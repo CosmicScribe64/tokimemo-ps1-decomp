@@ -2285,7 +2285,9 @@ void func_80053CC0(void);
 #ifndef MAIN_API_OVERRIDE_func_80053CE0
 void func_80053CE0(void);
 #endif
+#ifndef MAIN_API_OVERRIDE_func_80053D10
 void func_80053D10(void);
+#endif
 s32 func_80053F04(void);
 s32 func_80054140(void);
 u8 func_80054284(void);
@@ -2351,9 +2353,11 @@ void func_8005A37C(void);
 void func_8005A3E8(void);
 void func_8005A560(void);
 void func_8005A668();
+void func_8005AB4C(void);
 void func_8005ABC0();
 void func_8005ABD0(void);
 void func_8005AC70(s32 arg0);
+void func_8005AD1C(void);
 void func_8005AD70(void);
 void func_8005AE60();
 void func_8005AEFC();

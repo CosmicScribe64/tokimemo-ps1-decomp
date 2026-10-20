@@ -122,6 +122,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24301-local-list-l6-p01|T-24301 Local list l6-p01]]
 - [ ] [[tickets/T-24303-local-list-l6-p03|T-24303 Local list l6-p03]]
 - [ ] [[tickets/T-24302-local-list-l6-p02|T-24302 Local list l6-p02]]
 - [ ] [[tickets/T-24213-cloud-packet-taco-8014f820|T-24213 Cloud packet: TACO func_8014F820]]

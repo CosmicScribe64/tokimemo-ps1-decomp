@@ -125,8 +125,10 @@ void func_80139DE0(void) {
     func_8004DE1C();
 }
 
+/* NON_MATCHING: T-24301, 15 rows; as1 hoists the two `lui` at the head of the default block into the
+ * load delay and the range-check slot (the VALEN func_80134030 hoist, T-24211); the original keeps the nop. */
 #ifdef NON_MATCHING
-/* NON_MATCHING: C draft for T-24137 (switch-triple pattern of SHOUGATU func_8013EE30).
+/* C draft for T-24137 (switch-triple pattern of SHOUGATU func_8013EE30).
  * FAKE: the switch discriminant goes through the base of D_800F5AAE
  * ((&D_800F5AAE)[0x821] = D_800F62CF) so the byte store stays before the load;
  * same idiom as func_801381DC (as1 keeps the store before a same-base load).

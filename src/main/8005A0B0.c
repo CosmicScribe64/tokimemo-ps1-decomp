@@ -188,7 +188,110 @@ void func_8005A560(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005A668);
+/* Weekday command screen setup. The calendar reads are written from `unk_040 - 1` (the original keeps
+ * that sum and adds the offsets 2 and 7 to it, T-24301). */
+void func_8005A668(void) {
+    GameState *gs = &D_800E6280;
+    u8 event;
+
+    back_clear_switch(0);
+    func_80048E78();
+    func_80041584();
+    gs->unk_036 = 0;
+    gs->unk_037 = 0;
+    gs->unk_038 = 0;
+    func_8004E58C();
+    func_80066104("平日コマンド画面");
+    gnsx(&gs->unk_0D4);
+    parameter_show_init();
+    parameter_show_init();
+    hizuke_init();
+    message_window_init();
+    parameter_disp_switch(1);
+    tpage_buf_clear();
+    event = gs->unk_044[0].unk_20[gs->unk_040 - 1 + 2];
+    if (event == 5) {
+        gs->unk_F6D = 0xF;
+        func_8006509C();
+        func_800654D0((u8)gs->unk_F6D);
+        func_8005AC70(1);
+        gs->unk_1093 = 0xE;
+        icon_can_use_set(0xE, 1);
+        sndisp("明日からテストだ）", 0, 0x1F);
+    } else if (event == 8 && (gs->unk_0F4.h >> 12) != 0xB) {
+        gs->unk_F6D = 0xE;
+        func_8006509C();
+        func_800654D0((u8)gs->unk_F6D);
+        func_8005AC70(1);
+        icon_can_use_set(4, 1);
+        gs->unk_1093 = 4;
+        if ((gs->unk_0F4.h >> 12) == 6 && gs->unk_03E == 0x61 && (*(u16 *)&gs->unk_66C[6].unk_02 & 0xF) >= 8) {
+            sndisp("明日から、念願の 全国高校野球大会だ）", 0, 0x1F);
+        } else {
+            sndisp("明日から夏合宿だ）", 0, 0x1F);
+        }
+    } else if (gs->unk_044[0].unk_20[gs->unk_040 - 1 + 7] == 0xC && (gs->unk_0F4.h >> 12) < 6) {
+        if ((gs->unk_0F4.b[1] & 0xF) != 3) {
+            gs->unk_F6D = 0xE;
+            func_8006509C();
+            func_800654D0((u8)gs->unk_F6D);
+            func_8005AC70(1);
+            icon_can_use_set(4, 1);
+            gs->unk_1093 = 4;
+            sndisp("文化祭に向けて部活をせねば）", 0, 0x1F);
+        } else {
+            gs->unk_F6D = 0xE;
+            func_8006509C();
+            func_800654D0((u8)gs->unk_F6D);
+            func_8005AC70(1);
+            icon_can_use_set(7, 1);
+            gs->unk_1093 = 7;
+            func_8005AD1C();
+            sndisp("文化祭に向けて部活をせねば でも病気で身体が動かない）", 0, 0x1F);
+        }
+    } else if (event == 0xB) {
+        gs->unk_F6D = 0xF;
+        func_8006509C();
+        func_800654D0((u8)gs->unk_F6D);
+        func_8005AC70(1);
+        gs->unk_1093 = 0xE;
+        icon_can_use_set(0xE, 1);
+        sndisp("明日から修学旅行だ）", 0, 0x1F);
+    } else if (gs->unk_0F6.h & 1) {
+        gs->unk_F6D = 0xE;
+        func_8006509C();
+        func_800654D0((u8)gs->unk_F6D);
+        func_8005AC70(1);
+        icon_can_use_set(0, 1);
+        icon_can_use_set(1, 1);
+        icon_can_use_set(2, 1);
+        gs->unk_1093 = 0;
+        sndisp("一週間強制補習を しなければならない）", 0, 0x1F);
+    } else if ((gs->unk_0F4.b[1] & 0xF) == 3) {
+        gs->unk_F6D = 0xE;
+        func_8006509C();
+        func_800654D0((u8)gs->unk_F6D);
+        func_8005AC70(1);
+        icon_can_use_set(7, 1);
+        gs->unk_1093 = 7;
+        func_8005AD1C();
+        sndisp("病気で身体が動かない）", 0, 0x1F);
+    } else {
+        gs->unk_F6D = 0xE;
+        func_8006509C();
+        func_800654D0((u8)gs->unk_F6D);
+        func_8005AC70(0);
+        gs->unk_1093 = gs->unk_F68.w & 0xF;
+        sndisp("明日から何をしようかな？）", 0, 0x1F);
+    }
+    k_disp_start(4);
+    func_8006BC28(0);
+    if (gs->unk_03E == 0x5F && gs->unk_03F == 4 && gs->unk_040 == 4) {
+        icon_can_use_set(0xD, 0);
+    }
+    menu_bar_color(0x10, 0, 0, 8);
+    func_8005AB4C();
+}
 
 void func_8005AB4C(void) {
     s32 r;
@@ -859,7 +962,57 @@ void func_8005C968(void) {
     func_8005C7FC();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005CA94);
+/* The menu handler of ETC func_80144DF0 with the cancel arm first (T-24301). */
+void func_8005CA94(void) {
+    s32 pad[2]; /* FAKE: T-24301, with `pad2` reproduces the 0x40 frame and the slots of status/slot */
+    u8 *status;
+    s32 slot;
+    s32 pad2; /* FAKE: T-24301, see pad */
+
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    menu_bar_show(1);
+    slot = D_800E6280.unk_1094 + 1;
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_8005C4CC(1);
+        func_80042908(0);
+        func_80042940(2);
+        D_800E6280.unk_111B = 0;
+    } else if (D_800E6280.unk_F88 & 0x20) {
+        if (D_800E6280.unk_1094 != -1) {
+            status = &D_800E7D10.slot_status[slot];
+            if (*status == 0) {
+                /* FAKE: T-24301 (as T-24209), byte view store + plain re-read promote unk_1118 to v0 */
+                ((u8 *)&D_800E6280)[0x1118] = slot;
+                if (func_80054694(D_800E6280.unk_1118) == 1) {
+                    func_80054704(D_800E6280.unk_1118);
+                    *status = 0xFF;
+                    func_80053CE0();
+                    func_8004284C();
+                } else {
+                    func_80042940(0xF0);
+                }
+            } else if (slot == D_800E6280.unk_1118) {
+                func_80053CE0();
+                func_8004284C();
+            } else {
+                D_800E6280.unk_1118 = slot;
+                if ((u8) D_800E8BEE != 0) {
+                    /* FAKE: T-24301 (as T-24209), the repeated view store keeps unk_1118 promoted in both arms */
+                    ((u8 *)&D_800E6280)[0x1118] = slot;
+                    D_800E7D36 = D_800E6280.unk_1118;
+                    func_800696DC(0, 0);
+                    D_800E6280.unk_1094 = D_800E7D36 - 1;
+                } else {
+                    func_80042940(0xC0);
+                }
+            }
+        }
+    }
+    k_disp_inc();
+    func_8005C7FC();
+}
 
 /* FAKE: u8 view of the switch selector keeps the compares on the global ($v1), as in the original (T-5010, T-24111) */
 s32 func_8005CC40(void) {
@@ -1950,7 +2103,61 @@ void func_8005F6E4(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005F730);
+/* s32 with no return, like the sibling menus (func_8005FDEC). */
+s32 func_8005F730(void) {
+    s32 pad[2]; /* FAKE: T-24301, the frame has 8 more bytes above the arrays (as func_8005F26C) */
+    s32 i;
+    s16 x[5];
+    s16 y[5];
+    s16 w[5];
+    s16 h[5];
+
+    func_8004E58C();
+    func_8006612C("カーソル速度");
+    func_8005DEA0(4);
+    for (i = 0; i < 5; i++) {
+        x[i] = -4;
+        y[i] = -0x40 + i * 0x10;
+        w[i] = 0x6C;
+        h[i] = 0x10;
+    }
+    if (D_800E7D2C >= 9 || D_800E6280.unk_53C[8] >= 2) {
+        set_kanji_string(x[0], y[0], 3U, "超遅い", 0);
+        set_kanji_string(x[1], y[1], 3U, "遅い", 0);
+        set_kanji_string(x[2], y[2], 3U, "普通", 0);
+        set_kanji_string(x[3], y[3], 3U, "速い", 0);
+        set_kanji_string(x[4], y[4], 3U, "超速い", 0);
+    } else {
+        set_kanji_string(x[0], y[0], 3U, "遅い", 0);
+        set_kanji_string(x[1], y[1], 3U, "少し遅い", 0);
+        set_kanji_string(x[2], y[2], 3U, "普通", 0);
+        set_kanji_string(x[3], y[3], 3U, "少し速い", 0);
+        set_kanji_string(x[4], y[4], 3U, "速い", 0);
+    }
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0U, "カーソルの移動速度を設定します", 0);
+    menu_set(1, 5, x, y, w, h);
+    switch (D_800E6280.unk_F6F) {
+    default:
+    case 1:
+        D_800E6280.unk_1094 = 0;
+        break;
+    case 2:
+        D_800E6280.unk_1094 = 1;
+        break;
+    case 3:
+        D_800E6280.unk_1094 = 2;
+        break;
+    case 4:
+        D_800E6280.unk_1094 = 3;
+        break;
+    case 6:
+        D_800E6280.unk_1094 = 4;
+        break;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 void func_8005FA20(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);

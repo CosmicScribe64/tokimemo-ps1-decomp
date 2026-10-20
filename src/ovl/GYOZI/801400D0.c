@@ -90,24 +90,21 @@ void func_8014041C(void) {
 
 extern u8 D_800D9264[];
 
-/* NON_MATCHING: the original hoists the `D_800F5AAE | 0x20` and `D_800F5AAE | 0x40` stores into the branch delay slots of the month/day checks (`sb $t6, D_800F5AAE` repeated per branch). T-24116. */
-#ifdef NON_MATCHING
+/* The flag byte (work +0x70E) and the selection index (+0x70C) are read through the work struct: the
+ * original reloads the flag after its store and keeps the index load below it (T-24301). */
 s32 func_80140464(void) {
-    u8 v;
-
-    v = D_800F5AAE;
+    D_800F53A0.unk_410[0x2FE] |= 0x20;
     if (((GsWord *)&D_800F53A0.girl[0].unk_14)->date.month == 12 &&
-        ((GsWord *)&D_800F53A0.girl[0].unk_14)->date.day == 24 &&
-        (D_800F5AAE = v | 0x20)) {
-        D_800F5AAE |= 1;
-        D_800F53A0.unk_410[0x27D + D_800F5AAC * 4] = 0;
+        ((GsWord *)&D_800F53A0.girl[0].unk_14)->date.day == 24 && D_800F53A0.unk_410[0x2FE]) {
+        D_800F53A0.unk_410[0x2FE] |= 1;
+        D_800F53A0.unk_410[0x27D + D_800F53A0.unk_410[0x2FC] * 4] = 0;
         func_8004DE48(0x57);
         return 0;
     }
+    D_800F53A0.unk_410[0x2FE] |= 0x40;
     if (((GsWord *)&D_800F5490)->date.month == 12 &&
-        ((GsWord *)&D_800F5490)->date.day == 24 &&
-        (D_800F5AAE = v | 0x40)) {
-        D_800F5AAE = (v | 0x40) | 4;
+        ((GsWord *)&D_800F5490)->date.day == 24 && D_800F53A0.unk_410[0x2FE]) {
+        D_800F53A0.unk_410[0x2FE] |= 4;
         func_8004DE48(0x56);
         return 0;
     }
@@ -144,9 +141,6 @@ s32 func_80140464(void) {
     D_8014861C = D_80148264;
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801400D0", func_80140464);
-#endif
 
 void func_801406A4(void) {
     func_8008A0D4(0x4169);

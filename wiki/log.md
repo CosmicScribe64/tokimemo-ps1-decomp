@@ -20974,6 +20974,18 @@ Created [[tickets/T-24303-local-list-l6-p03]] (In Progress): local session works
 
 Local lists merged: T-24302 GEKO `func_801358CC`; T-24303 main `menu_girl_taku_set`, RPG_BAT `func_80138324`, main `func_800755B4` (linked proof here).
 
+## [2026-10-19] ticket | T-24301 In Progress: local list l6-p01
+
+Created [[tickets/T-24301-local-list-l6-p01]]: 53 functions from .claude/orchestrator/lists/l6-p01-list.txt, worked in the l6-p01 worktree.
+
+## [2026-10-19] ticket | T-24301 In Review: local list l6-p01, 9 matches
+
+[[tickets/T-24301-local-list-l6-p01]]: matched GYOZI func_80140464, main func_8005CA94, func_80042CB0, func_8005A668, func_8005F730, func_80065F34, OPTION func_80133010, func_80132BA8 (implicit int view of func_80053D10 via MAIN_API_OVERRIDE) and KANGEI func_80132FF8. Guards: GYOZI func_80140E0C (5 rows), func_80139E4C (15), main func_8006C988 (11), RPG_BAT func_8014BB80 (22, RPG_BAT_OVERRIDE_func_8013E7C0 in 8014ADD0.c). Notes in [[matching-notes]] (T-24301), four rows added to [[register-cheatsheet]], drafts in drafts/T-24301/.
+
+## [2026-10-20] ticket | T-24301 Done
+
+Local list l6-p01 merged: OPTION `func_80132BA8` matches (linked proof here); four guards under 30 rows with notes, other attempts parked as drafts.
+
 ## [2026-10-20] lint | T-24400 wiki reorganization
 
 New [[index]] hub, [[status]], [[playbook]], [[tooling]], generated [[tickets/catalog]] and [[notes/functions]]; `tools/wiki.py` rotates [[log]] and [[matching-notes]] verbatim into `log/` and `notes/`. Old index kept as [[archive/index-2026-10-20]]. [[tickets/T-24400-wiki-reorganization]].
