@@ -1,6 +1,7 @@
-/* FAKE: T-24503, unused pad0/pad1/pad2 reproduce measured stack slots; the
- * empty year test and unsigned-seven views test allocator range ordering.
- * Unmatched checkpoint: see README for current structural differences. */
+/* FAKE: T-24503, unused pad0/pad1/pad2 retain the observed stack slots.
+ * Empty flag-address and ID-base tests adjust allocator priorities. The volatile
+ * selector view prevents CSE of the packed-appointment comparison's fresh read.
+ * Original volatility is unknown. This remains unmatched; see README. */
 void func_80142C9C(void) {
     s32 pad0;
     u8 day;
@@ -98,17 +99,17 @@ void func_80142C9C(void) {
     }
     total = 0;
     for (i = 0; i < 0x15; i++) {
-        if (year) {}
+        if (&flags[i]) {}
         flags[i] = 0;
         if ((D_800E6280.unk_120[i] == 1) &&
             (year >= minYear.v[i]) &&
             ((year != minYear.v[i]) || (month >= minMonth.v[i])) &&
             ((i != 0xE) || !(D_800E6280.unk_74C[*(u8 *)&D_800E6280.unk_F5F] & 1)) &&
             ((i != 0xF) || !(D_800E6280.unk_74C[*(u8 *)&D_800E6280.unk_F5F] & 2)) &&
-            ((i != 7U) || !(D_800E6280.unk_74C[*(u8 *)&D_800E6280.unk_F5F] & 4)) &&
+            ((i != 7) || !(D_800E6280.unk_74C[*(u8 *)&D_800E6280.unk_F5F] & 4)) &&
             ((i != 0xE) || (tblA.v[*(u8 *)&D_800E6280.unk_F5F * 0xC + slot] != 0)) &&
             ((i != 0xF) || (tblB.v[*(u8 *)&D_800E6280.unk_F5F * 0xC + slot] != 0)) &&
-            ((i != 7U) || (((year != 0x61) || (month < 9U) || (month >= 0xCU) || (D_800E6280.unk_1BC[*(u8 *)&D_800E6280.unk_F5F].unk_14[0xC] == 0)) &&
+            ((i != 7) || (((year != 0x61) || (month < 9U) || (month >= 0xCU) || (D_800E6280.unk_1BC[*(u8 *)&D_800E6280.unk_F5F].unk_14[0xC] == 0)) &&
                           ((year != 0x61) || (month < 3U) || (month >= 6U) || (D_800E6280.unk_1BC[*(u8 *)&D_800E6280.unk_F5F].unk_14[0xD] == 0)) &&
                           ((year != 0x5F) || (month < 9U) || (month >= 0xCU) || (D_800E6280.unk_1BC[*(u8 *)&D_800E6280.unk_F5F].unk_14[0xE] == 0)))) &&
             (i != 0) && (i != 1) && (i != 0x12) &&
@@ -117,32 +118,35 @@ void func_80142C9C(void) {
             (((i != 0x10) && (i != 0x11)) || (D_800E6280.unk_044[spill].unk_00[day] == 2) || (month == 7)) &&
             (((i != 0x13) && (i != 0x14)) || (D_800E6280.unk_044[spill].unk_00[day] == 2) || (month == 0xC)) &&
             (i != banned.v[D_800E6280.unk_72C[*(u8 *)&D_800E6280.unk_F5F]]) &&
-            ((*(u8 *)&D_800E6280.unk_F5F != (((u32) (*(s32 *)&D_800E6280.unk_54C[0].w * 8)) >> 0x1C)) || (i != (*(s32 *)&D_800E6280.unk_54C[0].w & 0x1F))) &&
+            ((*(volatile u8 *)&D_800E6280.unk_F5F != (((u32) (*(u32 *)&D_800E6280.unk_54C[0].w * 8)) >> 0x1C)) || (i != (*(u32 *)&D_800E6280.unk_54C[0].w & 0x1F))) &&
             ((*(u8 *)&D_800E6280.unk_F5F != 1) || (((i != 0xD) || ((month != 1) && (month != 3) && (month != 6) && (month != 0xB))) && (i != 0x10) && (i != 0x11) && (i != 0x14))) &&
             ((*(u8 *)&D_800E6280.unk_F5F != 2) || (i != 0x14)) &&
             ((*(u8 *)&D_800E6280.unk_F5F != 3) || ((i != 0x10) && (i != 0x11))) &&
-            ((*(u8 *)&D_800E6280.unk_F5F != 4) || (i != 7U)) &&
+            ((*(u8 *)&D_800E6280.unk_F5F != 4) || (i != 7)) &&
             ((*(u8 *)&D_800E6280.unk_F5F != 5) || (i != 0xD) || ((month != 1) && (month != 3) && (month != 6) && (month != 0xB))) &&
             ((*(u8 *)&D_800E6280.unk_F5F != 9) || (((i != 0xD) || ((month != 1) && (month != 3) && (month != 6) && (month != 0xB))) && (i != 0x14))) &&
-            ((*(u8 *)&D_800E6280.unk_F5F != 0xA) || ((i != 7U) && (i != 0xB)))) {
+            ((*(u8 *)&D_800E6280.unk_F5F != 0xA) || ((i != 7) && (i != 0xB)))) {
             idx = ids.v[i];
+            if (&flags[i]) {}
             p = &weights.v[*(u8 *)&D_800E6280.unk_F5F * 0x13];
             if ((month == 1) || (month == 3) || (month == 6) || (month == 0xB)) {
                 if (i == 0xD) {
                     idx++;
                 }
             }
-            flags[i] = 1;
             total = total + p[idx];
+            flags[i] = 1;
         }
     }
     func_800AE120(*(u32 *)&D_800E6280.unk_10F8);
     r = func_800AE0D0() % total;
     total = 0;
     sel = 2;
+    q = ids.v;
+    if (q) {}
     for (i = 0; i < 0x15; i++) {
         if (flags[i] != 0) {
-            idx = ids.v[i];
+            idx = q[i];
             p = &weights.v[*(u8 *)&D_800E6280.unk_F5F * 0x13];
             if ((month == 1) || (month == 3) || (month == 6) || (month == 0xB)) {
                 if (i == 0xD) {
@@ -151,7 +155,7 @@ void func_80142C9C(void) {
             }
             total = total + p[idx];
             if (total >= r) {
-                sel = i & 0xFF;
+                sel = i;
                 break;
             }
         }
