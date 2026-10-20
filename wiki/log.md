@@ -2198,3 +2198,7 @@ Fresh isolated Docker ETC build passes SHA1 681c93b6e57c885f86e074c885a8bf6c3cca
 
 ## [2026-10-20] build | T-24513 final replay and 27 built hashes
 All eight archived full-TU cases reproduce their negative metrics with explicit-object DIFF and production unchanged. Final headers/globals/prototype guards pass (0 new, 15 known prototype disagreements). Independent hashing of actual build/SLPM_86.053.bin and build/ovl/*.bin passes 27/27. Corrected replay handling of expected DIFF exit1 and a separate checksum command's overlay working-directory error; no source promotion. [[tickets/T-24513-etc-matching]] remains In Review.
+
+## [2026-10-20] lint | Consolidate reviewed overlay archive histories
+
+[[tickets/T-24510-parallel-overlay-coordination]] merges reviewed TEL5544f3e03, corrected ENDING71896dd66 and ETC057eeb442 into the isolated coordinator branch, preserving original commits. All log entries from four original histories remain present (Docker audit); production src/include/config/tools diff against23e1a20fb empty. Docker catalog/lint0 broken links,0 ticket mismatches, one pre-existing large-page notice. No main push/integration-tree access or active-worker mutation.
