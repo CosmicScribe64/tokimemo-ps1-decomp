@@ -67,3 +67,27 @@ Explicit two-column source loop avoids the old full-unrolling problem but introd
 The final production source contains precisely the two verified replacements (2,604 bytes). The remaining nine functions retain INCLUDE_ASM. A final private overlay build and literal default linked proof of both functions pass after restoring every experiment. Source-only bodies and their reproduction limits are saved separately. Self-review found no staged raw data, generated assembly, compiler edits or unmarked production FAKEs; new README prose passed the repository deslop check. Parent review of the two production changes has no blockers; source-only archive review remains before ticket closure.
 
 - Parent archive review: marked the inherited scalar/offset views in both `func_80139AB0` bodies with leading FAKE comments naming T-24521 and their experimental status. These bodies remain source-only evidence with unresolved aggregate fields. No production changes or compiler search. The remaining archive review found no blockers; exact 44-byte table ownership evidence confirmed independently.
+
+### Focused comparison using the two new donors
+
+Compared only original TAIIKU instruction streams for new donors `func_80134060` and `func_80134F98` against the nine remaining functions. Method: `tools/siblings.py` `read_words` and `op_token`, then `difflib.SequenceMatcher(None, donor_tokens, target_tokens, autojunk=False).ratio()`. This preserves the sibling tool's directional score and removes registers, constants and targets. All 18 results, instruction counts and longest block indices are saved in `drafts/T-24521/new-donor-rankings.json`.
+
+| Remaining function | Closest new donor | Ratio |
+| --- | --- | ---: |
+| func_8013DDB8 | func_80134F98 | 0.2896 |
+| func_80135F3C | func_80134F98 | 0.2374 |
+| func_8013F3A4 | func_80134F98 | 0.2281 |
+| func_80137C44 | func_80134F98 | 0.2227 |
+| func_8013E894 | func_80134F98 | 0.2154 |
+| func_80139AB0 | func_80134060 | 0.2074 |
+| func_8013EC60 | func_80134060 | 0.1862 |
+| func_8013E1FC | func_80134060 | 0.1686 |
+| func_80137784 | func_80134F98 | 0.1650 |
+
+Inspected the strongest instruction blocks and the matched source templates:
+
+- DDB8's best seven-instruction block is generic jump-table dispatch. Its five-instruction addition run computes grid coordinates, whereas the donor increments character award fields. The source operations differ.
+- 35F3C shares the donor's ten-instruction 44-byte aggregate-copy prefix. The earlier saved reconstruction already uses the same `TaiWords11` assignment; remaining differences concern nested selection loops and allocation. The 34060 pairing (0.2222) also finds small aggregate copies, but its 18-byte tables differ from this target's 22-byte tables. Neither adds a new source hypothesis.
+- F3A4 shares the generic nine-instruction seven-way dispatch plus a five-instruction signed threshold/add sequence. Its actor update arms do not follow the donor's award loops or loader handle loops.
+
+Every pairing is below 0.30 and below `siblings.py`'s default 0.70 report threshold. No new structural transplant was justified; no compiler or build ran in this focused pass. Production remains the same two verified matches, with nine assembly tails. Returned to In Review for parent review of this evidence.

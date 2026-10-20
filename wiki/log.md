@@ -2186,3 +2186,11 @@ Added original copy instruction addresses, exact eleven-word data bounds and the
 ## [2026-10-20] lint | T-24521 archive review resolved
 
 Resolved the parent review finding by marking experimental scalar/offset views in both `func_80139AB0` source-only bodies with leading FAKE comments. Recorded the resolution in [[tickets/T-24521-taiiku]]. Production code and verified matches are unchanged; no compiler search or build was needed for comments only.
+
+## [2026-10-20] query | T-24521 new donor comparison
+
+Reopened [[tickets/T-24521-taiiku]] In Progress for a focused comparison restricted to the two newly matched TAIIKU donors, `func_80134060` and `func_80134F98`, against the nine remaining functions. Reuse normalized opcode similarity from `tools/siblings.py`; compile only a genuinely new structural transplant.
+
+## [2026-10-20] query | T-24521 donor comparison findings
+
+Completed 18 comparisons restricted to the two new TAIIKU donors and nine tails. Maximum normalized opcode similarity was0.2896 for `func_80134F98` to `func_8013DDB8`, from generic dispatch. The genuine aggregate-copy relationship to `func_80135F3C` was already used by its earlier typed draft. No new structural transplant or compiler probe was justified. Saved ranked metadata and block interpretations in [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]]. Returned the ticket to In Review; production unchanged.
