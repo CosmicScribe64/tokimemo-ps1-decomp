@@ -1,10 +1,11 @@
-/* T-24301 draft, ~66 rows: control flow right; the record pointer takes $v0 (original $v1), the li 22
- * and the F5F reload are scheduled earlier, and the frame wants two scalars above `names`. */
+/* T-24301 draft (autotweak best): two reused scalars (call result -> `have`, girl index -> `want`) give the
+ * original frame; wants `s32 func_800AE0F0();` (MAIN_API_OVERRIDE). Left: the first block's ugen numbering and
+ * as1 hoists of the D_80144C50/F5F loads differ (about 60 rows). */
 void func_80133C50(void) {
-    s32 state;
-    u32 have;
-    u32 want;
+    s32 v;
+    u32 g;
     GekoNames12 names;
+    u32 temp;
 
     names = D_80144D8C;
     func_800AE0F0(&D_800CA280, names.name[D_800E6280.unk_0F4.h >> 12]);
@@ -13,40 +14,42 @@ void func_80133C50(void) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0] |= 0x40;
     }
     D_80144C3C = 0x16;
-    state = get_g_zyotai_s(D_800E6280.unk_F5F);
+    v = get_g_zyotai_s(D_800E6280.unk_F5F);
     if (D_80144C50 == 2) {
+        g = D_800E6280.unk_F5F;
         D_80144C50 = 0;
-        if (D_800E6280.unk_F5F == 0) {
-            have = D_800E6280.unk_0F4.h >> 12;
-            want = D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[2] >> 4;
-            if (have == want && have < 6) {
+        if (g == 0) {
+            v = D_800E6280.unk_0F4.h >> 12;
+            temp = D_800E6280.unk_1BC[g].unk_0C.b[2] >> 4;
+            g = temp;
+            if (v == g && (u32)v < 6) {
                 func_80132A4C(2);
-            } else if (have != want && have < 6 && want < 6) {
+            } else if (v != g && (u32)v < 6 && g < 6) {
                 func_80132A4C(3);
-            } else if (have < 6 && want >= 6) {
+            } else if ((u32)v < 6 && g >= 6) {
                 func_80132A4C(4);
             } else {
                 func_80132A4C(5);
             }
-        } else if (D_800E6280.unk_F5F == 1 || D_800E6280.unk_F5F == 2 || D_800E6280.unk_F5F == 3) {
-            have = D_800E6280.unk_0F4.h >> 12;
-            want = D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[2] >> 4;
-            if (have == want) {
+        } else if (g == 1 || g == 2 || g == 3) {
+            v = D_800E6280.unk_0F4.h >> 12;
+            g = D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[2] >> 4;
+            if (v == g) {
                 func_80132A4C(2);
-            } else if (have != want && have < 6) {
+            } else if (v != g && (u32)v < 6) {
                 func_80132A4C(3);
             } else {
                 func_80132A4C(5);
             }
-        } else if (D_800E6280.unk_F5F == 4 || D_800E6280.unk_F5F == 5 || D_800E6280.unk_F5F == 10) {
+        } else if (g == 4 || g == 5 || g == 10) {
             if ((D_800E6280.unk_0F4.h >> 12) < 6) {
                 func_80132A4C(3);
-            } else if ((state & 0x7F) < 2) {
+            } else if ((u32)(v & 0x7F) < 2) {
                 func_80132A4C(4);
             } else {
                 func_80132A4C(5);
             }
-        } else if (D_800E6280.unk_F5F == 6 || D_800E6280.unk_F5F == 7 || D_800E6280.unk_F5F == 8 || D_800E6280.unk_F5F == 9) {
+        } else if (g == 6 || g == 7 || g == 8 || g == 9) {
             if ((D_800E6280.unk_0F4.h >> 12) < 6) {
                 func_80132A4C(2);
             } else {
