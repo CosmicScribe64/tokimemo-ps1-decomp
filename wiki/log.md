@@ -20936,3 +20936,7 @@ Created [[tickets/T-24211-cloud-packet-valen-80134030]] (In Progress): single-fu
 ## [2026-10-20] ticket | T-24207, T-24209, T-24210, T-24211 Done
 
 Cloud packet results merged with the linked proof here: ETC `func_80140AE4` (224 B), ETC `func_80144DF0` (388 B) and main `func_800591D8` (304 B) match. VALEN `func_80134030` stays guarded at 6 rows.
+
+## [2026-10-20] ticket | T-24302 In Progress
+
+Local work list l6-p02 (53 functions, best first) in worktree `../tokimemo-wt/l6-p02`: [[tickets/T-24302-local-list-l6-p02]].
