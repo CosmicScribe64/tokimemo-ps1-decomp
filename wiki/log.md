@@ -2226,3 +2226,11 @@ The authorized assignment-only identity probe in [[tickets/T-24523-seasonal-sour
 ## [2026-10-20] decision | Pin reviewed VALEN stale-guard cleanup
 
 Parent and self standards/source review found no blockers in the func_80132834 stale-guard removal: immutable target/control-flow mismatch established, original fallback/address order preserved, no header/compiler change, private complete VALEN SHA1 and27 hashes/guards pass. Correct unmatched381 source is separately pinned; this cleanup earns no coverage under [[tickets/T-24523-seasonal-source-hypotheses]].
+
+## [2026-10-20] query | Real VALEN rank-score array ownership
+
+Under [[tickets/T-24523-seasonal-source-hypotheses]], replaced only three scalar scores with the real signed-halfword rank_scores[3] array supported by adjacent target homes. Cost381 to336, exact frame0x78 and candidate base sp+0x5C restored; score homes remain four bytes high and scheduling is broad. Updated unmatched source checkpoint only; no production/header changes or new coverage. One approved probe, no declaration/width grid.
+
+## [2026-10-20] decision | Preserve score-array foundation after identity negative
+
+Parent and self review found no blockers in the336 source-only score array checkpoint for [[tickets/T-24523-seasonal-source-hypotheses]]. One approved identity probe on only the first two assignment sums worsens336 to371 and frame0x78 to0x80; it retains operand loads and recomputes sums rather than restoring the target reloads. Discarded. Best archive remains336, production fallback unchanged, no coverage or compiler-limit claim.

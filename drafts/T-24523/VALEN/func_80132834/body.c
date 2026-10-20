@@ -2,9 +2,7 @@ void func_80132834(void) {
     s16 r;
     /* FAKE: inherited sibling capacity; exact original list capacity unknown. T-24523. */
     s16 candidates[13];
-    s16 best0;
-    s16 best1;
-    s16 best2;
+    s16 rank_scores[3];
     s16 i;
     s16 count;
 
@@ -19,24 +17,24 @@ void func_80132834(void) {
         D_800E6280.unk_1BC[9].unk_06 = 50;
     }
     D_80134540[0] = D_80134540[1] = D_80134540[2] = 0xFF;
-    best0 = best1 = best2 = 0;
+    rank_scores[0] = rank_scores[1] = rank_scores[2] = 0;
     for (i = 0; i < 11; i++) {
         if (((CharFlags *)&D_800E6280.unk_1BC[i].unk_0C)->b1 != 0 &&
             get_h_tokimeki(i) >= 0x46U) {
-            if (best0 < D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06) {
-                best2 = best1;
-                best1 = best0;
-                best0 = D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02;
+            if (rank_scores[0] < D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06) {
+                rank_scores[2] = rank_scores[1];
+                rank_scores[1] = rank_scores[0];
+                rank_scores[0] = D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02;
                 D_80134540[2] = D_80134540[1];
                 D_80134540[1] = D_80134540[0];
                 D_80134540[0] = i;
-            } else if (best1 < D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06) {
-                best2 = best1;
-                best1 = D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02;
+            } else if (rank_scores[1] < D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06) {
+                rank_scores[2] = rank_scores[1];
+                rank_scores[1] = D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02;
                 D_80134540[2] = D_80134540[1];
                 D_80134540[1] = i;
-            } else if (best2 < D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06) {
-                best2 = D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06;
+            } else if (rank_scores[2] < D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06) {
+                rank_scores[2] = D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06;
                 D_80134540[2] = i;
             }
         }
