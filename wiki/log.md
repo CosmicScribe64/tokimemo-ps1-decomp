@@ -2124,3 +2124,13 @@ Parent reviewed CB24, guarded AB50 and the two own TACO.h declarations against C
 ## [2026-10-20] build | T-24502 Gouraud quad renderer matched
 
 func_80144E3C matches all1,888 linked target bytes in default C. Correct u8 arg4 and SDK POLY_G4 pointers replace the stale draft. Parent review found no blockers; all27 binary hashes and source/prototype guards pass. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record frame/layout and bounded expression recovery. Campaign total5 matches7644 bytes.
+
+
+## [2026-10-20] decision | T-24502 collision and pickup checkpoints
+
+Archived typed func_8013BAC4 (cost330, down from stale817) and func_8013C6D4 (cost251), with concrete frame/first-divergence evidence and bounded failed alternatives. Both remain production asm. [[matching-notes]] and [[tickets/T-24502-taco-completion]] link the durable drafts; moving to func_8013A790 scrolling/table logic.
+
+
+## [2026-10-20] decision | T-24502 archive review and AB50 consult
+
+Parent review found the BAC4 raw instruction comparison exceeded standards10 excerpt guidance; removed the dump and kept concise NOTES plus replay wrapper/commands. Independent AB50 consult still has seven constant-register words; chain stores worsen instruction count. [[matching-notes]] records the concrete allocator finding to avoid repeats. No production change under [[tickets/T-24502-taco-completion]].
