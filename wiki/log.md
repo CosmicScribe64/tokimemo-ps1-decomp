@@ -2085,3 +2085,7 @@ The l6-p01 merge carried 9 matches, not 1; listed in [[tickets/T-24301-local-lis
 ## [2026-10-20] query | Rank the remaining large functions
 
 Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24500-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
+
+## [2026-10-20] ticket | Start isolated overlay matching coordination
+
+[[tickets/T-24510-parallel-overlay-coordination]] coordinates three user-authorized Sol 6.1 medium workers: TEL T-24511, ENDING T-24512, ETC T-24513, from main `23e1a20fb`. Separate /private/tmp trees and overlay-only ownership; no coordinator compiler workload. Read [[status]], [[playbook]], standards, and TEL/ETC negative-history tickets before dispatch. Main integration and MAIN/TACO/GEKO-OPTION work remain with the parent chat. No new verified match claimed.
