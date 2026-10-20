@@ -2089,3 +2089,11 @@ Docker scan of current source INCLUDE_ASM entries and generated size headers ide
 ## [2026-10-20] ticket | Start isolated overlay matching coordination
 
 [[tickets/T-24510-parallel-overlay-coordination]] coordinates three user-authorized Sol 6.1 medium workers: TEL T-24511, ENDING T-24512, ETC T-24513, from main `23e1a20fb`. Separate /private/tmp trees and overlay-only ownership; no coordinator compiler workload. Read [[status]], [[playbook]], standards, and TEL/ETC negative-history tickets before dispatch. Main integration and MAIN/TACO/GEKO-OPTION work remain with the parent chat. No new verified match claimed.
+
+## [2026-10-20] decision | Favor source reconstruction in overlay lanes
+
+[[tickets/T-24510-parallel-overlay-coordination]]: all worker bases are `23e1a20fb`; parent main advanced with TACO. TEL starts the other remaining handler `func_8013D88C`, ETC validates its baseline checksum and tries explicit pointer cursors. Parent steering favors typed stale-draft repairs and family patterns, small causal no-gain sets, and immediate verified pins. All three workers informed; no new coverage claimed here.
+
+## [2026-10-20] build | ENDING baseline and targeted frame repair
+
+[[tickets/T-24510-parallel-overlay-coordination]] records ENDING unit baseline checksum pass at `23e1a20fb`. Worker avoids documented large scheduler barriers and tests the concrete declaration/frame mismatch in `func_801330E4`; no match yet, all-27 verification remains a promotion gate.

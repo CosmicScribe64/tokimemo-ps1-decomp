@@ -28,3 +28,7 @@ Targets: TEL `func_80136724` 6580 code bytes (7044 includes tables), ENDING `fun
 ## Comments
 
 2026-10-20: Read project instructions, status, playbook, coding standards and local orchestrator guidance. Started three medium workers; no fourth competing compiler workload. Baseline 90.8%, 159 remaining is inherited status, not newly measured. Git worktree creation required sandbox escalation and succeeded; Docker socket likewise requires escalation. No raw source copied or modified.
+
+2026-10-20 update: all three worker trees pin `23e1a20fb`; main subsequently advanced to `2c834dd47` after TACO integration. TEL reports fresh baseline building and shifts to the other remaining handler `func_8013D88C` (func_80134FE4 was already matched); ETC fresh unit checksum passes and tests explicit generation-loop pointer cursors against the ranking draft. Parent steering prioritizes typed stale-draft repairs/family reconstruction after verified TACO 828-byte and MAIN 1072-byte results, with small causally distinct experiments and immediate per-match handoffs. Forwarded to all workers. No lane match yet.
+
+ENDING reports exact base `23e1a20fb` and fresh unit checksum pass. Large `8013A2E8`/`80135F4C` scheduler barriers preserved; tests `801330E4` existing 114-row draft with concrete scalar/array frame mismatch through three causal variants. Full 27-unit verification deferred until a candidate is ready.
