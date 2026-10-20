@@ -63,6 +63,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24207-cloud-packet-etc-80140ae4|T-24207 Cloud packet: ETC func_80140AE4]]
 - [ ] [[tickets/T-24206-cloud-packet-main-800590cc|T-24206 Cloud packet: main func_800590CC]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]

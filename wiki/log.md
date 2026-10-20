@@ -20879,3 +20879,7 @@ Cloud packet sessions finished without a match: [[tickets/T-24201-cloud-packet-k
 ## [2026-10-20] ticket | T-24206 In Review: main func_800590CC instruction match
 
 [[tickets/T-24206-cloud-packet-main-800590cc]] (cloud packet): `func_800590CC` in `src/main/80058D20.c` from the T-17017 guard (16 lines) to 0 differing instructions in the scratch single-function diff; plain C, guard and `INCLUDE_ASM` removed. FAKE: the call arguments re-read the stored `D_800E6280` halfwords through a `u16 *` view (uopt forwards the stored registers), one statement per line, else arm stores `unk_000/002` first. Notes in [[matching-notes]] (T-24206), idiom row in [[register-cheatsheet]]. Local linked proof and review still due.
+
+## [2026-10-20] ticket | T-24207 In Review: ETC func_80140AE4 instruction match
+
+Created [[tickets/T-24207-cloud-packet-etc-80140ae4]] (cloud packet) and moved it to In Review: `func_80140AE4` in `src/ovl/ETC/8013FF80.c` from the T-24129 guard (20 rows) to an instruction match in the scratch single-function `funcdiff`; guard and `INCLUDE_ASM` removed. FAKE: `(f() == 1) != 0` costs the missing ugen temporary; `do { func_80140E80(); } while (0);` puts `D_801500DC` in `$v0`. Both found with `tools/permute.py` on the packet `.s`. Notes in [[matching-notes]] (T-24207), rows in [[register-cheatsheet]]. Docker Hub returned 429 on the first image build; a retried `docker pull ubuntu:22.04` fixed it ([[cloud-matching]]). Local linked proof and review still due.
