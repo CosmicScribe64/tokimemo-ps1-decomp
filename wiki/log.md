@@ -2119,3 +2119,8 @@ func_8014CB24 matches 1,756 linked target bytes in default C. All 27 binary hash
 ## [2026-10-20] decision | T-24502 stage-handler review complete
 
 Parent reviewed CB24, guarded AB50 and the two own TACO.h declarations against CODING_STANDARDS.md, with no blocking findings. The implicit-int return view is documented in [[tickets/T-24502-taco-completion]]. Next target func_80144E3C compiles as SDK POLY_G4 pointer-array C (cost600,464 words versus472); no production change yet.
+
+
+## [2026-10-20] build | T-24502 Gouraud quad renderer matched
+
+func_80144E3C matches all1,888 linked target bytes in default C. Correct u8 arg4 and SDK POLY_G4 pointers replace the stale draft. Parent review found no blockers; all27 binary hashes and source/prototype guards pass. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record frame/layout and bounded expression recovery. Campaign total5 matches7644 bytes.
