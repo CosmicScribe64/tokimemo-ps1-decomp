@@ -2311,3 +2311,10 @@ All eight archived full-TU cases reproduce their negative metrics with explicit-
 ## [2026-10-20] lint | Consolidate reviewed overlay archive histories
 
 [[tickets/T-24510-parallel-overlay-coordination]] merges reviewed TEL5544f3e03, corrected ENDING71896dd66 and ETC057eeb442 into the isolated coordinator branch, preserving original commits. All log entries from four original histories remain present (Docker audit); production src/include/config/tools diff against23e1a20fb empty. Docker catalog/lint0 broken links,0 ticket mismatches, one pre-existing large-page notice. No main push/integration-tree access or active-worker mutation.
+## [2026-10-20] query | T-24522 typed battle decision lead
+
+`func_80144C84` reconstructed from archived252-row draft to30 literal rows via typed first-counter pointer and staged output-global arithmetic. The remaining gap is third-arm counter store/reload scheduling; no production change or coverage claimed. Bounded negatives and metrics in [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] build | T-24522 staged battle calculator match
+
+`func_801447E0` matches924 literal default linked bytes using the result global as the arithmetic variable and ordering the real k/lim locals. Private RPG_BAT SHA1 and linked proof pass; parent standards review has no findings. See [[tickets/T-24522-rpg-bat]], [[families/rpg-bat-family-results]].
