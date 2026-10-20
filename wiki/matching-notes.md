@@ -7894,3 +7894,10 @@ Open leads: the and-on-year op may need to be something other than an `and` (e.g
 expression shape), or the target's uopt output ordered the year mask before the subu.
 Cloud notes: Docker Hub 429 on `ubuntu:22.04` is avoided with `--build-arg BASE=mirror.gcr.io/library/ubuntu:22.04`; IDO
 `cc -S` ignores `-o` and writes `<base>.s` to the cwd (the repo root in docker); `ld` on IDO objects needs `.mdebug` stripped first.
+
+## T-24204: main func_8006D7EC in a cloud session (the idx++ fold, third pass)
+
+[[tickets/T-24204-cloud-packet-main-8006d7ec]], match packet per [[cloud-matching]]. No match; the T-23003 guard stays at 1 row (`addiu v1,v1,1` expected, `li v1,1` built), only its comment now names T-24204.
+
+- **Single-function scratch setup works for a main unit.** Copy of the C file with every other `INCLUDE_ASM` line removed, reference = `common.h` + the one `INCLUDE_ASM`; the asm fallback equals the reference except three trailing alignment nops; the guarded C via a prepended `#define NON_MATCHING`. A relocation-normalising objdump diff (`%lo` symbol + immediate to absolute, branch targets as function offsets, `jal` ignored) gives the one row directly; 5 s per variant.
+- **uopt proves the zero through every source form tried** (11 variants of the function plus about 30 probes on a 15-line file of the same shape: address-taken counter, zero set after a call, increment in an `if`): phis of equal constants (`if/else`, `switch`), aggregates and overlapping unions, algebraic zeros of unknown values (`d - d`, `d & 0`, `d * 0`, `d != d`), a store through a literal constant address in between, constant-false `do/while` exits and unreachable or constant-false backward `goto`s (deleted before the fold). Only a live backedge keeps the `addiu` (T-24001), and the original has no branch target before the test, so a loop form cannot match. Further source sweeps on this row are unlikely to pay; the open question is the uopt build ([[toolchain]]).

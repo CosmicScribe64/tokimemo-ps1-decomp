@@ -20886,3 +20886,6 @@ Cloud packet sessions finished without a match: [[tickets/T-24201-cloud-packet-k
 ## [2026-10-20] ticket | T-24202 to In Review (KANGEI func_8013852C still 2 rows)
 
 [[tickets/T-24202-cloud-packet-kangei-8013852c]]: cloud compile of src/ovl/KANGEI/80137B90.c reproduced sha1 `0ae36c0a925e1ee093ab51867f0c007aa64fbc2a`. About 5,000 variants (cast, order, temp, struct-access sweeps) stayed at 2 rows; the guard comment now names T-24202. Found that as1 deletes ugen's redundant `and 0xFFFF`/`sll-sra 16` ops by renaming, which explains the $t2/$t4/$t6 numbering, while the deleted ops still affect the schedule; details in [[matching-notes]]. Moved to In Review: review and local linked-build proof due.
+## [2026-10-20] ticket | T-24204 In Review: main func_8006D7EC stays at 1 row
+
+[[tickets/T-24204-cloud-packet-main-8006d7ec]]: cloud match packet for `src/main/8006CB30.c`. Asm fallback agrees with the packet reference; the guarded C is still the one `li v1,1` row. 11 function variants and about 30 small-file probes: uopt folds the first `idx++` in every source form (phis, aggregates, unions, algebraic zeros, constant-false loops and gotos). Guard comment now names T-24204; notes in [[matching-notes]] (T-24204). Local linked proof and review still due.

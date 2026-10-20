@@ -216,7 +216,7 @@ s32 func_8006D6E0(void) {
     }
 }
 
-/* NON_MATCHING: T-23003, 1 row; the first idx++ (right after idx = 0) is folded by uopt to li v1,1 where the original keeps addiu v1,v1,1. */
+/* NON_MATCHING: T-24204, 1 row; the first idx++ (right after idx = 0) is folded by uopt to li v1,1 where the original keeps addiu v1,v1,1 (draft T-23003; T-24001, T-24204: no source form found). */
 #ifdef NON_MATCHING
 /* T-23003: the 3-bit counter in bits 5..7 of the byte at GameState +0xF6 (read with lbu, decremented as a bit-field). */
 typedef struct F6Bits {
