@@ -20871,3 +20871,7 @@ Created [[tickets/T-24203-cloud-packet-geko-80136c20]] (In Progress): single-fun
 ## [2026-10-20] ticket | T-24203 In Review: GEKO func_80136C20 still 4 rows
 
 [[tickets/T-24203-cloud-packet-geko-80136c20]]: setup proven (asm-fallback scratch copy equals the packet reference); 28 more C variants leave `func_80136C20` at 4 rows in `src/ovl/GEKO/80134D10.c`. ugen's listing shows the miss is in as1 (it places the selector `lui` in the `D_80145090` load delay, the original in the `D_80145088` branch slot). Guard comment now T-24203. Notes in [[matching-notes]] (T-24203), single-function setup in [[cloud-matching]]. Local linked proof and review due.
+
+## [2026-10-20] ticket | T-24201, T-24203 Done
+
+Cloud packet sessions finished without a match: [[tickets/T-24201-cloud-packet-kangei-80134724]] KANGEI `func_80134724` stays at 2 rows, T-24203 GEKO `func_80136C20` at 4 rows; notes merged.

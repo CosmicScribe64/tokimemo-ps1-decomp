@@ -1,7 +1,7 @@
 ---
 id: T-24203
 title: Cloud packet: GEKO func_80136C20
-status: In Review
+status: Done
 assignee: claude (cloud)
 created: 2026-10-20
 updated: 2026-10-20
@@ -25,3 +25,5 @@ Packet asm lives only under the gitignored `asm/`; never committed.
 ## Comments
 
 - 2026-10-20: setup proven (asm fallback scratch copy equals the packet reference). Not matched: still 4 rows, the `lui` of `unk_F5F` is placed by as1 in the load delay of `D_80145090` instead of the `D_80145088` branch slot; ugen output already has the selector load in the switch block. 28 more variants, none moves it. Guard comment updated to T-24203. Details in [[matching-notes]] (T-24203). Local linked build proof (guarded file unchanged in code) and review due.
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only the guard note and wiki; no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. No match; the guard stays. Done.
