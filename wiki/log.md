@@ -2144,3 +2144,13 @@ Published MAIN func_800767A4 at f294c7f36:932 literal default-C bytes,27 indepen
 ## [2026-10-20] decision | T-24503 reconstruct GEKO eligibility loops
 
 [[tickets/T-24503-geko-option-completion]]: func_80142C9C draft improves from 450 to 135 after narrowing, packed-word, store-order and documented allocator repairs. Frame is 0x558, with 914 target and 913 candidate resolved instructions. Remaining load-base, register and operand differences are recorded in drafts/T-24503/README.md. Checked the sibling scene initializer's strcpy view; it leaves these instructions unchanged. Production remains ASM and coverage is unchanged.
+
+
+## [2026-10-20] build | T-24502 fan close guard reviewed
+
+Retained func_80153B38 NON_MATCHING guard at26 aligned diff lines, confined to color copies; default832-byte fallback and all27 SHA1 checks pass. Parent review accepted the guard; SDK declaration finding is resolved once in include/libgpu.h, preserving original symbol and unchanged guarded output. [[matching-notes]], source packet and [[tickets/T-24502-taco-completion]] record the negative bounded consult and518-target rebuild. Focused donor check leads to E778-based DEE4 reconstruction (cost108, original frame/homes), no new global sweep.
+
+
+## [2026-10-20] lint | T-24502 fan packet final review
+
+Parent final SDK declaration review passes; removed the extra blank line at the archived body EOF found by the staged diff check. Production source and prior all27/default proof are unchanged. [[tickets/T-24502-taco-completion]].

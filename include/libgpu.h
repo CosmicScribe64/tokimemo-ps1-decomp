@@ -12,4 +12,8 @@ typedef struct RECT {
     /* 0x06 */ s16 h;
 } RECT; /* size 0x08 */
 
+/* PsyQ 3.x Gouraud triangle initializer (SetPolyG3): length 6, command 0x30.
+ * Preserve the SDK symbol from asm/libgpu.s and the original K&R call view. T-24502 */
+void func_8009F004();
+
 #endif /* LIBGPU_H */
