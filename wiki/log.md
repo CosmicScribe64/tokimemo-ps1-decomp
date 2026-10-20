@@ -2159,3 +2159,31 @@ Parent final SDK declaration review passes; removed the extra blank line at the 
 ## [2026-10-20] decision | T-24502 projection donor packet frozen
 
 DEE4 semantic donor E778 plus recovered local order and canonical inner loop improves370-row prior draft to70cost, with original frame/major homes and saved-register allocation. Archived concise body/context/NOTES under drafts/T-24502/TACO; outer counter homes/zero web remain and one extra real instruction prevents a close guard. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the exact boundary and bounded negative probes for a later narrow consult. Production unchanged.
+## [2026-10-20] query | T-24517 later register region lane
+
+[[tickets/T-24517-master-flow]] continues in fresh
+/private/tmp/tokimemo-t24517-later from036407cd5 while root consultation owns the
+first copy. Existing packet/source tree stays clean. Read-only later-register
+mapping will distinguish independent source differences from an inherited ring
+offset before any new compiler experiment. No old log entries restored.
+
+## [2026-10-20] query | T-24517 later map is one inherited permutation
+
+[[tickets/T-24517-master-flow]] records119 later363F4 differing rows /152 register
+fields as one stable bijection across calls. No independent later source issue
+established and no remapping fix proposed. Root Astra copy-operand control is
+negative651/cost403 with disturbed bases/prefix. Proceed to independently owned
+326B4 original-flow/packed-halfword evidence, as root authorized. No old log
+entries restored after rotation.
+
+## [2026-10-20] build | T24517 MASTER326B4 structural checkpoint
+
+Fresh unchanged MASTER baseline checksum passed on036407cd5. Read T22015 history before probes. Corrected stale fadeout argument and girl-call load view privately; reconstructed raw case4 selector lifetime with source-backed reloads, giving190/816 versus baseline538/832 (target816),430 exact diagnostic prefix,83 register-only and19 real placement/opcode/immediate rows. Retained narrow C/replay/map in drafts/T-24517/later; no production changes or C match. Later363F4 one-bijection map and negative Astra control preserved concisely. [[tickets/T-24517-master-flow]] remains In Progress.
+
+## [2026-10-20] build | T24517 MASTER35FB8 matched-sibling source lead
+
+Read latest35FB8 twin history. Indexed zero-fill plus actual shuffle pointer lifetime and equivalent threshold reassociation improve58->48->12, with271 target/candidate positions and232 exact diagnostic prefix; six final fade v1/v0 register rows remain. Preserved narrow candidate/replay35 before final check. Two326B4 switch/join separation controls533/807 are no gain. No C match or production change; [[tickets/T-24517-master-flow]] remains In Progress.
+
+## [2026-10-20] build | T24517 MASTER35FB8 literal1084-byte match
+
+The preceding fade callee's s32 view closes six remaining rows after indexed initialization, scoped shuffle pointer and threshold reassociation. Plain default C matches1084 linked bytes; MASTER and all27 checksums pass. Source-local MAIN_API override and essential shared guard are coordinated with root; other default views remain unchanged. Header/global guards pass and prototype check has0 new/15 known. Standards/spec self-review and coordinator comment review resolved findings. [[tickets/T-24517-master-flow]] moves to In Review for integration; research checkpoints remain explicitly nonmatching. No production compiler change, raw dump or assembly fallback for35FB8.

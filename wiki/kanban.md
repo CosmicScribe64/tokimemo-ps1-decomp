@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24517-master-flow|T-24517 Reconstruct MASTER animation flow and pointer lifetimes]]
 
 
 - [ ] [[tickets/T-24522-rpg-bat|T-24522 Match remaining RPG_BAT functions]]
@@ -80,6 +79,7 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
+- [ ] [[tickets/T-24517-master-flow|T-24517 Reconstruct MASTER animation flow and pointer lifetimes]]
 
 - [ ] [[tickets/T-24516-overlay-family|T-24516 Reconstruct BUNKA_SD EN_NICHI KANGEI functions]]
 

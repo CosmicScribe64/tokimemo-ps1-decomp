@@ -151,3 +151,9 @@ Narrow compiling bodies, exact controls and Docker replay live in
 `drafts/T-24514/`; no full-TU context or original assembly dump is retained.
 Production and headers are unchanged.326B4 historical correct-frame source
 rescores538; its known selector-promotion blocker was not exhaustively retried.
+
+## T-24517 matched35FB8 and structural checkpoints
+
+[[tickets/T-24517-master-flow]] matches `func_80135FB8` in literal default C (1,084 linked bytes). The existing matched33F80 twin becomes exact with indexed zero-initialization (defers the saved array base to the shuffle), a real pointer used only for the shuffle, equivalent threshold reassociation, and the preceding fade callee's s32 view. The last view closes six final fade-byte register rows; own return-type and final Default_Disp view are neutral. A source-local override plus the shared declaration guard confines the change to `80133680.c`; MASTER and all27 checksums pass with header/global/prototype guards. Inherited scalar probability-byte FAKE views remain marked.
+
+The same lane preserves326B4's raw case4 selector/call-boundary reconstruction at190/816 positions (430 exact diagnostic prefix;83 register-only and19 actual placement rows), plus363F4's separate copy-end consultation boundary. Neither is a C match. Source/replay/evidence are narrow in `drafts/T-24517/later/`; no compiler patch or raw dump.
