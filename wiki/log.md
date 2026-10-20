@@ -2205,3 +2205,10 @@ Final DEE4 zero-initializer probe is negative: chain72, pair/comma/group70; pack
 ## [2026-10-20] decision | T-24502 full-unit scope correction and carousel packet
 
 Independent DEE4 consult finds additional post-projection allocation differences in full TU69 despite default guards; standalone70 claims qualified, three loop hypotheses negative.39FB8 fresh lifetime change lowers first-loop sine priority10 to3.5; full-TU baseline280 becomes216, shared preheader web198 with remaining broad register/scheduling differences. Source-only replay packet and concise bounded negatives saved, no production/header changes or new coverage credited. [[matching-notes]] and [[tickets/T-24502-taco-completion]].
+## [2026-10-20] build | MAIN radial texture generator literal match
+
+[[tickets/T-24501-main-tail]] reconstructs `func_80046754` (884 bytes) using clean packed-word loops, byte fill color and halfword upload coordinates; literal default C link matches target. Parent review of actual source and canonical prototype has no findings. Full27/header/branch validation running at two jobs. Lessons in [[matching-notes]].
+
+## [2026-10-20] build | Radial texture post-header validation passes
+
+[[tickets/T-24501-main-tail]] final `func_80046754` source/header passed484-step two-job rebuild, explicit27/27 executable SHA1 hashes, headers/main_api and branch prototype guard (zero new,15 known). Parent review is clean; literal default884-byte proof passed on final source. Focused source/wiki pin ready.

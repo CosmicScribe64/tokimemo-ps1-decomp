@@ -2069,6 +2069,7 @@ s32 func_800430C0(void);
 void func_800433D0(s32 arg0);
 void func_80043448(void);
 s32 func_80046590(s16 arg0, u8 arg1);
+void func_80046754(void *arg0, s32 arg1, s32 arg2);
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1);
 u8 *get_k_work(s32 arg0);
 void glyph_expand_1bpp();
