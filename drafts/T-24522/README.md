@@ -125,3 +125,11 @@ Final MAIN767A4 source-template check finds split stack padding around an ID lis
 ## C84 full-width read view negative
 
 One approved signed32-bit bit-field view at the two third-arm noncall fresh reads, with canonical stores/clamps unchanged, gives28/28. Its complete diagnostic is byte-for-byte identical to the preserved baseline (cmp passed). No extraction or new read dependency survives; missing reloads and speculative decrement/call-path spill remain unchanged. This distinct access-class hypothesis is rejected. Candidate remains ignored in build/T-24522/c84_fullwidth_bitread.c; no further width/view variants or production edit.
+
+## Bounded root consult and preferred pointer-update alternative
+
+Root consult completed three forms privately in Docker against frozen430699874; no literal match. Unsigned index casts retain the original4-row residual. Uniform integer addresses give376 words and39 aligned rows, reproducing this lane's41/39 alternative. Sequential C89 pointer initialization and compound advance at all three sites (`p = work; p += index;`) produce an identical complete resolved-row JSON list to the integer-address form (consult cmp passed).
+
+Preserved only the useful source at `RPG_BAT/func_8015528C/pointer-update-41.c`, with its stale metric header corrected. The received source SHA256 before that comment correction was07f4d86ecd9457f113a8eb7b1979b52f5e41aee9ad8c1125dcbafd170a850b39, from /private/tmp/tokimemo-5528c-consult/pointer_update/body.c and RESULT.md. This ordinary pointer-update body is preferred over scalar-address-41.c as the simpler scheduling alternative; best4 body.c remains unchanged. Existing FAKE arena and remainder-identity explanations remain.
+
+Indexed pointer expressions preserve the original schedule but reverse the two initial add operands. Sequential pointer updates restore operand roles and register ownership but retain save/restore order, correction-store scheduling and extra-nop residuals. Integer conversion is therefore unnecessary for the alternative's operand order. This is evidence about the tested source classes, not a compiler-limit or impossibility claim. No diagnostic listing, binary, generated rows or raw game data is archived; no additional compiler variants were run by this lane.

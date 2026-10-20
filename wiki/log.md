@@ -2254,3 +2254,7 @@ After freezing5528C, reviewed the precise C84 load dependency and prior negative
 ## [2026-10-20] query | T-24522 C84 full-width read view negative
 
 Single authorized signed32-bit bit-field read view gives28/28 and byte-identical baseline diagnostic. No read dependency/extraction survives, so missing reloads remain unresolved. Rejected with no further variants. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] ingest | T-24522 ordinary pointer-update consult source
+
+Archived only the root consult's C89 sequential pointer-update body at41/39,376 words, with received hash/provenance and corrected metric comment. Consult resolved rows exactly equal integer-address alternative; casts are unnecessary for operand roles. Best4 unchanged, no new compiler runs or coverage, no generated diagnostics/assets archived. See [[tickets/T-24522-rpg-bat]] and drafts/T-24522/README.md.
