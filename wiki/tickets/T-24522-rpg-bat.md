@@ -112,3 +112,33 @@ New concrete sharing hypothesis sent before compilation: reuse the start accumul
 ### 2026-10-20 structural evidence checkpoint
 
 Actual p532 first-arm remainder-times-one body preserved at drafts/T-24522/RPG_BAT/func_8015528C/body.c, with meaningful local names and both FAKE sites documented. Exact archived text recompiled274/206. DD8 canonical duration ownership body preserved326/288. Reusing start accumulator for initial raw progress worsens412/392 and is rejected. Full experiment table and causal observations saved in drafts/T-24522/README.md; no production/header edits, no new coverage, no compiler-limit claim. Ticket remains In Progress for continued structural work.
+
+### 2026-10-20 structural archive review and first dependency
+
+Coordinator reviewed d2611ea6e source archive and README: no blockers. C89, source-only metrics/provenance and both new FAKE sites are explicit; no asm/assets or production edits. Do not infer helper-wide adjacency from the two known caller index pairs.
+
+Next uncompiled causal hypothesis: target initial EBAC address in v1 feeds progress and initial correction's phase pointer, then dies; post-join phase initialization reconstructs EBAC in t1. Current common named work base occupies t0 while initial raw progress occupies v1, and a new post-join phase base(t8) hoists into the initial branch delay slot, shortening the pre-loop block by one instruction. Restrict named work base to initial progress/correction ownership and write the post-join phase initializer as a direct global-array view. This tests the observed two base lifetimes without adding a type/adjacency assumption or changing declaration order.
+
+Post-join direct global phase initializer274/206 with a byte-for-byte identical diagnostic to p532: base reconstruction scope alone does not alter initial register owners or pre-loop one-instruction difference. No declaration grid followed.
+
+A new composition was proposed before compilation: transplant the now-validated first-arm remainder identity into the original separate quotient/start scalar source. Target explicitly holds quotient in v0 before deriving start in a0, while merged-start p532 assigns quotient to a0 and shifts end candidate/phase sum. This tests actual distinct value ownership under the new correct modulo graph; the original302 baseline had never included this recipe.
+
+### 2026-10-20 exact stock/tracer first-conflict diagnosis
+
+Transferred the new remainder identity to the original separate quotient/start baseline:447/231, rejected. Used coordinator-provided existing read-only /private/tmp/t24047-uopt/variants/trace, with no compiler rebuild/patch. Before analysis, stock and traced candidate function bytes matched exactly:1500 bytes, SHA2565fc82f9a125b0855aea6790e2c29e1e6d3925e55c34c0c680e202e41c2118a29; resolved instruction/relocation keys also identical. Saved first-divergence report in ignored build/T-24522/trace/first-report.txt.
+
+Initial work base: bit134 priority0.5 (2 uses/0 defs over2units), allocation23 ->t0. Initial-only progress_raw: bit10 priority1.5 (2uses+1def), allocation21 ->v1. It is not shared with the loop quotient; proposed signed/unsigned initial-read split therefore lacks its required causal precondition and was not run.
+
+The related initial v0 owner is local phase_next, bit30 priority3 (2uses+1def), allocated before progress_raw; target decrement instead uses an expression temporary. Proposed one direct-counter source test on the newly corrected modulo graph, deleting named phase_next and updating/read-testing actual *phase. The old T-24027 direct-phase negative used the wrong merged-modulo graph; any new result must be measured without assuming transfer.
+
+### 2026-10-20 named phase temporary identified and removed
+
+Deleting named phase_next and writing/read-testing actual *phase on the corrected modulo graph gives53/53. Initial work-base v1 and raw progress v0 now match; phase decrement is the target's ugen t4/t6 expression. Remaining major loop allocation differs because the merged start variable holds the quotient in a0 whereas target quotient is v0 before start a0. Target callback bodies largely agree apart offsets.
+
+Two authorized orthogonal follow-ups: restoring original separate quotient and lower-product locals359/227, rejected; explicitly spelling initial work+index pointers53/53 with unchanged operand order. New one-form hypothesis sent: reuse existing initial progress_raw(v0) for loop quotient, keep start distinct, leave lower product inline, add no home. This is distinct from rejected reuse of start itself during initialization.
+
+### 2026-10-20 best53 source and fresh MAIN donors
+
+Preserved best5528C53/53 source at body.c, former274/206 checkpoint at modulo-only.c. Fresh stock/tracer exact candidate agreement:1504 bytes SHA256ffb6038d8aa8ab017d1681a1a9960a13bed8ae79a51dee653f146ff7736acf0b, resolved keys identical. First loop mismatch start range priority45 precolored a0 vs target quotient v0; extra move at74 and initial pointer operand reversals remain. Restoring quotient/product locals359/227; pointer spelling53/53 unchanged; initial raw/loop quotient reuse369/225; sole quotient local359/215. No production changes.
+
+Latest coordinator priority is fresh donors. Compared exactly8 MAIN76000/767A4 original pairs against4 remaining RPG_BAT targets; ranked metrics and source-template findings in drafts/T-24522/README.md. Best767A4/DD8 .265918 is generic division-trap code; no fresh shared structure. MAIN76000's packed icon/selector source was inspected and does not fit the current target blockers.767A4 source still ASM in root when checked; source comparison waits for its pin. No donor-driven compiler variants.

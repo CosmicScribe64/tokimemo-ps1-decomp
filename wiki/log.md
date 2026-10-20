@@ -2210,3 +2210,19 @@ One first-arm remainder-times-one expression keeps target's duplicated modulo bl
 ## [2026-10-20] query | T-24522 preserve structural modulo lead
 
 Preserved canonical DD8 source326/288 and improved5528C source274/206 with original375-word length and duplicated modulo blocks. Recompiled exact archived5528C text after local renaming. Initial/loop raw-value sharing worsens412/392 and is rejected. No production changes. Evidence and FAKE documentation: drafts/T-24522/README.md, [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 work-base lifetime hypothesis
+
+Coordinator source review of d2611ea6e has no blockers. Mapped original versus current5528C EBAC base lifetimes and proposed a single post-join initializer change before compilation, with no adjacency assumption or declaration grid. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 validated first allocation conflict
+
+Existing read-only traced uopt produces exact stock1500-byte candidate and resolved instruction keys. First-conflict diagnosis identifies initial work-base priority0.5, raw-progress1.5 and competing named phase-decrement3. Initial value has no loop-quotient sharing, so no signed-view split was attempted. One direct-counter hypothesis tied to this trace was proposed; evidence in [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 direct phase counter reaches53 rows
+
+Validated first-conflict diagnosis leads to53/53 in5528C by replacing named phase_next with direct actual phase update. Initial registers now match. Original extra quotient/product locals worsen; pointer spelling unchanged. Proposed narrower raw-progress/loop-quotient sharing without added homes. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] query | T-24522 preserve53-row helper and new MAIN donor scores
+
+Preserved source-only5528C53/53 plus exact stock/tracer byte evidence and failed causal ownership variants. Compared only the two new MAIN originals against the four remaining RPG_BAT targets; top similarities are generic division traps, with no new structural transplant. MAIN76000 source does not share current packed-field blockers;767A4 source pin pending. Full metrics: drafts/T-24522/README.md and [[tickets/T-24522-rpg-bat]].

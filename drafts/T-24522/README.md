@@ -71,3 +71,39 @@ DD8 ownership: EC68 is the existing RpgRec18 D_EC58.unk10, already accessed cano
 The modulo domain[-2,2] proves both narrow conversions preserve semantics, but the compiler retains their extensions. The single multiply-by-one wrapper is an existing project idiom and is explicitly FAKE: it distinguishes the two source expressions long enough to keep modulo in both upper-bound arms, yet generates no real multiplication. This restores original ownership of divisor3(s5), stride(s6), phase pointer(s7) and progress pointer(fp), as well as callback-case block lengths and dispatch offsets. Remaining differences include initial work-base/raw-progress registers, operand choices, and color/call scheduling. No exact match or compiler-limit conclusion.
 
 The work-array view remains explicitly FAKE because the global arena's real complete type is unresolved. Known callers use progress/phase pairs at work indexes50/51 and52/53, but the helper's interface takes separate indexes; no unproven adjacency assumption was introduced. Inputs, full candidates and diagnostics remain in ignored `build/T-24522/` (`dd8_*`, `dd9_*`, `p528_*` through `p533_*`).
+
+## Current helper checkpoint:53 rows
+
+`RPG_BAT/func_8015528C/body.c` now preserves the best53 literal/53 aligned source-only form; previous274/206 causal checkpoint is retained as `modulo-only.c`. Remove the named phase-decrement temporary and directly update/read-test actual `*phase`. This eliminates the competing uopt range and recovers original initial base(v1), raw value(v0), and ugen phase decrement(t4/t6). The helper is376 words versus original375. No production guard or coverage was added.
+
+First stock/tracer comparison used the existing coordinator-provided trace binary read-only, no compiler rebuild/patch. The274-row candidate was exactly1500 bytes with identical resolved instruction/relocation keys, SHA2565fc82f9a125b0855aea6790e2c29e1e6d3925e55c34c0c680e202e41c2118a29. Initial work-base priority0.5, raw-progress1.5, competing named phase-decrement3 led directly to the53-row result.
+
+A fresh stock/tracer comparison for the best53 source also passes exact function bytes and resolved keys:1504 bytes, SHA256ffb6038d8aa8ab017d1681a1a9960a13bed8ae79a51dee653f146ff7736acf0b. Its first allocation mismatch is now loop load59: start range bit39 has priority45 and is constrained/precolored a0; target holds quotient in v0 before start a0. Next expression range bit52 has priority30 and occupies v0. First structural mismatch is extra move at instruction74. Initial pointer adds also have reversed operands. Ignored trace evidence is in `build/T-24522/trace536/first-report.txt`; no full instruction listing is committed.
+
+Additional causal tests, all negative:
+
+- Post-join direct global phase initializer274/206, byte-for-byte identical diagnostic to the274 checkpoint; no base lifetime change.
+- New remainder identity on original separate quotient/start baseline447/231.
+- Restored original quotient+product locals with direct phase update359/227.
+- Explicit initial work-plus-index pointer spelling53/53, operands unchanged.
+- Share initial raw value with distinct loop quotient369/225: incorrectly couples both into v1 and moves initial base to v0.
+- Add only a genuine loop quotient local359/215: still wrong quotient ownership and callback schedule.
+
+No unsigned initial-read view was run: trace proved initial raw progress and loop quotient were not originally the same source web in this draft, so the proposed view split lacked its prerequisite. No declaration-order, padding, type or reference grid followed these results.
+
+## Two new MAIN donors, eight original comparisons
+
+Same normalized-opcode method as the earlier donor pass, only MAIN76000 and767A4 against the four remaining RPG_BAT originals; no compiler search.
+
+| Rank | MAIN donor | RPG_BAT target | Opcode ratio | Registers retained ratio |
+| --- | --- | --- | ---: | ---: |
+| 1 | func_800767A4 | func_80154DD8 | 0.265918 | 0.131086 |
+| 2 | func_800767A4 | func_8014BFE4 | 0.206140 | 0.092105 |
+| 3 | func_800767A4 | func_80144C84 | 0.195652 | 0.119565 |
+| 4 | func_80076000 | func_8014BFE4 | 0.176245 | 0.057471 |
+| 5 | func_80076000 | func_80154DD8 | 0.150000 | 0.113333 |
+| 6 | func_800767A4 | func_8015528C | 0.141447 | 0.128289 |
+| 7 | func_80076000 | func_80144C84 | 0.113269 | 0.100324 |
+| 8 | func_80076000 | func_8015528C | 0.097923 | 0.068249 |
+
+Every target's best donor block is generic signed-division trap handling plus nearby call/register setup (10-11 words), rather than shared game control or data structure. MAIN76000's current source was inspected read-only: its u16 packed icon field and signed menu-selector lifetime do not correspond to any of the four remaining target blockers. MAIN767A4 source was still INCLUDE_ASM in root at8c52b2b0a during this pass; final source-template comparison waits for its pin. No new structural transplant justified a compiler run from these donor scores. Exact scores and decoded block diagnostics remain ignored in `build/T-24522/main-donor-ratios.json` and donor script output.

@@ -1,12 +1,11 @@
-/* Source-only NON_MATCHING draft, T-24522: 274 literal / 206 aligned rows.
- * Exact 375-word length and branch-local modulo restored; registers/scheduling differ. */
+/* Source-only NON_MATCHING draft, T-24522: 53 literal / 53 aligned rows.
+ * 376 words against target375; loop start/quotient range and pointer operands differ. */
 void func_8015528C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
     s32 *work;
     s32 *progress;
     s32 *phase;
     s32 end_candidate;
     s32 phase_sum;
-    s32 phase_next;
     s32 progress_raw;
     s32 start;
     s32 end;
@@ -20,9 +19,8 @@ void func_8015528C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     if (arg3 < (progress_raw / 10)) {
         phase = &work[arg7];
         *progress = progress_raw - (arg3 * 0xA);
-        phase_next = *phase - 1;
-        *phase = phase_next;
-        if (phase_next < 0) {
+        *phase -= 1;
+        if (*phase < 0) {
             *phase = 2;
         }
     }
