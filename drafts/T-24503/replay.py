@@ -16,10 +16,14 @@ import order_search
 
 def main():
     for unit, name in (("OPTION", "func_8013A7EC"), ("OPTION", "func_801326BC"),
-                       ("GEKO", "func_80135DC0"), ("GEKO", "func_80142C9C")):
+                       ("GEKO", "func_80135DC0"), ("GEKO", "func_80142C9C"),
+                       ("GEKO", "func_801420E4")):
         source = funcloc.locate(name, unit)
         text = Path(source.src).read_text()
         body = (Path(__file__).parent / unit / name / "body.c").read_text()
+        declarations = Path(__file__).parent / unit / name / "declarations.h"
+        if declarations.exists():
+            body = declarations.read_text() + body
         pattern = r'INCLUDE_ASM\("[^\"]+",\s*' + name + r'\);'
         text, replaced = re.subn(pattern, lambda match: body, text)
         if replaced != 1:

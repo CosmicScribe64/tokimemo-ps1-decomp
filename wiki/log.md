@@ -2121,3 +2121,7 @@ Repaired a concrete halfword-pointer stride error in func_80135DC0 and tested or
 ## [2026-10-20] query | T-24503 short-leaf history correction
 
 GEKO func_80144198 remains ASM and has multiple archived campaigns; verified current main and indexed histories before four new selector-lifetime tests. Baseline57 and no prototype-view gain; lifetime tests worsen68/74. No source promotion. Larger GEKO source checkpoints replay547/450 and are retained under drafts/T-24503/; the scene initializer's known text-call view gives525 only. [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] query | T-24503 fresh GEKO ranking source
+
+Repaired the previously untried func_801420E4 source's missing rodata declaration and reconstructed its top-six insertion loop with paired arrays. Full-unit cost444 to357; original0x480 frame differs from natural0x60. No padding or production promotion. Archived body, declaration and replay under drafts/T-24503/ with current limits. [[tickets/T-24503-geko-option-completion]].
