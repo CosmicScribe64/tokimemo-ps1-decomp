@@ -2101,3 +2101,11 @@ Promoted src/ovl/GEKO/801323E0.c to default C: Docker funcdiff proves 656 linked
 ## [2026-10-20] query | T-24503 retain GEKO date guard checkpoint
 
 Retained func_80133024 at two differing words with an explicit FAKE explanation, separately from the two matching commits. Additional causal tests on func_80132B24 did not improve cost61 (seven variants); latest func_80133C50 draft viewsweep confirms the known implicit-int text-call view but remains cost113. See [[matching-notes]] and [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] query | T-24503 repaired OPTION draft checkpoint
+
+GEKO matches are integrated by the parent. Recorded exact contributor handoff in [[tickets/T-24503-geko-option-completion]] (two complete, nine GEKO and three OPTION remaining). Repaired typed OPTION func_8013A7EC draft reaches cost94 from202; repaired raw pointer copy for func_801326BC reaches156. Production OPTION sources untouched.
+
+## [2026-10-20] query | T-24503 preserve OPTION handoff sources
+
+Archived unmatched OPTION func_8013A7EC (cost90) and func_801326BC (cost144) source bodies and a complete-unit replay script under drafts/T-24503/. Earlier indexed palette draft remains preferable. Corrected func_80139A30 prototype sweep gives no improvement (19 compiles, cost223). No OPTION source promoted. See [[tickets/T-24503-geko-option-completion]].
