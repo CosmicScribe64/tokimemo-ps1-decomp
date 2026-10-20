@@ -20940,3 +20940,7 @@ Cloud packet results merged with the linked proof here: ETC `func_80140AE4` (224
 ## [2026-10-20] ticket | T-24302 In Progress
 
 Local work list l6-p02 (53 functions, best first) in worktree `../tokimemo-wt/l6-p02`: [[tickets/T-24302-local-list-l6-p02]].
+
+## [2026-10-20] ticket | T-24302 In Review
+
+Local list l6-p02: GEKO `func_801358CC` matched (416 B); guards GEKO `func_80133024` (5 rows), `func_80134808` (15), `func_80132B24` (about 30). Findings in [[matching-notes]] (T-24302 section): [[tickets/T-24302-local-list-l6-p02]].
