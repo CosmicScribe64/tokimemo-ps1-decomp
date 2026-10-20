@@ -73,7 +73,7 @@ If the table starts at 0 or below the lowest case, add the empty labels the tabl
 
 ## 10. Block copies
 
-Struct copy temporaries and the end register come from ugen's copy-state rotation. Recipes: copy the sibling's declaration order for record-drawing frames; write `Rec *p` with index arrays instead of pointer walks (main `menu_girl_taku_set`, matched once the m2c walks were replaced, T-24303). If the end register is one list entry off with equal address registers it is not a C choice: [[build-step-gaps]] (5 cases, SHUGAKU T-22014).
+For copy mismatches, distinguish direction state from temporary-register choices. The historical direction mismatch is handled by the enabled T-24092 `ugen_pass.py`; see [[build-step-gaps]]. Source recipes still matter: copy the sibling's declaration order for record-drawing frames; write `Rec *p` with index arrays instead of pointer walks (main `menu_girl_taku_set`, matched once the m2c walks were replaced, T-24303). A remaining register mismatch alone does not prove that no C source can match.
 
 ## 11. Return value, implicit int and narrowing
 
@@ -86,7 +86,7 @@ Flag byte `|=`: use a bit-field store `((Bits *)&x)->f = 1;` when one temporary 
 ## Known compiler limits
 
 Do not spend a session on these without a new idea; leave a guard with the ticket id and what remains. Details and the census in [[build-step-gaps]].
-- ugen block-copy state: the original does not switch a struct copy to state F at a block start; IDO 5.3 does. Not reachable from C (T-19001, T-22014).
+- Historical ugen block-copy direction mismatch (T-19001, T-22014): addressed by the enabled `tools/ugen_pass.py` in [[tickets/T-24092-ugen-block-copy-state-pass]]. Reproduce remaining failures with the current pipeline; 32-byte unrolled-copy register choices are a separate question.
 - as1 global scheduler picks and default-block hoists (T-24202, T-24211, T-24212): same family, no source form found.
 - uopt `idx = 0; idx++` fold (T-24204): proves the zero through every source form tried; only a live backedge keeps the `addiu`.
 - uopt priority and colour order with no uniform rule: apply recipes above, do not search flags (exhausted in T-0014, T-0017, T-9800).
