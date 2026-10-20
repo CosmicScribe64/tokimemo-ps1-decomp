@@ -2216,3 +2216,6 @@ Independent DEE4 consult finds additional post-projection allocation differences
 ## [2026-10-20] build | Twenty-first match raises coverage to 91.8 percent
 
 Published MAIN func_80046754 at6a2c6eb4b:884 literal C bytes,27 independent hashes and declaration guards pass after root review. Docker census6814/6952 functions,2089868/2276920 bytes,138 remaining. [[status]] and [[tickets/T-24500-completion-orchestration]] record21 new matches/22864 bytes, archived GEKO/TACO findings, negative consultations and active ownership. MAIN continues46AC8; former TACO worker maps NAME_ENT43580 after two bounded negatives. Research completion is not function coverage.
+## [2026-10-20] decision | T-24503 reconstruct GEKO club flag writes
+
+[[tickets/T-24503-geko-option-completion]]: func_80133C50 improves from 113 to 66 with existing named flag-bit stores, restoring the original 209-instruction sequence and frame 0x128. A documented matching-only empty test improves to 44 without structural instruction gaps. Archived both source forms and the local strcpy ABI view; bounded follow-ups leave temporary numbering and two comparison operand pairs. The production fallback is retained.

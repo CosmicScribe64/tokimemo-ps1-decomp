@@ -17,7 +17,7 @@ import order_search
 def main():
     for unit, name in (("OPTION", "func_8013A7EC"), ("OPTION", "func_801326BC"),
                        ("GEKO", "func_80132B24"), ("GEKO", "func_80135DC0"),
-                       ("GEKO", "func_80142C9C"),
+                       ("GEKO", "func_80142C9C"), ("GEKO", "func_80133C50"),
                        ("GEKO", "func_801420E4")):
         source = funcloc.locate(name, unit)
         text = Path(source.src).read_text()
