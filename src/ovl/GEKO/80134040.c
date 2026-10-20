@@ -211,7 +211,63 @@ void func_8013478C(void) {
     func_80082764(D_80122CDC, 1, 0);
 }
 
+/* NON_MATCHING: T-24302, 15 rows; sibling of func_801358CC (matched with the
+ * same idioms). Left: the second equality branch gets "move v0,s6; bne a0,v0"
+ * (the "* 1" FAKE is CSEd), "next != D_80122D40" compares a temporary, and the
+ * loop tail converts next to s16 twice, so as1 fills the branch delay slots
+ * with the first sll and later ugen temporaries are one higher. cur and
+ * newState are the extra s-register values that stop uopt from hoisting the
+ * record base out of the loop. */
+#ifdef NON_MATCHING
+s32 func_80134808(void) {
+    s16 i;
+    s32 next;
+    s16 best;
+    u32 cur;
+    u32 bestState;
+    u32 state;
+    u32 newState;
+    u8 yuukou;
+    u8 tokimeki;
+    u8 bestTokimeki;
+    u8 girl;
+
+    best = 0xFF;
+    bestState = 4;
+    i = 0;
+    do {
+        if (!D_800E6280.unk_1BC[i].unk_0C.f.b1) {
+            next = i + 1;
+        } else if (!(D_800E6280.unk_71E & 0x80) || (next = i + 1, D_80122D40 != next)) {
+            next = i + 1;
+            state = get_g_zyotai_s(i) & 0x7F;
+            newState = state & 0xFF;
+            if ((u8) state < bestState ||
+                (bestState * 1 == (u8) state && (cur = best, bestState * 1 == (u8) state) &&
+                 (yuukou = get_h_yuukou(i), tokimeki = get_h_tokimeki(i),
+                  bestTokimeki = get_h_tokimeki(cur),
+                  get_h_yuukou(cur) + bestTokimeki < tokimeki + yuukou))) {
+                best = (u8) i;
+                bestState = (u8) newState;
+            }
+        }
+        i = next;
+    } while (i < 11);
+    state = get_g_zyotai_s(best);
+    D_80122D40 = 0;
+    if ((state & 0x7F) >= 2 || best == 0xFF || (girl = best, D_800E6280.unk_71E & 8)) {
+        func_80042940(0x17);
+        return 0;
+    }
+    D_800E6280.unk_F5F = girl;
+    func_800847B8(girl);
+    func_80134F84();
+    func_80134A14();
+    return func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134808);
+#endif
 
 void func_801349B8(void) {
     func_80134F84();

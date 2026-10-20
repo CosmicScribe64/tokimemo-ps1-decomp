@@ -20949,3 +20949,11 @@ Cloud packet results merged with the linked proof here: ETC `func_80140AE4` (224
 ## [2026-10-20] ticket | T-24212, T-24213, T-24214 Done
 
 Last cloud packet results merged (cloud usage spent): TACO `func_8014F820` and main `func_80054884` match (linked proof here); VALEN `func_80132D0C` stays guarded at 3 rows.
+
+## [2026-10-20] ticket | T-24302 In Progress
+
+Local work list l6-p02 (53 functions, best first) in worktree `../tokimemo-wt/l6-p02`: [[tickets/T-24302-local-list-l6-p02]].
+
+## [2026-10-20] ticket | T-24302 In Review
+
+Local list l6-p02: GEKO `func_801358CC` matched (416 B); guards GEKO `func_80133024` (5 rows), `func_80134808` (15), `func_80132B24` (about 30). Findings in [[matching-notes]] (T-24302 section): [[tickets/T-24302-local-list-l6-p02]].

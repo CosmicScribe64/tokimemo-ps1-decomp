@@ -595,7 +595,48 @@ void func_80135894(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801358CC);
+s32 func_801358CC(void) {
+    s16 i;
+    s16 best;
+    u32 cur;
+    u32 bestState;
+    u32 state;
+    u32 newState;
+    u8 yuukou;
+    u8 tokimeki;
+    u8 bestTokimeki;
+
+    best = 0xFF;
+    bestState = 4;
+    for (i = 0; i < 11; i++) {
+        /* FAKE: T-24302, empty test; gives bestState and newState the original s-registers. */
+        if (i) {}
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1) {
+            state = get_g_zyotai_s(i) & 0x7F;
+            newState = state & 0xFF;
+            if ((u8) state < bestState ||
+                /* FAKE: T-24302, "* 1" keeps the original bne operand order. */
+                ((cur = best, bestState * 1 == (u8) state) &&
+                 (yuukou = get_h_yuukou(i), tokimeki = get_h_tokimeki(i),
+                  bestTokimeki = get_h_tokimeki(cur),
+                  get_h_yuukou(cur) + bestTokimeki < tokimeki + yuukou))) {
+                best = (u8) i;
+                bestState = (u8) newState;
+            }
+        }
+    }
+    state = get_g_zyotai_s(D_800E6280.unk_F5F);
+    if ((D_800E6280.unk_0F8 & 0xF) == D_800E6280.unk_03F &&
+        ((u32) (D_800E6280.unk_0F8 << 23) >> 27) == D_800E6280.unk_040 &&
+        !(D_800E6280.unk_71E & 4) && (u8) (state & 0x7F) < 2 && D_800E6280.unk_F5F == best) {
+        /* FAKE: T-24302, two byte-view ORs spend the ugen temporaries the original uses (ori t8). */
+        ((u8 *)&D_800E6280)[0x71E] |= 0x44;
+        ((u8 *)&D_800E6280)[0x71E] |= 0x44;
+        func_80042940(0x34);
+        return 0;
+    }
+    return func_8004284C();
+}
 
 s32 func_80135A6C(void) {
     func_80136B2C();

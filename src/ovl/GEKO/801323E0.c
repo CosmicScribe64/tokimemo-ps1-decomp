@@ -172,7 +172,48 @@ s32 func_80132A4C(s16 arg0) {
     }
 }
 
+/* NON_MATCHING: T-24302, about 30 rows (61 funcdiff lines); frame and both
+ * table copies match (scalars declared before the tables, only date, girl and
+ * month as scalars). Left: girl comes out in $v1 and the record pointer and
+ * day in $v0 (the original swaps them, so the return needs a move), frame 0x58
+ * against 0x50 (the day local adds a home), and the else arm's ugen temporaries
+ * are numbered differently. */
+#ifdef NON_MATCHING
+s32 func_80132B24(void) {
+    u32 date;
+    u8 girl;
+    u8 month;
+    u32 day;
+    GekoThresholds thr;
+    GekoMonthDays days;
+
+    thr = D_80144CF8;
+    days = D_80144D10;
+    if (D_800E6280.unk_03E == 0x60) {
+        days.day[1] = 29;
+    }
+    girl = D_800E6280.unk_F5F;
+    if (!D_800E6280.unk_1BC[girl].unk_0C.f.b6) {
+        return 0;
+    }
+    if ((D_800E6280.unk_10F8 & 7) < thr.threshold[girl] || D_80144C50 == 0) {
+        date = D_800E6280.unk_1BC[girl].unk_10.w;
+        month = D_800E6280.unk_03F;
+        day = D_800E6280.unk_040;
+        if (month == (date & 0xF)) {
+            if (((date << 23) >> 27) - day < 21 && ((date << 23) >> 27) - day != 0) {
+                D_80144C50 = 10;
+            }
+        } else if (((date & 0xF) - month + 12) % 12 == 1 &&
+                   ((date << 23) >> 27) + days.day[(month + 10) % 12] - day < 20) {
+            D_80144C50 = 10;
+        }
+    }
+    return girl;
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132B24);
+#endif
 
 void func_80132D04(s16 arg0, s16 arg1) {
     s32 pad; /* FAKE: unused local that places status at sp+0x33 and the frame at 0x38 (T-3330) */
@@ -233,8 +274,9 @@ void func_80132D04(s16 arg0, s16 arg1) {
     }
 }
 
-/* NON_MATCHING: T-24007, 36 differing rows; frame and initialization
- * match, but the month/day and table-value ranges use other registers. */
+/* NON_MATCHING: T-24302, 5 rows; month comes out in $a1 instead of $a3 (and
+ * the day load's lui base in $a0 instead of $a2). The two empty tests are FAKE
+ * (T-24302): they give day $a2 and n $v1 as in the original (36 rows without). */
 #ifdef NON_MATCHING
 s32 func_80133024(void) {
     u8 month;
@@ -250,8 +292,10 @@ s32 func_80133024(void) {
     D_80144C50 = 0;
     i = 1;
     do {
-        month = D_800E6280.unk_03F;
         day = D_800E6280.unk_040;
+        if (day) {}
+        month = D_800E6280.unk_03F;
+        if (month) {}
         n = days.day[month - 1];
         if ((u32) n >= (u32) (day + i)) {
             func_80132D04(0, (s16) (day + i - 1));
