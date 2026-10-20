@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24511-tel|T-24511 Investigate remaining TEL functions]]
 
 - [ ] [[tickets/T-24500-completion-orchestration|T-24500 Orchestrate the remaining matching functions]]
 
@@ -62,6 +61,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-24511-tel|T-24511 Investigate remaining TEL functions]]
 
 - [ ] [[tickets/T-24141-main-remaining-sweep-e|T-24141 Sweep remaining unmatched functions in src/main/ (wave E)]]
 - [ ] [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers|T-24140 Wave 3 closer sweep across GEKO (12), OPTION (8), TEL (2), and OMIMAI (1)]]

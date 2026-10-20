@@ -2101,3 +2101,11 @@ Existing `tokimemo-decomp-arm64` image configured a new build in `/private/tmp/t
 ## [2026-10-20] build | T-24511 bounded TEL menu reconstruction
 
 Sixteen serial Docker probes reproduced the prior control and tested control-flow corrections, pointer lifetimes, frame topology and explicit F64 capture. Packed-word capture removes thirty words versus signed-index control; preserved corrected body is755 words/844 rows against745 target words. No match or production change. Source-only replay and negative ledger saved in drafts/T-24511; [[matching-notes]] and [[tickets/T-24511-tel]] record the result. Fresh673-step j2 baseline build passed all27 checksums and header/global checks. Limited large-handler audit found no new semantic repair; exhausted month probes remain untouched.
+
+## [2026-10-20] ticket | T-24511 reviewed bounded TEL handoff
+
+Standards/spec self-review of `23e1a20fb...b24b039f4` found no unresolved findings. All16 archived probes reproduced and independent27/27 built SHA1 passed; header/global/prototype guards pass (0 new,15 known prototype disagreements). [[tickets/T-24511-tel]] moved to Done for the bounded investigation; both matching targets remain unresolved. No production source/header/config/compiler changes, push or merge.
+
+## [2026-10-20] lint | T-24511 closure wiki check
+
+Docker `tools/wiki.py lint`:0 broken links,0 status mismatches; one existing large-page notice for [[data/t0018-cases]]. No new wiki page requiring an index entry; ticket remains on the board.
