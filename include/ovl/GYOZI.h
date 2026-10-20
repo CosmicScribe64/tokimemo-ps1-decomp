@@ -334,7 +334,7 @@ extern s32 D_801462DC;
 extern s32 D_801462E0;
 extern s32 D_801462E4;
 extern s32 D_801462E8;
-extern s32 D_801462EC;
+extern volatile s32 D_801462EC; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the func_80139E4C default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24500 */
 extern s32 D_801462F0;
 extern s32 D_801462F4;
 extern s32 D_801462F8;
@@ -347,7 +347,7 @@ extern s32 D_80146310;
 extern s32 D_80146314;
 extern s32 D_80146318;
 extern s32 D_8014631C;
-extern s32 D_80146320;
+extern volatile s32 D_80146320; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the func_80139E4C default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24500 */
 extern s32 D_80146324;
 extern s32 D_80146328;
 extern s32 D_8014632C;
@@ -360,7 +360,7 @@ extern s32 D_80146344;
 extern s32 D_80146348;
 extern s32 D_8014634C;
 extern s32 D_80146350;
-extern s32 D_80146354;
+extern volatile s32 D_80146354; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the func_80139E4C default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24500 */
 extern s32 D_801470F0;
 extern s32 D_801470F4;
 extern s32 D_801470F8;

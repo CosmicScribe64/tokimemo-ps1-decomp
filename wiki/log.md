@@ -2909,3 +2909,7 @@ MAIN `func_8004A814` is on main at `87df21291`: 1,028 linked default-C bytes mat
 ## [2026-10-20] decision | Recover glyph raster and mirror loop semantics
 
 [[tickets/T-24501-main-tail]] reconstructs get_fnt256B byte raster and natural mirror loops; full-TU343->23/258words versus259target, all saved roles recovered. Vertical old-count control verified8/16 rows. Shared-mirror/separate-raster ownership removes double-unroll and extra constant lifetimes; negatives preserved. Frame/home and late-expression residuals frozen for consultation, no production/header/compiler changes. See [[matching-notes]].
+
+## [2026-10-20] query | as1 global delay-slot filler rule and the volatile lever
+
+[[tickets/T-24500-completion-orchestration]] research branch `as1-lever`. Traced as1's global filler with the T-24047 print-only build plus a relocation print: blocks with a stall are visited by (weight, number); candidates are dominated blocks in that order up to weight +5; a volatile access and its `lui` are never candidates; an indirect jump on the path or a live destination register rejects. Confirmed on OMIMAI `func_801340E4`, SHOUGATU `func_8013EE30`, TAIIKU `func_8013C33C`. Lever: `volatile` on the default arm's three globals matches VALEN `func_80134030` and GYOZI `func_80139E4C` (FAKE in VALEN.h/GYOZI.h). VALEN `func_80132D0C`, GEKO `func_80136C20`, KANGEI `func_8013852C` stay guarded with T-24500 notes. New page [[as1-scheduler-rule]]; [[playbook]] section 5 and known limits updated.

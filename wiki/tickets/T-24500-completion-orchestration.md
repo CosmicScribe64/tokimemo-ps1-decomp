@@ -86,3 +86,7 @@ Former TACO worker owns NAME_ENT: bounded38C1C input-read and398EC indexed post-
 ## User-directed usage conservation
 
 Keep MAIN and NAME_ENT as the only two active Sol6.1 medium matching workers. GEKO/OPTION and both other coordinators received checkpoint-and-idle instructions; no new experiments after their currently running probe. Astra idle unless a narrow blocker warrants it. User permits Luna high for simple mechanical tasks. Centralize full27 checks at root, retain worker literal/affected-unit proofs, avoid duplicate builds and repeated polling. This reduces concurrency without pausing or redefining the100% goal.
+
+### 2026-10-20 as1 global filler research (branch `as1-lever`)
+
+Rule and evidence in [[as1-scheduler-rule]]. Matched VALEN `func_80134030` and GYOZI `func_80139E4C` by declaring the default arm's three globals `volatile` (FAKE, headers). Not matched, notes updated: VALEN `func_80132D0C` (volatile on the reloaded `mode` global changes uopt), GEKO `func_80136C20` (weight limit), KANGEI `func_8013852C` (same-block order).
