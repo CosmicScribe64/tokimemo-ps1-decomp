@@ -1,5 +1,5 @@
-/* T-24301 draft, 39 rows: frame and bit-field month stores right; case 4 keeps the shifted
- * selector in $a0 (original $v1, raw halfword in $a1), and the ugen temporaries after it are one off. */
+/* T-24301 draft, 39 rows: frame (pad[3]) and bit-field month stores right; case 4 keeps the shifted
+ * selector in $a0 (original $v1, raw halfword in $a1); a 20-minute permuter run found nothing. */
 s32 func_8005B43C(void) {
     s32 pad[3];
     s32 sp28;
