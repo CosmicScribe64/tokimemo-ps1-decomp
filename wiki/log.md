@@ -2284,3 +2284,15 @@ Created [[tickets/T-24515-name-ent]] In Progress at `eaf7c6e709cb85435c313ac2fbf
 ## [2026-10-20] build | T-24515 NAME_ENT corrected source checkpoint
 
 Fresh660-step remaining-unit ninja -j2 plus the preceding13-step NAME_ENT build passed; independent27/27 built SHA1 checks passed. Header/global/prototype guards pass (0 new,15 known prototype disagreements). Source-based reconstructions under drafts/T-24515 reduce NAME_ENT38C1C from284/331 to181/104 words/rows with repaired date-store width and correct frame; indexed398EC reduces213/266 to126/173. All remain nonmatching; [[matching-notes]] and [[tickets/T-24515-name-ent]] record exact blockers. Production source unchanged.
+
+## [2026-10-20] ticket | T-24515 reviewed NAME_ENT handoff
+
+Self-review of `eaf7c6e70...00bfc328d` found no unresolved standards/spec findings. All32 archived source controls replay exact; two annotated preserved bodies reproduce104/173 rows. Independent27/27 built hashes and declaration guards pass. [[tickets/T-24515-name-ent]] moved to Done for the bounded investigation; four matching targets remain unresolved.
+
+## [2026-10-20] lint | T-24515 closure wiki pass
+
+Docker wiki lint reports0 broken links and0 status mismatches, with one existing large-page notice for [[data/t0018-cases]]. No new wiki page requiring an index entry; the ticket is on the board.
+
+## [2026-10-20] ticket | T-24515 root acceptance gate
+
+Coordinator reviewed `00bfc328d` with no new findings and requested In Review pending root acceptance. [[tickets/T-24515-name-ent]] moved from Done to In Review; this supersedes the earlier local bounded-investigation closure. No further NAME_ENT probes.

@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-24515-name-ent|T-24515 Reconstruct remaining NAME_ENT functions]]
 
 
 
@@ -61,6 +60,8 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-24515-name-ent|T-24515 Reconstruct remaining NAME_ENT functions]]
 
 - [ ] [[tickets/T-24514-master|T-24514 Reconstruct remaining MASTER functions]]
 

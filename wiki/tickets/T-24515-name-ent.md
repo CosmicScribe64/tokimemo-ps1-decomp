@@ -1,7 +1,7 @@
 ---
 id: T-24515
 title: Investigate remaining NAME_ENT functions
-status: In Progress
+status: In Review
 assignee: Codex Sol 6.1 medium
 created: 2026-10-20
 updated: 2026-10-20
@@ -14,9 +14,9 @@ Bounded source-based pass on remaining NAME_ENT functions in isolated `/private/
 
 ## Acceptance criteria
 
-- [ ] Literal default C/linked-byte proof for any accepted match; otherwise archive precise blockers.
-- [ ] All 27 built SHA1 checks and header/global/prototype guards pass.
-- [ ] Standards/spec self-review, source/wiki-only commits and synchronized board/log.
+- [x] Literal default C/linked-byte proof for any accepted match; otherwise archive precise blockers.
+- [x] All 27 built SHA1 checks and header/global/prototype guards pass.
+- [x] Standards/spec self-review, source/wiki-only commits and synchronized board/log.
 
 ## Notes
 
@@ -37,3 +37,7 @@ Verification: initial 13-step NAME_ENT baseline build, fresh 660-step remaining-
 ### Self-review (standards/spec)
 
 Applied .claude/skills/code-review/SKILL.md against base `eaf7c6e709cb85435c313ac2fbfde5c7db14cd93`, using the explicitly requested self-review rather than reviewer agents. Standards: C89 source-only reconstructions; existing GsWord/Rec24/GameState types; no shared declaration/config/toolchain edits, inline asm or generated instruction/binary/game data staged. Diagnostic volatile source reads, inherited unused frame scalar and integer fallthrough liveness carry FAKE reasons and T-24515. The direct indexed loop has no artificial source constraints. Spec: NAME_ENT only, bounded causal controls, Docker image/read-only disc/j2 maintained, no grids or extra agents, no push/merge. README is needed for future matching work: it distinguishes genuine stale-source repairs from still-nonmatching scheduling controls and supplies reproducible counts. Local deslop prose review found one long paragraph; split it without changing facts. No unresolved review findings; matching blockers remain explicitly open.
+
+### Closing review
+
+Reviewed the non-empty committed diff `eaf7c6e70...00bfc328d` against the ticket and CODING_STANDARDS.md. No unresolved standards/spec findings. All 32 archived records replay exactly; annotated source snapshots reproduce104/173 rows. Staged prose check has0 strong findings; retained weak hits are required FAKE prefixes, generated C strings and concise technical labels. Production source/header/config/tools are identical to base. This bounded investigation is In Review pending root acceptance; all four NAME_ENT matching targets remain unresolved.
