@@ -101,3 +101,5 @@ Circular GPU grid `func_8004A414` source recovery 390->164, exact 256-word count
 Astra grid source improves164->132/256 with exact frame/all homes; adopted unchanged and independently replayed. One focused trace has identical ordinary output and identifies pre-colouring priority order; no source experiment justified yet. See packet provenance/rank table.
 
 TILE sibling `func_8004A814` source-only300->114, exact257-word count/frameB8/x and RGB homes; all saved-register roles match. Uniform+4 CSE/depth homes and ugen/scheduling remain; packet/replay archived for bounded consultation. Target dimension quirk, six abs calls and signed/clamped colors preserved. No production/header changes. See [[matching-notes]].
+
+TILE adopted real abs_y local reaches94/257 with every stack home/saved role exact; ordinary replay and diagnostic pre-as1 capture output agree. First apparent preload difference originates in late latch; earliest emission ring difference is geometry-y. Provenance and exhausted controls recorded; no speculative edge load.

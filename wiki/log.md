@@ -2220,3 +2220,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] decision | Preserve circular TILE CSE ownership packet
 
 [[tickets/T-24501-main-tail]] recovers `func_8004A814` typed primitive/natural arithmetic,300->114 with exact257 words/frameB8/x and RGB homes. All saved-register roles match; existing setWH restores actual dimension-store scheduling. Uniform+4 invariant homes and preload/ugen residuals documented with replay. No padding, extra slots, production/header change or literal-match claim. Parent requested bounded consultation and idle. See [[matching-notes]].
+
+## [2026-10-20] decision | Recover TILE abs-result ownership and locate scheduling cause
+
+[[tickets/T-24501-main-tail]] adopts real abs_y source local,94/257 with exact homes/register roles; ordinary replay confirms. Scratch pre-as1 capture preserves normal output and traces first apparent preload to outer latch, while geometry-y temp emission is earliest substantive ring difference. Consult loop controls recorded, no extra slots or fabricated load. See [[matching-notes]].
