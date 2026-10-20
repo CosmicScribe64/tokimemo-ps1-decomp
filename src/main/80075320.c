@@ -6,7 +6,7 @@
 u8 D_800B6990[8] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0 };
 u8 D_800B6998 = 0;
 INCLUDE_RODATA("asm/data/main/80075320.data", D_800B699C);
-INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69BC);
+u8 D_800B69BC[0x14] = { "で、待ち合わせ』" };
 INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69D0);
 INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69D8);
 INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69E0);
@@ -574,7 +574,67 @@ void func_80076630(void) {
     func_80042940(2);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800767A4);
+/* T-24501: 932-byte literal match. The split stack padding preserves the
+ * original 0x198 frame: selected IDs at 0x188/0x18C/0x190, candidate IDs at
+ * 0x108, and string buffers at 0x3C/0x7C/0xBC. */
+void func_800767A4(void) {
+    s32 top_gap; /* FAKE: reserve the original top stack word. T-24501. */
+    s32 third;
+    s32 second;
+    s32 first;
+    s32 choices[32];
+    s32 list_gap; /* FAKE: reserve the original word between IDs and buffers. T-24501. */
+    s32 temp_hi; /* FAKE: unused original draft scalar retained for the diagnosed stack layout. T-24501. */
+    s32 var_v1_2;
+    u8 text1[64];
+    u8 text2[64];
+    u8 text3[64];
+    s32 i;
+    for (i = 0; i < 64; i++) {
+        text1[i] = text2[i] = text3[i] = 0;
+    }
+    if (func_800764AC(choices) >= 3) {
+        var_v1_2 = rand() % 3;
+        if (var_v1_2 < 0) {
+            var_v1_2 = 0;
+        }
+        first = choices[var_v1_2 % 3];
+        second = choices[(s32) (var_v1_2 + 1) % 3];
+        third = choices[(s32) (var_v1_2 + 2) % 3];
+        D_800E6280.unk_724 = 2;
+        x_taku_menu_set(1, 3);
+        strcpy(text1, "『");
+        strcat(text1, D_800B342C[first]);
+        strcat(text1, &D_800B69BC);
+        strcpy(text2, "『");
+        strcat(text2, D_800B342C[second]);
+        strcat(text2, &D_800B69BC);
+        strcpy(text3, "『");
+        strcat(text3, D_800B342C[third]);
+        strcat(text3, &D_800B69BC);
+        x_taku_string_set((s32) text1, (s32) text2, (s32) text3, 3);
+    } else {
+        var_v1_2 = rand() & 1;
+        if (var_v1_2 < 0) {
+            var_v1_2 = 0;
+        }
+        first = choices[var_v1_2 % 2];
+        second = choices[(s32) (var_v1_2 + 1) % 2];
+        third = 0xFF;
+        D_800E6280.unk_724 = 1;
+        x_taku_menu_set(1, 2);
+        strcpy(text1, "『");
+        strcat(text1, D_800B342C[first]);
+        strcat(text1, &D_800B69BC);
+        strcpy(text2, "『");
+        strcat(text2, D_800B342C[second]);
+        strcat(text2, &D_800B69BC);
+        x_taku_string_set((s32) text1, (s32) text2, 0, 2);
+    }
+    D_800E6280.unk_725 = (u8) first;
+    D_800E6280.unk_726 = (u8) second;
+    D_800E6280.unk_727 = (u8) third;
+}
 
 s32 func_80076B48(void) {
     GameState *g;

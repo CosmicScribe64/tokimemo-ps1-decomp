@@ -2552,6 +2552,7 @@ void func_80075C24(void);
 s32 func_80075C84();
 s32 func_80075FA0();
 s32 func_80076000();
+void func_800767A4(void);
 void func_80076450();
 void func_80076630(void);
 s32 func_80076B48(void);
