@@ -93,3 +93,5 @@ Active `sndi` semantic recovery: correct first-stage found-flag/reset join, prop
 `sndi` primary210/259 and branch-reset211/260 archived with exact replay. Last approved conditional increment hypothesis fails303/262/frame120; two-base/index forms remain unequal. Freeze before bounded induction consultation, no more source-spelling tests. No production change; preserve corrected flag semantics and inferred-capacity warnings. See [[matching-notes]].
 
 `func_800552DC` loader672B: typed record reconstruction reaches resolved0/168words and private default-C literal672B proof; header/prototype/global guards pass. Parent source/header standards review has no findings. Affected MAIN checksum passes (`ninja -j2 build/SLPM_86.053.ok`); root centrally checks all27 before integration. Record boundaries and FAKE integer bank grouping documented in [[matching-notes]].
+
+Inverse `func_80054FC0` source-only typed reconstruction frozen at 113/200 words (target 199), exact frame and first 45 resolved rows. Byte-loop and unsigned-bound source recovery retained; narrow copy-ring/epilogue packet prepared for parent consultation. No production/header changes. See [[matching-notes]].

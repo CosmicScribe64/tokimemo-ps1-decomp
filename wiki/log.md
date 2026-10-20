@@ -2200,3 +2200,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] build | Verify loader MAIN checksum
 
 [[tickets/T-24501-main-tail]] default MAIN rebuild passes target SHA1 after `func_800552DC` and game-header promotion, capped at two jobs. Private default-C proof equals all 672 target bytes; headers, main prototypes and migrated globals pass. Parent's source/header review has no findings; full 27-unit integration verification remains central.
+
+## [2026-10-20] decision | Preserve inverse serializer copy-ring packet
+
+[[tickets/T-24501-main-tail]] recovers `func_80054FC0` record copies and natural byte checksum; unsigned counter restores target multiply shape. Source-only 113/200 words versus 199 target, first 45 resolved rows exact, frame 0x28. Explicit return-ABI controls unchanged. Narrow unrolled-copy temporary and epilogue evidence/replay archived; production remains ASM. Parent requested freeze for consultation. See [[matching-notes]].
