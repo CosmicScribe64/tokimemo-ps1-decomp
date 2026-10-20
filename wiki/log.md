@@ -2194,3 +2194,6 @@ The preceding fade callee's s32 view closes six remaining rows after indexed ini
 ## [2026-10-20] build | Twentieth resumed match published
 
 MASTER func_80135FB8 is main ca34dcf7f after root review, literal1084-byte proof,27 independent hashes and declaration guards. Docker census6813/6952 functions,2088984/2276920 bytes (91.7%),139 remaining. [[status]] and [[tickets/T-24500-completion-orchestration]] record20 new matches/21980 bytes this run, source archives throughf1e2511ff, the negative RPG consultation and active TACO/queued CD consultations. Read-only GitHub check found no open PR and unchanged issue65; no contributor messages.
+## [2026-10-20] decision | T-24503 recover the GEKO birthday-check frame
+
+[[tickets/T-24503-geko-option-completion]]: func_80132B24 now has a separate cost 73 source candidate with frame 0x50 and exact table offsets, using the packed record field directly and retaining the real day home. The cost 61 production guard still has frame 0x58. Further return-coalescing and register differences remain. Bounded sibling/type/control-flow tests did not close it; archived source and replay preserve the structural repair without a match claim.
