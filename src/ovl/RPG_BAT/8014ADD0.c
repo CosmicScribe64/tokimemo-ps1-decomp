@@ -286,14 +286,12 @@ void func_8014BAA4(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-24301, 22 rows; with the implicit int view of func_8013E7C0 the state machine matches up to
- * the case 3 test: the original reloads unk_1093 into a temporary after the inner switch (`lui; lb t1`),
- * this volatile read materialises the struct address first (one instruction more). */
-#ifdef NON_MATCHING
 void func_8014BB80(void) {
-    s32 pad; /* FAKE: T-24301, puts sp34 at sp+0x34 */
+    /* T-24522: pointer reads keep the menu choices separate from the condition range. */
+    GameState *gs;
     RpgHalfTbl12 sp34;
 
+    gs = &D_800E6280;
     sp34 = D_8015E720;
     if (D_8015EE50.unk_00 != 3 && !(D_800E6280.unk_1092 & 1)) {
         func_8006BA40();
@@ -330,7 +328,7 @@ void func_8014BB80(void) {
         menu_check(0, D_8011ECF6, D_8011ECFA);
         func_8004FC10(0);
         func_8013E7C0(0x22, 0xFF, 1, 1);
-        switch (D_800E6280.unk_1093) {
+        switch (gs->unk_1093) {
         case 0:
             func_8013E7C0(0x22, 5, 1, 1);
             break;
@@ -344,11 +342,10 @@ void func_8014BB80(void) {
             func_8013E7C0(0x22, 0xFF, 1, 0);
             break;
         }
-        /* FAKE: T-24301, the volatile read keeps unk_1093 out of the promoted range of the two switches */
-        if ((*(volatile s8 *)&D_800E6280.unk_1093 != -1) && (D_800E6280.unk_F88 & 0x20)) {
+        if ((D_800E6280.unk_1093 != -1) && (D_800E6280.unk_F88 & 0x20)) {
             func_8013E7C0(0x22, 0xFF, 1, 0);
             func_8013E7C0(0x23, 0xFF, 1, 0);
-            switch (D_800E6280.unk_1093) {
+            switch (gs->unk_1093) {
             case 0:
                 D_8015ED98 ^= 0x01000000;
                 break;
@@ -384,9 +381,6 @@ void func_8014BB80(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014BB80);
-#endif
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014BFE4);
 
