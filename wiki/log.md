@@ -2771,3 +2771,6 @@ One causally predicted R=G=B element chain recovers original single128 and all s
 
 ## [2026-10-20] build | T-24518 prove exact first table region
 Natural shared-index source gives all10 original resolved first-table words at function+288..2AC, with frame70/buffer54 and recovered shade block. Current527word/336cost source and rejected second-table/callee controls are compact replays;48 hashes pass. Standards/spec checkpoint review and unchanged production audit pass. No full-function match or all27 rerun claim. [[tickets/T-24518-etc-flow]] remains In Progress.
+## [2026-10-20] query | Correct SHOUGATU random source field
+
+Fresh baseline plus one corrected-field probe for [[tickets/T-24523-seasonal-source-hypotheses]] both cost152. Raw object diffs prove func_8013E50C's random load now addresses original0x800E7378 instead of0x800E6378. Corrected source archived; local-table homes and zero/ring differences remain broad. No further compiler variants, production/header change or coverage; broad-guard handling awaits review.
