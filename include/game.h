@@ -27,6 +27,13 @@ typedef struct FileReq {
     /* 0x20 */ s32 retry;
 } FileReq; /* size 0x24 */
 
+/* Packed icon choice at GameState +0xF68, bits 4..7. */
+typedef struct MenuIconBits {
+    /* 0x00 */ u16 low : 4;
+    u16 icon : 4;
+    u16 rest : 8;
+} MenuIconBits; /* size 0x02 */
+
 #endif /* GAME_H */
 
 #ifndef GAME_DISPLAY_ACTOR44_T10890

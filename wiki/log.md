@@ -2530,3 +2530,10 @@ Repaired the previously untried func_801420E4 source's missing rodata declaratio
 ## [2026-10-20] ingest | Publish remaining MAIN and GEKO draft checkpoints
 
 Root reviewed and published MAIN b44f1e302 as e5d03aebd and GEKO9de2cd7cd as b90f0e4e4. Source-only archives retain exact nonmatching metrics and replay requirements, without coverage credit. MAIN scratch whitespace repaired; independent wiki append histories preserved. [[tickets/T-24500-completion-orchestration]] records continued deep source work and the bounded Astra seven-word TACO constant-allocation consultation. MAIN76000 has zero diagnostic differences but remains uncounted pending literal proof, shared-type correction and final integration checks.
+## [2026-10-20] build | T-24501 menu dispatcher literal match
+
+Resumed `func_80076000` region by region: trace proved 298/298 instructions and order-only differences; typed packed icon stores, explicit signed-byte selector views and shift-back flag extraction reduced resolved cost 214 -> 164 -> 138 -> 0. Literal default private link proves all 1,196 bytes; pre-review build, 27/27 image hashes, headers and prototype checks pass. Parent review requested relocating the view to `include/game.h` and explaining flag extraction; applied both, final header rebuild running. [[matching-notes]] records the causal steps; [[tickets/T-24501-main-tail]] remains In Progress.
+
+## [2026-10-20] build | T-24501 menu dispatcher final proof and review
+
+Post-`game.h` 486-step build passed, explicit SHA1 recomputation passed all 27 images, literal default private link re-proved all 1,196 dispatcher bytes, and headers/prototype branch checks pass (zero new, 15 known). Parent re-reviewed the moved view and shift comments: its one finding is resolved, no blocking findings remain. Focused source/header/wiki commit ready; [[tickets/T-24501-main-tail]] remains In Progress.
