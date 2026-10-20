@@ -33,84 +33,9 @@ void func_80132810(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: score=749 (304/310 insns). .data island D_80134540[4] resolves the 0xFF/sp50/D_80134540 shift chain; IDO 5.3 uopt treats (unk_06 + unk_02) and (unk_02 + unk_06) as commutative in isearchloop and CSEs all 6 into $v0, eliminating 4 loads from &D_800E6280 + i * 56 and swapping $s0/$s1. T-24101. T-24138: guarded compile fixed (VALEN.h func_8013387C prototype + ValenStateView for unk_11C halfwords); production build unaffected (NON_MATCHING off). */
-void func_80132834(void) {
-    s16 i;
-    s16 j;
-    u8 sp50[4];
-
-    for (i = 0; i < 11; i++) {
-        D_80134524[i] = 0xFF;
-    }
-    D_8013453C = 0;
-    D_80134520 = 0;
-    for (i = 1; i < 11; i++) {
-        if ((i != 9 &&
-             !(D_800E6280.unk_1BC[i].unk_0C.w & 0x20000000) &&
-             (D_800E6280.unk_1BC[i].unk_0C.w & 0x04000000) &&
-             get_h_tokimeki(i) >= 0x1EU &&
-             ((u32)(D_800E6280.unk_1BC[i].unk_0C.w << 4) >> 28) <= 2U) ||
-            (i == 9 &&
-             (D_800E6280.unk_1BC[9].unk_0C.w & 0x02000000) &&
-             (D_800E6280.unk_1BC[9].unk_0C.w & 0x04000000) &&
-             get_h_tokimeki(9) >= 0x46U &&
-             ((u32)(D_800E6280.unk_1BC[9].unk_0C.w << 4) >> 28) <= 2U)) {
-            D_80134524[D_8013453C] = i;
-            D_8013453C += 1;
-        }
-    }
-    func_8013387C();
-    if (D_800E6280.unk_1BC[0].unk_02 >= 0x1E &&
-        !(D_800E6280.unk_1BC[0].unk_0C.w & 0x20000000) &&
-        (D_800E6280.unk_1BC[0].unk_0C.w & 0x04000000) &&
-        ((u32)(D_800E6280.unk_1BC[0].unk_0C.w << 4) >> 28) <= 2U) {
-        D_80134524[D_8013453C] = 0;
-        D_8013453C += 1;
-    }
-    D_80134540[0] = D_80134540[1] = D_80134540[2] = 0xFF;
-    sp50[0] = sp50[1] = sp50[2] = 0;
-    for (i = 0; i < 11; i++) {
-        if ((i != 9 &&
-             !(D_800E6280.unk_1BC[i].unk_0C.w & 0x20000000) &&
-             (D_800E6280.unk_1BC[i].unk_0C.w & 0x04000000)) ||
-            (i == 9 &&
-             (D_800E6280.unk_1BC[i].unk_0C.w & 0x02000000) &&
-             (D_800E6280.unk_1BC[i].unk_0C.w & 0x04000000))) {
-            if (D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02 >= sp50[0]) {
-                sp50[2] = sp50[1];
-                sp50[1] = sp50[0];
-                sp50[0] = D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06;
-                D_80134540[2] = D_80134540[1];
-                D_80134540[1] = D_80134540[0];
-                D_80134540[0] = i;
-            } else if (D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02 >= sp50[1]) {
-                sp50[2] = sp50[1];
-                sp50[1] = D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06;
-                D_80134540[2] = D_80134540[1];
-                D_80134540[1] = i;
-            } else if (D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02 >= sp50[2]) {
-                sp50[2] = D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02;
-                D_80134540[2] = i;
-            }
-        }
-    }
-    D_80134544 = 0;
-    j = 0;
-    for (i = 0; i < 11; i++) {
-        if ((i != 0 && get_h_tokimeki(i) >= 0x46U && D_80134524[j] == i) ||
-            (i == 0 && D_800E6280.unk_1BC[0].unk_02 >= 0x46 && D_80134524[j] == 0)) {
-            D_80134544 += 1;
-        }
-        if (D_80134524[j] == i) {
-            j++;
-        }
-    }
-    func_8004284C();
-}
-#else
+/* T-24523: stale guarded body removed; correct source remains unmatched in
+ * drafts/T-24523/VALEN/func_80132834 (T-14500/T-16100 foundation). */
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132834);
-#endif
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-24212, 3 rows (7 resolved rows in funcdiff); only the dispatch `sll t3,a1,2` is in the wrong delay slot. as1's global scheduler (trace `as1 -R -xbbdbg 8`) visits the `== 9` test block first and fills its slot with the `lui v0` of the `mode` reload from its fallthrough; the `sll` then goes to the third `if` head's slot. The original fills the `== 9` slot with the `sll` and keeps that `lui` and a `nop`. T-24033/T-24138: switch spellings, `sel` copies, mode reloads, `u8 mode`, nested ifs, autotweak. T-24212: `1 == mode`, byte view of the mode load, one-line ifs (all output-identical); else-if/goto/ternary/early-return-as-else forms change code. Notes: wiki/matching-notes.md T-24212. */

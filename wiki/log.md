@@ -2599,3 +2599,46 @@ Archived only the root consult's C89 sequential pointer-update body at41/39,376 
 ## [2026-10-20] decision | Consolidate RPG_BAT archive ancestry
 
 Private consolidated head now includes RPG_BAT2781edac6, retaining frozen4-row source430699874, validated allocator evidence, ordinary C89 pointer-update alternative and bounded consultation negatives. Source archives only, no production/header changes or new coverage. Existing lane history retained; current board cards preserved and owned statuses normalized from tickets. Root will perform final integration checks.
+
+## [2026-10-20] ticket | Reopen candidate-list ownership analysis
+
+At the coordinator's explicit request, reopened [[tickets/T-24523-seasonal-source-hypotheses]] for GYOZI func_80138C9C. Read T-24116 and original stack accesses. The target proves values at sp+0x4C and one pointer spill at sp+0x44, but no record-prefix field access; a metadata struct is not inferred from unused space alone. Investigate actual gather/print/rotation stage lifetimes before any compile.
+
+
+## [2026-10-20] query | Candidate-list ownership and MAIN donors
+
+[[tickets/T-24523-seasonal-source-hypotheses]] records GYOZI func_80138C9C original local/global ownership evidence and four bounded probes: baseline103, stage scopes112, count/rotation scratch reuse103, direct global aggregate111, local work pointer150. The real list starts sp+0x4C; no local record prefix inferred. No production/header change or coverage. New MAIN76000/767A4 donors against14 remaining seasonal originals give maximum normalized ratios0.240/0.230; all28 negative and no donor transplant compiled. See [[matching-notes]].
+
+
+## [2026-10-20] query | VALEN ranking guard provenance
+
+The authorized assignment-only identity probe in [[tickets/T-24523-seasonal-source-hypotheses]] gives484 baseline/491 modified. Immutable target bounds and source comparison show the old func_80132834 guard describes a different control flow; its near-tail metric is stale. Correct historical drafts at T-14500/T-16100 match the target's initial special-girl test, strict ranking and gather/rotate/reorder stages. Original normalized ratio to GYOZI38C9C is0.60215. No production change or coverage; no further compile before the sibling-port hypothesis review.
+
+
+## [2026-10-20] build | Correct VALEN candidate source and stale-guard cleanup
+
+[[tickets/T-24523-seasonal-source-hypotheses]] archives the correct typed func_80132834 reconstruction at381 resolved edits, reproduced from exact annotated source. Removed structurally wrong guard and preserved matching INCLUDE_ASM. Full private VALEN SHA1, all27 hashes (three private seasonal binaries and24 unchanged read-only root binaries), header/global/prototype guards and diff whitespace check pass. No new coverage. Source/archive and cleanup remain separate reviewable changes; [[matching-notes]] records target provenance.
+
+
+## [2026-10-20] decision | Pin reviewed VALEN stale-guard cleanup
+
+Parent and self standards/source review found no blockers in the func_80132834 stale-guard removal: immutable target/control-flow mismatch established, original fallback/address order preserved, no header/compiler change, private complete VALEN SHA1 and27 hashes/guards pass. Correct unmatched381 source is separately pinned; this cleanup earns no coverage under [[tickets/T-24523-seasonal-source-hypotheses]].
+
+
+## [2026-10-20] query | Real VALEN rank-score array ownership
+
+Under [[tickets/T-24523-seasonal-source-hypotheses]], replaced only three scalar scores with the real signed-halfword rank_scores[3] array supported by adjacent target homes. Cost381 to336, exact frame0x78 and candidate base sp+0x5C restored; score homes remain four bytes high and scheduling is broad. Updated unmatched source checkpoint only; no production/header changes or new coverage. One approved probe, no declaration/width grid.
+
+
+## [2026-10-20] decision | Preserve score-array foundation after identity negative
+
+Parent and self review found no blockers in the336 source-only score array checkpoint for [[tickets/T-24523-seasonal-source-hypotheses]]. One approved identity probe on only the first two assignment sums worsens336 to371 and frame0x78 to0x80; it retains operand loads and recomputes sums rather than restoring the target reloads. Discarded. Best archive remains336, production fallback unchanged, no coverage or compiler-limit claim.
+
+
+## [2026-10-20] query | Audit seven near seasonal guards against immutable originals
+
+[[tickets/T-24523-seasonal-source-hypotheses]] records exact target bounds, byte-equal generated-code provenance, opening control flow and complete call sets for seven near guards. Six agree at the checked opening-control and call-set level. SHOUGATU3E50C belongs to the correct function but reads GameState+0xF8 instead of original+0x10F8 in its random-bit test; no edit or compiler run. No fresh automatic sibling or broad sweep, no coverage. Audit distinguishes this field error from the previously removed wholly wrong VALEN bodies.
+
+## [2026-10-20] decision | Consolidate all three lane heads and coordinator notes
+
+Private codex/t24520-consolidated now includes main4c5cd6524, coordinator5090e769f, TAIIKUbb1abd853, RPG_BAT2781edac6 and seasonaldcc4dc9aa. Only production delta from the main snapshot is removal of wrong VALEN32834 NON_MATCHING body; original INCLUDE_ASM retained. Preserved main progress, unrelated board cards and all current log text; appended incoming new sections and synchronized four owned cards to ticket frontmatter. Worker checks retained, root requested no duplicate coordinator rebuild and will run full27/defaultVALEN checks. User explicitly says retain archive history/use future T-prefixes, resolving title-only concern without history edits. No new coverage. [[tickets/T-24520-parallel-tail-coordination]] and [[status]] updated.

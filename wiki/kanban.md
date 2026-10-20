@@ -53,11 +53,16 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
+
 - [ ] [[tickets/T-24522-rpg-bat|T-24522 Match remaining RPG_BAT functions]]
 
 - [ ] [[tickets/T-24521-taiiku|T-24521 Match remaining TAIIKU functions]]
 
 - [ ] [[tickets/T-24520-parallel-tail-coordination|T-24520 Coordinate TAIIKU RPG_BAT and seasonal matching lanes]]
+
+
+
 
 
 
@@ -92,7 +97,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 
 
 

@@ -51,3 +51,9 @@ Root-requested fresh-donor comparisons produced no additional matches. All18 TAI
 ### Structural reconstruction continuation
 
 2026-10-20: Originating chat confirms all six matches integrated and explicitly requests continued active structural work. Reopened coordinator and lane tickets. TAIIKU investigates remaining display/control functions beyond the three bounded failed reconstructions; RPG_BAT investigates fresh state/interpolation source beyond C84 and BFE4 exhausted variants; seasonal investigates correct location/background source or a genuinely new aggregate hypothesis beyond prior scheduler and donor negatives. Each must state a concrete source hypothesis before compiling, remain at j1 in Docker, and prove literal default C before claiming any new coverage. Existing pins and negative evidence remain authoritative.
+
+### Consolidation for root integration
+
+Private branch codex/t24520-consolidated starts at main4c5cd6524 and merges coordinator5090e769f, TAIIKUbb1abd853, RPG_BAT2781edac6 and seasonaldcc4dc9aa as ancestors. Wiki conflicts preserve main's progress, all unrelated board cards and all prior log entries; only owned ticket cards are normalized. The only production-source delta from that main snapshot removes the proven-wrong VALEN32834 NON_MATCHING body while keeping its original default INCLUDE_ASM. Worker checksum/prototype/header/global evidence is retained; root explicitly owns the final full27/defaultVALEN gate, so no redundant coordinator rebuild is claimed.
+
+Root explicitly directs retaining published archive history despite title-only lint and using T-prefixes for future commits. No history is renamed for that earlier formatting observation; this resolves the title-only handoff concern under the user's current instruction.
