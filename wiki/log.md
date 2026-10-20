@@ -2341,3 +2341,22 @@ Reconstructed `func_80134F98` using actor fields and normal 4-runner and 12-char
 ## [2026-10-20] build | T-24521 TAIIKU func_80134F98 matched
 
 Matched another 1,256 literal default-C bytes. A direct table expression and the counter declaration order close the typed draft. Private TAIIKU SHA1, default linked function proof, 27-output hash manifest and all declaration guards pass. Standards self-review and independent parent source review found no blockers. Lane total: 2,604 bytes across two functions; nine remain. Details in [[tickets/T-24521-taiiku]] and [[matching-notes]].
+## [2026-10-20] ticket | Seasonal isolated source hypotheses
+
+Started [[tickets/T-24523-seasonal-source-hypotheses]] in /private/tmp/tokimemo-t24523 at dba33c4f5. GYOZI, VALEN and SHOUGATU only; scheduler negatives are known and broad exhausted grids will not be repeated.
+
+## [2026-10-20] build | SHOUGATU narrow product candidate
+
+[[tickets/T-24523-seasonal-source-hypotheses]] found full-unit score zero for SHOUGATU func_80133B44 by adding a redundant signed-halfword product cast; all later temporary registers align. Default-C linked proof and 27 hashes are in progress. GYOZI func_80140E0C alias-store probes did not improve its nine-edit baseline and were discarded.
+
+## [2026-10-20] query | Seasonal ring hypothesis and declaration guards
+
+[[matching-notes]] records the new SHOUGATU product-narrowing recipe and negative GYOZI alias-store experiment for [[tickets/T-24523-seasonal-source-hypotheses]]. `check_headers.py` and `sync_protos.py --check-branch` pass (0 new disagreements, 15 known). Early `migrate_globals.py --check` lacked five DATE/TACO asm proofs before those split stages; rerun after the complete build. Parent standards review found no blockers in the product-cast C and explicit FAKE padding comments.
+
+## [2026-10-20] build | Verified 408-byte SHOUGATU match
+
+[[tickets/T-24523-seasonal-source-hypotheses]] matches func_80133B44 with literal default C and private linked 408-byte proof. Private SHOUGATU SHA1 passes; all 27 hashes pass using private SHOUGATU plus 26 unchanged read-only root binaries. Header, global and prototype guards pass; four original TACO asm proof files are read-only baseline symlinks. Parent standards review has no blockers. No compiler or assembly changes. Remaining seasonal functions continue.
+
+## [2026-10-20] build | Verified GYOZI selection-loop match
+
+[[tickets/T-24523-seasonal-source-hypotheses]] matches GYOZI func_80140F90: literal default C privately links to 788 original bytes, complete private GYOZI hash passes. Typed loops, named work-area fields, documented redundant narrowing and a guarded local integer debug-call view resolve the original register sequence. Header/global/prototype guards pass. Parent standards review has no blockers. [[matching-notes]] records the causal improvements and discarded lifetime probes.

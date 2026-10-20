@@ -2937,7 +2937,9 @@ s32 close(s32 fd);
 s32 format(u8 *path);
 s32 open(u8 *name, s32 mode);
 s32 GetSp(void);
+#ifndef MAIN_API_OVERRIDE_func_800BCDF0
 void func_800BCDF0();
+#endif
 #ifndef MAIN_API_OVERRIDE_func_800BCE10
 void func_800BCE10();
 #endif

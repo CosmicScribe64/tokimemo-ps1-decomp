@@ -228,7 +228,12 @@ typedef struct GyoziWork {
     /* 0x1A8 */ GyoziGirl girl[11];
     /* 0x410 */ u8 unk_410[0x260];
     /* 0x670 */ u16 unk_670;
-    /* 0x672 */ u8 unk_672[0x8BD];
+    /* 0x672 */ u8 unk_672[0x9E];
+    /* 0x710 */ u8 unk_710; /* D_800F5AB0, copied state byte (T-24523) */
+    /* 0x711 */ u8 unk_711; /* D_800F5AB1 (T-24523) */
+    /* 0x712 */ u8 unk_712; /* D_800F5AB2, event code (T-24523) */
+    /* 0x713 */ u8 unk_713[0x81B];
+    /* 0xF2E */ u8 unk_F2E; /* D_800F62CE, eight-byte event record selector (T-24523) */
     /* 0xF2F */ u8 unk_F2F;   /* D_800F62CF, the girl index; read as a member where the original reloads it after a girl[] store (T-9210) */
     /* 0xF30 */ u8 unk_F30[0x28];
     /* 0xF58 */ s32 unk_F58;
@@ -238,8 +243,12 @@ typedef struct GyoziWork {
     /* 0x10B8 */ s32 unk_10B8; /* D_800F6458; a member where a later girl[] bit-field load stays below its store (T-17600) */
     /* 0x10BC */ u8 unk_10BC[0xC];
     /* 0x10C8 */ u32 unk_10C8;
-} GyoziWork; /* size 0x10CC; the object goes on (D_800F6474 and up are still main_api.h scalars) */
+    /* 0x10CC */ u8 unk_10CC[0xC];
+    /* 0x10D8 */ u8 unk_10D8; /* D_800F6478, source state byte (T-24523) */
+    /* 0x10D9 */ u8 unk_10D9; /* D_800F6479 (T-24523) */
+} GyoziWork; /* size 0x10DC, including trailing alignment; the object goes on */
 extern GyoziWork D_800F53A0;
+void func_80141550(void);
 void func_8013D5B0();
 void func_8013D62C();
 void func_8013D6B4();
