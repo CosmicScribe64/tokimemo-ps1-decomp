@@ -2134,3 +2134,7 @@ Promoted src/ovl/GEKO/801323E0.c to default C: Docker funcdiff proves 656 linked
 ## [2026-10-20] build | T-24502 largest TACO function matched
 
 func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, existing table indexing and marked initializer grouping replace stale split-variable code. Parent review found no blockers; all 27 binary SHA1 checks and source guards pass after its own header declaration. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the source forms and failed alternatives.
+
+## [2026-10-20] ticket | Start isolated overlay matching coordination
+
+[[tickets/T-24510-parallel-overlay-coordination]] coordinates three user-authorized Sol 6.1 medium workers: TEL T-24511, ENDING T-24512, ETC T-24513, from main `23e1a20fb`. Separate /private/tmp trees and overlay-only ownership; no coordinator compiler workload. Read [[status]], [[playbook]], standards, and TEL/ETC negative-history tickets before dispatch. Main integration and MAIN/TACO/GEKO-OPTION work remain with the parent chat. No new verified match claimed.
