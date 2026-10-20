@@ -13,7 +13,7 @@ typedef struct ModRec14 {
 } ModRec14; /* size 0x14 */
 
 void mod_trans_vram(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    u32 sp194;
+    u32 var_a0;
     /* 256-byte extent proved by get_fnt writes and 0x100-byte mirror reads.
      * Word-aligned storage view; original array element type is unknown. */
     u32 sp88[64];
@@ -24,7 +24,6 @@ void mod_trans_vram(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 temp_t0;
     s32 var_a1;
     s32 var_s1;
-    u32 var_a0;
     u32 var_s0;
     u8 var_v0;
     u8 var_v1;
@@ -70,7 +69,6 @@ void mod_trans_vram(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
             var_s0 = 0;
             if (var_v0 != 0) {
                 var_s1 = 0;
-                sp194 = var_a0;
                 sp78 = var_a1;
                 do {
                     temp_t0 = *var_s2;
@@ -82,7 +80,6 @@ void mod_trans_vram(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
                     var_s1 += sp78;
                 } while (var_s0 < var_v0);
                 var_v1 = sp74->rows;
-                var_a0 = sp194;
                 var_a1 = sp78;
             }
             var_a0 += 1;

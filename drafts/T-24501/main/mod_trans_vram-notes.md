@@ -52,3 +52,28 @@ Private controls .scratch/t24501/mod232.c (typed baseline with selector local), 
 ## Frozen sibling transfer
 
 func_8004A414132 already has explicit x/y casts at all coordinates plus narrowed dimensions. Its trace already establishes a narrow-y range; no target-supported missing primitive-field narrowing follows from successful4A814 erased-conversion mechanism. No cast sweep or new4A414 compile was performed; saved-rank problem remains separate and frozen.
+
+## Single-row correction and faithful cell trace (2026-10-20)
+
+Primary now adopts Astra single_row/body.c unchanged, SHA2564388150412fb686f125f52c80ec87aedbee63512ac234dedf4492f1c7a6ae810. Previous232 primary preserved as mod_trans_vram-232.c. Independent full-TU replay confirms226/196 words, target188, frame1A0. This supersedes the earlier explicit-row-shadow inference: one real row local naturally remains in a0 with automatic call spill19C (target194). Cell homes84/94 remain separate versus target78. Buffer9C/ratio9B/record70 versus target88/87/74.
+
+Bounded consult controls: merged row+cell at original shadow declaration sites248/192/frame198; byte-oriented256B buffer232/196/frame1A0 unchanged; single row226/196/frame1A0. Merged248 differs from archived reduced242 control. No additional source forms tested.
+
+Both ordinary/traced resolved functions agree exactly,196 words for226 and192 for248. Private directories .scratch/t24501/mod226-{normal,trace} and mod248-{normal,trace}; detailed extracted units mod-cell-trace.json. No raw trace committed.
+
+| Cell evidence | Single row, explicit cell shadow | Merged cell |
+| --- | --- | --- |
+| Initial bit13 priority |42|38.6667|
+| Final outer priority |1.8|-0.2|
+| BB14 uses |4|3|
+| Outer colour |a1|uncoloured, negative save|
+| Split chain |13->150->151->152->153|13->143->144->145|
+| Final inner descendants |uncoloured, negative save|uncoloured, negative save|
+
+Explicit sp78 bit16 splits16->160, final priorities0/-45, uncoloured. Both controls already split across inner calls; merging loses outer profitability, not splitting. The shadow contributes a fourth BB14 use and its independent home. Read-only target check shows exactly the merged source's three real outer uses: signed cell/2 width, cell&FFFF height, row*cell Y. Target SW a1,78 is preservation, not evidence of an omitted arithmetic/call/loop use. No justified artificial extra use, alias or new source hypothesis follows. Freeze this lead.
+
+Replay ordinary primary with --scratch .scratch/t24501/mod226-normal. With existing instrumented compiler parent rs mounted /scratch read-only and TOKIMEMO_SCRATCH=/scratch:
+
+    python3 tools/regdiff.py main:mod_trans_vram --src .scratch/t24501/mod226-normal/variant.c --scratch .scratch/t24501/mod226-trace -v
+
+Consult merged body/reproducer remains /private/tmp/tokimemo-mod-consult/merge_homes/body.c and run.py. Production source/headers/compiler unchanged. Next nominated, not compiled: same-TU get_fnt1036B raw draft has12B sp8C[3] copied256B and s32* row cursor incremented by byte width; measured256B byte raster and mirror row types offer concrete recovery.

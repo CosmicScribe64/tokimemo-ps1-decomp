@@ -2901,3 +2901,7 @@ MAIN `func_8004A814` is on main at `87df21291`: 1,028 linked default-C bytes mat
 ## [2026-10-20] decision | Preserve font tile upload ownership packet
 
 [[tickets/T-24501-main-tail]] proves real256B glyph buffer and20B record view in `mod_trans_vram`, typed232/196 words/frame1A0 versus188 target. Reduced row/cell capture control loses target ranges; direct switch corrects selector promotion. Source-only replay and exact caller/callee/homes evidence archived for bounded consultation. No production/header/compiler change or padding.4A414 transfer inspection finds no missing narrowing, no cast sweep. See [[matching-notes]].
+
+## [2026-10-20] decision | Correct font upload row inference and trace cell splitting
+
+[[tickets/T-24501-main-tail]] adopts single-row226/196 and independently confirms full TU. Ordinary/traced functions agree for226/248. Outer cell1.8/-0.2 priorities explain a1 versus stack-only, while inner ranges spill in both; target has no omitted fourth use. Row-shadow inference withdrawn, no artificial use/new variant/production edit. Source-only packet retains controls; get_fnt nominated for concrete buffer/cursor recovery. See [[matching-notes]].
