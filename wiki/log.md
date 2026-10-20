@@ -2075,3 +2075,46 @@ TACO func_8013A790 is pushed at735e50bd9 after root review,27 hashes, declaratio
 ## [2026-10-20] decision | T-24502 font quad checkpoint
 
 Archived repaired SDK func_80139424 (cost513,404/419 words) with concise frame/range diagnostics and replay commands. Production stays asm; matched K&R callers keep their declaration. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the bounded reconstruction. Next func_80153B38 uses its recorded in-loop color decode as the baseline.
+## [2026-10-20] query | Adjacent SHOUGATU retry-loop checkpoint
+
+[[tickets/T-24523-seasonal-source-hypotheses]] preserves a source-only func_8013E6E4 foundation under drafts/T-24523. Typed port, corrected field/table accesses and sequential retry flow reach full-unit resolved cost187; remaining saved-constant and selector-cache differences are broad. Production fallback retained; no additional coverage claimed.
+
+## [2026-10-20] query | Seasonal follow-up triage
+
+[[tickets/T-24523-seasonal-source-hypotheses]] records broad SHOUGATU func_8013EA98 port (cost284, discarded), negative GYOZI func_80138C9C integer-debug view, and the existing correct T-19016 VALEN func_80133088 foundation. Current VALEN guarded body is stale relative to its immutable target; prior dispatch-layout work remains the reference. No further match or production changes claimed.
+
+## [2026-10-20] decision | Review seasonal source-only checkpoint
+
+Parent and self review of drafts/T-24523/SHOUGATU/func_8013E6E4 found no blockers against the source-only archive rules. [[tickets/T-24523-seasonal-source-hypotheses]] retains its explicit no-coverage status and production assembly fallback.
+
+## [2026-10-20] build | Verify stale VALEN draft removal
+
+[[tickets/T-24523-seasonal-source-hypotheses]] removes the structurally incorrect guarded func_80133088 body while retaining its original matching assembly fallback and correct T-19016 reference. Full private VALEN SHA1356aed2481987108f908d7013cc0392cea9dcc8c and declaration guards pass. All27 hashes pass with three private seasonal binaries and24 unchanged read-only baseline binaries. Parent standards/spec review has no blockers. No coverage from cleanup.
+
+## [2026-10-20] ticket | Seasonal lane enters integration review
+
+Moved [[tickets/T-24523-seasonal-source-hypotheses]] from In Progress to In Review, with matching kanban card. Two exact literal-C matches total1,196 bytes; fourteen assigned seasonal targets remain. The source-only checkpoint and stale draft cleanup are separate commits. No compiler changes or copyrighted assets committed.
+
+## [2026-10-20] ticket | Reopen seasonal fresh-donor triage
+
+Moved [[tickets/T-24523-seasonal-source-hypotheses]] back to In Progress at the coordinator's explicit request. Compare newly verified SHOUGATU func_80133B44 and GYOZI func_80140F90 against the fourteen remaining seasonal targets; compile only a genuinely new source transplant. The tested SHOUGATU func_8013E6E4 port is excluded.
+
+## [2026-10-20] query | Close seasonal new-donor follow-up
+
+[[tickets/T-24523-seasonal-source-hypotheses]] compares the two new donors with the fourteen remaining originals. GYOZI func_80140F90's nearest targets are SHOUGATU func_8013E6E4 (0.770, already tested), GYOZI func_801412A4 (0.745) and SHOUGATU func_8013EA98 (0.707, already tested). SHOUGATU func_80133B44 has no remaining relative above0.291. Two new GYOZI func_801412A4 transplants give218/219 resolved cost and remain broad; prior T-24301 foundation retained, worse new bodies discarded. No production change or coverage. Parent notes review has no blockers.
+
+## [2026-10-20] ticket | Return seasonal donor pass to review
+
+Moved [[tickets/T-24523-seasonal-source-hypotheses]] from In Progress to In Review after the bounded donor pass; kanban matches. The earlier four pins remain unchanged. No further compiler work queued.
+
+## [2026-10-20] ticket | Reopen structural seasonal work
+
+At the root's explicit request, moved [[tickets/T-24523-seasonal-source-hypotheses]] back to In Progress. Read T-19016 and T-16930 before selecting a new VALEN location/background control/aggregate hypothesis. Previous failed donor ports and exhausted scheduler grids remain excluded.
+
+## [2026-10-20] query | Correct VALEN location draft reaches fourteen edits
+
+[[tickets/T-24523-seasonal-source-hypotheses]] reconstructs the correct func_80133088 location/background function from T-19016: current baseline189, forward labels173, isolated player-byte narrowing127, middle-only GameState pointer54, scoped frame50, union lifetime sharing14. Exact annotated source under drafts/T-24523/VALEN recompiles at14. Remaining dispatch orientation and two copy-call argument/id-spill orders are documented without listings. Production fallback and headers unchanged; no new coverage or compiler-limit claim.
+
+## [2026-10-20] decision | Review corrected fourteen-edit VALEN foundation
+
+Parent and self review of drafts/T-24523/VALEN/func_80133088 found no blockers: C89, safe disjoint union phases, documented FAKE choices, exact annotated14-cost reproduction, precise source-level blockers and no listings/assets. Production/header diff remains empty. [[tickets/T-24523-seasonal-source-hypotheses]] returns from In Progress to In Review with matching kanban; coverage remains two exact functions/1,196 bytes.
