@@ -253,7 +253,115 @@ void func_80132B30(void) {
     }
 }
 
+/* NON_MATCHING: T-24301, 26 rows; the frame and case 0 match. Left: the unk_1115 reads sit in $v0 where the
+ * original uses $v1, and as1 leaves no dead `li at` copies after the else-if arms of case 1 (three
+ * instructions short). A switch on unk_1115 is worse (47). */
+#ifdef NON_MATCHING
+void func_80132BA8(void) {
+    s32 pad[5]; /* FAKE: T-24301, puts `rows` at sp+0x3C in the 0x90 frame */
+    Arrs4x8 rows;
+    u8 r;
+
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        D_800E6280.unk_1124 = 1;
+        func_800438DC(1, 0);
+        func_80048DAC(1);
+        func_80041584();
+        func_80048E78();
+        *(s32 *)&D_800E6280.unk_1095[3] = 0xA0;
+        func_800438F0(1);
+        D_800E6280.unk_037 = 0;
+        D_800E6280.unk_036 = 0;
+        D_800E6280.unk_038 = 0;
+        func_80048390();
+        D_800E6280.unk_10A2 = 0;
+        func_8004E58C();
+        D_800E6280.unk_1093 = 0;
+        D_800E6280.unk_1094 = 0;
+        func_8006BC28(0);
+        D_800E6280.unk_03A = 0xFF;
+        D_8013D300 = 0;
+        D_800B3220 = 0;
+        D_801230D0 = 0;
+        text_set_advance(0xE);
+        func_801325A0(&rows);
+        func_8004F870(0, 8, rows.a, rows.b, rows.c, rows.d);
+        func_8004E788(rows.a[0], rows.b[0], 0, "文字表示速度", 0);
+        func_8004E788(rows.a[1], rows.b[1], 0, "アイコンモード", 0);
+        func_8004E788(rows.a[2], rows.b[2], 0, "マウス設定", 0);
+        func_8004E788(rows.a[3], rows.b[3], 0, "メニューモード", 0);
+        func_8004E788(rows.a[4], rows.b[4], 0, "カーソル速度", 0);
+        func_8004E788(rows.a[5], rows.b[5], 0, "音声モード", 0);
+        func_8004E788(rows.a[6], rows.b[6], 0, "おまけ", 0);
+        func_8004E788(rows.a[7], rows.b[7], 0, "オプション終了", 0);
+        k_sub_reset_point_set();
+        k_sub_disp_start(0);
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x78;
+        D_800E6280.unk_110D = 1;
+        func_80053CE0();
+        break;
+    case 1:
+        if (func_80053F04() != 0) {
+            r = D_800E6280.unk_1115;
+            if (r == 1) {
+                D_800E6280.unk_110D += 1;
+            } else if (r == 0xF1) {
+                D_800E6280.unk_110D += 1;
+            } else if (r == 0xFF) {
+                D_800E6280.unk_110D += 1;
+            }
+        } else if ((u32)D_800E6280.unk_1120 > 0x200) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        func_80053D10();
+        if (D_800E6280.unk_1115 == 1) {
+            if (func_80054AF4(0) == 1) {
+                D_800E6280.unk_110D += 1;
+                func_80053CE0();
+            } else {
+                D_800E6280.unk_110D = 0xFF;
+            }
+            if (func_80054AF4(0xF) == 1) {
+                D_800B3220 = 1;
+            } else {
+                D_800B3220 = 0;
+            }
+        } else {
+            D_800E6280.unk_110D = 0xFF;
+        }
+        break;
+    case 3:
+        if (func_80054284() == 3) {
+            func_80053D10();
+            D_800E6280.unk_110D += 1;
+        } else if ((u32)D_800E6280.unk_1120 > 0x200 || D_800E6280.unk_1115 == 0xF0) {
+            func_80053D10();
+            D_800E6280.unk_110D = 0xFF;
+        }
+        break;
+    case 4:
+        if (func_800552DC(0) == -1) {
+            D_800E6280.unk_110D = 0xFF;
+        } else {
+            D_800E6280.unk_110D = 0xFF;
+        }
+        break;
+    case 0xFF:
+    default:
+        cd_read_sectors(0x3D, 0x801B0000, 0x9EA4);
+        func_8004284C();
+        break;
+    }
+    func_8004AC18(D_800E6280.unk_03A);
+}
+#else
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132BA8);
+#endif
 
 /* Option screen loader: waits for the CD, sets up records 96..159 and the palettes, then fades in. */
 void func_80133010(void) {
