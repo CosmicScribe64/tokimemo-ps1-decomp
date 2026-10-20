@@ -2085,3 +2085,28 @@ The l6-p01 merge carried 9 matches, not 1; listed in [[tickets/T-24301-local-lis
 ## [2026-10-20] query | Rank the remaining large functions
 
 Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24500-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
+
+## [2026-10-20] ticket | T-24512 ENDING lane initialized
+
+[[tickets/T-24512-ending]] is In Progress in isolated /private/tmp/tokimemo-t24512 from 23e1a20fb. Read [[notes/functions]] and ENDING history; scope is remaining ENDING functions, bounded source hypotheses, Docker-only analysis.
+
+## [2026-10-20] build | T-24512 bounded ENDING reconstructions
+
+[[tickets/T-24512-ending]]: Docker ENDING baseline SHA1 OK. 330E4 existing draft aligned104 ->84 after scalar/array frame reconstruction and removal of a redundant extracted-value local; level-spill and bonus-expression differences remain. Typed scene387B0 reconstruction148/177. Production source restored; zero new C bytes. Existing large scheduling blockers not repeated.
+
+## [2026-10-20] query | T-24512 ENDING source handoff
+
+[[tickets/T-24512-ending]] records all bounded causal outcomes in
+`drafts/T-24512/README.md`; [[families/ending-family-results]] has the330E4 frame
+lead. Full-unit scorer scores are diagnostic, no match claims. Production C,
+headers and compiler unchanged. Full baseline checksum/guard verification runs
+in Docker with immutable original disc mounted read-only.
+
+## [2026-10-20] build | T-24512 verified research handoff
+
+[[tickets/T-24512-ending]] moves In Progress -> In Review. Docker baseline build
+and explicit manifests pass27/27, header/global guards pass, prototype branch
+check has0 new disagreements (15 known). Archived reproduction scripts pass
+py_compile; standards/spec self-review and diff check pass. Production diff is
+empty, zero new C bytes. Research archive preserves the unresolved330E4 frame
+lead, without changing existing scheduler guards.
