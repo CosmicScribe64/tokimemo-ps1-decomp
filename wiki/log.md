@@ -2138,3 +2138,7 @@ func_8014FFDC now matches 2,292 linked bytes in default C. Shared loop locals, e
 ## [2026-10-20] ticket | Start isolated overlay matching coordination
 
 [[tickets/T-24510-parallel-overlay-coordination]] coordinates three user-authorized Sol 6.1 medium workers: TEL T-24511, ENDING T-24512, ETC T-24513, from main `23e1a20fb`. Separate /private/tmp trees and overlay-only ownership; no coordinator compiler workload. Read [[status]], [[playbook]], standards, and TEL/ETC negative-history tickets before dispatch. Main integration and MAIN/TACO/GEKO-OPTION work remain with the parent chat. No new verified match claimed.
+
+## [2026-10-20] build | Five verified matches integrated to main
+
+[[tickets/T-24500-completion-orchestration]] integrated MAIN func_800654D0, TACO func_80140028 and func_8014FFDC, GEKO func_80134808 and func_80133308 through source head e51680da0: five functions, 5,280 bytes. Each integration independently passed 27 SHA1 checks, default-C linked proofs and header/global/prototype guards. Docker progress now reports 6,798/6,952 functions and 2,072,284/2,276,920 bytes (91.0%); [[status]] updated. [[tickets/T-24510-parallel-overlay-coordination]] handoff published at b128b443b; six Sol workers span MAIN, TACO, GEKO/OPTION, TEL, ENDING and ETC. Latest read-only GitHub check found issue #65 unchanged and no open PR; contributor still unavailable until Friday. Bounded Astra consult for GEKO func_80133024 found no new source hypothesis; preserve the two-row checkpoint and avoid further blind grids.
