@@ -2154,6 +2154,7 @@ void func_8004A734(void);
 void func_8004A764();
 void func_8004A7C4();
 void func_8004A7F4();
+void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 #ifndef MAIN_API_OVERRIDE_func_8004A8EC
 void func_8004A8EC();
 #endif

@@ -10,6 +10,7 @@ void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     s32 r;
     s32 g;
     s32 b;
+    s32 abs_y;
 
     red = (u32)(arg5 & 0xFF0000) >> 16;
     green = (u32)(arg5 & 0xFF00) >> 8;
@@ -36,11 +37,14 @@ void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
                     /* The target uses the x step for both dimensions. */
                     setWH(tile, arg3, arg3);
                     abs_x = abs(arg0 - x);
-                    r = (s32)((arg2 * 2 - abs(arg1 - y) - abs_x) * red) / arg2;
+                    abs_y = abs(arg1 - y);
+                    r = (s32)((arg2 * 2 - abs_y - abs_x) * red) / arg2;
                     abs_x = abs(arg0 - x);
-                    g = (s32)((arg2 * 2 - abs(arg1 - y) - abs_x) * green) / arg2;
+                    abs_y = abs(arg1 - y);
+                    g = (s32)((arg2 * 2 - abs_y - abs_x) * green) / arg2;
                     abs_x = abs(arg0 - x);
-                    b = ((arg2 * 2 - abs(arg1 - y) - abs_x) * blue) / arg2;
+                    abs_y = abs(arg1 - y);
+                    b = ((arg2 * 2 - abs_y - abs_x) * blue) / arg2;
                     if (r >= 256) {
                         r = 255;
                     }
