@@ -16,3 +16,9 @@ python3 tools/funcdiff.py --built build/T24502/dee4-replay.o --resolve TACO:func
 ```
 
 The scratch context only shadows the legacy void declaration: target explicitly produces -1 at the distance exit, and the existing T-19028 draft therefore uses s32 with fallthrough elsewhere. Production header/callers have not changed. A later matching promotion must correct the own header declaration and prove all callers/default bytes.
+
+Final zero-initializer check: chained rot=o=q=0 worsens70 to72; pair o=q=0, comma-separated initialization and same-line grouping each remain70 (336 aligned words). Frozen for the parent's bounded frame/counter consult; no further initializer grid.
+
+Scope correction after independent full-TU consult: the70 metric and post-projection alignment above apply only to standalone context.c. The same335-real-instruction body in the full TU scores69 with337 padded words, even with all other NON_MATCHING guards disabled. Full TU additionally allocates distance s1 instead of target s2, kind/mode together at5C instead of original kind80/mode64, and loses retained constants5/4. Do not claim standalone post-projection alignment transfers, or infer a real instruction gain from padded word counts. All future probes must use the full TU.
+
+Independent bounded consult (/private/tmp/tokimemo-dee4-consult/RESULT.md): deriving byte offset from count219/frameE0; latch order o++,rot+=step,q+=4 stays69 but fixes arithmetic temporary roles only; incrementing count in the condition127. None matches; no production/header changes or literal proof attempted. Exact private full-TU replay is /private/tmp/tokimemo-dee4-consult/run.py, with default_context.py checking guard selection and standalone.py reproducing this packet. No new initializer/loop grid justified.

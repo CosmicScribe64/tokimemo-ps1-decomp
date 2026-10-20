@@ -2197,3 +2197,11 @@ MASTER func_80135FB8 is main ca34dcf7f after root review, literal1084-byte proof
 ## [2026-10-20] decision | T-24503 recover the GEKO birthday-check frame
 
 [[tickets/T-24503-geko-option-completion]]: func_80132B24 now has a separate cost 73 source candidate with frame 0x50 and exact table offsets, using the packed record field directly and retaining the real day home. The cost 61 production guard still has frame 0x58. Further return-coalescing and register differences remain. Bounded sibling/type/control-flow tests did not close it; archived source and replay preserve the structural repair without a match claim.
+
+## [2026-10-20] decision | T-24502 projection handoff and carousel lifetime probe
+
+Final DEE4 zero-initializer probe is negative: chain72, pair/comma/group70; packet frozen for the parent's independent frame/counter consult. Proceeding39FB8 without repeating old shared-sine/index grids: corrected byte-table access and negation give282, scratch implicit-int font view264, bounded sine lifetime extension252. Broad allocation gap remains; production unchanged. [[tickets/T-24502-taco-completion]].
+
+## [2026-10-20] decision | T-24502 full-unit scope correction and carousel packet
+
+Independent DEE4 consult finds additional post-projection allocation differences in full TU69 despite default guards; standalone70 claims qualified, three loop hypotheses negative.39FB8 fresh lifetime change lowers first-loop sine priority10 to3.5; full-TU baseline280 becomes216, shared preheader web198 with remaining broad register/scheduling differences. Source-only replay packet and concise bounded negatives saved, no production/header changes or new coverage credited. [[matching-notes]] and [[tickets/T-24502-taco-completion]].
