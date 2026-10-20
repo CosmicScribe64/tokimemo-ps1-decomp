@@ -2159,3 +2159,15 @@ Parent final SDK declaration review passes; removed the extra blank line at the 
 ## [2026-10-20] decision | T-24502 projection donor packet frozen
 
 DEE4 semantic donor E778 plus recovered local order and canonical inner loop improves370-row prior draft to70cost, with original frame/major homes and saved-register allocation. Archived concise body/context/NOTES under drafts/T-24502/TACO; outer counter homes/zero web remain and one extra real instruction prevents a close guard. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record the exact boundary and bounded negative probes for a later narrow consult. Production unchanged.
+
+## [2026-10-20] ticket | T24519 MASTER animation sibling transfer
+
+Created [[tickets/T-24519-master-sibling]] before probes on pinned9013099115dc8cc3ff07a98061a39d32ff95fe0c in isolated /private/tmp/tokimemo-t24519. Transfer recovered363F4 indexed clone/point lifetimes plus real RNG local into344E0's own flow; no repeated copy-end investigation or broad grid. Read current index/status/playbook and T24048/T24517 history; modest j2 Docker/read-only original disc.
+
+## [2026-10-20] build | T24519 indexed sibling transfer restores frame
+
+MASTER baseline SHA1 passed. T24048 control428/730 positions versus728 target; recovered363F4 indexed clone/point loops with existing i/value locals give338/728,64-byte frame and289 exact diagnostic prefix positions. Preserved own344E0 early/late cases in narrow drafts/T-24519 source. [[tickets/T-24519-master-sibling]] remains In Progress; no C match or copy-end probe.
+
+## [2026-10-20] build | T24519 MASTER344E0 structural checkpoint
+
+Sibling transfer restores64-byte frame, clone/speed spill34 and point30,728 positions and289 exact diagnostic prefix. Corrected-mask replay reports171 register-only rows/0 other rows; later430..727 has a consistent bijection across calls and counter v1 agrees. First residual is the known aligned-copy end relation; no copy-end probe repeated. Narrow source/replay/map retained; production diff empty, MASTER SHA1/header checks pass. [[tickets/T-24519-master-sibling]] moves to In Review after standards/spec self-review; no C match or full27 claim.

@@ -151,3 +151,7 @@ Narrow compiling bodies, exact controls and Docker replay live in
 `drafts/T-24514/`; no full-TU context or original assembly dump is retained.
 Production and headers are unchanged.326B4 historical correct-frame source
 rescores538; its known selector-promotion blocker was not exhaustively retried.
+
+## T-24519 reverse sibling transfer
+
+[[tickets/T-24519-master-sibling]] transfers recovered363F4 indexed clone/point loops and the real RNG local back into344E0's own flow. T24048 control428/730 positions/frame72 becomes338/728/frame64, with289 exact diagnostic prefix positions,171 register-only rows and0 other rows. Clone/speed spill34 and point30 match. First residual is the already-consulted aligned-copy end relation; the later register mapping is consistent across calls, and no independent source issue is established. No copy-end probes, production changes or new C bytes. Narrow source/replay/map: `drafts/T-24519/`.

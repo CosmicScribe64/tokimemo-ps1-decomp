@@ -79,6 +79,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24519-master-sibling|T-24519 Transfer recovered MASTER animation sibling lifetimes]]
+
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 
 - [ ] [[tickets/T-24516-overlay-family|T-24516 Reconstruct BUNKA_SD EN_NICHI KANGEI functions]]
