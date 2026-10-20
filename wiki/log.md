@@ -20900,3 +20900,7 @@ Cloud packet results merged. T-24206: main `func_800590CC` (268 bytes) matches, 
 ## [2026-10-20] ticket | T-24208 In Review: MASTER func_80132444 matches (cloud packet)
 
 [[tickets/T-24208-cloud-packet-master-80132444]] created and worked in a cloud session: src/ovl/MASTER/80132140.c `func_80132444` from the T-22015 guard (22 rows) to 0 rows in the scratch row diff (size 0x270), guard removed. `*(u8 *)&D_800E7D50 |= 1; |= 2; |= 1;` before the copies: uopt promotes the byte to `$v1`, as1 folds the ORs to one `ori 3`, and the six deleted ugen temporaries put the copies in `$t1..$t3` (third OR marked FAKE). Notes in [[matching-notes]] (T-24208) and [[register-cheatsheet]]. Local linked-build proof and review due.
+
+## [2026-10-20] ticket | T-24205 cloud packet TACO func_801511C0
+
+[[tickets/T-24205-cloud-packet-taco-801511c0]] created and worked in a cloud session ([[cloud-matching]]): asm fallback proven equal in a single-function scratch compile; the guarded draft improves from 4 to 2 diff lines (inits on one source line, FAKE), no match: only the `sw a1,0x3C(sp)` store-back is late. Guard comment in src/ovl/TACO/80149F90.c updated to T-24205; note in [[matching-notes]]. Ticket In Review; the local linked build has to prove the default build unchanged.

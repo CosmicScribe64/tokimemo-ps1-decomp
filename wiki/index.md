@@ -45,6 +45,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-24204-cloud-packet-main-8006d7ec|T-24204]] cloud packet, main `func_8006D7EC`: no match, guard stays at 1 row (uopt folds the first `idx++` in every form), In Review.
 - [[tickets/T-24208-cloud-packet-master-80132444|T-24208]] cloud packet, MASTER `func_80132444` 22 rows -> instruction match (FAKE third OR on the `D_800E7D50` byte), In Review.
 - [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200]] cloud packet pilot, TACO `func_8013B460` 41 -> 2 rows guarded, toolchain recipe in [[cloud-matching]], In Review.
+- [[tickets/T-24205-cloud-packet-taco-801511c0|T-24205]] cloud packet, TACO `func_801511C0` guarded, 4 -> 2 diff lines (only the `sw a1` store-back is late), In Review.
 - [[tickets/T-24063-taco-short-count|T-24063]] TACO corrected buffer source and refreshed controls, zero matches, In Review.
 - [[tickets/T-24060-shugaku-short-selectors|T-24060]] SHUGAKU52/62-row corrected source leads, zero matches, In Review.
 - [[tickets/T-24059-short-copy-siblings|T-24059]] two short copy-chain matches328 bytes, independently verified on main, Done.
