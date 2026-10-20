@@ -2087,3 +2087,7 @@ entries restored after rotation.
 ## [2026-10-20] build | T24517 MASTER326B4 structural checkpoint
 
 Fresh unchanged MASTER baseline checksum passed on036407cd5. Read T22015 history before probes. Corrected stale fadeout argument and girl-call load view privately; reconstructed raw case4 selector lifetime with source-backed reloads, giving190/816 versus baseline538/832 (target816),430 exact diagnostic prefix,83 register-only and19 real placement/opcode/immediate rows. Retained narrow C/replay/map in drafts/T-24517/later; no production changes or C match. Later363F4 one-bijection map and negative Astra control preserved concisely. [[tickets/T-24517-master-flow]] remains In Progress.
+
+## [2026-10-20] build | T24517 MASTER35FB8 matched-sibling source lead
+
+Read latest35FB8 twin history. Indexed zero-fill plus actual shuffle pointer lifetime and equivalent threshold reassociation improve58->48->12, with271 target/candidate positions and232 exact diagnostic prefix; six final fade v1/v0 register rows remain. Preserved narrow candidate/replay35 before final check. Two326B4 switch/join separation controls533/807 are no gain. No C match or production change; [[tickets/T-24517-master-flow]] remains In Progress.

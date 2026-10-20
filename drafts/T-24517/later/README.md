@@ -64,3 +64,26 @@ No C match, production coverage gain, full27 rebuild or compiler impossibility
 is claimed. The fresh unchanged MASTER baseline checksum passed. The narrow body
 and replay compile in Docker. Self-review against standards/spec found no raw ASM,
 binary/ucode dump, duplicated context, invalid C or unintended production changes.
+
+## Closest matched-sibling follow-up:35FB8
+
+The current matched33F80 twin source scores58 for35FB8. An indexed zero-fill
+loop restores the original initialization pointer comparison and delays saved
+s2 table-base materialization until shuffle row109, improving to48. The existing
+a pointer is then used for the shuffle itself, so no unused pointer slot remains.
+The threshold is written as shifted_stat - (0x140 - club_score), equivalent to
+shifted_stat + club_score -0x140 over these promoted16-bit operands. This recovers
+the original first-sum operand allocation and downstream t7/t8 order, giving12.
+
+Target and candidate each contain271 instruction positions;232 leading diagnostic
+keys are exact. The only six different instruction rows are232,233,235,236,240,243,
+each replacing target v1 with candidate v0 in the final fade load, decrement,
+mask and clamp. All opcode/immediate positions agree under the corrected mask.
+These are six register-only rows, not271 exact-equal rows and not a linked match.
+The existing scalar probability-byte FAKE views remain marked with reason/tickets.
+
+No-gain controls: matched-twin sum operand order58, split stat local48, canonical
+scalar fade symbol48. The two326B4 switch/join lifetime-separation controls each
+give533/807 and discard the correct reload structure; they are not retained.
+Replay the new narrow source with python3 drafts/T-24517/later/replay35.py in the
+same Docker setup. Standards/spec self-review finds no new archive scope issue.
