@@ -2117,3 +2117,11 @@ Recovered the old data-ownership blocker by assigning only the 64-byte initializ
 ## [2026-10-20] build | T-24501 menu palette final verification and review
 
 Fresh post-prototype 520-step build passed, explicit hashes passed 27/27 images, literal default private link proved `menu_bar_color`'s 84 bytes, headers passed, and branch prototypes report zero new disagreements (15 known). Parent reviewed the exact source/config/header change and data boundaries with no blocking standards findings. Removed the cosmetic blank after the marked FAKE mask; literal proof rebuilt the final source. [[tickets/T-24501-main-tail]] remains In Progress for further MAIN work.
+
+## [2026-10-20] decision | T-24501 park status display stack reconstruction
+
+Recovered the four timestamps/color array and by-value RECT call for `func_8004443C`; bounded order/gap/grouped-record variants leave broad allocation and home differences. Archived clean cost-109 scratch body, exact target/build homes, and declaration requirements in `drafts/T-24501/main/func_8004443C.c` and [[matching-notes]]. Production C and shared headers unchanged; [[tickets/T-24501-main-tail]] stays In Progress.
+
+## [2026-10-20] decision | T-24501 bound key-ring alias follow-up
+
+Local struct views of the canonical two-symbol ring do not restore the position reload in `func_80075C84` (resolved cost 154 unchanged); integer-base and position-relative variants are worse. Recorded exact forms/costs in [[matching-notes]] and [[tickets/T-24501-main-tail]], with no production/header edits. Same ownership scan confirms prior mouse fix and separate sndisp blockers.
