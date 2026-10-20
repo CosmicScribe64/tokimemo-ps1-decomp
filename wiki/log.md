@@ -2066,3 +2066,24 @@ aligned68-byte direct/indirect byte-store source yields relative end+3/+2;
 source goal is target+2 without changing preceding address setup. No defect or
 impossibility claimed. Narrow source-only archive self-review/syntax/prose checks
 pass; no original ASM, binary, ucode or full context archived. In Progress.
+
+## [2026-10-20] query | T-24517 later register region lane
+
+[[tickets/T-24517-master-flow]] continues in fresh
+/private/tmp/tokimemo-t24517-later from036407cd5 while root consultation owns the
+first copy. Existing packet/source tree stays clean. Read-only later-register
+mapping will distinguish independent source differences from an inherited ring
+offset before any new compiler experiment. No old log entries restored.
+
+## [2026-10-20] query | T-24517 later map is one inherited permutation
+
+[[tickets/T-24517-master-flow]] records119 later363F4 differing rows /152 register
+fields as one stable bijection across calls. No independent later source issue
+established and no remapping fix proposed. Root Astra copy-operand control is
+negative651/cost403 with disturbed bases/prefix. Proceed to independently owned
+326B4 original-flow/packed-halfword evidence, as root authorized. No old log
+entries restored after rotation.
+
+## [2026-10-20] build | T24517 MASTER326B4 structural checkpoint
+
+Fresh unchanged MASTER baseline checksum passed on036407cd5. Read T22015 history before probes. Corrected stale fadeout argument and girl-call load view privately; reconstructed raw case4 selector lifetime with source-backed reloads, giving190/816 versus baseline538/832 (target816),430 exact diagnostic prefix,83 register-only and19 real placement/opcode/immediate rows. Retained narrow C/replay/map in drafts/T-24517/later; no production changes or C match. Later363F4 one-bijection map and negative Astra control preserved concisely. [[tickets/T-24517-master-flow]] remains In Progress.
