@@ -1,10 +1,10 @@
 ---
 id: T-24301
 title: Local list l6-p01
-status: In Review
+status: Done
 assignee: local session l6-p01
 created: 2026-10-19
-updated: 2026-10-19
+updated: 2026-10-20
 links: ["[[matching-notes]]", "[[register-cheatsheet]]", ".claude/orchestrator/lists/l6-p01-list.txt"]
 ---
 
@@ -27,3 +27,5 @@ Result: 9 matches (GYOZI func_80140464; main func_8005CA94, func_80042CB0, func_
 - 2026-10-19 checkpoint 1 (clean build 27/27, check_headers, migrate_globals --check, sync_protos --check-branch OK): 4 matches (GYOZI func_80140464, main func_8005CA94, main func_80042CB0, main func_8005A668); guards GYOZI func_80140E0C (11 rows), GYOZI func_80139E4C (15 rows, note), main func_8006C988 (11 rows); drafts in drafts/T-24301/.
 - 2026-10-19 checkpoint 2 (clean build 27/27, check_headers, migrate_globals --check, sync_protos --check-branch OK): 9 matches so far (adds OPTION func_80133010, main func_8005F730, KANGEI func_80132FF8, main func_80065F34, OPTION func_80132BA8 with a MAIN_API_OVERRIDE_func_80053D10 implicit int view); GYOZI func_80140E0C guard now 5 rows; RPG_BAT func_8014BB80 guard 22 rows (RPG_BAT_OVERRIDE_func_8013E7C0 in 8014ADD0.c).
 - 2026-10-19 wrap-up at the orchestrator's request (about 2h40m in): final clean build 27/27 and checks; ticket In Review.
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): only owned C files, notes and C drafts changed; no asm or game data; guards under 30 rows with ticketed notes. Merged with a clean 27/27 build, header/global/prototype checks and linked funcdiff MATCH for OPTION func_80132BA8. Done.
