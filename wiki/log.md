@@ -2169,3 +2169,10 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] decision | Preserve renderer recovery and bounded CD negatives
 
 [[tickets/T-24501-main-tail]] archives `func_80046AC8` typed semantic draft at738 (raw1048); source-expression lifetime restores target saved-register ranks, but frame/order/narrowing remain broad. Grouped UV/scoped-local hypotheses fail; no compiler escalation justified. Parent CD consult confirms baseline26 preferred over relative-frame repair, local reuse and grouped stores. Production unchanged; exact replay/cautions in [[matching-notes]].
+## [2026-10-20] ticket | Start focused MAIN metric-record view hypothesis
+
+[[tickets/T-24570-main-80054e6c-metric-record-view]] tracks a single fresh source hypothesis for `func_80054E6C`: the existing draft reads nine `GsRec0FC` records through `unk_0F8`, while the recovered canonical type models those records at `unk_0FC`. The hypothesis must preserve a supported 32-bit view and literal default-C proof; no source change is promoted before that proof.
+
+## [2026-10-20] ticket | Record negative MAIN metric-record view result
+
+[[tickets/T-24570-main-80054e6c-metric-record-view]] records the Docker full-TU baseline and diagnostic union-view trial: each has 84 printable diff rows and remains DIFF. The expected frame is 0x80 versus 0x40 in the C draft; the single word-view hypothesis changed allocator choices without reducing differences. The trial source was reverted. The ticket is In Review; no production or shared-header change remains.

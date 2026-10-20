@@ -58,6 +58,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
+
 
 ## Done
 
