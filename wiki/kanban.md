@@ -49,6 +49,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-11900-geko-option-closers|T-11900 GEKO and OPTION closers (claim #65)]]
 - [ ] [[tickets/T-24142-single-agent-closer-sweep|T-24142 Single-agent closer sweep (post-quota restart)]]
 - [ ] [[tickets/T-24141-main-remaining-sweep-e|T-24141 Sweep remaining unmatched functions in src/main/ (wave E)]]
 - [ ] [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers|T-24140 Wave 3 closer sweep across GEKO (12), OPTION (8), TEL (2), and OMIMAI (1)]]

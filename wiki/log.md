@@ -2069,3 +2069,7 @@ New [[index]] hub, [[status]], [[playbook]], [[tooling]], generated [[tickets/ca
 ## [2026-10-20] ticket | T-24400 Done
 
 Wiki reorganization merged: [[index]] 4.7 KB (was 135 KB), [[log]] 200 KB (was 1.9 MB), [[matching-notes]] 155 KB (was 1.7 MB); older parts in `log/` and `notes/`, lookups in [[notes/functions]] and [[tickets/catalog]]. [[tickets/T-24400-wiki-reorganization]].
+
+## [2026-10-20] ticket | T-11900 In Progress
+
+Outside-contributor claim CosmicScribe64/tokimemo-ps1-decomp#65: the remaining 11 GEKO and 3 OPTION functions (14,152 bytes), taken off [[tickets/T-24140-geko-option-tel-omimai-wave-3-closers]] for the claim. Five file-disjoint groups, two Opus agents at a time. [[tickets/T-11900-geko-option-closers]].
