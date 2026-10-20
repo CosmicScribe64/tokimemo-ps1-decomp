@@ -2238,3 +2238,7 @@ TAIIKU requested a ready tracer after structural/frame alignment. [[ending-alloc
 ## [2026-10-20] query | Pin correct fourteen-row VALEN foundation
 
 Seasonal pinnedb089e7788 after0cab47a76: correctVALEN33088 source-onlyfoundation189->14, exactannotatedbodyrecompiled14. Parent source review no blockers: C89, disjointactiveunion phases, isolatedredundantbytecast maskedtoonebit, documentedFAKE and precise branch/two-call scheduler report. Production/headers unchanged; no newcoverage or compilerlimitclaim. Ticket/board In Review, treeclean. The old incorrectguardremoval remains preserved. RPG_BAT archive d2611ea6e separately reviewedno blockers for recovered375-word modulo layout; stillnonmatching. See [[tickets/T-24520-parallel-tail-coordination]].
+
+## [2026-10-20] query | Trace fidelity and concrete array-address priority imbalance
+
+TAIIKU3E894 stock/traced text/data/relocation sections allbyteequal. Firstdivergence34 isugen; structuralextra106 is movea0,v0. Traced sharedx-indexaddressrange acrossthree stages has priority476.7 andtakesv0, beatingcamera-x100 intov1; pairrow140 alsodisplacesy0. One coherent stage-specific existingcounter source tests splitting that realixaweb, with noaddedhomes/padding. RPG_BAT retains274/206 source; applyingidentity tooldseparatequotient source worsens447/231, so tracefirst currentbest beforemorevariants. Suggested initialunsignedmemoryview onlyiftraceproves sharedinitial/loopquotient lifetime, retaining signedmath. No productioncoverage. See [[tickets/T-24520-parallel-tail-coordination]].
