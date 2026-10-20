@@ -2853,3 +2853,6 @@ Root reassigns TACO EAA4 in existing clean worktree. Read latest notes and origi
 ## [2026-10-20] decision | T-24502 EAA4 structural handoff
 
 Real middle row use plus separate height/width recover independent row count, height spill and saved Y/stride; third Y512 endpoint recovered. Full-TU491-word candidate has aligned cost186 and192 positional rows, predominantly real home differences; original121 control retained. Source-only replay, home/size/lifetime table and twelve non-stack-word classification saved; no new compilation merely for handoff. No padding/zero controls, production changes or coverage credit. [[tickets/T-24502-taco-completion]] and [[matching-notes]].
+## [2026-10-20] decision | Preserve inverse serializer copy-ring packet
+
+[[tickets/T-24501-main-tail]] recovers `func_80054FC0` record copies and natural byte checksum; unsigned counter restores target multiply shape. Source-only 113/200 words versus 199 target, first 45 resolved rows exact, frame 0x28. Explicit return-ABI controls unchanged. Narrow unrolled-copy temporary and epilogue evidence/replay archived; production remains ASM. Parent requested freeze for consultation. See [[matching-notes]].
