@@ -693,3 +693,7 @@ Default-C complete-TU private literal link equals all1,028 target bytes, affecte
 ### T-24501 font upload cell split trace
 
 Single-row consultation232->226/196 independently confirmed; natural a0 call spill corrects earlier shadow requirement. Faithful ordinary/traced functions agree for226 and merged248. Outer cell priority1.8/a1 versus-0.2/uncoloured follows four versus three BB14 uses; both controls split around calls. Target has only the three real uses (width, height, row Y); fourth shadow-copy use has no omitted-source justification. Freeze, no new forms. Source-only details: drafts/T-24501/main/mod_trans_vram-notes.md. Production unchanged.
+
+### T-24501 get_fnt raster and mirror recovery
+
+Natural byte raster/mirror reconstruction343->23 resolved cost,258words versus259target. Proven256B temporary, byte row stride, fixed eight-byte horizontal permutation and correct8/16 vertical rowcounts replace inherited invalid array/wordcasts/manual unroll. Separate raster/shared mirror counter restores all saved roles and raster/vertical flow. Remaining frame188/1A0, buffer88/8C, late exit/move and multiply-order differences frozen for bounded consultation. Source-only packet/replay drafts/T-24501/main/get_fnt-notes.md; production/header unchanged.

@@ -2236,3 +2236,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] decision | Correct font upload row inference and trace cell splitting
 
 [[tickets/T-24501-main-tail]] adopts single-row226/196 and independently confirms full TU. Ordinary/traced functions agree for226/248. Outer cell1.8/-0.2 priorities explain a1 versus stack-only, while inner ranges spill in both; target has no omitted fourth use. Row-shadow inference withdrawn, no artificial use/new variant/production edit. Source-only packet retains controls; get_fnt nominated for concrete buffer/cursor recovery. See [[matching-notes]].
+
+## [2026-10-20] decision | Recover glyph raster and mirror loop semantics
+
+[[tickets/T-24501-main-tail]] reconstructs get_fnt256B byte raster and natural mirror loops; full-TU343->23/258words versus259target, all saved roles recovered. Vertical old-count control verified8/16 rows. Shared-mirror/separate-raster ownership removes double-unroll and extra constant lifetimes; negatives preserved. Frame/home and late-expression residuals frozen for consultation, no production/header/compiler changes. See [[matching-notes]].

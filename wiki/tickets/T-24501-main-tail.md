@@ -109,3 +109,5 @@ TILE adopted real abs_y local reaches94/257 with every stack home/saved role exa
 `mod_trans_vram` proven256B/20B object recovery: typed232/196 words/exactframe1A0, target188. Reduced row/cell control loses target ownership; direct switch fixes selector promotion. Compact packet/replay and exact caller/homes evidence archived for bounded consultation; no production/header change.4A414 cast transfer negative by inspection, no compile. See [[matching-notes]].
 
 Font upload single-row226/196 adopted; faithful allocator comparison confirms cell splits in both controls, outer colouring differs with redundant copy use. Target has no omitted fourth use. Frozen source-only packet retains232/reduced controls; production unchanged. See [[matching-notes]].
+
+get_fnt1036B reconstructed343->23/258words(target259). Actual256B raster, byte cursor, correct vertical rowcount and natural compiler-unrolled fixed8B mirror recovered. Counterownership controls archived; no dead slots. Narrow frame/late-expression packet ready for consultation. Production unchanged; see [[matching-notes]].
