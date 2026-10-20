@@ -38,6 +38,8 @@ ever committed, pushed or quoted in issues/PRs. Before every commit: `git status
 
    The full build (old-gcc, IDO 5.3/7.1 release binaries, asm-processor, permuter, objdiff) took
    about 8 minutes. The CA is only in the cloud image; never commit this Dockerfile variant.
+   If the build stops at `ubuntu:22.04` with `429 Too Many Requests` (Docker Hub rate limit),
+   retry `docker pull --platform linux/amd64 ubuntu:22.04` with a short backoff, then build again (T-24207).
 
 3. Each `tools/docker.sh` call is a fresh container: only the repo (`/work`) persists, so
    write objects under the gitignored `build/` (e.g. `build/t24200/`), not `/tmp`.
@@ -67,6 +69,11 @@ A one-variant loop (splice a body file into the C file, `cc.py`, diff) takes abo
 `tools/autotweak.py` runs (stripped fastscore compile) but its score is not usable here: it
 reported 160 for a draft the scratch diff put at 4 lines, so do not trust its ranking without the disc.
 `regdiff` needs the traced uopt (not built here).
+
+`tools/permute.py setup UNIT:func --src <scratch NON_MATCHING copy>` then `run --no-verify` works
+disc-free: its target is the packet `.s`. Score 0 is unreachable when the original names a
+split symbol (`D_800E7200` for `D_800E6280+0xF80`); read the candidate's `diff.txt` and
+confirm with `funcdiff --expected` (T-24207, found both FAKEs in about 10 minutes).
 
 Single-function packets (the file is too big to send whole, [[tickets/T-24203-cloud-packet-geko-80136c20]]):
 compile a scratch copy under `build/scratch/` with every other `INCLUDE_ASM`/`INCLUDE_RODATA` line

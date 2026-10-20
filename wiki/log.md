@@ -20908,3 +20908,7 @@ Cloud packet results merged. T-24206: main `func_800590CC` (268 bytes) matches, 
 ## [2026-10-20] ticket | T-24205, T-24208 Done
 
 Cloud packet results merged. T-24208: MASTER `func_80132444` (624 bytes) matches (linked proof here). T-24205: TACO `func_801511C0` stays guarded (one late argument home store).
+
+## [2026-10-20] ticket | T-24207 In Review: ETC func_80140AE4 instruction match
+
+Created [[tickets/T-24207-cloud-packet-etc-80140ae4]] (cloud packet) and moved it to In Review: `func_80140AE4` in `src/ovl/ETC/8013FF80.c` from the T-24129 guard (20 rows) to an instruction match in the scratch single-function `funcdiff`; guard and `INCLUDE_ASM` removed. FAKE: `(f() == 1) != 0` costs the missing ugen temporary; `do { func_80140E80(); } while (0);` puts `D_801500DC` in `$v0`. Both found with `tools/permute.py` on the packet `.s`. Notes in [[matching-notes]] (T-24207), rows in [[register-cheatsheet]]. Docker Hub returned 429 on the first image build; a retried `docker pull ubuntu:22.04` fixed it ([[cloud-matching]]). Local linked proof and review still due.

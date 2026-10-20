@@ -92,14 +92,14 @@ void func_801408F0(void) {
     }
 }
 
-/* NON_MATCHING: T-24129, 20 rows: ugen temp rotor starts at $t7 instead of $t6 after func_80143240 call */
-#ifdef NON_MATCHING
 void func_80140AE4(void) {
     func_80140BC4();
     func_80140DC8();
-    func_80140E80();
+    /* FAKE: do-while block puts D_801500DC in $v0 instead of $a0; real source unknown. T-24207 */
+    do { func_80140E80(); } while (0);
     if (D_801500DC == 0) {
-        if ((func_80143240() == 1) && (D_800E6280.unk_F80 & 0x09000000)) {
+        /* FAKE: `!= 0` costs one ugen temporary and no code, so the rotor starts at $t7. T-24207 */
+        if (((func_80143240() == 1) != 0) && (D_800E6280.unk_F80 & 0x09000000)) {
             if (D_801500D8 != 1) {
                 func_80044750(0x50E);
             }
@@ -116,9 +116,6 @@ void func_80140AE4(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013FF80", func_80140AE4);
-#endif
 
 s32 func_80140BC4(void) {
     s32 r;
