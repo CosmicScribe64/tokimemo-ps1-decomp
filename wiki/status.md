@@ -9,9 +9,9 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,810 / 6,952 functions, 2,085,476 / 2,276,920 bytes (91.6%), measured with Docker `tools/progress.py` after source integration `8253c1d73`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,811 / 6,952 functions, 2,086,968 / 2,276,920 bytes (91.7%), measured with Docker `tools/progress.py` after source integration `735e50bd9`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (142 functions): main 57, TACO 14, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 4, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining by unit (141 functions): main 57, TACO 13, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 4, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
@@ -23,6 +23,8 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 - Eight additional matches are pushed through `3741db7e2`: RPG_BAT `func_801447E0` (924), TAIIKU `func_80134060` (1,348) and `func_80134F98` (1,256), SHOUGATU `func_80133B44` (408), GYOZI `func_80140F90` (788), TACO `func_8014CB24` (1,756) and `func_80144E3C` (1,888), MAIN `menu_bar_color` (84). Resumed-run total: **16 functions / 17,276 bytes**. All have root integration checks for 27 hashes, literal default-C output and declarations. New donors are being checked against remaining siblings; the earlier global sweep found no automatic twins.
 
 - MAIN `func_80076000` adds 1,196 verified bytes at `8253c1d73`: current resumed-run total **17 functions / 18,472 bytes**. The corrected packed field and explicit flag extraction close a previously broad register mismatch. Header placement review resolved; all 27 integration hashes, literal default-C proof and declaration guards passed. MAIN/GEKO/TACO diagnostic archives are also preserved through `3c8582d6a`, without extra coverage.
+
+- TACO `func_8013A790` adds 1,492 verified bytes at `735e50bd9`: current resumed-run total **18 functions / 19,964 bytes**. Root checks cover all 27 hashes, literal default-C output and declaration guards. Source-only MASTER copy-state consultation and deeper GEKO scene reconstruction are preserved through `036407cd5`; neither is counted as a match. Active Sol workers continue; Astra is inspecting MASTER's isolated copy-end issue, with MAIN767A4's stack-only issue queued.
 
 - Local matching sessions on file-disjoint lists: T-24301, T-24302, T-24303 merged (5 matches); next lists from a fresh inventory. Lists: `.claude/orchestrator/lists/l6-p0N-list.txt` (local).
 - Cloud "match packets" ([[cloud-matching]]): T-24200..T-24214 done, 7 matches; paused (cloud usage spent).
