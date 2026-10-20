@@ -2194,3 +2194,15 @@ Moved [[tickets/T-24523-seasonal-source-hypotheses]] back to In Progress at the 
 ## [2026-10-20] ticket | Return seasonal donor pass to review
 
 Moved [[tickets/T-24523-seasonal-source-hypotheses]] from In Progress to In Review after the bounded donor pass; kanban matches. The earlier four pins remain unchanged. No further compiler work queued.
+
+## [2026-10-20] ticket | Reopen structural seasonal work
+
+At the root's explicit request, moved [[tickets/T-24523-seasonal-source-hypotheses]] back to In Progress. Read T-19016 and T-16930 before selecting a new VALEN location/background control/aggregate hypothesis. Previous failed donor ports and exhausted scheduler grids remain excluded.
+
+## [2026-10-20] query | Correct VALEN location draft reaches fourteen edits
+
+[[tickets/T-24523-seasonal-source-hypotheses]] reconstructs the correct func_80133088 location/background function from T-19016: current baseline189, forward labels173, isolated player-byte narrowing127, middle-only GameState pointer54, scoped frame50, union lifetime sharing14. Exact annotated source under drafts/T-24523/VALEN recompiles at14. Remaining dispatch orientation and two copy-call argument/id-spill orders are documented without listings. Production fallback and headers unchanged; no new coverage or compiler-limit claim.
+
+## [2026-10-20] decision | Review corrected fourteen-edit VALEN foundation
+
+Parent and self review of drafts/T-24523/VALEN/func_80133088 found no blockers: C89, safe disjoint union phases, documented FAKE choices, exact annotated14-cost reproduction, precise source-level blockers and no listings/assets. Production/header diff remains empty. [[tickets/T-24523-seasonal-source-hypotheses]] returns from In Progress to In Review with matching kanban; coverage remains two exact functions/1,196 bytes.
