@@ -2471,3 +2471,131 @@ Parent independently reviewed the 37784 archive with no blocking code finding; r
 ## [2026-10-20] decision | Consolidate TAIIKU archive ancestry
 
 Private consolidation from main4c5cd6524 now merges coordinator5090e769f and TAIIKUbb1abd853. Preserved current main progress/all unrelated board cards and appended incoming log sections; normalized only T-24520..T-24523 to their merged ticket frontmatter. Source-only geometry/runner archives add no coverage, no production/header change beyond already integrated matches, no history renamed. Root retains full final verification.
+
+## [2026-10-20] query | T-24522 preserve remaining RPG_BAT lead
+
+Preserved annotated28-row `func_80144C84` source-only draft and bounded negative results in drafts/T-24522. `func_8014BFE4` actor/argument-pointer forms were worse; recent DD8/5528C history provided no fresh targeted hypothesis. No further coverage claimed. Lane has two verified matches,2,048 bytes; four remain assembly. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] ticket | T-24522 lane archive In Review
+
+Moved [[tickets/T-24522-rpg-bat]] and its board card to In Review. Two production matches passed independent source review and verification; complete lane evidence and28-row source-only draft await coordinator archive review.
+
+
+## [2026-10-20] query | T-24522 residual dependency map and archive review
+
+Coordinator reviewed1564d1bf1 source archive with no blockers. Read-only analysis mapped `func_80144C84`'s first moved EBE0 load and its third-arm threshold-to-clamp register carry/reload difference. Recorded one untested local-aggregate snapshot hypothesis without a compiler run. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 threshold snapshot folded away
+
+Tested the coordinator-approved two-word local aggregate snapshot in three meaningful forms at j1. All34/34 retain the original28-row `func_80144C84` gap plus6 spill-offset differences. No production change; kept the28-row source-only draft. Results and minimal dependency blocker added to drafts/T-24522/README.md and [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] ticket | T-24522 fresh donor pass In Progress
+
+Reopened [[tickets/T-24522-rpg-bat]] and moved its board card to In Progress at coordinator request. Compare only newly matched BB80/447E0 donors against the four remaining RPG_BAT targets using original normalized instructions, then inspect closest source templates. No broad grid or repeated C84 arithmetic transplant.
+
+
+## [2026-10-20] query | T-24522 fresh donor pass negative
+
+Recorded all8 original-normalized BB80/447E0-to-remaining-target ratios and inspected the best source-template pair per target. The only useful447E0/C84 arithmetic transfer was already applied; other short overlaps do not support a new source transplant. No compiler runs or new coverage. Returned [[tickets/T-24522-rpg-bat]] and board to In Review; full evidence in drafts/T-24522/README.md.
+
+
+## [2026-10-20] ticket | T-24522 aggregate path reconstruction In Progress
+
+Reopened [[tickets/T-24522-rpg-bat]] at coordinator request for continued structural work on DD8/5528C. Read T-24027, T-17106 and T-17114 history. New DD8 ownership evidence: denominatorEC68 is RpgRec18 D_EC58.unk10, already used canonically by matched801321D0.c. Proposed typed path pointer and shared quotient scalar replace inherited fake homes; no no-op-reference grid or compiler patch.
+
+
+## [2026-10-20] query | T-24522 DD8 canonical path probe
+
+Canonical RpgRec18 duration ownership and typed path pointer preserve326/288; real shared quotient331/293 worsens frame and does not establish the desired quotient lifetime. Approved one fresh explicit shared-call CFG source test from the original branch graph. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 interval accumulator and clamp ownership
+
+`func_8015528C` shared start accumulator plus direct lower-bound product improves302/246 to298/242. Original-derived clamp graph inspection identifies m2c cross-arm zero-block sharing and modulo factoring as a broad remaining structural difference. Testing one independent-clamp successor reconstruction; see [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 branch graph hypotheses fold
+
+DD8 shared sound label remains326/288. Independent 5528C start clamps worsen368/268 and still sink modulo into one merged block; source goto sharing is insufficient explanation. Recorded a single domain-proven signed-byte remainder hypothesis before compilation. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 modulo duplication source cause isolated
+
+Asymmetric s8 and conditionally approved s16 remainder views each restore original duplicated modulo blocks and saved-register ownership in5528C, but retain real extensions (408/246). Recorded the positive causal evidence without a match claim. Testing exactly one coordinator-approved multiply-by-one expression wrapper, not an identity grid. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 branch-local modulo restored
+
+One first-arm remainder-times-one expression keeps target's duplicated modulo blocks with zero extension instructions, restores saved-register ownership and exactly375-word length. Current source-only lead274/206, still nonmatching. Recorded next real start-accumulator sharing hypothesis before compilation. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 preserve structural modulo lead
+
+Preserved canonical DD8 source326/288 and improved5528C source274/206 with original375-word length and duplicated modulo blocks. Recompiled exact archived5528C text after local renaming. Initial/loop raw-value sharing worsens412/392 and is rejected. No production changes. Evidence and FAKE documentation: drafts/T-24522/README.md, [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 work-base lifetime hypothesis
+
+Coordinator source review of d2611ea6e has no blockers. Mapped original versus current5528C EBAC base lifetimes and proposed a single post-join initializer change before compilation, with no adjacency assumption or declaration grid. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 validated first allocation conflict
+
+Existing read-only traced uopt produces exact stock1500-byte candidate and resolved instruction keys. First-conflict diagnosis identifies initial work-base priority0.5, raw-progress1.5 and competing named phase-decrement3. Initial value has no loop-quotient sharing, so no signed-view split was attempted. One direct-counter hypothesis tied to this trace was proposed; evidence in [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 direct phase counter reaches53 rows
+
+Validated first-conflict diagnosis leads to53/53 in5528C by replacing named phase_next with direct actual phase update. Initial registers now match. Original extra quotient/product locals worsen; pointer spelling unchanged. Proposed narrower raw-progress/loop-quotient sharing without added homes. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 preserve53-row helper and new MAIN donor scores
+
+Preserved source-only5528C53/53 plus exact stock/tracer byte evidence and failed causal ownership variants. Compared only the two new MAIN originals against the four remaining RPG_BAT targets; top similarities are generic division traps, with no new structural transplant. MAIN76000 source does not share current packed-field blockers;767A4 source pin pending. Full metrics: drafts/T-24522/README.md and [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 repeated quotient restores loop range
+
+Repeated quotient expressions in5528C produce64 literal/32 aligned, exact375 words, quotient v0 and selector v1; all instructions after106 match. Proposed one independent end-candidate/phase-sum computation reorder to resolve the remaining swapped ranges and ugen numbering. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 helper down to two pointer operand swaps
+
+Independent expression ordering and original arm-local modulo/assignment ordering reduce5528C to4 literal/4 aligned, exact375 words. Preserved best source and prior53-row checkpoint; production remains ASM. Approved index-times-one composition regresses230/210 with initial base/raw/pointer allocation changes; no identity grid. See [[tickets/T-24522-rpg-bat]] and drafts/T-24522/README.md.
+
+
+## [2026-10-20] query | T-24522 bounded pointer normalization negatives
+
+Two authorized addressing forms fail: byte-offset230/210, integer-address373/229. Best5528C4/4 remains source-only; only initial pointer-add operand orders differ. Recorded first ownership shifts and stopped addressing variants for coordinator consult. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 integer address role normalization
+
+Coordinator reviewed430699874 with no blockers. Final source peek of MAIN767A4 finds only unrelated buffer/frame layout, no new donor transplant. Existing p545 output does fix both initial pointer-add operand roles to base-first, while splitting initial/postjoin phase owners; uniform expression ownership is a concrete uncompiled follow-up, not established uopt evidence. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 uniform scalar addresses restore register roles
+
+One authorized uniform scalar-address form produces41/39 and fixes all register and pointer-operand roles. Residual is save/restore and correction-store scheduling plus one nop. Preserved separately from best4 source, with no coverage change. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 distinct C84 read-class hypothesis
+
+After freezing5528C, reviewed the precise C84 load dependency and prior negatives. Proposed one full-width signed bit-field read view at the two missing reload sites, leaving plain stores/clamps unchanged. No compile yet; the view would be FAKE. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] query | T-24522 C84 full-width read view negative
+
+Single authorized signed32-bit bit-field read view gives28/28 and byte-identical baseline diagnostic. No read dependency/extraction survives, so missing reloads remain unresolved. Rejected with no further variants. See [[tickets/T-24522-rpg-bat]].
+
+
+## [2026-10-20] ingest | T-24522 ordinary pointer-update consult source
+
+Archived only the root consult's C89 sequential pointer-update body at41/39,376 words, with received hash/provenance and corrected metric comment. Consult resolved rows exactly equal integer-address alternative; casts are unnecessary for operand roles. Best4 unchanged, no new compiler runs or coverage, no generated diagnostics/assets archived. See [[tickets/T-24522-rpg-bat]] and drafts/T-24522/README.md.
+
+## [2026-10-20] decision | Consolidate RPG_BAT archive ancestry
+
+Private consolidated head now includes RPG_BAT2781edac6, retaining frozen4-row source430699874, validated allocator evidence, ordinary C89 pointer-update alternative and bounded consultation negatives. Source archives only, no production/header changes or new coverage. Existing lane history retained; current board cards preserved and owned statuses normalized from tickets. Root will perform final integration checks.
