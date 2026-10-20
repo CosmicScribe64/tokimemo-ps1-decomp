@@ -2363,3 +2363,111 @@ Reviewedarchiveheads: TAIIKUcfe2082d5 (afterfef889358/4b7709f3c), RPG_BAT2781eda
 ## [2026-10-20] query | Archive heads ready while one precise field correction proceeds
 
 Currentcleanheads TAIIKUbb1abd853 (aftercfe2082d5, reviewedsource-only37784 and no-compileF3A4triage), RPG_BAT2781edac6 (best4frozen430699874, ordinarypointer41alternative plusconsultnegative), seasonaldcc4dc9aa (after3df47857c/880e65ad6). Seasonal7guardsemanticprovenanceaudit finds sixfamily/control/callsets correct and one concreteSHOUGATU3E50C wrongfield: draftGameState+F8 versusimmutable+10F8; baselineplusonlyfieldfix scratchtestauthorized, no productionchange/coverageyet. Rootrequestedcompactconsolidationwithoutwaitingactualmatch; tickets stayInProgress. Source-onlycode review no blockingfinding; non-T-prefixed archive commit titles notedfornormalizationbeforeDone withoutrewritingpublishedpinsduringintegration. See [[tickets/T-24520-parallel-tail-coordination]].
+
+## [2026-10-20] build | T-24521 runner display source-only variants
+
+Three natural typed forms of `func_80137C44` compile with real DIFFs but do not improve prior evidence. Snapshot locals are sunk by uopt; original global hoists and saved-register allocation remain. Preserved the bodies in `drafts/T-24521/TAIIKU/func_80137C44/`, restored production INCLUDE_ASM, and retained two verified matches only. See [[tickets/T-24521-taiiku]].
+
+
+## [2026-10-20] build | T-24521 selection initializer source evidence
+
+The fresh typed `func_80135F3C` body compiles but remains543 diagnostic rows from target; frame and selector-loop allocation differ. Preserved source-only evidence and the known missing rejected-player store, then restored production/header. No coverage gained. See [[tickets/T-24521-taiiku]].
+
+
+## [2026-10-20] build | T-24521 grid loop granularity evidence
+
+Tested an explicit two-column source loop in `func_80139AB0`: it stays rolled but IDO strength-reduces products into many induction ranges. Narrow counters prevent that optimization but retain sign extensions and allocation differences. Preserved228/194-row source-only variants and restored production INCLUDE_ASM. No compiler, flags or generated assembly changed; no new coverage. Details in [[tickets/T-24521-taiiku]].
+
+
+## [2026-10-20] ticket | T-24521 checkpoint In Review
+
+Added original copy instruction addresses, exact eleven-word data bounds and the source-user search for D_801494C4 to [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]]. The private final overlay and both literal linked matches pass after restoring all experiments. Saved three bounded source-only follow-ups with no coverage claims. Moved the ticket to In Review pending archive review; production changes already passed independent parent review.
+
+
+## [2026-10-20] lint | T-24521 archive review resolved
+
+Resolved the parent review finding by marking experimental scalar/offset views in both `func_80139AB0` source-only bodies with leading FAKE comments. Recorded the resolution in [[tickets/T-24521-taiiku]]. Production code and verified matches are unchanged; no compiler search or build was needed for comments only.
+
+
+## [2026-10-20] query | T-24521 new donor comparison
+
+Reopened [[tickets/T-24521-taiiku]] In Progress for a focused comparison restricted to the two newly matched TAIIKU donors, `func_80134060` and `func_80134F98`, against the nine remaining functions. Reuse normalized opcode similarity from `tools/siblings.py`; compile only a genuinely new structural transplant.
+
+
+## [2026-10-20] query | T-24521 donor comparison findings
+
+Completed 18 comparisons restricted to the two new TAIIKU donors and nine tails. Maximum normalized opcode similarity was0.2896 for `func_80134F98` to `func_8013DDB8`, from generic dispatch. The genuine aggregate-copy relationship to `func_80135F3C` was already used by its earlier typed draft. No new structural transplant or compiler probe was justified. Saved ranked metadata and block interpretations in [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]]. Returned the ticket to In Review; production unchanged.
+
+
+## [2026-10-20] ticket | T-24521 geometry reconstruction resumed
+
+Reopened [[tickets/T-24521-taiiku]] In Progress for a fresh `func_8013E894` reconstruction after reading the T-11010/T-11640 history. Original stack accesses establish separate four-word x/y arrays, scalar rotation inputs and two endpoint pairs. Replace archived scalar-offset walks with real arrays and pointer loops before compiling. Previous source-only and donor hypotheses remain parked.
+
+
+## [2026-10-20] build | T-24521 real geometry array ownership
+
+Fresh `func_8013E894` source uses the original two four-word coordinate arrays and typed camera/ball fields. Structural probes compile with real DIFFs; the best so far is337 rows. Original separate equal-valued loop-limit ranges and spilled angle differ from the draft's merged limits. A natural array-induction hypothesis is running; no coverage claimed. Details in [[tickets/T-24521-taiiku]].
+
+
+## [2026-10-20] build | T-24521 geometry homes and faithful allocator trace
+
+Real endpoint temporaries plus natural array induction recover the original `func_8013E894` frame and all observed stack homes without padding. Reused the existing allocator tracer read-only and verified six complete code/data/relocation sections exactly equal stock before interpreting it. The remaining source differs by two instructions; the trace identifies a common x-address range outranking camera x and a separately promoted row range. See [[tickets/T-24521-taiiku]].
+
+
+
+## [2026-10-20] decision | T-24521 geometry archive and MAIN donor checkpoint
+
+Saved real-array E894 (224 rows, exact 200-byte frame) and E1FC (548 rows, 208-byte frame) source-only checkpoints after bounded loop/ownership hypotheses; restored production. Verified existing trace against stock emitted object sections before using first-divergence ranges. Restricted MAIN76000/767A4 versus nine-tail ranking found only generic division/address/call patterns; no donor compile justified. Updated [[families/taiiku-family-results]] and [[tickets/T-24521-taiiku]]; archive awaits parent review. Coordinator explicitly keeps ticket/[[kanban]] In Progress. Focused original inspection identifies EC60's two-phase real-array geometry as a new E1FC structural sibling; no further compile yet. Two verified matches remain unchanged; no additional coverage.
+
+
+## [2026-10-20] build | T-24521 restored geometry checkpoint validation
+
+Private TAIIKU checksum and both literal default linked matches pass after restoring production. Private TAIIKU plus 26 unchanged read-only root outputs pass 27 hashes. Headers/globals pass; prototype branch check has zero new/twelve known. README deslop scan has zero hits. Standards self-review of the source-only archive finds no unresolved issue; parent review remains pending in [[tickets/T-24521-taiiku]].
+
+
+
+## [2026-10-20] build | T-24521 single EC60 geometry sibling probe
+
+Parent review of archived E894/E1FC source-only bodies and README found no blockers: real arrays, canonical camera/ball fields, no padding or new types, C89 declarations, explicit unmatched limits. Prepared one authorized EC60 transplant using E1FC's real arrays and warp/clip body, observed positive straight bounds and four camera rotations, input (0, -radius) for curved rotation, and the original actor-102 x store. Compiling once; broad residual differences will be archived without a new search pipeline. Ticket remains In Progress: [[tickets/T-24521-taiiku]].
+
+
+
+## [2026-10-20] decision | T-24521 EC60 bounded transplant stopped
+
+The single authorized EC60 real-array sibling probe remains broad: 489 diagnostic rows, frame 216 versus 200, arrays 16 bytes high, and different first-loop induction. Saved source-only evidence and restored production without further compiler searches. Updated [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]]; ticket remains In Progress at coordinator request. No additional coverage.
+
+
+## [2026-10-20] build | T-24521 EC60 restoration verified
+
+Restored private TAIIKU checksum, two literal default linked matches and all 27 hashes pass. Headers/globals pass; prototype branch check stays zero new/twelve known. Reviewed the one weak README colon hit as valid list introduction. No production/header change remains; source-only standards self-review finds no unresolved issue. [[tickets/T-24521-taiiku]] keeps the measured residuals and pending parent review.
+
+
+## [2026-10-20] decision | T-24521 EC60 archive parent review passed
+
+Parent independently reviewed the EC60 source-only body and README against the standards with no blockers: C89, real arrays/locals, existing camera/actor fields, no dummy homes or new header/assembly, and explicit unmatched/semantic limits. Recorded review in [[tickets/T-24521-taiiku]]. No further EC60 compiler work; clean checkpoint awaits coordinator reassignment with ticket In Progress.
+
+
+
+## [2026-10-20] build | T-24521 owned runner transition reconstruction
+
+Catalog inspection found only T-14500 autogenerated (493 rows) and T-16550 folded (448 rows) drafts for 1216-byte func_80137784, with raw actor offsets and an incorrect actor-count clear-loop bound. Matched same-unit func_80137EA8 and func_80138680 supply canonical actor/runner views; caller func_80136EC0 supplies CPU slot i+1. Reconstructed canonical fields and four-slot accumulator arrays (each original data symbol owns 16 bytes), corrected the three-record clear loop, and reused Fix32 for the high-half update. Shared player/cpu indexing is explicitly FAKE as in the matched neighbor. Compiling one fresh owned reconstruction under [[tickets/T-24521-taiiku]].
+
+
+
+## [2026-10-20] decision | T-24521 runner foundation remains broad
+
+The one corrected owned func_80137784 foundation compiles at 396 rows, 296 versus 304 instructions and frame 120 versus 56. First structural mismatch is shared multu stride versus pointer-index shift/add; corrected three-record clear loop rolls. Saved body/declarations under drafts/T-24521/TAIIKU/func_80137784/ and restored production/header without a view/declaration grid. Updated [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]]; no additional coverage.
+
+
+## [2026-10-20] build | T-24521 runner restoration verified
+
+Restored private TAIIKU checksum, both literal linked matches, 27 hashes and header/global/prototype guards all pass; prototype baseline stays zero new/twelve known. README deslop scan has zero hits. Source-only self-review finds no unresolved issue; no production/header diff remains. Evidence in [[tickets/T-24521-taiiku]], pending parent archive review; ticket remains In Progress.
+
+
+## [2026-10-20] decision | T-24521 runner archive reviewed and F3A4 read-only triage
+
+Parent independently reviewed the 37784 archive with no blocking code finding; recorded resolution in [[tickets/T-24521-taiiku]]. Read F3A4's T-9710/T-11010/T-11640 history and best catalog drafts before considering a probe. Original per-case actor-base reconstruction versus IDO whole-switch hoisting remains the documented blocker; per-case pointers already failed. Identified the folded first flag-clear's wrong source field, but no new causal hoisting solution. Matched F948/FC5C ownership/helper templates add no untried recipe. Updated [[families/taiiku-family-results]]; no compiler or new baseline ran. Ticket stays In Progress for coordinator direction. Future commit titles start with T-24521; existing shared pins remain intact.
+
+## [2026-10-20] decision | Consolidate TAIIKU archive ancestry
+
+Private consolidation from main4c5cd6524 now merges coordinator5090e769f and TAIIKUbb1abd853. Preserved current main progress/all unrelated board cards and appended incoming log sections; normalized only T-24520..T-24523 to their merged ticket frontmatter. Source-only geometry/runner archives add no coverage, no production/header change beyond already integrated matches, no history renamed. Root retains full final verification.
