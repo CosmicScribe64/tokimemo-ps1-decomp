@@ -2153,3 +2153,7 @@ Parent's bounded frame consult found two split scalar slots that close `func_800
 ## [2026-10-20] build | T-24501 choice-string final proof and review
 
 Post-prototype/string 520-step two-job build passed; explicit hashes passed all27 images, literal default private link re-proved932 bytes, headers passed and prototype branch check reports zero new disagreements (15 known). Parent reviewed the actual source/header/string diff with no remaining findings. MAIN checksum proves explicit20-byte source string placement and pool ordering. Focused pin ready; [[tickets/T-24501-main-tail]] remains In Progress.
+
+## [2026-10-20] decision | Freeze CD dispatcher at isolated frame/order boundary
+
+[[tickets/T-24501-main-tail]] reconstructs MAIN `func_800455C4` from439 to26 resolved edit cost with691 instructions. Archived reproducible source-only body and focused frame/order packet; bounded status-bitfield, expression and local-layout alternatives did not improve26. No production/header changes or executable rebuild needed. Exact structural lessons in [[matching-notes]].

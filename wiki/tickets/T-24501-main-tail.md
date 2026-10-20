@@ -73,3 +73,7 @@ Neighbor `func_800767A4` clean reconstruction now matches all 233 instruction op
 Parent's focused frame consult closed `func_800767A4` (932 bytes) using two split unused scalar slots, preserving the 32 candidate IDs and all target stack homes. Promoted exact zero-cost candidate, added T-24501 to all FAKE comments, and this worktree's literal default link proves 932 bytes. Parent reviewed body/padding with no remaining findings. Added approved canonical prototype and replaced inherited suffix string data include with a correctly encoded 20-byte C string definition; final full checks running at two jobs. Details and original candidate SHA256 are in [[matching-notes]].
 
 Final fifth-match verification completed: post-header/string 520-step build at two jobs, explicit 27/27 executable SHA1 hashes, repeated literal default 932-byte private-link proof, headers, and branch prototypes (zero new, 15 known) pass. Parent reviewed the actual source/header/string diff with no remaining standards findings. Focused source/header/wiki pin ready for integration; broader ticket remains In Progress.
+
+### CD dispatcher checkpoint
+
+Resumed structural repair of `func_800455C4`, reducing439 to26 across691 instructions. All remaining differences are nine stack offsets and two four-instruction reorderings. Source-only draft/replay and precise rejected hypotheses preserved; awaiting bounded compiler consult. Production unchanged; ticket remains In Progress. See [[matching-notes]].
