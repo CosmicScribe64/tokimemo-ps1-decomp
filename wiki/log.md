@@ -2228,3 +2228,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] build | Match circular TILE falloff renderer
 
 [[tickets/T-24501-main-tail]] promotes `func_8004A814`,1,028 literal default-C bytes equal target, affected MAIN SHA1 passes at-j2 and declaration/global guards pass. Isolated FAKE-marked y0 cast closes94->0; faithful pre-as1 capture proves erased conversion's temporary allocations. Six abs calls, signed colors and target dimension quirk retained. Root standards review found no findings; coordinating ticket stays In Progress, full27 checks central. See [[matching-notes]].
+
+## [2026-10-20] decision | Preserve font tile upload ownership packet
+
+[[tickets/T-24501-main-tail]] proves real256B glyph buffer and20B record view in `mod_trans_vram`, typed232/196 words/frame1A0 versus188 target. Reduced row/cell capture control loses target ranges; direct switch corrects selector promotion. Source-only replay and exact caller/callee/homes evidence archived for bounded consultation. No production/header/compiler change or padding.4A414 transfer inspection finds no missing narrowing, no cast sweep. See [[matching-notes]].
