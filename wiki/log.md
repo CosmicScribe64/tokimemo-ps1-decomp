@@ -2296,3 +2296,18 @@ Docker wiki lint reports0 broken links and0 status mismatches, with one existing
 ## [2026-10-20] ticket | T-24515 root acceptance gate
 
 Coordinator reviewed `00bfc328d` with no new findings and requested In Review pending root acceptance. [[tickets/T-24515-name-ent]] moved from Done to In Review; this supersedes the earlier local bounded-investigation closure. No further NAME_ENT probes.
+
+## [2026-10-20] ticket | T-24516 isolated overlay-family lane
+Created [[tickets/T-24516-overlay-family]] In Progress for BUNKA_SD, EN_NICHI and KANGEI, isolated from exact main base eaf7c6e709cb85435c313ac2fbfde5c7db14cd93. Read [[index]], [[status]], [[playbook]] and local guidance. No other overlay ownership or integration writes.
+
+## [2026-10-20] ingest | T-24516 overlay source defects and bounded controls
+[[tickets/T-24516-overlay-family]] records fresh three-overlay checksum control and typed reconstruction of five functions. Found concrete BUNKA_SD func_80134D94 branch polarity, draw-coordinate and argument-order errors; repaired private source restores original word length/frame but remains144 aligned cost. Found EN_NICHI func_80136DEC alpha-source/dispatcher errors; indexed local-table recipe reduces466 to317 cost. KANGEI's two known scheduler tails are preserved without repeating grids. No literal match, production change or new C bytes.
+
+## [2026-10-20] decision | T-24516 stop bounded family controls, preserve source
+Final EN_NICHI byte-cursor and KANGEI typed-bitfield/club-local controls do not improve the retained reconstructed bodies. [[tickets/T-24516-overlay-family]] preserves five source drafts, metrics and precise semantic corrections in drafts/T-24516. No additional source/compiler search, coverage claim or production edit; fresh full27 verification begins for handoff.
+
+## [2026-10-20] ticket | T-24516 self-review and full27 validation, In Review
+[[tickets/T-24516-overlay-family]] moves to In Review after standards/scope self-review, no findings. Fresh Docker ninja-j2 completes all27 binary targets; independent built-path SHA1 also passes27/27. Header/global/prototype guards pass(0 new,15 known). Production source/header/config/tooling diff against eaf7c6e70 remains empty. No C-byte gain; five source reconstructions and known negative boundaries retained for coordinator review.
+
+## [2026-10-20] build | T-24516 retained-body replay confirmed
+All five actual full-TU C bodies in drafts/T-24516 reproduce their recorded word/row/aligned-cost metrics and explicit-object default resolved DIFF verdicts. Production unchanged. [[tickets/T-24516-overlay-family]] archive handoff is ready; no literal match asserted.

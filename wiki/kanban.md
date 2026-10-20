@@ -61,6 +61,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24516-overlay-family|T-24516 Reconstruct BUNKA_SD EN_NICHI KANGEI functions]]
+
 - [ ] [[tickets/T-24515-name-ent|T-24515 Reconstruct remaining NAME_ENT functions]]
 
 - [ ] [[tickets/T-24514-master|T-24514 Reconstruct remaining MASTER functions]]
