@@ -1,3 +1,6 @@
+/* FAKE: T-24503, reuse one s32 as a label pointer and saved month to test
+ * the original register lifetimes; this archived draft is not matched. */
+
 void func_8013A7EC(void) {
     GameState *g = &D_800E6280;
     s32 var_s2;

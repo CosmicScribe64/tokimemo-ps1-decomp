@@ -2109,3 +2109,7 @@ GEKO matches are integrated by the parent. Recorded exact contributor handoff in
 ## [2026-10-20] query | T-24503 preserve OPTION handoff sources
 
 Archived unmatched OPTION func_8013A7EC (cost90) and func_801326BC (cost144) source bodies and a complete-unit replay script under drafts/T-24503/. Earlier indexed palette draft remains preferable. Corrected func_80139A30 prototype sweep gives no improvement (19 compiles, cost223). No OPTION source promoted. See [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] lint | T-24503 archive FAKE source comments
+
+Parent archive review requested source-local FAKE comments in addition to the README descriptions. Added T-24503 comments to both unmatched OPTION bodies without changing C expressions. No replay required for comments; previous source-only costs remain90/144. [[tickets/T-24503-geko-option-completion]].

@@ -1,3 +1,6 @@
+/* FAKE: T-24503, walk GameState views by four bytes to reproduce the original
+ * palette-copy addresses; this archived draft is not matched. */
+
 void func_801326BC(void) {
     GameState *var_v0;
     s32 palette;
