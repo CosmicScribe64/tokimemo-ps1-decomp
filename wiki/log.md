@@ -2258,3 +2258,7 @@ Single authorized signed32-bit bit-field read view gives28/28 and byte-identical
 ## [2026-10-20] ingest | T-24522 ordinary pointer-update consult source
 
 Archived only the root consult's C89 sequential pointer-update body at41/39,376 words, with received hash/provenance and corrected metric comment. Consult resolved rows exactly equal integer-address alternative; casts are unnecessary for operand roles. Best4 unchanged, no new compiler runs or coverage, no generated diagnostics/assets archived. See [[tickets/T-24522-rpg-bat]] and drafts/T-24522/README.md.
+
+## [2026-10-20] query | T-24522 pointer line-grouping negative
+
+One approved coherent grouping of pointer init/advance pairs and correction progress assignment gives unchanged41/39 with byte-identical diagnostic. No source expression/control changes, no permutation grid; best4 and preferred ordinary41 source archives unchanged. See [[tickets/T-24522-rpg-bat]].
