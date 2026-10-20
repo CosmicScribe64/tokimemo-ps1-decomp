@@ -20908,3 +20908,7 @@ Cloud packet results merged. T-24206: main `func_800590CC` (268 bytes) matches, 
 ## [2026-10-20] ticket | T-24205, T-24208 Done
 
 Cloud packet results merged. T-24208: MASTER `func_80132444` (624 bytes) matches (linked proof here). T-24205: TACO `func_801511C0` stays guarded (one late argument home store).
+
+## [2026-10-20] ticket | T-24214 In Review: main func_80054884 matches (cloud packet)
+
+[[tickets/T-24214-cloud-packet-main-80054884]] created and worked in a cloud session ([[cloud-matching]]; Docker Hub 429 on `ubuntu:22.04`, a retried `docker pull` got it): src/main/80053650.c `func_80054884` from the T-24123 guard (17 instruction rows, ugen temporaries one lower from the `idx` block on) to 0 instruction rows in the scratch diff; funcdiff: identical after relocation. `idx = sp47 & 0xFF;` spends the missing temporary (FAKE); the pad locals got a FAKE comment. Guard and `INCLUDE_ASM` removed. Notes in [[matching-notes]] (T-24214). Local linked-build proof and review due.

@@ -523,9 +523,9 @@ s32 func_8005478C(s32 arg0) {
     return 1;
 }
 
-/* NON_MATCHING: T-24123, score=36 (18 instructions, register-only: ugen temp numbering shifted by 1 from block 4 onwards). */
-#ifdef NON_MATCHING
 s32 func_80054884(s32 arg0) {
+    /* FAKE: pad1/pad2 reproduce the 0x70-byte frame (sp47/sp46 at SP+0x47/0x46,
+     * idx spilled at SP+0x50); real locals unknown. T-24214. */
     u8 name[28];
     s32 idx;
     s32 pad1[2];
@@ -563,7 +563,9 @@ s32 func_80054884(s32 arg0) {
     }
     bzero(D_80123164, 0x1C);
     func_8006C988(&sp47, &sp46, arg0);
-    idx = sp47;
+    /* FAKE: T-24214, the no-op mask on the u8 takes one ugen temporary, so
+     * the later temporaries (t2..t9) land on the original's registers. */
+    idx = sp47 & 0xFF;
     if (idx >= 0xD) {
         idx = 0;
     }
@@ -583,9 +585,6 @@ s32 func_80054884(s32 arg0) {
     }
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054884);
-#endif
 
 s32 func_80054AF4(s32 arg0) {
     u8 name[0x1C];
