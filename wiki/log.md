@@ -20879,3 +20879,10 @@ Cloud packet sessions finished without a match: [[tickets/T-24201-cloud-packet-k
 ## [2026-10-20] ticket | T-24206 In Review: main func_800590CC instruction match
 
 [[tickets/T-24206-cloud-packet-main-800590cc]] (cloud packet): `func_800590CC` in `src/main/80058D20.c` from the T-17017 guard (16 lines) to 0 differing instructions in the scratch single-function diff; plain C, guard and `INCLUDE_ASM` removed. FAKE: the call arguments re-read the stored `D_800E6280` halfwords through a `u16 *` view (uopt forwards the stored registers), one statement per line, else arm stores `unk_000/002` first. Notes in [[matching-notes]] (T-24206), idiom row in [[register-cheatsheet]]. Local linked proof and review still due.
+## [2026-10-20] ticket | T-24202 cloud packet KANGEI func_8013852C opened
+
+[[tickets/T-24202-cloud-packet-kangei-8013852c]] created In Progress: match `KANGEI func_8013852C` (2-row guarded draft in src/ovl/KANGEI/80137B90.c) from a cloud match packet. Docker Hub returned 429 for `ubuntu:22.04`, so the cloud image was built with `--build-arg BASE=mirror.gcr.io/library/ubuntu:22.04` (the Dockerfile's existing CI override).
+
+## [2026-10-20] ticket | T-24202 to In Review (KANGEI func_8013852C still 2 rows)
+
+[[tickets/T-24202-cloud-packet-kangei-8013852c]]: cloud compile of src/ovl/KANGEI/80137B90.c reproduced sha1 `0ae36c0a925e1ee093ab51867f0c007aa64fbc2a`. About 5,000 variants (cast, order, temp, struct-access sweeps) stayed at 2 rows; the guard comment now names T-24202. Found that as1 deletes ugen's redundant `and 0xFFFF`/`sll-sra 16` ops by renaming, which explains the $t2/$t4/$t6 numbering, while the deleted ops still affect the schedule; details in [[matching-notes]]. Moved to In Review: review and local linked-build proof due.
