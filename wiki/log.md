@@ -20973,3 +20973,7 @@ Created [[tickets/T-24303-local-list-l6-p03]] (In Progress): local session works
 ## [2026-10-20] ticket | T-24302, T-24303 Done
 
 Local lists merged: T-24302 GEKO `func_801358CC`; T-24303 main `menu_girl_taku_set`, RPG_BAT `func_80138324`, main `func_800755B4` (linked proof here).
+
+## [2026-10-20] lint | T-24400 wiki reorganization
+
+New [[index]] hub, [[status]], [[playbook]], [[tooling]], generated [[tickets/catalog]] and [[notes/functions]]; `tools/wiki.py` rotates [[log]] and [[matching-notes]] verbatim into `log/` and `notes/`. Old index kept as [[archive/index-2026-10-20]]. [[tickets/T-24400-wiki-reorganization]].

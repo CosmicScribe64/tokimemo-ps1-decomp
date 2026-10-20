@@ -6,8 +6,8 @@ Goal: byte-matching decompilation of the PS1 executable(s) of Tokimeki Memorial 
 
 The project knowledge base is `wiki/`, maintained in the Karpathy LLM-wiki style: raw sources (immutable: `disc/`, the game zip, `raw/`) -> wiki (LLM-owned markdown) -> this schema.
 
-1. Read `wiki/index.md` first, every session, before any work. Consult relevant pages before acting.
-2. After every meaningful action (finding, decision, ticket change, tool result, new file), update the relevant wiki pages, update `wiki/index.md` if pages were added, and append an entry to `wiki/log.md`.
+1. Read `wiki/index.md` first, every session, before any work, then the pages it points to for your task: `wiki/status.md` for where things stand, `wiki/playbook.md` before matching. To find what is known about a function, search `wiki/notes/functions.md` and the pages it links.
+2. After every meaningful action (finding, decision, ticket change, tool result, new file), update the relevant wiki pages, add a line to `wiki/index.md` if you added a page (tickets go only on the board; `tools/wiki.py catalog` lists them), and append an entry to `wiki/log.md`.
 3. Log format: `## [YYYY-MM-DD] <op> | <title>` followed by a short body. Ops: setup, ingest, query, lint, ticket, build, decision. Never edit or delete old entries.
 4. Link rule in the log: use `[[wikilinks]]` for wiki files (e.g. `[[overview]]`, `[[tickets/T-0002-...]]`) and plain paths for everything else (e.g. `src/main.c`, `disc/SLPM_xxx`).
 5. Operations: **ingest** (read a source, write/refresh pages, update index and log), **query** (answer from the wiki; file good answers back as pages), **lint** (periodically: contradictions, stale claims, orphan pages, missing pages for mentioned concepts, missing cross-references, ticket/kanban mismatches; log the pass).
