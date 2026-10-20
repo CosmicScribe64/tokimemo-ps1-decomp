@@ -2134,3 +2134,8 @@ Archived typed func_8013BAC4 (cost330, down from stale817) and func_8013C6D4 (co
 ## [2026-10-20] decision | T-24502 archive review and AB50 consult
 
 Parent review found the BAC4 raw instruction comparison exceeded standards10 excerpt guidance; removed the dump and kept concise NOTES plus replay wrapper/commands. Independent AB50 consult still has seven constant-register words; chain stores worsen instruction count. [[matching-notes]] records the concrete allocator finding to avoid repeats. No production change under [[tickets/T-24502-taco-completion]].
+
+
+## [2026-10-20] build | T-24502 scrolling sampler matched
+
+func_8013A790 matches1,492 default linked bytes; all27 binary hashes and source/prototype guards pass. Parent code review found no blockers. Read-only trace identified the count/bound priority gap; documented zero-subtree use fixes the eight-register-word swap without emitted arithmetic. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record all three source-local FAKE controls and campaign six matches9,136 bytes. Continued on clean archive ancestry, preserving scratch work.
