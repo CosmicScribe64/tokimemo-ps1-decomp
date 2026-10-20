@@ -100,6 +100,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24800-as1-per-file-flags|T-24800 Test per-file compiler options against the as1 order near misses]]
+
 - [ ] [[tickets/T-24571-ending-first-portrait-view|T-24571 Test the first ENDING portrait16 alias view]]
 
 - [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]

@@ -2909,3 +2909,7 @@ MAIN `func_8004A814` is on main at `87df21291`: 1,028 linked default-C bytes mat
 ## [2026-10-20] decision | Recover glyph raster and mirror loop semantics
 
 [[tickets/T-24501-main-tail]] reconstructs get_fnt256B byte raster and natural mirror loops; full-TU343->23/258words versus259target, all saved roles recovered. Vertical old-count control verified8/16 rows. Shared-mirror/separate-raster ownership removes double-unroll and extra constant lifetimes; negatives preserved. Frame/home and late-expression residuals frozen for consultation, no production/header/compiler changes. See [[matching-notes]].
+
+## [2026-10-20] ticket | T-24800 per-file as1 options
+
+[[tickets/T-24800-as1-per-file-flags]] created and worked; moved to In Review. New harness tools/as1_flag_sweep.py compiled the 8 as1-order near-miss files under about 60 as1/driver option variants ([[as1-scheduling]]). Only `-noxbb` (`-Wb,-noxbb`) fixes any of them. VALEN func_80134030 now matches with a FAKE per-object option in config/toolchains.txt; every function of the file matches and VALEN.bin is OK. GYOZI func_80139E4C also matches with it, but func_801399C0 in the same file breaks. A `-noxbb` census changes 2,450 of 6,814 C functions. Verdict: per-file options do not explain the family. Lead: xbb's per-function treatment of one-predecessor switch default blocks. configure.py and tools/cc.py now accept `ido <ver> -W<pass>,<opt>` lines; funcdiff_verify, order_search and permute use the object's toolchain.
