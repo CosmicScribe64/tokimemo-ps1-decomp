@@ -2203,3 +2203,11 @@ Full-TU source controls confirm word old_x removes two spurious sign extensions,
 ## [2026-10-20] decision | T-24526 source-only regional checkpoint
 
 Frozen full-TU1075-word/864-row source replay after true X-width fix and natural depth/frame recovery. Regional map and bounded step7/state-flow negatives retained without raw listings; production unchanged, zero new coverage. Root requested freeze then idle; investigation remains open for later work. [[tickets/T-24526-name-ent-intro-regions]] and [[matching-notes]].
+
+## [2026-10-20] decision | T-24502 resumed coordinate-loop reconstruction
+
+Root reassigns TACO EAA4 in existing clean worktree. Read latest notes and original loop regions: middle inner loop counts pixel offsets256 through512, third outer latch compares Y512, unlike archived row-index forms. Recover those source controls serially with full-TU control; no repeated scalar/grid/Astra negatives. [[tickets/T-24502-taco-completion]].
+
+## [2026-10-20] decision | T-24502 EAA4 structural handoff
+
+Real middle row use plus separate height/width recover independent row count, height spill and saved Y/stride; third Y512 endpoint recovered. Full-TU491-word candidate has aligned cost186 and192 positional rows, predominantly real home differences; original121 control retained. Source-only replay, home/size/lifetime table and twelve non-stack-word classification saved; no new compilation merely for handoff. No padding/zero controls, production changes or coverage credit. [[tickets/T-24502-taco-completion]] and [[matching-notes]].
