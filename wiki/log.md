@@ -2133,3 +2133,15 @@ Resumed `func_80076000` region by region: trace proved 298/298 instructions and 
 ## [2026-10-20] build | T-24501 menu dispatcher final proof and review
 
 Post-`game.h` 486-step build passed, explicit SHA1 recomputation passed all 27 images, literal default private link re-proved all 1,196 dispatcher bytes, and headers/prototype branch checks pass (zero new, 15 known). Parent re-reviewed the moved view and shift comments: its one finding is resolved, no blocking findings remain. Focused source/header/wiki commit ready; [[tickets/T-24501-main-tail]] remains In Progress.
+
+## [2026-10-20] decision | T-24501 isolate choice-string setup frame gap
+
+Cleanly reconstructed `func_800767A4` string buffers, indexed zero loop, shared RNG and post-read count/sentinel stores. All 233 instruction operations/order/registers match; only frame offsets remain, with exact target/draft maps in [[matching-notes]] and `drafts/T-24501/main/func_800767A4.c`. Bounded padding/alignment/grouping forms isolate a word before the 32-ID array; no production/header change. Requested focused parent frame consult; [[tickets/T-24501-main-tail]] remains In Progress.
+
+## [2026-10-20] decision | T-24501 queue source-only frame consult packet
+
+Added `drafts/T-24501/replay.py` and a FAKE comment on the archived unused scalar, so the parent can replay the clean body and exact frame maps without any committed full-TU or assembly dump. [[matching-notes]] records the Docker replay command and bounded hypotheses. Parent will queue the isolated frame packet behind its current consult; continuing a fresh structural target.
+
+## [2026-10-20] build | T-24501 verify both source-only frame packets
+
+Replayed clean `func_800767A4` archive at resolved edit cost40 and exact diagnostic `func_800767A4-33.c` at30. The latter contains both33 candidate entries and an unused scalar after the array; [[matching-notes]] corrects the earlier abbreviated alternative description. Both archives identify FAKE locals; replay helper accepts the alternate body path. No production/header change.
