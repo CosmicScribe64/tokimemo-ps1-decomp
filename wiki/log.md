@@ -2194,3 +2194,172 @@ The preceding fade callee's s32 view closes six remaining rows after indexed ini
 ## [2026-10-20] build | Twentieth resumed match published
 
 MASTER func_80135FB8 is main ca34dcf7f after root review, literal1084-byte proof,27 independent hashes and declaration guards. Docker census6813/6952 functions,2088984/2276920 bytes (91.7%),139 remaining. [[status]] and [[tickets/T-24500-completion-orchestration]] record20 new matches/21980 bytes this run, source archives throughf1e2511ff, the negative RPG consultation and active TACO/queued CD consultations. Read-only GitHub check found no open PR and unchanged issue65; no contributor messages.
+
+## [2026-10-20] ticket | Start isolated TAIIKU RPG_BAT and seasonal lanes
+
+[[tickets/T-24520-parallel-tail-coordination]] coordinates three user-authorized Sol 6.1 medium workers from dba33c4f5: TAIIKU T-24521, RPG_BAT T-24522, GYOZI/VALEN/SHOUGATU T-24523. Each owns an isolated /private/tmp worktree with Docker-only tools and one compiler job. Existing twin-sweep and scheduler negatives are carried forward to avoid repeated grids. [[status]] records lane ownership; parent chat retains serialized integration. No new verified coverage claimed.
+
+
+## [2026-10-20] lint | Verify T-24520 coordination wiki consistency
+
+Docker tools/wiki.py lint reports zero broken links and zero ticket/kanban mismatches; the existing data/t0018-cases size warning remains. Coordinator read the indexed T-24301/T-24303 and T-24029 negative evidence. GYOZI func_80140E0C's five-row blocker is constant-zero range and frame placement; RPG_BAT func_8014BB80's 22-row checkpoint uses a volatile read to block promotion but adds an address calculation. Workers received bounded byte-view/alias hypotheses based on existing [[playbook]] recipes. No source change or new coverage claimed.
+
+
+## [2026-10-20] query | New source hypotheses reach exact instruction candidates
+
+Seasonal T-24523 reports SHOUGATU func_80133B44 resolved score 82 to zero by narrowing the text-width product before the existing final s16 cast. Parent source review finds no standards blocker: default C, redundant modulo narrowing and two padding slots explicitly marked FAKE, existing strings unchanged. RPG_BAT T-24522 reports target instructions for func_8014BB80 after using a GameState pointer in both switches; pointer slot/frame cleanup remains. Neither candidate counts as coverage until private linked proof, 27 checksums and guards pass. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] build | RPG_BAT first lane match pinned
+
+T-24522 pinned bf7e243bd214f8e52a4d81f130776c1c4638de36 for RPG_BAT func_8014BB80, 1,124 literal default linked C bytes. GameState pointer reads in the two switches separate their lifetime from the plain condition read; removing the inherited padding gives the exact frame. Old volatile read and padding fakematch are gone. Parent source review found only indentation, repaired before proof. Private RPG_BAT SHA1 142d13e317aa7ae6def6a300085c38f645c19db6; 27 hashes pass using that binary plus 26 unchanged read-only root outputs. Headers/global/prototypes pass (0 new, 15 known prototype disagreements). Commit retains lane ticket In Progress for five remaining functions. No integration-tree or progress total changed here. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] build | SHOUGATU match pinned and TAIIKU proof candidate found
+
+T-24523 pinned c182f981586a85cebf11675dea9ea0d731d75ff1 for SHOUGATU func_80133B44, 408 literal linked C bytes. Private overlay SHA1 d956b1df6fbf9d1f8261d7e1f98ea301f7eb66a9, 27 hashes with explicit read-only baseline provenance, and header/global/prototype guards pass. Parent and self standards review found no blockers; narrowing and padding documented FAKE. T-24521 separately reports TAIIKU func_80134060 linked equality at 1,348 bytes, awaiting exact candidate restoration, full guards and source review. [[tickets/T-24520-parallel-tail-coordination]] records pinned handoff checkpoints; workers continue.
+
+
+## [2026-10-20] query | Review TAIIKU default-C reconstruction candidate
+
+Parent reviewed the restored T-24521 TAIIKU func_80134060 candidate: existing aligned TaiShorts12 aggregates, index loops, canonical overlay-local declarations; unsigned first-store view and unused frame slot explicitly marked FAKE. The unrelated data-definition probe was excluded. No blocking source finding; private whole-overlay SHA1 remains necessary because three newly canonical declarations are visible across TAIIKU. T-24522 meanwhile reduced func_80144C84's current draft from 252 to 44 rows through typed stat pointers and staged output-global arithmetic; no second RPG_BAT match claimed. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] build | TAIIKU reconstruction verified and pinned
+
+T-24521 pinned f278c1b6cbdc8793c0175ae41d6acc364bc1140d for TAIIKU func_80134060, 1,348 literal default linked bytes. Private TAIIKU SHA1 306d1013b9be465819525d1fb4dc0e86b422a846; all 27 hashes pass using private TAIIKU plus 26 unchanged root binaries mounted read-only. Header/global/prototype checks pass (0 new, 12 known prototype disagreements). Parent source review recorded no blockers. The three lane commits now total three functions and 2,880 bytes, pending serialized parent integration. [[tickets/T-24520-parallel-tail-coordination]] lists pinned commits. All workers continue on remaining tails.
+
+
+## [2026-10-20] query | Review second TAIIKU and RPG_BAT candidates
+
+Parent source review found no blockers in T-24521 TAIIKU func_80134F98 (1,256 linked bytes) or T-24522 RPG_BAT func_801447E0 (924 linked bytes), pending final checks. TAIIKU uses the real 44-byte TaiWords11 table and a marked unused upper scalar; RPG_BAT stages arithmetic through the actual output global with two real locals. Seasonal T-24523 reports GYOZI func_80140F90 linked equality at 788 bytes after the implicit-int debug-print view; canonical aggregate field recovery and guarded main_api declaration remain before review. Root confirms RPG_BAT bf7e243bd integrated at d2665864e. Root also corrects stale guidance: F/B block-copy direction already fixed by enabled tools/ugen_pass.py T-24092; workers informed, distinct 32-byte copy-register mismatch remains unproven. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] build | Second RPG_BAT and TAIIKU matches pinned
+
+T-24522 pinned 66f4bbe19 atop bf7e243bd for RPG_BAT func_801447E0 (924 bytes). T-24521 pinned 263294a8f6971a79d86544c8072a47053b77982c atop f278c1b6c for TAIIKU func_80134F98 (1,256 bytes). Both have literal default linked equality, private whole-overlay hash, 27 checksum checks with explicit read-only baseline provenance, source guards and no-blocker parent source review. Five pinned lane functions total 5,060 bytes. [[tickets/T-24520-parallel-tail-coordination]] lists dependencies. Both workers continue: RPG_BAT four functions remain, TAIIKU nine.
+
+
+## [2026-10-20] build | Sixth verified lane match pinned
+
+T-24523 pinned 636b44839 atop c182f9815 for GYOZI func_80140F90 (788 bytes). Literal default private linked proof and GYOZI SHA1 43f92523116e7b6cd772d4397712a52eeda89703 pass; 27 hashes use private GYOZI and SHOUGATU plus 25 unchanged read-only baseline outputs. Header/global/prototype checks pass, 0 new disagreements and 15 known. Parent source review approved guarded main_api void-to-local-s32 view of func_800BCDF0 and named GyoziWork field recovery. Six pinned functions total 5,848 bytes. [[tickets/T-24520-parallel-tail-coordination]] records exact commit dependencies; all workers continue, no global progress total changed here.
+
+
+## [2026-10-20] query | Establish original TAIIKU table bounds and review RPG_BAT archive
+
+D_801494C4 is exactly 0x2C bytes: original func_80134F98 sets copy end to source+0x24 at 80134FA8, copies three words per iteration at 80134FB0..80134FD0 (nine words), then loads final offsets0x24/0x28 at 80134FD4/80134FD8. Next label D_801494F0 is exactly start+0x2C. Source search finds only owning INCLUDE_RODATA, the new function initializer, and canonical declaration; whole TAIIKU SHA1 passes. Parent reviewed RPG_BAT source-only archive1564d1bf1: no blockers, marked FAKE/coverage limits, no instruction listings or raw data. Fresh C84 hypothesis snapshots only two threshold weights before plain-global mutation; bounded probes authorized, no compiler-limit claim. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Close bounded follow-up evidence without new coverage
+
+TAIIKU source archive80e6861db records three structural negatives and exact eleven-word ownership evidence; review follow-up392e2e680 labels experimental scalar/offset views FAKE and resolves the only archive documentation finding. No production changes or new matches. RPG_BAT evidence chain1564d1bf1 -> 5ea66b18c -> 35f244c4d preserves the 28-row C84 source-only lead, exact missing reload/store dependency map and three folded aggregate-snapshot negatives (34 rows each, six extra spill offsets). All sources remain default assembly for these targets; no compiler-limit claim. Both lane trees clean, tickets In Review, no further searches without a fresh structural hypothesis. Seasonal stale VALEN guard removal reviewed no-blocker; private VALEN checksum and all 27 hashes pass, final focused pins pending. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] decision | Check only newly matched sibling donors
+
+Originating chat confirms both RPG_BAT and both TAIIKU matches integrated at c768eda88; seasonal verification ongoing. Root requests testing fresh matches as donor sources before closing lanes. Reactivated only focused donor-to-remaining analysis: TAIIKU34060/34F98 versus nine tails; RPG_BAT4BB80/447E0 versus four tails; SHOUGATU33B44/GYOZI40F90 versus fourteen seasonal tails. Already tried447E0 arithmetic to44C84 and40F90 template toSHOUGATU3E6E4 are excluded from repeat work. Compile only a genuinely new structural transplant hypothesis; no repeated global twin sweep or exhausted grids. Seasonal final follow-up pinsda848ec19/7a6290955 preserve source-only evidence/remove incorrect guarded draft, both reviewed, no coverage. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Fresh donor pass identifies one seasonal transplant
+
+TAIIKU18 donor-target comparisons: best34F98->3DDB8 similarity0.2896, generic dispatch; genuine aggregate prefix34F98->35F3C0.2374 already used. RPG_BAT8 comparisons: best447E0->44C840.2800, arithmetic transfer already applied; other best pairs0.206..0.222 are generic call/dispatch/HI-LO blocks without the newly solved source lifetime. No new compiler runs in either lane. Seasonal28 comparisons found fresh GYOZI40F90->412A4 similarity0.745/684 bytes; strongest SHOUGATU3E6E40.770 and3EA980.707 already tried. Authorized only new412A4 donor transplant and explicit-flag variant; all other pairs remain read-only evidence. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] ticket | Move bounded lane coordination to review
+
+[[tickets/T-24520-parallel-tail-coordination]] moves In Review with board matching: six verified coverage commits/5,848 bytes delivered, all archive review findings resolved, source-only evidence retained separately. TAIIKU donor notes89d2721f4 and RPG_BAT donor notes852b424ed have no production changes or fresh transfer. Seasonal only-new strong relativeGYOZI412A4 failed two concrete donor forms218/219 rows, worse than older draft; notes-only pin pending. No further compiler searches queued or blanket compiler-limit claim. Root owns current integrated progress totals; [[status]] records isolated lane outcome without replacing them.
+
+
+## [2026-10-20] lint | Final coordinator consistency and seasonal donor pin
+
+Docker wiki lint: zero broken links, zero ticket/kanban mismatches; existing oversized data/t0018-cases warning only. Seasonal notes-only donor follow-up0cab47a76 descends7a6290955; no worse bodies archived or production/header changes, priorbest412A4 foundation retained. All three lane trees clean, tickets In Review, no compilers queued. Six verified coverage functions/5,848 bytes remain the only counted outcome; archives/cleanup add none. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] ticket | Resume structural reconstruction after six integrations
+
+Originating chat confirms all six original lane matches integrated (RPG_BAT447E0ca691c60a, TAIIKUc768eda88, seasonal6beeb32de plus prior4BB80) and requests continued active structural/new-donor work. [[tickets/T-24520-parallel-tail-coordination]] moves back In Progress with board synchronized. Three existing workers reopened for distinct fresh source reconstructions, retaining prior donor/scheduler negatives and requiring concrete hypotheses before j1Docker compiles. No new coverage claimed; all earlier pins preserved.
+
+
+## [2026-10-20] decision | Three concrete structural hypotheses selected
+
+TAIIKU3E894: recover two four-word coordinate arrays and natural rotate/translate/scale/clipping walks instead of malformed scalar pointer increments. RPG_BAT54DD8: existing RpgRec18 D_8015EC58 owns denominatorEC68 as unk_10 (matched801321D0 corroborates), so use canonical endpoint/duration aggregate and shared quotient local rather than stale scalar declaration and fake homes. VALEN33088: explicit forward dispatch labels and actual byte globalmode to recover original block layout/conversion lifetimes beyond T-19016 switch/if negatives. Workers read indexed prior histories and limit probes to these causal source forms, j1Docker. No new coverage or compiler-limit claim. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Structural source results and causal next steps
+
+TAIIKU3E894 real-array draft compiles at350rows versus archived366; distinct loop bound lifetimes and spilled angle remain (frame192 versus200), targeted flow rewrite underway. RPG_BAT54DD8 canonical aggregate duration and endpoint pointer retain326/288; shared quotient331/293, optimized away. One explicit shared-sound-label CFG test targets original counter-branch/delay-slot ownership, not a predicate grid. VALEN33088 forwardlabels173 versus189; isolated u8 playeroverride restores original move/mask/move prefix and gives127. Region-limited GameState pointer now targets middle-section selector hoisting while preserving exact seedprefix. No new match or production change. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Refine stack ownership and duplicated clamp control flow
+
+VALEN33088 C89 disjoint scopes improve54 to50 and restore48-byte frame; remainingidspill is4bytes high, one explicit unionphase-home test pending. TAIIKU3E894 ownarraypointerbounds already proved correctly spelled; natural shared indexloops across five coordinate stages now test compiler-created boundranges, not dummyendpointers. RPG_BAT5528C sharedstart298/242 exposes old cross-arm goto factoring modulo/clamp blocks; target instead duplicates signedmodulo3 then independentnegativeclamps in both arms, one literalstructuralrewrite underway. Root's newlyverifiedMAIN76000 packedu16bitfield/signedbyte/signextension recipe relayed only for relevant field/shiftblockers; newMenuIconBitsgame.h additions must be preserved. No newcoverage. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | VALEN near match and interpolation factoring cause isolated
+
+VALEN33088 phaseunion reaches14rows from50 with exactframe48/idspill28 and alignedmiddle/tailregisters; only dispatchorientation and two stringcall argument schedules remain. Source-linegroup and one defaultedge topology test authorized; union and any linegroup tricks require FAKE reasons. RPG_BAT5528C first-arm signedbyte remainder restores both branch-local div/mfhi blocks and originalsavedregisterownership but retains real signextension instructions, so not a match. This establishes source-expression equality caused old factoring, not unreachableCFG. One signed16 counterpart tests same[-2,2] domain; subsequentaliaspair hypothesis only if newownershipnotalreadytested. TAIIKU3E894 currentreal-local ordering targets exact array/input/angle homes without padding. No newcoverage. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Recover interpolation block layout with a single source identity
+
+RPG_BAT5528C first-arm `(phaseSum%3)*1` restores both modulo blocks without signextensions and exact375-word targetlength/caseoffsets; four savedregisterowners align. Current274/206 versus302/246 remains nonmatching, mostlyregister/storelayout; sharedinitial/loopstart tests firstworkbase allocation. VALEN33088 remains14afterrealcopyreturnviews; two destinationargument commaexpressions now target measured argumentsetuporder, no othercalleeviews. TAIIKU3E894 exactprologue/boundregisterownership predicts two realendpointlocals will fixuniform8-byte stackshortfall and redundantreloads; no padding. No production match or coverage claimed. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] ingest | Locate existing read-only allocator diagnostics
+
+TAIIKU requested a ready tracer after structural/frame alignment. [[ending-allocator-trace]] documents existing executable /private/tmp/t24047-uopt/variants/trace (741728bytes), confirmed on disk; worker told to mountread-only and use explicit regdiff --uopt, verifying stock/traced candidateoutput before interpretation. Root also supplied active MAIN/TACO rs/r9-uopt/variants/trace path; no rebuild or productioncompilerpatch. RPG_BAT transfers newlyproven remainderidentity back to original separatequotient/start source to restore real distinct lifetimes after postjoinbase expression proved byte-identical. Rootboolean sltiu/xori >=1U recipe relayed only for exactpatterns. No newcoverage. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Pin correct fourteen-row VALEN foundation
+
+Seasonal pinnedb089e7788 after0cab47a76: correctVALEN33088 source-onlyfoundation189->14, exactannotatedbodyrecompiled14. Parent source review no blockers: C89, disjointactiveunion phases, isolatedredundantbytecast maskedtoonebit, documentedFAKE and precise branch/two-call scheduler report. Production/headers unchanged; no newcoverage or compilerlimitclaim. Ticket/board In Review, treeclean. The old incorrectguardremoval remains preserved. RPG_BAT archive d2611ea6e separately reviewedno blockers for recovered375-word modulo layout; stillnonmatching. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Trace fidelity and concrete array-address priority imbalance
+
+TAIIKU3E894 stock/traced text/data/relocation sections allbyteequal. Firstdivergence34 isugen; structuralextra106 is movea0,v0. Traced sharedx-indexaddressrange acrossthree stages has priority476.7 andtakesv0, beatingcamera-x100 intov1; pairrow140 alsodisplacesy0. One coherent stage-specific existingcounter source tests splitting that realixaweb, with noaddedhomes/padding. RPG_BAT retains274/206 source; applyingidentity tooldseparatequotient source worsens447/231, so tracefirst currentbest beforemorevariants. Suggested initialunsignedmemoryview onlyiftraceproves sharedinitial/loopquotient lifetime, retaining signedmath. No productioncoverage. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] decision | Reuse recovered source structure and trace-derived direct variable
+
+RPG_BAT tracevalidated1500stockbytes againsttracedoutput beforeinterpretation. Initialrawprogress isinitial-only, so proposed memoryviewsplitpreconditionfalse and notrun. Actualcompetingphase_next priority3 versusraw1.5/workbase0.5 identifies meaningfullocalrange; directactualphaseupdate/read on recoveredmodulograph improves274/206 to53/53. TAIIKU3E894 boundedtrace-awareforms remain224rows with exacthomes/prologue; fresh3E1FC now reuses realcoordinate/stagebody for straight androtated64-strip phases. Root explicitlyrequestsseasonalslotactive afterVALENneararchive, so assignednewsubstantiveGYOZI38C9C localcandidate/rotationloopownership, priorT24116 negativesretained. Tickets remain/reopen InProgress; no newcoverage. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Keep speculative ownership separate from measured stack facts
+
+GYOZI38C9C originalstack onlyproves candidatevalues sp4C and finalpointerspill sp44; noheader48/4A orrecordaddress, so no inventedmetadatarecord. Separate naturalstage scopes/indices now test gather/print/rotate/reorderlifetimes, retaining realarray. TAIIKU3E1FC explicitfourxinitializer removes8bytes hiddenchaintemps (frame216->208) and restoresarrayhomes; nextangle+16 naturalinduction tests measuredderivedspill instead ofdeclaredscalar. RPG_BAT reusedraw/quotient ownership fails369/225; best53retained. One genuinequotientlocal replacingremovedphase_nexthome tests targetv0quotient/a0start withoutreintroducingoldproducttemp; subsequentchanges requirefresh53trace. No newcoverage. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] decision | Prioritize newly solved MAIN donors before deeper reconstruction
+
+Latestuserpriority relayedbyroot: twins/similarity/easywins forcompletiontoday. Existing18/8/28 owned-donor comparisons remainexhausted, so workers nowrank onlynewMAIN76000(1196bytes) and767A4(932bytes,promoting) againsttheir9/4/14remainingtargets beforemoredeepwork. No repeatedglobaltwinsweep. GYOZI38C9C baseline103, scopedstageindices112; realcount/rotationoffset reuse isonependinglifetimehypothesis afterdonorcheck. RPG_BAT minimalquotient359/215 fails; best53 tracebytefidelitypasses1504bytes, start rangepriority45 precoloreda0 vsendexpr30v0, nofurthergenericviews. Source-onlyevidencepending. RootintegratedVALEN14foundation ancestryat6fc14a82b, noCcoveragecredit. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Interpolation helper converges to ten aligned edits
+
+RPG_BAT5528C repeatedquotientexpressions restoreseparatev0quotient/a0start and exact375-wordlength, allinstructionsafterrow106align. Computingindependentendcandidatebeforephasesum thenfixesremainingregister/ugenweb:46literal/10aligned. Onlytwoinitialpointeroperandorders and endpoint/sentinelcopies scheduledbeforedivguards remain; two causal sourceforms authorized (index+work and modulo-beforeend/sentinelassignments), no ordergrid. TAIIKU identifies EC60<-E1FC realgeometrysibling withsameframes/arrayhomes; donorstill548rows so onlyoneboundedtypedtransplant, no quickmatchassumption. No newcoverage yet. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Interpolation helper has only two pointer operand swaps
+
+RPG_BAT5528C modulo-beforeendpoint/sentinel sourceordering reaches4literal/4aligned rows: exact375words except twoinitialaddu operandorders. Reversepointeraddition syntax alone hadnoeffect; one alreadyprovenzero-code *1indexwrapper authorized onjustthoseindices, noidentitygrid. No matchclaimeduntildefaultlinked/fullchecks. Seasonal38C9C fourstructuralforms failtoimprove103; notes-onlyreviewno blockers. NextownedVALEN32834 precisehypothesis transfersnewmodulofactoringrecipe: asymmetrical *1 onlyinassignment-form statssums could prevent commutativeCSE that removesfourloads, if T24101/T24138didnotalreadytryit. Preservecomparison16bitsemantics; baseline+oneformonly. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Normalize address-role evidence and recover real ranking storage
+
+RPG_BAT integeraddressnegative haspositiveoperand-role evidence: bothinitialadds become basefirst, but initial/postjoinmixedIRclasses splitpointerowners. Oneuniformscalaraddressclass test nowkeepsinitialbasefirst/postjoinindexfirst roles; thisis emittedinstructionevidence, nottracedwebleak proof. Best4source430699874 reviewedno blockers. Seasonalcorrect32834archiveandwrongguardcleanup reviewedno blockers; one real s16rank_scores[3] test follows originaladjacentlh/shsp50/52/54, replacingpromotedscalars only. TAIIKU37784freshtypedCPU/actorreconstruction corrects genuine3recordclearloop bug in oldautodraft, usingmatched37EA8/36EC0 ownership; onefoundationcompile authorized. No newcoverage. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Consolidate reviewed archives and relay bounded consultation
+
+TAIIKUlatestcfe2082d5 retains corrected37784foundation396rows, canonical16-byteaccumulators/FAKEsharedplayer-cpuview and restoredwholeunit/twoexistingmatch/27hash/guards; parent source-onlyreview no blockingcodefindings. Priorfef889358/4b7709f3c geometryarchives remainnoncoverage. Seasonalheads b31e60cb0 correct32834archive,880e65ad6 wrongguardremoval,3df47857c improvedscorearray336 plusnegative371; source/cleanupreviews pass, privateVALEN/27hash/guards supplied. RPGhead74822c7fb after8cd90eade includesbest4frozen430699874 andC84fullwordbitfieldnegative28unchanged. RootAstra consultthreeforms complete,no literalmatch; ordinarysequentialpointerupdates reproduce41/39uniforminteger rows exactly. Soltoldtopreserve source-onlyordinaryvariant/provenance withoutrepeatingcompiles. No newcoverage; rootrequestedcompactarchivehandoff. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Finalize compact archive consolidation for parent integration
+
+Reviewedarchiveheads: TAIIKUcfe2082d5 (afterfef889358/4b7709f3c), RPG_BAT2781edac6 (after74822c7fb/8cd90eade/best4430699874), seasonal3df47857c (after880e65ad6wrong32834guardremoval/b31e60cb0correctfoundation). None addscoverage. TAIIKU37784source-onlyreview no blockingcodefinding; earliergeometrytitleprefixformat flaggedforhistorycleanupbeforeDone withoutrewritingpublishedpins. RootAstra ordinarypointerupdatealternative archivedwithsourcehash/provenance, threeconsultformsnotrepeated; no literal5528Cmatch. NewMAINdonorpairs allnegative (54total); no redundantglobalrescan. TAIIKUF3A4read-onlytriage finds oldsemanticbug but nofreshsolutionto documentedbasehoist, so no compile. Seasonalnear-guardprovenanceaudit continues; rootrequestedcompactheads now ratherthanwaitingnewmatch. See [[tickets/T-24520-parallel-tail-coordination]].
+
+
+## [2026-10-20] query | Archive heads ready while one precise field correction proceeds
+
+Currentcleanheads TAIIKUbb1abd853 (aftercfe2082d5, reviewedsource-only37784 and no-compileF3A4triage), RPG_BAT2781edac6 (best4frozen430699874, ordinarypointer41alternative plusconsultnegative), seasonaldcc4dc9aa (after3df47857c/880e65ad6). Seasonal7guardsemanticprovenanceaudit finds sixfamily/control/callsets correct and one concreteSHOUGATU3E50C wrongfield: draftGameState+F8 versusimmutable+10F8; baselineplusonlyfieldfix scratchtestauthorized, no productionchange/coverageyet. Rootrequestedcompactconsolidationwithoutwaitingactualmatch; tickets stayInProgress. Source-onlycode review no blockingfinding; non-T-prefixed archive commit titles notedfornormalizationbeforeDone withoutrewritingpublishedpinsduringintegration. See [[tickets/T-24520-parallel-tail-coordination]].
