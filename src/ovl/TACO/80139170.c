@@ -230,7 +230,68 @@ void func_8013A764(void) {
     D_8015F4F8 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_8013A790);
+void func_8013A790(s32 arg0, s32 arg1) {
+    /* FAKE: preserve the original 0x68 frame while keeping next at sp+0x44. T-24502 */
+    s32 pad[4];
+    s32 divisor;
+    s32 scroll;
+    s32 count;
+    s32 i;
+    s32 next;
+
+    divisor = 30000;
+    scroll = 0;
+    if (arg1 == 0) {
+        if (D_800E6280.unk_F80 & 1) divisor = 10000;
+        else if (D_800E6280.unk_F80 & 2) divisor = 50000;
+        if (D_800E6280.unk_F80 & 4) scroll = 40;
+        if (D_800E6280.unk_F80 & 8) scroll = -40;
+    } else if (arg1 == 1) {
+        if ((D_8015EDB4->unk2 & 1) == 1) scroll = 40;
+        if ((D_8015EDB4->unk2 & 2) == 2) scroll = -40;
+    } else if (arg1 == 2) {
+        scroll = 40;
+        divisor = 20000;
+    } else if (arg1 == 3) {
+        scroll = 40;
+        divisor = 10000;
+    }
+    count = 0;
+    if (scroll > 0) {
+        for (i = 0; i < 100; i++) {
+            D_8015F4EC[i].a += scroll;
+            if (D_8015F4EC[i].a >= 4097) D_8015F4EC[i].a -= 4096;
+        }
+    }
+    if (scroll < 0) {
+        for (i = 0; i < 100; i++) {
+            D_8015F4EC[i].a += scroll;
+            if (D_8015F4EC[i].a < 0) D_8015F4EC[i].a += 4096;
+        }
+    }
+    for (i = 0; i != 100; i++) {
+        next = count + 1;
+        if (D_8015F4EC[i].b == 0) {
+            /* FAKE: | 0 keeps the divisor/count value in one spill web. T-24502 */
+            if (func_800AE0D0() % (next | 0) == 0) {
+                count = next;
+                D_8015F4EC[i].a = func_800AE0D0() % 4096;
+                if (arg0 == 0) D_8015F4EC[i].b = 240000;
+                else D_8015F4EC[i].b = 1000;
+            }
+        } else count = next;
+        if (arg0 == 0) {
+            D_8015F4EC[i].b -= D_8015F4EC[i].b * 1000 / divisor;
+            if (D_8015F4EC[i].b < 3001) D_8015F4EC[i].b = 0;
+        } else {
+            D_8015F4EC[i].b += D_8015F4EC[i].b * 1000 / divisor;
+            /* FAKE: uopt counts this use, then ugen discards * 0; count gets s2 before the bound gets s3. T-24502 */
+            if (D_8015F4EC[i].b >= (count * 0) + 240000) D_8015F4EC[i].b = 0;
+        }
+        if (D_8015F4EC[i].b != 0) func_8013AD64(D_8015F4EC[i].a, D_8015F4EC[i].b / 1000, -1, arg1);
+    }
+}
+
 
 /* r_sh and g_sh are single-use named shifts: they reserve the two frame words above the four spilled values
    that the original has (T-19021). */

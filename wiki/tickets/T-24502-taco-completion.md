@@ -45,3 +45,5 @@ Isolated branch codex/taco-24502 from 2c7293275. TACO files only.
 - 2026-10-20: archived typed BAC4 collision (cost330,456/460 words) and C6D4 pickup (cost251,348/347) drafts under drafts/T-24502/TACO. Broad remaining allocation/loop gaps documented, production stays asm; no repeated grids. Next A790 scrolling/table loops.
 
 - 2026-10-20 archive review: parent standards10 finding on raw comparison dump resolved by deleting it and adding small context wrapper plus exact replay commands; concise first-divergence prose retained. Independent AB50 consult confirms priority0.5 constant reuse and no source fix; chained stores worsen469 to471 instructions. No further AB50 grid.
+
+- 2026-10-20: func_8013A790 matched1492 literal default bytes; accurate AD64 declaration and callers covered by27/27 hashes, ninja guards,0 new prototype disagreements. Parent no-blocker standards review recorded. Read-only trace explains count/bound priority swap, resolved with source-local FAKE zero-subtree use; frame pad and sampler spill view also marked. Campaign total6 functions9136 bytes. Work now on clean ancestry codex/taco-24502-clean after reviewed source-only archive7bac2d12b.

@@ -2021,3 +2021,7 @@ Continued func_80135DC0 using current-pass instruction regions. Fixed invented h
 ## [2026-10-20] decision | T-24503 reconstruct 35DC0 source regions
 
 [[tickets/T-24503-geko-option-completion]]: GEKO func_80135DC0 archive improves from 547 to 336 through control-flow, counter, call, date and RECT repairs. Target and candidate have 565 and 563 resolved instructions. The frame is 0x68, RECT is at sp+0x34, counter at sp+0x62 and status byte at sp+0x3F. Opcode/immediate differences remain in appointment reloads/copies at offsets 0x208 through 0x274; registers still differ elsewhere. Updated drafts/T-24503/README.md corrects the earlier baseline frame attribution. Production remains ASM; coverage is unchanged.
+
+## [2026-10-20] build | T-24502 scrolling sampler matched
+
+func_8013A790 matches1,492 default linked bytes; all27 binary hashes and source/prototype guards pass. Parent code review found no blockers. Read-only trace identified the count/bound priority gap; documented zero-subtree use fixes the eight-register-word swap without emitted arithmetic. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record all three source-local FAKE controls and campaign six matches9,136 bytes. Continued on clean archive ancestry, preserving scratch work.

@@ -138,6 +138,7 @@ s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 ar
 s32 func_8014F820(void);
 void func_8013AFDC(void);
 void func_8013A790(s32 arg0, s32 arg1);
+void func_8013AD64(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_8013760C();
 void func_8013788C();
 void func_8014F210(void);
