@@ -1,3 +1,4 @@
+/* FAKE: T-24521, experimental scalar/offset views retained only as source-only evidence; real aggregate fields unresolved. */
 void func_80139AB0(void) {
     s32 i;
     s32 j;

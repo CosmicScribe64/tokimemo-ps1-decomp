@@ -2182,3 +2182,7 @@ Tested an explicit two-column source loop in `func_80139AB0`: it stays rolled bu
 ## [2026-10-20] ticket | T-24521 checkpoint In Review
 
 Added original copy instruction addresses, exact eleven-word data bounds and the source-user search for D_801494C4 to [[tickets/T-24521-taiiku]] and [[families/taiiku-family-results]]. The private final overlay and both literal linked matches pass after restoring all experiments. Saved three bounded source-only follow-ups with no coverage claims. Moved the ticket to In Review pending archive review; production changes already passed independent parent review.
+
+## [2026-10-20] lint | T-24521 archive review resolved
+
+Resolved the parent review finding by marking experimental scalar/offset views in both `func_80139AB0` source-only bodies with leading FAKE comments. Recorded the resolution in [[tickets/T-24521-taiiku]]. Production code and verified matches are unchanged; no compiler search or build was needed for comments only.

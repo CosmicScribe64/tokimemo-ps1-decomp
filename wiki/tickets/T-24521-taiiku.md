@@ -65,3 +65,5 @@ Explicit two-column source loop avoids the old full-unrolling problem but introd
 ### Checkpoint review
 
 The final production source contains precisely the two verified replacements (2,604 bytes). The remaining nine functions retain INCLUDE_ASM. A final private overlay build and literal default linked proof of both functions pass after restoring every experiment. Source-only bodies and their reproduction limits are saved separately. Self-review found no staged raw data, generated assembly, compiler edits or unmarked production FAKEs; new README prose passed the repository deslop check. Parent review of the two production changes has no blockers; source-only archive review remains before ticket closure.
+
+- Parent archive review: marked the inherited scalar/offset views in both `func_80139AB0` bodies with leading FAKE comments naming T-24521 and their experimental status. These bodies remain source-only evidence with unresolved aggregate fields. No production changes or compiler search. The remaining archive review found no blockers; exact 44-byte table ownership evidence confirmed independently.
