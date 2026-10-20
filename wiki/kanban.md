@@ -78,6 +78,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]
+
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24517-master-flow|T-24517 Reconstruct MASTER animation flow and pointer lifetimes]]
 

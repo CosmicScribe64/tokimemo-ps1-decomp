@@ -2205,3 +2205,15 @@ Final DEE4 zero-initializer probe is negative: chain72, pair/comma/group70; pack
 ## [2026-10-20] decision | T-24502 full-unit scope correction and carousel packet
 
 Independent DEE4 consult finds additional post-projection allocation differences in full TU69 despite default guards; standalone70 claims qualified, three loop hypotheses negative.39FB8 fresh lifetime change lowers first-loop sine priority10 to3.5; full-TU baseline280 becomes216, shared preheader web198 with remaining broad register/scheduling differences. Source-only replay packet and concise bounded negatives saved, no production/header changes or new coverage credited. [[matching-notes]] and [[tickets/T-24502-taco-completion]].
+
+## [2026-10-20] ticket | T24560 ENDING halfword object lead
+
+Created [[tickets/T-24560-ending-slot]] on f37fd808aa5aad169acc1091cdbc7421c779a55d in fresh /private/tmp/tokimemo-t24560 after avoiding the other coordinator's T24520 collision. Read330E4/T24512 history and helper declarations. Test only a narrow2-byte level object at54 with existing chance/points/rank/frame layout; no padding grid or production edit before literal proof.
+
+## [2026-10-20] build | T24560 narrow level object fixes home54
+
+Fresh ENDING SHA1 passes. Scalar84/199 uses56; s16[1]87/200 fixes54 with early stores; a two-byte struct member80/199 fixes only sh/lh54, preserving B0/table30/points58/rank78 and call/store positions. Box is marked FAKE because source semantics are unproven. Narrow source/replay preserved under drafts/T-24560; production unchanged, no C match. [[tickets/T-24560-ending-slot]] records the separate unresolved bonus-word lifetime.
+
+## [2026-10-20] decision | T24560 raw-mask negative and slot handoff
+
+One real raw-bonus local replacing one pad word plus direct0xE00 predicate gives96/199, emits extraANDI and keeps raw v1/level a0, unlike target. No more raw/padding variants. Retained FAKE-marked box80 fixes exactly two spill/load immediates56->54. Docker ENDING SHA1/header and C/Python checks pass; production unchanged. [[tickets/T-24560-ending-slot]] moves to In Review after standards/spec self-review; no match or full27 claim.

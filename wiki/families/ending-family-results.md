@@ -256,3 +256,7 @@ Flag-first ordering, narrow extracted-value locals and raw-word shifts do not
 close it. This is source research, zero verified C bytes; production unchanged.
 Typed387B0 stale-index repairs148/177 and current34270 typed redraft890 provide
 no closer. Existing A2E8/35F4C scheduler investigations were read and preserved.
+
+## T-24560 level object home
+
+[[tickets/T-24560-ending-slot]] distinguishes330E4's two-byte level object from a scalar word home. A FAKE-marked struct member improves84->80 and changes exactly sh/lh56->54, retaining199 positions andB0/table30/points58/rank78. An array member adds stores87/200. One real raw-bonus local/direct0xE00 predicate96/199 emits an extra ANDI and does not recover target raw-a0/extracted-v0 lifetime. Narrow source/replay is in `drafts/T-24560/`; zero new verified C bytes, production unchanged.
