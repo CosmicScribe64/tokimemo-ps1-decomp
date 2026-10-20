@@ -113,7 +113,7 @@ INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132834);
 #endif
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-24033, 7 resolved rows. Dispatch shift is late in a branch delay slot; original shifts earlier and keeps one extra nop, changing two branch offsets. T-24138: `switch (D_800E6280.unk_F5F)` spelling tried (CSE merges, no change); autotweak 644 edits, no match. T-24138b: `s32 sel` copy before switch keeps the 7-row shape (u8 sel adds andi, worse); using sel in the mode ifs recolors a0/a1/v1, worse. T-24138c: mode-reloads, u8 mode, nested if1/if3 all output-identical (same 7); mixed/all-direct spellings and explicit sel+(sel<<2) recolor (39-55, switch index is MUL so no CSE merge); mode-copy coalesces (same 7), fsel-copy recolors (39). */
+/* NON_MATCHING: T-24212, 3 rows (7 resolved rows in funcdiff); only the dispatch `sll t3,a1,2` is in the wrong delay slot. as1's global scheduler (trace `as1 -R -xbbdbg 8`) visits the `== 9` test block first and fills its slot with the `lui v0` of the `mode` reload from its fallthrough; the `sll` then goes to the third `if` head's slot. The original fills the `== 9` slot with the `sll` and keeps that `lui` and a `nop`. T-24033/T-24138: switch spellings, `sel` copies, mode reloads, `u8 mode`, nested ifs, autotweak. T-24212: `1 == mode`, byte view of the mode load, one-line ifs (all output-identical); else-if/goto/ternary/early-return-as-else forms change code. Notes: wiki/matching-notes.md T-24212. */
 s32 func_80132D0C(void) {
     s32 mode;
     GameState *state;
