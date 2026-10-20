@@ -20924,3 +20924,11 @@ Created [[tickets/T-24209-cloud-packet-etc-80144df0]] for `func_80144DF0` in `sr
 ## [2026-10-20] ticket | T-24210 In Review: main func_800591D8 matches (cloud packet)
 
 [[tickets/T-24210-cloud-packet-main-800591d8]]: match packet for `func_800591D8` in src/main/80058D20.c. Asm fallback equals the packet reference; the T-24206 `u16 *` re-read view and else-arm store order plus `unk_002` written first in the if arm give 0 differing lines (from the T-17017 guard's 32). Plain C with one FAKE; notes in [[matching-notes]] (T-24210). Local linked proof and review still due.
+
+## [2026-10-20] ticket | T-24211 cloud packet: VALEN func_80134030
+
+Created [[tickets/T-24211-cloud-packet-valen-80134030]] (In Progress): single-function match packet for `func_80134030` in `src/ovl/VALEN/80133C70.c` (guarded at 27 lines since T-19016); packet asm stays under the gitignored `asm/`, scratch compile under `build/scratch/`.
+
+## [2026-10-20] ticket | T-24211 In Review: VALEN func_80134030 still guarded
+
+[[tickets/T-24211-cloud-packet-valen-80134030]]: setup proven (asm-fallback scratch copy equals the packet reference); about 30 C variants leave `func_80134030` in `src/ovl/VALEN/80133C70.c` at 6 instruction lines. The miss is as1 hoisting the head of the single-predecessor default block above the range check; only a jump-table reference (`case 10:`, wrong bound) stops it. A scan of 174 matched files shows the original's as1 hoists the same way (OMIMAI `func_801340E4`). Guard comment now T-24211; notes in [[matching-notes]] (T-24211). Local linked proof and review due.

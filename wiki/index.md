@@ -42,6 +42,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-24209-cloud-packet-etc-80144df0|T-24209]] cloud packet, ETC `func_80144DF0` 26 rows -> instruction match (FAKE byte-view store of `unk_1118`, `pad[3]`), In Review.
 - [[tickets/T-24210-cloud-packet-main-800591d8|T-24210]] cloud packet, main `func_800591D8` 32 rows -> instruction match (T-24206 `u16 *` view, `unk_002` first in the if arm), In Review.
+- [[tickets/T-24211-cloud-packet-valen-80134030|T-24211]] cloud packet, VALEN `func_80134030` still guarded at 6 instruction lines (as1 hoists the default block head; only `case 10:` stops it), In Review.
 - [[tickets/T-24203-cloud-packet-geko-80136c20|T-24203]] cloud packet, GEKO `func_80136C20` still 4 rows guarded (as1 places the selector `lui`), In Review.
 - [[tickets/T-24207-cloud-packet-etc-80140ae4|T-24207]] cloud packet, ETC `func_80140AE4` 20 rows -> instruction match (FAKE `!= 0` temporary, `do/while` block), In Review.
 - [[tickets/T-24206-cloud-packet-main-800590cc|T-24206]] cloud packet, main `func_800590CC` 16 rows -> instruction match (FAKE `u16 *` re-read view), In Review.

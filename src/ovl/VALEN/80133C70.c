@@ -80,7 +80,7 @@ void func_80133FD0(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-19016, 27 differing lines (2 instructions plus branch offsets); as1 hoists two lui of the default block above the range check, the original keeps them in the block. A second label on the default block stops it but changes the bound. */
+/* NON_MATCHING: T-24211, 6 rows (instruction diff lines, one instruction short); as1 hoists the first two lui of the default block into the selector load delay and the range-check slot because the default block has one predecessor; the original keeps the nop and fills the slot with the dispatch sll. case 10: before default: gives the original schedule but the bound 11. */
 void func_80134030(void) {
     func_80133C70();
     /* two statements: the single expression (x & 0xFFF7) | 4 takes $t6/$t7/$t8 where the original has $v0, $t7, $t9 */
