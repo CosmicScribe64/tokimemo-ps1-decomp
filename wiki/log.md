@@ -2724,3 +2724,15 @@ Frozen full-TU1075-word/864-row source replay after true X-width fix and natural
 ## [2026-10-20] build | Consolidated archives verified and cheaper-first matching resumed
 
 Root published TAIIKU/RPG/VALEN archive consolidation at6e9467a90 after all27 executable hashes and header/global/prototype guards passed. VALEN stale guard removal preserves its original fallback; no coverage gain. Reviewed NAME_ENT regional source packet762014be1 for archive preservation. Latest GitHub read shows no open PRs and unchanged issue65 timestamp14:31:11Z. Luna high now tests one fresh MAIN54E6C aggregate-access hypothesis; prior Sol workers are idle. [[status]] retains6814/6952 functions and91.8% bytes; [[tickets/T-24500-completion-orchestration]] goal remains100%.
+
+## [2026-10-20] ticket | T24519 MASTER animation sibling transfer
+
+Created [[tickets/T-24519-master-sibling]] before probes on pinned9013099115dc8cc3ff07a98061a39d32ff95fe0c in isolated /private/tmp/tokimemo-t24519. Transfer recovered363F4 indexed clone/point lifetimes plus real RNG local into344E0's own flow; no repeated copy-end investigation or broad grid. Read current index/status/playbook and T24048/T24517 history; modest j2 Docker/read-only original disc.
+
+## [2026-10-20] build | T24519 indexed sibling transfer restores frame
+
+MASTER baseline SHA1 passed. T24048 control428/730 positions versus728 target; recovered363F4 indexed clone/point loops with existing i/value locals give338/728,64-byte frame and289 exact diagnostic prefix positions. Preserved own344E0 early/late cases in narrow drafts/T-24519 source. [[tickets/T-24519-master-sibling]] remains In Progress; no C match or copy-end probe.
+
+## [2026-10-20] build | T24519 MASTER344E0 structural checkpoint
+
+Sibling transfer restores64-byte frame, clone/speed spill34 and point30,728 positions and289 exact diagnostic prefix. Corrected-mask replay reports171 register-only rows/0 other rows; later430..727 has a consistent bijection across calls and counter v1 agrees. First residual is the known aligned-copy end relation; no copy-end probe repeated. Narrow source/replay/map retained; production diff empty, MASTER SHA1/header checks pass. [[tickets/T-24519-master-sibling]] moves to In Review after standards/spec self-review; no C match or full27 claim.
