@@ -2748,3 +2748,26 @@ Fresh ENDING SHA1 passes. Scalar84/199 uses56; s16[1]87/200 fixes54 with early s
 ## [2026-10-20] decision | T24560 raw-mask negative and slot handoff
 
 One real raw-bonus local replacing one pad word plus direct0xE00 predicate gives96/199, emits extraANDI and keeps raw v1/level a0, unlike target. No more raw/padding variants. Retained FAKE-marked box80 fixes exactly two spill/load immediates56->54. Docker ENDING SHA1/header and C/Python checks pass; production unchanged. [[tickets/T-24560-ending-slot]] moves to In Review after standards/spec self-review; no match or full27 claim.
+## [2026-10-20] ticket | T-24518 deep ETC initializer reconstruction
+Created [[tickets/T-24518-etc-flow]] In Progress in fresh isolated worktree from c768eda884eb30dd0067509f90d8892dc2563ef1. Read fresh [[index]], [[status]], [[playbook]], standards and [[tickets/T-24513-etc-matching]]. Original flow/loop/lifetime proof precedes source changes; no full27 baseline or old block-copy direction experiment.
+
+## [2026-10-20] build | T-24518 original first-loop shape recovered in source
+Fresh actual full-TU baseline reproduces T-24513. One source induction counter reused across both case5 loops retains the original first loop; separate address and pointer forms expand. Signed shared counter and actual declaration layout also recover buffer0x54, with530 candidate versus529 target words and447 aligned cost. First address/bound registers still differ. [[tickets/T-24518-etc-flow]] records exact causal controls; no compiler blocker or match claimed.
+
+## [2026-10-20] build | T-24518 scalar state lifetime localized
+Existing read-only uopt trace is byte-faithful to stock on both ETC candidates. A coherent named-field byte view of the scene state recovers promotion across unrelated GameState stores and improves447 to351 resolved cost; both loop shapes/frame/buffer remain recovered. Remaining structural regions and neutral/worse controls are recorded in [[tickets/T-24518-etc-flow]]. Production source/header/compiler unchanged, no match or coverage claim.
+
+## [2026-10-20] decision | T-24518 preserve structural source checkpoint
+Signed first-sprite flag view recovers shared01000000 materialization, yielding529 target/529 candidate words and190 resolved cost. Private marked controls and exact commands are retained in drafts/T-24518; production source/include/tools/config audit is unchanged. Standards/spec self-review passed for this diagnostic checkpoint; no match or backend claim, ticket stays In Progress. See [[tickets/T-24518-etc-flow]] and [[families/etc-family-results]].
+
+## [2026-10-20] decision | T-24518 archive review cleanup
+Coordinator review requested compact evidence. Keep only baseline and best ETC body in full; other24 causal controls are exact replay edits with verified source SHA256, plus a compact result table. Original active sources remain in ignored scratch. Production source/include/tools/config remain unchanged; [[tickets/T-24518-etc-flow]] stays In Progress.
+
+## [2026-10-20] build | T-24518 targeted sibling and stack-slot followup
+Coordinator extends scope to retained ETC/BUNKA_SD/EN_NICHI/KANGEI ownership. Current closest ETC4790C baseline85cost is byte-neutral under measured MAIN767A4 separated-slot and matched ETC43758 typed-record transfers. EN36DEC actual top gap recovers frameF8 with two upper slots,317 to313cost, but saved byte cursor/loop gaps remain. Existing exhausted KANGEI/BUNKA controls were not repeated. All34 compact replay source hashes pass; production audit unchanged and no match claim. See [[tickets/T-24518-etc-flow]].
+
+## [2026-10-20] build | T-24518 RGB chain predicts original shade order
+One causally predicted R=G=B element chain recovers original single128 and all shade stores/call slot in ETC3FFAC. Structural replay527words/515 normalized positions retains two opcode gaps plus table/register differences; no match. EN kind-cursor exact stock/trace fidelity passes; trace and rejected historical return/cursor controls recorded in [[tickets/T-24518-etc-flow]]. All evidence stays compact and production unchanged.
+
+## [2026-10-20] build | T-24518 prove exact first table region
+Natural shared-index source gives all10 original resolved first-table words at function+288..2AC, with frame70/buffer54 and recovered shade block. Current527word/336cost source and rejected second-table/callee controls are compact replays;48 hashes pass. Standards/spec checkpoint review and unchanged production audit pass. No full-function match or all27 rerun claim. [[tickets/T-24518-etc-flow]] remains In Progress.
