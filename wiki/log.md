@@ -20969,3 +20969,7 @@ Created [[tickets/T-24303-local-list-l6-p03]] (In Progress): local session works
 ## [2026-10-20] ticket | T-24303 In Review: local list l6-p03
 
 [[tickets/T-24303-local-list-l6-p03]]: 3 of 54 matched (main `func_800755B4` with a `.data` island and two key-ring symbols, RPG_BAT `func_80138324` from its siblings plus a `viewsweep` callee view, main `menu_girl_taku_set` by a plain rewrite); main `func_80047560` guarded at 22 rows; misses archived in `drafts/T-24303/`. Notes in [[matching-notes]] (T-24303), [[data-types]] updated. Review due.
+
+## [2026-10-20] ticket | T-24302, T-24303 Done
+
+Local lists merged: T-24302 GEKO `func_801358CC`; T-24303 main `menu_girl_taku_set`, RPG_BAT `func_80138324`, main `func_800755B4` (linked proof here).

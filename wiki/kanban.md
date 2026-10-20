@@ -63,8 +63,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24303-local-list-l6-p03|T-24303 Local list l6-p03]]
-- [ ] [[tickets/T-24302-local-list-l6-p02|T-24302 Local list l6-p02]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
 - [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
@@ -123,6 +121,8 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-24303-local-list-l6-p03|T-24303 Local list l6-p03]]
+- [ ] [[tickets/T-24302-local-list-l6-p02|T-24302 Local list l6-p02]]
 - [ ] [[tickets/T-24213-cloud-packet-taco-8014f820|T-24213 Cloud packet: TACO func_8014F820]]
 - [ ] [[tickets/T-24214-cloud-packet-main-80054884|T-24214 Cloud packet: main func_80054884]]
 - [ ] [[tickets/T-24212-cloud-packet-valen-80132d0c|T-24212 Cloud packet: VALEN func_80132D0C]]

@@ -1,7 +1,7 @@
 ---
 id: T-24303
 title: Local list l6-p03
-status: In Review
+status: Done
 assignee: local-l6-p03
 created: 2026-10-20
 updated: 2026-10-20
@@ -30,3 +30,5 @@ Clean build 27/27 sha1 OK; check_headers, migrate_globals --check, sync_protos -
 ### 2026-10-20 final: In Review
 
 Matched (3, 2,908 B): main `func_800755B4`, RPG_BAT `func_80138324`, main `menu_girl_taku_set`. New guard: main `func_80047560` (22 rows). Header changes: `main_api.h` (`KeyRing` replaced by `u8 D_800B6990[8]`, `u8 D_800B6998`), `RPG_BAT.h` (`RPG_BAT_OVERRIDE_func_8013E810` guard); `config/SLPM_86.053.yaml` gains the `.data` island of main/80075320. Details in [[matching-notes]] (T-24303). Code review against CODING_STANDARDS.md still due.
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): only owned C files, notes and C drafts changed (plus one splat .data split for func_800755B4 in T-24303); no asm or game data; FAKE/NON_MATCHING comments ticketed. Merged with a clean 27/27 build, header/global/prototype checks and linked funcdiff MATCH for each match. Done.
