@@ -1,5 +1,5 @@
-/* T-24301 draft: GsBG/GsMAP/GsCELL setup (types as in include/ovl/OPTION.h). The original multiplies
- * h * 0x78 with multu (the 0x78 constant is shared with map->cellh) and has a 0x70 frame. */
+/* T-24301 draft, ~106 rows: GsBG/GsMAP/GsCELL setup (types as in include/ovl/OPTION.h); `w` is s32 (no
+ * narrowing in the original); `h * (map->cellh = 0x78)` gives the multu but with an andi (u8 chain). */
 typedef struct BgCell8 {
     u8 u;
     u8 v;
@@ -22,20 +22,19 @@ extern BgMap10 D_80122120[2];
 extern BgCell8 D_80122140[2][64];
 extern u16 D_80122540[2][64];
 
-void func_8004A1A0(s32 *tex, s32 slot, s32 count, s16 w, s32 h, s32 clut, s32 x, s32 y, s32 flag, s32 tp) {
+void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x, s32 y, s32 flag, s32 tp) {
     SpriteSlot24 *bg;
     BgMap10 *map;
     BgCell8 *cells;
     u16 *index;
     s32 row;
     s32 col;
-    s32 n;
 
     bg = &((SpriteSlot24 *)&D_801220D0)[slot];
     bg->unk_04 = x;
     map = &D_80122120[slot];
     bg->unk_00 = 0x01000000;
-    bg->unk_0A = h * 0x78;
+    bg->unk_0A = h * (map->cellh = 0x78);
     bg->unk_08 = w << 7;
     bg->unk_14 = (u32)&D_80122120[slot];
     bg->unk_1C = 0x1000;
@@ -51,7 +50,6 @@ void func_8004A1A0(s32 *tex, s32 slot, s32 count, s16 w, s32 h, s32 clut, s32 x,
     bg->unk_1A = 0;
     bg->unk_20 = 0;
     map->cellw = 0x80;
-    map->cellh = 0x78;
     map->ncellw = w;
     map->base = cells;
     map->index = index;
@@ -64,14 +62,13 @@ void func_8004A1A0(s32 *tex, s32 slot, s32 count, s16 w, s32 h, s32 clut, s32 x,
     }
     for (row = 0; row < h; row++) {
         for (col = 0; col < w; col++) {
-            n = row * w + col;
-            index[n] = n;
-            cells[n].u = 0;
-            cells[n].v = row * 0x78;
-            cells[n].tpage = tp + col;
-            cells[n].cba = func_8009ED74(0, clut);
-            cells[n].flag = 0;
-            if (n > 0x40) {
+            index[row * w + col] = row * w + col;
+            cells[row * w + col].u = 0;
+            cells[row * w + col].v = row * 0x78;
+            cells[row * w + col].tpage = tp + col;
+            cells[row * w + col].cba = func_8009ED74(0, clut);
+            cells[row * w + col].flag = 0;
+            if (row * w + col > 0x40) {
                 printf("BG_ERROR:p_line.c \n");
             }
         }
