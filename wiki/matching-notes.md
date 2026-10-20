@@ -658,3 +658,10 @@ Affected MAIN rebuild `ninja -j2 build/SLPM_86.053.ok` passes its immutable targ
 ### T-24501 inverse serializer packet (2026-10-20)
 
 `func_80054FC0` (796 bytes) now has source-only typed aggregate reconstruction using the matched loader views. Actual checksum is a natural byte loop, automatically unrolled four ways; writing four bytes in C double-unrolls to 246 words. Unsigned counter separates the loop bound from selector multiplication and restores target shift/sub; 113/200 words versus target 199, exact frame 0x28. First 45 resolved rows agree; first 20-byte copy then skips a different temporary (t5 versus t4), subsequent copy ring differs, and checksum epilogue adds one word. Explicit scratch void prototype and s32 control are identical; both callers ignore return. No shared declaration promoted. Archive/replay: `drafts/T-24501/save_inverse.py`, `drafts/T-24501/main/func_80054FC0*`. Freeze for bounded consultation; do not conflate this unrolled 20-byte case with the already negative long-copy end-pointer consult or global direction changes.
+
+
+### T-24501 circular GPU grid source recovery (2026-10-20)
+
+`func_8004A414` (1,024 bytes, src/main/80049FF0.c) improves raw 390/260 words/frame C8 to typed 164/256 words with exact target frame 98 and x/y homes 8C/88. Natural repeated bound expressions fix explicit-bound promotion; natural squared-distance expressions remove duplicate local/spill ownership. Existing pointer locals before x/y reproduce target coordinate homes. Remaining first divergence swaps x/max_x stores; invariant CSE spills are 12 bytes lower, saved-register priorities and some constant/store scheduling differ. Source/replay and exact residual table archived under `drafts/T-24501/main/func_8004A414*`, `drafts/T-24501/grid_replay.py`. No production/header edit; freeze for bounded source-lifetime consultation, no padding/declaration grid or compiler-defect claim.
+
+Inverse 54FC0 consult negative: disabling the ugen shim leaves instructions identical 113/200; checksum store/function-end grouping unchanged. Keep frozen.
