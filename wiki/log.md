@@ -2117,3 +2117,11 @@ Docker scan of current source INCLUDE_ASM entries and generated size headers ide
 ## [2026-10-20] query | Pin ETC bounded reconstruction checkpoint
 
 [[tickets/T-24510-parallel-overlay-coordination]] records ETC `057eeb442`, zero new C bytes, production diff empty, all27 built hashes and interface guards passed. Eight source-only replay controls preserve exact negatives; archive contains no full-context copies or ASM dumps. Ticket In Review; MASTER remains active under expanded parent authorization.
+
+## [2026-10-20] decision | MASTER typed donor audit and candidate ownership
+
+[[tickets/T-24510-parallel-overlay-coordination]]: MASTER baseline checksum passes;35FB8 remains58cost after bounded controls.363F4 source reconstruction uses archived T-24048/344E0 typed loops while preserving target-specific cases. Corrected donor label:344E0 is not verified default C, remains INCLUDE_ASM. Root's additional lanes own TAIIKU/RPG_BAT/GYOZI/VALEN/SHOUGATU, no overlap.
+
+## [2026-10-20] decision | Reuse completed lane slots for fresh owned units
+
+[[tickets/T-24510-parallel-overlay-coordination]] records root's expanded ownership: NAME_ENT T-24515 and BUNKA_SD/EN_NICHI/KANGEI T-24516, fresh isolated trees; MASTER T-24514 continues. Three workers cap unchanged. Returned concise archive review: TEL/ETC no findings, ENDING duplicatecontext/metric attribution fixed; all zero matched gain. MASTER counted-loop reconstruction improves420to363cost but remains nonmatching.
