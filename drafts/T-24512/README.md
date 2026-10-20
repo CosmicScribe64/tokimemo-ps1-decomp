@@ -50,3 +50,10 @@ A2E8 and35F4C are existing scheduler blockers (T-24009 and T-24047), with
 extensive prior bounded evidence. No repeated pointer-truthiness, binasm or
 backend-version experiment was run. Their guarded production sources remain
 untouched. No compiler or main_api changes were made.
+
+Archive validation after removing the redundant generated context: both
+retained bodies compile against the baseline translation unit and current
+headers. 330E4 remains84. The retained postprocessed34270 body scores504;
+redraft's typed890 report describes its earlier variant, not this retained
+finish body. Neither score is a match. Context references in result/catalog
+point to23e1a20fb and the precise source/header paths.

@@ -2117,3 +2117,11 @@ lead, without changing existing scheduler guards.
 context and empty declarations from its research archive. Reproduction scripts
 use current source/header context, so neither removed file was needed. Existing
 source-only candidate and score provenance remain; no original assembly dump.
+
+## [2026-10-20] build | T-24512 retained body validation
+
+[[tickets/T-24512-ending]] independently compiled both retained source bodies
+against current headers in Docker:330E4 aligned84,34270 aligned504. The earlier
+typed redraft report890 predates finish processing, so the source archive now
+makes the distinction explicit. No C match; replaced stale context hashes with
+exact baseline/source references.

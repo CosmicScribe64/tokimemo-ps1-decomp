@@ -45,3 +45,5 @@ Spec: bounded function-by-function causal hypotheses, current typed draft contro
 - Moving research checkpoint to In Review for coordinator handoff. Matching objective remains unresolved; zero new C bytes. Avoid repeating the measured negative controls. No linked C MATCH claim is made, because no candidate reached equality.
 
 - Archive follow-up self-review: generated34270 context.c merely copied the existing translation-unit siblings; none of the reproduction scripts reads it. Removed that unnecessary full context and empty declarations.h. Retained the compiling nonmatching body and score/provenance JSON only; no original ASM dump is present. Ticket stays In Review pending root acceptance.
+
+- Retained-body Docker compile review after context removal:330E4 candidate84;34270 retained body504. The redraft command's reported typed890 is its initial scorer result; the retained finish body is a different postprocessed candidate. Both compile, neither matches. Stale context_hash fields removed in result/catalog and replaced with exact baseline/source-path references.
