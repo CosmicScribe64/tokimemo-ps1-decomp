@@ -2311,3 +2311,7 @@ Final EN_NICHI byte-cursor and KANGEI typed-bitfield/club-local controls do not 
 
 ## [2026-10-20] build | T-24516 retained-body replay confirmed
 All five actual full-TU C bodies in drafts/T-24516 reproduce their recorded word/row/aligned-cost metrics and explicit-object default resolved DIFF verdicts. Production unchanged. [[tickets/T-24516-overlay-family]] archive handoff is ready; no literal match asserted.
+
+## [2026-10-20] decision | Resume deep structural matching and consolidate remaining archives
+
+[[tickets/T-24510-parallel-overlay-coordination]] returns to In Progress at parent's explicit request. Two medium workers restart in fresh trees: MASTER363F4 T-24517 and ETC3FFAC T-24518, original-flow region reconstruction until match or isolated backend blocker. Consolidated reviewed MASTER/NAME_ENT/family archives through source-only cherry-picks retaining original refs and exact append suffixes. No production ancestry imported; no raw-source or active-worker mutation.

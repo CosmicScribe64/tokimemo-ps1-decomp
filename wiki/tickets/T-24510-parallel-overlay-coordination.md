@@ -1,7 +1,7 @@
 ---
 id: T-24510
 title: Coordinate isolated TEL ENDING ETC matching lanes
-status: In Review
+status: In Progress
 assignee: Codex
 created: 2026-10-20
 updated: 2026-10-20
@@ -91,3 +91,9 @@ Family checkpoint `1b212b6f7ca9c088b83f033dac974ca60c08bafa` (base `eaf7c6e70`) 
 All six assigned tickets have completed their bounded source-backed investigations with zero new matches/C bytes. Earlier TEL/ENDING/ETC consolidated pin0abd29391 is integrated by parent127bba16c; outstanding independent source-only checkpoints for root acceptance are MASTERdfec4bf72+8b76c1b46, NAME_ENT00bfc328d+30b4f5716, family1b212b6f7. No workers remain compiling; no remaining distinct evidence-backed experiment identified in assigned units. Keep sources for future targeted consultation; do not call drafts coverage or claim compiler impossibility.
 
 Coordinator final review: all scoped source/wiki evidence reviewed, exact base and verification recorded, all history append-only, no raw-source mutation, no host installs, no production compiler change, no extra review subagents, no contributor messaging/push/main merge/integration-tree access. In Review for root acceptance. Matching objective remains unresolved.
+
+## Continued structural reconstruction
+
+Parent explicitly resumes work toward100%, requesting deeper original-flow reconstruction until a real match or concrete isolated backend blocker, not stopping after tiny causal sets. Two existing Sol6.1 medium workers restart in NEW isolated trees: MASTER363F4 T-24517 and ETC3FFAC T-24518. MASTER chosen for exact frame/first213instructions with real clone pointer-compare/lifetime mismatch; ETC chosen for corrected six-entry semantics but original retained-table-loop/unroll and buffer/lifetime differences. Each reconstructs original flow region-by-region, no grids or production compiler patches, no fallback coverage claims. Existing T-24047 read-only diagnostic tracer location supplied to ETC for a specific loop/type question; no instrumentation rebuild authorized.
+
+Consolidation now includes reviewed MASTERdfec4bf72/8b76c1b46, NAME_ENT00bfc328d/30b4f5716 and family1b212b6f7 via individual cherry-picks with original commit references. Kept exact worker log/matching-note append suffixes, regenerated combined catalogs, and retained existing coordinator history; no parent production ancestry imported. ROOT requested one pin for archive integration. Coordinator returns to In Progress for two deep workers; prior matching targets remain unresolved.
