@@ -53,6 +53,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24517-master-flow|T-24517 Reconstruct MASTER animation flow and pointer lifetimes]]
+
+
 - [ ] [[tickets/T-24522-rpg-bat|T-24522 Match remaining RPG_BAT functions]]
 
 - [ ] [[tickets/T-24521-taiiku|T-24521 Match remaining TAIIKU functions]]

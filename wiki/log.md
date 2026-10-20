@@ -2025,3 +2025,44 @@ Continued func_80135DC0 using current-pass instruction regions. Fixed invented h
 ## [2026-10-20] build | T-24502 scrolling sampler matched
 
 func_8013A790 matches1,492 default linked bytes; all27 binary hashes and source/prototype guards pass. Parent code review found no blockers. Read-only trace identified the count/bound priority gap; documented zero-subtree use fixes the eight-register-word swap without emitted arithmetic. [[matching-notes]] and [[tickets/T-24502-taco-completion]] record all three source-local FAKE controls and campaign six matches9,136 bytes. Continued on clean archive ancestry, preserving scratch work.
+## [2026-10-20] ticket | T-24517 MASTER flow reconstruction
+
+[[tickets/T-24517-master-flow]] begins In Progress in fresh
+/private/tmp/tokimemo-t24517 from c768eda884. Root requests deeper363F4
+control-flow and clone/point lifetime reconstruction using the concrete T24514
+boundaries. Enabled T24092 direction fix is distinct; no compiler patch planned.
+
+## [2026-10-20] build | T-24517 clone and point flow recovered
+
+[[tickets/T-24517-master-flow]] reconstructs both loops as indexed operations
+with a real RNG result local. Clone sltu/bnez, all spill homes (clone/speed34,
+point30), frame64 and652-instruction extent agree. Full-function aligned330,
+not a match; first213 instructions exact. Remaining copy/temporary differences
+are assessed separately from these structural results.
+
+## [2026-10-20] build | T-24517 preserved structural checkpoint
+
+[[tickets/T-24517-master-flow]] preserves narrow source and a Docker replay
+before further register analysis.652 diagnostic rows retain matching opcode,
+immediate and relocation annotations when register fields are masked;167 rows
+are register-only substitutions,213-row exact diagnostic prefix. Section-owned
+strings/tables are normalized, so this is not literal linked-byte proof or C
+coverage. Root requests uopt/ugen attribution before any backend conclusion.
+
+## [2026-10-20] build | T-24517 exact tracer attribution
+
+[[tickets/T-24517-master-flow]] stock/traced exact sections and target checkpoint
+agree. Final uopt colours are only v0/v1/a0/a1; no temporary-register colour is
+assigned. First copy-end difference has no live range. Corrected opcode mask
+retains REGIMM condition selector and asserts no COP formats; existing-object
+check still652 positions,167 register-only and0 other rows. No backend defect
+or source impossibility inferred.
+
+## [2026-10-20] build | T-24517 narrow root consultation packet
+
+[[tickets/T-24517-master-flow]] packages recovered source, exact replay commands,
+stock/traced fidelity and identical enabled/omitted-shim sections. Synthetic
+aligned68-byte direct/indirect byte-store source yields relative end+3/+2;
+source goal is target+2 without changing preceding address setup. No defect or
+impossibility claimed. Narrow source-only archive self-review/syntax/prose checks
+pass; no original ASM, binary, ucode or full context archived. In Progress.
