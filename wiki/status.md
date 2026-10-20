@@ -50,3 +50,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 T-24510 coordinates user-authorized Sol 6.1 medium workers TEL T-24511, ENDING T-24512, ETC T-24513 from `23e1a20fb`. Trees are isolated under /private/tmp, with modest j2 worker load and no coordinator compiler search. Main integration remains in the original orchestrator chat. Results will be pinned with literal C and linked-byte/checksum evidence; no new coverage yet.
 
 T-24510 archived bounded TEL/ENDING/ETC and MASTER/NAME_ENT/BUNKA_SD/EN_NICHI/KANGEI investigations with zero new C bytes. Reviewed checkpoints preserve semantic corrections and replay evidence. Two Sol workers have restarted deeper MASTER and ETC reconstructions under T-24517 and T-24518; coordination remains In Progress.
+
+## Usage-conserving mode (2026-10-20)
+
+The user requested lower usage before capacity runs out. Keep only two active Sol6.1 medium workers: MAIN T-24501 and the former TACO worker's NAME_ENT reconstruction. All other workers/coordinators finish their current bounded experiment, preserve checkpoints, and remain idle. Astra stays idle unless a specific narrow blocker warrants escalation. Luna high may handle clearly mechanical tasks when useful; do not spawn extra work merely to fill slots. Workers prove literal C and affected-unit/declaration checks; root runs the full27 integration gate once. Reduce polling, repeated context reads, duplicate builds and verbose diagnostics. The100% goal remains active.

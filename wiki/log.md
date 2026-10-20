@@ -2243,3 +2243,7 @@ Full-TU control and sole direct-global indexed post-test variant both126 words/1
 ## [2026-10-20] ticket | T-24525 investigation reviewed
 
 Root standards review passes with no findings; full-TU unchanged result meets investigation acceptance. Moved In Review to Done, board synchronized; production unchanged. [[tickets/T-24525-name-ent-indexed-posttest]].
+
+## [2026-10-20] decision | Conserve usage with two matching workers
+
+User requested slower usage consumption and permitted Luna high for simple tasks. [[status]] and [[tickets/T-24500-completion-orchestration]] record MAIN/NAME_ENT as the two continuing Solmedium lanes, checkpoint-and-idle instructions to the others, narrow-only Astra escalation, and centralized full27 integration checks. Goal remains100%. Latest wiki lint had0 broken links/0 status mismatches and only the pre-existing large data/t0018-cases warning.
