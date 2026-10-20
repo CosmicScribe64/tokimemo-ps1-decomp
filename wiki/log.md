@@ -2191,3 +2191,11 @@ Created [[tickets/T-24522-rpg-bat]] in isolated codex/t24522-rpg-bat worktree fr
 ## [2026-10-20] build | T-24522 RPG_BAT menu-choice match
 
 `func_8014BB80` now matches 1,124 default linked bytes using typed GameState pointer switches and plain condition field read. Removed old volatile read and fake frame home. Private RPG_BAT checksum and 27/27 hashes (26 unchanged reference outputs) pass; headers pass. Source review by worker and coordinator found only repaired indentation. Evidence: [[tickets/T-24522-rpg-bat]], [[families/rpg-bat-family-results]].
+
+## [2026-10-20] build | Eight new matches and refreshed sibling scan
+
+MAIN make_color_bar16, TACO func_8013F468 and RPG_BAT func_8014BB80 are integrated with literal default-C proofs, 27 independently checked binary hashes and declaration guards. Source head d2665864e brings this run to eight functions / 8,824 bytes. Docker progress reports 6,801/6,952 functions,2,075,828/2,276,920 bytes (91.2%); [[status]] updated. Reviewed guarded GEKO and source-only OPTION/TACO checkpoints are also on main, with no coverage credit. The fresh global twin sweep has zero automatic candidates; five higher-similarity targets and three unmatched sibling pairs are recorded in [[tickets/T-24500-completion-orchestration]]. New T-24520 coordinator covers TAIIKU, RPG_BAT and seasonal overlays in isolated lanes.
+
+## [2026-10-20] lint | Correct stale block-copy compiler guidance
+
+Bounded Astra consultation found that [[build-step-gaps]] and [[playbook]] still described a pre-T-24092 blocker as unimplemented. Inspected tools/ugen_pass.py, its wiring in tools/cc.py, and [[tickets/T-24092-ugen-block-copy-state-pass]]: the direction-state pass is already enabled. Updated both guidance pages to distinguish the historical census, the implemented direction fix, and still-unproven 32-byte register mismatches. Historical17test/6337function regression results are attributed to the ticket, not claimed as rerun. No compiler source or configuration changed.

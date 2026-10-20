@@ -1,6 +1,6 @@
 ---
 type: analysis
-updated: 2026-10-17
+updated: 2026-10-20
 ---
 
 # What the build is missing
@@ -10,6 +10,8 @@ reproduce, so the last functions do not block a full match. Sources: [[data/true
 [[ido-52-evaluation]] (T-20700), the T-20600/T-20610/T-20620 family passes, [[uopt-register-allocation]] (T-9800).
 
 ## Census (T-20710, 2026-10-17)
+
+This is a historical census, not the current remaining-function inventory. [[tickets/T-24092-ugen-block-copy-state-pass]] subsequently implemented the block-copy direction correction in `tools/ugen_pass.py`, enabled by `tools/cc.py`. Its ticket records 17 passing tests, no regressions across 6,337 then-matched functions, and 12 newly promoted functions (6,748 bytes). These historical checks were not rerun for this documentation correction.
 
 87 guarded non-TT drafts: 9 registers only, 8 order only, 3 both, 15 within two unpaired instructions, 52 still
 structurally off. For the 55 drafts within six unpaired instructions (32,308 bytes) the first divergence is:
@@ -28,13 +30,11 @@ structurally off. For the 55 drafts within six unpaired instructions (32,308 byt
 | uopt tie-break | Closed as a build step: only 2 true ties (EVENT func_80114B0C, TACO func_80134A18), both first-use order; every tie variant tried changes 661-1,724 matched functions (T-9800). | Source recipes only. |
 | uopt range set / priority / colour order (26) | Open. Not tie-breaks; no uniform rule found. Most register-order gaps solved so far turned out to be source shapes (T-16920, T-20600, T-20610). | Keep applying the recipe catalogue; re-census after the next matching round to see what is left. |
 | as1 order (12) | IDO 4.1's as1 equals 5.3's on 6,335 of 6,336 matched functions (T-20700); as1 options change nothing useful (T-20620). Both schedule per source line. | Source line grouping (T-20620 recipes); no build step expected. |
-| ugen block-copy state (5) | The one uniform compiler difference found: the original, like IDO 4.1, does not switch a struct copy to state F at a block start; IDO 5.3/5.2 do (6 reproducers in tools/ido_eval_cases/ugen_copy_state/). Swapping in 4.1's ugen changes 1,307 matched functions for other reasons, so it is not usable. | A narrow patch to the recompiled 5.3 ugen's block-copy state logic, like the uopt patch tooling (T-9800). Needs reverse engineering of ugen's rotation code; test on the 35 matched functions with F-state copies and the 5 census cases. |
-| ugen temporary numbering (6) | Open; may share a cause with the block-copy state. | Re-check after a ugen block-copy patch prototype. |
+| ugen block-copy direction state (historical 5) | Addressed by T-24092 and the enabled `ugen_pass.py`. The cause is an uninitialized stack read in `f_eval_mov`, with preceding branch/store helpers affecting forward/backward copy direction for unaligned copies larger than 32 bytes. | Use the current compiler pipeline. Do not repeat the old whole-ugen swap or prototype request. A remaining copy mismatch needs a fresh reproducer; a 32-byte unrolled-copy register mismatch is not automatically this issue. |
+| ugen temporary numbering (historical 6) | Current status requires remeasurement after T-24092 and subsequent source matches. | Diagnose the first divergence with the current pipeline; do not assume the old census still names unmatched functions. |
 
 ## Next steps
 
-1. Prototype the ugen block-copy patch (research, private, not in the build until it passes the adoption rule:
-   uniform, evidenced, every matched function unchanged).
-2. Keep the conveyor on source recipes; the census lists two recipes ready to apply (EVENT func_8010B614, GYOZI
-   func_8013E638) and two functions with no recipe pass yet (GEKO func_80134228, func_80135AC8).
-3. Re-run the census after the next round to measure what is left in each row.
+1. Keep matching with the current enabled passes and source recipes. Check current INCLUDE_ASM status before reusing any target from the October 17 census.
+2. Preserve exact current-pipeline reproductions for remaining scheduler, range-allocation and copy-register failures.
+3. Re-run the census over the remaining functions before proposing another uniform compiler correction.
