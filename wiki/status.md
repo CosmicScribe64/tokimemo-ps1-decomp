@@ -9,9 +9,9 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,813 / 6,952 functions, 2,088,984 / 2,276,920 bytes (91.7%), measured with Docker `tools/progress.py` after source integration `ca34dcf7f`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,814 / 6,952 functions, 2,089,868 / 2,276,920 bytes (91.8%), measured with Docker `tools/progress.py` after source integration `6a2c6eb4b`. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (139 functions): main 56, TACO 13, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining by unit (138 functions): main 55, TACO 13, GEKO 9, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 3, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
@@ -31,6 +31,8 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 - Refreshed Docker twin scan at 6,811 matched / 141 remaining found no exact, near, lenient or wider-shape copies and no identical unmatched groups. Focused sibling work continues; this scan preceded the newest MAIN match and does not claim that all semantic reuse is exhausted.
 
 - MASTER `func_80135FB8` adds 1,084 verified bytes at `ca34dcf7f`: resumed-run total **20 functions / 21,980 bytes**. The matched sibling supplied initialization and shuffle structure; the preceding fade callee's return view closed the final register difference. Root reviewed the source and scoped override; literal default C, all 27 hashes and declaration guards pass. GEKO eligibility, TACO fan/projection and MAIN CD archives are preserved through `f1e2511ff`, with no extra coverage credit. Astra's RPG pointer consultation found a simpler equivalent source form but no literal match; TACO projection is the active bounded consultation, with MAIN CD queued.
+
+- MAIN `func_80046754` adds 884 verified bytes at `6a2c6eb4b`: resumed-run total **21 functions / 22,864 bytes**. Natural packed-texture loops, byte fill color and halfword upload coordinates match without artificial padding or allocation tricks. Root review, literal default C, all 27 hashes and declaration guards pass. Current bounded consultations are complete without further matches; their negative results are being preserved. MAIN continues the adjacent renderer; the former TACO worker now owns NAME_ENT, after preserving TACO lifetime evidence and correcting standalone/full-file scope. Other Sol lanes continue independently.
 
 - Local matching sessions on file-disjoint lists: T-24301, T-24302, T-24303 merged (5 matches); next lists from a fresh inventory. Lists: `.claude/orchestrator/lists/l6-p0N-list.txt` (local).
 - Cloud "match packets" ([[cloud-matching]]): T-24200..T-24214 done, 7 matches; paused (cloud usage spent).
