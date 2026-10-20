@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_800BCDF0 /* T-24523: integer debug-call result keeps the following flag out of v0. */
 #include "common.h"
 #include "ovl/GYOZI.h"
+
+s32 func_800BCDF0();
 
 typedef struct {
     s32 (*f[26])();
@@ -75,7 +78,58 @@ void func_80140E0C(void) {
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80140E0C);
 #endif
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80140F90);
+void func_80140F90(void) {
+    s16 i;
+    s16 count;
+    s32 status;
+
+    count = 0;
+    for (i = 0; i < 11; i++) {
+        count += ((GyoziBits32 *)D_800F53A0.girl[i].unk_10)->b1 >= 1;
+    }
+    i = 0;
+    do {
+        /* FAKE: multiplication by one preserves the original sum operand order. T-24523 */
+        D_800F53A0.unk_F2F = (D_800F6468 * 1 + i) % 10U + 1;
+        func_800BCDF0("num%d girl%d\n", count, D_800F53A0.unk_F2F);
+        i++;
+    } while ((!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 && D_800F53A0.unk_F2F >= 9) ||
+        (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 && count >= 2));
+    if (D_80148750 != 0) {
+        D_800F53A0.unk_F2F = 9;
+    }
+    D_80148754 = D_800F53A0.unk_F2F;
+    D_80148620 = 0;
+    /* FAKE: the redundant byte conversion reserves the original temporary slots. T-24523 */
+    status = (u8)func_8005E0E0(D_800F53A0.unk_F2F);
+    if (D_800F53A0.unk_F2F == 6 && (status & 0x7F) >= 2U) {
+        D_80148620++;
+    }
+    if ((status & 0x7F) == 4) {
+        D_80148620++;
+    }
+    func_80141550();
+    func_8008F618(D_800F53A0.unk_F2F);
+    if (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 || (D_80148750 != 0 && D_800F53A0.unk_F2F == 9)) {
+        ((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 = 1;
+        D_800F53A0.unk_710 = D_800F53A0.unk_10D8;
+        D_800F53A0.unk_711 = D_800F53A0.unk_10D9;
+        D_800F53A0.unk_712 = 0x11;
+        func_80090960(4, 0);
+        D_800F53A0.unk_713[D_800F53A0.unk_F2E * 8 + 0x1E] = 2;
+        func_8004DEAC(5);
+        return;
+    }
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A += 4;
+    for (i = 0; i < 7; i++) {
+        if (D_800F54AE < D_8014875C[i]) {
+            break;
+        }
+    }
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_06 += D_8014876C[i];
+    func_80090960(4, 0);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_801412A4);
 

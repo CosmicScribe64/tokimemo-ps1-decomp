@@ -2158,3 +2158,7 @@ Started [[tickets/T-24523-seasonal-source-hypotheses]] in /private/tmp/tokimemo-
 ## [2026-10-20] build | Verified 408-byte SHOUGATU match
 
 [[tickets/T-24523-seasonal-source-hypotheses]] matches func_80133B44 with literal default C and private linked 408-byte proof. Private SHOUGATU SHA1 passes; all 27 hashes pass using private SHOUGATU plus 26 unchanged read-only root binaries. Header, global and prototype guards pass; four original TACO asm proof files are read-only baseline symlinks. Parent standards review has no blockers. No compiler or assembly changes. Remaining seasonal functions continue.
+
+## [2026-10-20] build | Verified GYOZI selection-loop match
+
+[[tickets/T-24523-seasonal-source-hypotheses]] matches GYOZI func_80140F90: literal default C privately links to 788 original bytes, complete private GYOZI hash passes. Typed loops, named work-area fields, documented redundant narrowing and a guarded local integer debug-call view resolve the original register sequence. Header/global/prototype guards pass. Parent standards review has no blockers. [[matching-notes]] records the causal improvements and discarded lifetime probes.
