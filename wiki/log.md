@@ -2790,3 +2790,7 @@ Coordinator requested usage reduction: checkpoint only, no new compiler/build/re
 ## [2026-10-20] query | T-24522 pointer line-grouping negative
 
 One approved coherent grouping of pointer init/advance pairs and correction progress assignment gives unchanged41/39 with byte-identical diagnostic. No source expression/control changes, no permutation grid; best4 and preferred ordinary41 source archives unchanged. See [[tickets/T-24522-rpg-bat]].
+
+## [2026-10-20] decision | T24560 worker resource handoff
+
+Stopped new probes/builds under resource-conservation steering. Preserved4a90979c7 and recorded the untested387B0 mixed-alias sibling lead in [[tickets/T-24560-ending-slot]]. Documentation only; no overall-goal pause or production change.
