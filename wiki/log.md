@@ -2526,3 +2526,7 @@ GEKO func_80144198 remains ASM and has multiple archived campaigns; verified cur
 ## [2026-10-20] query | T-24503 fresh GEKO ranking source
 
 Repaired the previously untried func_801420E4 source's missing rodata declaration and reconstructed its top-six insertion loop with paired arrays. Full-unit cost444 to357; original0x480 frame differs from natural0x60. No padding or production promotion. Archived body, declaration and replay under drafts/T-24503/ with current limits. [[tickets/T-24503-geko-option-completion]].
+
+## [2026-10-20] ingest | Publish remaining MAIN and GEKO draft checkpoints
+
+Root reviewed and published MAIN b44f1e302 as e5d03aebd and GEKO9de2cd7cd as b90f0e4e4. Source-only archives retain exact nonmatching metrics and replay requirements, without coverage credit. MAIN scratch whitespace repaired; independent wiki append histories preserved. [[tickets/T-24500-completion-orchestration]] records continued deep source work and the bounded Astra seven-word TACO constant-allocation consultation. MAIN76000 has zero diagnostic differences but remains uncounted pending literal proof, shared-type correction and final integration checks.
