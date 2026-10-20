@@ -41,6 +41,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-24200-cloud-packet-taco-8013b460|T-24200]] cloud packet pilot, TACO `func_8013B460` 41 -> 2 rows guarded, toolchain recipe in [[cloud-matching]], In Review.
+- [[tickets/T-24205-cloud-packet-taco-801511c0|T-24205]] cloud packet, TACO `func_801511C0` guarded, 4 -> 2 diff lines (only the `sw a1` store-back is late), In Review.
 - [[tickets/T-24063-taco-short-count|T-24063]] TACO corrected buffer source and refreshed controls, zero matches, In Review.
 - [[tickets/T-24060-shugaku-short-selectors|T-24060]] SHUGAKU52/62-row corrected source leads, zero matches, In Review.
 - [[tickets/T-24059-short-copy-siblings|T-24059]] two short copy-chain matches328 bytes, independently verified on main, Done.

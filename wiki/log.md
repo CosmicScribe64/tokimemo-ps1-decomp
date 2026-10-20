@@ -20857,3 +20857,7 @@ Five more variants (y3 temporary with every UV store order) of `func_8013B460`: 
 ## [2026-10-20] ticket | T-24142 draft archived
 
 An uncommitted T-24142 draft of TAIIKU `func_8013E1FC` (about 210 differing lines) was left in the main checkout; moved to drafts/T-24142/TAIIKU/func_8013E1FC/ and the source file restored, so the checkout matches main. [[tickets/T-24142-single-agent-closer-sweep]].
+
+## [2026-10-20] ticket | T-24205 cloud packet TACO func_801511C0
+
+[[tickets/T-24205-cloud-packet-taco-801511c0]] created and worked in a cloud session ([[cloud-matching]]): asm fallback proven equal in a single-function scratch compile; the guarded draft improves from 4 to 2 diff lines (inits on one source line, FAKE), no match: only the `sw a1,0x3C(sp)` store-back is late. Guard comment in src/ovl/TACO/80149F90.c updated to T-24205; note in [[matching-notes]]. Ticket In Review; the local linked build has to prove the default build unchanged.

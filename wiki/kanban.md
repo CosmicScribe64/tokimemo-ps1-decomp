@@ -63,6 +63,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-24205-cloud-packet-taco-801511c0|T-24205 Cloud packet: TACO func_801511C0]]
 - [ ] [[tickets/T-24132-name-ent-final-4|T-24132 Close remaining 4 unmatched functions of NAME_ENT (func_80138C1C, func_801398EC, func_8013AF78, func_80143580)]]
 - [ ] [[tickets/T-24077-etc-pair-scene|T-24077 Recover ETC pair-table scene]]
 - [ ] [[tickets/T-24076-etc-album-search|T-24076 Recover ETC album search]]
