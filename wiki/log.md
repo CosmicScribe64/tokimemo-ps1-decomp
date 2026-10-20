@@ -2188,3 +2188,7 @@ Post-prototype/string 520-step two-job build passed; explicit hashes passed all2
 ## [2026-10-20] decision | Freeze text substitution IV packet
 
 [[tickets/T-24501-main-tail]] preserves `sndi` source210/259words and branch-reset211/260 versus263 target, exact observed buffer homes/frame118. Two-base forms and final approved conditional increments do not recover target cursor recomputation; final303/262/frame120 rejected. Source-only replay, precise LBU/induction evidence and capacity cautions archived; no production/header edit or compiler-defect claim. See [[matching-notes]].
+
+## [2026-10-20] decision | Stop text variants and preserve final source candidate
+
+[[tickets/T-24501-main-tail]] preserves unverified `sndi`150/265words, with183 control reconstructible by parity width. Target263; correct buffer/index/flag homes and semantics retained, integer-address idiom FAKE-marked. User directed stopping variants; no further compiles or production changes. Bounded read-only family assessment follows. See [[matching-notes]].
