@@ -700,3 +700,13 @@ The ordinary schedule records are indexed with `unk_69C[unk_71C].unk_01/02`, avo
 Pre-review literal default proof privately links and proves all 1,196 bytes; fresh ninja, explicit 27/27 image hashes, header check and prototype branch check all pass (zero new, 15 known). Final post-game.h validation is running.
 
 Final post-review verification passes: affected 486-step rebuild exits zero; explicit SHA1 recomputation matches all 27 images; literal default proof again proves 1,196 linked bytes; headers pass and prototype branch check reports zero new disagreements (15 known). Parent reviewed the moved header type and flag comments, resolving its only finding with no remaining blocking standards findings.
+
+
+## T-24502: typed collision and pickup checkpoints
+
+Saved func_8013BAC4 under drafts/T-24502/TACO with fresh SDK/project types, 256-word score table and nine-byte damage initializer. Cost330 versus stale817;456 versus460 words, frame4A8 versus4A0. Actual matched func_8013D2A0 is s32(s16,s16,s16), missing in TACO.h; scratch declarations plus wide coordinates restore target narrowing. Remaining counter homes, post-call score reload/CSE, threshold comparison destinations and temporary propagation are broad; all bounded experiments and exact homes are in its NOTES.md. No production header or code change. Volatile dead-count reset is rejected (extra preheader/loads,cost510).
+
+Saved earlier func_8013C6D4 repaired pickup handler: signed sentinels and typed pointer stride corrected, random result initializes the bonus local and removes stale uninitialized saved range. Cost251,348 versus347 words; remaining first-loop exit/result range and bonus v1 versusv0 propagation documented. A lower-cost global-score form is semantically usable but introduces extra stores and364 words, so it is not promoted. No production change. Continuing func_8013A790 scrolling/table loops.
+
+
+T-24502 follow-up consult on AB50 confirms seven differing words out of469. Hoisted constant1 only saves one instruction through two flag stores (priority0.5); free v0 wins allocation. Chaining those stores removes the saving and allocation, but grows to471 instructions. Original v1 is still unexplained. Consult evidence is private /private/tmp/tokimemo-ab50-consult/RESULT.md; no further AB50 source grid. BAC4 raw instruction comparison is also kept private: its committed NOTES now has concise metrics/first divergence plus exact Docker replay commands and a four-include context wrapper.

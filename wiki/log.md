@@ -2537,3 +2537,12 @@ Resumed `func_80076000` region by region: trace proved 298/298 instructions and 
 ## [2026-10-20] build | T-24501 menu dispatcher final proof and review
 
 Post-`game.h` 486-step build passed, explicit SHA1 recomputation passed all 27 images, literal default private link re-proved all 1,196 dispatcher bytes, and headers/prototype branch checks pass (zero new, 15 known). Parent re-reviewed the moved view and shift comments: its one finding is resolved, no blocking findings remain. Focused source/header/wiki commit ready; [[tickets/T-24501-main-tail]] remains In Progress.
+
+## [2026-10-20] decision | T-24502 collision and pickup checkpoints
+
+Archived typed func_8013BAC4 (cost330, down from stale817) and func_8013C6D4 (cost251), with concrete frame/first-divergence evidence and bounded failed alternatives. Both remain production asm. [[matching-notes]] and [[tickets/T-24502-taco-completion]] link the durable drafts; moving to func_8013A790 scrolling/table logic.
+
+
+## [2026-10-20] decision | T-24502 archive review and AB50 consult
+
+Parent review found the BAC4 raw instruction comparison exceeded standards10 excerpt guidance; removed the dump and kept concise NOTES plus replay wrapper/commands. Independent AB50 consult still has seven constant-register words; chain stores worsen instruction count. [[matching-notes]] records the concrete allocator finding to avoid repeats. No production change under [[tickets/T-24502-taco-completion]].

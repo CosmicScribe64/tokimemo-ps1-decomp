@@ -41,3 +41,7 @@ Isolated branch codex/taco-24502 from 2c7293275. TACO files only.
 - 2026-10-20 review: parent checked CB24/AB50 and own TACO.h declarations against CODING_STANDARDS.md; no blocking findings. CB24 retains original implicit-int s32 return view with bare early return/fallthrough, already literal-proven with its linked caller. Guard controls are source-local FAKE; default remains original. Continuing func_80144E3C (1888 bytes), a stale raw Gouraud quad draft; first fresh POLY_G4 pointer-array compile succeeds, cost600 and464 vs472 words.
 
 - 2026-10-20: func_80144E3C matched1888 literal default bytes using POLY_G4 array and six byte channels; u8 arg4 is proven by original entry caller-home lbu. Full27 hashes cover all callers; ninja guards and prototype branch check pass. Parent code review has no blocking findings; source-local FAKE pad/order and two loop groupings documented. Campaign total5 functions7644 bytes.
+
+- 2026-10-20: archived typed BAC4 collision (cost330,456/460 words) and C6D4 pickup (cost251,348/347) drafts under drafts/T-24502/TACO. Broad remaining allocation/loop gaps documented, production stays asm; no repeated grids. Next A790 scrolling/table loops.
+
+- 2026-10-20 archive review: parent standards10 finding on raw comparison dump resolved by deleting it and adding small context wrapper plus exact replay commands; concise first-divergence prose retained. Independent AB50 consult confirms priority0.5 constant reuse and no source fix; chained stores worsen469 to471 instructions. No further AB50 grid.
