@@ -2238,3 +2238,7 @@ Parent and self review found no blockers in the336 source-only score array check
 ## [2026-10-20] query | Audit seven near seasonal guards against immutable originals
 
 [[tickets/T-24523-seasonal-source-hypotheses]] records exact target bounds, byte-equal generated-code provenance, opening control flow and complete call sets for seven near guards. Six agree at the checked opening-control and call-set level. SHOUGATU3E50C belongs to the correct function but reads GameState+0xF8 instead of original+0x10F8 in its random-bit test; no edit or compiler run. No fresh automatic sibling or broad sweep, no coverage. Audit distinguishes this field error from the previously removed wholly wrong VALEN bodies.
+
+## [2026-10-20] query | Correct SHOUGATU random source field
+
+Fresh baseline plus one corrected-field probe for [[tickets/T-24523-seasonal-source-hypotheses]] both cost152. Raw object diffs prove func_8013E50C's random load now addresses original0x800E7378 instead of0x800E6378. Corrected source archived; local-table homes and zero/ring differences remain broad. No further compiler variants, production/header change or coverage; broad-guard handling awaits review.
