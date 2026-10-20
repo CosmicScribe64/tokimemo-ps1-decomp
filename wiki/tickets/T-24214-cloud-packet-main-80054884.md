@@ -1,7 +1,7 @@
 ---
 id: T-24214
 title: "Cloud packet: main func_80054884"
-status: In Review
+status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
@@ -24,3 +24,5 @@ Match main `func_80054884` (624 B, the memory-card save writer, `src/main/800536
 Match: `idx = sp47 & 0xFF;` (no-op mask on the `u8` out-parameter) spends the one ugen temporary the draft was short, so `$t2/$t3/$t4` and the copy loop's `$t5/$t6/$t9` land on the original registers. Marked FAKE; the existing pad locals now carry a FAKE comment too. Details: [[matching-notes]] (T-24214).
 
 ## Comments
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only its C file and wiki, no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Matches: linked funcdiff --resolve MATCH; FAKE comments ticketed. Done.

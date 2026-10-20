@@ -1,7 +1,7 @@
 ---
 id: T-24213
 title: "Cloud packet: TACO func_8014F820"
-status: In Review
+status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
@@ -24,3 +24,5 @@ Match TACO `func_8014F820` (400 B, `src/ovl/TACO/80149F90.c`) from a cloud match
 Match: the `unk_038` decrement as an element chain over the three selector bytes, `(&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = --(&D_800E6280.unk_036)[2];` (FAKE, T-24213). The pre-decrement stores the raw `addiu t9` to 038; the chain value is its `u8` result (`andi v0,t9,0xFF`) for 037 and 036, stored in the original order 037, 036, 038. The T-24136 s32 return view is still needed (void: 5 rows). Details: [[matching-notes]] (T-24213).
 
 ## Comments
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only its C file and wiki, no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Matches: linked funcdiff --resolve MATCH; FAKE comments ticketed. Done.

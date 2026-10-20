@@ -1,7 +1,7 @@
 ---
 id: T-24212
 title: "Cloud packet: VALEN func_80132D0C"
-status: In Review
+status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
@@ -25,3 +25,5 @@ Match VALEN `func_80132D0C` (892 B, `src/ovl/VALEN/80132760.c`) in a cloud sessi
 - Result: no match. The as1 trace (`-R -xbbdbg 8`) locates the difference in as1's global scheduler: the `sel == 9` block is visited first and takes the `lui v0` of the mode reload from its fallthrough instead of the dispatch `sll`. About 30 C variants plus a scan of 340 compiled switch files; details in [[matching-notes]] (T-24212). Guard comment updated (comment-only change to the C file).
 
 ## Comments
+
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): cloud branch changed only its C file and wiki, no asm or game data; merged with a clean 27/27 build and header/global/prototype checks. No match; guard at 3 rows with an as1 scheduling note. Done.
