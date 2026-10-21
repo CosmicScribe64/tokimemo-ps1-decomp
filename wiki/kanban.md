@@ -53,6 +53,10 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24914-func-8006c988-800674B0|T-24914 main:func_8006C988 (src/main/800674B0.c)]]
+- [ ] [[tickets/T-24915-func-80054e6c-80053650|T-24915 main:func_80054E6C (src/main/80053650.c)]]
+- [ ] [[tickets/T-24916-func-80138b2c-80138890|T-24916 TACO:func_80138B2C (src/ovl/TACO/80138890.c)]]
+
 - [ ] [[tickets/T-24911-func-80133024-801323E0|T-24911 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
 - [ ] [[tickets/T-24912-func-8013a2e8-801396E0|T-24912 ENDING:func_8013A2E8 (src/ovl/ENDING/801396E0.c)]]
 - [ ] [[tickets/T-24913-func-80139290-801388D0|T-24913 BUNKA_SD:func_80139290 (src/ovl/BUNKA_SD/801388D0.c)]]
@@ -60,7 +64,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24909-func-8014790c-80146400|T-24909 ETC:func_8014790C (src/ovl/ETC/80146400.c)]]
 - [ ] [[tickets/T-24910-func-80154dd8-80154430|T-24910 RPG_BAT:func_80154DD8 (src/ovl/RPG_BAT/80154430.c)]]
 
-- [ ] [[tickets/T-24907-func-80140e0c-80140C90|T-24907 GYOZI:func_80140E0C (src/ovl/GYOZI/80140C90.c)]]
 - [ ] [[tickets/T-24908-func-8013907c-80138B50|T-24908 GYOZI:func_8013907C (src/ovl/GYOZI/80138B50.c)]]
 
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
@@ -77,6 +80,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+- [ ] [[tickets/T-24907-func-80140e0c-80140C90|T-24907 GYOZI:func_80140E0C (src/ovl/GYOZI/80140C90.c)]]
 - [ ] [[tickets/T-24902-func-80134724-80134120|T-24902 KANGEI:func_80134724 (src/ovl/KANGEI/80134120.c)]]
 - [ ] [[tickets/T-24904-func-80136c20-80134D10|T-24904 GEKO:func_80136C20 (src/ovl/GEKO/80134D10.c)]]
 - [ ] [[tickets/T-24905-func-8013b460-8013B170|T-24905 TACO:func_8013B460 (src/ovl/TACO/8013B170.c)]]
