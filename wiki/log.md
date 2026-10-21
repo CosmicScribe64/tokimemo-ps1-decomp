@@ -1708,3 +1708,10 @@ Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `fun
 
 ## [2026-10-20] ticket | T-25009 to In Review
 [[tickets/T-25009-closers-etc-geko-mod-set-gpu]]: no match; main `mod_set_gpu` guard 28 -> 17 rows (empty `if (last) {}` lifts `last` above `clut`), GEKO `func_80133C50` 13 and ETC `func_80146D4C` 12 unchanged (zero-girl mask lead recorded). Notes in [[matching-notes]]. Clean build 27/27, checks pass. Branch n2.
+## [2026-10-20] ticket | T-25008 In Progress
+
+[[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]]: closers for main `func_8005B43C` (3 rows), `func_8006BA40` (7), `parameter_up_down` (11), branch n1.
+
+## [2026-10-20] ticket | T-25008 In Review
+
+[[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]]: main `func_8006BA40` matched (a `(u8)` cast on the low-nibble test spends the ugen slot the original spends; new line in [[playbook]] section 2). `func_8005B43C` stays guarded at 3 rows, `parameter_up_down` at 11; findings in [[matching-notes]] T-25008.

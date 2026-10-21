@@ -70,6 +70,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback|T-25010 Class C/D: main func_80065964 frame, func_8006A044, func_8004A1A0]]
 - [ ] [[tickets/T-25009-closers-etc-geko-mod-set-gpu|T-25009 Closers: ETC func_80146D4C, GEKO func_80133C50, main mod_set_gpu]]
+- [ ] [[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down|T-25008 Closers: main func_8005B43C, func_8006BA40, parameter_up_down]]
 - [ ] [[tickets/T-24926-func-80133024-801323E0|T-24926 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
 - [ ] [[tickets/T-24928-func-8006c988-800674B0|T-24928 main:func_8006C988 (src/main/800674B0.c)]]
 - [ ] [[tickets/T-24927-func-80139290-801388D0|T-24927 BUNKA_SD:func_80139290 (src/ovl/BUNKA_SD/801388D0.c)]]

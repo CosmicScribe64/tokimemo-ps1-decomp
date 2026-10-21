@@ -499,8 +499,10 @@ void func_8005B39C(void) {
     }
 }
 
-/* NON_MATCHING: T-25004, 3 rows; the club number (h >> 12) is coloured $a0 (the call argument) where the
- * original keeps it in $v1 and copies it to $a0 in the call delay slot. */
+/* NON_MATCHING: T-25004, T-25008, 3 rows; the club number (h >> 12) is coloured $a0 (the call argument) where
+ * the original keeps it in $v1 and copies it to $a0 in the call delay slot. T-25008: reading the halfword into
+ * temp_v0_2 for the empty test (permuter, score 440 -> 275) gives the move, but from $a1 with the halfword in
+ * $a0 (7 rows). */
 #ifdef NON_MATCHING
 s32 func_8005B43C(void) {
     s32 pad[3]; /* FAKE: T-25004, frame 0x38 with the result at sp+0x28 (T-24301). */
