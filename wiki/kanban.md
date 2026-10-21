@@ -53,6 +53,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c|T-25003 Class C: main func_8006BA40, func_80043510, func_8004443C]]
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]

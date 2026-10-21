@@ -1669,3 +1669,6 @@ Catalog refreshed:729 tickets,428 sections,3,077 functions. Docker wiki lint rep
 ## [2026-10-20] decision | Plan for the remaining functions
 
 [[plan-remaining]] gives any agent (including cheap ones) the rules and per-class recipes for the last 127 functions; the classified list is [[data/remaining-2026-10-20]] (A 8 near misses, B 18 guarded, C 11 good drafts, D 90 reconstructions). T-24800 and T-24900 Done ([[as1-scheduling]], [[as1-scheduler-rule]]).
+
+## [2026-10-20] ticket | T-25003 class C main trio
+[[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]] created, In Progress (branch c-m3): main `func_8006BA40`, `func_80043510`, `func_8004443C`.
