@@ -300,7 +300,7 @@ def compile_variant(c, text, work, non_matching):
     source = work / "guarded.c"
     source.write_text(pre)
     obj = work / "guarded.o"
-    proof.command(["python3", "tools/cc.py", str(source), str(obj), "ido", "5.3"])
+    proof.command(["python3", "tools/cc.py", str(source), str(obj)] + cc.toolchain_of(c.name))
     includes = {name for _, name in cc.INCLUDE_ASM_RE.findall(pre)}
     trailing_pad.pad_functions(str(obj), str(c.src), includes)
     obj.write_bytes(object_layout.trim(obj.read_bytes(), object_layout.source_extent(c.src)))
@@ -312,13 +312,14 @@ def compile_variant_fast(builder, c, text, work):
     the pipeline of autotweak and permute. 3-4x cheaper than compile_variant, but the object lacks the
     other functions, so relocations to them (and the nops after the function) read differently and the
     score is an approximation of the full-unit score."""
+    import cc
     import funcdiff_verify as proof
     import trailing_pad
     work.mkdir(parents=True, exist_ok=True)
     source = work / "stripped.c"
     source.write_text(builder.build(text))
     obj = work / "stripped.o"
-    proof.command(["python3", "tools/cc.py", str(source), str(obj), "ido", "5.3"])
+    proof.command(["python3", "tools/cc.py", str(source), str(obj)] + cc.toolchain_of(c.name))
     trailing_pad.pad_functions(str(obj), str(c.src), set())
     return str(obj)
 

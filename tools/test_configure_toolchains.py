@@ -40,6 +40,13 @@ class ReadToolchains(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 table(bad)
 
+    def test_ido_pass_options(self):
+        self.assertEqual(table("TACO/8015D270 ido 5.3 -Wb,-noxbb\n"),
+                         {"TACO/8015D270": ["ido", "5.3", "-Wb,-noxbb"]})
+        for bad in ("TACO/8015D270 ido 5.3 noxbb\n", "TACO/8015D270 ido 5.3 -O3\n"):
+            with self.assertRaises(SystemExit):
+                table(bad)
+
     def test_duplicate_stops(self):
         with self.assertRaises(SystemExit):
             table("TACO/8015D270 gcc 2.7.2-psx 2.79\nTACO/8015D270 ido 5.3\n")

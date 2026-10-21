@@ -125,10 +125,8 @@ void func_80139DE0(void) {
     func_8004DE1C();
 }
 
-/* NON_MATCHING: T-24301/T-24707, 27 rows; as1 hoists the two `lui` at the head of the default block into the
- * load delay and the range-check slot (the VALEN func_80134030 hoist, T-24211); the original keeps the nop. */
-#ifdef NON_MATCHING
-/* C draft for T-24137 (switch-triple pattern of SHOUGATU func_8013EE30).
+/* T-24137 draft (switch-triple pattern of SHOUGATU func_8013EE30); matches since T-24900 with the
+ * default arm's three globals declared volatile in GYOZI.h (FAKE there).
  * FAKE: the switch discriminant goes through the base of D_800F5AAE
  * ((&D_800F5AAE)[0x821] = D_800F62CF) so the byte store stays before the load;
  * same idiom as func_801381DC (as1 keeps the store before a same-base load).
@@ -198,9 +196,6 @@ void func_80139E4C(void) {
     D_8014719C = 0;
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80139920", func_80139E4C);
-#endif
 
 void func_8013A104(void) {
     func_8004DEAC(D_800F5AB1);

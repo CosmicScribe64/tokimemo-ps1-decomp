@@ -2,7 +2,7 @@
 """Compile one C file with the toolchain chosen for its segment, checking every stage.
 
 Usage (inside Docker, called by ninja):
-    python3 tools/cc.py <src.c> <out.o> ido <ido_version>
+    python3 tools/cc.py <src.c> <out.o> ido <ido_version> [<driver option> ...]
     python3 tools/cc.py <src.c> <out.o> gcc <gcc_version> <aspsx_version>
 
 ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
@@ -15,7 +15,10 @@ ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
      and the block-copy direction state pass around ugen (tools/ugen_pass.py,
      T-24092).
      IDO runs in K&R mode (-cckr, T-7000): unsigned char/short promote to
-     unsigned int, as in the original.
+     unsigned int, as in the original. Options after the version are added to
+     the IDO command line of that object only (config/toolchains.txt, for
+     example `-Wb,-noxbb`: as1 without its cross-block scheduler, T-24800,
+     wiki/as1-scheduling.md).
 gcc: the PsyQ way, cpp | cc1 | maspsx | sdk_aspsx_pass | as. Every GCC compile
      runs the Sony workstation assembler emulation pass (tools/sdk_aspsx_pass.py,
      T-24086) on maspsx output: `l* rd,sym(rs)` through `rd` when `rd != rs`,
@@ -210,7 +213,26 @@ def sjis_literals(text):
     return "".join(out)
 
 
-def compile_ido(src, out, ido_ver):
+def toolchain_of(name, path="config/toolchains.txt"):
+    """tools/cc.py toolchain words of the object `name` (srcscan CFile.name, e.g. `VALEN/80133C70`):
+    its config/toolchains.txt line, or the default `ido 5.3`. For the tools that compile a file
+    outside ninja (funcdiff_verify, order_search, permute), so they use the object's own options."""
+    if os.path.exists(path):
+        for line in open(path):
+            words = line.split("#", 1)[0].split()
+            if words and words[0] == name:
+                return words[1:]
+    return ["ido", "5.3"]
+
+
+def toolchain_of_source(src, path="config/toolchains.txt"):
+    """toolchain_of for a C source path (`src/ovl/VALEN/80133C70.c` -> `VALEN/80133C70`)."""
+    rel = os.path.relpath(os.path.abspath(src), os.path.abspath("src")).replace(os.sep, "/")
+    rel = rel[len("ovl/"):] if rel.startswith("ovl/") else rel
+    return toolchain_of(rel[:-2] if rel.endswith(".c") else rel, path)
+
+
+def compile_ido(src, out, ido_ver, extra=()):
     with open(src, encoding="utf-8") as f:
         text = f.read()
     if any(ord(c) >= 0x80 for c in text):
@@ -232,7 +254,7 @@ def compile_ido(src, out, ido_ver):
                     "/opt/ido/%s/cc" % ido_ver]
         cmd = (["python3", ASM_PROCESSOR, "--no-dep-file", "--drop-mdebug-gptab",
                 "--convert-statics", "no", "--asm-prelude", ASM_PRELUDE]
-               + compiler + ["--"] + AS + ["--"] + IDO_CFLAGS + ["-o", out, src])
+               + compiler + ["--"] + AS + ["--"] + IDO_CFLAGS + list(extra) + ["-o", out, src])
         run_stage(cmd, None, ido_frame_env(ido_ver, tmp))
         with open(dep_path) as f:
             return json.load(f)
@@ -305,8 +327,8 @@ def main(argv):
         text = f.read()
     includes = INCLUDE_ASM_RE.findall(text)
     deps = ["%s/%s.s" % m for m in includes]
-    if kind == "ido" and len(argv) == 5:
-        deps += compile_ido(src, out, argv[4])
+    if kind == "ido" and len(argv) >= 5 and all(a.startswith("-") for a in argv[5:]):
+        deps += compile_ido(src, out, argv[4], argv[5:])
     elif kind == "gcc" and len(argv) == 6:
         deps += compile_gcc(src, out, argv[4], argv[5])
     else:
