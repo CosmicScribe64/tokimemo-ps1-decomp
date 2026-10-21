@@ -1708,3 +1708,7 @@ removed). Clean build 27/27; progress 6,827 / 6,952 (92.3%). Rejected variants c
 ## [2026-10-20] ticket | T-24929, T-25001, T-25002, T-25003, T-25005 Done
 
 Four matches: ETC `func_8013CCE4` through the uniform switch_compares pass (T-24929, zero regressions), main `sndisp` through several .data ranges per object (T-25005), main `func_80043510` and `func_8004443C` (T-25003). Guards: GEKO `func_80133C50` 13 rows, main `func_8006BA40` 7 rows. [[status]].
+
+## [2026-10-20] ticket | T-25007 In Progress
+
+[[tickets/T-25007-class-c-etc-rpgbat-main]]: class C ETC `func_80146D4C`, RPG_BAT `func_8014BFE4`, main `func_8005938C`; branch c-m6.
