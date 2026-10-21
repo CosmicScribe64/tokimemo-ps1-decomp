@@ -252,7 +252,46 @@ void gnsx(u8 *arg0) {
     }
 }
 
+/* NON_MATCHING: T-25001, 2 rows; code and frame match. Left: the template of pos[] lands at
+ * .data+0x40 of this object (after the D_800E3680 island) instead of D_800B40F8 = .data+8 of the
+ * 800B40F0 range; the build can give the object only one of its two .data regions. */
+#ifdef NON_MATCHING
+void sndisp(u8 *str, s32 y, s32 col) {
+    s32 pad[2]; /* FAKE: T-25001, two unused home words at the top of the 0x168 frame */
+    s32 i;
+    s32 q;
+    s32 n;
+    u8 pos[5] = { 0, 0, 0, 0, 0 };
+    u8 buf[256];
+
+    strncpy(buf, str, 256);
+    q = 0;
+    n = 0;
+    for (i = 0; buf[i] != 0; i++, q++) {
+        if (buf[i] == ' ' && !(q & 1)) {
+            pos[n] = i;
+            buf[i] = 0;
+            q = -1;
+            n++;
+        }
+        if (buf[i] == 'P' && !(q & 1)) {
+            q = -1;
+        }
+        if (buf[i] == 'G' && !(q & 1)) {
+            q = -1;
+        }
+    }
+    D_800E6280.unk_F61 = check_set_k();
+    sndi(buf, y, col);
+    for (i = 0; i < n; i++) {
+        sndi(&buf[pos[i]] + 1, y + 1 + i, col);
+    }
+    D_800E6280.unk_F60 = check_set_k();
+    D_800E6280.unk_F62 = 0x80;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndisp);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndi);
 
