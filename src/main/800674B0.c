@@ -1245,8 +1245,11 @@ s16 func_8006C934(void) {
     }
 }
 
-/* NON_MATCHING: T-24301, 11 rows; the record pointer and the unk_00 value swap $t0/$t1, and the last-value
- * copy is `andi v1,t1,0xff` in both arms where the original has one `move v1,t0` at the join. */
+/* NON_MATCHING: T-24928, 5 rows; base/value registers match since the dead parameter tests below
+ * put the value local in $t0. Left: the loop tail emits the `cur = val` narrowing copy per arm
+ * (`andi v1,t0,0xff` in the branch slots) where the original advances the record base per arm
+ * and keeps one `move v1,t0` at the latch, and the induction-init `addiu t1` schedules after
+ * `move a3` instead of before it. */
 #ifdef NON_MATCHING
 s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     GameState *g = &D_800E6280;
@@ -1254,7 +1257,15 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     s32 n;
     u8 sel;
     u8 cur;
+    u8 val;
 
+    /* FAKE: T-24928; the dead tests give first/last an early use so their webs are coloured $a0/$a1
+     * before the value local's web, which then takes $t0 and pushes the record base to $t1 as in
+     * the original. Without them the fifth local takes $a0 and spills first. The tests emit no code. */
+    if (first) {
+    }
+    if (last) {
+    }
     sel = 0xFF;
     cur = 0;
     n = 0;
@@ -1266,10 +1277,12 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
         }
         cur = g->unk_75E[n].unk_02;
         if (cur != 0 && cur != 1 && cur != 2 && cur != 0xF) {
+            val = g->unk_75E[n].unk_00;
         } else {
-            sel = g->unk_75E[n].unk_00;
+            val = g->unk_75E[n].unk_00;
+            sel = val;
         }
-        cur = g->unk_75E[n].unk_00;
+        cur = val;
         n++;
     } while (i < 0x100);
     for (i = n; i < 0x100; i++) {
