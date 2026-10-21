@@ -1729,3 +1729,19 @@ Pre-flighted four isolated-worktree tickets (`Ready` on [[kanban]]):
 [[tickets/T-24921-func-8013cce4-8013BEF0]], [[tickets/T-24922-func-801367ec-80134D10]],
 [[tickets/T-24923-func-801326bc-80132000]], and [[tickets/T-24924-func-801330e4-80133030]],
 each with exact `funcdiff --resolve` defect breakdowns and two-stage lever plans.
+
+## [2026-10-20] build | Wave C-1 results and clean 27/27
+
+Four isolated-worktree runs (the first under the v2 IR-first protocol; 4 workers max). No new
+promotion, but three real row-count gains kept:
+- T-24921 ETC func_8013CCE4 9 -> 3 rows (guard). Case-2 schedule fixed by `buf[0] = 0x801E2000;
+  buf[1] = 0x801E6000;` on the `for` line with `u32 i`; the 3 remaining `beq v1` rows are coupled
+  to uopt folding the 4-trip loop. Next lead: cvt_pass switch-temp (`OPTN 405 0`).
+- T-24922 GEKO func_801367EC archived at 44 rows, 0 register rows; residuals are as1 block picks.
+- T-24923 OPTION func_801326BC archived at 134 rows; the copy loops are 0x200 bytes (not 9 words)
+  and the D_8013D304 signed `% 4` structure is understood; strength-reduced induction remains.
+- T-24924 ENDING func_801330E4 114 -> 92 rows (archive): frame now exact (0xB0, chance 0x30,
+  level 0x54, points 0x58, rank 0x78), rows 0-83 clean; next is the uopt coalescing of the f9
+  extraction vs the target's `or v0,t1,zero`.
+All commits cherry-picked to main; tickets In Review. Clean build 27/27, headers/globals OK.
+tools/progress.py: 6,826 / 6,952 functions, 2,100,368 / 2,276,920 bytes (92.2%); 126 left.
