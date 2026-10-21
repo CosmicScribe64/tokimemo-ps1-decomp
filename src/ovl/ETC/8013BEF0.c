@@ -354,13 +354,6 @@ void func_8013CC74(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-24921, 3 rows. Remaining: the three switch compares use $v0
- * here and $v1 in the original. The byte-view selector
- * `switch (*(u8 *)&D_800E6280.unk_110D)` fixes those three rows exactly but makes
- * uopt constant-fold the four-trip buf[] loop (89 rows, i no longer in a register,
- * frame 8 bytes small); every selector form that compares on $v1 does this. The
- * case-2 schedule matches: buf[0]/buf[1] and the for head share one source line. */
 s32 func_8013CCE4(void) {
     s32 pad; /* FAKE: unused slot, the original frame has it (real source unknown). T-22019 */
     s32 buf[6];
@@ -410,9 +403,6 @@ s32 func_8013CCE4(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013CCE4);
-#endif
 
 /* FAKE: retain the s32 fallthrough matching view so v0 stays live at the
  * epilogue and as1 hoists li t9,0xC00 instead of lui v0,0x8000 in case 5;

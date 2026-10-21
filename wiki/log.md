@@ -1710,3 +1710,18 @@ Clean build 27/27, headers/globals OK. tools/progress.py: 6,826 / 6,952 (92.2%),
 
 ## [2026-10-20] build | T-25005 several .data ranges per C object
 [[tickets/T-25005-data-regions-per-object]] created, worked, moved to In Review. A further `.data` island of an object is a yaml dict line with `dir: island_<VRAM>` and `linker_section: .data_<VRAM>` (written by tools/data_island.py). tools/data_pieces.py puts all its pieces in one directory, and the new tools/data_split.py (called by tools/object_layout.py) cuts the compiled `.data` into the sections. main `sndisp` (T-25001 guard, cherry-picked) now matches in plain C, src/main/8004F870.c owns `800B40F0-800B4390` as well. Clean build 27/27; [[build-system]] "Several ranges per object"; notes in [[matching-notes]] `## T-25005`.
+## [2026-10-20] ticket | T-24929 In Progress
+[[tickets/T-24929-uopt-zcopy-scope]] claimed (assignee claude), worktree uopt-scope: measure a uniform uopt
+copy-propagation scope rule (globals propagated, local induction copies kept) on the whole build.
+
+## [2026-10-20] build | T-24929 switch-compare rule in cvt_pass, ETC func_8013CCE4 matched
+[[tickets/T-24929-uopt-zcopy-scope]]: the zcopy-scope hypothesis (T-24925) did not hold. The three rows were
+as1 leaving the chain's compares on the temporary's register. New uniform step `switch_compares` in
+`tools/cvt_pass.py` (on uopt's output, zcopy-off procedures: the entry copy is propagated into the chain's
+compares). It fires in 267 procedures, changes 0 matched functions, and matches ETC func_8013CCE4 in C (guard
+removed). Clean build 27/27; progress 6,827 / 6,952 (92.3%). Rejected variants changed 24-275 matched functions
+([[matching-notes]] T-24929). Updated [[build-step-gaps]], [[toolchain]], [[status]],
+[[tickets/T-24925-func-8013cce4-8013BEF0]]. Scratch tools in drafts/T-24929/.
+
+## [2026-10-20] ticket | T-24929 In Review
+[[tickets/T-24929-uopt-zcopy-scope]] moved to In Review; waiting for the code review against CODING_STANDARDS.md.
