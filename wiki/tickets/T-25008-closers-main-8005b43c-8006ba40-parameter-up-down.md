@@ -1,7 +1,7 @@
 ---
 id: T-25008
 title: "Closers: main func_8005B43C, func_8006BA40, parameter_up_down"
-status: In Review
+status: Done
 assignee: n1
 created: 2026-10-20
 updated: 2026-10-20
@@ -25,3 +25,4 @@ Branch n1.
 ## Comments
 
 2026-10-20 (n1): `func_8006BA40` MATCH (`(u8)` cast on the nibble test spends the missing ugen slot; the T-25003 `(u16)step` cast removed). `func_8005B43C` guarded at 3 rows, `parameter_up_down` at 11 rows; notes in [[matching-notes]] T-25008. In Review.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): main func_8006BA40 MATCH (linked); func_8005B43C 3 rows and parameter_up_down 11 rows stay guarded with updated notes. FAKE comments ticketed; no inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.

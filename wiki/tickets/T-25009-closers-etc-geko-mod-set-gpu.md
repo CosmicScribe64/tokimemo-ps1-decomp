@@ -1,7 +1,7 @@
 ---
 id: T-25009
 title: "Closers: ETC func_80146D4C, GEKO func_80133C50, main mod_set_gpu"
-status: In Review
+status: Done
 assignee: n2
 created: 2026-10-20
 updated: 2026-10-20
@@ -23,3 +23,4 @@ Close three guarded functions: ETC `func_80146D4C` (12 rows), GEKO `func_80133C5
 ## Comments
 
 - 2026-10-20: no match. mod_set_gpu 28 -> 17 rows (empty `if (last) {}`), GEKO 13 and ETC 12 unchanged; notes in [[matching-notes]]. To In Review.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): mod_set_gpu guard 28 -> 17 rows; GEKO func_80133C50 and ETC func_80146D4C notes updated. FAKE comments ticketed; no inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.

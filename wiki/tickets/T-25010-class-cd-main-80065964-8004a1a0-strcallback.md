@@ -1,7 +1,7 @@
 ---
 id: T-25010
 title: "Class C/D: main func_80065964 frame, func_8006A044, func_8004A1A0"
-status: In Review
+status: Done
 assignee: c-m7
 created: 2026-10-20
 updated: 2026-10-20
@@ -26,3 +26,4 @@ Branch c-m7.
 ## Comments
 
 2026-10-20 (c-m7): no match. BG slot types moved to main_api.h (OPTION still matches). func_8004A1A0 and func_80065964 stay INCLUDE_ASM with drafts in drafts/T-25010/main/; strCallback guard unchanged (75 rows). func_8006A044 skipped (file owned elsewhere). Clean build 27/27, check_headers, migrate_globals --check, sync_protos --check-branch pass. Details: [[matching-notes]] T-25010.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): BG slot types moved to include/main_api.h (OPTION still matches); func_8004A1A0, func_80065964 drafts; strCallback unchanged. FAKE comments ticketed; no inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.

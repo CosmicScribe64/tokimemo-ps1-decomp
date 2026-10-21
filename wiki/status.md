@@ -9,12 +9,14 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6832 / 6,952 functions, 92.4% of bytes.
+- Game code: 6833 / 6,952 functions, 92.4% of bytes.
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
 - Remaining by unit (129 functions): main 51, TACO 12, GEKO 7, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 1, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- 2026-10-20 session end: no agents running. Closest guards: main func_8005B43C 3 rows (permuter candidate in notes), GEKO func_80136C20 4, KANGEI x2 2 rows, parameter_up_down 11 (permuter output-252 unchecked), ETC func_80146D4C 12, GEKO func_80133C50 13 (masked-load lead in notes), mod_set_gpu 17.
 
 - 2026-10-20 evening: T-24929 build pass (switch_compares, zero regressions) and T-25005 (several .data ranges per object) landed; matches ETC func_8013CCE4, main sndisp, func_80043510, func_8004443C.
 
