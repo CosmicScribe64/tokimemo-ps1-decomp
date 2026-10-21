@@ -2059,6 +2059,9 @@ s32 func_80042908(s32 arg0);
 s32 func_80042940(s32 arg0);
 s32 func_80042960(void);
 void func_80042A00(void);
+void csr_load_vram(s32 arg0);
+void palette_load_vram(s32 arg0);
+void disp_string(void);
 s32 func_80042AC8();
 void func_80042BD4(void);
 void func_80042C30(void);
@@ -3028,6 +3031,7 @@ extern s32 D_800B3D34;
 extern s32 D_800B3D38;
 extern s32 D_800B3D3C;
 extern u8 D_800B3D20;
+extern s32 D_800B3D10[4]; /* four timestamps, func_80043510 and func_8004443C (T-25003) */
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
