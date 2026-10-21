@@ -17,14 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24213: TACO func_8014F820 in a cloud session (match packet)
-
-[[tickets/T-24213-cloud-packet-taco-8014f820]], packet for `func_8014F820` (400 B, `src/ovl/TACO/80149F90.c`), from the T-24136 guard (7 rows on the T-24136 count, 11 on the scratch objdump row diff) to an instruction-level match, plain C with two FAKEs. Single-function scratch setup per [[cloud-matching]]; the asm fallback gave 0 rows.
-
-- **Match: element chain with a pre-decrement.** `(&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = --(&D_800E6280.unk_036)[2];`. `--x` keeps the raw `addiu t9,v1,-1` as the value stored to 038 and gives the chain the `u8` result `andi v0,t9,0xFF` for 037 and 036. The store order is 037, 036, 038, as in the T-19005 chain row of [[register-cheatsheet]]. The T-24136 s32 return view is still needed: as `void` (header and definition) the `andi` folds away, 5 rows.
-- **Rejected (16 rows each).** The same chain on struct fields: `unk_037 = unk_036 = --unk_038`, `unk_036 = unk_037 = --unk_038`, `... = unk_038 -= 1`, `... = unk_038 = unk_038 - 1`. Element order `[1] = [0] = --[2]`: 4 rows (the two stores swapped).
-- Six variants in total; the full-unit compile is the local session's job (the packet holds only this function's asm).
-
 ## T-24214: cloud packet, main `func_80054884` (matched)
 
 [[tickets/T-24214-cloud-packet-main-80054884]], cloud session per [[cloud-matching]]. Scratch single-function compile: asm fallback identical to the packet reference after relocation; the T-24123 draft had 17 instruction rows, all ugen temporaries one register lower than the original from the `idx` block on (`sll t1/t2` for `t2/t3`, `t3` for `t4`, copy loop `t5/t4/t8` for `t6/t5/t9`).
@@ -697,6 +689,7 @@ After changing the pass, touch `tools/cc.py` or do a clean build.
 - **`func_8004A1A0` (628 B, INCLUDE_ASM).** `bg->unk_14 = (u32)(D_80122120 + slot);` reproduces the original's second `sll a1,4` and the instruction count (157/157; the T-25006 `(u32)D_80122120 + slot * 0x10` is one short). What is left is uopt colouring: the original keeps 0x1000 in `$v1`, map in `$a0`, 0x80 in `$a2`, 0x78 in `$t0`; the build gives map `$a2`. In the loops `w` and `row * 0x78` swap `$s5`/`$s6`, the tp counter and the index pointer swap `$s3`/`$s4`. `u8`/`s16` locals for the constants change nothing (the constants are ranges already); chained stores reload the field. autotweak 300 s and the permuter 600 s found only FAKE empty tests and formatting.
 - **`func_80065964` (424 B, INCLUDE_ASM, about 68 rows).** A `for`/`do` loop with the constant 15 trips is unrolled by IDO (216 instructions); a `goto` loop stays rolled like the original. Left: the original's frame 0x68 with s0/s1 and dead stores of p, y0, y1 (all to sp+0x28), x0 (0x24), x1 (0x20), after which x0, y0, x1, y1 each live in two registers, one pair per corner test, and the loop rematerialises the table base and the 15. This is live-range splitting under register pressure. No source form tried (eight corner variables, a local `s32 c[4]`, `s32 *pa = &x0`, inline expressions) gives a frame: a local array with constant indices is scalarised with no stores.
 - **`strCallback` (640 B, guard unchanged at 75 rows).** Every ugen temporary is one ring slot high from the RECT copy on: the original's second copy word is `$t1` and the hoisted `lui` of the else arm `$t2`; the build spends one slot more before them. Also without gain: `*&` and `RECT *` source copies (79), a ternary `rectid`, `odd && D` spelling, a nested `if`, the two `+=` as ternaries (118).
+
 ## T-25008: closers; main func_8006BA40 matched; func_8005B43C and parameter_up_down still guarded
 
 [[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]], branch n1. One of three matched in plain C; the other two keep their guards (3 and 11 rows).

@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24502 TACO completion
-
-Created [[tickets/T-24502-taco-completion]] In Progress in an isolated worktree from 2c7293275. Read [[index]], [[status]], [[playbook]] and project standards; TACO source ownership only.
-
-## [2026-10-20] build | T-24502 TACO func_80140028 literal match
-
-Fresh typed particle-update C matches all 828 linked target bytes in the default build. Corrected stale draft strides/fields and the TcPos argument; declaration layout and XYZ store order closed the remaining stack and scheduling differences. Recorded experiments in [[matching-notes]]. Full 27-binary build and header/prototype verification pending before integration; [[tickets/T-24502-taco-completion]] remains active.
-
 ## [2026-10-20] build | T-24502 verified TACO particle update
 
 After the parent review's header placement fix, default func_80140028 matches 828 linked bytes and all 27 built binaries independently match their pinned SHA1 values. Header/global guards and prototype branch check pass (0 new disagreements). [[tickets/T-24502-taco-completion]] records the resolved review finding; campaign continues.
@@ -1708,6 +1700,7 @@ Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `fun
 
 ## [2026-10-20] ticket | T-25009 to In Review
 [[tickets/T-25009-closers-etc-geko-mod-set-gpu]]: no match; main `mod_set_gpu` guard 28 -> 17 rows (empty `if (last) {}` lifts `last` above `clut`), GEKO `func_80133C50` 13 and ETC `func_80146D4C` 12 unchanged (zero-girl mask lead recorded). Notes in [[matching-notes]]. Clean build 27/27, checks pass. Branch n2.
+
 ## [2026-10-20] ticket | T-25008 In Progress
 
 [[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]]: closers for main `func_8005B43C` (3 rows), `func_8006BA40` (7), `parameter_up_down` (11), branch n1.
