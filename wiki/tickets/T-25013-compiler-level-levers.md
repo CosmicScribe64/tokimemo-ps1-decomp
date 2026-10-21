@@ -146,3 +146,38 @@ Both are the allocation/lifetime behaviour covered by levers 1 and 5,
 not a frame-pass rule. The frame pass (tools/frame_pass.py) has nothing
 to fix for this function. Lever 2 does not exist as an independent
 compiler lever; do not re-pursue it as one.
+
+### Lever 4 session notes (Octa, remote, 2026-10-21)
+
+The as1 delay-slot rule was already measured by T-24900 (see
+[[as1-scheduler-rule]]); the open compiler-level question was the
+weight pass: when does a predecessor add 1 instead of 3? Read from the
+pinned recomp as1 source (sha256 905927751a79aba82d332bdce254b2b30a4312ae14a4108897e11b48487d17a1,
+identical to the project's pin) and confirmed on a traced as1 run of
+the GEKO func_80136C20 draft (traced object byte-identical to the
+build's):
+
+- Block weight (block struct +72) = max over predecessors of an
+  adjusted predecessor weight; entry blocks get 1.
+- A predecessor outside the current region bitset is skipped. A
+  predecessor whose row in the dominator table contains the current
+  block (the current block dominates it: a back edge) contributes
+  pred - 3.
+- Otherwise the region test (func_428758 in the recomp source) walks
+  the predecessor's successor list (+16): if any successor is outside
+  the region bitset, the predecessor contributes pred + 1; if every
+  successor stays inside, pred + 3.
+
+For GEKO func_80136C20 the trace shows the stall block (weight 1,
+ending in the bnez of the D_80145088 test) scanning candidates in
+order and stopping at the first weight-7 block, which holds the
+selector lui the original used as the filler. In the draft's CFG that
+block's controlling chain is pure +3 (every predecessor's successors
+stay in the region). The original's CFG must have given one of those
+predecessors a region-exit successor (a +1), putting the block at
+weight 5, inside the stall block's window. That is a source-shape
+difference around the switch head, not an as1 build rule: consistent
+with build-step-gaps.md (as1 order closed as source recipes only).
+KANGEI func_8013852C is the per-block scheduler, also not the global
+mover. Lever 4 has no build-step rule to implement; the +1 condition
+above is the input the GEKO source work needed.
