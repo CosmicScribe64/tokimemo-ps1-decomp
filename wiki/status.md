@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,823 / 6,952 functions, 2,098,084 / 2,276,920 bytes (92.1%), measured with Docker `tools/progress.py` after T-24607 editor promotion. SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,826 / 6,952 functions, 2,100,368 / 2,276,920 bytes (92.2%), measured with Docker `tools/progress.py` after T-24900 and T-24903 promotions (126 remaining). SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
 - Remaining by unit (129 functions): main 51, TACO 12, GEKO 7, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 1, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
@@ -17,7 +17,18 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 ## Active work
 
 - Plan for the last 127 functions, for any agent: [[plan-remaining]] (classes A-D, list in [[data/remaining-2026-10-20]]).
+  Wave C-1 (T-24921..T-24924, isolated worktrees) produced no promotion; kept 9->3 (ETC func_8013CCE4),
+  114->92 (ENDING func_801330E4) and two archived drafts (GEKO func_801367EC 44, OPTION func_801326BC 134).
+  Wave C-2 (T-24925..T-24928) on the same functions: main func_8006C988 11->5 rows, mechanism
+  diagnoses for ETC func_8013CCE4 (uopt zcopy, T-24929), GEKO func_80133024 (two day ranges) and
+  BUNKA_SD func_80139290 (same-block order, lever banked in drafts/T-24927/).
+  Class A is running as T-24901..T-24908 (one function per file-disjoint worker, 45-minute box).
 - as1 scheduling: rule and `volatile` lever in [[as1-scheduler-rule]] (T-24900); per-file options ruled out in [[as1-scheduling]] (T-24800).
+
+- T-24700 fan-out (2026-10-20, before the new plan): no promotions; source-only improvements kept
+  in guards: BUNKA_SD func_80139290 123->6, main func_80054E6C 84->19, GYOZI func_80138C9C 103->75,
+  ETC func_8014790C 85->57, GYOZI func_8013907C 39->23, main func_800455C4 26->16,
+  ETC func_8013CCE4 84->18, NAME_ENT func_801398EC 266->185, GYOZI func_80140E0C 9->5.
 
 - Current handoff: user requested wrapping up and pushing this session. T-24607 OPTION `func_80139A30` adds1,036 literal default-C bytes; all27 hashes and declaration guards pass. Seven functions /6,516 bytes completed in this continuation;129 remain. Matching lanes have stopped, with unfinished evidence preserved in [[matching-notes#T-24600: Wrap-up reconstruction checkpoints]]. The full decompilation remains incomplete; earlier activity entries below are historical.
 

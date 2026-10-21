@@ -81,6 +81,7 @@ void func_8013B404(void) {
     func_8009C674(0);
 }
 
+/* T-24705: the y3 store position is the only difference. Splitting the UV statement into 2, 4 or 8 lines (20 lines), the y3 store first or last in one comma chain (18/154), a same-line `p->y3` with the UV chain, and a y3 temporary in the pad slot (151) do not move it; the memory of the division already reaches the AddPrim block in the original. */
 /* NON_MATCHING: T-24200, 4 differing lines (2 rows, one per quad): the p->y3 halfword store is scheduled before the eight
  * UV byte stores; the original computes y3 first but stores it after them (as1 order; a y3 temporary gets
  * that order but recolours the 0xFF/0xF0 constants). */

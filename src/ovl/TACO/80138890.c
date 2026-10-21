@@ -54,6 +54,7 @@ s32 func_80138964(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
+/* T-24705: autotweak (4 edits) reaches 25 rows only with a u8 view of the s32 score word D_8015F490 (not plausible source, not adopted); regdiff shows the count web has cheapest colour cost 0 in $v0 and does not interfere with either $v0 web (var_v0 #1, temp_v0 #2), so neither mentioning var_a1 first nor the store order moves it to $a0. */
 /* NON_MATCHING: T-19015 (T-16564), 30 differing instruction rows (60 funcdiff lines), registers only: the original colours the u8 count D_8015EDCC $a0, the second local $a1 and the sum $a0; IDO gives $v0, $a0 and $a1. */
 #ifdef NON_MATCHING
 s32 func_80138B2C(void) {

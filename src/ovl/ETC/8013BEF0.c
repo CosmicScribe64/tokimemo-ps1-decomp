@@ -1,6 +1,9 @@
+#define MAIN_API_OVERRIDE_func_800AE0A0 /* original called it undeclared (implicit int); T-24706 */
 #include "common.h"
 #include "psx_types.h"
 #include "ovl/ETC.h"
+
+extern s32 func_800AE0A0();
 
 typedef struct {
     /* 0x00 */ u32 tag;
@@ -351,7 +354,65 @@ void func_8013CC74(void) {
     func_8004284C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-24921, 3 rows. Remaining: the three switch compares use $v0
+ * here and $v1 in the original. The byte-view selector
+ * `switch (*(u8 *)&D_800E6280.unk_110D)` fixes those three rows exactly but makes
+ * uopt constant-fold the four-trip buf[] loop (89 rows, i no longer in a register,
+ * frame 8 bytes small); every selector form that compares on $v1 does this. The
+ * case-2 schedule matches: buf[0]/buf[1] and the for head share one source line. */
+s32 func_8013CCE4(void) {
+    s32 pad; /* FAKE: unused slot, the original frame has it (real source unknown). T-22019 */
+    s32 buf[6];
+    u32 i;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        if (D_80150068 > 0) {
+            cd_read_sectors(0x69U, 0x801A0000, 0xB389);
+            D_800E6280.unk_110D += 1;
+        } else {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 1:
+        if (D_80150068 == 0) {
+            D_800E6280.unk_110D += 1;
+        } else if (D_80150068 > 0) {
+            if (cd_read_sync_status() & 1) {
+                func_800AE0A0((void *)0x801E2000, 0x801A0600, 0x18000);
+                if (D_80150068 == 1) {
+                    D_80150068 = 2;
+                }
+                D_800E6280.unk_110D += 1;
+            }
+        }
+        break;
+    case 2:
+        if (D_800E6280.unk_F88 & 0x20) {
+            /* FAKE: the two-literal line and the one-line loop keep as1's
+             * scheduling; the byte chain shares one li, as the original. T-24706 */
+            buf[0] = 0x801E2000; buf[1] = 0x801E6000; for (i = 2; i < 6; i++) buf[i] = 0x801E2000 + i * 0x4000;
+            func_8004A1A0(buf, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 5);
+            D_801220D0 = 0x01000000;
+            (&D_801220E0)[0] = (&D_801220E0)[1] = (&D_801220E0)[2] = 0x80;
+            D_800E6280.unk_03A = 0x80;
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 3:
+        if (D_801500D4 >= 0xC00) {
+            func_80042940(0);
+        } else {
+            D_801500D4 += 8;
+            func_8013FA7C();
+        }
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013CCE4);
+#endif
 
 /* FAKE: retain the s32 fallthrough matching view so v0 stays live at the
  * epilogue and as1 hoists li t9,0xC00 instead of lui v0,0x8000 in case 5;

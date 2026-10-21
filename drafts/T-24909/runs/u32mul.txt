@@ -1,0 +1,135 @@
+ETC:func_8014790C: compared NON_MATCHING C (full translation unit)
+note: ignored 4 stale asm file(s) of functions that changed between C and INCLUDE_ASM (e.g. asm/ovl/ETC/nonmatchings/ETC/80146400/func_80146400.s); `rm` them or rebuild asm/ to clean up
+ETC:func_8014790C: DIFF (- expected, + built)
+  -100000f9  ; b 1948 <func_8014790C+0x43c>
+  +10000114  ; b 19b4 <func_8014790C+0x4a8>
+  -100000d6  ; b 1948 <func_8014790C+0x43c>
+  +100000f1  ; b 19b4 <func_8014790C+0x4a8>
+  -142000d0  ; bnez at,1944 <func_8014790C+0x438>
+  +142000eb  ; bnez at,19b0 <func_8014790C+0x4a4>
+  -100000ce  ; b 1944 <func_8014790C+0x438>
+  +100000e9  ; b 19b0 <func_8014790C+0x4a4>
+  -132000ca  ; beqz t9,1948 <func_8014790C+0x43c>
+  +132000e5  ; beqz t9,19b4 <func_8014790C+0x4a8>
+  -3c108012  ; lui s0,0x0
+  +3c178012  ; lui s7,0x0
+  +26f7ecd0  ; addiu s7,s7,0
+  -3c148015  ; lui s4,0x0
+  -3c168012  ; lui s6,0x0
+  -26d6ecd0  ; addiu s6,s6,0
+  -26940684  ; addiu s4,s4,0
+  +3c158015  ; lui s5,0x0
+  +26b50684  ; addiu s5,s5,0
+  -2610ecd0  ; addiu s0,s0,0
+  +02e08025  ; move s0,s7
+  -241e00a4  ; li s8,164
+  -24170044  ; li s7,68
+  -27b5007c  ; addiu s5,sp,124
+  +241e0044  ; li s8,68
+  +27b6007c  ; addiu s6,sp,124
+  +24140044  ; li s4,68
+  -8e820000  ; lw v0,0(s4)
+  +8ea20000  ; lw v0,0(s5)
+  -02a02025  ; move a0,s5
+  +02c02025  ; move a0,s6
+  -02a02025  ; move a0,s5
+  +02c02025  ; move a0,s6
+  +afa00010  ; sw zero,16(sp)
+  -02a03825  ; move a3,s5
+  -afa00010  ; sw zero,16(sp)
+  +02c03825  ; move a3,s6
+  -1000003e  ; b 190c <func_8014790C+0x400>
+  +1000005a  ; b 1978 <func_8014790C+0x46c>
+  -1441000a  ; bne v0,at,1848 <func_8014790C+0x33c>
+  +1441000c  ; bne v0,at,184c <func_8014790C+0x340>
+  +2401000b  ; li at,11
+  -10000032  ; b 190c <func_8014790C+0x400>
+  +1000004d  ; b 1978 <func_8014790C+0x46c>
+  -14410016  ; bne v0,at,18a8 <func_8014790C+0x39c>
+  -000250c0  ; sll t2,v0,0x3
+  +14410023  ; bne v0,at,18dc <func_8014790C+0x3d0>
+  +000268c0  ; sll t5,v0,0x3
+  -24640018  ; addiu a0,v1,24
+  +00000000  ; nop
+  -11c0000a  ; beqz t6,1894 <func_8014790C+0x388>
+  -26390061  ; addiu t9,s1,97
+  +11c0000b  ; beqz t6,1898 <func_8014790C+0x38c>
+  +00000000  ; nop
+  +24640018  ; addiu a0,v1,24
+  -1000001f  ; b 190c <func_8014790C+0x400>
+  +10000039  ; b 1978 <func_8014790C+0x46c>
+  -03370019  ; multu t9,s7
+  +023e0019  ; multu s1,s8
+  +241900a4  ; li t9,164
+  -02c84821  ; addu t1,s6,t0
+  -10000019  ; b 1908 <func_8014790C+0x3fc>
+  -a13e0003  ; sb s8,3(t1)
+  -01425023  ; subu t2,t2,v0
+  -000a50c0  ; sll t2,t2,0x3
+  -3c0b800e  ; lui t3,0x0
+  -016a5821  ; addu t3,t3,t2
+  -8d6b6448  ; lw t3,0(t3)
+  +250919c4  ; addiu t1,t0,6596
+  +00000000  ; nop
+  +0134001b  ; divu zero,t1,s4
+  +16800002  ; bnez s4,18bc <func_8014790C+0x3b0>
+  +00000000  ; nop
+  +0007000d  ; break 0x7
+  +00005012  ; mflo t2
+  +00000000  ; nop
+  +00000000  ; nop
+  +01540019  ; multu t2,s4
+  +00005812  ; mflo t3
+  +02eb6021  ; addu t4,s7,t3
+  +10000027  ; b 1974 <func_8014790C+0x468>
+  +a1990003  ; sb t9,3(t4)
+  +01a26823  ; subu t5,t5,v0
+  +000d68c0  ; sll t5,t5,0x3
+  +3c0e800e  ; lui t6,0x0
+  +01cd7021  ; addu t6,t6,t5
+  +8dce6448  ; lw t6,456(t6)
+  +00000000  ; nop
+  +000e7f80  ; sll t7,t6,0x1e
+  +000fc7c2  ; srl t8,t7,0x1f
+  +1300000d  ; beqz t8,1934 <func_8014790C+0x428>
+  +00000000  ; nop
+  +00025080  ; sll t2,v0,0x2
+  +3c07800b  ; lui a3,0x0
+  +00ea3821  ; addu a3,a3,t2
+  -000b6f80  ; sll t5,t3,0x1e
+  -05a1000c  ; bgez t5,18f8 <func_8014790C+0x3ec>
+  -26390061  ; addiu t9,s1,97
+  -0002c080  ; sll t8,v0,0x2
+  -3c07800b  ; lui a3,0x0
+  -00f83821  ; addu a3,a3,t8
+  +00044400  ; sll t0,a0,0x10
+  -00047400  ; sll t6,a0,0x10
+  -000e2403  ; sra a0,t6,0x10
+  +00082403  ; sra a0,t0,0x10
+  -10000006  ; b 190c <func_8014790C+0x400>
+  +10000012  ; b 1978 <func_8014790C+0x46c>
+  -03370019  ; multu t9,s7
+  -00004012  ; mflo t0
+  -02c84821  ; addu t1,s6,t0
+  -a13e0003  ; sb s8,3(t1)
+  +023e0019  ; multu s1,s8
+  +240b00a4  ; li t3,164
+  +0000c812  ; mflo t9
+  +272c19c4  ; addiu t4,t9,6596
+  +00000000  ; nop
+  +0194001b  ; divu zero,t4,s4
+  +16800002  ; bnez s4,1958 <func_8014790C+0x44c>
+  +00000000  ; nop
+  +0007000d  ; break 0x7
+  +00006812  ; mflo t5
+  +00000000  ; nop
+  +00000000  ; nop
+  +01b40019  ; multu t5,s4
+  +00007012  ; mflo t6
+  +02ee7821  ; addu t7,s7,t6
+  +a1eb0003  ; sb t3,3(t7)
+  -1621ff85  ; bne s1,at,1734 <func_8014790C+0x228>
+  -26940004  ; addiu s4,s4,4
+  +1621ff69  ; bne s1,at,1730 <func_8014790C+0x224>
+  +26b50004  ; addiu s5,s5,4
+  resolved: REAL DIFFERENCE, not naming. Symbol+offset or instruction words differ after relocation.

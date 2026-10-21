@@ -17,36 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24045 TEL profile screen closed from T-19027 (2026-10-18)
-
-func_8013D03C now matches 2128 linked default bytes as actual unguarded C. The old draft must use current D_800B3778[n][j] rather than flat indexing. Shared-source-line SET_REC is neutral here (97 rows before/after). Moving the volatile q assignment after the four image-address stores fixes its schedule; explicit if/else-if/else for the three age arms restores the missing branch. The final birthday month/day pair reads q through (*(GameState **)&q), letting the compiler share one packed-word load while all surrounding reads retain the spilled/reloaded shape. This compiler-specific nonvolatile view is marked FAKE; inherited unused pad[32] and volatile q are also reticketed FAKE. Root standards review must assess the qualifier-removing view; it is not a portable volatile-access pattern or an original-source claim.
-
-Existing-scalar packed-word reuse, a new word within padding, scalar/aggregate union views and temporary record-pointer reuse all failed; drafts/T-24045/README.md records their counts. Approved TEL.h aggregate TelSignDays has sixteen u32 elements/size0x40, matching the table-copy extent. Fresh Docker ninja -j1 compiled actual source and passed TEL checksum/headers. Literal default linked funcdiff MATCH 2128; no target INCLUDE_ASM or guard remains. [[tickets/T-24045-tel-profile-screen]] is In Review.
-
-## EVENT Boolean and branch-order closure (T-24023)
-
-EVENT func_801103A0 is default C, 1,712 instructions / 6,848 literal text bytes; its full overlay SHA1 passes. The former 214-cost draft is resolved. Three logical date tests need distinct month operands (`* 1`, `^ 0`, `| 0`) to prevent a common Boolean range. A positive date condition around the success block replaces both gotos while preserving failure exits; this restores the original common-tail load and delay slots. Both steps are required.
-
-A u32 selector copy at each dispatch-arm entry preserves plain-variable comparison order. The byte-gap local captures constants for four direct-global comparisons. The last nine swapped selector branches came from the conversion pass's constant-first rule. Reading the same byte as `((u8 *)&D_801243A4)[0xC]` avoids that classification. The containing aggregate remains unknown, so the neighboring-base view is marked FAKE under standards section 8; its address and load width are verified by literal linking and the full checksum. The identity operands and constant captures are also marked FAKE. No compiler change or artificial call arguments are used.
-
-See [[tickets/T-24023-event-handler]] and drafts/T-24023/closure/replay.py for the final source and negative controls. The canonical EVENT.h return type is s32; its sole C caller ignores the result and is covered by the overlay checksum.
-
-## T-20013 NAME_ENT fade and character-page selection
-
-[[tickets/T-20013-name-ent-fade-page-followup]] matches func_80132320 (396 bytes) and func_80134248 (2,256 bytes), completing the remaining scope of claim #57 after T-20011. The fade keeps pointer rebasing, five alpha stores and post-helper reloads; signed `val & -1` identities on all five stores retain the original A1 masked-byte web. Removing any one costs4/4/4/11/11 aligned instruction edits; OR-zero or extending the identity to the threshold compare does not match.
-
-For the character picker, reuse the existing u32 index for raw selection bytes before each clamp. A separate raw local restores the dispatch but enlarges the frame; reuse restores the original0x38. The initial remainder needs an indirect s32 read, and the two indexed modes need eliminated column tests to preserve the observed reload/range separation. The final two swapped branch operands disappear with signed `(column | 0) == 5` comparisons. All three source constraints are marked FAKE; direct remainder reads cost46 edits, removing the empty tests176, and removing either comparison identity1. Repeating the remainder or narrowing the comparison does not match. These are measured source controls, not a compiler-wide rule.
-
-Actual default linked C proof reports MATCH396/2256 bytes; all27 hashes and header/global/prototype guards pass. The ticket records focused negative controls and ignored evidence paths. No shared ABI or compiler changes.
-
-## T-24064: ETC model initialization cursor and setup schedule
-
-ETC func_8013F980 matches252 actual default linked bytes using matched MAIN func_8006190C/T-17010's integer model cursor. It retains the header pointer/count load across printf, avoiding the old absolute-folded pointer form. Correct TaiikuBig/u32 increments give the real16-record loop. Initializer order reduces10→4 diagnostic rows, then FAKE initializer/do same-line grouping fixes the last two setup instructions (original source-line layout unknown). Plain existing shared prototype matches, so no local override/header change is retained. ETC SHA1, interfaces and other-body byte audit pass, including matched8013FC64. [[tickets/T-24064-etc-count-trio]] In Review; source checkpoint0f3496877 and provenance drafts/T-24064/README.md.
-
-## T-24073 ETC record initialization
-
-func_8014407C matches352 actual default linked C bytes. Correct stale &array+0x48 to Rec24[2], then write real fields through a0x24 cursor. Word x/index-derived values avoid spurious short narrowing; the matched MAIN80084E90 unsigned SDK width view shares128 across unk08/0A (marked FAKE). Required y-store immediately after signed RNG%112 exposes the DIV macro early. A canonical for-loop separates ID=i+3 from induction update; ordered i/x initializer matches its prologue. Existing void(void) declaration was wrong: original spills/reads incominga0, while matched caller passes no expression. Approved void() header plus definitionvoid(s32arg0) preserves both. ETC checksum, default352 literal, guards and42 unchanged neighbor bodies pass; parent publication pending.
-
 ## T-24200: TACO func_8013B460 in a cloud session (match packet pilot)
 
 [[tickets/T-24200-cloud-packet-taco-8013b460]]; setup in [[cloud-matching]]. From 41 rows (T-19030) to 4 differing lines (2 rows, one per quad); guarded `NON_MATCHING` in `src/ovl/TACO/8013B170.c`. Start: the T-20830 `best.c` (`GameState *g` view, which already fixes the `$s5..$s7` colours of T-19030), 32 lines. Scores below are lines of a symbol-resolved objdump diff (no disc).
@@ -698,10 +668,45 @@ User requested stopping the current matching session and committing/pushing comp
 - NAME_ENT `func_80143580`: restored signed-halfword decrement narrowing is required. Selector byte views, RGB zero chains, and fade snapshots recover several causal regions; `name-lane/intro-recovery/NOTES.md` records the still-unmatched candidates. A lower-scoring branch-reorder control loses an observed selector self-store and is not a valid improvement.
 - ETC `func_801328A4`: archive reconstruction had incorrect record and input strides, wrong copy widths and one-element stack placeholders. Typed three-row Rgb555Split storage and RECT recover these accesses; `etc-lane` candidate remains231 words against230, with frame/layout unresolved. No production source or header change.
 
+## T-25001: class C main sndisp, strCallback, func_80065964
+
+[[tickets/T-25001-class-c-main-sndisp-strcallback]], worktree `c-m1`. No new match; one guard at 2 rows.
+
+- **`sndisp` (388 B, guarded, 2 rows).** A clean rewrite of the T-14500 draft gives every instruction and register: `strncpy(buf, str, 256)`, then `for (i = 0; buf[i] != 0; i++, q++)` with the space, `P` and `G` tests on `!(q & 1)`. The original's `andi v0,zero,0xFF` is uopt forwarding the store `buf[i] = 0` into the next `buf[i]` read. `i` is both the position stored in `pos[n]` and, reset to 0, the counter of the second `sndi` loop. Frame: `i, q, n` declared before `pos` and `buf` put `pos` at sp+0x14C and `buf` at sp+0x4C, and a FAKE `s32 pad[2];` declared first gives the 0x168 frame. Left: the two rows of the template address. `u8 pos[5] = {0,...}` makes IDO copy from a template in the object's `.data`. The original template is `D_800B40F8`, 8 bytes into the 800B40F0 data range. This object's C `.data` is already the `D_800E3680` island (yaml `[0xA2E80, .data, main/8004F870]`, needed by the matched `menu_bar_color`), so the template lands at `.data+0x40`. `data_island.py main/8004F870` adds a second `.data` entry for the same object, and splat then writes only one `8004F870.data.s`, so `data_pieces.py` fails ("island 800B40F0 does not start with a symbol"). Closing this needs build support for two `.data` regions in one object, or another way to own the 800E3680 bytes.
+- **`strCallback` (640 B, `INCLUDE_ASM`, 75 rows).** The T-17014 draft is unchanged: from the RECT copy on, every ugen temporary is one ring slot high. Tried: `odd` as u32 (same) and s16/s8/u16/u8 (worse), an assignment in the condition, `if (odd)`, declaration order, the `D_80125C5C = 0` store before the reload, copy and `if` on one line, `x = x + ...`, `*&` on the copy source. autotweak (300 s, 318 edits) and the permuter (600 s, best 315, only by dropping the semantic `odd` reload) found nothing. Draft: `drafts/T-25001/main/strCallback.c`.
+- **`func_80065964` (424 B, `INCLUDE_ASM`).** A natural four-corner test, a block-local macro per corner and a do-while loop all compile to a frameless leaf, and uopt splits the loop around `idx`. The original has frame 0x68, saves s0/s1, keeps dead `sw` of p, y0 and y1 to sp+0x28, x0 to 0x24 and x1 to 0x20, and holds eight coordinate registers, a copy of each value, one pair per corner test. The source shape is unknown. Drafts: `drafts/T-25001/main/func_80065964.c`.
+
+## T-24713: as1 traces (superseded by T-24900)
+
+Wave-2 T-24713 traced the near-miss diffs with an instrumented as1. Its measurements are kept here
+because they agree with [[as1-scheduler-rule]]: the cross-block filler visits stalled blocks by
+(weight, block number), a switch default is numbered before its dispatch and wins at equal weight,
+and the per-block scheduler (not source lines) orders the instructions inside one block. Two
+conclusions in the first version of this note were wrong and must not be reused:
+
+- **"A backend-version trait, no source form" is wrong.** T-24900 found the lever: declare the
+  plain globals of the switch default arm `volatile` in the unit header (FAKE) and as1 will not
+  move their `lui`. It matched VALEN func_80134030 and GYOZI func_80139E4C in C. Use
+  [[as1-scheduler-rule]] and classify every scheduling diff there before calling it blocked.
+- **"Closing these needs a scheduling pass" is wrong for the default-arm family.** It is still the
+  open question only for the same-block KANGEI func_8013852C case (a local order, volatile changes
+  nothing) and for the GEKO func_80136C20 weight problem; those two have trace-backed notes in
+  [[as1-scheduler-rule]] and stay guarded.
+
+Kept observation: `--resolve` rows overstate a one-instruction move because every later branch
+target shifts; report the true moved-instruction count with the row count. main func_8006D7EC's
+last row is still uopt constant propagation (`cc -S` shows `li $3,1`), a separate open item.
+
+## T-25002: class C ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224
+
+[[tickets/T-25002-class-c-ending-geko-etc]], worktree c-m2, from [[plan-remaining]] class C. 0 of 3 matched; one guard.
+
+- **GEKO `func_80133C50` (guarded, 13 rows).** Started from the T-24503 cost-44 body (22 rows here). Three changes: `(u8)(v & 0x7F) < 2` in the 4/5/10 arm (autotweak, 22 to 15); `g * 1 == 2` in the 1/2/3 chain puts the shared constant first, `beq a0,v1` (15 to 14; `2 == g`, `| 0` do not); `(g = D_80144C50) == 2U` gives `bne t8,a0` (14 to 13; the same word-local trick as the sibling `func_80133AA0`; `2 == C50`, `* 1`, `^ 0`, `(s32)`, byte view do not). The implicit-int strcpy view is a per-file `MAIN_API_OVERRIDE_func_800AE0F0`. Left: ugen temporary order in the zero-girl arm (original `srl t9; mflo t6; addu t0; srl t1`, built `srl t1; mflo t9; addu t6; srl t0`) and `lhu`/`srl` t9/t7 swapped in the 4/5/10 arm. No effect: a separate club local, `g` vs `temp` roles, compare order `g == v`, one-line grouping, empty tests on `v`/`g` (worse), `6U`/`2U`, autotweak 300 s a second time.
+- **ENDING `func_801387B0` (INCLUDE_ASM, draft `drafts/T-25002/ENDING/func_801387B0.c`, 80/76 rows).** Fresh body in the style of the matched siblings (`DisplayActor44` record 31, the `D_8011F4DE/E0/D0` scalars), frame 0x28 right. `D_8011F4DE * 1 == 1` gives the original `bne v1,t0`. Left: the original keeps `byte & 1` in `v1` (byte in `a0`) and recomputes `xor a1,v1; sltiu` for each of the four `N - (flag == 1)` compares; every form tried CSEs the boolean from the second compare on, so the build is 16 bytes short. Tried: s32/u8/u32/s16 flag, byte plus bit locals, `1 == flag`, `1U`, `!(x ^ 1)`, ternary, direct field reads. autotweak: view `D_8013C360` s32 (exact 156 to 123).
+- **ETC `func_80144224` (INCLUDE_ASM, draft `drafts/T-25002/ETC/func_80144224.c`, 106/97 rows, 185 against 194 instructions).** Fixed against the m2c draft: frame 0x38 (declare `rem`, `quot`, `v` in that order), `func_8014407C(quot)` (m2c lost the argument), `(&D_8015014C)[D_80150148]`, s32 return for the implicit-int caller. Left: the original promotes `D_800E7384` in `a3` over the whole function (reloaded after every call) and `D_80150148` in `v1` in the `rem == 1` arm with write-backs before each call; the draft does neither. Self-assignment write-backs give 93/87 rows with frame 0x40 (kept in the draft under `#if 0`). A u32 `D_800E7384` changes nothing; autotweak refuses the shape.
+
 ## T-25005: several .data ranges per object; main sndisp
-
 [[tickets/T-25005-data-regions-per-object]], worktree `data2`. Build support for an object with two or more `.data` ranges ([[build-system]], "Several ranges per object").
-
 - **`sndisp` (388 B): MATCH.** This is the T-25001 C with its guard removed. `tools/data_island.py main/8004F870` adds `800B40F0-800B4390` as a further island (section `.data_800B40F0`). In `src/main/8004F870.c` the order is: `D_800E3680` (the old island, stays `.data`), the `D_800B40F0` piece, ..., `sndisp`, then the pieces from `D_800B4100` on. IDO emits the `pos[]` template when it compiles `sndisp`, so the template lands at `.data_800B40F0+8` = `D_800B40F8`, the original address. The `D_800B40F8` piece is gone because the compiler provides those bytes.
 - **Rule for other files.** The C file must emit each range's data back to back. A local aggregate initialiser template sits where its function sits in the source, so the `INCLUDE_RODATA` lines of a range are split around that function. `data_split.py` fails the build when the parts are not contiguous, have the wrong size, or do not start on a symbol.
 - **Other functions blocked by this.** None found. No `NON_MATCHING` note in `src/` and no matching note names a second data range as the only gap. The two earlier initialiser cases needed only one island each: TAIIKU `80141280` (`D_8014A070`, island in the yaml) and EVENT `func_8011767C` (C in `8010FE10.c`).

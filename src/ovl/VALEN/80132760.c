@@ -37,8 +37,11 @@ void func_80132810(void) {
  * drafts/T-24523/VALEN/func_80132834 (T-14500/T-16100 foundation). */
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132834);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-24900 (was T-24212), 3 rows (7 resolved rows in funcdiff); only the dispatch `sll t3,a1,2` is in the wrong delay slot. as1's global scheduler visits the `== 9` block (bb 8, weight 4) first and scans dominated blocks by (weight, number): bb 9's `lui v0` (mode reload, weight 7) comes before the dispatch bb 20 (weight 7) and passes every gate, so it fills the slot; the original must have had that lui pinned or bb 9 ordered after bb 20 (wiki/as1-scheduler-rule.md). Pinning it with a volatile D_80134544 keeps one load instead of uopt's two reloads (13 rows); a volatile first read changes the allocation (190). T-24212: `1 == mode`, byte view of the mode load, one-line ifs (all output-identical); else-if/goto/ternary/early-return-as-else forms change code. Notes: wiki/matching-notes.md T-24212. */
+/* The mode flag is read twice on purpose (T-24903): as1's global scheduler moves the
+ * head `lui` of a dominated block into a branch delay slot, so the first read has to be
+ * a volatile access (VALEN.h) to keep `lui v0` out of the `sel == 9` slot, and the second
+ * read keeps uopt from loading the byte once instead (13 rows). In the original the
+ * `sel == 9` slot holds the switch's dispatch `sll` (wiki/as1-scheduler-rule.md). */
 s32 func_80132D0C(void) {
     s32 mode;
     GameState *state;
@@ -55,10 +58,13 @@ s32 func_80132D0C(void) {
     if (state->unk_F5F == 0) {
         D_80134498 = state->unk_1BC[0].unk_02 >= 0x46;
     }
-    mode = D_80134544;
-    if ((state->unk_F5F == 9) && (mode == 1)) {
-        D_80134498 = 3;
+    if (state->unk_F5F == 9) {
+        mode = D_80134544;
+        if (mode == 1) {
+            D_80134498 = 3;
+        }
     }
+    mode = D_80134544;
     if ((state->unk_F5F == 0) && (mode == 1) && (state->unk_1BC[0].unk_02 >= 0x46)) {
         D_80134498 = 3;
     }
@@ -124,10 +130,6 @@ s32 func_80132D0C(void) {
     }
     func_8004284C();
 }
-
-#else
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132D0C);
-#endif
 
 /* T-24523: stale guarded body removed; correct location/background draft in drafts/T-19016. */
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80133088);

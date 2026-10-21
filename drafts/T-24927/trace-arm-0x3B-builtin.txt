@@ -1,0 +1,31 @@
+Picking node 1 (INST 3), at 9c4, best_addr = 9c0
+  node 0 (INST 4), time = 2, aftercycles = 1, latency = 0, besttime = 1
+  node 3 (INST 1), time = 2, aftercycles = 0, latency = 0, besttime = 2
+Picking node 0 (INST 4), at 9c8, best_addr = 9c0
+  node 3 (INST 1), time = 3, aftercycles = 0, latency = 0, besttime = 2
+Picking node 3 (INST 1), at 9cc, best_addr = 9c0
+Node   6: inst 240f0002, relocation 0, lineno 3382
+	before 0, aftercycles 2, maxhazard 0
+	afternodes: 4/1
+Node   5: inst 3c010000, relocation 335, lineno 3382
+	before 0, aftercycles 2, maxhazard 0
+	afternodes: 4/1
+Node   4: inst a42f0000, relocation 336, lineno 3382
+	before 2, aftercycles 0, maxhazard 0
+	afternodes:
+Node   3: inst 240a0060, relocation 0, lineno 3383
+	before 0, aftercycles 0, maxhazard 0
+	afternodes:
+Node   2: inst 3c080000, relocation 337, lineno 3383
+	before 0, aftercycles 3, maxhazard 0
+	afternodes: 1/1
+Node   1: inst 9108003e, relocation 338, lineno 3383
+	before 1, aftercycles 2, maxhazard 2
+	afternodes: 0/1
+Node   0: inst 10000000, relocation 0, lineno 3383
+	before 1, aftercycles 1, maxhazard 0
+	afternodes:
+Initial nodes: 6 5 3 2
+
+  node 6 (INST 2), time = 0, aftercycles = 2, latency = 1, besttime = 3
+  node 5 (INST 3), time = 0, aftercycles = 2, latency = 1, besttime = 0

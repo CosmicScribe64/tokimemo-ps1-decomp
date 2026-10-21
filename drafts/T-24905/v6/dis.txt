@@ -1,0 +1,367 @@
+000002f0 <func_8013B460>:
+ 2f0:	addiu	sp,sp,-96
+ 2f4:	lui	a1,0x0
+			2f4: R_MIPS_HI16	D_8011ECA0
+ 2f8:	sw	ra,52(sp)
+ 2fc:	sw	a0,96(sp)
+ 300:	lw	a1,0(a1)
+			300: R_MIPS_LO16	D_8011ECA0
+ 304:	sw	s7,48(sp)
+ 308:	sw	s6,44(sp)
+ 30c:	sw	s5,40(sp)
+ 310:	sw	s4,36(sp)
+ 314:	sw	s3,32(sp)
+ 318:	sw	s2,28(sp)
+ 31c:	sw	s1,24(sp)
+ 320:	sw	s0,20(sp)
+ 324:	jal	0 <func_8013B170>
+			324: R_MIPS_26	GetWorkBase
+ 328:	li	a0,40
+ 32c:	move	s0,v0
+ 330:	jal	0 <func_8013B170>
+			330: R_MIPS_26	func_8009F040
+ 334:	move	a0,v0
+ 338:	move	a0,s0
+ 33c:	jal	0 <func_8013B170>
+			33c: R_MIPS_26	SetSemiTrans
+ 340:	move	a1,zero
+ 344:	move	a0,s0
+ 348:	jal	0 <func_8013B170>
+			348: R_MIPS_26	SetShadeTex
+ 34c:	move	a1,zero
+ 350:	li	a0,2
+ 354:	move	a1,zero
+ 358:	li	a2,512
+ 35c:	jal	0 <func_8013B170>
+			35c: R_MIPS_26	func_8009ECB0
+ 360:	move	a3,zero
+ 364:	lw	a0,96(sp)
+ 368:	li	s3,100
+ 36c:	subu	s4,s3,a0
+ 370:	sll	t6,s4,0x4
+ 374:	div	zero,t6,s3
+ 378:	sll	t7,s4,0x9
+ 37c:	sll	t5,s4,0x6
+ 380:	li	s5,128
+ 384:	sh	v0,22(s0)
+ 388:	sb	s5,4(s0)
+ 38c:	sb	s5,5(s0)
+ 390:	sb	s5,6(s0)
+ 394:	lui	t9,0x0
+			394: R_MIPS_HI16	D_8011ECA0
+ 398:	lw	t9,0(t9)
+			398: R_MIPS_LO16	D_8011ECA0
+ 39c:	lui	s1,0x0
+			39c: R_MIPS_HI16	D_800E6280
+ 3a0:	addiu	s1,s1,0
+			3a0: R_MIPS_LO16	D_800E6280
+ 3a4:	sll	t0,t9,0x1
+ 3a8:	addu	t1,s1,t0
+ 3ac:	lh	t2,20(t1)
+ 3b0:	bnez	s3,3bc <func_8013B460+0xcc>
+ 3b4:	nop
+ 3b8:	break	0x7
+ 3bc:	li	at,-1
+ 3c0:	bne	s3,at,3d4 <func_8013B460+0xe4>
+ 3c4:	lui	at,0x8000
+ 3c8:	bne	t6,at,3d4 <func_8013B460+0xe4>
+ 3cc:	nop
+ 3d0:	break	0x6
+ 3d4:	lui	t6,0x0
+			3d4: R_MIPS_HI16	D_8011ECA0
+ 3d8:	li	a2,240
+ 3dc:	move	a1,s0
+ 3e0:	mflo	a3
+ 3e4:	nop
+ 3e8:	nop
+ 3ec:	div	zero,t7,s3
+ 3f0:	bnez	s3,3fc <func_8013B460+0x10c>
+ 3f4:	nop
+ 3f8:	break	0x7
+ 3fc:	li	at,-1
+ 400:	bne	s3,at,414 <func_8013B460+0x124>
+ 404:	lui	at,0x8000
+ 408:	bne	t7,at,414 <func_8013B460+0x124>
+ 40c:	nop
+ 410:	break	0x6
+ 414:	mflo	t8
+ 418:	subu	v1,t8,a3
+ 41c:	addu	t3,t2,v1
+ 420:	div	zero,t5,s3
+ 424:	sll	t2,a0,0x8
+ 428:	addiu	t4,t3,-256
+ 42c:	sh	t4,8(s0)
+ 430:	lw	t6,0(t6)
+			430: R_MIPS_LO16	D_8011ECA0
+ 434:	lui	t3,0x0
+			434: R_MIPS_HI16	D_8011ECA0
+ 438:	sll	t7,t6,0x1
+ 43c:	addu	t8,s1,t7
+ 440:	lh	t9,24(t8)
+ 444:	bnez	s3,450 <func_8013B460+0x160>
+ 448:	nop
+ 44c:	break	0x7
+ 450:	li	at,-1
+ 454:	bne	s3,at,468 <func_8013B460+0x178>
+ 458:	lui	at,0x8000
+ 45c:	bne	t5,at,468 <func_8013B460+0x178>
+ 460:	nop
+ 464:	break	0x6
+ 468:	mflo	s2
+ 46c:	addu	t0,t9,s2
+ 470:	addiu	t1,t0,-120
+ 474:	div	zero,t2,s3
+ 478:	sh	t1,10(s0)
+ 47c:	lw	t3,0(t3)
+			47c: R_MIPS_LO16	D_8011ECA0
+ 480:	lui	t0,0x0
+			480: R_MIPS_HI16	D_8011ECA0
+ 484:	sll	t4,t3,0x1
+ 488:	addu	t5,s1,t4
+ 48c:	lh	t6,20(t5)
+ 490:	bnez	s3,49c <func_8013B460+0x1ac>
+ 494:	nop
+ 498:	break	0x7
+ 49c:	li	at,-1
+ 4a0:	bne	s3,at,4b4 <func_8013B460+0x1c4>
+ 4a4:	lui	at,0x8000
+ 4a8:	bne	t2,at,4b4 <func_8013B460+0x1c4>
+ 4ac:	nop
+ 4b0:	break	0x6
+ 4b4:	addu	t7,t6,v1
+ 4b8:	lui	t6,0x0
+			4b8: R_MIPS_HI16	D_8011ECA0
+ 4bc:	mflo	s6
+ 4c0:	addu	t8,t7,s6
+ 4c4:	addiu	t9,t8,-256
+ 4c8:	sh	t9,16(s0)
+ 4cc:	lw	t0,0(t0)
+			4cc: R_MIPS_LO16	D_8011ECA0
+ 4d0:	nop
+ 4d4:	sll	t1,t0,0x1
+ 4d8:	addu	t2,s1,t1
+ 4dc:	lh	t3,24(t2)
+ 4e0:	sll	t2,a0,0x4
+ 4e4:	subu	t2,t2,a0
+ 4e8:	sll	t2,t2,0x4
+ 4ec:	div	zero,t2,s3
+ 4f0:	addu	t4,t3,s2
+ 4f4:	addiu	t5,t4,-120
+ 4f8:	sh	t5,18(s0)
+ 4fc:	lw	t6,0(t6)
+			4fc: R_MIPS_LO16	D_8011ECA0
+ 500:	lui	t3,0x0
+			500: R_MIPS_HI16	D_8011ECA0
+ 504:	sll	t7,t6,0x1
+ 508:	addu	t8,s1,t7
+ 50c:	lh	t9,20(t8)
+ 510:	nop
+ 514:	addu	t0,t9,v1
+ 518:	addiu	t1,t0,-256
+ 51c:	sh	t1,24(s0)
+ 520:	lw	t3,0(t3)
+			520: R_MIPS_LO16	D_8011ECA0
+ 524:	lui	t0,0x0
+			524: R_MIPS_HI16	D_8011ECA0
+ 528:	sll	t4,t3,0x1
+ 52c:	addu	t5,s1,t4
+ 530:	lh	t6,24(t5)
+ 534:	bnez	s3,540 <func_8013B460+0x250>
+ 538:	nop
+ 53c:	break	0x7
+ 540:	li	at,-1
+ 544:	bne	s3,at,558 <func_8013B460+0x268>
+ 548:	lui	at,0x8000
+ 54c:	bne	t2,at,558 <func_8013B460+0x268>
+ 550:	nop
+ 554:	break	0x6
+ 558:	mflo	s7
+ 55c:	addu	t7,t6,s2
+ 560:	addu	t8,t7,s7
+ 564:	addiu	t9,t8,-120
+ 568:	sh	t9,26(s0)
+ 56c:	lw	t0,0(t0)
+			56c: R_MIPS_LO16	D_8011ECA0
+ 570:	lui	t7,0x0
+			570: R_MIPS_HI16	D_800E8CA0
+ 574:	sll	t1,t0,0x1
+ 578:	addu	t2,s1,t1
+ 57c:	lh	t3,20(t2)
+ 580:	sb	a2,37(s0)
+ 584:	addu	t4,t3,v1
+ 588:	addu	t5,t4,s6
+ 58c:	li	v1,255
+ 590:	addiu	t6,t5,-256
+ 594:	sh	t6,32(s0)
+ 598:	sb	v1,20(s0)
+ 59c:	sb	v1,36(s0)
+ 5a0:	sb	a2,29(s0)
+ 5a4:	sb	zero,28(s0)
+ 5a8:	sb	zero,21(s0)
+ 5ac:	sb	zero,13(s0)
+ 5b0:	sb	zero,12(s0)
+ 5b4:	lui	t4,0x0
+			5b4: R_MIPS_HI16	D_8011ECA0
+ 5b8:	lw	t4,0(t4)
+			5b8: R_MIPS_LO16	D_8011ECA0
+ 5bc:	addiu	t7,t7,0
+			5bc: R_MIPS_LO16	D_800E8CA0
+ 5c0:	sll	t5,t4,0xa
+ 5c4:	addiu	t6,t5,1020
+ 5c8:	addu	a0,t6,t7
+ 5cc:	jal	0 <func_8013B170>
+			5cc: R_MIPS_26	AddPrim
+ 5d0:	sw	a3,72(sp)
+ 5d4:	lui	a1,0x0
+			5d4: R_MIPS_HI16	D_8011ECA0
+ 5d8:	lw	a1,0(a1)
+			5d8: R_MIPS_LO16	D_8011ECA0
+ 5dc:	jal	0 <func_8013B170>
+			5dc: R_MIPS_26	GetWorkBase
+ 5e0:	li	a0,40
+ 5e4:	move	s0,v0
+ 5e8:	jal	0 <func_8013B170>
+			5e8: R_MIPS_26	func_8009F040
+ 5ec:	move	a0,v0
+ 5f0:	move	a0,s0
+ 5f4:	jal	0 <func_8013B170>
+			5f4: R_MIPS_26	SetSemiTrans
+ 5f8:	move	a1,zero
+ 5fc:	move	a0,s0
+ 600:	jal	0 <func_8013B170>
+			600: R_MIPS_26	SetShadeTex
+ 604:	move	a1,zero
+ 608:	li	a0,2
+ 60c:	move	a1,zero
+ 610:	li	a2,768
+ 614:	jal	0 <func_8013B170>
+			614: R_MIPS_26	func_8009ECB0
+ 618:	move	a3,zero
+ 61c:	sll	t8,s4,0x8
+ 620:	div	zero,t8,s3
+ 624:	sh	v0,22(s0)
+ 628:	sb	s5,4(s0)
+ 62c:	sb	s5,5(s0)
+ 630:	sb	s5,6(s0)
+ 634:	lui	t1,0x0
+			634: R_MIPS_HI16	D_8011ECA0
+ 638:	lw	t1,0(t1)
+			638: R_MIPS_LO16	D_8011ECA0
+ 63c:	lw	t0,72(sp)
+ 640:	sll	t2,t1,0x1
+ 644:	addu	t3,s1,t2
+ 648:	lh	t4,20(t3)
+ 64c:	lui	t6,0x0
+			64c: R_MIPS_HI16	D_8011ECA0
+ 650:	bnez	s3,65c <func_8013B460+0x36c>
+ 654:	nop
+ 658:	break	0x7
+ 65c:	li	at,-1
+ 660:	bne	s3,at,674 <func_8013B460+0x384>
+ 664:	lui	at,0x8000
+ 668:	bne	t8,at,674 <func_8013B460+0x384>
+ 66c:	nop
+ 670:	break	0x6
+ 674:	lui	t2,0x0
+			674: R_MIPS_HI16	D_8011ECA0
+ 678:	li	a2,240
+ 67c:	move	a1,s0
+ 680:	mflo	t9
+ 684:	subu	v1,t9,t0
+ 688:	addu	t5,t4,v1
+ 68c:	sh	t5,8(s0)
+ 690:	lw	t6,0(t6)
+			690: R_MIPS_LO16	D_8011ECA0
+ 694:	nop
+ 698:	sll	t7,t6,0x1
+ 69c:	addu	t8,s1,t7
+ 6a0:	lh	t9,24(t8)
+ 6a4:	lui	t8,0x0
+			6a4: R_MIPS_HI16	D_8011ECA0
+ 6a8:	addu	t0,t9,s2
+ 6ac:	addiu	t1,t0,-120
+ 6b0:	sh	t1,10(s0)
+ 6b4:	lw	t2,0(t2)
+			6b4: R_MIPS_LO16	D_8011ECA0
+ 6b8:	nop
+ 6bc:	sll	t3,t2,0x1
+ 6c0:	addu	t4,s1,t3
+ 6c4:	lh	t5,20(t4)
+ 6c8:	lui	t4,0x0
+			6c8: R_MIPS_HI16	D_8011ECA0
+ 6cc:	addu	t6,t5,v1
+ 6d0:	addu	t7,t6,s6
+ 6d4:	sh	t7,16(s0)
+ 6d8:	lw	t8,0(t8)
+			6d8: R_MIPS_LO16	D_8011ECA0
+ 6dc:	nop
+ 6e0:	sll	t9,t8,0x1
+ 6e4:	addu	t0,s1,t9
+ 6e8:	lh	t1,24(t0)
+ 6ec:	lui	t9,0x0
+			6ec: R_MIPS_HI16	D_8011ECA0
+ 6f0:	addu	t2,t1,s2
+ 6f4:	addiu	t3,t2,-120
+ 6f8:	sh	t3,18(s0)
+ 6fc:	lw	t4,0(t4)
+			6fc: R_MIPS_LO16	D_8011ECA0
+ 700:	nop
+ 704:	sll	t5,t4,0x1
+ 708:	addu	t6,s1,t5
+ 70c:	lh	t7,20(t6)
+ 710:	lui	t6,0x0
+			710: R_MIPS_HI16	D_8011ECA0
+ 714:	addu	t8,t7,v1
+ 718:	sh	t8,24(s0)
+ 71c:	lw	t9,0(t9)
+			71c: R_MIPS_LO16	D_8011ECA0
+ 720:	nop
+ 724:	sll	t0,t9,0x1
+ 728:	addu	t1,s1,t0
+ 72c:	lh	t2,24(t1)
+ 730:	nop
+ 734:	addu	t3,t2,s2
+ 738:	addu	t4,t3,s7
+ 73c:	addiu	t5,t4,-120
+ 740:	sh	t5,26(s0)
+ 744:	lw	t6,0(t6)
+			744: R_MIPS_LO16	D_8011ECA0
+ 748:	lui	t2,0x0
+			748: R_MIPS_HI16	D_800E8CA0
+ 74c:	sll	t7,t6,0x1
+ 750:	addu	t8,s1,t7
+ 754:	lh	t9,20(t8)
+ 758:	sb	a2,37(s0)
+ 75c:	addu	t0,t9,v1
+ 760:	li	v1,255
+ 764:	addu	t1,t0,s6
+ 768:	sh	t1,32(s0)
+ 76c:	sb	v1,20(s0)
+ 770:	sb	v1,36(s0)
+ 774:	sb	a2,29(s0)
+ 778:	sb	zero,28(s0)
+ 77c:	sb	zero,21(s0)
+ 780:	sb	zero,13(s0)
+ 784:	sb	zero,12(s0)
+ 788:	lui	t9,0x0
+			788: R_MIPS_HI16	D_8011ECA0
+ 78c:	lw	t9,0(t9)
+			78c: R_MIPS_LO16	D_8011ECA0
+ 790:	addiu	t2,t2,0
+			790: R_MIPS_LO16	D_800E8CA0
+ 794:	sll	t0,t9,0xa
+ 798:	addiu	t1,t0,1020
+ 79c:	jal	0 <func_8013B170>
+			79c: R_MIPS_26	AddPrim
+ 7a0:	addu	a0,t1,t2
+ 7a4:	lw	ra,52(sp)
+ 7a8:	lw	s0,20(sp)
+ 7ac:	lw	s1,24(sp)
+ 7b0:	lw	s2,28(sp)
+ 7b4:	lw	s3,32(sp)
+ 7b8:	lw	s4,36(sp)
+ 7bc:	lw	s5,40(sp)
+ 7c0:	lw	s6,44(sp)
+ 7c4:	lw	s7,48(sp)
+ 7c8:	jr	ra
+ 7cc:	addiu	sp,sp,96
