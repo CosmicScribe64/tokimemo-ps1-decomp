@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psx_types.h"
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_tpage_show);
 
@@ -130,7 +131,106 @@ void func_8004DAC4(s32 arg0) {
     s32 *p = &arg0;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-25006, 28 rows; clut is coloured before last ($s3 instead of $s7, so last, the x and
+ * col counters and data sit one register lower), and the p and ypos spill slots are 4 bytes off.
+ * search_tpage_multi is viewed as returning u16 here (the original compares the raw result and keeps
+ * the narrowed copy). */
+u16 search_tpage_multi();
+void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
+    s32 padA; /* FAKE: T-25006, padA and padB put row and mode at the original stack homes */
+    s32 padB;
+    u32 row;
+    SPRT_8 *s;
+    u32 col;
+    u32 *data;
+    u32 uv;
+    u32 page;
+    u32 clut;
+    u16 tpage;
+    u16 last;
+    s32 bright;
+    s32 mode;
+    s32 ypos;
+    u8 rows;
+    u8 cols;
+    ModRec14 *p;
+
+    bright = func_8004901C();
+    p = (ModRec14 *)(D_801217A0 + idx * 0x14);
+    switch (p->unk_08) {
+    case 0:
+        mode = 1;
+        break;
+    case 1:
+        mode = 2;
+        break;
+    case 2:
+        mode = 2;
+        break;
+    case 3:
+        mode = 1;
+        break;
+    case 4:
+        mode = 1;
+        break;
+    case 5:
+        mode = 1;
+        break;
+    default:
+        mode = 1;
+        break;
+    }
+    last = 0xFFFF;
+    rows = p->unk_0D;
+    cols = p->unk_0C;
+    data = rows * frame * cols + p->unk_04;
+    row = 0;
+    if (rows != 0) {
+        do {
+            col = 0;
+            if (cols != 0) {
+                ypos = row * 8 + y + 0x168;
+                do {
+                    uv = *data & 0xFF0000;
+                    page = *data & 0xFF000000;
+                    clut = *data & 0xFF00;
+                    uv >>= 16;
+                    page >>= 24;
+                    clut >>= 8;
+                    s = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+                    func_8009F07C(s);
+                    SetSemiTrans(s, 0);
+                    s->x0 = x + 0xA0 + col * 8;
+                    s->y0 = ypos - D_8011ECA0 * 0xF0;
+                    /* FAKE: T-25006, one line so as1 keeps the u0/v0 order */
+                    s->u0 = (uv & 0xF) * 8; s->v0 = ((uv & 0xF0) >> 4) * 8;
+                    s->b0 = bright;
+                    s->g0 = bright;
+                    s->r0 = bright;
+                    tpage = search_tpage_multi(p->unk_00[page], mode);
+                    if (last != tpage) {
+                        if (last != 0xFFFF) {
+                            goto_tpage((last & 0xF) << 6, (last & 0x10) << 4, pri + 1, 0, 0);
+                        }
+                        last = tpage;
+                    }
+                    s->clut = func_8009ED74(cx + clut * 16, cy);
+                    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + pri * 4 + 4, s);
+                    data++;
+                    col++;
+                    cols = p->unk_0C;
+                } while (col < cols);
+                rows = p->unk_0D;
+            }
+            row++;
+        } while (row < rows);
+    }
+    goto_tpage((last & 0xF) << 6, (last & 0x10) << 4, pri + 1, 0, 0);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set_gpu);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set);
 
