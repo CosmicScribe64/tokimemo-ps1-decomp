@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-25015-lever-expansion-tooling|T-25015 Lever-expansion tooling programme]]
 
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
@@ -70,6 +69,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-25015-lever-expansion-tooling|T-25015 Lever-expansion tooling programme]]
 - [ ] [[tickets/T-25014-allocator-source-shape-automation|T-25014 Automation for allocator-artifact and source-shape residuals]]
 - [ ] [[tickets/T-25013-compiler-level-levers|T-25013 NEXT STEP: compiler-level levers (uopt/ugen/as1 rules) to unblock the last ~119 functions]]
 - [ ] [[tickets/T-25012-class-c-d-reconstruction|T-25012 Class C/D reconstruction: missing drafts, class C, class D smallest first]]
