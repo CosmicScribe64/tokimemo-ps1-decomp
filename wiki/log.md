@@ -1712,3 +1712,7 @@ Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `fun
 ## [2026-10-20] ticket | T-25008, T-25009, T-25010 Done; session wrap-up
 
 Match: main `func_8006BA40` (T-25008). Guard progress: `mod_set_gpu` 17 rows. Today: 8 matches merged by this orchestrator (ETC `func_8013CCE4`, main `sndisp`, `func_80043510`, `func_8004443C`, `col2sepia`, `srn_set`, `func_8006BA40`, plus the T-24900 pair earlier). [[status]].
+
+## [2026-10-21] ticket | Start T-25011 after merging the other agent's work
+
+Fast-forwarded local main to 50e032fcc (other agent: 129 functions left, plan in [[plan-remaining]]). Started [[tickets/T-25011-class-a-closers-as1-levers]]: one Sonnet 5.5 subagent on the eight class A near misses.

@@ -74,3 +74,4 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[log]] - append-only log of the last week; older weeks in `log/` (`tools/wiki.py rotate-log`)
 - [[SCHEMA]] - wiki layout and rules
 - `tools/wiki.py` - `rotate-log`, `rotate-notes`, `catalog` (ticket catalog, notes sections, function index), `lint` (broken links, kanban mismatches, large pages)
+- [[tickets/T-25011-class-a-closers-as1-levers|T-25011]] Class A closers: eight guarded near misses (10 rows or fewer) with the as1 scheduler levers, one Sonnet 5.5 subagent (In Progress).
