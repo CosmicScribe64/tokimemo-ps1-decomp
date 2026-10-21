@@ -53,6 +53,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25009-closers-etc-geko-mod-set-gpu|T-25009 Closers: ETC func_80146D4C, GEKO func_80133C50, main mod_set_gpu]]
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]

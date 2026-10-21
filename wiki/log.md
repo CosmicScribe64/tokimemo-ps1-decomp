@@ -1708,3 +1708,6 @@ Four matches: ETC `func_8013CCE4` through the uniform switch_compares pass (T-24
 ## [2026-10-20] ticket | T-25004, T-25006, T-25007 Done
 
 Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `func_8005B43C` 3 rows, `parameter_up_down` 11, ETC `func_80146D4C` 12, main `mod_set_gpu` 28. [[status]].
+
+## [2026-10-20] ticket | T-25009 created, In Progress
+[[tickets/T-25009-closers-etc-geko-mod-set-gpu]] created, In Progress (branch n2): closers for ETC `func_80146D4C`, GEKO `func_80133C50`, main `mod_set_gpu`.
