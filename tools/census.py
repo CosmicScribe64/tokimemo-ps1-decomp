@@ -62,6 +62,12 @@ def classify_hunk(ref_rows, cand_rows):
 def census_function(ref_obj, cand_obj, fn):
     a = norm_rows(ref_obj, fn)
     b = norm_rows(cand_obj, fn)
+    canon_sm = difflib.SequenceMatcher(None, [canon(r) for r in a],
+                                       [canon(r) for r in b], autojunk=False)
+    canon_rows = 0
+    for tag, i1, i2, j1, j2 in canon_sm.get_opcodes():
+        if tag != "equal":
+            canon_rows += max(i2 - i1, j2 - j1)
     sm = difflib.SequenceMatcher(None, a, b, autojunk=False)
     buckets = {}
     total = 0
@@ -79,8 +85,8 @@ def census_function(ref_obj, cand_obj, fn):
                                   "ref_fill": a[i1:i2],
                                   "cand_context": b[max(0, k - 1):k + 2]})
     primary = max(buckets, key=buckets.get) if buckets else "match"
-    return {"fn": fn, "rows": total, "buckets": buckets,
-            "primary": primary, "fills": fills}
+    return {"fn": fn, "rows": total, "rows_canon": canon_rows,
+            "buckets": buckets, "primary": primary, "fills": fills}
 
 
 def main():
