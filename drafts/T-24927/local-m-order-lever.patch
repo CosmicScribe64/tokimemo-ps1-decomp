@@ -1,0 +1,59 @@
+diff --git a/src/ovl/BUNKA_SD/801388D0.c b/src/ovl/BUNKA_SD/801388D0.c
+index aea23117c..6b36dd59b 100644
+--- a/src/ovl/BUNKA_SD/801388D0.c
++++ b/src/ovl/BUNKA_SD/801388D0.c
+@@ -249,6 +249,8 @@ s32 func_80139100(void) {
+  * order, one-line arms and a shared selector local do not move it. */
+ void func_80139290(void) {
+     GameState *g = &D_800E6280;
++    /* FAKE: T-24927 (lever patch, see drafts/T-24927/). */
++    u8 m;
+     switch (g->unk_1104.u) {
+     case 0x1D:
+         D_801206AC = 1;
+@@ -294,19 +296,26 @@ void func_80139290(void) {
+     }
+     switch (g->unk_1104.u - 0x70000000) {
+     case 0x3B:
++        m = g->unk_03E;
+         D_801206AC = 2;
+         break;
+     case 0x49:
++        m = g->unk_03E;
+         D_801206AC = 0;
+         break;
+     case 0x66:
++        m = g->unk_03E;
+         D_801206AC = 1;
+         break;
+     case 0xA1:
+-        if (g->unk_03E == 0x60) {
++        m = g->unk_03E;
++        if (m == 0x60) {
+             D_801206AC = 0;
+         }
+         break;
++    default:
++        m = g->unk_03E;
++        break;
+     }
+     if (g->unk_1104.u == 0x95) {
+         D_801206F0 = 0x10;
+@@ -372,7 +381,7 @@ void func_80139290(void) {
+             D_801207BC = 0x28;
+         }
+     }
+-    if (g->unk_1104.u - 0x70000000 == 0x3B && g->unk_03E != 0x60) {
++    if (g->unk_1104.u - 0x70000000 == 0x3B && m != 0x60) {
+         D_801206F0 = 0xF;
+         D_80120734 = 0x13;
+         D_80120778 = 0x17;
+@@ -387,7 +396,7 @@ void func_80139290(void) {
+             D_801207BC = 0x27;
+         }
+     }
+-    if (g->unk_1104.u - 0x70000000 == 0x68 && g->unk_03E == 0x60) {
++    if (g->unk_1104.u - 0x70000000 == 0x68 && m == 0x60) {
+         D_801206F0 = 0x12;
+         D_80120734 = 0x16;
+         D_80120778 = 0x1A;
