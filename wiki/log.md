@@ -1711,3 +1711,6 @@ Four matches: ETC `func_8013CCE4` through the uniform switch_compares pass (T-24
 
 ## [2026-10-20] ticket | T-25004 created, In Progress
 [[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]] created, In Progress (branch c-m4): main `func_8005B43C`, `parameter_up_down`, `col2sepia`.
+
+## [2026-10-20] ticket | T-25004 to In Review
+[[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]]: main `col2sepia` matched (sum local reused for blue, every clamp as a ternary). Guards: `func_8005B43C` 3 rows (bit-field flag test, FAKE second read of `unk_0F4.h` found by the permuter), `parameter_up_down` 11 rows. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.

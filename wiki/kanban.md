@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia|T-25004 Class C: main func_8005B43C, parameter_up_down, col2sepia]]
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]
@@ -69,6 +68,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia|T-25004 Class C: main func_8005B43C, parameter_up_down, col2sepia]]
 - [ ] [[tickets/T-24926-func-80133024-801323E0|T-24926 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
 - [ ] [[tickets/T-24928-func-8006c988-800674B0|T-24928 main:func_8006C988 (src/main/800674B0.c)]]
 - [ ] [[tickets/T-24927-func-80139290-801388D0|T-24927 BUNKA_SD:func_80139290 (src/ovl/BUNKA_SD/801388D0.c)]]
