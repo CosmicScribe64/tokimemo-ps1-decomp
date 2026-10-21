@@ -1720,3 +1720,7 @@ Fast-forwarded local main to 50e032fcc (other agent: 129 functions left, plan in
 ## [2026-10-21] ticket | T-25011 result: class A closers, zero matches
 
 autotweak (280-1,940 variants each) left every class A guard unchanged; KANGEI func_80134724 default arm rewritten (FAKE, 4 rows, the old 2-row figure was not reproducible). VALEN func_80132D0C and main func_8005B43C still need guarded drafts. Details in [[tickets/T-25011-class-a-closers-as1-levers]]. Ticket In Review; build clean 27/27. Next: drafts for those two, class C, then class D smallest first ([[plan-remaining]]).
+
+## [2026-10-21] ticket | Start T-25012
+
+Class A is exhausted at the autotweak level; [[tickets/T-25012-class-c-d-reconstruction]] starts hand reconstruction of class C/D functions.
