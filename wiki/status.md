@@ -16,6 +16,9 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Active work
 
+- Plan for the last 127 functions, for any agent: [[plan-remaining]] (classes A-D, list in [[data/remaining-2026-10-20]]).
+- as1 scheduling: rule and `volatile` lever in [[as1-scheduler-rule]] (T-24900); per-file options ruled out in [[as1-scheduling]] (T-24800).
+
 - Current handoff: user requested wrapping up and pushing this session. T-24607 OPTION `func_80139A30` adds1,036 literal default-C bytes; all27 hashes and declaration guards pass. Seven functions /6,516 bytes completed in this continuation;129 remain. Matching lanes have stopped, with unfinished evidence preserved in [[matching-notes#T-24600: Wrap-up reconstruction checkpoints]]. The full decompilation remains incomplete; earlier activity entries below are historical.
 
 - T-24606 OPTION `func_8013A7EC` adds1,092 literal default-C bytes with all27 hashes, declaration guards and independent reviews passing. This continuation has completed six functions /5,480 bytes;130 remain. Root continues MAIN matrix reconstruction while agents continue OPTION numeric editing, TACO font rendering and NAME_ENT introduction. Completion goal remains active.

@@ -1,7 +1,7 @@
 ---
 id: T-24800
 title: "Test per-file compiler options against the as1 order near misses"
-status: In Review
+status: Done
 assignee: as1-flags agent
 created: 2026-10-20
 updated: 2026-10-20
@@ -43,3 +43,4 @@ Worktree `tokimemo-wt/as1-flags`, branch `as1-flags` (from `w2-good`).
   object's toolchain; tests in `tools/test_cc.py` and `tools/test_configure_toolchains.py`.
 
 - 2026-10-20 orchestrator: the VALEN/80133C70 `-Wb,-noxbb` line and the func_80134030 hunk were dropped before merge: an option change with no positive evidence is a fakematch (CODING_STANDARDS 7a), and T-24900 matches the function in C with a volatile declaration. The per-object option support and the harness stay.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): harness and per-object IDO option support with tests (test_cc, test_configure_toolchains, test_order_search, test_frame_pass OK; test_funcdiff_verify and test_permute fail the same way on main before this change); the VALEN -noxbb option change was dropped as a fakematch. Merged with a clean 27/27 build and header/global/prototype checks. Done.

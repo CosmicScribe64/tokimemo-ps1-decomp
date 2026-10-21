@@ -68,7 +68,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24800-as1-per-file-flags|T-24800 Test per-file compiler options against the as1 order near misses]]
 - [ ] [[tickets/T-24571-ending-first-portrait-view|T-24571 Test the first ENDING portrait16 alias view]]
 - [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]
 - [ ] [[tickets/T-24519-master-sibling|T-24519 Transfer recovered MASTER animation sibling lifetimes]]
@@ -79,10 +78,11 @@ kanban-plugin: board
 - [ ] [[tickets/T-24512-ending|T-24512 Match remaining ENDING functions]]
 - [ ] [[tickets/T-24513-etc-matching|T-24513 Match remaining ETC functions]]
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
-- [ ] [[tickets/T-24900-as1-global-scheduler|T-24900 as1 global delay-slot filler: rule and source lever]]
 
 ## Done
 
+- [ ] [[tickets/T-24800-as1-per-file-flags|T-24800 Test per-file compiler options against the as1 order near misses]]
+- [ ] [[tickets/T-24900-as1-global-scheduler|T-24900 as1 global delay-slot filler: rule and source lever]]
 - [ ] [[tickets/T-24607-option-editor|T-24607 Match OPTION numeric editor]]
 - [ ] [[tickets/T-24606-option-calendar|T-24606 Match OPTION calendar controls]]
 - [ ] [[tickets/T-24605-geko-ranking|T-24605 Match GEKO top-six ranking initialization]]

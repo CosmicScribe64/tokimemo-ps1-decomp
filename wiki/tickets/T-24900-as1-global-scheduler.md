@@ -1,7 +1,7 @@
 ---
 id: T-24900
 title: as1 global delay-slot filler: rule and source lever
-status: In Review
+status: Done
 assignee: claude-orchestrator
 created: 2026-10-20
 updated: 2026-10-20
@@ -20,3 +20,4 @@ User 2026-10-20: agents report being blocked by "as1 hoist/scheduler". Eight gua
 - Companion study T-24800 ([[as1-scheduling]]): per-file compile options do not explain the family; the original ran as1's cross-block scheduler.
 
 ## Comments
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): as1 rule traced and confirmed on matched functions; `volatile` lever; VALEN func_80134030 and GYOZI func_80139E4C matched with linked funcdiff MATCH; FAKE comments name the ticket and reason. Merged with a clean 27/27 build and header/global/prototype checks. Done.
