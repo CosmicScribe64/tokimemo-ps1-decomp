@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## NEXT STEP (read this first)
 
-Source-level matching is exhausted (2026-10-21): the remaining ~119 functions need compiler-level levers in the build pipeline (uopt/ugen/as1 emulation rules, one uniform rule at a time). The next agent should take [[tickets/T-25013-compiler-level-levers]] (Ready) with the strongest model available. Do not restart autotweak/permuter/order_search sweeps on the guarded near misses; they were run to exhaustion in T-24142, T-25011 and T-25012. Rules for a build change are in [[plan-remaining]] and CODING_STANDARDS 7a.
+Source-level matching is exhausted (2026-10-21): the remaining ~119 functions need compiler-level levers in the build pipeline (uopt/ugen/as1 emulation rules, one uniform rule at a time). The next agent should take [[tickets/T-25013-compiler-level-levers]] (Ready) with the strongest model available. Do not restart autotweak/permuter/order_search sweeps on the guarded near misses; they were run to exhaustion in T-24142, T-25011 and T-25012. Rules for a build change are in [[plan-remaining]] and CODING_STANDARDS 7a. Measure every candidate rule with `tools/lever_lab.py` (one command: no matched object may change, guarded rows before/after), see the ticket.
 
 ## Progress (2026-10-20)
 

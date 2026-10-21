@@ -29,6 +29,18 @@ Source-level work is exhausted. After the 2026-10-19/21 sessions (T-24142, T-250
 4. **as1 block-weight / delay-slot picks.** KANGEI `func_8013852C`, KANGEI `func_80134724` (4 rows), VALEN-style dispatch `sll` slot picks, GEKO `func_80136C20` and `func_801367EC` (selector `lui` should fill the branch slot, block weight 7 but the scan stops at +6), TACO `func_801511C0`/`func_8013B460`, GYOZI `func_80140E0C`/`func_8013907C`. See [[as1-scheduler-rule]]: the visit-order / weight pass is the lever to trace.
 5. **Register colouring order.** Unconstrained uopt ranges are coloured in first-mention order, not priority (regdiff finding, T-25012). GYOZI `func_801412A4` (ugen temporaries t7 vs t5), BUNKA_SD `func_80134D94`/`func_80139290`, GEKO `func_80144198`-style param-in-register (`sel` kept in `$a2` instead of spilled), `D_800E7384`-style direct-symbol reads (`keepproof.py` says NOT PROVEN for BUNKA_SD `func_80134D94` and MASTER `func_80132444`).
 
+## Tooling that saves tokens (use it, do not re-do it by hand)
+
+`tools/lever_lab.py` (T-25013, tested in `tools/test_lever_lab.py`) measures a lever in one command and prints a short report:
+
+```
+tools/docker.sh python3 tools/lever_lab.py run base -j 4                       # once per tree state
+tools/docker.sh python3 tools/lever_lab.py run myrule --env CVT_MYRULE=1 -j 4  # a variant, compared to base
+tools/docker.sh python3 tools/lever_lab.py show myrule                         # reprint the report
+```
+
+It rebuilds every object, checks `0 FAILED` and 27 `.ok`, compares every matched function with the base snapshot (any change prints `RULE IS NOT UNIFORM, reject`), and re-scores all guarded functions (`ZERO`/`better`/`WORSE` against base). A no-op variant reports `0 of 7506` changed and `guarded changes vs base: 0`. Gate the rule behind an env knob while experimenting (read the knob in the pass), make it unconditional only once the report is clean, and re-run `base` then. Read only the report; do not read build logs or object dumps unless a function you target did not move.
+
 ## Method
 
 1. Pick one lever. Take its smallest target, trace uopt/ugen/as1 on the original-shaped source and find the first divergence from the target asm.

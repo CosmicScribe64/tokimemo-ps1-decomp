@@ -1740,3 +1740,7 @@ T-25012 matched nothing. Added main `func_80062948` (736 B): clean rewrite from 
 ## [2026-10-21] decision | Next step is compiler-level levers (T-25013)
 
 At the user's direction, recorded the next step for future agents: source-level matching is exhausted, so [[tickets/T-25013-compiler-level-levers]] (Ready) is the clear next piece of work. Added a NEXT STEP block to [[status]] and a section to [[plan-remaining]], created the ticket with five candidate levers, the rules (uniform rule, no matched object changes, 27/27) and the method. Subagent and timer stopped; no agents running.
+
+## [2026-10-21] build | tools/lever_lab.py for compiler-level experiments (T-25013)
+
+Added `tools/lever_lab.py` and `tools/test_lever_lab.py`: one command rebuilds every object under an env-gated variant, checks 0 FAILED and 27 `.ok`, compares each matched function with a base snapshot (any change = non-uniform rule, reject) and re-scores all guarded functions against base. Validated with a no-op variant (`0 of 7506` changed, 0 guarded changes). Note: `tools/queue.py` shadows the stdlib `queue`, so `concurrent.futures`/`ThreadPool` break inside `tools/`; the tool uses plain subprocess polling. Documented in [[tickets/T-25013-compiler-level-levers]].
