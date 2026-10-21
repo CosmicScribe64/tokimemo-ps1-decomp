@@ -61,3 +61,38 @@ Cheap models stalled on this class (three Sonnet 5.5 runs, zero matches); use th
 - Tried: uopt `OPTN zcopy 0` (copy propagation off) for ALL procedures via an env knob in `cvt_pass.copy_propagation_options`. `lever_lab run zall`: not uniform (22 guarded changes, 3 better, 19 WORSE, e.g. main func_8006D7EC 2 -> 1630, BUNKA_SD func_80139290 14 -> 595); on the mini case it did not produce the `or t5,v0,zero` copy either. Verdict: zcopy is not the lever for this pattern; dead end. Knob reverted.
 - Next idea (not done): the copy is a ucode `LOD R; STR R` pair that uopt normally collapses; trace which uopt phase removes it (instrumented uopt, [[ending-allocator-trace]]).
 - Levers 2-5 not started in this session (usage budget); no rule adopted, tree unchanged apart from this note.
+
+## Lever 1 session notes (Octa, remote, 2026-10-21)
+
+Setup: native install of the pinned toolchain on the cloud VM (Docker cannot
+create containers there: network namespace creation is blocked), packets in
+scratch outside the repo, fidelity proven by reproducing the T-25012 draft
+measurement for main `func_8006A044` (97 diff rows on the score.py metric,
+same first divergence: month colour swap). Full gate is CI on the PR.
+
+Findings on lever 1 (main `func_8006A044`, draft `body-global.c`):
+
+1. The addressing form is not the lever. cfe reaches `unk_F64[1]` (and
+   `unk_F64[0]`) indirectly (`LDA; LDC 0xf64; ADD; LDC idx; IXA; ILOD/ISTR`).
+   A `cvt_pass` pre-rewrite (env-gated `TOKIMEMO_LEVER1`) that normalizes
+   constant-address indirect accesses to narrow S locations into direct
+   `LOD`/`STR` fires on all 19 sites and changes uopt's output, but the
+   final object scores identically (97). uopt already recognizes the
+   constant address (baseline output promotes via `RLOD`/`RSTR` of the S
+   location), so the two forms converge. Do not pursue addressing again.
+2. uopt's expression graph already models the byte as one evolving version
+   chain (traced listing: expression 853, `uior` versions feeding `ustr`);
+   there is no per-arm temporary in uopt for a rewrite to preserve. The
+   delta is below uopt: ugen/allocator coalescing.
+3. Our compiled arm is `ori t,v1,k; andi v1,t,0xff; sb v1` against the
+   original's `or t5,v0,zero; ori t6,t5,k; andi v0,t6,0xff; sb v0`: the
+   only per-arm difference is the original's extra copy of the home
+   register before the `ori` (plus the head colour swap, lever 5). The
+   copy is an allocator coalescing artifact of the original build, not a
+   uopt phase collapsing a `LOD`/`STR` pair, so the trace question the
+   ticket queued is answered in the negative: no uopt phase removes the
+   pair; it is never created. Lever 1 as stated does not exist as a uopt
+   rule; the function needs lever 5 (colouring/coalescing) instead.
+
+Next: lever 3 (ENDING `func_801387B0`, no CSE of relational booleans) has
+the cleanest remaining single-mechanism hypothesis.
