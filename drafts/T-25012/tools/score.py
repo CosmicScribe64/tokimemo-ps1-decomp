@@ -26,7 +26,14 @@ for body in sys.argv[3:]:
         print(body, "ERR", str(ex)[-200:]); continue
     got = funcdiff.functions(obj, [name])[name]
     g = [norm(x) for x in got if not x.startswith("R_MIPS")]
-    sm = difflib.SequenceMatcher(None, w, g, autojunk=False)
+    import os
+    P=int(os.environ.get("PREFIX","0")) or None
+    sm = difflib.SequenceMatcher(None, w[:P], g[:P], autojunk=False)
     n = sum(max(i2 - i1, j2 - j1) for tag, i1, i2, j1, j2 in sm.get_opcodes() if tag != "equal")
-    print(body, "want", len(w), "got", len(g), "diff", n, flush=True)
+    regs=r"\b(zero|at|v[01]|a[0-3]|t[0-9]|s[0-7]|k[01]|gp|sp|fp|ra)\b"
+    def st(l): return re.sub(r"-?\d+\(","#(",re.sub(regs,"r",re.sub(r"^[0-9a-f]{8} ","",l)))
+    sm2 = difflib.SequenceMatcher(None, [st(x) for x in w[:P]], [st(x) for x in g[:P]], autojunk=False)
+    n2 = sum(max(i2 - i1, j2 - j1) for tag, i1, i2, j1, j2 in sm2.get_opcodes() if tag != "equal")
+    print(body, "struct", n2, end=" ")
+    print("want", len(w), "got", len(g), "diff", n, flush=True)
     shutil.rmtree(d, ignore_errors=True)

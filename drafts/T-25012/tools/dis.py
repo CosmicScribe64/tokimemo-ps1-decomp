@@ -11,7 +11,12 @@ e, problem = funcdiff.expected_object(c, False, stale=[])
 want = funcdiff.functions(e, [name])[name]
 got = funcdiff.functions(obj, [name])[name]
 import re
-def norm(l): return re.sub(r"<[^>]*>","<>",l)
+import os
+regs=r"\b(zero|at|v[01]|a[0-3]|t[0-9]|s[0-7]|k[01]|gp|sp|fp|ra)\b"
+def norm(l):
+    l=re.sub(r"<[^>]*>","<>",l)
+    if os.environ.get("STRUCT"): l=re.sub(r"-?\d+\(","#(",re.sub(regs,"r",re.sub(r"^[0-9a-f]{8} ","",l)))
+    return l
 w=[norm(x) for x in want]; g=[norm(x) for x in got]
 print("want %d got %d"%(len(w),len(g)))
 for tag,i1,i2,j1,j2 in difflib.SequenceMatcher(None,w,g,autojunk=False).get_opcodes():
