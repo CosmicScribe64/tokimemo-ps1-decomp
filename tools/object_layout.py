@@ -8,6 +8,9 @@ zero bytes, provided no non-section symbol or relocation occupies them. All
 instructions, symbol values and relocations remain unchanged. Other size
 differences are left for funcdiff and the unit checksum, never padded or fitted.
 This is section placement, not an instruction or compiler code-generation pass.
+
+An object with several `.data` islands (T-25005) then has its `.data` cut into their sections
+(tools/data_split.py); an object with one or none is left as it is.
 """
 from pathlib import Path
 import struct
@@ -15,6 +18,8 @@ import sys
 
 import yaml
 
+import data_pieces as dp
+import data_split as ds
 import object_boundaries as ob
 import srcscan
 from trailing_pad import Elf, read_symbols
@@ -45,8 +50,8 @@ def trim(data, extent):
     return elf.to_bytes()
 
 
-def source_extent(source, root="."):
-    """Configured text span for a C subsegment, including original trailing nops."""
+def source_config(source, root="."):
+    """(unit, config path, parsed config, subsegment name) of a C source."""
     source = Path(source)
     if source.is_absolute():
         source = source.relative_to(Path(root).resolve())
@@ -55,8 +60,38 @@ def source_extent(source, root="."):
     config = Path(root) / ("config/SLPM_86.053.yaml" if wanted == "main"
                            else "config/overlays/%s.yaml" % wanted)
     with config.open() as f:
-        subs = srcscan.subsegments(yaml.safe_load(f))
+        cfg = yaml.safe_load(f)
     name = str(source.with_suffix("").relative_to("src" if wanted == "main" else "src/ovl"))
+    return wanted, config, cfg, name
+
+
+def data_regions(source, root="."):
+    """[(section, start symbol, size)] of the `.data` islands of a C source when it has more than
+    one (T-25005), else []. The start symbol is the first label of splat's island file."""
+    _unit, config, cfg, name = source_config(source, root)
+    own = [i for i in dp.islands(cfg) if i.name == name]
+    if len(own) < 2:
+        return []
+    opts = cfg["options"]
+    base = Path(config).parent / opts.get("base_path", ".")
+    out = []
+    for isl in own:
+        path = dp.island_source(str(base / opts["asm_path"]), isl)
+        with open(path, encoding="utf-8") as f:
+            labels, _lines = dp.parse_island(f.read())
+        if not labels:
+            raise ValueError("%s has no label" % path)
+        out.append((isl.section, labels[0][1], isl.end - isl.start))
+    return out
+
+
+def source_extent(source, root="."):
+    """Configured text span for a C subsegment, including original trailing nops."""
+    source = Path(source)
+    if source.is_absolute():
+        source = source.relative_to(Path(root).resolve())
+    wanted, _config, cfg, name = source_config(source, root)
+    subs = srcscan.subsegments(cfg)
     for k, (off, kind, stem, _delta) in enumerate(subs):
         if kind == "c" and stem == name and k + 1 < len(subs):
             return subs[k + 1][0] - off
@@ -77,9 +112,12 @@ def main(argv):
     try:
         before = path.read_bytes()
         after = trim(before, source_extent(argv[1]))
+        regions = data_regions(argv[1])
+        if regions:
+            after = ds.split(after, regions)
         if after != before:
             path.write_bytes(after)
-    except ValueError as exc:
+    except (ValueError, dp.PieceError, ds.SplitError) as exc:
         sys.exit("object_layout.py: %s: %s" % (argv[1], exc))
 
 

@@ -21,10 +21,19 @@ binary named by `target_path`) and `.word EXPR` for each word splat wrote as a s
 reference, which keeps its relocation; `dlabel` lines keep every symbol defined. Running the
 script twice gives the same files.
 
+One C object can own several ranges (T-25005). Its island in list form links the object's
+`.data`; each further one is written in dict form with its own section and directory,
+`{ start: 0x738F0, type: .data, name: main/8004F870, dir: island_800B40F0, linker_section:
+.data_800B40F0 }` (`secondary()` gives both). splat then links `<obj>(.data_800B40F0)` there and
+writes the range to `<asm_path>/data/island_800B40F0/<name>.data.s`. The pieces of all ranges of
+an object go to the one directory `<asm_path>/data/<name>.data/`, so the C file includes them by
+one path. tools/object_layout.py cuts the compiled `.data` into those sections (tools/data_split.py).
+
 Fails loudly (exit 1) when an island file is missing, the island does not start on a multiple
 of 16 or is not a multiple of 16 long (IDO aligns and pads an object's `.data` to 16), or a
 symbol reference is not 4-aligned. Tests: tools/test_data_pieces.py.
 """
+import collections
 import os
 import re
 import sys
@@ -42,8 +51,18 @@ class PieceError(Exception):
     """The island cannot be cut into pieces exactly."""
 
 
+Island = collections.namedtuple("Island", "name start end dir section")
+
+
+def secondary(vram):
+    """(dir, linker section) of a further `.data` island of an object that starts at vram."""
+    return "island_%08X" % vram, ".data_%08X" % vram
+
+
 def islands(cfg):
-    """[(name, rom start, rom end)] of the `.data` subsegments of a splat config."""
+    """[Island(name, rom start, rom end, dir, linker section)] of the `.data` subsegments of a
+    splat config, in config order. dir is "" and the section `.data` unless the dict form sets
+    `dir`/`linker_section` (a further island of the same object, T-25005)."""
     out = []
     for seg in cfg["segments"]:
         if not isinstance(seg, dict):
@@ -52,9 +71,11 @@ def islands(cfg):
         rows = []
         for sub in subs:
             if isinstance(sub, dict):
-                rows.append((sub["start"], sub["type"], sub.get("name")))
+                rows.append((sub["start"], sub["type"], sub.get("name"), sub.get("dir", ""),
+                             sub.get("linker_section", ".data")))
             else:
-                rows.append((sub[0], sub[1] if len(sub) > 1 else None, sub[2] if len(sub) > 2 else None))
+                rows.append((sub[0], sub[1] if len(sub) > 1 else None, sub[2] if len(sub) > 2 else None,
+                             "", ".data"))
         nxt = [r[0] for r in rows[1:]]
         end = None
         idx = cfg["segments"].index(seg)
@@ -62,12 +83,23 @@ def islands(cfg):
             end = later["start"] if isinstance(later, dict) else later[0]
             break
         nxt.append(end)
-        for (start, typ, name), stop in zip(rows, nxt):
+        for (start, typ, name, sdir, section), stop in zip(rows, nxt):
             if typ == ".data":
                 if stop is None:
                     raise PieceError("%s: island has no end" % name)
-                out.append((name, start, stop))
+                out.append(Island(name, start, stop, sdir, section))
+    seen = collections.defaultdict(set)
+    for isl in out:
+        if (isl.dir, isl.section) in seen[isl.name]:
+            raise PieceError("%s: two .data islands with section %s and dir '%s'"
+                             % (isl.name, isl.section, isl.dir))
+        seen[isl.name].add((isl.dir, isl.section))
     return out
+
+
+def island_source(asm_path, isl):
+    """The splat data file of an island."""
+    return os.path.join(asm_path, "data", isl.dir, isl.name + ".data.s")
 
 
 def parse_island(text):
@@ -144,8 +176,9 @@ def pieces(labels, relocs, blob, rom0, vram0, size):
     return out
 
 
-def process(island_path, blob, rom0, rom1, piece_dir):
-    """Write the pieces of one island; returns ([piece symbols], [(vram, label)])."""
+def process(island_path, blob, rom0, rom1, piece_dir, clear=True):
+    """Write the pieces of one island; returns ([piece symbols], [(vram, label)]). clear empties
+    piece_dir first (once per object: its further islands share the directory)."""
     with open(island_path, encoding="utf-8") as f:
         labels, lines = parse_island(f.read())
     if not lines:
@@ -153,10 +186,14 @@ def process(island_path, blob, rom0, rom1, piece_dir):
     vram0 = lines[0][1] - (lines[0][0] - rom0)
     out = pieces(labels, relocations(lines), blob, rom0, vram0, rom1 - rom0)
     os.makedirs(piece_dir, exist_ok=True)
-    for fn in os.listdir(piece_dir):
-        os.remove(os.path.join(piece_dir, fn))
+    if clear:
+        for fn in os.listdir(piece_dir):
+            os.remove(os.path.join(piece_dir, fn))
     for sym, text in out:
-        with open(os.path.join(piece_dir, sym + ".s"), "w", encoding="utf-8") as f:
+        path = os.path.join(piece_dir, sym + ".s")
+        if not clear and os.path.exists(path):
+            raise PieceError("%s: piece written twice" % path)
+        with open(path, "w", encoding="utf-8") as f:
             f.write(text)
     return [s for s, _ in out], labels
 
@@ -186,14 +223,17 @@ def main(argv):
     try:
         found = islands(cfg)
         blob = None
-        for name, r0, r1 in found:
+        done = set()
+        for isl in found:
             if blob is None:
                 with open(os.path.join(base, opts["target_path"]), "rb") as f:
                     blob = f.read()
-            src = os.path.join(asm_path, "data", name + ".data.s")
+            src = island_source(asm_path, isl)
             if not os.path.exists(src):
                 raise PieceError("%s not written by splat" % src)
-            syms, lab = process(src, blob, r0, r1, os.path.join(asm_path, "data", name + ".data"))
+            syms, lab = process(src, blob, isl.start, isl.end,
+                                os.path.join(asm_path, "data", isl.name + ".data"), isl.name not in done)
+            done.add(isl.name)
             labels += lab
             print("%s: %d data pieces" % (src, len(syms)))
     except PieceError as e:

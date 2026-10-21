@@ -1669,3 +1669,7 @@ Catalog refreshed:729 tickets,428 sections,3,077 functions. Docker wiki lint rep
 ## [2026-10-20] decision | Plan for the remaining functions
 
 [[plan-remaining]] gives any agent (including cheap ones) the rules and per-class recipes for the last 127 functions; the classified list is [[data/remaining-2026-10-20]] (A 8 near misses, B 18 guarded, C 11 good drafts, D 90 reconstructions). T-24800 and T-24900 Done ([[as1-scheduling]], [[as1-scheduler-rule]]).
+
+## [2026-10-20] build | T-25005 several .data ranges per C object
+
+[[tickets/T-25005-data-regions-per-object]] created, worked, moved to In Review. A further `.data` island of an object is a yaml dict line with `dir: island_<VRAM>` and `linker_section: .data_<VRAM>` (written by tools/data_island.py). tools/data_pieces.py puts all its pieces in one directory, and the new tools/data_split.py (called by tools/object_layout.py) cuts the compiled `.data` into the sections. main `sndisp` (T-25001 guard, cherry-picked) now matches in plain C, src/main/8004F870.c owns `800B40F0-800B4390` as well. Clean build 27/27; [[build-system]] "Several ranges per object"; notes in [[matching-notes]] `## T-25005`.

@@ -84,6 +84,29 @@ class LayoutTests(unittest.TestCase):
                 "      - [0x18, c, TEST/80132018]\n      - [0x30, .rodata, TEST/80132000]\n")
             self.assertEqual(layout.source_extent(root / "src/ovl/TEST/80132018.c", root), 24)
 
+    def test_data_regions_only_for_several_islands(self):
+        """T-25005: (section, first label, size) per island of the object, else nothing."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "config").mkdir()
+            yaml_text = ("options:\n  base_path: ..\n  asm_path: asm\n"
+                         "segments:\n  - type: code\n    start: 0x800\n    vram: 0x80041000\n"
+                         "    subsegments:\n      - [0x800, c, main/80041000]\n"
+                         "      - { start: 0x900, type: .data, name: main/80041000, dir: island_80041100,"
+                         " linker_section: .data_80041100 }\n"
+                         "      - [0x920, .data, main/80041000]\n  - [0x940]\n")
+            (root / "config/SLPM_86.053.yaml").write_text(yaml_text)
+            for sub, label in (("island_80041100/main", "D_80041100"), ("main", "D_80041120")):
+                (root / "asm/data" / sub).mkdir(parents=True)
+                (root / "asm/data" / sub / "80041000.data.s").write_text(
+                    "dlabel %s\n    /* 900 80041100 */ .word 0x0\n" % label)
+            self.assertEqual(layout.data_regions("src/main/80041000.c", root),
+                             [(".data_80041100", "D_80041100", 0x20), (".data", "D_80041120", 0x20)])
+            (root / "config/SLPM_86.053.yaml").write_text(
+                yaml_text.replace("{ start: 0x900, type: .data, name: main/80041000, dir: island_80041100,"
+                                  " linker_section: .data_80041100 }", "[0x900, data, d]"))
+            self.assertEqual(layout.data_regions("src/main/80041000.c", root), [])
+
 
 if __name__ == "__main__":
     unittest.main()

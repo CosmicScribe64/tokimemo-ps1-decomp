@@ -4,6 +4,10 @@
 /* Menu palette colors, data island 0x800E3680..0x800E36BF. */
 u32 D_800E3680[16] = {0};
 
+/* .data range 0x800B40F0..0x800B438F of this object (T-25005: its own section, tools/data_split.py).
+ * The template of sndisp's pos[] is D_800B40F8, so the rest of the range follows sndisp. */
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B40F0);
+
 /* get_now_k (8004E500.c) returns u8; xa_wait needs that view, the other callers keep the implicit int one. T-17018 */
 u8 get_now_k(void);
 
@@ -252,10 +256,6 @@ void gnsx(u8 *arg0) {
     }
 }
 
-/* NON_MATCHING: T-25001, 2 rows; code and frame match. Left: the template of pos[] lands at
- * .data+0x40 of this object (after the D_800E3680 island) instead of D_800B40F8 = .data+8 of the
- * 800B40F0 range; the build can give the object only one of its two .data regions. */
-#ifdef NON_MATCHING
 void sndisp(u8 *str, s32 y, s32 col) {
     s32 pad[2]; /* FAKE: T-25001, two unused home words at the top of the 0x168 frame */
     s32 i;
@@ -289,9 +289,18 @@ void sndisp(u8 *str, s32 y, s32 col) {
     D_800E6280.unk_F60 = check_set_k();
     D_800E6280.unk_F62 = 0x80;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndisp);
-#endif
+
+/* rest of the 0x800B40F0 range, after the template of sndisp */
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4100);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4110);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4120);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4130);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4198);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B419C);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B41A0);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B41B0);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B436C);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B437C);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndi);
 

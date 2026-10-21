@@ -23,12 +23,19 @@ Afterwards replace a line by the C definition of that variable (same place, same
 its initialiser): `s32 D_8015EE30[4] = { 0, 0, 0, 0 };`. The bytes then come from the C
 compiler, and IDO shares one `lui $at` between the stores to that variable, as the original
 does (wiki/decompile-workflow.md, "Data defined in the C file"). Refuses an object without a
-data range, a range that does not start on a symbol, or a C file that already has the island.
+data range, a range that does not start on a symbol, or a range the yaml already has as an island.
+
+An object that already has an island elsewhere gets this range as a further island (T-25005): a
+dict line with its own `dir` and `linker_section` (data_pieces.secondary()), pieces in the same
+directory as the first island's. tools/data_split.py then cuts the compiled `.data` into the
+ranges; the C file must emit each range's data back to back (wiki/build-system.md).
 """
 import argparse
 import os
 import re
 import sys
+
+import yaml
 
 import data_pieces as dp
 import object_boundaries as ob
@@ -86,15 +93,29 @@ def insert_block(text, lines, interior=()):
     return "".join(rows[:last + 1] + block + rows[last + 1:])
 
 
-def split_yaml(text, unit, start, end, name):
-    """Yaml text with [start, end) cut out of its `data` subsegment as the island `name`."""
-    delta = so.EXE_TEXT_OFF if unit == "main" else None
+def island_line(off, name, vram=None):
+    """The yaml line of an island; with vram, a further island of the object (T-25005)."""
+    if vram is None:
+        return "      - [0x%X, .data, %s]\n" % (off, name)
+    sdir, section = dp.secondary(vram)
+    return ("      - { start: 0x%X, type: .data, name: %s, dir: %s, linker_section: %s }\n"
+            % (off, name, sdir, section))
+
+
+def delta_of(unit, text):
+    """vram minus file offset of a unit's code segment."""
+    if unit == "main":
+        return so.EXE_TEXT_OFF
+    return int(re.search(r"^\s*vram:\s*(0x[0-9A-Fa-f]+)", text, re.M).group(1), 16)
+
+
+def split_yaml(text, unit, start, end, name, further=False):
+    """Yaml text with [start, end) cut out of its `data` subsegment as the island `name`
+    (further: the object already has an island, so this one gets its own section)."""
+    delta = delta_of(unit, text)
     lines = text.splitlines(True)
     parsed = [so.parse_sub_line(l) for l in lines]
     subs = [i for i, q in enumerate(parsed) if q]
-    if delta is None:
-        seg = re.search(r"^\s*vram:\s*(0x[0-9A-Fa-f]+)", text, re.M)
-        delta = int(seg.group(1), 16)
     for n, i in enumerate(subs):
         off, typ, sname = parsed[i]
         if typ != "data":
@@ -110,7 +131,7 @@ def split_yaml(text, unit, start, end, name):
         new = []
         if start > lo:
             new.append(lines[i])
-        new.append("      - [0x%X, .data, %s]\n" % (start - delta, name))
+        new.append(island_line(start - delta, name, start if further else None))
         if end < hi:
             stem = "data" if unit == "main" else "%s_data" % unit
             new.append("      - [0x%X, data, %s_%08X]\n" % (end - delta, stem, end))
@@ -138,16 +159,19 @@ def plan(root, arg):
     cpath = c_path(unit, addr)
     ctext = so.read_text(os.path.join(root, cpath))
     pdir = piece_dir(unit, addr)
-    if '"%s"' % pdir in ctext:
+    ypath = so.yaml_path(unit)
+    ytext = so.read_text(os.path.join(root, ypath))
+    own = [i for i in dp.islands(yaml.safe_load(ytext)) if i.name == island_name(unit, addr)]
+    if any(i.start <= r.start - delta_of(unit, ytext) < i.end for i in own) or (
+            not own and '"%s"' % pdir in ctext):
         raise IslandError("%s already has the data island" % cpath)
     funcs, _items = ob.load(units[unit], root)
     code_refs = set().union(*(f.refs for f in funcs)) if funcs else set()
     starts, interior = split_starts(items, r.start, code_refs)
     lines = ['INCLUDE_RODATA("%s", %s);' % (pdir, n) for _a, n in starts]
-    ypath = so.yaml_path(unit)
-    ytext = so.read_text(os.path.join(root, ypath))
     return [(cpath, insert_block(ctext, lines, interior)),
-            (ypath, split_yaml(ytext, unit, r.start, r.end, island_name(unit, addr)))], r, len(lines), interior
+            (ypath, split_yaml(ytext, unit, r.start, r.end, island_name(unit, addr), bool(own)))], \
+        r, len(lines), interior
 
 
 def main(argv=None):

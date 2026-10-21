@@ -202,7 +202,8 @@ segments:
       - [0x73560, .data, main/800451D0]
       - [0x73580, data, data_800B3D80]
       - [0x735C0, .data, main/8004E500]
-      - [0x738F0, data, data_800B40F0]
+      - { start: 0x738F0, type: .data, name: main/8004F870, dir: island_800B40F0, linker_section: .data_800B40F0 }
+      - [0x73B90, data, data_800B4390]
       - [0x75120, .data, main/80057390]
       - [0x75150, data, data_800B5950]
       - [0x76190, .data, main/80075320]
