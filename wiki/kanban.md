@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-25012-class-c-d-reconstruction|T-25012 Class C/D reconstruction: missing drafts, class C, class D smallest first]]
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]
@@ -69,6 +68,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-25012-class-c-d-reconstruction|T-25012 Class C/D reconstruction: missing drafts, class C, class D smallest first]]
 - [ ] [[tickets/T-25011-class-a-closers-as1-levers|T-25011 Class A closers (8 near misses) with the as1 levers]]
 - [ ] [[tickets/T-24926-func-80133024-801323E0|T-24926 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
 - [ ] [[tickets/T-24928-func-8006c988-800674B0|T-24928 main:func_8006C988 (src/main/800674B0.c)]]
