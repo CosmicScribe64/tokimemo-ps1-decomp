@@ -950,7 +950,73 @@ void func_8006B900(void) {
     dtd_on_tpage(0, 0, 9, 1, 0);
 }
 
+/* NON_MATCHING: T-25003, 7 rows; only registers left: the hoisted %hi(D_8011ECFA) of the first clamp
+ * takes $t2 where the original has $t0, and the andi and case-0x1000 temporaries come one lower. */
+#ifdef NON_MATCHING
+void func_8006BA40(void) {
+    GameState *g = &D_800E6280;
+    u8 speed;
+    s32 step;
+    u8 temp; /* FAKE: T-25003, first test through a u8 copy keeps the D_800B6708 value in $v0 */
+
+    if ((u8)D_8011ECA4 == 0) {
+        speed = g->unk_F6F;
+        D_8011ECA4 = (u8)D_8011ECA4 + 1;
+        if (speed == 0) {
+            speed = 1;
+        }
+        g->unk_F6F = speed;
+        step = speed;
+        if (!(g->unk_1092 & 3) && (g->unk_F80 & 0xFF)) {
+            step = speed * 2;
+        }
+        if (g->unk_F80 & 0xF) {
+        } else {
+            switch (g->unk_F80 & 0x5000) {
+            case 0x1000:
+                D_8011ECFA -= (u16)step; /* FAKE: T-25003, the cast spends the ugen temporary the original spends */
+                break;
+            case 0x4000:
+                D_8011ECFA += step;
+                break;
+            }
+            switch (g->unk_F80 & 0xA000) {
+            case 0x2000:
+                D_8011ECF6 += step;
+                break;
+            case 0x8000:
+                D_8011ECF6 -= step;
+                break;
+            }
+        }
+        if (D_8011ECF6 >= 0x8D) {
+            D_8011ECF6 = 0x8C;
+        }
+        if (D_8011ECF6 < -0x96) {
+            D_8011ECF6 = -0x96;
+        }
+        if (D_8011ECFA < -0x64) {
+            D_8011ECFA = -0x64;
+        }
+        if (D_8011ECFA >= 0x65) {
+            D_8011ECFA = 0x64;
+        }
+        if (g->unk_F88 & 0x80) {
+            temp = D_800B6708;
+            if (temp == 0) {
+                D_800B6708 = 0x9B;
+            } else if (D_800B6708 == 0xAC) {
+                D_800B6708 = 0;
+            } else {
+                D_800B6708++;
+            }
+            D_8011ECE8 = D_800B6708;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BA40);
+#endif
 
 /* FAKE: the empty `if ((s32)D_800B6708) {}` gives the byte a use in the dispatch block, so uopt promotes it and loads it
  * once into $v0 before the arg0 tests; without it each arm loads it. The test emits no code. T-17002 */
