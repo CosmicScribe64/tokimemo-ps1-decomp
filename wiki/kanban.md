@@ -6,6 +6,8 @@ kanban-plugin: board
 
 ## Backlog
 
+- [ ] [[tickets/T-24929-uopt-zcopy-scope|T-24929 uopt zcopy scope: propagate global copies but not local induction copies]]
+
 - [ ] [[tickets/T-21000-event-goto-loops-and-seq-views|T-21000 EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4 views]]
 - [ ] [[tickets/T-21001-recover-wave-10-list-6-near-misses|T-21001 Recover the wave-10 list 6 near misses: BUNKAKEN func_80143DD0 and RPG_BAT func_80139510]]
 - [ ] [[tickets/T-21002-game-state-unk120-second-record-set|T-21002 Declare the second set of nine GsRec0FC records in GameState instead of raw unk_120 casts]]
