@@ -967,6 +967,7 @@ void func_8006BA40(void) {
         if (!(g->unk_1092 & 3) && (g->unk_F80 & 0xFF)) {
             step = speed * 2;
         }
+        /* FAKE: T-25008, the u8 cast spends the ugen temporary the original spends before the switch */
         if ((u8)g->unk_F80 & 0xF) {
         } else {
             switch (g->unk_F80 & 0x5000) {
