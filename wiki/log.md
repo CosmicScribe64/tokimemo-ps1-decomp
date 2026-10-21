@@ -1708,3 +1708,6 @@ Four matches: ETC `func_8013CCE4` through the uniform switch_compares pass (T-24
 ## [2026-10-20] ticket | T-25004, T-25006, T-25007 Done
 
 Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `func_8005B43C` 3 rows, `parameter_up_down` 11, ETC `func_80146D4C` 12, main `mod_set_gpu` 28. [[status]].
+
+## [2026-10-20] ticket | T-25010 created, In Progress
+[[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]] (branch c-m7): main `func_8004A1A0`, `func_80065964`, `strCallback`; `func_8006A044` skipped (file owned elsewhere this round).
