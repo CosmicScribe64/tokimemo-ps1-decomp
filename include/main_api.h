@@ -1698,6 +1698,35 @@ extern s32 D_801220F4;
 extern u8 D_80122104;
 extern u8 D_80122105;
 extern u8 D_80122106;
+/* T-25010 (moved from include/ovl/OPTION.h): the cell maps, cells and cell indexes of the two BG slots,
+ * SpriteSlot24 (game.h, GsBG layout) at D_801220D0 + n * 0x24, whose +0x14 points at map n. Main
+ * func_8004A1A0 sets up slot n through these three tables; OPTION func_801328C0 fills slot 0 itself (T-20910). */
+typedef struct SpriteCell8 {
+    /* 0x00 */ u8 u;
+    /* 0x01 */ u8 v;
+    /* 0x02 */ u16 cba;
+    /* 0x04 */ u16 flag;
+    /* 0x06 */ u16 tpage;
+} SpriteCell8; /* size 0x08, PsyQ libgs GsCELL layout */
+
+typedef struct SpriteMap10 {
+    /* 0x00 */ u8 cellw;
+    /* 0x01 */ u8 cellh;
+    /* 0x02 */ u16 ncellw;
+    /* 0x04 */ u16 ncellh;
+    /* 0x06 */ u8 pad_06[2];
+    /* 0x08 */ SpriteCell8 *base;
+    /* 0x0C */ u16 *index;
+} SpriteMap10; /* size 0x10, PsyQ libgs GsMAP layout */
+
+/* The cell index of one slot (map->index), one u16 per map position. */
+typedef struct SpriteIndex80 {
+    /* 0x00 */ u16 v[64];
+} SpriteIndex80; /* size 0x80 */
+
+extern SpriteMap10 D_80122120[2];
+extern SpriteCell8 D_80122140[2][64];
+extern SpriteIndex80 D_80122540[2];
 extern s16 D_80122790;
 extern s32 D_80122794;
 extern s8 D_80122798;

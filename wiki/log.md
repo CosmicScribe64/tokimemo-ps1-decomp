@@ -1711,3 +1711,6 @@ Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `fun
 
 ## [2026-10-20] ticket | T-25010 created, In Progress
 [[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]] (branch c-m7): main `func_8004A1A0`, `func_80065964`, `strCallback`; `func_8006A044` skipped (file owned elsewhere this round).
+
+## [2026-10-20] ticket | T-25010 to In Review
+[[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]] (branch c-m7): no match. BG slot types and tables moved from include/ovl/OPTION.h to include/main_api.h; main `func_8004A1A0` draft now has the original instruction count; `func_80065964` draft rolled with a `goto` loop (frame and range splits left); `strCallback` guard unchanged. Drafts in drafts/T-25010/main/. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
