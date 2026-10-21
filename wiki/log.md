@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24303 In Review: local list l6-p03
-
-[[tickets/T-24303-local-list-l6-p03]]: 3 of 54 matched (main `func_800755B4` with a `.data` island and two key-ring symbols, RPG_BAT `func_80138324` from its siblings plus a `viewsweep` callee view, main `menu_girl_taku_set` by a plain rewrite); main `func_80047560` guarded at 22 rows; misses archived in `drafts/T-24303/`. Notes in [[matching-notes]] (T-24303), [[data-types]] updated. Review due.
-
-## [2026-10-20] ticket | T-24302, T-24303 Done
-
-Local lists merged: T-24302 GEKO `func_801358CC`; T-24303 main `menu_girl_taku_set`, RPG_BAT `func_80138324`, main `func_800755B4` (linked proof here).
-
 ## [2026-10-19] ticket | T-24301 In Progress: local list l6-p01
 
 Created [[tickets/T-24301-local-list-l6-p01]]: 53 functions from .claude/orchestrator/lists/l6-p01-list.txt, worked in the l6-p01 worktree.
@@ -1706,6 +1698,7 @@ removed). Clean build 27/27; progress 6,827 / 6,952 (92.3%). Rejected variants c
 
 ## [2026-10-20] ticket | T-24929 In Review
 [[tickets/T-24929-uopt-zcopy-scope]] moved to In Review; waiting for the code review against CODING_STANDARDS.md.
+
 ## [2026-10-20] ticket | T-25003 class C main trio
 [[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]] created, In Progress (branch c-m3): main `func_8006BA40`, `func_80043510`, `func_8004443C`.
 

@@ -17,16 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24206: main func_800590CC in a cloud session (match packet)
-
-[[tickets/T-24206-cloud-packet-main-800590cc]], packet for `func_800590CC` (268 B, `src/main/80058D20.c`), toolchain per [[cloud-matching]]. From the T-17017 guard (16 lines, three K&R parameters with aliased `w`/`h`) to an instruction-level match, plain C with one FAKE. Scratch single-function setup; the comparison was a `mips-linux-gnu-objdump -drz -M no-aliases` row diff with `%lo` relocations mapped to absolute addresses (`D_800E6280+0x14` = `D_800E6294`) and branch targets dropped. The asm fallback gave 0 lines, the old guard 12 on this count.
-
-- **No `w`/`h` variables.** The function has one parameter (only `a0` is spilled; the 0x30 frame is IDO's 0x20 plus the frame_pass 16, so the original has no locals). What shares `a0`/`a1` between the halfword stores and the call is uopt's promotion of the stored globals: store `D_800E6280.unk_000/002/004` as plain fields, then pass them re-read through a `u16 *` view, `func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0)`. The stored registers are forwarded into the arguments. Plain field re-reads fold the constants (separate `li` per use, 18 lines); reading only [0] and [1] and passing a literal 0 leaves the `or a2`/`sh zero` order wrong (8 lines).
-- **One statement per line.** The same statements written on one source line give 16 lines: ugen sinks the promoted stores to the call and as1 schedules the line as one group (`lui` before `li`). One statement per line gives the original's `li a0; lui; sh a0; li a1; ...` order.
-- **Else arm store order.** The original's `li a0,0x140` (load delay slot of `lw t6`) and `li a1,0xF0` (`beqz` delay slot) are the first instructions of the else block, hoisted by as1. Writing the else arm as `unk_000 = 0x140; unk_002 = 0xF0;` before the two `unk_014` stores puts them at the head of the block; the stores still come out in the original's order (`unk_014` first, then 000, 002, 004). The if arm keeps the plain order (`unk_014` first).
-- **Did not work (this pass):** call-argument assignments to element views (`func(((u16 *)&D)[0] = 0x100, ...)`, `(&D.unk_000)[0] = ...`, `(&D)[0].unk_000 = ...`; 16 lines, registers right, stores sunk after the argument `li`s), `w = elem = k` chains (20), merged arms with one tail (w becomes a phi in `a0`, tails not duplicated, 25), `w = arg0 ? 0x100 : 0x140` (38), `register` K&R parameters (38), swapped arms (24).
-- **Carry-over.** `func_800591D8` (same file, still guarded at 32 lines) has the same store/call tail; the re-read view and else-arm store order are the first thing to try there (no packet for it in this session). Idiom for [[register-cheatsheet]].
-
 ## T-24210: main func_800591D8 in a cloud session (match packet)
 
 [[tickets/T-24210-cloud-packet-main-800591d8]], packet for `func_800591D8` (304 B, `src/main/80058D20.c`), sibling of T-24206. From the T-17017 guard (32 lines, aliased `w`/`h`, frame 0x38) to an instruction-level match, plain C with one FAKE. Scratch single-function setup and the T-24206 objdump row diff; the asm fallback gave 0 lines.
@@ -727,6 +717,7 @@ blank-padded names at 0x10003c10-0x10003d10: zaloc 0x199, zscm 0x198, zstor 0x19
 
 Build note: `build.ninja` does not list `tools/cvt_pass.py` as a dependency of IDO compiles (only `tools/cc.py`).
 After changing the pass, touch `tools/cc.py` or do a clean build.
+
 ## T-25003: class C main func_80043510, func_8004443C matched; func_8006BA40 guarded
 
 [[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]], branch c-m3. Two of three matched in plain C; one guard at 7 rows.
