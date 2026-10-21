@@ -1,7 +1,7 @@
 ---
 id: T-25004
 title: "Class C: main func_8005B43C, parameter_up_down, col2sepia"
-status: In Review
+status: Done
 assignee: agent (c-m4)
 created: 2026-10-20
 updated: 2026-10-20
@@ -25,3 +25,4 @@ Branch c-m4 (from w2-good).
 ## Comments
 
 2026-10-20: `col2sepia` matched (plain C). `func_8005B43C` guarded at 3 rows, `parameter_up_down` guarded at 11 rows. Clean build 27/27; check_headers, migrate_globals --check, sync_protos --check-branch pass. Notes in [[matching-notes]] under T-25004. In Review.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): main col2sepia MATCH (linked); func_8005B43C guard 3 rows, parameter_up_down guard 11 rows. FAKE comments ticketed; no inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.

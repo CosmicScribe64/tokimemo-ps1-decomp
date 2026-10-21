@@ -1,7 +1,7 @@
 ---
 id: T-25006
 title: "Class C: main srn_set, mod_set_gpu, func_8004A1A0"
-status: In Review
+status: Done
 assignee: agent (branch c-m5)
 created: 2026-10-20
 updated: 2026-10-20
@@ -25,3 +25,4 @@ Drafts: drafts/T-14500, drafts/T-17000, drafts/T-17015 (srn_set), drafts/T-24006
 ## Comments
 
 2026-10-20: `srn_set` matched (plain C, one FAKE unused local; `SRN_REC` macro and the record-load rule in [[matching-notes]]). `mod_set_gpu` guarded at 28 rows (`ModRec14` in game.h, u16 view of search_tpage_multi inside the guard). `func_8004A1A0` stays INCLUDE_ASM, draft drafts/T-25006/main/func_8004A1A0.c (76 rows). Clean build 27/27, check_headers, migrate_globals --check and sync_protos --check-branch pass. In Review.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): main srn_set MATCH (linked); mod_set_gpu guard 28 rows; func_8004A1A0 draft. FAKE comments ticketed; no inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.

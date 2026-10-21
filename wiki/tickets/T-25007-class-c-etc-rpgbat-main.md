@@ -1,7 +1,7 @@
 ---
 id: T-25007
 title: "Class C: ETC func_80146D4C, RPG_BAT func_8014BFE4, main func_8005938C"
-status: In Review
+status: Done
 assignee: agent c-m6
 created: 2026-10-20
 updated: 2026-10-20
@@ -30,3 +30,4 @@ Branch c-m6 from w2-good.
 - RPG_BAT `func_8014BFE4`: INCLUDE_ASM, best is still the T-17110 hand draft (128 rows); notes in `drafts/T-25007/RPG_BAT/func_8014BFE4/NOTES.md`.
 - main `func_8005938C`: INCLUDE_ASM, best is still the T-17017 closer draft (124 rows, MATRIX-copy ring slots); notes in `drafts/T-25007/main/func_8005938C/NOTES.md`.
 - Clean build 27/27; check_headers, migrate_globals --check, sync_protos --check-branch pass. Notes: [[matching-notes]] T-25007; playbook recipe "Promoted global left uncoloured".
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): ETC func_80146D4C guard 12 rows; RPG_BAT func_8014BFE4 and main func_8005938C drafts and notes. FAKE comments ticketed; no inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.
