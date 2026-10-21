@@ -17,14 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24064: ETC model initialization cursor and setup schedule
-
-ETC func_8013F980 matches252 actual default linked bytes using matched MAIN func_8006190C/T-17010's integer model cursor. It retains the header pointer/count load across printf, avoiding the old absolute-folded pointer form. Correct TaiikuBig/u32 increments give the real16-record loop. Initializer order reduces10→4 diagnostic rows, then FAKE initializer/do same-line grouping fixes the last two setup instructions (original source-line layout unknown). Plain existing shared prototype matches, so no local override/header change is retained. ETC SHA1, interfaces and other-body byte audit pass, including matched8013FC64. [[tickets/T-24064-etc-count-trio]] In Review; source checkpoint0f3496877 and provenance drafts/T-24064/README.md.
-
-## T-24073 ETC record initialization
-
-func_8014407C matches352 actual default linked C bytes. Correct stale &array+0x48 to Rec24[2], then write real fields through a0x24 cursor. Word x/index-derived values avoid spurious short narrowing; the matched MAIN80084E90 unsigned SDK width view shares128 across unk08/0A (marked FAKE). Required y-store immediately after signed RNG%112 exposes the DIV macro early. A canonical for-loop separates ID=i+3 from induction update; ordered i/x initializer matches its prologue. Existing void(void) declaration was wrong: original spills/reads incominga0, while matched caller passes no expression. Approved void() header plus definitionvoid(s32arg0) preserves both. ETC checksum, default352 literal, guards and42 unchanged neighbor bodies pass; parent publication pending.
-
 ## T-24200: TACO func_8013B460 in a cloud session (match packet pilot)
 
 [[tickets/T-24200-cloud-packet-taco-8013b460]]; setup in [[cloud-matching]]. From 41 rows (T-19030) to 4 differing lines (2 rows, one per quad); guarded `NON_MATCHING` in `src/ovl/TACO/8013B170.c`. Start: the T-20830 `best.c` (`GameState *g` view, which already fixes the `$s5..$s7` colours of T-19030), 32 lines. Scores below are lines of a symbol-resolved objdump diff (no disc).
@@ -704,6 +696,7 @@ conclusions in the first version of this note were wrong and must not be reused:
 Kept observation: `--resolve` rows overstate a one-instruction move because every later branch
 target shifts; report the true moved-instruction count with the row count. main func_8006D7EC's
 last row is still uopt constant propagation (`cc -S` shows `li $3,1`), a separate open item.
+
 ## T-25002: class C ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224
 
 [[tickets/T-25002-class-c-ending-geko-etc]], worktree c-m2, from [[plan-remaining]] class C. 0 of 3 matched; one guard.

@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24212 In Review: VALEN func_80132D0C stays guarded (cloud packet)
-
-[[tickets/T-24212-cloud-packet-valen-80132d0c]] created and worked in a cloud session ([[cloud-matching]]): asm fallback equals the packet reference in a single-function scratch compile; the T-24033 draft is 3 rows (dispatch `sll` in the third `if`'s slot instead of the `sel == 9` test's). An as1 trace (`-R -xbbdbg 8`) shows the global scheduler visiting the `== 9` block first and moving the mode reload's `lui v0` into it; no C form found that makes it take the `sll`. Guard comment in src/ovl/VALEN/80132760.c updated to T-24212; note in [[matching-notes]]. Docker Hub rate limit worked around with the gcr.io mirror of `ubuntu:22.04`.
-
 ## [2026-10-20] ticket | T-24212, T-24213, T-24214 Done
 
 Last cloud packet results merged (cloud usage spent): TACO `func_8014F820` and main `func_80054884` match (linked proof here); VALEN `func_80132D0C` stays guarded at 3 rows.
@@ -1705,6 +1701,7 @@ promotion, but three of four moved and every one now has a mechanism-level diagn
   web plus two dead parameter tests at the top, FAKE T-24928); the induction-init order and the
   per-arm narrowing copy remain.
 Clean build 27/27, headers/globals OK. tools/progress.py: 6,826 / 6,952 (92.2%), 126 left.
+
 ## [2026-10-20] ticket | T-25002 class C ENDING, GEKO, ETC
 [[tickets/T-25002-class-c-ending-geko-etc]] created and set In Progress (worktree c-m2): ENDING `func_801387B0`, GEKO `func_80133C50`, ETC `func_80144224` from [[plan-remaining]] class C.
 
