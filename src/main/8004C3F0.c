@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psx_types.h"
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_tpage_show);
 
@@ -130,11 +131,176 @@ void func_8004DAC4(s32 arg0) {
     s32 *p = &arg0;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-25006, 28 rows; clut is coloured before last ($s3 instead of $s7, so last, the x and
+ * col counters and data sit one register lower), and the p and ypos spill slots are 4 bytes off.
+ * search_tpage_multi is viewed as returning u16 here (the original compares the raw result and keeps
+ * the narrowed copy). */
+u16 search_tpage_multi();
+void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
+    s32 padA; /* FAKE: T-25006, padA and padB put row and mode at the original stack homes */
+    s32 padB;
+    u32 row;
+    SPRT_8 *s;
+    u32 col;
+    u32 *data;
+    u32 uv;
+    u32 page;
+    u32 clut;
+    u16 tpage;
+    u16 last;
+    s32 bright;
+    s32 mode;
+    s32 ypos;
+    u8 rows;
+    u8 cols;
+    ModRec14 *p;
+
+    bright = func_8004901C();
+    p = (ModRec14 *)(D_801217A0 + idx * 0x14);
+    switch (p->unk_08) {
+    case 0:
+        mode = 1;
+        break;
+    case 1:
+        mode = 2;
+        break;
+    case 2:
+        mode = 2;
+        break;
+    case 3:
+        mode = 1;
+        break;
+    case 4:
+        mode = 1;
+        break;
+    case 5:
+        mode = 1;
+        break;
+    default:
+        mode = 1;
+        break;
+    }
+    last = 0xFFFF;
+    rows = p->unk_0D;
+    cols = p->unk_0C;
+    data = rows * frame * cols + p->unk_04;
+    row = 0;
+    if (rows != 0) {
+        do {
+            col = 0;
+            if (cols != 0) {
+                ypos = row * 8 + y + 0x168;
+                do {
+                    uv = *data & 0xFF0000;
+                    page = *data & 0xFF000000;
+                    clut = *data & 0xFF00;
+                    uv >>= 16;
+                    page >>= 24;
+                    clut >>= 8;
+                    s = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+                    func_8009F07C(s);
+                    SetSemiTrans(s, 0);
+                    s->x0 = x + 0xA0 + col * 8;
+                    s->y0 = ypos - D_8011ECA0 * 0xF0;
+                    /* FAKE: T-25006, one line so as1 keeps the u0/v0 order */
+                    s->u0 = (uv & 0xF) * 8; s->v0 = ((uv & 0xF0) >> 4) * 8;
+                    s->b0 = bright;
+                    s->g0 = bright;
+                    s->r0 = bright;
+                    tpage = search_tpage_multi(p->unk_00[page], mode);
+                    if (last != tpage) {
+                        if (last != 0xFFFF) {
+                            goto_tpage((last & 0xF) << 6, (last & 0x10) << 4, pri + 1, 0, 0);
+                        }
+                        last = tpage;
+                    }
+                    s->clut = func_8009ED74(cx + clut * 16, cy);
+                    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + pri * 4 + 4, s);
+                    data++;
+                    col++;
+                    cols = p->unk_0C;
+                } while (col < cols);
+                rows = p->unk_0D;
+            }
+            row++;
+        } while (row < rows);
+    }
+    goto_tpage((last & 0xF) << 6, (last & 0x10) << 4, pri + 1, 0, 0);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set_gpu);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_set);
+/* Matching notes (T-25006): the record fields are read through the global array (SRN_REC), not a
+ * pointer, the row and column positions are written as expressions (uopt strength-reduces them into the
+ * two induction variables), and cols, rows are computed before wid, hgt, left so cols wins $fp. */
+s32 srn_set(s32 arg0) {
+    SrnRec28 *rec; /* FAKE: T-25006, unused; its stack slot keeps the frame at 0xC0 and the spill homes */
+    s32 w0;
+    s32 h0;
+    s32 tw;
+    s32 th;
+    s32 ox;
+    s32 oy;
+    s32 cw;
+    s32 ch;
+    s32 xoff;
+    s32 rows;
+    s32 yoff;
+    u32 *src;
+    s32 row;
+    s32 left;
+    s32 col;
+    s32 wid;
+    s32 hgt;
+    s32 x;
+    s32 idx;
+    s32 cols;
+    w0 = SRN_REC(arg0).unk_0E;
+    h0 = SRN_REC(arg0).unk_0F;
+    tw = SRN_REC(arg0).unk_10;
+    th = SRN_REC(arg0).unk_11;
+    ox = SRN_REC(arg0).unk_12;
+    oy = SRN_REC(arg0).unk_13;
+    cw = SRN_REC(arg0).unk_14;
+    ch = SRN_REC(arg0).unk_15;
+    xoff = SRN_REC(arg0).unk_02;
+    yoff = SRN_REC(arg0).unk_06;
+    src = SRN_REC(arg0).unk_08;
+    if (h0 == 0 || w0 == 0) {
+        return -1;
+    }
+    cols = cw * tw / w0;
+    rows = ch * th / h0;
+    wid = SRN_REC(arg0).unk_16;
+    hgt = SRN_REC(arg0).unk_18;
+    left = SRN_REC(arg0).unk_1C;
+    for (row = 0; row < rows; row++) {
+        if (th * row + yoff + h0 * oy >= -0x77) {
+            for (col = 0; col < cols; col++) {
+                if (th * row + yoff >= 0x79) {
+                    return 0;
+                }
+                x = tw * col + xoff;
+                if (tw * col + xoff + ox * w0 >= -0x9F) {
+                    if ((*src & 0xFFFF) != 0) {
+                        idx = *src & 0xFFFF;
+                        mod_set_gpu(0, idx, x, th * row + yoff, wid, hgt, SRN_REC(0).unk_0C);
+                    }
+                }
+                left--;
+                src++;
+                if (left == 0) {
+                    return 0;
+                }
+            }
+        }
+    }
+}
+
 
 void srn_init(s32 arg0, u32 *arg1, s32 arg2) {
     u8 *p;

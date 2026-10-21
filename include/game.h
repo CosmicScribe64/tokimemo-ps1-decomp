@@ -394,4 +394,22 @@ typedef struct SrnRec28 {
     /* 0x20 */ u32 unk_20;
     /* 0x24 */ u8 *unk_24;
 } SrnRec28; /* size 0x28 */
+/* Record i of D_80121750. srn_set indexes the global array directly: with a record pointer as1
+ * cannot move the record loads above the stack stores (T-25006). */
+#define SRN_REC(i) (((SrnRec28 *)D_80121750)[i])
+#endif
+
+#ifndef GAME_T25006_MOD_REC
+#define GAME_T25006_MOD_REC
+/* D_801217A0: 0x14-byte tile-set records of the mod_* routines (mod_set_gpu reads one). T-25006. */
+typedef struct ModRec14 {
+    /* 0x00 */ u32 *unk_00;
+    /* 0x04 */ u32 *unk_04;
+    /* 0x08 */ u8 unk_08;
+    /* 0x09 */ u8 unk_09;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 unk_0C;
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 unk_0E[6];
+} ModRec14; /* size 0x14 */
 #endif
