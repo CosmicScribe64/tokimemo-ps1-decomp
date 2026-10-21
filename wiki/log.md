@@ -1716,3 +1716,7 @@ Match: main `func_8006BA40` (T-25008). Guard progress: `mod_set_gpu` 17 rows. To
 ## [2026-10-21] ticket | Start T-25011 after merging the other agent's work
 
 Fast-forwarded local main to 50e032fcc (other agent: 129 functions left, plan in [[plan-remaining]]). Started [[tickets/T-25011-class-a-closers-as1-levers]]: one Sonnet 5.5 subagent on the eight class A near misses.
+
+## [2026-10-21] ticket | T-25011 result: class A closers, zero matches
+
+autotweak (280-1,940 variants each) left every class A guard unchanged; KANGEI func_80134724 default arm rewritten (FAKE, 4 rows, the old 2-row figure was not reproducible). VALEN func_80132D0C and main func_8005B43C still need guarded drafts. Details in [[tickets/T-25011-class-a-closers-as1-levers]]. Ticket In Review; build clean 27/27. Next: drafts for those two, class C, then class D smallest first ([[plan-remaining]]).

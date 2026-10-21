@@ -142,7 +142,7 @@ void func_8013454C(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-24902 (T-24201, T-24122), 2 rows (1 pair); frame, registers
+/* NON_MATCHING: T-25011 now 4 rows (default arm temporaries t1..t3 vs t0..t2 after the (u16) FAKE, slot pick fixed); was T-24902 (T-24201, T-24122), 2 rows (1 pair); frame, registers
  * ($v0=v, $v1=s, $a0=unk_66C, $a1=unk_0F4>>12, $a2=c2) and all switch cases match.
  * Only the IDO 5.3 as1 default-block delay-slot hoist remains: as1 moves the default arm's
  * `sll t0, v0, 0x2` into the delay slot of the range check `beqz at, default`; the original
@@ -229,7 +229,7 @@ void func_80134724(void) {
         D_80139ADC = v * 4 + s + 7;
         break;
     default:
-        D_80139ADC = v * 4 + s + 3;
+        D_80139ADC = (u16)v * 4 + s + 3; /* FAKE: (u16) cast (as1 deletes the and) puts the default `sll` back after the range-check slot; leaves the ring one temporary late (t1..t3 vs t0..t2, 4 rows). T-25011 */
         break;
     }
     func_801349D4();
