@@ -1724,3 +1724,7 @@ autotweak (280-1,940 variants each) left every class A guard unchanged; KANGEI f
 ## [2026-10-21] ticket | Start T-25012
 
 Class A is exhausted at the autotweak level; [[tickets/T-25012-class-c-d-reconstruction]] starts hand reconstruction of class C/D functions.
+
+## [2026-10-21] ticket | T-25012 first findings: no twins, GYOZI func_801412A4 at 96
+
+`tools/twin_sweep.py` plans no copies: none of the 119 unmatched functions has an exact, near or lenient matched twin, so the unguarded ones are pure reconstruction. `wiki/data/remaining-2026-10-20.md` is stale (VALEN func_80132D0C, sndisp, func_8006BA40 already matched). GYOZI `func_801412A4`: draft 103 -> 96 exact score (`count += (b1 == 0) ^ 1;` reproduces `sltiu; xori`; the autotweak best adds a `u16 count` that costs an `andi` and a 0x30 frame, not kept); permuter 600 s found no 0. Leads left: ugen temporaries in loop 1 (t7 vs t5), operand order in loop 2, `D_801486E4` read once. `regdiff.py` needs `TOKIMEMO_SCRATCH` set to a writable directory. Notes and helper scripts in `drafts/T-25012/` ([[tickets/T-25012-class-c-d-reconstruction]]).
