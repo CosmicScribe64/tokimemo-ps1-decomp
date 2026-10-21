@@ -1,7 +1,7 @@
 ---
 id: T-25008
 title: "Closers: main func_8005B43C, func_8006BA40, parameter_up_down"
-status: In Progress
+status: In Review
 assignee: n1
 created: 2026-10-20
 updated: 2026-10-20
@@ -14,8 +14,8 @@ Close the three guarded main functions left by T-25003/T-25004: `func_8005B43C` 
 
 ## Acceptance criteria
 
-- [ ] Each function matched in plain C, or its guard note updated with rows and what was tried
-- [ ] `## T-25008` in [[matching-notes]]
+- [x] Each function matched in plain C, or its guard note updated with rows and what was tried
+- [x] `## T-25008` in [[matching-notes]]
 - [ ] Clean build 27/27, check_headers, migrate_globals --check, sync_protos --check-branch
 
 ## Notes
@@ -23,3 +23,5 @@ Close the three guarded main functions left by T-25003/T-25004: `func_8005B43C` 
 Branch n1.
 
 ## Comments
+
+2026-10-20 (n1): `func_8006BA40` MATCH (`(u8)` cast on the nibble test spends the missing ugen slot; the T-25003 `(u16)step` cast removed). `func_8005B43C` guarded at 3 rows, `parameter_up_down` at 11 rows; notes in [[matching-notes]] T-25008. In Review.

@@ -295,7 +295,8 @@ void week_day_exit0(void) {
 
 /* NON_MATCHING: T-25004, 11 rows; the mode byte (v1) and its low nibble (v0) take a ugen temporary and two
  * copies, which shifts the ring by one, and the arg0 == 4 row pointer gets $v1 where the original keeps it in
- * its stack home (sp+0x4C) as the else branch does. */
+ * its stack home (sp+0x4C) as the else branch does. T-25008: an index that survives the loop
+ * (`arg0 = h`) gives the home store but loads into $a0; see matching-notes T-25008. */
 #ifdef NON_MATCHING
 s32 parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
     s32 i;
