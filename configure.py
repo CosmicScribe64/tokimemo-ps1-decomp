@@ -200,7 +200,7 @@ def overlay_targets(n, overlays):
                     variables={"toolchain": " ".join(OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN))},
                     implicit=[stamp, SYMBOLS_OK, INCLUDE_FILES, "include/macro.inc", "include/labels.inc",
                               "include/asmproc_prelude.inc",
-                              "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py",
+                              "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py", "tools/ugen_pass.py",
                               "tools/object_layout.py"], order_only=[HEADERS_OK])
             c_os.append(cf.obj)
         data_os = []
@@ -305,7 +305,7 @@ def main():
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, SYMBOLS_OK, INCLUDE_FILES, "tools/cc.py", "tools/frame_pass.py",
+                implicit=[stamp, SYMBOLS_OK, INCLUDE_FILES, "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py", "tools/ugen_pass.py",
                           "tools/object_layout.py", "include/asmproc_prelude.inc",
                           "include/gte_macros.inc", "include/macro.inc", "include/labels.inc"],
                 order_only=[HEADERS_OK])
