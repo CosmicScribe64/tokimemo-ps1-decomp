@@ -46,10 +46,6 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-24921-func-8013cce4-8013BEF0|T-24921 ETC:func_8013CCE4 (src/ovl/ETC/8013BEF0.c)]]
-- [ ] [[tickets/T-24922-func-801367ec-80134D10|T-24922 GEKO:func_801367EC (src/ovl/GEKO/80134D10.c)]]
-- [ ] [[tickets/T-24923-func-801326bc-80132000|T-24923 OPTION:func_801326BC (src/ovl/OPTION/80132000.c)]]
-- [ ] [[tickets/T-24924-func-801330e4-80133030|T-24924 ENDING:func_801330E4 (src/ovl/ENDING/80133030.c)]]
 
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
@@ -57,6 +53,11 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-24921-func-8013cce4-8013BEF0|T-24921 ETC:func_8013CCE4 (src/ovl/ETC/8013BEF0.c)]]
+- [ ] [[tickets/T-24922-func-801367ec-80134D10|T-24922 GEKO:func_801367EC (src/ovl/GEKO/80134D10.c)]]
+- [ ] [[tickets/T-24923-func-801326bc-80132000|T-24923 OPTION:func_801326BC (src/ovl/OPTION/80132000.c)]]
+- [ ] [[tickets/T-24924-func-801330e4-80133030|T-24924 ENDING:func_801330E4 (src/ovl/ENDING/80133030.c)]]
 
 
 
