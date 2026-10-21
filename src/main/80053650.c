@@ -717,10 +717,10 @@ void func_80054E6C(void) {
         *(s32 *)&D_800E7D10.metrics[i][slot] = (&D_800E6280.unk_0F8)[i + 1];
     }
     for (i = 0; i != 4; i++) {
+        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 0] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 0];
         ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 1] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 1];
         ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 2] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 2];
         ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 3] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 3];
-        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 0] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 0];
     }
     i = D_800E6280.unk_0F4.h >> 12;
     ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->club[0] = i;
