@@ -950,9 +950,6 @@ void func_8006B900(void) {
     dtd_on_tpage(0, 0, 9, 1, 0);
 }
 
-/* NON_MATCHING: T-25003, 7 rows; only registers left: the hoisted %hi(D_8011ECFA) of the first clamp
- * takes $t2 where the original has $t0, and the andi and case-0x1000 temporaries come one lower. */
-#ifdef NON_MATCHING
 void func_8006BA40(void) {
     GameState *g = &D_800E6280;
     u8 speed;
@@ -970,11 +967,11 @@ void func_8006BA40(void) {
         if (!(g->unk_1092 & 3) && (g->unk_F80 & 0xFF)) {
             step = speed * 2;
         }
-        if (g->unk_F80 & 0xF) {
+        if ((u8)g->unk_F80 & 0xF) {
         } else {
             switch (g->unk_F80 & 0x5000) {
             case 0x1000:
-                D_8011ECFA -= (u16)step; /* FAKE: T-25003, the cast spends the ugen temporary the original spends */
+                D_8011ECFA -= step;
                 break;
             case 0x4000:
                 D_8011ECFA += step;
@@ -1014,9 +1011,6 @@ void func_8006BA40(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BA40);
-#endif
 
 /* FAKE: the empty `if ((s32)D_800B6708) {}` gives the byte a use in the dispatch block, so uopt promotes it and loads it
  * once into $v0 before the arg0 tests; without it each arm loads it. The test emits no code. T-17002 */
