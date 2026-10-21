@@ -53,6 +53,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24909-func-8014790c-80146400|T-24909 ETC:func_8014790C (src/ovl/ETC/80146400.c)]]
+- [ ] [[tickets/T-24910-func-80154dd8-80154430|T-24910 RPG_BAT:func_80154DD8 (src/ovl/RPG_BAT/80154430.c)]]
+
 - [ ] [[tickets/T-24901-func-8013852c-80137B90|T-24901 KANGEI:func_8013852C (src/ovl/KANGEI/80137B90.c)]]
 - [ ] [[tickets/T-24902-func-80134724-80134120|T-24902 KANGEI:func_80134724 (src/ovl/KANGEI/80134120.c)]]
 - [ ] [[tickets/T-24903-func-80132d0c-80132760|T-24903 VALEN:func_80132D0C (src/ovl/VALEN/80132760.c)]]
