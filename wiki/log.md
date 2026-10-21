@@ -1712,3 +1712,7 @@ Four matches: ETC `func_8013CCE4` through the uniform switch_compares pass (T-24
 ## [2026-10-20] ticket | T-25007 In Progress
 
 [[tickets/T-25007-class-c-etc-rpgbat-main]]: class C ETC `func_80146D4C`, RPG_BAT `func_8014BFE4`, main `func_8005938C`; branch c-m6.
+
+## [2026-10-20] ticket | T-25007 In Review
+
+[[tickets/T-25007-class-c-etc-rpgbat-main]]: ETC `func_80146D4C` guarded at 12 rows (104 before; empty-if promotion lever from the permuter, recipe added to [[playbook]]); RPG_BAT `func_8014BFE4` (128) and main `func_8005938C` (124) stay `INCLUDE_ASM`, notes in `drafts/T-25007/`. Notes in [[matching-notes]]. Clean build 27/27, header/global/proto checks pass. Branch c-m6.
