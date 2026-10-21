@@ -79,6 +79,9 @@ s32 func_80133AA0() {
 }
 
 #ifdef NON_MATCHING
+/* NON_MATCHING: T-25002, 13 rows; ugen temporary numbering in the zero-girl branch (srl/mflo/addu ring order)
+ * and in the 4/5/10 branch (lhu/srl t9/t7 swapped). Tried: separate club local, empty tests, line grouping,
+ * operand swaps, autotweak 300 s twice. */
 void func_80133C50(void) {
     s32 v;
     u32 g;
