@@ -46,6 +46,11 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-24921-func-8013cce4-8013BEF0|T-24921 ETC:func_8013CCE4 (src/ovl/ETC/8013BEF0.c)]]
+- [ ] [[tickets/T-24922-func-801367ec-80134D10|T-24922 GEKO:func_801367EC (src/ovl/GEKO/80134D10.c)]]
+- [ ] [[tickets/T-24923-func-801326bc-80132000|T-24923 OPTION:func_801326BC (src/ovl/OPTION/80132000.c)]]
+- [ ] [[tickets/T-24924-func-801330e4-80133030|T-24924 ENDING:func_801330E4 (src/ovl/ENDING/80133030.c)]]
+
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
@@ -55,7 +60,6 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-24910-func-80154dd8-80154430|T-24910 RPG_BAT:func_80154DD8 (src/ovl/RPG_BAT/80154430.c)]]
 
 
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
@@ -72,6 +76,22 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+- [ ] [[tickets/T-24910-func-80154dd8-80154430|T-24910 RPG_BAT:func_80154DD8 (src/ovl/RPG_BAT/80154430.c)]]
+- [ ] [[tickets/T-24700-completion-fanout|T-24700 Completion fan-out to 100 percent literal match]]
+- [ ] [[tickets/T-24701-completion-fanout|T-24701 Completion fan-out T-24701: main low: graphics and sprite tail]]
+- [ ] [[tickets/T-24702-completion-fanout|T-24702 Completion fan-out T-24702: main GPU/sprite: mod, srn and menu]]
+- [ ] [[tickets/T-24703-completion-fanout|T-24703 Completion fan-out T-24703: main mid: sound, text and date helpers]]
+- [ ] [[tickets/T-24704-completion-fanout|T-24704 Completion fan-out T-24704: main high: record, CD and parameter functions]]
+- [ ] [[tickets/T-24705-completion-fanout|T-24705 Completion fan-out T-24705: TACO remaining twelve]]
+- [ ] [[tickets/T-24706-completion-fanout|T-24706 Completion fan-out T-24706: ETC remaining ten]]
+- [ ] [[tickets/T-24707-completion-fanout|T-24707 Completion fan-out T-24707: TAIIKU and GYOZI remaining fifteen]]
+- [ ] [[tickets/T-24708-completion-fanout|T-24708 Completion fan-out T-24708: overlays A: ENDING, VALEN, NAME_ENT, KANGEI]]
+- [ ] [[tickets/T-24709-completion-fanout|T-24709 Completion fan-out T-24709: overlays B: GEKO, MASTER, SHOUGATU, RPG_BAT, TEL, EN_NICHI, BUNKA_SD, OPTION]]
+- [ ] [[tickets/T-24710-completion-fanout|T-24710 Completion fan-out T-24710: wave 2: main high close functions]]
+- [ ] [[tickets/T-24711-completion-fanout|T-24711 Completion fan-out T-24711: wave 2: main low close functions]]
+- [ ] [[tickets/T-24712-completion-fanout|T-24712 Completion fan-out T-24712: wave 2: GYOZI close functions]]
+- [ ] [[tickets/T-24713-completion-fanout|T-24713 Completion fan-out T-24713: wave 2: as1 hoist family]]
+- [ ] [[tickets/T-24714-completion-fanout|T-24714 Completion fan-out T-24714: ETC func_8013CCE4 byte-view switch]]
 - [ ] [[tickets/T-24914-func-8006c988-800674B0|T-24914 main:func_8006C988 (src/main/800674B0.c)]]
 - [ ] [[tickets/T-24915-func-80054e6c-80053650|T-24915 main:func_80054E6C (src/main/80053650.c)]]
 - [ ] [[tickets/T-24916-func-80138b2c-80138890|T-24916 TACO:func_80138B2C (src/ovl/TACO/80138890.c)]]
