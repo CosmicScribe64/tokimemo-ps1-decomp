@@ -46,6 +46,7 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-25013-compiler-level-levers|T-25013 NEXT STEP: compiler-level levers (uopt/ugen/as1 rules) to unblock the last ~119 functions]]
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]

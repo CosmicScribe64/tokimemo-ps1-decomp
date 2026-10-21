@@ -76,3 +76,4 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - `tools/wiki.py` - `rotate-log`, `rotate-notes`, `catalog` (ticket catalog, notes sections, function index), `lint` (broken links, kanban mismatches, large pages)
 - [[tickets/T-25011-class-a-closers-as1-levers|T-25011]] Class A closers: eight guarded near misses (10 rows or fewer) with the as1 scheduler levers, one Sonnet 5.5 subagent (In Progress).
 - [[tickets/T-25012-class-c-d-reconstruction|T-25012]] Class C/D reconstruction (missing drafts, class C, class D smallest first), one Sonnet 5.5 subagent (In Progress).
+- [[tickets/T-25013-compiler-level-levers|T-25013]] NEXT STEP for the project: compiler-level levers (uopt/ugen/as1 rules, one uniform build rule at a time) to unblock the last ~119 functions; see [[status]] (Ready).

@@ -7,6 +7,10 @@ updated: 2026-10-20
 
 For any agent, including cheap ones, working on the last functions. State on 2026-10-20: 6,825 / 6,952 functions (92.2%), 127 left. The full list with classes, sizes, row counts and notes is [[data/remaining-2026-10-20]]. Read this page, then [[playbook]]; look up a function's history in [[notes/functions]].
 
+## Next step (2026-10-21): compiler-level levers, not more sweeps
+
+Classes A and B were swept to exhaustion (T-24142, T-25011) and the class C/D reconstructions stall 70-100 rows away (T-25012). The remaining functions are blocked by compiler behaviour the build does not yet model. The next piece of work is [[tickets/T-25013-compiler-level-levers]]: pick one lever (redundant promoted-global store, 8-byte locals shift, no CSE of relational booleans, as1 block-weight/delay-slot pick, uopt colouring order), implement it as one uniform rule in `tools/cvt_pass.py` / `tools/ugen_pass.py` with evidence and a unit test, prove no matched object changes, then promote the functions it unblocks. Use the strongest model; the per-function loop below is only worth running again after a new lever lands.
+
 ## Ground rules
 
 - One ticket per agent run (`wiki/tickets/_template.md`), one function or one C file at a time. Claim the file in the ticket title before editing; never edit a file another open ticket names.
