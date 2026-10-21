@@ -2062,6 +2062,7 @@ void func_80042A00(void);
 void csr_load_vram(s32 arg0);
 void palette_load_vram(s32 arg0);
 void disp_string(void);
+void func_8004A14C(s32 arg0, RECT rect, s32 arg3);
 s32 func_80042AC8();
 void func_80042BD4(void);
 void func_80042C30(void);

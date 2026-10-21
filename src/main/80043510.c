@@ -259,7 +259,42 @@ void StoreSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
 void func_80044434(void) {
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", func_8004443C);
+void func_8004443C(void) {
+    /* FAKE: T-25003, the two unused words give the original stack layout (colors at sp+0x64, rect at
+     * sp+0x58, frame 0x78); without them the colors and rect move and 17 rows differ. */
+    s32 pad0;
+    s32 colors[4];
+    s32 i;
+    RECT rect;
+    s32 pad1;
+
+    colors[0] = D_800B3D10[0] / 264;
+    colors[1] = D_800B3D10[1] / 264;
+    colors[2] = D_800B3D10[2] / 264;
+    colors[3] = D_800B3D10[3] / 264;
+    for (i = 0; i < 4; i++) {
+        if (colors[i] >= 3) {
+            colors[i] = 0x800000;
+        } else if (colors[i] >= 2) {
+            colors[i] = 0x808000;
+        } else if (colors[i] > 0) {
+            colors[i] = 0x8000;
+        } else {
+            colors[i] = 0x80;
+        }
+    }
+    rect.w = 4;
+    for (i = 0; i < 4; i++) {
+        rect.x = 0x8C + i * 4;
+        rect.h = D_800B3D10[i] * 16 / 264;
+        rect.y = 0x4C - rect.h;
+        func_8004A14C(i + 6, rect, colors[i]);
+    }
+    rect.x = 0x88;
+    rect.h = 16;
+    rect.y = 0x3C;
+    func_8004A14C(i + 6, rect, 0x808080);
+}
 
 void func_80044700(s32 arg0, s32 arg1, s32 arg2) {
     RECT rect;
