@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] lint | T-24400 wiki reorganization
-
-New [[index]] hub, [[status]], [[playbook]], [[tooling]], generated [[tickets/catalog]] and [[notes/functions]]; `tools/wiki.py` rotates [[log]] and [[matching-notes]] verbatim into `log/` and `notes/`. Old index kept as [[archive/index-2026-10-20]]. [[tickets/T-24400-wiki-reorganization]].
-
-## [2026-10-20] ticket | T-24400 Done
-
-Wiki reorganization merged: [[index]] 4.7 KB (was 135 KB), [[log]] 200 KB (was 1.9 MB), [[matching-notes]] 155 KB (was 1.7 MB); older parts in `log/` and `notes/`, lookups in [[notes/functions]] and [[tickets/catalog]]. [[tickets/T-24400-wiki-reorganization]].
-
 ## [2026-10-20] ticket | Close stale T-240xx campaign tickets
 
 Board cleanup after [[tickets/T-24400-wiki-reorganization]]: 55 In Review and 11 In Progress tickets from the 2026-10-17..19 campaign were left open although their work is merged. Each In Review ticket was checked against main (no unmerged branch, claimed matches are C) and against CODING_STANDARDS.md (ticketed FAKE/NON_MATCHING comments, no inline asm, no guard over 30 rows); wave-3 checkpoint `6d3d78ed8` reviewed for [[tickets/T-24136-taco-and-etc-wave-3-closers]]..[[tickets/T-24141-main-remaining-sweep-e]]. 62 moved to Done (including umbrella [[tickets/T-24000-complete-matching]]), 4 to Backlog with what is left: [[tickets/T-20008-large-name-introduction]], [[tickets/T-24020-astra-hard-functions]], [[tickets/T-24078-etc-two-poly-renderer]], [[tickets/T-24142-single-agent-closer-sweep]]. Board now has no In Review or In Progress cards. Follow-up found: 20 older FAKE comments in src/ name no ticket (from T-8050..T-9330, T-24051, T-24103..T-24111, T-24121/23, T-24133/34).
@@ -1702,6 +1694,7 @@ Four matches: ETC `func_8013CCE4` through the uniform switch_compares pass (T-24
 
 ## [2026-10-20] ticket | T-25004 to In Review
 [[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]]: main `col2sepia` matched (sum local reused for blue, every clamp as a ternary). Guards: `func_8005B43C` 3 rows (bit-field flag test, FAKE second read of `unk_0F4.h` found by the permuter), `parameter_up_down` 11 rows. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
+
 ## [2026-10-20] ticket | T-25007 In Progress
 
 [[tickets/T-25007-class-c-etc-rpgbat-main]]: class C ETC `func_80146D4C`, RPG_BAT `func_8014BFE4`, main `func_8005938C`; branch c-m6.
