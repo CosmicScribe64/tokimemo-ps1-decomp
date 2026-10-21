@@ -124,3 +124,25 @@ stage swapped into the 5.3 pipeline produces the identical CSE (score
 unchanged, 2 xor rows). Conclusion: lever 3 as stated does not exist in
 uopt's option space; func_801387B0's boolean CSE has no uniform
 compiler-level switch. Do not re-sweep.
+
+### Lever 2 session notes (Octa, remote, 2026-10-21)
+
+Target main func_80062948 (src/main/80061710.c). The matrices draft sits
+at 40/184 words with original aggregate homes but frame 0xD8 against the
+original 0xD0, every local home shifted +8. The lever as stated assumed
+the original reserves 8 bytes our compiler does not, or that an unused
+local grows our frame where the original's compiler elided it.
+
+Micro-experiment in the packet environment: a function with a used
+s32 buf[2] builds frame -48. Adding a declared-but-unused s32 pad[2]
+changes nothing; adding an unused 32-byte struct plus an unused scalar
+also changes nothing (frame still -48, ra still at 20(sp)). The IDO 5.3
+pipeline already elides frame space for unused locals, so the +8 in the
+matrices draft cannot come from an unused declaration. It must come
+from something the draft actually materializes that the original does
+not: an outgoing-argument slot for a call the original passes in
+registers, or a spilled temporary the original keeps in a register.
+Both are the allocation/lifetime behaviour covered by levers 1 and 5,
+not a frame-pass rule. The frame pass (tools/frame_pass.py) has nothing
+to fix for this function. Lever 2 does not exist as an independent
+compiler lever; do not re-pursue it as one.

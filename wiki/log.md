@@ -1765,3 +1765,13 @@ at the second compare and reloads it after; the original shares only the
 AND), OPTN sweep over 0..530 found no controlling option, and the 7.1
 uopt stage CSEs identically. Lever 3 does not exist as a compiler rule.
 Detail in [[tickets/T-25013-compiler-level-levers]].
+
+## [2026-10-21] build | T-25013 lever 2 concluded: frame elision already happens, +8 is a lifetime artifact
+
+Lever 2 session on main func_80062948: micro-experiments show the IDO
+5.3 pipeline elides frame space for unused locals (an unused 32-byte
+struct and scalar leave the frame at -48), so the matrices draft's
+0xD8 vs 0xD0 frame is not a frame-pass gap. The extra 8 bytes are a
+materialized value the original keeps in a register, the same
+allocation behaviour as levers 1 and 5. Detail in
+[[tickets/T-25013-compiler-level-levers]].
