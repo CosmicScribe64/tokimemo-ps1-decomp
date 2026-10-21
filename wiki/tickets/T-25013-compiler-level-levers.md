@@ -96,3 +96,31 @@ Findings on lever 1 (main `func_8006A044`, draft `body-global.c`):
 
 Next: lever 3 (ENDING `func_801387B0`, no CSE of relational booleans) has
 the cleanest remaining single-mechanism hypothesis.
+
+### Lever 3 session notes (Octa, remote, 2026-10-21)
+
+Target ENDING func_801387B0 (draft drafts/T-25002/ENDING/func_801387B0.c).
+Baseline reproduced in the packet environment: 99 diff rows on the local
+funcdiff metric (T-25002 measured 80 on the full tree; same divergence,
+the boolean chain in the final else-if block).
+
+Mechanism, from the ucode in/out dumps of the draft: cfe emits four
+(and, equ) pairs, one per compare. uopt value-numbers the boolean
+(flag & 1) == 1 and, in its output stream, computes it at the first two
+compares, stores it to a reused local slot at the second compare, and
+reloads it for the third and fourth compares. The original computes
+xor/sltiu per compare from one shared andi result, so its uopt graph
+shared the AND but not the EQU. Nothing downstream can express that
+split: a post-pass expansion of the stored temp re-loads or re-computes
+from the stack slot uopt reused, which cannot reproduce the original's
+register-resident AND result held across the chain.
+
+Option sweep: an env-gated knob in the scratch tree's cvt_pass inserted
+OPTN N:V before every ENT. Every N in 0..530 at V=0, and every N in
+400..464 at V=1 and V=2. No setting changed the target's output except
+N=404, 405 (zcopy off, expected), 406, all worse (226/111/124 rows),
+and uopt failures at N=1, 4, 5 (V=0) and N=403 (V=1, 2). The 7.1 uopt
+stage swapped into the 5.3 pipeline produces the identical CSE (score
+unchanged, 2 xor rows). Conclusion: lever 3 as stated does not exist in
+uopt's option space; func_801387B0's boolean CSE has no uniform
+compiler-level switch. Do not re-sweep.
