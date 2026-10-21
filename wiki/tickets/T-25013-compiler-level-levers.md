@@ -52,3 +52,11 @@ It rebuilds every object, checks `0 FAILED` and 27 `.ok`, compares every matched
 ## Notes for the agent who picks this up
 
 Cheap models stalled on this class (three Sonnet 5.5 runs, zero matches); use the strongest model available. Do not start with the source-level sweep tools again: the work they can do is done.
+
+## Findings
+
+### 2026-10-21 lever 1 (redundant store of promoted global, main func_8006A044): NOT closed, partial analysis
+- Mini reproduction (struct with u8 `y`, `m`, `f[2]`, same if/else chain, `|=` arms, switch) compiled with tools/cc.py: our F64[1]-style byte is already promoted and stored at the same places as the original (`sb` before the next test). The only difference left is the arm shape: original `or t5,v0,zero; ori t6,t5,k; andi v0,t6,0xff; sb v0`, ours `ori t5,v1,k; sb t5` (no copy, no write-back `andi` into the promoted register). So the stores are NOT dropped; what is missing is the register copy of the variable and the narrowing write-back at the end of a path (copy propagation / dead-assignment removal of the promoted var at an exit).
+- Tried: uopt `OPTN zcopy 0` (copy propagation off) for ALL procedures via an env knob in `cvt_pass.copy_propagation_options`. `lever_lab run zall`: not uniform (22 guarded changes, 3 better, 19 WORSE, e.g. main func_8006D7EC 2 -> 1630, BUNKA_SD func_80139290 14 -> 595); on the mini case it did not produce the `or t5,v0,zero` copy either. Verdict: zcopy is not the lever for this pattern; dead end. Knob reverted.
+- Next idea (not done): the copy is a ucode `LOD R; STR R` pair that uopt normally collapses; trace which uopt phase removes it (instrumented uopt, [[ending-allocator-trace]]).
+- Levers 2-5 not started in this session (usage budget); no rule adopted, tree unchanged apart from this note.
