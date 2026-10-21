@@ -423,62 +423,7 @@ void func_801441DC(s32 arg0, s32 arg1) {
     p[0x14] = v;
 }
 
-#ifdef NON_MATCHING
-s32 func_80144224(void) {
-    u32 quot;
-    s32 a;
-    s32 rem;
-    s32 v;
-
-    D_801217D0[0].unk_00 = 0x80000000;
-    D_801217D0[1].unk_00 = 0x80000000;
-    func_80143968();
-    rem = D_800E7384 % 701U;
-    quot = D_800E7384 / 701U;
-    if (rem == 1) {
-        if (D_80150148 == 0) {
-            func_801436E4(D_800E71DF);
-        } else if (D_80150148 < 0xF) {
-            a = D_80150150[D_80150148 - 1];
-            if (D_800E71DF == a) {
-                D_80150148++;
-                a = D_80150150[D_80150148 - 1];
-            }
-            func_801436E4(a);
-        } else {
-            func_801436E4(D_800E71DF);
-        }
-        D_80150148 += 1;
-    } else if ((s32)quot < 0xF) {
-        if (rem == 2) {
-            func_8014407C(quot);
-        } else if ((u32)rem < 0xA0) {
-            v = rem * 3;
-            func_801441DC(2, v / 4);
-            func_801441DC(3, (v - 0x3C) / 4);
-            func_801441DC(4, (v - 0x78) / 4);
-        }
-    }
-    if (D_80150148 < 0x10) {
-        rem = D_800E7384 % 701U;
-        if ((u32)rem >= 0x21E) {
-            v = (701 - rem) * 3;
-            func_801441DC(2, (v - 0x78) / 4);
-            func_801441DC(3, (v - 0x3C) / 4);
-            func_801441DC(4, v / 4);
-        }
-    }
-    if ((u32)D_800E7384 >= 0x259 && (func_800460EC() & 2)) {
-        func_80042940(2);
-    }
-    func_8004B19C(D_800E7384, 0, -0xA);
-    func_8004B19C(quot, 0, 0);
-    func_8004B19C(D_80150148, 0, 0xA);
-    func_8004B19C((&D_8015014C)[D_80150148], 0, 0x14);
-}
-#else
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144224);
-#endif
 
 s32 func_80144540(void) {
     switch (D_800E6280.unk_110D) {

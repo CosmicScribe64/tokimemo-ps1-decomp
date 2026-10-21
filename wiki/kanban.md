@@ -53,7 +53,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-25002-class-c-ending-geko-etc|T-25002 Class C: ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224]]
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]
@@ -69,6 +68,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-25002-class-c-ending-geko-etc|T-25002 Class C: ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224]]
 - [ ] [[tickets/T-24571-ending-first-portrait-view|T-24571 Test the first ENDING portrait16 alias view]]
 - [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]
 - [ ] [[tickets/T-24519-master-sibling|T-24519 Transfer recovered MASTER animation sibling lifetimes]]
