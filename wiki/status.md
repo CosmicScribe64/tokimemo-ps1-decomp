@@ -17,6 +17,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 ## Active work
 
 - Plan for the last 127 functions, for any agent: [[plan-remaining]] (classes A-D, list in [[data/remaining-2026-10-20]]).
+  Class A is running as T-24901..T-24908 (one function per file-disjoint worker, 45-minute box).
 - as1 scheduling: rule and `volatile` lever in [[as1-scheduler-rule]] (T-24900); per-file options ruled out in [[as1-scheduling]] (T-24800).
 
 - T-24700 fan-out (2026-10-20, before the new plan): no promotions; source-only improvements kept

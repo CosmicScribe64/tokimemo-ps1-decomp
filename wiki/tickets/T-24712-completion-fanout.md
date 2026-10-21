@@ -1,7 +1,7 @@
 ---
 id: T-24712
 title: Completion fan-out T-24712: wave 2: GYOZI close functions
-status: In Progress
+status: In Review
 assignee: worker
 created: 2026-10-20
 updated: 2026-10-20
@@ -29,3 +29,6 @@ Close the listed near-miss functions (best current row counts) to literal C matc
 Wave 2 of T-24700. The function cells in the list files are the current best row counts.
 
 ## Comments
+
+- 2026-10-20: closed to In Review under the T-24900 plan. No promotion; guarded
+  row-count improvements and evidence are recorded (see [[matching-notes]] and [[as1-scheduler-rule]]).

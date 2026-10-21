@@ -1,7 +1,7 @@
 ---
 id: T-24708
 title: Completion fan-out T-24708: overlays A: ENDING, VALEN, NAME_ENT, KANGEI
-status: In Progress
+status: In Review
 assignee: worker
 created: 2026-10-20
 updated: 2026-10-20
@@ -41,3 +41,6 @@ Lane of the T-24700 completion fan-out. Draft archives and per-function history 
 `drafts/` and [[notes/functions]].
 
 ## Comments
+
+- 2026-10-20: closed to In Review under the T-24900 plan. No promotion; guarded
+  row-count improvements and evidence are recorded (see [[matching-notes]] and [[as1-scheduler-rule]]).

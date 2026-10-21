@@ -1,7 +1,7 @@
 ---
 id: T-24702
 title: Completion fan-out T-24702: main GPU/sprite: mod, srn and menu
-status: In Progress
+status: In Review
 assignee: worker
 created: 2026-10-20
 updated: 2026-10-20
@@ -61,3 +61,6 @@ No duplicate/near-duplicate leverage: `neardupes.py --unit main` over all 12 nam
 with a matched source and 0 unmatched members without a matched twin.
 
 ## Comments
+
+- 2026-10-20: closed to In Review under the T-24900 plan. No promotion; guarded
+  row-count improvements and evidence are recorded (see [[matching-notes]] and [[as1-scheduler-rule]]).

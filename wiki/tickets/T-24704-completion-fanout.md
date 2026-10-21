@@ -1,7 +1,7 @@
 ---
 id: T-24704
 title: Completion fan-out T-24704: main high: record, CD and parameter functions
-status: In Progress
+status: In Review
 assignee: worker
 created: 2026-10-20
 updated: 2026-10-20
@@ -60,3 +60,5 @@ No new literal matches; no source changes left in the lane (all four owned files
   archived drafts use removed `D_` globals and would need retyping to the GameState structs
   first; `func_80075C84` was left at the documented T-24303/T-24501 alias blocker.
 
+- 2026-10-20: closed to In Review under the T-24900 plan. No promotion; guarded
+  row-count improvements and evidence are recorded (see [[matching-notes]] and [[as1-scheduler-rule]]).

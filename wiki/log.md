@@ -1699,3 +1699,22 @@ No promotions; the near-miss set is compiler-pass bound.
 ## [2026-10-20] decision | Plan for the remaining functions
 
 [[plan-remaining]] gives any agent (including cheap ones) the rules and per-class recipes for the last 127 functions; the classified list is [[data/remaining-2026-10-20]] (A 8 near misses, B 18 guarded, C 11 good drafts, D 90 reconstructions). T-24800 and T-24900 Done ([[as1-scheduling]], [[as1-scheduler-rule]]).
+
+## [2026-10-20] build | T-24700 work merged onto the new plan; clean 27/27
+
+Committed the T-24700 fan-out records and guarded improvements, merged origin/main (c5b96eb43:
+[[plan-remaining]], T-24800, T-24900), and kept the upstream match of GYOZI func_80139E4C. Clean
+build after the merge: `rm -rf build && python3 configure.py && ninja` exit 0, 27 SHA1 checks OK,
+headers and globals OK. tools/progress.py: 6,825 / 6,952 functions, 2,099,476 / 2,276,920 bytes
+(92.2%), 127 left (VALEN func_80134030 and GYOZI func_80139E4C from T-24900). Corrected the
+T-24713 note: its "backend-version trait, no source form" conclusion was superseded by T-24900's
+traced rule and volatile lever; [[as1-scheduler-rule]] is now the reference. Started class A of
+[[plan-remaining]]: one file-disjoint worker per function, tickets T-24901..T-24908.
+
+## [2026-10-20] ticket | T-24901..T-24908 class A near-miss closers
+
+Eight workers, one function each, 45-minute box: KANGEI func_8013852C (80137B90.c) and func_80134724
+(80134120.c), VALEN func_80132D0C (80132760.c), GEKO func_80136C20 (80134D10.c), TACO func_8013B460
+(8013B170.c) and func_801511C0 (80149F90.c), GYOZI func_80140E0C (80140C90.c) and func_8013907C
+(80138B50.c). Each claims its file in the ticket title; header edits limited to the unit header the
+as1 volatile lever needs. T-24700...T-24714 moved to In Review without promotion.

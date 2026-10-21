@@ -53,6 +53,15 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24901-func-8013852c-80137B90|T-24901 KANGEI:func_8013852C (src/ovl/KANGEI/80137B90.c)]]
+- [ ] [[tickets/T-24902-func-80134724-80134120|T-24902 KANGEI:func_80134724 (src/ovl/KANGEI/80134120.c)]]
+- [ ] [[tickets/T-24903-func-80132d0c-80132760|T-24903 VALEN:func_80132D0C (src/ovl/VALEN/80132760.c)]]
+- [ ] [[tickets/T-24904-func-80136c20-80134D10|T-24904 GEKO:func_80136C20 (src/ovl/GEKO/80134D10.c)]]
+- [ ] [[tickets/T-24905-func-8013b460-8013B170|T-24905 TACO:func_8013B460 (src/ovl/TACO/8013B170.c)]]
+- [ ] [[tickets/T-24906-func-801511c0-80149F90|T-24906 TACO:func_801511C0 (src/ovl/TACO/80149F90.c)]]
+- [ ] [[tickets/T-24907-func-80140e0c-80140C90|T-24907 GYOZI:func_80140E0C (src/ovl/GYOZI/80140C90.c)]]
+- [ ] [[tickets/T-24908-func-8013907c-80138B50|T-24908 GYOZI:func_8013907C (src/ovl/GYOZI/80138B50.c)]]
+
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]
@@ -67,6 +76,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
+
 
 - [ ] [[tickets/T-24571-ending-first-portrait-view|T-24571 Test the first ENDING portrait16 alias view]]
 - [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]

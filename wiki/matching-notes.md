@@ -698,29 +698,23 @@ User requested stopping the current matching session and committing/pushing comp
 - NAME_ENT `func_80143580`: restored signed-halfword decrement narrowing is required. Selector byte views, RGB zero chains, and fade snapshots recover several causal regions; `name-lane/intro-recovery/NOTES.md` records the still-unmatched candidates. A lower-scoring branch-reorder control loses an observed selector self-store and is not a valid improvement.
 - ETC `func_801328A4`: archive reconstruction had incorrect record and input strides, wrong copy widths and one-element stack placeholders. Typed three-row Rgb555Split storage and RECT recover these accesses; `etc-lane` candidate remains231 words against230, with frame/layout unresolved. No production source or header change.
 
-## T-24713: as1 scheduler mechanism and the compiler-bound near-miss set
+## T-24713: as1 traces (superseded by T-24900)
 
-Nine-lane T-24700 wave 1 and the focused T-24713 wave-2 pass measured the remaining near-misses with
-`funcdiff --resolve` (note: moved instructions also shift every later branch target, so `--resolve`
-rows overstate the residual; the real residual is one or two moved instructions).
+Wave-2 T-24713 traced the near-miss diffs with an instrumented as1. Its measurements are kept here
+because they agree with [[as1-scheduler-rule]]: the cross-block filler visits stalled blocks by
+(weight, block number), a switch default is numbered before its dispatch and wins at equal weight,
+and the per-block scheduler (not source lines) orders the instructions inside one block. Two
+conclusions in the first version of this note were wrong and must not be reused:
 
-- **as1 cross-block scheduler.** Captured `u.G/u.T` from an instrumented as1 (T-24047 print-only
-  tracer): for each stalled destination it scans a candidate array sorted by CFG block weight, ties
-  by block id, starting after the destination, and imports the first movable candidate. A switch
-  default (branch target) always has a lower block id than its dispatch (fallthrough); at equal
-  weight 4 the default is tried first. OMIMAI func_80134384 does not hoist because its default is
-  outside the weight window, not because an argument register is live (the T-24708 theory is wrong).
-  The only source form that flips the order is an extra jump-table edge to the default, which changes
-  the table size (T-24047 case12, T-24211 case 10).
-- **Local scheduler.** KANGEI func_8013852C: ugen emits no `lui` at all; as1 expands the `sh`
-  relocation and schedules the `lui` node (besttime 15) one slot before the `addu` (16). A scan of
-  every built object finds no matched C function with the original's `addu; lui at; sh` order, so
-  5.3's as1 never produces it. This is a backend-version trait; 4.1's as1 with 5.3's `pic0` record
-  matches VALEN func_80134030 but empties delay slots in 1,054 matched functions.
-- **uopt cprop.** main func_8006D7EC: `cc -S` shows `li $3,1` in uopt's output, so the last row is
-  a uopt constant-propagation difference, not as1 or a source shape.
-- **Function-level residual after wave 2** (true moved instructions): KANGEI func_8013852C 1,
-  func_80134724 1, VALEN func_80132D0C 1, func_80134030 1, ENDING func_8013A2E8 1,
-  func_80135F4C 2, GEKO func_80136C20 1, func_80133024 1, BUNKA_SD func_80139290 3 arms.
-  Closing these needs a binasm/as1 scheduling pass validated against all 6,823 matched functions,
-  not more source search.
+- **"A backend-version trait, no source form" is wrong.** T-24900 found the lever: declare the
+  plain globals of the switch default arm `volatile` in the unit header (FAKE) and as1 will not
+  move their `lui`. It matched VALEN func_80134030 and GYOZI func_80139E4C in C. Use
+  [[as1-scheduler-rule]] and classify every scheduling diff there before calling it blocked.
+- **"Closing these needs a scheduling pass" is wrong for the default-arm family.** It is still the
+  open question only for the same-block KANGEI func_8013852C case (a local order, volatile changes
+  nothing) and for the GEKO func_80136C20 weight problem; those two have trace-backed notes in
+  [[as1-scheduler-rule]] and stay guarded.
+
+Kept observation: `--resolve` rows overstate a one-instruction move because every later branch
+target shifts; report the true moved-instruction count with the row count. main func_8006D7EC's
+last row is still uopt constant propagation (`cc -S` shows `li $3,1`), a separate open item.
