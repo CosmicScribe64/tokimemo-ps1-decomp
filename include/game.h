@@ -394,4 +394,7 @@ typedef struct SrnRec28 {
     /* 0x20 */ u32 unk_20;
     /* 0x24 */ u8 *unk_24;
 } SrnRec28; /* size 0x28 */
+/* Record i of D_80121750. srn_set indexes the global array directly: with a record pointer as1
+ * cannot move the record loads above the stack stores (T-25006). */
+#define SRN_REC(i) (((SrnRec28 *)D_80121750)[i])
 #endif

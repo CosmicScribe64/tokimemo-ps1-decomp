@@ -134,7 +134,73 @@ INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set_gpu);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_set);
+/* Matching notes (T-25006): the record fields are read through the global array (SRN_REC), not a
+ * pointer, the row and column positions are written as expressions (uopt strength-reduces them into the
+ * two induction variables), and cols, rows are computed before wid, hgt, left so cols wins $fp. */
+s32 srn_set(s32 arg0) {
+    SrnRec28 *rec; /* FAKE: T-25006, unused; its stack slot keeps the frame at 0xC0 and the spill homes */
+    s32 w0;
+    s32 h0;
+    s32 tw;
+    s32 th;
+    s32 ox;
+    s32 oy;
+    s32 cw;
+    s32 ch;
+    s32 xoff;
+    s32 rows;
+    s32 yoff;
+    u32 *src;
+    s32 row;
+    s32 left;
+    s32 col;
+    s32 wid;
+    s32 hgt;
+    s32 x;
+    s32 idx;
+    s32 cols;
+    w0 = SRN_REC(arg0).unk_0E;
+    h0 = SRN_REC(arg0).unk_0F;
+    tw = SRN_REC(arg0).unk_10;
+    th = SRN_REC(arg0).unk_11;
+    ox = SRN_REC(arg0).unk_12;
+    oy = SRN_REC(arg0).unk_13;
+    cw = SRN_REC(arg0).unk_14;
+    ch = SRN_REC(arg0).unk_15;
+    xoff = SRN_REC(arg0).unk_02;
+    yoff = SRN_REC(arg0).unk_06;
+    src = SRN_REC(arg0).unk_08;
+    if (h0 == 0 || w0 == 0) {
+        return -1;
+    }
+    cols = cw * tw / w0;
+    rows = ch * th / h0;
+    wid = SRN_REC(arg0).unk_16;
+    hgt = SRN_REC(arg0).unk_18;
+    left = SRN_REC(arg0).unk_1C;
+    for (row = 0; row < rows; row++) {
+        if (th * row + yoff + h0 * oy >= -0x77) {
+            for (col = 0; col < cols; col++) {
+                if (th * row + yoff >= 0x79) {
+                    return 0;
+                }
+                x = tw * col + xoff;
+                if (tw * col + xoff + ox * w0 >= -0x9F) {
+                    if ((*src & 0xFFFF) != 0) {
+                        idx = *src & 0xFFFF;
+                        mod_set_gpu(0, idx, x, th * row + yoff, wid, hgt, SRN_REC(0).unk_0C);
+                    }
+                }
+                left--;
+                src++;
+                if (left == 0) {
+                    return 0;
+                }
+            }
+        }
+    }
+}
+
 
 void srn_init(s32 arg0, u32 *arg1, s32 arg2) {
     u8 *p;
