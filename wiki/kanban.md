@@ -53,6 +53,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down|T-25008 Closers: main func_8005B43C, func_8006BA40, parameter_up_down]]
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]
