@@ -1669,3 +1669,6 @@ Catalog refreshed:729 tickets,428 sections,3,077 functions. Docker wiki lint rep
 ## [2026-10-20] decision | Plan for the remaining functions
 
 [[plan-remaining]] gives any agent (including cheap ones) the rules and per-class recipes for the last 127 functions; the classified list is [[data/remaining-2026-10-20]] (A 8 near misses, B 18 guarded, C 11 good drafts, D 90 reconstructions). T-24800 and T-24900 Done ([[as1-scheduling]], [[as1-scheduler-rule]]).
+
+## [2026-10-20] ticket | T-25002 class C ENDING, GEKO, ETC
+[[tickets/T-25002-class-c-ending-geko-etc]] created and set In Progress (worktree c-m2): ENDING `func_801387B0`, GEKO `func_80133C50`, ETC `func_80144224` from [[plan-remaining]] class C.
