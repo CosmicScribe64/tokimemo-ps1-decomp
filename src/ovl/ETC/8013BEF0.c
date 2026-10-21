@@ -355,9 +355,12 @@ void func_8013CC74(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-24714, 9 rows. Remaining: the three switch compares use
- * $v0 here and $v1 in the original (T-24706's byte-view switch is the lead but
- * unrolls the buf[] loop), plus the case-2 0xA000/0x6000 ori order. */
+/* NON_MATCHING: T-24921, 3 rows. Remaining: the three switch compares use $v0
+ * here and $v1 in the original. The byte-view selector
+ * `switch (*(u8 *)&D_800E6280.unk_110D)` fixes those three rows exactly but makes
+ * uopt constant-fold the four-trip buf[] loop (89 rows, i no longer in a register,
+ * frame 8 bytes small); every selector form that compares on $v1 does this. The
+ * case-2 schedule matches: buf[0]/buf[1] and the for head share one source line. */
 s32 func_8013CCE4(void) {
     s32 pad; /* FAKE: unused slot, the original frame has it (real source unknown). T-22019 */
     s32 buf[6];
@@ -389,8 +392,7 @@ s32 func_8013CCE4(void) {
         if (D_800E6280.unk_F88 & 0x20) {
             /* FAKE: the two-literal line and the one-line loop keep as1's
              * scheduling; the byte chain shares one li, as the original. T-24706 */
-            buf[1] = 0x801E6000; buf[0] = 0x801E2000;
-            for (i = 2; i < 6; i++) buf[i] = 0x801E2000 + i * 0x4000;
+            buf[0] = 0x801E2000; buf[1] = 0x801E6000; for (i = 2; i < 6; i++) buf[i] = 0x801E2000 + i * 0x4000;
             func_8004A1A0(buf, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 5);
             D_801220D0 = 0x01000000;
             (&D_801220E0)[0] = (&D_801220E0)[1] = (&D_801220E0)[2] = 0x80;
