@@ -1,7 +1,7 @@
 ---
 id: T-25013
 title: "NEXT STEP: compiler-level levers (uopt/ugen/as1 emulation rules) to unblock the last ~119 functions"
-status: In Progress
+status: In Review
 priority: high
 type: tooling
 assignee: octa
@@ -181,3 +181,43 @@ with build-step-gaps.md (as1 order closed as source recipes only).
 KANGEI func_8013852C is the per-block scheduler, also not the global
 mover. Lever 4 has no build-step rule to implement; the +1 condition
 above is the input the GEKO source work needed.
+
+### Lever 5 session notes (Octa, remote, 2026-10-21)
+
+Question: can a uniform rule change uopt's colouring order for
+unconstrained ranges (first-mention order, per the T-25012 regdiff
+finding) toward the priority order the original shows? Test bed was
+main func_8006A044, whose residuals are exactly this class (the head
+month load coloured $v0 against the original's $v1, and the per-arm
+copy the original's allocator kept).
+
+The OPTN sweep was repeated against this function: every option
+0..530 at value 0, and 400..464 at values 1 and 2, inserted before ENT
+through the same cvt_pass knob as lever 3. Only option 404 changes
+the output, and it makes it far worse (194 rows against the 97
+baseline; it also worsened the lever 3 target). No uopt option
+controls the colouring order.
+
+The colour table itself is uopt-internal: neither shim sees it.
+cvt_pass rewrites ucode records before and after uopt, and a
+pre-rewrite that reordered independent statements to change
+first-mention order would be per-function tuning toward an unknown
+original order, not a uniform rule (CODING_STANDARDS 7a). ugen's temp
+ring choice (the GYOZI case) is likewise allocator-internal; the
+ugen shim's one adopted rule (T-24092) is a state transform with a
+proof, and no equivalent proof exists for renumbering temps. Lever 5
+does not exist as a uniform build rule with the controls this
+pipeline exposes. func_8006A044's residuals stand as allocator
+artifacts of the original build.
+
+### Outcome (Octa, 2026-10-21)
+
+All five levers investigated with traces on the pinned toolchain;
+none of the five exists as a uniform compiler-level rule, and no
+function was promoted. The durable results are the negative results
+plus two pieces of positive knowledge the project did not have: the
+as1 weight pass's +1 region test (lever 4, also written into
+[[as1-scheduler-rule]]) and the confirmation that unused locals are
+already elided (lever 2). The remaining ~119 functions' gaps are
+allocator and source-shape artifacts, not missing compiler switches.
+Ticket to In Review for the maintainer's review of these findings.

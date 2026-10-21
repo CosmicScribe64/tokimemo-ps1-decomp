@@ -1786,3 +1786,14 @@ block's scan stops at the weight-7 switch block as documented; the
 original's CFG must have earned a +1 there, a source-shape matter.
 Detail in [[tickets/T-25013-compiler-level-levers]]; the open item in
 [[as1-scheduler-rule]] is answered there.
+
+## [2026-10-21] ticket | T-25013 complete: all five levers investigated, none is a uniform rule
+
+Lever 5 session on main func_8006A044: the OPTN sweep (0..530, plus
+values 1 and 2 for 400..464) found no option controlling uopt's
+colouring order, and the colour table is not visible to either build
+shim, so no uniform rule can express it. With that, all five levers
+in [[tickets/T-25013-compiler-level-levers]] are concluded: none
+exists as a compiler-level rule, no functions promoted, and the
+ticket moves to In Review with the full evidence trail (the as1 +1
+region test in [[as1-scheduler-rule]] is the positive result).
