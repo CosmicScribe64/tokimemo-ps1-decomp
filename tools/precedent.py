@@ -36,20 +36,28 @@ PATTERNS = {
 }
 
 
-VOL_DECL = re.compile(r"\bvolatile\b[^;]*\b(D_[0-9A-F]{8})\b")
+VOL_DECL = re.compile(r"^\s*(?:extern\s+)?volatile\s+[\w\s\*]+?(D_[0-9A-F]{8})\s*(?:\[|;)", re.M)
 
 
 def volatile_symbols(src_root):
-    """D_ symbols declared volatile anywhere in include/ or src/
-    headers: the declaration is project-wide, so any function reading
-    one was compiled with the volatile form."""
+    """D_ symbols with a declaration-shaped volatile line in a header
+    (include/**/*.h, or a src file's pre-function header block): such a
+    declaration is project-wide, so any function reading one was
+    compiled with the volatile form."""
     syms = set()
-    for sub in ("include", "src"):
-        base = os.path.join(src_root, sub)
-        for root, _, files in os.walk(base):
-            for fname in files:
-                if fname.endswith((".h", ".c")):
-                    syms.update(VOL_DECL.findall(open(os.path.join(root, fname)).read()))
+    base = os.path.join(src_root, "include")
+    for root, _, files in os.walk(base):
+        for fname in files:
+            if fname.endswith(".h"):
+                syms.update(VOL_DECL.findall(open(os.path.join(root, fname)).read()))
+    base = os.path.join(src_root, "src")
+    for root, _, files in os.walk(base):
+        for fname in files:
+            if fname.endswith(".c"):
+                text = open(os.path.join(root, fname)).read()
+                fns = split_functions(text)
+                header = fns[0][1] if fns else ""
+                syms.update(VOL_DECL.findall(header))
     return syms
 
 
