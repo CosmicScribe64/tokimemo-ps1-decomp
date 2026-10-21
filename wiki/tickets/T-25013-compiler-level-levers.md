@@ -1,9 +1,10 @@
 ---
 id: T-25013
 title: "NEXT STEP: compiler-level levers (uopt/ugen/as1 emulation rules) to unblock the last ~119 functions"
-status: Ready
+status: In Progress
 priority: high
 type: tooling
+assignee: octa
 created: 2026-10-21
 updated: 2026-10-21
 depends_on:
