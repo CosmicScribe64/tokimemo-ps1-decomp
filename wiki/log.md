@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] query | Rank the remaining large functions
-
-Docker scan of current source INCLUDE_ASM entries and generated size headers identifies TEL func_80136724 as the largest remaining function (6,580 code bytes; older 7,044 includes jump tables). Ranked next targets and the prior exhausted TEL month-promotion avenue are recorded in [[tickets/T-24900-completion-orchestration]]. Three Sol workers remain active; no additional match claimed.
-
 ## [2026-10-20] ticket | T-24502 TACO completion
 
 Created [[tickets/T-24502-taco-completion]] In Progress in an isolated worktree from 2c7293275. Read [[index]], [[status]], [[playbook]] and project standards; TACO source ownership only.
@@ -1706,6 +1702,7 @@ Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `fun
 
 ## [2026-10-20] ticket | T-25010 to In Review
 [[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]] (branch c-m7): no match. BG slot types and tables moved from include/ovl/OPTION.h to include/main_api.h; main `func_8004A1A0` draft now has the original instruction count; `func_80065964` draft rolled with a `goto` loop (frame and range splits left); `strCallback` guard unchanged. Drafts in drafts/T-25010/main/. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
+
 ## [2026-10-20] ticket | T-25009 created, In Progress
 [[tickets/T-25009-closers-etc-geko-mod-set-gpu]] created, In Progress (branch n2): closers for ETC `func_80146D4C`, GEKO `func_80133C50`, main `mod_set_gpu`.
 
