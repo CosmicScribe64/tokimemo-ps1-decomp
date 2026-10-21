@@ -1705,3 +1705,8 @@ promotion, but three of four moved and every one now has a mechanism-level diagn
   web plus two dead parameter tests at the top, FAKE T-24928); the induction-init order and the
   per-arm narrowing copy remain.
 Clean build 27/27, headers/globals OK. tools/progress.py: 6,826 / 6,952 (92.2%), 126 left.
+## [2026-10-20] ticket | T-25002 class C ENDING, GEKO, ETC
+[[tickets/T-25002-class-c-ending-geko-etc]] created and set In Progress (worktree c-m2): ENDING `func_801387B0`, GEKO `func_80133C50`, ETC `func_80144224` from [[plan-remaining]] class C.
+
+## [2026-10-20] ticket | T-25002 to In Review
+[[tickets/T-25002-class-c-ending-geko-etc]]: no match. GEKO `func_80133C50` guarded at 13 rows (from the T-24503 cost-44 body: u8 cast, `g * 1`, word-local C50 read); ENDING `func_801387B0` and ETC `func_80144224` stay INCLUDE_ASM with drafts in drafts/T-25002/. Notes in [[matching-notes]]. Clean build 27/27 and the header, globals and proto checks pass.

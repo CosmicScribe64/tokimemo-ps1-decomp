@@ -109,6 +109,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24901-func-8013852c-80137B90|T-24901 KANGEI:func_8013852C (src/ovl/KANGEI/80137B90.c)]]
 - [ ] [[tickets/T-24903-func-80132d0c-80132760|T-24903 VALEN:func_80132D0C (src/ovl/VALEN/80132760.c)]]
 - [ ] [[tickets/T-25001-class-c-main-sndisp-strcallback|T-25001 Class C: main sndisp, strCallback, func_80065964]]
+- [ ] [[tickets/T-25002-class-c-ending-geko-etc|T-25002 Class C: ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224]]
 - [ ] [[tickets/T-24571-ending-first-portrait-view|T-24571 Test the first ENDING portrait16 alias view]]
 - [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]
 - [ ] [[tickets/T-24519-master-sibling|T-24519 Transfer recovered MASTER animation sibling lifetimes]]
