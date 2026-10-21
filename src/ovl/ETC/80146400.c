@@ -293,7 +293,8 @@ void func_80146C68(s32 arg0) {
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-25007, 12 rows; the last block (score load, grade chain, D_801230F4 increment) has every
  * ugen temporary one lower than the original (the original skips one ring slot before the index shift
- * and one between the load and the add of the increment). */
+ * and one between the load and the add of the increment). T-25009: no gain from masks, casts or
+ * chained assignments on the increment and the index, an idx local (88), or the permuter (900 s). */
 s32 func_80146D4C(void) {
     s32 pad; /* FAKE: T-25007, unused word keeps the original frame 0x58 (ret at sp+0x48, main 0x44, bio 0x3C) */
     s32 score;

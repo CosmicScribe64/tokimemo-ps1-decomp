@@ -1,7 +1,7 @@
 ---
 id: T-25009
 title: "Closers: ETC func_80146D4C, GEKO func_80133C50, main mod_set_gpu"
-status: In Progress
+status: In Review
 assignee: n2
 created: 2026-10-20
 updated: 2026-10-20
@@ -14,10 +14,12 @@ Close three guarded functions: ETC `func_80146D4C` (12 rows), GEKO `func_80133C5
 
 ## Acceptance criteria
 
-- [ ] Each function matched in plain C, or its guard note updated with T-25009, rows and what was tried
-- [ ] `## T-25009` in [[matching-notes]]
-- [ ] Clean build 27/27; check_headers, migrate_globals --check, sync_protos --check-branch pass
+- [x] Each function matched in plain C, or its guard note updated with T-25009, rows and what was tried
+- [x] `## T-25009` in [[matching-notes]]
+- [x] Clean build 27/27; check_headers, migrate_globals --check, sync_protos --check-branch pass
 
 ## Notes
 
 ## Comments
+
+- 2026-10-20: no match. mod_set_gpu 28 -> 17 rows (empty `if (last) {}`), GEKO 13 and ETC 12 unchanged; notes in [[matching-notes]]. To In Review.

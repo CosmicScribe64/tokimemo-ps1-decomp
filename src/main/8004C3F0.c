@@ -132,8 +132,9 @@ void func_8004DAC4(s32 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-25006, 28 rows; clut is coloured before last ($s3 instead of $s7, so last, the x and
- * col counters and data sit one register lower), and the p and ypos spill slots are 4 bytes off.
+/* NON_MATCHING: T-25009, 17 rows (T-25006: 28); last now takes $s3, but clut (uopt priority 100) still
+ * outranks the x counter and data, so clut sits in $s4 instead of $s7 and x/data shift; the p and ypos
+ * spill slots are 4 bytes off (p is a spilled expression range, not its declared home).
  * search_tpage_multi is viewed as returning u16 here (the original compares the raw result and keeps
  * the narrowed copy). */
 u16 search_tpage_multi();
@@ -215,6 +216,8 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
                         }
                         last = tpage;
                     }
+                    /* FAKE: T-25009, an extra read of last raises its priority above clut */
+                    if (last) {}
                     s->clut = func_8009ED74(cx + clut * 16, cy);
                     AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + pri * 4 + 4, s);
                     data++;
