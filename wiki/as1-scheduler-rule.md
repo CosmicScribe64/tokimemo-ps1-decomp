@@ -62,5 +62,5 @@ Use it when the trace shows the wrong instruction is a `lui` of a global that is
 
 ### Open
 
-- What makes the weight of a block add 1 instead of 3 (the region test in the weight pass); it is the likely lever for GEKO `func_80136C20`.
+- What makes the weight of a block add 1 instead of 3: answered 2026-10-21 (T-25013, from the pinned recomp as1 source, confirmed on a traced GEKO `func_80136C20` run). A predecessor contributes pred + 1 exactly when at least one of its successors is outside the current region bitset (the test is func_428758 in the recomp source, walking the predecessor's successor list); pred + 3 when every successor stays inside; pred - 3 when the current block dominates the predecessor (a back edge). Predecessors outside the region are skipped. For GEKO `func_80136C20` the original's switch-head CFG must have earned one such +1; that is a source-shape question for the GEKO ticket, not an as1 build rule.
 - A form that pins one of two reloads of the same global for VALEN `func_80132D0C`.

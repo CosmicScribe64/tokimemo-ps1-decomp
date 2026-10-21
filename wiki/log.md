@@ -1748,3 +1748,103 @@ Added `tools/lever_lab.py` and `tools/test_lever_lab.py`: one command rebuilds e
 ## [2026-10-21] ticket | T-25013 first lever experiment: zcopy off is not the lever
 
 A Sonnet worktree run (branch T-25013, merged) tried lever 1 on main `func_8006A044` and ran out of usage before levers 2-5. Result: our compiler already promotes the byte and stores it at the same places; the difference is the arm shape (original `or t5,v0,zero; ori; andi v0; sb v0`, ours `ori; sb t5`). Forcing uopt `OPTN zcopy 0` everywhere is not uniform (`lever_lab`: 22 guarded changes, 19 worse, e.g. `main func_8006D7EC` 2 -> 1630) and did not produce the copy. Next step on that lever: trace which uopt phase collapses the `LOD R; STR R` copy. Levers 2-5 untouched; ticket [[tickets/T-25013-compiler-level-levers]] stays Ready. Worktree `/Users/lila/Documents/Projects/tokimemo-wt/T-25013` (local, game data copied in) can be reused or removed with `git worktree remove`.
+
+## [2026-10-21] ticket | T-25013 claimed by Octa (remote, cloud workflow)
+
+Octa (Muse, working remotely per the maintainer's direction) takes [[tickets/T-25013-compiler-level-levers]]: compiler-level levers from the cloud workflow ([[cloud-matching]]), since the maintainer is away from the Mac. Setup: public clone plus the project Docker image built locally; single-function packets stay outside the repo and are never committed. Full uniformity gate runs through CI on pull requests (progress workflow) until a local tree with the disc is available. First target is the lever 1 follow-up the ticket already queues: trace which uopt phase collapses the `LOD`/`STR` copy pair on main `func_8006A044`, using the instrumented uopt from [[ending-allocator-trace]]. Branch: `octa/t25013-levers`.
+
+## [2026-10-21] build | T-25013 lever 1 traced: no uopt phase removes the copy; it is never created
+
+Octa's remote session on [[tickets/T-25013-compiler-level-levers]]: built the instrumented uopt (pristine `uopt.c` hash matches [[ending-allocator-trace]]) and dumped the ucode streams for the `func_8006A044` draft. The constant-address indirect form of the `unk_F64` accesses is not the lever (a gated `cvt_pass` normalization to direct `LOD`/`STR` fires on all 19 sites, final score unchanged at 97). The traced expression graph shows the byte as one evolving version chain; the original's extra per-arm copy is an allocator coalescing artifact, which puts `func_8006A044` on lever 5, not lever 1. Details in the ticket. Environment note: the cloud VM cannot run Docker containers (netns blocked), so the pinned toolchain runs natively there and CI is the gate; the Docker-only rule for the maintainer's host is unaffected.
+
+## [2026-10-21] build | T-25013 lever 3 concluded: no uopt option controls the boolean CSE
+
+Lever 3 session on ENDING func_801387B0: baseline reproduced, mechanism
+traced in the ucode dumps (uopt stores the CSE'd (flag & 1) == 1 boolean
+at the second compare and reloads it after; the original shares only the
+AND), OPTN sweep over 0..530 found no controlling option, and the 7.1
+uopt stage CSEs identically. Lever 3 does not exist as a compiler rule.
+Detail in [[tickets/T-25013-compiler-level-levers]].
+
+## [2026-10-21] build | T-25013 lever 2 concluded: frame elision already happens, +8 is a lifetime artifact
+
+Lever 2 session on main func_80062948: micro-experiments show the IDO
+5.3 pipeline elides frame space for unused locals (an unused 32-byte
+struct and scalar leave the frame at -48), so the matrices draft's
+0xD8 vs 0xD0 frame is not a frame-pass gap. The extra 8 bytes are a
+materialized value the original keeps in a register, the same
+allocation behaviour as levers 1 and 5. Detail in
+[[tickets/T-25013-compiler-level-levers]].
+
+## [2026-10-21] build | T-25013 lever 4 concluded: the as1 +1 region test identified, no build rule
+
+Read the weight pass in the pinned recomp as1 source and confirmed it
+on a traced run of GEKO func_80136C20: a predecessor adds 1 (not 3)
+exactly when one of its successors leaves the current region bitset
+(func_428758), and -3 on a back edge to a dominator. The GEKO stall
+block's scan stops at the weight-7 switch block as documented; the
+original's CFG must have earned a +1 there, a source-shape matter.
+Detail in [[tickets/T-25013-compiler-level-levers]]; the open item in
+[[as1-scheduler-rule]] is answered there.
+
+## [2026-10-21] ticket | T-25013 complete: all five levers investigated, none is a uniform rule
+
+Lever 5 session on main func_8006A044: the OPTN sweep (0..530, plus
+values 1 and 2 for 400..464) found no option controlling uopt's
+colouring order, and the colour table is not visible to either build
+shim, so no uniform rule can express it. With that, all five levers
+in [[tickets/T-25013-compiler-level-levers]] are concluded: none
+exists as a compiler-level rule, no functions promoted, and the
+ticket moves to In Review with the full evidence trail (the as1 +1
+region test in [[as1-scheduler-rule]] is the positive result).
+
+## [2026-10-21] ticket | T-25014 created: variant search automation for allocator and source-shape residuals
+
+At Lila's direction, follow-on work to T-25013: a packet-based variant
+search engine that hill-climbs source transformations from the project's
+matching history (lifetime shaping, respellings, CFG shapes informed by
+the as1 +1 region test), scored against single-function packets in the
+remote environment. Ticket [[tickets/T-25014-allocator-source-shape-automation]],
+branch octa/t25014-shape-automation stacked on octa/t25013-levers.
+
+## [2026-10-21] ticket | T-25014 tooling landed: packet variant search engine, no improvement on the two hardest beds
+
+Committed tools/shape_search.py (hill-climb with plateau moves),
+tools/shape_transforms.py (eight transform families from the matching
+notes), tools/shape_score.py (relocation-aware packet metric) and
+tools/test_shape_search.py (passing). Runs: GEKO func_80136C20, 236
+trials, no improvement on 15 (goto form neutral, as lever 4 predicts);
+main func_8006A044, 400 trials, no improvement on 113 (field copies
+cost more than they gain). Ticket [[tickets/T-25014-allocator-source-shape-automation]]
+to In Review; the engine is ready to sweep the remaining functions at
+the maintainer's pace.
+
+## [2026-10-21] ticket | T-25015 created: lever-expansion tooling programme (six tools)
+
+At Lila's direction, build the instrumentation first, then test across
+the remaining functions: regression corpus + uniformity harness, trace
+observatory, census + delay-slot oracle, rule fuzzing lab, construct
+precedent miner, sweep ledger + batch runner. Ticket
+[[tickets/T-25015-lever-expansion-tooling]], branch octa/t25015-tooling.
+
+## [2026-10-21] setup | Full asm tree now mirrored in the remote scratch (T-25015 reach)
+
+Lila zipped the generated asm/ tree on the host (14,087 listings) and
+it was pulled into the remote VM's scratch tree only (never committed,
+same handling as packets). Verified: the GEKO func_80136C20 reference
+rebuilt from the bundle is identical to the packet-built one. The
+census, fuzz lab, and shape engine can now run across all remaining
+functions remotely; formal match verdicts still come from CI or the
+host build. Her laptop checkout was also verified current: main at
+1ddbbe29, matching origin.
+
+## [2026-10-21] ticket | T-25015 complete: six tools landed, OPTN space closed by lab evidence, census run
+
+All six tools are in tools/ with passing tests (corpus gate,
+trace_lab, census, rule_fuzz, precedent, sweep_ledger). Fuzz: ~660
+single OPTN values and all 45 active pairs across three beds, no
+improvement anywhere, and the corpus gate shows no active knob is
+uniform. Census over the mirrored asm bundle: references build for
+all 96 INCLUDE_ASM functions; only 9 have machine-usable candidates,
+the rest are draft fragments (the v2 gap, recorded in the ticket).
+Ticket [[tickets/T-25015-lever-expansion-tooling]] to In Review.

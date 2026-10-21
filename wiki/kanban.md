@@ -46,13 +46,13 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-25013-compiler-level-levers|T-25013 NEXT STEP: compiler-level levers (uopt/ugen/as1 rules) to unblock the last ~119 functions]]
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
 
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
@@ -69,6 +69,9 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-25015-lever-expansion-tooling|T-25015 Lever-expansion tooling programme]]
+- [ ] [[tickets/T-25014-allocator-source-shape-automation|T-25014 Automation for allocator-artifact and source-shape residuals]]
+- [ ] [[tickets/T-25013-compiler-level-levers|T-25013 NEXT STEP: compiler-level levers (uopt/ugen/as1 rules) to unblock the last ~119 functions]]
 - [ ] [[tickets/T-25012-class-c-d-reconstruction|T-25012 Class C/D reconstruction: missing drafts, class C, class D smallest first]]
 - [ ] [[tickets/T-25011-class-a-closers-as1-levers|T-25011 Class A closers (8 near misses) with the as1 levers]]
 - [ ] [[tickets/T-24926-func-80133024-801323E0|T-24926 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
