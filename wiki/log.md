@@ -1848,3 +1848,12 @@ uniform. Census over the mirrored asm bundle: references build for
 all 96 INCLUDE_ASM functions; only 9 have machine-usable candidates,
 the rest are draft fragments (the v2 gap, recorded in the ticket).
 Ticket [[tickets/T-25015-lever-expansion-tooling]] to In Review.
+
+## [2026-10-21] ticket | T-25016 created: candidate reconstruction for the fragment functions
+
+Follow-on to T-25015 at Lila's direction: extractor v2 to assemble
+candidates from drafts/ fragments, register-canonicalized census
+scoring, then per-function reconstruction against the mirrored
+references. Ticket [[tickets/T-25016-candidate-reconstruction]],
+branch octa/t25016-reconstruction. The T-25013/14/15 stack is
+proposed to main as PR #66.
