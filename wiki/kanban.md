@@ -6,7 +6,6 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-24929-uopt-zcopy-scope|T-24929 uopt zcopy scope: propagate global copies but not local induction copies]]
 
 - [ ] [[tickets/T-21000-event-goto-loops-and-seq-views|T-21000 EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4 views]]
 - [ ] [[tickets/T-21001-recover-wave-10-list-6-near-misses|T-21001 Recover the wave-10 list 6 near misses: BUNKAKEN func_80143DD0 and RPG_BAT func_80139510]]
@@ -76,6 +75,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+- [ ] [[tickets/T-24929-uopt-zcopy-scope|T-24929 uopt zcopy scope: propagate global copies but not local induction copies]]
 - [ ] [[tickets/T-24926-func-80133024-801323E0|T-24926 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
 - [ ] [[tickets/T-24928-func-8006c988-800674B0|T-24928 main:func_8006C988 (src/main/800674B0.c)]]
 - [ ] [[tickets/T-24927-func-80139290-801388D0|T-24927 BUNKA_SD:func_80139290 (src/ovl/BUNKA_SD/801388D0.c)]]

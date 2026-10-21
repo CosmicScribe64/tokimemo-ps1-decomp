@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,826 / 6,952 functions, 2,100,368 / 2,276,920 bytes (92.2%), measured with Docker `tools/progress.py` after T-24900 and T-24903 promotions (126 remaining). SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6,827 / 6,952 functions, 2,100,952 / 2,276,920 bytes (92.3%), measured with Docker `tools/progress.py` after the T-24929 build step matched ETC func_8013CCE4 (125 remaining). SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
 - Remaining by unit (129 functions): main 51, TACO 12, GEKO 7, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 1, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
@@ -22,6 +22,8 @@ The one page for "where are we". Update it when a wave, a local or cloud session
   Wave C-2 (T-24925..T-24928) on the same functions: main func_8006C988 11->5 rows, mechanism
   diagnoses for ETC func_8013CCE4 (uopt zcopy, T-24929), GEKO func_80133024 (two day ranges) and
   BUNKA_SD func_80139290 (same-block order, lever banked in drafts/T-24927/).
+  T-24929 closed the ETC func_8013CCE4 gap with a build step (`tools/cvt_pass.py` switch compares, zero
+  regressions, [[matching-notes]] T-24929); the function is matched.
   Class A is running as T-24901..T-24908 (one function per file-disjoint worker, 45-minute box).
 - as1 scheduling: rule and `volatile` lever in [[as1-scheduler-rule]] (T-24900); per-file options ruled out in [[as1-scheduling]] (T-24800).
 

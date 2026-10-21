@@ -1762,3 +1762,19 @@ promotion, but three of four moved and every one now has a mechanism-level diagn
   web plus two dead parameter tests at the top, FAKE T-24928); the induction-init order and the
   per-arm narrowing copy remain.
 Clean build 27/27, headers/globals OK. tools/progress.py: 6,826 / 6,952 (92.2%), 126 left.
+
+## [2026-10-20] ticket | T-24929 In Progress
+[[tickets/T-24929-uopt-zcopy-scope]] claimed (assignee claude), worktree uopt-scope: measure a uniform uopt
+copy-propagation scope rule (globals propagated, local induction copies kept) on the whole build.
+
+## [2026-10-20] build | T-24929 switch-compare rule in cvt_pass, ETC func_8013CCE4 matched
+[[tickets/T-24929-uopt-zcopy-scope]]: the zcopy-scope hypothesis (T-24925) did not hold. The three rows were
+as1 leaving the chain's compares on the temporary's register. New uniform step `switch_compares` in
+`tools/cvt_pass.py` (on uopt's output, zcopy-off procedures: the entry copy is propagated into the chain's
+compares). It fires in 267 procedures, changes 0 matched functions, and matches ETC func_8013CCE4 in C (guard
+removed). Clean build 27/27; progress 6,827 / 6,952 (92.3%). Rejected variants changed 24-275 matched functions
+([[matching-notes]] T-24929). Updated [[build-step-gaps]], [[toolchain]], [[status]],
+[[tickets/T-24925-func-8013cce4-8013BEF0]]. Scratch tools in drafts/T-24929/.
+
+## [2026-10-20] ticket | T-24929 In Review
+[[tickets/T-24929-uopt-zcopy-scope]] moved to In Review; waiting for the code review against CODING_STANDARDS.md.

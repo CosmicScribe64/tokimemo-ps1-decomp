@@ -1,0 +1,670 @@
+#!/usr/bin/env python3
+# T-24929 scratch: tools/cvt_pass.py with the measured variants behind CVT_ZCOPY_SCOPE
+# (sprop, zstor, zstor1, sprop_zstor, sprop_zstor_stored, rprop, rprop_all). To re-measure, copy it
+# over tools/cvt_pass.py in a scratch worktree and run measure.sh VARIANT. Not used by the build.
+"""Unsigned-load conversion pass for IDO 5.3 (T-1321).
+
+The original game code was built by a MIPS ucode compiler that keeps a global
+`u8`/`u16` variable in one register across basic blocks and calls (a compare
+chain on the global, then the reload after a call goes into the same
+register, `lui v1; lbu v1,%lo(D)(v1)`). IDO 5.3 does not, and the reason is
+one ucode instruction: its front end (cfe) writes every load of an unsigned
+8- or 16-bit variable as `LOD L` followed by `CVT J<-L` (widen to int).
+uopt then treats `cvt(D)` as an expression of its own: the compare chain uses
+the expression (a CSE temporary, usually `$v0`), and the variable `D` itself
+is left with too few uses to be worth a register, so its later loads get
+fresh ugen temporaries. A signed `s8`/`s16` global, whose load needs no
+`CVT`, is already promoted by IDO exactly like the original does (measured,
+wiki/matching-notes.md, "Unsigned-load conversion pass (T-1321)").
+
+The rule
+--------
+For every global (memory type S) variable that the procedure accesses only
+as unsigned and narrower than a word, the `CVT J<-L` that directly follows a
+`LOD` of it is removed before uopt runs. uopt then sees plain variable uses
+and allocates registers for the variable as it does for an `int` or signed
+global. Two consequences of the removal are undone, so that nothing else
+changes:
+
+  * operand order of `==`/`!=`: uopt puts a plain variable first when the
+    left operand is not one (uoptinput, "swap == and !="). With the CVT the
+    load was not a plain variable. The pass reorders the two operands in the
+    ucode so that uopt's result is the order it would have chosen with the
+    CVT; when no input order gives that result (the expression would have
+    to come before the variable), that one CVT is kept;
+  * signedness: without the CVT uopt types the load by its use (int) and
+    would emit `lb`/`lh`. After uopt, every load (`LOD`, `RLOD`) of a
+    rewritten variable gets its unsigned type back, so ugen emits
+    `lbu`/`lhu` as before.
+
+Constant operands (`LDC`, `LDA`) do not take part in the reordering: ugen
+emits the compare the same way for either order.
+
+Two conditions limit the removal (T-5010, measured on the original's switch
+and compare chains and on every matched function):
+
+  * entry: a procedure's CVTs are removed only for variables that it loads or
+    stores before its first call, branch or label. Where the first reference
+    comes later (`f(); switch (D)`, a switch inside an `if`), the original
+    compiles the selector like IDO does (`$v0`): 135 of 155 chains after a
+    call and 35 of 41 after a branch, against 260 of 283 `$v1` chains at the
+    entry (wiki/matching-notes.md, "Selector register rule (T-5010)");
+  * compare: only a widened value that goes straight into a comparison
+    (`==`, `!=`, `<`, `<=`, `>`, `>=`) or into a switch temporary loses its
+    CVT. A value that is assigned, passed or used in arithmetic keeps it, as
+    in the original (`x = D; g(D);` keeps `lui v0; lbu a0,(v0)`).
+
+K&R front end (T-7000)
+----------------------
+The build runs IDO in K&R mode (-cckr, tools/cc.py): the original promotes an
+unsigned char/short to unsigned int (sltiu, srl, divu on values loaded by lbu/lhu).
+IDO's K&R front end then writes no CVT at all, while the original's ucode had the
+widening for global variables: in the original, a compare of a narrow global against
+a constant held in a register puts the constant first (lbu 310 against 76, lh 40
+against 8; uopt's operand swap for a non-variable left operand), a compare of a word
+global puts the variable first (lw 83 against 24), and a compare of a narrow local or
+parameter read from its stack slot puts the variable first (59 against 0). So the pass
+first puts back the record IDO's ANSI front end writes: `CVT J<-L` after every load of
+a narrow unsigned S variable, unless the value goes straight into a store, a
+conversion, an array index, ++/--, a truth test, an operand swap or a narrow
+parameter (where ANSI writes none either); a switch temporary does get it. Locals and
+parameters are not widened. The rules below then work on that ucode exactly as they
+did on ANSI ucode.
+
+Switch temporaries
+------------------
+cfe evaluates a `switch` selector into a compiler temporary (a `VREG`) and
+compares the temporary. When the selector is an unsigned global (`LOD L` of a
+memory type S variable, widened or not), the original keeps the temporary:
+the global goes to one register and the temporary to another (`lbu v1,D;
+or v0,v1,zero` with the compares on `$v1`; the copy is dropped when its value
+is never needed). IDO's global copy propagation replaces the temporary by
+the global and gives the global `$v0`. For every procedure that assigns such
+a temporary before its first call, branch or label (the entry condition
+above), the pass turns uopt's global copy propagation off with an
+`OPTN 405 0` record (the switch behind `-Wo,-zcopy:0`) in front of the
+procedure's `ENT`; every other procedure gets `OPTN 405 1`. A switch on a
+local copy (`u8 mode = D; switch (mode)`) or on a signed global is not
+affected and keeps IDO's propagation, which is what the original does for
+those forms (wiki/matching-notes.md).
+
+Layer
+-----
+IDO runs cfe -> uopt -> ugen -> as1. tools/cc.py points IDO's USR_LIB at a
+directory whose `uopt` is a shim for this file: it rewrites uopt's input
+ucode, runs the real uopt, and rewrites uopt's output. The ucode is IDO's
+binary ucode (big-endian 32-bit words; record layout from the ido-decomp
+project's ucode.h and libu/uini.c). Anything the pass does not understand
+(an unknown opcode, an operand it cannot move, a truncated file) aborts with
+PassError; the build fails and nothing is guessed.
+
+Usage as the uopt shim:  cvt_pass.py --uopt /opt/ido/5.3/uopt <uopt args...>
+"""
+import os
+import struct
+import subprocess
+import sys
+import tempfile
+
+# Uopcode enum (ucode.h), in order.
+OPS = """abs add adj aent and aos asym bgn bgnb bsub cg1 cg2 chkh chkl chkn chkt
+cia clab clbd comm csym ctrl cubd cup cvt cvtl dec def dif div dup end
+endb ent eof equ esym fill fjp fsym geq grt gsym hsym icuf idx iequ igeq
+igrt ijp ilda ildv ileq iles ilod inc ineq init inn int ior isld isst istr
+istv ixa lab lbd lbdy lbgn lca lda ldap ldc ldef ldsp lend leq les lex
+lnot loc lod lsym ltrm max min mod mov movv mpmv mpy mst mus neg neq
+nop not odd optn par pdef pmov pop regs rem ret rlda rldc rlod rnd rpar
+rstr sdef sgs shl shr sign sqr sqrt ssym step stp str stsp sub swp tjp
+tpeq tpge tpgt tple tplt tpne typ ubd ujp unal uni vreg xjp xor xpar mtag
+alia ildi isti irld irst ldrc msym rcuf ksym osym irlv irsv""".split()
+OP = {name: i for i, name in enumerate(OPS)}
+
+# Record length in words (uini.c instlength; default 2).
+_LEN4 = """adj bgn cia clab ctrl comm cup cvt def dif int uni ent aent iequ igeq igrt
+ileq iles ineq fill ildv ilod inn istv istr lab ldef lca ldc lod mov mus optn
+par pdef regs rlda rldc rlod rnd rpar rstr sdef asym hsym sgs str swp csym esym
+fsym gsym lsym icuf isld isst pmov mpmv vreg typ ssym rcuf ldrc msym ksym osym
+ildi isti irld irst""".split()
+LENGTH = {OP[n]: 4 for n in _LEN4}
+LENGTH.update({OP["init"]: 6, OP["ilda"]: 6, OP["lda"]: 6, OP["xjp"]: 8})
+HASCONST = {OP[n] for n in "cia comm init lca ldc rldc ssym".split()}
+
+# Data types (ucode.h enum Datatype) and memory types (enum Memtype).
+DTYPES = "ACFGHIJKLMNPQRSWXZ"
+DT_J, DT_L = DTYPES.index("J"), DTYPES.index("L")
+STRING_DTYPES = {DTYPES.index(c) for c in "MQRSX"}
+MT_S = 4
+MT_M = 1
+MT_R = 3
+UCO_ZCOPY = 405   # uopt option number of `zcopy` (global copy propagation on/off)
+
+# Expression operators: operands popped (uini.c stack_pop) for ops that push
+# a value. Only these may appear inside an operand that the pass reorders;
+# all are free of side effects.
+EXPR_POP = dict(
+    abs=1, add=2, adj=1, And=2, cvt=1, cvtl=1, dec=1, div=2, equ=2, geq=2,
+    grt=2, ilod=1, inc=1, ior=2, ixa=2, lda=0, ldc=0, leq=2, les=2, lnot=1,
+    lod=0, max=2, min=2, mod=2, mpy=2, neg=1, neq=2, Not=1, rem=2, shl=2,
+    shr=2, sub=2, xor=2)
+EXPR_POP = {OP[k.lower()]: v for k, v in EXPR_POP.items()}
+CONSTS = {OP["ldc"], OP["lda"]}
+VOLATILE_ATTR = 1
+
+
+class PassError(Exception):
+    """The pass met something it cannot transform exactly."""
+
+
+class Insn:
+    """One ucode record: its 32-bit words and any trailing string bytes."""
+
+    __slots__ = ("words", "extra")
+
+    def __init__(self, words, extra=b""):
+        self.words = list(words)
+        self.extra = extra
+
+    @property
+    def opc(self):
+        return self.words[0] >> 24
+
+    @property
+    def dtype(self):
+        return (self.words[0] >> 16) & 0x1F
+
+    @property
+    def mtype(self):
+        return (self.words[0] >> 21) & 7
+
+    @property
+    def lexlev(self):
+        return self.words[0] & 0xFFFF
+
+    def set_dtype(self, dtype):
+        self.words[0] = (self.words[0] & ~(0x1F << 16)) | (dtype << 16)
+
+    def location(self):
+        """(memtype, block, offset, length) of a LOD/STR/RLOD record (same field layout)."""
+        return (self.mtype, self.words[1], self.words[3], self.words[2])
+
+
+def parse(data):
+    """List of Insn for a binary ucode file; raises PassError if it is malformed."""
+    if len(data) % 4:
+        raise PassError("ucode size is not a multiple of 4")
+    n = len(data) // 4
+    words = struct.unpack(">%dI" % n, data)
+    out, p = [], 0
+    while p < n:
+        opc = words[p] >> 24
+        if opc >= len(OPS):
+            raise PassError("unknown ucode opcode %d at word %d" % (opc, p))
+        length = LENGTH.get(opc, 2)
+        if opc in HASCONST:
+            length += 2
+        if p + length > n:
+            raise PassError("truncated ucode record at word %d" % p)
+        rec = words[p:p + length]
+        p += length
+        extra = b""
+        if opc in HASCONST:
+            dtype = (rec[0] >> 16) & 0x1F
+            if dtype in STRING_DTYPES or opc == OP["comm"]:
+                nwords = (rec[LENGTH.get(opc, 2)] + 3) // 4
+                nwords += nwords & 1
+                if p + nwords > n:
+                    raise PassError("truncated ucode string at word %d" % p)
+                extra = data[p * 4:(p + nwords) * 4]
+                p += nwords
+        out.append(Insn(rec, extra))
+    return out
+
+
+def serialize(insns):
+    return b"".join(struct.pack(">%dI" % len(i.words), *i.words) + i.extra for i in insns)
+
+
+def _unsigned_narrow_globals(insns):
+    """Locations of S variables narrower than a word that are only loaded/stored as unsigned."""
+    types = {}
+    for i in insns:
+        if i.opc in (OP["lod"], OP["str"]) and i.mtype == MT_S:
+            types.setdefault(i.location(), set()).add(i.dtype)
+    return {loc for loc, ts in types.items() if ts == {DT_L} and loc[3] < 4}
+
+
+CALL_OPS = {OP[n] for n in "cup icuf rcuf".split()}
+FLOW_OPS = {OP[n] for n in "fjp tjp ujp xjp ijp lab clab".split()}
+COMPARE_OPS = {OP[n] for n in "equ neq les leq grt geq".split()}
+
+
+def _spans(insns):
+    """[(start, end)] of every procedure; the whole stream when it has no ENT (unit tests)."""
+    return _procedures(insns) or [(0, len(insns))]
+
+
+def _entry_end(insns, start, end):
+    """Index of the procedure's first call, branch or label (`end` if it has none)."""
+    for k in range(start, end):
+        if insns[k].opc in CALL_OPS or insns[k].opc in FLOW_OPS:
+            return k
+    return end
+
+
+def _entry_locations(insns, start, end):
+    """S locations that the procedure loads or stores before its first call, branch or label."""
+    return {i.location() for i in insns[start:_entry_end(insns, start, end)]
+            if i.opc in (OP["lod"], OP["str"]) and i.mtype == MT_S}
+
+
+def _consumer(insns, k):
+    """The record that takes the value pushed by insns[k] off the stack (None at the end).
+    VREG records are declarations and are skipped."""
+    depth = 1
+    for j in range(k + 1, len(insns)):
+        r = insns[j]
+        if r.opc == OP["vreg"]:
+            continue
+        pops = EXPR_POP.get(r.opc)
+        if pops is None or pops >= depth:
+            return r
+        depth = depth - pops + 1
+    return None
+
+
+def _compared(insns, k, temps):
+    """True if the widened value of insns[k] goes straight into a comparison or a switch temporary."""
+    c = _consumer(insns, k)
+    if c is None:
+        return False
+    if c.opc in COMPARE_OPS:
+        return True
+    return c.opc == OP["str"] and c.mtype == MT_M and (c.words[1], c.words[3]) in temps
+
+
+def _widenings(insns, unsigned):
+    """Indices of the CVT J<-L records that directly follow a LOD of a location in `unsigned`."""
+    found = set()
+    for k in range(1, len(insns)):
+        cvt, lod = insns[k], insns[k - 1]
+        if (cvt.opc == OP["cvt"] and cvt.dtype == DT_J and (cvt.words[2] >> 24) == DT_L
+                and lod.opc == OP["lod"] and lod.dtype == DT_L and lod.mtype == MT_S
+                and lod.location() in unsigned):
+            found.add(k)
+    return found
+
+
+def _operand(insns, end):
+    """Index range [start, end] of the side-effect-free expression that ends at `end`, or None."""
+    need, k = 1, end
+    while k >= 0:
+        i = insns[k]
+        pops = EXPR_POP.get(i.opc)
+        if pops is None:
+            return None
+        if i.opc in (OP["lod"], OP["ilod"]) and i.lexlev & VOLATILE_ATTR:
+            return None
+        need += pops - 1
+        if need == 0:
+            return (k, end)
+        k -= 1
+    return None
+
+
+def pre(insns):
+    """Remove the widenings (in place on a copy). Returns (new insns, rewritten locations)."""
+    unsigned = _unsigned_narrow_globals(insns)
+    temps = {(i.words[1], i.words[3]) for i in insns if i.opc == OP["vreg"]}
+    strip = set()
+    for start, end in _spans(insns):
+        entry = _entry_locations(insns, start, end)
+        for k in _widenings(insns[start:end], unsigned):
+            k += start
+            if insns[k - 1].location() in entry and _compared(insns, k, temps):
+                strip.add(k)
+    if not strip:
+        return list(insns), set()
+    keep = set()
+    swaps = {}   # start of the first operand -> (first range, second range)
+    for k, i in enumerate(insns):
+        if i.opc not in (OP["equ"], OP["neq"]):
+            continue
+        b = _operand(insns, k - 1)
+        a = _operand(insns, b[0] - 1) if b else None
+        involved = [j for j in strip if (b and b[0] <= j <= b[1]) or (a and a[0] <= j <= a[1])]
+        if not involved:
+            continue
+        if a is None or b is None:
+            raise PassError("cannot delimit the operands of %s at record %d" % (OPS[i.opc], k))
+
+        def single(r, op):
+            return r[0] == r[1] and insns[r[0]].opc == op
+
+        def plain_with_cvt(r):     # a plain variable for uopt while the CVT is there
+            return single(r, OP["lod"])
+
+        def plain_without_cvt(r):  # ... and after the CVT is removed
+            return plain_with_cvt(r) or (r[1] == r[0] + 1 and r[1] in strip
+                                         and insns[r[0]].opc == OP["lod"])
+
+        if single(a, OP["ldc"]) or single(a, OP["lda"]) or single(b, OP["ldc"]) or single(b, OP["lda"]):
+            continue
+        want = (a, b) if plain_with_cvt(a) else (b, a)
+        if plain_without_cvt(want[0]):
+            give = want
+        elif not plain_without_cvt(want[1]):
+            give = (want[1], want[0])
+        else:
+            keep.add(want[1][1])
+            give = (want[1], want[0])
+        if give != (a, b):
+            swaps[a[0]] = (a, b)
+    out, k = [], 0
+    while k < len(insns):
+        if k in swaps:
+            a, b = swaps[k]
+            order = list(range(b[0], b[1] + 1)) + list(range(a[0], a[1] + 1))
+            k = b[1] + 1
+        else:
+            order = [k]
+            k += 1
+        out.extend(insns[j] for j in order if j not in strip or j in keep)
+    return out, {insns[j - 1].location() for j in strip if j not in keep}
+
+
+def _procedures(insns):
+    """(index of ENT, index of END) of every procedure."""
+    procs, start = [], None
+    for k, i in enumerate(insns):
+        if i.opc == OP["ent"]:
+            start = k
+        elif i.opc == OP["end"] and start is not None:
+            procs.append((start, k))
+            start = None
+    return procs
+
+
+def _assigns_switch_temp_from_unsigned_global(insns, start, end):
+    """True if the procedure stores a direct load of an unsigned S variable into a VREG temporary
+    before its first call, branch or label."""
+    stop = _entry_end(insns, start, end)
+    temps = {(i.words[1], i.words[3]) for i in insns[start:end] if i.opc == OP["vreg"]}
+    for k in range(start, end):
+        st = insns[k]
+        if st.opc != OP["str"] or st.mtype != MT_M or (st.words[1], st.words[3]) not in temps:
+            continue
+        j = k - 1
+        while j > start and insns[j].opc == OP["vreg"]:
+            j -= 1
+        if insns[j].opc == OP["cvt"] and (insns[j].words[2] >> 24) == DT_L:
+            j -= 1
+        if (k < stop and insns[j].opc == OP["lod"] and insns[j].mtype == MT_S
+                and insns[j].dtype == DT_L):
+            return True
+    return False
+
+
+def copy_propagation_options(insns):
+    """Insert OPTN zcopy records: 0 before procedures with an unsigned-global switch temporary, else 1."""
+    flags = {s: _assigns_switch_temp_from_unsigned_global(insns, s, e) for s, e in _procedures(insns)}
+    out = []
+    for k, i in enumerate(insns):
+        if k in flags:
+            out.append(Insn([OP["optn"] << 24, UCO_ZCOPY, 0 if flags[k] else 1, 0]))
+        out.append(i)
+    return out
+
+
+def _zcopy_off_procedures(insns):
+    """(ENT index, END index) of every procedure preceded by an `OPTN 405 0` record."""
+    out = []
+    for s, e in _procedures(insns):
+        j = s - 1
+        while j >= 0 and insns[j].opc == OP["optn"]:
+            if insns[j].words[1] == UCO_ZCOPY and insns[j].words[2] == 0:
+                out.append((s, e))
+                break
+            j -= 1
+    return out
+
+
+def _selector_stored(insns, s):
+    """True if the switch-temp source global of the procedure at ENT index s is stored in it."""
+    e = next(k for k in range(s, len(insns)) if insns[k].opc == OP["end"])
+    stop = _entry_end(insns, s, e)
+    srcs = {insns[k].location() for k in range(s, stop) if insns[k].opc == OP["lod"] and insns[k].mtype == MT_S}
+    return any(r.opc == OP["str"] and r.mtype == MT_S and r.location() in srcs for r in insns[s:e])
+
+
+def propagate_register_copies(out, zcopy_off):
+    """EXPERIMENT (T-24929, CVT_ZCOPY_SCOPE=rprop): on uopt's OUTPUT, in the k-th procedure for k in
+    zcopy_off, a register copy `lod Rg; str Rt` at the entry is propagated into the loads of Rt that
+    follow it before the first label, call or store (they read Rg instead)."""
+    procs = _procedures(out)
+    res = list(out)
+    for n, (s, e) in enumerate(procs):
+        if n not in zcopy_off:
+            continue
+        for k in range(s + 1, e):
+            st, ld = res[k], res[k - 1]
+            if res[k].opc in (OP["lab"], OP["clab"]) or res[k].opc in CALL_OPS:
+                break
+            if not (st.opc == OP["str"] and st.mtype == MT_R and ld.opc == OP["lod"] and ld.mtype == MT_R):
+                continue
+            t, g = st.location(), ld.location()
+            hits = False
+            for m in range(k + 1, e):
+                r = res[m]
+                if r.opc in (OP["lab"], OP["clab"]) or r.opc in CALL_OPS or r.opc in (OP["str"], OP["istr"]):
+                    break
+                if r.opc == OP["lod"] and r.mtype == MT_R and r.location() == t:
+                    res[m] = Insn(ld.words, ld.extra)
+                    hits = True
+            if hits and os.environ.get("CVT_RPROP_LOG"):
+                with open(os.environ["CVT_RPROP_LOG"], "a") as f:
+                    f.write("proc %d\n" % n)
+            break
+    return res
+
+
+def propagate_switch_temps(insns):
+    """EXPERIMENT (T-24929, env CVT_ZCOPY_SCOPE=sprop): in a zcopy-off procedure, replace each load
+    of an unsigned-global switch temporary that comes before the procedure's first label, call or
+    store by the load of the global it copies."""
+    mode = os.environ.get("CVT_ZCOPY_SCOPE", "")
+    if not mode or mode == "rprop":
+        return insns
+    out = list(insns)
+    if "zstor" in mode:   # OPTN 0x197 (uopt `zstor`) 0 for zcopy-off procedures, 1 for the rest
+        off = {s for s, _ in _zcopy_off_procedures(out)}
+        if "stored" in mode:
+            off = {s for s in off if _selector_stored(out, s)}
+        if mode == "zstor1":
+            off = set()
+        res = []
+        for k, i in enumerate(out):
+            if i.opc == OP["ent"]:
+                res.append(Insn([OP["optn"] << 24, 0x197, 0 if k in off else 1, 0]))
+            res.append(i)
+        out = res
+        if mode in ("zstor", "zstor1"):
+            return out
+    for s, e in _zcopy_off_procedures(out):
+        for k in range(s, e):
+            st = out[k]
+            if st.opc != OP["str"] or st.mtype != MT_M:
+                continue
+            j = k - 1
+            while j > s and out[j].opc == OP["vreg"]:
+                j -= 1
+            src = [out[j]]
+            if out[j].opc == OP["cvt"]:
+                j -= 1
+                src = [out[j], out[j + 1]]
+            g = src[0]
+            if not (g.opc == OP["lod"] and g.mtype == MT_S and g.dtype == DT_L):
+                continue
+            temp = st.location()
+            if "stored" in mode and not any(r.opc == OP["str"] and r.mtype == MT_S and r.location() == g.location()
+                                            for r in out[s:e]):
+                break
+            m = k + 1
+            while m < e:
+                r = out[m]
+                if r.opc in (OP["lab"], OP["clab"]) or r.opc in CALL_OPS:
+                    break
+                if r.opc in (OP["str"], OP["istr"]):
+                    break
+                if r.opc == OP["lod"] and r.mtype == MT_M and r.location() == temp:
+                    out[m:m + 1] = [Insn(x.words, x.extra) for x in src]
+                    e += len(src) - 1
+                    m += len(src)
+                    continue
+                m += 1
+            break
+    return out
+
+
+def _constant_first(insns, rewritten):
+    """Put the constant operand first in ==/!= against a rewritten variable, as IDO does with the CVT.
+
+    With the CVT the widened load is not a plain variable, so uopt swaps `cvt(D) == k` to
+    `k == cvt(D)`; without it uopt keeps `D == k`. The order is visible when uopt keeps the
+    constant in a register (`bne v1,v0` vs `bne v0,v1`). Operands are recognised in uopt's
+    output: a LOD of a rewritten location, or a register LOD of a register that the procedure
+    loads only by an RLOD of a rewritten location (or also by an outgoing-call `STR R` before
+    `RPAR` when compared against a callee-saved constant register `r >= 16`); constants are
+    LDC records or registers loaded only by RLDC.
+    """
+    out = list(insns)
+    for start, end in _procedures(out):
+        defs = {}
+        rpar_regs = set()
+        for idx in range(start, end):
+            i = out[idx]
+            if i.opc == OP["rlod"]:
+                defs.setdefault(i.lexlev, set()).add("var" if i.location() in rewritten else "other")
+            elif i.opc == OP["rldc"]:
+                defs.setdefault(i.words[1], set()).add("const")
+            elif i.opc == OP["str"] and i.mtype == MT_R:
+                if idx + 1 < end and out[idx + 1].opc == OP["rpar"]:
+                    rpar_regs.add(i.words[3])
+                else:
+                    defs.setdefault(i.words[3], set()).add("other")
+        var_regs = {r for r, kinds in defs.items() if kinds == {"var"}}
+        const_regs = {r for r, kinds in defs.items() if kinds == {"const"}}
+
+        def is_var(i, const):
+            if i.opc != OP["lod"]:
+                return False
+            if i.mtype == MT_R:
+                if i.words[3] in rpar_regs and not (const.opc == OP["lod"] and const.mtype == MT_R and const.words[3] >= 16):
+                    return False
+                return i.words[3] in var_regs
+            return i.location() in rewritten
+
+        def is_const(i):
+            return i.opc == OP["ldc"] or (i.opc == OP["lod"] and i.mtype == MT_R and i.words[3] in const_regs)
+
+        for k in range(start + 2, end):
+            if out[k].opc in (OP["equ"], OP["neq"]) and is_var(out[k - 2], out[k - 1]) and is_const(out[k - 1]):
+                out[k - 2], out[k - 1] = out[k - 1], out[k - 2]
+    return out
+
+
+def post(insns, rewritten):
+    """Give loads of the rewritten locations their unsigned type back and restore IDO's constant order."""
+    for i in insns:
+        if i.opc in (OP["lod"], OP["rlod"]) and i.dtype == DT_J and i.location() in rewritten:
+            i.set_dtype(DT_L)
+    return _constant_first(insns, rewritten)
+
+
+VALUED = {"-G", "-t", "-l", "-f", "-i", "-p", "-varref", "-Olimit", "-loopunroll",
+          "-unrolllimit", "-regr", "-rege"}
+
+
+# Consumers of a loaded value that IDO's ANSI front end does not precede by a widening:
+# stores and conversions, array indexing, ++/--, truth tests and operand swaps.
+NO_WIDEN = {OP[n] for n in "str istr cvt ixa inc dec fjp tjp swp".split()}
+
+
+def widen(insns):
+    """Insert IDO's ANSI widening `CVT J<-L` after loads of narrow unsigned globals (K&R mode).
+
+    IDO's K&R front end (-cckr) promotes an unsigned char/short to unsigned int without a
+    conversion record. The original keeps the widening for global variables: see the module
+    docstring. A load whose value goes straight into a store, a conversion, an array index,
+    ++/--, a truth test, or a narrow parameter gets none, as in ANSI mode.
+    """
+    temps = {(i.words[1], i.words[3]) for i in insns if i.opc == OP["vreg"]}
+    out = []
+    for k, i in enumerate(insns):
+        out.append(i)
+        if not (i.opc == OP["lod"] and i.dtype == DT_L and i.mtype == MT_S and i.words[2] < 4):
+            continue
+        c = _consumer(insns, k)
+        if c is None or (c.opc == OP["par"] and c.words[2] < 4):
+            continue
+        switch_temp = c.opc == OP["str"] and c.mtype == MT_M and (c.words[1], c.words[3]) in temps
+        if c.opc in NO_WIDEN and not switch_temp:
+            continue
+        out.append(Insn([(OP["cvt"] << 24) | (DT_J << 16), 0, DT_L << 24, 0]))
+    return out
+
+
+def run_uopt(real, argv):
+    """Rewrite uopt's input, run the real uopt, rewrite its output. Returns uopt's exit code."""
+    files, i = [], 0
+    while i < len(argv):
+        if argv[i] in VALUED:
+            i += 2
+        elif argv[i].startswith("-"):
+            i += 1
+        else:
+            files.append(i)
+            i += 1
+    if len(files) < 2:
+        raise PassError("uopt arguments name no input and output ucode")
+    inp, outp = files[0], files[1]
+    with open(argv[inp], "rb") as f:
+        insns, rewritten = pre(copy_propagation_options(widen(parse(f.read()))))
+        insns = propagate_switch_temps(insns)
+    fd, tmp = tempfile.mkstemp(prefix="cvtpass", suffix=".B")
+    with os.fdopen(fd, "wb") as f:
+        f.write(serialize(insns))
+    args = list(argv)
+    args[inp] = tmp
+    try:
+        rc = subprocess.call([real] + args)
+    finally:
+        os.unlink(tmp)
+    if rc == 0 and os.environ.get("CVT_ZCOPY_SCOPE", "").startswith("rprop"):
+        off = {n for n, (st, _) in enumerate(_procedures(insns)) if any(
+            insns[j].opc == OP["optn"] and insns[j].words[1] == UCO_ZCOPY and insns[j].words[2] == 0
+            for j in range(max(0, st - 3), st))}
+        if os.environ.get("CVT_ZCOPY_SCOPE") == "rprop_all":
+            off = set(range(len(_procedures(insns))))
+        with open(argv[outp], "rb") as f:
+            out = propagate_register_copies(parse(f.read()), off)
+        with open(argv[outp], "wb") as f:
+            f.write(serialize(out))
+    if rc == 0 and rewritten:
+        with open(argv[outp], "rb") as f:
+            out = post(parse(f.read()), rewritten)
+        with open(argv[outp], "wb") as f:
+            f.write(serialize(out))
+    return rc
+
+
+def main(argv):
+    if len(argv) < 3 or argv[1] != "--uopt":
+        sys.exit(__doc__)
+    try:
+        sys.exit(run_uopt(argv[2], argv[3:]))
+    except PassError as e:
+        sys.exit("cvt_pass.py: %s" % e)
+
+
+if __name__ == "__main__":
+    main(sys.argv)

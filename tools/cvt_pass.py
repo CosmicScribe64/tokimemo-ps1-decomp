@@ -85,6 +85,23 @@ local copy (`u8 mode = D; switch (mode)`) or on a signed global is not
 affected and keeps IDO's propagation, which is what the original does for
 those forms (wiki/matching-notes.md).
 
+Switch compares (T-24929)
+-------------------------
+With zcopy off, uopt keeps the temporary in its own register (`lod Rg; str
+Rt` at the entry) and only the first compare reads the global's register Rg;
+the later compares of the chain read Rt. In most such procedures as1 then
+replaces Rt by Rg in those compares itself, and the result is the original's
+(`lbu v1,D; ...; or v0,v1,zero` in a delay slot, every compare on `$v1`).
+as1 does not do it when Rg is redefined in a case body while Rt is still live
+(ETC func_8013CCE4 increments the global it switches on), and the compares
+stay on `$v0`; the original compares on `$v1` there as well. So after uopt
+has run, in every zcopy-off procedure the loads of Rt that follow that entry
+copy, before the first label, call or store, are made to read Rg. Nothing
+can redefine Rg between the copy and those loads, so the code means the
+same. Measured on the whole build (T-24929): the rewrite fires in 267
+procedures and changes exactly one function, func_8013CCE4, which then
+matches; every other output is unchanged (wiki/matching-notes.md, T-24929).
+
 Layer
 -----
 IDO runs cfe -> uopt -> ugen -> as1. tools/cc.py points IDO's USR_LIB at a
@@ -412,6 +429,45 @@ def copy_propagation_options(insns):
     return out
 
 
+def _zcopy_off(insns):
+    """Indices (in _procedures order) of the procedures that an `OPTN 405 0` record precedes."""
+    out = set()
+    for n, (start, _) in enumerate(_procedures(insns)):
+        j = start - 1
+        while j >= 0 and insns[j].opc == OP["optn"]:
+            if insns[j].words[1] == UCO_ZCOPY and insns[j].words[2] == 0:
+                out.add(n)
+            j -= 1
+    return out
+
+
+def switch_compares(insns, zcopy_off):
+    """On uopt's output: in each procedure whose index is in zcopy_off, the first register copy
+    `LOD Rg; STR Rt` before the procedure's first label or call is propagated into the loads of Rt
+    that follow it, up to the next label, call or store (they load Rg instead)."""
+    out = list(insns)
+    for n, (start, end) in enumerate(_procedures(out)):
+        if n not in zcopy_off:
+            continue
+        for k in range(start + 1, end):
+            if out[k].opc in (OP["lab"], OP["clab"]) or out[k].opc in CALL_OPS:
+                break
+            copy, src = out[k], out[k - 1]
+            if not (copy.opc == OP["str"] and copy.mtype == MT_R
+                    and src.opc == OP["lod"] and src.mtype == MT_R):
+                continue
+            temp = copy.location()
+            for m in range(k + 1, end):
+                r = out[m]
+                if (r.opc in (OP["lab"], OP["clab"], OP["str"], OP["istr"])
+                        or r.opc in CALL_OPS):
+                    break
+                if r.opc == OP["lod"] and r.mtype == MT_R and r.location() == temp:
+                    out[m] = Insn(src.words, src.extra)
+            break
+    return out
+
+
 def _constant_first(insns, rewritten):
     """Put the constant operand first in ==/!= against a rewritten variable, as IDO does with the CVT.
 
@@ -525,9 +581,12 @@ def run_uopt(real, argv):
         rc = subprocess.call([real] + args)
     finally:
         os.unlink(tmp)
-    if rc == 0 and rewritten:
+    off = _zcopy_off(insns)
+    if rc == 0 and (rewritten or off):
         with open(argv[outp], "rb") as f:
-            out = post(parse(f.read()), rewritten)
+            out = switch_compares(parse(f.read()), off)
+        if rewritten:
+            out = post(out, rewritten)
         with open(argv[outp], "wb") as f:
             f.write(serialize(out))
     return rc
