@@ -17,24 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24201: KANGEI func_80134724 (cloud packet)
-
-[[tickets/T-24201-cloud-packet-kangei-80134724]], first KANGEI run of [[cloud-matching]]. `func_80134724` (688 B, `src/ovl/KANGEI/80134120.c`) stays guarded at 2 rows (1 pair), the T-24122 draft unchanged. The cloud compile of the unchanged file gave the local sha1 `03b66d14...`.
-
-- **The pair.** as1 moves the default block's first instruction `sll t0,v0,0x2` into the delay slot of the range check `beqz at,default`. The original keeps it in the default block and fills the slot with the dispatch `sll t1,t1,0x2` (same family as VALEN `func_80134030`, T-19016 / T-20620).
-- **Second label reference works but costs.** `case 7: default:` gives the original slot (the default block now has two predecessors), but the bound becomes 8, the table gets 8 entries, and uopt rotates `s`/`unk_0F4>>12`/`unk_66C` across `$a0`/`$a1`/`$v1` (121 rows). `if (sel >= 7) goto def;` or an `if (sel < 7) switch ... else` wrapper also emit a second range check with the same rotation. Any extra CFG edge into the default moves the allocation. So whatever gave the original its slot was not visible to uopt; it was probably something in what ugen hands to as1.
-- **No effect (still 2 rows):** `v << 2`, `(s16)`, operand order and a scoped temp in the default; default and case 6 on one line; `goto end` / explicit join label after the switch; default code after a switch without `default:`; `(u32)`/`(u16)`/`(s8)`/byte-view selector casts; `u32`/`s32` selector locals; `if (0) goto def` (it changes the allocation, 115 rows); `case 0x100`/`case -1`/`case 255` (extra compare).
-- **Cloud diff aid.** `cc -S` on a stripped copy of the file gives a listing whose registers do not match the real compile, so read it only for structure (it shows ugen's `bgeu $9, 7, $73` and `mul $24, $2, 4`).
-
-## T-24203: cloud packet, GEKO func_80136C20 (80134D10.c)
-
-[[tickets/T-24203-cloud-packet-geko-80136c20]], single-function packet run in a cloud container ([[cloud-matching]]). Still 4 rows, guard kept with the T-24203 note; about 1.5 hours.
-
-- Setup: a scratch copy of the file with every other `INCLUDE_ASM`/`INCLUDE_RODATA` removed, compiled without `NON_MATCHING`, equals the packet reference instruction for instruction (only `jal` names and the jump-table relocation base differ, as expected); with `NON_MATCHING` it gives exactly the T-22010 diff.
-- Where the miss comes from: the `cc -S` listing of ugen shows block 2 as `lbu $8,D_80145090; bne $8,0,$83` and the switch block starting `lbu $14,D_800E6280+3935`, so the selector load is already in the switch block for every draft; as1 imports its `lui` into block 2's load-delay hole, the original puts it one block higher, in the `bnez` slot of `D_80145088`, and leaves a `nop` after `lbu D_80145090`. The miss is an as1 scheduling choice, not a ugen or uopt one.
-- 28 more variants, none moves it (all 4 rows unless noted): early-return `if (D_80145088 != 0)` order (32, block layout), if/else nesting (30), selector read at the top, in block 2, inline in the `switch`, `s32`, through `GameState *g` (28 and 60), `((u8 *)&...)[0]`, `D_80145090` read as `(&D_80145088)[8]` and the reverse, both flags C-defined in the file (`u8 D_80145090 = 0;`, `static` gives 6), flag read into a local at the top (28), `s32` return, the four arrays as one local struct (195), literal-address casts (66 to 93).
-- Lead: compare with matched functions where a later block's `lui` lands in an earlier `bnez` slot; `func_801367EC` has the same miss, so a fix for one likely closes both.
-
 ## T-24206: main func_800590CC in a cloud session (match packet)
 
 [[tickets/T-24206-cloud-packet-main-800590cc]], packet for `func_800590CC` (268 B, `src/main/80058D20.c`), toolchain per [[cloud-matching]]. From the T-17017 guard (16 lines, three K&R parameters with aliased `w`/`h`) to an instruction-level match, plain C with one FAKE. Scratch single-function setup; the comparison was a `mips-linux-gnu-objdump -drz -M no-aliases` row diff with `%lo` relocations mapped to absolute addresses (`D_800E6280+0x14` = `D_800E6294`) and branch targets dropped. The asm fallback gave 0 lines, the old guard 12 on this count.
@@ -702,6 +684,7 @@ last row is still uopt constant propagation (`cc -S` shows `li $3,1`), a separat
 - **`sndisp` (388 B): MATCH.** This is the T-25001 C with its guard removed. `tools/data_island.py main/8004F870` adds `800B40F0-800B4390` as a further island (section `.data_800B40F0`). In `src/main/8004F870.c` the order is: `D_800E3680` (the old island, stays `.data`), the `D_800B40F0` piece, ..., `sndisp`, then the pieces from `D_800B4100` on. IDO emits the `pos[]` template when it compiles `sndisp`, so the template lands at `.data_800B40F0+8` = `D_800B40F8`, the original address. The `D_800B40F8` piece is gone because the compiler provides those bytes.
 - **Rule for other files.** The C file must emit each range's data back to back. A local aggregate initialiser template sits where its function sits in the source, so the `INCLUDE_RODATA` lines of a range are split around that function. `data_split.py` fails the build when the parts are not contiguous, have the wrong size, or do not start on a symbol.
 - **Other functions blocked by this.** None found. No `NON_MATCHING` note in `src/` and no matching note names a second data range as the only gap. The two earlier initialiser cases needed only one island each: TAIIKU `80141280` (`D_8014A070`, island in the yaml) and EVENT `func_8011767C` (C in `8010FE10.c`).
+
 ## T-24929: uopt zcopy scope, closed as a switch-compare rule (in the build)
 [[tickets/T-24929-uopt-zcopy-scope]]. ETC func_8013CCE4 (guarded at 3 rows since T-24921) now matches in plain C.
 

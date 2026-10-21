@@ -7,26 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24212, T-24213, T-24214 Done
-
-Last cloud packet results merged (cloud usage spent): TACO `func_8014F820` and main `func_80054884` match (linked proof here); VALEN `func_80132D0C` stays guarded at 3 rows.
-
-## [2026-10-20] ticket | T-24302 In Progress
-
-Local work list l6-p02 (53 functions, best first) in worktree `../tokimemo-wt/l6-p02`: [[tickets/T-24302-local-list-l6-p02]].
-
-## [2026-10-20] ticket | T-24302 In Review
-
-Local list l6-p02: GEKO `func_801358CC` matched (416 B); guards GEKO `func_80133024` (5 rows), `func_80134808` (15), `func_80132B24` (about 30). Findings in [[matching-notes]] (T-24302 section): [[tickets/T-24302-local-list-l6-p02]].
-
-## [2026-10-20] ticket | T-24303 In Progress: local list l6-p03
-
-Created [[tickets/T-24303-local-list-l6-p03]] (In Progress): local session works the 54-function list l6-p03 (best first) in worktree `l6-p03`, owned C files only; matches committed one by one, checkpoints merged by the orchestrator.
-
-## [2026-10-20] build | T-24303 checkpoint 1
-
-[[tickets/T-24303-local-list-l6-p03]]: clean build 27/27 and the header, globals and prototype checks OK. main `func_800755B4` matched (data island for main/80075320, two key-ring symbols, [[data-types]]); main `func_80047560` guarded at 22 rows.
-
 ## [2026-10-20] ticket | T-24303 In Review: local list l6-p03
 
 [[tickets/T-24303-local-list-l6-p03]]: 3 of 54 matched (main `func_800755B4` with a `.data` island and two key-ring symbols, RPG_BAT `func_80138324` from its siblings plus a `viewsweep` callee view, main `menu_girl_taku_set` by a plain rewrite); main `func_80047560` guarded at 22 rows; misses archived in `drafts/T-24303/`. Notes in [[matching-notes]] (T-24303), [[data-types]] updated. Review due.
@@ -1710,6 +1690,7 @@ Clean build 27/27, headers/globals OK. tools/progress.py: 6,826 / 6,952 (92.2%),
 
 ## [2026-10-20] build | T-25005 several .data ranges per C object
 [[tickets/T-25005-data-regions-per-object]] created, worked, moved to In Review. A further `.data` island of an object is a yaml dict line with `dir: island_<VRAM>` and `linker_section: .data_<VRAM>` (written by tools/data_island.py). tools/data_pieces.py puts all its pieces in one directory, and the new tools/data_split.py (called by tools/object_layout.py) cuts the compiled `.data` into the sections. main `sndisp` (T-25001 guard, cherry-picked) now matches in plain C, src/main/8004F870.c owns `800B40F0-800B4390` as well. Clean build 27/27; [[build-system]] "Several ranges per object"; notes in [[matching-notes]] `## T-25005`.
+
 ## [2026-10-20] ticket | T-24929 In Progress
 [[tickets/T-24929-uopt-zcopy-scope]] claimed (assignee claude), worktree uopt-scope: measure a uniform uopt
 copy-propagation scope rule (globals propagated, local induction copies kept) on the whole build.
