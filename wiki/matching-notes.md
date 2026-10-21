@@ -17,27 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24210: main func_800591D8 in a cloud session (match packet)
-
-[[tickets/T-24210-cloud-packet-main-800591d8]], packet for `func_800591D8` (304 B, `src/main/80058D20.c`), sibling of T-24206. From the T-17017 guard (32 lines, aliased `w`/`h`, frame 0x38) to an instruction-level match, plain C with one FAKE. Scratch single-function setup and the T-24206 objdump row diff; the asm fallback gave 0 lines.
-
-- **T-24206 carry-over works directly.** No locals, one parameter (frame 0x30); both arms store the fields, then call `func_80097F58(((u16 *)&D_800E6280)[0], [1], [2], 0, 0)`; conditions `(arg0 != 0) && (unk_000 != 0x200)` / `else if ((arg0 == 0) && (unk_000 != 0x140))`. The else arm with `unk_000 = 0x140; unk_002 = 0xF0;` first matched at once; the second compare's `lhu` above `bnez v0` comes out as in the original without a temp.
-- **If arm: only `li a1` is hoisted.** The original has `li a1,0xF0` in the `beq` delay slot but `li a0,0x200` after the second `unk_014` store. Plain order (`unk_014` x2, 000, 002) left `li a1` below `sh a0` (2 lines); `unk_002 = 0xF0;` as the first statement of the arm, then `unk_014` x2 and `unk_000` gives 0 lines. Putting `unk_002` between or after the `unk_014` stores stays at 2. Rule: the statement written first in the block is the one as1 lifts into the delay slot.
-
-## T-24202 KANGEI func_8013852C: as1 `lui $at` placement (cloud packet, still 2 rows)
-
-The remaining diff is one `lui $at, %hi(D_80139ADC)` that as1 hoists above `addu $t6, $t4, $v1` (target: addu, lui, sh).
-Pre-as1 (`cc -S` under the cc.py shims) shows ugen emits `sll $10; subu $11; and $12,$11,0xFFFF; and $13,$3,0xFFFF; addu $14; sh`
-and as1 deletes the redundant `and`s (and `sll/sra 16` pairs) by renaming the producer to the deleted op's destination; this is
-where the $t2/$t4/$t6 numbering comes from, and the deleted ops still shape the schedule (an extra surviving `andi 0xFF` flips
-the lui below the addu). The target's numbering needs exactly one removable op after subu and one before addu. Sweeps
-(~5,000 variants: casts on each operand, the shift, difference, year and sum; `F*3`; statement orders of all five stores; temps
-before/after the stores; struct-based `D_80139AD0` picture-set access; `year` as u8/u16/s32/u32) all stay at 2 rows or worse.
-Open leads: the and-on-year op may need to be something other than an `and` (e.g. a removable move from a different
-expression shape), or the target's uopt output ordered the year mask before the subu.
-Cloud notes: Docker Hub 429 on `ubuntu:22.04` is avoided with `--build-arg BASE=mirror.gcr.io/library/ubuntu:22.04`; IDO
-`cc -S` ignores `-o` and writes `<base>.s` to the cwd (the repo root in docker); `ld` on IDO objects needs `.mdebug` stripped first.
-
 ## T-24204: main func_8006D7EC in a cloud session (the idx++ fold, third pass)
 
 [[tickets/T-24204-cloud-packet-main-8006d7ec]], match packet per [[cloud-matching]]. No match; the T-23003 guard stays at 1 row (`addiu v1,v1,1` expected, `li v1,1` built), only its comment now names T-24204.
