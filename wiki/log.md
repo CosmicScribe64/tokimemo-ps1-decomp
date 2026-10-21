@@ -1706,3 +1706,8 @@ removed). Clean build 27/27; progress 6,827 / 6,952 (92.3%). Rejected variants c
 
 ## [2026-10-20] ticket | T-24929 In Review
 [[tickets/T-24929-uopt-zcopy-scope]] moved to In Review; waiting for the code review against CODING_STANDARDS.md.
+## [2026-10-20] ticket | T-25003 class C main trio
+[[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]] created, In Progress (branch c-m3): main `func_8006BA40`, `func_80043510`, `func_8004443C`.
+
+## [2026-10-20] ticket | T-25003 to In Review
+[[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]]: main `func_80043510` and `func_8004443C` matched (plain C, FAKE frame pads); `func_8006BA40` guarded at 7 rows. `main_api.h`: `D_800B3D10` as `s32[4]`, prototypes for `csr_load_vram`, `palette_load_vram`, `disp_string`, `func_8004A14C`. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
