@@ -9,12 +9,14 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Progress (2026-10-20)
 
-- Game code: 6,827 / 6,952 functions, 2,100,952 / 2,276,920 bytes (92.3%), measured with Docker `tools/progress.py` after the T-24929 build step matched ETC func_8013CCE4 (125 remaining). SDK libraries (728 functions) stay asm by design ([[psyq-sdk]]).
+- Game code: 6830 / 6,952 functions, 92.4% of bytes.
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
 - Remaining by unit (129 functions): main 51, TACO 12, GEKO 7, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 1, BUNKA_SD 2, EN_NICHI 2, TEL 2.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- 2026-10-20 evening: T-24929 build pass (switch_compares, zero regressions) and T-25005 (several .data ranges per object) landed; matches ETC func_8013CCE4, main sndisp, func_80043510, func_8004443C.
 
 - Plan for the last 127 functions, for any agent: [[plan-remaining]] (classes A-D, list in [[data/remaining-2026-10-20]]).
   Wave C-1 (T-24921..T-24924, isolated worktrees) produced no promotion; kept 9->3 (ETC func_8013CCE4),

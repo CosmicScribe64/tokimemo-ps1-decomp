@@ -1,7 +1,7 @@
 ---
 id: T-24929
 title: "T-24929 uopt zcopy scope: propagate global copies but not local induction copies"
-status: In Review
+status: Done
 assignee: claude
 created: 2026-10-20
 updated: 2026-10-20
@@ -47,3 +47,4 @@ guarded at 3 rows until this is resolved.
   Full tool suite: the 11 test_build_deps failures and 1 test_protoverride error are present at the base commit
   too (not caused by this change).
 - Needs the code review (CODING_STANDARDS.md) before Done.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): switch_compares pass in tools/cvt_pass.py: one uniform rule (post-uopt copy propagation in zcopy-off procedures), fires in 267 procedures and changes no matched function (whole-build 27/27); test_cvt_pass 51 OK; ETC func_8013CCE4 MATCH; build.ninja now lists cvt_pass.py and ugen_pass.py as compile dependencies. No inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.

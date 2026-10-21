@@ -1,7 +1,7 @@
 ---
 id: T-25005
 title: "Build: more than one .data region per C object"
-status: In Review
+status: Done
 assignee: agent (worktree data2)
 created: 2026-10-20
 updated: 2026-10-20
@@ -27,3 +27,4 @@ A further island is a yaml dict line with `dir: island_<VRAM>` and `linker_secti
 ## Comments
 
 - 2026-10-20: done in worktree `data2` (branch data2, from w2-good). Cherry-picked the T-25001 guards (b5dee4aa5), applied `data_island.py main/8004F870`, removed the sndisp guard. MATCH (388 bytes), clean build 27/27. No other guarded or INCLUDE_ASM function has a NON_MATCHING note or matching note naming a second data range as its only gap. `tools/test_build_deps.py` fails the same 11 tests before and after this change: its temporary tree lacks `tools/ugen_pass.py`.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): several .data ranges per object (tools/data_split.py, data_island/data_pieces/split_objects changes, tests); objects with one range unchanged (27/27); main sndisp MATCH. No inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.

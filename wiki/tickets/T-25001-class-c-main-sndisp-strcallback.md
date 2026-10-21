@@ -1,7 +1,7 @@
 ---
 id: T-25001
 title: "Class C: main sndisp, strCallback, func_80065964"
-status: In Review
+status: Done
 assignee: c-m1
 created: 2026-10-20
 updated: 2026-10-20
@@ -25,3 +25,4 @@ Starting drafts: drafts/T-14500/main/<func> (scores 98, 139, 160).
 ## Comments
 
 2026-10-20: sndisp guarded at 2 rows (only the template address of `pos[]`: the object's two .data regions); strCallback (75 rows) and func_80065964 left INCLUDE_ASM, drafts in drafts/T-25001/main/. Clean build 27/27, headers, globals and the prototype branch check pass. In Review. Details: [[matching-notes]] T-25001.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): notes and drafts; sndisp guard later closed by T-25005. No inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.

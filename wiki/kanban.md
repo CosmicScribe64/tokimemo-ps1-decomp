@@ -68,7 +68,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-24929-uopt-zcopy-scope|T-24929 uopt zcopy scope: propagate global copies but not local induction copies]]
 - [ ] [[tickets/T-24926-func-80133024-801323E0|T-24926 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
 - [ ] [[tickets/T-24928-func-8006c988-800674B0|T-24928 main:func_8006C988 (src/main/800674B0.c)]]
 - [ ] [[tickets/T-24927-func-80139290-801388D0|T-24927 BUNKA_SD:func_80139290 (src/ovl/BUNKA_SD/801388D0.c)]]
@@ -108,9 +107,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24906-func-801511c0-80149F90|T-24906 TACO:func_801511C0 (src/ovl/TACO/80149F90.c)]]
 - [ ] [[tickets/T-24901-func-8013852c-80137B90|T-24901 KANGEI:func_8013852C (src/ovl/KANGEI/80137B90.c)]]
 - [ ] [[tickets/T-24903-func-80132d0c-80132760|T-24903 VALEN:func_80132D0C (src/ovl/VALEN/80132760.c)]]
-- [ ] [[tickets/T-25001-class-c-main-sndisp-strcallback|T-25001 Class C: main sndisp, strCallback, func_80065964]]
-- [ ] [[tickets/T-25002-class-c-ending-geko-etc|T-25002 Class C: ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224]]
-- [ ] [[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c|T-25003 Class C: main func_8006BA40, func_80043510, func_8004443C]]
 - [ ] [[tickets/T-24571-ending-first-portrait-view|T-24571 Test the first ENDING portrait16 alias view]]
 - [ ] [[tickets/T-24560-ending-slot|T-24560 Reconstruct ENDING level halfword slot]]
 - [ ] [[tickets/T-24519-master-sibling|T-24519 Transfer recovered MASTER animation sibling lifetimes]]
@@ -121,10 +117,14 @@ kanban-plugin: board
 - [ ] [[tickets/T-24512-ending|T-24512 Match remaining ENDING functions]]
 - [ ] [[tickets/T-24513-etc-matching|T-24513 Match remaining ETC functions]]
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
-- [ ] [[tickets/T-25005-data-regions-per-object|T-25005 Build: more than one .data region per C object]]
 
 ## Done
 
+- [ ] [[tickets/T-24929-uopt-zcopy-scope|T-24929 uopt zcopy scope: propagate global copies but not local induction copies]]
+- [ ] [[tickets/T-25001-class-c-main-sndisp-strcallback|T-25001 Class C: main sndisp, strCallback, func_80065964]]
+- [ ] [[tickets/T-25002-class-c-ending-geko-etc|T-25002 Class C: ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224]]
+- [ ] [[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c|T-25003 Class C: main func_8006BA40, func_80043510, func_8004443C]]
+- [ ] [[tickets/T-25005-data-regions-per-object|T-25005 Build: more than one .data region per C object]]
 - [ ] [[tickets/T-24800-as1-per-file-flags|T-24800 Test per-file compiler options against the as1 order near misses]]
 - [ ] [[tickets/T-24900-as1-global-scheduler|T-24900 as1 global delay-slot filler: rule and source lever]]
 - [ ] [[tickets/T-24607-option-editor|T-24607 Match OPTION numeric editor]]

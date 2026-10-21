@@ -1,7 +1,7 @@
 ---
 id: T-25002
 title: "Class C: ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224"
-status: In Review
+status: Done
 assignee: claude-c-m2
 created: 2026-10-20
 updated: 2026-10-20
@@ -23,3 +23,4 @@ Match three class C functions from [[plan-remaining]] in worktree c-m2: ENDING `
 ## Comments
 
 - 2026-10-20: 0 of 3 matched. GEKO func_80133C50 guarded at 13 rows (ugen temporary order in two arms); ENDING func_801387B0 (80 rows) and ETC func_80144224 (106 rows) back to INCLUDE_ASM with drafts in drafts/T-25002/. Details in [[matching-notes]] T-25002. Clean build 27/27, check_headers, migrate_globals --check, sync_protos --check-branch pass. Branch c-m2. In Review.
+- 2026-10-20 review (orchestrator, CODING_STANDARDS.md): notes, drafts and a 13-row GEKO func_80133C50 guard with ticketed FAKE comments. No inline asm or game data; merged with a clean 27/27 build and header/global/prototype checks. Done.
