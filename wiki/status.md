@@ -16,6 +16,16 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Active work
 
+- T-24700 waves 1-2 (2026-10-20): no promotions yet. Every near-miss is now a compiler-pass
+  difference, not a missing source shape: main func_8006D7EC's last row (`addiu` vs `li 1`) is proven
+  to happen in uopt (visible in `cc -S`), and the 1-6 row family (KANGEI func_8013852C/func_80134724,
+  GEKO func_80136C20/func_80133024, VALEN func_80132D0C, ENDING func_8013A2E8/func_80135F4C,
+  BUNKA_SD func_80139290) is as1 scheduling/hoisting. Source-only improvements kept in guards:
+  func_80139290 123->6, func_80138C9C 103->75, func_8014790C 85->57, func_80154E6C 84->33,
+  func_8013907C 39->23, func_8013CCE4 84->18, func_801455C4 26->16, func_801398EC 266->185.
+
+- T-24700 fan-out (2026-10-20): nine file-disjoint lanes T-24701..T-24709 cover the 129 remaining functions; each worker uses [[playbook]] and the automated solvers, the orchestrator runs the 27-hash gate and commits. Twin scan: no reusable matched sibling remains.
+
 - Current handoff: user requested wrapping up and pushing this session. T-24607 OPTION `func_80139A30` adds1,036 literal default-C bytes; all27 hashes and declaration guards pass. Seven functions /6,516 bytes completed in this continuation;129 remain. Matching lanes have stopped, with unfinished evidence preserved in [[matching-notes#T-24600: Wrap-up reconstruction checkpoints]]. The full decompilation remains incomplete; earlier activity entries below are historical.
 
 - T-24606 OPTION `func_8013A7EC` adds1,092 literal default-C bytes with all27 hashes, declaration guards and independent reviews passing. This continuation has completed six functions /5,480 bytes;130 remain. Root continues MAIN matrix reconstruction while agents continue OPTION numeric editing, TACO font rendering and NAME_ENT introduction. Completion goal remains active.

@@ -848,3 +848,30 @@ User requested stopping the current matching session and committing/pushing comp
 - TACO `func_80139424`: direct byte argument, independent coordinate words and direct branch-local UV stores recover most structure. `taco-lane/font-copy-order/y-order` is115/418 against419 words, with original Y homes and copies; `font-constant-order/top-first` scores97/418 but changes V-store order. Center/division register allocation and X-copy ordering remain. Full private ledger: `taco-lane/CHECKPOINT.md`.
 - NAME_ENT `func_80143580`: restored signed-halfword decrement narrowing is required. Selector byte views, RGB zero chains, and fade snapshots recover several causal regions; `name-lane/intro-recovery/NOTES.md` records the still-unmatched candidates. A lower-scoring branch-reorder control loses an observed selector self-store and is not a valid improvement.
 - ETC `func_801328A4`: archive reconstruction had incorrect record and input strides, wrong copy widths and one-element stack placeholders. Typed three-row Rgb555Split storage and RECT recover these accesses; `etc-lane` candidate remains231 words against230, with frame/layout unresolved. No production source or header change.
+
+## T-24713: as1 scheduler mechanism and the compiler-bound near-miss set
+
+Nine-lane T-24700 wave 1 and the focused T-24713 wave-2 pass measured the remaining near-misses with
+`funcdiff --resolve` (note: moved instructions also shift every later branch target, so `--resolve`
+rows overstate the residual; the real residual is one or two moved instructions).
+
+- **as1 cross-block scheduler.** Captured `u.G/u.T` from an instrumented as1 (T-24047 print-only
+  tracer): for each stalled destination it scans a candidate array sorted by CFG block weight, ties
+  by block id, starting after the destination, and imports the first movable candidate. A switch
+  default (branch target) always has a lower block id than its dispatch (fallthrough); at equal
+  weight 4 the default is tried first. OMIMAI func_80134384 does not hoist because its default is
+  outside the weight window, not because an argument register is live (the T-24708 theory is wrong).
+  The only source form that flips the order is an extra jump-table edge to the default, which changes
+  the table size (T-24047 case12, T-24211 case 10).
+- **Local scheduler.** KANGEI func_8013852C: ugen emits no `lui` at all; as1 expands the `sh`
+  relocation and schedules the `lui` node (besttime 15) one slot before the `addu` (16). A scan of
+  every built object finds no matched C function with the original's `addu; lui at; sh` order, so
+  5.3's as1 never produces it. This is a backend-version trait; 4.1's as1 with 5.3's `pic0` record
+  matches VALEN func_80134030 but empties delay slots in 1,054 matched functions.
+- **uopt cprop.** main func_8006D7EC: `cc -S` shows `li $3,1` in uopt's output, so the last row is
+  a uopt constant-propagation difference, not as1 or a source shape.
+- **Function-level residual after wave 2** (true moved instructions): KANGEI func_8013852C 1,
+  func_80134724 1, VALEN func_80132D0C 1, func_80134030 1, ENDING func_8013A2E8 1,
+  func_80135F4C 2, GEKO func_80136C20 1, func_80133024 1, BUNKA_SD func_80139290 3 arms.
+  Closing these needs a binasm/as1 scheduling pass validated against all 6,823 matched functions,
+  not more source search.

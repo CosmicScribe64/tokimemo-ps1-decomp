@@ -1,8 +1,10 @@
 #define MAIN_API_OVERRIDE_func_800BCDF0 /* T-24523: integer debug-call result keeps the following flag out of v0. */
+#define MAIN_API_OVERRIDE_func_8008F618 /* T-24712: integer result (viewsweep) keeps the loop counter in $v1. */
 #include "common.h"
 #include "ovl/GYOZI.h"
 
 s32 func_800BCDF0();
+s32 func_8008F618();
 
 typedef struct {
     s32 (*f[26])();
@@ -30,7 +32,7 @@ s16 func_80140C90(void) {
 
 void func_80140D7C(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    if (((u8)func_8005E0E0(D_800F62CF) & 0x7F) != 4) {
+    if (((u8)func_8005E0E0(*(u8 *)&D_800F62CF) & 0x7F) != 4) {
         func_8004DE1C();
         return;
     }
@@ -44,9 +46,12 @@ void func_80140DCC(void) {
     func_8004DE1C();
 }
 
-/* NON_MATCHING: T-24301, 5 rows; the original keeps 0 in $a1 from entry (`or $a1,$zero,$zero; sb $a1,D_800F62CF;
- * or $a0,$a1,$zero`) and has a 0x28 frame (0x30 here). Zero locals of every width, assignment-expression
- * arguments and chained stores all fold to $zero (T-24116, T-24301). */
+/* NON_MATCHING: 5 resolved rows (T-24712; was 9), all the `$a1` zero: the original has `or $a1,$zero,$zero`
+ * in the entry block, `sb $a1,D_800F62CF` at the merge and `or $a0,$a1,$zero` in the call delay slot; this
+ * draft folds the same 0 to `sb $zero`/`move a0,zero`. Zero locals of every width, assignment-expression
+ * arguments, chained stores, a pointer store and the byte-view forms all fold (T-24116). The s32 view of
+ * func_8008F618 (`MAIN_API_OVERRIDE_` here, guarded in main_api.h) fixed the loop counter ($v1) and the
+ * 0x28 frame; `*(u8 *)&D_800F62CF` for the argument fixed the later address base ($a1). */
 #ifdef NON_MATCHING
 void func_80140E0C(void) {
     s16 i;
@@ -56,14 +61,13 @@ void func_80140E0C(void) {
         D_800F53A0.girl[9].unk_06 >= 20 && (D_800F6468 & 1)) {
         D_80148750 = 1;
     }
-    D_800F53A0.unk_F2F = 0;
-    /* FAKE: the byte view of the girl index makes the later reload use $a1 for its address. T-24301 */
-    D_80148620 = (((u8)func_8005E0E0(((u8 *)&D_800F53A0)[0xF2F]) & 0x7F) == 4) * 4;
+    D_800F62CF = 0;
+    /* FAKE: the byte view of the girl index keeps the later reload's address base in $a1 (T-24712). */
+    D_80148620 = (((u8)func_8005E0E0(*(u8 *)&D_800F62CF) & 0x7F) == 4) * 4;
     D_80148614 = D_801481D4;
-    if (i) {} /* FAKE: T-24301 (permuter), keeps i live from entry: the loop counter gets $v1 as in the original */
     D_80148618 = D_80148208;
     D_8014861C = D_8014823C;
-    func_8008F618(D_800F53A0.unk_F2F);
+    func_8008F618(D_800F62CF);
     D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A += 4;
     for (i = 0; i < 7; i++) {
         if (D_800F54AE < D_8014875C[i]) {
@@ -109,7 +113,7 @@ void func_80140F90(void) {
         D_80148620++;
     }
     func_80141550();
-    func_8008F618(D_800F53A0.unk_F2F);
+    func_8008F618(D_800F62CF);
     if (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 || (D_80148750 != 0 && D_800F53A0.unk_F2F == 9)) {
         ((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 = 1;
         D_800F53A0.unk_710 = D_800F53A0.unk_10D8;

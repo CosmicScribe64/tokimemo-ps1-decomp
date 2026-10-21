@@ -3125,3 +3125,34 @@ Recorded final MAIN matrix/background, TACO font, NAME_ENT introduction and ETC 
 ## [2026-10-20] lint | Final handoff checks
 
 Catalog refreshed:729 tickets,428 sections,3,077 functions. Docker wiki lint reports zero broken links and zero ticket/board mismatches; only the two existing large-page warnings remain ([[data/t0018-cases]], [[log]]). `git diff --check` passes. Matching goal paused at the user's wrap-up request; completed source and handoff documentation prepared for commit and push to origin/main.
+
+## [2026-10-20] ticket | T-24700 completion fan-out to 100 percent
+
+Split the 129 remaining INCLUDE_ASM functions (178,836 bytes) into nine file-disjoint lanes,
+T-24701..T-24709, each with a background worker and a list under `.claude/orchestrator/lists/`.
+Worker brief: `.claude/orchestrator/fanout-brief.md`. Baseline gate: tools/progress.py 6823/6952
+functions, 2,098,084/2,276,920 bytes (92.1 percent). A Docker twin scan (`neardupes.py --report -v`)
+found 0 fillable unmatched functions and 0 unmatched members in groups with a matched source, so
+the remaining work needs per-function reconstruction. See [[status]] and [[tickets/T-24700-completion-fanout]].
+
+## [2026-10-20] decision | T-24700 wave 1 results and wave 2
+
+Wave 1 (T-24701..T-24709) closed no literal matches: the remaining set is the hard tail, and the
+closest guarded drafts are blocked at 1-33 rows, most of them by the documented as1 hoist/scheduler
+family. Real improvements kept: NAME_ENT func_801398EC 266->185 rows, GYOZI func_80138C9C 103->75,
+func_8013907C 39->23, main func_80054E6C 84->33, main func_800455C4 26->16 (new guarded body).
+Found and documented a process bug: `funcdiff --resolve` reports MATCH for an INCLUDE_ASM function
+because both sides are the original .s; the playbook now states the promotion rule. Wave 2
+(T-24710..T-24713) assigns the closest functions (main func_8006D7EC at 1 row, KANGEI 2 rows,
+VALEN 4, ENDING 5, GYOZI 9/23/75, main func_800455C4 16, func_80047560 22, func_80054E6C 33)
+single-mindedly, plus one worker on the as1 family.
+
+## [2026-10-20] build | T-24700 wave 2 partial results
+
+T-24710: main func_8006D7EC's last row is uopt constant propagation (`cc -S` shows `li $3,1`),
+not as1; no source form moves it (300 s permuter and 20+ forms). T-24711: main func_80054E6C
+33->19 rows by breaking the `slot*16` CSE across the nickname memcpy; func_800455C4 stays at 16
+(the 0x2C counter slot is a uopt expression range, and the `lbu` sink is ugen). T-24709 improved
+BUNKA_SD func_80139290 123->6, SHOUGATU func_8013E50C 152->150 with the frame layout now right,
+GEKO func_80132B24 61->57. T-24706 kept ETC func_8013CCE4 at 18 rows and func_8014790C at 57.
+No promotions; the near-miss set is compiler-pass bound.

@@ -15,6 +15,8 @@ tools/docker.sh python3 tools/order_search.py func_XXXXXXXX --unit UNIT -j 8
 tools/docker.sh python3 tools/permute.py func_XXXXXXXX --time 120
 ```
 
+**Verdict rule (T-24700):** `funcdiff --resolve` prints `MATCH` for a function that is still `INCLUDE_ASM` because both sides are the original .s ("compared default build"). That is not a C match. A promotion needs the `compared NON_MATCHING C` version with no diff row (then remove the guard and re-run) or a default build whose body is C; only then does `tools/progress.py` count the function.
+
 Guard rules: readable C that does not match stays under `#ifdef NON_MATCHING` only when it is under about 30 rows, with a ticket id and what is left in the comment; every FAKE comment names the ticket and the reason; no inline asm. If a variant does not compile, `funcdiff` prints no diff lines: check for `MATCH` or `DIFF`, do not count zero rows. References: [[register-cheatsheet]] (symptom table), [[decompile-workflow]] (tools in full), [[notes/functions]] (past notes per function), [[build-step-gaps]] (what the compiler cannot reproduce), [[cloud-matching]] (single-function scratch setup).
 
 Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in that order, by priority, then first mention). ugen hands out `t6..t9, t0..t5` as a ring for expression temporaries. as1 deletes redundant ops (`and 0xFF`, `sll/sra` pairs, copies) but those ops still spent ring slots, then schedules delay slots per source line.

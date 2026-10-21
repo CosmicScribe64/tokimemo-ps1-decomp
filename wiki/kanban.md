@@ -53,6 +53,24 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24714-completion-fanout|T-24714 Completion fan-out ETC func_8013CCE4 byte-view switch]]
+
+- [ ] [[tickets/T-24710-completion-fanout|T-24710 Completion fan-out wave 2: main high close functions]]
+- [ ] [[tickets/T-24711-completion-fanout|T-24711 Completion fan-out wave 2: main low close functions]]
+- [ ] [[tickets/T-24712-completion-fanout|T-24712 Completion fan-out wave 2: GYOZI close functions]]
+- [ ] [[tickets/T-24713-completion-fanout|T-24713 Completion fan-out wave 2: as1 hoist family]]
+
+- [ ] [[tickets/T-24700-completion-fanout|T-24700 Completion fan-out to 100 percent literal match]]
+- [ ] [[tickets/T-24701-completion-fanout|T-24701 Completion fan-out main low: graphics and sprite tail]]
+- [ ] [[tickets/T-24702-completion-fanout|T-24702 Completion fan-out main GPU/sprite: mod, srn and menu]]
+- [ ] [[tickets/T-24703-completion-fanout|T-24703 Completion fan-out main mid: sound, text and date helpers]]
+- [ ] [[tickets/T-24704-completion-fanout|T-24704 Completion fan-out main high: record, CD and parameter functions]]
+- [ ] [[tickets/T-24705-completion-fanout|T-24705 Completion fan-out TACO remaining twelve]]
+- [ ] [[tickets/T-24706-completion-fanout|T-24706 Completion fan-out ETC remaining ten]]
+- [ ] [[tickets/T-24707-completion-fanout|T-24707 Completion fan-out TAIIKU and GYOZI remaining fifteen]]
+- [ ] [[tickets/T-24708-completion-fanout|T-24708 Completion fan-out overlays A: ENDING, VALEN, NAME_ENT, KANGEI]]
+- [ ] [[tickets/T-24709-completion-fanout|T-24709 Completion fan-out overlays B: GEKO, MASTER, SHOUGATU, RPG_BAT, TEL, EN_NICHI, BUNKA_SD, OPTION]]
+
 
 
 

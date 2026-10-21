@@ -2809,7 +2809,9 @@ void func_8008E408();
 void func_8008E6AC();
 void func_8008E8B4();
 void func_8008F54C();
+#ifndef MAIN_API_OVERRIDE_func_8008F618
 void func_8008F618();
+#endif
 void func_8008FB00();
 void func_8008FC10();
 void func_8008FD1C();
@@ -2907,7 +2909,9 @@ void func_800AE090(void *dst, void *src, s32 n);
 #ifndef MAIN_API_OVERRIDE_strncpy
 void strncpy(void *dst, void *src, s32 n); /* Same SDK address and legacy view as func_800AE090. */
 #endif
+#ifndef MAIN_API_OVERRIDE_func_800AE0A0
 void func_800AE0A0(void *arg0, s32 arg1, s32 arg2);
+#endif
 void memcpy();
 void func_800AE0B0(void *arg0, ...); /* printf-like (SDK libc) */
 s32 printf(u8 *fmt, ...);
