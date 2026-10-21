@@ -295,4 +295,39 @@ void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag) {
     p[0].b0 = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", col2sepia);
+void col2sepia(arg0, arg1, dr, dg, db)
+Pix2In *arg0;
+Pix2In *arg1;
+s32 dr;
+s32 dg;
+s32 db;
+{
+    Pix2In *p;
+    s32 i;
+    u32 v;
+    u32 s;
+
+    func_8004B590(arg0, arg1);
+    p = arg1;
+    for (i = 0; i != 0x80; i++) {
+        s = p->r0 + p->g0 + p->b0;
+        if (s != 0) {
+            v = p->r0 + dr;
+            p->r0 = (v >= 0x20) ? 0x1F : v;
+            v = p->g0 + dg;
+            p->g0 = (v >= 0x20) ? 0x1F : v;
+            s = p->b0 + db;
+            p->b0 = (s >= 0x20) ? 0x1F : s;
+        }
+        s = p->r1 + p->g1 + p->b1;
+        if (s != 0) {
+            v = p->r1 + dr;
+            p->r1 = (v >= 0x20) ? 0x1F : v;
+            v = p->g1 + dg;
+            p->g1 = (v >= 0x20) ? 0x1F : v;
+            v = p->b1 + db;
+            p->b1 = (v >= 0x20) ? 0x1F : v;
+        }
+        p++;
+    }
+}
