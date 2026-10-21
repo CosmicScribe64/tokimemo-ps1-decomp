@@ -1711,3 +1711,6 @@ Four matches: ETC `func_8013CCE4` through the uniform switch_compares pass (T-24
 
 ## [2026-10-20] ticket | T-25006 created, In Progress
 [[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]] created, In Progress (branch c-m5): main `srn_set`, `mod_set_gpu`, `func_8004A1A0`.
+
+## [2026-10-20] ticket | T-25006 to In Review
+[[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]]: main `srn_set` matched (record loads through the global array so as1 can move them above the stack stores; `SRN_REC` and `ModRec14` in `game.h`); `mod_set_gpu` guarded at 28 rows; `func_8004A1A0` INCLUDE_ASM with a 76-row draft in drafts/T-25006. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
