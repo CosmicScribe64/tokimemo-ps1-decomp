@@ -1,0 +1,95 @@
+ENDING:func_801330E4: compared NON_MATCHING C (full translation unit)
+ENDING:func_801330E4: DIFF (- expected, + built)
+  -@row 85 914a6838  ; lbu t2,0(t2)
+  +@row 85 3c19800e  ; lui t9,0x0
+  -@row 86 3c04800e  ; lui a0,0x0
+  +@row 86 93396838  ; lbu t9,1464(t9)
+  -@row 87 3c18800e  ; lui t8,0x0
+  +@row 87 914a683a  ; lbu t2,1466(t2)
+  -@row 88 8c8466b0  ; lw a0,0(a0)
+  +@row 88 3c02800e  ; lui v0,0x0
+  -@row 89 9318683a  ; lbu t8,0(t8)
+  +@row 89 8c4266b0  ; lw v0,1072(v0)
+  -@row 90 2d4b0001  ; sltiu t3,t2,1
+  +@row 90 2f380001  ; sltiu t8,t9,1
+  -@row 91 396b0001  ; xori t3,t3,0x1
+  +@row 91 2d4b0001  ; sltiu t3,t2,1
+  -@row 92 00041500  ; sll v0,a0,0x14
+  +@row 92 396c0001  ; xori t4,t3,0x1
+  -@row 93 2f080001  ; sltiu t0,t8,1
+  +@row 93 3b080001  ; xori t0,t8,0x1
+  -@row 94 00024f42  ; srl t1,v0,0x1d
+  +@row 94 00027500  ; sll t6,v0,0x14
+  -@row 95 000b6040  ; sll t4,t3,0x1
+  +@row 95 000e1742  ; srl v0,t6,0x1d
+  -@row 96 39080001  ; xori t0,t0,0x1
+  +@row 96 00087840  ; sll t7,t0,0x1
+  -@row 97 012cc821  ; addu t9,t1,t4
+  +@row 97 000c6840  ; sll t5,t4,0x1
+  -@row 98 00087840  ; sll t7,t0,0x1
+  +@row 98 01af7021  ; addu t6,t5,t7
+  -@row 99 032f1821  ; addu v1,t9,t7
+  +@row 99 01c21821  ; addu v1,t6,v0
+  -@row 100 00037400  ; sll t6,v1,0x10
+  +@row 100 00034c00  ; sll t1,v1,0x10
+  -@row 101 000e1c03  ; sra v1,t6,0x10
+  +@row 101 00091c03  ; sra v1,t1,0x10
+  -@row 104 01201025  ; move v0,t1
+  +@row 104 3c0b800e  ; lui t3,0x0
+  -@row 106 10400015  ; beqz v0,2b4 <func_801330E4+0x200>
+  +@row 106 10400016  ; beqz v0,2b8 <func_801330E4+0x204>
+  -@row 107 3c0a800e  ; lui t2,0x0
+  +@row 107 24040001  ; li a0,1
+  -@row 108 914a6839  ; lbu t2,0(t2)
+  +@row 108 916b6839  ; lbu t3,1465(t3)
+  -@row 110 15400012  ; bnez t2,2b8 <func_801330E4+0x204>
+  +@row 110 15600012  ; bnez t3,2b8 <func_801330E4+0x204>
+  -@row 113 a7a30054  ; sh v1,84(sp)
+  +@row 113 a7a30056  ; sh v1,86(sp)
+  -@row 114 87a30054  ; lh v1,84(sp)
+  +@row 114 87a30056  ; lh v1,86(sp)
+  -@row 116 304b00ff  ; andi t3,v0,0xff
+  +@row 116 304c00ff  ; andi t4,v0,0xff
+  -@row 117 11600002  ; beqz t3,294 <func_801330E4+0x1e0>
+  +@row 117 11800002  ; beqz t4,294 <func_801330E4+0x1e0>
+  -@row 119 256bff00  ; addiu t3,t3,-256
+  +@row 119 258cff00  ; addiu t4,t4,-256
+  -@row 120 00036040  ; sll t4,v1,0x1
+  +@row 120 0003c840  ; sll t9,v1,0x1
+  -@row 121 03ac6821  ; addu t5,sp,t4
+  +@row 121 03b9c021  ; addu t8,sp,t9
+  -@row 122 85ad0030  ; lh t5,48(t5)
+  +@row 122 87180030  ; lh t8,48(t8)
+  -@row 123 2419000b  ; li t9,11
+  +@row 123 2408000b  ; li t0,11
+  -@row 124 016d082a  ; slt at,t3,t5
+  +@row 124 0198082a  ; slt at,t4,t8
+  -@row 127 a03971df  ; sb t9,0(at)
+  +@row 127 a02871df  ; sb t0,3935(at)
+  -@row 156 24180001  ; li t8,1
+  +@row 156 240d0001  ; li t5,1
+  -@row 158 ac387368  ; sw t8,0(at)
+  +@row 158 ac2d7368  ; sw t5,4328(at)
+  -@row 159 24080080  ; li t0,128
+  +@row 159 240f0080  ; li t7,128
+  -@row 161 a02862ba  ; sb t0,0(at)
+  +@row 161 a02f62ba  ; sb t7,58(at)
+  -@row 182 3c0f8014  ; lui t7,0x0
+  +@row 182 3c0e8014  ; lui t6,0x0
+  -@row 183 8defc28c  ; lw t7,0(t7)
+  +@row 183 8dcec28c  ; lw t6,12(t6)
+  -@row 185 3c0e8014  ; lui t6,0x0
+  +@row 185 3c098014  ; lui t1,0x0
+  -@row 186 8dcec2d0  ; lw t6,0(t6)
+  +@row 186 8d29c2d0  ; lw t1,80(t1)
+  -@row 187 ac2fa160  ; sw t7,0(at)
+  +@row 187 ac2ea160  ; sw t6,0(at)
+  -@row 189 3c098014  ; lui t1,0x0
+  +@row 189 3c0a8014  ; lui t2,0x0
+  -@row 190 8d29c314  ; lw t1,0(t1)
+  +@row 190 8d4ac314  ; lw t2,148(t2)
+  -@row 191 ac2ea164  ; sw t6,0(at)
+  +@row 191 ac29a164  ; sw t1,0(at)
+  -@row 194 ac29a168  ; sw t1,0(at)
+  +@row 194 ac2aa168  ; sw t2,0(at)
+  resolved: REAL DIFFERENCE, not naming. Symbol+offset or instruction words differ after relocation.

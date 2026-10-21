@@ -50,21 +50,28 @@ void func_8013E4B4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: C draft for T-24137 (twin of GYOZI func_80140E0C). */
+/* NON_MATCHING: T-24137/T-24709 (twin of GYOZI func_80140E0C). Frame and both
+ * record copies now match (the two word locals sit above the arrays, T-24709).
+ * What is left is the family's register-only miss: the original keeps the zero
+ * `girl` value in $a2 across the first if (`or $a2,$zero,$zero`, `sb $a2`,
+ * `or $a0,$a2,$zero`); IDO folds it to $zero and renumbers the ranges after it
+ * (T-24116, T-24301). */
 void func_8013E50C(void) {
+    s16 i;
+    s32 girl;
     ShoShorts7 sp40;
     ShoShorts7 sp30;
-    s16 i;
 
     sp40 = D_801460CC;
     sp30 = D_801460DC;
+    girl = 0;
     D_80146050 = 0;
     if (D_800E6280.unk_1BC[9].unk_0C.f.b1 == 0 &&
         D_800E6280.unk_1BC[9].unk_02 >= 20 && (D_800E6280.unk_0F8 & 1)) {
         D_80146050 = 1;
     }
-    D_800E6280.unk_F5F = 0;
-    D_80145F2C = ((func_80051A68(0) & 0x7F) == 4) * 4;
+    D_800E6280.unk_F5F = girl;
+    D_80145F2C = ((func_80051A68(girl) & 0x7F) == 4) * 4;
     D_80145F20 = D_80145AD4;
     D_80145F24 = D_80145B08;
     D_80145F28 = D_80145B3C;

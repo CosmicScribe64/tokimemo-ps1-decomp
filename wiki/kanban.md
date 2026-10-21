@@ -6,6 +6,8 @@ kanban-plugin: board
 
 ## Backlog
 
+- [ ] [[tickets/T-24929-uopt-zcopy-scope|T-24929 uopt zcopy scope: propagate global copies but not local induction copies]]
+
 - [ ] [[tickets/T-21000-event-goto-loops-and-seq-views|T-21000 EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4 views]]
 - [ ] [[tickets/T-21001-recover-wave-10-list-6-near-misses|T-21001 Recover the wave-10 list 6 near misses: BUNKAKEN func_80143DD0 and RPG_BAT func_80139510]]
 - [ ] [[tickets/T-21002-game-state-unk120-second-record-set|T-21002 Declare the second set of nine GsRec0FC records in GameState instead of raw unk_120 casts]]
@@ -46,12 +48,19 @@ kanban-plugin: board
 
 ## Ready
 
+
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+
+
+
+
+
 
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
@@ -67,6 +76,47 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+- [ ] [[tickets/T-24926-func-80133024-801323E0|T-24926 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
+- [ ] [[tickets/T-24928-func-8006c988-800674B0|T-24928 main:func_8006C988 (src/main/800674B0.c)]]
+- [ ] [[tickets/T-24927-func-80139290-801388D0|T-24927 BUNKA_SD:func_80139290 (src/ovl/BUNKA_SD/801388D0.c)]]
+- [ ] [[tickets/T-24925-func-8013cce4-8013BEF0|T-24925 ETC:func_8013CCE4 (src/ovl/ETC/8013BEF0.c)]]
+- [ ] [[tickets/T-24923-func-801326bc-80132000|T-24923 OPTION:func_801326BC (src/ovl/OPTION/80132000.c)]]
+- [ ] [[tickets/T-24924-func-801330e4-80133030|T-24924 ENDING:func_801330E4 (src/ovl/ENDING/80133030.c)]]
+- [ ] [[tickets/T-24921-func-8013cce4-8013BEF0|T-24921 ETC:func_8013CCE4 (src/ovl/ETC/8013BEF0.c)]]
+- [ ] [[tickets/T-24922-func-801367ec-80134D10|T-24922 GEKO:func_801367EC (src/ovl/GEKO/80134D10.c)]]
+- [ ] [[tickets/T-24910-func-80154dd8-80154430|T-24910 RPG_BAT:func_80154DD8 (src/ovl/RPG_BAT/80154430.c)]]
+- [ ] [[tickets/T-24700-completion-fanout|T-24700 Completion fan-out to 100 percent literal match]]
+- [ ] [[tickets/T-24701-completion-fanout|T-24701 Completion fan-out T-24701: main low: graphics and sprite tail]]
+- [ ] [[tickets/T-24702-completion-fanout|T-24702 Completion fan-out T-24702: main GPU/sprite: mod, srn and menu]]
+- [ ] [[tickets/T-24703-completion-fanout|T-24703 Completion fan-out T-24703: main mid: sound, text and date helpers]]
+- [ ] [[tickets/T-24704-completion-fanout|T-24704 Completion fan-out T-24704: main high: record, CD and parameter functions]]
+- [ ] [[tickets/T-24705-completion-fanout|T-24705 Completion fan-out T-24705: TACO remaining twelve]]
+- [ ] [[tickets/T-24706-completion-fanout|T-24706 Completion fan-out T-24706: ETC remaining ten]]
+- [ ] [[tickets/T-24707-completion-fanout|T-24707 Completion fan-out T-24707: TAIIKU and GYOZI remaining fifteen]]
+- [ ] [[tickets/T-24708-completion-fanout|T-24708 Completion fan-out T-24708: overlays A: ENDING, VALEN, NAME_ENT, KANGEI]]
+- [ ] [[tickets/T-24709-completion-fanout|T-24709 Completion fan-out T-24709: overlays B: GEKO, MASTER, SHOUGATU, RPG_BAT, TEL, EN_NICHI, BUNKA_SD, OPTION]]
+- [ ] [[tickets/T-24710-completion-fanout|T-24710 Completion fan-out T-24710: wave 2: main high close functions]]
+- [ ] [[tickets/T-24711-completion-fanout|T-24711 Completion fan-out T-24711: wave 2: main low close functions]]
+- [ ] [[tickets/T-24712-completion-fanout|T-24712 Completion fan-out T-24712: wave 2: GYOZI close functions]]
+- [ ] [[tickets/T-24713-completion-fanout|T-24713 Completion fan-out T-24713: wave 2: as1 hoist family]]
+- [ ] [[tickets/T-24714-completion-fanout|T-24714 Completion fan-out T-24714: ETC func_8013CCE4 byte-view switch]]
+- [ ] [[tickets/T-24914-func-8006c988-800674B0|T-24914 main:func_8006C988 (src/main/800674B0.c)]]
+- [ ] [[tickets/T-24915-func-80054e6c-80053650|T-24915 main:func_80054E6C (src/main/80053650.c)]]
+- [ ] [[tickets/T-24916-func-80138b2c-80138890|T-24916 TACO:func_80138B2C (src/ovl/TACO/80138890.c)]]
+- [ ] [[tickets/T-24911-func-80133024-801323E0|T-24911 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
+- [ ] [[tickets/T-24912-func-8013a2e8-801396E0|T-24912 ENDING:func_8013A2E8 (src/ovl/ENDING/801396E0.c)]]
+- [ ] [[tickets/T-24913-func-80139290-801388D0|T-24913 BUNKA_SD:func_80139290 (src/ovl/BUNKA_SD/801388D0.c)]]
+- [ ] [[tickets/T-24909-func-8014790c-80146400|T-24909 ETC:func_8014790C (src/ovl/ETC/80146400.c)]]
+- [ ] [[tickets/T-24908-func-8013907c-80138B50|T-24908 GYOZI:func_8013907C (src/ovl/GYOZI/80138B50.c)]]
+- [ ] [[tickets/T-24907-func-80140e0c-80140C90|T-24907 GYOZI:func_80140E0C (src/ovl/GYOZI/80140C90.c)]]
+- [ ] [[tickets/T-24902-func-80134724-80134120|T-24902 KANGEI:func_80134724 (src/ovl/KANGEI/80134120.c)]]
+- [ ] [[tickets/T-24904-func-80136c20-80134D10|T-24904 GEKO:func_80136C20 (src/ovl/GEKO/80134D10.c)]]
+- [ ] [[tickets/T-24905-func-8013b460-8013B170|T-24905 TACO:func_8013B460 (src/ovl/TACO/8013B170.c)]]
+- [ ] [[tickets/T-24906-func-801511c0-80149F90|T-24906 TACO:func_801511C0 (src/ovl/TACO/80149F90.c)]]
+- [ ] [[tickets/T-24901-func-8013852c-80137B90|T-24901 KANGEI:func_8013852C (src/ovl/KANGEI/80137B90.c)]]
+- [ ] [[tickets/T-24903-func-80132d0c-80132760|T-24903 VALEN:func_80132D0C (src/ovl/VALEN/80132760.c)]]
+
+
 
 - [ ] [[tickets/T-25001-class-c-main-sndisp-strcallback|T-25001 Class C: main sndisp, strCallback, func_80065964]]
 - [ ] [[tickets/T-24571-ending-first-portrait-view|T-24571 Test the first ENDING portrait16 alias view]]

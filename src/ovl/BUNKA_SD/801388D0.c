@@ -240,9 +240,16 @@ s32 func_80139100(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: C draft for T-24137. */
+/* NON_MATCHING: T-24137, six rows. Reading the GameState fields through
+ * `GameState *g = &D_800E6280;` (T-24709) took the draft from 123 rows to 6:
+ * the remaining difference is the position of the speculative
+ * `lui/lbu D_800E62BE` inside three arms of the 0x70000000 switch (the original
+ * puts it first in the arm, IDO here after the arm's `li`/`lui`); that is the
+ * as1 hoist family of T-24211/T-24212. autotweak (692 edits), the `&&` operand
+ * order, one-line arms and a shared selector local do not move it. */
 void func_80139290(void) {
-    switch (D_800E6280.unk_1104.u) {
+    GameState *g = &D_800E6280;
+    switch (g->unk_1104.u) {
     case 0x1D:
         D_801206AC = 1;
         break;
@@ -256,8 +263,8 @@ void func_80139290(void) {
         D_801206AC = 3;
         break;
     }
-    if (D_800E6280.unk_1104.u >= 0xBF && D_800E6280.unk_1104.u < 0x70000000) {
-        switch (((D_800E6280.unk_1104.u - 0xBE) % 0xF2) / 0xB) {
+    if (g->unk_1104.u >= 0xBF && g->unk_1104.u < 0x70000000) {
+        switch (((g->unk_1104.u - 0xBE) % 0xF2) / 0xB) {
         case 0: D_801206AC = 4; break;
         case 1: D_801206AC = 3; break;
         case 2: D_801206AC = 5; break;
@@ -282,10 +289,10 @@ void func_80139290(void) {
         case 21: D_801206AC = 7; break;
         }
     }
-    if (D_800E6280.unk_1104.u == 0x70000000) {
+    if (g->unk_1104.u == 0x70000000) {
         D_801206AC = 3;
     }
-    switch (D_800E6280.unk_1104.u - 0x70000000) {
+    switch (g->unk_1104.u - 0x70000000) {
     case 0x3B:
         D_801206AC = 2;
         break;
@@ -296,12 +303,12 @@ void func_80139290(void) {
         D_801206AC = 1;
         break;
     case 0xA1:
-        if (D_800E6280.unk_03E == 0x60) {
+        if (g->unk_03E == 0x60) {
             D_801206AC = 0;
         }
         break;
     }
-    if (D_800E6280.unk_1104.u == 0x95) {
+    if (g->unk_1104.u == 0x95) {
         D_801206F0 = 0x10;
         D_80120734 = 0x14;
         D_80120778 = 0x18;
@@ -316,8 +323,8 @@ void func_80139290(void) {
             D_801207BC = 0x28;
         }
     }
-    if (D_800E6280.unk_1104.u >= 0xD1 && D_800E6280.unk_1104.u < 0x70000000) {
-        switch (((D_800E6280.unk_1104.u - 0xC9) % 0x4E) / 0x27) {
+    if (g->unk_1104.u >= 0xD1 && g->unk_1104.u < 0x70000000) {
+        switch (((g->unk_1104.u - 0xC9) % 0x4E) / 0x27) {
         case 0:
             D_801206F0 = 0x11;
             D_80120734 = 0x15;
@@ -350,7 +357,7 @@ void func_80139290(void) {
             break;
         }
     }
-    if (D_800E6280.unk_1104.u == 0x70000000) {
+    if (g->unk_1104.u == 0x70000000) {
         D_801206F0 = 0x10;
         D_80120734 = 0x14;
         D_80120778 = 0x18;
@@ -365,7 +372,7 @@ void func_80139290(void) {
             D_801207BC = 0x28;
         }
     }
-    if (D_800E6280.unk_1104.u - 0x70000000 == 0x3B && D_800E6280.unk_03E != 0x60) {
+    if (g->unk_1104.u - 0x70000000 == 0x3B && g->unk_03E != 0x60) {
         D_801206F0 = 0xF;
         D_80120734 = 0x13;
         D_80120778 = 0x17;
@@ -380,7 +387,7 @@ void func_80139290(void) {
             D_801207BC = 0x27;
         }
     }
-    if (D_800E6280.unk_1104.u - 0x70000000 == 0x68 && D_800E6280.unk_03E == 0x60) {
+    if (g->unk_1104.u - 0x70000000 == 0x68 && g->unk_03E == 0x60) {
         D_801206F0 = 0x12;
         D_80120734 = 0x16;
         D_80120778 = 0x1A;

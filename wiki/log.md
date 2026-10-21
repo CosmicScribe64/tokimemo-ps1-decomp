@@ -1651,6 +1651,36 @@ Recorded final MAIN matrix/background, TACO font, NAME_ENT introduction and ETC 
 
 Catalog refreshed:729 tickets,428 sections,3,077 functions. Docker wiki lint reports zero broken links and zero ticket/board mismatches; only the two existing large-page warnings remain ([[data/t0018-cases]], [[log]]). `git diff --check` passes. Matching goal paused at the user's wrap-up request; completed source and handoff documentation prepared for commit and push to origin/main.
 
+## [2026-10-20] ticket | T-24700 completion fan-out to 100 percent
+
+Split the 129 remaining INCLUDE_ASM functions (178,836 bytes) into nine file-disjoint lanes,
+T-24701..T-24709, each with a background worker and a list under `.claude/orchestrator/lists/`.
+Worker brief: `.claude/orchestrator/fanout-brief.md`. Baseline gate: tools/progress.py 6823/6952
+functions, 2,098,084/2,276,920 bytes (92.1 percent). A Docker twin scan (`neardupes.py --report -v`)
+found 0 fillable unmatched functions and 0 unmatched members in groups with a matched source, so
+the remaining work needs per-function reconstruction. See [[status]] and [[tickets/T-24700-completion-fanout]].
+
+## [2026-10-20] decision | T-24700 wave 1 results and wave 2
+
+Wave 1 (T-24701..T-24709) closed no literal matches: the remaining set is the hard tail, and the
+closest guarded drafts are blocked at 1-33 rows, most of them by the documented as1 hoist/scheduler
+family. Real improvements kept: NAME_ENT func_801398EC 266->185 rows, GYOZI func_80138C9C 103->75,
+func_8013907C 39->23, main func_80054E6C 84->33, main func_800455C4 26->16 (new guarded body).
+Found and documented a process bug: `funcdiff --resolve` reports MATCH for an INCLUDE_ASM function
+because both sides are the original .s; the playbook now states the promotion rule. Wave 2
+(T-24710..T-24713) assigns the closest functions (main func_8006D7EC at 1 row, KANGEI 2 rows,
+VALEN 4, ENDING 5, GYOZI 9/23/75, main func_800455C4 16, func_80047560 22, func_80054E6C 33)
+single-mindedly, plus one worker on the as1 family.
+
+## [2026-10-20] build | T-24700 wave 2 partial results
+
+T-24710: main func_8006D7EC's last row is uopt constant propagation (`cc -S` shows `li $3,1`),
+not as1; no source form moves it (300 s permuter and 20+ forms). T-24711: main func_80054E6C
+33->19 rows by breaking the `slot*16` CSE across the nickname memcpy; func_800455C4 stays at 16
+(the 0x2C counter slot is a uopt expression range, and the `lbu` sink is ugen). T-24709 improved
+BUNKA_SD func_80139290 123->6, SHOUGATU func_8013E50C 152->150 with the frame layout now right,
+GEKO func_80132B24 61->57. T-24706 kept ETC func_8013CCE4 at 18 rows and func_8014790C at 57.
+No promotions; the near-miss set is compiler-pass bound.
 ## [2026-10-20] query | as1 global delay-slot filler rule and the volatile lever
 
 [[tickets/T-24900-completion-orchestration]] research branch `as1-lever`. Traced as1's global filler with the T-24047 print-only build plus a relocation print: blocks with a stall are visited by (weight, number); candidates are dominated blocks in that order up to weight +5; a volatile access and its `lui` are never candidates; an indirect jump on the path or a live destination register rejects. Confirmed on OMIMAI `func_801340E4`, SHOUGATU `func_8013EE30`, TAIIKU `func_8013C33C`. Lever: `volatile` on the default arm's three globals matches VALEN `func_80134030` and GYOZI `func_80139E4C` (FAKE in VALEN.h/GYOZI.h). VALEN `func_80132D0C`, GEKO `func_80136C20`, KANGEI `func_8013852C` stay guarded with T-24900 notes. New page [[as1-scheduler-rule]]; [[playbook]] section 5 and known limits updated.
@@ -1667,3 +1697,65 @@ Catalog refreshed:729 tickets,428 sections,3,077 functions. Docker wiki lint rep
 
 ## [2026-10-20] ticket | T-25001 to In Review
 [[tickets/T-25001-class-c-main-sndisp-strcallback]]: main `sndisp` guarded at 2 rows. Code and frame match; the `pos[]` template cannot sit at D_800B40F8 because this object's C `.data` is already the D_800E3680 island. `strCallback` (75 rows, ugen ring) and `func_80065964` (frame/home-store shape unknown) stay INCLUDE_ASM with drafts in drafts/T-25001/main/. Notes in [[matching-notes]]. Clean build 27/27.
+## [2026-10-20] build | T-24700 work merged onto the new plan; clean 27/27
+
+Committed the T-24700 fan-out records and guarded improvements, merged origin/main (c5b96eb43:
+[[plan-remaining]], T-24800, T-24900), and kept the upstream match of GYOZI func_80139E4C. Clean
+build after the merge: `rm -rf build && python3 configure.py && ninja` exit 0, 27 SHA1 checks OK,
+headers and globals OK. tools/progress.py: 6,825 / 6,952 functions, 2,099,476 / 2,276,920 bytes
+(92.2%), 127 left (VALEN func_80134030 and GYOZI func_80139E4C from T-24900). Corrected the
+T-24713 note: its "backend-version trait, no source form" conclusion was superseded by T-24900's
+traced rule and volatile lever; [[as1-scheduler-rule]] is now the reference. Started class A of
+[[plan-remaining]]: one file-disjoint worker per function, tickets T-24901..T-24908.
+
+## [2026-10-20] ticket | T-24901..T-24908 class A near-miss closers
+
+Eight workers, one function each, 45-minute box: KANGEI func_8013852C (80137B90.c) and func_80134724
+(80134120.c), VALEN func_80132D0C (80132760.c), GEKO func_80136C20 (80134D10.c), TACO func_8013B460
+(8013B170.c) and func_801511C0 (80149F90.c), GYOZI func_80140E0C (80140C90.c) and func_8013907C
+(80138B50.c). Each claims its file in the ticket title; header edits limited to the unit header the
+as1 volatile lever needs. T-24700...T-24714 moved to In Review without promotion.
+
+## [2026-10-20] ticket | T-24921..T-24924 Wave C-1 pre-flighted and Ready
+
+Closed the cancelled wave (T-24908..T-24916) to In Review, archived the T-24909 ETC draft in
+`drafts/T-24909/`, kept T-24915's store-order improvement on `main:func_80054E6C` (19->12 rows),
+fixed kanban card corruption, and verified a clean 27/27 build + zero wiki lint errors at
+6,826 / 6,952 functions (92.2%, 126 remaining after [[tickets/T-24903-func-80132d0c-80132760]]).
+Pre-flighted four isolated-worktree tickets (`Ready` on [[kanban]]):
+[[tickets/T-24921-func-8013cce4-8013BEF0]], [[tickets/T-24922-func-801367ec-80134D10]],
+[[tickets/T-24923-func-801326bc-80132000]], and [[tickets/T-24924-func-801330e4-80133030]],
+each with exact `funcdiff --resolve` defect breakdowns and two-stage lever plans.
+
+## [2026-10-20] build | Wave C-1 results and clean 27/27
+
+Four isolated-worktree runs (the first under the v2 IR-first protocol; 4 workers max). No new
+promotion, but three real row-count gains kept:
+- T-24921 ETC func_8013CCE4 9 -> 3 rows (guard). Case-2 schedule fixed by `buf[0] = 0x801E2000;
+  buf[1] = 0x801E6000;` on the `for` line with `u32 i`; the 3 remaining `beq v1` rows are coupled
+  to uopt folding the 4-trip loop. Next lead: cvt_pass switch-temp (`OPTN 405 0`).
+- T-24922 GEKO func_801367EC archived at 44 rows, 0 register rows; residuals are as1 block picks.
+- T-24923 OPTION func_801326BC archived at 134 rows; the copy loops are 0x200 bytes (not 9 words)
+  and the D_8013D304 signed `% 4` structure is understood; strength-reduced induction remains.
+- T-24924 ENDING func_801330E4 114 -> 92 rows (archive): frame now exact (0xB0, chance 0x30,
+  level 0x54, points 0x58, rank 0x78), rows 0-83 clean; next is the uopt coalescing of the f9
+  extraction vs the target's `or v0,t1,zero`.
+All commits cherry-picked to main; tickets In Review. Clean build 27/27, headers/globals OK.
+tools/progress.py: 6,826 / 6,952 functions, 2,100,368 / 2,276,920 bytes (92.2%); 126 left.
+
+## [2026-10-20] build | Wave C-2 results; clean 27/27
+
+Four continuation runs on the same functions (T-24925..T-24928, isolated worktrees). No new
+promotion, but three of four moved and every one now has a mechanism-level diagnosis:
+- T-24925 ETC func_8013CCE4 stays at 3 rows: the `$v1` compares and the uopt loop fold are proven
+  coupled in uopt's `OPTN 405` (zcopy) record; no C spelling can decouple them. Build-step
+  ticket [[tickets/T-24929-uopt-zcopy-scope]] filed with the reproduction shims.
+- T-24926 GEKO func_80133024 stays at 2 rows: the two day ranges are the whole miss; direct
+  field reads make rows 33/35 match exactly (~15 rows) and the next un-CSE step is written.
+- T-24927 BUNKA_SD func_80139290 stays at 6 rows: classified same-block (not the default-arm
+  filler); the local-m lever removes all six target rows and is banked as
+  drafts/T-24927/local-m-order-lever.patch with the colour-cascade follow-up.
+- T-24928 main func_8006C988 11 -> 5 rows: the base/register swap is solved (two-arm `u8 val`
+  web plus two dead parameter tests at the top, FAKE T-24928); the induction-init order and the
+  per-arm narrowing copy remain.
+Clean build 27/27, headers/globals OK. tools/progress.py: 6,826 / 6,952 (92.2%), 126 left.

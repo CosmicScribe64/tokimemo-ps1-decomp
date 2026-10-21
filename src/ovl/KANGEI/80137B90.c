@@ -207,7 +207,13 @@ void func_80138470(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-24202, T-24900, 2 rows (rows 35..36): as1 schedules lui $at, %hi(D_80139ADC) before addu $t6, $t4, $v1 instead of after (a local, same-block choice: the T-24900 global-mover levers, volatile D_80139ADC or D_8013A2AC, leave it at 2 rows) (also T-24054, T-24107, T-24122). ~5,000 cast/order/temp variants all stay at 2 rows or worse. */
+/* NON_MATCHING: T-24202, T-24900, T-24901, 2 rows (rows 35..36): as1's per-block list scheduler picks the
+ * lui $at, %hi(D_80139ADC) node (besttime 15) before the addu $t6, $t4, $v1 node (besttime 16); the target has
+ * addu, lui, sh. Not the global mover: volatile D_80139ADC / D_8013A2AC leave it at 2 rows. as1 -xbbdbg 8 shows
+ * the addu is only ready at 16 because subu is scheduled at 14, while the lui's $at chain is ready at 15.
+ * ~5,000 cast/order/temp/line variants (T-24202) and the T-24901 batch (sum in a u16/s32 temp, store through a
+ * view, (u8) masks that as1 deletes, A2AC store first / after the call, year as s16, F in a local) stay at 2 rows
+ * or worse. */
 #ifdef NON_MATCHING
 void func_8013852C(void) {
     u8 year;

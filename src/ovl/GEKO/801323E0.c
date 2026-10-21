@@ -172,20 +172,20 @@ s32 func_80132A4C(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-24302, about 30 rows (61 funcdiff lines); frame and both
- * table copies match (scalars declared before the tables, only date, girl and
- * month as scalars). Left: girl comes out in $v1 and the record pointer and
- * day in $v0 (the original swaps them, so the return needs a move), frame 0x58
- * against 0x50 (the day local adds a home), and the else arm's ugen temporaries
- * are numbered differently. */
+/* NON_MATCHING: T-24302/T-24709, about 28 rows (57 funcdiff lines); frame (0x50)
+ * and both table copies match. The `day` home after the two tables (T-24709) is
+ * what fixes the frame. Left: girl comes out in $v1 and the record pointer and
+ * day in $v0 (the original swaps them, so each exit needs a `move v0,v1`; the
+ * selector and the record pointer tie in the allocator), and the else arm's
+ * ugen temporaries are numbered differently. */
 #ifdef NON_MATCHING
 s32 func_80132B24(void) {
     u32 date;
     u8 girl;
     u8 month;
-    u32 day;
     GekoThresholds thr;
     GekoMonthDays days;
+    u32 day;
 
     thr = D_80144CF8;
     days = D_80144D10;

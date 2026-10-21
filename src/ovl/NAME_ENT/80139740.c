@@ -36,14 +36,17 @@ s32 func_80139740(u32 arg0, s32 arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-24132, ~260 resolved rows, all register allocation. Shape follows the asm and the
- * matched sibling func_80139F30: tmp is D_8014D0D4 % 3, the 13 NameRecord flags (record stride 0xF00
- * by D_800E8BEF, bytes at +0x688) drive Rec24 records 0..12 two per loop trip (i = 1,3,..,11, exit on
- * i == 13, records step 2 = 0x48 bytes), zero/0x80000000 stores with the (i/8)*0x30 +
- * (((unk_10F8>>2)%3)*0x10)+0x80 sprite byte. The original keeps the D_80123120 base, the D_800E8BEF
- * byte and unk_10F8 in $t0/$a3/$a2 across all six trips; this draft reloads them inside the loop. */
+/* NON_MATCHING: T-24132, T-24708, ~185 resolved rows (was ~266 with the rec pointer). Shape follows
+ * the asm and the matched sibling func_80139F30: tmp is D_8014D0D4 % 3, the 13 NameRecord flags
+ * (record stride 0xF00 by D_800E8BEF, bytes at +0x688) drive Rec24 records 0..12 two per loop trip
+ * (i = 1,3,..,11, exit on i == 13, records step 2 = 0x48 bytes), zero/0x80000000 stores with the
+ * (i/8)*0x30 + (((unk_10F8>>2)%3)*0x10)+0x80 sprite byte. Indexing D_801217D0[i] directly (no Rec24
+ * *rec local) is what lets uopt keep the D_80123120 base, the D_800E8BEF byte and unk_10F8 in
+ * registers across the six trips; a local record pointer makes uopt reload them each trip.
+ * Remaining: uopt gives the same live ranges one colour earlier than the original (target tmp $v1,
+ * i $v0, D_800E7378 $a2, 0x80000000 $t2, 13 $t4, 0x30 $t3; draft one slot down) and the loop-tail
+ * constants take different registers. autotweak (300 s) 2561 vs 3420 cost, no match. */
 void func_801398EC(void) {
-    Rec24 *rec;
     s32 tmp;
     s32 i;
 
@@ -59,30 +62,28 @@ void func_801398EC(void) {
         D_801217D0[0].unk_00 = 0x80000000;
     }
     i = 1;
-    rec = &D_801217D0[1];
     do {
         if (tmp == 0) {
             if (((NameRecordF00 *)D_80123120)[D_800E8BEF].flags[i] == 0) {
-                rec->unk_00 = 0;
-                rec->unk_0E = (i / 8) * 0x30 + ((D_800E6280.unk_10F8 >> 2) % 3) * 0x10 + 0x80;
+                D_801217D0[i].unk_00 = 0;
+                D_801217D0[i].unk_0E = (i / 8) * 0x30 + ((D_800E6280.unk_10F8 >> 2) % 3) * 0x10 + 0x80;
             } else {
-                rec->unk_00 = 0x80000000;
+                D_801217D0[i].unk_00 = 0x80000000;
             }
         } else {
-            rec->unk_00 = 0x80000000;
+            D_801217D0[i].unk_00 = 0x80000000;
         }
         if (tmp == 0) {
             if (((NameRecordF00 *)D_80123120)[D_800E8BEF].flags[i + 1] == 0) {
-                rec[1].unk_00 = 0;
-                rec[1].unk_0E = ((i + 1) / 8) * 0x30 + ((D_800E6280.unk_10F8 >> 2) % 3) * 0x10 + 0x80;
+                D_801217D0[i + 1].unk_00 = 0;
+                D_801217D0[i + 1].unk_0E = ((i + 1) / 8) * 0x30 + ((D_800E6280.unk_10F8 >> 2) % 3) * 0x10 + 0x80;
             } else {
-                rec[1].unk_00 = 0x80000000;
+                D_801217D0[i + 1].unk_00 = 0x80000000;
             }
         } else {
-            rec[1].unk_00 = 0x80000000;
+            D_801217D0[i + 1].unk_00 = 0x80000000;
         }
         i += 2;
-        rec += 2;
     } while (i != 13);
 }
 #else

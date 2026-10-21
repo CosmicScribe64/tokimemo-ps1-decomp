@@ -142,14 +142,23 @@ void func_8013454C(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-24201, 2 rows (1 pair); frame, registers ($v0=v, $v1=s, $a0=unk_66C,
- * $a1=unk_0F4>>12, $a2=c2) and all switch cases match (T-24122 draft). Only the IDO 5.3 as1
- * default-block delay-slot hoist remains: as1 moves `sll t0, v0, 0x2` from `default:` into the
- * delay slot of `beqz at, default`; the original fills it with the dispatch `sll t1, t1, 0x2`.
- * A second reference to the default label (`case 7:`, a guard `if`/`goto def`) gives the
- * original slot but also the bound 8 or a second range check and rotates $a0/$a1/$v1, so the
- * original's extra reference is not a uopt edge. No effect: default spellings, scopes, line
- * layout, selector casts and locals, explicit join label (VALEN:func_80134030, T-19016). */
+/* NON_MATCHING: T-24902 (T-24201, T-24122), 2 rows (1 pair); frame, registers
+ * ($v0=v, $v1=s, $a0=unk_66C, $a1=unk_0F4>>12, $a2=c2) and all switch cases match.
+ * Only the IDO 5.3 as1 default-block delay-slot hoist remains: as1 moves the default arm's
+ * `sll t0, v0, 0x2` into the delay slot of the range check `beqz at, default`; the original
+ * fills that slot with the dispatch `sll t1, t1, 0x2` and leaves the default's `sll` alone.
+ * T-24902 as1 trace (-R -xbbdbg 8, drafts/T-24902): the switch head is bb 17 (weight 1),
+ * the out-of-range default bb 18 (weight 4, numbered before the dispatch), the dispatch
+ * bb 19 (weight 4). The scan tries bb 18 first (equal weights, lower number), its slot-2
+ * candidate (op 00024080, reloc 0, sched 0/1) prints path_accept=1, and MOVEFROM bb 18 inst 2
+ * is kept -- bb 17 has no stall left, so bb 19's `sll` is never tried. The wrong candidate is
+ * a plain `sll`, not a `lui` of a global, so the volatile lever of wiki/as1-scheduler-rule.md
+ * cannot reach it (volatile D_80139ADC: score unchanged, 214 rows on the vr.py count). A second
+ * reference to the default label (`case 7:`, a guard `if`/`goto def`) gives the original slot
+ * but the bound 8 or a second range check and rotates $a0/$a1/$v1. Also no effect: default
+ * spellings, scopes, line layout, selector casts and locals, explicit join label (T-24201).
+ * Left: a source form that makes bb 18 weigh 7 (its dominator the dispatch, i.e. a table
+ * entry) or bb 19 weigh 1 / get a lower number, with the same instruction stream. */
 void func_80134724(void) {
     u8 s;
     s16 v;
