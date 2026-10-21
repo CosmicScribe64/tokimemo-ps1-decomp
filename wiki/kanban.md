@@ -53,10 +53,13 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24911-func-80133024-801323E0|T-24911 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
+- [ ] [[tickets/T-24912-func-8013a2e8-801396E0|T-24912 ENDING:func_8013A2E8 (src/ovl/ENDING/801396E0.c)]]
+- [ ] [[tickets/T-24913-func-80139290-801388D0|T-24913 BUNKA_SD:func_80139290 (src/ovl/BUNKA_SD/801388D0.c)]]
+
 - [ ] [[tickets/T-24909-func-8014790c-80146400|T-24909 ETC:func_8014790C (src/ovl/ETC/80146400.c)]]
 - [ ] [[tickets/T-24910-func-80154dd8-80154430|T-24910 RPG_BAT:func_80154DD8 (src/ovl/RPG_BAT/80154430.c)]]
 
-- [ ] [[tickets/T-24901-func-8013852c-80137B90|T-24901 KANGEI:func_8013852C (src/ovl/KANGEI/80137B90.c)]]
 - [ ] [[tickets/T-24902-func-80134724-80134120|T-24902 KANGEI:func_80134724 (src/ovl/KANGEI/80134120.c)]]
 - [ ] [[tickets/T-24903-func-80132d0c-80132760|T-24903 VALEN:func_80132D0C (src/ovl/VALEN/80132760.c)]]
 - [ ] [[tickets/T-24904-func-80136c20-80134D10|T-24904 GEKO:func_80136C20 (src/ovl/GEKO/80134D10.c)]]
@@ -79,6 +82,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+- [ ] [[tickets/T-24901-func-8013852c-80137B90|T-24901 KANGEI:func_8013852C (src/ovl/KANGEI/80137B90.c)]]
 
 
 
