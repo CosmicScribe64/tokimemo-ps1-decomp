@@ -54,6 +54,11 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-24925-func-8013cce4-8013BEF0|T-24925 ETC:func_8013CCE4 (src/ovl/ETC/8013BEF0.c)]]
+- [ ] [[tickets/T-24926-func-80133024-801323E0|T-24926 GEKO:func_80133024 (src/ovl/GEKO/801323E0.c)]]
+- [ ] [[tickets/T-24927-func-80139290-801388D0|T-24927 BUNKA_SD:func_80139290 (src/ovl/BUNKA_SD/801388D0.c)]]
+- [ ] [[tickets/T-24928-func-8006c988-800674B0|T-24928 main:func_8006C988 (src/main/800674B0.c)]]
+
 
 
 
