@@ -55,7 +55,6 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] [[tickets/T-24923-func-801326bc-80132000|T-24923 OPTION:func_801326BC (src/ovl/OPTION/80132000.c)]]
-- [ ] [[tickets/T-24924-func-801330e4-80133030|T-24924 ENDING:func_801330E4 (src/ovl/ENDING/80133030.c)]]
 
 
 
@@ -75,6 +74,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+- [ ] [[tickets/T-24924-func-801330e4-80133030|T-24924 ENDING:func_801330E4 (src/ovl/ENDING/80133030.c)]]
 - [ ] [[tickets/T-24921-func-8013cce4-8013BEF0|T-24921 ETC:func_8013CCE4 (src/ovl/ETC/8013BEF0.c)]]
 - [ ] [[tickets/T-24922-func-801367ec-80134D10|T-24922 GEKO:func_801367EC (src/ovl/GEKO/80134D10.c)]]
 - [ ] [[tickets/T-24910-func-80154dd8-80154430|T-24910 RPG_BAT:func_80154DD8 (src/ovl/RPG_BAT/80154430.c)]]
