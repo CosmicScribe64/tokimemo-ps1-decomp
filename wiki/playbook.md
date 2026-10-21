@@ -45,6 +45,8 @@ Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in th
 
 **Global as the variable.** A local held in the wrong register and stored to a global in each branch: assign the global itself and read it back; uopt promotes it and colours as the original (T-10860 family).
 
+**Promoted global left uncoloured.** Symptom: the original keeps every read of a byte global in one argument register (`lui a3; lbu a3`) and the draft loads some into ugen temporaries. Fix: read it through `GameState *g = &D_800E6280;` and add one more read in an empty test, `if (g->unk_041) {}`; the extra use raises the range's priority so all pieces take one colour (ETC `func_80146D4C`, 82 to 28 rows, found by the permuter, T-25007). FAKE.
+
 **Split a range with an empty test.** `if (x) {}` after an assignment splits or reorders live ranges and adds no code (GEKO `func_801358CC`, found by autotweak, T-24302). Unassigned locals grow the frame by 8. Always FAKE.
 
 ## 4. Operand order of compares and sums
