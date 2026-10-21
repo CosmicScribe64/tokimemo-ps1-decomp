@@ -93,7 +93,8 @@ void func_80133C50(void) {
     }
     D_80144C3C = 0x16;
     v = get_g_zyotai_s(D_800E6280.unk_F5F);
-    if (D_80144C50 == 2) {
+    /* FAKE: T-25002 reading D_80144C50 through the word local g keeps bne t8,a0 operand order */
+    if ((g = D_80144C50) == 2U) {
         g = D_800E6280.unk_F5F;
         D_80144C50 = 0;
         if (g == 0) {
@@ -109,7 +110,7 @@ void func_80133C50(void) {
             } else {
                 func_80132A4C(5);
             }
-        } else if (g == 1 || g == 2 || g == 3) {
+        } else if (g == 1 || g * 1 == 2 || g == 3 /* FAKE: T-25002 g * 1 puts the shared constant 2 first in the beq */) {
             v = D_800E6280.unk_0F4.h >> 12;
             /* FAKE: T-25002 (from T-24503) empty test retains this club value before the
              * record load, restoring this branch's original temporary numbering. */
@@ -125,7 +126,7 @@ void func_80133C50(void) {
         } else if (g == 4 || g == 5 || g == 10) {
             if ((D_800E6280.unk_0F4.h >> 12) < 6) {
                 func_80132A4C(3);
-            } else if ((u32)(v & 0x7F) < 2) {
+            } else if ((u8)(v & 0x7F) < 2) {
                 func_80132A4C(4);
             } else {
                 func_80132A4C(5);
