@@ -53,6 +53,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0|T-25006 Class C: main srn_set, mod_set_gpu, func_8004A1A0]]
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]
