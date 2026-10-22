@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25042-kangei-dispatch-emission|T-25042 Match KANGEI dispatch scheduling]]
+
 
 - [ ] [[tickets/T-25040-main-flag-dispatch|T-25040 Match MAIN flag dispatcher]]
 

@@ -2573,3 +2573,23 @@ Root independent standards/spec review reports no findings. Moved [[tickets/T-25
 ## [2026-10-22] build | MAIN background and TACO pointer walk accepted
 
 Integrated e6c71b6be and e95ec5c3b. Root independently reviewed both against standards/spec with no findings; literal default-C852/164byte proofs and fresh27/27 binary checksums pass. Headers/globals and prototypes0new/15known pass. [[tickets/T-25048-main-80076fdc]] and [[tickets/T-25047-taco-home-store]] move Done. [[status]] now6845/6952functions,2119140/2276920bytes93.1%;107functions/157780bytes remain. Twelve matches add14464bytes. TACO80149F90.c is complete. Workers continue under T-25050/T-25051, avoiding existing claims.
+
+## [2026-10-22] ticket | T-25042 KANGEI dispatch follow-up
+
+Claimed [[tickets/T-25042-kangei-dispatch-emission]] after pinning KANGEI3852C. Read prior switch-weight/global-mover negatives and current T-25011 cast-based draft; source ownership is only src/ovl/KANGEI/80134120.c. Baseline capture precedes new source tests.
+
+## [2026-10-22] query | T-25042 default-arm emission baseline
+
+Reproduced the current four-position cast-based KANGEI34724 miss and old uncast hoist (score26 under the current comparison). Stored-global empty tests promote all switch stores, while local empty tests change whole-function allocation; neither transfers the previous match directly. Preserved captures and negative ledger in drafts/T-25042/README.md and updated [[tickets/T-25042-kangei-dispatch-emission]]. Source is unchanged.
+
+## [2026-10-22] query | T-25042 path rejection confirmed
+
+Original binasm replay shows the cast's default shift rejected by the as1 path check, while the uncast shift is accepted; both default blocks have weight4. Distinct conversion, empty-control placement and adjacent-case exit tests have not restored the target temporary chain. Recorded phase evidence and negative classes in drafts/T-25042/README.md; [[tickets/T-25042-kangei-dispatch-emission]] remains active with no production source edit.
+
+## [2026-10-22] query | T-25042 source-boundary negative ledger
+
+Named conversion locals show that uopt can avoid the cast's extra scratch temporary, but their boundary disappears before the global move and the default t0 shift is hoisted again. Adjacent-case edges, nested switches and explicit cleanup forms likewise fail without producing a match. Preserved source classes and phase constraints in drafts/T-25042/README.md and [[tickets/T-25042-kangei-dispatch-emission]]. Production source remains unchanged; investigation continues.
+
+## [2026-10-22] query | Preserve KANGEI phase constraints
+
+Integrated research checkpoint872d89968 for [[tickets/T-25042-kangei-dispatch-emission]], preserving both histories. Production unchanged; worker continues investigating source boundaries surviving global scheduling. Relayed newly verified T-25047 alternating late-zero identity mechanism to ETC worker whose remaining issue needs one temporary slot. MAIN dispatcher worker reports216/218 exact in a newer unverified candidate; no coverage counted.
