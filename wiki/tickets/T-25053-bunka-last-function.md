@@ -52,3 +52,5 @@ combined narrow-index controls s16=132, u16=166, u8=177/248words are negative.
 Quotient identity follow-up on102-cost source: q*1 in switch outputs is neutral102; q OR late-zero from b worsens112, and from selector worsens138. All remain243words. None restores target copy without other changes; production unchanged.
 
 Counter alias follow-up: scalar u8 view on load worsens102→142; store-only view is neutral102; both views142 (all243words). Static-load classification is needed for current best allocation; no production edit.
+
+Return-lifetime control: canonical header declares void; initial s32 trial correctly failed incompatible redeclaration. Scratch-only preprocessed declaration override then measured s32 best244/243words,cost105 and s32 repaired baseline243/243,cost146. Neither improves current102. Header and production unchanged; no non-void promotion proposed.

@@ -2845,3 +2845,7 @@ Root Docker parse of captured input confirms field-entry-switch has OPTN405=1 fo
 ## [2026-10-22] decision | Respect MAIN coordinator chat wrap-up request
 
 MAIN coordinator reports a direct human request in that chat to wrap up, commit and push. Its three lanes (T-25034 quadrant, T-25051 TACO, nextT-25058) are stopping experiments and preserving branches. Root will not restart those lanes contrary to that request. Other chats and root workers continue existing assignments; root alone integrates main. [[status]] reflects this scope distinction.
+
+## [2026-10-22] query | BUNKA return lifetime ruled out
+
+[[tickets/T-25053-bunka-last-function]] scratch-only s32 definition/declaration control worsens best to244words/cost105; baseline243/cost146. Canonical void header remains unchanged. Current archived best102 persists. TEL final ABI removal controls and worker gates pass; source pin is being prepared for root integration.
