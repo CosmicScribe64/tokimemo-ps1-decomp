@@ -1,12 +1,12 @@
 ---
 id: T-25013
 title: "NEXT STEP: compiler-level levers (uopt/ugen/as1 emulation rules) to unblock the last ~119 functions"
-status: In Review
+status: Done
 priority: high
 type: tooling
 assignee: octa
 created: 2026-10-21
-updated: 2026-10-21
+updated: 2026-10-22
 depends_on:
   - T-25012
 links: [[[status]], [[plan-remaining]], [[build-step-gaps]], [[as1-scheduler-rule]], [[matching-notes]], [[tickets/T-25012-class-c-d-reconstruction]], [[tickets/T-25011-class-a-closers-as1-levers]], [[tickets/T-24929-uopt-zcopy-scope]]]

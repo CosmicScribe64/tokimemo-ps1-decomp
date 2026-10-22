@@ -1,6 +1,6 @@
 ---
 type: status
-updated: 2026-10-20
+updated: 2026-10-22
 ---
 
 # Status
@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## NEXT STEP (read this first)
 
-Source-level matching is exhausted (2026-10-21): the remaining ~119 functions need compiler-level levers in the build pipeline (uopt/ugen/as1 emulation rules, one uniform rule at a time). The next agent should take [[tickets/T-25013-compiler-level-levers]] (Ready) with the strongest model available. Do not restart autotweak/permuter/order_search sweeps on the guarded near misses; they were run to exhaustion in T-24142, T-25011 and T-25012. Rules for a build change are in [[plan-remaining]] and CODING_STANDARDS 7a. Measure every candidate rule with `tools/lever_lab.py` (one command: no matched object may change, guarded rows before/after), see the ticket.
+The compiler-lever programme is complete and negative ([[tickets/T-25013-compiler-level-levers]], [[tickets/T-25015-lever-expansion-tooling]]: every lever rejected with evidence, the OPTN space closed, the build proven frozen on the matched corpus). [[tickets/T-25016-candidate-reconstruction]] then rebuilt the candidate pool: the near set stands at 2 to 7 funcdiff rows each with named residues (as1 scheduling outcomes, one register allocation, one constant fold), and the bulk pool is fully classified in the regenerated work queue (79 scored drafts, 43 blocked with named first blockers; packet scores flatter by about 10x, verified, so Tier 0 is the only near-term match path). Next work is per-function reconstruction from that queue, starting with the near set; do not restart the generic salvage passes or the source-shape sweeps, both converged at zero. A match still counts only by the standing rule: funcdiff MATCH plus the full local gate, with formal verdicts from CI or the host build.
 
 ## Progress (2026-10-20)
 
@@ -19,6 +19,8 @@ Source-level matching is exhausted (2026-10-21): the remaining ~119 functions ne
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- 2026-10-22: T-25013, T-25014, and T-25015 are Done (merged in PR #66; all levers rejected, tooling landed). T-25016 closed out its census, engine, and bulk phases with no new matches (count unchanged at 6,833) and is In Review as the PR carrying its record. The regenerated work queue is the current map of what remains: Tier 0 near set, Tier 1 scored bulk drafts (a reconstruction backlog, verified 210+ resolved rows at best), Tier 2 blocked drafts with named blockers.
 
 - 2026-10-20 session end: no agents running. Closest guards: main func_8005B43C 3 rows (permuter candidate in notes), GEKO func_80136C20 4, KANGEI x2 2 rows, parameter_up_down 11 (permuter output-252 unchecked), ETC func_80146D4C 12, GEKO func_80133C50 13 (masked-load lead in notes), mod_set_gpu 17.
 

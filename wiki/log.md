@@ -1848,3 +1848,58 @@ uniform. Census over the mirrored asm bundle: references build for
 all 96 INCLUDE_ASM functions; only 9 have machine-usable candidates,
 the rest are draft fragments (the v2 gap, recorded in the ticket).
 Ticket [[tickets/T-25015-lever-expansion-tooling]] to In Review.
+
+## [2026-10-21] ticket | T-25016 created: candidate reconstruction for the fragment functions
+
+Follow-on to T-25015 at Lila's direction: extractor v2 to assemble
+candidates from drafts/ fragments, register-canonicalized census
+scoring, then per-function reconstruction against the mirrored
+references. Ticket [[tickets/T-25016-candidate-reconstruction]],
+branch octa/t25016-reconstruction. The T-25013/14/15 stack is
+proposed to main as PR #66.
+
+## [2026-10-21] build | T-25016 census v2 recorded: 24 functions ranked, top is func_801511C0 at 4
+
+Extractor v2 plus canonical scoring censused 24 of the 96 remaining
+functions (the other 71 fragment wrappings do not compile as wrapped,
+recorded honestly in the ticket). Ranked list is in the ticket; the
+nearest are func_801511C0 (canon 4), func_80133024 (8),
+func_8013B460 (8), func_8013907C (9), func_80140E0C (12). Baselines
+are in the sweep ledger; the 10-minute loop now works the list
+top-down. Ticket [[tickets/T-25016-candidate-reconstruction]].
+
+## [2026-10-21] build | T-25016 engine pass over all 24 censused functions: no zeros, near set identified
+
+The 10-minute loop Lila set ran the shape engine across the whole
+census list. Best raw-score reductions: func_8013907C 163 to 15,
+func_80134724 113 to 28, func_800455C4 261 to 171. func_801511C0
+remains the nearest at 4 rows. The loop removed itself on queue
+exhaustion as instructed. Hand reconstruction on the near set is
+the remaining phase. Ticket [[tickets/T-25016-candidate-reconstruction]].
+
+## [2026-10-21] build | T-25016 hand phase: funcdiff ground truth for the near set
+
+Hand phase on [[tickets/T-25016-candidate-reconstruction]]. Two
+measurement corrections: census v2 scored stale drafts/ bodies where
+the src tree carries newer NON_MATCHING bodies (13 of 24), and the
+packet metric counts symbolization differences that funcdiff's
+after-relocation comparison resolves away. Resolved rows for the
+near set: func_8013852C 2, func_80136C20 2, func_80134724 4,
+func_801511C0 5, func_80140E0C 6, func_80139290 7, func_8014AB50 7.
+No local zero. All top-group residues are as1 local ordering
+choices on identical instruction streams; source-shape attempts
+(statement and declaration permutations, splits, label placement,
+compiler variants, a 302-trial engine run on func_8014AB50)
+recorded in the ticket do not move them.
+
+## [2026-10-22] ticket | T-25016 phase 2 results and resolution plan by common issue
+
+## [2026-10-22] ticket | T-25016 gate-lever experiments: flattening and volatile both negative with named causes
+
+## [2026-10-22] ticket | T-25016 trace note: global filler active in func_80139290 (37 moves)
+
+## [2026-10-22] ticket | T-25016 phase 2 closeout: bulk pool fully classified (79 scored, 43 named blockers), queue regenerated, in-tree pool contamination corrected
+
+## [2026-10-22] ticket | T-25016 queue verification: top bulk candidates funcdiff-verified (best 210 resolved lines); packet scores flatter by ~10x; Tier 1 re-labelled a reconstruction backlog
+
+## [2026-10-22] ticket | T-25013, T-25014, T-25015 marked Done (merged in PR #66); T-25016 to In Review with its PR; status page next-step rewritten for the post-lever state

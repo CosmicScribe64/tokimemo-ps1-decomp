@@ -65,6 +65,9 @@ def main():
     log.write("step\ttransform\tscore\n")
     base = score(best_text)
     print("baseline:", base)
+    if base is None:
+        print("error: the bed body does not compile; check the bed", file=sys.stderr)
+        raise SystemExit(2)
     log.write("0\t<base>\t%s\n" % base)
     best = base
     trials = 1
