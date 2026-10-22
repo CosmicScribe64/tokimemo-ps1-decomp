@@ -61,6 +61,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-25017-completion-plan|T-25017 Reconcile census and execute completion plan]]
 
 
@@ -80,6 +81,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
+- [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
 
 - [ ] [[tickets/T-25030-overlay-candidate-triage|T-25030 Qualify older large overlay reconstructions without source sweeps]]
 

@@ -2023,3 +2023,15 @@ Reviewed12 different actual remaining overlay functions; current119 scope confir
 ## [2026-10-22] lint | T-25030 checkpoint checks
 
 Wiki lint zero broken links/status mismatches with only existing data/t0018-cases size warning; diff check clean and production/header/tools/config unchanged. [[tickets/T-25030-overlay-candidate-triage]] remains In Review.
+
+## [2026-10-22] ticket | T-25031 small-overlay candidate qualification
+
+Created [[tickets/T-25031-small-overlay-candidate-triage]] and In Progress card before work. Read-only NAME_ENT/SHOUGATU/VALEN/KANGEI/GYOZI/BUNKA_SD selection excludes prior24, reserved GEKO/OPTION/TEL and exhausted tails; MAIN separately owned. At most12 functions, no builds/source variants/root edits/agents.
+
+## [2026-10-22] query | T-25031 nominates proven zero-argument helper model
+
+Stopped after four reviewed actual remaining functions, current119. Matched check_para_limit at80084D3C overwrites incoming a1/a0 before reads; corrected SHOUGATU E50C archive still passes &sp40 and a record address as FAKE arguments. Verified callee resolves earlier open escape question. Preserved exact target/canonical source evidence and one minimal canonical no-arg proving variant in drafts/T-25031/README.md and [[matching-notes]]. No build/source trials or runtime-bug claim; root assigns implementation. [[tickets/T-25031-small-overlay-candidate-triage]] moves to In Review.
+
+## [2026-10-22] lint | T-25031 actionable checkpoint
+
+Wiki lint zero broken links/status mismatches, one existing data/t0018-cases size warning. Diff check clean and production/header/tools/config unchanged. [[tickets/T-25031-small-overlay-candidate-triage]] remains In Review; root authorized separate T-25033 proving experiment after pin.
