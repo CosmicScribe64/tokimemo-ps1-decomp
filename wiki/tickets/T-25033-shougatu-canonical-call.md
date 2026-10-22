@@ -1,7 +1,7 @@
 ---
 id: T-25033
 title: Match SHOUGATU func_8013E50C with canonical helper and promoted zero
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
 updated: 2026-10-22
@@ -47,3 +47,7 @@ Docker-only: affected `ninja build/ovl/SHOUGATU.ok`; default-C `funcdiff --unit 
 Worker source review against CODING_STANDARDS.md: C89; canonical aggregate fields and helper; no asm fallback for E50C; every retained workaround has a FAKE/T-25033 explanation. The early byte store crosses only nonvolatile reads of disjoint fields and writes to D_80146050, with no intervening calls or aliases. Multiplication by zero is defined for every possible u8 input, and its extra source read is nonvolatile. No extra runtime load/store/call appears: the linked code is literal. Existing integer return value is ignored. No shared declaration changes. Ticket remains In Review for coordinator review/integration.
 
 Coordinator source review on 2026-10-22: no findings against CODING_STANDARDS.md or the requested scope. Ticket stays In Review until the coordinator completes the combined 27-binary integration gate. Independent `non_matching=False` full-TU proof asserts no E50C INCLUDE_ASM fallback and matches all 472 bytes; source SHA256 c566388b1c2eeca90b5a34e00731ed2e9b453d20b7808550efdb73d2ae43b416. Wiki lint: zero broken links/status mismatches, one pre-existing large-page warning. `git diff --check` passes.
+
+## Root integration verification
+
+Root standards/spec review has no findings. Fresh Docker rebuild and all27 binary checksums pass; both functions verified as default C with literal linked bytes, assembly fallback removed. Headers/globals pass; prototype check has zero new disagreements. Root progress6835/6952 functions,2105536/2276920 bytes. Accepted and moved to Done.

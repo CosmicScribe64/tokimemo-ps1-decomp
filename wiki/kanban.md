@@ -54,6 +54,7 @@ kanban-plugin: board
 
 ## In Progress
 
+
 - [ ] [[tickets/T-25034-main-quadrant-extent|T-25034 MAIN src/main/80046500.c full-width tile extent recovery]]
 
 - [ ] [[tickets/T-25032-main-candidate-audit|T-25032 Bounded read-only MAIN candidate qualification]]
@@ -95,7 +96,7 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-25033-shougatu-canonical-call|T-25033 Match SHOUGATU func_8013E50C with canonical helper and promoted zero]]
+
 - [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
 
 - [ ] [[tickets/T-25030-overlay-candidate-triage|T-25030 Qualify older large overlay reconstructions without source sweeps]]
@@ -173,6 +174,9 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-25033-shougatu-canonical-call|T-25033 Match SHOUGATU func_8013E50C with canonical helper and promoted zero]]
+- [ ] [[tickets/T-25035-gyozi-late-folded-zero|T-25035 GYOZI zero carrier through late folding]]
 
 - [ ] [[tickets/T-25013-compiler-level-levers|T-25013 NEXT STEP: compiler-level levers (uopt/ugen/as1 rules) to unblock the last ~119 functions]]
 - [ ] [[tickets/T-25014-allocator-source-shape-automation|T-25014 Automation for allocator-artifact and source-shape residuals]]

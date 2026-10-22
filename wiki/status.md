@@ -7,6 +7,10 @@ updated: 2026-10-22
 
 The one page for "where are we". Update it when a wave, a local or cloud session, or a contributor PR changes the numbers (`tools/docker.sh python3 tools/progress.py`). Older status and handoff pages are in `archive/` ([[completion-run-2026-10-17]], [[stopping-point-2026-10-15]]).
 
+## Latest verified integration (2026-10-22)
+
+SHOUGATU func_8013E50C (472 bytes) and GYOZI func_80140E0C (388 bytes) are verified default C. Root independently checked literal linked bytes, all27 binary checksums and declaration guards. Current game code: **6835/6952 functions;2105536/2276920 bytes (92.5%)**,117 functions/171384 bytes remaining. Both use a marked late-folded zero expression with early global initialization. MAIN counter and BUNKA scheduler follow-ups are active; their experimental results are not yet counted. Older counts below are historical.
+
 ## NEXT STEP (read this first)
 
 The compiler-lever programme is complete and negative ([[tickets/T-25013-compiler-level-levers]], [[tickets/T-25015-lever-expansion-tooling]]: every lever rejected with evidence, the OPTN space closed, the build proven frozen on the matched corpus). [[tickets/T-25016-candidate-reconstruction]] then rebuilt the candidate pool: the near set stands at 2 to 7 funcdiff rows each with named residues (as1 scheduling outcomes, one register allocation, one constant fold), and the bulk pool is fully classified in the regenerated work queue (79 scored drafts, 43 blocked with named first blockers; packet scores flatter by about 10x, verified, so Tier 0 is the only near-term match path). Next work is per-function reconstruction from that queue, starting with the near set; do not restart the generic salvage passes or the source-shape sweeps, both converged at zero. A match still counts only by the standing rule: funcdiff MATCH plus the full local gate, with formal verdicts from CI or the host build.

@@ -752,3 +752,9 @@ Read-only candidate survey stopped after four actual remaining functions. The co
 ## T-25033: Late-folded zero producer under active verification
 
 The active SHOUGATU worker reports a whole-TU 118/118-word candidate at private path /private/tmp/tokimemo-t25023/build/t25033/astra/single-identity-or/unit.c. `girl = (u32)D_800E6280.unk_F5F < 0;` survives uopt and folds later to zero without an input load. Combined with `func_80051A68(girl | 0, sp40.v, girl)`, it recovers the target entry zero carrier, store and argument sequence. Identity/ignored-argument controls affect precoloring and must be marked FAKE. Four aligned differences remain around the later reload base; this is not a match. T-25035 GYOZI and T-25036 MAIN counter workers received the exact donor for independent transfer tests. Do not assume those functions share the same result or alter their semantics to force transfer.
+
+## T-25035: GYOZI func_80140E0C zero carrier matched
+
+The new T-25033 SHOUGATU late-folding donor closes the older T-25025 boundary. `girl = D_800F62CF * 0; D_800F62CF = girl;` before the disjoint flag tests, with the existing single byte-view status argument, produces all 97 words exactly. The local expression and early assignment are marked FAKE: they preserve the entry a1-zero and global lifetime; the compiler sinks the actual store to the original merge. A late store plus ignored argument reached 97 words but kept a four-cost reload-base residue, so no ignored arguments remain. The old plain-zero local grids did not test this late-folding mechanism.
+
+Default C proof: 388 linked bytes equal target, GYOZI SHA1 43f92523116e7b6cd772d4397712a52eeda89703, headers/global/prototype guards pass. Source has no guard/fallback for this function. Root owns independent review and the full integration gate. See [[tickets/T-25035-gyozi-late-folded-zero]] and drafts/T-25035/README.md for negative controls and reproduction.
