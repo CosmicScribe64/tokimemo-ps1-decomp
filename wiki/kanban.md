@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25022-main-reload-boundary|T-25022 MAIN src/main/8004F870.c reload-boundary closure]]
+
 
 
 - [ ] [[tickets/T-25017-completion-plan|T-25017 Reconcile census and execute completion plan]]
