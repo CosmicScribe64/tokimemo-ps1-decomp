@@ -97,3 +97,14 @@ AS1CAP=/work/build/capKANGEI tools/docker.sh python3 build/as1tr/cap.py src/ovl/
 tools/docker.sh python3 build/as1tr/s.py /work/build/capKANGEI/unit.c /work/build/sK   # post-ugen listing
 # trace is in build/capKANGEI/bbdbg.log (grep -n "lineno 3307")
 ```
+
+## Superseding source result: T-25041 (2026-10-22)
+
+The function now matches from C. An empty read of the just-stored global
+makes uopt emit that store as rstr on the next line, while removing the
+redundant signed conversion of the byte year restores the temporary register.
+The new trace keeps aftercycles4 and besttime15/16 for lui/addu but picks
+addu, so the readiness-only conclusion above was too strong. The earlier
+measurements remain valid for their tested sources. See
+`drafts/T-25041/README.md` for the causal captures, negative ledger and literal
+180-byte proof; no compiler change was needed.

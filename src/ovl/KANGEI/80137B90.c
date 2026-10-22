@@ -207,15 +207,6 @@ void func_80138470(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-24202, T-24900, T-24901, 2 rows (rows 35..36): as1's per-block list scheduler picks the
- * lui $at, %hi(D_80139ADC) node (besttime 15) before the addu $t6, $t4, $v1 node (besttime 16); the target has
- * addu, lui, sh. Not the global mover: volatile D_80139ADC / D_8013A2AC leave it at 2 rows. as1 -xbbdbg 8 shows
- * the addu is only ready at 16 because subu is scheduled at 14, while the lui's $at chain is ready at 15.
- * ~5,000 cast/order/temp/line variants (T-24202) and the T-24901 batch (sum in a u16/s32 temp, store through a
- * view, (u8) masks that as1 deletes, A2AC store first / after the call, year as s16, F in a local) stay at 2 rows
- * or worse. T-25018 reproduced the full-unit 2-row baseline and the stock as1 DAG on 2026-10-22;
- * no untested dependency-changing source form was established, so the guard remains pinned. */
-#ifdef NON_MATCHING
 void func_8013852C(void) {
     u8 year;
 
@@ -227,15 +218,15 @@ void func_8013852C(void) {
     D_80139AD0 = (KObj *) D_8013A170[1][0][11];
     D_80139AD4 = D_8013A170[1][1][11];
     D_80139AD8 = D_8013A170[1][2][11];
-    /* FAKE: repeated field use and halfword conversions recover the promoted
-     * girl byte and $t2/$t4/$t6 temporary numbering; original source unknown. T-24054, T-24122, T-24131 */
-    D_80139ADC = (u16)((D_800E6280.unk_F5F << 2) - D_800E6280.unk_F5F) + (u16)(s16)year;
+    /* FAKE: repeated field use and the halfword conversion recover the
+     * promoted girl byte and temporary numbering. The empty test makes
+     * uopt emit the store separately, keeping the sum before its address.
+     * Original source unknown. T-24054, T-24122, T-24131, T-25041 */
+    D_80139ADC = (u16)((D_800E6280.unk_F5F << 2) - D_800E6280.unk_F5F) + year;
+    if (D_80139ADC) {}
     D_8013A2AC = year;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_8013852C);
-#endif
 
 void func_801385E0(void) {
     D_80139AD0 = (KObj *)D_8013A170[1][0][1];
