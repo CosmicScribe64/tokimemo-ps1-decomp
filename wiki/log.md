@@ -1967,3 +1967,7 @@ Preserved reviewed T-25020 guarded source and T-25021 draft checkpoints on main8
 ## [2026-10-22] build | Preserved checkpoint and dispatch verification
 
 Root Docker affected BUNKA_SD build passes header check and executable SHA1 after checkpoint integration. Wiki lint reports zero broken links, zero status mismatches and the pre-existing large data/t0018-cases page. All three assigned chats confirmed active with current in-progress turns; MAIN has isolated883760224 worktree and starts the reload test. No full-scope C-match claim.
+
+## [2026-10-22] decision | Bounded Astra escalation for BUNKA scheduler blocker
+
+Live T-25023 Sol worker reports no untested causal source lever after checking the four-position residue and negative ledger. Authorized one read-only Astra consultation within that chat, limited to bb43/45 local load order versus bb42/44 filler selection, at most three trace-backed hypotheses; Sol idles during consultation and tests only justified new ideas afterward. T-25022 worker reports first real global reload repair reduces138 to127 printed diff lines and recovers one instruction; second read boundary under test, no match claim. TEL chat remains active. Overall scope unchanged.
