@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25027-main-sndi|T-25027 MAIN src/main/8004F870.c sndi reconstruction]]
+
 - [ ] [[tickets/T-25022-main-reload-boundary|T-25022 MAIN src/main/8004F870.c reload-boundary closure]]
 
 

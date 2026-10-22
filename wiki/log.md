@@ -2067,3 +2067,19 @@ Checked root's conditional consultation request: T-24001 Astra already addresses
 ## [2026-10-22] decision | Preserve large near blocker and select new reconstruction evidence
 
 Reviewed T-25026 research-only pin1cce82f2e:4692-byte function has exactly one changed position; prior identical Astra consultation reused, no duplicated tests. Current body unchanged. Sol lane releases8006CB30 and takes T-25028 bounded read-only triage of at most12 unclaimed remaining candidates for still-unrepaired semantic/control/ABI defects with donors, excluding active8004F870 and contributor GEKO/OPTION. MAIN worker continues T-25027 sndi; TEL worker idle. Keep two Sol workers and no active Astra until a specific new question warrants it.
+
+## [2026-10-22] ticket | MAIN sndi reconstruction
+
+Created [[tickets/T-25027-main-sndi]] In Progress in the existing isolated worktree. Exclusive file src/main/8004F870.c remains unchanged. Read prior sndi negative ledger before experiments; compare current tracked and recovered source with whole-TU evidence rather than archived canonical scores. No extra workers or Astra consultation.
+
+## [2026-10-22] build | sndi target entry-control recovery
+
+[[tickets/T-25027-main-sndi]] reproduces tracked full-TU baseline263target/265built words,150aligned/150printed. Audited recovered buffer widths, call ABI and found sequencing. Explicit target stage[0] guard restores G-loop indexed cursor structure and improves to264words,123/123; target-timed join-reset alternate264/125/127 preserved. Word parity controls regress. Fresh traced object equals normal object exactly. Source/audit at drafts/T-25027/main/sndi/; private target traces stay ignored. No match or production/shared-header/tool change. Remaining base/constant and parity/cursor priority conflict is the known frozen blocker.
+
+## [2026-10-22] lint | sndi checkpoint validation
+
+Docker wiki catalog reports794 tickets,444 sections and3,078 functions. Lint reports zero broken links, zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes; src/, include/ and tools/ have no changes. T-25027 remains In Progress; source-only checkpoint is prepared for root review.
+
+## [2026-10-22] ingest | Preserve reviewed sndi entry-control repair
+
+Root reviewed T-25027 source-only checkpoint624541ad3 against prior source/audit: second scan now tests stage[0] at entry and indexed byte at latch; target-timed reset alternate also preserved. Default production unchanged. Measured264built versus263target words/123printedlines is an improvement, not a match. Remaining known allocation/spill conflicts are explicit. MAIN worker idle pending T-25028 candidate screening; no automatic consultation or repeated sweep. Full matching goal stays active.
