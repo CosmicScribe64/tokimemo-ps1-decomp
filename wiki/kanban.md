@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25052-main-schedule-dispatch|T-25052 Match MAIN remaining schedule dispatcher]]
+
 
 
 - [ ] [[tickets/T-25034-main-quadrant-extent|T-25034 MAIN src/main/80046500.c full-width tile extent recovery]]

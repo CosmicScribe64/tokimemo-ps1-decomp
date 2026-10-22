@@ -2267,3 +2267,22 @@ Whole-TU replay recovers a 219/218-word shape; bit-field snapshot restores targe
 ## [2026-10-22] build | T-25040 literal flag dispatcher closure
 
 Promoted `src/main/8006CB30.c` function `func_8006D138` to default C. An exact-width discarded byte view holds uopt's static alias while the real late-zero address stays base-relative; together with the measured constant-range boundary, all218 words match. Annotated guarded/default links each prove872 bytes and complete MAIN SHA1. Header/global checks pass; prototype branch0new/15known. Root's independent final standards/spec review has no findings. [[tickets/T-25040-main-flag-dispatch]] moves to In Review for full27 integration. Reproduction and negative controls are retained in `drafts/T-25040/`.
+
+## [2026-10-22] ticket | T-25052 remaining MAIN schedule dispatcher
+
+Root accepted and pushed T-25040 at4933de332 after full27 hashes and guards passed. Created [[tickets/T-25052-main-schedule-dispatch]] In Progress for the exclusively assigned `func_8007132C`, preserving both accepted same-file matches. Read the newest T-24024 snapshot before new source experiments; production remains assembly.
+
+## [2026-10-22] build | T-25052 dispatcher baseline reproduced
+
+Whole-TU replay reproduces T-24024 exactly: 998 target words, 975 baseline (aligned cost 1013), 984 byte-view calendar candidate (892). A targeted volatile-calendar control is worse at 961 words / 967 and is retained as a negative. The first remaining structural issue is the schedule pointer's origin: target keeps the GameState origin plus index and accesses +0x69C, while the old draft points directly into the record array. Investigate that representation before register tuning; production remains assembly. See [[tickets/T-25052-main-schedule-dispatch]].
+
+## [2026-10-22] build | T-25052 first dispatcher decisions recovered
+
+Calendar byte views and independent first-count lifetime (`op`, with later count
+in `t`) recover frame72/spill0x30 and the first101 instructions except exit-branch
+distances. The984/998-word draft remains unpromoted. Explicit GameState pointer
+rewrites, volatile calendars, empty-switch/test controls, loop-bound identities,
+and index-view induction negatives are retained in drafts/T-25052. The direct
+record type already produces the correct displaced access. Remaining work is
+address/loop-bound promotion after the first helper calls. See
+[[tickets/T-25052-main-schedule-dispatch]].
