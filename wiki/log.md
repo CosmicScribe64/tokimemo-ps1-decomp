@@ -2003,3 +2003,15 @@ For [[tickets/T-25029-main-strcallback-ring]], checked prior exact callback Astr
 ## [2026-10-22] lint | strCallback mechanism checkpoint
 
 Docker catalog795 tickets,444 sections,3,078 functions; wiki lint zero broken links/zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes. src/, include/ and tools/ unchanged. T-25029 research/consultation preserved for root review; no match or coverage change.
+
+## [2026-10-22] ticket | Read-only MAIN qualification
+
+Created [[tickets/T-25032-main-candidate-audit]] In Progress; release800563F0.c editing. Read latest main b6d7754bd and prior T-25028/30 tables before selecting from current membership. Bound12MAIN functions/15minutes, no builds/source sweeps/subagents/Astra. Preserve37bf807db separately; root handles integration.
+
+## [2026-10-22] query | MAIN remaining extent-width candidate
+
+[[tickets/T-25032-main-candidate-audit]] stops early after five focused remaining candidates and two raw-prefix provenance checks. Latest main44a495b88 confirms membership. Newest tracked func_80046AC8 still narrows tile extent to s16 before positive test; target branches on full word and narrows only at TILE store. Known T-24501 suspect now confirmed as still-unrepaired source/control gap, not a new archive discovery. Current callers and exact one-type baseline experiment recorded in drafts/T-25032/README.md; reuse any existing private corrected variant first. No builds, source experiments, workers/Astra, production/root edits or coverage change.
+
+## [2026-10-22] lint | MAIN read-only audit checkpoint
+
+Metadata-only Docker catalog/lint pass:796 tickets,444 sections,3,078 functions; zero broken links, zero status mismatches, one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes and src/, include/, tools/ unchanged. No compiler/build/source trial occurred. Candidate qualification is ready for root review; no match or coverage credit.
