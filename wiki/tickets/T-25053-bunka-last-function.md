@@ -48,3 +48,5 @@ signed plus global empty use138. No production edits.
 Follow-up: b-before-q zero reset improves archived signed-selector.c to102
 aligned cost (243/243 words). Signed q and separate s32 index were neutral104;
 combined narrow-index controls s16=132, u16=166, u8=177/248words are negative.
+
+Quotient identity follow-up on102-cost source: q*1 in switch outputs is neutral102; q OR late-zero from b worsens112, and from selector worsens138. All remain243words. None restores target copy without other changes; production unchanged.
