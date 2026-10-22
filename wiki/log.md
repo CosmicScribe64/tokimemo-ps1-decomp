@@ -1959,3 +1959,11 @@ Created [[tickets/T-25021-main-5215c-reconstruction]] in the isolated T-25019 wo
 ## [2026-10-22] query | Typed state-machine reconstruction checkpoint
 
 [[tickets/T-25021-main-5215c-reconstruction]]: recovered func_8005215C compiles after evidence-based buffer and callee repairs. Docker full-TU final source315target/313built words, aligned138 and printed138, frame64 and observed homes exact. Preserved wide arithmetic. Earlier baseline frame96/printed325. Source-only checkpoints saved under drafts/T-25021/main/func_8005215C/; production restored. Earliest structural read-boundary gap documented in [[matching-notes]] for the requested multi-chat attack plan. Ticket/board moved to In Review; no match or coverage claim.
+
+## [2026-10-22] decision | Dispatch three file-disjoint completion chats
+
+Preserved reviewed T-25020 guarded source and T-25021 draft checkpoints on main883760224. Reused three idle chats for T-25022 MAIN read-boundary repair, T-25023 BUNKA four-row scheduler closure and T-25024 TEL largest-function qualification. Exact source ownership and chat IDs recorded in [[tickets/T-25017-completion-plan]]. Sol6.1medium, one worker per chat, isolated trees, no worker main pushes; root verifies integration. No new match claimed.
+
+## [2026-10-22] build | Preserved checkpoint and dispatch verification
+
+Root Docker affected BUNKA_SD build passes header check and executable SHA1 after checkpoint integration. Wiki lint reports zero broken links, zero status mismatches and the pre-existing large data/t0018-cases page. All three assigned chats confirmed active with current in-progress turns; MAIN has isolated883760224 worktree and starts the reload test. No full-scope C-match claim.
