@@ -43,3 +43,10 @@ so signed storage and unsigned division preserve the computation. Selector use
 is diagnostic FAKE and changes its load scheduling; it remains unmatched.
 Signed counter plus reversed zero assignments scores136; plus empty counter
 use scores138. Missing quotient copy persists; selector load is too early.
+
+Follow-up: reversing the two zero resets (b before q, matching target order)
+improves this same archived candidate to102 aligned cost, still243/243 words.
+Making q signed or using a separate s32 index is neutral104 before that reset
+change. Narrow distinct index after combined fixes worsens: s16 cost132,
+u16 cost166 (both243 words), u8 cost177 at248 words. The quotient copy is not
+explained by these narrowing controls.

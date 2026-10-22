@@ -26,8 +26,8 @@ void func_80134D94(void) {
         b = D_800E6280.unk_110D;
         q = (u32)b / 14;
         if (q >= 2) {
-            q = 0;
             b = 0;
+            q = 0;
         }
         switch (D_80122EAC) {
         case 0:

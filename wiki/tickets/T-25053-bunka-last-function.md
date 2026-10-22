@@ -44,3 +44,7 @@ Counter's source is u8, preserving0..255 range. Selector FAKE is marked; no prom
 Remaining first region still lacks quotient copy and schedules selector load early.
 Empty selector use immediately before switch is neutral144. Signed zero-order136,
 signed plus global empty use138. No production edits.
+
+Follow-up: b-before-q zero reset improves archived signed-selector.c to102
+aligned cost (243/243 words). Signed q and separate s32 index were neutral104;
+combined narrow-index controls s16=132, u16=166, u8=177/248words are negative.
