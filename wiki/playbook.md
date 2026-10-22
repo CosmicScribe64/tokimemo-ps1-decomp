@@ -96,3 +96,8 @@ Do not spend a session on these without a new idea; leave a guard with the ticke
 - as1 global scheduler picks (T-24202, T-24212, T-24203): rule and remaining cases in [[as1-scheduler-rule]]; default-block hoists are fixed with `volatile` (T-24900).
 - Historical uopt `idx = 0; idx++` fold (T-24204): closed in MAIN by the T-25036 late-zero producer and late-eliminated identity arm; see section 6.
 - uopt priority and colour order with no uniform rule: apply recipes above, do not search flags (exhausted in T-0014, T-0017, T-9800).
+
+
+### T-25040: measure the full constraint threshold and overlapping static views
+
+For a leaf register cycle, count interference rather than assuming the caller-save pool is the threshold. MAIN `func_8006D138` year/base ranges each had22 edges (constrained), while the initial flags snapshot had5. Deferring one constant's fold removed a zero-profit range and restored allocation without changing emitted instructions. After that, overlapping flag word/byte views left one absolute load. An exact-width discarded unsigned-less-than-zero byte test retained the static view in uopt; the actual zero-offset pointer read stayed base-relative and the discarded view vanished in ugen. Every control is defined and FAKE-annotated; guarded/default872-byte proofs and whole MAIN SHA1 pass. See [[tickets/T-25040-main-flag-dispatch]] and `drafts/T-25040/` for evidence and rejected broader address/lifetime changes.

@@ -54,7 +54,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-25040-main-flag-dispatch|T-25040 Match MAIN flag dispatcher]]
 
 
 - [ ] [[tickets/T-25034-main-quadrant-extent|T-25034 MAIN src/main/80046500.c full-width tile extent recovery]]
@@ -97,6 +96,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
+- [ ] [[tickets/T-25040-main-flag-dispatch|T-25040 Match MAIN flag dispatcher]]
 
 - [ ] [[tickets/T-25036-main-counter-late-fold|T-25036 Match MAIN counter through late constant folding]]
 

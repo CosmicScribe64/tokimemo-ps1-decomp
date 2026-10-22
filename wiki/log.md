@@ -2263,3 +2263,7 @@ Whole-TU replay recovers a 219/218-word shape; bit-field snapshot restores targe
 ## [2026-10-22] build | T-25040 three-instruction checkpoint
 
 [[tickets/T-25040-main-flag-dispatch]] isolates the register cycle to a single unprofitable constant range at the leaf constraint threshold. A defined late-zero identity in the empty year98 check restores all target registers; the default whole-TU candidate matches215 of218 words, with only the first b7 load address and adjacent scheduling residue remaining. `drafts/T-25040/` preserves the source and causal controls; no production promotion or coverage claim.
+
+## [2026-10-22] build | T-25040 literal flag dispatcher closure
+
+Promoted `src/main/8006CB30.c` function `func_8006D138` to default C. An exact-width discarded byte view holds uopt's static alias while the real late-zero address stays base-relative; together with the measured constant-range boundary, all218 words match. Annotated guarded/default links each prove872 bytes and complete MAIN SHA1. Header/global checks pass; prototype branch0new/15known. Root's independent final standards/spec review has no findings. [[tickets/T-25040-main-flag-dispatch]] moves to In Review for full27 integration. Reproduction and negative controls are retained in `drafts/T-25040/`.
