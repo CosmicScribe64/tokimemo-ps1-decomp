@@ -65,6 +65,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-25017-completion-plan|T-25017 Reconcile census and execute completion plan]]
 
 
@@ -84,6 +85,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
+- [ ] [[tickets/T-25028-read-only-candidate-triage|T-25028 Prioritize unclaimed remaining functions from current evidence]]
 
 - [ ] [[tickets/T-25026-main-d7ec-near-candidate|T-25026 Reconcile func_8006D7EC in src/main/8006CB30.c]]
 

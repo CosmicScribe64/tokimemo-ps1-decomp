@@ -2083,3 +2083,19 @@ Docker wiki catalog reports794 tickets,444 sections and3,078 functions. Lint rep
 ## [2026-10-22] ingest | Preserve reviewed sndi entry-control repair
 
 Root reviewed T-25027 source-only checkpoint624541ad3 against prior source/audit: second scan now tests stage[0] at entry and indexed byte at latch; target-timed reset alternate also preserved. Default production unchanged. Measured264built versus263target words/123printedlines is an improvement, not a match. Remaining known allocation/spill conflicts are explicit. MAIN worker idle pending T-25028 candidate screening; no automatic consultation or repeated sweep. Full matching goal stays active.
+
+## [2026-10-22] ticket | T-25028 read-only candidate prioritization
+
+Released src/main/8006CB30.c at T-25026 pin 1cce82f2e; created [[tickets/T-25028-read-only-candidate-triage]] and In Progress card. At most12 promising remaining functions, excluding reserved GEKO/OPTION and active src/main/8004F870.c; no builds/grids/source changes or agents. Root selects next implementation.
+
+## [2026-10-22] query | T-25028 twelve-function triage without another sweep
+
+Read-only Docker progress confirms119 remaining at main f688ec594; checked membership of12 reviewed functions. No new evidenced semantic/control/ABI/width defect qualified after newest source/ledger reconciliation. Historical matched entries and already repaired raw-draft errors excluded. Preserved concise table and a bounded strCallback upstream-expression question in drafts/T-25028/README.md and [[matching-notes]]. No compiles, source grids/root edits or agents. [[tickets/T-25028-read-only-candidate-triage]] moves to In Review; this is not an all119-blocked claim.
+
+## [2026-10-22] lint | T-25028 triage checkpoint
+
+Wiki lint zero broken links/status mismatches, only existing data/t0018-cases size warning. Diff check clean, production/header/tools/config unchanged; body pointers exist. [[tickets/T-25028-read-only-candidate-triage]] remains In Review.
+
+## [2026-10-22] decision | Trace callback temporary and broaden scoped triage
+
+Root reviewed and preserved T-25028 twelve-function audit; no new repair found in those12, no inference about all119. Assigned former MAIN worker T-25029, exclusive src/main/800563F0.c strCallback, to locate extra RECT-copy temporary with faithful phase evidence before source tests. Released8004F870. Same triage worker takes T-25030, up to12 different older high-byte overlay candidates, stop early on concrete unrepaired defect with donor/target evidence. Exclude contributorGEKO/OPTION, qualifiedTEL36724 and prior12. TwoSolmedium workers, no activeAstra; root integration remains serialized.
