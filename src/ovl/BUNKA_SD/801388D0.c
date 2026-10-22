@@ -240,13 +240,14 @@ s32 func_80139100(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-24137, six rows. Reading the GameState fields through
- * `GameState *g = &D_800E6280;` (T-24709) took the draft from 123 rows to 6:
- * the remaining difference is the position of the speculative
- * `lui/lbu D_800E62BE` inside three arms of the 0x70000000 switch (the original
- * puts it first in the arm, IDO here after the arm's `li`/`lui`); that is the
- * as1 hoist family of T-24211/T-24212. autotweak (692 edits), the `&&` operand
- * order, one-line arms and a shared selector local do not move it. */
+/* NON_MATCHING: T-24137, T-24709, T-24927, T-25020, four resolved rows.
+ * The speculative year-byte load is emitted in each switch arm by uopt.
+ * as1's per-block scheduler puts it after the store-address lui in cases
+ * 0x49 and 0x66; this is not the global delay-slot filler. The empty field
+ * test in case 0x3B moves its load before the store without allocating the
+ * extra local range of the T-24927 lever. Adding the test to the other two
+ * arms fixes local order but lets the global mover hoist their lui into
+ * the compare-chain slots, so those arms retain the original draft. */
 void func_80139290(void) {
     GameState *g = &D_800E6280;
     switch (g->unk_1104.u) {
@@ -294,6 +295,9 @@ void func_80139290(void) {
     }
     switch (g->unk_1104.u - 0x70000000) {
     case 0x3B:
+        /* FAKE: empty field test emits the speculative load before the
+         * store while keeping its original global range. T-25020 */
+        if (g->unk_03E) {}
         D_801206AC = 2;
         break;
     case 0x49:

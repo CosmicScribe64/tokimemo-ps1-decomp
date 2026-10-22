@@ -706,3 +706,9 @@ Reproduced the full-unit NON_MATCHING C baseline from 7c87f223e: exactly two res
 ## T-25019: recovered TACO 38B2C is an older register-tail candidate
 
 [[tickets/T-25019-recovered-taco-38b2c]] reproduces the current whole-TU guarded func_80138B2C at 30 positional rows (60 printed +/- lines). Recovered QUEUE.md canon 11/raw 56 is not that baseline: census-m2c32 also records historical resolved 154. One compatibility-only archived-body comparison gives 103 printed +/- lines across unequal instruction spans, worse than current source; restored source. No new semantic/type/control gap survived prior T-16564/T-19015/T-20600/T-24705 evidence. No production changes or matches. Recovered artifact counts are provenance-only, not unmatched coverage. Next reconstruction target: main func_8005215C, typed from matched xa_wait prefix with wide F61+2 preserved.
+
+## T-25020: BUNKA_SD func_80139290 four-row guard
+
+A field-expression empty test `if (g->unk_03E) {}` before case 0x3B's store reduces the full-unit C draft from seven changed positions (14 +/- lines) to four (eight +/- lines), with original registers and instruction count. It emits the speculative year load earlier without introducing T-24927's real-local allocator cascade; marked FAKE. The same test in cases 0x49/0x66 fixes their local order but lets the global mover take their early lui into compare-chain slots, so only case 0x3B is kept.
+
+Recovered `39290-vol.txt` and a fresh full-unit trace have identical normalized 779 DAG records and 74 mover events. Block 60 supplies eight of 37 moved instructions (constants/store address/flag masks from the later modulo switch), unrelated to the year-load residue. This corrects T-25016's nine-move claim and confirms the pre-existing T-24927 local-scheduler diagnosis. Remaining blocker and experiment record: [[tickets/T-25020-bunka-sd-trace-closure]]. No C promotion.
