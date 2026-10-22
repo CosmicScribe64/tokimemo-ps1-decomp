@@ -1975,3 +1975,15 @@ Docker catalog reports793 tickets,444 sections and3,078 functions. Wiki lint rep
 ## [2026-10-22] build | MAIN bounded Astra consultation
 
 [[tickets/T-25022-main-reload-boundary]] received one read-only Astra consultation while Sol idled. Signed diagnostic supplies target-like final reload topology but wrong load sign; conversion-web trace motivates two unsigned controls. Explicit signed-word zero tests give315target/309built words,198aligned/198printed. Word-mask mode reads give315/317,262/262 and retain lb+andi. Both rejected, source and findings preserved in drafts/T-25022/main/func_8005215C/. No third justified hypothesis, no sweeps, no production/shared-header edits or match claim.
+
+## [2026-10-22] ticket | MAIN sndi reconstruction
+
+Created [[tickets/T-25027-main-sndi]] In Progress in the existing isolated worktree. Exclusive file src/main/8004F870.c remains unchanged. Read prior sndi negative ledger before experiments; compare current tracked and recovered source with whole-TU evidence rather than archived canonical scores. No extra workers or Astra consultation.
+
+## [2026-10-22] build | sndi target entry-control recovery
+
+[[tickets/T-25027-main-sndi]] reproduces tracked full-TU baseline263target/265built words,150aligned/150printed. Audited recovered buffer widths, call ABI and found sequencing. Explicit target stage[0] guard restores G-loop indexed cursor structure and improves to264words,123/123; target-timed join-reset alternate264/125/127 preserved. Word parity controls regress. Fresh traced object equals normal object exactly. Source/audit at drafts/T-25027/main/sndi/; private target traces stay ignored. No match or production/shared-header/tool change. Remaining base/constant and parity/cursor priority conflict is the known frozen blocker.
+
+## [2026-10-22] lint | sndi checkpoint validation
+
+Docker wiki catalog reports794 tickets,444 sections and3,078 functions. Lint reports zero broken links, zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes; src/, include/ and tools/ have no changes. T-25027 remains In Progress; source-only checkpoint is prepared for root review.
