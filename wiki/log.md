@@ -2796,3 +2796,7 @@ Created [[tickets/T-25050-main-ring-input]] In Progress for func_80075C84 in src
 ## [2026-10-22] query | BUNKA quotient identity boundary controls
 
 [[tickets/T-25053-bunka-last-function]] q*1 is neutral102 aligned cost; OR late-zero from b/selector worsens112/138, all243words. Keep archived best; no production change. Root independently accepted MAIN T-25050 in prior entry; ETC and TEL zero-difference candidates are undergoing source and integration validation.
+
+## [2026-10-22] query | BUNKA counter alias controls
+
+[[tickets/T-25053-bunka-last-function]] scalar-load and combined load/store views worsen102→142; store-only remains102, all243words. Preserved best candidate. TEL worker assigned next same-file target under reserved T-25060 after current match pin; MAIN nextT-25058 and ETC nextT-25059 remain reserved independently.
