@@ -625,6 +625,7 @@ void func_80147880(void) {
     }
 }
 
+void func_801480D0(void);
 void func_80148F34(void); /* defined later in this file */
 
 /* T-25054: results scene and the fourteen result display records.
@@ -824,7 +825,169 @@ void func_80148078(void) {
     }
     func_800646CC();
 }
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801480D0);
+/* T-25059: generate exam scores, order and ranks, then apply relationship bonuses. */
+void func_801480D0(void) {
+    /* FAKE: T-25059, scalar order and the unused word below preserve the
+     * original 0xD0 frame and the noise/angle/offset/array stack homes. */
+    s32 i;
+    s32 j;
+    s32 changed;
+    s32 a;
+    s32 noise;
+    s32 first_random;
+    s32 selected;
+    s32 sine;
+    s32 offset;
+    s32 minimum;
+    s32 angle;
+    s32 maximum;
+    s32 values[14];
+    s32 pad;
+
+    func_800AE120(D_800E6280.unk_10F8);
+    for (i = 0; i < 13; i++) {
+        first_random = func_800AE0D0();
+        noise = (first_random % (s32)D_80150738[i]) * (((func_800AE0D0() & 1) * 2) - 1);
+        first_random = func_800AE0D0();
+        a = (first_random % (s32)D_80150738[i]) * ((func_800AE0D0() & 1) * 2 - 1);
+        D_80150668[i] = ((D_80150728[i] + a) * 5) + noise;
+        j = func_801464D4(i);
+        if (j != 1) {
+            if (j == 9) {
+                D_80150668[i] += func_800AE0D0() % 250;
+            }
+        } else {
+            D_80150668[i] += func_800AE0D0() % 50;
+        }
+        if (D_80150668[i] >= 501) {
+            D_80150668[i] = 500;
+        }
+        func_800AE0B0("[%d:%d]\n", i, D_80150668[i]);
+    }
+    D_80150668[13] = (s16) ((EtcWork40 *)&D_801230D0)->unk_28[5];
+    do {
+        changed = 0;
+        for (j = 0; j < 14; j++) {
+            for (i = j + 1; i < 14; i++) {
+                if (D_80150668[i] == D_80150668[j]) {
+                    changed++;
+                    D_80150668[i]--;
+                }
+            }
+        }
+    } while (changed != 0);
+    for (i = 0; i < 14; i++) {
+        values[i] = D_80150668[i];
+    }
+    for (j = 0; j < 14; j++) {
+        selected = 0;
+        maximum = values[0];
+        for (i = 1; i < 14; i++) {
+            if (maximum < values[i]) {
+                maximum = values[i];
+                selected = i;
+            }
+        }
+        values[selected] = 0;
+        D_80150684[j] = selected;
+    }
+    func_800AE0B0("順位計算\n ");
+    for (i = 0; i < 14; i++) {
+        func_800AE0B0("[%d:%d] \n", i, D_80150684[i]);
+    }
+    func_800AE0B0("順位作成\n ");
+    offset = func_800AE0D0() & 3;
+    for (i = 0; i < 14; i++) {
+        angle = (D_80150668[i] << 12) / 1000;
+        sine = func_800A0140(angle);
+        D_801506BC[i] = (sine * 200) / 4096 + offset + 200;
+        func_800AE0B0("[%d:%d %d %d] \n", i, angle, sine, D_801506BC[i]);
+    }
+    do {
+        changed = 0;
+        for (j = 0; j < 14; j++) {
+            for (i = j + 1; i < 14; i++) {
+                if (D_801506BC[i] == D_801506BC[j]) {
+                    changed++;
+                    if (D_80150668[i] < D_80150668[j]) {
+                        D_801506BC[i]++;
+                    } else {
+                        D_801506BC[i]--;
+                    }
+                }
+            }
+        }
+    } while (changed != 0);
+    func_800AE0B0("順位ソート\n ");
+    for (i = 0; i < 14; i++) {
+        func_800AE0B0("[%d:%d] \n", i, D_801506BC[i]);
+    }
+    minimum = 1000;
+    for (i = 0; i < 14; i++) {
+        if (D_801506BC[i] < minimum) {
+            minimum = D_801506BC[i];
+        }
+    }
+    if (minimum >= 9) {
+        a = func_800AE0D0() % (minimum - 8) + minimum - 8;
+        for (i = 0; i < 14; i++) {
+            D_801506BC[i] -= a;
+        }
+    } else if (minimum <= 0) {
+        a = 1 - minimum;
+        for (i = 0; i < 14; i++) {
+            D_801506BC[i] += a;
+        }
+    }
+    maximum = D_80150668[0];
+    selected = 0;
+    for (i = 1; i < 14; i++) {
+        if (maximum < D_80150668[i]) {
+            maximum = D_80150668[i];
+            selected = i;
+        }
+    }
+    if (maximum >= 466) {
+        offset = D_801506BC[selected] - 1;
+        for (i = 0; i < 14; i++) {
+            D_801506BC[i] -= offset;
+        }
+    }
+    func_800AE0B0("順位確定\n ");
+    for (i = 0; i < 14; i++) {
+        func_800AE0B0("[%d:%d] \n", i, D_801506BC[i]);
+    }
+    if (D_80150684[0] == 13 && D_80150684[1] == 0) {
+        if (D_801506BC[0] < D_801506BC[13]) {
+            a = D_801506BC[0];
+            D_801506BC[0] = D_801506BC[13];
+            D_801506BC[13] = a;
+        }
+    }
+    if (D_80150684[0] == 13 && D_801506BC[13] <= 0) {
+        j = 1 - D_801506BC[13];
+        D_801506BC[13] = 1;
+        for (i = 0; i < 13; i++) {
+            D_801506BC[i] += j;
+        }
+    }
+    for (i = 0; i < 11; i++) {
+        if (D_80150668[i] < D_80150668[13]) {
+            if (D_800E6280.unk_56C[0xC8 + i] == 0) {
+                D_800E6280.unk_1BC[i].unk_02 += 11;
+                D_800E6280.unk_56C[0xC8 + i] = 1;
+            } else {
+                D_800E6280.unk_1BC[i].unk_02 += 2;
+            }
+        }
+    }
+    if (D_801506BC[13] == 1) {
+        for (i = 0; i < 11; i++) {
+            D_800E6280.unk_1BC[i].unk_02 += 2;
+        }
+    }
+}
+
 
 /* Implicit int in the original (no return value): $v0 stays live at the exit, which orders the loop preheader. T-22029 */
 s32 func_80148BC8() {

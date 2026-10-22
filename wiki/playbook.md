@@ -110,3 +110,7 @@ A late-folded zero plus two alternating identities in an existing call argument 
 ## Separate loop bases with a late-folded initializer boundary (T-25054)
 
 If uopt shares a walked base and an indexed base but the target materializes both, a one-iteration `do { p = base; } while ((u32)byte < 0);` can retain the control-flow boundary through uopt and fold it before final code. Check that the byte is nonvolatile and independent of earlier live ranges; reusing a switch byte changes its allocation. Mark the artificial boundary FAKE. For the ETC results scene, indexed coordinate arrays also provide noalias metadata needed to schedule a stack argument in the call delay slot. Index all related arrays and place the counter increment where their strength-reduced updates belong. See [[tickets/T-25054-etc-results-scene]].
+
+## Recover counter reuse before tuning temporaries (T-25059)
+
+When several adjacent loops use the same saved register in the target, trace which source counter survives into the next loop. ETC func_801480D0 needs its generation counter as the inner counter of the later tie and selection loops; swapping only those variable roles removes an unwanted saved induction range. Separate unrelated scalar lifetimes before deriving declaration order from stack offsets. Existing scalar identities can then recover product and adjustment registers without runtime identities. A cached global value may also suppress a required reload after intervening array stores; compare direct accesses. See [[tickets/T-25059-etc-ranking-generator]].
