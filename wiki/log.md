@@ -1987,3 +1987,19 @@ Created [[tickets/T-25027-main-sndi]] In Progress in the existing isolated workt
 ## [2026-10-22] lint | sndi checkpoint validation
 
 Docker wiki catalog reports794 tickets,444 sections and3,078 functions. Lint reports zero broken links, zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes; src/, include/ and tools/ have no changes. T-25027 remains In Progress; source-only checkpoint is prepared for root review.
+
+## [2026-10-22] ticket | strCallback upstream temporary diagnosis
+
+Created [[tickets/T-25029-main-strcallback-ring]] In Progress in isolated worktree; release src/main/8004F870.c and exclusively own src/main/800563F0.c. Read T-25001/10 negatives before compiling. Trace actual RECT copy inputs/outputs before at most three new causal source tests. No generic grids, shared rules, additional worker or Astra.
+
+## [2026-10-22] build | strCallback small-copy reservation identified
+
+[[tickets/T-25029-main-strcallback-ring]] reproduces160target/160built words,148aligned/150printed,75 register-only instructions. Captured actual8-byte Umov and normal ugen output; shim/raw callback binasm agree. Private offset/alignment/length controls isolate fixed reservation, not source address or second-word count. Existing T-24067 logging-only tool, audited whole-object identical, confirms reused slot+232=10000 selects double dummy t0/t1 before actual second copy wordt2; candidate writer f_loadstore saved gp. Target is consistent with one dummy. No faithful new source mechanism established, so no source controls or build changes. Evidence/limitations in drafts/T-25029/README.md; raw reference/traces stay private. No match or coverage claim.
+
+## [2026-10-22] decision | strCallback bounded branch-route consultation
+
+For [[tickets/T-25029-main-strcallback-ring]], checked prior exact callback Astra history: sentinel bypass only, not the new slot path. One authorized read-only Astra follow-up, Sol idle, found required predecessor branches occur before later scalar operations and next required branch after Umov; f_jump's predicate/emitter order offers no justified source-required pre-copy route. Zero source hypotheses recommended or tested. Preserved exact record ordering and limitations in drafts/T-25029/README.md; no universal source-impossibility or compiler-exception claim.
+
+## [2026-10-22] lint | strCallback mechanism checkpoint
+
+Docker catalog795 tickets,444 sections,3,078 functions; wiki lint zero broken links/zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes. src/, include/ and tools/ unchanged. T-25029 research/consultation preserved for root review; no match or coverage change.
