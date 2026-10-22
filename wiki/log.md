@@ -2901,3 +2901,35 @@ For [[tickets/T-25034-main-quadrant-extent]], raw ugen disproves a regdiff const
 ## [2026-10-22] build | Preserve stopped quadrant lane checkpoint
 
 Root independently replayed [[tickets/T-25034-main-quadrant-extent]] uv-standard.c:674/674words,116aligned cost,156printed lines. Preserved131bc66b6 and the corrected allocator explanation. Production unchanged; lane remains stopped under its chat's human wrap-up request, no coverage credit.
+
+## [2026-10-22] ticket | T-25051 TACO wipe quad store schedule
+
+Created [[tickets/T-25051-taco-quad-store]] In Progress for func_8013B460 in `src/ovl/TACO/8013B170.c`, after completing 80149F90.c. Historical and current ledgers read; old grouping/order grids excluded. Source ownership is narrow; root checkout untouched.
+
+## [2026-10-22] query | T-25051 store-promotion and expression staging controls
+
+[[tickets/T-25051-taco-quad-store]] reproduces332-word baseline and two early halfword stores. New stored-field tests disrupt broader promotion; arithmetic across UV side effects moves coordinate loads too late. Explicit y3 local preserves the desired late store but interferes with constants and shifts downstream temporaries. Full-TU allocation tracing will distinguish those effects; no source promotion.
+
+## [2026-10-22] build | T-25051 dependency controls
+
+Recorded source-local store, expression, and temporary-lifetime controls in [[tickets/T-25051-taco-quad-store]]. The baseline remains two misplaced stores; local lifetime changes either displace the UV constant registers or add code. Explicit narrowing spends a temporary but leaves the store early. All probes use the unchanged Docker compiler and isolated scratch files; production source is unchanged.
+
+## [2026-10-22] build | T-25051 local scheduling trace
+
+The actual stock compiler trace ties both y3 and UV stores at aftercycles6 before the mode load. Recorded the trace and new conversion-boundary, scoped-local, and immediate-join negatives in [[tickets/T-25051-taco-quad-store]]. The production function remains guarded; no checksum claim is made for scratch probes.
+
+## [2026-10-22] decision | T-25051 preserve failed temporary controls
+
+Extended [[tickets/T-25051-taco-quad-store]] with expression/encoding and local-array negatives and the stock scheduler tie-break reading. The y3 temporary continues to occupy v0; all encoding variants either retain that allocation or add code. Baseline remains the best valid draft. Continue source reconstruction; no production promotion or blocker claim.
+
+## [2026-10-22] ticket | T-25051 requested research checkpoint
+
+The user requested current work be frozen, committed, and pushed. Moved [[tickets/T-25051-taco-quad-store]] to In Review and archived source-only probe generators in drafts/T-25051/. The production source remains unchanged with the two-store mismatch; this checkpoint is not a match or external blocker. Parent owns independent wrap-up review and integration.
+
+## [2026-10-22] lint | T-25051 checkpoint review and validation
+
+Parent independently reviewed the research packet for [[tickets/T-25051-taco-quad-store]] and reported no findings. Docker parsed all 27 archived Python scripts; wiki lint found zero broken links and zero ticket-status mismatches, with two existing oversized-page warnings. Applied the local deslop prose check and corrected its weak colon finding. Production source remains unchanged; the unmatched function stays In Review.
+
+## [2026-10-22] build | Preserve stopped TACO scheduling lane
+
+Root replay of [[tickets/T-25051-taco-quad-store]] baseline reproduces332words/alignedcost4. Preserved5a5733657 source-only generators, negative controls and scheduler evidence; production unchanged. Ticket In Review is a research handoff, not a match or external blocker. Lane remains stopped under its chat's human wrap-up request.
