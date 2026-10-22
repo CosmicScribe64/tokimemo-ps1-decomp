@@ -11,6 +11,8 @@ For any agent, including cheap ones, working on the last functions. State on 202
 
 ### Latest user direction and active ownership
 
+Latest override: after the MAIN wrap-up below, the user directly instructed root to keep both workers going until problems are solved and matches made. T-25034 is resumed from d8e482c4a; T-25033 continues its118-word zero-carrier candidate. Both lanes use Astra, with no time/probe stopping limits. The stopped-lane paragraph below is historical and no longer governs execution.
+
 The user has replaced the Sol-first, bounded-consultation policy below with sustained Astra implementation. The historical lane assignments and time/probe limits below are superseded. Current sole source owners are T-25033 (`src/ovl/SHOUGATU/8013E330.c`, func_8013E50C) and T-25034 (`src/main/80046500.c`, func_80046AC8), both using GPT-6 Astra. Coordinators must not duplicate their workers' experiments. Continue each assignment until a verified literal match or a concrete external blocker; a checkpoint or unsuccessful experiment is not a stopping point. Preserve intermediate work and negative evidence. Root serializes integration and checks contributor claims; GEKO/OPTION remain reserved under issue #65. No additional broad screening is active.
 
 T-25033's preserved guard has five printed diff lines, 117/118 instructions, exact frame/table homes, corrected random field and canonical final helper call. It is still NON_MATCHING. T-25034 is repairing full-width extent semantics and local spill/allocation differences; its current frame and incoming argument homes agree with the target. Neither assignment has yet increased verified coverage.

@@ -2231,3 +2231,7 @@ Docker replay independently reproduced conservative674/671words,361aligned/381pr
 ## [2026-10-22] ingest | Preserve MAIN wrap-up checkpoints
 
 Integrated d8e482c4a after source/replay review. Root Docker replay confirms conservative674/671words with361aligned/381printed and forward-join674/670 with360/380. Source drafts only, production unchanged, no match credited. Wiki catalog/lint pass with zero broken links/status mismatches and two size warnings. MAIN chat reports newer direct user wrap-up/push instructions; root withdrew its resume request based on older context and preserves that stopped lane. Updated [[plan-remaining]]. SHOUGATU remains active with reported118/118-word zero-carrier experiment and four aligned differences; not yet a match.
+
+## [2026-10-22] decision | User resumes sustained matching after MAIN wrap-up
+
+New direct root instruction: keep workers going until problems are figured out and matches made. This supersedes the earlier MAIN-chat wrap-up. Resumed T-25034 Astra from preserved d8e482c4a candidates and reinforced T-25033 continuation from the118-word zero-carrier experiment. No time/probe limits; checkpoints and failed controls do not terminate assignments. Concrete external blockers and literal proof standards remain. Root integrates, coordinators avoid duplicate experiments.
