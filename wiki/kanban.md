@@ -58,6 +58,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-25017-completion-plan|T-25017 Reconcile census and execute completion plan]]
 
 
@@ -77,6 +78,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
+- [ ] [[tickets/T-25026-main-d7ec-near-candidate|T-25026 Reconcile func_8006D7EC in src/main/8006CB30.c]]
 
 - [ ] [[tickets/T-25025-gyozi-zero-reaching-definition|T-25025 Trace zero reaching definition in src/ovl/GYOZI/80140C90.c]]
 

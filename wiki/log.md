@@ -1987,3 +1987,15 @@ Current and archived-v6 whole-TU measurements agree: 97:96 instructions, five pr
 ## [2026-10-22] lint | T-25025 checkpoint checks
 
 Wiki lint has zero broken links and status mismatches, one existing data/t0018-cases size warning. `git diff --check` passes; no production/header/tool/config differences. [[tickets/T-25025-gyozi-zero-reaching-definition]] remains In Review for root review.
+
+## [2026-10-22] ticket | T-25026 high-byte MAIN near-candidate decision
+
+Released GYOZI at pin 5c2954688 and created [[tickets/T-25026-main-d7ec-near-candidate]] In Progress with board card. Exclusive src/main/8006CB30.c, only func_8006D7EC initially; current in-tree body and historical ledger first, no source grids or automatic Astra.
+
+## [2026-10-22] query | T-25026 confirms high-byte one-position uopt fold
+
+Current MAIN func_8006D7EC guard remains one differing position,1173/1173 instructions: row94 addiu versus li, two printed lines/aligned cost2. Fresh uopt input/output and stock as1 initial nodes locate the fold before ugen/as1 scheduling; traced/stock four-section fidelity passes. Historical direct-counter/backedge grids and rejected nonuniform zcopy rule provide no novel repair. Preserved precise near-candidate/revisit decision in drafts/T-25026/README.md and [[matching-notes]]. No new variants/source changes or coverage. [[tickets/T-25026-main-d7ec-near-candidate]] moves to In Review.
+
+## [2026-10-22] decision | T-25026 reuses exact prior Astra consultation
+
+Checked root's conditional consultation request: T-24001 Astra already addresses identical idx-zero/addiu-versus-li blocker and full-TU row94. Source diff from d57c78028 contains only explanatory guard-comment changes. Fresh phase/metric evidence preserves that consult's premise, so reused its bounded negative rather than duplicate it. No new consultant or variants. [[tickets/T-25026-main-d7ec-near-candidate]] remains In Review. Wiki lint zero broken links/status mismatches, one existing large-page warning; diff check passes and source/header/tools/config unchanged.
