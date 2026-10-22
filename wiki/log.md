@@ -1927,3 +1927,11 @@ Reproduced two full-unit NON_MATCHING C rows and the stock as1 DAG for KANGEI fu
 ## [2026-10-22] build | T-25018 retained fallback verification
 
 Default funcdiff verified 180 linked bytes equal the target (assembly fallback only). After the note-only source edit, the configured KANGEI.ok Ninja target passed SHA1. Header, GameState migration, and branch prototype guards passed; no new prototype disagreement. [[tickets/T-25018-kangei-near-closure]] remains In Review.
+
+## [2026-10-22] ticket | Recovered TACO candidate investigation
+
+Created [[tickets/T-25019-recovered-taco-38b2c]] in isolated worktree /private/tmp/t25019-taco at 7bc6d8d99; recovered archive remains private evidence. Read prior T-16564/T-19015/T-20600 negatives before any experiments.
+
+## [2026-10-22] query | Recovered queue provenance and TACO baseline
+
+[[tickets/T-25019-recovered-taco-38b2c]]: 410 recovered files; 151 C body artifacts, 122 m2c bodies. TACO func_80138B2C current guarded whole-TU Docker baseline is 30 positional rows/60 printed diff lines; mechanically adapted older archive gives 103 unequal-span printed diff lines, REAL DIFFERENCE. Restored source and registered existing colour tail without speculative variants. [[matching-notes]] records result and concrete next reconstruction target main func_8005215C. Ticket and board moved to In Review for independent standards review.

@@ -702,3 +702,7 @@ After changing the pass, touch `tools/cc.py` or do a clean build.
 ## T-25018: KANGEI func_8013852C bounded recheck
 
 Reproduced the full-unit NON_MATCHING C baseline from 7c87f223e: exactly two resolved rows (35/36, addu/lui swap). A fresh stock as1 trace reproduces T-24901: equal aftercycles 4 and source line, but lui besttime 15 beats addu 16 at time 16. The arithmetic chain is nodes 8/7/6/5; the address chain reaches node 4 from nodes 11/10. No untested dependency-changing C form was established outside the prior ~5,000 cast/temp/order variants, so no duplicate experiments were run. Guard pinned, no match or count change. See [[tickets/T-25018-kangei-near-closure]] and `drafts/T-24901/NOTES.md` for the exact revisit condition.
+
+## T-25019: recovered TACO 38B2C is an older register-tail candidate
+
+[[tickets/T-25019-recovered-taco-38b2c]] reproduces the current whole-TU guarded func_80138B2C at 30 positional rows (60 printed +/- lines). Recovered QUEUE.md canon 11/raw 56 is not that baseline: census-m2c32 also records historical resolved 154. One compatibility-only archived-body comparison gives 103 printed +/- lines across unequal instruction spans, worse than current source; restored source. No new semantic/type/control gap survived prior T-16564/T-19015/T-20600/T-24705 evidence. No production changes or matches. Recovered artifact counts are provenance-only, not unmatched coverage. Next reconstruction target: main func_8005215C, typed from matched xa_wait prefix with wide F61+2 preserved.
