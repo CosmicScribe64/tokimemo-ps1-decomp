@@ -2007,3 +2007,19 @@ Wiki lint passes with zero broken links and status mismatches; only the existing
 ## [2026-10-22] ingest | Preserve MAIN reload source and BUNKA consultation
 
 Root reviewed research scope and source-only checkpoints, merged T-25022 pin1b50b37d6 and T-25023 pina9608aeba. No production promotion or header/tool change. MAIN keeps both semantic reload repairs separately from lower-score partial source; direct callee mutation remains unestablished, target reload placement is established. Authorized one read-only Astra consultation on the precise eager-read/control-flow packet, with Sol idle during it and at most three subsequent justified tests. BUNKA correction: the all-arm regression hoists year-address lui t0, not store-address lui at; li t2 aftercycles is0, not2. See drafts/T-25023/README.md for upstream-emission revisit condition. Merged wiki lint: zero broken links/status mismatches, one pre-existing large page. GYOZI and TEL workers continue.
+
+## [2026-10-22] ticket | T-25025 GYOZI reaching-definition evidence
+
+Released the BUNKA source claim at separate T-25023 pin a9608aeba. Created [[tickets/T-25025-gyozi-zero-reaching-definition]] In Progress and board card before GYOZI work. Exclusive src/ovl/GYOZI/80140C90.c; inspect propagation before considering source. No old workers or automatic Astra.
+
+## [2026-10-22] query | T-25025 zero carrier dies before allocation
+
+Current and archived-v6 whole-TU measurements agree: 97:96 instructions, five printed lines, aligned cost 5. Input contains entry z and merge use; stale expression-table entries coexist with a propagated constant store, but no live z range reaches allocation. Optimized ucode recreates zero at merge; initial as1 nodes already use hardware zero. Stock/traced v6 four-section fidelity passes. No new variants, source edits or Astra. Preserved phase-boundary evidence and exact remaining internal trace question in drafts/T-25025/README.md and [[matching-notes]]. [[tickets/T-25025-gyozi-zero-reaching-definition]] moves to In Review, BUNKA claim remains released.
+
+## [2026-10-22] lint | T-25025 checkpoint checks
+
+Wiki lint has zero broken links and status mismatches, one existing data/t0018-cases size warning. `git diff --check` passes; no production/header/tool/config differences. [[tickets/T-25025-gyozi-zero-reaching-definition]] remains In Review for root review.
+
+## [2026-10-22] decision | Preserve zero-propagation evidence and qualify large near candidate
+
+Root reviewed T-25025 documentation-only scope; current and v6 both97:96 instructions, five printed lines, as1 input already hardware-zero uses. This closes allocation/scheduler tuning on that body without a new upstream mechanism. Preserving pin5c2954688. Same Sol chat now releases GYOZI and claims src/main/8006CB30.c under T-25026 solely to reconcile current4692-byte func_8006D7EC against historical one-row guard and later negative ledger. TEL remains TEL-only; no duplicate large-file ownership. MAIN reload consultation continues.
