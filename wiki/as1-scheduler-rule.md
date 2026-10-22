@@ -90,3 +90,8 @@ The diagnostic's default output equals stock. This explains the historical
 T-23002 deletion threshold, but is not a production match or an accepted
 compiler rule. Source-only controls and exact reproduction are tracked by
 [[tickets/T-25056-ending-scheduler]] and `drafts/T-25056/`.
+
+Cached original IDO5.2 has the same100/10 region-header selection. Replaying
+the same captured ENDING input gives all1164 stock5.3 candidate instructions
+unchanged. A simple5.2-to5.3 historical budget change is therefore excluded;
+the scratch raised-budget result still lacks an original-compiler rationale.

@@ -49,6 +49,14 @@ for label, latch in [('carrier_loop', ''),
     variants[label] = (body[:chain_start]+'    pad = (u32)'+flag+' < 0;\n    do {\n'+first_arm+
         latch+'    } while (pad);\n'+remainder+
         't25056_chain_done:\n'+body[chain_end:])
+for label, text, value in [('conditional_string', body, literal),
+                            ('conditional_pointer', ptr, 'pad')]:
+    text = text.replace(anchor, '    top = (u32)'+flag+' < 0;\n'+anchor, 1)
+    call = 'func_800AE0F0(D_800CA280, '+value+');'
+    replacement = ('func_800AE0F0(D_800CA280, ('+flag+' & 2) ? '+value+
+                   ' : '+value+' + top);')
+    assert text.count(call) == 1
+    variants[label] = text.replace(call,replacement,1)
 score = order_search.make_text_scorer(c,name,resolve=True)
 for label in sys.argv[1:] or variants:
     text = src[:start] + variants[label] + src[end:]

@@ -3058,3 +3058,11 @@ NAME_ENT func_801398EC passes the default-build literal linked 492-byte proof, f
 ## [2026-10-22] ticket | T-25062 NAME_ENT byte-pack claim
 
 Created [[tickets/T-25062-name-ent-byte-pack]] In Progress and added its [[kanban]] card before investigation. Scope is only func_8013AF78 in src/ovl/NAME_ENT/80139740.c, continuing after the clean T-25057 match pin. Read [[index]] and function catalog; historical pointer-zero loop and byte-register packing need current-pipeline qualification before any production edit.
+## [2026-10-22] query | T-25056 cached assembler control
+
+[[tickets/T-25056-ending-scheduler]] records exact original IDO5.2/stock5.3
+equality across1164 candidate instructions on identical captured input, plus
+the shared100/10 region gate. Two conditional pointer controls regress692/691.
+The raised-budget scratch output preserves all15 sibling instruction bodies;
+final sibling B640 independently matches96bytes despite changed section padding.
+Source-only reproduction and hashes are in drafts/T-25056; no production change.
