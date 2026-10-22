@@ -2376,3 +2376,15 @@ Created [[tickets/T-25059-etc-ranking-generator]] before experiments, preserving
 ## [2026-10-22] lint | T-25059 checkpoint evidence checked
 
 Wiki lint reports zero broken links and zero status mismatches; the two existing large-page warnings remain. Git diff check passes. Deslop review of drafts/T-25059/README.md and the ticket found no strong tells; retained the ticket heading and stack-offset list colon. [[tickets/T-25059-etc-ranking-generator]] remains In Review for integration.
+
+## [2026-10-22] ticket | T-25061 next ETC continuation
+
+Created [[tickets/T-25061-etc-next-match]] before experiments, preserving the completed T-25059 pin. The current file is complete; qualify up to three remaining ETC functions against specific ledgers and announce one new file claim before source edits. Root handles integration.
+
+## [2026-10-22] decision | T-25061 selects ETC record-scene controller
+
+Compared three specific histories and claimed func_80144224 in src/ovl/ETC/80143240.c; parent confirmed the claim before source edits. T-25002 retains the closest concrete body with two global-promotion gaps. [[tickets/T-25061-etc-next-match]] records the selection and 780-byte body span; initializer and polygon-renderer controls will not be repeated.
+
+## [2026-10-22] build | T-25061 current full-TU baseline reproduced
+
+The T-25002 draft now measures 199 target / 190 candidate words, aligned cost 175. Resolved comparison includes four target alignment words after the 780-byte body. Historical counts are not directly interchangeable. [[tickets/T-25061-etc-next-match]] will trace frame-counter versus order-index lifetimes; no production source changed.
