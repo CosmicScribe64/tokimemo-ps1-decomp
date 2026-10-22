@@ -226,11 +226,6 @@ void func_8014A8E0(void) {
 }
 
 /* T-24705: without the empty test the store moves to the right place (after sw ra) but the forwarded `lw` of the home spends one ugen temporary, so every temporary is one high (6 lines); `if (p){}`, `if (n){}`, `if (i){}`, `if (p == 0){}`, `arg1 |= 0;`, `arg1 = arg1 ^ 0;`, `arg1 = arg1 * 1;`, `arg1 & -1`, a `k = arg1` local, an absolute-address view and the for/while forms all stay at 5 or 6. */
-/* NON_MATCHING: T-24502, seven differing instruction words (28 bytes), all
- * constant-1 register choices (v0 here, v1 in the original). Regdiff: hoisted
- * constant bit 161 has priority 0.5, four uses, no defs, and takes the free v0.
- * Return views and flag byte views do not change it. Default remains original asm. */
-#ifdef NON_MATCHING
 void func_8014AB50(s32 arg0) {
     s32 i;
     s32 j;
@@ -290,11 +285,17 @@ void func_8014AB50(s32 arg0) {
     } else if ((arg0 >= 0x267) && (arg0 < 0x289)) {
         func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0xC8);
     } else if (arg0 == 0x289) {
+        /* FAKE: T-25043, keep the helper result live in uopt through the flag
+         * stores so the shared constant takes v1. Ugen removes the unsigned
+         * always-false test and its store. */
         for (i = 1, j = 0; i != 0x1F; i++, j++) {
-            func_801472D4(i, 1, D_8015FEF8[j * 2 - 2], D_8015FEF8[j * 2 - 1], D_8015FFE2[j * 2 - 2], D_8015FFE2[j * 2 - 1]);
+            random = func_801472D4(i, 1, D_8015FEF8[j * 2 - 2], D_8015FEF8[j * 2 - 1], D_8015FFE2[j * 2 - 2], D_8015FFE2[j * 2 - 1]);
         }
         D_8015EDB4[17].unk2 = 1;
         D_8015EDB4[17].unk84[2] = 1U;
+        if ((u32)random < 0) {
+            D_8015EDB4[17].unk84[2] = 1U;
+        }
     } else if ((arg0 >= 0x28A) && (arg0 < 0x32A)) {
         func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0xC8);
         if (D_8015EDB4[17].unk84[2] == 1) {
@@ -318,9 +319,6 @@ void func_8014AB50(s32 arg0) {
     }
 }
 
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014AB50);
-#endif
 
 void func_8014B2A4(s32 arg0) {
     u8 t;

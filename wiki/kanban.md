@@ -104,6 +104,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
 
 - [ ] [[tickets/T-25030-overlay-candidate-triage|T-25030 Qualify older large overlay reconstructions without source sweeps]]
@@ -181,6 +182,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-25043-taco-constant-tail|T-25043 Match TACO stage handler constant tail]]
 
 - [ ] [[tickets/T-25038-shougatu-selection-loop|T-25038 Match SHOUGATU func_8013E6E4 selection loop]]
 
