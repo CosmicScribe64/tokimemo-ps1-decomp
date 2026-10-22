@@ -53,6 +53,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-25062-name-ent-byte-pack|T-25062 Match NAME_ENT byte pack and zero loop]]
 
 
 - [ ] [[tickets/T-25053-bunka-last-function|T-25053 Match final BUNKA_SD function]]

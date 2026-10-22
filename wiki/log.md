@@ -2749,3 +2749,7 @@ Created [[tickets/T-25057-name-ent-pass-investigation]] In Progress in isolated 
 ## [2026-10-22] build | T-25057 default C verified and ready for integration
 
 NAME_ENT func_801398EC passes the default-build literal linked 492-byte proof, full ninja build, fresh 27/27 binary hashes and declaration guards (headers/globals OK; prototypes 0 new / 15 known). Four FAKE constraints and removal controls are preserved in drafts/T-25057; no shared header/compiler or other function changed. Root's direct standards/spec review has no findings. Updated [[playbook]] and [[matching-notes]] with the remainder-range and expression-order mechanism. Moved [[tickets/T-25057-name-ent-pass-investigation]] and [[kanban]] to In Review for root integration; the next candidate will use T-25062.
+
+## [2026-10-22] ticket | T-25062 NAME_ENT byte-pack claim
+
+Created [[tickets/T-25062-name-ent-byte-pack]] In Progress and added its [[kanban]] card before investigation. Scope is only func_8013AF78 in src/ovl/NAME_ENT/80139740.c, continuing after the clean T-25057 match pin. Read [[index]] and function catalog; historical pointer-zero loop and byte-register packing need current-pipeline qualification before any production edit.
