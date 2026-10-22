@@ -1899,3 +1899,5 @@ recorded in the ticket do not move them.
 ## [2026-10-22] ticket | T-25016 trace note: global filler active in func_80139290 (37 moves)
 
 ## [2026-10-22] ticket | T-25016 phase 2 closeout: bulk pool fully classified (79 scored, 43 named blockers), queue regenerated, in-tree pool contamination corrected
+
+## [2026-10-22] ticket | T-25016 queue verification: top bulk candidates funcdiff-verified (best 210 resolved lines); packet scores flatter by ~10x; Tier 1 re-labelled a reconstruction backlog
