@@ -2059,3 +2059,23 @@ For [[tickets/T-25034-main-quadrant-extent]], Astra captured normal ugen inputs 
 ## [2026-10-22] build | Quadrant destination-forwarding mechanism confirmed
 
 For [[tickets/T-25034-main-quadrant-extent]], normal backend forwards fp into a single-use shift child, then rejects in-place AND and allocates/copies a temporary. Sharing the raw shift through one required color store suppresses forwarding and removes the copy in real C, confirming the mechanism. The control worsens overall output (668words/850aligned/862printed) through a0 allocation and remains diagnostic only. Astra continues source mechanisms; no backend changes or promotion.
+
+## [2026-10-22] build | Quadrant shared flag/color value hoists
+
+For [[tickets/T-25034-main-quadrant-extent]], the required TILE-flag/red-mask shared high-word control hoists before the quad loop and adds a stack home (672words/810aligned/816printed), so it is rejected. Best source remains unchanged; Astra continues UV/control lifetimes. At newer root-relayed human request, coordinator also spawned independent Astra/high T-25043 TACO func_8014AB50 and T-25044 MAIN parameter_up_down workers in separate managed worktrees; no source ownership overlaps or root edits.
+
+## [2026-10-22] build | Quadrant UV saved-register rotation explained
+
+Astra traced separate-case-break controls for [[tickets/T-25034-main-quadrant-extent]]: scaled-row priority rises8.2->9.111 and overtakes constant127/quadrant, rotating saved registers. If-chain reproduces rotation; standalone shared-u0/default bypass returns to existing360/380 best. UV byte-result cast leaves end_v in v1. Matching continues with required masking/store-chain mechanisms; production unchanged.
+
+## [2026-10-22] build | Quadrant signed-byte mask closes red placement
+
+For [[tickets/T-25034-main-quadrant-extent]], signed-byte cast before mask with s32 red reproduces temporary SRA followed by direct ANDI into fp/s7 without sign-extension/copy. Whole-TU candidate674/667words,367aligned/415printed is not overall best; blue narrowing introduces a stack LB. Astra continues that local correction and trace. No literal match or promotion yet.
+
+## [2026-10-22] build | Quadrant signed-mask source improves to212
+
+[[tickets/T-25034-main-quadrant-extent]] improves from360/380 to212aligned/212printed at674target/666built padded words after removing only blue narrowing. Red/green direct masks, blue word extraction, full-word extents and0xA8 frame preserved. Archived immutable source as drafts/T-25034/main/func_80046AC8/signed-mask.c; inner signed CVTL is the measured color expression boundary. Astra continues remaining UV/register/CFG work; no promotion.
+
+## [2026-10-22] build | Quadrant archived212 candidate replayed
+
+Independent Docker replay of drafts/T-25034/main/func_80046AC8/signed-mask.c reproduces674target/666built,212aligned/212printed for [[tickets/T-25034-main-quadrant-extent]]. This validates the archived source/replay path without changing production. Worker continues remaining matching work.

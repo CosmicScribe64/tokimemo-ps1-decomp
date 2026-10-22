@@ -38,3 +38,10 @@ Matching resumed later on 2026-10-22 after the coordinator relayed a newer
 human instruction to continue until resolution. The wrap-up above describes
 checkpoint d8e482c4a, not the current worker state. The same Astra worker
 continues this function; these archived candidates remain unchanged.
+
+The resumed best is now `main/func_80046AC8/signed-mask.c`:674target/666built
+padded words,212aligned/212printed. With s32 red, `(s8)(arg6 >>16)&255`
+introduces an inner signed CVTL boundary; red/green emit a temporary shift
+followed by ANDI directly into fp/s7. Keeping blue as a word extraction avoids
+an unwanted stack LB. Frame0xA8 and all full-s32 extent tests are retained.
+This remains nonmatching research. Replay with argument `signed-mask.c`.
