@@ -111,3 +111,15 @@ Immutable astra-integer-return changes only return type to s32 with no explicit 
 Parent read-only caller audit: no declaration under include/; two known C calls are expression statements in NAME_ENT func8013B5F0 and SHUGAKU func801360B0, currently implicit-int. Target NAME_ENT JAL8013B764 immediately reaches epilogue without reading v0. SHUGAKU JAL80136344 proceeds to argument setup and func800494BC without reading v0. INCLUDE_ASM supplies no return declaration. This is compatible with ignored integer return, not unique proof of original signature. Canonical declaration/ABI checks required before eventual promotion; no shared header edited.
 
 Root independent replay on current main confirms integer-return.c674/674words,144aligned/902positional lines. Root source search confirms two existing calls discard results and no include declaration exists. This preserves the audited research branch without claiming unique original return signature or coverage. Worker continues remaining allocation/scheduling residues.
+
+### Early row scaling changes allocation priority
+
+Explicit early texture-row scaling recovers target t7/t8/t9 entry temporaries, but raises the row range from9uses/priority8.2 to13uses/12.2 and moves it froms7 tos3. Four additional uses are per-case endpoint expressions. Repeating original arg0 extraction canonicalizes back without reducing the use count. Integer144 remains best; private captures and priority traces preserved. Worker continues source-lifetime reconstruction.
+
+### UV hidden range is a base-row copy
+
+Faithful raw ugen corrects regdiff's bit210 constant0x80120000 guess: records639/745/851/956 are COPY a1,s7 of base UV row feeding v0/v1 byte stores. Final as1 removes the copy and substitutes s7. Hidden range priority30 (8uses/4defs) overlaps endpoint bit223 priority40 and reverse radius36.67. Target endpointa1 is consistent with different ordering of these real overlapping webs. Worker now targets required base/end UV consumers, not a hypothetical unused constant.
+
+### Standard UV ordering improves to116; user-requested wrap-up
+
+Standard forward u0,v0,u1,v1,u2,v2,u3,v3 assignments in one comma expression per quad exchange the overlapping range priorities: base-row CVT40/v1, reverse-radius36.67/a0, endpoint ADD30/a1. Prior base-copy priority30 reflected denominator4 versus endpoint3 from later base-byte consumers. Endpoint allocation now agrees with target; final reversed store scheduling and u0 branch delays also agree, and the spurious a1=0 hoist disappears. Immutable astra-uv-standard-macro gives674/674 padded words, aligned116/printed156; archived as drafts/T-25034/main/func_80046AC8/uv-standard.c. No production changes. The user's latest instruction requests wrap-up, commit and push; experiments stopped and remaining mismatch is explicitly preserved rather than marked Done.
