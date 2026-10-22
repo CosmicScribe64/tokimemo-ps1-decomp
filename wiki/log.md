@@ -1979,3 +1979,7 @@ Both archived complete-TU source replays reproduced their hashes/metrics and che
 ## [2026-10-22] lint | T-25024 final self-review and checks
 
 [[tickets/T-25024-tel-qualification]] is In Review with matching board card; function-note backlink updated. Header/global/prototype guards pass (0 new prototype disagreements,12 known in partial-split tree; three known void-result rows absent, explicitly recorded). Standards/spec self-review has no unresolved findings; remaining semantic proof and large matching residue are limitations, not completion. Exact sources replay at hand1372/pointer1403 changed positions, both1643 vs1645 words. Production source unchanged; git diff --check passes.
+
+## [2026-10-22] query | Review T-25024 TEL qualification handoff
+
+[[tickets/T-25024-tel-qualification]] checkpoint e43de7fb9 reviewed against883760224: narrow source/replay/results/wiki only, no production/header/build-tool/raw-data changes. Both whole-TU bodies remain far from matching; changed-position metric and semantic/ABI limits explicit. Earliest pointer opcode divergence is table-load NOP versus moved total initialization at word326. No new archive findings or compiler rerun; In Review for root acceptance, no C coverage credit. Single worker is idle pending ownership decision.
