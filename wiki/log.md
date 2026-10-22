@@ -2741,3 +2741,11 @@ Created [[tickets/T-25057-name-ent-pass-investigation]] In Progress in isolated 
 ## [2026-10-22] lint | T-25057 checkpoint review
 
 [[tickets/T-25057-name-ent-pass-investigation]]: annotated sources reproduce108/123 and106/123 identical resolved words. Docker wiki lint has0 broken links/0 status mismatches; existing large data/log pages remain. Direct standards/spec and staged prose review found no unresolved checkpoint issue. Ticket remains In Progress; production C unchanged.
+
+## [2026-10-22] build | T-25057 literal492-byte candidate
+
+[[tickets/T-25057-name-ent-pass-investigation]]: unsigned subtraction of an unsigned negation preserves the required row-before-tile evaluation. Complete TU123/123 words and private-linked492 bytes MATCH. Removed unnecessary tail test; four necessary FAKE constraints have removal controls. Default C installed and full27 build started. Coordinator direct standards/spec review has no findings, pending final gates.
+
+## [2026-10-22] build | T-25057 default C verified and ready for integration
+
+NAME_ENT func_801398EC passes the default-build literal linked 492-byte proof, full ninja build, fresh 27/27 binary hashes and declaration guards (headers/globals OK; prototypes 0 new / 15 known). Four FAKE constraints and removal controls are preserved in drafts/T-25057; no shared header/compiler or other function changed. Root's direct standards/spec review has no findings. Updated [[playbook]] and [[matching-notes]] with the remainder-range and expression-order mechanism. Moved [[tickets/T-25057-name-ent-pass-investigation]] and [[kanban]] to In Review for root integration; the next candidate will use T-25062.

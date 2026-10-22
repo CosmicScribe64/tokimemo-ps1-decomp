@@ -39,3 +39,13 @@
 {"func": "func_801398EC", "label": "row-late-add", "target": 123, "words": 122, "rows": 151}
 {"func": "func_801398EC", "label": "tile-pair-zero", "target": 123, "words": 127, "rows": 52}
 {"func": "func_801398EC", "label": "scalar-goto-order", "target": 123, "words": 123, "rows": 50}
+{"func": "func_801398EC", "label": "saved-scalar", "target": 123, "words": 123, "rows": 30}
+{"func": "func_801398EC", "label": "saved-array", "target": 123, "words": 123, "rows": 34}
+{"func": "func_801398EC", "label": "sum-negative-product", "target": 123, "words": 135, "rows": 128}
+{"func": "func_801398EC", "label": "sum-negative-expression", "target": 123, "words": 123, "rows": 0}
+{"func": "func_801398EC", "label": "annotated-match", "target": 123, "words": 123, "rows": 0}
+{"func": "func_801398EC", "label": "remove-tail-use", "target": 123, "words": 123, "rows": 0}
+{"func": "func_801398EC", "label": "remove-record-use", "target": 123, "words": 123, "rows": 72}
+{"func": "func_801398EC", "label": "remove-dead-frame", "target": 123, "words": 123, "rows": 50}
+{"func": "func_801398EC", "label": "remove-array", "target": 123, "words": 123, "rows": 50}
+{"func": "func_801398EC", "label": "remove-subtraction", "target": 123, "words": 123, "rows": 34}

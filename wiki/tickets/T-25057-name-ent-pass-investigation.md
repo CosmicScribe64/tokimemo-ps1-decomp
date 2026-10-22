@@ -1,7 +1,7 @@
 ---
 id: T-25057
 title: Reconstruct NAME_ENT record selector allocation
-status: In Progress
+status: In Review
 assignee: Codex Astra
 created: 2026-10-22
 updated: 2026-10-22
@@ -14,8 +14,8 @@ Qualify and reconstruct func_801398EC, then the best remaining function in the e
 
 ## Acceptance criteria
 
-- [ ] Causal pass-level investigation with exact replayable evidence and best sources archived.
-- [ ] Any promotion proves literal linked default C MATCH, 27 binary checksums and declaration guards.
+- [x] Causal pass-level investigation with exact replayable evidence and best sources archived.
+- [x] Any promotion proves literal linked default C MATCH, 27 binary checksums and declaration guards.
 - [ ] Direct standards/spec review resolves findings before Done; root integrates and pushes.
 
 ## Notes
@@ -37,3 +37,9 @@ Docker-only existing tokimemo-decomp-arm64 image, read-only disc. No shared head
 2026-10-22 checkpoint verification: annotated saved sources recompiled through complete TU in Docker. Scalar108/123 identical resolved positions (15 differing,30 printed rows); array106/123 (17 differing,34 rows). Results recorded in drafts/T-25057/saved-results.json; neither is a literal linked match. Direct standards/spec review against633d95356 covers source-only diagnostic scope, C89, existing types, marked FAKE constraints, no undefined local reads, read-only disc/Docker-only tools, and no production/header/compiler changes. README is a replay guide for the next matcher and preserves unique pass evidence. Ticket remains In Progress while investigation continues.
 
 2026-10-22 staged checkpoint review: no unresolved standards/spec findings. Docker wiki lint reports0 broken links/0 status mismatches, with only the existing large data/log pages. Staged deslop review split the long README control paragraph and removed one stock adverb; the repeated append-only log sentence and technical dominance/FAKE wording are retained. No copyrighted material, build output, production changes or shared declarations staged. This checkpoint records ongoing research, not acceptance of a match.
+
+2026-10-22 breakthrough: unsigned subtraction `row - (0U - tile[0] * 16) + 128` prevents the sum-tree commutation while preserving modulo2^32 semantics. Full TU123/123 words and private-linked492 bytes MATCH. The negative-product alternative adds instructions. Annotated-source replay stays exact; tail unsigned test is unnecessary and removed. Removal controls retain123 words but differ36 positions without record test,25 without dead initialization,25 with scalar local,17 with ordinary addition. Four retained levers are FAKE/ticketed. Default C installed; full27-j2 build running.
+
+2026-10-22 direct coordinator standards/spec review of final production diff: no findings. Ordinary13-record loop preserves intent; fixed-width C89; tile use dominated by computed assignment; extra initialization is nonvolatile and dead; unsigned subtraction defined; i0..12 row bounded; all four levers annotated and tested; no header/compiler/other-function edits. Review remains contingent on final gates, then ticket goes In Review for root acceptance.
+
+2026-10-22 final verification: default-build literal linked MATCH, 492 bytes / 123 words; full ninja -j2 succeeds; independently rehashed all 27 configured binaries; headers/globals OK and prototype branch check 0 new / 15 known. Hash evidence is in drafts/T-25057/gate-results.json. Coordinator review has no outstanding findings. Moved to In Review for root integration and acceptance. The next owned-file candidate moves to reserved T-25062 after this clean pin.
