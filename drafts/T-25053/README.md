@@ -33,3 +33,13 @@ Reusing q/b as later rectangle arguments after definite constant assignments
 is neutral144 (142 with the extra globaluse), so it does not precolor them.
 These results exclude narrow conversions and simple later argument reuse as
 the missing copy mechanism. Traces remain private; no binary dumps committed.
+
+New best: `signed-selector.c` has243/243 words, aligned cost104. Replay with
+the same T-24516 driver above, replacing the final candidate path. A signed
+counter local with explicit unsigned division recovers target countera1 and
+quotienta0 (cost138 alone). Empty selector use before counter initialization
+recovers selectora2 (cost112 alone); combined cost104. The loaded byte is0..255,
+so signed storage and unsigned division preserve the computation. Selector use
+is diagnostic FAKE and changes its load scheduling; it remains unmatched.
+Signed counter plus reversed zero assignments scores136; plus empty counter
+use scores138. Missing quotient copy persists; selector load is too early.

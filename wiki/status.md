@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Latest verified integration (2026-10-22)
 
-Fourteen functions verified this resumed effort, adding16,392bytes. Latest: ETC func_80146D4C adds1,056 literal default-C bytes. Root fresh27 binary checksums, declaration guards and standards/spec review pass. Current game code: **6847/6952 functions;2121068/2276920 bytes (93.2%)**,105 functions/155852 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25042 KANGEI80134724; T-25046 SHOUGATU8013EA98; T-25050 MAIN80075C84; T-25051 TACO8013B460; T-25052 MAIN8007132C; T-25054 ETC8014790C. Root owns T-25053 final BUNKA_SD function. Older counts below are historical.
+Fourteen functions verified this resumed effort, adding16,392bytes. Latest: ETC func_80146D4C adds1,056 literal default-C bytes. Root fresh27 binary checksums, declaration guards and standards/spec review pass. Current game code: **6847/6952 functions;2121068/2276920 bytes (93.2%)**,105 functions/155852 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25042 KANGEI80134724; T-25046 SHOUGATU8013EA98; T-25050 MAIN80075C84; T-25051 TACO8013B460; T-25052 MAIN8007132C; T-25054 ETC8014790C. Additional Astra workers own T-25055 TEL80136724, T-25056 ENDING8013A2E8 and T-25057 NAME_ENT801398EC. Root owns T-25053 final BUNKA_SD function. Older counts below are historical.
 
 ## NEXT STEP (read this first)
 

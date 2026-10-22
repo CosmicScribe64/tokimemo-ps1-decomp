@@ -34,3 +34,13 @@ Full range trace: constant-address bit46 priority3 winsv0; quotient bit44 priori
 ### Quotient storage controls
 
 Docker `build/T-25053/quotient-storage.py` completed: u16 quotient produces244 words/cost171; s16 produces247/cost204; reversed zero-assignment order remains243/cost144. Target243 words. None improves archived counter-use cost142. Narrow storage adds real conversion instructions, so it does not supply the missing target copy without additional changes.
+
+### Typed counter and selector allocation improvement
+
+New archived best `drafts/T-25053/signed-selector.c`:243/243 words, aligned cost104.
+Signed b with explicit unsigned division recovers target b=a1 and q=a0 (138 alone).
+Empty selector use before b initialization gives a2 (112 alone); combined104.
+Counter's source is u8, preserving0..255 range. Selector FAKE is marked; no promotion.
+Remaining first region still lacks quotient copy and schedules selector load early.
+Empty selector use immediately before switch is neutral144. Signed zero-order136,
+signed plus global empty use138. No production edits.

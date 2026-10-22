@@ -2717,3 +2717,11 @@ User requested more agents. Root reactivated the existing TEL/ENDING/ETC coordin
 ## [2026-10-22] query | BUNKA quotient storage controls negative
 
 [[tickets/T-25053-bunka-last-function]]: Docker quotient-storage controls returned u16 244 words/cost171, s16 247/cost204, reversed zero assignments243/cost144 against243 target words. Existing counter-use cost142 remains best; no production edit or coverage change.
+
+## [2026-10-22] query | BUNKA counter typing improves register allocation
+
+[[tickets/T-25053-bunka-last-function]] new source checkpoint `drafts/T-25053/signed-selector.c` scores104 aligned edits at243/243 words, improved from142. Signed counter with unsigned division recovers a1/a0; marked empty selector use recovers a2. Missing quotient copy and early selector load remain. No match or coverage credit. GitHub check: no open PRs; issue65 unchanged, GEKO/OPTION reserved.
+
+## [2026-10-22] decision | Three additional Astra workers confirmed running
+
+Coordinator confirmed `/root/astra_tel_25055`, `/root/astra_ending_25056`, `/root/astra_name_25057` on TEL80132000.c, ENDING801396E0.c and NAME_ENT80139740.c respectively. Three targets remain guarded. Isolated worktrees and per-function tickets; two compiler slots in that chat while NAME_ENT begins qualification. Existing seven assignments continue; root retains BUNKA_SD. See [[status]].
