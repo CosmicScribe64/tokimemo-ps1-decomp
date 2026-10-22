@@ -2407,3 +2407,23 @@ Moved [[tickets/T-25044-parameter-up-down]] and its [[kanban]] card to In Review
 ## [2026-10-22] lint | T-25044 evidence replay validated
 
 Docker source-only replay confirms zero diagnostic lines for current C, eight for four home substitutions, four for the padded frame pair, and 245 after removing the raw-byte lifetime use. Wiki lint reports zero broken links and zero status mismatches, with existing size warnings for [[data/t0018-cases]] and [[log]]. Root independent standards/spec review passed without findings. Source pin: 62429d6d9.
+
+## [2026-10-22] ticket | T-25048 adjacent MAIN table selector
+
+Claimed [[tickets/T-25048-main-80076fdc]] and src/main/80075320.c exclusively. The same-file 80073CB0 requires missing shared table declarations; chose 80076FDC with existing canonical tables under the frozen-header constraint. Read current and historical source/ledger before controls.
+
+## [2026-10-22] build | T-25048 global background carrier
+
+The two-local reconstruction in [[tickets/T-25048-main-80076fdc]] matches the complete instruction stream except the column save/reload stack home. Using the existing global as the carrier fixes the historical constant-store order and all switch-arm colors together. Local-background controls are preserved privately; final stack placement and necessity of the empty use are being checked.
+
+## [2026-10-22] build | T-25048 plain C reaches zero diagnostic differences
+
+[[tickets/T-25048-main-80076fdc]] declaration order restores the exact column home. Removing the artificial empty use keeps zero resolved differences. The final candidate is plain C with two real locals and direct global/table accesses. Literal linking is required to verify both jump tables before promotion.
+
+## [2026-10-22] build | T-25048 default C matches852 bytes
+
+[[tickets/T-25048-main-80076fdc]] passes default-C literal852-byte proof and MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26, including both jump tables. Header/global guards pass; prototype check reports0 new/15 known. No artificial empty test remains. Exact field/table addresses and source-only controls are preserved in drafts/T-25048; updated [[matching-notes]].
+
+## [2026-10-22] ticket | T-25048 In Review with validated evidence
+
+Moved [[tickets/T-25048-main-80076fdc]] and [[kanban]] card to In Review after parent independent standards/spec review passed without findings. Source pin f3c5c1759. Docker replay confirms current0, reversed locals4, empty use0, local background252, reused background264 diagnostic lines. Wiki lint finds zero broken links/status mismatches and two existing size warnings; evidence prose checker has zero hits. Root owns full27 integration.
