@@ -4,11 +4,13 @@ title: Coordinate isolated TEL ENDING ETC matching lanes
 status: In Progress
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-22
 links: ["[[status]]", "[[playbook]]"]
 ---
 
 ## Goal
+
+2026-10-22 active assignment supersedes the old lanes below: coordinate three user-requested Astra high workers on TEL T-25055 (`src/ovl/TEL/80132000.c`), ENDING T-25056 (`src/ovl/ENDING/801396E0.c`), and NAME_ENT T-25057 (`src/ovl/NAME_ENT/80139740.c`). Qualify 80136724, 8013A2E8, and 801398EC respectively. Persistent causal investigations, isolated trees, no root checkout edits or integration. Initial coordinator base633d953563b1038d65572295e6667d709e8ce1e1, branch `codex/t24510-astra-coordination`; old coordinator branch preserved.
 
 Coordinate three user-authorized GPT-6.1 Sol medium workers from main `23e1a20fb`: TEL T-24511, ENDING T-24512, ETC T-24513. Main integration remains owned by chat `01a140b3-83ee-7252-a0bc-fe8bf1519d84`.
 

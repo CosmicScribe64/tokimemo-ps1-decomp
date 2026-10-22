@@ -2717,3 +2717,7 @@ User requested more agents. Root reactivated the existing TEL/ENDING/ETC coordin
 ## [2026-10-22] query | BUNKA quotient storage controls negative
 
 [[tickets/T-25053-bunka-last-function]]: Docker quotient-storage controls returned u16 244 words/cost171, s16 247/cost204, reversed zero assignments243/cost144 against243 target words. Existing counter-use cost142 remains best; no production edit or coverage change.
+
+## [2026-10-22] ticket | Astra overlay coordinator resumed
+
+[[tickets/T-24510-parallel-overlay-coordination]] resumes on633d953563b1038d65572295e6667d709e8ce1e1 in the clean reused coordinator tree, preserving the old branch. Started fresh agents astra_tel_25055, astra_ending_25056, astra_name_25057 with explicit high Astra authorization and file-disjoint TEL80132000, ENDING801396E0, NAME_ENT80139740 claims. Source confirms all initial functions remain unmatched. Workers create their tickets before research. Two initial compiler slots go to TEL/ENDING; NAME_ENT qualifies source and history pending rotation. Root received actual agent names and exact claims. No production changes, no new match claim, no fourth compiler workload.
