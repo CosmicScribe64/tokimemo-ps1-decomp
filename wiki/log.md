@@ -2295,3 +2295,7 @@ Root reviewed the GYOZI change against standards and scope with no findings: def
 ## [2026-10-22] build | Two late-zero family matches verified on main
 
 Root combined T-25033/T-25035, reviewed source against standards/spec with no findings, and refreshed every binary checksum:27/27 pass. Default-C literal linked proofs pass SHOUGATU472bytes and GYOZI388bytes; neither function has an assembly fallback. Headers/globals pass, prototypes0new/15known. Docker progress6835/6952functions,2105536/2276920bytes (92.5%);117functions/171384bytes remain. Moved both reviewed tickets/cards to Done, updated [[status]] and regenerated catalog. Research workers continue MAIN counter/quadrant and BUNKA scheduling. No experimental follow-up counted.
+
+## [2026-10-22] decision | Continue successful workers on new functions
+
+After verified T-25033/T-25035 integration, reassigned their Astra capacity without duplicating active work. SHOUGATU chat reserves T-25038 for the next remaining function in8013E330.c, selecting E6E4 or EA98 by existing candidate evidence. Former GYOZI worker reserves T-25039 MAIN func_8005B43C in8005A0B0.c, releasing GYOZI. Both sustain implementation through literal proof; MAIN quadrant/counter and BUNKA scheduler workers continue. Root owns integration.
