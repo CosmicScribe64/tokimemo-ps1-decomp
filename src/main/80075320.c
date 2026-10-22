@@ -292,14 +292,17 @@ void func_80075C24(void) {
     }
 }
 
-#ifdef NON_MATCHING
 s32 func_80075C84(void) {
     s32 i;
     s32 j;
     u32 k;
+    s32 random;
 
     if ((((DisplayActor44 *)D_8011ECD0)->unk_26 < -0x40) && (((DisplayActor44 *)D_8011ECD0)->unk_26 >= -0x4F)
         && (((DisplayActor44 *)D_8011ECD0)->unk_2A < 0x18) && (((DisplayActor44 *)D_8011ECD0)->unk_2A >= -0xF)) {
+        /* FAKE T-25050: the raw input use keeps the word and mask in
+         * separate promoted registers. */
+        if (D_800E6280.unk_F88) {}
         switch (D_800E6280.unk_F88 & 0x70) {
         case 0x20:
             D_800B6990[D_800B6998] = 0;
@@ -323,7 +326,7 @@ s32 func_80075C84(void) {
         if (D_800E6280.unk_F88 & 0x70) {
             for (i = 0; i < 13; i++) {
                 k = D_800B6998 + 7;
-                for (j = 0; j < 7; j++, k++) {
+                for (j = 0; j < 7; k++, j++) {
                     if (D_800B6990[k % 7] != D_800B3778[i][j]) {
                         break;
                     }
@@ -339,7 +342,9 @@ s32 func_80075C84(void) {
                                 D_800E6280.unk_1093 = i + 1;
                             }
                         }
-                        *(s32 *)&D_800E6280.unk_1BC[i].unk_00 += rand() & 0x7FFF;
+                        random = rand();
+                        /* The original adds to the full first record word. */
+                        *(s32 *)&D_800E6280.unk_1BC[i].unk_00 += random & 0x7FFF;
                         if (D_800E6280.unk_0F6.h & 1) {
                             D_800E6280.unk_11C.unk_02 += 0x20;
                         }
@@ -355,14 +360,17 @@ s32 func_80075C84(void) {
                         return 1;
                     }
                 }
+                /* FAKE T-25050: this impossible unsigned branch keeps the
+                 * position load inside the outer loop during optimization.
+                 * The branch and store disappear from the emitted code. */
+                if ((u32)i < 0) {
+                    D_800B6998 = 0;
+                }
             }
         }
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075C84);
-#endif
 
 s32 func_80075FA0(void) {
     u8 x;
