@@ -157,6 +157,46 @@ for f in ['71E', '71F']:
 variants['neighbor-status-byte-views'] = neighbor
 variants['neighbor-71d-store-only'] = re.sub(r'D_800E6280.unk_71D(?= \[+\-]=)', '(*(u8 *)&D_800E6280.unk_71D)', full_switch)
 
+
+# Byte aliasing demotes the base; explicit modulo arithmetic tests the wrong pointer recurrence.
+byte_index = full_switch.replace('D_800E6280.unk_71C', '(*(u8 *)&D_800E6280.unk_71C)')
+variants['unsigned-switch-index-byte-view'] = byte_index
+index = '(*(u8 *)&D_800E6280.unk_71C)'
+variants['byte-index-explicit-mask'] = byte_index.replace(index + ' += 1;', index + ' = (' + index + ' + 1) & 255;').replace(index + ' -= 1;', index + ' = (' + index + ' - 1) & 255;')
+variants['byte-index-explicit-cast'] = byte_index.replace(index + ' += 1;', index + ' = (u8)(' + index + ' + 1);').replace(index + ' -= 1;', index + ' = (u8)(' + index + ' - 1);')
+
+
+# Preserve modulo narrowing only in the opcode-walk region, where the target masks.
+a = byte_index.index('    p = &D_800E6280.unk_69C')
+b = byte_index.index('    if (op == 0xFB || op == 0xFF)')
+masked_walk = byte_index[:a] + byte_index[a:b].replace(index + ' += 1;', index + ' = (' + index + ' + 1) & 255;') + byte_index[b:]
+variants['byte-index-mask-walk-only'] = masked_walk
+# Switch CFG with a provably unreachable call may split a constant range before late folding.
+zero_switch = '    switch ((u32)D_800E6280.unk_71C < 0) { case 0: break; case 1: case 2: default: func_8006D00C(); break; }\n'
+variants['unsigned-switch-dead-switch-boundary'] = full_switch.replace(first_pointer, zero_switch + first_pointer, 1)
+
+
+# Hide the unit step until after induction recognition; all arithmetic is defined.
+late_step = index + ' += 1 + ((u32)' + index + ' < 0);'
+variants['byte-index-late-step-walk'] = byte_index[:a] + byte_index[a:b].replace(index + ' += 1;', late_step) + byte_index[b:]
+variants['byte-index-late-step-all'] = byte_index.replace(index + ' += 1;', late_step)
+
+
+# Inspect return-register liveness using a complete preprocessed-TU declaration view.
+variants['s32-return-unsigned-switch'] = full_switch
+variants['s32-return-byte-index'] = byte_index
+
+
+# The schedule is a four-byte record; a character pointer exposes its original byte accesses.
+def byte_record_pointer(source):
+    source = source.replace('GsRec69C *p;', 'u8 *p;')
+    source = source.replace('p = &D_800E6280.unk_69C[', 'p = (u8 *)&D_800E6280.unk_69C[')
+    source = source.replace('p[-1].unk_00', 'p[-4]')
+    for off in range(4): source = source.replace('p->unk_%02X' % off, 'p[%d]' % off)
+    return source
+variants['byte-record-pointer'] = byte_record_pointer(full_switch)
+variants['byte-record-pointer-index-view'] = byte_record_pointer(byte_index)
+
 expected, problem = fd.expected_object(c)
 if problem: raise RuntimeError(problem)
 want = fd.resolved_functions(expected, [name], c)[name]
@@ -167,7 +207,8 @@ for label in sys.argv[1:] or variants:
     (directory / 'body.c').write_text(candidate)
     source = directory / 'unit.c'
     source.write_text(original.replace(needle, candidate))
-    obj, _ = fv.compile_unit(c, directory, source=source, non_matching=False)
+    edit = (lambda pre: pre.replace('void func_8007132C(', 's32 func_8007132C(')) if label.startswith('s32-return-') else None
+    obj, _ = fv.compile_unit(c, directory, source=source, non_matching=False, edit=edit)
     got = fd.resolved_functions(obj, [name], c)[name]
     rows = fd.diff_lines(want, got)
     (directory / 'diff.txt').write_text('\n'.join(rows) + '\n')
