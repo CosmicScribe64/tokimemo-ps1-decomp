@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25034-main-quadrant-extent|T-25034 MAIN src/main/80046500.c full-width tile extent recovery]]
+
 - [ ] [[tickets/T-25032-main-candidate-audit|T-25032 Bounded read-only MAIN candidate qualification]]
 
 - [ ] [[tickets/T-25029-main-strcallback-ring|T-25029 MAIN src/main/800563F0.c strCallback copy-ring diagnosis]]
