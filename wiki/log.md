@@ -2123,3 +2123,19 @@ Independent Docker replay confirms current signed-mask.c at674target/673built wo
 ## [2026-10-22] build | Quadrant integer-return checkpoint replayed
 
 Independent Docker replay confirms integer-return.c at674/674words,144aligned/902positional-printed for [[tickets/T-25034-main-quadrant-extent]]. Astra also verified actual implicit-int spelling is byte-identical to explicit s32. Remaining groups: entry temporaries/homes, UV endpoint v1 vs a1 and related zero-argument hoist, TILE t2/t4 choices, green-shift temporary. No operation-count gap remains; worker continues.
+
+## [2026-10-22] build | Quadrant entry scaling and row priority separated
+
+[[tickets/T-25034-main-quadrant-extent]] early row scaling fixes entry temporary order but adds four endpoint uses, raising priority8.2->12.2 and shifting s7->s3. Repeated original extraction canonicalizes unchanged. This control is rejected as a candidate; integer144 remains best. The successful signed-conversion-tree boundary distinction was also shared with T25051's independent scheduling investigation, without parent source experiments.
+
+## [2026-10-22] build | Quadrant hidden UV base-copy range identified
+
+For [[tickets/T-25034-main-quadrant-extent]], raw ugen disproves a regdiff constant-label guess: hidden a1 range is a required base-UV copy later removed by as1. Priority30 overlaps endpoint40 and reverse-radius36.67. Real consumer lifetimes now guide the remaining endpoint-register work; integer144 remains best and production unchanged.
+
+## [2026-10-22] decision | Preserve quadrant UV ordering checkpoint and wrap up
+
+[[tickets/T-25034-main-quadrant-extent]] standard forward UV comma grouping exchanges real base-row/endpoint range priorities and improves aligned144 to116 with674/674 padded words. Archived source-only draft and replay option; native trace confirms endpoint a1 and removes wrong a1=0 hoist. User requested current work committed and pushed; all three workers instructed to freeze and preserve evidence. No production promotion or completion claim.
+
+## [2026-10-22] build | Verify final quadrant research checkpoint
+
+[[tickets/T-25034-main-quadrant-extent]] archived uv-standard.c replay independently returns target674/candidate674 words, aligned116/printed156. Docker wiki lint:0 broken links,0 status mismatches,1 existing large-page warning. README prose check:0 hits. Diff whitespace check passes. No generated binary or raw input is staged.

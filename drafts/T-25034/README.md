@@ -75,3 +75,17 @@ than aligned comparison; use aligned cost144 for this checkpoint. The void
 and no existing header declaration specifies a return type. This supports an
 integer/implicit-int contract but does not uniquely prove the original source
 signature. Eventual promotion requires canonical declaration/ABI checks.
+
+Latest wrap-up checkpoint (2026-10-22): `uv-standard.c` preserves the standard
+forward UV assignment order (u0,v0,u1,v1,u2,v2,u3,v3) in one comma expression
+per quad. Target and candidate both have674 padded words; aligned cost116,
+printed156. This exchanges the overlapping base-row and endpoint range
+priorities, puts the endpoint in a1, reproduces reversed final store scheduling
+and removes the spurious a1=0 hoist. Native trace identifies base-row CVT at
+priority40/v1, reverse radius36.67/a0 and endpoint ADD30/a1. The diagnostic
+regdiff label for the endpoint is misleading; the native expression is the
+row-plus127 addition. The source remains a nonmatching research draft.
+
+The user requested wrap-up, commit and push; source experiments are stopped.
+Replay with `tools/docker.sh python3 drafts/T-25034/reproduce.py uv-standard.c`.
+No production source, shared header or compiler changes accompany this checkpoint.
