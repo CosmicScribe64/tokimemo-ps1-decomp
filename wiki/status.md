@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Latest verified integration (2026-10-22)
 
-Six functions verified this resumed effort: SHOUGATU8013E50C472bytes, GYOZI80140E0C388, MAIN8006D7EC4692, BUNKA_SD801392901516, MAIN8005B43C860, KANGEI8013852C180. Root independently checked literal default-C linked bytes, all27 binary checksums and declaration guards. Current game code: **6839/6952 functions;2112784/2276920 bytes (92.8%)**,113 functions/164136 bytes remaining. Total gain8108bytes. SHOUGATU8013E6E4 is under verification, not yet counted. Continued source owners: T-25034 MAIN quadrant; T-25038 SHOUGATU; T-25040 MAIN8006D138; T-25042 KANGEI80134724; T-25045 ETC80146D4C. Newly authorized T-25043 TACO8014AB50 and T-25044 parameter_up_down are being started by the MAIN chat in isolated trees. Older counts below are historical.
+Seven functions verified this resumed effort: SHOUGATU8013E50C472bytes, GYOZI80140E0C388, MAIN8006D7EC4692, BUNKA_SD801392901516, MAIN8005B43C860, KANGEI8013852C180, SHOUGATU8013E6E4948. Root independently checked literal default-C linked bytes, all27 binary checksums and declaration guards. Current game code: **6840/6952 functions;2113732/2276920 bytes (92.8%)**,112 functions/163188 bytes remaining. Total gain9056bytes. Active Astra assignments: T-25034 MAIN quadrant; T-25040 MAIN8006D138; T-25042 KANGEI80134724; T-25043 TACO8014AB50; T-25044 parameter_up_down; T-25045 ETC80146D4C; T-25046 SHOUGATU8013EA98. TACO reports zero resolved differences under verification, not counted yet. Older counts below are historical.
 
 ## NEXT STEP (read this first)
 

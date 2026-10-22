@@ -41,6 +41,8 @@ Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in th
 
 **Original reloads, draft CSEs.** Fix: read the second use through an address view, `*(u8 *)((u8 *)&D_800E6280 + 0x3E)`, or through a `GameState *gs` pointer (uopt treats a pointer store as a possible alias). In main `func_8006D7EC` the original mixes `gs->` and absolute accesses; the `gs->` form for record stores recomputes `sll; addu` per statement as the original does (T-23003).
 
+A later call argument can keep an earlier selector promoted across several tests. SHOUGATU E6E4 needed both an exact byte view at the second club test and at the later status-call argument: the first restored a reload, the second removed the remaining `a0` range and matched the temporary sequence. Integer debug return fixed the preceding flag register. See [[tickets/T-25038-shougatu-selection-loop]]; these are marked FAKEs, and individual removal controls establish their roles.
+
 **Delete a redundant local.** If regdiff lists a shift or sum as its own range next to your local, remove the local and repeat the expression (TAIIKU `func_8013B200`, 79 to 43 rows, T-19008). If a global is written back at every loop latch, drop the local array base and index the global (main `func_8006612C`, T-17011).
 
 **Global as the variable.** A local held in the wrong register and stored to a global in each branch: assign the global itself and read it back; uopt promotes it and colours as the original (T-10860 family).

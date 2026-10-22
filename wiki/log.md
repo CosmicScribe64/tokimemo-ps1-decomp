@@ -2395,3 +2395,18 @@ Moved the local club definition into its consuming else branch, before the exist
 ## [2026-10-22] build | MAIN club and KANGEI matches accepted
 
 Integrated cb6cc430b and c0249b80c. Root default-C literal860/180byte proofs, fresh27/27binary checksums, headers/globals and prototypes0new/15known pass. Independent standards/spec reviews no findings. T-25039/T-25041 move Done. Progress6839/6952functions,2112784/2276920bytes (92.8%);113functions/164136bytes remain. Six matches add8108bytes. User requested more agents: MAIN chat tasked to add two isolated Astra lanes T-25043 TACO8014AB50 and T-25044 parameter_up_down, keeping quadrant worker. T-25039 file now complete; its worker continues T-25045 ETC80146D4C. KANGEI worker continues T-25042. Root serializes integration.
+
+## [2026-10-22] ticket | T-25038 selects SHOUGATU E6E4
+
+Created [[tickets/T-25038-shougatu-selection-loop]] and its In Progress board card before experiments. The clean isolated tree fast-forwarded from d091557e4 to root integration77eae26cf, preserving prior work. Root reports E50C and GYOZI E0C Done with all27 hashes and860 literal bytes. Selected E6E4's preserved corrected187-edit body over EA98's284-edit corrected port; existing table-home fix and negative ledger are in drafts/T-24523/SHOUGATU/func_8013E6E4 and [[tickets/T-24523-seasonal-source-hypotheses]]. Same Astra worker continues sole ownership of src/ovl/SHOUGATU/8013E330.c through resolution; root retains integration ownership.
+## [2026-10-22] build | T-25038 selector access classes close resolved E6E4
+
+[[tickets/T-25038-shougatu-selection-loop]]: fresh canonical full-TU baseline187/187 has exact frame/tables and no saved56 residue. Integer debug return gives177; independent club6 byte read restores its reload; a byte-view status argument then removes the unwanted selector promotion and gives0/0,237/237 words. Literal/default-C proof and minimization remain pending. Private evidence in `build/t25038/`, concise ledger in `drafts/T-25038/README.md`. Coordinator's declaration audit found existing s32 D_80122D48 uses in main/DATE and an overlapping EVENT table view; shared-header ownership will be reconciled before promotion.
+
+## [2026-10-22] build | T-25038 default C verified and ready for integration
+
+Promoted SHOUGATU func_8013E6E4 with no fallback: private and production full-TU links match all 948 bytes, and an independent link of the actual Ninja object matches E6E4 plus preserved E50C472bytes. SHOUGATU SHA1 and headers/globals/prototype guards pass (0 new / 15 known). Removal controls document the integer debug return, two byte views, result narrowing and multiplication by one. Root approved the narrow debug guard, overlay forward prototype and existing T-11590 scalar-local exception; coordinator source review has no findings. Moved [[tickets/T-25038-shougatu-selection-loop]] and card to In Review pending root combined gate. Updated [[playbook]] and drafts/T-25038/README.md; raw evidence remains private.
+
+## [2026-10-22] build | SHOUGATU selection loop accepted
+
+Root reviewed ca9569534 source/header against standards/spec, no findings. Narrow debug-return guard leaves default declaration unchanged; existing scalar-local exception documented, overlay forward prototype consistent. Full520-step rebuild passes fresh27/27SHA. Default-C E6E4 literal948bytes and preserved E50C472bytes pass. Headers/globals/prototypes0new/15known pass. T-25038 moves Done. Docker progress6840/6952functions,2113732/2276920bytes (92.8%);112functions/163188bytes remain. Seven matches add9056bytes. Worker continues T-25046 EA98; TACO zero-diff candidate not yet counted. All seven lanes remain assigned.
