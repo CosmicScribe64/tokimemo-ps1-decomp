@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Latest verified integration (2026-10-22)
 
-Eight functions verified this resumed effort, adding10,932bytes. Latest: TACO func_8014AB50 adds1,876 literal default-C bytes. Root independently checked all27 binary checksums and declaration guards, with no standards/spec review findings. Current game code: **6841/6952 functions;2115608/2276920 bytes (92.9%)**,111 functions/161312 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25040 MAIN8006D138; T-25042 KANGEI80134724; T-25044 parameter_up_down; T-25045 ETC80146D4C; T-25046 SHOUGATU8013EA98. TACO worker continues to next unclaimed candidate under T-25047. Older counts below are historical.
+Nine functions verified this resumed effort, adding12,160bytes. Latest: MAIN parameter_up_down adds1,228 literal default-C bytes. Root independently checked all27 binary checksums and declaration guards, with no standards/spec review findings. Current game code: **6842/6952 functions;2116836/2276920 bytes (93.0%)**,110 functions/160084 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25040 MAIN8006D138; T-25042 KANGEI80134724; T-25045 ETC80146D4C; T-25046 SHOUGATU8013EA98; T-25047 TACO801511C0. Parameter worker continues under reserved T-25048. Older counts below are historical.
 
 ## NEXT STEP (read this first)
 

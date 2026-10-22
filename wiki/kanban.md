@@ -57,6 +57,8 @@ kanban-plugin: board
 
 
 
+
+
 - [ ] [[tickets/T-25034-main-quadrant-extent|T-25034 MAIN src/main/80046500.c full-width tile extent recovery]]
 
 - [ ] [[tickets/T-25032-main-candidate-audit|T-25032 Bounded read-only MAIN candidate qualification]]
@@ -97,6 +99,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
 
 
 
@@ -182,6 +185,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-25044-parameter-up-down|T-25044 Match parameter_up_down]]
 
 - [ ] [[tickets/T-25043-taco-constant-tail|T-25043 Match TACO stage handler constant tail]]
 

@@ -2464,3 +2464,35 @@ Added the verified T-25043 call-result liveness recipe to [[playbook]] and relay
 ## [2026-10-22] build | Root preserves quadrant research checkpoint
 
 Root independently replayed b25963c45 signed-mask candidate in Docker:674 target words,666 candidate words,212 aligned/printed differences, reproducing the worker result. Preserved source and research on main without promoting production or changing coverage. Worker has reported a newer198-difference candidate and continues; it is not yet independently verified.
+
+## [2026-10-22] ticket | T-25044 parameter_up_down claimed
+
+Created [[tickets/T-25044-parameter-up-down]] In Progress in an isolated worktree. Read the earlier eleven-row residual and failed source-control ledger before any matching experiments. No root source or shared declarations changed.
+
+## [2026-10-22] build | T-25044 baseline lifetime trace
+
+Docker full-translation-unit trace confirms the two existing [[tickets/T-25044-parameter-up-down]] residuals. Signed-byte expression and unsigned-carrier controls do not remove the head copies; unsigned carrier additionally reverses products. Private trace and exact source controls remain under build/T-25044; production guard retained.
+
+## [2026-10-22] build | T-25044 mode head resolved diagnostically
+
+A raw-byte lifetime use eliminates the extra nibble copies in [[tickets/T-25044-parameter-up-down]]. The first mismatch now starts at the club row-address result; removing that promoted expression would also restore the downstream temporary numbering. This is a diagnostic improvement, not a function match.
+
+## [2026-10-22] build | T-25044 four-access stack residue
+
+[[tickets/T-25044-parameter-up-down]] now has a complete 307-word source candidate differing only at four saved-row offsets. Reserved padding fixes those offsets but changes the frame, so no candidate is promoted. Stack/object controls are recorded privately and rejected with reasons.
+
+## [2026-10-22] build | T-25044 default C matches parameter_up_down
+
+[[tickets/T-25044-parameter-up-down]] matches all 1228 linked bytes with default C. Direct signed element expressions remove the extra scalar while preserving the separate index lifetime. Full MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 and header/global/prototype guards pass. Updated [[matching-notes]]; source-only controls retained in drafts/T-25044.
+
+## [2026-10-22] ticket | T-25044 ready for integration review
+
+Moved [[tickets/T-25044-parameter-up-down]] and its [[kanban]] card to In Review. Coordinator semantic review found no issue; its stale comment finding is resolved. Independent full27 integration remains with root.
+
+## [2026-10-22] lint | T-25044 evidence replay validated
+
+Docker source-only replay confirms zero diagnostic lines for current C, eight for four home substitutions, four for the padded frame pair, and 245 after removing the raw-byte lifetime use. Wiki lint reports zero broken links and zero status mismatches, with existing size warnings for [[data/t0018-cases]] and [[log]]. Root independent standards/spec review passed without findings. Source pin: 62429d6d9.
+
+## [2026-10-22] build | MAIN parameter match accepted
+
+Integrated e6da7a621. Root independently reviewed final source against standards/spec, no findings; default-C parameter_up_down matches1228 literal bytes and fresh27/27 binary checksums pass. Headers/globals and prototypes0new/15known pass. [[tickets/T-25044-parameter-up-down]] moves Done. [[status]] now6842/6952functions,2116836/2276920bytes (93.0%);110functions/160084bytes remain. Nine matches add12160bytes. Worker continues under T-25048, reserved with coordinator; TACO T-25047 now owns801511C0. Other five Astra lanes remain active.
