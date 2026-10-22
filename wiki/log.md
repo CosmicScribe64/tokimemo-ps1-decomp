@@ -2147,3 +2147,7 @@ Live T-25031 found SHOUGATU8013E50C archived FAKE table-address arguments to ren
 ## [2026-10-22] decision | Hands-on escalation for near SHOUGATU closure
 
 Live T-25033 corrected guard reaches five printed lines: missing entry zero carrier and its two uses, other instructions aligned. Three-argument status-call control restores count but emits zero too late and disturbs reload base; rejected. Authorized one hands-on Astra worker on this exact claimed source after Sol pins trace/bestbody, with Sol idle and exclusive editing transferred. Must consult T-24907/T-25025 and current negatives, avoid repeated grids and semantic/byte shortcuts; initial30min sustained attempt with literal proof for any match. This supersedes read-only consultation restriction for this specific blocker. T-25034 MAIN continues source lifetimes/frame/control work. No coverage claim yet.
+
+## [2026-10-22] decision | User switches active implementation to Astra
+
+Human explicitly states Sol is insufficient and requests Astra. Sent both active matching chats model override gpt-6-astra/high: T-25033 SHOUGATU five-line closure and T-25034 MAIN full-width extent reconstruction. This supersedes earlier Sol-default/read-only-Astra policy for active implementation. Continue exact best sources and negative ledgers; a running Astra child remains sole editor if already dispatched, avoiding duplicate work. Root integration/proof requirements unchanged, no new fan-out or screening. No coverage increase claimed.
