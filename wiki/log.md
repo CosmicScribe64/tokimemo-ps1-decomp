@@ -1903,3 +1903,15 @@ recorded in the ticket do not move them.
 ## [2026-10-22] ticket | T-25016 queue verification: top bulk candidates funcdiff-verified (best 210 resolved lines); packet scores flatter by ~10x; Tier 1 re-labelled a reconstruction backlog
 
 ## [2026-10-22] ticket | T-25013, T-25014, T-25015 marked Done (merged in PR #66); T-25016 to In Review with its PR; status page next-step rewritten for the post-lever state
+
+## [2026-10-22] ticket | T-25018 bounded KANGEI near closure
+
+Created [[tickets/T-25018-kangei-near-closure]] In Progress in an isolated worktree. Read [[playbook]], [[as1-scheduler-rule]], T-24901 source notes and [[tickets/T-25016-candidate-reconstruction]] before attempting new source work. Reproducing the full-unit baseline; no repeated sweeps authorized.
+
+## [2026-10-22] query | T-25018 pins KANGEI local scheduler blocker
+
+Reproduced two full-unit NON_MATCHING C rows and the stock as1 DAG for KANGEI func_8013852C. The existing arithmetic/$at chains give equal aftercycles 4, same source line, but besttime 16 versus 15. No new dependency-backed source lever was established; zero duplicate source variants run. Pinned the source note in src/ovl/KANGEI/80137B90.c and filed the exact revisit condition in [[matching-notes]] and [[tickets/T-25018-kangei-near-closure]]. Moved the ticket and board to In Review; no promotion.
+
+## [2026-10-22] build | T-25018 retained fallback verification
+
+Default funcdiff verified 180 linked bytes equal the target (assembly fallback only). After the note-only source edit, the configured KANGEI.ok Ninja target passed SHA1. Header, GameState migration, and branch prototype guards passed; no new prototype disagreement. [[tickets/T-25018-kangei-near-closure]] remains In Review.

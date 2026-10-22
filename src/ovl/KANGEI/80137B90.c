@@ -213,7 +213,8 @@ void func_80138470(void) {
  * the addu is only ready at 16 because subu is scheduled at 14, while the lui's $at chain is ready at 15.
  * ~5,000 cast/order/temp/line variants (T-24202) and the T-24901 batch (sum in a u16/s32 temp, store through a
  * view, (u8) masks that as1 deletes, A2AC store first / after the call, year as s16, F in a local) stay at 2 rows
- * or worse. */
+ * or worse. T-25018 reproduced the full-unit 2-row baseline and the stock as1 DAG on 2026-10-22;
+ * no untested dependency-changing source form was established, so the guard remains pinned. */
 #ifdef NON_MATCHING
 void func_8013852C(void) {
     u8 year;
