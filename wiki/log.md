@@ -2151,3 +2151,7 @@ Live T-25033 corrected guard reaches five printed lines: missing entry zero carr
 ## [2026-10-22] decision | User switches active implementation to Astra
 
 Human explicitly states Sol is insufficient and requests Astra. Sent both active matching chats model override gpt-6-astra/high: T-25033 SHOUGATU five-line closure and T-25034 MAIN full-width extent reconstruction. This supersedes earlier Sol-default/read-only-Astra policy for active implementation. Continue exact best sources and negative ledgers; a running Astra child remains sole editor if already dispatched, avoiding duplicate work. Root integration/proof requirements unchanged, no new fan-out or screening. No coverage increase claimed.
+
+## [2026-10-22] decision | User requires continued work through resolution
+
+Human directs active workers not to stop until their assigned problems are resolved. Relayed to both Astra matching chats: supersede prior time boxes/probe-count stopping limits; checkpoints and negative experiments do not terminate work. Continue evidence-informed implementation and verification on current files, preserving interim sources. Required literal match/semantics/proof standards remain; ordinary difficulty is not an external blocker. Root integration remains serialized.
