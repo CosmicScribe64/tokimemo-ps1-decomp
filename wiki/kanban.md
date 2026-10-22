@@ -54,6 +54,7 @@ kanban-plugin: board
 
 ## In Progress
 
+
 - [ ] [[tickets/T-25017-completion-plan|T-25017 Reconcile census and execute completion plan]]
 
 
@@ -71,6 +72,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+- [ ] [[tickets/T-25019-recovered-taco-38b2c|T-25019 Recovered queue provenance and TACO baseline]]
+
 
 - [ ] [[tickets/T-25016-candidate-reconstruction|T-25016 Candidate reconstruction for the fragment functions]]
 - [ ] [[tickets/T-25012-class-c-d-reconstruction|T-25012 Class C/D reconstruction: missing drafts, class C, class D smallest first]]

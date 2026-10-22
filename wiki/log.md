@@ -1911,3 +1911,11 @@ Fetched and fast-forwarded clean main to 7c87f223e, read T-25013 through T-25016
 ## [2026-10-22] ticket | Start bounded completion execution
 
 Moved [[tickets/T-25017-completion-plan]] to In Progress with board synchronized. One Sol 6.1 medium worker owns KANGEI func_8013852C under T-25018 in isolation; no other live subagents. Issue65 remains open and its contributor expects to return Friday; select KANGEI first to avoid GEKO/OPTION overlap. No open PRs. Remote artifact access is unresolved; requested location from user while independent near-match work proceeds. No contributor messages posted.
+
+## [2026-10-22] ticket | Recovered TACO candidate investigation
+
+Created [[tickets/T-25019-recovered-taco-38b2c]] in isolated worktree /private/tmp/t25019-taco at 7bc6d8d99; recovered archive remains private evidence. Read prior T-16564/T-19015/T-20600 negatives before any experiments.
+
+## [2026-10-22] query | Recovered queue provenance and TACO baseline
+
+[[tickets/T-25019-recovered-taco-38b2c]]: 410 recovered files; 151 C body artifacts, 122 m2c bodies. TACO func_80138B2C current guarded whole-TU Docker baseline is 30 positional rows/60 printed diff lines; mechanically adapted older archive gives 103 unequal-span printed diff lines, REAL DIFFERENCE. Restored source and registered existing colour tail without speculative variants. [[matching-notes]] records result and concrete next reconstruction target main func_8005215C. Ticket and board moved to In Review for independent standards review.
