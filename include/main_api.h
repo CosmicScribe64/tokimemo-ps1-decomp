@@ -843,6 +843,10 @@ extern s32 D_800B6810[];
  * signed nine-byte rows (`lb`, row index * 9): eight rows at D_800B68E0 end where D_800B6928 starts. */
 extern u8 D_800B6890[12][2];
 extern u8 D_800B68A8[12][2];
+/* T-25049: event-selector byte regions. Indexed lbu uses offsets
+ * 0,2,4,6,9,11 plus the selection column; offset13 is a scalar byte. */
+extern u8 D_800B68C0[16];
+extern u8 D_800B68D0[16];
 extern s8 D_800B68E0[8][9];
 extern s8 D_800B6928[][9];
 /* T-20940: static data of 80075320.c. D_800B6990 is a ring of the last seven keys pressed on the holiday

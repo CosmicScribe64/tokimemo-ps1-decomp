@@ -54,7 +54,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-25049-main-event-table-recovery|T-25049 Recover MAIN event selection table draft]]
 
 - [ ] [[tickets/T-25040-main-flag-dispatch|T-25040 Match MAIN flag dispatcher]]
 
@@ -189,6 +188,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-25049-main-event-table-recovery|T-25049 Recover MAIN event selection table draft]]
 
 - [ ] [[tickets/T-25044-parameter-up-down|T-25044 Match parameter_up_down]]
 

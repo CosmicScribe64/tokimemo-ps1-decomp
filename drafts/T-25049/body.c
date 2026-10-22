@@ -6,9 +6,6 @@ void func_80073CB0(void) {
     u32 temp_t6;
     u32 temp_t9;
     u8 temp_a0;
-    u8 temp_t3;
-    u8 temp_t5;
-    u8 var_t0;
 
     D_801230D0 = 0xFF;
     temp_a0 = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_03;
@@ -20,10 +17,10 @@ void func_80073CB0(void) {
     if ((D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 == 3) && (temp_a0 == 5)) {
         var_v1 = 2;
     }
+    if (temp_a0) {}
     sp28 = var_v1;
     if (func_80066A84() == 1) {
-        temp_t3 = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
-        switch (temp_t3) {
+        switch (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01) {
         case 0:
             D_801230D0 = (s32) D_800B68C0[0 + var_v1];
             break;
@@ -50,8 +47,7 @@ void func_80073CB0(void) {
             break;
         }
     } else {
-        temp_t5 = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
-        switch (temp_t5) {
+        switch (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01) {
         case 0:
             D_801230D0 = (s32) D_800B68D0[0 + var_v1];
             break;
@@ -93,8 +89,8 @@ void func_80073CB0(void) {
                 D_801230D0 = (s32) D_800B6890[2][var_v1];
                 break;
             case 3:
-                var_t0 = D_800B6890[3][var_v1];
-                goto block_55;
+                D_801230D0 = D_800B6890[3][var_v1];
+                break;
             case 4:
                 D_801230D0 = (s32) D_800B6890[4][var_v1];
                 break;
@@ -121,9 +117,7 @@ void func_80073CB0(void) {
             temp_t9 = (u16) D_800E6280.unk_0F4.h >> 0xC;
             switch (temp_t9) {
             case 0:
-                var_t0 = (*D_800B68A8)[var_v1];
-block_55:
-                D_801230D0 = (s32) var_t0;
+                D_801230D0 = D_800B68A8[0][var_v1];
                 break;
             case 1:
                 D_801230D0 = (s32) D_800B68A8[1][var_v1];
@@ -153,8 +147,8 @@ block_55:
                 D_801230D0 = (s32) D_800B68A8[9][var_v1];
                 break;
             case 10:
-                var_t0 = D_800B68A8[0xA][var_v1];
-                goto block_55;
+                D_801230D0 = D_800B68A8[10][var_v1];
+                break;
             }
         }
     }

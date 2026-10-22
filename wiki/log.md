@@ -2524,3 +2524,11 @@ Created [[tickets/T-25049-main-event-table-recovery]] before reconstruction. Roo
 ## [2026-10-22] build | Event selector typed baseline recovered
 
 [[tickets/T-25049-main-event-table-recovery]] now has a Docker compiling322-word whole-TU candidate with148 aligned differences. Corrected C0/D0 byte table views and second fallback's wrong GameState field from assembly evidence. Saved source and replay under drafts/T-25049; no promotion or header changes. Diagnostic cost did not change for the field correction, underscoring need for semantic review and literal proof. Remaining differences begin with allocation and selector promotion.
+
+## [2026-10-22] build | Event selector zero-difference candidate
+
+[[tickets/T-25049-main-event-table-recovery]] now322/322words,cost0 after removing artificial shared-store branches, inlining selector tests and retaining byte liveness in a marked empty test. Source/header promotion is local pending full binary gate and independent coordinator review. Cleanup controls retain only the necessary saved selection local, annotated FAKE. Replays updated to replace the function after production promotion.
+
+## [2026-10-22] build | MAIN event selector accepted
+
+[[tickets/T-25049-main-event-table-recovery]] moves Done after independent coordinator standards/spec review and root literal1288byte proof. Full520-step Docker rebuild passes27/27 hashes, headers/globals and prototypes0new/15known. All saved controls reproduced after promotion. src/main/800737A0.c is fully matched. [[status]] now6843/6952functions,2118124/2276920bytes93.0%;109functions/158796bytes remain. Ten matches add13448bytes this effort; seven Astra lanes continue.

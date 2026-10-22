@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Latest verified integration (2026-10-22)
 
-Nine functions verified this resumed effort, adding12,160bytes. Latest: MAIN parameter_up_down adds1,228 literal default-C bytes. Root independently checked all27 binary checksums and declaration guards, with no standards/spec review findings. Current game code: **6842/6952 functions;2116836/2276920 bytes (93.0%)**,110 functions/160084 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25040 MAIN8006D138; T-25042 KANGEI80134724; T-25045 ETC80146D4C; T-25046 SHOUGATU8013EA98; T-25047 TACO801511C0. Parameter worker continues under reserved T-25048. Older counts below are historical.
+Ten functions verified this resumed effort, adding13,448bytes. Latest: MAIN func_80073CB0 adds1,288 literal default-C bytes and completes src/main/800737A0.c. Full520-step rebuild passes27 binary checksums and declaration guards; independent standards/spec review has no findings. Current game code: **6843/6952 functions;2118124/2276920 bytes (93.0%)**,109 functions/158796 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25040 MAIN8006D138; T-25042 KANGEI80134724; T-25045 ETC80146D4C; T-25046 SHOUGATU8013EA98; T-25047 TACO801511C0; T-25048 MAIN80076FDC. Older counts below are historical.
 
 ## NEXT STEP (read this first)
 
