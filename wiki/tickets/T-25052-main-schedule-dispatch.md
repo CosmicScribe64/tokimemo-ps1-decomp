@@ -51,3 +51,14 @@ uniform `OPTN 405 0` rule, with the dead assignment emitting no runtime work.
 That control measures 985 words / cost 975 and does not yet improve the target.
 `options.py` inspects the actual records; the earlier zcopy-off inference is
 corrected in both draft READMEs. Historical logs remain append-only.
+
+### Loop-bound and tail-CFG repair
+
+The three live-index loops now have a defined sequenced late-zero bound that
+removes the cached11 constant without adding runtime instructions:984words,
+cost854, verified first101 instructions retained. Unsigned tail dispatch plus
+an explicitFF/default label restores seven missing branch-tree instructions:
+991words,cost847. A late-zero selector additionally restores the target's
+selector-copy shape but not its colors (992words,cost852). These remain draft
+checkpoints; production is still assembly. Independent block locals enlarge
+the frame to88 and are not adopted. See the draft README and named replay.

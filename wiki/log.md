@@ -2298,3 +2298,13 @@ unsigned global does invoke the uniform zcopy-off rule; the latter adds no
 runtime operations but gives 985/998 words, cost975, so is only a diagnostic.
 See [[tickets/T-25040-main-flag-dispatch]] and
 [[tickets/T-25052-main-schedule-dispatch]].
+
+## [2026-10-22] build | T25052 live-index bounds and unsigned tail dispatch
+
+[[tickets/T-25052-main-schedule-dispatch]] retains defined sequenced late-zero
+bounds for only the three loops carrying a live index (984/998words,cost854).
+Unsigned tail switch with explicitFF/default restores seven target branch-tree
+words (991,cost847); selector identity recovers the missing copy shape but
+still has wrong colors (992,cost852). Independent lexical counts enlarge the
+frame and are rejected. Production remains assembly; evidence is in
+`drafts/T-25052/README.md` and named whole-TU replay controls.

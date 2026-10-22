@@ -62,3 +62,23 @@ Whole-GameState aliases, address-only volatile qualification, integer record
 arithmetic, direct and local-carried unreachable-call controls did not improve
 the verified prefix candidate. Zero-based pointer identities can add a spilled
 zero or change alias induction, so word count alone is not evidence of progress.
+
+## Loop bounds and tail switch
+
+`first-exact-do-live-late-bound` preserves the first101 instructions and removes
+all three promoted bound11 ranges in loops whose index remains live. The index
+increment is a separate full expression, followed by
+`while (i != 11 + ((u32)i < 0))`; the unsigned comparison is defined zero.
+This is984/998 words, cost854. Applying the identity to every loop is the older
+negative above; only the three index-carrying loops benefit. There is no extra
+runtime work, and the target immediate11 branch/delay-slot pointer increment
+returns in each loop.
+
+The tail needs an unsigned switch and an explicit `case 0xFF` joining default.
+`late-bounds-unsigned-switch-ff` restores seven missing branch-tree words:
+991/998, cost847. Adding the defined zero identity to the selector recovers the
+target's branch-delay selector copy, but colors remain wrong (992/998,cost852).
+Reloading the selector through `p` adds an unwanted load. Making `op` a byte
+adds unwanted narrowing to the first count. A word-unsigned `op` is identical
+to casting the switch selector. Separate block-local counts produce an88-byte
+frame instead of72 and are rejected (991words,cost869 with repaired bounds).
