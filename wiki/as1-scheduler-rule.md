@@ -22,7 +22,7 @@ The scripts are in `drafts/T-24900-as1/` (copy them to `build/as1tr/`; the trace
 
 as1 first schedules each block on its own. It then numbers the blocks, gives each a weight, and visits every block that still has a stall (an unfilled load delay or branch slot) in ascending (weight, number) order. For a visited block D:
 
-1. **Candidate blocks.** It walks the blocks that come after D in (weight, number) order and stops for good at the first block whose weight is at least D's weight + 6. A block is tried only if D dominates it (`XBBSCAN` lines with no detail are blocks that D does not dominate). So the blocks of equal weight (D's control-equivalent joins and tails) are tried first, then the next level (+3), and never the level after that.
+1. **Candidate blocks.** It walks the blocks that come after D in (weight, number) order and stops for good at the first block whose weight is at least D's weight + 6. A block is tried only if D dominates it (`XBBSCAN` lines with no detail are blocks that D does not dominate). So the blocks of equal weight (D's control-equivalent joins and tails) are tried first, then the next level (+3), and never the level after that. There is also a candidate-count cutoff: the outer region admits11 dominated blocks; a natural-loop region admits101. Failed instruction searches consume this budget too (T-25056 below).
 2. **Weights.** Weight = 1 + 3 per controlling branch for plain `if` and `switch` code: in a switch head of weight 1 the default and dispatch blocks are 4 and the cases 7; a function body after an early `return` starts at 4. A predecessor that also leaves the current region adds 1 instead of 3 (OMIMAI `func_80134384` has weights 2 and 5).
 3. **Block numbers are not layout order.** The out-of-range default of a jump-table switch is numbered right after the range check and before the dispatch, even when its code is laid out after all cases. With equal weights (4 and 4) the default is therefore tried before the dispatch.
 4. **Candidate instructions.** Inside a candidate block the instructions are tried in order. An instruction is a candidate only if its `volatile` mark is clear (the `sched` pair printed as `0/1`; a volatile access and its `lui` print `1/1`), it is movable (loads, stores, calls and branches are not), it does not conflict with an earlier instruction of the same block that stayed, and its relocation kind is 0 to 3 (`%hi` of a global is 2).
@@ -72,3 +72,21 @@ BUNKA_SD func_80139290 now reproduces the local year-load order and global const
 ### Promoted store emission changes the local tie (T-25041)
 
 KANGEI func_8013852C closes through an empty read of its just-stored global. `if (D_80139ADC) {}` makes uopt promote that value and emit `rstr` on the next line, separating its address preparation from the sum. Both old and new local traces show aftercycles4 and besttime15 for lui versus16 for addu at time16, yet the new trace chooses addu. Readiness alone therefore does not explain the old tie; line/emission context matters. Removing the redundant `(u16)(s16)` conversions from the u8 year compensates for the promoted result's conversion and preserves t6. The resulting default C passes literal180-byte proof. See [[tickets/T-25041-kangei-preload-schedule]] and drafts/T-25041/README.md. This supersedes the readiness-only interpretation in T-24901/T-25018 without changing the old experiment results.
+
+### Candidate-count cutoff in a large function (T-25056)
+
+ENDING func_8013A2E8's first flag block exhausts the outer-region search budget
+before reaching either flag arm. In reconstructed as1 `func_42aa0c`, labels
+`L42acdc`/`L42ad20`, the threshold is10 for the outer region and100 when
+`region+4` holds a natural-loop header. The old count is compared with `>` before
+increment, admitting11 or101 dominated candidate blocks. This counts blocks,
+not instructions, and failed motion attempts consume the count.
+
+The current guarded source's block10 examines eleven equal-weight joins and
+stops on block320. Raising only the general threshold to100 in a scratch
+diagnostic reaches flag block11 at count15 and first call arm58 at16; both
+delay slots then match and funcdiff proves4648 literal linked bytes equal.
+The diagnostic's default output equals stock. This explains the historical
+T-23002 deletion threshold, but is not a production match or an accepted
+compiler rule. Source-only controls and exact reproduction are tracked by
+[[tickets/T-25056-ending-scheduler]] and `drafts/T-25056/`.

@@ -2949,3 +2949,31 @@ Docker `tools/wiki.py lint` reports zero broken links, zero status mismatches an
 ## [2026-10-22] query | Preserve MAIN screen-offset qualification
 
 Preserved e3df7af22 and [[tickets/T-25058-main-screen-offset]] Ready status. Root source read confirms the guarded divisor uses a signed-byte view while the canonical timer advances through128; this is an unresolved semantic audit, not a matching promotion. No experiments or production edits added to the stopped lane. All three wrapped-up lanes now have their handoff checkpoints on main. Combined wiki lint0broken links/0status mismatches; existing large pages only.
+
+## [2026-10-22] ticket | T-25056 ENDING scheduler lane
+
+Created [[tickets/T-25056-ending-scheduler]] In Progress in isolated codex/t25056, preserving prior ENDING research branch. Ownership is src/ovl/ENDING/801396E0.c; first target func_8013A2E8. Read existing [[notes/matching-07]] evidence before qualification.
+
+## [2026-10-22] build | T-25056 baseline qualification
+
+[[tickets/T-25056-ending-scheduler]] reproduced full-TU baseline12 and prior pointer-lifetime10 using the existing Docker image. No production changes. Beginning print-only assembler trace to identify the failed motion gate.
+
+## [2026-10-22] query | ENDING global motion candidate budget
+
+[[tickets/T-25056-ending-scheduler]] traced A2E8's first flag block: equal-weight later join candidates consume the as110-attempt budget before either flag arm is examined. This gives a concrete cause for the prior whole-function deletion threshold. Source-only preload controls follow; production unchanged.
+
+## [2026-10-22] query | T-25056 preload controls and exact cutoff
+
+[[tickets/T-25056-ending-scheduler]] records six preload and three late-false loop controls, none improving the pointer baseline10. Corrected scanner identity and off-by-one: threshold10 admits11 candidate blocks, rejects the12th. Compiler slot yielded to another lane while preparing a scratch counterfactual; production remains unchanged.
+
+## [2026-10-22] query | ENDING budget counterfactual closes diagnostic
+
+[[tickets/T-25056-ending-scheduler]] proves the as1 candidate budget causes this residue: an unchanged-C scratch backend with threshold100 yields literal4648-byte equality; its default diagnostic equals stock. This is diagnostic evidence only, not a production match or authorized pipeline change. Exact source patch and replay recorded in drafts/T-25056; source-only work continues.
+
+## [2026-10-22] query | T-25056 backedge phase boundary
+
+[[tickets/T-25056-ending-scheduler]] records17 causal source controls. Early-folded backedges preserve the restrictive as1 budget; a late-zero carrier retains a natural-loop region with budget100 but also unwanted runtime branches. Added the candidate-count cutoff to [[as1-scheduler-rule]]. Direct standards/spec checkpoint review found no production changes; root's wording clarification resolved. Investigation continues.
+
+## [2026-10-22] ingest | Preserve ENDING scheduler counterfactual evidence
+
+Preserved91e1f4182 under [[tickets/T-25056-ending-scheduler]]. Review confirms all diagnostic assembler construction remains under ignored build/, guarded by an exact reconstruction source hash; no production toolchain/source/config changes. Captured candidate-budget evidence distinguishes region header and scan count from instruction count. Four archived scripts parse in Docker; wiki lint0broken/0status mismatches. No coverage claim and no independent root replay of the experimental backend in this ingest; worker literal counterfactual remains research only.
