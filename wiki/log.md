@@ -2115,3 +2115,7 @@ Wiki lint zero broken links/status mismatches with only existing data/t0018-case
 ## [2026-10-22] ingest | Preserve second scoped triage
 
 Root reviewed documentation-only T-25030 pin708f1c4f6 and preserved corrected starting-body pointers. Combined T-25028/T-25030 cover24 distinct remaining functions, not all119; no qualified new semantic repair. T-25029 callback trace remains live and is the current implementation lead; triage worker idle instead of repeating near-tail sweeps. Latest contributor check: no open PRs, issue65 unchanged. No coverage increase.
+
+## [2026-10-22] decision | Consult newly measured callback backend state
+
+Live T-25029 reproduces160-word strCallback with75 register-only positions. Existing logging-only diagnostic identifies eval_mov reused stack slot0x10000 and two-dummy path, candidate last writer f_loadstore; normal/logged whole-TU bytes agree. Bypassing existing copy-state shim is neutral, as are address-offset/alignment controls. Exact earlier strCallback consult covered sentinel, not this measured last-writer path. Authorized one read-only Astra consultation on required predecessor/control-flow ordering while preserving reloads/stores/ABI/160words; Sol idles and tests only up to3 new trace-backed hypotheses. No backend-slot patch, input-specific rule or broad source grid authorized. This is a new phase diagnosis, not a match.
