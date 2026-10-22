@@ -55,6 +55,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-24600-finish-matching|T-24600 Finish remaining game-code matching]]
 - [ ] [[tickets/T-24523-seasonal-source-hypotheses|T-24523 Match seasonal overlay tails using new source hypotheses]]
 - [ ] [[tickets/T-24518-etc-flow|T-24518 Reconstruct ETC initializer flow and live values]]
@@ -69,6 +70,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
+- [ ] [[tickets/T-25020-bunka-sd-trace-closure|T-25020 Map recovered BUNKA_SD scheduler trace before closure tests]]
 
 - [ ] [[tickets/T-25018-kangei-near-closure|T-25018 Close or pin KANGEI func_8013852C local schedule]]
 

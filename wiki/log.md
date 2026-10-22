@@ -1915,3 +1915,15 @@ Reproduced two full-unit NON_MATCHING C rows and the stock as1 DAG for KANGEI fu
 ## [2026-10-22] build | T-25018 retained fallback verification
 
 Default funcdiff verified 180 linked bytes equal the target (assembly fallback only). After the note-only source edit, the configured KANGEI.ok Ninja target passed SHA1. Header, GameState migration, and branch prototype guards passed; no new prototype disagreement. [[tickets/T-25018-kangei-near-closure]] remains In Review.
+
+## [2026-10-22] ticket | T-25020 BUNKA_SD trace mapping
+
+Created [[tickets/T-25020-bunka-sd-trace-closure]] In Progress to verify the recovered volatile trace before drawing conclusions from block 60. Reuse the isolated T-25018 worktree; own only src/ovl/BUNKA_SD/801388D0.c for new source work.
+
+## [2026-10-22] build | T-25020 improves BUNKA_SD guarded draft
+
+Mapped the recovered trace: 779 normalized DAG records and all 74 mover events equal a fresh full-unit trace. Block 60 supplies eight of 37 moved instructions from the later modulo switch, unrelated to the earlier year-load residue. Two directed empty-field-test experiments established a case-0x3B-only improvement from seven changed positions to four; retained in src/ovl/BUNKA_SD/801388D0.c under NON_MATCHING with FAKE/T-25020 notes. All-arm tests regress global-mover slots. See [[tickets/T-25020-bunka-sd-trace-closure]] and [[matching-notes]]. No promotion.
+
+## [2026-10-22] build | T-25020 verified four-row guard handed to review
+
+Updated full-unit NON_MATCHING C verifies four changed positions (eight +/- lines), only case-0x49/0x66 load/lui swaps. Default linked-byte MATCH verifies the assembly fallback only (1516 bytes); affected BUNKA_SD SHA1 and header/global/prototype guards pass. Lint has zero broken links/status mismatches and one pre-existing large page. [[tickets/T-25020-bunka-sd-trace-closure]] and board moved to In Review, with bb 41/43/45 and head bb 42/44 mapped for the next bounded consultation. No C match counted.

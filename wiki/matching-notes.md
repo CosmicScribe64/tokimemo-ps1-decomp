@@ -702,3 +702,9 @@ After changing the pass, touch `tools/cc.py` or do a clean build.
 ## T-25018: KANGEI func_8013852C bounded recheck
 
 Reproduced the full-unit NON_MATCHING C baseline from 7c87f223e: exactly two resolved rows (35/36, addu/lui swap). A fresh stock as1 trace reproduces T-24901: equal aftercycles 4 and source line, but lui besttime 15 beats addu 16 at time 16. The arithmetic chain is nodes 8/7/6/5; the address chain reaches node 4 from nodes 11/10. No untested dependency-changing C form was established outside the prior ~5,000 cast/temp/order variants, so no duplicate experiments were run. Guard pinned, no match or count change. See [[tickets/T-25018-kangei-near-closure]] and `drafts/T-24901/NOTES.md` for the exact revisit condition.
+
+## T-25020: BUNKA_SD func_80139290 four-row guard
+
+A field-expression empty test `if (g->unk_03E) {}` before case 0x3B's store reduces the full-unit C draft from seven changed positions (14 +/- lines) to four (eight +/- lines), with original registers and instruction count. It emits the speculative year load earlier without introducing T-24927's real-local allocator cascade; marked FAKE. The same test in cases 0x49/0x66 fixes their local order but lets the global mover take their early lui into compare-chain slots, so only case 0x3B is kept.
+
+Recovered `39290-vol.txt` and a fresh full-unit trace have identical normalized 779 DAG records and 74 mover events. Block 60 supplies eight of 37 moved instructions (constants/store address/flag masks from the later modulo switch), unrelated to the year-load residue. This corrects T-25016's nine-move claim and confirms the pre-existing T-24927 local-scheduler diagnosis. Remaining blocker and experiment record: [[tickets/T-25020-bunka-sd-trace-closure]]. No C promotion.
