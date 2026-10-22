@@ -2035,3 +2035,19 @@ Stopped after four reviewed actual remaining functions, current119. Matched chec
 ## [2026-10-22] lint | T-25031 actionable checkpoint
 
 Wiki lint zero broken links/status mismatches, one existing data/t0018-cases size warning. Diff check clean and production/header/tools/config unchanged. [[tickets/T-25031-small-overlay-candidate-triage]] remains In Review; root authorized separate T-25033 proving experiment after pin.
+
+## [2026-10-22] ticket | T-25033 canonical helper call control
+
+After separate T-25031 pin e211b9bb5, created [[tickets/T-25033-shougatu-canonical-call]] and In Progress card. Root authorized one current whole-TU no-argument check_para_limit control for corrected SHOUGATU E50C. Exclusive src/ovl/SHOUGATU/8013E330.c, no shared changes or grids; check prior exact variant first.
+
+## [2026-10-22] build | T-25033 canonical call and source-layout reconciliation
+
+No exact no-arg call among37 tracked prior narrow bodies. Canonical control improves archived152to99 aligned cost. Newer in-tree i/girl declarations omitted by the archived body restore exact40/30 table homes and frame58; corrected random field plus canonical call gives93cost,117/118words, first28 exact. [[tickets/T-25033-shougatu-canonical-call]] continues sustained matching in private full-TU candidates; production unchanged.
+
+## [2026-10-22] build | T-25033 matched-family caller transfer closes broad drift
+
+Retaining corrected in-tree local layout, the GYOZI relative's integer-return view for func_800847B8 reduces93to87 aligned cost; explicit u8 narrowing of func_80051A68 result reduces87to9,117words versus118target with exact frame58/table40/30. All remaining differences are entry zero-carrier/store/call and one reload-base register. Continuing the concrete byte-argument transfer in [[tickets/T-25033-shougatu-canonical-call]], no source grid/shared header changes.
+
+## [2026-10-22] build | T-25033 five-line guard and faithful trace pinned for Astra
+
+Updated only owned SHOUGATU E50C source: correct random field, canonical final helper, known relative's marked return/narrowing/byte-view controls. Actual guarded C5cost,117/118words, exact frame/homes; one three-arg status control rejected10cost. Default SHOUGATU checksum and declaration guards pass; no C match counted. Stock/trace four-section fidelity passes. [[tickets/T-25033-shougatu-canonical-call]] remains In Progress for explicitly authorized sole hands-on Astra implementation; coordinator idles after pin. Compact ledger at drafts/T-25033/README.md.

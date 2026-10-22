@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25033-shougatu-canonical-call|T-25033 Test canonical check_para_limit call in src/ovl/SHOUGATU/8013E330.c]]
+
 
 
 
