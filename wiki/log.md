@@ -2752,3 +2752,43 @@ address/loop-bound promotion after the first helper calls. See
 ## [2026-10-22] build | MAIN dispatcher research checkpoint replayed
 
 Integrated research pin656e2aa7e for [[tickets/T-25052-main-schedule-dispatch]]. Independent Docker replay confirms field-first-count-op984/998words,860aligned cost. Source-only archive preserves causal controls and first101instruction evidence; production unchanged. Wiki lint0broken links/0status mismatches, only existing large-page warnings.
+
+## [2026-10-22] ticket | T-25050 ring input ownership
+
+Created [[tickets/T-25050-main-ring-input]] In Progress for func_80075C84 in src/main/80075320.c after the accepted T-25048 match. Historical T-24303/T-24501 aliases and T-25016 diagnostics reviewed; canonical declarations and compiler pipeline remain fixed. Work stays in the isolated /private/tmp/tokimemo-t25044 tree.
+
+## [2026-10-22] build | T-25050 baseline and reload control
+
+[[tickets/T-25050-main-ring-input]] reproduces the canonical two-symbol baseline at338 diagnostic lines. A narrowly volatile position read after each key store restores the read but adds explicit address formation (202 diagnostic lines); it is a negative control, not a promoted candidate. Next separate the store-address alias question from selector allocation using existing globals.
+
+## [2026-10-22] build | T-25050 switch reload mechanism isolated
+
+[[tickets/T-25050-main-ring-input]] complete key-store integer address retains the key base and restores position rereads. The raw input-word empty use fixes selector allocation, reducing338 to31 diagnostic lines. Remaining evidence isolates outer-loop position-load hoisting and increment scheduling. No production/header/compiler edits.
+
+## [2026-10-22] decision | T-25050 direct loop-load dependency
+
+[[tickets/T-25050-main-ring-input]] records the alias, volatile, natural traversal and initialization negatives. Best31 remains canonical direct position load hoisted outside the loop. Parent suggests an unsigned-impossible comparison as a zero address offset dependent on the outer index, to test whether late folding retains the target reload. No header/global override is needed for this control.
+
+## [2026-10-22] build | T-25050 direct reload restored
+
+[[tickets/T-25050-main-ring-input]] zero-offset address forms prevent hoisting but retain an unwanted address register. A late-folded unsigned-impossible control after the direct scalar read restores instruction count and direct symbol access (28 diagnostic lines). Instrumented and ordinary compilers agree; remaining register/spill priorities and cursor increment placement are documented. No literal-match claim or production change.
+
+## [2026-10-22] build | T-25050 four-row candidate
+
+[[tickets/T-25050-main-ring-input]] reaches8 diagnostic lines (four rows) by placing the unsigned-impossible position store at the outer-loop tail. The store and branch disappear; global alias facts keep the direct loop reload, while all inner-loop register priorities now match. Remaining differences are swapped cursor increments and the a1 call-spill home2C versus28. This would require an explicit FAKE comment if retained.
+
+## [2026-10-22] build | T-25050 literal ring input match
+
+[[tickets/T-25050-main-ring-input]] proves796 literal linked bytes. Captured unchanged compiler ucode identifies the last spill offset as a missing word of local extent; naming the real random result fixes it without padding. C promoted with explicit FAKE explanations and exact field/table address audit. Parent review requested and default MAIN/declaration gates started.
+
+## [2026-10-22] ticket | T-25050 checked source ready for integration
+
+[[tickets/T-25050-main-ring-input]] moves to In Review after default-C literal796 proof, MAIN checksum and declaration guards pass. Parent standards/spec review has no findings. Necessity controls remove the redundant integer key-address trick; final source uses canonical array indexing and two marked FAKE mechanisms. Source-only baseline/replay and all meaningful negative findings are preserved under drafts/T-25050; root owns full27 integration.
+
+## [2026-10-22] lint | T-25050 evidence checks
+
+[[tickets/T-25050-main-ring-input]] source-only pin2ebd6fd3a is ready for root integration. Final simplified diff independently reviewed with no findings. Wiki lint reports0 broken links and0 status mismatches; two existing large-page warnings remain. Evidence prose findings were reviewed, with technical key terminology retained and historical counts formatted as a table.
+
+## [2026-10-22] build | MAIN ring input accepted on main
+
+[[tickets/T-25050-main-ring-input]] Done after independent default-C796-byte MATCH, fresh27/27 binary checksums, headers/globals and0new/15known prototypes. Final source standards/spec review has no findings. Source integrated345fea3b; evidence09b341db2 preserved. Entire80075320.c is C. [[status]] now6848/6952functions,2121864/2276920bytes;104functions/155056bytes remain. Fifteen matches add17188bytes this resumed effort. ETC match still pending its own integration.
