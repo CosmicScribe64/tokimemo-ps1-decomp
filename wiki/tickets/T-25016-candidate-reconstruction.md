@@ -44,3 +44,34 @@ to actual matches is:
   convention before any src change is proposed.
 
 ## Comments
+
+### Census v2 ranked list (2026-10-21, canonical rows)
+
+Extractor v2 censused 24 of 96 functions (71 fragment candidates
+failed to compile when wrapped; 1 had no candidate). Ranked by
+register-canonicalized rows:
+
+- func_801511C0 canon=4 raw=4 instruction (drafts/T-14500/TACO/func_801511C0/context.c)
+- func_80133024 canon=8 raw=22 addressing (drafts/T-17700/GEKO/func_80133024/hand.c)
+- func_8013B460 canon=8 raw=33 register-only (drafts/T-19030/TACO/func_8013B460/body.c)
+- func_8013907C canon=9 raw=163 instruction (drafts/T-24019/GYOZI/func_8013907C/body.c)
+- func_80140E0C canon=12 raw=14 addressing (drafts/T-24907/v6.c)
+- func_80136C20 canon=15 raw=15 addressing (drafts/T-17700/GEKO/func_80136C20/context.c)
+- func_8013852C canon=16 raw=17 addressing (drafts/T-24054/body.c)
+- func_8013AF78 canon=17 raw=105 instruction (drafts/T-22023/NAME_ENT/func_8013AF78/body.c)
+- func_80132B24 canon=18 raw=41 register-only (drafts/T-24503/GEKO/func_80132B24/body.c)
+- func_80133C50 canon=20 raw=38 addressing (drafts/T-24503/GEKO/func_80133C50/body.c)
+- func_80139290 canon=20 raw=51 register-only (drafts/T-24516/bunka-39290.c)
+- func_80134724 canon=24 raw=113 register-only (drafts/T-22016/KANGEI/func_80134724.c)
+- func_80047560 canon=30 raw=58 instruction (drafts/T-23006/main/func_80047560/body.c)
+- func_80134D94 canon=32 raw=90 instruction (drafts/T-24516/bunka-34d94.c)
+- func_8013E50C canon=33 raw=89 instruction (drafts/T-24523/SHOUGATU/func_8013E50C/body.c)
+- func_80146D4C canon=41 raw=75 instruction (drafts/T-24303/ETC/func_80146D4C/body.c)
+- func_80138C1C canon=41 raw=83 instruction (drafts/T-24515/func_80138C1C.c)
+- func_801398EC canon=42 raw=110 instruction (drafts/T-24515/func_801398EC.c)
+- func_8005B43C canon=55 raw=75 addressing (drafts/T-24301/main/func_8005B43C.c)
+- func_8006C988 canon=57 raw=84 instruction (drafts/T-17000/main/func_8006C988/context.c)
+- func_80075C84 canon=59 raw=111 instruction (drafts/T-24303/main/func_80075C84/body.c)
+- func_8014AB50 canon=104 raw=236 instruction (drafts/T-16560/_runs/typed/TACO/func_8014AB50/body.c)
+- func_800455C4 canon=140 raw=261 instruction (drafts/T-24041/func_800455C4.c)
+- func_80135F4C canon=343 raw=343 addressing (drafts/T-24047/body.c)

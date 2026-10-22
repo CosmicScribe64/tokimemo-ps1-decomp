@@ -1857,3 +1857,13 @@ scoring, then per-function reconstruction against the mirrored
 references. Ticket [[tickets/T-25016-candidate-reconstruction]],
 branch octa/t25016-reconstruction. The T-25013/14/15 stack is
 proposed to main as PR #66.
+
+## [2026-10-21] build | T-25016 census v2 recorded: 24 functions ranked, top is func_801511C0 at 4
+
+Extractor v2 plus canonical scoring censused 24 of the 96 remaining
+functions (the other 71 fragment wrappings do not compile as wrapped,
+recorded honestly in the ticket). Ranked list is in the ticket; the
+nearest are func_801511C0 (canon 4), func_80133024 (8),
+func_8013B460 (8), func_8013907C (9), func_80140E0C (12). Baselines
+are in the sweep ledger; the 10-minute loop now works the list
+top-down. Ticket [[tickets/T-25016-candidate-reconstruction]].
