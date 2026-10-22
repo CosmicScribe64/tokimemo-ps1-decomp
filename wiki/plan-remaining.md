@@ -22,6 +22,45 @@ Baseline at 7c87f223e, independently measured in Docker: 6833/6952 functions; 21
 
 Success is zero unmatched game functions and full-scope byte proof, with drafts/research preserved. Measure verified bytes and functions per worker-hour; diagnostic score changes are evidence, not completion. Review lane allocation after the first two investigations. No credible same-day completion estimate follows from the research.
 
+## Multi-chat attack plan (2026-10-22, supersedes lane limits above)
+
+Requested after the recovered-artifact and causal pilots. Main remains 811c35028, 119 functions / 172244 bytes remaining; no pilot is a C match. Fresh origin check found no newer commits or open PRs. Issue #65 still claims GEKO/OPTION, with contributor return planned Friday; reserve those files and recheck about every 30 minutes.
+
+### What the experiments establish
+
+- T-25018: KANGEI 8013852C reproduces the known local scheduling tie. Thousands of prior variants do not justify another blind search.
+- T-25019: TACO 80138B2C is 30 differing instruction positions in the current whole unit. The recovered canonical score of 11 is misleading; its older body performs worse. Rank with whole-unit resolved evidence.
+- T-25020, pin de816368f: BUNKA_SD 80139290 improves from seven to four changed instruction positions, with identical instruction count and register identities. A field empty-test fixes one arm. In the other two arms it also changes global delay-slot selection. The recovered bb60 trace has eight moved instructions and is unrelated to this residue; the earlier nine-instruction premise was wrong.
+- T-25021, pin 4cf12bdd1: MAIN 8005215C reconstruction reduces printed diff lines from 325 to 138, reproduces the 64-byte frame and three spill homes. Target315 / candidate313 instructions. A cached mode across k_disp_inc still differs from the target's global reload. This is a concrete source problem to fix before allocator experimentation. Printed lines, changed positions and aligned cost are different metrics.
+
+These results support separate reconstruction and scheduler lanes. They do not establish a missing compiler rule, predict a match rate, or justify launching a worker for every remaining function.
+
+### Chat ownership and first assignments
+
+Use three worker chats, each initially with one Sol 6.1 medium worker. Root owns integration, the claim table and contributor checks. Chat coordinators should delegate bounded investigations, not run duplicate matching attempts themselves. Maximum three active Sol workers initially; permit a fourth only for an independent donor/type investigation with a precise question. Keep at most two compiler-heavy experiments running concurrently until measured throughput justifies more. Astra temporarily replaces a stuck worker rather than adding another open-ended lane.
+
+| Chat | Exclusive initial source ownership | First task and proof of progress | Next queue |
+| --- | --- | --- | --- |
+| MAIN reconstruction | src/main/8004F870.c | Continue T-25021 body at 4cf12bdd1; reproduce baseline, restore the target's mode reload after k_disp_inc, then inspect the earliest structural divergence. Preserve exact frame and home evidence. | Remaining five functions in the same file, 7448 bytes, only after identifying an actual shared type/call/read-boundary repair. |
+| Scheduler closure | src/ovl/BUNKA_SD/801388D0.c | Continue four-row draft de816368f. Solve the bb43/45 load order while retaining bb42/44 li fillers. Prepare one bounded Astra consultation if Sol cannot propose a new causal source lever. | GYOZI 80140E0C zero-fold and TACO 8014AB50 constant allocation after fresh ownership and ledger checks. KANGEI ties stay parked without a new mechanism. |
+| Large-function reconstruction | src/ovl/TEL/80132000.c | Largest remaining single function: 80136724, 6580 bytes. First map recovered undefined D_800E738D against current fields and target access width; inspect all remaining semantic holes, identify matched donors and obtain a whole-unit baseline. Do not start a generic register sweep. | MAIN src/main/8006CB30.c: 8006D7EC (4692 bytes), 8007132C (3992), 8006D138 (872), only after explicit ownership transfer. |
+
+The three initial source files contain eight remaining functions / 16804 bytes, but these are ownership envelopes, not promised immediate gains. BUNKA and MAIN have measured next steps. TEL is a bounded qualification task; undefined-symbol evidence alone is not proof that the body is near matching. If its first investigation cannot establish a faithful, measurable body, checkpoint it and qualify a smaller candidate with a specific donor. Do not spend an entire lane indefinitely on size alone.
+
+### Coordination and escalation
+
+1. Before dispatch, each worker gets a ticket, exact base/pin, exclusive C-file claim, known-best body, target, one metric definition, previous negative results and first falsifiable hypothesis. Keep raw extracted archive/traces private. Copy only source and concise findings into tracked drafts/wiki. Check existing chats before creating replacements.
+2. A chat may use a second subagent for read-only donor analysis or a distinct compiler-pass question. Only its owning worker edits the C file. Shared headers/build rules require root ownership and coordinated validation. Avoid recursive orchestration and repeated status polling.
+3. First checkpoint after approximately 45 minutes. Reassess after 20 minutes with no new evidence; stop repeating a failed hypothesis, not an investigation that is still producing causal progress. Report a match, a measured improvement with the next exact divergence, or a blocker packet. Preserve the best source every time.
+4. Astra receives only a small reproducible packet: target differences, source, pre/post-pass evidence, current compiler context and rejected hypotheses. Request at most three new causal tests. Idle the requesting Sol worker during the consultation, then let Sol execute the useful tests. No speculative whole-project compiler rewrite.
+5. Root maintains one live file-claim table; successful type/source patterns are tested on one sibling before wider transfer. Score lane output by verified functions/bytes and useful causal results per worker-hour. After the first wave, expand only the productive class; replace unproductive assignments instead of increasing agent count.
+
+### Integration and completion
+
+Review and preserve de816368f and 4cf12bdd1 before dependent chats start; these are research/draft checkpoints, not promotions. Merge each verified C match independently, with literal linked default-C proof that excludes assembly fallback. Run all 27 executable checksums and header/global/prototype guards on the combined integration state, serializing integration and batching compatible build checks. Keep the paused integration automation paused; root explicitly integrates current results. Update the census after each accepted batch.
+
+Completion means 6952/6952 game functions and 2276920/2276920 game bytes, no remaining game INCLUDE_ASM, all required checks passing, and pushed main/wiki ready for handoff. SDK code remains outside that stated scope. No experiment supports a reliable same-day completion promise.
+
 ## Historical recommendation (2026-10-21, superseded)
 
 Classes A and B were swept to exhaustion (T-24142, T-25011) and the class C/D reconstructions stall 70-100 rows away (T-25012). The remaining functions are blocked by compiler behaviour the build does not yet model. The next piece of work is [[tickets/T-25013-compiler-level-levers]]: pick one lever (redundant promoted-global store, 8-byte locals shift, no CSE of relational booleans, as1 block-weight/delay-slot pick, uopt colouring order), implement it as one uniform rule in `tools/cvt_pass.py` / `tools/ugen_pass.py` with evidence and a unit test, prove no matched object changes, then promote the functions it unblocks. Use the strongest model; the per-function loop below is only worth running again after a new lever lands.

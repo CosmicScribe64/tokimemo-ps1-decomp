@@ -11,7 +11,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 
 - [[overview]] - project goal, stack, pointers to fact pages
 - [[status]] - progress, what is left by unit, active work
-- [[plan-remaining]] - plan and recipes for the last 127 functions, by class; list in [[data/remaining-2026-10-20]]
+- [[plan-remaining]] - current completion plan: 119 remaining functions on 2026-10-22; older census in [[data/remaining-2026-10-20]]
 - [[playbook]] - the matching loop and the recipes that closed matches; read before matching
 - [[notes/functions]] - every function named in the matching notes, with links to its sections
 - Repo root: `AGENTS.md` (rules), `CODING_STANDARDS.md` (conventions, review checklist), `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`

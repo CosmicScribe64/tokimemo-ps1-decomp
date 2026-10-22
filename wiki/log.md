@@ -1935,3 +1935,7 @@ Created [[tickets/T-25019-recovered-taco-38b2c]] in isolated worktree /private/t
 ## [2026-10-22] query | Recovered queue provenance and TACO baseline
 
 [[tickets/T-25019-recovered-taco-38b2c]]: 410 recovered files; 151 C body artifacts, 122 m2c bodies. TACO func_80138B2C current guarded whole-TU Docker baseline is 30 positional rows/60 printed diff lines; mechanically adapted older archive gives 103 unequal-span printed diff lines, REAL DIFFERENCE. Restored source and registered existing colour tail without speculative variants. [[matching-notes]] records result and concrete next reconstruction target main func_8005215C. Ticket and board moved to In Review for independent standards review.
+
+## [2026-10-22] decision | Evidence-based multi-chat completion plan
+
+Updated [[plan-remaining]] under [[tickets/T-25017-completion-plan]] after fresh per-file Docker census and completed worker pilots. Remaining119 functions/172244 bytes; origin/main remains811c35028, no open PRs, issue65 still reserves GEKO/OPTION. BUNKA pilot de816368f reduces7 to4 instruction positions; MAIN pilot4cf12bdd1 reproduces frame/homes and exposes a concrete global reload defect. Neither is a match. Plan assigns three file-disjoint Sol6.1medium lanes (MAIN, BUNKA scheduler, TEL qualification), bounded Astra escalation and serialized verification; no new chats launched during preflight. Corrected index's stale127 count. Raw archive stays private.

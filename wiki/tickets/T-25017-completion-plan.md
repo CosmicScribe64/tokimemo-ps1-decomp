@@ -10,7 +10,7 @@ links: [[[plan-remaining]], [[status]], [[tickets/T-25016-candidate-reconstructi
 
 ## Goal
 
-Finish the remaining game-code matches using the new research without repeating exhausted sweeps. Planning is complete; one Sol medium lane is reproducing the KANGEI near match while the orchestrator recovers remote artifacts.
+Finish the remaining game-code matches using the new research without repeating exhausted sweeps. The 2026-10-22 multi-chat plan in [[plan-remaining]] records the recovered-artifact audit, two causal pilots and three proposed file-disjoint worker lanes. Pilot checkpoints are awaiting integration; no new chats dispatched by this planning pass.
 
 ## Acceptance criteria
 
