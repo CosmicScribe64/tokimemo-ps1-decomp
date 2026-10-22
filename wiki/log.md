@@ -2051,3 +2051,19 @@ Both archived complete-TU source replays reproduced their hashes/metrics and che
 ## [2026-10-22] query | Review T-25024 TEL qualification handoff
 
 [[tickets/T-25024-tel-qualification]] checkpoint e43de7fb9 reviewed against883760224: narrow source/replay/results/wiki only, no production/header/build-tool/raw-data changes. Both whole-TU bodies remain far from matching; changed-position metric and semantic/ABI limits explicit. Earliest pointer opcode divergence is table-load NOP versus moved total initialization at word326. No new archive findings or compiler rerun; In Review for root acceptance, no C coverage credit. Single worker is idle pending ownership decision.
+
+## [2026-10-22] ticket | T-25026 high-byte MAIN near-candidate decision
+
+Released GYOZI at pin 5c2954688 and created [[tickets/T-25026-main-d7ec-near-candidate]] In Progress with board card. Exclusive src/main/8006CB30.c, only func_8006D7EC initially; current in-tree body and historical ledger first, no source grids or automatic Astra.
+
+## [2026-10-22] query | T-25026 confirms high-byte one-position uopt fold
+
+Current MAIN func_8006D7EC guard remains one differing position,1173/1173 instructions: row94 addiu versus li, two printed lines/aligned cost2. Fresh uopt input/output and stock as1 initial nodes locate the fold before ugen/as1 scheduling; traced/stock four-section fidelity passes. Historical direct-counter/backedge grids and rejected nonuniform zcopy rule provide no novel repair. Preserved precise near-candidate/revisit decision in drafts/T-25026/README.md and [[matching-notes]]. No new variants/source changes or coverage. [[tickets/T-25026-main-d7ec-near-candidate]] moves to In Review.
+
+## [2026-10-22] decision | T-25026 reuses exact prior Astra consultation
+
+Checked root's conditional consultation request: T-24001 Astra already addresses identical idx-zero/addiu-versus-li blocker and full-TU row94. Source diff from d57c78028 contains only explanatory guard-comment changes. Fresh phase/metric evidence preserves that consult's premise, so reused its bounded negative rather than duplicate it. No new consultant or variants. [[tickets/T-25026-main-d7ec-near-candidate]] remains In Review. Wiki lint zero broken links/status mismatches, one existing large-page warning; diff check passes and source/header/tools/config unchanged.
+
+## [2026-10-22] decision | Preserve large near blocker and select new reconstruction evidence
+
+Reviewed T-25026 research-only pin1cce82f2e:4692-byte function has exactly one changed position; prior identical Astra consultation reused, no duplicated tests. Current body unchanged. Sol lane releases8006CB30 and takes T-25028 bounded read-only triage of at most12 unclaimed remaining candidates for still-unrepaired semantic/control/ABI defects with donors, excluding active8004F870 and contributor GEKO/OPTION. MAIN worker continues T-25027 sndi; TEL worker idle. Keep two Sol workers and no active Astra until a specific new question warrants it.
