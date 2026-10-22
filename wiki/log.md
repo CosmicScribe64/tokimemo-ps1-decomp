@@ -2729,3 +2729,26 @@ Coordinator confirmed `/root/astra_tel_25055`, `/root/astra_ending_25056`, `/roo
 ## [2026-10-22] query | BUNKA reset ordering and index-conversion controls
 
 [[tickets/T-25053-bunka-last-function]] archived signed-selector candidate now102 aligned cost after matching b-before-q zero reset order. Separate signed index and signed quotient do not restore target copy; narrow indices worsen132/166/177. No production change; full match remains unproven. MAIN T-25050 worker reports796-byte literal match, pending final pin and root integration gates.
+
+## [2026-10-22] ticket | T-25052 remaining MAIN schedule dispatcher
+
+Root accepted and pushed T-25040 at4933de332 after full27 hashes and guards passed. Created [[tickets/T-25052-main-schedule-dispatch]] In Progress for the exclusively assigned `func_8007132C`, preserving both accepted same-file matches. Read the newest T-24024 snapshot before new source experiments; production remains assembly.
+
+## [2026-10-22] build | T-25052 dispatcher baseline reproduced
+
+Whole-TU replay reproduces T-24024 exactly: 998 target words, 975 baseline (aligned cost 1013), 984 byte-view calendar candidate (892). A targeted volatile-calendar control is worse at 961 words / 967 and is retained as a negative. The first remaining structural issue is the schedule pointer's origin: target keeps the GameState origin plus index and accesses +0x69C, while the old draft points directly into the record array. Investigate that representation before register tuning; production remains assembly. See [[tickets/T-25052-main-schedule-dispatch]].
+
+## [2026-10-22] build | T-25052 first dispatcher decisions recovered
+
+Calendar byte views and independent first-count lifetime (`op`, with later count
+in `t`) recover frame72/spill0x30 and the first101 instructions except exit-branch
+distances. The984/998-word draft remains unpromoted. Explicit GameState pointer
+rewrites, volatile calendars, empty-switch/test controls, loop-bound identities,
+and index-view induction negatives are retained in drafts/T-25052. The direct
+record type already produces the correct displaced access. Remaining work is
+address/loop-bound promotion after the first helper calls. See
+[[tickets/T-25052-main-schedule-dispatch]].
+
+## [2026-10-22] build | MAIN dispatcher research checkpoint replayed
+
+Integrated research pin656e2aa7e for [[tickets/T-25052-main-schedule-dispatch]]. Independent Docker replay confirms field-first-count-op984/998words,860aligned cost. Source-only archive preserves causal controls and first101instruction evidence; production unchanged. Wiki lint0broken links/0status mismatches, only existing large-page warnings.
