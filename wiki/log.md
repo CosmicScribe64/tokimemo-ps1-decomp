@@ -2516,3 +2516,11 @@ Whole-TU replay recovers a 219/218-word shape; bit-field snapshot restores targe
 ## [2026-10-22] build | Root verifies MAIN dispatcher checkpoint
 
 Independently replayed [[tickets/T-25040-main-flag-dispatch]] candidate on current main:218/218 words, only rows72–74 differ. Saved checkpoint1da87a36b plus causal evidence; no coverage increase. All target register allocation outside the byte-load address sequence now agrees. Worker continues while root preserves the result.
+
+## [2026-10-22] ticket | Root takes remaining MAIN event selector
+
+Created [[tickets/T-25049-main-event-table-recovery]] before reconstruction. Root owns func_80073CB0 in src/main/800737A0.c after parameter match integration; T-25048 owns separate80075320.c. Recover existing draft and table evidence while seven Astra workers continue. Contributor check: no open PRs; issue65 unchanged.
+
+## [2026-10-22] build | Event selector typed baseline recovered
+
+[[tickets/T-25049-main-event-table-recovery]] now has a Docker compiling322-word whole-TU candidate with148 aligned differences. Corrected C0/D0 byte table views and second fallback's wrong GameState field from assembly evidence. Saved source and replay under drafts/T-25049; no promotion or header changes. Diagnostic cost did not change for the field correction, underscoring need for semantic review and literal proof. Remaining differences begin with allocation and selector promotion.

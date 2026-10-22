@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25049-main-event-table-recovery|T-25049 Recover MAIN event selection table draft]]
+
 - [ ] [[tickets/T-25040-main-flag-dispatch|T-25040 Match MAIN flag dispatcher]]
 
 
