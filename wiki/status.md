@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Latest verified integration (2026-10-22)
 
-Fifteen functions verified this resumed effort, adding17,188bytes. Latest: MAIN func_80075C84 adds796 literal default-C bytes and completes80075320.c. Root fresh27 binary checksums, declaration guards and standards/spec review pass. Current game code: **6848/6952 functions;2121864/2276920 bytes (93.2%)**,104 functions/155056 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25042 KANGEI80134724; T-25046 SHOUGATU8013EA98; T-25051 TACO8013B460; T-25052 MAIN8007132C; T-25054 ETC8014790C (reported match, pending integration); T-25055 TEL80136724; T-25056 ENDING8013A2E8; T-25057 NAME_ENT801398EC. T-25058 reserved for the MAIN worker next assignment. Root owns T-25053 final BUNKA_SD function. Older counts below are historical.
+Sixteen functions verified this resumed effort, adding18,316bytes. Latest: ETC func_8014790C adds1128 literal default-C bytes. Root fresh27 binary checksums, declaration guards and standards/spec review pass. Current game code: **6849/6952 functions;2122992/2276920 bytes (93.2%)**,103 functions/153928 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25042 KANGEI80134724; T-25046 SHOUGATU8013EA98; T-25051 TACO8013B460; T-25052 MAIN8007132C; T-25059 ETC801480D0; T-25055 TEL80136724 (reported match, pending integration); T-25056 ENDING8013A2E8; T-25057 NAME_ENT801398EC. T-25058 reserved for the MAIN worker next assignment. Root owns T-25053 final BUNKA_SD function. Older counts below are historical.
 
 ## NEXT STEP (read this first)
 
