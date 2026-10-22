@@ -2597,3 +2597,11 @@ Integrated research checkpoint872d89968 for [[tickets/T-25042-kangei-dispatch-em
 ## [2026-10-22] build | MAIN dispatcher reduced to two words
 
 Root independent Docker replay confirms [[tickets/T-25040-main-flag-dispatch]] snapshot candidate218/218words with only two differing words at116–117. Preserved source/replay; production unchanged and no coverage increase. Worker continues final b8 base-address residue. TACO continuation owns8013B460 in8013B170.c; quadrant worker reports182differences, not yet independently replayed.
+
+## [2026-10-22] ticket | Root claims final BUNKA_SD function
+
+Created [[tickets/T-25053-bunka-last-function]] before replay, owning80134540.c. T-24516 repairs establish semantic baseline; old guard remains unchanged. MAIN dispatcher worker reports zero differences and is proving literal/default output; T-25052 reserved for its next same-file function after acceptance.
+
+## [2026-10-22] build | Final BUNKA_SD baseline reproduced
+
+[[tickets/T-25053-bunka-last-function]] independently reproduces repaired T-24516 baseline243/243diagnosticwords,144aligned/368printed differences. No production edit or coverage claimed; investigate counter/switch allocation next. The diagnostic span is not a literal function-size proof.
