@@ -2247,3 +2247,19 @@ Whole-TU Docker donor transfer retains the counter addition through uopt and uge
 ## [2026-10-22] build | T-25036 closes MAIN 4692-byte counter dependency
 
 Promoted `src/main/8006CB30.c` function `func_8006D7EC` using the T-25033 late-zero producer and a late-eliminated identity arm. Whole-TU guarded and default C each pass literal 4,692-byte linked proof and complete MAIN SHA1; header/global/prototype checks pass. Both source controls are FAKE-annotated and add no emitted operations. Root standards/spec review has no findings. [[tickets/T-25036-main-counter-late-fold]] moves to In Review for full integration verification; `drafts/T-25036/` preserves reproduction and phase evidence.
+
+## [2026-10-22] ticket | T-25040 MAIN flag dispatcher
+
+Continued authorized Astra work with [[tickets/T-25040-main-flag-dispatch]], choosing `func_8006D138` from the two assigned same-file targets. Latest ledger is 219 candidate / 218 target instructions with a known flag snapshot/base lifetime issue; the alternate dispatcher remains outside scope. T-25036's committed match is preserved.
+
+## [2026-10-22] build | T-25040 reproduces flag-dispatch structure
+
+Whole-TU replay recovers a 219/218-word shape; bit-field snapshot restores target temporary numbering. A new late-zero pointer identity preserves relative flag loads but splits pointer ranges and adds instructions. [[tickets/T-25040-main-flag-dispatch]] records the distinction; production stays assembly while allocator evidence guides the next change.
+## [2026-10-22] build | T-25040 exact dispatcher shape and allocator cause
+
+[[tickets/T-25040-main-flag-dispatch]] recovered 218/218 words in the isolated whole-TU harness. The empty unsigned entry switch activates the existing copy boundary; allocator tracing identifies constrained year/base ranges preceding the unconstrained flags snapshot. Late-zero store indices fix the register cycle but introduce alias reloads; absolute spellings and volatile-store controls do not close it. Production source remains assembly. Replays are in `drafts/T-25040/probe.py`.
+
+
+## [2026-10-22] build | T-25040 three-instruction checkpoint
+
+[[tickets/T-25040-main-flag-dispatch]] isolates the register cycle to a single unprofitable constant range at the leaf constraint threshold. A defined late-zero identity in the empty year98 check restores all target registers; the default whole-TU candidate matches215 of218 words, with only the first b7 load address and adjacent scheduling residue remaining. `drafts/T-25040/` preserves the source and causal controls; no production promotion or coverage claim.

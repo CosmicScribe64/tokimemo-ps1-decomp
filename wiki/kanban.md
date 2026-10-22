@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25040-main-flag-dispatch|T-25040 Match MAIN flag dispatcher]]
+
 
 - [ ] [[tickets/T-25034-main-quadrant-extent|T-25034 MAIN src/main/80046500.c full-width tile extent recovery]]
 
