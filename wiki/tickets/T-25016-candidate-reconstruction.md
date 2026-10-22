@@ -206,3 +206,33 @@ Endgame for any local zero: stage under drafts/T-25016/, run
 the full local gate (clean build, check_headers,
 migrate_globals --check, sync_protos --check-branch), then one
 batched PR so CI gives the formal verdicts together.
+
+### Gate-lever experiments (2026-10-22, Octa)
+
+Three directed experiments from the [[as1-scheduler-rule]] gates,
+scored with funcdiff resolved_verdict diff lines (controls:
+func_80136C20 4, func_8013852C 4, func_80139290 14 under this
+count; the hand-phase row counts differ by counter, comparisons
+here are internal):
+
+- func_80136C20 early-exit flattening (invert the D_80145088
+  guard so the switch sits one level shallower): 148. Dead.
+  The restructure changes the whole layout, not only the head
+  weight.
+- func_8013852C volatile on the tail store globals
+  (D_80139ADC, D_8013A2AC, both; declaration edited in
+  include/ovl/KANGEI.h, since a volatile redeclaration is a
+  qualifier error): 4, 4, 4. No change. The swapped pair is
+  ordered inside one block, not by the global filler, so the
+  volatile mark has nothing to block.
+- func_80139290 volatile on the GameState unk_03E field:
+  125. Far worse. The field is read in the selector
+  computations too, so the mark forces reloads everywhere;
+  the VALEN condition (the marked access is the only one that
+  matters) does not hold for a shared struct field.
+
+Conclusion: none of the three is the VALEN shape. The near
+set's residues are per-block scheduling and allocation
+outcomes, and the remaining lever for them is the input order
+ugen hands the per-block scheduler, which the source forms
+tried so far do not reach.

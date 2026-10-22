@@ -1893,3 +1893,5 @@ compiler variants, a 302-trial engine run on func_8014AB50)
 recorded in the ticket do not move them.
 
 ## [2026-10-22] ticket | T-25016 phase 2 results and resolution plan by common issue
+
+## [2026-10-22] ticket | T-25016 gate-lever experiments: flattening and volatile both negative with named causes
