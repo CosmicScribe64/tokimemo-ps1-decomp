@@ -2717,3 +2717,27 @@ User requested more agents. Root reactivated the existing TEL/ENDING/ETC coordin
 ## [2026-10-22] query | BUNKA quotient storage controls negative
 
 [[tickets/T-25053-bunka-last-function]]: Docker quotient-storage controls returned u16 244 words/cost171, s16 247/cost204, reversed zero assignments243/cost144 against243 target words. Existing counter-use cost142 remains best; no production edit or coverage change.
+
+## [2026-10-22] ticket | T-25057 NAME_ENT claim
+
+Created [[tickets/T-25057-name-ent-pass-investigation]] In Progress in isolated /private/tmp/tokimemo-t24515 from633d95356. Exclusive source src/ovl/NAME_ENT/80139740.c; first target func_801398EC. Prior30b4f5716 preserved on its original branch. Docker compilation waits for a coordinator slot; source/history analysis proceeds.
+
+## [2026-10-22] build | T-25057 remainder lifetime restores exact shape
+
+[[tickets/T-25057-name-ent-pass-investigation]]: Docker full-TU controls recover123 target words from126 using a named frame remainder and a late-erased unsigned comparison; moving the index initialization before the selector fixes v0/v1. Best source in drafts/T-25057/func_801398EC.c has72 diff rows, no match. Allocator trace identifies the remaining unconstrained pointer/remainder/frame/index ordering. Eight causal probes, no production/header/tool edits; compiler slot returned for TEL.
+
+## [2026-10-22] build | T-25057 record induction ordered correctly
+
+[[tickets/T-25057-name-ent-pass-investigation]]: an exact-width discarded record read moves the existing induction to a0 without emitted instructions. Best source123 words/36 diff rows, still not matching; index/remainder allocation and one load ordering remain. Follow-up local phi controls fail and are archived by serial replay scripts. No production changes; compiler slot released to ENDING.
+
+## [2026-10-22] build | T-25057 isolated frame/remainder pair
+
+[[tickets/T-25057-name-ent-pass-investigation]]: precomputing the frame remainder before the flag test lets uopt sink it lazily and order the index range correctly. Best123 words/30 diff rows: only frame and remainder registers are exchanged. Signed/in-place forms are neutral; narrow and phi forms regress. Best saved in drafts/T-25057/func_801398EC.c; no production promotion.
+
+## [2026-10-22] build | T-25057 two precise source frontiers
+
+[[tickets/T-25057-name-ent-pass-investigation]] archives scalar123/30 and array123/34 sources. The array's removed dead initialization fixes every uopt colour; captured ucode identifies the remaining row/tile expression evaluation order before ugen temporaries. No production changes or coverage claim. Source controls and measured counts preserved under drafts/T-25057/.
+
+## [2026-10-22] lint | T-25057 checkpoint review
+
+[[tickets/T-25057-name-ent-pass-investigation]]: annotated sources reproduce108/123 and106/123 identical resolved words. Docker wiki lint has0 broken links/0 status mismatches; existing large data/log pages remain. Direct standards/spec and staged prose review found no unresolved checkpoint issue. Ticket remains In Progress; production C unchanged.

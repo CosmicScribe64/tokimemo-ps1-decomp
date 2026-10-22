@@ -1,0 +1,18 @@
+[
+  {
+    "source": "func_801398EC.c",
+    "target_words": 123,
+    "compiled_words": 123,
+    "identical_positions": 108,
+    "differing_positions": 15,
+    "printed_rows": 30
+  },
+  {
+    "source": "func_801398EC-array.c",
+    "target_words": 123,
+    "compiled_words": 123,
+    "identical_positions": 106,
+    "differing_positions": 17,
+    "printed_rows": 34
+  }
+]
