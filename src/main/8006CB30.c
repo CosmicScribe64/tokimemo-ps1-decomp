@@ -216,12 +216,6 @@ s32 func_8006D6E0(void) {
     }
 }
 
-/* NON_MATCHING: T-24204, 1 row; the first idx++ (right after idx = 0) is folded by uopt to li v1,1 where
- * the original keeps addiu v1,v1,1 (draft T-23003; T-24001, T-24204: no source form found; T-24710: live- and
- * constant-false loop/goto backs, static/array/pointer counters, empty head tests, cast and pointer-arithmetic
- * increments, dead-variable copies of the zero and store reordering all fold; `cc -S` shows `li $3,1` in uopt's
- * output, so only a live backedge or a memory reload keeps the addiu). */
-#ifdef NON_MATCHING
 /* T-23003: the 3-bit counter in bits 5..7 of the byte at GameState +0xF6 (read with lbu, decremented as a bit-field). */
 typedef struct F6Bits {
     u32 pad0 : 5;
@@ -280,9 +274,12 @@ void func_8006D7EC(void) {
     }
     func_8006CF38();
     wd = (D_800E6280.unk_041 + 1) % 7U;
-    idx = 0;
+    /* FAKE: T-25036, unsigned < 0 is zero, but folds after uopt so idx keeps a register dependency. */
+    idx = (u32)D_800E6280.unk_F5F < 0;
     if (day == monthDays) {
         D_800E6280.unk_69C[0].unk_00 = 0xFE;
+        /* FAKE: T-25036, this unreachable identity clears as1's zero substitution; it emits no code. */
+        if (idx) { idx = idx + ((u32)day < 0); }
         idx++;
         day = 0;
         monthOff = 1;
@@ -579,9 +576,6 @@ void func_8006D7EC(void) {
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
-#endif
 
 s32 func_8006EA40(void) {
     s32 count;

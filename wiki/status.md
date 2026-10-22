@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Latest verified integration (2026-10-22)
 
-SHOUGATU func_8013E50C (472 bytes) and GYOZI func_80140E0C (388 bytes) are verified default C. Root independently checked literal linked bytes, all27 binary checksums and declaration guards. Current game code: **6835/6952 functions;2105536/2276920 bytes (92.5%)**,117 functions/171384 bytes remaining. Both use a marked late-folded zero expression with early global initialization. MAIN counter and BUNKA scheduler follow-ups are active; their experimental results are not yet counted. Older counts below are historical.
+Three functions verified this resumed effort: SHOUGATU func_8013E50C (472 bytes), GYOZI func_80140E0C (388), and MAIN func_8006D7EC (4692). Root independently checked literal default-C linked bytes, all27 binary checksums and declaration guards. Current game code: **6836/6952 functions;2110228/2276920 bytes (92.7%)**,116 functions/166692 bytes remaining. Total gain5552bytes. BUNKA scheduler has an experimental zero-diff candidate under verification; it is not yet counted. Older counts below are historical.
 
 ## NEXT STEP (read this first)
 

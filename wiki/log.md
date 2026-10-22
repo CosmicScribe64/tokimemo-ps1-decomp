@@ -2299,3 +2299,19 @@ Root combined T-25033/T-25035, reviewed source against standards/spec with no fi
 ## [2026-10-22] decision | Continue successful workers on new functions
 
 After verified T-25033/T-25035 integration, reassigned their Astra capacity without duplicating active work. SHOUGATU chat reserves T-25038 for the next remaining function in8013E330.c, selecting E6E4 or EA98 by existing candidate evidence. Former GYOZI worker reserves T-25039 MAIN func_8005B43C in8005A0B0.c, releasing GYOZI. Both sustain implementation through literal proof; MAIN quadrant/counter and BUNKA scheduler workers continue. Root owns integration.
+
+## [2026-10-22] ticket | T-25036 MAIN counter late-fold investigation
+
+Created [[tickets/T-25036-main-counter-late-fold]] in an isolated worktree at 242c0c3a3. Reused [[tickets/T-25026-main-d7ec-near-candidate]] phase evidence and prior negatives; next test is a late-folded zero producer that preserves the original increment dependency without extra instructions.
+
+## [2026-10-22] build | T-25036 identifies second constant-fold barrier
+
+Whole-TU Docker donor transfer retains the counter addition through uopt and ugen but stock as1's initial-node expansion folds it to one. Final output remains 1,173 words with one differing instruction. [[tickets/T-25036-main-counter-late-fold]] records the phase evidence. Read-only donor and tracer reused; production sources and compiler unchanged.
+
+## [2026-10-22] build | T-25036 closes MAIN 4692-byte counter dependency
+
+Promoted `src/main/8006CB30.c` function `func_8006D7EC` using the T-25033 late-zero producer and a late-eliminated identity arm. Whole-TU guarded and default C each pass literal 4,692-byte linked proof and complete MAIN SHA1; header/global/prototype checks pass. Both source controls are FAKE-annotated and add no emitted operations. Root standards/spec review has no findings. [[tickets/T-25036-main-counter-late-fold]] moves to In Review for full integration verification; `drafts/T-25036/` preserves reproduction and phase evidence.
+
+## [2026-10-22] build | MAIN 4692-byte match accepted
+
+Root integrated abc02da59 and independently proved default-C func_8006D7EC literal4692bytes. Fresh27/27binary checksums, headers/globals and prototypes0new/15known pass. Standards/spec review has no findings; marked late-zero and unreachable identity controls introduce no observable effects or compiler exceptions. T-25036 moves Done. Progress6836/6952functions,2110228/2276920bytes (92.7%);116functions/166692bytes remain. Updated [[status]]. Worker continues T-25040 on same-file func_8006D138,872bytes, selected against larger7132C's broad unresolved structure. BUNKA candidate not yet counted.

@@ -61,7 +61,9 @@ Hoists from another block (as1's global filler, [[as1-scheduler-rule]]): as1 mov
 
 ## 6. Constants: folded vs kept in a register
 
-One `li k` stored to several places: chain through elements, `a[0] = b[0] = k;` or `(&G)[0] = (&G)[1] = (&G)[2] = k;` (shares the `li`; the hidden chain temporary can add 4 bytes to the frame, a declared local can absorb it). `--(&G)[2]` as the chain source keeps the raw `addiu` and gives `andi` for the byte stores (TACO `func_8014F820`, T-24213). A constant stored to a global and passed as an argument: store plain fields, then pass them re-read through a view (FAKE). A constant argument scheduled too late: reuse a word local, `render_x = (render_x & 0) - 40` (T-24021). If uopt folds `idx = 0; idx++` into `li 1` and the original has `addiu`, only a live backedge keeps the `addiu` (T-24204, unresolved, 1 row).
+One `li k` stored to several places: chain through elements, `a[0] = b[0] = k;` or `(&G)[0] = (&G)[1] = (&G)[2] = k;` (shares the `li`; the hidden chain temporary can add 4 bytes to the frame, a declared local can absorb it). `--(&G)[2]` as the chain source keeps the raw `addiu` and gives `andi` for the byte stores (TACO `func_8014F820`, T-24213). A constant stored to a global and passed as an argument: store plain fields, then pass them re-read through a view (FAKE). A constant argument scheduled too late: reuse a word local, `render_x = (render_x & 0) - 40` (T-24021).
+
+**Zero followed by an increment.** T-25036 closes the historical T-24204 MAIN `func_8006D7EC` fold. Initialize `idx` with `(u32)D_800E6280.unk_F5F < 0`, which uopt keeps and ugen turns into zero. As1 still substitutes that zero into the increment unless an alternate definition survives until as1: immediately before `idx++`, `if (idx) { idx = idx + ((u32)day < 0); }`. Both comparisons are always zero; the arm is unreachable and disappears entirely. Whole-TU guarded/default C and the complete MAIN checksum match. Both constructs need FAKE annotations. Placement matters; the tested forward arm leaves a branch. See [[tickets/T-25036-main-counter-late-fold]] and `drafts/T-25036/README.md`.
 
 T-25033 closes a zero-carrier case: assign the byte global before the conditional using
 `girl = G * 0; G = girl;`, then pass it through the exact unsigned byte view. uopt can
@@ -99,5 +101,5 @@ Flag byte `|=`: use a bit-field store `((Bits *)&x)->f = 1;` when one temporary 
 Do not spend a session on these without a new idea; leave a guard with the ticket id and what remains. Details and the census in [[build-step-gaps]].
 - Historical ugen block-copy direction mismatch (T-19001, T-22014): addressed by the enabled `tools/ugen_pass.py` in [[tickets/T-24092-ugen-block-copy-state-pass]]. Reproduce remaining failures with the current pipeline; 32-byte unrolled-copy register choices are a separate question.
 - as1 global scheduler picks (T-24202, T-24212, T-24203): rule and remaining cases in [[as1-scheduler-rule]]; default-block hoists are fixed with `volatile` (T-24900).
-- uopt `idx = 0; idx++` fold (T-24204): proves the zero through every source form tried; only a live backedge keeps the `addiu`.
+- Historical uopt `idx = 0; idx++` fold (T-24204): closed in MAIN by the T-25036 late-zero producer and late-eliminated identity arm; see section 6.
 - uopt priority and colour order with no uniform rule: apply recipes above, do not search flags (exhausted in T-0014, T-0017, T-9800).
