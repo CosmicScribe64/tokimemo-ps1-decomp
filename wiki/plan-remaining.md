@@ -11,6 +11,8 @@ For any agent, including cheap ones, working on the last functions. State on 202
 
 ### Latest user direction and active ownership
 
+Additional user-authorized Astra lanes: T-25035 owns GYOZI func_80140E0C, T-25036 owns MAIN func_8006D7EC (`8006CB30.c`), and T-25037 owns BUNKA_SD func_80139290 (`801388D0.c`). These are isolated, file-disjoint matching assignments alongside T-25033/T-25034. GYOZI and the counter function independently investigate transfer of SHOUGATU's late-folded zero producer; BUNKA investigates its remaining scheduler ordering. Root integrates serially. No further workers are delegated by these three agents.
+
 Latest override: after the MAIN wrap-up below, the user directly instructed root to keep both workers going until problems are solved and matches made. T-25034 is resumed from d8e482c4a; T-25033 continues its118-word zero-carrier candidate. Both lanes use Astra, with no time/probe stopping limits. The stopped-lane paragraph below is historical and no longer governs execution.
 
 The user has replaced the Sol-first, bounded-consultation policy below with sustained Astra implementation. The historical lane assignments and time/probe limits below are superseded. Current sole source owners are T-25033 (`src/ovl/SHOUGATU/8013E330.c`, func_8013E50C) and T-25034 (`src/main/80046500.c`, func_80046AC8), both using GPT-6 Astra. Coordinators must not duplicate their workers' experiments. Continue each assignment until a verified literal match or a concrete external blocker; a checkpoint or unsuccessful experiment is not a stopping point. Preserve intermediate work and negative evidence. Root serializes integration and checks contributor claims; GEKO/OPTION remain reserved under issue #65. No additional broad screening is active.

@@ -2235,3 +2235,7 @@ Integrated d8e482c4a after source/replay review. Root Docker replay confirms con
 ## [2026-10-22] decision | User resumes sustained matching after MAIN wrap-up
 
 New direct root instruction: keep workers going until problems are figured out and matches made. This supersedes the earlier MAIN-chat wrap-up. Resumed T-25034 Astra from preserved d8e482c4a candidates and reinforced T-25033 continuation from the118-word zero-carrier experiment. No time/probe limits; checkpoints and failed controls do not terminate assignments. Concrete external blockers and literal proof standards remain. Root integrates, coordinators avoid duplicate experiments.
+
+## [2026-10-22] decision | Additional Astra matching lanes
+
+User explicitly requests more agents across unmatched functions and independent solutions. Dispatched three file-disjoint Astra/high workers: T-25035 GYOZI func_80140E0C, T-25036 MAIN func_8006D7EC, T-25037 BUNKA_SD func_80139290. Each uses isolated checkout, Docker, existing negative ledger, and sustained implementation until literal match or concrete external blocker. GYOZI/counter workers will independently assess the new SHOUGATU late-folded producer, not duplicate its source editing. BUNKA worker pursues remaining source-to-scheduler ordering. Existing T-25033/T-25034 continue; GEKO/OPTION reserved. Root serializes proof and integration. No new coverage claimed.
