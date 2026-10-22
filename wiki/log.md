@@ -3033,3 +3033,17 @@ Wiki lint reports zero broken links and zero status mismatches; the two existing
 ## [2026-10-22] build | ETC ranking generator accepted on main
 
 [[tickets/T-25059-etc-ranking-generator]] Done: root independently proves2808 default-C linked bytes, fresh27/27 hashes, headers/globals and0new/15known prototypes. Source standards/spec review has no findings. [[status]] now6851/6952functions,2132380/2276920bytes93.7%;101functions/144540bytes remain. Eighteen matches add27704bytes this resumed effort. EntireETC80146400.c is C; worker continues80144224 in80143240.c underT-25061. GitHub check: no openPRs, issue65 unchanged; GEKO/OPTION claim retained. Current plan refreshed to supersede obsolete near-set-only advice after large source reconstructions succeeded.
+
+## [2026-10-22] build | T25052 live-index bounds and unsigned tail dispatch
+
+[[tickets/T-25052-main-schedule-dispatch]] retains defined sequenced late-zero
+bounds for only the three loops carrying a live index (984/998words,cost854).
+Unsigned tail switch with explicitFF/default restores seven target branch-tree
+words (991,cost847); selector identity recovers the missing copy shape but
+still has wrong colors (992,cost852). Independent lexical counts enlarge the
+frame and are rejected. Production remains assembly; evidence is in
+`drafts/T-25052/README.md` and named whole-TU replay controls.
+
+## [2026-10-22] build | MAIN loop and switch checkpoint replayed
+
+Root independently replayed [[tickets/T-25052-main-schedule-dispatch]] late-bounds-unsigned-switch-ff:991/998words,cost847. Preserved d4c458069 and exact loop-bound/selector evidence without production changes. [[tickets/T-25053-bunka-last-function]] transfer test of NAME_ENT's memory-local ordering worsens q-array255/245 and b-array263; current best102 retained.

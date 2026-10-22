@@ -56,3 +56,5 @@ Counter alias follow-up: scalar u8 view on load worsens102→142; store-only vie
 Return-lifetime control: canonical header declares void; initial s32 trial correctly failed incompatible redeclaration. Scratch-only preprocessed declaration override then measured s32 best244/243words,cost105 and s32 repaired baseline243/243,cost146. Neither improves current102. Header and production unchanged; no non-void promotion proposed.
 
 Tail-local reuse control reuses first b/q in the later animation block with explicit unsigned division. Repaired baseline improves144→138, but current best regresses102→104; both243words. This does not recover the target quotient copy. No retained production change.
+
+Transfer control from NAME_ENT memory-local ordering: q[1] on best source produces248words/cost255, on baseline248/cost245; b[1] best produces244/cost263. No improvement, so scalar best102 is retained. Diagnostic arrays are ignored build outputs, not production changes.

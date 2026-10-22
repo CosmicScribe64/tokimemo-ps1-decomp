@@ -102,6 +102,61 @@ def live_index_do_loops(source):
     return source
 variants['first-exact-do-live-index'] = live_index_do_loops(first_exact)
 variants['register-do-live-index'] = live_index_do_loops(variants['register-entry-unrelated'])
+variants['first-exact-do-live-late-bound'] = variants['first-exact-do-live-index'].replace('} while (++i < 11);', 'i++; } while (i != 11 + ((u32)i < 0));')
+variants['register-do-live-late-bound'] = variants['register-do-live-index'].replace('} while (++i < 11);', 'i++; } while (i != 11 + ((u32)i < 0));')
+record_zero = variants['register-entry-unrelated'].replace('GsRec69C *p;', 'GameState *p;')
+record_zero = record_zero.replace('&D_800E6280.unk_69C[D_800E6280.unk_71C]', '(GameState *)((u8 *)&D_800E6280 + D_800E6280.unk_71C * 4)')
+record_zero = record_zero.replace('p->unk_', 'p->unk_69C[0].unk_').replace('p[-1].unk_', 'p->unk_69C[-1].unk_')
+variants['register-record-origin'] = record_zero
+combined = first_exact
+combined = re.sub(r'D_800E6280.unk_71C \+= 1;\n(\s*)p = &D_800E6280.unk_69C\[D_800E6280.unk_71C\];', r'p = &D_800E6280.unk_69C[++D_800E6280.unk_71C];', combined)
+combined = re.sub(r'D_800E6280.unk_71C \+= 1;\n(\s*)op = D_800E6280.unk_69C\[D_800E6280.unk_71C\].unk_00;', r'op = D_800E6280.unk_69C[++D_800E6280.unk_71C].unk_00;', combined)
+variants['first-exact-combined-index-update'] = combined
+variants['first-exact-flag-bit-stores'] = variants['first-exact-do-live-late-bound'].replace('unk_0C.b[2] |= 1;', 'unk_0C.f.b16 = 1;').replace('unk_0C.b[2] |= 2;', 'unk_0C.f.b17 = 1;')
+late_bounds = variants['first-exact-do-live-late-bound']
+variants['late-bounds-self-zero-pointer'] = late_bounds.replace('&D_800E6280.unk_69C[D_800E6280.unk_71C]', '(GsRec69C *)((u8 *)&D_800E6280.unk_69C[D_800E6280.unk_71C] + ((u32)D_800E6280.unk_71C < 0))')
+variants['late-bounds-array-plus'] = late_bounds.replace('&D_800E6280.unk_69C[D_800E6280.unk_71C]', '(D_800E6280.unk_69C + D_800E6280.unk_71C)')
+slot1 = 'D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01'
+column1 = '((u8 *)&D_800E6280.unk_69C[0].unk_01)[D_800E6280.unk_71C * 4]'
+variants['late-bounds-icon-column-view'] = late_bounds.replace('i != ' + slot1, 'i != ' + column1)
+variants['late-bounds-schedule-column-views'] = late_bounds.replace(slot1, column1).replace('D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02', '((u8 *)&D_800E6280.unk_69C[0].unk_02)[D_800E6280.unk_71C * 4]')
+unsigned_switch = late_bounds.replace('    switch (op) {', '    switch ((u32)op) {')
+variants['late-bounds-unsigned-switch'] = unsigned_switch
+variants['late-bounds-unsigned-switch-ff'] = unsigned_switch.replace('    default:\n        main_state_set(0x34);', '    case 0xFF:\n    default:\n        main_state_set(0x34);')
+full_switch = variants['late-bounds-unsigned-switch-ff']
+variants['late-bounds-pointer-switch-ff'] = full_switch.replace('switch ((u32)op)', 'switch (p->unk_00)')
+variants['late-bounds-byte-op-ff'] = full_switch.replace('    s32 op;', '    u8 op;').replace('switch ((u32)op)', 'switch (op)').replace('if (op >= 6)', 'if ((s32)op >= 6)')
+variants['late-bounds-word-op-ff'] = full_switch.replace('    s32 op;', '    u32 op;').replace('switch ((u32)op)', 'switch (op)').replace('if (op >= 6)', 'if ((s32)op >= 6)')
+variants['late-bounds-switch-identity-ff'] = full_switch.replace('switch ((u32)op)', 'switch ((u32)op + ((u32)op < 0))')
+scoped = variants['field'].replace('    s32 t;\n', '').replace('    s32 n;\n', '')
+scoped = scoped.replace('        n = 0;\n', '        s32 n;\n\n        n = 0;\n', 1)
+scoped = scoped.replace('    if (op == 0x32) {\n        t =', '    if (op == 0x32) {\n        s32 t;\n\n        t =', 1)
+scoped = scoped.replace('    if (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_00 == 0xFF) {\n        t =', '    if (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_00 == 0xFF) {\n        s32 t;\n\n        t =', 1)
+scoped = scoped.replace('    n = 0;\n    if (op == 0xFB) {', '    if (op == 0xFB) {\n        s32 n;\n\n        n = 0;')
+scoped = scoped.replace('switch (op)', 'switch ((u32)op)').replace('    default:\n        main_state_set(0x34);', '    case 0xFF:\n    default:\n        main_state_set(0x34);')
+variants['scoped-counts-unsigned-ff'] = scoped
+variants['scoped-counts-late-bounds-ff'] = live_index_do_loops(scoped).replace('} while (++i < 11);', 'i++; } while (i != 11 + ((u32)i < 0));')
+
+# Same stack home, distinct signed/unsigned IChains for disjoint count/op lifetimes.
+union_op = full_switch.replace('    s32 op;', '    union { s32 count; u32 code; } op;')
+split = union_op.index('    func_8006D138();')
+union_op = union_op[:split].replace('op =', 'op.count =').replace('op++;', 'op.count++;').replace('if (op >=', 'if (op.count >=') + re.sub(r'\bop\b', 'op.code', union_op[split:])
+variants['union-op-count-code'] = union_op
+union_t = full_switch.replace('    s32 t;', '    union { s32 code; u32 count; } t;')
+a = union_t.index('    func_8006D138();')
+b = union_t.index('    t = 0;\n    if (op == 0xFB)')
+union_t = union_t[:a] + re.sub(r'\bt\b', 't.code', union_t[a:b]) + re.sub(r'\bt\b', 't.count', union_t[b:])
+variants['union-t-code-count'] = union_t
+
+
+# Character views on sibling stores kill cached index values without changing index arithmetic.
+neighbor = full_switch.replace('D_800E6280.unk_71D', '(*(u8 *)&D_800E6280.unk_71D)')
+variants['neighbor-71d-byte-view'] = neighbor
+for f in ['71E', '71F']:
+    neighbor = neighbor.replace('D_800E6280.unk_' + f, '(*(u8 *)&D_800E6280.unk_' + f + ')')
+variants['neighbor-status-byte-views'] = neighbor
+variants['neighbor-71d-store-only'] = re.sub(r'D_800E6280.unk_71D(?= \[+\-]=)', '(*(u8 *)&D_800E6280.unk_71D)', full_switch)
+
 expected, problem = fd.expected_object(c)
 if problem: raise RuntimeError(problem)
 want = fd.resolved_functions(expected, [name], c)[name]
