@@ -54,3 +54,5 @@ Quotient identity follow-up on102-cost source: q*1 in switch outputs is neutral1
 Counter alias follow-up: scalar u8 view on load worsens102→142; store-only view is neutral102; both views142 (all243words). Static-load classification is needed for current best allocation; no production edit.
 
 Return-lifetime control: canonical header declares void; initial s32 trial correctly failed incompatible redeclaration. Scratch-only preprocessed declaration override then measured s32 best244/243words,cost105 and s32 repaired baseline243/243,cost146. Neither improves current102. Header and production unchanged; no non-void promotion proposed.
+
+Tail-local reuse control reuses first b/q in the later animation block with explicit unsigned division. Repaired baseline improves144→138, but current best regresses102→104; both243words. This does not recover the target quotient copy. No retained production change.

@@ -2977,3 +2977,7 @@ Created [[tickets/T-25056-ending-scheduler]] In Progress in isolated codex/t2505
 ## [2026-10-22] ingest | Preserve ENDING scheduler counterfactual evidence
 
 Preserved91e1f4182 under [[tickets/T-25056-ending-scheduler]]. Review confirms all diagnostic assembler construction remains under ignored build/, guarded by an exact reconstruction source hash; no production toolchain/source/config changes. Captured candidate-budget evidence distinguishes region header and scan count from instruction count. Four archived scripts parse in Docker; wiki lint0broken/0status mismatches. No coverage claim and no independent root replay of the experimental backend in this ingest; worker literal counterfactual remains research only.
+
+## [2026-10-22] query | BUNKA tail local reuse control
+
+[[tickets/T-25053-bunka-last-function]] reusing b/q in the later animation block gives baseline138 and current-best104 (243words), so archived102 remains best. Source unchanged. T-25059 ETC worker has passed default2808-byte proof and affected checks; root awaits its pin for combined integration.
