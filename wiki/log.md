@@ -2003,3 +2003,7 @@ Read-only Astra clarified original-INST global selection versus local scheduling
 ## [2026-10-22] lint | T-25023 checkpoint
 
 Wiki lint passes with zero broken links and status mismatches; only the existing data/t0018-cases size warning remains. `git diff --check` passes. [[tickets/T-25023-bunka-scheduler-closure]] stays In Review. No source/header/tool differences or generated/raw artifacts included in the checkpoint.
+
+## [2026-10-22] ingest | Preserve MAIN reload source and BUNKA consultation
+
+Root reviewed research scope and source-only checkpoints, merged T-25022 pin1b50b37d6 and T-25023 pina9608aeba. No production promotion or header/tool change. MAIN keeps both semantic reload repairs separately from lower-score partial source; direct callee mutation remains unestablished, target reload placement is established. Authorized one read-only Astra consultation on the precise eager-read/control-flow packet, with Sol idle during it and at most three subsequent justified tests. BUNKA correction: the all-arm regression hoists year-address lui t0, not store-address lui at; li t2 aftercycles is0, not2. See drafts/T-25023/README.md for upstream-emission revisit condition. Merged wiki lint: zero broken links/status mismatches, one pre-existing large page. GYOZI and TEL workers continue.
