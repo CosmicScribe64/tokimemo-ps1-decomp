@@ -2011,3 +2011,15 @@ Read-only Docker progress confirms119 remaining at main f688ec594; checked membe
 ## [2026-10-22] lint | T-25028 triage checkpoint
 
 Wiki lint zero broken links/status mismatches, only existing data/t0018-cases size warning. Diff check clean, production/header/tools/config unchanged; body pointers exist. [[tickets/T-25028-read-only-candidate-triage]] remains In Review.
+
+## [2026-10-22] ticket | T-25030 overlay reconstruction qualification
+
+Created [[tickets/T-25030-overlay-candidate-triage]] and In Progress card before second read-only triage. At most12 different actual remaining overlay functions; stop on a concrete unrepaired semantic/control/ABI defect. No builds/source grids/root writes/agents; strCallback remains MAIN T-25029, TEL36724 and contributor GEKO/OPTION excluded.
+
+## [2026-10-22] query | T-25030 corrected overlay bodies supersede raw defects
+
+Reviewed12 different actual remaining overlay functions; current119 scope confirmed read-only. No strong new semantic/control/ABI repair qualified. Old raw field/dispatcher/callee/array/actor errors already repaired; preserved corrected-body pointers and ledgers in drafts/T-25030/README.md. Eight bounded target/source direct-call multisets agree after renames, without full semantics claim. No compiles/source variants/root changes/agents. [[tickets/T-25030-overlay-candidate-triage]] moves to In Review; other107 not individually audited.
+
+## [2026-10-22] lint | T-25030 checkpoint checks
+
+Wiki lint zero broken links/status mismatches with only existing data/t0018-cases size warning; diff check clean and production/header/tools/config unchanged. [[tickets/T-25030-overlay-candidate-triage]] remains In Review.
