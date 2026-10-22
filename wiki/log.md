@@ -2119,3 +2119,23 @@ Root reviewed documentation-only T-25030 pin708f1c4f6 and preserved corrected st
 ## [2026-10-22] decision | Consult newly measured callback backend state
 
 Live T-25029 reproduces160-word strCallback with75 register-only positions. Existing logging-only diagnostic identifies eval_mov reused stack slot0x10000 and two-dummy path, candidate last writer f_loadstore; normal/logged whole-TU bytes agree. Bypassing existing copy-state shim is neutral, as are address-offset/alignment controls. Exact earlier strCallback consult covered sentinel, not this measured last-writer path. Authorized one read-only Astra consultation on required predecessor/control-flow ordering while preserving reloads/stores/ABI/160words; Sol idles and tests only up to3 new trace-backed hypotheses. No backend-slot patch, input-specific rule or broad source grid authorized. This is a new phase diagnosis, not a match.
+
+## [2026-10-22] ticket | strCallback upstream temporary diagnosis
+
+Created [[tickets/T-25029-main-strcallback-ring]] In Progress in isolated worktree; release src/main/8004F870.c and exclusively own src/main/800563F0.c. Read T-25001/10 negatives before compiling. Trace actual RECT copy inputs/outputs before at most three new causal source tests. No generic grids, shared rules, additional worker or Astra.
+
+## [2026-10-22] build | strCallback small-copy reservation identified
+
+[[tickets/T-25029-main-strcallback-ring]] reproduces160target/160built words,148aligned/150printed,75 register-only instructions. Captured actual8-byte Umov and normal ugen output; shim/raw callback binasm agree. Private offset/alignment/length controls isolate fixed reservation, not source address or second-word count. Existing T-24067 logging-only tool, audited whole-object identical, confirms reused slot+232=10000 selects double dummy t0/t1 before actual second copy wordt2; candidate writer f_loadstore saved gp. Target is consistent with one dummy. No faithful new source mechanism established, so no source controls or build changes. Evidence/limitations in drafts/T-25029/README.md; raw reference/traces stay private. No match or coverage claim.
+
+## [2026-10-22] decision | strCallback bounded branch-route consultation
+
+For [[tickets/T-25029-main-strcallback-ring]], checked prior exact callback Astra history: sentinel bypass only, not the new slot path. One authorized read-only Astra follow-up, Sol idle, found required predecessor branches occur before later scalar operations and next required branch after Umov; f_jump's predicate/emitter order offers no justified source-required pre-copy route. Zero source hypotheses recommended or tested. Preserved exact record ordering and limitations in drafts/T-25029/README.md; no universal source-impossibility or compiler-exception claim.
+
+## [2026-10-22] lint | strCallback mechanism checkpoint
+
+Docker catalog795 tickets,444 sections,3,078 functions; wiki lint zero broken links/zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes. src/, include/ and tools/ unchanged. T-25029 research/consultation preserved for root review; no match or coverage change.
+
+## [2026-10-22] ingest | Preserve callback mechanism and continue unaudited groups
+
+Root reviewed T-25029 pin37bf807db: faithful phase observations and limited required-branch consultation, no production code or promotion. Preserve candidate last-writer caveat and no-universal-impossibility limit. Assigned twoSolmedium read-only passes: T-25031 small overlays and T-25032 otherMAIN, at most12 new candidates each, disjoint from prior24 and contributor claims; stop early on actionable defect. Source800563F0 released after checkpoint, no active source-edit claims. No activeAstra. Objective remains all119 remaining game functions, not merely draft coverage.
