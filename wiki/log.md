@@ -2295,3 +2295,15 @@ Root reviewed the GYOZI change against standards and scope with no findings: def
 ## [2026-10-22] build | Two late-zero family matches verified on main
 
 Root combined T-25033/T-25035, reviewed source against standards/spec with no findings, and refreshed every binary checksum:27/27 pass. Default-C literal linked proofs pass SHOUGATU472bytes and GYOZI388bytes; neither function has an assembly fallback. Headers/globals pass, prototypes0new/15known. Docker progress6835/6952functions,2105536/2276920bytes (92.5%);117functions/171384bytes remain. Moved both reviewed tickets/cards to Done, updated [[status]] and regenerated catalog. Research workers continue MAIN counter/quadrant and BUNKA scheduling. No experimental follow-up counted.
+
+## [2026-10-22] ticket | T-25039 MAIN club carrier
+
+Created [[tickets/T-25039-main-club-carrier]] after GYOZI integration. Reused isolated checkout, fast-forwarded to 77eae26cf with prior private evidence retained; claimed only src/main/8005A0B0.c. Read T-25004/T-25008 controls and allocation history. Reproduce the baseline before testing distinct lifetime/phase mechanisms.
+
+## [2026-10-22] build | T-25039 club precolor boundary
+
+Docker full-TU baseline for [[tickets/T-25039-main-club-carrier]] is 215/215 words, three changed positions. Captured allocation confirms distinct shift-expression v1 and local a0 ranges; later coalescing produces the wrong a0. Repeated shift expression with a late-folded zero preserves the target v1 and argument move, leaving the halfword a0-versus-a1 carrier. Corrected actual function size to 860 bytes; no match or production edit yet.
+
+## [2026-10-22] build | T-25039 MAIN club carrier matched
+
+Moved the local club definition into its consuming else branch, before the existing empty halfword test, while comparing the raw shift beforehand. This closes both carriers without new late-zero arithmetic or ignored arguments. Default C matches all 860 linked bytes, MAIN SHA1 passes, and headers/global/prototype guards pass (zero new, 15 known). Root independently reviewed standards and scope with no findings. Recorded controls in drafts/T-25039/README.md and [[matching-notes]]; moved [[tickets/T-25039-main-club-carrier]] to In Review pending root integration.
