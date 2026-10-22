@@ -2657,3 +2657,7 @@ Integrated51a413820. Root default-C literal1056byte proof, fresh27/27 binary che
 ## [2026-10-22] query | BUNKA allocation boundary measured
 
 Instrumented compiler identifies counter local/global priority inversion for [[tickets/T-25053-bunka-last-function]]. Extra global use restores valuea1 but not its address or quotient/selector registers, reducing144→142alignedcost. Saved source/ledger under drafts/T-25053; no production change. Signed quotient controls do not improve. Worker chats remain active; no new completed function this turn.
+
+## [2026-10-22] query | BUNKA quotient allocation constraints
+
+[[tickets/T-25053-bunka-last-function]] full trace exposes high-priority address range before quotient and low-priority selector. Narrow index controls and definite later call-argument reuse do not recover target copies; recorded exact results in drafts/T-25053/README.md. No production change. Contributor check unchanged: no open PRs, issue65 claim unchanged. Requested stable quadrant improvement pin while worker continues.

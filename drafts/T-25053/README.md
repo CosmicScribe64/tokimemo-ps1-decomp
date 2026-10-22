@@ -23,3 +23,13 @@ Negative controls: u8 counter, empty quotient use, distinct s32/u32 index,
 late-zero index plus later empty quotient use, and signed quotient storage
 all remain144. Distinct u16 index worsens200. Signed quotient plus global use
 remains142. First switch still lacks target a0-to-v0 quotient copy.
+
+Further allocator evidence: first constant-address range bit46 has priority3
+and getsv0; quotient bit44 has priority1.4 and getsv1; selector bit53 has
+priority1/3 and reusesv0. Thus fixing the counter alone cannot recover the
+quotient copy and selectora2. Typed index locals coalesce; narrowing s8/u8
+adds instructions (253/cost192,248/cost211), while s16 stays243 but cost172.
+Reusing q/b as later rectangle arguments after definite constant assignments
+is neutral144 (142 with the extra globaluse), so it does not precolor them.
+These results exclude narrow conversions and simple later argument reuse as
+the missing copy mechanism. Traces remain private; no binary dumps committed.
