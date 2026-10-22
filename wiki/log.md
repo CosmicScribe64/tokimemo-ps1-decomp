@@ -2463,3 +2463,15 @@ Created [[tickets/T-25050-main-ring-input]] In Progress for func_80075C84 in src
 ## [2026-10-22] lint | T-25050 evidence checks
 
 [[tickets/T-25050-main-ring-input]] source-only pin2ebd6fd3a is ready for root integration. Final simplified diff independently reviewed with no findings. Wiki lint reports0 broken links and0 status mismatches; two existing large-page warnings remain. Evidence prose findings were reviewed, with technical key terminology retained and historical counts formatted as a table.
+
+## [2026-10-22] ticket | T-25058 MAIN screen-offset qualification
+
+Created [[tickets/T-25058-main-screen-offset]] In Progress before experiments and added its board card. Historical T-23006/T-24303/T-25016 and newer candidate ledgers identify two quotient narrowings and a temporary-order gap in `src/main/80047550.c` `func_80047560`. Read-only audit found the guarded signed-byte divisor view differs from the unsigned target load and canonical timer declaration; ownership confirmation requested from the parent before source edits.
+
+## [2026-10-22] decision | Preserve T-25058 qualification without experiments
+
+The parent relayed the user's request to commit and push all work and explicitly stop before T-25058 source experiments. [[tickets/T-25058-main-screen-offset]] returns to Ready with its card synchronized. The source-level audit records the timer-128 denominator discrepancy (128 in the signed-view draft versus 384 in the original unsigned load); no compiled behavior is claimed and no production source was edited. Future work must reconfirm ownership before testing this evidence.
+
+## [2026-10-22] lint | T-25058 qualification records
+
+Docker `tools/wiki.py lint` reports zero broken links, zero status mismatches and the same two existing large pages (`data/t0018-cases` and this log). `git diff --check` passes. The only pending files are [[tickets/T-25058-main-screen-offset]], [[kanban]] and [[log]]; no source or private input is included.

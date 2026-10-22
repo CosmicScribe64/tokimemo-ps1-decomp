@@ -46,6 +46,8 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-25058-main-screen-offset|T-25058 Match MAIN screen-offset easing]]
+
 
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
@@ -53,6 +55,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
 
 
 
