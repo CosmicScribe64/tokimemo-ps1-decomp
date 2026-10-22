@@ -1895,3 +1895,5 @@ recorded in the ticket do not move them.
 ## [2026-10-22] ticket | T-25016 phase 2 results and resolution plan by common issue
 
 ## [2026-10-22] ticket | T-25016 gate-lever experiments: flattening and volatile both negative with named causes
+
+## [2026-10-22] ticket | T-25016 trace note: global filler active in func_80139290 (37 moves)

@@ -236,3 +236,16 @@ set's residues are per-block scheduling and allocation
 outcomes, and the remaining lever for them is the input order
 ugen hands the per-block scheduler, which the source forms
 tried so far do not reach.
+
+### Trace note (2026-10-22, Octa)
+
+func_80139290 traced with the T-25015 trace lab (726 ucode
+records in, 661 out). The as1 global filler makes 37 moves in
+this function, so the speculative load's position is a filler
+outcome, not an emission-order artifact. One block (bb 60)
+supplies nine of the moved instructions. Mapping bb 60 to the
+source region and comparing against the reference's fill
+pattern is the next diagnostic step for this function; it is
+recorded here so the near-set work can resume from the trace
+(directory traces/39290-vol.txt in the scratch tree) instead
+of from source-shape guessing.
