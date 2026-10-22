@@ -1,10 +1,10 @@
 ---
 id: T-25016
 title: "Candidate reconstruction for the fragment functions: extractor v2, canonical census, then per-function matching"
-status: In Progress
+status: In Review
 assignee: octa
 created: 2026-10-21
-updated: 2026-10-21
+updated: 2026-10-22
 links: [[[status]], [[matching-notes]], [[build-step-gaps]], [[tickets/T-25015-lever-expansion-tooling]], [[tickets/T-25014-allocator-source-shape-automation]]]
 ---
 
