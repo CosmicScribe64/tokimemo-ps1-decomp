@@ -59,7 +59,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-25042-kangei-dispatch-emission|T-25042 Match KANGEI dispatch scheduling]]
 
 
-- [ ] [[tickets/T-25040-main-flag-dispatch|T-25040 Match MAIN flag dispatcher]]
+
 
 
 
@@ -108,6 +108,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
+
 
 
 
@@ -198,6 +200,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-25040-main-flag-dispatch|T-25040 Match MAIN flag dispatcher]]
 
 - [ ] [[tickets/T-25047-taco-home-store|T-25047 Match TACO pointer-walk entry home store]]
 - [ ] [[tickets/T-25048-main-80076fdc|T-25048 Match MAIN func_80076FDC in 80075320.c]]

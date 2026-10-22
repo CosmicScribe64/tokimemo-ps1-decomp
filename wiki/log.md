@@ -2605,3 +2605,15 @@ Created [[tickets/T-25053-bunka-last-function]] before replay, owning80134540.c.
 ## [2026-10-22] build | Final BUNKA_SD baseline reproduced
 
 [[tickets/T-25053-bunka-last-function]] independently reproduces repaired T-24516 baseline243/243diagnosticwords,144aligned/368printed differences. No production edit or coverage claimed; investigate counter/switch allocation next. The diagnostic span is not a literal function-size proof.
+
+## [2026-10-22] build | T-25040 literal flag dispatcher closure
+
+Promoted `src/main/8006CB30.c` function `func_8006D138` to default C. An exact-width discarded byte view holds uopt's static alias while the real late-zero address stays base-relative; together with the measured constant-range boundary, all218 words match. Annotated guarded/default links each prove872 bytes and complete MAIN SHA1. Header/global checks pass; prototype branch0new/15known. Root's independent final standards/spec review has no findings. [[tickets/T-25040-main-flag-dispatch]] moves to In Review for full27 integration. Reproduction and negative controls are retained in `drafts/T-25040/`.
+
+## [2026-10-22] query | BUNKA counter controls ruled out
+
+[[tickets/T-25053-bunka-last-function]] counter narrowing and empty quotient use each preserve the baseline243words/cost144. First meaningful residue is quotient/counter allocation and missing switch copy. No production edit; continue causal lifetime analysis. ETC reports literal1056-byte default match under affected-unit verification, not yet integrated.
+
+## [2026-10-22] build | MAIN flag dispatcher accepted
+
+Integrated e98740640. Root independent default-C literal872byte proof, fresh27/27 binary hashes, headers/globals and prototypes0new/15known pass. Final source review has no findings; [[tickets/T-25040-main-flag-dispatch]] moves Done. [[status]] now6846/6952functions,2120012/2276920bytes93.1%;106functions/156908bytes remain. Thirteen matches add15336bytes. Worker continues T-25052; ETC candidate still awaits integration.

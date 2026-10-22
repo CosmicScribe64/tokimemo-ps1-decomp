@@ -10,8 +10,13 @@ import funcdiff_verify as fv
 
 name = "func_8006D138"
 c = fd.locate(name, "main")
-base = Path(c.src).read_text()
+original = Path(c.src).read_text()
+base = original
 needle = 'INCLUDE_ASM("asm/nonmatchings/main/8006CB30", ' + name + ');'
+if needle not in base:
+    start = base.index("void " + name + "(void)")
+    stop = base.index("void func_8006D4A0(void)", start)
+    base = base[:start] + needle + "\n\n" + base[stop:]
 old = Path("drafts/T-23003/main/func_8006D138/hand.c").read_text()
 old = old[old.index("void " + name):]
 old = old.replace("(((Rec38Flags *)gs->unk_F64)->f.", "(((CharFlags *)gs->unk_F64)->")
@@ -120,6 +125,36 @@ last_near = variants["direct-98-latezero"]
 variants["near-b7-word-shift"] = last_near.replace("((CharFlags *)gs->unk_F64)->b7", "((s32)(*(u32 *)gs->unk_F64 << 24) < 0)", 1)
 variants["near-b7-byte-signed"] = last_near.replace("((CharFlags *)gs->unk_F64)->b7", "(*(s8 *)gs->unk_F64 < 0)", 1)
 variants["near-b7-late-address"] = last_near.replace("((CharFlags *)gs->unk_F64)->b7", late_b7, 1)
+variants["snapshot-98-b7-late-address"] = live_snapshot.replace("gs->unk_03E == 0x62", "gs->unk_03E == 0x62 + ((u32)gs->unk_03F < 0)").replace("((CharFlags *)gs->unk_F64)->b7", late_b7, 1)
+variants["snapshot-b7-late-address"] = live_snapshot.replace("((CharFlags *)gs->unk_F64)->b7", late_b7, 1)
+variants["snapshot-98-b7-b8-late-address"] = variants["snapshot-98-b7-late-address"].replace("gs->unk_F64[1] & 1", "(gs->unk_F64 + ((u32)gs->unk_03F < 0))[1] & 1", 1)
+variants["snapshot-98-b7-b8-b6-late-address"] = variants["snapshot-98-b7-b8-late-address"].replace("((CharFlags *)gs->unk_F64)->b6", "((CharFlags *)(gs->unk_F64 + ((u32)gs->unk_03F < 0)))->b6", 1)
+all_relative = live_snapshot.replace("gs->unk_03E == 0x62", "gs->unk_03E == 0x62 + ((u32)gs->unk_03F < 0)").replace("((CharFlags *)gs->unk_F64)", "((CharFlags *)(gs->unk_F64 + ((u32)gs->unk_03F < 0)))").replace("gs->unk_F64[1] & 1", "(gs->unk_F64 + ((u32)gs->unk_03F < 0))[1] & 1")
+variants["snapshot-all-flag-reads-relative"] = all_relative
+variants["snapshot-all-flag-accesses-relative"] = all_relative.replace("gs->unk_F64[1] &=", "(gs->unk_F64 + ((u32)gs->unk_03F < 0))[1] &=")
+variants["snapshot-all-flag-reads-year-zero"] = all_relative.replace("(gs->unk_F64 + ((u32)gs->unk_03F < 0))", "(gs->unk_F64 + ((u32)gs->unk_03E < 0))")
+nested_b7 = "        if (gs->unk_03E == 0x61) {\n            if (((CharFlags *)gs->unk_F64)->b7) {\n                gs->unk_120[6] = 1;\n            }\n        }"
+flat_b7 = "        if ((gs->unk_03E == 0x61) && (((CharFlags *)gs->unk_F64)->b7)) {\n            gs->unk_120[6] = 1;\n        }"
+assert nested_b7 in last_near
+variants["near-flat-b7"] = last_near.replace(nested_b7, flat_b7)
+snapshot98 = live_snapshot.replace("gs->unk_03E == 0x62", "gs->unk_03E == 0x62 + ((u32)gs->unk_03F < 0)")
+variants["snapshot-98-dead-word-before-b7"] = snapshot98.replace("            if (((CharFlags *)gs->unk_F64)->b7)", "            if (*(u32 *)gs->unk_F64 < 0) {}\n            if (((CharFlags *)gs->unk_F64)->b7)", 1)
+variants["snapshot-98-dead-word-arm"] = snapshot98.replace("            if (((CharFlags *)gs->unk_F64)->b7)", "            if ((u32)gs->unk_03F < 0) { if (*(u32 *)gs->unk_F64) {} }\n            if (((CharFlags *)gs->unk_F64)->b7)", 1)
+variants["snapshot-98-volatile-flag-reads"] = snapshot98.replace("((CharFlags *)gs->unk_F64)", "((volatile CharFlags *)gs->unk_F64)").replace("gs->unk_F64[1] & 1", "((volatile u8 *)gs->unk_F64)[1] & 1")
+variants["snapshot-98-base-zero-flag-reads"] = all_relative.replace("(gs->unk_F64 + ((u32)gs->unk_03F < 0))", "(gs->unk_F64 + ((u32)gs < 0))")
+variants["volatile-reloads-selectors"] = variants["snapshot-98-volatile-flag-reads"].replace("switch (gs->unk_03F) {\n", "switch (((volatile GameState *)gs)->unk_03F) {\n")
+variants["late-address-volatile-selectors"] = variants["snapshot-98-base-zero-flag-reads"].replace("switch (gs->unk_03F) {\n", "switch (((volatile GameState *)gs)->unk_03F) {\n")
+variants["volatile-absolute-selectors"] = variants["volatile-reloads-selectors"].replace("((volatile GameState *)gs)->unk_03F", "((volatile GameState *)&D_800E6280)->unk_03F")
+variants["volatile-all-flags-absolute-selectors"] = variants["volatile-absolute-selectors"].replace("gs->unk_F64[1] &=", "((volatile u8 *)gs->unk_F64)[1] &=")
+two_word = variants["snapshot-98-b7-late-address"]
+variants["two-word-b8-bitfield"] = two_word.replace("gs->unk_F64[1] & 1", "((CharFlags *)gs->unk_F64)->b8", 1)
+variants["two-word-b8-union"] = two_word.replace("gs->unk_F64[1] & 1", "((Rec38Flags *)gs->unk_F64)->b[1] & 1", 1)
+variants["near-b7-union"] = last_near.replace("((CharFlags *)gs->unk_F64)->b7", "((Rec38Flags *)gs->unk_F64)->f.b7", 1)
+b8line = "        if ((gs->unk_03E == 0x61) && (gs->unk_F64[1] & 1)) {\n            gs->unk_120[0xB] = 1;\n        }"
+assert b8line in two_word
+variants["two-word-b8-base-identity"] = two_word.replace(b8line, "        gs += ((u32)gs->unk_03F < 0);\n" + b8line + "\n        gs = &D_800E6280;")
+variants["two-word-b8-inner-base-identity"] = two_word.replace(b8line, "        if (gs->unk_03E == 0x61) {\n            gs += ((u32)gs->unk_03F < 0);\n            if (gs->unk_F64[1] & 1) {\n                gs->unk_120[0xB] = 1;\n            }\n            gs = &D_800E6280;\n        }")
+variants["two-word-b8-dead-byte-view"] = two_word.replace(b8line, "        if (gs->unk_03E == 0x61) {\n            if ((u32)gs->unk_F64[1] < 0) {}\n            if ((gs->unk_F64 + ((u32)gs->unk_03F < 0))[1] & 1) {\n                gs->unk_120[0xB] = 1;\n            }\n        }")
 expected, _ = fd.expected_object(c)
 want = fd.resolved_functions(expected, [name], c)[name]
 for label in sys.argv[1:] or variants:
@@ -138,4 +173,4 @@ for label in sys.argv[1:] or variants:
     result = dict(target_words=len(want), candidate_words=len(got), printed_lines=len(rows), aligned_cost=fd.diff_score(want, got))
     (directory / "measurement.json").write_text(json.dumps(result, indent=2) + "\n")
     print(label, result, flush=True)
-assert Path(c.src).read_text() == base
+assert Path(c.src).read_text() == original

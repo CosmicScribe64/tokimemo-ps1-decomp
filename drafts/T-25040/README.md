@@ -1,10 +1,41 @@
 # T-25040 MAIN flag dispatcher
 
 Target `func_8006D138`, 872 bytes / 218 words, in `src/main/8006CB30.c`.
-Production remains `INCLUDE_ASM`. This draft preserves the T-25036 match in
-the same translation unit.
+Production is default C with guarded/default literal 872-byte proofs and
+complete MAIN SHA1 `e823bd844a8f8fa4d05483b59c66bc54b8393b26`. This change
+preserves the T-25036 match in the same translation unit.
 
-## Current checkpoint
+## Closure
+
+`two-word-b8-dead-byte-view` matches all218 words. An explicit initial flags
+snapshot preserves the five first-arm flag tests. A late-zero address on
+the first b7 read keeps it base-relative, but initially moves the absolute
+representation to the first b8 byte read. Applying a late-zero address to
+b8 alone moves the representation again, to a live word read.
+
+The final control keeps a discarded static view at exactly the same byte
+width and offset: `if ((u32)gs->unk_F64[1] < 0) {}` immediately before the
+late-zero b8 load. This holds the static alias in uopt, while the real load
+remains indirect. Ugen drops the false comparison and its read entirely.
+Together with the year98 identity below, this gives the literal match.
+Every unsigned comparison is false for every input, pointer offsets are
+zero, and no extra runtime loads, stores or branches are emitted. All odd
+controls, including the empty date tests, carry FAKE annotations.
+
+```
+python3 drafts/T-25040/probe.py two-word-b8-dead-byte-view
+python3 drafts/T-25040/prepare.py
+python3 drafts/T-25040/prove.py guarded-proof build/t25040/final/guarded.c guarded
+python3 drafts/T-25040/prove.py default-proof src/main/8006CB30.c default
+```
+
+Proofs additionally mount the verified integration checkout read-only at
+`/baseline`; only this newly compiled TU is substituted into the private
+link. No baseline object is changed or copied. Header/global/prototype
+checks and independent review are recorded in the ticket. Root owns the
+full27 integration gate.
+
+## Earlier three-instruction checkpoint
 
 `near.c` is the `direct-98-latezero` body. Normal default full-TU compilation
 has 218/218 words and only three differing instructions: the first b7 byte
@@ -73,3 +104,10 @@ address lui; row117 target base-relative lbu versus absolute lbu. All other216
 words agree. Run `tools/docker.sh python3 drafts/T-25040/replay-snapshot.py`.
 Production remains assembly. Worker continues overlapping flag-view research;
 rewriting further reads has so far moved the absolute-address residue elsewhere.
+
+* Explicit snapshot plus first b7 address control reaches216/218 exact
+  words, with only the first b8 load absolute. Altering all flag reads
+  removes the static representation but changes month promotion. Adding
+  pointer identity assignments, even locally restored, changes alias
+  reloads. Existing union views are neutral. A discarded word view is
+  insufficient; the successful discarded view must match the byte width.
