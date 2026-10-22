@@ -1,0 +1,137 @@
+[
+  {
+    "binary": "build/SLPM_86.053.bin",
+    "sha1": "e823bd844a8f8fa4d05483b59c66bc54b8393b26",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/BUNKAKEN.bin",
+    "sha1": "d423cb6d09b4b7e96e894168c0db4c7d15745b98",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/BUNKASAI.bin",
+    "sha1": "0307afff16d01bd32055ee2699bdf9a075d846ad",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/BUNKA_SD.bin",
+    "sha1": "173ac942ad4efbbbb176f8522fc7d273540169b0",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/DATE.bin",
+    "sha1": "b5fb83738364a317a590735578f5878077fcda3d",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/DATE2.bin",
+    "sha1": "0db71056d49f1bf0975a592ec7bbb4fd7894bd56",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/ENDING.bin",
+    "sha1": "6788c26fe3b93016b245e2f5837de12428603ddf",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/EN_NICHI.bin",
+    "sha1": "d1642c45b607242936873b52e81ac62c451b3e29",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/ETC.bin",
+    "sha1": "681c93b6e57c885f86e074c885a8bf6c3cca2319",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/EVENT.bin",
+    "sha1": "ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/GEKO.bin",
+    "sha1": "fa37853a9bd8df628c6313b0a4af8ec7568482cd",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/GYOZI.bin",
+    "sha1": "43f92523116e7b6cd772d4397712a52eeda89703",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/KANGEI.bin",
+    "sha1": "b94bbaceb7083c4b56d3b2ff56313cbcfbe6ac83",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/MASTER.bin",
+    "sha1": "7303c196a7a2fd8423da1e66e5a49511e9805bbc",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/NAME_ENT.bin",
+    "sha1": "e9a9a0f059dc0029e292363ecf09cffb4068dad9",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/OLH.bin",
+    "sha1": "3c6fd6ec737732f62c4fda4a655b8a5b3f48122b",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/OMIMAI.bin",
+    "sha1": "465f4abd096d90e78960fd0f99e983c122efe3c1",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/OPTION.bin",
+    "sha1": "3fd443d1e32404e5febd57d0586ef1c70ce8a811",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/RENSYU.bin",
+    "sha1": "67efd6e1b2ee454598096a74bd13dfeb0c15d27e",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/RPG_BAT.bin",
+    "sha1": "142d13e317aa7ae6def6a300085c38f645c19db6",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/SHOUGATU.bin",
+    "sha1": "d956b1df6fbf9d1f8261d7e1f98ea301f7eb66a9",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/SHUGAKU.bin",
+    "sha1": "e9c64e952a1ef5dfea5e9b3e6a659aa6ccb8eb8c",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/TACO.bin",
+    "sha1": "1419e93cbad6c0df790577701181be04e0747969",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/TAIIKU.bin",
+    "sha1": "306d1013b9be465819525d1fb4dc0e86b422a846",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/TEL.bin",
+    "sha1": "d37c3ae6beb7ab361f39366b8274cde0f7c96b5c",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/TT.bin",
+    "sha1": "89a81735c1e9d79d2562f4c6ce628a732e017cf2",
+    "match": true
+  },
+  {
+    "binary": "build/ovl/VALEN.bin",
+    "sha1": "356aed2481987108f908d7013cc0392cea9dcc8c",
+    "match": true
+  }
+]

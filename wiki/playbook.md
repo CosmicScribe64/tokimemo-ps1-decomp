@@ -122,3 +122,7 @@ For a leaf register cycle, count interference rather than assuming the caller-sa
 ## Spend a temporary before a call without changing later address sharing (T-25045)
 
 A late-folded zero plus two alternating identities in an existing call argument can advance the ugen free-list order while as1 removes every identity instruction. ETC func_80146D4C uses `zero = g->unk_041 * 0; printf(format, (score + zero) | zero);` in the preceding total print, retaining the final shared address and producing index t3/counter t4,t6. Applying the identity inside the index instead breaks address CSE. Check the producer's semantics, zero lifetime, full-TU literal output and removal controls; mark the artificial form FAKE. One identity or literal zero regresses this case. See [[tickets/T-25045-etc-ring-slots]].
+
+## A missing reserved register can look like an early temporary deficit (T-25055)
+
+TEL func_80136724 first differed in temporaries at word85, but the cause was the case0x40 selector much later. A separate local left the global uncoloured; direct global stores/reads reserved the missing caller register for the whole procedure. Sharing maximum and total then repaired the moved zero. A defined unsigned-false girl read raised range profit and corrected40 remaining positions; a neutral comparison expression closed the last operand swap. Capture the allocator before adding ring identities: compare which registers are reserved across the function. See [[tickets/T-25055-tel-pass-mechanisms]] and drafts/T-25055 for independent controls and exact full-TU evidence.

@@ -24,6 +24,8 @@ The compiler-lever programme is complete and negative ([[tickets/T-25013-compile
 
 ## Active work
 
+- T-25055 TEL func_80136724 is ready for integration with6,580 literal default-C bytes, all27 binary hashes and declaration guards passing. Direct standards/spec review has no unresolved finding; ticket is In Review. Global selector ownership, shared maximum/total and a measured range-profit control close the large historical register mismatch. This isolated result is not included in the integration totals above.
+
 - 2026-10-22: T-25013, T-25014, and T-25015 are Done (merged in PR #66; all levers rejected, tooling landed). T-25016 closed out its census, engine, and bulk phases with no new matches (count unchanged at 6,833) and is In Review as the PR carrying its record. The regenerated work queue is the current map of what remains: Tier 0 near set, Tier 1 scored bulk drafts (a reconstruction backlog, verified 210+ resolved rows at best), Tier 2 blocked drafts with named blockers.
 
 - 2026-10-20 session end: no agents running. Closest guards: main func_8005B43C 3 rows (permuter candidate in notes), GEKO func_80136C20 4, KANGEI x2 2 rows, parameter_up_down 11 (permuter output-252 unchecked), ETC func_80146D4C 12, GEKO func_80133C50 13 (masked-load lead in notes), mod_set_gpu 17.
