@@ -1867,3 +1867,12 @@ nearest are func_801511C0 (canon 4), func_80133024 (8),
 func_8013B460 (8), func_8013907C (9), func_80140E0C (12). Baselines
 are in the sweep ledger; the 10-minute loop now works the list
 top-down. Ticket [[tickets/T-25016-candidate-reconstruction]].
+
+## [2026-10-21] build | T-25016 engine pass over all 24 censused functions: no zeros, near set identified
+
+The 10-minute loop Lila set ran the shape engine across the whole
+census list. Best raw-score reductions: func_8013907C 163 to 15,
+func_80134724 113 to 28, func_800455C4 261 to 171. func_801511C0
+remains the nearest at 4 rows. The loop removed itself on queue
+exhaustion as instructed. Hand reconstruction on the near set is
+the remaining phase. Ticket [[tickets/T-25016-candidate-reconstruction]].

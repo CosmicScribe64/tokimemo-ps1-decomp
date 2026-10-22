@@ -75,3 +75,19 @@ register-canonicalized rows:
 - func_8014AB50 canon=104 raw=236 instruction (drafts/T-16560/_runs/typed/TACO/func_8014AB50/body.c)
 - func_800455C4 canon=140 raw=261 instruction (drafts/T-24041/func_800455C4.c)
 - func_80135F4C canon=343 raw=343 addressing (drafts/T-24047/body.c)
+
+### Engine pass complete (2026-10-21 evening)
+
+The shape engine has now run over all 24 censused functions (budget
+400 each, results in the sweep ledger). No function reached local
+zero. The engine's wins were in raw-score reduction on the
+register-heavy functions: func_8013907C 163 -> 15, func_80134724
+113 -> 28, func_800455C4 261 -> 171, func_801398EC 110 -> 86,
+func_80047560 58 -> 37. The nearest function overall remains
+func_801511C0, plateaued at 4 rows (a single small instruction hunk
+the transforms cannot move). Everything else sits at 14 or above.
+
+What remains for actual matches is hand reconstruction on the near
+set (func_801511C0 first), using the observatory to read the first
+divergence per function. The engine pass and census are complete;
+the ticket stays In Progress for that hand phase.
