@@ -3128,3 +3128,18 @@ For-loop retry increment restores the target previous-choice/constant9/G-base re
 ## [2026-10-22] build | T-25046 first-rejection availability boundary
 
 [[tickets/T-25046-shougatu-ea98]] records rejected CFG/late-identity/read controls and corrects an invalid old local-selector scratch negative (accidental forced-store replacement; production unaffected). Corrected controls remain negative. Target first rejection bypasses the t4 load, while current uopt RLOD makes t4 available there; tracing that availability boundary now. Best remains36/230, exact frame/tables.
+## [2026-10-22] ticket | Claim final TEL menu builder
+
+[[tickets/T-25060-tel-date-menu]] starts In Progress from clean596c2c269 on codex/t25060 in /private/tmp/tokimemo-t25024. Root explicitly transferred exclusive scope to src/ovl/TEL/8013CCD0.c:func_8013D88C after the preclaim audit showed func_80134FE4 already default C and former TU fully matched. Read T-24039/T-24511 semantic corrections and negative controls; baseline755 versus745 words,232 versus224-byte frame. No compiler run or source change yet; slot yielded while preparing the new replay.
+
+## [2026-10-22] build | T-25060 baseline and packed-word lifetime control
+
+[[tickets/T-25060-tel-date-menu]] replayed the preserved T-24511 full-TU source: 755/745 words, 689 changed positions, aligned cost 798, final frame 240/224. Native allocation shows flags already in v1 and a separate saved x/packed-word range in s2; old notes about a saved flag pointer and frame 232 describe prior controls. Reusing dead arg0 for packed-word capture gives 751 words and cost 786; narrowing coordinate x is neutral. Sources and generator are under drafts/T-25060; private object/trace evidence stays under build/T-25060. No production source changed.
+
+## [2026-10-22] build | T-25060 independent allocation and multiply controls
+
+[[tickets/T-25060-tel-date-menu]] isolated pointer/index false-reads and negative-literal multiplication after separating packed flags from coordinates. Index read reaches747 words (cost804); negative-scale arg0 control755 (cost770) restores a target multiply macro. None matches. The next concrete hypothesis is signed/unsigned packed-word alias identity: three signed loads alone fail to share the target GameState base. Preserved generators are in drafts/T-25060/lifetime_controls.py; no production edits. Compiler slot yielded after this bounded stage.
+
+## [2026-10-22] build | T-25060 address-sharing hypothesis narrowed
+
+[[tickets/T-25060-tel-date-menu]] found three unsigned-load controls byte-neutral. An explicit page-one GameState pointer restores common-base loads but expands the function to776 words. The combined prior allocation reads produce756 words; native trace capture is examining their interaction. Baseline frame terminology corrected: native224, final240 after the uniform pass, target final224. No production or shared tooling changed.
