@@ -1897,3 +1897,5 @@ recorded in the ticket do not move them.
 ## [2026-10-22] ticket | T-25016 gate-lever experiments: flattening and volatile both negative with named causes
 
 ## [2026-10-22] ticket | T-25016 trace note: global filler active in func_80139290 (37 moves)
+
+## [2026-10-22] ticket | T-25016 phase 2 closeout: bulk pool fully classified (79 scored, 43 named blockers), queue regenerated, in-tree pool contamination corrected

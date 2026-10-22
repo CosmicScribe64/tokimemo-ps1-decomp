@@ -249,3 +249,42 @@ pattern is the next diagnostic step for this function; it is
 recorded here so the near-set work can resume from the trace
 (directory traces/39290-vol.txt in the scratch tree) instead
 of from source-shape guessing.
+
+## Phase 2 closeout (2026-10-22)
+
+The bulk reconstruction pool is fully worked through the salvage
+pipeline. Of the pool, 79 functions now have a compiling candidate
+with a packet-canonical score, and 43 remain blocked, each with
+its first blocker and offending line recorded. The regenerated
+queue (scratch corpus QUEUE.md) ranks Tier 1 by score and lists
+Tier 2 by named blocker. No bulk candidate reached local zero;
+the matched count is unchanged.
+
+What the salvage pipeline needed, in order of discovery: m2c
+writes field accesses with no underscore (unk4, unkA) as well as
+with one, and negative offsets for fields behind a pointer
+(unk-8); every pattern must accept both. m2c's own failure
+markers (M2C_ERROR terms) are zeroed and counted per draft so
+the queue flags drafts with holes. Field-access salvage is a
+backward-scanning tokenizer over arbitrary base expressions,
+not per-shape regexes: three regex generations each missed a
+base form. Transforms run as an attempt ladder (full, reduced,
+harmonize-only, sanitize-only); the first compile wins and the
+recorded error comes from the least transformed attempt, because
+transforms applied cumulatively across passes mangled beds and
+poisoned the error data more than once.
+
+Correction to an earlier note in this phase: func_8004DAC4,
+func_8007437C, and func_80135FB8 are in-tree bodies the project
+already counts as matched (two are marked FAKE in-tree). They
+entered the bulk pool because early reference builds failed for
+main-segment files, not because they are unmatched. A one-row
+score measured for each was bed-context versus whole-file
+context noise, not distance to the original. Pool membership is
+not evidence a function is unmatched; the INCLUDE_ASM census
+scope is the authoritative unmatched set.
+
+Remaining bulk value is per-function reconstruction against the
+Tier 1 distances and Tier 2 blockers, plus the near set in
+Tier 0. The generic salvage has converged: two consecutive
+passes over pristine drafts converted zero new functions.
