@@ -91,3 +91,55 @@ What remains for actual matches is hand reconstruction on the near
 set (func_801511C0 first), using the observatory to read the first
 divergence per function. The engine pass and census are complete;
 the ticket stays In Progress for that hand phase.
+
+### Hand phase (2026-10-21 night)
+
+Two measurement corrections first:
+
+1. Census v2 scored several functions from stale drafts/ files. The
+   src tree carries newer NON_MATCHING bodies for 13 of the 24, and
+   several rank far better from the in-tree body (func_8014AB50
+   canonical 104 -> 6, func_80134724 packet raw 113 -> 20,
+   func_80139290 51 -> 17). Future census runs should prefer the
+   in-tree body over drafts/ fragments.
+2. The packet metric counts symbolization differences as diffs
+   (a member access and a standalone symbol at the same address
+   produce different normalized text). funcdiff's after-relocation
+   section resolves those away and is the local ground truth. By
+   it, the near set is much closer than the packet numbers said.
+
+funcdiff resolved rows for the best current body of each of the 24:
+func_8013852C 2, func_80136C20 2, func_80134724 4, func_801511C0 5,
+func_80140E0C 6, func_80139290 7, func_8014AB50 7, func_80133024 20,
+func_80135F4C 21, func_80133C50 22, func_8005B43C 33,
+func_80132B24 40, func_8013B460 41, func_80146D4C 52,
+func_80138C1C 54, func_8013AF78 63, func_80047560 72,
+func_80134D94 78, func_8013E50C 79, func_8006C988 79,
+func_801398EC 89, func_8013907C 136, func_80075C84 169,
+func_800455C4 254. No function reached local zero.
+
+Every residue in the top group is a local ordering choice by as1
+on an otherwise identical instruction stream: a hoisted address
+load (func_8013852C, func_80139290), the delay-slot candidate pick
+of T-25011 (func_80134724), a two-instruction prologue placement
+(func_801511C0), the zero fold documented in the src comment
+(func_80140E0C), and the v0/v1 constant allocation (func_8014AB50).
+
+Hand attempts this session:
+
+- func_801511C0: statement orders, all 120 declaration
+  permutations, local-copy and index-temp forms, loop forms,
+  empty-if variants, no-base forms. All plateau at the same hunk.
+- func_8013852C: standalone-symbol rewrite takes the packet score
+  17 -> 2 but the resolved rows stay 2; statement splits,
+  expression variants, and the 5.3mix / 7.1 compiler variants do
+  not flip the remaining swap.
+- func_80134724: default label first (no change), merged
+  case 5/6 (worse).
+- func_8014AB50: constant-form variants at the four `= 1` sites
+  (no change) and a 302-trial engine run on the in-tree body
+  (no improvement).
+
+The ticket stays In Progress. For the top group the remaining
+lever is as1 scheduling inputs (block weights and region
+structure), not source shape.
