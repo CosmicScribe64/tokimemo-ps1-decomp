@@ -3154,3 +3154,14 @@ Compared three specific histories and claimed func_80144224 in src/ovl/ETC/80143
 ## [2026-10-22] build | T-25061 current full-TU baseline reproduced
 
 The T-25002 draft now measures 199 target / 190 candidate words, aligned cost 175. Resolved comparison includes four target alignment words after the 780-byte body. Historical counts are not directly interchangeable. [[tickets/T-25061-etc-next-match]] will trace frame-counter versus order-index lifetimes; no production source changed.
+## [2026-10-22] query | T-25042 late-edge lifetime checks
+
+Unsigned aliases do not isolate the shared store's promotion; a late-zero index retains an extra address instruction. Signed nonnegative tests survive into as1 but remain in final code, and nested case-label or neutral-assignment forms do not preserve the required harmless edge. Added the measured negative classes to drafts/T-25042/README.md for [[tickets/T-25042-kangei-dispatch-emission]]. No production source change or match claimed.
+
+## [2026-10-22] query | T-25042 staged selector allocation
+
+A staged byte conversion restores the172-word uncast stream with a full-width local, isolating the two lost instructions from earlier widening tests. Conditional neutral identities still disappear too early; impossible byte-selector cases retain extra dispatch code. Recorded the causal controls in drafts/T-25042/README.md for [[tickets/T-25042-kangei-dispatch-emission]]. Production source remains unchanged.
+
+## [2026-10-22] query | T-25042 exact live-register conflict
+
+A print-only as1 replay reproduces stock target instructions and identifies the cast default shift's t1 bit as the precise conflict with dispatch live-in. Whole-switch loop, high-bit and translated-selector controls retain changed code or allocation. Preserved measured outcomes in drafts/T-25042/README.md for [[tickets/T-25042-kangei-dispatch-emission]]; no production source change.

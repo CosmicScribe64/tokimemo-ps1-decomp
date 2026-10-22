@@ -97,3 +97,60 @@ boundary must survive until the global move, while leaving no instructions or da
 in the final binary. The stock as1 pipeline has a branch optimization stage after
 its global scheduling stage; locating a C form whose edge lasts until that stage
 remains open. This is a research lead, not a proof that such a form exists.
+
+## Store alias and late-edge checks
+
+Unsigned scalar aliases still promote the same shared global (score134), rather
+than isolating the default store. A provably zero array index, computed from an
+unsigned comparison, does keep the access indirect through uopt, but the final
+code retains a separate address addiu and still hoists the shift. Local final-result
+boundaries retain172 words but change a promoted arithmetic register (score30/32).
+
+Signed tests of masked or shifted nonnegative values reach as1, unlike unsigned
+`< 0`, but as1 does not remove those tests: the final code retains the mask/shift
+and bgez. Legal nested case labels (inside a constant if or a never-repeated loop)
+do not supply a retained default predecessor. Conditional mathematically neutral
+assignments also fail: a narrow local retains sign extension, while a full-width
+local keeps conditional copies. Widening the function's v changes its earlier
+allocation and instruction stream. These tests produced no candidate better than
+the unchanged T-25011 guard.
+
+## Allocation and unreachable-case follow-up
+
+A u32 selector local with `s = (u8)func_80051A68(...); s &= 0x7F;`
+reproduces the uncast control exactly (172 words, score26). This isolates why the
+previous direct u32 declaration lost two initial instructions: staging the byte
+conversion restores the helper-result move, masked temporary and subsequent
+scratch-register sequence. A direct split without narrowing, a second cast on the
+mask, and an empty pre-mask use instead retain the170-word/score188 difference.
+Conditional signed AND-minus-one, OR-zero and late unsigned-false identities on
+this restored full-width local all disappear before scheduling and retain score26.
+
+Unreachable case labels outside the byte selector's domain (-1 and256), sharing
+the default body, both retain extra dispatch code (178 words, score128). Thus they
+do not provide a zero-runtime additional predecessor. The separate ENDING scan
+budget finding does not directly transfer: KANGEI's undesired default is already
+its first candidate, before the desired dispatch block.
+
+## Region and conservative-liveness checks
+
+- Setting otherwise discarded high bits of the restored u32 local retains real
+  code:174 words unconditionally,176 under a predicate (score32/34). The final
+  halfword store does not make as1 remove those operations across this sequence.
+- A one-execution wrapper around the whole switch gives171/167 words with changed
+  allocation; the literal-zero form still hoists the default shift. Preinitializing
+  the default global before the switch instead sinks/shares substantial work and
+  produces162 words, score190.
+- Narrowing a translated switch domain prevents early affine cancellation, but
+  leaves175/176 words (score151/166). A named translated selector with an empty test
+  instead reaches172 words, score130: as1 combines its +1/-1 to `addiu t1,a1,0`, but
+  keeps that copy and the changed allocation. This is distinct from the earlier
+  plain translation, which uopt canonicalizes completely.
+
+A print-only diagnostic assembler adds phase and path-live-set output to the
+existing as1-probe source. The captured baseline, uncast and promoted-selector
+objects reproduce the stock resolved target instructions exactly. The cast's path
+failure is specifically the default shift's t1 definition bitmap0x00400000 against
+exit block19's live-in bitmap0x3c40ff0e. The uncast t0 definition does not intersect
+that bitmap. Further phase tracing is checking whether conservative liveness can
+outlast an instruction removal; no source recipe or match is claimed from this.
