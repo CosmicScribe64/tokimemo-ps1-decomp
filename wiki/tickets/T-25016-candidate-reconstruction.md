@@ -143,3 +143,66 @@ Hand attempts this session:
 The ticket stays In Progress. For the top group the remaining
 lever is as1 scheduling inputs (block weights and region
 structure), not source shape.
+
+### Phase 2 + resolution plan (2026-10-22, Octa)
+
+Phase 1 (as1 block weights) closed with no flip: the traced
+weights for func_80134724 confirm the model in
+[[as1-scheduler-rule]] (head 1, default 4, dispatch 4), and the
+default block's predecessor structure cannot change because no
+switch arm shares the default arm's body. func_80136C20's
+delay-slot residue survives the standalone-symbol form and both
+compiler variants.
+
+Phase 2 bulk reconstruction over the 95 INCLUDE_ASM functions
+census v2 never scored (scratch pipeline, m2c with a per-file
+preprocessed context, drafts stocked as beds for all 95):
+
+- 2 scored: func_80139FB8 canon 69, func_8015528C canon 75.
+- 66 compile failures, by first error: 21 syntax errors and 13
+  Shift-JIS encoding errors (pipeline bugs in draft handling,
+  not draft quality), 11 selector-on-non-struct type mismatches,
+  about 8 undefined globals the bed header does not declare,
+  the rest scattered.
+- 16 produced no m2c draft; 11 references failed to build from
+  the stub TU.
+
+Resolution plan by common issue, in the order being executed:
+
+1. Encoding and syntax class (about 34): normalize drafts
+   (escape non-ASCII in string literals, drop it in comments,
+   drop m2c uncertainty lines) and recompile. Patch run in
+   flight; this is a pipeline fix and should unlock most of
+   the class.
+2. Undefined globals (about 8): synthesize bed-level extern
+   declarations from the repo's own declarations for measuring;
+   the in-tree fix at promotion time is the existing keep-line
+   mechanism. Also part of the patch run.
+3. Reference failures (11): build the reference by compiling
+   the whole src file in the scratch tree and extracting the
+   function. Also part of the patch run.
+4. Selector type mismatches (11): rewrite the access using the
+   form the matched corpus uses for the same address
+   (precedent index), or pointer arithmetic with the same
+   offsets where the corpus treats the value as bytes.
+5. No m2c draft (16): retry without context (done in the patch
+   run where the context was the failure), else hand
+   reconstruction; several are string-heavy and tied to class 1.
+6. Near set (2 to 7 resolved rows, as1 ordering on identical
+   streams): the untested levers are (a) case-label permutation
+   to renumber the tied blocks, checked against the trace
+   before funcdiff; (b) naming the mover's tie-break variable
+   from the pinned as1 source, then designing the source form
+   that sets it; (c) for the prologue case, a form that makes
+   one of the two instructions depend on the other; for the
+   constant case, a form whose first use of the constant is
+   the compare.
+7. Mid band (20 to 89 rows): iterate on the first funcdiff
+   divergence only; later rows are usually cascade from the
+   first. The precedent index supplies the matched form for
+   the diverging construct.
+
+Endgame for any local zero: stage under drafts/T-25016/, run
+the full local gate (clean build, check_headers,
+migrate_globals --check, sync_protos --check-branch), then one
+batched PR so CI gives the formal verdicts together.

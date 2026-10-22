@@ -1891,3 +1891,5 @@ choices on identical instruction streams; source-shape attempts
 (statement and declaration permutations, splits, label placement,
 compiler variants, a 302-trial engine run on func_8014AB50)
 recorded in the ticket do not move them.
+
+## [2026-10-22] ticket | T-25016 phase 2 results and resolution plan by common issue
