@@ -66,6 +66,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-25053-bunka-last-function|T-25053 Match final BUNKA_SD function]]
 
 - [ ] [[tickets/T-25042-kangei-dispatch-emission|T-25042 Match KANGEI dispatch scheduling]]
+- [ ] [[tickets/T-25061-etc-next-match|T-25061 Match next ETC function]]
 
 
 
