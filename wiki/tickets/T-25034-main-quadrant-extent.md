@@ -91,3 +91,11 @@ Immutable astra-rgb-comma-group uses standard per-vertex RGB order grouped as on
 ### UV store order improves to186
 
 Immutable astra-uv-after-xy moves each v3 store after its y3 coordinate assignment in all four cases. Existing as1 scheduling puts the UV store in the target y3 load delay slot, restoring four NOP/UV positions. Whole-TU674target/670built words,186aligned/186printed. Color block stays exact except hoisted a1=0. Updated signed-mask.c from immutable worker source; worker continues.
+
+### TILE case0 scheduling improves to182
+
+Immutable astra-tile-xy-before-width gives674target/670built,182aligned/182printed. Moving TILE case0 width assignment after y0 lets the independent constant-width store fill the target load delay and restores a1=primitive scheduling. Full-s32 extent semantics retained. Worker next tests corresponding case1 width/height grouping; private accumulated ledger is build/T-25034/astra-resume-progress.md.
+
+### UV exit branches improve to159
+
+Case1 width-before-height ordering first improved to178/178 at674/670words. Latest immutable astra-uv-join-after-u0 is674target/673built,159aligned/159printed: each required u0=0 store precedes its explicit goto, shared label follows case3 u0. This reproduces target UV exit branches/delay stores while preserving saved-register ranks, unlike natural breaks. One overall missing instruction is TILE case2 radius MOVE; UV endpoint remains v1 vs a1. Quad-only half-radius narrowing was negative; moving TILE case2 extent after y0 canonicalizes unchanged. Updated signed-mask.c; worker continues, no promotion.

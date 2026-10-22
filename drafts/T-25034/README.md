@@ -57,3 +57,11 @@ The latest `signed-mask.c` adds only v3-after-y3 ordering in each UV case to
 the198 checkpoint. Existing scheduling puts each UV store in the target y3
 load delay slot:674target/670built words,186aligned/186printed. Four missing
 NOP/UV positions are restored; the candidate remains four words short.
+
+The current `signed-mask.c` now measures674target/673built words,159/159.
+Case0 width-after-y0 and case1 width-before-height restore TILE delay slots.
+Each UV case stores u0 before its goto; placing the shared label after case3's
+u0 store reproduces all target UV exit branches/delay stores without rotating
+saved registers. One instruction remains missing overall (TILE case2 radius
+MOVE); UV endpoint still uses v1 rather than a1. Quad-only half-radius
+narrowing was rejected; full-s32 TILE extent/radius semantics remain.

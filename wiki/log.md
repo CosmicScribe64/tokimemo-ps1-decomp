@@ -2099,3 +2099,15 @@ Docker replay of the updated signed-mask.c independently reproduces674target/666
 ## [2026-10-22] build | Quadrant UV checkpoint replayed
 
 Independent Docker replay confirms latest signed-mask.c at674target/670built words,186aligned/186printed for [[tickets/T-25034-main-quadrant-extent]]. Pinning source and scheduling notes while the worker continues. Production remains unchanged.
+
+## [2026-10-22] build | Quadrant TILE load-delay scheduling improves
+
+[[tickets/T-25034-main-quadrant-extent]] case0 width-after-y0 placement improves186 to182 differences at674target/670built words, retaining full-word extents. Immutable worker source preserved privately; worker continues case1 grouping. No production promotion.
+
+## [2026-10-22] build | Quadrant UV exits improve to159
+
+[[tickets/T-25034-main-quadrant-extent]] natural TILE width/height ordering reaches178/178, then explicit UV u0 stores before shared exit goto reach674target/673built words,159aligned/159printed. Saved-register ranks retained and all UV exit branches/delay stores restored. One missing TILE radius MOVE and UV endpoint allocation remain. Archived signed-mask.c updated; full-word TILE semantics preserved, no promotion.
+
+## [2026-10-22] build | Quadrant159 checkpoint replayed
+
+Independent Docker replay confirms current signed-mask.c at674target/673built words,159aligned/159printed for [[tickets/T-25034-main-quadrant-extent]]. Pin source plus causal notes; worker remains active and production unchanged.
