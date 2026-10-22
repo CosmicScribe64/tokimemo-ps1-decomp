@@ -63,3 +63,13 @@ this diagnostic changes no compiler decision and is not used for proofs.
   address but disrupts the first b3 snapshot reuse, growing to220 words.
 * Late-zero identity on the first 128 store is neutral. The year98 identity
   removes the critical range and reaches the checkpoint above.
+
+## Root-replayed two-instruction snapshot
+
+`snapshot-near.c` preserves the newer explicit initial snapshot, late-zero first
+b7 address and year98 identity. Root replay on current main independently gives
+218/218 words, cost4 (two differing words): row116 target nop versus absolute
+address lui; row117 target base-relative lbu versus absolute lbu. All other216
+words agree. Run `tools/docker.sh python3 drafts/T-25040/replay-snapshot.py`.
+Production remains assembly. Worker continues overlapping flag-view research;
+rewriting further reads has so far moved the absolute-address residue elsewhere.

@@ -2593,3 +2593,7 @@ Named conversion locals show that uopt can avoid the cast's extra scratch tempor
 ## [2026-10-22] query | Preserve KANGEI phase constraints
 
 Integrated research checkpoint872d89968 for [[tickets/T-25042-kangei-dispatch-emission]], preserving both histories. Production unchanged; worker continues investigating source boundaries surviving global scheduling. Relayed newly verified T-25047 alternating late-zero identity mechanism to ETC worker whose remaining issue needs one temporary slot. MAIN dispatcher worker reports216/218 exact in a newer unverified candidate; no coverage counted.
+
+## [2026-10-22] build | MAIN dispatcher reduced to two words
+
+Root independent Docker replay confirms [[tickets/T-25040-main-flag-dispatch]] snapshot candidate218/218words with only two differing words at116–117. Preserved source/replay; production unchanged and no coverage increase. Worker continues final b8 base-address residue. TACO continuation owns8013B460 in8013B170.c; quadrant worker reports182differences, not yet independently replayed.
