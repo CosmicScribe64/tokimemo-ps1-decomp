@@ -55,7 +55,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-25057-name-ent-pass-investigation|T-25057 Reconstruct NAME_ENT record selector allocation]]
+- [ ] [[tickets/T-25062-name-ent-byte-pack|T-25062 Match NAME_ENT byte pack and zero loop]]
 
 
 
@@ -122,6 +122,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+- [ ] [[tickets/T-25057-name-ent-pass-investigation|T-25057 Reconstruct NAME_ENT record selector allocation]]
 
 
 - [ ] [[tickets/T-25051-taco-quad-store|T-25051 Match TACO wipe quad store schedule]]
