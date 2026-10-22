@@ -499,11 +499,6 @@ void func_8005B39C(void) {
     }
 }
 
-/* NON_MATCHING: T-25004, T-25008, 3 rows; the club number (h >> 12) is coloured $a0 (the call argument) where
- * the original keeps it in $v1 and copies it to $a0 in the call delay slot. T-25008: reading the halfword into
- * temp_v0_2 for the empty test (permuter, score 440 -> 275) gives the move, but from $a1 with the halfword in
- * $a0 (7 rows). */
-#ifdef NON_MATCHING
 s32 func_8005B43C(void) {
     s32 pad[3]; /* FAKE: T-25004, frame 0x38 with the result at sp+0x28 (T-24301). */
     s32 sp28;
@@ -528,11 +523,13 @@ s32 func_8005B43C(void) {
         case 4:
             if (get_icon_can_use(D_800E6280.unk_1093) != 0) {
                 func_80044750(0x500);
-                temp_v1 = D_800E6280.unk_0F4.h >> 0xC;
-                if (temp_v1 == 0xB) {
+                if ((D_800E6280.unk_0F4.h >> 0xC) == 0xB) {
                     D_800E6280.unk_F68.date.month = D_800E6280.unk_1093;
                     func_80042908(5);
                 } else {
+                    /* T-25039: define the call argument only on this path so
+                     * the shared shift stays in $v1 until the call. */
+                    temp_v1 = D_800E6280.unk_0F4.h >> 0xC;
                     /* FAKE: T-25004, a second read of the halfword makes uopt keep the load in a register
                      * ($a1), so the shift costs no ugen temporary (permuter find). */
                     if (D_800E6280.unk_0F4.h) {
@@ -605,9 +602,6 @@ s32 func_8005B43C(void) {
     }
     return sp28;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B43C);
-#endif
 
 void func_8005B798(void) {
     switch (D_800E6280.unk_110A) {

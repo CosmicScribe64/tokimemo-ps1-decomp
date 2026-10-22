@@ -100,7 +100,7 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-25041-kangei-preload-schedule|T-25041 Match KANGEI local scheduling]]
+
 
 
 - [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
@@ -180,6 +180,9 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-25039-main-club-carrier|T-25039 Match MAIN club-number carrier]]
+- [ ] [[tickets/T-25041-kangei-preload-schedule|T-25041 Match KANGEI local scheduling]]
 
 - [ ] [[tickets/T-25037-bunka-upstream-emission|T-25037 Match BUNKA_SD upstream emission]]
 

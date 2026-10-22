@@ -1,7 +1,7 @@
 ---
 id: T-25041
 title: Match KANGEI local scheduling with upstream dependency evidence
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
 updated: 2026-10-22
@@ -40,3 +40,7 @@ The simpler plain `if (D_80139ADC) {}` matches with plain `year`; selected over 
 Rebuilt all8 current KANGEI C units using the generated normal Ninja commands, then normal link/objcopy/SHA1 commands: **KANGEI.bin OK** (b94bbaceb7083c4b56d3b2ff56313cbcfbe6ac83). Read-only shared assembly inputs were retained; no compiler/build-rule changes. Header/global checks pass; branch prototype check reports0 new disagreements,15 known. One existing compiler warning about `&` before an array occurs in unchanged 80135F10.c.
 
 Root final-source standards/spec review: no findings. u8 year makes the removed conversions value-preserving; the nonvolatile empty field test has no effect; all unusual source controls are marked FAKE. Ticket moves to In Review for root full27-unit integration and main push. Negative ledger in drafts/T-25041/README.md; superseding note appended to drafts/T-24901/NOTES.md. This branch adds one matched function/180 bytes after the separately pinned BUNKA_SD commit.
+
+## Root acceptance
+
+Independent standards/spec review passes. Integrated default-C literal proofs860/180bytes, fresh27/27binary checksums and declaration guards pass, prototypes0new/15known. No assembly fallback. Accepted and moved to Done.

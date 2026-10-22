@@ -2379,3 +2379,19 @@ Claimed [[tickets/T-25041-kangei-preload-schedule]] after pinning BUNKA_SD. Read
 ## [2026-10-22] lint | T-25041 reviewed integration pin
 
 Wiki lint reports0 broken links and0 status mismatches; existing large data/log pages remain. The draft README prose checker reports no hits; git diff --check passes. [[tickets/T-25041-kangei-preload-schedule]] is ready for root integration with its source and complete experiment ledger.
+
+## [2026-10-22] ticket | T-25039 MAIN club carrier
+
+Created [[tickets/T-25039-main-club-carrier]] after GYOZI integration. Reused isolated checkout, fast-forwarded to 77eae26cf with prior private evidence retained; claimed only src/main/8005A0B0.c. Read T-25004/T-25008 controls and allocation history. Reproduce the baseline before testing distinct lifetime/phase mechanisms.
+
+## [2026-10-22] build | T-25039 club precolor boundary
+
+Docker full-TU baseline for [[tickets/T-25039-main-club-carrier]] is 215/215 words, three changed positions. Captured allocation confirms distinct shift-expression v1 and local a0 ranges; later coalescing produces the wrong a0. Repeated shift expression with a late-folded zero preserves the target v1 and argument move, leaving the halfword a0-versus-a1 carrier. Corrected actual function size to 860 bytes; no match or production edit yet.
+
+## [2026-10-22] build | T-25039 MAIN club carrier matched
+
+Moved the local club definition into its consuming else branch, before the existing empty halfword test, while comparing the raw shift beforehand. This closes both carriers without new late-zero arithmetic or ignored arguments. Default C matches all 860 linked bytes, MAIN SHA1 passes, and headers/global/prototype guards pass (zero new, 15 known). Root independently reviewed standards and scope with no findings. Recorded controls in drafts/T-25039/README.md and [[matching-notes]]; moved [[tickets/T-25039-main-club-carrier]] to In Review pending root integration.
+
+## [2026-10-22] build | MAIN club and KANGEI matches accepted
+
+Integrated cb6cc430b and c0249b80c. Root default-C literal860/180byte proofs, fresh27/27binary checksums, headers/globals and prototypes0new/15known pass. Independent standards/spec reviews no findings. T-25039/T-25041 move Done. Progress6839/6952functions,2112784/2276920bytes (92.8%);113functions/164136bytes remain. Six matches add8108bytes. User requested more agents: MAIN chat tasked to add two isolated Astra lanes T-25043 TACO8014AB50 and T-25044 parameter_up_down, keeping quadrant worker. T-25039 file now complete; its worker continues T-25045 ETC80146D4C. KANGEI worker continues T-25042. Root serializes integration.
