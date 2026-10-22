@@ -1919,3 +1919,11 @@ Created [[tickets/T-25019-recovered-taco-38b2c]] in isolated worktree /private/t
 ## [2026-10-22] query | Recovered queue provenance and TACO baseline
 
 [[tickets/T-25019-recovered-taco-38b2c]]: 410 recovered files; 151 C body artifacts, 122 m2c bodies. TACO func_80138B2C current guarded whole-TU Docker baseline is 30 positional rows/60 printed diff lines; mechanically adapted older archive gives 103 unequal-span printed diff lines, REAL DIFFERENCE. Restored source and registered existing colour tail without speculative variants. [[matching-notes]] records result and concrete next reconstruction target main func_8005215C. Ticket and board moved to In Review for independent standards review.
+
+## [2026-10-22] ticket | Typed reconstruction main func_8005215C
+
+Created [[tickets/T-25021-main-5215c-reconstruction]] in the isolated T-25019 worktree. Recovered candidate uses invalid void-pointer selectors; current xa_wait supplies shared-prefix buffer widths. Read T-12050 wide-compare negatives and inspected original k_disp_inc call sites before changing call views.
+
+## [2026-10-22] query | Typed state-machine reconstruction checkpoint
+
+[[tickets/T-25021-main-5215c-reconstruction]]: recovered func_8005215C compiles after evidence-based buffer and callee repairs. Docker full-TU final source315target/313built words, aligned138 and printed138, frame64 and observed homes exact. Preserved wide arithmetic. Earlier baseline frame96/printed325. Source-only checkpoints saved under drafts/T-25021/main/func_8005215C/; production restored. Earliest structural read-boundary gap documented in [[matching-notes]] for the requested multi-chat attack plan. Ticket/board moved to In Review; no match or coverage claim.
