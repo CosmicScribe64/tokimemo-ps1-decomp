@@ -1903,3 +1903,11 @@ recorded in the ticket do not move them.
 ## [2026-10-22] ticket | T-25016 queue verification: top bulk candidates funcdiff-verified (best 210 resolved lines); packet scores flatter by ~10x; Tier 1 re-labelled a reconstruction backlog
 
 ## [2026-10-22] ticket | T-25013, T-25014, T-25015 marked Done (merged in PR #66); T-25016 to In Review with its PR; status page next-step rewritten for the post-lever state
+
+## [2026-10-22] decision | Replan completion after contributor research
+
+Fetched and fast-forwarded clean main to 7c87f223e, read T-25013 through T-25016 research and closeout evidence, and independently ran Docker progress: 6833/6952 functions, 2104676/2276920 bytes. Corrected stale remaining count to119. Updated [[plan-remaining]] with artifact recovery, whole-TU measurement, two Sol medium lanes, bounded Astra escalation and strict integration gates; created Ready [[tickets/T-25017-completion-plan]]. Remote queue/candidates/traces must be recovered before repeating the completed salvage programme. No matching workers dispatched by this planning action, no production changes.
+
+## [2026-10-22] ticket | Start bounded completion execution
+
+Moved [[tickets/T-25017-completion-plan]] to In Progress with board synchronized. One Sol 6.1 medium worker owns KANGEI func_8013852C under T-25018 in isolation; no other live subagents. Issue65 remains open and its contributor expects to return Friday; select KANGEI first to avoid GEKO/OPTION overlap. No open PRs. Remote artifact access is unresolved; requested location from user while independent near-match work proceeds. No contributor messages posted.

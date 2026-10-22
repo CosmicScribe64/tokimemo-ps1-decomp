@@ -13,9 +13,9 @@ The compiler-lever programme is complete and negative ([[tickets/T-25013-compile
 
 ## Progress (2026-10-20)
 
-- Game code: 6833 / 6,952 functions, 92.4% of bytes.
+- Game code: 6,833 / 6,952 functions; 2,104,676 / 2,276,920 bytes (92.4%), independently measured in Docker on 2026-10-22 at 7c87f223e.
 - Complete units: TT 303/303, DATE2 102/102, and every overlay not listed below.
-- Remaining by unit (129 functions): main 51, TACO 12, GEKO 7, TAIIKU 9, ETC 10, GYOZI 6, RPG_BAT 4, ENDING 5, SHOUGATU 4, MASTER 3, NAME_ENT 4, VALEN 4, KANGEI 3, OPTION 1, BUNKA_SD 2, EN_NICHI 2, TEL 2.
+- Remaining: 119 functions and 172,244 bytes. The previous 129-function unit breakdown was stale; reconcile unit counts with the current census before dispatch.
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
