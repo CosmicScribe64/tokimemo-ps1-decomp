@@ -2335,3 +2335,24 @@ Transferred the newly verified T-25047 alternating identity to the total printf 
 ## [2026-10-22] lint | T-25045 review checkpoint
 
 Wiki lint reports zero broken links and zero ticket/board mismatches; only existing data/t0018-cases and growing log size warnings remain. Git diff check passes. ETC SHA1 is681c93b6e57c885f86e074c885a8bf6c3cca2319. [[tickets/T-25045-etc-ring-slots]] remains In Review for integration.
+
+## [2026-10-22] ticket | T-25054 ETC results scene continuation
+
+Created [[tickets/T-25054-etc-results-scene]] for func_8014790C, continuing exclusive ownership of src/ovl/ETC/80146400.c after accepted T-25045. Selected the latest roughly44-row T-24909 archive over the file's much larger ranking draft. Preserved prior pins/evidence on codex/t25054-etc-results; reproduce complete-TU baseline before causal source experiments.
+
+## [2026-10-22] build | T-25054 late-folded index isolates remaining base and call scheduling
+
+[[tickets/T-25054-etc-results-scene]] reproduced the current full-TU baseline (282 words, aligned cost66), then removed the stale separate n counter and used a late-folded zero OR to retain the original index arithmetic (281 words, cost21). Unmodified compiler captures locate the remaining base sharing in uopt and a call delay-slot reorder. Pointer bias and late branch controls do not solve the base sharing. Private evidence is in build/t25054/; production remains guarded.
+
+## [2026-10-22] build | T-25054 one-iteration boundary restores independent bases
+
+[[tickets/T-25054-etc-results-scene]] found a source control-flow boundary that survives uopt but folds before final assembly: a one-iteration initializer loop with an unsigned-less-than-zero condition. It restores both target address materializations and 282-word size; its condition operand currently extends the switch byte's range. Captures and negative controls remain under build/t25054/.
+
+
+## [2026-10-22] ticket | T-25054 matched and moved to In Review
+
+[[tickets/T-25054-etc-results-scene]] now has a default-C literal match for all1128 bytes, an unchanged ETC checksum and passing declaration guards. Canonical DisplayActor44 fields preserve the result. Recorded the separate-base boundary, array noalias mechanism and negative controls in [[matching-notes]], [[playbook]] and drafts/T-25054/README.md. Ticket and board moved together to In Review for root source review and full27 integration.
+
+## [2026-10-22] decision | T-25054 source review passed
+
+Root independently checked [[tickets/T-25054-etc-results-scene]] against CODING_STANDARDS.md and its scope. No findings remain. Final canonical source passes the default literal comparison, ETC checksum and declaration guards; root will run the full 27-binary integration gate.

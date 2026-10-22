@@ -97,6 +97,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+- [ ] [[tickets/T-25054-etc-results-scene|T-25054 Match ETC results scene]]
 - [ ] [[tickets/T-25045-etc-ring-slots|T-25045 Match ETC ring-temporary tail]]
 - [ ] [[tickets/T-25039-main-club-carrier|T-25039 Match MAIN club-number carrier]]
 

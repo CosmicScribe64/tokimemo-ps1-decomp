@@ -105,3 +105,8 @@ Do not spend a session on these without a new idea; leave a guard with the ticke
 ## Spend a temporary before a call without changing later address sharing (T-25045)
 
 A late-folded zero plus two alternating identities in an existing call argument can advance the ugen free-list order while as1 removes every identity instruction. ETC func_80146D4C uses `zero = g->unk_041 * 0; printf(format, (score + zero) | zero);` in the preceding total print, retaining the final shared address and producing index t3/counter t4,t6. Applying the identity inside the index instead breaks address CSE. Check the producer's semantics, zero lifetime, full-TU literal output and removal controls; mark the artificial form FAKE. One identity or literal zero regresses this case. See [[tickets/T-25045-etc-ring-slots]].
+
+
+## Separate loop bases with a late-folded initializer boundary (T-25054)
+
+If uopt shares a walked base and an indexed base but the target materializes both, a one-iteration `do { p = base; } while ((u32)byte < 0);` can retain the control-flow boundary through uopt and fold it before final code. Check that the byte is nonvolatile and independent of earlier live ranges; reusing a switch byte changes its allocation. Mark the artificial boundary FAKE. For the ETC results scene, indexed coordinate arrays also provide noalias metadata needed to schedule a stack argument in the call delay slot. Index all related arrays and place the counter increment where their strength-reduced updates belong. See [[tickets/T-25054-etc-results-scene]].

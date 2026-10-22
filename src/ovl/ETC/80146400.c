@@ -625,7 +625,115 @@ void func_80147880(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014790C);
+void func_80148F34(void); /* defined later in this file */
+
+/* T-25054: results scene and the fourteen result display records.
+ * FAKE: retain the legacy non-void fallthrough to keep the switch copy in v0;
+ * the only caller ignores the result. A void definition removes that copy. */
+s32 func_8014790C(void) {
+    /* FAKE: the 0x10C size only reproduces the 0x188 frame and the buffer at 0x7C (original size unknown). T-22029 */
+    u8 buf[0x10C];
+    s32 i;
+    u8 *r;
+    s16 x;
+    s16 y;
+    s32 v;
+
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        func_8004E58C();
+        func_8006612C("結果発表 ");
+        gnsx(D_800E6280.unk_0D4);
+        sndisp("今日は、試験結果の 発表の日だ。）", 0, 0x1F);
+        k_sub_reset_point_set();
+        k_sub_disp_start(0);
+        func_8004500C(1, 0x202);
+        hizuke_init();
+        func_80048E78();
+        D_800E6280.unk_110D += 1;
+        cd_read_sectors(0xD, 0x801E0000, 0x9CA8);
+        break;
+    case 1:
+        if ((u32) D_800E6280.unk_1104.w >= 0x101) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_8004E58C();
+            icon_disp_switch(0);
+            parameter_disp_switch(0);
+            hizuke_disp_switch(0);
+            func_80048F64(0x60);
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 4;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 0x40;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0xA4;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (u8 *) 0x801E64A0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (u8 *) 0x801E6520;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (u8 *) 0x801E6494;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 1;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 8;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x28;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = 0x80;
+            func_80148E98();
+            func_80148EE8();
+            func_801480D0();
+            /* FAKE: T-25054, the always-false unsigned comparison folds after
+             * uopt, keeping the walked base separate from the indexed base.
+             * Keep i's initialization and the following do on one line for
+             * the original address schedule. */
+            do { r = D_8011ECD0; } while ((u32)D_800E6280.unk_041 < 0); i = 0; do {
+                x = D_80150630[i];
+                y = D_8015064C[i];
+                v = D_80150684[i];
+                ((DisplayActor44 *)r)[0x61].unk_01 = 3;
+                ((DisplayActor44 *)r)[0x61].unk_02 = 0x40;
+                ((DisplayActor44 *)r)[0x61].unk_38 = 0;
+                ((DisplayActor44 *)r)[0x61].unk_03 = 0x24;
+                ((DisplayActor44 *)r)[0x61].unk_0C = (u8 *)0x801E64A0;
+                ((DisplayActor44 *)r)[0x61].unk_10 = (u8 *)0x801E6520;
+                ((DisplayActor44 *)r)[0x61].unk_34 = (u8 *)0x801E6494;
+                ((DisplayActor44 *)r)[0x61].unk_18 = 0x1F;
+                ((DisplayActor44 *)r)[0x61].unk_05 = 1;
+                ((DisplayActor44 *)r)[0x61].unk_04 = 8;
+                ((DisplayActor44 *)r)[0x61].unk_07 = 0x80;
+                ((DisplayActor44 *)r)[0x61].unk_26 = x;
+                ((DisplayActor44 *)r)[0x61].unk_2A = y;
+                if (v == 0xD) {
+                    strncpy((char *) buf, (char *) D_800E6280.unk_0D4, 8);
+                    strncat((char *) buf, (char *) D_800E6280.unk_0DC, 8);
+                    set_kanji_string(D_80150630[i] + 0x18, D_8015064C[i], 3, buf, 0);
+                    func_800AE0B0("%s\n", D_800E6280.unk_0C4);
+                } else if (v == 0xA) {
+                    set_kanji_string(x + 0x18, y, 3, D_800B3538[13], 0);
+                } else if (v == 0xB) {
+                    if (D_800E6280.unk_1BC[11].unk_0C.f.f9 != 0) {
+                        set_kanji_string(x + 0x18, y, 3, D_800B3538[11], 0);
+                    } else {
+                        /* FAKE: T-25054, this late-folded zero prevents uopt
+                         * from distributing 0x61 into the field displacement.
+                         * The same identity is used in the final else arm. */
+                        ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].unk_03 = 0xA4;
+                    }
+                } else if (D_800E6280.unk_1BC[v].unk_0C.f.b1) {
+                    set_kanji_string(x + 0x18, y, 3, D_800B3538[v], 0);
+                } else {
+                    ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].unk_03 = 0xA4;
+                }
+                r += 0x44;
+                i += 1;
+            } while (i != 0xE);
+            k_sub_reset_point_set();
+            k_sub_disp_start(0);
+            func_80148F34();
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 /* Bits 0 and 1 of the low byte of GameState +0xF6 (T-7010). */
 typedef struct {
