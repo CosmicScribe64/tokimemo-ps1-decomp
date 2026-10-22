@@ -2741,3 +2741,12 @@ Created [[tickets/T-25056-ending-scheduler]] In Progress in isolated codex/t2505
 ## [2026-10-22] query | T-25056 backedge phase boundary
 
 [[tickets/T-25056-ending-scheduler]] records17 causal source controls. Early-folded backedges preserve the restrictive as1 budget; a late-zero carrier retains a natural-loop region with budget100 but also unwanted runtime branches. Added the candidate-count cutoff to [[as1-scheduler-rule]]. Direct standards/spec checkpoint review found no production changes; root's wording clarification resolved. Investigation continues.
+
+## [2026-10-22] query | T-25056 cached assembler control
+
+[[tickets/T-25056-ending-scheduler]] records exact original IDO5.2/stock5.3
+equality across1164 candidate instructions on identical captured input, plus
+the shared100/10 region gate. Two conditional pointer controls regress692/691.
+The raised-budget scratch output preserves all15 sibling instruction bodies;
+final sibling B640 independently matches96bytes despite changed section padding.
+Source-only reproduction and hashes are in drafts/T-25056; no production change.
