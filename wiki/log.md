@@ -2235,3 +2235,19 @@ Integrated d8e482c4a after source/replay review. Root Docker replay confirms con
 ## [2026-10-22] decision | User resumes sustained matching after MAIN wrap-up
 
 New direct root instruction: keep workers going until problems are figured out and matches made. This supersedes the earlier MAIN-chat wrap-up. Resumed T-25034 Astra from preserved d8e482c4a candidates and reinforced T-25033 continuation from the118-word zero-carrier experiment. No time/probe limits; checkpoints and failed controls do not terminate assignments. Concrete external blockers and literal proof standards remain. Root integrates, coordinators avoid duplicate experiments.
+
+## [2026-10-22] ticket | T-25035 GYOZI late-folded zero carrier
+
+Created [[tickets/T-25035-gyozi-late-folded-zero]] in an isolated checkout from 242c0c3a3. Read existing T-24907/T-25025 evidence and claimed only src/ovl/GYOZI/80140C90.c. New lead is the concurrent SHOUGATU late-folded carrier; old zero-local grids remain exhausted.
+
+## [2026-10-22] build | T-25035 donor transfer preserves entry zero
+
+Docker full-TU controls for [[tickets/T-25035-gyozi-late-folded-zero]] transfer the new SHOUGATU late-folded unsigned comparison: target and candidate now both have 97 words with exact zero initialization/store/first call, versus the old 97/96. Remaining aligned cost 4 is the second-call reload base and its schedule. Focused coalescing controls are negative; inspecting compiler allocation next. No production edits or coverage.
+
+## [2026-10-22] build | T-25035 GYOZI literal C match
+
+Transferred the improved T-25033 early-global-assignment form into GYOZI func_80140E0C. A marked late-folded multiply-by-zero expression preserves the entry a1 carrier; the early store lets allocation retain the later a1 reload base. Default C links to all 388 target bytes and GYOZI SHA1 passes. Headers/global/prototype guards pass after missing reference splits were generated. Removed the assembly fallback, documented controls in drafts/T-25035/README.md and [[matching-notes]], and moved [[tickets/T-25035-gyozi-late-folded-zero]] to In Review for root review/integration.
+
+## [2026-10-22] query | T-25035 independent source review
+
+Root reviewed the GYOZI change against standards and scope with no findings: defined zero expression, disjoint early-store move, marked FAKEs and no build exceptions. [[tickets/T-25035-gyozi-late-folded-zero]] stays In Review until the combined integration gate.

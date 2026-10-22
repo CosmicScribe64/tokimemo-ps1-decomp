@@ -46,23 +46,21 @@ void func_80140DCC(void) {
     func_8004DE1C();
 }
 
-/* NON_MATCHING: 5 resolved rows (T-24712; was 9), all the `$a1` zero: the original has `or $a1,$zero,$zero`
- * in the entry block, `sb $a1,D_800F62CF` at the merge and `or $a0,$a1,$zero` in the call delay slot; this
- * draft folds the same 0 to `sb $zero`/`move a0,zero`. Zero locals of every width, assignment-expression
- * arguments, chained stores, a pointer store and the byte-view forms all fold (T-24116). The s32 view of
- * func_8008F618 (`MAIN_API_OVERRIDE_` here, guarded in main_api.h) fixed the loop counter ($v1) and the
- * 0x28 frame; `*(u8 *)&D_800F62CF` for the argument fixed the later address base ($a1). */
-#ifdef NON_MATCHING
 void func_80140E0C(void) {
     s16 i;
+    s32 girl;
 
+    /* FAKE: late-folded zero and early assignment preserve the entry $a1
+     * carrier; the compiler sinks the store past the flag tests. T-25035 */
+    girl = D_800F62CF * 0;
+    D_800F62CF = girl;
     D_80148750 = 0;
     if (((GyoziBits32 *)D_800F53A0.girl[9].unk_10)->b1 == 0 &&
         D_800F53A0.girl[9].unk_06 >= 20 && (D_800F6468 & 1)) {
         D_80148750 = 1;
     }
-    D_800F62CF = 0;
-    /* FAKE: the byte view of the girl index keeps the later reload's address base in $a1 (T-24712). */
+    /* FAKE: narrowing spends the original temporary slots; the byte argument
+     * view keeps the later reload's address base in $a1. T-24712, T-25035 */
     D_80148620 = (((u8)func_8005E0E0(*(u8 *)&D_800F62CF) & 0x7F) == 4) * 4;
     D_80148614 = D_801481D4;
     D_80148618 = D_80148208;
@@ -78,9 +76,6 @@ void func_80140E0C(void) {
     func_80090960(4, 0);
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80140E0C);
-#endif
 
 void func_80140F90(void) {
     s16 i;
