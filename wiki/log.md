@@ -2552,3 +2552,24 @@ The two-local reconstruction in [[tickets/T-25048-main-80076fdc]] matches the co
 ## [2026-10-22] ticket | T-25048 In Review with validated evidence
 
 Moved [[tickets/T-25048-main-80076fdc]] and [[kanban]] card to In Review after parent independent standards/spec review passed without findings. Source pin f3c5c1759. Docker replay confirms current0, reversed locals4, empty use0, local background252, reused background264 diagnostic lines. Wiki lint finds zero broken links/status mismatches and two existing size warnings; evidence prose checker has zero hits. Root owns full27 integration.
+
+## [2026-10-22] ticket | T-25047 TACO home-store continuation
+
+Created [[tickets/T-25047-taco-home-store]] In Progress for the last guarded function in `src/ovl/TACO/80149F90.c`, func_801511C0. Read historical function index/ledgers and latest T-25011/T-25016 evidence; prior ordering/loop/empty-test grids excluded. Root checkout remains untouched.
+
+## [2026-10-22] query | T-25047 entry-boundary controls
+
+[[tickets/T-25047-taco-home-store]] reproduces both historical41-word shapes. New late-eliminated tests/returns/wrappers preserve the late spill; an unreachable call/address escape selects the early home store but wrong ugen temporaries. Volatile self-store adds instructions and is rejected. Identity-definition controls follow from this negative evidence; no source promotion.
+
+
+## [2026-10-22] build | T-25047 literal TACO pointer-walk match
+
+`src/ovl/TACO/80149F90.c` now provides default C for func_801511C0:164 linked bytes and complete TACO SHA1 match. Removing the empty argument test restores the early home store; a marked late-zero identity chain wraps the temporary ring and disappears from emitted code. [[matching-notes]], [[playbook]] and [[tickets/T-25047-taco-home-store]] preserve the mechanism and rejected causal controls. Header/global/prototype guards pass, with0 new/15 known declaration disagreements.
+
+## [2026-10-22] ticket | T-25047 review passes
+
+Root independent standards/spec review reports no findings. Moved [[tickets/T-25047-taco-home-store]] and [[kanban]] card to In Review for root full27 integration; no compiler/header/build changes or copyrighted artifacts included.
+
+## [2026-10-22] build | MAIN background and TACO pointer walk accepted
+
+Integrated e6c71b6be and e95ec5c3b. Root independently reviewed both against standards/spec with no findings; literal default-C852/164byte proofs and fresh27/27 binary checksums pass. Headers/globals and prototypes0new/15known pass. [[tickets/T-25048-main-80076fdc]] and [[tickets/T-25047-taco-home-store]] move Done. [[status]] now6845/6952functions,2119140/2276920bytes93.1%;107functions/157780bytes remain. Twelve matches add14464bytes. TACO80149F90.c is complete. Workers continue under T-25050/T-25051, avoiding existing claims.

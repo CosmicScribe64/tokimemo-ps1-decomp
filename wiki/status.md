@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Latest verified integration (2026-10-22)
 
-Ten functions verified this resumed effort, adding13,448bytes. Latest: MAIN func_80073CB0 adds1,288 literal default-C bytes and completes src/main/800737A0.c. Full520-step rebuild passes27 binary checksums and declaration guards; independent standards/spec review has no findings. Current game code: **6843/6952 functions;2118124/2276920 bytes (93.0%)**,109 functions/158796 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25040 MAIN8006D138; T-25042 KANGEI80134724; T-25045 ETC80146D4C; T-25046 SHOUGATU8013EA98; T-25047 TACO801511C0; T-25048 MAIN80076FDC. Older counts below are historical.
+Twelve functions verified this resumed effort, adding14,464bytes. Latest: MAIN func_80076FDC adds852 bytes and TACO func_801511C0 adds164 bytes, completing src/ovl/TACO/80149F90.c. Root literal default-C proofs, fresh27 binary checksums and declaration guards pass; independent standards/spec reviews have no findings. Current game code: **6845/6952 functions;2119140/2276920 bytes (93.1%)**,107 functions/157780 bytes remaining. Active Astra assignments: T-25034 MAIN quadrant; T-25040 MAIN8006D138; T-25042 KANGEI80134724; T-25045 ETC80146D4C; T-25046 SHOUGATU8013EA98. Completing workers continue under reserved T-25050 MAIN and T-25051 TACO. Older counts below are historical.
 
 ## NEXT STEP (read this first)
 
