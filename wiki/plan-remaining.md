@@ -15,6 +15,8 @@ The user has replaced the Sol-first, bounded-consultation policy below with sust
 
 T-25033's preserved guard has five printed diff lines, 117/118 instructions, exact frame/table homes, corrected random field and canonical final helper call. It is still NON_MATCHING. T-25034 is repairing full-width extent semantics and local spill/allocation differences; its current frame and incoming argument homes agree with the target. Neither assignment has yet increased verified coverage.
 
+Later on 2026-10-22, the MAIN chat reported newer direct user instructions to wrap up, commit and push. T-25034 is therefore stopped, with corrected source checkpoints preserved at d8e482c4a; do not restart that lane from the earlier sustained-work instruction. The two whole-TU candidates have aligned costs361/360 and remain unmatched. Target diagnostic674 words includes three trailing padding nops beyond the671-word active function. SHOUGATU remains active; its latest experimental zero-producing expression restores118/118 instructions but still has four aligned differences, pending final proof.
+
 This section supersedes the older compiler-lever recommendation and historical class counts below. T-25013/15 closed their tested levers negatively; T-25014/16 broad shape/salvage passes produced no matches. That bounds the tested approaches, not proof that all remaining functions require compiler changes.
 
 Baseline at 7c87f223e, independently measured in Docker: 6833/6952 functions; 2104676/2276920 bytes (92.4%). Remaining: 119 functions, 172244 bytes. Coordination: [[tickets/T-25017-completion-plan]].

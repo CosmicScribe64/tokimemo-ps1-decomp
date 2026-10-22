@@ -2203,3 +2203,31 @@ Metadata-only Docker catalog/lint pass:796 tickets,444 sections,3,078 functions;
 ## [2026-10-22] ingest | Preserve MAIN extent-width evidence
 
 Root reviewed and integrated T-25032 pin62948769f, documenting the full-word branch versus s16 draft narrowing in func_80046AC8. Documentation only; implementation continues independently under T-25034 with Astra. No match credited. Preserved both log histories and regenerated the wiki catalog to include the integrated tickets.
+
+## [2026-10-22] ticket | Full-width quadrant extent implementation
+
+Created [[tickets/T-25034-main-quadrant-extent]] In Progress after pinning [[tickets/T-25032-main-candidate-audit]] at62948769f. Exclusive source src/main/80046500.c; first repair retains full-word tile branch values and narrows only at TILE store. Preserve baseline and semantic checkpoint even if score regresses. One worker, bounded investigation, root owns integration; no shared-header/build changes.
+
+## [2026-10-22] build | Quadrant full-word extent correction
+
+[[tickets/T-25034-main-quadrant-extent]] reproduces674target/680built words,738aligned/796printed. Single extent-width repair improves to671words,613/649 and matches all four signed full-word branch widths, narrowing only to TILE fields. Continued source/lifetime reconstruction: shared primitive role reduces frameB8->B0; mask/callback lifetimes and target UV-tail sharing remain under investigation. No promotion or coverage claim; sustained matching continues.
+
+## [2026-10-22] decision | Astra owns sustained quadrant matching
+
+Human requests Astra hands-on and no stopping before resolution. [[tickets/T-25034-main-quadrant-extent]] transfers sole source writer to Astra; Sol coordinates without duplicate experiments. Prior time/probe caps superseded. Corrected source improves to674target/671built words,367aligned/389printed with frameB0 and full-word extent tests. Saved source and ledger before handoff; matching continues through remaining CFG/lifetime/frame differences. No production match or coverage claim yet.
+
+## [2026-10-22] build | Quadrant target frame recovered
+
+Astra re-audited the newest367-cost source in [[tickets/T-25034-main-quadrant-extent]]: direct-low-channel already emits target0xA8 frame and incoming argument homesB8/BC/C0/C4. Earlier handoff incorrectly carried forward0xB0 from its predecessor. Corrected ticket without changing old log history. Remaining local homes/color-expression webs continue under sole Astra ownership.
+
+## [2026-10-22] decision | User-directed quadrant wrap-up
+
+User requested wrap-up, commit and push, superseding sustained matching for [[tickets/T-25034-main-quadrant-extent]]. Astra stopped all experiments. Archived conservative361/381 and forward-join360/380 candidates, full-word extent correction, target0xA8 frame, findings and Docker replay under drafts/T-25034. Target674words includes12bytes trailing padding after2684byte active body; candidates671/670paddedwords remain12/16bytes short. No adjacent function, production change, match or coverage credit. Root owns main integration.
+
+## [2026-10-22] lint | Quadrant wrap-up replay verification
+
+Docker replay independently reproduced conservative674/671words,361aligned/381printed and forward-join674/670words,360/380 for [[tickets/T-25034-main-quadrant-extent]]. Docker catalog797tickets; lint zero broken links and zero status mismatches, with one existing large-page warning for [[data/t0018-cases]]. git diff --check passes. src/, include/ and tools/ unchanged. Source-only checkpoint remains unfinished research; all worker experiments stopped at user request.
+
+## [2026-10-22] ingest | Preserve MAIN wrap-up checkpoints
+
+Integrated d8e482c4a after source/replay review. Root Docker replay confirms conservative674/671words with361aligned/381printed and forward-join674/670 with360/380. Source drafts only, production unchanged, no match credited. Wiki catalog/lint pass with zero broken links/status mismatches and two size warnings. MAIN chat reports newer direct user wrap-up/push instructions; root withdrew its resume request based on older context and preserves that stopped lane. Updated [[plan-remaining]]. SHOUGATU remains active with reported118/118-word zero-carrier experiment and four aligned differences; not yet a match.
