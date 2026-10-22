@@ -41,3 +41,25 @@ Astra verified saved direct-low-channel built output: frame is already0xA8, not 
 ## User-directed wrap-up
 
 User requested wrap-up, commit and push on 2026-10-22, superseding sustained matching. Astra stopped all experiments. Conservative candidate674target/671built padded words,361aligned/381printed; forward-join alternative674/670,360/380. Both retain full-word extents and target0xA8 frame. Sources, findings and Docker replay are archived under drafts/T-25034. Ticket remains In Progress: no match, promotion or coverage credit. Root owns main integration.
+
+## Resumed after newer human instruction
+
+Root relayed a newer direct human instruction after wrap-up: "Keep them going wihtout stopping until problems are figured out and matches made". This supersedes the wrap-up above. Reused the existing Astra worker on the same func_80046AC8 from checkpoint d8e482c4a (integrated by root as ff8a1c912). Sole source writer, no duplicate coordinator experiments. Continue through failed controls and checkpoints until literal semantic matching plus checks or a concrete external blocker. Prior source and negative evidence remain preserved; root owns main integration.
+
+### Resumed conversion finding
+
+Astra's mask-before-shift control moves the extra copy with the expression tree: fp receives the inner mask, the outer shift uses a temporary and copies back; shift-then-mask had the reverse order. Explicit unsigned-byte consumers leave the best object unchanged. Evidence points to expression/result placement rather than extraction arithmetic. Next mechanism is assignment propagation through primitive color fields, preserving required stores and full-word extents. No new best or match yet.
+
+### Mask-node allocation is insufficient
+
+Faithful unsigned-mask trace: bit53=SHR(arg6,16), bit54=CVT(bit53), bit55=AND(bit54,255). Bit55 itself is assigned fp (priority7.625, uses5/defs2), yet output remains SRA fp; ANDI temporary,fp,255; MOVE fp,temporary. Earlier signed-mask trace assigned outer CVT bit63 to fp. This shifts the next investigation to normal backend expression/result placement: allocating the mask node is not enough. Natural primitive-field propagation, nested required assignments, macro-style grouping and unsigned remainder extraction did not fix it. A distinct reverse-radius local left UV at v1 and enlarged the frame. Astra continues output-ucode/normal lowering inspection; no production changes or match.
+
+### Raw lowering contains the copy
+
+Normal ugen input for unsigned-mask is SHR J; CVT L; AND L 255; STR R30. A signed-byte store view yields SHR J; AND J 255; STR R30 with no CVT. Both raw ugen binasm streams already contain SRA fp,source,16; AND temporary,fp,255; MOVE fp,temporary, so as1 does not introduce the copy. Capture fidelity was checked: resolved function identical, entire object differs only in .mdebug path metadata, with .text and all other sections identical. Private evidence: build/T-25034/astra-ucode-capture and astra-signed-view-capture. Next investigation: destination forwarding into the shift child. No compiler defect or pass is established.
+
+### Destination forwarding confirmed causally
+
+Reference normal backend immediate-op path L432A18 forwards requested destination fp into the left child. L432A58 sees the child/result registers coincide; AND is absent from the allowed in-place opcode set, so L432A9C allocates a temporary and later copies back. At f_eval entry L42D55C, child reference count>=2 cancels the requested destination (0x48).
+
+A real C control confirms this: replacing only the fourth required red store with raw (arg6>>16) makes the normal compiler emit SRA a0 followed by ANDI fp directly, eliminating the copy. astra-shared-red-shift is668candidate words/850aligned/862printed, worse overall: raw shift becomes a0 and the fourth store uses a0, whereas target uses a temporary shift result and fp for all stores. Causal success, not promotion. Worker continues distinct masked consumers and constant-left AND spelling to avoid forwarding without a live raw-color register. No backend changes.

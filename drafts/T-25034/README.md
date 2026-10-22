@@ -33,3 +33,8 @@ tools/docker.sh python3 drafts/T-25034/reproduce.py forward-join.c
 ```
 
 Do not promote either candidate until literal C verification and review pass.
+
+Matching resumed later on 2026-10-22 after the coordinator relayed a newer
+human instruction to continue until resolution. The wrap-up above describes
+checkpoint d8e482c4a, not the current worker state. The same Astra worker
+continues this function; these archived candidates remain unchanged.
