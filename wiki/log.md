@@ -2709,3 +2709,11 @@ Independent Docker replay confirms integer-return.c at674/674words,144aligned/90
 ## [2026-10-22] build | Root preserves exact-length quadrant checkpoint
 
 Integrated7a4f9d6c2 research only. Root Docker replay of integer-return.c reproduces674/674words,144aligned/902positional lines; verified existing caller expressions discard results and header search has no declaration. [[tickets/T-25034-main-quadrant-extent]] remains active. No production/header change or coverage increase. Conservative void159 candidate and caller audit retained alongside improved integer-return branch.
+
+## [2026-10-22] decision | Expand Astra matching to three additional units
+
+User requested more agents. Root reactivated the existing TEL/ENDING/ETC coordinator chat with Astra high and authorized three Astra high workers: T-25055 TEL func_80136724 (`src/ovl/TEL/80132000.c`), T-25056 ENDING func_8013A2E8 (`src/ovl/ENDING/801396E0.c`), and T-25057 NAME_ENT func_801398EC (`src/ovl/NAME_ENT/80139740.c`). Coordinator creates tickets in isolated trees and confirms exact claims before experiments. Existing seven worker assignments and root T-25053 remain owned; GEKO/OPTION contributor reservation preserved. Docker-only, causal experiments, source checkpoints and literal default-C gates remain required. No coverage increase from dispatch. See [[status]] and [[tickets/T-25017-completion-plan]].
+
+## [2026-10-22] query | BUNKA quotient storage controls negative
+
+[[tickets/T-25053-bunka-last-function]]: Docker quotient-storage controls returned u16 244 words/cost171, s16 247/cost204, reversed zero assignments243/cost144 against243 target words. Existing counter-use cost142 remains best; no production edit or coverage change.

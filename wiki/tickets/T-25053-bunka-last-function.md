@@ -30,3 +30,7 @@ Separate signed/unsigned index locals assigned from q fold back to baseline243/c
 Optimizer trace: local b bit39 priority0.6 allocated before global counter/address bit41 priority0.5. Extra global use changes b to targeta1 but address to a0; cost142, still243words. Signed quotient has no further effect. Preserved diagnostic counter-use.c and concise causal/negative ledger in drafts/T-25053. Next trace quotient/selector interference; do not repeat exhausted width/index spelling controls.
 
 Full range trace: constant-address bit46 priority3 winsv0; quotient bit44 priority1.4 winsv1; selector bit53 priority0.333 reusesv0. Narrow-index controls are negative: s8=253/cost192, u8=248/cost211, s16=243/cost172. Reusing q/b as later call coordinates after definite assignments remains144 (142 with globaluse). Need a surviving quotient-to-use range boundary without added conversion instructions; simple local/width/argument reuse does not provide it.
+
+### Quotient storage controls
+
+Docker `build/T-25053/quotient-storage.py` completed: u16 quotient produces244 words/cost171; s16 produces247/cost204; reversed zero-assignment order remains243/cost144. Target243 words. None improves archived counter-use cost142. Narrow storage adds real conversion instructions, so it does not supply the missing target copy without additional changes.
