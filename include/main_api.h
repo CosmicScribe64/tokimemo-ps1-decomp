@@ -2946,7 +2946,9 @@ void strncpy(void *dst, void *src, s32 n); /* Same SDK address and legacy view a
 void func_800AE0A0(void *arg0, s32 arg1, s32 arg2);
 #endif
 void memcpy();
+#ifndef MAIN_API_OVERRIDE_func_800AE0B0
 void func_800AE0B0(void *arg0, ...); /* printf-like (SDK libc) */
+#endif
 s32 printf(u8 *fmt, ...);
 s32 func_800AE0C0(s32);
 s32 func_800AE0D0(void);

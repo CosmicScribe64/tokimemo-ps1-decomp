@@ -54,7 +54,6 @@ kanban-plugin: board
 
 ## In Progress
 
-
 - [ ] [[tickets/T-25034-main-quadrant-extent|T-25034 MAIN src/main/80046500.c full-width tile extent recovery]]
 
 - [ ] [[tickets/T-25032-main-candidate-audit|T-25032 Bounded read-only MAIN candidate qualification]]
@@ -96,6 +95,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-25038-shougatu-selection-loop|T-25038 Match SHOUGATU func_8013E6E4 selection loop]]
 
 - [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
 
