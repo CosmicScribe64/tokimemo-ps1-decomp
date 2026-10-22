@@ -1911,3 +1911,7 @@ Fetched and fast-forwarded clean main to 7c87f223e, read T-25013 through T-25016
 ## [2026-10-22] ticket | Start bounded completion execution
 
 Moved [[tickets/T-25017-completion-plan]] to In Progress with board synchronized. One Sol 6.1 medium worker owns KANGEI func_8013852C under T-25018 in isolation; no other live subagents. Issue65 remains open and its contributor expects to return Friday; select KANGEI first to avoid GEKO/OPTION overlap. No open PRs. Remote artifact access is unresolved; requested location from user while independent near-match work proceeds. No contributor messages posted.
+
+## [2026-10-22] ingest | Recover Octa scratch archive
+
+User supplied /Users/lila/Downloads/t25016-scratch-2026-10-22.tar.gz (SHA256 fd41defd56adcbd8ff2ed3dfa7969f31ad3e329d772ed9ccff5e2aab6c048d68). Extracted privately to /private/tmp/t25016-recovered-20261022 after listing members. Includes corpus/QUEUE.md, census/ledger/precedent records and compiler traces/objects; raw outputs remain uncommitted. Queue confirms already-matched entries and packet-score caveats, so membership and score require whole-TU verification. Sol T-25019 will resolve candidate provenance and TACO func_80138B2C baseline; KANGEI worker reproduced its exhausted two-row scheduler tie without repeating sweeps. See [[tickets/T-25017-completion-plan]].
