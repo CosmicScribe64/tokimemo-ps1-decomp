@@ -1915,3 +1915,15 @@ Moved [[tickets/T-25017-completion-plan]] to In Progress with board synchronized
 ## [2026-10-22] ingest | Recover Octa scratch archive
 
 User supplied /Users/lila/Downloads/t25016-scratch-2026-10-22.tar.gz (SHA256 fd41defd56adcbd8ff2ed3dfa7969f31ad3e329d772ed9ccff5e2aab6c048d68). Extracted privately to /private/tmp/t25016-recovered-20261022 after listing members. Includes corpus/QUEUE.md, census/ledger/precedent records and compiler traces/objects; raw outputs remain uncommitted. Queue confirms already-matched entries and packet-score caveats, so membership and score require whole-TU verification. Sol T-25019 will resolve candidate provenance and TACO func_80138B2C baseline; KANGEI worker reproduced its exhausted two-row scheduler tie without repeating sweeps. See [[tickets/T-25017-completion-plan]].
+
+## [2026-10-22] ticket | T-25018 bounded KANGEI near closure
+
+Created [[tickets/T-25018-kangei-near-closure]] In Progress in an isolated worktree. Read [[playbook]], [[as1-scheduler-rule]], T-24901 source notes and [[tickets/T-25016-candidate-reconstruction]] before attempting new source work. Reproducing the full-unit baseline; no repeated sweeps authorized.
+
+## [2026-10-22] query | T-25018 pins KANGEI local scheduler blocker
+
+Reproduced two full-unit NON_MATCHING C rows and the stock as1 DAG for KANGEI func_8013852C. The existing arithmetic/$at chains give equal aftercycles 4, same source line, but besttime 16 versus 15. No new dependency-backed source lever was established; zero duplicate source variants run. Pinned the source note in src/ovl/KANGEI/80137B90.c and filed the exact revisit condition in [[matching-notes]] and [[tickets/T-25018-kangei-near-closure]]. Moved the ticket and board to In Review; no promotion.
+
+## [2026-10-22] build | T-25018 retained fallback verification
+
+Default funcdiff verified 180 linked bytes equal the target (assembly fallback only). After the note-only source edit, the configured KANGEI.ok Ninja target passed SHA1. Header, GameState migration, and branch prototype guards passed; no new prototype disagreement. [[tickets/T-25018-kangei-near-closure]] remains In Review.
