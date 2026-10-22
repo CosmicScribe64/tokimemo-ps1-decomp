@@ -1999,3 +1999,15 @@ Current MAIN func_8006D7EC guard remains one differing position,1173/1173 instru
 ## [2026-10-22] decision | T-25026 reuses exact prior Astra consultation
 
 Checked root's conditional consultation request: T-24001 Astra already addresses identical idx-zero/addiu-versus-li blocker and full-TU row94. Source diff from d57c78028 contains only explanatory guard-comment changes. Fresh phase/metric evidence preserves that consult's premise, so reused its bounded negative rather than duplicate it. No new consultant or variants. [[tickets/T-25026-main-d7ec-near-candidate]] remains In Review. Wiki lint zero broken links/status mismatches, one existing large-page warning; diff check passes and source/header/tools/config unchanged.
+
+## [2026-10-22] ticket | T-25028 read-only candidate prioritization
+
+Released src/main/8006CB30.c at T-25026 pin 1cce82f2e; created [[tickets/T-25028-read-only-candidate-triage]] and In Progress card. At most12 promising remaining functions, excluding reserved GEKO/OPTION and active src/main/8004F870.c; no builds/grids/source changes or agents. Root selects next implementation.
+
+## [2026-10-22] query | T-25028 twelve-function triage without another sweep
+
+Read-only Docker progress confirms119 remaining at main f688ec594; checked membership of12 reviewed functions. No new evidenced semantic/control/ABI/width defect qualified after newest source/ledger reconciliation. Historical matched entries and already repaired raw-draft errors excluded. Preserved concise table and a bounded strCallback upstream-expression question in drafts/T-25028/README.md and [[matching-notes]]. No compiles, source grids/root edits or agents. [[tickets/T-25028-read-only-candidate-triage]] moves to In Review; this is not an all119-blocked claim.
+
+## [2026-10-22] lint | T-25028 triage checkpoint
+
+Wiki lint zero broken links/status mismatches, only existing data/t0018-cases size warning. Diff check clean, production/header/tools/config unchanged; body pointers exist. [[tickets/T-25028-read-only-candidate-triage]] remains In Review.
