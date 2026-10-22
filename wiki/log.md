@@ -2235,3 +2235,15 @@ Integrated d8e482c4a after source/replay review. Root Docker replay confirms con
 ## [2026-10-22] decision | User resumes sustained matching after MAIN wrap-up
 
 New direct root instruction: keep workers going until problems are figured out and matches made. This supersedes the earlier MAIN-chat wrap-up. Resumed T-25034 Astra from preserved d8e482c4a candidates and reinforced T-25033 continuation from the118-word zero-carrier experiment. No time/probe limits; checkpoints and failed controls do not terminate assignments. Concrete external blockers and literal proof standards remain. Root integrates, coordinators avoid duplicate experiments.
+
+## [2026-10-22] ticket | T-25036 MAIN counter late-fold investigation
+
+Created [[tickets/T-25036-main-counter-late-fold]] in an isolated worktree at 242c0c3a3. Reused [[tickets/T-25026-main-d7ec-near-candidate]] phase evidence and prior negatives; next test is a late-folded zero producer that preserves the original increment dependency without extra instructions.
+
+## [2026-10-22] build | T-25036 identifies second constant-fold barrier
+
+Whole-TU Docker donor transfer retains the counter addition through uopt and ugen but stock as1's initial-node expansion folds it to one. Final output remains 1,173 words with one differing instruction. [[tickets/T-25036-main-counter-late-fold]] records the phase evidence. Read-only donor and tracer reused; production sources and compiler unchanged.
+
+## [2026-10-22] build | T-25036 closes MAIN 4692-byte counter dependency
+
+Promoted `src/main/8006CB30.c` function `func_8006D7EC` using the T-25033 late-zero producer and a late-eliminated identity arm. Whole-TU guarded and default C each pass literal 4,692-byte linked proof and complete MAIN SHA1; header/global/prototype checks pass. Both source controls are FAKE-annotated and add no emitted operations. Root standards/spec review has no findings. [[tickets/T-25036-main-counter-late-fold]] moves to In Review for full integration verification; `drafts/T-25036/` preserves reproduction and phase evidence.
