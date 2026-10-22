@@ -30,9 +30,13 @@ mounted at `/tracer/trace` and saves normal/optimized ucode.
   delay-slot address fills. No benefit.
 - Explicit GameState record origin: 982/cost914; shared counts improve to894
   but induce index reloads where the target forwards narrowed increments.
-- Empty entry switch is neutral: this function already activates the uniform
-  zcopy-off boundary. Empty count test and discarded static byte views are
-  also neutral here.
+- Empty default-only entry switch is neutral. Actual input ucode has
+  `OPTN 405 1` (zcopy on); cfe drops the selector before creating any temporary.
+  A single empty case still has no temporary. Two cases or an existing local
+  declared `register` and assigned an unsigned global before the first call
+  trigger `OPTN 405 0` through the existing uniform build rule. The latter
+  assignment emits no runtime work. Empty count and discarded byte-view tests
+  are neutral. The earlier zcopy-off claim was incorrect.
 - Loop inequality spelling, unsigned index, and inclusive bound do not solve
   promotion. Late-folded loop bounds add substantial code (1062 words).
 - Index byte views demote the overpromoted global base and fix the early
@@ -46,3 +50,15 @@ mounted at `/tracer/trace` and saves normal/optimized ucode.
 The next work must preserve the verified first decision blocks while recovering
 unpromoted address recomputation and immediate loop-bound11. Avoid repeating
 these controls or optimizing by the aggregate score alone.
+
+## Compiler-option verification
+
+`capture.py` retains the entire input stream in `trace/draft.B`; the OPTN record
+immediately before the relevant ENT is authoritative. Do not infer it from
+an empty switch or a neutral output. Accepted D138 also has zcopy on; its
+README explanation is corrected, with historical logs left untouched.
+
+Whole-GameState aliases, address-only volatile qualification, integer record
+arithmetic, direct and local-carried unreachable-call controls did not improve
+the verified prefix candidate. Zero-based pointer identities can add a spilled
+zero or change alias induction, so word count alone is not evidence of progress.

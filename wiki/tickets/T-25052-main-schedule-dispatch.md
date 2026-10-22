@@ -40,3 +40,14 @@ frame, spill0x30 and first101 instructions (except exit distances);984/998words,
 cost860. Index byte views lower the aggregate score but introduce wrong pointer
 induction; explicit GameState record pointers introduce wrong reloads. Neither
 is adopted. Evidence and named negatives are retained in `drafts/T-25052/README.md`.
+
+### Verified compiler options
+
+Actual `trace/draft.B` records show zcopy on for the prefix checkpoint and for
+the accepted D138 sibling. Default-only and one-case empty entry switches do
+not create a VREG selector temporary. Two cases do; a C89 `register s32 t`
+assigned an unsigned global before the first call also triggers the existing
+uniform `OPTN 405 0` rule, with the dead assignment emitting no runtime work.
+That control measures 985 words / cost 975 and does not yet improve the target.
+`options.py` inspects the actual records; the earlier zcopy-off inference is
+corrected in both draft READMEs. Historical logs remain append-only.

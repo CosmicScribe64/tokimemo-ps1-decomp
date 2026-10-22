@@ -31,3 +31,11 @@ Selected from the two assigned functions before source edits. D138's latest ledg
 - Closure: explicit initial flags snapshot plus a late-zero first b7 address reduces the residue to the first b8 byte load. Giving the real b8 read a late-zero address alone moves the static representation to another live word read. The added `if ((u32)gs->unk_F64[1] < 0) {}` holds a discarded static view at the exact byte width and offset; ugen removes it, while the real byte load remains base-relative. All218 words now agree. Every unsigned comparison is false, every pointer offset is zero, and no extra runtime operation is emitted. Existing empty date controls are collectively FAKE-annotated with the new controls.
 - Final annotated source: guarded and default whole-TU C each pass872 literal linked bytes at0x8006D138 and the entire MAIN SHA1 `e823bd844a8f8fa4d05483b59c66bc54b8393b26`. Headers/global migration pass; prototype branch0new/15known. Production is default C. Root reviewed the unannotated matching body with no semantic issue and is checking final annotations/standards. Ticket moves to In Review for independent final review and full27 integration, both owned by root.
 - Root reviewed the final annotated source against standards/spec: no findings. Checked fixed-width C89, existing aligned flag view, defined unsigned comparisons and zero offsets, exact b8 byte mapping, and complete FAKE coverage. Awaiting only root's full27 integration gate; keep In Review until that passes.
+
+### Compiler-option explanation correction (T-25052)
+
+The accepted source still passes its literal proof. Actual input ucode captured
+in the T-25052 whole-TU replay has `OPTN 405 1` before this function: zcopy is on.
+The earlier README explanation that the empty switch enables zcopy off was
+incorrect. The empty switch changes entry control flow; its selector is removed
+by cfe. No source or compiler changes are needed for this documentation correction.

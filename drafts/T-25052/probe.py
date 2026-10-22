@@ -63,6 +63,45 @@ variants['static-index-late-subscript'] = index_static.replace('unk_69C[(*(u8 *)
 variants['static-index-late-pointer'] = index_static.replace('&D_800E6280.unk_69C[(*(u8 *)&D_800E6280.unk_71C)]', '(GsRec69C *)((u8 *)&D_800E6280.unk_69C[(*(u8 *)&D_800E6280.unk_71C)] + ((u32)&D_800E6280 < 0))')
 variants['static-index-self-zero'] = variants['static-index-late-subscript'].replace('((u32)&D_800E6280 < 0)', '((u32)*(u8 *)&D_800E6280.unk_71C < 0)')
 variants['first-exact-integer-record'] = first_exact.replace('&D_800E6280.unk_69C[D_800E6280.unk_71C]', '(GsRec69C *)((u32)D_800E6280.unk_69C + D_800E6280.unk_71C * sizeof(GsRec69C))')
+captured = first_exact.replace('                    if (get_g_zyotai_s(i) != 4 && func_8006B014(i) == 0) {', '                    t = get_g_zyotai_s(i);\n                    if (t != 4 && func_8006B014(i) == 0) {')
+variants['first-exact-captured-result'] = captured
+variants['captured-base-after-call'] = captured.replace('                    t = get_g_zyotai_s(i);', '                    t = get_g_zyotai_s(i);\n                    if ((u32)&D_800E6280 < 0) {}')
+variants['first-exact-base-boundary'] = first_exact.replace('    func_8006D00C();', '    func_8006D00C();\n    if ((u32)&D_800E6280 < 0) {}')
+variants['first-exact-all-gs'] = first_exact.replace('    GsRec69C *p;', '    GsRec69C *p;\n    GameState *gs = &D_800E6280;').replace('D_800E6280.', 'gs->')
+variants['first-exact-volatile-address'] = first_exact.replace('&D_800E6280.unk_69C[D_800E6280.unk_71C]', '(GsRec69C *)&((volatile GameState *)&D_800E6280)->unk_69C[D_800E6280.unk_71C]')
+first_pointer = '    p = &D_800E6280.unk_69C[D_800E6280.unk_71C];'
+variants['first-exact-dead-call-boundary'] = first_exact.replace(first_pointer, '    if ((u32)D_800E6280.unk_71C < 0) { func_8006D00C(); }\n' + first_pointer, 1)
+variants['first-exact-dead-call-base'] = first_exact.replace(first_pointer, '    if ((u32)&D_800E6280 < 0) { func_8006D00C(); }\n' + first_pointer, 1)
+variants['first-exact-carried-dead-call'] = first_exact.replace(first_pointer, '    t = (u32)D_800E6280.unk_71C < 0;\n    if (t) { func_8006D00C(); }\n' + first_pointer, 1)
+variants['first-exact-carried-dead-call-base'] = first_exact.replace(first_pointer, '    t = (u32)&D_800E6280 < 0;\n    if (t) { func_8006D00C(); }\n' + first_pointer, 1)
+variants['first-exact-entry-case'] = first_exact.replace('    func_80071280();', '    switch (D_800E6280.unk_03E) { case 0: break; default: break; }\n    func_80071280();', 1)
+variants['first-exact-entry-switch-local'] = first_exact.replace('    func_80071280();', '    switch (D_800E6280.unk_03E) { case 0: t = 0; break; default: t = 1; break; }\n    if (t) {}\n    func_80071280();', 1)
+variants['first-exact-entry-switch-two'] = first_exact.replace('    func_80071280();', '    switch (D_800E6280.unk_03E) { case 0: t = 0; break; case 1: t = 1; break; default: t = 2; break; }\n    if (t) {}\n    func_80071280();', 1)
+variants['first-exact-entry-two-empty'] = first_exact.replace('    func_80071280();', '    switch (D_800E6280.unk_03E) { case 0: break; case 1: break; default: break; }\n    func_80071280();', 1)
+variants['first-exact-register-entry'] = first_exact.replace('    s32 t;', '    register s32 t;').replace('    func_80071280();', '    t = D_800E6280.unk_03E;\n    func_80071280();', 1)
+variants['first-exact-shared-empty-labels'] = first_exact.replace('    func_80071280();', '    switch (D_800E6280.unk_03E) { case 0: case 1: default: break; }\n    func_80071280();', 1)
+direct_zero = variants['first-exact-register-entry']
+for field in ['03E', '03F', '040']:
+    direct_zero = direct_zero.replace('(*(u8 *)&D_800E6280.unk_' + field + ')', 'D_800E6280.unk_' + field)
+variants['register-entry-direct-calendar'] = direct_zero
+variants['register-entry-unrelated'] = variants['first-exact-register-entry'].replace('    t = D_800E6280.unk_03E;', '    t = D_800E6280.unk_F5F;', 1)
+def live_index_do_loops(source):
+    needle = 'for (i = 0; i < 11; i++) {'
+    spans = []
+    for match in re.finditer(re.escape(needle), source):
+        start = match.end(); end = start; depth = 1
+        while depth:
+            if source[end] == '{': depth += 1
+            elif source[end] == '}': depth -= 1
+            end += 1
+        inner = source[start:end-1]
+        if 'get_g_zyotai_s(i)' in inner or 'unk_01 = i;' in inner:
+            spans.append((match.start(), end, inner))
+    for a,b,inner in reversed(spans):
+        source = source[:a] + 'i = 0; do {' + inner + '} while (++i < 11);' + source[b:]
+    return source
+variants['first-exact-do-live-index'] = live_index_do_loops(first_exact)
+variants['register-do-live-index'] = live_index_do_loops(variants['register-entry-unrelated'])
 expected, problem = fd.expected_object(c)
 if problem: raise RuntimeError(problem)
 want = fd.resolved_functions(expected, [name], c)[name]

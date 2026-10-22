@@ -2286,3 +2286,15 @@ and index-view induction negatives are retained in drafts/T-25052. The direct
 record type already produces the correct displaced access. Remaining work is
 address/loop-bound promotion after the first helper calls. See
 [[tickets/T-25052-main-schedule-dispatch]].
+
+## [2026-10-22] decision | Correct switch-copy explanation from actual ucode
+
+T-25052 option inspection finds `OPTN 405 1` before both the schedule dispatcher
+and the accepted D138 sibling. The earlier claim that D138's empty default-only
+switch enables zcopy off was incorrect: cfe drops that selector and retains entry
+control flow. Its literal match is unaffected. READMEs and tickets are corrected.
+A real two-case switch or a register-qualified existing local assigned a direct
+unsigned global does invoke the uniform zcopy-off rule; the latter adds no
+runtime operations but gives 985/998 words, cost975, so is only a diagnostic.
+See [[tickets/T-25040-main-flag-dispatch]] and
+[[tickets/T-25052-main-schedule-dispatch]].
