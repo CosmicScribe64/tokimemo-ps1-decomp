@@ -2825,3 +2825,23 @@ Root independently checked [[tickets/T-25054-etc-results-scene]] against CODING_
 ## [2026-10-22] build | ETC results scene accepted on main
 
 [[tickets/T-25054-etc-results-scene]] Done after independent default-C1128-byte MATCH, fresh27/27 binary hashes, headers/globals and0new/15known prototype checks. Canonical source direct standards/spec review has no findings. [[status]] now6849/6952functions,2122992/2276920bytes;103functions/153928bytes remain. Sixteen matches add18316bytes this resumed effort. Worker continues801480D0 underT-25059; TEL candidate still pending integration.
+
+## [2026-10-22] decision | Correct switch-copy explanation from actual ucode
+
+T-25052 option inspection finds `OPTN 405 1` before both the schedule dispatcher
+and the accepted D138 sibling. The earlier claim that D138's empty default-only
+switch enables zcopy off was incorrect: cfe drops that selector and retains entry
+control flow. Its literal match is unaffected. READMEs and tickets are corrected.
+A real two-case switch or a register-qualified existing local assigned a direct
+unsigned global does invoke the uniform zcopy-off rule; the latter adds no
+runtime operations but gives 985/998 words, cost975, so is only a diagnostic.
+See [[tickets/T-25040-main-flag-dispatch]] and
+[[tickets/T-25052-main-schedule-dispatch]].
+
+## [2026-10-22] query | Independently verify compiler-option correction
+
+Root Docker parse of captured input confirms field-entry-switch has OPTN405=1 for both acceptedD138 and unmatched7132C. register-entry-unrelated keepsD138=1 and changes7132C=0. Preserved correctiond259ee253 with no production/compiler changes. Historical logs remain intact; [[tickets/T-25040-main-flag-dispatch]] remains Done.
+
+## [2026-10-22] decision | Respect MAIN coordinator chat wrap-up request
+
+MAIN coordinator reports a direct human request in that chat to wrap up, commit and push. Its three lanes (T-25034 quadrant, T-25051 TACO, nextT-25058) are stopping experiments and preserving branches. Root will not restart those lanes contrary to that request. Other chats and root workers continue existing assignments; root alone integrates main. [[status]] reflects this scope distinction.

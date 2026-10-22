@@ -45,8 +45,11 @@ This is not a literal match and must not be counted as C coverage.
 
 Two source controls explain the reduction:
 
-* An empty unsigned entry switch activates the existing uniform switch-copy
-  boundary. Combined flags/base empty test preserves the entry flag load.
+* An empty entry switch changes the entry control-flow shape. The combined
+  flags/base empty test preserves the entry flag load. Correction from T-25052:
+  actual input ucode for the accepted function has `OPTN 405 1` (zcopy on);
+  the earlier explanation that this switch activates zcopy off was incorrect.
+  The literal match and the measured source controls remain valid.
 * In the empty year-98 comparison, `0x62 + ((u32)gs->unk_03F < 0)` is exactly
   98, but the comparison folds after uopt. It removes one unprofitable
   constant range from the interference graph. Year and base each go from

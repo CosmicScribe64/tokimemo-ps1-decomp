@@ -38,3 +38,11 @@ Selected from the two assigned functions before source edits. D138's latest ledg
 - Root reviewed the final annotated source against standards/spec: no findings. Checked fixed-width C89, existing aligned flag view, defined unsigned comparisons and zero offsets, exact b8 byte mapping, and complete FAKE coverage. Awaiting only root's full27 integration gate; keep In Review until that passes.
 
 Root acceptance2026-10-22: independent literal default-C872bytes and fresh27/27 binary checksums pass. Headers/globals and prototypes0new/15known pass; final standards/spec review has no findings. Moved Done. Prior snapshot replay now supports the promoted source. Worker continues reservedT-25052.
+
+### Compiler-option explanation correction (T-25052)
+
+The accepted source still passes its literal proof. Actual input ucode captured
+in the T-25052 whole-TU replay has `OPTN 405 1` before this function: zcopy is on.
+The earlier README explanation that the empty switch enables zcopy off was
+incorrect. The empty switch changes entry control flow; its selector is removed
+by cfe. No source or compiler changes are needed for this documentation correction.
