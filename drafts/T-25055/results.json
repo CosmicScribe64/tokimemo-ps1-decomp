@@ -1,0 +1,137 @@
+{
+  "pointer-baseline": {
+    "body": "drafts/T-25024/pointer-baseline.c",
+    "source_sha256": "67dd63003ff880c85cd487f64142d0c330455fdfa8a296c044e91fc67cc8cbad",
+    "tu_sha256": "7eb16077546e244e43dbf4bac9c63b40c1b25ca51c1ea6af350a5c098499ac5c",
+    "target_words": 1645,
+    "candidate_words": 1643,
+    "changed_positions": 1403,
+    "aligned_cost": 970
+  },
+  "global-selector": {
+    "body": "build/T-25055/controls/global-selector.c",
+    "source_sha256": "0f2e1d037b7465b91a01f7cfd8369e37ac9ec23376311a10b939deb98be23a44",
+    "tu_sha256": "c2bd9dc13d10f1a21ec02a2be1eaa72a50f69ab864e81138bbfdba47e078ed8d",
+    "target_words": 1645,
+    "candidate_words": 1644,
+    "changed_positions": 1352,
+    "aligned_cost": 127
+  },
+  "selector-view": {
+    "body": "build/T-25055/controls/selector-view.c",
+    "source_sha256": "794ff0d64125cbafdbda676857fc190d0b5888097f550a38ab0f6c57a8299cc6",
+    "tu_sha256": "abc39778e37c32a71ad952631a67862a7e8e8c6522758c63216eca02c5ed9823",
+    "target_words": 1645,
+    "candidate_words": 1643,
+    "changed_positions": 1403,
+    "aligned_cost": 970
+  },
+  "shared-total": {
+    "body": "build/T-25055/controls/shared-total.c",
+    "source_sha256": "ab2116ca637385e677fed98a6d710059ae51dad7cad40eb67f6c78f7471e8c4e",
+    "tu_sha256": "f521ffc586c4f2e298c76c81bc0d78f0b8cd47af702912b1c61517b3922ba4aa",
+    "target_words": 1645,
+    "candidate_words": 1644,
+    "changed_positions": 1366,
+    "aligned_cost": 969
+  },
+  "global-shared-total": {
+    "body": "build/T-25055/controls/global-shared-total.c",
+    "source_sha256": "862f37d11d8fa67f6f19b72c2e24d223523b94129cf266b288b8c91ba2ad023c",
+    "tu_sha256": "f6e2ff241d0b30c58b8b0e360a7ef0ed9493fefaf7ce53542f36fcb40e384c28",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 41,
+    "aligned_cost": 78
+  },
+  "share-random": {
+    "body": "build/T-25055/controls/share-random.c",
+    "source_sha256": "1b349d978caf15849313f02012afcee42689b5d25d5b9c1d447e3c193dea65b6",
+    "tu_sha256": "59425008473914547073fc8e208b49f7d7b0bbaafd6361ec8c515f75261a3934",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 41,
+    "aligned_cost": 78
+  },
+  "share-delta": {
+    "body": "build/T-25055/controls/share-delta.c",
+    "source_sha256": "44ee581ea05c780d1ddb97c893ba0fd192ff395ad6431ad3603db642f3719aea",
+    "tu_sha256": "06b8e88c324b2f9438e523fb9552801393740d6aabd6e17125b4eb3e8ead90f6",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 41,
+    "aligned_cost": 78
+  },
+  "girl-profit": {
+    "body": "build/T-25055/controls/girl-profit.c",
+    "source_sha256": "46d93ae92b59f0a2ac8f257601f381db9fb9903a50e12693113019fccd857461",
+    "tu_sha256": "28c99f9fb2a7101c04f12795000ec3951a53a935e4c929b3d147a35642ea1199",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 1,
+    "aligned_cost": 2
+  },
+  "girl-argument": {
+    "body": "build/T-25055/controls/girl-argument.c",
+    "source_sha256": "8fff237756951ad1f33db6e04d83878aad3739697147360ceb9f6ddb24dfad7e",
+    "tu_sha256": "c24609d7ff54c96bf90f6eb7129b363a29378a81cd34c8b4ec865990838aeddd",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 41,
+    "aligned_cost": 78
+  },
+  "compare-multiply": {
+    "body": "build/T-25055/controls/compare-multiply.c",
+    "source_sha256": "476f2a040c78f777b3f0f196d7426d812139a75c089eb788210f42a8d1898cbd",
+    "tu_sha256": "068125f5753a9c5c74456e253e2ec8bee6abf78ad5a4b33a3b23ebe255f05f69",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 0,
+    "aligned_cost": 0
+  },
+  "month-22": {
+    "body": "build/T-25055/controls/month-22.c",
+    "source_sha256": "d25755e06b006b9b2d69a2cf715e3445faaf3140e9dfbb751942044ec23d85db",
+    "tu_sha256": "c2b5b955f2cdd93108272bfc5ecc59c6bd5759231c63adeea0b31c53251017bf",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 0,
+    "aligned_cost": 0
+  },
+  "month-2f": {
+    "body": "build/T-25055/controls/month-2f.c",
+    "source_sha256": "c3157a1b56407b2741f7df3d502b5d47cf893372174847d07ab735f0c851cd48",
+    "tu_sha256": "abbe39b7fab604a63314a203a77598db6b30da7f1efa20c499056900314c9465",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 0,
+    "aligned_cost": 0
+  },
+  "month-both": {
+    "body": "build/T-25055/controls/month-both.c",
+    "source_sha256": "86916f38d4eeeec6cedb78d1d5df6e8c3be31565b5d3b6bede412d130868c239",
+    "tu_sha256": "b584ee4221cfb24074535704625d78e36b678d4112a64be540332c157dc013c1",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 0,
+    "aligned_cost": 0
+  },
+  "typed-text": {
+    "body": "build/T-25055/controls/typed-text.c",
+    "source_sha256": "44dec632bf757bc34530a3f55a4eb42013d54a429c82cd46505c3c3418ed24dd",
+    "tu_sha256": "4b3b7c2ac1bf681126e3785b04cecdc000737fd6d88b244c782a2f2f7a0101dc",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 0,
+    "aligned_cost": 0
+  },
+  "matched": {
+    "body": "drafts/T-25055/matched.c",
+    "source_sha256": "af1569291448dc825dfdf9afd27f32dc299bf67d59782d01d4cc8833e83d5dd9",
+    "tu_sha256": "a4cbf115739179e824e191a5fd2ab508a10912ddc60e8806053d17d6e1fc753a",
+    "target_words": 1645,
+    "candidate_words": 1645,
+    "changed_positions": 0,
+    "aligned_cost": 0
+  }
+}

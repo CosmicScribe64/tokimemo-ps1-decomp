@@ -9,7 +9,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Latest verified integration (2026-10-22)
 
-Sixteen functions verified this resumed effort, adding18,316bytes. Latest: ETC func_8014790C adds1128 literal default-C bytes. Root fresh27 binary checksums, declaration guards and standards/spec review pass. Current game code: **6849/6952 functions;2122992/2276920 bytes (93.2%)**,103 functions/153928 bytes remaining. Active Astra assignments: T-25042 KANGEI80134724; T-25046 SHOUGATU8013EA98; T-25052 MAIN8007132C; T-25059 ETC801480D0; T-25055 TEL80136724 (reported match, pending integration); T-25056 ENDING8013A2E8; T-25057 NAME_ENT801398EC. MAIN coordinator lanes T-25034, T-25051 and reserved T-25058 are wrapping up on a direct human request in that chat; checkpoints remain preserved. Root owns T-25053 final BUNKA_SD function. Older counts below are historical.
+Seventeen functions verified this resumed effort, adding24,896bytes. Latest: TEL func_80136724 adds6580 literal default-C bytes and completes80132000.c. Root fresh27 binary checksums, declaration guards and standards/spec review pass. Current game code: **6850/6952 functions;2129572/2276920 bytes (93.5%)**,102 functions/147348 bytes remaining. Active Astra assignments: T-25042 KANGEI80134724; T-25046 SHOUGATU8013EA98; T-25052 MAIN8007132C; T-25059 ETC801480D0; T-25060 TEL8013D88C; T-25056 ENDING8013A2E8; T-25057 NAME_ENT801398EC. MAIN coordinator lanes T-25034, T-25051 and reserved T-25058 are wrapping up on a direct human request in that chat; checkpoints remain preserved. Root owns T-25053 final BUNKA_SD function. Older counts below are historical.
 
 ## NEXT STEP (read this first)
 
@@ -23,6 +23,8 @@ The compiler-lever programme is complete and negative ([[tickets/T-25013-compile
 - What is left is mostly hard tails: guarded drafts a few rows off (compiler ordering and register choices, [[build-step-gaps]]) and large functions without a good draft. Find a function's history in [[notes/functions]].
 
 ## Active work
+
+- T-25055 TEL func_80136724 is ready for integration with6,580 literal default-C bytes, all27 binary hashes and declaration guards passing. Direct standards/spec review has no unresolved finding; ticket is In Review. Global selector ownership, shared maximum/total and a measured range-profit control close the large historical register mismatch. This isolated result is not included in the integration totals above.
 
 - 2026-10-22: T-25013, T-25014, and T-25015 are Done (merged in PR #66; all levers rejected, tooling landed). T-25016 closed out its census, engine, and bulk phases with no new matches (count unchanged at 6,833) and is In Review as the PR carrying its record. The regenerated work queue is the current map of what remains: Tier 0 near set, Tier 1 scored bulk drafts (a reconstruction backlog, verified 210+ resolved rows at best), Tier 2 blocked drafts with named blockers.
 

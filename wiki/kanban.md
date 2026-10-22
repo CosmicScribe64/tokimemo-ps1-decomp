@@ -54,6 +54,7 @@ kanban-plugin: board
 
 ## In Progress
 
+
 - [ ] [[tickets/T-25053-bunka-last-function|T-25053 Match final BUNKA_SD function]]
 
 - [ ] [[tickets/T-25042-kangei-dispatch-emission|T-25042 Match KANGEI dispatch scheduling]]
@@ -112,6 +113,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
 
 
 
@@ -209,6 +211,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-25055-tel-pass-mechanisms|T-25055 Match TEL qualification dialogue through causal compiler evidence]]
 
 - [ ] [[tickets/T-25054-etc-results-scene|T-25054 Match ETC results scene]]
 

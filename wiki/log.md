@@ -2849,3 +2849,35 @@ MAIN coordinator reports a direct human request in that chat to wrap up, commit 
 ## [2026-10-22] query | BUNKA return lifetime ruled out
 
 [[tickets/T-25053-bunka-last-function]] scratch-only s32 definition/declaration control worsens best to244words/cost105; baseline243/cost146. Canonical void header remains unchanged. Current archived best102 persists. TEL final ABI removal controls and worker gates pass; source pin is being prepared for root integration.
+
+## [2026-10-22] ticket | Claim T-25055 TEL causal matching lane
+
+[[tickets/T-25055-tel-pass-mechanisms]] starts In Progress from main633d95356 in the reused isolated /private/tmp/tokimemo-t25024 checkout on codex/t25055. Prior branch codex/t25024-tel-qualification preserves3b257980c and both donor candidates. Exclusive scope is src/ovl/TEL/80132000.c:func_80136724. No production/header/tool edits or C coverage claim. Next step reproduces whole-TU baseline and traces early pass-level divergence; broad shape grids remain excluded.
+
+## [2026-10-22] query | Reproduce TEL pointer baseline and prepare pass captures
+
+[[tickets/T-25055-tel-pass-mechanisms]] reproduces T-25024 pointer baseline at1643/1645 words,1403 changed positions,970 aligned cost in Docker on current full TU. First non-displacement mismatch remains word85. The unchanged early state increment precedes a one-slot temporary-ring deficit; capture harness drafts/T-25055/probe.py will forward identical stage arguments and retain uopt/ugen/as1 files privately under build. Ranked causal probes: (1) erased narrowing after state increment consumes the missing temporary; (2) eligibility zero and selected minimum share a range in the original; (3) mixed exact-width views explain redundant address setup. No source-shape grid or production change. Compiler slot yielded for sibling baseline after this reproduction.
+
+## [2026-10-22] build | TEL selector and total ranges remove widespread temporary mismatch
+
+[[tickets/T-25055-tel-pass-mechanisms]] Docker controls: case0x40 direct D_801405E4 stores/reads (no ent local) gives1644 words/cost127 versus baseline1643/cost970. Exact byte-view local load is neutral970. Sharing case6 maximum and total in total alone gives1644/cost969. Combining the two gives1645 target and candidate words,41 changed positions,cost78; preserved drafts/T-25055/combined-41.c. The early temporary mismatch was a missing reserved color, not a consumed slot; avoid increment-mask probes. Global store movement crosses no call or observable alias use before sndisp, and total is assigned in both max branches before its eligibility use. No production promotion; remaining target mismatch starts at word298, with global t0/t1 swap, local max input colors, one address schedule and one compare operand order.
+
+## [2026-10-22] build | TEL default C reaches literal linked match
+
+[[tickets/T-25055-tel-pass-mechanisms]] adds a defined always-false unsigned girl test before case6 rank calculation:41 changed positions becomes1 (the local-sharing and argument-view controls are neutral). The last second case0x40 branch operand order is corrected with hp*1; whole-TU1645words/0changed positions. Annotated source installed as default C. Docker funcdiff --resolve --version default reports MATCH: linked function bytes equal target6580bytes. Padding, inferred text extent, unsigned-false test and neutral compare expression are marked FAKE; the observed third strcat argument is explained. Full27/guard validation and direct coordinator standards/spec review remain pending.
+
+## [2026-10-22] build | TEL final ABI cleanup and full validation
+
+[[tickets/T-25055-tel-pass-mechanisms]] passes full27 binary checksums, then fresh27 hashes after neutral cleanup; default C is literal linked MATCH6580bytes. Headers/globals pass; prototype branch check reports0 new/15 known, OK. Removing extra strcat month arguments independently and together is neutral; typed set_kanji_string integer casts are neutral and removed. Actual func_80052060 definition takes4xs32, supporting its retained table-pointer casts. Final trace identifies girl field static6+0xF5F: uses7->9,priority0.25->0.4,t1->t0; selector t0->t1,lim a0->v0,hp a1->a0. Compact metadata in drafts/T-25055; no compiler/header/flag edits.
+
+## [2026-10-22] ticket | TEL T-25055 ready for integration
+
+[[tickets/T-25055-tel-pass-mechanisms]] moves to In Review with matching board. Coordinator direct standards/spec review has no unresolved finding after frame/buffer FAKE annotations and ABI cleanup. Source-only intermediate controls, final source and exact result/hash metadata are preserved; private full-TU/assembly/ucode outputs are excluded. Root owns integration and global counts. Compiler slot released after final checks.
+
+## [2026-10-22] lint | T-25055 final archive checks
+
+[[tickets/T-25055-tel-pass-mechanisms]] git diff whitespace check passes. Docker wiki lint finds0 broken links and0 status mismatches; existing large data/t0018-cases and log pages remain. The archive README writing check has0 strong hits and one weak passive construction retained for the exact allocator identity. Source/replay metadata contain no private instruction listings or binary files.
+
+## [2026-10-22] build | Largest remaining TEL dialogue accepted on main
+
+[[tickets/T-25055-tel-pass-mechanisms]] Done: root independent default-C6580-byte MATCH, fresh27/27 binary hashes, headers/globals and0new/15known prototypes pass. Direct final source standards/spec review has no findings; ABI cleanup and all appointment bits verified. [[status]] now6850/6952functions,2129572/2276920bytes93.5%;102functions/147348bytes remain. Seventeen matches add24896bytes this resumed effort. EntireTEL80132000.c is C; worker transferred to remainingTEL8013D88C in8013CCD0.c underT-25060.

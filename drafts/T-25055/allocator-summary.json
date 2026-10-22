@@ -1,0 +1,246 @@
+{
+  "combined": [
+    {
+      "description": "local lim",
+      "bit": 98,
+      "lr": 98,
+      "priority": 1.5,
+      "uses": 2,
+      "defs": 1,
+      "blocks": 2,
+      "allocation_order": 18,
+      "register": "$a0",
+      "identity": {
+        "id": 1194,
+        "ver": 0,
+        "bit": 98,
+        "kind": "var",
+        "cls": "M",
+        "l": 225,
+        "r": -12
+      }
+    },
+    {
+      "description": "local hp",
+      "bit": 105,
+      "lr": 105,
+      "priority": 1.5,
+      "uses": 2,
+      "defs": 1,
+      "blocks": 2,
+      "allocation_order": 19,
+      "register": "$a1",
+      "identity": {
+        "id": 1130,
+        "ver": 1,
+        "bit": 105,
+        "kind": "var",
+        "cls": "M",
+        "l": 225,
+        "r": -16
+      }
+    },
+    {
+      "description": "local total",
+      "bit": 113,
+      "lr": 113,
+      "priority": 2.25,
+      "uses": 4,
+      "defs": 5,
+      "blocks": 4,
+      "allocation_order": 7,
+      "register": "$v1",
+      "identity": {
+        "id": 938,
+        "ver": 0,
+        "bit": 113,
+        "kind": "var",
+        "cls": "M",
+        "l": 225,
+        "r": -28
+      }
+    },
+    {
+      "description": "local ent",
+      "bit": 117,
+      "lr": 117,
+      "priority": 1.5,
+      "uses": 2,
+      "defs": 1,
+      "blocks": 2,
+      "allocation_order": 20,
+      "register": "$v0",
+      "identity": {
+        "id": 787,
+        "ver": 0,
+        "bit": 117,
+        "kind": "var",
+        "cls": "M",
+        "l": 225,
+        "r": -341
+      }
+    },
+    {
+      "description": "global D_801405E4",
+      "bit": 179,
+      "lr": 179,
+      "priority": 0.25,
+      "uses": 1,
+      "defs": 3,
+      "blocks": 4,
+      "allocation_order": null,
+      "register": "$t0",
+      "identity": {
+        "id": 1396,
+        "ver": 0,
+        "bit": 179,
+        "kind": "var",
+        "cls": "S",
+        "l": 236,
+        "r": 0
+      }
+    },
+    {
+      "description": "global GameState.unk_F5F (girl byte)",
+      "bit": 405,
+      "lr": 635,
+      "priority": 0.25,
+      "uses": 7,
+      "defs": 0,
+      "blocks": 4,
+      "allocation_order": 81,
+      "register": "$t1",
+      "identity": {
+        "id": 773,
+        "ver": 0,
+        "bit": 405,
+        "kind": "var",
+        "cls": "S",
+        "l": 6,
+        "r": 3935
+      }
+    }
+  ],
+  "final": [
+    {
+      "description": "local lim",
+      "bit": 97,
+      "lr": 97,
+      "priority": 1.5,
+      "uses": 2,
+      "defs": 1,
+      "blocks": 2,
+      "allocation_order": 18,
+      "register": "$v0",
+      "identity": {
+        "id": 1194,
+        "ver": 0,
+        "bit": 97,
+        "kind": "var",
+        "cls": "M",
+        "l": 225,
+        "r": -12
+      }
+    },
+    {
+      "description": "local hp",
+      "bit": 103,
+      "lr": 103,
+      "priority": 1.5,
+      "uses": 2,
+      "defs": 1,
+      "blocks": 2,
+      "allocation_order": 19,
+      "register": "$a0",
+      "identity": {
+        "id": 1130,
+        "ver": 1,
+        "bit": 103,
+        "kind": "var",
+        "cls": "M",
+        "l": 225,
+        "r": -16
+      }
+    },
+    {
+      "description": "local total",
+      "bit": 111,
+      "lr": 111,
+      "priority": 2.25,
+      "uses": 4,
+      "defs": 5,
+      "blocks": 4,
+      "allocation_order": 7,
+      "register": "$v1",
+      "identity": {
+        "id": 938,
+        "ver": 0,
+        "bit": 111,
+        "kind": "var",
+        "cls": "M",
+        "l": 225,
+        "r": -28
+      }
+    },
+    {
+      "description": "local ent",
+      "bit": 115,
+      "lr": 115,
+      "priority": 1.5,
+      "uses": 2,
+      "defs": 1,
+      "blocks": 2,
+      "allocation_order": 20,
+      "register": "$v0",
+      "identity": {
+        "id": 787,
+        "ver": 0,
+        "bit": 115,
+        "kind": "var",
+        "cls": "M",
+        "l": 225,
+        "r": -341
+      }
+    },
+    {
+      "description": "global D_801405E4",
+      "bit": 177,
+      "lr": 177,
+      "priority": 0.25,
+      "uses": 1,
+      "defs": 3,
+      "blocks": 4,
+      "allocation_order": null,
+      "register": "$t1",
+      "identity": {
+        "id": 1396,
+        "ver": 0,
+        "bit": 177,
+        "kind": "var",
+        "cls": "S",
+        "l": 236,
+        "r": 0
+      }
+    },
+    {
+      "description": "global GameState.unk_F5F (girl byte)",
+      "bit": 404,
+      "lr": 636,
+      "priority": 0.400000006,
+      "uses": 9,
+      "defs": 0,
+      "blocks": 5,
+      "allocation_order": 78,
+      "register": "$t0",
+      "identity": {
+        "id": 773,
+        "ver": 0,
+        "bit": 404,
+        "kind": "var",
+        "cls": "S",
+        "l": 6,
+        "r": 3935
+      }
+    }
+  ]
+}
