@@ -97,6 +97,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-25047-taco-home-store|T-25047 Match TACO pointer-walk entry home store]]
+
 - [ ] [[tickets/T-25043-taco-constant-tail|T-25043 Match TACO stage handler constant tail]]
 
 
