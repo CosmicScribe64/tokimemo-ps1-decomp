@@ -2091,3 +2091,11 @@ Astra refined [[tickets/T-25034-main-quadrant-extent]] diagnosis: raw ugen still
 ## [2026-10-22] build | Quadrant RGB-group checkpoint replayed
 
 Docker replay of the updated signed-mask.c independently reproduces674target/666built words,198aligned/198printed for [[tickets/T-25034-main-quadrant-extent]]. This pins the newer grouping improvement while worker continues, without repeating the superseded212 proof. No production promotion.
+
+## [2026-10-22] build | Quadrant UV load-delay slots recovered
+
+[[tickets/T-25034-main-quadrant-extent]] moves four v3 stores after corresponding y3 coordinates and restores target load-delay-slot ordering through normal scheduling. Latest immutable source674target/670built words,186aligned/186printed, now four words short. Archived signed-mask.c updated; no production promotion, worker continues.
+
+## [2026-10-22] build | Quadrant UV checkpoint replayed
+
+Independent Docker replay confirms latest signed-mask.c at674target/670built words,186aligned/186printed for [[tickets/T-25034-main-quadrant-extent]]. Pinning source and scheduling notes while the worker continues. Production remains unchanged.

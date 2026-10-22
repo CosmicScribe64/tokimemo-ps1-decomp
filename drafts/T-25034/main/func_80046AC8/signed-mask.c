@@ -64,8 +64,8 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
             ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
             ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->u3 = 0x7F;
             ((POLY_GT4 *)primitive)->v2 = green;
             ((POLY_GT4 *)primitive)->u2 = 0;
@@ -84,8 +84,8 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
             ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
             ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->u3 = 0x7F;
             ((POLY_GT4 *)primitive)->v2 = green;
             ((POLY_GT4 *)primitive)->u2 = 0;
@@ -104,8 +104,8 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
             ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
             ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->u3 = 0x7F;
             ((POLY_GT4 *)primitive)->v2 = green;
             ((POLY_GT4 *)primitive)->u2 = 0;
@@ -123,8 +123,8 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
             ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
             ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->u3 = 0x7F;
             ((POLY_GT4 *)primitive)->v2 = green;
             ((POLY_GT4 *)primitive)->u2 = 0;

@@ -87,3 +87,7 @@ Normal ugen still emits the shift/sign-extension/mask chain with intermediate co
 ### RGB grouping improves to198
 
 Immutable astra-rgb-comma-group uses standard per-vertex RGB order grouped as one comma expression per vertex. Whole TU674/666words,198aligned/198printed. Colored-quad channel extraction, temporary registers red t0/green t3, and all twelve color stores agree with target. The unrelated a1=0 tpage argument still occupies the branch delay slot rather than target red shift. Updated tracked signed-mask.c; prior212 source remains in b25963c45. Matching continues.
+
+### UV store order improves to186
+
+Immutable astra-uv-after-xy moves each v3 store after its y3 coordinate assignment in all four cases. Existing as1 scheduling puts the UV store in the target y3 load delay slot, restoring four NOP/UV positions. Whole-TU674target/670built words,186aligned/186printed. Color block stays exact except hoisted a1=0. Updated signed-mask.c from immutable worker source; worker continues.

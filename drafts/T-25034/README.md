@@ -52,3 +52,8 @@ measures674target/666built words,198aligned/198printed. Colored-quad channel
 extraction, its temporary registers and all twelve color stores match. The
 block's branch delay slot still hoists a1=0 instead of the target red shift.
 The rest of the function remains under active reconstruction.
+
+The latest `signed-mask.c` adds only v3-after-y3 ordering in each UV case to
+the198 checkpoint. Existing scheduling puts each UV store in the target y3
+load delay slot:674target/670built words,186aligned/186printed. Four missing
+NOP/UV positions are restored; the candidate remains four words short.
