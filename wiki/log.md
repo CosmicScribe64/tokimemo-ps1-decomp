@@ -2306,3 +2306,39 @@ Created [[tickets/T-25038-shougatu-selection-loop]] and its In Progress board ca
 ## [2026-10-22] build | T-25038 default C verified and ready for integration
 
 Promoted SHOUGATU func_8013E6E4 with no fallback: private and production full-TU links match all 948 bytes, and an independent link of the actual Ninja object matches E6E4 plus preserved E50C472bytes. SHOUGATU SHA1 and headers/globals/prototype guards pass (0 new / 15 known). Removal controls document the integer debug return, two byte views, result narrowing and multiplication by one. Root approved the narrow debug guard, overlay forward prototype and existing T-11590 scalar-local exception; coordinator source review has no findings. Moved [[tickets/T-25038-shougatu-selection-loop]] and card to In Review pending root combined gate. Updated [[playbook]] and drafts/T-25038/README.md; raw evidence remains private.
+
+## [2026-10-22] ticket | T-25046 continues SHOUGATU EA98
+
+Created [[tickets/T-25046-shougatu-ea98]] and In Progress board card before source edits, preserving clean E6E4 pin ca9569534. Root reviewed [[tickets/T-25038-shougatu-selection-loop]] with no findings and owns its combined integration. Same Astra worker continues EA98, using the corrected284-cost history in [[tickets/T-24523-seasonal-source-hypotheses]] and concrete target/callee evidence before transferring matching controls. The corrected284 body was not committed; older T-17500 archives are a distinct baseline. No duplicate coordinator compiler tests or uncoordinated shared-header changes.
+
+## [2026-10-22] ingest | T-25046 recovers exact EA98 source lineage
+
+Recovered prior private t24523-sho-ea.c plus generator/scorer, then verified target semantics. Corrected copied event byte0x11 to target0x18 and final helper to check_para_limit(). Fresh full-TU baseline is282 aligned/286 printed,232/230words, with frame/table offsets eight bytes too high. Target random word reloads inside retry and shares selector through club tests; draft hoists the random and promotes selector through status call. Two isolated access-class controls test these observed causes. [[tickets/T-25046-shougatu-ea98]] records the evidence; production remains assembly.
+
+## [2026-10-22] build | T-25046 pins optimizer frame growth and direct-call control
+
+Faithful EA98 baseline trace reproduces282 cost and shows local area0x28 before uopt,0x38 afterward, with no surviving accesses to added homes. Per-call void847 cast regresses because it introduces jalr/address setup; a private direct void declaration is identical to baseline. Exact random access views and do-while control are also identical. Volatile random restores ra copy allocation but leaves wrong addressing/ranges, so remains diagnostic. [[tickets/T-25046-shougatu-ea98]] records precise negative controls; next test follows the existing unsigned-load pass entry gate rather than varying declarations.
+
+## [2026-10-22] build | T-25046 identifies hidden homes and shared selector range
+
+A faithful private tracer pins EA98 hidden homes to random/address, flag, selector conversion and previous-selector conversion. Optimized code shares the selector through three loop checks, forced-selection refresh and status RPAR, unlike the target's fresh post-merge load. Removing inherited random multiply-by-one restores its per-retry load and target table-copy registers (215 cost,231 words); call-only byte views do not resolve the selector range. [[tickets/T-25046-shougatu-ea98]] records the focused negative controls and current causal split. No production/compiler changes.
+
+## [2026-10-22] build | T-25046 restores frame and isolates post-call promotion
+
+Combined evidence-led access classes restore EA98 frame0x58, both table homes and230 words. The do-while condition restores the target G-base allocation. A post-status volatile read proves the later comparison extends the loop selector promotion; an existing D_800E71DF scalar alias only there gives48 aligned,230 words, with downstream arithmetic exact. Private847-byte control gives44 but228 words. [[tickets/T-25046-shougatu-ea98]] records all controls. Coordinator requires literal match plus keep necessity proof before any alias config/source promotion; production remains unchanged.
+
+## [2026-10-22] build | T-25046 count-loop sequencing and tied ranges
+
+Postincrement indexing fixes the complete EA98 count-loop schedule and gives38 aligned differences at230words, exact frame/tables. Faithful44-cost trace identifies selector range21/150 and equal2.2 priorities for previous choice, G-base and constant9; the missing common latch remains the main causal question. Created drafts/T-25046/README.md with current candidate path, trace hash and negative-family ledger. [[tickets/T-25046-shougatu-ea98]] remains In Progress; no production changes or coverage.
+
+## [2026-10-22] build | T-25046 confirms latch and allocation interaction
+
+For-loop retry increment restores the target previous-choice/constant9/G-base registers, but only addiu hoists early; signed narrowing stays at the latch. A coordinator-suggested word counter with explicit s16 updates retains that problem. Faithful late-zero trace proves its producer survives uopt, yet tested latch forms change promotion or disappear without the required reload. [[tickets/T-25046-shougatu-ea98]] and drafts/T-25046/README.md record the exact negative controls. Preserved best remains38 differences/230words; production and neighboring matches unchanged.
+
+## [2026-10-22] build | T-25046 unsigned recurrence and latch phase evidence
+
+[[tickets/T-25046-shougatu-ea98]] preserves36 differences/230 words with exact frame and tables after u32 status reuse plus signed16 normalization restores sum operand order. Faithful for-latch trace shows optimized ADD/CVTL/CVT remain together at the latch; as1 alone moves ADD early. Union storage, redundant normalization and selector-zero arithmetic controls regress and are not promoted. Updated drafts/T-25046/README.md; production remains ASM and no external blocker exists.
+
+## [2026-10-22] build | T-25046 first-rejection availability boundary
+
+[[tickets/T-25046-shougatu-ea98]] records rejected CFG/late-identity/read controls and corrects an invalid old local-selector scratch negative (accidental forced-store replacement; production unaffected). Corrected controls remain negative. Target first rejection bypasses the t4 load, while current uopt RLOD makes t4 available there; tracing that availability boundary now. Best remains36/230, exact frame/tables.
