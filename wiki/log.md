@@ -2039,3 +2039,23 @@ User requested wrap-up, commit and push, superseding sustained matching for [[ti
 ## [2026-10-22] lint | Quadrant wrap-up replay verification
 
 Docker replay independently reproduced conservative674/671words,361aligned/381printed and forward-join674/670words,360/380 for [[tickets/T-25034-main-quadrant-extent]]. Docker catalog797tickets; lint zero broken links and zero status mismatches, with one existing large-page warning for [[data/t0018-cases]]. git diff --check passes. src/, include/ and tools/ unchanged. Source-only checkpoint remains unfinished research; all worker experiments stopped at user request.
+
+## [2026-10-22] decision | Resume quadrant matching after newer instruction
+
+Root relayed newer direct human instruction to keep workers going until problems are resolved and matches made, superseding prior wrap-up. Reactivated existing Astra worker for [[tickets/T-25034-main-quadrant-extent]] from d8e482c4a, integrated by root as ff8a1c912. Same exclusive function, sole source writer, Docker only, no duplicate coordinator experiments or arbitrary stopping caps. Existing conservative361/381 and forward-join360/380 checkpoints retain full-word extent repair; no match yet.
+
+## [2026-10-22] build | Quadrant color result placement control
+
+Resumed Astra controls for [[tickets/T-25034-main-quadrant-extent]] show mask-before-shift moves the extra copy with expression order; explicit unsigned-byte consumers leave the best object unchanged. This narrows the remaining color issue to expression/result placement, not extraction arithmetic. Worker continues required primitive-field assignment propagation; no duplicate coordinator experiments, promotion or match.
+
+## [2026-10-22] build | Quadrant allocated mask still copies
+
+Astra trace for [[tickets/T-25034-main-quadrant-extent]] assigns the unsigned AND node itself to fp (priority7.625, uses5/defs2), but normal emission still routes the outer result through a temporary and copies back. Field assignment/grouping/remainder controls did not remove it. This rejects the simple outer-conversion allocation hypothesis and motivates output-ucode/lowering inspection. Production unchanged; source and negative evidence remain private pending a meaningful checkpoint.
+
+## [2026-10-22] build | Quadrant copy precedes assembly scheduling
+
+For [[tickets/T-25034-main-quadrant-extent]], Astra captured normal ugen inputs with and without CVT: both raw binasm streams already contain the extra masked-color copy, excluding as1 as its origin. Capture and normal object .text/all other sections match except .mdebug path metadata; resolved function identical. Destination forwarding into the shift child is next. This is diagnostic evidence, not justification for a compiler pass or a literal match.
+
+## [2026-10-22] build | Quadrant destination-forwarding mechanism confirmed
+
+For [[tickets/T-25034-main-quadrant-extent]], normal backend forwards fp into a single-use shift child, then rejects in-place AND and allocates/copies a temporary. Sharing the raw shift through one required color store suppresses forwarding and removes the copy in real C, confirming the mechanism. The control worsens overall output (668words/850aligned/862printed) through a0 allocation and remains diagnostic only. Astra continues source mechanisms; no backend changes or promotion.
