@@ -82,6 +82,8 @@ kanban-plugin: board
 
 
 
+- [ ] [[tickets/T-25046-shougatu-ea98|T-25046 Match SHOUGATU func_8013EA98]]
+
 - [ ] [[tickets/T-25034-main-quadrant-extent|T-25034 MAIN src/main/80046500.c full-width tile extent recovery]]
 
 - [ ] [[tickets/T-25032-main-candidate-audit|T-25032 Bounded read-only MAIN candidate qualification]]
