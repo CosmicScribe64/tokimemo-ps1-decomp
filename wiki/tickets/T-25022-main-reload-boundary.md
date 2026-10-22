@@ -28,3 +28,7 @@ Reproduced315/313words,138aligned/138printed baseline in Docker. Initial mode re
 Bounded source-role, byte-view and read-placement tests recorded in the draft README. No broad sweeps or new workers. Traced compiler output equals normal compiler output for the semantic checkpoint (310words, zero resolved differences). Earliest structural difference: mode comparison introduces a v1-to-v0 copy; final eager reloads sink below guards. Private raw evidence in build/T-25022. Direct mode mutation by inspected callees is not established; actual known writes and remaining transitive audio uncertainty are recorded rather than guessed.
 
 Prepared at most three bounded consultation questions in the draft README. Still unmatched; ticket remains In Progress. No production source/shared-header/build-tool edits and no full-build coverage claim.
+
+## Bounded consultation follow-up
+
+One read-only Astra consultation, Sol idle, identified distinct raw signed/unsigned-byte/signed-word conversion webs and the signed diagnostic's target-like final reload topology. Sol tested its two justified probes: explicit signed-word zero-extended zero tests315/309words,198aligned/198printed; word-mask representation315/317words,262/262, with incorrect lb+andi remaining. Neither recovers eager unsigned read placement. Both source controls and consultation findings preserved in the draft packet. No justified third probe; no generic tuning followed. Semantic body.c remains310words,179/179; lower-score partial source remains diagnostic only. Ticket still In Progress, no match claimed.

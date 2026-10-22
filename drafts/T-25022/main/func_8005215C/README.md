@@ -53,3 +53,14 @@ A bounded Astra consultation should ask at most three questions:
 3. Does the initial phase/count coloring follow an actual source-lifetime difference once the mode boundaries are recovered? Trace has phase-expression priority1.5 and count-expression priority2; do not alter priorities with dummy uses.
 
 No match or coverage increase claimed. Root owns review, integration and full-executable gates.
+
+## Bounded Astra consultation follow-up
+
+One read-only GPT-6 Astra consultation inspected this exact packet; Sol idled during it. No files or compiler outputs were changed by the consultant. It identified a concrete control: the earlier signed-read diagnostic reproduces the final eager-read/reload topology, although its signed lb is ineligible. The faithful trace distinguishes raw signed mode bit67, unsigned-byte conversion bit70 used by the initial zero test, and signed-word conversion bit71 used by cached comparisons. The preceding sp34/mode-zero test uses67, so these zero tests do not add uses to the final comparison conversion web.
+
+Only two new probes were justified and executed through the same whole-TU Docker harness:
+
+- `consult-signedword-zero.c`: change both standalone zero-test operands to explicit `(s32)(u8)D_800E6280.unk_03C`, leaving s32 assignments unchanged. Result target315/built309words, aligned198/printed198. Mode still sinks below the final F88/result guards; first structural mode-copy difference remains. Unsigned loads remain, but the desired topology is not recovered.
+- `consult-word-mask.c`: replace every mode `(u8)` conversion and the remaining uncast zero-test operand with `(D_800E6280.unk_03C & 0xFF)`. Result315/317words, aligned262/printed262. Masking does not fold to lbu: signed lb and explicit andi survive. Rejected as a match mechanism.
+
+No third source hypothesis was justified. No register, flag, volatile or declaration grid followed. The consultation establishes that conversion representation affects this topology, but neither tested unsigned representation reproduces the target. The corrected semantic checkpoint remains body.c (310words,179/179), and partial-reload.c (314words,127/127) remains diagnostic only. Direct callee mode mutation is still unproven; target read-placement evidence is established. Private full-TU objects and differences are in build/T-25022/consult-{signedword-zero,word-mask}/. No production or shared-header edits; no C match or coverage credit.

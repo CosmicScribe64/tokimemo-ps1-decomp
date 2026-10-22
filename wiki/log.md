@@ -1971,3 +1971,7 @@ Created [[tickets/T-25022-main-reload-boundary]] In Progress in an isolated work
 ## [2026-10-22] lint | Reload checkpoint documentation
 
 Docker catalog reports793 tickets,444 sections and3,078 functions. Wiki lint reports zero broken links, zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes; src/, include/ and tools/ have no changes. Research-only pin prepared for root review; ticket remains In Progress.
+
+## [2026-10-22] build | MAIN bounded Astra consultation
+
+[[tickets/T-25022-main-reload-boundary]] received one read-only Astra consultation while Sol idled. Signed diagnostic supplies target-like final reload topology but wrong load sign; conversion-web trace motivates two unsigned controls. Explicit signed-word zero tests give315target/309built words,198aligned/198printed. Word-mask mode reads give315/317,262/262 and retain lb+andi. Both rejected, source and findings preserved in drafts/T-25022/main/func_8005215C/. No third justified hypothesis, no sweeps, no production/shared-header edits or match claim.
