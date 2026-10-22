@@ -65,3 +65,13 @@ u0 store reproduces all target UV exit branches/delay stores without rotating
 saved registers. One instruction remains missing overall (TILE case2 radius
 MOVE); UV endpoint still uses v1 rather than a1. Quad-only half-radius
 narrowing was rejected; full-s32 TILE extent/radius semantics remain.
+
+`integer-return.c` preserves the newer s32-return/no-explicit-return control:
+674target/674built words,144aligned cost. The normal pipeline retains exactly
+the previously missing TILE case2 radius move and updates branch distances.
+The equal-length diagnostic printer reports902lines using positional rather
+than aligned comparison; use aligned cost144 for this checkpoint. The void
+159 candidate remains in signed-mask.c. Both known callers discard the result,
+and no existing header declaration specifies a return type. This supports an
+integer/implicit-int contract but does not uniquely prove the original source
+signature. Eventual promotion requires canonical declaration/ABI checks.

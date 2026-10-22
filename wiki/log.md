@@ -2111,3 +2111,15 @@ Independent Docker replay confirms latest signed-mask.c at674target/670built wor
 ## [2026-10-22] build | Quadrant159 checkpoint replayed
 
 Independent Docker replay confirms current signed-mask.c at674target/673built words,159aligned/159printed for [[tickets/T-25034-main-quadrant-extent]]. Pin source plus causal notes; worker remains active and production unchanged.
+
+## [2026-10-22] build | Quadrant radius move exists before final pipeline
+
+[[tickets/T-25034-main-quadrant-extent]]159-candidate capture reproduces canonical673words exactly. Raw ugen emits the missing TILE case2 radius MOVE; final pipeline removes it, whereas case3 counterpart survives. Allocation-only premise rejected; worker continues coordinate/extent dependency and grouping. No promotion or compiler changes.
+
+## [2026-10-22] build | Quadrant integer return restores exact word count
+
+[[tickets/T-25034-main-quadrant-extent]] s32-return control restores missing TILE radius MOVE:674/674words,144aligned cost. Archived integer-return.c alongside conservative void159 source. Parent audited both known callers: discarded C result and no target v0 use after calls, with no existing header declaration. Supports integer/implicit-int contract without uniquely proving signature. No shared-header or production change; Astra continues.
+
+## [2026-10-22] build | Quadrant integer-return checkpoint replayed
+
+Independent Docker replay confirms integer-return.c at674/674words,144aligned/902positional-printed for [[tickets/T-25034-main-quadrant-extent]]. Astra also verified actual implicit-int spelling is byte-identical to explicit s32. Remaining groups: entry temporaries/homes, UV endpoint v1 vs a1 and related zero-argument hoist, TILE t2/t4 choices, green-shift temporary. No operation-count gap remains; worker continues.

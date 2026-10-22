@@ -99,3 +99,13 @@ Immutable astra-tile-xy-before-width gives674target/670built,182aligned/182print
 ### UV exit branches improve to159
 
 Case1 width-before-height ordering first improved to178/178 at674/670words. Latest immutable astra-uv-join-after-u0 is674target/673built,159aligned/159printed: each required u0=0 store precedes its explicit goto, shared label follows case3 u0. This reproduces target UV exit branches/delay stores while preserving saved-register ranks, unlike natural breaks. One overall missing instruction is TILE case2 radius MOVE; UV endpoint remains v1 vs a1. Quad-only half-radius narrowing was negative; moving TILE case2 extent after y0 canonicalizes unchanged. Updated signed-mask.c; worker continues, no promotion.
+
+### Missing radius move is downstream
+
+Faithful astra-159-capture resolves exactly equal to canonical673word candidate (capture comparison0). Raw ugen emits TILE case2 MOVE v0,t8 immediately after division at record1209; final pipeline removes it, while case3 copy survives. Thus the missing instruction is downstream, not absent uopt radius allocation. Source chains/order/two-stage division controls canonicalize unchanged. Astra continues y0/extent dependency and grouping investigation.
+
+### Integer return contract restores the radius move
+
+Immutable astra-integer-return changes only return type to s32 with no explicit return. The previously missing TILE case2 MOVE and consequent branch distances are restored:674/674words,144aligned cost; equal-length positional printer902lines is not comparable to prior aligned printer rows. Preserve void159 as conservative baseline and integer-return.c as active branch.
+
+Parent read-only caller audit: no declaration under include/; two known C calls are expression statements in NAME_ENT func8013B5F0 and SHUGAKU func801360B0, currently implicit-int. Target NAME_ENT JAL8013B764 immediately reaches epilogue without reading v0. SHUGAKU JAL80136344 proceeds to argument setup and func800494BC without reading v0. INCLUDE_ASM supplies no return declaration. This is compatible with ignored integer return, not unique proof of original signature. Canonical declaration/ABI checks required before eventual promotion; no shared header edited.
