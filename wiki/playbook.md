@@ -101,3 +101,7 @@ Do not spend a session on these without a new idea; leave a guard with the ticke
 - as1 global scheduler picks (T-24202, T-24212, T-24203): rule and remaining cases in [[as1-scheduler-rule]]; default-block hoists are fixed with `volatile` (T-24900).
 - uopt `idx = 0; idx++` fold (T-24204): proves the zero through every source form tried; only a live backedge keeps the `addiu`.
 - uopt priority and colour order with no uniform rule: apply recipes above, do not search flags (exhausted in T-0014, T-0017, T-9800).
+
+## Spend a temporary before a call without changing later address sharing (T-25045)
+
+A late-folded zero plus two alternating identities in an existing call argument can advance the ugen free-list order while as1 removes every identity instruction. ETC func_80146D4C uses `zero = g->unk_041 * 0; printf(format, (score + zero) | zero);` in the preceding total print, retaining the final shared address and producing index t3/counter t4,t6. Applying the identity inside the index instead breaks address CSE. Check the producer's semantics, zero lifetime, full-TU literal output and removal controls; mark the artificial form FAKE. One identity or literal zero regresses this case. See [[tickets/T-25045-etc-ring-slots]].

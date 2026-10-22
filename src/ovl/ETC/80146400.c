@@ -290,13 +290,8 @@ void func_80146C68(s32 arg0) {
     ((DisplayActor44 *)D_80120650)->unk_2A = -0x40;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25007, 12 rows; the last block (score load, grade chain, D_801230F4 increment) has every
- * ugen temporary one lower than the original (the original skips one ring slot before the index shift
- * and one between the load and the add of the increment). T-25009: no gain from masks, casts or
- * chained assignments on the increment and the index, an idx local (88), or the permuter (900 s). */
 s32 func_80146D4C(void) {
-    s32 pad; /* FAKE: T-25007, unused word keeps the original frame 0x58 (ret at sp+0x48, main 0x44, bio 0x3C) */
+    s32 zero; /* FAKE: T-25045, reuses the original T-25007 frame-padding word. */
     s32 score;
     EtcWork40 *w;
     s32 ret;
@@ -365,7 +360,10 @@ s32 func_80146D4C(void) {
     func_800AE0B0("今日の成績 %d\t", w->unk_28[g->unk_041]);
     score = w->unk_28[g->unk_041] + w->unk_28[5];
     w->unk_28[5] = score;
-    func_800AE0B0("合計点 %d\n", score);
+    /* FAKE: T-25045, the late-folded zero and two identities spend one ugen
+     * temporary before as1 removes them, preserving the final index registers. */
+    zero = g->unk_041 * 0;
+    func_800AE0B0("合計点 %d\n", (score + zero) | zero);
     ret = w->unk_28[g->unk_041];
     if (ret < 0x28) {
         ret = 0;
@@ -388,9 +386,6 @@ s32 func_80146D4C(void) {
     w->unk_10[g->unk_041] = ret;
     return ret;
 }
-#else
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146D4C);
-#endif
 
 void func_8014716C(void) {
     func_8004E58C();

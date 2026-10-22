@@ -917,3 +917,7 @@ while raw190cost signed-flag remains preserved. Two true count gaps remain:
 case8ANDI and case13 flag-load NOP/LUI hoist; second-table differences are
 scheduling/registers. Source-backed peel and targeted callee-return controls
 do not close them. No production edit or coverage claim.
+
+## T-25045 exam grade tail closure
+
+The historical func_80146D4C negative above is superseded by [[tickets/T-25045-etc-ring-slots]]. Default C now matches all1056 linked bytes; ETC checksum and declaration guards pass. A marked late-zero addition/OR argument in the preceding total printf spends one ugen temporary without changing final address sharing. Root source review passed; full integration remains root-owned. See drafts/T-25045/README.md and [[matching-notes]].
