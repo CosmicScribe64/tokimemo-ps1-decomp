@@ -2617,3 +2617,39 @@ Promoted `src/main/8006CB30.c` function `func_8006D138` to default C. An exact-w
 ## [2026-10-22] build | MAIN flag dispatcher accepted
 
 Integrated e98740640. Root independent default-C literal872byte proof, fresh27/27 binary hashes, headers/globals and prototypes0new/15known pass. Final source review has no findings; [[tickets/T-25040-main-flag-dispatch]] moves Done. [[status]] now6846/6952functions,2120012/2276920bytes93.1%;106functions/156908bytes remain. Thirteen matches add15336bytes. Worker continues T-25052; ETC candidate still awaits integration.
+
+## [2026-10-22] ticket | T-25045 next target scope check
+
+Created [[tickets/T-25045-etc-ring-slots]] under root's same-file assignment. src/main/8005A0B0.c has no remaining INCLUDE_ASM or NON_MATCHING after T-25039. Comparing at most three historical candidate names against their current default bodies before confirming that scope is complete. No source edits; previous scratch evidence retained.
+
+## [2026-10-22] decision | T-25045 reassigned to ETC ring tail
+
+Root confirmed src/main/8005A0B0.c is complete and reassigned [[tickets/T-25045-etc-ring-slots]] to ETC func_80146D4C in src/ovl/ETC/80146400.c. No stale-candidate rebuilds or MAIN changes. Earlier attempted fast-forward was rejected because integration used a different ancestry; previous pins and evidence remain intact, and relevant source equality will be checked before new work.
+
+## [2026-10-22] build | T-25045 final-block temporary boundary
+
+ETC full-TU baseline for [[tickets/T-25045-etc-ring-slots]] is 264/264 instructions, cost 12; actual size 1056 bytes. Target first skips a ring slot before the index shift and another before the counter result. New late-zero controls either preserve the baseline or alter allocation/add code; faithful bitfield controls also preserve baseline. Retained all production source unchanged and started unmodified ugen phase capture.
+
+## [2026-10-22] build | T-25045 phantom slots localized
+
+Unmodified phase capture for [[tickets/T-25045-etc-ring-slots]] shows the final binasm already has the wrong ring temporaries. Cast/empty-branch late-zero controls do not fix them. A promoted byte self-assignment reaches target t3/t4/t6, but emits unwanted byte stores and a reload copy; retained as diagnostic evidence only and proceeding to local capture. No production edit.
+
+## [2026-10-22] build | T-25045 one missing allocation confirmed
+
+Logging-only ugen replay is byte-identical to standard captured binasm. Allocation traces correct the prior two-slot inference for [[tickets/T-25045-etc-ring-slots]]: only the mask's t2 allocation is missing; t5 is already absent from the later free list. A narrowed late-negative expression reaches the target first load/shift but duplicates the shared address. Testing explicit sharing while keeping the original guard.
+
+## [2026-10-22] ticket | T-25045 ETC literal match enters review
+
+Transferred the newly verified T-25047 alternating identity to the total printf argument in func_80146D4C. The reused pad becomes a late-zero carrier; one intermediate spends the needed ring slot and vanishes in as1. Minimized to byte multiply-zero, marked FAKE, and removed the fallback. Default C matches1056 literal bytes; ETC checksum/header/global/prototype guards pass (0 new/15known). Root independent source review passes. Added drafts/T-25045/README.md, updated [[playbook]], [[matching-notes]] and [[families/etc-family-results]], and moved [[tickets/T-25045-etc-ring-slots]] to In Review pending root full27 integration.
+
+## [2026-10-22] lint | T-25045 review checkpoint
+
+Wiki lint reports zero broken links and zero ticket/board mismatches; only existing data/t0018-cases and growing log size warnings remain. Git diff check passes. ETC SHA1 is681c93b6e57c885f86e074c885a8bf6c3cca2319. [[tickets/T-25045-etc-ring-slots]] remains In Review for integration.
+
+## [2026-10-22] query | BUNKA quotient-copy controls
+
+[[tickets/T-25053-bunka-last-function]] separate signed/unsigned index and late-zero overlapping lifetime controls preserve baseline144cost; u16 narrowing worsens200. No retained source improvement; optimizer-range evidence is needed before further variants. ETC full integration gate is running.
+
+## [2026-10-22] build | ETC grade function accepted
+
+Integrated51a413820. Root default-C literal1056byte proof, fresh27/27 binary checksums, headers/globals and prototypes0new/15known pass; independent source review has no findings. [[tickets/T-25045-etc-ring-slots]] moves Done. [[status]] now6847/6952functions,2121068/2276920bytes93.2%;105functions/155852bytes remain. Fourteen matches add16392bytes. Worker continues T-25054 ETC8014790C; seven Astra lanes and root BUNKA research remain active.
