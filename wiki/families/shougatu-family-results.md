@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-17
+updated: 2026-10-22
 sources: ["include/ovl/SHOUGATU.h", "drafts/T-17500/README.md", "drafts/T-17500/redraft.py", "tools/type_recovery.py", "tools/siblings.py"]
 ---
 
@@ -8,6 +8,16 @@ sources: ["include/ovl/SHOUGATU.h", "drafts/T-17500/README.md", "drafts/T-17500/
 
 SHOUGATU (the New Year event overlay) shares its scene code with GYOZI; the earlier GYOZI and SHOUGATU
 transfer work is in [[event-family-results]].
+
+## T-25033: func_8013E50C matched
+
+The 472-byte function now builds as default C and matches its linked target bytes;
+the affected overlay checksum passes. Early selected-girl initialization through
+multiply-by-zero preserves a promoted byte across the opening conditional, and
+the exact unsigned-byte status argument selects the target a2 carrier/reload.
+The canonical final helper and corrected random-state field are retained. All
+workarounds are marked FAKE; see [[tickets/T-25033-shougatu-canonical-call]] for
+minimization, semantic review and validation. Coordinator integration is pending.
 
 ## Types-first pass (T-17500)
 

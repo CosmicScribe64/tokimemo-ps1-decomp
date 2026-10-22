@@ -1,72 +1,55 @@
-# T-25033 SHOUGATU E50C hands-on matching checkpoint
+# T-25033 SHOUGATU E50C verified match
 
-Exclusive source src/ovl/SHOUGATU/8013E330.c, func_8013E50C,472 bytes.
-Best current guard:118 target/117 candidate words, five printed +/- lines,
-aligned cost5. Missing entry move a2,zero at0x8013E57C, then target sb a2
-at0x8013E5BC and move a0,a2 at0x8013E5C4 versus hardware zero. Every other
-resolved instruction key agrees after alignment. Frame58/table homes40/30
-exact. No C match or new coverage. Preserve this guard through further work.
+Source: src/ovl/SHOUGATU/8013E330.c, func_8013E50C, 472 bytes.
+Default C: 118/118 words, zero resolved differences; private and default linked
+proofs both match all 472 bytes. Default SHOUGATU checksum and declaration/global
+guards pass (0 new / 15 known prototype disagreements). Guard/fallback removed.
+Coordinator owns formal review and full 27-binary integration.
 
-Source SHA256 eef07f82f90f49390dfc3c70bd83995217d81235e8cdd7147b9e043e20d47a04.
-Field correction unk_10F8, canonical no-arg check_para_limit and caller FAKEs
-are intentional. The overridden integer func_800847B8 result is ignored;
-it retains the loop index in v1. The u8 status result narrowing spends dead
-expression temporaries; byte-view first argument fixes later reload base.
-Shared headers/tools unchanged. Default keeps assembly fallback.
+## Closing mechanism
 
-## Measured path, same whole TU
+Before the opening conditional, initialize:
 
-| Source/control | Candidate words / target118 | Printed lines / aligned cost |
-| --- | ---: | ---: |
-| T-24523 corrected archive baseline |124|152/152|
-| Archive plus canonical check_para_limit() |117|99/99|
-| Corrected newer in-tree declaration layout, old helper args |124|150/150|
-| Corrected in-tree layout plus canonical helper |117|93/93|
-| Integer-return view of func_800847B8 (related GYOZI precedent) |117|87/87|
-| Plus u8 narrowing of status result |117|9/9|
-| Plus byte-view first status argument (BEST) |117|5/5|
-| First status call(girl,sp40.v,girl), explicit ignored arguments |118|42/10|
+```c
+girl = D_800E6280.unk_F5F * 0;
+D_800E6280.unk_F5F = girl;
+```
 
-T-24523 archive omitted newer T-24709 declaration placement. Current i/girl
-above both tables restores40/30 rather than48/38. Preserve it. Last test
-emits a2-zero only at the first call, not entry, still uses sb zero and
-move a0,zero, and regresses the reload base. Do not repeat that three-arg
-form, zero-local widths/promotion/assignment grids or obsolete table layouts.
-37 tracked prior narrow E50C bodies had no canonical zero-arg final helper.
+Preserve the exact first status argument `*(u8 *)&D_800E6280.unk_F5F` and the
+existing u8 result cast. The nonconstant zero producer survives uopt, then ugen
+emits the zero without loading the input. The early byte assignment is promoted;
+its store is deferred to the first call, exactly as in the target. The unsigned
+byte argument gives the required a2 allocation and later byte reload base.
+No extra ignored arguments or identity expressions remain.
 
-## Faithful current boundary and old ledger
+This resolves the prior missing move a2,zero / sb a2 / move a0,a2 residue.
+The field correction unk_10F8 and canonical check_para_limit() remain. The existing
+integer func_800847B8 return view is retained; its result is ignored.
 
-Private build/t25033/trace has full TU draft.c, input draft.B, optimized
-draft.B.after, native draft.o.trace, allocator draft.log, decoded function
-excerpts and measurement.json. Stock capture in build/t25033/stock retains
-G/T/initial-as1 log. Four relevant stock/trace sections match byte-for-byte
-(.text/.rodata/.rel.text/.rel.rodata), recorded trace/fidelity.json.
-Input girl home M25/-8 has zero entry store; optimized output removes it
-and starts a new literal-zero merge value. Old expression-table entry alone
-does not establish live allocation (see analogous T-25025 GYOZI analysis).
+## Source minimization and proof
 
-Read drafts/T-24907/NOTES.md and wiki/tickets/T-25025-gyozi-zero-reaching-definition.md:
-zero locals, global promotion, byte-view *=0, assignment-expression and
-two-argument call experiments previously failed in that relative. This does
-not prove every distinct source mechanism impossible. T-25026 counter-fold
-consultation is a different site; do not repeat its simple dead/live backedges.
+- Literal zero in the same early-global form: 117 words / 15 cost.
+- Removing status result narrowing: 118 words / 78 cost.
+- Removing integer847B8 return view: 117 words / 25 cost.
+- Removing girl shifts the table homes; keep i/girl before the 14-byte tables.
+- A direct `D_F5F *= 0` also matches but leaves girl unused; retained source uses
+  the local meaningfully instead of introducing a padding-only FAKE.
+- Earlier direct unsigned-negative comparison also matches. Multiplication by
+  zero is the smaller retained workaround and has an explicit FAKE comment.
 
-Existing raw source T-17500 has spurious status/helper args. Callees are
-matched get_g_zyotai_s(s32) at80051A68 and check_para_limit(void) at80084D3C;
-actual incoming unused registers are not a semantic parameter contract.
-Target/source files and callers are available in the isolated worktree.
+The early store crosses no call and only disjoint nonvolatile state accesses;
+all values and effects are preserved. Exact machine proof confirms original
+store timing, frame 0x58, tables 0x40/0x30, and all registers/instructions.
 
-## Current checks and continuation
+## Private diagnostic trail
 
-Actual in-tree full-TU C funcdiff reproduces5/5,117/118. Default SHOUGATU
-checksum passes (assembly fallback); headers/global/prototype guards pass,
-0 new disagreements/15 known. No full27 worker build. No raw output committed.
+`build/t25033/astra/match-multiplyzero` is the matching full-TU private candidate
+and linked proof. `early-direct-byte` is the original matching comparison form.
+`single-identity-or` reproduced the carrier with a four-cost later reload residue;
+`near-secondzerouse` reduced that to two wrong register operands. `trace-near`,
+`trace-second` and `trace-early` retain ucode/allocator evidence. These intermediate
+forms are diagnostic, not final source. No raw binary or compiler dump is tracked.
 
-Human/root authorized one GPT-6 Astra implementation worker as sole writer
-of this file/tree during the next attempt; Sol coordinator idles. Initial
-30-minute sustained attempt, continue on actual measured progress. Work
-target CFG/lifetimes/ABI and novel plausible C/control/representation forms;
-mark FAKEs. No other agents/functions, inline asm, patched instructions,
-per-function flags, global compiler changes or extra observable stores/calls.
-Preserve best guard even if controls regress. A match requires literal full-TU
-and default-C/private linked proof, with ASM fallback excluded. Root integrates.
+The historical five-line guard is pinned at 7a9ed5a81c5ad04f5349d1b36c98d014752dd24f.
+The human's sustained-work instruction superseded old stopping limits; literal
+resolution is now achieved and verified rather than inferred from a bounded search.

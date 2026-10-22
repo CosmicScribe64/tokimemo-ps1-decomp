@@ -63,6 +63,13 @@ Hoists from another block (as1's global filler, [[as1-scheduler-rule]]): as1 mov
 
 One `li k` stored to several places: chain through elements, `a[0] = b[0] = k;` or `(&G)[0] = (&G)[1] = (&G)[2] = k;` (shares the `li`; the hidden chain temporary can add 4 bytes to the frame, a declared local can absorb it). `--(&G)[2]` as the chain source keeps the raw `addiu` and gives `andi` for the byte stores (TACO `func_8014F820`, T-24213). A constant stored to a global and passed as an argument: store plain fields, then pass them re-read through a view (FAKE). A constant argument scheduled too late: reuse a word local, `render_x = (render_x & 0) - 40` (T-24021). If uopt folds `idx = 0; idx++` into `li 1` and the original has `addiu`, only a live backedge keeps the `addiu` (T-24204, unresolved, 1 row).
 
+T-25033 closes a zero-carrier case: assign the byte global before the conditional using
+`girl = G * 0; G = girl;`, then pass it through the exact unsigned byte view. uopt can
+promote the byte and defer its store to the call; ugen folds the producer late and keeps
+the entry zero register. A literal zero folds too early. This is a marked FAKE, and
+moving the source store requires checking intervening aliases/calls. See
+[[tickets/T-25033-shougatu-canonical-call]].
+
 ## 7. Stack frame size and offsets
 
 Every declared scalar owns a 4-byte slot, promoted or not; arrays sit lowest; scalars declared before an array go above it; spilled locals take slots top-down in declaration order. Fixes: declare the real scalars before tables (GEKO `func_80132B24`, only three scalars, T-24302); add `s32 pad[n]` or `u8 pad[4]` and mark FAKE (ETC `func_80144DF0` needed `pad[3]`, T-24209; TAIIKU `func_8014280C`, T-16554); remove expression-temp locals (`tbl`, `rec`) in big functions; `A[f()] = v` reserves a spare slot, so use `idx = f(); A[idx] = v;` (T-16554). Overlay and main frames are handled by `frame_pass`; write C for a normal frame. `order_search` with `/* ORDER */` around declarations finds the declaration order (T-16230). Turn a pad slot into the real local the source likely had when ring numbers also differ.
