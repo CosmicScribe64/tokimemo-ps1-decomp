@@ -239,15 +239,6 @@ s32 func_80139100(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-24137, T-24709, T-24927, T-25020, four resolved rows.
- * The speculative year-byte load is emitted in each switch arm by uopt.
- * as1's per-block scheduler puts it after the store-address lui in cases
- * 0x49 and 0x66; this is not the global delay-slot filler. The empty field
- * test in case 0x3B moves its load before the store without allocating the
- * extra local range of the T-24927 lever. Adding the test to the other two
- * arms fixes local order but lets the global mover hoist their lui into
- * the compare-chain slots, so those arms retain the original draft. */
 void func_80139290(void) {
     GameState *g = &D_800E6280;
     switch (g->unk_1104.u) {
@@ -301,10 +292,18 @@ void func_80139290(void) {
         D_801206AC = 2;
         break;
     case 0x49:
+        /* FAKE: stage the constant before the year preload; the unsigned
+         * false test folds after uopt has placed that preload. T-25037 */
+        if (g->unk_1104.u == 0x60) {}
+        if ((u32)g->unk_03E < 0) {}
         D_801206AC = 0;
         break;
     case 0x66:
+        /* FAKE: split constant/store emission from the year preload without
+         * recomputing the selector; both empty tests disappear. T-25037 */
+        if (g->unk_1104.u == 1) {}
         D_801206AC = 1;
+        if ((u32)g->unk_03E < 0) {}
         break;
     case 0xA1:
         if (g->unk_03E == 0x60) {
@@ -407,9 +406,6 @@ void func_80139290(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_80139290);
-#endif
 
 /* FAKE: T-22021. The byte D_800E6280.unk_110B is read and written only as a u8 view, so uopt promotes it to one register for the whole function (a local copy splits the range and adds a `move`). `*= 0` is the clear that survives constant folding: it keeps the `move v1,zero` and the loop stores of that register (a plain `= 0` folds to `sb zero`); the original source is unknown. */
 void func_8013987C(void) {

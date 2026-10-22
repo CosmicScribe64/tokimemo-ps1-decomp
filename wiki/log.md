@@ -2235,3 +2235,23 @@ Integrated d8e482c4a after source/replay review. Root Docker replay confirms con
 ## [2026-10-22] decision | User resumes sustained matching after MAIN wrap-up
 
 New direct root instruction: keep workers going until problems are figured out and matches made. This supersedes the earlier MAIN-chat wrap-up. Resumed T-25034 Astra from preserved d8e482c4a candidates and reinforced T-25033 continuation from the118-word zero-carrier experiment. No time/probe limits; checkpoints and failed controls do not terminate assignments. Concrete external blockers and literal proof standards remain. Root integrates, coordinators avoid duplicate experiments.
+
+## [2026-10-22] ticket | T-25037 BUNKA_SD upstream emission
+
+Claimed [[tickets/T-25037-bunka-upstream-emission]] in an isolated worktree from 242c0c3a3. Read the T-25020/T-25023 evidence and retained the existing four-position guarded source. New work focuses on uopt/ugen emission before further source experiments; no coverage added.
+
+## [2026-10-22] build | T-25037 optimized-ucode evidence
+
+[[tickets/T-25037-bunka-upstream-emission]] reproduced the four-position guarded C difference and captured the actual uopt-output/ugen-input boundary. The first three targeted comparison probes do not separate constant and memory preloads: early year still precedes constant, and the 0x60 comparison leaves two extra instructions. Best source remains unchanged; no match claimed.
+
+## [2026-10-22] build | T-25037 closes BUNKA_SD case0x49 ordering
+
+[[tickets/T-25037-bunka-upstream-emission]] found a source form that independently stages the constant and year preloads. An empty frame==0x60 test followed by an unsigned-false year test removes the case0x49 residue without changing any other instruction:379 words, remaining cost2 at positions171/172 in case0x66. Source stays guarded; no coverage credit until the remaining pair matches.
+
+## [2026-10-22] build | T-25037 literal BUNKA_SD match
+
+[[tickets/T-25037-bunka-upstream-emission]] promotes func_80139290 after separate guarded and default-C private links prove all1516 bytes. Rebuilt all11 BUNKA_SD C units and normal link/hash commands pass BUNKA_SD.bin SHA1; declaration/global/prototype guards pass with0 new disagreements. Root standards/spec review has no findings. Ticket moves to In Review pending root full27 integration. Negative source ledger is preserved in drafts/T-25037/README.md; no compiler or header changes.
+
+## [2026-10-22] lint | T-25037 integration checkpoint
+
+Wiki lint reports0 broken links and0 status mismatches; two large pages are data/t0018-cases and the append-only log. The draft README prose check has no strong hits; its one weak colon introduces the explicit hash result and is retained. git diff --check passes. [[tickets/T-25037-bunka-upstream-emission]] remains In Review for integration.
