@@ -2717,3 +2717,27 @@ User requested more agents. Root reactivated the existing TEL/ENDING/ETC coordin
 ## [2026-10-22] query | BUNKA quotient storage controls negative
 
 [[tickets/T-25053-bunka-last-function]]: Docker quotient-storage controls returned u16 244 words/cost171, s16 247/cost204, reversed zero assignments243/cost144 against243 target words. Existing counter-use cost142 remains best; no production edit or coverage change.
+
+## [2026-10-22] ticket | T-25056 ENDING scheduler lane
+
+Created [[tickets/T-25056-ending-scheduler]] In Progress in isolated codex/t25056, preserving prior ENDING research branch. Ownership is src/ovl/ENDING/801396E0.c; first target func_8013A2E8. Read existing [[notes/matching-07]] evidence before qualification.
+
+## [2026-10-22] build | T-25056 baseline qualification
+
+[[tickets/T-25056-ending-scheduler]] reproduced full-TU baseline12 and prior pointer-lifetime10 using the existing Docker image. No production changes. Beginning print-only assembler trace to identify the failed motion gate.
+
+## [2026-10-22] query | ENDING global motion candidate budget
+
+[[tickets/T-25056-ending-scheduler]] traced A2E8's first flag block: equal-weight later join candidates consume the as110-attempt budget before either flag arm is examined. This gives a concrete cause for the prior whole-function deletion threshold. Source-only preload controls follow; production unchanged.
+
+## [2026-10-22] query | T-25056 preload controls and exact cutoff
+
+[[tickets/T-25056-ending-scheduler]] records six preload and three late-false loop controls, none improving the pointer baseline10. Corrected scanner identity and off-by-one: threshold10 admits11 candidate blocks, rejects the12th. Compiler slot yielded to another lane while preparing a scratch counterfactual; production remains unchanged.
+
+## [2026-10-22] query | ENDING budget counterfactual closes diagnostic
+
+[[tickets/T-25056-ending-scheduler]] proves the as1 candidate budget causes this residue: an unchanged-C scratch backend with threshold100 yields literal4648-byte equality; its default diagnostic equals stock. This is diagnostic evidence only, not a production match or authorized pipeline change. Exact source patch and replay recorded in drafts/T-25056; source-only work continues.
+
+## [2026-10-22] query | T-25056 backedge phase boundary
+
+[[tickets/T-25056-ending-scheduler]] records17 causal source controls. Early-folded backedges preserve the restrictive as1 budget; a late-zero carrier retains a natural-loop region with budget100 but also unwanted runtime branches. Added the candidate-count cutoff to [[as1-scheduler-rule]]. Direct standards/spec checkpoint review found no production changes; root's wording clarification resolved. Investigation continues.

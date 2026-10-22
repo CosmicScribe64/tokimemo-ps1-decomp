@@ -54,6 +54,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25056-ending-scheduler|T-25056 Resolve ENDING A2E8 scheduler residue]]
+
 - [ ] [[tickets/T-25053-bunka-last-function|T-25053 Match final BUNKA_SD function]]
 
 - [ ] [[tickets/T-25042-kangei-dispatch-emission|T-25042 Match KANGEI dispatch scheduling]]
