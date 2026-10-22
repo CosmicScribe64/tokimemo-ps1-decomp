@@ -1,0 +1,10 @@
+{
+  "label": "void53418",
+  "source_sha256": "67dd63003ff880c85cd487f64142d0c330455fdfa8a296c044e91fc67cc8cbad",
+  "tu_sha256": "bad7514e240a824d6791b2457cc71ea2c7c07fdfd1b4137c25ff13e2fec46926",
+  "target_words": 1645,
+  "candidate_words": 1643,
+  "printed_lines": 988,
+  "changed_positions": 1405,
+  "aligned_cost": 974
+}

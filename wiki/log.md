@@ -1959,3 +1959,23 @@ Created [[tickets/T-25021-main-5215c-reconstruction]] in the isolated T-25019 wo
 ## [2026-10-22] query | Typed state-machine reconstruction checkpoint
 
 [[tickets/T-25021-main-5215c-reconstruction]]: recovered func_8005215C compiles after evidence-based buffer and callee repairs. Docker full-TU final source315target/313built words, aligned138 and printed138, frame64 and observed homes exact. Preserved wide arithmetic. Earlier baseline frame96/printed325. Source-only checkpoints saved under drafts/T-25021/main/func_8005215C/; production restored. Earliest structural read-boundary gap documented in [[matching-notes]] for the requested multi-chat attack plan. Ticket/board moved to In Review; no match or coverage claim.
+
+## [2026-10-22] ticket | T-25024 isolated TEL qualification
+
+Created [[tickets/T-25024-tel-qualification]] In Progress from exact pinned base 883760224a9ff9712c4850ca7662c5ce3df2625d after confirming ancestry under advanced main. Exclusive function is TEL func_80136724 in src/ovl/TEL/80132000.c; [[plan-remaining]] multi-chat qualification rules apply. Fresh worktree created successfully before local guidance/skills copy.
+
+## [2026-10-22] ingest | T-25024 recovered TEL qualification baseline
+
+[[tickets/T-25024-tel-qualification]] verified GameState offset 0x110D as u8 against target LBU/SB. Recovered m2c body still has unknown stack aggregates, invalid stack-relative rank access, scalar packed-word aliases and case-0x40 label/index artifacts; older tracked drafts already address these. Fresh Docker TEL-only object build succeeded. Complete-TU resolved T-23001 baseline reproduces 1645 target / 1643 candidate words, 1048 printed lines, 1372 changed ordinal positions, 1038 aligned cost; adapted T-20830 pointer body is 1643/984/1403/970. Exact sources/results remain in private build/T-25024 pending archive. Matched rank-helper callers justify one void ABI control, rejected at aligned cost974 versus970. No C match or source promotion.
+
+## [2026-10-22] decision | T-25024 preserve measured TEL sources
+
+Preserved two complete-TU measured sources, hashes and Docker replay in drafts/T-25024; [[matching-notes#T-25024 TEL largest-function qualification]] records primary changed-position metrics and structural earliest divergence. Matched rank/packed-word donors support current types, but no new semantic source repair was identified. Default TEL unit checksum passes only with unchanged fallback. No production/header/build changes, no all27 run, no coverage credit. [[tickets/T-25024-tel-qualification]] moves to In Review after standards/spec self-review.
+
+## [2026-10-22] build | T-25024 guard prerequisites
+
+Both archived complete-TU source replays reproduced their hashes/metrics and check_headers passed. Initial global migration guard lacked the five baseline DATE/TACO keep-proof disassemblies in this TEL-only fresh tree; generated those two immutable split inputs without compiling C, then reran the guards. This prerequisite failure is not a changed-source regression. No full27 build performed.
+
+## [2026-10-22] lint | T-25024 final self-review and checks
+
+[[tickets/T-25024-tel-qualification]] is In Review with matching board card; function-note backlink updated. Header/global/prototype guards pass (0 new prototype disagreements,12 known in partial-split tree; three known void-result rows absent, explicitly recorded). Standards/spec self-review has no unresolved findings; remaining semantic proof and large matching residue are limitations, not completion. Exact sources replay at hand1372/pointer1403 changed positions, both1643 vs1645 words. Production source unchanged; git diff --check passes.

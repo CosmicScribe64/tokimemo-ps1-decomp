@@ -56,6 +56,8 @@ kanban-plugin: board
 
 
 
+
+
 - [ ] [[tickets/T-25017-completion-plan|T-25017 Reconcile census and execute completion plan]]
 
 
@@ -75,6 +77,9 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
+- [ ] [[tickets/T-25024-tel-qualification|T-25024 Qualify TEL 80136724 in src/ovl/TEL/80132000.c]]
+
 - [ ] [[tickets/T-25021-main-5215c-reconstruction|T-25021 Typed reconstruction main func_8005215C]]
 
 - [ ] [[tickets/T-25019-recovered-taco-38b2c|T-25019 Recovered queue provenance and TACO baseline]]
