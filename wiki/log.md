@@ -1987,3 +1987,19 @@ Created [[tickets/T-25022-main-reload-boundary]] In Progress in an isolated work
 ## [2026-10-22] lint | Reload checkpoint documentation
 
 Docker catalog reports793 tickets,444 sections and3,078 functions. Wiki lint reports zero broken links, zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes; src/, include/ and tools/ have no changes. Research-only pin prepared for root review; ticket remains In Progress.
+
+## [2026-10-22] ticket | T-25023 BUNKA scheduler closure
+
+Created [[tickets/T-25023-bunka-scheduler-closure]] and its In Progress card before investigation. Isolated base 883760224; only src/ovl/BUNKA_SD/801388D0.c assigned. Read [[plan-remaining]], [[tickets/T-25020-bunka-sd-trace-closure]] and [[tickets/T-24927-func-80139290-801388D0]]. Root owns integration; no old workers resumed.
+
+## [2026-10-22] query | T-25023 four-position baseline and bounded packet
+
+Reproduced whole-TU BUNKA_SD guarded C: four positions / eight printed lines / aligned cost 4, 379 instructions. Fresh print-only trace matches all four relevant sections. No source variants; prior local-order levers conflict with global filler selection. Preserved compact packet at drafts/T-25023/README.md and private pre/post evidence under build/t25023-cap. [[tickets/T-25023-bunka-scheduler-closure]] remains In Progress for root-authorized read-only Astra consultation; Sol idles during it.
+
+## [2026-10-22] decision | T-25023 consultation closes without another source sweep
+
+Read-only Astra clarified original-INST global selection versus local scheduling, and corrected the prior li-aftercycles description. No causal source recipe beyond the rejected ledger; zero new variants. Preserved exact upstream-emission revisit condition in drafts/T-25023/README.md and [[matching-notes]]. [[tickets/T-25023-bunka-scheduler-closure]] moved to In Review with its board card. Production source unchanged; no C match or coverage, root owns integration checks.
+
+## [2026-10-22] lint | T-25023 checkpoint
+
+Wiki lint passes with zero broken links and status mismatches; only the existing data/t0018-cases size warning remains. `git diff --check` passes. [[tickets/T-25023-bunka-scheduler-closure]] stays In Review. No source/header/tool differences or generated/raw artifacts included in the checkpoint.
