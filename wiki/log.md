@@ -1951,3 +1951,11 @@ Mapped the recovered trace: 779 normalized DAG records and all 74 mover events e
 ## [2026-10-22] build | T-25020 verified four-row guard handed to review
 
 Updated full-unit NON_MATCHING C verifies four changed positions (eight +/- lines), only case-0x49/0x66 load/lui swaps. Default linked-byte MATCH verifies the assembly fallback only (1516 bytes); affected BUNKA_SD SHA1 and header/global/prototype guards pass. Lint has zero broken links/status mismatches and one pre-existing large page. [[tickets/T-25020-bunka-sd-trace-closure]] and board moved to In Review, with bb 41/43/45 and head bb 42/44 mapped for the next bounded consultation. No C match counted.
+
+## [2026-10-22] ticket | Typed reconstruction main func_8005215C
+
+Created [[tickets/T-25021-main-5215c-reconstruction]] in the isolated T-25019 worktree. Recovered candidate uses invalid void-pointer selectors; current xa_wait supplies shared-prefix buffer widths. Read T-12050 wide-compare negatives and inspected original k_disp_inc call sites before changing call views.
+
+## [2026-10-22] query | Typed state-machine reconstruction checkpoint
+
+[[tickets/T-25021-main-5215c-reconstruction]]: recovered func_8005215C compiles after evidence-based buffer and callee repairs. Docker full-TU final source315target/313built words, aligned138 and printed138, frame64 and observed homes exact. Preserved wide arithmetic. Earlier baseline frame96/printed325. Source-only checkpoints saved under drafts/T-25021/main/func_8005215C/; production restored. Earliest structural read-boundary gap documented in [[matching-notes]] for the requested multi-chat attack plan. Ticket/board moved to In Review; no match or coverage claim.
