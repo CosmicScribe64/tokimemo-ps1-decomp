@@ -1971,3 +1971,7 @@ Root Docker affected BUNKA_SD build passes header check and executable SHA1 afte
 ## [2026-10-22] decision | Bounded Astra escalation for BUNKA scheduler blocker
 
 Live T-25023 Sol worker reports no untested causal source lever after checking the four-position residue and negative ledger. Authorized one read-only Astra consultation within that chat, limited to bb43/45 local load order versus bb42/44 filler selection, at most three trace-backed hypotheses; Sol idles during consultation and tests only justified new ideas afterward. T-25022 worker reports first real global reload repair reduces138 to127 printed diff lines and recovers one instruction; second read boundary under test, no match claim. TEL chat remains active. Overall scope unchanged.
+
+## [2026-10-22] decision | Rotate exhausted scheduler lane to a concrete trace question
+
+Live T-25023 consultation found no supported source lever to separate local year-load ordering from global filler selection. Preserve packet and four-row guard; assigned same Sol chat T-25025 GYOZI func_80140E0C reaching-zero-definition trace investigation, explicitly excluding prior zero-local/promotion grids. Claim transfer recorded in [[tickets/T-25017-completion-plan]]. TEL whole-unit target1645/candidate1643 baseline aligned costs1038/970 confirm substantial reconstruction remains; MAIN preserves semantic reload repairs alongside lower-score partial candidates. No match claimed.

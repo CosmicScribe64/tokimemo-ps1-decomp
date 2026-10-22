@@ -31,3 +31,7 @@ Fetched and fast-forwarded clean main to 7c87f223e (PRs #66/#67). Docker progres
 ### Three-chat dispatch, 2026-10-22
 
 Reviewed the guarded BUNKA delta (explicit FAKE, retained fallback) and source-only MAIN checkpoint against standards and ticket scope; preserved on main883760224. Neither is a C promotion. Reused existing idle chats with Sol6.1medium and one active worker each: T-25022 MAIN src/main/8004F870.c in chat01a15aee-c8fd-7382-a23a-0da45f598e67; T-25023 BUNKA src/ovl/BUNKA_SD/801388D0.c in chat01a15a31-d97a-7802-804e-bdb52f0dcf1a; T-25024 TEL src/ovl/TEL/80132000.c in chat01a15a25-5486-7e23-83bc-44fc1fe73dd1. Workers create their tickets in isolated worktrees. These exact file claims supersede the chats' older broad assignments. Root owns shared headers/tools and integration. GEKO/OPTION remain contributor-reserved. Astra awaits a specific blocker packet.
+
+### Scheduler lane rotation
+
+2026-10-22: T-25023 Sol baseline reproduces four changed positions/379 words and tracer control matches stock relevant sections. Bounded Astra consultation found no justified new source test; packet being pinned. After preservation, that chat releases BUNKA and owns only src/ovl/GYOZI/80140C90.c under T-25025, tracing zero-carrier reaching definitions for func_80140E0C. T-24907 grids remain closed; no automatic second Astra consultation. MAIN and TEL ownership unchanged.
