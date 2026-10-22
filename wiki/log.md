@@ -1975,3 +1975,15 @@ Read-only Astra clarified original-INST global selection versus local scheduling
 ## [2026-10-22] lint | T-25023 checkpoint
 
 Wiki lint passes with zero broken links and status mismatches; only the existing data/t0018-cases size warning remains. `git diff --check` passes. [[tickets/T-25023-bunka-scheduler-closure]] stays In Review. No source/header/tool differences or generated/raw artifacts included in the checkpoint.
+
+## [2026-10-22] ticket | T-25025 GYOZI reaching-definition evidence
+
+Released the BUNKA source claim at separate T-25023 pin a9608aeba. Created [[tickets/T-25025-gyozi-zero-reaching-definition]] In Progress and board card before GYOZI work. Exclusive src/ovl/GYOZI/80140C90.c; inspect propagation before considering source. No old workers or automatic Astra.
+
+## [2026-10-22] query | T-25025 zero carrier dies before allocation
+
+Current and archived-v6 whole-TU measurements agree: 97:96 instructions, five printed lines, aligned cost 5. Input contains entry z and merge use; stale expression-table entries coexist with a propagated constant store, but no live z range reaches allocation. Optimized ucode recreates zero at merge; initial as1 nodes already use hardware zero. Stock/traced v6 four-section fidelity passes. No new variants, source edits or Astra. Preserved phase-boundary evidence and exact remaining internal trace question in drafts/T-25025/README.md and [[matching-notes]]. [[tickets/T-25025-gyozi-zero-reaching-definition]] moves to In Review, BUNKA claim remains released.
+
+## [2026-10-22] lint | T-25025 checkpoint checks
+
+Wiki lint has zero broken links and status mismatches, one existing data/t0018-cases size warning. `git diff --check` passes; no production/header/tool/config differences. [[tickets/T-25025-gyozi-zero-reaching-definition]] remains In Review for root review.
