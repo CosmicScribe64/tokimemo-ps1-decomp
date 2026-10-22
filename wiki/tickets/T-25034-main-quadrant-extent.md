@@ -79,3 +79,35 @@ With s32 red, `red = (s8)(arg6 >> 16) & 255` and equivalent TILE red/green extra
 ### New best signed-mask source
 
 Removing only blue narrowing from astra-mask-signed-byte yields immutable astra-mask-signed-shifts:674target/666built padded words,212aligned/212printed (previous best360/380). Red/green use direct ANDI into fp/s7; blue uses required word load and ANDI instead of LB. Full-s32 extent tests and0xA8 frame retained. Archived as drafts/T-25034/main/func_80046AC8/signed-mask.c with replay support. Trace of preceding candidate identifies fp bit64 as cvt(and(cvtl(shr(arg6,16)),255)),priority7.625,5uses2defs; inner signed CVTL is causal, without synthetic sharing. Matching continues UV/register/CFG reconstruction; not promoted.
+
+### Signed-mask capture refinement
+
+Normal ugen still emits the shift/sign-extension/mask chain with intermediate copies. The existing pipeline collapses that chain into the final temporary-shift/direct-ANDI form. Thus the signed CVTL source expression is successful through the full pipeline, but does not prove raw ugen destination forwarding changed. astra-signed-mask-capture/fidelity.json confirms resolved capture output exactly equals the666word,212/212 canonical candidate (capture comparison cost0). No compiler/tool changes.
+
+### RGB grouping improves to198
+
+Immutable astra-rgb-comma-group uses standard per-vertex RGB order grouped as one comma expression per vertex. Whole TU674/666words,198aligned/198printed. Colored-quad channel extraction, temporary registers red t0/green t3, and all twelve color stores agree with target. The unrelated a1=0 tpage argument still occupies the branch delay slot rather than target red shift. Updated tracked signed-mask.c; prior212 source remains in b25963c45. Matching continues.
+
+### UV store order improves to186
+
+Immutable astra-uv-after-xy moves each v3 store after its y3 coordinate assignment in all four cases. Existing as1 scheduling puts the UV store in the target y3 load delay slot, restoring four NOP/UV positions. Whole-TU674target/670built words,186aligned/186printed. Color block stays exact except hoisted a1=0. Updated signed-mask.c from immutable worker source; worker continues.
+
+### TILE case0 scheduling improves to182
+
+Immutable astra-tile-xy-before-width gives674target/670built,182aligned/182printed. Moving TILE case0 width assignment after y0 lets the independent constant-width store fill the target load delay and restores a1=primitive scheduling. Full-s32 extent semantics retained. Worker next tests corresponding case1 width/height grouping; private accumulated ledger is build/T-25034/astra-resume-progress.md.
+
+### UV exit branches improve to159
+
+Case1 width-before-height ordering first improved to178/178 at674/670words. Latest immutable astra-uv-join-after-u0 is674target/673built,159aligned/159printed: each required u0=0 store precedes its explicit goto, shared label follows case3 u0. This reproduces target UV exit branches/delay stores while preserving saved-register ranks, unlike natural breaks. One overall missing instruction is TILE case2 radius MOVE; UV endpoint remains v1 vs a1. Quad-only half-radius narrowing was negative; moving TILE case2 extent after y0 canonicalizes unchanged. Updated signed-mask.c; worker continues, no promotion.
+
+### Missing radius move is downstream
+
+Faithful astra-159-capture resolves exactly equal to canonical673word candidate (capture comparison0). Raw ugen emits TILE case2 MOVE v0,t8 immediately after division at record1209; final pipeline removes it, while case3 copy survives. Thus the missing instruction is downstream, not absent uopt radius allocation. Source chains/order/two-stage division controls canonicalize unchanged. Astra continues y0/extent dependency and grouping investigation.
+
+### Integer return contract restores the radius move
+
+Immutable astra-integer-return changes only return type to s32 with no explicit return. The previously missing TILE case2 MOVE and consequent branch distances are restored:674/674words,144aligned cost; equal-length positional printer902lines is not comparable to prior aligned printer rows. Preserve void159 as conservative baseline and integer-return.c as active branch.
+
+Parent read-only caller audit: no declaration under include/; two known C calls are expression statements in NAME_ENT func8013B5F0 and SHUGAKU func801360B0, currently implicit-int. Target NAME_ENT JAL8013B764 immediately reaches epilogue without reading v0. SHUGAKU JAL80136344 proceeds to argument setup and func800494BC without reading v0. INCLUDE_ASM supplies no return declaration. This is compatible with ignored integer return, not unique proof of original signature. Canonical declaration/ABI checks required before eventual promotion; no shared header edited.
+
+Root independent replay on current main confirms integer-return.c674/674words,144aligned/902positional lines. Root source search confirms two existing calls discard results and no include declaration exists. This preserves the audited research branch without claiming unique original return signature or coverage. Worker continues remaining allocation/scheduling residues.

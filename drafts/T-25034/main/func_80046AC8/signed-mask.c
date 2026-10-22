@@ -35,18 +35,10 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
         if (alpha != 0) {
             red = (s8)(arg6 >> 0x10) & 0xFF;
             green = arg6 >> 8;
-            ((POLY_GT4 *)primitive)->g0 = (s8) green;
-            ((POLY_GT4 *)primitive)->r0 = red;
-            ((POLY_GT4 *)primitive)->b0 = (s8) arg6;
-            ((POLY_GT4 *)primitive)->g1 = (s8) green;
-            ((POLY_GT4 *)primitive)->r1 = red;
-            ((POLY_GT4 *)primitive)->b1 = (s8) arg6;
-            ((POLY_GT4 *)primitive)->g2 = (s8) green;
-            ((POLY_GT4 *)primitive)->r2 = red;
-            ((POLY_GT4 *)primitive)->b2 = (s8) arg6;
-            ((POLY_GT4 *)primitive)->g3 = (s8) green;
-            ((POLY_GT4 *)primitive)->r3 = red;
-            ((POLY_GT4 *)primitive)->b3 = (s8) arg6;
+            ((POLY_GT4 *)primitive)->r0 = red, ((POLY_GT4 *)primitive)->g0 = (s8) green, ((POLY_GT4 *)primitive)->b0 = (s8) arg6;
+            ((POLY_GT4 *)primitive)->r1 = red, ((POLY_GT4 *)primitive)->g1 = (s8) green, ((POLY_GT4 *)primitive)->b1 = (s8) arg6;
+            ((POLY_GT4 *)primitive)->r2 = red, ((POLY_GT4 *)primitive)->g2 = (s8) green, ((POLY_GT4 *)primitive)->b2 = (s8) arg6;
+            ((POLY_GT4 *)primitive)->r3 = red, ((POLY_GT4 *)primitive)->g3 = (s8) green, ((POLY_GT4 *)primitive)->b3 = (s8) arg6;
         } else {
             ((POLY_GT4 *)primitive)->r0 = 0x80;
             ((POLY_GT4 *)primitive)->g0 = 0x80;
@@ -72,14 +64,15 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
             ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
             ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->u3 = 0x7F;
             ((POLY_GT4 *)primitive)->v2 = green;
             ((POLY_GT4 *)primitive)->u2 = 0;
             ((POLY_GT4 *)primitive)->v1 = (texture_row * 4);
             ((POLY_GT4 *)primitive)->u1 = 0x7F;
             ((POLY_GT4 *)primitive)->v0 = (texture_row * 4);
+            ((POLY_GT4 *)primitive)->u0 = 0;
             goto block_16;
         case 1:
             ((POLY_GT4 *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
@@ -92,14 +85,15 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
             ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
             ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->u3 = 0x7F;
             ((POLY_GT4 *)primitive)->v2 = green;
             ((POLY_GT4 *)primitive)->u2 = 0;
             ((POLY_GT4 *)primitive)->v1 = (texture_row * 4);
             ((POLY_GT4 *)primitive)->u1 = 0x7F;
             ((POLY_GT4 *)primitive)->v0 = (texture_row * 4);
+            ((POLY_GT4 *)primitive)->u0 = 0;
             goto block_16;
         case 2:
             ((POLY_GT4 *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
@@ -112,14 +106,15 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
             ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
             ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->u3 = 0x7F;
             ((POLY_GT4 *)primitive)->v2 = green;
             ((POLY_GT4 *)primitive)->u2 = 0;
             ((POLY_GT4 *)primitive)->v1 = (texture_row * 4);
             ((POLY_GT4 *)primitive)->u1 = 0x7F;
             ((POLY_GT4 *)primitive)->v0 = (texture_row * 4);
+            ((POLY_GT4 *)primitive)->u0 = 0;
             goto block_16;
         case 3:
             ((POLY_GT4 *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
@@ -131,16 +126,16 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
             ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
             ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->v3 = green;
             ((POLY_GT4 *)primitive)->u3 = 0x7F;
             ((POLY_GT4 *)primitive)->v2 = green;
             ((POLY_GT4 *)primitive)->u2 = 0;
             ((POLY_GT4 *)primitive)->v1 = (texture_row * 4);
             ((POLY_GT4 *)primitive)->u1 = 0x7F;
             ((POLY_GT4 *)primitive)->v0 = (texture_row * 4);
-block_16:
             ((POLY_GT4 *)primitive)->u0 = 0;
+block_16:
             break;
         }
         ((POLY_GT4 *)primitive)->tpage = func_8009ECB0(0, 0, texture_u, texture_v);
@@ -162,8 +157,8 @@ block_16:
             switch (quadrant) {
             case 0:
                 ((TILE *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] - 0xA0);
-                ((TILE *)primitive)->w = 0x140;
                 ((TILE *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] - 0x78);
+                ((TILE *)primitive)->w = 0x140;
                 extent = (arg5 - ((s32) (arg3 << 7) / 4096)) + 0x78;
                 ((TILE *)primitive)->h = extent;
                 if (extent > 0) {
@@ -173,9 +168,9 @@ block_16:
             case 1:
                 ((TILE *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] - 0xA0);
                 ((TILE *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] - 0x78);
-                ((TILE *)primitive)->h = 0xF0;
                 extent = (arg4 - ((s32) (arg3 << 7) / 4096)) + 0xA0;
                 ((TILE *)primitive)->w = extent;
+                ((TILE *)primitive)->h = 0xF0;
                 if (extent > 0) {
                     AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + order_offset], primitive);
                 }

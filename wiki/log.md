@@ -2661,3 +2661,51 @@ Instrumented compiler identifies counter local/global priority inversion for [[t
 ## [2026-10-22] query | BUNKA quotient allocation constraints
 
 [[tickets/T-25053-bunka-last-function]] full trace exposes high-priority address range before quotient and low-priority selector. Narrow index controls and definite later call-argument reuse do not recover target copies; recorded exact results in drafts/T-25053/README.md. No production change. Contributor check unchanged: no open PRs, issue65 claim unchanged. Requested stable quadrant improvement pin while worker continues.
+
+## [2026-10-22] build | Quadrant signed-mask capture clarifies pipeline effect
+
+Astra refined [[tickets/T-25034-main-quadrant-extent]] diagnosis: raw ugen still includes intermediate signed-mask chain/copies; the existing pipeline collapses them into the desired final instructions. Capture output exactly reproduces the canonical666word,212/212 candidate. Source improvement is verified, but earlier CVTL wording must not be read as proof of changed raw destination forwarding. No compiler/tool changes.
+
+## [2026-10-22] build | Quadrant RGB grouping improves to198
+
+[[tickets/T-25034-main-quadrant-extent]] per-vertex RGB comma grouping gives674/666words,198aligned/198printed. Colored-quad extraction/temporaries/twelve stores match; branch delay slot still differs. Current signed-mask.c updated from immutable worker candidate, previous212 source retained in b25963c45. No production promotion; Astra continues.
+
+## [2026-10-22] build | Quadrant RGB-group checkpoint replayed
+
+Docker replay of the updated signed-mask.c independently reproduces674target/666built words,198aligned/198printed for [[tickets/T-25034-main-quadrant-extent]]. This pins the newer grouping improvement while worker continues, without repeating the superseded212 proof. No production promotion.
+
+## [2026-10-22] build | Quadrant UV load-delay slots recovered
+
+[[tickets/T-25034-main-quadrant-extent]] moves four v3 stores after corresponding y3 coordinates and restores target load-delay-slot ordering through normal scheduling. Latest immutable source674target/670built words,186aligned/186printed, now four words short. Archived signed-mask.c updated; no production promotion, worker continues.
+
+## [2026-10-22] build | Quadrant UV checkpoint replayed
+
+Independent Docker replay confirms latest signed-mask.c at674target/670built words,186aligned/186printed for [[tickets/T-25034-main-quadrant-extent]]. Pinning source and scheduling notes while the worker continues. Production remains unchanged.
+
+## [2026-10-22] build | Quadrant TILE load-delay scheduling improves
+
+[[tickets/T-25034-main-quadrant-extent]] case0 width-after-y0 placement improves186 to182 differences at674target/670built words, retaining full-word extents. Immutable worker source preserved privately; worker continues case1 grouping. No production promotion.
+
+## [2026-10-22] build | Quadrant UV exits improve to159
+
+[[tickets/T-25034-main-quadrant-extent]] natural TILE width/height ordering reaches178/178, then explicit UV u0 stores before shared exit goto reach674target/673built words,159aligned/159printed. Saved-register ranks retained and all UV exit branches/delay stores restored. One missing TILE radius MOVE and UV endpoint allocation remain. Archived signed-mask.c updated; full-word TILE semantics preserved, no promotion.
+
+## [2026-10-22] build | Quadrant159 checkpoint replayed
+
+Independent Docker replay confirms current signed-mask.c at674target/673built words,159aligned/159printed for [[tickets/T-25034-main-quadrant-extent]]. Pin source plus causal notes; worker remains active and production unchanged.
+
+## [2026-10-22] build | Quadrant radius move exists before final pipeline
+
+[[tickets/T-25034-main-quadrant-extent]]159-candidate capture reproduces canonical673words exactly. Raw ugen emits the missing TILE case2 radius MOVE; final pipeline removes it, whereas case3 counterpart survives. Allocation-only premise rejected; worker continues coordinate/extent dependency and grouping. No promotion or compiler changes.
+
+## [2026-10-22] build | Quadrant integer return restores exact word count
+
+[[tickets/T-25034-main-quadrant-extent]] s32-return control restores missing TILE radius MOVE:674/674words,144aligned cost. Archived integer-return.c alongside conservative void159 source. Parent audited both known callers: discarded C result and no target v0 use after calls, with no existing header declaration. Supports integer/implicit-int contract without uniquely proving signature. No shared-header or production change; Astra continues.
+
+## [2026-10-22] build | Quadrant integer-return checkpoint replayed
+
+Independent Docker replay confirms integer-return.c at674/674words,144aligned/902positional-printed for [[tickets/T-25034-main-quadrant-extent]]. Astra also verified actual implicit-int spelling is byte-identical to explicit s32. Remaining groups: entry temporaries/homes, UV endpoint v1 vs a1 and related zero-argument hoist, TILE t2/t4 choices, green-shift temporary. No operation-count gap remains; worker continues.
+
+## [2026-10-22] build | Root preserves exact-length quadrant checkpoint
+
+Integrated7a4f9d6c2 research only. Root Docker replay of integer-return.c reproduces674/674words,144aligned/902positional lines; verified existing caller expressions discard results and header search has no declaration. [[tickets/T-25034-main-quadrant-extent]] remains active. No production/header change or coverage increase. Conservative void159 candidate and caller audit retained alongside improved integer-return branch.

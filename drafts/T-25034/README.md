@@ -45,3 +45,33 @@ introduces an inner signed CVTL boundary; red/green emit a temporary shift
 followed by ANDI directly into fp/s7. Keeping blue as a word extraction avoids
 an unwanted stack LB. Frame0xA8 and all full-s32 extent tests are retained.
 This remains nonmatching research. Replay with argument `signed-mask.c`.
+
+The current `signed-mask.c` supersedes the212-difference version preserved in
+commit b25963c45. Grouping RGB stores as one comma expression per vertex now
+measures674target/666built words,198aligned/198printed. Colored-quad channel
+extraction, its temporary registers and all twelve color stores match. The
+block's branch delay slot still hoists a1=0 instead of the target red shift.
+The rest of the function remains under active reconstruction.
+
+The latest `signed-mask.c` adds only v3-after-y3 ordering in each UV case to
+the198 checkpoint. Existing scheduling puts each UV store in the target y3
+load delay slot:674target/670built words,186aligned/186printed. Four missing
+NOP/UV positions are restored; the candidate remains four words short.
+
+The current `signed-mask.c` now measures674target/673built words,159/159.
+Case0 width-after-y0 and case1 width-before-height restore TILE delay slots.
+Each UV case stores u0 before its goto; placing the shared label after case3's
+u0 store reproduces all target UV exit branches/delay stores without rotating
+saved registers. One instruction remains missing overall (TILE case2 radius
+MOVE); UV endpoint still uses v1 rather than a1. Quad-only half-radius
+narrowing was rejected; full-s32 TILE extent/radius semantics remain.
+
+`integer-return.c` preserves the newer s32-return/no-explicit-return control:
+674target/674built words,144aligned cost. The normal pipeline retains exactly
+the previously missing TILE case2 radius move and updates branch distances.
+The equal-length diagnostic printer reports902lines using positional rather
+than aligned comparison; use aligned cost144 for this checkpoint. The void
+159 candidate remains in signed-mask.c. Both known callers discard the result,
+and no existing header declaration specifies a return type. This supports an
+integer/implicit-int contract but does not uniquely prove the original source
+signature. Eventual promotion requires canonical declaration/ABI checks.
