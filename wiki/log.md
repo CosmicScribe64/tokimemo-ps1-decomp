@@ -3009,3 +3009,27 @@ Created [[tickets/T-25057-name-ent-pass-investigation]] In Progress in isolated 
 ## [2026-10-22] build | NAME_ENT saved frontiers independently replayed
 
 Root replay of [[tickets/T-25057-name-ent-pass-investigation]] checkpoints confirms123words each: scalar108identical/15different positions, array106identical/17different;30/34printed rows respectively. Preserved1f0eab46b without production edits. Worker now reports a new unsigned noncommutative expression with0differences, pending literal proof and final validation; archived frontiers remain research, not coverage.
+
+## [2026-10-22] ticket | T-25059 ETC ranking generator continuation
+
+Created [[tickets/T-25059-etc-ranking-generator]] before experiments, preserving the T-25054 match pin. Read the corrected T-24049 reconstruction and T-24513 negative controls. Continue exclusive ownership of src/ovl/ETC/80146400.c with func_801480D0; root handles integration.
+
+## [2026-10-22] build | T-25059 correct counter reuse and isolate first-noise lifetime
+
+[[tickets/T-25059-etc-ranking-generator]] reproduced the corrected baseline and verified diagnostic tracer fidelity. Reusing the generation counter as the inner counter in the tie and selection phases removes an unwanted saved induction range. Separating the first noise result from later adjustment amounts restores the target frame and saved-register count. Best scalar reconstruction is705 words/cost595 versus702 target words; production remains INCLUDE_ASM. Private candidates and traces are in build/t25059/.
+
+## [2026-10-22] build | T-25059 recovers generation order and target local homes
+
+[[tickets/T-25059-etc-ranking-generator]] now has704 candidate words versus702 target, aligned cost526. Counter-role corrections, a separate noise lifetime, inverted selector layout, commuted product operands and reused random temporary restore the first generation block. Local ordering follows observed stack offsets and uses no padding. The second product's destination is the next causal difference; production remains guarded by its original INCLUDE_ASM.
+
+## [2026-10-22] ticket | T-25059 ranking generator matches and enters review
+
+[[tickets/T-25059-etc-ranking-generator]] matches all 702 instructions / 2,808 bytes in the default C build. Natural counter/scalar lifetimes, explicit lower-bound delta and direct player-rank accesses close the remaining differences. The unused frame word and scalar order are marked FAKE. Added drafts/T-25059/README.md and updated [[matching-notes]] and [[playbook]]. ETC checksum and declaration guards pass with zero new / 15 known prototype disagreements. Root independent standards/spec review reports no findings. Ticket and board moved together to In Review pending root's full 27-binary gate; src/ovl/ETC/80146400.c now has no remaining fallback guards.
+
+## [2026-10-22] lint | T-25059 checkpoint evidence checked
+
+Wiki lint reports zero broken links and zero status mismatches; the two existing large-page warnings remain. Git diff check passes. Deslop review of drafts/T-25059/README.md and the ticket found no strong tells; retained the ticket heading and stack-offset list colon. [[tickets/T-25059-etc-ranking-generator]] remains In Review for integration.
+
+## [2026-10-22] build | ETC ranking generator accepted on main
+
+[[tickets/T-25059-etc-ranking-generator]] Done: root independently proves2808 default-C linked bytes, fresh27/27 hashes, headers/globals and0new/15known prototypes. Source standards/spec review has no findings. [[status]] now6851/6952functions,2132380/2276920bytes93.7%;101functions/144540bytes remain. Eighteen matches add27704bytes this resumed effort. EntireETC80146400.c is C; worker continues80144224 in80143240.c underT-25061. GitHub check: no openPRs, issue65 unchanged; GEKO/OPTION claim retained. Current plan refreshed to supersede obsolete near-set-only advice after large source reconstructions succeeded.

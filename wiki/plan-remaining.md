@@ -1,13 +1,23 @@
 ---
 type: plan
-updated: 2026-10-20
+updated: 2026-10-22
 ---
 
 # Plan for the remaining functions
 
 For any agent, including cheap ones, working on the last functions. State on 2026-10-20: 6,825 / 6,952 functions (92.2%), 127 left. The full list with classes, sizes, row counts and notes is [[data/remaining-2026-10-20]]. Read this page, then [[playbook]]; look up a function's history in [[notes/functions]].
 
-## Current execution plan (2026-10-22)
+## Current dispatch and evidence (2026-10-22)
+
+Authoritative counts are in [[status]]: 6,851/6,952 game functions, 93.7% of bytes after T-25059. Seven Astra workers continue: T-25042 KANGEI80134724, T-25046 SHOUGATU8013EA98, T-25052 MAIN8007132C, T-25056 ENDING8013A2E8, T-25057 NAME_ENT801398EC, T-25060 TEL8013D88C and T-25061 ETC80144224. Root owns T-25053 BUNKA_SD80134D94 and serial integration. Confirm exact files in tickets before editing.
+
+The separate MAIN coordinator received a direct human wrap-up request. T-25034 quadrant, T-25051 TACO and T-25058 screen-offset work is stopped; all checkpoints are preserved on main. Do not restart those lanes without renewed authorization. Other workers continue their existing assignments. GEKO/OPTION remain reserved under issue65; check contributor updates about every30minutes without posting comments.
+
+Large source reconstructions are productive: TEL6580bytes and ETC2808bytes matched by recovering global/local ownership, counter reuse and stack lifetimes. Prioritize a concrete first divergence and pass evidence rather than size or an old aggregate score alone. Avoid repeating archived grids. Preserve useful source and negative evidence while continuing until a match or a real external blocker. ENDING's larger assembler search budget is only a diagnostic counterfactual; it does not authorize a production compiler change.
+
+Acceptance remains literal linked default-C equality, all27 binary hashes, declaration guards and direct standards/spec review. Draft improvements never increase coverage. Keep SDK code outside the stated game-code scope.
+
+## Earlier execution plan (2026-10-22, historical)
 
 ### Latest user direction and active ownership
 

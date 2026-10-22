@@ -81,6 +81,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-25034-main-quadrant-extent|T-25034 MAIN src/main/80046500.c full-width tile extent recovery]]
 
 - [ ] [[tickets/T-25032-main-candidate-audit|T-25032 Bounded read-only MAIN candidate qualification]]
@@ -124,6 +125,7 @@ kanban-plugin: board
 
 
 - [ ] [[tickets/T-25051-taco-quad-store|T-25051 Match TACO wipe quad store schedule]]
+
 
 
 
@@ -223,6 +225,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-25059-etc-ranking-generator|T-25059 Match ETC ranking generator]]
 
 - [ ] [[tickets/T-25055-tel-pass-mechanisms|T-25055 Match TEL qualification dialogue through causal compiler evidence]]
 
