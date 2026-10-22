@@ -35,18 +35,10 @@ void func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
         if (alpha != 0) {
             red = (s8)(arg6 >> 0x10) & 0xFF;
             green = arg6 >> 8;
-            ((POLY_GT4 *)primitive)->g0 = (s8) green;
-            ((POLY_GT4 *)primitive)->r0 = red;
-            ((POLY_GT4 *)primitive)->b0 = (s8) arg6;
-            ((POLY_GT4 *)primitive)->g1 = (s8) green;
-            ((POLY_GT4 *)primitive)->r1 = red;
-            ((POLY_GT4 *)primitive)->b1 = (s8) arg6;
-            ((POLY_GT4 *)primitive)->g2 = (s8) green;
-            ((POLY_GT4 *)primitive)->r2 = red;
-            ((POLY_GT4 *)primitive)->b2 = (s8) arg6;
-            ((POLY_GT4 *)primitive)->g3 = (s8) green;
-            ((POLY_GT4 *)primitive)->r3 = red;
-            ((POLY_GT4 *)primitive)->b3 = (s8) arg6;
+            ((POLY_GT4 *)primitive)->r0 = red, ((POLY_GT4 *)primitive)->g0 = (s8) green, ((POLY_GT4 *)primitive)->b0 = (s8) arg6;
+            ((POLY_GT4 *)primitive)->r1 = red, ((POLY_GT4 *)primitive)->g1 = (s8) green, ((POLY_GT4 *)primitive)->b1 = (s8) arg6;
+            ((POLY_GT4 *)primitive)->r2 = red, ((POLY_GT4 *)primitive)->g2 = (s8) green, ((POLY_GT4 *)primitive)->b2 = (s8) arg6;
+            ((POLY_GT4 *)primitive)->r3 = red, ((POLY_GT4 *)primitive)->g3 = (s8) green, ((POLY_GT4 *)primitive)->b3 = (s8) arg6;
         } else {
             ((POLY_GT4 *)primitive)->r0 = 0x80;
             ((POLY_GT4 *)primitive)->g0 = 0x80;

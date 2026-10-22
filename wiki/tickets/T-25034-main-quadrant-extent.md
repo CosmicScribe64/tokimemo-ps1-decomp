@@ -79,3 +79,11 @@ With s32 red, `red = (s8)(arg6 >> 16) & 255` and equivalent TILE red/green extra
 ### New best signed-mask source
 
 Removing only blue narrowing from astra-mask-signed-byte yields immutable astra-mask-signed-shifts:674target/666built padded words,212aligned/212printed (previous best360/380). Red/green use direct ANDI into fp/s7; blue uses required word load and ANDI instead of LB. Full-s32 extent tests and0xA8 frame retained. Archived as drafts/T-25034/main/func_80046AC8/signed-mask.c with replay support. Trace of preceding candidate identifies fp bit64 as cvt(and(cvtl(shr(arg6,16)),255)),priority7.625,5uses2defs; inner signed CVTL is causal, without synthetic sharing. Matching continues UV/register/CFG reconstruction; not promoted.
+
+### Signed-mask capture refinement
+
+Normal ugen still emits the shift/sign-extension/mask chain with intermediate copies. The existing pipeline collapses that chain into the final temporary-shift/direct-ANDI form. Thus the signed CVTL source expression is successful through the full pipeline, but does not prove raw ugen destination forwarding changed. astra-signed-mask-capture/fidelity.json confirms resolved capture output exactly equals the666word,212/212 canonical candidate (capture comparison cost0). No compiler/tool changes.
+
+### RGB grouping improves to198
+
+Immutable astra-rgb-comma-group uses standard per-vertex RGB order grouped as one comma expression per vertex. Whole TU674/666words,198aligned/198printed. Colored-quad channel extraction, temporary registers red t0/green t3, and all twelve color stores agree with target. The unrelated a1=0 tpage argument still occupies the branch delay slot rather than target red shift. Updated tracked signed-mask.c; prior212 source remains in b25963c45. Matching continues.

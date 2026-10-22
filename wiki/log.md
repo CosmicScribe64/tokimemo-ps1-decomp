@@ -2079,3 +2079,15 @@ For [[tickets/T-25034-main-quadrant-extent]], signed-byte cast before mask with 
 ## [2026-10-22] build | Quadrant archived212 candidate replayed
 
 Independent Docker replay of drafts/T-25034/main/func_80046AC8/signed-mask.c reproduces674target/666built,212aligned/212printed for [[tickets/T-25034-main-quadrant-extent]]. This validates the archived source/replay path without changing production. Worker continues remaining matching work.
+
+## [2026-10-22] build | Quadrant signed-mask capture clarifies pipeline effect
+
+Astra refined [[tickets/T-25034-main-quadrant-extent]] diagnosis: raw ugen still includes intermediate signed-mask chain/copies; the existing pipeline collapses them into the desired final instructions. Capture output exactly reproduces the canonical666word,212/212 candidate. Source improvement is verified, but earlier CVTL wording must not be read as proof of changed raw destination forwarding. No compiler/tool changes.
+
+## [2026-10-22] build | Quadrant RGB grouping improves to198
+
+[[tickets/T-25034-main-quadrant-extent]] per-vertex RGB comma grouping gives674/666words,198aligned/198printed. Colored-quad extraction/temporaries/twelve stores match; branch delay slot still differs. Current signed-mask.c updated from immutable worker candidate, previous212 source retained in b25963c45. No production promotion; Astra continues.
+
+## [2026-10-22] build | Quadrant RGB-group checkpoint replayed
+
+Docker replay of the updated signed-mask.c independently reproduces674target/666built words,198aligned/198printed for [[tickets/T-25034-main-quadrant-extent]]. This pins the newer grouping improvement while worker continues, without repeating the superseded212 proof. No production promotion.

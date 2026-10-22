@@ -45,3 +45,10 @@ introduces an inner signed CVTL boundary; red/green emit a temporary shift
 followed by ANDI directly into fp/s7. Keeping blue as a word extraction avoids
 an unwanted stack LB. Frame0xA8 and all full-s32 extent tests are retained.
 This remains nonmatching research. Replay with argument `signed-mask.c`.
+
+The current `signed-mask.c` supersedes the212-difference version preserved in
+commit b25963c45. Grouping RGB stores as one comma expression per vertex now
+measures674target/666built words,198aligned/198printed. Colored-quad channel
+extraction, its temporary registers and all twelve color stores match. The
+block's branch delay slot still hoists a1=0 instead of the target red shift.
+The rest of the function remains under active reconstruction.
