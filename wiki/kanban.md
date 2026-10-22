@@ -61,6 +61,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-25022-main-reload-boundary|T-25022 MAIN src/main/8004F870.c reload-boundary closure]]
 
 
+- [ ] [[tickets/T-25033-shougatu-canonical-call|T-25033 Test canonical check_para_limit call in src/ovl/SHOUGATU/8013E330.c]]
+
 
 
 
@@ -88,6 +90,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 
 ## In Review
+
+- [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
 
 - [ ] [[tickets/T-25030-overlay-candidate-triage|T-25030 Qualify older large overlay reconstructions without source sweeps]]
 

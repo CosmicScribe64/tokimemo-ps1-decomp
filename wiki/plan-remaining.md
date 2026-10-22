@@ -9,6 +9,12 @@ For any agent, including cheap ones, working on the last functions. State on 202
 
 ## Current execution plan (2026-10-22)
 
+### Latest user direction and active ownership
+
+The user has replaced the Sol-first, bounded-consultation policy below with sustained Astra implementation. The historical lane assignments and time/probe limits below are superseded. Current sole source owners are T-25033 (`src/ovl/SHOUGATU/8013E330.c`, func_8013E50C) and T-25034 (`src/main/80046500.c`, func_80046AC8), both using GPT-6 Astra. Coordinators must not duplicate their workers' experiments. Continue each assignment until a verified literal match or a concrete external blocker; a checkpoint or unsuccessful experiment is not a stopping point. Preserve intermediate work and negative evidence. Root serializes integration and checks contributor claims; GEKO/OPTION remain reserved under issue #65. No additional broad screening is active.
+
+T-25033's preserved guard has five printed diff lines, 117/118 instructions, exact frame/table homes, corrected random field and canonical final helper call. It is still NON_MATCHING. T-25034 is repairing full-width extent semantics and local spill/allocation differences; its current frame and incoming argument homes agree with the target. Neither assignment has yet increased verified coverage.
+
 This section supersedes the older compiler-lever recommendation and historical class counts below. T-25013/15 closed their tested levers negatively; T-25014/16 broad shape/salvage passes produced no matches. That bounds the tested approaches, not proof that all remaining functions require compiler changes.
 
 Baseline at 7c87f223e, independently measured in Docker: 6833/6952 functions; 2104676/2276920 bytes (92.4%). Remaining: 119 functions, 172244 bytes. Coordination: [[tickets/T-25017-completion-plan]].
