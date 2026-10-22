@@ -98,6 +98,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
 
 - [ ] [[tickets/T-25030-overlay-candidate-triage|T-25030 Qualify older large overlay reconstructions without source sweeps]]
@@ -175,6 +176,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-25037-bunka-upstream-emission|T-25037 Match BUNKA_SD upstream emission]]
 
 - [ ] [[tickets/T-25036-main-counter-late-fold|T-25036 Match MAIN counter through late constant folding]]
 

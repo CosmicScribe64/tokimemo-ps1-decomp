@@ -2315,3 +2315,27 @@ Promoted `src/main/8006CB30.c` function `func_8006D7EC` using the T-25033 late-z
 ## [2026-10-22] build | MAIN 4692-byte match accepted
 
 Root integrated abc02da59 and independently proved default-C func_8006D7EC literal4692bytes. Fresh27/27binary checksums, headers/globals and prototypes0new/15known pass. Standards/spec review has no findings; marked late-zero and unreachable identity controls introduce no observable effects or compiler exceptions. T-25036 moves Done. Progress6836/6952functions,2110228/2276920bytes (92.7%);116functions/166692bytes remain. Updated [[status]]. Worker continues T-25040 on same-file func_8006D138,872bytes, selected against larger7132C's broad unresolved structure. BUNKA candidate not yet counted.
+
+## [2026-10-22] ticket | T-25037 BUNKA_SD upstream emission
+
+Claimed [[tickets/T-25037-bunka-upstream-emission]] in an isolated worktree from 242c0c3a3. Read the T-25020/T-25023 evidence and retained the existing four-position guarded source. New work focuses on uopt/ugen emission before further source experiments; no coverage added.
+
+## [2026-10-22] build | T-25037 optimized-ucode evidence
+
+[[tickets/T-25037-bunka-upstream-emission]] reproduced the four-position guarded C difference and captured the actual uopt-output/ugen-input boundary. The first three targeted comparison probes do not separate constant and memory preloads: early year still precedes constant, and the 0x60 comparison leaves two extra instructions. Best source remains unchanged; no match claimed.
+
+## [2026-10-22] build | T-25037 closes BUNKA_SD case0x49 ordering
+
+[[tickets/T-25037-bunka-upstream-emission]] found a source form that independently stages the constant and year preloads. An empty frame==0x60 test followed by an unsigned-false year test removes the case0x49 residue without changing any other instruction:379 words, remaining cost2 at positions171/172 in case0x66. Source stays guarded; no coverage credit until the remaining pair matches.
+
+## [2026-10-22] build | T-25037 literal BUNKA_SD match
+
+[[tickets/T-25037-bunka-upstream-emission]] promotes func_80139290 after separate guarded and default-C private links prove all1516 bytes. Rebuilt all11 BUNKA_SD C units and normal link/hash commands pass BUNKA_SD.bin SHA1; declaration/global/prototype guards pass with0 new disagreements. Root standards/spec review has no findings. Ticket moves to In Review pending root full27 integration. Negative source ledger is preserved in drafts/T-25037/README.md; no compiler or header changes.
+
+## [2026-10-22] lint | T-25037 integration checkpoint
+
+Wiki lint reports0 broken links and0 status mismatches; two large pages are data/t0018-cases and the append-only log. The draft README prose check has no strong hits; its one weak colon introduces the explicit hash result and is retained. git diff --check passes. [[tickets/T-25037-bunka-upstream-emission]] remains In Review for integration.
+
+## [2026-10-22] build | BUNKA_SD scheduling match accepted
+
+Integrated5e132362 and independently verified default-C1516literal bytes plus fresh27/27binary checksums. Headers/globals and prototypes0new/15known pass. Root standards/spec review no findings; empty tests are marked FAKE and compile away without observable effects. T-25037 moves Done. Docker progress6837/6952functions,2111744/2276920bytes (92.7%);115functions/165176bytes remain. Four resumed matches add7068bytes. Worker continues T-25041 KANGEI8013852C in disjoint80137B90.c using current ledger and new preload mechanism; other four lanes continue. Updated [[status]] and catalog.
