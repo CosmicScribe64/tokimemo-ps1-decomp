@@ -1959,3 +1959,15 @@ Created [[tickets/T-25021-main-5215c-reconstruction]] in the isolated T-25019 wo
 ## [2026-10-22] query | Typed state-machine reconstruction checkpoint
 
 [[tickets/T-25021-main-5215c-reconstruction]]: recovered func_8005215C compiles after evidence-based buffer and callee repairs. Docker full-TU final source315target/313built words, aligned138 and printed138, frame64 and observed homes exact. Preserved wide arithmetic. Earlier baseline frame96/printed325. Source-only checkpoints saved under drafts/T-25021/main/func_8005215C/; production restored. Earliest structural read-boundary gap documented in [[matching-notes]] for the requested multi-chat attack plan. Ticket/board moved to In Review; no match or coverage claim.
+
+## [2026-10-22] ticket | MAIN reload-boundary investigation
+
+Created [[tickets/T-25022-main-reload-boundary]] In Progress in an isolated worktree pinned to883760224, following [[plan-remaining]]. Exclusive source src/main/8004F870.c; first hypothesis restores mode reload across k_disp_inc using the T-25021 full-TU checkpoint. No shared-header edits or root-checkout edits.
+
+## [2026-10-22] build | MAIN call-boundary checkpoint
+
+[[tickets/T-25022-main-reload-boundary]] reproduces T-25021 and repairs the first mode reload:315target/314built words,127aligned/127printed. Preserved the semantically corrected later reload body despite worse310words,179/179; partial lower-score source is diagnostic only. Exact64-byte frame and homes remain. Bounded negative tests and callee effects are in drafts/T-25022/main/func_8005215C/README.md; normal/traced full-TU objects resolve identically. No C match or production change. Prepared a bounded consultation packet for read placement and conversion-web recovery.
+
+## [2026-10-22] lint | Reload checkpoint documentation
+
+Docker catalog reports793 tickets,444 sections and3,078 functions. Wiki lint reports zero broken links, zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes; src/, include/ and tools/ have no changes. Research-only pin prepared for root review; ticket remains In Progress.
