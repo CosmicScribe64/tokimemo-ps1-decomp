@@ -11,7 +11,7 @@ expected, problem = f.expected_object(context)
 assert problem is None, problem
 want = f.resolved_functions(expected, [name], context)[name]
 variant = sys.argv[1] if len(sys.argv) > 1 else "body.c"
-assert variant in ("body.c", "forward-join.c")
+assert variant in ("body.c", "forward-join.c", "signed-mask.c")
 body = (Path("drafts/T-25034/main/func_80046AC8") / variant).read_text()
 marker = 'INCLUDE_ASM("asm/nonmatchings/main/80046500", func_80046AC8);'
 base = Path(context.src).read_text()

@@ -107,3 +107,7 @@ Do not spend a session on these without a new idea; leave a guard with the ticke
 - as1 global scheduler picks (T-24202, T-24212, T-24203): rule and remaining cases in [[as1-scheduler-rule]]; default-block hoists are fixed with `volatile` (T-24900).
 - Historical uopt `idx = 0; idx++` fold (T-24204): closed in MAIN by the T-25036 late-zero producer and late-eliminated identity arm; see section 6.
 - uopt priority and colour order with no uniform rule: apply recipes above, do not search flags (exhausted in T-0014, T-0017, T-9800).
+
+## Call-result liveness and a miscolored constant (T-25043)
+
+TACO `func_8014AB50` had seven differing words, all the shared constant one in v0 instead of v1. Capturing an existing signed helper result in an existing local and reading it after the flag stores in `if ((u32)random < 0) { repeat_last_flag_store; }` closes the match. The condition is always false; uopt still sees the call-result lifetime and extra constant use, then ugen removes the arm. Trace confirms constant priority0.5->1 and v0->v1. This is a marked FAKE, with no added runtime instruction. Check that the helper defines its return and the local is initialized on every path; this example's loop always executes30 times. Argument-derived and index-derived identities failed because they changed other live ranges. See [[tickets/T-25043-taco-constant-tail]] for controls. Apply only when allocator evidence supports this mechanism.

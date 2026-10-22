@@ -63,3 +63,19 @@ Normal ugen input for unsigned-mask is SHR J; CVT L; AND L 255; STR R30. A signe
 Reference normal backend immediate-op path L432A18 forwards requested destination fp into the left child. L432A58 sees the child/result registers coincide; AND is absent from the allowed in-place opcode set, so L432A9C allocates a temporary and later copies back. At f_eval entry L42D55C, child reference count>=2 cancels the requested destination (0x48).
 
 A real C control confirms this: replacing only the fourth required red store with raw (arg6>>16) makes the normal compiler emit SRA a0 followed by ANDI fp directly, eliminating the copy. astra-shared-red-shift is668candidate words/850aligned/862printed, worse overall: raw shift becomes a0 and the fourth store uses a0, whereas target uses a temporary shift result and fp for all stores. Causal success, not promotion. Worker continues distinct masked consumers and constant-left AND spelling to avoid forwarding without a live raw-color register. No backend changes.
+
+### Shared required high-word consumer rejected
+
+The common high-word source feeding the required TILE flag and red mask did not preserve target-local extraction: uopt hoisted it before the quad loop and added a stack home. Candidate672words/810aligned/816printed is negative; best source unchanged. Worker returns to required UV/control lifetimes while retaining the proven destination-forwarding mechanism for color.
+
+### UV priority change measured
+
+Separate case breaks raise scaled-row priority8.2->9.111, above constant127(8.889) and quadrant(8.875), rotating s5/s6/s7. An explicit if-chain also rotates them. A standalone shared-u0 block with default bypass canonicalizes back to the360/380 best. UV byte-result cast leaves end_v in v1. Worker next checks single-local-read masking and a required field-store chain; no promotion.
+
+### Cast-before-mask closes color result placement
+
+With s32 red, `red = (s8)(arg6 >> 16) & 255` and equivalent TILE red/green extraction emits SRA into a temporary then ANDI directly into fp/s7, without the unwanted sign-extension pair or copy. Immutable astra-mask-signed-byte candidate measures674target/667built,367aligned/415printed; not overall best. Applying `(s8)arg6 &255` to blue adds an unwanted stack LB, so worker removes only that narrowing and traces the changed expression identity. This ordinary-C mechanism closes the critical red placement without synthetic sharing or backend changes.
+
+### New best signed-mask source
+
+Removing only blue narrowing from astra-mask-signed-byte yields immutable astra-mask-signed-shifts:674target/666built padded words,212aligned/212printed (previous best360/380). Red/green use direct ANDI into fp/s7; blue uses required word load and ANDI instead of LB. Full-s32 extent tests and0xA8 frame retained. Archived as drafts/T-25034/main/func_80046AC8/signed-mask.c with replay support. Trace of preceding candidate identifies fp bit64 as cvt(and(cvtl(shr(arg6,16)),255)),priority7.625,5uses2defs; inner signed CVTL is causal, without synthetic sharing. Matching continues UV/register/CFG reconstruction; not promoted.
