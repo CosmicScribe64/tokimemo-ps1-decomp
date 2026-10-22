@@ -2243,3 +2243,35 @@ User explicitly requests more agents across unmatched functions and independent 
 ## [2026-10-22] query | Share concrete late-folded producer across independent lanes
 
 T-25033 supplied exact private donor single-identity-or/unit.c and unsigned-less-than-zero producer, preserving target entry zero carrier without an input load. Recorded provisional mechanism and FAKE/verification limits in [[matching-notes]], relayed to T-25035/T-25036. These workers test transfer independently in separate files; no match or coverage claim. T-25034 continues color-result placement, T-25037 scheduler ordering.
+
+## [2026-10-22] decision | T-25033 continuous sole-worker attempt
+
+Latest human direction removes historical time/probe stopping limits for [[tickets/T-25033-shougatu-canonical-call]]. Sole implementation ownership transferred to the requested Astra worker; coordinator idles. Preserve the five-line guarded candidate while testing evidence-informed zero-carrier mechanisms through literal resolution or a concrete external blocker. Updated drafts/T-25033/README.md; no source changes.
+
+## [2026-10-22] build | T-25033 zero representation controls
+
+Private full-TU controls in build/t25033/astra retain the five-line baseline for direct float-to-integer zero and null-pointer zero. A live float local adds conversion code; mixed-width conditional writes and register-volatile locals force unwanted stack traffic. Union punning encounters the existing frame-pass unsupported-stack-form guard. None is retained. Next hypothesis is a width-limited extraction with a disjoint mask, recognized after uopt so the target zero carrier can remain live. See [[tickets/T-25033-shougatu-canonical-call]].
+
+## [2026-10-22] build | T-25033 late-folded zero producer found
+
+Disjoint masks survive uopt but remain explicit ANDI-zero instructions; they do not give the target move. Unsigned comparison with zero, `(u32)flag_word < 0`, does produce an entry register-zero move and retains its uses, reaching the target 118-word length. It currently promotes the shared flag load into v1, shifts temporary registers and allocates the carrier in v0 (112 aligned cost), so it is diagnostic evidence, not a candidate improvement. Next test feeds an already-available table address into that comparison, avoiding a promoted flag range. Private data remains in build/t25033/astra. [[tickets/T-25033-shougatu-canonical-call]] remains In Progress.
+
+## [2026-10-22] build | T-25033 single-use late-zero carrier
+
+Single-use unsigned comparisons eliminate their input evaluation and preserve an entry zero move: 118 words, 12 printed / 10 aligned, post-call code exact. Direct call selects a0; byte-view plus third argument selects a2 but leaves byte masks and changes one later base. Pointer and signedness forms did not resolve both constraints. [[tickets/T-25033-shougatu-canonical-call]] records this concrete new mechanism; five-line source guard remains preserved.
+
+## [2026-10-22] build | T-25033 target zero carrier reproduced
+
+A single-use unsigned-negative comparison plus an identity first argument and explicit ignored table/third arguments reproduces the target entry a2 zero, sb a2, and move a0,a2. `single-identity-or` is 118/118 words, six printed / four aligned; only the later F5F reload base and its scheduling differ. An eliminated extra byte use repairs scheduling but gives v1 rather than a2 (four printed/four aligned). Trace confirms the late carrier R6 conflicts with a distinct narrowed global-byte range R3. Early promoted global initialization also works and defers the store to the target merge, but its entire byte range chooses v1. Continuing allocation and source minimization; no production change or C coverage claimed. [[tickets/T-25033-shougatu-canonical-call]].
+
+## [2026-10-22] build | T-25033 literal SHOUGATU E50C match
+
+Early selected-girl initialization plus the exact unsigned-byte status argument closes the function: full-TU 118/118, zero resolved differences. The diagnostic unsigned comparison minimized to `girl = D_800E6280.unk_F5F * 0; D_800E6280.unk_F5F = girl;` before the conditional. Private real linking proves all 472 function bytes equal the target. Literal zero regresses to 117 words/15 rows; removing result narrowing gives 78 aligned cost, and removing the integer847B8 view gives 117 words/25 rows. Retained meaningful girl local; deleting it shifts table homes. Promoted C in src/ovl/SHOUGATU/8013E330.c, removed the fallback, and marked the zero-carrier FAKE. Default-C checksum/declaration validation follows. [[tickets/T-25033-shougatu-canonical-call]].
+
+## [2026-10-22] ticket | T-25033 verified C match enters review
+
+Production default-C funcdiff confirms all 472 linked bytes; affected SHOUGATU checksum passes after compiling src/ovl/SHOUGATU/8013E330.c. Header/global guards pass; prototype branch check has 0 new / 15 known disagreements. Source review found no extra effects or unsafe arithmetic in the marked multiply-by-zero carrier. Updated [[playbook]], [[families/shougatu-family-results]] and drafts/T-25033/README.md; moved [[tickets/T-25033-shougatu-canonical-call]] and its board card to In Review. Coordinator owns formal review and full 27-binary integration.
+
+## [2026-10-22] lint | T-25033 reviewed match checkpoint
+
+Coordinator source review of [[tickets/T-25033-shougatu-canonical-call]] found no issues. Independent default-preprocessed full-TU proof explicitly excludes the E50C assembly fallback and confirms 118 words / 472 literal bytes. Wiki lint reports zero broken links/status mismatches and the existing data/t0018-cases size warning; git diff check passes. Ticket remains In Review for the coordinator's combined integration gate.

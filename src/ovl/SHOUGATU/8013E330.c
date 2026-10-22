@@ -52,10 +52,6 @@ void func_8013E4B4(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25033, five printed diff lines, 117/118 instructions.
- * Frame and table homes match. Only the entry a2 zero and its store/call
- * uses differ: uopt folds girl to hardware zero. No C match claimed. */
 void func_8013E50C(void) {
     s16 i;
     s32 girl;
@@ -64,13 +60,15 @@ void func_8013E50C(void) {
 
     sp40 = D_801460CC;
     sp30 = D_801460DC;
-    girl = 0;
+    /* FAKE: multiply by zero keeps this byte promoted across the conditional;
+     * literal zero loses the entry a2 carrier and its later reload. T-25033 */
+    girl = D_800E6280.unk_F5F * 0;
+    D_800E6280.unk_F5F = girl;
     D_80146050 = 0;
     if (D_800E6280.unk_1BC[9].unk_0C.f.b1 == 0 &&
         D_800E6280.unk_1BC[9].unk_02 >= 20 && (D_800E6280.unk_10F8 & 1)) {
         D_80146050 = 1;
     }
-    D_800E6280.unk_F5F = girl;
     /* FAKE: narrowing spends the target's expression temporaries; the byte
      * argument view keeps the later index-reload base in a2. T-25033 */
     D_80145F2C = (((u8)func_80051A68(*(u8 *)&D_800E6280.unk_F5F) & 0x7F) == 4) * 4;
@@ -89,9 +87,6 @@ void func_8013E50C(void) {
     func_80085B3C(4, 0);
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013E50C);
-#endif
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013E6E4);
 

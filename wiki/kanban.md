@@ -65,7 +65,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-25022-main-reload-boundary|T-25022 MAIN src/main/8004F870.c reload-boundary closure]]
 
 
-- [ ] [[tickets/T-25033-shougatu-canonical-call|T-25033 Test canonical check_para_limit call in src/ovl/SHOUGATU/8013E330.c]]
+
 
 
 
@@ -95,6 +95,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-25033-shougatu-canonical-call|T-25033 Match SHOUGATU func_8013E50C with canonical helper and promoted zero]]
 - [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
 
 - [ ] [[tickets/T-25030-overlay-candidate-triage|T-25030 Qualify older large overlay reconstructions without source sweeps]]
