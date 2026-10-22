@@ -2379,3 +2379,31 @@ Claimed [[tickets/T-25041-kangei-preload-schedule]] after pinning BUNKA_SD. Read
 ## [2026-10-22] lint | T-25041 reviewed integration pin
 
 Wiki lint reports0 broken links and0 status mismatches; existing large data/log pages remain. The draft README prose checker reports no hits; git diff --check passes. [[tickets/T-25041-kangei-preload-schedule]] is ready for root integration with its source and complete experiment ledger.
+
+## [2026-10-22] ticket | T-25044 parameter_up_down claimed
+
+Created [[tickets/T-25044-parameter-up-down]] In Progress in an isolated worktree. Read the earlier eleven-row residual and failed source-control ledger before any matching experiments. No root source or shared declarations changed.
+
+## [2026-10-22] build | T-25044 baseline lifetime trace
+
+Docker full-translation-unit trace confirms the two existing [[tickets/T-25044-parameter-up-down]] residuals. Signed-byte expression and unsigned-carrier controls do not remove the head copies; unsigned carrier additionally reverses products. Private trace and exact source controls remain under build/T-25044; production guard retained.
+
+## [2026-10-22] build | T-25044 mode head resolved diagnostically
+
+A raw-byte lifetime use eliminates the extra nibble copies in [[tickets/T-25044-parameter-up-down]]. The first mismatch now starts at the club row-address result; removing that promoted expression would also restore the downstream temporary numbering. This is a diagnostic improvement, not a function match.
+
+## [2026-10-22] build | T-25044 four-access stack residue
+
+[[tickets/T-25044-parameter-up-down]] now has a complete 307-word source candidate differing only at four saved-row offsets. Reserved padding fixes those offsets but changes the frame, so no candidate is promoted. Stack/object controls are recorded privately and rejected with reasons.
+
+## [2026-10-22] build | T-25044 default C matches parameter_up_down
+
+[[tickets/T-25044-parameter-up-down]] matches all 1228 linked bytes with default C. Direct signed element expressions remove the extra scalar while preserving the separate index lifetime. Full MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 and header/global/prototype guards pass. Updated [[matching-notes]]; source-only controls retained in drafts/T-25044.
+
+## [2026-10-22] ticket | T-25044 ready for integration review
+
+Moved [[tickets/T-25044-parameter-up-down]] and its [[kanban]] card to In Review. Coordinator semantic review found no issue; its stale comment finding is resolved. Independent full27 integration remains with root.
+
+## [2026-10-22] lint | T-25044 evidence replay validated
+
+Docker source-only replay confirms zero diagnostic lines for current C, eight for four home substitutions, four for the padded frame pair, and 245 after removing the raw-byte lifetime use. Wiki lint reports zero broken links and zero status mismatches, with existing size warnings for [[data/t0018-cases]] and [[log]]. Root independent standards/spec review passed without findings. Source pin: 62429d6d9.
