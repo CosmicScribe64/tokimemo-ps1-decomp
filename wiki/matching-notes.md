@@ -706,3 +706,12 @@ The last 17 differing words came from evaluation order: captured optimized ucode
 ## T-25101: main func_80052F68
 
 No match. Best body: 69 rows (compared NON_MATCHING C), up from the 604-row archived m2c drafts. It is over the guard limit, so the tree keeps `INCLUDE_ASM`; the body and notes are in `drafts/T-25101/main/func_80052F68/`. What closed: the loop-1 unroll (its own counter, because a counter assigned again later keeps a loop rolled), the frame (0x80, val at sp+0x48), the loop tests (an outer counter used only in loop 2 gives `bne`; the inner counter shared with loop 3 gives `slti`), and the loop-1 induction registers. Those last need table bases at 0x800B4348, 0x800B4354 and 0x800B4360, which have no splat label and would go in `config/symbol_addrs_main.txt`, plus a FAKE store through a copy of the array address. What is left: the constant 10 gets v1, and the loop-2 counters get a0 and v1, where the target has 10 in a0 and the counters in v0 and v1. Its `li a0,10` in loop 1's preheader is as1's global filler acting on that allocation; the ugen listing has the `li` after the clamp. The next step needs the uopt allocation trace.
+
+## T-25101: main func_8005215C
+
+Matched as default C, 1260 bytes (316 words), from INCLUDE_ASM. [[tickets/T-25101-w8-main-8004F870]]; evidence and negatives are in `drafts/T-25101/main/func_8005215C/NOTES.md`. The work started from the matched sibling `xa_wait`, not from the T-25021/T-25022 checkpoints. Four steps:
+
+1. Every mode read is `*(u8 *)&D_800E6280.unk_03C`, with no local. uopt keeps the byte as one promoted global that it reloads after each call. The `(u8)` cast on the s8 field adds conversion ranges that cache it, which was the T-25022 blocker. 183 rows to 49.
+2. `pad[2]` gives the 64-byte frame, as in xa_wait.
+3. The plain argument in `k_disp_switch(F61, 0)` gives the F61 CSE range an a0 preference, so the range takes a2. `+ 0` (FAKE) gives v1 for F61 and a0 for F62.
+4. Both call-pair tables are word-indexed with `[D_80125BFC * 2]`, as in `func_80052060`. The shift is then one shared ugen temporary. Int arithmetic and pointer views make it a uopt range in v0; struct indexing in separate statements emits two shifts.
