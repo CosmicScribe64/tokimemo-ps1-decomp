@@ -2877,6 +2877,11 @@ void func_80098380(void);
 void func_80098490(u16 a, u16 b, u16 c, u16 d);
 void func_80098530(void);
 void func_800985A0(void);
+/* GsSortSprite (libgs): sprite, ordering table, priority. The u16 priority is converted at the call
+ * (mod_set, T-25104). */
+#ifndef MAIN_API_OVERRIDE_func_80098B80
+void func_80098B80(Rec24 *sp, void *ot, u16 pri);
+#endif
 void func_80099540(s32 *p);
 void func_80099E30(s32 a, void *p);
 void func_8009AC20(void);

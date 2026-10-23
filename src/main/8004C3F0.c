@@ -235,12 +235,12 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set_gpu);
 #endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25104, 10 rows; clut takes $s1 before the x position and col (uopt priority
- * 133 against 103 and 78), so x/col/clut sit in s2/s3/s1 instead of s1/s2/s3. */
-void func_80098B80(Rec24 *sp, void *ot, u16 pri);
+/* Matching notes (T-25104): sp is the sprite handed to func_80098B80 (GsSortSprite); the u16 priority
+ * of its prototype converts pri at each call. Each tile field is masked and shifted in one statement:
+ * the split form (mask, then shift) gives uv and clut more uses, and clut then outranks the x position
+ * and col for the saved registers. The y position is written row * w + y with a signed row. */
 void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
-    s32 padA[4];
+    s32 padA[4]; /* FAKE: T-25104, padA, padB and padC put row, sp and mode at the original stack homes */
     s32 row;
     Rec24 sp;
     ModRec14 *p;
@@ -259,6 +259,7 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
 
     bright = func_8004901C();
     p = (ModRec14 *)(D_801217A0 + idx * 0x14);
+    /* FAKE: T-25104, one line per case so that as1 stores mode before the attribute in cases 3 to 5 */
     switch (p->unk_08) {
     case 0: sp.unk_00 = 0x01000000; mode = 1; break;
     case 1: mode = 2; sp.unk_00 = 0; break;
@@ -290,12 +291,9 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
                 do {
                     sp.unk_04 = x + col * w;
                     sp.unk_06 = row * w + y;
-                    uv = *data & 0xFF0000;
-                    word = *data & 0xFF000000;
-                    clut = *data & 0xFF00;
-                    uv >>= 16;
-                    word >>= 24;
-                    clut >>= 8;
+                    uv = (*data & 0xFF0000) >> 16;
+                    word = (*data & 0xFF000000) >> 24;
+                    clut = (*data & 0xFF00) >> 8;
                     sp.unk_0C = search_tpage_multi(p->unk_00[word], mode);
                     switch (w) {
                     case 8:
@@ -324,9 +322,6 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
         } while (row < rows);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set);
-#endif
 
 /* Matching notes (T-25006): the record fields are read through the global array (SRN_REC), not a
  * pointer, the row and column positions are written as expressions (uopt strength-reduces them into the
