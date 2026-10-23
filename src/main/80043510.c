@@ -261,6 +261,7 @@ void palette_load_vram(s32 arg0) {
                         }
                     }
                     break;
+                /* Empty on purpose; without the default label the function is 6 words shorter (T-25134). */
                 case 1:
                 default:
                     break;
