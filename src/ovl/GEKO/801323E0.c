@@ -172,20 +172,16 @@ s32 func_80132A4C(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-24302/T-24709, about 28 rows (57 funcdiff lines); frame (0x50)
- * and both table copies match. The `day` home after the two tables (T-24709) is
- * what fixes the frame. Left: girl comes out in $v1 and the record pointer and
- * day in $v0 (the original swaps them, so each exit needs a `move v0,v1`; the
- * selector and the record pointer tie in the allocator), and the else arm's
- * ugen temporaries are numbered differently. */
-#ifdef NON_MATCHING
+/* FAKE: T-11910 s32 with no return statement: the original leaves girl in $v0 at
+ * every exit but the first. A `return girl` makes uopt keep the selector out of $v0
+ * (girl in $v1, the record pointer and day in $v0, a `move v0,v1` at the exits). */
 s32 func_80132B24(void) {
     u32 date;
     u8 girl;
     u8 month;
     GekoThresholds thr;
     GekoMonthDays days;
-    u32 day;
+    u32 day; /* its home after the two tables gives the 0x50 frame (T-24709) */
 
     thr = D_80144CF8;
     days = D_80144D10;
@@ -205,15 +201,15 @@ s32 func_80132B24(void) {
                 D_80144C50 = 10;
             }
         } else if (((date & 0xF) - month + 12) % 12 == 1 &&
-                   ((date << 23) >> 27) + days.day[(month + 10) % 12] - day < 20) {
+                   /* FAKE: T-11910 the no-op `date = date` side effect makes cfe emit the
+                    * day bits before the table load (the original's ugen temporary order) */
+                   days.day[(month + 10) % 12] + ((date = date) << 23 >> 27) - day < 20) {
             D_80144C50 = 10;
         }
     }
-    return girl;
+    /* FAKE: T-11910 keeps girl live to the exit so it holds $v0 there and day takes $v1 */
+    if (girl) {}
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132B24);
-#endif
 
 void func_80132D04(s16 arg0, s16 arg1) {
     s32 pad; /* FAKE: unused local that places status at sp+0x33 and the frame at 0x38 (T-3330) */
