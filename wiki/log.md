@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25008, T-25009, T-25010 Done; session wrap-up
-
-Match: main `func_8006BA40` (T-25008). Guard progress: `mod_set_gpu` 17 rows. Today: 8 matches merged by this orchestrator (ETC `func_8013CCE4`, main `sndisp`, `func_80043510`, `func_8004443C`, `col2sepia`, `srn_set`, `func_8006BA40`, plus the T-24900 pair earlier). [[status]].
-
 ## [2026-10-21] ticket | Start T-25011 after merging the other agent's work
 
 Fast-forwarded local main to 50e032fcc (other agent: 129 functions left, plan in [[plan-remaining]]). Started [[tickets/T-25011-class-a-closers-as1-levers]]: one Sonnet 5.5 subagent on the eight class A near misses.
@@ -1755,6 +1751,7 @@ One finding fixed (comment on the empty `case 1: default:`); the two stack-frame
 
 Reviewed [[tickets/T-25131-w8-NAME_ENT-80142A80]] against CODING_STANDARDS.md; no matches (`src/` unchanged, `func_80143580` stays INCLUDE_ASM).
 `func_80143580` is down to 471 rows from 835 (draft and notes in drafts/T-25131/NAME_ENT/func_80143580/).
+
 ## [2026-10-23] ticket | T-25133 Done
 
 Reviewed [[tickets/T-25133-w8-TEL-8013CCD0]] against CODING_STANDARDS.md; matched TEL `func_8013D88C` (2980 bytes) as default-build C, 27/27; the guard and `INCLUDE_ASM` are gone, no function left in `src/ovl/TEL/8013CCD0.c`.
