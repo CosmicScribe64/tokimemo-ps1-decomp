@@ -7,23 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] build | Wave C-2 results; clean 27/27
-
-Four continuation runs on the same functions (T-24925..T-24928, isolated worktrees). No new
-promotion, but three of four moved and every one now has a mechanism-level diagnosis:
-- T-24925 ETC func_8013CCE4 stays at 3 rows: the `$v1` compares and the uopt loop fold are proven
-  coupled in uopt's `OPTN 405` (zcopy) record; no C spelling can decouple them. Build-step
-  ticket [[tickets/T-24929-uopt-zcopy-scope]] filed with the reproduction shims.
-- T-24926 GEKO func_80133024 stays at 2 rows: the two day ranges are the whole miss; direct
-  field reads make rows 33/35 match exactly (~15 rows) and the next un-CSE step is written.
-- T-24927 BUNKA_SD func_80139290 stays at 6 rows: classified same-block (not the default-arm
-  filler); the local-m lever removes all six target rows and is banked as
-  drafts/T-24927/local-m-order-lever.patch with the colour-cascade follow-up.
-- T-24928 main func_8006C988 11 -> 5 rows: the base/register swap is solved (two-arm `u8 val`
-  web plus two dead parameter tests at the top, FAKE T-24928); the induction-init order and the
-  per-arm narrowing copy remain.
-Clean build 27/27, headers/globals OK. tools/progress.py: 6,826 / 6,952 (92.2%), 126 left.
-
 ## [2026-10-20] ticket | T-25002 class C ENDING, GEKO, ETC
 [[tickets/T-25002-class-c-ending-geko-etc]] created and set In Progress (worktree c-m2): ENDING `func_801387B0`, GEKO `func_80133C50`, ETC `func_80144224` from [[plan-remaining]] class C.
 
@@ -1741,14 +1724,17 @@ The guard in `src/main/800451D0.c` is gone; FAKEs (D_801255B5 via the B4 symbol,
 
 Reviewed [[tickets/T-25143-w8-SHOUGATU-8013E330]] against CODING_STANDARDS.md: no source change, no findings; SHOUGATU `func_8013EA98` not matched (42 rows, over the guard limit), source stays `INCLUDE_ASM`.
 Body, unit-level allocator trace findings and next hypothesis kept in drafts/T-25143/SHOUGATU/func_8013EA98/ and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25121 Done
 
 Reviewed [[tickets/T-25121-w8-ETC-80132880]] against CODING_STANDARDS.md; matched ETC `func_801328A4` (920 bytes) as default-build C, 27/27.
 `func_80132C3C` stays INCLUDE_ASM behind a NON_MATCHING guard at 15 rows, down from 105 (notes in drafts/T-25121/ETC/func_80132C3C/).
+
 ## [2026-10-23] ticket | T-25141 Done
 
 Reviewed [[tickets/T-25141-w8-TACO-8013F250]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_8013FBF0` (1040 bytes) as default C in `src/ovl/TACO/8013F250.c` with two FAKEs (`pad[6]`, one-line UV stores).
 The only function of the package is matched, none left with rows; notes in `drafts/T-25141/TACO/func_8013FBF0/NOTES.md` and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25142 Done
 Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/matching-notes.md`, fixed), clean rebuild 27/27. No function matched: BUNKA_SD `func_80134D94` stays `INCLUDE_ASM` (old T-24137 guard removed) with its draft at aligned cost 12, 45 positional rows, in `drafts/T-25142/BUNKA_SD/func_80134D94/`.
 No function matched in this job; notes in `drafts/T-25142/BUNKA_SD/func_80134D94/NOTES.md`, [[matching-notes]], [[tickets/T-25142-w8-BUNKA_SD-80134540]].
