@@ -101,7 +101,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25149-w8-NAME_ENT-80132000|T-25149 Wave 8 package w8-NAME_ENT-80132000 (src/ovl/NAME_ENT/80132000.c)]]
 - [ ] [[tickets/T-25150-w8-KANGEI-80134120|T-25150 Wave 8 package w8-KANGEI-80134120 (src/ovl/KANGEI/80134120.c)]]
 - [ ] [[tickets/T-25151-w8-GYOZI-80140C90|T-25151 Wave 8 package w8-GYOZI-80140C90 (src/ovl/GYOZI/80140C90.c)]]
-- [ ] [[tickets/T-25152-w8-TACO-80138890|T-25152 Wave 8 package w8-TACO-80138890 (src/ovl/TACO/80138890.c)]]
 - [ ] [[tickets/T-25153-w8-NAME_ENT-80139740|T-25153 Wave 8 package w8-NAME_ENT-80139740 (src/ovl/NAME_ENT/80139740.c)]]
 
 ## In Progress
@@ -206,6 +205,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25152-w8-TACO-80138890|T-25152 Wave 8 package w8-TACO-80138890 (src/ovl/TACO/80138890.c)]]
 - [ ] [[tickets/T-25106-w8-TAIIKU-80133C80|T-25106 Wave 8 package w8-TAIIKU-80133C80 (src/ovl/TAIIKU/80133C80.c)]]
 - [ ] [[tickets/T-25059-etc-ranking-generator|T-25059 Match ETC ranking generator]]
 - [ ] [[tickets/T-25055-tel-pass-mechanisms|T-25055 Match TEL qualification dialogue through causal compiler evidence]]

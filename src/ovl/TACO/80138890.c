@@ -54,7 +54,7 @@ s32 func_80138964(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-/* The unused K&R parameter holds the stage: as a parameter live in the entry block it cannot take $v0/$v1 (uopt cupcosts), so it gets $a0 as in the original. T-25152 */
+/* FAKE: T-25152, the unused K&R parameter holds the stage and the total: a parameter live in the entry block cannot take $v0/$v1 (uopt cupcosts), so it gets $a0 as in the original. The original has no such parameter; real source unknown. */
 s32 func_80138B2C(arg0)
 s32 arg0;
 {

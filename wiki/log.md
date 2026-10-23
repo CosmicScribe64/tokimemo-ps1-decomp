@@ -1722,3 +1722,8 @@ Reviewed [[tickets/T-25106-w8-TAIIKU-80133C80]] against CODING_STANDARDS.md; mat
 ## [2026-10-23] ticket | T-25200 wave 9 neighbor conveyor opened
 
 User asked for neighbor work next to wave 8. [[tickets/T-25200-wave-9-neighbor]] takes untouched wave 8 packages from the tail of the queue and runs near-miss closers for merged wave 8 packages under [[tickets/T-25201-wave-9-closers]]. Job picking and package blocking go through one lock shared with the wave 8 worktree script.
+
+## [2026-10-23] ticket | T-25152 Done
+
+Reviewed [[tickets/T-25152-w8-TACO-80138890]] against CODING_STANDARDS.md; matched TACO `func_80138B2C` (476 bytes) as default-build C, 27/27.
+The review marked the unused K&R parameter FAKE; the clamp-arm zero term and the two address views were already marked.
