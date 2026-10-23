@@ -36,7 +36,62 @@ void func_8004A14C(s32 arg0, RECT rect, s32 arg3) {
     func_80049A40(rect.x, rect.y, rect.w, rect.h, 1, arg3, 1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80049FF0", func_8004A1A0);
+void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x, s32 y, s32 flag, s32 tp) {
+    SpriteSlot24 *bg;
+    u8 cellh;
+    s32 row;
+    s32 col;
+
+    cellh = 0x78;
+    /* main_api.h declares D_801220D0 as the first word of slot 0; the slots are SpriteSlot24 records. */
+    bg = &((SpriteSlot24 *)&D_801220D0)[slot];
+    bg->unk_00 = 0x1000000;
+    bg->unk_04 = x;
+    bg->unk_06 = y;
+    bg->unk_08 = w << 7;
+    bg->unk_0A = h * cellh;
+    bg->unk_0C = 0;
+    bg->unk_0E = 0;
+    bg->unk_10 = 0x80;
+    bg->unk_11 = 0x80;
+    bg->unk_12 = 0x80;
+    bg->unk_14 = (u32)&D_80122120[slot];
+    bg->unk_18 = 0;
+    bg->unk_1A = 0;
+    bg->unk_1C = 0x1000;
+    bg->unk_1E = 0x1000;
+    /* FAKE: T-25302, empty test: a uopt block boundary (the branch is dropped after register allocation),
+     * so 0x1000 and row share $v1 and the map address takes $a0 as in the original. Real source unknown. */
+    if (slot) {
+    }
+    bg->unk_20 = 0;
+    /* Indexed, not through a map local: with four locals the cell and index spills land at sp+0x58/0x54. */
+    D_80122120[slot].cellw = 0x80;
+    D_80122120[slot].cellh = cellh;
+    D_80122120[slot].ncellw = w;
+    D_80122120[slot].ncellh = h;
+    D_80122120[slot].base = D_80122140[slot];
+    D_80122120[slot].index = D_80122540[slot].v;
+    for (row = 0; row < h; row++) {
+        for (col = 0; col < w; col++) {
+            load_tpage_buf_lock(tp + col + row * 32, tex[row * w + col], 1);
+        }
+    }
+    for (row = 0; row < h; row++) {
+        for (col = 0; col < w; col++) {
+            D_80122540[slot].v[row * w + col] = row * w + col;
+            D_80122140[slot][row * w + col].u = 0;
+            D_80122140[slot][row * w + col].v = row * 0x78;
+            D_80122140[slot][row * w + col].tpage = tp + col;
+            D_80122140[slot][row * w + col].cba = func_8009ED74(0, clut);
+            D_80122140[slot][row * w + col].flag = 0;
+            if (row * w + col > 0x40) {
+                printf("BG_ERROR:p_line.c \n");
+            }
+        }
+    }
+    D_800E6280.unk_10EC[slot] = flag;
+}
 
 void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     GameState *g;
