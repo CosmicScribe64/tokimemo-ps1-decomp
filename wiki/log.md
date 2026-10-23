@@ -1750,3 +1750,7 @@ Reviewed [[tickets/T-25118-w8-main-800563F0]] against CODING_STANDARDS.md; match
 
 Reviewed [[tickets/T-25123-w8-main-800451D0]] against CODING_STANDARDS.md; matched main `func_800455C4` (2,768 bytes) as default-build C, 27/27.
 The guard in `src/main/800451D0.c` is gone; FAKEs (D_801255B5 via the B4 symbol, `* 1` loop test) are ticketed, notes in [[matching-notes]] and [[playbook]].
+## [2026-10-23] ticket | T-25143 Done
+
+Reviewed [[tickets/T-25143-w8-SHOUGATU-8013E330]] against CODING_STANDARDS.md: no source change, no findings; SHOUGATU `func_8013EA98` not matched (42 rows, over the guard limit), source stays `INCLUDE_ASM`.
+Body, unit-level allocator trace findings and next hypothesis kept in drafts/T-25143/SHOUGATU/func_8013EA98/ and [[matching-notes]].
