@@ -851,3 +851,14 @@ Matched (480 bytes, default C), [[tickets/T-25401-w11-GEKO-801323E0]], from the 
 - The record-field spelling (no `date` local) gets the else-arm order right but swaps the record word and month (`$a0`/`$a1`): the record-word ILOD hashes like the b6-test ILOD (same base, offset not in the key), so after copy propagation it is a second version with a late bit and is coloured after month.
 
 Negatives, the scoring setup (one-function TU, ucode dumps, `regdiff -v --src`) and the other bodies: drafts/T-25401/GEKO/func_80132B24/NOTES.md.
+
+## T-25401: GEKO func_80133024 (wave 11 pass 1)
+
+[[tickets/T-25401-w11-GEKO-801323E0]]. Matched (280 bytes, default C) from the T-24503 guard (2 rows: the day load's `lui` base `$a1` instead of `$a2`), with the three T-24503 FAKE empty tests removed.
+
+- **Extra arguments precolour `$a2`/`$a3`.** The original calls func_80132D04 with four arguments; the callee reads two. The day and month passed third and fourth are precoloured to `$a2`/`$a3` and live in the call blocks past the `$a0`/`$a1` writes, so uopt keeps both fields in those registers and the loop head loads straight into them (`lui a3; lbu a3` / `lui a2; lbu a2`). Without the extra arguments the month is a one-block range and takes the first free `$a0`/`$a1`. A four-parameter prototype gives the caller exactly, but the callee then homes `$a2`/`$a3`, so the callee has two parameters and the original call had no prototype: func_80132D04 now has an old-style definition (same bytes).
+- **Unprototyped narrow arguments must come from a store.** Passing `D_800E6280.unk_040` directly to an unprototyped callee gets `cvt_pass.widen`'s `CVT J<-L` (an int argument), and uopt gives `cvt(field)` its own range (60 rows; `(u8)` casts are dropped). Reading the globals into the `u8` locals in each arm and passing the locals keeps plain loads (local copy propagation in the call block).
+- **Keep the test's and the arms' `day + i` apart.** The test reads `D_800E6280.unk_040 + i` directly (widened), the arm sums use the local; the same spelling on both sides merges the sums (31 rows).
+- Tooling: uopt input/output ucode dumps (a `--uopt` wrapper for `uopt_eval.py compile` that copies both files, rendered with `cvt_pass.parse`; register N is `m3 b0 oN`) showed the ranges before ugen and as1 fold the copies.
+
+Measurements and negatives: drafts/T-25401/GEKO/func_80133024/NOTES.md.
