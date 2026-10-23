@@ -7,17 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] ticket | T-25013 complete: all five levers investigated, none is a uniform rule
-
-Lever 5 session on main func_8006A044: the OPTN sweep (0..530, plus
-values 1 and 2 for 400..464) found no option controlling uopt's
-colouring order, and the colour table is not visible to either build
-shim, so no uniform rule can express it. With that, all five levers
-in [[tickets/T-25013-compiler-level-levers]] are concluded: none
-exists as a compiler-level rule, no functions promoted, and the
-ticket moves to In Review with the full evidence trail (the as1 +1
-region test in [[as1-scheduler-rule]] is the positive result).
-
 ## [2026-10-21] ticket | T-25014 created: variant search automation for allocator and source-shape residuals
 
 At Lila's direction, follow-on work to T-25013: a packet-based variant
@@ -1784,6 +1773,7 @@ User approved one gate in place of the separate conveyors. [[tickets/T-25600-fin
 
 ## [2026-10-23] build | T-25401 w11-GEKO-801323E0-p1
 Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl/GEKO/801323E0.c`; func_80132D04 got an old-style definition (same bytes). The file has no INCLUDE_ASM left, so [[tickets/T-25401-w11-GEKO-801323E0]] is Done after review; notes in [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25317 Done
 
 Reviewed [[tickets/T-25317-w10-main-80047550]] against CODING_STANDARDS.md; no match: main `func_800476C0` stays `INCLUDE_ASM` (552 funcdiff rows, 8 structural hunks, saved-register order now original), 27/27, two small findings fixed.

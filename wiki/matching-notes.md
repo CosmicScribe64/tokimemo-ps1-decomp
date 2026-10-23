@@ -17,18 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25059: ETC ranking generator matched through counter and scalar lifetimes
-
-[[tickets/T-25059-etc-ranking-generator]] closes func_801480D0, 702 instructions / 2,808 bytes. The corrected T-24049 full-TU baseline reproduces 709 instructions and aligned cost 859. Target register continuity identifies the generation counter as the inner counter in both tie loops and the selection loop. Correcting those identities and separating first-noise storage restores the 208-byte frame and four saved registers. Product operand order, case-9-before-case-1 layout and observed scalar stack homes recover the generation phase. Existing `a`, `offset` and `j` then supply the second random product, curve/top-score shift and final player correction carriers. An explicit lower-bound delta prevents distribution; direct player-rank accesses preserve the reload after the other thirteen ranks change.
-
-No late-zero runtime identity remains. Scalar order and one unused word are marked FAKE; removing the word regresses the match to aligned cost 42. Current default C matches every linked byte, ETC checksum and declaration guards pass (zero new / 15 known prototype disagreements), and root source review has no findings. Full 27-binary integration remains with root. The file has no remaining guards. Details, negative controls and private evidence paths are in drafts/T-25059/README.md.
-
-## T-25057: NAME_ENT record selector remainder and expression order matched
-
-`func_801398EC` matches 123 words / 492 literal default-build bytes. The ordinary indexed thirteen-record loop recovers the peeled first record and six paired trips. Initialize the index before the selector, retain an erased exact-width unsigned record test, and use a one-element u32 array for the remainder. Its dead initial frame assignment orders the memory range before frame/index; the computed remainder overwrites it before every semantic read. Uopt removes array storage and the initial load entirely, recovering a0 record / a1 remainder / a2 frame / a3 index.
-
-The last 17 differing words came from evaluation order: captured optimized ucode evaluated tile-multiply before row-divide/multiply. `row - (0U - tile * 16) + 128` retains row-first evaluation and is equal modulo 2^32; index 0..12 bounds the signed row product. Four constraints are FAKE-marked and have removal controls; the redundant unsigned tail test was removed. Full build, fresh 27 hashes and declaration checks pass; root's direct standards/spec review has no findings. [[tickets/T-25057-name-ent-pass-investigation]] is In Review for integration. drafts/T-25057/README.md preserves traces, rejected controls and exact metrics.
-
 ## T-25102: TAIIKU func_80139AB0
 
 Matched (812 bytes, default C; all 27 sha1 OK). The 20x4 grid loop is no longer a blocker. Write `i << 2` and `i << 3` instead of `i * 4` and `i * 8` (uopt does not strength-reduce shifts, so the outer loop recomputes them from `i` as the original does), and put the invariant first, `-160 - (i << 3) + ((i << 2) + 80) * j`: that body is long enough to be unrolled by 2 with `multu w, j`, and the invariant is hoisted into one register per array. `(j - 2) * w` is unrolled completely. One `i` serves all four loops (a fresh counter unrolls the small loops). A third declared scalar puts the spill of `i` at sp+0x50 (FAKE `pad`). The last 5 rows were a `lui $at` that as1 did not share: as1 reuses one `lui $at` across offsets only for a symbol defined in the compiled C and only inside one 16-byte-aligned chunk of the section, so `D_801499B0` (an `INCLUDE_RODATA` piece, an extern to the C) got two. Defining it in C (`TaiikuPair D_801499B0[1]`) matched. Details and negatives: `drafts/T-25102/TAIIKU/func_80139AB0/NOTES.md`.
@@ -842,6 +830,7 @@ Negatives, the scoring setup (one-function TU, ucode dumps, `regdiff -v --src`) 
 - Tooling: uopt input/output ucode dumps (a `--uopt` wrapper for `uopt_eval.py compile` that copies both files, rendered with `cvt_pass.parse`; register N is `m3 b0 oN`) showed the ranges before ugen and as1 fold the copies.
 
 Measurements and negatives: drafts/T-25401/GEKO/func_80133024/NOTES.md.
+
 ## T-25317: main func_800476C0 (second pass)
 
 Not matched; the function stays `INCLUDE_ASM` (552 rows, above the guard limit). The best body went from the
