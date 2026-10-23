@@ -2096,7 +2096,86 @@ void func_8013D9B4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013DDB8);
+void func_8013DDB8(void) {
+    s32 i;
+    s32 j;
+    s32 pos;
+    s16 h;
+    TaiHalves *p; /* FAKE: T-25102, the halves are read through p and the word directly: the original keeps
+                   * &D_801499C0 in s2 after each call but builds the word's address with %hi/%lo */
+
+    p = &D_801499C0;
+    switch (((TaiikuWork *)D_80122DD0)->step) {
+    case 0:
+    case 3:
+    case 6:
+        pos = D_801499C0.word;
+        D_801499C0.word = pos >> 1;
+        func_8013E1FC();
+        h = p->halves.high;
+        /* FAKE: T-25102, an unsigned subtraction (same bits); a signed one lets uopt test h >= 0x100 as
+         * bltz on this difference */
+        ((TaiikuWork *)D_80122DD0)->camera.y = h - 0x100U;
+        if (((TaiikuWork *)D_80122DD0)->step == 6) {
+            ((TaiikuActor44 *)D_8011ECD0)[102].unk_1A = (h << 4) * 3 + 0x1000;
+            ((TaiikuActor44 *)D_8011ECD0)[102].unk_1C = ((TaiikuActor44 *)D_8011ECD0)[102].unk_1A;
+            ((TaiikuActor44 *)D_8011ECD0)[102].unk_26 = -(D_80149968.unk_1C[0] >> 2) - (h >> 1) - 40;
+            ((TaiikuActor44 *)D_8011ECD0)[102].unk_2A = -(h >> 4) - (h >> 1) - 104;
+            if (h >= 0x100) {
+                D_80149968.unk_04 = 0;
+                D_80149960 = 0;
+                ((TaiikuWork *)D_80122DD0)->step = 0;
+                func_80042808();
+            }
+        }
+        D_801499C0.word = pos;
+        if (((TaiikuWork *)D_80122DD0)->camera.y >= 0x100) {
+            for (i = 0; i < 20; i++) {
+                for (j = 0; j < 4; j++) {
+                    D_80149B24[(i << 2) + j] = -160 + j * ((i << 2) + 80);
+                    D_80149BC4[(i << 2) + j] = -160 + (j + 1) * ((i << 2) + 80);
+                    D_80149C64[(i << 2) + j] = -160 + j * (((i + 1) << 2) + 80);
+                    D_80149D04[(i << 2) + j] = -160 + (j + 1) * (((i + 1) << 2) + 80);
+                }
+            }
+            p->halves.high -= 0x200;
+            ((TaiikuWork *)D_80122DD0)->step++;
+        }
+        break;
+    case 1:
+    case 4:
+        func_8013E894();
+        ((TaiikuWork *)D_80122DD0)->camera.angle = -p->halves.high * 4 + 0x800;
+        if (((TaiikuWork *)D_80122DD0)->camera.angle < -0x3FF) {
+            if (((TaiikuWork *)D_80122DD0)->step == 4) {
+                ((TaiikuActor44 *)D_8011ECD0)[102].unk_26 = 0xB0;
+                ((TaiikuActor44 *)D_8011ECD0)[102].unk_03 |= 0x80;
+            }
+            ((TaiikuWork *)D_80122DD0)->step++;
+        }
+        break;
+    case 2:
+    case 5:
+        func_8013EC60();
+        ((TaiikuWork *)D_80122DD0)->camera.angle = -p->halves.high * 4 + 0x800;
+        if (((TaiikuWork *)D_80122DD0)->camera.angle < -0x7FF) {
+            for (i = 0; i < 20; i++) {
+                for (j = 0; j < 4; j++) {
+                    D_80149B24[(i << 2) + j] = -160 - (i << 3) + ((i << 2) + 80) * j;
+                    D_80149BC4[(i << 2) + j] = -80 - (i << 2) + ((i << 2) + 80) * j;
+                    D_80149C64[(i << 2) + j] = -168 - (i << 3) + (((i + 1) << 2) + 80) * j;
+                    D_80149D04[(i << 2) + j] = -84 - (i << 2) + (((i + 1) << 2) + 80) * j;
+                }
+            }
+            ((TaiikuWork *)D_80122DD0)->camera.x = 0x118;
+            ((TaiikuWork *)D_80122DD0)->camera.y = -0x100;
+            ((TaiikuWork *)D_80122DD0)->camera.angle = 0;
+            D_801499C0.word = 0;
+            ((TaiikuWork *)D_80122DD0)->step++;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013E1FC);
 
