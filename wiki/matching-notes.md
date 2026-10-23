@@ -689,3 +689,16 @@ Matched: `srn_tpage_show` (806 words, 3224 bytes) is default-build C, 27/27 SHA1
 ## T-25111: TACO func_8013C6D4
 
 Matched: `func_8013C6D4` (347 words, 1388 bytes) is default-build C. Start: the T-24502 body, frame 0x50 against 0x88. Closed by, in order: a pointer `for` for the first loop (`sltu` exit and the original setup order; index loops give `bne`) and an index loop for the second (`bne`, dead `i = 0` kept in `v0` by the `s32` no-return FAKE as in func_8013C1F4); homes from declaration order (`u32 i` between the flags takes 0x50, the register locals above them six words, a FAKE `pad[6]` the rest); one flag clear per mode case and the later clears after their calls; the bonus carried in `D_8015EDD4` itself with `case 7: default:`, which gives `li v0,1` and one store at the join (the T-24502 global form failed only for lack of the default). Notes and negatives: `drafts/T-25111/TACO/func_8013C6D4/NOTES.md`.
+
+## T-25111: TACO func_8013BAC4
+
+Matched: `func_8013BAC4` (460 words, 1840 bytes) is default-build C, 27/27 SHA1. Start: the T-24502 body, cost 330 (456 against 460 words, frame 0x4A8 against 0x4A0). Closed by, in order:
+- the second distance compared directly, with a separate variable per loop;
+- the score index base first, as in func_8013CE78;
+- `continue` before the second score add, which stops ugen reusing the stored D_8015EDF0 value across the fall-through (322 to 90);
+- loop 2 as an indexed `for`, so uopt's strength-reduced homes land at 0x5C/0x60 and the dead `i = 0` store stays;
+- 11 scalars with i third and damage tenth (score 5);
+- the s32 return with no `return`, for the loop-2 branch slot;
+- `switch (*(u8 *)&D_800E6280.unk_1109)`, which keeps global copy propagation on. The tools/cvt_pass.py zcopy-off rule otherwise leaves the y distance as a range with `move a0,v0`, and as1 keeps that move in an s32 function.
+
+`s32 func_8013D2A0(s16, s16, s16)` and `TcDamage9 D_8015F548` are now in TACO.h. The two FAKEs (s32 return, byte-view selector) name T-25111. Measured negatives and the toy evidence are in `drafts/T-25111/TACO/func_8013BAC4/NOTES.md`.

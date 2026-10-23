@@ -41,9 +41,9 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
     u32 scores[256];
 
     damageTable = D_8015F548;
-    /* FAKE: the byte view keeps tools/cvt_pass.py from turning global copy propagation off for
-     * this procedure (a switch on an unsigned global at the entry); the original propagated the
-     * second distance into its compare (no move from v0) and still compared the stage in v1. T-25111. */
+    /* FAKE: through the byte view, tools/cvt_pass.py does not see a switch on an unsigned global
+     * and leaves global copy propagation on. The y distances then fold into their compares, as in
+     * the original (no `move a0,v0`), and the stage is still compared in v1. T-25111. */
     switch (*(u8 *)&D_800E6280.unk_1109) {
     case 0xC:
         for (j = 0; j < 256; j++) scores[j] = 0x190;
