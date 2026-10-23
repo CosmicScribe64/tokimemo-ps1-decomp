@@ -2229,7 +2229,9 @@ void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
 #ifndef MAIN_API_OVERRIDE_func_8004A8EC
 void func_8004A8EC();
 #endif
+#ifndef MAIN_API_OVERRIDE_func_8004AC18
 void func_8004AC18(s32 arg0);
+#endif
 void func_8004ACA8();
 void func_8004ACC8(s32 arg0);
 void func_8004ADE4(void);
@@ -2243,6 +2245,7 @@ void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag);
 void func_8004BB54();
 s32 func_8004BC20(s32 arg0);
 void func_8004C060();
+void col2sepia();
 void func_8004C250();
 void func_8004C360();
 void func_8004C46C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);

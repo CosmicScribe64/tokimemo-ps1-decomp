@@ -1,8 +1,10 @@
+#define MAIN_API_OVERRIDE_func_8004AC18 /* original called it undeclared (implicit int): its $v0 result keeps v0 busy after the calls in func_80143580, T-25604 */
 #define MAIN_API_OVERRIDE_D_8012070C /* func_8014472C: pointer view of the record field (main_api.h: s32), T-22007 */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 
 extern s32 *D_8012070C;
+extern s32 func_8004AC18();
 
 /* The 21 song-line strings are placed from their rodata pieces (rodata_pieces.py), not copied into the source. T-22007 */
 extern u8 D_8014C4F0[];
@@ -247,7 +249,7 @@ void func_80142E24(void) {
     }
 }
 
-s32 func_80143498(void) {
+void func_80143498(void) {
     if ((func_800460EC() & 2) && D_8014D170 == 0) {
         func_80046290(0x06000CBB, 0x12000E0C, 0xF);
         func_80044750(0x300);
@@ -263,36 +265,28 @@ s32 func_80143498(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* Scratch declarations for the NON_MATCHING compile: same-file callees defined after
- * func_80143580 need prototypes before it. T-25131, T-25319. */
+/* Same-file functions defined below. */
 void func_80144654(void);
 void func_8014472C(void);
 void func_80144908(void);
-/* col2sepia is defined K&R as void in src/main/8004AD60.c; without a declaration it is an
- * implicit int here. T-25604 */
-void col2sepia();
-/* NON_MATCHING: T-25604 fresh-start round 1 digest, 122 funcdiff rows, Levenshtein score 120,
- * 1077 of 1077 words (T-25319: 293). Clean-room lens body (compare statuses in index, index
- * fill loops on address, case 9 chain order, actor index i in cases 11/16, copy loop on i)
- * plus the structure lens's col2sepia declaration and case 17 order. Needs s32
- * func_80143498(void). Left: the fade value and the fill end constant in a2 for a1, 0x80000000
- * in v0 for t1, the entry fill registers, the case 9 store order. See
- * drafts/T-25604/NAME_ENT/func_80143580/BRIEF-r1.md.
- */
+
+/* Introduction scene state machine. T-25604: case 9 hides the three records with one chain
+ * (D_801217D0[2] is read back, so uopt keeps it in a2 and the selector gets t0), func_8004AC18 is
+ * called undeclared (its $v0 result keeps v0 busy after each call), and every tile fill counts with
+ * i. */
 void func_80143580(void) {
-    s32 index;
+    s32 pad0; /* FAKE: unused; with pad1 its stack home gives the original 0x90 frame. T-25604 */
     s32 tiles[8];
-    s32 address;
+    s32 pad1; /* FAKE: unused, see pad0. T-25604 */
     s32 i;
     u8 step;
 
-    /* FAKE: T-25319: a reference to unk_F5F before the first branch satisfies the entry rule
-     * of tools/cvt_pass.py, so the CVTs of the case 16/17 compares go and F5F is one promoted
+    /* FAKE: T-25319, T-25604: a reference to unk_F5F before the first branch satisfies the entry
+     * rule of tools/cvt_pass.py, so the CVTs of the case 16/17 compares go and F5F is one promoted
      * range (v0) as in the target; uopt removes the self-store. */
     D_800E6280.unk_F5F = D_800E6280.unk_F5F;
-    for (index = 0, address = 0x80180000; address < (s32)0x801A0000; address += 0x4000) {
-        tiles[index++] = address;
+    for (i = 0; i < 8; i++) {
+        tiles[i] = 0x80180000 + i * 0x4000;
     }
     step = D_800E6280.unk_110D;
     switch (step) {
@@ -305,11 +299,7 @@ void func_80143580(void) {
         break;
     case 1:
         if ((D_800E6280.unk_10F8 & 3) == 3) {
-            /* FAKE: T-25604: the compare status of the four x-- / x++ tests (cases 1, 3, 5, 8)
-             * is held in index (clean-room lens, 176 -> 146 rows on its body); the original form
-             * is unknown. */
-            index = ((SpriteSlot24 *)&D_801220D0)[0].unk_04-- < -0xF0;
-            if (index) {
+            if (((SpriteSlot24 *)&D_801220D0)[0].unk_04-- < -0xF0) {
                 D_800E6280.unk_110D++;
                 ((SpriteSlot24 *)&D_801220D0)[0].unk_00 = 0x51000000;
             }
@@ -327,8 +317,7 @@ void func_80143580(void) {
     case 3:
         if ((D_800E6280.unk_10F8 & 3) == 3) {
             ((SpriteSlot24 *)&D_801220D0)[0].unk_04 -= 1;
-            index = ((SpriteSlot24 *)&D_801220D0)[1].unk_04++ >= -0xEF;
-            if (index) {
+            if (((SpriteSlot24 *)&D_801220D0)[1].unk_04++ >= -0xEF) {
                 func_8004A1A0((s32) tiles, 0, 8, 4, 2, 0x1EF, -0xA0, -0x78, 8, 5);
                 load_palette((s32 *)0x801A0000U, 0xF, 1, 3, 0);
                 ((SpriteSlot24 *)&D_801220D0)[0].unk_11 = 0;
@@ -354,13 +343,12 @@ void func_80143580(void) {
             if (((SpriteSlot24 *)&D_801220D0)[1].unk_04 < -0xA0) {
                 ((SpriteSlot24 *)&D_801220D0)[1].unk_04 += 1;
             }
-            index = ((SpriteSlot24 *)&D_801220D0)[0].unk_04-- < -0x140;
-            if (index) {
+            if (((SpriteSlot24 *)&D_801220D0)[0].unk_04-- < -0x140) {
                 ((SpriteSlot24 *)&D_801220D0)[0].unk_00 = 0x51000000;
                 D_800E6280.unk_110D++;
             }
-            /* FAKE: T-25319: ^ 0 drops the a0 argument preference of the promoted field; gives
-             * the target's move a0,v0 and F8 in a0. */
+            /* FAKE: T-25319, T-25604: ^ 0 drops the a0 argument preference of the promoted field;
+             * gives the target's move a0,v0 and F8 in a0. */
             func_8004B19C(((SpriteSlot24 *)&D_801220D0)[0].unk_04 ^ 0, 0, 0);
             if (((SpriteSlot24 *)&D_801220D0)[0].unk_04 == -0x118) {
                 func_8004E58C();
@@ -382,14 +370,11 @@ void func_80143580(void) {
         }
         if ((((SpriteSlot24 *)&D_801220D0)[0].unk_10 = ((SpriteSlot24 *)&D_801220D0)[0].unk_11 = ((SpriteSlot24 *)&D_801220D0)[0].unk_12--) == 0) {
             ((SpriteSlot24 *)&D_801220D0)[0].unk_00 = 0x80000000;
-            /* FAKE: T-25319: dead read of the entry fill's last address; makes address live from
-             * the entry into case 6, which moves the selector to t0 (autotweak emptytest). */
-            if (address) {}
-            /* FAKE: T-25131, T-25319 (from T-20008): the target has this nested fill loop
+            /* FAKE: T-25131, T-25319, T-25604 (from T-20008): the target has this nested fill loop
              * (the outer loop runs once); its original source form is unknown. */
-            for (address = 0; address < 8; address++) {
-                for (address = 0; address < 8; address++) {
-                    tiles[address] = 0x801B0000 + address * 0x4000;
+            for (i = 0; i < 8; i++) {
+                for (i = 0; i < 8; i++) {
+                    tiles[i] = 0x801B0000 + i * 0x4000;
                 }
             }
             func_8004A1A0((s32) tiles, 1, 6, 3, 2, 0x1EE, -0xA0, -0x78, 8, 0x15);
@@ -421,8 +406,7 @@ void func_80143580(void) {
         break;
     case 8:
         if ((D_800E6280.unk_10F8 & 3) == 3) {
-            index = D_801217D0[0].unk_04-- < -0x160;
-            if (index) {
+            if (D_801217D0[0].unk_04-- < -0x160) {
                 func_80044750(0xD1);
                 func_8004E58C();
                 cd_read_sectors(0x31U, 0x80180000U, 0xA017);
@@ -438,12 +422,10 @@ void func_80143580(void) {
             func_8004AC18(((SpriteSlot24 *)&D_801220D0)[0].unk_10++);
         } else {
             func_8004AC18(0xFF);
-            *(u32 *)&D_801217D0[1].unk_00 = 0x80000000;
-            *(u32 *)&D_801217D0->unk_00 = 0x80000000;
+            *(u32 *)&D_801217D0->unk_00 = *(u32 *)&D_801217D0[1].unk_00 = *(u32 *)&D_801217D0[2].unk_00 = 0x80000000;
             ((SpriteSlot24 *)&D_801220D0)[1].unk_00 = 0x80000000;
             ((SpriteSlot24 *)&D_801220D0)[0].unk_00 = 0x01000000;
             ((SpriteSlot24 *)&D_801220D0)[0].unk_11 = ((SpriteSlot24 *)&D_801220D0)[0].unk_12 = ((SpriteSlot24 *)&D_801220D0)[0].unk_10 = 0x80;
-            *(u32 *)&D_801217D0[2].unk_00 = 0x80000000;
             ((SpriteSlot24 *)&D_801220D0)[1].unk_10 = 0xFF;
             D_800E6280.unk_110D++;
         }
@@ -500,10 +482,10 @@ void func_80143580(void) {
         }
         break;
     case 13:
-        /* FAKE: T-25131, T-25319 (from T-20008): nested fill loop as in case 6. */
-        for (address = 0; address < 6; address++) {
-            for (address = 0; address < 6; address++) {
-                tiles[address] = 0x80186000 + address * 0x4000;
+        /* FAKE: T-25131, T-25319, T-25604 (from T-20008): nested fill loop as in case 6. */
+        for (i = 0; i < 6; i++) {
+            for (i = 0; i < 6; i++) {
+                tiles[i] = 0x80186000 + i * 0x4000;
             }
         }
         func_8004A1A0((s32) tiles, 1, 6, 3, 2, 0x1EF, -0xA0, -0x78, 8, 0x15);
@@ -550,10 +532,10 @@ void func_80143580(void) {
         }
         break;
     case 16:
-        /* FAKE: T-25131, T-25319 (from T-20008): nested fill loop as in case 6. */
-        for (address = 0; address < 6; address++) {
-            for (address = 0; address < 6; address++) {
-                tiles[address] = 0x801BA7F0 + address * 0x4000;
+        /* FAKE: T-25131, T-25319, T-25604 (from T-20008): nested fill loop as in case 6. */
+        for (i = 0; i < 6; i++) {
+            for (i = 0; i < 6; i++) {
+                tiles[i] = 0x801BA7F0 + i * 0x4000;
             }
         }
         func_8004A1A0((s32) tiles, 0, 6, 3, 2, 0x1EE, -0xA0, -0x78, 8, 0x15);
@@ -624,9 +606,6 @@ void func_80143580(void) {
     }
     func_80144654();
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80143580);
-#endif
 
 void func_80144654(void) {
     if (D_800E6280.unk_F80 & 0x10) {

@@ -10,7 +10,7 @@ colours of ../fresh-r1/colours.py. One line per body. Build output: build/T-2560
 Option --no-rev1 skips the second compile. No game data is read from or written to tracked paths.
 """
 from pathlib import Path
-import collections, difflib, re, subprocess, sys
+import collections, difflib, os, re, subprocess, sys
 HERE = Path(__file__).parent
 sys.path.insert(0, "tools")
 sys.path.insert(0, str(HERE.parent / "fresh-r1"))
@@ -25,7 +25,8 @@ REV1 = Path("build/T-25604/ref/rev1.s")
 def unit_text(c, body):
     """The unit with BODY in the NON_MATCHING guard. Body lines `#define MAIN_API_OVERRIDE_...` go to the
     top of the file (before the first include), as the project's override mechanism needs."""
-    text = Path(c.src).read_text()
+    # SCORE2_UNIT: a guarded copy of the unit to use as the template (once src holds the plain C)
+    text = Path(os.environ.get("SCORE2_UNIT", c.src)).read_text()
     top = [l for l in body.splitlines(True) if l.startswith("#define MAIN_API_OVERRIDE_")]
     body = "".join(l for l in body.splitlines(True) if not l.startswith("#define MAIN_API_OVERRIDE_"))
     text = "".join(top) + text
