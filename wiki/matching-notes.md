@@ -719,3 +719,13 @@ A `GameState *g` pointer replaces the FAKE scalar views and keeps the two final 
 3. One source line per vertex (FAKE, layout only). uopt emits `160 - arg0` and `160 - Q11` under the x2 line (see `cc -S`), so as1 orders case 0 correctly only when x2, h and y2 share a line: 4 to 0.
 
 Details and negatives: `drafts/T-25113/ETC/func_8013D570/NOTES.md`.
+
+## T-25118: main strCallback
+
+[[tickets/T-25118-w8-main-800563F0]]: not matched; the guard (75 rows) is removed and the body is in `drafts/T-25118/main/strCallback/`. The body itself is complete: with the copy-state gadget forced to F before the RECT copy (a private copy of `tools/ugen_pass.py` under `build/`), the unchanged C gives `MATCH` (640 bytes) in `funcdiff --built`. All 75 rows come from the tiny-copy dummy count that T-25029 traced: the shim injects B here (last state op is the direct `D_80125C5C = 0` store after the `func_80088210` call), B leaves 0x10000 in `f_eval_mov`'s stale frame word, and ugen spends two dummy scratch registers instead of the original's one.
+
+- No source route under the current shim: F needs an `Uistr` as the last state op. `*&` and `(&x)[0]` stores fold back to `str`; a `volatile` pointer store keeps `istr` and selects F, but costs a register address and an `addiu` (162 words).
+- Census (private, `build/T-25118/diag/`): inverting the state of copies of 32 bytes or less changes 141 matched functions, so the current rule is right for all matched code; strCallback is the only guarded copy function that improves under inversion.
+- Candidate rule for a tooling ticket (`drafts/T-25118/main/strCallback/ugen_pass-candidate.diff`): F for a copy of at most 16 bytes whose last state ops are direct stores right after a call. In a private census of all 437 C files it changes no matched function and takes strCallback from 75 rows to 0; the eight other guarded copy functions keep their rows. With a 32-byte limit it changes the four aligned MATRIX copies in ETC/TAIIKU, which the original copies in state B. It rests on one unmatched data point, so confirm it with `lever_lab` (re-insert the guard first) and the 27/27 gate.
+
+Details, negatives and the census commands: `drafts/T-25118/main/strCallback/NOTES.md`.
