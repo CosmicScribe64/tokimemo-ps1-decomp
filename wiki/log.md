@@ -7,17 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] build | T-24700 work merged onto the new plan; clean 27/27
-
-Committed the T-24700 fan-out records and guarded improvements, merged origin/main (c5b96eb43:
-[[plan-remaining]], T-24800, T-24900), and kept the upstream match of GYOZI func_80139E4C. Clean
-build after the merge: `rm -rf build && python3 configure.py && ninja` exit 0, 27 SHA1 checks OK,
-headers and globals OK. tools/progress.py: 6,825 / 6,952 functions, 2,099,476 / 2,276,920 bytes
-(92.2%), 127 left (VALEN func_80134030 and GYOZI func_80139E4C from T-24900). Corrected the
-T-24713 note: its "backend-version trait, no source form" conclusion was superseded by T-24900's
-traced rule and volatile lever; [[as1-scheduler-rule]] is now the reference. Started class A of
-[[plan-remaining]]: one file-disjoint worker per function, tickets T-24901..T-24908.
-
 ## [2026-10-20] ticket | T-24901..T-24908 class A near-miss closers
 
 Eight workers, one function each, 45-minute box: KANGEI func_8013852C (80137B90.c) and func_80134724
@@ -1755,6 +1744,7 @@ Both functions of `src/ovl/VALEN/80132760.c` are now C, notes in drafts/T-25117/
 
 Reviewed [[tickets/T-25116-w8-main-80047550]] against CODING_STANDARDS.md; matched main `func_80047560` (352 bytes) as default-build C, 27/27.
 `func_800476C0` stays `INCLUDE_ASM` at 649 diff lines (notes in drafts/T-25116/main/func_800476C0/); the unneeded `include/game.h` change was reverted in review.
+
 ## [2026-10-23] ticket | T-25146 Done
 Matched ETC `func_80144224` (796 bytes) as default-build C, 27/27; review found one issue (needless `s32` return without a return statement, now `void` with an ETC.h prototype) and it is fixed ([[tickets/T-25146-w8-ETC-80143240]]).
 The frame counter read through a `GsWord *` local is the lever that fixed the register ranges; two FAKE word views (quot, v) as in `func_80143A88` ([[matching-notes]]).
