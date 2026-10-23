@@ -707,3 +707,12 @@ What closed:
 - `D_8011ECF6`/`D_8011ECFA` as `((DisplayActor44 *)D_8011ECD0)[0].unk_26`/`unk_2A` keep the y load behind the x store in as1. New externs `s8 D_800B5A9C`, `u8 D_800B5AA0`.
 
 What is left: the else arm sets the shared constant 3 (`$s5`) before `jal menu_check` in the original and after the index reload in the draft (uopt moves the join's reload to the end of the else arm). From the IDO uopt sources, the original's `$s5` range covers the menu_check block, which needs a reference to the constant there or in the entry block; none of about 30 variants found one, and autotweak and the permuter found nothing. Analysis, negatives and the next probe: `drafts/T-25108/main/func_80065B0C/NOTES.md`.
+
+## T-25108: main func_8006509C
+
+[[tickets/T-25108-w8-main-80062CD0]], branch w8-main-80062CD0. Matched in plain C (1076 B, no FAKE), from score 99 (T-24301 draft, T-24501 measured 95).
+
+- **The case 2 copy reuses the count variable.** After `n >= 2` the copy runs `for (n = 0; n < 15; n++)`, so its strength-reduced pointers are new uopt bits. On `i` they share the bits of the case 0/1 copies: one range spans several cases and takes one colour, so the dst/src registers of cases 0/1 swapped and the scan count took the end constant's register (56 to 0). The scan has its own counter `j`.
+- **The `i = 0` between the first two loops sits at the join** (a `for` loop): uopt PRE moves it onto the loop-1 exit edge as in the target (99 to 93). The first record half stores `unk_14` right after `unk_34` (93 to 89).
+- **Every GameState access goes through `g`.** The u8 views on F6C/F6D and the `(u8)` switch cast of the old draft are no longer needed once the reads use `g`. All loops are `for (i = 0; i < g->unk_F6D; i++)`.
+- New K&R declaration `void func_800654D0();` in `include/main_api.h` (an `(s32 n)` prototype breaks the OPTION.bin checksum). Steps and negatives: `drafts/T-25108/main/func_8006509C/NOTES.md`.

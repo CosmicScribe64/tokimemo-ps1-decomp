@@ -143,3 +143,12 @@ NAME_ENT `func_801398EC` needed remainder/frame/index in a1/a2/a3. A scalar rema
 ## Small copies follow the ugen_pass state; final store with the epilogue (T-25105)
 
 `tools/ugen_pass.py` puts its B/F sentinel before every `Umov`, also before copies of 32 bytes or less. The transfer register skips two ugen entries in state B and one in state F. If a small copy's temporary is one slot late, check the pass's state for it (the last `str`/`istr`/jump before the copy in the ucode). After an `istr`, an empty `if ((s32)x > 0) {}` survives uopt as a signed positive-bound jump, emits no code and gives F (FAKE). Separately, as1 moves `lw ra` above the last store only when the store's address names a global: write `((T *)&G[i * N + k])->f = v`, not a store through a pointer local. Main `func_80054FC0`, 113 lines to MATCH. Loops (main `func_8005557C`, 1212 bytes): when only the last of many constant-trip loops is unrolled in the original, give every loop one shared counter: with a shared counter IDO unrolls only the last loop of the function. Make it `u32` if a bound equals a multiply constant elsewhere (an `s32` bound shares the constant and turns the multiply into `li; multu`).
+
+## Same expression in several switch cases shares one register range (T-25108)
+
+uopt numbers an expression such as `D_800B5AE4[i][0]` once per function. Strength-reduced pointers of
+loops in different `case` arms that use the same index variable then form one range, which takes one
+colour in every arm. Symptom: dst/src pointer registers swapped in some arms and right in others. Fix:
+look for a variable the original reuses as the loop counter in the odd arm. In main `func_8006509C`
+the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the scan on its own `j`
+(56 rows to 0, plain C). See `drafts/T-25108/main/func_8006509C/NOTES.md`.

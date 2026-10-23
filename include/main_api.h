@@ -2499,7 +2499,7 @@ void func_80064FA4(s32);
 void icon_disp_switch(s32 a);
 void icon_can_use_set(s32 idx, s32 on);
 void func_8006509C(void);
-void func_800654D0(s32 n);
+void func_800654D0();  /* K&R: with an (s32) prototype OPTION.bin no longer matches (T-25108) */
 void func_80065900(u8 arg0);
 void func_80065B0C(s32 a);
 void func_80065F34(s32 arg0);
