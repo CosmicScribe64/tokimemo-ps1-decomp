@@ -1793,3 +1793,7 @@ Agent B matched GEKO `func_80132B24` (s32 with no return plus a kept-live empty 
 ## [2026-10-23] build | T-25403 w11-GEKO-80142760-p1
 Pass 1 on GEKO func_80142C9C did not match: `src/ovl/GEKO/80142760.c` unchanged (INCLUDE_ASM stays, best body 159 rows); reviewed, only drafts and notes merged.
 Next pass starts from `drafts/T-25403/GEKO/func_80142C9C/NOTES.md` (global copy propagation off, [[tickets/T-25403-w11-GEKO-80142760]]).
+
+## [2026-10-23] ticket | T-25501 Done: SHOUGATU func_8013EA98 matched
+
+The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) matched SHOUGATU func_8013EA98 (920 bytes) under stock IDO 5.3: a nested-if loop shape, counted free references and a forced cost split; no tool change, one keep line with a keepproof proof. Both reviews pass after the FAKE marking was completed ([[tickets/T-25501-stubborn-shougatu-8013ea98]]).

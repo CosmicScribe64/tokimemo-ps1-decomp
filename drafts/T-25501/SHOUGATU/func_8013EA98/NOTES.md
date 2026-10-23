@@ -3,7 +3,7 @@
 Start 2026-10-23 18:12 UTC, worktree `w12-shougatu-final` (base w2-good). **Matched** at about
 19:30 UTC. `func_8013EA98.c` next to this file is the C now in `src/ovl/SHOUGATU/8013E330.c`
 (plain C, no guard). Checks: `funcdiff --resolve --version default` MATCH (920 bytes), clean build
-27/27. No tool or config change.
+27/27. No tool change; one config change, the D_800E71DF keep line in `config/migrate_globals.txt` (keepproof necessity proof, [[keep-lines]]).
 
 The match has FAKEs, all marked with T-25501:
 - the `* 0` references in the selection loop (b1 alias hole, selector and counter references);

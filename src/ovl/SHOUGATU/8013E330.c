@@ -180,6 +180,8 @@ void func_8013EA98(void) {
     sp50 = D_8014610C;
     sp40 = D_8014611C;
     count = 0;
+    /* FAKE (T-25501): the increment inside the subscript, not in the for
+     * header, keeps the loop's block shape (header i++ gives 8 rows). */
     for (i = 0; i < 11;) {
         count += D_800E6280.unk_1BC[i++].unk_0C.f.b1 >= 1;
     }
@@ -187,7 +189,11 @@ void func_8013EA98(void) {
     /* FAKE (T-25501): the "* 0" terms in this loop are references that uopt
      * counts and ugen folds away. The b1 re-read makes the >= 9 test an alias
      * hole of the selector; the selector and counter terms set the colouring
-     * order of the loop ranges (selector piece in t4, counter in v0). */
+     * order of the loop ranges (selector piece in t4, counter in v0).
+     * The three *(u8 *)& views of unk_F5F in the == 5, == 6 and D_80146054
+     * compares are also FAKE: plain reads give 236, 227 and 224 rows.
+     * The u32 counter with the (s16) truncation is FAKE too: status++ gives
+     * 314 rows and an s16 counter 2; the counter is reused below. */
     do {
         D_800E6280.unk_F5F = (D_800E6280.unk_10F8 + status) % 10U + 1;
         status = (s16)(status + 1);
@@ -209,7 +215,9 @@ void func_8013EA98(void) {
     /* FAKE (T-25501): the counter holds the forced choice so the compares
      * keep their operand order; the record read is an alias hole, and the
      * forced store and the next two reads go through the D_800E71DF alias
-     * of unk_F5F, which gives the v1 piece of the original. */
+     * of unk_F5F, which gives the v1 piece of the original. The byte-view
+     * "* 0" term in the forced store keeps the selector range live through
+     * the exit path (152 rows without it). */
     status = D_80145FE4;
     if ((status == 7 || status == 9) && D_80146054 != status + D_800E6280.unk_1BC[status * 0].unk_06 * 0) {
         D_800E71DF = status + *(u8 *)&D_800E6280.unk_F5F * 0;
