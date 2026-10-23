@@ -382,21 +382,19 @@ void func_8014BB80(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25144, 3 rows; as1 schedules addu s0,t2,t3 (the record pointer) after sw t1,80(sp) and
- * move v0,t1 before the loop, the original right after lw s4,108(sp). */
+/* Number display of slot arg0 (records 64 + 12 * slot, three rows of four digits) at x, y; T-25144. */
 void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 i;
     s32 j;
     s32 idx;
     s32 div;
     s32 k;
-    s32 t[1]; /* FAKE: one-word array keeps slot * 12 in its own home at sp+0x50, reloaded after the loop; T-25144 */
+    s32 t[1]; /* FAKE: one-word array keeps slot * 12 in memory at sp+0x50, reloaded after the loop and kept out of CSE; T-25144 */
 
     arg1 -= 0xA0;
     arg2 -= 0x78;
     if (arg3 < 10) {
-        /* empty: the label of the else arm makes ugen reload arg1/arg3 as the original does; T-25144 */
+        /* empty arm: its label makes ugen reload arg1 and arg3 in each test, as the original does; T-25144 */
     } else if (arg3 < 100) {
         arg1 += 4;
     } else if (arg3 < 1000) {
@@ -427,9 +425,8 @@ void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
         D_8015EE88 = 0;
         break;
     }
-    t[0] = arg0 * 12;
-    j = t[0];
-    for (i = 0; i < 4; j++, i++) {
+    /* FAKE: one line, so as1 schedules the record pointer before the store of t[0]; T-25144 */
+    t[0] = arg0 * 12; j = t[0]; for (i = 0; i < 4; j++, i++) {
         k = j + 0x40;
         ((DisplayActor44 *) D_8011ECD0)[64 + j].unk_26 = arg1 - i * 9;
         ((DisplayActor44 *) D_8011ECD0)[64 + j].unk_2A = arg2;
@@ -472,9 +469,6 @@ void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014BFE4);
-#endif
 
 void func_8014C360(s32 arg0, s32 arg1, s32 arg2) {
     s32 t;
