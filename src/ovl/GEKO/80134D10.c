@@ -100,7 +100,27 @@ INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80145084);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80145088);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_8014508C);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80145090);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80145094);
+/* Scene table, indexed by D_800E6280.unk_110A in func_801351F8. Defined in C as the original did:
+ * as1 treats every function named in this file's data as an address-taken label, so each
+ * jump-table dispatch here gets an edge back to the function entries (T-25150). */
+typedef struct GekoFnTable73 { /* 0x00 */ void (*f[73])(); } GekoFnTable73; /* size 0x124 */
+GekoFnTable73 D_80145094 = { {
+    func_80135DC0, func_80135BC4, func_80135C48, func_80135CC8, func_8007C784,
+    func_80136694, func_8004284C, func_8004284C, func_8004284C, func_8004284C,
+    func_8004284C, func_801366DC, func_8004284C, func_80136BA8, normal_date_two_select,
+    func_801374A8, func_80136B2C, func_80137580, func_80136B2C, normal_date_three_select,
+    func_80137630, func_80136B2C, func_80136714, func_80136B2C, func_80136E7C,
+    func_801372D4, func_80136F20, func_80135A6C, func_80135D00, func_801367EC,
+    func_8007C784, dec_init, change_dec_bg, func_80136C20, func_8007C784,
+    func_80083474, func_8007C8A4, place_init, func_80136FF8, func_80136B2C,
+    func_80137040, func_80136FB8, func_80136EE4, func_80136B2C, func_801370EC,
+    func_80137694, func_80136B2C, func_801358CC, normal_date_girl_out, func_80136B2C,
+    func_80137954, func_80135AC8, func_80135894, func_8007C784, func_80083338,
+    func_801355E8, func_80136B2C, normal_date_girl_out, func_80136B2C, normal_date_bg_out,
+    func_80135AC8, func_80136B2C, func_80136E7C, func_80137120, func_801355B8,
+    func_80136B2C, func_80135AC8, func_80135340, func_8007C784, func_801354E4,
+    func_80135570, func_80135598, func_80046500
+} };
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_801451B8);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_801451E4);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_801451EC);
@@ -434,8 +454,6 @@ void func_80134F84(void) {
     D_80145044 = 0x801B155C;
 }
 
-typedef struct GekoFnTable73 { /* 0x00 */ void (*f[73])(); } GekoFnTable73; /* size 0x124 */
-extern GekoFnTable73 D_80145094;
 void func_801351F8(void) {
 
     s32 idx;
@@ -788,8 +806,9 @@ void func_80136BA8(void) {
     func_80082764(0xFF, 1, 0);
 }
 
-/* NON_MATCHING: T-24203, T-24900, 4 rows. as1 trace (wiki/as1-scheduler-rule.md): the D_80145088 test block (bb 8, weight 1) cannot take the selector lui because the switch head (bb 11) has weight 7 and the scan stops at the first block 6 or more heavier; the original's switch head was at most weight 6 there, so the `D_80145090 == 0` early return did not add a full level; volatile D_80145088/D_80145090 make it worse (6-12 rows). Earlier: the original fills the delay slot of the D_80145088 branch with the lui of unk_F5F (the switch selector, loaded later) and leaves a nop after the lbu of D_80145090, IDO here puts that lui in the load delay of D_80145090; ugen already emits the selector load in the switch block, so the move is as1 scheduling: 28 more C variants (T-24203: if/else and early-return forms, the selector at the top, inline, s32, GameState pointer, byte views, C-defined or array views of both flags, literal addresses, s32 return, one local struct) and the T-22010 round (volatile views, goto, `!` tests, dead (s32) tests, permute 300 s) leave it in place (the girl local only holds the frame slot). T-24904: 10 structural forms (early return on each test, if/else vs else-if chain, goto, `while`, truthiness, outer `switch (D_80145088)`, inner `switch (D_80145090)`) either keep the byte-identical stream and the same 4 rows - same CFG, so the same weights (trace 2026-10-20: bb8 w1, bb10 w4, bb11 w7, scan stops at bb11) - or reorder the uniform-call block and score 14-16 rows; next: a form where ugen splits the selector `%hi` into the D_80145088 block and leaves the `lbu` in the switch block (drafts/T-24904/NOTES.md) */
-#ifdef NON_MATCHING
+/* The bnez slot of the D_80145088 test takes the selector lui only because D_80145094 (above) names this
+ * function: the switch dispatch then has an edge back to the entry, which makes the switch head light
+ * enough for as1 to scan it (T-11900; T-25150 rule, history T-24203, T-24900). */
 void func_80136C20(void) {
     u8 girl;
     GekoWords11 all;
@@ -846,9 +865,6 @@ void func_80136C20(void) {
     }
     read_bustup();
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80136C20);
-#endif
 
 void func_80136E7C(void) {
     if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b3) {
