@@ -208,3 +208,14 @@ colour in every arm. Symptom: dst/src pointer registers swapped in some arms and
 look for a variable the original reuses as the loop counter in the odd arm. In main `func_8006509C`
 the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the scan on its own `j`
 (56 rows to 0, plain C). See `drafts/T-25108/main/func_8006509C/NOTES.md`.
+## A shared constant loaded too late in one arm (T-25201)
+
+uopt adds a block to a constant's register range only where the constant has appeared on some path from the
+entry (`regdataflow`). An arm with no use of it gets the join's reload at its end instead of at its start.
+Only uses that need a register count: a divisor, a compare operand, the value of an indirect store (`istr`).
+A store to a fixed address (`rec[64].x = 3`) is a variable store whose small constant is an immediate and
+adds nothing. Fix: a never-true arm with an indirect store at the start of the arm,
+`if ((u32)a < 0) { rec[a + 64].unk_01 = 3; }` on a parameter (FAKE); uopt keeps it and ugen removes it. The
+traced uopt's R9SAVE lines (regdiff's `draft.log`) list each range's blocks to confirm. main `func_80065B0C`
+(9 rows to 0); `drafts/T-25108/main/func_80065B0C/NOTES.md`.
+
