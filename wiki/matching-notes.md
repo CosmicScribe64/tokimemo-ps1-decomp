@@ -697,3 +697,14 @@ the full record.
 - Left: `d` and the loop end bound need `$v0`. In IDO 5.3 a range used in the zero arm, whose
   `return 0` defines the return register, never gets `$v0`. `return d` costs a final move.
   The next hypothesis (zero-arm stores through the AND CSE, so `d` has no zero-arm unit) is in NOTES.md.
+
+## T-25151: GYOZI func_801412A4
+
+Matched: `func_801412A4` (172 words, 684 bytes) is default-build C. Started from the matched sibling
+`func_80140F90` instead of the T-25012 seed (96 rows). Four causes, in order: the random word read
+through the member `D_800F53A0.unk_10C8`, which may alias the `unk_F2F` store, so the load stays in the
+retry loop (the donor's `* 1` and the plain `D_800F6468` symbol both hoist it, 276 rows); `D_801486E4`
+read once into the reused s16 counter (only s16 gives `beq a2,v0`); an `(s32)` view of that u32 word,
+which puts the load first in the sum (FAKE: `801418B0.c` needs the field unsigned); and the count-loop
+body on the `for` line (FAKE layout, as1 orders by line). Details and negatives:
+`drafts/T-25151/GYOZI/func_801412A4/NOTES.md`.
