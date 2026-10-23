@@ -161,3 +161,7 @@ Main `get_h_tokimeki`, 230 rows to 0. Unconstrained ranges are coloured in bit o
 ## A switch keeps a parameter in its saved register (T-25101)
 
 Symptom: a parameter tested in a loop that calls functions is spilled to its home slot (`sw a0,<frame>(sp)`, `lw` before each test), and every saved register is one off. regdiff reports the parameter as "not allocated, -ve save". Fix: write the tests that the target lowers as a compare chain (`beqz fp; ... beq fp,a2`) as `switch (mode) { case 0: ... case 1: ... }`, not as `if (mode == 0) ... else if (mode == 1)`. Main `get_near_menu`: the tie block as a switch put `mode` in fp and the constant 1 in a2, 352 rows to 9. The other mode tests stayed `if (mode == 0 && ...)`, as in the target. See `drafts/T-25101/main/get_near_menu/NOTES.md`.
+
+## Empty then-arm and a u8 count under -cckr (T-25101)
+
+Symptom: the target branches `beqz t6, body` and then `b join` from the fall-through, where the draft has one inverted `bnez t6, join`. Fix: write the test with an empty arm, `if (g->unk_F80 & 0xF) { } else { switch ... }`. In main `func_8004FC10` the inverted `if (!(...))` cost 52 aligned rows and moved a1/a2/a3. In the same function, a signed `slt` test of an s8 cursor against a u8 count needs `(s32)count`, because IDO runs with -cckr and promotes u8 to unsigned. A frame 8 bytes too large came from a separate result local: one counter serves the scan loops and the call result. See `drafts/T-25101/main/func_8004FC10/NOTES.md`.

@@ -732,3 +732,10 @@ Matched as default C, 1784 bytes (446 words), from INCLUDE_ASM, with no FAKE. [[
 
 1. With the tie block as an if/else-if chain on `mode`, the parameter was not allocated (regdiff "-ve save"). It stayed in its home slot, every saved register moved by one, and the result was 352 rows. The same arms as `switch (mode)` put `mode` in fp and the constant 1 in a2, as in the target, which left 9 rows. A control with only the switch reverted confirms that the switch is the lever.
 2. The 9 rows were the `diff` base (sp+0x94 against 0x88). Declaring the array after the four scalars `g, n, best_d, best` matched.
+
+## T-25101: main func_8004FC10
+
+Matched as default C, 1812 bytes (453 words), from INCLUDE_ASM, with no FAKE. [[tickets/T-25101-w8-main-8004F870]]; steps and controls are in `drafts/T-25101/main/func_8004FC10/NOTES.md`. No earlier draft was in the tree, so the body was rebuilt from the asm with the sibling views (`MenuSelection5`, `GsRecF90 (*)[2]`, a `GameState *g` local). It is the menu cursor step: four modes on `unk_1092 & 3`, d-pad wrap with a skip over disabled entries, `get_near_menu` in mode 3, then the pointer clamps.
+
+1. The first typed draft had 140 funcdiff rows. Three changes together left only the frame: `(s32)` on the u8 count in the signed wrap tests (-cckr promotes u8 to unsigned, so the tests became `sltu`), `unk_00 + unk_04` in the position sum (load order), and case 1 as `if (F80 & 0xF) { } else { switch }`. The target jumps from the empty arm to the wrap tests, while `if (!(...))` inverts the branch. That change alone is 52 aligned rows.
+2. The frame was 8 bytes too large. One `s32 i` for the scan loops and the `get_near_menu` result, with no separate local, put the `g` home at 0x4C and the a2 spill at 0x30: MATCH.
