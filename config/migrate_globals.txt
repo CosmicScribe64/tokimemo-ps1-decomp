@@ -19,3 +19,4 @@ keep src/ovl/TACO/801447D0.c D_800E7384 proof=func_80146754:156:5e8407a9 second 
 keep src/ovl/TACO/80148FE0.c D_800E7384 proof=func_80149538:33:d7dd7f6c second uopt variable for the late read (byte-match necessity proof, T-20820)
 keep src/ovl/TACO/801480B0.c D_800E7384 proof=func_801484E4:32:cda52ed3 second uopt variable for the late read (byte-match necessity proof, T-20820, T-22005)
 keep src/ovl/DATE/80132000.c D_800E71DF proof=func_80137154:94:56706346 second uopt variable for the late read (byte-match necessity proof, T-20820, T-24099)
+keep src/ovl/GEKO/80142760.c D_800E71DF proof=func_80142C9C:2:e48ab935 second uopt variable for the packed-appointment reload in the first loop (byte-match necessity proof, T-25403)
