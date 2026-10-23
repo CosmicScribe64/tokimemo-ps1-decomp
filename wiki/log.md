@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | tools/lever_lab.py for compiler-level experiments (T-25013)
-
-Added `tools/lever_lab.py` and `tools/test_lever_lab.py`: one command rebuilds every object under an env-gated variant, checks 0 FAILED and 27 `.ok`, compares each matched function with a base snapshot (any change = non-uniform rule, reject) and re-scores all guarded functions against base. Validated with a no-op variant (`0 of 7506` changed, 0 guarded changes). Note: `tools/queue.py` shadows the stdlib `queue`, so `concurrent.futures`/`ThreadPool` break inside `tools/`; the tool uses plain subprocess polling. Documented in [[tickets/T-25013-compiler-level-levers]].
-
-## [2026-10-21] ticket | T-25013 first lever experiment: zcopy off is not the lever
-
-A Sonnet worktree run (branch T-25013, merged) tried lever 1 on main `func_8006A044` and ran out of usage before levers 2-5. Result: our compiler already promotes the byte and stores it at the same places; the difference is the arm shape (original `or t5,v0,zero; ori; andi v0; sb v0`, ours `ori; sb t5`). Forcing uopt `OPTN zcopy 0` everywhere is not uniform (`lever_lab`: 22 guarded changes, 19 worse, e.g. `main func_8006D7EC` 2 -> 1630) and did not produce the copy. Next step on that lever: trace which uopt phase collapses the `LOD R; STR R` copy. Levers 2-5 untouched; ticket [[tickets/T-25013-compiler-level-levers]] stays Ready. Worktree `/Users/lila/Documents/Projects/tokimemo-wt/T-25013` (local, game data copied in) can be reused or removed with `git worktree remove`.
-
 ## [2026-10-21] ticket | T-25013 claimed by Octa (remote, cloud workflow)
 
 Octa (Muse, working remotely per the maintainer's direction) takes [[tickets/T-25013-compiler-level-levers]]: compiler-level levers from the cloud workflow ([[cloud-matching]]), since the maintainer is away from the Mac. Setup: public clone plus the project Docker image built locally; single-function packets stay outside the repo and are never committed. Full uniformity gate runs through CI on pull requests (progress workflow) until a local tree with the disc is available. First target is the lever 1 follow-up the ticket already queues: trace which uopt phase collapses the `LOD`/`STR` copy pair on main `func_8006A044`, using the instrumented uopt from [[ending-allocator-trace]]. Branch: `octa/t25013-levers`.
@@ -1777,3 +1769,23 @@ The cause was counter ownership (`m` spans loops 1, 2-inner, 3-outer and 4, `i` 
 
 Reviewed [[tickets/T-25306-w10-BUNKA_SD-80134540]] against CODING_STANDARDS.md; matched BUNKA_SD `func_80134D94` (972 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
 The header now declares `s32 func_80134D94(void);`; notes in `drafts/T-25306/BUNKA_SD/func_80134D94/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25400 wave 11 opened (repeat until matched, GEKO included)
+
+The user does not want to wait for the issue #65 claim; diman8 was told on the issue that our agents now also work on the four GEKO functions and that their PRs stay welcome. [[tickets/T-25400-wave-11-until-matched]] and T-25401..T-25412 cover every file still holding INCLUDE_ASM: GEKO first, then each file wave 10 leaves unmatched, up to three passes per file.
+
+## [2026-10-23] ticket | T-11910 In Progress
+
+Second round of claim CosmicScribe64/tokimemo-ps1-decomp#65: the last four GEKO functions (`func_80133C50`, `func_80142C9C`, `func_80133024`, `func_80132B24`). One Opus agent at a time. [[tickets/T-11910-geko-remainder]].
+
+## [2026-10-23] ticket | T-11910: GEKO func_80133C50 matched
+
+Agent A matched `func_80133C50` (volatile club view, FAKE) and moved the `func_80142C9C` checkpoint from 162 to 119 lines. PR opened for the match because the maintainer's agents now also work on the remaining GEKO functions (#65). Notes in [[matching-notes]]. [[tickets/T-11910-geko-remainder]].
+
+## [2026-10-23] ticket | T-25500 stubborn functions opened
+
+User asked for extra effort, outside-the-box approaches and build tooling changes if needed for the functions that keep failing. [[tickets/T-25500-stubborn-functions]] starts with SHOUGATU func_8013EA98 ([[tickets/T-25501-stubborn-shougatu-8013ea98]]) and TAIIKU func_80137784 ([[tickets/T-25502-stubborn-taiiku-80137784]]); tooling or config changes must meet CODING_STANDARDS.md 7a and pass two adversarial reviews.
+
+## [2026-10-23] decision | Playbook: compiler research summary for agents
+
+Added "Before proposing a compiler or build-step change" to [[playbook]]: which compiler the game used, the IDO 5.2/5.3/4.1 comparisons, the rejected allocator rules and levers, and where a real difference has been found before (the front end's ucode, `cvt_pass.py`). Prompted by the stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) so agents start from these results instead of repeating them.

@@ -131,6 +131,17 @@ Do not spend a session on these without a new idea; leave a guard with the ticke
 - Historical uopt `idx = 0; idx++` fold (T-24204): closed in MAIN by the T-25036 late-zero producer and late-eliminated identity arm; see section 6.
 - uopt priority and colour order with no uniform rule: apply recipes above, do not search flags (exhausted in T-0014, T-0017, T-9800).
 
+### Before proposing a compiler or build-step change
+
+The compiler has been compared and traced in depth. Start from these results; do not re-run them.
+
+- Which compiler: release 3.18, the IDO 5.2 generation, from the linker stamps in O.BIN ([[original-compiler]]).
+- IDO 5.2 against 5.3: byte-identical on 2,564 matched functions and on all 46 blocked cases tested (T-3110, [[ido-52-evaluation]]). Switching compilers gains nothing. `tools/ido_eval.py` repeats the comparison for one function if a new case needs it.
+- IDO 4.1's back end: its ugen gives the +16 frames natively but changes 1,355 matched functions; its as1 changes 1 (T-20700).
+- uopt register allocation: eight uniform allocator rules all broke matched code, the best 661 functions; only 2 true tie-breaks exist (T-9800, [[uopt-register-allocation]]). The compiler levers of T-25013 to T-25015 were all rejected.
+- What did work: differences in the ucode the original front end produced, which no stock IDO reproduces: `tools/cvt_pass.py` (T-1321, T-5010, T-24929), `-cckr` (T-7000), plus the frame pass (T-0016) and `tools/ugen_pass.py` (T-24092). A new compiler difference, if there is one, most likely belongs in the ucode before uopt (an extension of `cvt_pass.py`), not in uopt or as1.
+- Any such change must meet CODING_STANDARDS.md 7a and leave all 27 checksums unchanged. [[build-step-gaps]] lists the gaps still open.
+
 ## Call-result liveness and a miscolored constant (T-25043)
 
 TACO `func_8014AB50` had seven differing words, all the shared constant one in v0 instead of v1. Capturing an existing signed helper result in an existing local and reading it after the flag stores in `if ((u32)random < 0) { repeat_last_flag_store; }` closes the match. The condition is always false; uopt still sees the call-result lifetime and extra constant use, then ugen removes the arm. Trace confirms constant priority0.5->1 and v0->v1. This is a marked FAKE, with no added runtime instruction. Check that the helper defines its return and the local is initialized on every path; this example's loop always executes30 times. Argument-derived and index-derived identities failed because they changed other live ranges. See [[tickets/T-25043-taco-constant-tail]] for controls. Apply only when allocator evidence supports this mechanism.

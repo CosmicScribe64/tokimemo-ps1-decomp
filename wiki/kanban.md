@@ -63,9 +63,22 @@ kanban-plugin: board
 - [ ] [[tickets/T-25318-w10-main-8006CB30|T-25318 Wave 10 second pass on src/main/8006CB30.c]]
 - [ ] [[tickets/T-25319-w10-NAME_ENT-80142A80|T-25319 Wave 10 second pass on src/ovl/NAME_ENT/80142A80.c]]
 - [ ] [[tickets/T-25320-w10-main-800674B0|T-25320 Wave 10 second pass on src/main/800674B0.c]]
+- [ ] [[tickets/T-25401-w11-GEKO-801323E0|T-25401 Wave 11 passes on src/ovl/GEKO/801323E0.c]]
+- [ ] [[tickets/T-25402-w11-GEKO-801338F0|T-25402 Wave 11 passes on src/ovl/GEKO/801338F0.c]]
+- [ ] [[tickets/T-25403-w11-GEKO-80142760|T-25403 Wave 11 passes on src/ovl/GEKO/80142760.c]]
+- [ ] [[tickets/T-25404-w11-main-80047550|T-25404 Wave 11 passes on src/main/80047550.c]]
+- [ ] [[tickets/T-25405-w11-main-80053650|T-25405 Wave 11 passes on src/main/80053650.c]]
+- [ ] [[tickets/T-25406-w11-main-800674B0|T-25406 Wave 11 passes on src/main/800674B0.c]]
+- [ ] [[tickets/T-25407-w11-main-8006CB30|T-25407 Wave 11 passes on src/main/8006CB30.c]]
+- [ ] [[tickets/T-25408-w11-ENDING-80133C10|T-25408 Wave 11 passes on src/ovl/ENDING/80133C10.c]]
+- [ ] [[tickets/T-25409-w11-ETC-8013FF80|T-25409 Wave 11 passes on src/ovl/ETC/8013FF80.c]]
+- [ ] [[tickets/T-25410-w11-NAME_ENT-80142A80|T-25410 Wave 11 passes on src/ovl/NAME_ENT/80142A80.c]]
+- [ ] [[tickets/T-25411-w11-SHOUGATU-8013E330|T-25411 Wave 11 passes on src/ovl/SHOUGATU/8013E330.c]]
+- [ ] [[tickets/T-25412-w11-TAIIKU-80133C80|T-25412 Wave 11 passes on src/ovl/TAIIKU/80133C80.c]]
 
 ## In Progress
 
+- [ ] [[tickets/T-11910-geko-remainder|T-11910 GEKO remainder (claim #65)]]
 - [ ] [[tickets/T-25062-name-ent-byte-pack|T-25062 Match NAME_ENT byte pack and zero loop]]
 - [ ] [[tickets/T-25060-tel-date-menu|T-25060 Match final TEL date menu builder]]
 - [ ] [[tickets/T-25056-ending-scheduler|T-25056 Resolve ENDING A2E8 scheduler residue]]
@@ -93,6 +106,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-24501-main-tail|T-24501 Match MAIN remaining functions]]
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 - [ ] [[tickets/T-25300-wave-10-second-pass|T-25300 Wave 10 - second pass on every function left after waves 8 and 9]]
+- [ ] [[tickets/T-25400-wave-11-until-matched|T-25400 Wave 11 - repeated passes until every game function matches]]
+- [ ] [[tickets/T-25500-stubborn-functions|T-25500 Stubborn functions - multi-angle attack, toolchain changes allowed under 7a]]
+- [ ] [[tickets/T-25501-stubborn-shougatu-8013ea98|T-25501 Stubborn function SHOUGATU func_8013EA98 (src/ovl/SHOUGATU/8013E330.c)]]
+- [ ] [[tickets/T-25502-stubborn-taiiku-80137784|T-25502 Stubborn function TAIIKU func_80137784 (src/ovl/TAIIKU/80133C80.c)]]
 
 ## In Review
 
