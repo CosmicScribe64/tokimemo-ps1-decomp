@@ -1785,3 +1785,7 @@ Agent A matched `func_80133C50` (volatile club view, FAKE) and moved the `func_8
 ## [2026-10-23] ticket | T-25500 stubborn functions opened
 
 User asked for extra effort, outside-the-box approaches and build tooling changes if needed for the functions that keep failing. [[tickets/T-25500-stubborn-functions]] starts with SHOUGATU func_8013EA98 ([[tickets/T-25501-stubborn-shougatu-8013ea98]]) and TAIIKU func_80137784 ([[tickets/T-25502-stubborn-taiiku-80137784]]); tooling or config changes must meet CODING_STANDARDS.md 7a and pass two adversarial reviews.
+
+## [2026-10-23] decision | Playbook: compiler research summary for agents
+
+Added "Before proposing a compiler or build-step change" to [[playbook]]: which compiler the game used, the IDO 5.2/5.3/4.1 comparisons, the rejected allocator rules and levers, and where a real difference has been found before (the front end's ucode, `cvt_pass.py`). Prompted by the stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) so agents start from these results instead of repeating them.
