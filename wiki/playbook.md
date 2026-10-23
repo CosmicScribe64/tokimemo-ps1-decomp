@@ -261,3 +261,13 @@ and a dead `m = G.h;` is removed. MASTER `func_801326B4`, 102 rows to 0; `drafts
 ## A store that the original schedules after the next statement's `lui` (T-25137)
 
 When independent instructions of one block tie in as1 (same start time, aftercycles and latency), the smaller source line wins, then the node released last. Read the `Node ... lineno` and `Picking node` lines of stock `as1 -R -xbbdbg 8` (capture shim in drafts/T-24900-as1/) before trying spellings: if the original's order needs a store to lose to instructions of a later statement, no statement order or one-line form reaches it under IDO 5.3. TACO `func_8013B460`: the y3 store needed a later line than the AddPrim call; a `#line` pair around the y3 statement (FAKE) closed it from cost 4. See [[as1-scheduler-rule]] and drafts/T-25137/TACO/func_8013B460/NOTES.md.
+
+## A `t0` missing from ugen's pool can be a call-argument local (T-25304)
+
+Symptom: the original never uses `t0` as a ugen temporary (an early `li t1,..` where the draft has `li t0,..`),
+and `t0` appears only in one block, often as the register of a loaded word. Look for a value that is computed
+before a call and passed after the `a0..a3` arguments (a stack argument): as its own local it lives past the
+argument writes, so `a0..a3` are forbidden for it; when `v0` and `v1` already hold other ranges of the block it
+gets `t0`, which then leaves the ugen ring for the whole function. Main `mod_trans_vram`: `u8 flags = *data & 0xFF;` for the sixth `get_fnt` argument, 47 rows to
+0 with the sibling form `uv = (*data & 0xFF0000) >> 16;`. A uopt colour need not appear in the final code (ugen
+forwards single-use ranges), so check the trace, not only the asm; `drafts/T-25304/main/mod_trans_vram/NOTES.md`.
