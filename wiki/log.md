@@ -7,9 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25001 class C main drafts
-[[tickets/T-25001-class-c-main-sndisp-strcallback]] created, In Progress (worktree c-m1): main `sndisp`, `strCallback`, `func_80065964` from their T-14500 drafts.
-
 ## [2026-10-20] ticket | T-25001 to In Review
 [[tickets/T-25001-class-c-main-sndisp-strcallback]]: main `sndisp` guarded at 2 rows. Code and frame match; the `pos[]` template cannot sit at D_800B40F8 because this object's C `.data` is already the D_800E3680 island. `strCallback` (75 rows, ugen ring) and `func_80065964` (frame/home-store shape unknown) stay INCLUDE_ASM with drafts in drafts/T-25001/main/. Notes in [[matching-notes]]. Clean build 27/27.
 
@@ -1751,6 +1748,7 @@ One finding fixed (FAKE comments on the `gs` alias and `channel * 0` black verti
 
 Reviewed [[tickets/T-25114-w8-RPG_BAT-80154430]] against CODING_STANDARDS.md; matched RPG_BAT `func_8015528C` (1,500 bytes) as default-build C, 27/27.
 `func_80154DD8` stays INCLUDE_ASM behind a NON_MATCHING guard at 34 rows, down from 102 (notes in drafts/T-25114/RPG_BAT/func_80154DD8/).
+
 ## [2026-10-23] ticket | T-25117 Done
 
 Reviewed [[tickets/T-25117-w8-VALEN-80132760]] against CODING_STANDARDS.md; matched VALEN `func_80133088` (1108 bytes, two FAKEs) and `func_80132834` (1240 bytes, no FAKE) as default-build C, 27/27.
