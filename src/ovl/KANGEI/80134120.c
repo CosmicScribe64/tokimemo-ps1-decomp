@@ -4,7 +4,6 @@
 typedef struct {
     void (*f[30])();
 } FnTbl30; /* size 0x78 */
-extern FnTbl30 D_80139B30;
 
 typedef struct {
     void (*f[37])();
@@ -14,6 +13,27 @@ typedef struct {
 } FnTbl33; /* size 0x84 */
 extern FnTbl37 D_80139BEC;
 extern FnTbl33 D_80139C80;
+
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+/* Scene table, indexed by D_800E6280.unk_110A in func_801341E8. Defining it here as the
+ * original did matters for code: as1 treats every function named in this file's data as
+ * an address-taken label, so the jump-table dispatch of func_80134724 gets an edge back to
+ * that function's entry. The resulting loop changes as1's block weights and its choice for
+ * the switch's range-check delay slot (T-25150). */
+FnTbl30 D_80139B30 = { {
+    func_80134374, func_8013425C, func_801342EC, func_80133CB0, func_8007C784,
+    func_80133CEC, func_8007C784, func_80134724, func_80134BC4, func_8007C784,
+    dec_init, change_dec_bg, func_8007C8A4, place_init, func_8013454C,
+    func_8007C784, func_80083474, normal_date_girl_in, func_80133EF8, normal_date_girl_out,
+    normal_date_bg_out, func_801338B4, func_80133734, func_80133834, func_80133CB0,
+    func_8007C784, func_80133CEC, func_8007C784, func_80133C84, func_80046500,
+} };
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BA8);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BD4);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BDC);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BE4);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BEC);
 
 void func_80134120(void) {
     if ((D_800E6280.unk_F5F != 0xFF) && D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1) {
@@ -141,24 +161,10 @@ void func_8013454C(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25011 now 4 rows (default arm temporaries t1..t3 vs t0..t2 after the (u16) FAKE, slot pick fixed); was T-24902 (T-24201, T-24122), 2 rows (1 pair); frame, registers
- * ($v0=v, $v1=s, $a0=unk_66C, $a1=unk_0F4>>12, $a2=c2) and all switch cases match.
- * Only the IDO 5.3 as1 default-block delay-slot hoist remains: as1 moves the default arm's
- * `sll t0, v0, 0x2` into the delay slot of the range check `beqz at, default`; the original
- * fills that slot with the dispatch `sll t1, t1, 0x2` and leaves the default's `sll` alone.
- * T-24902 as1 trace (-R -xbbdbg 8, drafts/T-24902): the switch head is bb 17 (weight 1),
- * the out-of-range default bb 18 (weight 4, numbered before the dispatch), the dispatch
- * bb 19 (weight 4). The scan tries bb 18 first (equal weights, lower number), its slot-2
- * candidate (op 00024080, reloc 0, sched 0/1) prints path_accept=1, and MOVEFROM bb 18 inst 2
- * is kept -- bb 17 has no stall left, so bb 19's `sll` is never tried. The wrong candidate is
- * a plain `sll`, not a `lui` of a global, so the volatile lever of wiki/as1-scheduler-rule.md
- * cannot reach it (volatile D_80139ADC: score unchanged, 214 rows on the vr.py count). A second
- * reference to the default label (`case 7:`, a guard `if`/`goto def`) gives the original slot
- * but the bound 8 or a second range check and rotates $a0/$a1/$v1. Also no effect: default
- * spellings, scopes, line layout, selector casts and locals, explicit join label (T-24201).
- * Left: a source form that makes bb 18 weigh 7 (its dominator the dispatch, i.e. a table
- * entry) or bb 19 weigh 1 / get a lower number, with the same instruction stream. */
+/* The switch's range-check delay slot holds the dispatch `sll` only because D_80139B30 (above)
+ * names this function: the dispatch `jr` then has an edge back to the entry, the loop gives the
+ * dispatch a lighter as1 weight than the default arm, and as1 fills the slot from the dispatch
+ * instead of hoisting the default's `sll` (T-25150; history T-24201, T-24902, T-25042). */
 void func_80134724(void) {
     u8 s;
     s16 v;
@@ -229,15 +235,12 @@ void func_80134724(void) {
         D_80139ADC = v * 4 + s + 7;
         break;
     default:
-        D_80139ADC = (u16)v * 4 + s + 3; /* FAKE: (u16) cast (as1 deletes the and) puts the default `sll` back after the range-check slot; leaves the ring one temporary late (t1..t3 vs t0..t2, 4 rows). T-25011 */
+        D_80139ADC = v * 4 + s + 3;
         break;
     }
     func_801349D4();
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134724);
-#endif
 
 void func_801349D4(void) {
     func_80132E74();
