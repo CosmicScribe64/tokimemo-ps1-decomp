@@ -161,6 +161,7 @@ typedef union GsSlot54C {
 typedef union GsHalf {
     /* 0x00 */ u16 h;
     /* 0x00 */ u8 b[2];
+    /* 0x00 */ volatile u16 vh; /* FAKE: T-11910 volatile view: GEKO func_80133C50 reads the club here so uopt keeps the read in place */
 } GsHalf; /* size 0x02 */
 
 #ifndef T9540_FLAGS_WORK24

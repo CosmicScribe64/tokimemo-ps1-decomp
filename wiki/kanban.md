@@ -78,6 +78,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-11910-geko-remainder|T-11910 GEKO remainder (claim #65)]]
 - [ ] [[tickets/T-25062-name-ent-byte-pack|T-25062 Match NAME_ENT byte pack and zero loop]]
 - [ ] [[tickets/T-25060-tel-date-menu|T-25060 Match final TEL date menu builder]]
 - [ ] [[tickets/T-25056-ending-scheduler|T-25056 Resolve ENDING A2E8 scheduler residue]]
