@@ -69,6 +69,35 @@ M1 120, U1 120 (plain post-call reads, the kept body). Bodies are in `final/b/`.
   P1-P6). The plain member gets the CVT under the cvt_pass entry rule, and uopt then puts the
   constant first again. Every body since T-25046 has these two post-loop rows.
 
+## Where the post-loop `lui v1` comes from (second hour)
+
+The pattern `lui R,%hi(F5F)` ... `lbu a0,%lo(F5F)(R)` is ugen's reload of a register range R whose
+first use is the call argument, with the copy into a0 folded away. X4 shows it with R = t4 when the
+selector range is coloured whole, and W1a with R = a0 for the forced-store piece. A plain load
+through a temporary gives t6..t9, rotated by the number of folded `* 0` terms (W1..W4: t8, t9, t7,
+t6). It never gives v1. So in the original the selector's value at L_EC7C was a coloured range in
+**v1**: the register b1 frees at the loop exit.
+- `final/b/syn_Z1.c` shows it. It reads the two post-loop loads through the D_800E71DF alias as well, so
+  they form their own range {forced store S, L_EC7C L2 r} (0.5). That range is coloured v1 and gives
+  exactly the original's `lui v1` (delay slot of the `== 7` branch) and `lbu a0,%lo(v1)`. But then
+  the selector range no longer reaches into the call block, its cheapest caller-saved register
+  (t4) costs 1, and it is coloured whole (bb6 reload, stray `andi`): Z1 152, Z12/Z13 112..116,
+  Z4/Z5 112.
+- In U1 the plain post-loop loads keep the selector range in the call block. No caller-saved
+  register is then available below s0's 11.85, so the cost split happens. Its remainder
+  {bb6 r, bb16 r, bb15 r, bb21 r, L_EC7C L2 r, post-call L1 r} is -5.25 and stays in memory, so
+  L_EC7C loads through a temporary (t6).
+- A real forced store (`final/b/syn_Y1.c`) splits the {store, L_EC7C} piece first (a0), and the remainder is
+  coloured whole (t4, stray `andi`), as the compiler lens found.
+
+Under IDO 5.3's costs, then, the original's three facts can't hold together: the loop piece is a
+cost split from L_EBE8, the post-loop piece is coloured in v1, and bb6 gets no reload. The
+remainder that would hold the post-loop piece has two loop-frequency reloads (bb6, bb16) that make
+it negative. This is the strongest sign so far that the original's uopt costed reloads differently
+from 5.3 (compare the T-3100 hypothesis that the original charges no entry load). It is not a rule
+that can be built: T-9800's `free_entry_load` and `half_move_cost` candidates change hundreds of
+matched functions.
+
 ## Verdict
 
 Mechanism: uopt's colouring of the selector range plus the flow-graph block counts behind the
@@ -82,9 +111,11 @@ touch other functions.
 ## Next step
 
 Work only on the post-loop block of `func_8013EA98.c` (U1). Keep the loop and its FAKEs as they are.
-1. Find out why ugen takes v1 for the hoisted `lui`. Compare uopt's output (`tr.py`, `fn.after.txt`)
-   at L_EC54..L_EC7C between U1 and W1a, which gets `lui a0`. Then look for a body where v1 is the
-   free temporary at that point, for example by changing what is live in v1 at the loop exit.
+1. Get a coloured post-loop selector piece in v1 (as Z1 does) while the loop piece stays a cost
+   split from L_EBE8 (as U1 does). The open question is what makes U1's whole selector range miss
+   t4 (s0 at 11.85 is its cheapest register), while Z13's range, which has the same loop units,
+   gets t4 at cost 1. Reading uopt's `cupcosts` for a global that is live into a call block would
+   settle it.
 2. Get FE4 first against 9 and D_80146054 first against FE4 together. Candidates: an FE4 local
    with the D_80146054 compare written through a form that is not a plain variable, or FE4 read
    before the loop (the entry rule then drops its CVT).
