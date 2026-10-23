@@ -635,7 +635,7 @@ extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
 
 extern Tc14 D_8015EB30[16];
 extern Tc14 D_8015EC70[16]; /* the table after D_8015EB30; also its end address (T-16560) */
-void func_8013DEE4();
+s32 func_8013DEE4();
 extern u8 D_8015FA80[];
 void func_801483B0(void);
 void func_80148D6C(void);
