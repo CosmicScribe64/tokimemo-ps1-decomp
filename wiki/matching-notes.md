@@ -795,6 +795,10 @@ swapped the counter colours; negative offsets from `D_8015EBFC` did not alias `E
 before the `unk_08` clamp, and the real locals `sel`/`total` for the 0x38 frame. The T-24522 `* 1` wrappers
 and `RpgStat *stat` are gone; the comma return stays (FAKE). Details: `drafts/T-25138/RPG_BAT/func_80144C84/NOTES.md`.
 
+## T-25136: TACO func_80145650
+
+Matched (1,908 bytes, default build, 27/27 sha1 OK). The starting point was the T-24502 body at 200 rows. The first divergence was the transfer register of the second matrix copy. Forcing the block-copy state per copy in a scratch `ugen` shim showed the cause: copies 2-4 are in state F in the original and B in the draft, because only stack stores to the input come before them. Forcing BFFF dropped the draft to 92 rows. Writing the four tail sums field first (`arg0[2]->x0 + rsin(...) * len / 3 / 4096`) gave the original's call-first evaluation order. `s32 x, y` restored the 0x88 frame. In place of the forced state, one FAKE: an empty `if (x + y > 0) {}` after the vertex-0 stores. It sets `ugen_pass.py`'s signed-jump flag after an `istr`, so all later copies are F. Testing only x or only y reorders the saved registers. Negatives: pointer stores to the input (uopt makes them direct), the copy before the input stores, a vertex loop (not unrolled). Details: `drafts/T-25136/TACO/func_80145650/NOTES.md`.
+
 ## T-25139: KANGEI func_801327DC
 
 Matched in literal default C, 1,096 bytes. Started from the T-24516 body

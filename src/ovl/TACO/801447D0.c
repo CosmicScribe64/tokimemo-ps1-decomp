@@ -325,7 +325,83 @@ void func_8014559C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801447D0", func_80145650);
+s32 func_80145650(POLY_G4 **arg0, s32 arg1, s32 arg2) {
+    s32 angle;
+    SVECTOR input;
+    SVECTOR output;
+    MATRIX matrix;
+    s32 x;
+    s32 y;
+
+    x = arg0[2]->x0;
+    y = arg0[2]->y0;
+    input.vx = 0;
+    input.vy = 0;
+    input.vz = 0;
+    matrix = *(MATRIX *)D_80125C60;
+    angle = (arg1 << 12) / 360;
+    matrix.t[0] = 0;
+    matrix.t[1] = 0;
+    matrix.t[2] = 0;
+    func_8015CF30(angle, &matrix);
+    func_800A0ECC(&matrix, &input, &output);
+    arg0[2]->x0 = output.vx + x;
+    arg0[2]->y0 = output.vy + y;
+    /* FAKE: T-25136. The empty signed test emits no code; it puts the three later matrix copies in
+     * ugen's block-copy state F (tools/ugen_pass.py), as in the original. Testing x + y keeps the
+     * saved-register order x, y, angle. */
+    if (x + y > 0) {
+    }
+    input.vx = arg0[2]->x1 - x;
+    input.vy = arg0[2]->y1 - y;
+    input.vz = 0;
+    matrix = *(MATRIX *)D_80125C60;
+    matrix.t[1] = 0;
+    matrix.t[2] = 0;
+    matrix.t[0] = input.vx;
+    func_8015CF30(angle, &matrix);
+    func_800A0ECC(&matrix, &input, &output);
+    arg0[2]->x1 = output.vx + x;
+    arg0[2]->y1 = output.vy + y;
+    input.vx = arg0[2]->x2 - x;
+    input.vy = arg0[2]->y2 - y;
+    input.vz = 0;
+    matrix = *(MATRIX *)D_80125C60;
+    matrix.t[1] = 0;
+    matrix.t[2] = 0;
+    matrix.t[0] = input.vx;
+    func_8015CF30(angle, &matrix);
+    func_800A0ECC(&matrix, &input, &output);
+    arg0[2]->x2 = output.vx + x;
+    arg0[2]->y2 = output.vy + y;
+    input.vx = arg0[2]->x3 - x;
+    input.vy = arg0[2]->y3 - y;
+    input.vz = 0;
+    matrix = *(MATRIX *)D_80125C60;
+    matrix.t[1] = 0;
+    matrix.t[2] = 0;
+    matrix.t[0] = input.vx;
+    func_8015CF30(angle, &matrix);
+    func_800A0ECC(&matrix, &input, &output);
+    arg0[2]->x3 = output.vx + x;
+    arg0[2]->y3 = output.vy + y;
+    arg0[0]->x0 = arg0[2]->x0 + func_800A0070(angle) * arg2 / 3 / 4096;
+    arg0[0]->y0 = arg0[2]->y0 - func_800A0140(angle) * arg2 / 3 / 4096;
+    arg0[0]->x1 = arg0[2]->x1 + func_800A0070(angle) * arg2 / 3 / 4096;
+    arg0[0]->y1 = arg0[2]->y1 - func_800A0140(angle) * arg2 / 3 / 4096;
+    arg0[0]->x2 = arg0[2]->x0;
+    arg0[0]->y2 = arg0[2]->y0;
+    arg0[0]->x3 = arg0[2]->x1;
+    arg0[0]->y3 = arg0[2]->y1;
+    arg0[1]->x0 = arg0[2]->x2;
+    arg0[1]->y0 = arg0[2]->y2;
+    arg0[1]->x1 = arg0[2]->x3;
+    arg0[1]->y1 = arg0[2]->y3;
+    arg0[1]->x2 = arg0[2]->x2 - func_800A0070(angle) * arg2 / 3 / 4096;
+    arg0[1]->y2 = arg0[2]->y2 + func_800A0140(angle) * arg2 / 3 / 4096;
+    arg0[1]->x3 = arg0[2]->x3 - func_800A0070(angle) * arg2 / 3 / 4096;
+    arg0[1]->y3 = arg0[2]->y3 + func_800A0140(angle) * arg2 / 3 / 4096;
+}
 
 s32 func_80145DC4(void) {
     s32 t;

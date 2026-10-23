@@ -1757,3 +1757,7 @@ Best draft is 197 funcdiff rows (346 before), notes and next hypothesis in `draf
 ## [2026-10-23] ticket | T-25300 wave 10 second pass opened
 
 The wave 9 neighbor run ([[tickets/T-25200-wave-9-neighbor]]) stopped when a job-picker agent returned no structured result; its last pick had found no untouched packages left. [[tickets/T-25300-wave-10-second-pass]] replaces it: a second deep pass, from the first pass's notes, on each of the 20 non-GEKO files still holding INCLUDE_ASM (tickets T-25301..T-25320), starting each file as soon as no wave 8 or wave 9 worktree holds it.
+## [2026-10-23] ticket | T-25136 Done
+
+Reviewed w9-TACO-801447D0 against CODING_STANDARDS.md (no open findings; the empty `if (x + y > 0) {}` is a marked FAKE), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_80145650` (1908 bytes) as default C in `src/ovl/TACO/801447D0.c`.
+The package's only function is matched, none left with rows; the block-copy state method is in [[playbook]] and [[matching-notes]], notes in `drafts/T-25136/TACO/func_80145650/NOTES.md`, see [[tickets/T-25136-w8-TACO-801447D0]].
