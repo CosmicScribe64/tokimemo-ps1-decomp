@@ -1727,3 +1727,7 @@ Best bodies (57 and 61 rows, two FAKEs) are in drafts/T-25153/NAME_ENT/func_8013
 
 Reviewed and merged w8-main-8004F870: matched main `sndi`, `func_8005215C`, `get_h_tokimeki`, `get_near_menu`, `func_8004FC10` (7508 bytes, default C, 27/27).
 `func_80052F68` stays INCLUDE_ASM (69 rows, notes in drafts/T-25101/main/func_80052F68/NOTES.md); see [[tickets/T-25101-w8-main-8004F870]].
+
+## [2026-10-23] ticket | T-25112 Done
+Reviewed [[tickets/T-25112-w8-TACO-80139170]] against CODING_STANDARDS.md; no findings, clean rebuild 27/27. Matched TACO `func_80139FB8` (1480 bytes, plain C, no FAKE) and `func_80139424` (1676 bytes, default C, FAKEs T-25112: dead `x3 = 0;`, `pad[2]`).
+Lessons are in [[matching-notes#T-25112: TACO func_80139FB8]] and [[matching-notes#T-25112: TACO func_80139424]] (for loop instead of m2c do/while; vertex written as centre + (offset -/+ half)).
