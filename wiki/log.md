@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] decision | Plan for the remaining functions
-
-[[plan-remaining]] gives any agent (including cheap ones) the rules and per-class recipes for the last 127 functions; the classified list is [[data/remaining-2026-10-20]] (A 8 near misses, B 18 guarded, C 11 good drafts, D 90 reconstructions). T-24800 and T-24900 Done ([[as1-scheduling]], [[as1-scheduler-rule]]).
-
 ## [2026-10-20] ticket | T-25001 class C main drafts
 [[tickets/T-25001-class-c-main-sndisp-strcallback]] created, In Progress (worktree c-m1): main `sndisp`, `strCallback`, `func_80065964` from their T-14500 drafts.
 
@@ -1745,10 +1741,12 @@ One review finding fixed: the steering local `half` now carries a `FAKE` comment
 
 Reviewed and merged w9-main-80058D20: matched main `func_8005938C` (764 bytes, default C, one FAKE never-true arm from the T-25107 recipe), 27/27.
 The only function of the package is matched, none left with rows; see [[tickets/T-25147-w8-main-80058D20]] and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25115 Done
 
 Reviewed [[tickets/T-25115-w8-main-800490C0]] against CODING_STANDARDS.md; matched main `_sprite_set_light_effect1` (1,124 bytes) and `func_80049A40` (1,456 bytes) as default-build C, 27/27.
 One finding fixed (FAKE comments on the `gs` alias and `channel * 0` black vertices in `func_80049A40`); notes in drafts/T-25115/main/.
+
 ## [2026-10-23] ticket | T-25114 Done
 
 Reviewed [[tickets/T-25114-w8-RPG_BAT-80154430]] against CODING_STANDARDS.md; matched RPG_BAT `func_8015528C` (1,500 bytes) as default-build C, 27/27.
