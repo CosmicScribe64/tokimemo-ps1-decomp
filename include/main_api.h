@@ -814,6 +814,8 @@ extern s16 D_800B59F4;
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
 extern s32 D_800B5A98; /* T-17011: counter of func_80063668 (CD level high-water mark) */
+extern s8 D_800B5A9C; /* T-25108: last selection index seen by func_80065B0C */
+extern u8 D_800B5AA0; /* T-25108: blink countdown of func_80065B0C, 0x20 on a selection change */
 /* T-17000: two tables of (x, y) halfword pairs that func_8006509C copies pair by pair into the pair
  * table at D_80125C10 (`lh`/`sh` at +0 and +2, step 4); the copy of the second table from D_800B5AF0
  * (pair 3) runs to D_800B5B20, its end. 16 + 15 pairs fill 0x800B5AA4..0x800B5B20. */
@@ -2521,6 +2523,7 @@ void func_80064FA4(s32);
 void icon_disp_switch(s32 a);
 void icon_can_use_set(s32 idx, s32 on);
 void func_8006509C(void);
+void func_800654D0();  /* K&R: with an (s32) prototype OPTION.bin no longer matches (T-25108) */
 void func_80065900(u8 arg0);
 void func_80065B0C(s32 a);
 void func_80065F34(s32 arg0);

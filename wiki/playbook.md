@@ -199,3 +199,11 @@ Symptom: the target branches `beqz t6, body` and then `b join` from the fall-thr
 ## A spill slot one word off: copy propagation and the temporaries (T-25201)
 
 When a pointer's spill slot is 4 bytes off and everything else matches, check whether the original spills the variable at its own home (not copy-propagated) or a uopt temporary (copy-propagated expression). uopt does not copy-propagate `p = expr` into a block where the assignment is not available, where an operand of `expr` changes, into a loop-latch branch condition, or when `expr` contains a load (uoptcopy.c). A dead store to the operand right after the assignment (`idx = 0;`, FAKE) makes every use read p's home and keeps p a register candidate, unlike `&p`. Loop bounds read straight from a record in `for` conditions become partial-redundancy items kept in registers and reloaded after calls, which is the shape of a count reloaded at the latch and at the inner exit (main `mod_set_gpu`, 4 rows to 0).
+## Same expression in several switch cases shares one register range (T-25108)
+
+uopt numbers an expression such as `D_800B5AE4[i][0]` once per function. Strength-reduced pointers of
+loops in different `case` arms that use the same index variable then form one range, which takes one
+colour in every arm. Symptom: dst/src pointer registers swapped in some arms and right in others. Fix:
+look for a variable the original reuses as the loop counter in the odd arm. In main `func_8006509C`
+the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the scan on its own `j`
+(56 rows to 0, plain C). See `drafts/T-25108/main/func_8006509C/NOTES.md`.
