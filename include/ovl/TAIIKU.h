@@ -10,6 +10,7 @@ void func_80138950(void);
 void func_80135830(void);
 void func_80135AD0(void);
 void func_80135DF8(void);
+void func_80135F3C(void);
 void func_80136A28(void);
 void func_80136AB0(void);
 void func_80136B18(void);

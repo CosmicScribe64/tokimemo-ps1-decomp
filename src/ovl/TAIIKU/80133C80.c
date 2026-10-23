@@ -843,7 +843,71 @@ void func_80135DF8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135F3C);
+/* Display records of the 0x44-byte pool. RUNNER_DISP(n) is the record of runner index n
+ * (TaiRunnerA.unk_02), counted from record 46: the u8 index stays unsigned and every product
+ * shares one 0x44 constant, as in the original. RUN(n) is runner n, 0 the player. T-25106. */
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+#define RUNNER_DISP(n) ((&DISP(46))[n])
+#define RUN(n) ((&D_80149208.player)[n])
+/* Picks a random display record for each runner: the player's from 10..29, the others' from
+ * 0..29, never 19, and no two runners (or the extra record D_801491D8) with the same unk_16 value.
+ * The comparisons read the records directly, with no local for the value: uopt's PRE then keeps
+ * one value per test in the original's registers. FAKE: `pad` is an unused third word above the
+ * copied tables, where the original frame keeps 12 bytes. T-25106 */
+void func_80135F3C(void) {
+    s32 i;
+    s32 j;
+    s32 pad;
+    TaiWords11 choices;
+    TaiikuS11 player_codes;
+    TaiikuS11 rival_codes;
+    TaiFlags58 flags;
+
+    choices = D_80149728;
+    player_codes = D_80149754;
+    rival_codes = D_8014976C;
+    flags = D_80149784;
+    D_80149208.player.unk_02 = func_800AE0D0() % 20 + 10;
+    while (D_80149208.player.unk_02 == 19) {
+        D_80149208.player.unk_02 = func_800AE0D0() % 20 + 10;
+    }
+    RUNNER_DISP(D_80149208.player.unk_02).unk_16 = player_codes.v[D_801491EC];
+    for (i = 0; i < 3; i++) {
+        D_80149208.cpu[i].unk_02 = func_800AE0D0() % 30;
+        while (D_80149208.cpu[i].unk_02 == 19) {
+            D_80149208.cpu[i].unk_02 = func_800AE0D0() % 30;
+        }
+    }
+    D_801491DC = func_8008647C();
+    if (func_8008667C(D_801491DC) < 2 && D_801491DC != choices.value[D_801491EC]) {
+        D_801491D8 = func_800AE0D0() % 10;
+        RUNNER_DISP(D_801491D8).unk_16 = rival_codes.v[D_801491DC];
+        DISP(115).unk_16 = RUNNER_DISP(D_801491D8).unk_16 >> 3;
+        DISP(115).unk_43 = flags.value[RUNNER_DISP(D_801491D8).unk_16 >> 3][RUNNER_DISP(D_801491D8).unk_16 & 7];
+    } else {
+        D_801491DC = 0xFF;
+    }
+    if (D_801491DC == choices.value[D_801491EC]) {
+        D_801491DC = 0xFF;
+    }
+    for (i = 0; i < 3; i++) {
+        for (j = 1; j <= i + 1; j++) {
+            while (RUNNER_DISP(D_80149208.cpu[i].unk_02).unk_16 == RUNNER_DISP(RUN(i + 1 - j).unk_02).unk_16
+                   || RUNNER_DISP(D_80149208.cpu[i].unk_02).unk_16 == RUNNER_DISP(D_801491D8).unk_16) {
+                D_80149208.cpu[i].unk_02 = func_800AE0D0() % 30;
+            }
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(107 + i).unk_16 = RUNNER_DISP(RUN(i).unk_02).unk_16 >> 3;
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(107 + i).unk_43 = flags.value[RUNNER_DISP(RUN(i).unk_02).unk_16 >> 3][RUNNER_DISP(RUN(i).unk_02).unk_16 & 7];
+    }
+}
+#undef RUN
+#undef RUNNER_DISP
+#undef DISP
 
 void func_801365C8(void) {
     s32 i;
