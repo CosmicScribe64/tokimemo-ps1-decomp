@@ -77,6 +77,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-25142-w8-BUNKA_SD-80134540|T-25142 Wave 8 package w8-BUNKA_SD-80134540 (src/ovl/BUNKA_SD/80134540.c)]]
 - [ ] [[tickets/T-25143-w8-SHOUGATU-8013E330|T-25143 Wave 8 package w8-SHOUGATU-8013E330 (src/ovl/SHOUGATU/8013E330.c)]]
 - [ ] [[tickets/T-25144-w8-RPG_BAT-8014ADD0|T-25144 Wave 8 package w8-RPG_BAT-8014ADD0 (src/ovl/RPG_BAT/8014ADD0.c)]]
+- [ ] [[tickets/T-25145-w8-ENDING-80133030|T-25145 Wave 8 package w8-ENDING-80133030 (src/ovl/ENDING/80133030.c)]]
+- [ ] [[tickets/T-25146-w8-ETC-80143240|T-25146 Wave 8 package w8-ETC-80143240 (src/ovl/ETC/80143240.c)]]
 
 ## In Progress
 
@@ -182,6 +184,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-25145-w8-ENDING-80133030|T-25145 Wave 8 package w8-ENDING-80133030 (src/ovl/ENDING/80133030.c)]]
 - [ ] [[tickets/T-25146-w8-ETC-80143240|T-25146 Wave 8 package w8-ETC-80143240 (src/ovl/ETC/80143240.c)]]
+- [ ] [[tickets/T-25144-w8-RPG_BAT-8014ADD0|T-25144 Wave 8 package w8-RPG_BAT-8014ADD0 (src/ovl/RPG_BAT/8014ADD0.c)]]
 - [ ] [[tickets/T-25147-w8-main-80058D20|T-25147 Wave 8 package w8-main-80058D20 (src/main/80058D20.c)]]
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
 - [ ] [[tickets/T-25114-w8-RPG_BAT-80154430|T-25114 Wave 8 package w8-RPG_BAT-80154430 (src/ovl/RPG_BAT/80154430.c)]]
