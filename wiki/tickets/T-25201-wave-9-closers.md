@@ -22,3 +22,5 @@ One fresh-eyes Opus pass on each guarded near miss (25 rows or fewer) that a mer
 Jobs are appended under Comments as they finish (file, functions, result).
 
 ## Comments
+
+2026-10-23, TAIIKU `src/ovl/TAIIKU/80133C80.c`, `func_80137784`: no match, guard kept at 4 rows (NON_MATCHING comment now names T-25201). Measured why the compare operand order cannot be reached with the offset alias: uopt swaps `==` when its first operand is not a plain variable, and a constant addend on the second operand moves to the first (uopt or ugen). A control with undefined zero-offset alias symbols gets every instruction right (8 rows, all alias relocations). Next: `config/symbols_TAIIKU.txt` aliases at 0x8014984C and 0x8014981C, which need approval. Notes: `drafts/T-25106/TAIIKU/func_80137784/NOTES.md`, `alias-8rows.c`.
