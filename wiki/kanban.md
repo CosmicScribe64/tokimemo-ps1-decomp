@@ -52,7 +52,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 - [ ] [[tickets/T-25112-w8-TACO-80139170|T-25112 Wave 8 package w8-TACO-80139170 (src/ovl/TACO/80139170.c)]]
-- [ ] [[tickets/T-25113-w8-ETC-8013BEF0|T-25113 Wave 8 package w8-ETC-8013BEF0 (src/ovl/ETC/8013BEF0.c)]]
 - [ ] [[tickets/T-25114-w8-RPG_BAT-80154430|T-25114 Wave 8 package w8-RPG_BAT-80154430 (src/ovl/RPG_BAT/80154430.c)]]
 - [ ] [[tickets/T-25115-w8-main-800490C0|T-25115 Wave 8 package w8-main-800490C0 (src/main/800490C0.c)]]
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
@@ -907,6 +906,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-2000-wave2-event|T-2000 Wave 2: EVENT]]
 - [ ] [[tickets/T-1340-tooling-jump-table-functions|T-1340 Tooling: jump-table functions]]
 - [ ] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
+- [ ] [[tickets/T-25113-w8-ETC-8013BEF0|T-25113 Wave 8 package w8-ETC-8013BEF0 (src/ovl/ETC/8013BEF0.c)]]
 
 
 %% kanban:settings

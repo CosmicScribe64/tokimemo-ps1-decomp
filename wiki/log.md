@@ -1735,3 +1735,7 @@ No review findings: the three fakematches (four test spellings, `* 1` on two rea
 
 Reviewed [[tickets/T-25111-w8-TACO-8013B990]] against CODING_STANDARDS.md; matched TACO `func_8013C6D4` (1388 bytes) and `func_8013BAC4` (1840 bytes) as default-build C, 27/27; the review added two comments for non-obvious tricks in `func_8013BAC4`.
 Both functions of `src/ovl/TACO/8013B990.c` are now C, notes in drafts/T-25111/TACO/ and [[matching-notes]].
+## [2026-10-23] ticket | T-25113 Done
+
+Reviewed and merged w8-ETC-8013BEF0: matched ETC `func_8013F054` (716 bytes) and `func_8013D570` (2352 bytes), default C, 27/27.
+Both functions of the package are matched, none left with rows; see [[tickets/T-25113-w8-ETC-8013BEF0]].
