@@ -28,7 +28,9 @@ the `mod_set_gpu` donor shape was 195 words on the first compile (116 raw rows, 
    (GsSortSprite): uopt keeps the `cvtl(pri)` range in s7 (`lhu s7` in the outer loop) and the call
    keeps its own `andi a2,s7,0xffff`. `u16 pri` folds the conversion into `lhu a2` at the call and
    pri loses its register to cx; an explicit `& 0xFFFF` is hoisted and spends one ring slot (t9).
-   The prototype is in `main_api.h`; `func_80043510` keeps the implicit view (override).
+   The prototype is declared in `src/main/8004C3F0.c` (review T-25104: the first version put it in
+   `main_api.h` with an override in `src/main/80043510.c`, a second C file; `func_80043510` and every
+   other caller keep the implicit view).
 6. **Frame.** Declaration order `padA[4], row, sp, p, col, data, word, uv, clut, bright, rows, cols,
    w, padB[7], mode, padC[1]` gives frame 0xE8, row 0xD4, sp 0xB0, mode 0x70. FAKE pads.
 7. **Switch arms on one line each.** Cases 3-5 store mode before the attribute only when the two

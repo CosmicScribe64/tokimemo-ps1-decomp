@@ -371,9 +371,11 @@ INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set_gpu);
 #endif
 
 /* Matching notes (T-25104): sp is the sprite handed to func_80098B80 (GsSortSprite); the u16 priority
- * of its prototype converts pri at each call. Each tile field is masked and shifted in one statement:
+ * of its prototype, declared here because func_80043510 calls it without one, converts pri at each
+ * call. Each tile field is masked and shifted in one statement:
  * the split form (mask, then shift) gives uv and clut more uses, and clut then outranks the x position
  * and col for the saved registers. The y position is written row * w + y with a signed row. */
+void func_80098B80(Rec24 *sp, void *ot, u16 pri);
 void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     s32 padA[4]; /* FAKE: T-25104, padA, padB and padC put row, sp and mode at the original stack homes */
     s32 row;

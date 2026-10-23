@@ -1,6 +1,3 @@
-/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this file was matched with. */
-#define MAIN_API_OVERRIDE_func_80098B80 /* implicit declaration: the original passes the priority without the u16 conversion of the main_api.h prototype (T-25104) */
-
 #include "common.h"
 #include "game.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
