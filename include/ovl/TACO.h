@@ -272,6 +272,8 @@ s32 func_8013C1F4(void);
 s32 func_8013C440(void);
 void func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2);
 extern Tc14 D_8015E3B0[];
+/* func_8013EAA4: per-kind frame count, CLUT row, U and V tables (T-25110) */
+extern u8 D_8015F560[8], D_8015F568[8], D_8015F570[8], D_8015F578[8];
 extern u16 D_8015F580;
 extern u16 D_8015F584;
 void func_801413B8(Tc14 *arg0, s32 arg1);
