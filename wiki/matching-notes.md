@@ -17,15 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25006: class C main srn_set matched; mod_set_gpu guarded; func_8004A1A0 drafted
-
-[[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]], branch c-m5. One of three matched in plain C, one guard at 28 rows, one INCLUDE_ASM with a draft (drafts/T-25006/main/func_8004A1A0.c, 76 rows). All three were rewritten from the asm instead of patching the T-17015/T-24301 drafts.
-
-- **`srn_set` (596 B, MATCH).** Levers, in the order they cut rows (105 -> 0): compute `cols` before the `wid`/`hgt`/`left` loads, so the inner-loop copy of `cols` wins `$fp` over `wid` (105 -> 42); no `ybase` or `y` locals: the row tests and the call argument are written as `th * row + yoff (+ h0 * oy)` and uopt strength-reduces them into the two induction variables the original has (`$s3` and the spilled one at sp+0x60), which also puts the split `cols` range at sp+0x64 (42 -> 25); `tw * col + xoff + ox * w0` spelled out in the clip test (the `x` sum reverses the `addu` operands); the masked table word assigned to a local inside the `if` (`idx = *src & 0xFFFF`, gives the dead `move v0,t6` of the original); `cols` and `rows` both before the three loads (25 -> 9). The last 9 rows were as1 not moving the `wid`/`hgt`/`left` loads above the `cols`/`rows` stack stores: with a `SrnRec28 *rec` pointer as1 cannot prove the loads and the `sp` stores independent, through the global array (`SRN_REC(arg0).unk_16`, new macro in `game.h`) it can (9 -> 0). An unused `SrnRec28 *rec` stays declared (FAKE) to keep the frame at 0xC0.
-- **`mod_set_gpu` (804 B, guarded, 28 rows).** New `ModRec14` (stride-0x14 records of `D_801217A0`) in `game.h`. Found: the `u16 search_tpage_multi()` view (inside the guard) gives `beq s3,v0` on the raw result plus the narrowed copy; the row/column counts as loop-carried `u8` locals re-read at the loop ends (the natural `for (row < p->unk_0D)` form splits `p` into two stack homes); `ypos = row * 8 + y + 0x168` as a local in the outer loop (as an expression uopt moves the constant out of the invariant); the data pointer as `rows * frame * cols + p->unk_04` (ugen order); `u0` and `v0` on one line (FAKE, as1 order); two FAKE pads at the top for the `row` and `mode` homes. Left: `clut` is coloured before `last` (`$s3` instead of `$s7`, so `last`, the x and column counters and `data` are one register lower) and the `p`/`ypos` spill slots are 4 bytes off. Tried without gain: `clut` as `s32`/`u8`/`u16`, the declaration position of `clut`, the order of the loop increments, autotweak (300 s) and the permuter (600 s, formatting-only best).
-- **`func_8004A1A0` (628 B, INCLUDE_ASM, draft 76 rows).** `u8 ch = 0x78` reproduces `li t0,0x78; multu s4,t0` shared with the `cellh` store (a literal strength-reduces to shifts, `h * (map->cellh = 0x78)` adds an `andi`, a `u16` operand adds an `andi` too); without `cells`/`index` locals the bases become the spilled invariants at sp+0x58/0x54 and the frame is 0x70; `unk_14 = (u32)D_80122120 + slot * 0x10` keeps the original's second address add. Left: the header schedule and constant registers (the original keeps 0x80 in `$a2`, 0x1000 in `$v1`, map in `$a0`), `w` and the `row * 0x78` counter swap `$s5`/`$s6`, the tp counter and the index pointer swap `$s3`/`$s4`. A promotion also needs the BG slot types moved from `include/ovl/OPTION.h` to a shared header.
-- Rule seen in `srn_set`: as1 reorders a load above a stack store only when the load's base is a known global symbol; record loads through a local pointer stay below the spills of earlier statements.
-
 ## T-25010: class C/D main func_8004A1A0, func_80065964, strCallback not matched; BG slot types shared
 
 [[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]], branch c-m7. No match; `func_8006A044` skipped (src/main/800674B0.c owned elsewhere this round). Drafts in `drafts/T-25010/main/`.
@@ -830,6 +821,7 @@ uopt promotes it into `$v1` (150 to 17 rows).
 (5) an `else if (club == 7) ... else` chain, and `(u8)` on the `get_g_zyotai_s(6)` result for one
 ring slot (FAKE).
 Details and negatives: `drafts/T-25139/KANGEI/func_801327DC/NOTES.md`.
+
 ## T-25130: MASTER func_801326B4
 
 [[tickets/T-25130-w8-MASTER-80132140]] matches `func_801326B4` (3264 bytes, default C, about 55 minutes) from the T-24517 body (`drafts/T-24517/later/func_801326B4.c`), 113 rows here and 102 once `func_800847B8` is called as an implicit int. The first divergence was the case 4 switch: uopt copy-propagated the raw `sel` local into the global D_800E6374 and made `shr(D.h, 12)` one PRE range in `$v1` (computed at the switch, inserted after each reload in the call arms), where the original recomputes both shifts in ugen temporaries. What closed it:
@@ -839,9 +831,11 @@ Details and negatives: `drafts/T-25139/KANGEI/func_801327DC/NOTES.md`.
 - **`s32 func_800847B8();`** under the existing override pattern: a `void` view moves the case 0/1 ranges (39 rows).
 
 Negatives and the full measurement list: `drafts/T-25130/MASTER/func_801326B4/NOTES.md`.
+
 ## T-25137: TACO func_8013B460
 
 [[tickets/T-25137-w8-TACO-8013B170]], branch w9-TACO-8013B170 (wave 9 neighbor conveyor). Matched (1328 bytes, default C, guard removed) from the T-24200 guard (cost 4: the `p->y3` store before the UV stores instead of between `lui` and `lw` of the AddPrim argument). Stock `as1 -R -xbbdbg 8` plus the recompiled as1 show the per-block pick order: smallest start time, larger aftercycles, larger latency, smaller hazard address (+48), smaller **source line** (+12), then the front of the ready list (released nodes go to the front, which is why one UV statement comes out v3 first). The y3 store, the UV stores and the `lui` tie on everything but line, so the original's y3 statement had a later line than the AddPrim call. IDO 5.3 gives a statement the line of its first token and gives code moved to a `goto` site the jump's line, so no plain or `goto` layout reaches it. A `#line` pair per quad (the y3 statement on AddPrim's line + 1, numbering restored after it) gives MATCH (FAKE). `funcdiff --version c` and `preprocess_draft` run `gcc -E -P` and drop the markers; the default build keeps them. Negatives and the trace recipe: drafts/T-25137/TACO/func_8013B460/NOTES.md.
+
 ## T-11900: GEKO 80134D10.c and OPTION func_801326BC (outside contributor, claim #65)
 
 [[tickets/T-11900-geko-option-closers]]. Four matches: GEKO `func_80136C20`, `func_801367EC`, `func_80135DC0` and OPTION `func_801326BC`.

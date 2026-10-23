@@ -7,20 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25007 In Progress
-
-[[tickets/T-25007-class-c-etc-rpgbat-main]]: class C ETC `func_80146D4C`, RPG_BAT `func_8014BFE4`, main `func_8005938C`; branch c-m6.
-
-## [2026-10-20] ticket | T-25007 In Review
-
-[[tickets/T-25007-class-c-etc-rpgbat-main]]: ETC `func_80146D4C` guarded at 12 rows (104 before; empty-if promotion lever from the permuter, recipe added to [[playbook]]); RPG_BAT `func_8014BFE4` (128) and main `func_8005938C` (124) stay `INCLUDE_ASM`, notes in `drafts/T-25007/`. Notes in [[matching-notes]]. Clean build 27/27, header/global/proto checks pass. Branch c-m6.
-
-## [2026-10-20] ticket | T-25006 created, In Progress
-[[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]] created, In Progress (branch c-m5): main `srn_set`, `mod_set_gpu`, `func_8004A1A0`.
-
-## [2026-10-20] ticket | T-25006 to In Review
-[[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]]: main `srn_set` matched (record loads through the global array so as1 can move them above the stack stores; `SRN_REC` and `ModRec14` in `game.h`); `mod_set_gpu` guarded at 28 rows; `func_8004A1A0` INCLUDE_ASM with a 76-row draft in drafts/T-25006. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
-
 ## [2026-10-20] ticket | T-25004, T-25006, T-25007 Done
 
 Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `func_8005B43C` 3 rows, `parameter_up_down` 11, ETC `func_80146D4C` 12, main `mod_set_gpu` 28. [[status]].
@@ -1760,6 +1746,7 @@ Findings fixed (u32 copy marked FAKE, blank line, kanban column); the six always
 
 Reviewed w9-TACO-8013B170 against CODING_STANDARDS.md (no open findings; the `#line` pair per quad is an accepted marked FAKE), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_8013B460` (1328 bytes) as default C in `src/ovl/TACO/8013B170.c`.
 The package's only function is matched; the as1 line tie-break rule is in [[as1-scheduler-rule]] and [[playbook]], notes in `drafts/T-25137/TACO/func_8013B460/NOTES.md`, see [[tickets/T-25137-w8-TACO-8013B170]].
+
 ## [2026-10-23] ticket | T-11900 Done
 
 Four matches: OPTION `func_801326BC`, GEKO `func_80136C20`, `func_801367EC` (both closed by defining `D_80145094` in C, [[as1-scheduler-rule]]) and `func_80135DC0`. `func_80133024`, `func_80132B24` keep their guards; `func_80142C9C` checkpoint in `drafts/T-11900`. Inline review against CODING_STANDARDS.md (FAKE comments, no inline asm). Notes in [[matching-notes]]. [[tickets/T-11900-geko-option-closers]].
