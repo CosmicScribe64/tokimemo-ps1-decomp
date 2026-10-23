@@ -1727,3 +1727,7 @@ Reviewed and merged w8-main-8004F870: matched main `sndi`, `func_8005215C`, `get
 ## [2026-10-23] build | T-25201 w9c-main-8004C3F0
 Matched: main `mod_set_gpu` (804 bytes) as default-build C, guard removed; for-loop bounds read from the record, a FAKE dead store `idx = 0;` (T-25201) and an `xpos` local.
 Reviewed against `CODING_STANDARDS.md` (no findings), clean rebuild 27/27, `mod_set` still matches; see [[tickets/T-25201-wave-9-closers]] and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25150 Done
+Reviewed against `CODING_STANDARDS.md` (no findings), clean rebuild 27/27, funcdiff MATCH. Matched: KANGEI `func_80134724` (688 bytes) as default C, FAKE cast dropped, by defining the object's own scene table `D_80139B30` in C ([[tickets/T-25150-w8-KANGEI-80134120]], [[matching-notes]]).
+No function left with rows in this package; the data-island lead for other switches is in `drafts/T-25150/KANGEI/func_80134724/NOTES.md`.
