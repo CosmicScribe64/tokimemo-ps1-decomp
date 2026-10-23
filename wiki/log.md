@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] build | Preserve unfinished matching evidence
-
-Recorded final MAIN matrix/background, TACO font, NAME_ENT introduction and ETC image-processing findings in [[matching-notes]] under [[tickets/T-24600-finish-matching]]. All unmatched candidates remain private scratch; no coverage credit or source promotion. User-requested wrap-up supersedes continued matching for this session.
-
 ## [2026-10-20] ticket | OPTION editor integration checks pass
 
 [[tickets/T-24607-option-editor]] In Progress -> In Review. Root default linked proof matches1,036 bytes; full Docker build, fresh27 hashes, globals, headers and prototype guard pass (zero new disagreements,15 known). Behavior review has no findings. Standards review remains pending. Measured census:6,823 functions /2,098,084 bytes,129 functions remaining.
@@ -1733,6 +1729,7 @@ The review marked the unused K&R parameter FAKE; the clamp-arm zero term and the
 
 Reviewed and merged w8-TAIIKU-80138950: matched TAIIKU `func_80139AB0`, `func_8013E894`, `func_8013DDB8`, `func_8013F3A4`, `func_8013E1FC`, `func_8013EC60` (7796 bytes, default C, 27/27).
 All six functions of the package are matched, none left with rows; see [[tickets/T-25102-w8-TAIIKU-80138950]].
+
 ## [2026-10-23] ticket | T-25151 Done
 
 Reviewed [[tickets/T-25151-w8-GYOZI-80140C90]] against CODING_STANDARDS.md; matched GYOZI `func_801412A4` (684 bytes) as default-build C, 27/27.

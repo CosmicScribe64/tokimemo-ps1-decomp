@@ -17,10 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24502: carousel lifetime checkpoint
-
-39FB8 corrected byte-table/negation draft scores280 in full TU; scratch implicit-int font39424 view262. Extending first-loop sine lifetime through a source-local FAKE zero subtree lowers priority10 to3.5, restores radius s4/step s3/loop sine s5 and scores216. Sharing preheader/first-loop sine gives198 but moves that shared web to s7, so this is an aggregate improvement with unresolved allocation/scheduling. Both full-TU candidates have370 real instructions and frame0x68. Standalone scores are two rows higher due alignment; all causal claims are qualified in drafts/T-24502/TACO/func_80139FB8/NOTES.md, with source-only body/context and a full-TU replay.py. Parent review pending; production/header unchanged and no close guard. Bounded lifetime/constant/pointer negatives recorded; old shared-sine/index grids not repeated.
-
 ## T-24501 radial texture generator match (2026-10-20)
 
 `func_80046754` (884 bytes, `src/main/80046500.c`) now passes literal default linked C proof. Replaced inherited m2c duplicated/unrolled operations with natural loops over a packed 128x128 nibble texture. Clear each word column using an advancing `u32 *`; indexed clear arithmetic changes induction allocation. A byte-sized flat-fill color reduces180 resolved edits to19 (word-sized selector incorrectly promotes its input and shifts the entire flat branch). Explicit `u16` upload coordinates reduce19 to2. Initialize the row counter inside each mode branch: moving their common zero assignment before the `if` removes the flat branch's independently scheduled initialization and leaves one nop instead. Branch-local initialization closes tozero. No FAKE, dummy locals, inline asm or compiler changes. Exact canonical prototype added to `main_api.h`; parent notified and reviewed actual body/header with no findings. Literal proof884 bytes passes; final full27 checks running.
@@ -725,6 +721,7 @@ Matched (default-build C, 804 bytes, 27/27). The last 4 rows were p's spill slot
 ## T-25152: TACO func_80138B2C (closer)
 
 [[tickets/T-25152-w8-TACO-80138890]]: matched (default C, 476 bytes). The last 3 rows were the clamp constant in `$t2`. uopt's input pass replaces a load of a variable with the constant stored to it earlier in the same block (`uoptinput.c`), so `arg0 = 0x98967F; D_8015F490[4] = arg0;` stores the constant and ugen builds it in a ring temporary. For an expression used once, the load stays a read of the variable when the expression has an indirect load (`has_ilod`) or an operand killed in between (`treekilled`). `arg0 = 0x98967F + *(u8 *)&D_8015EDCC * 0;` (FAKE) keeps the def in `$a0`, and ugen folds the zero term. Reading `arg0` in the zero term also puts the arm in `$a0`, but it makes the total live into the arm, and the total then gets its own range in `$v1` (25 rows). Variants: `drafts/T-25152/TACO/func_80138B2C/NOTES.md`.
+
 ## T-25151: GYOZI func_801412A4
 
 Matched: `func_801412A4` (172 words, 684 bytes) is default-build C. Started from the matched sibling
