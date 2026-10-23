@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | Final OPTION editor match and requested handoff
-
-User requested wrapping up the current work and committing/pushing it. Created [[tickets/T-24607-option-editor]] In Progress for the newly exact private1,036-byte candidate. Other lanes stop matching and preserve their findings; independent behavior and standards reviews run before integration completion. [[tickets/T-24600-finish-matching]] remains incomplete.
-
 ## [2026-10-20] build | Preserve unfinished matching evidence
 
 Recorded final MAIN matrix/background, TACO font, NAME_ENT introduction and ETC image-processing findings in [[matching-notes]] under [[tickets/T-24600-finish-matching]]. All unmatched candidates remain private scratch; no coverage credit or source promotion. User-requested wrap-up supersedes continued matching for this session.
@@ -1727,10 +1723,12 @@ Reviewed and merged w8-main-8004F870: matched main `sndi`, `func_8005215C`, `get
 ## [2026-10-23] build | T-25201 w9c-main-8004C3F0
 Matched: main `mod_set_gpu` (804 bytes) as default-build C, guard removed; for-loop bounds read from the record, a FAKE dead store `idx = 0;` (T-25201) and an `xpos` local.
 Reviewed against `CODING_STANDARDS.md` (no findings), clean rebuild 27/27, `mod_set` still matches; see [[tickets/T-25201-wave-9-closers]] and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25152 Done
 
 Reviewed [[tickets/T-25152-w8-TACO-80138890]] against CODING_STANDARDS.md; matched TACO `func_80138B2C` (476 bytes) as default-build C, 27/27.
 The review marked the unused K&R parameter FAKE; the clamp-arm zero term and the two address views were already marked.
+
 ## [2026-10-23] ticket | T-25102 Done
 
 Reviewed and merged w8-TAIIKU-80138950: matched TAIIKU `func_80139AB0`, `func_8013E894`, `func_8013DDB8`, `func_8013F3A4`, `func_8013E1FC`, `func_8013EC60` (7796 bytes, default C, 27/27).
