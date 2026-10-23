@@ -811,6 +811,7 @@ extern s32 D_800B5950[];
 extern s32 D_800B5960[];
 extern s16 D_800B59F0;
 extern s16 D_800B59F4;
+extern s16 D_800B5A40[13]; /* T-25119: 13 halfwords func_80061A3C copies into the words at D_801230D4 */
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
 extern s32 D_800B5A98; /* T-17011: counter of func_80063668 (CD level high-water mark) */
