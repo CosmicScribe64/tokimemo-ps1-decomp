@@ -10,24 +10,26 @@ void func_8013FF80(void) {
     }
 }
 
-/* NON_MATCHING: T-25314, 17 rows (T-25128 left 197). Left: the dead switch's VREG copy
- * `move v0,a1` at the entry, the frame 8 bytes too large (the k temporary), and 0x01000000
- * in $v0 instead of $a0 in cases 5 and 11. drafts/T-25314/ETC/func_8013FFAC/NOTES.md */
+/* NON_MATCHING: T-25314, 10 rows (T-25128 left 197). Left: 0x01000000 in $v0 instead of
+ * $a0 in cases 5 and 11 (uopt colours the constant after j, which holds $a0 in the same
+ * case 5 block). drafts/T-25314/ETC/func_8013FFAC/NOTES.md */
 #ifdef NON_MATCHING
 void func_80140AE4(void);
 s32 func_8013FFAC(void) {
-    s32 i;
+    /* FAKE: `register` makes i a VREG, so the dead entry read below is a direct unsigned
+     * global stored into a VREG and cvt_pass.py emits OPTN 405 0 (zcopy off): the second
+     * table loop keeps its runtime index. It replaces a dead two-case switch, whose extra VREG
+     * cost 8 frame bytes and a `move v0,a1`. i declared before sp54, the scalars after it, put
+     * sp54 at 0x54. T-25314 */
+    register s32 i;
+    s32 sp54[6];
     u32 j;
     u32 k;
-    s32 sp54[6];
 
     /* FAKE: the dead read of unk_F5F makes it an entry location for cvt_pass.py, so its
      * promoted range starts at the entry ($t0, reloaded in cases 0, 5 and 8, no entry load).
-     * The dead two-case switch on the selector stores it in a VREG, so cvt_pass.py emits
-     * OPTN 405 0 (zcopy off) and the second table loop keeps its runtime index. Its dead VREG
-     * copy stays as `move v0,a1` (the s32 view keeps $v0 live at the exit). T-25314 */
+     * T-25314 */
     i = D_800E6280.unk_F5F;
-    switch (D_800E6280.unk_110D) { case 0: case 9: break; }
     switch ((*(u8 *)&D_800E6280.unk_110D)) {
     case 0:
         draw2d3d(1, 0);
@@ -94,7 +96,7 @@ s32 func_8013FFAC(void) {
         D_800E6280.unk_03A = 0;
         /* FAKE: explicit peel plus unsigned 2..6 loop, the matched func_8013CCE4 recipe
          * (T-24706): the unsigned body sums do not CSE with the signed peel literals. T-25128 */
-        sp54[0] = 0x80180600; sp54[1] = 0x80184600; for (j = 2; j < 6; j++) { k = j * 0x4000; sp54[j] = 0x80180600 + k; } /* the k temporary gives the shift $v0 and the pointer $v1; it costs the 8 frame bytes left (T-25314) */
+        sp54[0] = 0x80180600; sp54[1] = 0x80184600; for (j = 2; j < 6; j++) { k = j * 0x4000; sp54[j] = 0x80180600 + k; } /* the k temporary gives the shift $v0 and the pointer $v1 (T-25314) */
 
         func_8004A1A0(sp54, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 0x18);
         D_801220D0 = 0x80000000;
