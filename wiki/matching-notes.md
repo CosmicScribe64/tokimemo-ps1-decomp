@@ -723,3 +723,13 @@ Matched (default C, 688 bytes, 27/27), after the T-24201/T-24902/T-25042 history
 ## T-25149: NAME_ENT func_80138C1C
 
 [[tickets/T-25149-w8-NAME_ENT-80132000]]: matched (default C, 740 bytes; NAME_ENT sha1 OK). The T-24515 body (pointer walks, volatile space reads) was at 104 rows. What closed it: index loops over the three name arrays (`D_8014CC74[i]`, `i += 2`) with the copies stored through `GameState *gs = &D_800E6280`. The strength-reduced pointer lets as1 hoist the store-block `lbu` above `sb` (a declared `u8 *p` gets no `.noalias` mark), and the `gs` stores make uopt keep the three second-byte loads separate. The full-width space bytes are read as `D_800B3644[0]`/`[1]` in the tests, not through locals: uopt promotes them (two `lui`/`lbu` pairs), and the comparison keeps the loaded byte first (`beq t6,t0`). ugen puts a register variable before a loaded expression, so local copies of any type give `beq t0,t6`. Then `for (i = 0, n = 0; ...)` for the `move a1,zero` position, `u8 buf[0x20]` for the 96-byte frame (FAKE), and `(x + 1) & 3` on the two-bit `unk_09` fields for one more ugen temporary in each date (FAKE, 62 rows to 0). void would match this function, but the caller `func_80138F60` needs the s32 declaration (FAKE). Details and negatives: `drafts/T-25149/NAME_ENT/func_80138C1C/NOTES.md`.
+## T-25148: ENDING func_801387B0
+
+Matched: `func_801387B0` (188 words, 748 bytes) is default-build C. It started from the T-25002 draft (156 diff lines).
+Four causes, in order:
+- **Boolean sharing.** uopt shares the largest common tree, so one spelling of `(flag & 1) == 1` gives one saved boolean. The original shares only the AND (`andi v1,a0,1`) and recomputes `xor; sltiu` per test. Four spellings (plain, `^ 0`, `* 1`, `<< 0`) stop the EQU sharing; `| 0`, `1U`, `1 ==` and `(s32)` fold into the plain form (FAKE).
+- **Where `flag` is read.** `flag = D_800E6280.unk_53C[6];` before the if chain makes the first test use the shared AND; uopt sinks the load into the else block.
+- **The 0x1C arm.** `if (D_8013C360 == 0) { } else if (D_8013C360 == 1)` brings back the original's reload of `D_8013C360` (same form as the matched func_80137F64).
+- **The `D_8013CAA0 == 1` order.** Reading it into a local gives load-first in uopt's raw output, but `tools/cvt_pass.py` `_constant_first` swaps it back. Its `rewritten` set covers the whole unit and includes `D_8013CAA0` through func_80137BB4's FAKE entry loads. Reading the byte as `((u8 *)&D_8013CAA4)[-4]` (another location, FAKE) avoids the swap.
+
+Possible tool follow-up: a per-procedure `rewritten` set in `_constant_first`, gated by lever_lab. Details, negatives and ucode traces: `drafts/T-25148/ENDING/func_801387B0/NOTES.md`.
