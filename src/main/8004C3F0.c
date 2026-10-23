@@ -7,17 +7,19 @@
  * textured from VRAM x 0x3C0 (the first one goes to ordering-table entry arg8 - 1). arg0 selects
  * the texture page bits, arg1 the colour mode, arg2 the semi-transparency; arg5 is unused, arg6/arg7
  * are the clut position and arg8 the ordering-table entry.
- * Matching notes (T-25104): the colour, UV and XY stores of each quad are one comma statement each,
- * in the field order of the libgpu setRGB0/setUV4/setXY4 macros: as1 schedules by source line, and
- * the ucode order decides which common subexpression gets v0 or v1. The two assignments of each
- * colour-mode case share a line for the same reason. The repeated expressions stay inline: IDO
- * keeps them as common subexpressions and spills them to its own stack slots across the calls. */
+ * Matching notes (T-25104): the repeated expressions stay inline; IDO keeps them as common
+ * subexpressions and spills them to its own stack slots across the calls.
+ * FAKE (layout): T-25104, the colour, UV and XY stores of each quad are one comma statement each, in
+ * the field order of the libgpu setRGB0/setUV4/setXY4 macros (likely the original's macros): as1
+ * schedules by source line, and this ucode order gives the original's store order and decides which
+ * common subexpression gets v0 or v1. One statement per field misses 57 rows. */
 void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7, s32 arg8) {
     GameState *g = &D_800E6280;
     POLY_FT4 *poly;
     s32 divisor;
     s32 pageWidth;
 
+    /* FAKE: T-25104, one line per case so that as1 stores pageWidth before divisor */
     switch (arg1) {
     case 0:
         divisor = 4; pageWidth = 0x40;
