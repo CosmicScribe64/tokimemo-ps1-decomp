@@ -63,7 +63,7 @@ void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
                     SetSemiTrans(poly, 0);
                     /* FAKE: T-25122, hand expansions of the PsyQ macros setXYWH, setUVWH(poly, 0xC0, 0x50, 0x10, 0x10)
                      * and setRGB0..setRGB3, one comma statement per macro as they expand. One statement per field
-                     * gives other saved-register colours, constant registers and store order (142 rows). */
+                     * gives other saved-register colours, constant registers and store order (142 diff lines). */
                     poly->x0 = g->unk_014[D_8011ECA0] + (s16)x - arg3 / 2,
                         poly->y0 = g->unk_018[D_8011ECA0] + (s16)y - arg4 / 2,
                         poly->x1 = g->unk_014[D_8011ECA0] + (s16)x - arg3 / 2 + (s16)arg3,
