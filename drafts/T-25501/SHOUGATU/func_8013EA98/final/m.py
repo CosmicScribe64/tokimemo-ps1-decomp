@@ -11,7 +11,10 @@ m=pat.search(source)
 if m: source=source[:m.start()]+body+'\n'+source[m.end():]
 else:
     needle='INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013EA98);'
-    assert needle in source; source=source.replace(needle,body)
+    if needle in source: source=source.replace(needle,body)
+    else:
+        k=source.index('void func_8013EA98(void) {'); e=source.index('\n}\n',k)+3
+        source=source[:k]+body+source[e:]
 for a in sys.argv[3:]:
     if a.startswith('--pre='): source=Path(a[6:]).read_text()+source
 (d/'body.c').write_text(body)

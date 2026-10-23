@@ -1,14 +1,22 @@
 # T-25501: SHOUGATU func_8013EA98, synthesis pass (wave 12)
 
-Start 2026-10-23 18:12 UTC, worktree `w12-shougatu-final` (base w2-good). Not matched.
-`src/` keeps `INCLUDE_ASM`. Best body: `func_8013EA98.c` next to this file, 120 rows
-(`funcdiff --resolve --version c`, whole unit), 230 words, frame 0x58. No tool or config change.
+Start 2026-10-23 18:12 UTC, worktree `w12-shougatu-final` (base w2-good). **Matched** at about
+19:30 UTC. `func_8013EA98.c` next to this file is the C now in `src/ovl/SHOUGATU/8013E330.c`
+(plain C, no guard). Checks: `funcdiff --resolve --version default` MATCH (920 bytes), clean build
+27/27. No tool or config change.
 
-The selection loop (0x8013EB0C..0x8013EC50) now matches the original instruction for instruction,
-registers included. That had not happened in any earlier pass. All nine loop ranges are coloured in
-the original's order: 10 a1, 5 a2, 8 a3, 9 t0, base t1, D_80146054 t2, 6 t3, selector t4, 0x38 t5,
-with the counter in v0 and b1 in v1. What is left is all after the loop (list below). It is worth more
-rows than W1a's 60 because one temporary register differs and every later temporary shifts with it.
+The match has FAKEs, all marked with T-25501:
+- the `* 0` references in the selection loop (b1 alias hole, selector and counter references);
+- the forced choice held in the counter variable;
+- an alias-hole record read in the D_80146054 compare;
+- the forced store and the two following reads through the `D_800E71DF` alias. This needed a new
+  keep line in `config/migrate_globals.txt`: `proof=func_8013EA98:130:cb9e034c`, proven by
+  `tools/keepproof.py check` (130 rows with the symbol folded into the aggregate);
+- the byte view in `func_800847B8`'s argument.
+
+The sections below record how it was reached. The first part, up to "Verdict", was written at the
+120-row checkpoint (U1) and is kept as history. The closing steps are in "Closing the post-loop"
+at the end.
 
 ## The lenses
 
@@ -145,3 +153,30 @@ Work only on the post-loop block of `func_8013EA98.c` (U1). Keep the loop and it
 `final/cfg.sh` the flow graph, `final/odiff.py` an instruction diff against the target with
 pseudo-ops normalised, `final/mk.py` makes literal-replacement variants, and `final/grid.py` holds
 the post-loop grid. `m.py`, `tr.py` and `pri.sh` come from T-25143/T-25305.
+
+## Closing the post-loop (match)
+
+1. **The split comes from a precoloured unit.** This was the cost-split question left open above.
+   When the selector itself is a call argument (a byte view, so no CVT and no conversion), uopt
+   precolours that live unit to a0. `cupcosts` then gives every register in `regscantpass` the
+   cost 1e20. The cheapest register left is s0 (11.85), above the range's total, so the cost split
+   happens. Moving that unit from L_EC7C to the post-call `func_800847B8(*(u8 *)&F5F)` keeps the
+   split.
+2. **The two L_EC7C reads go through the alias** (`D_80146058 = D_800E71DF;`
+   `func_80051A68(D_800E71DF)`). With the alias forced store they form their own range,
+   {store, L_EC7C}, which is coloured v1. That gives the original's hoisted `lui v1` and
+   `lbu a0,%lo(v1)`, and every later temporary matches.
+3. **A free reference in the forced store** (`status + *(u8 *)&F5F * 0`) keeps the selector range
+   live through the exit path. Its priority is then 9/6 = 1.5, inside the window (AD1: 2 rows).
+4. **Operand order of the post-loop compares.** Copying FE4 into the counter variable makes
+   `status == 9` give `bne v0,t0`. Putting the hole term on the right of
+   `D_80146054 != status + rec[status * 0].unk_06 * 0` gives `beq t2,v0`. AE1 matched with 0 rows.
+5. **Removing FAKEs, one at a time, measured.**
+   - Not needed: the `>= 0` block, the loop's byte view of D_80146054, the byte view in `!= 6`,
+     and the byte view in the first free reference.
+   - Needed (rows when removed): the hole in the D_80146054 compare (22), the counter references
+     (18), the alias forced store (152; a real store gives 155), the b1 hole (198), the byte view
+     in `func_800847B8` (110), the alias reads (136), the `(u8)` narrowing (108). Making all loop
+     views plain gives 226.
+   - Combinations interact: several pairs of single removals that each give 0 move the frame to
+     0x60 (k1..k4, p1, p2, p4, q1, q2). p3 is the kept body.
