@@ -29,7 +29,7 @@ for body_file, outp in zip(args[0::2], args[1::2]):
         a = text.index(inc)
         b = a + len(inc)
     # the draft calls func_8004901C before its u8 definition later in the file
-    decl = "" if "u8 func_8004901C(void);" in text[:a] else "u8 func_8004901C(void);\n"
+    decl = ""
     text = text[:a] + decl + body + "\n" + text[b:]
     d = Path(tempfile.mkdtemp(dir="/tmp"))
     src = d / "cand.c"

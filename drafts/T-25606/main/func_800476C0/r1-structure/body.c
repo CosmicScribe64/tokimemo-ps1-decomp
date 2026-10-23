@@ -31,11 +31,8 @@ void func_800476C0(void) {
                 if (!(*(s32 *)((DisplayFixActor44 *)D_8011ECD0)[i].unk_34 & 0x80000000) || !(*(s32 *)((DisplayFixActor44 *)D_8011ECD0)[i].unk_0C & 0x80000000)) {
                     printf("cls%x[m%xs%xs%xf%x] ", i, D_800E6280.unk_1108, D_800E6280.unk_1109,
                            D_800E6280.unk_110A, D_800E6280.unk_110D);
-                    /* FAKE: T-25317, dead branch after the printf: the printf-path gs use then needs a reload,
-                       the gs piece drops to priority 0 and stays in memory (but the count CSE takes v0) */
-                    if (i) {
-                        tpx = 0;
-                    }
+                /* FAKE: T-25606, label for the never-taken goto at the end of the main path (see there) */
+                print_done:
                     continue;
                 } else {
                     if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_02 & 0x40) {
@@ -316,6 +313,11 @@ void func_800476C0(void) {
                             ((DisplayFixActor44 *)D_8011ECD0)[i].unk_28.w += ((DisplayFixActor44 *)D_8011ECD0)[i].unk_30;
                         }
                     }
+                    /* FAKE: T-25606, never taken ((u32)i < 0 is false; uopt keeps the edge, ugen folds it away).
+                       The extra edge into the block after the printf makes gs's loop piece reload there, so the
+                       piece has no profit and gs stays in memory, while the PRE copy of gs->count stays in the
+                       block after the call and gets v1 as in the original */
+                    if ((u32)i < 0) goto print_done;
                 }
             }
         }
