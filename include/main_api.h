@@ -211,7 +211,8 @@ typedef struct Work800E7D10 {
     /* 0x908 */ u8 given_name[16][8];
     /* 0x988 */ u8 nickname[16][16];
     /* 0xA88 */ NameMetric4 metrics[9][16];
-    /* 0xCC8 */ u8 unk_CC8[0x200];
+    /* 0xCC8 */ u8 unk_CC8[16][16]; /* per slot: the 16 bytes of GameState +0x518 (T-25105) */
+    /* 0xDC8 */ u8 unk_DC8[0x100];
     /* 0xEC8 */ u8 club[16];
     /* 0xED8 */ u8 unk_ED8[8];
 } Work800E7D10; /* size 0xEE0 */

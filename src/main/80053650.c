@@ -689,29 +689,27 @@ s32 func_80054C74(s32 arg0) {
 }
 
 void func_80054E6C(void) {
-    s32 pad[16]; /* FAKE: T-24703/T-25105, 64 unused bytes of the original 0x80 frame; the real local is unknown */
+    Work800E7D10 *w = &D_800E7D10;
+    GameState *g = &D_800E6280;
+    s32 pad[14]; /* FAKE: T-25105, 56 unused bytes of the original 0x80 frame; the real locals are unknown */
     s32 i;
     s32 slot;
 
-    /* FAKE: T-24703/T-25105, the byte view (an indirect load) loads the raw byte into s0 and keeps the
-       slot and slot * 8 bases saved across the memcpy calls; the plain global load does neither */
-    slot = *(u8 *)&D_800E7D36;
-    slot &= 0xF;
-    D_800E7D10.year[slot] = D_800E6280.unk_03E;
-    D_800E7D10.month[slot] = D_800E6280.unk_03F;
-    D_800E7D10.day[slot] = D_800E6280.unk_040;
-    memcpy(D_800E7D10.family_name[slot], D_800E6280.unk_0D4, 8);
-    memcpy(D_800E7D10.given_name[slot], D_800E6280.unk_0DC, 8);
-    memcpy(D_800E7D10.nickname[slot], D_800E6280.unk_0E4, 0x10);
+    slot = w->selected_slot & 0xF;
+    w->year[slot] = g->unk_03E;
+    w->month[slot] = g->unk_03F;
+    w->day[slot] = g->unk_040;
+    memcpy(w->family_name[slot], g->unk_0D4, 8);
+    memcpy(w->given_name[slot], g->unk_0DC, 8);
+    memcpy(w->nickname[slot], g->unk_0E4, 0x10);
     for (i = 0; i < 9; i++) {
-        *(s32 *)&D_800E7D10.metrics[i][slot] = ((s32 *)&D_800E6280.unk_0FC)[i];
+        /* each 4-byte record is copied as one word */
+        *(s32 *)&w->metrics[i][slot] = ((s32 *)&g->unk_0FC)[i];
     }
     for (i = 0; i < 16; i++) {
-        /* FAKE: T-25105, a 16-byte row view of unk_CC8; the flat slot * 16 + i index is CSE'd with
-           the nickname address across the memcpy calls and spilled */
-        ((u8 (*)[16])D_800E7D10.unk_CC8)[slot][i] = D_800E6280.unk_1BC[15].unk_14[i];
+        w->unk_CC8[slot][i] = g->unk_1BC[15].unk_14[i];
     }
-    D_800E7D10.club[slot] = D_800E6280.unk_0F4.h >> 12;
+    w->club[slot] = g->unk_0F4.h >> 12;
 }
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054FC0);
@@ -748,12 +746,12 @@ s32 func_800552DC(s32 arg0) {
     memcpy(D_800E7D10.club, bank->club, 16);
     memcpy(D_800E7D10.metrics, bank->metrics, 0x240);
     memcpy(D_800E7D10.unk_CC8, bank->unk_CD8, 0x100);
-    memcpy(&D_800E7D10.unk_CC8[0x100], bank->unk_DD8, 0x100);
-    memcpy(D_80125C10, &D_800E7D10.unk_CC8[0x100], 0x40);
-    memcpy(&D_80125C50, &D_800E7D10.unk_CC8[0x1F0], 4);
-    D_800B5C08 = D_800E7D10.unk_CC8[0x1F4];
-    D_80125C54 = D_800E7D10.unk_CC8[0x1F5];
-    D_80125C55 = D_800E7D10.unk_CC8[0x1F6];
+    memcpy(D_800E7D10.unk_DC8, bank->unk_DD8, 0x100);
+    memcpy(D_80125C10, D_800E7D10.unk_DC8, 0x40);
+    memcpy(&D_80125C50, &D_800E7D10.unk_DC8[0xF0], 4);
+    D_800B5C08 = D_800E7D10.unk_DC8[0xF4];
+    D_80125C54 = D_800E7D10.unk_DC8[0xF5];
+    D_80125C55 = D_800E7D10.unk_DC8[0xF6];
 }
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
