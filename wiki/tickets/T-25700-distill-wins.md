@@ -1,7 +1,7 @@
 ---
 id: T-25700
 title: Distill the wave 8-11 wins into playbook recipes
-status: In Review
+status: Done
 assignee: claude
 created: 2026-10-23
 updated: 2026-10-23
@@ -18,7 +18,7 @@ Make every match of waves 8-11, the wave 9 closers, the stubborn-function attack
 - [x] [[playbook]]: recurring recipes extended with the new examples; new recipes where none existed; FAKE constructs marked as FAKE.
 - [x] [[register-cheatsheet]]: rows only for register symptoms that had no row.
 - [x] [[index]] line under Matching.
-- [ ] Review against CODING_STANDARDS.md (wiki-only change; the FAKE marking rule of section 7 is the one that applies).
+- [x] Review against CODING_STANDARDS.md (wiki-only change; the FAKE marking rule of section 7 is the one that applies).
 
 ## Notes
 
@@ -35,3 +35,4 @@ Not changed: [[kanban]] and [[log]] (the orchestrator updates them).
 ## Comments
 
 - 2026-10-23, review corrections (checked against the match commits, sources and notes): main `func_8004A1A0` uses indexed map stores, not a `map` pointer (the pointer after the split reached 4 rows); FAKE labels added for the ENDING `func_801387B0` identity spellings, the main `func_80067F04` and TEL `func_8013D88C` two-path splits, and the TAIIKU `func_80137784` T-25106 FAKEs that stay (its deciding change is plain C); a scan of every "plain C" row against its source also found FAKE marks in main `func_8004FC10`, `get_near_menu`, `sndi` and GEKO `func_80133024` (per-arm locals), now labelled; GYOZI `func_801368B8` moved out of the as1 one-symbol list into its own uopt-promotion sentence; the TEL example under "Two expressions" now names the F64 flag word; the strcpy sentence names the value-returning prototype as the lever; ETC `func_8013D570` cost and the `make_color_bar` offsets corrected; the wins page counts are stated as of a018bb0e9, and main `func_8007132C` (T-25318) and GEKO `func_80142C9C` (T-25403) are listed under "Matched after this page".
+- 2026-10-23, review result: the wiki-only change was checked against CODING_STANDARDS.md (section 7, FAKE marking) and against the match commits, sources and notes. The findings (wrong access path in main `func_8004A1A0`, missing FAKE labels, a misfiled GYOZI `func_801368B8`, wrong cost and offsets in two rows, stale counts) were fixed in the corrections commit above; no open findings. Status Done.
