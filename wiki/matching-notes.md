@@ -730,7 +730,7 @@ What closed:
 
 - The record is the global array `((DisplayFixActor44 *)D_8011ECD0)[i]`, not a pointer. uopt keeps field CSEs of a named global across stores to an address-taken local, and kills them for a pointer.
 - `tpx`/`tpy` are computed after the tpage switch.
-- Rotate is the word `DisplayFixActor44.unk_20`. The header type is now `s32`, and no other user read the old halfwords.
+- Rotate is the word `DisplayFixActor44.unk_20`. The draft needs `s32 unk_20` in place of the halfwords `unk_20`/`unk_22` in `include/game.h`; no other user reads them. The edit is not committed (the header stays as the committed C needs it); apply it before running `score.py` (see the notes).
 - There is a `parts = anim->part` base and a separate count variable for the `j` loop.
 - Both `unk_05` switches have `case 0` labels.
 - One index variable serves both animation arms.

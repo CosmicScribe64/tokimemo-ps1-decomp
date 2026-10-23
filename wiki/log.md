@@ -1740,3 +1740,8 @@ Reviewed [[tickets/T-25109-w8-EN_NICHI-80136B10]] against CODING_STANDARDS.md; m
 
 Reviewed [[tickets/T-25110-w8-TACO-8013DB80]] against CODING_STANDARDS.md; matched TACO `func_8013DEE4` (1,344 bytes) as default-build C, 27/27.
 `func_8013EAA4` stays `INCLUDE_ASM` behind a NON_MATCHING body at 4 rows (notes in drafts/T-25110/TACO/func_8013EAA4/); no review findings.
+
+## [2026-10-23] ticket | T-25116 Done
+
+Reviewed [[tickets/T-25116-w8-main-80047550]] against CODING_STANDARDS.md; matched main `func_80047560` (352 bytes) as default-build C, 27/27.
+`func_800476C0` stays `INCLUDE_ASM` at 649 diff lines (notes in drafts/T-25116/main/func_800476C0/); the unneeded `include/game.h` change was reverted in review.

@@ -6,7 +6,7 @@ The per-frame draw loop over the 160 display records of `D_8011ECD0` (3,132 byte
 
 - Start: `INCLUDE_ASM`; best known body `drafts/T-23006/main/func_800476C0/body.c`. Measured here at 1,191 diff lines (`score.py`), 816 built words against 783.
 - Now: `body.c` has 649 diff lines (score 625) and 780 words against 783. The control flow, frame, stack homes and every block shape are the original's, except three places listed under "What is left". The other rows are register numbers.
-- `body.c` needs `u8 func_8004901C(void);` before it. `score.py` adds that line. It also needs `DisplayFixActor44.unk_20` as one `s32` (the rotate word, `lw 0x20(s1)`). That header change is committed in `include/game.h`; nothing else used `unk_20` or `unk_22` of that type.
+- `body.c` needs `u8 func_8004901C(void);` before it. `score.py` adds that line. It also needs `DisplayFixActor44.unk_20` as one `s32` (the rotate word, `lw 0x20(s1)`). That header edit is not committed (the review kept `include/game.h` to what the committed C needs): in `include/game.h` replace the two lines `/* 0x20 */ s16 unk_20;` and `/* 0x22 */ s16 unk_22;` of `DisplayFixActor44` with `/* 0x20 */ s32 unk_20;` before running `score.py`. Nothing else uses `unk_20` or `unk_22` of that type (checked at the T-25116 build).
 
 ## Tools (Docker, repo root)
 
