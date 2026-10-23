@@ -719,3 +719,20 @@ A `GameState *g` pointer replaces the FAKE scalar views and keeps the two final 
 3. One source line per vertex (FAKE, layout only). uopt emits `160 - arg0` and `160 - Q11` under the x2 line (see `cc -S`), so as1 orders case 0 correctly only when x2, h and y2 share a line: 4 to 0.
 
 Details and negatives: `drafts/T-25113/ETC/func_8013D570/NOTES.md`.
+## T-25112: TACO func_80139FB8
+
+Matched as default C, 1480 bytes (370 words), from INCLUDE_ASM, with no FAKE. [[tickets/T-25112-w8-TACO-80139170]]; steps, measurements and negatives are in `drafts/T-25112/TACO/func_80139FB8/NOTES.md`. The start was the T-24502 body (FAKE zero subtree), 179 rows in the full unit.
+
+1. The mirrored half had v0/v1 swapped (input and angle result). Writing the angle result into the scale variable, which is coloured first, gave 169 rows; a separate local or `d`/`angle` cost 10 rows on the final body.
+2. Without the FAKE, one sine variable for the front, +i and back entries (the -i sine stays separate) has priority 4.8, between the radius and the constants, and takes s5: 163 rows.
+3. The last 163 rows were the constant colours: in the m2c `do { } while (i != 20)` form, 3 (3.5) beat 40 (3.444), and 0x100000 and 96 (2.5) beat the table address (2.333), so 0x100000 took fp and the table was addressed with `lui/%lo`. `for (i = 1; i < 20; i++)` (also with `!=`, also with an explicit step) changes the loop's block layout and matched. A do/while with `<` stays at 163. Check the `for` form when the s registers of hoisted constants are permuted in a constant-trip loop.
+
+## T-25112: TACO func_80139424
+
+Matched as default C, 1676 bytes (419 words), from INCLUDE_ASM. [[tickets/T-25112-w8-TACO-80139170]]; steps, measurements and negatives in `drafts/T-25112/TACO/func_80139424/NOTES.md`. The start was the T-24502 body, 282/265 rows in the full unit.
+
+- **K&R `u8 arg0;` definition** keeps the glyph in s1 from entry (the header's `void func_80139424();` stays).
+- **The frame homes list the locals**: the caller-save slots hold, top-down, x0, y0, x1, y1, x2, y2, x3, y3, w; x1 and x2 are memory-only copies. Declaring them in that order (two FAKE pad words below) gives the 0x68 frame.
+- **One full expression per vertex, offset grouped first**: `D_800E6280.unk_014[i] + (arg4 - dx)`. uopt shares the centre load but finds no common sum, and the later re-association emits `centre + arg4` twice, as the original does. `(centre + arg4) - dx`, a centre local, explicit copies or chains all CSE or propagate (300+ rows).
+- **setUVWH on one line** for the `@ * #` glyphs: the 0xD3/0xDF constants are coloured by first mention, which only the macro's field order gets right together with the store order. The letter index is assigned in its test, `(letter = arg0 - 'A') < 26`.
+- **FAKE `x3 = 0;` at the top**: x0 and x3 tie at priority 1 and are coloured by uopt bit; the dead store gives x3 the earlier bit without changing the evaluation order. Real source unknown.

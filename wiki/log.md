@@ -1739,3 +1739,6 @@ Both functions of `src/ovl/TACO/8013B990.c` are now C, notes in drafts/T-25111/T
 
 Reviewed and merged w8-ETC-8013BEF0: matched ETC `func_8013F054` (716 bytes) and `func_8013D570` (2352 bytes), default C, 27/27.
 Both functions of the package are matched, none left with rows; see [[tickets/T-25113-w8-ETC-8013BEF0]].
+## [2026-10-23] ticket | T-25112 Done
+Reviewed [[tickets/T-25112-w8-TACO-80139170]] against CODING_STANDARDS.md; no findings, clean rebuild 27/27. Matched TACO `func_80139FB8` (1480 bytes, plain C, no FAKE) and `func_80139424` (1676 bytes, default C, FAKEs T-25112: dead `x3 = 0;`, `pad[2]`).
+Lessons are in [[matching-notes#T-25112: TACO func_80139FB8]] and [[matching-notes#T-25112: TACO func_80139424]] (for loop instead of m2c do/while; vertex written as centre + (offset -/+ half)).
