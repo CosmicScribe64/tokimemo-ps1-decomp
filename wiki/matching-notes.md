@@ -789,6 +789,7 @@ negatives: `drafts/T-25146/ETC/func_80144224/NOTES.md`.
 ## T-25145: ENDING func_801330E4
 
 Matched (default C, 796 bytes) from the T-24924 92-row body, in about an hour. Three causes. (1) `level` is saved at 0x54: declare the register-allocated `s16 i` after `points`, so `level` sits below it; frame and `chance` stay. (2) The original loads the f9 flag word into `a0`, shifts it into `v0` and copies the `srl` temporary back to `v0` after the sum. That is ugen's destination forwarding ([[tickets/T-25034-main-quadrant-extent]]) with the word coloured on one read, which IDO 5.3 does not do ([[original-compiler]] rule 3); a FAKE empty test on the word gives it a second read and `a0`. (3) The in-place `sltiu/xori` and every ugen temporary of the block and the tail came from `(x > 0) * 2` (not `(x == 0 ^ 1) * 2`) and three statements, `level = f9; level += A; level += B;`. Step 3 was found with a FIFO model of ugen's free list applied to the `cc -S` listing: the target's registers after the clamp need the first sum freed before B's byte. Candidate [[playbook]] recipe: when every ugen temporary of a sum and later blocks is off and one-statement operand orders do not fix it, try the sum as separate `+=` statements. Details and negatives: `drafts/T-25145/ENDING/func_801330E4/NOTES.md`.
+
 ## T-25142: BUNKA_SD func_80134D94
 
 Not matched; aligned cost 102 -> 12 (243/243 words), but 45 positional rows, so the source is plain
