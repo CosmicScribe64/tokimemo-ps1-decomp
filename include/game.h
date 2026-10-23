@@ -223,8 +223,7 @@ typedef struct DisplayFixActor44 {
     /* 0x1A */ s16 unk_1A;
     /* 0x1C */ s16 unk_1C;
     /* 0x1E */ s16 unk_1E;
-    /* 0x20 */ s16 unk_20;
-    /* 0x22 */ s16 unk_22;
+    /* 0x20 */ s32 unk_20;            /* sprite rotate word (lw in main func_800476C0, T-25116) */
     /* 0x24 */ Fix32 unk_24;
     /* 0x28 */ Fix32 unk_28;
     /* 0x2C */ s32 unk_2C;
