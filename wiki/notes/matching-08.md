@@ -81,3 +81,15 @@ Single-row consultation232->226/196 independently confirmed; natural a0 call spi
 ### T-24501 get_fnt raster and mirror recovery
 
 Natural byte raster/mirror reconstruction343->23 resolved cost,258words versus259target. Proven256B temporary, byte row stride, fixed eight-byte horizontal permutation and correct8/16 vertical rowcounts replace inherited invalid array/wordcasts/manual unroll. Separate raster/shared mirror counter restores all saved roles and raster/vertical flow. Remaining frame188/1A0, buffer88/8C, late exit/move and multiply-order differences frozen for bounded consultation. Source-only packet/replay drafts/T-24501/main/get_fnt-notes.md; production/header unchanged.
+
+## T-24600: record-scan allocation and GEKO day-load probes
+
+[[tickets/T-24600-finish-matching]] confirms the 6,816/6,952 Docker census. No new verified C bytes and no production-source changes.
+
+MAIN `func_8006C988`: 25 baseline/join-local/type/switch probes, 20 increment-placement/base-lifetime probes, 24 address-construction probes, and 15 empty-test/load-seeding probes found no zero score. The best isolated scorer result is 715 versus 850 for the guarded baseline; these are permuter costs, not instruction counts or proof of a match. Full-TU verification still reports real differences across the same 69 instructions: pointer and PRE-value registers are swapped, with initialization and loop-tail scheduling differences. Wider `cur` removes narrowing but does not close the match, consistent with earlier evidence.
+
+Instrumented uopt reports the induction pointer as unconstrained bit 83 (priority 15.25) and PRE-loaded byte as unconstrained bit 84 (priority 20). Both are allocated in bit order, so raising the latter's priority alone is not a sufficient remedy. Arrow, byte-offset and reversed-add forms did not improve the score. Explicit early loads and empty tests did not successfully seed the desired range order. Some early assignment probes change semantics and were diagnostic controls only; none is suitable for promotion.
+
+GEKO `func_80133024`: 29 baseline/day-expression/empty-test probes found no improvement over isolated score 40. Byte views can retain that score; promotion masks and arithmetic no-ops worsen it. No full-TU candidate verification was warranted because none beat the baseline.
+
+Local reproducibility files remain gitignored in `build/T-24600/`: `probe.py`, `join.py`, `views.py`, `seed.py`, `geko.py`, candidate C and `regdiff/`. They require the current checkout and Docker; the trace used the existing `/private/tmp/t24047-uopt/variants/trace`. Do not count these scratch artifacts as completed decompilation.

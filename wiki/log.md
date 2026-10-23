@@ -7,9 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24800 per-file as1 options
-[[tickets/T-24800-as1-per-file-flags]] created and worked; moved to In Review. New harness tools/as1_flag_sweep.py compiled the 8 as1-order near-miss files under about 60 as1/driver option variants ([[as1-scheduling]]). Only `-noxbb` (`-Wb,-noxbb`) fixes any of them. VALEN func_80134030 now matches with a FAKE per-object option in config/toolchains.txt; every function of the file matches and VALEN.bin is OK. GYOZI func_80139E4C also matches with it, but func_801399C0 in the same file breaks. A `-noxbb` census changes 2,450 of 6,814 C functions. Verdict: per-file options do not explain the family. Lead: xbb's per-function treatment of one-predecessor switch default blocks. configure.py and tools/cc.py now accept `ido <ver> -W<pass>,<opt>` lines; funcdiff_verify, order_search and permute use the object's toolchain.
-
 ## [2026-10-20] decision | Plan for the remaining functions
 
 [[plan-remaining]] gives any agent (including cheap ones) the rules and per-class recipes for the last 127 functions; the classified list is [[data/remaining-2026-10-20]] (A 8 near misses, B 18 guarded, C 11 good drafts, D 90 reconstructions). T-24800 and T-24900 Done ([[as1-scheduling]], [[as1-scheduler-rule]]).
@@ -1734,9 +1731,11 @@ Lessons are in [[matching-notes#T-25112: TACO func_80139FB8]] and [[matching-not
 ## [2026-10-23] build | T-25201 w9c-main-80062CD0
 Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/playbook.md`, fixed), clean rebuild 27/27, funcdiff MATCH. Matched: main `func_80065B0C` (1064 bytes) as default C with one FAKE (never-true indirect-store arm that puts the else arm in the `$s5` range).
 No function left with rows in this job; notes in `drafts/T-25108/main/func_80065B0C/NOTES.md`, [[matching-notes]], [[playbook]].
+
 ## [2026-10-23] build | T-25201 w9c-EN_NICHI-80136B10
 Matched EN_NICHI `func_80136DEC` (1,392 bytes) as default-build C, guard removed, 27/27, review without findings ([[tickets/T-25201-wave-9-closers]]).
 The scene table `D_80139C5C`, which names the function, is now defined in C, so as1 links the case-3 jump-table `jr` back to the entry and fills the D1/D2 delay slots as the original does ([[as1-scheduler-rule]], [[matching-notes]]).
+
 ## [2026-10-23] build | T-25201 w9c-TACO-8013DB80
 
 Reviewed [[tickets/T-25201-wave-9-closers]] job w9c-TACO-8013DB80; matched TACO `func_8013EAA4` (1964 bytes) as default-build C, 27/27 (`src/ovl/TACO/8013DB80.c`).

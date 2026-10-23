@@ -17,18 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24600: record-scan allocation and GEKO day-load probes
-
-[[tickets/T-24600-finish-matching]] confirms the 6,816/6,952 Docker census. No new verified C bytes and no production-source changes.
-
-MAIN `func_8006C988`: 25 baseline/join-local/type/switch probes, 20 increment-placement/base-lifetime probes, 24 address-construction probes, and 15 empty-test/load-seeding probes found no zero score. The best isolated scorer result is 715 versus 850 for the guarded baseline; these are permuter costs, not instruction counts or proof of a match. Full-TU verification still reports real differences across the same 69 instructions: pointer and PRE-value registers are swapped, with initialization and loop-tail scheduling differences. Wider `cur` removes narrowing but does not close the match, consistent with earlier evidence.
-
-Instrumented uopt reports the induction pointer as unconstrained bit 83 (priority 15.25) and PRE-loaded byte as unconstrained bit 84 (priority 20). Both are allocated in bit order, so raising the latter's priority alone is not a sufficient remedy. Arrow, byte-offset and reversed-add forms did not improve the score. Explicit early loads and empty tests did not successfully seed the desired range order. Some early assignment probes change semantics and were diagnostic controls only; none is suitable for promotion.
-
-GEKO `func_80133024`: 29 baseline/day-expression/empty-test probes found no improvement over isolated score 40. Byte views can retain that score; promotion masks and arithmetic no-ops worsen it. No full-TU candidate verification was warranted because none beat the baseline.
-
-Local reproducibility files remain gitignored in `build/T-24600/`: `probe.py`, `join.py`, `views.py`, `seed.py`, `geko.py`, candidate C and `regdiff/`. They require the current checkout and Docker; the trace used the existing `/private/tmp/t24047-uopt/variants/trace`. Do not count these scratch artifacts as completed decompilation.
-
 ## T-24601: get_fnt literal match
 
 [[tickets/T-24601-get-fnt-match]] promotes the T-24501 natural raster/mirror reconstruction as 1,036 default-C bytes. Width-first multiplication in the horizontal loop fixes the second unrolled-row operand order (23 -> 21 cost). The missing odd-row `v0` pointer copy and early return-address load both come from return-register liveness: `s32 get_fnt(...)` without a return changes cost 21 -> 14 and restores all 259 instructions. Remaining differences are only seven frame-derived words. A marked five-word pad before the real 256-byte temporary plus one word after restores frame 0x1A0 and buffer 0x8C, giving cost zero. These unknown original locals and return-liveness constraint remain explicitly FAKE.
@@ -704,6 +692,7 @@ Matched: `func_8013BAC4` (460 words, 1840 bytes) is default-build C, 27/27 SHA1.
 - `switch (*(u8 *)&D_800E6280.unk_1109)`, which keeps global copy propagation on. The tools/cvt_pass.py zcopy-off rule otherwise leaves the y distance as a range with `move a0,v0`, and as1 keeps that move in an s32 function.
 
 `s32 func_8013D2A0(s16, s16, s16)` and `TcDamage9 D_8015F548` are now in TACO.h. The two FAKEs (s32 return, byte-view selector) name T-25111. Measured negatives and the toy evidence are in `drafts/T-25111/TACO/func_8013BAC4/NOTES.md`.
+
 ## T-25113: ETC func_8013F054
 
 [[tickets/T-25113-w8-ETC-8013BEF0]]: matched (default C, 716 bytes, no FAKE), from INCLUDE_ASM. The best earlier body had 71 rows (T-24076). Three causes, each closed by one change:
@@ -723,6 +712,7 @@ A `GameState *g` pointer replaces the FAKE scalar views and keeps the two final 
 3. One source line per vertex (FAKE, layout only). uopt emits `160 - arg0` and `160 - Q11` under the x2 line (see `cc -S`), so as1 orders case 0 correctly only when x2, h and y2 share a line: 4 to 0.
 
 Details and negatives: `drafts/T-25113/ETC/func_8013D570/NOTES.md`.
+
 ## T-25112: TACO func_80139FB8
 
 Matched as default C, 1480 bytes (370 words), from INCLUDE_ASM, with no FAKE. [[tickets/T-25112-w8-TACO-80139170]]; steps, measurements and negatives are in `drafts/T-25112/TACO/func_80139FB8/NOTES.md`. The start was the T-24502 body (FAKE zero subtree), 179 rows in the full unit.
@@ -740,6 +730,7 @@ Matched as default C, 1676 bytes (419 words), from INCLUDE_ASM. [[tickets/T-2511
 - **One full expression per vertex, offset grouped first**: `D_800E6280.unk_014[i] + (arg4 - dx)`. uopt shares the centre load but finds no common sum, and the later re-association emits `centre + arg4` twice, as the original does. `(centre + arg4) - dx`, a centre local, explicit copies or chains all CSE or propagate (300+ rows).
 - **setUVWH on one line** for the `@ * #` glyphs: the 0xD3/0xDF constants are coloured by first mention, which only the macro's field order gets right together with the store order. The letter index is assigned in its test, `(letter = arg0 - 'A') < 26`.
 - **FAKE `x3 = 0;` at the top**: x0 and x3 tie at priority 1 and are coloured by uopt bit; the dead store gives x3 the earlier bit without changing the evaluation order. Real source unknown.
+
 ## T-25201: EN_NICHI func_80136DEC (closer)
 
 Matched; the guard is removed. The T-25109 body was right. The last 4 rows (the delay slots of the
@@ -752,6 +743,7 @@ case of the [[playbook]] recipe "A function named by the file's own data" (after
 `func_80134724`). The symptom here is different: a compare-chain switch, not a range-check slot. Check
 it whenever the original fills a slot from the next compare and the case head's instruction would
 pass the path test. Details: `drafts/T-25109/EN_NICHI/func_80136DEC/NOTES.md`.
+
 ## T-25201: TACO func_8013EAA4 (closer)
 
 Matched (default C, 1964 bytes, 27/27) from the T-25110 4-row body. Cause of the last rows: uopt's `spilltemps` gives temporaries in bit order (first fit, skipping those of lower bits that share a node). The third grid's `o * 0x100` (bit 196) came before `j * size * 2` (bit 201) and took the particle pointer's sp+0x64, since their regions do not meet. Fix: `half = 0x80;` after the height statement, and `j * half * 2 - half` / `o * half * 2 - half` in the second grid X and third grid Y. Copy propagation then makes the Y item late (bit 215): `j * size * 2` takes sp+0x64 (it stays in s1) and Y gets sp+0x58. `half` takes the old `pad_b` slot. Found with a scratch uopt that prints each `spilltemps` decision (`drafts/T-25110/TACO/func_8013EAA4/spillpatch.py` on top of `tools/uopt_patch.py trace`). Details and controls: `drafts/T-25110/TACO/func_8013EAA4/NOTES.md`.
