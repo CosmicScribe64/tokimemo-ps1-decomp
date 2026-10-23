@@ -84,7 +84,136 @@ void func_8013DDE4(void) {
     } while (i != 0x10);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013DB80", func_8013DEE4);
+s32 func_8013DEE4(s32 arg0) {
+    /* FAKE: pad is an unused local; it holds the 4-byte slot that puts the original frame at 0xD8 (m at
+     * sp+0xB0, kind at 0x80, v at 0x6C) and the colour switch temporary at 0x68. T-25110 */
+    s32 pad;
+    POLY_FT4 *poly;
+    MATRIX m;
+    SVECTOR w;
+    s32 pt[4];
+    s32 dist;
+    s32 o;
+    s32 depth;
+    s32 flag;
+    s32 j;
+    s32 kind;
+    s32 mode;
+    s32 c;
+    s32 step;
+    SVECTOR v;
+
+    v = *(SVECTOR *)&D_8015EB30[arg0];
+    kind = D_8015EB30[arg0].unk11 & 0xF;
+    m = D_80129C40;
+    v.vz -= 0x200;
+    func_800A1100(&m);
+    func_800A1070(&m);
+    switch (kind) {
+    case 3:
+    case 5:
+        step = 0x100;
+        break;
+    case 0:
+        step = 0x40;
+        break;
+    default:
+    case 1:
+    case 2:
+    case 4:
+        step = 0x80;
+        break;
+    }
+    mode = kind;
+    w.vz = v.vz;
+    for (o = 0; o < 2; o++) {
+        w.vy = v.vy + o * step - step / 2;
+        for (j = 0; j < 2; j++) {
+            w.vx = v.vx + j * step - step / 2;
+            func_800AB170(&w, &pt[j * 2 + o], &depth, &flag);
+        }
+    }
+    if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
+        if (((s16 *)pt)[3] >= D_800E6280.unk_018[D_8011ECA0] - 0x200
+            && D_800E6280.unk_018[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
+            dist = (D_80122754 - v.vz) / 127;
+            if (dist >= 0x100) {
+                dist = 0xFF;
+            } else if (dist <= 0) {
+                return -1;
+            }
+            poly = func_800490F0(0x28, D_8011ECA0);
+            func_8009F040(poly);
+            switch (mode) {
+            case 5:
+                c = 0xFF;
+                break;
+            case 6:
+                c = 0xFF;
+                break;
+            default:
+                c = 0x80;
+                break;
+            }
+            poly->r0 = c;
+            poly->g0 = c;
+            poly->b0 = c;
+            switch (kind) {
+            case 3:
+            case 5:
+            case 6:
+                SetSemiTrans(poly, 1);
+                break;
+            default:
+            case 0:
+            case 1:
+            case 2:
+            case 4:
+                SetSemiTrans(poly, 0);
+                break;
+            }
+            if (mode != 4) {
+                poly->tpage = func_8009ECB0(1, 1, 0x3C0, 0x100);
+            } else {
+                poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
+            }
+            if (mode != 4) {
+                if (mode == 5) {
+                    poly->clut = func_8009ED74(0, 0x1EA);
+                } else {
+                    poly->clut = func_8009ED74(0x100, 0x1F8);
+                }
+            } else {
+                poly->clut = func_8009ED74(0, 0x1E5);
+            }
+            switch (kind) {
+            default:
+            case 0:
+            case 1:
+                poly->u0 = 1, poly->v0 = 0x41, poly->u1 = 0x1F, poly->v1 = 0x41, poly->u2 = 1, poly->v2 = 0x5F, poly->u3 = 0x1F, poly->v3 = 0x5F;
+                break;
+            case 2:
+                poly->u0 = 0x41, poly->v0 = 1, poly->u1 = 0x7F, poly->v1 = 1, poly->u2 = 0x41, poly->v2 = 0x3F, poly->u3 = 0x7F, poly->v3 = 0x3F;
+                break;
+            case 3:
+                poly->u0 = 1, poly->v0 = 1, poly->u1 = 0x3F, poly->v1 = 1, poly->u2 = 1, poly->v2 = 0x3F, poly->u3 = 0x3F, poly->v3 = 0x3F;
+                break;
+            case 4:
+                poly->u0 = 0x40, poly->v0 = 0x80, poly->u1 = 0x7F, poly->v1 = 0x80, poly->u2 = 0x40, poly->v2 = 0xBF, poly->u3 = 0x7F, poly->v3 = 0xBF;
+                break;
+            }
+            poly->x0 = ((s16 *)pt)[4];
+            poly->y0 = ((s16 *)pt)[5];
+            poly->x1 = ((s16 *)pt)[0];
+            poly->y1 = ((s16 *)pt)[1];
+            poly->x2 = ((s16 *)pt)[6];
+            poly->y2 = ((s16 *)pt)[7];
+            poly->x3 = ((s16 *)pt)[2];
+            poly->y3 = ((s16 *)pt)[3];
+            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+        }
+    }
+}
 
 s32 func_8013E424(pos, kind)
 TcPos pos;
@@ -257,4 +386,148 @@ void func_8013E778(s32 arg0) {
     }
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-25110, 4 rows: the third grid's vertical induction temporary (o * 0x100) shares the
+ * particle pointer's spill home (sp+0x64) instead of taking sp+0x58; every other instruction matches. */
+void func_8013EAA4(s32 arg0) {
+    /* FAKE: pad, pad_a and pad_b are unused; they hold the original frame (0x110: matrix at sp+0xE8, v at
+     * 0xC0, pt at 0xB0, pos at 0xA8, depth/flag at 0x94/0x90, kind/phase at 0x88/0x84, height at 0x74, uopt
+     * spill homes from 0x6C down). Real locals unknown. T-25110 */
+    Tc14 *particle;
+    POLY_FT4 *poly;
+    MATRIX matrix;
+    s32 pad[8];
+    SVECTOR v;
+    s32 pt[4];
+    TcPos pos;
+    s32 dist;
+    s32 o;
+    s32 j;
+    s32 pad_a;
+    s32 depth;
+    s32 flag;
+    s32 pad_b;
+    s32 kind;
+    u32 phase;
+    s32 row;
+    s32 size;
+    s32 clut;
+    s32 height;
+    u32 frame;
+
+    matrix = D_80129C40;
+    particle = &D_8015EC70[arg0];
+    pos = *(TcPos *)particle;
+    pos.z -= 0x200;
+    kind = particle->unk11 & 7;
+    phase = particle->unk12 >> 1;
+    func_800A1100(&matrix);
+    func_800A1070(&matrix);
+    v.vz = pos.z;
+    for (o = 0; o < 2; o++) {
+        v.vy = pos.y + o * 0x80 - 0x40;
+        for (j = 0; j < 2; j++) {
+            v.vx = pos.x + j * 0x80 - 0x40;
+            func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
+        }
+    }
+    if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
+        if (((s16 *)pt)[3] >= D_800E6280.unk_018[D_8011ECA0] - 0x200 && D_800E6280.unk_018[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
+            dist = (D_80122754 - pos.z) / 127;
+            if (dist >= 0x100) {
+                dist = 0xFF;
+            } else if (dist <= 0) {
+                dist = 1;
+            }
+            poly = GetWorkBase(0x28, D_8011ECA0);
+            func_8009F040(poly);
+            SetSemiTrans(poly, 0);
+            poly->r0 = 0x80;
+            poly->g0 = 0x80;
+            poly->b0 = 0x80;
+            poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
+            if (D_8015F560[kind] != 0) {
+                frame = phase % D_8015F560[kind];
+            } else {
+                frame = 0;
+            }
+            row = D_8015F568[kind];
+            poly->clut = func_8009ED74(frame * 0x10, row + 0x1E0);
+            poly->u0 = D_8015F570[kind] + 1;
+            poly->v0 = D_8015F578[kind] + 1;
+            poly->u1 = D_8015F570[kind] + 0xF;
+            poly->v1 = D_8015F578[kind] + 1;
+            poly->u2 = D_8015F570[kind] + 1;
+            poly->v2 = D_8015F578[kind] + 0xF;
+            poly->u3 = D_8015F570[kind] + 0xF;
+            poly->v3 = D_8015F578[kind] + 0xF;
+            poly->x0 = ((s16 *)pt)[4];
+            poly->y0 = ((s16 *)pt)[5];
+            poly->x1 = ((s16 *)pt)[0];
+            poly->y1 = ((s16 *)pt)[1];
+            poly->x2 = ((s16 *)pt)[6];
+            poly->y2 = ((s16 *)pt)[7];
+            poly->x3 = ((s16 *)pt)[2];
+            poly->y3 = ((s16 *)pt)[3];
+            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            height = (func_800A0070(particle->unk12 * 0x10) << 7) / 4096;
+            v.vz = pos.z;
+            for (o = 0; o < 2; o++) {
+                v.vy = pos.y + o * height * 2 - height;
+                for (j = 0; j < 2; j++) {
+                    v.vx = pos.x + j * 0x100 - 0x80;
+                    func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
+                }
+            }
+            poly = GetWorkBase(0x28, D_8011ECA0);
+            func_8009F040(poly);
+            SetSemiTrans(poly, 1);
+            poly->r0 = 0x80;
+            poly->g0 = 0x80;
+            poly->b0 = 0x80;
+            poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
+            clut = ((s32)phase % 14) * 0x10;
+            poly->clut = func_8009ED74(clut, 0x1E7);
+            poly->u0 = 0x61, poly->v0 = 0x21, poly->u1 = 0x7F, poly->v1 = 0x21, poly->u2 = 0x61, poly->v2 = 0x3F, poly->u3 = 0x7F, poly->v3 = 0x3F;
+            poly->x0 = ((s16 *)pt)[4];
+            poly->y0 = ((s16 *)pt)[5];
+            poly->x1 = ((s16 *)pt)[0];
+            poly->y1 = ((s16 *)pt)[1];
+            poly->x2 = ((s16 *)pt)[6];
+            poly->y2 = ((s16 *)pt)[7];
+            poly->x3 = ((s16 *)pt)[2];
+            poly->y3 = ((s16 *)pt)[3];
+            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            size = (func_800A0140(particle->unk12 * 0x10) << 7) / 4096;
+            v.vz = pos.z;
+            for (o = 0; o < 2; o++) {
+                v.vy = pos.y + o * 0x100 - 0x80;
+                for (j = 0; j < 2; j++) {
+                    v.vx = pos.x + j * size * 2 - size;
+                    func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
+                }
+            }
+            poly = GetWorkBase(0x28, D_8011ECA0);
+            func_8009F040(poly);
+            SetSemiTrans(poly, 1);
+            poly->r0 = 0x80;
+            poly->g0 = 0x80;
+            poly->b0 = 0x80;
+            poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
+            poly->clut = func_8009ED74(clut, 0x1E7);
+            poly->u0 = 0x61, poly->v0 = 0x21, poly->u1 = 0x7F, poly->v1 = 0x21, poly->u2 = 0x61, poly->v2 = 0x3F, poly->u3 = 0x7F, poly->v3 = 0x3F;
+            poly->x0 = ((s16 *)pt)[4];
+            poly->y0 = ((s16 *)pt)[5];
+            poly->x1 = ((s16 *)pt)[0];
+            poly->y1 = ((s16 *)pt)[1];
+            poly->x2 = ((s16 *)pt)[6];
+            poly->y2 = ((s16 *)pt)[7];
+            poly->x3 = ((s16 *)pt)[2];
+            poly->y3 = ((s16 *)pt)[3];
+            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013DB80", func_8013EAA4);
+#endif
