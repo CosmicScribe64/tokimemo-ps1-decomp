@@ -1733,3 +1733,8 @@ The review marked the unused K&R parameter FAKE; the clamp-arm zero term and the
 
 Reviewed and merged w8-TAIIKU-80138950: matched TAIIKU `func_80139AB0`, `func_8013E894`, `func_8013DDB8`, `func_8013F3A4`, `func_8013E1FC`, `func_8013EC60` (7796 bytes, default C, 27/27).
 All six functions of the package are matched, none left with rows; see [[tickets/T-25102-w8-TAIIKU-80138950]].
+
+## [2026-10-23] ticket | T-25113 Done
+
+Reviewed and merged w8-ETC-8013BEF0: matched ETC `func_8013F054` (716 bytes) and `func_8013D570` (2352 bytes), default C, 27/27.
+Both functions of the package are matched, none left with rows; see [[tickets/T-25113-w8-ETC-8013BEF0]].
