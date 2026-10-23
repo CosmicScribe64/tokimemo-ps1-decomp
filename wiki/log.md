@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | GEKO ranking complete
-
-[[tickets/T-24605-geko-ranking]] In Review -> Done after all review and integration gates pass. Updated [[status]], [[matching-notes]] and [[tickets/T-24600-finish-matching]]:6,821 functions /2,095,956 bytes,131 functions remaining. Five functions /4,388 bytes completed in this continuation. Root and three agents continue matching; the full completion goal remains active.
-
-## [2026-10-20] lint | GEKO ranking completion checks
-
-Refreshed catalogs for [[tickets/T-24605-geko-ranking]]:727 tickets,426 sections,3,076 functions. Docker wiki lint reports zero broken links and zero ticket/board mismatches. Large-page warnings now include [[matching-notes]] alongside [[data/t0018-cases]] and [[log]]; notes should be archived in the continuing maintenance pass. `git diff --check` passes.
-
 ## [2026-10-20] decision | Correct NAME_ENT decrement-width interpretation
 
 Independent re-audit during [[tickets/T-24600-finish-matching]] found that NAME_ENT43580 narrows decremented X to s16 before both store and call. Corrected the earlier full-word claim in [[tickets/T-24526-name-ent-intro-regions]] and [[matching-notes]]; its1075-word scratch metrics included an incorrect width control, never promoted. Active reconstruction restores the narrowing. Old log entries remain untouched.
