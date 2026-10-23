@@ -7,9 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25002 to In Review
-[[tickets/T-25002-class-c-ending-geko-etc]]: no match. GEKO `func_80133C50` guarded at 13 rows (from the T-24503 cost-44 body: u8 cast, `g * 1`, word-local C50 read); ENDING `func_801387B0` and ETC `func_80144224` stay INCLUDE_ASM with drafts in drafts/T-25002/. Notes in [[matching-notes]]. Clean build 27/27 and the header, globals and proto checks pass.
-
 ## [2026-10-20] build | T-25005 several .data ranges per C object
 [[tickets/T-25005-data-regions-per-object]] created, worked, moved to In Review. A further `.data` island of an object is a yaml dict line with `dir: island_<VRAM>` and `linker_section: .data_<VRAM>` (written by tools/data_island.py). tools/data_pieces.py puts all its pieces in one directory, and the new tools/data_split.py (called by tools/object_layout.py) cuts the compiled `.data` into the sections. main `sndisp` (T-25001 guard, cherry-picked) now matches in plain C, src/main/8004F870.c owns `800B40F0-800B4390` as well. Clean build 27/27; [[build-system]] "Several ranges per object"; notes in [[matching-notes]] `## T-25005`.
 
@@ -1744,6 +1741,7 @@ The only function of the package is matched, none left with rows; notes in `draf
 ## [2026-10-23] ticket | T-25124 Done
 Reviewed [[tickets/T-25124-w8-main-80046500]] against CODING_STANDARDS.md; the goto FAKE comment now also covers the comma UV groups and a duplicate draft copy of the body was removed; clean rebuild 27/27, funcdiff MATCH. Matched main `func_80046AC8` (2696 bytes) as default C in `src/main/80046500.c`.
 The only function of the package is C now; notes in `drafts/T-25124/main/func_80046AC8/NOTES.md` and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25120 Done
 
 Reviewed [[tickets/T-25120-w8-GYOZI-80138B50]] against CODING_STANDARDS.md; matched GYOZI `func_8013907C` (844 bytes) and `func_80138C9C` (992 bytes) as default-build C.
