@@ -1792,3 +1792,5 @@ The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) found that
 ## [2026-10-23] ticket | T-25600 finish gate opened
 
 User approved one gate in place of the separate conveyors. [[tickets/T-25600-finish-gate]] (tickets T-25601..T-25609) loops the nine functions left until none is in assembly, using the lens, synthesis and review treatment that matched TAIIKU func_80137784. Waves 10 and 11 start no new work; their running passes finish first.
+## [2026-10-23] build | T-25401 w11-GEKO-801323E0-p1
+Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl/GEKO/801323E0.c`; func_80132D04 got an old-style definition (same bytes). The file has no INCLUDE_ASM left, so [[tickets/T-25401-w11-GEKO-801323E0]] is Done after review; notes in [[matching-notes]].

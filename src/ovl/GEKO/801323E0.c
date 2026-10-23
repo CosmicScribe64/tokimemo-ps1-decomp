@@ -211,7 +211,13 @@ s32 func_80132B24(void) {
     if (girl) {}
 }
 
-void func_80132D04(s16 arg0, s16 arg1) {
+/* Old-style definition: func_80133024 calls it with four arguments (it reads two), so
+ * no prototype may be in scope for that call; the bytes are the same as with
+ * `(s16 arg0, s16 arg1)` (T-25401). */
+void func_80132D04(arg0, arg1)
+s16 arg0;
+s16 arg1;
+{
     s32 pad; /* FAKE: unused local that places status at sp+0x33 and the frame at 0x38 (T-3330) */
     u8 status;
 
@@ -270,20 +276,11 @@ void func_80132D04(s16 arg0, s16 arg1) {
     }
 }
 
-/* NON_MATCHING: T-24503, two rows: the day-address base is a1 rather than a2.
- * FAKE: empty day/month tests assign the day and table value to a2/v1;
- * the table-element test in the true arm moves month from a1 to a3.
- * Global-day and local-day ranges still tie at priority 10; see ticket.
- * T-11910 ucode (uopt in/out dumps): the second range exists because uopt
- * narrows the copy into the u8 local (`cvtl 8`, ugen `lbu a1; and a2,a1,0xff`,
- * folded by as1 into `lbu a2,64(a1)`), so the lui base is always the field
- * range's colour. Without the local (one range, the target's `lui a2; lbu a2`)
- * the compare's and the arms' `day + i` become one CSE'd sum: uopt canonicalises
- * the commutative add and cfe folds casts and no-op assignments on either
- * side (`i + day`, `(u32) i`, `(s32) i`, `(i = i)`, `(day = ...)` all give the
- * same ucode), and month then takes a1. No C split of the two sums with a
- * single day range was found. */
-#ifdef NON_MATCHING
+/* The calls pass the day and month as two extra arguments that func_80132D04 does
+ * not read: the values sit in $a2/$a3, where the original keeps them (T-25401).
+ * FAKE: T-25401, the day and month are read into the locals in each arm (a store,
+ * so the loads stay plain byte loads for an unprototyped call), while the test
+ * reads the globals directly so its sum stays apart from the arms' sums. */
 s32 func_80133024(void) {
     u8 month;
     u8 day;
@@ -296,26 +293,20 @@ s32 func_80133024(void) {
         days.day[1] = 29;
     }
     D_80144C50 = 0;
-    i = 1;
-    do {
-        day = D_800E6280.unk_040;
-        if (day) {}
-        month = D_800E6280.unk_03F;
-        if (month) {}
-        n = days.day[month - 1];
-        if ((u32) n >= (u32) (day + i)) {
-            if (days.day[month - 1]) {}
-            func_80132D04(0, (s16) (day + i - 1));
+    for (i = 1; i < 20; i++) {
+        n = days.day[D_800E6280.unk_03F - 1];
+        if (n >= D_800E6280.unk_040 + i) {
+            day = D_800E6280.unk_040;
+            month = D_800E6280.unk_03F;
+            func_80132D04(0, (s16) (day + i - 1), day, month);
         } else {
-            func_80132D04(1, (s16) (day + i - n - 1));
+            day = D_800E6280.unk_040;
+            month = D_800E6280.unk_03F;
+            func_80132D04(1, (s16) (day + i - n - 1), day, month);
         }
-        i++;
-    } while (i < 20);
+    }
     func_80132B24();
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80133024);
-#endif
 
 void func_8013313C(void) {
     bg_read_sub2(0x4032);
