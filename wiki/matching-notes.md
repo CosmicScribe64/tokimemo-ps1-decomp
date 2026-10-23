@@ -731,3 +731,21 @@ Matched (1124 bytes, default C) from the T-24501 body (233 rows) in about 25 min
 ## T-25115: main func_80049A40
 
 Matched (1456 bytes, default C) from the m2c census draft (354 rows in the first hand draft) in about 60 minutes. POLY_G4 box with a 7-way shading switch. Steps: (1) the definition reads full words, so `main_api.h` declares it with `s32` parameters (no caller unit changed). (2) `p` was in `s0`, the original keeps it in `a2` with stack saves around the three calls: the first use of a saved register costs `0.25 * blocks`, and the draft had 21 uopt blocks against the 24 needed. uopt ends a block at a statement boundary after 20 counted variable loads (`varreflimit`). The blocks come from `s32 r, g, b` computed once before the switch (uopt copies them into every arm) and black vertices written `r * 0` (as in `_sprite_set_light_effect1`): cases 6, 5, 4 pass the limit. `gs = &D_800E6280;` before the calls ends a block before `y2`, where the original reloads arg3. (3) Case 3 uses `(u8)r * 8` (FAKE) for the ugen temporary the original spends before each shift. Steps, costs and negatives: `drafts/T-25115/main/func_80049A40/NOTES.md`.
+## T-25114: RPG_BAT func_80154DD8
+
+[[tickets/T-25114-w8-RPG_BAT-80154430]], branch w8-RPG_BAT-80154430. Not matched: guarded at 34 funcdiff rows, all aligned, down from T-24910's 102. Three source facts closed most of it:
+
+- **Counters are the global itself.** `D_8015EC9C++; if (D_8015EC68 < D_8015EC9C)` in all three cases. uopt promotes the global `D_8015EC9C` into `$a0` for the call-argument and counter pieces. The `temp = G + 1` locals give a CSE of `G + 1` in `$v0`.
+- **Quotients and sums are their own webs** (`$v0`/`$v1`), negated into named `nx`/`ny` (`$a1`/`$a2`, stored at 0x48/0x44). A plain single-use `x = q; nx = -x;` is folded (`mflo a1; negu a1,a1`). An address view on one operand, `*(s32 *)&D_8015EC58.unk_04` (FAKE), keeps the web. Volatile `D_8015EC64` or a pointer local does the same at a frame cost. An indirect read comes first in a commutative op, so the case 3 view goes on the counter (`addu v1,t7,t8`).
+- `D_8015EC5C/64/68` as `D_8015EC58.unk_04/0C/10`: same bytes.
+
+Left: frame 0x60 against 0x58 (a web kept by an unmovable read costs frame words; an empty `if (x) {}` keeps it for free but splits blocks), the case 0 `D_8015EBAC` load (first in the original), and the case 3 counter store (before the test loads in the original). Fast scorer `drafts/T-25114/score.py`; details, negatives and the next hypothesis in `drafts/T-25114/RPG_BAT/func_80154DD8/NOTES.md`.
+
+## T-25114: RPG_BAT func_8015528C
+
+[[tickets/T-25114-w8-RPG_BAT-80154430]], branch w8-RPG_BAT-80154430. Matched as default-build C (1500 B, 27/27), from T-24522's 4-line draft. The last two words were commutative `addu` instructions with their operands exchanged. cfe sets the order: `&p[i]`, `p + i` and `i + p` are index first, and a subscript read or store (`IXA`), `p += i` or an integer sum in source order are base first. uopt keeps the order.
+
+- **Progress through subscripts.** `(&D_8015EBAC)[arg6]` everywhere, with no pointer local. The base-first `IXA` address is CSE'd into `$fp`.
+- **One phase range with two orders.** The target writes `$s7` base first in the correction arm and index first after the join. Integer address sums, `(s32)&D + arg7 * 4` in the arm and `arg7 * 4 + (s32)&D` at the join, are one uopt expression with two defs, and each def emits its own order. Base-first pointer forms in the arm (`p += i`, subscripts) split it into an arm-only range in `$v0`: 230 lines.
+
+FAKE: the array view of the scalar-declared D_8015EBAC and the integer sums (T-25114); T-24522's `* 1` remainder is still needed. Controls: `drafts/T-25114/RPG_BAT/func_8015528C/NOTES.md`.

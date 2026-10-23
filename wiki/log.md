@@ -1749,3 +1749,7 @@ The only function of the package is matched, none left with rows; see [[tickets/
 
 Reviewed [[tickets/T-25115-w8-main-800490C0]] against CODING_STANDARDS.md; matched main `_sprite_set_light_effect1` (1,124 bytes) and `func_80049A40` (1,456 bytes) as default-build C, 27/27.
 One finding fixed (FAKE comments on the `gs` alias and `channel * 0` black vertices in `func_80049A40`); notes in drafts/T-25115/main/.
+## [2026-10-23] ticket | T-25114 Done
+
+Reviewed [[tickets/T-25114-w8-RPG_BAT-80154430]] against CODING_STANDARDS.md; matched RPG_BAT `func_8015528C` (1,500 bytes) as default-build C, 27/27.
+`func_80154DD8` stays INCLUDE_ASM behind a NON_MATCHING guard at 34 rows, down from 102 (notes in drafts/T-25114/RPG_BAT/func_80154DD8/).
