@@ -7,15 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] ticket | T-25014 created: variant search automation for allocator and source-shape residuals
-
-At Lila's direction, follow-on work to T-25013: a packet-based variant
-search engine that hill-climbs source transformations from the project's
-matching history (lifetime shaping, respellings, CFG shapes informed by
-the as1 +1 region test), scored against single-function packets in the
-remote environment. Ticket [[tickets/T-25014-allocator-source-shape-automation]],
-branch octa/t25014-shape-automation stacked on octa/t25013-levers.
-
 ## [2026-10-21] ticket | T-25014 tooling landed: packet variant search engine, no improvement on the two hardest beds
 
 Committed tools/shape_search.py (hill-climb with plateau moves),
@@ -1778,6 +1769,7 @@ Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl
 
 Reviewed [[tickets/T-25317-w10-main-80047550]] against CODING_STANDARDS.md; no match: main `func_800476C0` stays `INCLUDE_ASM` (552 funcdiff rows, 8 structural hunks, saved-register order now original), 27/27, two small findings fixed.
 Draft body and notes in `drafts/T-25317/main/func_800476C0/`; section in [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25314 Done
 
 Reviewed [[tickets/T-25314-w10-ETC-8013FF80]] against CODING_STANDARDS.md; matched ETC `func_8013FFAC` (2116 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
