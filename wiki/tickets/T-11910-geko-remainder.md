@@ -16,9 +16,17 @@ Outside-contributor claim CosmicScribe64/tokimemo-ps1-decomp#65, second round af
 
 ## Acceptance criteria
 
-- [ ] Agent A done; matches committed one per commit, near misses guarded with `T-11910` (under about 30 rows)
+- [x] Agent A done; matches committed one per commit, near misses guarded with `T-11910` (under about 30 rows)
 - [ ] Agent B done (timeboxed)
 - [ ] Inline review against `CODING_STANDARDS.md` (FAKE comment on every fake trick)
 - [ ] `ninja`: 27/27 `OK`, headers/globals OK; `sync_protos.py --check-branch` and `migrate_globals.py --check` clean
 
 ## Results
+Agent A (PR for `func_80133C50`; the maintainer said on #65 on 2026-10-23 that their agents now also work on these four, first match wins):
+
+| Function | Result |
+|---|---|
+| `func_80133C50` | MATCH. The club read goes through a FAKE volatile view `D_800E6280.unk_0F4.vh` (new member of the `GsHalf` union in `include/main_api.h`), so uopt keeps it before the record load; this replaces the T-25002 `if (v) {}` |
+| `func_80142C9C` | not matched; checkpoint `drafts/T-11900/GEKO/func_80142C9C/body.c` at 119 full-TU lines (from 162) |
+
+Agent B (`func_80133024`, `func_80132B24`) is still running.
