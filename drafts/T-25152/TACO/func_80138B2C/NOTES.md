@@ -51,6 +51,7 @@ materialises it in its ring.
 - Keep arg0 alive after the if with `if ((u32) arg0 < 0) { D_8015F490[4] = arg0; }`: the constant
   becomes its own two-use range, `$v0` (3 rows). The same test inside the arm: `$t2`.
 - `arg0 = ((u32) arg0 < 0) + 0x98967F;` 25 rows (allocation order changes).
+- `arg0 -= arg0 - 0x98967F;` 28 rows; a word view on the arm store (`*(s32 *)&D_8015F490[4] = arg0;`) 3 rows, `$t2`.
 - One store after the if (`if (...) arg0 = K; D_8015F490[4] = arg0;`): arg0 is live into the call
   block, whose `$a0` argument forbids it; 32 rows.
 - Promoted total with the bonus words as globals (all, or `[3]` only): `[1]`/`[3]` are uncoloured
