@@ -725,3 +725,10 @@ Matched as default C, 1600 bytes (400 words), from INCLUDE_ASM. [[tickets/T-2510
 3. The last 230 rows were the bonus row and the parameter value swapped (s2/s1). Unconstrained ranges are coloured in bit order, and copy propagation re-enters every expression whose operands changed after the main pass. The row pointer is propagated (late bit), the parameter load was not. Reading the parameters through `GameState *gs = &D_800E6280` makes the value a re-entered expression too, numbered after the row: 0 rows.
 
 Tool gap: `funcdiff --version c` reported "linked function bytes differ" with 0 rows, because the guarded compile does not apply the `.data_800B40F0` split, so the D_800B41xx references link elsewhere. Check the default build in that case.
+
+## T-25101: main get_near_menu
+
+Matched as default C, 1784 bytes (446 words), from INCLUDE_ASM, with no FAKE. [[tickets/T-25101-w8-main-8004F870]]; the steps and the control are in `drafts/T-25101/main/get_near_menu/NOTES.md`. The archived m2c drafts were not usable, so the body is a new reconstruction: an offset table `diff[16]`, a direction filter, and a nearest-entry scan with tie breaks that call `abs`.
+
+1. With the tie block as an if/else-if chain on `mode`, the parameter was not allocated (regdiff "-ve save"). It stayed in its home slot, every saved register moved by one, and the result was 352 rows. The same arms as `switch (mode)` put `mode` in fp and the constant 1 in a2, as in the target, which left 9 rows. A control with only the switch reverted confirms that the switch is the lever.
+2. The 9 rows were the `diff` base (sp+0x94 against 0x88). Declaring the array after the four scalars `g, n, best_d, best` matched.
