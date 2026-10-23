@@ -27,6 +27,10 @@ Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in th
 
 **Return type changes the delay slot.** Symptom: mode-address `lui` or loads in branch slots where the original has `nop`. Fix: make the shared declaration and definition `s32`, K&R. Caveat: the working explanation is return-register liveness, not an allocator rule; the void control differs.
 
+**An int view of a void callee takes `$v0` away after the call.** Symptom: a range that starts right after a call (a loop pointer in the next preheader) takes `$v0` and the loop-invariant values `$v1`; the original has the reverse. Fix: call the function as an implicit int (try `funcdiff --proto 's32 f(...);'` first). TAIIKU calls Rot_2D as `func_80086204`: 44 rows to 0 in `func_8013E894` (T-25102).
+
+**`i << 1`, not `i * 2`, when the original recomputes an offset from the counter.** uopt strength-reduces a multiply of the loop counter into a second induction variable and leaves a shift alone (TAIIKU `func_80139AB0` and `func_8013E894`, T-25102).
+
 ## 2. A temporary one register too low or too high (ugen ring)
 
 **Ops that as1 deletes still cost a slot.** Symptom: every `t` register one lower than the original from one block on, no instruction missing. Fix: add a no-op that ugen numbers: `idx = sp47 & 0xFF;` on a `u8` out-parameter (main `func_80054884`, 17 rows to 0, T-24214); `((f() == 1) != 0) && ...` on a call test (ETC `func_80140AE4`, 16 rows, T-24207); a third `|=` on a promoted narrow global (MASTER `func_80132444`, T-24208: each narrow `|=` spends two slots, so the count of ORs before the copies sets the numbering). Mark FAKE. Caveat: the right count is found by trying 1, 2, 3; the permuter finds these disc-free. A narrowing cast that as1 drops also spends one: `if ((u8)g->unk_F80 & 0xF)` on a word flag test put the missing slot in the right block (main `func_8006BA40`, 7 rows to 0, T-25008); place it in the first block whose temporaries are off, and remove casts that only moved the numbering later.
