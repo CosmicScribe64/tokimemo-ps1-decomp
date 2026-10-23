@@ -692,3 +692,21 @@ No match; guarded at 4 rows (2 instructions), was INCLUDE_ASM with a 391-row bes
 ## T-25106: TAIIKU func_80135F3C
 
 [[tickets/T-25106-w8-TAIIKU-80133C80]] matches TAIIKU `func_80135F3C` (419 words, 1,676 bytes, default-build C). A fresh body replaced the T-24521 draft (543 rows), which was missing a store; the fresh body started at 510 diff lines. Four changes closed it. The inner duplicate loop counts `j = 1; j <= i + 1` (the original's `blez (i + 1)` guard and `slt` exit). Records are indexed from 46, so every product is `multu` with one 0x44 constant. The `>> 3` loop and the flag lookups are two loops, so the first stays rolled. The repeat tests read the records directly with no value local: uopt PRE then hoists the first read past the guard (12 lines left). One unused `pad` scalar (FAKE) restores the 12 bytes above the copied tables. Steps, causes and negatives: `drafts/T-25106/TAIIKU/func_80135F3C/NOTES.md`.
+
+## T-25153: NAME_ENT func_8013AF78
+
+Not matched. The T-24132 guard (99 rows) is gone and the source is plain `INCLUDE_ASM` again. The best
+body is in `drafts/T-25153/NAME_ENT/func_8013AF78/body.c` (57 funcdiff rows, two FAKEs); NOTES.md there has
+the full record.
+
+- Closed: the `sltu` loop comes from reusing the loop counter after the loop, as in RPG_BAT
+  `func_8014E994`. The masked values are int-typed (`x = D & 0x7F` gives the original
+  `lui X; lbu X; andi t,X; or X,t,zero`; a `u8` local adds a CVT and loads into a temporary). The 0x30
+  frame is `s32 a, b; s32 sel[3]; s32 c, d;` with a value local as the counter (IDO frame is
+  round8(locals + 4), and every declared scalar takes a slot).
+- Closed with FAKEs: `c` splits into a CSE and a local because its mask stays available in the `sel[0]`
+  arm. An aliasing selector store, `((s32 *)(u32)sel)[...]`, kills that. An empty `if (arg0) {}` keeps
+  `arg0` in `$a0`, because bits follow the first reference.
+- Left: `d` and the loop end bound need `$v0`. In IDO 5.3 a range used in the zero arm, whose
+  `return 0` defines the return register, never gets `$v0`. `return d` costs a final move.
+  The next hypothesis (zero-arm stores through the AND CSE, so `d` has no zero-arm unit) is in NOTES.md.
