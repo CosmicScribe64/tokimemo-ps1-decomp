@@ -162,6 +162,8 @@ s32 func_80134270(void) {
     for (i = 0; i < 6; i++) {
         D_801217D0[i + 4].unk_0C = i + 5;
         D_801217D0[i + 4].unk_00 = 0x41000000;
+        /* FAKE: u16 view of the s16 field (shared Rec24 type); the s16 store changes the
+         * constant ranges of the whole function (425 rows). T-25311 */
         *(u16 *)&D_801217D0[i + 4].unk_08 = 0x80;
         D_801217D0[i + 4].unk_0A = 0x80;
         D_801217D0[i + 4].unk_0E = 0;
@@ -192,7 +194,7 @@ s32 func_80134270(void) {
     ((DisplayActor44 *)D_80120650)[0].unk_16 = 0;
     ((DisplayActor44 *)D_80120650)[0].unk_18 = 0;
     ((DisplayActor44 *)D_80120650)[0].unk_06 = 1;
-    D_80120693 = 0x11;
+    ((DisplayActor44 *)D_80120650)[0].unk_43 = 0x11;
     ((DisplayActor44 *)D_80120650)[0].unk_26 = -0x20;
     ((DisplayActor44 *)D_80120650)[0].unk_2A = 0x28;
     ((DisplayActor44 *)D_80120650)[0].unk_07 = 0;
