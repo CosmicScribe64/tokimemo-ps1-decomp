@@ -834,3 +834,11 @@ No match committed; the guard stays at 4 rows (the two pointer compares, constan
 ## T-25309: TAIIKU func_80137784 (third pass)
 
 No match; the guard stays at 4 rows with its code unchanged. New negatives: a dead second parameter as the slot pointer keeps frame 56 and gets a0, but IDO stores the incoming a1 and the alias offset still moves to the pointer side (230 rows; with `pos == D_8014984C` the base takes t5, 250). Pointer casts on the natural compare change nothing (240), integer casts make it worse (388). `volatile` slot arrays keep the base in t5 and grow the frame to 64 (292). A late-folded zero index (`[arg0 * 0]`) stays the same lda candidate. cfe 5.3 ignores `#pragma weak` for an extern. No other linker symbol sits at either slot address. That confirms the second pass: only a second zero-offset name (the tested `alias-match.patch`, waiting for approval) gives the original's separate compare constant. A reduced-unit compile (the two includes, the macros and the body) screens a variant in about 13 s under load, against minutes for funcdiff. Details: `drafts/T-25309/TAIIKU/func_80137784/NOTES.md`.
+## T-25310: main func_80055AFC (second pass)
+
+Matched (1396 bytes, default C) from the T-25105 113-row draft in about 50 minutes. Three causal steps:
+- **Frame.** The spill homes (0x30, 0x2C) sit below five words of declared locals; the draft declared two. `u8 *p` plus a FAKE `s32 pad[2]` give frame 0x48 and both home offsets.
+- **Slot read through `g`.** `g = &D_800E6280;` before the `func_80055A38(0)` call, then `arg0 = g->unk_1117 & 1;`. The indirect load keeps `arg0` a copy, so the bank base is one range and the T-25105 volatile view is gone (102 rows left).
+- **A dead call result.** The original reads bzero's `v0` after the call: something must hold v0 in the 256-loop preheader and not in the loop body. Then the unrolled loop's start values skip v0, the end pointer takes v0, and the counter and bank-offset temporaries take t3/t4, so the bank bases land in t5 and ra (every other row). `void *bzero(void *p, s32 n);` in `main_api.h` (other callers discard it, no code change) and `p = bzero(g->unk_75E, 0x800);` with p never read (FAKE: its real use is unknown). A function-pointer cast instead gives `jalr t9`.
+
+Notes, negatives and the unroll rule check: `drafts/T-25310/main/func_80055AFC/NOTES.md`.
