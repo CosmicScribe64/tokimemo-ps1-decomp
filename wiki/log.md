@@ -7,16 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | T-25013 lever 2 concluded: frame elision already happens, +8 is a lifetime artifact
-
-Lever 2 session on main func_80062948: micro-experiments show the IDO
-5.3 pipeline elides frame space for unused locals (an unused 32-byte
-struct and scalar leave the frame at -48), so the matrices draft's
-0xD8 vs 0xD0 frame is not a frame-pass gap. The extra 8 bytes are a
-materialized value the original keeps in a register, the same
-allocation behaviour as levers 1 and 5. Detail in
-[[tickets/T-25013-compiler-level-levers]].
-
 ## [2026-10-21] build | T-25013 lever 4 concluded: the as1 +1 region test identified, no build rule
 
 Read the weight pass in the pinned recomp as1 source and confirmed it
@@ -1790,6 +1780,7 @@ Reviewed and merged: ENDING func_80134270 matched (1848 bytes, default C, three 
 ## [2026-10-23] ticket | T-11910 Done
 
 Agent B matched GEKO `func_80132B24` (s32 with no return plus a kept-live empty test; a no-op assignment to order cfe's `+` operands) and kept `func_80133024` guarded at 2 rows with the ucode finding in its comment. With `func_80133C50` (#69) that is two matches in this round; `func_80142C9C` and `func_80133024` stay open (the maintainer's agents also work on them, #65). Inline review against CODING_STANDARDS.md. Notes in [[matching-notes]]. [[tickets/T-11910-geko-remainder]].
+
 ## [2026-10-23] build | T-25403 w11-GEKO-80142760-p1
 Pass 1 on GEKO func_80142C9C did not match: `src/ovl/GEKO/80142760.c` unchanged (INCLUDE_ASM stays, best body 159 rows); reviewed, only drafts and notes merged.
 Next pass starts from `drafts/T-25403/GEKO/func_80142C9C/NOTES.md` (global copy propagation off, [[tickets/T-25403-w11-GEKO-80142760]]).
