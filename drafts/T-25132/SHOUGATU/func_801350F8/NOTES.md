@@ -1,7 +1,7 @@
 # T-25132: SHOUGATU func_801350F8 (588 words, 2308 bytes)
 
-Omikuji scene step handler (switch on the scene step `D_800E6280.unk_1104.w`). `body.c` here is the body
-that is in the `NON_MATCHING` guard of `src/ovl/SHOUGATU/80134890.c`.
+MATCHED (default C, guard removed, 27/27 sha1 OK). Omikuji scene step handler (switch on the scene step
+`D_800E6280.unk_1104.w`). `body.c` here is a copy of the matched body in `src/ovl/SHOUGATU/80134890.c`.
 
 ## Start state
 
@@ -38,15 +38,22 @@ prototype (now in `include/ovl/SHOUGATU.h`).
    temporary. With the `(s32)` index every use reads one CSE of `cvt(lod G)`: `$v1`, and `&sp38`
    is `t0` again.
 
-## Rows now: 2 (one swapped pair)
+## Last row (2 -> 0)
 
 Case 8 head: original `ori t7,t4,0x80; lui v1,%hi(D_80143DD8); sb t7,%lo(D_80120653)(at); lbu v1`,
-draft `ori; sb t7; lui v1; lbu v1`. Same instructions and registers. ugen emits the D_80143DD8 load
-with statement 3 (`unk_18 = sel + 0xD`); as1's local list scheduler takes the `sb` first (it is
-earlier in the ugen order; the two seem to tie).
+draft `ori; sb t7; lui v1; lbu v1`, same instructions and registers. ugen emitted the D_80143DD8 load
+with statement 3 (`unk_18 = D_80143DD8 + 0xD`), after the first flag store, and as1's per-block
+scheduler kept the store first. An empty test `if (D_80143DD8 != 0) {}` as the first statement of
+case 8 (FAKE) makes ugen emit the load at the case head; the test itself is removed and the `lui`
+lands before the store. `!= 0`, `== 0xFF` and `(u32)x < 0` all match; a bare `if (D_80143DD8) {}`
+gives 18 rows (another branch shape), as does the test after the first statement.
+
+The `(s32)` index casts are still needed with the empty test (without them: 445).
 
 ## Negatives (measured, current tree)
 
+- Last row: autotweak (300 s, 300 edits, `--score-jobs 2`) found nothing; defining `D_80143DD8` in C
+  (`u8 D_80143DD8 = 0;`) changes nothing, a `static` copy is worse (3 rows).
 - Case 8: any separate-symbol/array spelling of the four head stores (16 combinations: no change);
   `D_80120650` base for the first store; head statements on one line (4 groupings); statement order
   (3 orders, 8-14 rows); `(s32)`/`0xD +`/`13U` on the `+ 0xD`; `(s32)` on the tests; `(u32)`/`(s16)`
@@ -56,10 +63,7 @@ earlier in the ugen order; the two seem to tie).
   `s32`/`u8` local copies of the timer (505-515); a flag local for `G++ == 0x1E` (524).
 - `return;` without value everywhere (561) and an explicit final `return 0` (610).
 
-## Next hypothesis
+## Reuse
 
-Make ugen emit the `D_80143DD8` load at the case 8 head (as a promoted-global `rlod` would) while
-keeping one register, or check whether the original defined `D_80143DD8` in this file: the object's
-data range is `80143DB0..80143EB0` (`config/objects/SHOUGATU.txt`, `data 80134890 ... owner`), so a
-data island (`tools/data_island.py SHOUGATU/80134890`, then C definitions) may change as1's
-treatment of the load; untested.
+GYOZI `func_801368B8` (2256 bytes) is the same scene with GYOZI's globals (the step global is
+`D_800F6474` in `$a1` there); the six levers above are the first things to try on it.

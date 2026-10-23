@@ -243,3 +243,11 @@ code, raise its priority: a never-true arm with one more `istr` of it, `if ((u32
 first use the arm costs two reloads and gains nothing. Store through a pointer whose own priority order does not
 change, and put the arm on an existing uopt block split so the store counts stay as they are. ETC
 `func_80132C3C`, 15 rows to 0; `drafts/T-25121/ETC/func_80132C3C/NOTES.md`.
+
+## u8 selector in one register; `return 0` next to a base use; load at the case head (T-25132)
+
+SHOUGATU `func_801350F8` (2308 bytes, 656 edits to 0). Three general levers:
+
+- **A u8 global used by tests and as an array index.** cfe multiplies a u8 subscript in u8 (`mpy L` on the raw byte) while the tests use the widened value, so uopt promotes the byte and keeps the widened copy in a second register (`lbu t0; ... move v1,t0`). Write the index `tbl.s[(s32)G]`: every use then reads one CSE of the widened load, one register. The same split on a promoted counter (`G == 0` then `G++ == 0x1E`) was fixed by reading the byte through `GameState *g` (FAKE).
+- **`return 0` in the block of the last use of a CSE'd base.** uopt interference is per block, so the `$v0` definition makes the whole `&D_X` base range (all cases) avoid `$v0`. Write `if (c) {...} else {...} return 0;` so the return sits in its own join block; IDO's branch retargeting still gives each path its own `b end; move v0,zero`.
+- **A load scheduled one slot late inside a block.** If the original's `lui` of a global sits before a store of an earlier statement and the draft's after it, an empty test of that global as the first statement of the block (`if (G != 0) {}`, FAKE) makes ugen emit the load there; the test is removed. A bare `if (G) {}` changed the branch shape.
