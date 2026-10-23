@@ -74,7 +74,100 @@ void func_801393F4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_80139424);
+/* Draws glyph arg0 ('0'-'9', 'A'-'Z', ". - ! @ * #", other: a fallback cell) as a POLY_FT4 centred
+ * on D_800E6280.unk_014/unk_018[D_8011ECA0] plus (arg4, arg5), half sizes from arg6/arg7, clut row arg1, ordering-table
+ * slot arg2, grey level arg3; arg8 == 3 selects the wide cell, arg8 == 1 anchors the glyph at its
+ * bottom edge. Called without a prototype (K&R definition, the u8 parameter is narrowed at entry).
+ * Matching notes (T-25112): every vertex coordinate is its own full expression with the offset
+ * grouped first, `centre + (arg4 - dx)`: uopt then shares the centre load but not the sum, and the
+ * repeated vertices become its copies (x1 and x2 stay in their stack homes) as in the original.
+ * FAKE (layout): T-25112, each UV setup is one comma statement on one line, the expansion of the
+ * libgpu setUVWH(p, u, v, w, 12) macro (likely the original's): the special glyphs need it for the
+ * original's constant registers and store order. */
+void func_80139424(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+u8 arg0;
+s32 arg1;
+s32 arg2;
+s32 arg3;
+s32 arg4;
+s32 arg5;
+s32 arg6;
+s32 arg7;
+s32 arg8;
+{
+    POLY_FT4 *p;
+    s32 dx;
+    s32 dy;
+    s32 x0, y0, x1, y1, x2, y2, x3, y3;
+    s32 w;
+    u8 letter;
+    u8 *uv;
+    s32 pad[2]; /* FAKE: two unused words give the original's 0x68 frame and home slots; real source unknown. T-25112 */
+
+    /* FAKE: dead store; mentioning x3 first gives it the lower uopt bit, so it takes t5 and x0 ra
+     * at their equal priority, as in the original. Real source unknown. T-25112 */
+    x3 = 0;
+    if (arg8 == 3) {
+        w = 12;
+    } else {
+        w = 11;
+    }
+    p = (POLY_FT4 *)GetWorkBase(sizeof(POLY_FT4), D_8011ECA0);
+    func_8009F040(p);
+    SetShadeTex(p, 0);
+    SetSemiTrans(p, 0);
+    p->b0 = p->g0 = p->r0 = arg3;
+    dx = (w * arg6) / 8192;
+    x0 = D_800E6280.unk_014[D_8011ECA0] + (arg4 - dx);
+    x3 = D_800E6280.unk_014[D_8011ECA0] + (arg4 + dx);
+    x1 = D_800E6280.unk_014[D_8011ECA0] + (arg4 + dx);
+    x2 = D_800E6280.unk_014[D_8011ECA0] + (arg4 - dx);
+    if (arg8 != 1) {
+        dy = (arg7 * 12) / 8192;
+        y0 = D_800E6280.unk_018[D_8011ECA0] + (arg5 - dy);
+        y1 = D_800E6280.unk_018[D_8011ECA0] + (arg5 - dy);
+        y2 = D_800E6280.unk_018[D_8011ECA0] + (arg5 + dy);
+        y3 = D_800E6280.unk_018[D_8011ECA0] + (arg5 + dy);
+    } else {
+        y0 = D_800E6280.unk_018[D_8011ECA0] + (arg5 - (arg7 * 12) / 4096);
+        y1 = D_800E6280.unk_018[D_8011ECA0] + (arg5 - (arg7 * 12) / 4096);
+        y2 = D_800E6280.unk_018[D_8011ECA0] + arg5;
+        y3 = D_800E6280.unk_018[D_8011ECA0] + arg5;
+    }
+    p->tpage = func_8009ECB0(0, 0, 0x340, 0x180);
+    p->x0 = x0;
+    p->y0 = y0;
+    p->x1 = x1;
+    p->y1 = y1;
+    p->x2 = x2;
+    p->y2 = y2;
+    p->x3 = x3;
+    p->y3 = y3;
+    if (arg0 >= '0' && arg0 <= '9') {
+        uv = &D_8015F5A0[(u8)(arg0 - '0') * 2];
+        p->u0 = uv[0] + 0x80, p->v0 = uv[1], p->u1 = uv[0] + 0x80 + w, p->v1 = uv[1], p->u2 = uv[0] + 0x80, p->v2 = uv[1] + 12, p->u3 = uv[0] + 0x80 + w, p->v3 = uv[1] + 12;
+    } else if ((letter = arg0 - 'A') < 26) {
+        uv = &D_8015F5B4[letter * 2];
+        p->u0 = uv[0] + 0x80, p->v0 = uv[1], p->u1 = uv[0] + 0x80 + w, p->v1 = uv[1], p->u2 = uv[0] + 0x80, p->v2 = uv[1] + 12, p->u3 = uv[0] + 0x80 + w, p->v3 = uv[1] + 12;
+    } else if (arg0 == '.') {
+        p->u0 = D_8015F5E8 + 0x80, p->v0 = D_8015F5E9, p->u1 = D_8015F5E8 + 0x80 + w, p->v1 = D_8015F5E9, p->u2 = D_8015F5E8 + 0x80, p->v2 = D_8015F5E9 + 12, p->u3 = D_8015F5E8 + 0x80 + w, p->v3 = D_8015F5E9 + 12;
+    } else if (arg0 == '-') {
+        p->u0 = D_8015F5EA + 0x80, p->v0 = D_8015F5EB, p->u1 = D_8015F5EA + 0x80 + w, p->v1 = D_8015F5EB, p->u2 = D_8015F5EA + 0x80, p->v2 = D_8015F5EB + 12, p->u3 = D_8015F5EA + 0x80 + w, p->v3 = D_8015F5EB + 12;
+    } else if (arg0 == '!') {
+        p->u0 = D_8015F5EE + 0x80, p->v0 = D_8015F5EF, p->u1 = D_8015F5EE + 0x80 + w, p->v1 = D_8015F5EF, p->u2 = D_8015F5EE + 0x80, p->v2 = D_8015F5EF + 12, p->u3 = D_8015F5EE + 0x80 + w, p->v3 = D_8015F5EF + 12;
+    } else if (arg0 == '@') {
+        p->u0 = 0xA6, p->v0 = 0xD3, p->u1 = 0xA6 + w, p->v1 = 0xD3, p->u2 = 0xA6, p->v2 = 0xD3 + 12, p->u3 = 0xA6 + w, p->v3 = 0xD3 + 12;
+    } else if (arg0 == '*') {
+        p->u0 = 0xBE, p->v0 = 0xD3, p->u1 = 0xBE + w, p->v1 = 0xD3, p->u2 = 0xBE, p->v2 = 0xD3 + 12, p->u3 = 0xBE + w, p->v3 = 0xD3 + 12;
+    } else if (arg0 == '#') {
+        p->u0 = 0xEE, p->v0 = 0xD3, p->u1 = 0xEE + w, p->v1 = 0xD3, p->u2 = 0xEE, p->v2 = 0xD3 + 12, p->u3 = 0xEE + w, p->v3 = 0xD3 + 12;
+    } else {
+        p->u0 = D_8015F5EC + 0x80, p->v0 = D_8015F5ED, p->u1 = D_8015F5EC + 0x80 + w, p->v1 = D_8015F5ED, p->u2 = D_8015F5EC + 0x80, p->v2 = D_8015F5ED + 12, p->u3 = D_8015F5EC + 0x80 + w, p->v3 = D_8015F5ED + 12;
+    }
+    p->clut = func_8009ED74(arg1 * 16, 0x1EF);
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg2 * 4, (s32)p);
+    dtd_on_tpage(0x340, 0x180, arg2, 0, 0);
+}
 
 void func_80139AB0(void) {
     if (D_8015F4F8 < 0x100) {
