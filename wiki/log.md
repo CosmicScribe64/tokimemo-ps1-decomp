@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | OPTION editor complete and session wrapped up
-
-[[tickets/T-24607-option-editor]] In Review -> Done after independent standards and behavior reviews passed without unresolved findings. All integration gates pass. Updated [[status]] and [[tickets/T-24600-finish-matching]] with6,823/6,952 functions and2,098,084/2,276,920 bytes;129 remain. This continuation completed seven functions /6,516 bytes. All matching lanes stopped at the user's request; full decompilation is not claimed complete.
-
 ## [2026-10-20] lint | Final handoff checks
 
 Catalog refreshed:729 tickets,428 sections,3,077 functions. Docker wiki lint reports zero broken links and zero ticket/board mismatches; only the two existing large-page warnings remain ([[data/t0018-cases]], [[log]]). `git diff --check` passes. Matching goal paused at the user's wrap-up request; completed source and handoff documentation prepared for commit and push to origin/main.
@@ -1735,6 +1731,7 @@ No review findings: the two fakematches (the `(s32)` view of the random word, th
 
 Reviewed [[tickets/T-25108-w8-main-80062CD0]] against CODING_STANDARDS.md; matched main `func_80065964` (424 bytes) and `func_8006509C` (1,076 bytes) as default-build C, 27/27.
 `func_80065B0C` stays INCLUDE_ASM behind a NON_MATCHING guard at 9 rows (notes in drafts/T-25108/main/func_80065B0C/).
+
 ## [2026-10-23] ticket | T-25109 Done
 
 Reviewed [[tickets/T-25109-w8-EN_NICHI-80136B10]] against CODING_STANDARDS.md; matched EN_NICHI `func_8013735C` (2,300 bytes) as default-build C, 27/27.
