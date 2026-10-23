@@ -1750,3 +1750,7 @@ The package's only function is matched; the as1 line tie-break rule is in [[as1-
 ## [2026-10-23] ticket | T-11900 Done
 
 Four matches: OPTION `func_801326BC`, GEKO `func_80136C20`, `func_801367EC` (both closed by defining `D_80145094` in C, [[as1-scheduler-rule]]) and `func_80135DC0`. `func_80133024`, `func_80132B24` keep their guards; `func_80142C9C` checkpoint in `drafts/T-11900`. Inline review against CODING_STANDARDS.md (FAKE comments, no inline asm). Notes in [[matching-notes]]. [[tickets/T-11900-geko-option-closers]].
+## [2026-10-23] ticket | T-25129 Done
+
+Reviewed [[tickets/T-25129-w8-GYOZI-80136220]] against CODING_STANDARDS.md; matched GYOZI `func_801368B8` (2256 bytes) as default-build C, 27/27, funcdiff MATCH.
+One FAKE (dead entry read, marked); finding fixed (comment for the always-true `| 8` in case 6); lead for SHOUGATU `func_801350F8` in [[matching-notes]].
