@@ -157,7 +157,168 @@ s32 menu_check_2(arg0, arg1, arg2)
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004FC10);
+void func_8004FC10(s32 menu) {
+    GameState *g;
+    s32 dir;
+    s32 n;
+    s32 i;
+
+    g = &D_800E6280;
+    dir = 0;
+    n = 16;
+    if (g->unk_F88 & 0x100) {
+        g->unk_1092++;
+        ((MenuSelection5 *)&g->unk_1090)->current[menu] = -1;
+        return;
+    }
+    switch (g->unk_1092 & 3) {
+    case 0:
+        func_8006BA40();
+        for (i = 0; i < ((MenuSelection5 *)&g->unk_1090)->count[menu]; i++) {
+            if (((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_06 != 0) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = i;
+                break;
+            }
+        }
+        break;
+    case 1:
+        /* The empty arm is in the target: a jump to the wrap tests, not an inverted branch. */
+        if (g->unk_F80 & 0xF) {
+        } else {
+            switch (g->unk_F88 & 0xF000) {
+            case 0x1000:
+            case 0x8000:
+                dir = -1;
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] -= 1;
+                break;
+            case 0x2000:
+            case 0x4000:
+                dir = 1;
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] += 1;
+                break;
+            }
+        }
+        if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = 0;
+        }
+        if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = ((MenuSelection5 *)&g->unk_1090)->count[menu] - 1;
+        }
+        while (((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_07 == 1) {
+            if (n-- == 0) {
+                break;
+            }
+            if (dir == 1) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] += 1;
+            }
+            if (dir == -1) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] -= 1;
+            }
+            if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = 0;
+            }
+            if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = ((MenuSelection5 *)&g->unk_1090)->count[menu] - 1;
+            }
+        }
+        D_8011ECF6 = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00 + ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_04 - 4;
+        D_8011ECFA = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02 + 8;
+        break;
+    case 2:
+        if (g->unk_F80 & 4) {
+            if (g->unk_F88 & 4) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = g->unk_1095[menu];
+            } else {
+                switch (g->unk_F88 & 0xF000) {
+                case 0x2000:
+                case 0x4000:
+                    dir = 1;
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] += 1;
+                    break;
+                case 0x1000:
+                case 0x8000:
+                    dir = -1;
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] -= 1;
+                    break;
+                }
+                if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] = 0;
+                }
+                if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] = ((MenuSelection5 *)&g->unk_1090)->count[menu] - 1;
+                }
+                while (((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_07 == 1) {
+                    if (n-- == 0) {
+                        break;
+                    }
+                    if (dir == 1) {
+                        ((MenuSelection5 *)&g->unk_1090)->current[menu] += 1;
+                    }
+                    if (dir == -1) {
+                        ((MenuSelection5 *)&g->unk_1090)->current[menu] -= 1;
+                    }
+                    if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+                        ((MenuSelection5 *)&g->unk_1090)->current[menu] = 0;
+                    }
+                    if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+                        ((MenuSelection5 *)&g->unk_1090)->current[menu] = ((MenuSelection5 *)&g->unk_1090)->count[menu] - 1;
+                    }
+                }
+            }
+            D_8011ECF6 = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00 + ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_04 - 4;
+            D_8011ECFA = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02 + 8;
+        } else {
+            func_8006BA40();
+            for (i = 0; i < ((MenuSelection5 *)&g->unk_1090)->count[menu]; i++) {
+                if (((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_06 != 0) {
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] = i;
+                }
+            }
+        }
+        break;
+    case 3:
+        i = -1;
+        switch (g->unk_F88 & 0xF000) {
+        case 0x1000:
+            i = get_near_menu(1, -1, menu);
+            break;
+        case 0x4000:
+            i = get_near_menu(1, 1, menu);
+            break;
+        case 0x2000:
+            i = get_near_menu(0, 1, menu);
+            break;
+        case 0x8000:
+            i = get_near_menu(0, -1, menu);
+            break;
+        }
+        if (i != -1) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = i;
+        }
+        if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = func_80050324(menu, 1);
+        }
+        if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = func_80050324(menu, 0);
+        }
+        D_8011ECF6 = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00 + ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_04 - 4;
+        D_8011ECFA = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02 + 8;
+        break;
+    }
+    if (D_8011ECF6 > 140) {
+        D_8011ECF6 = 140;
+    }
+    if (D_8011ECF6 < -150) {
+        D_8011ECF6 = -150;
+    }
+    if (D_8011ECFA < -100) {
+        D_8011ECFA = -100;
+    }
+    if (D_8011ECFA > 100) {
+        D_8011ECFA = 100;
+    }
+}
+
 
 s32 func_80050324(s32 menu, s32 reverse) {
     GameState *g;
