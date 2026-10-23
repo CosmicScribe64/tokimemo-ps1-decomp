@@ -41,7 +41,7 @@ def main():
     subprocess.check_call(["python3", "/work/build/as1tr/cc_cap.py", str(unit), str(cap / "unit.o"), "ido", "5.3"], env=env)
     want = fd.resolved_functions("expected/build/src/main/800674B0.o", ["func_8006B0C8"])["func_8006B0C8"]
     got = fd.resolved_functions(str(cap / "unit.o"), ["func_8006B0C8"])["func_8006B0C8"]
-    rows = sum(1 for a, b in zip(want, got) if a != b) + abs(len(want) - len(got))
+    rows = sum(1 for a, b in zip(want, got) if a[0] != b[0]) + abs(len(want) - len(got))
     print(name, "words", len(got), "rows(same-pos)", rows, "w133-136", " ".join(str(w) for w in got[132:136]))
     if "--raw" in sys.argv:
         return
