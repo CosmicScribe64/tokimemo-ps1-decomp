@@ -1,6 +1,6 @@
 ---
 type: playbook
-updated: 2026-10-20
+updated: 2026-10-23
 ---
 # Matching playbook
 
@@ -170,3 +170,7 @@ Symptom: a parameter tested in a loop that calls functions is spilled to its hom
 ## Empty then-arm and a u8 count under -cckr (T-25101)
 
 Symptom: the target branches `beqz t6, body` and then `b join` from the fall-through, where the draft has one inverted `bnez t6, join`. Fix: write the test with an empty arm, `if (g->unk_F80 & 0xF) { } else { switch ... }`. In main `func_8004FC10` the inverted `if (!(...))` cost 52 aligned rows and moved a1/a2/a3. In the same function, a signed `slt` test of an s8 cursor against a u8 count needs `(s32)count`, because IDO runs with -cckr and promotes u8 to unsigned. A frame 8 bytes too large came from a separate result local: one counter serves the scan loops and the call result. See `drafts/T-25101/main/func_8004FC10/NOTES.md`.
+
+## A spill slot one word off: copy propagation and the temporaries (T-25201)
+
+When a pointer's spill slot is 4 bytes off and everything else matches, check whether the original spills the variable at its own home (not copy-propagated) or a uopt temporary (copy-propagated expression). uopt does not copy-propagate `p = expr` into a block where the assignment is not available, where an operand of `expr` changes, into a loop-latch branch condition, or when `expr` contains a load (uoptcopy.c). A dead store to the operand right after the assignment (`idx = 0;`, FAKE) makes every use read p's home and keeps p a register candidate, unlike `&p`. Loop bounds read straight from a record in `for` conditions become partial-redundancy items kept in registers and reloaded after calls, which is the shape of a count reloaded at the latch and at the inner exit (main `mod_set_gpu`, 4 rows to 0).

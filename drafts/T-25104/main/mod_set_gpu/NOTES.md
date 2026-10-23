@@ -90,3 +90,34 @@ cost, `x + 0xA0` as a shared subexpression used twice in the body (for example t
 computed the clip or x1 of the sprite from the same base), or the base taken from a field or global.
 (T1), a non-propagated register-candidate `p`, stays as the fallback. Every idx reuse tried
 colours p at entry.
+
+## T-25201: matched
+
+`mod_set_gpu` is default-build C (804 bytes), 27/27 SHA1. Neither T1 nor T2 as written above was the
+answer. Two changes together:
+
+1. **The loop bounds read from the record in `for` conditions**, with no `rows`/`cols` locals:
+   `for (row = 0; row < p->unk_0D; row++) for (col = 0; col < p->unk_0C; col++, data++)`, and
+   `data = p->unk_0D * frame * p->unk_0C + p->unk_04`. uopt keeps the two counts in v1/v0 as
+   partial-redundancy items: the column count is reloaded at the inner latch, the row count when the
+   inner loop ends. The original's `rows = p->unk_0D` inside `if (cols != 0)` was this placement.
+   Measured: two temporaries then sit between p's home and ypos (sp+0x68, 0x64; the x IV is one).
+2. **p not copy-propagated anywhere**: a FAKE dead store `idx = 0;` right after `p = ...`. The
+   assignment of p is then not available below it, so every use reads p from its own home. The
+   latch use goes to `$a3` across the latch and the inner exit (as in the original), not to a ugen
+   temporary as with the address-taken control. The store must be in the entry block: at the
+   `data` line instead (`idx = p->unk_0D * frame * p->unk_0C`) p is coloured `$v1` at entry (96 diff
+   lines).
+3. `s32 xpos` declared before `ypos` (`xpos = x + 0xA0 + col * 8; s->x0 = xpos;`) adds the home word
+   that puts p's home at sp+0x6C.
+
+Measured on the way: without the dead store, the `for` form uses two slots for p (a copy-propagated
+temporary for most uses and p's home for the two latch conditions; uopt does not copy-propagate into
+a `fjp`/`tjp` whose successor is a loop's first block, uoptcopy.c). Implicit `int search_tpage_multi()`
+misses 51 lines, so the u16 view stays (file scope; `mod_set` still matches with it).
+
+Source for the rules (IDO uopt decomp in the T-25108 scratch copy): uoptcopy.c (copy propagation is
+refused when the assignment is not available at the block, the expression changes in the block, it
+contains an `ilod`, or the use is a loop-latch branch), uoptreg2.c `spilltemps` (PRE temporaries in
+bit order; a later item reuses an earlier item's temporary when their regions share no block),
+uopttemp.c `gettemp` (block-local CSE temporaries at emit time, reused when free).

@@ -1727,3 +1727,6 @@ Best bodies (57 and 61 rows, two FAKEs) are in drafts/T-25153/NAME_ENT/func_8013
 
 Reviewed and merged w8-main-8004F870: matched main `sndi`, `func_8005215C`, `get_h_tokimeki`, `get_near_menu`, `func_8004FC10` (7508 bytes, default C, 27/27).
 `func_80052F68` stays INCLUDE_ASM (69 rows, notes in drafts/T-25101/main/func_80052F68/NOTES.md); see [[tickets/T-25101-w8-main-8004F870]].
+## [2026-10-23] build | T-25201 w9c-main-8004C3F0
+Matched: main `mod_set_gpu` (804 bytes) as default-build C, guard removed; for-loop bounds read from the record, a FAKE dead store `idx = 0;` (T-25201) and an `xpos` local.
+Reviewed against `CODING_STANDARDS.md` (no findings), clean rebuild 27/27, `mod_set` still matches; see [[tickets/T-25201-wave-9-closers]] and [[matching-notes]].
