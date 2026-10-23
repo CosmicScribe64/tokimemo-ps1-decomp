@@ -1731,3 +1731,8 @@ Reviewed against `CODING_STANDARDS.md` (no findings), clean rebuild 27/27, `mod_
 
 Reviewed [[tickets/T-25152-w8-TACO-80138890]] against CODING_STANDARDS.md; matched TACO `func_80138B2C` (476 bytes) as default-build C, 27/27.
 The review marked the unused K&R parameter FAKE; the clamp-arm zero term and the two address views were already marked.
+
+## [2026-10-23] ticket | T-25149 Done
+
+Reviewed [[tickets/T-25149-w8-NAME_ENT-80132000]] against CODING_STANDARDS.md; matched NAME_ENT `func_80138C1C` (740 bytes) as default-build C, 27/27.
+No findings; the three FAKEs (0x20 buffer, `& 3` on the two-bit date fields, s32 return for the caller) already carry reasons and the ticket.
