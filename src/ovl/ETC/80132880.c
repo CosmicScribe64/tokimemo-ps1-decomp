@@ -9,9 +9,154 @@ void func_80132880(Rgb555Split *arg0) {
     arg0->b = c & 0x7C00;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132880", func_801328A4);
+/* Blur the 274x160 VRAM area at (343, 275): each output pixel mixes arg0% of the pixel with arg1% of
+ * the mean of its four neighbours, from three rolling rows of split channels. */
+void func_801328A4(s32 arg0, s32 arg1) {
+    RECT rect;
+    /* FAKE: three unused words above the buffer put buf at sp+0x90 and the row + 1 spill at
+     * sp+0x6C; the original's locals that own these slots are unknown. T-25121 */
+    s32 pad[3];
+    u16 *src;
+    u16 *dst;
+    s32 y;
+    Rgb555Split buf[3][274];
+    s32 x;
+    u32 r;
+    u32 g;
+    u32 b;
+    u32 cr;
+    u32 cg;
+    u32 cb;
 
+    rect.x = 343;
+    rect.y = 275;
+    rect.w = 274;
+    rect.h = 160;
+    func_8009C8E0(&rect, (void *)0x80198000);
+    func_8009C674(0);
+    src = (u16 *)0x80198000;
+    dst = (u16 *)0x80198000;
+    for (y = 0; y < 160; y++) {
+        if (y == 0) {
+            for (x = 0; x < 274; x++) {
+                buf[2][x].color = *src;
+                func_80132880(&buf[2][x]);
+                buf[0][x].color = *src;
+                func_80132880(&buf[0][x]);
+                src++;
+            }
+        }
+        for (x = 0; x < 274; x++) {
+            if (y == 159) {
+                buf[(y + 1) % 3][x].color = buf[y % 3][x].color;
+                func_80132880(&buf[(y + 1) % 3][x]);
+            } else {
+                buf[(y + 1) % 3][x].color = *src;
+                func_80132880(&buf[(y + 1) % 3][x]);
+                src++;
+            }
+        }
+        dst++;
+        for (x = 1; x < 273; x++) {
+            r = (buf[(y + 2) % 3][x].r + buf[(y + 1) % 3][x].r + buf[y % 3][x - 1].r + buf[y % 3][x + 1].r) >> 2;
+            g = (buf[(y + 2) % 3][x].g + buf[(y + 1) % 3][x].g + buf[y % 3][x - 1].g + buf[y % 3][x + 1].g) >> 2;
+            b = (buf[(y + 2) % 3][x].b + buf[(y + 1) % 3][x].b + buf[y % 3][x - 1].b + buf[y % 3][x + 1].b) >> 2;
+            cr = buf[y % 3][x].r * arg0 / 100 + r * arg1 / 100;
+            cg = buf[y % 3][x].g * arg0 / 100 + g * arg1 / 100;
+            cb = buf[y % 3][x].b * arg0 / 100 + b * arg1 / 100;
+            *dst = (cr & 0x1F) | (cg & 0x3E0) | (cb & 0x7C00);
+            *dst |= 0x8000;
+            dst++;
+        }
+        dst++;
+    }
+    func_8009C884(&rect, (void *)0x80198000);
+    func_8009C674(0);
+}
+
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-25121, 15 rows; only the four 4-use coordinate constants are coloured in another order
+ * (draft t0..t3 = 0xA0 u1/u3, 0x128, 0x20, 0xA8; original 0x20, 0xA0, 0x128, 0xA8). Notes:
+ * drafts/T-25121/ETC/func_80132C3C/NOTES.md. Also needs the FAKE volatile view of D_8014DB80 in ovl/ETC.h. */
+/* FAKE: one line per PsyQ setXY4/setUVWH expansion (x0 first) keeps as1's per-line store order and the
+ * constant numbering; the original's macros are not in the headers. T-25121 */
+s32 func_80132C3C(void) {
+    s32 pad[13]; /* FAKE: 13 frame words above y; the original likely had folded coordinate locals. T-25121 */
+    s32 y;
+    s32 shade;
+    s32 y2;
+    s32 y0;
+    s32 next;
+    POLY_FT4 *p0;
+    POLY_FT4 *p1;
+    POLY_FT4 *p2;
+    POLY_FT4 *p3;
+
+    y = (-D_8011ECA0 * 0xF0) + 0xF0;
+    p0 = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    p1 = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    p2 = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    p3 = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    func_8009F040(p0);
+    func_8009F040(p1);
+    func_8009F040(p2);
+    func_8009F040(p3);
+    SetSemiTrans(p0, 1);
+    SetSemiTrans(p1, 1);
+    SetSemiTrans(p2, 1);
+    SetSemiTrans(p3, 1);
+    shade = D_8014DB80;
+    p0->r0 = shade;
+    p0->g0 = shade;
+    p0->b0 = shade;
+    p1->b0 = shade;
+    p1->g0 = shade;
+    p1->r0 = shade;
+    p2->b0 = shade;
+    p2->g0 = shade;
+    p2->r0 = shade;
+    p3->b0 = shade;
+    p3->g0 = shade;
+    p3->r0 = shade;
+    /* FAKE: the original stores the unchanged counter back here; real source unknown (T-24012). T-25121 */
+    D_8014DB80 = shade;
+    p0->tpage = func_8009ECB0(2, 2, 0x280, 0);
+    p1->tpage = func_8009ECB0(2, 2, 0x300, 0);
+    p2->tpage = func_8009ECB0(2, 1, 0x140, 0x100);
+    p3->tpage = func_8009ECB0(2, 1, 0x1C0, 0x100);
+    y2 = y + 0xB3;
+    y0 = y + 0x13;
+    p0->x0 = 0x18, p0->y0 = y0, p0->x1 = 0xA0, p0->y1 = y0, p0->x2 = 0x18, p0->y2 = y2, p0->x3 = 0xA0, p0->y3 = y2;
+    /* FAKE: empty test splits the uopt block after the first quad's XY stores, as the original's block
+     * (16 counted stores) does; the UV constants then start after the tpage store. T-25121 */
+    if (p0) {
+    }
+    /* FAKE: s8 views type u0/u2 as int constants so 0x18 shares the x0 register; real form unknown. T-25121 */
+    *(s8 *)&p0->u0 = 0x18, p0->v0 = 0x13, p0->u1 = 0xA0, p0->v1 = 0x13, *(s8 *)&p0->u2 = 0x18, p0->v2 = 0xB3, p0->u3 = 0xA0, p0->v3 = 0xB3;
+    p1->x0 = 0xA0, p1->y0 = y0, p1->x1 = 0x128, p1->y1 = y0, p1->x2 = 0xA0, p1->y2 = y2, p1->x3 = 0x128, p1->y3 = y2;
+    p1->u0 = 0x20, p1->v0 = 0x13, p1->u1 = 0xA8, p1->v1 = 0x13, p1->u2 = 0x20, p1->v2 = 0xB3, p1->u3 = 0xA8, p1->v3 = 0xB3;
+    p2->x0 = 0x18, p2->y0 = y0, p2->x1 = 0xA0, p2->y1 = y0, p2->x2 = 0x18, p2->y2 = y2, p2->x3 = 0xA0, p2->y3 = y2;
+    *(s8 *)&p2->u0 = 0x18, p2->v0 = 0x13, p2->u1 = 0xA0, p2->v1 = 0x13, *(s8 *)&p2->u2 = 0x18, p2->v2 = 0xB3, p2->u3 = 0xA0, p2->v3 = 0xB3;
+    p3->x0 = 0xA0, p3->y0 = y0, p3->x1 = 0x128, p3->y1 = y0, p3->x2 = 0xA0, p3->y2 = y2, p3->x3 = 0x128, p3->y3 = y2;
+    p3->u0 = 0x20, p3->v0 = 0x13, p3->u1 = 0xA8, p3->v1 = 0x13, p3->u2 = 0x20, p3->v2 = 0xB3, p3->u3 = 0xA8, p3->v3 = 0xB3;
+    AddPrim((D_8011ECA0 << 0xA) + 0x14 + D_800E8CA0, p0);
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 0x14, p1);
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 4, p2);
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 4, p3);
+    next = D_8014DB80 + 2;
+    D_8014DB80 = next;
+    if (next >= 0x81) {
+        D_800E6280.unk_110D++;
+        next = 0;
+        D_8014DB80 = 0;
+    }
+    /* FAKE: no return and a dead test keep the result in v0 (a return statement puts it in v1). T-25121 */
+    if (next) {
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132880", func_80132C3C);
+#endif
 
 void func_80132FB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_8014E0C0 = 0;

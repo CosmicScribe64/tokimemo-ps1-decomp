@@ -817,3 +817,18 @@ stays at the block start. With all three as diagnostics, the loop piece reaches 
 An extra reload on the empty fall-through block after the `>= 9` test blocks colouring. Natural
 source for the hole and the latch-reload placement is the open question. Negatives, the trace
 recipe and the next hypothesis: `drafts/T-25143/SHOUGATU/func_8013EA98/NOTES.md`.
+## T-25121: ETC func_80132C3C
+
+[[tickets/T-25121-w8-ETC-80132880]], branch w8-ETC-80132880. Not matched: guarded `NON_MATCHING` body, 15 rows (from T-24012's 105-row draft). Left: four 4-use coordinate constants coloured in another order (draft t0..t3 = 0xA0 u1/u3, 0x128, 0x20, 0xA8; original 0x20 first). Findings that apply elsewhere:
+
+- **uopt splits a basic block after the statement at which it holds 16 indirect stores.** `istr` are counted before dead-store elimination; `str` to locals do not count; the count restarts at calls. Constants first used in a block are loaded at its head, so a split moves a constant's range start (here past a call result in v0). Seven dead stores or one empty `if (p) {}` move the split.
+- **Constant-propagated and dead scalars keep frame slots** (three folded coordinate locals grew the frame by 8): a frame larger than the live locals can be folded locals, not arrays.
+- **Constant type follows the store, unless uopt folds it.** A literal or a propagated local stored to a `u8` field is an `L` constant, to an `s16` field a `J` constant, and the two never share a register; a `u16`/`s8` view, or a sum uopt folds (`0x18 + i`, i = 0), gives a `J` constant that does.
+- **One line per PsyQ macro expansion** (comma expression, x0 first) reproduces as1's in-line store order and the hoisted-constant numbering at once; one statement per store in the target order gets the stores right and the constant order wrong.
+- A `volatile` view of a counter global gives one load for a run of byte stores (no copy-propagated second `lw`) and adds in the loaded register.
+
+FAKE (T-25121): `volatile D_8014DB80` in `ovl/ETC.h`, `pad[13]`, `s8` views on u0/u2, the empty block-split test, no `return` plus a dead test. Measurements, negatives and the next hypothesis: `drafts/T-25121/ETC/func_80132C3C/NOTES.md`.
+
+## T-25121: ETC func_801328A4
+
+[[tickets/T-25121-w8-ETC-80132880]]: func_801328A4 (920 bytes) is a literal match in the default build. The T-24012 pointer and byte-offset draft (cost 217) was rewritten in index form over a real `Rgb555Split buf[3][274]`. What closed it: `row + 1` is a uopt temporary spilled below the declared homes (sp+0x6C), not a `next_row` local. The pixel tail keeps both stores (`*dst = (cr & 0x1F) | (cg & 0x3E0) | (cb & 0x7C00); *dst |= 0x8000;`), and the combined channels are locals. A sweep of the 24 operand orders found `up + down + left + right`, which uopt reassociates into the original's load order. Six scalars declared above the buffer and a FAKE `s32 pad[3]` give the 13-word slot count. Rgb555Split channels are now `u32` (srl/multu/divu without casts). Notes and negatives: `drafts/T-25121/ETC/func_801328A4/NOTES.md`.

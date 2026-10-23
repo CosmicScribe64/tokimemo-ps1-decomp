@@ -17,13 +17,14 @@ extern s32 D_80150E9C;
 extern s32 D_801506F0;
 extern s32 D_801506F4;
 
-/* A 15-bit color and its three masked channels (func_80132880, T-2040). */
+/* A 15-bit color and its three masked channels (func_80132880, T-2040). The channels are unsigned:
+ * func_801328A4 averages and scales them with srl, multu and divu (T-25121). */
 typedef struct Rgb555Split {
     /* 0x00 */ u16 color;
     /* 0x02 */ u16 pad;
-    /* 0x04 */ s32 r;
-    /* 0x08 */ s32 g;
-    /* 0x0C */ s32 b;
+    /* 0x04 */ u32 r;
+    /* 0x08 */ u32 g;
+    /* 0x0C */ u32 b;
 } Rgb555Split; /* size 0x10 */
 
 extern s32 D_8015007C;
@@ -1309,7 +1310,9 @@ extern s32 *D_8014E070[13];
 extern u8 D_8014E0A4[13];
 /* CD file tables per scene: dec_bg_cd_read(D_8014EA18[scene][i]) (func_80132FB0). */
 extern s32 *D_8014EA18[22];
-extern s32 D_8014DB80;
+/* FAKE: volatile keeps the shade counter out of uopt's global promotion, so func_80132C3C loads it once for the
+ * colour stores (no copy-propagated second load) and adds 2 in the loaded register; guard only. T-25121 */
+extern volatile s32 D_8014DB80;
 extern s32 D_80150078;
 extern s32 D_801500C0;
 extern s32 D_801500DC;
