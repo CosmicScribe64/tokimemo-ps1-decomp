@@ -273,7 +273,16 @@ void func_80132D04(s16 arg0, s16 arg1) {
 /* NON_MATCHING: T-24503, two rows: the day-address base is a1 rather than a2.
  * FAKE: empty day/month tests assign the day and table value to a2/v1;
  * the table-element test in the true arm moves month from a1 to a3.
- * Global-day and local-day ranges still tie at priority 10; see ticket. */
+ * Global-day and local-day ranges still tie at priority 10; see ticket.
+ * T-11910 ucode (uopt in/out dumps): the second range exists because uopt
+ * narrows the copy into the u8 local (`cvtl 8`, ugen `lbu a1; and a2,a1,0xff`,
+ * folded by as1 into `lbu a2,64(a1)`), so the lui base is always the field
+ * range's colour. Without the local (one range, the target's `lui a2; lbu a2`)
+ * the compare's and the arms' `day + i` become one CSE'd sum: uopt canonicalises
+ * the commutative add and cfe folds casts and no-op assignments on either
+ * side (`i + day`, `(u32) i`, `(s32) i`, `(i = i)`, `(day = ...)` all give the
+ * same ucode), and month then takes a1. No C split of the two sums with a
+ * single day range was found. */
 #ifdef NON_MATCHING
 s32 func_80133024(void) {
     u8 month;
