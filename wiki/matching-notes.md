@@ -796,3 +796,13 @@ Matched (default C, 3220 bytes, 27/27), after the T-24047 history (cost 35: the 
 ## T-25201: ETC func_80132C3C (closer)
 
 [[tickets/T-25201-wave-9-closers]], branch w9c-ETC-80132880. Matched (884 bytes, default build, guard removed) from T-25121's 15-row body. The four 4-use coordinate constants had equal priority 1.5 (savings 3 over D = 2) and were coloured in bit order; the original colours 0x20 first. A never-true arm after the XY3 line, `if ((u32)p0 < 0) { p1->code = 0x20; }` (FAKE), adds one use of 0x20 after its first block, so no new reload: savings 4, priority 2, colour t0; ugen drops the arm. Placement rules measured: before the constant's first use the arm needs its own load and a second one on the fall-through path (no gain); a store through p3 raises p3's priority and swaps the saved registers; the arm adds a reaching block to every range it sits in (0x13 and 0xB3 went from D = 2 to 3 and kept v0/a3). Notes: `drafts/T-25121/ETC/func_80132C3C/NOTES.md`.
+
+## T-25130: MASTER func_801326B4
+
+[[tickets/T-25130-w8-MASTER-80132140]] matches `func_801326B4` (3264 bytes, default C, about 55 minutes) from the T-24517 body (`drafts/T-24517/later/func_801326B4.c`), 113 rows here and 102 once `func_800847B8` is called as an implicit int. The first divergence was the case 4 switch: uopt copy-propagated the raw `sel` local into the global D_800E6374 and made `shr(D.h, 12)` one PRE range in `$v1` (computed at the switch, inserted after each reload in the call arms), where the original recomputes both shifts in ugen temporaries. What closed it:
+
+- **Different expressions for the two shifts.** The switch is `(u16) D_800E6280.unk_0F4.h >> 0xC` (`shr(cvt(D.h))`) and the join test reads a u32 copy, `mode = D_800E6280.unk_0F4.h; if ((mode >> 0xC) != 3)` (`shr(D.h)` after copy propagation). Nothing is shared, so nothing is PRE'd.
+- **Uses in the call arms.** Six always-false tests, `if ((u32) D_800E6280.unk_0F4.h < 0) {}` after each arm call (a FAKE macro), give each arm one use with its reload; the global becomes profitable, gets `$a0` and is reloaded after each call as in the original. ugen folds the tests. Removing any one costs 229 register rows.
+- **`s32 func_800847B8();`** under the existing override pattern: a `void` view moves the case 0/1 ranges (39 rows).
+
+Negatives and the full measurement list: `drafts/T-25130/MASTER/func_801326B4/NOTES.md`.
