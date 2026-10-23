@@ -468,9 +468,10 @@ void func_8013EAA4(s32 arg0) {
             poly->y3 = ((s16 *)pt)[3];
             AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
             height = (func_800A0070(particle->unk12 * 0x10) << 7) / 4096;
-            /* uopt propagates half into its uses (its slot stays). The propagated o * 0x100 of the third
-             * grid is then a later item than j * size * 2, which takes the first spill home (sp+0x64), and
-             * the vertical temporary gets sp+0x58. T-25201 */
+            /* FAKE: half is a constant local that only steers uopt (real source unknown). It is propagated
+             * into its uses (its slot stays), so the third grid's o * 0x100 becomes a later item than
+             * j * size * 2, which takes the first spill home (sp+0x64), and the vertical temporary gets
+             * sp+0x58. T-25201 */
             half = 0x80;
             v.vz = pos.z;
             for (o = 0; o < 2; o++) {
