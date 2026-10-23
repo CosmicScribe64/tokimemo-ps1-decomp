@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | OPTION editor integration checks pass
-
-[[tickets/T-24607-option-editor]] In Progress -> In Review. Root default linked proof matches1,036 bytes; full Docker build, fresh27 hashes, globals, headers and prototype guard pass (zero new disagreements,15 known). Behavior review has no findings. Standards review remains pending. Measured census:6,823 functions /2,098,084 bytes,129 functions remaining.
-
 ## [2026-10-20] ticket | OPTION editor complete and session wrapped up
 
 [[tickets/T-24607-option-editor]] In Review -> Done after independent standards and behavior reviews passed without unresolved findings. All integration gates pass. Updated [[status]] and [[tickets/T-24600-finish-matching]] with6,823/6,952 functions and2,098,084/2,276,920 bytes;129 remain. This continuation completed seven functions /6,516 bytes. All matching lanes stopped at the user's request; full decompilation is not claimed complete.
@@ -1734,6 +1730,7 @@ All six functions of the package are matched, none left with rows; see [[tickets
 
 Reviewed [[tickets/T-25151-w8-GYOZI-80140C90]] against CODING_STANDARDS.md; matched GYOZI `func_801412A4` (684 bytes) as default-build C, 27/27.
 No review findings: the two fakematches (the `(s32)` view of the random word, the count-loop body on the `for` line) already carry `FAKE`, the reason and the ticket.
+
 ## [2026-10-23] ticket | T-25108 Done
 
 Reviewed [[tickets/T-25108-w8-main-80062CD0]] against CODING_STANDARDS.md; matched main `func_80065964` (424 bytes) and `func_8006509C` (1,076 bytes) as default-build C, 27/27.

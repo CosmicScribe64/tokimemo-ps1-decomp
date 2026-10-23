@@ -17,34 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24501 radial texture generator match (2026-10-20)
-
-`func_80046754` (884 bytes, `src/main/80046500.c`) now passes literal default linked C proof. Replaced inherited m2c duplicated/unrolled operations with natural loops over a packed 128x128 nibble texture. Clear each word column using an advancing `u32 *`; indexed clear arithmetic changes induction allocation. A byte-sized flat-fill color reduces180 resolved edits to19 (word-sized selector incorrectly promotes its input and shifts the entire flat branch). Explicit `u16` upload coordinates reduce19 to2. Initialize the row counter inside each mode branch: moving their common zero assignment before the `if` removes the flat branch's independently scheduled initialization and leaves one nop instead. Branch-local initialization closes tozero. No FAKE, dummy locals, inline asm or compiler changes. Exact canonical prototype added to `main_api.h`; parent notified and reviewed actual body/header with no findings. Literal proof884 bytes passes; final full27 checks running.
-
-Final radial verification:484-step post-header rebuild, explicit27/27 SHA1 hashes, headers/main_api and branch guard (zero new,15 known) pass. Parent review has no findings.
-
-## T-24524: NAME_ENT copy input-read timing negative
-
-After T-24515/lane histories, tested only the fresh input-read hypothesis for38C1C in full TU. Control181 words/104 rows is identical for volatile first-character read, second-byte reads, or complete input pointer. The three hoisted byte loads in target nop slots persist, so input volatility does not explain the scheduling boundary. No production/header edits, generated archive or matching claim. Exact replay and private output paths are in [[tickets/T-24524-name-ent-copy-reads]]; existing T-24515 reconstruction remains best. No scheduling/qualifier grid follows.
-
-## T-24525: NAME_ENT indexed post-test negative
-
-398EC's direct-global indexed for loop and fresh direct-global indexed post-test do/while both give126 words/173 rows against123 target in full TU; decoded comparisons identical. Earlier post-test controls used pointer aliasing, so this combination was tested once after lane history review. It does not change the allocation/arithmetic gap; no further loop grid or production/header edit. Concise replay/private paths in [[tickets/T-24525-name-ent-indexed-posttest]].
-
-## T-24501 quadrant renderer and CD consult checkpoint (2026-10-20)
-
-`func_80046AC8` (2,684 bytes) remains ASM. Typed primitive fields838 from raw1048; semantic locals/GameState view810; keeping texture page row bit unscaled and scaling at use restores target saved-register ranks and gives738. Explicit updates/shift spelling do not improve; comma-grouped UV stores and scoped case locals fail their specific tail/frame hypotheses. Broad frame/order and inherited channel/extent narrowings remain; no narrow compiler consult justified. Source-only draft and exact replay/width cautions archived under `drafts/T-24501/main/func_80046AC8*`. Stop this probe phase rather than repeat type/frame grids.
-
-Parent CD26 consult also negative: relative spacing repair grows frame by8 (66); address/counter reuse changes codegen (223); grouped flags/status assignment leaves26. Preserve baseline26 and its packet; no compiler changes.
-
-## T-24523: GYOZI candidate-list ownership negatives
-
-For `func_80138C9C`, the original proves a thirteen-halfword local list at sp+0x4C and a final pointer spill at sp+0x44, without local record-prefix fields. Current full-unit baseline cost103 remains better than separate stage index scopes112, disjoint count/rotation scalar reuse103, direct global candidate-work aggregate111 or local global-work pointer150. Original s0 index ownership spans all loops, including rotation without calls. The real global layout is signed-halfword current+0, values[12]+4, signed-halfword count+0x1C, byte special+0x20 and mode+0x24, with next table+0x28. Reloading count after each values store motivated the aggregate probes, but they retain the baseline rotation scheduling and add downstream reloads/frame pressure. No production declaration/type pun or source-only worse body retained. Details and the negative new MAIN donor ranking (all28 ratios at most0.240) are in [[tickets/T-24523-seasonal-source-hypotheses]]. No new coverage.
-
-## T-24523: VALEN32834 stale guard and correct typed sibling
-
-The old func_80132834 guard is structurally wrong, not the documented commuted-sum near miss. Immutable target bounds are0x80132834..0x80132D0B (1240 bytes, next0x80132D0C). Target starts current/mode/count/special clears and girl9 flag/condition test, then strict top-three ranking followed by gather/rotate/reorder. Old guard starts eleven0xFF list stores and uses different ranking predicates/final counting. Its current cost484 and assignment-only *1 probe491 are irrelevant to a narrow target tail. Original normalized similarity to GYOZI38C9C is0.60215; typed shared-stage reconstruction plus faithful ranking prefix gives381. Correct annotated source-only archive at drafts/T-24523/VALEN/func_80132834 reproduces381; list capacity uncertainty is marked FAKE. Removed incorrect guard only, retaining default matching fallback. Full private VALEN hash,27 checksum provenance and declaration guards pass. No new coverage. See [[tickets/T-24523-seasonal-source-hypotheses]].
-
 ## T-24526: NAME_ENT introduction real width/frame reconstruction
 
 43580 canonical archive1078 words/835 rows has actual opcode/control gaps, not just registers. Correction during T-24600: target narrows decremented X to s16 before its store and call. The historical s32 old_x control incorrectly removed two required sign extensions and was never promoted. Exact128-word palette-copy endpoint removes extra latch sltu. Naming early actor depth before index++ naturally restores target frame90/table6C without padding. Preserved full-TU body1075 words/864 rows; no production/header change or new match. Source-only body/declarations/NOTES/replay in drafts/T-24526/NAME_ENT/func_80143580.
@@ -732,6 +704,7 @@ read once into the reused s16 counter (only s16 gives `beq a2,v0`); an `(s32)` v
 which puts the load first in the sum (FAKE: `801418B0.c` needs the field unsigned); and the count-loop
 body on the `for` line (FAKE layout, as1 orders by line). Details and negatives:
 `drafts/T-25151/GYOZI/func_801412A4/NOTES.md`.
+
 ## T-25108: main func_80065964
 
 [[tickets/T-25108-w8-main-80062CD0]], branch w8-main-80062CD0. Matched in plain C (424 B), from about 68 rows (T-25010 draft).
