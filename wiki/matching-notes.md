@@ -808,3 +808,19 @@ FAKE (T-25121): `volatile D_8014DB80` in `ovl/ETC.h`, `pad[13]`, `s8` views on u
 ## T-25141: TACO func_8013FBF0
 
 Matched (1040 bytes, default C), [[tickets/T-25141-w8-TACO-8013F250]], wave 9 neighbor conveyor (T-25200). Start: the T-24502 typed SPRT draft at 84 rows. Four causes, each measured alone. (1) The colour word is `(r << 16) + (g << 8) + b` on u8 channels after `r *= value`: the `andi` in the target is the u8 truncation of the product, and the `& 0xFF` that m2c printed added redundant `and`s that cost ugen ring slots and sent the products to temporaries (`mflo t4` for `mflo s0`); `cc -S` shows it (80 to 51 rows). Candidate [[playbook]] recipe: when a u8 variable's product sits in its own register in the target and the draft has `mflo` into a temporary, drop the explicit masks at the use. (2) The second sprite's y0 has the shift written before the array read; cfe swaps `+` operands by weight, so that order makes ugen read the array first (51 to 4). (3) UV stores of each sprite on one line, as in `func_8013F874` (4 to 0). (4) `s32 pad[6]` for the 0x60 frame (FAKE). Negatives: s32 channels, separate product locals, a `u32 dy` local, lighter shift spellings. Details: `drafts/T-25141/TACO/func_8013FBF0/NOTES.md`.
+## T-25142: BUNKA_SD func_80134D94
+
+Not matched; aligned cost 102 -> 12 (243/243 words), but 45 positional rows, so the source is plain
+`INCLUDE_ASM` again (the old T-24137 guard is gone) and the body is in
+`drafts/T-25142/BUNKA_SD/func_80134D94/func_80134D94.c`. It needs `s32 func_80134D94(void);` in
+include/ovl/BUNKA_SD.h (caller and BUNKA_SD sha1 checked with it). What closed rows: the fade colour
+is `(0x68E - frame) * 0x10201` done as two in-place `v += v << 8` (the old draft had `* 0x10101`, a
+wrong value); an implicit-int function whose last block returns its quotient (`return w;`, the
+original's `move v0,v1`); that block written like func_80134850 (u8 views of `unk_110C`, promoted to
+`a0`); the switch arms read `t = q * 1` with an empty `if (t < 0)` (a range uopt keeps, `move v0,a0`
+at the switch head, like `q * 2` in func_80132708); and the frame counter read through
+`GsWord *fc = &D_800E6280.unk_1104;` (an `ilod` is not copy propagated, so the colour stays one
+register, as in T-25146). Left: in the first block the original loads the byte counter straight into
+`a1` (`lui a1`) while the draft keeps a load range in `v0` (`lui v0`), and the selector needs the
+T-25053 empty test to get `a2`, which loads it one slot early; the last block copies w to `v0` after
+the store instead of before. Negatives and the next hypothesis: `drafts/T-25142/BUNKA_SD/func_80134D94/NOTES.md`.
