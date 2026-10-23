@@ -752,3 +752,6 @@ case of the [[playbook]] recipe "A function named by the file's own data" (after
 `func_80134724`). The symptom here is different: a compare-chain switch, not a range-check slot. Check
 it whenever the original fills a slot from the next compare and the case head's instruction would
 pass the path test. Details: `drafts/T-25109/EN_NICHI/func_80136DEC/NOTES.md`.
+## T-25201: TACO func_8013EAA4 (closer)
+
+Matched (default C, 1964 bytes, 27/27) from the T-25110 4-row body. Cause of the last rows: uopt's `spilltemps` gives temporaries in bit order (first fit, skipping those of lower bits that share a node). The third grid's `o * 0x100` (bit 196) came before `j * size * 2` (bit 201) and took the particle pointer's sp+0x64, since their regions do not meet. Fix: `half = 0x80;` after the height statement, and `j * half * 2 - half` / `o * half * 2 - half` in the second grid X and third grid Y. Copy propagation then makes the Y item late (bit 215): `j * size * 2` takes sp+0x64 (it stays in s1) and Y gets sp+0x58. `half` takes the old `pad_b` slot. Found with a scratch uopt that prints each `spilltemps` decision (`drafts/T-25110/TACO/func_8013EAA4/spillpatch.py` on top of `tools/uopt_patch.py trace`). Details and controls: `drafts/T-25110/TACO/func_8013EAA4/NOTES.md`.
