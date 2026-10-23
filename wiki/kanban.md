@@ -107,7 +107,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25300-wave-10-second-pass|T-25300 Wave 10 - second pass on every function left after waves 8 and 9]]
 - [ ] [[tickets/T-25400-wave-11-until-matched|T-25400 Wave 11 - repeated passes until every game function matches]]
 - [ ] [[tickets/T-25500-stubborn-functions|T-25500 Stubborn functions - multi-angle attack, toolchain changes allowed under 7a]]
-- [ ] [[tickets/T-25501-stubborn-shougatu-8013ea98|T-25501 Stubborn function SHOUGATU func_8013EA98 (src/ovl/SHOUGATU/8013E330.c)]]
 - [ ] [[tickets/T-25600-finish-gate|T-25600 Finish gate - loop the last functions until 100%]]
 
 ## In Review
@@ -180,6 +179,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25501-stubborn-shougatu-8013ea98|T-25501 Stubborn function SHOUGATU func_8013EA98 (src/ovl/SHOUGATU/8013E330.c)]]
 - [ ] [[tickets/T-25319-w10-NAME_ENT-80142A80|T-25319 Wave 10 second pass on src/ovl/NAME_ENT/80142A80.c]]
 - [ ] [[tickets/T-25317-w10-main-80047550|T-25317 Wave 10 second pass on src/main/80047550.c]]
 - [ ] [[tickets/T-25318-w10-main-8006CB30|T-25318 Wave 10 second pass on src/main/8006CB30.c]]
