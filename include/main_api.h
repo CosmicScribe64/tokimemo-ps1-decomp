@@ -423,7 +423,7 @@ typedef struct GsRecF90 {
 
 /* 32 records at +0x1328 (palette_load_vram). */
 typedef struct GsRec1328 {
-    /* 0x00 */ s32 unk_00;
+    /* 0x00 */ u32 *unk_00;
     /* 0x04 */ u8 unk_04;
     /* 0x05 */ u8 unk_05;
     /* 0x06 */ u8 unk_06;
