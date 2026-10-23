@@ -1,6 +1,6 @@
 #!/bin/sh
 # usage (host, repo root, TOKIMEMO_SCRATCH set to a directory holding r9-uopt/variants/trace):
-#   sh drafts/T-25116/main/func_800476C0/rd.sh BODY.c
+#   sh drafts/T-25317/main/func_800476C0/rd.sh BODY.c
 # regdiff (traced uopt) for main:func_800476C0 with BODY.c in place of the INCLUDE_ASM line, via a scratch copy
 # of src/main/80047550.c (drafts/T-25317/main/func_800476C0/regsrc.c, not committed). T-25317 (from T-25116).
 set -e

@@ -1790,3 +1790,8 @@ Added "Before proposing a compiler or build-step change" to [[playbook]]: which 
 
 Reviewed [[tickets/T-25309-w10-TAIIKU-80133C80]] against CODING_STANDARDS.md; no match: TAIIKU `func_80137784` stays behind its `NON_MATCHING` guard (4 funcdiff rows, the operand order of two pointer compares), 27/27, no findings.
 The only measured match needs second symbol names (`drafts/T-25309/TAIIKU/func_80137784/alias-match.patch`, waiting for the user's approval); notes in [[matching-notes]].
+
+## [2026-10-23] ticket | T-25317 Done
+
+Reviewed [[tickets/T-25317-w10-main-80047550]] against CODING_STANDARDS.md; no match: main `func_800476C0` stays `INCLUDE_ASM` (552 funcdiff rows, 8 structural hunks, saved-register order now original), 27/27, two small findings fixed.
+Draft body and notes in `drafts/T-25317/main/func_800476C0/`; section in [[matching-notes]].
