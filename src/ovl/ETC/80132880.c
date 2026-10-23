@@ -9,7 +9,70 @@ void func_80132880(Rgb555Split *arg0) {
     arg0->b = c & 0x7C00;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132880", func_801328A4);
+/* Blur the 274x160 VRAM area at (343, 275): each output pixel mixes arg0% of the pixel with arg1% of
+ * the mean of its four neighbours, from three rolling rows of split channels. */
+void func_801328A4(s32 arg0, s32 arg1) {
+    RECT rect;
+    /* FAKE: three unused words above the buffer put buf at sp+0x90 and the row + 1 spill at
+     * sp+0x6C; the original's locals that own these slots are unknown. T-25121 */
+    s32 pad[3];
+    u16 *src;
+    u16 *dst;
+    s32 y;
+    Rgb555Split buf[3][274];
+    s32 x;
+    u32 r;
+    u32 g;
+    u32 b;
+    u32 cr;
+    u32 cg;
+    u32 cb;
+
+    rect.x = 343;
+    rect.y = 275;
+    rect.w = 274;
+    rect.h = 160;
+    func_8009C8E0(&rect, (void *)0x80198000);
+    func_8009C674(0);
+    src = (u16 *)0x80198000;
+    dst = (u16 *)0x80198000;
+    for (y = 0; y < 160; y++) {
+        if (y == 0) {
+            for (x = 0; x < 274; x++) {
+                buf[2][x].color = *src;
+                func_80132880(&buf[2][x]);
+                buf[0][x].color = *src;
+                func_80132880(&buf[0][x]);
+                src++;
+            }
+        }
+        for (x = 0; x < 274; x++) {
+            if (y == 159) {
+                buf[(y + 1) % 3][x].color = buf[y % 3][x].color;
+                func_80132880(&buf[(y + 1) % 3][x]);
+            } else {
+                buf[(y + 1) % 3][x].color = *src;
+                func_80132880(&buf[(y + 1) % 3][x]);
+                src++;
+            }
+        }
+        dst++;
+        for (x = 1; x < 273; x++) {
+            r = (buf[(y + 2) % 3][x].r + buf[(y + 1) % 3][x].r + buf[y % 3][x - 1].r + buf[y % 3][x + 1].r) >> 2;
+            g = (buf[(y + 2) % 3][x].g + buf[(y + 1) % 3][x].g + buf[y % 3][x - 1].g + buf[y % 3][x + 1].g) >> 2;
+            b = (buf[(y + 2) % 3][x].b + buf[(y + 1) % 3][x].b + buf[y % 3][x - 1].b + buf[y % 3][x + 1].b) >> 2;
+            cr = buf[y % 3][x].r * arg0 / 100 + r * arg1 / 100;
+            cg = buf[y % 3][x].g * arg0 / 100 + g * arg1 / 100;
+            cb = buf[y % 3][x].b * arg0 / 100 + b * arg1 / 100;
+            *dst = (cr & 0x1F) | (cg & 0x3E0) | (cb & 0x7C00);
+            *dst |= 0x8000;
+            dst++;
+        }
+        dst++;
+    }
+    func_8009C884(&rect, (void *)0x80198000);
+    func_8009C674(0);
+}
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-25121, 15 rows; only the four 4-use coordinate constants are coloured in another order
