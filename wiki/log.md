@@ -7,15 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24700 completion fan-out to 100 percent
-
-Split the 129 remaining INCLUDE_ASM functions (178,836 bytes) into nine file-disjoint lanes,
-T-24701..T-24709, each with a background worker and a list under `.claude/orchestrator/lists/`.
-Worker brief: `.claude/orchestrator/fanout-brief.md`. Baseline gate: tools/progress.py 6823/6952
-functions, 2,098,084/2,276,920 bytes (92.1 percent). A Docker twin scan (`neardupes.py --report -v`)
-found 0 fillable unmatched functions and 0 unmatched members in groups with a matched source, so
-the remaining work needs per-function reconstruction. See [[status]] and [[tickets/T-24700-completion-fanout]].
-
 ## [2026-10-20] decision | T-24700 wave 1 results and wave 2
 
 Wave 1 (T-24701..T-24709) closed no literal matches: the remaining set is the hard tail, and the
@@ -1741,6 +1732,7 @@ Reviewed [[tickets/T-25110-w8-TACO-8013DB80]] against CODING_STANDARDS.md; match
 ## [2026-10-23] ticket | T-25150 Done
 Reviewed against `CODING_STANDARDS.md` (no findings), clean rebuild 27/27, funcdiff MATCH. Matched: KANGEI `func_80134724` (688 bytes) as default C, FAKE cast dropped, by defining the object's own scene table `D_80139B30` in C ([[tickets/T-25150-w8-KANGEI-80134120]], [[matching-notes]]).
 No function left with rows in this package; the data-island lead for other switches is in `drafts/T-25150/KANGEI/func_80134724/NOTES.md`.
+
 ## [2026-10-23] ticket | T-25149 Done
 
 Reviewed [[tickets/T-25149-w8-NAME_ENT-80132000]] against CODING_STANDARDS.md; matched NAME_ENT `func_80138C1C` (740 bytes) as default-build C, 27/27.
