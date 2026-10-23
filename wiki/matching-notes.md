@@ -827,3 +827,14 @@ the store instead of before. Negatives and the next hypothesis: `drafts/T-25142/
 ## T-25140: main make_color_bar
 
 Matched (1,072 bytes, default C, no FAKE) from the T-24501 walked-pointer draft (186 rows, cost 330) in about 20 minutes. The first divergence was the row pointer: as a declared variable it is range bit 0 and takes `$v0`. The target colours it after the masked gradient values (`$v0`, `$a1`), at `$t0`, so it has to be a uopt induction temporary. Writing every store from the pair index, `p[k + 16 * row].r1 = k * 2` and `.r0 = k * 2 - 1` in `for (k = 0; k < 16; k++)`, lets uopt strength-reduce both values and the address, and use `k * 2 - 1 < 31` as the loop test. That closes all three loops at once. Negatives: indexed `p[k]` with separate `i`/`j` counters (247 rows), and a `Pix2Out *` parameter with no `p = arg0` copy (260 rows). A toy file with only the typedef and the function, compiled with `tools/cc.py`, reproduced the full-unit score in 8 s. Details: `drafts/T-25140/main/make_color_bar/NOTES.md`.
+## T-25138: RPG_BAT func_80144C84
+
+Matched (1,276 bytes, default C) from the T-24522 28-row draft in about 25 minutes. Both remaining gaps came from
+one ownership fact: the flag words `D_8015EBCC`, `D_8015EBE0` and the counters `D_8015EBFC` are one object.
+With direct members of one view (`extern RpgBattleView D_8015EBCC`, a file override of the header's `s32[3]`),
+the indexed read `flag[D_8015EBAC]` aliases `EBE0` and `unk_08`, so uopt ends their ranges at the third
+threshold and reloads them after the test (as the target does), and as1 keeps the `EBE0` load before the
+counter writebacks at the join (one symbol). A pointer view of an incomplete array gave the reloads but
+swapped the counter colours; negative offsets from `D_8015EBFC` did not alias `EBE0`. Then `EBE0 -= 0x14`
+before the `unk_08` clamp, and the real locals `sel`/`total` for the 0x38 frame. The T-24522 `* 1` wrappers
+and `RpgStat *stat` are gone; the comma return stays (FAKE). Details: `drafts/T-25138/RPG_BAT/func_80144C84/NOTES.md`.
