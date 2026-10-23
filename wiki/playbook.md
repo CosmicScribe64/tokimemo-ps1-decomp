@@ -222,6 +222,10 @@ the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the 
 
 tools/cvt_pass.py writes `OPTN 405 0` (no global copy propagation) for a procedure whose switch selector is an unsigned global read at the entry. Every cross-block copy then stays a range. A call result used after a branch (`d = f(); if (a < t && d < t)`) gets `move rX,v0`, because uopt never gives v0 to a range defined in the call's block. as1 deletes that move in a `void` function but keeps it in an `s32` one. Fix: `switch (*(u8 *)&G.field)`. The byte view is an indirect load, so the pass leaves propagation on, and the selector keeps its register. Mark it FAKE. TACO `func_8013BAC4`, score 18 to 0. Separately, `if (x != 0) continue;` before a second `G += ...` makes ugen reload G, where a plain `if` reuses the stored value across the fall-through.
 
+## Copies of globals folded into their later use: a dead `register` initializer turns copy propagation off (T-25301)
+
+If a body matches with global copy propagation off but not with it on (the copies `x = D;` of a block are folded into a later block's `x &= k`), a dead initializer of a `register` local from an unsigned global turns it off for that procedure with no code and no frame word. cfe declares a `register` local with a `VREG` record, and the tools/cvt_pass.py rule above only asks for a direct load of an unsigned `S` variable stored into a `VREG` before the first call, branch or label. NAME_ENT `func_8013AF78`: `register s32 d = D_80120C2B;` (d is the loop counter, so the store is dead), 22 rows to 0, FAKE. A dead two-case switch on an unrelated unsigned global does the same, but its temporary costs a frame home (8 bytes of frame). See `drafts/T-25301/NAME_ENT/func_8013AF78/NOTES.md`.
+
 ## A shared constant loaded too late in one arm (T-25201)
 
 uopt adds a block to a constant's register range only where the constant has appeared on some path from the
