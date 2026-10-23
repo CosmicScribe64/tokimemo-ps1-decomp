@@ -103,6 +103,9 @@ void func_80136B74(void) {
     }
 }
 
+/* NON_MATCHING: T-25109, 4 aligned rows (funcdiff counts 258 positional rows from the shift); what is
+ * left: as1 fills the case-1 and case-2 dispatch delay slots from the case heads (move s1,zero and
+ * lui t4) where the original takes the next compare's li s0,2 and li at,3. drafts/T-25109/. */
 #ifdef NON_MATCHING
 void func_80136DEC(void) {
     GameState *gs;
@@ -156,7 +159,7 @@ void func_80136DEC(void) {
         return;
     case 2:
         if (((DisplayActor44 *)D_8011ECD0)[96].unk_07 >= 0x80U) {
-            D_800E6280.unk_03A = 0x80;
+            gs->unk_03A = 0x80;
             ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = 0x80;
             func_8004284C();
         } else {
@@ -167,16 +170,16 @@ void func_80136DEC(void) {
         }
         return;
     case 3:
-        switch (D_800E6280.unk_110D) {
+        switch (gs->unk_110D) {
         case 0:
             func_80046290(0x07000002, 0x03000008, 0xE);
             func_80044750(0x300);
-            D_800E6280.unk_110D += 1;
+            gs->unk_110D += 1;
             return;
         case 1:
         case 3:
             if (func_800460EC() == 4) {
-                D_800E6280.unk_110D += 1;
+                gs->unk_110D += 1;
                 return;
             }
         default:
@@ -185,7 +188,7 @@ void func_80136DEC(void) {
             if (func_800460EC() == 2) {
                 func_80046290(0x08000001, 0x02000004, 0xE);
                 func_80044750(0x300);
-                D_800E6280.unk_110D += 1;
+                gs->unk_110D += 1;
                 return;
             }
             break;
