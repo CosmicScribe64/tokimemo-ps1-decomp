@@ -744,3 +744,12 @@ What is left: the else arm sets the shared constant 3 (`$s5`) before `jal menu_c
 - `D_8015EC5C/64/68` as `D_8015EC58.unk_04/0C/10`: same bytes.
 
 Left: frame 0x60 against 0x58 (a web kept by an unmovable read costs frame words; an empty `if (x) {}` keeps it for free but splits blocks), the case 0 `D_8015EBAC` load (first in the original), and the case 3 counter store (before the test loads in the original). Fast scorer `drafts/T-25114/score.py`; details, negatives and the next hypothesis in `drafts/T-25114/RPG_BAT/func_80154DD8/NOTES.md`.
+
+## T-25114: RPG_BAT func_8015528C
+
+[[tickets/T-25114-w8-RPG_BAT-80154430]], branch w8-RPG_BAT-80154430. Matched as default-build C (1500 B, 27/27), from T-24522's 4-line draft. The last two words were commutative `addu` instructions with their operands exchanged. cfe sets the order: `&p[i]`, `p + i` and `i + p` are index first, and a subscript read or store (`IXA`), `p += i` or an integer sum in source order are base first. uopt keeps the order.
+
+- **Progress through subscripts.** `(&D_8015EBAC)[arg6]` everywhere, with no pointer local. The base-first `IXA` address is CSE'd into `$fp`.
+- **One phase range with two orders.** The target writes `$s7` base first in the correction arm and index first after the join. Integer address sums, `(s32)&D + arg7 * 4` in the arm and `arg7 * 4 + (s32)&D` at the join, are one uopt expression with two defs, and each def emits its own order. Base-first pointer forms in the arm (`p += i`, subscripts) split it into an arm-only range in `$v0`: 230 lines.
+
+FAKE: the array view of the scalar-declared D_8015EBAC and the integer sums (T-25114); T-24522's `* 1` remainder is still needed. Controls: `drafts/T-25114/RPG_BAT/func_8015528C/NOTES.md`.
