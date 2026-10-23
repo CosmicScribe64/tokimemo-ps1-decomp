@@ -725,3 +725,13 @@ Matched (default-build C, 804 bytes, 27/27). The last 4 rows were p's spill slot
 ## T-25152: TACO func_80138B2C (closer)
 
 [[tickets/T-25152-w8-TACO-80138890]]: matched (default C, 476 bytes). The last 3 rows were the clamp constant in `$t2`. uopt's input pass replaces a load of a variable with the constant stored to it earlier in the same block (`uoptinput.c`), so `arg0 = 0x98967F; D_8015F490[4] = arg0;` stores the constant and ugen builds it in a ring temporary. For an expression used once, the load stays a read of the variable when the expression has an indirect load (`has_ilod`) or an operand killed in between (`treekilled`). `arg0 = 0x98967F + *(u8 *)&D_8015EDCC * 0;` (FAKE) keeps the def in `$a0`, and ugen folds the zero term. Reading `arg0` in the zero term also puts the arm in `$a0`, but it makes the total live into the arm, and the total then gets its own range in `$v1` (25 rows). Variants: `drafts/T-25152/TACO/func_80138B2C/NOTES.md`.
+
+## T-25113: ETC func_8013F054
+
+[[tickets/T-25113-w8-ETC-8013BEF0]]: matched (default C, 716 bytes, no FAKE), from INCLUDE_ASM. The best earlier body had 71 rows (T-24076). Three causes, each closed by one change:
+
+1. A pointer do/while lets uopt CSE the base and the bound. An index do/while lets LFTR build the bound in `$a2` while the base stays a ugen temporary: 71 to 31 rows.
+2. The entry load with its `move`: `i = D_80150064;` at the top. The promoted global and `i` tie on priority, and the lower bit (first appearance) wins.
+3. The compare operand order in the loop: no `v` local, and the record read as an expression after `i--`.
+
+A `GameState *g` pointer replaces the FAKE scalar views and keeps the two final `unk_F5F` reloads. Details: `drafts/T-25113/ETC/func_8013F054/NOTES.md`.
