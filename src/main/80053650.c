@@ -917,7 +917,8 @@ s32 func_80055A38(s32 arg0) {
 }
 
 /* The load half of func_8005557C: copies bank D_800E6280.unk_1117 & 1 back into GameState, field by field
-   in the same order (T-25310). The bank address has the writer's two spellings (FAKE, see func_8005557C).
+   in the same order (T-25310). The bank address has the writer's two spellings (FAKE: T-25310, the same
+   address forms as func_8005557C, see its comment).
    The slot byte is read through g, set before the func_80055A38 call: a plain D_800E6280.unk_1117 read
    lets IDO fold arg0 into the bank base, which then splits into two live ranges. */
 s32 func_80055AFC(s32 arg0) {
