@@ -8,6 +8,9 @@
 /* Frame and position of display record n, one source line (as1 schedules the three stores by line). */
 #define SET_REC(n, frame, px, py) (REC(n).unk_18 = (frame), REC(n).unk_26 = (px), REC(n).unk_2A = (py))
 
+/* The packed flag word at GameState +0xF64 of state gs, as single bits. */
+#define FLAGS_F64(gs) ((FlagsF64 *)(gs)->unk_F64)
+
 void func_8013CCD0(void) {
     DisplayActor44 *rec;
     s32 i;
@@ -203,4 +206,211 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     set_kanji_string(-0x58, 0x12, 3, notes + 0x20, 0);
 }
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/8013CCD0", func_8013D88C);
+/* Date-spot menu (two pages): fills the x, y, availability and step rows of the eleven entries
+ * for menu_set and draws the names of the available ones. arg0 selects the page, arg1..arg3 are
+ * the year, month and day of the date. The spot flags, the month and year and the packed-flag
+ * tests of page one and of the page-two month ladder are read through g; the other packed-flag
+ * tests name D_800E6280 itself. The two spellings give uopt different base-register and
+ * promotion choices, and only this split reproduces the original (measured in T-25133).
+ */
+void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 i;
+    GameState *g;
+    s16 x[11];
+    s16 y[11];
+    s16 avail[11];
+    s16 step[11];
+
+    g = &D_800E6280;
+    for (i = 0; i < 10; i++) {
+        avail[i] = 0;
+    }
+    /* FAKE: one source line, so as1 stores the four row-10 entries in the original order. T-25133 */
+    y[10] = -0x54; avail[10] = 0x64; step[10] = 0x10; x[10] = 0;
+    if (arg0 == 0) {
+        set_kanji_string(-0x80, -0x52, 3, "デートスポット", 0);
+        set_kanji_string(0, -0x52, 3, "次のページへ", 0);
+        for (i = 0; i < 10; i++) {
+            if (g->unk_120[i] & 0x7F) {
+                avail[i] = 0x74;
+            } else {
+                avail[i] = 0;
+                switch (i) {
+                case 0:
+                case 2:
+                case 4:
+                case 8:
+                case 9:
+                    break;
+                case 1:
+                    if (FLAGS_F64(g)->b1 == 1 && arg1 == 0x5F && arg2 == 6) {
+                        avail[i] = 0x74;
+                    }
+                    break;
+                case 3:
+                    if (FLAGS_F64(g)->b3 == 1 && arg1 == 0x5F && arg2 == 12) {
+                        avail[i] = 0x74;
+                    }
+                    break;
+                case 5:
+                    if (FLAGS_F64(g)->b5 == 1 && arg1 == 0x60 && arg2 == 6) {
+                        avail[i] = 0x74;
+                    }
+                    break;
+                case 6:
+                    if (FLAGS_F64(g)->b7 == 1 && arg1 == 0x60 && arg2 == 12) {
+                        avail[i] = 0x74;
+                    }
+                    break;
+                case 7:
+                    if (FLAGS_F64(g)->b2 == 1 && arg1 == 0x5F && arg2 == 9) {
+                        avail[i] = 0x74;
+                    }
+                    break;
+                }
+            }
+            x[i] = (1 - i / 5) * -0x88;
+            y[i] = (i % 5) * 0x10 - 0x38;
+            step[i] = 0x10;
+            if (avail[i] != 0) {
+                set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, D_800B342C[i], 0);
+            }
+        }
+    } else {
+        set_kanji_string(-0x80, -0x52, 3, "デートスポット", 0);
+        set_kanji_string(0, -0x52, 3, "前のページへ", 0);
+        for (i = 0; i < 6; i++) {
+            if (g->unk_120[i + 10] & 0x7F) {
+                if (i < 3) {
+                    avail[i] = 0x74;
+                } else if (i == 3) {
+                    /* The empty arm keeps the original test order and block layout (T-25133). */
+                    if (arg2 == 12 || arg2 == 2 || arg2 == 0 || arg2 == 14) {
+                    } else {
+                        if (arg2 == g->unk_03F) {
+                            if (FLAGS_F64(g)->b14 == 1) {
+                                avail[i] = 0x74;
+                            }
+                        } else if (g->unk_03F % 3U == 2) {
+                            if (FLAGS_F64(g)->b13 == 1) {
+                                avail[i] = 0x74;
+                            }
+                        } else if (FLAGS_F64(g)->b14 == 1) {
+                            avail[i] = 0x74;
+                        }
+                    }
+                } else if (i == 4) {
+                    if (arg2 == g->unk_03F) {
+                        if (FLAGS_F64(g)->b14 == 1) {
+                            avail[i] = 0x74;
+                        }
+                    } else if (g->unk_03F % 3U == 2) {
+                        if (FLAGS_F64(g)->b13 == 1) {
+                            avail[i] = 0x74;
+                        }
+                    } else if (FLAGS_F64(g)->b14 == 1) {
+                        avail[i] = 0x74;
+                    }
+                } else if (i == 5) {
+                    if (arg2 == g->unk_03F) {
+                        if (FLAGS_F64(g)->b14 == 1) {
+                            avail[i] = 0x74;
+                        }
+                    } else if (g->unk_03F % 3U == 2) {
+                        if (FLAGS_F64(g)->b13 == 1) {
+                            avail[i] = 0x74;
+                        }
+                    } else if (FLAGS_F64(g)->b14 == 1) {
+                        avail[i] = 0x74;
+                    }
+                }
+            } else {
+                switch (i) {
+                case 2:
+                case 5:
+                    break;
+                case 0:
+                    if (FLAGS_F64(&D_800E6280)->b6 == 1 && arg1 == 0x60 && arg2 >= 9) {
+                        avail[i] = 0x74;
+                    }
+                    break;
+                case 1:
+                    if (FLAGS_F64(&D_800E6280)->b8 == 1 && arg1 == 0x61 && arg2 >= 3) {
+                        avail[i] = 0x74;
+                    }
+                    break;
+                case 3:
+                    if (FLAGS_F64(&D_800E6280)->b13 == 1 && g->unk_03F == 2 && arg2 == 3 && g->unk_03E == 0x60) {
+                        avail[i] = 0x74;
+                    }
+                    break;
+                case 4:
+                    if (FLAGS_F64(&D_800E6280)->b13 == 1 && arg1 == 0x5F && arg2 == 6 && g->unk_03F == 5) {
+                        avail[i] = 0x74;
+                    }
+                    break;
+                }
+            }
+            x[i] = (1 - i / 5) * -0x88;
+            y[i] = (i % 5) * 0x10 - 0x38;
+            step[i] = 0x10;
+            if (avail[i] != 0) {
+                /* 3U shares the unsigned 3 of the month test (andi of t1). T-25133 */
+                set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3U, D_800B342C[i + 10], 0);
+            }
+        }
+        for (i = 6; i < 10; i++) {
+            if (i == 6) {
+                if (func_80066B40(arg2, arg3) == 1) {
+                    set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, D_800B342C[16], 0);
+                    avail[i] = 0x74;
+                } else if (func_80066B40(arg2, arg3) == 2) {
+                    set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, D_800B342C[19], 0);
+                    avail[i] = 0x74;
+                } else {
+                    avail[i] = 0;
+                }
+            }
+            if (i == 7) {
+                if (func_80066B40(arg2, arg3) == 2) {
+                    set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, D_800B342C[20], 0);
+                    avail[i] = 0x74;
+                } else if (func_80066B40(arg2, arg3) == 1) {
+                    set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, D_800B342C[17], 0);
+                    avail[i] = 0x74;
+                } else {
+                    avail[i] = 0;
+                }
+            }
+            if (i == 8) {
+                avail[i] = 0;
+            }
+            if (i == 9) {
+                if (FLAGS_F64(&D_800E6280)->b15 == 1 && arg2 == 8 && (arg3 + 6) / 7 == 1) {
+                    set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, D_800B342C[18], 0);
+                    avail[i] = 0x74;
+                } else {
+                    avail[i] = 0;
+                }
+            }
+            x[i] = (1 - i / 5) * -0x88;
+            y[i] = (i % 5) * 0x10 - 0x38;
+            step[i] = 0x10;
+        }
+    }
+    menu_set(0, 0xB, x, y, avail, step);
+    D_800E6280.unk_1093 = 0xA;
+    func_80048F64(0x60);
+    REC(96).unk_01 = 4;
+    REC(96).unk_02 = 0x40;
+    REC(96).unk_38 = 0x40000000;
+    REC(96).unk_03 = 0x84;
+    REC(96).unk_0C = sprite_frame_table;
+    REC(96).unk_10 = D_800C9A14;
+    REC(96).unk_34 = D_800C9730;
+    REC(96).unk_04 = 8;
+    REC(96).unk_05 = 1;
+    REC(96).unk_18 = 0x40;
+    REC(96).unk_26 = -0x10;
+    REC(96).unk_2A = -0x13;
+}
