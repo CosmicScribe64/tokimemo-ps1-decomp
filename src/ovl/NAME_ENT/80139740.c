@@ -393,17 +393,16 @@ void func_8013ACA4(void) {
     func_80139740(((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].metrics[8].unk_02, 128, 78);
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25301, 22 rows, all in the as1 order of the mask block. The original keeps the
- * four byte copies (`d = D_80120C2B; ...`) apart from the masks; IDO 5.3's global copy propagation
- * folds each load into its mask. With copy propagation off (OPTN 405 0, a scratch cvt_pass variant)
- * this body matches every instruction. See drafts/T-25301/NAME_ENT/func_8013AF78/NOTES.md. */
 s32 func_8013AF78(s32 arg0) {
     s32 a;
     s32 b;
     s32 sel[3];
     s32 c;
-    s32 d;
+    /* FAKE: T-25301, a register local stored from an unsigned global before the first branch is
+     * what tools/cvt_pass.py reads as a switch temporary; it turns IDO's global copy propagation
+     * off for the function, so the copies below stay apart from their masks as in the original.
+     * The store is dead (the loop sets d) and emits nothing. */
+    register s32 d = D_80120C2B;
 
     /* FAKE: T-25301, the empty test gives arg0 the first optimizer bit, so it keeps $a0 */
     if (arg0) {
@@ -448,9 +447,6 @@ s32 func_8013AF78(s32 arg0) {
         D_80120BA3 = c = (u8)(c | 0x80);
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013AF78);
-#endif
 
 s32 func_8013B0A0(void) {
     s32 a;

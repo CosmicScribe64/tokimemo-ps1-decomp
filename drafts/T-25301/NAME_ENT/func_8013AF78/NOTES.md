@@ -113,3 +113,52 @@ rule above, check it on this function and the T-11570 drafts, then run the full 
 or (b) find C that keeps a copy of a global apart from its later use under IDO 5.3 without a second
 use of the raw value. Untested ideas for (b): the copies in a block that has a second predecessor
 (a path on which the locals keep other values), or a copy through a local array element read back.
+
+# Third pass: matched (about 30 minutes)
+
+Default-C match, 296 bytes, from the 22-row guard. One change: `s32 d;` becomes
+`register s32 d = D_80120C2B;` (FAKE). Nothing else in the body moved.
+
+## Why it works
+
+- In the ucode that cfe writes, a `register` local is declared with a `VREG` record; plain locals
+  are not (the guard has no `VREG` at all; the logging shim below counts them).
+- `tools/cvt_pass.py` turns global copy propagation off (`OPTN 405 0`) for a procedure that stores a
+  direct `LOD` of an unsigned `S` variable into a `VREG` location before its first call, branch or
+  label (`_assigns_switch_temp_from_unsigned_global`). It was written for switch temporaries, but it
+  only looks at the `VREG` record, so the initializer of a `register` local passes it as well.
+- The initializer is dead (the loop sets `d = 0` before any read), so uopt deletes the store and the
+  load; the function then compiles exactly like the guard body under the scratch zcopy-off shim,
+  which matched every instruction.
+
+## How it was found
+
+1. An empty switch on an unsigned global at the entry does not fire the rule: with no case or one
+   case cfe writes no temporary (`ujp`, or `lod; cvt; ldc; equ; fjp`). Two cases (`case 0: case 1:
+   break;`) give `lod; cvt; vreg; str` and the rule fires; the branches vanish.
+2. With the selector `D_80120C2B` itself, uopt reuses the entry load for `d` (load before the loop,
+   72 rows). With an unrelated unsigned global (`D_800E8BEE`) the mask block matches: 16 rows, all
+   of them the frame (0x38 for 0x30, `sel` at 0x24 for 0x1C). The switch temporary has a frame home
+   of its own, and the frame is align8(local area + 4), so any extra 4-byte home costs 8.
+3. Freeing a home does not work: `u8`/`u16`/`s16`/`s8` for `c` or `d` change the ugen slots
+   (76 to 118 rows); `s32 sel[2]` with the scalar above it read as `sel[2]` gives the right frame,
+   but uopt then reads that scalar's register for `sel[2]` (13 rows, wrong code).
+4. `register s32 c;` alone keeps the frame and adds one `VREG` record, so a dead entry store into a
+   `register` local gives the temporary without a new home: `register s32 d; d = D_800E8BEE;` and
+   `d = D_80120C2B;` both 0 rows, as does the initializer form. The same dead store on `register c`
+   (42 rows) or `register a` (66) changes the allocation; not traced (a guess: the store gives the
+   local an earlier optimizer bit). On `d`, the loop counter, it does not.
+
+## Negatives (third pass)
+
+- `*(u8 *)&D_X` views on the four copies: cfe writes `ilod`, but the result is the same as the plain
+  names (22 rows); the copies are still propagated.
+- Self stores `D_X = D_X;` before or after the masks: no change (22).
+- With zcopy off, the one-line groupings are still needed: copies on four lines 20 rows, masks on
+  four lines 8 rows.
+
+## Scratch tools added
+
+No new files in `harness/`. The logging uopt shim used here (`cvt_log.py` +
+`cc_log.py` + `ulog.sh` in `build/t25301/`) wraps `cvt_pass._assigns_switch_temp_from_unsigned_global`
+and prints each procedure's flag and its ucode opcodes with `M` offsets; it was not kept.
