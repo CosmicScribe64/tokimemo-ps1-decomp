@@ -17,10 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25031: SHOUGATU E50C helper has no incoming arguments
-
-Read-only candidate survey stopped after four actual remaining functions. The corrected T-24523 SHOUGATU func_8013E50C source still passes a GameState address and &sp40 to func_80084D3C. Its matched alias check_para_limit(void) consumes neither: original entry overwrites a1 at80084D3C/40 and first defines a0 at80084D6C before any use/branch; leaf accesses global stats only. Caller a0 addresses the final sh in the call delay slot, not a consumed helper argument. This supplies the actual-callee evidence missing from the earlier table-escape question. Nominate one source-only experiment using existing canonical check_para_limit(); preserve already corrected random field and other source, measure frame/homes and whole-TU output without assuming a match. No build/variant executed, no runtime behavior error claimed, no shared header changes needed. Three NAME_ENT candidates' old defects already repaired. See [[tickets/T-25031-small-overlay-candidate-triage]] and drafts/T-25031/README.md.
-
 ## T-25033: Late-folded zero producer under active verification
 
 The active SHOUGATU worker reports a whole-TU 118/118-word candidate at private path /private/tmp/tokimemo-t25023/build/t25033/astra/single-identity-or/unit.c. `girl = (u32)D_800E6280.unk_F5F < 0;` survives uopt and folds later to zero without an input load. Combined with `func_80051A68(girl | 0, sp40.v, girl)`, it recovers the target entry zero carrier, store and argument sequence. Identity/ignored-argument controls affect precoloring and must be marked FAKE. Four aligned differences remain around the later reload base; this is not a match. T-25035 GYOZI and T-25036 MAIN counter workers received the exact donor for independent transfer tests. Do not assume those functions share the same result or alter their semantics to force transfer.
@@ -842,6 +838,7 @@ No match, [[tickets/T-25305-w10-SHOUGATU-8013E330]]. The best body is still the 
 - The empty edge block between the `>= 9` test and the `== 5` label is always in F5F's range. It makes the loop part of the range worth exactly 0. The original's allocation appears only when the range is split starting at the `== 5` block. A FAKE-built diagnostic (hole, latch, alias forced store) reproduces the loop allocation, but the split piece then runs into the post-loop code.
 
 Negatives, trace helpers (`pri.sh`) and the next hypothesis: `drafts/T-25305/SHOUGATU/func_8013EA98/NOTES.md`.
+
 ## T-25308: RPG_BAT func_80154DD8 (second pass)
 
 [[tickets/T-25308-w10-RPG_BAT-80154430]], branch w10-RPG_BAT-80154430. Matched as default-build C (1204 B), from the T-25114 guard at 34 funcdiff rows. Two source facts closed it:
