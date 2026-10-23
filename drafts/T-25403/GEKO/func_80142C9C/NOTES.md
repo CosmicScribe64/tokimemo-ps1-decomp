@@ -1,4 +1,4 @@
-# T-25403: GEKO func_80142C9C (926 words), not matched
+# T-25403: GEKO func_80142C9C (926 words), matched in pass 2
 
 Wave 11 (umbrella T-25400), worktree w11-GEKO-80142760-p1.
 
@@ -93,3 +93,80 @@ at the loop exits. Two concrete leads:
 
 Tools for both: `diag/live_patch.py` (build recipe in its docstring), `diag/units.py` (pieces of the
 `&ids` constant), `diag/graph.py` (flow graph from `draft.o.trace`).
+
+## Pass 2 (2026-10-23, about 70 minutes): matched
+
+Worktree w11-GEKO-80142760-p2. Result: byte match, default build C (3,656 bytes), commits
+`T-25403: match GEKO:func_80142C9C` and a follow-up that drops one FAKE. The body here (`body.c`,
+`body_loop2_exact.c`) is history now; the source is in `src/ovl/GEKO/80142760.c`.
+
+### Start state
+
+The checkpoint (`body.c`) at 159 rows; first divergence the one pass 1 named: the original holds
+`&ids` in `$t4` for the second loop only. Pass 1 showed that in this CFG the loop-2 piece of the
+`&ids` constant always grows into the post-loop blocks.
+
+### What closed it (one cause each)
+
+The `&ids` constant had units in bb0 (struct copy), loop 1 (`idx = ids.v[i]`), loop 2 and the two
+post-loop references (A: `&ids.v[sel]`, B: `&ids.v[13]`). Three changes, measured in this order:
+
+1. **Loop 1 reads ids through another table**: `idx = ((u8 *)&names)[i - 0x40];` (FAKE). Same
+   instruction (`addu v0,sp,v1; lbu v0,0x34(v0)`), but the use belongs to the `names` constant. The
+   `&ids` remainder after the first split no longer pays the reloads at the two successors of the
+   loop-1 block (21), so its priority turns positive without the pass-1 FAKE `if (ids.v) {}`. Alone:
+   231 rows, the same as the pass-1 FAKE variant (loop 2 exact with `$t4`, post-loop reuses `$t4`).
+2. **`if (flags[i] == 0) continue;` in loop 2.** The post-loop block A now comes before the loop body
+   in uopt's block order, so `split()` seeds the next piece at A. Alone (with 1): 278 rows; the
+   post-loop piece {A, B} has 2 uses and 1 reload, priority > 0, and takes `$v1`.
+3. **B through a second variable**: `p = &ids.v[13]; if (q == p)` (FAKE, `p` is dead after loop 2).
+   With `q == &ids.v[13]` cfe emits the address operand first (`lda; ldc 13; add; lod q; equ`), and
+   uoptinput's equ/neq rule (first operand not an op: move the constant to the other side) turns it
+   into `equ(add(q,-13), lda ids)`, the same constant as A. With two variables, q stays first, the
+   `+13` stays with the LDA, and B is its own address constant. Now A is the last `&ids` use, its
+   unit is deadout, the piece {A} is 1 use minus 1 reload (not coloured: `addiu t6,sp,0x34` as in the
+   original), and the next piece, seeded in loop 2, cannot grow past the loop exits: `$t4`. With 1-3:
+   106 rows, everything up to switch case 6 exact.
+4. **Case 6**: `((u8) get_g_zyotai_s(...) & 0x7F) < 2` (the KANGEI `func_80132090` spelling) instead
+   of `(u32)(... & 0x7F) < 2U`: the ugen temporary after the call is `$t7`, and the rest of the
+   function follows: 0 rows.
+
+Afterwards, the second `if (&flags[i]) {}` (before the weights read in loop 1) turned out to be
+unnecessary (either one of the two is enough, removing both gives 461 rows). `if (&D_800E6280) {}` is
+still needed (60 rows without it). `D_800E71DF` in the packed-appointment compare is needed (2 rows
+with `D_800E6280.unk_F5F`): keep line with a `tools/keepproof.py` proof in config/migrate_globals.txt.
+
+### Measured (rows = funcdiff --resolve --version c)
+
+| variant | rows |
+|---|---:|
+| checkpoint | 159 |
+| zcopy off (`register s32 pad0 = D_800E71DF;`) | 166 |
+| zcopy off, loop 2 without `p` | 161 |
+| zcopy off, `base = ids.v;` before loop 2 in the pad2 slot (`u8 *base`) | 178 (exact instructions, base `$a3`, sel `$t4`) |
+| 1 (names alias in loop 1) | 231 |
+| 1 + 2 | 278 |
+| 1 + 2 + compare through `names` (`q == &((u8 *)&names)[13 - 0x40]`) | 117 (`addiu t7,v0,51`: negative LDA offset moved to q) |
+| 1 + 2 + `&ids.v[sel] == &ids.v[13]` (A as `ids.v[sel]`) | 108 (`bne t7,v0` operand order) |
+| 1 + 2 + 3 | 106 |
+| 1 + 2 + 3 + 4 | 0 |
+
+### Negatives added
+
+- The variable route (zcopy off, a pointer local for the loop-2 base) reproduces every instruction,
+  but the local's priority is at least about 2.2 (1 def + 10 uses over 4-5 blocks), above the
+  constants 1, 13, 3 and `total`; it takes `$a3` and pushes `sel` to `$t4`. No def placement brings it
+  below 1.514 without crossing a call.
+- A struct-member cast (`&((struct { u8 pad[13]; u8 x; } *)&ids)->x`) and both operand orders of
+  `q == &ids.v[13]` give the same ucode as the plain form.
+- A local below `ids` grows the frame (no free bytes under the lowest local).
+- `q = &flags[i]; *q = 0; ... *q = 1;` in loop 1 instead of the flag FAKE: 579 rows.
+
+### Mechanism worth reusing
+
+An address constant that the original keeps in a register in one loop only: remove the constant's
+other uses that force split reloads (alias them through another symbol), make the last use outside
+the loop come first in block order and be deadout (one use, so its piece is not profitable), and
+watch uoptinput's equ/neq rule, which moves a constant addend off an LDA when the first ucode operand
+is not an operation. Lever in wiki/playbook.md.
+
