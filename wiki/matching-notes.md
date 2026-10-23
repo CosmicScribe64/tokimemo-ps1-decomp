@@ -17,10 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25044: MAIN parameter_up_down matched
-
-The T-25004/T-25008 eleven-row residue closes in default C, 1228 literal linked bytes, with the MAIN checksum and declaration checks passing. An empty use of the raw mode byte before the nibble assignment keeps the raw byte in v1 and lets the nibble go straight to v0; testing the nibble local directly avoids the old masked-expression copies. This remaining artificial use is marked FAKE. Use u32 h for both the opening nibble and the club index, then read the signed table elements directly in the tests and call arguments. The index survives the loop rather than being overwritten by the element local, preventing row-expression promotion/spilling. Removing the element scalar also restores row home sp+0x4C without padding. Keeping separate index/element scalars matches all instructions except four row accesses at 0x48; adding padding fixes the home but grows the frame by eight. See [[tickets/T-25044-parameter-up-down]] and drafts/T-25044/README.md for controls and proof.
-
 ## T-25049: MAIN event selector matched
 
 func_80073CB0 matches1288 bytes after correcting historical s32 table views to byte regions C0/D0, fixing the second fallback selector to GameState.unk_0F4.h, removing artificial shared-store gotos and inlining the first two switch selectors. These controls reduce148→22→10 diagnostic cost. A marked empty use of the initial byte extends its lifetime and fixes the five v0/a0 substitutions, reaching zero. Removing unused temporaries preserves the match; removing the saved selection local shifts four instructions, so its retained home is marked FAKE. No compiler changes. Independent review and full520-step rebuild/27 hashes pass. See [[tickets/T-25049-main-event-table-recovery]] and drafts/T-25049 for reproducible controls.
@@ -834,6 +830,7 @@ No match committed; the guard stays at 4 rows (the two pointer compares, constan
 ## T-25309: TAIIKU func_80137784 (third pass)
 
 No match; the guard stays at 4 rows with its code unchanged. New negatives: a dead second parameter as the slot pointer keeps frame 56 and gets a0, but IDO stores the incoming a1 and the alias offset still moves to the pointer side (230 rows; with `pos == D_8014984C` the base takes t5, 250). Pointer casts on the natural compare change nothing (240), integer casts make it worse (388). `volatile` slot arrays keep the base in t5 and grow the frame to 64 (292). A late-folded zero index (`[arg0 * 0]`) stays the same lda candidate. cfe 5.3 ignores `#pragma weak` for an extern. No other linker symbol sits at either slot address. That confirms the second pass: only a second zero-offset name (the tested `alias-match.patch`, waiting for approval) gives the original's separate compare constant. A reduced-unit compile (the two includes, the macros and the body) screens a variant in about 13 s under load, against minutes for funcdiff. Details: `drafts/T-25309/TAIIKU/func_80137784/NOTES.md`.
+
 ## T-25310: main func_80055AFC (second pass)
 
 Matched (1396 bytes, default C) from the T-25105 113-row draft in about 50 minutes. Three causal steps:

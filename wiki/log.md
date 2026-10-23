@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | T-25013 lever 1 traced: no uopt phase removes the copy; it is never created
-
-Octa's remote session on [[tickets/T-25013-compiler-level-levers]]: built the instrumented uopt (pristine `uopt.c` hash matches [[ending-allocator-trace]]) and dumped the ucode streams for the `func_8006A044` draft. The constant-address indirect form of the `unk_F64` accesses is not the lever (a gated `cvt_pass` normalization to direct `LOD`/`STR` fires on all 19 sites, final score unchanged at 97). The traced expression graph shows the byte as one evolving version chain; the original's extra per-arm copy is an allocator coalescing artifact, which puts `func_8006A044` on lever 5, not lever 1. Details in the ticket. Environment note: the cloud VM cannot run Docker containers (netns blocked), so the pinned toolchain runs natively there and CI is the gate; the Docker-only rule for the maintainer's host is unaffected.
-
 ## [2026-10-21] build | T-25013 lever 3 concluded: no uopt option controls the boolean CSE
 
 Lever 3 session on ENDING func_801387B0: baseline reproduced, mechanism
@@ -1790,6 +1786,7 @@ Added "Before proposing a compiler or build-step change" to [[playbook]]: which 
 
 Reviewed [[tickets/T-25309-w10-TAIIKU-80133C80]] against CODING_STANDARDS.md; no match: TAIIKU `func_80137784` stays behind its `NON_MATCHING` guard (4 funcdiff rows, the operand order of two pointer compares), 27/27, no findings.
 The only measured match needs second symbol names (`drafts/T-25309/TAIIKU/func_80137784/alias-match.patch`, waiting for the user's approval); notes in [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25310 Done
 
 Reviewed [[tickets/T-25310-w10-main-80053650]] against CODING_STANDARDS.md; matched main `func_80055AFC` (1396 bytes) as default-build C, 27/27, funcdiff MATCH; two small findings fixed (cheatsheet row placement, FAKE comment ticket).
