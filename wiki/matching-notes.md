@@ -839,3 +839,12 @@ Not matched; [[tickets/T-25301-w10-NAME_ENT-80139740]]. The source now has a `NO
 ## T-25301: NAME_ENT func_8013AF78 (third pass)
 
 Matched (default C, 296 bytes), [[tickets/T-25301-w10-NAME_ENT-80139740]], from the second-pass 22-row guard; only the declaration changed. `s32 d;` became `register s32 d = D_80120C2B;` (FAKE). cfe declares a `register` local with a `VREG` record. A direct load of an unsigned global stored into a `VREG` before the first branch is what tools/cvt_pass.py reads as a switch temporary, so it turns global copy propagation off for the procedure (`OPTN 405 0`). With propagation off, the guard body was already known to match every instruction. The initializer is dead (the loop sets `d`), so it emits nothing. The route there: a dead two-case `switch` on an unrelated unsigned global fixed the mask block (16 rows), but its temporary took a frame home and the frame grew from 0x30 to 0x38. Narrow types and an undersized `sel` did not free a word. A `register` local adds a `VREG` without a new home. Negatives (`*(u8 *)&D_X` copies, self-stores, the line groupings with propagation off) and the logging shim: `drafts/T-25301/NAME_ENT/func_8013AF78/NOTES.md`. Lever in [[playbook]].
+
+## T-25308: RPG_BAT func_80154DD8 (second pass)
+
+[[tickets/T-25308-w10-RPG_BAT-80154430]], branch w10-RPG_BAT-80154430. Matched as default-build C (1204 B), from the T-25114 guard at 34 funcdiff rows. Two source facts closed it:
+
+- **Only x and y are declared.** With the web-keeping views, a declared `nx = -x` is spilled to a new uopt home below the declared locals, so the `nx`/`ny` slots cost two unused words (frame 0x60). Writing `-x, -y` in both calls lets uopt keep the negations in temporaries across the first call: frame 0x58, homes 0x48/0x44, as in the original.
+- **One symbol for the counter, the selector and the test reads.** as1 does not move a load above a store through the same symbol. `(&D_8015EBAC)[60] = 1;` (the counter is element 60 of the int array at `D_8015EBAC`) keeps the case 0 selector load in front of the stores; `(&D_8015EC9C)[-16]` for `D_8015EC5C` keeps the case 3 test loads behind the counter store. Both FAKE until the array is declared in the header.
+
+Controls, negatives and the aggregate follow-up: `drafts/T-25308/RPG_BAT/func_80154DD8/NOTES.md`.

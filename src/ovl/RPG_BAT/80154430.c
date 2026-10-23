@@ -256,7 +256,8 @@ s32 func_80154DD8(void) {
         D_8015EC78 = 0;
         D_8015EC7C = 0xA;
         D_8015EC80 = 0;
-        /* FAKE: scalar-address view keeps the selector in $v1 and the constant 1 in $a3 (T-17114, T-24910). */
+        /* FAKE: scalar-address view keeps the selector in $v1 and the constant 1 in $a3 (T-17114, T-24910;
+         * 20 rows without it, T-25308). */
         switch (*(s32 *)&D_8015EBAC) {
         default:
             D_8015EC58.unk_10 = 0xB8;
@@ -308,7 +309,7 @@ s32 func_80154DD8(void) {
         break;
     case 3:
         /* FAKE: same web-keeping view as case 1 (297 rows without it); the view on the counter also keeps
-         * it as the first addu operand of y. T-25114 */
+         * it as the first addu operand of y. T-25114, T-25308 */
         x = D_8015EC58.unk_04 - *(s32 *)&D_8015EC9C;
         y = *(s32 *)&D_8015EC9C + D_8015EC58.unk_0C;
         func_8015528C(D_8015EC58.unk_10, -x, -y, 0x30, 5, 5, 0x34, 0x35, 0xBF);
