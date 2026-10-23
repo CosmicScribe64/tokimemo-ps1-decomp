@@ -1788,3 +1788,7 @@ Next pass starts from `drafts/T-25403/GEKO/func_80142C9C/NOTES.md` (global copy 
 ## [2026-10-23] ticket | T-25502 Done: TAIIKU func_80137784 matched in plain C
 
 The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) found that the original's two pointer compares are uopt's test replacement of plain `arg0 == 0` tests; no extra symbols or tool change. Both reviewers' wording findings on the mechanism were fixed before merge ([[tickets/T-25502-stubborn-taiiku-80137784]]).
+
+## [2026-10-23] ticket | T-25600 finish gate opened
+
+User approved one gate in place of the separate conveyors. [[tickets/T-25600-finish-gate]] (tickets T-25601..T-25609) loops the nine functions left until none is in assembly, using the lens, synthesis and review treatment that matched TAIIKU func_80137784. Waves 10 and 11 start no new work; their running passes finish first.
