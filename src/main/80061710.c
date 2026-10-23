@@ -125,8 +125,8 @@ void func_80061A3C(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            /* The pointer cast keeps the source apart from the integer 0x801F0000 of case 1; one shared
-             * constant makes as1 put that call's `lui a1` before its `li a0`. T-25119 */
+            /* FAKE: the pointer cast keeps the source apart from the integer 0x801F0000 of case 1; one
+             * shared constant makes as1 put that call's `lui a1` before its `li a0`. T-25119 */
             for (p = (u8 *)0x801F0800; p != (u8 *)0x801F6800; p += 0x800) {
                 memcpy(p, (void *)0x801F0000, 0x800);
             }
@@ -183,7 +183,8 @@ void func_80061A3C(void) {
              * v0/v1. T-25119 */
             if (func_8006190C()) {
             }
-            /* positions 1..13 of the D_801230D0 work area (see func_80062948); the first copy is a
+            /* FAKE: positions 1..13 of the D_801230D0 work area, reached through its first word as in
+             * func_80062948 (its other words are not declared as an aggregate yet); the first copy is a
              * statement of its own, the loop of 12 is unrolled by four. T-25119 */
             (&D_801230D0)[1] = D_800B5A40[0];
             for (i = 1; i < 13; i++) {
