@@ -7,15 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] build | T-24929 switch-compare rule in cvt_pass, ETC func_8013CCE4 matched
-[[tickets/T-24929-uopt-zcopy-scope]]: the zcopy-scope hypothesis (T-24925) did not hold. The three rows were
-as1 leaving the chain's compares on the temporary's register. New uniform step `switch_compares` in
-`tools/cvt_pass.py` (on uopt's output, zcopy-off procedures: the entry copy is propagated into the chain's
-compares). It fires in 267 procedures, changes 0 matched functions, and matches ETC func_8013CCE4 in C (guard
-removed). Clean build 27/27; progress 6,827 / 6,952 (92.3%). Rejected variants changed 24-275 matched functions
-([[matching-notes]] T-24929). Updated [[build-step-gaps]], [[toolchain]], [[status]],
-[[tickets/T-24925-func-8013cce4-8013BEF0]]. Scratch tools in drafts/T-24929/.
-
 ## [2026-10-20] ticket | T-24929 In Review
 [[tickets/T-24929-uopt-zcopy-scope]] moved to In Review; waiting for the code review against CODING_STANDARDS.md.
 
@@ -1754,6 +1745,7 @@ The only job of the package is matched, none left with rows; notes in `drafts/T-
 
 Reviewed [[tickets/T-25122-w8-main-80049FF0]] against CODING_STANDARDS.md; matched main `func_8004A414` (1,024 bytes, one FAKE) as default-build C, 27/27.
 `func_8004A1A0` stays INCLUDE_ASM at 64 rows, down from 89 (notes in drafts/T-25122/main/func_8004A1A0/).
+
 ## [2026-10-23] ticket | T-25127 Done
 
 Reviewed [[tickets/T-25127-w8-ENDING-801396E0]] against CODING_STANDARDS.md; matched ENDING `func_8013A2E8` (4648 bytes) as default-build C, 27/27.
