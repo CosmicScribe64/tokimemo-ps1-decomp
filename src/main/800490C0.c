@@ -157,6 +157,7 @@ void func_80049A40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     s32 g;
     s32 b;
 
+    /* FAKE: T-25115, gs alias of D_800E6280 assigned before the calls: it ends a uopt block before y2. */
     gs = &D_800E6280;
     p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
     func_8009F054(p);
@@ -170,6 +171,7 @@ void func_80049A40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     b = arg5 & 0xFF;
     switch (arg6 & 0x7F) {
     case 6:
+        /* FAKE: T-25115, black vertices as channel * 0 (cases 6, 5, 4): the extra uopt blocks keep p in a2. */
         p->r0 = r * 0, p->g0 = g * 0, p->b0 = b * 0;
         p->r1 = r, p->g1 = g, p->b1 = b;
         p->r2 = r * 0, p->g2 = g * 0, p->b2 = b * 0;
