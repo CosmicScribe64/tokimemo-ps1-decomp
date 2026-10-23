@@ -786,3 +786,20 @@ final print use the sibling's `D_80150150[D_80150148 - 1]`. Two marked FAKEs are
 matched sibling `func_80143A88`'s `sp30`/`sp28`: a word view in the quotient test keeps quot in its
 slot 0x30, and word stores keep `v = x * 3` in 0x28 with no extra spill slot (frame 0x38). Levers and
 negatives: `drafts/T-25146/ETC/func_80144224/NOTES.md`.
+
+## T-25143: SHOUGATU func_8013EA98
+
+No match. The best body is still the T-25046 36-cost source (42 rows, 230/230 words, frame 0x58).
+That is over the guard limit, so the source stays `INCLUDE_ASM` and the body is in
+`drafts/T-25143/SHOUGATU/func_8013EA98/func_8013EA98.c`. All remaining rows are the
+girl-selection loop. A unit-level allocator trace now explains them. The trace is the
+`uopt_patch.py trace` binary's `R9SAVE`/`R9UNIT` lines, scripts in the draft folder. Findings:
+a block with a computed-address `ilod` (`unk_1BC[F5F]`) is an alias hole; the blocks after a hole
+get reload units; the split starts at the forced post-loop store and grows along successors only.
+The original needs three things: a latch block shared by all five rejections (as in
+`while ((...) && (i++, 1))`, which reproduces the original's final-test layout), the `>= 9` block
+outside the selector range (a hole there reproduces that block exactly), and a latch reload that
+stays at the block start. With all three as diagnostics, the loop piece reaches priority exactly 0.
+An extra reload on the empty fall-through block after the `>= 9` test blocks colouring. Natural
+source for the hole and the latch-reload placement is the open question. Negatives, the trace
+recipe and the next hypothesis: `drafts/T-25143/SHOUGATU/func_8013EA98/NOTES.md`.
