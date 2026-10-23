@@ -17,27 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24713: as1 traces (superseded by T-24900)
-
-Wave-2 T-24713 traced the near-miss diffs with an instrumented as1. Its measurements are kept here
-because they agree with [[as1-scheduler-rule]]: the cross-block filler visits stalled blocks by
-(weight, block number), a switch default is numbered before its dispatch and wins at equal weight,
-and the per-block scheduler (not source lines) orders the instructions inside one block. Two
-conclusions in the first version of this note were wrong and must not be reused:
-
-- **"A backend-version trait, no source form" is wrong.** T-24900 found the lever: declare the
-  plain globals of the switch default arm `volatile` in the unit header (FAKE) and as1 will not
-  move their `lui`. It matched VALEN func_80134030 and GYOZI func_80139E4C in C. Use
-  [[as1-scheduler-rule]] and classify every scheduling diff there before calling it blocked.
-- **"Closing these needs a scheduling pass" is wrong for the default-arm family.** It is still the
-  open question only for the same-block KANGEI func_8013852C case (a local order, volatile changes
-  nothing) and for the GEKO func_80136C20 weight problem; those two have trace-backed notes in
-  [[as1-scheduler-rule]] and stay guarded.
-
-Kept observation: `--resolve` rows overstate a one-instruction move because every later branch
-target shifts; report the true moved-instruction count with the row count. main func_8006D7EC's
-last row is still uopt constant propagation (`cc -S` shows `li $3,1`), a separate open item.
-
 ## T-25002: class C ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224
 
 [[tickets/T-25002-class-c-ending-geko-etc]], worktree c-m2, from [[plan-remaining]] class C. 0 of 3 matched; one guard.
@@ -817,6 +796,7 @@ stays at the block start. With all three as diagnostics, the loop piece reaches 
 An extra reload on the empty fall-through block after the `>= 9` test blocks colouring. Natural
 source for the hole and the latch-reload placement is the open question. Negatives, the trace
 recipe and the next hypothesis: `drafts/T-25143/SHOUGATU/func_8013EA98/NOTES.md`.
+
 ## T-25121: ETC func_80132C3C
 
 [[tickets/T-25121-w8-ETC-80132880]], branch w8-ETC-80132880. Not matched: guarded `NON_MATCHING` body, 15 rows (from T-24012's 105-row draft). Left: four 4-use coordinate constants coloured in another order (draft t0..t3 = 0xA0 u1/u3, 0x128, 0x20, 0xA8; original 0x20 first). Findings that apply elsewhere:
