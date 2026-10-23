@@ -52,8 +52,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 - [ ] [[tickets/T-25128-w8-ETC-8013FF80|T-25128 Wave 8 package w8-ETC-8013FF80 (src/ovl/ETC/8013FF80.c)]]
-- [ ] [[tickets/T-25129-w8-GYOZI-80136220|T-25129 Wave 8 package w8-GYOZI-80136220 (src/ovl/GYOZI/80136220.c)]]
-- [ ] [[tickets/T-25130-w8-MASTER-80132140|T-25130 Wave 8 package w8-MASTER-80132140 (src/ovl/MASTER/80132140.c)]]
 - [ ] [[tickets/T-25131-w8-NAME_ENT-80142A80|T-25131 Wave 8 package w8-NAME_ENT-80142A80 (src/ovl/NAME_ENT/80142A80.c)]]
 - [ ] [[tickets/T-25132-w8-SHOUGATU-80134890|T-25132 Wave 8 package w8-SHOUGATU-80134890 (src/ovl/SHOUGATU/80134890.c)]]
 - [ ] [[tickets/T-25133-w8-TEL-8013CCD0|T-25133 Wave 8 package w8-TEL-8013CCD0 (src/ovl/TEL/8013CCD0.c)]]
@@ -163,16 +161,16 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25129-w8-GYOZI-80136220|T-25129 Wave 8 package w8-GYOZI-80136220 (src/ovl/GYOZI/80136220.c)]]
+- [ ] [[tickets/T-25130-w8-MASTER-80132140|T-25130 Wave 8 package w8-MASTER-80132140 (src/ovl/MASTER/80132140.c)]]
 - [ ] [[tickets/T-25137-w8-TACO-8013B170|T-25137 Wave 8 package w8-TACO-8013B170 (src/ovl/TACO/8013B170.c)]]
 - [ ] [[tickets/T-25138-w8-RPG_BAT-801447E0|T-25138 Wave 8 package w8-RPG_BAT-801447E0 (src/ovl/RPG_BAT/801447E0.c)]]
 - [ ] [[tickets/T-25139-w8-KANGEI-80132090|T-25139 Wave 8 package w8-KANGEI-80132090 (src/ovl/KANGEI/80132090.c)]]
-- [ ] [[tickets/T-25130-w8-MASTER-80132140|T-25130 Wave 8 package w8-MASTER-80132140 (src/ovl/MASTER/80132140.c)]]
 - [ ] [[tickets/T-11900-geko-option-closers|T-11900 GEKO and OPTION closers (claim #65)]]
 - [ ] [[tickets/T-25122-w8-main-80049FF0|T-25122 Wave 8 package w8-main-80049FF0 (src/main/80049FF0.c)]]
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
 - [ ] [[tickets/T-25118-w8-main-800563F0|T-25118 Wave 8 package w8-main-800563F0 (src/main/800563F0.c)]]
 - [ ] [[tickets/T-25119-w8-main-80061710|T-25119 Wave 8 package w8-main-80061710 (src/main/80061710.c)]]
-- [ ] [[tickets/T-25129-w8-GYOZI-80136220|T-25129 Wave 8 package w8-GYOZI-80136220 (src/ovl/GYOZI/80136220.c)]]
 - [ ] [[tickets/T-25120-w8-GYOZI-80138B50|T-25120 Wave 8 package w8-GYOZI-80138B50 (src/ovl/GYOZI/80138B50.c)]]
 - [ ] [[tickets/T-25126-w8-ENDING-80134D20|T-25126 Wave 8 package w8-ENDING-80134D20 (src/ovl/ENDING/80134D20.c)]]
 - [ ] [[tickets/T-25123-w8-main-800451D0|T-25123 Wave 8 package w8-main-800451D0 (src/main/800451D0.c)]]
