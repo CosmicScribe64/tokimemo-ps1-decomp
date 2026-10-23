@@ -1223,11 +1223,9 @@ s32 func_8006B014(s32 arg0) {
     return n;
 }
 
-/* NON_MATCHING: T-25608, 90 funcdiff --resolve rows (317 words, same length); from the T-25103 body (130 rows):
- * every access goes through a GameState pointer, so the month and undo preheaders compute the end first and the
- * inner loop sets up the keys walk first, as in the original. Left: the outer key walk's increment three slots early
- * (word 136) and the ugen scratch ring from the swap on (words 228-311). BRIEF-r1.md here. */
-#ifdef NON_MATCHING
+/* Packs the active schedule entries to the front, clears the rest, and sorts the first n by month * 100 + day
+ * (selection sort). While unk_03F is 12, month-1 entries count as month 13 during the sort, so they go last.
+ * Every access goes through the GameState pointer g (T-25608: the original's loop preheaders). */
 #define SCHED_DATE(i) ((ScheduleEntryDate *)&g->unk_54C[i])
 void func_8006B0C8(void) {
     s32 i;
@@ -1283,9 +1281,6 @@ void func_8006B0C8(void) {
     }
 }
 #undef SCHED_DATE
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B0C8);
-#endif
 
 void func_8006B5BC(GsWord arg0) {
     s32 i;

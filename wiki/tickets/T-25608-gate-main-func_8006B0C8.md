@@ -21,3 +21,5 @@ Match main:func_8006B0C8 (318 words, `src/main/800674B0.c`) through the finish g
 If an earlier wave matches it before its turn, this ticket closes as not needed.
 
 ## Comments
+
+- 2026-10-23 (fresh r1, as1 lens, branch f-b0c8-r1-as1-line-order-plus-): MATCH, 1,268 B default C, 27/27 clean. `while (i < n)` with `i++` after the swap fixes the as1 order (90 to 82 rows). The 82 rows were the block-copy state: forcing `BBBB` matches, and the pass gave `BFFF`. `tools/ugen_pass.py` now locks F only when no `fjp`/`tjp` lies between the indirect store and the signed jump; the census changes no other procedure. Needs review of the pass change (CODING_STANDARDS 7a) before Done. Notes: `drafts/T-25608/main/func_8006B0C8/fresh-r1-as1-line-order-plus-permuter/NOTES.md`.

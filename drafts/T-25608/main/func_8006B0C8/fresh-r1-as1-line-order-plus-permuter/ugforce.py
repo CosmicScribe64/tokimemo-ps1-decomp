@@ -33,7 +33,7 @@ d.mkdir(parents=True, exist_ok=True)
 log = d / "uglog.txt"
 if log.exists():
     log.unlink()
-os.environ["UGLOG"] = str(log.resolve()); os.environ["UGDUMP"] = str((d / "ugdump.txt").resolve())
+os.environ["UGLOG"] = str(log.resolve()); os.environ["UGFULL"] = str((d / "ugfull.txt").resolve()); (d / "ugfull.txt").unlink() if (d / "ugfull.txt").exists() else None; os.environ["UGDUMP"] = str((d / "ugdump.txt").resolve())
 sys.argv = ["cc.py", str(d / "unit.c"), str(d / "unit.o"), "ido", "5.3"]
 if (d / "unit.o").exists():
     (d / "unit.o").unlink()

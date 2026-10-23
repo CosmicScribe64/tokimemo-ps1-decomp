@@ -38,7 +38,7 @@ def rewrite(insns):
                             with open(os.environ["UGDUMP"], "a") as f:
                                 for q in range(start, k + 1):
                                     o = insns[q]
-                                    f.write("%d %s dt=%d %s\n" % (q - start, up.OPS[o.opc], o.dtype, " ".join("%x" % w for w in o.words[1:5])))
+                                    f.write("%d %s dt=%d mt=%s %s\n" % (q - start, up.OPS[o.opc], o.dtype, getattr(o, "mtype", "?"), " ".join("%x" % w for w in o.words[1:5])))
                     uist_rill = True
                 nj += 1
                 last = "jump"
@@ -51,6 +51,12 @@ def rewrite(insns):
                 idx = up._mov_insert_index(insns, start, k)
                 insertions.setdefault(idx, []).extend(up._gadget_f() if want_f else up._gadget_b(proc_block))
         log.append("%d %s" % (pi, " ".join(states)))
+        if os.environ.get("UGFULL"):
+            with open(os.environ["UGFULL"], "a") as f:
+                f.write("== proc %d\n" % pi)
+                for q in range(start, end):
+                    o = insns[q]
+                    f.write("%d %s dt=%d mt=%s %s\n" % (q - start, up.OPS[o.opc], o.dtype, getattr(o, "mtype", "?"), " ".join("%x" % w for w in o.words[1:5])))
     if os.environ.get("UGLOG"):
         with open(os.environ["UGLOG"], "a") as f:
             f.write("\n".join(log) + "\n")

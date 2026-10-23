@@ -1,0 +1,56 @@
+--- a/tools/ugen_pass.py
++++ b/tools/ugen_pass.py
+@@ -262,6 +262,23 @@
+         Insn([(OP["ldc"] << 24) | (DT_L << 16), 0, 4, 0, 0, 0]),
+         Insn([(OP["istr"] << 24) | (DT_L << 16) | 8, SENTINEL_OFF, 1, 0]),
+     ]
++
++
++def _census_unit():
++    pid = os.getppid()
++    for _ in range(8):
++        try:
++            cmd = open("/proc/%d/cmdline" % pid, "rb").read().split(b"\0")
++        except OSError:
++            return "?"
++        for a in cmd:
++            if a.endswith(b".c") and b"/src/" in a:
++                return a.decode()
++        try:
++            pid = int(open("/proc/%d/stat" % pid).read().split(")")[1].split()[1])
++        except (OSError, ValueError, IndexError):
++            return "?"
++    return "?"
+ 
+ 
+ def rewrite_ucode(insns):
+@@ -278,6 +295,29 @@
+         uist_rill_loop = False
+         last_state_op = "ent"
+ 
++        _tr, _labs = [], set()
++        for k in range(start + 1, end):
++            ins = insns[k]
++            opc = ins.opc
++            if opc == OP["lab"]:
++                _labs.add(ins.words[1])
++            elif opc in (OP["fjp"], OP["tjp"]):
++                _tr.append(("R" if _is_signed_blt_pos_imm_jump(insns, start, k) else "J") + ("b" if ins.words[1] in _labs else "f"))
++            elif opc == OP["ujp"]:
++                _tr.append("G" + ("b" if ins.words[1] in _labs else "f"))
++            elif opc in (OP["istr"], OP["istv"]):
++                _tr.append("U")
++            elif opc == OP["str"] and ins.mtype != MT_R:
++                _tr.append("S")
++            elif opc in (OP["cup"], OP["icuf"], OP["rcuf"]):
++                _tr.append("C")
++            elif opc == OP["mov"]:
++                _tr.append("M")
++            elif opc in (OP["isst"], OP["irst"], OP["isti"], OP["mst"], OP["irsv"]):
++                _tr.append("X" + OPS[opc])
++        if os.path.exists("build/ugen_census.on"):
++            with open("build/ugen_census.log", "a") as _f:
++                _f.write("%s %d %s\n" % (_census_unit(), start, " ".join(_tr)))
+         for k in range(start + 1, end):
+             ins = insns[k]
+             opc = ins.opc

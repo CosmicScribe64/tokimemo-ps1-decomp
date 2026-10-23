@@ -165,6 +165,34 @@ class StateRules(unittest.TestCase):
         self.assertTrue(changed)
         self.assertEqual(opnames(out)[-7:], ["ldc", "ldc", "istr", "lda", "lda", "mov", "end"])
 
+    def test_signed_blt_pos_imm_guard_after_ordinary_jump_keeps_state_b(self):
+        # p[j] = x in a loop on a variable bound, then the next loop's guard `n >= 1` (fjp, zblt
+        # imm 1): another jump lies between the store and the guard, so no lock (T-25608).
+        insns = proc(
+            2,
+            lod(A, 5), ldc(1), istr(J, 0, 4),
+            lod(J, 7), lod(J, 8), op("neq"), tjp(9),
+            lod(J, 8), ldc(1, J), op("geq", J), fjp(10),
+            lda(5), lda(6), mov(),
+        )
+        out, changed = up.rewrite_ucode(insns)
+        self.assertTrue(changed)
+        self.assertEqual(opnames(out)[-6:], ["ldc", "str", "lda", "lda", "mov", "end"])
+
+    def test_signed_blt_pos_imm_guard_right_after_istr_locks_state_f(self):
+        # the same guard with only a direct store between it and the indirect store still locks
+        insns = proc(
+            2,
+            lod(A, 5), ldc(1), istr(J, 0, 4),
+            ldc(0), st(J, 6),
+            lod(J, 8), ldc(1, J), op("geq", J), fjp(10),
+            ldc(0), st(J, 6),
+            lda(5), lda(6), mov(),
+        )
+        out, changed = up.rewrite_ucode(insns)
+        self.assertTrue(changed)
+        self.assertEqual(opnames(out)[-7:], ["ldc", "ldc", "istr", "lda", "lda", "mov", "end"])
+
     def test_undelimited_mov_operand_raises(self):
         with self.assertRaises(up.PassError):
             up.rewrite_ucode(proc(2, rec("dup", A), mov()))
