@@ -1361,8 +1361,9 @@ void func_80137544(void) {
 /* Display records of the 0x44-byte pool; DISPF reads +0x24/+0x28 as 16.16 words. T-25106.
  * The arg0 == 0 before D_8014929C and the one before D_80122E94 == 1 become bne a0,t8 /
  * bne a1,t9: &D_8014984C[arg0] and &D_8014981C[arg0] are in a0/a1 by then, and uopt rewrites the
- * index test into a compare of that address with the array base, built fresh at the compare.
- * Tests with no slot address in a register stay bnez. T-25502. */
+ * index test into a compare of that address with the array base, built fresh at the compare
+ * (the address comes from an earlier block and arg0 is not used after the test). The other
+ * arg0 tests stay bnez. T-25502. */
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 #define DISPF(n) (((DisplayFixActor44 *)D_8011ECD0)[n])
 /* FAKE: shared player/cpu[3] index, as in matched func_80138680; T-25106. */

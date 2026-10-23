@@ -23,13 +23,20 @@ with the T-25309 guard comment was resolved by rewriting the function comment.
 The original's `bne a0,t8` / `bne a1,t9` compare a slot address that is already in a register
 (`&D_8014984C[arg0]` in a0, `&D_8014981C[arg0]` in a1) with the slot base, which ugen builds fresh with lui/addiu
 at the compare. That compare is not in the source. uopt's test replacement (LFTR in this wiki) rewrites the index
-test `arg0 == 0` into `&arr[arg0] == &arr[0]` when an address linear in arg0 is already a CSE in a register at the
-test. The base constant comes from the rewrite, not from a source use, so it never becomes a register candidate
-ahead of the 0x44 stride. That is the "priority <= 0" T-25309 inferred. Tests with no slot address in a register at
-that point keep `bnez` (the entry test `arg0 != 0 || ...` and the first `if (arg0 == 0)` of block 1, `bnez s0`).
-arg0 does not have to be dead: after the block-3 test it stays live in s0 (`addiu t8,s0,0x90`). The plain-C lens
-notes and its ticket comment say "arg0 dead after each test"; that part is wrong, and the source comment and the
-cheatsheet row now give the right condition.
+test `arg0 == 0` into `&arr[arg0] == &arr[0]` when two things hold: the address `&arr[arg0]` was formed in an
+earlier basic block and is live into the test's block, and the raw index is not used after the test (scaled
+products such as arg0*4 or arg0*0x44 may stay live). The base constant comes from the rewrite, not from a source
+use, so it never becomes a register candidate ahead of the 0x44 stride. That is the "priority <= 0" T-25309
+inferred. The other arg0 tests keep `bnez` (the entry test `arg0 != 0 || ...` and the first `if (arg0 == 0)` of
+block 1, `bnez s0`).
+
+Review correction (T-25502): an earlier version of this note said arg0 stays live after the block-3 test
+(`addiu t8,s0,0x90`). That instruction computes `arg0 + 0x90` for the statement before the test and is only
+scheduled next to it. In the target, no path reads s0 after either rewritten compare: after `bne a0,t8`
+(0x80137960) both paths go to the exit, and the `bnez s0` at 0x801379B4 is on another branch, reached before it.
+IDO 5.3 probes by the standards reviewer agree: `x == 0` stays `bne x,0` when x is used after the test, and when the
+address is formed in the same block as the test. The plain-C lens's condition (raw index dead after each test)
+was right.
 
 `&D_8014984C[arg0] == D_8014984C` is true exactly when `arg0 == 0`, so the index test means the same thing.
 
