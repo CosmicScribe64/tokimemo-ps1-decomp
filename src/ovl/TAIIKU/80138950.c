@@ -22,7 +22,7 @@ TaiikuSel D_80149988 = { 0, 0, 0 };
 Taiiku3s32 D_80149990 = { 0, 0, 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014999C);
 TaiikuA0 D_801499A0 = { 0, 0, 0, 0, 0, 0 };
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499B0);
+TaiikuPair D_801499B0[1] = { { 0, 0 } };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499B4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499C0);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499C4);
@@ -468,7 +468,75 @@ void func_80139A20(void) {
     D_80122ECC = 1;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139AB0);
+/* FAKE: T-25102, the halves of the 16.16 word unk_18 are written through s16 views and D_8014995A/D_8014995C
+ * through (&D_80149958)[n], as elsewhere in this file; the real aggregates are unknown. */
+void func_80139AB0(void) {
+    s32 i;
+    s32 j;
+    s32 pad; /* FAKE: T-25102, unused local; its slot puts the spill of i at sp+0x50 as in the original */
+
+    D_80149964 = 0;
+    D_80149960 = 0;
+    D_80149968.unk_1C[0] = 0;
+    D_80149968.unk_1C[1] = 0x100;
+    D_80149968.unk_14 = 0;
+    ((s16 *)&D_80149968.unk_18)[1] = 0x80;
+    ((s16 *)&D_80149968.unk_18)[0] = 0;
+    D_80149968.unk_00 = 0;
+    D_80149968.unk_04 = 0;
+    D_80149968.unk_0C = 0;
+    D_80149968.unk_10 = 0;
+    D_80149940 = 0;
+    D_80149948 = 0;
+    D_8014994C = 0;
+    D_801499C0.word = 0;
+    D_80122EC4 = 0;
+    D_80149944 = 1;
+    D_801499E0 = 0;
+    D_801499DC = 0;
+    D_80149988.unk_00 = 0;
+    D_80149988.unk_04 = 0;
+    D_80149990.unk_04 = 0;
+    D_80149990.unk_08 = 0;
+    D_80149990.unk_00 = 1;
+    D_80149988.unk_06 = 0;
+    D_8014999C = 0;
+    D_801499A0.unk_00 = 0;
+    D_801499A0.unk_08 = 0;
+    D_801499A0.unk_0C = 0;
+    D_801499A0.unk_02 = 0;
+    D_801499A0.unk_04 = -0x20;
+    D_801499A0.unk_06 = 0x30;
+    D_801499B0[0].unk0 = 0;
+    D_801499B0[0].val = 0;
+    func_800AE120(D_800E6280.unk_10F4);
+    D_80149958 = 0;
+    (&D_80149958)[1] = 0;
+    (&D_80149958)[2] = 0;
+    ((TaiikuCamera0C *)D_80122DD0)->x = 0x118;
+    ((TaiikuCamera0C *)D_80122DD0)->y = -0x100;
+    ((TaiikuCamera0C *)D_80122DD0)->angle = 0;
+    for (i = 0; i < 3; i++) {
+        D_801499CC[i] = 0;
+        D_801499C4[i] = 0;
+        D_801499B4[i].word = 0;
+    }
+    for (i = 0; i < 4; i++) {
+        D_801499D4[i] = 0xFF;
+    }
+    for (i = 0; i < 80; i++) {
+        D_801499E4[i] = (i >> 2) * 8 - 24;
+        D_80149A84[i] = (i >> 2) * 8 - 16;
+    }
+    for (i = 0; i < 20; i++) {
+        for (j = 0; j < 4; j++) {
+            D_80149B24[(i << 2) + j] = -160 - (i << 3) + ((i << 2) + 80) * j;
+            D_80149BC4[(i << 2) + j] = -80 - (i << 2) + ((i << 2) + 80) * j;
+            D_80149C64[(i << 2) + j] = -168 - (i << 3) + (((i + 1) << 2) + 80) * j;
+            D_80149D04[(i << 2) + j] = -84 - (i << 2) + (((i + 1) << 2) + 80) * j;
+        }
+    }
+}
 
 void func_80139DDC(void) {
     func_8004E44C(0, D_8014A0BC, D_8014A0B0);
