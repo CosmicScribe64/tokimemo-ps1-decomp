@@ -688,48 +688,86 @@ s32 func_80054C74(s32 arg0) {
     return 1;
 }
 
-/* NON_MATCHING: T-24123/T-24703/T-24711, 19 resolved rows. The frame home, the u8 slot view, the
- * empty `i` test and the nickname address shift are FAKE layout/allocation edits. Everything before
- * the unk_CC8 loop now matches; the rest is that loop head: the original emits sll t7,s0,4 before the
- * bound `lui` and `addiu v0` before `addu v1,t7,t8`, and numbers the four loaded bytes t0,t1,t2,t9
- * where this draft gets t9,t0,t1,t2 (same four instructions, rotated one ugen slot). Statement
- * order, one-line grouping, i < 4, a pointer local, the unk_CC8 base form and a load-then-store body
- * were all tried (T-24711). */
-#ifdef NON_MATCHING
 void func_80054E6C(void) {
-    s32 pad[16]; /* FAKE: T-24703, 64 unused bytes the original frame has (0x80 against 0x40) */
+    Work800E7D10 *w = &D_800E7D10;
+    GameState *g = &D_800E6280;
+    s32 pad[14]; /* FAKE: T-25105, 56 unused bytes of the original 0x80 frame; the real locals are unknown */
     s32 i;
     s32 slot;
 
-    slot = *(u8 *)&D_800E7D36; /* FAKE: T-24703, a byte view keeps the andi and the ugen ring slot */
-    slot &= 0xF;
-    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->year[0] = D_800E6280.unk_03E;
-    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->month[0] = D_800E6280.unk_03F;
-    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->day[0] = D_800E6280.unk_040;
-    memcpy(((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 8))->family_name[0], D_800E6280.unk_0D4, 8);
-    memcpy(((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 8))->given_name[0], D_800E6280.unk_0DC, 8);
-    /* FAKE: T-24711, the shift form keeps this index a different ugen/uopt expression from the
-       slot * 16 of the unk_CC8 loop below; as the struct field it is CSE'd across the memcpy calls
-       and spilled (2 extra instructions, ring one slot off). */
-    memcpy((u8 *)&D_800E7D10 + 0x988 + (slot << 4), D_800E6280.unk_0E4, 0x10);
-    if (i) {} /* FAKE: T-24123 empty test splits the live range of i */
+    slot = w->selected_slot & 0xF;
+    w->year[slot] = g->unk_03E;
+    w->month[slot] = g->unk_03F;
+    w->day[slot] = g->unk_040;
+    memcpy(w->family_name[slot], g->unk_0D4, 8);
+    memcpy(w->given_name[slot], g->unk_0DC, 8);
+    memcpy(w->nickname[slot], g->unk_0E4, 0x10);
     for (i = 0; i < 9; i++) {
-        *(s32 *)&D_800E7D10.metrics[i][slot] = (&D_800E6280.unk_0F8)[i + 1];
+        /* each 4-byte record is copied as one word */
+        *(s32 *)&w->metrics[i][slot] = ((s32 *)&g->unk_0FC)[i];
     }
-    for (i = 0; i != 4; i++) {
-        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 0] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 0];
-        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 1] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 1];
-        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 2] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 2];
-        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 3] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 3];
+    for (i = 0; i < 16; i++) {
+        w->unk_CC8[slot][i] = g->unk_1BC[15].unk_14[i];
     }
-    i = D_800E6280.unk_0F4.h >> 12;
-    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->club[0] = i;
+    w->club[slot] = g->unk_0F4.h >> 12;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054E6C);
-#endif
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054FC0);
+s32 func_80054FC0(s32 arg0) {
+    SaveImageView *bank;
+    u8 *p;
+    s32 sum;
+    u32 offset;
+
+    bank = (SaveImageView *)D_80123320;
+    D_800E7D10.slot_status[D_800E7D10.selected_slot] = 1;
+    memcpy(bank->slot_status, D_800E7D10.slot_status, 16);
+    memcpy(bank->flags, D_800E7D10.flags, 16);
+    bank->unk_24[0] = D_800E7D10.unk_024[0];
+    bank->unk_24[1] = D_800E7D10.unk_024[1];
+    /* FAKE: T-25105, an empty signed test with a positive bound after the indexed slot store puts
+       tools/ugen_pass.py in block-copy state F for the two record copies below, which is the
+       original's temporary numbering (one ugen register skipped, not two). The original's state
+       comes from its own compiler; the real source has no such test. */
+    if ((s32)D_800E7D10.selected_slot > 0) {
+    }
+    if (D_800E7D10.selected_slot != 0) {
+        bank->selected_slot = D_800E7D10.selected_slot % 15U;
+    }
+    bank->config0 = ((SaveWorkView *)&D_800E7D10)->config0;
+    bank->config1 = ((SaveWorkView *)&D_800E7D10)->config1;
+    bank->unk_54[0] = D_800E7D10.unk_027[0];
+    bank->unk_54[1] = D_800E7D10.unk_027[1];
+    memcpy(bank->records, D_800E7D10.unk_058, 0x800);
+    memcpy(bank->year, D_800E7D10.year, 16);
+    memcpy(bank->month, D_800E7D10.month, 16);
+    memcpy(bank->day, D_800E7D10.day, 16);
+    memcpy(bank->family_name, D_800E7D10.family_name, 0x80);
+    memcpy(bank->given_name, D_800E7D10.given_name, 0x80);
+    memcpy(bank->nickname, D_800E7D10.nickname, 0x100);
+    memcpy(bank->club, D_800E7D10.club, 16);
+    memcpy(bank->metrics, D_800E7D10.metrics, 0x240);
+    memcpy(bank->unk_CD8, D_800E7D10.unk_CC8, 0x100);
+    if (D_800E6280.unk_1124 == 0) {
+        if (D_800E7D10.selected_slot != 0) {
+            memcpy(D_800E7D10.unk_DC8, D_80125C10, 0x40);
+            memcpy(&D_800E7D10.unk_DC8[0xF0], &D_80125C50, 4);
+            D_800E7D10.unk_DC8[0xF4] = D_800B5C08;
+            D_800E7D10.unk_DC8[0xF5] = D_80125C54;
+            D_800E7D10.unk_DC8[0xF6] = D_80125C55;
+            memcpy(bank->unk_DD8, D_800E7D10.unk_DC8, 0x100);
+        }
+    }
+    /* byte sum of the selected bank's data, from the card block base.
+       FAKE: T-25105, the checksum store below names D_80123120 in its address: as1 moves `lw ra`
+       above a store only when the address names a global, as the original's epilogue shows (a store
+       through a pointer local stays before it). The real source form is unknown. */
+    p = &D_80123120[arg0 * 0xF00 + 0x204];
+    sum = 0;
+    for (offset = 4; offset < 0xF00; offset++) {
+        sum += *p++;
+    }
+    ((SaveBank *)&D_80123120[arg0 * 0xF00 + 0x200])->checksum = sum;
+}
 
 s32 func_800552DC(s32 arg0) {
     SaveImageView *bank;
@@ -763,15 +801,86 @@ s32 func_800552DC(s32 arg0) {
     memcpy(D_800E7D10.club, bank->club, 16);
     memcpy(D_800E7D10.metrics, bank->metrics, 0x240);
     memcpy(D_800E7D10.unk_CC8, bank->unk_CD8, 0x100);
-    memcpy(&D_800E7D10.unk_CC8[0x100], bank->unk_DD8, 0x100);
-    memcpy(D_80125C10, &D_800E7D10.unk_CC8[0x100], 0x40);
-    memcpy(&D_80125C50, &D_800E7D10.unk_CC8[0x1F0], 4);
-    D_800B5C08 = D_800E7D10.unk_CC8[0x1F4];
-    D_80125C54 = D_800E7D10.unk_CC8[0x1F5];
-    D_80125C55 = D_800E7D10.unk_CC8[0x1F6];
+    memcpy(D_800E7D10.unk_DC8, bank->unk_DD8, 0x100);
+    memcpy(D_80125C10, D_800E7D10.unk_DC8, 0x40);
+    memcpy(&D_80125C50, &D_800E7D10.unk_DC8[0xF0], 4);
+    D_800B5C08 = D_800E7D10.unk_DC8[0xF4];
+    D_80125C54 = D_800E7D10.unk_DC8[0xF5];
+    D_80125C55 = D_800E7D10.unk_DC8[0xF6];
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
+/* Writes a game save into bank arg0 of the card image (SaveGameView), then stores the bank's byte sum.
+   FAKE: T-25105, the straight-line stores reach the bank through the byte offset
+   `&D_80123120[arg0 * 0xF00 + 0x200]` and the loops as an element of the bank array
+   `((SaveGameView *)&D_80123120[0x200])[arg0]`. uopt keeps the two spellings as two values: the
+   original's two base registers (a2 for the stores, a3 recomputed before the first loop, both
+   spilled around get_k_speed). One spelling for both gives one base register. The real source
+   form is unknown. */
+s32 func_8005557C(s32 arg0) {
+    GameState *g;
+    u8 *p;
+    s32 sum;
+    u32 i; /* one counter for every loop: only the last loop (the byte sum) is unrolled */
+
+    g = &D_800E6280;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004 = g->unk_03D;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 = g->unk_03E;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 = g->unk_03F;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007 = g->unk_040;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008 = g->unk_041;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A = g->unk_042;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[0] = g->unk_044[0];
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[1] = g->unk_044[1];
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C = *(GsBlockC4 *)g->unk_0C4;
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_108[i] = g->unk_1BC[i];
+    }
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_488[i] = g->unk_53C[i];
+    }
+    for (i = 0; i < 8; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_498[i] = g->unk_54C[i];
+    }
+    for (i = 0; i < 12; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_4B8[i] = ((GsWord *)g->unk_66C)[i];
+    }
+    g->unk_668[3] = get_k_speed();
+    g->unk_668[2] = D_800B6708;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8 = *(GsBlock56C *)g->unk_56C;
+    for (i = 0; i < 4; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5E8[i] = g->unk_728[i];
+    }
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5EC[i] = g->unk_72C[i];
+    }
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5FC[i] = g->unk_73C[i];
+    }
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_60C[i] = g->unk_74C[i];
+    }
+    for (i = 0; i < 256; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_61C[i] = g->unk_75E[i];
+    }
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C = g->unk_F6C;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D = g->unk_F6D;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E = g->unk_1092;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F = g->unk_F6E;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20 = g->unk_03C;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24 = g->unk_F68;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28 = g->unk_F6F;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29 = g->unk_F70;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A = g->unk_F73;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B = g->unk_F75;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C = *(GsWord *)g->unk_F64;
+    /* byte sum of the bank's data; the checksum store is a FAKE address form as in func_80054FC0 (T-25105) */
+    p = &D_80123120[arg0 * 0xF00 + 0x204];
+    sum = 0;
+    for (i = 4; i < 0xF00; i++) {
+        sum += *p++;
+    }
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->checksum = sum;
+}
 
 /* FAKE: T-10850, T-17007: the dead initial assignments set the induction-register numbering, and
    writing all five on one line makes as1 emit the hoisted starts in the original order (q, r, b).

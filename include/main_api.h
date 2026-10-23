@@ -211,7 +211,8 @@ typedef struct Work800E7D10 {
     /* 0x908 */ u8 given_name[16][8];
     /* 0x988 */ u8 nickname[16][16];
     /* 0xA88 */ NameMetric4 metrics[9][16];
-    /* 0xCC8 */ u8 unk_CC8[0x200];
+    /* 0xCC8 */ u8 unk_CC8[16][16]; /* per slot: the 16 bytes of GameState +0x518 (T-25105) */
+    /* 0xDC8 */ u8 unk_DC8[0x100];
     /* 0xEC8 */ u8 club[16];
     /* 0xED8 */ u8 unk_ED8[8];
 } Work800E7D10; /* size 0xEE0 */
@@ -242,6 +243,30 @@ typedef struct CharFlags {
     u32 f20 : 4;
     u32 rest : 8;
 } CharFlags; /* size 0x04 */
+
+/* Flag word at GameState +0xF64 (D_800E6280.unk_F64) as single bits. func_8006A044 sets them with
+ * bit-field stores, which load the byte into another register than its lui (T-25103): bits 0-11 by
+ * year (0x5F, 0x60, 0x61) and month group (2-4, 5-7, 8-10, 11-1), bit 13 in months 2, 5, 8 and 11,
+ * bit 14 in the other months, bit 15 in months 5-7. */
+typedef struct FlagsF64 {
+    /* 0x00 */ u32 b0 : 1;
+    /* 0x00 */ u32 b1 : 1;
+    /* 0x00 */ u32 b2 : 1;
+    /* 0x00 */ u32 b3 : 1;
+    /* 0x00 */ u32 b4 : 1;
+    /* 0x00 */ u32 b5 : 1;
+    /* 0x00 */ u32 b6 : 1;
+    /* 0x00 */ u32 b7 : 1;
+    /* 0x00 */ u32 b8 : 1;
+    /* 0x00 */ u32 b9 : 1;
+    /* 0x00 */ u32 b10 : 1;
+    /* 0x00 */ u32 b11 : 1;
+    /* 0x00 */ u32 b12 : 1;
+    /* 0x00 */ u32 b13 : 1;
+    /* 0x00 */ u32 b14 : 1;
+    /* 0x00 */ u32 b15 : 1;
+    /* 0x00 */ u32 rest : 16;
+} FlagsF64; /* size 0x04 */
 
 /* The Rec38 flag word: whole, by halves and bytes, or by bits. */
 typedef union Rec38Flags {
@@ -434,7 +459,7 @@ typedef struct GameState {
     /* 0x039 */ u8 unk_039;
     /* 0x03A */ u8 unk_03A;
     /* 0x03B */ u8 unk_03B;
-    /* 0x03C */ s8 unk_03C;
+    /* 0x03C */ u8 unk_03C;
     /* 0x03D */ u8 unk_03D;
     /* 0x03E */ u8 unk_03E;            /* 0x5F at init; with +0x3F..+0x41 a date (year, month, day, weekday?) */
     /* 0x03F */ u8 unk_03F;            /* 4 at init; compared with Rec38.unk_10 bits 0-3 */
@@ -493,14 +518,14 @@ typedef struct GameState {
     /* 0xF63 */ s8 unk_F63;
     /* 0xF64 */ u8 unk_F64[4];
     /* 0xF68 */ GsWord unk_F68;
-    /* 0xF6C */ s8 unk_F6C;
-    /* 0xF6D */ s8 unk_F6D;
-    /* 0xF6E */ s8 unk_F6E;
+    /* 0xF6C */ u8 unk_F6C;
+    /* 0xF6D */ u8 unk_F6D;
+    /* 0xF6E */ u8 unk_F6E;
     /* 0xF6F */ u8 unk_F6F;
-    /* 0xF70 */ s8 unk_F70;
+    /* 0xF70 */ u8 unk_F70;
     /* 0xF71 */ s8 unk_F71;
     /* 0xF72 */ u8 unk_F72;
-    /* 0xF73 */ s8 unk_F73;
+    /* 0xF73 */ u8 unk_F73;
     /* 0xF74 */ u8 unk_F74;
     /* 0xF75 */ u8 unk_F75;
     /* 0xF76 */ u8 unk_F76;
@@ -2524,7 +2549,7 @@ void cal_base_show(void);
 void func_80069128();
 void cal_sprite_init(void);
 void func_800696DC(s32, s32);
-void func_8006A044();
+s32 func_8006A044();
 void func_8006A2CC();
 void func_8006B0C8();
 void club_list_menu(void);

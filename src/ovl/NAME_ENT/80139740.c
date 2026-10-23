@@ -312,25 +312,25 @@ void func_8013A9C8(void) {
     }
     if (D_800E8BEE != 0) {
         for (i = 0; i < 8; i++) {
-            if (w->unk_CC8[w->selected_slot * 16 + i] == 0) {
+            if (w->unk_CC8[w->selected_slot][i] == 0) {
                 ((DisplayActor44 *)D_8011ECD0)[i + 128].unk_03 |= 0x80;
                 ((DisplayActor44 *)D_8011ECD0)[i + 128].unk_01 = 4;
                 ((DisplayActor44 *)D_8011ECD0)[i + 141].unk_03 &= 0x7F;
             } else {
                 ((DisplayActor44 *)D_8011ECD0)[i + 128].unk_03 &= 0x7F;
                 ((DisplayActor44 *)D_8011ECD0)[i + 141].unk_03 |= 0x80;
-                ((DisplayActor44 *)D_8011ECD0)[i + 141].unk_18 = (w->unk_CC8[w->selected_slot * 16 + i] & 7) + 0x58;
+                ((DisplayActor44 *)D_8011ECD0)[i + 141].unk_18 = (w->unk_CC8[w->selected_slot][i] & 7) + 0x58;
             }
         }
         for (i = 8; i < 11; i++) {
-            if (w->unk_CC8[w->selected_slot * 16 + i] == 0) {
+            if (w->unk_CC8[w->selected_slot][i] == 0) {
                 ((DisplayActor44 *)D_8011ECD0)[i + 129].unk_03 |= 0x80;
                 ((DisplayActor44 *)D_8011ECD0)[i + 129].unk_01 = 4;
                 ((DisplayActor44 *)D_8011ECD0)[i + 141].unk_03 &= 0x7F;
             } else {
                 ((DisplayActor44 *)D_8011ECD0)[i + 129].unk_03 &= 0x7F;
                 ((DisplayActor44 *)D_8011ECD0)[i + 141].unk_03 |= 0x80;
-                ((DisplayActor44 *)D_8011ECD0)[i + 141].unk_18 = (w->unk_CC8[w->selected_slot * 16 + i] & 7) + 0x58;
+                ((DisplayActor44 *)D_8011ECD0)[i + 141].unk_18 = (w->unk_CC8[w->selected_slot][i] & 7) + 0x58;
             }
         }
     } else {
@@ -393,61 +393,7 @@ void func_8013ACA4(void) {
     func_80139740(((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].metrics[8].unk_02, 128, 78);
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-24132, ~99 resolved rows. Frame is exact (0x30, pad above the 3-word sel) and the
- * exit is s32 with a bare fallthrough (void loses five instructions); arg0 == 0 stores the four
- * masked bytes and returns 0. Open: the zeroing loop (for gives bne over the bounds, the original
- * is an sltu pointer loop) and the raw byte loads, which the original keeps in $a2/$a1/$v1/$v0
- * where this draft spills them (extra move of arg0 to $a3, shifted temporaries). T-22023 draft. */
-/* FAKE: s32 with a bare fallthrough exit keeps the original $v0 liveness; void loses five instructions. T-24132 */
-s32 func_8013AF78(s32 arg0) {
-    s32 pad[2];
-    s32 i;
-    s32 sel[3];
-    u8 a;
-    u8 b;
-    u8 c;
-    u8 d;
-
-    for (i = 0; i < 3; i++) {
-        sel[i] = 0;
-    }
-    a = D_80120BE7;
-    b = D_80120B5F;
-    c = D_80120BA3;
-    d = D_80120C2B;
-    b &= 0x7F;
-    c &= 0x7F;
-    a &= 0x7F;
-    d &= 0x7F;
-    if (arg0 == 0) {
-        D_80120BE7 = a;
-        D_80120B5F = b;
-        D_80120BA3 = c;
-        D_80120C2B = d;
-        return 0;
-    }
-    sel[D_8014D0D4 % 3] = 1;
-    D_80120BE7 = a;
-    if (sel[0] != 0) {
-        c |= 0x80;
-        D_80120BE7 = a | 0x80;
-    }
-    D_80120B5F = b;
-    if (sel[1] != 0) {
-        D_80120B5F = b | 0x80;
-    }
-    D_80120C2B = d;
-    D_80120BA3 = c;
-    if (sel[2] != 0) {
-        d |= 0x80;
-        D_80120C2B = d;
-        D_80120BA3 = c | 0x80;
-    }
-}
-#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013AF78);
-#endif
 
 s32 func_8013B0A0(void) {
     s32 a;

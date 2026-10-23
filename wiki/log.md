@@ -7,42 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | GEKO ranking complete
-
-[[tickets/T-24605-geko-ranking]] In Review -> Done after all review and integration gates pass. Updated [[status]], [[matching-notes]] and [[tickets/T-24600-finish-matching]]:6,821 functions /2,095,956 bytes,131 functions remaining. Five functions /4,388 bytes completed in this continuation. Root and three agents continue matching; the full completion goal remains active.
-
-## [2026-10-20] lint | GEKO ranking completion checks
-
-Refreshed catalogs for [[tickets/T-24605-geko-ranking]]:727 tickets,426 sections,3,076 functions. Docker wiki lint reports zero broken links and zero ticket/board mismatches. Large-page warnings now include [[matching-notes]] alongside [[data/t0018-cases]] and [[log]]; notes should be archived in the continuing maintenance pass. `git diff --check` passes.
-
-## [2026-10-20] decision | Correct NAME_ENT decrement-width interpretation
-
-Independent re-audit during [[tickets/T-24600-finish-matching]] found that NAME_ENT43580 narrows decremented X to s16 before both store and call. Corrected the earlier full-word claim in [[tickets/T-24526-name-ent-intro-regions]] and [[matching-notes]]; its1075-word scratch metrics included an incorrect width control, never promoted. Active reconstruction restores the narrowing. Old log entries remain untouched.
-
-## [2026-10-20] build | MAIN matrix reconstruction and lane refresh
-
-Recorded schedule-sort frame controls and fresh MAIN62948 typed recovery in [[matching-notes]]. Current candidates remain unmatched. TACO moves from its documented BAC4 assembler-lifetime gap to FBF0 sprite channels; OPTION calendar and NAME_ENT introduction continue independently under [[tickets/T-24600-finish-matching]]. No additional production changes or coverage credit.
-
-## [2026-10-20] build | Matrix aggregate homes recovered
-
-Recorded MAIN62948's184-word typed reconstruction in [[matching-notes]]. Correct post-call reload, distinct unsigned negation and declaration placement restore the original operation count and SDK aggregate homes; frame and final copy scheduling remain. OPTION A7EC independently reaches a single missing delay-slot NOP; TACO font39424 recovers original byte-argument entry and independent coordinates. No additional match claimed.
-
-## [2026-10-20] lint | Rotate active matching notes
-
-Moved the oldest active sections verbatim into existing [[notes/matching-07]] with Docker `tools/wiki.py rotate-notes --keep-bytes 200000`, then refreshed function/section catalogs. This resolves the new active-note size warning while preserving findings. Log history remains untouched; the current matching work continues under [[tickets/T-24600-finish-matching]].
-
-## [2026-10-20] ticket | OPTION calendar private literal match
-
-Created [[tickets/T-24606-option-calendar]] In Progress under [[tickets/T-24600-finish-matching]]. Private OPTION A7EC proof matches1,092 linked bytes. Existing flag/selector views, weekday lifetime, identity update and integer fallthrough recover the remaining instructions. Final cleanup, production integration and both independent reviews are pending; no coverage credit yet.
-
-## [2026-10-20] ticket | OPTION calendar passes integration and reviews
-
-[[tickets/T-24606-option-calendar]] In Progress -> In Review. Root default linked proof matches1,092 bytes, full ninja and fresh27 executable hashes pass, prototype guard reports zero new disagreements/15 known. Both independent reviews have no unresolved findings after clarifying the explicit integer-return annotation. Removed unnecessary identity multiplication; retained source controls have omission evidence and FAKE explanations. No header/data/compiler change.
-
-## [2026-10-20] ticket | OPTION calendar complete
-
-[[tickets/T-24606-option-calendar]] In Review -> Done after all reviews and integration gates passed. Updated [[status]], [[matching-notes]] and [[tickets/T-24600-finish-matching]]:6,822 functions /2,097,048 bytes,130 functions remaining. Six functions /5,480 bytes completed in this continuation; all four matching lanes continue.
-
 ## [2026-10-20] lint | OPTION calendar completion wiki checks
 
 Refreshed catalogs:728 tickets,427 sections,3,076 functions. Docker wiki lint reports zero broken links, zero ticket/board mismatches and only the two existing large-page warnings ([[data/t0018-cases]], [[log]]). Active [[matching-notes]] size warning is resolved by the preserved archive rotation. `git diff --check` passes.
@@ -1721,3 +1685,45 @@ A print-only as1 replay reproduces stock target instructions and identifies the 
 ## [2026-10-23] ticket | T-25100 wave 8 conveyor opened
 
 User request "Finish the game decomp" (ultracode). [[tickets/T-25100-wave-8-finish]] and package tickets T-25101..T-25153 created: 53 file-disjoint packages, 92 functions (GEKO and OPTION stay reserved for issue #65). One deep Opus pass per function from the best known body, Opus closer for guards of 25 rows or fewer, Sonnet review and merge3 with literal default-C checks.
+
+## [2026-10-23] ticket | T-25106 Done
+
+Reviewed [[tickets/T-25106-w8-TAIIKU-80133C80]] against CODING_STANDARDS.md; matched TAIIKU `func_80137C44` (612 bytes) and `func_80135F3C` (1,676 bytes) as default-build C, 27/27.
+`func_80137784` stays guarded at 4 rows (notes in drafts/T-25106/TAIIKU/func_80137784/); the review added FAKE markers to the record-46 and runner-index views.
+
+## [2026-10-23] ticket | T-25200 wave 9 neighbor conveyor opened
+
+User asked for neighbor work next to wave 8. [[tickets/T-25200-wave-9-neighbor]] takes untouched wave 8 packages from the tail of the queue and runs near-miss closers for merged wave 8 packages under [[tickets/T-25201-wave-9-closers]]. Job picking and package blocking go through one lock shared with the wave 8 worktree script.
+
+## [2026-10-23] ticket | T-25105 Done
+
+Reviewed [[tickets/T-25105-w8-main-80053650]] against CODING_STANDARDS.md; matched main `func_80054E6C` (340 bytes), `func_80054FC0` (796) and `func_8005557C` (1,212) as default-build C, 27/27.
+`func_80055AFC` stays INCLUDE_ASM at 113 rows (notes in drafts/T-25105/main/func_80055AFC/); the review marked the checksum address forms as FAKE.
+
+## [2026-10-23] ticket | T-25107 Done
+
+Reviewed [[tickets/T-25107-w8-MASTER-80133680]] against CODING_STANDARDS.md; matched MASTER `func_801363F4` (2,608 bytes) and `func_801344E0` (2,912 bytes) as default-build C, 27/27.
+Both use the marked FAKE never-true arm before the first record copy; ENDING `func_80134270` has the same symptom (see wiki/playbook.md section 10).
+
+## [2026-10-23] ticket | T-25103 Done
+
+Reviewed [[tickets/T-25103-w8-main-800674B0]] against CODING_STANDARDS.md; matched main `func_8006C988` (276 bytes), `func_8006A044` (648 bytes) and `func_80067F04` (2,452 bytes) as default-build C, 27/27.
+`func_80067870` (75 rows) and `func_8006B0C8` (130 rows) stay `INCLUDE_ASM` with notes in drafts/T-25103/main/; the review added a FAKE marker for the `gs` split in `func_80067F04`.
+
+## [2026-10-23] ticket | T-25104 Done
+
+Reviewed [[tickets/T-25104-w8-main-8004C3F0]] against CODING_STANDARDS.md; matched main `mod_set` (780 bytes) and `srn_tpage_show` (3224 bytes) as default-build C, 27/27; the review moved the `func_80098B80` prototype into `src/main/8004C3F0.c` so only one C file changes.
+`mod_set_gpu` stays guarded at 4 rows and `mod_trans_vram` stays `INCLUDE_ASM` at 47 rows, with notes in drafts/T-25104/main/.
+
+## [2026-10-23] build | T-25201 w9c-TAIIKU-80133C80
+No match: TAIIKU `func_80137784` stays guarded at 4 rows (the two `bne` operand orders); the NON_MATCHING comment now names T-25201 and the uopt rule behind it.
+Reviewed against `CODING_STANDARDS.md`, clean rebuild 27/27; next step (second symbol names in `config/symbols_TAIIKU.txt`) needs approval, see [[tickets/T-25201-wave-9-closers]] and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25153 Done
+Reviewed [[tickets/T-25153-w8-NAME_ENT-80139740]] against CODING_STANDARDS.md; no matches, 27/27 clean rebuild. The T-24132 guard on NAME_ENT `func_8013AF78` (99 rows) is plain `INCLUDE_ASM` again.
+Best bodies (57 and 61 rows, two FAKEs) are in drafts/T-25153/NAME_ENT/func_8013AF78/ with the `$v0` blocker and next hypothesis in NOTES.md.
+
+## [2026-10-23] ticket | T-25101 Done
+
+Reviewed and merged w8-main-8004F870: matched main `sndi`, `func_8005215C`, `get_h_tokimeki`, `get_near_menu`, `func_8004FC10` (7508 bytes, default C, 27/27).
+`func_80052F68` stays INCLUDE_ASM (69 rows, notes in drafts/T-25101/main/func_80052F68/NOTES.md); see [[tickets/T-25101-w8-main-8004F870]].

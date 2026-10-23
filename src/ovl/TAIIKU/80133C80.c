@@ -843,7 +843,74 @@ void func_80135DF8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135F3C);
+/* Display records of the 0x44-byte pool. T-25106. */
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+/* FAKE: record of runner index n (TaiRunnerA.unk_02), counted from record 46 instead of from the
+ * pool start: the u8 index stays unsigned and every product shares one 0x44 constant, as in the
+ * original. The pool is one array; the real source is unknown. T-25106 */
+#define RUNNER_DISP(n) ((&DISP(46))[n])
+/* FAKE: runner n (0 the player) indexed from the player record; the object is player + cpu[3],
+ * not one array. As in func_80138680 and func_801368B8. T-25106 */
+#define RUN(n) ((&D_80149208.player)[n])
+/* Picks a random display record for each runner: the player's from 10..29, the others' from
+ * 0..29, never 19, and no two runners (or the extra record D_801491D8) with the same unk_16 value.
+ * The comparisons read the records directly, with no local for the value: uopt's PRE then keeps
+ * one value per test in the original's registers. FAKE: `pad` is an unused third word above the
+ * copied tables, where the original frame keeps 12 bytes. T-25106 */
+void func_80135F3C(void) {
+    s32 i;
+    s32 j;
+    s32 pad;
+    TaiWords11 choices;
+    TaiikuS11 player_codes;
+    TaiikuS11 rival_codes;
+    TaiFlags58 flags;
+
+    choices = D_80149728;
+    player_codes = D_80149754;
+    rival_codes = D_8014976C;
+    flags = D_80149784;
+    D_80149208.player.unk_02 = func_800AE0D0() % 20 + 10;
+    while (D_80149208.player.unk_02 == 19) {
+        D_80149208.player.unk_02 = func_800AE0D0() % 20 + 10;
+    }
+    RUNNER_DISP(D_80149208.player.unk_02).unk_16 = player_codes.v[D_801491EC];
+    for (i = 0; i < 3; i++) {
+        D_80149208.cpu[i].unk_02 = func_800AE0D0() % 30;
+        while (D_80149208.cpu[i].unk_02 == 19) {
+            D_80149208.cpu[i].unk_02 = func_800AE0D0() % 30;
+        }
+    }
+    D_801491DC = func_8008647C();
+    if (func_8008667C(D_801491DC) < 2 && D_801491DC != choices.value[D_801491EC]) {
+        D_801491D8 = func_800AE0D0() % 10;
+        RUNNER_DISP(D_801491D8).unk_16 = rival_codes.v[D_801491DC];
+        DISP(115).unk_16 = RUNNER_DISP(D_801491D8).unk_16 >> 3;
+        DISP(115).unk_43 = flags.value[RUNNER_DISP(D_801491D8).unk_16 >> 3][RUNNER_DISP(D_801491D8).unk_16 & 7];
+    } else {
+        D_801491DC = 0xFF;
+    }
+    if (D_801491DC == choices.value[D_801491EC]) {
+        D_801491DC = 0xFF;
+    }
+    for (i = 0; i < 3; i++) {
+        for (j = 1; j <= i + 1; j++) {
+            while (RUNNER_DISP(D_80149208.cpu[i].unk_02).unk_16 == RUNNER_DISP(RUN(i + 1 - j).unk_02).unk_16
+                   || RUNNER_DISP(D_80149208.cpu[i].unk_02).unk_16 == RUNNER_DISP(D_801491D8).unk_16) {
+                D_80149208.cpu[i].unk_02 = func_800AE0D0() % 30;
+            }
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(107 + i).unk_16 = RUNNER_DISP(RUN(i).unk_02).unk_16 >> 3;
+    }
+    for (i = 0; i < 4; i++) {
+        DISP(107 + i).unk_43 = flags.value[RUNNER_DISP(RUN(i).unk_02).unk_16 >> 3][RUNNER_DISP(RUN(i).unk_02).unk_16 & 7];
+    }
+}
+#undef RUN
+#undef RUNNER_DISP
+#undef DISP
 
 void func_801365C8(void) {
     s32 i;
@@ -1291,12 +1358,178 @@ void func_80137544(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-25201, 4 rows; only the operand order of the two pointer compares is left
+ * (original bne a0,t8 / bne a1,t9: pointer first; this C gives the address constant first).
+ * uopt swaps an == whose left operand is not a plain variable and moves a constant offset
+ * on the second operand to the first, so an offset alias always lands first. Writing
+ * D_8014984C itself keeps the order but its base constant then takes a register ahead of
+ * the 0x44 constant and shifts every later colour. Next: second names in a symbols file. T-25201.
+ * Display records of the 0x44-byte pool; DISPF reads +0x24/+0x28 as 16.16 words. T-25106. */
+#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+#define DISPF(n) (((DisplayFixActor44 *)D_8011ECD0)[n])
+/* FAKE: shared player/cpu[3] index, as in matched func_80138680; T-25106. */
+#define RUN(n) ((&D_80149208.player)[n])
+/* FAKE: (s32) on the runner's record index. Without it the u8 index takes its own unsigned 0x44 and
+ * the entry product is strength-reduced; the original shares one li t5,68 with the arg0 products. T-25106 */
+s32 func_80137784(s32 arg0) {
+    s32 i;
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137C44);
+    if (DISP(46 + (s32)RUN(arg0).unk_02).unk_02 != 0 && (arg0 != 0 || D_80122E94 == 0xFF)) {
+        DISP(46 + (s32)RUN(arg0).unk_02).unk_02 = 0;
+        DISP(46 + (s32)RUN(arg0).unk_02).unk_03 = 0;
+        if (arg0 == 0) {
+            for (i = 0; i < 3; i++) {
+                DISP(104 + i).unk_02 = 0;
+                DISP(104 + i).unk_03 = 0;
+            }
+            k_reset(0);
+        }
+        DISP(107 + arg0).unk_02 = 1;
+        DISP(107 + arg0).unk_03 = 0xA4;
+        DISP(107 + arg0).unk_26 = (((s16)RUN(arg0).unk_02 % 10) << 5) - D_80149298.halves.high + 0x1E0;
+        DISP(107 + arg0).unk_2A = -((s16)RUN(arg0).unk_02 / 10) * 16 - 0x30;
+        D_8014982C[arg0] = (DISPF(96 + arg0).unk_24.w - DISPF(107 + arg0).unk_24.w) >> 7;
+        D_8014983C[arg0] = (DISPF(96 + arg0).unk_28.w - DISPF(107 + arg0).unk_28.w) >> 7;
+        D_8014984C[arg0].w = DISPF(107 + arg0).unk_24.w - DISPF(96 + arg0).unk_24.w;
+        if (D_8014982C[arg0] > 0) {
+            DISP(107 + arg0).unk_03 |= 1;
+        }
+        D_8014981C[arg0] = 0;
+        RUN(arg0).unk_03 = 0;
+        RUN(arg0).unk_04 = 0;
+        RUN(arg0).unk_0C = 0;
+        RUN(arg0).unk_0E = 0;
+        RUN(arg0).unk_10 = 0;
+        RUN(arg0).unk_14 = 0;
+        RUN(arg0).unk_18 = 0;
+        RUN(arg0).unk_1C = 0;
+        /* FAKE: the player's slot address written from the next object, D_8014985C. With
+         * D_8014984C itself the compare shares the slot base with &D_8014984C[arg0]; uopt then keeps
+         * that base in a register (priority 0.5) ahead of the 0x44 stride (0.4), which the original
+         * colours into t5. T-25106 */
+        if (&D_8014984C[arg0] == (Fix32 *)&D_8014985C - 4) {
+            D_80149208.player.unk_20.halves.high = -0xA0;
+            D_8014929C = 0;
+        }
+        return 0;
+    }
+    /* FAKE: record D_801491D8 indexed from record 46, so the u8 global stays unsigned and its product is
+     * strength-reduced, as in func_80135F3C. T-25106 */
+    if ((&DISP(46))[D_801491D8].unk_02 != 0 && D_80122E94 == 1 && arg0 == 0) {
+        (&DISP(46))[D_801491D8].unk_02 = 0;
+        (&DISP(46))[D_801491D8].unk_03 = 0;
+        for (i = 0; i < 3; i++) {
+            DISP(104 + i).unk_02 = 0;
+            DISP(104 + i).unk_03 = 0;
+        }
+        k_reset(0);
+        DISP(107).unk_16 = DISP(115).unk_16;
+        DISP(107).unk_43 = DISP(115).unk_43;
+        DISP(107).unk_18 = 0;
+        DISP(107).unk_08 = 0;
+        DISP(107).unk_02 = 1;
+        DISP(107).unk_03 = 0xA4;
+        DISP(107).unk_26 = (D_801491D8 << 5) - D_80149298.halves.high + 0x1E0;
+        DISP(107).unk_2A = -0x30;
+        D_8014982C[0] = (DISPF(96).unk_24.w - DISPF(107).unk_24.w) >> 7;
+        D_8014983C[0] = (DISPF(96).unk_28.w - DISPF(107).unk_28.w) >> 7;
+        D_8014984C[0].w = DISPF(107).unk_24.w - DISPF(96).unk_24.w;
+        if (D_8014982C[0] > 0) {
+            DISP(107).unk_03 = 0xA5;
+        }
+        D_8014981C[0] = 0;
+        D_80149208.player.unk_03 = 0;
+        D_80149208.player.unk_04 = 0;
+        D_80149208.player.unk_0C = 0;
+        D_80149208.player.unk_0E = 0;
+        D_80149208.player.unk_10 = 0;
+        D_80149208.player.unk_14 = 0;
+        D_80149208.player.unk_18 = 0;
+        D_80149208.player.unk_1C = 0;
+        D_80149208.player.unk_20.halves.high = -0xA0;
+        D_8014929C = 0;
+        return 0;
+    }
+    D_8014984C[arg0].w += D_8014982C[arg0];
+    DISP(107 + arg0).unk_26 = DISP(96 + arg0).unk_26 + D_8014984C[arg0].h[1];
+    DISPF(107 + arg0).unk_28.w += D_8014983C[arg0];
+    if (++D_8014981C[arg0] >= 0x80) {
+        DISP(96 + arg0).unk_18 = arg0 + 0x90;
+        /* FAKE: player's counter address from D_8014985C, as above; with D_8014981C the counter
+         * base takes a2 ahead of D_80122E94. T-25106 */
+        if (&D_8014981C[arg0] == (s32 *)&D_8014985C - 16 && D_80122E94 == 1) {
+            DISP(107).unk_18 = D_80149320[D_801491DC] * 6 + 5;
+        } else {
+            DISP(107 + arg0).unk_18 = D_801491EC * 6 + 5;
+        }
+        DISP(107 + arg0).unk_26 = DISP(96 + arg0).unk_26 - 8;
+        DISPF(107 + arg0).unk_28.w = DISPF(96 + arg0).unk_28.w;
+        DISP(107 + arg0).unk_02 = 0x40;
+        DISP(107 + arg0).unk_03 = 0xA4;
+        return 1;
+    }
+    return 0;
+}
+#undef RUN
+#undef DISPF
+#undef DISP
+#else
+INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
+#endif
 
 /* Display-record view shared with the matched game-C sibling. T-24008. */
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+/* FAKE: display record of runner n (TaiRunnerA.unk_02), counted from record 46. Indexing from that
+ * record lets a u8 global index stay unsigned, as the runner field does, so both share one 0x44
+ * constant; DISP(46 + n) widens the global and gives it the counter's constant. T-25106. */
+#define RUNNER_DISP(n) ((&DISP(46))[n])
+/* FAKE: byte-offset address of record i for the second loop. Written as DISP(108 + i) it is the same
+ * expression as the first loop's DISP(107 + i), and the second loop then ends on the runner
+ * pointer instead of the record pointer. T-25106 */
+#define DISP_AT(i) ((DisplayActor44 *)(D_8011ECD0 + (i) * 0x44))
+s32 func_80137C44(void) {
+    s32 i;
+    s32 x;
+    s32 pos;
+    TaiRunnerA *runner;
+
+    for (i = 0, runner = &D_80149208.player; i < 4; i++, runner++) {
+        if (runner->unk_00 != 0) {
+            DISP(107 + i).unk_26 = DISP(96 + i).unk_26 - 8;
+            if (i == 0) {
+                /* FAKE: read through an address view; an indirect load is not a plain variable, so uopt
+                 * keeps the constant first (bne t4,a1), as in the original. T-25106 */
+                if (*(s32 *)&D_80122E94 == 1) {
+                    DISP(107).unk_18 = D_801492B8[D_80149208.player.unk_04] + ((RUNNER_DISP(D_801491D8).unk_16 >> 3) * 6);
+                } else {
+                    DISP(107).unk_18 = D_801492B8[D_80149208.player.unk_04] + ((RUNNER_DISP(runner->unk_02).unk_16 >> 3) * 6);
+                }
+            } else {
+                DISP(107 + i).unk_18 = D_801492B8[runner->unk_03] + ((RUNNER_DISP(runner->unk_02).unk_16 >> 3) * 6);
+            }
+            if (i + 0x90 == DISP(96 + i).unk_18) {
+                /* FAKE: address view as above. T-25106 */
+                if (*(s32 *)&D_80122E94 == 1) {
+                    DISP(107 + i).unk_18 = D_80149320[D_801491DC] * 6 + 5;
+                } else {
+                    DISP(107 + i).unk_18 = ((RUNNER_DISP(runner->unk_02).unk_16 >> 3) * 6) + 5;
+                }
+            }
+        }
+    }
+    pos = D_80149298.halves.high;
+    for (i = 0; i < 3; i++) {
+        if (((D_80149208.cpu[i].unk_05 == 2 && DISP_AT(i)[108].unk_02 != 0) || D_80149208.cpu[i].unk_00 == 1) && (x = D_80149208.cpu[i].unk_20.halves.high - pos) < 0x140 && x >= -0x13F) {
+            DISP_AT(i)[108].unk_03 = 0xA4;
+        } else {
+            DISP_AT(i)[108].unk_03 = 0;
+        }
+    }
+}
+#undef DISP_AT
+#undef RUNNER_DISP
+
 /* Keep the explicit final else and assign result slot zero first: uopt spills
  * the result-loop pointer and writes the promoted first byte after its neighbors. T-24008. */
 s32 func_80137EA8(void) {

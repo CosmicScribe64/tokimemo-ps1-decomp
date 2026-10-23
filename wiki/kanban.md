@@ -51,13 +51,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
-- [ ] [[tickets/T-25101-w8-main-8004F870|T-25101 Wave 8 package w8-main-8004F870 (src/main/8004F870.c)]]
 - [ ] [[tickets/T-25102-w8-TAIIKU-80138950|T-25102 Wave 8 package w8-TAIIKU-80138950 (src/ovl/TAIIKU/80138950.c)]]
-- [ ] [[tickets/T-25103-w8-main-800674B0|T-25103 Wave 8 package w8-main-800674B0 (src/main/800674B0.c)]]
-- [ ] [[tickets/T-25104-w8-main-8004C3F0|T-25104 Wave 8 package w8-main-8004C3F0 (src/main/8004C3F0.c)]]
-- [ ] [[tickets/T-25105-w8-main-80053650|T-25105 Wave 8 package w8-main-80053650 (src/main/80053650.c)]]
-- [ ] [[tickets/T-25106-w8-TAIIKU-80133C80|T-25106 Wave 8 package w8-TAIIKU-80133C80 (src/ovl/TAIIKU/80133C80.c)]]
-- [ ] [[tickets/T-25107-w8-MASTER-80133680|T-25107 Wave 8 package w8-MASTER-80133680 (src/ovl/MASTER/80133680.c)]]
 - [ ] [[tickets/T-25108-w8-main-80062CD0|T-25108 Wave 8 package w8-main-80062CD0 (src/main/80062CD0.c)]]
 - [ ] [[tickets/T-25109-w8-EN_NICHI-80136B10|T-25109 Wave 8 package w8-EN_NICHI-80136B10 (src/ovl/EN_NICHI/80136B10.c)]]
 - [ ] [[tickets/T-25110-w8-TACO-8013DB80|T-25110 Wave 8 package w8-TACO-8013DB80 (src/ovl/TACO/8013DB80.c)]]
@@ -103,7 +97,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25150-w8-KANGEI-80134120|T-25150 Wave 8 package w8-KANGEI-80134120 (src/ovl/KANGEI/80134120.c)]]
 - [ ] [[tickets/T-25151-w8-GYOZI-80140C90|T-25151 Wave 8 package w8-GYOZI-80140C90 (src/ovl/GYOZI/80140C90.c)]]
 - [ ] [[tickets/T-25152-w8-TACO-80138890|T-25152 Wave 8 package w8-TACO-80138890 (src/ovl/TACO/80138890.c)]]
-- [ ] [[tickets/T-25153-w8-NAME_ENT-80139740|T-25153 Wave 8 package w8-NAME_ENT-80139740 (src/ovl/NAME_ENT/80139740.c)]]
 
 ## In Progress
 
@@ -134,6 +127,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24501-main-tail|T-24501 Match MAIN remaining functions]]
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 - [ ] [[tickets/T-25100-wave-8-finish|T-25100 Wave 8 conveyor - one deep Opus pass per remaining function]]
+- [ ] [[tickets/T-25200-wave-9-neighbor|T-25200 Wave 9 neighbor conveyor - wave 8 queue from the tail, plus near-miss closers]]
+- [ ] [[tickets/T-25201-wave-9-closers|T-25201 Wave 9 closers for wave 8 near misses]]
 
 ## In Review
 
@@ -205,6 +200,13 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25153-w8-NAME_ENT-80139740|T-25153 Wave 8 package w8-NAME_ENT-80139740 (src/ovl/NAME_ENT/80139740.c)]]
+- [ ] [[tickets/T-25104-w8-main-8004C3F0|T-25104 Wave 8 package w8-main-8004C3F0 (src/main/8004C3F0.c)]]
+- [ ] [[tickets/T-25103-w8-main-800674B0|T-25103 Wave 8 package w8-main-800674B0 (src/main/800674B0.c)]]
+- [ ] [[tickets/T-25105-w8-main-80053650|T-25105 Wave 8 package w8-main-80053650 (src/main/80053650.c)]]
+- [ ] [[tickets/T-25106-w8-TAIIKU-80133C80|T-25106 Wave 8 package w8-TAIIKU-80133C80 (src/ovl/TAIIKU/80133C80.c)]]
+- [ ] [[tickets/T-25107-w8-MASTER-80133680|T-25107 Wave 8 package w8-MASTER-80133680 (src/ovl/MASTER/80133680.c)]]
+- [ ] [[tickets/T-25101-w8-main-8004F870|T-25101 Wave 8 package w8-main-8004F870 (src/main/8004F870.c)]]
 - [ ] [[tickets/T-25059-etc-ranking-generator|T-25059 Match ETC ranking generator]]
 - [ ] [[tickets/T-25055-tel-pass-mechanisms|T-25055 Match TEL qualification dialogue through causal compiler evidence]]
 - [ ] [[tickets/T-25054-etc-results-scene|T-25054 Match ETC results scene]]

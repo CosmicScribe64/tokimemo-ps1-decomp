@@ -139,6 +139,7 @@ extern u8 D_8013C57C[5];
 #endif
 
 /* Calls from the large scene handlers to later definitions in this object. */
+void func_80137BF4(void);
 void func_80137F94(void);
 void func_80138088(void);
 void func_80138374(void);
