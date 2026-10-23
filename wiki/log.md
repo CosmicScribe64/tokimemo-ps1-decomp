@@ -7,9 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25004 to In Review
-[[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]]: main `col2sepia` matched (sum local reused for blue, every clamp as a ternary). Guards: `func_8005B43C` 3 rows (bit-field flag test, FAKE second read of `unk_0F4.h` found by the permuter), `parameter_up_down` 11 rows. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
-
 ## [2026-10-20] ticket | T-25007 In Progress
 
 [[tickets/T-25007-class-c-etc-rpgbat-main]]: class C ETC `func_80146D4C`, RPG_BAT `func_8014BFE4`, main `func_8005938C`; branch c-m6.
@@ -1754,6 +1751,7 @@ The only function of the package is matched, none left with rows; notes in `draf
 
 Reviewed [[tickets/T-25130-w8-MASTER-80132140]] against CODING_STANDARDS.md; matched MASTER `func_801326B4` (3264 bytes) as default-build C, 27/27.
 Findings fixed (u32 copy marked FAKE, blank line, kanban column); the six always-false mode tests are FAKE; notes in drafts/T-25130/MASTER/func_801326B4/.
+
 ## [2026-10-23] ticket | T-25137 Done
 
 Reviewed w9-TACO-8013B170 against CODING_STANDARDS.md (no open findings; the `#line` pair per quad is an accepted marked FAKE), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_8013B460` (1328 bytes) as default C in `src/ovl/TACO/8013B170.c`.
