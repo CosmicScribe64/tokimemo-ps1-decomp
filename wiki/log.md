@@ -1774,3 +1774,7 @@ Draft body and notes in `drafts/T-25317/main/func_800476C0/`; section in [[match
 
 Reviewed [[tickets/T-25314-w10-ETC-8013FF80]] against CODING_STANDARDS.md; matched ETC `func_8013FFAC` (2116 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
 `register s32 i` is the zcopy-off trigger, two empty labels split uopt blocks, `func_8004A1A0` is an implicit-int view; notes in `drafts/T-25314/ETC/func_8013FFAC/NOTES.md` and [[matching-notes]].
+## [2026-10-23] ticket | T-25318 Done
+
+Reviewed [[tickets/T-25318-w10-main-8006CB30]] against CODING_STANDARDS.md; matched main `func_8007132C` (3992 bytes) as default-build C, 27/27, funcdiff MATCH; one small finding fixed (FAKE comments at the two remaining late-bound loops).
+Reading the schedule as `D_800E6280.unk_69C[D_800E6280.unk_71C]` with no record pointer leaves the base unallocated; notes in `drafts/T-25318/main/func_8007132C/NOTES.md` and [[matching-notes]].

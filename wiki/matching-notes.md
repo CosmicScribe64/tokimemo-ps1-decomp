@@ -851,3 +851,17 @@ Not matched, [[tickets/T-25314-w10-ETC-8013FF80]]. The guard in `src/ovl/ETC/801
 ## T-25314: ETC func_8013FFAC (third pass)
 
 Matched, [[tickets/T-25314-w10-ETC-8013FF80]] (default build MATCH, 2116 bytes). Three causal changes from the 17-row guard. (1) A jump-table `switch` has no selector VREG (cfe emits `lod; cvt; xjp`), so it can never turn zcopy off; a `register`-qualified local can: `register s32 i;` makes the existing dead entry read `i = unk_F5F` a VREG store, cvt_pass.py emits `OPTN 405 0`, and the dead two-case switch with its VREG copy (`move v0,a1`) and 8 frame bytes goes. With `i` declared before `sp54` and `j`, `k` after it, sp54 is at 0x54 (10 rows left, all 0x01000000). (2) The 0x01000000 range (3 uses, priority 0.5) is coloured after j and unk_03A; uopt interference is per block, and the case 5 block from the first call to `j = 2` held j in `$a0`. An empty `goto split_peel; split_peel: ;` after `unk_03A = 0` splits it. (3) `func_8004A1A0` as implicit int: its `$v0` result blocks `$v0` in the constant's block, so the constant takes `$a0`; a second empty label right after the second call keeps that call's result out of the 0x80 chain's block. Reading the traced uopt's R9UNIT lists (regdiff's `draft.log`: which ranges share a block with the one you want to move) found both splits; regdiff's range labels for hoisted constants were wrong here (it named the 0x01000000 range "value live on entry"). Notes: `drafts/T-25314/ETC/func_8013FFAC/NOTES.md`.
+## T-25318: main func_8007132C (second pass)
+
+Matched (3,992 bytes, default C, [[tickets/T-25318-w10-main-8006CB30]]), from the first pass's 738-row best and
+its 996-row v17 walk form. The blocker was the 0x800E6280 base that uopt coloured in the draft. In the traced
+uopt, each read through a copy-propagated record pointer counts as one more use of the base. Without the record
+pointer and the `op`/`t` reassignments, every schedule read is written `D_800E6280.unk_69C[D_800E6280.unk_71C]`.
+uopt's PRE then keeps the record address in `$a1` and the opcode in `$v1`, as the target does, and the base
+stays unallocated. The rest came from the ugen temporaries: `unk_54C_0.active`/`.unk_25` bit-field reads,
+`f.b17 = 1`, `unk_725 != unk_724`, a separate `hour` local (four locals put the v1 spill at 0x30), and an
+`(s32)` index cast (FAKE) so case 0x45 reloads the index for its second field. The T-25052 calendar byte views
+and late-bound loop bounds are still needed (901 and 92 rows without them). Lesson: when a draft keeps a
+pointer or local that the target's register use does not show, write the expression again at each use.
+uopt's CSE and PRE then give the target's ranges. Steps, row counts and negatives:
+`drafts/T-25318/main/func_8007132C/NOTES.md`.
