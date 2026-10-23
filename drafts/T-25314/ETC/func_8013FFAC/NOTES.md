@@ -1,6 +1,6 @@
 # T-25314: ETC func_8013FFAC (second pass, 529 words)
 
-Not matched. The best body is the `NON_MATCHING` guard in `src/ovl/ETC/8013FF80.c`:
+Matched in the third pass (section at the end). Second pass: not matched; its best body was the `NON_MATCHING` guard in `src/ovl/ETC/8013FF80.c`:
 17 resolved funcdiff rows (`tools/docker.sh python3 tools/funcdiff.py func_8013FFAC --unit ETC
 --resolve --version c`). `include/ovl/ETC.h` declares `s32 func_8013FFAC(void);`.
 
@@ -95,3 +95,40 @@ read by the dispatch (so the copy is live, not dead) and gets `$a1` with the glo
 retargeted by as1, or a VREG that uopt colours past `$v0` because a `$v0` range is live at the
 entry. If the frame then fits with k, the remaining 0x01000000 `$a0` may follow from the new
 colouring order (the original colours shift/pointer before the constant).
+
+# Third pass (T-25314): matched
+
+`tools/docker.sh python3 tools/funcdiff.py func_8013FFAC --unit ETC --resolve --version default`
+prints MATCH (2116 bytes); the guard and the `INCLUDE_ASM` are gone. Three changes, each measured
+alone against the second-pass body (17 rows):
+
+1. Zcopy trigger without the dead switch: `register s32 i;`. cfe writes a register-qualified
+   local as a `VREG`, so the existing dead entry read `i = D_800E6280.unk_F5F;` is a direct
+   unsigned global stored into a VREG, and cvt_pass.py emits `OPTN 405 0` (checked in the uopt
+   input). A jump-table switch never has a VREG (cfe emits `lod; cvt; xjp`), so the real switch
+   cannot be the trigger. Dropping the dead two-case switch removes its VREG copy (`move v0,a1`)
+   and 8 frame bytes; declaring `register s32 i; s32 sp54[6]; u32 j; u32 k;` (i first, the other
+   scalars after the array) puts sp54 back at 0x54. 17 to 10 rows (only 0x01000000 left).
+2. The 0x01000000 range (3 uses, priority 0.5, coloured late) shared the case 5 block that runs
+   from the first `func_8004A1A0` call to `j = 2` with j (`$a0`) and unk_03A (`$v1`), so it got
+   `$v0`. A `goto split_peel; split_peel: ;` after `unk_03A = 0` splits that block: j leaves it
+   (checked in the traced uopt's R9UNIT lists), the constant still gets `$v0`.
+3. `func_8004A1A0` called as implicit int (`MAIN_API_OVERRIDE_func_8004A1A0`, `extern s32
+   func_8004A1A0();`): its `$v0` result now blocks `$v0` in the constant's block, so the constant
+   takes `$a0`. Alone (without the labels) it gives 50 rows: the second call's result also takes
+   `$v0` from the 0x80 chain VREG, which pushes unk_03A to `$a3`. A second empty branch,
+   `goto split_call; split_call: ;` right after the second call, keeps the call result out of the
+   chain's block. Both labels plus the int view: 0 rows.
+
+Scratch tools (not committed): a uopt input/output ucode dumper (a shim around
+`cvt_pass.run_uopt` that copies uopt's input and output), a register-masked aligner over
+`funcdiff.resolved_functions`, and a script that lists the R9UNIT blocks a range shares with
+other ranges from regdiff's `draft.log`.
+
+Negatives (third pass): a plain `switch (D_800E6280.unk_110D)` as the trigger (jump table, no
+VREG: zcopy stays on, 271 rows); other declaration orders with `register i` (22 rows); a
+natural 0..6 second loop with i or j (288 to 350 rows); `while`, `!=`, `++j < 6`, do/while and
+init-order forms of the 2..6 loop (all 10 rows, same as the for); passing i to the first call
+instead of the dead `i = 0` (330 rows); moving the case 5 constant store later (22 to 112 rows);
+assignment chains in case 11 (10 rows, or 162 with element views, where D_801220F4 itself becomes
+the range).

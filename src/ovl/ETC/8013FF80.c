@@ -1,8 +1,10 @@
-#ifdef NON_MATCHING
-#define MAIN_API_OVERRIDE_func_800AE0A0 /* guard calls it undeclared (implicit int) as 8013BEF0.c does (T-24706); keeps $v0 off the case 5 table address, T-25314 */
-#endif
+#define MAIN_API_OVERRIDE_func_800AE0A0 /* original called it undeclared (implicit int), as 8013BEF0.c (T-24706); keeps $v0 off the case 5 table address, T-25314 */
+#define MAIN_API_OVERRIDE_func_8004A1A0 /* original called it undeclared (implicit int): its $v0 result keeps 0x01000000 off $v0 after the first call, T-25314 */
 #include "common.h"
 #include "ovl/ETC.h"
+
+extern s32 func_800AE0A0();
+extern s32 func_8004A1A0();
 
 void func_8013FF80(void) {
     if (D_800E6280.unk_110A == 0) {
@@ -10,11 +12,8 @@ void func_8013FF80(void) {
     }
 }
 
-/* NON_MATCHING: T-25314, 10 rows (T-25128 left 197). Left: 0x01000000 in $v0 instead of
- * $a0 in cases 5 and 11 (uopt colours the constant after j, which holds $a0 in the same
- * case 5 block). drafts/T-25314/ETC/func_8013FFAC/NOTES.md */
-#ifdef NON_MATCHING
 void func_80140AE4(void);
+
 s32 func_8013FFAC(void) {
     /* FAKE: `register` makes i a VREG, so the dead entry read below is a direct unsigned
      * global stored into a VREG and cvt_pass.py emits OPTN 405 0 (zcopy off): the second
@@ -94,11 +93,17 @@ s32 func_8013FFAC(void) {
         D_80122105 = 0;
         D_80122104 = 0;
         D_800E6280.unk_03A = 0;
+        /* FAKE: the empty branch ends the uopt block, so j (set to 2 below) does not share a
+         * block with 0x01000000, which then takes $a0 as in the original (T-25314) */
+        goto split_peel; split_peel: ;
         /* FAKE: explicit peel plus unsigned 2..6 loop, the matched func_8013CCE4 recipe
          * (T-24706): the unsigned body sums do not CSE with the signed peel literals. T-25128 */
         sp54[0] = 0x80180600; sp54[1] = 0x80184600; for (j = 2; j < 6; j++) { k = j * 0x4000; sp54[j] = 0x80180600 + k; } /* the k temporary gives the shift $v0 and the pointer $v1 (T-25314) */
 
         func_8004A1A0(sp54, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 0x18);
+        /* FAKE: the empty branch keeps the call's $v0 result out of the 0x80 chain's block,
+         * so the chain keeps $v0 (T-25314) */
+        goto split_call; split_call: ;
         D_801220D0 = 0x80000000;
         /* FAKE: element views give the chain its hidden VREG, which shares 0x80 in $v0; plain chains put it in $a3 (T-25314) */
         (&D_801220E0)[0] = (&D_801220E1)[0] = (&D_801220E2)[0] = 0x80;
@@ -226,9 +231,6 @@ block_50:
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013FF80", func_8013FFAC);
-#endif
 
 void func_801407F0(void) {
     D_800E6280.unk_1100 += 1;
