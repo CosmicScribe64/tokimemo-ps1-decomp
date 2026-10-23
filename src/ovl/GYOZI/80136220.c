@@ -142,10 +142,8 @@ void func_8013683C(void) {
     func_8004DE1C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25129, 2 rows; case 8 head: the original schedules the D_80146178 lui above the D_8012B8C3 store */
 s32 func_801368B8(void) {
-    s32 pad = D_800F647D; /* FAKE: T-25129, a dead read at the entry; see the NON_MATCHING note */
+    s32 pad = D_800F647D + D_80146178; /* FAKE: T-25129, dead entry read: the cvt pass then keeps both u8 globals in one register; also the 0x7C frame slot */
     u8 sp64[] = "おみくじを引きます。";
     u8 sp4C[] = "うおりゃあああ〜・・・";
     u8 sp3C[] = "こ、これは！！";
@@ -261,17 +259,17 @@ s32 func_801368B8(void) {
         ((DisplayActor44 *)D_80129F40)[0x60].unk_2A = -0x78;
         ((DisplayFixActor44 *)D_80129F40)[0x60].unk_30 = 0;
         if (D_80146178 == 3 || D_80146178 == 4) {
-            func_800BCEA0(sp4C, "%sだ・・・", D_80146178 * 5 + D_8014617C);
+            func_800BCEA0(sp4C, "%sだ・・・", D_8014617C[D_80146178]);
             ((DisplayActor44 *)D_80129F40)[0x63].unk_03 |= 0x80;
             ((DisplayActor44 *)D_80129F40)[0x63].unk_02 = 0x40;
             ((DisplayActor44 *)D_80129F40)[0x63].unk_18 = 7;
         } else if (D_80146178 != 0) {
-            func_800BCEA0(sp4C, "おっ、　%sだ。", D_80146178 * 5 + D_8014617C);
+            func_800BCEA0(sp4C, "おっ、　%sだ。", D_8014617C[D_80146178]);
             ((DisplayActor44 *)D_80129F40)[0x63].unk_18 = 6;
             D_801461A0 = 1;
             ((DisplayActor44 *)D_80129F40)[0x63].unk_03 &= 0x7F;
         } else {
-            func_800BCEA0(sp4C, "ラッキー！　%sだ！！", D_80146178 * 5 + D_8014617C);
+            func_800BCEA0(sp4C, "ラッキー！　%sだ！！", D_8014617C[D_80146178]);
             ((DisplayActor44 *)D_80129F40)[0x63].unk_18 = 6;
             D_801461A0 = 1;
             ((DisplayActor44 *)D_80129F40)[0x63].unk_03 &= 0x7F;
@@ -314,16 +312,13 @@ s32 func_801368B8(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80136220", func_801368B8);
-#endif
 
 void func_80137188(void) {
     D_80146178 = D_800F6468 & 7;
     if (D_80146178 != 0) {
         D_80146178--;
     }
-    func_800BCE10(&D_800D9320, &D_8014617C[D_80146178 * 5]);
+    func_800BCE10(&D_800D9320, D_8014617C[D_80146178]);
     if (D_80146178 == 0) {
         D_800F54B6 -= 5;
     }

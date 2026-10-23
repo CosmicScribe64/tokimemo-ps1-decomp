@@ -943,7 +943,7 @@ void func_80134938(void);
 #ifndef OVL_GYOZI_T10010_SCENE_PROTOTYPE
 #define OVL_GYOZI_T10010_SCENE_PROTOTYPE
 void func_80135730(void);
-extern u8 D_8014617C[];
+extern u8 D_8014617C[][5]; /* T-25129: 5-byte name strings, indexed by D_80146178 */
 #endif
 
 #ifndef OVL_GYOZI_T10850_TYPES
