@@ -866,7 +866,181 @@ void func_8005215C(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_tokimeki);
+/* Love level of girl arg0: base value from her record, plus one bonus from D_800B4130 for each
+ * parameter that her mask in D_800B4110 selects, by the threshold ladder of her kind (D_800B4120).
+ * The u32 level locals give the frame and the colour order of the thresholds; reading the
+ * parameters through gs gives the bonus row s1 and the parameter value s2 (T-25101). */
+u32 get_h_tokimeki(s32 arg0) {
+    s32 girl;
+    s32 sum;
+    s32 i;
+    u8 mask;
+    u8 kind;
+    u32 lv0;
+    u32 lv1;
+    u32 lv2;
+    u32 lv3;
+    u32 lv4;
+    u32 lv5;
+    u32 lv6;
+    s32 use[8];
+    s8 *bonus;
+    GameState *gs;
+
+    gs = &D_800E6280;
+    girl = arg0 % 13;
+    sum = gs->unk_1BC[girl].unk_02 * D_800B4100[girl];
+    sum /= 100;
+    mask = D_800B4110[girl];
+    for (i = 1; i < 8; i++) {
+        if (mask & (1 << i)) {
+            use[i] = 1;
+        } else {
+            use[i] = 0;
+        }
+    }
+    kind = D_800B4120[girl];
+    lv0 = D_800B4198[0];
+    lv1 = D_800B4198[1];
+    lv2 = D_800B4198[2];
+    lv3 = D_800B4198[3];
+    lv4 = D_800B4198[4];
+    lv5 = D_800B4198[5];
+    lv6 = D_800B4198[6];
+    for (i = 1; i < 7; i++) {
+        if (use[i]) {
+            switch (kind) {
+            case 1:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0 + 50) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1 + 35) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2 + 20) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3 + 20) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4 + 5) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5 + 5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 2:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 3:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0 + 50) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1 + 50) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2 + 50) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3 + 20) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4 + 20) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5 + 20) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6 + 20) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 4:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0 + 10) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1 + 10) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2 + 10) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3 + 10) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 5:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0 + 20) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1 + 20) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2 + 20) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3 + 20) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5 - 5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 6:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4 - 5) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5 - 5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6 - 5) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            }
+        }
+    }
+    if (sum >= 0x65) {
+        return 0x64;
+    }
+    if (sum < 0) {
+        return 0;
+    }
+    return sum & 0xFF;
+}
 
 u32 get_h_yuukou(s32 arg0) {
     s32 t;
