@@ -1778,3 +1778,7 @@ Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl
 
 Reviewed [[tickets/T-25317-w10-main-80047550]] against CODING_STANDARDS.md; no match: main `func_800476C0` stays `INCLUDE_ASM` (552 funcdiff rows, 8 structural hunks, saved-register order now original), 27/27, two small findings fixed.
 Draft body and notes in `drafts/T-25317/main/func_800476C0/`; section in [[matching-notes]].
+## [2026-10-23] ticket | T-25314 Done
+
+Reviewed [[tickets/T-25314-w10-ETC-8013FF80]] against CODING_STANDARDS.md; matched ETC `func_8013FFAC` (2116 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+`register s32 i` is the zcopy-off trigger, two empty labels split uopt blocks, `func_8004A1A0` is an implicit-int view; notes in `drafts/T-25314/ETC/func_8013FFAC/NOTES.md` and [[matching-notes]].

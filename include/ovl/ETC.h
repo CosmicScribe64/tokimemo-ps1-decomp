@@ -10,7 +10,7 @@ extern u8 D_80150108[];
 extern u8 D_80150128[];
 extern u8 D_8015012C[];
 extern u8 D_80150124[];
-void func_8013FFAC(void);
+s32 func_8013FFAC(void);
 void func_80145C00(void);
 s32 func_8014AA74(void);
 extern s32 D_80150E9C;

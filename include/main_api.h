@@ -2215,7 +2215,9 @@ void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
 void func_80049A40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 #endif
 s32 func_80049B20();
+#ifndef MAIN_API_OVERRIDE_func_8004A1A0
 void func_8004A1A0();
+#endif
 void func_8004A2C4();
 void func_8004A4D8();
 void func_8004A734(void);
