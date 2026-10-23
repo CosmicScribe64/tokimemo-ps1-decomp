@@ -232,20 +232,14 @@ s32 func_80154760(void) {
 }
 
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25114, 34 funcdiff rows, all aligned: frame 0x60 against 0x58 (the two kept quotient
- * webs cost two frame words more than the original's), the case 0 selector load placed before the
- * stores in the original, and the case 3 counter store placed after the test loads here. The s32 return
- * matches the implicit-int call in func_80154430 (a void definition is a redeclaration error). Notes:
- * drafts/T-25114/RPG_BAT/func_80154DD8/NOTES.md */
+/* The s32 return matches the implicit-int call in func_80154430 (a void definition is a redeclaration
+ * error). */
 extern s32 D_8015EC9C;
 void func_8015528C(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
 s32 func_80154DD8(void) {
     s32 x;
     s32 y;
-    s32 nx;
-    s32 ny;
 
     func_8013F0F4(0x50A, 0, 1);
     if (((D_8015EDB0.unk_00 == 1) && (D_8015EC9C >= 0x3D)) || (D_8015EDB0.unk_00 >= 2)) {
@@ -253,7 +247,11 @@ s32 func_80154DD8(void) {
     }
     switch (D_8015EDB0.unk_00) {
     case 0:
-        D_8015EC9C = 1;
+        /* FAKE: D_8015EC9C written as element 60 of D_8015EBAC. as1 does not move a load above a store
+         * through the same symbol, so the selector load stays in front of the stores, as in the original
+         * (the counter and the selector are one int array there). Writing all five stores this way
+         * matches too. T-25308 */
+        (&D_8015EBAC)[60] = 1;
         D_8015EC74 = 0xA;
         D_8015EC78 = 0;
         D_8015EC7C = 0xA;
@@ -286,14 +284,13 @@ s32 func_80154DD8(void) {
         func_8014EBD0();
         break;
     case 1:
-        /* FAKE: the address views keep x and y as their own webs ($v0/$v1) instead of being folded into
-         * nx/ny; plain reads compute the quotient straight into $a1/$a2. T-25114 */
+        /* FAKE: the address views keep x and y as their own webs ($v0/$v1); with plain reads the
+         * quotients are folded and spilled (281 rows). uopt then keeps -x and -y in temporaries that
+         * cross the first call. T-25114, T-25308 */
         x = (*(s32 *)&D_8015EC58.unk_04 * D_8015EC9C) / D_8015EC58.unk_10;
         y = (*(s32 *)&D_8015EC58.unk_0C * D_8015EC9C) / D_8015EC58.unk_10;
-        nx = -x;
-        ny = -y;
-        func_8015528C(D_8015EC9C, nx, ny, 0x30, 5, 5, 0x34, 0x35, 0xBF);
-        func_8015528C(D_8015EC9C, nx, ny, 0xC, 0x14, 4, 0x32, 0x33, 0xDF);
+        func_8015528C(D_8015EC9C, -x, -y, 0x30, 5, 5, 0x34, 0x35, 0xBF);
+        func_8015528C(D_8015EC9C, -x, -y, 0xC, 0x14, 4, 0x32, 0x33, 0xDF);
         D_8015EC9C++;
         if (D_8015EC58.unk_10 < D_8015EC9C) {
             func_8014EBD0();
@@ -310,24 +307,21 @@ s32 func_80154DD8(void) {
         }
         break;
     case 3:
-        /* FAKE: same web-keeping view as case 1; the view on the counter also keeps it as the first addu
-         * operand of y. T-25114 */
+        /* FAKE: same web-keeping view as case 1 (297 rows without it); the view on the counter also keeps
+         * it as the first addu operand of y. T-25114 */
         x = D_8015EC58.unk_04 - *(s32 *)&D_8015EC9C;
         y = *(s32 *)&D_8015EC9C + D_8015EC58.unk_0C;
-        nx = -x;
-        ny = -y;
-        func_8015528C(D_8015EC58.unk_10, nx, ny, 0x30, 5, 5, 0x34, 0x35, 0xBF);
-        func_8015528C(D_8015EC58.unk_10, nx, ny, 0xC, 0x14, 4, 0x32, 0x33, 0xDF);
+        func_8015528C(D_8015EC58.unk_10, -x, -y, 0x30, 5, 5, 0x34, 0x35, 0xBF);
+        func_8015528C(D_8015EC58.unk_10, -x, -y, 0xC, 0x14, 4, 0x32, 0x33, 0xDF);
         D_8015EC9C++;
-        if ((D_8015EC58.unk_04 - D_8015EC9C) < (D_8015EC9C + D_8015EC58.unk_0C)) {
+        /* FAKE: D_8015EC5C read through the counter's symbol, so as1 keeps the test loads behind the
+         * counter store, as in the original. T-25308 */
+        if (((&D_8015EC9C)[-16] - D_8015EC9C) < (D_8015EC9C + D_8015EC58.unk_0C)) {
             func_8014EBA8();
         }
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80154430", func_80154DD8);
-#endif
 
 void func_8015528C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
     s32 *phase;
