@@ -12,16 +12,28 @@ recs = fp.parse(open(prefix + ".G", "rb").read())
 start = next(k for k, (r, _) in enumerate(recs) if r.instr == fp.I_IENT)
 idx = list(range(start, len(recs)))          # dumped line n -> record index start + n
 order = list(range(len(recs)))
+alias = {}
+def at(n):
+    n = int(n)
+    return alias[n] if n in alias else start + n
 dels = set()
+import copy
 for e in [x for x in edits.split(";") if x]:
     p = e.split(":")
+    if p[0] == "dup":     # dup:N:M:TAG  copy of line N inserted before line M, addressed later as line TAG (>= 100000)
+        r = copy.deepcopy(recs[start + int(p[1])])
+        recs.append(r)
+        newk = len(recs) - 1
+        order.insert(order.index(start + int(p[2])), newk)
+        alias[int(p[3])] = newk
+        continue
     if p[0] == "del":
         dels.add(start + int(p[1]))
     elif p[0] == "mv":
         a, b = start + int(p[1]), start + int(p[2])
         order.remove(a); order.insert(order.index(b), a)
     elif p[0] == "set":
-        r = recs[start + int(p[1])][0]
+        r = recs[at(p[1])][0]
         f, v = p[2].split("=")
         v = int(v)
         if f == "imm": r.w[3] = v & 0xFFFFFFFF

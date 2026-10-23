@@ -92,7 +92,13 @@ for n, (op, d, srcs, k) in enumerate(ins):
         if d in cur and cur[d] in live:
             continue
         if n not in dmap or dmap[n] not in pair:
-            print("line %d %s %s: unmapped" % (k + 1, op, T[d])); cur[d] = None; continue
+            # unmapped (for example folded by as1): assume the original follows the model
+            o = free[0] if free else None
+            print("line %d %s %s: unmapped, assumed %s" % (k + 1, op, T[d], T.get(o)))
+            if o in free: free.remove(o)
+            if o is not None: live.add(o)
+            cur[d] = o
+            continue
         wl = w[pair[dmap[n]]]
         o = NAME2.get(gdest(wl))
         head = free[0] if free else None
@@ -104,3 +110,15 @@ for n, (op, d, srcs, k) in enumerate(ins):
         if o is not None: live.add(o)
         cur[d] = o
 print("departures", bad)
+# ring offsets: original register minus ours in the cyclic order of the 8 free temporaries
+RING = [14, 15, 24, 25, 10, 11, 12, 13]
+if "--offsets" in sys.argv:
+    last = None
+    for n, (op, d, srcs, k) in enumerate(ins):
+        if d not in RING or n not in dmap or dmap[n] not in pair: continue
+        o = NAME2.get(gdest(w[pair[dmap[n]]]))
+        if o not in RING: continue
+        off = (RING.index(o) - RING.index(d)) % 8
+        if off != last:
+            print("line %4d %-5s ours %s orig %s offset %d | want[%d] %s" % (k + 1, op, T[d], T[o], off, pair[dmap[n]], w[pair[dmap[n]]][:30]))
+            last = off

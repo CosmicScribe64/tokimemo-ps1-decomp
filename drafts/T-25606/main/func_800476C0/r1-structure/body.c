@@ -3,7 +3,7 @@ void func_800476C0(void) {
     Rec24 spr;
     s32 step;
     s32 slot;
-    s32 uv;
+    s16 uv; /* T-25606: s16, the tpage UV byte is computed through a halfword */
     DisplayImage78 *anim;
     DisplayImagePart0E *part;
     s32 j;
