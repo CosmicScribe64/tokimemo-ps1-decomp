@@ -42,6 +42,7 @@ Source lines play no part in these choices; they only order the per-block schedu
 | SHOUGATU `func_8013EE30` | Default is the shared return block (weight 4, `jr ra` not movable); the dispatch (weight 4) gives its `sll`, its `lui $at` fails the path test, the first case (weight 7) ends the scan. Load delay stays `nop`. | 1, 5, 7 |
 | TAIIKU `func_8013C33C` | The `lui`/`lhu` of the volatile flag `D_801499B2` print `sched=1/1` and are skipped (the T-11640 FAKE). | 4 |
 | VALEN `func_80134030` (now matched) | With the default arm's three globals volatile, all three `lui`/`lw` pairs print `sched=1/1`; the join (weight 1) fails at the dispatch barrier; the dispatch `sll` fills the range-check slot; the load delay stays `nop`. | 4, 5, 7 |
+| ENDING `func_80135F4C` (T-25126, matched) | Not traced; measured by funcdiff. With object 80134D20's `.data` in asm the default arm gives two `lui` (load delay and `beqz` slot). With its table `D_8013CA3C`, which names the function, defined in C, the head keeps the `nop` and the dispatch `sll`, with no change to the function. | 8 |
 | GYOZI `func_80139E4C` (now matched) | Same as VALEN `func_80134030`. | 4, 5, 7 |
 | VALEN `func_80134030` draft, toy switches | Without volatile the default (weight 4, numbered before the dispatch) passes and gives two `lui`: the T-24211 hoist. Toys: a default placed first or after reversed cases, an `int` selector, `goto` instead of `break`, defined, static, bss, `const` or array globals keep the same numbers and the hoist (a default in the middle still gives one `lui`; its second `lui` gets the selector's register, which is live into the dispatch). | 3 |
 
@@ -53,6 +54,8 @@ Before (VALEN `func_80134030`, 6 rows): `lbu t0; lui t1; sltiu; beqz; lui t2; sl
 After (match): `extern volatile s32 D_80134690;` and the same for `D_801346C4`, `D_801346F8` (VALEN.h) gives `lbu t0; nop; sltiu; beqz; sll t0`. The same three-line change matches GYOZI `func_80139E4C` (GYOZI.h). Declaring all 39 table words volatile also matches both units; only the three default-arm words are volatile in the tree, marked FAKE (the real declaration is unknown).
 
 Use it when the trace shows the wrong instruction is a `lui` of a global that is only read in the function (or whose other readers still match), and check every unit that includes the header.
+
+A global read twice is fine when the original also loads it twice, each read in its own conditional block (GYOZI `func_8013907C`, two `D_80147240 == 1` tests, T-25120). Another reader in the same unit whose per-block order changed went back to its original order with a non-volatile view at one read, `*(u8 *)&D_80147240` (FAKE).
 
 ### Levers that do not work
 

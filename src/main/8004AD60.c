@@ -245,7 +245,80 @@ Pix2Out *arg1;
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", make_color_bar);
+void make_color_bar(void *arg0, s32 flag) {
+    /* T-25140: every gradient value comes from the pair index (k * 2, k * 2 - 1). uopt
+     * strength-reduces them and the row pointer itself; separate i/j counters or a walked
+     * pointer give the wrong register order. */
+    s32 k;
+    Pix2Out *p;
+
+    p = arg0;
+    for (k = 0; k < 16; k++) {
+        p[k].r1 = k * 2;
+        p[k + 16].r1 = k * 2;
+        p[k + 32].r1 = 0;
+        p[k + 48].r1 = 0;
+        p[k + 64].r1 = k * 2;
+        p[k + 80].r1 = k * 2;
+        p[k + 96].r1 = 0;
+        p[k + 112].r1 = 0;
+        p[k].r0 = k * 2 - 1;
+        p[k + 16].r0 = k * 2 - 1;
+        p[k + 32].r0 = 0;
+        p[k + 48].r0 = 0;
+        p[k + 64].r0 = k * 2 - 1;
+        p[k + 80].r0 = k * 2 - 1;
+        p[k + 96].r0 = 0;
+        p[k + 112].r0 = 0;
+    }
+    for (k = 0; k < 16; k++) {
+        p[k].g1 = k * 2;
+        p[k + 16].g1 = k * 2;
+        p[k + 32].g1 = k * 2;
+        p[k + 48].g1 = k * 2;
+        p[k + 64].g1 = 0;
+        p[k + 80].g1 = 0;
+        p[k + 96].g1 = 0;
+        p[k + 112].g1 = 0;
+        p[k].g0 = k * 2 - 1;
+        p[k + 16].g0 = k * 2 - 1;
+        p[k + 32].g0 = k * 2 - 1;
+        p[k + 48].g0 = k * 2 - 1;
+        p[k + 64].g0 = 0;
+        p[k + 80].g0 = 0;
+        p[k + 96].g0 = 0;
+        p[k + 112].g0 = 0;
+    }
+    for (k = 0; k < 16; k++) {
+        p[k].b1 = k * 2;
+        p[k + 16].b1 = 0;
+        p[k + 32].b1 = k * 2;
+        p[k + 48].b1 = 0;
+        p[k + 64].b1 = k * 2;
+        p[k + 80].b1 = 0;
+        p[k + 96].b1 = k * 2;
+        p[k + 112].b1 = 0;
+        p[k].b0 = k * 2 - 1;
+        p[k + 16].b0 = 0;
+        p[k + 32].b0 = k * 2 - 1;
+        p[k + 48].b0 = 0;
+        p[k + 64].b0 = k * 2 - 1;
+        p[k + 80].b0 = 0;
+        p[k + 96].b0 = k * 2 - 1;
+        p[k + 112].b0 = 0;
+    }
+    if (flag) {
+        for (k = 0; k != 128; k++) {
+            p[k].x1 = 1;
+            p[k].x0 = 1;
+        }
+    } else {
+        for (k = 0; k != 128; k++) {
+            p[k].x1 = 0;
+            p[k].x0 = 0;
+        }
+    }
+}
 
 void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag) {
     /* T-24501: declaration order preserves the interpolation spill homes. */

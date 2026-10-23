@@ -17,142 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24604: date display initialization literal match
-
-`hizuke_init` now matches 1,048 literal linked bytes in default C. The actor initialization follows the matched sibling's loop bound and store order. Two otherwise discarded entry reads establish the existing conversion pass's documented entry condition for the unsigned month/day globals; this preserves their shared s0 lifetime and narrow arguments across digit calls. Removing either read fails. Joining the second year-digit assignment and its x store on one line gives the final address-load/store order; the other eight joined pairs are unnecessary and were split. Both required mechanisms are marked FAKE. No header or compiler change. Full build, fresh 27 executable hashes, prototype guard (zero new disagreements), and independent standards/spec reviews pass. Census: 6,820/6,952 functions, 2,094,700/2,276,920 bytes, 132 functions remaining.
-
-Schedule-sort source-level unroll finding: assigning the computed date key inside the comparison (`if ((keys[j] = ...) < key)`) restores the target four-way inner loop, improving the pointer draft to371/306 words. Separate candidate scalar also unrolls four ways but worsens allocation. Distinct first-scan index yields351/314 but unrolls that scan twice, unlike the original. Private interior-symbol views can improve apparent distance to271/318, but retain wrong base lifetime and are not canonical declarations or a match. Current production remains unchanged. Scratch sort-keyrange, sort-scanindex and sort-symbolviews preserves the evidence.
-
-Schedule-sort structural checkpoint: reusing j for the clearing loop restores its expected a0 spill/reload form. An empty boundary inside the active-record arm inhibits the unwanted shared-base hoist and produces exactly317 words with the original branch topology (sort-baseboundary/count314-316 cost depending on boundary value). Frame is0x98 versus0xB0; first-scan pointer/destination allocation and temporary-ring/order differences remain. This is a private FAKE diagnostic, not a literal match. Offset pointer/integer spellings and function return-type probes were neutral. Production is unchanged.
-
-Schedule-sort trace confirms the317-word boundary candidate has only instruction-order differences in its structure;144 instructions differ in registers. The initial pointer competes with high-priority month-loop derived addresses; indexed first-loop j shares a1 as wanted but adds a materialized record pointer (318 words). First-loop copy views and pointer types do not close this. See sort-trace.txt, sort-scanboundary, sort-copyview and sort-pointerkind. Current-TU GEKO33024 remains4/70, and srn_set staging/bound probes remain unmatched. The overlay lane now reconstructs GEKO420E4's ranking arrays.
-
-## T-24605: GEKO top-six ranking literal match
-
-[[tickets/T-24605-geko-ranking]] promotes func_801420E4 (1,256 bytes). Existing GameState record access and repeated sum expressions preserve the full signed comparisons and per-insertion reloads; signed halfword arrays retain narrowing and descending-girl tie order. Scalar declarations precede the two GekoShorts6 locals. A discarded girls[2] test resolves the traced priority10 tie with girls[5];0x420 unused bytes reproduce the original0x480 frame while retaining array homes40/4C; joining girl=9 with do restores initialization scheduling. All three are minimized and marked FAKE. Empty string owns the original zero rodata, and actor3/4 byte clears use DisplayActor44. Private/default literal proof, full build, fresh27 hashes, prototype guard and both independent reviews pass. No header or compiler change.
-
-T-24600 schedule-sort frame diagnostic: declaration order plus private padding reproduces keys7C, swap9C, countA4 and frameB0, but generated clearing spill remains44 rather than40 and broad register/order differences remain (306/317). Source-line/comma initialization moves the count initialization to its target position without closing allocation. No padding/source promotion. Root pivots to MAIN62948: typed matrix/rotation/scale recovery exposes an archived pre-call cached value that the original reloads after rsin, plus an unnecessarily retained next=k+1 local. Explicit output index improves124/188 to97/185 words versus184 target; matrices/walker/call lifetimes still differ. Scratch matrices-* keeps evidence.
-
-MAIN62948 continuation: explicit sine result followed by the real values[1] reload yields184 target words. Unsigned negation for the third translation keeps the original two distinct negations, and moving four existing scalar/pointer declarations before SDK aggregates gives every original matrix/vector home. Best full-TU42/184: frameD8 versusD0, initial ordering/multiply operand order, and final copy/update scheduling/registers remain. Smaller vector extents, own-return view, register storage, direct output-base and source-line controls do not close it. Retain SDK types in the best candidate; no production/header edits. See matrices-wave, matrices-negtype, matrices-homefix and matrices-trace.txt.
-
-## T-24606: OPTION calendar controls literal match
-
-[[tickets/T-24606-option-calendar]] promotes func_8013A7EC (1,092 bytes). Existing ScheduleFlags.unk_12 replaces hand-packed update logic, and OptionByteBf preserves the unsigned selector web. Direct canonical weekday comparisons plus one entry read restore the original address allocation; plain counter increment suffices after this recovery, so identity multiplication was removed. Explicit integer return with fallthrough prevents as1 from filling the original flag-branch NOP. Shared label-pointer/month and display-row/loop-bound words remain necessary; all unusual mechanisms have FAKE explanations. Omission proofs and both independent reviews are in the ticket. Default literal proof, full build, fresh27 hashes and declaration guards pass without header/data/compiler changes.
-
-## T-24600: Wrap-up reconstruction checkpoints
-
-User requested stopping the current matching session and committing/pushing completed work. Remaining experiments stay private under `build/T-24600/`; no coverage credit is taken for them.
-
-- MAIN `func_80062948`: joining the four entry initializations improves the typed, correct-reload reconstruction to40/184 words differing, with original aggregate homes but frame D8 instead of D0. Tail value types and shared temporaries do not resolve the copy-register and scheduling differences. Best packet `matrices-entry/init-joined`; earlier42/184 packet `matrices-homefix/four-before` remains the cleaner structural baseline.
-- MAIN `func_8004A1A0`: replaying the old typed background initializer gives149/156 against157 words. Direct height constant multiplication strength-reduces unlike the original multiply; byte-bitfield and signed-byte views do not solve the redundant conversion. Chained assignments produce174/155,171/156 and179/156, all worse. Canonical SpriteMap10/Cell declarations currently live in OPTION's header; a future MAIN promotion must move shared declarations properly. No production type or source change.
-- TACO `func_80139424`: direct byte argument, independent coordinate words and direct branch-local UV stores recover most structure. `taco-lane/font-copy-order/y-order` is115/418 against419 words, with original Y homes and copies; `font-constant-order/top-first` scores97/418 but changes V-store order. Center/division register allocation and X-copy ordering remain. Full private ledger: `taco-lane/CHECKPOINT.md`.
-- NAME_ENT `func_80143580`: restored signed-halfword decrement narrowing is required. Selector byte views, RGB zero chains, and fade snapshots recover several causal regions; `name-lane/intro-recovery/NOTES.md` records the still-unmatched candidates. A lower-scoring branch-reorder control loses an observed selector self-store and is not a valid improvement.
-- ETC `func_801328A4`: archive reconstruction had incorrect record and input strides, wrong copy widths and one-element stack placeholders. Typed three-row Rgb555Split storage and RECT recover these accesses; `etc-lane` candidate remains231 words against230, with frame/layout unresolved. No production source or header change.
-
-## T-25001: class C main sndisp, strCallback, func_80065964
-
-[[tickets/T-25001-class-c-main-sndisp-strcallback]], worktree `c-m1`. No new match; one guard at 2 rows.
-
-- **`sndisp` (388 B, guarded, 2 rows).** A clean rewrite of the T-14500 draft gives every instruction and register: `strncpy(buf, str, 256)`, then `for (i = 0; buf[i] != 0; i++, q++)` with the space, `P` and `G` tests on `!(q & 1)`. The original's `andi v0,zero,0xFF` is uopt forwarding the store `buf[i] = 0` into the next `buf[i]` read. `i` is both the position stored in `pos[n]` and, reset to 0, the counter of the second `sndi` loop. Frame: `i, q, n` declared before `pos` and `buf` put `pos` at sp+0x14C and `buf` at sp+0x4C, and a FAKE `s32 pad[2];` declared first gives the 0x168 frame. Left: the two rows of the template address. `u8 pos[5] = {0,...}` makes IDO copy from a template in the object's `.data`. The original template is `D_800B40F8`, 8 bytes into the 800B40F0 data range. This object's C `.data` is already the `D_800E3680` island (yaml `[0xA2E80, .data, main/8004F870]`, needed by the matched `menu_bar_color`), so the template lands at `.data+0x40`. `data_island.py main/8004F870` adds a second `.data` entry for the same object, and splat then writes only one `8004F870.data.s`, so `data_pieces.py` fails ("island 800B40F0 does not start with a symbol"). Closing this needs build support for two `.data` regions in one object, or another way to own the 800E3680 bytes.
-- **`strCallback` (640 B, `INCLUDE_ASM`, 75 rows).** The T-17014 draft is unchanged: from the RECT copy on, every ugen temporary is one ring slot high. Tried: `odd` as u32 (same) and s16/s8/u16/u8 (worse), an assignment in the condition, `if (odd)`, declaration order, the `D_80125C5C = 0` store before the reload, copy and `if` on one line, `x = x + ...`, `*&` on the copy source. autotweak (300 s, 318 edits) and the permuter (600 s, best 315, only by dropping the semantic `odd` reload) found nothing. Draft: `drafts/T-25001/main/strCallback.c`.
-- **`func_80065964` (424 B, `INCLUDE_ASM`).** A natural four-corner test, a block-local macro per corner and a do-while loop all compile to a frameless leaf, and uopt splits the loop around `idx`. The original has frame 0x68, saves s0/s1, keeps dead `sw` of p, y0 and y1 to sp+0x28, x0 to 0x24 and x1 to 0x20, and holds eight coordinate registers, a copy of each value, one pair per corner test. The source shape is unknown. Drafts: `drafts/T-25001/main/func_80065964.c`.
-
-## T-24713: as1 traces (superseded by T-24900)
-
-Wave-2 T-24713 traced the near-miss diffs with an instrumented as1. Its measurements are kept here
-because they agree with [[as1-scheduler-rule]]: the cross-block filler visits stalled blocks by
-(weight, block number), a switch default is numbered before its dispatch and wins at equal weight,
-and the per-block scheduler (not source lines) orders the instructions inside one block. Two
-conclusions in the first version of this note were wrong and must not be reused:
-
-- **"A backend-version trait, no source form" is wrong.** T-24900 found the lever: declare the
-  plain globals of the switch default arm `volatile` in the unit header (FAKE) and as1 will not
-  move their `lui`. It matched VALEN func_80134030 and GYOZI func_80139E4C in C. Use
-  [[as1-scheduler-rule]] and classify every scheduling diff there before calling it blocked.
-- **"Closing these needs a scheduling pass" is wrong for the default-arm family.** It is still the
-  open question only for the same-block KANGEI func_8013852C case (a local order, volatile changes
-  nothing) and for the GEKO func_80136C20 weight problem; those two have trace-backed notes in
-  [[as1-scheduler-rule]] and stay guarded.
-
-Kept observation: `--resolve` rows overstate a one-instruction move because every later branch
-target shifts; report the true moved-instruction count with the row count. main func_8006D7EC's
-last row is still uopt constant propagation (`cc -S` shows `li $3,1`), a separate open item.
-
-## T-25002: class C ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224
-
-[[tickets/T-25002-class-c-ending-geko-etc]], worktree c-m2, from [[plan-remaining]] class C. 0 of 3 matched; one guard.
-
-- **GEKO `func_80133C50` (guarded, 13 rows).** Started from the T-24503 cost-44 body (22 rows here). Three changes: `(u8)(v & 0x7F) < 2` in the 4/5/10 arm (autotweak, 22 to 15); `g * 1 == 2` in the 1/2/3 chain puts the shared constant first, `beq a0,v1` (15 to 14; `2 == g`, `| 0` do not); `(g = D_80144C50) == 2U` gives `bne t8,a0` (14 to 13; the same word-local trick as the sibling `func_80133AA0`; `2 == C50`, `* 1`, `^ 0`, `(s32)`, byte view do not). The implicit-int strcpy view is a per-file `MAIN_API_OVERRIDE_func_800AE0F0`. Left: ugen temporary order in the zero-girl arm (original `srl t9; mflo t6; addu t0; srl t1`, built `srl t1; mflo t9; addu t6; srl t0`) and `lhu`/`srl` t9/t7 swapped in the 4/5/10 arm. No effect: a separate club local, `g` vs `temp` roles, compare order `g == v`, one-line grouping, empty tests on `v`/`g` (worse), `6U`/`2U`, autotweak 300 s a second time.
-- **ENDING `func_801387B0` (INCLUDE_ASM, draft `drafts/T-25002/ENDING/func_801387B0.c`, 80/76 rows).** Fresh body in the style of the matched siblings (`DisplayActor44` record 31, the `D_8011F4DE/E0/D0` scalars), frame 0x28 right. `D_8011F4DE * 1 == 1` gives the original `bne v1,t0`. Left: the original keeps `byte & 1` in `v1` (byte in `a0`) and recomputes `xor a1,v1; sltiu` for each of the four `N - (flag == 1)` compares; every form tried CSEs the boolean from the second compare on, so the build is 16 bytes short. Tried: s32/u8/u32/s16 flag, byte plus bit locals, `1 == flag`, `1U`, `!(x ^ 1)`, ternary, direct field reads. autotweak: view `D_8013C360` s32 (exact 156 to 123).
-- **ETC `func_80144224` (INCLUDE_ASM, draft `drafts/T-25002/ETC/func_80144224.c`, 106/97 rows, 185 against 194 instructions).** Fixed against the m2c draft: frame 0x38 (declare `rem`, `quot`, `v` in that order), `func_8014407C(quot)` (m2c lost the argument), `(&D_8015014C)[D_80150148]`, s32 return for the implicit-int caller. Left: the original promotes `D_800E7384` in `a3` over the whole function (reloaded after every call) and `D_80150148` in `v1` in the `rem == 1` arm with write-backs before each call; the draft does neither. Self-assignment write-backs give 93/87 rows with frame 0x40 (kept in the draft under `#if 0`). A u32 `D_800E7384` changes nothing; autotweak refuses the shape.
-
-## T-25005: several .data ranges per object; main sndisp
-[[tickets/T-25005-data-regions-per-object]], worktree `data2`. Build support for an object with two or more `.data` ranges ([[build-system]], "Several ranges per object").
-- **`sndisp` (388 B): MATCH.** This is the T-25001 C with its guard removed. `tools/data_island.py main/8004F870` adds `800B40F0-800B4390` as a further island (section `.data_800B40F0`). In `src/main/8004F870.c` the order is: `D_800E3680` (the old island, stays `.data`), the `D_800B40F0` piece, ..., `sndisp`, then the pieces from `D_800B4100` on. IDO emits the `pos[]` template when it compiles `sndisp`, so the template lands at `.data_800B40F0+8` = `D_800B40F8`, the original address. The `D_800B40F8` piece is gone because the compiler provides those bytes.
-- **Rule for other files.** The C file must emit each range's data back to back. A local aggregate initialiser template sits where its function sits in the source, so the `INCLUDE_RODATA` lines of a range are split around that function. `data_split.py` fails the build when the parts are not contiguous, have the wrong size, or do not start on a symbol.
-- **Other functions blocked by this.** None found. No `NON_MATCHING` note in `src/` and no matching note names a second data range as the only gap. The two earlier initialiser cases needed only one island each: TAIIKU `80141280` (`D_8014A070`, island in the yaml) and EVENT `func_8011767C` (C in `8010FE10.c`).
-
-## T-24929: uopt zcopy scope, closed as a switch-compare rule (in the build)
-[[tickets/T-24929-uopt-zcopy-scope]]. ETC func_8013CCE4 (guarded at 3 rows since T-24921) now matches in plain C.
-
-The T-24925 hypothesis (the original propagates copies of globals but not local induction copies) did not hold up.
-The fold of the unrolled `buf[]` loop only happens under `OPTN 405 1`, and the original's loop is exactly IDO's
-zcopy-off code, so the fix keeps zcopy off. The three rows came from the compare register:
-
-- With zcopy off, uopt keeps the switch temporary in its own register (`lod R3; str R2` at the entry). Only the
-  first compare reads the global's register; the later ones read R2. ugen emits the same thing (`move v0,v1;
-  beq v0,at` ...), seen in a binasm dump of main func_80077CA8.
-- In 80077CA8 and most other chains, as1 then rewrites those compares to `$v1` and keeps the move, which is the
-  original's shape. In func_8013CCE4 it does not: the case bodies increment the global, and ugen's code redefines
-  `$v1` there (`addu v1,v1,1; andi t6,v1,0xff; move v1,t6`) while `$v0` is still live, so as1 leaves the compares on
-  `$v0`. The original compares on `$v1` here too (target rows 7/10/13).
-- The new step in `tools/cvt_pass.py` (`switch_compares`) does the substitution on uopt's output: in every
-  zcopy-off procedure, the loads of Rt after the entry copy `lod Rg; str Rt`, up to the first label, call or
-  store, read Rg. Nothing redefines Rg there, so the meaning is unchanged.
-
-Measurements: whole build, every IDO object rebuilt; a function counts as changed when its disassembly differs
-from the baseline object after normalising addresses and trailing pad nops (`drafts/T-24929/objcmp.py`,
-`measure.sh`). `drafts/T-24929/cvt_pass_variants.py` holds the variants.
-
-| Variant (uniform) | Stage | Matched functions changed | func_8013CCE4 |
-| --- | --- | ---: | --- |
-| zcopy 1 for this procedure (T-24925 flip) | OPTN | not uniform | loop folds, 96 lines |
-| zcopy 1 plus any uopt z-option (0x191-0x19a: zmark, zvref, zdbug, zmovc, zcomo, zstor, zscm, zaloc, one more), either value | OPTN | not measured | none stops the fold, 96 lines |
-| zcopy 0 plus any of those options | OPTN | not measured | 6 lines (zmovc 0: 224) |
-| `sprop`: the temporary's loads in the entry chain replaced by the global's `LOD`, zcopy-off procedures | uopt input | 261 | 3 lines (the copy is dropped) |
-| `zstor`: `OPTN 0x197 0` (zstor) for zcopy-off procedures | OPTN | 24 | - |
-| `zstor1`: `OPTN 0x197 1` everywhere (control) | OPTN | 0 | - |
-| `sprop` + `zstor` | both | 174 | match |
-| the same, only where the switched-on global is stored in the procedure | both | 74 | match |
-| `rprop_all`: register-copy propagation at the entry of every procedure | uopt output | 275 | - |
-| **`rprop`: the same, zcopy-off procedures only (adopted)** | uopt output | **0** (fires in 267 procedures) | **match** |
-
-`rprop` gives 27/27 SHA1 with func_8013CCE4 unguarded. On the other 25 guarded functions it changes no diff row
-count (`drafts/T-24929/guards.sh`). uopt's z-option numbers come from the name table in the 5.3 binary (32-byte
-blank-padded names at 0x10003c10-0x10003d10: zaloc 0x199, zscm 0x198, zstor 0x197, zcomo 0x196, zcopy 0x195, zmovc
-0x194, zdbug 0x193, zvref 0x192, zmark 0x191).
-
-Build note: `build.ninja` does not list `tools/cvt_pass.py` as a dependency of IDO compiles (only `tools/cc.py`).
-After changing the pass, touch `tools/cc.py` or do a clean build.
-
-## T-25003: class C main func_80043510, func_8004443C matched; func_8006BA40 guarded
-
-[[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]], branch c-m3. Two of three matched in plain C; one guard at 7 rows.
-
-- **`func_80043510` (972 B, MATCH).** Rewritten from the asm with the matched TACO twin `func_801446D8` as the model for the third block. Levers, in the order they cut rows (93 -> 0): loop 1 as `for (i = 0; i < 0x40; i++)` over `g->unk_10A5[i]` with a separate `Rec24 *rec` stepped by `rec++` (uopt then keeps the byte walker as the induction variable with end `D_800E62C0`, 93 -> 71); the third argument `(u8)(v - 1) & 0x7F` in both arms (without the cast uopt keeps `v - 1` in `$a2` and narrows into a temp, 71 -> 25); declarations `obj`, `rec` before the arrays and `i`, `v` after, with `u32 sp70[12]` (two spare words, FAKE) for frame 0xA8 and the work areas at sp+0x50/0x70 (25 -> 19); `GameState *g = &D_800E6280;` declared last and used for every field (autotweak `gstate all last`, 19 -> 0; it moves the second `unk_1109` read into `$v0`). The four timestamps are now `extern s32 D_800B3D10[4]` in `main_api.h` (the data stays as four `INCLUDE_RODATA` lines); `csr_load_vram`, `palette_load_vram`, `disp_string` got prototypes there.
-- **`func_8004443C` (708 B, MATCH).** The four divisions are written out (IDO does not unroll the loop); the colour-threshold loop and the draw loop are `for (i = 0; i < 4; i++)` over `colors[i]` and `D_800B3D10[i]`, with `rect.x = 0x8C + i * 4` (a separate `x` variable swaps `$s1`/`$s3` init and latch order, 5 rows). Stack layout: locals are placed bottom-up in reverse declaration order, and an unused scalar still owns a slot here, so `s32 pad0; s32 colors[4]; s32 i; RECT rect; s32 pad1;` gives colors at sp+0x64 and rect at sp+0x58 (FAKE pads; without them 17 rows). Needs `void func_8004A14C(s32, RECT, s32);` in `main_api.h`.
-- **`func_8006BA40` (488 B, guarded, 7 rows).** From the T-24301 draft (41 rows): the D_800B6708 cycle as a promoted global with a `u8 temp` copy for the first test and `else if (D_800B6708 == 0xAC)` before the increment (autotweak plus branch order, 41 -> 14 -> 7), and `D_8011ECFA -= (u16)step` (autotweak). Left: the hoisted `%hi(D_8011ECFA)` of the first clamp takes `$t2` instead of `$t0` and the `andi`/case-0x1000 temporaries come one lower (the T-24603 ring problem). Tried without gain: spellings of `step = speed * 2` (`<<`, `+`, `*=`, on `step`), `(u8)g->unk_F80`, casts on the other three `+=`/`-=`, `!(g->unk_F80 & 0xF)`, switch or ternary forms of the D_800B6708 cycle, removing `g`, a second autotweak (402 edits) and a 600 s permuter run.
-- Layout rule seen in both matches: with arrays and scalars mixed, IDO places locals bottom-up in reverse declaration order above a fixed bottom; scalars declared before an array land above it, after it below it.
-
-## T-25004: class C main col2sepia matched; func_8005B43C and parameter_up_down guarded
-
-[[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]], branch c-m4. One match, two guards (3 and 11 rows).
-
-- **`col2sepia` (580 B, MATCH).** Rewritten from the asm on the `Pix2In` bit-field type (one pointer for reads and writes). Levers: a sum local `s` (`s = p->r0 + p->g0 + p->b0; if (s != 0)`) that is reused for the first pixel's blue value (the original keeps both in `$a0`; the second pixel uses `v`), 171 -> 73 rows; every clamp written as a ternary, `p->r0 = (v >= 0x20) ? 0x1F : v;`, 73 -> 0 (the `if`/`else` form spends one more ugen slot per clamp, so every store's temporaries came one high). The earlier drafts (T-9730, T-17013, T-24303) used `if`/`else` throughout.
-- **`func_8005B43C` (920 B, guarded, 3 rows).** From the T-24301 draft (now 33 rows with current tools). The flag test is the bit-field `unk_1BC[n].unk_0C.f.b2` (sll 29; bgez), not `.w & 4`; with it every later temporary was one high (54 rows), traced to the case-4 shift `h >> 12`, which spent a ugen slot. The permuter (900 s) found the fix: a second read of `unk_0F4.h` in the else arm (`if (D_800E6280.unk_0F4.h) {}`, FAKE) makes uopt keep the halfword in `$a1` and the shift costs no slot (54 -> 3). Left: the shifted club number is coloured `$a0` (the call argument) where the original has `$v1` plus `move a0,v1` in the call delay slot. Tried without gain: `u16`/`s16`/`u8`/`s32` for the local, a separate `h` local, the shift inline in the compare and the call, a one-case `switch`, the club number reused for the call result, `(s32)`/`| 0`/`* 1` on the argument, an empty test on the local, a second autotweak (350 edits) and a second 600 s permuter run.
-- **`parameter_up_down` (1228 B, guarded, 11 rows).** From the T-17016 draft (109 rows with current tools). Levers: `v` (the element local) also holds the mode nibble and the raw `unk_0F4.h` of the arg0 == 4 branch (the original keeps all three in `$v0`), 109 -> 47; the index as `(u32)v >> 12` (srl, not sra); the products as `v * (u32)(arg1 * 0x1000 / arg2 / div_a / div_b)` (the cast puts `v` first in `multu`, 47 -> 43); the first mode test reads the byte again (FAKE, the byte then stays in `$v1`, 43 -> 13); no `i = 0` before the branch and `for (i = 0; ...)` in both loops (13 -> 11). Left: the nibble `andi` goes to a ugen temporary with two copies (the original writes `$v0` directly), which moves the arg0 == 4 temporaries one up, and that branch's row pointer gets `$v1` with a spill at sp+0x58 where the original stores the temporary straight to the home at sp+0x4C (the else branch already does). A `u8` byte local (permuter find) colours the byte right but scores 16. autotweak (508 edits) found nothing.
-- Lesson: an `if`/`else` clamp that stores to a bit-field costs one more ugen slot than the same clamp as a ternary; try the ternary when every temporary after a clamp is one high.
-
 ## T-25009: closers ETC func_80146D4C, GEKO func_80133C50, main mod_set_gpu
 
 [[tickets/T-25009-closers-etc-geko-mod-set-gpu]], branch n2. No match; three guards, one improved.
@@ -773,6 +637,7 @@ What is left:
 - gs gets a split piece in s0 with priority (20 - 10)/5. Assigning gs after the calls removes the piece but breaks the prologue.
 
 The traced uopt was rebuilt in scratch from `wiki/uopt-register-allocation.md` in about 7 minutes. `rd.sh` runs regdiff with it.
+
 ## T-25146: ETC func_80144224
 
 Matched, 796 bytes, the default build compiles the C and the ETC sha1 is OK. The step that closed it
@@ -786,6 +651,151 @@ final print use the sibling's `D_80150150[D_80150148 - 1]`. Two marked FAKEs are
 matched sibling `func_80143A88`'s `sp30`/`sp28`: a word view in the quotient test keeps quot in its
 slot 0x30, and word stores keep `v = x * 3` in 0x28 with no extra spill slot (frame 0x38). Levers and
 negatives: `drafts/T-25146/ETC/func_80144224/NOTES.md`.
+
 ## T-25145: ENDING func_801330E4
 
 Matched (default C, 796 bytes) from the T-24924 92-row body, in about an hour. Three causes. (1) `level` is saved at 0x54: declare the register-allocated `s16 i` after `points`, so `level` sits below it; frame and `chance` stay. (2) The original loads the f9 flag word into `a0`, shifts it into `v0` and copies the `srl` temporary back to `v0` after the sum. That is ugen's destination forwarding ([[tickets/T-25034-main-quadrant-extent]]) with the word coloured on one read, which IDO 5.3 does not do ([[original-compiler]] rule 3); a FAKE empty test on the word gives it a second read and `a0`. (3) The in-place `sltiu/xori` and every ugen temporary of the block and the tail came from `(x > 0) * 2` (not `(x == 0 ^ 1) * 2`) and three statements, `level = f9; level += A; level += B;`. Step 3 was found with a FIFO model of ugen's free list applied to the `cc -S` listing: the target's registers after the clamp need the first sum freed before B's byte. Candidate [[playbook]] recipe: when every ugen temporary of a sum and later blocks is off and one-statement operand orders do not fix it, try the sum as separate `+=` statements. Details and negatives: `drafts/T-25145/ENDING/func_801330E4/NOTES.md`.
+
+## T-25119: main func_80062948
+
+[[tickets/T-25119-w8-main-80061710]] matches `func_80062948` (736 bytes, default C) from plain `INCLUDE_ASM`. What closed it: only `i`, `j` declared above the SDK aggregates (two scalar slots above `rot`, which gives the 0xD0 frame with every original home); `D * (j + 2) * -2` so as1 expands the multiply by -2 with `$at` and spends one ring temporary; the position update before the matrix copy; the copy through the record (`*(MATRIX *)D_801227A0[i].unk4 = m`, as in DATE), which gives the copy walker its own induction variable after the flag walker; and a local copy of the position reloaded after `rsin`. The last one is a front-end rule: cfe orders the operands of a commutative operation heavier first, and an indexed load is heavier than `v / 32`, so the draft emitted `-x / 2` first and the FIFO free list permuted t0..t2. Two FAKE spellings restore the original order where no natural form did: `(D | 0) * (j + 2)` and `(v & 1) - (0 - X) + 2`. The negatives and the scratch method are in `drafts/T-25119/main/func_80062948/NOTES.md`.
+
+## T-25119: main func_80061A3C
+
+[[tickets/T-25119-w8-main-80061710]] matches `func_80061A3C` (1216 bytes, default C) from plain `INCLUDE_ASM`; earlier work had only m2c drafts. A hand-written body (switch on `unk_110D`, one shared counter `i` for every loop, `tbl[8]`, actor 96 through `DisplayActor44`) started at 60 rows. What closed it:
+
+- **Copy loop**: a separate first store and a 12-trip loop `(&D_801230D0)[i + 1] = D_800B5A40[i]` for i = 1..12 (the work-area spelling of func_80062948). The pointer offsets give it away: the source pointer starts on its element, the destination 4 bytes before. A 13-trip loop puts the remainder through the pointers; a separate counter makes uopt unroll the table loop as well.
+- **Frame**: `s32 pad[2]` below `tbl` (FAKE) for the 0x88 frame with `tbl` at sp+0x60.
+- **v0 after an int call** (34 rows): the copy pointers took v1/a0/v0 for the original v0/v1/a0. A void `func_8006190C` (experiment) gave the original colours, so the return register of the int call is reserved in the rest of the block. `if (func_8006190C()) { }` (FAKE) ends the block; uopt removes the empty test.
+- **One shared constant reorders argument setup** (4 rows): `memcpy(p, 0x801F0000, ...)` in case 2 made as1 emit case 1's `lui a1,0x801f` before `li a0,1`; a minimal repro showed it. `(void *)0x801F0000` for the memcpy source fixed it.
+
+Steps, removal controls and negatives: `drafts/T-25119/main/func_80061A3C/NOTES.md`.
+
+## T-25144: RPG_BAT func_8014BFE4
+
+Matched (892 bytes, default C), [[tickets/T-25144-w8-RPG_BAT-8014ADD0]], wave 9 neighbor conveyor (T-25200). Start: the T-17110 hand draft at 128 rows. The function was read through ugen's `cc -S` listing of the function alone (shims of `tools/cc.py`), which shows every real load, the ring order and where uopt places an expression. Levers in the order they cut rows: an empty first arm `if (arg3 < 10) {} else if ...` (its label clears ugen's register cache, so arg1 and arg3 are reloaded in each test and as1 leaves the original's dead `move`s); a record-index variable `j` whose dead init is the original's `move v0,t1`; `slot * 12` in a one-word array `t[1]` (FAKE: it stays in memory at sp+0x50, is reloaded after the loop and is not CSE'd across the calls); five scalars with div fourth so div's home is sp+0x58 (128 -> 35); `div = 1` before the switch, which lowers div's priority and gives the `li a1,1` delay slot; the call index as `k = j + 0x40` at the top of the loop body (strength-reduced into `s2`, so `k + 8` is computed before the first call into `s5`, which pushes div out to `a1` with its spill at 0x58); `j++, i++` in the for increment for the order of the IV increments (35 -> 3); the pre-loop store, `j = t[0]` and the `for` header on one source line (FAKE, as1 line grouping: the record-pointer init moves up behind `lw s4`, 3 -> 0). The idx+8 range came from the strength-reduced index, not from a variable: a plain `k = idx + 8` is always forward-substituted to its use, and an empty test that keeps it early wrecks the allocation. Negatives and the traced-uopt rebuild recipe in `drafts/T-25144/RPG_BAT/func_8014BFE4/NOTES.md`.
+
+## T-25118: main strCallback
+
+[[tickets/T-25118-w8-main-800563F0]]: not matched; the guard (75 rows) is removed and the body is in `drafts/T-25118/main/strCallback/`. The body itself is complete: with the copy-state gadget forced to F before the RECT copy (a private copy of `tools/ugen_pass.py` under `build/`), the unchanged C gives `MATCH` (640 bytes) in `funcdiff --built`. All 75 rows come from the tiny-copy dummy count that T-25029 traced: the shim injects B here (last state op is the direct `D_80125C5C = 0` store after the `func_80088210` call), B leaves 0x10000 in `f_eval_mov`'s stale frame word, and ugen spends two dummy scratch registers instead of the original's one.
+
+- No source route under the current shim: F needs an `Uistr` as the last state op. `*&` and `(&x)[0]` stores fold back to `str`; a `volatile` pointer store keeps `istr` and selects F, but costs a register address and an `addiu` (162 words).
+- Census (private, `build/T-25118/diag/`): inverting the state of copies of 32 bytes or less changes 141 matched functions, so the current rule is right for all matched code; strCallback is the only guarded copy function that improves under inversion.
+- Candidate rule for a tooling ticket (`drafts/T-25118/main/strCallback/ugen_pass-candidate.diff`): F for a copy of at most 16 bytes whose last state ops are direct stores right after a call. In a private census of all 437 C files it changes no matched function and takes strCallback from 75 rows to 0; the eight other guarded copy functions keep their rows. With a 32-byte limit it changes the four aligned MATRIX copies in ETC/TAIIKU, which the original copies in state B. It rests on one unmatched data point, so confirm it with `lever_lab` (re-insert the guard first) and the 27/27 gate.
+
+Details, negatives and the census commands: `drafts/T-25118/main/strCallback/NOTES.md`.
+
+## T-25118: main func_80056BA8
+
+[[tickets/T-25118-w8-main-800563F0]]: matched (default C, 1296 bytes), from INCLUDE_ASM. Start: the T-17014 draft, 219 rows with the types in headers (DISPENV/DRAWENV now in `psx_types.h`, CdlFILE in a new `libcd.h`). What closed it:
+
+1. Semantic holes: short prototypes for the two volume calls (file overrides), the sample's `id = rectid ? 0 : 1` ternary (keeps `id` in v0), the GsOT draw argument as `(u8 *)&D_800E8C70 + D_8011ECA0 * 0x14` (the `* 5` form shifts every later ring temporary), `start` assigned before the limit: 219 to 94.
+2. Allocation by block count: a new saved register costs `0.25 * blocks`. At 75 blocks `&draw` (savings 21) still beats 20.95 and the arg0 piece shares its s3. A `for` vol loop (76 blocks) drops `&draw`; one FAKE empty test in the loop (78 blocks) raises the `&disp` range's denominator so the arg0 pieces are coloured first and fail: 94 to 50 (offsets only). The R9 SAVE/COST lines of regdiff's trace log show savings and costs directly.
+3. Frame: `limit` is the hoisted expression `arg1 - 3` (uopt spill home sp+0x48), plus FAKE pads for six unknown words of locals: 50 to 0.
+
+Details, the cost arithmetic and negatives: `drafts/T-25118/main/func_80056BA8/NOTES.md`.
+
+## T-25123: main func_800455C4
+
+Matched (2,768 bytes, default C) from the T-24701 guard (13 differing words) in about 75 minutes. Three source facts closed it:
+
+- **D_801255B5 is a byte of the D_801255B4 object.** In the two `head += 1; D_801255B4 = 2; status |= 1; D_801255B5 += 1;` arms the original issues `lui at; li 2` for the D_801255B4 store before the status load; the draft hoisted the status load first. Writing the last statement as `((u8 *)&D_801255B4)[1] += 1` (FAKE, aggregate unknown) puts the B5 load and the B4 store on one symbol, so as1 orders them and the B4 store chain gains priority. Found with a 4-second toy of the arm in `build/toy` (the whole unit takes 30-50 s under load); line groupings, statement orders, a separate `cd_read_status` symbol, volatile B4 and empty reads all left the order or made it worse.
+- **VSync (`func_800AD950`) as an implicit int.** With the `void` prototype the wait-loop counter takes `$v0`; with `s32` it takes `$v1` as in the original. The file now defines `MAIN_API_OVERRIDE_func_800AD950` and calls it undeclared, as `include/ovl/TT.h` does; `func_80046478` in the same file still matches.
+- **The counter spill at sp+0x2C is a uopt induction temporary.** A declared counter spills to its own home (0x4C); declaring it after the buffers or in a block scope grows the frame by 8. `var_v1 * 1 != 0x200` in the loop test makes uopt strength-reduce the test into a temporary, which lands in the slot below the locals with the frame unchanged (FAKE). `+ 1`, `- 1`, `<< 0`, `| 0`, pointer and `(u32)` spellings are folded before the induction pass and keep the home.
+
+Measured negatives: s16/u16 counters (extra `andi`/size change), `sp48` or `sp44` reused as the counter (size change), post-increment test (cfe temporary, frame +8), `if (D_801255B4) {}` and similar empty reads in the arm (29-130 rows). Full checksum 27/27 after a clean rebuild; headers, globals and branch protos pass.
+
+## T-25143: SHOUGATU func_8013EA98
+
+No match. The best body is still the T-25046 36-cost source (42 rows, 230/230 words, frame 0x58).
+That is over the guard limit, so the source stays `INCLUDE_ASM` and the body is in
+`drafts/T-25143/SHOUGATU/func_8013EA98/func_8013EA98.c`. All remaining rows are the
+girl-selection loop. A unit-level allocator trace now explains them. The trace is the
+`uopt_patch.py trace` binary's `R9SAVE`/`R9UNIT` lines, scripts in the draft folder. Findings:
+a block with a computed-address `ilod` (`unk_1BC[F5F]`) is an alias hole; the blocks after a hole
+get reload units; the split starts at the forced post-loop store and grows along successors only.
+The original needs three things: a latch block shared by all five rejections (as in
+`while ((...) && (i++, 1))`, which reproduces the original's final-test layout), the `>= 9` block
+outside the selector range (a hole there reproduces that block exactly), and a latch reload that
+stays at the block start. With all three as diagnostics, the loop piece reaches priority exactly 0.
+An extra reload on the empty fall-through block after the `>= 9` test blocks colouring. Natural
+source for the hole and the latch-reload placement is the open question. Negatives, the trace
+recipe and the next hypothesis: `drafts/T-25143/SHOUGATU/func_8013EA98/NOTES.md`.
+
+## T-25121: ETC func_80132C3C
+
+[[tickets/T-25121-w8-ETC-80132880]], branch w8-ETC-80132880. Not matched: guarded `NON_MATCHING` body, 15 rows (from T-24012's 105-row draft). Left: four 4-use coordinate constants coloured in another order (draft t0..t3 = 0xA0 u1/u3, 0x128, 0x20, 0xA8; original 0x20 first). Findings that apply elsewhere:
+
+- **uopt splits a basic block after the statement at which it holds 16 indirect stores.** `istr` are counted before dead-store elimination; `str` to locals do not count; the count restarts at calls. Constants first used in a block are loaded at its head, so a split moves a constant's range start (here past a call result in v0). Seven dead stores or one empty `if (p) {}` move the split.
+- **Constant-propagated and dead scalars keep frame slots** (three folded coordinate locals grew the frame by 8): a frame larger than the live locals can be folded locals, not arrays.
+- **Constant type follows the store, unless uopt folds it.** A literal or a propagated local stored to a `u8` field is an `L` constant, to an `s16` field a `J` constant, and the two never share a register; a `u16`/`s8` view, or a sum uopt folds (`0x18 + i`, i = 0), gives a `J` constant that does.
+- **One line per PsyQ macro expansion** (comma expression, x0 first) reproduces as1's in-line store order and the hoisted-constant numbering at once; one statement per store in the target order gets the stores right and the constant order wrong.
+- A `volatile` view of a counter global gives one load for a run of byte stores (no copy-propagated second `lw`) and adds in the loaded register.
+
+FAKE (T-25121): `volatile D_8014DB80` in `ovl/ETC.h`, `pad[13]`, `s8` views on u0/u2, the empty block-split test, no `return` plus a dead test. Measurements, negatives and the next hypothesis: `drafts/T-25121/ETC/func_80132C3C/NOTES.md`.
+
+## T-25121: ETC func_801328A4
+
+[[tickets/T-25121-w8-ETC-80132880]]: func_801328A4 (920 bytes) is a literal match in the default build. The T-24012 pointer and byte-offset draft (cost 217) was rewritten in index form over a real `Rgb555Split buf[3][274]`. What closed it: `row + 1` is a uopt temporary spilled below the declared homes (sp+0x6C), not a `next_row` local. The pixel tail keeps both stores (`*dst = (cr & 0x1F) | (cg & 0x3E0) | (cb & 0x7C00); *dst |= 0x8000;`), and the combined channels are locals. A sweep of the 24 operand orders found `up + down + left + right`, which uopt reassociates into the original's load order. Six scalars declared above the buffer and a FAKE `s32 pad[3]` give the 13-word slot count. Rgb555Split channels are now `u32` (srl/multu/divu without casts). Notes and negatives: `drafts/T-25121/ETC/func_801328A4/NOTES.md`.
+
+## T-25141: TACO func_8013FBF0
+
+Matched (1040 bytes, default C), [[tickets/T-25141-w8-TACO-8013F250]], wave 9 neighbor conveyor (T-25200). Start: the T-24502 typed SPRT draft at 84 rows. Four causes, each measured alone. (1) The colour word is `(r << 16) + (g << 8) + b` on u8 channels after `r *= value`: the `andi` in the target is the u8 truncation of the product, and the `& 0xFF` that m2c printed added redundant `and`s that cost ugen ring slots and sent the products to temporaries (`mflo t4` for `mflo s0`); `cc -S` shows it (80 to 51 rows). Candidate [[playbook]] recipe: when a u8 variable's product sits in its own register in the target and the draft has `mflo` into a temporary, drop the explicit masks at the use. (2) The second sprite's y0 has the shift written before the array read; cfe swaps `+` operands by weight, so that order makes ugen read the array first (51 to 4). (3) UV stores of each sprite on one line, as in `func_8013F874` (4 to 0). (4) `s32 pad[6]` for the 0x60 frame (FAKE). Negatives: s32 channels, separate product locals, a `u32 dy` local, lighter shift spellings. Details: `drafts/T-25141/TACO/func_8013FBF0/NOTES.md`.
+
+## T-25142: BUNKA_SD func_80134D94
+
+Not matched; aligned cost 102 -> 12 (243/243 words), but 45 positional rows, so the source is plain
+`INCLUDE_ASM` again (the old T-24137 guard is gone) and the body is in
+`drafts/T-25142/BUNKA_SD/func_80134D94/func_80134D94.c`. It needs `s32 func_80134D94(void);` in
+include/ovl/BUNKA_SD.h (caller and BUNKA_SD sha1 checked with it). What closed rows: the fade colour
+is `(0x68E - frame) * 0x10201` done as two in-place `v += v << 8` (the old draft had `* 0x10101`, a
+wrong value); an implicit-int function whose last block returns its quotient (`return w;`, the
+original's `move v0,v1`); that block written like func_80134850 (u8 views of `unk_110C`, promoted to
+`a0`); the switch arms read `t = q * 1` with an empty `if (t < 0)` (a range uopt keeps, `move v0,a0`
+at the switch head, like `q * 2` in func_80132708); and the frame counter read through
+`GsWord *fc = &D_800E6280.unk_1104;` (an `ilod` is not copy propagated, so the colour stays one
+register, as in T-25146). Left: in the first block the original loads the byte counter straight into
+`a1` (`lui a1`) while the draft keeps a load range in `v0` (`lui v0`), and the selector needs the
+T-25053 empty test to get `a2`, which loads it one slot early; the last block copies w to `v0` after
+the store instead of before. Negatives and the next hypothesis: `drafts/T-25142/BUNKA_SD/func_80134D94/NOTES.md`.
+
+## T-25140: main make_color_bar
+
+Matched (1,072 bytes, default C, no FAKE) from the T-24501 walked-pointer draft (186 rows, cost 330) in about 20 minutes. The first divergence was the row pointer: as a declared variable it is range bit 0 and takes `$v0`. The target colours it after the masked gradient values (`$v0`, `$a1`), at `$t0`, so it has to be a uopt induction temporary. Writing every store from the pair index, `p[k + 16 * row].r1 = k * 2` and `.r0 = k * 2 - 1` in `for (k = 0; k < 16; k++)`, lets uopt strength-reduce both values and the address, and use `k * 2 - 1 < 31` as the loop test. That closes all three loops at once. Negatives: indexed `p[k]` with separate `i`/`j` counters (247 rows), and a `Pix2Out *` parameter with no `p = arg0` copy (260 rows). A toy file with only the typedef and the function, compiled with `tools/cc.py`, reproduced the full-unit score in 8 s. Details: `drafts/T-25140/main/make_color_bar/NOTES.md`.
+
+## T-25124: main func_80046AC8
+
+[[tickets/T-25124-w8-main-80046500]] matches `func_80046AC8` (2696 bytes, default C). It is the quadrant renderer from [[tickets/T-25034-main-quadrant-extent]], whose `uv-standard.c` body was the start, at 78 rows. The code from the quad colour block to the texture page already matched. What was left were stack homes and ugen temporaries. What closed it:
+
+- **Spill homes come from `spilltemps` order** (T-25110 rule, traced with a spill-printing uopt built from `spillpatch.py`). Texture u/v go inline in the `func_8009ECB0` call, with no `texture_row` local. `order * 4` is inline. `alpha` is a variable tested as `alpha & 0xF`. The v2/v3 endpoint reads a top `row` local, so copy propagation numbers it after texture v. Nine declared scalars keep frame 0xA8. The last two rows (tile blue at 0x74, not 0x70) closed with a FAKE `if (order) {}` after the tile loop: it keeps the order item in the tile region, which pushes red, green and blue one temporary up.
+- **Temporaries that as1 deletes still set ugen numbering** ([[playbook]] section 2). `u8 alpha` gives `sra; and 255; and 15`; as1 deletes the `and 255` and renames the shift to its register. A `(u16)` conversion on red (same expression in both loops, with `red` assigned again in the tile loop), the green and the blue, and `(u8)` on the tile flag supply the other missing or extra slots. Convert the shifted or masked value, not the parameter: `(u16)arg6` loads with `lhu`.
+- **The quad loop as `for`** puts `move s6,zero` in place.
+
+Notes, negatives and scripts: `drafts/T-25124/main/func_80046AC8/NOTES.md`.
+
+## T-25120: GYOZI func_8013907C
+
+Matched (844 bytes, default C), [[tickets/T-25120-w8-GYOZI-80138B50]], in about 70 minutes, starting from the T-24707 23-row guard. Three causes. (1) The girl index is read through `GyoziWork *w = &D_800F53A0;`, as in the matched VALEN sibling func_80132D0C. The table value then stays in `$a0` for the store and the call, and the later reads form one promoted `unk_F2F` range over the 3rd load and the switch. (2) That range took `$a0` because its bb5 use is the func_8005EBE0 argument; the traced uopt's R9COST line showed `$a0` at cost 1 against `$v1`. Declaring `u32 func_8005EBE0(s32 arg0);` in main_api.h (before, an implicit int) removes the preference, and the range takes `$v1` as in the original. (3) The dispatch `sll` needs `extern volatile u8 D_80147240;` in GYOZI.h, the as1 lever of [[as1-scheduler-rule]]. It works here although the byte is read twice, because the two reads sit in separate conditional blocks. func_801393C8 needs a non-volatile view at one read to keep its `lui` order. Both are FAKE. Details: `drafts/T-25120/GYOZI/func_8013907C/NOTES.md`.
+
+## T-25120: GYOZI func_80138C9C
+
+Matched (992 bytes, default C), [[tickets/T-25120-w8-GYOZI-80138B50]], in about 80 minutes, starting from the T-24707 75-row guard. Three causes. (1) uopt's global copy propagation put the rotation offset `r = D_800F6468 % count` into the rotation loop and hoisted it after the loop guard; the original computes it before the guard. Propagation stops when an operand is altered in the loop, so the gather, print and rotation stages read the list and the count through one record view `#define CL (*(CandList *)D_80147224)` (count at +0x18, FAKE): the values store then aliases the count. The reorder loop keeps the separate symbols, because there the original keeps the address of the last entry across a store (75 to 12 rows). (2) `s32 func_800BCDF0();` as a per-file override (as in 80140C90.c) moves the offset from `$v0` to `$v1` (4 rows). (3) `bne s4,t6` against the original `bne t6,s4` in `D_80147240 == 1`: tools/cvt_pass.py makes any narrow unsigned global compared with a register constant come out constant first, either through uopt's input swap of a widened `cvt(D) == k` or through `_constant_first` after the widening is stripped. A kept widening on the right of a non-variable left operand gets past both: clear the byte at the entry through the view (`CL.special = 0;`, so it is not an entry location and the `CVT` stays) and compare `r * 1 == D_80147240` with `r = 1;` before the loop (both FAKE). Details and negatives: `drafts/T-25120/GYOZI/func_80138C9C/NOTES.md`.
+
+## T-25126: ENDING func_80135F4C
+
+Matched (default C, 3220 bytes, 27/27), after the T-24047 history (cost 35: the default arm's two `lui` hoisted into the switch head, plus branch offsets). The cause was the T-25150 one: object 80134D20 owns `.data` 8013C5F0-8013CAA0, and its function table `D_8013CA3C` (read by func_80135DD0) names func_80135F4C. With `tools/data_island.py ENDING/80134D20` and the table defined in C, as1 gives the dispatch `jr` an edge back to the entry and keeps the original's `nop` and dispatch `sll`; the function body did not change. Both T-24047 FAKEs (menu-byte address roundtrip, u16 width view) are still needed. Volatile views or declarations of the default-arm cells do not work (base-register addressing, or the hoist moves to the call-argument `lui`s). Lead: func_80134270 (80133C10.c, table D_8013C5BC) and func_8013A2E8 (801396E0.c, table D_8013CB74) are also named by their own object's data and have indirect jumps. Details: `drafts/T-25126/ENDING/func_80135F4C/NOTES.md`.
+
+## T-25201: ETC func_80132C3C (closer)
+
+[[tickets/T-25201-wave-9-closers]], branch w9c-ETC-80132880. Matched (884 bytes, default build, guard removed) from T-25121's 15-row body. The four 4-use coordinate constants had equal priority 1.5 (savings 3 over D = 2) and were coloured in bit order; the original colours 0x20 first. A never-true arm after the XY3 line, `if ((u32)p0 < 0) { p1->code = 0x20; }` (FAKE), adds one use of 0x20 after its first block, so no new reload: savings 4, priority 2, colour t0; ugen drops the arm. Placement rules measured: before the constant's first use the arm needs its own load and a second one on the fall-through path (no gain); a store through p3 raises p3's priority and swaps the saved registers; the arm adds a reaching block to every range it sits in (0x13 and 0xB3 went from D = 2 to 3 and kept v0/a3). Notes: `drafts/T-25121/ETC/func_80132C3C/NOTES.md`.
+
+## T-25122: main func_8004A1A0
+
+[[tickets/T-25122-w8-main-80049FF0]]. No match. The file keeps `INCLUDE_ASM`. Measured with whole-unit `funcdiff --resolve --version c`: T-25010 draft 89 rows, clean draft now 64 rows (157/157 words, no FAKE). Bodies, negatives and scratch scripts (binasm and ucode dumps) are in `drafts/T-25122/main/func_8004A1A0/` (NOTES.md).
+
+- Closed: both loops now match register for register. (1) `tp + col + row * 32` in loop 1 gives `tp + col` the lower bit, which wins the 103.3 priority tie in loop 2 (tp counter `$s3`, index pointer `$s4`, increment order). (2) `if (n <= 0x40) continue; printf(...)` adds one uopt block to `w`'s range (N 21 -> 22, D 6 -> 7, priority 40.33 -> 34.57), so `row * 0x78` takes `$s5` and `w` `$s6`. (3) Header order `unk_00, x, y, w, h` follows the original's ugen temporary ring (x `t2`, y `t3`; as1 sank the y store into the last delay slot).
+- Left: header colouring. The original has map `$a0`, 0x80 `$a2`, 0x78 `$t0`, `&D_80122120` `$t1` and 0x1000 `$v1`, the same register as row. Under per-block interference that means the original header is two uopt blocks: the 0x1000 stores before the split, the map def and `row = 0` after it. A late-folded `do {} while ((u32)slot < 0);` before `bg->unk_20 = 0` reproduces every uopt colour and the whole ugen ring. But uopt then emits no `unal` for the map `ixa`, so ugen writes no `.noalias a0,sp`/`a0,v0`, and as1 keeps two slot reloads (159 words) and the header order. Next step: find the split construct after which uopt still emits `unal` (read uopt's emission rule first).
+
+## T-25122: main func_8004A414
+
+Matched (1,024 bytes, default C, [[tickets/T-25122-w8-main-80049FF0]]). It started from the T-24501 `for_loops` body at 142 diff lines, with frame, homes and instruction count already right. What was left were the saved-register colours (y/shade/x/w/h/base), the constant registers (0x60 in `a0`) and the clut argument association. The constants and coordinates are exactly the PsyQ `setXYWH` and `setUVWH(poly, 0xC0, 0x50, 0x10, 0x10)` macros, plus `setRGB0..3`. One comma statement per macro, in macro field order, gave 142 -> 16 lines and fixed every colour and the store order (FAKE: hand expansion, as in other files). The clut needs both `rand()` calls nested and no `random_x` local, and uopt reorders the operands, so the operand order matters: `g->unk_014[i] + (s16)x + (rand() & 8)` and `(s16)y + g->unk_018[i] + (rand() & 8)` (16 -> 0). Lesson: when a POLY packet's constants spell an SDK macro, try the macro expansion before working on priorities. Details and negatives: `drafts/T-25122/main/func_8004A414/NOTES.md`.

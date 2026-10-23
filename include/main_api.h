@@ -811,6 +811,7 @@ extern s32 D_800B5950[];
 extern s32 D_800B5960[];
 extern s16 D_800B59F0;
 extern s16 D_800B59F4;
+extern s16 D_800B5A40[13]; /* T-25119: 13 halfwords func_80061A3C copies into the words at D_801230D4 */
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
 extern s32 D_800B5A98; /* T-17011: counter of func_80063668 (CD level high-water mark) */
@@ -2375,8 +2376,9 @@ s32 func_80055AFC(s32 arg0);
 s32 func_80056070(u8 *buf, s32 arg1);
 void func_80056284(void);
 void set_movie_offset(s16 arg0, s16 arg1);
+void strCallback(void);
 void strKickCD(s32 arg0);
-void func_80056BA8();
+s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2);
 void func_8005715C(s32 arg0); /* defined after its caller func_80056BA8 */
 void func_80057390();
 #ifndef MAIN_API_OVERRIDE_set_dec_bri
@@ -2471,6 +2473,7 @@ s32 func_800603C0(void);
 void func_8005D1B0();
 void func_8005D9B4();
 s32 func_8005E0E0();
+u32 func_8005EBE0(s32 arg0); /* GYOZI calls only; the s32 parameter as in get_h_tokimeki, needed by func_8013907C (T-25120) */
 void join_club(void);
 void join_club_init(void);
 s32 join_club_select(void);
@@ -2852,7 +2855,9 @@ void D_80089B6C();
 void D_80089BD4();
 void func_8008A0D4(s32 arg0);
 void func_8008A148();
+#ifndef MAIN_API_OVERRIDE_func_8008B750
 void func_8008B750();
+#endif
 void func_8008B8C4();
 void func_8008B904();
 void func_8008BAA4();

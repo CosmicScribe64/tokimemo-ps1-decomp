@@ -83,7 +83,118 @@ s32 func_8006190C(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80061A3C);
+/* Setup steps selected by D_800E6280.unk_110D: 0 resets the display state, 1 starts the CD
+ * read of the model data to 0x801F0000, 2 duplicates its first sector into the next twelve and reads the
+ * textures to 0x80180000, 3 loads palettes and texture pages, sets up actor 96 and the 13 models. T-25119 */
+void func_80061A3C(void) {
+    s32 i;
+    u8 *p;
+    s32 tbl[8];
+    /* FAKE: unused; two words below tbl give the original 136-byte frame with tbl at sp+0x60. T-25119 */
+    s32 pad[2];
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        D_800B3CFC = 0;
+        D_800B3D00 = 0;
+        D_800B3CF8 = 0;
+        tpage_buf_clear();
+        func_80048EB8(0);
+        dec_bg_reset();
+        func_80041168(0xFE);
+        func_8004E58C();
+        func_80065F34(0);
+        back_clear_switch(1);
+        func_80048DAC(1);
+        *(s32 *)&D_800E6280.unk_1095[3] = 0x9F;
+        func_8006BD6C(0);
+        D_800E6280.unk_037 = 0;
+        D_800E6280.unk_036 = 0;
+        D_800E6280.unk_03A = 0;
+        D_800E6280.unk_038 = 0;
+        func_80044750(0x7F);
+        func_80044890(1, 0xC592, 0xC580, 0xCFA7, 0xCF8B, 0xCF83);
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_80044E8C() == 1) {
+            func_8004500C(1, 0);
+            cd_read_sectors(1, 0x801F0000, 0xBE13);
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            /* FAKE: the pointer cast keeps the source apart from the integer 0x801F0000 of case 1; one
+             * shared constant makes as1 put that call's `lui a1` before its `li a0`. T-25119 */
+            for (p = (u8 *)0x801F0800; p != (u8 *)0x801F6800; p += 0x800) {
+                memcpy(p, (void *)0x801F0000, 0x800);
+            }
+            D_800E6280.unk_110D++;
+            cd_read_sectors(0xD6, 0x80180000, 0xA0CC);
+        }
+        break;
+    case 3:
+        if (cd_read_sync_status() & 1) {
+            for (i = 1; i < 14; i++) {
+                load_palette(0x801CC200, (i + 15) & 0xFF, 1, 2, i);
+            }
+            load_palette(0x801CC200, 0x1F, 1, 2, 0xF);
+            load_palette(0x801CC200, 0x1E, 1, 2, 0xE);
+            for (i = 0; i < 6; i++) {
+                load_tpage_buf_lock(i + 0x15, 0x80180000 + i * 0x4000, 1);
+            }
+            for (i = 0; i < 4; i++) {
+                load_tpage_buf_lock(i + 0x35, 0x80198000 + i * 0x4000, 1);
+            }
+            for (i = 0; i < 3; i++) {
+                load_tpage_buf_lock(i + 0x25, 0x801A8000 + i * 0x4000, 1);
+            }
+            for (i = 0; i < 8; i++) {
+                tbl[i] = 0x801B4000 + i * 0x4000;
+            }
+            func_8004A1A0(tbl, 0, 6, 3, 2, 0x1EF, -0xA0, -0x78, 8, 0xD);
+            load_palette(0x801CC000, 0xF, 1, 3, 0);
+            func_80048F64(0x60);
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 0xD;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 1;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x41000000;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0xA4;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (u8 *)0x801EAB3C;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (u8 *)0x801EAB6C;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (u8 *)0x801EAB20;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 8;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 0x80;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0xA0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x78;
+            D_801220E1 = 0;
+            D_801220E0 = 0;
+            D_800E6280.unk_10EC[0] = 0x7F;
+            D_801220E2 = 0;
+            back_clear_switch(0);
+            srand(D_800E6280.unk_10F4);
+            draw2d3d(1, 1);
+            func_80061710();
+            func_80061790();
+            func_800618B0();
+            /* FAKE: an empty test of the int result ends the block after the call; otherwise its
+             * return register v0 is reserved there and the copy pointers below take v1/a0 instead of
+             * v0/v1. T-25119 */
+            if (func_8006190C()) {
+            }
+            /* FAKE: positions 1..13 of the D_801230D0 work area, reached through its first word as in
+             * func_80062948 (its other words are not declared as an aggregate yet); the first copy is a
+             * statement of its own, the loop of 12 is unrolled by four. T-25119 */
+            (&D_801230D0)[1] = D_800B5A40[0];
+            for (i = 1; i < 13; i++) {
+                (&D_801230D0)[i + 1] = D_800B5A40[i];
+            }
+            func_80042808();
+        }
+        break;
+    }
+}
 
 void func_80061EFC(void) {
     u32 c;
@@ -361,7 +472,55 @@ void func_80062840(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80062948);
+/* Places the 13 rotating models: model i (D_801227A0[i], a GsCOORDINATE2 record) gets a local
+ * matrix from a rotation that depends on the frame counter, an identity scale and a translation
+ * from position word i + 1 of the D_801230D0 work area, which then moves on by 2 or 3.
+ * s32 because func_8006218C calls it before this definition (implicit int). T-25119 */
+s32 func_80062948(void) {
+    s32 i;
+    s32 j;
+    SVECTOR rot;
+    MATRIX m;
+    MATRIX s;
+    VECTOR scale;
+    s32 v;
+    s32 x;
+
+    for (i = 0; i < 13; i++) {
+        j = i & 3;
+        /* FAKE: `| 0` puts the counter first in the multu, as in the original; IDO's front end
+         * otherwise orders the heavier (j + 2) first. T-25119 */
+        rot.vz = (D_800E6280.unk_10F8 | 0) * (j + 2) * -2 - 2;
+        rot.vx = rsin(D_800E6280.unk_10F8 * 10 * (j + 1)) / 12 + 0x7FD;
+        rot.vy = func_800A0140(D_800E6280.unk_10F8 * 10 * (j + 1)) / 12 - 5;
+        m = *(MATRIX *)D_80125C60;
+        s = *(MATRIX *)D_80125C60;
+        RotMatrix(&rot, &m);
+        m.t[0] = 0;
+        m.t[1] = 0;
+        m.t[2] = 0;
+        scale.vx = 0x1000;
+        scale.vy = 0x1000;
+        scale.vz = 0x1000;
+        ScaleMatrix(&s, &scale);
+        MulMatrix(&m, &s);
+        /* FAKE: D_801230D0 is a work area each module lays out its own way (main_api.h declares
+         * only its first word); here the positions follow that word. T-25119 */
+        m.t[0] = (&D_801230D0)[i + 1];
+        v = rsin((D_800E6280.unk_10F8 & 0xFFF) * (j + 10));
+        x = (&D_801230D0)[i + 1];
+        m.t[1] = v / 32 + -x / 2;
+        /* FAKE: the unsigned negation keeps the original's second negu; a signed -x is shared
+         * with the line above. T-25119 */
+        m.t[2] = -(u32)x * 4 - 0x190;
+        v = abs(rsin(D_800E6280.unk_10F8));
+        /* FAKE: `- (0 - p)` puts (v & 1) before the reloaded position in the addu, as in the
+         * original; `+ p` is ordered position first. T-25119 */
+        (&D_801230D0)[i + 1] = (v & 1) - (0 - (&D_801230D0)[i + 1]) + 2;
+        *(MATRIX *)D_801227A0[i].unk4 = m;
+        D_801227A0[i].unk0 = 0;
+    }
+}
 
 void func_80062C28(void) {
     set_movie_offset(0, 0);

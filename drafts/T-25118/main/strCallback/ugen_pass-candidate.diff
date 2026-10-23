@@ -1,0 +1,39 @@
+--- a/tools/ugen_pass.py
++++ b/tools/ugen_pass.py
+@@ -273,21 +273,35 @@
+         seen_uist = False
+         uist_rill_loop = False
+         last_state_op = "ent"
++        after_call = False  # a Ucup ran since the last state op (T-25118)
++        call_then_ustr = False  # the current run of Ustr started right after a Ucup
+ 
+         for k in range(start + 1, end):
+             ins = insns[k]
+             opc = ins.opc
+-            if opc in (OP["istr"], OP["istv"]):
++            if opc in (OP["cup"], OP["icuf"]):
++                after_call = True
++            elif opc in (OP["istr"], OP["istv"]):
+                 seen_uist = True
+                 last_state_op = "uist"
++                after_call = False
+             elif opc == OP["str"] and ins.mtype != MT_R:
++                if last_state_op != "ustr" or after_call:
++                    call_then_ustr = after_call
+                 last_state_op = "ustr"
++                after_call = False
+             elif opc in (OP["fjp"], OP["tjp"]):
+                 if seen_uist and _is_signed_blt_pos_imm_jump(insns, start, k):
+                     uist_rill_loop = True
+                 last_state_op = "jump"
++                after_call = False
+             elif opc == OP["mov"]:
+                 want_f = uist_rill_loop or (last_state_op == "uist")
++                # T-25118 candidate: a copy of at most 16 bytes after direct stores that follow a
++                # call (no branch between) reads a small stale word (one dummy scratch).
++                if (ins.words[2] <= 16 and last_state_op == "ustr" and call_then_ustr
++                        and not after_call):
++                    want_f = True
+                 ins_idx = _mov_insert_index(insns, start, k)
+                 gadget = _gadget_f() if want_f else _gadget_b(proc_block)
+                 insertions.setdefault(ins_idx, []).extend(gadget)

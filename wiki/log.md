@@ -7,71 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24901..T-24908 class A near-miss closers
-
-Eight workers, one function each, 45-minute box: KANGEI func_8013852C (80137B90.c) and func_80134724
-(80134120.c), VALEN func_80132D0C (80132760.c), GEKO func_80136C20 (80134D10.c), TACO func_8013B460
-(8013B170.c) and func_801511C0 (80149F90.c), GYOZI func_80140E0C (80140C90.c) and func_8013907C
-(80138B50.c). Each claims its file in the ticket title; header edits limited to the unit header the
-as1 volatile lever needs. T-24700...T-24714 moved to In Review without promotion.
-
-## [2026-10-20] ticket | T-24921..T-24924 Wave C-1 pre-flighted and Ready
-
-Closed the cancelled wave (T-24908..T-24916) to In Review, archived the T-24909 ETC draft in
-`drafts/T-24909/`, kept T-24915's store-order improvement on `main:func_80054E6C` (19->12 rows),
-fixed kanban card corruption, and verified a clean 27/27 build + zero wiki lint errors at
-6,826 / 6,952 functions (92.2%, 126 remaining after [[tickets/T-24903-func-80132d0c-80132760]]).
-Pre-flighted four isolated-worktree tickets (`Ready` on [[kanban]]):
-[[tickets/T-24921-func-8013cce4-8013BEF0]], [[tickets/T-24922-func-801367ec-80134D10]],
-[[tickets/T-24923-func-801326bc-80132000]], and [[tickets/T-24924-func-801330e4-80133030]],
-each with exact `funcdiff --resolve` defect breakdowns and two-stage lever plans.
-
-## [2026-10-20] build | Wave C-1 results and clean 27/27
-
-Four isolated-worktree runs (the first under the v2 IR-first protocol; 4 workers max). No new
-promotion, but three real row-count gains kept:
-- T-24921 ETC func_8013CCE4 9 -> 3 rows (guard). Case-2 schedule fixed by `buf[0] = 0x801E2000;
-  buf[1] = 0x801E6000;` on the `for` line with `u32 i`; the 3 remaining `beq v1` rows are coupled
-  to uopt folding the 4-trip loop. Next lead: cvt_pass switch-temp (`OPTN 405 0`).
-- T-24922 GEKO func_801367EC archived at 44 rows, 0 register rows; residuals are as1 block picks.
-- T-24923 OPTION func_801326BC archived at 134 rows; the copy loops are 0x200 bytes (not 9 words)
-  and the D_8013D304 signed `% 4` structure is understood; strength-reduced induction remains.
-- T-24924 ENDING func_801330E4 114 -> 92 rows (archive): frame now exact (0xB0, chance 0x30,
-  level 0x54, points 0x58, rank 0x78), rows 0-83 clean; next is the uopt coalescing of the f9
-  extraction vs the target's `or v0,t1,zero`.
-All commits cherry-picked to main; tickets In Review. Clean build 27/27, headers/globals OK.
-tools/progress.py: 6,826 / 6,952 functions, 2,100,368 / 2,276,920 bytes (92.2%); 126 left.
-
-## [2026-10-20] build | Wave C-2 results; clean 27/27
-
-Four continuation runs on the same functions (T-24925..T-24928, isolated worktrees). No new
-promotion, but three of four moved and every one now has a mechanism-level diagnosis:
-- T-24925 ETC func_8013CCE4 stays at 3 rows: the `$v1` compares and the uopt loop fold are proven
-  coupled in uopt's `OPTN 405` (zcopy) record; no C spelling can decouple them. Build-step
-  ticket [[tickets/T-24929-uopt-zcopy-scope]] filed with the reproduction shims.
-- T-24926 GEKO func_80133024 stays at 2 rows: the two day ranges are the whole miss; direct
-  field reads make rows 33/35 match exactly (~15 rows) and the next un-CSE step is written.
-- T-24927 BUNKA_SD func_80139290 stays at 6 rows: classified same-block (not the default-arm
-  filler); the local-m lever removes all six target rows and is banked as
-  drafts/T-24927/local-m-order-lever.patch with the colour-cascade follow-up.
-- T-24928 main func_8006C988 11 -> 5 rows: the base/register swap is solved (two-arm `u8 val`
-  web plus two dead parameter tests at the top, FAKE T-24928); the induction-init order and the
-  per-arm narrowing copy remain.
-Clean build 27/27, headers/globals OK. tools/progress.py: 6,826 / 6,952 (92.2%), 126 left.
-
-## [2026-10-20] ticket | T-25002 class C ENDING, GEKO, ETC
-[[tickets/T-25002-class-c-ending-geko-etc]] created and set In Progress (worktree c-m2): ENDING `func_801387B0`, GEKO `func_80133C50`, ETC `func_80144224` from [[plan-remaining]] class C.
-
-## [2026-10-20] ticket | T-25002 to In Review
-[[tickets/T-25002-class-c-ending-geko-etc]]: no match. GEKO `func_80133C50` guarded at 13 rows (from the T-24503 cost-44 body: u8 cast, `g * 1`, word-local C50 read); ENDING `func_801387B0` and ETC `func_80144224` stay INCLUDE_ASM with drafts in drafts/T-25002/. Notes in [[matching-notes]]. Clean build 27/27 and the header, globals and proto checks pass.
-
-## [2026-10-20] build | T-25005 several .data ranges per C object
-[[tickets/T-25005-data-regions-per-object]] created, worked, moved to In Review. A further `.data` island of an object is a yaml dict line with `dir: island_<VRAM>` and `linker_section: .data_<VRAM>` (written by tools/data_island.py). tools/data_pieces.py puts all its pieces in one directory, and the new tools/data_split.py (called by tools/object_layout.py) cuts the compiled `.data` into the sections. main `sndisp` (T-25001 guard, cherry-picked) now matches in plain C, src/main/8004F870.c owns `800B40F0-800B4390` as well. Clean build 27/27; [[build-system]] "Several ranges per object"; notes in [[matching-notes]] `## T-25005`.
-
-## [2026-10-20] ticket | T-24929 In Progress
-[[tickets/T-24929-uopt-zcopy-scope]] claimed (assignee claude), worktree uopt-scope: measure a uniform uopt
-copy-propagation scope rule (globals propagated, local induction copies kept) on the whole build.
-
 ## [2026-10-20] build | T-24929 switch-compare rule in cvt_pass, ETC func_8013CCE4 matched
 [[tickets/T-24929-uopt-zcopy-scope]]: the zcopy-scope hypothesis (T-24925) did not hold. The three rows were
 as1 leaving the chain's compares on the temporary's register. New uniform step `switch_compares` in
@@ -1748,6 +1683,7 @@ Reviewed [[tickets/T-25116-w8-main-80047550]] against CODING_STANDARDS.md; match
 ## [2026-10-23] ticket | T-25146 Done
 Matched ETC `func_80144224` (796 bytes) as default-build C, 27/27; review found one issue (needless `s32` return without a return statement, now `void` with an ETC.h prototype) and it is fixed ([[tickets/T-25146-w8-ETC-80143240]]).
 The frame counter read through a `GsWord *` local is the lever that fixed the register ranges; two FAKE word views (quot, v) as in `func_80143A88` ([[matching-notes]]).
+
 ## [2026-10-23] ticket | T-25145 Done
 Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/matching-notes.md`, fixed), clean rebuild 27/27, funcdiff MATCH. Matched ENDING `func_801330E4` (796 bytes) as default C in `src/ovl/ENDING/80133030.c` with two FAKEs (`pad[4]`, an empty test on the f9 word).
 No function left with rows in this job; notes in `drafts/T-25145/ENDING/func_801330E4/NOTES.md`, [[matching-notes]], [[tickets/T-25145-w8-ENDING-80133030]].
@@ -1755,3 +1691,70 @@ No function left with rows in this job; notes in `drafts/T-25145/ENDING/func_801
 ## [2026-10-23] ticket | T-11900 In Progress (claim #65)
 
 Outside-contributor claim CosmicScribe64/tokimemo-ps1-decomp#65 (posted 2026-10-20): the 11 GEKO and 3 OPTION functions left at `ff6c770b2`. Upstream has since matched GEKO `func_80134808`, `func_80133308`, `func_80144198`, `func_801420E4` and OPTION `func_80139A30`, `func_8013A7EC`; the branch keeps upstream's versions of those. OPTION `func_801326BC` matched on this branch. [[tickets/T-11900-geko-option-closers]].
+
+## [2026-10-23] ticket | T-25119 Done
+Reviewed [[tickets/T-25119-w8-main-80061710]] against CODING_STANDARDS.md; two comments were missing the `FAKE` marker (pointer cast, work-area view) and are fixed; clean rebuild 27/27. Matched main `func_80062948` (736 bytes) and `func_80061A3C` (1216 bytes) as default C.
+Both functions of `src/main/80061710.c` are C now; notes in drafts/T-25119/main/ and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25144 Done
+
+Reviewed and merged w9-RPG_BAT-8014ADD0: matched RPG_BAT `func_8014BFE4` (892 bytes, default C, 128 rows to 0; FAKEs: `t[1]`, one-line pre-loop statement, empty first arm now marked), 27/27.
+The only function of the package is matched, none left with rows; see [[tickets/T-25144-w8-RPG_BAT-8014ADD0]] and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25118 Done
+
+Reviewed [[tickets/T-25118-w8-main-800563F0]] against CODING_STANDARDS.md; matched main `func_80056BA8` (1296 bytes) as default-build C, 27/27; the review added a comment on its missing return.
+`strCallback` stays INCLUDE_ASM (75 rows from the copy-state shim); candidate tool rule in drafts/T-25118/main/strCallback/ for a tooling ticket.
+
+## [2026-10-23] ticket | T-25123 Done
+
+Reviewed [[tickets/T-25123-w8-main-800451D0]] against CODING_STANDARDS.md; matched main `func_800455C4` (2,768 bytes) as default-build C, 27/27.
+The guard in `src/main/800451D0.c` is gone; FAKEs (D_801255B5 via the B4 symbol, `* 1` loop test) are ticketed, notes in [[matching-notes]] and [[playbook]].
+
+## [2026-10-23] ticket | T-25143 Done
+
+Reviewed [[tickets/T-25143-w8-SHOUGATU-8013E330]] against CODING_STANDARDS.md: no source change, no findings; SHOUGATU `func_8013EA98` not matched (42 rows, over the guard limit), source stays `INCLUDE_ASM`.
+Body, unit-level allocator trace findings and next hypothesis kept in drafts/T-25143/SHOUGATU/func_8013EA98/ and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25121 Done
+
+Reviewed [[tickets/T-25121-w8-ETC-80132880]] against CODING_STANDARDS.md; matched ETC `func_801328A4` (920 bytes) as default-build C, 27/27.
+`func_80132C3C` stays INCLUDE_ASM behind a NON_MATCHING guard at 15 rows, down from 105 (notes in drafts/T-25121/ETC/func_80132C3C/).
+
+## [2026-10-23] ticket | T-25141 Done
+
+Reviewed [[tickets/T-25141-w8-TACO-8013F250]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_8013FBF0` (1040 bytes) as default C in `src/ovl/TACO/8013F250.c` with two FAKEs (`pad[6]`, one-line UV stores).
+The only function of the package is matched, none left with rows; notes in `drafts/T-25141/TACO/func_8013FBF0/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25142 Done
+Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/matching-notes.md`, fixed), clean rebuild 27/27. No function matched: BUNKA_SD `func_80134D94` stays `INCLUDE_ASM` (old T-24137 guard removed) with its draft at aligned cost 12, 45 positional rows, in `drafts/T-25142/BUNKA_SD/func_80134D94/`.
+No function matched in this job; notes in `drafts/T-25142/BUNKA_SD/func_80134D94/NOTES.md`, [[matching-notes]], [[tickets/T-25142-w8-BUNKA_SD-80134540]].
+
+## [2026-10-23] ticket | T-25140 Done
+
+Reviewed [[tickets/T-25140-w8-main-8004AD60]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched main `make_color_bar` (1072 bytes) as default C in `src/main/8004AD60.c`, no FAKE.
+The only function of the package is matched, none left with rows; notes in `drafts/T-25140/main/make_color_bar/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25124 Done
+Reviewed [[tickets/T-25124-w8-main-80046500]] against CODING_STANDARDS.md; the goto FAKE comment now also covers the comma UV groups and a duplicate draft copy of the body was removed; clean rebuild 27/27, funcdiff MATCH. Matched main `func_80046AC8` (2696 bytes) as default C in `src/main/80046500.c`.
+The only function of the package is C now; notes in `drafts/T-25124/main/func_80046AC8/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25120 Done
+
+Reviewed [[tickets/T-25120-w8-GYOZI-80138B50]] against CODING_STANDARDS.md; matched GYOZI `func_8013907C` (844 bytes) and `func_80138C9C` (992 bytes) as default-build C.
+Findings fixed (CandList offset comments, catalog link, kanban column); FAKEs are marked; notes in drafts/T-25120/GYOZI/.
+
+## [2026-10-23] ticket | T-25126 Done
+
+Reviewed [[tickets/T-25126-w8-ENDING-80134D20]] against CODING_STANDARDS.md; matched ENDING `func_80135F4C` (3220 bytes) as default-build C, 27/27.
+The guard is gone; the fix was defining the object's `.data` table `D_8013CA3C` in C (T-25150 as1 rule), lead for `func_80134270` and `func_8013A2E8` in [[matching-notes]].
+
+## [2026-10-23] build | T-25201 w9c-ETC-80132880
+
+Reviewed w9c-ETC-80132880 against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH on both versions. Matched ETC `func_80132C3C` (884 bytes) as default C in `src/ovl/ETC/80132880.c` with a never-true `p1->code = 0x20` arm (FAKE) that raises the priority of 0x20.
+The only job of the package is matched, none left with rows; notes in `drafts/T-25121/ETC/func_80132C3C/NOTES.md`, [[matching-notes]] and [[playbook]].
+
+## [2026-10-23] ticket | T-25122 Done
+
+Reviewed [[tickets/T-25122-w8-main-80049FF0]] against CODING_STANDARDS.md; matched main `func_8004A414` (1,024 bytes, one FAKE) as default-build C, 27/27.
+`func_8004A1A0` stays INCLUDE_ASM at 64 rows, down from 89 (notes in drafts/T-25122/main/func_8004A1A0/).
