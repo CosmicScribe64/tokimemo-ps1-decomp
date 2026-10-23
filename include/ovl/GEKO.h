@@ -862,7 +862,7 @@ extern s16 D_80146400[16];
 extern u8 D_80145090; /* func_80136C20: zero picks read_bustup_uniform (read_bustup_uniform) */
 
 /* 80134D10.c: functions named by the scene table D_80145094 (defined in C, T-11900). */
-s32 func_80135DC0();
+s32 func_80135DC0(void);
 void func_80135BC4(void);
 void func_80135C48(void);
 void func_80135CC8(void);
