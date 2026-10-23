@@ -7,17 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] ticket | T-25015 complete: six tools landed, OPTN space closed by lab evidence, census run
-
-All six tools are in tools/ with passing tests (corpus gate,
-trace_lab, census, rule_fuzz, precedent, sweep_ledger). Fuzz: ~660
-single OPTN values and all 45 active pairs across three beds, no
-improvement anywhere, and the corpus gate shows no active knob is
-uniform. Census over the mirrored asm bundle: references build for
-all 96 INCLUDE_ASM functions; only 9 have machine-usable candidates,
-the rest are draft fragments (the v2 gap, recorded in the ticket).
-Ticket [[tickets/T-25015-lever-expansion-tooling]] to In Review.
-
 ## [2026-10-21] ticket | T-25016 created: candidate reconstruction for the fragment functions
 
 Follow-on to T-25015 at Lila's direction: extractor v2 to assemble
@@ -1761,9 +1750,11 @@ Lever in [[playbook]], notes in `drafts/T-25403/GEKO/func_80142C9C/NOTES.md`, [[
 
 Reviewed [[tickets/T-25319-w10-NAME_ENT-80142A80]] against CODING_STANDARDS.md; no match: NAME_ENT `func_80143580` stays `INCLUDE_ASM` (draft at 293 rows, score 293, from 471), 27/27, no findings left.
 The draft packet is `drafts/T-25319/NAME_ENT/func_80143580/` (next hypothesis in NOTES.md) and [[matching-notes]].
+
 ## [2026-10-23] ingest | T-25700 recent wins distilled into the playbook
 
 New page [[notes/wins-2026-10]]: all 93 functions of waves 8-11, the wave 9 closers, the stubborn-function attack and PRs #68 to #70, grouped by recipe with a ranked summary. [[playbook]] gained 11 recipes (new sections 13 and 14) and 19 extended entries, [[register-cheatsheet]] 11 rows; [[tickets/T-25700-distill-wins]] is Done after review.
+
 ## [2026-10-23] ticket | T-25606 Done: main func_800476C0 matched
 
 The finish gate's block-by-block lens matched main func_800476C0 (3,132 bytes) in round 1; merged directly after an orchestrator review so the match does not wait for the synthesis stage ([[tickets/T-25600-finish-gate]]).
