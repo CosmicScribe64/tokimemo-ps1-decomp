@@ -272,3 +272,13 @@ SHOUGATU `func_801350F8` (2308 bytes, 656 edits to 0). Three general levers:
 - **A u8 global used by tests and as an array index.** cfe multiplies a u8 subscript in u8 (`mpy L` on the raw byte) while the tests use the widened value, so uopt promotes the byte and keeps the widened copy in a second register (`lbu t0; ... move v1,t0`). Write the index `tbl.s[(s32)G]`: every use then reads one CSE of the widened load, one register. The same split on a promoted counter (`G == 0` then `G++ == 0x1E`) was fixed by reading the byte through `GameState *g` (FAKE).
 - **`return 0` in the block of the last use of a CSE'd base.** uopt interference is per block, so the `$v0` definition makes the whole `&D_X` base range (all cases) avoid `$v0`. Write `if (c) {...} else {...} return 0;` so the return sits in its own join block; IDO's branch retargeting still gives each path its own `b end; move v0,zero`.
 - **A load scheduled one slot late inside a block.** If the original's `lui` of a global sits before a store of an earlier statement and the draft's after it, an empty test of that global as the first statement of the block (`if (G != 0) {}`, FAKE) makes ugen emit the load there; the test is removed. A bare `if (G) {}` changed the branch shape.
+
+## A `t0` missing from ugen's pool can be a call-argument local (T-25304)
+
+Symptom: the original never uses `t0` as a ugen temporary (an early `li t1,..` where the draft has `li t0,..`),
+and `t0` appears only in one block, often as the register of a loaded word. Look for a value that is computed
+before a call and passed after the `a0..a3` arguments (a stack argument): as its own local it lives past the
+argument writes, so `a0..a3` are forbidden for it; when `v0` and `v1` already hold other ranges of the block it
+gets `t0`, which then leaves the ugen ring for the whole function. Main `mod_trans_vram`: `u8 flags = *data & 0xFF;` for the sixth `get_fnt` argument, 47 rows to
+0 with the sibling form `uv = (*data & 0xFF0000) >> 16;`. A uopt colour need not appear in the final code (ugen
+forwards single-use ranges), so check the trace, not only the asm; `drafts/T-25304/main/mod_trans_vram/NOTES.md`.

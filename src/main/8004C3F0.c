@@ -218,7 +218,87 @@ void move_255_line(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_trans_vram);
+/* Uploads one frame of tile-set record idx of D_801217A0 to VRAM. Each tile word holds a glyph number
+ * (bits 16-23), a source index into p->unk_00 (bits 24-31) and the get_fnt flags (bits 0-7); get_fnt
+ * expands the glyph into buf and LoadSquare copies buf into the texture page selected by page, at x / 2
+ * plus the column offset, both divided by the record's mode ratio (1 or 2), and at y plus the row offset.
+ * The divisions by ratio are unsigned because the u8 promotes to unsigned int (-cckr).
+ * Matching notes (T-25304): the flags byte is its own u8 local, declared next to the other u8 locals (one
+ * frame word more moves the p spill slot to sp+0x70). uopt then colours flags t0, so t0 leaves ugen's
+ * temporary pool for the whole function, as in the original, and the tile word is loaded into t0. With
+ * `*data & 0xFF` passed directly, no range takes t0 and the temporaries shift (T-25104: 47 rows at best).
+ * The xh and ypos locals order the hoisted loop invariants (inlined: 143 and 175 rows). */
+void mod_trans_vram(s32 idx, s32 frame, s32 page, s32 x, s32 y) {
+    s32 col;
+    u32 *data;
+    s32 row;
+    u32 uv;
+    u32 bank;
+    ModRec14 *p;
+    u8 buf[256];
+    u8 ratio;
+    u8 rows;
+    u8 cols;
+    u8 flags;
+    s32 xh;
+    s32 ypos;
+    s32 size;
+
+    p = (ModRec14 *)(D_801217A0 + idx * 0x14);
+    if (p->unk_0E[0] == 8) {
+        size = 8;
+    } else {
+        size = 16;
+    }
+    switch (p->unk_08) {
+    case 0:
+        ratio = 1;
+        break;
+    case 1:
+        ratio = 2;
+        break;
+    case 2:
+        ratio = 2;
+        break;
+    case 3:
+        ratio = 1;
+        break;
+    case 4:
+        ratio = 1;
+        break;
+    case 5:
+        ratio = 1;
+        break;
+    default:
+        ratio = 1;
+        break;
+    }
+    xh = x / 2;
+    rows = p->unk_0D;
+    cols = p->unk_0C;
+    data = rows * frame * cols + p->unk_04;
+    row = 0;
+    if (rows != 0) {
+        do {
+            col = 0;
+            if (cols != 0) {
+                ypos = ((page & 0x10) << 4) + ((page & 0x20) << 2) + y + row * size;
+                do {
+                    uv = (*data & 0xFF0000) >> 16;
+                    bank = (*data & 0xFF000000) >> 24;
+                    flags = *data & 0xFF;
+                    get_fnt(buf, (u8 *)p->unk_00[bank], uv, ratio, size, flags);
+                    LoadSquare(((page & 0xF) << 6) + xh / ratio + col * size / 2 / ratio, ypos, size / 2 / ratio, size, buf);
+                    data++;
+                    col++;
+                    cols = p->unk_0C;
+                } while (col < cols);
+                rows = p->unk_0D;
+            }
+            row++;
+        } while (row < rows);
+    }
+}
 
 /* FAKE: the integer return type without a return preserves the original v0
  * lifetime and exit scheduling; callers discard the result. T-24601. */
