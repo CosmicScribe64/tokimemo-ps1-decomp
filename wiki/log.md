@@ -1761,3 +1761,6 @@ Lever in [[playbook]], notes in `drafts/T-25403/GEKO/func_80142C9C/NOTES.md`, [[
 
 Reviewed [[tickets/T-25319-w10-NAME_ENT-80142A80]] against CODING_STANDARDS.md; no match: NAME_ENT `func_80143580` stays `INCLUDE_ASM` (draft at 293 rows, score 293, from 471), 27/27, no findings left.
 The draft packet is `drafts/T-25319/NAME_ENT/func_80143580/` (next hypothesis in NOTES.md) and [[matching-notes]].
+## [2026-10-23] ingest | T-25700 recent wins distilled into the playbook
+
+New page [[notes/wins-2026-10]]: all 93 functions of waves 8-11, the wave 9 closers, the stubborn-function attack and PRs #68 to #70, grouped by recipe with a ranked summary. [[playbook]] gained 11 recipes (new sections 13 and 14) and 19 extended entries, [[register-cheatsheet]] 11 rows; [[tickets/T-25700-distill-wins]] is Done after review.
