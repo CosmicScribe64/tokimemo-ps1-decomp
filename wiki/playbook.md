@@ -1,6 +1,6 @@
 ---
 type: playbook
-updated: 2026-10-20
+updated: 2026-10-23
 ---
 # Matching playbook
 
@@ -145,3 +145,7 @@ NAME_ENT `func_801398EC` needed remainder/frame/index in a1/a2/a3. A scalar rema
 ## Small copies follow the ugen_pass state; final store with the epilogue (T-25105)
 
 `tools/ugen_pass.py` puts its B/F sentinel before every `Umov`, also before copies of 32 bytes or less. The transfer register skips two ugen entries in state B and one in state F. If a small copy's temporary is one slot late, check the pass's state for it (the last `str`/`istr`/jump before the copy in the ucode). After an `istr`, an empty `if ((s32)x > 0) {}` survives uopt as a signed positive-bound jump, emits no code and gives F (FAKE). Separately, as1 moves `lw ra` above the last store only when the store's address names a global: write `((T *)&G[i * N + k])->f = v`, not a store through a pointer local. Main `func_80054FC0`, 113 lines to MATCH. Loops (main `func_8005557C`, 1212 bytes): when only the last of many constant-trip loops is unrolled in the original, give every loop one shared counter: with a shared counter IDO unrolls only the last loop of the function. Make it `u32` if a bound equals a multiply constant elsewhere (an `s32` bound shares the constant and turns the multiply into `li; multu`).
+
+## A spill slot one word off: copy propagation and the temporaries (T-25201)
+
+When a pointer's spill slot is 4 bytes off and everything else matches, check whether the original spills the variable at its own home (not copy-propagated) or a uopt temporary (copy-propagated expression). uopt does not copy-propagate `p = expr` into a block where the assignment is not available, where an operand of `expr` changes, into a loop-latch branch condition, or when `expr` contains a load (uoptcopy.c). A dead store to the operand right after the assignment (`idx = 0;`, FAKE) makes every use read p's home and keeps p a register candidate, unlike `&p`. Loop bounds read straight from a record in `for` conditions become partial-redundancy items kept in registers and reloaded after calls, which is the shape of a count reloaded at the latch and at the inner exit (main `mod_set_gpu`, 4 rows to 0).

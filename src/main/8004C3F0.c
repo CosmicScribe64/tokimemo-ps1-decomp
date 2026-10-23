@@ -270,13 +270,14 @@ void func_8004DAC4(s32 arg0) {
     s32 *p = &arg0;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25104, 4 rows (T-25009: 17); registers, order and the other stack slots match. Left:
- * the record pointer p is spilled at sp+0x68 instead of sp+0x6C. Here p is a copy-propagated expression
- * whose spill temporary is the first one below the declared locals; the original has one more frame
- * word above the hoisted temporaries (drafts/T-25104/main/mod_set_gpu/NOTES.md).
- * search_tpage_multi is viewed as returning u16 here (the original compares the raw result and keeps
- * the narrowed copy). */
+/* Draws one frame of a tile-set record as 8x8 sprites: record idx of D_801217A0 holds a rows x cols
+ * grid per frame, each word the UV byte, the texture page index and the clut column of one tile.
+ * search_tpage_multi is viewed as returning u16 here: the original compares the raw result with the
+ * last page and keeps the narrowed copy (implicit int misses 51 lines).
+ * Matching notes (T-25201): the loop bounds are read from the record in the for conditions; uopt keeps
+ * the two counts in v1/v0 across the loops and reloads them after the calls (the column count at the
+ * inner latch, the row count when the inner loop ends). xpos and ypos are a register and a hoisted
+ * value; their stack homes are never used, but they place p's home at sp+0x6C. */
 u16 search_tpage_multi();
 void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     s32 padA; /* FAKE: T-25006, padA and padB put row and mode at the original stack homes */
@@ -292,13 +293,15 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     u16 last;
     s32 bright;
     s32 mode;
+    s32 xpos;
     s32 ypos;
-    u8 rows;
-    u8 cols;
     ModRec14 *p;
 
     bright = func_8004901C();
     p = (ModRec14 *)(D_801217A0 + idx * 0x14);
+    /* FAKE: T-25201, a dead store to idx after p is set; with idx changed, uopt does not copy-propagate
+     * p's expression, so p is spilled at its own home (sp+0x6C) instead of a temporary one word lower */
+    idx = 0;
     switch (p->unk_08) {
     case 0:
         mode = 1;
@@ -323,52 +326,37 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
         break;
     }
     last = 0xFFFF;
-    rows = p->unk_0D;
-    cols = p->unk_0C;
-    data = rows * frame * cols + p->unk_04;
-    row = 0;
-    if (rows != 0) {
-        do {
-            col = 0;
-            if (cols != 0) {
-                do {
-                    uv = (*data & 0xFF0000) >> 16;
-                    page = (*data & 0xFF000000) >> 24;
-                    clut = (*data & 0xFF00) >> 8;
-                    s = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
-                    func_8009F07C(s);
-                    SetSemiTrans(s, 0);
-                    s->x0 = x + 0xA0 + col * 8;
-                    ypos = row * 8 + y + 0x168;
-                    s->y0 = ypos - D_8011ECA0 * 0xF0;
-                    /* FAKE: T-25006, one line so as1 keeps the u0/v0 order */
-                    s->u0 = (uv & 0xF) * 8; s->v0 = ((uv & 0xF0) >> 4) * 8;
-                    s->b0 = bright;
-                    s->g0 = bright;
-                    s->r0 = bright;
-                    tpage = search_tpage_multi(p->unk_00[page], mode);
-                    if (last != tpage) {
-                        if (last != 0xFFFF) {
-                            goto_tpage((last & 0xF) << 6, (last & 0x10) << 4, pri + 1, 0, 0);
-                        }
-                        last = tpage;
-                    }
-                    s->clut = func_8009ED74(cx + clut * 16, cy);
-                    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + pri * 4 + 4, s);
-                    col++;
-                    data++;
-                    cols = p->unk_0C;
-                } while (col < cols);
-                rows = p->unk_0D;
+    data = p->unk_0D * frame * p->unk_0C + p->unk_04;
+    for (row = 0; row < p->unk_0D; row++) {
+        for (col = 0; col < p->unk_0C; col++, data++) {
+            uv = (*data & 0xFF0000) >> 16;
+            page = (*data & 0xFF000000) >> 24;
+            clut = (*data & 0xFF00) >> 8;
+            s = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+            func_8009F07C(s);
+            SetSemiTrans(s, 0);
+            xpos = x + 0xA0 + col * 8;
+            s->x0 = xpos;
+            ypos = row * 8 + y + 0x168;
+            s->y0 = ypos - D_8011ECA0 * 0xF0;
+            /* FAKE: T-25006, one line so as1 keeps the u0/v0 order */
+            s->u0 = (uv & 0xF) * 8; s->v0 = ((uv & 0xF0) >> 4) * 8;
+            s->b0 = bright;
+            s->g0 = bright;
+            s->r0 = bright;
+            tpage = search_tpage_multi(p->unk_00[page], mode);
+            if (last != tpage) {
+                if (last != 0xFFFF) {
+                    goto_tpage((last & 0xF) << 6, (last & 0x10) << 4, pri + 1, 0, 0);
+                }
+                last = tpage;
             }
-            row++;
-        } while (row < rows);
+            s->clut = func_8009ED74(cx + clut * 16, cy);
+            AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + pri * 4 + 4, s);
+        }
     }
     goto_tpage((last & 0xF) << 6, (last & 0x10) << 4, pri + 1, 0, 0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set_gpu);
-#endif
 
 /* Matching notes (T-25104): sp is the sprite handed to func_80098B80 (GsSortSprite); the u16 priority
  * of its prototype, declared here because func_80043510 calls it without one, converts pri at each
