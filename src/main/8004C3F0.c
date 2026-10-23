@@ -235,7 +235,98 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set_gpu);
 #endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-25104, 10 rows; clut takes $s1 before the x position and col (uopt priority
+ * 133 against 103 and 78), so x/col/clut sit in s2/s3/s1 instead of s1/s2/s3. */
+void func_80098B80(Rec24 *sp, void *ot, u16 pri);
+void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
+    s32 padA[4];
+    s32 row;
+    Rec24 sp;
+    ModRec14 *p;
+    u32 col;
+    u32 *data;
+    u32 word;
+    u32 uv;
+    u32 clut;
+    s32 bright;
+    u8 rows;
+    u8 cols;
+    u8 w;
+    s32 padB[7];
+    s32 mode;
+    s32 padC[1];
+
+    bright = func_8004901C();
+    p = (ModRec14 *)(D_801217A0 + idx * 0x14);
+    switch (p->unk_08) {
+    case 0: sp.unk_00 = 0x01000000; mode = 1; break;
+    case 1: mode = 2; sp.unk_00 = 0; break;
+    case 2: mode = 2; sp.unk_00 = 0; break;
+    case 3: sp.unk_00 = 0x01000000; mode = 1; break;
+    case 4: sp.unk_00 = 0x01000000; mode = 1; break;
+    case 5: sp.unk_00 = 0x01000000; mode = 1; break;
+    default: sp.unk_00 = 0x01000000; mode = 1; break;
+    }
+    rows = p->unk_0D;
+    cols = p->unk_0C;
+    w = p->unk_0E[0];
+    sp.unk_0A = p->unk_0E[1];
+    sp.unk_18 = 0;
+    sp.unk_1A = 0;
+    sp.unk_14 = bright;
+    sp.unk_15 = bright;
+    sp.unk_16 = bright;
+    sp.unk_20 = 0;
+    sp.unk_1C = 0x1000;
+    sp.unk_1E = 0x1000;
+    row = 0;
+    sp.unk_08 = w;
+    data = rows * frame * cols + p->unk_04;
+    if (rows != 0) {
+        do {
+            col = 0;
+            if (cols != 0) {
+                do {
+                    sp.unk_04 = x + col * w;
+                    sp.unk_06 = row * w + y;
+                    uv = *data & 0xFF0000;
+                    word = *data & 0xFF000000;
+                    clut = *data & 0xFF00;
+                    uv >>= 16;
+                    word >>= 24;
+                    clut >>= 8;
+                    sp.unk_0C = search_tpage_multi(p->unk_00[word], mode);
+                    switch (w) {
+                    case 8:
+                        sp.unk_0E = (uv & 0xF) * 8;
+                        sp.unk_0F = ((uv & 0xF0) >> 4) * 8;
+                        break;
+                    case 16:
+                        sp.unk_0E = (uv & 7) * 16;
+                        sp.unk_0F = ((uv & 0xF8) >> 4) * 16;
+                        break;
+                    default:
+                        sp.unk_0E = (uv & 0xF) * 8;
+                        sp.unk_0F = ((uv & 0xF0) >> 4) * 8;
+                        break;
+                    }
+                    sp.unk_10 = cx + clut * 16;
+                    sp.unk_12 = cy;
+                    func_80098B80(&sp, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14, pri);
+                    col++;
+                    data++;
+                    cols = p->unk_0C;
+                } while (col < cols);
+                rows = p->unk_0D;
+            }
+            row++;
+        } while (row < rows);
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set);
+#endif
 
 /* Matching notes (T-25006): the record fields are read through the global array (SRN_REC), not a
  * pointer, the row and column positions are written as expressions (uopt strength-reduces them into the
