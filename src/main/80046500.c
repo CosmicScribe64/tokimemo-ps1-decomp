@@ -165,8 +165,9 @@ s32 func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s3
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
-            /* FAKE: T-25124 (from T-25034), the goto to the shared label after case 3's
-               u0 store reproduces the original UV store and branch layout. */
+            /* FAKE: T-25124 (from T-25034), the one-line comma groups of UV stores and the goto
+               to the shared label after case 3 reproduce the original UV store and branch
+               layout; the original source is unknown. */
             goto block_16;
         case 1:
             ((POLY_GT4 *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4);

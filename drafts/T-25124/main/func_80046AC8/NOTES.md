@@ -1,7 +1,7 @@
 # T-25124: main func_80046AC8 (matched)
 
-Result: default-build C match, 2696 bytes (671 words + 3 alignment nops). `func_80046AC8.c` here is a
-copy of the matched body in `src/main/80046500.c`.
+Result: default-build C match, 2696 bytes (671 words + 3 alignment nops). The matched body is in
+`src/main/80046500.c` (the draft copy was dropped in review, so there is one source of truth).
 
 ## Start state
 
