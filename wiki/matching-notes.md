@@ -834,3 +834,24 @@ No match committed; the guard stays at 4 rows (the two pointer compares, constan
 ## T-25309: TAIIKU func_80137784 (third pass)
 
 No match; the guard stays at 4 rows with its code unchanged. New negatives: a dead second parameter as the slot pointer keeps frame 56 and gets a0, but IDO stores the incoming a1 and the alias offset still moves to the pointer side (230 rows; with `pos == D_8014984C` the base takes t5, 250). Pointer casts on the natural compare change nothing (240), integer casts make it worse (388). `volatile` slot arrays keep the base in t5 and grow the frame to 64 (292). A late-folded zero index (`[arg0 * 0]`) stays the same lda candidate. cfe 5.3 ignores `#pragma weak` for an extern. No other linker symbol sits at either slot address. That confirms the second pass: only a second zero-offset name (the tested `alias-match.patch`, waiting for approval) gives the original's separate compare constant. A reduced-unit compile (the two includes, the macros and the body) screens a variant in about 13 s under load, against minutes for funcdiff. Details: `drafts/T-25309/TAIIKU/func_80137784/NOTES.md`.
+
+## T-25317: main func_800476C0 (second pass)
+
+Not matched; the function stays `INCLUDE_ASM` (552 rows, above the guard limit). The best body went from the
+T-25116 649 lines and 14 structural hunks to 552 rows and 8 hunks, and the whole saved-register order is now the
+original's: `drafts/T-25317/main/func_800476C0/body.c`, with steps, negatives and a 2-second traced-allocation
+printer (`tr.sh`) in the NOTES.md there.
+
+What closed: `s16 bx, by` with `bx + ox` (IDO puts a converted `s16` operand first when the other is `s32`; equal
+types keep the source order, which gives the original's `addu s7,a3,s5`); a count variable separate from the tpage
+UV variable, with `uv = part->unk_04 & 0xFF` (the original's `lh v0; andi t4,v0,0xff`); `step` read before `slot`;
+`part->unk_00` in the first mirror arm. With these the j loop and the tail are structurally identical. A marked
+FAKE reuses `anim` for the sequence row in the second animation arm (`v0`, 845 -> 595). The constant 0x1000 in
+`s4`: the traced priorities showed it needed 8 or 9 frequency-100 use units (stores and assignments of a constant
+never count; no invisible loop form raises a frequency). A second scale test around a dead store gives exactly
+that and no instruction, because uopt removes dead stores before colouring and empty branches after it (FAKE,
+595 -> 555 lines). General lever: an `if (cond) { dead = 0; }` adds uopt blocks and compare uses without code.
+
+What is left: the gs piece in `s0` (a dead branch between the printf and `continue` removes it, but the count CSE
+then takes `v0` and the ugen ring moves: `body-gs-dead-branch.c`), the ugen ring and caller-saved colours in the
+j loop (the bulk of the rows now), and the folded `step * 2 * 2` in the second animation arm.
