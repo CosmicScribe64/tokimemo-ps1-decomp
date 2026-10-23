@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25008 In Review
-
-[[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]]: main `func_8006BA40` matched (a `(u8)` cast on the low-nibble test spends the ugen slot the original spends; new line in [[playbook]] section 2). `func_8005B43C` stays guarded at 3 rows, `parameter_up_down` at 11; findings in [[matching-notes]] T-25008.
-
 ## [2026-10-20] ticket | T-25008, T-25009, T-25010 Done; session wrap-up
 
 Match: main `func_8006BA40` (T-25008). Guard progress: `mod_set_gpu` 17 rows. Today: 8 matches merged by this orchestrator (ETC `func_8013CCE4`, main `sndisp`, `func_80043510`, `func_8004443C`, `col2sepia`, `srn_set`, `func_8006BA40`, plus the T-24900 pair earlier). [[status]].
@@ -1754,6 +1750,7 @@ The package's only function is matched, none left with rows; the block-copy stat
 
 Reviewed [[tickets/T-25134-w8-main-80043510]] against CODING_STANDARDS.md; matched main `palette_load_vram` (2024 bytes) as default-build C, 27/27.
 One finding fixed (comment on the empty `case 1: default:`); the two stack-frame locals are FAKE and ticketed; notes in drafts/T-25134/main/palette_load_vram/.
+
 ## [2026-10-23] ticket | T-25131 Done
 
 Reviewed [[tickets/T-25131-w8-NAME_ENT-80142A80]] against CODING_STANDARDS.md; no matches (`src/` unchanged, `func_80143580` stays INCLUDE_ASM).
