@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] ticket | Start T-25012
-
-Class A is exhausted at the autotweak level; [[tickets/T-25012-class-c-d-reconstruction]] starts hand reconstruction of class C/D functions.
-
-## [2026-10-21] ticket | T-25012 first findings: no twins, GYOZI func_801412A4 at 96
-
-`tools/twin_sweep.py` plans no copies: none of the 119 unmatched functions has an exact, near or lenient matched twin, so the unguarded ones are pure reconstruction. `wiki/data/remaining-2026-10-20.md` is stale (VALEN func_80132D0C, sndisp, func_8006BA40 already matched). GYOZI `func_801412A4`: draft 103 -> 96 exact score (`count += (b1 == 0) ^ 1;` reproduces `sltiu; xori`; the autotweak best adds a `u16 count` that costs an `andi` and a 0x30 frame, not kept); permuter 600 s found no 0. Leads left: ugen temporaries in loop 1 (t7 vs t5), operand order in loop 2, `D_801486E4` read once. `regdiff.py` needs `TOKIMEMO_SCRATCH` set to a writable directory. Notes and helper scripts in `drafts/T-25012/` ([[tickets/T-25012-class-c-d-reconstruction]]).
-
 ## [2026-10-21] ticket | T-25012: ETC func_8013F054, main func_8006A044 notes
 
 No match. `regdiff.py` works with `TOKIMEMO_SCRATCH=$PWD/build/scratch/t25012` plus the traced uopt copied into `build/scratch/t25012/r9-uopt/variants/trace`; key fact: unconstrained ranges are coloured in bit order (order of first mention in the source), not by priority. `score.py` masks registers in its `struct` count, so it can look near-matched when it is not (main func_8006A044 is about 87 real rows). ETC `func_8013F054`: only the pointer do/while form `p = (u8 *)&D_800E6280 + idx * 8; do { ... p -= 8; } while ((u32)p >= (u32)&D_800E6280);` reloads `D_800E71DF` in the loop like the original; 8 instructions still missing (idx kept in `$a0` with a `move v1,a0`). main `func_8006A044`: structure solved (month test chain, jump-table switch), colours swapped (month in `$v0`, F64[1] in `$v1`) and 12 instructions missing. Drafts in `drafts/T-25012/` ([[tickets/T-25012-class-c-d-reconstruction]]).
@@ -1753,10 +1745,12 @@ Review finding fixed: the empty month-bypass arm and the g/D_800E6280 split are 
 
 Reviewed [[tickets/T-25303-w10-main-800563F0]] against CODING_STANDARDS.md; matched main `strCallback` (640 bytes) as default-build C, 27/27, funcdiff MATCH; `func_80056BA8`, `strNext`, `strInit` still MATCH.
 The match is the T-25118 body plus a marked never-true istr arm that sets the shim's sticky F state (no tooling change); notes in [[matching-notes]] and `drafts/T-25303/main/strCallback/NOTES.md`.
+
 ## [2026-10-23] ticket | T-25132 Done
 
 Reviewed [[tickets/T-25132-w8-SHOUGATU-80134890]] against CODING_STANDARDS.md (two comment fixes); matched SHOUGATU `func_801350F8` (2308 bytes, two FAKEs) as default-build C, 27/27.
 The INCLUDE_ASM in `src/ovl/SHOUGATU/80134890.c` is gone; levers and the GYOZI `func_801368B8` lead in [[matching-notes]] and [[playbook]].
+
 ## [2026-10-23] ticket | T-25304 Done
 
 Reviewed [[tickets/T-25304-w10-main-8004C3F0]] against CODING_STANDARDS.md; matched main `mod_trans_vram` (752 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
