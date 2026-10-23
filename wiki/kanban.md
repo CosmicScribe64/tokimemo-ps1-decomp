@@ -133,6 +133,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24501-main-tail|T-24501 Match MAIN remaining functions]]
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 - [ ] [[tickets/T-25100-wave-8-finish|T-25100 Wave 8 conveyor - one deep Opus pass per remaining function]]
+- [ ] [[tickets/T-25200-wave-9-neighbor|T-25200 Wave 9 neighbor conveyor - wave 8 queue from the tail, plus near-miss closers]]
+- [ ] [[tickets/T-25201-wave-9-closers|T-25201 Wave 9 closers for wave 8 near misses]]
 
 ## In Review
 
