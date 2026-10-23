@@ -698,3 +698,11 @@ Matched as default C, 1812 bytes (453 words), from INCLUDE_ASM, with no FAKE. [[
 
 1. The first typed draft had 140 funcdiff rows. Three changes together left only the frame: `(s32)` on the u8 count in the signed wrap tests (-cckr promotes u8 to unsigned, so the tests became `sltu`), `unk_00 + unk_04` in the position sum (load order), and case 1 as `if (F80 & 0xF) { } else { switch }`. The target jumps from the empty arm to the wrap tests, while `if (!(...))` inverts the branch. That change alone is 52 aligned rows.
 2. The frame was 8 bytes too large. One `s32 i` for the scan loops and the `get_near_menu` result, with no separate local, put the `g` home at 0x4C and the a2 spill at 0x30: MATCH.
+
+## T-25112: TACO func_80139FB8
+
+Matched as default C, 1480 bytes (370 words), from INCLUDE_ASM, with no FAKE. [[tickets/T-25112-w8-TACO-80139170]]; steps, measurements and negatives are in `drafts/T-25112/TACO/func_80139FB8/NOTES.md`. The start was the T-24502 body (FAKE zero subtree), 179 rows in the full unit.
+
+1. The mirrored half had v0/v1 swapped (input and angle result). Writing the angle result into the scale variable, which is coloured first, gave 169 rows; a separate local or `d`/`angle` cost 10 rows on the final body.
+2. Without the FAKE, one sine variable for the front, +i and back entries (the -i sine stays separate) has priority 4.8, between the radius and the constants, and takes s5: 163 rows.
+3. The last 163 rows were the constant colours: in the m2c `do { } while (i != 20)` form, 3 (3.5) beat 40 (3.444), and 0x100000 and 96 (2.5) beat the table address (2.333), so 0x100000 took fp and the table was addressed with `lui/%lo`. `for (i = 1; i < 20; i++)` (also with `!=`, also with an explicit step) changes the loop's block layout and matched. A do/while with `<` stays at 163. Check the `for` form when the s registers of hoisted constants are permuted in a constant-trip loop.
