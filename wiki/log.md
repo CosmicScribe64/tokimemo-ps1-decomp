@@ -1757,3 +1757,8 @@ Best draft is 197 funcdiff rows (346 before), notes and next hypothesis in `draf
 ## [2026-10-23] ticket | T-25300 wave 10 second pass opened
 
 The wave 9 neighbor run ([[tickets/T-25200-wave-9-neighbor]]) stopped when a job-picker agent returned no structured result; its last pick had found no untouched packages left. [[tickets/T-25300-wave-10-second-pass]] replaces it: a second deep pass, from the first pass's notes, on each of the 20 non-GEKO files still holding INCLUDE_ASM (tickets T-25301..T-25320), starting each file as soon as no wave 8 or wave 9 worktree holds it.
+
+## [2026-10-23] ticket | T-25302 Done
+
+Reviewed [[tickets/T-25302-w10-main-80049FF0]] against CODING_STANDARDS.md; matched main `func_8004A1A0` (628 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+The cause was a pointer local defined before the late uopt block split, which lost `.noalias`; one FAKE (the empty `if (slot) {}` split). Notes in `drafts/T-25302/main/func_8004A1A0/NOTES.md` and [[matching-notes]].
