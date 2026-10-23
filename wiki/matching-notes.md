@@ -842,3 +842,23 @@ Negatives, the scoring setup (one-function TU, ucode dumps, `regdiff -v --src`) 
 - Tooling: uopt input/output ucode dumps (a `--uopt` wrapper for `uopt_eval.py compile` that copies both files, rendered with `cvt_pass.parse`; register N is `m3 b0 oN`) showed the ranges before ugen and as1 fold the copies.
 
 Measurements and negatives: drafts/T-25401/GEKO/func_80133024/NOTES.md.
+## T-25317: main func_800476C0 (second pass)
+
+Not matched; the function stays `INCLUDE_ASM` (552 rows, above the guard limit). The best body went from the
+T-25116 649 lines and 14 structural hunks to 552 rows and 8 hunks, and the whole saved-register order is now the
+original's: `drafts/T-25317/main/func_800476C0/body.c`, with steps, negatives and a 2-second traced-allocation
+printer (`tr.sh`) in the NOTES.md there.
+
+What closed: `s16 bx, by` with `bx + ox` (IDO puts a converted `s16` operand first when the other is `s32`; equal
+types keep the source order, which gives the original's `addu s7,a3,s5`); a count variable separate from the tpage
+UV variable, with `uv = part->unk_04 & 0xFF` (the original's `lh v0; andi t4,v0,0xff`); `step` read before `slot`;
+`part->unk_00` in the first mirror arm. With these the j loop and the tail are structurally identical. A marked
+FAKE reuses `anim` for the sequence row in the second animation arm (`v0`, 845 -> 595). The constant 0x1000 in
+`s4`: the traced priorities showed it needed 8 or 9 frequency-100 use units (stores and assignments of a constant
+never count; no invisible loop form raises a frequency). A second scale test around a dead store gives exactly
+that and no instruction, because uopt removes dead stores before colouring and empty branches after it (FAKE,
+595 -> 555 lines). General lever: an `if (cond) { dead = 0; }` adds uopt blocks and compare uses without code.
+
+What is left: the gs piece in `s0` (a dead branch between the printf and `continue` removes it, but the count CSE
+then takes `v0` and the ugen ring moves: `body-gs-dead-branch.c`), the ugen ring and caller-saved colours in the
+j loop (the bulk of the rows now), and the folded `step * 2 * 2` in the second animation arm.

@@ -1784,3 +1784,7 @@ User approved one gate in place of the separate conveyors. [[tickets/T-25600-fin
 
 ## [2026-10-23] build | T-25401 w11-GEKO-801323E0-p1
 Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl/GEKO/801323E0.c`; func_80132D04 got an old-style definition (same bytes). The file has no INCLUDE_ASM left, so [[tickets/T-25401-w11-GEKO-801323E0]] is Done after review; notes in [[matching-notes]].
+## [2026-10-23] ticket | T-25317 Done
+
+Reviewed [[tickets/T-25317-w10-main-80047550]] against CODING_STANDARDS.md; no match: main `func_800476C0` stays `INCLUDE_ASM` (552 funcdiff rows, 8 structural hunks, saved-register order now original), 27/27, two small findings fixed.
+Draft body and notes in `drafts/T-25317/main/func_800476C0/`; section in [[matching-notes]].
