@@ -173,9 +173,6 @@ void func_8013507C(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-25132, 2 rows; case 8 head: as1 schedules the `sb` of the D_80120653 flag before the `lui` of
- * D_80143DD8, the original after it (one swapped pair, no register or instruction difference). */
-#ifdef NON_MATCHING
 s32 func_801350F8(void) {
     /* FAKE: T-25132: the timer byte is read through a local pointer, so uopt keeps one register for it instead of
      * a promoted global plus a widened copy (as in DATE func_8013AF1C, T-21520). */
@@ -295,6 +292,10 @@ s32 func_801350F8(void) {
     case 7:
         break;
     case 8:
+        /* FAKE: T-25132: an empty test of the selector makes ugen load it at the head of the case, so as1
+         * schedules its `lui` before the first flag store, as the original does (1 swapped pair without it). */
+        if (D_80143DD8 != 0) {
+        }
         ((DisplayActor44 *)D_8011ECD0)[96].unk_03 |= 0x80;
         ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 0x40;
         ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = D_80143DD8 + 0xD;
@@ -356,9 +357,6 @@ s32 func_801350F8(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_801350F8);
-#endif
 
 void func_801359FC(void) {
     s32 pad; /* FAKE: preserves labels at stack +0x28 (T-3330). T-24084 */

@@ -117,6 +117,10 @@ s32 func_801350F8(void) {
     case 7:
         break;
     case 8:
+        /* FAKE: T-25132: an empty test of the selector makes ugen load it at the head of the case, so as1
+         * schedules its `lui` before the first flag store, as the original does (1 swapped pair without it). */
+        if (D_80143DD8 != 0) {
+        }
         ((DisplayActor44 *)D_8011ECD0)[96].unk_03 |= 0x80;
         ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 0x40;
         ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = D_80143DD8 + 0xD;
