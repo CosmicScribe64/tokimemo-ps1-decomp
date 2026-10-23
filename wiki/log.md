@@ -1737,3 +1737,7 @@ No function left with rows in this package; the data-island lead for other switc
 
 Reviewed [[tickets/T-25149-w8-NAME_ENT-80132000]] against CODING_STANDARDS.md; matched NAME_ENT `func_80138C1C` (740 bytes) as default-build C, 27/27.
 No findings; the three FAKEs (0x20 buffer, `& 3` on the two-bit date fields, s32 return for the caller) already carry reasons and the ticket.
+
+## [2026-10-23] build | T-25201 w9c-EN_NICHI-80136B10
+Matched EN_NICHI `func_80136DEC` (1,392 bytes) as default-build C, guard removed, 27/27, review without findings ([[tickets/T-25201-wave-9-closers]]).
+The scene table `D_80139C5C`, which names the function, is now defined in C, so as1 links the case-3 jump-table `jr` back to the entry and fills the D1/D2 delay slots as the original does ([[as1-scheduler-rule]], [[matching-notes]]).
