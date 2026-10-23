@@ -2975,7 +2975,7 @@ s32 StartCARD(void);
 void _bu_init(void);
 s32 _card_auto(s32 arg0);
 s32 _card_status(s32 chan);
-void bzero(void *p, s32 n);
+void *bzero(void *p, s32 n); /* BIOS A(0x28); main func_80055AFC stores the result in a local (T-25310) */
 #ifndef MAIN_API_OVERRIDE_func_800AE080
 void func_800AE080(u8 *arg0, s32 arg1);
 #endif
