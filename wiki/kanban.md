@@ -68,7 +68,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25601-gate-ETC-func_8013FFAC|T-25601 Finish gate - ETC func_8013FFAC]]
 - [ ] [[tickets/T-25602-gate-GEKO-func_80133024|T-25602 Finish gate - GEKO func_80133024]]
 - [ ] [[tickets/T-25603-gate-GEKO-func_80142C9C|T-25603 Finish gate - GEKO func_80142C9C]]
-- [ ] [[tickets/T-25604-gate-NAME_ENT-func_80143580|T-25604 Finish gate - NAME_ENT func_80143580]]
 - [ ] [[tickets/T-25605-gate-SHOUGATU-func_8013EA98|T-25605 Finish gate - SHOUGATU func_8013EA98]]
 - [ ] [[tickets/T-25607-gate-main-func_80067870|T-25607 Finish gate - main func_80067870]]
 - [ ] [[tickets/T-25608-gate-main-func_8006B0C8|T-25608 Finish gate - main func_8006B0C8]]
@@ -178,6 +177,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25604-gate-NAME_ENT-func_80143580|T-25604 Finish gate - NAME_ENT func_80143580]]
 - [ ] [[tickets/T-25606-gate-main-func_800476C0|T-25606 Finish gate - main func_800476C0]]
 - [ ] [[tickets/T-25501-stubborn-shougatu-8013ea98|T-25501 Stubborn function SHOUGATU func_8013EA98 (src/ovl/SHOUGATU/8013E330.c)]]
 - [ ] [[tickets/T-25319-w10-NAME_ENT-80142A80|T-25319 Wave 10 second pass on src/ovl/NAME_ENT/80142A80.c]]
