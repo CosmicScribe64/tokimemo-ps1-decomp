@@ -1,4 +1,4 @@
-# T-25110: TACO func_8013EAA4 (not matched, 4 rows)
+# T-25110: TACO func_8013EAA4 (left at 4 rows; matched in T-25201, last section)
 
 Result: guarded in `src/ovl/TACO/8013DB80.c` (`#ifdef NON_MATCHING`, default build stays
 INCLUDE_ASM). Full-TU `funcdiff --resolve --version c`: 491/491 words, 4 differing words (cost 8).
@@ -81,3 +81,30 @@ it in one compile: dump them for this body and for the `if (particle) {}` contro
 `dump_ucode.py` + `homes.py` here print the homes of a guarded TU (run in Docker:
 `python3 drafts/T-25110/TACO/func_8013EAA4/dump_ucode.py <guarded.c> x <out.O>` then
 `python3 drafts/T-25110/TACO/func_8013EAA4/homes.py <out.O> -1 272`; ucode offset + 0x110 = sp).
+
+## T-25201 (closer): matched
+
+Matched in the default build (1964 bytes, 27/27). The change, on the 4-row body: a constant local
+`half = 0x80;` after the `height` statement, used as `j * half * 2 - half` (second grid X) and
+`o * half * 2 - half` (third grid Y). It takes the former `pad_b` slot; `pad[8]` and `pad_a` stay FAKE.
+
+How it was found: a uopt built from the pinned recomp (`tools/uopt_patch.py trace` plus `spillpatch.py`
+here, binary in scratch only) prints `spilltemps` per coloured item. For the 4-row body:
+
+- temporaries are sp+0x64 (index 0), 0x60, 0x5C, 0x58, 0x54, 0x50 (index 5). 0x6C/0x68 are not
+  `spilltemps` temporaries.
+- bit 6 (particle pointer) creates temp 0, region nodes 0-41. The third grid's Y item `o * 0x100` is bit 196,
+  region nodes 42-47 (42 is the preheader after the `func_800A0140` call). Its blocked set is {1,2,4,5}, so
+  it takes temp 0. `j * size * 2` (bit 201, nodes 43-45) takes temp 3 (0x58).
+- with `half` the Y item is made by copy propagation (bit 215, after the 213 bits read from the ucode).
+  `j * size * 2` (now bit 205) comes first and takes temp 0. Y is then blocked by it and takes temp 3
+  (0x58), the same as the original. It never spills `j * size * 2`, so no other code changes.
+
+Controls (full TU): `w = 0x100; o * w - 0x80`, `o * (w * 2) - w`, `half` only in the third grid, either pad
+slot: all MATCH. Fails: `if (particle) {}` after the size statement makes two new nodes, so the pointer's region
+does not reach the preheader (5 rows). The same idea for the first grid (`quarter = 0x40;
+o * quarter * 2 - quarter` and the X line) gives 216 rows.
+
+Lead for other functions: a spill home that is wrong while every other instruction matches can come from
+the order of uopt items, not from live ranges. A constant or copy assigned to a local before use moves
+the propagated expression to the end of the bit table.

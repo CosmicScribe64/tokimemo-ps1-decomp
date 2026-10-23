@@ -386,13 +386,10 @@ void func_8013E778(s32 arg0) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25110, 4 rows: the third grid's vertical induction temporary (o * 0x100) shares the
- * particle pointer's spill home (sp+0x64) instead of taking sp+0x58; every other instruction matches. */
 void func_8013EAA4(s32 arg0) {
-    /* FAKE: pad, pad_a and pad_b are unused; they hold the original frame (0x110: matrix at sp+0xE8, v at
-     * 0xC0, pt at 0xB0, pos at 0xA8, depth/flag at 0x94/0x90, kind/phase at 0x88/0x84, height at 0x74, uopt
-     * spill homes from 0x6C down). Real locals unknown. T-25110 */
+    /* FAKE: pad and pad_a are unused; they hold the original frame (0x110: matrix at sp+0xE8, v at 0xC0, pt
+     * at 0xB0, pos at 0xA8, depth/flag at 0x94/0x90, kind/phase at 0x88/0x84, height at 0x74, uopt spill
+     * homes from 0x6C down). Real locals unknown. T-25110, T-25201 */
     Tc14 *particle;
     POLY_FT4 *poly;
     MATRIX matrix;
@@ -406,7 +403,7 @@ void func_8013EAA4(s32 arg0) {
     s32 pad_a;
     s32 depth;
     s32 flag;
-    s32 pad_b;
+    s32 half;
     s32 kind;
     u32 phase;
     s32 row;
@@ -471,11 +468,15 @@ void func_8013EAA4(s32 arg0) {
             poly->y3 = ((s16 *)pt)[3];
             AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
             height = (func_800A0070(particle->unk12 * 0x10) << 7) / 4096;
+            /* uopt propagates half into its uses (its slot stays). The propagated o * 0x100 of the third
+             * grid is then a later item than j * size * 2, which takes the first spill home (sp+0x64), and
+             * the vertical temporary gets sp+0x58. T-25201 */
+            half = 0x80;
             v.vz = pos.z;
             for (o = 0; o < 2; o++) {
                 v.vy = pos.y + o * height * 2 - height;
                 for (j = 0; j < 2; j++) {
-                    v.vx = pos.x + j * 0x100 - 0x80;
+                    v.vx = pos.x + j * half * 2 - half;
                     func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
                 }
             }
@@ -501,7 +502,7 @@ void func_8013EAA4(s32 arg0) {
             size = (func_800A0140(particle->unk12 * 0x10) << 7) / 4096;
             v.vz = pos.z;
             for (o = 0; o < 2; o++) {
-                v.vy = pos.y + o * 0x100 - 0x80;
+                v.vy = pos.y + o * half * 2 - half;
                 for (j = 0; j < 2; j++) {
                     v.vx = pos.x + j * size * 2 - size;
                     func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
@@ -528,6 +529,3 @@ void func_8013EAA4(s32 arg0) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013DB80", func_8013EAA4);
-#endif
