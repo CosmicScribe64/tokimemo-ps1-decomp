@@ -1754,3 +1754,7 @@ Four matches: OPTION `func_801326BC`, GEKO `func_80136C20`, `func_801367EC` (bot
 
 Reviewed [[tickets/T-25129-w8-GYOZI-80136220]] against CODING_STANDARDS.md; matched GYOZI `func_801368B8` (2256 bytes) as default-build C, 27/27, funcdiff MATCH.
 One FAKE (dead entry read, marked); finding fixed (comment for the always-true `| 8` in case 6); lead for SHOUGATU `func_801350F8` in [[matching-notes]].
+## [2026-10-23] ticket | T-25128 Done
+
+Reviewed [[tickets/T-25128-w8-ETC-8013FF80]] against CODING_STANDARDS.md; no function matched, `src/ovl/ETC/8013FF80.c` unchanged (`func_8013FFAC` stays `INCLUDE_ASM`, 0 bytes added).
+Best draft is 197 funcdiff rows (346 before), notes and next hypothesis in `drafts/T-25128/ETC/func_8013FFAC/NOTES.md` and [[matching-notes]].
