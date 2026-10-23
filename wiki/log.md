@@ -7,16 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] build | T-24700 wave 2 partial results
-
-T-24710: main func_8006D7EC's last row is uopt constant propagation (`cc -S` shows `li $3,1`),
-not as1; no source form moves it (300 s permuter and 20+ forms). T-24711: main func_80054E6C
-33->19 rows by breaking the `slot*16` CSE across the nickname memcpy; func_800455C4 stays at 16
-(the 0x2C counter slot is a uopt expression range, and the `lbu` sink is ugen). T-24709 improved
-BUNKA_SD func_80139290 123->6, SHOUGATU func_8013E50C 152->150 with the frame layout now right,
-GEKO func_80132B24 61->57. T-24706 kept ETC func_8013CCE4 at 18 rows and func_8014790C at 57.
-No promotions; the near-miss set is compiler-pass bound.
-
 ## [2026-10-20] query | as1 global delay-slot filler rule and the volatile lever
 
 [[tickets/T-24900-completion-orchestration]] research branch `as1-lever`. Traced as1's global filler with the T-24047 print-only build plus a relocation print: blocks with a stall are visited by (weight, number); candidates are dominated blocks in that order up to weight +5; a volatile access and its `lui` are never candidates; an indirect jump on the path or a live destination register rejects. Confirmed on OMIMAI `func_801340E4`, SHOUGATU `func_8013EE30`, TAIIKU `func_8013C33C`. Lever: `volatile` on the default arm's three globals matches VALEN `func_80134030` and GYOZI `func_80139E4C` (FAKE in VALEN.h/GYOZI.h). VALEN `func_80132D0C`, GEKO `func_80136C20`, KANGEI `func_8013852C` stay guarded with T-24900 notes. New page [[as1-scheduler-rule]]; [[playbook]] section 5 and known limits updated.
@@ -1735,10 +1725,12 @@ No review findings: the three fakematches (four test spellings, `* 1` on two rea
 
 Reviewed [[tickets/T-25111-w8-TACO-8013B990]] against CODING_STANDARDS.md; matched TACO `func_8013C6D4` (1388 bytes) and `func_8013BAC4` (1840 bytes) as default-build C, 27/27; the review added two comments for non-obvious tricks in `func_8013BAC4`.
 Both functions of `src/ovl/TACO/8013B990.c` are now C, notes in drafts/T-25111/TACO/ and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25113 Done
 
 Reviewed and merged w8-ETC-8013BEF0: matched ETC `func_8013F054` (716 bytes) and `func_8013D570` (2352 bytes), default C, 27/27.
 Both functions of the package are matched, none left with rows; see [[tickets/T-25113-w8-ETC-8013BEF0]].
+
 ## [2026-10-23] ticket | T-25112 Done
 Reviewed [[tickets/T-25112-w8-TACO-80139170]] against CODING_STANDARDS.md; no findings, clean rebuild 27/27. Matched TACO `func_80139FB8` (1480 bytes, plain C, no FAKE) and `func_80139424` (1676 bytes, default C, FAKEs T-25112: dead `x3 = 0;`, `pad[2]`).
 Lessons are in [[matching-notes#T-25112: TACO func_80139FB8]] and [[matching-notes#T-25112: TACO func_80139424]] (for loop instead of m2c do/while; vertex written as centre + (offset -/+ half)).
