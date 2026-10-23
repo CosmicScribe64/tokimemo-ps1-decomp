@@ -194,9 +194,10 @@ void func_80139BCC(void) {
 }
 
 /* Draws the 40-entry ring around D_8015F4E0: the front entry, 19 pairs on both sides, then the back
-   entry. In the mirrored half, scale holds the angle before it is reflected: that shared variable
-   gives the original's v0/v1 split. One x for the front, right and back sides keeps the sine in s5
-   (T-25112). */
+   entry. Three source details set the original's registers (T-25112): one x for the front, the +i and
+   the back entries (sine in s5), scale reused for the mirrored angle before it is reflected (v0/v1 split),
+   and a for loop (a do/while puts 3 and 40 in the wrong s registers and 0x100000 in fp instead of
+   the table address). */
 void func_80139FB8(s32 arg0, s32 arg1, s32 radius, s32 arg3) {
     s32 pos;
     s32 d;
@@ -206,7 +207,6 @@ void func_80139FB8(s32 arg0, s32 arg1, s32 radius, s32 arg3) {
     s32 z;
     s32 scale;
     s32 i;
-    s32 step;
 
     angle = (-D_8015F4E4 << 10) / 512;
     x = (func_800A0070(angle) * radius) >> 12;
@@ -217,8 +217,8 @@ void func_80139FB8(s32 arg0, s32 arg1, s32 radius, s32 arg3) {
         scale = ((z << 12) + 0x100000) / 96;
     }
     func_80139424(D_8015F4B0[D_8015F4E0 % 40], 2, 5, ((z << 5) + 0x2800) / 160, x, (z >> 2) + 50, scale, scale, 0);
-    for (i = 1, step = 0x1000; i < 20; i++, step += 0x1000) {
-        pos = step / 40;
+    for (i = 1; i < 20; i++) {
+        pos = i * 0x1000 / 40;
         d = pos - D_8015F4E4;
         if (d < 0x200) {
             angle = (d << 10) / 512;
