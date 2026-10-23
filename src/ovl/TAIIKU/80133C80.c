@@ -1359,8 +1359,12 @@ void func_80137544(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-25106, 4 rows; only the operand order of the two pointer compares is left
+/* NON_MATCHING: T-25201, 4 rows; only the operand order of the two pointer compares is left
  * (original bne a0,t8 / bne a1,t9: pointer first; this C gives the address constant first).
+ * uopt swaps an == whose left operand is not a plain variable and moves a constant offset
+ * on the second operand to the first, so an offset alias always lands first. Writing
+ * D_8014984C itself keeps the order but its base constant then takes a register ahead of
+ * the 0x44 constant and shifts every later colour. Next: second names in a symbols file. T-25201.
  * Display records of the 0x44-byte pool; DISPF reads +0x24/+0x28 as 16.16 words. T-25106. */
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 #define DISPF(n) (((DisplayFixActor44 *)D_8011ECD0)[n])

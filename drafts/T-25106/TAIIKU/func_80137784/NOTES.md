@@ -68,3 +68,56 @@ The original compared a pointer *variable* (variables go first) without a frame 
 a dead second parameter with its home in the caller's frame (the `i` reuse is measured negative), checked by frame size and the 0x30 spill slot; or a symbol
 alias for the player's slot declared in `config/symbols_TAIIKU.txt` (config change, needs approval)
 in place of the D_8014985C FAKE.
+
+## T-25201 closer (fresh eyes, 2026-10-23)
+
+Result: no match; the guard stays at 4 rows (the two compare operand orders). Measured the cause in
+the ucode itself (uopt input and output dumped through a scratch wrapper around `/opt/ido/5.3/uopt`,
+rendered with `cvt_pass.parse`; nothing in the tree changed).
+
+How the order of `==` is decided, measured on this function:
+- cfe keeps the source order for two non-variable operands (`D_8014984C == &D_8014984C[arg0]` enters as
+  `lda; lda; lod arg0; ixa; equ`). With a plain variable it puts the complex operand first
+  (`pos == X - 16` enters as `X - 16`, `pos`).
+- uopt swaps when the first operand is not a plain variable. The guard's `ptr == X - 16` leaves uopt as
+  `lda 85C-16; lod a0; equ` (constant first); natural `ptr == D_8014984C` leaves as base register first too.
+- A constant addend on the second operand after the swap is moved to the first: `X + 0x44 == ptr`
+  (from `D_80149808.v[17]`) leaves as `ptr - 0x44 == lda`, and the `-16` alias forms on the left
+  (`&(&D_8014985C)[-2]`, `&((Fix32 *)&D_8014985C)[-4]`, `(u8 *)&D_8014985C - 16`, `D_8014985C.v[-8]`)
+  all give `addiu t8,a0,16; bne t8,t9` (229 rows). With `(s32)` casts uopt keeps the add, but ugen moves
+  it the same way (`(Fix32 *)((s32)&D_8014985C - 16)`, `-16 + (s32)...`: 229 rows).
+- So pointer first needs the constant on the left in the source *and* a zero offset: only a second
+  symbol at the same address can do that. `D_8014984C == &D_8014984C[arg0]` gives the right order
+  (`lod a0; lod base`) but brings the base back as a register candidate (249 rows).
+
+Allocator data (R9 lines of the traced uopt): the D_8014984C hoisted constant (bit 238) has units
+bb9 (reload), bb11 (the compare, no reload), bb24 (reload): saving 1 over 2, priority 0.5, ahead of
+0x44 (bit 230: bb0 reload, bb9, bb24, saving 2 over 5 blocks = 0.4). In the guard both base units
+reload, so priority 0. Had 0x44 come first (equal priority keeps the lower bit 230), the base could
+only take $ra at cost 1, and 1 > 1 fails: it would stay unallocated as in the original. No C lever
+found that changes those counts without code.
+
+Negatives (new): a block-scoped `Fix32 *pos` (plain or `register`) still costs a frame slot (64);
+`pos == D_8014984C` also keeps the base allocated; `(s32)` differences or xor
+(`a - b == 0`, `!(a - b)`, `(a ^ b) == 0`) recolour the entry (314 rows); `(u8 *)` difference adds two
+instructions (228); the T-25106 alias store pointer with the real base on the left (265, the alias
+constant becomes the candidate instead).
+
+Positive control: `alias-8rows.c` compares against undefined zero-offset aliases
+(`D_8014984C_alias == &D_8014984C[arg0]`, `D_8014981C_alias == &D_8014981C[arg0]`). Every instruction
+then matches, both compares included; the 8 rows are only the four `R_MIPS_HI16/LO16` relocations of the
+undefined aliases.
+
+## Next hypothesis (T-25201)
+
+Add two overlay-only symbols to a new `config/symbols_TAIIKU.txt` (for example
+`D_8014984C_alias = 0x8014984C;` and `D_8014981C_alias = 0x8014981C;`, names to be chosen) and declare
+them as FAKE views in `include/ovl/TAIIKU.h`. That is a config change and needs the user's approval. Check first
+that splat and `check_symbols.py` accept two names at one address and that the disassembly keeps
+`D_8014984C` for the other references. Then `alias-8rows.c` should be a match and the D_8014985C FAKEs go away.
+
+Block counts behind those priorities (flow graph of the natural draft): 0x44 is live in bb0-bb4, the
+clear loop and call path (bb5-bb8, bb31), bb9, the block-2 tests bb14-bb16 and bb24: N = 15, D = 5,
+saving 2. The base covers bb9-bb11 and bb24: N = 4, D = 2, saving 1. A tie at 0.5 (0x44 wins on the
+lower bit) needs 0x44 at N <= 13 or one more reload-free 0x44 unit; the base drops below 0.4 only at
+N >= 6 without another reload-free unit. `do`/`while` forms of the clear loop change nothing (249 rows).
