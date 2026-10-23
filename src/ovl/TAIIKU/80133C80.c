@@ -1299,8 +1299,8 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
  * lets a u8 global index stay unsigned, as the runner field does, so both share one 0x44 constant;
  * DISP(46 + n) widens the global and gives it the counter's constant. T-25106. */
 #define RUNNER_DISP(n) ((&DISP(46))[n])
-/* FAKE: byte-offset address of record i for the first loop. Written as DISP(107 + i) it is the same
- * expression as the second loop's DISP(108 + i), and the second loop then ends on the runner
+/* FAKE: byte-offset address of record i for the second loop. Written as DISP(108 + i) it is the same
+ * expression as the first loop's DISP(107 + i), and the second loop then ends on the runner
  * pointer instead of the record pointer. T-25106 */
 #define DISP_AT(i) ((DisplayActor44 *)(D_8011ECD0 + (i) * 0x44))
 s32 func_80137C44(void) {
@@ -1311,7 +1311,7 @@ s32 func_80137C44(void) {
 
     for (i = 0, runner = &D_80149208.player; i < 4; i++, runner++) {
         if (runner->unk_00 != 0) {
-            DISP_AT(i)[107].unk_26 = DISP_AT(i)[96].unk_26 - 8;
+            DISP(107 + i).unk_26 = DISP(96 + i).unk_26 - 8;
             if (i == 0) {
                 /* FAKE: read through an address view; an indirect load is not a plain variable, so uopt
                  * keeps the constant first (bne t4,a1), as in the original. T-25106 */
@@ -1321,24 +1321,24 @@ s32 func_80137C44(void) {
                     DISP(107).unk_18 = D_801492B8[D_80149208.player.unk_04] + ((RUNNER_DISP(runner->unk_02).unk_16 >> 3) * 6);
                 }
             } else {
-                DISP_AT(i)[107].unk_18 = D_801492B8[runner->unk_03] + ((RUNNER_DISP(runner->unk_02).unk_16 >> 3) * 6);
+                DISP(107 + i).unk_18 = D_801492B8[runner->unk_03] + ((RUNNER_DISP(runner->unk_02).unk_16 >> 3) * 6);
             }
-            if (i + 0x90 == DISP_AT(i)[96].unk_18) {
+            if (i + 0x90 == DISP(96 + i).unk_18) {
                 /* FAKE: address view as above. T-25106 */
                 if (*(s32 *)&D_80122E94 == 1) {
-                    DISP_AT(i)[107].unk_18 = D_80149320[D_801491DC] * 6 + 5;
+                    DISP(107 + i).unk_18 = D_80149320[D_801491DC] * 6 + 5;
                 } else {
-                    DISP_AT(i)[107].unk_18 = ((RUNNER_DISP(runner->unk_02).unk_16 >> 3) * 6) + 5;
+                    DISP(107 + i).unk_18 = ((RUNNER_DISP(runner->unk_02).unk_16 >> 3) * 6) + 5;
                 }
             }
         }
     }
     pos = D_80149298.halves.high;
     for (i = 0; i < 3; i++) {
-        if (((D_80149208.cpu[i].unk_05 == 2 && DISP(108 + i).unk_02 != 0) || D_80149208.cpu[i].unk_00 == 1) && (x = D_80149208.cpu[i].unk_20.halves.high - pos) < 0x140 && x >= -0x13F) {
-            DISP(108 + i).unk_03 = 0xA4;
+        if (((D_80149208.cpu[i].unk_05 == 2 && DISP_AT(i)[108].unk_02 != 0) || D_80149208.cpu[i].unk_00 == 1) && (x = D_80149208.cpu[i].unk_20.halves.high - pos) < 0x140 && x >= -0x13F) {
+            DISP_AT(i)[108].unk_03 = 0xA4;
         } else {
-            DISP(108 + i).unk_03 = 0;
+            DISP_AT(i)[108].unk_03 = 0;
         }
     }
 }
