@@ -328,7 +328,63 @@ s32 func_80154DD8(void) {
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80154430", func_80154DD8);
 #endif
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80154430", func_8015528C);
+void func_8015528C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
+    s32 *phase;
+    s32 end_candidate;
+    s32 phase_sum;
+    s32 start;
+    s32 end;
+    s32 i;
+    s32 color_phase;
+
+    /* FAKE: T-25114, D_8015EBAC is an int array that the header declares as a scalar (as in T-9310);
+     * its subscripts give the original's base-first addresses. The two integer address sums keep the
+     * arm's base-first and the join's index-first `addu` in one register range ($s7). */
+    if (arg3 < ((&D_8015EBAC)[arg6] / 10)) {
+        phase = (s32 *)((s32)&D_8015EBAC + arg7 * 4);
+        (&D_8015EBAC)[arg6] -= arg3 * 0xA;
+        *phase -= 1;
+        if (*phase < 0) {
+            *phase = 2;
+        }
+    }
+    phase = (s32 *)(arg7 * 4 + (s32)&D_8015EBAC);
+    for (i = 0; i < 0x32; i++) {
+        end_candidate = (&D_8015EBAC)[arg6] / 10 + (i * arg3);
+        phase_sum = *phase + i;
+        if (end_candidate < arg0) {
+            start = (&D_8015EBAC)[arg6] / 10 + (i - 1) * arg3;
+            /* FAKE: T-24522, T-25114: the `* 1` keeps this arm's remainder in its own range, as in the original. */
+            color_phase = (phase_sum % 3) * 1;
+            end = end_candidate;
+            if (start < 0) {
+                goto block_9;
+            }
+        } else {
+            start = (&D_8015EBAC)[arg6] / 10 + (i - 1) * arg3;
+            color_phase = phase_sum % 3;
+            end = arg0;
+            i = 0x64;
+            if (start < 0) {
+block_9:
+                start = 0;
+            }
+        }
+        switch (color_phase) {
+        case 0:
+            func_80155868(start, arg1 * start / arg0, arg2 * start / arg0, end, arg1 * end / arg0, arg2 * end / arg0, arg8 << 0x10, arg8 << 8, 4);
+            break;
+        case 1:
+            func_80155868(start, arg1 * start / arg0, arg2 * start / arg0, end, arg1 * end / arg0, arg2 * end / arg0, arg8 << 8, arg8, 4);
+            break;
+        case 2:
+            func_80155868(start, arg1 * start / arg0, arg2 * start / arg0, end, arg1 * end / arg0, arg2 * end / arg0, arg8, arg8 << 0x10, 4);
+            break;
+        }
+    }
+    dtd_on_tpage(0, 0, 4, arg5 - 4, 0);
+    (&D_8015EBAC)[arg6] += arg4;
+}
 
 void func_80155868(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
     s32 unused; /* FAKE: unused local, only its 4-byte frame slot above p is observed (DATE func_8014EF1C; T-17106) */
