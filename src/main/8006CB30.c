@@ -1590,10 +1590,8 @@ void func_80071280(void) {
 
 /* T-25318: the opcode walk and the dispatch read D_800E6280.unk_69C[D_800E6280.unk_71C] directly, with no record
  * pointer or opcode local: uopt keeps the record address in $a1 and the opcode in $v1 across the tests, as the
- * target does. The 0xFF branch has its own hour local (four locals give the target's spill slot at 0x30).
- * FAKE (T-25052): the calendar byte views and the late-bound loop bounds `11 + ((u32)i < 0)` keep the base
- * 0x800E6280 and the bound 11 out of registers. FAKE (T-25318): the (s16) index of the case 0x45 second field
- * keeps uopt from reusing the record address there; the target reloads the index. */
+ * target does, and the base 0x800E6280 stays out of the allocator. The 0xFF branch has its own hour local (four
+ * locals give the target's spill slot at 0x30). */
 void func_8007132C(void) {
     s32 op;
     u32 t;
@@ -1602,6 +1600,8 @@ void func_8007132C(void) {
 
     func_80071280();
     func_80071038();
+    /* FAKE: T-25052, the calendar byte views keep the base 0x800E6280 out of a register (plain fields: 901 rows,
+     * T-25318). */
     if ((*(u8 *)&D_800E6280.unk_03E) >= 0x62U && (*(u8 *)&D_800E6280.unk_03F) >= 3U && (*(u8 *)&D_800E6280.unk_040) != 0) {
         func_8004284C();
         return;
@@ -1623,7 +1623,8 @@ void func_8007132C(void) {
             }
         }
     }
-    if ((*(u8 *)&D_800E6280.unk_03E) >= 0x62U && (*(u8 *)&D_800E6280.unk_03F) == 2 && (*(u8 *)&D_800E6280.unk_040) == 0x1C && func_80071110() != 0 && D_800E6280.unk_56C[20] == 0) {
+    if ((*(u8 *)&D_800E6280.unk_03E) >= 0x62U && (*(u8 *)&D_800E6280.unk_03F) == 2 && (*(u8 *)&D_800E6280.unk_040) == 0x1C
+        && func_80071110() != 0 && D_800E6280.unk_56C[20] == 0) {
         D_80122CD4 = 2;
         D_80122CD0 = 7;
         D_800E6280.unk_56C[20] += 1;
@@ -1635,7 +1636,10 @@ void func_8007132C(void) {
     if (((*(u8 *)&D_800E6280.unk_03F) != 0xC || (*(u8 *)&D_800E6280.unk_040) != 0x18) && D_800E6280.unk_71D == 0 && D_800E6280.unk_041 != 6
         && D_800E6280.unk_044[0].unk_00[(*(u8 *)&D_800E6280.unk_040)] == 0 && D_800E6280.unk_69C[D_800E6280.unk_71C].unk_00 == 0xFB
         && D_800E6280.unk_69C[0].unk_00 != 0x40 && D_800E6280.unk_69C[D_800E6280.unk_71C - 1].unk_00 == 0) {
-        i = 0; do {
+        /* FAKE: T-25052, 11 + ((u32)i < 0) folds after uopt, so the bound 11 is not held in a register in the
+         * three counter loops (plain loops: 92 rows, T-25318). */
+        i = 0;
+        do {
             if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0A >= 0x4C && !(D_800E6280.unk_1BC[i].unk_0C.h[1] & 1)) {
                 D_800E6280.unk_1BC[i].unk_0C.f.b16 = 1;
                 if (D_800E6280.unk_71C != 0) {
@@ -1646,7 +1650,8 @@ void func_8007132C(void) {
                 main_state_set(0x59);
                 return;
             }
-        i++; } while (i != 11 + ((u32)i < 0));
+            i++;
+        } while (i != 11 + ((u32)i < 0));
     }
     if (D_800E6280.unk_69C[0].unk_00 == 0x25 && D_800E6280.unk_69C[D_800E6280.unk_71C - 1].unk_00 == 0x25) {
         if (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_00 == 0x32) {
@@ -1706,14 +1711,16 @@ void func_8007132C(void) {
             }
         }
         if (hour < 6 && (*(u8 *)&D_800E6280.unk_03F) == 0xA
-            && (((*(u8 *)&D_800E6280.unk_03E) == 0x5F && (*(u8 *)&D_800E6280.unk_040) == 8) || ((*(u8 *)&D_800E6280.unk_03E) == 0x60 && (*(u8 *)&D_800E6280.unk_040) == 6)
+            && (((*(u8 *)&D_800E6280.unk_03E) == 0x5F && (*(u8 *)&D_800E6280.unk_040) == 8)
+                || ((*(u8 *)&D_800E6280.unk_03E) == 0x60 && (*(u8 *)&D_800E6280.unk_040) == 6)
                 || ((*(u8 *)&D_800E6280.unk_03E) == 0x61 && (*(u8 *)&D_800E6280.unk_040) == 5))) {
             main_state_set(0x43);
             func_80042908(9);
             return;
         }
         if ((*(u8 *)&D_800E6280.unk_03E) == 0x5F && (*(u8 *)&D_800E6280.unk_03F) == 0xA && (*(u8 *)&D_800E6280.unk_040) == 0xF) {
-            i = 0; do {
+            i = 0;
+            do {
                 if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0C.f.b12) {
                     if (get_g_zyotai_s(i) != 4 && func_8006B014(i) == 0) {
                         D_800E6280.unk_71F = 1;
@@ -1722,10 +1729,12 @@ void func_8007132C(void) {
                         return;
                     }
                 }
-            i++; } while (i != 11 + ((u32)i < 0));
+                i++;
+            } while (i != 11 + ((u32)i < 0));
         }
         if ((*(u8 *)&D_800E6280.unk_03E) == 0x60 && (*(u8 *)&D_800E6280.unk_03F) == 0xA && (*(u8 *)&D_800E6280.unk_040) == 0xD) {
-            i = 0; do {
+            i = 0;
+            do {
                 if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0C.f.b13) {
                     if (get_g_zyotai_s(i) != 4 && func_8006B014(i) == 0) {
                         D_800E6280.unk_71F = 1;
@@ -1734,7 +1743,8 @@ void func_8007132C(void) {
                         return;
                     }
                 }
-            i++; } while (i != 11 + ((u32)i < 0));
+                i++;
+            } while (i != 11 + ((u32)i < 0));
         }
     }
     t = 0;
@@ -1896,7 +1906,9 @@ void func_8007132C(void) {
         return;
     case 0x45:
         D_80122CD4 = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
-        D_80122CD0 = D_800E6280.unk_69C[(s16)D_800E6280.unk_71C].unk_02;
+        /* FAKE: T-25318, the (s32) index cast keeps uopt from reusing the record address in $a1; the target
+         * reloads the index here. */
+        D_80122CD0 = D_800E6280.unk_69C[(s32)D_800E6280.unk_71C].unk_02;
         main_state_set(0x5D);
         return;
     case 0x47:
