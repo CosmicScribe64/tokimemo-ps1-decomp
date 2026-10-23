@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | OPTION calendar complete
-
-[[tickets/T-24606-option-calendar]] In Review -> Done after all reviews and integration gates passed. Updated [[status]], [[matching-notes]] and [[tickets/T-24600-finish-matching]]:6,822 functions /2,097,048 bytes,130 functions remaining. Six functions /5,480 bytes completed in this continuation; all four matching lanes continue.
-
 ## [2026-10-20] lint | OPTION calendar completion wiki checks
 
 Refreshed catalogs:728 tickets,427 sections,3,076 functions. Docker wiki lint reports zero broken links, zero ticket/board mismatches and only the two existing large-page warnings ([[data/t0018-cases]], [[log]]). Active [[matching-notes]] size warning is resolved by the preserved archive rotation. `git diff --check` passes.
@@ -1726,6 +1722,7 @@ Reviewed against `CODING_STANDARDS.md`, clean rebuild 27/27; next step (second s
 ## [2026-10-23] ticket | T-25153 Done
 Reviewed [[tickets/T-25153-w8-NAME_ENT-80139740]] against CODING_STANDARDS.md; no matches, 27/27 clean rebuild. The T-24132 guard on NAME_ENT `func_8013AF78` (99 rows) is plain `INCLUDE_ASM` again.
 Best bodies (57 and 61 rows, two FAKEs) are in drafts/T-25153/NAME_ENT/func_8013AF78/ with the `$v0` blocker and next hypothesis in NOTES.md.
+
 ## [2026-10-23] ticket | T-25101 Done
 
 Reviewed and merged w8-main-8004F870: matched main `sndi`, `func_8005215C`, `get_h_tokimeki`, `get_near_menu`, `func_8004FC10` (7508 bytes, default C, 27/27).
