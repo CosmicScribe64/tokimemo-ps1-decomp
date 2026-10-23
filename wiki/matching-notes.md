@@ -796,3 +796,13 @@ Matched (default C, 796 bytes) from the T-24924 92-row body, in about an hour. T
 - **One shared constant reorders argument setup** (4 rows): `memcpy(p, 0x801F0000, ...)` in case 2 made as1 emit case 1's `lui a1,0x801f` before `li a0,1`; a minimal repro showed it. `(void *)0x801F0000` for the memcpy source fixed it.
 
 Steps, removal controls and negatives: `drafts/T-25119/main/func_80061A3C/NOTES.md`.
+
+## T-25124: main func_80046AC8
+
+[[tickets/T-25124-w8-main-80046500]] matches `func_80046AC8` (2696 bytes, default C). It is the quadrant renderer from [[tickets/T-25034-main-quadrant-extent]], whose `uv-standard.c` body was the start, at 78 rows. The code from the quad colour block to the texture page already matched. What was left were stack homes and ugen temporaries. What closed it:
+
+- **Spill homes come from `spilltemps` order** (T-25110 rule, traced with a spill-printing uopt built from `spillpatch.py`). Texture u/v go inline in the `func_8009ECB0` call, with no `texture_row` local. `order * 4` is inline. `alpha` is a variable tested as `alpha & 0xF`. The v2/v3 endpoint reads a top `row` local, so copy propagation numbers it after texture v. Nine declared scalars keep frame 0xA8. The last two rows (tile blue at 0x74, not 0x70) closed with a FAKE `if (order) {}` after the tile loop: it keeps the order item in the tile region, which pushes red, green and blue one temporary up.
+- **Temporaries that as1 deletes still set ugen numbering** ([[playbook]] section 2). `u8 alpha` gives `sra; and 255; and 15`; as1 deletes the `and 255` and renames the shift to its register. A `(u16)` conversion on red (same expression in both loops, with `red` assigned again in the tile loop), the green and the blue, and `(u8)` on the tile flag supply the other missing or extra slots. Convert the shifted or masked value, not the parameter: `(u16)arg6` loads with `lhu`.
+- **The quad loop as `for`** puts `move s6,zero` in place.
+
+Notes, negatives and scripts: `drafts/T-25124/main/func_80046AC8/NOTES.md`.
