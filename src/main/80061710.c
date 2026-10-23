@@ -361,7 +361,55 @@ void func_80062840(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80062948);
+/* Places the 13 rotating models: model i (D_801227A0[i], a GsCOORDINATE2 record) gets a local
+ * matrix from a rotation that depends on the frame counter, an identity scale and a translation
+ * from position word i + 1 of the D_801230D0 work area, which then moves on by 2 or 3.
+ * s32 because func_8006218C calls it before this definition (implicit int). T-25119 */
+s32 func_80062948(void) {
+    s32 i;
+    s32 j;
+    SVECTOR rot;
+    MATRIX m;
+    MATRIX s;
+    VECTOR scale;
+    s32 v;
+    s32 x;
+
+    for (i = 0; i < 13; i++) {
+        j = i & 3;
+        /* FAKE: `| 0` puts the counter first in the multu, as in the original; IDO's front end
+         * otherwise orders the heavier (j + 2) first. T-25119 */
+        rot.vz = (D_800E6280.unk_10F8 | 0) * (j + 2) * -2 - 2;
+        rot.vx = rsin(D_800E6280.unk_10F8 * 10 * (j + 1)) / 12 + 0x7FD;
+        rot.vy = func_800A0140(D_800E6280.unk_10F8 * 10 * (j + 1)) / 12 - 5;
+        m = *(MATRIX *)D_80125C60;
+        s = *(MATRIX *)D_80125C60;
+        RotMatrix(&rot, &m);
+        m.t[0] = 0;
+        m.t[1] = 0;
+        m.t[2] = 0;
+        scale.vx = 0x1000;
+        scale.vy = 0x1000;
+        scale.vz = 0x1000;
+        ScaleMatrix(&s, &scale);
+        MulMatrix(&m, &s);
+        /* FAKE: D_801230D0 is a work area each module lays out its own way (main_api.h declares
+         * only its first word); here the positions follow that word. T-25119 */
+        m.t[0] = (&D_801230D0)[i + 1];
+        v = rsin((D_800E6280.unk_10F8 & 0xFFF) * (j + 10));
+        x = (&D_801230D0)[i + 1];
+        m.t[1] = v / 32 + -x / 2;
+        /* FAKE: the unsigned negation keeps the original's second negu; a signed -x is shared
+         * with the line above. T-25119 */
+        m.t[2] = -(u32)x * 4 - 0x190;
+        v = abs(rsin(D_800E6280.unk_10F8));
+        /* FAKE: `- (0 - p)` puts (v & 1) before the reloaded position in the addu, as in the
+         * original; `+ p` is ordered position first. T-25119 */
+        (&D_801230D0)[i + 1] = (v & 1) - (0 - (&D_801230D0)[i + 1]) + 2;
+        *(MATRIX *)D_801227A0[i].unk4 = m;
+        D_801227A0[i].unk0 = 0;
+    }
+}
 
 void func_80062C28(void) {
     set_movie_offset(0, 0);
