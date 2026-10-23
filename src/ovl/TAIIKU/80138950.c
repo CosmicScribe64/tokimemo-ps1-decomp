@@ -2100,7 +2100,90 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013DDB8);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013E1FC);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013E894);
+void func_8013E894(void) {
+    s32 i;
+    s32 middle0;
+    s32 middle1;
+    s32 x[4];
+    s32 y[4];
+    s32 scale;
+    s32 input_x;
+    s32 input_y;
+    s32 camera_x;
+    s32 camera_y;
+    s32 *xp;
+    s32 *yp;
+    s32 ball_x;
+    s32 angle;
+    s32 first_y;
+
+    angle = 0;
+    do {
+        /* func_80086204 is Rot_2D called without a prototype (implicit int, as in func_8013C4E4's
+         * caller above): the int result makes uopt treat $v0 as written by the call, which keeps
+         * the x pointer of the loops below out of $v0 (T-25102). */
+        input_x = -320;
+        input_y = 0;
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle, &input_x, &input_y, &x[0], &y[0]);
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle + 16, &input_x, &input_y, &x[1], &y[1]);
+        input_x = -240;
+        input_y = 0;
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle, &input_x, &input_y, &x[2], &y[2]);
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle + 16, &input_x, &input_y, &x[3], &y[3]);
+        camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
+        camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
+        for (i = 0; i < 4; i++) {
+            x[i] += camera_x;
+            y[i] += camera_y;
+        }
+        for (i = 0; i < 4; i++) {
+            scale = func_800A0140(0x2AA);
+            y[i] = (y[i] * scale) >> 12;
+        }
+        middle0 = (x[0] + x[2]) >> 1;
+        middle1 = (x[1] + x[3]) >> 1;
+        /* Rows are x[2 * i], x[2 * i + 1]. `i << 1` keeps the counter: uopt strength-reduces
+         * `i * 2` into a second induction variable, the original recomputes the row offset (T-25102). */
+        for (i = 0; i < 2; i++) {
+            xp = x + (i << 1);
+            yp = y + (i << 1);
+            first_y = yp[0];
+            if (first_y > 0 || yp[1] > 0) {
+                if (middle0 < xp[0]) {
+                    xp[0] = xp[0] + first_y + middle0;
+                }
+                if (xp[0] < middle0) {
+                    xp[0] = xp[0] - first_y + middle0;
+                }
+                if (middle1 < xp[1]) {
+                    xp[1] = yp[1] + xp[1] + middle1; /* operand order sets the addu order (T-25102) */
+                }
+                if (xp[1] < middle1) {
+                    xp[1] = xp[1] - yp[1] + middle1;
+                }
+            }
+        }
+        for (i = 0; i < 4; i++) {
+            x[i] = -x[i];
+        }
+        for (i = 0; i < 4; i++) {
+            y[i] -= 24;
+        }
+        ball_x = (s16)D_80149968.unk_1C[0] >> 2;
+        for (i = 0; i < 4; i++) {
+            x[i] -= ball_x;
+        }
+        for (i = 0; i != 2; i++) {
+            xp = x + (i << 1);
+            yp = y + (i << 1);
+            if ((xp[0] >= -160 && xp[0] <= 160 && yp[0] >= -23 && yp[0] < 121) ||
+                (xp[1] >= -160 && xp[1] <= 160 && yp[1] >= -23 && yp[1] < 121)) {
+                func_80049FF0((s16)xp[0], (s16)yp[0], (s16)xp[1], (s16)yp[1], 0xFFFFFF, 0xFFFFFF, 250);
+            }
+        }
+        angle += 16;
+    } while (angle != 0x800);
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013EC60);
 
