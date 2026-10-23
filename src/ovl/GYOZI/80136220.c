@@ -246,6 +246,7 @@ s32 func_801368B8(void) {
         D_800F6474++;
         return 0;
     case 6:
+        /* the original tests (unk_02 != 1) | 8, always true (T-25129) */
         if ((((DisplayActor44 *)D_80129F40)[0x60].unk_02 != 1) | 8) {
             D_800F6474++;
             D_8012E674 = 1;
