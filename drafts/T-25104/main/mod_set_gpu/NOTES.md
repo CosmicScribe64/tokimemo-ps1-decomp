@@ -67,12 +67,26 @@ fit the original frame (0xA8, ypos 0x60, pri4 0x5C):
 - moving `u8 rows, cols` next to tpage/last (mode moves).
 - Permuter 900 s at -j 1 on the 4-row body: best only re-parenthesises (no score change).
 
+## Strongest lead (measured last): (T2) with `x + 0xA0` as its own hoisted item
+
+In the T2 layout (`u8 rows; u8 cols; s32 padB;` above `row`, nothing after `ypos` but `p`),
+writing `s->x0 = (s16)(x + 0xA0) + col * 8;` gives the original frame and slot map exactly:
+frame 0xA8, p 0x6C, (x + 0xA0) 0x68, IV 0x64, ypos 0x60, pri4 0x5C. The cast keeps `x + 0xA0` as a
+separate subtree, which LICM hoists before the IV, and that is the missing temporary. The code is
+wrong, though. The cast adds `sll/sra`, `x + 0xA0` is spilled, and SR builds the IV from `col * 8`
+alone (`move s4,zero`, with the add inside the loop). In the original, `x + 0xA0` is computed
+straight into `$s4`, and the IV starts from it. So the original has `x + 0xA0` as a hoisted item of
+its own, with no cvt between it and `+ col * 8`. Its slot is reserved but never used, just like the
+IV's. Measured without success: `(u32)`/`(s32)` casts, parenthesised or reordered sums, an `xpos`
+local (inner or outer loop, s32/u32), `x + 0xA0 + (s32)(col * 8)` (SR of col*8 only, frame 0xA0),
+and an empty `if (x + 0xA0) {}` (the item appears at 0x64, registers shift).
+
 ## Next hypothesis
 
-Find the source of the missing frame word. (T1) seems the likelier one: in the original, p is a
-register-candidate variable that copy propagation cannot replace. That variable is spilled at its
-home, its latch piece is coloured `$a3`, and its entry piece is not coloured. The extra word is a
-real local declared after p (the counterpart of `padC` in the control). Look for what blocks the
-propagation: uopt `find_replacements` checks `has_ilod`, `is_incr`, `no_nested_ops`,
-`countvars >= 10` and availability of the RHS at each use. An operand of `D + idx * 0x14`
-(idx) redefined before the post-switch reads would do it, but each idx reuse tried so far colours p.
+Find a spelling of the x position that cfe and uopt do not reassociate into `(x + col * 8) + 0xA0`,
+so that LICM hoists `x + 0xA0` as an item and SR then takes it as the IV start. Apply it in the T2
+layout. Ideas not yet measured: x through a K&R-promoted or narrower parameter type with no code
+cost, `x + 0xA0` as a shared subexpression used twice in the body (for example the original may have
+computed the clip or x1 of the sprite from the same base), or the base taken from a field or global.
+(T1), a non-propagated register-candidate `p`, stays as the fallback. Every idx reuse tried
+colours p at entry.
