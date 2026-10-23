@@ -1767,3 +1767,6 @@ Reviewed [[tickets/T-25314-w10-ETC-8013FF80]] against CODING_STANDARDS.md; match
 
 Reviewed [[tickets/T-25318-w10-main-8006CB30]] against CODING_STANDARDS.md; matched main `func_8007132C` (3992 bytes) as default-build C, 27/27, funcdiff MATCH; one small finding fixed (FAKE comments at the two remaining late-bound loops).
 Reading the schedule as `D_800E6280.unk_69C[D_800E6280.unk_71C]` with no record pointer leaves the base unallocated; notes in `drafts/T-25318/main/func_8007132C/NOTES.md` and [[matching-notes]].
+## [2026-10-23] build | T-25403 w11-GEKO-80142760-p2
+Pass 2 matched GEKO `func_80142C9C` (3,656 bytes, default C, 27/27); `src/ovl/GEKO/80142760.c` has no INCLUDE_ASM left. Reviewed, no findings; keep line for `D_800E71DF` added.
+Lever in [[playbook]], notes in `drafts/T-25403/GEKO/func_80142C9C/NOTES.md`, [[tickets/T-25403-w11-GEKO-80142760]] Done.

@@ -79,7 +79,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-25403-w11-GEKO-80142760|T-25403 Wave 11 passes on src/ovl/GEKO/80142760.c]]
 - [ ] [[tickets/T-25062-name-ent-byte-pack|T-25062 Match NAME_ENT byte pack and zero loop]]
 - [ ] [[tickets/T-25060-tel-date-menu|T-25060 Match final TEL date menu builder]]
 - [ ] [[tickets/T-25056-ending-scheduler|T-25056 Resolve ENDING A2E8 scheduler residue]]
@@ -186,6 +185,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-25317-w10-main-80047550|T-25317 Wave 10 second pass on src/main/80047550.c]]
 - [ ] [[tickets/T-25401-w11-GEKO-801323E0|T-25401 Wave 11 passes on src/ovl/GEKO/801323E0.c]]
 - [ ] [[tickets/T-25502-stubborn-taiiku-80137784|T-25502 Stubborn function TAIIKU func_80137784 (src/ovl/TAIIKU/80133C80.c)]]
+- [ ] [[tickets/T-25403-w11-GEKO-80142760|T-25403 Wave 11 passes on src/ovl/GEKO/80142760.c]]
 - [ ] [[tickets/T-25311-w10-ENDING-80133C10|T-25311 Wave 10 second pass on src/ovl/ENDING/80133C10.c]]
 - [ ] [[tickets/T-25309-w10-TAIIKU-80133C80|T-25309 Wave 10 second pass on src/ovl/TAIIKU/80133C80.c]]
 - [ ] [[tickets/T-25310-w10-main-80053650|T-25310 Wave 10 second pass on src/main/80053650.c]]

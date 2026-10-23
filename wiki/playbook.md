@@ -303,3 +303,19 @@ argument writes, so `a0..a3` are forbidden for it; when `v0` and `v1` already ho
 gets `t0`, which then leaves the ugen ring for the whole function. Main `mod_trans_vram`: `u8 flags = *data & 0xFF;` for the sixth `get_fnt` argument, 47 rows to
 0 with the sibling form `uv = (*data & 0xFF0000) >> 16;`. A uopt colour need not appear in the final code (ugen
 forwards single-use ranges), so check the trace, not only the asm; `drafts/T-25304/main/mod_trans_vram/NOTES.md`.
+
+## An address constant in a register for one loop only (T-25403)
+
+Symptom: the original loads `addiu tN,sp,X` before one loop and uses `tN` there, but recomputes the same
+address with ugen temporaries before and after the loop; the draft either never hoists it or, with an extra
+use in the loop, keeps the register past the loop. uopt has one register candidate per LDA symbol, and
+`split()` grows a piece only forward from its seed through blocks still in the range, so a piece seeded in
+the loop always takes in the blocks after the loop. What the original's split needs: (1) no use of the
+symbol in an earlier loop whose piece leaves reloads in the remainder (read it there through another table,
+`((u8 *)&names)[i - 0x40]`, FAKE); (2) the use after the loop first in block order (`if (!x) continue;`
+in the loop) and deadout, so its piece has one use and one reload and stays uncoloured; (3) any second use
+after the loop as a different constant. `q == &t[13]` makes cfe emit the address first, and uoptinput's
+equ/neq rule then moves the `+13` to `q`, which makes it the same constant again; `p = &t[13]; if (q == p)`
+keeps it on the LDA. GEKO `func_80142C9C`, 159 rows to 0 (with a sibling cast in a switch arm). Notes:
+`drafts/T-25403/GEKO/func_80142C9C/NOTES.md`.
+
