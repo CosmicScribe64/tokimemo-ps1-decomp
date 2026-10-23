@@ -2,7 +2,144 @@
 #include "game.h"
 #include "psx_types.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_tpage_show);
+/* Adds five POLY_FT4 quads to the ordering table: three 256-pixel-wide pages (at x, x + 0x100 and
+ * x + 0x200, scrolled left by the low byte of arg4) and two 1-pixel-wide columns between them,
+ * textured from VRAM x 0x3C0 (the first one goes to ordering-table entry arg8 - 1). arg0 selects
+ * the texture page bits, arg1 the colour mode, arg2 the semi-transparency; arg5 is unused, arg6/arg7
+ * are the clut position and arg8 the ordering-table entry.
+ * Matching notes (T-25104): the colour, UV and XY stores of each quad are one comma statement each,
+ * in the field order of the libgpu setRGB0/setUV4/setXY4 macros: as1 schedules by source line, and
+ * the ucode order decides which common subexpression gets v0 or v1. The two assignments of each
+ * colour-mode case share a line for the same reason. The repeated expressions stay inline: IDO
+ * keeps them as common subexpressions and spills them to its own stack slots across the calls. */
+void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7, s32 arg8) {
+    GameState *g = &D_800E6280;
+    POLY_FT4 *poly;
+    s32 divisor;
+    s32 pageWidth;
+
+    switch (arg1) {
+    case 0:
+        divisor = 4; pageWidth = 0x40;
+        break;
+    case 1:
+        divisor = 2; pageWidth = 0x80;
+        break;
+    case 2:
+        divisor = 1; pageWidth = 0x100;
+        break;
+    }
+
+    /* left page */
+    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    func_8009F040(poly);
+    if (arg2 != 0) {
+        SetSemiTrans(poly, 1);
+    } else {
+        SetSemiTrans(poly, 0);
+    }
+    SetShadeTex(poly, 0);
+    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->u0 = 0, poly->v0 = (arg0 & 0x20) * 4,
+        poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
+        poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
+        poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
+    poly->x0 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x1 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x2 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
+    poly->clut = func_8009ED74(arg6, arg7);
+    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
+
+    /* 1-pixel column after the left page */
+    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    func_8009F040(poly);
+    if (arg2 != 0) {
+        SetSemiTrans(poly, 1);
+    } else {
+        SetSemiTrans(poly, 0);
+    }
+    SetShadeTex(poly, 0);
+    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->u0 = arg4 / 256 * 4 + 3, poly->v0 = 0,
+        poly->u1 = arg4 / 256 * 4 + 4, poly->v1 = 0,
+        poly->u2 = arg4 / 256 * 4 + 3, poly->v2 = arg3->h,
+        poly->u3 = arg4 / 256 * 4 + 4, poly->v3 = arg3->h;
+    poly->x0 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x1 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 1, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x2 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->unk_014[D_8011ECA0] - (arg4 & 0xFF) + arg3->x + 0x100, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->tpage = func_8009ECB0(arg1, arg2 & 3, 0x3C0, 0);
+    poly->clut = func_8009ED74(arg6, arg7);
+    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4 - 4], poly);
+
+    /* middle page */
+    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    func_8009F040(poly);
+    if (arg2 != 0) {
+        SetSemiTrans(poly, 1);
+    } else {
+        SetSemiTrans(poly, 0);
+    }
+    SetShadeTex(poly, 0);
+    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->u0 = 0, poly->v0 = (arg0 & 0x20) * 4,
+        poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
+        poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
+        poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
+    poly->x0 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x1 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x2 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor + pageWidth, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
+    poly->clut = func_8009ED74(arg6, arg7);
+    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
+
+    /* 1-pixel column after the middle page */
+    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    func_8009F040(poly);
+    if (arg2 != 0) {
+        SetSemiTrans(poly, 1);
+    } else {
+        SetSemiTrans(poly, 0);
+    }
+    SetShadeTex(poly, 0);
+    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->u0 = arg4 / 256 * 4 + 7, poly->v0 = 0,
+        poly->u1 = arg4 / 256 * 4 + 8, poly->v1 = 0,
+        poly->u2 = arg4 / 256 * 4 + 7, poly->v2 = arg3->h,
+        poly->u3 = arg4 / 256 * 4 + 8, poly->v3 = arg3->h;
+    poly->x0 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x1 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x101, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x2 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->unk_014[D_8011ECA0] - (arg4 & 0xFF) + arg3->x + 0x200, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->tpage = func_8009ECB0(arg1, arg2 & 3, 0x3C0, 0);
+    poly->clut = func_8009ED74(arg6, arg7);
+    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
+
+    /* right page */
+    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    func_8009F040(poly);
+    if (arg2 != 0) {
+        SetSemiTrans(poly, 1);
+    } else {
+        SetSemiTrans(poly, 0);
+    }
+    SetShadeTex(poly, 0);
+    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->u0 = 0, poly->v0 = (arg0 & 0x20) * 4,
+        poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
+        poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
+        poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
+    poly->x0 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x1 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
+        poly->x2 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor + pageWidth * 2, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
+    poly->clut = func_8009ED74(arg6, arg7);
+    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
+}
 
 /* Matching notes (T-17015): the count and order of the 15 declared locals set the frame size and the
  * spilled home slots, so do not add or drop one. The masked table word is written twice ((*src & 0xFFFF)
