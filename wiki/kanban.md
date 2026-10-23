@@ -55,8 +55,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25102-w8-TAIIKU-80138950|T-25102 Wave 8 package w8-TAIIKU-80138950 (src/ovl/TAIIKU/80138950.c)]]
 - [ ] [[tickets/T-25103-w8-main-800674B0|T-25103 Wave 8 package w8-main-800674B0 (src/main/800674B0.c)]]
 - [ ] [[tickets/T-25104-w8-main-8004C3F0|T-25104 Wave 8 package w8-main-8004C3F0 (src/main/8004C3F0.c)]]
-- [ ] [[tickets/T-25105-w8-main-80053650|T-25105 Wave 8 package w8-main-80053650 (src/main/80053650.c)]]
-- [ ] [[tickets/T-25106-w8-TAIIKU-80133C80|T-25106 Wave 8 package w8-TAIIKU-80133C80 (src/ovl/TAIIKU/80133C80.c)]]
 - [ ] [[tickets/T-25107-w8-MASTER-80133680|T-25107 Wave 8 package w8-MASTER-80133680 (src/ovl/MASTER/80133680.c)]]
 - [ ] [[tickets/T-25108-w8-main-80062CD0|T-25108 Wave 8 package w8-main-80062CD0 (src/main/80062CD0.c)]]
 - [ ] [[tickets/T-25109-w8-EN_NICHI-80136B10|T-25109 Wave 8 package w8-EN_NICHI-80136B10 (src/ovl/EN_NICHI/80136B10.c)]]
@@ -207,8 +205,8 @@ kanban-plugin: board
 
 ## Done
 
-- [ ] [[tickets/T-25106-w8-TAIIKU-80133C80|T-25106 Wave 8 package w8-TAIIKU-80133C80 (src/ovl/TAIIKU/80133C80.c)]]
 - [ ] [[tickets/T-25105-w8-main-80053650|T-25105 Wave 8 package w8-main-80053650 (src/main/80053650.c)]]
+- [ ] [[tickets/T-25106-w8-TAIIKU-80133C80|T-25106 Wave 8 package w8-TAIIKU-80133C80 (src/ovl/TAIIKU/80133C80.c)]]
 - [ ] [[tickets/T-25059-etc-ranking-generator|T-25059 Match ETC ranking generator]]
 - [ ] [[tickets/T-25055-tel-pass-mechanisms|T-25055 Match TEL qualification dialogue through causal compiler evidence]]
 - [ ] [[tickets/T-25054-etc-results-scene|T-25054 Match ETC results scene]]
