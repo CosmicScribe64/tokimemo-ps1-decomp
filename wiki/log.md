@@ -1790,3 +1790,6 @@ Reviewed and merged: ENDING func_80134270 matched (1848 bytes, default C, three 
 ## [2026-10-23] ticket | T-11910 Done
 
 Agent B matched GEKO `func_80132B24` (s32 with no return plus a kept-live empty test; a no-op assignment to order cfe's `+` operands) and kept `func_80133024` guarded at 2 rows with the ucode finding in its comment. With `func_80133C50` (#69) that is two matches in this round; `func_80142C9C` and `func_80133024` stay open (the maintainer's agents also work on them, #65). Inline review against CODING_STANDARDS.md. Notes in [[matching-notes]]. [[tickets/T-11910-geko-remainder]].
+## [2026-10-23] build | T-25403 w11-GEKO-80142760-p1
+Pass 1 on GEKO func_80142C9C did not match: `src/ovl/GEKO/80142760.c` unchanged (INCLUDE_ASM stays, best body 159 rows); reviewed, only drafts and notes merged.
+Next pass starts from `drafts/T-25403/GEKO/func_80142C9C/NOTES.md` (global copy propagation off, [[tickets/T-25403-w11-GEKO-80142760]]).
