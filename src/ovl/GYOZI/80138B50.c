@@ -1,8 +1,10 @@
 #define MAIN_API_OVERRIDE_func_800BCE10 /* matched with implicit int return view (main_api.h: void) */
+#define MAIN_API_OVERRIDE_func_800BCDF0 /* T-25120: integer debug-call result (as in 80140C90.c) keeps the rotation offset out of v0 */
 #include "common.h"
 #include "ovl/GYOZI.h"
 
 s32 func_800BCE10();
+s32 func_800BCDF0();
 
 void func_80138B50(void) {
     func_8008A0D4(0x3FED);
@@ -39,12 +41,19 @@ void func_80138C78(void) {
     func_8004DE1C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: 75 rows (T-24707, was 103; two FAKE empty tests and the D_8014723C/count store order).
- * Remaining: the $s3/$s4 swap (sp4C base vs 1) and uopt zcopy:1 copy-propagating r into the D_80147224
- * loop preheader and hoisting the second "%d " into $s2. T-24116/T-24712: the four operands of the
- * `D_80147240 == 1` tests come out commuted (`bne s4,t6`), unchanged by a `* 1` wrapper, 1U, 0x1, a byte
- * view and `!(x != 1)`; a u16 divisor view for the `%` drops its `blez` but grows to 134 rows. */
+/* FAKE (T-25120): the gather, print and rotation stages reach the list, its count and the special
+ * byte through the CL view of one record. The values store then aliases the count, so uopt keeps the
+ * rotation offset out of the rotation loop and computes it before the loop guard, as the original
+ * does. The reorder loop keeps the separate symbols, so the address of the last entry stays shared
+ * across its store. */
+typedef struct {
+    /* 0x00 */ s16 values[12]; /* D_80147224 */
+    /* 0x18 */ s16 count;      /* D_8014723C */
+    /* 0x1A */ s16 pad;
+    /* 0x1C */ u8 special;     /* D_80147240 */
+} CandList; /* only the part up to special is used */
+#define CL (*(CandList *)D_80147224)
+
 void func_80138C9C(void) {
     s16 r;
     s16 sp4C[13];
@@ -53,35 +62,37 @@ void func_80138C9C(void) {
 
     D_80147220 = 0;
     D_80147244 = 0;
-    D_8014723C = 0;
-    D_80147240 = 0;
+    CL.count = 0;
+    CL.special = 0; /* FAKE (T-25120): an entry store by name would let tools/cvt_pass.py drop the
+                     * widening of the `== 1` loads and then put the register constant first */
     count = 0;
     if (((CharFlags *)D_800F53A0.girl[9].unk_10)->b1 == 0 &&
         D_800F53A0.girl[9].unk_06 >= 20) {
         D_80147240 = 1;
     }
+    r = 1; /* FAKE (T-25120): `r * 1` is not a plain variable, so uopt puts the widened load first */
     if (i) {} /* FAKE: empty test splits the live range of i (autotweak) T-24707 */
     for (i = 0; i < 11; i++) {
         if (i) {} /* FAKE: empty test splits the live range of i (autotweak) T-24707 */
-        if ((((CharFlags *)D_800F53A0.girl[i].unk_10)->b1 != 0 || (i == 9 && D_80147240 == 1)) &&
-            (func_8005F220(i) >= 0x32U || (D_80147240 == 1 && i == 9)) &&
+        if ((((CharFlags *)D_800F53A0.girl[i].unk_10)->b1 != 0 || (i == 9 && r * 1 == D_80147240)) &&
+            (func_8005F220(i) >= 0x32U || (r * 1 == D_80147240 && i == 9)) &&
             (D_80147240 == 0 || i != 0 || func_8005EBE0(0) >= 0x46U)) {
             sp4C[count] = i;
             count += 1;
-            D_8014723C += 1;
+            CL.count += 1;
             ((CharFlags *)D_800F53A0.girl[i].unk_10)->b8 = 1;
         }
     }
-    for (i = 0; i < D_8014723C; i++) {
+    for (i = 0; i < CL.count; i++) {
         func_800BCDF0("%d ", sp4C[i]);
     }
     func_800BCDF0("\n");
-    r = (u32)D_800F6468 % (u32)D_8014723C;
-    for (i = 0; i < D_8014723C; i++) {
-        D_80147224[i] = sp4C[(i + r) % D_8014723C];
+    r = (u32)D_800F6468 % (u32)CL.count;
+    for (i = 0; i < CL.count; i++) {
+        CL.values[i] = sp4C[(i + r) % CL.count];
     }
-    for (i = 0; i < D_8014723C; i++) {
-        func_800BCDF0("%d ", D_80147224[i]);
+    for (i = 0; i < CL.count; i++) {
+        func_800BCDF0("%d ", CL.values[i]);
     }
     func_800BCDF0("\n");
     for (i = 0; i < D_8014723C; i++) {
@@ -103,35 +114,31 @@ void func_80138C9C(void) {
     }
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50", func_80138C9C);
-#endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: 23 rows (T-24707, was 39; `>= 0x46U` assigned directly instead of through `? 1 : 0`).
- * Remaining: the jump-table dispatch `sll` sits in the range-check delay slot where the original has it in
- * the `== 9` branch slot (VALEN func_80132D0C, T-24033), and the selector load forwards into
- * func_8008F618 as `$v1` + `move a0,v1` where the original uses `$a0` (store in the jal delay slot).
- * T-24712: viewsweep (6 singles) and autotweak 240 s found nothing; splitting the assignment expression
- * is 62 rows; a `u8 sel` local fixes the first call but the later `D_800F62CF` bases move to `$a0` (56). */
+/* The girl index is reached through the work pointer, as in the VALEN sibling func_80132D0C:
+ * the assignment value then stays in $a0 for the store and the first call, and the later reads
+ * form one promoted range of unk_F2F that takes $v1 once func_8005EBE0 has its s32 parameter
+ * (main_api.h). D_80147240 is volatile in GYOZI.h for the dispatch `sll` slot (T-25120). */
 s32 func_8013907C(void) {
-    s32 pad;
+    GyoziWork *w;
     u8 s;
+
+    w = &D_800F53A0;
 
     if (D_80147220 == D_8014723C) {
         func_8004DDD8();
         return 0;
     }
-    func_8008F618(D_800F62CF = D_80147224[D_80147220]);
-    s = func_8005E0E0(D_800F62CF) & 0x7F;
-    D_80147198 = func_8005EBE0(D_800F62CF) >= 0x46U;
-    if (D_800F62CF == 9 && D_80147240 == 1) {
+    func_8008F618(w->unk_F2F = D_80147224[D_80147220]);
+    s = func_8005E0E0(w->unk_F2F) & 0x7F;
+    D_80147198 = func_8005EBE0(w->unk_F2F) >= 0x46U;
+    if (w->unk_F2F == 9 && D_80147240 == 1) {
         D_80147198 = 3;
     }
-    if (D_800F62CF == 0 && D_80147240 == 1 && s < 2U) {
+    if (w->unk_F2F == 0 && D_80147240 == 1 && s < 2U) {
         D_80147198 = 3;
     }
-    switch (D_800F62CF) {
+    switch (w->unk_F2F) {
     case 0:
         D_8014718C = D_801470F8;
         D_80147190 = D_8014712C;
@@ -190,9 +197,6 @@ s32 func_8013907C(void) {
     }
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50", func_8013907C);
-#endif
 
 void func_801393C8(void) {
     s32 pad;
@@ -244,7 +248,8 @@ void func_801393C8(void) {
         func_800BCE10(&D_800D92E0, "教室");
         bg = 0x3FF5;
     }
-    if (D_800F62CF == 9 && D_80147240 == 1 && D_80147244 < 2U) {
+    /* FAKE: non-volatile view of D_80147240 (volatile in GYOZI.h for func_8013907C) keeps the original local order of its `lui`. T-25120 */
+    if (D_800F62CF == 9 && *(u8 *)&D_80147240 == 1 && D_80147244 < 2U) {
         func_800BCE10(&D_800D92E0, "廊下");
         bg = 0x3FED;
     }
