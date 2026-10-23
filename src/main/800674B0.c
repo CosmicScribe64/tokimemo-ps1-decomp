@@ -217,7 +217,10 @@ void func_80067E34(void) {
 
 /* Calendar marks in records 0x61.. of D_8011ECD0 (at most 0x3F): the date word at +0xF8, the flagged Rec38 dates,
  * the active +0x54C entries, two 0x6F marks in periods 6..10, the day-schedule frames of both months (a multi-day
- * event repeats its frame on the following empty days) and the +0x75E records of this month. */
+ * event repeats its frame on the following empty days) and the +0x75E records of this month.
+ * FAKE: the first month test of each pair reads unk_03F through `gs` and the second through D_800E6280. They are
+ * separate expressions, so uopt does not share cvt(unk_03F) across the mark calls (519 rows to 16); the original
+ * keeps gs in a stack slot for the loop bounds, but which tests used it is unknown. T-25103 */
 void func_80067F04(void) {
     GameState *gs;
     s32 i;
