@@ -56,7 +56,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25311-w10-ENDING-80133C10|T-25311 Wave 10 second pass on src/ovl/ENDING/80133C10.c]]
 - [ ] [[tickets/T-25312-w10-TACO-801447D0|T-25312 Wave 10 second pass on src/ovl/TACO/801447D0.c]]
 - [ ] [[tickets/T-25313-w10-main-80043510|T-25313 Wave 10 second pass on src/main/80043510.c]]
-- [ ] [[tickets/T-25314-w10-ETC-8013FF80|T-25314 Wave 10 second pass on src/ovl/ETC/8013FF80.c]]
 - [ ] [[tickets/T-25315-w10-SHOUGATU-80134890|T-25315 Wave 10 second pass on src/ovl/SHOUGATU/80134890.c]]
 - [ ] [[tickets/T-25316-w10-TEL-8013CCD0|T-25316 Wave 10 second pass on src/ovl/TEL/8013CCD0.c]]
 - [ ] [[tickets/T-25317-w10-main-80047550|T-25317 Wave 10 second pass on src/main/80047550.c]]
@@ -164,6 +163,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25314-w10-ETC-8013FF80|T-25314 Wave 10 second pass on src/ovl/ETC/8013FF80.c]]
 - [ ] [[tickets/T-25306-w10-BUNKA_SD-80134540|T-25306 Wave 10 second pass on src/ovl/BUNKA_SD/80134540.c]]
 - [ ] [[tickets/T-25301-w10-NAME_ENT-80139740|T-25301 Wave 10 second pass on src/ovl/NAME_ENT/80139740.c]]
 - [ ] [[tickets/T-25302-w10-main-80049FF0|T-25302 Wave 10 second pass on src/main/80049FF0.c]]
