@@ -1781,3 +1781,7 @@ The header now declares `s32 func_80134D94(void);`; notes in `drafts/T-25306/BUN
 ## [2026-10-23] ticket | T-25400 wave 11 opened (repeat until matched, GEKO included)
 
 The user does not want to wait for the issue #65 claim; diman8 was told on the issue that our agents now also work on the four GEKO functions and that their PRs stay welcome. [[tickets/T-25400-wave-11-until-matched]] and T-25401..T-25412 cover every file still holding INCLUDE_ASM: GEKO first, then each file wave 10 leaves unmatched, up to three passes per file.
+
+## [2026-10-23] ticket | T-11910 In Progress
+
+Second round of claim CosmicScribe64/tokimemo-ps1-decomp#65: the last four GEKO functions (`func_80133C50`, `func_80142C9C`, `func_80133024`, `func_80132B24`). One Opus agent at a time. [[tickets/T-11910-geko-remainder]].
