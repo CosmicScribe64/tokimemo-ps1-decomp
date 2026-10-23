@@ -172,13 +172,7 @@ s32 func_80132A4C(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-24302/T-24709, about 28 rows (57 funcdiff lines); frame (0x50)
- * and both table copies match. The `day` home after the two tables (T-24709) is
- * what fixes the frame. Left: girl comes out in $v1 and the record pointer and
- * day in $v0 (the original swaps them, so each exit needs a `move v0,v1`; the
- * selector and the record pointer tie in the allocator), and the else arm's
- * ugen temporaries are numbered differently. */
-#ifdef NON_MATCHING
+/* s32 with no return at the end: girl is still in $v0 at the exit (T-25401). */
 s32 func_80132B24(void) {
     u32 date;
     u8 girl;
@@ -200,20 +194,22 @@ s32 func_80132B24(void) {
         date = D_800E6280.unk_1BC[girl].unk_10.w;
         month = D_800E6280.unk_03F;
         day = D_800E6280.unk_040;
+        /* FAKE: T-25401, `*&date` in the else arm is an indirect load for cfe,
+         * so the birthday term is evaluated before the table entry (the ugen
+         * temporaries of the original); uopt folds it back into the date register. */
         if (month == (date & 0xF)) {
             if (((date << 23) >> 27) - day < 21 && ((date << 23) >> 27) - day != 0) {
                 D_80144C50 = 10;
             }
         } else if (((date & 0xF) - month + 12) % 12 == 1 &&
-                   ((date << 23) >> 27) + days.day[(month + 10) % 12] - day < 20) {
+                   days.day[(month + 10) % 12] + ((*&date << 23) >> 27) - day < 20) {
             D_80144C50 = 10;
         }
     }
-    return girl;
+    /* FAKE: T-25401, an empty use keeps girl live (in $v0) to the exit, so the
+     * record pointer and day take $v1; `return girl` would bar girl from $v0. */
+    if (girl) {}
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132B24);
-#endif
 
 void func_80132D04(s16 arg0, s16 arg1) {
     s32 pad; /* FAKE: unused local that places status at sp+0x33 and the frame at 0x38 (T-3330) */
