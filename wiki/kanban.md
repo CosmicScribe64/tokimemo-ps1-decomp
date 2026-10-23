@@ -53,7 +53,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 - [ ] [[tickets/T-25309-w10-TAIIKU-80133C80|T-25309 Wave 10 second pass on src/ovl/TAIIKU/80133C80.c]]
 - [ ] [[tickets/T-25310-w10-main-80053650|T-25310 Wave 10 second pass on src/main/80053650.c]]
-- [ ] [[tickets/T-25311-w10-ENDING-80133C10|T-25311 Wave 10 second pass on src/ovl/ENDING/80133C10.c]]
 - [ ] [[tickets/T-25312-w10-TACO-801447D0|T-25312 Wave 10 second pass on src/ovl/TACO/801447D0.c]]
 - [ ] [[tickets/T-25313-w10-main-80043510|T-25313 Wave 10 second pass on src/main/80043510.c]]
 - [ ] [[tickets/T-25314-w10-ETC-8013FF80|T-25314 Wave 10 second pass on src/ovl/ETC/8013FF80.c]]
@@ -181,6 +180,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25311-w10-ENDING-80133C10|T-25311 Wave 10 second pass on src/ovl/ENDING/80133C10.c]]
 - [ ] [[tickets/T-25306-w10-BUNKA_SD-80134540|T-25306 Wave 10 second pass on src/ovl/BUNKA_SD/80134540.c]]
 - [ ] [[tickets/T-25301-w10-NAME_ENT-80139740|T-25301 Wave 10 second pass on src/ovl/NAME_ENT/80139740.c]]
 - [ ] [[tickets/T-25302-w10-main-80049FF0|T-25302 Wave 10 second pass on src/main/80049FF0.c]]
