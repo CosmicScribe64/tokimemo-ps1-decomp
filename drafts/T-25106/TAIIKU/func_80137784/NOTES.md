@@ -57,7 +57,9 @@ Insn 119 and 263: original `bne a0,t8` / `bne a1,t9` (pointer first), the guard 
 other side: `addiu t8,a0,16; bne t8,t9`), `!(p != X)`, `.w` member addresses, `X + 0`, `u8 *` byte
 offsets, other alias symbols, `(s32)p | 0` wrapper (breaks the entry colouring, 282 rows),
 `D_8014984C + arg0` (286 rows). A declared pointer local gives pointer-first order (as in T-24521) but
-costs a frame slot (64) and moves the spill slot. Reusing `i` as the slot address (`i = (s32)&D_8014984C[arg0]`,
+costs a frame slot (64) and moves the spill slot. Taking the store pointer from the alias and comparing
+with the real base on the left (`D_8014984C == &((Fix32 *)&D_8014985C - 4)[arg0]`, 265 rows; `[arg0 - 4]`, 309)
+recolours the entry. Reusing `i` as the slot address (`i = (s32)&D_8014984C[arg0]`,
 compare `i == (s32)X`) keeps frame 56 but recolours the entry (t0 for the runner): 86 rows, 318 with block 3 too.
 
 ## Next hypothesis
