@@ -843,11 +843,14 @@ void func_80135DF8(void) {
     }
 }
 
-/* Display records of the 0x44-byte pool. RUNNER_DISP(n) is the record of runner index n
- * (TaiRunnerA.unk_02), counted from record 46: the u8 index stays unsigned and every product
- * shares one 0x44 constant, as in the original. RUN(n) is runner n, 0 the player. T-25106. */
+/* Display records of the 0x44-byte pool. T-25106. */
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+/* FAKE: record of runner index n (TaiRunnerA.unk_02), counted from record 46 instead of from the
+ * pool start: the u8 index stays unsigned and every product shares one 0x44 constant, as in the
+ * original. The pool is one array; the real source is unknown. T-25106 */
 #define RUNNER_DISP(n) ((&DISP(46))[n])
+/* FAKE: runner n (0 the player) indexed from the player record; the object is player + cpu[3],
+ * not one array. As in func_80138680 and func_801368B8. T-25106 */
 #define RUN(n) ((&D_80149208.player)[n])
 /* Picks a random display record for each runner: the player's from 10..29, the others' from
  * 0..29, never 19, and no two runners (or the extra record D_801491D8) with the same unk_16 value.
@@ -1407,6 +1410,8 @@ s32 func_80137784(s32 arg0) {
         }
         return 0;
     }
+    /* FAKE: record D_801491D8 indexed from record 46, so the u8 global stays unsigned and its product is
+     * strength-reduced, as in func_80135F3C. T-25106 */
     if ((&DISP(46))[D_801491D8].unk_02 != 0 && D_80122E94 == 1 && arg0 == 0) {
         (&DISP(46))[D_801491D8].unk_02 = 0;
         (&DISP(46))[D_801491D8].unk_03 = 0;
@@ -1471,9 +1476,9 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
 
 /* Display-record view shared with the matched game-C sibling. T-24008. */
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
-/* Display record of runner n (TaiRunnerA.unk_02), counted from record 46. Indexing from that record
- * lets a u8 global index stay unsigned, as the runner field does, so both share one 0x44 constant;
- * DISP(46 + n) widens the global and gives it the counter's constant. T-25106. */
+/* FAKE: display record of runner n (TaiRunnerA.unk_02), counted from record 46. Indexing from that
+ * record lets a u8 global index stay unsigned, as the runner field does, so both share one 0x44
+ * constant; DISP(46 + n) widens the global and gives it the counter's constant. T-25106. */
 #define RUNNER_DISP(n) ((&DISP(46))[n])
 /* FAKE: byte-offset address of record i for the second loop. Written as DISP(108 + i) it is the same
  * expression as the first loop's DISP(107 + i), and the second loop then ends on the runner
