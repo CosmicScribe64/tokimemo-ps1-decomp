@@ -30,7 +30,7 @@ Playbook, extended entries (19): sections 1 (implicit int, value-returning libra
 
 Register cheat sheet: 11 new rows (extra arguments, pre-offset base, priority by blocks, value moved past a loop guard, LFTR bound register, typed field pointer, load sunk to first use, per-block interference, input-pass constant, split sum, `for` against do/while).
 
-Not changed: [[kanban]] and [[log]] (the orchestrator updates them).
+Not changed by the distillation commit: [[kanban]] (the orchestrator syncs it from the ticket status).
 
 ## Comments
 
