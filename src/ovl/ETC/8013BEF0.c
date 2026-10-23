@@ -551,7 +551,53 @@ s32 func_8013D32C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013D570);
+/* FAKE: one source line per vertex (x and y, u and v, the colour). as1 schedules by source line, and
+ * case 0 needs x2, h and y2 on one line; the original layout is plausible but unproven. T-25113 */
+s32 func_8013D570(s32 arg0, s32 arg1) {
+    s32 i;
+    POLY_FT4 *poly[2];
+    s32 h;
+
+    for (i = 0; i < 2; i++) {
+        poly[i] = GetWorkBase(0x28, D_8011ECA0);
+        func_8009F040(poly[i]);
+        SetSemiTrans(poly[i], 0);
+        SetShadeTex(poly[i], 1);
+        poly[i]->tpage = func_8009ECB0(2, 0, 0x140 + i * 0x80, 0x100);
+        switch (arg1) {
+        case 0:
+            poly[i]->x0 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; poly[i]->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x65;
+            poly[i]->x1 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0x88; poly[i]->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x65;
+            poly[i]->x2 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; h = 0xA0 - arg0; poly[i]->y2 = D_800E6280.unk_018[D_8011ECA0] + h - 0x65;
+            poly[i]->x3 = 0xA0 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80; poly[i]->y3 = D_800E6280.unk_018[D_8011ECA0] + h - 0x65;
+            break;
+        case 1:
+            poly[i]->x0 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; poly[i]->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x65;
+            poly[i]->x1 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x65;
+            poly[i]->x2 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; h = 0xA0 - arg0; poly[i]->y2 = D_800E6280.unk_018[D_8011ECA0] + h - 0x65;
+            poly[i]->x3 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y3 = D_800E6280.unk_018[D_8011ECA0] + h - 0x65;
+            break;
+        case 2:
+            poly[i]->x0 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; poly[i]->y0 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x1 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0x88; poly[i]->y1 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x2 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; h = 0xA0 - arg0; poly[i]->y2 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 + h - 0x65;
+            poly[i]->x3 = 0xA0 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80; poly[i]->y3 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 + h - 0x65;
+            break;
+        case 3:
+            poly[i]->x0 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; poly[i]->y0 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x1 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y1 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x2 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; h = 0xA0 - arg0; poly[i]->y2 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 + h - 0x65;
+            poly[i]->x3 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y3 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 + h - 0x65;
+            break;
+        }
+        poly[i]->u0 = i * 8 + 0x18; poly[i]->v0 = 0x13;
+        poly[i]->u1 = i * 8 + 0xA0; poly[i]->v1 = 0x13;
+        poly[i]->u2 = i * 8 + 0x18; poly[i]->v2 = 0xB3;
+        poly[i]->u3 = i * 8 + 0xA0; poly[i]->v3 = 0xB3;
+        poly[i]->r0 = 0x80; poly[i]->g0 = 0x80; poly[i]->b0 = 0x80;
+        AddPrim(D_8011ECA0 * 0x400 + 0x28 + D_800E8CA0, poly[i]);
+    }
+}
 
 void func_8013DEA0(s32 arg0) {
     SPRT *temp_v0;
