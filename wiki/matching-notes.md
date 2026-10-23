@@ -809,3 +809,14 @@ free); the draft piece sits at +1 to +5. The original's opcode walk uses a GameS
 the constant (absolute-address FAKE) leaves it unallocated and gives the walk's structure (825 rows). Left: the walk
 colours (op, 0x25, p). Bodies, measurements, negatives and the next hypothesis (the schedule reached through
 another aggregate or symbol than the GameState base): `drafts/T-25125/main/func_8007132C/NOTES.md`.
+## T-25138: RPG_BAT func_80144C84
+
+Matched (1,276 bytes, default C) from the T-24522 28-row draft in about 25 minutes. Both remaining gaps came from
+one ownership fact: the flag words `D_8015EBCC`, `D_8015EBE0` and the counters `D_8015EBFC` are one object.
+With direct members of one view (`extern RpgBattleView D_8015EBCC`, a file override of the header's `s32[3]`),
+the indexed read `flag[D_8015EBAC]` aliases `EBE0` and `unk_08`, so uopt ends their ranges at the third
+threshold and reloads them after the test (as the target does), and as1 keeps the `EBE0` load before the
+counter writebacks at the join (one symbol). A pointer view of an incomplete array gave the reloads but
+swapped the counter colours; negative offsets from `D_8015EBFC` did not alias `EBE0`. Then `EBE0 -= 0x14`
+before the `unk_08` clamp, and the real locals `sel`/`total` for the 0x38 frame. The T-24522 `* 1` wrappers
+and `RpgStat *stat` are gone; the comma return stays (FAKE). Details: `drafts/T-25138/RPG_BAT/func_80144C84/NOTES.md`.
