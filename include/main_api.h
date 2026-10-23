@@ -2471,6 +2471,7 @@ s32 func_800603C0(void);
 void func_8005D1B0();
 void func_8005D9B4();
 s32 func_8005E0E0();
+u32 func_8005EBE0(s32 arg0); /* GYOZI calls only; the s32 parameter as in get_h_tokimeki, needed by func_8013907C (T-25120) */
 void join_club(void);
 void join_club_init(void);
 s32 join_club_select(void);

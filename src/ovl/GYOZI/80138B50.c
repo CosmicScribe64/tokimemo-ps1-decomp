@@ -107,31 +107,30 @@ void func_80138C9C(void) {
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50", func_80138C9C);
 #endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: 23 rows (T-24707, was 39; `>= 0x46U` assigned directly instead of through `? 1 : 0`).
- * Remaining: the jump-table dispatch `sll` sits in the range-check delay slot where the original has it in
- * the `== 9` branch slot (VALEN func_80132D0C, T-24033), and the selector load forwards into
- * func_8008F618 as `$v1` + `move a0,v1` where the original uses `$a0` (store in the jal delay slot).
- * T-24712: viewsweep (6 singles) and autotweak 240 s found nothing; splitting the assignment expression
- * is 62 rows; a `u8 sel` local fixes the first call but the later `D_800F62CF` bases move to `$a0` (56). */
+/* The girl index is reached through the work pointer, as in the VALEN sibling func_80132D0C:
+ * the assignment value then stays in $a0 for the store and the first call, and the later reads
+ * form one promoted range of unk_F2F that takes $v1 once func_8005EBE0 has its s32 parameter
+ * (main_api.h). D_80147240 is volatile in GYOZI.h for the dispatch `sll` slot (T-25120). */
 s32 func_8013907C(void) {
-    s32 pad;
+    GyoziWork *w;
     u8 s;
+
+    w = &D_800F53A0;
 
     if (D_80147220 == D_8014723C) {
         func_8004DDD8();
         return 0;
     }
-    func_8008F618(D_800F62CF = D_80147224[D_80147220]);
-    s = func_8005E0E0(D_800F62CF) & 0x7F;
-    D_80147198 = func_8005EBE0(D_800F62CF) >= 0x46U;
-    if (D_800F62CF == 9 && D_80147240 == 1) {
+    func_8008F618(w->unk_F2F = D_80147224[D_80147220]);
+    s = func_8005E0E0(w->unk_F2F) & 0x7F;
+    D_80147198 = func_8005EBE0(w->unk_F2F) >= 0x46U;
+    if (w->unk_F2F == 9 && D_80147240 == 1) {
         D_80147198 = 3;
     }
-    if (D_800F62CF == 0 && D_80147240 == 1 && s < 2U) {
+    if (w->unk_F2F == 0 && D_80147240 == 1 && s < 2U) {
         D_80147198 = 3;
     }
-    switch (D_800F62CF) {
+    switch (w->unk_F2F) {
     case 0:
         D_8014718C = D_801470F8;
         D_80147190 = D_8014712C;
@@ -190,9 +189,6 @@ s32 func_8013907C(void) {
     }
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50", func_8013907C);
-#endif
 
 void func_801393C8(void) {
     s32 pad;
@@ -244,7 +240,8 @@ void func_801393C8(void) {
         func_800BCE10(&D_800D92E0, "教室");
         bg = 0x3FF5;
     }
-    if (D_800F62CF == 9 && D_80147240 == 1 && D_80147244 < 2U) {
+    /* FAKE: non-volatile view of D_80147240 (volatile in GYOZI.h for func_8013907C) keeps the original local order of its `lui`. T-25120 */
+    if (D_800F62CF == 9 && *(u8 *)&D_80147240 == 1 && D_80147244 < 2U) {
         func_800BCE10(&D_800D92E0, "廊下");
         bg = 0x3FED;
     }
