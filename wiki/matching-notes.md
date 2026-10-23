@@ -17,55 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25005: several .data ranges per object; main sndisp
-[[tickets/T-25005-data-regions-per-object]], worktree `data2`. Build support for an object with two or more `.data` ranges ([[build-system]], "Several ranges per object").
-- **`sndisp` (388 B): MATCH.** This is the T-25001 C with its guard removed. `tools/data_island.py main/8004F870` adds `800B40F0-800B4390` as a further island (section `.data_800B40F0`). In `src/main/8004F870.c` the order is: `D_800E3680` (the old island, stays `.data`), the `D_800B40F0` piece, ..., `sndisp`, then the pieces from `D_800B4100` on. IDO emits the `pos[]` template when it compiles `sndisp`, so the template lands at `.data_800B40F0+8` = `D_800B40F8`, the original address. The `D_800B40F8` piece is gone because the compiler provides those bytes.
-- **Rule for other files.** The C file must emit each range's data back to back. A local aggregate initialiser template sits where its function sits in the source, so the `INCLUDE_RODATA` lines of a range are split around that function. `data_split.py` fails the build when the parts are not contiguous, have the wrong size, or do not start on a symbol.
-- **Other functions blocked by this.** None found. No `NON_MATCHING` note in `src/` and no matching note names a second data range as the only gap. The two earlier initialiser cases needed only one island each: TAIIKU `80141280` (`D_8014A070`, island in the yaml) and EVENT `func_8011767C` (C in `8010FE10.c`).
-
-## T-24929: uopt zcopy scope, closed as a switch-compare rule (in the build)
-[[tickets/T-24929-uopt-zcopy-scope]]. ETC func_8013CCE4 (guarded at 3 rows since T-24921) now matches in plain C.
-
-The T-24925 hypothesis (the original propagates copies of globals but not local induction copies) did not hold up.
-The fold of the unrolled `buf[]` loop only happens under `OPTN 405 1`, and the original's loop is exactly IDO's
-zcopy-off code, so the fix keeps zcopy off. The three rows came from the compare register:
-
-- With zcopy off, uopt keeps the switch temporary in its own register (`lod R3; str R2` at the entry). Only the
-  first compare reads the global's register; the later ones read R2. ugen emits the same thing (`move v0,v1;
-  beq v0,at` ...), seen in a binasm dump of main func_80077CA8.
-- In 80077CA8 and most other chains, as1 then rewrites those compares to `$v1` and keeps the move, which is the
-  original's shape. In func_8013CCE4 it does not: the case bodies increment the global, and ugen's code redefines
-  `$v1` there (`addu v1,v1,1; andi t6,v1,0xff; move v1,t6`) while `$v0` is still live, so as1 leaves the compares on
-  `$v0`. The original compares on `$v1` here too (target rows 7/10/13).
-- The new step in `tools/cvt_pass.py` (`switch_compares`) does the substitution on uopt's output: in every
-  zcopy-off procedure, the loads of Rt after the entry copy `lod Rg; str Rt`, up to the first label, call or
-  store, read Rg. Nothing redefines Rg there, so the meaning is unchanged.
-
-Measurements: whole build, every IDO object rebuilt; a function counts as changed when its disassembly differs
-from the baseline object after normalising addresses and trailing pad nops (`drafts/T-24929/objcmp.py`,
-`measure.sh`). `drafts/T-24929/cvt_pass_variants.py` holds the variants.
-
-| Variant (uniform) | Stage | Matched functions changed | func_8013CCE4 |
-| --- | --- | ---: | --- |
-| zcopy 1 for this procedure (T-24925 flip) | OPTN | not uniform | loop folds, 96 lines |
-| zcopy 1 plus any uopt z-option (0x191-0x19a: zmark, zvref, zdbug, zmovc, zcomo, zstor, zscm, zaloc, one more), either value | OPTN | not measured | none stops the fold, 96 lines |
-| zcopy 0 plus any of those options | OPTN | not measured | 6 lines (zmovc 0: 224) |
-| `sprop`: the temporary's loads in the entry chain replaced by the global's `LOD`, zcopy-off procedures | uopt input | 261 | 3 lines (the copy is dropped) |
-| `zstor`: `OPTN 0x197 0` (zstor) for zcopy-off procedures | OPTN | 24 | - |
-| `zstor1`: `OPTN 0x197 1` everywhere (control) | OPTN | 0 | - |
-| `sprop` + `zstor` | both | 174 | match |
-| the same, only where the switched-on global is stored in the procedure | both | 74 | match |
-| `rprop_all`: register-copy propagation at the entry of every procedure | uopt output | 275 | - |
-| **`rprop`: the same, zcopy-off procedures only (adopted)** | uopt output | **0** (fires in 267 procedures) | **match** |
-
-`rprop` gives 27/27 SHA1 with func_8013CCE4 unguarded. On the other 25 guarded functions it changes no diff row
-count (`drafts/T-24929/guards.sh`). uopt's z-option numbers come from the name table in the 5.3 binary (32-byte
-blank-padded names at 0x10003c10-0x10003d10: zaloc 0x199, zscm 0x198, zstor 0x197, zcomo 0x196, zcopy 0x195, zmovc
-0x194, zdbug 0x193, zvref 0x192, zmark 0x191).
-
-Build note: `build.ninja` does not list `tools/cvt_pass.py` as a dependency of IDO compiles (only `tools/cc.py`).
-After changing the pass, touch `tools/cc.py` or do a clean build.
-
 ## T-25003: class C main func_80043510, func_8004443C matched; func_8006BA40 guarded
 
 [[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]], branch c-m3. Two of three matched in plain C; one guard at 7 rows.
@@ -808,6 +759,7 @@ FAKE (T-25121): `volatile D_8014DB80` in `ovl/ETC.h`, `pad[13]`, `s8` views on u
 ## T-25141: TACO func_8013FBF0
 
 Matched (1040 bytes, default C), [[tickets/T-25141-w8-TACO-8013F250]], wave 9 neighbor conveyor (T-25200). Start: the T-24502 typed SPRT draft at 84 rows. Four causes, each measured alone. (1) The colour word is `(r << 16) + (g << 8) + b` on u8 channels after `r *= value`: the `andi` in the target is the u8 truncation of the product, and the `& 0xFF` that m2c printed added redundant `and`s that cost ugen ring slots and sent the products to temporaries (`mflo t4` for `mflo s0`); `cc -S` shows it (80 to 51 rows). Candidate [[playbook]] recipe: when a u8 variable's product sits in its own register in the target and the draft has `mflo` into a temporary, drop the explicit masks at the use. (2) The second sprite's y0 has the shift written before the array read; cfe swaps `+` operands by weight, so that order makes ugen read the array first (51 to 4). (3) UV stores of each sprite on one line, as in `func_8013F874` (4 to 0). (4) `s32 pad[6]` for the 0x60 frame (FAKE). Negatives: s32 channels, separate product locals, a `u32 dy` local, lighter shift spellings. Details: `drafts/T-25141/TACO/func_8013FBF0/NOTES.md`.
+
 ## T-25142: BUNKA_SD func_80134D94
 
 Not matched; aligned cost 102 -> 12 (243/243 words), but 45 positional rows, so the source is plain
@@ -824,9 +776,11 @@ register, as in T-25146). Left: in the first block the original loads the byte c
 `a1` (`lui a1`) while the draft keeps a load range in `v0` (`lui v0`), and the selector needs the
 T-25053 empty test to get `a2`, which loads it one slot early; the last block copies w to `v0` after
 the store instead of before. Negatives and the next hypothesis: `drafts/T-25142/BUNKA_SD/func_80134D94/NOTES.md`.
+
 ## T-25140: main make_color_bar
 
 Matched (1,072 bytes, default C, no FAKE) from the T-24501 walked-pointer draft (186 rows, cost 330) in about 20 minutes. The first divergence was the row pointer: as a declared variable it is range bit 0 and takes `$v0`. The target colours it after the masked gradient values (`$v0`, `$a1`), at `$t0`, so it has to be a uopt induction temporary. Writing every store from the pair index, `p[k + 16 * row].r1 = k * 2` and `.r0 = k * 2 - 1` in `for (k = 0; k < 16; k++)`, lets uopt strength-reduce both values and the address, and use `k * 2 - 1 < 31` as the loop test. That closes all three loops at once. Negatives: indexed `p[k]` with separate `i`/`j` counters (247 rows), and a `Pix2Out *` parameter with no `p = arg0` copy (260 rows). A toy file with only the typedef and the function, compiled with `tools/cc.py`, reproduced the full-unit score in 8 s. Details: `drafts/T-25140/main/make_color_bar/NOTES.md`.
+
 ## T-25124: main func_80046AC8
 
 [[tickets/T-25124-w8-main-80046500]] matches `func_80046AC8` (2696 bytes, default C). It is the quadrant renderer from [[tickets/T-25034-main-quadrant-extent]], whose `uv-standard.c` body was the start, at 78 rows. The code from the quad colour block to the texture page already matched. What was left were stack homes and ugen temporaries. What closed it:

@@ -7,9 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25002 class C ENDING, GEKO, ETC
-[[tickets/T-25002-class-c-ending-geko-etc]] created and set In Progress (worktree c-m2): ENDING `func_801387B0`, GEKO `func_80133C50`, ETC `func_80144224` from [[plan-remaining]] class C.
-
 ## [2026-10-20] ticket | T-25002 to In Review
 [[tickets/T-25002-class-c-ending-geko-etc]]: no match. GEKO `func_80133C50` guarded at 13 rows (from the T-24503 cost-44 body: u8 cast, `g * 1`, word-local C50 read); ENDING `func_801387B0` and ETC `func_80144224` stay INCLUDE_ASM with drafts in drafts/T-25002/. Notes in [[matching-notes]]. Clean build 27/27 and the header, globals and proto checks pass.
 
@@ -1738,10 +1735,12 @@ The only function of the package is matched, none left with rows; notes in `draf
 ## [2026-10-23] ticket | T-25142 Done
 Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/matching-notes.md`, fixed), clean rebuild 27/27. No function matched: BUNKA_SD `func_80134D94` stays `INCLUDE_ASM` (old T-24137 guard removed) with its draft at aligned cost 12, 45 positional rows, in `drafts/T-25142/BUNKA_SD/func_80134D94/`.
 No function matched in this job; notes in `drafts/T-25142/BUNKA_SD/func_80134D94/NOTES.md`, [[matching-notes]], [[tickets/T-25142-w8-BUNKA_SD-80134540]].
+
 ## [2026-10-23] ticket | T-25140 Done
 
 Reviewed [[tickets/T-25140-w8-main-8004AD60]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched main `make_color_bar` (1072 bytes) as default C in `src/main/8004AD60.c`, no FAKE.
 The only function of the package is matched, none left with rows; notes in `drafts/T-25140/main/make_color_bar/NOTES.md` and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25124 Done
 Reviewed [[tickets/T-25124-w8-main-80046500]] against CODING_STANDARDS.md; the goto FAKE comment now also covers the comma UV groups and a duplicate draft copy of the body was removed; clean rebuild 27/27, funcdiff MATCH. Matched main `func_80046AC8` (2696 bytes) as default C in `src/main/80046500.c`.
 The only function of the package is C now; notes in `drafts/T-25124/main/func_80046AC8/NOTES.md` and [[matching-notes]].
