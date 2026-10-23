@@ -208,6 +208,7 @@ colour in every arm. Symptom: dst/src pointer registers swapped in some arms and
 look for a variable the original reuses as the loop counter in the odd arm. In main `func_8006509C`
 the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the scan on its own `j`
 (56 rows to 0, plain C). See `drafts/T-25108/main/func_8006509C/NOTES.md`.
+
 ## A shared constant loaded too late in one arm (T-25201)
 
 uopt adds a block to a constant's register range only where the constant has appeared on some path from the
@@ -218,4 +219,3 @@ adds nothing. Fix: a never-true arm with an indirect store at the start of the a
 `if ((u32)a < 0) { rec[a + 64].unk_01 = 3; }` on a parameter (FAKE); uopt keeps it and ugen removes it. The
 traced uopt's R9SAVE lines (regdiff's `draft.log`) list each range's blocks to confirm. main `func_80065B0C`
 (9 rows to 0); `drafts/T-25108/main/func_80065B0C/NOTES.md`.
-
