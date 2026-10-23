@@ -688,46 +688,31 @@ s32 func_80054C74(s32 arg0) {
     return 1;
 }
 
-/* NON_MATCHING: T-24123/T-24703/T-24711, 19 resolved rows. The frame home, the u8 slot view, the
- * empty `i` test and the nickname address shift are FAKE layout/allocation edits. Everything before
- * the unk_CC8 loop now matches; the rest is that loop head: the original emits sll t7,s0,4 before the
- * bound `lui` and `addiu v0` before `addu v1,t7,t8`, and numbers the four loaded bytes t0,t1,t2,t9
- * where this draft gets t9,t0,t1,t2 (same four instructions, rotated one ugen slot). Statement
- * order, one-line grouping, i < 4, a pointer local, the unk_CC8 base form and a load-then-store body
- * were all tried (T-24711). */
-#ifdef NON_MATCHING
 void func_80054E6C(void) {
-    s32 pad[16]; /* FAKE: T-24703, 64 unused bytes the original frame has (0x80 against 0x40) */
+    s32 pad[16]; /* FAKE: T-24703/T-25105, 64 unused bytes of the original 0x80 frame; the real local is unknown */
     s32 i;
     s32 slot;
 
-    slot = *(u8 *)&D_800E7D36; /* FAKE: T-24703, a byte view keeps the andi and the ugen ring slot */
+    /* FAKE: T-24703/T-25105, the byte view (an indirect load) loads the raw byte into s0 and keeps the
+       slot and slot * 8 bases saved across the memcpy calls; the plain global load does neither */
+    slot = *(u8 *)&D_800E7D36;
     slot &= 0xF;
-    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->year[0] = D_800E6280.unk_03E;
-    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->month[0] = D_800E6280.unk_03F;
-    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->day[0] = D_800E6280.unk_040;
-    memcpy(((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 8))->family_name[0], D_800E6280.unk_0D4, 8);
-    memcpy(((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 8))->given_name[0], D_800E6280.unk_0DC, 8);
-    /* FAKE: T-24711, the shift form keeps this index a different ugen/uopt expression from the
-       slot * 16 of the unk_CC8 loop below; as the struct field it is CSE'd across the memcpy calls
-       and spilled (2 extra instructions, ring one slot off). */
-    memcpy((u8 *)&D_800E7D10 + 0x988 + (slot << 4), D_800E6280.unk_0E4, 0x10);
-    if (i) {} /* FAKE: T-24123 empty test splits the live range of i */
+    D_800E7D10.year[slot] = D_800E6280.unk_03E;
+    D_800E7D10.month[slot] = D_800E6280.unk_03F;
+    D_800E7D10.day[slot] = D_800E6280.unk_040;
+    memcpy(D_800E7D10.family_name[slot], D_800E6280.unk_0D4, 8);
+    memcpy(D_800E7D10.given_name[slot], D_800E6280.unk_0DC, 8);
+    memcpy(D_800E7D10.nickname[slot], D_800E6280.unk_0E4, 0x10);
     for (i = 0; i < 9; i++) {
-        *(s32 *)&D_800E7D10.metrics[i][slot] = (&D_800E6280.unk_0F8)[i + 1];
+        *(s32 *)&D_800E7D10.metrics[i][slot] = ((s32 *)&D_800E6280.unk_0FC)[i];
     }
-    for (i = 0; i != 4; i++) {
-        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 0] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 0];
-        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 1] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 1];
-        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 2] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 2];
-        ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot * 16))->unk_CC8[i * 4 + 3] = D_800E6280.unk_1BC[15].unk_14[i * 4 + 3];
+    for (i = 0; i < 16; i++) {
+        /* FAKE: T-25105, a 16-byte row view of unk_CC8; the flat slot * 16 + i index is CSE'd with
+           the nickname address across the memcpy calls and spilled */
+        ((u8 (*)[16])D_800E7D10.unk_CC8)[slot][i] = D_800E6280.unk_1BC[15].unk_14[i];
     }
-    i = D_800E6280.unk_0F4.h >> 12;
-    ((Work800E7D10 *)((u8 *)&D_800E7D10 + slot))->club[0] = i;
+    D_800E7D10.club[slot] = D_800E6280.unk_0F4.h >> 12;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054E6C);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054FC0);
 
