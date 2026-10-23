@@ -167,7 +167,8 @@ void strKickCD(s32 arg0) {
 
 /* The PsyQ movie sample's player loop (CdSearchFile retry, DecDCTin/DecDCTout, double-buffered
  * DISPENV/DRAWENV) on the StrCtx at 0x80180000; arg0 is the file name, arg1 the end frame and arg2
- * the start sector (CdIntToPos when it is not 0). T-17014, T-25118 */
+ * the start sector (CdIntToPos when it is not 0). Returns 0 when the file is not found; the normal
+ * exit has no return statement, as in the original (v0 is left by the last call). T-17014, T-25118 */
 s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
     s32 frames;
     s16 vol;
