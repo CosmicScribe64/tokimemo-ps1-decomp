@@ -2400,7 +2400,147 @@ void func_8013E894(void) {
     } while (angle != 0x800);
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013EC60);
+void func_8013EC60(void) {
+    s32 i;
+    s32 middle0;
+    s32 middle1;
+    s32 x[4];
+    s32 y[4];
+    s32 scale;
+    s32 input_x;
+    s32 input_y;
+    s32 camera_x;
+    s32 camera_y;
+    s32 ball_x;
+    s32 angle;
+    s32 first_y;
+
+    /* Straight strips, each corner turned by the camera angle. */
+    for (angle = 0; angle < 64; angle++) {
+        x[1] = x[0] = 320;
+        x[3] = x[2] = 240;
+        y[0] = angle << 3;
+        y[1] = (angle + 1) << 3;
+        /* Copies, not chained stores: `y[2] = y[0] = angle << 3` reserves one more spill slot, and the counter
+         * spill lands at 0x74 instead of 0x78 (T-25102). */
+        y[2] = y[0];
+        y[3] = y[1];
+        for (i = 0; i < 4; i++) {
+            input_x = x[i];
+            input_y = y[i];
+            /* func_80086204 is Rot_2D called without a prototype (implicit int), as in func_8013E894. */
+            func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle, &input_x, &input_y, &x[i], &y[i]);
+        }
+        camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
+        camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
+        for (i = 0; i < 4; i++) {
+            x[i] += camera_x;
+            y[i] += camera_y;
+        }
+        for (i = 0; i < 4; i++) {
+            scale = func_800A0140(0x2AA);
+            y[i] = (y[i] * scale) >> 12;
+        }
+        middle0 = (x[0] + x[2]) >> 1;
+        middle1 = (x[1] + x[3]) >> 1;
+        for (i = 0; i < 2; i++) {
+            first_y = y[i << 1];
+            if (first_y > 0 || y[(i << 1) + 1] > 0) {
+                if (middle0 < x[i << 1]) {
+                    x[i << 1] = x[i << 1] + first_y + middle0;
+                }
+                if (x[i << 1] < middle0) {
+                    x[i << 1] = x[i << 1] - first_y + middle0;
+                }
+                if (middle1 < x[(i << 1) + 1]) {
+                    x[(i << 1) + 1] = y[(i << 1) + 1] + x[(i << 1) + 1] + middle1;
+                }
+                if (x[(i << 1) + 1] < middle1) {
+                    x[(i << 1) + 1] = x[(i << 1) + 1] - y[(i << 1) + 1] + middle1;
+                }
+            }
+        }
+        for (i = 0; i < 4; i++) {
+            x[i] = -x[i];
+        }
+        for (i = 0; i < 4; i++) {
+            y[i] -= 24;
+        }
+        ball_x = (s16)D_80149968.unk_1C[0] >> 2;
+        for (i = 0; i < 4; i++) {
+            x[i] -= ball_x;
+        }
+        for (i = 0; i != 2; i++) {
+            if ((x[i << 1] >= -160 && x[i << 1] <= 160 && y[i << 1] >= -23 && y[i << 1] < 121) ||
+                (x[(i << 1) + 1] >= -160 && x[(i << 1) + 1] <= 160 &&
+                 y[(i << 1) + 1] >= -23 && y[(i << 1) + 1] < 121)) {
+                func_80049FF0((s16)x[i << 1], (s16)y[i << 1], (s16)x[(i << 1) + 1], (s16)y[(i << 1) + 1],
+                              0xFFFFFF, 0xFFFFFF, 250);
+            }
+        }
+    }
+    ((TaiikuActor44 *)D_8011ECD0)[102].unk_26 = x[3] + 8;
+    /* Rotated strips. `angle * 16` with `angle++` lets uopt strength-reduce the counter into one spilled
+     * value at 0x78, the slot of the first phase, ending with `bne v0,0x400`. The second corner adds 16 to
+     * that sum; `(angle + 1) * 16` would be a second strength-reduced value (T-25102). */
+    for (angle = 0; angle < 64; angle++) {
+        input_x = 0;
+        input_y = -320;
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16, &input_x, &input_y, &x[0], &y[0]);
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16 + 16, &input_x, &input_y, &x[1], &y[1]);
+        input_x = 0;
+        input_y = -240;
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16, &input_x, &input_y, &x[2], &y[2]);
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16 + 16, &input_x, &input_y, &x[3], &y[3]);
+        camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
+        camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
+        for (i = 0; i < 4; i++) {
+            x[i] += camera_x;
+            y[i] += camera_y;
+        }
+        for (i = 0; i < 4; i++) {
+            scale = func_800A0140(0x2AA);
+            y[i] = (y[i] * scale) >> 12;
+        }
+        middle0 = (x[0] + x[2]) >> 1;
+        middle1 = (x[1] + x[3]) >> 1;
+        for (i = 0; i < 2; i++) {
+            first_y = y[i << 1];
+            if (first_y > 0 || y[(i << 1) + 1] > 0) {
+                if (middle0 < x[i << 1]) {
+                    x[i << 1] = x[i << 1] + first_y + middle0;
+                }
+                if (x[i << 1] < middle0) {
+                    x[i << 1] = x[i << 1] - first_y + middle0;
+                }
+                if (middle1 < x[(i << 1) + 1]) {
+                    x[(i << 1) + 1] = y[(i << 1) + 1] + x[(i << 1) + 1] + middle1;
+                }
+                if (x[(i << 1) + 1] < middle1) {
+                    x[(i << 1) + 1] = x[(i << 1) + 1] - y[(i << 1) + 1] + middle1;
+                }
+            }
+        }
+        for (i = 0; i < 4; i++) {
+            x[i] = -x[i];
+        }
+        for (i = 0; i < 4; i++) {
+            y[i] -= 24;
+        }
+        ball_x = (s16)D_80149968.unk_1C[0] >> 2;
+        for (i = 0; i < 4; i++) {
+            x[i] -= ball_x;
+        }
+        for (i = 0; i != 2; i++) {
+            if ((x[i << 1] >= -160 && x[i << 1] <= 160 && y[i << 1] >= -23 && y[i << 1] < 121) ||
+                (x[(i << 1) + 1] >= -160 && x[(i << 1) + 1] <= 160 &&
+                 y[(i << 1) + 1] >= -23 && y[(i << 1) + 1] < 121)) {
+                func_80049FF0((s16)x[i << 1], (s16)y[i << 1], (s16)x[(i << 1) + 1], (s16)y[(i << 1) + 1],
+                              0xFFFFFF, 0xFFFFFF, 250);
+            }
+        }
+    }
+}
 
 void func_8013F35C(void) {
     s32 var_s0;
