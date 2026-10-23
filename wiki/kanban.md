@@ -51,7 +51,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
-- [ ] [[tickets/T-25114-w8-RPG_BAT-80154430|T-25114 Wave 8 package w8-RPG_BAT-80154430 (src/ovl/RPG_BAT/80154430.c)]]
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
 - [ ] [[tickets/T-25117-w8-VALEN-80132760|T-25117 Wave 8 package w8-VALEN-80132760 (src/ovl/VALEN/80132760.c)]]
 - [ ] [[tickets/T-25118-w8-main-800563F0|T-25118 Wave 8 package w8-main-800563F0 (src/main/800563F0.c)]]
@@ -186,6 +185,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25114-w8-RPG_BAT-80154430|T-25114 Wave 8 package w8-RPG_BAT-80154430 (src/ovl/RPG_BAT/80154430.c)]]
 - [ ] [[tickets/T-25147-w8-main-80058D20|T-25147 Wave 8 package w8-main-80058D20 (src/main/80058D20.c)]]
 - [ ] [[tickets/T-25112-w8-TACO-80139170|T-25112 Wave 8 package w8-TACO-80139170 (src/ovl/TACO/80139170.c)]]
 - [ ] [[tickets/T-25111-w8-TACO-8013B990|T-25111 Wave 8 package w8-TACO-8013B990 (src/ovl/TACO/8013B990.c)]]
