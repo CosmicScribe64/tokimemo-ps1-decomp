@@ -735,3 +735,13 @@ Matched (default-build C, 804 bytes, 27/27). The last 4 rows were p's spill slot
 3. The compare operand order in the loop: no `v` local, and the record read as an expression after `i--`.
 
 A `GameState *g` pointer replaces the FAKE scalar views and keeps the two final `unk_F5F` reloads. Details: `drafts/T-25113/ETC/func_8013F054/NOTES.md`.
+
+## T-25113: ETC func_8013D570
+
+[[tickets/T-25113-w8-ETC-8013BEF0]]: matched (default C, 2352 bytes), from INCLUDE_ASM. The T-24078 drafts (aligned cost 604 to 618, about 670 to 850 rows) walked a `POLY_FT4 **` cursor with explicit page and UV counters, and the constant 160 then took a saved register from the page. Three steps:
+
+1. Write it like the matched sibling func_8013D32C: `for (i = 0; ...)`, `poly[i]`, page `0x140 + i * 0x80`, UVs from `i`, coordinates as full expressions. The original preheader sets s0, s3, s4, s5, s7 and fp in register order, which marks them as strength-reduction and range-entry setup. Cost 604 to 20.
+2. A height local `h = 0xA0 - arg0;` adds the missing scalar slot, which moves the UV induction spills to 0x50/0x54: 22 to 4 rows.
+3. One source line per vertex (FAKE, layout only). uopt emits `160 - arg0` and `160 - Q11` under the x2 line (see `cc -S`), so as1 orders case 0 correctly only when x2, h and y2 share a line: 4 to 0.
+
+Details and negatives: `drafts/T-25113/ETC/func_8013D570/NOTES.md`.
