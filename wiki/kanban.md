@@ -73,9 +73,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25140-w8-main-8004AD60|T-25140 Wave 8 package w8-main-8004AD60 (src/main/8004AD60.c)]]
 - [ ] [[tickets/T-25141-w8-TACO-8013F250|T-25141 Wave 8 package w8-TACO-8013F250 (src/ovl/TACO/8013F250.c)]]
 - [ ] [[tickets/T-25142-w8-BUNKA_SD-80134540|T-25142 Wave 8 package w8-BUNKA_SD-80134540 (src/ovl/BUNKA_SD/80134540.c)]]
-- [ ] [[tickets/T-25143-w8-SHOUGATU-8013E330|T-25143 Wave 8 package w8-SHOUGATU-8013E330 (src/ovl/SHOUGATU/8013E330.c)]]
-- [ ] [[tickets/T-25144-w8-RPG_BAT-8014ADD0|T-25144 Wave 8 package w8-RPG_BAT-8014ADD0 (src/ovl/RPG_BAT/8014ADD0.c)]]
-- [ ] [[tickets/T-25145-w8-ENDING-80133030|T-25145 Wave 8 package w8-ENDING-80133030 (src/ovl/ENDING/80133030.c)]]
 
 ## In Progress
 
@@ -179,6 +176,9 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25143-w8-SHOUGATU-8013E330|T-25143 Wave 8 package w8-SHOUGATU-8013E330 (src/ovl/SHOUGATU/8013E330.c)]]
+- [ ] [[tickets/T-25144-w8-RPG_BAT-8014ADD0|T-25144 Wave 8 package w8-RPG_BAT-8014ADD0 (src/ovl/RPG_BAT/8014ADD0.c)]]
+- [ ] [[tickets/T-25145-w8-ENDING-80133030|T-25145 Wave 8 package w8-ENDING-80133030 (src/ovl/ENDING/80133030.c)]]
 - [ ] [[tickets/T-25123-w8-main-800451D0|T-25123 Wave 8 package w8-main-800451D0 (src/main/800451D0.c)]]
 - [ ] [[tickets/T-25118-w8-main-800563F0|T-25118 Wave 8 package w8-main-800563F0 (src/main/800563F0.c)]]
 - [ ] [[tickets/T-25112-w8-TACO-80139170|T-25112 Wave 8 package w8-TACO-80139170 (src/ovl/TACO/80139170.c)]]
@@ -187,9 +187,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
 - [ ] [[tickets/T-25117-w8-VALEN-80132760|T-25117 Wave 8 package w8-VALEN-80132760 (src/ovl/VALEN/80132760.c)]]
 - [ ] [[tickets/T-25119-w8-main-80061710|T-25119 Wave 8 package w8-main-80061710 (src/main/80061710.c)]]
-- [ ] [[tickets/T-25144-w8-RPG_BAT-8014ADD0|T-25144 Wave 8 package w8-RPG_BAT-8014ADD0 (src/ovl/RPG_BAT/8014ADD0.c)]]
-- [ ] [[tickets/T-25145-w8-ENDING-80133030|T-25145 Wave 8 package w8-ENDING-80133030 (src/ovl/ENDING/80133030.c)]]
-- [ ] [[tickets/T-25143-w8-SHOUGATU-8013E330|T-25143 Wave 8 package w8-SHOUGATU-8013E330 (src/ovl/SHOUGATU/8013E330.c)]]
 - [ ] [[tickets/T-25146-w8-ETC-80143240|T-25146 Wave 8 package w8-ETC-80143240 (src/ovl/ETC/80143240.c)]]
 - [ ] [[tickets/T-25147-w8-main-80058D20|T-25147 Wave 8 package w8-main-80058D20 (src/main/80058D20.c)]]
 - [ ] [[tickets/T-25111-w8-TACO-8013B990|T-25111 Wave 8 package w8-TACO-8013B990 (src/ovl/TACO/8013B990.c)]]
