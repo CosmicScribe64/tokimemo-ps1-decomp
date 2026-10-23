@@ -22,7 +22,7 @@ TaiikuSel D_80149988 = { 0, 0, 0 };
 Taiiku3s32 D_80149990 = { 0, 0, 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014999C);
 TaiikuA0 D_801499A0 = { 0, 0, 0, 0, 0, 0 };
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499B0);
+TaiikuPair D_801499B0[1] = { { 0, 0 } };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499B4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499C0);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499C4);
@@ -468,7 +468,75 @@ void func_80139A20(void) {
     D_80122ECC = 1;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139AB0);
+/* FAKE: T-25102, the halves of the 16.16 word unk_18 are written through s16 views and D_8014995A/D_8014995C
+ * through (&D_80149958)[n], as elsewhere in this file; the real aggregates are unknown. */
+void func_80139AB0(void) {
+    s32 i;
+    s32 j;
+    s32 pad; /* FAKE: T-25102, unused local; its slot puts the spill of i at sp+0x50 as in the original */
+
+    D_80149964 = 0;
+    D_80149960 = 0;
+    D_80149968.unk_1C[0] = 0;
+    D_80149968.unk_1C[1] = 0x100;
+    D_80149968.unk_14 = 0;
+    ((s16 *)&D_80149968.unk_18)[1] = 0x80;
+    ((s16 *)&D_80149968.unk_18)[0] = 0;
+    D_80149968.unk_00 = 0;
+    D_80149968.unk_04 = 0;
+    D_80149968.unk_0C = 0;
+    D_80149968.unk_10 = 0;
+    D_80149940 = 0;
+    D_80149948 = 0;
+    D_8014994C = 0;
+    D_801499C0.word = 0;
+    D_80122EC4 = 0;
+    D_80149944 = 1;
+    D_801499E0 = 0;
+    D_801499DC = 0;
+    D_80149988.unk_00 = 0;
+    D_80149988.unk_04 = 0;
+    D_80149990.unk_04 = 0;
+    D_80149990.unk_08 = 0;
+    D_80149990.unk_00 = 1;
+    D_80149988.unk_06 = 0;
+    D_8014999C = 0;
+    D_801499A0.unk_00 = 0;
+    D_801499A0.unk_08 = 0;
+    D_801499A0.unk_0C = 0;
+    D_801499A0.unk_02 = 0;
+    D_801499A0.unk_04 = -0x20;
+    D_801499A0.unk_06 = 0x30;
+    D_801499B0[0].unk0 = 0;
+    D_801499B0[0].val = 0;
+    func_800AE120(D_800E6280.unk_10F4);
+    D_80149958 = 0;
+    (&D_80149958)[1] = 0;
+    (&D_80149958)[2] = 0;
+    ((TaiikuCamera0C *)D_80122DD0)->x = 0x118;
+    ((TaiikuCamera0C *)D_80122DD0)->y = -0x100;
+    ((TaiikuCamera0C *)D_80122DD0)->angle = 0;
+    for (i = 0; i < 3; i++) {
+        D_801499CC[i] = 0;
+        D_801499C4[i] = 0;
+        D_801499B4[i].word = 0;
+    }
+    for (i = 0; i < 4; i++) {
+        D_801499D4[i] = 0xFF;
+    }
+    for (i = 0; i < 80; i++) {
+        D_801499E4[i] = (i >> 2) * 8 - 24;
+        D_80149A84[i] = (i >> 2) * 8 - 16;
+    }
+    for (i = 0; i < 20; i++) {
+        for (j = 0; j < 4; j++) {
+            D_80149B24[(i << 2) + j] = -160 - (i << 3) + ((i << 2) + 80) * j;
+            D_80149BC4[(i << 2) + j] = -80 - (i << 2) + ((i << 2) + 80) * j;
+            D_80149C64[(i << 2) + j] = -168 - (i << 3) + (((i + 1) << 2) + 80) * j;
+            D_80149D04[(i << 2) + j] = -84 - (i << 2) + (((i + 1) << 2) + 80) * j;
+        }
+    }
+}
 
 void func_80139DDC(void) {
     func_8004E44C(0, D_8014A0BC, D_8014A0B0);
@@ -2028,13 +2096,451 @@ void func_8013D9B4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013DDB8);
+void func_8013DDB8(void) {
+    s32 i;
+    s32 j;
+    s32 pos;
+    s16 h;
+    TaiHalves *p; /* FAKE: T-25102, the halves are read through p and the word directly: the original keeps
+                   * &D_801499C0 in s2 after each call but builds the word's address with %hi/%lo */
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013E1FC);
+    p = &D_801499C0;
+    switch (((TaiikuWork *)D_80122DD0)->step) {
+    case 0:
+    case 3:
+    case 6:
+        pos = D_801499C0.word;
+        D_801499C0.word = pos >> 1;
+        func_8013E1FC();
+        h = p->halves.high;
+        /* FAKE: T-25102, an unsigned subtraction (same bits); a signed one lets uopt test h >= 0x100 as
+         * bltz on this difference */
+        ((TaiikuWork *)D_80122DD0)->camera.y = h - 0x100U;
+        if (((TaiikuWork *)D_80122DD0)->step == 6) {
+            ((TaiikuActor44 *)D_8011ECD0)[102].unk_1A = (h << 4) * 3 + 0x1000;
+            ((TaiikuActor44 *)D_8011ECD0)[102].unk_1C = ((TaiikuActor44 *)D_8011ECD0)[102].unk_1A;
+            ((TaiikuActor44 *)D_8011ECD0)[102].unk_26 = -(D_80149968.unk_1C[0] >> 2) - (h >> 1) - 40;
+            ((TaiikuActor44 *)D_8011ECD0)[102].unk_2A = -(h >> 4) - (h >> 1) - 104;
+            if (h >= 0x100) {
+                D_80149968.unk_04 = 0;
+                D_80149960 = 0;
+                ((TaiikuWork *)D_80122DD0)->step = 0;
+                func_80042808();
+            }
+        }
+        D_801499C0.word = pos;
+        if (((TaiikuWork *)D_80122DD0)->camera.y >= 0x100) {
+            for (i = 0; i < 20; i++) {
+                for (j = 0; j < 4; j++) {
+                    D_80149B24[(i << 2) + j] = -160 + j * ((i << 2) + 80);
+                    D_80149BC4[(i << 2) + j] = -160 + (j + 1) * ((i << 2) + 80);
+                    D_80149C64[(i << 2) + j] = -160 + j * (((i + 1) << 2) + 80);
+                    D_80149D04[(i << 2) + j] = -160 + (j + 1) * (((i + 1) << 2) + 80);
+                }
+            }
+            p->halves.high -= 0x200;
+            ((TaiikuWork *)D_80122DD0)->step++;
+        }
+        break;
+    case 1:
+    case 4:
+        func_8013E894();
+        ((TaiikuWork *)D_80122DD0)->camera.angle = -p->halves.high * 4 + 0x800;
+        if (((TaiikuWork *)D_80122DD0)->camera.angle < -0x3FF) {
+            if (((TaiikuWork *)D_80122DD0)->step == 4) {
+                ((TaiikuActor44 *)D_8011ECD0)[102].unk_26 = 0xB0;
+                ((TaiikuActor44 *)D_8011ECD0)[102].unk_03 |= 0x80;
+            }
+            ((TaiikuWork *)D_80122DD0)->step++;
+        }
+        break;
+    case 2:
+    case 5:
+        func_8013EC60();
+        ((TaiikuWork *)D_80122DD0)->camera.angle = -p->halves.high * 4 + 0x800;
+        if (((TaiikuWork *)D_80122DD0)->camera.angle < -0x7FF) {
+            for (i = 0; i < 20; i++) {
+                for (j = 0; j < 4; j++) {
+                    D_80149B24[(i << 2) + j] = -160 - (i << 3) + ((i << 2) + 80) * j;
+                    D_80149BC4[(i << 2) + j] = -80 - (i << 2) + ((i << 2) + 80) * j;
+                    D_80149C64[(i << 2) + j] = -168 - (i << 3) + (((i + 1) << 2) + 80) * j;
+                    D_80149D04[(i << 2) + j] = -84 - (i << 2) + (((i + 1) << 2) + 80) * j;
+                }
+            }
+            ((TaiikuWork *)D_80122DD0)->camera.x = 0x118;
+            ((TaiikuWork *)D_80122DD0)->camera.y = -0x100;
+            ((TaiikuWork *)D_80122DD0)->camera.angle = 0;
+            D_801499C0.word = 0;
+            ((TaiikuWork *)D_80122DD0)->step++;
+        }
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013E894);
+void func_8013E1FC(void) {
+    s32 i;
+    s32 middle0;
+    s32 middle1;
+    s32 x[4];
+    s32 y[4];
+    s32 scale;
+    s32 input_x;
+    s32 input_y;
+    s32 camera_x;
+    s32 camera_y;
+    s32 ball_x;
+    s32 angle;
+    s32 first_y;
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013EC60);
+    /* Straight strips. The chained stores share one register per constant (T-25102). */
+    for (angle = 0; angle < 64; angle++) {
+        x[1] = x[0] = -320;
+        x[3] = x[2] = -240;
+        y[0] = angle << 3;
+        y[1] = (angle + 1) << 3;
+        camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
+        for (i = 0; i < 4; i++) {
+            x[i] += camera_x;
+        }
+        camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
+        for (i = 0; i < 2; i++) {
+            y[i] += camera_y;
+        }
+        for (i = 0; i < 2; i++) {
+            scale = func_800A0140(0x2AA);
+            y[i] = (y[i] * scale) >> 12;
+        }
+        /* The copies come before the midpoints: ugen's temporaries follow this order (T-25102). */
+        y[2] = y[0];
+        y[3] = y[1];
+        middle0 = (x[0] + x[2]) >> 1;
+        middle1 = (x[1] + x[3]) >> 1;
+        /* Rows are x[2 * i], x[2 * i + 1]. `i << 1` keeps the counter (uopt strength-reduces `i * 2`), and
+         * plain indexing instead of row pointers keeps uopt's no-alias marks for the x and y walks of the
+         * rotated strips below (T-25102). */
+        for (i = 0; i < 2; i++) {
+            first_y = y[i << 1];
+            if (first_y > 0 || y[(i << 1) + 1] > 0) {
+                if (middle0 < x[i << 1]) {
+                    x[i << 1] = x[i << 1] + first_y + middle0;
+                }
+                if (x[i << 1] < middle0) {
+                    x[i << 1] = x[i << 1] - first_y + middle0;
+                }
+                if (middle1 < x[(i << 1) + 1]) {
+                    x[(i << 1) + 1] = y[(i << 1) + 1] + x[(i << 1) + 1] + middle1;
+                }
+                if (x[(i << 1) + 1] < middle1) {
+                    x[(i << 1) + 1] = x[(i << 1) + 1] - y[(i << 1) + 1] + middle1;
+                }
+            }
+        }
+        for (i = 0; i < 4; i++) {
+            x[i] = -x[i];
+        }
+        for (i = 0; i < 4; i++) {
+            y[i] -= 24;
+        }
+        ball_x = (s16)D_80149968.unk_1C[0] >> 2;
+        for (i = 0; i < 4; i++) {
+            x[i] -= ball_x;
+        }
+        for (i = 0; i != 2; i++) {
+            if ((x[i << 1] >= -160 && x[i << 1] <= 160 && y[i << 1] >= -23 && y[i << 1] < 121) ||
+                (x[(i << 1) + 1] >= -160 && x[(i << 1) + 1] <= 160 &&
+                 y[(i << 1) + 1] >= -23 && y[(i << 1) + 1] < 121)) {
+                func_80049FF0((s16)x[i << 1], (s16)y[i << 1], (s16)x[(i << 1) + 1], (s16)y[(i << 1) + 1],
+                              0xFFFFFF, 0xFFFFFF, 250);
+            }
+        }
+    }
+    /* Rotated strips. func_80086204 is Rot_2D called without a prototype (implicit int), as in
+     * func_8013E894 below: with the void Rot_2D the registers of the loops differ (T-25102). */
+    for (angle = 0; angle < 64; angle++) {
+        input_x = -320;
+        input_y = 0;
+        func_80086204(angle * 16, &input_x, &input_y, &x[0], &y[0]);
+        func_80086204((angle + 1) * 16, &input_x, &input_y, &x[1], &y[1]);
+        input_x = -240;
+        input_y = 0;
+        func_80086204(angle * 16, &input_x, &input_y, &x[2], &y[2]);
+        func_80086204((angle + 1) * 16, &input_x, &input_y, &x[3], &y[3]);
+        camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
+        camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
+        for (i = 0; i < 4; i++) {
+            x[i] += camera_x;
+            y[i] += camera_y;
+        }
+        for (i = 0; i < 4; i++) {
+            scale = func_800A0140(0x2AA);
+            y[i] = (y[i] * scale) >> 12;
+        }
+        middle0 = (x[0] + x[2]) >> 1;
+        middle1 = (x[1] + x[3]) >> 1;
+        for (i = 0; i < 2; i++) {
+            first_y = y[i << 1];
+            if (first_y > 0 || y[(i << 1) + 1] > 0) {
+                if (middle0 < x[i << 1]) {
+                    x[i << 1] = x[i << 1] + first_y + middle0;
+                }
+                if (x[i << 1] < middle0) {
+                    x[i << 1] = x[i << 1] - first_y + middle0;
+                }
+                if (middle1 < x[(i << 1) + 1]) {
+                    x[(i << 1) + 1] = y[(i << 1) + 1] + x[(i << 1) + 1] + middle1;
+                }
+                if (x[(i << 1) + 1] < middle1) {
+                    x[(i << 1) + 1] = x[(i << 1) + 1] - y[(i << 1) + 1] + middle1;
+                }
+            }
+        }
+        for (i = 0; i < 4; i++) {
+            x[i] = -x[i];
+        }
+        for (i = 0; i < 4; i++) {
+            y[i] -= 24;
+        }
+        ball_x = (s16)D_80149968.unk_1C[0] >> 2;
+        for (i = 0; i < 4; i++) {
+            x[i] -= ball_x;
+        }
+        for (i = 0; i != 2; i++) {
+            if ((x[i << 1] >= -160 && x[i << 1] <= 160 && y[i << 1] >= -23 && y[i << 1] < 121) ||
+                (x[(i << 1) + 1] >= -160 && x[(i << 1) + 1] <= 160 &&
+                 y[(i << 1) + 1] >= -23 && y[(i << 1) + 1] < 121)) {
+                func_80049FF0((s16)x[i << 1], (s16)y[i << 1], (s16)x[(i << 1) + 1], (s16)y[(i << 1) + 1],
+                              0xFFFFFF, 0xFFFFFF, 250);
+            }
+        }
+    }
+}
+
+void func_8013E894(void) {
+    s32 i;
+    s32 middle0;
+    s32 middle1;
+    s32 x[4];
+    s32 y[4];
+    s32 scale;
+    s32 input_x;
+    s32 input_y;
+    s32 camera_x;
+    s32 camera_y;
+    s32 *xp;
+    s32 *yp;
+    s32 ball_x;
+    s32 angle;
+    s32 first_y;
+
+    angle = 0;
+    do {
+        /* func_80086204 is Rot_2D called without a prototype (implicit int, as in func_8013C4E4's
+         * caller above): the int result makes uopt treat $v0 as written by the call, which keeps
+         * the x pointer of the loops below out of $v0 (T-25102). */
+        input_x = -320;
+        input_y = 0;
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle, &input_x, &input_y, &x[0], &y[0]);
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle + 16, &input_x, &input_y, &x[1], &y[1]);
+        input_x = -240;
+        input_y = 0;
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle, &input_x, &input_y, &x[2], &y[2]);
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle + 16, &input_x, &input_y, &x[3], &y[3]);
+        camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
+        camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
+        for (i = 0; i < 4; i++) {
+            x[i] += camera_x;
+            y[i] += camera_y;
+        }
+        for (i = 0; i < 4; i++) {
+            scale = func_800A0140(0x2AA);
+            y[i] = (y[i] * scale) >> 12;
+        }
+        middle0 = (x[0] + x[2]) >> 1;
+        middle1 = (x[1] + x[3]) >> 1;
+        /* Rows are x[2 * i], x[2 * i + 1]. `i << 1` keeps the counter: uopt strength-reduces
+         * `i * 2` into a second induction variable, the original recomputes the row offset (T-25102). */
+        for (i = 0; i < 2; i++) {
+            xp = x + (i << 1);
+            yp = y + (i << 1);
+            first_y = yp[0];
+            if (first_y > 0 || yp[1] > 0) {
+                if (middle0 < xp[0]) {
+                    xp[0] = xp[0] + first_y + middle0;
+                }
+                if (xp[0] < middle0) {
+                    xp[0] = xp[0] - first_y + middle0;
+                }
+                if (middle1 < xp[1]) {
+                    xp[1] = yp[1] + xp[1] + middle1; /* operand order sets the addu order (T-25102) */
+                }
+                if (xp[1] < middle1) {
+                    xp[1] = xp[1] - yp[1] + middle1;
+                }
+            }
+        }
+        for (i = 0; i < 4; i++) {
+            x[i] = -x[i];
+        }
+        for (i = 0; i < 4; i++) {
+            y[i] -= 24;
+        }
+        ball_x = (s16)D_80149968.unk_1C[0] >> 2;
+        for (i = 0; i < 4; i++) {
+            x[i] -= ball_x;
+        }
+        for (i = 0; i != 2; i++) {
+            xp = x + (i << 1);
+            yp = y + (i << 1);
+            if ((xp[0] >= -160 && xp[0] <= 160 && yp[0] >= -23 && yp[0] < 121) ||
+                (xp[1] >= -160 && xp[1] <= 160 && yp[1] >= -23 && yp[1] < 121)) {
+                func_80049FF0((s16)xp[0], (s16)yp[0], (s16)xp[1], (s16)yp[1], 0xFFFFFF, 0xFFFFFF, 250);
+            }
+        }
+        angle += 16;
+    } while (angle != 0x800);
+}
+
+void func_8013EC60(void) {
+    s32 i;
+    s32 middle0;
+    s32 middle1;
+    s32 x[4];
+    s32 y[4];
+    s32 scale;
+    s32 input_x;
+    s32 input_y;
+    s32 camera_x;
+    s32 camera_y;
+    s32 ball_x;
+    s32 angle;
+    s32 first_y;
+
+    /* Straight strips, each corner turned by the camera angle. */
+    for (angle = 0; angle < 64; angle++) {
+        x[1] = x[0] = 320;
+        x[3] = x[2] = 240;
+        y[0] = angle << 3;
+        y[1] = (angle + 1) << 3;
+        /* Copies, not chained stores: `y[2] = y[0] = angle << 3` reserves one more spill slot, and the counter
+         * spill lands at 0x74 instead of 0x78 (T-25102). */
+        y[2] = y[0];
+        y[3] = y[1];
+        for (i = 0; i < 4; i++) {
+            input_x = x[i];
+            input_y = y[i];
+            /* func_80086204 is Rot_2D called without a prototype (implicit int), as in func_8013E894. */
+            func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle, &input_x, &input_y, &x[i], &y[i]);
+        }
+        camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
+        camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
+        for (i = 0; i < 4; i++) {
+            x[i] += camera_x;
+            y[i] += camera_y;
+        }
+        for (i = 0; i < 4; i++) {
+            scale = func_800A0140(0x2AA);
+            y[i] = (y[i] * scale) >> 12;
+        }
+        middle0 = (x[0] + x[2]) >> 1;
+        middle1 = (x[1] + x[3]) >> 1;
+        for (i = 0; i < 2; i++) {
+            first_y = y[i << 1];
+            if (first_y > 0 || y[(i << 1) + 1] > 0) {
+                if (middle0 < x[i << 1]) {
+                    x[i << 1] = x[i << 1] + first_y + middle0;
+                }
+                if (x[i << 1] < middle0) {
+                    x[i << 1] = x[i << 1] - first_y + middle0;
+                }
+                if (middle1 < x[(i << 1) + 1]) {
+                    x[(i << 1) + 1] = y[(i << 1) + 1] + x[(i << 1) + 1] + middle1;
+                }
+                if (x[(i << 1) + 1] < middle1) {
+                    x[(i << 1) + 1] = x[(i << 1) + 1] - y[(i << 1) + 1] + middle1;
+                }
+            }
+        }
+        for (i = 0; i < 4; i++) {
+            x[i] = -x[i];
+        }
+        for (i = 0; i < 4; i++) {
+            y[i] -= 24;
+        }
+        ball_x = (s16)D_80149968.unk_1C[0] >> 2;
+        for (i = 0; i < 4; i++) {
+            x[i] -= ball_x;
+        }
+        for (i = 0; i != 2; i++) {
+            if ((x[i << 1] >= -160 && x[i << 1] <= 160 && y[i << 1] >= -23 && y[i << 1] < 121) ||
+                (x[(i << 1) + 1] >= -160 && x[(i << 1) + 1] <= 160 &&
+                 y[(i << 1) + 1] >= -23 && y[(i << 1) + 1] < 121)) {
+                func_80049FF0((s16)x[i << 1], (s16)y[i << 1], (s16)x[(i << 1) + 1], (s16)y[(i << 1) + 1],
+                              0xFFFFFF, 0xFFFFFF, 250);
+            }
+        }
+    }
+    ((TaiikuActor44 *)D_8011ECD0)[102].unk_26 = x[3] + 8;
+    /* Rotated strips. `angle * 16` with `angle++` lets uopt strength-reduce the counter into one spilled
+     * value at 0x78, the slot of the first phase, ending with `bne v0,0x400`. The second corner adds 16 to
+     * that sum; `(angle + 1) * 16` would be a second strength-reduced value (T-25102). */
+    for (angle = 0; angle < 64; angle++) {
+        input_x = 0;
+        input_y = -320;
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16, &input_x, &input_y, &x[0], &y[0]);
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16 + 16, &input_x, &input_y, &x[1], &y[1]);
+        input_x = 0;
+        input_y = -240;
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16, &input_x, &input_y, &x[2], &y[2]);
+        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16 + 16, &input_x, &input_y, &x[3], &y[3]);
+        camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
+        camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
+        for (i = 0; i < 4; i++) {
+            x[i] += camera_x;
+            y[i] += camera_y;
+        }
+        for (i = 0; i < 4; i++) {
+            scale = func_800A0140(0x2AA);
+            y[i] = (y[i] * scale) >> 12;
+        }
+        middle0 = (x[0] + x[2]) >> 1;
+        middle1 = (x[1] + x[3]) >> 1;
+        for (i = 0; i < 2; i++) {
+            first_y = y[i << 1];
+            if (first_y > 0 || y[(i << 1) + 1] > 0) {
+                if (middle0 < x[i << 1]) {
+                    x[i << 1] = x[i << 1] + first_y + middle0;
+                }
+                if (x[i << 1] < middle0) {
+                    x[i << 1] = x[i << 1] - first_y + middle0;
+                }
+                if (middle1 < x[(i << 1) + 1]) {
+                    x[(i << 1) + 1] = y[(i << 1) + 1] + x[(i << 1) + 1] + middle1;
+                }
+                if (x[(i << 1) + 1] < middle1) {
+                    x[(i << 1) + 1] = x[(i << 1) + 1] - y[(i << 1) + 1] + middle1;
+                }
+            }
+        }
+        for (i = 0; i < 4; i++) {
+            x[i] = -x[i];
+        }
+        for (i = 0; i < 4; i++) {
+            y[i] -= 24;
+        }
+        ball_x = (s16)D_80149968.unk_1C[0] >> 2;
+        for (i = 0; i < 4; i++) {
+            x[i] -= ball_x;
+        }
+        for (i = 0; i != 2; i++) {
+            if ((x[i << 1] >= -160 && x[i << 1] <= 160 && y[i << 1] >= -23 && y[i << 1] < 121) ||
+                (x[(i << 1) + 1] >= -160 && x[(i << 1) + 1] <= 160 &&
+                 y[(i << 1) + 1] >= -23 && y[(i << 1) + 1] < 121)) {
+                func_80049FF0((s16)x[i << 1], (s16)y[i << 1], (s16)x[(i << 1) + 1], (s16)y[(i << 1) + 1],
+                              0xFFFFFF, 0xFFFFFF, 250);
+            }
+        }
+    }
+}
 
 void func_8013F35C(void) {
     s32 var_s0;
@@ -2047,7 +2553,159 @@ void func_8013F35C(void) {
     func_8013F948();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013F3A4);
+/* Positions display records 104 + arg0 and 108 + arg0 from the runner's state (D_80122EC4 for arg0 0, else
+ * func_8013FB14) and phase (D_801499C0.halves.high, else func_8013FBA8). */
+void func_8013F3A4(s32 arg0) {
+    s16 phase;
+    s32 state;
+    s32 t;
+    s16 x;
+
+    if (arg0 == 0) {
+        state = D_80122EC4;
+        phase = D_801499C0.halves.high;
+        if (D_80149990.unk_00 != 0) {
+            ((DisplayActor44 *)D_8011ECD0)[104].unk_03 |= 0x40;
+            ((DisplayActor44 *)D_8011ECD0)[108].unk_03 |= 0x40;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[104].unk_03 &= ~0x40;
+            ((DisplayActor44 *)D_8011ECD0)[108].unk_03 &= ~0x40;
+        }
+    } else {
+        if (D_801499CC[arg0 - 1] == 1) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 |= 0x40;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_03 |= 0x40;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 &= ~0x40;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_03 &= ~0x40;
+        }
+        state = func_8013FB14(arg0);
+        phase = func_8013FBA8(arg0);
+    }
+    switch (state) {
+    case 0:
+    case 6:
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (phase >> 3) + (phase >> 6) - 0x48;
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 + 0x10;
+        break;
+    case 1:
+        t = phase - 0x200;
+        if (t < 0x80) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (t >> 2) + 0x48;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = -0x48 - (t >> 4);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        } else {
+            t = phase - 0x280;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (t >> 3) + 0x68;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = -0x50 - (t >> 3);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        }
+        x = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26;
+        if (x >= 0x68 && ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 < 0x8E) {
+            if (arg0 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x90;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 = 0x8E;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 = 0x84;
+        }
+        if (x < 0x68) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x + 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - 8;
+        }
+        break;
+    case 2:
+        if (phase < 0x380) {
+            t = phase - 0x300;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = 0x78 - (t >> 4);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = -0x60 - (t >> 4);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        } else {
+            t = phase - 0x380;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = 0x68 - (t >> 2);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = -0x68 - (t >> 4);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        }
+        x = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26;
+        if (x < 0x69 && ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 >= 0x8E) {
+            if (arg0 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x8A;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 = 0x86;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 = 0x84;
+        }
+        if (x < 0x68) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x - 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - 8;
+        }
+        break;
+    case 3:
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = -(phase >> 3) - (phase >> 6) + 0x48;
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 - 0x10;
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        break;
+    case 4:
+        t = phase - 0x200;
+        if (t < 0x80) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = -0x48 - (t >> 2);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = (t >> 4) - 0x70;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        } else {
+            t = phase - 0x280;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = -0x68 - (t >> 3);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = (t >> 3) - 0x68;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        }
+        x = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26;
+        if (x < -0x68 && ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 != 0) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 = 0;
+        }
+        if (x < -0x68) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A + 8;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x - 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        }
+        break;
+    case 5:
+        t = phase - 0x300;
+        if (t < 0x80) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (t >> 3) - 0x78;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = (t >> 4) - 0x58;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        } else {
+            t = phase - 0x380;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (t >> 2) - 0x68;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = (t >> 4) - 0x50;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        }
+        x = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26;
+        if (x >= -0x67 && ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 == 0) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 = 0x85;
+            if (arg0 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x8A;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 = 0x86;
+            }
+        }
+        if (x < -0x68) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A + 8;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x + 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        }
+        break;
+    }
+}
 
 void func_8013F948(void) {
     s32 i;

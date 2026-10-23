@@ -1731,3 +1731,7 @@ Reviewed against `CODING_STANDARDS.md` (no findings), clean rebuild 27/27, `mod_
 
 Reviewed [[tickets/T-25152-w8-TACO-80138890]] against CODING_STANDARDS.md; matched TACO `func_80138B2C` (476 bytes) as default-build C, 27/27.
 The review marked the unused K&R parameter FAKE; the clamp-arm zero term and the two address views were already marked.
+## [2026-10-23] ticket | T-25102 Done
+
+Reviewed and merged w8-TAIIKU-80138950: matched TAIIKU `func_80139AB0`, `func_8013E894`, `func_8013DDB8`, `func_8013F3A4`, `func_8013E1FC`, `func_8013EC60` (7796 bytes, default C, 27/27).
+All six functions of the package are matched, none left with rows; see [[tickets/T-25102-w8-TAIIKU-80138950]].

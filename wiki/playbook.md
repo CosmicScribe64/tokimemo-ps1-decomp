@@ -27,6 +27,10 @@ Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in th
 
 **Return type changes the delay slot.** Symptom: mode-address `lui` or loads in branch slots where the original has `nop`. Fix: make the shared declaration and definition `s32`, K&R. Caveat: the working explanation is return-register liveness, not an allocator rule; the void control differs.
 
+**An int view of a void callee takes `$v0` away after the call.** Symptom: a range that starts right after a call (a loop pointer in the next preheader) takes `$v0` and the loop-invariant values `$v1`; the original has the reverse. Fix: call the function as an implicit int (try `funcdiff --proto 's32 f(...);'` first). TAIIKU calls Rot_2D as `func_80086204`: 44 rows to 0 in `func_8013E894` (T-25102).
+
+**`i << 1`, not `i * 2`, when the original recomputes an offset from the counter.** uopt strength-reduces a multiply of the loop counter into a second induction variable and leaves a shift alone (TAIIKU `func_80139AB0` and `func_8013E894`, T-25102).
+
 ## 2. A temporary one register too low or too high (ugen ring)
 
 **Ops that as1 deletes still cost a slot.** Symptom: every `t` register one lower than the original from one block on, no instruction missing. Fix: add a no-op that ugen numbers: `idx = sp47 & 0xFF;` on a `u8` out-parameter (main `func_80054884`, 17 rows to 0, T-24214); `((f() == 1) != 0) && ...` on a call test (ETC `func_80140AE4`, 16 rows, T-24207); a third `|=` on a promoted narrow global (MASTER `func_80132444`, T-24208: each narrow `|=` spends two slots, so the count of ORs before the copies sets the numbering). Mark FAKE. Caveat: the right count is found by trying 1, 2, 3; the permuter finds these disc-free. A narrowing cast that as1 drops also spends one: `if ((u8)g->unk_F80 & 0xF)` on a word flag test put the missing slot in the right block (main `func_8006BA40`, 7 rows to 0, T-25008); place it in the first block whose temporaries are off, and remove casts that only moved the numbering later.
@@ -63,6 +67,10 @@ as1 schedules per source line. Put initial assignments on one line (`n = 0; b = 
 
 Hoists from another block (as1's global filler, [[as1-scheduler-rule]]): as1 moves the head `lui` of a dominated block (for example the out-of-range default of a switch) into a stall. Fix: declare the globals of the instructions that must stay `volatile` in the header; a volatile global's `lui` and load are never moved and the code is otherwise unchanged (VALEN `func_80134030`, GYOZI `func_80139E4C`, T-24900; FAKE). Caveat: not for a global the function reads twice (uopt then loads it once, VALEN `func_80132D0C`), not for weight-limited picks (GEKO `func_80136C20`) or same-block order (KANGEI `func_8013852C`).
 
+**Two stores to one data symbol get two `lui $at`.** as1 shares one `lui $at` across offsets only for a symbol defined in the C of the unit, inside one 16-byte-aligned chunk of the section. If the symbol is still an `INCLUDE_RODATA` piece, replace that line with its C definition (TAIIKU `func_80139AB0`, `D_801499B0`, 5 rows to 0, T-25102).
+
+**A load that the original keeps on one side of a store to another global: the two may be one symbol.** as1 keeps a load and a store in order only when both use one symbol; with two symbols its list scheduler moves the stores (long `$at` chain) above the load. Symptom: order-only rows where a promoted global's `lui/lw` sits after neighbouring stores in the draft and before them in the original. Check whether both addresses fall in one known block and reach them through it: TAIIKU `func_8013DDB8` reads `D_80122EC4` as offset 0xF4 of the `D_80122DD0` block and `D_8012080E`/`D_801207EB` as fields of actor record 102 of `D_8011ECD0` (16 rows to 0, T-25102).
+
 **Promote a stored global to separate its emission from the sum.** An empty `if (D_80139ADC) {}` after the store changes uopt's direct `str` to an `rstr` on the following line. In KANGEI `func_8013852C`, this puts the sum before its store-address `lui`; removing the redundant signed conversion of the u8 year restores the temporary register (T-25041, FAKE). The old and new traces have identical readiness values at the disputed pick, so readiness alone does not determine local order. Capture actual uopt output before applying this to another function.
 
 ## 6. Constants: folded vs kept in a register
@@ -85,6 +93,8 @@ Every declared scalar owns a 4-byte slot, promoted or not; arrays sit lowest; sc
 ## 8. Loads re-read vs CSE'd; struct aggregates
 
 Several close `D_` names in one function are usually one struct or array. Write accesses through one base (`D_X[i]`, `(&D_X)[k]`); consecutive scalar globals with a store, then the next load, are one struct declared at the lowest address (T-10610 family). The opposite case: in main 80075320 `u8 D_800B6990[8]` plus `u8 D_800B6998` shared `lui $at` correctly while a single `KeyRing` struct did not (`func_800755B4`, T-24303). `viewsweep` and `data_island.py` before guessing.
+
+**Base address and record size in registers across a switch, rebuilt per case in the original.** Symptom: the draft has `li aN,68; multu` and a `lui/addiu` base in `$a2`/`$a3` loaded at the switch head, and the original has `sll/addu/sll` and a fresh `lui/addiu` in each case. Fix: drop the record pointer local and index the array in every statement (`((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26`). Test the index (`if (arg0 == 0)`), not the pointer: uopt rewrites the index test into `bne v0,<base>` itself, and that `lda` does not count as a use. A written pointer compare does count and brings the hoist back. TAIIKU `func_8013F3A4`, 524 rows to 0 (T-25102).
 
 ## 9. Jump tables and switch spelling
 
@@ -142,9 +152,24 @@ When several adjacent loops use the same saved register in the target, trace whi
 
 NAME_ENT `func_801398EC` needed remainder/frame/index in a1/a2/a3. A scalar remainder was replaced by its later expression range; a one-element local array retained an earlier memory range, then was fully promoted. A dead initial frame assignment ordered that range before frame/index. The computed remainder dominates every read, and uopt removes the initial load and store. An exact-width discarded unsigned comparison separately orders record induction. Inspect optimized ucode before treating temporary differences as allocator errors: here the array made `row + tile * 16` evaluate tile first. `row - (0U - tile * 16)` preserves row-first order with defined unsigned modulo arithmetic. Default C matches 492 bytes, with all 27 hashes passing. Each artificial constraint is FAKE-marked; removal controls differ 36, 25, 25 and 17 of 123 words respectively. See [[tickets/T-25057-name-ent-pass-investigation]] and drafts/T-25057/README.md.
 
+## Counter slots, row pointers and `.noalias` in two-phase loops (T-25102)
+
+TAIIKU `func_8013E1FC` (1688 bytes). A loop counter whose spill sits below every declared local is not spilled at
+its declared home, and a second phase may reuse that slot for a +16 value. Write the increment at the loop end
+(`for (angle = 0; angle < 64; angle++)`) and the stride as `angle * 16`, `(angle + 1) * 16`, so the spills are
+compiler temporaries. Then fit the declared scalar count to the array offsets. If the original loads two array walks
+before storing either (`lw x; lw y; ...; sw x; sw y`) and the draft stores x first, read the `cc -S` listing for
+`.noalias $y,$x`. Row-pointer locals (`xp = x + (i << 1)`) used elsewhere in the function can remove it, so index the
+arrays instead (`x[i << 1]`). A `move v0,zero` init that the original schedules after the hoisted loop invariants
+needs the init on the `for` line.
+A chained store of a computed value (`y[2] = y[0] = angle << 3;`) can reserve one more spill slot than two
+statements (`y[0] = angle << 3; ... y[2] = y[0];`, same stores after uopt's forwarding): symptom, a counter spill
+4 bytes low with the frame size right. Constant chains (`x[1] = x[0] = 320;`) did not (TAIIKU `func_8013EC60`).
+
 ## Small copies follow the ugen_pass state; final store with the epilogue (T-25105)
 
 `tools/ugen_pass.py` puts its B/F sentinel before every `Umov`, also before copies of 32 bytes or less. The transfer register skips two ugen entries in state B and one in state F. If a small copy's temporary is one slot late, check the pass's state for it (the last `str`/`istr`/jump before the copy in the ucode). After an `istr`, an empty `if ((s32)x > 0) {}` survives uopt as a signed positive-bound jump, emits no code and gives F (FAKE). Separately, as1 moves `lw ra` above the last store only when the store's address names a global: write `((T *)&G[i * N + k])->f = v`, not a store through a pointer local. Main `func_80054FC0`, 113 lines to MATCH. Loops (main `func_8005557C`, 1212 bytes): when only the last of many constant-trip loops is unrolled in the original, give every loop one shared counter: with a shared counter IDO unrolls only the last loop of the function. Make it `u32` if a bound equals a multiply constant elsewhere (an `s32` bound shares the constant and turns the multiply into `li; multu`).
+
 ## Keep an index scan unreduced with a scan pointer (T-25101)
 
 Symptom: the target recomputes `base + i` on each pass, and its loop test reads through a preheader copy of the base (`move a1,a3`; `addu t2,a1,v0` in the latch, `addu v1,a3,v0` in the header). Fix: write a plain `for` over a scan pointer, `for (i = 0, s = buf; s[i] != 0; i++) { p = s + i; ... }`. uopt strength-reduces a cursor written as `&buf[i]` or `buf[i]` into a walked pointer. `p = buf + i` with the test `buf[i]` stays indexed, but then the test shares the base register. Put `i = 0` before `s = buf` so the copy lands in the entry `beqz` delay slot. uopt moves a following loop's `i = 0` into the break arm and the exhausted exit, so do not add resets there. Main `sndi`: 123 rows to a default-C match, with no FAKE casts. See `drafts/T-25101/main/sndi/NOTES.md`.

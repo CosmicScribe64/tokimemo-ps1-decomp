@@ -31,6 +31,9 @@ void func_8013CF88(void);
 void func_8013D114(void);
 void func_8013D2B4(void);
 void func_8013D788(void);
+void func_8013E1FC(void);
+void func_8013E894(void);
+void func_8013EC60(void);
 void func_8013FC5C(void);
 void func_80146884(void);
 void func_8014692C(void);
@@ -619,6 +622,15 @@ typedef struct TaiikuCamera0C {
     /* 0x04 */ s32 y;
     /* 0x08 */ s32 angle;
 } TaiikuCamera0C; /* size 0x0C */
+/* T-25102: the 0x100-byte block at D_80122DD0 (main bzeroes it) as TAIIKU uses it: the camera and, at 0xF4,
+ * the step of the track-grid intro that other functions still read as D_80122EC4. func_8013DDB8 matches
+ * only with the step and the camera reached through one symbol: as1 keeps the order of accesses to one
+ * symbol (the step load stays above the camera stores), and reorders accesses to two. */
+typedef struct TaiikuWork {
+    /* 0x00 */ TaiikuCamera0C camera;
+    /* 0x0C */ u8 unk_0C[0xE8];
+    /* 0xF4 */ s32 step;
+} TaiikuWork; /* size 0xF8 */
 #endif
 
 #ifndef OVL_TAIIKU_RESULT_TABLES_T10890
