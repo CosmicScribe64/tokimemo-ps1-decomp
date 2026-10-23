@@ -7,17 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24921..T-24924 Wave C-1 pre-flighted and Ready
-
-Closed the cancelled wave (T-24908..T-24916) to In Review, archived the T-24909 ETC draft in
-`drafts/T-24909/`, kept T-24915's store-order improvement on `main:func_80054E6C` (19->12 rows),
-fixed kanban card corruption, and verified a clean 27/27 build + zero wiki lint errors at
-6,826 / 6,952 functions (92.2%, 126 remaining after [[tickets/T-24903-func-80132d0c-80132760]]).
-Pre-flighted four isolated-worktree tickets (`Ready` on [[kanban]]):
-[[tickets/T-24921-func-8013cce4-8013BEF0]], [[tickets/T-24922-func-801367ec-80134D10]],
-[[tickets/T-24923-func-801326bc-80132000]], and [[tickets/T-24924-func-801330e4-80133030]],
-each with exact `funcdiff --resolve` defect breakdowns and two-stage lever plans.
-
 ## [2026-10-20] build | Wave C-1 results and clean 27/27
 
 Four isolated-worktree runs (the first under the v2 IR-first protocol; 4 workers max). No new
@@ -1748,6 +1737,7 @@ No function left with rows in this job; notes in `drafts/T-25145/ENDING/func_801
 ## [2026-10-23] ticket | T-25119 Done
 Reviewed [[tickets/T-25119-w8-main-80061710]] against CODING_STANDARDS.md; two comments were missing the `FAKE` marker (pointer cast, work-area view) and are fixed; clean rebuild 27/27. Matched main `func_80062948` (736 bytes) and `func_80061A3C` (1216 bytes) as default C.
 Both functions of `src/main/80061710.c` are C now; notes in drafts/T-25119/main/ and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25144 Done
 
 Reviewed and merged w9-RPG_BAT-8014ADD0: matched RPG_BAT `func_8014BFE4` (892 bytes, default C, 128 rows to 0; FAKEs: `t[1]`, one-line pre-loop statement, empty first arm now marked), 27/27.
