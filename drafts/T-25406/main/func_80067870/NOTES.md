@@ -83,3 +83,29 @@ not a plain reload (an aggregate copy of the D_80125C50/52 pair, as `func_800536
 
 Scratch tools (not committed, `build/scratch/vt/`): `vt.py` (scores variant bodies in one Docker run, about 0.5 s
 each on an idle machine; `-r` adds the regdiff colour list), `gen.py` (statement-order generator), `search1.py`.
+
+## Closer (wave 11): matched
+
+Result: default-C match (`funcdiff --resolve --version default` and `--version c`: MATCH, 952 bytes), guard
+and INCLUDE_ASM removed. No empty test and no `#line` left. Intermediate bodies: `closer_s4.c` (3 rows),
+`closer_match_linemark.c` (0 rows through a `#line` shift, scratch-only marker), `closer_W4.c` (first plain match).
+
+### Steps (rows from `funcdiff --resolve --version c`)
+
+| change | rows | why (measured) |
+|---|---|---|
+| start: `views.c` | 15 | |
+| y1 sums as `*(u8 *)&D_80125C54 + *(s16 *)&D_80125C52` | 15 (order rows gone) | cfe orders a commutative `+` by operand weight; with both operands views the weights are equal and the D_80125C52 operand comes out first (`addu t1,a0,a2`). Source order, `* 1`, `^ 0`, `0 - x`, a local copy, `(y1 = D52) + v` left it unchanged |
+| `if ((u32)x1 < 0) {}` before the call (later dropped) | 3 | x1 one block more, 7/9 against y1 6/8: x1 takes t0 |
+| drop the second empty test, `x1 = *(s16 *)&D_80125C50 + dx` | 2 | x1 sum, y1 sum and the F466 store in one block: D_80125C50 load shared (`sh t4`), 238 words; with the plain read cvt(D_80125C54) comes back as a range ($v0, 146 rows) |
+| as1 trace | | last 2 rows: `lui a3` (D_800B5C08 reload after SquareRoot0) against `sll t2,t8,16` (dy narrowing). Both tie on time 11, aftercycles 9, latency 1; the smaller line wins, and the reload carries the line of the statement that holds the call, the same as dy's narrowing. A `#line` shift of dy by 3 or 4 lines matched. |
+| `r = SquareRoot0(...); dy = 0xF - r;` (new s32 local), no empty test at all | 0 | the call and its reloads keep their line, the sub and the narrowing move to the next line, as the original orders them |
+| clean-up | 0 | dropped: x1 priority test, every other D_80125C54 view (bb8, compares, case sums), the F466 view, the y1 recomputation in the F426 store (`y1 - dy`), one of the two multiply views |
+
+FAKEs left (marked in the source): one byte view in the SquareRoot0 multiply (33 rows plain), the D_80125C50 view
+in the x1 sum (146 rows plain), both views in the y1 sum (161 rows plain, 1 row with one view), the T-25103 joined
+lines of the 0x8 cases (4 rows split).
+
+Scratch tools (not committed): `build/scratch/vt/vt.py` (scores bodies; `LINEMARK(k);`/`LINEREST;` lines become
+`#line` after preprocessing, so the shift reaches IDO), `build/scratch/vt/tr.py` (as1 `-R -xbbdbg 8` trace of a body,
+T-24900 shim in `build/as1tr/`).

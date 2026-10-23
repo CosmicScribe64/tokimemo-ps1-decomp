@@ -99,19 +99,12 @@ void func_800676AC(s32 arg0) {
     D_8011ECD0[0x1C].unk_18 = 0xD;
 }
 
-/* NON_MATCHING: T-25406, 14 funcdiff rows (240 words against 238). Every uopt colour but one is the original's:
- * the empty tests after dy and between the x1 and y1 statements (FAKE) put the x1 sum and the y1 sum in different
- * blocks, so both take $v0 and the forwarded `15 - ret` range takes $v1; cvt(D_80125C52) then gets $a0, unk_F80 $a1
- * and D_800B5C08 one $a3 range, as in the original. Left: (1) the D_8011ECD0[0x1C].unk_26 store sits after the block
- * split, so D_80125C50 is loaded again (`lui t4; lh t4`, 2 words); the original reuses the x1 load. (2) The T-0018
- * promo gap: the D_80125C54 global range takes $a3 beside cvt(D_80125C54) in $a2 (10 rows). See
- * drafts/T-25406/main/func_80067870/NOTES.md. */
-#ifdef NON_MATCHING
 void func_80067870(void) {
     s32 x1;
     s16 dx;
     s16 dy;
     s32 y1;
+    s32 r;
 
     if (D_800B5C08 == 0 || D_800B5C08 >= 0xE) {
         func_800676AC(0);
@@ -127,14 +120,18 @@ void func_80067870(void) {
         }
         dx = (rsin((D_800E6280.unk_10F8 & 0x7F) << 5) * D_80125C55) >> 12;
         D_8011F41C = ((-dx * 2) / 3) << 12;
-        dy = 0xF - SquareRoot0(D_80125C54 * D_80125C54 - dx * dx);
-        if ((s32)D_80125C54) { /* FAKE T-25406: ends the uopt block after dy (see the guard comment) */
-        }
-        x1 = D_80125C50 + dx;
+        /* FAKE T-25406: one factor through a byte view. tools/cvt_pass.py writes no CVT for that read, so
+         * D_80125C54 stays one $a2 range with no cvt(D_80125C54) range beside it (T-0018 gap); both factors
+         * plain is 33 rows. */
+        r = SquareRoot0(*(u8 *)&D_80125C54 * D_80125C54 - dx * dx);
+        dy = 0xF - r;
+        /* FAKE T-25406: with a plain D_80125C50 read, cvt(D_80125C54) comes back as its own $v0 range and
+         * every colour after it moves (146 rows). */
+        x1 = *(s16 *)&D_80125C50 + dx;
         D_8011ECD0[0x1B].unk_26 = x1;
-        if ((s32)D_80125C54) { /* FAKE T-25406: puts the x1 sum and the y1 sum in different uopt blocks */
-        }
-        y1 = D_80125C52 + D_80125C54;
+        /* FAKE T-25406: both operands through views. The byte view keeps D_80125C54 out of a cvt range; the
+         * s16 view gives cfe equal operand weights, so the sum comes out as `addu t1,a0,a2` (D_80125C52 first). */
+        y1 = *(u8 *)&D_80125C54 + *(s16 *)&D_80125C52;
         D_8011ECD0[0x1B].unk_2A = y1 - dy;
         D_8011ECD0[0x1B].unk_18 = D_800B5C08 - 1;
         D_8011ECD0[0x1C].unk_26 = D_80125C50;
@@ -159,6 +156,7 @@ void func_80067870(void) {
             }
         } else if (D_800E6280.unk_F80 & 8) {
             D_8011ECD0[0x1C].unk_18 = 0xE;
+            /* FAKE T-25103 layout, kept by T-25406: each store and sum on one line keeps as1's order (4 rows split). */
             switch (D_800E6280.unk_F80 & 0x5000) {
             case 0x1000:
                 D_80125C52 -= 4; y1 = D_80125C52 + D_80125C54;
@@ -180,8 +178,6 @@ void func_80067870(void) {
         } else {
             D_8011ECD0[0x1C].unk_18 = 0xD;
         }
-        if ((s32)D_80125C54) { /* FAKE T-17002, kept by T-25406: an extra cvt(D_80125C54) use that lowers its priority so it takes $a2 */
-        }
         func_80049FF0(D_80125C50, D_80125C52, x1, y1 - dy, 0xF8B0C8, 0xF8B0C8, 1);
         if (D_80125C50 >= 0x201) {
             D_80125C50 = -0x200;
@@ -197,9 +193,6 @@ void func_80067870(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067870);
-#endif
 
 /* FAKE: the second `max` loop is dead (max is never read) and the u8 view of the s8 field unk_03C gives the original lbu;
  * both are needed for the bytes, real source unknown. T-11690 */
