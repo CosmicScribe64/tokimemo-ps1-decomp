@@ -2277,7 +2277,159 @@ void func_8013F35C(void) {
     func_8013F948();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013F3A4);
+/* Positions display records 104 + arg0 and 108 + arg0 from the runner's state (D_80122EC4 for arg0 0, else
+ * func_8013FB14) and phase (D_801499C0.halves.high, else func_8013FBA8). */
+void func_8013F3A4(s32 arg0) {
+    s16 phase;
+    s32 state;
+    s32 t;
+    s16 x;
+
+    if (arg0 == 0) {
+        state = D_80122EC4;
+        phase = D_801499C0.halves.high;
+        if (D_80149990.unk_00 != 0) {
+            ((DisplayActor44 *)D_8011ECD0)[104].unk_03 |= 0x40;
+            ((DisplayActor44 *)D_8011ECD0)[108].unk_03 |= 0x40;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[104].unk_03 &= ~0x40;
+            ((DisplayActor44 *)D_8011ECD0)[108].unk_03 &= ~0x40;
+        }
+    } else {
+        if (D_801499CC[arg0 - 1] == 1) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 |= 0x40;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_03 |= 0x40;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 &= ~0x40;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_03 &= ~0x40;
+        }
+        state = func_8013FB14(arg0);
+        phase = func_8013FBA8(arg0);
+    }
+    switch (state) {
+    case 0:
+    case 6:
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (phase >> 3) + (phase >> 6) - 0x48;
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 + 0x10;
+        break;
+    case 1:
+        t = phase - 0x200;
+        if (t < 0x80) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (t >> 2) + 0x48;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = -0x48 - (t >> 4);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        } else {
+            t = phase - 0x280;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (t >> 3) + 0x68;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = -0x50 - (t >> 3);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        }
+        x = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26;
+        if (x >= 0x68 && ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 < 0x8E) {
+            if (arg0 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x90;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 = 0x8E;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 = 0x84;
+        }
+        if (x < 0x68) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x + 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - 8;
+        }
+        break;
+    case 2:
+        if (phase < 0x380) {
+            t = phase - 0x300;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = 0x78 - (t >> 4);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = -0x60 - (t >> 4);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        } else {
+            t = phase - 0x380;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = 0x68 - (t >> 2);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = -0x68 - (t >> 4);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        }
+        x = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26;
+        if (x < 0x69 && ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 >= 0x8E) {
+            if (arg0 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x8A;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 = 0x86;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 = 0x84;
+        }
+        if (x < 0x68) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x - 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - 8;
+        }
+        break;
+    case 3:
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = -(phase >> 3) - (phase >> 6) + 0x48;
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 - 0x10;
+        ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        break;
+    case 4:
+        t = phase - 0x200;
+        if (t < 0x80) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = -0x48 - (t >> 2);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = (t >> 4) - 0x70;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        } else {
+            t = phase - 0x280;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = -0x68 - (t >> 3);
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = (t >> 3) - 0x68;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        }
+        x = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26;
+        if (x < -0x68 && ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 != 0) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 = 0;
+        }
+        if (x < -0x68) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A + 8;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x - 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        }
+        break;
+    case 5:
+        t = phase - 0x300;
+        if (t < 0x80) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (t >> 3) - 0x78;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = (t >> 4) - 0x58;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        } else {
+            t = phase - 0x380;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26 = (t >> 2) - 0x68;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = (t >> 4) - 0x50;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A - arg0 + 3;
+        }
+        x = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26;
+        if (x >= -0x67 && ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 == 0) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_03 = 0x85;
+            if (arg0 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x8A;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_18 = 0x86;
+            }
+        }
+        if (x < -0x68) {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A + 8;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_26 = x + 0x10;
+            ((DisplayActor44 *)D_8011ECD0)[arg0 + 108].unk_2A = ((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_2A;
+        }
+        break;
+    }
+}
 
 void func_8013F948(void) {
     s32 i;
