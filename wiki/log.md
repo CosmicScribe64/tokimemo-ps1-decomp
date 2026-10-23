@@ -1746,3 +1746,7 @@ The only function of the package is C now; notes in `drafts/T-25124/main/func_80
 
 Reviewed [[tickets/T-25120-w8-GYOZI-80138B50]] against CODING_STANDARDS.md; matched GYOZI `func_8013907C` (844 bytes) and `func_80138C9C` (992 bytes) as default-build C.
 Findings fixed (CandList offset comments, catalog link, kanban column); FAKEs are marked; notes in drafts/T-25120/GYOZI/.
+## [2026-10-23] ticket | T-25126 Done
+
+Reviewed [[tickets/T-25126-w8-ENDING-80134D20]] against CODING_STANDARDS.md; matched ENDING `func_80135F4C` (3220 bytes) as default-build C, 27/27.
+The guard is gone; the fix was defining the object's `.data` table `D_8013CA3C` in C (T-25150 as1 rule), lead for `func_80134270` and `func_8013A2E8` in [[matching-notes]].

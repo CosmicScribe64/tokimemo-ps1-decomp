@@ -74,4 +74,6 @@ segments:
       - [0xA0B0, .rodata, ENDING/801396E0]
       - [0xA260, .rodata, ENDING/8013B6A0]
       - [0xA280, data, ENDING_data]
+      - [0xA5F0, .data, ENDING/80134D20]
+      - [0xAAA0, data, ENDING_data_8013CAA0]
   - [0x30000]
