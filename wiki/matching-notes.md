@@ -17,14 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25001: class C main sndisp, strCallback, func_80065964
-
-[[tickets/T-25001-class-c-main-sndisp-strcallback]], worktree `c-m1`. No new match; one guard at 2 rows.
-
-- **`sndisp` (388 B, guarded, 2 rows).** A clean rewrite of the T-14500 draft gives every instruction and register: `strncpy(buf, str, 256)`, then `for (i = 0; buf[i] != 0; i++, q++)` with the space, `P` and `G` tests on `!(q & 1)`. The original's `andi v0,zero,0xFF` is uopt forwarding the store `buf[i] = 0` into the next `buf[i]` read. `i` is both the position stored in `pos[n]` and, reset to 0, the counter of the second `sndi` loop. Frame: `i, q, n` declared before `pos` and `buf` put `pos` at sp+0x14C and `buf` at sp+0x4C, and a FAKE `s32 pad[2];` declared first gives the 0x168 frame. Left: the two rows of the template address. `u8 pos[5] = {0,...}` makes IDO copy from a template in the object's `.data`. The original template is `D_800B40F8`, 8 bytes into the 800B40F0 data range. This object's C `.data` is already the `D_800E3680` island (yaml `[0xA2E80, .data, main/8004F870]`, needed by the matched `menu_bar_color`), so the template lands at `.data+0x40`. `data_island.py main/8004F870` adds a second `.data` entry for the same object, and splat then writes only one `8004F870.data.s`, so `data_pieces.py` fails ("island 800B40F0 does not start with a symbol"). Closing this needs build support for two `.data` regions in one object, or another way to own the 800E3680 bytes.
-- **`strCallback` (640 B, `INCLUDE_ASM`, 75 rows).** The T-17014 draft is unchanged: from the RECT copy on, every ugen temporary is one ring slot high. Tried: `odd` as u32 (same) and s16/s8/u16/u8 (worse), an assignment in the condition, `if (odd)`, declaration order, the `D_80125C5C = 0` store before the reload, copy and `if` on one line, `x = x + ...`, `*&` on the copy source. autotweak (300 s, 318 edits) and the permuter (600 s, best 315, only by dropping the semantic `odd` reload) found nothing. Draft: `drafts/T-25001/main/strCallback.c`.
-- **`func_80065964` (424 B, `INCLUDE_ASM`).** A natural four-corner test, a block-local macro per corner and a do-while loop all compile to a frameless leaf, and uopt splits the loop around `idx`. The original has frame 0x68, saves s0/s1, keeps dead `sw` of p, y0 and y1 to sp+0x28, x0 to 0x24 and x1 to 0x20, and holds eight coordinate registers, a copy of each value, one pair per corner test. The source shape is unknown. Drafts: `drafts/T-25001/main/func_80065964.c`.
-
 ## T-24713: as1 traces (superseded by T-24900)
 
 Wave-2 T-24713 traced the near-miss diffs with an instrumented as1. Its measurements are kept here
@@ -808,6 +800,7 @@ Matched (2,768 bytes, default C) from the T-24701 guard (13 differing words) in 
 - **The counter spill at sp+0x2C is a uopt induction temporary.** A declared counter spills to its own home (0x4C); declaring it after the buffers or in a block scope grows the frame by 8. `var_v1 * 1 != 0x200` in the loop test makes uopt strength-reduce the test into a temporary, which lands in the slot below the locals with the frame unchanged (FAKE). `+ 1`, `- 1`, `<< 0`, `| 0`, pointer and `(u32)` spellings are folded before the induction pass and keep the home.
 
 Measured negatives: s16/u16 counters (extra `andi`/size change), `sp48` or `sp44` reused as the counter (size change), post-increment test (cfe temporary, frame +8), `if (D_801255B4) {}` and similar empty reads in the arm (29-130 rows). Full checksum 27/27 after a clean rebuild; headers, globals and branch protos pass.
+
 ## T-25143: SHOUGATU func_8013EA98
 
 No match. The best body is still the T-25046 36-cost source (42 rows, 230/230 words, frame 0x58).

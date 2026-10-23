@@ -7,22 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] build | Wave C-1 results and clean 27/27
-
-Four isolated-worktree runs (the first under the v2 IR-first protocol; 4 workers max). No new
-promotion, but three real row-count gains kept:
-- T-24921 ETC func_8013CCE4 9 -> 3 rows (guard). Case-2 schedule fixed by `buf[0] = 0x801E2000;
-  buf[1] = 0x801E6000;` on the `for` line with `u32 i`; the 3 remaining `beq v1` rows are coupled
-  to uopt folding the 4-trip loop. Next lead: cvt_pass switch-temp (`OPTN 405 0`).
-- T-24922 GEKO func_801367EC archived at 44 rows, 0 register rows; residuals are as1 block picks.
-- T-24923 OPTION func_801326BC archived at 134 rows; the copy loops are 0x200 bytes (not 9 words)
-  and the D_8013D304 signed `% 4` structure is understood; strength-reduced induction remains.
-- T-24924 ENDING func_801330E4 114 -> 92 rows (archive): frame now exact (0xB0, chance 0x30,
-  level 0x54, points 0x58, rank 0x78), rows 0-83 clean; next is the uopt coalescing of the f9
-  extraction vs the target's `or v0,t1,zero`.
-All commits cherry-picked to main; tickets In Review. Clean build 27/27, headers/globals OK.
-tools/progress.py: 6,826 / 6,952 functions, 2,100,368 / 2,276,920 bytes (92.2%); 126 left.
-
 ## [2026-10-20] build | Wave C-2 results; clean 27/27
 
 Four continuation runs on the same functions (T-24925..T-24928, isolated worktrees). No new
@@ -1742,14 +1726,17 @@ Both functions of `src/main/80061710.c` are C now; notes in drafts/T-25119/main/
 
 Reviewed and merged w9-RPG_BAT-8014ADD0: matched RPG_BAT `func_8014BFE4` (892 bytes, default C, 128 rows to 0; FAKEs: `t[1]`, one-line pre-loop statement, empty first arm now marked), 27/27.
 The only function of the package is matched, none left with rows; see [[tickets/T-25144-w8-RPG_BAT-8014ADD0]] and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25118 Done
 
 Reviewed [[tickets/T-25118-w8-main-800563F0]] against CODING_STANDARDS.md; matched main `func_80056BA8` (1296 bytes) as default-build C, 27/27; the review added a comment on its missing return.
 `strCallback` stays INCLUDE_ASM (75 rows from the copy-state shim); candidate tool rule in drafts/T-25118/main/strCallback/ for a tooling ticket.
+
 ## [2026-10-23] ticket | T-25123 Done
 
 Reviewed [[tickets/T-25123-w8-main-800451D0]] against CODING_STANDARDS.md; matched main `func_800455C4` (2,768 bytes) as default-build C, 27/27.
 The guard in `src/main/800451D0.c` is gone; FAKEs (D_801255B5 via the B4 symbol, `* 1` loop test) are ticketed, notes in [[matching-notes]] and [[playbook]].
+
 ## [2026-10-23] ticket | T-25143 Done
 
 Reviewed [[tickets/T-25143-w8-SHOUGATU-8013E330]] against CODING_STANDARDS.md: no source change, no findings; SHOUGATU `func_8013EA98` not matched (42 rows, over the guard limit), source stays `INCLUDE_ASM`.
