@@ -1755,3 +1755,8 @@ Both functions of `src/ovl/VALEN/80132760.c` are now C, notes in drafts/T-25117/
 
 Reviewed [[tickets/T-25116-w8-main-80047550]] against CODING_STANDARDS.md; matched main `func_80047560` (352 bytes) as default-build C, 27/27.
 `func_800476C0` stays `INCLUDE_ASM` at 649 diff lines (notes in drafts/T-25116/main/func_800476C0/); the unneeded `include/game.h` change was reverted in review.
+
+## [2026-10-23] ticket | T-25123 Done
+
+Reviewed [[tickets/T-25123-w8-main-800451D0]] against CODING_STANDARDS.md; matched main `func_800455C4` (2,768 bytes) as default-build C, 27/27.
+The guard in `src/main/800451D0.c` is gone; FAKEs (D_801255B5 via the B4 symbol, `* 1` loop test) are ticketed, notes in [[matching-notes]] and [[playbook]].
