@@ -7,17 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | T-25013 lever 4 concluded: the as1 +1 region test identified, no build rule
-
-Read the weight pass in the pinned recomp as1 source and confirmed it
-on a traced run of GEKO func_80136C20: a predecessor adds 1 (not 3)
-exactly when one of its successors leaves the current region bitset
-(func_428758), and -3 on a back edge to a dominator. The GEKO stall
-block's scan stops at the weight-7 switch block as documented; the
-original's CFG must have earned a +1 there, a source-shape matter.
-Detail in [[tickets/T-25013-compiler-level-levers]]; the open item in
-[[as1-scheduler-rule]] is answered there.
-
 ## [2026-10-21] ticket | T-25013 complete: all five levers investigated, none is a uniform rule
 
 Lever 5 session on main func_8006A044: the OPTN sweep (0..530, plus
@@ -1792,5 +1781,6 @@ The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) found that
 ## [2026-10-23] ticket | T-25600 finish gate opened
 
 User approved one gate in place of the separate conveyors. [[tickets/T-25600-finish-gate]] (tickets T-25601..T-25609) loops the nine functions left until none is in assembly, using the lens, synthesis and review treatment that matched TAIIKU func_80137784. Waves 10 and 11 start no new work; their running passes finish first.
+
 ## [2026-10-23] build | T-25401 w11-GEKO-801323E0-p1
 Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl/GEKO/801323E0.c`; func_80132D04 got an old-style definition (same bytes). The file has no INCLUDE_ASM left, so [[tickets/T-25401-w11-GEKO-801323E0]] is Done after review; notes in [[matching-notes]].
