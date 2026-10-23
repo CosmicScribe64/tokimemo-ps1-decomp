@@ -3,7 +3,7 @@
 Start: plain `INCLUDE_ASM`. Best earlier body: `drafts/T-24519/func_801344E0.c`
 (the T-24048 body with the clone and point loops in the indexed form of
 `func_801363F4`). Under a guard it needs `void func_80137BF4(void);`, which
-is already in `include/ovl/MASTER.h`. Measured whole-unit: 171 rows. The
+this package adds to `include/ovl/MASTER.h`. Measured whole-unit: 171 rows. The
 first divergence was row 289, the end pointer of the first 0x44-byte record
 copy in case 4: target `addiu t5,t3,60`, candidate `t6` (one ring slot high).
 
