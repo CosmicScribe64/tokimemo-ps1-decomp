@@ -695,3 +695,15 @@ Measured negatives and the next hypothesis: `drafts/T-25105/main/func_80055AFC/N
 - **The dead stores are CSE temporaries.** sp+0x20..0x28 sit below the declared locals' 15 words: they hold the shared subexpressions (`&D_80125C10[idx]`, x0, y0, x0 + 19, y0 + 15). They only appear when the arrays are filled from repeated expressions (`cx[1] = p[0] + dx + 19;`), one source line per corner; `cx[1] = cx[0] + 19` or declared `x`, `y` locals do not give them.
 - **Last rows.** The fourth bound test reads `cy[1] > 120` (t1), the third `cy[0] < -120` (a3); the other record is read inline (`((s16 *)&D_80125C10[i * 4])[0]`), as a `q` pointer it takes a2 instead of s0. One unused local (FAKE) is the 15th local word; without it the spill slots move by 4.
 - Measurements and negatives: `drafts/T-25108/main/func_80065964/NOTES.md`.
+
+## T-25108: main func_80065B0C
+
+No match: guarded at 9 funcdiff lines (2 instructions out of 266 words) in `src/main/80062CD0.c`. Before this pass the function had only m2c census drafts (313 rows). The selection-cursor step of the 15-icon menu.
+
+What closed:
+- **The selection index through `GameState *g`.** The original keeps `unk_1093` in `$s3`, re-read after every call, and recomputes the `D_80125C10` address for the y store after the x store. Read directly, the index stays in temporaries and the address is shared (169 rows). Through `g->unk_1093` it is an ILOD: the x store kills it for CSE, the extra use gives the range `$s3` (125 rows). Every other GameState read goes through `g` too; at the `n` test this also stops the `unk_F6C` read from being PRE'd into `$v0`.
+- **An unsigned switch selector.** `switch ((u32)g->unk_F80 & 0x5000)` keeps the `case 0x1000` constant apart from the loop's halfword 0x1000 stores; signed, one register holds both and the loop counter and the constant swap (125 to 25 rows).
+- **One multiply in the flag index.** `unk_F90[i * 2].unk_06` is two multiplies in ucode and ugen spends a temporary on the folded one, so the loop's else arm is one ring slot late; `((GsRecF90 (*)[2])g->unk_F90)[i][0].unk_06` (the 8004F870 idiom) closes it.
+- `D_8011ECF6`/`D_8011ECFA` as `((DisplayActor44 *)D_8011ECD0)[0].unk_26`/`unk_2A` keep the y load behind the x store in as1. New externs `s8 D_800B5A9C`, `u8 D_800B5AA0`.
+
+What is left: the else arm sets the shared constant 3 (`$s5`) before `jal menu_check` in the original and after the index reload in the draft (uopt moves the join's reload to the end of the else arm). From the IDO uopt sources, the original's `$s5` range covers the menu_check block, which needs a reference to the constant there or in the entry block; none of about 30 variants found one, and autotweak and the permuter found nothing. Analysis, negatives and the next probe: `drafts/T-25108/main/func_80065B0C/NOTES.md`.
