@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] decision | Correct NAME_ENT decrement-width interpretation
-
-Independent re-audit during [[tickets/T-24600-finish-matching]] found that NAME_ENT43580 narrows decremented X to s16 before both store and call. Corrected the earlier full-word claim in [[tickets/T-24526-name-ent-intro-regions]] and [[matching-notes]]; its1075-word scratch metrics included an incorrect width control, never promoted. Active reconstruction restores the narrowing. Old log entries remain untouched.
-
-## [2026-10-20] build | MAIN matrix reconstruction and lane refresh
-
-Recorded schedule-sort frame controls and fresh MAIN62948 typed recovery in [[matching-notes]]. Current candidates remain unmatched. TACO moves from its documented BAC4 assembler-lifetime gap to FBF0 sprite channels; OPTION calendar and NAME_ENT introduction continue independently under [[tickets/T-24600-finish-matching]]. No additional production changes or coverage credit.
-
 ## [2026-10-20] build | Matrix aggregate homes recovered
 
 Recorded MAIN62948's184-word typed reconstruction in [[matching-notes]]. Correct post-call reload, distinct unsigned negation and declaration placement restore the original operation count and SDK aggregate homes; frame and final copy scheduling remain. OPTION A7EC independently reaches a single missing delay-slot NOP; TACO font39424 recovers original byte-argument entry and independent coordinates. No additional match claimed.
@@ -1722,6 +1714,7 @@ Reviewed [[tickets/T-25106-w8-TAIIKU-80133C80]] against CODING_STANDARDS.md; mat
 ## [2026-10-23] ticket | T-25200 wave 9 neighbor conveyor opened
 
 User asked for neighbor work next to wave 8. [[tickets/T-25200-wave-9-neighbor]] takes untouched wave 8 packages from the tail of the queue and runs near-miss closers for merged wave 8 packages under [[tickets/T-25201-wave-9-closers]]. Job picking and package blocking go through one lock shared with the wave 8 worktree script.
+
 ## [2026-10-23] ticket | T-25105 Done
 
 Reviewed [[tickets/T-25105-w8-main-80053650]] against CODING_STANDARDS.md; matched main `func_80054E6C` (340 bytes), `func_80054FC0` (796) and `func_8005557C` (1,212) as default-build C, 27/27.
