@@ -1358,14 +1358,12 @@ void func_80137544(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25201, 4 rows; only the operand order of the two pointer compares is left
- * (original bne a0,t8 / bne a1,t9: pointer first; this C gives the address constant first).
- * uopt swaps an == whose left operand is not a plain variable and moves a constant offset
- * on the second operand to the first, so an offset alias always lands first. Writing
- * D_8014984C itself keeps the order but its base constant then takes a register ahead of
- * the 0x44 constant and shifts every later colour. Next: second names in a symbols file. T-25201.
- * Display records of the 0x44-byte pool; DISPF reads +0x24/+0x28 as 16.16 words. T-25106. */
+/* Display records of the 0x44-byte pool; DISPF reads +0x24/+0x28 as 16.16 words. T-25106.
+ * The arg0 == 0 before D_8014929C and the one before D_80122E94 == 1 become bne a0,t8 /
+ * bne a1,t9: &D_8014984C[arg0] and &D_8014981C[arg0] are in a0/a1 by then, and uopt rewrites the
+ * index test into a compare of that address with the array base, built fresh at the compare
+ * (the address comes from an earlier block and arg0 is not used after the test). The other
+ * arg0 tests stay bnez. T-25502. */
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
 #define DISPF(n) (((DisplayFixActor44 *)D_8011ECD0)[n])
 /* FAKE: shared player/cpu[3] index, as in matched func_80138680; T-25106. */
@@ -1404,11 +1402,7 @@ s32 func_80137784(s32 arg0) {
         RUN(arg0).unk_14 = 0;
         RUN(arg0).unk_18 = 0;
         RUN(arg0).unk_1C = 0;
-        /* FAKE: the player's slot address written from the next object, D_8014985C. With
-         * D_8014984C itself the compare shares the slot base with &D_8014984C[arg0]; uopt then keeps
-         * that base in a register (priority 0.5) ahead of the 0x44 stride (0.4), which the original
-         * colours into t5. T-25106 */
-        if (&D_8014984C[arg0] == (Fix32 *)&D_8014985C - 4) {
+        if (arg0 == 0) {
             D_80149208.player.unk_20.halves.high = -0xA0;
             D_8014929C = 0;
         }
@@ -1456,9 +1450,7 @@ s32 func_80137784(s32 arg0) {
     DISPF(107 + arg0).unk_28.w += D_8014983C[arg0];
     if (++D_8014981C[arg0] >= 0x80) {
         DISP(96 + arg0).unk_18 = arg0 + 0x90;
-        /* FAKE: player's counter address from D_8014985C, as above; with D_8014981C the counter
-         * base takes a2 ahead of D_80122E94. T-25106 */
-        if (&D_8014981C[arg0] == (s32 *)&D_8014985C - 16 && D_80122E94 == 1) {
+        if (arg0 == 0 && D_80122E94 == 1) {
             DISP(107).unk_18 = D_80149320[D_801491DC] * 6 + 5;
         } else {
             DISP(107 + arg0).unk_18 = D_801491EC * 6 + 5;
@@ -1474,9 +1466,6 @@ s32 func_80137784(s32 arg0) {
 #undef RUN
 #undef DISPF
 #undef DISP
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
-#endif
 
 /* Display-record view shared with the matched game-C sibling. T-24008. */
 #define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])

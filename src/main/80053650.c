@@ -916,7 +916,86 @@ s32 func_80055A38(s32 arg0) {
     return -1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80055AFC);
+/* The load half of func_8005557C: copies bank D_800E6280.unk_1117 & 1 back into GameState, field by field
+   in the same order (T-25310). The bank address has the writer's two spellings (FAKE: T-25310, the same
+   address forms as func_8005557C, see its comment).
+   The slot byte is read through g, set before the func_80055A38 call: a plain D_800E6280.unk_1117 read
+   lets IDO fold arg0 into the bank base, which then splits into two live ranges. */
+s32 func_80055AFC(s32 arg0) {
+    GameState *g;
+    u8 *p;
+    u32 i;
+    s32 pad[2]; /* FAKE: T-25310, two unknown frame words (frame 0x48, spill homes 0x2C/0x30) */
+
+    g = &D_800E6280;
+    if (func_80055A38(0) == -1) {
+        return -1;
+    }
+    arg0 = g->unk_1117 & 1;
+    if (((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 == 0) {
+        return -1;
+    }
+    if (((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 == 0) {
+        return -1;
+    }
+    g->unk_03D = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004;
+    g->unk_03E = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005;
+    g->unk_03F = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006;
+    g->unk_040 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007;
+    g->unk_041 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008;
+    g->unk_042 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A;
+    for (i = 0; i < 2; i++) {
+        g->unk_044[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_00C[i];
+    }
+    *(GsBlockC4 *)g->unk_0C4 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C;
+    for (i = 0; i < 16; i++) {
+        g->unk_1BC[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_108[i];
+    }
+    for (i = 0; i < 16; i++) {
+        g->unk_53C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_488[i];
+    }
+    for (i = 0; i < 8; i++) {
+        g->unk_54C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_498[i];
+    }
+    for (i = 0; i < 12; i++) {
+        ((GsWord *)g->unk_66C)[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_4B8[i];
+    }
+    *(GsBlock56C *)g->unk_56C = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8;
+    k_speed_set(g->unk_668[3]);
+    D_800B6708 = g->unk_668[2];
+    for (i = 0; i < 4; i++) {
+        g->unk_728[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5E8[i];
+    }
+    for (i = 0; i < 16; i++) {
+        g->unk_72C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5EC[i];
+    }
+    for (i = 0; i < 16; i++) {
+        g->unk_73C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5FC[i];
+    }
+    for (i = 0; i < 16; i++) {
+        g->unk_74C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_60C[i];
+    }
+    /* FAKE: T-25310, the result is stored and never read; the original reads bzero's v0 after the call,
+       which keeps v0 out of the unrolled loop's start values (end pointer in v0, the counter range in t4,
+       the bank bases in t5 and ra). Its real use is unknown. */
+    p = bzero(g->unk_75E, 0x800);
+    for (i = 0; i < 256; i++) {
+        g->unk_75E[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_61C[i];
+    }
+    g->unk_F5E = func_8006C988(&g->unk_F5F, &g->unk_75D, 1);
+    g->unk_F6C = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C;
+    g->unk_F6D = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D;
+    g->unk_1092 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E;
+    g->unk_F6E = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F;
+    g->unk_03C = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20;
+    g->unk_F68 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24;
+    g->unk_F6F = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28;
+    g->unk_F70 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29;
+    g->unk_F73 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A;
+    g->unk_F75 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B;
+    *(GsWord *)g->unk_F64 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C;
+    return 1;
+}
 
 s32 func_80056070(u8 *buf, s32 arg1) {
     s32 i;

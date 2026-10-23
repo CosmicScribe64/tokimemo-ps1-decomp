@@ -51,9 +51,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
-- [ ] [[tickets/T-25309-w10-TAIIKU-80133C80|T-25309 Wave 10 second pass on src/ovl/TAIIKU/80133C80.c]]
-- [ ] [[tickets/T-25310-w10-main-80053650|T-25310 Wave 10 second pass on src/main/80053650.c]]
-- [ ] [[tickets/T-25311-w10-ENDING-80133C10|T-25311 Wave 10 second pass on src/ovl/ENDING/80133C10.c]]
 - [ ] [[tickets/T-25312-w10-TACO-801447D0|T-25312 Wave 10 second pass on src/ovl/TACO/801447D0.c]]
 - [ ] [[tickets/T-25313-w10-main-80043510|T-25313 Wave 10 second pass on src/main/80043510.c]]
 - [ ] [[tickets/T-25314-w10-ETC-8013FF80|T-25314 Wave 10 second pass on src/ovl/ETC/8013FF80.c]]
@@ -65,7 +62,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25320-w10-main-800674B0|T-25320 Wave 10 second pass on src/main/800674B0.c]]
 - [ ] [[tickets/T-25401-w11-GEKO-801323E0|T-25401 Wave 11 passes on src/ovl/GEKO/801323E0.c]]
 - [ ] [[tickets/T-25402-w11-GEKO-801338F0|T-25402 Wave 11 passes on src/ovl/GEKO/801338F0.c]]
-- [ ] [[tickets/T-25403-w11-GEKO-80142760|T-25403 Wave 11 passes on src/ovl/GEKO/80142760.c]]
 - [ ] [[tickets/T-25404-w11-main-80047550|T-25404 Wave 11 passes on src/main/80047550.c]]
 - [ ] [[tickets/T-25405-w11-main-80053650|T-25405 Wave 11 passes on src/main/80053650.c]]
 - [ ] [[tickets/T-25406-w11-main-800674B0|T-25406 Wave 11 passes on src/main/800674B0.c]]
@@ -78,6 +74,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25403-w11-GEKO-80142760|T-25403 Wave 11 passes on src/ovl/GEKO/80142760.c]]
 - [ ] [[tickets/T-25062-name-ent-byte-pack|T-25062 Match NAME_ENT byte pack and zero loop]]
 - [ ] [[tickets/T-25060-tel-date-menu|T-25060 Match final TEL date menu builder]]
 - [ ] [[tickets/T-25056-ending-scheduler|T-25056 Resolve ENDING A2E8 scheduler residue]]
@@ -106,6 +103,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
 - [ ] [[tickets/T-25300-wave-10-second-pass|T-25300 Wave 10 - second pass on every function left after waves 8 and 9]]
 - [ ] [[tickets/T-25400-wave-11-until-matched|T-25400 Wave 11 - repeated passes until every game function matches]]
+- [ ] [[tickets/T-25500-stubborn-functions|T-25500 Stubborn functions - multi-angle attack, toolchain changes allowed under 7a]]
+- [ ] [[tickets/T-25501-stubborn-shougatu-8013ea98|T-25501 Stubborn function SHOUGATU func_8013EA98 (src/ovl/SHOUGATU/8013E330.c)]]
 
 ## In Review
 
@@ -177,17 +176,22 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25502-stubborn-taiiku-80137784|T-25502 Stubborn function TAIIKU func_80137784 (src/ovl/TAIIKU/80133C80.c)]]
+- [ ] [[tickets/T-25311-w10-ENDING-80133C10|T-25311 Wave 10 second pass on src/ovl/ENDING/80133C10.c]]
+- [ ] [[tickets/T-25309-w10-TAIIKU-80133C80|T-25309 Wave 10 second pass on src/ovl/TAIIKU/80133C80.c]]
+- [ ] [[tickets/T-25310-w10-main-80053650|T-25310 Wave 10 second pass on src/main/80053650.c]]
+- [ ] [[tickets/T-11910-geko-remainder|T-11910 GEKO remainder (claim #65)]]
 - [ ] [[tickets/T-25306-w10-BUNKA_SD-80134540|T-25306 Wave 10 second pass on src/ovl/BUNKA_SD/80134540.c]]
+- [ ] [[tickets/T-25307-w10-main-8004F870|T-25307 Wave 10 second pass on src/main/8004F870.c]]
+- [ ] [[tickets/T-25305-w10-SHOUGATU-8013E330|T-25305 Wave 10 second pass on src/ovl/SHOUGATU/8013E330.c]]
+- [ ] [[tickets/T-25308-w10-RPG_BAT-80154430|T-25308 Wave 10 second pass on src/ovl/RPG_BAT/80154430.c]]
+- [ ] [[tickets/T-25132-w8-SHOUGATU-80134890|T-25132 Wave 8 package w8-SHOUGATU-80134890 (src/ovl/SHOUGATU/80134890.c)]]
+- [ ] [[tickets/T-25135-w8-ENDING-80133C10|T-25135 Wave 8 package w8-ENDING-80133C10 (src/ovl/ENDING/80133C10.c)]]
 - [ ] [[tickets/T-25301-w10-NAME_ENT-80139740|T-25301 Wave 10 second pass on src/ovl/NAME_ENT/80139740.c]]
 - [ ] [[tickets/T-25302-w10-main-80049FF0|T-25302 Wave 10 second pass on src/main/80049FF0.c]]
-- [ ] [[tickets/T-25305-w10-SHOUGATU-8013E330|T-25305 Wave 10 second pass on src/ovl/SHOUGATU/8013E330.c]]
-- [ ] [[tickets/T-25307-w10-main-8004F870|T-25307 Wave 10 second pass on src/main/8004F870.c]]
-- [ ] [[tickets/T-25308-w10-RPG_BAT-80154430|T-25308 Wave 10 second pass on src/ovl/RPG_BAT/80154430.c]]
 - [ ] [[tickets/T-25131-w8-NAME_ENT-80142A80|T-25131 Wave 8 package w8-NAME_ENT-80142A80 (src/ovl/NAME_ENT/80142A80.c)]]
-- [ ] [[tickets/T-25132-w8-SHOUGATU-80134890|T-25132 Wave 8 package w8-SHOUGATU-80134890 (src/ovl/SHOUGATU/80134890.c)]]
 - [ ] [[tickets/T-25303-w10-main-800563F0|T-25303 Wave 10 second pass on src/main/800563F0.c]]
 - [ ] [[tickets/T-25304-w10-main-8004C3F0|T-25304 Wave 10 second pass on src/main/8004C3F0.c]]
-- [ ] [[tickets/T-25135-w8-ENDING-80133C10|T-25135 Wave 8 package w8-ENDING-80133C10 (src/ovl/ENDING/80133C10.c)]]
 - [ ] [[tickets/T-25133-w8-TEL-8013CCD0|T-25133 Wave 8 package w8-TEL-8013CCD0 (src/ovl/TEL/8013CCD0.c)]]
 - [ ] [[tickets/T-25134-w8-main-80043510|T-25134 Wave 8 package w8-main-80043510 (src/main/80043510.c)]]
 - [ ] [[tickets/T-25136-w8-TACO-801447D0|T-25136 Wave 8 package w8-TACO-801447D0 (src/ovl/TACO/801447D0.c)]]

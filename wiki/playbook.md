@@ -65,7 +65,7 @@ A `u16` global read only through shifts (`h >> 12`) keeps its CVT at every read 
 
 `bne` operands reversed, registers right: read the selector through a u32/s32 local (GYOZI `func_8014206C`, T-20005 note), or the aggregate (T-16930), or wrap the left operand `w * 1 != x->width` (`| 0`, `^ 0`, `<< 0` also work; `+ 0` does not) (main `strNext`, T-17014). When t0..t3 are permuted inside one expression and nothing else differs, read the ucode entering uopt: cfe puts the heavier operand of `+`/`*` first (an indexed array read is heavier than a local or scalar, a `u32` conversion adds weight), and ugen takes each temporary from its FIFO list when it emits the instruction. A local copy of the array element (`x = A[i + 1]; ... v / 32 + -x / 2`) evens the weights so source order holds; otherwise `(D | 0) * k` or `a - (0 - A[i])` (FAKE) (main `func_80062948`, T-25119). For sums, spelling decides: `(idx + D_X)->f` gives index first, `(D_X + idx)->f` base first (TACO `func_801557E8`, T-16564); in RPG_BAT `func_80138324` the last 4 rows were the global first in two sums (T-24303).
 
-**An indirect load on the other side (T-25401).** cfe puts an operand that contains an ILOD first in a sum, whatever the source order; with ILODs on both sides the right operand goes first. A register local is a plain LOD, so `(x << 23) >> 27` from a local always comes after a table entry. `tbl[i] + ((*&x << 23) >> 27)` (FAKE) makes the local an ILOD for cfe only: uopt reads it from the register again (GEKO `func_80132B24`, 18 rows to 0).
+**An indirect load on the other side (T-25401).** cfe puts an operand that contains an ILOD first in a sum, whatever the source order; with ILODs on both sides the right operand goes first. A register local is a plain LOD, so `(x << 23) >> 27` from a local always comes after a table entry. `tbl[i] + ((*&x << 23) >> 27)` (FAKE) makes the local an ILOD for cfe only: uopt reads it from the register again (GEKO `func_80132B24`, 18 rows to 0; the merged source uses the equivalent `(date = date) << 23 >> 27` from T-11910).
 
 ## 5. Store order, delay slots and as1 line grouping
 
@@ -134,6 +134,17 @@ Do not spend a session on these without a new idea; leave a guard with the ticke
 - as1 global scheduler picks (T-24202, T-24212, T-24203): rule and remaining cases in [[as1-scheduler-rule]]; default-block hoists are fixed with `volatile` (T-24900).
 - Historical uopt `idx = 0; idx++` fold (T-24204): closed in MAIN by the T-25036 late-zero producer and late-eliminated identity arm; see section 6.
 - uopt priority and colour order with no uniform rule: apply recipes above, do not search flags (exhausted in T-0014, T-0017, T-9800).
+
+### Before proposing a compiler or build-step change
+
+The compiler has been compared and traced in depth. Start from these results; do not re-run them.
+
+- Which compiler: release 3.18, the IDO 5.2 generation, from the linker stamps in O.BIN ([[original-compiler]]).
+- IDO 5.2 against 5.3: byte-identical on 2,564 matched functions and on all 46 blocked cases tested (T-3110, [[ido-52-evaluation]]). Switching compilers gains nothing. `tools/ido_eval.py` repeats the comparison for one function if a new case needs it.
+- IDO 4.1's back end: its ugen gives the +16 frames natively but changes 1,355 matched functions; its as1 changes 1 (T-20700).
+- uopt register allocation: eight uniform allocator rules all broke matched code, the best 661 functions; only 2 true tie-breaks exist (T-9800, [[uopt-register-allocation]]). The compiler levers of T-25013 to T-25015 were all rejected.
+- What did work: differences in the ucode the original front end produced, which no stock IDO reproduces: `tools/cvt_pass.py` (T-1321, T-5010, T-24929), `-cckr` (T-7000), plus the frame pass (T-0016) and `tools/ugen_pass.py` (T-24092). A new compiler difference, if there is one, most likely belongs in the ucode before uopt (an extension of `cvt_pass.py`), not in uopt or as1.
+- Any such change must meet CODING_STANDARDS.md 7a and leave all 27 checksums unchanged. [[build-step-gaps]] lists the gaps still open.
 
 ## Call-result liveness and a miscolored constant (T-25043)
 

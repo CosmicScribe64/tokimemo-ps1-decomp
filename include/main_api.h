@@ -161,6 +161,7 @@ typedef union GsSlot54C {
 typedef union GsHalf {
     /* 0x00 */ u16 h;
     /* 0x00 */ u8 b[2];
+    /* 0x00 */ volatile u16 vh; /* FAKE: T-11910 volatile view: GEKO func_80133C50 reads the club here so uopt keeps the read in place */
 } GsHalf; /* size 0x02 */
 
 #ifndef T9540_FLAGS_WORK24
@@ -2975,7 +2976,7 @@ s32 StartCARD(void);
 void _bu_init(void);
 s32 _card_auto(s32 arg0);
 s32 _card_status(s32 chan);
-void bzero(void *p, s32 n);
+void *bzero(void *p, s32 n); /* BIOS A(0x28); main func_80055AFC stores the result in a local (T-25310) */
 #ifndef MAIN_API_OVERRIDE_func_800AE080
 void func_800AE080(u8 *arg0, s32 arg1);
 #endif

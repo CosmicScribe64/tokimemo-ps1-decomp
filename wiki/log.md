@@ -7,41 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | tools/lever_lab.py for compiler-level experiments (T-25013)
-
-Added `tools/lever_lab.py` and `tools/test_lever_lab.py`: one command rebuilds every object under an env-gated variant, checks 0 FAILED and 27 `.ok`, compares each matched function with a base snapshot (any change = non-uniform rule, reject) and re-scores all guarded functions against base. Validated with a no-op variant (`0 of 7506` changed, 0 guarded changes). Note: `tools/queue.py` shadows the stdlib `queue`, so `concurrent.futures`/`ThreadPool` break inside `tools/`; the tool uses plain subprocess polling. Documented in [[tickets/T-25013-compiler-level-levers]].
-
-## [2026-10-21] ticket | T-25013 first lever experiment: zcopy off is not the lever
-
-A Sonnet worktree run (branch T-25013, merged) tried lever 1 on main `func_8006A044` and ran out of usage before levers 2-5. Result: our compiler already promotes the byte and stores it at the same places; the difference is the arm shape (original `or t5,v0,zero; ori; andi v0; sb v0`, ours `ori; sb t5`). Forcing uopt `OPTN zcopy 0` everywhere is not uniform (`lever_lab`: 22 guarded changes, 19 worse, e.g. `main func_8006D7EC` 2 -> 1630) and did not produce the copy. Next step on that lever: trace which uopt phase collapses the `LOD R; STR R` copy. Levers 2-5 untouched; ticket [[tickets/T-25013-compiler-level-levers]] stays Ready. Worktree `/Users/lila/Documents/Projects/tokimemo-wt/T-25013` (local, game data copied in) can be reused or removed with `git worktree remove`.
-
-## [2026-10-21] ticket | T-25013 claimed by Octa (remote, cloud workflow)
-
-Octa (Muse, working remotely per the maintainer's direction) takes [[tickets/T-25013-compiler-level-levers]]: compiler-level levers from the cloud workflow ([[cloud-matching]]), since the maintainer is away from the Mac. Setup: public clone plus the project Docker image built locally; single-function packets stay outside the repo and are never committed. Full uniformity gate runs through CI on pull requests (progress workflow) until a local tree with the disc is available. First target is the lever 1 follow-up the ticket already queues: trace which uopt phase collapses the `LOD`/`STR` copy pair on main `func_8006A044`, using the instrumented uopt from [[ending-allocator-trace]]. Branch: `octa/t25013-levers`.
-
-## [2026-10-21] build | T-25013 lever 1 traced: no uopt phase removes the copy; it is never created
-
-Octa's remote session on [[tickets/T-25013-compiler-level-levers]]: built the instrumented uopt (pristine `uopt.c` hash matches [[ending-allocator-trace]]) and dumped the ucode streams for the `func_8006A044` draft. The constant-address indirect form of the `unk_F64` accesses is not the lever (a gated `cvt_pass` normalization to direct `LOD`/`STR` fires on all 19 sites, final score unchanged at 97). The traced expression graph shows the byte as one evolving version chain; the original's extra per-arm copy is an allocator coalescing artifact, which puts `func_8006A044` on lever 5, not lever 1. Details in the ticket. Environment note: the cloud VM cannot run Docker containers (netns blocked), so the pinned toolchain runs natively there and CI is the gate; the Docker-only rule for the maintainer's host is unaffected.
-
-## [2026-10-21] build | T-25013 lever 3 concluded: no uopt option controls the boolean CSE
-
-Lever 3 session on ENDING func_801387B0: baseline reproduced, mechanism
-traced in the ucode dumps (uopt stores the CSE'd (flag & 1) == 1 boolean
-at the second compare and reloads it after; the original shares only the
-AND), OPTN sweep over 0..530 found no controlling option, and the 7.1
-uopt stage CSEs identically. Lever 3 does not exist as a compiler rule.
-Detail in [[tickets/T-25013-compiler-level-levers]].
-
-## [2026-10-21] build | T-25013 lever 2 concluded: frame elision already happens, +8 is a lifetime artifact
-
-Lever 2 session on main func_80062948: micro-experiments show the IDO
-5.3 pipeline elides frame space for unused locals (an unused 32-byte
-struct and scalar leave the frame at -48), so the matrices draft's
-0xD8 vs 0xD0 frame is not a frame-pass gap. The extra 8 bytes are a
-materialized value the original keeps in a register, the same
-allocation behaviour as levers 1 and 5. Detail in
-[[tickets/T-25013-compiler-level-levers]].
-
 ## [2026-10-21] build | T-25013 lever 4 concluded: the as1 +1 region test identified, no build rule
 
 Read the weight pass in the pinned recomp as1 source and confirmed it
@@ -1781,6 +1746,48 @@ The header now declares `s32 func_80134D94(void);`; notes in `drafts/T-25306/BUN
 ## [2026-10-23] ticket | T-25400 wave 11 opened (repeat until matched, GEKO included)
 
 The user does not want to wait for the issue #65 claim; diman8 was told on the issue that our agents now also work on the four GEKO functions and that their PRs stay welcome. [[tickets/T-25400-wave-11-until-matched]] and T-25401..T-25412 cover every file still holding INCLUDE_ASM: GEKO first, then each file wave 10 leaves unmatched, up to three passes per file.
+
+## [2026-10-23] ticket | T-11910 In Progress
+
+Second round of claim CosmicScribe64/tokimemo-ps1-decomp#65: the last four GEKO functions (`func_80133C50`, `func_80142C9C`, `func_80133024`, `func_80132B24`). One Opus agent at a time. [[tickets/T-11910-geko-remainder]].
+
+## [2026-10-23] ticket | T-11910: GEKO func_80133C50 matched
+
+Agent A matched `func_80133C50` (volatile club view, FAKE) and moved the `func_80142C9C` checkpoint from 162 to 119 lines. PR opened for the match because the maintainer's agents now also work on the remaining GEKO functions (#65). Notes in [[matching-notes]]. [[tickets/T-11910-geko-remainder]].
+
+## [2026-10-23] ticket | T-25500 stubborn functions opened
+
+User asked for extra effort, outside-the-box approaches and build tooling changes if needed for the functions that keep failing. [[tickets/T-25500-stubborn-functions]] starts with SHOUGATU func_8013EA98 ([[tickets/T-25501-stubborn-shougatu-8013ea98]]) and TAIIKU func_80137784 ([[tickets/T-25502-stubborn-taiiku-80137784]]); tooling or config changes must meet CODING_STANDARDS.md 7a and pass two adversarial reviews.
+
+## [2026-10-23] decision | Playbook: compiler research summary for agents
+
+Added "Before proposing a compiler or build-step change" to [[playbook]]: which compiler the game used, the IDO 5.2/5.3/4.1 comparisons, the rejected allocator rules and levers, and where a real difference has been found before (the front end's ucode, `cvt_pass.py`). Prompted by the stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) so agents start from these results instead of repeating them.
+
+## [2026-10-23] ticket | T-25309 Done
+
+Reviewed [[tickets/T-25309-w10-TAIIKU-80133C80]] against CODING_STANDARDS.md; no match: TAIIKU `func_80137784` stays behind its `NON_MATCHING` guard (4 funcdiff rows, the operand order of two pointer compares), 27/27, no findings.
+The only measured match needs second symbol names (`drafts/T-25309/TAIIKU/func_80137784/alias-match.patch`, waiting for the user's approval); notes in [[matching-notes]].
+
+## [2026-10-23] ticket | T-25310 Done
+
+Reviewed [[tickets/T-25310-w10-main-80053650]] against CODING_STANDARDS.md; matched main `func_80055AFC` (1396 bytes) as default-build C, 27/27, funcdiff MATCH; two small findings fixed (cheatsheet row placement, FAKE comment ticket).
+A dead `p = bzero(...)` (pointer-returning prototype) fixes the colours of the unrolled 256-record loop; notes in `drafts/T-25310/main/func_80055AFC/NOTES.md`, [[matching-notes]] and [[register-cheatsheet]].
+
+## [2026-10-23] ticket | T-25311 Done
+
+Reviewed and merged: ENDING func_80134270 matched (1848 bytes, default C, three FAKE marks), src/ovl/ENDING/80133C10.c has no INCLUDE_ASM left. [[tickets/T-25311-w10-ENDING-80133C10]], notes in [[matching-notes]].
+
+## [2026-10-23] ticket | T-11910 Done
+
+Agent B matched GEKO `func_80132B24` (s32 with no return plus a kept-live empty test; a no-op assignment to order cfe's `+` operands) and kept `func_80133024` guarded at 2 rows with the ucode finding in its comment. With `func_80133C50` (#69) that is two matches in this round; `func_80142C9C` and `func_80133024` stay open (the maintainer's agents also work on them, #65). Inline review against CODING_STANDARDS.md. Notes in [[matching-notes]]. [[tickets/T-11910-geko-remainder]].
+
+## [2026-10-23] build | T-25403 w11-GEKO-80142760-p1
+Pass 1 on GEKO func_80142C9C did not match: `src/ovl/GEKO/80142760.c` unchanged (INCLUDE_ASM stays, best body 159 rows); reviewed, only drafts and notes merged.
+Next pass starts from `drafts/T-25403/GEKO/func_80142C9C/NOTES.md` (global copy propagation off, [[tickets/T-25403-w11-GEKO-80142760]]).
+
+## [2026-10-23] ticket | T-25502 Done: TAIIKU func_80137784 matched in plain C
+
+The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) found that the original's two pointer compares are uopt's test replacement of plain `arg0 == 0` tests; no extra symbols or tool change. Both reviewers' wording findings on the mechanism were fixed before merge ([[tickets/T-25502-stubborn-taiiku-80137784]]).
 
 ## [2026-10-23] build | T-25401 w11-GEKO-801323E0-p1
 Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl/GEKO/801323E0.c`; func_80132D04 got an old-style definition (same bytes). The file has no INCLUDE_ASM left, so [[tickets/T-25401-w11-GEKO-801323E0]] is Done after review; notes in [[matching-notes]].

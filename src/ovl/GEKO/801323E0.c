@@ -172,14 +172,16 @@ s32 func_80132A4C(s16 arg0) {
     }
 }
 
-/* s32 with no return at the end: girl is still in $v0 at the exit (T-25401). */
+/* FAKE: T-11910 s32 with no return statement: the original leaves girl in $v0 at
+ * every exit but the first. A `return girl` makes uopt keep the selector out of $v0
+ * (girl in $v1, the record pointer and day in $v0, a `move v0,v1` at the exits). */
 s32 func_80132B24(void) {
     u32 date;
     u8 girl;
     u8 month;
     GekoThresholds thr;
     GekoMonthDays days;
-    u32 day;
+    u32 day; /* its home after the two tables gives the 0x50 frame (T-24709) */
 
     thr = D_80144CF8;
     days = D_80144D10;
@@ -194,20 +196,18 @@ s32 func_80132B24(void) {
         date = D_800E6280.unk_1BC[girl].unk_10.w;
         month = D_800E6280.unk_03F;
         day = D_800E6280.unk_040;
-        /* FAKE: T-25401, `*&date` in the else arm is an indirect load for cfe,
-         * so the birthday term is evaluated before the table entry (the ugen
-         * temporaries of the original); uopt folds it back into the date register. */
         if (month == (date & 0xF)) {
             if (((date << 23) >> 27) - day < 21 && ((date << 23) >> 27) - day != 0) {
                 D_80144C50 = 10;
             }
         } else if (((date & 0xF) - month + 12) % 12 == 1 &&
-                   days.day[(month + 10) % 12] + ((*&date << 23) >> 27) - day < 20) {
+                   /* FAKE: T-11910 the no-op `date = date` side effect makes cfe emit the
+                    * day bits before the table load (the original's ugen temporary order) */
+                   days.day[(month + 10) % 12] + ((date = date) << 23 >> 27) - day < 20) {
             D_80144C50 = 10;
         }
     }
-    /* FAKE: T-25401, an empty use keeps girl live (in $v0) to the exit, so the
-     * record pointer and day take $v1; `return girl` would bar girl from $v0. */
+    /* FAKE: T-11910 keeps girl live to the exit so it holds $v0 there and day takes $v1 */
     if (girl) {}
 }
 

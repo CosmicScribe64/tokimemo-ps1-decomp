@@ -1,5 +1,14 @@
 /* T-11900 checkpoint for GEKO func_80142C9C (unmatched; production stays INCLUDE_ASM).
- * Built from drafts/T-24503/GEKO/func_80142C9C/body.c. Full-TU funcdiff: 162 lines (T-24503 body: 171);
+ * T-11910 update: full-TU funcdiff 119 lines (60 expected / 59 built; T-11900 body: 162, T-24503: 171).
+ * Loop 2 now matches through the FAKE `if (ids.v) {}` (rlda t4) plus the permuter's `(i < 0x15) != 0`;
+ * left: the post-loop &ids.v[sel] / &ids.v[13] reuse t4 (`addu v0,t4,a3`, `addiu t7,t4,13`; the original
+ * rematerialises `addiu t6,sp,52`), one instruction short, `slti t6` for `slti at` on the loop test, and the
+ * switch arms after it. Measured (ucode dump): the ids lda is one uopt constant range over every use after the
+ * rand call; dropping one post-loop use drops the promotion, extra loop uses do not stop the extension. Not
+ * separated by: pointer locals (copy/constant propagation folds them, also with zcopy off via a plain switch),
+ * a loop-carried def, (u32)/(s32) base locals (own stack home), s8/s32 views, offset lda forms (folded).
+ * A conditionally assigned pointer in loop 1 gives the exact loop/post-loop code but is spilled across the calls.
+ * Built from drafts/T-24503/GEKO/func_80142C9C/body.c. T-11900 notes:
  * every instruction before the second (weighted pick) loop now matches. Changes:
  * - the packed-appointment compare reads D_800E71DF (the separate-symbol view of unk_F5F that
  *   DATE func_80137154 keeps; needs a keep line with proof in config/migrate_globals.txt if adopted)
@@ -159,9 +168,12 @@ void func_80142C9C(void) {
     r = func_800AE0D0() % total;
     total = 0;
     sel = 2;
-    for (i = 0; i < 0x15; i++) {
+    /* FAKE: T-11910 `!= 0` (permuter) spends one ugen slot on the loop test (slti t6 for slti at), offsetting the post-loop shift below. */
+    for (i = 0; (i < 0x15) != 0; i++) {
         if (flags[i] != 0) {
             idx = ids.v[i];
+            /* FAKE: T-11910 second use of the ids base: uopt promotes it to t4 (addiu t4,sp,52 before the loop) as in the original. */
+            if (ids.v) {}
             p = &weights.v[*(u8 *)&D_800E6280.unk_F5F * 0x13];
             if ((month == 1) || (month == 3) || (month == 6) || (month == 0xB)) {
                 if (i == 0xD) {
