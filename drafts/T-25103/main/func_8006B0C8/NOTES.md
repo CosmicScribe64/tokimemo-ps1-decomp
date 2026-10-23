@@ -84,5 +84,12 @@ Next: run `regdiff` on `alt-split-counter.c` with a traced uopt (none was availa
 the original. Declaration order of `m`, `i`, `j`, `k` does not change it (measured). The do-while(0) around the
 min update is still needed there (without it: unrolled by 2 and the base range back).
 
+Caveat against the split counter: in the original the walk over `unk_54C` is `$a1` in the compaction, month,
+inner and undo loops alike (with `j` everywhere, `body.c` reproduces that), which looks like one strength-reduction
+temporary for `&unk_54C[j]` shared by all loops, i.e. one counter variable. With `m` the pre-sort walks get `$v0`
+and the inner one `$a0`. So the better next step may be the reverse: keep `j` everywhere (`body.c`) and find why
+the original emits the `keys` walk before the (older, shared) entry walk; compare uopt's SR bookkeeping for a new
+versus a reused temporary in a trace.
+
 Helper: `sbs.py` (run in Docker: `python3 drafts/T-25103/main/func_8006B0C8/sbs.py func_8006B0C8 main`) prints a
 register-normalised side-by-side of the guarded C against the original.
