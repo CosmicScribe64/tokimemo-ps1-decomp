@@ -224,7 +224,109 @@ void csr_load_vram(s32 arg0) {
     base->unk_1429 = 0U;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", palette_load_vram);
+/* Uploads the queued palettes base->unk_1328[0..unk_1428-1] to VRAM and empties the queue.
+ * unk_04 below 32: a 256-colour row at (0, 0x1E0 + unk_04), whose STP bits unk_06 first
+ * clears or sets on non-black colours (by word pairs); otherwise a 32-colour row at x 0x100
+ * or 0x120. The colours start unk_07 * 128 words into unk_00. */
+void palette_load_vram(s32 arg0) {
+    GameState *base;
+    u16 x;
+    u16 y;
+    u16 width;
+    u32 index;
+    s32 first;
+    s32 j;
+    /* FAKE: T-25134, a second loop counter and a height local (j and the constant 1 would do);
+     * their two stack words give the original frame (0x78) and the homes of base..index. */
+    s32 k;
+    u16 height;
+
+    base = &D_800E6280;
+    index = 0;
+    if (base->unk_1428 != 0) {
+        do {
+            y = (base->unk_1328[index].unk_04 & 31) + 0x1E0;
+            first = base->unk_1328[index].unk_07 << 7;
+            if (base->unk_1328[index].unk_04 < 32) {
+                width = 0x100;
+                x = 0;
+                switch (base->unk_1328[index].unk_06) {
+                case 0:
+                    for (j = first; j < first + 128; j++) {
+                        if (base->unk_1328[index].unk_00[j] & 0x80000000) {
+                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        }
+                        if (base->unk_1328[index].unk_00[j] & 0x8000) {
+                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        }
+                    }
+                    break;
+                /* Empty on purpose; without the default label the function is 6 words shorter (T-25134). */
+                case 1:
+                default:
+                    break;
+                case 2:
+                    for (j = first; j < first + 120; j++) {
+                        if (base->unk_1328[index].unk_00[j] & 0x80000000) {
+                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        }
+                        if (base->unk_1328[index].unk_00[j] & 0x8000) {
+                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        }
+                    }
+                    for (k = first + 120; k < first + 128; k++) {
+                        if (base->unk_1328[index].unk_00[k] & 0x7FFF0000) {
+                            base->unk_1328[index].unk_00[k] |= 0x80000000;
+                        }
+                        if (base->unk_1328[index].unk_00[k] & 0x7FFF) {
+                            base->unk_1328[index].unk_00[k] |= 0x8000;
+                        }
+                    }
+                    break;
+                case 3:
+                    for (j = first; j < first + 128; j++) {
+                        if (base->unk_1328[index].unk_00[j] & 0x7FFF0000) {
+                            base->unk_1328[index].unk_00[j] |= 0x80000000;
+                        }
+                        if (base->unk_1328[index].unk_00[j] & 0x7FFF) {
+                            base->unk_1328[index].unk_00[j] |= 0x8000;
+                        }
+                    }
+                    break;
+                case 4:
+                    for (j = first; j < first + 112; j++) {
+                        if (base->unk_1328[index].unk_00[j] & 0x80000000) {
+                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        }
+                        if (base->unk_1328[index].unk_00[j] & 0x8000) {
+                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        }
+                    }
+                    for (k = first + 112; k < first + 128; k++) {
+                        if (base->unk_1328[index].unk_00[k] & 0x7FFF0000) {
+                            base->unk_1328[index].unk_00[k] |= 0x80000000;
+                        }
+                        if (base->unk_1328[index].unk_00[k] & 0x7FFF) {
+                            base->unk_1328[index].unk_00[k] |= 0x8000;
+                        }
+                    }
+                    break;
+                }
+            } else {
+                width = 0x20;
+                if (base->unk_1328[index].unk_04 < 0x40) {
+                    x = 0x100;
+                } else {
+                    x = 0x120;
+                }
+            }
+            height = 1;
+            LoadSquare(x, y, width, height, base->unk_1328[index].unk_00 + first);
+            index++;
+        } while (index < base->unk_1428);
+    }
+    base->unk_1428 = 0;
+}
 
 void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
     RECT rect;
