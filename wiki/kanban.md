@@ -51,7 +51,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
-- [ ] [[tickets/T-25135-w8-ENDING-80133C10|T-25135 Wave 8 package w8-ENDING-80133C10 (src/ovl/ENDING/80133C10.c)]]
 - [ ] [[tickets/T-25301-w10-NAME_ENT-80139740|T-25301 Wave 10 second pass on src/ovl/NAME_ENT/80139740.c]]
 - [ ] [[tickets/T-25302-w10-main-80049FF0|T-25302 Wave 10 second pass on src/main/80049FF0.c]]
 - [ ] [[tickets/T-25305-w10-SHOUGATU-8013E330|T-25305 Wave 10 second pass on src/ovl/SHOUGATU/8013E330.c]]
@@ -99,9 +98,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24502-taco-completion|T-24502 Match remaining TACO functions]]
 - [ ] [[tickets/T-24501-main-tail|T-24501 Match MAIN remaining functions]]
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
-- [ ] [[tickets/T-25100-wave-8-finish|T-25100 Wave 8 conveyor - one deep Opus pass per remaining function]]
-- [ ] [[tickets/T-25200-wave-9-neighbor|T-25200 Wave 9 neighbor conveyor - wave 8 queue from the tail, plus near-miss closers]]
-- [ ] [[tickets/T-25201-wave-9-closers|T-25201 Wave 9 closers for wave 8 near misses]]
 - [ ] [[tickets/T-25300-wave-10-second-pass|T-25300 Wave 10 - second pass on every function left after waves 8 and 9]]
 
 ## In Review
@@ -174,6 +170,10 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25135-w8-ENDING-80133C10|T-25135 Wave 8 package w8-ENDING-80133C10 (src/ovl/ENDING/80133C10.c)]]
+- [ ] [[tickets/T-25100-wave-8-finish|T-25100 Wave 8 conveyor - one deep Opus pass per remaining function]]
+- [ ] [[tickets/T-25200-wave-9-neighbor|T-25200 Wave 9 neighbor conveyor - wave 8 queue from the tail, plus near-miss closers]]
+- [ ] [[tickets/T-25201-wave-9-closers|T-25201 Wave 9 closers for wave 8 near misses]]
 - [ ] [[tickets/T-25304-w10-main-8004C3F0|T-25304 Wave 10 second pass on src/main/8004C3F0.c]]
 - [ ] [[tickets/T-25132-w8-SHOUGATU-80134890|T-25132 Wave 8 package w8-SHOUGATU-80134890 (src/ovl/SHOUGATU/80134890.c)]]
 - [ ] [[tickets/T-25125-w8-main-8006CB30|T-25125 Wave 8 package w8-main-8006CB30 (src/main/8006CB30.c)]]

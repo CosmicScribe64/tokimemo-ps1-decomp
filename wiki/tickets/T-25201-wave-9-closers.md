@@ -1,7 +1,7 @@
 ---
 id: T-25201
 title: Wave 9 closers for wave 8 near misses
-status: In Progress
+status: Done
 assignee: wave-9 conveyor
 created: 2026-10-23
 updated: 2026-10-23
@@ -43,3 +43,5 @@ Review of w9c-TACO-8013DB80 against CODING_STANDARDS.md (2026-10-23): the diff i
 2026-10-23, ETC `src/ovl/ETC/80132880.c`, `func_80132C3C`: matched, guard removed (default build MATCH 884 bytes, no INCLUDE_ASM, clean rebuild 27/27 SHA1, headers/globals/branch checks OK). The 15 rows were four equal-priority (1.5) coordinate constants coloured in bit order. A never-true arm after the XY3 line, `if ((u32)p0 < 0) { p1->code = 0x20; }` (FAKE, T-25201), gives 0x20 one more use without a reload (priority 2), so it takes t0 first; ugen drops the arm. The `ovl/ETC.h` volatile view of `D_8014DB80` (T-25121 FAKE) now serves the default build; its "guard only" wording is gone. Notes: `drafts/T-25121/ETC/func_80132C3C/NOTES.md`, [[matching-notes]] "T-25201: ETC func_80132C3C (closer)", [[playbook]].
 
 Review of w9c-ETC-80132880 against CODING_STANDARDS.md (2026-10-23): the diff is `src/ovl/ETC/80132880.c` (the only C file), a comment-only edit of the `D_8014DB80` declaration in `include/ovl/ETC.h` (the volatile declaration the C needs stays; "guard only" wording dropped), notes under `drafts/T-25121/ETC/func_80132C3C/`, and `wiki/`. No build, tool, game-data or inline-asm change. No findings. `func_80132C3C` is plain C: the NON_MATCHING guard and the INCLUDE_ASM line are gone (grep for the INCLUDE_ASM line is empty). Every FAKE comment in the function (function-level one-line stores, `pad[13]`, the volatile store-back, the empty `if (p0)` block split, the `s8` views, the dead `if (next)`, and the new never-true arm) states what it does and carries a ticket (T-25121 or T-25201). C89 holds (declarations at block top, `/* */` comments). Verified: clean rebuild 27/27 SHA1; `funcdiff func_80132C3C --unit ETC --resolve --no-build` prints MATCH (884 bytes) with `--version default` and `--version c`; check_headers, migrate_globals --check and sync_protos --check-branch OK. Matched: `func_80132C3C` (884 bytes). Left with rows: none from this job; notes in [[matching-notes]] "T-25201: ETC func_80132C3C (closer)". Open follow-up: natural forms for the remaining T-25121 FAKEs (`pad[13]`, the `s8` views, the block-split test, the dead `if (next)`, the volatile view; possibly PsyQ setXYWH/setUVWH macros with folded coordinate locals).
+
+- 2026-10-23 (orchestrator): six closer jobs ran, 5 matches verified and merged: main mod_set_gpu (8004C3F0), main func_80065B0C (80062CD0), EN_NICHI func_80136DEC, TACO func_8013EAA4 (8013DB80), ETC func_80132C3C (80132880). TAIIKU func_80137784 stayed at 4 rows (notes in drafts/T-25106/TAIIKU/func_80137784/); it gets a second pass in [[tickets/T-25309-w10-TAIIKU-80133C80]].

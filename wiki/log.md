@@ -1755,3 +1755,7 @@ The INCLUDE_ASM in `src/ovl/SHOUGATU/80134890.c` is gone; levers and the GYOZI `
 
 Reviewed [[tickets/T-25304-w10-main-8004C3F0]] against CODING_STANDARDS.md; matched main `mod_trans_vram` (752 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
 The cause was a `u8 flags` local that makes uopt colour `t0` (recipe in [[playbook]]); notes in `drafts/T-25304/main/mod_trans_vram/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25100, T-25200, T-25201 Done; status 98.6%
+
+Wave 8 finished (34 packages merged, 57 verified matches) and wave 9 stopped (20 verified matches from 17 packages and 6 closer jobs). With PR #68, main is 6,932/6,952 functions (98.6%). [[status]] lists the 20 functions left; 16 are in the wave 10 second pass ([[tickets/T-25300-wave-10-second-pass]]), 4 are GEKO (issue #65). T-25135 is superseded by T-25311.
