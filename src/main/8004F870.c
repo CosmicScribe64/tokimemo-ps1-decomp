@@ -182,7 +182,95 @@ s32 func_80050324(s32 menu, s32 reverse) {
     return -1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_near_menu);
+s32 get_near_menu(s32 mode, s32 dir, s32 menu) {
+    GameState *g;
+    s32 n;
+    s16 best_d;
+    s32 best;
+    s16 diff[16];
+    s32 i;
+
+    g = &D_800E6280;
+    n = 16;
+    best_d = 320;
+    if (((MenuSelection5 *)&g->unk_1090)->count[menu] < 16) {
+        n = ((MenuSelection5 *)&g->unk_1090)->count[menu];
+    }
+    switch (mode) {
+    case 0:
+        for (i = 0; i < n; i++) {
+            diff[i] = ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00;
+        }
+        break;
+    case 1:
+        for (i = 0; i < n; i++) {
+            diff[i] = ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02;
+        }
+        break;
+    }
+    switch (dir) {
+    case -1:
+        for (i = 0; i < n; i++) {
+            if (diff[i] > 0) {
+                diff[i] = 0;
+            } else {
+                diff[i] = -diff[i];
+            }
+        }
+        break;
+    case 1:
+        for (i = 0; i < n; i++) {
+            if (diff[i] < 0) {
+                diff[i] = 0;
+            }
+        }
+        break;
+    }
+    best = -1;
+    for (i = 0; i < n; i++) {
+        if (((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_07 == 0 && diff[i] != 0) {
+            if (mode == 0 && ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 == ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02) {
+                if (best_d > 0) {
+                    best_d = -320;
+                }
+                if (best_d < -abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00)) {
+                    best_d = -abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00);
+                    best = i;
+                }
+            } else if (mode == 1 && ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 == ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00) {
+                if (best_d > 0) {
+                    best_d = -320;
+                }
+                if (best_d < -abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02)) {
+                    best_d = -abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02);
+                    best = i;
+                }
+            } else if (best_d > 0) {
+                if (diff[i] < best_d) {
+                    best_d = diff[i];
+                    best = i;
+                } else if (best_d == diff[i]) {
+                    switch (mode) {
+                    case 0:
+                        if (abs(((GsRecF90 (*)[2])g->unk_F90)[best][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02) > abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02)) {
+                            best = i;
+                        }
+                        break;
+                    case 1:
+                        if (abs(((GsRecF90 (*)[2])g->unk_F90)[best][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00) > abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00)) {
+                            best = i;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if (best >= 0) {
+        return best;
+    }
+    return -1;
+}
 
 void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg0 >= 0x10) {
