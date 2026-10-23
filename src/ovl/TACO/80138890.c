@@ -54,10 +54,12 @@ s32 func_80138964(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-/* T-24705: autotweak (4 edits) reaches 25 rows only with a u8 view of the s32 score word D_8015F490 (not plausible source, not adopted); regdiff shows the count web has cheapest colour cost 0 in $v0 and does not interfere with either $v0 web (var_v0 #1, temp_v0 #2), so neither mentioning var_a1 first nor the store order moves it to $a0. */
-/* NON_MATCHING: T-19015 (T-16564), 30 differing instruction rows (60 funcdiff lines), registers only: the original colours the u8 count D_8015EDCC $a0, the second local $a1 and the sum $a0; IDO gives $v0, $a0 and $a1. */
+/* NON_MATCHING: T-25152, 3 rows: in the clamp arm the original keeps 9999999 in $a0 (the total's register); IDO propagates the constant into the store and builds it in $t2. Notes: drafts/T-25152/TACO/func_80138B2C/NOTES.md */
 #ifdef NON_MATCHING
-s32 func_80138B2C(void) {
+/* The unused K&R parameter holds the stage: as a parameter live in the entry block it cannot take $v0/$v1 (uopt cupcosts), so it gets $a0 as in the original. T-25152 */
+s32 func_80138B2C(arg0)
+s32 arg0;
+{
     s32 var_a1;
     s32 var_v0;
     s32 var_v1;
@@ -65,10 +67,12 @@ s32 func_80138B2C(void) {
 
     D_800E6280.unk_037 = 0;
     D_800E6280.unk_036 = 0;
-    D_8015F490[0] = D_8015EDF0 = D_8015EDF0 + (D_8015EDCC * 0xF4240);
+    /* FAKE: T-25152, byte view of the stage: the indirect load stops copy propagation, so arg0 stays a variable instead of the promoted global */
+    arg0 = *(u8 *)&D_8015EDCC;
+    D_8015F490[0] = D_8015EDF0 += arg0 * 0xF4240;
     D_800E6280.unk_038 = 0;
     var_a1 = 0;
-    if ((u8) D_8015EDCC >= 3U) {
+    if (arg0 >= 3U) {
         temp_v0 = D_8015EDB4->unk84[1];
         if (temp_v0 == 0xFF) {
             var_v1 = 0x7A120;
@@ -88,12 +92,15 @@ s32 func_80138B2C(void) {
     } else {
         var_v0 = 0;
     }
+    /* FAKE: T-25152, word view of the score for the same reason: the total stays in arg0 ($a0) and is stored in place, before the time bonus */
+    arg0 = *(s32 *)&D_8015EDF0 + var_v1 + var_v0 + var_a1;
     D_8015F490[2] = var_v0;
     D_8015F490[1] = var_v1;
-    D_8015F490[4] = D_8015EDF0 + var_v1 + var_v0 + var_a1;
+    D_8015F490[4] = arg0;
     D_8015F490[3] = var_a1;
-    if (D_8015F490[4] >= 0x989680) {
-        D_8015F490[4] = 0x98967F;
+    if (arg0 >= 0x989680) {
+        arg0 = 0x98967F;
+        D_8015F490[4] = arg0;
     }
     func_80044750(0x24);
     func_80059048();
