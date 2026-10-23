@@ -383,8 +383,8 @@ void func_8014BB80(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-25144, 35 rows; the original keeps idx + 8 in s5 from before the first call of the digit arm,
- * so div loses its saved register (a1, spilled at sp+0x58) and li a1,1 fills the switch delay slot. */
+/* NON_MATCHING: T-25144, 3 rows; as1 schedules addu s0,t2,t3 (the record pointer) after sw t1,80(sp) and
+ * move v0,t1 before the loop, the original right after lw s4,108(sp). */
 void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 i;
     s32 j;
@@ -404,6 +404,7 @@ void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     } else {
         arg1 += 13;
     }
+    div = 1;
     switch (arg0) {
     case 0:
         D_8015EE5C = 0;
@@ -428,9 +429,8 @@ void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     }
     t[0] = arg0 * 12;
     j = t[0];
-    idx = j + 0x40;
-    div = 1;
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 4; j++, i++) {
+        k = j + 0x40;
         ((DisplayActor44 *) D_8011ECD0)[64 + j].unk_26 = arg1 - i * 9;
         ((DisplayActor44 *) D_8011ECD0)[64 + j].unk_2A = arg2;
         ((DisplayActor44 *) D_8011ECD0)[68 + j].unk_26 = arg1 - i * 9;
@@ -438,24 +438,21 @@ void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
         ((DisplayActor44 *) D_8011ECD0)[72 + j].unk_26 = arg1 - i * 9;
         ((DisplayActor44 *) D_8011ECD0)[72 + j].unk_2A = arg2;
         if (arg3 / div != 0) {
-            k = idx + 8;
-            func_8013E864(idx + 4, arg3 / div % 10 + 0x27, 0);
-            func_8013E864(k, arg3 / div % 10 + 0x27, 0);
+            func_8013E864(k + 4, arg3 / div % 10 + 0x27, 0);
+            func_8013E864(k + 8, arg3 / div % 10 + 0x27, 0);
             if (arg4 == 0) {
-                func_8013E864(idx, arg3 / div % 10 + 0x1D, 0);
+                func_8013E864(k, arg3 / div % 10 + 0x1D, 0);
             } else {
-                func_8013E864(idx, arg3 / div % 10 + 0x13, 0);
+                func_8013E864(k, arg3 / div % 10 + 0x13, 0);
             }
         } else {
-            ((DisplayActor44 *) D_8011ECD0)[idx].unk_26 = 0xA0;
-            ((DisplayActor44 *) D_8011ECD0)[idx].unk_2A = 0x78;
-            ((DisplayActor44 *) D_8011ECD0)[idx + 4].unk_26 = 0xA0;
-            ((DisplayActor44 *) D_8011ECD0)[idx + 4].unk_2A = 0x78;
-            ((DisplayActor44 *) D_8011ECD0)[idx + 8].unk_26 = 0xA0;
-            ((DisplayActor44 *) D_8011ECD0)[idx + 8].unk_2A = 0x78;
+            ((DisplayActor44 *) D_8011ECD0)[k].unk_26 = 0xA0;
+            ((DisplayActor44 *) D_8011ECD0)[k].unk_2A = 0x78;
+            ((DisplayActor44 *) D_8011ECD0)[k + 4].unk_26 = 0xA0;
+            ((DisplayActor44 *) D_8011ECD0)[k + 4].unk_2A = 0x78;
+            ((DisplayActor44 *) D_8011ECD0)[k + 8].unk_26 = 0xA0;
+            ((DisplayActor44 *) D_8011ECD0)[k + 8].unk_2A = 0x78;
         }
-        j++;
-        idx++;
         div *= 10;
     }
     if (arg3 == 0) {
@@ -466,12 +463,12 @@ void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
         ((DisplayActor44 *) D_8011ECD0)[68 + t[0]].unk_26 = arg1;
         ((DisplayActor44 *) D_8011ECD0)[72 + t[0]].unk_26 = arg1;
         func_8013E864(t[0] + 0x44, 0x27, 0);
-        k = t[0] + 0x40;
-        func_8013E864(k + 8, 0x27, 0);
+        idx = t[0] + 0x40;
+        func_8013E864(idx + 8, 0x27, 0);
         if (arg4 == 0) {
-            func_8013E864(k, 0x1D, 0);
+            func_8013E864(idx, 0x1D, 0);
         } else {
-            func_8013E864(k, 0x13, 0);
+            func_8013E864(idx, 0x13, 0);
         }
     }
 }
