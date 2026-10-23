@@ -839,3 +839,7 @@ Details and negatives: `drafts/T-25139/KANGEI/func_801327DC/NOTES.md`.
 - **`s32 func_800847B8();`** under the existing override pattern: a `void` view moves the case 0/1 ranges (39 rows).
 
 Negatives and the full measurement list: `drafts/T-25130/MASTER/func_801326B4/NOTES.md`.
+
+## T-25134: main palette_load_vram
+
+**Matched (2,024 bytes, literal default C).** Three causal steps from the T-24501 draft (554 exact rows, 32 rows without register names). (1) Index the records as `base->unk_1328[index]`, the way the matched sibling `csr_load_vram` does, and drop the stepped `GameState *g`: uopt then makes the pointer itself (`$t1`, copied from the `$t6` that also stores the memory-resident `base`), giving 22 rows. (2) Compute `y` before `first`: the ugen order t8, t9 (y), then t7 (the shift), giving 18 rows, all stack offsets. (3) Two more stack words below `index` give the 0x78 frame. These are a second loop counter `k` and `u16 height = 1`, both marked FAKE. `GsRec1328.unk_00` is now `u32 *`. Keep the empty `case 1: default: break;`: without `default` the function is 6 words shorter. No saved registers is expected here. For a function with this many blocks, uopt's first-use cost for a callee-saved register is higher than saving around the one call. Details: `drafts/T-25134/main/palette_load_vram/NOTES.md`.
