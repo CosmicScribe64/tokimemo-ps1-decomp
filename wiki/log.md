@@ -1759,3 +1759,8 @@ The cause was a `u8 flags` local that makes uopt colour `t0` (recipe in [[playbo
 ## [2026-10-23] ticket | T-25100, T-25200, T-25201 Done; status 98.6%
 
 Wave 8 finished (34 packages merged, 57 verified matches) and wave 9 stopped (20 verified matches from 17 packages and 6 closer jobs). With PR #68, main is 6,932/6,952 functions (98.6%). [[status]] lists the 20 functions left; 16 are in the wave 10 second pass ([[tickets/T-25300-wave-10-second-pass]]), 4 are GEKO (issue #65). T-25135 is superseded by T-25311.
+
+## [2026-10-23] ticket | T-25306 Done
+
+Reviewed [[tickets/T-25306-w10-BUNKA_SD-80134540]] against CODING_STANDARDS.md; matched BUNKA_SD `func_80134D94` (972 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+The header now declares `s32 func_80134D94(void);`; notes in `drafts/T-25306/BUNKA_SD/func_80134D94/NOTES.md` and [[matching-notes]].
