@@ -847,3 +847,12 @@ Negatives, trace helpers (`pri.sh`) and the next hypothesis: `drafts/T-25305/SHO
 - **One symbol for the counter, the selector and the test reads.** as1 does not move a load above a store through the same symbol. `(&D_8015EBAC)[60] = 1;` (the counter is element 60 of the int array at `D_8015EBAC`) keeps the case 0 selector load in front of the stores; `(&D_8015EC9C)[-16]` for `D_8015EC5C` keeps the case 3 test loads behind the counter store. Both FAKE until the array is declared in the header.
 
 Controls, negatives and the aggregate follow-up: `drafts/T-25308/RPG_BAT/func_80154DD8/NOTES.md`.
+
+## T-25310: main func_80055AFC (second pass)
+
+Matched (1396 bytes, default C) from the T-25105 113-row draft in about 50 minutes. Three causal steps:
+- **Frame.** The spill homes (0x30, 0x2C) sit below five words of declared locals; the draft declared two. `u8 *p` plus a FAKE `s32 pad[2]` give frame 0x48 and both home offsets.
+- **Slot read through `g`.** `g = &D_800E6280;` before the `func_80055A38(0)` call, then `arg0 = g->unk_1117 & 1;`. The indirect load keeps `arg0` a copy, so the bank base is one range and the T-25105 volatile view is gone (102 rows left).
+- **A dead call result.** The original reads bzero's `v0` after the call: something must hold v0 in the 256-loop preheader and not in the loop body. Then the unrolled loop's start values skip v0, the end pointer takes v0, and the counter and bank-offset temporaries take t3/t4, so the bank bases land in t5 and ra (every other row). `void *bzero(void *p, s32 n);` in `main_api.h` (other callers discard it, no code change) and `p = bzero(g->unk_75E, 0x800);` with p never read (FAKE: its real use is unknown). A function-pointer cast instead gives `jalr t9`.
+
+Notes, negatives and the unroll rule check: `drafts/T-25310/main/func_80055AFC/NOTES.md`.
