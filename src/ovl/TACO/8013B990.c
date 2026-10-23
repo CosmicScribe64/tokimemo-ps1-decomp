@@ -26,6 +26,7 @@ void func_8013B990(void) {
 /* FAKE: s32 with no return keeps v0 live at the exit, so as1 fills the first branch slot of the
  * particle loop from the latch (void moves the kind test there), as in func_8013C1F4. T-25111. */
 s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
+    /* The order of these scalars sets their frame homes (i third, damage tenth). T-25111. */
     s32 x;
     s32 y;
     s32 i;
@@ -80,6 +81,7 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
                                 if ((j + D_8015EDB4)->unk84[1] != 0) (j + D_8015EDB4)->unk84[1]--;
                                 func_8013D2A0(x, y, (j + D_8015EDB4)->unk78 - 0x200);
                                 D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17] / 20;
+                                /* continue, not a fall-through: with a plain if, ugen reuses the stored D_8015EDF0 (T-25111) */
                                 if ((j + D_8015EDB4)->unk84[1] != 0) continue;
                                 D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17];
                             }
