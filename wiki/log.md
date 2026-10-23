@@ -1742,3 +1742,6 @@ No function matched in this job; notes in `drafts/T-25142/BUNKA_SD/func_80134D94
 
 Reviewed [[tickets/T-25140-w8-main-8004AD60]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched main `make_color_bar` (1072 bytes) as default C in `src/main/8004AD60.c`, no FAKE.
 The only function of the package is matched, none left with rows; notes in `drafts/T-25140/main/make_color_bar/NOTES.md` and [[matching-notes]].
+## [2026-10-23] ticket | T-25124 Done
+Reviewed [[tickets/T-25124-w8-main-80046500]] against CODING_STANDARDS.md; the goto FAKE comment now also covers the comma UV groups and a duplicate draft copy of the body was removed; clean rebuild 27/27, funcdiff MATCH. Matched main `func_80046AC8` (2696 bytes) as default C in `src/main/80046500.c`.
+The only function of the package is C now; notes in `drafts/T-25124/main/func_80046AC8/NOTES.md` and [[matching-notes]].
