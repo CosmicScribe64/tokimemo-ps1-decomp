@@ -7,7 +7,11 @@ updated: 2026-10-22
 
 The one page for "where are we". Update it when a wave, a local or cloud session, or a contributor PR changes the numbers (`tools/docker.sh python3 tools/progress.py`). Older status and handoff pages are in `archive/` ([[completion-run-2026-10-17]], [[stopping-point-2026-10-15]]).
 
-## Latest verified integration (2026-10-22)
+## Latest verified integration (2026-10-23)
+
+Waves 8 and 9 ([[tickets/T-25100-wave-8-finish]], [[tickets/T-25200-wave-9-neighbor]]) gave every remaining non-GEKO function one deep Opus pass from its best known body and history: 77 verified matches (wave 8: 57, wave 9: 20), plus diman8's PR #68 (GEKO func_80136C20, func_801367EC, func_80135DC0, OPTION func_801326BC). Game code: **6,932/6,952 functions; 2,245,480/2,276,920 bytes (98.6%)**, 20 functions / 31,440 bytes left. Four are GEKO (func_80132B24, func_80133024, func_80142C9C claimed by diman8 in issue #65; func_80133C50 offered to them). The other 16 are in the wave 10 second pass ([[tickets/T-25300-wave-10-second-pass]]): main func_800476C0, func_8004A1A0, mod_trans_vram, func_80052F68, func_80055AFC, func_80067870, func_8006B0C8, func_8007132C; BUNKA_SD func_80134D94; ENDING func_80134270; ETC func_8013FFAC; NAME_ENT func_8013AF78, func_80143580; RPG_BAT func_80154DD8; SHOUGATU func_8013EA98; TAIIKU func_80137784 (4 rows). Each first pass left `drafts/T-251NN/UNIT/func/NOTES.md` with the first divergence and the next hypothesis. Older counts below are historical.
+
+## Latest verified integration (2026-10-22, historical)
 
 Eighteen functions verified this resumed effort, adding27,704bytes. Latest: ETC func_801480D0 adds2808 literal default-C bytes and completes80146400.c. Root fresh27 binary checksums, declaration guards and standards/spec review pass. Current game code: **6851/6952 functions;2132380/2276920 bytes (93.7%)**,101 functions/144540 bytes remaining. Active Astra assignments: T-25042 KANGEI80134724; T-25046 SHOUGATU8013EA98; T-25052 MAIN8007132C; T-25061 ETC80144224; T-25060 TEL8013D88C; T-25056 ENDING8013A2E8; T-25057 NAME_ENT801398EC. MAIN coordinator lanes T-25034, T-25051 and reserved T-25058 are wrapping up on a direct human request in that chat; checkpoints remain preserved. Root owns T-25053 final BUNKA_SD function. Older counts below are historical.
 

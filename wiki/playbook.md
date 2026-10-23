@@ -97,6 +97,8 @@ moving the source store requires checking intervening aliases/calls. See
 
 Every declared scalar owns a 4-byte slot, promoted or not; arrays sit lowest; scalars declared before an array go above it; spilled locals take slots top-down in declaration order. Fixes: declare the real scalars before tables (GEKO `func_80132B24`, only three scalars, T-24302); add `s32 pad[n]` or `u8 pad[4]` and mark FAKE (ETC `func_80144DF0` needed `pad[3]`, T-24209; TAIIKU `func_8014280C`, T-16554); remove expression-temp locals (`tbl`, `rec`) in big functions; `A[f()] = v` reserves a spare slot, so use `idx = f(); A[idx] = v;` (T-16554). Overlay and main frames are handled by `frame_pass`; write C for a normal frame. `order_search` with `/* ORDER */` around declarations finds the declaration order (T-16230). Turn a pad slot into the real local the source likely had when ring numbers also differ. Homes below every slot the declared locals can reach are uopt spill homes (`rstr`/`rlod` in uopt output): strength-reduced products of a loop counter (`o * step`, `o * 4`) and copies get them in creation order. Remove the declared `rot`/`q` locals and write the index loop instead of padding (TACO `func_8013DEE4`, `&pt[j * 2 + o]`, 69 rows to 0, T-25110). A small compare-chain `switch` also takes a cfe temporary slot after the declared locals.
 
+**Two frame words too many, homes right: drop the negated locals.** If a value kept in its own web (`v0`) is negated into `nx = -x` and passed to two calls, uopt spills nx to a new home below the declared locals, so a declared `nx`/`ny` slot is never used but still costs its word. Declare only x and y and write `-x` in both calls: uopt keeps `-x` in a temporary across the first call (one store, one reload) and the frame shrinks by the unused slots. With plain reads (x folded) `-x` twice is spilled and negated again instead. RPG_BAT `func_80154DD8`, frame 0x60 to 0x58 (T-25308).
+
 ## 8. Loads re-read vs CSE'd; struct aggregates
 
 Several close `D_` names in one function are usually one struct or array. Write accesses through one base (`D_X[i]`, `(&D_X)[k]`); consecutive scalar globals with a store, then the next load, are one struct declared at the lowest address (T-10610 family). The opposite case: in main 80075320 `u8 D_800B6990[8]` plus `u8 D_800B6998` shared `lui $at` correctly while a single `KeyRing` struct did not (`func_800755B4`, T-24303). `viewsweep` and `data_island.py` before guessing.
@@ -177,6 +179,10 @@ statements (`y[0] = angle << 3; ... y[2] = y[0];`, same stores after uopt's forw
 
 `tools/ugen_pass.py` puts its B/F sentinel before every `Umov`, also before copies of 32 bytes or less. The transfer register skips two ugen entries in state B and one in state F. If a small copy's temporary is one slot late, check the pass's state for it (the last `str`/`istr`/jump before the copy in the ucode). After an `istr`, an empty `if ((s32)x > 0) {}` survives uopt as a signed positive-bound jump, emits no code and gives F (FAKE). Separately, as1 moves `lw ra` above the last store only when the store's address names a global: write `((T *)&G[i * N + k])->f = v`, not a store through a pointer local. Main `func_80054FC0`, 113 lines to MATCH. Loops (main `func_8005557C`, 1212 bytes): when only the last of many constant-trip loops is unrolled in the original, give every loop one shared counter: with a shared counter IDO unrolls only the last loop of the function. Make it `u32` if a bound equals a multiply constant elsewhere (an `s32` bound shares the constant and turns the multiply into `li; multu`).
 
+## Copies after stack stores in state F; measure the state first (T-25136)
+
+If a copy's transfer register is one ring slot late and only stack stores come before it, find the state of each copy before changing C: a scratch `ugen` shim (`cc.ido_frame_env(..., extra_shims={"ugen": ...})`) that wraps `ugen_pass.py` can log the ops it reads and force B/F per copy. In TACO `func_80145650`, forcing BFFF took 200 rows to 92 and exposed the next gaps. Field-first sums (`p->x0 + f(a) * n / 3`) gave the call-first order, and `s32` coordinate locals gave the frame. One empty `if (x + y > 0) {}` after the first pointer stores then made every later copy F. A test of x alone or y alone reordered the saved registers, so let the test read every variable whose block count it raises (FAKE).
+
 ## Keep an index scan unreduced with a scan pointer (T-25101)
 
 Symptom: the target recomputes `base + i` on each pass, and its loop test reads through a preheader copy of the base (`move a1,a3`; `addu t2,a1,v0` in the latch, `addu v1,a3,v0` in the header). Fix: write a plain `for` over a scan pointer, `for (i = 0, s = buf; s[i] != 0; i++) { p = s + i; ... }`. uopt strength-reduces a cursor written as `&buf[i]` or `buf[i]` into a walked pointer. `p = buf + i` with the test `buf[i]` stays indexed, but then the test shares the base register. Put `i = 0` before `s = buf` so the copy lands in the entry `beqz` delay slot. uopt moves a following loop's `i = 0` into the break arm and the exhausted exit, so do not add resets there. Main `sndi`: 123 rows to a default-C match, with no FAKE casts. See `drafts/T-25101/main/sndi/NOTES.md`.
@@ -218,6 +224,10 @@ the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the 
 
 tools/cvt_pass.py writes `OPTN 405 0` (no global copy propagation) for a procedure whose switch selector is an unsigned global read at the entry. Every cross-block copy then stays a range. A call result used after a branch (`d = f(); if (a < t && d < t)`) gets `move rX,v0`, because uopt never gives v0 to a range defined in the call's block. as1 deletes that move in a `void` function but keeps it in an `s32` one. Fix: `switch (*(u8 *)&G.field)`. The byte view is an indirect load, so the pass leaves propagation on, and the selector keeps its register. Mark it FAKE. TACO `func_8013BAC4`, score 18 to 0. Separately, `if (x != 0) continue;` before a second `G += ...` makes ugen reload G, where a plain `if` reuses the stored value across the fall-through.
 
+## Copies of globals folded into their later use: a dead `register` initializer turns copy propagation off (T-25301)
+
+If a body matches with global copy propagation off but not with it on (the copies `x = D;` of a block are folded into a later block's `x &= k`), a dead initializer of a `register` local from an unsigned global turns it off for that procedure with no code and no frame word. cfe declares a `register` local with a `VREG` record, and the tools/cvt_pass.py rule above only asks for a direct load of an unsigned `S` variable stored into a `VREG` before the first call, branch or label. NAME_ENT `func_8013AF78`: `register s32 d = D_80120C2B;` (d is the loop counter, so the store is dead), 22 rows to 0, FAKE. A dead two-case switch on an unrelated unsigned global does the same, but its temporary costs a frame home (8 bytes of frame). See `drafts/T-25301/NAME_ENT/func_8013AF78/NOTES.md`.
+
 ## A shared constant loaded too late in one arm (T-25201)
 
 uopt adds a block to a constant's register range only where the constant has appeared on some path from the
@@ -245,3 +255,36 @@ code, raise its priority: a never-true arm with one more `istr` of it, `if ((u32
 first use the arm costs two reloads and gains nothing. Store through a pointer whose own priority order does not
 change, and put the arm on an existing uopt block split so the store counts stay as they are. ETC
 `func_80132C3C`, 15 rows to 0; `drafts/T-25121/ETC/func_80132C3C/NOTES.md`.
+
+## A shift shared across a switch join, and a promoted global with reloads in the arms (T-25130)
+
+Symptom: the original reloads a halfword global into one argument register after every call in the arms of a
+switch (`lui a0; lhu a0` before each `b join`) and recomputes `srl` from it at the switch and again at the join,
+both in ugen temporaries. The draft holds the shifted value in `$v1` and puts `srl v1,a0,12` into the reload
+branch slots: uopt made the shift one PRE range (regdiff -v: an expression range with one use per occurrence and
+one def per reload arm). Fix both halves: (1) make the two shifts different expressions to uopt. Write the switch
+on the promoted read, `(u16) G.h >> 12` (`shr(cvt(G))`), and the join test on a u32 copy, `m = G.h; if ((m >> 12) != 3)`
+(`shr(G)` after copy propagation; the u32 assignment absorbs the cvt). (2) The global then has too few uses to stay
+promoted (a reload charge per arm, no use there): add an always-false test after each arm call,
+`if ((u32) G.h < 0) {}` (FAKE; ugen folds it, no code). Plain `if (G.h) {}` leaves a `beqz` before the break jump,
+and a dead `m = G.h;` is removed. MASTER `func_801326B4`, 102 rows to 0; `drafts/T-25130/MASTER/func_801326B4/NOTES.md`.
+## A store that the original schedules after the next statement's `lui` (T-25137)
+
+When independent instructions of one block tie in as1 (same start time, aftercycles and latency), the smaller source line wins, then the node released last. Read the `Node ... lineno` and `Picking node` lines of stock `as1 -R -xbbdbg 8` (capture shim in drafts/T-24900-as1/) before trying spellings: if the original's order needs a store to lose to instructions of a later statement, no statement order or one-line form reaches it under IDO 5.3. TACO `func_8013B460`: the y3 store needed a later line than the AddPrim call; a `#line` pair around the y3 statement (FAKE) closed it from cost 4. See [[as1-scheduler-rule]] and drafts/T-25137/TACO/func_8013B460/NOTES.md.
+## u8 selector in one register; `return 0` next to a base use; load at the case head (T-25132)
+
+SHOUGATU `func_801350F8` (2308 bytes, 656 edits to 0). Three general levers:
+
+- **A u8 global used by tests and as an array index.** cfe multiplies a u8 subscript in u8 (`mpy L` on the raw byte) while the tests use the widened value, so uopt promotes the byte and keeps the widened copy in a second register (`lbu t0; ... move v1,t0`). Write the index `tbl.s[(s32)G]`: every use then reads one CSE of the widened load, one register. The same split on a promoted counter (`G == 0` then `G++ == 0x1E`) was fixed by reading the byte through `GameState *g` (FAKE).
+- **`return 0` in the block of the last use of a CSE'd base.** uopt interference is per block, so the `$v0` definition makes the whole `&D_X` base range (all cases) avoid `$v0`. Write `if (c) {...} else {...} return 0;` so the return sits in its own join block; IDO's branch retargeting still gives each path its own `b end; move v0,zero`.
+- **A load scheduled one slot late inside a block.** If the original's `lui` of a global sits before a store of an earlier statement and the draft's after it, an empty test of that global as the first statement of the block (`if (G != 0) {}`, FAKE) makes ugen emit the load there; the test is removed. A bare `if (G) {}` changed the branch shape.
+
+## A `t0` missing from ugen's pool can be a call-argument local (T-25304)
+
+Symptom: the original never uses `t0` as a ugen temporary (an early `li t1,..` where the draft has `li t0,..`),
+and `t0` appears only in one block, often as the register of a loaded word. Look for a value that is computed
+before a call and passed after the `a0..a3` arguments (a stack argument): as its own local it lives past the
+argument writes, so `a0..a3` are forbidden for it; when `v0` and `v1` already hold other ranges of the block it
+gets `t0`, which then leaves the ugen ring for the whole function. Main `mod_trans_vram`: `u8 flags = *data & 0xFF;` for the sixth `get_fnt` argument, 47 rows to
+0 with the sibling form `uv = (*data & 0xFF0000) >> 16;`. A uopt colour need not appear in the final code (ugen
+forwards single-use ranges), so check the trace, not only the asm; `drafts/T-25304/main/mod_trans_vram/NOTES.md`.

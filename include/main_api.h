@@ -423,7 +423,7 @@ typedef struct GsRecF90 {
 
 /* 32 records at +0x1328 (palette_load_vram). */
 typedef struct GsRec1328 {
-    /* 0x00 */ s32 unk_00;
+    /* 0x00 */ u32 *unk_00;
     /* 0x04 */ u8 unk_04;
     /* 0x05 */ u8 unk_05;
     /* 0x06 */ u8 unk_06;
@@ -785,9 +785,9 @@ extern u8 D_800B4198[7];
 extern u8 D_800B41A0[];
 extern u8 D_800B41B0[20][20];
 extern u8 D_800B4341[]; /* table read by func_80052E60 */
-extern s8 D_800B4349[11];
-extern u8 D_800B4355[10];
-extern u8 D_800B4361[10];
+extern s8 D_800B4348[12];
+extern u8 D_800B4354[12];
+extern u8 D_800B4360[12];
 extern s8 D_800B436C[15];
 extern s8 D_800B437C[15];
 extern u8 D_800B4390[];
@@ -1175,6 +1175,7 @@ extern s32 D_800EECEC;
 extern s32 D_800EECF0;
 extern u8 D_800F19AB;
 extern u8 D_800F53DA;
+extern u8 D_800F53DC;
 extern u8 D_800F53DE;
 extern u8 D_800F53DF;
 extern u8 D_800F53E0;
@@ -1208,6 +1209,7 @@ extern u8 D_800F5AB2;
 extern u8 D_800F5ACD;
 extern u8 D_800F62CF;
 extern s32 D_800F62F0; /* T-17600: GYOZI func_8013C774 tests bits 0x100 and 0x800 */
+extern s32 D_800F62F8;
 extern s8 D_800F6412;
 extern s32 D_800F6458;
 extern s32 D_800F6468;
@@ -2770,6 +2772,7 @@ void func_80083418(void);
 #ifndef MAIN_API_OVERRIDE_func_80083440
 void func_80083440(u8 arg0);
 #endif
+void func_80083338(void);
 s32 func_80083474(void);
 s32 func_80083808();
 void func_80083A10();

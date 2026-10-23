@@ -1,7 +1,7 @@
 ---
 id: T-25100
 title: Wave 8 conveyor - one deep Opus pass per remaining function
-status: In Progress
+status: Done
 assignee: orchestrator
 created: 2026-10-23
 updated: 2026-10-23
@@ -77,3 +77,5 @@ Packages are file-disjoint (one worktree per C file, functions of a file in sequ
 - [[tickets/T-25153-w8-NAME_ENT-80139740|T-25153]] src/ovl/NAME_ENT/80139740.c: func_8013AF78
 
 ## Comments
+
+- 2026-10-23 (orchestrator): wave 8 finished (run wf_f91e4ce7-198, 291 agents). 34 packages merged by wave 8 with 57 verified matches, every merge with 27/27 sha1, header/global/prototype checks and literal default-C checks; no merge failed. The other 19 packages went to the wave 9 neighbor ([[tickets/T-25200-wave-9-neighbor]]). Main 6,932/6,952 (98.6%) after the last merge (SHOUGATU 80134890). Script weakness found: agents report `UNIT:func` names and the script compared bare names, so the closer stage never ran here; wave 9 ran those closers. Functions still unmatched move to the second pass, [[tickets/T-25300-wave-10-second-pass]].

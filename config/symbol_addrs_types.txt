@@ -9,3 +9,5 @@ D_801217D0 = 0x801217D0; // T-10630: canonical Rec24 sprite table base used by M
 D_800CA2E8 = 0x800CA2E8; // T-24051: existing s16 symbol, DATE selector byte view at +0x10; no allocation
 func_8007C784 = 0x8007C784; // T-25150: main function named only by the KANGEI D_80139B30 table in C (no KANGEI asm reference gives it a link name)
 func_8007C8A4 = 0x8007C8A4; // T-25150: main function named only by the KANGEI D_80139B30 table in C (no KANGEI asm reference gives it a link name)
+func_80083338 = 0x80083338; // T-11900: main function named only by the GEKO D_80145094 table in C (no GEKO asm reference gives it a link name)
+func_80083474 = 0x80083474; // T-11900: main function named only by the GEKO D_80145094 table in C (no GEKO asm reference gives it a link name)

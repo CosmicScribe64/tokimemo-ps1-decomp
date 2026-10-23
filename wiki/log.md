@@ -7,82 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25004 created, In Progress
-[[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]] created, In Progress (branch c-m4): main `func_8005B43C`, `parameter_up_down`, `col2sepia`.
-
-## [2026-10-20] ticket | T-25004 to In Review
-[[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]]: main `col2sepia` matched (sum local reused for blue, every clamp as a ternary). Guards: `func_8005B43C` 3 rows (bit-field flag test, FAKE second read of `unk_0F4.h` found by the permuter), `parameter_up_down` 11 rows. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
-
-## [2026-10-20] ticket | T-25007 In Progress
-
-[[tickets/T-25007-class-c-etc-rpgbat-main]]: class C ETC `func_80146D4C`, RPG_BAT `func_8014BFE4`, main `func_8005938C`; branch c-m6.
-
-## [2026-10-20] ticket | T-25007 In Review
-
-[[tickets/T-25007-class-c-etc-rpgbat-main]]: ETC `func_80146D4C` guarded at 12 rows (104 before; empty-if promotion lever from the permuter, recipe added to [[playbook]]); RPG_BAT `func_8014BFE4` (128) and main `func_8005938C` (124) stay `INCLUDE_ASM`, notes in `drafts/T-25007/`. Notes in [[matching-notes]]. Clean build 27/27, header/global/proto checks pass. Branch c-m6.
-
-## [2026-10-20] ticket | T-25006 created, In Progress
-[[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]] created, In Progress (branch c-m5): main `srn_set`, `mod_set_gpu`, `func_8004A1A0`.
-
-## [2026-10-20] ticket | T-25006 to In Review
-[[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]]: main `srn_set` matched (record loads through the global array so as1 can move them above the stack stores; `SRN_REC` and `ModRec14` in `game.h`); `mod_set_gpu` guarded at 28 rows; `func_8004A1A0` INCLUDE_ASM with a 76-row draft in drafts/T-25006. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
-
-## [2026-10-20] ticket | T-25004, T-25006, T-25007 Done
-
-Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `func_8005B43C` 3 rows, `parameter_up_down` 11, ETC `func_80146D4C` 12, main `mod_set_gpu` 28. [[status]].
-
-## [2026-10-20] ticket | T-25010 created, In Progress
-[[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]] (branch c-m7): main `func_8004A1A0`, `func_80065964`, `strCallback`; `func_8006A044` skipped (file owned elsewhere this round).
-
-## [2026-10-20] ticket | T-25010 to In Review
-[[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]] (branch c-m7): no match. BG slot types and tables moved from include/ovl/OPTION.h to include/main_api.h; main `func_8004A1A0` draft now has the original instruction count; `func_80065964` draft rolled with a `goto` loop (frame and range splits left); `strCallback` guard unchanged. Drafts in drafts/T-25010/main/. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
-
-## [2026-10-20] ticket | T-25009 created, In Progress
-[[tickets/T-25009-closers-etc-geko-mod-set-gpu]] created, In Progress (branch n2): closers for ETC `func_80146D4C`, GEKO `func_80133C50`, main `mod_set_gpu`.
-
-## [2026-10-20] ticket | T-25009 to In Review
-[[tickets/T-25009-closers-etc-geko-mod-set-gpu]]: no match; main `mod_set_gpu` guard 28 -> 17 rows (empty `if (last) {}` lifts `last` above `clut`), GEKO `func_80133C50` 13 and ETC `func_80146D4C` 12 unchanged (zero-girl mask lead recorded). Notes in [[matching-notes]]. Clean build 27/27, checks pass. Branch n2.
-
-## [2026-10-20] ticket | T-25008 In Progress
-
-[[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]]: closers for main `func_8005B43C` (3 rows), `func_8006BA40` (7), `parameter_up_down` (11), branch n1.
-
-## [2026-10-20] ticket | T-25008 In Review
-
-[[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]]: main `func_8006BA40` matched (a `(u8)` cast on the low-nibble test spends the ugen slot the original spends; new line in [[playbook]] section 2). `func_8005B43C` stays guarded at 3 rows, `parameter_up_down` at 11; findings in [[matching-notes]] T-25008.
-
-## [2026-10-20] ticket | T-25008, T-25009, T-25010 Done; session wrap-up
-
-Match: main `func_8006BA40` (T-25008). Guard progress: `mod_set_gpu` 17 rows. Today: 8 matches merged by this orchestrator (ETC `func_8013CCE4`, main `sndisp`, `func_80043510`, `func_8004443C`, `col2sepia`, `srn_set`, `func_8006BA40`, plus the T-24900 pair earlier). [[status]].
-
-## [2026-10-21] ticket | Start T-25011 after merging the other agent's work
-
-Fast-forwarded local main to 50e032fcc (other agent: 129 functions left, plan in [[plan-remaining]]). Started [[tickets/T-25011-class-a-closers-as1-levers]]: one Sonnet 5.5 subagent on the eight class A near misses.
-
-## [2026-10-21] ticket | T-25011 result: class A closers, zero matches
-
-autotweak (280-1,940 variants each) left every class A guard unchanged; KANGEI func_80134724 default arm rewritten (FAKE, 4 rows, the old 2-row figure was not reproducible). VALEN func_80132D0C and main func_8005B43C still need guarded drafts. Details in [[tickets/T-25011-class-a-closers-as1-levers]]. Ticket In Review; build clean 27/27. Next: drafts for those two, class C, then class D smallest first ([[plan-remaining]]).
-
-## [2026-10-21] ticket | Start T-25012
-
-Class A is exhausted at the autotweak level; [[tickets/T-25012-class-c-d-reconstruction]] starts hand reconstruction of class C/D functions.
-
-## [2026-10-21] ticket | T-25012 first findings: no twins, GYOZI func_801412A4 at 96
-
-`tools/twin_sweep.py` plans no copies: none of the 119 unmatched functions has an exact, near or lenient matched twin, so the unguarded ones are pure reconstruction. `wiki/data/remaining-2026-10-20.md` is stale (VALEN func_80132D0C, sndisp, func_8006BA40 already matched). GYOZI `func_801412A4`: draft 103 -> 96 exact score (`count += (b1 == 0) ^ 1;` reproduces `sltiu; xori`; the autotweak best adds a `u16 count` that costs an `andi` and a 0x30 frame, not kept); permuter 600 s found no 0. Leads left: ugen temporaries in loop 1 (t7 vs t5), operand order in loop 2, `D_801486E4` read once. `regdiff.py` needs `TOKIMEMO_SCRATCH` set to a writable directory. Notes and helper scripts in `drafts/T-25012/` ([[tickets/T-25012-class-c-d-reconstruction]]).
-
-## [2026-10-21] ticket | T-25012: ETC func_8013F054, main func_8006A044 notes
-
-No match. `regdiff.py` works with `TOKIMEMO_SCRATCH=$PWD/build/scratch/t25012` plus the traced uopt copied into `build/scratch/t25012/r9-uopt/variants/trace`; key fact: unconstrained ranges are coloured in bit order (order of first mention in the source), not by priority. `score.py` masks registers in its `struct` count, so it can look near-matched when it is not (main func_8006A044 is about 87 real rows). ETC `func_8013F054`: only the pointer do/while form `p = (u8 *)&D_800E6280 + idx * 8; do { ... p -= 8; } while ((u32)p >= (u32)&D_800E6280);` reloads `D_800E71DF` in the loop like the original; 8 instructions still missing (idx kept in `$a0` with a `move v1,a0`). main `func_8006A044`: structure solved (month test chain, jump-table switch), colours swapped (month in `$v0`, F64[1] in `$v1`) and 12 instructions missing. Drafts in `drafts/T-25012/` ([[tickets/T-25012-class-c-d-reconstruction]]).
-
-## [2026-10-21] ticket | T-25012 final summary: zero matches, remaining targets need new compiler levers
-
-T-25012 matched nothing. Added main `func_80062948` (736 B): clean rewrite from the asm with MATRIX/SVECTOR/VECTOR from `libgte.h`, 208 target vs 210 built insns; left: original locals sit 8 bytes lower in the 0xD0 frame and interleave the two struct copies word by word. ENDING `func_801387B0` stays at about 80 rows (original recomputes `xor; sltiu` for each of four `0xC - (flag == 1)` compares; every tried form CSEs the boolean). Tooling: IDO allocates locals in reverse declaration order from the frame top; an unused local takes space only when declared first; unconstrained uopt ranges are coloured in first-mention order. Levers that would unblock several targets: keeping a redundant promoted-global store (main `func_8006A044`), an 8-byte shift of the locals area (`func_80062948`), no CSE of relational booleans (ENDING `func_801387B0`). Any such lever must be a uniform build rule with evidence, per [[plan-remaining]]. Notes in `drafts/T-25012/` ([[tickets/T-25012-class-c-d-reconstruction]]).
-
-## [2026-10-21] decision | Next step is compiler-level levers (T-25013)
-
-At the user's direction, recorded the next step for future agents: source-level matching is exhausted, so [[tickets/T-25013-compiler-level-levers]] (Ready) is the clear next piece of work. Added a NEXT STEP block to [[status]] and a section to [[plan-remaining]], created the ticket with five candidate levers, the rules (uniform rule, no matched object changes, 27/27) and the method. Subagent and timer stopped; no agents running.
-
 ## [2026-10-21] build | tools/lever_lab.py for compiler-level experiments (T-25013)
 
 Added `tools/lever_lab.py` and `tools/test_lever_lab.py`: one command rebuilds every object under an env-gated variant, checks 0 FAILED and 27 `.ok`, compares each matched function with a base snapshot (any change = non-uniform rule, reject) and re-scores all guarded functions against base. Validated with a no-op variant (`0 of 7506` changed, 0 guarded changes). Note: `tools/queue.py` shadows the stdlib `queue`, so `concurrent.futures`/`ThreadPool` break inside `tools/`; the tool uses plain subprocess polling. Documented in [[tickets/T-25013-compiler-level-levers]].
@@ -1666,6 +1590,10 @@ The frame counter read through a `GsWord *` local is the lever that fixed the re
 Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/matching-notes.md`, fixed), clean rebuild 27/27, funcdiff MATCH. Matched ENDING `func_801330E4` (796 bytes) as default C in `src/ovl/ENDING/80133030.c` with two FAKEs (`pad[4]`, an empty test on the f9 word).
 No function left with rows in this job; notes in `drafts/T-25145/ENDING/func_801330E4/NOTES.md`, [[matching-notes]], [[tickets/T-25145-w8-ENDING-80133030]].
 
+## [2026-10-23] ticket | T-11900 In Progress (claim #65)
+
+Outside-contributor claim CosmicScribe64/tokimemo-ps1-decomp#65 (posted 2026-10-20): the 11 GEKO and 3 OPTION functions left at `ff6c770b2`. Upstream has since matched GEKO `func_80134808`, `func_80133308`, `func_80144198`, `func_801420E4` and OPTION `func_80139A30`, `func_8013A7EC`; the branch keeps upstream's versions of those. OPTION `func_801326BC` matched on this branch. [[tickets/T-11900-geko-option-closers]].
+
 ## [2026-10-23] ticket | T-25119 Done
 Reviewed [[tickets/T-25119-w8-main-80061710]] against CODING_STANDARDS.md; two comments were missing the `FAKE` marker (pointer cast, work-area view) and are fixed; clean rebuild 27/27. Matched main `func_80062948` (736 bytes) and `func_80061A3C` (1216 bytes) as default C.
 Both functions of `src/main/80061710.c` are C now; notes in drafts/T-25119/main/ and [[matching-notes]].
@@ -1752,3 +1680,100 @@ The only function of the package is matched, none left with rows; the real battl
 
 Reviewed [[tickets/T-25139-w8-KANGEI-80132090]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched KANGEI `func_801327DC` (1096 bytes) as default C in `src/ovl/KANGEI/80132090.c`; FAKEs: two empty tests of the club halfword and a `(u8)` narrowing; the scene table `D_801399B0` now defined in C (data island).
 The only function of the package is matched, none left with rows; notes in `drafts/T-25139/KANGEI/func_801327DC/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25130 Done
+
+Reviewed [[tickets/T-25130-w8-MASTER-80132140]] against CODING_STANDARDS.md; matched MASTER `func_801326B4` (3264 bytes) as default-build C, 27/27.
+Findings fixed (u32 copy marked FAKE, blank line, kanban column); the six always-false mode tests are FAKE; notes in drafts/T-25130/MASTER/func_801326B4/.
+
+## [2026-10-23] ticket | T-25137 Done
+
+Reviewed w9-TACO-8013B170 against CODING_STANDARDS.md (no open findings; the `#line` pair per quad is an accepted marked FAKE), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_8013B460` (1328 bytes) as default C in `src/ovl/TACO/8013B170.c`.
+The package's only function is matched; the as1 line tie-break rule is in [[as1-scheduler-rule]] and [[playbook]], notes in `drafts/T-25137/TACO/func_8013B460/NOTES.md`, see [[tickets/T-25137-w8-TACO-8013B170]].
+
+## [2026-10-23] ticket | T-11900 Done
+
+Four matches: OPTION `func_801326BC`, GEKO `func_80136C20`, `func_801367EC` (both closed by defining `D_80145094` in C, [[as1-scheduler-rule]]) and `func_80135DC0`. `func_80133024`, `func_80132B24` keep their guards; `func_80142C9C` checkpoint in `drafts/T-11900`. Inline review against CODING_STANDARDS.md (FAKE comments, no inline asm). Notes in [[matching-notes]]. [[tickets/T-11900-geko-option-closers]].
+
+## [2026-10-23] ticket | T-25129 Done
+
+Reviewed [[tickets/T-25129-w8-GYOZI-80136220]] against CODING_STANDARDS.md; matched GYOZI `func_801368B8` (2256 bytes) as default-build C, 27/27, funcdiff MATCH.
+One FAKE (dead entry read, marked); finding fixed (comment for the always-true `| 8` in case 6); lead for SHOUGATU `func_801350F8` in [[matching-notes]].
+
+## [2026-10-23] ticket | T-25128 Done
+
+Reviewed [[tickets/T-25128-w8-ETC-8013FF80]] against CODING_STANDARDS.md; no function matched, `src/ovl/ETC/8013FF80.c` unchanged (`func_8013FFAC` stays `INCLUDE_ASM`, 0 bytes added).
+Best draft is 197 funcdiff rows (346 before), notes and next hypothesis in `drafts/T-25128/ETC/func_8013FFAC/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25300 wave 10 second pass opened
+
+The wave 9 neighbor run ([[tickets/T-25200-wave-9-neighbor]]) stopped when a job-picker agent returned no structured result; its last pick had found no untouched packages left. [[tickets/T-25300-wave-10-second-pass]] replaces it: a second deep pass, from the first pass's notes, on each of the 20 non-GEKO files still holding INCLUDE_ASM (tickets T-25301..T-25320), starting each file as soon as no wave 8 or wave 9 worktree holds it.
+
+## [2026-10-23] ticket | T-25136 Done
+
+Reviewed w9-TACO-801447D0 against CODING_STANDARDS.md (no open findings; the empty `if (x + y > 0) {}` is a marked FAKE), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_80145650` (1908 bytes) as default C in `src/ovl/TACO/801447D0.c`.
+The package's only function is matched, none left with rows; the block-copy state method is in [[playbook]] and [[matching-notes]], notes in `drafts/T-25136/TACO/func_80145650/NOTES.md`, see [[tickets/T-25136-w8-TACO-801447D0]].
+
+## [2026-10-23] ticket | T-25134 Done
+
+Reviewed [[tickets/T-25134-w8-main-80043510]] against CODING_STANDARDS.md; matched main `palette_load_vram` (2024 bytes) as default-build C, 27/27.
+One finding fixed (comment on the empty `case 1: default:`); the two stack-frame locals are FAKE and ticketed; notes in drafts/T-25134/main/palette_load_vram/.
+
+## [2026-10-23] ticket | T-25131 Done
+
+Reviewed [[tickets/T-25131-w8-NAME_ENT-80142A80]] against CODING_STANDARDS.md; no matches (`src/` unchanged, `func_80143580` stays INCLUDE_ASM).
+`func_80143580` is down to 471 rows from 835 (draft and notes in drafts/T-25131/NAME_ENT/func_80143580/).
+
+## [2026-10-23] ticket | T-25133 Done
+
+Reviewed [[tickets/T-25133-w8-TEL-8013CCD0]] against CODING_STANDARDS.md; matched TEL `func_8013D88C` (2980 bytes) as default-build C, 27/27; the guard and `INCLUDE_ASM` are gone, no function left in `src/ovl/TEL/8013CCD0.c`.
+Review finding fixed: the empty month-bypass arm and the g/D_800E6280 split are now marked FAKE; levers and negatives in `drafts/T-25133/TEL/func_8013D88C/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25303 Done
+
+Reviewed [[tickets/T-25303-w10-main-800563F0]] against CODING_STANDARDS.md; matched main `strCallback` (640 bytes) as default-build C, 27/27, funcdiff MATCH; `func_80056BA8`, `strNext`, `strInit` still MATCH.
+The match is the T-25118 body plus a marked never-true istr arm that sets the shim's sticky F state (no tooling change); notes in [[matching-notes]] and `drafts/T-25303/main/strCallback/NOTES.md`.
+
+## [2026-10-23] ticket | T-25132 Done
+
+Reviewed [[tickets/T-25132-w8-SHOUGATU-80134890]] against CODING_STANDARDS.md (two comment fixes); matched SHOUGATU `func_801350F8` (2308 bytes, two FAKEs) as default-build C, 27/27.
+The INCLUDE_ASM in `src/ovl/SHOUGATU/80134890.c` is gone; levers and the GYOZI `func_801368B8` lead in [[matching-notes]] and [[playbook]].
+
+## [2026-10-23] ticket | T-25304 Done
+
+Reviewed [[tickets/T-25304-w10-main-8004C3F0]] against CODING_STANDARDS.md; matched main `mod_trans_vram` (752 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+The cause was a `u8 flags` local that makes uopt colour `t0` (recipe in [[playbook]]); notes in `drafts/T-25304/main/mod_trans_vram/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25100, T-25200, T-25201 Done; status 98.6%
+
+Wave 8 finished (34 packages merged, 57 verified matches) and wave 9 stopped (20 verified matches from 17 packages and 6 closer jobs). With PR #68, main is 6,932/6,952 functions (98.6%). [[status]] lists the 20 functions left; 16 are in the wave 10 second pass ([[tickets/T-25300-wave-10-second-pass]]), 4 are GEKO (issue #65). T-25135 is superseded by T-25311.
+
+## [2026-10-23] ticket | T-25302 Done
+
+Reviewed [[tickets/T-25302-w10-main-80049FF0]] against CODING_STANDARDS.md; matched main `func_8004A1A0` (628 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+The cause was a pointer local defined before the late uopt block split, which lost `.noalias`; one FAKE (the empty `if (slot) {}` split). Notes in `drafts/T-25302/main/func_8004A1A0/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25301 Done
+
+Reviewed [[tickets/T-25301-w10-NAME_ENT-80139740]] against CODING_STANDARDS.md; matched NAME_ENT `func_8013AF78` (296 bytes) as default-build C, 27/27, funcdiff MATCH for default and `--version c`.
+Four marked FAKEs (a dead `register` initializer turns copy propagation off, see [[playbook]]); no blocking findings, one catalog link added.
+
+## [2026-10-23] ticket | T-25305 Done
+
+Reviewed [[tickets/T-25305-w10-SHOUGATU-8013E330]] against CODING_STANDARDS.md; no match: SHOUGATU `func_8013EA98` stays `INCLUDE_ASM` (best body 42 funcdiff rows, over the guard limit), 27/27, no findings.
+Second-pass results (natural member spelling fixes the `>= 9` block, count block and exit; latch and t4 selector still diverge) and the next hypothesis are in `drafts/T-25305/SHOUGATU/func_8013EA98/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25308 Done
+
+Reviewed [[tickets/T-25308-w10-RPG_BAT-80154430]] against CODING_STANDARDS.md; matched RPG_BAT `func_80154DD8` (1204 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+Frame fixed by declaring only x and y (`-x, -y` in both calls), call order by two marked same-symbol FAKE views; notes in `drafts/T-25308/RPG_BAT/func_80154DD8/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25307 Done
+
+Reviewed [[tickets/T-25307-w10-main-8004F870]] against CODING_STANDARDS.md; matched main `func_80052F68` (1200 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+The cause was counter ownership (`m` spans loops 1, 2-inner, 3-outer and 4, `i` loops 2-outer and 3-inner); one FAKE (three unused locals for the frame). Notes in `drafts/T-25307/main/func_80052F68/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25306 Done
+
+Reviewed [[tickets/T-25306-w10-BUNKA_SD-80134540]] against CODING_STANDARDS.md; matched BUNKA_SD `func_80134D94` (972 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+The header now declares `s32 func_80134D94(void);`; notes in `drafts/T-25306/BUNKA_SD/func_80134D94/NOTES.md` and [[matching-notes]].

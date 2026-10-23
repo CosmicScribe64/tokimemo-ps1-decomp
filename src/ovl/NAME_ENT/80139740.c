@@ -393,7 +393,60 @@ void func_8013ACA4(void) {
     func_80139740(((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].metrics[8].unk_02, 128, 78);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013AF78);
+s32 func_8013AF78(s32 arg0) {
+    s32 a;
+    s32 b;
+    s32 sel[3];
+    s32 c;
+    /* FAKE: T-25301, a register local stored from an unsigned global before the first branch is
+     * what tools/cvt_pass.py reads as a switch temporary; it turns IDO's global copy propagation
+     * off for the function, so the copies below stay apart from their masks as in the original.
+     * The store is dead (the loop sets d) and emits nothing. */
+    register s32 d = D_80120C2B;
+
+    /* FAKE: T-25301, the empty test gives arg0 the first optimizer bit, so it keeps $a0 */
+    if (arg0) {
+    }
+    for (d = 0; d < 3; d++) {
+        sel[d] = 0;
+    }
+    /* FAKE: T-25301, copies and masks each on one line (as1 schedules a line as one group); the
+     * second empty test ends the block, so the copies give d, c, b, a their optimizer bits */
+    d = D_80120C2B; c = D_80120BA3; b = D_80120B5F; a = D_80120BE7;
+    if (arg0) {
+    }
+    b &= 0x7F; c &= 0x7F; a &= 0x7F; d &= 0x7F;
+    if (arg0 == 0) {
+        D_80120BE7 = a;
+        D_80120B5F = b;
+        D_80120BA3 = c;
+        D_80120C2B = d;
+        /* FAKE: T-25301, the label puts `return 0` in a block of its own; uopt forbids $v0 to a
+         * range used in the block that sets the return value, and d must stay in $v0 */
+        goto ret0;
+    ret0:
+        return 0;
+    }
+    sel[D_8014D0D4 % 3] = 1;
+    D_80120BE7 = a;
+    if (sel[0] != 0) {
+        a = (u8)(a | 0x80);
+        c = (u8)(c | 0x80);
+        D_80120BE7 = a;
+    }
+    D_80120B5F = b;
+    if (sel[1] != 0) {
+        b = (u8)(b | 0x80);
+        D_80120B5F = b;
+    }
+    D_80120C2B = d;
+    D_80120BA3 = c;
+    if (sel[2] != 0) {
+        d = (u8)(d | 0x80);
+        D_80120C2B = d;
+        D_80120BA3 = c = (u8)(c | 0x80);
+    }
+}
 
 s32 func_8013B0A0(void) {
     s32 a;

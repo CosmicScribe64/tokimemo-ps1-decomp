@@ -8,3 +8,8 @@ D_800E7D13 = 0x800E7D13;
 // T-20940: the name table (u8 *[16], main_api.h). telephone_class_init (C) indexes it as D_800B3538[i - 1];
 // the original's relocation was splat's D_800B3534 = D_800B3538 - 4.
 D_800B3538 = 0x800B3538;
+// T-25307: s8/u8[12] tables of func_80052F68 (main_api.h), indexed 1..10. No instruction names the bases
+// (the loops start at entry 1); the original's relocations are splat's D_800B4349, D_800B4355 and D_800B4361.
+D_800B4348 = 0x800B4348;
+D_800B4354 = 0x800B4354;
+D_800B4360 = 0x800B4360;

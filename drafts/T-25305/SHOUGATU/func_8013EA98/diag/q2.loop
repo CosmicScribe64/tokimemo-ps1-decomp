@@ -1,0 +1,10 @@
+    status = 0;
+    do {
+        G = (BASE + status) % 10U + 1;
+        status = (s16)(status + 1);
+        if (!REC[G].unk_0C.f.b1 && G >= 9) continue;
+        if (G == 5 && (REC[0].unk_0C.b[2] >> 4) == 8) continue;
+        if (G == 6 && (REC[0].unk_0C.b[2] >> 4) == 9) continue;
+        if (PREV == G) continue;
+        if (REC[G].unk_0C.f.b1 || count < 3) break;
+    } while (G);

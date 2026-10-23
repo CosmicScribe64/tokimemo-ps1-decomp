@@ -171,7 +171,49 @@ void func_80132624(OptionGrid80 *grid) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801326BC);
+/* Palette cycle: four 128-word palettes at 0x801CBEF0 (RAM above the overlay, filled at load). */
+#define OPTION_PALETTES ((s32 *)0x801CBEF0)
+
+void func_801326BC(void) {
+    s32 i;
+    GameState *g;
+
+    if (D_8013D300 != 0) {
+        ((SpriteSlot24 *)&D_801220D0)->unk_10 = D_800E6280.unk_03A;
+        ((SpriteSlot24 *)&D_801220D0)->unk_11 = D_800E6280.unk_03A;
+        ((SpriteSlot24 *)&D_801220D0)->unk_12 = D_800E6280.unk_03A;
+        if (D_800E6280.unk_10F8 & 1) {
+            ((SpriteSlot24 *)&D_801220D0)->unk_0C += 1;
+            ((SpriteSlot24 *)&D_801220D0)->unk_0E -= 1;
+        }
+        /* The palette stores go through a pointer: uopt then keeps the `% 4` index in every
+         * iteration and every statement, as the original does. */
+        g = &D_800E6280;
+        D_8013D308++;
+        if (D_8013D308 > 0x100) {
+            for (i = 0; i < 0x80; i++) {
+                g->unk_163C[i] = OPTION_PALETTES[D_8013D304 % 4 * 128 + i];
+            }
+            for (i = 0; i <= D_8013D308 - 0x100; i++) {
+                g->unk_163C[i + 0x10] = OPTION_PALETTES[(D_8013D304 + 1) % 4 * 128 + i + 0x10];
+                g->unk_163C[i + 0x38] = OPTION_PALETTES[(D_8013D304 + 1) % 4 * 128 + i + 0x38];
+                if (i + 0x60 < 0x80) {
+                    g->unk_163C[i + 0x60] = OPTION_PALETTES[(D_8013D304 + 1) % 4 * 128 + i + 0x60];
+                }
+            }
+            if (D_8013D308 > 0x128) {
+                D_8013D304 += 1;
+                D_8013D308 = 0;
+            }
+            func_80043914(D_800E6280.unk_163C, 0x1A, 1, 1, 0);
+        } else {
+            /* FAKE: T-11900 empty `else return`: the promoted D_8013D308 is then stored back on
+             * both arms after the compare instead of right after the increment. */
+            return;
+        }
+    }
+}
+#undef OPTION_PALETTES
 
 void func_801328C0(void) {
     s32 i;
