@@ -1781,3 +1781,6 @@ The header now declares `s32 func_80134D94(void);`; notes in `drafts/T-25306/BUN
 ## [2026-10-23] ticket | T-25400 wave 11 opened (repeat until matched, GEKO included)
 
 The user does not want to wait for the issue #65 claim; diman8 was told on the issue that our agents now also work on the four GEKO functions and that their PRs stay welcome. [[tickets/T-25400-wave-11-until-matched]] and T-25401..T-25412 cover every file still holding INCLUDE_ASM: GEKO first, then each file wave 10 leaves unmatched, up to three passes per file.
+
+## [2026-10-23] build | T-25401 w11-GEKO-801323E0-p1
+Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl/GEKO/801323E0.c`; func_80132D04 got an old-style definition (same bytes). The file has no INCLUDE_ASM left, so [[tickets/T-25401-w11-GEKO-801323E0]] is Done after review; notes in [[matching-notes]].

@@ -278,8 +278,9 @@ s16 arg1;
 
 /* The calls pass the day and month as two extra arguments that func_80132D04 does
  * not read: the values sit in $a2/$a3, where the original keeps them (T-25401).
- * They are read into the locals in each arm (a store, so the loads stay plain
- * byte loads), while the test reads the globals directly. */
+ * FAKE: T-25401, the day and month are read into the locals in each arm (a store,
+ * so the loads stay plain byte loads for an unprototyped call), while the test
+ * reads the globals directly so its sum stays apart from the arms' sums. */
 s32 func_80133024(void) {
     u8 month;
     u8 day;
