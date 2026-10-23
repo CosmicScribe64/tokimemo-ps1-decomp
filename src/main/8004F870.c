@@ -737,7 +737,134 @@ void func_80052060(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_80125C00 = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8005215C);
+void func_8005215C(void) {
+    /* FAKE: two unused home words above the spills; the original frame is 8 bytes larger, as in xa_wait. T-25101 */
+    s32 pad[2];
+    s32 r;
+    u8 *a;
+    u8 *b;
+    s32 *k;
+    s32 now;
+    s32 ph;
+    u32 t;
+
+    r = 0;
+    now = get_now_k();
+    if (D_800E6280.unk_F62 & 0x80) {
+        ph = D_800E6280.unk_F62 & 0x7F;
+        if (D_800E6280.unk_F61 + 2 >= (u32)now) {
+            r = k_disp_inc();
+            now = get_now_k();
+            t = D_800E6280.unk_F61;
+            if (now == t + 3) {
+                if (D_800E6280.unk_F60 >= t + 3) {
+                    k_disp_switch(now, 0);
+                }
+            }
+        } else if (ph == 0) {
+            /* FAKE: `+ 0` keeps this argument off the F61 range, which then has no a0 preference and takes v1 (F62 a0) as in the original; the plain argument gives a2. T-25101 */
+            k_disp_switch(D_800E6280.unk_F61 + 0, 0);
+            a = get_k_work(D_800E6280.unk_F61 + 1);
+            b = get_k_work(D_800E6280.unk_F61 + 2);
+            *(s16 *)(a + 2) -= 2;
+            *(s16 *)(b + 2) -= 2;
+            D_800E6280.unk_F62 += 1;
+        } else if (ph != 0) {
+            /* FAKE: redundant test, as in xa_wait; the second use keeps ph in $v0. T-25101 */
+            a = get_k_work(D_800E6280.unk_F61 + 1);
+            b = get_k_work(D_800E6280.unk_F61 + 2);
+            *(s16 *)(a + 2) -= 2;
+            *(s16 *)(b + 2) -= 2;
+            if (*(s16 *)(a + 2) < 0x33) {
+                *(s16 *)(a + 2) = 0x32;
+                *(s16 *)(b + 2) = 0x42;
+                D_800E6280.unk_F62 -= 1;
+                D_800E6280.unk_F61 += 1;
+                k_disp_switch(D_800E6280.unk_F61 + 2, 1);
+            }
+        }
+    } else {
+        /* FAKE: the s8 mode field is read through a u8 address view: lbu, and uopt keeps the byte as one promoted global
+         * reloaded after each call; `(u8)D_800E6280.unk_03C` adds conversion ranges that cache it. T-25101 */
+        if (((*(u8 *)&D_800E6280.unk_03C) == 1 && D_80125C00 != 0) || ((*(u8 *)&D_800E6280.unk_03C) == 2 && D_80125C00 != 0)) {
+            r = k_disp_inc();
+        }
+        if ((*(u8 *)&D_800E6280.unk_03C) == 0) {
+            r = k_disp_inc();
+        }
+        get_now_k();
+    }
+    if (D_80125C00 == 0 && (func_800460EC() & 4)) {
+        D_80125C00 = 1;
+    }
+    k = (s32 *)func_80046284();
+    if (D_80125C00 == 1) {
+        if (func_800460EC() & 2) {
+            if (D_80125BFC != -1) {
+                if (((s32 *)D_80125BF4)[D_80125BFC * 2] != ((s32 *)D_80125BF8)[D_80125BFC * 2] && ((s32 *)D_80125BF4)[D_80125BFC * 2] == k[2]) {
+                    func_80046290(((s32 *)D_80125BF8)[D_80125BFC * 2], ((s32 *)D_80125BF8)[D_80125BFC * 2 + 1], D_800E6280.unk_F5F);
+                    func_80044750(0x300);
+                    D_80125C00 = 0;
+                } else {
+                    D_80125C00 = 2;
+                }
+            } else {
+                D_80125C00 = 2;
+            }
+        }
+    }
+    if (r == 1 && D_80125C00 == 2) {
+        if (D_8011ED5B & 0x80) {
+            func_8006C934();
+        } else {
+            func_8006C848(1);
+        }
+    }
+    if (r == 1 && (*(u8 *)&D_800E6280.unk_03C) == 0) {
+        if (D_8011ED5B & 0x80) {
+            func_8006C934();
+        } else {
+            func_8006C848(1);
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        if (r == 1) {
+            if ((*(u8 *)&D_800E6280.unk_03C) == 2) {
+                D_80125C00 = 2;
+                func_80044750(0x74);
+                func_80045414(9, 0, 0);
+            }
+            D_800E6280.unk_F62 = 0;
+        } else {
+            k_disp_goto_line_end();
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x60) {
+        if (r == 1) {
+            if ((*(u8 *)&D_800E6280.unk_03C) == 1) {
+                if (D_80125C00 == 2) {
+                    func_8006C848(0);
+                    D_800E6280.unk_110D += 1;
+                }
+                D_800E6280.unk_F62 = 0;
+                return;
+            }
+            if ((*(u8 *)&D_800E6280.unk_03C) == 2) {
+                if (D_80125C00 == 2) {
+                    func_8006C848(0);
+                    D_800E6280.unk_110D += 1;
+                }
+                D_800E6280.unk_F62 = 0;
+                return;
+            }
+            func_8006C848(0);
+            D_800E6280.unk_110D += 1;
+            D_800E6280.unk_F62 = 0;
+            return;
+        }
+        k_disp_goto_line_end();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_tokimeki);
 
