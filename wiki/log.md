@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | OPTION calendar passes integration and reviews
-
-[[tickets/T-24606-option-calendar]] In Progress -> In Review. Root default linked proof matches1,092 bytes, full ninja and fresh27 executable hashes pass, prototype guard reports zero new disagreements/15 known. Both independent reviews have no unresolved findings after clarifying the explicit integer-return annotation. Removed unnecessary identity multiplication; retained source controls have omission evidence and FAKE explanations. No header/data/compiler change.
-
 ## [2026-10-20] ticket | OPTION calendar complete
 
 [[tickets/T-24606-option-calendar]] In Review -> Done after all reviews and integration gates passed. Updated [[status]], [[matching-notes]] and [[tickets/T-24600-finish-matching]]:6,822 functions /2,097,048 bytes,130 functions remaining. Six functions /5,480 bytes completed in this continuation; all four matching lanes continue.
@@ -1726,6 +1722,7 @@ Reviewed [[tickets/T-25104-w8-main-8004C3F0]] against CODING_STANDARDS.md; match
 ## [2026-10-23] build | T-25201 w9c-TAIIKU-80133C80
 No match: TAIIKU `func_80137784` stays guarded at 4 rows (the two `bne` operand orders); the NON_MATCHING comment now names T-25201 and the uopt rule behind it.
 Reviewed against `CODING_STANDARDS.md`, clean rebuild 27/27; next step (second symbol names in `config/symbols_TAIIKU.txt`) needs approval, see [[tickets/T-25201-wave-9-closers]] and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25153 Done
 Reviewed [[tickets/T-25153-w8-NAME_ENT-80139740]] against CODING_STANDARDS.md; no matches, 27/27 clean rebuild. The T-24132 guard on NAME_ENT `func_8013AF78` (99 rows) is plain `INCLUDE_ASM` again.
 Best bodies (57 and 61 rows, two FAKEs) are in drafts/T-25153/NAME_ENT/func_8013AF78/ with the `$v0` blocker and next hypothesis in NOTES.md.
