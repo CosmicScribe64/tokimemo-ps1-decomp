@@ -1754,3 +1754,8 @@ The guard in `src/ovl/ENDING/801396E0.c` is gone: defining the scene table D_801
 
 Reviewed [[tickets/T-25125-w8-main-8006CB30]] against CODING_STANDARDS.md: no source change, nothing matched, 27/27 build; no findings.
 `func_8007132C` stays INCLUDE_ASM (738 rows from 950); notes and next hypothesis in drafts/T-25125/main/func_8007132C/NOTES.md.
+
+## [2026-10-23] ticket | T-25133 Done
+
+Reviewed [[tickets/T-25133-w8-TEL-8013CCD0]] against CODING_STANDARDS.md; matched TEL `func_8013D88C` (2980 bytes) as default-build C, 27/27; the guard and `INCLUDE_ASM` are gone, no function left in `src/ovl/TEL/8013CCD0.c`.
+Review finding fixed: the empty month-bypass arm and the g/D_800E6280 split are now marked FAKE; levers and negatives in `drafts/T-25133/TEL/func_8013D88C/NOTES.md` and [[matching-notes]].
