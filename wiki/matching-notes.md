@@ -768,3 +768,10 @@ Matched: `func_80132834` (310 words, 1240 bytes) is default-build C with no FAKE
 - `count += 1` before `D_8013453C += 1` (to 0).
 
 Negatives and a hint for the GYOZI sibling `func_80138C9C` (same `r` symptom) are in `drafts/T-25117/VALEN/func_80132834/NOTES.md`.
+
+## T-25122: main func_8004A1A0
+
+[[tickets/T-25122-w8-main-80049FF0]]. No match. The file keeps `INCLUDE_ASM`. Measured with whole-unit `funcdiff --resolve --version c`: T-25010 draft 89 rows, clean draft now 64 rows (157/157 words, no FAKE). Bodies, negatives and scratch scripts (binasm and ucode dumps) are in `drafts/T-25122/main/func_8004A1A0/` (NOTES.md).
+
+- Closed: both loops now match register for register. (1) `tp + col + row * 32` in loop 1 gives `tp + col` the lower bit, which wins the 103.3 priority tie in loop 2 (tp counter `$s3`, index pointer `$s4`, increment order). (2) `if (n <= 0x40) continue; printf(...)` adds one uopt block to `w`'s range (N 21 -> 22, D 6 -> 7, priority 40.33 -> 34.57), so `row * 0x78` takes `$s5` and `w` `$s6`. (3) Header order `unk_00, x, y, w, h` follows the original's ugen temporary ring (x `t2`, y `t3`; as1 sank the y store into the last delay slot).
+- Left: header colouring. The original has map `$a0`, 0x80 `$a2`, 0x78 `$t0`, `&D_80122120` `$t1` and 0x1000 `$v1`, the same register as row. Under per-block interference that means the original header is two uopt blocks: the 0x1000 stores before the split, the map def and `row = 0` after it. A late-folded `do {} while ((u32)slot < 0);` before `bg->unk_20 = 0` reproduces every uopt colour and the whole ugen ring. But uopt then emits no `unal` for the map `ixa`, so ugen writes no `.noalias a0,sp`/`a0,v0`, and as1 keeps two slot reloads (159 words) and the header order. Next step: find the split construct after which uopt still emits `unal` (read uopt's emission rule first).
