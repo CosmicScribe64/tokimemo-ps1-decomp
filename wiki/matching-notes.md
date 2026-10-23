@@ -740,3 +740,15 @@ Matched as default C, 1676 bytes (419 words), from INCLUDE_ASM. [[tickets/T-2511
 - **One full expression per vertex, offset grouped first**: `D_800E6280.unk_014[i] + (arg4 - dx)`. uopt shares the centre load but finds no common sum, and the later re-association emits `centre + arg4` twice, as the original does. `(centre + arg4) - dx`, a centre local, explicit copies or chains all CSE or propagate (300+ rows).
 - **setUVWH on one line** for the `@ * #` glyphs: the 0xD3/0xDF constants are coloured by first mention, which only the macro's field order gets right together with the store order. The letter index is assigned in its test, `(letter = arg0 - 'A') < 26`.
 - **FAKE `x3 = 0;` at the top**: x0 and x3 tie at priority 1 and are coloured by uopt bit; the dead store gives x3 the earlier bit without changing the evaluation order. Real source unknown.
+## T-25201: EN_NICHI func_80136DEC (closer)
+
+Matched; the guard is removed. The T-25109 body was right. The last 4 rows (the delay slots of the
+D1/D2 dispatch compares) came from data: the object's `.data` table `D_80139C5C` names this function,
+and it was still `INCLUDE_RODATA`. Defined in C in `src/ovl/EN_NICHI/80136B10.c` (prototypes in
+`include/ovl/EN_NICHI.h`), it makes as1 add an edge from the case-3 inner jump-table `jr` back to the
+entry (rule 8 in [[as1-scheduler-rule]]). The natural loop holds the compare chain and the case-3 head
+but not the case-1 and case-2 heads, so D1 and D2 take the next compare's `li s0,2` and `li at,3`. This is the second
+case of the [[playbook]] recipe "A function named by the file's own data" (after KANGEI
+`func_80134724`). The symptom here is different: a compare-chain switch, not a range-check slot. Check
+it whenever the original fills a slot from the next compare and the case head's instruction would
+pass the path test. Details: `drafts/T-25109/EN_NICHI/func_80136DEC/NOTES.md`.

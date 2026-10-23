@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-20
+updated: 2026-10-23
 ---
 
 # as1 global delay-slot filler
@@ -32,7 +32,7 @@ as1 first schedules each block on its own. It then numbers the blocks, gives eac
 
 Source lines play no part in these choices; they only order the per-block schedule.
 
-8. **Indirect jumps reach every address-taken label (T-25150).** as1's CFG builder (`func_41dc10`) gives each block that ends in an indirect jump other than `jr ra` an edge to every block whose label is address-taken in the file: all jump-table entries of all switches, and every function that a `.word` in the same file's data names. A switch dispatch in a function named by a C-defined table therefore has a back edge to the function entry; the loop changes the weights (dispatch 2, the +1 rule) and the scan order of the switch head. KANGEI `func_80134724` matched only once its object's table `D_80139B30` was defined in C (data island). A file whose original `.data` names its own functions must define that data in C before the scheduling of its switches can match.
+8. **Indirect jumps reach every address-taken label (T-25150).** as1's CFG builder (`func_41dc10`) gives each block that ends in an indirect jump other than `jr ra` an edge to every block whose label is address-taken in the file: all jump-table entries of all switches, and every function that a `.word` in the same file's data names. A switch dispatch in a function named by a C-defined table therefore has a back edge to the function entry; the loop changes the weights (dispatch 2, the +1 rule) and the scan order of the switch head. KANGEI `func_80134724` matched only once its object's table `D_80139B30` was defined in C (data island). A file whose original `.data` names its own functions must define that data in C before the scheduling of its switches can match. The loop also changes which blocks a stall can take from. In EN_NICHI `func_80136DEC` (T-25201) the back edge comes from a jump-table `jr` inside case 3 of a compare-chain switch. The loop region (processed before the outer region) holds the compares and the case-3 head but not the heads of cases 1 and 2. Those heads drop out of the compares' candidate lists, and each compare slot takes the next compare's constant, as in the original.
 
 ### Evidence from matched functions
 

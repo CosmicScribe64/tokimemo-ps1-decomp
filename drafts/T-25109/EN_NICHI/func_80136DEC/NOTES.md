@@ -80,3 +80,22 @@ Then test the source shapes that would put the case-1 and case-2 heads in their 
 dominance: the case 1 init loop as a `do`/`while` with the init on the case line; case 2's copy loop with
 the if/else inside a loop shape; or an outer `for`/`while` wrapper that uopt removes. Check each one with
 `XBBSCAN dst=19`/`dst=27` in the as1 trace, before counting rows.
+
+## T-25201 (closer): matched
+
+The body in the guard was right. The 4 rows came from the file's data: `D_80139C5C` (the scene table
+that `func_80136B10` calls through) names `func_80136B74`, `func_80136DEC` and `func_8013735C`, and it
+was still an `INCLUDE_RODATA` piece. Defined in C (`FnTbl3 D_80139C5C = { { ... } };`), it makes
+`func_80136DEC` an address-taken label in the file. as1 then gives the jump-table `jr` of the inner
+`switch (gs->unk_110D)` in case 3 an edge back to the function entry ([[as1-scheduler-rule]] rule 8).
+That back edge forms a natural loop: entry, table copies, the compare chain D0-D3, the case-3 head
+and the `jr` block. The case-1 and case-2 heads cannot reach the `jr`, so they stay in the outer
+region. as1 handles the loop region first, and its candidate list for D1 and D2 holds only the loop's
+blocks: D1 takes D2's `li s0,2`, D2 takes D3's `li at,3`, and D3 still takes the case-3 head's
+`lui t4`. `funcdiff --resolve` gives MATCH in both the NON_MATCHING and the default build; 27/27 sha1.
+
+How it was found: the traced as1 showed the case heads in the outer list in (weight, number) order,
+with `move s1,zero` passing the path test. In the original the case-1 and case-2 heads had to be left
+out of D1's and D2's lists while the case-3 head stayed in D3's list. The only thing the three heads
+differ in is whether they reach the case-3 `jr`, and the playbook's KANGEI recipe (T-25150) gives the
+edge.
