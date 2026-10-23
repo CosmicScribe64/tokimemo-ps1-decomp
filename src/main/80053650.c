@@ -712,7 +712,59 @@ void func_80054E6C(void) {
     w->club[slot] = g->unk_0F4.h >> 12;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054FC0);
+s32 func_80054FC0(s32 arg0) {
+    SaveImageView *bank;
+    u8 *p;
+    s32 sum;
+    u32 offset;
+
+    bank = (SaveImageView *)D_80123320;
+    D_800E7D10.slot_status[D_800E7D10.selected_slot] = 1;
+    memcpy(bank->slot_status, D_800E7D10.slot_status, 16);
+    memcpy(bank->flags, D_800E7D10.flags, 16);
+    bank->unk_24[0] = D_800E7D10.unk_024[0];
+    bank->unk_24[1] = D_800E7D10.unk_024[1];
+    /* FAKE: T-25105, an empty signed test with a positive bound after the indexed slot store puts
+       tools/ugen_pass.py in block-copy state F for the two record copies below, which is the
+       original's temporary numbering (one ugen register skipped, not two). The original's state
+       comes from its own compiler; the real source has no such test. */
+    if ((s32)D_800E7D10.selected_slot > 0) {
+    }
+    if (D_800E7D10.selected_slot != 0) {
+        bank->selected_slot = D_800E7D10.selected_slot % 15U;
+    }
+    bank->config0 = ((SaveWorkView *)&D_800E7D10)->config0;
+    bank->config1 = ((SaveWorkView *)&D_800E7D10)->config1;
+    bank->unk_54[0] = D_800E7D10.unk_027[0];
+    bank->unk_54[1] = D_800E7D10.unk_027[1];
+    memcpy(bank->records, D_800E7D10.unk_058, 0x800);
+    memcpy(bank->year, D_800E7D10.year, 16);
+    memcpy(bank->month, D_800E7D10.month, 16);
+    memcpy(bank->day, D_800E7D10.day, 16);
+    memcpy(bank->family_name, D_800E7D10.family_name, 0x80);
+    memcpy(bank->given_name, D_800E7D10.given_name, 0x80);
+    memcpy(bank->nickname, D_800E7D10.nickname, 0x100);
+    memcpy(bank->club, D_800E7D10.club, 16);
+    memcpy(bank->metrics, D_800E7D10.metrics, 0x240);
+    memcpy(bank->unk_CD8, D_800E7D10.unk_CC8, 0x100);
+    if (D_800E6280.unk_1124 == 0) {
+        if (D_800E7D10.selected_slot != 0) {
+            memcpy(D_800E7D10.unk_DC8, D_80125C10, 0x40);
+            memcpy(&D_800E7D10.unk_DC8[0xF0], &D_80125C50, 4);
+            D_800E7D10.unk_DC8[0xF4] = D_800B5C08;
+            D_800E7D10.unk_DC8[0xF5] = D_80125C54;
+            D_800E7D10.unk_DC8[0xF6] = D_80125C55;
+            memcpy(bank->unk_DD8, D_800E7D10.unk_DC8, 0x100);
+        }
+    }
+    /* byte sum of the selected bank's data; the address is indexed from the card block base */
+    p = &D_80123120[arg0 * 0xF00 + 0x204];
+    sum = 0;
+    for (offset = 4; offset < 0xF00; offset++) {
+        sum += *p++;
+    }
+    ((SaveBank *)&D_80123120[arg0 * 0xF00 + 0x200])->checksum = sum;
+}
 
 s32 func_800552DC(s32 arg0) {
     SaveImageView *bank;
