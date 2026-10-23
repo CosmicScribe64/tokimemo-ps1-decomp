@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24929 In Progress
-[[tickets/T-24929-uopt-zcopy-scope]] claimed (assignee claude), worktree uopt-scope: measure a uniform uopt
-copy-propagation scope rule (globals propagated, local induction copies kept) on the whole build.
-
 ## [2026-10-20] build | T-24929 switch-compare rule in cvt_pass, ETC func_8013CCE4 matched
 [[tickets/T-24929-uopt-zcopy-scope]]: the zcopy-scope hypothesis (T-24925) did not hold. The three rows were
 as1 leaving the chain's compares on the temporary's register. New uniform step `switch_compares` in
@@ -1748,10 +1744,12 @@ Findings fixed (CandList offset comments, catalog link, kanban column); FAKEs ar
 
 Reviewed [[tickets/T-25126-w8-ENDING-80134D20]] against CODING_STANDARDS.md; matched ENDING `func_80135F4C` (3220 bytes) as default-build C, 27/27.
 The guard is gone; the fix was defining the object's `.data` table `D_8013CA3C` in C (T-25150 as1 rule), lead for `func_80134270` and `func_8013A2E8` in [[matching-notes]].
+
 ## [2026-10-23] build | T-25201 w9c-ETC-80132880
 
 Reviewed w9c-ETC-80132880 against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH on both versions. Matched ETC `func_80132C3C` (884 bytes) as default C in `src/ovl/ETC/80132880.c` with a never-true `p1->code = 0x20` arm (FAKE) that raises the priority of 0x20.
 The only job of the package is matched, none left with rows; notes in `drafts/T-25121/ETC/func_80132C3C/NOTES.md`, [[matching-notes]] and [[playbook]].
+
 ## [2026-10-23] ticket | T-25122 Done
 
 Reviewed [[tickets/T-25122-w8-main-80049FF0]] against CODING_STANDARDS.md; matched main `func_8004A414` (1,024 bytes, one FAKE) as default-build C, 27/27.
