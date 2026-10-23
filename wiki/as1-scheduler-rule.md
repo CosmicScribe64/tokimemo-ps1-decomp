@@ -100,3 +100,7 @@ Cached original IDO5.2 has the same100/10 region-header selection. Replaying
 the same captured ENDING input gives all1164 stock5.3 candidate instructions
 unchanged. A simple5.2-to5.3 historical budget change is therefore excluded;
 the scratch raised-budget result still lacks an original-compiler rationale.
+
+### Per-block pick order and source lines (T-25137)
+
+The per-block list scheduler (`func_433ed0` in the recompiled as1) picks, among ready nodes, the smallest start time, then the larger aftercycles (node +44), then the larger latency to a successor, then the smaller hazard address (node +48, set only for users of a load), then the smaller **lineno** (node +12, the `.loc` line, printed in the `Node` dump of `-R -xbbdbg 8`). On a full tie the first node of the ready list wins, and released nodes are put at the front, so a node released last wins ties with its line peers (one UV comma statement comes out last store first). IDO 5.3 gives a statement the line of its first token; code that uopt moves to a `goto` site drops its own `.loc` and takes the jump's line. A store that must lose a tie to a later statement's instructions therefore needs a later line than that statement. TACO `func_8013B460` closed with a `#line` pair (FAKE); `gcc -E -P` in `funcdiff --version c` drops the markers, the default build keeps them. Recipe and negatives: drafts/T-25137/TACO/func_8013B460/NOTES.md.
