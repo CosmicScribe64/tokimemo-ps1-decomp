@@ -258,3 +258,6 @@ on the promoted read, `(u16) G.h >> 12` (`shr(cvt(G))`), and the join test on a 
 promoted (a reload charge per arm, no use there): add an always-false test after each arm call,
 `if ((u32) G.h < 0) {}` (FAKE; ugen folds it, no code). Plain `if (G.h) {}` leaves a `beqz` before the break jump,
 and a dead `m = G.h;` is removed. MASTER `func_801326B4`, 102 rows to 0; `drafts/T-25130/MASTER/func_801326B4/NOTES.md`.
+## A store that the original schedules after the next statement's `lui` (T-25137)
+
+When independent instructions of one block tie in as1 (same start time, aftercycles and latency), the smaller source line wins, then the node released last. Read the `Node ... lineno` and `Picking node` lines of stock `as1 -R -xbbdbg 8` (capture shim in drafts/T-24900-as1/) before trying spellings: if the original's order needs a store to lose to instructions of a later statement, no statement order or one-line form reaches it under IDO 5.3. TACO `func_8013B460`: the y3 store needed a later line than the AddPrim call; a `#line` pair around the y3 statement (FAKE) closed it from cost 4. See [[as1-scheduler-rule]] and drafts/T-25137/TACO/func_8013B460/NOTES.md.
