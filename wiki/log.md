@@ -1723,3 +1723,8 @@ Reviewed [[tickets/T-25105-w8-main-80053650]] against CODING_STANDARDS.md; match
 
 Reviewed [[tickets/T-25107-w8-MASTER-80133680]] against CODING_STANDARDS.md; matched MASTER `func_801363F4` (2,608 bytes) and `func_801344E0` (2,912 bytes) as default-build C, 27/27.
 Both use the marked FAKE never-true arm before the first record copy; ENDING `func_80134270` has the same symptom (see wiki/playbook.md section 10).
+
+## [2026-10-23] ticket | T-25109 Done
+
+Reviewed [[tickets/T-25109-w8-EN_NICHI-80136B10]] against CODING_STANDARDS.md; matched EN_NICHI `func_8013735C` (2,300 bytes) as default-build C, 27/27.
+`func_80136DEC` stays guarded NON_MATCHING at 4 aligned rows (two dispatch delay-slot fills; notes in drafts/T-25109/EN_NICHI/func_80136DEC/).
