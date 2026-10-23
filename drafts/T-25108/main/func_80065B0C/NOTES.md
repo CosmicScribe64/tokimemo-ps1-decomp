@@ -77,9 +77,9 @@ entry block, without an instruction of its own. Not found (see the mechanism che
 
 ## Next hypothesis
 
-Find what references the constant 3 in the else arm before `menu_check` in the original. Capture the uopt
-input ucode of the else blocks (trace_lab hooks, or the traced uopt's live-unit dump) and look for a
-constant-3 operand that ugen folds away: a store or compare that survives uopt and dies in ugen (the
-late-zero family of T-25036). Probe it first with an explicit FAKE store of 3 in a block that ugen deletes,
-placed before the menu_check call, and check that `li s5,3` moves in front of the `jal`; then look for the
-natural form. A trace of which blocks the original's constant range covers would settle it.
+The mechanism check shows that a reference to 3 in the menu_check block is split off into its own
+temporary, so the question is why the else blocks stay out of the `$s5` piece. Next: make the traced uopt
+print the live units of the constant-3 range (block numbers 25, 26, 58 of the else arm, 27 the join) before
+and after `split`, for the final body and for the M1 store probe. If the else blocks are cut by `split`, the
+original's range had a higher priority or fewer interferences there (compare the `$s3` index range, which
+is live through the same blocks); if they never enter the range, look for the reference in the entry block.
