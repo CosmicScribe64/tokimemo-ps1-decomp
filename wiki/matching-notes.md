@@ -812,3 +812,12 @@ Details, negatives and the census commands: `drafts/T-25118/main/strCallback/NOT
 3. Frame: `limit` is the hoisted expression `arg1 - 3` (uopt spill home sp+0x48), plus FAKE pads for six unknown words of locals: 50 to 0.
 
 Details, the cost arithmetic and negatives: `drafts/T-25118/main/func_80056BA8/NOTES.md`.
+## T-25123: main func_800455C4
+
+Matched (2,768 bytes, default C) from the T-24701 guard (13 differing words) in about 75 minutes. Three source facts closed it:
+
+- **D_801255B5 is a byte of the D_801255B4 object.** In the two `head += 1; D_801255B4 = 2; status |= 1; D_801255B5 += 1;` arms the original issues `lui at; li 2` for the D_801255B4 store before the status load; the draft hoisted the status load first. Writing the last statement as `((u8 *)&D_801255B4)[1] += 1` (FAKE, aggregate unknown) puts the B5 load and the B4 store on one symbol, so as1 orders them and the B4 store chain gains priority. Found with a 4-second toy of the arm in `build/toy` (the whole unit takes 30-50 s under load); line groupings, statement orders, a separate `cd_read_status` symbol, volatile B4 and empty reads all left the order or made it worse.
+- **VSync (`func_800AD950`) as an implicit int.** With the `void` prototype the wait-loop counter takes `$v0`; with `s32` it takes `$v1` as in the original. The file now defines `MAIN_API_OVERRIDE_func_800AD950` and calls it undeclared, as `include/ovl/TT.h` does; `func_80046478` in the same file still matches.
+- **The counter spill at sp+0x2C is a uopt induction temporary.** A declared counter spills to its own home (0x4C); declaring it after the buffers or in a block scope grows the frame by 8. `var_v1 * 1 != 0x200` in the loop test makes uopt strength-reduce the test into a temporary, which lands in the slot below the locals with the frame unchanged (FAKE). `+ 1`, `- 1`, `<< 0`, `| 0`, pointer and `(u32)` spellings are folded before the induction pass and keep the home.
+
+Measured negatives: s16/u16 counters (extra `andi`/size change), `sp48` or `sp44` reused as the counter (size change), post-increment test (cfe temporary, frame +8), `if (D_801255B4) {}` and similar empty reads in the arm (29-130 rows). Full checksum 27/27 after a clean rebuild; headers, globals and branch protos pass.
