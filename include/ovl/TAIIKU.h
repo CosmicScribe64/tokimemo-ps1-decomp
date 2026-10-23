@@ -902,6 +902,11 @@ extern TaiWords11 D_801494C4; /* 0x2C-byte table copied by func_80134F98. T-2452
 extern TaiikuS11 D_801494F0; /* func_80135480 */
 extern TaiShorts20 D_80149508; /* func_80135830 */
 extern TaiShorts20 D_80149530; /* func_80135830 */
+/* Four 16-byte runner-slot objects of func_80137784 (player, cpu 1..3). T-25106. */
+extern s32 D_8014981C[4];
+extern s32 D_8014982C[4];
+extern s32 D_8014983C[4];
+extern Fix32 D_8014984C[4];
 extern TkS16x4 D_8014985C; /* func_80137EA8 */
 extern TaiBytes10 D_80149864; /* func_80138224 */
 extern TaiikuHalf10 D_80149870; /* func_80138224 */
