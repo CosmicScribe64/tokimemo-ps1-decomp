@@ -6,37 +6,29 @@ void func_80047550(void) {
     D_801255DC = 4;
 }
 
-/* NON_MATCHING: T-24303, 22 rows (4 instructions out of place, ugen numbers the first (s16)q chain t0-t2 before
-   the off narrowing, the original t1-t3 after it; putting the unk_014[1] store first fixes the registers but
-   not the store order) */
-#ifdef NON_MATCHING
 void func_80047560(void) {
     s32 sum;
-    u32 i;
+    s32 i;
     s32 q;
-    s32 off;
-    s16 x;
-    s16 y;
+    s16 off;
 
     if (D_801255DC != 0) {
-        i = 0;
-        sum = 0;
-        if (D_801255DC != 0) {
-            do {
-                sum += i;
-                i += 1;
-            } while (i < D_801255DC);
+        for (i = 0, sum = 0; i < D_801255DC; i++) {
+            sum += i;
         }
-        q = (s16)rsin(sum * 4) / 4 / (s32)(*(s8 *)&D_801255DC + 0x100); /* FAKE: T-24303, s8 view keeps the divisor's cvt out of the global's register (a0) */
+        /* FAKE: T-25116, a u8 view of the u8 global (same value); with the plain read the conversion of
+           the reloaded divisor takes the global's register */
+        q = (s16)rsin(sum * 4) / 4 / (s32)(*(u8 *)&D_801255DC + 0x100);
+        off = q;
         D_800E6280.unk_014[0] = (s16)q + 0xA0;
-        off = (q << 16) >> 16; /* FAKE: T-24303, shift form keeps a second narrowing of q next to (s16)q */
-        x = off + 0xA0;
-        D_800E6280.unk_014[1] = x;
+        /* FAKE: T-25116, dead store; redefining q stops uopt from forwarding off to its uses, so the
+           narrowing is computed on the off line, before the unk_014[0] store (t0 and the original order) */
+        q = 0;
+        D_800E6280.unk_014[1] = off + 0xA0;
         D_800E6280.unk_018[0] = off + 0x168;
-        y = off + 0x78;
-        D_800E6280.unk_018[1] = y;
-        D_801255E0 = x;
-        D_801255E2 = y;
+        D_800E6280.unk_018[1] = off + 0x78;
+        D_801255E0 = off + 0xA0;
+        D_801255E2 = off + 0x78;
         D_801255DC += 4;
         if (D_801255DC > 0x80) {
             D_801255DC = 0;
@@ -50,9 +42,6 @@ void func_80047560(void) {
         D_800E6280.unk_018[1] = 0x78;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80047560);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800476C0);
 

@@ -1,10 +1,10 @@
 ---
 id: T-20008
 title: Recover the large NAME_ENT introduction handler
-status: In Progress
+status: Backlog
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[matching-notes]]", "[[ref-english-patch]]"]
 ---
 
@@ -52,3 +52,5 @@ Self-review against CODING_STANDARDS.md: C89 and fixed-width types; existing agg
 ## Comments
 
 2026-10-17, maintainer review (PR #51): draft checkpoint merged; no findings (archive files hold C and notes only, no instruction listings; FAKE controls name T-20008). Matching continues under claim #50, so the ticket goes back to In Progress until a match or a stop.
+
+- closing (2026-10-20): contributor claim #50 is closed; the draft checkpoint (PR #51) is on main but NAME_ENT func_80143580 is still INCLUDE_ASM. Left: match it from drafts/T-20008/. Backlog.

@@ -1,10 +1,10 @@
 ---
 id: T-24001
 title: Close main schedule final instruction
-status: In Review
+status: Done
 assignee: complete-main
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[tickets/T-24000-complete-matching]]", "[[tickets/T-23003-w5-big-p03]]"]
 ---
 
@@ -16,7 +16,7 @@ Close the one remaining instruction in `func_8006D7EC` using C source only. Limi
 
 - [x] Literal matching C, or documented bounded negative result with the guard preserved.
 - [x] Docker verification and affected default executable checksum recorded.
-- [ ] Review against CODING_STANDARDS.md.
+- [x] Review against CODING_STANDARDS.md.
 
 ## Notes
 
@@ -64,3 +64,5 @@ No production changes and no new matching bytes. Tested 19 new source variants w
 - Archived harness smoke-check: `signed-bitfield do-lt` reproduces both the baseline fold and the surviving-backedge result. Production C, headers, configuration, and shared compiler tools remain byte-for-byte unchanged from the pinned commit, so the previous header/global/prototype checks remain applicable.
 
 The precise remaining barrier is retaining the register increment while eliminating the artificial predecessor/backedge that prevents constant propagation. These tests do not establish that every source formulation is impossible. The supplied historical compiler-source directories were empty, so no new compiler-source finding is claimed. Ticket returns to In Review; integrating review is still required. Self-check: diagnostics have a docstring, take variant arguments, return nonzero on compile failure, run only in Docker, and contain no embedded game bytes or original assembly.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

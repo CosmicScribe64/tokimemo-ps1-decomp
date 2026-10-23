@@ -1,0 +1,73 @@
+ETC:func_8014790C: compared NON_MATCHING C (full translation unit)
+note: ignored 4 stale asm file(s) of functions that changed between C and INCLUDE_ASM (e.g. asm/ovl/ETC/nonmatchings/ETC/80146400/func_80146400.s); `rm` them or rebuild asm/ to clean up
+ETC:func_8014790C: DIFF (- expected, + built)
+  -3c108012  ; lui s0,0x0
+  +3c178012  ; lui s7,0x0
+  +26f7ecd0  ; addiu s7,s7,0
+  -3c168012  ; lui s6,0x0
+  -26d6ecd0  ; addiu s6,s6,0
+  -2610ecd0  ; addiu s0,s0,0
+  -00008825  ; move s1,zero
+  -241e00a4  ; li s8,164
+  -24170044  ; li s7,68
+  -27b5007c  ; addiu s5,sp,124
+  +02e08025  ; move s0,s7
+  +24110061  ; li s1,97
+  +0000a825  ; move s5,zero
+  +241e0044  ; li s8,68
+  +27b6007c  ; addiu s6,sp,124
+  -02a02025  ; move a0,s5
+  +02c02025  ; move a0,s6
+  -02a02025  ; move a0,s5
+  +02c02025  ; move a0,s6
+  +afa00010  ; sw zero,16(sp)
+  -02a03825  ; move a3,s5
+  -afa00010  ; sw zero,16(sp)
+  +02c03825  ; move a3,s6
+  -26310001  ; addiu s1,s1,1
+  +26b50001  ; addiu s5,s5,1
+  -26310001  ; addiu s1,s1,1
+  +26b50001  ; addiu s5,s5,1
+  -11c0000a  ; beqz t6,1894 <func_8014790C+0x388>
+  -26390061  ; addiu t9,s1,97
+  +11c00009  ; beqz t6,188c <func_8014790C+0x380>
+  +00047c00  ; sll t7,a0,0x10
+  -00047c00  ; sll t7,a0,0x10
+  -1000001f  ; b 190c <func_8014790C+0x400>
+  -26310001  ; addiu s1,s1,1
+  -03370019  ; multu t9,s7
+  +10000020  ; b 1908 <func_8014790C+0x3fc>
+  +26b50001  ; addiu s5,s5,1
+  +023e0019  ; multu s1,s8
+  +241900a4  ; li t9,164
+  -02c84821  ; addu t1,s6,t0
+  +02e84821  ; addu t1,s7,t0
+  -a13e0003  ; sb s8,3(t1)
+  +a1390003  ; sb t9,3(t1)
+  -05a1000c  ; bgez t5,18f8 <func_8014790C+0x3ec>
+  -26390061  ; addiu t9,s1,97
+  +05a1000b  ; bgez t5,18f0 <func_8014790C+0x3e4>
+  +00047400  ; sll t6,a0,0x10
+  -00047400  ; sll t6,a0,0x10
+  -10000006  ; b 190c <func_8014790C+0x400>
+  +10000007  ; b 1908 <func_8014790C+0x3fc>
+  +26b50001  ; addiu s5,s5,1
+  +023e0019  ; multu s1,s8
+  +240800a4  ; li t0,164
+  +0000c812  ; mflo t9
+  +02f94821  ; addu t1,s7,t9
+  +a1280003  ; sb t0,3(t1)
+  +26b50001  ; addiu s5,s5,1
+  +2401000e  ; li at,14
+  -03370019  ; multu t9,s7
+  -00004012  ; mflo t0
+  -02c84821  ; addu t1,s6,t0
+  -a13e0003  ; sb s8,3(t1)
+  -26310001  ; addiu s1,s1,1
+  -2401000e  ; li at,14
+  -1621ff85  ; bne s1,at,1734 <func_8014790C+0x228>
+  +16a1ff84  ; bne s5,at,1730 <func_8014790C+0x224>
+  +00000000  ; nop
+  +00000000  ; nop
+  +00000000  ; nop
+  resolved: REAL DIFFERENCE, not naming. Symbol+offset or instruction words differ after relocation.

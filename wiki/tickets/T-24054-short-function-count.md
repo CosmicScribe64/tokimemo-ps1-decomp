@@ -1,10 +1,10 @@
 ---
 id: T-24054
 title: Recover short MAIN OPTION KANGEI functions
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ['[[main-family-results]]', '[[option-family-results]]', '[[kangei-family-results]]']
 ---
 
@@ -28,3 +28,7 @@ No new C function. KANGEI typed arithmetic recovery improves current baseline34 
 ## Verification
 
 Docker reproducer returns cost4; default affected unit SHA1s pass: main e823bd844a8f8fa4d05483b59c66bc54b8393b26, OPTION 3fd443d1e32404e5febd57d0586ef1c70ce8a811, KANGEI b94bbaceb7083c4b56d3b2ff56313cbcfbe6ac83. Header/global/prototype guards pass. These checks validate unchanged fallback units, not a new C match.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

@@ -423,7 +423,64 @@ void func_801441DC(s32 arg0, s32 arg1) {
     p[0x14] = v;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144224);
+/* The frame counter is read through a pointer: that keeps it in one register range ($a3, reloaded
+ * after each call group) and D_80150148 promoted only in the remainder-1 arm, as in the original
+ * (T-25146). */
+void func_80144224(void) {
+    GsWord *fc;
+    /* FAKE: the `*(u32 *)&quot` read below keeps quot in its slot 0x30(sp) (the test reloads it
+     * instead of using the divide result), and the `*(s32 *)&v` stores keep v in 0x28(sp) without
+     * a spill slot of its own; the matched sibling func_80143A88 needs the same two tricks for
+     * sp30/sp28. Real source unknown. T-25146 */
+    u32 quot;
+    s32 x;
+    s32 v;
+
+    D_801217D0[0].unk_00 = 0x80000000;
+    D_801217D0[1].unk_00 = 0x80000000;
+    func_80143968();
+    fc = &D_800E6280.unk_1104;
+    quot = fc->u / 701U;
+    if (fc->u % 701U == 1) {
+        if (D_80150148 == 0) {
+            func_801436E4(D_800E6280.unk_F5F);
+        } else if (D_80150148 < 0xF) {
+            if (D_800E6280.unk_F5F == D_80150150[D_80150148 - 1]) {
+                D_80150148++;
+            }
+            func_801436E4(D_80150150[D_80150148 - 1]);
+        } else {
+            func_801436E4(D_800E6280.unk_F5F);
+        }
+        D_80150148 += 1;
+    } else if ((s32)*(u32 *)&quot < 0xF) {
+        if (fc->u % 701U == 2) {
+            func_8014407C(quot);
+        } else if (fc->u % 701U < 0xA0) {
+            x = fc->u % 701U;
+            *(s32 *)&v = x * 3;
+            func_801441DC(2, v / 4);
+            func_801441DC(3, (v - 0x3C) / 4);
+            func_801441DC(4, (v - 0x78) / 4);
+        }
+    }
+    if (D_80150148 < 0x10) {
+        if (fc->u % 701U >= 0x21E) {
+            x = 701 - fc->u % 701U;
+            *(s32 *)&v = x * 3;
+            func_801441DC(2, (v - 0x78) / 4);
+            func_801441DC(3, (v - 0x3C) / 4);
+            func_801441DC(4, v / 4);
+        }
+    }
+    if (fc->u >= 0x259 && (func_800460EC() & 2)) {
+        func_80042940(2);
+    }
+    func_8004B19C(fc->w, 0, -0xA);
+    func_8004B19C(quot, 0, 0);
+    func_8004B19C(D_80150148, 0, 0xA);
+    func_8004B19C(D_80150150[D_80150148 - 1], 0, 0x14);
+}
 
 s32 func_80144540(void) {
     switch (D_800E6280.unk_110D) {

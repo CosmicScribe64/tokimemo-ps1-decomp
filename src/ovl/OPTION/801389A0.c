@@ -429,44 +429,45 @@ void func_801399C0(void) {
     func_8004B19C(D_8013D3F4 & 1, 0x78, 0xA);
 }
 
-/* FAKE: T-11900 plain u16 view of the counter that the header declares volatile for func_80139E3C (T-11340):
- * the original keeps each case's load in $v1 and reloads it once after the switch. */
-#define D_8013D3B8_PLAIN (*(u16 *)&D_8013D3B8)
-
 void func_80139A30(void) {
-    u16 v;
-    u8 s;
-    GameState *g = &D_800E6280;
+    u32 repeat_selector;
+    u32 press_selector;
+    u32 decrease_selector;
+    s32 decreased;
+    /* FAKE: word-sized staging preserves the byte/halfword live ranges;
+     * direct narrow updates use different registers. T-24607 */
+    u32 value;
+    u32 character;
+    GameState *game = &D_800E6280;
 
-    if (g->unk_F88 & 0x08000000) {
+    if (D_800E6280.unk_F88 & 0x08000000) {
         D_8013D3F0 = 1 - D_8013D3F0;
     }
-    if (D_8013D3F0 != 0 && (func_800460EC() & 2)) {
-        g->unk_F88 |= 0x20;
-        g->unk_F80 |= 4;
+    if ((D_8013D3F0 != 0) && (func_800460EC() & 2)) {
+        D_800E6280.unk_F88 |= 0x20;
+        D_800E6280.unk_F80 |= 4;
     }
-    if (g->unk_F80 & 5) {
-        if (g->unk_F88 & 0x8000) {
-            s = g->unk_F5F;
-            g->unk_F5F = s + 1;
+    if (D_800E6280.unk_F80 & 5) {
+        if (D_800E6280.unk_F88 & 0x8000) {
+            character = game->unk_F5F;
+            game->unk_F5F = character + 1;
         }
-        s = g->unk_F5F;
-        if (g->unk_F88 & 0x2000) {
-            s--;
+        character = game->unk_F5F;
+        if (D_800E6280.unk_F88 & 0x2000) {
+            character = (character - 1) & 0xFF;
         }
-        if (s == 0xFF) {
-            s = 0xF;
+        if (character == 0xFF) {
+            character = 0xF;
         }
-        g->unk_F5F = s;
-        if (s > 0x10) {
-            g->unk_F5F = 0;
+        game->unk_F5F = character;
+        if (character >= 0x11U) {
+            game->unk_F5F = 0;
         }
     }
-    if (D_8013D3B0 | D_8013D3B4) {
+    if ((D_8013D3B0 | D_8013D3B4) != 0) {
         func_8013A060();
-    } else if (g->unk_F88 & 0x860) {
-        /* FAKE: T-11900 u8 view of the s8 menu index: lbu with no sign extension before the table bound */
-        switch (*(u8 *)&g->unk_1093) {
+    } else if (D_800E6280.unk_F88 & 0x860) {
+        switch (*(u8 *)&D_800E6280.unk_1093) {
         case 0:
             func_80139E3C(0);
             break;
@@ -483,7 +484,7 @@ void func_80139A30(void) {
             func_8013A038();
             break;
         case 5:
-            if (g->unk_F88 & 0x800) {
+            if (D_800E6280.unk_F88 & 0x800) {
                 func_80042940(5);
             } else {
                 func_80139F04();
@@ -494,77 +495,86 @@ void func_80139A30(void) {
             break;
         }
     }
-    if (g->unk_F80 & 0x50000) {
-        switch (g->unk_F80 & 0xF00000) {
+    /* FAKE: D_8013D3B8 is volatile for func_80139E3C (T-11340). Its
+     * nonvolatile halfword view here permits the original load coalescing.
+     * Explicit staged stores preserve the observed updates. T-24607 */
+    press_selector = D_800E6280.unk_F88 & 0xF00000;
+    repeat_selector = D_800E6280.unk_F80 & 0xF00000;
+    if (D_800E6280.unk_F80 & 0x50000) {
+        switch (repeat_selector) {
         case 0x200000:
-            v = D_8013D3B8_PLAIN;
-            D_8013D3B8_PLAIN = v + 1;
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 1;
             break;
         case 0x400000:
-            v = D_8013D3B8_PLAIN;
-            D_8013D3B8_PLAIN = v + 10;
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 0xA;
             break;
         case 0x800000:
-            v = D_8013D3B8_PLAIN;
-            D_8013D3B8_PLAIN = v + 100;
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 0x64;
             break;
         case 0x100000:
-            v = D_8013D3B8_PLAIN;
-            D_8013D3B8_PLAIN = v + 1000;
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 0x3E8;
             break;
         }
-        v = D_8013D3B8_PLAIN;
+        value = (*(u16 *)&D_8013D3B8);
     } else {
-        switch (g->unk_F88 & 0xF00000) {
-        case 0x200000:
-            v = D_8013D3B8_PLAIN + 1;
-            break;
-        case 0x400000:
-            v = D_8013D3B8_PLAIN + 10;
-            break;
-        case 0x800000:
-            v = D_8013D3B8_PLAIN + 100;
-            break;
-        case 0x100000:
-            v = D_8013D3B8_PLAIN + 1000;
-            break;
+        switch (press_selector) {
         default:
-            v = D_8013D3B8_PLAIN;
+            value = (*(u16 *)&D_8013D3B8);
+            break;
+        case 0x200000:
+            value = ((*(u16 *)&D_8013D3B8) + 1) & 0xFFFF;
+            break;
+        case 0x400000:
+            value = ((*(u16 *)&D_8013D3B8) + 0xA) & 0xFFFF;
+            break;
+        case 0x800000:
+            value = ((*(u16 *)&D_8013D3B8) + 0x64) & 0xFFFF;
+            break;
+        case 0x100000:
+            value = ((*(u16 *)&D_8013D3B8) + 0x3E8) & 0xFFFF;
             break;
         }
     }
-    /* v is u16, so under -cckr `v - k` is unsigned: `>= 0` always holds and `> 0` tests `!= 0`. */
-    if (g->unk_F80 & 0xA0000) {
-        switch (g->unk_F80 & 0xF00000) {
+    decrease_selector = D_800E6280.unk_F80 & 0xF00000;
+    if (D_800E6280.unk_F80 & 0xA0000) {
+        switch (decrease_selector) {
         case 0x200000:
-            if (v - 1 >= 0) {
-                v -= 1;
-            }
+            decreased = value - 1;
+            /* FAKE: retain the decrement result in v0 before narrowing;
+             * omitting the test adds a copy through v1. T-24607 */
+            if (decreased) {}
+            value = (u16)decreased;
             break;
         case 0x400000:
-            if (v - 10 > 0) {
-                v -= 10;
+            decreased = value - 0xA;
+            if (decreased != 0) {
+                value = (u16)decreased;
             }
             break;
         case 0x800000:
-            if (v - 100 > 0) {
-                v -= 100;
+            decreased = value - 0x64;
+            if (decreased != 0) {
+                value = (u16)decreased;
             }
             break;
         case 0x100000:
-            if (v - 1000 > 0) {
-                v -= 1000;
+            decreased = value - 0x3E8;
+            if (decreased != 0) {
+                value = (u16)decreased;
             }
             break;
         }
     }
-    D_8013D3B8_PLAIN = v;
-    if (v > 2899) {
-        D_8013D3B8_PLAIN = 0;
+    (*(u16 *)&D_8013D3B8) = value;
+    if (value >= 0xB54U) {
+        (*(u16 *)&D_8013D3B8) = 0;
     }
     func_8013A334();
 }
-#undef D_8013D3B8_PLAIN
 
 #define F80_BOOST_9E3C \
     (((D_800E6280.unk_F80 ^ 1) * 0) + ((D_800E6280.unk_F80 ^ 2) * 0) + ((D_800E6280.unk_F80 ^ 3) * 0) + \

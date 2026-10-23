@@ -1,10 +1,10 @@
 ---
 id: T-24078
 title: Recover ETC renderer with actual two-slot polygon buffer
-status: In Progress
+status: Backlog
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[etc-family-results]]", "[[tickets/T-17300-types-first-etc]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -500,3 +500,7 @@ eight Y-A+59 forms; no original H/ADD boundary recovered. Original saved roles,
 UV50/54/poly84/88 and Q/P order preserved. Source/replay height-offset and
 height-lifetimes.md retain prediction/opcode deltas; no width/mask grid,
 production unchanged, same function active.
+
+## Comments
+
+- closing (2026-10-20): no match; ETC func_8013D570 is still INCLUDE_ASM, evidence in drafts/T-24078/. Backlog.

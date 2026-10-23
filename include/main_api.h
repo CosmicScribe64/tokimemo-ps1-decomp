@@ -211,7 +211,8 @@ typedef struct Work800E7D10 {
     /* 0x908 */ u8 given_name[16][8];
     /* 0x988 */ u8 nickname[16][16];
     /* 0xA88 */ NameMetric4 metrics[9][16];
-    /* 0xCC8 */ u8 unk_CC8[0x200];
+    /* 0xCC8 */ u8 unk_CC8[16][16]; /* per slot: the 16 bytes of GameState +0x518 (T-25105) */
+    /* 0xDC8 */ u8 unk_DC8[0x100];
     /* 0xEC8 */ u8 club[16];
     /* 0xED8 */ u8 unk_ED8[8];
 } Work800E7D10; /* size 0xEE0 */
@@ -242,6 +243,30 @@ typedef struct CharFlags {
     u32 f20 : 4;
     u32 rest : 8;
 } CharFlags; /* size 0x04 */
+
+/* Flag word at GameState +0xF64 (D_800E6280.unk_F64) as single bits. func_8006A044 sets them with
+ * bit-field stores, which load the byte into another register than its lui (T-25103): bits 0-11 by
+ * year (0x5F, 0x60, 0x61) and month group (2-4, 5-7, 8-10, 11-1), bit 13 in months 2, 5, 8 and 11,
+ * bit 14 in the other months, bit 15 in months 5-7. */
+typedef struct FlagsF64 {
+    /* 0x00 */ u32 b0 : 1;
+    /* 0x00 */ u32 b1 : 1;
+    /* 0x00 */ u32 b2 : 1;
+    /* 0x00 */ u32 b3 : 1;
+    /* 0x00 */ u32 b4 : 1;
+    /* 0x00 */ u32 b5 : 1;
+    /* 0x00 */ u32 b6 : 1;
+    /* 0x00 */ u32 b7 : 1;
+    /* 0x00 */ u32 b8 : 1;
+    /* 0x00 */ u32 b9 : 1;
+    /* 0x00 */ u32 b10 : 1;
+    /* 0x00 */ u32 b11 : 1;
+    /* 0x00 */ u32 b12 : 1;
+    /* 0x00 */ u32 b13 : 1;
+    /* 0x00 */ u32 b14 : 1;
+    /* 0x00 */ u32 b15 : 1;
+    /* 0x00 */ u32 rest : 16;
+} FlagsF64; /* size 0x04 */
 
 /* The Rec38 flag word: whole, by halves and bytes, or by bits. */
 typedef union Rec38Flags {
@@ -434,7 +459,7 @@ typedef struct GameState {
     /* 0x039 */ u8 unk_039;
     /* 0x03A */ u8 unk_03A;
     /* 0x03B */ u8 unk_03B;
-    /* 0x03C */ s8 unk_03C;
+    /* 0x03C */ u8 unk_03C;
     /* 0x03D */ u8 unk_03D;
     /* 0x03E */ u8 unk_03E;            /* 0x5F at init; with +0x3F..+0x41 a date (year, month, day, weekday?) */
     /* 0x03F */ u8 unk_03F;            /* 4 at init; compared with Rec38.unk_10 bits 0-3 */
@@ -493,14 +518,14 @@ typedef struct GameState {
     /* 0xF63 */ s8 unk_F63;
     /* 0xF64 */ u8 unk_F64[4];
     /* 0xF68 */ GsWord unk_F68;
-    /* 0xF6C */ s8 unk_F6C;
-    /* 0xF6D */ s8 unk_F6D;
-    /* 0xF6E */ s8 unk_F6E;
+    /* 0xF6C */ u8 unk_F6C;
+    /* 0xF6D */ u8 unk_F6D;
+    /* 0xF6E */ u8 unk_F6E;
     /* 0xF6F */ u8 unk_F6F;
-    /* 0xF70 */ s8 unk_F70;
+    /* 0xF70 */ u8 unk_F70;
     /* 0xF71 */ s8 unk_F71;
     /* 0xF72 */ u8 unk_F72;
-    /* 0xF73 */ s8 unk_F73;
+    /* 0xF73 */ u8 unk_F73;
     /* 0xF74 */ u8 unk_F74;
     /* 0xF75 */ u8 unk_F75;
     /* 0xF76 */ u8 unk_F76;
@@ -789,6 +814,8 @@ extern s16 D_800B59F4;
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
 extern s32 D_800B5A98; /* T-17011: counter of func_80063668 (CD level high-water mark) */
+extern s8 D_800B5A9C; /* T-25108: last selection index seen by func_80065B0C */
+extern u8 D_800B5AA0; /* T-25108: blink countdown of func_80065B0C, 0x20 on a selection change */
 /* T-17000: two tables of (x, y) halfword pairs that func_8006509C copies pair by pair into the pair
  * table at D_80125C10 (`lh`/`sh` at +0 and +2, step 4); the copy of the second table from D_800B5AF0
  * (pair 3) runs to D_800B5B20, its end. 16 + 15 pairs fill 0x800B5AA4..0x800B5B20. */
@@ -843,6 +870,10 @@ extern s32 D_800B6810[];
  * signed nine-byte rows (`lb`, row index * 9): eight rows at D_800B68E0 end where D_800B6928 starts. */
 extern u8 D_800B6890[12][2];
 extern u8 D_800B68A8[12][2];
+/* T-25049: event-selector byte regions. Indexed lbu uses offsets
+ * 0,2,4,6,9,11 plus the selection column; offset13 is a scalar byte. */
+extern u8 D_800B68C0[16];
+extern u8 D_800B68D0[16];
 extern s8 D_800B68E0[8][9];
 extern s8 D_800B6928[][9];
 /* T-20940: static data of 80075320.c. D_800B6990 is a ring of the last seven keys pressed on the holiday
@@ -1698,6 +1729,35 @@ extern s32 D_801220F4;
 extern u8 D_80122104;
 extern u8 D_80122105;
 extern u8 D_80122106;
+/* T-25010 (moved from include/ovl/OPTION.h): the cell maps, cells and cell indexes of the two BG slots,
+ * SpriteSlot24 (game.h, GsBG layout) at D_801220D0 + n * 0x24, whose +0x14 points at map n. Main
+ * func_8004A1A0 sets up slot n through these three tables; OPTION func_801328C0 fills slot 0 itself (T-20910). */
+typedef struct SpriteCell8 {
+    /* 0x00 */ u8 u;
+    /* 0x01 */ u8 v;
+    /* 0x02 */ u16 cba;
+    /* 0x04 */ u16 flag;
+    /* 0x06 */ u16 tpage;
+} SpriteCell8; /* size 0x08, PsyQ libgs GsCELL layout */
+
+typedef struct SpriteMap10 {
+    /* 0x00 */ u8 cellw;
+    /* 0x01 */ u8 cellh;
+    /* 0x02 */ u16 ncellw;
+    /* 0x04 */ u16 ncellh;
+    /* 0x06 */ u8 pad_06[2];
+    /* 0x08 */ SpriteCell8 *base;
+    /* 0x0C */ u16 *index;
+} SpriteMap10; /* size 0x10, PsyQ libgs GsMAP layout */
+
+/* The cell index of one slot (map->index), one u16 per map position. */
+typedef struct SpriteIndex80 {
+    /* 0x00 */ u16 v[64];
+} SpriteIndex80; /* size 0x80 */
+
+extern SpriteMap10 D_80122120[2];
+extern SpriteCell8 D_80122140[2][64];
+extern SpriteIndex80 D_80122540[2];
 extern s16 D_80122790;
 extern s32 D_80122794;
 extern s8 D_80122798;
@@ -2059,6 +2119,10 @@ s32 func_80042908(s32 arg0);
 s32 func_80042940(s32 arg0);
 s32 func_80042960(void);
 void func_80042A00(void);
+void csr_load_vram(s32 arg0);
+void palette_load_vram(s32 arg0);
+void disp_string(void);
+void func_8004A14C(s32 arg0, RECT rect, s32 arg3);
 s32 func_80042AC8();
 void func_80042BD4(void);
 void func_80042C30(void);
@@ -2069,6 +2133,7 @@ s32 func_800430C0(void);
 void func_800433D0(s32 arg0);
 void func_80043448(void);
 s32 func_80046590(s16 arg0, u8 arg1);
+void func_80046754(void *arg0, s32 arg1, s32 arg2);
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1);
 u8 *get_k_work(s32 arg0);
 void glyph_expand_1bpp();
@@ -2143,7 +2208,7 @@ void dtd_on(s32 arg0);
 void func_8004955C();
 void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 #ifndef MAIN_API_OVERRIDE_func_80049A40
-void func_80049A40(s16 a, s16 b, s16 c, s16 d, s32 e, s32 f, s32 g);
+void func_80049A40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 #endif
 s32 func_80049B20();
 void func_8004A1A0();
@@ -2153,6 +2218,7 @@ void func_8004A734(void);
 void func_8004A764();
 void func_8004A7C4();
 void func_8004A7F4();
+void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 #ifndef MAIN_API_OVERRIDE_func_8004A8EC
 void func_8004A8EC();
 #endif
@@ -2166,6 +2232,7 @@ void func_8004AEB0();
 void func_8004B19C(s32 a, s32 b, s32 c);
 void func_8004B338(s32 arg0, s32 arg1, s32 arg2);
 s32 func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag);
 void func_8004BB54();
 s32 func_8004BC20(s32 arg0);
 void func_8004C060();
@@ -2187,6 +2254,7 @@ void func_8004CF30();
 s32 srn_vram_set(s32, s32, s32, s32);
 void move_255_line(s32 arg0, s32 arg1, s32 arg2);
 void mod_trans_vram(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 get_fnt(u8 *output, u8 *source, s32 glyph, s32 divisor, s32 width, u8 flags);
 void func_8004DDD8();
 void func_8004DE1C(void);
 void func_8004DEAC();
@@ -2233,6 +2301,7 @@ void func_8004FC10();
 void func_800504CC();
 s32 func_80050AB8();
 void func_80050B54();
+void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void menu_bar_show();
 void func_80050C24(s32 arg0, s32 arg1);
 void x_taku_menu_set(s32 arg0, s32 arg1);
@@ -2454,6 +2523,7 @@ void func_80064FA4(s32);
 void icon_disp_switch(s32 a);
 void icon_can_use_set(s32 idx, s32 on);
 void func_8006509C(void);
+void func_800654D0();  /* K&R: with an (s32) prototype OPTION.bin no longer matches (T-25108) */
 void func_80065900(u8 arg0);
 void func_80065B0C(s32 a);
 void func_80065F34(s32 arg0);
@@ -2482,7 +2552,7 @@ void cal_base_show(void);
 void func_80069128();
 void cal_sprite_init(void);
 void func_800696DC(s32, s32);
-void func_8006A044();
+s32 func_8006A044();
 void func_8006A2CC();
 void func_8006B0C8();
 void club_list_menu(void);
@@ -2550,6 +2620,7 @@ void func_80075C24(void);
 s32 func_80075C84();
 s32 func_80075FA0();
 s32 func_80076000();
+void func_800767A4(void);
 void func_80076450();
 void func_80076630(void);
 s32 func_80076B48(void);
@@ -2642,6 +2713,7 @@ void SD_GetCDLevel();
 void func_8007C6A8(s32 arg0);
 void addr_init_bustup(void);
 void func_8007C740();
+void func_8007C784(void);
 void func_8007C8A4(void);
 s32 func_8007C8D8();
 s32 func_8007D8AC();
@@ -2658,13 +2730,17 @@ void normal_date_girl_out_init(void);
 s32 normal_date_girl_out_main(void);
 s32 normal_date_bg_fadein(void);
 void func_8007E934();
+#ifndef MAIN_API_OVERRIDE_normal_date_bg_fadeout
 void normal_date_bg_fadeout(void);
+#endif
 s32 normal_date_bggirl_fadein(void);
 s32 normal_date_bggirl_fadeout(void);
 void normal_date_move_place(void);
 void normal_date_move_place_init(void);
 s32 normal_date_move_place_main(void);
 void place_init(void);
+void change_dec_bg(void);
+s32 dec_init(void);
 void bg_read_sub2(s32 arg0);
 void func_8007ED84();
 void check_k_scroll();
@@ -2801,7 +2877,9 @@ void func_8008E408();
 void func_8008E6AC();
 void func_8008E8B4();
 void func_8008F54C();
+#ifndef MAIN_API_OVERRIDE_func_8008F618
 void func_8008F618();
+#endif
 void func_8008FB00();
 void func_8008FC10();
 void func_8008FD1C();
@@ -2899,9 +2977,13 @@ void func_800AE090(void *dst, void *src, s32 n);
 #ifndef MAIN_API_OVERRIDE_strncpy
 void strncpy(void *dst, void *src, s32 n); /* Same SDK address and legacy view as func_800AE090. */
 #endif
+#ifndef MAIN_API_OVERRIDE_func_800AE0A0
 void func_800AE0A0(void *arg0, s32 arg1, s32 arg2);
+#endif
 void memcpy();
+#ifndef MAIN_API_OVERRIDE_func_800AE0B0
 void func_800AE0B0(void *arg0, ...); /* printf-like (SDK libc) */
+#endif
 s32 printf(u8 *fmt, ...);
 s32 func_800AE0C0(s32);
 s32 func_800AE0D0(void);
@@ -2936,7 +3018,9 @@ s32 close(s32 fd);
 s32 format(u8 *path);
 s32 open(u8 *name, s32 mode);
 s32 GetSp(void);
+#ifndef MAIN_API_OVERRIDE_func_800BCDF0
 void func_800BCDF0();
+#endif
 #ifndef MAIN_API_OVERRIDE_func_800BCE10
 void func_800BCE10();
 #endif
@@ -3018,6 +3102,7 @@ extern s32 D_800B3D34;
 extern s32 D_800B3D38;
 extern s32 D_800B3D3C;
 extern u8 D_800B3D20;
+extern s32 D_800B3D10[4]; /* four timestamps, func_80043510 and func_8004443C (T-25003) */
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 

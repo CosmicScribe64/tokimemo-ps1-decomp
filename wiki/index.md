@@ -11,6 +11,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 
 - [[overview]] - project goal, stack, pointers to fact pages
 - [[status]] - progress, what is left by unit, active work
+- [[plan-remaining]] - current completion plan: 101 remaining functions on 2026-10-22; older census in [[data/remaining-2026-10-20]]
 - [[playbook]] - the matching loop and the recipes that closed matches; read before matching
 - [[notes/functions]] - every function named in the matching notes, with links to its sections
 - Repo root: `AGENTS.md` (rules), `CODING_STANDARDS.md` (conventions, review checklist), `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`
@@ -22,6 +23,8 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[decompile-workflow]] - queue -> m2c -> edit -> build -> funcdiff -> commit; switches, jump tables
 - [[matching-notes]] - active notes page (append new sections here); older parts in `notes/`, index in [[notes/sections]]
 - [[build-step-gaps]] - what the build cannot reproduce yet (uopt, as1, ugen block-copy state)
+- [[as1-scheduler-rule]] - as1's global delay-slot filler: candidate order, weights, gates, the `volatile` lever (T-24900)
+- [[as1-scheduling]] - per-file as1/driver options tested on the as1 order near misses (T-24800); tools/as1_flag_sweep.py
 - [[keep-lines]] - proposed `keep` rule with a byte-match necessity proof
 - [[cloud-matching]] - matching one C file in a cloud container from a match packet
 
@@ -71,3 +74,6 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[log]] - append-only log of the last week; older weeks in `log/` (`tools/wiki.py rotate-log`)
 - [[SCHEMA]] - wiki layout and rules
 - `tools/wiki.py` - `rotate-log`, `rotate-notes`, `catalog` (ticket catalog, notes sections, function index), `lint` (broken links, kanban mismatches, large pages)
+- [[tickets/T-25011-class-a-closers-as1-levers|T-25011]] Class A closers: eight guarded near misses (10 rows or fewer) with the as1 scheduler levers, one Sonnet 5.5 subagent (In Progress).
+- [[tickets/T-25012-class-c-d-reconstruction|T-25012]] Class C/D reconstruction (missing drafts, class C, class D smallest first), one Sonnet 5.5 subagent (In Progress).
+- [[tickets/T-25013-compiler-level-levers|T-25013]] NEXT STEP for the project: compiler-level levers (uopt/ugen/as1 rules, one uniform build rule at a time) to unblock the last ~119 functions; see [[status]] (Ready).

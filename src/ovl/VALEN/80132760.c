@@ -1,4 +1,6 @@
 #include "ovl/VALEN.h"
+
+extern s32 D_80122D48; /* main bss; SHOUGATU, DATE and main declare it the same way */
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/80132760.data", D_80134520);
@@ -33,87 +35,95 @@ void func_80132810(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: score=749 (304/310 insns). .data island D_80134540[4] resolves the 0xFF/sp50/D_80134540 shift chain; IDO 5.3 uopt treats (unk_06 + unk_02) and (unk_02 + unk_06) as commutative in isearchloop and CSEs all 6 into $v0, eliminating 4 loads from &D_800E6280 + i * 56 and swapping $s0/$s1. T-24101. T-24138: guarded compile fixed (VALEN.h func_8013387C prototype + ValenStateView for unk_11C halfwords); production build unaffected (NON_MATCHING off). */
+/* Locals take frame slots top-down in declaration order, so this order puts candidates at sp+0x5C
+ * and the scores at sp+0x50 (T-25117). Reads through `state` are pointer loads that uopt lets every
+ * later store change: the ranking loop reloads both fields for the first two score assignments, and
+ * `r` stays ahead of the rotation loop's guard instead of being copied into it. The direct
+ * D_800E6280 reads stay available, so the player's affinity is hoisted out of the last loop. Each
+ * sum is written in the order the original loads its two fields. */
 void func_80132834(void) {
+    s16 r;
+    s16 candidates[13];
+    GameState *state;
     s16 i;
-    s16 j;
-    u8 sp50[4];
+    s16 rank_scores[3];
+    s16 count;
 
-    for (i = 0; i < 11; i++) {
-        D_80134524[i] = 0xFF;
-    }
-    D_8013453C = 0;
+    state = &D_800E6280;
     D_80134520 = 0;
-    for (i = 1; i < 11; i++) {
-        if ((i != 9 &&
-             !(D_800E6280.unk_1BC[i].unk_0C.w & 0x20000000) &&
-             (D_800E6280.unk_1BC[i].unk_0C.w & 0x04000000) &&
-             get_h_tokimeki(i) >= 0x1EU &&
-             ((u32)(D_800E6280.unk_1BC[i].unk_0C.w << 4) >> 28) <= 2U) ||
-            (i == 9 &&
-             (D_800E6280.unk_1BC[9].unk_0C.w & 0x02000000) &&
-             (D_800E6280.unk_1BC[9].unk_0C.w & 0x04000000) &&
-             get_h_tokimeki(9) >= 0x46U &&
-             ((u32)(D_800E6280.unk_1BC[9].unk_0C.w << 4) >> 28) <= 2U)) {
-            D_80134524[D_8013453C] = i;
-            D_8013453C += 1;
-        }
-    }
-    func_8013387C();
-    if (D_800E6280.unk_1BC[0].unk_02 >= 0x1E &&
-        !(D_800E6280.unk_1BC[0].unk_0C.w & 0x20000000) &&
-        (D_800E6280.unk_1BC[0].unk_0C.w & 0x04000000) &&
-        ((u32)(D_800E6280.unk_1BC[0].unk_0C.w << 4) >> 28) <= 2U) {
-        D_80134524[D_8013453C] = 0;
-        D_8013453C += 1;
+    D_80134548 = 0;
+    D_8013453C = 0;
+    D_80134544 = 0;
+    count = 0;
+    if (D_800E6280.unk_1BC[9].unk_0C.f.b1 == 0 &&
+        D_800E6280.unk_1BC[9].unk_02 >= 20) {
+        D_80134544 = 1;
+        D_800E6280.unk_1BC[9].unk_06 = 50;
     }
     D_80134540[0] = D_80134540[1] = D_80134540[2] = 0xFF;
-    sp50[0] = sp50[1] = sp50[2] = 0;
+    rank_scores[0] = rank_scores[1] = rank_scores[2] = 0;
     for (i = 0; i < 11; i++) {
-        if ((i != 9 &&
-             !(D_800E6280.unk_1BC[i].unk_0C.w & 0x20000000) &&
-             (D_800E6280.unk_1BC[i].unk_0C.w & 0x04000000)) ||
-            (i == 9 &&
-             (D_800E6280.unk_1BC[i].unk_0C.w & 0x02000000) &&
-             (D_800E6280.unk_1BC[i].unk_0C.w & 0x04000000))) {
-            if (D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02 >= sp50[0]) {
-                sp50[2] = sp50[1];
-                sp50[1] = sp50[0];
-                sp50[0] = D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06;
+        if (state->unk_1BC[i].unk_0C.f.b1 != 0 &&
+            get_h_tokimeki(i) >= 0x46U) {
+            if (rank_scores[0] < state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02) {
+                rank_scores[2] = rank_scores[1];
+                rank_scores[1] = rank_scores[0];
+                rank_scores[0] = state->unk_1BC[i].unk_02 + state->unk_1BC[i].unk_06;
                 D_80134540[2] = D_80134540[1];
                 D_80134540[1] = D_80134540[0];
                 D_80134540[0] = i;
-            } else if (D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02 >= sp50[1]) {
-                sp50[2] = sp50[1];
-                sp50[1] = D_800E6280.unk_1BC[i].unk_02 + D_800E6280.unk_1BC[i].unk_06;
+            } else if (rank_scores[1] < state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02) {
+                rank_scores[2] = rank_scores[1];
+                rank_scores[1] = state->unk_1BC[i].unk_02 + state->unk_1BC[i].unk_06;
                 D_80134540[2] = D_80134540[1];
                 D_80134540[1] = i;
-            } else if (D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02 >= sp50[2]) {
-                sp50[2] = D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02;
+            } else if (rank_scores[2] < state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02) {
+                rank_scores[2] = state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02;
                 D_80134540[2] = i;
             }
         }
     }
-    D_80134544 = 0;
-    j = 0;
     for (i = 0; i < 11; i++) {
-        if ((i != 0 && get_h_tokimeki(i) >= 0x46U && D_80134524[j] == i) ||
-            (i == 0 && D_800E6280.unk_1BC[0].unk_02 >= 0x46 && D_80134524[j] == 0)) {
-            D_80134544 += 1;
+        if ((D_800E6280.unk_1BC[i].unk_0C.f.b1 != 0 ||
+             (i == 9 && D_80134544 == 1)) &&
+            (get_h_yuukou(i) >= 0x32U || (D_80134544 == 1 && i == 9))) {
+            candidates[count] = i;
+            count += 1;
+            D_8013453C += 1;
+            D_800E6280.unk_1BC[i].unk_0C.f.b8 = 1;
         }
-        if (D_80134524[j] == i) {
-            j++;
+    }
+    if (D_8013453C > 0) {
+        r = (u32)state->unk_10F8 % (u32)D_8013453C;
+        for (i = 0; i < D_8013453C; i++) {
+            D_80134524[i] = candidates[(i + r) % D_8013453C];
+        }
+        func_8013387C();
+    }
+    for (i = 0; i < D_8013453C; i++) {
+        if (D_80134524[i] == 0 && D_800E6280.unk_1BC[0].unk_02 >= 70) {
+            D_80134524[i] = D_80134524[D_8013453C - 1];
+            D_80134524[D_8013453C - 1] = 0;
+        } else if (D_80134524[i] == 0 && D_80134544 != 0) {
+            D_80134524[i] = D_80134524[D_8013453C - 1];
+            D_80134524[D_8013453C - 1] = 0;
+        } else if (D_80134524[i] == 0) {
+            D_80134524[i] = D_80134524[0];
+            D_80134524[0] = 0;
+        }
+        if (D_80134524[i] == 9 && D_80134544 != 0) {
+            D_80134524[i] = D_80134524[0];
+            D_80134524[0] = 9;
         }
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132834);
-#endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-24212, 3 rows (7 resolved rows in funcdiff); only the dispatch `sll t3,a1,2` is in the wrong delay slot. as1's global scheduler (trace `as1 -R -xbbdbg 8`) visits the `== 9` test block first and fills its slot with the `lui v0` of the `mode` reload from its fallthrough; the `sll` then goes to the third `if` head's slot. The original fills the `== 9` slot with the `sll` and keeps that `lui` and a `nop`. T-24033/T-24138: switch spellings, `sel` copies, mode reloads, `u8 mode`, nested ifs, autotweak. T-24212: `1 == mode`, byte view of the mode load, one-line ifs (all output-identical); else-if/goto/ternary/early-return-as-else forms change code. Notes: wiki/matching-notes.md T-24212. */
+/* The mode flag is read twice on purpose (T-24903): as1's global scheduler moves the
+ * head `lui` of a dominated block into a branch delay slot, so the first read has to be
+ * a volatile access (VALEN.h) to keep `lui v0` out of the `sel == 9` slot, and the second
+ * read keeps uopt from loading the byte once instead (13 rows). In the original the
+ * `sel == 9` slot holds the switch's dispatch `sll` (wiki/as1-scheduler-rule.md). */
 s32 func_80132D0C(void) {
     s32 mode;
     GameState *state;
@@ -130,10 +140,13 @@ s32 func_80132D0C(void) {
     if (state->unk_F5F == 0) {
         D_80134498 = state->unk_1BC[0].unk_02 >= 0x46;
     }
-    mode = D_80134544;
-    if ((state->unk_F5F == 9) && (mode == 1)) {
-        D_80134498 = 3;
+    if (state->unk_F5F == 9) {
+        mode = D_80134544;
+        if (mode == 1) {
+            D_80134498 = 3;
+        }
     }
+    mode = D_80134544;
     if ((state->unk_F5F == 0) && (mode == 1) && (state->unk_1BC[0].unk_02 >= 0x46)) {
         D_80134498 = 3;
     }
@@ -200,85 +213,117 @@ s32 func_80132D0C(void) {
     func_8004284C();
 }
 
-#else
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132D0C);
-#endif
-
-#ifdef NON_MATCHING
-/* NON_MATCHING: score=171 (278/277 insns). D_80134548 promotes to $v0 across the % 8, % 2, and switch blocks; remaining diffs are CVTL 8 on the initial % 8 assignment and uopt hoisting D_800E6280.unk_F5F into $a0 at .L80133208. T-24101. T-24138: `.h` on u32 unk_10F8 replaced by word `& 0xFFFF` (original: lw D_800E7378 + andi 7 head); unk_11C halfwords via ValenStateView. Still far (initial-sum shape differs). */
 void func_80133088(void) {
-    D_80134548 = (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 +
-                  D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 +
-                  (D_800E6280.unk_10F8 & 0xFFFF)) % 8;
-    if ((get_h_tokimeki(D_800E6280.unk_F5F) < 0x46U && D_800E6280.unk_F5F != 0) ||
-        (D_800E6280.unk_1BC[0].unk_02 < 0x46 && D_800E6280.unk_F5F == 0)) {
-        if ((D_80134548 % 2) != 0) {
-            D_80134548 = (D_80134548 - 1) & 0xFF;
-        }
-        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 3;
+    GameState *state;
+    s32 id;
+
+    state = &D_800E6280;
+    /* FAKE: dead entry store (every arm below rewrites the global); it gives the promoted
+     * global $v0 and the random word $v1 (without it they take $v1 and $a0), as the entry
+     * stores of the GYOZI twin func_801393C8 do (T-24130). T-25117 */
+    D_80134548 = state->unk_10F8 & 7;
+    if ((state->unk_10F8 & 7) == 0) {
+        D_80134548 = 3;
+    } else if ((state->unk_10F8 & 7) < 4U) {
+        D_80134548 = 0;
     } else {
-        if ((D_80134548 % 2) == 0) {
-            D_80134548 = (D_80134548 + 1) & 0xFF;
-        }
-        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 5;
-        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 5;
+        D_80134548 = 1;
+    }
+    if (state->unk_F5F == 0) {
+        D_80134548 = state->unk_10F8 & 1;
     }
     switch (D_80134548) {
     case 0:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 += 2;
+        func_800AE0F0(D_800CA1DC, "廊下");
+        id = 0x4045;
         break;
     case 1:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 -= 3;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_04 += 0xA;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_06 += 0xA;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_08 += 0xA;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0A += 0xA;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0E += 0xA;
+        func_800AE0F0(D_800CA1DC, "教室");
+        id = 0x4055;
         break;
     case 2:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_04 += 5;
+        func_800AE0F0(D_800CA1DC, "校舎裏");
+        id = 0x407A;
         break;
-    case 3:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 -= 5;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_06 += 0xA;
-        break;
-    case 4:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_02 += 2;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0A += 3;
-        break;
-    case 5:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_08 += 0xA;
-        break;
-    case 6:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0E += 5;
-        break;
-    case 7:
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_04 += 5;
-        ((ValenStateView *)&D_800E6280)->unk_11C.unk_0E += 5;
+    default:
+        func_800AE0F0(D_800CA1DC, "屋上");
+        id = 0x4084;
         break;
     }
-    if (D_800E6280.unk_F5F == 9 && D_80134544 == 1) {
-        D_80134548 = 9;
+    if (state->unk_F5F != 0) {
+        if (D_80134520 + 1 == D_8013453C) {
+            func_800AE0F0(D_800CA1DC, "校門前");
+            id = 0x4032;
+        }
+        if ((D_80134520 + 2 == D_8013453C) && (D_80134524[D_80134520 + 1] == 0)) {
+            func_800AE0F0(D_800CA1DC, "校門前");
+            id = 0x4032;
+        }
     }
-    if (D_800E6280.unk_F5F == 0 && D_80134544 == 1 && D_800E6280.unk_1BC[0].unk_02 >= 0x46) {
-        D_80134548 = 8;
+    /* FAKE: non-volatile view of D_80134544 (volatile in VALEN.h for func_80132D0C, T-24903)
+     * so as1 may hoist its lui above the affinity test, as the original does. T-25117 */
+    if ((D_80134520 + 1 == D_8013453C) && (state->unk_F5F == 0) &&
+        ((state->unk_1BC[0].unk_02 >= 0x46) || (*(u8 *)&D_80134544 != 0))) {
+        func_800AE0F0(D_800CA1DC, "自宅前");
+        id = 0x414C;
     }
-    if (D_800E6280.unk_F5F == 0 && D_80134544 == 1 && D_800E6280.unk_1BC[0].unk_02 < 0x46) {
-        D_80134548 = 0;
+    if ((state->unk_F5F == 9) && (D_80134544 == 1)) {
+        func_800AE0F0(D_800CA1DC, "教室");
+        id = 0x4055;
     }
-    check_para_limit();
-    if (D_80134548 < 8) {
-        func_8007ED84(D_80134548 + 0x4072);
-    } else if (D_80134548 == 8) {
-        func_8007ED84(0x41DB);
+    if (state->unk_F5F == 0) {
+        if (state->unk_1BC[0].unk_02 >= 0x46) {
+            D_80122D48 = 1;
+        } else {
+            D_80122D48 = 2;
+        }
     } else {
-        func_8007ED84(0x41DA);
+        if (get_h_tokimeki(state->unk_F5F) >= 0x46U) {
+            D_80122D48 = 1;
+        } else {
+            D_80122D48 = 2;
+        }
+    }
+    switch (id) {
+    case 0x4045:
+        func_80085B3C(6, 0);
+        break;
+    case 0x4055:
+        func_80085B3C(6, 1);
+        break;
+    case 0x414C:
+        func_80085B3C(6, 5);
+        break;
+    case 0x4032:
+        func_80085B3C(6, 4);
+        break;
+    case 0x407A:
+        func_80085B3C(6, 3);
+        break;
+    default:
+        func_80085B3C(6, 2);
+        break;
+    }
+    if ((state->unk_F5F == 9) && (D_80134544 == 1)) {
+        state->unk_F5E -= 1;
+        D_80122D48 = 1;
+        func_80085B3C(6, 3);
+    }
+    func_8007ED84(id);
+    if (get_h_tokimeki(state->unk_F5F) >= 0x46U) {
+        func_80083440(0);
+    } else {
+        func_80083440(1);
+    }
+    if (state->unk_F5F == 0) {
+        if (state->unk_1BC[0].unk_02 >= 0x46) {
+            func_80083440(0);
+        } else {
+            func_80083440(1);
+        }
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80133088);
-#endif
 
 void func_801334DC(void) {
     D_80134520 += 1;

@@ -52,7 +52,7 @@ def compile_unit(c, directory, protos=(), non_matching=True, edit=None, source=N
         pre = edit(pre)
     unit_c.write_text(pre)
     obj = directory / "guarded.o"
-    command(["python3", "tools/cc.py", str(unit_c), str(obj), "ido", "5.3"])
+    command(["python3", "tools/cc.py", str(unit_c), str(obj)] + cc.toolchain_of(c.name))
     includes = {name for _, name in cc.INCLUDE_ASM_RE.findall(pre)}
     trailing_pad.pad_functions(str(obj), str(c.src), includes)
     obj.write_bytes(object_layout.trim(obj.read_bytes(), object_layout.source_extent(c.src)))

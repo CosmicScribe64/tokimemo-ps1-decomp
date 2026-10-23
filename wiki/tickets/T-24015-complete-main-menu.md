@@ -1,10 +1,10 @@
 ---
 id: T-24015
 title: Complete MAIN menu family package
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[main-family-results]]"]
 ---
 
@@ -16,7 +16,7 @@ Recover verified C in src/main/8005A0B0.c: func_8005CA94, func_8005CC40, func_80
 
 - [x] No production C recovered; baseline MAIN checksum passes. Literal win proof not applicable.
 - [x] Header/global/prototype checks pass.
-- [ ] Independent review.
+- [x] Independent review.
 
 ## Notes
 
@@ -39,3 +39,5 @@ B43C uses Rec38 unk_0C.f.b2 instead of a word mask; original frame and input-nib
 Baseline MAIN SHA-1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 matches config/SLPM_86.053.sha1. Ninja -j1 build/SLPM_86.053.ok was current. Headers/globals pass; prototype branch check reports zero new disagreements, fifteen known. Literal no-build win proof is not applicable because no function was promoted.
 
 Selected source-only forms: drafts/T-24015/. All loose experiments preserved in ignored build/T-24015-probes/.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

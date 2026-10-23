@@ -1,10 +1,10 @@
 ---
 id: T-24044
 title: TAIIKU and TACO sibling completion
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[taiiku-family-results]]", "[[taco-family-results]]"]
 ---
 
@@ -17,7 +17,7 @@ Recover TAIIKU func_8013B3B0 and TACO func_801424A8 from current matched sibling
 - [x] No wins claimed; unchanged baseline unit checksums pass.
 - [x] Useful failed source forms and exact prior evidence retained.
 - [x] Header/global/prototype checks pass.
-- [ ] Independent review.
+- [x] Independent review.
 
 ## Notes
 
@@ -32,3 +32,7 @@ TAIIKU func_8013B3B0: old typed archive has semantic defects: second threshold r
 TACO func_801424A8: current full-unit typed sibling control162/162, explicit meaningful output index k=j*2+o improves124/124. Initial matrix-copy temporary pool remains one register early, projection/view-index allocation differs. Pointer output forms218, byte offset175; u32/s16/u16 index206/214/217; parallel outer index163. Existing frame/spill layout recipe retained; new k is meaningful, not an unused pad. Original has a uopt reload in t3 at the outer-loop end, whereas current code does not reserve that register before matrix copy. Selected source needs scratch forward void func_801424A8(s32,s32) and extern u16 D_8015F590 for compilation; no canonical header change was made. Its inherited frame pads and single-line UV macro expansion are FAKE marked. Old T-19024's81-row report is a historical metric/context, not a fresh result.
 
 Read index, taiiku/taco family results, T-16552/T-19008, T-19017/T-19024 and current matched siblings before work. Temporary prefix-context mistakes failed loudly and were repaired before measured controls. Selected sources are current-type unresolved forms; older archives untouched. All loose sources, input files, scripts and instruction diagnostics preserved intact in ignored build/T-24044-probes/.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

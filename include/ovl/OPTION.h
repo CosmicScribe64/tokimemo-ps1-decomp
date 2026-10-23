@@ -18,6 +18,7 @@ extern volatile u16 D_8013D3B8; /* volatile: both stores of func_80139E3C stay (
 extern u8 D_8013D3A4;
 extern u8 D_8013D3A0;
 extern s8 D_8013D39C;
+extern u8 D_8013D3F0;
 
 void func_80132AB8(void);
 void func_80132BA8(void);
@@ -46,8 +47,6 @@ s32 func_801376A8(void);
 void func_80139878(void);
 
 void func_80139A30();
-s32 func_801394F4(void);
-void func_801399C0();
 void func_80139E3C(s32 arg0);
 void func_80139F04(void);
 void func_80139F8C(void);
@@ -55,8 +54,9 @@ void func_8013A010(void);
 void func_8013A038(void);
 void func_8013A060(void);
 void func_8013A334(void);
+s32 func_801394F4(void);
+void func_801399C0();
 
-extern u8 D_8013D3F0;
 extern u8 D_8013D3F4;
 extern s8 D_8013D180;
 void func_80138A24(void);
@@ -151,36 +151,7 @@ extern s32 D_8013D308;
 /* Four pointers walked up to the next label, D_8013D360 (func_8013554C, T-17800). */
 extern u8 *D_8013D350[4];
 
-/* Main-exe bss read only here (CODING_STANDARDS 8a: the types live in this header while no other unit
- * declares the symbols): the cell maps, cells and cell indexes of the two BG slots, SpriteSlot24 (game.h,
- * GsBG layout) at D_801220D0 + n * 0x24, whose +0x14 points at map n. Main func_8004A1A0 (asm) sets up
- * slot n through these three tables; func_801328C0 fills slot 0 itself (T-20910). */
-typedef struct SpriteCell8 {
-    /* 0x00 */ u8 u;
-    /* 0x01 */ u8 v;
-    /* 0x02 */ u16 cba;
-    /* 0x04 */ u16 flag;
-    /* 0x06 */ u16 tpage;
-} SpriteCell8; /* size 0x08, PsyQ libgs GsCELL layout */
-
-typedef struct SpriteMap10 {
-    /* 0x00 */ u8 cellw;
-    /* 0x01 */ u8 cellh;
-    /* 0x02 */ u16 ncellw;
-    /* 0x04 */ u16 ncellh;
-    /* 0x06 */ u8 pad_06[2];
-    /* 0x08 */ SpriteCell8 *base;
-    /* 0x0C */ u16 *index;
-} SpriteMap10; /* size 0x10, PsyQ libgs GsMAP layout */
-
-/* The cell index of one slot (map->index), one u16 per map position. */
-typedef struct SpriteIndex80 {
-    /* 0x00 */ u16 v[64];
-} SpriteIndex80; /* size 0x80 */
-
-extern SpriteMap10 D_80122120[2];
-extern SpriteCell8 D_80122140[2][64];
-extern SpriteIndex80 D_80122540[2];
+/* The BG slot tables D_80122120, D_80122140, D_80122540 and their types are in main_api.h (T-25010). */
 
 /* Views of shared records, moved here from the .c files (T-17800). */
 

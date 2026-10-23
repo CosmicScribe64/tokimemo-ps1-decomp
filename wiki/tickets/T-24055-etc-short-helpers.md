@@ -1,10 +1,10 @@
 ---
 id: T-24055
 title: Recover three ETC short helpers
-status: In Review
+status: Done
 assignee: codex/complete-option
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[etc-family-results]]"]
 ---
 
@@ -17,7 +17,7 @@ Count-focused bounded pass on ETC func_8014354C (248 bytes), func_80143758 (292)
 - [x] Read prior negatives and correct stale source/type defects first.
 - [ ] Verify any promotion from unguarded default actual C plus unit SHA1 and guards.
 - [x] Preserve meaningful source/reproducer if unmatched, with no compiler impossibility claim.
-- [ ] Independent review before Done.
+- [x] Independent review before Done.
 
 ## Notes
 
@@ -30,3 +30,5 @@ Read ETC family, T-17300 typed/hand bodies, T-9720/T-10030 and T0018 records. 43
 Zero of3 matched,0 C bytes; production untouched. Fresh current-type model13/13 reproduces historical near miss, literal argument108/12, byte-pointer13, chained SDK vector15, array view13. Fill corrected byte table/current actor fields111/109; index193/191, single base194/192. Scroll corrected byte reads70/70; pre-call index109, direct counter74/72, late index89/85, word view74/72, int return70. No blind sweep or compiler impossibility claim. The final scroll's redundant initial counter writeback is explicitly FAKE; rejected alias probes also marked. Selected sources/reproducer and exact blockers documented in drafts/T-24055/README.md; all loose source/traces retained ignored.
 
 Final saved-source scores freshly reproduce13/13,111/109,70/70. Baseline ETC SHA1 `681c93b6e57c885f86e074c885a8bf6c3cca2319`, unit build passes. No actual default C claim or fallback coverage. This source-only closure changes no interface; prior interface checks need no repeated full build. In Review pending independent archive/standards review.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

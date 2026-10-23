@@ -1,5 +1,14 @@
+#define MAIN_API_OVERRIDE_func_800AE0B0 /* FAKE: integer result keeps the retry flag in v1. T-25038 */
+#define MAIN_API_OVERRIDE_func_800847B8 /* FAKE: integer return view keeps E50C's loop counter in v1. T-25033 */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
+
+s32 func_800847B8();
+s32 func_800AE0B0(void *arg0, ...);
+
+/* Existing exception: EVENT owns a table at this overlapping address; moving
+ * this scalar to main_api.h needs its override first. T-11590, T-25038 */
+extern s32 D_80122D48;
 
 /* T-9740: integer definition without an explicit return matches the original. */
 s32 func_8013E330(void) {
@@ -49,22 +58,26 @@ void func_8013E4B4(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: C draft for T-24137 (twin of GYOZI func_80140E0C). */
 void func_8013E50C(void) {
+    s16 i;
+    s32 girl;
     ShoShorts7 sp40;
     ShoShorts7 sp30;
-    s16 i;
 
     sp40 = D_801460CC;
     sp30 = D_801460DC;
+    /* FAKE: multiply by zero keeps this byte promoted across the conditional;
+     * literal zero loses the entry a2 carrier and its later reload. T-25033 */
+    girl = D_800E6280.unk_F5F * 0;
+    D_800E6280.unk_F5F = girl;
     D_80146050 = 0;
     if (D_800E6280.unk_1BC[9].unk_0C.f.b1 == 0 &&
-        D_800E6280.unk_1BC[9].unk_02 >= 20 && (D_800E6280.unk_0F8 & 1)) {
+        D_800E6280.unk_1BC[9].unk_02 >= 20 && (D_800E6280.unk_10F8 & 1)) {
         D_80146050 = 1;
     }
-    D_800E6280.unk_F5F = 0;
-    D_80145F2C = ((func_80051A68(0) & 0x7F) == 4) * 4;
+    /* FAKE: narrowing spends the target's expression temporaries; the byte
+     * argument view keeps the later index-reload base in a2. T-25033 */
+    D_80145F2C = (((u8)func_80051A68(*(u8 *)&D_800E6280.unk_F5F) & 0x7F) == 4) * 4;
     D_80145F20 = D_80145AD4;
     D_80145F24 = D_80145B08;
     D_80145F28 = D_80145B3C;
@@ -76,16 +89,86 @@ void func_8013E50C(void) {
         }
     }
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += sp30.v[i];
-    /* FAKE: base+stride address matches the original addu (no +0x1BC); T-24137. */
-    func_80084D3C((s32)&D_800E6280 + D_800E6280.unk_F5F * 0x38, &sp40);
+    check_para_limit();
     func_80085B3C(4, 0);
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013E50C);
-#endif
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013E6E4);
+void func_8013E6E4(void) {
+    s16 i;
+    s16 count;
+    s32 status;
+    ShoShorts7 sp50;
+    ShoShorts7 sp40;
+
+    sp50 = D_801460EC;
+    sp40 = D_801460FC;
+    count = 0;
+    for (i = 0; i < 11; i++) {
+        count += D_800E6280.unk_1BC[i].unk_0C.f.b1 >= 1;
+    }
+    i = 0;
+    do {
+        /* FAKE: multiplication by one preserves the original sum operand order. T-25038 */
+        D_800E6280.unk_F5F = (D_800E6280.unk_10F8 * 1 + i) % 10U + 1;
+        func_800AE0B0("num%d girl%d\n", count, D_800E6280.unk_F5F);
+        i++;
+        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1 && D_800E6280.unk_F5F >= 9) {
+            continue;
+        }
+        if (D_800E6280.unk_F5F == 5 && (D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 8) {
+            continue;
+        }
+        /* FAKE: a separate byte view preserves the second selector reload. T-25038 */
+        if (*(u8 *)&D_800E6280.unk_F5F == 6 && (D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 9) {
+            continue;
+        }
+        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1 && count >= 2) {
+            continue;
+        }
+        break;
+    } while (1);
+    if (D_80146050 != 0) {
+        D_800E6280.unk_F5F = 9;
+    }
+    D_80146054 = D_800E6280.unk_F5F;
+    D_80145F2C = 0;
+    /* FAKE: narrowing spends the original temporary slots; the byte argument
+     * view prevents selector promotion through the club filters. T-25038 */
+    status = (u8)func_80051A68(*(u8 *)&D_800E6280.unk_F5F);
+    if (D_800E6280.unk_F5F == 6 && (status & 0x7F) >= 2U) {
+        D_80145F2C++;
+    }
+    if ((status & 0x7F) == 4) {
+        D_80145F2C++;
+    }
+    func_8013EE30();
+    func_800847B8(D_800E6280.unk_F5F);
+    if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1 || (D_80146050 != 0 && D_800E6280.unk_F5F == 9)) {
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1 = 1;
+        D_800E6280.unk_720 = D_800E6280.unk_1108;
+        D_800E6280.unk_721 = D_800E6280.unk_1109;
+        D_800E6280.unk_722 = 0x11;
+        D_80122D48 = 3;
+        if (D_80146050 != 0) {
+            func_80085B3C(8, D_800E6280.unk_F5F * 10);
+        } else {
+            func_80085B3C(4, 0);
+        }
+        func_80042908(5);
+        return;
+    }
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 4;
+    for (i = 0; i < 7; i++) {
+        if (D_800E6280.unk_114.unk_02 < sp50.v[i]) {
+            break;
+        }
+    }
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += sp40.v[i];
+    func_80085B3C(4, 0);
+    check_para_limit();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013EA98);
 

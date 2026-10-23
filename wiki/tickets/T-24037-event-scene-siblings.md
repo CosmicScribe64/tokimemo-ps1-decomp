@@ -1,10 +1,10 @@
 ---
 id: T-24037
 title: Recover EVENT scene siblings
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-17
-updated: 2026-10-18
+updated: 2026-10-20
 links: ['[[event-family-results]]']
 ---
 
@@ -36,3 +36,7 @@ Final validation: no target INCLUDE_ASM for func_80103774; source gate passes; n
 ## Independent root review
 
 Reviewed production source/header changes against CODING_STANDARDS.md; no unresolved findings. Actual unguarded C target passed default linked proof and all27 binary hashes plus headers/globals/prototype guards. Preserved guarded siblings and explicit existing FAKE documentation. Ticket remains In Review because the assigned sibling is unresolved. Published on main.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

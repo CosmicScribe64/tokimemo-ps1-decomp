@@ -207,8 +207,6 @@ void func_80138470(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-24202, 2 rows (rows 35..36): as1 schedules lui $at, %hi(D_80139ADC) before addu $t6, $t4, $v1 instead of after (also T-24054, T-24107, T-24122). ~5,000 cast/order/temp variants all stay at 2 rows or worse. */
-#ifdef NON_MATCHING
 void func_8013852C(void) {
     u8 year;
 
@@ -220,15 +218,15 @@ void func_8013852C(void) {
     D_80139AD0 = (KObj *) D_8013A170[1][0][11];
     D_80139AD4 = D_8013A170[1][1][11];
     D_80139AD8 = D_8013A170[1][2][11];
-    /* FAKE: repeated field use and halfword conversions recover the promoted
-     * girl byte and $t2/$t4/$t6 temporary numbering; original source unknown. T-24054, T-24122, T-24131 */
-    D_80139ADC = (u16)((D_800E6280.unk_F5F << 2) - D_800E6280.unk_F5F) + (u16)(s16)year;
+    /* FAKE: repeated field use and the halfword conversion recover the
+     * promoted girl byte and temporary numbering. The empty test makes
+     * uopt emit the store separately, keeping the sum before its address.
+     * Original source unknown. T-24054, T-24122, T-24131, T-25041 */
+    D_80139ADC = (u16)((D_800E6280.unk_F5F << 2) - D_800E6280.unk_F5F) + year;
+    if (D_80139ADC) {}
     D_8013A2AC = year;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_8013852C);
-#endif
 
 void func_801385E0(void) {
     D_80139AD0 = (KObj *)D_8013A170[1][0][1];

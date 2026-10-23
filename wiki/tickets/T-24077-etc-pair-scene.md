@@ -1,10 +1,10 @@
 ---
 id: T-24077
 title: Recover ETC scene with actual two-word table indexing
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[etc-family-results]]", "[[tickets/T-17300-types-first-etc]]", "[[tickets/T-24075-etc-random-selection]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -53,3 +53,7 @@ absent operation or lifetime. Terminal flag stores are semantically correct,
 but no observed dependency justifies delaying the early80000000 constant.
 Preserve source/proofs/FAKE caveats, stop unsupported probes; no impossibility
 claim. Parent published the active packet at9a522dac3.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

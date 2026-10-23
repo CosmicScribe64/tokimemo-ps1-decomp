@@ -1,10 +1,10 @@
 ---
 id: T-24002
 title: Complete OPTION matching package
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[option-family-results]]", "[[matching-notes]]"]
 ---
 
@@ -16,7 +16,7 @@ Recover verified C for OPTION `801389A0.c`: func_80139198, func_80139F8C, func_8
 
 - [ ] Default linked proof and OPTION checksum for each recovered function.
 - [ ] Header/global/prototype checks pass.
-- [ ] Review against CODING_STANDARDS.md before Done.
+- [x] Review against CODING_STANDARDS.md before Done.
 
 ## Notes
 
@@ -31,3 +31,5 @@ Bounded follow-up of archived T-17800/T-20910 drafts. Preserve default assembly 
 2026-10-17: Package result: 1 of 5 matched (860 bytes), func_80139F8C improved behind its guard from 11 to 5 differing rows. func_80139E3C stays guarded at 60 rows; larger functions stay INCLUDE_ASM. Current typed source drafts and precise remaining register/scheduling blockers are preserved in drafts/T-24002/README.md and OPTION subdirectories. Header check passed; aggregate-global check passed after generating TACO assembly needed by existing keep proofs. Final branch prototype check pending below. Source meets the C89/guard/FAKE review checklist on self-review; independent review is required before Done.
 
 2026-10-17 final verification: `sync_protos.py --check-branch` passed (0 new disagreements, 15 known); `migrate_globals.py --check` passed; `check_headers.py` passed. Official funcdiff confirmed the retained `func_80139F8C` guard has exactly five differing rows (missing argument-register copy and its branch/OR consequences). Default linked proof for func_80139198 and OPTION checksum passed again after that edit.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

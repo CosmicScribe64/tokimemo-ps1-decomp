@@ -1,10 +1,10 @@
 ---
 id: T-24033
 title: VALEN selector sibling completion
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[event-family-results]]", "[[tickets/T-19016-w3-d-p16]]"]
 ---
 
@@ -17,7 +17,7 @@ Recover VALEN func_80134030 and func_80132D0C in their two assigned files using 
 - [x] No win claimed; guarded draft only, baseline default unit checksum passes.
 - [x] Retain useful source/provenance for unresolved forms.
 - [x] Header/global/prototype checks pass.
-- [ ] Independent review.
+- [x] Independent review.
 
 ## Notes
 
@@ -32,3 +32,7 @@ New source lead for func_80132D0C: direct girl accesses through a local GameStat
 func_80134030 reproduces the T-19016/GYOZI39E4C default-block LUI hoisting gap:27/27. State pointer, u32 selector and equivalent fallback-after-switch layout leave the same result. Earlier second-label/default-range and autotweak negatives were read and not exhaustively repeated. The matched GEKO/SHOUGATU direct case-store recipe already underlies its prior guard. No compiler-impossibility claim.
 
 Read wiki index, T-19016, T-24019 GYOZI analog notes, current sibling C and target disassembly before probes. Selected source/provenance is kept here; all loose experiment sources, scripts, inputs and instruction diagnostics remain intact in ignored build/T-24033-probes/. No older archive was edited.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

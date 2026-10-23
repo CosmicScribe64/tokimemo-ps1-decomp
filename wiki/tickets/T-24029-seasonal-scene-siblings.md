@@ -1,10 +1,10 @@
 ---
 id: T-24029
 title: Recover GYOZI and SHOUGATU scene sibling pair
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ['[[shougatu-family-results]]']
 ---
 
@@ -29,3 +29,7 @@ No new C matches. Production sources restored unchanged; source-only typed check
 The novel work used existing fixed-point word and actor views, simplified artificial condition flags and byte-counter temporaries, repaired the table member, and tested the early initialized selector local. The remaining blockers are broad copy scheduling, base and live-range differences rather than one compiler instruction. No shared header was expanded. Scratch-only declarations remain confined to the source archive. Self-review: source-only C/markdown archive, no assembly listing/raw assets/toolchain flags; independent review pending.
 
 Restored production build verification: GYOZI SHA1 `43f92523116e7b6cd772d4397712a52eeda89703` and SHOUGATU SHA1 `d956b1df6fbf9d1f8261d7e1f98ea301f7eb66a9` both pass. Production source diff is empty; `git diff --check` passes.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

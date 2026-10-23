@@ -1,5 +1,10 @@
+#define MAIN_API_OVERRIDE_func_800BCDF0 /* T-24523: integer debug-call result keeps the following flag out of v0. */
+#define MAIN_API_OVERRIDE_func_8008F618 /* T-24712: integer result (viewsweep) keeps the loop counter in $v1. */
 #include "common.h"
 #include "ovl/GYOZI.h"
+
+s32 func_800BCDF0();
+s32 func_8008F618();
 
 typedef struct {
     s32 (*f[26])();
@@ -27,7 +32,7 @@ s16 func_80140C90(void) {
 
 void func_80140D7C(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    if (((u8)func_8005E0E0(D_800F62CF) & 0x7F) != 4) {
+    if (((u8)func_8005E0E0(*(u8 *)&D_800F62CF) & 0x7F) != 4) {
         func_8004DE1C();
         return;
     }
@@ -41,26 +46,26 @@ void func_80140DCC(void) {
     func_8004DE1C();
 }
 
-/* NON_MATCHING: T-24301, 5 rows; the original keeps 0 in $a1 from entry (`or $a1,$zero,$zero; sb $a1,D_800F62CF;
- * or $a0,$a1,$zero`) and has a 0x28 frame (0x30 here). Zero locals of every width, assignment-expression
- * arguments and chained stores all fold to $zero (T-24116, T-24301). */
-#ifdef NON_MATCHING
 void func_80140E0C(void) {
     s16 i;
+    s32 girl;
 
+    /* FAKE: late-folded zero and early assignment preserve the entry $a1
+     * carrier; the compiler sinks the store past the flag tests. T-25035 */
+    girl = D_800F62CF * 0;
+    D_800F62CF = girl;
     D_80148750 = 0;
     if (((GyoziBits32 *)D_800F53A0.girl[9].unk_10)->b1 == 0 &&
         D_800F53A0.girl[9].unk_06 >= 20 && (D_800F6468 & 1)) {
         D_80148750 = 1;
     }
-    D_800F53A0.unk_F2F = 0;
-    /* FAKE: the byte view of the girl index makes the later reload use $a1 for its address. T-24301 */
-    D_80148620 = (((u8)func_8005E0E0(((u8 *)&D_800F53A0)[0xF2F]) & 0x7F) == 4) * 4;
+    /* FAKE: narrowing spends the original temporary slots; the byte argument
+     * view keeps the later reload's address base in $a1. T-24712, T-25035 */
+    D_80148620 = (((u8)func_8005E0E0(*(u8 *)&D_800F62CF) & 0x7F) == 4) * 4;
     D_80148614 = D_801481D4;
-    if (i) {} /* FAKE: T-24301 (permuter), keeps i live from entry: the loop counter gets $v1 as in the original */
     D_80148618 = D_80148208;
     D_8014861C = D_8014823C;
-    func_8008F618(D_800F53A0.unk_F2F);
+    func_8008F618(D_800F62CF);
     D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A += 4;
     for (i = 0; i < 7; i++) {
         if (D_800F54AE < D_8014875C[i]) {
@@ -71,13 +76,105 @@ void func_80140E0C(void) {
     func_80090960(4, 0);
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80140E0C);
-#endif
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80140F90);
+void func_80140F90(void) {
+    s16 i;
+    s16 count;
+    s32 status;
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_801412A4);
+    count = 0;
+    for (i = 0; i < 11; i++) {
+        count += ((GyoziBits32 *)D_800F53A0.girl[i].unk_10)->b1 >= 1;
+    }
+    i = 0;
+    do {
+        /* FAKE: multiplication by one preserves the original sum operand order. T-24523 */
+        D_800F53A0.unk_F2F = (D_800F6468 * 1 + i) % 10U + 1;
+        func_800BCDF0("num%d girl%d\n", count, D_800F53A0.unk_F2F);
+        i++;
+    } while ((!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 && D_800F53A0.unk_F2F >= 9) ||
+        (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 && count >= 2));
+    if (D_80148750 != 0) {
+        D_800F53A0.unk_F2F = 9;
+    }
+    D_80148754 = D_800F53A0.unk_F2F;
+    D_80148620 = 0;
+    /* FAKE: the redundant byte conversion reserves the original temporary slots. T-24523 */
+    status = (u8)func_8005E0E0(D_800F53A0.unk_F2F);
+    if (D_800F53A0.unk_F2F == 6 && (status & 0x7F) >= 2U) {
+        D_80148620++;
+    }
+    if ((status & 0x7F) == 4) {
+        D_80148620++;
+    }
+    func_80141550();
+    func_8008F618(D_800F62CF);
+    if (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 || (D_80148750 != 0 && D_800F53A0.unk_F2F == 9)) {
+        ((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 = 1;
+        D_800F53A0.unk_710 = D_800F53A0.unk_10D8;
+        D_800F53A0.unk_711 = D_800F53A0.unk_10D9;
+        D_800F53A0.unk_712 = 0x11;
+        func_80090960(4, 0);
+        D_800F53A0.unk_713[D_800F53A0.unk_F2E * 8 + 0x1E] = 2;
+        func_8004DEAC(5);
+        return;
+    }
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A += 4;
+    for (i = 0; i < 7; i++) {
+        if (D_800F54AE < D_8014875C[i]) {
+            break;
+        }
+    }
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_06 += D_8014876C[i];
+    func_80090960(4, 0);
+    func_8004DE1C();
+}
+
+void func_801412A4(void) {
+    s16 i;
+    s16 count;
+
+    count = 0;
+    /* FAKE: the body on the for line keeps as1's per-line order (the count copy before the
+     * branch, the counter copy in its delay slot). T-25151 */
+    for (i = 0; i < 11; i++) { count += ((GyoziBits32 *)D_800F53A0.girl[i].unk_10)->b1 >= 1; }
+    i = 0;
+    do {
+        /* FAKE: the s32 view of the random word (the type of D_800F6468) puts the load first in
+         * the sum; the member read keeps it reloaded after the unk_F2F store. T-25151 */
+        D_800F53A0.unk_F2F = ((s32)D_800F53A0.unk_10C8 + i) % 10U + 1;
+        i++;
+    } while ((!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 && D_800F53A0.unk_F2F >= 9) ||
+        D_800F53A0.unk_F2F == D_80148754 ||
+        (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 && count >= 3));
+    i = D_801486E4; /* the counter is reused for the requested girl (s16 compares, T-25151) */
+    if ((i == 7 || i == 9) && i != D_80148754) {
+        D_800F53A0.unk_F2F = i;
+    }
+    D_80148758 = D_800F53A0.unk_F2F;
+    D_80148620 = 0;
+    func_80141550();
+    func_8008F618(D_800F62CF);
+    if (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1) {
+        ((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 = 1;
+        D_800F53A0.unk_710 = D_800F53A0.unk_10D8;
+        D_800F53A0.unk_711 = D_800F53A0.unk_10D9;
+        D_800F53A0.unk_712 = 0x18;
+        func_80090960(4, 0);
+        D_800F53A0.unk_713[D_800F53A0.unk_F2E * 8 + 0x1E] = 2;
+        func_8004DEAC(5);
+        return;
+    }
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A += 4;
+    for (i = 0; i < 7; i++) {
+        if (D_800F54AE < D_8014875C[i]) {
+            break;
+        }
+    }
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_06 += D_8014876C[i];
+    func_80090960(4, 0);
+    func_8004DE1C();
+}
 
 void func_80141550(void) {
     switch (D_800F62CF) {

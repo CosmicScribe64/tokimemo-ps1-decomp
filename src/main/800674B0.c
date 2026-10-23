@@ -205,7 +205,185 @@ void func_80067E34(void) {
     func_80067F04();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067F04);
+/* One mark of the two-month calendar: frame `frame` in the cell of day index `d` of column `side` (0 this month,
+ * 1 next month), then the next record. The four statements expand on one source line, which as1 schedules as one
+ * group (the frame store after the argument copy where the record address is a constant). T-25103 */
+#define CAL_MARK(frame, side, d) \
+    D_8011ECD0[n + 0x61].unk_18 = (frame); D_8011ECD0[n + 0x61].unk_26 = func_80068898((side), (d)); \
+    D_8011ECD0[n + 0x61].unk_2A = func_800688F0((side), (d)); n++
+/* Frame of the schedule entry of day i + 1 in column `side`; every use reads it again (the original reloads it
+ * after each call). T-25103 */
+#define DAY_KIND(side) D_800B5C10[D_800E6280.unk_044[side].unk_20[i + 1]]
+
+/* Calendar marks in records 0x61.. of D_8011ECD0 (at most 0x3F): the date word at +0xF8, the flagged Rec38 dates,
+ * the active +0x54C entries, two 0x6F marks in periods 6..10, the day-schedule frames of both months (a multi-day
+ * event repeats its frame on the following empty days) and the +0x75E records of this month.
+ * FAKE: the first month test of each pair reads unk_03F through `gs` and the second through D_800E6280. They are
+ * separate expressions, so uopt does not share cvt(unk_03F) across the mark calls (519 rows to 16); the original
+ * keeps gs in a stack slot for the loop bounds, but which tests used it is unknown. T-25103 */
+void func_80067F04(void) {
+    GameState *gs;
+    s32 i;
+    s32 n;
+    s32 left;
+    /* FAKE: keeps kind in the original's sixth local slot (sp+0x68) and the frame at 0x80; real local unknown.
+     * T-25103 */
+    s32 pad;
+    s32 kind;
+    u32 month;
+    u32 day;
+    s32 day0;
+    s32 day1;
+    u32 year;
+
+    gs = &D_800E6280;
+    for (i = 0; i < 0x20; i++) {
+        func_80048F64(i + 0x61);
+        D_8011ECD0[i + 0x61].unk_01 = 3;
+        D_8011ECD0[i + 0x61].unk_02 = 0x40;
+        D_8011ECD0[i + 0x61].unk_38 = 0;
+        D_8011ECD0[i + 0x61].unk_03 = 0x8C;
+        D_8011ECD0[i + 0x61].unk_0C = sprite_frame_table;
+        D_8011ECD0[i + 0x61].unk_10 = D_800C9A14;
+        D_8011ECD0[i + 0x61].unk_34 = D_800C9730;
+        D_8011ECD0[i + 0x61].unk_14 = D_800C9A54;
+        D_8011ECD0[i + 0x61].unk_04 = 8;
+        D_8011ECD0[i + 0x61].unk_05 = 1;
+        D_8011ECD0[i + 0x61].unk_06 = 8;
+        D_8011ECD0[i + 0x61].unk_18 = 0x62;
+        D_8011ECD0[i + 0x61].unk_26 = 0x100;
+        D_8011ECD0[i + 0x61].unk_2A = 0x100;
+        D_8011ECD0[i + 0x61].unk_07 = 0x80;
+    }
+    left = 0;
+    n = 0;
+    month = ((GsWord *)&D_800E6280.unk_0F8)->date.month;
+    day = ((GsWord *)&D_800E6280.unk_0F8)->date.day;
+    if (month == gs->unk_03F) {
+        CAL_MARK(0x6E, 0, day - 1);
+    }
+    if (month == D_800E6280.unk_03F + 1) {
+        CAL_MARK(0x6E, 1, day - 1);
+    }
+    for (i = 0; i < 11; i++) {
+        month = D_800E6280.unk_1BC[i].unk_10.date.month;
+        day = D_800E6280.unk_1BC[i].unk_10.date.day;
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b6) {
+            if (month == gs->unk_03F) {
+                CAL_MARK(0x6D, 0, day - 1);
+            }
+            if (month == D_800E6280.unk_03F + 1 || D_800E6280.unk_03F + 1 == month + 12) {
+                CAL_MARK(0x6D, 1, day - 1);
+            }
+        }
+    }
+    for (i = 0; i < 8; i++) {
+        month = D_800E6280.unk_54C[i].h[0] >> 12;
+        day = D_800E6280.unk_54C[i].h[1] & 0x1F;
+        if (((GsEntry54C *)&D_800E6280.unk_54C[i])->active) {
+            if (month == gs->unk_03F) {
+                CAL_MARK(0x62, 0, day - 1);
+            }
+            if (month == D_800E6280.unk_03F % 12 + 1) {
+                CAL_MARK(0x62, 1, day - 1);
+            }
+        }
+    }
+    if ((D_800E6280.unk_0F4.h >> 12) >= 6 && (D_800E6280.unk_0F4.h >> 12) < 11) {
+        day0 = 0x15 - D_800E6280.unk_044[0].unk_20[0];
+        day1 = 0x15 - D_800E6280.unk_044[1].unk_20[0];
+        CAL_MARK(0x6F, 0, day0 - 1);
+        if (D_800E6280.unk_03E != 0x62 || D_800E6280.unk_03F != 2) {
+            CAL_MARK(0x6F, 1, day1 - 1);
+        }
+    }
+    for (i = 0; i < gs->unk_044[0].unk_00[0]; i++) {
+        if (D_800E6280.unk_044[0].unk_20[i + 1] != 0 && DAY_KIND(0) != 0xFF) {
+            if (DAY_KIND(0) == 0x6F) {
+                if (D_800E6280.unk_03F == 8 && (D_800E6280.unk_0F4.h >> 12) < 11) {
+                    CAL_MARK(DAY_KIND(0), 0, i);
+                }
+            } else {
+                CAL_MARK(DAY_KIND(0), 0, i);
+            }
+            if (DAY_KIND(0) == 0x66 && D_800E6280.unk_03F != 2) {
+                kind = DAY_KIND(0);
+                left = 6;
+            } else if (DAY_KIND(0) == 0x6C) {
+                kind = DAY_KIND(0);
+                left = 6;
+            } else if (DAY_KIND(0) == 0x67) {
+                kind = DAY_KIND(0);
+                left = 7;
+            } else if (DAY_KIND(0) == 0x6F && D_800E6280.unk_03F == 8 &&
+                       (D_800E6280.unk_0F4.h >> 12) < 11) {
+                kind = DAY_KIND(0);
+                left = 6;
+            }
+        } else if (left > 0) {
+            CAL_MARK(kind, 0, i);
+        }
+        left--;
+        if (n + 0x61 >= 0xA0) {
+            return;
+        }
+    }
+    left = 0;
+    for (i = 0; i < gs->unk_044[1].unk_00[0]; i++) {
+        if (D_800E6280.unk_044[1].unk_20[i + 1] != 0 && DAY_KIND(1) != 0xFF) {
+            if (DAY_KIND(1) == 0x6F) {
+                if (D_800E6280.unk_03F == 7 && (D_800E6280.unk_0F4.h >> 12) < 11) {
+                    CAL_MARK(DAY_KIND(1), 1, i);
+                }
+            } else {
+                CAL_MARK(DAY_KIND(1), 1, i);
+            }
+            if (DAY_KIND(1) == 0x66 && D_800E6280.unk_03F != 1) {
+                kind = DAY_KIND(1);
+                left = 6;
+            } else if (DAY_KIND(1) == 0x6C) {
+                kind = DAY_KIND(1);
+                left = 6;
+            } else if (DAY_KIND(1) == 0x67) {
+                kind = DAY_KIND(1);
+                left = 7;
+            } else if (DAY_KIND(1) == 0x6F && D_800E6280.unk_03F == 7 &&
+                       (D_800E6280.unk_0F4.h >> 12) < 11) {
+                kind = DAY_KIND(1);
+                left = 6;
+            }
+        } else if (left > 0) {
+            CAL_MARK(kind, 1, i);
+        }
+        left--;
+        if (n + 0x61 >= 0xA0) {
+            return;
+        }
+    }
+    for (i = 0; i < 0x100; i++) {
+        year = D_800E6280.unk_75E[i].unk_04;
+        month = D_800E6280.unk_75E[i].unk_05;
+        day = D_800E6280.unk_75E[i].unk_06;
+        if (year == D_800E6280.unk_03E && month == D_800E6280.unk_03F) {
+            if (D_800E6280.unk_75E[i].unk_00 == 0xC) {
+                if (D_800E7D10.flags[12] != 0 || D_800E6280.unk_53C[12] != 0) {
+                    CAL_MARK(0x62, 0, day - 1);
+                }
+            } else {
+                CAL_MARK(0x62, 0, day - 1);
+            }
+        }
+        if (n + 0x61 >= 0xA0) {
+            return;
+        }
+        if (D_800E6280.unk_75E[i].unk_04 == 0) {
+            return;
+        }
+    }
+}
+
+#undef CAL_MARK
+#undef DAY_KIND
 
 s16 func_80068898(s32 arg0, s32 arg1) {
     s32 v = D_800E6280.unk_044[0].unk_20[arg0 * 0x40];
@@ -583,7 +761,93 @@ void func_800696DC(s32 arg0, s32 arg1) {
     k_sub_disp_start(6);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
+/* Implicit int in the original (K&R definition, no return): $v0 stays live at the exit, so the last
+ * bit store of each case arm also goes through the promoted byte in $v0. T-25103. */
+s32 func_8006A044(arg0, arg1)
+s32 arg0;
+s32 arg1;
+{
+    u8 x;
+
+    /* FAKE: T-25103, the dead read numbers the flag byte before the month (uopt colours unconstrained
+     * ranges in that order), so the byte takes $v0 and the month $v1; uopt then removes the load. */
+    x = D_800E6280.unk_F64[1];
+    if (D_800E6280.unk_03F != 2 && D_800E6280.unk_03F != 5 && D_800E6280.unk_03F != 8 && D_800E6280.unk_03F != 11) {
+        ((FlagsF64 *)D_800E6280.unk_F64)->b14 = 1;
+    } else {
+        ((FlagsF64 *)D_800E6280.unk_F64)->b13 = 1;
+    }
+    if (D_800E6280.unk_03E == 0x5F && D_800E6280.unk_03F == 4) {
+        ((FlagsF64 *)D_800E6280.unk_F64)->b13 = 1;
+        ((FlagsF64 *)D_800E6280.unk_F64)->b14 = 1;
+    }
+    switch (D_800E6280.unk_03F) {
+    case 2:
+    case 3:
+    case 4:
+        if (D_800E6280.unk_03E == 0x5F) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b0 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b4 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b8 = 1;
+        }
+        break;
+    case 5:
+    case 6:
+    case 7:
+        if (D_800E6280.unk_03E == 0x5F) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b1 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b5 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b9 = 1;
+        }
+        ((FlagsF64 *)D_800E6280.unk_F64)->b15 = 1;
+        break;
+    case 8:
+    case 9:
+    case 10:
+        if (D_800E6280.unk_03E == 0x5F) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b2 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b6 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b10 = 1;
+        }
+        break;
+    case 11:
+    case 12:
+    case 13:
+        if (D_800E6280.unk_03E == 0x5F) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b3 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b7 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b11 = 1;
+        }
+        break;
+    case 1:
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b3 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b7 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x62) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b11 = 1;
+        }
+        break;
+    }
+}
 
 /* FAKE: each record triple (unk_18/unk_26/unk_2A) after the loop is written on one line, as from a macro (none is known):
  * as1 schedules by source line and the grouping sets the store order in each branch. T-11690 */
@@ -950,7 +1214,68 @@ void func_8006B900(void) {
     dtd_on_tpage(0, 0, 9, 1, 0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BA40);
+void func_8006BA40(void) {
+    GameState *g = &D_800E6280;
+    u8 speed;
+    s32 step;
+    u8 temp; /* FAKE: T-25003, first test through a u8 copy keeps the D_800B6708 value in $v0 */
+
+    if ((u8)D_8011ECA4 == 0) {
+        speed = g->unk_F6F;
+        D_8011ECA4 = (u8)D_8011ECA4 + 1;
+        if (speed == 0) {
+            speed = 1;
+        }
+        g->unk_F6F = speed;
+        step = speed;
+        if (!(g->unk_1092 & 3) && (g->unk_F80 & 0xFF)) {
+            step = speed * 2;
+        }
+        /* FAKE: T-25008, the u8 cast spends the ugen temporary the original spends before the switch */
+        if ((u8)g->unk_F80 & 0xF) {
+        } else {
+            switch (g->unk_F80 & 0x5000) {
+            case 0x1000:
+                D_8011ECFA -= step;
+                break;
+            case 0x4000:
+                D_8011ECFA += step;
+                break;
+            }
+            switch (g->unk_F80 & 0xA000) {
+            case 0x2000:
+                D_8011ECF6 += step;
+                break;
+            case 0x8000:
+                D_8011ECF6 -= step;
+                break;
+            }
+        }
+        if (D_8011ECF6 >= 0x8D) {
+            D_8011ECF6 = 0x8C;
+        }
+        if (D_8011ECF6 < -0x96) {
+            D_8011ECF6 = -0x96;
+        }
+        if (D_8011ECFA < -0x64) {
+            D_8011ECFA = -0x64;
+        }
+        if (D_8011ECFA >= 0x65) {
+            D_8011ECFA = 0x64;
+        }
+        if (g->unk_F88 & 0x80) {
+            temp = D_800B6708;
+            if (temp == 0) {
+                D_800B6708 = 0x9B;
+            } else if (D_800B6708 == 0xAC) {
+                D_800B6708 = 0;
+            } else {
+                D_800B6708++;
+            }
+            D_8011ECE8 = D_800B6708;
+        }
+    }
+}
 
 /* FAKE: the empty `if ((s32)D_800B6708) {}` gives the byte a use in the dispatch block, so uopt promotes it and loads it
  * once into $v0 before the arg0 tests; without it each arm loads it. The test emits no code. T-17002 */
@@ -1245,33 +1570,45 @@ s16 func_8006C934(void) {
     }
 }
 
-/* NON_MATCHING: T-24301, 11 rows; the record pointer and the unk_00 value swap $t0/$t1, and the last-value
- * copy is `andi v1,t1,0xff` in both arms where the original has one `move v1,t0` at the join. */
-#ifdef NON_MATCHING
+/* Scans the event records of D_800E6280.unk_75E (unk_04 == 0 ends the list): `last` gets the
+ * unk_00 of the final record, `first` that of the final record whose type unk_02 is 0, 1, 2 or
+ * 0xF. Clears unk_04 of every record after the list and returns the count, at most 0xFF.
+ * T-25103: the for loop orders the induction init before `i = 0`, and `n++` ahead of the join copy
+ * keeps `cur = val` (s32, a plain move) at the join instead of a narrowing copy in each arm. */
 s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     GameState *g = &D_800E6280;
     s32 i;
     s32 n;
     u8 sel;
-    u8 cur;
+    s32 cur;
+    u8 val;
+    u8 type;
 
+    /* FAKE: T-25103 (from T-24928); the dead tests give first/last an early use so their webs are
+     * coloured $a0/$a1 before the value local's web, which then takes $t0 and pushes the record
+     * base to $t1 as in the original. Without them val takes $a0 and first is spilled. The tests
+     * emit no code. */
+    if (first) {
+    }
+    if (last) {
+    }
     sel = 0xFF;
     cur = 0;
     n = 0;
-    i = 0;
-    do {
-        i++;
+    for (i = 0; i < 0x100; i++) {
         if (g->unk_75E[n].unk_04 == 0) {
             break;
         }
-        cur = g->unk_75E[n].unk_02;
-        if (cur != 0 && cur != 1 && cur != 2 && cur != 0xF) {
+        type = g->unk_75E[n].unk_02;
+        if (type != 0 && type != 1 && type != 2 && type != 0xF) {
+            val = g->unk_75E[n].unk_00;
         } else {
-            sel = g->unk_75E[n].unk_00;
+            val = g->unk_75E[n].unk_00;
+            sel = val;
         }
-        cur = g->unk_75E[n].unk_00;
         n++;
-    } while (i < 0x100);
+        cur = val;
+    }
     for (i = n; i < 0x100; i++) {
         g->unk_75E[i].unk_04 = 0;
     }
@@ -1282,9 +1619,6 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     }
     return n;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006C988);
-#endif
 
 u8 *func_8006CA9C(void) {
     if (D_800E6280.unk_F74 == 0) {

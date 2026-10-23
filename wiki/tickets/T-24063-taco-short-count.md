@@ -1,10 +1,10 @@
 ---
 id: T-24063
 title: Recover three TACO short helpers
-status: In Review
+status: Done
 assignee: codex/complete-option
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[taco-family-results]]", "[[ido-52-evaluation]]"]
 ---
 
@@ -17,7 +17,7 @@ Count lane for func_8013506C, func_8015B1B8 and func_801472D4. Exclusive src/ovl
 - [x] Confirm actual guarded/unclaimed status and read prior negatives/current sibling evidence.
 - [ ] Actual default C literal proof and unit SHA/guards for any win.
 - [x] Preserve meaningful corrected source/provenance without repeating exhausted copy-state grids.
-- [ ] Independent review before Done.
+- [x] Independent review before Done.
 
 ## Notes
 
@@ -30,3 +30,5 @@ Read T-19011/T-16563/T-19015/T-19026/T-22025, copy-state compiler comparison and
 Zero of3 matched,0 new C bytes. All targets confirmed guarded/unclaimed and no current matched sibling>=0.70. Only five measured forms:3506C control29/29, corrected actual unk_183C word-buffer view29/29, conditional coordinate extraction29/29;5B1B8 control16/16 (same8 changed instructions historically called8 rows);472D4 control20/20. No new copy-state lead, so no repeated grids or compiler exception. Corrected random.c source/reproducer retained, all loose controls/traces ignored; existing production guards untouched. Baseline one-job TACO build passes; exact unit hash recorded below. No actual C proof or fallback coverage claim. In Review pending independent source/archive review.
 
 Baseline TACO SHA1 `1419e93cbad6c0df790577701181be04e0747969`. Saved-source reproducer freshly reports29/29; git diff --check passes. No interface changes or additional C promotions after the control build.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

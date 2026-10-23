@@ -5,6 +5,12 @@
 #include "game.h"
 
 /* Overlay-local externs (T-1300). */
+void func_80138800(void);
+void func_80138950(void);
+void func_80135830(void);
+void func_80135AD0(void);
+void func_80135DF8(void);
+void func_80135F3C(void);
 void func_80136A28(void);
 void func_80136AB0(void);
 void func_80136B18(void);
@@ -25,6 +31,9 @@ void func_8013CF88(void);
 void func_8013D114(void);
 void func_8013D2B4(void);
 void func_8013D788(void);
+void func_8013E1FC(void);
+void func_8013E894(void);
+void func_8013EC60(void);
 void func_8013FC5C(void);
 void func_80146884(void);
 void func_8014692C(void);
@@ -613,6 +622,15 @@ typedef struct TaiikuCamera0C {
     /* 0x04 */ s32 y;
     /* 0x08 */ s32 angle;
 } TaiikuCamera0C; /* size 0x0C */
+/* T-25102: the 0x100-byte block at D_80122DD0 (main bzeroes it) as TAIIKU uses it: the camera and, at 0xF4,
+ * the step of the track-grid intro that other functions still read as D_80122EC4. func_8013DDB8 matches
+ * only with the step and the camera reached through one symbol: as1 keeps the order of accesses to one
+ * symbol (the step load stays above the camera stores), and reorders accesses to two. */
+typedef struct TaiikuWork {
+    /* 0x00 */ TaiikuCamera0C camera;
+    /* 0x0C */ u8 unk_0C[0xE8];
+    /* 0xF4 */ s32 step;
+} TaiikuWork; /* size 0xF8 */
 #endif
 
 #ifndef OVL_TAIIKU_RESULT_TABLES_T10890
@@ -893,10 +911,15 @@ extern s32 D_80149364; /* func_80133CFC */
 extern TaiikuW5 D_80149368; /* func_80133CFC */
 extern TaiWords7 D_8014937C; /* func_80133CFC */
 extern TaiWords10 D_80149398; /* func_80133CFC */
-extern TaiWords10 D_801494C4; /* func_80134F98 */
+extern TaiWords11 D_801494C4; /* 0x2C-byte table copied by func_80134F98. T-24521. */
 extern TaiikuS11 D_801494F0; /* func_80135480 */
 extern TaiShorts20 D_80149508; /* func_80135830 */
 extern TaiShorts20 D_80149530; /* func_80135830 */
+/* Four 16-byte runner-slot objects of func_80137784 (player, cpu 1..3). T-25106. */
+extern s32 D_8014981C[4];
+extern s32 D_8014982C[4];
+extern s32 D_8014983C[4];
+extern Fix32 D_8014984C[4];
 extern TkS16x4 D_8014985C; /* func_80137EA8 */
 extern TaiBytes10 D_80149864; /* func_80138224 */
 extern TaiikuHalf10 D_80149870; /* func_80138224 */

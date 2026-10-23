@@ -141,15 +141,16 @@ def settings_toml(func, allow_decl_edits=False):
     return text
 
 
-def compile_script(root):
-    """compile.sh: the permuter calls `compile.sh input.c -o output.o` from its own directory."""
+def compile_script(root, toolchain=("ido", "5.3")):
+    """compile.sh: the permuter calls `compile.sh input.c -o output.o` from its own directory.
+    `toolchain`: the tools/cc.py words of the function's object (cc.toolchain_of_source)."""
     cc_py = os.path.join(os.path.abspath(root), "tools", "cc.py")
     return ('#!/bin/bash\n'
             '# T-1330: same compile as ninja (tools/cc.py: IDO 5.3, frame pass, asm-processor, padding)\n'
             'in="$(realpath "$1")"\n'
             'out="$(realpath -m "$3")"\n'
-            'cd "%s" && exec python3 "%s" "$in" "$out" ido 5.3\n'
-            % (os.path.abspath(root), cc_py))
+            'cd "%s" && exec python3 "%s" "$in" "$out" %s\n'
+            % (os.path.abspath(root), cc_py, " ".join(toolchain)))
 
 
 def list_outputs(directory):
@@ -382,7 +383,8 @@ def setup(root, func, src=None, out=None, unit=None, allow_decl_edits=False, ins
     build_target(root, asm_path, os.path.join(out, "target.o"))
     script = os.path.join(out, "compile.sh")
     with open(script, "w") as f:
-        f.write(compile_script(root))
+        f.write(compile_script(root, cc.toolchain_of_source(os.path.relpath(src, root),
+                                                            os.path.join(root, "config", "toolchains.txt"))))
     os.chmod(script, 0o755)
     with open(os.path.join(out, "settings.toml"), "w") as f:
         f.write(settings_toml(func, allow_decl_edits))

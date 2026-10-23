@@ -44,6 +44,7 @@ def read_toolchains(known, path=TOOLCHAINS_FILE):
     """{object: toolchain words} from config/toolchains.txt (T-9200).
 
     One line per object that is not built by the default IDO: `<object> <ido|gcc> <args...>`, where
+    an `ido` line may add per-object pass options after the version (`ido 5.3 -Wb,-noxbb`, T-24800),
     <object> is the splat subsegment name of its `c` subsegment (`main/80041000`,
     `TACO/8015D270`; srcscan CFile.name) and the args are those of tools/cc.py. `known` is the set
     of valid names; an unknown object or toolchain stops the configure step."""
@@ -58,10 +59,12 @@ def read_toolchains(known, path=TOOLCHAINS_FILE):
         name, tc = line[0], line[1:]
         if name not in known:
             sys.exit("configure.py: %s: %s is not a `c` subsegment of any unit" % (where, name))
-        if (tc[:1] == ["ido"] and len(tc) == 2) or (tc[:1] == ["gcc"] and len(tc) == 3):
+        if ((tc[:1] == ["ido"] and len(tc) >= 2 and all(a.startswith("-W") for a in tc[2:]))
+                or (tc[:1] == ["gcc"] and len(tc) == 3)):
             pass
         else:
-            sys.exit("configure.py: %s: toolchain must be `ido <ver>` or `gcc <ver> <aspsx>`, got %r"
+            sys.exit("configure.py: %s: toolchain must be `ido <ver> [-W<pass>,<option> ...]` or "
+                     "`gcc <ver> <aspsx>`, got %r"
                      % (where, " ".join(tc)))
         if name in out:
             sys.exit("configure.py: %s: %s listed twice" % (where, name))
@@ -197,7 +200,7 @@ def overlay_targets(n, overlays):
                     variables={"toolchain": " ".join(OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN))},
                     implicit=[stamp, SYMBOLS_OK, INCLUDE_FILES, "include/macro.inc", "include/labels.inc",
                               "include/asmproc_prelude.inc",
-                              "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py",
+                              "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py", "tools/ugen_pass.py",
                               "tools/object_layout.py"], order_only=[HEADERS_OK])
             c_os.append(cf.obj)
         data_os = []
@@ -302,7 +305,7 @@ def main():
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, SYMBOLS_OK, INCLUDE_FILES, "tools/cc.py", "tools/frame_pass.py",
+                implicit=[stamp, SYMBOLS_OK, INCLUDE_FILES, "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py", "tools/ugen_pass.py",
                           "tools/object_layout.py", "include/asmproc_prelude.inc",
                           "include/gte_macros.inc", "include/macro.inc", "include/labels.inc"],
                 order_only=[HEADERS_OK])

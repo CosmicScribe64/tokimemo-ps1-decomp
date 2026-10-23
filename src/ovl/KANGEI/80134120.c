@@ -4,7 +4,6 @@
 typedef struct {
     void (*f[30])();
 } FnTbl30; /* size 0x78 */
-extern FnTbl30 D_80139B30;
 
 typedef struct {
     void (*f[37])();
@@ -14,6 +13,27 @@ typedef struct {
 } FnTbl33; /* size 0x84 */
 extern FnTbl37 D_80139BEC;
 extern FnTbl33 D_80139C80;
+
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+/* Scene table, indexed by D_800E6280.unk_110A in func_801341E8. Defining it here as the
+ * original did matters for code: as1 treats every function named in this file's data as
+ * an address-taken label, so the jump-table dispatch of func_80134724 gets an edge back to
+ * that function's entry. The resulting loop changes as1's block weights and its choice for
+ * the switch's range-check delay slot (T-25150). */
+FnTbl30 D_80139B30 = { {
+    func_80134374, func_8013425C, func_801342EC, func_80133CB0, func_8007C784,
+    func_80133CEC, func_8007C784, func_80134724, func_80134BC4, func_8007C784,
+    dec_init, change_dec_bg, func_8007C8A4, place_init, func_8013454C,
+    func_8007C784, func_80083474, normal_date_girl_in, func_80133EF8, normal_date_girl_out,
+    normal_date_bg_out, func_801338B4, func_80133734, func_80133834, func_80133CB0,
+    func_8007C784, func_80133CEC, func_8007C784, func_80133C84, func_80046500,
+} };
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BA8);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BD4);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BDC);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BE4);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BEC);
 
 void func_80134120(void) {
     if ((D_800E6280.unk_F5F != 0xFF) && D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1) {
@@ -141,15 +161,10 @@ void func_8013454C(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-24201, 2 rows (1 pair); frame, registers ($v0=v, $v1=s, $a0=unk_66C,
- * $a1=unk_0F4>>12, $a2=c2) and all switch cases match (T-24122 draft). Only the IDO 5.3 as1
- * default-block delay-slot hoist remains: as1 moves `sll t0, v0, 0x2` from `default:` into the
- * delay slot of `beqz at, default`; the original fills it with the dispatch `sll t1, t1, 0x2`.
- * A second reference to the default label (`case 7:`, a guard `if`/`goto def`) gives the
- * original slot but also the bound 8 or a second range check and rotates $a0/$a1/$v1, so the
- * original's extra reference is not a uopt edge. No effect: default spellings, scopes, line
- * layout, selector casts and locals, explicit join label (VALEN:func_80134030, T-19016). */
+/* The switch's range-check delay slot holds the dispatch `sll` only because D_80139B30 (above)
+ * names this function: the dispatch `jr` then has an edge back to the entry, the loop gives the
+ * dispatch a lighter as1 weight than the default arm, and as1 fills the slot from the dispatch
+ * instead of hoisting the default's `sll` (T-25150; history T-24201, T-24902, T-25042). */
 void func_80134724(void) {
     u8 s;
     s16 v;
@@ -226,9 +241,6 @@ void func_80134724(void) {
     func_801349D4();
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134724);
-#endif
 
 void func_801349D4(void) {
     func_80132E74();

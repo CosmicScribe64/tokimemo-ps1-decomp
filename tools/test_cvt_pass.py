@@ -249,6 +249,59 @@ class SwitchTemporaries(unittest.TestCase):
         self.assertEqual(zcopy(out), [0, 1])
 
 
+R = cp.MT_R
+
+
+def rlod(reg, length=4):
+    return lod(L, 0, length, reg, mtype=R)
+
+
+def rstr(reg, length=4):
+    return st(L, 0, length, reg, mtype=R)
+
+
+def chain(*body):
+    """A uopt-output procedure: the entry copy `lod R3; str R2`, then body."""
+    return proc(rlod(3, 1), rstr(2), *body)
+
+
+def regs(insns):
+    return [i.words[3] for i in insns if cp.OPS[i.opc] == "lod" and i.mtype == R]
+
+
+class SwitchCompares(unittest.TestCase):
+    """T-24929: in zcopy-off procedures the chain's loads of the temporary read the global's register."""
+
+    def test_compares_read_the_global_register(self):
+        out = cp.switch_compares(chain(rlod(3, 1), ldc(0), op("equ"), fjp(), rlod(2), ldc(1), op("equ"),
+                                       fjp(), rlod(2), ldc(2), op("equ"), fjp()), {0})
+        self.assertEqual(regs(out), [3, 3, 3, 3])
+        self.assertEqual(out[7].words, rlod(3, 1).words)   # the global's own record
+        self.assertEqual(names(out).count("str"), 1)   # the copy itself stays
+
+    def test_zcopy_on_procedure_untouched(self):
+        body = chain(rlod(2), ldc(1), op("equ"), fjp())
+        self.assertEqual(regs(cp.switch_compares(body, set())), [3, 2])
+
+    def test_stops_at_label_call_and_store(self):
+        for stop in (rec("lab", 0, 0, 0, 9), cup(), st(J, 6, 4)):
+            out = cp.switch_compares(chain(rlod(2), fjp(), stop, rlod(2), fjp()), {0})
+            self.assertEqual(regs(out), [3, 3, 2], cp.OPS[stop.opc])
+
+    def test_only_the_entry_copy(self):
+        out = cp.switch_compares(proc(cup(), rlod(3, 1), rstr(2), rlod(2), fjp()), {0})
+        self.assertEqual(regs(out), [3, 2])
+
+    def test_per_procedure_index(self):
+        two = chain(rlod(2), fjp()) + chain(rlod(2), fjp())
+        self.assertEqual(regs(cp.switch_compares(two, {1})), [3, 2, 3, 3])
+
+    def test_zcopy_off_indices(self):
+        out = cp.copy_propagation_options(
+            proc(lod(J, 6), st(J, 7)) + proc(lod(L, 6), widen(), vreg(), st(J, 3, 4, (-4) & 0xFFFFFFFF, mtype=M)))
+        self.assertEqual(cp._zcopy_off(out), {1})
+
+
 def par(dtype, length):
     return rec("par", dtype, 2, 0, 0, length, 0)
 

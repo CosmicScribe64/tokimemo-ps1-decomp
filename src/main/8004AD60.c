@@ -247,6 +247,87 @@ Pix2Out *arg1;
 
 INCLUDE_ASM("asm/nonmatchings/main/8004AD60", make_color_bar);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", make_color_bar16);
+void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag) {
+    /* T-24501: declaration order preserves the interpolation spill homes. */
+    s32 i;
+    Pix2Out *p;
+    s32 sr;
+    s32 er;
+    s32 sg;
+    s32 eg;
+    s32 sb;
+    s32 eb;
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", col2sepia);
+    sr = (start >> 16) & 255;
+    sg = (start >> 8) & 255;
+    sb = start & 255;
+    er = (end >> 16) & 255;
+    eg = (end >> 8) & 255;
+    eb = end & 255;
+    p = arg0;
+    i = 0;
+    if ((count / 2) > 0) {
+        do {
+            p[i].r1 = ((s32)((count - (i * 2 + 1)) * er + (i * 2 + 1) * sr) / count) / 8;
+            p[i].r0 = ((s32)((count - i * 2) * er + i * 2 * sr) / count) / 8;
+            p[i].g1 = ((s32)((count - (i * 2 + 1)) * eg + (i * 2 + 1) * sg) / count) / 8;
+            p[i].g0 = ((s32)((count - i * 2) * eg + i * 2 * sg) / count) / 8;
+            p[i].b1 = ((s32)((count - (i * 2 + 1)) * eb + (i * 2 + 1) * sb) / count) / 8;
+            p[i].b0 = ((s32)((count - i * 2) * eb + i * 2 * sb) / count) / 8;
+            i++;
+        } while (i != (count / 2));
+    }
+    if (flag) {
+        for (i = 1; i < (count / 2); i++) {
+            p[i].x1 = 1;
+            p[i].x0 = 1;
+        }
+        p[0].x1 = 1;
+    } else {
+        for (i = 0; i < (count / 2); i++) {
+            p[i].x1 = 0;
+            p[i].x0 = 0;
+        }
+    }
+    p[0].x0 = 0;
+    p[0].r0 = 0;
+    p[0].g0 = 0;
+    p[0].b0 = 0;
+}
+
+void col2sepia(arg0, arg1, dr, dg, db)
+Pix2In *arg0;
+Pix2In *arg1;
+s32 dr;
+s32 dg;
+s32 db;
+{
+    Pix2In *p;
+    s32 i;
+    u32 v;
+    u32 s;
+
+    func_8004B590(arg0, arg1);
+    p = arg1;
+    for (i = 0; i != 0x80; i++) {
+        s = p->r0 + p->g0 + p->b0;
+        if (s != 0) {
+            v = p->r0 + dr;
+            p->r0 = (v >= 0x20) ? 0x1F : v;
+            v = p->g0 + dg;
+            p->g0 = (v >= 0x20) ? 0x1F : v;
+            s = p->b0 + db;
+            p->b0 = (s >= 0x20) ? 0x1F : s;
+        }
+        s = p->r1 + p->g1 + p->b1;
+        if (s != 0) {
+            v = p->r1 + dr;
+            p->r1 = (v >= 0x20) ? 0x1F : v;
+            v = p->g1 + dg;
+            p->g1 = (v >= 0x20) ? 0x1F : v;
+            v = p->b1 + db;
+            p->b1 = (v >= 0x20) ? 0x1F : v;
+        }
+        p++;
+    }
+}

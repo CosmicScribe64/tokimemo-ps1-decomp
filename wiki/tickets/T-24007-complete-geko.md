@@ -1,10 +1,10 @@
 ---
 id: T-24007
 title: Complete GEKO scene package
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ["[[scenes-family-results]]"]
 ---
 
@@ -15,7 +15,7 @@ Recover verified C in GEKO 801323E0.c for func_80133024, func_80133598, func_801
 ## Acceptance criteria
 
 - [ ] Verify recovered C by default literal linked proof and affected overlay checksum.
-- [ ] Pass header/global/prototype checks and independent review.
+- [x] Pass header/global/prototype checks and independent review.
 
 ## Notes
 
@@ -31,3 +31,5 @@ Bounded types-first follow-up of T-17700 and source-family pass T-13900. Reuse e
 2026-10-17 final package: 1 of 5 matched (452 bytes). func_80133024 retained behind a ticketed guard at 36 rows (40 from T-17700 hand draft), with initialization scheduling fixed. Other three remain INCLUDE_ASM; corrected source drafts and concrete blockers are in drafts/T-24007/README.md. Default linked func_80133598 proof and GEKO checksum pass again after the guard edit. Official guarded funcdiff confirms 36 real differing rows. Headers/global checks pass; branch prototypes pass (0 new disagreements, 15 known). Self-review checked C89, shared types, guard, no FAKE or padding, no raw data. Independent review required before Done. Every loose experimental candidate, script, input and diagnostic is preserved under ignored build/T-24007-probes after automatic review rejected deleting temporary files.
 
 2026-10-17 review repair: probe.py now tracks candidate exceptions and exits 1 if any candidate fails, retaining all per-candidate ERROR diagnostics. Docker invalid-candidate run returned 1 and retained its labeled diagnostics; successful comparison results are unchanged. This resolves the independent review's diagnostic exit-status finding; the 452-byte production match is unaffected.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

@@ -1,10 +1,10 @@
 ---
 id: T-24026
 title: Port three SHOUGATU high-similarity siblings
-status: In Review
+status: Done
 assignee: complete_render_family
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-20
 links: ['[[shougatu-family-results]]']
 ---
 
@@ -32,3 +32,7 @@ Validation: SHOUGATU SHA1 `d956b1df6fbf9d1f8261d7e1f98ea301f7eb66a9`; `check_hea
 ## Independent root integration review
 
 Production changes reviewed against CODING_STANDARDS.md. No unresolved findings; existing SDK types and aggregates retained, necessary ABI views explained, FAKE forms marked, no compiler/config exceptions. All27 binary hashes and header/global/prototype guards pass. Each new target lacks its INCLUDE_ASM fallback and passes normal-default literal linked-byte proof. Root published verified code on main; unresolved family functions are not counted.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

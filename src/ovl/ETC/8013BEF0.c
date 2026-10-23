@@ -1,6 +1,9 @@
+#define MAIN_API_OVERRIDE_func_800AE0A0 /* original called it undeclared (implicit int); T-24706 */
 #include "common.h"
 #include "psx_types.h"
 #include "ovl/ETC.h"
+
+extern s32 func_800AE0A0();
 
 typedef struct {
     /* 0x00 */ u32 tag;
@@ -351,7 +354,55 @@ void func_8013CC74(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013CCE4);
+s32 func_8013CCE4(void) {
+    s32 pad; /* FAKE: unused slot, the original frame has it (real source unknown). T-22019 */
+    s32 buf[6];
+    u32 i;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        if (D_80150068 > 0) {
+            cd_read_sectors(0x69U, 0x801A0000, 0xB389);
+            D_800E6280.unk_110D += 1;
+        } else {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 1:
+        if (D_80150068 == 0) {
+            D_800E6280.unk_110D += 1;
+        } else if (D_80150068 > 0) {
+            if (cd_read_sync_status() & 1) {
+                func_800AE0A0((void *)0x801E2000, 0x801A0600, 0x18000);
+                if (D_80150068 == 1) {
+                    D_80150068 = 2;
+                }
+                D_800E6280.unk_110D += 1;
+            }
+        }
+        break;
+    case 2:
+        if (D_800E6280.unk_F88 & 0x20) {
+            /* FAKE: the two-literal line and the one-line loop keep as1's
+             * scheduling; the byte chain shares one li, as the original. T-24706 */
+            buf[0] = 0x801E2000; buf[1] = 0x801E6000; for (i = 2; i < 6; i++) buf[i] = 0x801E2000 + i * 0x4000;
+            func_8004A1A0(buf, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 5);
+            D_801220D0 = 0x01000000;
+            (&D_801220E0)[0] = (&D_801220E0)[1] = (&D_801220E0)[2] = 0x80;
+            D_800E6280.unk_03A = 0x80;
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 3:
+        if (D_801500D4 >= 0xC00) {
+            func_80042940(0);
+        } else {
+            D_801500D4 += 8;
+            func_8013FA7C();
+        }
+        break;
+    }
+}
 
 /* FAKE: retain the s32 fallthrough matching view so v0 stays live at the
  * epilogue and as1 hoists li t9,0xC00 instead of lui v0,0x8000 in case 5;
@@ -500,7 +551,53 @@ s32 func_8013D32C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013D570);
+/* FAKE: one source line per vertex (x and y, u and v, the colour). as1 schedules by source line, and
+ * case 0 needs x2, h and y2 on one line; the original layout is plausible but unproven. T-25113 */
+s32 func_8013D570(s32 arg0, s32 arg1) {
+    s32 i;
+    POLY_FT4 *poly[2];
+    s32 h;
+
+    for (i = 0; i < 2; i++) {
+        poly[i] = GetWorkBase(0x28, D_8011ECA0);
+        func_8009F040(poly[i]);
+        SetSemiTrans(poly[i], 0);
+        SetShadeTex(poly[i], 1);
+        poly[i]->tpage = func_8009ECB0(2, 0, 0x140 + i * 0x80, 0x100);
+        switch (arg1) {
+        case 0:
+            poly[i]->x0 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; poly[i]->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x65;
+            poly[i]->x1 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0x88; poly[i]->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x65;
+            poly[i]->x2 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; h = 0xA0 - arg0; poly[i]->y2 = D_800E6280.unk_018[D_8011ECA0] + h - 0x65;
+            poly[i]->x3 = 0xA0 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80; poly[i]->y3 = D_800E6280.unk_018[D_8011ECA0] + h - 0x65;
+            break;
+        case 1:
+            poly[i]->x0 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; poly[i]->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x65;
+            poly[i]->x1 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x65;
+            poly[i]->x2 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; h = 0xA0 - arg0; poly[i]->y2 = D_800E6280.unk_018[D_8011ECA0] + h - 0x65;
+            poly[i]->x3 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y3 = D_800E6280.unk_018[D_8011ECA0] + h - 0x65;
+            break;
+        case 2:
+            poly[i]->x0 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; poly[i]->y0 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x1 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0x88; poly[i]->y1 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x2 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; h = 0xA0 - arg0; poly[i]->y2 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 + h - 0x65;
+            poly[i]->x3 = 0xA0 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80; poly[i]->y3 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 + h - 0x65;
+            break;
+        case 3:
+            poly[i]->x0 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; poly[i]->y0 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x1 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y1 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x2 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; h = 0xA0 - arg0; poly[i]->y2 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 + h - 0x65;
+            poly[i]->x3 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y3 = D_800E6280.unk_018[D_8011ECA0] + arg0 * 112 / 80 + h - 0x65;
+            break;
+        }
+        poly[i]->u0 = i * 8 + 0x18; poly[i]->v0 = 0x13;
+        poly[i]->u1 = i * 8 + 0xA0; poly[i]->v1 = 0x13;
+        poly[i]->u2 = i * 8 + 0x18; poly[i]->v2 = 0xB3;
+        poly[i]->u3 = i * 8 + 0xA0; poly[i]->v3 = 0xB3;
+        poly[i]->r0 = 0x80; poly[i]->g0 = 0x80; poly[i]->b0 = 0x80;
+        AddPrim(D_8011ECA0 * 0x400 + 0x28 + D_800E8CA0, poly[i]);
+    }
+}
 
 void func_8013DEA0(s32 arg0) {
     SPRT *temp_v0;
@@ -914,7 +1011,70 @@ loop_4:
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013F054);
+/* Called undeclared (implicit int) by func_8013BFFC and func_8013C330; no value is returned. The search walks the
+ * records down from D_80150064 - 1 with the decrement before the tests (the original's pointer step comes before
+ * the compares); the record and the selector are read through `g`, which keeps the two final unk_F5F reads
+ * separate as in the original. T-25113. */
+s32 func_8013F054(void) {
+    GameState *g = &D_800E6280;
+    u8 *w = (u8 *)&D_800E7D10;
+    s32 i;
+    s32 type;
+    s32 a;
+    u8 b;
+
+    i = D_80150064;
+    b = 0;
+    a = 0;
+    type = 0;
+    if (g->unk_1124 == 0) {
+        if (D_801500D8 == 1 || D_801500D8 == 3) {
+            type = g->unk_75E[i - 1].unk_00;
+            a = g->unk_75E[i - 1].unk_02;
+            b = g->unk_75E[i - 1].unk_01;
+        } else if ((D_801500D8 == 0 || D_801500D8 == 2) && i >= 0) {
+            do {
+                i--;
+                if ((g->unk_75E[i].unk_00 == 0xC && g->unk_F5F == 0xC) ||
+                    (g->unk_75E[i].unk_00 == 0xB && g->unk_F5F == 0xB)) {
+                    type = g->unk_75E[i].unk_00;
+                    a = g->unk_75E[i].unk_02;
+                    b = g->unk_75E[i].unk_01;
+                    break;
+                }
+            } while (i >= 0);
+        }
+    } else {
+        type = ((EtcConfig8 *)(w + D_80150080 * 8))[11].unk_00;
+        a = ((EtcConfig8 *)(w + D_80150080 * 8))[11].unk_02;
+        b = ((EtcConfig8 *)(w + D_80150080 * 8))[11].unk_01;
+    }
+    if (g->unk_F5F == 0xC && type == 0xC) {
+        if (a == 4) {
+            func_8013F320(1);
+        } else if (a == 6) {
+            func_8013F320(2);
+        } else if (a == 7) {
+            func_8013F320(3);
+        } else if (a == 2 && b == 0x4F) {
+            func_8013F320(5);
+        } else if (a == 2 && b == 0x50) {
+            func_8013F320(4);
+        } else if (a == 2 && b == 0x51) {
+            func_8013F320(6);
+        }
+    } else if (g->unk_F5F == 0xB && type == 0xB) {
+        if (a == 2 && b == 0x4A) {
+            func_8013F320(0);
+        } else if ((a == 2 && b == 0x4C) || (a == 0xB && b != 0x1E)) {
+            func_8013F320(1);
+        } else if ((a == 2 && b == 0x4E) || (a == 0xB && b == 0x1E)) {
+            func_8013F320(2);
+        } else if (a == 0x12) {
+            func_8013F320(3);
+        }
+    }
+}
 
 /* T-24129: retain the earlier caller's K&R implicit-int view (func_8013CF2C). */
 s32 func_8013F320(s32 arg0) {

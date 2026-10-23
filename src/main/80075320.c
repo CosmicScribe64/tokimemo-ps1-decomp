@@ -6,7 +6,7 @@
 u8 D_800B6990[8] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0 };
 u8 D_800B6998 = 0;
 INCLUDE_RODATA("asm/data/main/80075320.data", D_800B699C);
-INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69BC);
+u8 D_800B69BC[0x14] = { "で、待ち合わせ』" };
 INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69D0);
 INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69D8);
 INCLUDE_RODATA("asm/data/main/80075320.data", D_800B69E0);
@@ -292,14 +292,17 @@ void func_80075C24(void) {
     }
 }
 
-#ifdef NON_MATCHING
 s32 func_80075C84(void) {
     s32 i;
     s32 j;
     u32 k;
+    s32 random;
 
     if ((((DisplayActor44 *)D_8011ECD0)->unk_26 < -0x40) && (((DisplayActor44 *)D_8011ECD0)->unk_26 >= -0x4F)
         && (((DisplayActor44 *)D_8011ECD0)->unk_2A < 0x18) && (((DisplayActor44 *)D_8011ECD0)->unk_2A >= -0xF)) {
+        /* FAKE T-25050: the raw input use keeps the word and mask in
+         * separate promoted registers. */
+        if (D_800E6280.unk_F88) {}
         switch (D_800E6280.unk_F88 & 0x70) {
         case 0x20:
             D_800B6990[D_800B6998] = 0;
@@ -323,7 +326,7 @@ s32 func_80075C84(void) {
         if (D_800E6280.unk_F88 & 0x70) {
             for (i = 0; i < 13; i++) {
                 k = D_800B6998 + 7;
-                for (j = 0; j < 7; j++, k++) {
+                for (j = 0; j < 7; k++, j++) {
                     if (D_800B6990[k % 7] != D_800B3778[i][j]) {
                         break;
                     }
@@ -339,7 +342,9 @@ s32 func_80075C84(void) {
                                 D_800E6280.unk_1093 = i + 1;
                             }
                         }
-                        *(s32 *)&D_800E6280.unk_1BC[i].unk_00 += rand() & 0x7FFF;
+                        random = rand();
+                        /* The original adds to the full first record word. */
+                        *(s32 *)&D_800E6280.unk_1BC[i].unk_00 += random & 0x7FFF;
                         if (D_800E6280.unk_0F6.h & 1) {
                             D_800E6280.unk_11C.unk_02 += 0x20;
                         }
@@ -355,14 +360,17 @@ s32 func_80075C84(void) {
                         return 1;
                     }
                 }
+                /* FAKE T-25050: this impossible unsigned branch keeps the
+                 * position load inside the outer loop during optimization.
+                 * The branch and store disappear from the emitted code. */
+                if ((u32)i < 0) {
+                    D_800B6998 = 0;
+                }
             }
         }
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075C84);
-#endif
 
 s32 func_80075FA0(void) {
     u8 x;
@@ -376,7 +384,108 @@ s32 func_80075FA0(void) {
     return D_800B6780[h >> 0xC];
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076000);
+s32 func_80076000(void) {
+    s32 pad[4]; /* FAKE: preserves the 0x40 frame and handled at sp+0x2C. T-24501 */
+    s32 handled;
+    s32 girl;
+    s32 other_girl;
+
+    /* FAKE: unsigned read of the signed state byte reproduces the original lbu. */
+    if (((u8)D_800E6280.unk_F6C == 2) && (D_800E6280.unk_F80 & 1)) {
+        return 1;
+    }
+    /* FAKE: explicit signed-byte views preserve the selector range across packed stores. */
+    handled = 0;
+    if (D_800E6280.unk_F88 & 0x20) {
+        if (*(s8 *)&D_800E6280.unk_1093 >= 0) {
+            handled = 1;
+            func_80045414(9, 0, 0);
+            func_80044750(3);
+            if (func_8004480C() == 0) {
+                func_8004500C(0, 0);
+            }
+        }
+        switch (*(s8 *)&D_800E6280.unk_1093) {
+        case 4:
+            if (get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) {
+                func_80044750(0x500);
+                if (D_800E6280.unk_041 == 6) {
+                    if (((u16) D_800E6280.unk_0F4.h >> 0xC) == 0xB) {
+                        ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = *(s8 *)&D_800E6280.unk_1093;
+                        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = func_8006BDA8(1);
+                        func_80042908(7);
+                    } else {
+                        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = *(s8 *)&D_800E6280.unk_1093;
+                        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = func_8006BDA8(1);
+                        ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                        girl = func_80053564((s32) ((u16) D_800E6280.unk_0F4.h >> 0xC));
+                        /* Shift back extracts flag bit 2 and preserves ugen temporary numbering. T-24501 */
+                        if ((girl != -1) && (((s32)(D_800E6280.unk_1BC[girl].unk_0C.u << 29) >> 31) != 0)) {
+                            D_800E6280.unk_1BC[girl].unk_06 += 1;
+                        }
+                        func_80042908(6);
+                    }
+                } else {
+                    other_girl = func_80053564((s32) ((u16) D_800E6280.unk_0F4.h >> 0xC));
+                    /* Keep the shift-back extraction here for the same temporary sequence. T-24501 */
+                    if ((other_girl != -1) && (((s32)(D_800E6280.unk_1BC[other_girl].unk_0C.u << 29) >> 31) != 0)) {
+                        D_800E6280.unk_1BC[other_girl].unk_06 += 1;
+                    }
+                    D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = *(s8 *)&D_800E6280.unk_1093;
+                    D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = func_8006BDA8(1);
+                    ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                    func_80042908(5);
+                }
+            }
+            break;
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 5:
+        case 6:
+        case 7:
+            if (get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) {
+                ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                func_80044750(0x500);
+                D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = *(s8 *)&D_800E6280.unk_1093;
+                D_800E6280.unk_69C[D_800E6280.unk_71C].unk_02 = func_8006BDA8(1);
+                func_80042908(5);
+            }
+            break;
+        case 9:
+            if ((get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) && (appointment_find_today((s32) D_800E6280.unk_03E, (s32) D_800E6280.unk_03F, (s32) D_800E6280.unk_040) > 0)) {
+                ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                func_80044750(0x500);
+                func_80042908(0xFE);
+            }
+            break;
+        case 8:
+            if (get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) {
+                ((MenuIconBits *)&D_800E6280.unk_F68)->icon = *(s8 *)&D_800E6280.unk_1093;
+                func_80044750(0x50D);
+                func_80042908(0x10);
+            }
+            break;
+        case 10:
+            if (get_icon_can_use((s32) *(s8 *)&D_800E6280.unk_1093) != 0) {
+                func_80044750(0x50D);
+                func_80042908(0x20);
+            }
+            break;
+        case 12:
+            func_80044750(0x50D);
+            func_80042908(0x30);
+            break;
+        case 11:
+            func_80044750(0x50D);
+            func_80042908(0x40);
+            break;
+        }
+    }
+    return handled;
+}
 
 
 s32 func_800764AC(u32 *arg0) {
@@ -473,7 +582,67 @@ void func_80076630(void) {
     func_80042940(2);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800767A4);
+/* T-24501: 932-byte literal match. The split stack padding preserves the
+ * original 0x198 frame: selected IDs at 0x188/0x18C/0x190, candidate IDs at
+ * 0x108, and string buffers at 0x3C/0x7C/0xBC. */
+void func_800767A4(void) {
+    s32 top_gap; /* FAKE: reserve the original top stack word. T-24501. */
+    s32 third;
+    s32 second;
+    s32 first;
+    s32 choices[32];
+    s32 list_gap; /* FAKE: reserve the original word between IDs and buffers. T-24501. */
+    s32 temp_hi; /* FAKE: unused original draft scalar retained for the diagnosed stack layout. T-24501. */
+    s32 var_v1_2;
+    u8 text1[64];
+    u8 text2[64];
+    u8 text3[64];
+    s32 i;
+    for (i = 0; i < 64; i++) {
+        text1[i] = text2[i] = text3[i] = 0;
+    }
+    if (func_800764AC(choices) >= 3) {
+        var_v1_2 = rand() % 3;
+        if (var_v1_2 < 0) {
+            var_v1_2 = 0;
+        }
+        first = choices[var_v1_2 % 3];
+        second = choices[(s32) (var_v1_2 + 1) % 3];
+        third = choices[(s32) (var_v1_2 + 2) % 3];
+        D_800E6280.unk_724 = 2;
+        x_taku_menu_set(1, 3);
+        strcpy(text1, "『");
+        strcat(text1, D_800B342C[first]);
+        strcat(text1, &D_800B69BC);
+        strcpy(text2, "『");
+        strcat(text2, D_800B342C[second]);
+        strcat(text2, &D_800B69BC);
+        strcpy(text3, "『");
+        strcat(text3, D_800B342C[third]);
+        strcat(text3, &D_800B69BC);
+        x_taku_string_set((s32) text1, (s32) text2, (s32) text3, 3);
+    } else {
+        var_v1_2 = rand() & 1;
+        if (var_v1_2 < 0) {
+            var_v1_2 = 0;
+        }
+        first = choices[var_v1_2 % 2];
+        second = choices[(s32) (var_v1_2 + 1) % 2];
+        third = 0xFF;
+        D_800E6280.unk_724 = 1;
+        x_taku_menu_set(1, 2);
+        strcpy(text1, "『");
+        strcat(text1, D_800B342C[first]);
+        strcat(text1, &D_800B69BC);
+        strcpy(text2, "『");
+        strcat(text2, D_800B342C[second]);
+        strcat(text2, &D_800B69BC);
+        x_taku_string_set((s32) text1, (s32) text2, 0, 2);
+    }
+    D_800E6280.unk_725 = (u8) first;
+    D_800E6280.unk_726 = (u8) second;
+    D_800E6280.unk_727 = (u8) third;
+}
 
 s32 func_80076B48(void) {
     GameState *g;
@@ -607,7 +776,106 @@ void func_80076F48(void) {
     func_80065B0C(1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076FDC);
+void func_80076FDC(void) {
+    s32 activity;
+    s32 col;
+
+    D_801230D0 = 0xFF;
+    if (func_80066A84() == 1) {
+        activity = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
+        if (activity == 4) {
+            D_801230D0 = 0xFF;
+        } else {
+            D_801230D0 = D_800B69D0[activity];
+        }
+    } else {
+        activity = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
+        if (activity == 4) {
+            D_801230D0 = 0xFF;
+        } else {
+            D_801230D0 = D_800B69D8[activity];
+        }
+    }
+    if (D_801230D0 == 0xFF) {
+        col = func_8006F524(4);
+        if (col != 0) {
+            col = 1;
+        }
+        if (func_80066A84() == 1) {
+            switch (D_800E6280.unk_0F4.h >> 12) {
+            case 0:
+                D_801230D0 = D_800B6890[0][col];
+                break;
+            case 1:
+                D_801230D0 = D_800B6890[1][col];
+                break;
+            case 2:
+                D_801230D0 = D_800B6890[2][col];
+                break;
+            case 3:
+                D_801230D0 = D_800B6890[3][col];
+                break;
+            case 4:
+                D_801230D0 = D_800B6890[4][col];
+                break;
+            case 5:
+                D_801230D0 = D_800B6890[5][col];
+                break;
+            case 6:
+                D_801230D0 = D_800B6890[6][col];
+                break;
+            case 7:
+                D_801230D0 = D_800B6890[7][col];
+                break;
+            case 8:
+                D_801230D0 = D_800B6890[8][col];
+                break;
+            case 9:
+                D_801230D0 = D_800B6890[9][col];
+                break;
+            case 10:
+                D_801230D0 = D_800B6890[10][col];
+                break;
+            }
+        } else {
+            switch (D_800E6280.unk_0F4.h >> 12) {
+            case 0:
+                D_801230D0 = D_800B68A8[0][col];
+                break;
+            case 1:
+                D_801230D0 = D_800B68A8[1][col];
+                break;
+            case 2:
+                D_801230D0 = D_800B68A8[2][col];
+                break;
+            case 3:
+                D_801230D0 = D_800B68A8[3][col];
+                break;
+            case 4:
+                D_801230D0 = D_800B68A8[4][col];
+                break;
+            case 5:
+                D_801230D0 = D_800B68A8[5][col];
+                break;
+            case 6:
+                D_801230D0 = D_800B68A8[6][col];
+                break;
+            case 7:
+                D_801230D0 = D_800B68A8[7][col];
+                break;
+            case 8:
+                D_801230D0 = D_800B68A8[8][col];
+                break;
+            case 9:
+                D_801230D0 = D_800B68A8[9][col];
+                break;
+            case 10:
+                D_801230D0 = D_800B68A8[10][col];
+                break;
+            }
+        }
+    }
+}
 
 s32 func_80077330(void) {
     s32 r;

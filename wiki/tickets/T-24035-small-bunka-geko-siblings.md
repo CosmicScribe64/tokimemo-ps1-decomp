@@ -1,10 +1,10 @@
 ---
 id: T-24035
 title: Match small BUNKA_SD and GEKO siblings
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[bunka-sd-family-results]]", "[[scenes-family-results]]"]
 ---
 
@@ -37,3 +37,5 @@ func_80134418 remains guarded, now at four printable diff rows: target 36 instru
 Reproduction of the final annotated guard gives four rows. Docker ninja -j1 rebuilt BUNKA_SD with headers/checksum OK; GEKO remains exact. Both actual C wins are rechecked with literal default linked proof commands. Neither matched target has a guard/fallback. Total new verified C remains 396 bytes; guarded fade-in contributes zero.
 
 In Review pending root standards review/integration. No push/merge; all exploration preserved under ignored build/T-24035.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

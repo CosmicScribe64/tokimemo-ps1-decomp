@@ -1,0 +1,19 @@
+{
+  "source_checkpoint": "633d95356",
+  "source_path": "src/ovl/ENDING/801396E0.c",
+  "source_sha256": "73f12dcb5c3c3c6e32e050d5c1fae87173f6ab83b91d2ad1f27d42350ead6e9d",
+  "captured_binasm_sha256": "d79c440727a852bb2cacd5a09a977ffb19871170744bdb6592192ebacb435f19",
+  "captured_symbol_sidecar_sha256": "b8a57e4a9ebaa2490121315d6a0bce652efb199037f83a40731ba10d0164cc05",
+  "reconstructed_as1_sha256": "905927751a79aba82d332bdce254b2b30a4312ae14a4108897e11b48487d17a1",
+  "default_diagnostic_target_equals_stock": true,
+  "counterfactual_threshold": 100,
+  "counterfactual_linked_bytes_equal": 4648,
+  "production_match": false,
+  "original_ido52_as1_sha256": "3c6e0cd1e9863fe7f7baddf46f336bcc959c804672f5ea6888ae11f41249a745",
+  "original_ido52_target_equals_stock53": true,
+  "original_ido52_target_words": 1164,
+  "first_flag_destination_block": 10,
+  "stock_admitted_candidates": [60,70,71,72,73,74,81,118,119,120,319],
+  "stock_rejected_candidate": {"block":320,"old_count":11,"threshold":10},
+  "counterfactual_arm_candidates": [{"block":11,"old_count":15},{"block":58,"old_count":16}]
+}

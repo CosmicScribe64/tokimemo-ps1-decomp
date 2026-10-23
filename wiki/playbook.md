@@ -1,6 +1,6 @@
 ---
 type: playbook
-updated: 2026-10-20
+updated: 2026-10-23
 ---
 # Matching playbook
 
@@ -15,6 +15,8 @@ tools/docker.sh python3 tools/order_search.py func_XXXXXXXX --unit UNIT -j 8
 tools/docker.sh python3 tools/permute.py func_XXXXXXXX --time 120
 ```
 
+**Verdict rule (T-24700):** `funcdiff --resolve` prints `MATCH` for a function that is still `INCLUDE_ASM` because both sides are the original .s ("compared default build"). That is not a C match. A promotion needs the `compared NON_MATCHING C` version with no diff row (then remove the guard and re-run) or a default build whose body is C; only then does `tools/progress.py` count the function.
+
 Guard rules: readable C that does not match stays under `#ifdef NON_MATCHING` only when it is under about 30 rows, with a ticket id and what is left in the comment; every FAKE comment names the ticket and the reason; no inline asm. If a variant does not compile, `funcdiff` prints no diff lines: check for `MATCH` or `DIFF`, do not count zero rows. References: [[register-cheatsheet]] (symptom table), [[decompile-workflow]] (tools in full), [[notes/functions]] (past notes per function), [[build-step-gaps]] (what the compiler cannot reproduce), [[cloud-matching]] (single-function scratch setup).
 
 Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in that order, by priority, then first mention). ugen hands out `t6..t9, t0..t5` as a ring for expression temporaries. as1 deletes redundant ops (`and 0xFF`, `sll/sra` pairs, copies) but those ops still spent ring slots, then schedules delay slots per source line.
@@ -25,9 +27,15 @@ Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in th
 
 **Return type changes the delay slot.** Symptom: mode-address `lui` or loads in branch slots where the original has `nop`. Fix: make the shared declaration and definition `s32`, K&R. Caveat: the working explanation is return-register liveness, not an allocator rule; the void control differs.
 
+**An int view of a void callee takes `$v0` away after the call.** Symptom: a range that starts right after a call (a loop pointer in the next preheader) takes `$v0` and the loop-invariant values `$v1`; the original has the reverse. Fix: call the function as an implicit int (try `funcdiff --proto 's32 f(...);'` first). TAIIKU calls Rot_2D as `func_80086204`: 44 rows to 0 in `func_8013E894` (T-25102).
+
+**`i << 1`, not `i * 2`, when the original recomputes an offset from the counter.** uopt strength-reduces a multiply of the loop counter into a second induction variable and leaves a shift alone (TAIIKU `func_80139AB0` and `func_8013E894`, T-25102).
+
 ## 2. A temporary one register too low or too high (ugen ring)
 
-**Ops that as1 deletes still cost a slot.** Symptom: every `t` register one lower than the original from one block on, no instruction missing. Fix: add a no-op that ugen numbers: `idx = sp47 & 0xFF;` on a `u8` out-parameter (main `func_80054884`, 17 rows to 0, T-24214); `((f() == 1) != 0) && ...` on a call test (ETC `func_80140AE4`, 16 rows, T-24207); a third `|=` on a promoted narrow global (MASTER `func_80132444`, T-24208: each narrow `|=` spends two slots, so the count of ORs before the copies sets the numbering). Mark FAKE. Caveat: the right count is found by trying 1, 2, 3; the permuter finds these disc-free.
+**Ops that as1 deletes still cost a slot.** Symptom: every `t` register one lower than the original from one block on, no instruction missing. Fix: add a no-op that ugen numbers: `idx = sp47 & 0xFF;` on a `u8` out-parameter (main `func_80054884`, 17 rows to 0, T-24214); `((f() == 1) != 0) && ...` on a call test (ETC `func_80140AE4`, 16 rows, T-24207); a third `|=` on a promoted narrow global (MASTER `func_80132444`, T-24208: each narrow `|=` spends two slots, so the count of ORs before the copies sets the numbering). Mark FAKE. Caveat: the right count is found by trying 1, 2, 3; the permuter finds these disc-free. A narrowing cast that as1 drops also spends one: `if ((u8)g->unk_F80 & 0xF)` on a word flag test put the missing slot in the right block (main `func_8006BA40`, 7 rows to 0, T-25008); place it in the first block whose temporaries are off, and remove casts that only moved the numbering later.
+
+**One extra temporary can be corrected by a full ring wrap.** In TACO `func_801511C0`, removing an empty argument test restores the correct early home store but spends one extra temporary on a home reload that as1 deletes. `i = (u32)arg0 < 0` supplies a late zero; ten alternating +i/OR-i operations in an existing scalar initializer consume nine intermediate slots and are deleted by as1, completing the ten-slot ring. The final OR preserves the original OR-move opcode. This is an explicit source-local FAKE, semantically +0/OR0 with no overflow, extra frame slot or runtime instruction. Prove the intermediate count and final literal bytes; do not blindly add a long identity chain. See [[tickets/T-25047-taco-home-store]].
 
 **Parameter width.** `t7` vs `t8` throughout: try `u16`/`s16`/`s32` for the parameter, or a K&R `u8` parameter for a selector (main `func_8007B144`, T-17012 family). Also split `v = x >> 3; v += (x >> 3) * 80 / 48;` when an s16 narrowing must take the temporary (T-19008).
 
@@ -39,9 +47,13 @@ Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in th
 
 **Original reloads, draft CSEs.** Fix: read the second use through an address view, `*(u8 *)((u8 *)&D_800E6280 + 0x3E)`, or through a `GameState *gs` pointer (uopt treats a pointer store as a possible alias). In main `func_8006D7EC` the original mixes `gs->` and absolute accesses; the `gs->` form for record stores recomputes `sll; addu` per statement as the original does (T-23003).
 
+A later call argument can keep an earlier selector promoted across several tests. SHOUGATU E6E4 needed both an exact byte view at the second club test and at the later status-call argument: the first restored a reload, the second removed the remaining `a0` range and matched the temporary sequence. Integer debug return fixed the preceding flag register. See [[tickets/T-25038-shougatu-selection-loop]]; these are marked FAKEs, and individual removal controls establish their roles.
+
 **Delete a redundant local.** If regdiff lists a shift or sum as its own range next to your local, remove the local and repeat the expression (TAIIKU `func_8013B200`, 79 to 43 rows, T-19008). If a global is written back at every loop latch, drop the local array base and index the global (main `func_8006612C`, T-17011).
 
 **Global as the variable.** A local held in the wrong register and stored to a global in each branch: assign the global itself and read it back; uopt promotes it and colours as the original (T-10860 family).
+
+**Promoted global left uncoloured.** Symptom: the original keeps every read of a byte global in one argument register (`lui a3; lbu a3`) and the draft loads some into ugen temporaries. Fix: read it through `GameState *g = &D_800E6280;` and add one more read in an empty test, `if (g->unk_041) {}`; the extra use raises the range's priority so all pieces take one colour (ETC `func_80146D4C`, 82 to 28 rows, found by the permuter, T-25007). FAKE.
 
 **Split a range with an empty test.** `if (x) {}` after an assignment splits or reorders live ranges and adds no code (GEKO `func_801358CC`, found by autotweak, T-24302). Unassigned locals grow the frame by 8. Always FAKE.
 
@@ -53,19 +65,37 @@ Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in th
 
 as1 schedules per source line. Put initial assignments on one line (`n = 0; b = 0; p = A; r = B;`) to keep ugen's order (main `func_80055A38`, T-17007); the loop init on the `do` line, the body on the `for` line (T-11650); two constant stores on one line in the constant numbering order (T-16554). Write `c++` before the record stores if the original loads early (T-23003). One statement per line is the default; the exceptions are the FAKE layout recipes above, marked in the source. `order_search` permutes lines but never joins them.
 
-Hoists you cannot stop: as1 moves the head of a single-predecessor block into the predecessor's slot. A reference from the jump table (`case 10:` before `default:`) stopped it in VALEN `func_80134030` but changed the table size (T-24211). Where the unwanted pick comes from the global scheduler (VALEN `func_80132D0C`, T-24212; KANGEI `func_8013852C`, T-24202) the rows stay; see section 12.
+Hoists from another block (as1's global filler, [[as1-scheduler-rule]]): as1 moves the head `lui` of a dominated block (for example the out-of-range default of a switch) into a stall. Fix: declare the globals of the instructions that must stay `volatile` in the header; a volatile global's `lui` and load are never moved and the code is otherwise unchanged (VALEN `func_80134030`, GYOZI `func_80139E4C`, T-24900; FAKE). Caveat: not for a global the function reads twice (uopt then loads it once, VALEN `func_80132D0C`), not for weight-limited picks (GEKO `func_80136C20`) or same-block order (KANGEI `func_8013852C`).
+
+**Two stores to one data symbol get two `lui $at`.** as1 shares one `lui $at` across offsets only for a symbol defined in the C of the unit, inside one 16-byte-aligned chunk of the section. If the symbol is still an `INCLUDE_RODATA` piece, replace that line with its C definition (TAIIKU `func_80139AB0`, `D_801499B0`, 5 rows to 0, T-25102).
+
+**A load that the original keeps on one side of a store to another global: the two may be one symbol.** as1 keeps a load and a store in order only when both use one symbol; with two symbols its list scheduler moves the stores (long `$at` chain) above the load. Symptom: order-only rows where a promoted global's `lui/lw` sits after neighbouring stores in the draft and before them in the original. Check whether both addresses fall in one known block and reach them through it: TAIIKU `func_8013DDB8` reads `D_80122EC4` as offset 0xF4 of the `D_80122DD0` block and `D_8012080E`/`D_801207EB` as fields of actor record 102 of `D_8011ECD0` (16 rows to 0, T-25102).
+**A function named by the file's own data.** Symptom: as1 hoists the default arm's first instruction into the switch range-check slot, the original keeps the dispatch `sll` there, and no source spelling of the function changes it. Check whether the object's original `.data` (`config/objects/<UNIT>.txt`) holds a table that names the function; define it in C (`tools/data_island.py`, [[decompile-workflow]] "Data defined in the C file"). as1 then links the dispatch `jr` back to the entry ([[as1-scheduler-rule]] rule 8). KANGEI `func_80134724`, 4 rows to 0 and its FAKE cast dropped (T-25150). Second symptom: in a compare-chain switch the original fills the compare delay slots from the next compare (`li s0,2`, `li at,3`), the draft from the case heads; the table puts the compares and the case that holds a jump-table `jr` in one loop region without the other case heads. EN_NICHI `func_80136DEC`, 4 rows to 0 (T-25201).
+
+**Promote a stored global to separate its emission from the sum.** An empty `if (D_80139ADC) {}` after the store changes uopt's direct `str` to an `rstr` on the following line. In KANGEI `func_8013852C`, this puts the sum before its store-address `lui`; removing the redundant signed conversion of the u8 year restores the temporary register (T-25041, FAKE). The old and new traces have identical readiness values at the disputed pick, so readiness alone does not determine local order. Capture actual uopt output before applying this to another function.
 
 ## 6. Constants: folded vs kept in a register
 
-One `li k` stored to several places: chain through elements, `a[0] = b[0] = k;` or `(&G)[0] = (&G)[1] = (&G)[2] = k;` (shares the `li`; the hidden chain temporary can add 4 bytes to the frame, a declared local can absorb it). `--(&G)[2]` as the chain source keeps the raw `addiu` and gives `andi` for the byte stores (TACO `func_8014F820`, T-24213). A constant stored to a global and passed as an argument: store plain fields, then pass them re-read through a view (FAKE). A constant argument scheduled too late: reuse a word local, `render_x = (render_x & 0) - 40` (T-24021). If uopt folds `idx = 0; idx++` into `li 1` and the original has `addiu`, only a live backedge keeps the `addiu` (T-24204, unresolved, 1 row).
+One `li k` stored to several places: chain through elements, `a[0] = b[0] = k;` or `(&G)[0] = (&G)[1] = (&G)[2] = k;` (shares the `li`; the hidden chain temporary can add 4 bytes to the frame, a declared local can absorb it). `--(&G)[2]` as the chain source keeps the raw `addiu` and gives `andi` for the byte stores (TACO `func_8014F820`, T-24213). A constant stored to a global and passed as an argument: store plain fields, then pass them re-read through a view (FAKE). A constant argument scheduled too late: reuse a word local, `render_x = (render_x & 0) - 40` (T-24021).
+
+**Zero followed by an increment.** T-25036 closes the historical T-24204 MAIN `func_8006D7EC` fold. Initialize `idx` with `(u32)D_800E6280.unk_F5F < 0`, which uopt keeps and ugen turns into zero. As1 still substitutes that zero into the increment unless an alternate definition survives until as1: immediately before `idx++`, `if (idx) { idx = idx + ((u32)day < 0); }`. Both comparisons are always zero; the arm is unreachable and disappears entirely. Whole-TU guarded/default C and the complete MAIN checksum match. Both constructs need FAKE annotations. Placement matters; the tested forward arm leaves a branch. See [[tickets/T-25036-main-counter-late-fold]] and `drafts/T-25036/README.md`.
+
+T-25033 closes a zero-carrier case: assign the byte global before the conditional using
+`girl = G * 0; G = girl;`, then pass it through the exact unsigned byte view. uopt can
+promote the byte and defer its store to the call; ugen folds the producer late and keeps
+the entry zero register. A literal zero folds too early. This is a marked FAKE, and
+moving the source store requires checking intervening aliases/calls. See
+[[tickets/T-25033-shougatu-canonical-call]].
 
 ## 7. Stack frame size and offsets
 
-Every declared scalar owns a 4-byte slot, promoted or not; arrays sit lowest; scalars declared before an array go above it; spilled locals take slots top-down in declaration order. Fixes: declare the real scalars before tables (GEKO `func_80132B24`, only three scalars, T-24302); add `s32 pad[n]` or `u8 pad[4]` and mark FAKE (ETC `func_80144DF0` needed `pad[3]`, T-24209; TAIIKU `func_8014280C`, T-16554); remove expression-temp locals (`tbl`, `rec`) in big functions; `A[f()] = v` reserves a spare slot, so use `idx = f(); A[idx] = v;` (T-16554). Overlay and main frames are handled by `frame_pass`; write C for a normal frame. `order_search` with `/* ORDER */` around declarations finds the declaration order (T-16230). Turn a pad slot into the real local the source likely had when ring numbers also differ.
+Every declared scalar owns a 4-byte slot, promoted or not; arrays sit lowest; scalars declared before an array go above it; spilled locals take slots top-down in declaration order. Fixes: declare the real scalars before tables (GEKO `func_80132B24`, only three scalars, T-24302); add `s32 pad[n]` or `u8 pad[4]` and mark FAKE (ETC `func_80144DF0` needed `pad[3]`, T-24209; TAIIKU `func_8014280C`, T-16554); remove expression-temp locals (`tbl`, `rec`) in big functions; `A[f()] = v` reserves a spare slot, so use `idx = f(); A[idx] = v;` (T-16554). Overlay and main frames are handled by `frame_pass`; write C for a normal frame. `order_search` with `/* ORDER */` around declarations finds the declaration order (T-16230). Turn a pad slot into the real local the source likely had when ring numbers also differ. Homes below every slot the declared locals can reach are uopt spill homes (`rstr`/`rlod` in uopt output): strength-reduced products of a loop counter (`o * step`, `o * 4`) and copies get them in creation order. Remove the declared `rot`/`q` locals and write the index loop instead of padding (TACO `func_8013DEE4`, `&pt[j * 2 + o]`, 69 rows to 0, T-25110). A small compare-chain `switch` also takes a cfe temporary slot after the declared locals.
 
 ## 8. Loads re-read vs CSE'd; struct aggregates
 
 Several close `D_` names in one function are usually one struct or array. Write accesses through one base (`D_X[i]`, `(&D_X)[k]`); consecutive scalar globals with a store, then the next load, are one struct declared at the lowest address (T-10610 family). The opposite case: in main 80075320 `u8 D_800B6990[8]` plus `u8 D_800B6998` shared `lui $at` correctly while a single `KeyRing` struct did not (`func_800755B4`, T-24303). `viewsweep` and `data_island.py` before guessing.
+
+**Base address and record size in registers across a switch, rebuilt per case in the original.** Symptom: the draft has `li aN,68; multu` and a `lui/addiu` base in `$a2`/`$a3` loaded at the switch head, and the original has `sll/addu/sll` and a fresh `lui/addiu` in each case. Fix: drop the record pointer local and index the array in every statement (`((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26`). Test the index (`if (arg0 == 0)`), not the pointer: uopt rewrites the index test into `bne v0,<base>` itself, and that `lda` does not count as a use. A written pointer compare does count and brings the hoist back. TAIIKU `func_8013F3A4`, 524 rows to 0 (T-25102).
 
 ## 9. Jump tables and switch spelling
 
@@ -73,7 +103,9 @@ If the table starts at 0 or below the lowest case, add the empty labels the tabl
 
 ## 10. Block copies
 
-Struct copy temporaries and the end register come from ugen's copy-state rotation. Recipes: copy the sibling's declaration order for record-drawing frames; write `Rec *p` with index arrays instead of pointer walks (main `menu_girl_taku_set`, matched once the m2c walks were replaced, T-24303). If the end register is one list entry off with equal address registers it is not a C choice: [[build-step-gaps]] (5 cases, SHUGAKU T-22014).
+For copy mismatches, distinguish direction state from temporary-register choices. The historical direction mismatch is handled by the enabled T-24092 `ugen_pass.py`; see [[build-step-gaps]]. Source recipes still matter: copy the sibling's declaration order for record-drawing frames; write `Rec *p` with index arrays instead of pointer walks (main `menu_girl_taku_set`, matched once the m2c walks were replaced, T-24303). A remaining register mismatch alone does not prove that no C source can match.
+
+**End pointer one ring slot high (source + 3, the original source + 2).** In our pipeline the `ugen_pass.py` sentinel sets how many scratch registers ugen burns before the end pointer: state B burns two, state F burns one, for aligned copies too. The pass picks F after an `istr`, and for the rest of the procedure once a signed `<` jump against a positive constant comes after an `istr`. When only direct global stores come before the copy, put a never-true arm before the first copy: `if ((u32)G < 0) { do { *(u8 *)0 = 0; } while ((s32)G < 1); }`, where `G` is a byte global that plays no part in the nearby allocation. ugen drops the arm and as1 deletes the dead load; mark it FAKE. MASTER `func_801363F4`, 167 rows to 0 together with a store-order fix, and `func_801344E0` (171 rows to 0) with the same two changes (T-25107).
 
 ## 11. Return value, implicit int and narrowing
 
@@ -81,12 +113,116 @@ Callee returns 16 bits: declare `u16 f();` and make the loop variable one `u16 r
 
 ## 12. Byte views and bit-fields
 
-Flag byte `|=`: use a bit-field store `((Bits *)&x)->f = 1;` when one temporary is missing (T-11650). A 3-bit field decremented in a byte is `f -= 1` on a bit-field typedef, not shifts (T-23003, 561 to 482 rows). Repeated `|=` through a byte view spends ring slots (T-24302: one OR gives `t4`, two give `t8`, three `t7`). A u16 flag read after a `+=`: test through an `s16` view `((*(s16 *)&D) & 0xFF00)`, not a cast (main `func_8007A50C`, T-17012).
+Flag byte `|=`: use a bit-field store `((Bits *)&x)->f = 1;` when one temporary is missing (T-11650). The shape gives it away: a bit-field store loads the byte into another register than its `lui` (`lui t9; lbu t0,(t9)`), and on a promoted byte it adds `move t,v0; ori; andi v0` before the store. A plain `|=` gives `lui t; lbu t,(t)` with no copy (main `func_8006A044`, 174 rows to 86, then 0 with a dead read for the colour order and an implicit-int return, T-25103). A 3-bit field decremented in a byte is `f -= 1` on a bit-field typedef, not shifts (T-23003, 561 to 482 rows). Repeated `|=` through a byte view spends ring slots (T-24302: one OR gives `t4`, two give `t8`, three `t7`). A u16 flag read after a `+=`: test through an `s16` view `((*(s16 *)&D) & 0xFF00)`, not a cast (main `func_8007A50C`, T-17012).
 
 ## Known compiler limits
 
 Do not spend a session on these without a new idea; leave a guard with the ticket id and what remains. Details and the census in [[build-step-gaps]].
-- ugen block-copy state: the original does not switch a struct copy to state F at a block start; IDO 5.3 does. Not reachable from C (T-19001, T-22014).
-- as1 global scheduler picks and default-block hoists (T-24202, T-24211, T-24212): same family, no source form found.
-- uopt `idx = 0; idx++` fold (T-24204): proves the zero through every source form tried; only a live backedge keeps the `addiu`.
+- Historical ugen block-copy direction mismatch (T-19001, T-22014): addressed by the enabled `tools/ugen_pass.py` in [[tickets/T-24092-ugen-block-copy-state-pass]]. Reproduce remaining failures with the current pipeline; 32-byte unrolled-copy register choices are a separate question.
+- as1 global scheduler picks (T-24202, T-24212, T-24203): rule and remaining cases in [[as1-scheduler-rule]]; default-block hoists are fixed with `volatile` (T-24900).
+- Historical uopt `idx = 0; idx++` fold (T-24204): closed in MAIN by the T-25036 late-zero producer and late-eliminated identity arm; see section 6.
 - uopt priority and colour order with no uniform rule: apply recipes above, do not search flags (exhausted in T-0014, T-0017, T-9800).
+
+## Call-result liveness and a miscolored constant (T-25043)
+
+TACO `func_8014AB50` had seven differing words, all the shared constant one in v0 instead of v1. Capturing an existing signed helper result in an existing local and reading it after the flag stores in `if ((u32)random < 0) { repeat_last_flag_store; }` closes the match. The condition is always false; uopt still sees the call-result lifetime and extra constant use, then ugen removes the arm. Trace confirms constant priority0.5->1 and v0->v1. This is a marked FAKE, with no added runtime instruction. Check that the helper defines its return and the local is initialized on every path; this example's loop always executes30 times. Argument-derived and index-derived identities failed because they changed other live ranges. See [[tickets/T-25043-taco-constant-tail]] for controls. Apply only when allocator evidence supports this mechanism.
+
+
+### T-25040: measure the full constraint threshold and overlapping static views
+
+For a leaf register cycle, count interference rather than assuming the caller-save pool is the threshold. MAIN `func_8006D138` year/base ranges each had22 edges (constrained), while the initial flags snapshot had5. Deferring one constant's fold removed a zero-profit range and restored allocation without changing emitted instructions. After that, overlapping flag word/byte views left one absolute load. An exact-width discarded unsigned-less-than-zero byte test retained the static view in uopt; the actual zero-offset pointer read stayed base-relative and the discarded view vanished in ugen. Every control is defined and FAKE-annotated; guarded/default872-byte proofs and whole MAIN SHA1 pass. See [[tickets/T-25040-main-flag-dispatch]] and `drafts/T-25040/` for evidence and rejected broader address/lifetime changes.
+
+## Spend a temporary before a call without changing later address sharing (T-25045)
+
+A late-folded zero plus two alternating identities in an existing call argument can advance the ugen free-list order while as1 removes every identity instruction. ETC func_80146D4C uses `zero = g->unk_041 * 0; printf(format, (score + zero) | zero);` in the preceding total print, retaining the final shared address and producing index t3/counter t4,t6. Applying the identity inside the index instead breaks address CSE. Check the producer's semantics, zero lifetime, full-TU literal output and removal controls; mark the artificial form FAKE. One identity or literal zero regresses this case. See [[tickets/T-25045-etc-ring-slots]].
+
+
+## Separate loop bases with a late-folded initializer boundary (T-25054)
+
+If uopt shares a walked base and an indexed base but the target materializes both, a one-iteration `do { p = base; } while ((u32)byte < 0);` can retain the control-flow boundary through uopt and fold it before final code. Check that the byte is nonvolatile and independent of earlier live ranges; reusing a switch byte changes its allocation. Mark the artificial boundary FAKE. For the ETC results scene, indexed coordinate arrays also provide noalias metadata needed to schedule a stack argument in the call delay slot. Index all related arrays and place the counter increment where their strength-reduced updates belong. See [[tickets/T-25054-etc-results-scene]].
+
+## A missing reserved register can look like an early temporary deficit (T-25055)
+
+TEL func_80136724 first differed in temporaries at word85, but the cause was the case0x40 selector much later. A separate local left the global uncoloured; direct global stores/reads reserved the missing caller register for the whole procedure. Sharing maximum and total then repaired the moved zero. A defined unsigned-false girl read raised range profit and corrected40 remaining positions; a neutral comparison expression closed the last operand swap. Capture the allocator before adding ring identities: compare which registers are reserved across the function. See [[tickets/T-25055-tel-pass-mechanisms]] and drafts/T-25055 for independent controls and exact full-TU evidence.
+
+## Recover counter reuse before tuning temporaries (T-25059)
+
+When several adjacent loops use the same saved register in the target, trace which source counter survives into the next loop. ETC func_801480D0 needs its generation counter as the inner counter of the later tie and selection loops; swapping only those variable roles removes an unwanted saved induction range. Separate unrelated scalar lifetimes before deriving declaration order from stack offsets. Existing scalar identities can then recover product and adjustment registers without runtime identities. A cached global value may also suppress a required reload after intervening array stores; compare direct accesses. See [[tickets/T-25059-etc-ranking-generator]].
+
+## Order a remainder range and preserve expression evaluation (T-25057)
+
+NAME_ENT `func_801398EC` needed remainder/frame/index in a1/a2/a3. A scalar remainder was replaced by its later expression range; a one-element local array retained an earlier memory range, then was fully promoted. A dead initial frame assignment ordered that range before frame/index. The computed remainder dominates every read, and uopt removes the initial load and store. An exact-width discarded unsigned comparison separately orders record induction. Inspect optimized ucode before treating temporary differences as allocator errors: here the array made `row + tile * 16` evaluate tile first. `row - (0U - tile * 16)` preserves row-first order with defined unsigned modulo arithmetic. Default C matches 492 bytes, with all 27 hashes passing. Each artificial constraint is FAKE-marked; removal controls differ 36, 25, 25 and 17 of 123 words respectively. See [[tickets/T-25057-name-ent-pass-investigation]] and drafts/T-25057/README.md.
+
+## Counter slots, row pointers and `.noalias` in two-phase loops (T-25102)
+
+TAIIKU `func_8013E1FC` (1688 bytes). A loop counter whose spill sits below every declared local is not spilled at
+its declared home, and a second phase may reuse that slot for a +16 value. Write the increment at the loop end
+(`for (angle = 0; angle < 64; angle++)`) and the stride as `angle * 16`, `(angle + 1) * 16`, so the spills are
+compiler temporaries. Then fit the declared scalar count to the array offsets. If the original loads two array walks
+before storing either (`lw x; lw y; ...; sw x; sw y`) and the draft stores x first, read the `cc -S` listing for
+`.noalias $y,$x`. Row-pointer locals (`xp = x + (i << 1)`) used elsewhere in the function can remove it, so index the
+arrays instead (`x[i << 1]`). A `move v0,zero` init that the original schedules after the hoisted loop invariants
+needs the init on the `for` line.
+A chained store of a computed value (`y[2] = y[0] = angle << 3;`) can reserve one more spill slot than two
+statements (`y[0] = angle << 3; ... y[2] = y[0];`, same stores after uopt's forwarding): symptom, a counter spill
+4 bytes low with the frame size right. Constant chains (`x[1] = x[0] = 320;`) did not (TAIIKU `func_8013EC60`).
+
+## Small copies follow the ugen_pass state; final store with the epilogue (T-25105)
+
+`tools/ugen_pass.py` puts its B/F sentinel before every `Umov`, also before copies of 32 bytes or less. The transfer register skips two ugen entries in state B and one in state F. If a small copy's temporary is one slot late, check the pass's state for it (the last `str`/`istr`/jump before the copy in the ucode). After an `istr`, an empty `if ((s32)x > 0) {}` survives uopt as a signed positive-bound jump, emits no code and gives F (FAKE). Separately, as1 moves `lw ra` above the last store only when the store's address names a global: write `((T *)&G[i * N + k])->f = v`, not a store through a pointer local. Main `func_80054FC0`, 113 lines to MATCH. Loops (main `func_8005557C`, 1212 bytes): when only the last of many constant-trip loops is unrolled in the original, give every loop one shared counter: with a shared counter IDO unrolls only the last loop of the function. Make it `u32` if a bound equals a multiply constant elsewhere (an `s32` bound shares the constant and turns the multiply into `li; multu`).
+
+## Keep an index scan unreduced with a scan pointer (T-25101)
+
+Symptom: the target recomputes `base + i` on each pass, and its loop test reads through a preheader copy of the base (`move a1,a3`; `addu t2,a1,v0` in the latch, `addu v1,a3,v0` in the header). Fix: write a plain `for` over a scan pointer, `for (i = 0, s = buf; s[i] != 0; i++) { p = s + i; ... }`. uopt strength-reduces a cursor written as `&buf[i]` or `buf[i]` into a walked pointer. `p = buf + i` with the test `buf[i]` stays indexed, but then the test shares the base register. Put `i = 0` before `s = buf` so the copy lands in the entry `beqz` delay slot. uopt moves a following loop's `i = 0` into the break arm and the exhausted exit, so do not add resets there. Main `sndi`: 123 rows to a default-C match, with no FAKE casts. See `drafts/T-25101/main/sndi/NOTES.md`.
+
+## Read-only byte global, argument colours, shared index shift (T-25101)
+
+Main `func_8005215C`, from INCLUDE_ASM to default C with three source recipes:
+
+- **Byte global reloaded after every call.** If the target loads a byte once per region and reloads it after each call (`lbu v0` after `jal`), write every read as `*(u8 *)&G.field`, with no local. uopt keeps the byte as one promoted global in v0. A `(u8)` cast on an s8 field adds conversion ranges that cache the value across calls.
+- **A plain argument can push a CSE range up one colour.** When a value is also passed directly as an argument (`f(G.f61, 0)`), its range gets that argument register as a preference and can land in a2 where the target has v1. A wrapper on the argument (`G.f61 + 0`, FAKE) removes the preference and still emits `move a0,v1`. A cast does not.
+- **One shift shared in a ugen temporary.** For two tables indexed by the same global, `((s32 *)A)[i * 2]` and `((s32 *)B)[i * 2]` give a single `sll` in a ring temporary, used by both `addu`. Int arithmetic or pointer casts in one condition make the shift a uopt range (v0, every later temporary one register low); separate statements emit two shifts.
+
+Before changing C, check the ring temporaries in emission order: they show whether a value is a ugen temporary or a uopt colour. See `drafts/T-25101/main/func_8005215C/NOTES.md`.
+
+## Copy propagation renumbers swapped saved-register ranges (T-25101)
+
+Main `get_h_tokimeki`, 230 rows to 0. Unconstrained ranges are coloured in bit order. Copy propagation re-enters every expression whose operands changed after the main pass, so a propagated local (a row pointer `p = TABLE[n]`) gets a late bit, and a plain load keeps its early main-pass bit. If the target colours the propagated range first, route the other range through a propagated pointer as well: `GameState *gs = &D_800E6280;` and `(&gs->unk_0FC)[i].unk_02` made the parameter value a re-entered expression, numbered after the row. Read the bits in the traced uopt's expression table (`draft.o.trace` after "REMOVAL OF REDUNDANT STORES", via `regdiff -v`) before trying spellings. See `drafts/T-25101/main/get_h_tokimeki/NOTES.md`.
+
+## A switch keeps a parameter in its saved register (T-25101)
+
+Symptom: a parameter tested in a loop that calls functions is spilled to its home slot (`sw a0,<frame>(sp)`, `lw` before each test), and every saved register is one off. regdiff reports the parameter as "not allocated, -ve save". Fix: write the tests that the target lowers as a compare chain (`beqz fp; ... beq fp,a2`) as `switch (mode) { case 0: ... case 1: ... }`, not as `if (mode == 0) ... else if (mode == 1)`. Main `get_near_menu`: the tie block as a switch put `mode` in fp and the constant 1 in a2, 352 rows to 9. The other mode tests stayed `if (mode == 0 && ...)`, as in the target. See `drafts/T-25101/main/get_near_menu/NOTES.md`.
+
+## Empty then-arm and a u8 count under -cckr (T-25101)
+
+Symptom: the target branches `beqz t6, body` and then `b join` from the fall-through, where the draft has one inverted `bnez t6, join`. Fix: write the test with an empty arm, `if (g->unk_F80 & 0xF) { } else { switch ... }`. In main `func_8004FC10` the inverted `if (!(...))` cost 52 aligned rows and moved a1/a2/a3. In the same function, a signed `slt` test of an s8 cursor against a u8 count needs `(s32)count`, because IDO runs with -cckr and promotes u8 to unsigned. A frame 8 bytes too large came from a separate result local: one counter serves the scan loops and the call result. See `drafts/T-25101/main/func_8004FC10/NOTES.md`.
+
+## A spill slot one word off: copy propagation and the temporaries (T-25201)
+
+When a pointer's spill slot is 4 bytes off and everything else matches, check whether the original spills the variable at its own home (not copy-propagated) or a uopt temporary (copy-propagated expression). uopt does not copy-propagate `p = expr` into a block where the assignment is not available, where an operand of `expr` changes, into a loop-latch branch condition, or when `expr` contains a load (uoptcopy.c). A dead store to the operand right after the assignment (`idx = 0;`, FAKE) makes every use read p's home and keeps p a register candidate, unlike `&p`. Loop bounds read straight from a record in `for` conditions become partial-redundancy items kept in registers and reloaded after calls, which is the shape of a count reloaded at the latch and at the inner exit (main `mod_set_gpu`, 4 rows to 0).
+## Same expression in several switch cases shares one register range (T-25108)
+
+uopt numbers an expression such as `D_800B5AE4[i][0]` once per function. Strength-reduced pointers of
+loops in different `case` arms that use the same index variable then form one range, which takes one
+colour in every arm. Symptom: dst/src pointer registers swapped in some arms and right in others. Fix:
+look for a variable the original reuses as the loop counter in the odd arm. In main `func_8006509C`
+the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the scan on its own `j`
+(56 rows to 0, plain C). See `drafts/T-25108/main/func_8006509C/NOTES.md`.
+## A switch on an unsigned global turns copy propagation off for the whole procedure (T-25111)
+
+tools/cvt_pass.py writes `OPTN 405 0` (no global copy propagation) for a procedure whose switch selector is an unsigned global read at the entry. Every cross-block copy then stays a range. A call result used after a branch (`d = f(); if (a < t && d < t)`) gets `move rX,v0`, because uopt never gives v0 to a range defined in the call's block. as1 deletes that move in a `void` function but keeps it in an `s32` one. Fix: `switch (*(u8 *)&G.field)`. The byte view is an indirect load, so the pass leaves propagation on, and the selector keeps its register. Mark it FAKE. TACO `func_8013BAC4`, score 18 to 0. Separately, `if (x != 0) continue;` before a second `G += ...` makes ugen reload G, where a plain `if` reuses the stored value across the fall-through.
+
+## A shared constant loaded too late in one arm (T-25201)
+
+uopt adds a block to a constant's register range only where the constant has appeared on some path from the
+entry (`regdataflow`). An arm with no use of it gets the join's reload at its end instead of at its start.
+Only uses that need a register count: a divisor, a compare operand, the value of an indirect store (`istr`).
+A store to a fixed address (`rec[64].x = 3`) is a variable store whose small constant is an immediate and
+adds nothing. Fix: a never-true arm with an indirect store at the start of the arm,
+`if ((u32)a < 0) { rec[a + 64].unk_01 = 3; }` on a parameter (FAKE); uopt keeps it and ugen removes it. The
+traced uopt's R9SAVE lines (regdiff's `draft.log`) list each range's blocks to confirm. main `func_80065B0C`
+(9 rows to 0); `drafts/T-25108/main/func_80065B0C/NOTES.md`.
+
+## A pointer in `s0` where the original saves it on the stack around calls (T-25115)
+
+Symptom: the target keeps a local in a caller register and stores and reloads it at its home around each call (`sw a2,0x28(sp)` before the `jal`, `lw a2` after), the draft gives it `s0`. Cost check: a caller register costs about 2 per call the range crosses; the first use of a saved register costs `clamp(0.25 * uopt_blocks, 4, 60)` (strict `<`, caller colours win ties). Count the blocks in the `flow graph` lines of the regdiff trace. uopt also ends a block at a statement boundary after 20 counted variable loads (`varreflimit`: checked at line and plain-store ops, not after `p->x = ...` stores; a variable assigned earlier in the same block does not count). Main `func_80049A40` needed 24 blocks: channel locals computed before the switch and black vertices as `r * 0` pushed three arms past the limit, and a `gs = &D_800E6280;` set before the calls placed the coordinate block's split where the target reloads a parameter. See `drafts/T-25115/main/func_80049A40/NOTES.md`.

@@ -73,4 +73,6 @@ segments:
       - [0x78E0, .rodata, KANGEI/80135F10]
       - [0x7900, .rodata, KANGEI/80137B90]
       - [0x7950, data, KANGEI_data]
+      - [0x7B30, .data, KANGEI/80134120]
+      - [0x7C80, data, KANGEI_data_80139C80]
   - [0x30000]

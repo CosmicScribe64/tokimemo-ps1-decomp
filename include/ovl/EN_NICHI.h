@@ -40,6 +40,10 @@ extern s32 D_80139218;
 void func_801320C0(void);
 void func_80135FBC(s32 arg0, s32 arg1);
 void func_80136B10(void);
+/* Entries of the 80136B10.c scene table D_80139C5C (defined in that file, T-25201). */
+void func_80136B74(void);
+void func_80136DEC(void);
+void func_8013735C(void);
 void func_801340CC(void);
 void func_80134258(s32 arg0);
 void func_801344F0(s32 arg0, s32 arg1);
@@ -111,8 +115,10 @@ extern u8 D_80139C34[8];
 extern u8 D_80139C3C[8];
 extern u8 D_80139C44[8];
 extern s16 D_80139C4C[6];
+void func_80137C58(void);
 void func_80137E2C(void);
 s32 func_80137FEC();
+void func_80138CCC(void);
 #endif /* OVL_EN_NICHI_H */
 extern s32 D_80139B24;
 

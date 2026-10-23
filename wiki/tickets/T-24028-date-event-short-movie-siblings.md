@@ -1,10 +1,10 @@
 ---
 id: T-24028
 title: Recover DATE and EVENT short movie siblings
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[date-family-results]]", "[[event-family-results]]"]
 ---
 
@@ -29,3 +29,5 @@ Both retain the same old T-17201 timer-narrowing gap: candidate raw counter in v
 Reproduction and detailed negative evidence: drafts/T-24028/. Both archive probe commands rechecked 22/14 rows. EVENT needs s32 self view in scratch; header stays void, EVENT source remains assembly. Normal Docker ninja -j1 DATE.ok/EVENT.ok rebuilt DATE, headers OK, DATE checksum OK; the guard fallback contributes zero C bytes. git diff --check clean.
 
 Status In Review for root standards review. No push/merge; DATE2 and other owned files untouched.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

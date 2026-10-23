@@ -14,6 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import data_island  # noqa: E402
 import data_pieces as dp  # noqa: E402
 import object_boundaries as ob  # noqa: E402
+import split_objects as so  # noqa: E402
 
 ISLAND_S = """.include "macro.inc"
 
@@ -70,7 +71,41 @@ class DataPiecesTest(unittest.TestCase):
         cfg = {"segments": [{"name": "X", "type": "code", "start": 0, "subsegments": [
             [0x0, "c", "X/80000000"], [0x100, "data", "X_data"], [0x120, ".data", "X/80000000"],
             [0x140, "data", "X_data_80000140"]]}, [0x200]]}
-        self.assertEqual(dp.islands(cfg), [("X/80000000", 0x120, 0x140)])
+        self.assertEqual(dp.islands(cfg), [("X/80000000", 0x120, 0x140, "", ".data")])
+
+    def test_further_island_of_an_object(self):
+        """T-25005: a second range of the same object has its own dir and section."""
+        cfg = {"segments": [{"name": "X", "type": "code", "start": 0, "subsegments": [
+            [0x0, "c", "X/80000000"],
+            {"start": 0x100, "type": ".data", "name": "X/80000000", "dir": "island_80000100",
+             "linker_section": ".data_80000100"},
+            [0x110, "data", "X_data"], [0x120, ".data", "X/80000000"]]}, [0x200]]}
+        self.assertEqual(dp.islands(cfg), [
+            ("X/80000000", 0x100, 0x110, "island_80000100", ".data_80000100"),
+            ("X/80000000", 0x120, 0x200, "", ".data")])
+        self.assertEqual(dp.secondary(0x80000100), ("island_80000100", ".data_80000100"))
+        self.assertEqual(dp.island_source("asm", dp.islands(cfg)[0]),
+                         os.path.join("asm", "data", "island_80000100", "X/80000000.data.s"))
+        cfg["segments"][0]["subsegments"][1] = [0x100, ".data", "X/80000000"]
+        with self.assertRaises(dp.PieceError):
+            dp.islands(cfg)
+
+    def test_further_island_shares_the_piece_directory(self):
+        second = ISLAND_S.replace("80001", "80002").replace("/* 10", "/* 20")
+        blob = self.blob + bytes(0x1000 - 16) + self.blob[0x1000:]
+        with tempfile.TemporaryDirectory() as tmp:
+            first, path = os.path.join(tmp, "a.s"), os.path.join(tmp, "b.s")
+            for p, text in ((first, ISLAND_S), (path, second)):
+                with open(p, "w") as f:
+                    f.write(text)
+            pdir = os.path.join(tmp, "pieces")
+            dp.process(first, blob, 0x1000, 0x1010, pdir)
+            dp.process(path, blob, 0x2000, 0x2010, pdir, clear=False)
+            self.assertEqual(len(os.listdir(pdir)), 6)
+            with self.assertRaises(dp.PieceError):
+                dp.process(path, blob, 0x2000, 0x2010, pdir, clear=False)
+            dp.process(first, blob, 0x1000, 0x1010, pdir)
+            self.assertEqual(len(os.listdir(pdir)), 3)
 
 
 class DataIslandTest(unittest.TestCase):
@@ -86,6 +121,13 @@ class DataIslandTest(unittest.TestCase):
         out = data_island.split_yaml(self.YAML, "X", 0x80000100, 0x80000200, "X/80000000")
         self.assertIn("      - [0x100, .data, X/80000000]\n  - [0x200]\n", out)
         self.assertNotIn("X_data", out)
+
+    def test_split_yaml_further_island(self):
+        out = data_island.split_yaml(self.YAML, "X", 0x80000120, 0x80000140, "X/80000000", further=True)
+        line = ("      - { start: 0x120, type: .data, name: X/80000000, dir: island_80000120, "
+                "linker_section: .data_80000120 }\n")
+        self.assertIn(line, out)
+        self.assertEqual(so.parse_sub_line(line), (0x120, ".data", "X/80000000"))
 
     def test_split_yaml_outside(self):
         with self.assertRaises(data_island.IslandError):

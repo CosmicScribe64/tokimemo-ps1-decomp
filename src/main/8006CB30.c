@@ -144,7 +144,125 @@ void func_8006D038(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D138);
+void func_8006D138(void) {
+    GameState *gs = &D_800E6280;
+    u32 flags;
+
+    /* FAKE: T-25040, the empty entry switch and flag/base test preserve the entry load.
+     * The empty year checks below retain the original branch layout. */
+    switch (gs->unk_03F) { default: break; }
+    flags = *(u32 *)gs->unk_F64;
+    if (flags | (u32)gs) {}
+
+    switch (gs->unk_03F) {
+    case 6:
+    case 7:
+        if (gs->unk_03E == 0x5F) {
+            if (((CharFlags *)&flags)->b1) {
+                gs->unk_120[1] = 1;
+            }
+            gs->unk_120[0xE] = 1;
+        }
+        if ((gs->unk_03E == 0x60) && (((CharFlags *)gs->unk_F64)->b5)) {
+            gs->unk_120[5] = 1;
+        }
+        if (gs->unk_03E == 0x61) {
+        }
+        break;
+    case 9:
+    case 10:
+        if ((gs->unk_03E == 0x5F) && (((CharFlags *)&flags)->b2)) {
+            gs->unk_120[7] = 1;
+        }
+        if ((gs->unk_03E == 0x60) && (((CharFlags *)gs->unk_F64)->b6)) {
+            gs->unk_120[0xA] = 1;
+        }
+        if (gs->unk_03E == 0x61) {
+        }
+        break;
+    case 1:
+        if ((gs->unk_03E == 0x60) && (((CharFlags *)&flags)->b3)) {
+            gs->unk_120[3] = 1;
+        }
+        if (gs->unk_03E == 0x61) {
+            /* FAKE: T-25040, this zero offset folds after uopt, retaining the base-relative byte load. */
+            if (((CharFlags *)(gs->unk_F64 + ((u32)gs->unk_03F < 0)))->b7) {
+                gs->unk_120[6] = 1;
+            }
+        }
+        /* FAKE: T-25040, the late zero keeps constant 98 out of the allocator's interference graph. */
+        if (gs->unk_03E == 0x62 + ((u32)gs->unk_03F < 0)) {
+        }
+        break;
+    case 12:
+        if ((gs->unk_03E == 0x5F) && (((CharFlags *)&flags)->b3)) {
+            gs->unk_120[3] = 1;
+        }
+        if ((gs->unk_03E == 0x60) && (((CharFlags *)gs->unk_F64)->b7)) {
+            gs->unk_120[6] = 1;
+        }
+        if (gs->unk_03E == 0x61) {
+        }
+        break;
+    case 3:
+    case 4:
+        if ((gs->unk_03E == 0x60) && (((CharFlags *)&flags)->b4)) {
+            gs->unk_120[0xD] = 1;
+        }
+        if (gs->unk_03E == 0x61) {
+            /* FAKE: T-25040, the dead byte view occupies uopt's static alias; the late-zero offset
+             * below keeps the real load base-relative. Both comparisons are false; no extra load emits. */
+            if ((u32)gs->unk_F64[1] < 0) {}
+            if ((gs->unk_F64 + ((u32)gs->unk_03F < 0))[1] & 1) {
+                gs->unk_120[0xB] = 1;
+            }
+        }
+        break;
+    }
+    switch (gs->unk_03F) {
+    case 5:
+        if ((gs->unk_03E == 0x60) && !(((CharFlags *)gs->unk_F64)->b4)) {
+            gs->unk_120[0xD] = 0x80;
+        }
+        if ((gs->unk_03E == 0x61) && !(gs->unk_F64[1] & 1)) {
+            gs->unk_120[0xB] = 0x80;
+            return;
+        }
+        return;
+    case 8:
+        if ((gs->unk_03E == 0x5F) && !(((CharFlags *)gs->unk_F64)->b1)) {
+            gs->unk_120[1] = 0x80;
+        }
+        if ((gs->unk_03E == 0x60) && !(((CharFlags *)gs->unk_F64)->b5)) {
+            gs->unk_120[5] = 0x80;
+        }
+        if (gs->unk_03E == 0x61) {
+            return;
+        }
+        break;
+    case 11:
+        gs->unk_F64[1] &= 0xFF7F;
+        if ((gs->unk_03E == 0x5F) && !(((CharFlags *)gs->unk_F64)->b2)) {
+            gs->unk_120[7] = 0x80;
+        }
+        if ((gs->unk_03E == 0x60) && !(((CharFlags *)gs->unk_F64)->b6)) {
+            gs->unk_120[0xA] = 0x80;
+        }
+        if (gs->unk_03E == 0x61) {
+            return;
+        }
+        break;
+    case 2:
+        if ((gs->unk_03E == 0x60) && !(((CharFlags *)gs->unk_F64)->b3)) {
+            gs->unk_120[3] = 0x80;
+        }
+        if ((gs->unk_03E == 0x61) && (!((CharFlags *)gs->unk_F64)->b7)) {
+            gs->unk_120[6] = 0x80;
+        }
+        break;
+    }
+}
+
 
 void func_8006D4A0(void) {
     s32 i;
@@ -216,8 +334,6 @@ s32 func_8006D6E0(void) {
     }
 }
 
-/* NON_MATCHING: T-24204, 1 row; the first idx++ (right after idx = 0) is folded by uopt to li v1,1 where the original keeps addiu v1,v1,1 (draft T-23003; T-24001, T-24204: no source form found). */
-#ifdef NON_MATCHING
 /* T-23003: the 3-bit counter in bits 5..7 of the byte at GameState +0xF6 (read with lbu, decremented as a bit-field). */
 typedef struct F6Bits {
     u32 pad0 : 5;
@@ -276,9 +392,12 @@ void func_8006D7EC(void) {
     }
     func_8006CF38();
     wd = (D_800E6280.unk_041 + 1) % 7U;
-    idx = 0;
+    /* FAKE: T-25036, unsigned < 0 is zero, but folds after uopt so idx keeps a register dependency. */
+    idx = (u32)D_800E6280.unk_F5F < 0;
     if (day == monthDays) {
         D_800E6280.unk_69C[0].unk_00 = 0xFE;
+        /* FAKE: T-25036, this unreachable identity clears as1's zero substitution; it emits no code. */
+        if (idx) { idx = idx + ((u32)day < 0); }
         idx++;
         day = 0;
         monthOff = 1;
@@ -575,9 +694,6 @@ void func_8006D7EC(void) {
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
-#endif
 
 s32 func_8006EA40(void) {
     s32 count;

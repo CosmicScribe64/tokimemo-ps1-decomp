@@ -155,7 +155,161 @@ void func_80144DF8(s32 arg0) {
     p->z = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801447D0", func_80144E3C);
+void func_80144E3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5, s32 arg6) {
+    /* FAKE: pad and local order preserve the original 0x90 frame and byte homes. T-24502 */
+    s32 pad[1];
+    POLY_G4 *polys[3];
+    POLY_G4 **end;
+    u8 r2;
+    u8 g2;
+    u8 b2;
+    u8 r0;
+    u8 g0;
+    u8 b0;
+    s32 i;
+    POLY_G4 **p;
+
+    /* FAKE: grouping preserves the original loop bound and initialization scheduling. T-24502 */
+    p = polys; i = 0; do {
+        *p = (POLY_G4 *)GetWorkBase(sizeof(POLY_G4), D_8011ECA0);
+        func_8009F054((s32) *p);
+        SetSemiTrans(*p, 1);
+        SetShadeTex(*p, 1);
+        switch (arg5) {
+        case 0:
+            b2 = 0xFF;
+            g2 = 0xFF;
+            r2 = 0xFF;
+            g0 = 0x20;
+            r0 = 0x20;
+            b0 = 0x50;
+            if ((u8) arg4 < 0xF8U) {
+                g2 = r2 = arg4 + 8;
+            }
+            if ((u8) arg4 < 0xF0U) {
+                b2 = ((u8) arg4 + 0x10);
+            }
+            if ((u8) arg4 < 0x18U) {
+                g0 = r0 = arg4 + 8;
+            }
+            if (arg4 < 0x40) {
+                b0 = ((u8) arg4 + 0x10);
+            }
+            break;
+        case 1:
+            g0 = 8;
+            r0 = 8;
+            g2 = 8;
+            r2 = 8;
+            b0 = 0x10;
+            b2 = 0x10;
+            if ((u8) arg4 < 0xF8U) {
+                g2 = r2 = 0xFF - arg4;
+            }
+            if ((u8) arg4 < 0xF0U) {
+                b2 = (0xFF - (u8) arg4);
+            }
+            if ((u8) arg4 < 0x18U) {
+                g0 = r0 = 0x20 - arg4;
+            }
+            if ((u8) arg4 < 0x40U) {
+                b0 = (0x50 - (u8) arg4);
+            }
+            break;
+        case 2:
+            b2 = 0xFF;
+            g2 = 0xFF;
+            r2 = 0xFF;
+            g0 = 0x20;
+            r0 = 0x20;
+            b0 = 0x50;
+            break;
+        }
+        switch (i) {
+        case 0:
+            (*p)->x0 = (s16) arg0;
+            (*p)->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1);
+            (*p)->x1 = (arg0 + 0x140);
+            (*p)->y1 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1);
+            (*p)->x2 = (s16) arg0;
+            (*p)->y2 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3));
+            (*p)->x3 = (arg0 + 0x140);
+            (*p)->y3 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3));
+            (*p)->r0 = (u8) r0;
+            (*p)->g0 = g0;
+            (*p)->b0 = (u8) b0;
+            (*p)->r1 = (u8) r0;
+            (*p)->g1 = g0;
+            (*p)->b1 = (u8) b0;
+            (*p)->r2 = r2;
+            (*p)->g2 = g2;
+            (*p)->b2 = b2;
+            (*p)->r3 = r2;
+            (*p)->g3 = g2;
+            (*p)->b3 = b2;
+            break;
+        case 1:
+            (*p)->x0 = (s16) arg0;
+            (*p)->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->x1 = (arg0 + 0x140);
+            (*p)->y1 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->x2 = (s16) arg0;
+            (*p)->y2 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
+            (*p)->x3 = (arg0 + 0x140);
+            (*p)->y3 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
+            (*p)->r0 = r2;
+            (*p)->g0 = g2;
+            (*p)->b0 = b2;
+            (*p)->r1 = r2;
+            (*p)->g1 = g2;
+            (*p)->b1 = b2;
+            (*p)->r2 = (u8) r0;
+            (*p)->g2 = g0;
+            (*p)->b2 = (u8) b0;
+            (*p)->r3 = (u8) r0;
+            (*p)->g3 = g0;
+            (*p)->b3 = (u8) b0;
+            break;
+        case 2:
+            (*p)->x0 = (s16) arg0;
+            (*p)->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3));
+            (*p)->x1 = (arg0 + 0x140);
+            (*p)->y1 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3));
+            (*p)->x2 = (s16) arg0;
+            (*p)->y2 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->x3 = (arg0 + 0x140);
+            (*p)->y3 = (s16) (D_800E6280.unk_018[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->r0 = r2;
+            (*p)->g0 = g2;
+            (*p)->b0 = b2;
+            (*p)->r1 = r2;
+            (*p)->g1 = g2;
+            (*p)->b1 = b2;
+            (*p)->r2 = r2;
+            (*p)->g2 = g2;
+            (*p)->b2 = b2;
+            (*p)->r3 = r2;
+            (*p)->g3 = g2;
+            (*p)->b3 = b2;
+            break;
+        }
+        i += 1;
+        p += 1;
+    } while (i < 3);
+    if (arg6 > 0) {
+        func_80145650((s32) polys, arg6, arg2);
+    }
+    /* FAKE: grouping keeps the saved offset/base initialization before the pointer loop. T-24502 */
+    i = arg3 * 4; p = polys; end = polys + 3; do {
+        AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + i, *p);
+        p += 1;
+    } while (p != end);
+    p = (POLY_G4 **)GetWorkBase(0xC, D_8011ECA0);
+    func_8009D294((s32) p, 0, 0, func_8009ECB0(1, 1, 0, 0), 0);
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + i, (s32) p);
+    safe_env(arg3);
+}
+
 
 void func_8014559C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     if ((arg4 >= 0) && (arg4 < 0x1F)) {

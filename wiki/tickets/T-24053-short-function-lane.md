@@ -1,10 +1,10 @@
 ---
 id: T-24053
 title: Recover three short functions
-status: In Review
+status: Done
 assignee: codex/complete-option
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[event-family-results]]", "[[bunka-sd-family-results]]", "[[shugaku-family-results]]", "[[tickets/T-20620-as1-scheduling]]"]
 ---
 
@@ -17,7 +17,7 @@ Raise actual C function count: EVENT func_8010B614 (100 bytes), BUNKA_SD func_80
 - [x] Reproduce T-20620's unintegrated EVENT recipe with current default actual C.
 - [x] Brief source-driven passes on the other two targets after prior evidence.
 - [x] Verify each promotion with literal default no-build proof, unit SHA1 and declaration guards.
-- [ ] Independent review before Done.
+- [x] Independent review before Done.
 
 ## Notes
 
@@ -39,3 +39,5 @@ First two targets independently reviewed against CODING_STANDARDS.md and publish
 ### Final short-target result
 
 SHUGAKU func_8013A1D4 remains plain ASM. Ten bounded forms: generated control38 rows; removing redundant byte-result mask10; meaningful s32 girl before u8 result8/8 with original sp2B and frame. Only selector load/base, comparison register and missing delayed argument move remain. Byte view8, unsigned girl8, direct selector/full-word call result8; GameState pointer16; return-liveness forms10. No header or production SHUGAKU change. Source/reproducer and all bounded negatives preserved, instruction traces ignored. Total2 of3 matched,232 bytes. Root independently verified/published both matches at d40a1ece7 with all27 hashes and interface guards; no repeated checks for source-only closure. Ticket In Review pending archive review.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

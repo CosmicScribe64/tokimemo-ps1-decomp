@@ -10,6 +10,114 @@
 /* Game types (structs) of the main exe. The declarations of its functions and globals live in
  * main_api.h (T-3340); this file only adds types that need a struct definition. */
 
+/* T-24501: saved records copied as whole objects by func_800552DC/func_80054FC0.
+ * HYPOTHESIS: these are settings records; field meanings remain unknown. The 20-byte
+ * record owns the protection flag in its last byte. The 24-byte record preserves
+ * Work800E7D10 bits, names and words without changing their canonical declarations. */
+typedef struct SaveSettings20 {
+    /* 0x000 */ u16 unk_00;
+    /* 0x002 */ u16 unk_02;
+    /* 0x004 */ u16 unk_04;
+    /* 0x006 */ u8 unk_06[10];
+    /* 0x010 */ GsWord flags;
+} SaveSettings20; /* size 0x14 */
+
+typedef struct SaveSettings24 {
+    /* 0x000 */ WorkSetBits bits;
+    /* 0x002 */ u8 name0[3];
+    /* 0x005 */ u8 name1[3];
+    /* 0x008 */ u8 name2[3];
+    /* 0x00B */ u8 unk_0B;
+    /* 0x00C */ s32 w0;
+    /* 0x010 */ s32 w1;
+    /* 0x014 */ s32 w2;
+} SaveSettings24; /* size 0x18 */
+
+typedef union SaveMetricWord {
+    /* 0x000 */ NameMetric4 metric;
+    /* 0x000 */ GsWord word;
+} SaveMetricWord; /* size 0x4 */
+
+typedef struct SaveImageView {
+    /* 0x000 */ s32 checksum;
+    /* 0x004 */ u8 slot_status[16];
+    /* 0x014 */ u8 flags[16];
+    /* 0x024 */ u8 unk_24[2];
+    /* 0x026 */ u8 selected_slot;
+    /* 0x027 */ u8 unk_27;
+    /* 0x028 */ SaveSettings20 config0;
+    /* 0x03C */ SaveSettings24 config1;
+    /* 0x054 */ u8 unk_54[2];
+    /* 0x056 */ u8 records[0x800];
+    /* 0x856 */ u8 year[16];
+    /* 0x866 */ u8 month[16];
+    /* 0x876 */ u8 day[16];
+    /* 0x886 */ u8 family_name[16][8];
+    /* 0x906 */ u8 given_name[16][8];
+    /* 0x986 */ u8 nickname[16][16];
+    /* 0xA86 */ u8 club[16];
+    /* 0xA96 */ u8 pad_A96[2];
+    /* 0xA98 */ SaveMetricWord metrics[9][16];
+    /* 0xCD8 */ u8 unk_CD8[0x100];
+    /* 0xDD8 */ u8 unk_DD8[0x100];
+    /* 0xED8 */ u8 unk_ED8[0x28];
+} SaveImageView; /* size 0xF00 */
+
+typedef struct SaveWorkView {
+    /* 0x000 */ u8 prefix[0x2C];
+    /* 0x02C */ SaveSettings20 config0;
+    /* 0x040 */ SaveSettings24 config1;
+} SaveWorkView; /* size 0x58 */
+
+/* GameState +0xC4..+0x140 (text buffers, +0xF8 and the nine +0xFC records) as the game save
+ * copies it: one word-aligned 0x7C-byte record (func_8005557C). T-25105 */
+typedef struct GsBlockC4 {
+    /* 0x000 */ s32 w[0x1F];
+} GsBlockC4; /* size 0x7C */
+
+/* GameState +0x56C..+0x66C as the game save copies it: one byte-aligned 0x100-byte record. T-25105 */
+typedef struct GsBlock56C {
+    /* 0x000 */ u8 b[0x100];
+} GsBlock56C; /* size 0x100 */
+
+/* One bank of the memory-card image holding a game save (func_8005557C writes it from GameState;
+ * the comments name the source field). T-25105 */
+typedef struct SaveGameView {
+    /* 0x000 */ s32 checksum;
+    /* 0x004 */ u8 unk_004;             /* unk_03D */
+    /* 0x005 */ u8 unk_005;             /* unk_03E */
+    /* 0x006 */ u8 unk_006;             /* unk_03F */
+    /* 0x007 */ u8 unk_007;             /* unk_040 */
+    /* 0x008 */ u8 unk_008;             /* unk_041 */
+    /* 0x009 */ u8 pad_009;
+    /* 0x00A */ u16 unk_00A;            /* unk_042 */
+    /* 0x00C */ GsRec044 unk_00C[2];    /* unk_044 */
+    /* 0x08C */ GsBlockC4 unk_08C;      /* unk_0C4 */
+    /* 0x108 */ Rec38 unk_108[16];      /* unk_1BC */
+    /* 0x488 */ u8 unk_488[16];         /* unk_53C */
+    /* 0x498 */ GsWord unk_498[8];      /* unk_54C */
+    /* 0x4B8 */ GsWord unk_4B8[12];     /* unk_66C */
+    /* 0x4E8 */ GsBlock56C unk_4E8;     /* unk_56C */
+    /* 0x5E8 */ u8 unk_5E8[4];          /* unk_728 */
+    /* 0x5EC */ u8 unk_5EC[16];         /* unk_72C */
+    /* 0x5FC */ u8 unk_5FC[16];         /* unk_73C */
+    /* 0x60C */ u8 unk_60C[16];         /* unk_74C */
+    /* 0x61C */ GsRec75E unk_61C[256];  /* unk_75E */
+    /* 0xE1C */ u8 unk_E1C;             /* unk_F6C */
+    /* 0xE1D */ u8 unk_E1D;             /* unk_F6D */
+    /* 0xE1E */ u8 unk_E1E;             /* unk_1092 */
+    /* 0xE1F */ u8 unk_E1F;             /* unk_F6E */
+    /* 0xE20 */ u8 unk_E20;             /* unk_03C */
+    /* 0xE21 */ u8 pad_E21[3];
+    /* 0xE24 */ GsWord unk_E24;         /* unk_F68 */
+    /* 0xE28 */ u8 unk_E28;             /* unk_F6F */
+    /* 0xE29 */ u8 unk_E29;             /* unk_F70 */
+    /* 0xE2A */ u8 unk_E2A;             /* unk_F73 */
+    /* 0xE2B */ u8 unk_E2B;             /* unk_F75 */
+    /* 0xE2C */ GsWord unk_E2C;         /* unk_F64 */
+    /* 0xE30 */ u8 unk_E30[0xD0];
+} SaveGameView; /* size 0xF00 */
+
 /* 8-byte record of the array at text_list (stride 8; see k_disp_switch). */
 typedef struct Entry8 {
     /* 0x00 */ s16 unk_00;
@@ -26,6 +134,13 @@ typedef struct FileReq {
     /* 0x00 */ u8 name[32];
     /* 0x20 */ s32 retry;
 } FileReq; /* size 0x24 */
+
+/* Packed icon choice at GameState +0xF68, bits 4..7. */
+typedef struct MenuIconBits {
+    /* 0x00 */ u16 low : 4;
+    u16 icon : 4;
+    u16 rest : 8;
+} MenuIconBits; /* size 0x02 */
 
 #endif /* GAME_H */
 
@@ -328,4 +443,22 @@ typedef struct SrnRec28 {
     /* 0x20 */ u32 unk_20;
     /* 0x24 */ u8 *unk_24;
 } SrnRec28; /* size 0x28 */
+/* Record i of D_80121750. srn_set indexes the global array directly: with a record pointer as1
+ * cannot move the record loads above the stack stores (T-25006). */
+#define SRN_REC(i) (((SrnRec28 *)D_80121750)[i])
+#endif
+
+#ifndef GAME_T25006_MOD_REC
+#define GAME_T25006_MOD_REC
+/* D_801217A0: 0x14-byte tile-set records of the mod_* routines (mod_set_gpu reads one). T-25006. */
+typedef struct ModRec14 {
+    /* 0x00 */ u32 *unk_00;
+    /* 0x04 */ u32 *unk_04;
+    /* 0x08 */ u8 unk_08;
+    /* 0x09 */ u8 unk_09;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 unk_0C;
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 unk_0E[6];
+} ModRec14; /* size 0x14 */
 #endif

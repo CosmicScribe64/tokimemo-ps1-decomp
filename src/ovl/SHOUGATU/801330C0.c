@@ -272,17 +272,18 @@ void func_80133A88(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: triple-dereference of D_80143AF4 allocates 4 temps vs 6 in target. T-24116. */
-#ifdef NON_MATCHING
 void func_80133B44(void) {
+    /* FAKE: two unused slots preserve the original local-buffer placement. T-24523 */
     s32 pad1;
     s32 pad2;
     s32 sp44;
     u8 sp40[3] = "　";
 
+    /* FAKE: narrowing is redundant after the final s16 cast, but spends the two
+     * temporary slots needed by the original register sequence. T-24523 */
     if (D_800E6280.unk_F5F != 0) {
         if (D_800E6280.unk_110D == 0) {
-            set_kanji_string((s16)(-0x68 - func_800AE0E0(D_800CA16C) * 4), 0x30, 0, (s32)D_800CA16C, 0);
+            set_kanji_string((s16)(-0x68 - (s16)(func_800AE0E0(D_800CA16C) * 4)), 0x30, 0, (s32)D_800CA16C, 0);
             set_kanji_string(-0x56, 0x30, 0, (s32)"『 ", 0);
             dialogue_render(-0x48, 0x30, 0, (s32)"それじゃ、神社に行くか。", 0, "", "", 0);
             D_80143B00 = 0;
@@ -302,9 +303,6 @@ void func_80133B44(void) {
         func_8004284C();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133B44);
-#endif
 
 void func_80133CDC(void) {
     D_80143B00 = 0xF;

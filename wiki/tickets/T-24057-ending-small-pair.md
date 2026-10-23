@@ -1,10 +1,10 @@
 ---
 id: T-24057
 title: Match two small ENDING fade handlers
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[ending-family-results]]", "[[tickets/T-18300-types-first-ending]]", "[[tickets/T-20930-types-ending]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -29,3 +29,5 @@ Separate record96/97 views plus tagged FAKE GameState byte views restore target 
 
 Production src/include/config remain identical to setup 496724768, including all other TU bodies and both original fallbacks. ENDING checksum and guards provide regression evidence only; neither function has actual default C proof. The archive delta awaits independent review.
 Parent assignment reports main 958e039a8, 6,504 functions and 1,850,912 verified bytes (81.2%). Those gains are outside this package. DATE's improved source stays frozen at 71833d4e2 and ownership reserved for later recipe transfer; no concurrent DATE compiler.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

@@ -232,9 +232,162 @@ s32 func_80154760(void) {
 }
 
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80154430", func_80154DD8);
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-25114, 34 funcdiff rows, all aligned: frame 0x60 against 0x58 (the two kept quotient
+ * webs cost two frame words more than the original's), the case 0 selector load placed before the
+ * stores in the original, and the case 3 counter store placed after the test loads here. The s32 return
+ * matches the implicit-int call in func_80154430 (a void definition is a redeclaration error). Notes:
+ * drafts/T-25114/RPG_BAT/func_80154DD8/NOTES.md */
+extern s32 D_8015EC9C;
+void func_8015528C(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80154430", func_8015528C);
+s32 func_80154DD8(void) {
+    s32 x;
+    s32 y;
+    s32 nx;
+    s32 ny;
+
+    func_8013F0F4(0x50A, 0, 1);
+    if (((D_8015EDB0.unk_00 == 1) && (D_8015EC9C >= 0x3D)) || (D_8015EDB0.unk_00 >= 2)) {
+        func_8013F0F4(0x50C, 0xA, 7);
+    }
+    switch (D_8015EDB0.unk_00) {
+    case 0:
+        D_8015EC9C = 1;
+        D_8015EC74 = 0xA;
+        D_8015EC78 = 0;
+        D_8015EC7C = 0xA;
+        D_8015EC80 = 0;
+        /* FAKE: scalar-address view keeps the selector in $v1 and the constant 1 in $a3 (T-17114, T-24910). */
+        switch (*(s32 *)&D_8015EBAC) {
+        default:
+            D_8015EC58.unk_10 = 0xB8;
+            D_8015EC58.unk_04 = 0x48;
+            D_8015EC58.unk_0C = -0x50;
+            break;
+        case 0:
+            D_8015EC58.unk_10 = 0x70;
+            D_8015EC58.unk_04 = 0x10;
+            D_8015EC58.unk_0C = -0x30;
+            break;
+        case 1:
+            D_8015EC58.unk_10 = 0xA8;
+            D_8015EC58.unk_04 = 0x24;
+            D_8015EC58.unk_0C = -0x1C;
+            D_801215FD = 4;
+            D_80121685 = 4;
+            break;
+        case 2:
+            D_8015EC58.unk_10 = 0xB0;
+            D_8015EC58.unk_04 = -0x18;
+            D_8015EC58.unk_0C = -0x50;
+            break;
+        }
+        func_8014EBD0();
+        break;
+    case 1:
+        /* FAKE: the address views keep x and y as their own webs ($v0/$v1) instead of being folded into
+         * nx/ny; plain reads compute the quotient straight into $a1/$a2. T-25114 */
+        x = (*(s32 *)&D_8015EC58.unk_04 * D_8015EC9C) / D_8015EC58.unk_10;
+        y = (*(s32 *)&D_8015EC58.unk_0C * D_8015EC9C) / D_8015EC58.unk_10;
+        nx = -x;
+        ny = -y;
+        func_8015528C(D_8015EC9C, nx, ny, 0x30, 5, 5, 0x34, 0x35, 0xBF);
+        func_8015528C(D_8015EC9C, nx, ny, 0xC, 0x14, 4, 0x32, 0x33, 0xDF);
+        D_8015EC9C++;
+        if (D_8015EC58.unk_10 < D_8015EC9C) {
+            func_8014EBD0();
+            D_8015EC9C = 1;
+        }
+        break;
+    case 2:
+        func_8015528C(D_8015EC58.unk_10, -D_8015EC58.unk_04, -D_8015EC58.unk_0C, 0x30, 5, 5, 0x34, 0x35, 0xBF);
+        func_8015528C(D_8015EC58.unk_10, -D_8015EC58.unk_04, -D_8015EC58.unk_0C, 0xC, 0x14, 4, 0x32, 0x33, 0xDF);
+        D_8015EC9C++;
+        if (D_8015EC9C >= 0x79) {
+            func_8014EBD0();
+            D_8015EC9C = 1;
+        }
+        break;
+    case 3:
+        /* FAKE: same web-keeping view as case 1; the view on the counter also keeps it as the first addu
+         * operand of y. T-25114 */
+        x = D_8015EC58.unk_04 - *(s32 *)&D_8015EC9C;
+        y = *(s32 *)&D_8015EC9C + D_8015EC58.unk_0C;
+        nx = -x;
+        ny = -y;
+        func_8015528C(D_8015EC58.unk_10, nx, ny, 0x30, 5, 5, 0x34, 0x35, 0xBF);
+        func_8015528C(D_8015EC58.unk_10, nx, ny, 0xC, 0x14, 4, 0x32, 0x33, 0xDF);
+        D_8015EC9C++;
+        if ((D_8015EC58.unk_04 - D_8015EC9C) < (D_8015EC9C + D_8015EC58.unk_0C)) {
+            func_8014EBA8();
+        }
+        break;
+    }
+}
+#else
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80154430", func_80154DD8);
+#endif
+
+void func_8015528C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
+    s32 *phase;
+    s32 end_candidate;
+    s32 phase_sum;
+    s32 start;
+    s32 end;
+    s32 i;
+    s32 color_phase;
+
+    /* FAKE: T-25114, D_8015EBAC is an int array that the header declares as a scalar (as in T-9310);
+     * its subscripts give the original's base-first addresses. The two integer address sums keep the
+     * arm's base-first and the join's index-first `addu` in one register range ($s7). */
+    if (arg3 < ((&D_8015EBAC)[arg6] / 10)) {
+        phase = (s32 *)((s32)&D_8015EBAC + arg7 * 4);
+        (&D_8015EBAC)[arg6] -= arg3 * 0xA;
+        *phase -= 1;
+        if (*phase < 0) {
+            *phase = 2;
+        }
+    }
+    phase = (s32 *)(arg7 * 4 + (s32)&D_8015EBAC);
+    for (i = 0; i < 0x32; i++) {
+        end_candidate = (&D_8015EBAC)[arg6] / 10 + (i * arg3);
+        phase_sum = *phase + i;
+        if (end_candidate < arg0) {
+            start = (&D_8015EBAC)[arg6] / 10 + (i - 1) * arg3;
+            /* FAKE: T-24522, T-25114: the `* 1` keeps this arm's remainder in its own range, as in the original. */
+            color_phase = (phase_sum % 3) * 1;
+            end = end_candidate;
+            /* FAKE: T-25114, the shared clamp label keeps both `start < 0` tests as in the original (merging
+             * them after the if/else costs 18 rows). */
+            if (start < 0) {
+                goto block_9;
+            }
+        } else {
+            start = (&D_8015EBAC)[arg6] / 10 + (i - 1) * arg3;
+            color_phase = phase_sum % 3;
+            end = arg0;
+            i = 0x64;
+            if (start < 0) {
+block_9:
+                start = 0;
+            }
+        }
+        switch (color_phase) {
+        case 0:
+            func_80155868(start, arg1 * start / arg0, arg2 * start / arg0, end, arg1 * end / arg0, arg2 * end / arg0, arg8 << 0x10, arg8 << 8, 4);
+            break;
+        case 1:
+            func_80155868(start, arg1 * start / arg0, arg2 * start / arg0, end, arg1 * end / arg0, arg2 * end / arg0, arg8 << 8, arg8, 4);
+            break;
+        case 2:
+            func_80155868(start, arg1 * start / arg0, arg2 * start / arg0, end, arg1 * end / arg0, arg2 * end / arg0, arg8, arg8 << 0x10, 4);
+            break;
+        }
+    }
+    dtd_on_tpage(0, 0, 4, arg5 - 4, 0);
+    (&D_8015EBAC)[arg6] += arg4;
+}
 
 void func_80155868(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
     s32 unused; /* FAKE: unused local, only its 4-byte frame slot above p is observed (DATE func_8014EF1C; T-17106) */

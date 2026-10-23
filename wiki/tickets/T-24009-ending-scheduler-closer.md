@@ -1,10 +1,10 @@
 ---
 id: T-24009
 title: Close ENDING func_8013A2E8 scheduler residue
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[tickets/T-23002-w5-big-p02]]", "[[matching-notes]]"]
 ---
 
@@ -31,3 +31,5 @@ T-23002's binasm probes implicate a whole-function as1 scheduling threshold: del
 - Completed 76 targeted sequential probes; no exact result. Production source remains byte-for-byte unchanged. Archived a minimal two-case reproducer and negative evidence in drafts/T-24009/. The weighted score-10 form is not installed because eight words still differ and it adds an allocation device. Zero verified C bytes.
 
 - Preservation checks: the archived reproducer reruns at baseline 12 / pointer-lifetime 10. Explicit default linked proof reports MATCH for 4,648 bytes of the retained assembly fallback; this is not a C match. Fresh ENDING SHA1 comparison passes. `git diff --check` passes and production source has no diff. Submitted In Review for independent review of the research archive.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

@@ -1,0 +1,18 @@
+{
+  "label": "hand23001",
+  "input": "drafts/T-23001/TEL/func_80136724/hand.c",
+  "source_sha256": "19a48e33187dbd6f4c5e1aad373993c167ab40da401b458abe9338a2231b3c55",
+  "tu_sha256": "1051cb8e6f2921b7be3a5d9b0b94d219090a7ad18a81dd560750c3d46e85fb5e",
+  "target_words": 1645,
+  "candidate_words": 1643,
+  "printed_lines": 1048,
+  "changed_positions": 1372,
+  "aligned_cost": 1038,
+  "first_divergence": 12,
+  "first_target": "10410647  ; beq v0,at,6074 <.L80138054+0x20>",
+  "first_candidate": "10410645  ; beq v0,at,606c <func_80136724+0x1948>",
+  "toolchain": [
+    "ido",
+    "5.3"
+  ]
+}

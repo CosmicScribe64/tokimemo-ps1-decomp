@@ -40,7 +40,11 @@ void func_80138C78(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: CharFlags b1/b8 and s16 r before sp4C[13] match the 0x68 frame, sp+0x4C offset, and bit-field accesses; remaining diffs are $s3/$s4 swap (sp4C vs 1) and uopt zcopy:1 copy-propagating r into the D_80147224 loop preheader and hoisting the second "%d " into $s2. T-24116. */
+/* NON_MATCHING: 75 rows (T-24707, was 103; two FAKE empty tests and the D_8014723C/count store order).
+ * Remaining: the $s3/$s4 swap (sp4C base vs 1) and uopt zcopy:1 copy-propagating r into the D_80147224
+ * loop preheader and hoisting the second "%d " into $s2. T-24116/T-24712: the four operands of the
+ * `D_80147240 == 1` tests come out commuted (`bne s4,t6`), unchanged by a `* 1` wrapper, 1U, 0x1, a byte
+ * view and `!(x != 1)`; a u16 divisor view for the `%` drops its `blez` but grows to 134 rows. */
 void func_80138C9C(void) {
     s16 r;
     s16 sp4C[13];
@@ -56,13 +60,15 @@ void func_80138C9C(void) {
         D_800F53A0.girl[9].unk_06 >= 20) {
         D_80147240 = 1;
     }
+    if (i) {} /* FAKE: empty test splits the live range of i (autotweak) T-24707 */
     for (i = 0; i < 11; i++) {
+        if (i) {} /* FAKE: empty test splits the live range of i (autotweak) T-24707 */
         if ((((CharFlags *)D_800F53A0.girl[i].unk_10)->b1 != 0 || (i == 9 && D_80147240 == 1)) &&
             (func_8005F220(i) >= 0x32U || (D_80147240 == 1 && i == 9)) &&
             (D_80147240 == 0 || i != 0 || func_8005EBE0(0) >= 0x46U)) {
             sp4C[count] = i;
-            D_8014723C += 1;
             count += 1;
+            D_8014723C += 1;
             ((CharFlags *)D_800F53A0.girl[i].unk_10)->b8 = 1;
         }
     }
@@ -102,7 +108,12 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50", func_80138C9C);
 #endif
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: 7 resolved rows (same jump-table dispatch shift in branch delay slot as VALEN func_80132D0C, T-24033). T-24116. */
+/* NON_MATCHING: 23 rows (T-24707, was 39; `>= 0x46U` assigned directly instead of through `? 1 : 0`).
+ * Remaining: the jump-table dispatch `sll` sits in the range-check delay slot where the original has it in
+ * the `== 9` branch slot (VALEN func_80132D0C, T-24033), and the selector load forwards into
+ * func_8008F618 as `$v1` + `move a0,v1` where the original uses `$a0` (store in the jal delay slot).
+ * T-24712: viewsweep (6 singles) and autotweak 240 s found nothing; splitting the assignment expression
+ * is 62 rows; a `u8 sel` local fixes the first call but the later `D_800F62CF` bases move to `$a0` (56). */
 s32 func_8013907C(void) {
     s32 pad;
     u8 s;
@@ -113,7 +124,7 @@ s32 func_8013907C(void) {
     }
     func_8008F618(D_800F62CF = D_80147224[D_80147220]);
     s = func_8005E0E0(D_800F62CF) & 0x7F;
-    D_80147198 = (func_8005EBE0(D_800F62CF) >= 0x46U) ? 1 : 0;
+    D_80147198 = func_8005EBE0(D_800F62CF) >= 0x46U;
     if (D_800F62CF == 9 && D_80147240 == 1) {
         D_80147198 = 3;
     }

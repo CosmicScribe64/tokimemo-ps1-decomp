@@ -60,82 +60,100 @@ void func_8013A604(void) {
     func_8004284C();
 }
 
-/* s32 with no return: $v0 stays live at the exit, so as1 leaves the case 2 test's delay slot empty. */
+/* FAKE: integer return type with fallthrough keeps v0 live across the calendar flag
+ * branch, preserving its nop delay slot. No meaningful return. T-24606. */
 s32 func_8013A7EC(void) {
-    GameState *g = &D_800E6280;
-    s32 i;
-    u8 old;
+    GameState *game = &D_800E6280;
+    /* FAKE: share the label pointer/month and drawing row/loop bound
+     * words to preserve the original saved-register lifetimes. T-24606. */
+    s32 label_or_month;
+    s32 row_or_limit;
+    s32 day;
 
+    /* FAKE: discarded entry read enables the conversion pass to preserve
+     * the unsigned weekday global across display and comparison. T-24606. */
+    label_or_month = D_800E6280.unk_041;
     menu_check(0, D_8011ECF6, D_8011ECFA);
     func_8004FC10(0);
     menu_bar_show(0);
-    for (i = 0; i < 16; i++) {
-        func_8004B338(D_8013E744[i], -0x20, i * 12 - 0x60);
-    }
-    func_8004AE28(g->unk_03E, 0x20, -0x60);
-    func_8004AE28(g->unk_03F, 0x20, -0x54);
-    func_8004AE28(g->unk_040, 0x20, -0x48);
-    func_8004AE28(g->unk_041, 0x20, -0x3C);
-    func_8004AE28(g->unk_03D, 0x20, -0x30);
-    func_8004AE28(g->unk_042, 0x20, -0x24);
-    func_8004AE28(((OptionDateBits *)&g->unk_0F8)->f0, 0x20, 0xC);
-    func_8004AE28(((OptionDateBits *)&g->unk_0F8)->f4, 0x20, 0x18);
-    func_8004AE28(((OptionDateBits *)&g->unk_0F8)->f9, 0x20, 0x24);
-    func_8004AE28(((ScheduleFlags *)&g->unk_0F4)->unk_12, 0x20, 0x30);
-    func_8004AE28(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f0, 0x20, 0x3C);
-    func_8004AE28(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f4, 0x20, 0x48);
-    func_8004AE28(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f9, 0x20, 0x54);
-    if (g->unk_F80 & 0x90) {
-        switch (g->unk_1093) {
-        case 0: /* empty label: the jump table starts at 0 */
+    label_or_month = (s32)D_8013E744;
+    row_or_limit = -0x60;
+    do {
+        func_8004B338(*(s32 *)label_or_month, -0x20, row_or_limit);
+        row_or_limit += 0xC;
+        label_or_month += 4;
+    } while (row_or_limit < 0x60);
+    func_8004AE28((s32) game->unk_03E, 0x20, -0x60);
+    func_8004AE28((s32) game->unk_03F, 0x20, -0x54);
+    func_8004AE28((s32) game->unk_040, 0x20, -0x48);
+    func_8004AE28((s32) D_800E6280.unk_041, 0x20, -0x3C);
+    func_8004AE28((s32) game->unk_03D, 0x20, -0x30);
+    func_8004AE28((s32) game->unk_042, 0x20, -0x24);
+    func_8004AE28(game->unk_0F8 & 0xF, 0x20, 0xC);
+    func_8004AE28((s32) ((u32) (game->unk_0F8 << 0x17) >> 0x1B), 0x20, 0x18);
+    func_8004AE28((s32) ((u32) (game->unk_0F8 << 0x15) >> 0x1E), 0x20, 0x24);
+    func_8004AE28((s32) ((u16) game->unk_0F4.h >> 0xC), 0x20, 0x30);
+    func_8004AE28(game->unk_1BC[0].unk_10.w & 0xF, 0x20, 0x3C);
+    func_8004AE28((s32) ((u32) (game->unk_1BC[0].unk_10.w << 0x17) >> 0x1B), 0x20, 0x48);
+    func_8004AE28((s32) ((u32) (game->unk_1BC[0].unk_10.w << 0x15) >> 0x1E), 0x20, 0x54);
+    if (game->unk_F80 & 0x90) {
+        /* FAKE: the unsigned byte bitfield keeps the selector in a ugen
+         * temporary instead of a promoted local in v0. T-24606. */
+        switch (((OptionByteBf *)&game->unk_1093)->x) {
+        case 0:
+        case 1:
             break;
         case 2:
-            if (g->unk_F88 & 0x90) {
-                old = g->unk_03F;
-                if (g->unk_041 != 6) {
-                    for (i = g->unk_041; i < 6; i++) {
-                        func_80072338();
+            if (game->unk_F88 & 0x90) {
+                label_or_month = game->unk_03F;
+                day = 0;
+                if (D_800E6280.unk_041 != 6) {
+                    day = D_800E6280.unk_041;
+                    if ((s32) D_800E6280.unk_041 < 6) {
+                        do {
+                            func_80072338();
+                            day++;
+                        } while (day < 6);
                     }
                 } else {
-                    for (i = 0; i < 7; i++) {
+                    row_or_limit = 7;
+                    do {
                         func_80072338();
-                    }
+                        day += 1;
+                    } while (day != row_or_limit);
                 }
-                if (old != g->unk_03F) {
+                if (label_or_month != game->unk_03F) {
                     func_80042940(0xFE);
                 }
             }
             break;
         case 4:
-            g->unk_03D = func_8013A550(g->unk_03D, 3, 0);
+            game->unk_03D = func_8013A550((s32) game->unk_03D, 3, 0);
             break;
         case 9:
-            ((OptionDateBits *)&g->unk_0F8)->f0 = func_8013A550(((OptionDateBits *)&g->unk_0F8)->f0, 12, 1);
+            ((OptionDateBits *)&game->unk_0F8)->f0 = func_8013A550(((OptionDateBits *)&game->unk_0F8)->f0, 12, 1);
             break;
         case 10:
-            ((OptionDateBits *)&g->unk_0F8)->f4 = func_8013A550(((OptionDateBits *)&g->unk_0F8)->f4, 31, 1);
+            ((OptionDateBits *)&game->unk_0F8)->f4 = func_8013A550(((OptionDateBits *)&game->unk_0F8)->f4, 31, 1);
             break;
         case 11:
-            ((OptionDateBits *)&g->unk_0F8)->f9 = func_8013A550(((OptionDateBits *)&g->unk_0F8)->f9, 3, 0);
+            ((OptionDateBits *)&game->unk_0F8)->f9 = func_8013A550(((OptionDateBits *)&game->unk_0F8)->f9, 3, 0);
             break;
         case 12:
-            ((ScheduleFlags *)&g->unk_0F4)->unk_12 = func_8013A550(((ScheduleFlags *)&g->unk_0F4)->unk_12, 11, 0);
+            ((ScheduleFlags *)&game->unk_0F4)->unk_12 = func_8013A550(((ScheduleFlags *)&game->unk_0F4)->unk_12, 11, 0);
             break;
         case 13:
-            ((OptionDateBits *)&g->unk_1BC[0].unk_10)->f0 =
-                func_8013A550(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f0, 12, 1);
+            game->unk_1BC[0].unk_10.date.month = func_8013A550(game->unk_1BC[0].unk_10.date.month, 12, 1);
             break;
         case 14:
-            ((OptionDateBits *)&g->unk_1BC[0].unk_10)->f4 =
-                func_8013A550(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f4, 31, 1);
+            game->unk_1BC[0].unk_10.date.day = func_8013A550(game->unk_1BC[0].unk_10.date.day, 31, 1);
             break;
         case 15:
-            ((OptionDateBits *)&g->unk_1BC[0].unk_10)->f9 =
-                func_8013A550(((OptionDateBits *)&g->unk_1BC[0].unk_10)->f9, 3, 0);
+            game->unk_1BC[0].unk_10.date.unk_09 = func_8013A550(game->unk_1BC[0].unk_10.date.unk_09, 3, 0);
             break;
         }
     }
-    if (g->unk_F88 & 0x800) {
+    if (game->unk_F88 & 0x800) {
         func_80041878();
         func_80042940(0);
     }

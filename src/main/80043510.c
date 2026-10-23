@@ -21,7 +21,83 @@ u8 D_800B3D4C = 0;
 u8 D_800B3D50 = 0;
 u8 D_800B3D54[12] = { 0 };
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", func_80043510);
+void func_80043510(s32 arg0) {
+    u32 *obj;
+    Rec24 *rec;
+    /* FAKE: T-25003, two spare words keep the original frame (0xA8) and the work areas at sp+0x50/0x70;
+     * the TACO twin func_801446D8 has the same kind of spare words. */
+    u32 sp70[12];
+    u32 sp50[8];
+    s32 i;
+    u8 v;
+    GameState *g = &D_800E6280;
+
+    D_800B3D10[1] = func_80098650();
+    func_80049044();
+    if (g->unk_1112 == 1) {
+        func_800476C0();
+    }
+    if ((u8)g->unk_10A2 != 0) {
+        srn_set(0);
+    }
+    if (g->unk_1114 != 0 && g->unk_10E8 != 0) {
+        rec = D_801217D0;
+        for (i = 0; i < 0x40; i++) {
+            v = g->unk_10A5[i];
+            if (v & 0x80) {
+                func_80098680(rec, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14, (u8)(v - 1) & 0x7F);
+            } else {
+                func_80098B80(rec, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14, (u8)(v - 1) & 0x7F);
+            }
+            rec++;
+        }
+        disp_string();
+        if (g->unk_10E8 != 0) {
+            for (i = 0; i < 2; i++) {
+                v = g->unk_10EC[i];
+                if (v < 0x80) {
+                    func_80098D00((u8 *)&D_801220D0 + i * 0x24, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14, (u16)(v - 1));
+                }
+            }
+        }
+    }
+    if (g->unk_1113 != 0) {
+        func_80099540(&D_80122740);
+        obj = D_80122640; do {
+            func_80099B10(obj[1], &sp50, &sp70);
+            func_80099F04(&sp50);
+            func_8009A200(obj[1], &sp70);
+            func_80099ED8(&sp70);
+            func_8009A4D0((s32)obj, (s32)((u8 *)&D_800E8C70 + (D_8011ECA0 * 0x14)), 6, 0x1F800000);
+            obj += 4;
+        } while (obj != (u32 *)&D_80122740);
+        func_8005938C();
+    }
+    if (arg0 != 0) {
+        D_800B3D10[2] = func_80098650();
+        csr_load_vram(0);
+        palette_load_vram(0);
+        if (g->unk_1108 != 0x90 || g->unk_1109 < 10 || g->unk_1109 == 12) {
+            func_8009C674(0);
+        }
+        D_800B3D10[3] = func_80098650();
+        if (g->unk_1108 == 0x90 && g->unk_1109 >= 10) {
+            func_800AD950(2);
+            func_8009C210(1);
+        } else if (func_80098650() < g->unk_10F0) {
+            func_800AD950(0);
+        }
+        D_800B3D10[0] = func_80098650();
+        func_80042A00();
+    }
+    func_8009C210(1);
+    func_8009ABF0();
+    func_8009AC20();
+    if (g->unk_039 != 0) {
+        func_8009824C(g->unk_036, g->unk_037, g->unk_038, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14);
+    }
+    func_8009AD00((u8 *)&D_800E8C70 + D_8011ECA0 * 0x14);
+}
 
 void draw2d3d(u8 arg0, u8 arg1) {
     D_800E6280.unk_1114 = arg0;
@@ -183,7 +259,42 @@ void StoreSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
 void func_80044434(void) {
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", func_8004443C);
+void func_8004443C(void) {
+    /* FAKE: T-25003, the two unused words give the original stack layout (colors at sp+0x64, rect at
+     * sp+0x58, frame 0x78); without them the colors and rect move and 17 rows differ. */
+    s32 pad0;
+    s32 colors[4];
+    s32 i;
+    RECT rect;
+    s32 pad1;
+
+    colors[0] = D_800B3D10[0] / 264;
+    colors[1] = D_800B3D10[1] / 264;
+    colors[2] = D_800B3D10[2] / 264;
+    colors[3] = D_800B3D10[3] / 264;
+    for (i = 0; i < 4; i++) {
+        if (colors[i] >= 3) {
+            colors[i] = 0x800000;
+        } else if (colors[i] >= 2) {
+            colors[i] = 0x808000;
+        } else if (colors[i] > 0) {
+            colors[i] = 0x8000;
+        } else {
+            colors[i] = 0x80;
+        }
+    }
+    rect.w = 4;
+    for (i = 0; i < 4; i++) {
+        rect.x = 0x8C + i * 4;
+        rect.h = D_800B3D10[i] * 16 / 264;
+        rect.y = 0x4C - rect.h;
+        func_8004A14C(i + 6, rect, colors[i]);
+    }
+    rect.x = 0x88;
+    rect.h = 16;
+    rect.y = 0x3C;
+    func_8004A14C(i + 6, rect, 0x808080);
+}
 
 void func_80044700(s32 arg0, s32 arg1, s32 arg2) {
     RECT rect;

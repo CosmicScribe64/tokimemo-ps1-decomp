@@ -572,7 +572,8 @@ def rodata_lines(unit, delta, islands, lo, hi, prefix, iname, extra=()):
 
 
 SUB_LINE_RE = re.compile(r'^\s*- (?:\[(0x[0-9A-Fa-f]+),\s*([.\w]+)(?:,\s*([\w/]+))?\]|'
-                         r'\{\s*start:\s*(0x[0-9A-Fa-f]+),\s*type:\s*([.\w]+),\s*name:\s*([\w/]+)\s*\})')
+                         r'\{\s*start:\s*(0x[0-9A-Fa-f]+),\s*type:\s*([.\w]+),\s*name:\s*([\w/]+)'
+                         r'(?:,\s*\w+:\s*[^,}\s]+)*\s*\})')   # extra keys: a further .data island (T-25005)
 
 
 def parse_sub_line(line):

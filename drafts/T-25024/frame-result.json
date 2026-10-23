@@ -1,0 +1,18 @@
+{
+  "label": "frame19022",
+  "input": "drafts/T-19022/TEL/func_80136724.c",
+  "source_sha256": "fec920f39475861e7f745783b642bf70d0ef7a453d4639a5b124619385ec9017",
+  "tu_sha256": "12fa5e30e7f1456e86533383a7edb36adc584326beb80f5a2c5a79030bb53570",
+  "target_words": 1645,
+  "candidate_words": 1646,
+  "printed_lines": 1401,
+  "changed_positions": 1422,
+  "aligned_cost": 1035,
+  "first_divergence": 12,
+  "first_target": "10410647  ; beq v0,at,6074 <.L80138054+0x20>",
+  "first_candidate": "10410648  ; beq v0,at,6078 <func_80136724+0x1954>",
+  "toolchain": [
+    "ido",
+    "5.3"
+  ]
+}

@@ -1,10 +1,10 @@
 ---
 id: T-24003
 title: Complete BUNKAKEN selector and date-loader remainder
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[bunka-family-results]]", "[[matching-notes]]"]
 ---
 
@@ -28,3 +28,5 @@ Isolated branch codex/complete-bunkaken from w2-good. Starting archived scores: 
 - Heroine-selection loop func_8013BD84: literal default linked MATCH, 540 bytes (`build/t24003/bd-proof.txt`); BUNKAKEN SHA1 OK (`build/t24003/checksum.txt`). Archived hand draft 87 -> 38 -> 0 search cost. Explicit `u8 flags` for the fixed heroine-0 tests supplies the original unshifted byte in v1; the indexed loop keeps its inline byte expression, and its sum is written unk_06 + unk_02. Conditional-local and reload variants scored worse (65 and 91). No FAKE or header changes.
 - Loader func_8013B510 remains INCLUDE_ASM. Bounded current-header tests: typed/GameState-pointer 335; old-style calls and retained seed self-store 318; dispatch view, s32 return view and local heroine copies 318; artificial fourth-parameter diagnostic 326, discarded. The target consistently uses a3 for repeated heroine loads while current C uses v1; a temporary-numbering shift follows case 17. Current typed candidate and provenance archived at drafts/T-24003/. The seed self-store is explicitly FAKE in the unaccepted archive. Historical 297 was not reproduced with current headers.
 - Final validation: complete default `ninja -j2` succeeds (`build/t24003/final-build.txt`). Combined `funcdiff.py --unit BUNKAKEN --resolve --version default func_80140F60 func_8013BD84` reports literal linked MATCH for 296 and 540 bytes (`build/t24003/final-proof.txt`). Headers and globals pass; prototype branch check reports 0 new / 15 known disagreements (`build/t24003/guards-final.txt`). Ticket remains In Review for independent review against CODING_STANDARDS.md.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

@@ -1,10 +1,10 @@
 ---
 id: T-24047
 title: Recover ENDING sprite scene initializer
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[ending-family-results]]", "[[completion-run-2026-10-17]]"]
 ---
 
@@ -420,3 +420,5 @@ input/build metadata, or a demonstrable12-entry C-generated barrier input.
 No match or impossibility proof is claimed; ticket stays In Progress.
 
 Root handoff: existing worker turn completed and is idle. Move this unresolved checkpoint to In Review, not Done; guarded source and evidence remain preserved, zero new matching bytes. Revisit when a concrete new source or input-metadata lead exists. The overall100% goal remains active with the sole Sol worker on ETC40AE4.
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

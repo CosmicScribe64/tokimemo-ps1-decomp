@@ -134,3 +134,29 @@ Three live spill homes remain +4, the external-array swap adds a LUI, case 8/lat
 ## T-24048 animation source pass
 
 [[tickets/T-24048-master-animation]] retried func_801344E0 in its own TU, without changing production C or headers. Fresh shared-type control reproduces475 rows/469 aligned; natural clone-pointer lifetime, explicit primary fade updates and direct counter increments produce a readable434/428 source lead. No match or new bytes. The current frame is72 versus64; the clone end pointer is hoisted across RNG and copy setup consumes a different temporary rotation. The scratch end-label hypothesis does not fix either. Historical T-10630's350-row handoff is unavailable in this checkout, so434 is not claimed as the historical best. Source-only selection, bounded negatives and reproducer: drafts/T-24048/README.md. No compiler-impossibility conclusion; no per-function patch.
+
+## T-24514 narrow source reconstruction
+
+[[tickets/T-24514-master]] adds zero verified C bytes. Current shared types bring
+the35FB8 matched-twin port to58 aligned; bounded initialization/shuffle-pointer
+lifetime controls do not improve it. The retained363F4 reconstruction uses its
+own early cases and checks/actions with the archived, nonmatching T-24048
+344E0 shared-loop source. Indexed clone plus removal of a one-use RNG local
+scores342 and restores the64-byte frame. First213 instructions align, then the
+copy end uses t3 instead of original t2; clone compare/spill homes and later
+register rotation remain. Byte/integer pre-copy store views342/439 do not close
+it. This is a source boundary, not a compiler-impossibility claim.
+
+Narrow compiling bodies, exact controls and Docker replay live in
+`drafts/T-24514/`; no full-TU context or original assembly dump is retained.
+Production and headers are unchanged.326B4 historical correct-frame source
+rescores538; its known selector-promotion blocker was not exhaustively retried.
+
+## T-24517 matched35FB8 and structural checkpoints
+
+[[tickets/T-24517-master-flow]] matches `func_80135FB8` in literal default C (1,084 linked bytes). The existing matched33F80 twin becomes exact with indexed zero-initialization (defers the saved array base to the shuffle), a real pointer used only for the shuffle, equivalent threshold reassociation, and the preceding fade callee's s32 view. The last view closes six final fade-byte register rows; own return-type and final Default_Disp view are neutral. A source-local override plus the shared declaration guard confines the change to `80133680.c`; MASTER and all27 checksums pass with header/global/prototype guards. Inherited scalar probability-byte FAKE views remain marked.
+
+The same lane preserves326B4's raw case4 selector/call-boundary reconstruction at190/816 positions (430 exact diagnostic prefix;83 register-only and19 actual placement rows), plus363F4's separate copy-end consultation boundary. Neither is a C match. Source/replay/evidence are narrow in `drafts/T-24517/later/`; no compiler patch or raw dump.
+## T-24519 reverse sibling transfer
+
+[[tickets/T-24519-master-sibling]] transfers recovered363F4 indexed clone/point loops and the real RNG local back into344E0's own flow. T24048 control428/730 positions/frame72 becomes338/728/frame64, with289 exact diagnostic prefix positions,171 register-only rows and0 other rows. Clone/speed spill34 and point30 match. First residual is the already-consulted aligned-copy end relation; the later register mapping is consistent across calls, and no independent source issue is established. No copy-end probes, production changes or new C bytes. Narrow source/replay/map: `drafts/T-24519/`.

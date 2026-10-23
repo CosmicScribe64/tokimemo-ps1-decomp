@@ -542,7 +542,75 @@ void func_8013855C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_801387B0);
+/* FAKE: T-25148; the four N - ((flag & 1) == 1) tests are spelled differently (plain, ^ 0, * 1, << 0) so that uopt
+ * shares the AND in v1 but recomputes xor/sltiu per test, as the original does; with one spelling uopt keeps the
+ * boolean itself. `* 1` on D_8011F4DE/D_8011F4D0 gives the original's constant-first bne (T-25002). */
+void func_801387B0(void) {
+    u8 flag;
+    u8 c;
+
+    flag = D_800E6280.unk_53C[6];
+    if (D_8013C35C == 1) {
+        if (D_8013C360 == 0) {
+            ((DisplayActor44 *)D_8011ECD0)[31].unk_16 = 7;
+            func_801396A4(0, 0xFF);
+            D_80122D0C = 0;
+            D_8013CAA0 = 0;
+        }
+    } else if (D_8013C35C == 8) {
+        if (D_8013C360 == 0xC8) {
+            func_801396A4(1, 5);
+            D_80122D0C = 1;
+        } else if (D_8011F4DE * 1 == 1 && D_8011F4E0 == 2 && D_8011F4D0 * 1 == 1) {
+            func_801396A4(2, 0);
+            D_80122D0C = 0;
+        }
+    } else {
+        if (D_8013C35C == 0xC - ((flag & 1) == 1)) {
+            if (D_8013CAA0 == 0 && D_8013C364 == 0xA) {
+                D_8013CAA0 = 1;
+                D_8013C364 = 0;
+            }
+            /* FAKE: T-25148; D_8013CAA0 read through D_8013CAA4 - 4 into a local. uopt then keeps the load first
+             * (`bne t0,a1`); with the plain symbol tools/cvt_pass.py's constant-first fix-up swaps it, because
+             * func_80137BB4's entry loads put D_8013CAA0 in the unit's set of rewritten globals. */
+            c = ((u8 *)&D_8013CAA4)[-4];
+            if (D_8013C364 == 0x1E && D_8011F4DE == 2 && c == 1) {
+                func_801396A4(3, 0);
+                ((DisplayActor44 *)D_8011ECD0)[31].unk_16 = 8;
+            }
+        } else if (D_8013C35C == 0xE - (((flag & 1) ^ 0) == 1)) {
+            if (D_8013C360 == 0) {
+                func_801396A4(0, 0);
+            }
+        } else if (D_8013C35C == 0x13 - ((flag & 1) * 1 == 1)) {
+            if (D_8013C360 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[31].unk_16 = 7;
+            }
+        } else if (D_8013C35C == 0x16 - (((flag & 1) << 0) == 1)) {
+            if (D_8013C360 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[31].unk_16 = 8;
+            }
+        } else if (D_8013C35C == 0x18) {
+            if (D_8013C360 == 1) {
+                func_801396A4(4, 5);
+                D_80122D0C = 1;
+            }
+        } else if (D_8013C35C == 0x1A) {
+            if (D_8013C360 == 0) {
+                ((DisplayActor44 *)D_8011ECD0)[31].unk_16 = 7;
+            }
+        } else if (D_8013C35C == 0x1C) {
+            if (D_8013C360 == 0) {
+            } else if (D_8013C360 == 1) {
+                func_801396A4(5, 5);
+            } else if (D_8011F4DE == 5 && D_8011F4E0 == 4 && D_8011F4D0 == 0xD) {
+                func_801396A4(6, 1);
+            }
+        }
+    }
+    D_8013C360 += 1;
+}
 
 void func_80138A9C(void) {
     if (D_8013C35C == 1) {

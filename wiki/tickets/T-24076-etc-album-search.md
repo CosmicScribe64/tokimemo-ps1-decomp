@@ -1,10 +1,10 @@
 ---
 id: T-24076
 title: Recover ETC album search with actual helper signature
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-20
 links: ["[[etc-family-results]]", "[[tickets/T-20900-shared-type-unification]]", "[[tickets/T-24000-complete-matching]]"]
 ---
 
@@ -65,3 +65,7 @@ GameState boundary/integer-address, final reload and s32 return-view FAKE caveat
 are inline; original source type/spelling remains unproven. Fresh archive replay
 confirms71. Production remains ASM, no helper/header/config or neighbor changes.
 Stop F054 probes under parent direction; no compiler-impossibility claim.
+
+## Comments
+
+- closing review (2026-10-20): work is on main (w2-good ff6c770b2). CODING_STANDARDS check of the touched sources: FAKE and NON_MATCHING comments carry ticket ids, no inline asm, no guard over 30 rows. Unmatched targets named here stay INCLUDE_ASM and remain in the matching work lists. Done.

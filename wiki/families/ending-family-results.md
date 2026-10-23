@@ -244,3 +244,19 @@ cross-block LUI motion and its branch-offset cascade remain. The case12
 diagnostic now differs only in the bound word and extra table entry, so remains
 rejected. Direct volatile views, a named label and register/selector metadata
 views do not fix the motion. Normal ENDING rebuild and tracer fidelity pass.
+
+## T-24512 bounded reconstruction checkpoint
+
+[[tickets/T-24512-ending]] preserves a concrete330E4 frame lead in
+`drafts/T-24512/func_801330E4.c`: current hand draft aligned104 ->84 after
+scalar-first layout, removal of the redundant extracted-field local, and a
+marked FAKE four-word frame pad. Frame B0 and tables30/58/78 now agree; the
+level halfword spill56 versus54 and bonus calculation lifetime remain wrong.
+Flag-first ordering, narrow extracted-value locals and raw-word shifts do not
+close it. This is source research, zero verified C bytes; production unchanged.
+Typed387B0 stale-index repairs148/177 and current34270 typed redraft890 provide
+no closer. Existing A2E8/35F4C scheduler investigations were read and preserved.
+
+## T-24560 level object home
+
+[[tickets/T-24560-ending-slot]] distinguishes330E4's two-byte level object from a scalar word home. A FAKE-marked struct member improves84->80 and changes exactly sh/lh56->54, retaining199 positions andB0/table30/points58/rank78. An array member adds stores87/200. One real raw-bonus local/direct0xE00 predicate96/199 emits an extra ANDI and does not recover target raw-a0/extracted-v0 lifetime. Narrow source/replay is in `drafts/T-24560/`; zero new verified C bytes, production unchanged.

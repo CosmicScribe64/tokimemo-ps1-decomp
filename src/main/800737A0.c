@@ -155,7 +155,163 @@ u8 func_80073AD8(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", func_80073CB0);
+void func_80073CB0(void) {
+    /* FAKE: T-25049, this saved selection local preserves the original
+     * call-spill home; removing it changes four instructions. */
+    s32 sp28;
+    s32 var_v1;
+    u32 temp_t6;
+    u32 temp_t9;
+    u8 temp_a0;
+
+    D_801230D0 = 0xFF;
+    temp_a0 = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_03;
+    if (temp_a0 != 0) {
+        var_v1 = 1;
+    } else {
+        var_v1 = 0;
+    }
+    if ((D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 == 3) && (temp_a0 == 5)) {
+        var_v1 = 2;
+    }
+    /* FAKE: T-25049, retain the entry value through this test so the
+     * record address takes v0 and its byte value takes a0. No emitted test. */
+    if (temp_a0) {}
+    sp28 = var_v1;
+    if (func_80066A84() == 1) {
+        switch (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01) {
+        case 0:
+            D_801230D0 = (s32) D_800B68C0[0 + var_v1];
+            break;
+        case 1:
+            D_801230D0 = (s32) D_800B68C0[2 + var_v1];
+            break;
+        case 2:
+            D_801230D0 = (s32) D_800B68C0[4 + var_v1];
+            break;
+        case 3:
+            D_801230D0 = (s32) D_800B68C0[6 + var_v1];
+            break;
+        case 4:
+            D_801230D0 = 0xFF;
+            break;
+        case 5:
+            D_801230D0 = (s32) D_800B68C0[9 + var_v1];
+            break;
+        case 6:
+            D_801230D0 = (s32) D_800B68C0[11 + var_v1];
+            break;
+        case 7:
+            D_801230D0 = (s32) D_800B68C0[13];
+            break;
+        }
+    } else {
+        switch (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01) {
+        case 0:
+            D_801230D0 = (s32) D_800B68D0[0 + var_v1];
+            break;
+        case 1:
+            D_801230D0 = (s32) D_800B68D0[2 + var_v1];
+            break;
+        case 2:
+            D_801230D0 = (s32) D_800B68D0[4 + var_v1];
+            break;
+        case 3:
+            D_801230D0 = (s32) D_800B68D0[6 + var_v1];
+            break;
+        case 4:
+            D_801230D0 = 0xFF;
+            break;
+        case 5:
+            D_801230D0 = (s32) D_800B68D0[9 + var_v1];
+            break;
+        case 6:
+            D_801230D0 = (s32) D_800B68D0[11 + var_v1];
+            break;
+        case 7:
+            D_801230D0 = (s32) D_800B68D0[13];
+            break;
+        }
+    }
+    if (D_801230D0 == 0xFF) {
+        sp28 = var_v1;
+        if (func_80066A84() == 1) {
+            temp_t6 = (u16) D_800E6280.unk_0F4.h >> 0xC;
+            switch (temp_t6) {
+            case 0:
+                D_801230D0 = (s32) (*D_800B6890)[var_v1];
+                break;
+            case 1:
+                D_801230D0 = (s32) D_800B6890[1][var_v1];
+                break;
+            case 2:
+                D_801230D0 = (s32) D_800B6890[2][var_v1];
+                break;
+            case 3:
+                D_801230D0 = D_800B6890[3][var_v1];
+                break;
+            case 4:
+                D_801230D0 = (s32) D_800B6890[4][var_v1];
+                break;
+            case 5:
+                D_801230D0 = (s32) D_800B6890[5][var_v1];
+                break;
+            case 6:
+                D_801230D0 = (s32) D_800B6890[6][var_v1];
+                break;
+            case 7:
+                D_801230D0 = (s32) D_800B6890[7][var_v1];
+                break;
+            case 8:
+                D_801230D0 = (s32) D_800B6890[8][var_v1];
+                break;
+            case 9:
+                D_801230D0 = (s32) D_800B6890[9][var_v1];
+                break;
+            case 10:
+                D_801230D0 = (s32) D_800B6890[0xA][var_v1];
+                break;
+            }
+        } else {
+            temp_t9 = (u16) D_800E6280.unk_0F4.h >> 0xC;
+            switch (temp_t9) {
+            case 0:
+                D_801230D0 = D_800B68A8[0][var_v1];
+                break;
+            case 1:
+                D_801230D0 = (s32) D_800B68A8[1][var_v1];
+                break;
+            case 2:
+                D_801230D0 = (s32) D_800B68A8[2][var_v1];
+                break;
+            case 3:
+                D_801230D0 = (s32) D_800B68A8[3][var_v1];
+                break;
+            case 4:
+                D_801230D0 = (s32) D_800B68A8[4][var_v1];
+                break;
+            case 5:
+                D_801230D0 = (s32) D_800B68A8[5][var_v1];
+                break;
+            case 6:
+                D_801230D0 = (s32) D_800B68A8[6][var_v1];
+                break;
+            case 7:
+                D_801230D0 = (s32) D_800B68A8[7][var_v1];
+                break;
+            case 8:
+                D_801230D0 = (s32) D_800B68A8[8][var_v1];
+                break;
+            case 9:
+                D_801230D0 = (s32) D_800B68A8[9][var_v1];
+                break;
+            case 10:
+                D_801230D0 = D_800B68A8[10][var_v1];
+                break;
+            }
+        }
+    }
+}
 
 u8 func_800741B8(void) {
     if (D_800E6280.unk_110D == 0) {
@@ -293,7 +449,70 @@ void week_day_exit0(void) {
     main_state_set(0x31);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", parameter_up_down);
+s32 parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
+    s32 i;
+    s32 div_a;
+    s32 div_b;
+    s8 *row;
+    s8 *p;
+    u32 h;
+
+    div_a = 1;
+    div_b = 1;
+    /* FAKE: T-25044, the extra raw-byte use keeps the byte in v1 while
+     * the nibble is assigned directly to v0, avoiding an extra copy. */
+    if (D_800E6280.unk_0F4.b[1]) {}
+    h = D_800E6280.unk_0F4.b[1] & 0xF;
+    if (h == 3) {
+        div_a = 2;
+    } else if (((h == 1) || (h == 2)) && (arg0 != 5) && (arg0 != 7) && (arg0 != 6)) {
+        div_b = 2;
+    }
+    if (arg1 != 0) {
+        arg1 = 4;
+    } else {
+        arg1 = 1;
+    }
+    if (arg2 != 0) {
+        arg2 = 2;
+    } else {
+        arg2 = 1;
+    }
+    if (arg0 == 4) {
+        h = D_800E6280.unk_0F4.h;
+        row = D_800B6928[h >> 12];
+        p = row;
+        for (i = 0; i != 8; i++) {
+            if (*p > 0) {
+                parameter_change(i, *p * (u32)(arg1 * 0x1000 / arg2 / div_a / div_b));
+            } else {
+                parameter_change(i, *p << 12);
+            }
+            p++;
+        }
+        if (row[8] < 0) {
+            parameter_change(8, row[8] * (u32)(arg1 * 0x1000 / arg2 / div_a / div_b) + (arg2 << 16) + 0xFFFF0000);
+        } else {
+            parameter_change(8, (row[8] << 12) + (arg2 << 16) + 0xFFFF0000);
+        }
+    } else {
+        row = D_800B68E0[arg0];
+        p = row;
+        for (i = 0; i != 8; i++) {
+            if (*p > 0) {
+                parameter_change(i, *p * (u32)(arg1 * 0x1000 / arg2 / div_a / div_b));
+            } else {
+                parameter_change(i, *p << 12);
+            }
+            p++;
+        }
+        if (row[8] < 0) {
+            parameter_change(8, row[8] * (u32)(arg1 * 0x1000 / arg2 / div_a / div_b) + (arg2 << 16) + 0xFFFF0000);
+        } else {
+            parameter_change(8, (row[8] << 12) + (arg2 << 16) + 0xFFFF0000);
+        }
+    }
+}
 
 u8 vacation_day_init(void) {
     D_800E6280.unk_1104.w += 1;

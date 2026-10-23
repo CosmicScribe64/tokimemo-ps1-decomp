@@ -290,7 +290,102 @@ void func_80146C68(s32 arg0) {
     ((DisplayActor44 *)D_80120650)->unk_2A = -0x40;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146D4C);
+s32 func_80146D4C(void) {
+    s32 zero; /* FAKE: T-25045, reuses the original T-25007 frame-padding word. */
+    s32 score;
+    EtcWork40 *w;
+    s32 ret;
+    s32 main;
+    s32 sub;
+    s32 bio;
+    GameState *g = &D_800E6280;
+
+    main = 0;
+    sub = 0;
+    switch (g->unk_041) {
+    case 0:
+        main = g->unk_100.unk_02;
+        bio = func_8006C334(0, 0, 1, 0x10);
+        break;
+    case 1:
+        main = g->unk_104.unk_02;
+        bio = func_8006C334(0, 0, 1, 0x10);
+        break;
+    case 2:
+        main = g->unk_104.unk_02 * 7 / 10;
+        sub = g->unk_110.unk_02 * 3 / 10;
+        if (sub >= 0x27) {
+            sub = 0x26;
+        }
+        bio = func_8006C334(0, 1, 1, 0x10);
+        break;
+    case 3:
+        sub = g->unk_100.unk_02 * 3 / 10;
+        main = g->unk_110.unk_02 * 7 / 10;
+        bio = func_8006C334(0, 0, 1, 0x10);
+        if (sub >= 0x27) {
+            sub = 0x26;
+        }
+        break;
+    case 4:
+        main = g->unk_108.unk_02 * 8 / 10;
+        sub = g->unk_110.unk_02 * 2 / 10;
+        bio = func_8006C334(0, 1, 0, 0x10);
+        if (sub >= 0x1A) {
+            sub = 0x19;
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    ret = main + sub + bio - 8;
+    /* FAKE: T-25007, the nibble view loads the flag byte into its own temporary as the original does */
+    if (((GsByteNibbles *)&g->unk_0F4.b[1])->low & 2) {
+        ret /= 2;
+    }
+    func_800AE0B0("main %d sub %d bio %d ret %d ", main, sub, bio, ret);
+    if (ret < 0) {
+        ret = 1;
+    }
+    ret = func_80146400() + ret;
+    sub = func_801464D4(0xF);
+    ret = (func_800AE0D0() % 10) * sub + ret;
+    w = (EtcWork40 *)&D_801230D0;
+    if (ret < 0x80) {
+        w->unk_28[g->unk_041] = ret * 100 / 128;
+    } else {
+        w->unk_28[g->unk_041] = 100 - (func_800AE0D0() & 3);
+    }
+    func_800AE0B0("今日の成績 %d\t", w->unk_28[g->unk_041]);
+    score = w->unk_28[g->unk_041] + w->unk_28[5];
+    w->unk_28[5] = score;
+    /* FAKE: T-25045, the late-folded zero and two identities spend one ugen
+     * temporary before as1 removes them, preserving the final index registers. */
+    zero = g->unk_041 * 0;
+    func_800AE0B0("合計点 %d\n", (score + zero) | zero);
+    ret = w->unk_28[g->unk_041];
+    if (ret < 0x28) {
+        ret = 0;
+    } else if (ret < 0x3C) {
+        ret = 1;
+    } else if (ret < 0x50) {
+        ret = 2;
+    } else if (ret < 0x5F) {
+        ret = 3;
+    } else {
+        ret = 4;
+    }
+    if (ret == 0) {
+        D_801230F4 += 1;
+        /* FAKE: T-25007, an extra read of unk_041 raises the priority of its promoted range so every
+         * read sits in a3 as in the original (found by the permuter) */
+        if (g->unk_041) {
+        }
+    }
+    w->unk_10[g->unk_041] = ret;
+    return ret;
+}
 
 void func_8014716C(void) {
     func_8004E58C();
@@ -530,7 +625,116 @@ void func_80147880(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014790C);
+void func_801480D0(void);
+void func_80148F34(void); /* defined later in this file */
+
+/* T-25054: results scene and the fourteen result display records.
+ * FAKE: retain the legacy non-void fallthrough to keep the switch copy in v0;
+ * the only caller ignores the result. A void definition removes that copy. */
+s32 func_8014790C(void) {
+    /* FAKE: the 0x10C size only reproduces the 0x188 frame and the buffer at 0x7C (original size unknown). T-22029 */
+    u8 buf[0x10C];
+    s32 i;
+    u8 *r;
+    s16 x;
+    s16 y;
+    s32 v;
+
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        func_8004E58C();
+        func_8006612C("結果発表 ");
+        gnsx(D_800E6280.unk_0D4);
+        sndisp("今日は、試験結果の 発表の日だ。）", 0, 0x1F);
+        k_sub_reset_point_set();
+        k_sub_disp_start(0);
+        func_8004500C(1, 0x202);
+        hizuke_init();
+        func_80048E78();
+        D_800E6280.unk_110D += 1;
+        cd_read_sectors(0xD, 0x801E0000, 0x9CA8);
+        break;
+    case 1:
+        if ((u32) D_800E6280.unk_1104.w >= 0x101) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_8004E58C();
+            icon_disp_switch(0);
+            parameter_disp_switch(0);
+            hizuke_disp_switch(0);
+            func_80048F64(0x60);
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 4;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 0x40;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0xA4;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (u8 *) 0x801E64A0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (u8 *) 0x801E6520;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (u8 *) 0x801E6494;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 1;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 8;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x28;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = 0x80;
+            func_80148E98();
+            func_80148EE8();
+            func_801480D0();
+            /* FAKE: T-25054, the always-false unsigned comparison folds after
+             * uopt, keeping the walked base separate from the indexed base.
+             * Keep i's initialization and the following do on one line for
+             * the original address schedule. */
+            do { r = D_8011ECD0; } while ((u32)D_800E6280.unk_041 < 0); i = 0; do {
+                x = D_80150630[i];
+                y = D_8015064C[i];
+                v = D_80150684[i];
+                ((DisplayActor44 *)r)[0x61].unk_01 = 3;
+                ((DisplayActor44 *)r)[0x61].unk_02 = 0x40;
+                ((DisplayActor44 *)r)[0x61].unk_38 = 0;
+                ((DisplayActor44 *)r)[0x61].unk_03 = 0x24;
+                ((DisplayActor44 *)r)[0x61].unk_0C = (u8 *)0x801E64A0;
+                ((DisplayActor44 *)r)[0x61].unk_10 = (u8 *)0x801E6520;
+                ((DisplayActor44 *)r)[0x61].unk_34 = (u8 *)0x801E6494;
+                ((DisplayActor44 *)r)[0x61].unk_18 = 0x1F;
+                ((DisplayActor44 *)r)[0x61].unk_05 = 1;
+                ((DisplayActor44 *)r)[0x61].unk_04 = 8;
+                ((DisplayActor44 *)r)[0x61].unk_07 = 0x80;
+                ((DisplayActor44 *)r)[0x61].unk_26 = x;
+                ((DisplayActor44 *)r)[0x61].unk_2A = y;
+                if (v == 0xD) {
+                    strncpy((char *) buf, (char *) D_800E6280.unk_0D4, 8);
+                    strncat((char *) buf, (char *) D_800E6280.unk_0DC, 8);
+                    set_kanji_string(D_80150630[i] + 0x18, D_8015064C[i], 3, buf, 0);
+                    func_800AE0B0("%s\n", D_800E6280.unk_0C4);
+                } else if (v == 0xA) {
+                    set_kanji_string(x + 0x18, y, 3, D_800B3538[13], 0);
+                } else if (v == 0xB) {
+                    if (D_800E6280.unk_1BC[11].unk_0C.f.f9 != 0) {
+                        set_kanji_string(x + 0x18, y, 3, D_800B3538[11], 0);
+                    } else {
+                        /* FAKE: T-25054, this late-folded zero prevents uopt
+                         * from distributing 0x61 into the field displacement.
+                         * The same identity is used in the final else arm. */
+                        ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].unk_03 = 0xA4;
+                    }
+                } else if (D_800E6280.unk_1BC[v].unk_0C.f.b1) {
+                    set_kanji_string(x + 0x18, y, 3, D_800B3538[v], 0);
+                } else {
+                    ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].unk_03 = 0xA4;
+                }
+                r += 0x44;
+                i += 1;
+            } while (i != 0xE);
+            k_sub_reset_point_set();
+            k_sub_disp_start(0);
+            func_80148F34();
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 /* Bits 0 and 1 of the low byte of GameState +0xF6 (T-7010). */
 typedef struct {
@@ -621,7 +825,169 @@ void func_80148078(void) {
     }
     func_800646CC();
 }
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801480D0);
+/* T-25059: generate exam scores, order and ranks, then apply relationship bonuses. */
+void func_801480D0(void) {
+    /* FAKE: T-25059, scalar order and the unused word below preserve the
+     * original 0xD0 frame and the noise/angle/offset/array stack homes. */
+    s32 i;
+    s32 j;
+    s32 changed;
+    s32 a;
+    s32 noise;
+    s32 first_random;
+    s32 selected;
+    s32 sine;
+    s32 offset;
+    s32 minimum;
+    s32 angle;
+    s32 maximum;
+    s32 values[14];
+    s32 pad;
+
+    func_800AE120(D_800E6280.unk_10F8);
+    for (i = 0; i < 13; i++) {
+        first_random = func_800AE0D0();
+        noise = (first_random % (s32)D_80150738[i]) * (((func_800AE0D0() & 1) * 2) - 1);
+        first_random = func_800AE0D0();
+        a = (first_random % (s32)D_80150738[i]) * ((func_800AE0D0() & 1) * 2 - 1);
+        D_80150668[i] = ((D_80150728[i] + a) * 5) + noise;
+        j = func_801464D4(i);
+        if (j != 1) {
+            if (j == 9) {
+                D_80150668[i] += func_800AE0D0() % 250;
+            }
+        } else {
+            D_80150668[i] += func_800AE0D0() % 50;
+        }
+        if (D_80150668[i] >= 501) {
+            D_80150668[i] = 500;
+        }
+        func_800AE0B0("[%d:%d]\n", i, D_80150668[i]);
+    }
+    D_80150668[13] = (s16) ((EtcWork40 *)&D_801230D0)->unk_28[5];
+    do {
+        changed = 0;
+        for (j = 0; j < 14; j++) {
+            for (i = j + 1; i < 14; i++) {
+                if (D_80150668[i] == D_80150668[j]) {
+                    changed++;
+                    D_80150668[i]--;
+                }
+            }
+        }
+    } while (changed != 0);
+    for (i = 0; i < 14; i++) {
+        values[i] = D_80150668[i];
+    }
+    for (j = 0; j < 14; j++) {
+        selected = 0;
+        maximum = values[0];
+        for (i = 1; i < 14; i++) {
+            if (maximum < values[i]) {
+                maximum = values[i];
+                selected = i;
+            }
+        }
+        values[selected] = 0;
+        D_80150684[j] = selected;
+    }
+    func_800AE0B0("順位計算\n ");
+    for (i = 0; i < 14; i++) {
+        func_800AE0B0("[%d:%d] \n", i, D_80150684[i]);
+    }
+    func_800AE0B0("順位作成\n ");
+    offset = func_800AE0D0() & 3;
+    for (i = 0; i < 14; i++) {
+        angle = (D_80150668[i] << 12) / 1000;
+        sine = func_800A0140(angle);
+        D_801506BC[i] = (sine * 200) / 4096 + offset + 200;
+        func_800AE0B0("[%d:%d %d %d] \n", i, angle, sine, D_801506BC[i]);
+    }
+    do {
+        changed = 0;
+        for (j = 0; j < 14; j++) {
+            for (i = j + 1; i < 14; i++) {
+                if (D_801506BC[i] == D_801506BC[j]) {
+                    changed++;
+                    if (D_80150668[i] < D_80150668[j]) {
+                        D_801506BC[i]++;
+                    } else {
+                        D_801506BC[i]--;
+                    }
+                }
+            }
+        }
+    } while (changed != 0);
+    func_800AE0B0("順位ソート\n ");
+    for (i = 0; i < 14; i++) {
+        func_800AE0B0("[%d:%d] \n", i, D_801506BC[i]);
+    }
+    minimum = 1000;
+    for (i = 0; i < 14; i++) {
+        if (D_801506BC[i] < minimum) {
+            minimum = D_801506BC[i];
+        }
+    }
+    if (minimum >= 9) {
+        a = func_800AE0D0() % (minimum - 8) + minimum - 8;
+        for (i = 0; i < 14; i++) {
+            D_801506BC[i] -= a;
+        }
+    } else if (minimum <= 0) {
+        a = 1 - minimum;
+        for (i = 0; i < 14; i++) {
+            D_801506BC[i] += a;
+        }
+    }
+    maximum = D_80150668[0];
+    selected = 0;
+    for (i = 1; i < 14; i++) {
+        if (maximum < D_80150668[i]) {
+            maximum = D_80150668[i];
+            selected = i;
+        }
+    }
+    if (maximum >= 466) {
+        offset = D_801506BC[selected] - 1;
+        for (i = 0; i < 14; i++) {
+            D_801506BC[i] -= offset;
+        }
+    }
+    func_800AE0B0("順位確定\n ");
+    for (i = 0; i < 14; i++) {
+        func_800AE0B0("[%d:%d] \n", i, D_801506BC[i]);
+    }
+    if (D_80150684[0] == 13 && D_80150684[1] == 0) {
+        if (D_801506BC[0] < D_801506BC[13]) {
+            a = D_801506BC[0];
+            D_801506BC[0] = D_801506BC[13];
+            D_801506BC[13] = a;
+        }
+    }
+    if (D_80150684[0] == 13 && D_801506BC[13] <= 0) {
+        j = 1 - D_801506BC[13];
+        D_801506BC[13] = 1;
+        for (i = 0; i < 13; i++) {
+            D_801506BC[i] += j;
+        }
+    }
+    for (i = 0; i < 11; i++) {
+        if (D_80150668[i] < D_80150668[13]) {
+            if (D_800E6280.unk_56C[0xC8 + i] == 0) {
+                D_800E6280.unk_1BC[i].unk_02 += 11;
+                D_800E6280.unk_56C[0xC8 + i] = 1;
+            } else {
+                D_800E6280.unk_1BC[i].unk_02 += 2;
+            }
+        }
+    }
+    if (D_801506BC[13] == 1) {
+        for (i = 0; i < 11; i++) {
+            D_800E6280.unk_1BC[i].unk_02 += 2;
+        }
+    }
+}
+
 
 /* Implicit int in the original (no return value): $v0 stays live at the exit, which orders the loop preheader. T-22029 */
 s32 func_80148BC8() {

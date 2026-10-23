@@ -225,7 +225,100 @@ void func_8014A8E0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014AB50);
+/* T-24705: without the empty test the store moves to the right place (after sw ra) but the forwarded `lw` of the home spends one ugen temporary, so every temporary is one high (6 lines); `if (p){}`, `if (n){}`, `if (i){}`, `if (p == 0){}`, `arg1 |= 0;`, `arg1 = arg1 ^ 0;`, `arg1 = arg1 * 1;`, `arg1 & -1`, a `k = arg1` local, an absolute-address view and the for/while forms all stay at 5 or 6. */
+void func_8014AB50(s32 arg0) {
+    s32 i;
+    s32 j;
+    s32 random;
+
+    if (arg0 == 0xA) {
+        func_801335A0(0, 0x500);
+    }
+    if (arg0 < 0x64) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0, 0x32, 0x64);
+    } else if (arg0 == 0xC7) {
+        func_80147674(0, (s16 *)0x801E5BD0, 1, 0x28, 0x28);
+        /* FAKE: this store chain consumes the original ugen slot; plain stores shift later temporaries. T-24502 */
+        D_80128880[0].x = D_80128880[0].z = D_80128880[0].y = 0;
+        func_801335A0(0, 0x500);
+    } else if ((arg0 >= 0xC8) && (arg0 < 0xF0)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 2, 0x32, 0x64);
+    } else if ((arg0 >= 0xF0) && (arg0 < 0x118)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 3, 0x32, 0x64);
+    } else if ((arg0 >= 0x118) && (arg0 < 0x140)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 4, 0x32, 0x64);
+    } else if ((arg0 >= 0x140) && (arg0 < 0x154)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 5, 0x32, 0x5A);
+    } else if ((arg0 >= 0x154) && (arg0 < 0x172)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 6, 0x32, 0x50);
+    } else if ((arg0 >= 0x172) && (arg0 < 0x190)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 7, 0x32, 0x46);
+    } else if ((arg0 >= 0x190) && (arg0 < 0x1A4)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 8, 0x32, 0x3C);
+    } else if ((arg0 >= 0x1A4) && (arg0 < 0x1B8)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 9, 0x32, 0x32);
+    } else if ((arg0 >= 0x1B8) && (arg0 < 0x1C2)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0xA, 0x1E, 0x1E);
+    } else if ((arg0 >= 0x1C2) && (arg0 < 0x1D6)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0xB, 0x14, 0x14);
+    } else if ((arg0 >= 0x1D6) && (arg0 < 0x1F4)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0xC, 0xA, 0xA);
+    } else if (arg0 == 0x1F4) {
+        for (i = 1, j = 0; i != 0x1F; i++, j++) {
+            func_801472D4(i, 1, D_8015FEF8[j * 2 - 2], D_8015FEF8[j * 2 - 1], D_8015FFE2[j * 2 - 2], D_8015FFE2[j * 2 - 1]);
+        }
+        D_8015EDB4[20].unk84[2] = 1U;
+        func_8014BC80(0xD, 0);
+        func_8014BC80(9, 3);
+    } else if ((arg0 >= 0x1F4) && (arg0 < 0x203)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0xD, 5, 5);
+    } else if ((arg0 >= 0x203) && (arg0 < 0x22B)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0xE, 0xA, 0xA);
+        if (D_8015EDB4[20].unk84[2] != 0) {
+            func_8014B790(&D_8015EDB4[19].unk3, &D_8015EDB4[19].unk2, 0xD, 0, 3U);
+            func_8014B790(&D_8015EDB4[18].unk3, &D_8015EDB4[18].unk2, 9, 3, 3U);
+        }
+    } else if ((arg0 >= 0x22B) && (arg0 < 0x23A)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0xF, 5, 0x64);
+    } else if ((arg0 >= 0x23A) && (arg0 < 0x267)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0xD, 5, 0x64);
+    } else if ((arg0 >= 0x267) && (arg0 < 0x289)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0xC8);
+    } else if (arg0 == 0x289) {
+        /* FAKE: T-25043, keep the helper result live in uopt through the flag
+         * stores so the shared constant takes v1. Ugen removes the unsigned
+         * always-false test and its store. */
+        for (i = 1, j = 0; i != 0x1F; i++, j++) {
+            random = func_801472D4(i, 1, D_8015FEF8[j * 2 - 2], D_8015FEF8[j * 2 - 1], D_8015FFE2[j * 2 - 2], D_8015FFE2[j * 2 - 1]);
+        }
+        D_8015EDB4[17].unk2 = 1;
+        D_8015EDB4[17].unk84[2] = 1U;
+        if ((u32)random < 0) {
+            D_8015EDB4[17].unk84[2] = 1U;
+        }
+    } else if ((arg0 >= 0x28A) && (arg0 < 0x32A)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0xC8);
+        if (D_8015EDB4[17].unk84[2] == 1) {
+            func_8014B374(2);
+        }
+    } else if ((arg0 >= 0x32A) && (arg0 < 0x3B6)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0x64);
+        random = func_800AE0D0();
+        func_80147C98(0, 0x1B, (s16) ((random & 0x3FF) - 0x200), (s16) ((func_800AE0D0() & 0x3FF) - 0x200), 0x7D0, 0x190, 0x81);
+    } else if (arg0 == 0x3B6) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0x64);
+        for (i = 1, j = 0; i != 0x1F; i++, j++) {
+            func_801472D4(i, 0x1D, D_8015FEF8[j * 2 - 2], D_8015FEF8[j * 2 - 1], D_8015FFE2[j * 2 - 2], D_8015FFE2[j * 2 - 1]);
+        }
+        D_8015EDB4[17].unk84[2] = 2U;
+    } else if ((arg0 >= 0x3B7) && (arg0 < 0x47E)) {
+        func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0x64);
+        if (D_8015EDB4[17].unk84[2] == 2) {
+            func_8014B4B4(2);
+        }
+    }
+}
+
 
 void func_8014B2A4(s32 arg0) {
     u8 t;
@@ -683,7 +776,90 @@ void func_8014C978(s32 arg0) {
     D_8015EDB4[25].unk3 += 1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014CB24);
+s32 func_8014CB24(s32 arg0) {
+    MATRIX matrix;
+    SVECTOR input;
+    SVECTOR output;
+    s32 i;
+
+    if (arg0 < 0xA) {
+        for (i = 0; i < 5; i++) {
+            func_80147674(i + 1, D_801600C0[i], 1, 0, 0);
+        }
+        for (i = 0; i < 3; i++) {
+            func_80147674(i + 0x19, D_801600D4[i], 1, 0, 0);
+        }
+        for (i = 0; i < 2; i++) {
+            func_80147674(i + 0x1D, D_801600E0[i], 1, 0, 0);
+        }
+        func_80147674(8, D_801600E8, 1, 0, 0);
+        for (i = 0; i != 2; i++) {
+            func_80147674(i + 0x15, D_801600EC[i], 1, 0, 0);
+        }
+    } else if (arg0 >= 0xE && arg0 < 0x18) {
+        for (i = 0; i < 5; i++) {
+            func_80147674(i + 1, D_801600C0[i], 2, 0, 0);
+        }
+        for (i = 0; i < 3; i++) {
+            func_80147674(i + 0x19, D_801600D4[i], 2, 0, 0);
+        }
+        for (i = 0; i != 2; i++) {
+            func_80147674(i + 0x1D, D_801600E0[i], 2, 0, 0);
+        }
+        func_80147674(8, D_801600E8, 2, 0, 0);
+    } else if (arg0 >= 0x1E && arg0 < 0x28) {
+        func_80147674(0x1A, D_801600D4[1], 3, 0, 0);
+        func_80147674(8, D_801600E8, 3, 0, 0);
+    } else if (arg0 >= 0x2C && arg0 < 0x36) {
+        func_80147674(0x1A, D_801600D4[1], 4, 0, 0);
+        func_80147674(8, D_801600E8, 4, 0, 0);
+    } else if (arg0 >= 0x36 && arg0 < 0x40) {
+        for (i = 0; i < 5; i++) {
+            func_80147674(i + 1, D_801600C0[i], 3, 0, 0);
+        }
+        func_80147674(0x19, D_801600D4[0], 3, 0, 0);
+        func_80147674(0x1A, D_801600D4[1], 5, 0, 0);
+        func_80147674(0x1B, D_801600D4[2], 3, 0, 0);
+        for (i = 0; i != 2; i++) {
+            func_80147674(i + 0x1D, D_801600E0[i], 3, 0, 0);
+        }
+        func_80147674(8, D_801600E8, 5, 0, 0);
+    } else if (arg0 >= 0x40 && arg0 < 0x4A) {
+        for (i = 0; i < 5; i++) {
+            func_80147674(i + 1, D_801600C0[i], 4, 0, 0);
+        }
+        func_80147674(0x19, D_801600D4[0], 4, 0, 0);
+        func_80147674(0x1A, D_801600D4[1], 6, 0, 0);
+        func_80147674(0x1B, D_801600D4[2], 4, 0, 0);
+        for (i = 0; i < 2; i++) {
+            func_80147674(i + 0x1D, D_801600E0[i], 4, 0, 0);
+        }
+        func_80147674(8, D_801600E8, 6, 0, 0);
+        for (i = 0; i != 2; i++) {
+            func_80147674(i + 0x15, D_801600EC[i], 2, 0, 0);
+        }
+    }
+    if (arg0 >= 0x28 && arg0 < 0x2D) {
+        matrix = *(MATRIX *)D_80125C60;
+        func_8015D0D0((D_80128880[0].x << 12) / 360, &matrix);
+        func_8015CF30((D_80128880[0].z << 12) / 360, &matrix);
+        func_8015D270((D_80128880[0].y << 12) / 360, &matrix);
+        input.vx = D_80127480[8].unk18;
+        input.vy = D_80127480[8].unk1C;
+        input.vz = D_80127480[8].unk20;
+        func_800A0ECC(&matrix, &input, &output);
+        D_8015EDB4[20].unk0[1] = 0x40;
+        D_8015EDB4[20].unk74 = D_80127480[0].unk18 + output.vx;
+        D_8015EDB4[20].unk76 = D_80127480[0].unk1C + output.vy;
+        D_8015EDB4[20].unk78 = 0x800;
+        D_8015EDB4[20].unk84[0] = 0x28;
+        return;
+    }
+    if (arg0 == 0x2D) {
+        D_8015EDB4[20].unk0[1] = 0x80;
+    }
+}
+
 
 void func_8014D200(void) {
     s32 i;
@@ -1443,7 +1619,172 @@ void func_8014FDC0(void) {
     D_8015EDB4[18].unk3 += 1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014FFDC);
+s32 func_8014FFDC(s32 arg0) {
+    s32 i;
+    s32 random;
+    s32 *tail;
+    /* FAKE: group loop initializers on the do line to preserve scheduling. T-24502 */
+    if (arg0 < 0xA) {
+        i = 0; do {
+            func_80147674(i + 1, (s16 *)D_8016024C[i], 1, 0, 0);
+            i++;
+        } while (i != 6);
+        func_80147674(0x1A, (s16 *) D_80160264, 1, 0, 0);
+        return;
+    }
+    if (arg0 >= 0xE) {
+        i = 0;
+        if (arg0 < 0x18) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 2, 0, 0);
+                i++;
+            } while (i != 4);
+            return;
+        }
+    }
+    if (arg0 == 0x1B) {
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        return;
+    }
+    if (arg0 >= 0x1C) {
+        i = 0;
+        if (arg0 < 0x1E) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 3, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 2, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 2, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x1E) {
+        i = 0;
+        if (arg0 < 0x22) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 4, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 3, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 3, 0, 0);
+            return;
+        }
+    }
+    if (arg0 == 0x22) {
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x12C, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x1F4, 0xC1);
+        return;
+    }
+    if (arg0 >= 0x23) {
+        i = 0;
+        if (arg0 < 0x25) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 3, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 2, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 2, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x25) {
+        i = 0;
+        if (arg0 < 0x29) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 4, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 3, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 3, 0, 0);
+            return;
+        }
+    }
+    if (arg0 == 0x29) {
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = func_800AE0D0();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x12C, 0xC1);
+        return;
+    }
+    if (arg0 >= 0x2A) {
+        i = 0;
+        if (arg0 < 0x2C) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 3, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 2, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 2, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x2C) {
+        i = 0;
+        if (arg0 < 0x31) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 4, 0, 0);
+                i++;
+            } while (i < 4);
+            tail = &D_8016024C[4]; i = 0; do {
+                func_80147674(i + 5, (s16 *)tail[i], 3, 0, 0);
+                i += 1;
+            } while (i != 2);
+            func_80147674(0x1A, (s16 *) D_80160264, 3, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x35) {
+        i = 0;
+        if (arg0 < 0x3F) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 5, 0, 0);
+                i++;
+            } while (i != 4);
+            func_80147674(6, (s16 *)D_8016024C[5], 4, 0, 0);
+            func_80147674(0x1A, (s16 *) D_80160264, 4, 0, 0);
+            return;
+        }
+    }
+    if (arg0 >= 0x43) {
+        i = 0;
+        if (arg0 < 0x4D) {
+            do {
+                func_80147674(i + 1, (s16 *)D_8016024C[i], 6, 0, 0);
+                i++;
+            } while (i != 4);
+            func_80147674(5, (s16 *)D_8016024C[4], 4, 0, 0);
+            func_80147674(6, (s16 *)D_8016024C[5], 5, 0, 0);
+            func_80147674(0x1A, (s16 *) D_80160264, 5, 0, 0);
+        }
+    }
+}
+
 
 void func_801508D0(void) {
     s32 i;
@@ -1585,15 +1926,17 @@ void func_80150F44(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-24205, 5 rows (rows 9-13), one instruction: only the sw a1,0x3C(sp) home store is late. The original stores arg1 after sw ra, before addu s2, or s0, or s1, li s3; the draft after li s3. It is the store-back of the register range that the empty test creates, and ugen puts it at the end of the block under the do line (cc -S); as1 does not move it up. Without the test arg1 stays in memory, the home store moves up, but ugen spends $t6 on a home reload and every temporary is one higher (T-10850). T-22025: 15 orders of the inits, a plain for loop and the do/while keep the store last; index loops D_8016024C[arg1 + i] score 31, arg0 as the counter 18, a while loop 12. T-24205: the inits on one line put addu s2 before or s0/or s1 as in the original (diff 4 to 2 lines); all 24 one-line orders and line splits, switch/goto/?:/&& forms of the empty test, a pointer temporary, dead re-inits, register p and #line all keep the store after li s3. */
-#ifdef NON_MATCHING
-/* FAKE: the empty test splits the range of arg1 so that the home store exists; the inits on one source line make as1 schedule addu s2 first. T-22025, T-24205 */
+/* T-24705: the 0x1 web (bit 11, priority 3) is coloured before the compiler-made `S31+2` web (bit 8, priority 1) and takes the free $v0. `1`/`1U`/`0x1`/`(u8)1`/`1 & 0xFF`/`1 << 0`/a char literal, byte-view stores, the compare operand order and a two-target chain store keep all 7 rows (the chain store changes 174 lines). */
 void func_801511C0(s32 arg0, s32 arg1)
 {
   s32 i;
   s32 n;
   s32 *p;
-  i = 0; n = arg0; p = D_8016024C + arg1; if (arg1) {}
+  /* FAKE: T-25047, i is always zero but folds after uopt. Alternating + and |
+   * preserves nine intermediate ugen temporaries, wrapping its ring to correct
+   * the extra slot spent on arg1's home reload. As1 removes these identities.
+   * Keep the setup on one line for instruction scheduling. */
+  i = (u32)arg0 < 0; n = ((((((((((arg0 + i) | i) + i) | i) + i) | i) + i) | i) + i) | i); p = D_8016024C + arg1;
   do
   {
     func_801478F8(n, *p);
@@ -1609,9 +1952,6 @@ void func_801511C0(s32 arg0, s32 arg1)
   }
   func_801478F8(0x1A, D_80160264);
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_801511C0);
-#endif
 
 void func_80151264(u32 arg0) {
     if (arg0 < D_8015EDB4[16].unk3) {

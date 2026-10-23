@@ -172,20 +172,20 @@ s32 func_80132A4C(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-24302, about 30 rows (61 funcdiff lines); frame and both
- * table copies match (scalars declared before the tables, only date, girl and
- * month as scalars). Left: girl comes out in $v1 and the record pointer and
- * day in $v0 (the original swaps them, so the return needs a move), frame 0x58
- * against 0x50 (the day local adds a home), and the else arm's ugen temporaries
- * are numbered differently. */
+/* NON_MATCHING: T-24302/T-24709, about 28 rows (57 funcdiff lines); frame (0x50)
+ * and both table copies match. The `day` home after the two tables (T-24709) is
+ * what fixes the frame. Left: girl comes out in $v1 and the record pointer and
+ * day in $v0 (the original swaps them, so each exit needs a `move v0,v1`; the
+ * selector and the record pointer tie in the allocator), and the else arm's
+ * ugen temporaries are numbered differently. */
 #ifdef NON_MATCHING
 s32 func_80132B24(void) {
     u32 date;
     u8 girl;
     u8 month;
-    u32 day;
     GekoThresholds thr;
     GekoMonthDays days;
+    u32 day;
 
     thr = D_80144CF8;
     days = D_80144D10;
@@ -274,9 +274,10 @@ void func_80132D04(s16 arg0, s16 arg1) {
     }
 }
 
-/* NON_MATCHING: T-24302, 5 rows; month comes out in $a1 instead of $a3 (and
- * the day load's lui base in $a0 instead of $a2). The two empty tests are FAKE
- * (T-24302): they give day $a2 and n $v1 as in the original (36 rows without). */
+/* NON_MATCHING: T-24503, two rows: the day-address base is a1 rather than a2.
+ * FAKE: empty day/month tests assign the day and table value to a2/v1;
+ * the table-element test in the true arm moves month from a1 to a3.
+ * Global-day and local-day ranges still tie at priority 10; see ticket. */
 #ifdef NON_MATCHING
 s32 func_80133024(void) {
     u8 month;
@@ -298,6 +299,7 @@ s32 func_80133024(void) {
         if (month) {}
         n = days.day[month - 1];
         if ((u32) n >= (u32) (day + i)) {
+            if (days.day[month - 1]) {}
             func_80132D04(0, (s16) (day + i - 1));
         } else {
             func_80132D04(1, (s16) (day + i - n - 1));
@@ -360,7 +362,49 @@ void func_80133250(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80133308);
+/* FAKE: T-24503, the empty index test controls the saved constant ranges;
+ * placing the loop initialization on the do line keeps the base address setup
+ * before it. The byte view of the selected girl reverses the branch operands. */
+void func_80133308(void) {
+    s16 var_s1;
+    s32 temp_s2;
+    s32 temp_t3;
+    s32 temp_v0;
+    s32 var_s6;
+
+    temp_v0 = get_g_zyotai_s(D_800E6280.unk_F5F);
+    if (D_80122CDC != 0) {
+        D_80144C54 = 0;
+        temp_s2 = ((s16) D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 / 20) & 0xFF;
+        temp_t3 = ((u32) D_800E6280.unk_10F8 % (u32) (temp_s2 + 1)) & 0xFF;
+        if ((u32) (temp_v0 & 0x7F & 0xFF) < 2U) {
+            D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A = D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A + temp_t3 + 0xA;
+        } else {
+            D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A = D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A + temp_t3 + 6;
+        }
+        D_80144C3C += 2;
+    } else {
+        D_80144C54 = 1;
+        if ((D_800E6280.unk_F5F == 0) || (D_800E6280.unk_F5F == 7) || (D_800E6280.unk_F5F == 1) || (D_800E6280.unk_F5F == 2) || (D_800E6280.unk_F5F == 8) || (var_s6 = 4, (D_800E6280.unk_F5F == 9))) {
+            var_s6 = 0;
+            if ((u32) (temp_v0 & 0x7F & 0xFF) >= 3U) {
+                D_80144C54 = 0;
+            } else {
+                var_s6 = 4;
+            }
+        }
+        var_s1 = 0; do {
+            if (var_s1) {}
+            if ((((u32) (D_800E6280.unk_1BC[var_s1].unk_0C.w << 0x1E) >> 0x1F) != 0) && (var_s1 != (*(u8 *)&D_800E6280.unk_F5F))) {
+                temp_s2 = ((s16) D_800E6280.unk_1BC[var_s1].unk_02 / 20) & 0xFF;
+                D_800E6280.unk_1BC[var_s1].unk_0A = ((func_800AE0D0() % (u32) (temp_s2 + 1)) & 0xFF) + (D_800E6280.unk_1BC[var_s1].unk_0A + var_s6);
+            }
+            var_s1 += 1;
+        } while (var_s1 < 0xB);
+    }
+    check_para_limit();
+    func_8004284C();
+}
 
 void func_80133598(void) {
     s32 result;
