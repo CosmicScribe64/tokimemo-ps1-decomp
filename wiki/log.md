@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] ticket | T-25012: ETC func_8013F054, main func_8006A044 notes
-
-No match. `regdiff.py` works with `TOKIMEMO_SCRATCH=$PWD/build/scratch/t25012` plus the traced uopt copied into `build/scratch/t25012/r9-uopt/variants/trace`; key fact: unconstrained ranges are coloured in bit order (order of first mention in the source), not by priority. `score.py` masks registers in its `struct` count, so it can look near-matched when it is not (main func_8006A044 is about 87 real rows). ETC `func_8013F054`: only the pointer do/while form `p = (u8 *)&D_800E6280 + idx * 8; do { ... p -= 8; } while ((u32)p >= (u32)&D_800E6280);` reloads `D_800E71DF` in the loop like the original; 8 instructions still missing (idx kept in `$a0` with a `move v1,a0`). main `func_8006A044`: structure solved (month test chain, jump-table switch), colours swapped (month in `$v0`, F64[1] in `$v1`) and 12 instructions missing. Drafts in `drafts/T-25012/` ([[tickets/T-25012-class-c-d-reconstruction]]).
-
 ## [2026-10-21] ticket | T-25012 final summary: zero matches, remaining targets need new compiler levers
 
 T-25012 matched nothing. Added main `func_80062948` (736 B): clean rewrite from the asm with MATRIX/SVECTOR/VECTOR from `libgte.h`, 208 target vs 210 built insns; left: original locals sit 8 bytes lower in the 0xD0 frame and interleave the two struct copies word by word. ENDING `func_801387B0` stays at about 80 rows (original recomputes `xor; sltiu` for each of four `0xC - (flag == 1)` compares; every tried form CSEs the boolean). Tooling: IDO allocates locals in reverse declaration order from the frame top; an unused local takes space only when declared first; unconstrained uopt ranges are coloured in first-mention order. Levers that would unblock several targets: keeping a redundant promoted-global store (main `func_8006A044`), an 8-byte shift of the locals area (`func_80062948`), no CSE of relational booleans (ENDING `func_801387B0`). Any such lever must be a uniform build rule with evidence, per [[plan-remaining]]. Notes in `drafts/T-25012/` ([[tickets/T-25012-class-c-d-reconstruction]]).
@@ -1759,6 +1755,7 @@ The cause was a `u8 flags` local that makes uopt colour `t0` (recipe in [[playbo
 ## [2026-10-23] ticket | T-25100, T-25200, T-25201 Done; status 98.6%
 
 Wave 8 finished (34 packages merged, 57 verified matches) and wave 9 stopped (20 verified matches from 17 packages and 6 closer jobs). With PR #68, main is 6,932/6,952 functions (98.6%). [[status]] lists the 20 functions left; 16 are in the wave 10 second pass ([[tickets/T-25300-wave-10-second-pass]]), 4 are GEKO (issue #65). T-25135 is superseded by T-25311.
+
 ## [2026-10-23] ticket | T-25302 Done
 
 Reviewed [[tickets/T-25302-w10-main-80049FF0]] against CODING_STANDARDS.md; matched main `func_8004A1A0` (628 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
