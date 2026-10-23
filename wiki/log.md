@@ -7,17 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] setup | Full asm tree now mirrored in the remote scratch (T-25015 reach)
-
-Lila zipped the generated asm/ tree on the host (14,087 listings) and
-it was pulled into the remote VM's scratch tree only (never committed,
-same handling as packets). Verified: the GEKO func_80136C20 reference
-rebuilt from the bundle is identical to the packet-built one. The
-census, fuzz lab, and shape engine can now run across all remaining
-functions remotely; formal match verdicts still come from CI or the
-host build. Her laptop checkout was also verified current: main at
-1ddbbe29, matching origin.
-
 ## [2026-10-21] ticket | T-25015 complete: six tools landed, OPTN space closed by lab evidence, census run
 
 All six tools are in tools/ with passing tests (corpus gate,
@@ -1737,6 +1726,7 @@ Next pass starts from `drafts/T-25403/GEKO/func_80142C9C/NOTES.md` (global copy 
 ## [2026-10-23] ticket | T-25501 Done: SHOUGATU func_8013EA98 matched
 
 The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) matched SHOUGATU func_8013EA98 (920 bytes) under stock IDO 5.3: a nested-if loop shape, counted free references and a forced cost split; no tool change, one keep line with a keepproof proof. Both reviews pass after the FAKE marking was completed ([[tickets/T-25501-stubborn-shougatu-8013ea98]]).
+
 ## [2026-10-23] ticket | T-25502 Done: TAIIKU func_80137784 matched in plain C
 
 The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) found that the original's two pointer compares are uopt's test replacement of plain `arg0 == 0` tests; no extra symbols or tool change. Both reviewers' wording findings on the mechanism were fixed before merge ([[tickets/T-25502-stubborn-taiiku-80137784]]).
