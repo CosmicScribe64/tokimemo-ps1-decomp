@@ -1,4 +1,5 @@
 #define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */
+#define MAIN_API_OVERRIDE_func_800AE0F0 /* matched with strcpy returning its destination: with the void prototype case 0 of the switch in func_80135DC0 takes v0 for the D_80144F14 value, not v1 (main_api.h: void). T-11900 */
 #include "common.h"
 #include "ovl/GEKO.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
@@ -100,7 +101,27 @@ INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80145084);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80145088);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_8014508C);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80145090);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80145094);
+/* Scene table, indexed by D_800E6280.unk_110A in func_801351F8. Defined in C as the original did:
+ * as1 treats every function named in this file's data as an address-taken label, so each
+ * jump-table dispatch here gets an edge back to the function entries (T-25150). */
+typedef struct GekoFnTable73 { /* 0x00 */ void (*f[73])(); } GekoFnTable73; /* size 0x124 */
+GekoFnTable73 D_80145094 = { {
+    func_80135DC0, func_80135BC4, func_80135C48, func_80135CC8, func_8007C784,
+    func_80136694, func_8004284C, func_8004284C, func_8004284C, func_8004284C,
+    func_8004284C, func_801366DC, func_8004284C, func_80136BA8, normal_date_two_select,
+    func_801374A8, func_80136B2C, func_80137580, func_80136B2C, normal_date_three_select,
+    func_80137630, func_80136B2C, func_80136714, func_80136B2C, func_80136E7C,
+    func_801372D4, func_80136F20, func_80135A6C, func_80135D00, func_801367EC,
+    func_8007C784, dec_init, change_dec_bg, func_80136C20, func_8007C784,
+    func_80083474, func_8007C8A4, place_init, func_80136FF8, func_80136B2C,
+    func_80137040, func_80136FB8, func_80136EE4, func_80136B2C, func_801370EC,
+    func_80137694, func_80136B2C, func_801358CC, normal_date_girl_out, func_80136B2C,
+    func_80137954, func_80135AC8, func_80135894, func_8007C784, func_80083338,
+    func_801355E8, func_80136B2C, normal_date_girl_out, func_80136B2C, normal_date_bg_out,
+    func_80135AC8, func_80136B2C, func_80136E7C, func_80137120, func_801355B8,
+    func_80136B2C, func_80135AC8, func_80135340, func_8007C784, func_801354E4,
+    func_80135570, func_80135598, func_80046500
+} };
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_801451B8);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_801451E4);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_801451EC);
@@ -344,6 +365,7 @@ INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80146268);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_8014626C);
 
 void func_80083440(s32 arg0);
+void *func_800AE0F0(void *dst, void *src);
 
 typedef struct {
     u8 s[0xCC3];
@@ -434,8 +456,6 @@ void func_80134F84(void) {
     D_80145044 = 0x801B155C;
 }
 
-typedef struct GekoFnTable73 { /* 0x00 */ void (*f[73])(); } GekoFnTable73; /* size 0x124 */
-extern GekoFnTable73 D_80145094;
 void func_801351F8(void) {
 
     s32 idx;
@@ -732,7 +752,181 @@ void func_80135D00(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80135DC0);
+s32 func_80135DC0(void) {
+    s32 pad1; /* FAKE: T-11900 frame slot: keeps i at sp+0x62 */
+    s16 i;
+    s32 pad[8]; /* FAKE: T-11900 frame slots: keep zyotai at sp+0x3F and rect at sp+0x34 */
+    u8 zyotai;
+    RECT rect;
+    GameState *gs = &D_800E6280;
+
+    gs->unk_F5F = gs->unk_69C[gs->unk_71C].unk_01;
+    if ((gs->unk_F5F == 0 && (gs->unk_71E & 1)) || (gs->unk_F5F != 0 && (gs->unk_71E & 2))) {
+        func_80135AC8();
+        return 0;
+    }
+    if (!gs->unk_1BC[gs->unk_F5F].unk_0C.f.b6 && gs->unk_F5F != 0) {
+        func_80135AC8();
+        return 0;
+    }
+    D_80145074 = (gs->unk_71E & 0x10) > 0;
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    back_clear_switch(1);
+    func_8006509C();
+    parameter_show_init();
+    parameter_show_init();
+    for (i = 0; i < 15; i++) {
+        icon_can_use_set(i, 0);
+    }
+    func_80065B0C(1);
+    func_8004E58C();
+    D_8014507C = 0;
+    D_80145090 = 0;
+    D_80145088 = 1;
+    /* The day tables at +0x44/+0x64 are indexed by day - 1 from +0x45/+0x65 (hence `- 1 + 1`).
+     * FAKE: T-11900 the call reads the date through D_800E6280, not gs: through gs uopt keeps
+     * unk_03E/unk_03F in the argument registers for the whole function. */
+    if (gs->unk_03F != 12 || gs->unk_040 != 24) {
+        if (gs->unk_041 != 6 && gs->unk_044[0].unk_20[gs->unk_040 - 1 + 1] != 0xA && gs->unk_044[0].unk_20[gs->unk_040 - 1 + 1] != 0x10 && gs->unk_044[0].unk_00[gs->unk_040 - 1 + 1] != 1 && gs->unk_044[0].unk_00[gs->unk_040 - 1 + 1] != 2 && gs->unk_044[0].unk_00[gs->unk_040 - 1 + 1] != 3 && D_80145074 == 0) {
+            D_80145088 = 0;
+        } else if ((gs->unk_F68.b[0] >> 4) == 4 && (gs->unk_0F4.h >> 12) == (gs->unk_1BC[gs->unk_F5F].unk_0C.b[2] >> 4) && (appointment_find_today(D_800E6280.unk_03E, D_800E6280.unk_03F, D_800E6280.unk_040) <= 0 || gs->unk_F5F != ((u32)(gs->unk_54C[0].w << 3) >> 28))) {
+            D_80145088 = 0;
+            D_80145090 = 1;
+        }
+    }
+    D_8014508C = 0;
+    hizuke_init();
+    message_window_init();
+    tpage_buf_clear();
+    func_800AE0F0(D_800CA19C, "廊下");
+    func_800AE0F0(D_800CA1DC, "近所の公園");
+    k_reset(1);
+    func_8008585C();
+    func_80084E4C();
+    D_80122D2C = 0;
+    gs->unk_10A2 = 0;
+    gs->unk_10E8 = 1;
+    if (gs->unk_F5F == 0) {
+        gs->unk_71E |= 1;
+    } else {
+        gs->unk_71E |= 2;
+    }
+    gs->unk_03A = 0x80;
+    D_800B593C = 0x80;
+    D_800B5940 = 0;
+    addr_init_bustup();
+    D_80145080 = 0;
+    D_80145084 = gs->unk_10F8 % 3 + 2;
+    zyotai = get_g_zyotai_s(gs->unk_F5F) & 0x7F;
+    D_80145060 = 0;
+    D_80145064 = 0;
+    D_800CA148 = (zyotai >= 2) + (zyotai >= 3) + (zyotai >= 4) + 30;
+    D_800CA14C = 0;
+    func_800847B8(gs->unk_F5F);
+    func_80134D10();
+    switch (gs->unk_F5F) {
+    case 0:
+        func_800AE0F0(D_800CA1DC, "自宅前");
+        D_80145048 = D_80144F14;
+        D_8014504C = D_80144F48;
+        D_80145050 = D_80144F7C;
+        D_800CA160 = D_80144F14;
+        D_800CA164 = D_80144F48;
+        D_800CA168 = D_80144F7C;
+        break;
+    case 1:
+        D_80145048 = D_80144F24;
+        D_8014504C = D_80144F58;
+        D_80145050 = D_80144F8C;
+        break;
+    case 2:
+        D_80145048 = D_80144F18;
+        D_8014504C = D_80144F4C;
+        D_80145050 = D_80144F80;
+        D_800CA160 = D_80144F18;
+        D_800CA164 = D_80144F4C;
+        D_800CA168 = D_80144F80;
+        break;
+    case 3:
+        D_80145048 = D_80144F1C;
+        D_8014504C = D_80144F50;
+        D_80145050 = D_80144F84;
+        break;
+    case 4:
+        D_80145048 = D_80144F38;
+        D_8014504C = D_80144F6C;
+        D_80145050 = D_80144FA0;
+        break;
+    case 5:
+        D_80145048 = D_80144F28;
+        D_8014504C = D_80144F5C;
+        D_80145050 = D_80144F90;
+        break;
+    case 6:
+        D_80145048 = D_80144F30;
+        D_8014504C = D_80144F64;
+        D_80145050 = D_80144F98;
+        D_800CA160 = D_80144F30;
+        D_800CA164 = D_80144F64;
+        D_800CA168 = D_80144F98;
+        if (zyotai < 2) {
+            D_80145048 = D_80144F2C;
+            D_8014504C = D_80144F60;
+            D_80145050 = D_80144F94;
+            D_800CA160 = D_80144F2C;
+            D_800CA164 = D_80144F60;
+            D_800CA168 = D_80144F94;
+        }
+        break;
+    case 7:
+        D_80145048 = D_80144F20;
+        D_8014504C = D_80144F54;
+        D_80145050 = D_80144F88;
+        break;
+    case 8:
+        D_80145048 = D_80144F10;
+        D_8014504C = D_80144F44;
+        D_80145050 = D_80144F78;
+        break;
+    case 9:
+        D_80145048 = D_80144F34;
+        D_8014504C = D_80144F68;
+        D_80145050 = D_80144F9C;
+        break;
+    case 10:
+        D_80145048 = D_80144F40;
+        D_8014504C = D_80144F74;
+        D_80145050 = D_80144FA8;
+        break;
+    }
+    if (gs->unk_03F >= 4) {
+        D_8014506C = gs->unk_03E - 0x5F;
+    } else {
+        D_8014506C = gs->unk_03E - 0x60;
+    }
+    D_80145070 = 0;
+    D_80145078 = 0;
+    if ((gs->unk_03E == 0x5F && gs->unk_03F == 6 && gs->unk_040 == 3) || (gs->unk_03E == 0x60 && gs->unk_03F == 6 && gs->unk_040 == 1) || (gs->unk_03E == 0x61 && gs->unk_03F == 6 && gs->unk_040 == 7) || (gs->unk_03E == 0x5F && gs->unk_03F == 10 && gs->unk_040 == 14) || (gs->unk_03E == 0x60 && gs->unk_03F == 10 && gs->unk_040 == 12) || (gs->unk_03E == 0x61 && gs->unk_03F == 10 && gs->unk_040 == 11)) {
+        rect.x = 0x140;
+        rect.y = 0x1A0;
+        rect.w = 0x140;
+        rect.h = 0x58;
+        func_8009C7F8(&rect, 8, 0, 0);
+        rect.x = 0x2C0;
+        rect.y = 0xA0;
+        func_8009C7F8(&rect, 8, 0, 0);
+    }
+    func_8004284C();
+    if (D_80145074 != 0 || (gs->unk_71E & 0x20)) {
+        func_80042940(0x43);
+    }
+    if (D_80145088 != 0) {
+        func_80042940(0x43);
+    }
+}
 
 void func_80136694(void) {
     func_8004284C();
@@ -768,7 +962,86 @@ void func_801367C4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801367EC);
+void func_801367EC(void) {
+    u32 club;
+
+    func_8004500C(1, 0x200);
+    if (D_80145088 == 0) {
+        if (D_80145090 == 0) {
+            func_800AE0F0(D_800CA19C, "廊下");
+            bg_read_sub2(0x4045);
+            func_80085B3C(0xA, 0x25);
+        } else {
+            club = D_800E6280.unk_0F4.h >> 12;
+            switch (club) {
+            case 0:
+                func_800AE0F0(D_800CA19C, "図書室");
+                bg_read_sub2(0x40BC);
+                break;
+            case 1:
+                func_800AE0F0(D_800CA19C, "演劇部");
+                bg_read_sub2(0x40B2);
+                break;
+            case 2:
+                func_800AE0F0(D_800CA19C, "実験室");
+                bg_read_sub2(0x40C6);
+                break;
+            case 3:
+                func_800AE0F0(D_800CA19C, "電脳部室");
+                bg_read_sub2(0x40D0);
+                break;
+            case 4:
+                func_800AE0F0(D_800CA19C, "美術室");
+                bg_read_sub2(0x40D9);
+                break;
+            case 5:
+                func_800AE0F0(D_800CA19C, "音楽室");
+                bg_read_sub2(0x40E2);
+                break;
+            case 6:
+                func_800AE0F0(D_800CA19C, "グランド");
+                bg_read_sub2(0x4296);
+                break;
+            case 7:
+                func_800AE0F0(D_800CA19C, "グランド");
+                bg_read_sub2(0x4296);
+                break;
+            case 8:
+                func_800AE0F0(D_800CA19C, "グランド");
+                bg_read_sub2(0x4296);
+                break;
+            case 9:
+                func_800AE0F0(D_800CA19C, "プール");
+                bg_read_sub2(0x40A0);
+                break;
+            default:
+                func_800AE0F0(D_800CA19C, "体育館");
+                bg_read_sub2(0x40A9);
+                break;
+            }
+            func_80085B3C(10, (D_800E6280.unk_0F4.h >> 12) + 0x33);
+        }
+    } else if ((D_80145074 != 0) || (D_800E6280.unk_71E & 0x20)) {
+        if (D_800E6280.unk_F5F == 0) {
+            func_800AE0F0(D_800CA19C, "自宅前");
+            bg_read_sub2(0x4156);
+            func_80085B3C(0xA, 0x28);
+        } else {
+            func_800AE0F0(D_800CA19C, "近所の公園");
+            bg_read_sub2(0x42E2);
+            func_80085B3C(0xA, 0x27);
+        }
+    } else if (D_800E6280.unk_F5F == 0) {
+        func_800AE0F0(D_800CA19C, "自宅前");
+        bg_read_sub2(0x414C);
+        func_80085B3C(0xA, 0x2F);
+    } else {
+        func_800AE0F0(D_800CA19C, "近所の公園");
+        bg_read_sub2(0x42D8);
+        func_80085B3C(0xA, 0x26);
+    }
+    func_8004284C();
+}
 
 void func_80136B2C(void) {
     D_800CA134 = &D_80145060;
@@ -788,8 +1061,9 @@ void func_80136BA8(void) {
     func_80082764(0xFF, 1, 0);
 }
 
-/* NON_MATCHING: T-24203, T-24900, 4 rows. as1 trace (wiki/as1-scheduler-rule.md): the D_80145088 test block (bb 8, weight 1) cannot take the selector lui because the switch head (bb 11) has weight 7 and the scan stops at the first block 6 or more heavier; the original's switch head was at most weight 6 there, so the `D_80145090 == 0` early return did not add a full level; volatile D_80145088/D_80145090 make it worse (6-12 rows). Earlier: the original fills the delay slot of the D_80145088 branch with the lui of unk_F5F (the switch selector, loaded later) and leaves a nop after the lbu of D_80145090, IDO here puts that lui in the load delay of D_80145090; ugen already emits the selector load in the switch block, so the move is as1 scheduling: 28 more C variants (T-24203: if/else and early-return forms, the selector at the top, inline, s32, GameState pointer, byte views, C-defined or array views of both flags, literal addresses, s32 return, one local struct) and the T-22010 round (volatile views, goto, `!` tests, dead (s32) tests, permute 300 s) leave it in place (the girl local only holds the frame slot). T-24904: 10 structural forms (early return on each test, if/else vs else-if chain, goto, `while`, truthiness, outer `switch (D_80145088)`, inner `switch (D_80145090)`) either keep the byte-identical stream and the same 4 rows - same CFG, so the same weights (trace 2026-10-20: bb8 w1, bb10 w4, bb11 w7, scan stops at bb11) - or reorder the uniform-call block and score 14-16 rows; next: a form where ugen splits the selector `%hi` into the D_80145088 block and leaves the `lbu` in the switch block (drafts/T-24904/NOTES.md) */
-#ifdef NON_MATCHING
+/* The bnez slot of the D_80145088 test takes the selector lui only because D_80145094 (above) names this
+ * function: the switch dispatch then has an edge back to the entry, which makes the switch head light
+ * enough for as1 to scan it (T-11900; T-25150 rule, history T-24203, T-24900). */
 void func_80136C20(void) {
     u8 girl;
     GekoWords11 all;
@@ -846,9 +1120,6 @@ void func_80136C20(void) {
     }
     read_bustup();
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80136C20);
-#endif
 
 void func_80136E7C(void) {
     if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b3) {

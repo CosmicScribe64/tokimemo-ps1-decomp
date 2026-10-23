@@ -860,4 +860,38 @@ extern s16 D_801463E0[12];
 extern s16 D_80146400[16];
 
 extern u8 D_80145090; /* func_80136C20: zero picks read_bustup_uniform (read_bustup_uniform) */
+
+/* 80134D10.c: functions named by the scene table D_80145094 (defined in C, T-11900). */
+s32 func_80135DC0(void);
+void func_80135BC4(void);
+void func_80135C48(void);
+void func_80135CC8(void);
+void func_80136694(void);
+void func_801366DC(void);
+void func_80136BA8(void);
+void func_801374A8(void);
+void func_80137580(void);
+void func_80137630(void);
+s32 func_80136714(void);
+void func_80136E7C(void);
+void func_80136F20(void);
+s32 func_80135A6C(void);
+void func_80135D00(void);
+void func_801367EC(void);
+void func_80136C20(void);
+void func_80136FF8(void);
+void func_80137040(void);
+void func_80136FB8(void);
+void func_80136EE4(void);
+void func_801370EC(void);
+void func_80137694(void);
+s32 func_801358CC(void);
+void func_80137954(void);
+s32 func_80135AC8(void);
+void func_80135894(void);
+void func_801355E8(void);
+void func_801355B8(void);
+void func_80135340(void);
+void func_80135570(void);
+void func_80135598(void);
 #endif

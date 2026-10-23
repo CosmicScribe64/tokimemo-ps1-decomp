@@ -1660,6 +1660,10 @@ The frame counter read through a `GsWord *` local is the lever that fixed the re
 Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/matching-notes.md`, fixed), clean rebuild 27/27, funcdiff MATCH. Matched ENDING `func_801330E4` (796 bytes) as default C in `src/ovl/ENDING/80133030.c` with two FAKEs (`pad[4]`, an empty test on the f9 word).
 No function left with rows in this job; notes in `drafts/T-25145/ENDING/func_801330E4/NOTES.md`, [[matching-notes]], [[tickets/T-25145-w8-ENDING-80133030]].
 
+## [2026-10-23] ticket | T-11900 In Progress (claim #65)
+
+Outside-contributor claim CosmicScribe64/tokimemo-ps1-decomp#65 (posted 2026-10-20): the 11 GEKO and 3 OPTION functions left at `ff6c770b2`. Upstream has since matched GEKO `func_80134808`, `func_80133308`, `func_80144198`, `func_801420E4` and OPTION `func_80139A30`, `func_8013A7EC`; the branch keeps upstream's versions of those. OPTION `func_801326BC` matched on this branch. [[tickets/T-11900-geko-option-closers]].
+
 ## [2026-10-23] ticket | T-25119 Done
 Reviewed [[tickets/T-25119-w8-main-80061710]] against CODING_STANDARDS.md; two comments were missing the `FAKE` marker (pointer cast, work-area view) and are fixed; clean rebuild 27/27. Matched main `func_80062948` (736 bytes) and `func_80061A3C` (1216 bytes) as default C.
 Both functions of `src/main/80061710.c` are C now; notes in drafts/T-25119/main/ and [[matching-notes]].
@@ -1756,3 +1760,6 @@ Findings fixed (u32 copy marked FAKE, blank line, kanban column); the six always
 
 Reviewed w9-TACO-8013B170 against CODING_STANDARDS.md (no open findings; the `#line` pair per quad is an accepted marked FAKE), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_8013B460` (1328 bytes) as default C in `src/ovl/TACO/8013B170.c`.
 The package's only function is matched; the as1 line tie-break rule is in [[as1-scheduler-rule]] and [[playbook]], notes in `drafts/T-25137/TACO/func_8013B460/NOTES.md`, see [[tickets/T-25137-w8-TACO-8013B170]].
+## [2026-10-23] ticket | T-11900 Done
+
+Four matches: OPTION `func_801326BC`, GEKO `func_80136C20`, `func_801367EC` (both closed by defining `D_80145094` in C, [[as1-scheduler-rule]]) and `func_80135DC0`. `func_80133024`, `func_80132B24` keep their guards; `func_80142C9C` checkpoint in `drafts/T-11900`. Inline review against CODING_STANDARDS.md (FAKE comments, no inline asm). Notes in [[matching-notes]]. [[tickets/T-11900-geko-option-closers]].
