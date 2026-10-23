@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-24901..T-24908 class A near-miss closers
-
-Eight workers, one function each, 45-minute box: KANGEI func_8013852C (80137B90.c) and func_80134724
-(80134120.c), VALEN func_80132D0C (80132760.c), GEKO func_80136C20 (80134D10.c), TACO func_8013B460
-(8013B170.c) and func_801511C0 (80149F90.c), GYOZI func_80140E0C (80140C90.c) and func_8013907C
-(80138B50.c). Each claims its file in the ticket title; header edits limited to the unit header the
-as1 volatile lever needs. T-24700...T-24714 moved to In Review without promotion.
-
 ## [2026-10-20] ticket | T-24921..T-24924 Wave C-1 pre-flighted and Ready
 
 Closed the cancelled wave (T-24908..T-24916) to In Review, archived the T-24909 ETC draft in
@@ -1748,9 +1740,11 @@ Reviewed [[tickets/T-25116-w8-main-80047550]] against CODING_STANDARDS.md; match
 ## [2026-10-23] ticket | T-25146 Done
 Matched ETC `func_80144224` (796 bytes) as default-build C, 27/27; review found one issue (needless `s32` return without a return statement, now `void` with an ETC.h prototype) and it is fixed ([[tickets/T-25146-w8-ETC-80143240]]).
 The frame counter read through a `GsWord *` local is the lever that fixed the register ranges; two FAKE word views (quot, v) as in `func_80143A88` ([[matching-notes]]).
+
 ## [2026-10-23] ticket | T-25145 Done
 Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/matching-notes.md`, fixed), clean rebuild 27/27, funcdiff MATCH. Matched ENDING `func_801330E4` (796 bytes) as default C in `src/ovl/ENDING/80133030.c` with two FAKEs (`pad[4]`, an empty test on the f9 word).
 No function left with rows in this job; notes in `drafts/T-25145/ENDING/func_801330E4/NOTES.md`, [[matching-notes]], [[tickets/T-25145-w8-ENDING-80133030]].
+
 ## [2026-10-23] ticket | T-25119 Done
 Reviewed [[tickets/T-25119-w8-main-80061710]] against CODING_STANDARDS.md; two comments were missing the `FAKE` marker (pointer cast, work-area view) and are fixed; clean rebuild 27/27. Matched main `func_80062948` (736 bytes) and `func_80061A3C` (1216 bytes) as default C.
 Both functions of `src/main/80061710.c` are C now; notes in drafts/T-25119/main/ and [[matching-notes]].
