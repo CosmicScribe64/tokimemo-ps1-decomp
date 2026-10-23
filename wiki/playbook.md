@@ -208,3 +208,6 @@ colour in every arm. Symptom: dst/src pointer registers swapped in some arms and
 look for a variable the original reuses as the loop counter in the odd arm. In main `func_8006509C`
 the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the scan on its own `j`
 (56 rows to 0, plain C). See `drafts/T-25108/main/func_8006509C/NOTES.md`.
+## A switch on an unsigned global turns copy propagation off for the whole procedure (T-25111)
+
+tools/cvt_pass.py writes `OPTN 405 0` (no global copy propagation) for a procedure whose switch selector is an unsigned global read at the entry. Every cross-block copy then stays a range. A call result used after a branch (`d = f(); if (a < t && d < t)`) gets `move rX,v0`, because uopt never gives v0 to a range defined in the call's block. as1 deletes that move in a `void` function but keeps it in an `s32` one. Fix: `switch (*(u8 *)&G.field)`. The byte view is an indirect load, so the pass leaves propagation on, and the selector keeps its register. Mark it FAKE. TACO `func_8013BAC4`, score 18 to 0. Separately, `if (x != 0) continue;` before a second `G += ...` makes ugen reload G, where a plain `if` reuses the stored value across the fall-through.

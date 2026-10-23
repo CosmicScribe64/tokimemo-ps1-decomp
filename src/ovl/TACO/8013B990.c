@@ -23,7 +23,112 @@ void func_8013B990(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013BAC4);
+/* FAKE: s32 with no return keeps v0 live at the exit, so as1 fills the first branch slot of the
+ * particle loop from the latch (void moves the kind test there), as in func_8013C1F4. T-25111. */
+s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
+    /* The order of these scalars sets their frame homes (i third, damage tenth). T-25111. */
+    s32 x;
+    s32 y;
+    s32 i;
+    s32 z;
+    s32 j;
+    s32 radius;
+    s32 xdist;
+    s32 ydist;
+    s32 kind;
+    u32 damage;
+    s32 width;
+    TcDamage9 damageTable;
+    u32 scores[256];
+
+    damageTable = D_8015F548;
+    /* FAKE: through the byte view, tools/cvt_pass.py does not see a switch on an unsigned global
+     * and leaves global copy propagation on. The y distances then fold into their compares, as in
+     * the original (no `move a0,v0`), and the stage is still compared in v1. T-25111. */
+    switch (*(u8 *)&D_800E6280.unk_1109) {
+    case 0xC:
+        for (j = 0; j < 256; j++) scores[j] = 0x190;
+        break;
+    case 0x16:
+        for (j = 0; j < 256; j++) scores[j] = 0xC8;
+        break;
+    case 0x20:
+        for (j = 0; j < 256; j++) scores[j] = 0x320;
+        break;
+    default:
+        for (j = 0; j < 256; j++) scores[j] = D_8015F504[j];
+        break;
+    }
+    D_8015F500 = 0;
+    if (arg0->unk13 & 0x20) {
+        for (i = 0; i != 2; i++) {
+            if (D_800E6280.unk_10F8 & 1) {
+                x = (i + arg0)->unk0;
+                y = (i + arg0)->unk2;
+                if (arg2 == 0) z = D_8015EDB4[0].unk78;
+                else z = D_8015EDB4[8].unk78;
+                for (j = 16; j != 63; j++) {
+                    if (((j + D_8015EDB4)->unk0[1] & 0x80) && ((j + D_8015EDB4)->unk84[3] & 1) && (j + D_8015EDB4)->unk84[1] != 0 && (j + D_8015EDB4)->unk84[0] != 0) {
+                        radius = (j + D_8015EDB4)->unk84[0] * 16;
+                        xdist = func_800AE0C0(x - (j + D_8015EDB4)->unk74);
+                        ydist = func_800AE0C0(y - (j + D_8015EDB4)->unk76);
+                        if (xdist < radius + 0x18 && ydist < radius + 0x18) {
+                            if ((j + D_8015EDB4)->unk78 < z) {
+                                if (D_8015F500 == 0 && arg2 == 0) {
+                                    D_8015F500 = 1;
+                                    func_801335A0(1, 0x507);
+                                }
+                                if ((j + D_8015EDB4)->unk84[1] != 0) (j + D_8015EDB4)->unk84[1]--;
+                                func_8013D2A0(x, y, (j + D_8015EDB4)->unk78 - 0x200);
+                                D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17] / 20;
+                                /* continue, not a fall-through: with a plain if, ugen reuses the stored D_8015EDF0 (T-25111) */
+                                if ((j + D_8015EDB4)->unk84[1] != 0) continue;
+                                D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    for (i = 0; i < 16; i++) {
+        if (((i + arg0)->unk13 & 0x80) && (kind = (i + arg0)->unk13 & 15) != 0) {
+            x = (i + arg0)->unk0;
+            y = (i + arg0)->unk2;
+            z = (i + arg0)->unk4;
+            damage = damageTable.bytes[kind];
+            if (kind == 8) width = 0x60;
+            else width = 0x30;
+            for (j = 16; j != 63; j++) {
+                if (((j + D_8015EDB4)->unk0[1] & 0x80) && ((j + D_8015EDB4)->unk84[3] & 1) && (j + D_8015EDB4)->unk84[1] != 0 && (j + D_8015EDB4)->unk84[0] != 0) {
+                    radius = (j + D_8015EDB4)->unk84[0] * 16;
+                    if (func_800AE0C0(z - (j + D_8015EDB4)->unk78) < radius + 0x100) {
+                        xdist = func_800AE0C0(x - (j + D_8015EDB4)->unk74);
+                        ydist = func_800AE0C0(y - (j + D_8015EDB4)->unk76);
+                        if (xdist < radius + width && ydist < radius + width) {
+                            if (D_8015F500 == 0 && arg2 == 0) {
+                                D_8015F500 = 1;
+                                func_801335A0(1, 0x507);
+                            }
+                            if (damage < (j + D_8015EDB4)->unk84[1]) (j + D_8015EDB4)->unk84[1] -= damage;
+                            else (j + D_8015EDB4)->unk84[1] = 0;
+                            if ((j + D_8015EDB4)->unk84[1] == 0) (j + D_8015EDB4)->unk84[3] &= 0xF0;
+                            (i + arg0)->unk12 = 0;
+                            (i + arg0)->unk13 = 0;
+                            func_8013D2A0(((j + D_8015EDB4)->unk74 + x) / 2, ((j + D_8015EDB4)->unk76 + y) / 2, z - 0x200);
+                            D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17] / 10 * damage;
+                            if ((j + D_8015EDB4)->unk84[1] == 0) {
+                                func_801335A0(1, 0x508);
+                                D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17];
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 /* FAKE: s32 with no return keeps the loop counter init (v0) live at the exit (void drops two
  * instructions); the hit in the second loop returns before it. T-19006. */
@@ -135,7 +240,195 @@ skip1:
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013C6D4);
+/* FAKE: s32 with no return keeps the second loop's counter init (v0) live at the first loop's exit
+ * (void drops the `move v0,zero`), as in func_8013C1F4. T-25111. */
+s32 func_8013C6D4(void) {
+    s32 pad[6]; /* FAKE: T-25111, six home words above the locals; the original frame has them, their source is unknown */
+    Tc14 *p;
+    s32 dy;
+    s32 dx;
+    u8 kind;
+    u8 value;
+    s32 last_kind;
+    s32 v;
+    s32 got2;
+    u32 i; /* declared between the flags: its home sits between them in the original frame */
+    s32 got_bonus;
+    s32 got5;
+    s32 sound_ok;
+
+    sound_ok = 1;
+    last_kind = -7;
+    got2 = -7;
+    got_bonus = -7;
+    got5 = -7;
+    for (p = D_8015EC70; p < D_8015EC70 + 16; p++) {
+        if (p->unk13 & 0x80) {
+            dx = func_800AE0C0(p->unk0 - D_8015EDB4->unk74);
+            dy = func_800AE0C0(p->unk2 - D_8015EDB4->unk76);
+            if (func_800AE0C0(p->unk4 - D_8015EDB4->unk78) < 0x200 && dy < 0x200 && dx < 0x200) {
+                D_8015EDF0 += 1000;
+                kind = p->unk11;
+                p->unk13 = 0;
+                switch (kind) {
+                case 0:
+                case 1:
+                    last_kind = kind;
+                    break;
+                case 2:
+                    got2 = 1;
+                    break;
+                case 3:
+                case 4:
+                    func_801335A0(1, 0x509);
+                    if (D_8015EDB4->unk7C == 0) {
+                        D_8015EDB4->unk7C = p->unk11;
+                    } else if (D_8015EDB4->unk7E == 0) {
+                        D_8015EDB4->unk7E = p->unk11;
+                    } else {
+                        D_8015EDB4->unk80 = p->unk11;
+                    }
+                    break;
+                case 5:
+                    got5 = 1;
+                    value = D_8015EDB4->unk84[1];
+                    if (value < 0xEF) {
+                        D_8015EDB4->unk84[1] = value + 0x10;
+                    } else {
+                        D_8015EDB4->unk84[1] = 0xFF;
+                    }
+                    break;
+                default:
+                    D_8015EDD0 = 0x20;
+                    got_bonus = 1;
+                    D_8015EDD4 = 1;
+                    switch (func_800AE0D0() & 7) {
+                    case 0:
+                        D_8015EDD4 = 100;
+                        break;
+                    case 1:
+                        D_8015EDD4 = 200;
+                        break;
+                    case 2:
+                        D_8015EDD4 = 400;
+                        break;
+                    case 3:
+                        D_8015EDD4 = 800;
+                        break;
+                    case 4:
+                        D_8015EDD4 = 1600;
+                        break;
+                    case 5:
+                        D_8015EDD4 = 3200;
+                        break;
+                    case 6:
+                        D_8015EDD4 = 6400;
+                        break;
+                    case 7:
+                    default: /* every path assigns D_8015EDD4, so uopt keeps it in v0 up to the sum */
+                        D_8015EDD4 = 57300;
+                        break;
+                    }
+                    D_8015EDF0 += D_8015EDD4;
+                    break;
+                case 7:
+                    last_kind = -1;
+                    break;
+                }
+            }
+        }
+    }
+    for (i = 0; i < 16; i++) {
+        if (D_8015EC70[i].unk13 & 0x80) {
+            v = D_8015EC70[i].unk11;
+            if (v != 3 && v != 4) {
+                dx = func_800AE0C0(D_8015EC70[i].unk0 - D_8015EDB4[8].unk74);
+                dy = func_800AE0C0(D_8015EC70[i].unk2 - D_8015EDB4[8].unk76);
+                v = func_800AE0C0(D_8015EC70[i].unk4 - D_8015EDB4[8].unk78);
+                if (v < 0x200 && dy < 0x200 && dx < 0x200) {
+                    v = D_8015EC70[i].unk11;
+                    D_8015EC70[i].unk13 = 0;
+                    switch (v) {
+                    case 0:
+                    case 1:
+                    case 7:
+                        D_8015EDB4[8].unk72 = v;
+                        break;
+                    case 2:
+                        v = D_8015EDB4[8].unk82;
+                        if (v == -1) {
+                            D_8015EDB4[8].unk82 = 1;
+                            v = D_8015EDB4[8].unk82;
+                        }
+                        D_8015EDB4[8].unk82 = 1 - v;
+                        break;
+                    case 5:
+                        value = D_8015EDB4[8].unk84[1];
+                        if (value < 0xEF) {
+                            D_8015EDB4[8].unk84[1] = value + 0x10;
+                        } else {
+                            D_8015EDB4[8].unk84[1] = 0xFF;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if (last_kind != D_8015EDB4->unk72) {
+        if (last_kind != -7) {
+            D_8015EDB4->unk72 = last_kind;
+            switch (last_kind) {
+            case -1:
+                func_80133410(0);
+                func_801335A0(1, 0x500);
+                sound_ok = 0;
+                break;
+            case 0:
+                func_80133410(0);
+                func_801335A0(1, 0x514);
+                sound_ok = 0;
+                break;
+            case 1:
+                func_80133410(0);
+                func_801335A0(1, 0x512);
+                sound_ok = 0;
+                break;
+            }
+        }
+    }
+    if (got2 == 1) {
+        v = D_8015EDB4->unk82;
+        if (v == -1) {
+            D_8015EDB4->unk82 = 1;
+            v = D_8015EDB4->unk82;
+        }
+        D_8015EDB4->unk82 = 1 - v;
+        if (sound_ok != 0) {
+            switch (D_8015EDB4->unk82) {
+            case 0:
+                func_801335A0(1, 0x511);
+                sound_ok = 0;
+                break;
+            case 1:
+                func_801335A0(1, 0x516);
+                sound_ok = 0;
+                break;
+            }
+        }
+    }
+    if (got5 == 1) {
+        if (sound_ok != 0) {
+            func_801335A0(1, 0x510);
+            sound_ok = 0;
+        }
+    }
+    if (got_bonus == 1) {
+        if (sound_ok != 0) {
+            func_801335A0(1, 0x509);
+        }
+    }
+}
 
 /* FAKE: s32 with no return keeps v0 live at the exit (void changes one instruction), as in
  * func_8013CE78. The i == 8 test is dead (the loop starts at 16) but the original has it. T-19006. */
@@ -174,7 +467,7 @@ s32 func_8013CE78(void) {
                 } else {
                     (i + D_8015EDB4)->unk84[1] = 0;
                 }
-                func_8013D2A0((s32)(i + D_8015EDB4)->unk74, (s32)(i + D_8015EDB4)->unk76, (s32)(s16)((i + D_8015EDB4)->unk78 - 0x200));
+                func_8013D2A0((i + D_8015EDB4)->unk74, (i + D_8015EDB4)->unk76, (i + D_8015EDB4)->unk78 - 0x200);
                 if ((i + D_8015EDB4)->unk84[1] == 0) {
                     func_801335A0(1, 0x508);
                     D_8015EDF0 += D_8015F504[(D_8015EDB4 + i)->unk84[2] % 17U];
@@ -211,7 +504,7 @@ s32 func_8013CFD8(void) {
             }
             d = (a + b) / 256;
             if (d != 0) {
-                func_8013D2A0((s32)(i + D_8015EDB4)->unk74, (s32)(i + D_8015EDB4)->unk76, (s32)(s16)((i + D_8015EDB4)->unk78 - 0x200));
+                func_8013D2A0((i + D_8015EDB4)->unk74, (i + D_8015EDB4)->unk76, (i + D_8015EDB4)->unk78 - 0x200);
             }
             if ((u32)d < (i + D_8015EDB4)->unk84[1]) {
                 (i + D_8015EDB4)->unk84[1] -= d;

@@ -144,6 +144,7 @@ void func_8013788C();
 void func_8014F210(void);
 void func_8015185C(void);
 s32 func_801335A0();
+void func_80133410(s32 arg0);
 s32 func_80134A18();
 void func_80134EBC(void);
 void func_8013506C();
@@ -270,7 +271,8 @@ extern Tc14 D_8015E270[];
 /* result screen (T-19006): counter and bonus drawers of 8013B990.c */
 s32 func_8013C1F4(void);
 s32 func_8013C440(void);
-void func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2);
+s32 func_8013C6D4(void);
+s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2);
 extern Tc14 D_8015E3B0[];
 /* func_8013EAA4: per-kind frame count, CLUT row, U and V tables (T-25110) */
 extern u8 D_8015F560[8], D_8015F568[8], D_8015F570[8], D_8015F578[8];
@@ -634,6 +636,14 @@ void func_8013546C(void);
 #define OVL_TACO_T10010_SCORE_TABLE
 extern s32 D_8015F500; /* T-19006 */
 extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
+/* Damage per particle kind (low nibble of Tc14.unk13), copied whole into a local by
+ * func_8013BAC4. T-25111. */
+typedef struct TcDamage9 {
+    u8 bytes[9];
+} TcDamage9;
+extern TcDamage9 D_8015F548;
+/* Defined in 8013D1E0.c; the s16 parameters give the callers their argument narrowing. T-25111. */
+s32 func_8013D2A0(s16 x, s16 y, s16 z);
 
 extern Tc14 D_8015EB30[16];
 extern Tc14 D_8015EC70[16]; /* the table after D_8015EB30; also its end address (T-16560) */
