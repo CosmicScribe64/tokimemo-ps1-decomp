@@ -1,0 +1,78 @@
+# T-25104: main mod_set_gpu (208 words, 804 B)
+
+Not matched. The guard in `src/main/8004C3F0.c` is at 4 rows (was 17, T-25009). Registers,
+instruction order and all stack slots except one match. Measured with
+`funcdiff mod_set_gpu --unit main --resolve --version c` ("compared NON_MATCHING C").
+
+## Start state
+
+T-25009 guard, 17 rows: clut in `$s4` instead of `$s7` (x counter and data one register off),
+the latch increments in the wrong order, and the `p` and `ypos` spill slots 4 bytes off. It used a
+FAKE `if (last) {}` to lift `last` into `$s3`.
+
+## What closed, one cause each
+
+1. **Mask and shift in one statement** (`uv = (*data & 0xFF0000) >> 16`, same for page and clut;
+   the mod_set lesson). clut drops below the x counter and data in uopt priority. With the
+   `if (last) {}` FAKE still in, other registers shifted, so the FAKE was removed: 17 -> 8 rows,
+   with every register right.
+2. **Latch order `col++; data++;`**. The original increments col, then the x counter, then data.
+   With `data++; col++;` data came before the x counter. 8 -> 6 rows.
+3. **`ypos = row * 8 + y + 0x168;` inside the inner loop, just before `s->y0`**. uopt hoists it
+   into the inner preheader, after the x counter in expression order, so its spill temporary moves
+   from 0x64 to 0x60, as in the original. 6 -> 4 rows.
+
+## How the spill temporaries are laid out (measured, used for the rows above)
+
+- Declared scalars take homes top-down (trace: row -12, s -16, ... clut -36, tpage -38,
+  last -40, bright -44, mode -48, ypos -52, rows -53, cols -54, p -60; final offset = 0xA8 + home).
+- The compiler temporaries sit below the last home, in this order: copy-propagated `p` expression
+  (spilled), then the hoisted preheader items in expression-table (bit) order: x counter IV
+  (in `$s4`, its slot is never used), ypos (spilled), pri*4 (spilled). Two observations agree with
+  this order: ypos in the outer loop gives p 0x68, ypos 0x64, (x IV) 0x60, pri4 0x5C; ypos in
+  the inner loop gives p 0x68, (x IV) 0x64, ypos 0x60, pri4 0x5C.
+- The uopt source (n64decomp/ido `uopttemp.c` gettemp/findbbtemps, `uoptreg1.c` makelivranges)
+  supports this: temps are created in node order, and preheader inserts are taken in bit order.
+
+## First divergence left
+
+`sw t8,0x68(sp)` against `sw t8,0x6C(sp)` (rows 22, 54, 123, 164: the store of `p` and its
+three reloads). The original keeps `p` in 0x6C, the slot of p's own declared home here. Two ways
+fit the original frame (0xA8, ypos 0x60, pri4 0x5C):
+
+- (T1) `p` is a real variable that is not copy-propagated, so it is spilled at its home 0x6C,
+  and one more frame word sits between the homes and the temporaries. Measured control:
+  `control-7-rows-p-home.c`. An extra local after p plus FAKE `if (&p) {}` at the end of the
+  function give the right frame and every slot. Two things are left: the latch load of p goes into
+  a ugen temporary (`$t4`) where the original has a uopt colour (`$a3`), because an address-taken p
+  is no longer a register candidate, and the ring shift after that load.
+- (T2) the declared homes end at 0x70 (one word fewer, e.g. `u8 rows, cols` at the top and a
+  single pad), so the p expression temporary is 0x6C. That needs one more temporary before ypos;
+  without it the frame shrinks to 0xA0 (measured, offsets from the frame top: p -60, x IV -64,
+  ypos -68, pri4 -72; the original has p -60, ypos -72, pri4 -76).
+
+## Negatives (measured, do not repeat)
+
+- `p = D; p += idx;` (is_incr does not hold for it), `(void)&p` (cfe drops it), `if (&p) {}`
+  right after the def (frame right, but the ugen ring moves from the switch on: 86 rows).
+- Ways to make p a non-propagated variable: `idx = GetWorkBase(...)`, `idx = p->unk_08; switch (idx)`,
+  zcopy off (scratch experiment only, cvt_pass copy) and `ModRec14 *pa[1]`. All of them give
+  frame 0xA0, or put p in `$v1`/`$a0` at entry (the original uses `$t8` and a reload).
+- x0 spellings (`x + col * 8 + 0xA0`, `col * 8 + x + 0xA0`, `x + (col + 20) * 8`,
+  `0xA0 + x + col * 8`), a `xpos` local (s32/u32 in the inner or outer loop; s16/u16 change code):
+  no extra temporary.
+- ypos spellings in the T2 layout (`y + row * 8 + 0x168`, `row * 8 + (y + 0x168)`, `<< 3`,
+  split `ypos = row * 8 + y` / `+ 0x168` at the use, u32/s16/u16): no extra temporary, or code changes.
+- ypos as an inline expression without a local: frame 0xA0, 74 rows.
+- moving `u8 rows, cols` next to tpage/last (mode moves).
+- Permuter 900 s at -j 1 on the 4-row body: best only re-parenthesises (no score change).
+
+## Next hypothesis
+
+Find the source of the missing frame word. (T1) seems the likelier one: in the original, p is a
+register-candidate variable that copy propagation cannot replace. That variable is spilled at its
+home, its latch piece is coloured `$a3`, and its entry piece is not coloured. The extra word is a
+real local declared after p (the counterpart of `padC` in the control). Look for what blocks the
+propagation: uopt `find_replacements` checks `has_ilod`, `is_incr`, `no_nested_ops`,
+`countvars >= 10` and availability of the RHS at each use. An operand of `D + idx * 0x14`
+(idx) redefined before the post-switch reads would do it, but each idx reuse tried so far colours p.
