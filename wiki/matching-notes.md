@@ -17,24 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25102: TAIIKU func_8013F3A4
-
-Matched (1444 bytes, default C, no FAKE; all 27 sha1 OK), from scratch (the older drafts were raw m2c). The long-standing blocker, IDO holding `&D_8011ECD0` (and 0x44) in a register across the whole switch, came from the source form, not the compiler. (1) No record pointer local: index the pool in every statement, `((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26`. A per-case `p = &pool[arg0]` makes uopt hoist the base and the record size to the switch head and into both flag arms (`li a2,68; multu`, 479-524 rows). The range is connected through the flag arms that precede the calls. (2) `if (arg0 == 0)` for the player test. uopt rewrites it into `bne v0,<base>` with a fresh `lda` that the allocator does not count. A written pointer compare counts as a use and brings the hoist back (482 rows). Matched TAIIKU `func_80147A6C` shows the same rewrite. (3) `phase` declared before `state` gives the original's `0x28(sp)` save slot for `state` (4 rows). (4) The x store before the y stores in each arm sets ugen's numbering (258 rows). Notes and negatives: `drafts/T-25102/TAIIKU/func_8013F3A4/NOTES.md`.
-
-## T-25102: TAIIKU func_8013E1FC
-
-Matched (1688 bytes, default C, no FAKE; all 27 sha1 OK), from the `func_8013E894` body of this package (T-24521's
-best was 548 rows). The function is two 64-trip loops: straight strips, then the E894 rotated strips without the
-camera angle. Seven source facts closed it. (1) Rotated phase: `Rot_2D(angle * 16)` and `Rot_2D((angle + 1) * 16)`;
-uopt strength-reduces both into the two spilled +16 values and tests `!= 0x410`. (2) Straight phase: `angle++` at
-the loop end; uopt then spills `angle + 1` before the first call, carries the test load into the next head, and both
-phases' counters take compiler temporary slots (0x78, 0x60) below the 11 declared scalars. (3) `x[1] = x[0] = -320;`
-chains. (4) `y[2] = y[0]; y[3] = y[1];` before the midpoint sums (ugen temporary order). (5) Plain `x[i << 1]`
-indexing instead of `xp`/`yp` row pointers: pointer locals read in the straight draw loop cost the `.noalias` mark
-between the x and y walks of the rotated translate loop. (6) Both outer loops as `for (angle = 0; ...)`, so the
-counter init shares the line of the hoisted invariants. (7) The implicit-int `func_80086204` call, as in E894.
-Measurements and negatives: `drafts/T-25102/TAIIKU/func_8013E1FC/NOTES.md`.
-
 ## T-25102: TAIIKU func_8013EC60
 
 Matched (1788 bytes, default C, no FAKE; all 27 sha1 OK), from the `func_8013E1FC` and `func_8013E894` bodies of this
@@ -862,7 +844,7 @@ and late-bound loop bounds are still needed (901 and 92 rows without them). Less
 pointer or local that the target's register use does not show, write the expression again at each use.
 uopt's CSE and PRE then give the target's ranges. Steps, row counts and negatives:
 `drafts/T-25318/main/func_8007132C/NOTES.md`.
+
 ## T-25403: GEKO func_80142C9C (wave 11 pass 2)
 
 Matched (default C, 3,656 bytes), [[tickets/T-25403-w11-GEKO-80142760]], from the pass-1 analysis of the `&ids` constant's split. Four changes, one cause each: the first loop reads `ids` through the `names` table (`((u8 *)&names)[i - 0x40]`, FAKE), so the `&ids` remainder no longer pays 21 in reloads after the loop-1 piece and its priority is positive without an extra use; `if (flags[i] == 0) continue;` in the second loop puts the post-loop block ahead of the loop body in block order; the post-loop compare goes through a second variable (`p = &ids.v[13]; if (q == p)`, FAKE), because with `q == &ids.v[13]` cfe emits the address first and uoptinput moves the `+13` to `q`, which made both post-loop references one constant; with one post-loop use left, that piece is one use minus one reload and stays uncoloured, and the piece seeded in the loop stops at the loop exits and gets `$t4`. Last, `((u8) get_g_zyotai_s(...) & 0x7F) < 2` in switch case 6 (the KANGEI spelling) fixes the ugen temporary after the call. One of the two `if (&flags[i]) {}` FAKEs is no longer needed. The packed-appointment compare needs `D_800E71DF` (2 rows with the GameState field): keep line with a keepproof proof. The variable route (copy propagation off, a pointer local) gives every instruction but not the colour order (178 rows). Lever in [[playbook]]; measurements and negatives in `drafts/T-25403/GEKO/func_80142C9C/NOTES.md`.
-

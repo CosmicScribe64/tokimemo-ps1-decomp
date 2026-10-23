@@ -479,3 +479,21 @@ Matched (972 bytes, default C; all 27 sha1 OK), from the T-24521 body at 224 row
 ## T-25102: TAIIKU func_8013DDB8
 
 Matched (1092 bytes, default C; all 27 sha1 OK), from scratch (the older drafts were raw m2c). The case 2/5 grid loop is the `func_80139AB0` loop; the case 0/3/6 loop is the same 4-trip inner loop with `-160 + j * w`, which uopt unrolls completely (the `li s1,3; multu` is the unrolled `j = 3`). `(h << 4) * 3`, not `h * 16 * 3` (folded to `* 48`). A pointer local for the half reads puts `&D_801499C0` in `s2` after each call (FAKE: the word stays direct). The y store is `h - 0x100U` (FAKE): a signed subtraction lets uopt test `h >= 0x100` as `bltz` on it. The last 16 rows were order only, and the cause was the symbols: as1 keeps a load below a store only when both use one symbol. 0x80122EC4 is offset 0xF4 of the 0x100-byte block at `D_80122DD0` (new `TaiikuWork` view in TAIIKU.h), and 0x801207EB..0x80120812 are fields of actor record 102 of `D_8011ECD0`; with those views the step load stays above the camera stores and the `lbu` below the `sh`. Then `[102].unk_1A = x; [102].unk_1C = [102].unk_1A;` promotes `unk_1A` and sinks its store as the original does. Details and negatives: `drafts/T-25102/TAIIKU/func_8013DDB8/NOTES.md`.
+
+## T-25102: TAIIKU func_8013F3A4
+
+Matched (1444 bytes, default C, no FAKE; all 27 sha1 OK), from scratch (the older drafts were raw m2c). The long-standing blocker, IDO holding `&D_8011ECD0` (and 0x44) in a register across the whole switch, came from the source form, not the compiler. (1) No record pointer local: index the pool in every statement, `((DisplayActor44 *)D_8011ECD0)[arg0 + 104].unk_26`. A per-case `p = &pool[arg0]` makes uopt hoist the base and the record size to the switch head and into both flag arms (`li a2,68; multu`, 479-524 rows). The range is connected through the flag arms that precede the calls. (2) `if (arg0 == 0)` for the player test. uopt rewrites it into `bne v0,<base>` with a fresh `lda` that the allocator does not count. A written pointer compare counts as a use and brings the hoist back (482 rows). Matched TAIIKU `func_80147A6C` shows the same rewrite. (3) `phase` declared before `state` gives the original's `0x28(sp)` save slot for `state` (4 rows). (4) The x store before the y stores in each arm sets ugen's numbering (258 rows). Notes and negatives: `drafts/T-25102/TAIIKU/func_8013F3A4/NOTES.md`.
+
+## T-25102: TAIIKU func_8013E1FC
+
+Matched (1688 bytes, default C, no FAKE; all 27 sha1 OK), from the `func_8013E894` body of this package (T-24521's
+best was 548 rows). The function is two 64-trip loops: straight strips, then the E894 rotated strips without the
+camera angle. Seven source facts closed it. (1) Rotated phase: `Rot_2D(angle * 16)` and `Rot_2D((angle + 1) * 16)`;
+uopt strength-reduces both into the two spilled +16 values and tests `!= 0x410`. (2) Straight phase: `angle++` at
+the loop end; uopt then spills `angle + 1` before the first call, carries the test load into the next head, and both
+phases' counters take compiler temporary slots (0x78, 0x60) below the 11 declared scalars. (3) `x[1] = x[0] = -320;`
+chains. (4) `y[2] = y[0]; y[3] = y[1];` before the midpoint sums (ugen temporary order). (5) Plain `x[i << 1]`
+indexing instead of `xp`/`yp` row pointers: pointer locals read in the straight draw loop cost the `.noalias` mark
+between the x and y walks of the rotated translate loop. (6) Both outer loops as `for (angle = 0; ...)`, so the
+counter init shares the line of the hoisted invariants. (7) The implicit-int `func_80086204` call, as in E894.
+Measurements and negatives: `drafts/T-25102/TAIIKU/func_8013E1FC/NOTES.md`.
