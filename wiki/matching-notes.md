@@ -734,3 +734,13 @@ What is left: the else arm sets the shared constant 3 (`$s5`) before `jal menu_c
 - **The `i = 0` between the first two loops sits at the join** (a `for` loop): uopt PRE moves it onto the loop-1 exit edge as in the target (99 to 93). The first record half stores `unk_14` right after `unk_34` (93 to 89).
 - **Every GameState access goes through `g`.** The u8 views on F6C/F6D and the `(u8)` switch cast of the old draft are no longer needed once the reads use `g`. All loops are `for (i = 0; i < g->unk_F6D; i++)`.
 - New K&R declaration `void func_800654D0();` in `include/main_api.h` (an `(s32 n)` prototype breaks the OPTION.bin checksum). Steps and negatives: `drafts/T-25108/main/func_8006509C/NOTES.md`.
+
+## T-25114: RPG_BAT func_80154DD8
+
+[[tickets/T-25114-w8-RPG_BAT-80154430]], branch w8-RPG_BAT-80154430. Not matched: guarded at 34 funcdiff rows, all aligned, down from T-24910's 102. Three source facts closed most of it:
+
+- **Counters are the global itself.** `D_8015EC9C++; if (D_8015EC68 < D_8015EC9C)` in all three cases. uopt promotes the global `D_8015EC9C` into `$a0` for the call-argument and counter pieces. The `temp = G + 1` locals give a CSE of `G + 1` in `$v0`.
+- **Quotients and sums are their own webs** (`$v0`/`$v1`), negated into named `nx`/`ny` (`$a1`/`$a2`, stored at 0x48/0x44). A plain single-use `x = q; nx = -x;` is folded (`mflo a1; negu a1,a1`). An address view on one operand, `*(s32 *)&D_8015EC58.unk_04` (FAKE), keeps the web. Volatile `D_8015EC64` or a pointer local does the same at a frame cost. An indirect read comes first in a commutative op, so the case 3 view goes on the counter (`addu v1,t7,t8`).
+- `D_8015EC5C/64/68` as `D_8015EC58.unk_04/0C/10`: same bytes.
+
+Left: frame 0x60 against 0x58 (a web kept by an unmovable read costs frame words; an empty `if (x) {}` keeps it for free but splits blocks), the case 0 `D_8015EBAC` load (first in the original), and the case 3 counter store (before the test loads in the original). Fast scorer `drafts/T-25114/score.py`; details, negatives and the next hypothesis in `drafts/T-25114/RPG_BAT/func_80154DD8/NOTES.md`.
