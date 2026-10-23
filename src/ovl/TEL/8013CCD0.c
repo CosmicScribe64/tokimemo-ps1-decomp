@@ -355,7 +355,7 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
             y[i] = (i % 5) * 0x10 - 0x38;
             step[i] = 0x10;
             if (avail[i] != 0) {
-                /* 3U shares the unsigned 3 of the month test (andi of t1). T-25133 */
+                /* FAKE: 3U makes the colour share the unsigned 3 of the month test (andi of t1). T-25133 */
                 set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3U, D_800B342C[i + 10], 0);
             }
         }
