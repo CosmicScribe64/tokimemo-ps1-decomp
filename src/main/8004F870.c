@@ -302,7 +302,108 @@ INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B41B0);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B436C);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B437C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndi);
+void sndi(u8 *str, s32 y, s32 col) {
+    u8 *s;
+    u8 original[64];
+    /* FAKE: the sizes below 64 are inferred from the target's frame offsets (each buffer ends
+     * where the next one starts); the real declarations are unknown. T-25101 */
+    u8 quoted[40];
+    u8 stage[40];
+    u8 result[40];
+    u8 name[20];
+    u8 *p;
+    s32 i;
+    s32 found;
+
+    strncpy(original, str, 64);
+    D_800E6280.unk_F62 = 0;
+    found = 0;
+    if ((col & 15) == 15) {
+        for (i = 0, s = original; s[i] != 0; i++) {
+            p = s + i;
+            if (*p == 'P' && (i & 1) == 0) {
+                *p = 0;
+                found = 1;
+                strcpy(stage, original);
+                get_p_name(name, col & 15);
+                strcat(stage, name);
+                strcat(stage, p + 1);
+                break;
+            }
+        }
+        if (found == 0) {
+            strcpy(stage, original);
+        }
+        found = 0;
+        for (i = 0, s = stage; s[i] != 0; i++) {
+            p = s + i;
+            if (*p == 'G' && (i & 1) == 0) {
+                *p = 0;
+                found = 1;
+                strcpy(result, stage);
+                get_g_name(name, D_800E6280.unk_F5F);
+                strcat(result, name);
+                strcat(result, p + 1);
+                break;
+            }
+        }
+        if (found == 0) {
+            strcpy(result, stage);
+        }
+    } else {
+        for (i = 0, s = original; s[i] != 0; i++) {
+            p = s + i;
+            if (*p == 'P' && (i & 1) == 0) {
+                *p = 0;
+                found = 1;
+                strcpy(result, original);
+                get_p_name(name, D_800E6280.unk_F5F);
+                strcat(result, name);
+                strcat(result, p + 1);
+                break;
+            }
+        }
+        if (found == 0) {
+            strcpy(result, original);
+        }
+    }
+    switch (y) {
+    case 0:
+        if (col == 0xF) {
+            strcpy(quoted, "『");
+            strcat(quoted, result);
+        } else if (col == 0x1F) {
+            strcpy(quoted, "（");
+            strcat(quoted, result);
+        } else if (col == 0x2F) {
+            strcpy(quoted, result);
+        } else {
+            strcpy(quoted, "「");
+            strcat(quoted, result);
+        }
+        if (col == 0xFF) {
+            set_kanji_string(-0x80, 0x32, 0, quoted, 0);
+            return;
+        }
+        set_kanji_string(-0x56, 0x32, 0, quoted, 0);
+        return;
+    case 1:
+        if (col == 0xFF) {
+            set_kanji_string(-0x80, 0x42, 0, result, 0);
+            return;
+        }
+        set_kanji_string(-0x48, 0x42, 0, result, 0);
+        return;
+    default:
+    case 2:
+        if (col == 0xFF) {
+            set_kanji_string(-0x80, 0x52, 0, result, 0);
+            return;
+        }
+        set_kanji_string(-0x48, 0x52, 0, result, 0);
+        return;
+    }
+}
 
 void set_c_girl(u8 arg0) {
     D_800E6280.unk_F5F = arg0;
