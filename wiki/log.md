@@ -1750,3 +1750,8 @@ Reviewed [[tickets/T-25122-w8-main-80049FF0]] against CODING_STANDARDS.md; match
 
 Reviewed [[tickets/T-25127-w8-ENDING-801396E0]] against CODING_STANDARDS.md; matched ENDING `func_8013A2E8` (4648 bytes) as default-build C, 27/27.
 The guard in `src/ovl/ENDING/801396E0.c` is gone: defining the scene table D_8013CB74 in C (data island, `config/overlays/ENDING.yaml`) gave as1 the jump-table back edge; notes in [[matching-notes]] and [[as1-scheduler-rule]].
+
+## [2026-10-23] ticket | T-25132 Done
+
+Reviewed [[tickets/T-25132-w8-SHOUGATU-80134890]] against CODING_STANDARDS.md (two comment fixes); matched SHOUGATU `func_801350F8` (2308 bytes, two FAKEs) as default-build C, 27/27.
+The INCLUDE_ASM in `src/ovl/SHOUGATU/80134890.c` is gone; levers and the GYOZI `func_801368B8` lead in [[matching-notes]] and [[playbook]].
