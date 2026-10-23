@@ -1781,3 +1781,7 @@ The header now declares `s32 func_80134D94(void);`; notes in `drafts/T-25306/BUN
 ## [2026-10-23] ticket | T-25400 wave 11 opened (repeat until matched, GEKO included)
 
 The user does not want to wait for the issue #65 claim; diman8 was told on the issue that our agents now also work on the four GEKO functions and that their PRs stay welcome. [[tickets/T-25400-wave-11-until-matched]] and T-25401..T-25412 cover every file still holding INCLUDE_ASM: GEKO first, then each file wave 10 leaves unmatched, up to three passes per file.
+
+## [2026-10-23] ticket | T-25500 stubborn functions opened
+
+User asked for extra effort, outside-the-box approaches and build tooling changes if needed for the functions that keep failing. [[tickets/T-25500-stubborn-functions]] starts with SHOUGATU func_8013EA98 ([[tickets/T-25501-stubborn-shougatu-8013ea98]]) and TAIIKU func_80137784 ([[tickets/T-25502-stubborn-taiiku-80137784]]); tooling or config changes must meet CODING_STANDARDS.md 7a and pass two adversarial reviews.
