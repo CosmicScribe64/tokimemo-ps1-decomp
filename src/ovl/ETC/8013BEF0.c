@@ -965,7 +965,70 @@ loop_4:
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013F054);
+/* Called undeclared (implicit int) by func_8013BFFC and func_8013C330; no value is returned. The search walks the
+ * records down from D_80150064 - 1 with the decrement before the tests (the original's pointer step comes before
+ * the compares); the record and the selector are read through `g`, which keeps the two final unk_F5F reads
+ * separate as in the original. T-25113. */
+s32 func_8013F054(void) {
+    GameState *g = &D_800E6280;
+    u8 *w = (u8 *)&D_800E7D10;
+    s32 i;
+    s32 type;
+    s32 a;
+    u8 b;
+
+    i = D_80150064;
+    b = 0;
+    a = 0;
+    type = 0;
+    if (g->unk_1124 == 0) {
+        if (D_801500D8 == 1 || D_801500D8 == 3) {
+            type = g->unk_75E[i - 1].unk_00;
+            a = g->unk_75E[i - 1].unk_02;
+            b = g->unk_75E[i - 1].unk_01;
+        } else if ((D_801500D8 == 0 || D_801500D8 == 2) && i >= 0) {
+            do {
+                i--;
+                if ((g->unk_75E[i].unk_00 == 0xC && g->unk_F5F == 0xC) ||
+                    (g->unk_75E[i].unk_00 == 0xB && g->unk_F5F == 0xB)) {
+                    type = g->unk_75E[i].unk_00;
+                    a = g->unk_75E[i].unk_02;
+                    b = g->unk_75E[i].unk_01;
+                    break;
+                }
+            } while (i >= 0);
+        }
+    } else {
+        type = ((EtcConfig8 *)(w + D_80150080 * 8))[11].unk_00;
+        a = ((EtcConfig8 *)(w + D_80150080 * 8))[11].unk_02;
+        b = ((EtcConfig8 *)(w + D_80150080 * 8))[11].unk_01;
+    }
+    if (g->unk_F5F == 0xC && type == 0xC) {
+        if (a == 4) {
+            func_8013F320(1);
+        } else if (a == 6) {
+            func_8013F320(2);
+        } else if (a == 7) {
+            func_8013F320(3);
+        } else if (a == 2 && b == 0x4F) {
+            func_8013F320(5);
+        } else if (a == 2 && b == 0x50) {
+            func_8013F320(4);
+        } else if (a == 2 && b == 0x51) {
+            func_8013F320(6);
+        }
+    } else if (g->unk_F5F == 0xB && type == 0xB) {
+        if (a == 2 && b == 0x4A) {
+            func_8013F320(0);
+        } else if ((a == 2 && b == 0x4C) || (a == 0xB && b != 0x1E)) {
+            func_8013F320(1);
+        } else if ((a == 2 && b == 0x4E) || (a == 0xB && b == 0x1E)) {
+            func_8013F320(2);
+        } else if (a == 0x12) {
+            func_8013F320(3);
+        }
+    }
+}
 
 /* T-24129: retain the earlier caller's K&R implicit-int view (func_8013CF2C). */
 s32 func_8013F320(s32 arg0) {
