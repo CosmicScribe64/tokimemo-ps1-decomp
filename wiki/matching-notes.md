@@ -17,14 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25009: closers ETC func_80146D4C, GEKO func_80133C50, main mod_set_gpu
-
-[[tickets/T-25009-closers-etc-geko-mod-set-gpu]], branch n2. No match; three guards, one improved.
-
-- **main `mod_set_gpu` (guarded, 28 -> 17 rows).** regdiff: `clut` (priority 100) outranked `last` (83.8). An empty `if (last) {}` right before `s->clut = func_8009ED74(...)` lifts `last` to 100.5 and gives it `$s3` as in the original (FAKE). Left: `clut` still outranks the x counter (62) and `data` (50.2), so it sits in `$s4` instead of `$s7`; `p` and `ypos` spill slots 4 bytes off. `p` is spilled as an expression range (uopt copy-propagates it), so its declaration position, `p` spellings (`+ idx`, `&[idx]`, two-step) change nothing; a pad after `padB`, `mode` or `ypos` shifts every home by 4. Worse: empty tests on `clut` (extend its range) or `data`/`col`/`x` (each extra block dilutes `last`), `clut` as `s32`/`u16`, `u32 rows/cols`. Permuter 600 s: no row gain.
-- **GEKO `func_80133C50` (guarded, 13 rows).** The ring is short one slot before the zero-girl branch: `v = (D_800E6280.unk_0F4.h & 0xFFFF) >> 12` there (as1 drops the `andi` after `lhu`) makes that branch match exactly, but the 1/2/3 and 6-9 branches shift up one register (30 rows); removing or moving the T-24503 `if (v) {}` in the 1/2/3 branch to compensate also disturbs the zero-girl branch (22-36 rows). Masks on `unk_F5F`, `g`, the record byte or the 4/5/10 test: worse. autotweak 300 s on the masked form reverts the mask.
-- **ETC `func_80146D4C` (guarded, 12 rows).** No gain from `D_801230F4` spellings (`1U`, `(u8)1`, `-= -1`, `1 + D`, `w->unk_10[5]`, chained or comma assignments, `+ ret`/`- ret` forms), `*(w->unk_28 + i)`, `(s16)`, `(u8)` or `& 0xFF` on both index reads (25, CSE breaks), an `idx` local in place of the pad (88), an empty test after the total. Permuter 900 s: formatting only.
-
 ## T-25007: class C ETC func_80146D4C guarded (12 rows); RPG_BAT func_8014BFE4, main func_8005938C not matched
 
 [[tickets/T-25007-class-c-etc-rpgbat-main]], branch c-m6. ETC `func_80146D4C` is guarded at 12 rows; the other two stay `INCLUDE_ASM` with notes in `drafts/T-25007/`.
@@ -799,9 +791,11 @@ Matched (default C, 3220 bytes, 27/27), after the T-24047 history (cost 35: the 
 ## T-25122: main func_8004A414
 
 Matched (1,024 bytes, default C, [[tickets/T-25122-w8-main-80049FF0]]). It started from the T-24501 `for_loops` body at 142 diff lines, with frame, homes and instruction count already right. What was left were the saved-register colours (y/shade/x/w/h/base), the constant registers (0x60 in `a0`) and the clut argument association. The constants and coordinates are exactly the PsyQ `setXYWH` and `setUVWH(poly, 0xC0, 0x50, 0x10, 0x10)` macros, plus `setRGB0..3`. One comma statement per macro, in macro field order, gave 142 -> 16 lines and fixed every colour and the store order (FAKE: hand expansion, as in other files). The clut needs both `rand()` calls nested and no `random_x` local, and uopt reorders the operands, so the operand order matters: `g->unk_014[i] + (s16)x + (rand() & 8)` and `(s16)y + g->unk_018[i] + (rand() & 8)` (16 -> 0). Lesson: when a POLY packet's constants spell an SDK macro, try the macro expansion before working on priorities. Details and negatives: `drafts/T-25122/main/func_8004A414/NOTES.md`.
+
 ## T-25127: ENDING func_8013A2E8
 
 [[tickets/T-25127-w8-ENDING-801396E0]]: func_8013A2E8 (4648 bytes) is a literal match in the default build; 801396E0.c has no INCLUDE_ASM left. The T-23002 guard body (6 rows: the first flag test's load slot kept a `nop` instead of the first string's `lui a1`) matched unchanged once the object's scene table D_8013CB74, which names func_8013A2E8, was defined in C (`tools/data_island.py ENDING/801396E0`). This is the T-25150 mechanism: the function's jump-table `jr` gets an edge back to its entry, so the first flag block lies in a loop region and as1 searches it with the larger candidate budget that T-25056 had shown would match (its scratch threshold 100). Lead: ENDING func_80134270 and func_80135F4C also have a `jr` and are named in their own objects' `.data`. Details: `drafts/T-25127/ENDING/func_8013A2E8/NOTES.md`.
+
 ## T-25125: main func_8007132C
 
 Not matched; `INCLUDE_ASM` stays (best body 738 rows, no guard). Start: the T-25052 body at 950 rows. Two semantic
