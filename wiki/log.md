@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25008 In Progress
-
-[[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]]: closers for main `func_8005B43C` (3 rows), `func_8006BA40` (7), `parameter_up_down` (11), branch n1.
-
 ## [2026-10-20] ticket | T-25008 In Review
 
 [[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]]: main `func_8006BA40` matched (a `(u8)` cast on the low-nibble test spends the ugen slot the original spends; new line in [[playbook]] section 2). `func_8005B43C` stays guarded at 3 rows, `parameter_up_down` at 11; findings in [[matching-notes]] T-25008.
@@ -1753,6 +1749,7 @@ The wave 9 neighbor run ([[tickets/T-25200-wave-9-neighbor]]) stopped when a job
 
 Reviewed w9-TACO-801447D0 against CODING_STANDARDS.md (no open findings; the empty `if (x + y > 0) {}` is a marked FAKE), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_80145650` (1908 bytes) as default C in `src/ovl/TACO/801447D0.c`.
 The package's only function is matched, none left with rows; the block-copy state method is in [[playbook]] and [[matching-notes]], notes in `drafts/T-25136/TACO/func_80145650/NOTES.md`, see [[tickets/T-25136-w8-TACO-801447D0]].
+
 ## [2026-10-23] ticket | T-25134 Done
 
 Reviewed [[tickets/T-25134-w8-main-80043510]] against CODING_STANDARDS.md; matched main `palette_load_vram` (2024 bytes) as default-build C, 27/27.
