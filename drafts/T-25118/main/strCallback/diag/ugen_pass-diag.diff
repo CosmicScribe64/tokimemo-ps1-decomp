@@ -1,0 +1,64 @@
+--- a/tools/ugen_pass.py
++++ b/tools/ugen_pass.py (private diagnostic copy, T-25118)
+@@ -273,21 +273,47 @@
+         seen_uist = False
+         uist_rill_loop = False
+         last_state_op = "ent"
++        _ev = ["ent"]
+ 
+         for k in range(start + 1, end):
+             ins = insns[k]
+             opc = ins.opc
++            if opc == OP["cup"] or opc == OP["icuf"]:
++                _ev.append("cup")
+             if opc in (OP["istr"], OP["istv"]):
+                 seen_uist = True
+                 last_state_op = "uist"
++                _ev.append("uist")
+             elif opc == OP["str"] and ins.mtype != MT_R:
+                 last_state_op = "ustr"
++                _ev.append("ustr")
+             elif opc in (OP["fjp"], OP["tjp"]):
+                 if seen_uist and _is_signed_blt_pos_imm_jump(insns, start, k):
+                     uist_rill_loop = True
+                 last_state_op = "jump"
++                _ev.append("jump")
+             elif opc == OP["mov"]:
+                 want_f = uist_rill_loop or (last_state_op == "uist")
++                _d = os.environ.get("DIAG_STATE", "")
++                if os.environ.get("DIAG_LOG"):
++                    _names = {v: kk for kk, v in OP.items()}
++                    _ctx = [_names.get(insns[j].opc, "?") + ("R" if insns[j].mtype == MT_R else "") for j in range(max(start, k - 14), k)]
++                    with open(os.environ["DIAG_LOG"], "a") as _fo:
++                        _fo.write("P%d %d %d size=%d w=%s want_f=%d last=%s ctx=%s\n" % (sum(1 for j in range(0, start + 1) if insns[j].opc == OP["ent"]) - 1, start, k, ins.words[2], ",".join("%x" % w for w in ins.words[1:]), want_f, last_state_op, " ".join(_ctx)))
++                if _d == "RULE1" and ins.words[2] <= 32 and last_state_op == "ustr":
++                    _j = len(_ev) - 1
++                    while _j >= 0 and _ev[_j] == "ustr":
++                        _j -= 1
++                    if _j >= 0 and _ev[_j] == "cup":
++                        want_f = True
++                if _d == "INV" or (_d == "INVSMALL" and ins.words[2] <= 32):
++                    want_f = not want_f
++                if _d == "F":
++                    want_f = True
++                elif _d == "B":
++                    want_f = False
++                elif _d == "none":
++                    continue
+                 ins_idx = _mov_insert_index(insns, start, k)
+                 gadget = _gadget_f() if want_f else _gadget_b(proc_block)
+                 insertions.setdefault(ins_idx, []).extend(gadget)
+@@ -370,6 +396,13 @@
+ 
+     with open(argv[inp], "rb") as f:
+         insns = parse_ucode(f.read())
++    if os.environ.get("DIAG_DUMP"):
++        names = {v: k for k, v in OP.items()}
++        with open(os.environ["DIAG_DUMP"], "w") as fo:
++            for idx, ins in enumerate(insns):
++                fo.write("%4d %-5s m%d %s %s\n" % (idx, names.get(ins.opc, "?%d" % ins.opc), ins.mtype,
++                         DTYPES[ins.dtype] if ins.dtype < len(DTYPES) else ins.dtype,
++                         " ".join("%x" % w for w in ins.words[1:])))
+     new_insns, changed = rewrite_ucode(insns)
+     if not changed:
+         return subprocess.call([real] + list(argv))

@@ -2376,8 +2376,9 @@ s32 func_80055AFC(s32 arg0);
 s32 func_80056070(u8 *buf, s32 arg1);
 void func_80056284(void);
 void set_movie_offset(s16 arg0, s16 arg1);
+void strCallback(void);
 void strKickCD(s32 arg0);
-void func_80056BA8();
+s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2);
 void func_8005715C(s32 arg0); /* defined after its caller func_80056BA8 */
 void func_80057390();
 #ifndef MAIN_API_OVERRIDE_set_dec_bri
@@ -2852,7 +2853,9 @@ void D_80089B6C();
 void D_80089BD4();
 void func_8008A0D4(s32 arg0);
 void func_8008A148();
+#ifndef MAIN_API_OVERRIDE_func_8008B750
 void func_8008B750();
+#endif
 void func_8008B8C4();
 void func_8008B904();
 void func_8008BAA4();
