@@ -7,28 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] build | T-24929 switch-compare rule in cvt_pass, ETC func_8013CCE4 matched
-[[tickets/T-24929-uopt-zcopy-scope]]: the zcopy-scope hypothesis (T-24925) did not hold. The three rows were
-as1 leaving the chain's compares on the temporary's register. New uniform step `switch_compares` in
-`tools/cvt_pass.py` (on uopt's output, zcopy-off procedures: the entry copy is propagated into the chain's
-compares). It fires in 267 procedures, changes 0 matched functions, and matches ETC func_8013CCE4 in C (guard
-removed). Clean build 27/27; progress 6,827 / 6,952 (92.3%). Rejected variants changed 24-275 matched functions
-([[matching-notes]] T-24929). Updated [[build-step-gaps]], [[toolchain]], [[status]],
-[[tickets/T-24925-func-8013cce4-8013BEF0]]. Scratch tools in drafts/T-24929/.
-
-## [2026-10-20] ticket | T-24929 In Review
-[[tickets/T-24929-uopt-zcopy-scope]] moved to In Review; waiting for the code review against CODING_STANDARDS.md.
-
-## [2026-10-20] ticket | T-25003 class C main trio
-[[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]] created, In Progress (branch c-m3): main `func_8006BA40`, `func_80043510`, `func_8004443C`.
-
-## [2026-10-20] ticket | T-25003 to In Review
-[[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]]: main `func_80043510` and `func_8004443C` matched (plain C, FAKE frame pads); `func_8006BA40` guarded at 7 rows. `main_api.h`: `D_800B3D10` as `s32[4]`, prototypes for `csr_load_vram`, `palette_load_vram`, `disp_string`, `func_8004A14C`. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
-
-## [2026-10-20] ticket | T-24929, T-25001, T-25002, T-25003, T-25005 Done
-
-Four matches: ETC `func_8013CCE4` through the uniform switch_compares pass (T-24929, zero regressions), main `sndisp` through several .data ranges per object (T-25005), main `func_80043510` and `func_8004443C` (T-25003). Guards: GEKO `func_80133C50` 13 rows, main `func_8006BA40` 7 rows. [[status]].
-
 ## [2026-10-20] ticket | T-25004 created, In Progress
 [[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]] created, In Progress (branch c-m4): main `func_8005B43C`, `parameter_up_down`, `col2sepia`.
 
@@ -1762,3 +1740,23 @@ Reviewed [[tickets/T-25122-w8-main-80049FF0]] against CODING_STANDARDS.md; match
 ## [2026-10-23] ticket | T-11900 Done
 
 Four matches: OPTION `func_801326BC`, GEKO `func_80136C20`, `func_801367EC` (both closed by defining `D_80145094` in C, [[as1-scheduler-rule]]) and `func_80135DC0`. `func_80133024`, `func_80132B24` keep their guards; `func_80142C9C` checkpoint in `drafts/T-11900`. Inline review against CODING_STANDARDS.md (FAKE comments, no inline asm). Notes in [[matching-notes]]. [[tickets/T-11900-geko-option-closers]].
+
+## [2026-10-23] ticket | T-25127 Done
+
+Reviewed [[tickets/T-25127-w8-ENDING-801396E0]] against CODING_STANDARDS.md; matched ENDING `func_8013A2E8` (4648 bytes) as default-build C, 27/27.
+The guard in `src/ovl/ENDING/801396E0.c` is gone: defining the scene table D_8013CB74 in C (data island, `config/overlays/ENDING.yaml`) gave as1 the jump-table back edge; notes in [[matching-notes]] and [[as1-scheduler-rule]].
+
+## [2026-10-23] ticket | T-25125 Done
+
+Reviewed [[tickets/T-25125-w8-main-8006CB30]] against CODING_STANDARDS.md: no source change, nothing matched, 27/27 build; no findings.
+`func_8007132C` stays INCLUDE_ASM (738 rows from 950); notes and next hypothesis in drafts/T-25125/main/func_8007132C/NOTES.md.
+
+## [2026-10-23] ticket | T-25138 Done
+
+Reviewed [[tickets/T-25138-w8-RPG_BAT-801447E0]] against CODING_STANDARDS.md (two small findings fixed), clean rebuild 27/27, funcdiff MATCH. Matched RPG_BAT `func_80144C84` (1276 bytes) as default C in `src/ovl/RPG_BAT/801447E0.c`; FAKEs: file-local `RpgBattleView` override of `D_8015EBCC` and the comma return.
+The only function of the package is matched, none left with rows; the real battle-block aggregate is the next step, notes in `drafts/T-25138/RPG_BAT/func_80144C84/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25139 Done
+
+Reviewed [[tickets/T-25139-w8-KANGEI-80132090]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched KANGEI `func_801327DC` (1096 bytes) as default C in `src/ovl/KANGEI/80132090.c`; FAKEs: two empty tests of the club halfword and a `(u8)` narrowing; the scene table `D_801399B0` now defined in C (data island).
+The only function of the package is matched, none left with rows; notes in `drafts/T-25139/KANGEI/func_801327DC/NOTES.md` and [[matching-notes]].

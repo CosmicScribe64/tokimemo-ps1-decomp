@@ -17,23 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25009: closers ETC func_80146D4C, GEKO func_80133C50, main mod_set_gpu
-
-[[tickets/T-25009-closers-etc-geko-mod-set-gpu]], branch n2. No match; three guards, one improved.
-
-- **main `mod_set_gpu` (guarded, 28 -> 17 rows).** regdiff: `clut` (priority 100) outranked `last` (83.8). An empty `if (last) {}` right before `s->clut = func_8009ED74(...)` lifts `last` to 100.5 and gives it `$s3` as in the original (FAKE). Left: `clut` still outranks the x counter (62) and `data` (50.2), so it sits in `$s4` instead of `$s7`; `p` and `ypos` spill slots 4 bytes off. `p` is spilled as an expression range (uopt copy-propagates it), so its declaration position, `p` spellings (`+ idx`, `&[idx]`, two-step) change nothing; a pad after `padB`, `mode` or `ypos` shifts every home by 4. Worse: empty tests on `clut` (extend its range) or `data`/`col`/`x` (each extra block dilutes `last`), `clut` as `s32`/`u16`, `u32 rows/cols`. Permuter 600 s: no row gain.
-- **GEKO `func_80133C50` (guarded, 13 rows).** The ring is short one slot before the zero-girl branch: `v = (D_800E6280.unk_0F4.h & 0xFFFF) >> 12` there (as1 drops the `andi` after `lhu`) makes that branch match exactly, but the 1/2/3 and 6-9 branches shift up one register (30 rows); removing or moving the T-24503 `if (v) {}` in the 1/2/3 branch to compensate also disturbs the zero-girl branch (22-36 rows). Masks on `unk_F5F`, `g`, the record byte or the 4/5/10 test: worse. autotweak 300 s on the masked form reverts the mask.
-- **ETC `func_80146D4C` (guarded, 12 rows).** No gain from `D_801230F4` spellings (`1U`, `(u8)1`, `-= -1`, `1 + D`, `w->unk_10[5]`, chained or comma assignments, `+ ret`/`- ret` forms), `*(w->unk_28 + i)`, `(s16)`, `(u8)` or `& 0xFF` on both index reads (25, CSE breaks), an `idx` local in place of the pad (88), an empty test after the total. Permuter 900 s: formatting only.
-
-## T-25007: class C ETC func_80146D4C guarded (12 rows); RPG_BAT func_8014BFE4, main func_8005938C not matched
-
-[[tickets/T-25007-class-c-etc-rpgbat-main]], branch c-m6. ETC `func_80146D4C` is guarded at 12 rows; the other two stay `INCLUDE_ASM` with notes in `drafts/T-25007/`.
-
-- **ETC `func_80146D4C` (1076 B, 104 -> 12 rows, guarded).** From the T-24303 draft. Levers in the order they cut rows: one variable `ret` for ret, score and grade puts the grade chain in `v1` as in the original (104 -> 88; one unused scalar keeps frame 0x58, FAKE pad); `GameState *g = &D_800E6280;` for every field gives case 2 its direct `lh s0` and colours two of the five `unk_041` reads (88 -> 68); the flag test as `((GsByteNibbles *)&g->unk_0F4.b[1])->low & 2` loads the byte into its own temporary as the original does (`lui t6; lbu t7`; FAKE view), after which regdiff reports registers only; an empty `if (g->unk_041) {}` in the grade-0 block (found by `permute.py`, 600 s, score 465 -> 265) raises the priority of the promoted `unk_041` range so every read sits in `a3` as in the original (82 -> 28; FAKE); the total as `score = w->unk_28[sel] + w->unk_28[5]; w->unk_28[5] = score; printf(..., score)` stops uopt promoting `w->unk_28[5]` into `a1` and evaluates the operands in the original order (28 -> 12; `w->unk_28[5] += ...`, `= [5] + [sel]` and a store-then-reread keep the promotion). Left: the last block has every ugen temporary one lower (the original skips a ring slot before the index shift and one between the load and the add of the `D_801230F4` increment, which is `w->unk_10[5]`). Tried there without gain: `& 0xFF` on the index (breaks the address CSE, 24-25), `| 0`/`* 1` (folded), `w->unk_10[5] += 1`/`++`, moving the empty `if`; autotweak 300 s on the 12-row form found no edit. Without gain earlier: a byte view of `unk_041` (104), a separate `extern u8 D_800E62C1` (88, never coloured), `sel` locals reloaded after each call (142), `g` declared first or in place of a pad (82-84).
-- **RPG_BAT `func_8014BFE4` (892 B, 128 rows).** The T-17110 hand draft is still the best. The original keeps `idx + 8` in `s5` from before the first call of the digit arm, so `div` falls to `a1` with a spill at 0x58 and `y` is spilled around the arm; the build gives `div` `s5`. After the loop the original reloads `t = slot * 12` from its home (0x50) three times and recomputes `t + 0x40`; the build value-numbers that with the pre-loop index and keeps it in a spill slot. Tried, all worse: named `t`/`u` locals and `u + i` arguments (164-255), `j = idx + 8` before the call (forward-substituted, 162), index as the reused `arg0` (223), `div = 1` before the switch (241), head-chain spellings (128-169); autotweak 300 s: 128 -> 126 (casts only); permuter 600 s: no row gain. See `drafts/T-25007/RPG_BAT/func_8014BFE4/NOTES.md`.
-- **main `func_8005938C` (764 B, 124 rows).** The T-17017 closer draft is still the best; every row is a ugen temporary. Each of the three 32-byte MATRIX copies takes two ring slots in the original (one skipped, one data register) and three in the build. Matched copies of the same `*(MATRIX *)D_80125C60` in ETC `func_8013FA7C` and TACO `80146D60.c` take three slots in their originals too, so this is not a general build gap; what makes this function's copies cheaper is unknown. Plain `rot` stores without `p` and `*(MATRIX *)&D_80125C60` change nothing; a `MATRIX *` source pointer (148) and a chained `sm = m = ...` (226) are worse.
-- Tools: `build/scr` helpers (not committed) printed a side-by-side of the guarded build against the original; regdiff needs `--uopt` pointing at the traced uopt (`TOKIMEMO_SCRATCH=/private/tmp/t24047-uopt`, `--uopt /scratch/variants/trace`).
-
 ## T-25006: class C main srn_set matched; mod_set_gpu guarded; func_8004A1A0 drafted
 
 [[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]], branch c-m5. One of three matched in plain C, one guard at 28 rows, one INCLUDE_ASM with a draft (drafts/T-25006/main/func_8004A1A0.c, 76 rows). All three were rewritten from the asm instead of patching the T-17015/T-24301 drafts.
@@ -808,3 +791,51 @@ Matched (1,024 bytes, default C, [[tickets/T-25122-w8-main-80049FF0]]). It start
 - **`func_80135DC0` (2,260 B).** autotweak's GameState-pointer edit took the draft from 297 to 84 rows. Reading the `appointment_find_today` arguments through `D_800E6280.unk_*` instead of `gs` (FAKE) splits the uopt range that otherwise keeps `unk_03E`/`unk_03F` in `$a0`/`$a1` for the whole function (24 rows). strcpy's real return type in this file (`void *func_800AE0F0()`, a `MAIN_API_OVERRIDE_`, as in RPG_BAT) closed case 0. `(gs->unk_71E & 0x10) > 0` gives `sltiu; xori`; FAKE pads fix the frame.
 - **OPTION `func_801326BC`.** The palette stores go through a `GameState *g` pointer (uopt treats the pointer store as a possible alias), so `% 4` is recomputed in every iteration and statement as in the original. Flat reads `((s32 *)0x801CBEF0)[k % 4 * 128 + i]` spend one ugen temporary per access. A FAKE empty `else { return; }` stores the promoted `D_8013D308` back on both arms after the compare.
 - **Not closed:** GEKO `func_80133024` (2 rows; the T-24926 hypothesis (b) gives 37-41 lines), `func_80132B24` (about 28 rows; return type, bitfield date reads and autotweak gave nothing), `func_80142C9C` (about 40 rows; the `ids` table base kept in a register across the second loop clashes with the post-loop `&ids.v[sel]`; checkpoint in `drafts/T-11900/GEKO/func_80142C9C/body.c`).
+
+## T-25127: ENDING func_8013A2E8
+
+[[tickets/T-25127-w8-ENDING-801396E0]]: func_8013A2E8 (4648 bytes) is a literal match in the default build; 801396E0.c has no INCLUDE_ASM left. The T-23002 guard body (6 rows: the first flag test's load slot kept a `nop` instead of the first string's `lui a1`) matched unchanged once the object's scene table D_8013CB74, which names func_8013A2E8, was defined in C (`tools/data_island.py ENDING/801396E0`). This is the T-25150 mechanism: the function's jump-table `jr` gets an edge back to its entry, so the first flag block lies in a loop region and as1 searches it with the larger candidate budget that T-25056 had shown would match (its scratch threshold 100). Lead: ENDING func_80134270 and func_80135F4C also have a `jr` and are named in their own objects' `.data`. Details: `drafts/T-25127/ENDING/func_8013A2E8/NOTES.md`.
+
+## T-25125: main func_8007132C
+
+Not matched; `INCLUDE_ASM` stays (best body 738 rows, no guard). Start: the T-25052 body at 950 rows. Two semantic
+holes closed: `u32 t` for the `unk_0F4.h >> 12` tests (the original uses `sltiu`) and a redundant `b3 >= 7` test in
+the rand condition. A `f.b16 = 1` bit-field store fixes the ugen slot at word 161; with the index read through byte
+views the first 192 words match exactly. The blocker is the address constant 0x800E6280: uopt colours one split
+piece of it (`$a3`), the original never does. Measured from the traced uopt: a constant piece is allocated when
+`sum(uses * freq) - sum(freq of reload units)` is positive (loop-first reloads with an in-range predecessor are
+free); the draft piece sits at +1 to +5. The original's opcode walk uses a GameState-typed record pointer
+`p = base + idx * 4` (fields at +0x69C, index forwarded with `idx++`), which adds uses; taking the schedule reads off
+the constant (absolute-address FAKE) leaves it unallocated and gives the walk's structure (825 rows). Left: the walk
+colours (op, 0x25, p). Bodies, measurements, negatives and the next hypothesis (the schedule reached through
+another aggregate or symbol than the GameState base): `drafts/T-25125/main/func_8007132C/NOTES.md`.
+
+## T-25138: RPG_BAT func_80144C84
+
+Matched (1,276 bytes, default C) from the T-24522 28-row draft in about 25 minutes. Both remaining gaps came from
+one ownership fact: the flag words `D_8015EBCC`, `D_8015EBE0` and the counters `D_8015EBFC` are one object.
+With direct members of one view (`extern RpgBattleView D_8015EBCC`, a file override of the header's `s32[3]`),
+the indexed read `flag[D_8015EBAC]` aliases `EBE0` and `unk_08`, so uopt ends their ranges at the third
+threshold and reloads them after the test (as the target does), and as1 keeps the `EBE0` load before the
+counter writebacks at the join (one symbol). A pointer view of an incomplete array gave the reloads but
+swapped the counter colours; negative offsets from `D_8015EBFC` did not alias `EBE0`. Then `EBE0 -= 0x14`
+before the `unk_08` clamp, and the real locals `sel`/`total` for the 0x38 frame. The T-24522 `* 1` wrappers
+and `RpgStat *stat` are gone; the comma return stays (FAKE). Details: `drafts/T-25138/RPG_BAT/func_80144C84/NOTES.md`.
+
+## T-25139: KANGEI func_801327DC
+
+Matched in literal default C, 1,096 bytes. Started from the T-24516 body
+(`drafts/T-24516/kangei-327dc.c`, 270 rows). What closed it, in order:
+(1) two empty truth tests of `D_800E6280.unk_0F4.h` (FAKE). The global is read only through
+`>> 12`, so cvt_pass keeps the CVT of every read and uopt saw no plain use. Two plain uses make it
+one range coloured `$v1`, the original's `lui v1; lhu v1` at every read. One test is not enough,
+any two are (175, 180 to 197, then 0 rows).
+(2) the object's `.data` scene table `D_801399B0`, which names this function, defined in C
+(`tools/data_island.py KANGEI/80132090`, T-25150 rule 8). Without it, as1 hoists the default arm's
+`D_800CA19C` address into the first switch head (29 rows in the control).
+(3) bit-field flag tests `unk_0C.f.b2` / `.f.b19`.
+(4) `D_800CA148` assigned and incremented directly (`+= 1`, `+= 2`) instead of m2c's locals, so
+uopt promotes it into `$v1` (150 to 17 rows).
+(5) an `else if (club == 7) ... else` chain, and `(u8)` on the `get_g_zyotai_s(6)` result for one
+ring slot (FAKE).
+Details and negatives: `drafts/T-25139/KANGEI/func_801327DC/NOTES.md`.

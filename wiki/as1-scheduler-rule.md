@@ -100,3 +100,8 @@ Cached original IDO5.2 has the same100/10 region-header selection. Replaying
 the same captured ENDING input gives all1164 stock5.3 candidate instructions
 unchanged. A simple5.2-to5.3 historical budget change is therefore excluded;
 the scratch raised-budget result still lacks an original-compiler rationale.
+
+Resolved (T-25127): the original's source gave the loop region. The object's scene table
+D_8013CB74 names func_8013A2E8; defined in C (data island), it gives the function's jump-table
+`jr` a back edge to the entry (rule 8, T-25150) and the unchanged guard body matches. Before
+chasing this cutoff in another function, check whether its object's `.data` names it.
