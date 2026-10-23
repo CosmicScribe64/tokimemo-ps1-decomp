@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] lint | OPTION calendar completion wiki checks
-
-Refreshed catalogs:728 tickets,427 sections,3,076 functions. Docker wiki lint reports zero broken links, zero ticket/board mismatches and only the two existing large-page warnings ([[data/t0018-cases]], [[log]]). Active [[matching-notes]] size warning is resolved by the preserved archive rotation. `git diff --check` passes.
-
 ## [2026-10-20] ticket | Final OPTION editor match and requested handoff
 
 User requested wrapping up the current work and committing/pushing it. Created [[tickets/T-24607-option-editor]] In Progress for the newly exact private1,036-byte candidate. Other lanes stop matching and preserve their findings; independent behavior and standards reviews run before integration completion. [[tickets/T-24600-finish-matching]] remains incomplete.
@@ -1727,6 +1723,7 @@ Best bodies (57 and 61 rows, two FAKEs) are in drafts/T-25153/NAME_ENT/func_8013
 
 Reviewed and merged w8-main-8004F870: matched main `sndi`, `func_8005215C`, `get_h_tokimeki`, `get_near_menu`, `func_8004FC10` (7508 bytes, default C, 27/27).
 `func_80052F68` stays INCLUDE_ASM (69 rows, notes in drafts/T-25101/main/func_80052F68/NOTES.md); see [[tickets/T-25101-w8-main-8004F870]].
+
 ## [2026-10-23] build | T-25201 w9c-main-8004C3F0
 Matched: main `mod_set_gpu` (804 bytes) as default-build C, guard removed; for-loop bounds read from the record, a FAKE dead store `idx = 0;` (T-25201) and an `xpos` local.
 Reviewed against `CODING_STANDARDS.md` (no findings), clean rebuild 27/27, `mod_set` still matches; see [[tickets/T-25201-wave-9-closers]] and [[matching-notes]].
