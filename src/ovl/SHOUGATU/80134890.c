@@ -284,6 +284,7 @@ s32 func_801350F8(void) {
         D_800E6280.unk_1104.w++;
         return 0;
     case 6:
+        /* The original ORs 8 into the compare result (the test is always true); kept as found, T-24029. */
         if ((((DisplayActor44 *)D_8011ECD0)[96].unk_02 != 1) | 8) {
             D_800E6280.unk_1104.w++;
             D_80122CE4 = 1;
@@ -302,8 +303,8 @@ s32 func_801350F8(void) {
         ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0xA0;
         ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x78;
         ((DisplayFixActor44 *)D_8011ECD0)[96].unk_30 = 0;
-        /* T-25132: the (s32) index reads the widened selector, the one register of the tests (a plain u8 index
-         * gives uopt a second register for it). */
+        /* FAKE: T-25132: the (s32) index casts read the widened selector, the one register of the tests (a plain
+         * u8 index gives uopt a second register for it). */
         if (D_80143DD8 == 3 || D_80143DD8 == 4) {
             sprintf(sp6C, "%sだ・・・", sp38.s[(s32)D_80143DD8]);
             ((DisplayActor44 *)D_8011ECD0)[99].unk_03 |= 0x80;
