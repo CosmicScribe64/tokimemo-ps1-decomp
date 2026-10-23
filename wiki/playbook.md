@@ -207,3 +207,7 @@ colour in every arm. Symptom: dst/src pointer registers swapped in some arms and
 look for a variable the original reuses as the loop counter in the odd arm. In main `func_8006509C`
 the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the scan on its own `j`
 (56 rows to 0, plain C). See `drafts/T-25108/main/func_8006509C/NOTES.md`.
+
+## A pointer in `s0` where the original saves it on the stack around calls (T-25115)
+
+Symptom: the target keeps a local in a caller register and stores and reloads it at its home around each call (`sw a2,0x28(sp)` before the `jal`, `lw a2` after), the draft gives it `s0`. Cost check: a caller register costs about 2 per call the range crosses; the first use of a saved register costs `clamp(0.25 * uopt_blocks, 4, 60)` (strict `<`, caller colours win ties). Count the blocks in the `flow graph` lines of the regdiff trace. uopt also ends a block at a statement boundary after 20 counted variable loads (`varreflimit`: checked at line and plain-store ops, not after `p->x = ...` stores; a variable assigned earlier in the same block does not count). Main `func_80049A40` needed 24 blocks: channel locals computed before the switch and black vertices as `r * 0` pushed three arms past the limit, and a `gs = &D_800E6280;` set before the calls placed the coordinate block's split where the target reloads a parameter. See `drafts/T-25115/main/func_80049A40/NOTES.md`.
