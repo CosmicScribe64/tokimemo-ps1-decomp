@@ -1770,3 +1770,7 @@ Reading the schedule as `D_800E6280.unk_69C[D_800E6280.unk_71C]` with no record 
 ## [2026-10-23] build | T-25403 w11-GEKO-80142760-p2
 Pass 2 matched GEKO `func_80142C9C` (3,656 bytes, default C, 27/27); `src/ovl/GEKO/80142760.c` has no INCLUDE_ASM left. Reviewed, no findings; keep line for `D_800E71DF` added.
 Lever in [[playbook]], notes in `drafts/T-25403/GEKO/func_80142C9C/NOTES.md`, [[tickets/T-25403-w11-GEKO-80142760]] Done.
+## [2026-10-23] ticket | T-25319 Done
+
+Reviewed [[tickets/T-25319-w10-NAME_ENT-80142A80]] against CODING_STANDARDS.md; no match: NAME_ENT `func_80143580` stays `INCLUDE_ASM` (draft at 293 rows, score 293, from 471), 27/27, no findings left.
+The draft packet is `drafts/T-25319/NAME_ENT/func_80143580/` (next hypothesis in NOTES.md) and [[matching-notes]].
