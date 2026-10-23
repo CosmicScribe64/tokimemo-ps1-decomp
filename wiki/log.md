@@ -7,15 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25010 to In Review
-[[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]] (branch c-m7): no match. BG slot types and tables moved from include/ovl/OPTION.h to include/main_api.h; main `func_8004A1A0` draft now has the original instruction count; `func_80065964` draft rolled with a `goto` loop (frame and range splits left); `strCallback` guard unchanged. Drafts in drafts/T-25010/main/. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
-
-## [2026-10-20] ticket | T-25009 created, In Progress
-[[tickets/T-25009-closers-etc-geko-mod-set-gpu]] created, In Progress (branch n2): closers for ETC `func_80146D4C`, GEKO `func_80133C50`, main `mod_set_gpu`.
-
-## [2026-10-20] ticket | T-25009 to In Review
-[[tickets/T-25009-closers-etc-geko-mod-set-gpu]]: no match; main `mod_set_gpu` guard 28 -> 17 rows (empty `if (last) {}` lifts `last` above `clut`), GEKO `func_80133C50` 13 and ETC `func_80146D4C` 12 unchanged (zero-girl mask lead recorded). Notes in [[matching-notes]]. Clean build 27/27, checks pass. Branch n2.
-
 ## [2026-10-20] ticket | T-25008 In Progress
 
 [[tickets/T-25008-closers-main-8005b43c-8006ba40-parameter-up-down]]: closers for main `func_8005B43C` (3 rows), `func_8006BA40` (7), `parameter_up_down` (11), branch n1.
@@ -1757,6 +1748,7 @@ Best draft is 197 funcdiff rows (346 before), notes and next hypothesis in `draf
 ## [2026-10-23] ticket | T-25300 wave 10 second pass opened
 
 The wave 9 neighbor run ([[tickets/T-25200-wave-9-neighbor]]) stopped when a job-picker agent returned no structured result; its last pick had found no untouched packages left. [[tickets/T-25300-wave-10-second-pass]] replaces it: a second deep pass, from the first pass's notes, on each of the 20 non-GEKO files still holding INCLUDE_ASM (tickets T-25301..T-25320), starting each file as soon as no wave 8 or wave 9 worktree holds it.
+
 ## [2026-10-23] ticket | T-25136 Done
 
 Reviewed w9-TACO-801447D0 against CODING_STANDARDS.md (no open findings; the empty `if (x + y > 0) {}` is a marked FAKE), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_80145650` (1908 bytes) as default C in `src/ovl/TACO/801447D0.c`.
