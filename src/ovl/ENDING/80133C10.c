@@ -137,9 +137,10 @@ void func_801341D8(void) {
     D_800E6280.unk_000 = 0x140;
 }
 
-#ifdef NON_MATCHING
-#define ED_A ((DisplayActor44 *)D_80120650)
-void func_80134270(void) {
+/* FAKE: s32 with no return keeps $v0 live at the exit, so as1 keeps the chain temporary
+ * (`or v0,zero,zero`) for the GameState unk_037/unk_036 stores instead of folding them
+ * to `sb zero` (wiki/register-cheatsheet.md, T-11590). T-25311 */
+s32 func_80134270(void) {
     s16 i;
 
     func_8009C5E0(1);
@@ -180,114 +181,112 @@ void func_80134270(void) {
         D_800E6280.unk_10A5[i + 4] = 0xB;
     }
     func_80048F64(0x60);
-    ED_A[0].unk_01 = 0xC;
-    ED_A[0].unk_02 = 0;
-    ED_A[0].unk_38 = 0;
-    ED_A[0].unk_03 = 0x84;
-    ED_A[0].unk_0C = (u8 *)D_8013C4C0.unk_38[0];
-    ED_A[0].unk_10 = (u8 *)D_8013C4C0.unk_70[0];
-    ED_A[0].unk_34 = (u8 *)D_8013C4C0.unk_00[0];
-    ED_A[0].unk_14 = D_8013C4C0.unk_A8[0].unk_00;
-    ED_A[0].unk_16 = 0;
-    ED_A[0].unk_18 = 0;
-    ED_A[0].unk_06 = 1;
+    ((DisplayActor44 *)D_80120650)[0].unk_01 = 0xC;
+    ((DisplayActor44 *)D_80120650)[0].unk_02 = 0;
+    ((DisplayActor44 *)D_80120650)[0].unk_38 = 0;
+    ((DisplayActor44 *)D_80120650)[0].unk_03 = 0x84;
+    ((DisplayActor44 *)D_80120650)[0].unk_0C = (u8 *)D_8013C4C0.unk_38[0];
+    ((DisplayActor44 *)D_80120650)[0].unk_10 = (u8 *)D_8013C4C0.unk_70[0];
+    ((DisplayActor44 *)D_80120650)[0].unk_34 = (u8 *)D_8013C4C0.unk_00[0];
+    ((DisplayActor44 *)D_80120650)[0].unk_14 = D_8013C4C0.unk_A8[0].unk_00;
+    ((DisplayActor44 *)D_80120650)[0].unk_16 = 0;
+    ((DisplayActor44 *)D_80120650)[0].unk_18 = 0;
+    ((DisplayActor44 *)D_80120650)[0].unk_06 = 1;
     D_80120693 = 0x11;
-    ED_A[0].unk_26 = -0x20;
-    ED_A[0].unk_2A = 0x28;
-    ED_A[0].unk_07 = 0;
-    ED_A[0].unk_05 = 1;
-    ED_A[0].unk_04 = 0;
-    ED_A[1] = ED_A[0];
-    ED_A[1].unk_03 = 4;
-    ED_A[1].unk_26 = 0x10;
+    ((DisplayActor44 *)D_80120650)[0].unk_26 = -0x20;
+    ((DisplayActor44 *)D_80120650)[0].unk_2A = 0x28;
+    ((DisplayActor44 *)D_80120650)[0].unk_07 = 0;
+    ((DisplayActor44 *)D_80120650)[0].unk_05 = 1;
+    ((DisplayActor44 *)D_80120650)[0].unk_04 = 0;
+    ((DisplayActor44 *)D_80120650)[1] = ((DisplayActor44 *)D_80120650)[0];
+    ((DisplayActor44 *)D_80120650)[1].unk_03 = 4;
+    ((DisplayActor44 *)D_80120650)[1].unk_26 = 0x10;
     switch (D_800E6280.unk_F5F) {
     case 0:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[1];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[1];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[1];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[1].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[1];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[1];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[1];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[1].unk_00;
         break;
     case 1:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[2];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[2];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[2];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[2].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[2];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[2];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[2];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[2].unk_00;
         break;
     case 2:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[3];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[3];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[3];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[3].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[3];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[3];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[3];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[3].unk_00;
         break;
     case 3:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[4];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[4];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[4];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[4].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[4];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[4];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[4];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[4].unk_00;
         break;
     case 4:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[5];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[5];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[5];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[5].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[5];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[5];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[5];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[5].unk_00;
         break;
     case 5:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[6];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[6];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[6];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[6].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[6];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[6];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[6];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[6].unk_00;
         break;
     case 6:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[7];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[7];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[7];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[7].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[7];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[7];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[7];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[7].unk_00;
         break;
     case 7:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[8];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[8];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[8];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[8].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[8];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[8];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[8];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[8].unk_00;
         break;
     case 8:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[9];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[9];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[9];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[9].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[9];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[9];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[9];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[9].unk_00;
         break;
     case 9:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[10];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[10];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[10];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[10].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[10];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[10];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[10];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[10].unk_00;
         break;
     case 10:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[11];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[11];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[11];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[11].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[11];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[11];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[11];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[11].unk_00;
         break;
     case 12:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[12];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[12];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[12];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[12].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[12];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[12];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[12];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[12].unk_00;
         break;
     default:
-        ED_A[1].unk_0C = (u8 *)D_8013C4C0.unk_38[13];
-        ED_A[1].unk_10 = (u8 *)D_8013C4C0.unk_70[13];
-        ED_A[1].unk_34 = (u8 *)D_8013C4C0.unk_00[13];
-        ED_A[1].unk_14 = D_8013C4C0.unk_A8[13].unk_00;
+        ((DisplayActor44 *)D_80120650)[1].unk_0C = (u8 *)D_8013C4C0.unk_38[13];
+        ((DisplayActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C0.unk_70[13];
+        ((DisplayActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4C0.unk_00[13];
+        ((DisplayActor44 *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[13].unk_00;
         break;
     }
-    D_800E6280.unk_037 = D_800E6280.unk_036 = 0;
-    D_800E6280.unk_038 = 0;
+    /* FAKE: element chain through the first field gives the store order 037, 036, 038 and one
+     * hidden temporary for the first two (struct-field chains store 038 first); GameState
+     * fields unk_036..unk_038, as in TACO func_8013B2A0 (T-19030). T-25311 */
+    (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = (&D_800E6280.unk_036)[2] = 0;
     func_8004284C();
 }
-#undef ED_A
-#else
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_80134270);
-#endif
 
 void func_801349A8(void) {
     cd_read_sectors(0x78, 0x80180000, 0x7B58);
