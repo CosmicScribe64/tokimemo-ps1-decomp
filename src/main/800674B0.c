@@ -583,7 +583,93 @@ void func_800696DC(s32 arg0, s32 arg1) {
     k_sub_disp_start(6);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
+/* Implicit int in the original (K&R definition, no return): $v0 stays live at the exit, so the last
+ * bit store of each case arm also goes through the promoted byte in $v0. T-25103. */
+s32 func_8006A044(arg0, arg1)
+s32 arg0;
+s32 arg1;
+{
+    u8 x;
+
+    /* FAKE: T-25103, the dead read numbers the flag byte before the month (uopt colours unconstrained
+     * ranges in that order), so the byte takes $v0 and the month $v1; uopt then removes the load. */
+    x = D_800E6280.unk_F64[1];
+    if (D_800E6280.unk_03F != 2 && D_800E6280.unk_03F != 5 && D_800E6280.unk_03F != 8 && D_800E6280.unk_03F != 11) {
+        ((FlagsF64 *)D_800E6280.unk_F64)->b14 = 1;
+    } else {
+        ((FlagsF64 *)D_800E6280.unk_F64)->b13 = 1;
+    }
+    if (D_800E6280.unk_03E == 0x5F && D_800E6280.unk_03F == 4) {
+        ((FlagsF64 *)D_800E6280.unk_F64)->b13 = 1;
+        ((FlagsF64 *)D_800E6280.unk_F64)->b14 = 1;
+    }
+    switch (D_800E6280.unk_03F) {
+    case 2:
+    case 3:
+    case 4:
+        if (D_800E6280.unk_03E == 0x5F) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b0 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b4 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b8 = 1;
+        }
+        break;
+    case 5:
+    case 6:
+    case 7:
+        if (D_800E6280.unk_03E == 0x5F) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b1 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b5 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b9 = 1;
+        }
+        ((FlagsF64 *)D_800E6280.unk_F64)->b15 = 1;
+        break;
+    case 8:
+    case 9:
+    case 10:
+        if (D_800E6280.unk_03E == 0x5F) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b2 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b6 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b10 = 1;
+        }
+        break;
+    case 11:
+    case 12:
+    case 13:
+        if (D_800E6280.unk_03E == 0x5F) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b3 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b7 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b11 = 1;
+        }
+        break;
+    case 1:
+        if (D_800E6280.unk_03E == 0x60) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b3 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x61) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b7 = 1;
+        }
+        if (D_800E6280.unk_03E == 0x62) {
+            ((FlagsF64 *)D_800E6280.unk_F64)->b11 = 1;
+        }
+        break;
+    }
+}
 
 /* FAKE: each record triple (unk_18/unk_26/unk_2A) after the loop is written on one line, as from a macro (none is known):
  * as1 schedules by source line and the grouping sets the store order in each branch. T-11690 */
