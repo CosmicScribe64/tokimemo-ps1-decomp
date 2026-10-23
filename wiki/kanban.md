@@ -105,7 +105,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25400-wave-11-until-matched|T-25400 Wave 11 - repeated passes until every game function matches]]
 - [ ] [[tickets/T-25500-stubborn-functions|T-25500 Stubborn functions - multi-angle attack, toolchain changes allowed under 7a]]
 - [ ] [[tickets/T-25501-stubborn-shougatu-8013ea98|T-25501 Stubborn function SHOUGATU func_8013EA98 (src/ovl/SHOUGATU/8013E330.c)]]
-- [ ] [[tickets/T-25502-stubborn-taiiku-80137784|T-25502 Stubborn function TAIIKU func_80137784 (src/ovl/TAIIKU/80133C80.c)]]
 
 ## In Review
 
@@ -177,6 +176,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25502-stubborn-taiiku-80137784|T-25502 Stubborn function TAIIKU func_80137784 (src/ovl/TAIIKU/80133C80.c)]]
 - [ ] [[tickets/T-25311-w10-ENDING-80133C10|T-25311 Wave 10 second pass on src/ovl/ENDING/80133C10.c]]
 - [ ] [[tickets/T-25309-w10-TAIIKU-80133C80|T-25309 Wave 10 second pass on src/ovl/TAIIKU/80133C80.c]]
 - [ ] [[tickets/T-25310-w10-main-80053650|T-25310 Wave 10 second pass on src/main/80053650.c]]
