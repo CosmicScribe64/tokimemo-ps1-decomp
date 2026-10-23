@@ -135,8 +135,8 @@ u8 *arg2;
     }
 }
 
-/* Queue header at D_80125128 read as one object: head, tail, status and phase are one symbol in
- * the original relocations, which orders as1's loads and stores (T-24501). */
+/* FAKE: view of the queue header bytes D_80125128..D_8012512B through one symbol; the load and
+ * store order of the original needs one symbol, the real aggregate is not declared yet (T-24501). */
 typedef struct CdRingView {
     /* 0x00 */ u8 head;
     /* 0x01 */ u8 tail;
@@ -149,10 +149,10 @@ extern u32 *D_801255BC;
 void func_80046478(void);
 
 void func_800455C4(void) {
-    s32 var_v1;
+    s32 i; /* home 0x4C unused: the loop test is strength-reduced (see the FAKE at the loop) */
     u32 sp48;
     s32 sp44;
-    u16 temp_t6_2;
+    u16 pad16; /* FAKE: unused frame home at 0x40, not a source recovery. T-24501 */
     s32 pad; /* FAKE: measured frame home, not a source recovery. T-24501 */
     s32 sp38[1];
     u8 sp30[8];
@@ -332,7 +332,7 @@ void func_800455C4(void) {
                                         /* FAKE: `* 1` makes uopt strength-reduce the test into an induction
                                          * temporary, spilled to the 0x2C slot below the locals as in the
                                          * original; the plain counter spills to its own home. T-25123 */
-                                        for (var_v1 = 0; var_v1 * 1 != 0x200; var_v1++) {
+                                        for (i = 0; i * 1 != 0x200; i++) {
                                             func_800AD950(0);
                                         }
                                     }
