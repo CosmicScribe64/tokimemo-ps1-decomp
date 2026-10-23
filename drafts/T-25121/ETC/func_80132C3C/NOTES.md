@@ -74,3 +74,23 @@ local assigned 0x20 in the UV1 block whose constant uopt does not propagate (a m
 local for u0 of all four quads, `u = 0x18` / `u = 0x20` alternating, with the s8 views), or a 3+ chain that
 leaves a phantom uopt range in the UV0/XY1 block (T-11840 note). Check the R9 units of 0x20 with
 `regdiff -v` after each try; the target needs 0x20 allocated before bit 153.
+
+## T-25201 closer: matched (2026-10-23)
+
+Matched (884 bytes, default build, guard removed). One change to the 15-row body: a never-true arm after the
+XY3 line (the existing 16-store split between XY3 and UV3), `if ((u32)p0 < 0) { p1->code = 0x20; }` (FAKE).
+
+Why it works (traced uopt, regdiff -v): priority is savings / D, with D = 2 while a range has at most 5 live
+plus reaching blocks. The four 4-use constants each had savings 4 - 1 reload = 3, priority 1.5, coloured in bit
+order. The arm's `sb` of 0x20 comes after UV1, so it is one more use with no new reload: savings 4, priority 2,
+and 0x20 is coloured before the three 1.5 ranges and takes t0; the others shift to t1/t2/t3 as in the original.
+ugen drops the arm, so no instruction is added.
+
+Measured on the way:
+- Arm before UV1 (between XY1 and UV1, `p1->code = 0x20`): still 15 rows. The arm's use needs its own load and
+  the fall-through path a second one (savings 5 - 2 = 3, priority 1.5).
+- Arm after XY3 storing through p3: 72 rows. p3 gains a use, its priority (3.571) passes p1/p2 and it takes s1.
+  Through p1 the s-register order stays (p1 is coloured before p2/p3 anyway).
+- The arm after XY3 lies inside the 0x13 and 0xB3 ranges: their D goes to 3 (priority 7/3), so they are coloured
+  after `next`, and still get v0/a3. It is past the end of the 0x18 and 0xA0 (x) ranges, whose priority stays
+  3.5. Not measured: an arm inside those two ranges would likely drop them below 0xB3, which could then take a1.

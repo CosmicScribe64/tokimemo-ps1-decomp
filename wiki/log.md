@@ -1748,3 +1748,7 @@ Findings fixed (CandList offset comments, catalog link, kanban column); FAKEs ar
 
 Reviewed [[tickets/T-25126-w8-ENDING-80134D20]] against CODING_STANDARDS.md; matched ENDING `func_80135F4C` (3220 bytes) as default-build C, 27/27.
 The guard is gone; the fix was defining the object's `.data` table `D_8013CA3C` in C (T-25150 as1 rule), lead for `func_80134270` and `func_8013A2E8` in [[matching-notes]].
+## [2026-10-23] build | T-25201 w9c-ETC-80132880
+
+Reviewed w9c-ETC-80132880 against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH on both versions. Matched ETC `func_80132C3C` (884 bytes) as default C in `src/ovl/ETC/80132880.c` with a never-true `p1->code = 0x20` arm (FAKE) that raises the priority of 0x20.
+The only job of the package is matched, none left with rows; notes in `drafts/T-25121/ETC/func_80132C3C/NOTES.md`, [[matching-notes]] and [[playbook]].
