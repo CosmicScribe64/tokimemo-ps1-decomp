@@ -757,7 +757,10 @@ s32 func_80054FC0(s32 arg0) {
             memcpy(bank->unk_DD8, D_800E7D10.unk_DC8, 0x100);
         }
     }
-    /* byte sum of the selected bank's data; the address is indexed from the card block base */
+    /* byte sum of the selected bank's data, from the card block base.
+       FAKE: T-25105, the checksum store below names D_80123120 in its address: as1 moves `lw ra`
+       above a store only when the address names a global, as the original's epilogue shows (a store
+       through a pointer local stays before it). The real source form is unknown. */
     p = &D_80123120[arg0 * 0xF00 + 0x204];
     sum = 0;
     for (offset = 4; offset < 0xF00; offset++) {
@@ -870,7 +873,7 @@ s32 func_8005557C(s32 arg0) {
     ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A = g->unk_F73;
     ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B = g->unk_F75;
     ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C = *(GsWord *)g->unk_F64;
-    /* byte sum of the bank's data, as in func_80054FC0 */
+    /* byte sum of the bank's data; the checksum store is a FAKE address form as in func_80054FC0 (T-25105) */
     p = &D_80123120[arg0 * 0xF00 + 0x204];
     sum = 0;
     for (i = 4; i < 0xF00; i++) {
