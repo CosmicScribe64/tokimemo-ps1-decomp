@@ -1,6 +1,6 @@
 # T-25103: main func_8006B0C8 (1272 B, 318 words)
 
-Result: not matched. Best body `body.c` here: 130 rows with
+Result: not matched. Best body `body.c` here: 130 rows (the structural lead `alt-split-counter.c`: 254) with
 `tools/docker.sh python3 tools/funcdiff.py func_8006B0C8 --unit main --resolve --version c`
 (guarded in the file, same length as the original: 318 words, words 0-70 equal).
 `src/main/800674B0.c` keeps plain `INCLUDE_ASM` (over the 30-row guard limit).
@@ -67,14 +67,22 @@ increment lands three slots early in the loop head.
 
 ## Exact next hypothesis
 
-The keys-first SR order appears when no loop before the sort uses the inner counter: with a separate counter
-`m` for the compaction, clear and month loops (`alt-split-counter.c`), the inner loop gets the original's
-`addiu v1,v1,4; sw t9,-4(v1)` and entry increment in the delay slot (likewise with `i`). Uopt seems to order SR
-temporaries by the age of the address expression `&unk_54C[j]`. But in that variant the base constant is
-allocated again (`rlda` in `$t1`) and the first-loop registers shift (walk `$v0`, end `$v1`, `m` in `$a1`);
-the swap label no longer drops it. Next: in the split-counter shape, find the block boundary or source shape
-that drops the base range (trace uopt's constant-range priority with the r9-uopt trace build if one is
-available), then recheck words 71-74 (month preheaders), which may follow the same expression-age order.
+The keys-first SR order appears when no loop before the sort uses the inner counter (uopt seems to order SR
+temporaries by the age of the address expression `&unk_54C[j]`). `alt-split-counter.c` (254 rows) does that:
+a separate counter `m` for the compaction, clear and month loops, and the compaction test written as
+`if (!active) continue;`. With the plain `if` the split counter brings the base `rlda` back (363 word rows);
+with `continue` it stays unallocated and no swap label is needed (removing the label changes nothing there).
+The inner loop then has the original's preheader order, `addiu v1,v1,4; sw t9,-4(v1)` and delay-slot entry
+increment, and the same ugen temporaries. Every word has the original's opcode except two schedule spots
+(word 4, word 136).
+
+What is left in that shape is uopt colouring: the first-loop walk/end are `v0/v1` (original `a1/v0`), `m` is
+`a1` (original `a2`), min and the entry walk are `a1/a0` (original `a0/a1`), the remainder counts `a3`
+(original `v0`); and from the swap (word 228) the ring is one off, as are the month preheaders (71-74, 265-268).
+Next: run `regdiff` on `alt-split-counter.c` with a traced uopt (none was available here; recipe in
+`wiki/uopt-register-allocation.md`) and read why `a0`/`v1` are free for the first-loop walk in IDO but not in
+the original. Declaration order of `m`, `i`, `j`, `k` does not change it (measured). The do-while(0) around the
+min update is still needed there (without it: unrolled by 2 and the base range back).
 
 Helper: `sbs.py` (run in Docker: `python3 drafts/T-25103/main/func_8006B0C8/sbs.py func_8006B0C8 main`) prints a
 register-normalised side-by-side of the guarded C against the original.
