@@ -1741,3 +1741,8 @@ The scene table `D_80139C5C`, which names the function, is now defined in C, so 
 
 Reviewed [[tickets/T-25201-wave-9-closers]] job w9c-TACO-8013DB80; matched TACO `func_8013EAA4` (1964 bytes) as default-build C, 27/27 (`src/ovl/TACO/8013DB80.c`).
 One review finding fixed: the steering local `half` now carries a `FAKE` comment; `pad[8]` and `pad_a` stay FAKE.
+
+## [2026-10-23] ticket | T-25147 Done
+
+Reviewed and merged w9-main-80058D20: matched main `func_8005938C` (764 bytes, default C, one FAKE never-true arm from the T-25107 recipe), 27/27.
+The only function of the package is matched, none left with rows; see [[tickets/T-25147-w8-main-80058D20]] and [[matching-notes]].
