@@ -165,6 +165,18 @@ extern EdFnTbl9 D_8013C490; /* func_80133AD0 */
 extern EdFnTbl13 D_8013C5BC; /* func_80133F1C */
 extern EdFnTbl9 D_8013CA3C; /* func_80135DD0 */
 extern EdFnTbl6 D_8013CAA4; /* func_80137340 */
+/* Entries of the scene table D_8013CB74 (801396E0.c). */
+void func_80139A58(void);
+void func_80139D24(void);
+void func_80139D54(void);
+void func_80139DA8(void);
+s32 func_80139E08(void);
+void func_80139EC4(void);
+void func_80139F3C(void);
+void func_8013A004(void);
+void func_8013A2E8(void);
+s32 func_8013B5E4(void);
+s32 func_8013B640(void); /* FAKE (T-23002): s32, see its definition; func_8013A2E8 reads its $v0 */
 extern EdFnTbl14 D_8013CB74; /* func_801399B4 */
 extern EdFnTbl25 D_8013CBE4; /* func_8013B760 */
 
