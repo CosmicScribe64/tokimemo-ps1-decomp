@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] query | as1 global delay-slot filler rule and the volatile lever
-
-[[tickets/T-24900-completion-orchestration]] research branch `as1-lever`. Traced as1's global filler with the T-24047 print-only build plus a relocation print: blocks with a stall are visited by (weight, number); candidates are dominated blocks in that order up to weight +5; a volatile access and its `lui` are never candidates; an indirect jump on the path or a live destination register rejects. Confirmed on OMIMAI `func_801340E4`, SHOUGATU `func_8013EE30`, TAIIKU `func_8013C33C`. Lever: `volatile` on the default arm's three globals matches VALEN `func_80134030` and GYOZI `func_80139E4C` (FAKE in VALEN.h/GYOZI.h). VALEN `func_80132D0C`, GEKO `func_80136C20`, KANGEI `func_8013852C` stay guarded with T-24900 notes. New page [[as1-scheduler-rule]]; [[playbook]] section 5 and known limits updated.
-
 ## [2026-10-20] ticket | T-24800 per-file as1 options
 [[tickets/T-24800-as1-per-file-flags]] created and worked; moved to In Review. New harness tools/as1_flag_sweep.py compiled the 8 as1-order near-miss files under about 60 as1/driver option variants ([[as1-scheduling]]). Only `-noxbb` (`-Wb,-noxbb`) fixes any of them. VALEN func_80134030 now matches with a FAKE per-object option in config/toolchains.txt; every function of the file matches and VALEN.bin is OK. GYOZI func_80139E4C also matches with it, but func_801399C0 in the same file breaks. A `-noxbb` census changes 2,450 of 6,814 C functions. Verdict: per-file options do not explain the family. Lead: xbb's per-function treatment of one-predecessor switch default blocks. configure.py and tools/cc.py now accept `ido <ver> -W<pass>,<opt>` lines; funcdiff_verify, order_search and permute use the object's toolchain.
 
@@ -1734,6 +1730,7 @@ Both functions of the package are matched, none left with rows; see [[tickets/T-
 ## [2026-10-23] ticket | T-25112 Done
 Reviewed [[tickets/T-25112-w8-TACO-80139170]] against CODING_STANDARDS.md; no findings, clean rebuild 27/27. Matched TACO `func_80139FB8` (1480 bytes, plain C, no FAKE) and `func_80139424` (1676 bytes, default C, FAKEs T-25112: dead `x3 = 0;`, `pad[2]`).
 Lessons are in [[matching-notes#T-25112: TACO func_80139FB8]] and [[matching-notes#T-25112: TACO func_80139424]] (for loop instead of m2c do/while; vertex written as centre + (offset -/+ half)).
+
 ## [2026-10-23] build | T-25201 w9c-main-80062CD0
 Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/playbook.md`, fixed), clean rebuild 27/27, funcdiff MATCH. Matched: main `func_80065B0C` (1064 bytes) as default C with one FAKE (never-true indirect-store arm that puts the else arm in the `$s5` range).
 No function left with rows in this job; notes in `drafts/T-25108/main/func_80065B0C/NOTES.md`, [[matching-notes]], [[playbook]].
