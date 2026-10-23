@@ -749,3 +749,22 @@ Left: frame 0x60 against 0x58 (a web kept by an unmovable read costs frame words
 - **One phase range with two orders.** The target writes `$s7` base first in the correction arm and index first after the join. Integer address sums, `(s32)&D + arg7 * 4` in the arm and `arg7 * 4 + (s32)&D` at the join, are one uopt expression with two defs, and each def emits its own order. Base-first pointer forms in the arm (`p += i`, subscripts) split it into an arm-only range in `$v0`: 230 lines.
 
 FAKE: the array view of the scalar-declared D_8015EBAC and the integer sums (T-25114); T-24522's `* 1` remainder is still needed. Controls: `drafts/T-25114/RPG_BAT/func_8015528C/NOTES.md`.
+## T-25117: VALEN func_80133088
+
+Matched: `func_80133088` (277 words, 1108 bytes) is default-build C. Start: the T-24523 body, cost 26 in this tree (14 before the T-24903 `volatile` on `D_80134544`). Closed by, in order:
+- a non-volatile view of `D_80134544` in the 自宅前 test, so as1 hoists its `lui` above the affinity test (26 to 14);
+- in the second 校門前 block and the 教室 block, the strcpy call first and the id after it (14 to 0). uopt moves the constant above the call and spills it, which gives the original's `lui a1; li a2; sw a2; addiu a1`. With the id written first, `li a2` stays first in every spelling tried;
+- the GYOZI twin `func_801393C8` shape: `D_80134548` itself is the selector, with `switch (D_80134548)`. One dead entry store of it is needed for v0/v1 (37 without). One `GameState *state` is used for every field access (40 with direct accesses). This replaced the T-24523 gotos, union and `(u8)` cast.
+
+Two FAKEs name T-25117: the entry store and the byte view. Notes and negatives: `drafts/T-25117/VALEN/func_80133088/NOTES.md`.
+
+## T-25117: VALEN func_80132834
+
+Matched: `func_80132834` (310 words, 1240 bytes) is default-build C with no FAKE. Start: the T-24523 typed body, cost 336 (342 rows). Closed by, in order:
+- a `GameState *state` pointer for the ranking loop (336 to 120). uopt lets later stores change reads through it, so the first two score assignments reload both fields, as in the original;
+- sum operand order: comparisons `unk_06 + unk_02`, assignments `unk_02 + unk_06` (to 108);
+- declaration order for the frame (to 74). Locals take slots top-down in declaration order at natural size (s16 is 2 bytes, arrays 4-aligned), with about 12 bytes of temporaries below them. Six orders fit this model;
+- the random word read as `state->unk_10F8`, so uopt keeps `r` ahead of the rotation loop's guard and does not copy it into the preheader (to 23);
+- `count += 1` before `D_8013453C += 1` (to 0).
+
+Negatives and a hint for the GYOZI sibling `func_80138C9C` (same `r` symptom) are in `drafts/T-25117/VALEN/func_80132834/NOTES.md`.
