@@ -723,3 +723,16 @@ Matched (default C, 688 bytes, 27/27), after the T-24201/T-24902/T-25042 history
 ## T-25149: NAME_ENT func_80138C1C
 
 [[tickets/T-25149-w8-NAME_ENT-80132000]]: matched (default C, 740 bytes; NAME_ENT sha1 OK). The T-24515 body (pointer walks, volatile space reads) was at 104 rows. What closed it: index loops over the three name arrays (`D_8014CC74[i]`, `i += 2`) with the copies stored through `GameState *gs = &D_800E6280`. The strength-reduced pointer lets as1 hoist the store-block `lbu` above `sb` (a declared `u8 *p` gets no `.noalias` mark), and the `gs` stores make uopt keep the three second-byte loads separate. The full-width space bytes are read as `D_800B3644[0]`/`[1]` in the tests, not through locals: uopt promotes them (two `lui`/`lbu` pairs), and the comparison keeps the loaded byte first (`beq t6,t0`). ugen puts a register variable before a loaded expression, so local copies of any type give `beq t0,t6`. Then `for (i = 0, n = 0; ...)` for the `move a1,zero` position, `u8 buf[0x20]` for the 96-byte frame (FAKE), and `(x + 1) & 3` on the two-bit `unk_09` fields for one more ugen temporary in each date (FAKE, 62 rows to 0). void would match this function, but the caller `func_80138F60` needs the s32 declaration (FAKE). Details and negatives: `drafts/T-25149/NAME_ENT/func_80138C1C/NOTES.md`.
+
+## T-25201: EN_NICHI func_80136DEC (closer)
+
+Matched; the guard is removed. The T-25109 body was right. The last 4 rows (the delay slots of the
+D1/D2 dispatch compares) came from data: the object's `.data` table `D_80139C5C` names this function,
+and it was still `INCLUDE_RODATA`. Defined in C in `src/ovl/EN_NICHI/80136B10.c` (prototypes in
+`include/ovl/EN_NICHI.h`), it makes as1 add an edge from the case-3 inner jump-table `jr` back to the
+entry (rule 8 in [[as1-scheduler-rule]]). The natural loop holds the compare chain and the case-3 head
+but not the case-1 and case-2 heads, so D1 and D2 take the next compare's `li s0,2` and `li at,3`. This is the second
+case of the [[playbook]] recipe "A function named by the file's own data" (after KANGEI
+`func_80134724`). The symptom here is different: a compare-chain switch, not a range-check slot. Check
+it whenever the original fills a slot from the next compare and the case head's instruction would
+pass the path test. Details: `drafts/T-25109/EN_NICHI/func_80136DEC/NOTES.md`.

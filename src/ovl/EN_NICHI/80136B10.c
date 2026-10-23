@@ -11,6 +11,10 @@ typedef struct EnWork1C20 {
     /* 0x1BFE */ u8 pad1BFE[0x1E];
     /* 0x1C1C */ s32 unk_1C1C;
 } EnWork1C20; /* size 0x1C20 */
+typedef struct {
+    void (*f[3])();
+} FnTbl3; /* size 0xC */
+
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139C30);
@@ -19,7 +23,11 @@ u8 D_80139C3C[8] = { 0 };
 u8 D_80139C44[8] = { 0 };
 s16 D_80139C4C[6] = { 0 };
 u16 D_80139C58 = 0;
-INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139C5C);
+/* Scene table, indexed by D_800E6280.unk_1109 in func_80136B10. Defining it here as the
+ * original did matters for code: as1 treats every function named in this file's data as an
+ * address-taken label, so the jump-table dispatch inside func_80136DEC gets an edge back to
+ * that function's entry, and the resulting loop decides its delay-slot fills (T-25201). */
+FnTbl3 D_80139C5C = { { func_80136B74, func_80136DEC, func_8013735C } };
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139C68);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139C94);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139CC0);
@@ -28,12 +36,6 @@ INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139D04);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139D1C);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139DA0);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139E20);
-
-typedef struct {
-    void (*f[3])();
-} FnTbl3; /* size 0xC */
-
-extern FnTbl3 D_80139C5C;
 
 void func_80136B10(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
@@ -103,10 +105,10 @@ void func_80136B74(void) {
     }
 }
 
-/* NON_MATCHING: T-25109, 4 aligned rows (funcdiff counts 258 positional rows from the shift); what is
- * left: as1 fills the case-1 and case-2 dispatch delay slots from the case heads (move s1,zero and
- * lui t4) where the original takes the next compare's li s0,2 and li at,3. drafts/T-25109/. */
-#ifdef NON_MATCHING
+/* The dispatch delay slots hold the next compare's li s0,2 and li at,3 only because D_80139C5C
+ * (above) names this function: the inner jump-table jr then has an edge back to the entry, and
+ * as1 schedules the compare chain and the case-3 head as one loop region without the case-1 and
+ * case-2 heads (T-25201; history T-25109, drafts/T-25109/). */
 void func_80136DEC(void) {
     GameState *gs;
     s32 i;
@@ -214,9 +216,6 @@ void func_80136DEC(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80136DEC);
-#endif
 
 void func_8013735C(void) {
     s32 i;
