@@ -1791,3 +1791,8 @@ The only measured match needs second symbol names (`drafts/T-25309/TAIIKU/func_8
 
 Reviewed [[tickets/T-25310-w10-main-80053650]] against CODING_STANDARDS.md; matched main `func_80055AFC` (1396 bytes) as default-build C, 27/27, funcdiff MATCH; two small findings fixed (cheatsheet row placement, FAKE comment ticket).
 A dead `p = bzero(...)` (pointer-returning prototype) fixes the colours of the unrolled 256-record loop; notes in `drafts/T-25310/main/func_80055AFC/NOTES.md`, [[matching-notes]] and [[register-cheatsheet]].
+
+## [2026-10-23] ticket | T-25318 Done
+
+Reviewed [[tickets/T-25318-w10-main-8006CB30]] against CODING_STANDARDS.md; matched main `func_8007132C` (3992 bytes) as default-build C, 27/27, funcdiff MATCH; one small finding fixed (FAKE comments at the two remaining late-bound loops).
+Reading the schedule as `D_800E6280.unk_69C[D_800E6280.unk_71C]` with no record pointer leaves the base unallocated; notes in `drafts/T-25318/main/func_8007132C/NOTES.md` and [[matching-notes]].
