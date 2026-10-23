@@ -1789,3 +1789,7 @@ User asked for extra effort, outside-the-box approaches and build tooling change
 ## [2026-10-23] decision | Playbook: compiler research summary for agents
 
 Added "Before proposing a compiler or build-step change" to [[playbook]]: which compiler the game used, the IDO 5.2/5.3/4.1 comparisons, the rejected allocator rules and levers, and where a real difference has been found before (the front end's ucode, `cvt_pass.py`). Prompted by the stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) so agents start from these results instead of repeating them.
+## [2026-10-23] ticket | T-25309 Done
+
+Reviewed [[tickets/T-25309-w10-TAIIKU-80133C80]] against CODING_STANDARDS.md; no match: TAIIKU `func_80137784` stays behind its `NON_MATCHING` guard (4 funcdiff rows, the operand order of two pointer compares), 27/27, no findings.
+The only measured match needs second symbol names (`drafts/T-25309/TAIIKU/func_80137784/alias-match.patch`, waiting for the user's approval); notes in [[matching-notes]].
