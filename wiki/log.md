@@ -1754,3 +1754,7 @@ The package's only function is matched, none left with rows; the block-copy stat
 
 Reviewed [[tickets/T-25134-w8-main-80043510]] against CODING_STANDARDS.md; matched main `palette_load_vram` (2024 bytes) as default-build C, 27/27.
 One finding fixed (comment on the empty `case 1: default:`); the two stack-frame locals are FAKE and ticketed; notes in drafts/T-25134/main/palette_load_vram/.
+## [2026-10-23] ticket | T-25131 Done
+
+Reviewed [[tickets/T-25131-w8-NAME_ENT-80142A80]] against CODING_STANDARDS.md; no matches (`src/` unchanged, `func_80143580` stays INCLUDE_ASM).
+`func_80143580` is down to 471 rows from 835 (draft and notes in drafts/T-25131/NAME_ENT/func_80143580/).
