@@ -190,8 +190,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25138-w8-RPG_BAT-801447E0|T-25138 Wave 8 package w8-RPG_BAT-801447E0 (src/ovl/RPG_BAT/801447E0.c)]]
 - [ ] [[tickets/T-25130-w8-MASTER-80132140|T-25130 Wave 8 package w8-MASTER-80132140 (src/ovl/MASTER/80132140.c)]]
 - [ ] [[tickets/T-25137-w8-TACO-8013B170|T-25137 Wave 8 package w8-TACO-8013B170 (src/ovl/TACO/8013B170.c)]]
-- [ ] [[tickets/T-25138-w8-RPG_BAT-801447E0|T-25138 Wave 8 package w8-RPG_BAT-801447E0 (src/ovl/RPG_BAT/801447E0.c)]]
-- [ ] [[tickets/T-25139-w8-KANGEI-80132090|T-25139 Wave 8 package w8-KANGEI-80132090 (src/ovl/KANGEI/80132090.c)]]
 - [ ] [[tickets/T-11900-geko-option-closers|T-11900 GEKO and OPTION closers (claim #65)]]
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
 - [ ] [[tickets/T-25118-w8-main-800563F0|T-25118 Wave 8 package w8-main-800563F0 (src/main/800563F0.c)]]
