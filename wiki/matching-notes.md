@@ -789,3 +789,19 @@ negatives: `drafts/T-25146/ETC/func_80144224/NOTES.md`.
 ## T-25145: ENDING func_801330E4
 
 Matched (default C, 796 bytes) from the T-24924 92-row body, in about an hour. Three causes. (1) `level` is saved at 0x54: declare the register-allocated `s16 i` after `points`, so `level` sits below it; frame and `chance` stay. (2) The original loads the f9 flag word into `a0`, shifts it into `v0` and copies the `srl` temporary back to `v0` after the sum. That is ugen's destination forwarding ([[tickets/T-25034-main-quadrant-extent]]) with the word coloured on one read, which IDO 5.3 does not do ([[original-compiler]] rule 3); a FAKE empty test on the word gives it a second read and `a0`. (3) The in-place `sltiu/xori` and every ugen temporary of the block and the tail came from `(x > 0) * 2` (not `(x == 0 ^ 1) * 2`) and three statements, `level = f9; level += A; level += B;`. Step 3 was found with a FIFO model of ugen's free list applied to the `cc -S` listing: the target's registers after the clamp need the first sum freed before B's byte. Candidate [[playbook]] recipe: when every ugen temporary of a sum and later blocks is off and one-statement operand orders do not fix it, try the sum as separate `+=` statements. Details and negatives: `drafts/T-25145/ENDING/func_801330E4/NOTES.md`.
+## T-25142: BUNKA_SD func_80134D94
+
+Not matched; aligned cost 102 -> 12 (243/243 words), but 45 positional rows, so the source is plain
+`INCLUDE_ASM` again (the old T-24137 guard is gone) and the body is in
+`drafts/T-25142/BUNKA_SD/func_80134D94/func_80134D94.c`. It needs `s32 func_80134D94(void);` in
+include/ovl/BUNKA_SD.h (caller and BUNKA_SD sha1 checked with it). What closed rows: the fade colour
+is `(0x68E - frame) * 0x10201` done as two in-place `v += v << 8` (the old draft had `* 0x10101`, a
+wrong value); an implicit-int function whose last block returns its quotient (`return w;`, the
+original's `move v0,v1`); that block written like func_80134850 (u8 views of `unk_110C`, promoted to
+`a0`); the switch arms read `t = q * 1` with an empty `if (t < 0)` (a range uopt keeps, `move v0,a0`
+at the switch head, like `q * 2` in func_80132708); and the frame counter read through
+`GsWord *fc = &D_800E6280.unk_1104;` (an `ilod` is not copy propagated, so the colour stays one
+register, as in T-25146). Left: in the first block the original loads the byte counter straight into
+`a1` (`lui a1`) while the draft keeps a load range in `v0` (`lui v0`), and the selector needs the
+T-25053 empty test to get `a2`, which loads it one slot early; the last block copies w to `v0` after
+the store instead of before. Negatives and the next hypothesis: `drafts/T-25142/BUNKA_SD/func_80134D94/NOTES.md`.
