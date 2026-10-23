@@ -56,7 +56,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25128-w8-ETC-8013FF80|T-25128 Wave 8 package w8-ETC-8013FF80 (src/ovl/ETC/8013FF80.c)]]
 - [ ] [[tickets/T-25129-w8-GYOZI-80136220|T-25129 Wave 8 package w8-GYOZI-80136220 (src/ovl/GYOZI/80136220.c)]]
 - [ ] [[tickets/T-25130-w8-MASTER-80132140|T-25130 Wave 8 package w8-MASTER-80132140 (src/ovl/MASTER/80132140.c)]]
-- [ ] [[tickets/T-25131-w8-NAME_ENT-80142A80|T-25131 Wave 8 package w8-NAME_ENT-80142A80 (src/ovl/NAME_ENT/80142A80.c)]]
 - [ ] [[tickets/T-25132-w8-SHOUGATU-80134890|T-25132 Wave 8 package w8-SHOUGATU-80134890 (src/ovl/SHOUGATU/80134890.c)]]
 - [ ] [[tickets/T-25133-w8-TEL-8013CCD0|T-25133 Wave 8 package w8-TEL-8013CCD0 (src/ovl/TEL/8013CCD0.c)]]
 - [ ] [[tickets/T-25134-w8-main-80043510|T-25134 Wave 8 package w8-main-80043510 (src/main/80043510.c)]]
@@ -168,6 +167,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25131-w8-NAME_ENT-80142A80|T-25131 Wave 8 package w8-NAME_ENT-80142A80 (src/ovl/NAME_ENT/80142A80.c)]]
 - [ ] [[tickets/T-25122-w8-main-80049FF0|T-25122 Wave 8 package w8-main-80049FF0 (src/main/80049FF0.c)]]
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
 - [ ] [[tickets/T-25118-w8-main-800563F0|T-25118 Wave 8 package w8-main-800563F0 (src/main/800563F0.c)]]
