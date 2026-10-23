@@ -1745,3 +1745,7 @@ Body, unit-level allocator trace findings and next hypothesis kept in drafts/T-2
 
 Reviewed [[tickets/T-25121-w8-ETC-80132880]] against CODING_STANDARDS.md; matched ETC `func_801328A4` (920 bytes) as default-build C, 27/27.
 `func_80132C3C` stays INCLUDE_ASM behind a NON_MATCHING guard at 15 rows, down from 105 (notes in drafts/T-25121/ETC/func_80132C3C/).
+## [2026-10-23] ticket | T-25141 Done
+
+Reviewed [[tickets/T-25141-w8-TACO-8013F250]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched TACO `func_8013FBF0` (1040 bytes) as default C in `src/ovl/TACO/8013F250.c` with two FAKEs (`pad[6]`, one-line UV stores).
+The only function of the package is matched, none left with rows; notes in `drafts/T-25141/TACO/func_8013FBF0/NOTES.md` and [[matching-notes]].
