@@ -233,4 +233,129 @@ void func_80134B88(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134540", func_80134D94);
+/* An implicit-int function: the last block returns its quotient in v0 (declared `s32` in the header). Every
+ * GameState read goes through `g`: uopt does not copy-propagate an expression that holds a load through a
+ * pointer, so the fade colour stays one variable (as in ETC func_80144224, T-25146) and the first counter is
+ * loaded straight into its own register. Grey level is (0x68E - frame) * 0x10201. T-25142, T-25306 */
+s32 func_80134D94(void) {
+    u32 q;
+    s32 b;
+    s32 col;
+    s32 t;
+    GameState *g;
+
+    g = &D_800E6280;
+    if (g->unk_1104.u == 0) {
+        D_8012071E = 5;
+    }
+    if (g->unk_1104.u == 0xFE) {
+        D_80120697 = 0x80;
+        D_80120696 = 5;
+        D_8012069B = 0x80;
+    }
+    if ((D_80120696 & 1) == 0) {
+        D_80120697 = 0;
+    }
+    if (g->unk_1104.u == 0x29C) {
+        D_801206DB = 0x80;
+        D_801206DA = 5;
+        D_801206DF = 0x80;
+    }
+    if (g->unk_1104.u >= 0xFF && g->unk_1104.u < 0x5A3) {
+        b = g->unk_110D;
+        D_8012071E = 0x40;
+        /* FAKE: T-25306. A copy of the counter that uopt keeps as its own range and as1 folds back into the
+         * divu; it holds v1 in this block, so q, b and the frame counter get a0, a1 and t0 as in the original. */
+        t = (u32)b * 1;
+        if (t < 0) {
+        }
+        q = (u32)t / 14;
+        if (q >= 2) {
+            b = 0;
+            q = 0;
+        }
+        /* FAKE: T-25142. `q * 1` is not a plain copy, so copy propagation keeps a range for the arm value (`move v0,a0` at the switch head); the empty test keeps it before the switch (as `q * 2` in func_80132708). */
+        t = q * 1;
+        if (t < 0) {
+        }
+        switch (D_80122EAC) {
+        case 0:
+            D_80120734 = t + 0x5D;
+            break;
+        case 1:
+            D_80120734 = t + 0x72;
+            break;
+        case 2:
+            D_80120734 = t + 0x87;
+            break;
+        case 3:
+        default:
+            if (g->unk_1104.u < 0x4C2) {
+                D_80120734 = t + 0x9D;
+            } else {
+                D_80120734 = t + 0x9F;
+            }
+            break;
+        }
+        g->unk_110D = b + 1;
+    }
+    if (g->unk_1104.u == 0x4C2 && D_80122EAC != 3) {
+        D_8012071F = 0;
+        D_80120763 = 0x80;
+        D_80120762 = 5;
+        D_80120767 = 0x80;
+    }
+    if (g->unk_1104.u == 0x58F && D_80122EAC == 3) {
+        D_8012071F = 0;
+        D_80120763 = 0x80;
+        D_80120762 = 5;
+        D_80120767 = 0x80;
+    }
+    if (g->unk_1104.u == 0x606 || g->unk_1104.u == 0x609 || g->unk_1104.u == 0x60C) {
+        func_80049A40(-0xA0, -0x78, 0x140, 0xA0, 2, 0xFFFFFF, 0x81);
+        func_800494BC(0, 0, 2, 0, 0);
+    }
+    if (g->unk_1104.u == 0x606) {
+        D_801206F0 = 0x48;
+        D_801206E0 = 0;
+    }
+    if (g->unk_1104.u >= 0x60F && g->unk_1104.u < 0x68E) {
+        col = 0x68E - g->unk_1104.u;
+        col += col << 8;
+        col += col << 8;
+        func_80049A40(-0x130, -0x78, 0x140, 0xA0, 2, col, 0x86);
+        func_80049A40(0x10, -0x78, 0x140, 0xA0, 2, col, 0x85);
+        func_800494BC(0, 0, 2, 1, 0);
+    }
+    if (g->unk_1104.u == 0x67E) {
+        D_80120657 = 0x80;
+        D_801206DF = 0x80;
+        D_80120767 = 0x80;
+    }
+    if (g->unk_1104.u >= 0x723 && D_80122EAC == 3) {
+        u32 w;
+        u32 n;
+
+        /* FAKE: T-25306. u8 view of the s8 counter, read with lbu as in func_80134850 (T-22021). */
+        n = *(u8 *)&g->unk_110C;
+        D_80120762 = 0x40;
+        w = n / 14;
+        if (w >= 2) {
+            n = 0;
+            w = 0;
+        }
+        D_80120778 = w + 0xA2;
+        /* FAKE: T-25306. An extra use of w colours it before n (w v1, n a0). The selector read keeps the
+         * selector live in this block, where w holds v1, so it takes a2 everywhere and its load in the
+         * first block stays at the switch. */
+        if (w) {}
+        if (D_80122EAC) {}
+        *(u8 *)&g->unk_110C = n + 1;
+/* FAKE: T-25306. as1 breaks the tie between this store and `move v0,v1` by source line, smaller first
+ * (wiki/as1-scheduler-rule.md, T-25137); the original copies w before the store, so the return gets an
+ * earlier line and the next `#line` restores the numbering. */
+#line 352
+        return w;
+#line 360
+    }
+}

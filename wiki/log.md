@@ -1774,3 +1774,7 @@ Frame fixed by declaring only x and y (`-x, -y` in both calls), call order by tw
 
 Reviewed [[tickets/T-25307-w10-main-8004F870]] against CODING_STANDARDS.md; matched main `func_80052F68` (1200 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
 The cause was counter ownership (`m` spans loops 1, 2-inner, 3-outer and 4, `i` loops 2-outer and 3-inner); one FAKE (three unused locals for the frame). Notes in `drafts/T-25307/main/func_80052F68/NOTES.md` and [[matching-notes]].
+## [2026-10-23] ticket | T-25306 Done
+
+Reviewed [[tickets/T-25306-w10-BUNKA_SD-80134540]] against CODING_STANDARDS.md; matched BUNKA_SD `func_80134D94` (972 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+The header now declares `s32 func_80134D94(void);`; notes in `drafts/T-25306/BUNKA_SD/func_80134D94/NOTES.md` and [[matching-notes]].
