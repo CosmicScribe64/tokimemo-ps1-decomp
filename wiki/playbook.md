@@ -65,6 +65,8 @@ A `u16` global read only through shifts (`h >> 12`) keeps its CVT at every read 
 
 `bne` operands reversed, registers right: read the selector through a u32/s32 local (GYOZI `func_8014206C`, T-20005 note), or the aggregate (T-16930), or wrap the left operand `w * 1 != x->width` (`| 0`, `^ 0`, `<< 0` also work; `+ 0` does not) (main `strNext`, T-17014). When t0..t3 are permuted inside one expression and nothing else differs, read the ucode entering uopt: cfe puts the heavier operand of `+`/`*` first (an indexed array read is heavier than a local or scalar, a `u32` conversion adds weight), and ugen takes each temporary from its FIFO list when it emits the instruction. A local copy of the array element (`x = A[i + 1]; ... v / 32 + -x / 2`) evens the weights so source order holds; otherwise `(D | 0) * k` or `a - (0 - A[i])` (FAKE) (main `func_80062948`, T-25119). For sums, spelling decides: `(idx + D_X)->f` gives index first, `(D_X + idx)->f` base first (TACO `func_801557E8`, T-16564); in RPG_BAT `func_80138324` the last 4 rows were the global first in two sums (T-24303).
 
+**An indirect load on the other side (T-25401).** cfe puts an operand that contains an ILOD first in a sum, whatever the source order; with ILODs on both sides the right operand goes first. A register local is a plain LOD, so `(x << 23) >> 27` from a local always comes after a table entry. `tbl[i] + ((*&x << 23) >> 27)` (FAKE) makes the local an ILOD for cfe only: uopt reads it from the register again (GEKO `func_80132B24`, 18 rows to 0).
+
 ## 5. Store order, delay slots and as1 line grouping
 
 as1 schedules per source line. Put initial assignments on one line (`n = 0; b = 0; p = A; r = B;`) to keep ugen's order (main `func_80055A38`, T-17007); the loop init on the `do` line, the body on the `for` line (T-11650); two constant stores on one line in the constant numbering order (T-16554). Write `c++` before the record stores if the original loads early (T-23003). One statement per line is the default; the exceptions are the FAKE layout recipes above, marked in the source. `order_search` permutes lines but never joins them.
@@ -118,6 +120,8 @@ For copy mismatches, distinguish direction state from temporary-register choices
 ## 11. Return value, implicit int and narrowing
 
 Callee returns 16 bits: declare `u16 f();` and make the loop variable one `u16 r` that is also the argument (main T-17019 family). Narrow the second result with a `u8 f();` view and `s32 res` to get `jal; or a0,fp,zero; beqz v0; or a0,v0,zero` (main `func_8006D7EC`, T-23003; FAKE inside the guard). A call without a prototype in the original is an implicit int: do not declare it unless `funcdiff --proto` shows a gain (T-17018: `get_now_k`). Wrong signedness of a header field causes `lb` for `lbu` across the whole function; fix the field in `main_api.h` (T-17018, `xa_wait`).
+
+**A returned local never gets `$v0` (T-25401).** A range with a unit in a block that sets the return register is barred from `$v0`, so `return x` gives `x` another register and a `move v0,x` on every exit. If the original keeps `x` in `$v0` to `jr ra`, write the `s32` function with no return at the end and keep `x` live to the exit with an empty `if (x) {}` (FAKE) when nothing else uses it there (GEKO `func_80132B24`, 57 rows to 18).
 
 ## 12. Byte views and bit-fields
 
