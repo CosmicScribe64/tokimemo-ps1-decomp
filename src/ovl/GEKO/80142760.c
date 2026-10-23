@@ -110,8 +110,8 @@ void func_80142C60(void) {
 }
 
 /* FAKE: T-24503, the unused locals pad0, pad1 and pad2 keep the original's stack slots.
- * FAKE: T-11900, the empty tests `if (&D_800E6280) {}` and `if (&flags[i]) {}` in the first loop set
- * the allocation priorities of the GameState base and of the flag pointer; the packed-appointment
+ * FAKE: T-11900, the empty tests `if (&D_800E6280) {}` and `if (&flags[i]) {}` at the top of the first
+ * loop body set the allocation priorities of the GameState base and of the flag pointer; the packed-appointment
  * compare reads D_800E71DF, which the original reloads with an absolute lui at that test.
  * T-25403: matched; drafts/T-25403/GEKO/func_80142C9C/NOTES.md (pass 2) explains the two FAKEs below. */
 void func_80142C9C(void) {
@@ -242,7 +242,6 @@ void func_80142C9C(void) {
             /* FAKE: T-25403, ids.v[i] read through names (ids sits 0x40 below it). The &ids address
              * constant then has no use in this loop, so uopt gives it $t4 in the second loop only. */
             idx = ((u8 *)&names)[i - 0x40];
-            if (&flags[i]) {}
             p = &weights.v[*(u8 *)&D_800E6280.unk_F5F * 0x13];
             if ((month == 1) || (month == 3) || (month == 6) || (month == 0xB)) {
                 if (i == 0xD) {
