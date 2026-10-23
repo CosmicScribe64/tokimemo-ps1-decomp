@@ -1794,3 +1794,6 @@ A dead `p = bzero(...)` (pointer-returning prototype) fixes the colours of the u
 ## [2026-10-23] ticket | T-25311 Done
 
 Reviewed and merged: ENDING func_80134270 matched (1848 bytes, default C, three FAKE marks), src/ovl/ENDING/80133C10.c has no INCLUDE_ASM left. [[tickets/T-25311-w10-ENDING-80133C10]], notes in [[matching-notes]].
+## [2026-10-23] ticket | T-11910 Done
+
+Agent B matched GEKO `func_80132B24` (s32 with no return plus a kept-live empty test; a no-op assignment to order cfe's `+` operands) and kept `func_80133024` guarded at 2 rows with the ucode finding in its comment. With `func_80133C50` (#69) that is two matches in this round; `func_80142C9C` and `func_80133024` stay open (the maintainer's agents also work on them, #65). Inline review against CODING_STANDARDS.md. Notes in [[matching-notes]]. [[tickets/T-11910-geko-remainder]].
