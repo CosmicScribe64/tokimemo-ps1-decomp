@@ -17,16 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25048: MAIN func_80076FDC matched with the global background carrier
-
-Default C matches852 literal linked bytes and the complete MAIN checksum. Reconstruct the two selectors with current GameState/table declarations, use D_801230D0 itself for every background assignment/test, and keep two real locals: activity before col. The global is promoted to a0 across its separate ranges, reproducing the historical initial constant-store order and all switch-arm loads; activity uses v0 and col uses v1 with its home at sp+0x28. A local background produces252 diagnostic lines, reusing it in every arm264; reversed local order leaves only the column save/reload at0x2C. No empty use is needed, so no FAKE remains. Both switches use unk_0F4.h at0x800E6374; the two tables at0x800B18AC/18D8 are covered by the literal/default MAIN proof. See [[tickets/T-25048-main-80076fdc]] and drafts/T-25048/README.md.
-
-## T-25047: TACO func_801511C0 early home store and temporary-ring wrap
-
-Closed the historical T-24205/T-24906 entry-store residue with literal default C:164 bytes, all41 words, complete TACO SHA1 and declaration guards pass. Removing the empty arg1 test restores the early home store but consumes one extra ugen temporary for a load that as1 forwards away. A late-zero initializer `i = (u32)arg0 < 0` plus ten alternating +i/OR-i operations in the existing n initializer consumes nine intermediate temporaries. The ten-slot ring returns to the original position, and as1 deletes every identity operation. The final OR keeps the original OR-move encoding. No additional frame slot or runtime operation appears. All expressions are defined: i is zero for every input, so +0/OR0 preserves arg0 without overflow. Source-local FAKE explicitly states the artificial purpose and preserves the same-line initialization layout.
-
-Two alternating operations advance one slot, confirming the mechanism before the ten-operation match. Plain additions end in a different add-move encoding. Late CFG boundaries only selected one of the two old shapes; unreachable stores either vanished before ugen allocated temporaries or left dead machine instructions; shifts of zero survived as1. These negatives and exact metrics are in [[tickets/T-25047-taco-home-store]]. No historical initialization/declaration-order grid was repeated. Root independent standards/spec review found no issues; full27 integration remains with root.
-
 ## T-25040: MAIN flag dispatcher scalar-view closure
 
 `func_8006D138` now matches all872 literal bytes in guarded/default whole-TU private links; complete MAIN SHA1 and header/global/prototype checks pass. The empty unsigned entry switch preserves the normal copy boundary and initial flag snapshot. A late-zero identity in the empty year98 check removes one unprofitable constant range: measured year/base interference falls below the leaf threshold22, restoring the target register order. This corrects the earlier assumption that the caller-save count12 was the constraint threshold.
@@ -839,6 +829,7 @@ Matched (1396 bytes, default C) from the T-25105 113-row draft in about 50 minut
 - **A dead call result.** The original reads bzero's `v0` after the call: something must hold v0 in the 256-loop preheader and not in the loop body. Then the unrolled loop's start values skip v0, the end pointer takes v0, and the counter and bank-offset temporaries take t3/t4, so the bank bases land in t5 and ra (every other row). `void *bzero(void *p, s32 n);` in `main_api.h` (other callers discard it, no code change) and `p = bzero(g->unk_75E, 0x800);` with p never read (FAKE: its real use is unknown). A function-pointer cast instead gives `jalr t9`.
 
 Notes, negatives and the unroll rule check: `drafts/T-25310/main/func_80055AFC/NOTES.md`.
+
 ## T-11910: GEKO func_80132B24 and the func_80133024 ucode finding (outside contributor, claim #65)
 
 [[tickets/T-11910-geko-remainder]]. `func_80132B24` matched (480 bytes) from the T-24302/T-24709 guard (57 funcdiff lines).

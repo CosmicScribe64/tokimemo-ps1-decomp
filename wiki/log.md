@@ -7,15 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | T-25013 lever 3 concluded: no uopt option controls the boolean CSE
-
-Lever 3 session on ENDING func_801387B0: baseline reproduced, mechanism
-traced in the ucode dumps (uopt stores the CSE'd (flag & 1) == 1 boolean
-at the second compare and reloads it after; the original shares only the
-AND), OPTN sweep over 0..530 found no controlling option, and the 7.1
-uopt stage CSEs identically. Lever 3 does not exist as a compiler rule.
-Detail in [[tickets/T-25013-compiler-level-levers]].
-
 ## [2026-10-21] build | T-25013 lever 2 concluded: frame elision already happens, +8 is a lifetime artifact
 
 Lever 2 session on main func_80062948: micro-experiments show the IDO
@@ -1791,9 +1782,11 @@ The only measured match needs second symbol names (`drafts/T-25309/TAIIKU/func_8
 
 Reviewed [[tickets/T-25310-w10-main-80053650]] against CODING_STANDARDS.md; matched main `func_80055AFC` (1396 bytes) as default-build C, 27/27, funcdiff MATCH; two small findings fixed (cheatsheet row placement, FAKE comment ticket).
 A dead `p = bzero(...)` (pointer-returning prototype) fixes the colours of the unrolled 256-record loop; notes in `drafts/T-25310/main/func_80055AFC/NOTES.md`, [[matching-notes]] and [[register-cheatsheet]].
+
 ## [2026-10-23] ticket | T-25311 Done
 
 Reviewed and merged: ENDING func_80134270 matched (1848 bytes, default C, three FAKE marks), src/ovl/ENDING/80133C10.c has no INCLUDE_ASM left. [[tickets/T-25311-w10-ENDING-80133C10]], notes in [[matching-notes]].
+
 ## [2026-10-23] ticket | T-11910 Done
 
 Agent B matched GEKO `func_80132B24` (s32 with no return plus a kept-live empty test; a no-op assignment to order cfe's `+` operands) and kept `func_80133024` guarded at 2 rows with the ucode finding in its comment. With `func_80133C50` (#69) that is two matches in this round; `func_80142C9C` and `func_80133024` stay open (the maintainer's agents also work on them, #65). Inline review against CODING_STANDARDS.md. Notes in [[matching-notes]]. [[tickets/T-11910-geko-remainder]].
