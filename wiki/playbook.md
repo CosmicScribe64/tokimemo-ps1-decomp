@@ -29,6 +29,8 @@ Model of the compiler: uopt colours registers (v0, v1, a0-a3, t0-t5, s0-s7 in th
 
 **An int view of a void callee takes `$v0` away after the call.** Symptom: a range that starts right after a call (a loop pointer in the next preheader) takes `$v0` and the loop-invariant values `$v1`; the original has the reverse. Fix: call the function as an implicit int (try `funcdiff --proto 's32 f(...);'` first). TAIIKU calls Rot_2D as `func_80086204`: 44 rows to 0 in `func_8013E894` (T-25102).
 
+**The reverse, when the callee must stay int:** a callee defined in the same file cannot get a void view (cfe rejects the redeclaration). If the ranges right after an int call skip `$v0` and a void experiment fixes them, end the block after the call with an empty test of its result, `if (f()) { }` (FAKE; uopt drops it). Main `func_80061A3C`, 34 rows to 0 for the copy pointers after `func_8006190C` (T-25119).
+
 **`i << 1`, not `i * 2`, when the original recomputes an offset from the counter.** uopt strength-reduces a multiply of the loop counter into a second induction variable and leaves a shift alone (TAIIKU `func_80139AB0` and `func_8013E894`, T-25102).
 
 ## 2. A temporary one register too low or too high (ugen ring)
@@ -59,7 +61,7 @@ A later call argument can keep an earlier selector promoted across several tests
 
 ## 4. Operand order of compares and sums
 
-`bne` operands reversed, registers right: read the selector through a u32/s32 local (GYOZI `func_8014206C`, T-20005 note), or the aggregate (T-16930), or wrap the left operand `w * 1 != x->width` (`| 0`, `^ 0`, `<< 0` also work; `+ 0` does not) (main `strNext`, T-17014). For sums, spelling decides: `(idx + D_X)->f` gives index first, `(D_X + idx)->f` base first (TACO `func_801557E8`, T-16564); in RPG_BAT `func_80138324` the last 4 rows were the global first in two sums (T-24303).
+`bne` operands reversed, registers right: read the selector through a u32/s32 local (GYOZI `func_8014206C`, T-20005 note), or the aggregate (T-16930), or wrap the left operand `w * 1 != x->width` (`| 0`, `^ 0`, `<< 0` also work; `+ 0` does not) (main `strNext`, T-17014). When t0..t3 are permuted inside one expression and nothing else differs, read the ucode entering uopt: cfe puts the heavier operand of `+`/`*` first (an indexed array read is heavier than a local or scalar, a `u32` conversion adds weight), and ugen takes each temporary from its FIFO list when it emits the instruction. A local copy of the array element (`x = A[i + 1]; ... v / 32 + -x / 2`) evens the weights so source order holds; otherwise `(D | 0) * k` or `a - (0 - A[i])` (FAKE) (main `func_80062948`, T-25119). For sums, spelling decides: `(idx + D_X)->f` gives index first, `(D_X + idx)->f` base first (TACO `func_801557E8`, T-16564); in RPG_BAT `func_80138324` the last 4 rows were the global first in two sums (T-24303).
 
 ## 5. Store order, delay slots and as1 line grouping
 
@@ -73,6 +75,8 @@ Hoists from another block (as1's global filler, [[as1-scheduler-rule]]): as1 mov
 **A function named by the file's own data.** Symptom: as1 hoists the default arm's first instruction into the switch range-check slot, the original keeps the dispatch `sll` there, and no source spelling of the function changes it. Check whether the object's original `.data` (`config/objects/<UNIT>.txt`) holds a table that names the function; define it in C (`tools/data_island.py`, [[decompile-workflow]] "Data defined in the C file"). as1 then links the dispatch `jr` back to the entry ([[as1-scheduler-rule]] rule 8). KANGEI `func_80134724`, 4 rows to 0 and its FAKE cast dropped (T-25150). Second symptom: in a compare-chain switch the original fills the compare delay slots from the next compare (`li s0,2`, `li at,3`), the draft from the case heads; the table puts the compares and the case that holds a jump-table `jr` in one loop region without the other case heads. EN_NICHI `func_80136DEC`, 4 rows to 0 (T-25201).
 
 **Promote a stored global to separate its emission from the sum.** An empty `if (D_80139ADC) {}` after the store changes uopt's direct `str` to an `rstr` on the following line. In KANGEI `func_8013852C`, this puts the sum before its store-address `lui`; removing the redundant signed conversion of the u8 year restores the temporary register (T-25041, FAKE). The old and new traces have identical readiness values at the disputed pick, so readiness alone does not determine local order. Capture actual uopt output before applying this to another function.
+
+**A constant shared with another case can reorder argument setup.** Symptom: `lui a1,K` before `li a0,1` in one call where the other calls of the function set a0 first. If K also appears in another statement (a loop-invariant memcpy source), give that use another type, `(void *)K`; case 1 of main `func_80061A3C` (T-25119). A minimal repro with and without the second use shows it in seconds.
 
 ## 6. Constants: folded vs kept in a register
 
