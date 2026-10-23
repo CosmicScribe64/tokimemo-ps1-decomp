@@ -68,7 +68,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-11900-geko-option-closers|T-11900 GEKO and OPTION closers (claim #65)]]
 - [ ] [[tickets/T-25062-name-ent-byte-pack|T-25062 Match NAME_ENT byte pack and zero loop]]
 - [ ] [[tickets/T-25060-tel-date-menu|T-25060 Match final TEL date menu builder]]
 - [ ] [[tickets/T-25056-ending-scheduler|T-25056 Resolve ENDING A2E8 scheduler residue]]
@@ -169,6 +168,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-11900-geko-option-closers|T-11900 GEKO and OPTION closers (claim #65)]]
 - [ ] [[tickets/T-25122-w8-main-80049FF0|T-25122 Wave 8 package w8-main-80049FF0 (src/main/80049FF0.c)]]
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
 - [ ] [[tickets/T-25118-w8-main-800563F0|T-25118 Wave 8 package w8-main-800563F0 (src/main/800563F0.c)]]
