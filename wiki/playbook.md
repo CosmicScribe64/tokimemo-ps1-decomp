@@ -153,3 +153,7 @@ Main `func_8005215C`, from INCLUDE_ASM to default C with three source recipes:
 - **One shift shared in a ugen temporary.** For two tables indexed by the same global, `((s32 *)A)[i * 2]` and `((s32 *)B)[i * 2]` give a single `sll` in a ring temporary, used by both `addu`. Int arithmetic or pointer casts in one condition make the shift a uopt range (v0, every later temporary one register low); separate statements emit two shifts.
 
 Before changing C, check the ring temporaries in emission order: they show whether a value is a ugen temporary or a uopt colour. See `drafts/T-25101/main/func_8005215C/NOTES.md`.
+
+## Copy propagation renumbers swapped saved-register ranges (T-25101)
+
+Main `get_h_tokimeki`, 230 rows to 0. Unconstrained ranges are coloured in bit order. Copy propagation re-enters every expression whose operands changed after the main pass, so a propagated local (a row pointer `p = TABLE[n]`) gets a late bit, and a plain load keeps its early main-pass bit. If the target colours the propagated range first, route the other range through a propagated pointer as well: `GameState *gs = &D_800E6280;` and `(&gs->unk_0FC)[i].unk_02` made the parameter value a re-entered expression, numbered after the row. Read the bits in the traced uopt's expression table (`draft.o.trace` after "REMOVAL OF REDUNDANT STORES", via `regdiff -v`) before trying spellings. See `drafts/T-25101/main/get_h_tokimeki/NOTES.md`.

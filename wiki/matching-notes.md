@@ -715,3 +715,13 @@ Matched as default C, 1260 bytes (316 words), from INCLUDE_ASM. [[tickets/T-2510
 2. `pad[2]` gives the 64-byte frame, as in xa_wait.
 3. The plain argument in `k_disp_switch(F61, 0)` gives the F61 CSE range an a0 preference, so the range takes a2. `+ 0` (FAKE) gives v1 for F61 and a0 for F62.
 4. Both call-pair tables are word-indexed with `[D_80125BFC * 2]`, as in `func_80052060`. The shift is then one shared ugen temporary. Int arithmetic and pointer views make it a uopt range in v0; struct indexing in separate statements emits two shifts.
+
+## T-25101: main get_h_tokimeki
+
+Matched as default C, 1600 bytes (400 words), from INCLUDE_ASM. [[tickets/T-25101-w8-main-8004F870]]; steps, evidence and negatives are in `drafts/T-25101/main/get_h_tokimeki/NOTES.md`. The archived m2c drafts were unusable, so the body is a typed reconstruction from the asm: a seven-step threshold ladder per girl kind (six cases), one `s8` bonus per selected parameter.
+
+1. The seven levels `D_800B4198[k]` are read into `u32` locals after the flag loop. This gives their t0..t5/s0 colours (they are numbered before the loop body) and, with `u32` slots, the 136-byte frame. `u8` locals pack and leave the frame 24 bytes short.
+2. The flag array `s32 use[8]` is declared after the eleven scalar slots and before `bonus`, which puts `&use[1]` at sp+0x40.
+3. The last 230 rows were the bonus row and the parameter value swapped (s2/s1). Unconstrained ranges are coloured in bit order, and copy propagation re-enters every expression whose operands changed after the main pass. The row pointer is propagated (late bit), the parameter load was not. Reading the parameters through `GameState *gs = &D_800E6280` makes the value a re-entered expression too, numbered after the row: 0 rows.
+
+Tool gap: `funcdiff --version c` reported "linked function bytes differ" with 0 rows, because the guarded compile does not apply the `.data_800B40F0` split, so the D_800B41xx references link elsewhere. Check the default build in that case.
