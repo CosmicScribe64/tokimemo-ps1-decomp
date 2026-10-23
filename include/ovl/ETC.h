@@ -960,6 +960,7 @@ void func_8014354C(void);
 void func_80143758(void);
 s32 func_80143968(void);
 void func_80143A88(void);
+void func_80144224(void);
 /* T-24073: original reads incoming a0; preserve historical callers without an argument expression. */
 void func_8014407C();
 extern s16 D_80150138;

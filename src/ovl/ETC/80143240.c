@@ -423,10 +423,10 @@ void func_801441DC(s32 arg0, s32 arg1) {
     p[0x14] = v;
 }
 
-/* Implicit-int K&R function (the caller ignores the value). The frame counter is read through a
- * pointer: that keeps it in one register range ($a3, reloaded after each call) and D_80150148
- * promoted only in the remainder-1 arm, as in the original (T-25146). */
-s32 func_80144224(void) {
+/* The frame counter is read through a pointer: that keeps it in one register range ($a3, reloaded
+ * after each call group) and D_80150148 promoted only in the remainder-1 arm, as in the original
+ * (T-25146). */
+void func_80144224(void) {
     GsWord *fc;
     /* FAKE: the `*(u32 *)&quot` read below keeps quot in its slot 0x30(sp) (the test reloads it
      * instead of using the divide result), and the `*(s32 *)&v` stores keep v in 0x28(sp) without
