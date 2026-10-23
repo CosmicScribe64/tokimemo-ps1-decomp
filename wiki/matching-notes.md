@@ -761,3 +761,7 @@ FAKE: the array view of the scalar-declared D_8015EBAC and the integer sums (T-2
 - A `volatile` view of a counter global gives one load for a run of byte stores (no copy-propagated second `lw`) and adds in the loaded register.
 
 FAKE (T-25121): `volatile D_8014DB80` in `ovl/ETC.h`, `pad[13]`, `s8` views on u0/u2, the empty block-split test, no `return` plus a dead test. Measurements, negatives and the next hypothesis: `drafts/T-25121/ETC/func_80132C3C/NOTES.md`.
+
+## T-25121: ETC func_801328A4
+
+[[tickets/T-25121-w8-ETC-80132880]]: func_801328A4 (920 bytes) is a literal match in the default build. The T-24012 pointer and byte-offset draft (cost 217) was rewritten in index form over a real `Rgb555Split buf[3][274]`. What closed it: `row + 1` is a uopt temporary spilled below the declared homes (sp+0x6C), not a `next_row` local. The pixel tail keeps both stores (`*dst = (cr & 0x1F) | (cg & 0x3E0) | (cb & 0x7C00); *dst |= 0x8000;`), and the combined channels are locals. A sweep of the 24 operand orders found `up + down + left + right`, which uopt reassociates into the original's load order. Six scalars declared above the buffer and a FAKE `s32 pad[3]` give the 13-word slot count. Rgb555Split channels are now `u32` (srl/multu/divu without casts). Notes and negatives: `drafts/T-25121/ETC/func_801328A4/NOTES.md`.
