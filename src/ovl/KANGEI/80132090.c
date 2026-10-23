@@ -4,7 +4,47 @@
 typedef struct {
     void (*f[22])();
 } FnTbl22; /* size 0x58 */
-extern FnTbl22 D_801399B0;
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139950);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139954);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139958);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_8013995C);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139960);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139964);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139968);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_8013996C);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139970);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139974);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139978);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_8013997C);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139980);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139984);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139988);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_8013998C);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139990);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139994);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139998);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_8013999C);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_801399A0);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_801399A4);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_801399A8);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_801399AC);
+/* Scene table, indexed by D_800E6280.unk_110A in func_80132214. Defining it here as the
+ * original did matters for code: as1 treats every function named in this file's data as an
+ * address-taken label, so a jump-table dispatch in this file gets an edge back to the entry of
+ * each named function (T-25150, T-25139). */
+FnTbl22 D_801399B0 = { {
+    func_80132514, func_801323A8, func_80132430, func_801324D8, func_8007C784,
+    func_801327DC, func_8007C784, dec_init, change_dec_bg, func_80132C24,
+    func_8007C784, func_80083474, func_8007C8A4, place_init, func_801324B0,
+    func_80132354, normal_date_girl_in, normal_date_speak, normal_date_girl_out, normal_date_bg_out,
+    func_80132290, func_80046500,
+} };
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139A08);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139A34);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139A3C);
+INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_80139A44);
 
 void func_80132090(void) {
     D_80139950[0][0] = 0x801973AC;
@@ -181,7 +221,131 @@ void func_8013260C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_801327DC);
+void func_801327DC(void) {
+    u32 club;
+
+    /* FAKE: the two empty tests of the club halfword are plain uses of the global (no widening
+     * CVT); with them uopt keeps the halfword in a register range and every read of it is
+     * `lui v1; lhu v1`, as in the original. Any two such tests anywhere in the function do it,
+     * one is not enough. T-25139 */
+    if (D_800E6280.unk_0F4.h) {}
+    func_80085B3C(0x10, D_800E6280.unk_0F4.h >> 12);
+    if (D_800E6280.unk_0F4.h) {} /* FAKE: second plain use, see above. T-25139 */
+    switch (D_800E6280.unk_0F4.h >> 12) {
+    case 0:
+        func_800AE0F0(D_800CA19C, "文芸部");
+        func_8007ED84(0x40BC);
+        break;
+    case 1:
+        func_800AE0F0(D_800CA19C, "演劇部");
+        func_8007ED84(0x40B2);
+        break;
+    case 2:
+        func_800AE0F0(D_800CA19C, "科学部");
+        func_8007ED84(0x40C6);
+        break;
+    case 3:
+        func_800AE0F0(D_800CA19C, "電脳部");
+        func_8007ED84(0x40D0);
+        break;
+    case 4:
+        func_800AE0F0(D_800CA19C, "美術部");
+        func_8007ED84(0x40D9);
+        break;
+    case 5:
+        func_800AE0F0(D_800CA19C, "吹奏楽部");
+        func_8007ED84(0x40E2);
+        break;
+    case 6:
+        func_800AE0F0(D_800CA19C, "野球部");
+        func_8007ED84(0x4097);
+        break;
+    case 7:
+        func_800AE0F0(D_800CA19C, "サッカー部");
+        func_8007ED84(0x4097);
+        break;
+    case 8:
+        func_800AE0F0(D_800CA19C, "テニス部");
+        func_8007ED84(0x4097);
+        break;
+    case 9:
+        func_800AE0F0(D_800CA19C, "水泳部");
+        func_8007ED84(0x40A0);
+        break;
+    default:
+        func_800AE0F0(D_800CA19C, "バスケ部");
+        func_8007ED84(0x40A9);
+        break;
+    }
+    D_800CA14C = 0;
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        club = D_800E6280.unk_0F4.h >> 12;
+        if (club < 6) {
+            D_800CA148 = 0;
+        } else if (club == 6) {
+            D_800CA148 = 2;
+        } else if (club == 7) {
+            D_800CA148 = 4;
+        } else {
+            D_800CA148 = 6;
+        }
+        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+            D_800CA148 += 1;
+        }
+        break;
+    case 1:
+        D_800CA148 = 0;
+        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+            D_800CA148 = 1;
+        }
+        break;
+    case 2:
+        D_800CA148 = 0;
+        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+            D_800CA148 = 1;
+        }
+        if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b19) {
+            D_800CA148 = 2;
+        }
+        break;
+    case 3:
+        if ((D_800E6280.unk_0F4.h >> 12) == 4) {
+            D_800CA148 = 0;
+        } else {
+            D_800CA148 = 1;
+        }
+        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+            D_800CA148 += 2;
+        }
+        break;
+    case 4:
+        if ((D_800E6280.unk_0F4.h >> 12) == 6) {
+            D_800CA148 = 0;
+        } else {
+            D_800CA148 = 1;
+        }
+        break;
+    case 5:
+        D_800CA148 = 0;
+        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+            D_800CA148 = 1;
+        }
+        break;
+    case 6:
+        D_800CA148 = 0;
+        /* FAKE: the (u8) narrowing spends one ugen temporary that as1 deletes, which gives the
+         * original's andi t1 and addiu t3. T-25139 */
+        if (((u8) get_g_zyotai_s(6) & 0x7F) < 2) {
+            D_800CA148 += 1;
+        }
+        break;
+    default:
+        D_800CA148 = 0;
+        break;
+    }
+    func_8004284C();
+}
 
 void func_80132C24(void) {
     u8 girl;

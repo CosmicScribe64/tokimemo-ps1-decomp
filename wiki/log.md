@@ -1751,3 +1751,7 @@ Reviewed [[tickets/T-25125-w8-main-8006CB30]] against CODING_STANDARDS.md: no so
 
 Reviewed [[tickets/T-25138-w8-RPG_BAT-801447E0]] against CODING_STANDARDS.md (two small findings fixed), clean rebuild 27/27, funcdiff MATCH. Matched RPG_BAT `func_80144C84` (1276 bytes) as default C in `src/ovl/RPG_BAT/801447E0.c`; FAKEs: file-local `RpgBattleView` override of `D_8015EBCC` and the comma return.
 The only function of the package is matched, none left with rows; the real battle-block aggregate is the next step, notes in `drafts/T-25138/RPG_BAT/func_80144C84/NOTES.md` and [[matching-notes]].
+## [2026-10-23] ticket | T-25139 Done
+
+Reviewed [[tickets/T-25139-w8-KANGEI-80132090]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched KANGEI `func_801327DC` (1096 bytes) as default C in `src/ovl/KANGEI/80132090.c`; FAKEs: two empty tests of the club halfword and a `(u8)` narrowing; the scene table `D_801399B0` now defined in C (data island).
+The only function of the package is matched, none left with rows; notes in `drafts/T-25139/KANGEI/func_801327DC/NOTES.md` and [[matching-notes]].
