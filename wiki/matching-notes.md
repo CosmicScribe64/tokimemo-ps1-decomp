@@ -812,3 +812,17 @@ Details, negatives and the census commands: `drafts/T-25118/main/strCallback/NOT
 3. Frame: `limit` is the hoisted expression `arg1 - 3` (uopt spill home sp+0x48), plus FAKE pads for six unknown words of locals: 50 to 0.
 
 Details, the cost arithmetic and negatives: `drafts/T-25118/main/func_80056BA8/NOTES.md`.
+
+## T-25125: main func_8007132C
+
+Not matched; `INCLUDE_ASM` stays (best body 738 rows, no guard). Start: the T-25052 body at 950 rows. Two semantic
+holes closed: `u32 t` for the `unk_0F4.h >> 12` tests (the original uses `sltiu`) and a redundant `b3 >= 7` test in
+the rand condition. A `f.b16 = 1` bit-field store fixes the ugen slot at word 161; with the index read through byte
+views the first 192 words match exactly. The blocker is the address constant 0x800E6280: uopt colours one split
+piece of it (`$a3`), the original never does. Measured from the traced uopt: a constant piece is allocated when
+`sum(uses * freq) - sum(freq of reload units)` is positive (loop-first reloads with an in-range predecessor are
+free); the draft piece sits at +1 to +5. The original's opcode walk uses a GameState-typed record pointer
+`p = base + idx * 4` (fields at +0x69C, index forwarded with `idx++`), which adds uses; taking the schedule reads off
+the constant (absolute-address FAKE) leaves it unallocated and gives the walk's structure (825 rows). Left: the walk
+colours (op, 0x25, p). Bodies, measurements, negatives and the next hypothesis (the schedule reached through
+another aggregate or symbol than the GameState base): `drafts/T-25125/main/func_8007132C/NOTES.md`.
