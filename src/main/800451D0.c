@@ -1,4 +1,6 @@
 #define MAIN_API_OVERRIDE_func_80045414 /* K&R u8 arg0 narrows the command byte on entry (T-24123). */
+#define MAIN_API_OVERRIDE_func_800AD950 /* implicit int declaration (VSync returns int): a void prototype gives the
+                                          * func_800455C4 wait-loop counter $v0 instead of $v1 (T-25123) */
 #include "common.h"
 #include "game.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
@@ -133,13 +135,15 @@ u8 *arg2;
     }
 }
 
-/* NON_MATCHING: T-24701, 16 rows (resolved cost 12). Two groups remain: the loop counter
-   is a caller-saved register spilled to 0x2C in the original (v1) but a declared local home
-   at 0x4C here (v0), and as1 sinks the D_801255B4 = 2 address/value below the cd_read_status
-   load in the cases at rows 541-544/561-564. Body reconstructed by the T-24701 worker from
-   drafts/T-24501; frame pads and views are FAKE. */
-#ifdef NON_MATCHING
-typedef struct { u8 head; u8 tail; u8 status; s8 phase; u8 pad[4]; } CdRingView;
+/* Queue header at D_80125128 read as one object: head, tail, status and phase are one symbol in
+ * the original relocations, which orders as1's loads and stores (T-24501). */
+typedef struct CdRingView {
+    /* 0x00 */ u8 head;
+    /* 0x01 */ u8 tail;
+    /* 0x02 */ u8 status;
+    /* 0x03 */ s8 phase;
+    /* 0x04 */ u8 pad[4];
+} CdRingView; /* size 0x08 */
 extern u16 D_800B3D64;
 extern u32 *D_801255BC;
 void func_80046478(void);
@@ -325,11 +329,12 @@ void func_800455C4(void) {
 
                                             } while (func_800879D0(0xA, 0, 0) == 0);
                                         }
-                                        var_v1 = 0;
-                                        do {
+                                        /* FAKE: `* 1` makes uopt strength-reduce the test into an induction
+                                         * temporary, spilled to the 0x2C slot below the locals as in the
+                                         * original; the plain counter spills to its own home. T-25123 */
+                                        for (var_v1 = 0; var_v1 * 1 != 0x200; var_v1++) {
                                             func_800AD950(0);
-                                            var_v1 += 1;
-                                        } while (var_v1 != 0x200);
+                                        }
                                     }
                                     ((CdRingView *)&D_80125128)->phase = -1;
                                 } else {
@@ -337,14 +342,18 @@ void func_800455C4(void) {
                                     ((CdRingView *)&D_80125128)->head += 1;
                                     D_801255B4 = 2;
                                     ((CdRingView *)&D_80125128)->status |= 1;
-                                    D_801255B5 += 1;
+                                    /* FAKE: D_801255B5 through the D_801255B4 symbol: one object in the
+                                     * original (aggregate unknown); as1 then keeps the status load
+                                     * before the D_801255B4 store. T-25123 */
+                                    ((u8 *)&D_801255B4)[1] += 1;
                                 }
                             } else {
                                 ((CdRingView *)&D_80125128)->phase = -1;
                                 ((CdRingView *)&D_80125128)->head += 1;
                                 D_801255B4 = 2;
                                 ((CdRingView *)&D_80125128)->status |= 1;
-                                D_801255B5 += 1;
+                                /* FAKE: as above, D_801255B5 through D_801255B4. T-25123 */
+                                ((u8 *)&D_801255B4)[1] += 1;
                             }
                         } else if (D_800B3D68 < 0) {
                             ((CdRingView *)&D_80125128)->phase = -1;
@@ -395,9 +404,6 @@ void func_800455C4(void) {
         ((CdRingView *)&D_80125128)->head = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_800455C4);
-#endif
 
 u8 func_80046094(void) {
     return D_80125130[(D_80125128 + 0x2FU) % 0x30U].cmd;
