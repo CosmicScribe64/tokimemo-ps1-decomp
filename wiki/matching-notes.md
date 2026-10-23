@@ -732,3 +732,14 @@ read once into the reused s16 counter (only s16 gives `beq a2,v0`); an `(s32)` v
 which puts the load first in the sum (FAKE: `801418B0.c` needs the field unsigned); and the count-loop
 body on the `for` line (FAKE layout, as1 orders by line). Details and negatives:
 `drafts/T-25151/GYOZI/func_801412A4/NOTES.md`.
+
+## T-25148: ENDING func_801387B0
+
+Matched: `func_801387B0` (188 words, 748 bytes) is default-build C. It started from the T-25002 draft (156 diff lines).
+Four causes, in order:
+- **Boolean sharing.** uopt shares the largest common tree, so one spelling of `(flag & 1) == 1` gives one saved boolean. The original shares only the AND (`andi v1,a0,1`) and recomputes `xor; sltiu` per test. Four spellings (plain, `^ 0`, `* 1`, `<< 0`) stop the EQU sharing; `| 0`, `1U`, `1 ==` and `(s32)` fold into the plain form (FAKE).
+- **Where `flag` is read.** `flag = D_800E6280.unk_53C[6];` before the if chain makes the first test use the shared AND; uopt sinks the load into the else block.
+- **The 0x1C arm.** `if (D_8013C360 == 0) { } else if (D_8013C360 == 1)` brings back the original's reload of `D_8013C360` (same form as the matched func_80137F64).
+- **The `D_8013CAA0 == 1` order.** Reading it into a local gives load-first in uopt's raw output, but `tools/cvt_pass.py` `_constant_first` swaps it back. Its `rewritten` set covers the whole unit and includes `D_8013CAA0` through func_80137BB4's FAKE entry loads. Reading the byte as `((u8 *)&D_8013CAA4)[-4]` (another location, FAKE) avoids the swap.
+
+Possible tool follow-up: a per-procedure `rewritten` set in `_constant_first`, gated by lever_lab. Details, negatives and ucode traces: `drafts/T-25148/ENDING/func_801387B0/NOTES.md`.
