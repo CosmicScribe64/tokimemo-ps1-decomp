@@ -63,6 +63,8 @@ as1 schedules per source line. Put initial assignments on one line (`n = 0; b = 
 
 Hoists from another block (as1's global filler, [[as1-scheduler-rule]]): as1 moves the head `lui` of a dominated block (for example the out-of-range default of a switch) into a stall. Fix: declare the globals of the instructions that must stay `volatile` in the header; a volatile global's `lui` and load are never moved and the code is otherwise unchanged (VALEN `func_80134030`, GYOZI `func_80139E4C`, T-24900; FAKE). Caveat: not for a global the function reads twice (uopt then loads it once, VALEN `func_80132D0C`), not for weight-limited picks (GEKO `func_80136C20`) or same-block order (KANGEI `func_8013852C`).
 
+**Two stores to one data symbol get two `lui $at`.** as1 shares one `lui $at` across offsets only for a symbol defined in the C of the unit, inside one 16-byte-aligned chunk of the section. If the symbol is still an `INCLUDE_RODATA` piece, replace that line with its C definition (TAIIKU `func_80139AB0`, `D_801499B0`, 5 rows to 0, T-25102).
+
 **Promote a stored global to separate its emission from the sum.** An empty `if (D_80139ADC) {}` after the store changes uopt's direct `str` to an `rstr` on the following line. In KANGEI `func_8013852C`, this puts the sum before its store-address `lui`; removing the redundant signed conversion of the u8 year restores the temporary register (T-25041, FAKE). The old and new traces have identical readiness values at the disputed pick, so readiness alone does not determine local order. Capture actual uopt output before applying this to another function.
 
 ## 6. Constants: folded vs kept in a register
