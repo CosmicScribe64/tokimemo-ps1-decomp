@@ -195,7 +195,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25102-w8-TAIIKU-80138950|T-25102 Wave 8 package w8-TAIIKU-80138950 (src/ovl/TAIIKU/80138950.c)]]
 - [ ] [[tickets/T-25108-w8-main-80062CD0|T-25108 Wave 8 package w8-main-80062CD0 (src/main/80062CD0.c)]]
 - [ ] [[tickets/T-25109-w8-EN_NICHI-80136B10|T-25109 Wave 8 package w8-EN_NICHI-80136B10 (src/ovl/EN_NICHI/80136B10.c)]]
-- [ ] [[tickets/T-25110-w8-TACO-8013DB80|T-25110 Wave 8 package w8-TACO-8013DB80 (src/ovl/TACO/8013DB80.c)]]
 - [ ] [[tickets/T-25148-w8-ENDING-80137340|T-25148 Wave 8 package w8-ENDING-80137340 (src/ovl/ENDING/80137340.c)]]
 - [ ] [[tickets/T-25149-w8-NAME_ENT-80132000|T-25149 Wave 8 package w8-NAME_ENT-80132000 (src/ovl/NAME_ENT/80132000.c)]]
 - [ ] [[tickets/T-25150-w8-KANGEI-80134120|T-25150 Wave 8 package w8-KANGEI-80134120 (src/ovl/KANGEI/80134120.c)]]
