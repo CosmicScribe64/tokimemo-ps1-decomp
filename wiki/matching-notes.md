@@ -709,3 +709,14 @@ Matched: `func_80133088` (277 words, 1108 bytes) is default-build C. Start: the 
 - the GYOZI twin `func_801393C8` shape: `D_80134548` itself is the selector, with `switch (D_80134548)`. One dead entry store of it is needed for v0/v1 (37 without). One `GameState *state` is used for every field access (40 with direct accesses). This replaced the T-24523 gotos, union and `(u8)` cast.
 
 Two FAKEs name T-25117: the entry store and the byte view. Notes and negatives: `drafts/T-25117/VALEN/func_80133088/NOTES.md`.
+
+## T-25117: VALEN func_80132834
+
+Matched: `func_80132834` (310 words, 1240 bytes) is default-build C with no FAKE. Start: the T-24523 typed body, cost 336 (342 rows). Closed by, in order:
+- a `GameState *state` pointer for the ranking loop (336 to 120). uopt lets later stores change reads through it, so the first two score assignments reload both fields, as in the original;
+- sum operand order: comparisons `unk_06 + unk_02`, assignments `unk_02 + unk_06` (to 108);
+- declaration order for the frame (to 74). Locals take slots top-down in declaration order at natural size (s16 is 2 bytes, arrays 4-aligned), with about 12 bytes of temporaries below them. Six orders fit this model;
+- the random word read as `state->unk_10F8`, so uopt keeps `r` ahead of the rotation loop's guard and does not copy it into the preheader (to 23);
+- `count += 1` before `D_8013453C += 1` (to 0).
+
+Negatives and a hint for the GYOZI sibling `func_80138C9C` (same `r` symptom) are in `drafts/T-25117/VALEN/func_80132834/NOTES.md`.
