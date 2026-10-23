@@ -145,3 +145,28 @@ NAME_ENT `func_801398EC` needed remainder/frame/index in a1/a2/a3. A scalar rema
 ## Small copies follow the ugen_pass state; final store with the epilogue (T-25105)
 
 `tools/ugen_pass.py` puts its B/F sentinel before every `Umov`, also before copies of 32 bytes or less. The transfer register skips two ugen entries in state B and one in state F. If a small copy's temporary is one slot late, check the pass's state for it (the last `str`/`istr`/jump before the copy in the ucode). After an `istr`, an empty `if ((s32)x > 0) {}` survives uopt as a signed positive-bound jump, emits no code and gives F (FAKE). Separately, as1 moves `lw ra` above the last store only when the store's address names a global: write `((T *)&G[i * N + k])->f = v`, not a store through a pointer local. Main `func_80054FC0`, 113 lines to MATCH. Loops (main `func_8005557C`, 1212 bytes): when only the last of many constant-trip loops is unrolled in the original, give every loop one shared counter: with a shared counter IDO unrolls only the last loop of the function. Make it `u32` if a bound equals a multiply constant elsewhere (an `s32` bound shares the constant and turns the multiply into `li; multu`).
+## Keep an index scan unreduced with a scan pointer (T-25101)
+
+Symptom: the target recomputes `base + i` on each pass, and its loop test reads through a preheader copy of the base (`move a1,a3`; `addu t2,a1,v0` in the latch, `addu v1,a3,v0` in the header). Fix: write a plain `for` over a scan pointer, `for (i = 0, s = buf; s[i] != 0; i++) { p = s + i; ... }`. uopt strength-reduces a cursor written as `&buf[i]` or `buf[i]` into a walked pointer. `p = buf + i` with the test `buf[i]` stays indexed, but then the test shares the base register. Put `i = 0` before `s = buf` so the copy lands in the entry `beqz` delay slot. uopt moves a following loop's `i = 0` into the break arm and the exhausted exit, so do not add resets there. Main `sndi`: 123 rows to a default-C match, with no FAKE casts. See `drafts/T-25101/main/sndi/NOTES.md`.
+
+## Read-only byte global, argument colours, shared index shift (T-25101)
+
+Main `func_8005215C`, from INCLUDE_ASM to default C with three source recipes:
+
+- **Byte global reloaded after every call.** If the target loads a byte once per region and reloads it after each call (`lbu v0` after `jal`), write every read as `*(u8 *)&G.field`, with no local. uopt keeps the byte as one promoted global in v0. A `(u8)` cast on an s8 field adds conversion ranges that cache the value across calls.
+- **A plain argument can push a CSE range up one colour.** When a value is also passed directly as an argument (`f(G.f61, 0)`), its range gets that argument register as a preference and can land in a2 where the target has v1. A wrapper on the argument (`G.f61 + 0`, FAKE) removes the preference and still emits `move a0,v1`. A cast does not.
+- **One shift shared in a ugen temporary.** For two tables indexed by the same global, `((s32 *)A)[i * 2]` and `((s32 *)B)[i * 2]` give a single `sll` in a ring temporary, used by both `addu`. Int arithmetic or pointer casts in one condition make the shift a uopt range (v0, every later temporary one register low); separate statements emit two shifts.
+
+Before changing C, check the ring temporaries in emission order: they show whether a value is a ugen temporary or a uopt colour. See `drafts/T-25101/main/func_8005215C/NOTES.md`.
+
+## Copy propagation renumbers swapped saved-register ranges (T-25101)
+
+Main `get_h_tokimeki`, 230 rows to 0. Unconstrained ranges are coloured in bit order. Copy propagation re-enters every expression whose operands changed after the main pass, so a propagated local (a row pointer `p = TABLE[n]`) gets a late bit, and a plain load keeps its early main-pass bit. If the target colours the propagated range first, route the other range through a propagated pointer as well: `GameState *gs = &D_800E6280;` and `(&gs->unk_0FC)[i].unk_02` made the parameter value a re-entered expression, numbered after the row. Read the bits in the traced uopt's expression table (`draft.o.trace` after "REMOVAL OF REDUNDANT STORES", via `regdiff -v`) before trying spellings. See `drafts/T-25101/main/get_h_tokimeki/NOTES.md`.
+
+## A switch keeps a parameter in its saved register (T-25101)
+
+Symptom: a parameter tested in a loop that calls functions is spilled to its home slot (`sw a0,<frame>(sp)`, `lw` before each test), and every saved register is one off. regdiff reports the parameter as "not allocated, -ve save". Fix: write the tests that the target lowers as a compare chain (`beqz fp; ... beq fp,a2`) as `switch (mode) { case 0: ... case 1: ... }`, not as `if (mode == 0) ... else if (mode == 1)`. Main `get_near_menu`: the tie block as a switch put `mode` in fp and the constant 1 in a2, 352 rows to 9. The other mode tests stayed `if (mode == 0 && ...)`, as in the target. See `drafts/T-25101/main/get_near_menu/NOTES.md`.
+
+## Empty then-arm and a u8 count under -cckr (T-25101)
+
+Symptom: the target branches `beqz t6, body` and then `b join` from the fall-through, where the draft has one inverted `bnez t6, join`. Fix: write the test with an empty arm, `if (g->unk_F80 & 0xF) { } else { switch ... }`. In main `func_8004FC10` the inverted `if (!(...))` cost 52 aligned rows and moved a1/a2/a3. In the same function, a signed `slt` test of an s8 cursor against a u8 count needs `(s32)count`, because IDO runs with -cckr and promotes u8 to unsigned. A frame 8 bytes too large came from a separate result local: one counter serves the scan loops and the call result. See `drafts/T-25101/main/func_8004FC10/NOTES.md`.

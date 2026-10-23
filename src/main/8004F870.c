@@ -157,7 +157,169 @@ s32 menu_check_2(arg0, arg1, arg2)
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004FC10);
+void func_8004FC10(s32 menu) {
+    GameState *g;
+    s32 dir;
+    s32 n;
+    s32 i;
+
+    g = &D_800E6280;
+    dir = 0;
+    n = 16;
+    if (g->unk_F88 & 0x100) {
+        g->unk_1092++;
+        ((MenuSelection5 *)&g->unk_1090)->current[menu] = -1;
+        return;
+    }
+    switch (g->unk_1092 & 3) {
+    case 0:
+        func_8006BA40();
+        for (i = 0; i < ((MenuSelection5 *)&g->unk_1090)->count[menu]; i++) {
+            if (((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_06 != 0) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = i;
+                break;
+            }
+        }
+        break;
+    case 1:
+        /* FAKE: empty then-arm; the target branches to the wrap tests from the fall-through, an inverted
+         * test gives a different branch shape. Real source unknown. T-25101 */
+        if (g->unk_F80 & 0xF) {
+        } else {
+            switch (g->unk_F88 & 0xF000) {
+            case 0x1000:
+            case 0x8000:
+                dir = -1;
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] -= 1;
+                break;
+            case 0x2000:
+            case 0x4000:
+                dir = 1;
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] += 1;
+                break;
+            }
+        }
+        if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = 0;
+        }
+        if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = ((MenuSelection5 *)&g->unk_1090)->count[menu] - 1;
+        }
+        while (((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_07 == 1) {
+            if (n-- == 0) {
+                break;
+            }
+            if (dir == 1) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] += 1;
+            }
+            if (dir == -1) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] -= 1;
+            }
+            if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = 0;
+            }
+            if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = ((MenuSelection5 *)&g->unk_1090)->count[menu] - 1;
+            }
+        }
+        D_8011ECF6 = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00 + ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_04 - 4;
+        D_8011ECFA = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02 + 8;
+        break;
+    case 2:
+        if (g->unk_F80 & 4) {
+            if (g->unk_F88 & 4) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = g->unk_1095[menu];
+            } else {
+                switch (g->unk_F88 & 0xF000) {
+                case 0x2000:
+                case 0x4000:
+                    dir = 1;
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] += 1;
+                    break;
+                case 0x1000:
+                case 0x8000:
+                    dir = -1;
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] -= 1;
+                    break;
+                }
+                if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] = 0;
+                }
+                if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] = ((MenuSelection5 *)&g->unk_1090)->count[menu] - 1;
+                }
+                while (((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_07 == 1) {
+                    if (n-- == 0) {
+                        break;
+                    }
+                    if (dir == 1) {
+                        ((MenuSelection5 *)&g->unk_1090)->current[menu] += 1;
+                    }
+                    if (dir == -1) {
+                        ((MenuSelection5 *)&g->unk_1090)->current[menu] -= 1;
+                    }
+                    if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+                        ((MenuSelection5 *)&g->unk_1090)->current[menu] = 0;
+                    }
+                    if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+                        ((MenuSelection5 *)&g->unk_1090)->current[menu] = ((MenuSelection5 *)&g->unk_1090)->count[menu] - 1;
+                    }
+                }
+            }
+            D_8011ECF6 = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00 + ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_04 - 4;
+            D_8011ECFA = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02 + 8;
+        } else {
+            func_8006BA40();
+            for (i = 0; i < ((MenuSelection5 *)&g->unk_1090)->count[menu]; i++) {
+                if (((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_06 != 0) {
+                    ((MenuSelection5 *)&g->unk_1090)->current[menu] = i;
+                }
+            }
+        }
+        break;
+    case 3:
+        i = -1;
+        switch (g->unk_F88 & 0xF000) {
+        case 0x1000:
+            i = get_near_menu(1, -1, menu);
+            break;
+        case 0x4000:
+            i = get_near_menu(1, 1, menu);
+            break;
+        case 0x2000:
+            i = get_near_menu(0, 1, menu);
+            break;
+        case 0x8000:
+            i = get_near_menu(0, -1, menu);
+            break;
+        }
+        if (i != -1) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = i;
+        }
+        if (((MenuSelection5 *)&g->unk_1090)->current[menu] >= (s32)((MenuSelection5 *)&g->unk_1090)->count[menu]) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = func_80050324(menu, 1);
+        }
+        if (((MenuSelection5 *)&g->unk_1090)->current[menu] < 0) {
+            ((MenuSelection5 *)&g->unk_1090)->current[menu] = func_80050324(menu, 0);
+        }
+        D_8011ECF6 = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00 + ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_04 - 4;
+        D_8011ECFA = ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02 + 8;
+        break;
+    }
+    if (D_8011ECF6 > 140) {
+        D_8011ECF6 = 140;
+    }
+    if (D_8011ECF6 < -150) {
+        D_8011ECF6 = -150;
+    }
+    if (D_8011ECFA < -100) {
+        D_8011ECFA = -100;
+    }
+    if (D_8011ECFA > 100) {
+        D_8011ECFA = 100;
+    }
+}
+
 
 s32 func_80050324(s32 menu, s32 reverse) {
     GameState *g;
@@ -182,7 +344,96 @@ s32 func_80050324(s32 menu, s32 reverse) {
     return -1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_near_menu);
+s32 get_near_menu(s32 mode, s32 dir, s32 menu) {
+    GameState *g;
+    s32 n;
+    s16 best_d;
+    s32 best;
+    s16 diff[16];
+    s32 i;
+
+    g = &D_800E6280;
+    n = 16;
+    best_d = 320;
+    if (((MenuSelection5 *)&g->unk_1090)->count[menu] < 16) {
+        n = ((MenuSelection5 *)&g->unk_1090)->count[menu];
+    }
+    switch (mode) {
+    case 0:
+        for (i = 0; i < n; i++) {
+            diff[i] = ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00;
+        }
+        break;
+    case 1:
+        for (i = 0; i < n; i++) {
+            diff[i] = ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02;
+        }
+        break;
+    }
+    switch (dir) {
+    case -1:
+        for (i = 0; i < n; i++) {
+            if (diff[i] > 0) {
+                diff[i] = 0;
+            } else {
+                diff[i] = -diff[i];
+            }
+        }
+        break;
+    case 1:
+        for (i = 0; i < n; i++) {
+            if (diff[i] < 0) {
+                diff[i] = 0;
+            }
+        }
+        break;
+    }
+    best = -1;
+    for (i = 0; i < n; i++) {
+        if (((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_07 == 0 && diff[i] != 0) {
+            if (mode == 0 && ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 == ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02) {
+                if (best_d > 0) {
+                    best_d = -320;
+                }
+                if (best_d < -abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00)) {
+                    best_d = -abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00);
+                    best = i;
+                }
+            } else if (mode == 1 && ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 == ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00) {
+                if (best_d > 0) {
+                    best_d = -320;
+                }
+                if (best_d < -abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02)) {
+                    best_d = -abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02);
+                    best = i;
+                }
+            } else if (best_d > 0) {
+                if (diff[i] < best_d) {
+                    best_d = diff[i];
+                    best = i;
+                } else if (best_d == diff[i]) {
+                    switch (mode) {
+                    case 0:
+                        if (abs(((GsRecF90 (*)[2])g->unk_F90)[best][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02) > abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_02 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_02)) {
+                            best = i;
+                        }
+                        break;
+                    case 1:
+                        if (abs(((GsRecF90 (*)[2])g->unk_F90)[best][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00) > abs(((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_00 - ((GsRecF90 (*)[2])g->unk_F90)[((MenuSelection5 *)&g->unk_1090)->current[menu]][menu].unk_00)) {
+                            best = i;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    /* FAKE: redundant test (best is -1 or an index); it gives bltz with `li v0,-1` in the delay slot as in the target. T-25101 */
+    if (best >= 0) {
+        return best;
+    }
+    return -1;
+}
 
 void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg0 >= 0x10) {
@@ -302,7 +553,108 @@ INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B41B0);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B436C);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B437C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndi);
+void sndi(u8 *str, s32 y, s32 col) {
+    u8 *s;
+    u8 original[64];
+    /* FAKE: the sizes below 64 are inferred from the target's frame offsets (each buffer ends
+     * where the next one starts); the real declarations are unknown. T-25101 */
+    u8 quoted[40];
+    u8 stage[40];
+    u8 result[40];
+    u8 name[20];
+    u8 *p;
+    s32 i;
+    s32 found;
+
+    strncpy(original, str, 64);
+    D_800E6280.unk_F62 = 0;
+    found = 0;
+    if ((col & 15) == 15) {
+        for (i = 0, s = original; s[i] != 0; i++) {
+            p = s + i;
+            if (*p == 'P' && (i & 1) == 0) {
+                *p = 0;
+                found = 1;
+                strcpy(stage, original);
+                get_p_name(name, col & 15);
+                strcat(stage, name);
+                strcat(stage, p + 1);
+                break;
+            }
+        }
+        if (found == 0) {
+            strcpy(stage, original);
+        }
+        found = 0;
+        for (i = 0, s = stage; s[i] != 0; i++) {
+            p = s + i;
+            if (*p == 'G' && (i & 1) == 0) {
+                *p = 0;
+                found = 1;
+                strcpy(result, stage);
+                get_g_name(name, D_800E6280.unk_F5F);
+                strcat(result, name);
+                strcat(result, p + 1);
+                break;
+            }
+        }
+        if (found == 0) {
+            strcpy(result, stage);
+        }
+    } else {
+        for (i = 0, s = original; s[i] != 0; i++) {
+            p = s + i;
+            if (*p == 'P' && (i & 1) == 0) {
+                *p = 0;
+                found = 1;
+                strcpy(result, original);
+                get_p_name(name, D_800E6280.unk_F5F);
+                strcat(result, name);
+                strcat(result, p + 1);
+                break;
+            }
+        }
+        if (found == 0) {
+            strcpy(result, original);
+        }
+    }
+    switch (y) {
+    case 0:
+        if (col == 0xF) {
+            strcpy(quoted, "『");
+            strcat(quoted, result);
+        } else if (col == 0x1F) {
+            strcpy(quoted, "（");
+            strcat(quoted, result);
+        } else if (col == 0x2F) {
+            strcpy(quoted, result);
+        } else {
+            strcpy(quoted, "「");
+            strcat(quoted, result);
+        }
+        if (col == 0xFF) {
+            set_kanji_string(-0x80, 0x32, 0, quoted, 0);
+            return;
+        }
+        set_kanji_string(-0x56, 0x32, 0, quoted, 0);
+        return;
+    case 1:
+        if (col == 0xFF) {
+            set_kanji_string(-0x80, 0x42, 0, result, 0);
+            return;
+        }
+        set_kanji_string(-0x48, 0x42, 0, result, 0);
+        return;
+    default:
+    case 2:
+        if (col == 0xFF) {
+            set_kanji_string(-0x80, 0x52, 0, result, 0);
+            return;
+        }
+        set_kanji_string(-0x48, 0x52, 0, result, 0);
+        return;
+    }
+}
 
 void set_c_girl(u8 arg0) {
     D_800E6280.unk_F5F = arg0;
@@ -636,9 +988,311 @@ void func_80052060(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_80125C00 = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8005215C);
+void func_8005215C(void) {
+    /* FAKE: two unused home words above the spills; the original frame is 8 bytes larger, as in xa_wait. T-25101 */
+    s32 pad[2];
+    s32 r;
+    u8 *a;
+    u8 *b;
+    s32 *k;
+    s32 now;
+    s32 ph;
+    u32 t;
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_tokimeki);
+    r = 0;
+    now = get_now_k();
+    if (D_800E6280.unk_F62 & 0x80) {
+        ph = D_800E6280.unk_F62 & 0x7F;
+        if (D_800E6280.unk_F61 + 2 >= (u32)now) {
+            r = k_disp_inc();
+            now = get_now_k();
+            t = D_800E6280.unk_F61;
+            if (now == t + 3) {
+                if (D_800E6280.unk_F60 >= t + 3) {
+                    k_disp_switch(now, 0);
+                }
+            }
+        } else if (ph == 0) {
+            /* FAKE: `+ 0` keeps this argument off the F61 range, which then has no a0 preference and takes v1 (F62 a0) as in the original; the plain argument gives a2. T-25101 */
+            k_disp_switch(D_800E6280.unk_F61 + 0, 0);
+            a = get_k_work(D_800E6280.unk_F61 + 1);
+            b = get_k_work(D_800E6280.unk_F61 + 2);
+            *(s16 *)(a + 2) -= 2;
+            *(s16 *)(b + 2) -= 2;
+            D_800E6280.unk_F62 += 1;
+        } else if (ph != 0) {
+            /* FAKE: redundant test, as in xa_wait; the second use keeps ph in $v0. T-25101 */
+            a = get_k_work(D_800E6280.unk_F61 + 1);
+            b = get_k_work(D_800E6280.unk_F61 + 2);
+            *(s16 *)(a + 2) -= 2;
+            *(s16 *)(b + 2) -= 2;
+            if (*(s16 *)(a + 2) < 0x33) {
+                *(s16 *)(a + 2) = 0x32;
+                *(s16 *)(b + 2) = 0x42;
+                D_800E6280.unk_F62 -= 1;
+                D_800E6280.unk_F61 += 1;
+                k_disp_switch(D_800E6280.unk_F61 + 2, 1);
+            }
+        }
+    } else {
+        /* FAKE: the s8 mode field is read through a u8 address view: lbu, and uopt keeps the byte as one promoted global
+         * reloaded after each call; `(u8)D_800E6280.unk_03C` adds conversion ranges that cache it. T-25101 */
+        if (((*(u8 *)&D_800E6280.unk_03C) == 1 && D_80125C00 != 0) || ((*(u8 *)&D_800E6280.unk_03C) == 2 && D_80125C00 != 0)) {
+            r = k_disp_inc();
+        }
+        if ((*(u8 *)&D_800E6280.unk_03C) == 0) {
+            r = k_disp_inc();
+        }
+        get_now_k();
+    }
+    if (D_80125C00 == 0 && (func_800460EC() & 4)) {
+        D_80125C00 = 1;
+    }
+    k = (s32 *)func_80046284();
+    if (D_80125C00 == 1) {
+        if (func_800460EC() & 2) {
+            if (D_80125BFC != -1) {
+                if (((s32 *)D_80125BF4)[D_80125BFC * 2] != ((s32 *)D_80125BF8)[D_80125BFC * 2] && ((s32 *)D_80125BF4)[D_80125BFC * 2] == k[2]) {
+                    func_80046290(((s32 *)D_80125BF8)[D_80125BFC * 2], ((s32 *)D_80125BF8)[D_80125BFC * 2 + 1], D_800E6280.unk_F5F);
+                    func_80044750(0x300);
+                    D_80125C00 = 0;
+                } else {
+                    D_80125C00 = 2;
+                }
+            } else {
+                D_80125C00 = 2;
+            }
+        }
+    }
+    if (r == 1 && D_80125C00 == 2) {
+        if (D_8011ED5B & 0x80) {
+            func_8006C934();
+        } else {
+            func_8006C848(1);
+        }
+    }
+    if (r == 1 && (*(u8 *)&D_800E6280.unk_03C) == 0) {
+        if (D_8011ED5B & 0x80) {
+            func_8006C934();
+        } else {
+            func_8006C848(1);
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        if (r == 1) {
+            if ((*(u8 *)&D_800E6280.unk_03C) == 2) {
+                D_80125C00 = 2;
+                func_80044750(0x74);
+                func_80045414(9, 0, 0);
+            }
+            D_800E6280.unk_F62 = 0;
+        } else {
+            k_disp_goto_line_end();
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x60) {
+        if (r == 1) {
+            if ((*(u8 *)&D_800E6280.unk_03C) == 1) {
+                if (D_80125C00 == 2) {
+                    func_8006C848(0);
+                    D_800E6280.unk_110D += 1;
+                }
+                D_800E6280.unk_F62 = 0;
+                return;
+            }
+            if ((*(u8 *)&D_800E6280.unk_03C) == 2) {
+                if (D_80125C00 == 2) {
+                    func_8006C848(0);
+                    D_800E6280.unk_110D += 1;
+                }
+                D_800E6280.unk_F62 = 0;
+                return;
+            }
+            func_8006C848(0);
+            D_800E6280.unk_110D += 1;
+            D_800E6280.unk_F62 = 0;
+            return;
+        }
+        k_disp_goto_line_end();
+    }
+}
+
+/* Love level of girl arg0: base value from her record, plus one bonus from D_800B4130 for each
+ * parameter that her mask in D_800B4110 selects, by the threshold ladder of her kind (D_800B4120).
+ * FAKE: the u32 level locals lv0..lv6 (copies of D_800B4198) give the frame and the colour order of
+ * the thresholds, and reading the parameters through the gs pointer gives the bonus row s1 and the
+ * parameter value s2; the original source of both is unknown. T-25101 */
+u32 get_h_tokimeki(s32 arg0) {
+    s32 girl;
+    s32 sum;
+    s32 i;
+    u8 mask;
+    u8 kind;
+    u32 lv0;
+    u32 lv1;
+    u32 lv2;
+    u32 lv3;
+    u32 lv4;
+    u32 lv5;
+    u32 lv6;
+    s32 use[8];
+    s8 *bonus;
+    GameState *gs;
+
+    gs = &D_800E6280;
+    girl = arg0 % 13;
+    sum = gs->unk_1BC[girl].unk_02 * D_800B4100[girl];
+    sum /= 100;
+    mask = D_800B4110[girl];
+    for (i = 1; i < 8; i++) {
+        if (mask & (1 << i)) {
+            use[i] = 1;
+        } else {
+            use[i] = 0;
+        }
+    }
+    kind = D_800B4120[girl];
+    lv0 = D_800B4198[0];
+    lv1 = D_800B4198[1];
+    lv2 = D_800B4198[2];
+    lv3 = D_800B4198[3];
+    lv4 = D_800B4198[4];
+    lv5 = D_800B4198[5];
+    lv6 = D_800B4198[6];
+    for (i = 1; i < 7; i++) {
+        if (use[i]) {
+            switch (kind) {
+            case 1:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0 + 50) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1 + 35) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2 + 20) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3 + 20) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4 + 5) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5 + 5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 2:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 3:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0 + 50) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1 + 50) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2 + 50) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3 + 20) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4 + 20) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5 + 20) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6 + 20) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 4:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0 + 10) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1 + 10) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2 + 10) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3 + 10) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 5:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0 + 20) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1 + 20) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2 + 20) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3 + 20) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5 - 5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            case 6:
+                bonus = D_800B4130[girl];
+                if ((&gs->unk_0FC)[i].unk_02 > lv0) {
+                    sum += bonus[0];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv1) {
+                    sum += bonus[1];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv2) {
+                    sum += bonus[2];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv3) {
+                    sum += bonus[3];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv4 - 5) {
+                    sum += bonus[4];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv5 - 5) {
+                    sum += bonus[5];
+                } else if ((&gs->unk_0FC)[i].unk_02 > lv6 - 5) {
+                    sum += bonus[6];
+                } else {
+                    sum += bonus[7];
+                }
+                break;
+            }
+        }
+    }
+    if (sum >= 0x65) {
+        return 0x64;
+    }
+    if (sum < 0) {
+        return 0;
+    }
+    return sum & 0xFF;
+}
 
 u32 get_h_yuukou(s32 arg0) {
     s32 t;

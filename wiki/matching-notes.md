@@ -697,3 +697,43 @@ the full record.
 - Left: `d` and the loop end bound need `$v0`. In IDO 5.3 a range used in the zero arm, whose
   `return 0` defines the return register, never gets `$v0`. `return d` costs a final move.
   The next hypothesis (zero-arm stores through the AND CSE, so `d` has no zero-arm unit) is in NOTES.md.
+## T-25101: main sndi
+
+`sndi` (`src/main/8004F870.c`, 263 words / 1052 bytes) matches as default C. [[tickets/T-25101-w8-main-8004F870]]; evidence and negatives in `drafts/T-25101/main/sndi/NOTES.md`. The old blocker (T-24501, T-25027) was a strength-reduced cursor, held back with FAKE integer-address casts. The target's scans have two bases: the cursor uses the buffer address and the loop test uses a preheader copy of it. Plain C gives both with a scan pointer in the loop init: `for (i = 0, s = buf; s[i] != 0; i++) { p = s + i; if (*p == 'P' && (i & 1) == 0) { ...; break; } }`. A cursor written `&buf[i]` or `buf[i]` is strength-reduced. `p = buf + i` with the test `buf[i]` is not, but the copy is missing. `s = buf` before `i = 0` schedules the copy before the entry `beqz`. The `i = 0` in the found arm and on the exhausted exit is the next loop's init, moved there by uopt, so no explicit resets are needed. One scalar (`s`) declared before the arrays sets the frame. Only the inferred buffer sizes remain FAKE.
+
+## T-25101: main func_80052F68
+
+No match. Best body: 69 rows (compared NON_MATCHING C), up from the 604-row archived m2c drafts. It is over the guard limit, so the tree keeps `INCLUDE_ASM`; the body and notes are in `drafts/T-25101/main/func_80052F68/`. What closed: the loop-1 unroll (its own counter, because a counter assigned again later keeps a loop rolled), the frame (0x80, val at sp+0x48), the loop tests (an outer counter used only in loop 2 gives `bne`; the inner counter shared with loop 3 gives `slti`), and the loop-1 induction registers. Those last need table bases at 0x800B4348, 0x800B4354 and 0x800B4360, which have no splat label and would go in `config/symbol_addrs_main.txt`, plus a FAKE store through a copy of the array address. What is left: the constant 10 gets v1, and the loop-2 counters get a0 and v1, where the target has 10 in a0 and the counters in v0 and v1. Its `li a0,10` in loop 1's preheader is as1's global filler acting on that allocation; the ugen listing has the `li` after the clamp. The next step needs the uopt allocation trace.
+
+## T-25101: main func_8005215C
+
+Matched as default C, 1260 bytes (316 words), from INCLUDE_ASM. [[tickets/T-25101-w8-main-8004F870]]; evidence and negatives are in `drafts/T-25101/main/func_8005215C/NOTES.md`. The work started from the matched sibling `xa_wait`, not from the T-25021/T-25022 checkpoints. Four steps:
+
+1. Every mode read is `*(u8 *)&D_800E6280.unk_03C`, with no local. uopt keeps the byte as one promoted global that it reloads after each call. The `(u8)` cast on the s8 field adds conversion ranges that cache it, which was the T-25022 blocker. 183 rows to 49.
+2. `pad[2]` gives the 64-byte frame, as in xa_wait.
+3. The plain argument in `k_disp_switch(F61, 0)` gives the F61 CSE range an a0 preference, so the range takes a2. `+ 0` (FAKE) gives v1 for F61 and a0 for F62.
+4. Both call-pair tables are word-indexed with `[D_80125BFC * 2]`, as in `func_80052060`. The shift is then one shared ugen temporary. Int arithmetic and pointer views make it a uopt range in v0; struct indexing in separate statements emits two shifts.
+
+## T-25101: main get_h_tokimeki
+
+Matched as default C, 1600 bytes (400 words), from INCLUDE_ASM. [[tickets/T-25101-w8-main-8004F870]]; steps, evidence and negatives are in `drafts/T-25101/main/get_h_tokimeki/NOTES.md`. The archived m2c drafts were unusable, so the body is a typed reconstruction from the asm: a seven-step threshold ladder per girl kind (six cases), one `s8` bonus per selected parameter.
+
+1. The seven levels `D_800B4198[k]` are read into `u32` locals after the flag loop. This gives their t0..t5/s0 colours (they are numbered before the loop body) and, with `u32` slots, the 136-byte frame. `u8` locals pack and leave the frame 24 bytes short.
+2. The flag array `s32 use[8]` is declared after the eleven scalar slots and before `bonus`, which puts `&use[1]` at sp+0x40.
+3. The last 230 rows were the bonus row and the parameter value swapped (s2/s1). Unconstrained ranges are coloured in bit order, and copy propagation re-enters every expression whose operands changed after the main pass. The row pointer is propagated (late bit), the parameter load was not. Reading the parameters through `GameState *gs = &D_800E6280` makes the value a re-entered expression too, numbered after the row: 0 rows.
+
+Tool gap: `funcdiff --version c` reported "linked function bytes differ" with 0 rows, because the guarded compile does not apply the `.data_800B40F0` split, so the D_800B41xx references link elsewhere. Check the default build in that case.
+
+## T-25101: main get_near_menu
+
+Matched as default C, 1784 bytes (446 words), from INCLUDE_ASM, with no FAKE. [[tickets/T-25101-w8-main-8004F870]]; the steps and the control are in `drafts/T-25101/main/get_near_menu/NOTES.md`. The archived m2c drafts were not usable, so the body is a new reconstruction: an offset table `diff[16]`, a direction filter, and a nearest-entry scan with tie breaks that call `abs`.
+
+1. With the tie block as an if/else-if chain on `mode`, the parameter was not allocated (regdiff "-ve save"). It stayed in its home slot, every saved register moved by one, and the result was 352 rows. The same arms as `switch (mode)` put `mode` in fp and the constant 1 in a2, as in the target, which left 9 rows. A control with only the switch reverted confirms that the switch is the lever.
+2. The 9 rows were the `diff` base (sp+0x94 against 0x88). Declaring the array after the four scalars `g, n, best_d, best` matched.
+
+## T-25101: main func_8004FC10
+
+Matched as default C, 1812 bytes (453 words), from INCLUDE_ASM, with no FAKE. [[tickets/T-25101-w8-main-8004F870]]; steps and controls are in `drafts/T-25101/main/func_8004FC10/NOTES.md`. No earlier draft was in the tree, so the body was rebuilt from the asm with the sibling views (`MenuSelection5`, `GsRecF90 (*)[2]`, a `GameState *g` local). It is the menu cursor step: four modes on `unk_1092 & 3`, d-pad wrap with a skip over disabled entries, `get_near_menu` in mode 3, then the pointer clamps.
+
+1. The first typed draft had 140 funcdiff rows. Three changes together left only the frame: `(s32)` on the u8 count in the signed wrap tests (-cckr promotes u8 to unsigned, so the tests became `sltu`), `unk_00 + unk_04` in the position sum (load order), and case 1 as `if (F80 & 0xF) { } else { switch }`. The target jumps from the empty arm to the wrap tests, while `if (!(...))` inverts the branch. That change alone is 52 aligned rows.
+2. The frame was 8 bytes too large. One `s32 i` for the scan loops and the `get_near_menu` result, with no separate local, put the `g` home at 0x4C and the a2 spill at 0x30: MATCH.
