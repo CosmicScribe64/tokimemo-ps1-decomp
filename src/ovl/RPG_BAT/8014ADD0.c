@@ -394,7 +394,7 @@ void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     arg1 -= 0xA0;
     arg2 -= 0x78;
     if (arg3 < 10) {
-        /* empty arm: its label makes ugen reload arg1 and arg3 in each test, as the original does; T-25144 */
+        /* FAKE: empty arm; its label makes ugen reload arg1 and arg3 in each test, as the original does; T-25144 */
     } else if (arg3 < 100) {
         arg1 += 4;
     } else if (arg3 < 1000) {
