@@ -111,8 +111,10 @@ extern u8 D_80139C34[8];
 extern u8 D_80139C3C[8];
 extern u8 D_80139C44[8];
 extern s16 D_80139C4C[6];
+void func_80137C58(void);
 void func_80137E2C(void);
 s32 func_80137FEC();
+void func_80138CCC(void);
 #endif /* OVL_EN_NICHI_H */
 extern s32 D_80139B24;
 

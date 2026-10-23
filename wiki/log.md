@@ -1735,3 +1735,7 @@ No review findings: the two fakematches (the `(s32)` view of the random word, th
 
 Reviewed [[tickets/T-25108-w8-main-80062CD0]] against CODING_STANDARDS.md; matched main `func_80065964` (424 bytes) and `func_8006509C` (1,076 bytes) as default-build C, 27/27.
 `func_80065B0C` stays INCLUDE_ASM behind a NON_MATCHING guard at 9 rows (notes in drafts/T-25108/main/func_80065B0C/).
+## [2026-10-23] ticket | T-25109 Done
+
+Reviewed [[tickets/T-25109-w8-EN_NICHI-80136B10]] against CODING_STANDARDS.md; matched EN_NICHI `func_8013735C` (2,300 bytes) as default-build C, 27/27.
+`func_80136DEC` stays guarded NON_MATCHING at 4 aligned rows (two dispatch delay-slot fills; notes in drafts/T-25109/EN_NICHI/func_80136DEC/).
