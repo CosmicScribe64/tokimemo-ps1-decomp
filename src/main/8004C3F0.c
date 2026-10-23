@@ -222,13 +222,16 @@ void move_255_line(s32 arg0, s32 arg1, s32 arg2) {
  * (bits 16-23), a source index into p->unk_00 (bits 24-31) and the get_fnt flags (bits 0-7); get_fnt
  * expands the glyph into buf and LoadSquare copies buf into the texture page selected by page, at x / 2
  * plus the column offset, both divided by the record's mode ratio (1 or 2), and at y plus the row offset.
+ * The divisions by ratio are unsigned because the u8 promotes to unsigned int (-cckr).
  * Matching notes (T-25304): the flags byte is its own u8 local, declared next to the other u8 locals (one
- * frame word more moves the p spill slot to sp+0x70). With it, the raw tile word is a uopt range in t0, as
- * in the original; read inline as `*data & 0xFF`, the word takes v0 or v1 and the temporaries shift. */
+ * frame word more moves the p spill slot to sp+0x70). uopt then colours flags t0, so t0 leaves ugen's
+ * temporary pool for the whole function, as in the original, and the tile word is loaded into t0. With
+ * `*data & 0xFF` passed directly, no range takes t0 and the temporaries shift (T-25104: 47 rows at best).
+ * The xh and ypos locals order the hoisted loop invariants (inlined: 143 and 175 rows). */
 void mod_trans_vram(s32 idx, s32 frame, s32 page, s32 x, s32 y) {
-    u32 col;
+    s32 col;
     u32 *data;
-    u32 row;
+    s32 row;
     u32 uv;
     u32 bank;
     ModRec14 *p;
@@ -237,7 +240,7 @@ void mod_trans_vram(s32 idx, s32 frame, s32 page, s32 x, s32 y) {
     u8 rows;
     u8 cols;
     u8 flags;
-    u32 xh;
+    s32 xh;
     s32 ypos;
     s32 size;
 
@@ -285,7 +288,7 @@ void mod_trans_vram(s32 idx, s32 frame, s32 page, s32 x, s32 y) {
                     bank = (*data & 0xFF000000) >> 24;
                     flags = *data & 0xFF;
                     get_fnt(buf, (u8 *)p->unk_00[bank], uv, ratio, size, flags);
-                    LoadSquare(((page & 0xF) << 6) + xh / ratio + (u32)((s32)(col * size) / 2) / ratio, ypos, (u32)(size / 2) / ratio, size, buf);
+                    LoadSquare(((page & 0xF) << 6) + xh / ratio + col * size / 2 / ratio, ypos, size / 2 / ratio, size, buf);
                     data++;
                     col++;
                     cols = p->unk_0C;
