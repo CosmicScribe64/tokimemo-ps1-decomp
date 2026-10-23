@@ -340,8 +340,9 @@ void func_801326B4(void) {
             break;
         }
         D_800CA14C = 0;
-        /* The switch reads the mode as (u16) D_800E6374 >> 12 and this test through a u32 copy: two
-         * different expressions to uopt, so the shift is not shared between them (both are ugen temporaries). */
+        /* FAKE: T-25130. The switch reads the mode as (u16) D_800E6374 >> 12 and this test through a u32 copy:
+         * two different expressions to uopt, so the shift is not shared between them (both are ugen
+         * temporaries); the original source of the join test is unknown. */
         mode = D_800E6280.unk_0F4.h;
         if ((mode >> 0xC) != 3) {
             if (D_8013C2E0 == 0xB) {
@@ -452,7 +453,6 @@ void func_801326B4(void) {
     }
     Default_Disp();
 }
-
 
 void func_80133374(void) {
     s32 i;
