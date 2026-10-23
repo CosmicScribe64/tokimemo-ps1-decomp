@@ -1733,3 +1733,7 @@ The review marked the unused K&R parameter FAKE; the clamp-arm zero term and the
 
 Reviewed and merged w8-TAIIKU-80138950: matched TAIIKU `func_80139AB0`, `func_8013E894`, `func_8013DDB8`, `func_8013F3A4`, `func_8013E1FC`, `func_8013EC60` (7796 bytes, default C, 27/27).
 All six functions of the package are matched, none left with rows; see [[tickets/T-25102-w8-TAIIKU-80138950]].
+## [2026-10-23] ticket | T-25151 Done
+
+Reviewed [[tickets/T-25151-w8-GYOZI-80140C90]] against CODING_STANDARDS.md; matched GYOZI `func_801412A4` (684 bytes) as default-build C, 27/27.
+No review findings: the two fakematches (the `(s32)` view of the random word, the count-loop body on the `for` line) already carry `FAKE`, the reason and the ticket.

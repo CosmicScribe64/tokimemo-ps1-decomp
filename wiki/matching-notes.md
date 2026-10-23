@@ -725,3 +725,13 @@ Matched (default-build C, 804 bytes, 27/27). The last 4 rows were p's spill slot
 ## T-25152: TACO func_80138B2C (closer)
 
 [[tickets/T-25152-w8-TACO-80138890]]: matched (default C, 476 bytes). The last 3 rows were the clamp constant in `$t2`. uopt's input pass replaces a load of a variable with the constant stored to it earlier in the same block (`uoptinput.c`), so `arg0 = 0x98967F; D_8015F490[4] = arg0;` stores the constant and ugen builds it in a ring temporary. For an expression used once, the load stays a read of the variable when the expression has an indirect load (`has_ilod`) or an operand killed in between (`treekilled`). `arg0 = 0x98967F + *(u8 *)&D_8015EDCC * 0;` (FAKE) keeps the def in `$a0`, and ugen folds the zero term. Reading `arg0` in the zero term also puts the arm in `$a0`, but it makes the total live into the arm, and the total then gets its own range in `$v1` (25 rows). Variants: `drafts/T-25152/TACO/func_80138B2C/NOTES.md`.
+## T-25151: GYOZI func_801412A4
+
+Matched: `func_801412A4` (172 words, 684 bytes) is default-build C. Started from the matched sibling
+`func_80140F90` instead of the T-25012 seed (96 rows). Four causes, in order: the random word read
+through the member `D_800F53A0.unk_10C8`, which may alias the `unk_F2F` store, so the load stays in the
+retry loop (the donor's `* 1` and the plain `D_800F6468` symbol both hoist it, 276 rows); `D_801486E4`
+read once into the reused s16 counter (only s16 gives `beq a2,v0`); an `(s32)` view of that u32 word,
+which puts the load first in the sum (FAKE: `801418B0.c` needs the field unsigned); and the count-loop
+body on the `for` line (FAKE layout, as1 orders by line). Details and negatives:
+`drafts/T-25151/GYOZI/func_801412A4/NOTES.md`.
