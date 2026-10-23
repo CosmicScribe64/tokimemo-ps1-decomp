@@ -7,13 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25004, T-25006, T-25007 Done
-
-Matches: main `col2sepia` (T-25004), main `srn_set` (T-25006). Guards: main `func_8005B43C` 3 rows, `parameter_up_down` 11, ETC `func_80146D4C` 12, main `mod_set_gpu` 28. [[status]].
-
-## [2026-10-20] ticket | T-25010 created, In Progress
-[[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]] (branch c-m7): main `func_8004A1A0`, `func_80065964`, `strCallback`; `func_8006A044` skipped (file owned elsewhere this round).
-
 ## [2026-10-20] ticket | T-25010 to In Review
 [[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]] (branch c-m7): no match. BG slot types and tables moved from include/ovl/OPTION.h to include/main_api.h; main `func_8004A1A0` draft now has the original instruction count; `func_80065964` draft rolled with a `goto` loop (frame and range splits left); `strCallback` guard unchanged. Drafts in drafts/T-25010/main/. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
 
@@ -1750,10 +1743,12 @@ The package's only function is matched; the as1 line tie-break rule is in [[as1-
 ## [2026-10-23] ticket | T-11900 Done
 
 Four matches: OPTION `func_801326BC`, GEKO `func_80136C20`, `func_801367EC` (both closed by defining `D_80145094` in C, [[as1-scheduler-rule]]) and `func_80135DC0`. `func_80133024`, `func_80132B24` keep their guards; `func_80142C9C` checkpoint in `drafts/T-11900`. Inline review against CODING_STANDARDS.md (FAKE comments, no inline asm). Notes in [[matching-notes]]. [[tickets/T-11900-geko-option-closers]].
+
 ## [2026-10-23] ticket | T-25129 Done
 
 Reviewed [[tickets/T-25129-w8-GYOZI-80136220]] against CODING_STANDARDS.md; matched GYOZI `func_801368B8` (2256 bytes) as default-build C, 27/27, funcdiff MATCH.
 One FAKE (dead entry read, marked); finding fixed (comment for the always-true `| 8` in case 6); lead for SHOUGATU `func_801350F8` in [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25128 Done
 
 Reviewed [[tickets/T-25128-w8-ETC-8013FF80]] against CODING_STANDARDS.md; no function matched, `src/ovl/ETC/8013FF80.c` unchanged (`func_8013FFAC` stays `INCLUDE_ASM`, 0 bytes added).
