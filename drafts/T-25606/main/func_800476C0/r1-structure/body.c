@@ -225,7 +225,8 @@ void func_800476C0(void) {
                                 }
                                 spr.unk_20 = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_20;
                                 if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_03 & 8) {
-                                    if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_20 != 0 || spr.unk_1C != 0x1000 || spr.unk_1E != 0x1000) {
+                                    /* T-25606: the rotate is tested in spr (a stack reload that as1 forwards) */
+                                    if (spr.unk_20 != 0 || spr.unk_1C != 0x1000 || spr.unk_1E != 0x1000) {
                                         spr.unk_08 = (u16)spr.unk_08 - 1;
                                         spr.unk_0A = spr.unk_0A - 1;
                                     }
