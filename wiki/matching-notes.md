@@ -728,3 +728,16 @@ indexing instead of `xp`/`yp` row pointers: pointer locals read in the straight 
 between the x and y walks of the rotated translate loop. (6) Both outer loops as `for (angle = 0; ...)`, so the
 counter init shares the line of the hoisted invariants. (7) The implicit-int `func_80086204` call, as in E894.
 Measurements and negatives: `drafts/T-25102/TAIIKU/func_8013E1FC/NOTES.md`.
+
+## T-25102: TAIIKU func_8013EC60
+
+Matched (1788 bytes, default C, no FAKE; all 27 sha1 OK), from the `func_8013E1FC` and `func_8013E894` bodies of this
+package (the older drafts were 489 to 784 rows). Straight phase: corners `{320, 320, 240, 240}` and
+`{a << 3, (a + 1) << 3}` twice, each turned by the camera angle through `func_80086204` with `input_x = x[i]`, then
+the E1FC tail over all four corners; between the phases `D_8011ECD0` record 102 `unk_26 = x[3] + 8`; rotated phase:
+the E894 body with inputs `(0, -320)`, `(0, -240)`. Two source facts closed it. (1) Rotated phase as
+`for (angle = 0; angle < 64; angle++)` with `angle * 16` and `angle * 16 + 16` (301 to 40 rows): the do-while
+`angle += 16` keeps `angle` in `$s6` for the whole function, the strength-reduced form spills it at 0x78 like the
+target. (2) `y[2] = y[0]; y[3] = y[1];` as copies (40 to 0 rows): the chained `y[2] = y[0] = angle << 3` stores
+reserve one more spill slot (counter at 0x74) and leave the counter colour one register off. Notes and negatives:
+`drafts/T-25102/TAIIKU/func_8013EC60/NOTES.md`.

@@ -160,3 +160,6 @@ before storing either (`lw x; lw y; ...; sw x; sw y`) and the draft stores x fir
 `.noalias $y,$x`. Row-pointer locals (`xp = x + (i << 1)`) used elsewhere in the function can remove it, so index the
 arrays instead (`x[i << 1]`). A `move v0,zero` init that the original schedules after the hoisted loop invariants
 needs the init on the `for` line.
+A chained store of a computed value (`y[2] = y[0] = angle << 3;`) can reserve one more spill slot than two
+statements (`y[0] = angle << 3; ... y[2] = y[0];`, same stores after uopt's forwarding): symptom, a counter spill
+4 bytes low with the frame size right. Constant chains (`x[1] = x[0] = 320;`) did not (TAIIKU `func_8013EC60`).
