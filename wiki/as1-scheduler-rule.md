@@ -54,6 +54,8 @@ After (match): `extern volatile s32 D_80134690;` and the same for `D_801346C4`, 
 
 Use it when the trace shows the wrong instruction is a `lui` of a global that is only read in the function (or whose other readers still match), and check every unit that includes the header.
 
+A global read twice is fine when the original also loads it twice, each read in its own conditional block (GYOZI `func_8013907C`, two `D_80147240 == 1` tests, T-25120). Another reader in the same unit whose per-block order changed went back to its original order with a non-volatile view at one read, `*(u8 *)&D_80147240` (FAKE).
+
 ### Levers that do not work
 
 - **Order and shape of the switch** (default first, in the middle, reversed cases, `int` selector, `goto out` instead of `break`, default after the switch): the block numbers and weights come from the control flow graph, which these forms do not change.
