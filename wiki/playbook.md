@@ -100,7 +100,7 @@ Callee returns 16 bits: declare `u16 f();` and make the loop variable one `u16 r
 
 ## 12. Byte views and bit-fields
 
-Flag byte `|=`: use a bit-field store `((Bits *)&x)->f = 1;` when one temporary is missing (T-11650). A 3-bit field decremented in a byte is `f -= 1` on a bit-field typedef, not shifts (T-23003, 561 to 482 rows). Repeated `|=` through a byte view spends ring slots (T-24302: one OR gives `t4`, two give `t8`, three `t7`). A u16 flag read after a `+=`: test through an `s16` view `((*(s16 *)&D) & 0xFF00)`, not a cast (main `func_8007A50C`, T-17012).
+Flag byte `|=`: use a bit-field store `((Bits *)&x)->f = 1;` when one temporary is missing (T-11650). The shape gives it away: a bit-field store loads the byte into another register than its `lui` (`lui t9; lbu t0,(t9)`), and on a promoted byte it adds `move t,v0; ori; andi v0` before the store. A plain `|=` gives `lui t; lbu t,(t)` with no copy (main `func_8006A044`, 174 rows to 86, then 0 with a dead read for the colour order and an implicit-int return, T-25103). A 3-bit field decremented in a byte is `f -= 1` on a bit-field typedef, not shifts (T-23003, 561 to 482 rows). Repeated `|=` through a byte view spends ring slots (T-24302: one OR gives `t4`, two give `t8`, three `t7`). A u16 flag read after a `+=`: test through an `s16` view `((*(s16 *)&D) & 0xFF00)`, not a cast (main `func_8007A50C`, T-17012).
 
 ## Known compiler limits
 
