@@ -1,3 +1,6 @@
+#ifdef NON_MATCHING
+#define MAIN_API_OVERRIDE_func_800AE0A0 /* guard calls it undeclared (implicit int) as 8013BEF0.c does (T-24706); keeps $v0 off the case 5 table address, T-25314 */
+#endif
 #include "common.h"
 #include "ovl/ETC.h"
 
@@ -7,7 +10,223 @@ void func_8013FF80(void) {
     }
 }
 
+/* NON_MATCHING: T-25314, 17 rows (T-25128 left 197). Left: the dead switch's VREG copy
+ * `move v0,a1` at the entry, the frame 8 bytes too large (the k temporary), and 0x01000000
+ * in $v0 instead of $a0 in cases 5 and 11. drafts/T-25314/ETC/func_8013FFAC/NOTES.md */
+#ifdef NON_MATCHING
+void func_80140AE4(void);
+s32 func_8013FFAC(void) {
+    s32 i;
+    u32 j;
+    u32 k;
+    s32 sp54[6];
+
+    /* FAKE: the dead read of unk_F5F makes it an entry location for cvt_pass.py, so its
+     * promoted range starts at the entry ($t0, reloaded in cases 0, 5 and 8, no entry load).
+     * The dead two-case switch on the selector stores it in a VREG, so cvt_pass.py emits
+     * OPTN 405 0 (zcopy off) and the second table loop keeps its runtime index. Its dead VREG
+     * copy stays as `move v0,a1` (the s32 view keeps $v0 live at the exit). T-25314 */
+    i = D_800E6280.unk_F5F;
+    switch (D_800E6280.unk_110D) { case 0: case 9: break; }
+    switch ((*(u8 *)&D_800E6280.unk_110D)) {
+    case 0:
+        draw2d3d(1, 0);
+        D_800E6280.unk_037 = 0;
+        D_800E6280.unk_036 = 0;
+        D_800E6280.unk_038 = 0;
+        func_80048DAC(1);
+        func_80048EB8(0);
+        func_8006BD6C(0);
+        func_80041584();
+        func_8004E58C();
+        back_clear_switch(1);
+        tpage_buf_clear();
+        D_801500C0 = 0;
+        func_801408F0();
+        D_801500C4 = D_8014E070[D_800E6280.unk_F5F % 13U];
+        func_80044890(0, 0xBF98, 0xBF98, 0xCFA7, 0xCF8B, 0xCF83);
+        (*(u8 *)&D_800E6280.unk_110D) += 1;
+    default:
+        break;
+    case 1:
+        if (func_80044E8C() == 1) {
+            func_80044750(0x201);
+            func_80044890(1, 0xC5B7, 0xC594, 0xD6B2, 0xD664, 0xD643);
+            (*(u8 *)&D_800E6280.unk_110D) += 1;
+        }
+        break;
+    case 2:
+        if (func_80044E8C() == 1) {
+            func_800462C8(1U, 0x801FA800, 0xBE09);
+            cd_read_sectors(0x69U, 0x80180000, 0xB389);
+            (*(u8 *)&D_800E6280.unk_110D) += 1;
+        }
+        break;
+    case 3:
+        if (cd_read_sync_status() & 1) {
+            (*(u8 *)&D_800E6280.unk_110D) += 1;
+        }
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            (*(u8 *)&D_800E6280.unk_110D) += 1;
+        }
+        break;
+    case 5:
+        draw2d3d(1, 1);
+        func_8013F980();
+        func_80061710();
+        func_80061790();
+        func_800618B0();
+        load_palette(0x80180000, 0x1F, 1, 3, 0);
+        load_palette(0x80180200, 0x1E, 1, 3, 0);
+        load_palette(0x80180400, 0x1D, 1, 3, 0);
+        load_tpage_buf_lock(0xF, 0x801B0600, 1);
+        for (i = 0; i < 6; i++) {
+            sp54[i] = i * 0x4000 + 0x80198600;
+        }
+        i = 0; /* FAKE: dead reassignment keeps the first loop rolled (T-25128) */
+        func_8004A1A0(sp54, 1, 6, 3, 2, 0x1FE, -0xA0, -0x7D, 0xC, 0x15);
+        D_801220F4 = 0x01000000;
+        D_80122106 = 0;
+        D_80122105 = 0;
+        D_80122104 = 0;
+        D_800E6280.unk_03A = 0;
+        /* FAKE: explicit peel plus unsigned 2..6 loop, the matched func_8013CCE4 recipe
+         * (T-24706): the unsigned body sums do not CSE with the signed peel literals. T-25128 */
+        sp54[0] = 0x80180600; sp54[1] = 0x80184600; for (j = 2; j < 6; j++) { k = j * 0x4000; sp54[j] = 0x80180600 + k; } /* the k temporary gives the shift $v0 and the pointer $v1; it costs the 8 frame bytes left (T-25314) */
+
+        func_8004A1A0(sp54, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 0x18);
+        D_801220D0 = 0x80000000;
+        /* FAKE: element views give the chain its hidden VREG, which shares 0x80 in $v0; plain chains put it in $a3 (T-25314) */
+        (&D_801220E0)[0] = (&D_801220E1)[0] = (&D_801220E2)[0] = 0x80;
+        D_800E6280.unk_03A = 0;
+        func_800AE0A0((void *)0x801E2000, 0x80180600, 0x18000);
+        /* FAKE: flat view of D_8014DB90 as in func_8013CF2C; the * 2 index spends the
+         * ugen slot the original spends. T-25128 */
+        func_80046290(((s32 *)D_8014DB90)[D_800E6280.unk_F5F * 2], ((s32 *)D_8014DB90)[D_800E6280.unk_F5F * 2 + 1], D_800E6280.unk_F5F);
+        func_80044750(0x300);
+        (*(u8 *)&D_800E6280.unk_110D) += 1;
+        break;
+    case 6:
+        if (func_800460EC() & 4) {
+            (*(u8 *)&D_800E6280.unk_110D) += 1;
+        }
+        break;
+    case 7:
+        func_80140AE4();
+        if ((u8) D_800E6280.unk_03A < 0x81U) {
+            D_80122106 = D_800E6280.unk_03A;
+            D_80122105 = D_800E6280.unk_03A;
+            D_80122104 = D_800E6280.unk_03A;
+            D_800E6280.unk_03A += 1;
+        }
+        if (func_800460EC() & 2) {
+            D_801500DC += 1;
+            D_800B3CF8 = 0;
+            D_800B3CFC = 0;
+            D_800B3D00 = 0;
+            D_800E6280.unk_1104.w = 0;
+            (*(u8 *)&D_800E6280.unk_110D) += 1;
+        }
+        break;
+    case 8:
+        j = D_800E6280.unk_03A;
+        if (j < 0x81) {
+            k = j & 0xFF; /* FAKE: the mask in a u32 local keeps the original's andi v0,v1,0xff for the shade stores (T-25314) */
+            D_80122106 = k;
+            D_80122105 = k;
+            D_80122104 = k;
+            D_800E6280.unk_03A = j + 1;
+        }
+        if (D_800E6280.unk_F5F == 0) {
+            if ((u32) D_800E6280.unk_1104.w >= 0x1EU) {
+                func_8013F320(0);
+                if (D_8015006C >= 3) {
+                    D_8015006C = 0;
+                    (*(u8 *)&D_800E6280.unk_110D) += 1;
+                }
+            }
+        } else if (D_800E6280.unk_F5F == 9) {
+            if ((u32) D_800E6280.unk_1104.w >= 0x1EU) {
+                func_8013F320(0);
+                if (D_8015006C >= 3) {
+                    D_8015006C = 0;
+                    (*(u8 *)&D_800E6280.unk_110D) += 1;
+                }
+            }
+        } else if (D_800E6280.unk_F5F == 0xC) {
+            if ((u32) D_800E6280.unk_1104.w >= 0x1EU) {
+                func_8013F320(0);
+                if (D_8015006C >= 3) {
+                    D_8015006C = 0;
+                    (*(u8 *)&D_800E6280.unk_110D) += 1;
+                }
+            }
+        } else {
+            (*(u8 *)&D_800E6280.unk_110D) += 1;
+        }
+        D_800E6280.unk_1104.w += 1;
+        break;
+    case 9:
+        j = D_800E6280.unk_03A & 0xFF; /* FAKE: the mask splits the old value ($v0) from the incremented byte ($v1), as1 folds it into the lbu (T-25314) */
+        D_80122106 = j;
+        D_80122105 = j;
+        D_80122104 = j;
+        D_800E6280.unk_03A = j + 1;
+        if (D_800E6280.unk_03A >= 0x80U) {
+
+            (*(u8 *)&D_800E6280.unk_110D) += 1;
+        }
+        break;
+    case 10:
+        func_8013FC08();
+        (*(u8 *)&D_800E6280.unk_110D) += 1;
+        break;
+    case 11:
+        D_801220F4 = 0x01000000;
+        *(s32 *)&D_801220D0 = 0x01000000;
+        (*(u8 *)&D_800E6280.unk_110D) += 1;
+        break;
+    case 12:
+        D_801500D4 = 0x800;
+        func_8013FA7C();
+        D_801220F4 = 0x80000000;
+        (*(u8 *)&D_800E6280.unk_110D) += 1;
+        break;
+    case 13:
+        func_80140AE4();
+        if (D_800E6280.unk_F88 & 0x20) {
+            if ((D_801500D8 == 0) || (D_801500D8 == 2)) {
+                func_8013EEFC();
+            }
+            (*(u8 *)&D_800E6280.unk_110D) += 1;
+        }
+        break;
+    case 14:
+        if (D_80150070 >= 3) {
+            if (D_801500D4 >= 0xC00) {
+                D_80150070 = 0;
+                func_80042808();
+            } else {
+                goto block_50;
+            }
+        } else {
+block_50:
+            if ((D_80150070 == -1) && (D_801500D4 >= 0xC00)) {
+                func_80042808();
+            } else {
+                func_8013E89C(1);
+                D_801500D4 += 8;
+                func_8013FA7C();
+            }
+        }
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013FF80", func_8013FFAC);
+#endif
 
 void func_801407F0(void) {
     D_800E6280.unk_1100 += 1;
