@@ -1793,3 +1793,7 @@ Agent B matched GEKO `func_80132B24` (s32 with no return plus a kept-live empty 
 ## [2026-10-23] build | T-25403 w11-GEKO-80142760-p1
 Pass 1 on GEKO func_80142C9C did not match: `src/ovl/GEKO/80142760.c` unchanged (INCLUDE_ASM stays, best body 159 rows); reviewed, only drafts and notes merged.
 Next pass starts from `drafts/T-25403/GEKO/func_80142C9C/NOTES.md` (global copy propagation off, [[tickets/T-25403-w11-GEKO-80142760]]).
+
+## [2026-10-23] ticket | T-25502 Done: TAIIKU func_80137784 matched in plain C
+
+The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) found that the original's two pointer compares are uopt's test replacement of plain `arg0 == 0` tests; no extra symbols or tool change. Both reviewers' wording findings on the mechanism were fixed before merge ([[tickets/T-25502-stubborn-taiiku-80137784]]).
