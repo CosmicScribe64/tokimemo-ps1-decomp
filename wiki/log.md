@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] ticket | T-25012 final summary: zero matches, remaining targets need new compiler levers
-
-T-25012 matched nothing. Added main `func_80062948` (736 B): clean rewrite from the asm with MATRIX/SVECTOR/VECTOR from `libgte.h`, 208 target vs 210 built insns; left: original locals sit 8 bytes lower in the 0xD0 frame and interleave the two struct copies word by word. ENDING `func_801387B0` stays at about 80 rows (original recomputes `xor; sltiu` for each of four `0xC - (flag == 1)` compares; every tried form CSEs the boolean). Tooling: IDO allocates locals in reverse declaration order from the frame top; an unused local takes space only when declared first; unconstrained uopt ranges are coloured in first-mention order. Levers that would unblock several targets: keeping a redundant promoted-global store (main `func_8006A044`), an 8-byte shift of the locals area (`func_80062948`), no CSE of relational booleans (ENDING `func_801387B0`). Any such lever must be a uniform build rule with evidence, per [[plan-remaining]]. Notes in `drafts/T-25012/` ([[tickets/T-25012-class-c-d-reconstruction]]).
-
 ## [2026-10-21] decision | Next step is compiler-level levers (T-25013)
 
 At the user's direction, recorded the next step for future agents: source-level matching is exhausted, so [[tickets/T-25013-compiler-level-levers]] (Ready) is the clear next piece of work. Added a NEXT STEP block to [[status]] and a section to [[plan-remaining]], created the ticket with five candidate levers, the rules (uniform rule, no matched object changes, 27/27) and the method. Subagent and timer stopped; no agents running.
@@ -1760,10 +1756,12 @@ Wave 8 finished (34 packages merged, 57 verified matches) and wave 9 stopped (20
 
 Reviewed [[tickets/T-25302-w10-main-80049FF0]] against CODING_STANDARDS.md; matched main `func_8004A1A0` (628 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
 The cause was a pointer local defined before the late uopt block split, which lost `.noalias`; one FAKE (the empty `if (slot) {}` split). Notes in `drafts/T-25302/main/func_8004A1A0/NOTES.md` and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25301 Done
 
 Reviewed [[tickets/T-25301-w10-NAME_ENT-80139740]] against CODING_STANDARDS.md; matched NAME_ENT `func_8013AF78` (296 bytes) as default-build C, 27/27, funcdiff MATCH for default and `--version c`.
 Four marked FAKEs (a dead `register` initializer turns copy propagation off, see [[playbook]]); no blocking findings, one catalog link added.
+
 ## [2026-10-23] ticket | T-25305 Done
 
 Reviewed [[tickets/T-25305-w10-SHOUGATU-8013E330]] against CODING_STANDARDS.md; no match: SHOUGATU `func_8013EA98` stays `INCLUDE_ASM` (best body 42 funcdiff rows, over the guard limit), 27/27, no findings.
