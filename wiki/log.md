@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] build | Matrix aggregate homes recovered
-
-Recorded MAIN62948's184-word typed reconstruction in [[matching-notes]]. Correct post-call reload, distinct unsigned negation and declaration placement restore the original operation count and SDK aggregate homes; frame and final copy scheduling remain. OPTION A7EC independently reaches a single missing delay-slot NOP; TACO font39424 recovers original byte-argument entry and independent coordinates. No additional match claimed.
-
 ## [2026-10-20] lint | Rotate active matching notes
 
 Moved the oldest active sections verbatim into existing [[notes/matching-07]] with Docker `tools/wiki.py rotate-notes --keep-bytes 200000`, then refreshed function/section catalogs. This resolves the new active-note size warning while preserving findings. Log history remains untouched; the current matching work continues under [[tickets/T-24600-finish-matching]].
@@ -1719,10 +1715,12 @@ User asked for neighbor work next to wave 8. [[tickets/T-25200-wave-9-neighbor]]
 
 Reviewed [[tickets/T-25105-w8-main-80053650]] against CODING_STANDARDS.md; matched main `func_80054E6C` (340 bytes), `func_80054FC0` (796) and `func_8005557C` (1,212) as default-build C, 27/27.
 `func_80055AFC` stays INCLUDE_ASM at 113 rows (notes in drafts/T-25105/main/func_80055AFC/); the review marked the checksum address forms as FAKE.
+
 ## [2026-10-23] ticket | T-25107 Done
 
 Reviewed [[tickets/T-25107-w8-MASTER-80133680]] against CODING_STANDARDS.md; matched MASTER `func_801363F4` (2,608 bytes) and `func_801344E0` (2,912 bytes) as default-build C, 27/27.
 Both use the marked FAKE never-true arm before the first record copy; ENDING `func_80134270` has the same symptom (see wiki/playbook.md section 10).
+
 ## [2026-10-23] ticket | T-25103 Done
 
 Reviewed [[tickets/T-25103-w8-main-800674B0]] against CODING_STANDARDS.md; matched main `func_8006C988` (276 bytes), `func_8006A044` (648 bytes) and `func_80067F04` (2,452 bytes) as default-build C, 27/27.
