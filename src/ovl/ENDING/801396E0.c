@@ -2,6 +2,62 @@
 #include "ovl/ENDING.h"
 #include "game.h"
 #include "psx_types.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAC0);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAC4);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAC8);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CACC);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAD0);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAD4);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAD8);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CADC);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAE0);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAE4);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAE8);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAEC);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAF0);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAF4);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAF8);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAFC);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB00);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB04);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB08);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB0C);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB10);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB14);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB18);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB1C);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB20);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB24);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB28);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB2C);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB30);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB34);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB38);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB3C);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB40);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB44);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB48);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB4C);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB50);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB54);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB58);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB5C);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB60);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB64);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB68);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB6C);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CB70);
+/* Scene table, indexed by D_800E6280.unk_110A in func_801399B4. Defined here as the original
+ * did: as1 treats every function named in this file's data as an address-taken label, so the
+ * jump-table dispatch of func_8013A2E8 gets an edge back to that function's entry, and the loop
+ * changes as1's block weights and candidate budget there (T-25150, T-25127). */
+EdFnTbl14 D_8013CB74 = { {
+    func_80139D54, func_80139D24, func_8007C784, func_8013A2E8, func_80139DA8,
+    func_8007C784, func_80139E08, func_8013A004, func_80139EC4, func_8013B5E4,
+    func_8013B510, func_80139F3C, func_80139A58, func_80046500,
+} };
 
 void func_801396E0(void) {
     D_8013CAC0[0][0] = 0x80180308;
@@ -235,10 +291,10 @@ void func_8013A004(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-23002, 12 differing lines (6 rows): the original fills the load-delay slot after `lbu a0` of the first flag test with the `lui a1` of the first string (arm 1 then reads `lui a0; addiu a0; jal; addiu a1`), here the slot stays a nop and the arm keeps `lui a1` (viewsweep, autotweak, 240 s of permuter, local and pointer forms of the first call: no gain). Binasm probes: ugen's chain is the plain order, and as1 builds the original's slot and moves `andi t8` from this same chain once about 240 instructions or the last 14 calls after the join are deleted, so the cause is a whole-function as1 limit, not the chain's C */
-#ifdef NON_MATCHING
-s32 func_8013B640(void); /* the callers read its (unset) $v0: it blocks $v0 in the next block (selector in $a0) */
-
+/* The first flag test fills its load-delay slot with the first string's `lui a1` only because
+ * D_8013CB74 (top of the file) names this function: the jump-table dispatch then has an edge back
+ * to the entry, so the flag block lies in a loop region, which as1 searches with its larger
+ * candidate budget (T-25127; T-23002 and T-25056 traced the 11-block cutoff of the outer region). */
 void func_8013A2E8(void) {
     u32 top;
     s16 i;
@@ -604,9 +660,6 @@ void func_8013A2E8(void) {
     D_800CA2C0 += 0x20;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013A2E8);
-#endif
 
 /* FAKE (T-9780): the s32 fall-through preserves the original timer result register. */
 s32 func_8013B510(void) {
