@@ -182,7 +182,8 @@ void func_8004FC10(s32 menu) {
         }
         break;
     case 1:
-        /* The empty arm is in the target: a jump to the wrap tests, not an inverted branch. */
+        /* FAKE: empty then-arm; the target branches to the wrap tests from the fall-through, an inverted
+         * test gives a different branch shape. Real source unknown. T-25101 */
         if (g->unk_F80 & 0xF) {
         } else {
             switch (g->unk_F88 & 0xF000) {
@@ -427,6 +428,7 @@ s32 get_near_menu(s32 mode, s32 dir, s32 menu) {
             }
         }
     }
+    /* FAKE: redundant test (best is -1 or an index); it gives bltz with `li v0,-1` in the delay slot as in the target. T-25101 */
     if (best >= 0) {
         return best;
     }
@@ -1117,8 +1119,9 @@ void func_8005215C(void) {
 
 /* Love level of girl arg0: base value from her record, plus one bonus from D_800B4130 for each
  * parameter that her mask in D_800B4110 selects, by the threshold ladder of her kind (D_800B4120).
- * The u32 level locals give the frame and the colour order of the thresholds; reading the
- * parameters through gs gives the bonus row s1 and the parameter value s2 (T-25101). */
+ * FAKE: the u32 level locals lv0..lv6 (copies of D_800B4198) give the frame and the colour order of
+ * the thresholds, and reading the parameters through the gs pointer gives the bonus row s1 and the
+ * parameter value s2; the original source of both is unknown. T-25101 */
 u32 get_h_tokimeki(s32 arg0) {
     s32 girl;
     s32 sum;
