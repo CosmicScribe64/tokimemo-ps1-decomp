@@ -38,3 +38,46 @@ Source-only coordinate.c and original body.c control plus full-TU replay and exa
 Current-candidate trace now verified: stock491/traced487 words have identical487-word prefix, only trailing padding absent. First CLUT reload146 is kind split bit13/lr253, priority0.5, a2 rather than targeta3, with no overlapping draft a3 range. First-cycle frame bit115 priority1.5 was allocated earlier (#33) to v0. Exact trace/first-only explanation paths in packet NOTES; no source fix or missing-object explanation proved, no new variants run.
 
 Matched adjacent E778/F468 have the same CLUT call declarations and simpler constant/affine arguments; no zero-count/modulo donor or missing call view found. Current arithmetic/control semantics agree; no new wrong-width/value defect identified. Preserve491-word candidate and precise trace boundary, without forcing a3 or inventing frame objects.
+
+## T-24501 inverse serializer packet (2026-10-20)
+
+`func_80054FC0` (796 bytes) now has source-only typed aggregate reconstruction using the matched loader views. Actual checksum is a natural byte loop, automatically unrolled four ways; writing four bytes in C double-unrolls to 246 words. Unsigned counter separates the loop bound from selector multiplication and restores target shift/sub; 113/200 words versus target 199, exact frame 0x28. First 45 resolved rows agree; first 20-byte copy then skips a different temporary (t5 versus t4), subsequent copy ring differs, and checksum epilogue adds one word. Explicit scratch void prototype and s32 control are identical; both callers ignore return. No shared declaration promoted. Archive/replay: `drafts/T-24501/save_inverse.py`, `drafts/T-24501/main/func_80054FC0*`. Freeze for bounded consultation; do not conflate this unrolled 20-byte case with the already negative long-copy end-pointer consult or global direction changes.
+
+
+### T-24501 circular GPU grid source recovery (2026-10-20)
+
+`func_8004A414` (1,024 bytes, src/main/80049FF0.c) improves raw 390/260 words/frame C8 to typed 164/256 words with exact target frame 98 and x/y homes 8C/88. Natural repeated bound expressions fix explicit-bound promotion; natural squared-distance expressions remove duplicate local/spill ownership. Existing pointer locals before x/y reproduce target coordinate homes. Remaining first divergence swaps x/max_x stores; invariant CSE spills are 12 bytes lower, saved-register priorities and some constant/store scheduling differ. Source/replay and exact residual table archived under `drafts/T-24501/main/func_8004A414*`, `drafts/T-24501/grid_replay.py`. No production/header edit; freeze for bounded source-lifetime consultation, no padding/declaration grid or compiler-defect claim.
+
+Inverse 54FC0 consult negative: disabling the ugen shim leaves instructions identical 113/200; checksum store/function-end grouping unchanged. Keep frozen.
+
+
+T-24501 GPU grid consult improves164->132/256: inline half/depth arithmetic removes three real locals and restores all invariant homes; outer for fixes initial stores, first40 resolved rows exact. GameState first-use init unchanged. Adopted source SHA ec73d70b... with provenance. Ordinary full-TU replay132; instrumented trace reproduces identical256 words/cost132. Priority order is shade240, x/y200, base180, dimensions150, explaining current colours before allocation; target ranks alone do not justify extra uses or a compiler-bug claim. Exact table/replay in `drafts/T-24501/main/func_8004A414-notes.md`. Production unchanged.
+
+
+T-24501 read-only 4A414 follow-up finds no supported missing coordinate/base reuse: both target and132 source retain eight coordinate reloads and one shared screen-derived base for two CLUT loads after two RNG calls. Current C already spells target y-addition association but uopt reassociates it; narrowing or extra uses lacks source evidence. Freeze905e4d172. Sibling `func_8004A814` (1,028 bytes) first typed full-TU187/258 words/frameC0 improves original300/257/frameE8; target257/frameB8. TILE width and height both use x step, six abs calls and signed color products/upper-only clamps preserved. Initial x/RGB homes uniformly frame+8; direct y-distance expression is the next supported CSE ownership hypothesis.
+
+
+T-24501 TILE sibling recovery reaches114/257 words/frameB8 (target exact count/frame), from original300/frameE8. Direct y expression fixes frame/homes; direct x expression fixes invariant ordering/count even though121->124 cost; existing abs_x placement restores RGB homes, native setWH restores dimension scheduling. First45 resolved rows exact, all saved-register roles recovered. Remaining CSE/depth block uniformly+4, nondraw delay-load and ugen choices unresolved. Source-only packet/replay `drafts/T-24501/main/func_8004A814*`, `drafts/T-24501/tile_grid_replay.py`; target width-for-height quirk, six abs calls, signed products and upper-only clamp retained. No padding/new slots, production/header change, literal claim or compiler-defect claim. Freeze for bounded consultation.
+
+
+T-24501 TILE consult supplies real abs_y local:114->94/257, all stack homes/saved-register roles exact, first57 rows exact. Adopted unchanged and independently replayed; inner-for identical, split increments rejected132/261. Faithful pre-as1 capture localizes first apparent x-preload mismatch to a late latch load hoisted by as1, not entry source; common skip/draw arg4 load placement differs from target's two-edge loads. Earliest emitted geometry-y ring differs despite same visible widths/association. No fabricated load, padding or compiler change. Provenance/evidence in TILE packet notes; no new source control yet.
+
+
+### T-24501 circular TILE literal match (2026-10-20)
+
+`func_8004A814` (1,028 bytes) now matches default C. Natural bounds/distances, typed TILE/setWH, real abs-result locals recover frame/homes and six-call signed falloff; the isolated y0 `(s16)y` closes94->0. Matched pre-as1 proves SLL t8/SRA t9 consume the predicted temporary slots, then as1 erases conversion into exact target ADDU/SUBU/SH. This does not establish original early-width intent, so source marks FAKE T-24501; full32 loop/abs/distance behavior stays unchanged.
+
+Default-C complete-TU private literal link equals all1,028 target bytes, affected MAIN SHA1 passes at-j2, header/prototype/global guards pass. Exact canonical void(s32 x8) prototype added. Parent production body/header standards review has no findings; all27 integration checks remain central. Actual width-for-height quirk, six abs calls and upper-only255 clamp preserved. Historical94 control/replay and full causal record remain in TILE packet notes.
+
+
+### T-24501 font tile upload object recovery (2026-10-20)
+
+`mod_trans_vram` (752B, src/main/8004C3F0.c) typed scratch proves256B glyph output via get_fnt0x100 mirror reads/max writes and20B descriptor stride via initializer, no frame padding. Original243/197 words/frameA8 -> typed232/196/frame1A0, target188/frame1A0. Merging captured row/cell copies gives242/192/frame198 but loses actual target value families; retained as negative structural control. Direct format-field switch fixes selector promotion at unchanged232 score; earlier ring already one behind. Target buffer88 versus candidate9C and row/cell spills remain different. Source/replay/layout/caller evidence under `drafts/T-24501/main/mod_trans_vram*`, `drafts/T-24501/mod_trans_replay.py`; no shared owner, production or compiler change. Freeze for bounded source-reconstruction consultation.4A414 already contains coordinate/dimension narrowings, no supported4A814 cast transfer or new cast test.
+
+### T-24501 font upload cell split trace
+
+Single-row consultation232->226/196 independently confirmed; natural a0 call spill corrects earlier shadow requirement. Faithful ordinary/traced functions agree for226 and merged248. Outer cell priority1.8/a1 versus-0.2/uncoloured follows four versus three BB14 uses; both controls split around calls. Target has only the three real uses (width, height, row Y); fourth shadow-copy use has no omitted-source justification. Freeze, no new forms. Source-only details: drafts/T-24501/main/mod_trans_vram-notes.md. Production unchanged.
+
+### T-24501 get_fnt raster and mirror recovery
+
+Natural byte raster/mirror reconstruction343->23 resolved cost,258words versus259target. Proven256B temporary, byte row stride, fixed eight-byte horizontal permutation and correct8/16 vertical rowcounts replace inherited invalid array/wordcasts/manual unroll. Separate raster/shared mirror counter restores all saved roles and raster/vertical flow. Remaining frame188/1A0, buffer88/8C, late exit/move and multiply-order differences frozen for bounded consultation. Source-only packet/replay drafts/T-24501/main/get_fnt-notes.md; production/header unchanged.

@@ -7,18 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] decision | T-24700 wave 1 results and wave 2
-
-Wave 1 (T-24701..T-24709) closed no literal matches: the remaining set is the hard tail, and the
-closest guarded drafts are blocked at 1-33 rows, most of them by the documented as1 hoist/scheduler
-family. Real improvements kept: NAME_ENT func_801398EC 266->185 rows, GYOZI func_80138C9C 103->75,
-func_8013907C 39->23, main func_80054E6C 84->33, main func_800455C4 26->16 (new guarded body).
-Found and documented a process bug: `funcdiff --resolve` reports MATCH for an INCLUDE_ASM function
-because both sides are the original .s; the playbook now states the promotion rule. Wave 2
-(T-24710..T-24713) assigns the closest functions (main func_8006D7EC at 1 row, KANGEI 2 rows,
-VALEN 4, ENDING 5, GYOZI 9/23/75, main func_800455C4 16, func_80047560 22, func_80054E6C 33)
-single-mindedly, plus one worker on the as1 family.
-
 ## [2026-10-20] build | T-24700 wave 2 partial results
 
 T-24710: main func_8006D7EC's last row is uopt constant propagation (`cc -S` shows `li $3,1`),
@@ -1737,10 +1725,12 @@ No function left with rows in this package; the data-island lead for other switc
 
 Reviewed [[tickets/T-25149-w8-NAME_ENT-80132000]] against CODING_STANDARDS.md; matched NAME_ENT `func_80138C1C` (740 bytes) as default-build C, 27/27.
 No findings; the three FAKEs (0x20 buffer, `& 3` on the two-bit date fields, s32 return for the caller) already carry reasons and the ticket.
+
 ## [2026-10-23] ticket | T-25148 Done
 
 Reviewed [[tickets/T-25148-w8-ENDING-80137340]] against CODING_STANDARDS.md; matched ENDING `func_801387B0` (748 bytes) as default-build C, 27/27.
 No review findings: the three fakematches (four test spellings, `* 1` on two reads, the D_8013CAA4 view of D_8013CAA0) already carry `FAKE`, the reason and the ticket; no rows left in the package.
+
 ## [2026-10-23] ticket | T-25111 Done
 
 Reviewed [[tickets/T-25111-w8-TACO-8013B990]] against CODING_STANDARDS.md; matched TACO `func_8013C6D4` (1388 bytes) and `func_8013BAC4` (1840 bytes) as default-build C, 27/27; the review added two comments for non-obvious tricks in `func_8013BAC4`.
