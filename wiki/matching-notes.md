@@ -686,3 +686,12 @@ What is left:
 - The colour order of the unrolled 256-record loop (about 40 rows). The original colours the end constant first.
 
 Measured negatives and the next hypothesis: `drafts/T-25105/main/func_80055AFC/NOTES.md`.
+
+## T-25108: main func_80065964
+
+[[tickets/T-25108-w8-main-80062CD0]], branch w8-main-80062CD0. Matched in plain C (424 B), from about 68 rows (T-25010 draft).
+
+- **Eight variables, not four.** The original's eight coordinate registers (four copies, one pair per corner test) are two local arrays `s32 cx[4], cy[4]` tested in an inner `for (j = 0; j < 4; j++)` loop. IDO unrolls the 4-trip inner loop and scalarises the arrays (eight ranges), so the 15-trip outer loop is no longer innermost and stays rolled (`li at,15; bne`), with no `goto`. The register pressure pushes the other record's address and ty into s0/s1 and gives the 0x68 frame.
+- **The dead stores are CSE temporaries.** sp+0x20..0x28 sit below the declared locals' 15 words: they hold the shared subexpressions (`&D_80125C10[idx]`, x0, y0, x0 + 19, y0 + 15). They only appear when the arrays are filled from repeated expressions (`cx[1] = p[0] + dx + 19;`), one source line per corner; `cx[1] = cx[0] + 19` or declared `x`, `y` locals do not give them.
+- **Last rows.** The fourth bound test reads `cy[1] > 120` (t1), the third `cy[0] < -120` (a3); the other record is read inline (`((s16 *)&D_80125C10[i * 4])[0]`), as a `q` pointer it takes a2 instead of s0. One unused local (FAKE) is the 15th local word; without it the spill slots move by 4.
+- Measurements and negatives: `drafts/T-25108/main/func_80065964/NOTES.md`.
