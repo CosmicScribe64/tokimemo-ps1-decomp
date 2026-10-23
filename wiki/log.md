@@ -7,9 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25004 created, In Progress
-[[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]] created, In Progress (branch c-m4): main `func_8005B43C`, `parameter_up_down`, `col2sepia`.
-
 ## [2026-10-20] ticket | T-25004 to In Review
 [[tickets/T-25004-class-c-main-8005b43c-parameter-up-down-col2sepia]]: main `col2sepia` matched (sum local reused for blue, every clamp as a ternary). Guards: `func_8005B43C` 3 rows (bit-field flag test, FAKE second read of `unk_0F4.h` found by the permuter), `parameter_up_down` 11 rows. Notes in [[matching-notes]]. Clean build 27/27 and header/global/proto checks pass.
 
@@ -1752,6 +1749,7 @@ The only function of the package is matched, none left with rows; the real battl
 
 Reviewed [[tickets/T-25139-w8-KANGEI-80132090]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched KANGEI `func_801327DC` (1096 bytes) as default C in `src/ovl/KANGEI/80132090.c`; FAKEs: two empty tests of the club halfword and a `(u8)` narrowing; the scene table `D_801399B0` now defined in C (data island).
 The only function of the package is matched, none left with rows; notes in `drafts/T-25139/KANGEI/func_801327DC/NOTES.md` and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25130 Done
 
 Reviewed [[tickets/T-25130-w8-MASTER-80132140]] against CODING_STANDARDS.md; matched MASTER `func_801326B4` (3264 bytes) as default-build C, 27/27.
