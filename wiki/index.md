@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-20
+updated: 2026-10-23
 ---
 
 # Wiki index
@@ -20,6 +20,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 
 - [[playbook]] - short recipe list by symptom
 - [[register-cheatsheet]] - full register-miss guide, symptom to C change (regdiff loop)
+- [[notes/wins-2026-10]] - the 93 wave 8-11 matches (2026-10-22/23) by recipe, with the deciding change per function and the levers ranked by how often they closed a match
 - [[decompile-workflow]] - queue -> m2c -> edit -> build -> funcdiff -> commit; switches, jump tables
 - [[matching-notes]] - active notes page (append new sections here); older parts in `notes/`, index in [[notes/sections]]
 - [[build-step-gaps]] - what the build cannot reproduce yet (uopt, as1, ugen block-copy state)
