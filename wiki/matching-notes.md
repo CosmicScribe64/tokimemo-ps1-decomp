@@ -827,6 +827,7 @@ the store instead of before. Negatives and the next hypothesis: `drafts/T-25142/
 ## T-25140: main make_color_bar
 
 Matched (1,072 bytes, default C, no FAKE) from the T-24501 walked-pointer draft (186 rows, cost 330) in about 20 minutes. The first divergence was the row pointer: as a declared variable it is range bit 0 and takes `$v0`. The target colours it after the masked gradient values (`$v0`, `$a1`), at `$t0`, so it has to be a uopt induction temporary. Writing every store from the pair index, `p[k + 16 * row].r1 = k * 2` and `.r0 = k * 2 - 1` in `for (k = 0; k < 16; k++)`, lets uopt strength-reduce both values and the address, and use `k * 2 - 1 < 31` as the loop test. That closes all three loops at once. Negatives: indexed `p[k]` with separate `i`/`j` counters (247 rows), and a `Pix2Out *` parameter with no `p = arg0` copy (260 rows). A toy file with only the typedef and the function, compiled with `tools/cc.py`, reproduced the full-unit score in 8 s. Details: `drafts/T-25140/main/make_color_bar/NOTES.md`.
+
 ## T-25138: RPG_BAT func_80144C84
 
 Matched (1,276 bytes, default C) from the T-24522 28-row draft in about 25 minutes. Both remaining gaps came from

@@ -2,7 +2,7 @@
  * func_80144C84 the indexed flag read must alias EBE0 and the counters (uopt reloads them after it) and as1
  * keeps the EBE0 load before the counter writebacks only when both share one symbol. The real aggregate's base
  * and extent are not recovered. */
-#define RPG_BAT_OVERRIDE_D_8015EBCC
+#define RPG_BAT_OVERRIDE_D_8015EBCC /* RpgBattleView below, a partial view of the battle block (T-25138) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
