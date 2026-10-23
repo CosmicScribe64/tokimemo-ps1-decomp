@@ -1790,3 +1790,7 @@ Reviewed and merged: ENDING func_80134270 matched (1848 bytes, default C, three 
 ## [2026-10-23] ticket | T-11910 Done
 
 Agent B matched GEKO `func_80132B24` (s32 with no return plus a kept-live empty test; a no-op assignment to order cfe's `+` operands) and kept `func_80133024` guarded at 2 rows with the ucode finding in its comment. With `func_80133C50` (#69) that is two matches in this round; `func_80142C9C` and `func_80133024` stay open (the maintainer's agents also work on them, #65). Inline review against CODING_STANDARDS.md. Notes in [[matching-notes]]. [[tickets/T-11910-geko-remainder]].
+
+## [2026-10-23] ticket | T-25502 Done: TAIIKU func_80137784 matched in plain C
+
+The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) found that the original's two pointer compares are uopt's test replacement of plain `arg0 == 0` tests; no extra symbols or tool change. Both reviewers' wording findings on the mechanism were fixed before merge ([[tickets/T-25502-stubborn-taiiku-80137784]]).
