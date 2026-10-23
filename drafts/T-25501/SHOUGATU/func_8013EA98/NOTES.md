@@ -90,6 +90,23 @@ t6). It never gives v1. So in the original the selector's value at L_EC7C was a 
 - A real forced store (`final/b/syn_Y1.c`) splits the {store, L_EC7C} piece first (a0), and the remainder is
   coloured whole (t4, stray `andi`), as the compiler lens found.
 
+- Why U1 splits and Z13 does not. U1 and Z13 have the same selector units except at L_EC7C (L2 in
+  U1, L1 in Z13). In U1 the second load is the call argument itself, so that live unit is
+  precoloured to a0. uopt's `cupcosts` (uoptreg2.c, n64decomp/ido d068e43) returns 1e20 for a
+  precoloured unit when the candidate register is in `regscantpass`. That leaves s0 (11.85) as the
+  cheapest register, above the range's total of 9, and causes the cost split. In Z13 the argument is
+  an expression, t4 costs 1 (one call-adjacent unit) and the range is coloured whole. In Z1 the alias
+  range's precoloured unit still gets v1, so v1 is outside `regscantpass` and t4 is inside it.
+- More negatives in this direction:
+  - Folded `* 0` terms in the loop rotate ugen's temporary for the `lui` (W1..W4: t8, t9, t7, t6)
+    but also move the constant ranges. The same terms after the loop (AB1..AB3, AC1..AC3) do not
+    rotate it.
+  - Triggering the cvt entry rule for FE4 and D_80146054 with an empty `if (G) {}` at the entry
+    (AA1..AA4) promotes them from the entry: 242-259 rows.
+  - Moving the D_80146058 store into the call argument (X1), or reading the argument through
+    D_80146058 (X2), breaks the split.
+  The `syn_*.c` files in `final/b/` keep the representative bodies.
+
 Under IDO 5.3's costs, then, the original's three facts can't hold together: the loop piece is a
 cost split from L_EBE8, the post-loop piece is coloured in v1, and bb6 gets no reload. The
 remainder that would hold the post-loop piece has two loop-frequency reloads (bb6, bb16) that make
