@@ -802,3 +802,16 @@ Matched (1,024 bytes, default C, [[tickets/T-25122-w8-main-80049FF0]]). It start
 ## T-25127: ENDING func_8013A2E8
 
 [[tickets/T-25127-w8-ENDING-801396E0]]: func_8013A2E8 (4648 bytes) is a literal match in the default build; 801396E0.c has no INCLUDE_ASM left. The T-23002 guard body (6 rows: the first flag test's load slot kept a `nop` instead of the first string's `lui a1`) matched unchanged once the object's scene table D_8013CB74, which names func_8013A2E8, was defined in C (`tools/data_island.py ENDING/801396E0`). This is the T-25150 mechanism: the function's jump-table `jr` gets an edge back to its entry, so the first flag block lies in a loop region and as1 searches it with the larger candidate budget that T-25056 had shown would match (its scratch threshold 100). Lead: ENDING func_80134270 and func_80135F4C also have a `jr` and are named in their own objects' `.data`. Details: `drafts/T-25127/ENDING/func_8013A2E8/NOTES.md`.
+## T-25125: main func_8007132C
+
+Not matched; `INCLUDE_ASM` stays (best body 738 rows, no guard). Start: the T-25052 body at 950 rows. Two semantic
+holes closed: `u32 t` for the `unk_0F4.h >> 12` tests (the original uses `sltiu`) and a redundant `b3 >= 7` test in
+the rand condition. A `f.b16 = 1` bit-field store fixes the ugen slot at word 161; with the index read through byte
+views the first 192 words match exactly. The blocker is the address constant 0x800E6280: uopt colours one split
+piece of it (`$a3`), the original never does. Measured from the traced uopt: a constant piece is allocated when
+`sum(uses * freq) - sum(freq of reload units)` is positive (loop-first reloads with an in-range predecessor are
+free); the draft piece sits at +1 to +5. The original's opcode walk uses a GameState-typed record pointer
+`p = base + idx * 4` (fields at +0x69C, index forwarded with `idx++`), which adds uses; taking the schedule reads off
+the constant (absolute-address FAKE) leaves it unallocated and gives the walk's structure (825 rows). Left: the walk
+colours (op, 0x25, p). Bodies, measurements, negatives and the next hypothesis (the schedule reached through
+another aggregate or symbol than the GameState base): `drafts/T-25125/main/func_8007132C/NOTES.md`.

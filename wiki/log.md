@@ -1750,3 +1750,7 @@ Reviewed [[tickets/T-25122-w8-main-80049FF0]] against CODING_STANDARDS.md; match
 
 Reviewed [[tickets/T-25127-w8-ENDING-801396E0]] against CODING_STANDARDS.md; matched ENDING `func_8013A2E8` (4648 bytes) as default-build C, 27/27.
 The guard in `src/ovl/ENDING/801396E0.c` is gone: defining the scene table D_8013CB74 in C (data island, `config/overlays/ENDING.yaml`) gave as1 the jump-table back edge; notes in [[matching-notes]] and [[as1-scheduler-rule]].
+## [2026-10-23] ticket | T-25125 Done
+
+Reviewed [[tickets/T-25125-w8-main-8006CB30]] against CODING_STANDARDS.md: no source change, nothing matched, 27/27 build; no findings.
+`func_8007132C` stays INCLUDE_ASM (738 rows from 950); notes and next hypothesis in drafts/T-25125/main/func_8007132C/NOTES.md.
