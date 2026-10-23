@@ -7,67 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | T-25013 lever 2 concluded: frame elision already happens, +8 is a lifetime artifact
-
-Lever 2 session on main func_80062948: micro-experiments show the IDO
-5.3 pipeline elides frame space for unused locals (an unused 32-byte
-struct and scalar leave the frame at -48), so the matrices draft's
-0xD8 vs 0xD0 frame is not a frame-pass gap. The extra 8 bytes are a
-materialized value the original keeps in a register, the same
-allocation behaviour as levers 1 and 5. Detail in
-[[tickets/T-25013-compiler-level-levers]].
-
-## [2026-10-21] build | T-25013 lever 4 concluded: the as1 +1 region test identified, no build rule
-
-Read the weight pass in the pinned recomp as1 source and confirmed it
-on a traced run of GEKO func_80136C20: a predecessor adds 1 (not 3)
-exactly when one of its successors leaves the current region bitset
-(func_428758), and -3 on a back edge to a dominator. The GEKO stall
-block's scan stops at the weight-7 switch block as documented; the
-original's CFG must have earned a +1 there, a source-shape matter.
-Detail in [[tickets/T-25013-compiler-level-levers]]; the open item in
-[[as1-scheduler-rule]] is answered there.
-
-## [2026-10-21] ticket | T-25013 complete: all five levers investigated, none is a uniform rule
-
-Lever 5 session on main func_8006A044: the OPTN sweep (0..530, plus
-values 1 and 2 for 400..464) found no option controlling uopt's
-colouring order, and the colour table is not visible to either build
-shim, so no uniform rule can express it. With that, all five levers
-in [[tickets/T-25013-compiler-level-levers]] are concluded: none
-exists as a compiler-level rule, no functions promoted, and the
-ticket moves to In Review with the full evidence trail (the as1 +1
-region test in [[as1-scheduler-rule]] is the positive result).
-
-## [2026-10-21] ticket | T-25014 created: variant search automation for allocator and source-shape residuals
-
-At Lila's direction, follow-on work to T-25013: a packet-based variant
-search engine that hill-climbs source transformations from the project's
-matching history (lifetime shaping, respellings, CFG shapes informed by
-the as1 +1 region test), scored against single-function packets in the
-remote environment. Ticket [[tickets/T-25014-allocator-source-shape-automation]],
-branch octa/t25014-shape-automation stacked on octa/t25013-levers.
-
-## [2026-10-21] ticket | T-25014 tooling landed: packet variant search engine, no improvement on the two hardest beds
-
-Committed tools/shape_search.py (hill-climb with plateau moves),
-tools/shape_transforms.py (eight transform families from the matching
-notes), tools/shape_score.py (relocation-aware packet metric) and
-tools/test_shape_search.py (passing). Runs: GEKO func_80136C20, 236
-trials, no improvement on 15 (goto form neutral, as lever 4 predicts);
-main func_8006A044, 400 trials, no improvement on 113 (field copies
-cost more than they gain). Ticket [[tickets/T-25014-allocator-source-shape-automation]]
-to In Review; the engine is ready to sweep the remaining functions at
-the maintainer's pace.
-
-## [2026-10-21] ticket | T-25015 created: lever-expansion tooling programme (six tools)
-
-At Lila's direction, build the instrumentation first, then test across
-the remaining functions: regression corpus + uniformity harness, trace
-observatory, census + delay-slot oracle, rule fuzzing lab, construct
-precedent miner, sweep ledger + batch runner. Ticket
-[[tickets/T-25015-lever-expansion-tooling]], branch octa/t25015-tooling.
-
 ## [2026-10-21] setup | Full asm tree now mirrored in the remote scratch (T-25015 reach)
 
 Lila zipped the generated asm/ tree on the host (14,087 listings) and
@@ -1790,6 +1729,7 @@ Reviewed and merged: ENDING func_80134270 matched (1848 bytes, default C, three 
 ## [2026-10-23] ticket | T-11910 Done
 
 Agent B matched GEKO `func_80132B24` (s32 with no return plus a kept-live empty test; a no-op assignment to order cfe's `+` operands) and kept `func_80133024` guarded at 2 rows with the ucode finding in its comment. With `func_80133C50` (#69) that is two matches in this round; `func_80142C9C` and `func_80133024` stay open (the maintainer's agents also work on them, #65). Inline review against CODING_STANDARDS.md. Notes in [[matching-notes]]. [[tickets/T-11910-geko-remainder]].
+
 ## [2026-10-23] build | T-25403 w11-GEKO-80142760-p1
 Pass 1 on GEKO func_80142C9C did not match: `src/ovl/GEKO/80142760.c` unchanged (INCLUDE_ASM stays, best body 159 rows); reviewed, only drafts and notes merged.
 Next pass starts from `drafts/T-25403/GEKO/func_80142C9C/NOTES.md` (global copy propagation off, [[tickets/T-25403-w11-GEKO-80142760]]).
@@ -1797,3 +1737,37 @@ Next pass starts from `drafts/T-25403/GEKO/func_80142C9C/NOTES.md` (global copy 
 ## [2026-10-23] ticket | T-25501 Done: SHOUGATU func_8013EA98 matched
 
 The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) matched SHOUGATU func_8013EA98 (920 bytes) under stock IDO 5.3: a nested-if loop shape, counted free references and a forced cost split; no tool change, one keep line with a keepproof proof. Both reviews pass after the FAKE marking was completed ([[tickets/T-25501-stubborn-shougatu-8013ea98]]).
+## [2026-10-23] ticket | T-25502 Done: TAIIKU func_80137784 matched in plain C
+
+The stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) found that the original's two pointer compares are uopt's test replacement of plain `arg0 == 0` tests; no extra symbols or tool change. Both reviewers' wording findings on the mechanism were fixed before merge ([[tickets/T-25502-stubborn-taiiku-80137784]]).
+
+## [2026-10-23] ticket | T-25600 finish gate opened
+
+User approved one gate in place of the separate conveyors. [[tickets/T-25600-finish-gate]] (tickets T-25601..T-25609) loops the nine functions left until none is in assembly, using the lens, synthesis and review treatment that matched TAIIKU func_80137784. Waves 10 and 11 start no new work; their running passes finish first.
+
+## [2026-10-23] build | T-25401 w11-GEKO-801323E0-p1
+Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl/GEKO/801323E0.c`; func_80132D04 got an old-style definition (same bytes). The file has no INCLUDE_ASM left, so [[tickets/T-25401-w11-GEKO-801323E0]] is Done after review; notes in [[matching-notes]].
+
+## [2026-10-23] ticket | T-25317 Done
+
+Reviewed [[tickets/T-25317-w10-main-80047550]] against CODING_STANDARDS.md; no match: main `func_800476C0` stays `INCLUDE_ASM` (552 funcdiff rows, 8 structural hunks, saved-register order now original), 27/27, two small findings fixed.
+Draft body and notes in `drafts/T-25317/main/func_800476C0/`; section in [[matching-notes]].
+
+## [2026-10-23] ticket | T-25314 Done
+
+Reviewed [[tickets/T-25314-w10-ETC-8013FF80]] against CODING_STANDARDS.md; matched ETC `func_8013FFAC` (2116 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+`register s32 i` is the zcopy-off trigger, two empty labels split uopt blocks, `func_8004A1A0` is an implicit-int view; notes in `drafts/T-25314/ETC/func_8013FFAC/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25318 Done
+
+Reviewed [[tickets/T-25318-w10-main-8006CB30]] against CODING_STANDARDS.md; matched main `func_8007132C` (3992 bytes) as default-build C, 27/27, funcdiff MATCH; one small finding fixed (FAKE comments at the two remaining late-bound loops).
+Reading the schedule as `D_800E6280.unk_69C[D_800E6280.unk_71C]` with no record pointer leaves the base unallocated; notes in `drafts/T-25318/main/func_8007132C/NOTES.md` and [[matching-notes]].
+
+## [2026-10-23] build | T-25403 w11-GEKO-80142760-p2
+Pass 2 matched GEKO `func_80142C9C` (3,656 bytes, default C, 27/27); `src/ovl/GEKO/80142760.c` has no INCLUDE_ASM left. Reviewed, no findings; keep line for `D_800E71DF` added.
+Lever in [[playbook]], notes in `drafts/T-25403/GEKO/func_80142C9C/NOTES.md`, [[tickets/T-25403-w11-GEKO-80142760]] Done.
+
+## [2026-10-23] ticket | T-25319 Done
+
+Reviewed [[tickets/T-25319-w10-NAME_ENT-80142A80]] against CODING_STANDARDS.md; no match: NAME_ENT `func_80143580` stays `INCLUDE_ASM` (draft at 293 rows, score 293, from 471), 27/27, no findings left.
+The draft packet is `drafts/T-25319/NAME_ENT/func_80143580/` (next hypothesis in NOTES.md) and [[matching-notes]].

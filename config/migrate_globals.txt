@@ -20,3 +20,4 @@ keep src/ovl/TACO/80148FE0.c D_800E7384 proof=func_80149538:33:d7dd7f6c second u
 keep src/ovl/TACO/801480B0.c D_800E7384 proof=func_801484E4:32:cda52ed3 second uopt variable for the late read (byte-match necessity proof, T-20820, T-22005)
 keep src/ovl/DATE/80132000.c D_800E71DF proof=func_80137154:94:56706346 second uopt variable for the late read (byte-match necessity proof, T-20820, T-24099)
 keep src/ovl/SHOUGATU/8013E330.c D_800E71DF proof=func_8013EA98:130:cb9e034c alias range for the forced choice and its two reads (byte-match necessity proof, T-20820, T-25501)
+keep src/ovl/GEKO/80142760.c D_800E71DF proof=func_80142C9C:2:e48ab935 second uopt variable for the packed-appointment reload in the first loop (byte-match necessity proof, T-25403)
