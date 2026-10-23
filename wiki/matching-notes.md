@@ -17,15 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25007: class C ETC func_80146D4C guarded (12 rows); RPG_BAT func_8014BFE4, main func_8005938C not matched
-
-[[tickets/T-25007-class-c-etc-rpgbat-main]], branch c-m6. ETC `func_80146D4C` is guarded at 12 rows; the other two stay `INCLUDE_ASM` with notes in `drafts/T-25007/`.
-
-- **ETC `func_80146D4C` (1076 B, 104 -> 12 rows, guarded).** From the T-24303 draft. Levers in the order they cut rows: one variable `ret` for ret, score and grade puts the grade chain in `v1` as in the original (104 -> 88; one unused scalar keeps frame 0x58, FAKE pad); `GameState *g = &D_800E6280;` for every field gives case 2 its direct `lh s0` and colours two of the five `unk_041` reads (88 -> 68); the flag test as `((GsByteNibbles *)&g->unk_0F4.b[1])->low & 2` loads the byte into its own temporary as the original does (`lui t6; lbu t7`; FAKE view), after which regdiff reports registers only; an empty `if (g->unk_041) {}` in the grade-0 block (found by `permute.py`, 600 s, score 465 -> 265) raises the priority of the promoted `unk_041` range so every read sits in `a3` as in the original (82 -> 28; FAKE); the total as `score = w->unk_28[sel] + w->unk_28[5]; w->unk_28[5] = score; printf(..., score)` stops uopt promoting `w->unk_28[5]` into `a1` and evaluates the operands in the original order (28 -> 12; `w->unk_28[5] += ...`, `= [5] + [sel]` and a store-then-reread keep the promotion). Left: the last block has every ugen temporary one lower (the original skips a ring slot before the index shift and one between the load and the add of the `D_801230F4` increment, which is `w->unk_10[5]`). Tried there without gain: `& 0xFF` on the index (breaks the address CSE, 24-25), `| 0`/`* 1` (folded), `w->unk_10[5] += 1`/`++`, moving the empty `if`; autotweak 300 s on the 12-row form found no edit. Without gain earlier: a byte view of `unk_041` (104), a separate `extern u8 D_800E62C1` (88, never coloured), `sel` locals reloaded after each call (142), `g` declared first or in place of a pad (82-84).
-- **RPG_BAT `func_8014BFE4` (892 B, 128 rows).** The T-17110 hand draft is still the best. The original keeps `idx + 8` in `s5` from before the first call of the digit arm, so `div` falls to `a1` with a spill at 0x58 and `y` is spilled around the arm; the build gives `div` `s5`. After the loop the original reloads `t = slot * 12` from its home (0x50) three times and recomputes `t + 0x40`; the build value-numbers that with the pre-loop index and keeps it in a spill slot. Tried, all worse: named `t`/`u` locals and `u + i` arguments (164-255), `j = idx + 8` before the call (forward-substituted, 162), index as the reused `arg0` (223), `div = 1` before the switch (241), head-chain spellings (128-169); autotweak 300 s: 128 -> 126 (casts only); permuter 600 s: no row gain. See `drafts/T-25007/RPG_BAT/func_8014BFE4/NOTES.md`.
-- **main `func_8005938C` (764 B, 124 rows).** The T-17017 closer draft is still the best; every row is a ugen temporary. Each of the three 32-byte MATRIX copies takes two ring slots in the original (one skipped, one data register) and three in the build. Matched copies of the same `*(MATRIX *)D_80125C60` in ETC `func_8013FA7C` and TACO `80146D60.c` take three slots in their originals too, so this is not a general build gap; what makes this function's copies cheaper is unknown. Plain `rot` stores without `p` and `*(MATRIX *)&D_80125C60` change nothing; a `MATRIX *` source pointer (148) and a chained `sm = m = ...` (226) are worse.
-- Tools: `build/scr` helpers (not committed) printed a side-by-side of the guarded build against the original; regdiff needs `--uopt` pointing at the traced uopt (`TOKIMEMO_SCRATCH=/private/tmp/t24047-uopt`, `--uopt /scratch/variants/trace`).
-
 ## T-25006: class C main srn_set matched; mod_set_gpu guarded; func_8004A1A0 drafted
 
 [[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]], branch c-m5. One of three matched in plain C, one guard at 28 rows, one INCLUDE_ASM with a draft (drafts/T-25006/main/func_8004A1A0.c, 76 rows). All three were rewritten from the asm instead of patching the T-17015/T-24301 drafts.
@@ -809,6 +800,7 @@ free); the draft piece sits at +1 to +5. The original's opcode walk uses a GameS
 the constant (absolute-address FAKE) leaves it unallocated and gives the walk's structure (825 rows). Left: the walk
 colours (op, 0x25, p). Bodies, measurements, negatives and the next hypothesis (the schedule reached through
 another aggregate or symbol than the GameState base): `drafts/T-25125/main/func_8007132C/NOTES.md`.
+
 ## T-25138: RPG_BAT func_80144C84
 
 Matched (1,276 bytes, default C) from the T-24522 28-row draft in about 25 minutes. Both remaining gaps came from
@@ -824,3 +816,33 @@ and `RpgStat *stat` are gone; the comma return stays (FAKE). Details: `drafts/T-
 ## T-25136: TACO func_80145650
 
 Matched (1,908 bytes, default build, 27/27 sha1 OK). The starting point was the T-24502 body at 200 rows. The first divergence was the transfer register of the second matrix copy. Forcing the block-copy state per copy in a scratch `ugen` shim showed the cause: copies 2-4 are in state F in the original and B in the draft, because only stack stores to the input come before them. Forcing BFFF dropped the draft to 92 rows. Writing the four tail sums field first (`arg0[2]->x0 + rsin(...) * len / 3 / 4096`) gave the original's call-first evaluation order. `s32 x, y` restored the 0x88 frame. In place of the forced state, one FAKE: an empty `if (x + y > 0) {}` after the vertex-0 stores. It sets `ugen_pass.py`'s signed-jump flag after an `istr`, so all later copies are F. Testing only x or only y reorders the saved registers. Negatives: pointer stores to the input (uopt makes them direct), the copy before the input stores, a vertex loop (not unrolled). Details: `drafts/T-25136/TACO/func_80145650/NOTES.md`.
+
+## T-25139: KANGEI func_801327DC
+
+Matched in literal default C, 1,096 bytes. Started from the T-24516 body
+(`drafts/T-24516/kangei-327dc.c`, 270 rows). What closed it, in order:
+(1) two empty truth tests of `D_800E6280.unk_0F4.h` (FAKE). The global is read only through
+`>> 12`, so cvt_pass keeps the CVT of every read and uopt saw no plain use. Two plain uses make it
+one range coloured `$v1`, the original's `lui v1; lhu v1` at every read. One test is not enough,
+any two are (175, 180 to 197, then 0 rows).
+(2) the object's `.data` scene table `D_801399B0`, which names this function, defined in C
+(`tools/data_island.py KANGEI/80132090`, T-25150 rule 8). Without it, as1 hoists the default arm's
+`D_800CA19C` address into the first switch head (29 rows in the control).
+(3) bit-field flag tests `unk_0C.f.b2` / `.f.b19`.
+(4) `D_800CA148` assigned and incremented directly (`+= 1`, `+= 2`) instead of m2c's locals, so
+uopt promotes it into `$v1` (150 to 17 rows).
+(5) an `else if (club == 7) ... else` chain, and `(u8)` on the `get_g_zyotai_s(6)` result for one
+ring slot (FAKE).
+Details and negatives: `drafts/T-25139/KANGEI/func_801327DC/NOTES.md`.
+## T-25130: MASTER func_801326B4
+
+[[tickets/T-25130-w8-MASTER-80132140]] matches `func_801326B4` (3264 bytes, default C, about 55 minutes) from the T-24517 body (`drafts/T-24517/later/func_801326B4.c`), 113 rows here and 102 once `func_800847B8` is called as an implicit int. The first divergence was the case 4 switch: uopt copy-propagated the raw `sel` local into the global D_800E6374 and made `shr(D.h, 12)` one PRE range in `$v1` (computed at the switch, inserted after each reload in the call arms), where the original recomputes both shifts in ugen temporaries. What closed it:
+
+- **Different expressions for the two shifts.** The switch is `(u16) D_800E6280.unk_0F4.h >> 0xC` (`shr(cvt(D.h))`) and the join test reads a u32 copy, `mode = D_800E6280.unk_0F4.h; if ((mode >> 0xC) != 3)` (`shr(D.h)` after copy propagation). Nothing is shared, so nothing is PRE'd.
+- **Uses in the call arms.** Six always-false tests, `if ((u32) D_800E6280.unk_0F4.h < 0) {}` after each arm call (a FAKE macro), give each arm one use with its reload; the global becomes profitable, gets `$a0` and is reloaded after each call as in the original. ugen folds the tests. Removing any one costs 229 register rows.
+- **`s32 func_800847B8();`** under the existing override pattern: a `void` view moves the case 0/1 ranges (39 rows).
+
+Negatives and the full measurement list: `drafts/T-25130/MASTER/func_801326B4/NOTES.md`.
+## T-25137: TACO func_8013B460
+
+[[tickets/T-25137-w8-TACO-8013B170]], branch w9-TACO-8013B170 (wave 9 neighbor conveyor). Matched (1328 bytes, default C, guard removed) from the T-24200 guard (cost 4: the `p->y3` store before the UV stores instead of between `lui` and `lw` of the AddPrim argument). Stock `as1 -R -xbbdbg 8` plus the recompiled as1 show the per-block pick order: smallest start time, larger aftercycles, larger latency, smaller hazard address (+48), smaller **source line** (+12), then the front of the ready list (released nodes go to the front, which is why one UV statement comes out v3 first). The y3 store, the UV stores and the `lui` tie on everything but line, so the original's y3 statement had a later line than the AddPrim call. IDO 5.3 gives a statement the line of its first token and gives code moved to a `goto` site the jump's line, so no plain or `goto` layout reaches it. A `#line` pair per quad (the y3 statement on AddPrim's line + 1, numbering restored after it) gives MATCH (FAKE). `funcdiff --version c` and `preprocess_draft` run `gcc -E -P` and drop the markers; the default build keeps them. Negatives and the trace recipe: drafts/T-25137/TACO/func_8013B460/NOTES.md.
