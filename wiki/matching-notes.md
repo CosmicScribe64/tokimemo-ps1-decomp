@@ -680,3 +680,20 @@ Matched: `srn_tpage_show` (806 words, 3224 bytes) is default-build C, 27/27 SHA1
 ## T-25201: TAIIKU func_80137784 (closer)
 
 No match; the guard stays at 4 rows (the two compare operand orders). Dumped uopt's input and output ucode for the compare: uopt swaps an `==` whose first operand is not a plain variable, then moves a constant addend of the second operand onto the first (uopt for an LDA sum, ugen when `(s32)` casts hide it). So an alias written with an offset (`(Fix32 *)&D_8014985C - 4`) always ends up first, and putting it on the left only adds `addiu t8,a0,16`. Pointer first needs the constant on the left with a zero offset. With `D_8014984C` itself that order is right, but the base constant (one reload-free unit, priority 0.5) outranks 0x44 (0.4) again. A positive control with undefined zero-offset alias symbols (`D_8014984C_alias == &D_8014984C[arg0]`) matches every instruction; the 8 rows left are its unresolved relocations. Next step, which needs approval: two overlay-only alias symbols in `config/symbols_TAIIKU.txt`. Details and negatives: `drafts/T-25106/TAIIKU/func_80137784/NOTES.md`, draft `alias-8rows.c`.
+## T-25153: NAME_ENT func_8013AF78
+
+Not matched. The T-24132 guard (99 rows) is gone and the source is plain `INCLUDE_ASM` again. The best
+body is in `drafts/T-25153/NAME_ENT/func_8013AF78/body.c` (57 funcdiff rows, two FAKEs); NOTES.md there has
+the full record.
+
+- Closed: the `sltu` loop comes from reusing the loop counter after the loop, as in RPG_BAT
+  `func_8014E994`. The masked values are int-typed (`x = D & 0x7F` gives the original
+  `lui X; lbu X; andi t,X; or X,t,zero`; a `u8` local adds a CVT and loads into a temporary). The 0x30
+  frame is `s32 a, b; s32 sel[3]; s32 c, d;` with a value local as the counter (IDO frame is
+  round8(locals + 4), and every declared scalar takes a slot).
+- Closed with FAKEs: `c` splits into a CSE and a local because its mask stays available in the `sel[0]`
+  arm. An aliasing selector store, `((s32 *)(u32)sel)[...]`, kills that. An empty `if (arg0) {}` keeps
+  `arg0` in `$a0`, because bits follow the first reference.
+- Left: `d` and the loop end bound need `$v0`. In IDO 5.3 a range used in the zero arm, whose
+  `return 0` defines the return register, never gets `$v0`. `return d` costs a final move.
+  The next hypothesis (zero-arm stores through the AND CSE, so `d` has no zero-arm unit) is in NOTES.md.
