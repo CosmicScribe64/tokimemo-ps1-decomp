@@ -57,6 +57,8 @@ A later call argument can keep an earlier selector promoted across several tests
 
 **Promoted global left uncoloured.** Symptom: the original keeps every read of a byte global in one argument register (`lui a3; lbu a3`) and the draft loads some into ugen temporaries. Fix: read it through `GameState *g = &D_800E6280;` and add one more read in an empty test, `if (g->unk_041) {}`; the extra use raises the range's priority so all pieces take one colour (ETC `func_80146D4C`, 82 to 28 rows, found by the permuter, T-25007). FAKE.
 
+A `u16` global read only through shifts (`h >> 12`) keeps its CVT at every read (cvt_pass), so uopt sees no plain use and every load is a ugen temporary. The original has `lui v1; lhu v1` at every read, after calls too. Two empty truth tests `if (D_800E6280.unk_0F4.h) {}` anywhere in the function make it one `$v1` range; one test is not enough (KANGEI `func_801327DC`, 175 rows to 0 with the other fixes, T-25139). FAKE.
+
 **Split a range with an empty test.** `if (x) {}` after an assignment splits or reorders live ranges and adds no code (GEKO `func_801358CC`, found by autotweak, T-24302). Unassigned locals grow the frame by 8. Always FAKE.
 
 ## 4. Operand order of compares and sums

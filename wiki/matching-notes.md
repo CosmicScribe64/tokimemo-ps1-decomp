@@ -824,3 +824,21 @@ register, as in T-25146). Left: in the first block the original loads the byte c
 `a1` (`lui a1`) while the draft keeps a load range in `v0` (`lui v0`), and the selector needs the
 T-25053 empty test to get `a2`, which loads it one slot early; the last block copies w to `v0` after
 the store instead of before. Negatives and the next hypothesis: `drafts/T-25142/BUNKA_SD/func_80134D94/NOTES.md`.
+
+## T-25139: KANGEI func_801327DC
+
+Matched in literal default C, 1,096 bytes. Started from the T-24516 body
+(`drafts/T-24516/kangei-327dc.c`, 270 rows). What closed it, in order:
+(1) two empty truth tests of `D_800E6280.unk_0F4.h` (FAKE). The global is read only through
+`>> 12`, so cvt_pass keeps the CVT of every read and uopt saw no plain use. Two plain uses make it
+one range coloured `$v1`, the original's `lui v1; lhu v1` at every read. One test is not enough,
+any two are (175, 180 to 197, then 0 rows).
+(2) the object's `.data` scene table `D_801399B0`, which names this function, defined in C
+(`tools/data_island.py KANGEI/80132090`, T-25150 rule 8). Without it, as1 hoists the default arm's
+`D_800CA19C` address into the first switch head (29 rows in the control).
+(3) bit-field flag tests `unk_0C.f.b2` / `.f.b19`.
+(4) `D_800CA148` assigned and incremented directly (`+= 1`, `+= 2`) instead of m2c's locals, so
+uopt promotes it into `$v1` (150 to 17 rows).
+(5) an `else if (club == 7) ... else` chain, and `(u8)` on the `get_g_zyotai_s(6)` result for one
+ring slot (FAKE).
+Details and negatives: `drafts/T-25139/KANGEI/func_801327DC/NOTES.md`.
