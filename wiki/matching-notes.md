@@ -843,3 +843,14 @@ Not matched, [[tickets/T-25128-w8-ETC-8013FF80]]. The source stays `INCLUDE_ASM`
 ## T-25303: main strCallback (second pass)
 
 Matched (640 bytes, default C), [[tickets/T-25303-w10-main-800563F0]], from the T-25118 body (75 rows). The first pass had shown the body exact under the F copy-state gadget and concluded that a `tools/ugen_pass.py` rule change was needed, because no spelling of the flag store `D_80125C5C = 0` (the last state op before the RECT copy) gives F. The shim's sticky arm does not depend on that store: the never-true arm `if ((u32)D_800B0896 < 0) { do { *(u8 *)0 = 0; } while ((s32)D_800B0896 < 1); }` at the top of the function (T-25107, T-25147 idiom, marked FAKE) leaves an `istr` and a signed positive-bound loop test in the ucode, ugen drops the arm, and the RECT copy is compiled in state F: 75 rows to MATCH with no other change. Negative: a literal-address flag store `*(s32 *)0x80125C5C = 0` stays an `istr` but ugen bases it on `t8`, not `$at` (one extra word). Notes: `drafts/T-25303/main/strCallback/NOTES.md`.
+
+## T-25305: SHOUGATU func_8013EA98 (second pass)
+
+No match, [[tickets/T-25305-w10-SHOUGATU-8013E330]]. The best body is still the T-25046 one (42 rows), which is over the guard limit, so the source stays `INCLUDE_ASM`. Results:
+
+- The natural spelling is closer than the byte-view base in three places. With plain `D_800E6280.unk_F5F` compares, `tools/cvt_pass.py` keeps the CVT, because F5F is first touched after a branch. That reproduces the original's `>= 9` block (forwarded `andi t9,t8,0xff`), the count block with no reload, and the exit (`lui tX; lbu a0,F5F(tX)`). The selector then becomes a CSE temporary with priority 13.3 and takes v0 (the original has t4), and there is no latch: 227 words, 203 rows.
+- IDO 5.3 threads an empty latch before register allocation. The latch survives only when it holds code at CFG time. `while (D_800E6280.unk_F5F)` gives the original's final-test layout and a latch that reads F5F, but the latch ends in `bnez` instead of `b`.
+- `docreatebb` is off by default, so a reload at a join stays at the block start when a non-member predecessor ends in a conditional jump. The T-25143 concern about the latch reload moving does not apply.
+- The empty edge block between the `>= 9` test and the `== 5` label is always in F5F's range. It makes the loop part of the range worth exactly 0. The original's allocation appears only when the range is split starting at the `== 5` block. A FAKE-built diagnostic (hole, latch, alias forced store) reproduces the loop allocation, but the split piece then runs into the post-loop code.
+
+Negatives, trace helpers (`pri.sh`) and the next hypothesis: `drafts/T-25305/SHOUGATU/func_8013EA98/NOTES.md`.
