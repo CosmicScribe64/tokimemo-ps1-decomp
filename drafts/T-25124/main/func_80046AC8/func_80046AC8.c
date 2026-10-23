@@ -11,6 +11,8 @@ s32 func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s3
 
     gs = &D_800E6280;
     order = arg7 & 0xF;
+    /* FAKE: T-25124, the v2/v3 endpoint reads row so uopt numbers its item after the
+       texture page arguments (spill temporaries); v0/v1 use the expression itself. */
     row = (arg0 & 0x20) * 4;
     alpha = arg6 >> 0x1C;
     for (quadrant = 0; quadrant < 4; quadrant++) {
@@ -22,6 +24,8 @@ s32 func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s3
             SetSemiTrans(primitive, 0);
         }
         if (alpha & 0xF) {
+            /* FAKE: T-25124, the (u16) conversion is deleted by as1 but spends the ugen
+               temporary that numbers the colour shifts; one RGB line per vertex. */
             red = (u16)(arg6 >> 0x10) & 0xFF;
             ((POLY_GT4 *)primitive)->r0 = red, ((POLY_GT4 *)primitive)->g0 = (s8) (arg6 >> 8), ((POLY_GT4 *)primitive)->b0 = (s8) arg6;
             ((POLY_GT4 *)primitive)->r1 = red, ((POLY_GT4 *)primitive)->g1 = (s8) (arg6 >> 8), ((POLY_GT4 *)primitive)->b1 = (s8) arg6;
@@ -53,6 +57,8 @@ s32 func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s3
             ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
             ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
+            /* FAKE: T-25124 (from T-25034), the goto to the shared label after case 3's
+               u0 store reproduces the original UV store and branch layout. */
             goto block_16;
         case 1:
             ((POLY_GT4 *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
@@ -100,6 +106,8 @@ block_16:
         dtd_on_tpage(0, 0, order, 1, 0);
     }
     quadrant = 0;
+    /* FAKE: T-25124, (u8) and the (u16) colour conversions below spend ugen temporaries
+       that as1 deletes; they set the register numbering of the tile setup. */
     if ((u8)(arg6 >> 0x18) & 0xF) {
         do {
             primitive = (void *)GetWorkBase(0x10, D_8011ECA0);
@@ -156,5 +164,9 @@ block_16:
             }
             quadrant += 1;
         } while (quadrant != 4);
+    }
+    /* FAKE: T-25124, empty test keeps the order item live through the tile loop; uopt then
+       gives the hoisted tile blue the spill temporary at 0x70 instead of 0x74. */
+    if (order) {
     }
 }
