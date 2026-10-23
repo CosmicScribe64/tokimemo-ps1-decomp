@@ -57,6 +57,26 @@ kanban-plugin: board
 - [ ] [[tickets/T-25134-w8-main-80043510|T-25134 Wave 8 package w8-main-80043510 (src/main/80043510.c)]]
 - [ ] [[tickets/T-25135-w8-ENDING-80133C10|T-25135 Wave 8 package w8-ENDING-80133C10 (src/ovl/ENDING/80133C10.c)]]
 - [ ] [[tickets/T-25136-w8-TACO-801447D0|T-25136 Wave 8 package w8-TACO-801447D0 (src/ovl/TACO/801447D0.c)]]
+- [ ] [[tickets/T-25301-w10-NAME_ENT-80139740|T-25301 Wave 10 second pass on src/ovl/NAME_ENT/80139740.c]]
+- [ ] [[tickets/T-25302-w10-main-80049FF0|T-25302 Wave 10 second pass on src/main/80049FF0.c]]
+- [ ] [[tickets/T-25303-w10-main-800563F0|T-25303 Wave 10 second pass on src/main/800563F0.c]]
+- [ ] [[tickets/T-25304-w10-main-8004C3F0|T-25304 Wave 10 second pass on src/main/8004C3F0.c]]
+- [ ] [[tickets/T-25305-w10-SHOUGATU-8013E330|T-25305 Wave 10 second pass on src/ovl/SHOUGATU/8013E330.c]]
+- [ ] [[tickets/T-25306-w10-BUNKA_SD-80134540|T-25306 Wave 10 second pass on src/ovl/BUNKA_SD/80134540.c]]
+- [ ] [[tickets/T-25307-w10-main-8004F870|T-25307 Wave 10 second pass on src/main/8004F870.c]]
+- [ ] [[tickets/T-25308-w10-RPG_BAT-80154430|T-25308 Wave 10 second pass on src/ovl/RPG_BAT/80154430.c]]
+- [ ] [[tickets/T-25309-w10-TAIIKU-80133C80|T-25309 Wave 10 second pass on src/ovl/TAIIKU/80133C80.c]]
+- [ ] [[tickets/T-25310-w10-main-80053650|T-25310 Wave 10 second pass on src/main/80053650.c]]
+- [ ] [[tickets/T-25311-w10-ENDING-80133C10|T-25311 Wave 10 second pass on src/ovl/ENDING/80133C10.c]]
+- [ ] [[tickets/T-25312-w10-TACO-801447D0|T-25312 Wave 10 second pass on src/ovl/TACO/801447D0.c]]
+- [ ] [[tickets/T-25313-w10-main-80043510|T-25313 Wave 10 second pass on src/main/80043510.c]]
+- [ ] [[tickets/T-25314-w10-ETC-8013FF80|T-25314 Wave 10 second pass on src/ovl/ETC/8013FF80.c]]
+- [ ] [[tickets/T-25315-w10-SHOUGATU-80134890|T-25315 Wave 10 second pass on src/ovl/SHOUGATU/80134890.c]]
+- [ ] [[tickets/T-25316-w10-TEL-8013CCD0|T-25316 Wave 10 second pass on src/ovl/TEL/8013CCD0.c]]
+- [ ] [[tickets/T-25317-w10-main-80047550|T-25317 Wave 10 second pass on src/main/80047550.c]]
+- [ ] [[tickets/T-25318-w10-main-8006CB30|T-25318 Wave 10 second pass on src/main/8006CB30.c]]
+- [ ] [[tickets/T-25319-w10-NAME_ENT-80142A80|T-25319 Wave 10 second pass on src/ovl/NAME_ENT/80142A80.c]]
+- [ ] [[tickets/T-25320-w10-main-800674B0|T-25320 Wave 10 second pass on src/main/800674B0.c]]
 
 ## In Progress
 
@@ -89,6 +109,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-25100-wave-8-finish|T-25100 Wave 8 conveyor - one deep Opus pass per remaining function]]
 - [ ] [[tickets/T-25200-wave-9-neighbor|T-25200 Wave 9 neighbor conveyor - wave 8 queue from the tail, plus near-miss closers]]
 - [ ] [[tickets/T-25201-wave-9-closers|T-25201 Wave 9 closers for wave 8 near misses]]
+- [ ] [[tickets/T-25300-wave-10-second-pass|T-25300 Wave 10 - second pass on every function left after waves 8 and 9]]
 
 ## In Review
 
