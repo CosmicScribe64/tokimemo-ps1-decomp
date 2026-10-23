@@ -17,19 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25102: TAIIKU func_8013EC60
-
-Matched (1788 bytes, default C, no FAKE; all 27 sha1 OK), from the `func_8013E1FC` and `func_8013E894` bodies of this
-package (the older drafts were 489 to 784 rows). Straight phase: corners `{320, 320, 240, 240}` and
-`{a << 3, (a + 1) << 3}` twice, each turned by the camera angle through `func_80086204` with `input_x = x[i]`, then
-the E1FC tail over all four corners; between the phases `D_8011ECD0` record 102 `unk_26 = x[3] + 8`; rotated phase:
-the E894 body with inputs `(0, -320)`, `(0, -240)`. Two source facts closed it. (1) Rotated phase as
-`for (angle = 0; angle < 64; angle++)` with `angle * 16` and `angle * 16 + 16` (301 to 40 rows): the do-while
-`angle += 16` keeps `angle` in `$s6` for the whole function, the strength-reduced form spills it at 0x78 like the
-target. (2) `y[2] = y[0]; y[3] = y[1];` as copies (40 to 0 rows): the chained `y[2] = y[0] = angle << 3` stores
-reserve one more spill slot (counter at 0x74) and leave the counter colour one register off. Notes and negatives:
-`drafts/T-25102/TAIIKU/func_8013EC60/NOTES.md`.
-
 ## T-25106: TAIIKU func_80137C44
 
 [[tickets/T-25106-w8-TAIIKU-80133C80]] matches TAIIKU `func_80137C44` (153 words, 612 bytes, default-build C, `TAIIKU.bin: OK`) from the T-24008 body (189 rows). The decisive changes were ownership and order: the four mode/selection/frame/slot globals read directly in the loop (uopt promotes them and loads them in the preheader; snapshot locals took the lowest bits, an `actor` pointer local made every store a kill), the table term first in each sum (`D_801492B8[k] + (x >> 3) * 6`, which uopt turns into the original's product-first `addu`), the selected index straight from record 46 (`(&DISP(46))[D_801491D8]`, no CVT, so it shares the runner field's 0x44 constant), and a position snapshot before the second loop. Two FAKEs: a byte-offset record address in the second loop (with `DISP(i + k)` in both loops the loops share one address expression and the second loop ends on the runner pointer), and `*(s32 *)&D_80122E94 == 1` for the constant-first `bne`. Steps, rows and negatives: `drafts/T-25106/TAIIKU/func_80137C44/NOTES.md`.
@@ -848,6 +835,7 @@ uopt's CSE and PRE then give the target's ranges. Steps, row counts and negative
 ## T-25403: GEKO func_80142C9C (wave 11 pass 2)
 
 Matched (default C, 3,656 bytes), [[tickets/T-25403-w11-GEKO-80142760]], from the pass-1 analysis of the `&ids` constant's split. Four changes, one cause each: the first loop reads `ids` through the `names` table (`((u8 *)&names)[i - 0x40]`, FAKE), so the `&ids` remainder no longer pays 21 in reloads after the loop-1 piece and its priority is positive without an extra use; `if (flags[i] == 0) continue;` in the second loop puts the post-loop block ahead of the loop body in block order; the post-loop compare goes through a second variable (`p = &ids.v[13]; if (q == p)`, FAKE), because with `q == &ids.v[13]` cfe emits the address first and uoptinput moves the `+13` to `q`, which made both post-loop references one constant; with one post-loop use left, that piece is one use minus one reload and stays uncoloured, and the piece seeded in the loop stops at the loop exits and gets `$t4`. Last, `((u8) get_g_zyotai_s(...) & 0x7F) < 2` in switch case 6 (the KANGEI spelling) fixes the ugen temporary after the call. One of the two `if (&flags[i]) {}` FAKEs is no longer needed. The packed-appointment compare needs `D_800E71DF` (2 rows with the GameState field): keep line with a keepproof proof. The variable route (copy propagation off, a pointer local) gives every instruction but not the colour order (178 rows). Lever in [[playbook]]; measurements and negatives in `drafts/T-25403/GEKO/func_80142C9C/NOTES.md`.
+
 ## T-25319: NAME_ENT func_80143580 (second pass)
 
 [[tickets/T-25319-w10-NAME_ENT-80142A80]]. No match; the file keeps `INCLUDE_ASM` (best body over the guard limit). Best body in `drafts/T-25319/NAME_ENT/func_80143580/` (body.c, declarations.h, replay.py, NOTES.md): 1076 of 1077 words, 293 rows, score 293 (T-25131: 471 / 465). The selector now has the target's `t0`.
