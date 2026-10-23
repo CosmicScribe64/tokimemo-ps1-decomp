@@ -1753,3 +1753,8 @@ Reviewed [[tickets/T-25114-w8-RPG_BAT-80154430]] against CODING_STANDARDS.md; ma
 
 Reviewed [[tickets/T-25117-w8-VALEN-80132760]] against CODING_STANDARDS.md; matched VALEN `func_80133088` (1108 bytes, two FAKEs) and `func_80132834` (1240 bytes, no FAKE) as default-build C, 27/27.
 Both functions of `src/ovl/VALEN/80132760.c` are now C, notes in drafts/T-25117/VALEN/ and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25122 Done
+
+Reviewed [[tickets/T-25122-w8-main-80049FF0]] against CODING_STANDARDS.md; matched main `func_8004A414` (1,024 bytes, one FAKE) as default-build C, 27/27.
+`func_8004A1A0` stays INCLUDE_ASM at 64 rows, down from 89 (notes in drafts/T-25122/main/func_8004A1A0/).
