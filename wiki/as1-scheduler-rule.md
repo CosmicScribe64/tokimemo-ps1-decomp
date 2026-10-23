@@ -32,6 +32,8 @@ as1 first schedules each block on its own. It then numbers the blocks, gives eac
 
 Source lines play no part in these choices; they only order the per-block schedule.
 
+8. **Indirect jumps reach every address-taken label (T-25150).** as1's CFG builder (`func_41dc10`) gives each block that ends in an indirect jump other than `jr ra` an edge to every block whose label is address-taken in the file: all jump-table entries of all switches, and every function that a `.word` in the same file's data names. A switch dispatch in a function named by a C-defined table therefore has a back edge to the function entry; the loop changes the weights (dispatch 2, the +1 rule) and the scan order of the switch head. KANGEI `func_80134724` matched only once its object's table `D_80139B30` was defined in C (data island). A file whose original `.data` names its own functions must define that data in C before the scheduling of its switches can match.
+
 ### Evidence from matched functions
 
 | Function | What the trace shows | Rule |

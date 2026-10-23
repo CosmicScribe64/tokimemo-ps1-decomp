@@ -91,6 +91,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-25148-w8-ENDING-80137340|T-25148 Wave 8 package w8-ENDING-80137340 (src/ovl/ENDING/80137340.c)]]
 - [ ] [[tickets/T-25149-w8-NAME_ENT-80132000|T-25149 Wave 8 package w8-NAME_ENT-80132000 (src/ovl/NAME_ENT/80132000.c)]]
 - [ ] [[tickets/T-25150-w8-KANGEI-80134120|T-25150 Wave 8 package w8-KANGEI-80134120 (src/ovl/KANGEI/80134120.c)]]
+- [ ] [[tickets/T-25151-w8-GYOZI-80140C90|T-25151 Wave 8 package w8-GYOZI-80140C90 (src/ovl/GYOZI/80140C90.c)]]
+- [ ] [[tickets/T-25152-w8-TACO-80138890|T-25152 Wave 8 package w8-TACO-80138890 (src/ovl/TACO/80138890.c)]]
 
 ## In Progress
 
@@ -197,6 +199,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-25110-w8-TACO-8013DB80|T-25110 Wave 8 package w8-TACO-8013DB80 (src/ovl/TACO/8013DB80.c)]]
 - [ ] [[tickets/T-25101-w8-main-8004F870|T-25101 Wave 8 package w8-main-8004F870 (src/main/8004F870.c)]]
 - [ ] [[tickets/T-25102-w8-TAIIKU-80138950|T-25102 Wave 8 package w8-TAIIKU-80138950 (src/ovl/TAIIKU/80138950.c)]]
+- [ ] [[tickets/T-25150-w8-KANGEI-80134120|T-25150 Wave 8 package w8-KANGEI-80134120 (src/ovl/KANGEI/80134120.c)]]
+- [ ] [[tickets/T-25153-w8-NAME_ENT-80139740|T-25153 Wave 8 package w8-NAME_ENT-80139740 (src/ovl/NAME_ENT/80139740.c)]]
 - [ ] [[tickets/T-25104-w8-main-8004C3F0|T-25104 Wave 8 package w8-main-8004C3F0 (src/main/8004C3F0.c)]]
 - [ ] [[tickets/T-25108-w8-main-80062CD0|T-25108 Wave 8 package w8-main-80062CD0 (src/main/80062CD0.c)]]
 - [ ] [[tickets/T-25109-w8-EN_NICHI-80136B10|T-25109 Wave 8 package w8-EN_NICHI-80136B10 (src/ovl/EN_NICHI/80136B10.c)]]

@@ -17,6 +17,17 @@ extern s8 D_80139AC0;
 extern s8 D_8013A2A8;
 extern s16 D_80139ADC;
 void func_80133C84(void);
+/* Entries of the 80134120.c scene table D_80139B30 (defined in that file, T-25150). */
+void func_80133734(void);
+void func_80133834(void);
+void func_801338B4(void);
+void func_80133CB0(void);
+void func_80133CEC(void);
+void func_8013425C(void);
+void func_801342EC(void);
+void func_8013454C(void);
+void func_80134724(void);
+void func_80134BC4(void);
 
 extern s8 D_80139AC4;
 extern s32 D_80139DFC;
