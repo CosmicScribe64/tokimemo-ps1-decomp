@@ -1719,6 +1719,7 @@ void func_8007132C(void) {
             return;
         }
         if ((*(u8 *)&D_800E6280.unk_03E) == 0x5F && (*(u8 *)&D_800E6280.unk_03F) == 0xA && (*(u8 *)&D_800E6280.unk_040) == 0xF) {
+            /* FAKE: T-25052, late-bound loop bound as in the first counter loop (92 rows without, T-25318). */
             i = 0;
             do {
                 if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0C.f.b12) {
@@ -1733,6 +1734,7 @@ void func_8007132C(void) {
             } while (i != 11 + ((u32)i < 0));
         }
         if ((*(u8 *)&D_800E6280.unk_03E) == 0x60 && (*(u8 *)&D_800E6280.unk_03F) == 0xA && (*(u8 *)&D_800E6280.unk_040) == 0xD) {
+            /* FAKE: T-25052, late-bound loop bound as in the first counter loop (92 rows without, T-25318). */
             i = 0;
             do {
                 if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0C.f.b13) {
