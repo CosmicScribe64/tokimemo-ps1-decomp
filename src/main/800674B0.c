@@ -1306,23 +1306,24 @@ s16 func_8006C934(void) {
     }
 }
 
-/* NON_MATCHING: T-24928, 5 rows; base/value registers match since the dead parameter tests below
- * put the value local in $t0. Left: the loop tail emits the `cur = val` narrowing copy per arm
- * (`andi v1,t0,0xff` in the branch slots) where the original advances the record base per arm
- * and keeps one `move v1,t0` at the latch, and the induction-init `addiu t1` schedules after
- * `move a3` instead of before it. */
-#ifdef NON_MATCHING
+/* Scans the event records of D_800E6280.unk_75E (unk_04 == 0 ends the list): `last` gets the
+ * unk_00 of the final record, `first` that of the final record whose type unk_02 is 0, 1, 2 or
+ * 0xF. Clears unk_04 of every record after the list and returns the count, at most 0xFF.
+ * T-25103: the for loop orders the induction init before `i = 0`, and `n++` ahead of the join copy
+ * keeps `cur = val` (s32, a plain move) at the join instead of a narrowing copy in each arm. */
 s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     GameState *g = &D_800E6280;
     s32 i;
     s32 n;
     u8 sel;
-    u8 cur;
+    s32 cur;
     u8 val;
+    u8 type;
 
-    /* FAKE: T-24928; the dead tests give first/last an early use so their webs are coloured $a0/$a1
-     * before the value local's web, which then takes $t0 and pushes the record base to $t1 as in
-     * the original. Without them the fifth local takes $a0 and spills first. The tests emit no code. */
+    /* FAKE: T-25103 (from T-24928); the dead tests give first/last an early use so their webs are
+     * coloured $a0/$a1 before the value local's web, which then takes $t0 and pushes the record
+     * base to $t1 as in the original. Without them val takes $a0 and first is spilled. The tests
+     * emit no code. */
     if (first) {
     }
     if (last) {
@@ -1330,22 +1331,20 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     sel = 0xFF;
     cur = 0;
     n = 0;
-    i = 0;
-    do {
-        i++;
+    for (i = 0; i < 0x100; i++) {
         if (g->unk_75E[n].unk_04 == 0) {
             break;
         }
-        cur = g->unk_75E[n].unk_02;
-        if (cur != 0 && cur != 1 && cur != 2 && cur != 0xF) {
+        type = g->unk_75E[n].unk_02;
+        if (type != 0 && type != 1 && type != 2 && type != 0xF) {
             val = g->unk_75E[n].unk_00;
         } else {
             val = g->unk_75E[n].unk_00;
             sel = val;
         }
-        cur = val;
         n++;
-    } while (i < 0x100);
+        cur = val;
+    }
     for (i = n; i < 0x100; i++) {
         g->unk_75E[i].unk_04 = 0;
     }
@@ -1356,9 +1355,6 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     }
     return n;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006C988);
-#endif
 
 u8 *func_8006CA9C(void) {
     if (D_800E6280.unk_F74 == 0) {
