@@ -7,6 +7,7 @@
 
 /* GYOZI data. */
 extern u8 D_801474B8;
+void func_80137188(void);
 void func_8013AF1C(void);
 void func_8013B03C(void);
 void func_8013B0C4(void);
@@ -628,7 +629,9 @@ extern u8 D_801486E4;
 extern s32 D_8012E660;
 extern s32 D_8012E664;
 extern s32 D_8012E6BC;
+extern s32 D_8012E674;
 extern s32 D_8012E678;
+extern s32 D_8012E680;
 extern s32 D_80148B60;
 extern s32 D_80148B64;
 extern s32 D_80148B68;
