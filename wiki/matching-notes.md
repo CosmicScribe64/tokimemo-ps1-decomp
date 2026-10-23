@@ -839,3 +839,18 @@ Matched (1396 bytes, default C) from the T-25105 113-row draft in about 50 minut
 - **A dead call result.** The original reads bzero's `v0` after the call: something must hold v0 in the 256-loop preheader and not in the loop body. Then the unrolled loop's start values skip v0, the end pointer takes v0, and the counter and bank-offset temporaries take t3/t4, so the bank bases land in t5 and ra (every other row). `void *bzero(void *p, s32 n);` in `main_api.h` (other callers discard it, no code change) and `p = bzero(g->unk_75E, 0x800);` with p never read (FAKE: its real use is unknown). A function-pointer cast instead gives `jalr t9`.
 
 Notes, negatives and the unroll rule check: `drafts/T-25310/main/func_80055AFC/NOTES.md`.
+
+## T-25318: main func_8007132C (second pass)
+
+Matched (3,992 bytes, default C, [[tickets/T-25318-w10-main-8006CB30]]), from the first pass's 738-row best and
+its 996-row v17 walk form. The blocker was the 0x800E6280 base that uopt coloured in the draft. In the traced
+uopt, each read through a copy-propagated record pointer counts as one more use of the base. Without the record
+pointer and the `op`/`t` reassignments, every schedule read is written `D_800E6280.unk_69C[D_800E6280.unk_71C]`.
+uopt's PRE then keeps the record address in `$a1` and the opcode in `$v1`, as the target does, and the base
+stays unallocated. The rest came from the ugen temporaries: `unk_54C_0.active`/`.unk_25` bit-field reads,
+`f.b17 = 1`, `unk_725 != unk_724`, a separate `hour` local (four locals put the v1 spill at 0x30), and an
+`(s32)` index cast (FAKE) so case 0x45 reloads the index for its second field. The T-25052 calendar byte views
+and late-bound loop bounds are still needed (901 and 92 rows without them). Lesson: when a draft keeps a
+pointer or local that the target's register use does not show, write the expression again at each use.
+uopt's CSE and PRE then give the target's ranges. Steps, row counts and negatives:
+`drafts/T-25318/main/func_8007132C/NOTES.md`.
