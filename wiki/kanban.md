@@ -58,7 +58,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25133-w8-TEL-8013CCD0|T-25133 Wave 8 package w8-TEL-8013CCD0 (src/ovl/TEL/8013CCD0.c)]]
 - [ ] [[tickets/T-25134-w8-main-80043510|T-25134 Wave 8 package w8-main-80043510 (src/main/80043510.c)]]
 - [ ] [[tickets/T-25135-w8-ENDING-80133C10|T-25135 Wave 8 package w8-ENDING-80133C10 (src/ovl/ENDING/80133C10.c)]]
-- [ ] [[tickets/T-25136-w8-TACO-801447D0|T-25136 Wave 8 package w8-TACO-801447D0 (src/ovl/TACO/801447D0.c)]]
 
 ## In Progress
 
@@ -162,6 +161,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25136-w8-TACO-801447D0|T-25136 Wave 8 package w8-TACO-801447D0 (src/ovl/TACO/801447D0.c)]]
 - [ ] [[tickets/T-25137-w8-TACO-8013B170|T-25137 Wave 8 package w8-TACO-8013B170 (src/ovl/TACO/8013B170.c)]]
 - [ ] [[tickets/T-25138-w8-RPG_BAT-801447E0|T-25138 Wave 8 package w8-RPG_BAT-801447E0 (src/ovl/RPG_BAT/801447E0.c)]]
 - [ ] [[tickets/T-25139-w8-KANGEI-80132090|T-25139 Wave 8 package w8-KANGEI-80132090 (src/ovl/KANGEI/80132090.c)]]
