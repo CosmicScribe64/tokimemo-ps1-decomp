@@ -7,18 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] ticket | T-25014 tooling landed: packet variant search engine, no improvement on the two hardest beds
-
-Committed tools/shape_search.py (hill-climb with plateau moves),
-tools/shape_transforms.py (eight transform families from the matching
-notes), tools/shape_score.py (relocation-aware packet metric) and
-tools/test_shape_search.py (passing). Runs: GEKO func_80136C20, 236
-trials, no improvement on 15 (goto form neutral, as lever 4 predicts);
-main func_8006A044, 400 trials, no improvement on 113 (field copies
-cost more than they gain). Ticket [[tickets/T-25014-allocator-source-shape-automation]]
-to In Review; the engine is ready to sweep the remaining functions at
-the maintainer's pace.
-
 ## [2026-10-21] ticket | T-25015 created: lever-expansion tooling programme (six tools)
 
 At Lila's direction, build the instrumentation first, then test across
@@ -1774,6 +1762,7 @@ Draft body and notes in `drafts/T-25317/main/func_800476C0/`; section in [[match
 
 Reviewed [[tickets/T-25314-w10-ETC-8013FF80]] against CODING_STANDARDS.md; matched ETC `func_8013FFAC` (2116 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
 `register s32 i` is the zcopy-off trigger, two empty labels split uopt blocks, `func_8004A1A0` is an implicit-int view; notes in `drafts/T-25314/ETC/func_8013FFAC/NOTES.md` and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25318 Done
 
 Reviewed [[tickets/T-25318-w10-main-8006CB30]] against CODING_STANDARDS.md; matched main `func_8007132C` (3992 bytes) as default-build C, 27/27, funcdiff MATCH; one small finding fixed (FAKE comments at the two remaining late-bound loops).
