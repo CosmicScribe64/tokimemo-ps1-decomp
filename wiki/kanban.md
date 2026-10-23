@@ -52,7 +52,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24025-geko-picker|T-24025 Recover GEKO hallway event picker]]
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 - [ ] [[tickets/T-25125-w8-main-8006CB30|T-25125 Wave 8 package w8-main-8006CB30 (src/main/8006CB30.c)]]
-- [ ] [[tickets/T-25127-w8-ENDING-801396E0|T-25127 Wave 8 package w8-ENDING-801396E0 (src/ovl/ENDING/801396E0.c)]]
 - [ ] [[tickets/T-25128-w8-ETC-8013FF80|T-25128 Wave 8 package w8-ETC-8013FF80 (src/ovl/ETC/8013FF80.c)]]
 - [ ] [[tickets/T-25129-w8-GYOZI-80136220|T-25129 Wave 8 package w8-GYOZI-80136220 (src/ovl/GYOZI/80136220.c)]]
 - [ ] [[tickets/T-25130-w8-MASTER-80132140|T-25130 Wave 8 package w8-MASTER-80132140 (src/ovl/MASTER/80132140.c)]]
@@ -168,6 +167,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25127-w8-ENDING-801396E0|T-25127 Wave 8 package w8-ENDING-801396E0 (src/ovl/ENDING/801396E0.c)]]
 - [ ] [[tickets/T-25122-w8-main-80049FF0|T-25122 Wave 8 package w8-main-80049FF0 (src/main/80049FF0.c)]]
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
 - [ ] [[tickets/T-25118-w8-main-800563F0|T-25118 Wave 8 package w8-main-800563F0 (src/main/800563F0.c)]]
