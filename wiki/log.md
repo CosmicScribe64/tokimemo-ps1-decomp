@@ -1758,3 +1758,7 @@ New page [[notes/wins-2026-10]]: all 93 functions of waves 8-11, the wave 9 clos
 ## [2026-10-23] ticket | T-25606 Done: main func_800476C0 matched
 
 The finish gate's block-by-block lens matched main func_800476C0 (3,132 bytes) in round 1; merged directly after an orchestrator review so the match does not wait for the synthesis stage ([[tickets/T-25600-finish-gate]]).
+
+## [2026-10-23] ticket | T-25604 Done: NAME_ENT func_80143580 matched
+
+The fresh start's history digest found a 122-row body; its guided-search lens closed it (4,308 bytes), with the case 9 record chain confirmed against the Rev 1 copy of the function ([[tickets/T-25600-finish-gate]]). Merged directly after an orchestrator review.
