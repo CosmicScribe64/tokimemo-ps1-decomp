@@ -773,3 +773,16 @@ What is left:
 - gs gets a split piece in s0 with priority (20 - 10)/5. Assigning gs after the calls removes the piece but breaks the prologue.
 
 The traced uopt was rebuilt in scratch from `wiki/uopt-register-allocation.md` in about 7 minutes. `rd.sh` runs regdiff with it.
+## T-25146: ETC func_80144224
+
+Matched, 796 bytes, the default build compiles the C and the ETC sha1 is OK. The step that closed it
+reads the frame counter through a pointer local, `GsWord *fc = &D_800E6280.unk_1104;`, with every read
+as `fc->u`. With that the counter is one register range (`$a3`, uopt reloads it after each call group,
+701 in `$t0`); `D_80150148` is promoted only in the remainder-1 arm (`$v1`, with the original's
+write-backs); the phase local `x` stays a real variable in `$v0`, so the original's dead
+`or v0,v1,zero` appears. Direct reads (field, `D_800E7384` scalar or the sibling's repeated `% 701U`)
+and cast forms of the pointer all let `D_80150148` take `$a3` for the whole function. The arm and the
+final print use the sibling's `D_80150150[D_80150148 - 1]`. Two marked FAKEs are the same as the
+matched sibling `func_80143A88`'s `sp30`/`sp28`: a word view in the quotient test keeps quot in its
+slot 0x30, and word stores keep `v = x * 3` in 0x28 with no extra spill slot (frame 0x38). Levers and
+negatives: `drafts/T-25146/ETC/func_80144224/NOTES.md`.

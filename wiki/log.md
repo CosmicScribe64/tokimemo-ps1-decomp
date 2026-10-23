@@ -1755,3 +1755,6 @@ Both functions of `src/ovl/VALEN/80132760.c` are now C, notes in drafts/T-25117/
 
 Reviewed [[tickets/T-25116-w8-main-80047550]] against CODING_STANDARDS.md; matched main `func_80047560` (352 bytes) as default-build C, 27/27.
 `func_800476C0` stays `INCLUDE_ASM` at 649 diff lines (notes in drafts/T-25116/main/func_800476C0/); the unneeded `include/game.h` change was reverted in review.
+## [2026-10-23] ticket | T-25146 Done
+Matched ETC `func_80144224` (796 bytes) as default-build C, 27/27; review found one issue (needless `s32` return without a return statement, now `void` with an ETC.h prototype) and it is fixed ([[tickets/T-25146-w8-ETC-80143240]]).
+The frame counter read through a `GsWord *` local is the lever that fixed the register ranges; two FAKE word views (quot, v) as in `func_80143A88` ([[matching-notes]]).
