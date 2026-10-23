@@ -1764,3 +1764,8 @@ The cause was a pointer local defined before the late uopt block split, which lo
 
 Reviewed [[tickets/T-25301-w10-NAME_ENT-80139740]] against CODING_STANDARDS.md; matched NAME_ENT `func_8013AF78` (296 bytes) as default-build C, 27/27, funcdiff MATCH for default and `--version c`.
 Four marked FAKEs (a dead `register` initializer turns copy propagation off, see [[playbook]]); no blocking findings, one catalog link added.
+
+## [2026-10-23] ticket | T-25308 Done
+
+Reviewed [[tickets/T-25308-w10-RPG_BAT-80154430]] against CODING_STANDARDS.md; matched RPG_BAT `func_80154DD8` (1204 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+Frame fixed by declaring only x and y (`-x, -y` in both calls), call order by two marked same-symbol FAKE views; notes in `drafts/T-25308/RPG_BAT/func_80154DD8/NOTES.md` and [[matching-notes]].
