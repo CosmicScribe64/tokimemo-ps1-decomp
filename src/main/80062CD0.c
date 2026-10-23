@@ -968,11 +968,7 @@ s32 func_80065964(s32 idx, s32 dx, s32 dy) {
     return r;
 }
 
-/* NON_MATCHING: T-25108, 9 funcdiff lines (2 instructions): the original sets the shared constant 3 ($s5) in
- * the else arm before the menu_check call, IDO after the reload of the selection index; three branch offsets
- * follow from that. drafts/T-25108/main/func_80065B0C/NOTES.md has the uopt analysis.
- *
- * Cursor step of the 15-icon menu: every third frame of the pad repeat (`unk_F6C % 3 == 2`) moves the
+/* Cursor step of the 15-icon menu: every third frame of the pad repeat (`unk_F6C % 3 == 2`) moves the
  * selected icon's position in D_80125C10 and the cursor record by the pad direction (`unk_F6F` pixels), unless
  * func_80065964 rejects the move, then clamps the icon to x -0x8A..0x80, y -0x5C..0x5C. Without pad input
  * it runs the menu cursor check instead. A selection change restarts the 0x20-frame blink of
@@ -980,7 +976,6 @@ s32 func_80065964(s32 idx, s32 dx, s32 dy) {
  * the icon records 64 + i and 80 + i, and the tail sets the page counter limits as func_80065900 does.
  * The selection index is read through `g`: the stores to D_80125C10 then reload the index expression (the
  * original recomputes the address for the y store), and uopt keeps the index in $s3, re-read after each call. */
-#ifdef NON_MATCHING
 void func_80065B0C(s32 a) {
     s32 dx;
     s32 dy;
@@ -1036,6 +1031,12 @@ void func_80065B0C(s32 a) {
             }
         }
     } else {
+        /* FAKE: T-25201, a never-true arm with an indirect store of 3. uopt counts it as a use of the shared
+         * constant 3 in this block, so the $s5 range covers the else arm and is loaded before menu_check (as in
+         * the original) instead of after the index reload; ugen then removes the arm. */
+        if ((u32)a < 0) {
+            ((DisplayActor44 *)D_8011ECD0)[a + 64].unk_01 = 3;
+        }
         menu_check(0, ((DisplayActor44 *)D_8011ECD0)[0].unk_26, ((DisplayActor44 *)D_8011ECD0)[0].unk_2A);
         func_8004FC10(0);
     }
@@ -1098,9 +1099,6 @@ void func_80065B0C(s32 a) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80065B0C);
-#endif
 
 /* Shows or hides records 3..D_800B5B24 + 4. The entry test is always false in the original too.
  * FAKE: T-24301, each loop on one source line: as1 then keeps the first unrolled load first. */

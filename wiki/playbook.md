@@ -211,3 +211,14 @@ the case 2 copy runs on the dead count `n` (`for (n = 0; n < 15; n++)`) and the 
 ## A switch on an unsigned global turns copy propagation off for the whole procedure (T-25111)
 
 tools/cvt_pass.py writes `OPTN 405 0` (no global copy propagation) for a procedure whose switch selector is an unsigned global read at the entry. Every cross-block copy then stays a range. A call result used after a branch (`d = f(); if (a < t && d < t)`) gets `move rX,v0`, because uopt never gives v0 to a range defined in the call's block. as1 deletes that move in a `void` function but keeps it in an `s32` one. Fix: `switch (*(u8 *)&G.field)`. The byte view is an indirect load, so the pass leaves propagation on, and the selector keeps its register. Mark it FAKE. TACO `func_8013BAC4`, score 18 to 0. Separately, `if (x != 0) continue;` before a second `G += ...` makes ugen reload G, where a plain `if` reuses the stored value across the fall-through.
+
+## A shared constant loaded too late in one arm (T-25201)
+
+uopt adds a block to a constant's register range only where the constant has appeared on some path from the
+entry (`regdataflow`). An arm with no use of it gets the join's reload at its end instead of at its start.
+Only uses that need a register count: a divisor, a compare operand, the value of an indirect store (`istr`).
+A store to a fixed address (`rec[64].x = 3`) is a variable store whose small constant is an immediate and
+adds nothing. Fix: a never-true arm with an indirect store at the start of the arm,
+`if ((u32)a < 0) { rec[a + 64].unk_01 = 3; }` on a parameter (FAKE); uopt keeps it and ugen removes it. The
+traced uopt's R9SAVE lines (regdiff's `draft.log`) list each range's blocks to confirm. main `func_80065B0C`
+(9 rows to 0); `drafts/T-25108/main/func_80065B0C/NOTES.md`.

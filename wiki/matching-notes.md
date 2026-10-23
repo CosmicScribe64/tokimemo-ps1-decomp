@@ -636,6 +636,10 @@ What closed:
 
 What is left: the else arm sets the shared constant 3 (`$s5`) before `jal menu_check` in the original and after the index reload in the draft (uopt moves the join's reload to the end of the else arm). From the IDO uopt sources, the original's `$s5` range covers the menu_check block, which needs a reference to the constant there or in the entry block; none of about 30 variants found one, and autotweak and the permuter found nothing. Analysis, negatives and the next probe: `drafts/T-25108/main/func_80065B0C/NOTES.md`.
 
+## T-25201: main func_80065B0C (closer)
+
+Matched (default-build C, 1064 bytes, 27/27) from the T-25108 guard at 9 funcdiff lines. The last miss was where the shared constant 3 (`$s5`) is loaded in the else arm: before `jal menu_check` in the original, after the index reload in the draft. The R9SAVE units of the traced uopt show the constant's range (divisor in block 1, three loop stores) with no unit in the else blocks 25/26/58; uopt's `regdataflow` makes a block part of a range only where the item has appeared on some path from the entry, so the join's reload went to the end of the else arm. The T-25108 store probe `rec[64].unk_01 = 3` made no unit because a store to a fixed address is a `str` to a variable, and its value is optype 0 (small constants are not register candidates). An indirect store (`istr`, value optype 3) is one. The fix is a never-true arm before menu_check, `if ((u32)a < 0) { rec[a + 64].unk_01 = 3; }` (FAKE): uopt keeps it, the else blocks join the `$s5` range with the reload at the start of block 25, and ugen removes the arm. `*(u8 *)a = 3` and `[a]` give the same bytes; the arm after menu_check gives 6 rows. Notes: `drafts/T-25108/main/func_80065B0C/NOTES.md`.
+
 ## T-25108: main func_8006509C
 
 [[tickets/T-25108-w8-main-80062CD0]], branch w8-main-80062CD0. Matched in plain C (1076 B, no FAKE), from score 99 (T-24301 draft, T-24501 measured 95).

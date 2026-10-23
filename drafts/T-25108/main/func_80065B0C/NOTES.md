@@ -83,3 +83,27 @@ print the live units of the constant-3 range (block numbers 25, 26, 58 of the el
 and after `split`, for the final body and for the M1 store probe. If the else blocks are cut by `split`, the
 original's range had a higher priority or fewer interferences there (compare the `$s3` index range, which
 is live through the same blocks); if they never enter the range, look for the reference in the entry block.
+
+## T-25201 (closer): matched
+
+The R9SAVE lines of the traced uopt (draft.log of a regdiff run) list each range's live units. The constant 3
+range had units in block 1 (divisor, reload), 27 (join, reload) and 38/39/40 (loop stores), none in the else
+blocks 25 (menu_check), 26 (func_8004FC10), 58 (index reload). The M1 probe added no unit either: the store
+`rec[64].unk_01 = 3` has a fixed address, so it is a `str` to a variable whose value is scanned with optype 0
+(`constinreg` is false for small constants), and ugen loads it with `li t4,3`. An indirect store's value is
+optype 3, a register candidate.
+
+Fix (FAKE, T-25201): `if ((u32)a < 0) { ((DisplayActor44 *)D_8011ECD0)[a + 64].unk_01 = 3; }` as the first
+statement of the else arm. uopt keeps the test on the parameter, the arm block gets a unit, the else blocks
+join the `$s5` range (reload at the start of block 25, which as1 moves after the argument loads), and ugen drops
+the arm. 0 rows; default build MATCH.
+
+| variant | rows |
+| --- | --- |
+| `(u32)a < 0` arm, store to fixed `rec[64].unk_01` | 9 (no unit) |
+| arm with `*(u8 *)a = 3`, `((u8 *)D_8011ECD0)[a] = 3`, `rec[a].unk_01`, `rec[a + 64].unk_01` | 0 |
+| arm between menu_check and func_8004FC10 | 6 |
+| fixed-address arm (`rec[64].unk_01`) after func_8004FC10 | 17 |
+| arm on `(u32)old < 0` | 3 |
+| plain `*(u8 *)a = 3;` before menu_check (real store) | 9 |
+

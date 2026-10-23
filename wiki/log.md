@@ -1734,3 +1734,6 @@ Both functions of the package are matched, none left with rows; see [[tickets/T-
 ## [2026-10-23] ticket | T-25112 Done
 Reviewed [[tickets/T-25112-w8-TACO-80139170]] against CODING_STANDARDS.md; no findings, clean rebuild 27/27. Matched TACO `func_80139FB8` (1480 bytes, plain C, no FAKE) and `func_80139424` (1676 bytes, default C, FAKEs T-25112: dead `x3 = 0;`, `pad[2]`).
 Lessons are in [[matching-notes#T-25112: TACO func_80139FB8]] and [[matching-notes#T-25112: TACO func_80139424]] (for loop instead of m2c do/while; vertex written as centre + (offset -/+ half)).
+## [2026-10-23] build | T-25201 w9c-main-80062CD0
+Reviewed against `CODING_STANDARDS.md` (one formatting finding in `wiki/playbook.md`, fixed), clean rebuild 27/27, funcdiff MATCH. Matched: main `func_80065B0C` (1064 bytes) as default C with one FAKE (never-true indirect-store arm that puts the else arm in the `$s5` range).
+No function left with rows in this job; notes in `drafts/T-25108/main/func_80065B0C/NOTES.md`, [[matching-notes]], [[playbook]].
