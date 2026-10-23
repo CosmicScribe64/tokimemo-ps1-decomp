@@ -806,7 +806,78 @@ s32 func_800552DC(s32 arg0) {
     D_80125C55 = D_800E7D10.unk_DC8[0xF6];
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
+/* Writes a game save into bank arg0 of the card image (SaveGameView), then stores the bank's byte sum.
+   FAKE: T-25105, the straight-line stores reach the bank through the byte offset
+   `&D_80123120[arg0 * 0xF00 + 0x200]` and the loops as an element of the bank array
+   `((SaveGameView *)&D_80123120[0x200])[arg0]`. uopt keeps the two spellings as two values: the
+   original's two base registers (a2 for the stores, a3 recomputed before the first loop, both
+   spilled around get_k_speed). One spelling for both gives one base register. The real source
+   form is unknown. */
+s32 func_8005557C(s32 arg0) {
+    GameState *g;
+    u8 *p;
+    s32 sum;
+    u32 i; /* one counter for every loop: only the last loop (the byte sum) is unrolled */
+
+    g = &D_800E6280;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004 = g->unk_03D;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 = g->unk_03E;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 = g->unk_03F;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007 = g->unk_040;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008 = g->unk_041;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A = g->unk_042;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[0] = g->unk_044[0];
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[1] = g->unk_044[1];
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C = *(GsBlockC4 *)g->unk_0C4;
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_108[i] = g->unk_1BC[i];
+    }
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_488[i] = g->unk_53C[i];
+    }
+    for (i = 0; i < 8; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_498[i] = g->unk_54C[i];
+    }
+    for (i = 0; i < 12; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_4B8[i] = ((GsWord *)g->unk_66C)[i];
+    }
+    g->unk_668[3] = get_k_speed();
+    g->unk_668[2] = D_800B6708;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8 = *(GsBlock56C *)g->unk_56C;
+    for (i = 0; i < 4; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5E8[i] = g->unk_728[i];
+    }
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5EC[i] = g->unk_72C[i];
+    }
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5FC[i] = g->unk_73C[i];
+    }
+    for (i = 0; i < 16; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_60C[i] = g->unk_74C[i];
+    }
+    for (i = 0; i < 256; i++) {
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_61C[i] = g->unk_75E[i];
+    }
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C = g->unk_F6C;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D = g->unk_F6D;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E = g->unk_1092;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F = g->unk_F6E;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20 = g->unk_03C;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24 = g->unk_F68;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28 = g->unk_F6F;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29 = g->unk_F70;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A = g->unk_F73;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B = g->unk_F75;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C = *(GsWord *)g->unk_F64;
+    /* byte sum of the bank's data, as in func_80054FC0 */
+    p = &D_80123120[arg0 * 0xF00 + 0x204];
+    sum = 0;
+    for (i = 4; i < 0xF00; i++) {
+        sum += *p++;
+    }
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->checksum = sum;
+}
 
 /* FAKE: T-10850, T-17007: the dead initial assignments set the induction-register numbering, and
    writing all five on one line makes as1 emit the hoisted starts in the original order (q, r, b).

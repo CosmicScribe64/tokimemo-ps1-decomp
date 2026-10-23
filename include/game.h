@@ -69,6 +69,55 @@ typedef struct SaveWorkView {
     /* 0x040 */ SaveSettings24 config1;
 } SaveWorkView; /* size 0x58 */
 
+/* GameState +0xC4..+0x140 (text buffers, +0xF8 and the nine +0xFC records) as the game save
+ * copies it: one word-aligned 0x7C-byte record (func_8005557C). T-25105 */
+typedef struct GsBlockC4 {
+    /* 0x000 */ s32 w[0x1F];
+} GsBlockC4; /* size 0x7C */
+
+/* GameState +0x56C..+0x66C as the game save copies it: one byte-aligned 0x100-byte record. T-25105 */
+typedef struct GsBlock56C {
+    /* 0x000 */ u8 b[0x100];
+} GsBlock56C; /* size 0x100 */
+
+/* One bank of the memory-card image holding a game save (func_8005557C writes it from GameState;
+ * the comments name the source field). T-25105 */
+typedef struct SaveGameView {
+    /* 0x000 */ s32 checksum;
+    /* 0x004 */ u8 unk_004;             /* unk_03D */
+    /* 0x005 */ u8 unk_005;             /* unk_03E */
+    /* 0x006 */ u8 unk_006;             /* unk_03F */
+    /* 0x007 */ u8 unk_007;             /* unk_040 */
+    /* 0x008 */ u8 unk_008;             /* unk_041 */
+    /* 0x009 */ u8 pad_009;
+    /* 0x00A */ u16 unk_00A;            /* unk_042 */
+    /* 0x00C */ GsRec044 unk_00C[2];    /* unk_044 */
+    /* 0x08C */ GsBlockC4 unk_08C;      /* unk_0C4 */
+    /* 0x108 */ Rec38 unk_108[16];      /* unk_1BC */
+    /* 0x488 */ u8 unk_488[16];         /* unk_53C */
+    /* 0x498 */ GsWord unk_498[8];      /* unk_54C */
+    /* 0x4B8 */ GsWord unk_4B8[12];     /* unk_66C */
+    /* 0x4E8 */ GsBlock56C unk_4E8;     /* unk_56C */
+    /* 0x5E8 */ u8 unk_5E8[4];          /* unk_728 */
+    /* 0x5EC */ u8 unk_5EC[16];         /* unk_72C */
+    /* 0x5FC */ u8 unk_5FC[16];         /* unk_73C */
+    /* 0x60C */ u8 unk_60C[16];         /* unk_74C */
+    /* 0x61C */ GsRec75E unk_61C[256];  /* unk_75E */
+    /* 0xE1C */ u8 unk_E1C;             /* unk_F6C */
+    /* 0xE1D */ u8 unk_E1D;             /* unk_F6D */
+    /* 0xE1E */ u8 unk_E1E;             /* unk_1092 */
+    /* 0xE1F */ u8 unk_E1F;             /* unk_F6E */
+    /* 0xE20 */ u8 unk_E20;             /* unk_03C */
+    /* 0xE21 */ u8 pad_E21[3];
+    /* 0xE24 */ GsWord unk_E24;         /* unk_F68 */
+    /* 0xE28 */ u8 unk_E28;             /* unk_F6F */
+    /* 0xE29 */ u8 unk_E29;             /* unk_F70 */
+    /* 0xE2A */ u8 unk_E2A;             /* unk_F73 */
+    /* 0xE2B */ u8 unk_E2B;             /* unk_F75 */
+    /* 0xE2C */ GsWord unk_E2C;         /* unk_F64 */
+    /* 0xE30 */ u8 unk_E30[0xD0];
+} SaveGameView; /* size 0xF00 */
+
 /* 8-byte record of the array at text_list (stride 8; see k_disp_switch). */
 typedef struct Entry8 {
     /* 0x00 */ s16 unk_00;
