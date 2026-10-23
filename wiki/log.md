@@ -1753,3 +1753,7 @@ Reviewed [[tickets/T-25114-w8-RPG_BAT-80154430]] against CODING_STANDARDS.md; ma
 
 Reviewed [[tickets/T-25117-w8-VALEN-80132760]] against CODING_STANDARDS.md; matched VALEN `func_80133088` (1108 bytes, two FAKEs) and `func_80132834` (1240 bytes, no FAKE) as default-build C, 27/27.
 Both functions of `src/ovl/VALEN/80132760.c` are now C, notes in drafts/T-25117/VALEN/ and [[matching-notes]].
+## [2026-10-23] ticket | T-25116 Done
+
+Reviewed [[tickets/T-25116-w8-main-80047550]] against CODING_STANDARDS.md; matched main `func_80047560` (352 bytes) as default-build C, 27/27.
+`func_800476C0` stays `INCLUDE_ASM` at 649 diff lines (notes in drafts/T-25116/main/func_800476C0/); the unneeded `include/game.h` change was reverted in review.

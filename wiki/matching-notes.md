@@ -768,3 +768,29 @@ Matched: `func_80132834` (310 words, 1240 bytes) is default-build C with no FAKE
 - `count += 1` before `D_8013453C += 1` (to 0).
 
 Negatives and a hint for the GYOZI sibling `func_80138C9C` (same `r` symptom) are in `drafts/T-25117/VALEN/func_80132834/NOTES.md`.
+## T-25116: main func_80047560
+
+Matched (352 bytes, default C) from the T-24303 guard (11 differing words) in about 35 minutes. The quotient is narrowed twice: once for the `unk_014[0]` store and once for the shared offset (uopt colours it `v1`; ugen computes it into `t0` and as1 sinks the `move v1,t0` into the last delay slot). The original's ring order (`t0` for the shared narrowing, `t1..t3` for the first store) means ugen emits the shared narrowing first, yet the first store still comes first. uopt forwards a local to its first use, so the guard's narrowing came after the first chain whatever line it was assigned on. A dead store `q = 0;` after the first store redefines the operand, so uopt keeps `off = q;` on its own line: the ring matches, and as1 (`-xbbdbg 8` trace) breaks the aftercycles tie between the two chains by source line, which gives the original's interleaving. A late-folded `+ ((u32)off < 0)` in the first store fixed the ring but left that tie on one line (2 words). A same-type `*(u8 *)&D_801255DC` view in the divisor replaces T-24303's `s8` view, which T-25058 flagged as semantically wrong (the plain read gives 32 words). With that, `s16 off = q`, no `x`/`y` locals, and a `for` loop with `s32 i` all match. Both FAKEs are marked. Controls and negatives: `drafts/T-25116/main/func_80047560/NOTES.md`.
+
+## T-25116: main func_800476C0
+
+Not matched. The function stays `INCLUDE_ASM`. About 95 minutes of work took the best body from 1,191 diff lines (the T-23006 draft, 816 words against 783) to 649 (780 words against 783). The body is `drafts/T-25116/main/func_800476C0/body.c`. Everything is in `drafts/T-25116/main/func_800476C0/NOTES.md`: steps with row counts, negatives, and a 17-second single-function scorer `score.py`.
+
+What closed:
+
+- The record is the global array `((DisplayFixActor44 *)D_8011ECD0)[i]`, not a pointer. uopt keeps field CSEs of a named global across stores to an address-taken local, and kills them for a pointer.
+- `tpx`/`tpy` are computed after the tpage switch.
+- Rotate is the word `DisplayFixActor44.unk_20`. The draft needs `s32 unk_20` in place of the halfwords `unk_20`/`unk_22` in `include/game.h`; no other user reads them. The edit is not committed (the header stays as the committed C needs it); apply it before running `score.py` (see the notes).
+- There is a `parts = anim->part` base and a separate count variable for the `j` loop.
+- Both `unk_05` switches have `case 0` labels.
+- One index variable serves both animation arms.
+- The mirror arms store the scale last.
+- In the tail, `seq` is assigned at the join, and a FAKE empty `else {}` gives IDO's PRE a real block. PRE does not split critical edges.
+- The record loop is a `for` with `continue` after the `printf`.
+
+What is left:
+
+- The constant 0x1000 sits in fp instead of s4. Traced priority is 600/41 = 14.63 against 520/27 = 19.26 for ox. The halfword scale stores are not uses of the constant range.
+- gs gets a split piece in s0 with priority (20 - 10)/5. Assigning gs after the calls removes the piece but breaks the prologue.
+
+The traced uopt was rebuilt in scratch from `wiki/uopt-register-allocation.md` in about 7 minutes. `rd.sh` runs regdiff with it.

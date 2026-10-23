@@ -31,3 +31,4 @@ Recover `func_80047560` (352 bytes) in `src/main/80047550.c` using canonical dec
 
 - 2026-10-22: Ticket created before any compile or source experiment. Worktree `/private/tmp/tokimemo-t25044`, branch `codex/t25044-parameter`; no root checkout edits.
 - 2026-10-22: Parent relayed the user's request to commit and push all work, with no T-25058 source experiments. Qualification is preserved and the ticket returns to Ready. No source edits, compiler probes, header changes or new match claims were made. Ownership must be reconfirmed when implementation resumes.
+- 2026-10-23: `func_80047560` matched in T-25116 (default C, 352 bytes); the divisor now uses a same-type `u8` view, which resolves the semantic audit above. See [[matching-notes]] (T-25116).
