@@ -1735,3 +1735,8 @@ No review findings: the three fakematches (four test spellings, `* 1` on two rea
 
 Reviewed [[tickets/T-25111-w8-TACO-8013B990]] against CODING_STANDARDS.md; matched TACO `func_8013C6D4` (1388 bytes) and `func_8013BAC4` (1840 bytes) as default-build C, 27/27; the review added two comments for non-obvious tricks in `func_8013BAC4`.
 Both functions of `src/ovl/TACO/8013B990.c` are now C, notes in drafts/T-25111/TACO/ and [[matching-notes]].
+
+## [2026-10-23] ticket | T-25117 Done
+
+Reviewed [[tickets/T-25117-w8-VALEN-80132760]] against CODING_STANDARDS.md; matched VALEN `func_80133088` (1108 bytes, two FAKEs) and `func_80132834` (1240 bytes, no FAKE) as default-build C, 27/27.
+Both functions of `src/ovl/VALEN/80132760.c` are now C, notes in drafts/T-25117/VALEN/ and [[matching-notes]].

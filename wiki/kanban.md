@@ -56,7 +56,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25114-w8-RPG_BAT-80154430|T-25114 Wave 8 package w8-RPG_BAT-80154430 (src/ovl/RPG_BAT/80154430.c)]]
 - [ ] [[tickets/T-25115-w8-main-800490C0|T-25115 Wave 8 package w8-main-800490C0 (src/main/800490C0.c)]]
 - [ ] [[tickets/T-25116-w8-main-80047550|T-25116 Wave 8 package w8-main-80047550 (src/main/80047550.c)]]
-- [ ] [[tickets/T-25117-w8-VALEN-80132760|T-25117 Wave 8 package w8-VALEN-80132760 (src/ovl/VALEN/80132760.c)]]
 - [ ] [[tickets/T-25118-w8-main-800563F0|T-25118 Wave 8 package w8-main-800563F0 (src/main/800563F0.c)]]
 - [ ] [[tickets/T-25119-w8-main-80061710|T-25119 Wave 8 package w8-main-80061710 (src/main/80061710.c)]]
 - [ ] [[tickets/T-25120-w8-GYOZI-80138B50|T-25120 Wave 8 package w8-GYOZI-80138B50 (src/ovl/GYOZI/80138B50.c)]]
@@ -190,6 +189,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25117-w8-VALEN-80132760|T-25117 Wave 8 package w8-VALEN-80132760 (src/ovl/VALEN/80132760.c)]]
 - [ ] [[tickets/T-25111-w8-TACO-8013B990|T-25111 Wave 8 package w8-TACO-8013B990 (src/ovl/TACO/8013B990.c)]]
 - [ ] [[tickets/T-25101-w8-main-8004F870|T-25101 Wave 8 package w8-main-8004F870 (src/main/8004F870.c)]]
 - [ ] [[tickets/T-25102-w8-TAIIKU-80138950|T-25102 Wave 8 package w8-TAIIKU-80138950 (src/ovl/TAIIKU/80138950.c)]]
