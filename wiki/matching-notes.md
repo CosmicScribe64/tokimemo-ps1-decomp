@@ -17,18 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25037: BUNKA_SD func_80139290 source scheduling closure
-
-Closed the final two lbu/store-address-lui swaps with separate preload blocks and late-folded empty tests. In case0x49, `if (g->unk_1104.u == 0x60) {}` followed by `if ((u32)g->unk_03E < 0) {}` precedes the zero store. This emits constant0x60 before the year-address lui, but schedules the year lbu before store-address preparation. In case0x66, `if (g->unk_1104.u == 1) {}` precedes the original store1, then the unsigned-false year test follows it. Store-before-first-test instead emits an extra selector subu; moving the test first removes it. Both predicates vanish from machine code, retain the correct register identities, and are marked FAKE. Existing case0x3B T-25020 test remains.
-
-Actual optimized ucode separates entry reloads (ascending registers) from edge reloads (linked-list order); this explains why the previous single-block early comparisons could not place t2's constant before t0's year preload. Guarded and promoted default C each pass literal private linked-byte proof:379 words/1516 bytes. Full experiment ledger: drafts/T-25037/README.md. [[tickets/T-25037-bunka-upstream-emission]].
-
-## T-25041: KANGEI func_8013852C local schedule closure
-
-A plain empty `if (D_80139ADC) {}` after its sum store promotes the stored value in uopt and changes direct `str` to an `rstr` emitted on the next source line. This places addu before store-address lui, but initially moves its temporary from t6 to t7. Replacing the redundant `(u16)(s16)year` with plain `year` (already u8) restores t6. The resulting 45-word function has separate guarded and promoted default-C literal 180-byte proofs. The empty test and retained expression controls are marked FAKE; removing the test loses the match.
-
-Correction to T-24901/T-25018: besttime alone does not decide this tie. Both traces have aftercycles4 and, at time16, lui besttime15/addu16; the new trace nevertheless selects addu after uopt emits the store on the later source line (with different original INST positions). Previous temp/store negatives did not exhaust this promotion mechanism. No compiler changes. See [[tickets/T-25041-kangei-preload-schedule]] and drafts/T-25041/README.md for the complete ledger.
-
 ## T-25039: MAIN func_8005B43C club carrier matched
 
 The T-25004/T-25008 near miss is closed by defining the club local only in the else branch that calls func_80053564, before the existing empty halfword test; the preceding condition compares `D_800E6280.unk_0F4.h >> 12` directly. Baseline traced uopt already assigned the shared shift expression v1 but copied it to a call-precolored a0 local before the condition; subsequent coalescing replaced v1. Delaying the local definition preserves v1 for the compare and a0 only for the eventual argument move, while the overlapping halfword remains a1. The final source needs no new late-zero identity or ignored argument. Existing pad/empty-read FAKEs remain annotated.

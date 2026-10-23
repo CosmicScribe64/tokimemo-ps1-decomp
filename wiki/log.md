@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | tools/lever_lab.py for compiler-level experiments (T-25013)
-
-Added `tools/lever_lab.py` and `tools/test_lever_lab.py`: one command rebuilds every object under an env-gated variant, checks 0 FAILED and 27 `.ok`, compares each matched function with a base snapshot (any change = non-uniform rule, reject) and re-scores all guarded functions against base. Validated with a no-op variant (`0 of 7506` changed, 0 guarded changes). Note: `tools/queue.py` shadows the stdlib `queue`, so `concurrent.futures`/`ThreadPool` break inside `tools/`; the tool uses plain subprocess polling. Documented in [[tickets/T-25013-compiler-level-levers]].
-
-## [2026-10-21] ticket | T-25013 first lever experiment: zcopy off is not the lever
-
-A Sonnet worktree run (branch T-25013, merged) tried lever 1 on main `func_8006A044` and ran out of usage before levers 2-5. Result: our compiler already promotes the byte and stores it at the same places; the difference is the arm shape (original `or t5,v0,zero; ori; andi v0; sb v0`, ours `ori; sb t5`). Forcing uopt `OPTN zcopy 0` everywhere is not uniform (`lever_lab`: 22 guarded changes, 19 worse, e.g. `main func_8006D7EC` 2 -> 1630) and did not produce the copy. Next step on that lever: trace which uopt phase collapses the `LOD R; STR R` copy. Levers 2-5 untouched; ticket [[tickets/T-25013-compiler-level-levers]] stays Ready. Worktree `/Users/lila/Documents/Projects/tokimemo-wt/T-25013` (local, game data copied in) can be reused or removed with `git worktree remove`.
-
 ## [2026-10-21] ticket | T-25013 claimed by Octa (remote, cloud workflow)
 
 Octa (Muse, working remotely per the maintainer's direction) takes [[tickets/T-25013-compiler-level-levers]]: compiler-level levers from the cloud workflow ([[cloud-matching]]), since the maintainer is away from the Mac. Setup: public clone plus the project Docker image built locally; single-function packets stay outside the repo and are never committed. Full uniformity gate runs through CI on pull requests (progress workflow) until a local tree with the disc is available. First target is the lever 1 follow-up the ticket already queues: trace which uopt phase collapses the `LOD`/`STR` copy pair on main `func_8006A044`, using the instrumented uopt from [[ending-allocator-trace]]. Branch: `octa/t25013-levers`.
