@@ -17,20 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-24606: OPTION calendar controls literal match
-
-[[tickets/T-24606-option-calendar]] promotes func_8013A7EC (1,092 bytes). Existing ScheduleFlags.unk_12 replaces hand-packed update logic, and OptionByteBf preserves the unsigned selector web. Direct canonical weekday comparisons plus one entry read restore the original address allocation; plain counter increment suffices after this recovery, so identity multiplication was removed. Explicit integer return with fallthrough prevents as1 from filling the original flag-branch NOP. Shared label-pointer/month and display-row/loop-bound words remain necessary; all unusual mechanisms have FAKE explanations. Omission proofs and both independent reviews are in the ticket. Default literal proof, full build, fresh27 hashes and declaration guards pass without header/data/compiler changes.
-
-## T-24600: Wrap-up reconstruction checkpoints
-
-User requested stopping the current matching session and committing/pushing completed work. Remaining experiments stay private under `build/T-24600/`; no coverage credit is taken for them.
-
-- MAIN `func_80062948`: joining the four entry initializations improves the typed, correct-reload reconstruction to40/184 words differing, with original aggregate homes but frame D8 instead of D0. Tail value types and shared temporaries do not resolve the copy-register and scheduling differences. Best packet `matrices-entry/init-joined`; earlier42/184 packet `matrices-homefix/four-before` remains the cleaner structural baseline.
-- MAIN `func_8004A1A0`: replaying the old typed background initializer gives149/156 against157 words. Direct height constant multiplication strength-reduces unlike the original multiply; byte-bitfield and signed-byte views do not solve the redundant conversion. Chained assignments produce174/155,171/156 and179/156, all worse. Canonical SpriteMap10/Cell declarations currently live in OPTION's header; a future MAIN promotion must move shared declarations properly. No production type or source change.
-- TACO `func_80139424`: direct byte argument, independent coordinate words and direct branch-local UV stores recover most structure. `taco-lane/font-copy-order/y-order` is115/418 against419 words, with original Y homes and copies; `font-constant-order/top-first` scores97/418 but changes V-store order. Center/division register allocation and X-copy ordering remain. Full private ledger: `taco-lane/CHECKPOINT.md`.
-- NAME_ENT `func_80143580`: restored signed-halfword decrement narrowing is required. Selector byte views, RGB zero chains, and fade snapshots recover several causal regions; `name-lane/intro-recovery/NOTES.md` records the still-unmatched candidates. A lower-scoring branch-reorder control loses an observed selector self-store and is not a valid improvement.
-- ETC `func_801328A4`: archive reconstruction had incorrect record and input strides, wrong copy widths and one-element stack placeholders. Typed three-row Rgb555Split storage and RECT recover these accesses; `etc-lane` candidate remains231 words against230, with frame/layout unresolved. No production source or header change.
-
 ## T-25001: class C main sndisp, strCallback, func_80065964
 
 [[tickets/T-25001-class-c-main-sndisp-strcallback]], worktree `c-m1`. No new match; one guard at 2 rows.
@@ -812,6 +798,7 @@ Details, negatives and the census commands: `drafts/T-25118/main/strCallback/NOT
 3. Frame: `limit` is the hoisted expression `arg1 - 3` (uopt spill home sp+0x48), plus FAKE pads for six unknown words of locals: 50 to 0.
 
 Details, the cost arithmetic and negatives: `drafts/T-25118/main/func_80056BA8/NOTES.md`.
+
 ## T-25123: main func_800455C4
 
 Matched (2,768 bytes, default C) from the T-24701 guard (13 differing words) in about 75 minutes. Three source facts closed it:
