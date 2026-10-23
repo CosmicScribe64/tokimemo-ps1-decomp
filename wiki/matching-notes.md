@@ -749,3 +749,15 @@ Left: frame 0x60 against 0x58 (a web kept by an unmovable read costs frame words
 - **One phase range with two orders.** The target writes `$s7` base first in the correction arm and index first after the join. Integer address sums, `(s32)&D + arg7 * 4` in the arm and `arg7 * 4 + (s32)&D` at the join, are one uopt expression with two defs, and each def emits its own order. Base-first pointer forms in the arm (`p += i`, subscripts) split it into an arm-only range in `$v0`: 230 lines.
 
 FAKE: the array view of the scalar-declared D_8015EBAC and the integer sums (T-25114); T-24522's `* 1` remainder is still needed. Controls: `drafts/T-25114/RPG_BAT/func_8015528C/NOTES.md`.
+
+## T-25121: ETC func_80132C3C
+
+[[tickets/T-25121-w8-ETC-80132880]], branch w8-ETC-80132880. Not matched: guarded `NON_MATCHING` body, 15 rows (from T-24012's 105-row draft). Left: four 4-use coordinate constants coloured in another order (draft t0..t3 = 0xA0 u1/u3, 0x128, 0x20, 0xA8; original 0x20 first). Findings that apply elsewhere:
+
+- **uopt splits a basic block after the statement at which it holds 16 indirect stores.** `istr` are counted before dead-store elimination; `str` to locals do not count; the count restarts at calls. Constants first used in a block are loaded at its head, so a split moves a constant's range start (here past a call result in v0). Seven dead stores or one empty `if (p) {}` move the split.
+- **Constant-propagated and dead scalars keep frame slots** (three folded coordinate locals grew the frame by 8): a frame larger than the live locals can be folded locals, not arrays.
+- **Constant type follows the store, unless uopt folds it.** A literal or a propagated local stored to a `u8` field is an `L` constant, to an `s16` field a `J` constant, and the two never share a register; a `u16`/`s8` view, or a sum uopt folds (`0x18 + i`, i = 0), gives a `J` constant that does.
+- **One line per PsyQ macro expansion** (comma expression, x0 first) reproduces as1's in-line store order and the hoisted-constant numbering at once; one statement per store in the target order gets the stores right and the constant order wrong.
+- A `volatile` view of a counter global gives one load for a run of byte stores (no copy-propagated second `lw`) and adds in the loaded register.
+
+FAKE (T-25121): `volatile D_8014DB80` in `ovl/ETC.h`, `pad[13]`, `s8` views on u0/u2, the empty block-split test, no `return` plus a dead test. Measurements, negatives and the next hypothesis: `drafts/T-25121/ETC/func_80132C3C/NOTES.md`.
