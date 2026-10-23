@@ -92,6 +92,9 @@ itself (`x = D; ...; x &= k;`). That is a build-step change and needs approval.
 - u8 locals (102 rows), u32 locals (no change), `(u8)` casts on the mask loads (no change).
 - Empty `if (D_X) {}` tests on the globals to promote them (93 rows); in-place global forms
   (`D_X &= 0x7F`): all four promoted with tests, but each narrow store spends two ugen slots (120).
+- An empty `switch (D_80120C2B) {}` at the top (to trigger cvt_pass's zcopy-off rule for switch
+  temporaries): no change (22). With `case 0: break;` the selector load stays at the top and the
+  copies still fold into the masks (99).
 - Record-array views `((DisplayActor44 *)D_80120650)[19..22].unk_03` with locals: same as the
   plain names; they do not alias each other for uopt.
 - Measured with zcopy off on the guard body: without the first `if (arg0) {}` 35 rows (arg0 loses
