@@ -23,7 +23,110 @@ void func_8013B990(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B990", func_8013BAC4);
+/* FAKE: s32 with no return keeps v0 live at the exit, so as1 fills the first branch slot of the
+ * particle loop from the latch (void moves the kind test there), as in func_8013C1F4. T-25111. */
+s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
+    s32 x;
+    s32 y;
+    s32 i;
+    s32 z;
+    s32 j;
+    s32 radius;
+    s32 xdist;
+    s32 ydist;
+    s32 kind;
+    u32 damage;
+    s32 width;
+    TcDamage9 damageTable;
+    u32 scores[256];
+
+    damageTable = D_8015F548;
+    /* FAKE: the byte view keeps tools/cvt_pass.py from turning global copy propagation off for
+     * this procedure (a switch on an unsigned global at the entry); the original propagated the
+     * second distance into its compare (no move from v0) and still compared the stage in v1. T-25111. */
+    switch (*(u8 *)&D_800E6280.unk_1109) {
+    case 0xC:
+        for (j = 0; j < 256; j++) scores[j] = 0x190;
+        break;
+    case 0x16:
+        for (j = 0; j < 256; j++) scores[j] = 0xC8;
+        break;
+    case 0x20:
+        for (j = 0; j < 256; j++) scores[j] = 0x320;
+        break;
+    default:
+        for (j = 0; j < 256; j++) scores[j] = D_8015F504[j];
+        break;
+    }
+    D_8015F500 = 0;
+    if (arg0->unk13 & 0x20) {
+        for (i = 0; i != 2; i++) {
+            if (D_800E6280.unk_10F8 & 1) {
+                x = (i + arg0)->unk0;
+                y = (i + arg0)->unk2;
+                if (arg2 == 0) z = D_8015EDB4[0].unk78;
+                else z = D_8015EDB4[8].unk78;
+                for (j = 16; j != 63; j++) {
+                    if (((j + D_8015EDB4)->unk0[1] & 0x80) && ((j + D_8015EDB4)->unk84[3] & 1) && (j + D_8015EDB4)->unk84[1] != 0 && (j + D_8015EDB4)->unk84[0] != 0) {
+                        radius = (j + D_8015EDB4)->unk84[0] * 16;
+                        xdist = func_800AE0C0(x - (j + D_8015EDB4)->unk74);
+                        ydist = func_800AE0C0(y - (j + D_8015EDB4)->unk76);
+                        if (xdist < radius + 0x18 && ydist < radius + 0x18) {
+                            if ((j + D_8015EDB4)->unk78 < z) {
+                                if (D_8015F500 == 0 && arg2 == 0) {
+                                    D_8015F500 = 1;
+                                    func_801335A0(1, 0x507);
+                                }
+                                if ((j + D_8015EDB4)->unk84[1] != 0) (j + D_8015EDB4)->unk84[1]--;
+                                func_8013D2A0(x, y, (j + D_8015EDB4)->unk78 - 0x200);
+                                D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17] / 20;
+                                if ((j + D_8015EDB4)->unk84[1] != 0) continue;
+                                D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    for (i = 0; i < 16; i++) {
+        if (((i + arg0)->unk13 & 0x80) && (kind = (i + arg0)->unk13 & 15) != 0) {
+            x = (i + arg0)->unk0;
+            y = (i + arg0)->unk2;
+            z = (i + arg0)->unk4;
+            damage = damageTable.bytes[kind];
+            if (kind == 8) width = 0x60;
+            else width = 0x30;
+            for (j = 16; j != 63; j++) {
+                if (((j + D_8015EDB4)->unk0[1] & 0x80) && ((j + D_8015EDB4)->unk84[3] & 1) && (j + D_8015EDB4)->unk84[1] != 0 && (j + D_8015EDB4)->unk84[0] != 0) {
+                    radius = (j + D_8015EDB4)->unk84[0] * 16;
+                    if (func_800AE0C0(z - (j + D_8015EDB4)->unk78) < radius + 0x100) {
+                        xdist = func_800AE0C0(x - (j + D_8015EDB4)->unk74);
+                        ydist = func_800AE0C0(y - (j + D_8015EDB4)->unk76);
+                        if (xdist < radius + width && ydist < radius + width) {
+                            if (D_8015F500 == 0 && arg2 == 0) {
+                                D_8015F500 = 1;
+                                func_801335A0(1, 0x507);
+                            }
+                            if (damage < (j + D_8015EDB4)->unk84[1]) (j + D_8015EDB4)->unk84[1] -= damage;
+                            else (j + D_8015EDB4)->unk84[1] = 0;
+                            if ((j + D_8015EDB4)->unk84[1] == 0) (j + D_8015EDB4)->unk84[3] &= 0xF0;
+                            (i + arg0)->unk12 = 0;
+                            (i + arg0)->unk13 = 0;
+                            func_8013D2A0(((j + D_8015EDB4)->unk74 + x) / 2, ((j + D_8015EDB4)->unk76 + y) / 2, z - 0x200);
+                            D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17] / 10 * damage;
+                            if ((j + D_8015EDB4)->unk84[1] == 0) {
+                                func_801335A0(1, 0x508);
+                                D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17];
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 /* FAKE: s32 with no return keeps the loop counter init (v0) live at the exit (void drops two
  * instructions); the hit in the second loop returns before it. T-19006. */
@@ -362,7 +465,7 @@ s32 func_8013CE78(void) {
                 } else {
                     (i + D_8015EDB4)->unk84[1] = 0;
                 }
-                func_8013D2A0((s32)(i + D_8015EDB4)->unk74, (s32)(i + D_8015EDB4)->unk76, (s32)(s16)((i + D_8015EDB4)->unk78 - 0x200));
+                func_8013D2A0((i + D_8015EDB4)->unk74, (i + D_8015EDB4)->unk76, (i + D_8015EDB4)->unk78 - 0x200);
                 if ((i + D_8015EDB4)->unk84[1] == 0) {
                     func_801335A0(1, 0x508);
                     D_8015EDF0 += D_8015F504[(D_8015EDB4 + i)->unk84[2] % 17U];
@@ -399,7 +502,7 @@ s32 func_8013CFD8(void) {
             }
             d = (a + b) / 256;
             if (d != 0) {
-                func_8013D2A0((s32)(i + D_8015EDB4)->unk74, (s32)(i + D_8015EDB4)->unk76, (s32)(s16)((i + D_8015EDB4)->unk78 - 0x200));
+                func_8013D2A0((i + D_8015EDB4)->unk74, (i + D_8015EDB4)->unk76, (i + D_8015EDB4)->unk78 - 0x200);
             }
             if ((u32)d < (i + D_8015EDB4)->unk84[1]) {
                 (i + D_8015EDB4)->unk84[1] -= d;
