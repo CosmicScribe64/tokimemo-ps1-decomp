@@ -729,3 +729,13 @@ Details and negatives: `drafts/T-25113/ETC/func_8013D570/NOTES.md`.
 - Candidate rule for a tooling ticket (`drafts/T-25118/main/strCallback/ugen_pass-candidate.diff`): F for a copy of at most 16 bytes whose last state ops are direct stores right after a call. In a private census of all 437 C files it changes no matched function and takes strCallback from 75 rows to 0; the eight other guarded copy functions keep their rows. With a 32-byte limit it changes the four aligned MATRIX copies in ETC/TAIIKU, which the original copies in state B. It rests on one unmatched data point, so confirm it with `lever_lab` (re-insert the guard first) and the 27/27 gate.
 
 Details, negatives and the census commands: `drafts/T-25118/main/strCallback/NOTES.md`.
+
+## T-25118: main func_80056BA8
+
+[[tickets/T-25118-w8-main-800563F0]]: matched (default C, 1296 bytes), from INCLUDE_ASM. Start: the T-17014 draft, 219 rows with the types in headers (DISPENV/DRAWENV now in `psx_types.h`, CdlFILE in a new `libcd.h`). What closed it:
+
+1. Semantic holes: short prototypes for the two volume calls (file overrides), the sample's `id = rectid ? 0 : 1` ternary (keeps `id` in v0), the GsOT draw argument as `(u8 *)&D_800E8C70 + D_8011ECA0 * 0x14` (the `* 5` form shifts every later ring temporary), `start` assigned before the limit: 219 to 94.
+2. Allocation by block count: a new saved register costs `0.25 * blocks`. At 75 blocks `&draw` (savings 21) still beats 20.95 and the arg0 piece shares its s3. A `for` vol loop (76 blocks) drops `&draw`; one FAKE empty test in the loop (78 blocks) raises the `&disp` range's denominator so the arg0 pieces are coloured first and fail: 94 to 50 (offsets only). The R9 SAVE/COST lines of regdiff's trace log show savings and costs directly.
+3. Frame: `limit` is the hoisted expression `arg1 - 3` (uopt spill home sp+0x48), plus FAKE pads for six unknown words of locals: 50 to 0.
+
+Details, the cost arithmetic and negatives: `drafts/T-25118/main/func_80056BA8/NOTES.md`.
