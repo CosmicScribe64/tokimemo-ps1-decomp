@@ -837,7 +837,55 @@ void func_80065900(u8 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80065964);
+/* Returns 0 when record idx of D_80125C10 moved by (dx, dy) leaves the screen (x0 < -160, x0 + 19 > 160,
+ * y0 outside -120..120) or when one of its four corners lies in the 20 x 16 box of another of the 15
+ * records, else 1. The corners are two local arrays filled from repeated expressions and tested in a
+ * 4-trip loop: IDO unrolls that loop, keeps the eight corner values in registers (one pair per test,
+ * so the outer loop runs out of caller-saved registers and spills the shared subexpressions to
+ * sp+0x20..0x28) and leaves the 15-trip loop rolled. T-25108. */
+s32 func_80065964(s32 idx, s32 dx, s32 dy) {
+    s32 cx[4];
+    s32 cy[4];
+    s16 *p;
+    s32 i;
+    s32 j;
+    s32 r;
+    s16 *q; /* FAKE: T-25108, never used; the original's 15th local word is unknown. It keeps the frame at
+             * 0x68 and the spill slots at sp+0x20..0x28. */
+    s32 tx;
+    s32 ty;
+
+    p = (s16 *)&D_80125C10[idx * 4];
+    r = 1;
+    cx[0] = p[0] + dx; cy[0] = p[1] + dy;
+    cx[1] = p[0] + dx + 19; cy[1] = p[1] + dy;
+    cx[2] = p[0] + dx; cy[2] = p[1] + dy + 15;
+    cx[3] = p[0] + dx + 19; cy[3] = p[1] + dy + 15;
+    if (cx[0] < -160) {
+        return 0;
+    }
+    if (cx[1] > 160) {
+        return 0;
+    }
+    if (cy[0] < -120) {
+        return 0;
+    }
+    if (cy[1] > 120) {
+        return 0;
+    }
+    for (i = 0; i < 15; i++) {
+        if (i != idx) {
+            tx = ((s16 *)&D_80125C10[i * 4])[0];
+            ty = ((s16 *)&D_80125C10[i * 4])[1];
+            for (j = 0; j < 4; j++) {
+                if (cx[j] >= tx && cx[j] < tx + 20 && cy[j] >= ty && cy[j] < ty + 16) {
+                    r = 0;
+                }
+            }
+        }
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80065B0C);
 
