@@ -7,10 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] ticket | T-25013 claimed by Octa (remote, cloud workflow)
-
-Octa (Muse, working remotely per the maintainer's direction) takes [[tickets/T-25013-compiler-level-levers]]: compiler-level levers from the cloud workflow ([[cloud-matching]]), since the maintainer is away from the Mac. Setup: public clone plus the project Docker image built locally; single-function packets stay outside the repo and are never committed. Full uniformity gate runs through CI on pull requests (progress workflow) until a local tree with the disc is available. First target is the lever 1 follow-up the ticket already queues: trace which uopt phase collapses the `LOD`/`STR` copy pair on main `func_8006A044`, using the instrumented uopt from [[ending-allocator-trace]]. Branch: `octa/t25013-levers`.
-
 ## [2026-10-21] build | T-25013 lever 1 traced: no uopt phase removes the copy; it is never created
 
 Octa's remote session on [[tickets/T-25013-compiler-level-levers]]: built the instrumented uopt (pristine `uopt.c` hash matches [[ending-allocator-trace]]) and dumped the ucode streams for the `func_8006A044` draft. The constant-address indirect form of the `unk_F64` accesses is not the lever (a gated `cvt_pass` normalization to direct `LOD`/`STR` fires on all 19 sites, final score unchanged at 97). The traced expression graph shows the byte as one evolving version chain; the original's extra per-arm copy is an allocator coalescing artifact, which puts `func_8006A044` on lever 5, not lever 1. Details in the ticket. Environment note: the cloud VM cannot run Docker containers (netns blocked), so the pinned toolchain runs natively there and CI is the gate; the Docker-only rule for the maintainer's host is unaffected.
@@ -1789,6 +1785,7 @@ User asked for extra effort, outside-the-box approaches and build tooling change
 ## [2026-10-23] decision | Playbook: compiler research summary for agents
 
 Added "Before proposing a compiler or build-step change" to [[playbook]]: which compiler the game used, the IDO 5.2/5.3/4.1 comparisons, the rejected allocator rules and levers, and where a real difference has been found before (the front end's ucode, `cvt_pass.py`). Prompted by the stubborn-function attack ([[tickets/T-25500-stubborn-functions]]) so agents start from these results instead of repeating them.
+
 ## [2026-10-23] ticket | T-25309 Done
 
 Reviewed [[tickets/T-25309-w10-TAIIKU-80133C80]] against CODING_STANDARDS.md; no match: TAIIKU `func_80137784` stays behind its `NON_MATCHING` guard (4 funcdiff rows, the operand order of two pointer compares), 27/27, no findings.
