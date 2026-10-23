@@ -144,6 +144,7 @@ void func_8013788C();
 void func_8014F210(void);
 void func_8015185C(void);
 s32 func_801335A0();
+void func_80133410(s32 arg0);
 s32 func_80134A18();
 void func_80134EBC(void);
 void func_8013506C();
@@ -270,6 +271,7 @@ extern Tc14 D_8015E270[];
 /* result screen (T-19006): counter and bonus drawers of 8013B990.c */
 s32 func_8013C1F4(void);
 s32 func_8013C440(void);
+s32 func_8013C6D4(void);
 void func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2);
 extern Tc14 D_8015E3B0[];
 extern u16 D_8015F580;
