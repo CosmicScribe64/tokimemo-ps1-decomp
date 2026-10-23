@@ -53,7 +53,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 - [ ] [[tickets/T-25306-w10-BUNKA_SD-80134540|T-25306 Wave 10 second pass on src/ovl/BUNKA_SD/80134540.c]]
 - [ ] [[tickets/T-25307-w10-main-8004F870|T-25307 Wave 10 second pass on src/main/8004F870.c]]
-- [ ] [[tickets/T-25308-w10-RPG_BAT-80154430|T-25308 Wave 10 second pass on src/ovl/RPG_BAT/80154430.c]]
 - [ ] [[tickets/T-25309-w10-TAIIKU-80133C80|T-25309 Wave 10 second pass on src/ovl/TAIIKU/80133C80.c]]
 - [ ] [[tickets/T-25310-w10-main-80053650|T-25310 Wave 10 second pass on src/main/80053650.c]]
 - [ ] [[tickets/T-25311-w10-ENDING-80133C10|T-25311 Wave 10 second pass on src/ovl/ENDING/80133C10.c]]
@@ -168,6 +167,9 @@ kanban-plugin: board
 ## Done
 
 - [ ] [[tickets/T-25305-w10-SHOUGATU-8013E330|T-25305 Wave 10 second pass on src/ovl/SHOUGATU/8013E330.c]]
+- [ ] [[tickets/T-25308-w10-RPG_BAT-80154430|T-25308 Wave 10 second pass on src/ovl/RPG_BAT/80154430.c]]
+- [ ] [[tickets/T-25301-w10-NAME_ENT-80139740|T-25301 Wave 10 second pass on src/ovl/NAME_ENT/80139740.c]]
+- [ ] [[tickets/T-25131-w8-NAME_ENT-80142A80|T-25131 Wave 8 package w8-NAME_ENT-80142A80 (src/ovl/NAME_ENT/80142A80.c)]]
 - [ ] [[tickets/T-25132-w8-SHOUGATU-80134890|T-25132 Wave 8 package w8-SHOUGATU-80134890 (src/ovl/SHOUGATU/80134890.c)]]
 - [ ] [[tickets/T-25135-w8-ENDING-80133C10|T-25135 Wave 8 package w8-ENDING-80133C10 (src/ovl/ENDING/80133C10.c)]]
 - [ ] [[tickets/T-25301-w10-NAME_ENT-80139740|T-25301 Wave 10 second pass on src/ovl/NAME_ENT/80139740.c]]

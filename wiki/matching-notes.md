@@ -842,3 +842,11 @@ No match, [[tickets/T-25305-w10-SHOUGATU-8013E330]]. The best body is still the 
 - The empty edge block between the `>= 9` test and the `== 5` label is always in F5F's range. It makes the loop part of the range worth exactly 0. The original's allocation appears only when the range is split starting at the `== 5` block. A FAKE-built diagnostic (hole, latch, alias forced store) reproduces the loop allocation, but the split piece then runs into the post-loop code.
 
 Negatives, trace helpers (`pri.sh`) and the next hypothesis: `drafts/T-25305/SHOUGATU/func_8013EA98/NOTES.md`.
+## T-25308: RPG_BAT func_80154DD8 (second pass)
+
+[[tickets/T-25308-w10-RPG_BAT-80154430]], branch w10-RPG_BAT-80154430. Matched as default-build C (1204 B), from the T-25114 guard at 34 funcdiff rows. Two source facts closed it:
+
+- **Only x and y are declared.** With the web-keeping views, a declared `nx = -x` is spilled to a new uopt home below the declared locals, so the `nx`/`ny` slots cost two unused words (frame 0x60). Writing `-x, -y` in both calls lets uopt keep the negations in temporaries across the first call: frame 0x58, homes 0x48/0x44, as in the original.
+- **One symbol for the counter, the selector and the test reads.** as1 does not move a load above a store through the same symbol. `(&D_8015EBAC)[60] = 1;` (the counter is element 60 of the int array at `D_8015EBAC`) keeps the case 0 selector load in front of the stores; `(&D_8015EC9C)[-16]` for `D_8015EC5C` keeps the case 3 test loads behind the counter store. Both FAKE until the array is declared in the header.
+
+Controls, negatives and the aggregate follow-up: `drafts/T-25308/RPG_BAT/func_80154DD8/NOTES.md`.

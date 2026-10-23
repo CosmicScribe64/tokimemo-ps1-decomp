@@ -1766,3 +1766,7 @@ Four marked FAKEs (a dead `register` initializer turns copy propagation off, see
 
 Reviewed [[tickets/T-25305-w10-SHOUGATU-8013E330]] against CODING_STANDARDS.md; no match: SHOUGATU `func_8013EA98` stays `INCLUDE_ASM` (best body 42 funcdiff rows, over the guard limit), 27/27, no findings.
 Second-pass results (natural member spelling fixes the `>= 9` block, count block and exit; latch and t4 selector still diverge) and the next hypothesis are in `drafts/T-25305/SHOUGATU/func_8013EA98/NOTES.md` and [[matching-notes]].
+## [2026-10-23] ticket | T-25308 Done
+
+Reviewed [[tickets/T-25308-w10-RPG_BAT-80154430]] against CODING_STANDARDS.md; matched RPG_BAT `func_80154DD8` (1204 bytes) as default-build C, 27/27, funcdiff MATCH, no findings.
+Frame fixed by declaring only x and y (`-x, -y` in both calls), call order by two marked same-symbol FAKE views; notes in `drafts/T-25308/RPG_BAT/func_80154DD8/NOTES.md` and [[matching-notes]].
