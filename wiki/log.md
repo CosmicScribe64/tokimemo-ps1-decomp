@@ -7,9 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-20] ticket | T-25001 to In Review
-[[tickets/T-25001-class-c-main-sndisp-strcallback]]: main `sndisp` guarded at 2 rows. Code and frame match; the `pos[]` template cannot sit at D_800B40F8 because this object's C `.data` is already the D_800E3680 island. `strCallback` (75 rows, ugen ring) and `func_80065964` (frame/home-store shape unknown) stay INCLUDE_ASM with drafts in drafts/T-25001/main/. Notes in [[matching-notes]]. Clean build 27/27.
-
 ## [2026-10-20] build | T-24700 work merged onto the new plan; clean 27/27
 
 Committed the T-24700 fan-out records and guarded improvements, merged origin/main (c5b96eb43:
@@ -1753,6 +1750,7 @@ Reviewed [[tickets/T-25114-w8-RPG_BAT-80154430]] against CODING_STANDARDS.md; ma
 
 Reviewed [[tickets/T-25117-w8-VALEN-80132760]] against CODING_STANDARDS.md; matched VALEN `func_80133088` (1108 bytes, two FAKEs) and `func_80132834` (1240 bytes, no FAKE) as default-build C, 27/27.
 Both functions of `src/ovl/VALEN/80132760.c` are now C, notes in drafts/T-25117/VALEN/ and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25116 Done
 
 Reviewed [[tickets/T-25116-w8-main-80047550]] against CODING_STANDARDS.md; matched main `func_80047560` (352 bytes) as default-build C, 27/27.
