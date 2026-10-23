@@ -206,3 +206,69 @@ conclusions in the first version of this note were wrong and must not be reused:
 Kept observation: `--resolve` rows overstate a one-instruction move because every later branch
 target shifts; report the true moved-instruction count with the row count. main func_8006D7EC's
 last row is still uopt constant propagation (`cc -S` shows `li $3,1`), a separate open item.
+
+## T-25002: class C ENDING func_801387B0, GEKO func_80133C50, ETC func_80144224
+
+[[tickets/T-25002-class-c-ending-geko-etc]], worktree c-m2, from [[plan-remaining]] class C. 0 of 3 matched; one guard.
+
+- **GEKO `func_80133C50` (guarded, 13 rows).** Started from the T-24503 cost-44 body (22 rows here). Three changes: `(u8)(v & 0x7F) < 2` in the 4/5/10 arm (autotweak, 22 to 15); `g * 1 == 2` in the 1/2/3 chain puts the shared constant first, `beq a0,v1` (15 to 14; `2 == g`, `| 0` do not); `(g = D_80144C50) == 2U` gives `bne t8,a0` (14 to 13; the same word-local trick as the sibling `func_80133AA0`; `2 == C50`, `* 1`, `^ 0`, `(s32)`, byte view do not). The implicit-int strcpy view is a per-file `MAIN_API_OVERRIDE_func_800AE0F0`. Left: ugen temporary order in the zero-girl arm (original `srl t9; mflo t6; addu t0; srl t1`, built `srl t1; mflo t9; addu t6; srl t0`) and `lhu`/`srl` t9/t7 swapped in the 4/5/10 arm. No effect: a separate club local, `g` vs `temp` roles, compare order `g == v`, one-line grouping, empty tests on `v`/`g` (worse), `6U`/`2U`, autotweak 300 s a second time.
+- **ENDING `func_801387B0` (INCLUDE_ASM, draft `drafts/T-25002/ENDING/func_801387B0.c`, 80/76 rows).** Fresh body in the style of the matched siblings (`DisplayActor44` record 31, the `D_8011F4DE/E0/D0` scalars), frame 0x28 right. `D_8011F4DE * 1 == 1` gives the original `bne v1,t0`. Left: the original keeps `byte & 1` in `v1` (byte in `a0`) and recomputes `xor a1,v1; sltiu` for each of the four `N - (flag == 1)` compares; every form tried CSEs the boolean from the second compare on, so the build is 16 bytes short. Tried: s32/u8/u32/s16 flag, byte plus bit locals, `1 == flag`, `1U`, `!(x ^ 1)`, ternary, direct field reads. autotweak: view `D_8013C360` s32 (exact 156 to 123).
+- **ETC `func_80144224` (INCLUDE_ASM, draft `drafts/T-25002/ETC/func_80144224.c`, 106/97 rows, 185 against 194 instructions).** Fixed against the m2c draft: frame 0x38 (declare `rem`, `quot`, `v` in that order), `func_8014407C(quot)` (m2c lost the argument), `(&D_8015014C)[D_80150148]`, s32 return for the implicit-int caller. Left: the original promotes `D_800E7384` in `a3` over the whole function (reloaded after every call) and `D_80150148` in `v1` in the `rem == 1` arm with write-backs before each call; the draft does neither. Self-assignment write-backs give 93/87 rows with frame 0x40 (kept in the draft under `#if 0`). A u32 `D_800E7384` changes nothing; autotweak refuses the shape.
+
+## T-25005: several .data ranges per object; main sndisp
+[[tickets/T-25005-data-regions-per-object]], worktree `data2`. Build support for an object with two or more `.data` ranges ([[build-system]], "Several ranges per object").
+- **`sndisp` (388 B): MATCH.** This is the T-25001 C with its guard removed. `tools/data_island.py main/8004F870` adds `800B40F0-800B4390` as a further island (section `.data_800B40F0`). In `src/main/8004F870.c` the order is: `D_800E3680` (the old island, stays `.data`), the `D_800B40F0` piece, ..., `sndisp`, then the pieces from `D_800B4100` on. IDO emits the `pos[]` template when it compiles `sndisp`, so the template lands at `.data_800B40F0+8` = `D_800B40F8`, the original address. The `D_800B40F8` piece is gone because the compiler provides those bytes.
+- **Rule for other files.** The C file must emit each range's data back to back. A local aggregate initialiser template sits where its function sits in the source, so the `INCLUDE_RODATA` lines of a range are split around that function. `data_split.py` fails the build when the parts are not contiguous, have the wrong size, or do not start on a symbol.
+- **Other functions blocked by this.** None found. No `NON_MATCHING` note in `src/` and no matching note names a second data range as the only gap. The two earlier initialiser cases needed only one island each: TAIIKU `80141280` (`D_8014A070`, island in the yaml) and EVENT `func_8011767C` (C in `8010FE10.c`).
+
+## T-24929: uopt zcopy scope, closed as a switch-compare rule (in the build)
+[[tickets/T-24929-uopt-zcopy-scope]]. ETC func_8013CCE4 (guarded at 3 rows since T-24921) now matches in plain C.
+
+The T-24925 hypothesis (the original propagates copies of globals but not local induction copies) did not hold up.
+The fold of the unrolled `buf[]` loop only happens under `OPTN 405 1`, and the original's loop is exactly IDO's
+zcopy-off code, so the fix keeps zcopy off. The three rows came from the compare register:
+
+- With zcopy off, uopt keeps the switch temporary in its own register (`lod R3; str R2` at the entry). Only the
+  first compare reads the global's register; the later ones read R2. ugen emits the same thing (`move v0,v1;
+  beq v0,at` ...), seen in a binasm dump of main func_80077CA8.
+- In 80077CA8 and most other chains, as1 then rewrites those compares to `$v1` and keeps the move, which is the
+  original's shape. In func_8013CCE4 it does not: the case bodies increment the global, and ugen's code redefines
+  `$v1` there (`addu v1,v1,1; andi t6,v1,0xff; move v1,t6`) while `$v0` is still live, so as1 leaves the compares on
+  `$v0`. The original compares on `$v1` here too (target rows 7/10/13).
+- The new step in `tools/cvt_pass.py` (`switch_compares`) does the substitution on uopt's output: in every
+  zcopy-off procedure, the loads of Rt after the entry copy `lod Rg; str Rt`, up to the first label, call or
+  store, read Rg. Nothing redefines Rg there, so the meaning is unchanged.
+
+Measurements: whole build, every IDO object rebuilt; a function counts as changed when its disassembly differs
+from the baseline object after normalising addresses and trailing pad nops (`drafts/T-24929/objcmp.py`,
+`measure.sh`). `drafts/T-24929/cvt_pass_variants.py` holds the variants.
+
+| Variant (uniform) | Stage | Matched functions changed | func_8013CCE4 |
+| --- | --- | ---: | --- |
+| zcopy 1 for this procedure (T-24925 flip) | OPTN | not uniform | loop folds, 96 lines |
+| zcopy 1 plus any uopt z-option (0x191-0x19a: zmark, zvref, zdbug, zmovc, zcomo, zstor, zscm, zaloc, one more), either value | OPTN | not measured | none stops the fold, 96 lines |
+| zcopy 0 plus any of those options | OPTN | not measured | 6 lines (zmovc 0: 224) |
+| `sprop`: the temporary's loads in the entry chain replaced by the global's `LOD`, zcopy-off procedures | uopt input | 261 | 3 lines (the copy is dropped) |
+| `zstor`: `OPTN 0x197 0` (zstor) for zcopy-off procedures | OPTN | 24 | - |
+| `zstor1`: `OPTN 0x197 1` everywhere (control) | OPTN | 0 | - |
+| `sprop` + `zstor` | both | 174 | match |
+| the same, only where the switched-on global is stored in the procedure | both | 74 | match |
+| `rprop_all`: register-copy propagation at the entry of every procedure | uopt output | 275 | - |
+| **`rprop`: the same, zcopy-off procedures only (adopted)** | uopt output | **0** (fires in 267 procedures) | **match** |
+
+`rprop` gives 27/27 SHA1 with func_8013CCE4 unguarded. On the other 25 guarded functions it changes no diff row
+count (`drafts/T-24929/guards.sh`). uopt's z-option numbers come from the name table in the 5.3 binary (32-byte
+blank-padded names at 0x10003c10-0x10003d10: zaloc 0x199, zscm 0x198, zstor 0x197, zcomo 0x196, zcopy 0x195, zmovc
+0x194, zdbug 0x193, zvref 0x192, zmark 0x191).
+
+Build note: `build.ninja` does not list `tools/cvt_pass.py` as a dependency of IDO compiles (only `tools/cc.py`).
+After changing the pass, touch `tools/cc.py` or do a clean build.
+
+## T-25003: class C main func_80043510, func_8004443C matched; func_8006BA40 guarded
+
+[[tickets/T-25003-class-c-main-8006ba40-80043510-8004443c]], branch c-m3. Two of three matched in plain C; one guard at 7 rows.
+
+- **`func_80043510` (972 B, MATCH).** Rewritten from the asm with the matched TACO twin `func_801446D8` as the model for the third block. Levers, in the order they cut rows (93 -> 0): loop 1 as `for (i = 0; i < 0x40; i++)` over `g->unk_10A5[i]` with a separate `Rec24 *rec` stepped by `rec++` (uopt then keeps the byte walker as the induction variable with end `D_800E62C0`, 93 -> 71); the third argument `(u8)(v - 1) & 0x7F` in both arms (without the cast uopt keeps `v - 1` in `$a2` and narrows into a temp, 71 -> 25); declarations `obj`, `rec` before the arrays and `i`, `v` after, with `u32 sp70[12]` (two spare words, FAKE) for frame 0xA8 and the work areas at sp+0x50/0x70 (25 -> 19); `GameState *g = &D_800E6280;` declared last and used for every field (autotweak `gstate all last`, 19 -> 0; it moves the second `unk_1109` read into `$v0`). The four timestamps are now `extern s32 D_800B3D10[4]` in `main_api.h` (the data stays as four `INCLUDE_RODATA` lines); `csr_load_vram`, `palette_load_vram`, `disp_string` got prototypes there.
+- **`func_8004443C` (708 B, MATCH).** The four divisions are written out (IDO does not unroll the loop); the colour-threshold loop and the draw loop are `for (i = 0; i < 4; i++)` over `colors[i]` and `D_800B3D10[i]`, with `rect.x = 0x8C + i * 4` (a separate `x` variable swaps `$s1`/`$s3` init and latch order, 5 rows). Stack layout: locals are placed bottom-up in reverse declaration order, and an unused scalar still owns a slot here, so `s32 pad0; s32 colors[4]; s32 i; RECT rect; s32 pad1;` gives colors at sp+0x64 and rect at sp+0x58 (FAKE pads; without them 17 rows). Needs `void func_8004A14C(s32, RECT, s32);` in `main_api.h`.
+- **`func_8006BA40` (488 B, guarded, 7 rows).** From the T-24301 draft (41 rows): the D_800B6708 cycle as a promoted global with a `u8 temp` copy for the first test and `else if (D_800B6708 == 0xAC)` before the increment (autotweak plus branch order, 41 -> 14 -> 7), and `D_8011ECFA -= (u16)step` (autotweak). Left: the hoisted `%hi(D_8011ECFA)` of the first clamp takes `$t2` instead of `$t0` and the `andi`/case-0x1000 temporaries come one lower (the T-24603 ring problem). Tried without gain: spellings of `step = speed * 2` (`<<`, `+`, `*=`, on `step`), `(u8)g->unk_F80`, casts on the other three `+=`/`-=`, `!(g->unk_F80 & 0xF)`, switch or ternary forms of the D_800B6708 cycle, removing `g`, a second autotweak (402 edits) and a 600 s permuter run.
+- Layout rule seen in both matches: with arrays and scalars mixed, IDO places locals bottom-up in reverse declaration order above a fixed bottom; scalars declared before an array land above it, after it below it.

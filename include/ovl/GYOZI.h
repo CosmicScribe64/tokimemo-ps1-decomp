@@ -25,7 +25,7 @@ extern s32 D_80146360;
 void func_80137E84(void);
 extern s16 D_80147220;
 extern s16 D_80147224[];
-extern u8 D_80147240;
+extern volatile u8 D_80147240; /* FAKE: volatile keeps as1's global scheduler from moving this byte's `lui` into the func_8013907C `sel == 9` branch slot, which holds the dispatch `sll` in the original (wiki/as1-scheduler-rule.md, as VALEN D_80134544); real declaration unknown. T-25120 */
 extern s16 D_8014723C;
 extern u8 D_80147244;
 extern u8 D_80145F60;

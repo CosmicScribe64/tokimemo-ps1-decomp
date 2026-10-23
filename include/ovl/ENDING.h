@@ -164,6 +164,11 @@ extern EdFnTbl43 D_8013C3E4; /* func_80133540 */
 extern EdFnTbl9 D_8013C490; /* func_80133AD0 */
 extern EdFnTbl13 D_8013C5BC; /* func_80133F1C */
 extern EdFnTbl9 D_8013CA3C; /* func_80135DD0 */
+void func_80135ECC(void);
+void func_80135F4C(void);
+void func_80136BE0(void);
+void func_80136EE4(void);
+void func_80137128(void);
 extern EdFnTbl6 D_8013CAA4; /* func_80137340 */
 /* Entries of the scene table D_8013CB74 (801396E0.c). */
 void func_80139A58(void);

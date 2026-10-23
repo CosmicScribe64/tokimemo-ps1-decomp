@@ -234,3 +234,12 @@ Symptom: the target keeps a local in a caller register and stores and reloads it
 ## Adjacent byte globals as one object; a counter spilled below the locals (T-25123)
 
 Main `func_800455C4`, 13 words to a default-C match. (1) Per-block order: the original issues `lui at; li 2` for `D_801255B4 = 2` before the next statement's status load, the draft hoists the load first. Reaching the neighbour byte through the same symbol, `((u8 *)&D_801255B4)[1] += 1` for `D_801255B5`, makes as1 keep the B5 load after the B4 store; that dependence raises the B4 chain and gives the original order (FAKE until the aggregate is known). A toy file with just the block, compiled with `tools/cc.py` (seconds), finds such orders faster than the whole unit. (2) A loop counter in a caller register spilled to a slot below every declared home, frame size unchanged, is a uopt induction temporary, not the declared variable: `i * 1 != N` in the test (FAKE) makes uopt strength-reduce it; `+ 0`-style identities fold too early. (3) The counter's `$v1` (draft `$v0`) came from calling VSync as an implicit int (section 1).
+
+## Equal-priority constants coloured in the wrong order (T-25201)
+
+Constants with the same priority are coloured in bit order (first use). To colour one earlier without moving
+code, raise its priority: a never-true arm with one more `istr` of it, `if ((u32)p < 0) { q->code = k; }`
+(FAKE; ugen drops it), placed after the constant's first block so the extra use needs no reload. Before the
+first use the arm costs two reloads and gains nothing. Store through a pointer whose own priority order does not
+change, and put the arm on an existing uopt block split so the store counts stay as they are. ETC
+`func_80132C3C`, 15 rows to 0; `drafts/T-25121/ETC/func_80132C3C/NOTES.md`.

@@ -191,7 +191,82 @@ void func_8013F9C0(void) {
     dtd_on_tpage(0x340, 0x100, 1, 0, 0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_8013FBF0);
+/* FAKE: pad keeps the observed frame extent (0x60) and the spill homes of g and b
+ * (0x42, 0x41); the original locals there are unknown. Each sprite's UV stores share
+ * a source line to preserve constant scheduling, as in func_8013F874. T-25141. */
+void func_8013FBF0(void) {
+    s32 pad[6];
+    SPRT *sprite;
+    u8 r;
+    u8 g;
+    u8 b;
+    s32 value;
+    u8 state;
+
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    setWH(sprite, 0x20, 0x40);
+    SetSemiTrans(sprite, 1);
+    sprite->r0 = 0xFF;
+    sprite->g0 = 0xFF;
+    sprite->b0 = 0xFF;
+    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] - 0xC8;
+    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + 0x28;
+    sprite->u0 = 0x80; sprite->v0 = 0x40;
+    sprite->clut = func_8009ED74(0x10, 0x1EF);
+    AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+    dtd_on_tpage(0x340, 0x100, 1, 0, 0);
+    state = D_8015EDB4->unk84[1];
+    if (state > 0xC0) {
+        r = 0;
+        g = 0;
+        b = 1;
+    } else if (state > 0x80) {
+        r = 0;
+        g = 1;
+        b = 0;
+    } else if (state > 0x40) {
+        r = 1;
+        g = 1;
+        b = 0;
+    } else {
+        r = 1;
+        g = 0;
+        b = 0;
+    }
+    value = (0x1000 - func_800A0070(D_800E6280.unk_10F8 * 240)) / 128 + 0x40;
+    r *= value;
+    g *= value;
+    b *= value;
+    func_80049A40(-0xBF, 0x68, 0xE, -D_8015EDB4->unk84[1] >> 2, 2, (r << 16) + (g << 8) + b, 0x81);
+    dtd_on_tpage(0, 0, 2, 1, 0);
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    setWH(sprite, 0x20, 0x20);
+    SetSemiTrans(sprite, 1);
+    sprite->r0 = 0x80;
+    sprite->g0 = 0x80;
+    sprite->b0 = 0x80;
+    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] - 0xC8;
+    sprite->y0 = ((0xFF - D_8015EDB4->unk84[1]) >> 2) + D_800E6280.unk_018[D_8011ECA0] + 0x18;
+    sprite->u0 = 0xA0; sprite->v0 = 0x60;
+    sprite->clut = func_8009ED74(0x20, 0x1EF);
+    AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+    dtd_on_tpage(0x340, 0x100, 1, 0, 0);
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    setWH(sprite, 0x28, 0x18);
+    SetSemiTrans(sprite, 1);
+    sprite->r0 = 0x80;
+    sprite->g0 = 0x80;
+    sprite->b0 = 0x80;
+    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] - 0xCE;
+    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + 0x68;
+    sprite->u0 = 0xA0; sprite->v0 = 0x40;
+    sprite->clut = func_8009ED74(0x20, 0x1EF);
+    AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+    dtd_on_tpage(0x340, 0x100, 1, 0, 0);
+}
 
 void func_80140000(void) {
     func_80140028(0);
