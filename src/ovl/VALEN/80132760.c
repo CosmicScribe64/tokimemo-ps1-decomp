@@ -1,4 +1,6 @@
 #include "ovl/VALEN.h"
+
+extern s32 D_80122D48; /* main bss; SHOUGATU, DATE and main declare it the same way */
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/80132760.data", D_80134520);
@@ -131,8 +133,117 @@ s32 func_80132D0C(void) {
     func_8004284C();
 }
 
-/* T-24523: stale guarded body removed; correct location/background draft in drafts/T-19016. */
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80133088);
+void func_80133088(void) {
+    GameState *state;
+    s32 id;
+
+    state = &D_800E6280;
+    /* FAKE: dead entry store (every arm below rewrites the global); it gives the promoted
+     * global $v0 and the random word $v1 (without it they take $v1 and $a0), as the entry
+     * stores of the GYOZI twin func_801393C8 do (T-24130). T-25117 */
+    D_80134548 = state->unk_10F8 & 7;
+    if ((state->unk_10F8 & 7) == 0) {
+        D_80134548 = 3;
+    } else if ((state->unk_10F8 & 7) < 4U) {
+        D_80134548 = 0;
+    } else {
+        D_80134548 = 1;
+    }
+    if (state->unk_F5F == 0) {
+        D_80134548 = state->unk_10F8 & 1;
+    }
+    switch (D_80134548) {
+    case 0:
+        func_800AE0F0(D_800CA1DC, "廊下");
+        id = 0x4045;
+        break;
+    case 1:
+        func_800AE0F0(D_800CA1DC, "教室");
+        id = 0x4055;
+        break;
+    case 2:
+        func_800AE0F0(D_800CA1DC, "校舎裏");
+        id = 0x407A;
+        break;
+    default:
+        func_800AE0F0(D_800CA1DC, "屋上");
+        id = 0x4084;
+        break;
+    }
+    if (state->unk_F5F != 0) {
+        if (D_80134520 + 1 == D_8013453C) {
+            func_800AE0F0(D_800CA1DC, "校門前");
+            id = 0x4032;
+        }
+        if ((D_80134520 + 2 == D_8013453C) && (D_80134524[D_80134520 + 1] == 0)) {
+            func_800AE0F0(D_800CA1DC, "校門前");
+            id = 0x4032;
+        }
+    }
+    /* FAKE: non-volatile view of D_80134544 (volatile in VALEN.h for func_80132D0C, T-24903)
+     * so as1 may hoist its lui above the affinity test, as the original does. T-25117 */
+    if ((D_80134520 + 1 == D_8013453C) && (state->unk_F5F == 0) &&
+        ((state->unk_1BC[0].unk_02 >= 0x46) || (*(u8 *)&D_80134544 != 0))) {
+        func_800AE0F0(D_800CA1DC, "自宅前");
+        id = 0x414C;
+    }
+    if ((state->unk_F5F == 9) && (D_80134544 == 1)) {
+        func_800AE0F0(D_800CA1DC, "教室");
+        id = 0x4055;
+    }
+    if (state->unk_F5F == 0) {
+        if (state->unk_1BC[0].unk_02 >= 0x46) {
+            D_80122D48 = 1;
+        } else {
+            D_80122D48 = 2;
+        }
+    } else {
+        if (get_h_tokimeki(state->unk_F5F) >= 0x46U) {
+            D_80122D48 = 1;
+        } else {
+            D_80122D48 = 2;
+        }
+    }
+    switch (id) {
+    case 0x4045:
+        func_80085B3C(6, 0);
+        break;
+    case 0x4055:
+        func_80085B3C(6, 1);
+        break;
+    case 0x414C:
+        func_80085B3C(6, 5);
+        break;
+    case 0x4032:
+        func_80085B3C(6, 4);
+        break;
+    case 0x407A:
+        func_80085B3C(6, 3);
+        break;
+    default:
+        func_80085B3C(6, 2);
+        break;
+    }
+    if ((state->unk_F5F == 9) && (D_80134544 == 1)) {
+        state->unk_F5E -= 1;
+        D_80122D48 = 1;
+        func_80085B3C(6, 3);
+    }
+    func_8007ED84(id);
+    if (get_h_tokimeki(state->unk_F5F) >= 0x46U) {
+        func_80083440(0);
+    } else {
+        func_80083440(1);
+    }
+    if (state->unk_F5F == 0) {
+        if (state->unk_1BC[0].unk_02 >= 0x46) {
+            func_80083440(0);
+        } else {
+            func_80083440(1);
+        }
+    }
+    func_8004284C();
+}
 
 void func_801334DC(void) {
     D_80134520 += 1;

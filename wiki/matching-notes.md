@@ -700,3 +700,12 @@ Matched: `func_8013BAC4` (460 words, 1840 bytes) is default-build C, 27/27 SHA1.
 - `switch (*(u8 *)&D_800E6280.unk_1109)`, which keeps global copy propagation on. The tools/cvt_pass.py zcopy-off rule otherwise leaves the y distance as a range with `move a0,v0`, and as1 keeps that move in an s32 function.
 
 `s32 func_8013D2A0(s16, s16, s16)` and `TcDamage9 D_8015F548` are now in TACO.h. The two FAKEs (s32 return, byte-view selector) name T-25111. Measured negatives and the toy evidence are in `drafts/T-25111/TACO/func_8013BAC4/NOTES.md`.
+
+## T-25117: VALEN func_80133088
+
+Matched: `func_80133088` (277 words, 1108 bytes) is default-build C. Start: the T-24523 body, cost 26 in this tree (14 before the T-24903 `volatile` on `D_80134544`). Closed by, in order:
+- a non-volatile view of `D_80134544` in the 自宅前 test, so as1 hoists its `lui` above the affinity test (26 to 14);
+- in the second 校門前 block and the 教室 block, the strcpy call first and the id after it (14 to 0). uopt moves the constant above the call and spills it, which gives the original's `lui a1; li a2; sw a2; addiu a1`. With the id written first, `li a2` stays first in every spelling tried;
+- the GYOZI twin `func_801393C8` shape: `D_80134548` itself is the selector, with `switch (D_80134548)`. One dead entry store of it is needed for v0/v1 (37 without). One `GameState *state` is used for every field access (40 with direct accesses). This replaced the T-24523 gotos, union and `(u8)` cast.
+
+Two FAKEs name T-25117: the entry store and the byte view. Notes and negatives: `drafts/T-25117/VALEN/func_80133088/NOTES.md`.
