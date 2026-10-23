@@ -785,9 +785,9 @@ extern u8 D_800B4198[7];
 extern u8 D_800B41A0[];
 extern u8 D_800B41B0[20][20];
 extern u8 D_800B4341[]; /* table read by func_80052E60 */
-extern s8 D_800B4349[11];
-extern u8 D_800B4355[10];
-extern u8 D_800B4361[10];
+extern s8 D_800B4348[12];
+extern u8 D_800B4354[12];
+extern u8 D_800B4360[12];
 extern s8 D_800B436C[15];
 extern s8 D_800B437C[15];
 extern u8 D_800B4390[];

@@ -550,6 +550,9 @@ INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4198);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B419C);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B41A0);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B41B0);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4348);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4354);
+INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4360);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B436C);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B437C);
 
@@ -1388,7 +1391,73 @@ s32 func_80052E60(u8 *arg0, s16 *arg1) {
     *arg1 = 0x311;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052F68);
+s32 func_80052F68(u8 *arg0, s16 *arg1) {
+    GameState *g = &D_800E6280;
+    s32 i;
+    /* FAKE: T-25307, j, k and x are never used; their three stack homes give the original's
+     * frame (0x80, val at sp+0x48). The original's real locals are unknown. */
+    s32 j;
+    s32 k;
+    s32 m;
+    s32 v;
+    s32 sum;
+    s32 x;
+    s16 val[11];
+
+    for (m = 1; m < 11; m++) {
+        val[m] = arg0[m] * 4;
+        val[m] += g->unk_1BC[m].unk_0A * D_800B4348[m];
+    }
+    sum = g->unk_11C.unk_02;
+    if (sum >= 141) {
+        sum = 140;
+    }
+    val[2] += D_800B437C[sum / 10];
+    for (i = 1; i < 11; i++) {
+        for (m = 0; m < 7; m++) {
+            if ((D_800B4354[i] >> (7 - m)) & 1) {
+                v = (&g->unk_0FC)[7 - m].unk_02;
+                /* m never reaches 7; the original has this test and the divide by 20 too */
+                if (m == 7) {
+                    v /= 20;
+                } else {
+                    v /= 10;
+                }
+                if (v >= 15) {
+                    v = 14;
+                }
+                val[i] += D_800B436C[v];
+                val[i] += D_800B436C[v] / 2;
+            }
+            if ((D_800B4360[i] >> (7 - m)) & 1) {
+                v = (&g->unk_0FC)[7 - m].unk_02;
+                if (m == 7) {
+                    v /= 20;
+                } else {
+                    v /= 10;
+                }
+                if (v >= 15) {
+                    v = 14;
+                }
+                val[i] += D_800B436C[v];
+            }
+        }
+    }
+    for (m = 1; m < 11; m++) {
+        sum = 0;
+        for (i = 1; i < 36; i++) {
+            sum += g->unk_1BC[m].unk_14[i];
+        }
+        if (sum >= 4) {
+            val[m] += sum * 10;
+        } else {
+            val[m] = 0;
+        }
+    }
+    for (m = 1; m < 11; m++) {
+        arg1[m] = val[m];
+    }
+}
 
 s32 func_80053418(u8 *arg0, s16 *arg1) {
     s32 i;
