@@ -1778,3 +1778,7 @@ Matched GEKO func_80132B24 (480 bytes) and func_80133024 (280 bytes) in `src/ovl
 
 Reviewed [[tickets/T-25317-w10-main-80047550]] against CODING_STANDARDS.md; no match: main `func_800476C0` stays `INCLUDE_ASM` (552 funcdiff rows, 8 structural hunks, saved-register order now original), 27/27, two small findings fixed.
 Draft body and notes in `drafts/T-25317/main/func_800476C0/`; section in [[matching-notes]].
+
+## [2026-10-23] ticket | T-25606 Done: main func_800476C0 matched
+
+The finish gate's block-by-block lens matched main func_800476C0 (3,132 bytes) in round 1; merged directly after an orchestrator review so the match does not wait for the synthesis stage ([[tickets/T-25600-finish-gate]]).
