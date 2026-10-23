@@ -54,7 +54,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25135-w8-ENDING-80133C10|T-25135 Wave 8 package w8-ENDING-80133C10 (src/ovl/ENDING/80133C10.c)]]
 - [ ] [[tickets/T-25301-w10-NAME_ENT-80139740|T-25301 Wave 10 second pass on src/ovl/NAME_ENT/80139740.c]]
 - [ ] [[tickets/T-25302-w10-main-80049FF0|T-25302 Wave 10 second pass on src/main/80049FF0.c]]
-- [ ] [[tickets/T-25304-w10-main-8004C3F0|T-25304 Wave 10 second pass on src/main/8004C3F0.c]]
 - [ ] [[tickets/T-25305-w10-SHOUGATU-8013E330|T-25305 Wave 10 second pass on src/ovl/SHOUGATU/8013E330.c]]
 - [ ] [[tickets/T-25306-w10-BUNKA_SD-80134540|T-25306 Wave 10 second pass on src/ovl/BUNKA_SD/80134540.c]]
 - [ ] [[tickets/T-25307-w10-main-8004F870|T-25307 Wave 10 second pass on src/main/8004F870.c]]
@@ -175,6 +174,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25304-w10-main-8004C3F0|T-25304 Wave 10 second pass on src/main/8004C3F0.c]]
 - [ ] [[tickets/T-25132-w8-SHOUGATU-80134890|T-25132 Wave 8 package w8-SHOUGATU-80134890 (src/ovl/SHOUGATU/80134890.c)]]
 - [ ] [[tickets/T-25125-w8-main-8006CB30|T-25125 Wave 8 package w8-main-8006CB30 (src/main/8006CB30.c)]]
 - [ ] [[tickets/T-25128-w8-ETC-8013FF80|T-25128 Wave 8 package w8-ETC-8013FF80 (src/ovl/ETC/8013FF80.c)]]
