@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] ticket | Start T-25011 after merging the other agent's work
-
-Fast-forwarded local main to 50e032fcc (other agent: 129 functions left, plan in [[plan-remaining]]). Started [[tickets/T-25011-class-a-closers-as1-levers]]: one Sonnet 5.5 subagent on the eight class A near misses.
-
-## [2026-10-21] ticket | T-25011 result: class A closers, zero matches
-
-autotweak (280-1,940 variants each) left every class A guard unchanged; KANGEI func_80134724 default arm rewritten (FAKE, 4 rows, the old 2-row figure was not reproducible). VALEN func_80132D0C and main func_8005B43C still need guarded drafts. Details in [[tickets/T-25011-class-a-closers-as1-levers]]. Ticket In Review; build clean 27/27. Next: drafts for those two, class C, then class D smallest first ([[plan-remaining]]).
-
 ## [2026-10-21] ticket | Start T-25012
 
 Class A is exhausted at the autotweak level; [[tickets/T-25012-class-c-d-reconstruction]] starts hand reconstruction of class C/D functions.
@@ -1756,6 +1748,7 @@ Reviewed [[tickets/T-25131-w8-NAME_ENT-80142A80]] against CODING_STANDARDS.md; n
 
 Reviewed [[tickets/T-25133-w8-TEL-8013CCD0]] against CODING_STANDARDS.md; matched TEL `func_8013D88C` (2980 bytes) as default-build C, 27/27; the guard and `INCLUDE_ASM` are gone, no function left in `src/ovl/TEL/8013CCD0.c`.
 Review finding fixed: the empty month-bypass arm and the g/D_800E6280 split are now marked FAKE; levers and negatives in `drafts/T-25133/TEL/func_8013D88C/NOTES.md` and [[matching-notes]].
+
 ## [2026-10-23] ticket | T-25303 Done
 
 Reviewed [[tickets/T-25303-w10-main-800563F0]] against CODING_STANDARDS.md; matched main `strCallback` (640 bytes) as default-build C, 27/27, funcdiff MATCH; `func_80056BA8`, `strNext`, `strInit` still MATCH.
