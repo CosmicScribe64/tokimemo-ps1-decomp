@@ -35,9 +35,89 @@ void func_80132810(void) {
     func_8004284C();
 }
 
-/* T-24523: stale guarded body removed; correct source remains unmatched in
- * drafts/T-24523/VALEN/func_80132834 (T-14500/T-16100 foundation). */
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132834);
+/* Locals take frame slots top-down in declaration order, so this order puts candidates at sp+0x5C
+ * and the scores at sp+0x50 (T-25117). Reads through `state` are pointer loads that uopt lets every
+ * later store change: the ranking loop reloads both fields for the first two score assignments, and
+ * `r` stays ahead of the rotation loop's guard instead of being copied into it. The direct
+ * D_800E6280 reads stay available, so the player's affinity is hoisted out of the last loop. Each
+ * sum is written in the order the original loads its two fields. */
+void func_80132834(void) {
+    s16 r;
+    s16 candidates[13];
+    GameState *state;
+    s16 i;
+    s16 rank_scores[3];
+    s16 count;
+
+    state = &D_800E6280;
+    D_80134520 = 0;
+    D_80134548 = 0;
+    D_8013453C = 0;
+    D_80134544 = 0;
+    count = 0;
+    if (D_800E6280.unk_1BC[9].unk_0C.f.b1 == 0 &&
+        D_800E6280.unk_1BC[9].unk_02 >= 20) {
+        D_80134544 = 1;
+        D_800E6280.unk_1BC[9].unk_06 = 50;
+    }
+    D_80134540[0] = D_80134540[1] = D_80134540[2] = 0xFF;
+    rank_scores[0] = rank_scores[1] = rank_scores[2] = 0;
+    for (i = 0; i < 11; i++) {
+        if (state->unk_1BC[i].unk_0C.f.b1 != 0 &&
+            get_h_tokimeki(i) >= 0x46U) {
+            if (rank_scores[0] < state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02) {
+                rank_scores[2] = rank_scores[1];
+                rank_scores[1] = rank_scores[0];
+                rank_scores[0] = state->unk_1BC[i].unk_02 + state->unk_1BC[i].unk_06;
+                D_80134540[2] = D_80134540[1];
+                D_80134540[1] = D_80134540[0];
+                D_80134540[0] = i;
+            } else if (rank_scores[1] < state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02) {
+                rank_scores[2] = rank_scores[1];
+                rank_scores[1] = state->unk_1BC[i].unk_02 + state->unk_1BC[i].unk_06;
+                D_80134540[2] = D_80134540[1];
+                D_80134540[1] = i;
+            } else if (rank_scores[2] < state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02) {
+                rank_scores[2] = state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02;
+                D_80134540[2] = i;
+            }
+        }
+    }
+    for (i = 0; i < 11; i++) {
+        if ((D_800E6280.unk_1BC[i].unk_0C.f.b1 != 0 ||
+             (i == 9 && D_80134544 == 1)) &&
+            (get_h_yuukou(i) >= 0x32U || (D_80134544 == 1 && i == 9))) {
+            candidates[count] = i;
+            count += 1;
+            D_8013453C += 1;
+            D_800E6280.unk_1BC[i].unk_0C.f.b8 = 1;
+        }
+    }
+    if (D_8013453C > 0) {
+        r = (u32)state->unk_10F8 % (u32)D_8013453C;
+        for (i = 0; i < D_8013453C; i++) {
+            D_80134524[i] = candidates[(i + r) % D_8013453C];
+        }
+        func_8013387C();
+    }
+    for (i = 0; i < D_8013453C; i++) {
+        if (D_80134524[i] == 0 && D_800E6280.unk_1BC[0].unk_02 >= 70) {
+            D_80134524[i] = D_80134524[D_8013453C - 1];
+            D_80134524[D_8013453C - 1] = 0;
+        } else if (D_80134524[i] == 0 && D_80134544 != 0) {
+            D_80134524[i] = D_80134524[D_8013453C - 1];
+            D_80134524[D_8013453C - 1] = 0;
+        } else if (D_80134524[i] == 0) {
+            D_80134524[i] = D_80134524[0];
+            D_80134524[0] = 0;
+        }
+        if (D_80134524[i] == 9 && D_80134544 != 0) {
+            D_80134524[i] = D_80134524[0];
+            D_80134524[0] = 9;
+        }
+    }
+    func_8004284C();
+}
 
 /* The mode flag is read twice on purpose (T-24903): as1's global scheduler moves the
  * head `lui` of a dominated block into a branch delay slot, so the first read has to be
