@@ -1,7 +1,7 @@
 # T-25152: TACO func_80138B2C (80138890.c)
 
-Result: not matched. Guard went from 30 rows to 3 rows (`funcdiff --resolve --version c`, whole unit).
-Body: `func_80138B2C.c` in this folder (the same text as the guard in `src/ovl/TACO/80138890.c`).
+Result: matched by the closer pass (default C, 476 bytes, see the last section). The first pass took the guard from 30 rows to 3.
+Body: `func_80138B2C.c` in this folder (the same text as `src/ovl/TACO/80138890.c`).
 
 ## Start state
 
@@ -59,7 +59,7 @@ materialises it in its ring.
 - Line grouping of the four tail statements: no effect (as1 order comes from the `$at` chain).
 - autotweak 300 s on the 11-row body: best order `[4],[3],[2],[1]` (9 rows), superseded by step 5.
 
-## Next hypothesis
+## Next hypothesis (first pass; closed by the closer pass below)
 
 Find what keeps 9999999 in arg0's register in the arm. The def must survive copy propagation
 (the store must read arg0, not the constant) while arg0 stays out of the call block. Candidates:
@@ -69,3 +69,28 @@ the `func_80044750` call block. Check each with regdiff: the constant must not g
 Also check whether a natural spelling replaces the two FAKE views: any indirect load in the
 assigned value works, for example the stage and score read through one struct pointer, but a new
 local costs a frame slot (frame is 0x28 with the four scalars now).
+
+## Closer pass: match
+
+The last 3 rows came from uopt's input pass, not from copy propagation (`uoptinput.c`, the load of a
+variable that was stored earlier in the same block). A load of `arg0` after `arg0 = 0x98967F` in one
+block is replaced by the constant itself, so the store reads the constant and ugen builds it in a ring
+temporary (`$t2`). For an assigned expression (`isop`) used once, the load is kept as a read of the
+variable when the expression contains an indirect load (`has_ilod`) or when one of its operands is
+killed in between (`treekilled`, for example the expression reads `arg0` itself).
+
+Fix: `arg0 = 0x98967F + *(u8 *)&D_8015EDCC * 0;` in the arm (FAKE, T-25152). uopt keeps the def of
+arg0, which is in `$a0`, and the store reads it. ugen folds the `* 0` term, so the arm is
+`lui a0; ori a0; lui at; sw a0`, as in the original. `funcdiff --resolve` gives MATCH for both
+`--version c` and `--version default` (476 bytes).
+
+Measured in the arm (rows, `--version c`):
+
+- `0x98967F + *(u8 *)&D_8015EDCC * 0`, `0x98967F + ((u32) *(u8 *)&D_8015EDCC < 0)`,
+  `0x98967F + *(s32 *)&D_8015EDF0 * 0`, `((u32) *(s32 *)&D_8015EDF0 < 0) + 0x98967F`: all MATCH.
+- `0x98967F + arg0 * 0` and `0x98967F | ((u32) arg0 < 0)`: the arm is right (`$a0`), but the total is
+  then live into the arm and becomes its own expression range in `$v1` (25 rows).
+- `0x98967F + var_a1 * 0`, `((u32) var_a1 < 0) + 0x98967F`: no indirect load, so the expression is
+  copied into the store (`$t2`); var_a1 also gains uses and swaps with var_v1 (26 rows).
+- `if (arg0 > 9999999)`: no change (3 rows).
+- Return type `void`: does not compile (the earlier call in `func_80138890` declares it implicitly as int).

@@ -54,8 +54,6 @@ s32 func_80138964(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-/* NON_MATCHING: T-25152, 3 rows: in the clamp arm the original keeps 9999999 in $a0 (the total's register); IDO propagates the constant into the store and builds it in $t2. Notes: drafts/T-25152/TACO/func_80138B2C/NOTES.md */
-#ifdef NON_MATCHING
 /* The unused K&R parameter holds the stage: as a parameter live in the entry block it cannot take $v0/$v1 (uopt cupcosts), so it gets $a0 as in the original. T-25152 */
 s32 func_80138B2C(arg0)
 s32 arg0;
@@ -99,7 +97,8 @@ s32 arg0;
     D_8015F490[4] = arg0;
     D_8015F490[3] = var_a1;
     if (arg0 >= 0x989680) {
-        arg0 = 0x98967F;
+        /* FAKE: T-25152, the zero term holds an indirect load, so uopt keeps this as a def of arg0 ($a0) and the store reads it; a plain constant is copied into the store and built in $t2. ugen folds the term away */
+        arg0 = 0x98967F + *(u8 *)&D_8015EDCC * 0;
         D_8015F490[4] = arg0;
     }
     func_80044750(0x24);
@@ -107,9 +106,6 @@ s32 arg0;
     func_80143AF4();
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80138890", func_80138B2C);
-#endif
 
 /* No return value on purpose: implicit-int function (v0 of the last call falls through). T-16564 */
 s32 func_80138D08(void) {

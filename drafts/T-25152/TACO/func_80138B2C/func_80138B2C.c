@@ -41,7 +41,8 @@ s32 arg0;
     D_8015F490[4] = arg0;
     D_8015F490[3] = var_a1;
     if (arg0 >= 0x989680) {
-        arg0 = 0x98967F;
+        /* FAKE: T-25152, the zero term holds an indirect load, so uopt keeps this as a def of arg0 ($a0) and the store reads it; a plain constant is copied into the store and built in $t2. ugen folds the term away */
+        arg0 = 0x98967F + *(u8 *)&D_8015EDCC * 0;
         D_8015F490[4] = arg0;
     }
     func_80044750(0x24);
