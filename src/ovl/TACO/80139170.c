@@ -193,7 +193,77 @@ void func_80139BCC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_80139FB8);
+/* Draws the 40-entry ring around D_8015F4E0: the front entry, 19 pairs on both sides, then the back
+   entry. In the mirrored half, scale holds the angle before it is reflected: that shared variable
+   gives the original's v0/v1 split. One x for the front, right and back sides keeps the sine in s5
+   (T-25112). */
+void func_80139FB8(s32 arg0, s32 arg1, s32 radius, s32 arg3) {
+    s32 pos;
+    s32 d;
+    s32 angle;
+    s32 x;
+    s32 x2;
+    s32 z;
+    s32 scale;
+    s32 i;
+    s32 step;
+
+    angle = (-D_8015F4E4 << 10) / 512;
+    x = (func_800A0070(angle) * radius) >> 12;
+    z = (func_800A0140(angle) * radius) >> 12;
+    if (z < -0x100) {
+        scale = 0;
+    } else {
+        scale = ((z << 12) + 0x100000) / 96;
+    }
+    func_80139424(D_8015F4B0[D_8015F4E0 % 40], 2, 5, ((z << 5) + 0x2800) / 160, x, (z >> 2) + 50, scale, scale, 0);
+    for (i = 1, step = 0x1000; i < 20; i++, step += 0x1000) {
+        pos = step / 40;
+        d = pos - D_8015F4E4;
+        if (d < 0x200) {
+            angle = (d << 10) / 512;
+        } else {
+            angle = (d * 2 + 0x800) / 3;
+        }
+        x = (func_800A0070(angle) * radius) >> 12;
+        z = (func_800A0140(angle) * radius) >> 12;
+        if (z < -0x100) {
+            scale = 0;
+        } else {
+            scale = ((z << 12) + 0x100000) / 96;
+        }
+        func_80139424(D_8015F4B0[(D_8015F4E0 + i) % 40], 0, 5, ((z << 5) + 0x2800) / 160, x, (z >> 2) + 50, scale, scale, 0);
+        d = pos + D_8015F4E4;
+        if (d < 0x200) {
+            scale = (d << 10) / 512;
+        } else {
+            scale = (d * 2 + 0x800) / 3;
+        }
+        angle = 0x1000 - scale;
+        x2 = (func_800A0070(angle) * radius) >> 12;
+        z = (func_800A0140(angle) * radius) >> 12;
+        if (z < -0x100) {
+            scale = 0;
+        } else {
+            scale = ((z << 12) + 0x100000) / 96;
+        }
+        func_80139424(D_8015F4B0[(D_8015F4E0 - i + 40) % 40], 0, 5, ((z << 5) + 0x2800) / 160, x2, (z >> 2) + 50, scale, scale, 0);
+    }
+    d = 0x800 - D_8015F4E4;
+    if (d < 0x200) {
+        angle = (d << 10) / 512;
+    } else {
+        angle = (d * 2 + 0x800) / 3;
+    }
+    x = (func_800A0070(angle) * radius) >> 12;
+    z = (func_800A0140(angle) * radius) >> 12;
+    if (z < -0x100) {
+        scale = 0;
+    } else {
+        scale = ((z << 12) + 0x100000) / 96;
+    }
+    func_80139424(D_8015F4B0[(D_8015F4E0 + i) % 40], 0, 5, ((z << 5) + 0x2800) / 160, x, (z >> 2) + 50, scale, scale, 0);
+}
 
 /* The y offset stays an expression: a fourth named temporary adds a frame word that moves the four
    spilled call values down by 4 (T-19021). */
