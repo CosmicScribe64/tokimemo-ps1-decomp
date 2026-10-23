@@ -1742,3 +1742,7 @@ No function matched in this job; notes in `drafts/T-25142/BUNKA_SD/func_80134D94
 
 Reviewed [[tickets/T-25140-w8-main-8004AD60]] against CODING_STANDARDS.md (no findings), clean rebuild 27/27, funcdiff MATCH. Matched main `make_color_bar` (1072 bytes) as default C in `src/main/8004AD60.c`, no FAKE.
 The only function of the package is matched, none left with rows; notes in `drafts/T-25140/main/make_color_bar/NOTES.md` and [[matching-notes]].
+## [2026-10-23] ticket | T-25138 Done
+
+Reviewed [[tickets/T-25138-w8-RPG_BAT-801447E0]] against CODING_STANDARDS.md (two small findings fixed), clean rebuild 27/27, funcdiff MATCH. Matched RPG_BAT `func_80144C84` (1276 bytes) as default C in `src/ovl/RPG_BAT/801447E0.c`; FAKEs: file-local `RpgBattleView` override of `D_8015EBCC` and the comma return.
+The only function of the package is matched, none left with rows; the real battle-block aggregate is the next step, notes in `drafts/T-25138/RPG_BAT/func_80144C84/NOTES.md` and [[matching-notes]].
