@@ -218,7 +218,184 @@ void func_80136DEC(void) {
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80136DEC);
 #endif
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_8013735C);
+void func_8013735C(void) {
+    s32 i;
+    s32 n;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8006BA40();
+        ((DisplayActor44 *)D_8011ECD0)[103].unk_26 = ((DisplayActor44 *)D_8011ECD0)[0].unk_26;
+        ((DisplayActor44 *)D_8011ECD0)[103].unk_2A = ((DisplayActor44 *)D_8011ECD0)[0].unk_2A;
+        if ((D_800E6280.unk_F88 & 0x20) && D_80139C30 != 0) {
+            D_80139C30--;
+            D_80139C34[D_80139C30] = 1;
+            D_80139C3C[D_80139C30] = (D_80139C58 >> 4) + 1;
+            /* Slots from record 98 indexed by the plain counter: the original scales it by 0x44 with
+             * shifts here, while case 1's [n + 98] form multiplies by the hoisted 0x44 register. */
+            ((DisplayActor44 *)D_8011ECD0 + 98)[D_80139C30].unk_26 = ((DisplayActor44 *)D_8011ECD0)[103].unk_26;
+            ((DisplayActor44 *)D_8011ECD0 + 98)[D_80139C30].unk_2A = ((DisplayActor44 *)D_8011ECD0)[103].unk_2A;
+            ((DisplayActor44 *)D_8011ECD0 + 98)[D_80139C30].unk_01 = 4;
+            func_80044750(0x50C);
+        }
+        func_80137C58();
+        func_80138CCC();
+        if (D_80139C30 == 0 && D_80139C34[0] == 0 && D_80139C34[1] == 0 && D_80139C34[2] == 0 && D_80139C34[3] == 0 && D_80139C34[4] == 0) {
+            func_8004284C();
+        }
+        break;
+    case 1:
+        ((DisplayActor44 *)D_8011ECD0)[117].unk_03 |= 0x80;
+        n = 0;
+        for (i = 0; i < 5; i++) {
+            if (D_80139C4C[i] != 0xFF) {
+                ((DisplayActor44 *)D_8011ECD0)[n + 98].unk_18 = D_80139C4C[i];
+                n++;
+            }
+            ((DisplayActor44 *)D_8011ECD0)[i + 98].unk_01 = 1;
+        }
+        /* FAKE: T-25109, a never-true loop that ugen folds away (no code). Its blocks lengthen the
+         * live range of the hoisted 0xFF, so uopt colours D_8011ECD0 first (t1) and 0xFF second (t2). */
+        do {
+        } while ((u32)n < 0 && (u32)i < 0);
+        for (; n < 5; n++) {
+            ((DisplayActor44 *)D_8011ECD0)[n + 98].unk_18 = 0xFF;
+        }
+        Vblnk_Timer_Init();
+        D_80139C30 = 0;
+        func_8004284C();
+        break;
+    case 2:
+        if (Vblnk_Timer() >= 0x2E) {
+            if (((DisplayActor44 *)D_8011ECD0 + 98)[D_80139C30].unk_18 == 0xFF || D_80139C30 >= 5) {
+                if (D_80139C4C[0] == 0x1F && D_80139C4C[1] == 0x1F && D_80139C4C[2] == 0x1F && D_80139C4C[3] == 0x1F && D_80139C4C[4] == 0x1F) {
+                    func_80042940(5);
+                } else if (D_80139C4C[0] == 0x20 && D_80139C4C[1] == 0x20 && D_80139C4C[2] == 0x20 && D_80139C4C[3] == 0x20 && D_80139C4C[4] == 0x20) {
+                    func_80042940(6);
+                } else {
+                    Vblnk_Timer_Init();
+                    func_8004284C();
+                }
+                func_80044750(0x50B);
+            } else {
+                func_80044750(0x50A);
+                ((DisplayActor44 *)D_8011ECD0 + 98)[D_80139C30].unk_03 = 0x84;
+                ((DisplayActor44 *)D_8011ECD0 + 98)[D_80139C30].unk_26 = (D_80139C30 << 6) - 0x80;
+                ((DisplayActor44 *)D_8011ECD0 + 98)[D_80139C30].unk_2A = 0x38;
+                D_80139C30++;
+                Vblnk_Timer_Init();
+            }
+        }
+        break;
+    case 3:
+        if (Vblnk_Timer() >= 0x79) {
+            if (((DisplayActor44 *)D_8011ECD0)[96].unk_07 < 4U) {
+                func_80048EB8(0);
+                func_8004284C();
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[96].unk_07 -= 4;
+            }
+            for (i = 1; i < 22; i++) {
+                ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_07 = ((DisplayActor44 *)D_8011ECD0)[96].unk_07;
+            }
+        }
+        break;
+    case 4:
+        if (D_80139C4C[0] < 0x10 && D_80139C4C[1] < 0x10 && D_80139C4C[2] < 0x10 && D_80139C4C[3] < 0x10 && D_80139C4C[4] < 0x10) {
+        } else if (D_80139C4C[0] == 0xFF && D_80139C4C[1] == 0xFF) {
+            /* FAKE: T-25109, a loop that uopt keeps and ugen folds away; it keeps the empty arm's two
+             * 0xFF tests that the original has (an empty or dead-store arm is removed whole). */
+            n = 0;
+            do {
+            } while ((u32)n < 0);
+        }
+        if (D_80139C4C[0] == 0x10 && D_80139C4C[1] == 0x10 && D_80139C4C[2] == 0x10 && D_80139C4C[3] == 0x10 && D_80139C4C[4] == 0x10 && D_800E6280.unk_F5F == 2) {
+            /* FAKE: T-25109, a second use so uopt keeps unk_F5F of this test in v1 (register-cheatsheet). */
+            if ((s32)D_800E6280.unk_F5F) {
+            }
+            D_80122E9C = 3;
+        } else if (D_800E6280.unk_F5F + 0x14 == D_80139C4C[0] && D_800E6280.unk_F5F + 0x14 == D_80139C4C[1] && D_800E6280.unk_F5F + 0x14 == D_80139C4C[2] && D_800E6280.unk_F5F + 0x14 == D_80139C4C[3] && D_800E6280.unk_F5F + 0x14 == D_80139C4C[4] && D_800E6280.unk_F5F != 2) {
+            D_80122E9C = 3;
+        } else if (D_80139C4C[0] < 0x21 && D_80139C4C[1] < 0x21 && D_80139C4C[2] < 0x21 && D_80139C4C[3] < 0x21 && D_80139C4C[4] < 0x21) {
+            D_80122E9C = 1;
+        } else {
+            D_80122E9C = 4;
+        }
+        main_state_set(D_800E6280.unk_720);
+        func_80042908(D_800E6280.unk_721);
+        func_80042940(D_800E6280.unk_722);
+        break;
+    case 5:
+        switch (D_800E6280.unk_110D) {
+        case 0:
+            func_80046290(0x1A0000B1, 0x170000B7, 0xE);
+            func_80044750(0x300);
+            D_800E6280.unk_110D += 1;
+            break;
+        case 1:
+            if (func_800460EC() == 4) {
+                D_800E6280.unk_110D += 1;
+            }
+            break;
+        case 2:
+            if (func_800460EC() == 2) {
+                func_80044750(0x74);
+                D_800E6280.unk_110D += 1;
+            }
+            break;
+        case 3:
+            Vblnk_Timer_Init();
+            D_800E6280.unk_110D += 1;
+            break;
+        case 4:
+            if (Vblnk_Timer() >= 0x79) {
+                Vblnk_Timer_Init();
+                func_80042940(3);
+            }
+            break;
+        default:
+            func_80046500();
+            break;
+        }
+        break;
+    case 6:
+        switch (D_800E6280.unk_110D) {
+        case 0:
+            func_80046290(0x03000000, 0x01000007, 0xE);
+            func_80044750(0x300);
+            D_800E6280.unk_110D += 1;
+            break;
+        case 1:
+            if (func_800460EC() == 4) {
+                D_800E6280.unk_110D += 1;
+            }
+            break;
+        case 2:
+            if (func_800460EC() == 2) {
+                func_80044750(0x74);
+                D_800E6280.unk_110D += 1;
+            }
+            break;
+        case 3:
+            Vblnk_Timer_Init();
+            D_800E6280.unk_110D += 1;
+            break;
+        case 4:
+            if (Vblnk_Timer() >= 0x79) {
+                Vblnk_Timer_Init();
+                func_80042940(3);
+            }
+            break;
+        default:
+            func_80046500();
+            break;
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 /* FAKE: the u8 locals `one` and `two` put the hoisted constants first in both bne compares (T-9410 idiom), T-11300 */
 void func_80137C58(void) {
