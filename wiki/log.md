@@ -1764,3 +1764,6 @@ The draft packet is `drafts/T-25319/NAME_ENT/func_80143580/` (next hypothesis in
 ## [2026-10-23] ingest | T-25700 recent wins distilled into the playbook
 
 New page [[notes/wins-2026-10]]: all 93 functions of waves 8-11, the wave 9 closers, the stubborn-function attack and PRs #68 to #70, grouped by recipe with a ranked summary. [[playbook]] gained 11 recipes (new sections 13 and 14) and 19 extended entries, [[register-cheatsheet]] 11 rows; [[tickets/T-25700-distill-wins]] is Done after review.
+## [2026-10-23] ticket | T-25606 Done: main func_800476C0 matched
+
+The finish gate's block-by-block lens matched main func_800476C0 (3,132 bytes) in round 1; merged directly after an orchestrator review so the match does not wait for the synthesis stage ([[tickets/T-25600-finish-gate]]).

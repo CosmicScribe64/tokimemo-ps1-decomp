@@ -2203,6 +2203,7 @@ void func_80048DD0(s32 arg0);
 void func_80048E78(void);
 void func_80048EB8(s32 arg0);
 void func_80048F64(s32 arg0);
+u8 func_8004901C(void);
 s32 GetWorkBase(s32 arg0, s32 arg1);
 void *func_800490F0();
 void safe_env(s32 arg0);
