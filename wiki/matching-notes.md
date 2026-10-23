@@ -17,15 +17,6 @@ sources: ["tools/viewsweep.py", "tools/cc.py", "tools/funcdiff.py", "include/gam
 - **What the sweep cannot do.** It changes return types and parameter lists only: an argument, a cast, a local, a statement order are other levers ([[register-cheatsheet]] rows, `order_search.py`, `autotweak.py`). A callee the asm calls but the body does not name is not probed. An archived body that needs declarations it does not carry fails at the baseline; `declarations.h` next to a `body.c` is read, nothing else.
 - **For the next matcher:** run `viewsweep` first; its table says whether the type lever is spent. The register cheat sheet's first row says so too.
 
-## T-25007: class C ETC func_80146D4C guarded (12 rows); RPG_BAT func_8014BFE4, main func_8005938C not matched
-
-[[tickets/T-25007-class-c-etc-rpgbat-main]], branch c-m6. ETC `func_80146D4C` is guarded at 12 rows; the other two stay `INCLUDE_ASM` with notes in `drafts/T-25007/`.
-
-- **ETC `func_80146D4C` (1076 B, 104 -> 12 rows, guarded).** From the T-24303 draft. Levers in the order they cut rows: one variable `ret` for ret, score and grade puts the grade chain in `v1` as in the original (104 -> 88; one unused scalar keeps frame 0x58, FAKE pad); `GameState *g = &D_800E6280;` for every field gives case 2 its direct `lh s0` and colours two of the five `unk_041` reads (88 -> 68); the flag test as `((GsByteNibbles *)&g->unk_0F4.b[1])->low & 2` loads the byte into its own temporary as the original does (`lui t6; lbu t7`; FAKE view), after which regdiff reports registers only; an empty `if (g->unk_041) {}` in the grade-0 block (found by `permute.py`, 600 s, score 465 -> 265) raises the priority of the promoted `unk_041` range so every read sits in `a3` as in the original (82 -> 28; FAKE); the total as `score = w->unk_28[sel] + w->unk_28[5]; w->unk_28[5] = score; printf(..., score)` stops uopt promoting `w->unk_28[5]` into `a1` and evaluates the operands in the original order (28 -> 12; `w->unk_28[5] += ...`, `= [5] + [sel]` and a store-then-reread keep the promotion). Left: the last block has every ugen temporary one lower (the original skips a ring slot before the index shift and one between the load and the add of the `D_801230F4` increment, which is `w->unk_10[5]`). Tried there without gain: `& 0xFF` on the index (breaks the address CSE, 24-25), `| 0`/`* 1` (folded), `w->unk_10[5] += 1`/`++`, moving the empty `if`; autotweak 300 s on the 12-row form found no edit. Without gain earlier: a byte view of `unk_041` (104), a separate `extern u8 D_800E62C1` (88, never coloured), `sel` locals reloaded after each call (142), `g` declared first or in place of a pad (82-84).
-- **RPG_BAT `func_8014BFE4` (892 B, 128 rows).** The T-17110 hand draft is still the best. The original keeps `idx + 8` in `s5` from before the first call of the digit arm, so `div` falls to `a1` with a spill at 0x58 and `y` is spilled around the arm; the build gives `div` `s5`. After the loop the original reloads `t = slot * 12` from its home (0x50) three times and recomputes `t + 0x40`; the build value-numbers that with the pre-loop index and keeps it in a spill slot. Tried, all worse: named `t`/`u` locals and `u + i` arguments (164-255), `j = idx + 8` before the call (forward-substituted, 162), index as the reused `arg0` (223), `div = 1` before the switch (241), head-chain spellings (128-169); autotweak 300 s: 128 -> 126 (casts only); permuter 600 s: no row gain. See `drafts/T-25007/RPG_BAT/func_8014BFE4/NOTES.md`.
-- **main `func_8005938C` (764 B, 124 rows).** The T-17017 closer draft is still the best; every row is a ugen temporary. Each of the three 32-byte MATRIX copies takes two ring slots in the original (one skipped, one data register) and three in the build. Matched copies of the same `*(MATRIX *)D_80125C60` in ETC `func_8013FA7C` and TACO `80146D60.c` take three slots in their originals too, so this is not a general build gap; what makes this function's copies cheaper is unknown. Plain `rot` stores without `p` and `*(MATRIX *)&D_80125C60` change nothing; a `MATRIX *` source pointer (148) and a chained `sm = m = ...` (226) are worse.
-- Tools: `build/scr` helpers (not committed) printed a side-by-side of the guarded build against the original; regdiff needs `--uopt` pointing at the traced uopt (`TOKIMEMO_SCRATCH=/private/tmp/t24047-uopt`, `--uopt /scratch/variants/trace`).
-
 ## T-25006: class C main srn_set matched; mod_set_gpu guarded; func_8004A1A0 drafted
 
 [[tickets/T-25006-class-c-main-srn-set-mod-set-gpu-8004a1a0]], branch c-m5. One of three matched in plain C, one guard at 28 rows, one INCLUDE_ASM with a draft (drafts/T-25006/main/func_8004A1A0.c, 76 rows). All three were rewritten from the asm instead of patching the T-17015/T-24301 drafts.
@@ -809,6 +800,7 @@ free); the draft piece sits at +1 to +5. The original's opcode walk uses a GameS
 the constant (absolute-address FAKE) leaves it unallocated and gives the walk's structure (825 rows). Left: the walk
 colours (op, 0x25, p). Bodies, measurements, negatives and the next hypothesis (the schedule reached through
 another aggregate or symbol than the GameState base): `drafts/T-25125/main/func_8007132C/NOTES.md`.
+
 ## T-25138: RPG_BAT func_80144C84
 
 Matched (1,276 bytes, default C) from the T-24522 28-row draft in about 25 minutes. Both remaining gaps came from
@@ -820,6 +812,7 @@ counter writebacks at the join (one symbol). A pointer view of an incomplete arr
 swapped the counter colours; negative offsets from `D_8015EBFC` did not alias `EBE0`. Then `EBE0 -= 0x14`
 before the `unk_08` clamp, and the real locals `sel`/`total` for the 0x38 frame. The T-24522 `* 1` wrappers
 and `RpgStat *stat` are gone; the comma return stays (FAKE). Details: `drafts/T-25138/RPG_BAT/func_80144C84/NOTES.md`.
+
 ## T-25139: KANGEI func_801327DC
 
 Matched in literal default C, 1,096 bytes. Started from the T-24516 body
