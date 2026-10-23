@@ -59,7 +59,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25402-w11-GEKO-801338F0|T-25402 Wave 11 passes on src/ovl/GEKO/801338F0.c]]
 - [ ] [[tickets/T-25404-w11-main-80047550|T-25404 Wave 11 passes on src/main/80047550.c]]
 - [ ] [[tickets/T-25405-w11-main-80053650|T-25405 Wave 11 passes on src/main/80053650.c]]
-- [ ] [[tickets/T-25406-w11-main-800674B0|T-25406 Wave 11 passes on src/main/800674B0.c]]
 - [ ] [[tickets/T-25407-w11-main-8006CB30|T-25407 Wave 11 passes on src/main/8006CB30.c]]
 - [ ] [[tickets/T-25408-w11-ENDING-80133C10|T-25408 Wave 11 passes on src/ovl/ENDING/80133C10.c]]
 - [ ] [[tickets/T-25409-w11-ETC-8013FF80|T-25409 Wave 11 passes on src/ovl/ETC/8013FF80.c]]
@@ -77,6 +76,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-25406-w11-main-800674B0|T-25406 Wave 11 passes on src/main/800674B0.c]]
 - [ ] [[tickets/T-25062-name-ent-byte-pack|T-25062 Match NAME_ENT byte pack and zero loop]]
 - [ ] [[tickets/T-25060-tel-date-menu|T-25060 Match final TEL date menu builder]]
 - [ ] [[tickets/T-25056-ending-scheduler|T-25056 Resolve ENDING A2E8 scheduler residue]]
