@@ -244,6 +244,30 @@ typedef struct CharFlags {
     u32 rest : 8;
 } CharFlags; /* size 0x04 */
 
+/* Flag word at GameState +0xF64 (D_800E6280.unk_F64) as single bits. func_8006A044 sets them with
+ * bit-field stores, which load the byte into another register than its lui (T-25103): bits 0-11 by
+ * year (0x5F, 0x60, 0x61) and month group (2-4, 5-7, 8-10, 11-1), bit 13 in months 2, 5, 8 and 11,
+ * bit 14 in the other months, bit 15 in months 5-7. */
+typedef struct FlagsF64 {
+    /* 0x00 */ u32 b0 : 1;
+    /* 0x00 */ u32 b1 : 1;
+    /* 0x00 */ u32 b2 : 1;
+    /* 0x00 */ u32 b3 : 1;
+    /* 0x00 */ u32 b4 : 1;
+    /* 0x00 */ u32 b5 : 1;
+    /* 0x00 */ u32 b6 : 1;
+    /* 0x00 */ u32 b7 : 1;
+    /* 0x00 */ u32 b8 : 1;
+    /* 0x00 */ u32 b9 : 1;
+    /* 0x00 */ u32 b10 : 1;
+    /* 0x00 */ u32 b11 : 1;
+    /* 0x00 */ u32 b12 : 1;
+    /* 0x00 */ u32 b13 : 1;
+    /* 0x00 */ u32 b14 : 1;
+    /* 0x00 */ u32 b15 : 1;
+    /* 0x00 */ u32 rest : 16;
+} FlagsF64; /* size 0x04 */
+
 /* The Rec38 flag word: whole, by halves and bytes, or by bits. */
 typedef union Rec38Flags {
     /* 0x00 */ s32 w;
@@ -2525,7 +2549,7 @@ void cal_base_show(void);
 void func_80069128();
 void cal_sprite_init(void);
 void func_800696DC(s32, s32);
-void func_8006A044();
+s32 func_8006A044();
 void func_8006A2CC();
 void func_8006B0C8();
 void club_list_menu(void);
