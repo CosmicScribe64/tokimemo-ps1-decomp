@@ -149,3 +149,14 @@ When several adjacent loops use the same saved register in the target, trace whi
 ## Order a remainder range and preserve expression evaluation (T-25057)
 
 NAME_ENT `func_801398EC` needed remainder/frame/index in a1/a2/a3. A scalar remainder was replaced by its later expression range; a one-element local array retained an earlier memory range, then was fully promoted. A dead initial frame assignment ordered that range before frame/index. The computed remainder dominates every read, and uopt removes the initial load and store. An exact-width discarded unsigned comparison separately orders record induction. Inspect optimized ucode before treating temporary differences as allocator errors: here the array made `row + tile * 16` evaluate tile first. `row - (0U - tile * 16)` preserves row-first order with defined unsigned modulo arithmetic. Default C matches 492 bytes, with all 27 hashes passing. Each artificial constraint is FAKE-marked; removal controls differ 36, 25, 25 and 17 of 123 words respectively. See [[tickets/T-25057-name-ent-pass-investigation]] and drafts/T-25057/README.md.
+
+## Counter slots, row pointers and `.noalias` in two-phase loops (T-25102)
+
+TAIIKU `func_8013E1FC` (1688 bytes). A loop counter whose spill sits below every declared local is not spilled at
+its declared home, and a second phase may reuse that slot for a +16 value. Write the increment at the loop end
+(`for (angle = 0; angle < 64; angle++)`) and the stride as `angle * 16`, `(angle + 1) * 16`, so the spills are
+compiler temporaries. Then fit the declared scalar count to the array offsets. If the original loads two array walks
+before storing either (`lw x; lw y; ...; sw x; sw y`) and the draft stores x first, read the `cc -S` listing for
+`.noalias $y,$x`. Row-pointer locals (`xp = x + (i << 1)`) used elsewhere in the function can remove it, so index the
+arrays instead (`x[i << 1]`). A `move v0,zero` init that the original schedules after the hoisted loop invariants
+needs the init on the `for` line.
