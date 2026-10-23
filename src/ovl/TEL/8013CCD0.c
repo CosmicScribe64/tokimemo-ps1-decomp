@@ -221,6 +221,8 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s16 avail[11];
     s16 step[11];
 
+    /* FAKE: g and D_800E6280 name the same state; the mixed spellings (see the header comment) steer the base
+     * register and promotion choices of uopt. The original source is unknown. T-25133 */
     g = &D_800E6280;
     for (i = 0; i < 10; i++) {
         avail[i] = 0;
@@ -284,7 +286,8 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                 if (i < 3) {
                     avail[i] = 0x74;
                 } else if (i == 3) {
-                    /* The empty arm keeps the original test order and block layout (T-25133). */
+                    /* FAKE: the empty arm keeps the original test order and block layout; the != and && form
+                     * moves the register of the 0x74 constant. T-25133 */
                     if (arg2 == 12 || arg2 == 2 || arg2 == 0 || arg2 == 14) {
                     } else {
                         if (arg2 == g->unk_03F) {
