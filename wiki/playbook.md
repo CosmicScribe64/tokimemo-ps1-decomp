@@ -59,7 +59,7 @@ A later call argument can keep an earlier selector promoted across several tests
 
 ## 4. Operand order of compares and sums
 
-`bne` operands reversed, registers right: read the selector through a u32/s32 local (GYOZI `func_8014206C`, T-20005 note), or the aggregate (T-16930), or wrap the left operand `w * 1 != x->width` (`| 0`, `^ 0`, `<< 0` also work; `+ 0` does not) (main `strNext`, T-17014). For sums, spelling decides: `(idx + D_X)->f` gives index first, `(D_X + idx)->f` base first (TACO `func_801557E8`, T-16564); in RPG_BAT `func_80138324` the last 4 rows were the global first in two sums (T-24303).
+`bne` operands reversed, registers right: read the selector through a u32/s32 local (GYOZI `func_8014206C`, T-20005 note), or the aggregate (T-16930), or wrap the left operand `w * 1 != x->width` (`| 0`, `^ 0`, `<< 0` also work; `+ 0` does not) (main `strNext`, T-17014). When t0..t3 are permuted inside one expression and nothing else differs, read the ucode entering uopt: cfe puts the heavier operand of `+`/`*` first (an indexed array read is heavier than a local or scalar, a `u32` conversion adds weight), and ugen takes each temporary from its FIFO list when it emits the instruction. A local copy of the array element (`x = A[i + 1]; ... v / 32 + -x / 2`) evens the weights so source order holds; otherwise `(D | 0) * k` or `a - (0 - A[i])` (FAKE) (main `func_80062948`, T-25119). For sums, spelling decides: `(idx + D_X)->f` gives index first, `(D_X + idx)->f` base first (TACO `func_801557E8`, T-16564); in RPG_BAT `func_80138324` the last 4 rows were the global first in two sums (T-24303).
 
 ## 5. Store order, delay slots and as1 line grouping
 
