@@ -1311,7 +1311,7 @@ extern u8 D_8014E0A4[13];
 /* CD file tables per scene: dec_bg_cd_read(D_8014EA18[scene][i]) (func_80132FB0). */
 extern s32 *D_8014EA18[22];
 /* FAKE: volatile keeps the shade counter out of uopt's global promotion, so func_80132C3C loads it once for the
- * colour stores (no copy-propagated second load) and adds 2 in the loaded register; guard only. T-25121 */
+ * colour stores (no copy-propagated second load) and adds 2 in the loaded register. T-25121 */
 extern volatile s32 D_8014DB80;
 extern s32 D_80150078;
 extern s32 D_801500C0;

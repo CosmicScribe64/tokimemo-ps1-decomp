@@ -74,10 +74,9 @@ void func_801328A4(s32 arg0, s32 arg1) {
     func_8009C674(0);
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25121, 15 rows; only the four 4-use coordinate constants are coloured in another order
- * (draft t0..t3 = 0xA0 u1/u3, 0x128, 0x20, 0xA8; original 0x20, 0xA0, 0x128, 0xA8). Notes:
- * drafts/T-25121/ETC/func_80132C3C/NOTES.md. Also needs the FAKE volatile view of D_8014DB80 in ovl/ETC.h. */
+/* Four semi-transparent POLY_FT4 quads with the shade counter D_8014DB80 as colour; the counter steps by 2
+ * and wraps at 0x81 (bumping unk_110D). Needs the FAKE volatile view of D_8014DB80 in ovl/ETC.h. Notes:
+ * drafts/T-25121/ETC/func_80132C3C/NOTES.md. */
 /* FAKE: one line per PsyQ setXY4/setUVWH expansion (x0 first) keeps as1's per-line store order and the
  * constant numbering; the original's macros are not in the headers. T-25121 */
 s32 func_80132C3C(void) {
@@ -138,6 +137,11 @@ s32 func_80132C3C(void) {
     p2->x0 = 0x18, p2->y0 = y0, p2->x1 = 0xA0, p2->y1 = y0, p2->x2 = 0x18, p2->y2 = y2, p2->x3 = 0xA0, p2->y3 = y2;
     *(s8 *)&p2->u0 = 0x18, p2->v0 = 0x13, p2->u1 = 0xA0, p2->v1 = 0x13, *(s8 *)&p2->u2 = 0x18, p2->v2 = 0xB3, p2->u3 = 0xA0, p2->v3 = 0xB3;
     p3->x0 = 0xA0, p3->y0 = y0, p3->x1 = 0x128, p3->y1 = y0, p3->x2 = 0xA0, p3->y2 = y2, p3->x3 = 0x128, p3->y3 = y2;
+    /* FAKE: never-true arm with a u8 store of 0x20: one more use without a reload lifts that constant's
+     * priority to 2, so uopt colours it (t0) before 0xA0, 0x128 and 0xA8; ugen drops the arm. T-25201 */
+    if ((u32)p0 < 0) {
+        p1->code = 0x20;
+    }
     p3->u0 = 0x20, p3->v0 = 0x13, p3->u1 = 0xA8, p3->v1 = 0x13, p3->u2 = 0x20, p3->v2 = 0xB3, p3->u3 = 0xA8, p3->v3 = 0xB3;
     AddPrim((D_8011ECA0 << 0xA) + 0x14 + D_800E8CA0, p0);
     AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 0x14, p1);
@@ -154,9 +158,6 @@ s32 func_80132C3C(void) {
     if (next) {
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132880", func_80132C3C);
-#endif
 
 void func_80132FB0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_8014E0C0 = 0;
