@@ -68,3 +68,45 @@ model). Apply `alias-match.patch` once the user approves second names for this f
 clean rebuild). The names in the patch (`slot_x_8014984C`, `slot_cnt_8014981C`) end in the address so
 that funcdiff resolves them. The policy question is the same kind as wiki/keep-lines.md (a second name
 for one object, with a FAKE comment at the use).
+
+## Third pass (2026-10-23, fresh eyes)
+
+Result: no match; the guard stays at 4 rows and its code is unchanged. Every lever below was measured
+against the natural compares or the guard. Rows are `funcdiff --resolve --version c` diff lines unless
+marked "mini". A mini count comes from a reduced unit: the two includes, the three macros and the body,
+compiled with `tools/cc.py` and compared word for word with the relocated immediates masked. It takes
+about 13 s under load, against minutes for funcdiff. Its counts are 18 higher, because the shared
+`lui at` of the block-2 runner stores differs there. The guard gives 22 mini rows.
+
+regdiff -v on the natural body (226 rows) gives the same picture as the second pass: bit 238
+(0x8014984C) 0.5 in t5, bit 239 (0x8014981C) 0.5 in a2, bit 230 (0x44) 0.4 in ra, bit 13 (D_80122E94)
+0.333 in a3.
+
+Negatives added:
+- A dead second parameter as the slot pointer (`s32 func_80137784(s32 arg0, Fix32 *pos)`, header
+  `s32 func_80137784();`, so the callers are unchanged). The parameter's home is in the caller's frame,
+  so the frame stays 56, and pos gets a0. But IDO stores the incoming a1 at entry (`sw a1,60(sp)`),
+  and the alias offset still moves to the pointer side (`addiu t8,a0,16; bne t8,t9`): 230 rows. With
+  `pos == D_8014984C` the base takes t5 again: 250 rows. A plain variable first does not stop the
+  addend move, because cfe puts the complex operand first and uopt swaps it back.
+- Casts on both sides of the natural block-3 compare: `(void *)`, `(u8 *)` and `(u16 *)` give 240 rows
+  (the same as the natural block 3 alone, so the candidate is unchanged). `(s32)`, `(u32)` and
+  `(s32)(D_8014981C + arg0)` give 388.
+- `volatile` on D_8014981C and D_8014984C (in the header) with both compares natural: the base still
+  takes t5, and the frame grows to 64: 292 rows.
+- A zero index that uopt folds late (`&D_8014981C[arg0 * 0]` on either side): it is still the same lda
+  candidate (a2 is held from the `++` into the compare), mini 250.
+- A second name made in C: `#pragma weak alias = D_8014981C` is ignored by cfe 5.3 for an extern
+  (Warning 780: the primary name must be defined with an initial value in this file). D_8014981C comes
+  from INCLUDE_RODATA, so this would need the object defined in C, and the result would still be a
+  second name, which is the open policy question.
+- No other linker symbol lies at 0x8014981C or 0x8014984C (`build/ovl/TAIIKU.map`,
+  `TAIIKU_data_syms.ld`), so no existing name can serve as the zero-offset compare constant.
+
+Why C cannot close it (summary of three passes): the original materialises the slot base twice, once
+for the CSE'd address (`addu a1,v0,t8`) and again in the next block for the compare (`bne a1,t9`). The
+saving formula (`(L+S)*F` minus one reload per unit that needs one) gives such a base a positive saving
+as soon as the compare's lda is the same expression as the address base, and a free register then
+takes it. Any distinct lda with a nonzero offset gets its addend moved onto the pointer side, by uopt
+or by ugen. So the compare constant must be a different symbol at offset 0. The alias patch is still
+the only measured match.
