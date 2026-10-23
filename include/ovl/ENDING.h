@@ -176,7 +176,7 @@ void func_80139F3C(void);
 void func_8013A004(void);
 void func_8013A2E8(void);
 s32 func_8013B5E4(void);
-s32 func_8013B640(void); /* FAKE (T-23002): s32, see its definition; func_8013A2E8 reads its $v0 */
+s32 func_8013B640(void); /* FAKE (T-23002; prototype moved here from the guard by T-25127): s32, see its definition; func_8013A2E8 reads its $v0 */
 extern EdFnTbl14 D_8013CB74; /* func_801399B4 */
 extern EdFnTbl25 D_8013CBE4; /* func_8013B760 */
 
