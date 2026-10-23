@@ -235,7 +235,8 @@ s32 func_80154760(void) {
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-25114, 34 funcdiff rows, all aligned: frame 0x60 against 0x58 (the two kept quotient
  * webs cost two frame words more than the original's), the case 0 selector load placed before the
- * stores in the original, and the case 3 counter store placed after the test loads here. Notes:
+ * stores in the original, and the case 3 counter store placed after the test loads here. The s32 return
+ * matches the implicit-int call in func_80154430 (a void definition is a redeclaration error). Notes:
  * drafts/T-25114/RPG_BAT/func_80154DD8/NOTES.md */
 extern s32 D_8015EC9C;
 void func_8015528C(s32, s32, s32, s32, s32, s32, s32, s32, s32);
@@ -357,6 +358,8 @@ void func_8015528C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
             /* FAKE: T-24522, T-25114: the `* 1` keeps this arm's remainder in its own range, as in the original. */
             color_phase = (phase_sum % 3) * 1;
             end = end_candidate;
+            /* FAKE: T-25114, the shared clamp label keeps both `start < 0` tests as in the original (merging
+             * them after the if/else costs 18 rows). */
             if (start < 0) {
                 goto block_9;
             }
