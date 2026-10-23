@@ -1749,3 +1749,8 @@ The only function of the package is matched, none left with rows; see [[tickets/
 
 Reviewed [[tickets/T-25115-w8-main-800490C0]] against CODING_STANDARDS.md; matched main `_sprite_set_light_effect1` (1,124 bytes) and `func_80049A40` (1,456 bytes) as default-build C, 27/27.
 One finding fixed (FAKE comments on the `gs` alias and `channel * 0` black vertices in `func_80049A40`); notes in drafts/T-25115/main/.
+
+## [2026-10-23] ticket | T-25120 Done
+
+Reviewed [[tickets/T-25120-w8-GYOZI-80138B50]] against CODING_STANDARDS.md; matched GYOZI `func_8013907C` (844 bytes) and `func_80138C9C` (992 bytes) as default-build C.
+Findings fixed (CandList offset comments, catalog link, kanban column); FAKEs are marked; notes in drafts/T-25120/GYOZI/.

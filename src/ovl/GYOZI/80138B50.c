@@ -47,11 +47,11 @@ void func_80138C78(void) {
  * does. The reorder loop keeps the separate symbols, so the address of the last entry stays shared
  * across its store. */
 typedef struct {
-    s16 values[12]; /* D_80147224 */
-    s16 count;      /* D_8014723C */
-    s16 pad;
-    u8 special;     /* D_80147240 */
-} CandList;
+    /* 0x00 */ s16 values[12]; /* D_80147224 */
+    /* 0x18 */ s16 count;      /* D_8014723C */
+    /* 0x1A */ s16 pad;
+    /* 0x1C */ u8 special;     /* D_80147240 */
+} CandList; /* only the part up to special is used */
 #define CL (*(CandList *)D_80147224)
 
 void func_80138C9C(void) {
