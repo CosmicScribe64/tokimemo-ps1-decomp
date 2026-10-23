@@ -78,11 +78,6 @@ s32 func_80133AA0() {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-25002, 13 rows; ugen temporary numbering in the zero-girl branch (srl/mflo/addu ring order)
- * and in the 4/5/10 branch (lhu/srl t9/t7 swapped). Tried: separate club local, empty tests, line grouping,
- * operand swaps, autotweak 300 s twice. T-25009: `(h & 0xFFFF) >> 12` for v in the zero-girl branch fixes
- * that branch but shifts the 1/2/3 and 6-9 branches by one register (30 rows). */
 void func_80133C50(void) {
     s32 v;
     u32 g;
@@ -102,7 +97,9 @@ void func_80133C50(void) {
         g = D_800E6280.unk_F5F;
         D_80144C50 = 0;
         if (g == 0) {
-            v = D_800E6280.unk_0F4.h >> 12;
+            /* FAKE: T-11910 the volatile club view keeps this read before the record load (uopt otherwise sinks it to
+             * the first compare), giving the original ugen order; also used in the 1/2/3 branch. */
+            v = D_800E6280.unk_0F4.vh >> 12;
             temp = D_800E6280.unk_1BC[g].unk_0C.b[2] >> 4;
             g = temp;
             if (v == g && (u32)v < 6) {
@@ -115,10 +112,7 @@ void func_80133C50(void) {
                 func_80132A4C(5);
             }
         } else if (g == 1 || g * 1 == 2 || g == 3 /* FAKE: T-25002 g * 1 puts the shared constant 2 first in the beq */) {
-            v = D_800E6280.unk_0F4.h >> 12;
-            /* FAKE: T-25002 (from T-24503) empty test retains this club value before the
-             * record load, restoring this branch's original temporary numbering. */
-            if (v) {}
+            v = D_800E6280.unk_0F4.vh >> 12;
             g = D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[2] >> 4;
             if (v == g) {
                 func_80132A4C(2);
@@ -145,9 +139,6 @@ void func_80133C50(void) {
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801338F0", func_80133C50);
-#endif
 
 void func_80133F94(void) {
     u32 cur;
