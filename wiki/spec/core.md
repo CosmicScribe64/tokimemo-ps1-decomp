@@ -520,7 +520,7 @@ Proposed for `include/game_enums.h` (238 rows): `GirlId` (16, `GIRL_*`), `Parame
 - Fields and variables keep their fixed-width types (an `enum` variable is 4 bytes and signed and would change code); the field gets a `/* GirlId */` comment.
 - A literal is replaced only where the other operand is a named site: comparisons and assignments of the field, `case` labels of a `switch` on it, and arguments of the named functions (`game_mode_set`, `mode_stage_set`, `mode_step_set`, `icon_can_use_set`, `get_g_zyotai_*`, `birth_day_check_days` for `GirlId`).
 - `Place` values stored in appointment words are place + 1; do not replace the stored value.
-- Placeholders until the overlay analysts settle them: `GAME_MODE_NAME_ENTRY/4`, `GAME_MODE_TELEPHONE_PROFILE`, `MODE_CLUB_MASTER_*`, `GAME_MODE_ETC_C2..C4`, `MARKER_NOTICE_*`, `DAY_EVENT_CLUB_MASTER_*`.
+- Placeholders until the overlay analysts settle them: `GAME_MODE_TELEPHONE_PROFILE`, `GAME_MODE_CLUB_MASTER_*`, `GAME_MODE_ETC_C2..C4`, `MARKER_NOTICE_*`, `DAY_EVENT_CLUB_MASTER_*`.
 
 ## 12. The 100 most used main functions
 
@@ -663,7 +663,7 @@ NAME_ENT then collects the player's name, birthday and blood type and the birthd
 
 1. `girl_cleared` (`unk_53C`): the mascot menu and ETC graduation count it with the saved per-girl flag. Is it an "ending seen" flag? The overlay analysts for ETC and OPTION can settle it.
 2. `story_stage` (flag bits 9-11) and flag bit 2 of `GirlFlags` ("introduced"?): events set them in many overlays; needs the DATE/GEKO analysts.
-3. `GAME_MODE_NAME_ENTRY/4`, `GAME_MODE_ETC_C2..C4`, `GAME_MODE_TELEPHONE_PROFILE`, `MODE_CLUB_MASTER_*`: roles unsettled.
+3. `GAME_MODE_ETC_C2..C4`, `GAME_MODE_TELEPHONE_PROFILE`, `GAME_MODE_CLUB_MASTER_*`: roles unsettled.
 4. Calendar marker values 2, 6, 10, 14, 16, 20 (notice records) and what the notice mode 0x39 shows.
 5. `progress_state` flag bytes (21): which HUD facts they record (first-time hints?).
 6. `unk_F6E` (`sd_anim_fast`): the in-game hint names it the SD character animation speed switch (pad 2 START); the animations it changes besides actors 96 and 97 and the parameter panel are not checked.
