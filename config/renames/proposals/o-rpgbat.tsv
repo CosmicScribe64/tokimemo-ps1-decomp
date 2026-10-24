@@ -5,7 +5,7 @@ func	RPG_BAT	func_8013BBF8	rpg_battle_code_entry_update	matches pad words agains
 func	RPG_BAT	func_8013BEA8	rpg_battle_pause_update	START (pad bit 0x800) toggles pause; state D_8015EC20 0 run, 1 paused, 3 code entry
 func	RPG_BAT	func_8013C1CC	rpg_battle_check_enemy_defeated	sets D_8015EE1C=1 when the enemy HP in use hit 0 and all actors idle
 func	RPG_BAT	func_8013C2A0	rpg_battle_start_victory_sequence	D_8015EE1C==1: calls victory script by encounter
-func	RPG_BAT	func_8013C32C	rpg_battle_park_background_wave	sine-driven background strips; only for encounter 0x100000
+func	RPG_BAT	func_8013C32C	rpg_battle_background_wave	sine-driven background strips; drawn only when the wave flag is set and the encounter is the delinquent trio (flag 0x100000)
 func	RPG_BAT	func_8013C890	rpg_battle_enemy_update	picks an enemy action when idle and timer D_8015EDC8 passes the limit; dispatches by D_8015EDC4 hi/lo
 func	RPG_BAT	func_8013CC90	rpg_battle_player_update	command ready flag, command bits to action code, dispatch of attack/guard/special
 func	RPG_BAT	func_8013D030	rpg_battle_player_pose_idle	chooses the player idle pose from HP (0, <10) and guard bit
@@ -239,8 +239,8 @@ func	RPG_BAT	func_801453B4	rpg_battle_enemy_pick_alien	weighted choice for the a
 func	RPG_BAT	func_80152080	rpg_battle_enemy_trip_attack	trip encounters action 1: named basic attack, 10 percent of current HP
 func	RPG_BAT	func_80151FC0	rpg_battle_trip_attack_hit_fx	hit effect on the player for the trip attack
 func	RPG_BAT	func_80152384	rpg_battle_trip_loot_text	builds 2 or 3 loot lines from the per-encounter 4-name table
-func	RPG_BAT	func_80145CC0	rpg_battle_enemy_habu_finale	encounter 0x10000 action 2: big attack, near-defeat, rescuer arrives, victory text
-func	RPG_BAT	func_80146578	rpg_battle_habu_finale_rescuer_strike	rescuer's hit in the habu finale
+func	RPG_BAT	func_80145CC0	rpg_battle_enemy_snake_finale	encounter 0x10000 action 2: big attack, near-defeat, rescuer arrives, victory text
+func	RPG_BAT	func_80146578	rpg_battle_snake_finale_rescuer_strike	rescuer's hit in the snake finale
 func	RPG_BAT	func_801468B0	rpg_battle_dialog_komuso_offer	rescuer offers help (deer encounter)
 func	RPG_BAT	func_8014698C	rpg_battle_dialog_komuso_calms_deer	rescuer line
 func	RPG_BAT	func_80146AB4	rpg_battle_dialog_komuso_farewell	rescuer farewell
@@ -264,7 +264,7 @@ func	RPG_BAT	func_80137AC8	rpg_battle_dialog_angel_voice_1	voice from nowhere as
 func	RPG_BAT	func_80137C44	rpg_battle_dialog_angel_voice_2	voice grants a new power
 func	RPG_BAT	func_80137E74	rpg_battle_dialog_bancho_shock	boss line of surprise
 func	RPG_BAT	func_80137F50	rpg_battle_dialog_bancho_true_power	boss line before round 2
-func	RPG_BAT	func_80139510	rpg_battle_victory_delinquents	finale script after the trio fell; then the boss scene if launch code 5, else stage_next
+func	RPG_BAT	func_80139510	rpg_battle_victory_delinquents	finale script after the trio fell; then the boss scene if launch code 5, else main_stage_next
 func	RPG_BAT	func_80139E88	rpg_battle_loot_text_delinquents	2 or 3 loot lines, weights 4:3:2:1 over 4 names
 func	RPG_BAT	func_8013A034	rpg_battle_bancho_asset_load	CD read of the boss sprites at 0x801B1000 and record setup
 func	RPG_BAT	func_8013A2F4	rpg_battle_bancho_flash	flickers record palette values for 181 frames, then ends the step
@@ -273,7 +273,7 @@ func	RPG_BAT	func_8013F4F0	rpg_battle_dialog_himoo_calls_robot	Himoo line when t
 func	RPG_BAT	func_8013F5C8	rpg_battle_dialog_robot_attack_1	attack banner and voice
 func	RPG_BAT	func_8013F694	rpg_battle_dialog_robot_attack_2	attack banner and voice
 func	RPG_BAT	func_8013F760	rpg_battle_dialog_robot_attack_3	attack banner and voice
-func	RPG_BAT	func_8013F82C	rpg_battle_victory_robot	robot destroyed: flicker, fade to white, stage_next
+func	RPG_BAT	func_8013F82C	rpg_battle_victory_robot	robot destroyed: flicker, fade to white, main_stage_next
 func	RPG_BAT	func_8013FD8C	rpg_battle_enemy_robot_attack	robot action 1: three attacks in a row, then damage to the player
 func	RPG_BAT	func_8013FF28	rpg_battle_robot_attack_1_motion	motion of attack 1
 func	RPG_BAT	func_80140204	rpg_battle_robot_attack_2_motion	motion of attack 2
@@ -305,7 +305,7 @@ func	RPG_BAT	func_801596E8	rpg_battle_victory_bancho	finale script after the bos
 func	RPG_BAT	func_80159B40	rpg_battle_loot_text_bancho	loot lines plus a random earned title out of 4
 func	RPG_BAT	func_80156D78	rpg_battle_enemy_alien_attack_1	alien action 1: damage never kills (HP stays at 1)
 func	RPG_BAT	func_80157158	rpg_battle_enemy_alien_attack_2	alien action 2: multi-hit, damage never kills
-func	RPG_BAT	func_80157640	rpg_battle_enemy_alien_retreat	alien action 3: aliens flee; result code 1; stage_next
+func	RPG_BAT	func_80157640	rpg_battle_enemy_alien_retreat	alien action 3: aliens flee; result code 1; main_stage_next
 func	RPG_BAT	func_80156CC0	rpg_battle_enemy_alien_chatter	alien action 4: alien speech line
 func	RPG_BAT	func_8015785C	rpg_battle_alien_scene_flicker	random on/off of four background records (1/100 per frame)
 func	RPG_BAT	func_8014F790	rpg_battle_dialog_himoo_after_aliens	Himoo line after the aliens left
@@ -313,7 +313,7 @@ func	RPG_BAT	func_8014F88C	rpg_battle_girl_survival_timer	girl action 0x10001000
 func	RPG_BAT	func_8014FDBC	rpg_battle_girl_rescue_sequence	girl action 0x10001001: Himoo's rescue, aliens destroyed, result code 0
 func	RPG_BAT	func_80150120	rpg_battle_alien_departure	alien speech and a three-colour wipe
 func	RPG_BAT	func_801525B0	rpg_battle_stage_labels_init	stage 4: creates name labels (player, girl, enemy, guest) per encounter
-func	RPG_BAT	func_801528DC	rpg_battle_stage_fade_out	stage 11: fades records to black then stage_next
+func	RPG_BAT	func_801528DC	rpg_battle_stage_fade_out	stage 11: fades records to black then main_stage_next
 func	RPG_BAT	func_801529B4	rpg_battle_stage_intro_slide_in	stage 6 (non-alien): attack announcement and slide-in of actors
 func	RPG_BAT	func_80152F30	rpg_battle_stage_intro_aliens	stage 6 (aliens): wipe, Himoo line, slide-in
 func	RPG_BAT	func_801535E4	rpg_battle_dialog_himoo_hold_out	Himoo asks the player to hold out
@@ -396,13 +396,13 @@ data	RPG_BAT	D_8015EC24	rpg_battle_pause_debounce	frames before START is read ag
 data	RPG_BAT	D_8015EC28	rpg_battle_target_x	target x for the current action
 data	RPG_BAT	D_8015EC2C	rpg_battle_target_y	target y for the current action
 data	RPG_BAT	D_8015EC30	rpg_battle_special_gauge	special gauge 0..170; attack +30..44, guard +20..34, special -100
-data	RPG_BAT	D_8015EC34	rpg_battle_enemy_action_count	counts enemy actions; tiers the no-club special
+data	RPG_BAT	D_8015EC34	rpg_battle_escalation_counter	0 at battle start; +1 or +2 per enemy attack chosen; read only by the no-club special, which writes its tier index 0..5 back for the move animation and sound, and the move clears it to 0 in its last step
 data	RPG_BAT	D_8015EC38	rpg_battle_wave_phase	phase accumulator of the background/transition wave
 data	RPG_BAT	D_8015EC3C	rpg_battle_wave_amplitude	amplitude of the wave
 data	RPG_BAT	D_8015EC40	rpg_battle_wave_phase_scale	half-cycle divisor of the wave phase
 data	RPG_BAT	D_8015EC44	rpg_battle_wave_wavelength	rows per wave cycle
 data	RPG_BAT	D_8015EC48	rpg_battle_wave_speed	phase step per frame
-data	RPG_BAT	D_8015EC4C	rpg_battle_wave_enabled	1 draws the park background wave
+data	RPG_BAT	D_8015EC4C	rpg_battle_wave_enabled	1 enables the background wave (set when the delinquent fight starts)
 data	RPG_BAT	D_8015EC50	rpg_battle_motion	RpgMotion20 scratch: dx, dy and a rectangle of six words
 data	RPG_BAT	D_8015EC58	rpg_battle_girl_run	RpgGirlRun: girl home, target and effect offsets
 data	RPG_BAT	D_8015EC74	rpg_battle_scratch	50-word scratch array (to D_8015ED38), cleared when an action ends
@@ -479,7 +479,7 @@ data	RPG_BAT	D_8015EEE4	rpg_battle_asset_palette_4	palette block pointer
 data	RPG_BAT	D_8015EEE8	rpg_battle_asset_palette_5	palette block pointer
 data	RPG_BAT	D_8015EEEC	rpg_battle_asset_palette_6	palette block pointer
 data	RPG_BAT	D_8015EEF0	rpg_battle_drama_lines	41 string pointers; three are picked per use
-data	RPG_BAT	D_8015EFA0	rpg_battle_loot_names_habu	4 loot string pointers, habu encounter
+data	RPG_BAT	D_8015EFA0	rpg_battle_loot_names_snake	4 loot string pointers, snake encounter
 data	RPG_BAT	D_8015EFB0	rpg_battle_loot_names_deer	4 loot string pointers, deer encounter
 data	RPG_BAT	D_8015EFC0	rpg_battle_loot_names_bear	4 loot string pointers, bear encounter
 data	RPG_BAT	D_8015EFD0	rpg_battle_loot_flags_init_trip	4 zero words for the trip loot pick
@@ -487,21 +487,21 @@ data	RPG_BAT	D_8015EFE0	rpg_battle_loot_names_bancho	4 loot string pointers, bos
 data	RPG_BAT	D_8015EFF0	rpg_battle_titles_bancho	4 earned-title string pointers; one is picked
 data	RPG_BAT	D_8015F000	rpg_battle_loot_flags_init_bancho	4 zero words for the boss loot pick
 data	RPG_BAT	D_8015ED14	rpg_battle_result_line_count	number of result/loot lines to show
-field	RpgBattleState	unk_00	enemy_weight_0	weight slot 0 of the weighted enemy choosers (outcome differs per encounter); -5 when picked
-field	RpgBattleState	unk_04	enemy_weight_1	weight slot 1 of the enemy choosers
-field	RpgBattleState	unk_08	enemy_weight_2	weight slot 2 of the enemy choosers
-field	RpgBattleState	unk_0C	enemy_weight_3	weight slot 3 of the enemy choosers
-field	RpgBattleState	unk_10	girl_weight_wait	weight of 'no action' in rpg_battle_girl_pick_action
-field	RpgBattleState	unk_14	girl_weight_act	weight of 'act' in rpg_battle_girl_pick_action
-field	RpgBattleState	unk_18	result_code	alias of D_8015EC14, written back to D_80122CE0 at exit
-field	RpgBattleState	unk_1C	saved_girl	alias of D_8015EC18
-field	RpgBattleState	unk_20	boss_event	alias of D_8015EC1C
-field	RpgBattleState	unk_24	pause_state	alias of D_8015EC20
-field	RpgBattleState	unk_28	pause_debounce	alias of D_8015EC24
-field	RpgBattleState	unk_2C	target_x	alias of D_8015EC28
-field	RpgBattleState	unk_30	target_y	alias of D_8015EC2C
-field	RpgBattleState	unk_34	special_gauge	alias of D_8015EC30
-field	RpgBattleState	unk_38	enemy_action_count	alias of D_8015EC34
+field	RpgStat	unk_00	enemy_weight_0	weight slot 0 of the weighted enemy choosers (outcome differs per encounter); -5 when picked
+field	RpgStat	unk_04	enemy_weight_1	weight slot 1 of the enemy choosers
+field	RpgStat	unk_08	enemy_weight_2	weight slot 2 of the enemy choosers
+field	RpgStat	unk_0C	enemy_weight_3	weight slot 3 of the enemy choosers
+field	RpgStat	unk_10	girl_weight_wait	weight of 'no action' in rpg_battle_girl_pick_action
+field	RpgStat	unk_14	girl_weight_act	weight of 'act' in rpg_battle_girl_pick_action
+field	RpgStat	unk_18	result_code	alias of D_8015EC14, written back to D_80122CE0 at exit
+field	RpgStat	unk_1C	saved_girl	alias of D_8015EC18
+field	RpgStat	unk_20	boss_event	alias of D_8015EC1C
+field	RpgStat	unk_24	pause_state	alias of D_8015EC20
+field	RpgStat	unk_28	pause_debounce	alias of D_8015EC24
+field	RpgStat	unk_2C	target_x	alias of D_8015EC28
+field	RpgStat	unk_30	target_y	alias of D_8015EC2C
+field	RpgStat	unk_34	special_gauge	alias of D_8015EC30
+field	RpgStat	unk_38	escalation_counter	alias of D_8015EC34; see rpg_battle_escalation_counter
 field	RpgGauge	cur	hp	HP per delinquent slot
 field	RpgGauge	flag	charmed	charmed flag per delinquent slot
 field	RpgPadSeq	unk_00	pad_now	pad word read this frame
@@ -523,7 +523,7 @@ type	RPG_BAT	RpgStrTbl4	RpgLootNames4	4 string pointers
 type	RPG_BAT	RpgWordTbl4	RpgPickFlags4	4 pick flags
 type	RPG_BAT	RpgWordTbl10	RpgPadCode10	10 pad words
 type	RPG_BAT	RpgHalfTbl12	RpgMenuPositions	6 (x,y) s16 pairs
-const	RpgEncounter	0x10000	RPG_ENC_HABU	D_8015EB98 flag; launch code 1; strings: habu snake enemy, mongoose rescuer
+const	RpgEncounter	0x10000	RPG_ENC_SNAKE	D_8015EB98 flag; launch code 1; strings: snake enemy, mongoose rescuer
 const	RpgEncounter	0x20000	RPG_ENC_DEER	launch code 2; deer enemy, monk rescuer
 const	RpgEncounter	0x40000	RPG_ENC_BEAR	launch code 3; bear enemy, hunter rescuer
 const	RpgEncounter	0x100000	RPG_ENC_DELINQUENTS	launch code 4 and 5; three delinquents
@@ -534,11 +534,11 @@ const	RpgEncounter	0x80000000	RPG_ENC_ALIENS	launch code 7 and default
 const	RpgEncounter	0xF0000	RPG_ENC_TRIP_MASK	any of the three trip encounters
 const	RpgEncounter	0x600000	RPG_ENC_BANCHO_MASK	either boss round
 const	RpgEncounter	0x800F0000	RPG_ENC_NO_SPECIAL_MASK	encounters without a club special move
-const	RpgLaunch	1	RPG_LAUNCH_HABU	D_80122CE0 set by SHUGAKU
+const	RpgLaunch	1	RPG_LAUNCH_SNAKE	D_80122CE0 set by SHUGAKU
 const	RpgLaunch	2	RPG_LAUNCH_DEER	set by SHUGAKU
 const	RpgLaunch	3	RPG_LAUNCH_BEAR	set by SHUGAKU
-const	RpgLaunch	4	RPG_LAUNCH_DELINQUENT_AMBUSH	set by DATE when the same girl was dated repeatedly
-const	RpgLaunch	5	RPG_LAUNCH_DELINQUENT_BOSS_EVENT	set by DATE on the fixed calendar day; continues to the boss
+const	RpgLaunch	4	RPG_LAUNCH_DELINQUENTS_REPEAT_PLACE	set by DATE (func_8013C7D0) when the two latest entries of the place history unk_728 equal the chosen place, the place is not 0, the year byte unk_03E is at least 0x60 and flag b20 is clear; also sets flag b19
+const	RpgLaunch	5	RPG_LAUNCH_DELINQUENT_BOSS_EVENT	set by DATE (func_8013C7D0) in month byte unk_03F == 9 with year byte unk_03E == 0x61 when flag b20 is clear and (a club slot 0..10 has flag unk_25 == 3, or flag b19 is set, or no slot 0..10 has club points: then slot 11 gets flag 3); continues to the boss
 const	RpgLaunch	6	RPG_LAUNCH_HIMOO_ROBOT	set by GEKO
 const	RpgLaunch	7	RPG_LAUNCH_ALIENS	set by SHUGAKU; also the default
 const	RpgStage	0	RPG_STAGE_INIT	rpg_battle_stage_init
@@ -549,18 +549,18 @@ const	RpgStage	4	RPG_STAGE_SETUP	sprites, HUD, labels
 const	RpgStage	5	RPG_STAGE_WAVE	ripple transition
 const	RpgStage	6	RPG_STAGE_INTRO	attack announcement, slide-in
 const	RpgStage	7	RPG_STAGE_START_SHOUT	start voice
-const	RpgStage	8	RPG_STAGE_START_MUSIC	music call for the aliens encounter then stage_next
+const	RpgStage	8	RPG_STAGE_START_MUSIC	music call for the aliens encounter then main_stage_next
 const	RpgStage	9	RPG_STAGE_FIGHT	battle loop
-const	RpgStage	10	RPG_STAGE_END_SOUND	sound command 0xC1, stage_next
+const	RpgStage	10	RPG_STAGE_END_SOUND	sound command 0xC1, main_stage_next
 const	RpgStage	11	RPG_STAGE_FADE_OUT	fade to black
-const	RpgStage	12	RPG_STAGE_STOP_AUDIO	stop CD audio, stage_next
+const	RpgStage	12	RPG_STAGE_STOP_AUDIO	stop CD audio, main_stage_next
 const	RpgStage	13	RPG_STAGE_SCREEN_RESTORE	main-exe helper func_800674B0
-const	RpgStage	14	RPG_STAGE_WAIT_AUDIO	waits for the CD or 0x400 frames
+const	RpgStage	14	RPG_STAGE_WAIT_AUDIO	waits for the sound-bank poll (main snd_bank_load_poll) to report done; after 0x400 frames it stops audio and goes back to stage 13 (retry)
 const	RpgStage	15	RPG_STAGE_EXIT	rpg_battle_exit
 const	RpgPlayerAction	1	RPG_PLAYER_ATTACK	basic attack in D_8015ED98 low bits
 const	RpgPlayerAction	2	RPG_PLAYER_SPECIAL	club move
 const	RpgPlayerAction	0x100	RPG_PLAYER_GUARD	guard; damage taken is reduced
-const	RpgPlayerAction	0x104	RPG_PLAYER_GUARD_RECOVER	guard waiting to heal 5 percent
+const	RpgPlayerAction	0x104	RPG_PLAYER_GUARD_RECOVER	guard during the heal sequence: set after 151 guard frames, while the 5 percent heal message and effect play; the guard bit 0x100 stays set
 const	RpgPlayerAction	0x1000	RPG_PLAYER_DOWN	player knocked down
 const	RpgPlayerAction	0x10000	RPG_PLAYER_READY	command menu allowed
 const	RpgPlayerAction	0x1000000	RPG_CMD_ATTACK	command request bit from the menu
@@ -577,7 +577,7 @@ const	RpgTarget	2	RPG_TARGET_DELINQUENT_C	target code
 const	RpgTarget	3	RPG_TARGET_BOSS	enemy pool HP
 const	RpgTarget	4	RPG_TARGET_ROBOT	enemy pool HP
 const	RpgTarget	5	RPG_TARGET_ALIENS	enemy pool HP
-const	RpgTarget	16	RPG_TARGET_TRIP_HABU	number only
+const	RpgTarget	16	RPG_TARGET_TRIP_SNAKE	number only
 const	RpgTarget	17	RPG_TARGET_TRIP_DEER	number only
 const	RpgTarget	18	RPG_TARGET_TRIP_BEAR	number only
 const	RpgTarget	32	RPG_TARGET_PLAYER	player HP down
@@ -602,47 +602,8 @@ const	RpgBgm	0x204	RPG_BGM_BOSS_FIGHT	HYPOTHESIS: music call argument; set when 
 const	RpgBgm	0x203	RPG_BGM_DEFEAT	HYPOTHESIS: music call argument; used when the player is knocked out
 const	RpgResult	0	RPG_RESULT_PREVAILED	written back to D_80122CE0
 const	RpgResult	1	RPG_RESULT_KNOCKED_OUT	written back to D_80122CE0
-const	ClubId	0	CLUB_LITERATURE	club_name_table order (shared enum)
-const	ClubId	1	CLUB_DRAMA	shared enum
-const	ClubId	2	CLUB_SCIENCE	shared enum
-const	ClubId	3	CLUB_COMPUTER	shared enum
-const	ClubId	4	CLUB_ART	shared enum
-const	ClubId	5	CLUB_BRASS_BAND	shared enum
-const	ClubId	6	CLUB_BASEBALL	shared enum
-const	ClubId	7	CLUB_SOCCER	shared enum
-const	ClubId	8	CLUB_TENNIS	shared enum
-const	ClubId	9	CLUB_SWIMMING	shared enum
-const	ClubId	10	CLUB_BASKETBALL	shared enum
-const	ClubId	11	CLUB_NONE	shared enum
-const	GirlId	0	GIRL_SHIORI	girl_short_name_table order (shared enum)
-const	GirlId	1	GIRL_MIO	shared enum
-const	GirlId	2	GIRL_YUINA	shared enum
-const	GirlId	3	GIRL_AYAKO	shared enum
-const	GirlId	4	GIRL_SAKI	shared enum
-const	GirlId	5	GIRL_YUKARI	shared enum
-const	GirlId	6	GIRL_NOZOMI	shared enum
-const	GirlId	7	GIRL_MIRA	shared enum
-const	GirlId	8	GIRL_YUKO	shared enum
-const	GirlId	9	GIRL_MEGUMI	shared enum
-const	GirlId	10	GIRL_YUMI	shared enum
-const	GirlId	13	GIRL_YOSHIO	shared enum; partner with three actions in this scene
-const	GirlId	14	GIRL_NONE_IN_RPG	HYPOTHESIS: the scene uses id 14 as 'no partner' (no HP, no actions); in the shared name table it is another person
-comment	main	set_kanji_string	O.BIN name kept: creates a text label at screen x,y and returns its handle (used by the HUD name labels and the message lines)	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	k_disp_start	O.BIN name kept: starts showing the labels created so far (argument is the last handle plus 1)	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	k_disp_switch	O.BIN name kept: shows or hides one text label by handle	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	k_sub_reset	O.BIN name kept: clears the lower text area used by the message window	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	k_sub_reset_point_set	O.BIN name kept: marks the text state to which k_sub_reset returns	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	menu_set	O.BIN name kept: opens a pad-driven menu with a given number of items at given screen positions	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	menu_check	O.BIN name kept: polls the open menu and stores the hovered item in GameState unk_1093	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	load_palette	O.BIN name kept: copies palette number idx from a block into a CLUT slot	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	load_tpage_buf_lock	O.BIN name kept: uploads a texture list into a texture-page buffer slot and locks the slot	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	tpage_buf_clear	O.BIN name kept: clears the texture-page buffers	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	dtd_on_tpage	O.BIN name kept: draws the queued fill primitive on a texture-page layer (used for screen fades and wipes here)	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	get_g_zyotai_s	O.BIN name kept: returns the state value of one girl record (rpg_battle_nozomi_is_calm tests it)	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	hizuke_disp_switch	O.BIN name kept: shows or hides the calendar date display (hidden during the battle)	O.BIN developer name kept; one-liner from how RPG_BAT uses it
+const	RpgPartner	14	RPG_PARTNER_NONE	HYPOTHESIS: the scene stores id 14 in rpg_battle_girl_id to mean 'no partner' (no HP shown, no actions); the shared GirlId table (core) names id 14 GIRL_SOTOI, the butler, who has no role in the scene, so the id is reused as a sentinel
 comment	main	message_disp_switch	O.BIN name kept: shows or hides the main message window (hidden during the battle)	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	back_clear_switch	O.BIN name kept: turns the per-frame background clear on or off	O.BIN developer name kept; one-liner from how RPG_BAT uses it
-comment	main	draw2d3d	O.BIN name kept: selects the 2D or 3D drawing mode (called with 1,0 at battle start)	O.BIN developer name kept; one-liner from how RPG_BAT uses it
 file	RPG_BAT	src/ovl/RPG_BAT/80132000.c	src/ovl/rpg_battle/move_assist_yuko.c	girl 8 assist in club moves
 file	RPG_BAT	src/ovl/RPG_BAT/801321D0.c	src/ovl/rpg_battle/club_move_basketball.c	club 10 special move
 file	RPG_BAT	src/ovl/RPG_BAT/80132FE0.c	src/ovl/rpg_battle/enemy_bear.c	bear finale and hunter rescue
@@ -676,7 +637,7 @@ file	RPG_BAT	src/ovl/RPG_BAT/801439E0.c	src/ovl/rpg_battle/girl_update.c	girl ac
 file	RPG_BAT	src/ovl/RPG_BAT/80144010.c	src/ovl/rpg_battle/init_player_state.c	start values, target pick, timers
 file	RPG_BAT	src/ovl/RPG_BAT/801447E0.c	src/ovl/rpg_battle/enemy_ai.c	enemy damage roll and weighted action choosers
 file	RPG_BAT	src/ovl/RPG_BAT/801454F0.c	src/ovl/rpg_battle/move_assist_megumi.c	girl 9 assist
-file	RPG_BAT	src/ovl/RPG_BAT/80145CC0.c	src/ovl/rpg_battle/enemy_habu.c	habu finale
+file	RPG_BAT	src/ovl/RPG_BAT/80145CC0.c	src/ovl/rpg_battle/enemy_snake.c	snake finale
 file	RPG_BAT	src/ovl/RPG_BAT/801468B0.c	src/ovl/rpg_battle/enemy_deer.c	deer finale and monk rescue
 file	RPG_BAT	src/ovl/RPG_BAT/801477E0.c	src/ovl/rpg_battle/girl_ai.c	girl damage roll and action chooser
 file	RPG_BAT	src/ovl/RPG_BAT/80147F10.c	src/ovl/rpg_battle/move_assist_saki.c	girl 4 assist
