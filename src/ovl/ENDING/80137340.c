@@ -28,7 +28,7 @@ s32 func_80137340(void) {
 
 void func_801374BC(void) {
     if (game_state.options_dirty != 0) {
-        game_mode_set(MODE_ETC_C2);
+        game_mode_set(GAME_MODE_ETC_C2);
         return;
     }
     mode_stage_next();

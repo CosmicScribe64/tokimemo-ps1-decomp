@@ -300,7 +300,7 @@ void func_80137CD8(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
         portrait_read_step(0x66BF);
@@ -406,7 +406,7 @@ void func_80137FB8(void) {
     case 7:
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
         dec_bg_reset();
@@ -525,7 +525,7 @@ void func_80138340(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
         portrait_read_step(0x66BF);
@@ -929,7 +929,7 @@ void func_80138EB8(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
         portrait_read_step(0x66BF);
@@ -1262,7 +1262,7 @@ void func_80139780(void) {
         D_80122EAC = 0;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
         portrait_read_step(0x66BF);
@@ -1369,7 +1369,7 @@ void func_80139A6C(void) {
         D_80122EAC = 0;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
         portrait_read_step(0x66BF);

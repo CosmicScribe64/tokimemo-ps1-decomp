@@ -157,7 +157,7 @@ void func_80132444(void) {
             game_state.saved_game_mode = game_state.game_mode;
             game_state.saved_mode_stage = game_state.mode_stage + 1;
             game_state.saved_mode_step = 0;
-            game_mode_set(MODE_SHOOTER);
+            game_mode_set(GAME_MODE_SHOOTER);
         } else {
             mode_stage_next();
         }

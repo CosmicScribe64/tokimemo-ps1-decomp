@@ -340,9 +340,9 @@ void func_80143F24(void) {
     if (D_80150138 < -0x7530) {
         func_80059048();
         if (g->current_girl >= GIRL_YOSHIO) {
-            game_mode_set(MODE_TITLE);
+            game_mode_set(GAME_MODE_TITLE);
         } else {
-            game_mode_set(MODE_ETC_C3);
+            game_mode_set(GAME_MODE_ETC_C3);
         }
     }
 }
@@ -533,7 +533,7 @@ void func_80144768(void) {
     if (game_state.screen_brightness-- < 8U) {
         game_state.screen_brightness = 0;
         memory_card_stop();
-        game_mode_set(MODE_PROLOGUE);
+        game_mode_set(GAME_MODE_OPENING);
     }
 }
 
@@ -1046,7 +1046,7 @@ void func_80145C00(void) {
     switch (game_state.substep) {
     case 0:
         if (game_state.current_girl >= GIRL_YOSHIO) {
-            game_mode_set(MODE_ETC_C4);
+            game_mode_set(GAME_MODE_ETC_C4);
             return;
         }
         (&game_state.clear_color_r)[0] = (&game_state.clear_color_g)[0] = (&game_state.clear_color_b)[0] = 0xFF;
@@ -1178,7 +1178,7 @@ void func_80146214(void) {
     if (game_state.video_width == 0x100) {
         func_800590CC(0);
     }
-    game_mode_set(MODE_ETC_C4);
+    game_mode_set(GAME_MODE_ETC_C4);
     func_8009C5E0(1);
 }
 
@@ -1186,7 +1186,7 @@ void func_80146254(void) {
     if (game_state.video_width == 0x100) {
         func_800590CC(0);
     }
-    game_mode_set(MODE_ALBUM);
+    game_mode_set(GAME_MODE_ALBUM);
     func_8009C5E0(1);
 }
 
@@ -1195,7 +1195,7 @@ void func_80146294(void) {
         func_800590CC(0);
     }
     game_state.current_girl += 0x10;
-    game_mode_set(MODE_TITLE);
+    game_mode_set(GAME_MODE_TITLE);
     func_8009C5E0(1);
 }
 

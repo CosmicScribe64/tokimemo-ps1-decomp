@@ -720,58 +720,58 @@ void func_8013C52C(void) {
         switch (game_state.menu_cursor_0) {
         case 0:
             D_800B3C6C = 0;
-            game_mode_set(MODE_COMMAND_SCREEN);
+            game_mode_set(GAME_MODE_COMMAND_SCREEN);
         default:
             break;
         case 1:
-            game_mode_set(MODE_DATE);
+            game_mode_set(GAME_MODE_DATE);
             break;
         case 2:
             text_system_reset();
             func_80048DD0(0);
-            game_mode_set(MODE_SPECIAL_EVENT);
+            game_mode_set(GAME_MODE_SPECIAL_EVENT);
             break;
         case 3:
-            game_mode_set(MODE_GIRL_BIRTHDAY);
+            game_mode_set(GAME_MODE_GIRL_BIRTHDAY);
             break;
         case 4:
-            game_mode_set(MODE_PLAYER_BIRTHDAY);
+            game_mode_set(GAME_MODE_PLAYER_BIRTHDAY);
             break;
         case 5:
-            game_mode_set(MODE_GIRL_INVITATION);
+            game_mode_set(GAME_MODE_GIRL_INVITATION);
             break;
         case 6:
-            game_mode_set(MODE_SPORTS_FESTIVAL);
+            game_mode_set(GAME_MODE_SPORTS_FESTIVAL);
             break;
         case 7:
-            game_mode_set(MODE_CULTURE_FESTIVAL_B);
+            game_mode_set(GAME_MODE_CULTURE_FESTIVAL_B);
             if (game_state.player_flags.h >> 0xC < 6) {
-                game_mode_set(MODE_CULTURE_FESTIVAL_A);
+                game_mode_set(GAME_MODE_CULTURE_FESTIVAL_A);
             }
             break;
         case 8:
-            game_mode_set(MODE_SCHOOL_TRIP);
+            game_mode_set(GAME_MODE_SCHOOL_TRIP);
             break;
         case 9:
-            game_mode_set(MODE_NEW_YEAR_B);
+            game_mode_set(GAME_MODE_NEW_YEAR_B);
             break;
         case 10:
-            game_mode_set(MODE_SEASONAL_PARTY);
+            game_mode_set(GAME_MODE_SEASONAL_PARTY);
             break;
         case 11:
-            game_mode_set(MODE_VALENTINE);
+            game_mode_set(GAME_MODE_VALENTINE);
             break;
         case 12:
-            game_mode_set(MODE_AMUSEMENT_PARK);
+            game_mode_set(GAME_MODE_AMUSEMENT_PARK);
             break;
         case 13:
-            game_mode_set(MODE_NEW_YEAR_A);
+            game_mode_set(GAME_MODE_NEW_YEAR_A);
             break;
         case 14:
-            game_mode_set(MODE_DATE_SCENE);
+            game_mode_set(GAME_MODE_DATE_SCENE);
             break;
         case 15:
-            game_mode_set(MODE_GIRL_ENCOUNTER);
+            game_mode_set(GAME_MODE_GIRL_ENCOUNTER);
             break;
         }
     }

@@ -2924,7 +2924,7 @@ void func_801396EC(void) {
     case 2:
         text_system_reset();
         actor_clear_upper();
-        game_mode_set(MODE_HOLIDAY);
+        game_mode_set(GAME_MODE_HOLIDAY);
         break;
     }
     menu_bar_show(0);

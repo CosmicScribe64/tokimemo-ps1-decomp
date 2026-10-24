@@ -1111,7 +1111,7 @@ void func_8013BE38(void) {
 }
 
 void func_8013BF50(void) {
-    game_mode_set(MODE_DAY_SCREEN);
+    game_mode_set(GAME_MODE_DAY_SCREEN);
 }
 
 s32 func_8013BF70(void) {
@@ -1470,7 +1470,7 @@ s32 func_8013CBA0(void) {
         xa_wait();
         return;
     default:
-        game_mode_set(MODE_COMMAND_SCREEN);
+        game_mode_set(GAME_MODE_COMMAND_SCREEN);
         return;
     }
 }

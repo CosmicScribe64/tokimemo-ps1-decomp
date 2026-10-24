@@ -2727,7 +2727,7 @@ void func_8014AE2C(void) {
         D_800B3DB0 = 0;
         k_speed_set(3);
         game_state.menu_mode = MENU_MODE_A;
-        game_mode_set(MODE_COMMAND_SCREEN);
+        game_mode_set(GAME_MODE_COMMAND_SCREEN);
         mode_stage_set(0xFF);
         return;
     }

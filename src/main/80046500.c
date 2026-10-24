@@ -5,7 +5,7 @@
 s32 game_mode_reset_to_title(void) {
     func_800789E0();
     game_state_init(0);
-    game_mode_set(MODE_TITLE);
+    game_mode_set(GAME_MODE_TITLE);
     sprite_tables_clear();
     func_80048DD0(0);
     back_clear_switch(1);

@@ -384,7 +384,7 @@ void date_event_trigger(s16 arg0, s16 arg1, u8 arg2) {
     D_800CA368 = arg2;
     D_800CA364 = 1;
     D_80122D44 |= 2;
-    game_mode_set(MODE_DATE_SCENE);
+    game_mode_set(GAME_MODE_DATE_SCENE);
 }
 
 s32 date_event_choose(void) {
@@ -620,27 +620,27 @@ s32 date_event_choose(void) {
     }
     if (((place = D_800CA2F8) == 0xB) && (selection == 2) && (g->mode_stage == 1) && (g->mode_step == 9)) {
         D_80122D44 = 2;
-        game_mode_set(MODE_AMUSEMENT_PARK_2);
+        game_mode_set(GAME_MODE_AMUSEMENT_PARK_2);
         return 0;
     }
     if ((g->month >= 3) && ((u8)g->month < 6U) && (g->girls[11].flags.f.story_stage >= 2U) && ((g->scene_flags[76] == 0) && ((g->mode_stage == 0) && (g->mode_step == 0xF)))) {
         talk_work = 3;
-        g->saved_game_mode = MODE_DATE;
+        g->saved_game_mode = GAME_MODE_DATE;
         g->saved_mode_stage = 0;
         g->saved_mode_step = g->mode_step + 1;
         D_80122CD4 = 0xB;
-        game_mode_set(MODE_DATE_SCENE);
+        game_mode_set(GAME_MODE_DATE_SCENE);
         g->scene_flags[76] = 1;
         D_80122D44 |= 2;
         return 0;
     }
     if (((place = D_800CA2F8) == 0x11) && ((u8)g->month >= 6U) && ((u8)g->month < 9U) && (g->girls[11].flags.f.story_stage >= 2U) && (g->scene_flags[78] == 0) && (g->mode_stage == 0) && (g->mode_step == 0xF)) {
         talk_work = 5;
-        g->saved_game_mode = MODE_DATE;
+        g->saved_game_mode = GAME_MODE_DATE;
         g->saved_mode_stage = 0;
         g->saved_mode_step = g->mode_step + 1;
         D_80122CD4 = 0xB;
-        game_mode_set(MODE_DATE_SCENE);
+        game_mode_set(GAME_MODE_DATE_SCENE);
         g->scene_flags[78] = 1;
         D_80122D44 |= 3;
         return 0;
@@ -2757,7 +2757,7 @@ void func_8013A2E0(void) {
     game_state.saved_game_mode = game_state.game_mode;
     game_state.saved_mode_stage = game_state.mode_stage;
     game_state.saved_mode_step = 0x3A;
-    game_mode_set(MODE_FESTIVAL_STALLS);
+    game_mode_set(GAME_MODE_FESTIVAL_STALLS);
 }
 
 /* FAKE: `two`/`three` hold the compare constants; they give the original's constant registers and bne operand order (found with the permuter, T-9380) */
@@ -3622,7 +3622,7 @@ void func_8013CBAC(void) {
     cursor_show(0);
     game_state.current_girl = game_state.date_girl;
     k_reset(0);
-    game_mode_set(MODE_RPG_BATTLE);
+    game_mode_set(GAME_MODE_RPG_BATTLE);
 }
 
 void func_8013CBF4(void) {
@@ -3741,13 +3741,13 @@ void func_8013D174(void) {
 
     v = game_state.girls[game_state.date_girl].birthday.w;
     if (((v & 0xF) == game_state.month) && (((u32)(v << 23) >> 27) == game_state.day)) {
-        game_mode_set(MODE_DATE);
+        game_mode_set(GAME_MODE_DATE);
         mode_stage_set(2);
         return;
     }
     v = game_state.player_birthday;
     if ((game_state.month == (v & 0xF)) && (game_state.day == ((u32)(v << 23) >> 27))) {
-        game_mode_set(MODE_DATE);
+        game_mode_set(GAME_MODE_DATE);
         mode_stage_set(3);
         return;
     }

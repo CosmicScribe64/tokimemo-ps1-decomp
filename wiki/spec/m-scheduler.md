@@ -15,8 +15,8 @@ Suggested future file name: `src/main/scheduler.c`; prototypes currently remain 
 
 The game advances in weeks. The player picks a weekday command on the command screen (mode 0x34, other unit); that hands over to this unit, which runs five steps once per week and then lets the day screen play the week one queue record at a time:
 
-1. `MODE_SCHEDULE` (0x30, `schedule_init`): builds the queue of events for tomorrow through Sunday, resolves random placeholders, applies the weekly girl decay, advances the calendar by one day, goes to 0x31.
-2. `MODE_DAY_SCREEN` (0x31, `schedule_day_screen_handler`, stage 0 step 0 is `day_event_dispatch`): reads `day_events[day_event_index]`, applies fixed-date rules and phone/appointment checks, and starts the mode for the record. Every scene ends through `day_event_next`, which moves the index on and returns to 0x31. At a day-end record (0xFB) the reader advances the calendar itself.
+1. `GAME_MODE_SCHEDULE` (0x30, `schedule_init`): builds the queue of events for tomorrow through Sunday, resolves random placeholders, applies the weekly girl decay, advances the calendar by one day, goes to 0x31.
+2. `GAME_MODE_DAY_SCREEN` (0x31, `schedule_day_screen_handler`, stage 0 step 0 is `day_event_dispatch`): reads `day_events[day_event_index]`, applies fixed-date rules and phone/appointment checks, and starts the mode for the record. Every scene ends through `day_event_next`, which moves the index on and returns to 0x31. At a day-end record (0xFB) the reader advances the calendar itself.
 3. When the queue shows 0xFF (end of the week) the reader goes to the command screen (0x34) and the cycle repeats.
 
 Modes owned here: 0x30 (schedule), 0x31 (day screen; its only stage, 0, is the queue reader, and the HUD draw set runs every frame), 0x32 (`schedule_week_end_mode_handler`: weekly health check, queue type 0xFC), 0x38 (`schedule_month_start_mode_handler`, type 0xFE), 0x39 (`schedule_day_notice_mode_handler`, type 0xFD).

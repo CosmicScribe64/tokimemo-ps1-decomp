@@ -1,0 +1,70 @@
+# kind	scope	old	new	note
+type	main	MainMode	GameMode	T-27043: shared game-mode enum tag; values and field widths unchanged
+enumerator	main	MODE_BOOT	GAME_MODE_BOOT	T-27043: prefix-only rename of MODE_BOOT = 0x00; preserves existing mode meaning and evidence
+enumerator	main	MODE_BOOT_WAIT	GAME_MODE_BOOT_WAIT	T-27043: prefix-only rename of MODE_BOOT_WAIT = 0x01; preserves existing mode meaning and evidence
+enumerator	main	MODE_OVERLAY_LOAD	GAME_MODE_OVERLAY_LOAD	T-27043: prefix-only rename of MODE_OVERLAY_LOAD = 0x02; preserves existing mode meaning and evidence
+enumerator	main	MODE_CALL_ENTRY	GAME_MODE_CALL_ENTRY	T-27043: prefix-only rename of MODE_CALL_ENTRY = 0x03; preserves existing mode meaning and evidence
+enumerator	main	MODE_START	GAME_MODE_START	T-27043: prefix-only rename of MODE_START = 0x10; preserves existing mode meaning and evidence
+enumerator	main	MODE_PROLOGUE	GAME_MODE_OPENING	T-27043: 0x11 loads NAME_ENT entry0x80144AD0: attract picture story then movie; main loader and wiki/spec/o-nameent.md, numeric value unchanged
+enumerator	main	MODE_TITLE	GAME_MODE_TITLE	T-27043: prefix-only rename of MODE_TITLE = 0x12; preserves existing mode meaning and evidence
+enumerator	main	MODE_NAME_ENTRY	GAME_MODE_FILE_SELECT	T-27043: 0x13 loads entry0x8014231C: system-file and album selection; main loader and wiki/spec/o-nameent.md, numeric value unchanged
+enumerator	main	MODE_NAME_ENT_3	GAME_MODE_NAME_ENTRY	T-27043: 0x14 loads entry0x8013209C: names birthdays and blood types; main loader and wiki/spec/o-nameent.md, numeric value unchanged
+enumerator	main	MODE_NAME_ENT_4	GAME_MODE_PROLOGUE	T-27043: 0x15 loads entry0x8014AF28: voiced first-school-day prologue; main loader and wiki/spec/o-nameent.md, numeric value unchanged
+enumerator	main	MODE_OPTION	GAME_MODE_OPTION	T-27043: prefix-only rename of MODE_OPTION = 0x20; preserves existing mode meaning and evidence
+enumerator	main	MODE_OPTION_2	GAME_MODE_OPTION_2	T-27043: prefix-only rename of MODE_OPTION_2 = 0x21; preserves existing mode meaning and evidence
+enumerator	main	MODE_OPTION_3	GAME_MODE_OPTION_3	T-27043: prefix-only rename of MODE_OPTION_3 = 0x22; preserves existing mode meaning and evidence
+enumerator	main	MODE_SCHEDULE	GAME_MODE_SCHEDULE	T-27043: prefix-only rename of MODE_SCHEDULE = 0x30; preserves existing mode meaning and evidence
+enumerator	main	MODE_DAY_SCREEN	GAME_MODE_DAY_SCREEN	T-27043: prefix-only rename of MODE_DAY_SCREEN = 0x31; preserves existing mode meaning and evidence
+enumerator	main	MODE_WEEK_END	GAME_MODE_WEEK_END	T-27043: prefix-only rename of MODE_WEEK_END = 0x32; preserves existing mode meaning and evidence
+enumerator	main	MODE_COMMAND_SCREEN	GAME_MODE_COMMAND_SCREEN	T-27043: prefix-only rename of MODE_COMMAND_SCREEN = 0x34; preserves existing mode meaning and evidence
+enumerator	main	MODE_EXAM	GAME_MODE_EXAM	T-27043: prefix-only rename of MODE_EXAM = 0x35; preserves existing mode meaning and evidence
+enumerator	main	MODE_CAREER_GUIDANCE	GAME_MODE_CAREER_GUIDANCE	T-27043: prefix-only rename of MODE_CAREER_GUIDANCE = 0x36; preserves existing mode meaning and evidence
+enumerator	main	MODE_CAREER_CHOICE	GAME_MODE_CAREER_CHOICE	T-27043: prefix-only rename of MODE_CAREER_CHOICE = 0x37; preserves existing mode meaning and evidence
+enumerator	main	MODE_MONTH_START	GAME_MODE_MONTH_START	T-27043: prefix-only rename of MODE_MONTH_START = 0x38; preserves existing mode meaning and evidence
+enumerator	main	MODE_DAY_NOTICE	GAME_MODE_DAY_NOTICE	T-27043: prefix-only rename of MODE_DAY_NOTICE = 0x39; preserves existing mode meaning and evidence
+enumerator	main	MODE_HELP	GAME_MODE_HELP	T-27043: prefix-only rename of MODE_HELP = 0x3A; preserves existing mode meaning and evidence
+enumerator	main	MODE_SCHOOL_DAY	GAME_MODE_SCHOOL_DAY	T-27043: prefix-only rename of MODE_SCHOOL_DAY = 0x40; preserves existing mode meaning and evidence
+enumerator	main	MODE_NEW_YEAR_PREP	GAME_MODE_NEW_YEAR_PREP	T-27043: prefix-only rename of MODE_NEW_YEAR_PREP = 0x41; preserves existing mode meaning and evidence
+enumerator	main	MODE_CHRISTMAS_PREP	GAME_MODE_CHRISTMAS_PREP	T-27043: prefix-only rename of MODE_CHRISTMAS_PREP = 0x42; preserves existing mode meaning and evidence
+enumerator	main	MODE_TELEPHONE	GAME_MODE_TELEPHONE	T-27043: prefix-only rename of MODE_TELEPHONE = 0x43; preserves existing mode meaning and evidence
+enumerator	main	MODE_RUMOR	GAME_MODE_RUMOR	T-27043: prefix-only rename of MODE_RUMOR = 0x44; preserves existing mode meaning and evidence
+enumerator	main	MODE_TELEPHONE_PROFILE	GAME_MODE_TELEPHONE_PROFILE	T-27043: prefix-only rename of MODE_TELEPHONE_PROFILE = 0x45; preserves existing mode meaning and evidence
+enumerator	main	MODE_HOLIDAY	GAME_MODE_HOLIDAY	T-27043: prefix-only rename of MODE_HOLIDAY = 0x46; preserves existing mode meaning and evidence
+enumerator	main	MODE_DATE	GAME_MODE_DATE	T-27043: prefix-only rename of MODE_DATE = 0x50; preserves existing mode meaning and evidence
+enumerator	main	MODE_SCHOOL_TRIP	GAME_MODE_SCHOOL_TRIP	T-27043: prefix-only rename of MODE_SCHOOL_TRIP = 0x51; preserves existing mode meaning and evidence
+enumerator	main	MODE_NEW_YEAR_A	GAME_MODE_NEW_YEAR_A	T-27043: prefix-only rename of MODE_NEW_YEAR_A = 0x52; preserves existing mode meaning and evidence
+enumerator	main	MODE_NEW_YEAR_B	GAME_MODE_NEW_YEAR_B	T-27043: prefix-only rename of MODE_NEW_YEAR_B = 0x53; preserves existing mode meaning and evidence
+enumerator	main	MODE_VALENTINE	GAME_MODE_VALENTINE	T-27043: prefix-only rename of MODE_VALENTINE = 0x54; preserves existing mode meaning and evidence
+enumerator	main	MODE_SEASONAL_PARTY	GAME_MODE_SEASONAL_PARTY	T-27043: prefix-only rename of MODE_SEASONAL_PARTY = 0x55; preserves existing mode meaning and evidence
+enumerator	main	MODE_PLAYER_BIRTHDAY	GAME_MODE_PLAYER_BIRTHDAY	T-27043: prefix-only rename of MODE_PLAYER_BIRTHDAY = 0x56; preserves existing mode meaning and evidence
+enumerator	main	MODE_GIRL_BIRTHDAY	GAME_MODE_GIRL_BIRTHDAY	T-27043: prefix-only rename of MODE_GIRL_BIRTHDAY = 0x57; preserves existing mode meaning and evidence
+enumerator	main	MODE_AMUSEMENT_PARK	GAME_MODE_AMUSEMENT_PARK	T-27043: prefix-only rename of MODE_AMUSEMENT_PARK = 0x58; preserves existing mode meaning and evidence
+enumerator	main	MODE_GIRL_ENCOUNTER	GAME_MODE_GIRL_ENCOUNTER	T-27043: prefix-only rename of MODE_GIRL_ENCOUNTER = 0x59; preserves existing mode meaning and evidence
+enumerator	main	MODE_GIRL_INVITATION	GAME_MODE_GIRL_INVITATION	T-27043: prefix-only rename of MODE_GIRL_INVITATION = 0x5A; preserves existing mode meaning and evidence
+enumerator	main	MODE_MEETING	GAME_MODE_MEETING	T-27043: prefix-only rename of MODE_MEETING = 0x5B; preserves existing mode meaning and evidence
+enumerator	main	MODE_AMUSEMENT_PARK_2	GAME_MODE_AMUSEMENT_PARK_2	T-27043: prefix-only rename of MODE_AMUSEMENT_PARK_2 = 0x5C; preserves existing mode meaning and evidence
+enumerator	main	MODE_SPECIAL_EVENT	GAME_MODE_SPECIAL_EVENT	T-27043: prefix-only rename of MODE_SPECIAL_EVENT = 0x5D; preserves existing mode meaning and evidence
+enumerator	main	MODE_DATE_SCENE	GAME_MODE_DATE_SCENE	T-27043: prefix-only rename of MODE_DATE_SCENE = 0x5E; preserves existing mode meaning and evidence
+enumerator	main	MODE_CLUB_CAMP	GAME_MODE_CLUB_CAMP	T-27043: prefix-only rename of MODE_CLUB_CAMP = 0x5F; preserves existing mode meaning and evidence
+enumerator	main	MODE_CLUB_CAMP_2	GAME_MODE_CLUB_CAMP_2	T-27043: prefix-only rename of MODE_CLUB_CAMP_2 = 0x60; preserves existing mode meaning and evidence
+enumerator	main	MODE_SICK_VISIT	GAME_MODE_SICK_VISIT	T-27043: prefix-only rename of MODE_SICK_VISIT = 0x61; preserves existing mode meaning and evidence
+enumerator	main	MODE_SICK_VISIT_2	GAME_MODE_SICK_VISIT_2	T-27043: prefix-only rename of MODE_SICK_VISIT_2 = 0x62; preserves existing mode meaning and evidence
+enumerator	main	MODE_ENDING	GAME_MODE_ENDING	T-27043: prefix-only rename of MODE_ENDING = 0x63; preserves existing mode meaning and evidence
+enumerator	main	MODE_CULTURE_FESTIVAL_A	GAME_MODE_CULTURE_FESTIVAL_A	T-27043: prefix-only rename of MODE_CULTURE_FESTIVAL_A = 0x70; preserves existing mode meaning and evidence
+enumerator	main	MODE_CULTURE_FESTIVAL_B	GAME_MODE_CULTURE_FESTIVAL_B	T-27043: prefix-only rename of MODE_CULTURE_FESTIVAL_B = 0x71; preserves existing mode meaning and evidence
+enumerator	main	MODE_SPORTS_FESTIVAL	GAME_MODE_SPORTS_FESTIVAL	T-27043: prefix-only rename of MODE_SPORTS_FESTIVAL = 0x72; preserves existing mode meaning and evidence
+enumerator	main	MODE_PRACTICE_MATCH	GAME_MODE_PRACTICE_MATCH	T-27043: prefix-only rename of MODE_PRACTICE_MATCH = 0x73; preserves existing mode meaning and evidence
+enumerator	main	MODE_CLUB_MASTER_A	GAME_MODE_CLUB_MASTER_A	T-27043: prefix-only rename of MODE_CLUB_MASTER_A = 0x74; preserves existing mode meaning and evidence
+enumerator	main	MODE_CLUB_MASTER_B	GAME_MODE_CLUB_MASTER_B	T-27043: prefix-only rename of MODE_CLUB_MASTER_B = 0x75; preserves existing mode meaning and evidence
+enumerator	main	MODE_CLUB_MASTER_C	GAME_MODE_CLUB_MASTER_C	T-27043: prefix-only rename of MODE_CLUB_MASTER_C = 0x76; preserves existing mode meaning and evidence
+enumerator	main	MODE_CULTURE_STAGE	GAME_MODE_CULTURE_STAGE	T-27043: prefix-only rename of MODE_CULTURE_STAGE = 0x80; preserves existing mode meaning and evidence
+enumerator	main	MODE_RPG_BATTLE	GAME_MODE_RPG_BATTLE	T-27043: prefix-only rename of MODE_RPG_BATTLE = 0x81; preserves existing mode meaning and evidence
+enumerator	main	MODE_FESTIVAL_STALLS	GAME_MODE_FESTIVAL_STALLS	T-27043: prefix-only rename of MODE_FESTIVAL_STALLS = 0x82; preserves existing mode meaning and evidence
+enumerator	main	MODE_SHOOTER	GAME_MODE_SHOOTER	T-27043: prefix-only rename of MODE_SHOOTER = 0x90; preserves existing mode meaning and evidence
+enumerator	main	MODE_ALBUM	GAME_MODE_ALBUM	T-27043: prefix-only rename of MODE_ALBUM = 0x91; preserves existing mode meaning and evidence
+enumerator	main	MODE_ETC_C2	GAME_MODE_ETC_C2	T-27043: prefix-only rename of MODE_ETC_C2 = 0xC2; preserves existing mode meaning and evidence
+enumerator	main	MODE_ETC_C3	GAME_MODE_ETC_C3	T-27043: prefix-only rename of MODE_ETC_C3 = 0xC3; preserves existing mode meaning and evidence
+enumerator	main	MODE_ETC_C4	GAME_MODE_ETC_C4	T-27043: prefix-only rename of MODE_ETC_C4 = 0xC4; preserves existing mode meaning and evidence
+enumerator	main	MODE_TT_GAME	GAME_MODE_TT_GAME	T-27043: prefix-only rename of MODE_TT_GAME = 0xD0; preserves existing mode meaning and evidence
+enumerator	main	MODE_DEBUG_VRAM_VIEW	GAME_MODE_DEBUG_VRAM_VIEW	T-27043: prefix-only rename of MODE_DEBUG_VRAM_VIEW = 0xFE; preserves existing mode meaning and evidence
+enumerator	main	MODE_EXIT	GAME_MODE_EXIT	T-27043: prefix-only rename of MODE_EXIT = 0xFF; preserves existing mode meaning and evidence

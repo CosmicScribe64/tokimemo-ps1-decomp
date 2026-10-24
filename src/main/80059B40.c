@@ -130,5 +130,5 @@ void boot_mode_handler(void) {
         func_80059B40();
         return;
     }
-    game_mode_set(MODE_TITLE);
+    game_mode_set(GAME_MODE_TITLE);
 }

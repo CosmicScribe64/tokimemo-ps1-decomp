@@ -35,7 +35,7 @@ New headers (declarations move out of `main_api.h`): `include/main/game_init.h`,
 
 `main_loop` (`func_80042134`, core name), once: reset the BIOS callbacks, SDK init, print a banner line to the debug console, `sys_init` (zero `system_data`, start the timer event, open the card events, init the pad driver), `vram_clear_framebuffers`, and then the "restart" block, which is `snd_init`, `cd_cmd_reset`, `gpu_init`, `game_state_init(1)`. `restart_request` is never written outside `game_state_init` (it is cleared there), so the jump back to the restart block never happens.
 
-Start-up in the emulator (frames from power-on; the movie and boot-mode frames are from the h-cdio spec): the first frame already runs mode 0x10 (`MODE_START`); `mode_start` plays the start movie (frames 622-1256) in one blocking call, pauses and re-inits the CD, sets the MDEC buffers (`mdec_still_buffers_set(0x80167000, 0x80162000, 0x80162000)`), clears VRAM block 0, turns the back clear on and calls `main_state_set(0)`. Mode 0 is the boot mode (h-cdio: loads the HUD textures, 57 frames) and ends with `main_state_set(0x12)`. The title starts at frame 1322.
+Start-up in the emulator (frames from power-on; the movie and boot-mode frames are from the h-cdio spec): the first frame already runs mode 0x10 (`GAME_MODE_START`); `mode_start` plays the start movie (frames 622-1256) in one blocking call, pauses and re-inits the CD, sets the MDEC buffers (`mdec_still_buffers_set(0x80167000, 0x80162000, 0x80162000)`), clears VRAM block 0, turns the back clear on and calls `main_state_set(0)`. Mode 0 is the boot mode (h-cdio: loads the HUD textures, 57 frames) and ends with `main_state_set(0x12)`. The title starts at frame 1322.
 
 ### 2.2 One pass of the loop
 
@@ -62,7 +62,7 @@ Input is therefore sampled once per frame, after the vblank wait, and is seen by
 
 `game_state_init(clear)` (core name) is the one reset. Steps in order: graphics reset; if `clear` != 0, clear all VRAM (`vram_clear_blocks(0xFF)`) and zero the first 0x1A8C bytes of `game_state`; then the defaults below; then `tpage_buf_clear`, sync `tpage_req`, `sprite_tables_clear`, `actor_clear_range(0)`, `dec_bg_reset`, `snd_bank_state_reset`, the menu bar colour, `pad_defaults_set`, the placeholder name strings, the birthday 1/1, cursor actor init and hide, the text marker toggled once, `game_data_init`, `card_block_clear`, zero `overlay_scratch` (0x100), `dialogue_work` (0x100) and `scene_work` (0x40), `settings_defaults_set`.
 
-Defaults written directly: video 320x240 (`video_width`, `video_height`), `screen_center_x` = 0xA0 for both buffers, `screen_center_y` = 0x168 and 0x78, clear colour 0, all four timers 0, `mode` = `MODE_START` (0x10), stage and step 0, pad words 0, `paused` 0, `restart_request` 0, `frame_hcount_limit` 0x106, `actor_draw_last` = 0x9F (all 160 actors), `screen_brightness` 0x80, `back_clear` 0, 2D and 3D passes off, `sound_active` 1, `quads_enabled` 1.
+Defaults written directly: video 320x240 (`video_width`, `video_height`), `screen_center_x` = 0xA0 for both buffers, `screen_center_y` = 0x168 and 0x78, clear colour 0, all four timers 0, `mode` = `GAME_MODE_START` (0x10), stage and step 0, pad words 0, `paused` 0, `restart_request` 0, `frame_hcount_limit` 0x106, `actor_draw_last` = 0x9F (all 160 actors), `screen_brightness` 0x80, `back_clear` 0, 2D and 3D passes off, `sound_active` 1, `quads_enabled` 1.
 
 `game_data_init` is the new-game state; it also runs at every reset and when NAME_ENT starts a new game (NAME_ENT also calls it, with `event_state_init`, for a loaded save dated 1995-04-04 or 1998-03-01, then returns to mode 0x14). It is `calendar_init`, `player_init`, `girls_init`, `event_state_init`:
 
@@ -139,64 +139,64 @@ Rules the port must keep:
 
 ### 3.4 Mode, overlay and entry
 
-Disc file = `/CDROM/EXEDIR/<name>.EXN`, 0x60 sectors (196608 bytes) each, read to 0x80132000. Folder names are the ADR map. "Core name" is the `MainMode` constant of core. The entry column is the address the loader stores in `overlay_entry`; the overlay's own function there runs once per frame while the mode lasts.
+Disc file = `/CDROM/EXEDIR/<name>.EXN`, 0x60 sectors (196608 bytes) each, read to 0x80132000. Folder names are the ADR map. "Core name" is the `GameMode` constant of core. The entry column is the address the loader stores in `overlay_entry`; the overlay's own function there runs once per frame while the mode lasts.
 
 | mode | core name | overlay folder (disc file) | LBA | entry |
 |---|---|---|---|---|
-| 0x11 | `MODE_PROLOGUE` | `name_entry` (NAME_ENT) | 0x95EA | 0x80144AD0 |
-| 0x13 | `MODE_NAME_ENTRY` | `name_entry` | 0x95EA | 0x8014231C |
-| 0x14 | `MODE_NAME_ENT_3` | `name_entry` | 0x95EA | 0x8013209C |
-| 0x15 | `MODE_NAME_ENT_4` | `name_entry` | 0x95EA | 0x8014AF28 |
-| 0x20 | `MODE_OPTION` | `options` (OPTION) | 0x976A | 0x801335E8 |
-| 0x21 | `MODE_OPTION_2` | `options` | 0x976A | 0x801389A0 |
-| 0x22 | `MODE_OPTION_3` | `options` | 0x976A | 0x8013C780 |
-| 0x35 | `MODE_EXAM` | `misc_scenes` (ETC) | 0x93AA | 0x801465F8 |
-| 0x36 | `MODE_CAREER_GUIDANCE` | `misc_scenes` | 0x93AA | 0x8014ABD0 |
-| 0x37 | `MODE_CAREER_CHOICE` | `misc_scenes` | 0x93AA | 0x801492C0 |
-| 0x3A | `MODE_HELP` | `help` (OLH) | 0x96AA | 0x80132000 |
-| 0x43 | `MODE_TELEPHONE` | `telephone` (TEL) | 0x9A0A | 0x801397D0 |
-| 0x45 | `MODE_TELEPHONE_PROFILE` | `telephone` | 0x9A0A | 0x80132000 |
-| 0x50 | `MODE_DATE` | `date` (DATE) | 0x922A | 0x801448D4 |
-| 0x51 | `MODE_SCHOOL_TRIP` | `school_trip` (SHUGAKU) | 0x98EA | 0x80137490 |
-| 0x52 | `MODE_NEW_YEAR_A` | `new_year_christmas` (SHOUGATU) HYPOTHESIS | 0x988A | 0x8013D180 |
-| 0x53 | `MODE_NEW_YEAR_B` | `new_year_christmas` HYPOTHESIS | 0x988A | 0x801322D4 |
-| 0x54 | `MODE_VALENTINE` | `valentine` (VALEN) | 0x9ACA | 0x80132274 |
-| 0x55 | `MODE_SEASONAL_PARTY` | `new_year_christmas` HYPOTHESIS | 0x988A | 0x8013B484 |
-| 0x56 | `MODE_PLAYER_BIRTHDAY` | `girl_encounters` (GEKO) HYPOTHESIS | 0x946A | 0x80134040 |
-| 0x57 | `MODE_GIRL_BIRTHDAY` | `girl_encounters` HYPOTHESIS | 0x946A | 0x80134C90 |
-| 0x58 | `MODE_AMUSEMENT_PARK` | `amusement_park_date` (DATE2) | 0x928A | 0x80132214 |
-| 0x59 | `MODE_GIRL_ENCOUNTER` | `girl_encounters` HYPOTHESIS | 0x946A | 0x80132244 |
-| 0x5A | `MODE_GIRL_INVITATION` | `girl_encounters` HYPOTHESIS | 0x946A | 0x801426D0 |
-| 0x5B | `MODE_MEETING` | `new_year_christmas` HYPOTHESIS | 0x988A | 0x80137144 |
-| 0x5C | `MODE_AMUSEMENT_PARK_2` | `amusement_park_date` | 0x928A | 0x80137F64 |
-| 0x5D | `MODE_SPECIAL_EVENT` | `girl_encounters` HYPOTHESIS | 0x946A | 0x8013882C |
-| 0x5E | `MODE_DATE_SCENE` | `date` | 0x922A | 0x8014C08C |
-| 0x5F | `MODE_CLUB_CAMP` | `summer_camp` (KANGEI) HYPOTHESIS | 0x952A | 0x80132FF8 |
-| 0x60 | `MODE_CLUB_CAMP_2` | `summer_camp` HYPOTHESIS | 0x952A | 0x80132000 |
-| 0x61 | `MODE_SICK_VISIT` | `sick_visit` (OMIMAI) | 0x970A | 0x80133120 |
-| 0x62 | `MODE_SICK_VISIT_2` | `sick_visit` | 0x970A | 0x80132000 |
-| 0x63 | `MODE_ENDING` | `ending` (ENDING) | 0x92EA | 0x80132334 |
-| 0x70 | `MODE_CULTURE_FESTIVAL_A` | `culture_festival` (BUNKASAI) | 0x916A | 0x80142700 |
-| 0x71 | `MODE_CULTURE_FESTIVAL_B` | `culture_festival_tour` (BUNKAKEN) HYPOTHESIS | 0x910A | 0x80144F70 |
-| 0x72 | `MODE_SPORTS_FESTIVAL` | `sports_festival` (TAIIKU) | 0x99AA | 0x80141280 |
-| 0x73 | `MODE_PRACTICE_MATCH` | `practice_match` (RENSYU) | 0x97CA | 0x80132040 |
-| 0x74 | `MODE_CLUB_MASTER_A` | `club_master` (MASTER) | 0x958A | 0x80133A2C |
-| 0x75 | `MODE_CLUB_MASTER_B` | `club_master` | 0x958A | 0x80139150 |
-| 0x76 | `MODE_CLUB_MASTER_C` | `club_master` | 0x958A | 0x80132140 |
-| 0x80 | `MODE_CULTURE_STAGE` | `culture_stage_shows` (BUNKA_SD) | 0x91CA | 0x80137890 |
-| 0x81 | `MODE_RPG_BATTLE` | `rpg_battle` (RPG_BAT) | 0x982A | 0x8013B5B0 |
-| 0x82 | `MODE_FESTIVAL_STALLS` | `festival_stalls` (EN_NICHI) | 0x934A | 0x80132000 |
-| 0x90 | `MODE_SHOOTER` | `shooter_3d` (TACO) | 0x994A (default arm) | 0x80132000 (default) |
-| 0x91 | `MODE_ALBUM` | `misc_scenes` | 0x93AA | 0x801407F0 |
-| 0xC2 | `MODE_ETC_C2` | `misc_scenes` HYPOTHESIS | 0x93AA | 0x80142974 |
-| 0xC3 | `MODE_ETC_C3` | `misc_scenes` HYPOTHESIS | 0x93AA | 0x8014636C |
-| 0xC4 | `MODE_ETC_C4` | `misc_scenes` HYPOTHESIS | 0x93AA | 0x80145A6C |
+| 0x11 | `GAME_MODE_OPENING` | `name_entry` (NAME_ENT) | 0x95EA | 0x80144AD0 |
+| 0x13 | `GAME_MODE_FILE_SELECT` | `name_entry` | 0x95EA | 0x8014231C |
+| 0x14 | `GAME_MODE_NAME_ENTRY` | `name_entry` | 0x95EA | 0x8013209C |
+| 0x15 | `GAME_MODE_PROLOGUE` | `name_entry` | 0x95EA | 0x8014AF28 |
+| 0x20 | `GAME_MODE_OPTION` | `options` (OPTION) | 0x976A | 0x801335E8 |
+| 0x21 | `GAME_MODE_OPTION_2` | `options` | 0x976A | 0x801389A0 |
+| 0x22 | `GAME_MODE_OPTION_3` | `options` | 0x976A | 0x8013C780 |
+| 0x35 | `GAME_MODE_EXAM` | `misc_scenes` (ETC) | 0x93AA | 0x801465F8 |
+| 0x36 | `GAME_MODE_CAREER_GUIDANCE` | `misc_scenes` | 0x93AA | 0x8014ABD0 |
+| 0x37 | `GAME_MODE_CAREER_CHOICE` | `misc_scenes` | 0x93AA | 0x801492C0 |
+| 0x3A | `GAME_MODE_HELP` | `help` (OLH) | 0x96AA | 0x80132000 |
+| 0x43 | `GAME_MODE_TELEPHONE` | `telephone` (TEL) | 0x9A0A | 0x801397D0 |
+| 0x45 | `GAME_MODE_TELEPHONE_PROFILE` | `telephone` | 0x9A0A | 0x80132000 |
+| 0x50 | `GAME_MODE_DATE` | `date` (DATE) | 0x922A | 0x801448D4 |
+| 0x51 | `GAME_MODE_SCHOOL_TRIP` | `school_trip` (SHUGAKU) | 0x98EA | 0x80137490 |
+| 0x52 | `GAME_MODE_NEW_YEAR_A` | `new_year_christmas` (SHOUGATU) HYPOTHESIS | 0x988A | 0x8013D180 |
+| 0x53 | `GAME_MODE_NEW_YEAR_B` | `new_year_christmas` HYPOTHESIS | 0x988A | 0x801322D4 |
+| 0x54 | `GAME_MODE_VALENTINE` | `valentine` (VALEN) | 0x9ACA | 0x80132274 |
+| 0x55 | `GAME_MODE_SEASONAL_PARTY` | `new_year_christmas` HYPOTHESIS | 0x988A | 0x8013B484 |
+| 0x56 | `GAME_MODE_PLAYER_BIRTHDAY` | `girl_encounters` (GEKO) HYPOTHESIS | 0x946A | 0x80134040 |
+| 0x57 | `GAME_MODE_GIRL_BIRTHDAY` | `girl_encounters` HYPOTHESIS | 0x946A | 0x80134C90 |
+| 0x58 | `GAME_MODE_AMUSEMENT_PARK` | `amusement_park_date` (DATE2) | 0x928A | 0x80132214 |
+| 0x59 | `GAME_MODE_GIRL_ENCOUNTER` | `girl_encounters` HYPOTHESIS | 0x946A | 0x80132244 |
+| 0x5A | `GAME_MODE_GIRL_INVITATION` | `girl_encounters` HYPOTHESIS | 0x946A | 0x801426D0 |
+| 0x5B | `GAME_MODE_MEETING` | `new_year_christmas` HYPOTHESIS | 0x988A | 0x80137144 |
+| 0x5C | `GAME_MODE_AMUSEMENT_PARK_2` | `amusement_park_date` | 0x928A | 0x80137F64 |
+| 0x5D | `GAME_MODE_SPECIAL_EVENT` | `girl_encounters` HYPOTHESIS | 0x946A | 0x8013882C |
+| 0x5E | `GAME_MODE_DATE_SCENE` | `date` | 0x922A | 0x8014C08C |
+| 0x5F | `GAME_MODE_CLUB_CAMP` | `summer_camp` (KANGEI) HYPOTHESIS | 0x952A | 0x80132FF8 |
+| 0x60 | `GAME_MODE_CLUB_CAMP_2` | `summer_camp` HYPOTHESIS | 0x952A | 0x80132000 |
+| 0x61 | `GAME_MODE_SICK_VISIT` | `sick_visit` (OMIMAI) | 0x970A | 0x80133120 |
+| 0x62 | `GAME_MODE_SICK_VISIT_2` | `sick_visit` | 0x970A | 0x80132000 |
+| 0x63 | `GAME_MODE_ENDING` | `ending` (ENDING) | 0x92EA | 0x80132334 |
+| 0x70 | `GAME_MODE_CULTURE_FESTIVAL_A` | `culture_festival` (BUNKASAI) | 0x916A | 0x80142700 |
+| 0x71 | `GAME_MODE_CULTURE_FESTIVAL_B` | `culture_festival_tour` (BUNKAKEN) HYPOTHESIS | 0x910A | 0x80144F70 |
+| 0x72 | `GAME_MODE_SPORTS_FESTIVAL` | `sports_festival` (TAIIKU) | 0x99AA | 0x80141280 |
+| 0x73 | `GAME_MODE_PRACTICE_MATCH` | `practice_match` (RENSYU) | 0x97CA | 0x80132040 |
+| 0x74 | `GAME_MODE_CLUB_MASTER_A` | `club_master` (MASTER) | 0x958A | 0x80133A2C |
+| 0x75 | `GAME_MODE_CLUB_MASTER_B` | `club_master` | 0x958A | 0x80139150 |
+| 0x76 | `GAME_MODE_CLUB_MASTER_C` | `club_master` | 0x958A | 0x80132140 |
+| 0x80 | `GAME_MODE_CULTURE_STAGE` | `culture_stage_shows` (BUNKA_SD) | 0x91CA | 0x80137890 |
+| 0x81 | `GAME_MODE_RPG_BATTLE` | `rpg_battle` (RPG_BAT) | 0x982A | 0x8013B5B0 |
+| 0x82 | `GAME_MODE_FESTIVAL_STALLS` | `festival_stalls` (EN_NICHI) | 0x934A | 0x80132000 |
+| 0x90 | `GAME_MODE_SHOOTER` | `shooter_3d` (TACO) | 0x994A (default arm) | 0x80132000 (default) |
+| 0x91 | `GAME_MODE_ALBUM` | `misc_scenes` | 0x93AA | 0x801407F0 |
+| 0xC2 | `GAME_MODE_ETC_C2` | `misc_scenes` HYPOTHESIS | 0x93AA | 0x80142974 |
+| 0xC3 | `GAME_MODE_ETC_C3` | `misc_scenes` HYPOTHESIS | 0x93AA | 0x8014636C |
+| 0xC4 | `GAME_MODE_ETC_C4` | `misc_scenes` HYPOTHESIS | 0x93AA | 0x80145A6C |
 
 The sector switch names 47 of the 48 overlay modes (0x90 takes the default arm) and also lists 0xD0, which can never reach it (0xD0 is not an overlay-request mode); the entry switch names the same 47 modes and falls back to 0x80132000 for the rest. The EVENT.EXN (0x940A) and GYOZI.EXN (0x94CA) files are not in either table, so no code loads them.
 
 HYPOTHESIS marks in the table: the ADR map still lists `summer_camp` (KANGEI), `culture_festival_tour` (BUNKAKEN), `girl_encounters` (GEKO), `new_year_christmas` (SHOUGATU) and the modes 0xC2-0xC4 of `misc_scenes` (ETC) as `confirm`, and core marks the matching mode names (0x5F/0x60, 0x55) as hypotheses. The disc file names, LBAs, modes and entries are facts from the loader code; only these folder names and the scene meanings behind them are unproven, and the five `OvlLba` constants carry the mark in the table.
 
-Core's `MainMode` rows for 0x74, 0x75, 0x76 give the entries 0x80132140, 0x80133A2C, 0x80139150; the loader code has 0x74 -> 0x80133A2C, 0x75 -> 0x80139150, 0x76 -> 0x80132140 (see open question 1). The loader's `extern` labels (`D_8013xxxx`) are overlay addresses; each overlay unit names its entry function and asks for a request row in `config/renames/requests.txt` so the loader follows.
+Core's `GameMode` rows for 0x74, 0x75, 0x76 give the entries 0x80132140, 0x80133A2C, 0x80139150; the loader code has 0x74 -> 0x80133A2C, 0x75 -> 0x80139150, 0x76 -> 0x80132140 (see open question 1). The loader's `extern` labels (`D_8013xxxx`) are overlay addresses; each overlay unit names its entry function and asks for a request row in `config/renames/requests.txt` so the loader follows.
 
 ### 3.5 Returning from a scene
 
@@ -227,7 +227,7 @@ Mode 0xD0 is not an overlay mode. `mode_tt_game` loads the TT file itself and ru
 
 ### 3.8 The shape of the whole game
 
-`MODE_START` -> start movie -> mode 0 (boot data) -> `MODE_TITLE` (0x12). The title leads to NAME_ENT (mode 0x13: new game, load, copy and clear files, name and birthday entry) or OPTION (0x20), or idles into the opening movie (0x11, back to the title). A started or loaded game enters the weekly cycle at the weekday command screen, mode 0x34 stage 0xFF (the notice steps), from where the scheduler (mode 0x30), the day screen (0x31) and the day modes run as in [[spec/m-scheduler]] and [[spec/core]]; every scene overlay returns with the saved triple. The 18-step pad code at the title, the soft reset and `game_reset_to_title` are the only exits from that cycle besides the endings.
+`GAME_MODE_START` -> start movie -> mode 0 (boot data) -> `GAME_MODE_TITLE` (0x12). The title leads to NAME_ENT (mode 0x13: new game, load, copy and clear files, name and birthday entry) or OPTION (0x20), or idles into the opening movie (0x11, back to the title). A started or loaded game enters the weekly cycle at the weekday command screen, mode 0x34 stage 0xFF (the notice steps), from where the scheduler (mode 0x30), the day screen (0x31) and the day modes run as in [[spec/m-scheduler]] and [[spec/core]]; every scene overlay returns with the saved triple. The 18-step pad code at the title, the soft reset and `game_reset_to_title` are the only exits from that cycle besides the endings.
 
 ### 3.9 Who requests which mode
 
@@ -433,7 +433,7 @@ Quirks of the original that a port should not copy: `vram_clear_blocks` with 0 o
 
 ## 10. Open questions
 
-1. Core's `MainMode` rows for 0x74-0x76 have the entries 0x80132140, 0x80133A2C, 0x80139150; the loader (`func_80079070`) has 0x74 -> 0x80133A2C, 0x75 -> 0x80139150, 0x76 -> 0x80132140. The code decides; core's notes should be corrected.
+1. Core's `GameMode` rows for 0x74-0x76 have the entries 0x80132140, 0x80133A2C, 0x80139150; the loader (`func_80079070`) has 0x74 -> 0x80133A2C, 0x75 -> 0x80139150, 0x76 -> 0x80132140. The code decides; core's notes should be corrected.
 2. `unk_1117` is named `album_slot` by core with the note "index of the selected album/save slot", but the memory-card code sets it to the bank (0 or 1) that passed `card_bank_validate`, and NAME_ENT indexes the loaded file image with it. A name like `card_bank` fits the use; this table keeps core's name.
 3. `unk_F77` (`mouse_buttons` in core) holds the buttons pressed this frame, not the held ones (`mouse_held` is). `mouse_pressed` would say it.
 4. m-sysmenu proposes `CardResult` (1, 0xD0, 0xF0, 0xF1, 0xFF) and a separate `CardPoll` (2, 3, 4, 0x13, 0x14) for the same field. This table puts all values in `CardResult` with the same names for the shared rows; the `CardPoll` rows should fold into it.

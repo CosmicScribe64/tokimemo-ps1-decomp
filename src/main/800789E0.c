@@ -100,7 +100,7 @@ void func_80078A94(void) {
         cursor_update();
         n += 1;
     }
-    if (game_state.ovl_target_game_mode == MODE_TELEPHONE_PROFILE) {
+    if (game_state.ovl_target_game_mode == GAME_MODE_TELEPHONE_PROFILE) {
         cal_base_show();
     }
     if (n != 0) {
@@ -138,18 +138,18 @@ s32 func_80078C48(void) {
     D_800B6D30 = 0;
     switch (g->ovl_target_game_mode) {
     case 8:
-    case MODE_NAME_ENTRY:
-    case MODE_EXAM:
-    case MODE_DATE:
-    case MODE_RPG_BATTLE:
+    case GAME_MODE_FILE_SELECT:
+    case GAME_MODE_EXAM:
+    case GAME_MODE_DATE:
+    case GAME_MODE_RPG_BATTLE:
         break;
-    case MODE_VALENTINE:
-    case MODE_SEASONAL_PARTY:
-    case MODE_GIRL_ENCOUNTER:
-    case MODE_GIRL_INVITATION:
-    case MODE_MEETING:
-    case MODE_SPECIAL_EVENT:
-    case MODE_SPORTS_FESTIVAL:
+    case GAME_MODE_VALENTINE:
+    case GAME_MODE_SEASONAL_PARTY:
+    case GAME_MODE_GIRL_ENCOUNTER:
+    case GAME_MODE_GIRL_INVITATION:
+    case GAME_MODE_MEETING:
+    case GAME_MODE_SPECIAL_EVENT:
+    case GAME_MODE_SPORTS_FESTIVAL:
         func_80057640(0xA0);
         D_800B6D30 = 1;
         break;
@@ -158,120 +158,120 @@ s32 func_80078C48(void) {
         sprite_quads[0].flags = 0x80000000;
     }
     switch (g->ovl_target_game_mode) {
-    case MODE_HELP:
+    case GAME_MODE_HELP:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x96AA;
         break;
-    case MODE_FESTIVAL_STALLS:
+    case GAME_MODE_FESTIVAL_STALLS:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x934A;
         break;
-    case MODE_CLUB_MASTER_A:
-    case MODE_CLUB_MASTER_B:
-    case MODE_CLUB_MASTER_C:
+    case GAME_MODE_CLUB_MASTER_A:
+    case GAME_MODE_CLUB_MASTER_B:
+    case GAME_MODE_CLUB_MASTER_C:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x958A;
         break;
-    case MODE_RPG_BATTLE:
+    case GAME_MODE_RPG_BATTLE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x982A;
         break;
-    case MODE_CULTURE_STAGE:
+    case GAME_MODE_CULTURE_STAGE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x91CA;
         break;
-    case MODE_SPORTS_FESTIVAL:
+    case GAME_MODE_SPORTS_FESTIVAL:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x99AA;
         break;
-    case MODE_CLUB_CAMP:
-    case MODE_CLUB_CAMP_2:
+    case GAME_MODE_CLUB_CAMP:
+    case GAME_MODE_CLUB_CAMP_2:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x952A;
         break;
-    case MODE_PRACTICE_MATCH:
+    case GAME_MODE_PRACTICE_MATCH:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x97CA;
         break;
-    case MODE_CULTURE_FESTIVAL_A:
+    case GAME_MODE_CULTURE_FESTIVAL_A:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x916A;
         break;
-    case MODE_CULTURE_FESTIVAL_B:
+    case GAME_MODE_CULTURE_FESTIVAL_B:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x910A;
         break;
-    case MODE_PROLOGUE:
-    case MODE_NAME_ENTRY:
-    case MODE_NAME_ENT_3:
-    case MODE_NAME_ENT_4:
+    case GAME_MODE_OPENING:
+    case GAME_MODE_FILE_SELECT:
+    case GAME_MODE_NAME_ENTRY:
+    case GAME_MODE_PROLOGUE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x95EA;
         break;
-    case MODE_TELEPHONE:
-    case MODE_TELEPHONE_PROFILE:
+    case GAME_MODE_TELEPHONE:
+    case GAME_MODE_TELEPHONE_PROFILE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x9A0A;
         break;
-    case MODE_ENDING:
+    case GAME_MODE_ENDING:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x92EA;
         break;
-    case MODE_EXAM:
-    case MODE_CAREER_GUIDANCE:
-    case MODE_CAREER_CHOICE:
-    case MODE_ALBUM:
-    case MODE_ETC_C2:
-    case MODE_ETC_C3:
-    case MODE_ETC_C4:
+    case GAME_MODE_EXAM:
+    case GAME_MODE_CAREER_GUIDANCE:
+    case GAME_MODE_CAREER_CHOICE:
+    case GAME_MODE_ALBUM:
+    case GAME_MODE_ETC_C2:
+    case GAME_MODE_ETC_C3:
+    case GAME_MODE_ETC_C4:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x93AA;
         break;
-    case MODE_DATE:
-    case MODE_DATE_SCENE:
+    case GAME_MODE_DATE:
+    case GAME_MODE_DATE_SCENE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x922A;
         break;
-    case MODE_AMUSEMENT_PARK:
-    case MODE_AMUSEMENT_PARK_2:
+    case GAME_MODE_AMUSEMENT_PARK:
+    case GAME_MODE_AMUSEMENT_PARK_2:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x928A;
         break;
-    case MODE_SICK_VISIT:
-    case MODE_SICK_VISIT_2:
+    case GAME_MODE_SICK_VISIT:
+    case GAME_MODE_SICK_VISIT_2:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x970A;
         break;
-    case MODE_PLAYER_BIRTHDAY:
-    case MODE_GIRL_BIRTHDAY:
-    case MODE_GIRL_ENCOUNTER:
-    case MODE_GIRL_INVITATION:
-    case MODE_SPECIAL_EVENT:
+    case GAME_MODE_PLAYER_BIRTHDAY:
+    case GAME_MODE_GIRL_BIRTHDAY:
+    case GAME_MODE_GIRL_ENCOUNTER:
+    case GAME_MODE_GIRL_INVITATION:
+    case GAME_MODE_SPECIAL_EVENT:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x946A;
         break;
-    case MODE_SCHOOL_TRIP:
+    case GAME_MODE_SCHOOL_TRIP:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x98EA;
         break;
-    case MODE_VALENTINE:
+    case GAME_MODE_VALENTINE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x9ACA;
         break;
-    case MODE_NEW_YEAR_A:
-    case MODE_NEW_YEAR_B:
-    case MODE_SEASONAL_PARTY:
-    case MODE_MEETING:
+    case GAME_MODE_NEW_YEAR_A:
+    case GAME_MODE_NEW_YEAR_B:
+    case GAME_MODE_SEASONAL_PARTY:
+    case GAME_MODE_MEETING:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x988A;
         break;
-    case MODE_OPTION:
-    case MODE_OPTION_2:
-    case MODE_OPTION_3:
+    case GAME_MODE_OPTION:
+    case GAME_MODE_OPTION_2:
+    case GAME_MODE_OPTION_3:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x976A;
         break;
-    case MODE_TT_GAME:
+    case GAME_MODE_TT_GAME:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x9A6A;
         break;
@@ -316,145 +316,145 @@ void func_80079070(void) {
 
     gs = &game_state;
     switch (gs->ovl_target_game_mode) {
-    case MODE_HELP:
+    case GAME_MODE_HELP:
         ovl_entry = (u32) &D_80132000;
         break;
-    case MODE_FESTIVAL_STALLS:
+    case GAME_MODE_FESTIVAL_STALLS:
         ovl_entry = (u32) &D_80132000;
         break;
-    case MODE_CLUB_MASTER_C:
+    case GAME_MODE_CLUB_MASTER_C:
         ovl_entry = (u32) &D_80132140;
         break;
-    case MODE_CLUB_MASTER_B:
+    case GAME_MODE_CLUB_MASTER_B:
         ovl_entry = (u32) &D_80139150;
         break;
-    case MODE_CLUB_MASTER_A:
+    case GAME_MODE_CLUB_MASTER_A:
         ovl_entry = (u32) &D_80133A2C;
         break;
-    case MODE_CULTURE_STAGE:
+    case GAME_MODE_CULTURE_STAGE:
         ovl_entry = (u32) &D_80137890;
         break;
-    case MODE_RPG_BATTLE:
+    case GAME_MODE_RPG_BATTLE:
         ovl_entry = (u32) &D_8013B5B0;
         break;
-    case MODE_SPORTS_FESTIVAL:
+    case GAME_MODE_SPORTS_FESTIVAL:
         ovl_entry = (u32) &D_80141280;
         break;
-    case MODE_CLUB_CAMP_2:
+    case GAME_MODE_CLUB_CAMP_2:
         ovl_entry = (u32) &D_80132000;
         break;
-    case MODE_CLUB_CAMP:
+    case GAME_MODE_CLUB_CAMP:
         ovl_entry = (u32) &D_80132FF8;
         break;
-    case MODE_PRACTICE_MATCH:
+    case GAME_MODE_PRACTICE_MATCH:
         ovl_entry = (u32) &D_80132040;
         break;
-    case MODE_CULTURE_FESTIVAL_A:
+    case GAME_MODE_CULTURE_FESTIVAL_A:
         ovl_entry = (u32) &D_80142700;
         break;
-    case MODE_CULTURE_FESTIVAL_B:
+    case GAME_MODE_CULTURE_FESTIVAL_B:
         ovl_entry = (u32) &D_80144F70;
         break;
-    case MODE_PROLOGUE:
+    case GAME_MODE_OPENING:
         ovl_entry = (u32) &D_80144AD0;
         break;
-    case MODE_NAME_ENT_3:
+    case GAME_MODE_NAME_ENTRY:
         ovl_entry = (u32) &D_8013209C;
         break;
-    case MODE_NAME_ENT_4:
+    case GAME_MODE_PROLOGUE:
         ovl_entry = (u32) &D_8014AF28;
         break;
-    case MODE_NAME_ENTRY:
+    case GAME_MODE_FILE_SELECT:
         ovl_entry = (u32) &D_8014231C;
         break;
-    case MODE_TELEPHONE:
+    case GAME_MODE_TELEPHONE:
         ovl_entry = (u32) &D_801397D0;
         break;
-    case MODE_TELEPHONE_PROFILE:
+    case GAME_MODE_TELEPHONE_PROFILE:
         ovl_entry = (u32) &D_80132000;
         break;
-    case MODE_ENDING:
+    case GAME_MODE_ENDING:
         ovl_entry = (u32) &D_80132334;
         break;
-    case MODE_ETC_C4:
+    case GAME_MODE_ETC_C4:
         ovl_entry = (u32) &D_80145A6C;
         break;
-    case MODE_CAREER_CHOICE:
+    case GAME_MODE_CAREER_CHOICE:
         ovl_entry = (u32) &D_801492C0;
         break;
-    case MODE_CAREER_GUIDANCE:
+    case GAME_MODE_CAREER_GUIDANCE:
         ovl_entry = (u32) &D_8014ABD0;
         break;
-    case MODE_ETC_C2:
+    case GAME_MODE_ETC_C2:
         ovl_entry = (u32) &D_80142974;
         break;
-    case MODE_ALBUM:
+    case GAME_MODE_ALBUM:
         ovl_entry = (u32) &D_801407F0;
         break;
-    case MODE_ETC_C3:
+    case GAME_MODE_ETC_C3:
         ovl_entry = (u32) &D_8014636C;
         break;
-    case MODE_EXAM:
+    case GAME_MODE_EXAM:
         ovl_entry = (u32) &D_801465F8;
         break;
-    case MODE_DATE_SCENE:
+    case GAME_MODE_DATE_SCENE:
         ovl_entry = (u32) &D_8014C08C;
         break;
-    case MODE_DATE:
+    case GAME_MODE_DATE:
         ovl_entry = (u32) &D_801448D4;
         break;
-    case MODE_AMUSEMENT_PARK_2:
+    case GAME_MODE_AMUSEMENT_PARK_2:
         ovl_entry = (u32) &D_80137F64;
         break;
-    case MODE_AMUSEMENT_PARK:
+    case GAME_MODE_AMUSEMENT_PARK:
         ovl_entry = (u32) &D_80132214;
         break;
-    case MODE_SICK_VISIT_2:
+    case GAME_MODE_SICK_VISIT_2:
         ovl_entry = (u32) &D_80132000;
         break;
-    case MODE_SICK_VISIT:
+    case GAME_MODE_SICK_VISIT:
         ovl_entry = (u32) &D_80133120;
         break;
-    case MODE_GIRL_ENCOUNTER:
+    case GAME_MODE_GIRL_ENCOUNTER:
         ovl_entry = (u32) &D_80132244;
         break;
-    case MODE_PLAYER_BIRTHDAY:
+    case GAME_MODE_PLAYER_BIRTHDAY:
         ovl_entry = (u32) &D_80134040;
         break;
-    case MODE_GIRL_BIRTHDAY:
+    case GAME_MODE_GIRL_BIRTHDAY:
         ovl_entry = (u32) &D_80134C90;
         break;
-    case MODE_SPECIAL_EVENT:
+    case GAME_MODE_SPECIAL_EVENT:
         ovl_entry = (u32) &D_8013882C;
         break;
-    case MODE_GIRL_INVITATION:
+    case GAME_MODE_GIRL_INVITATION:
         ovl_entry = (u32) &D_801426D0;
         break;
-    case MODE_SCHOOL_TRIP:
+    case GAME_MODE_SCHOOL_TRIP:
         ovl_entry = (u32) &D_80137490;
         break;
-    case MODE_VALENTINE:
+    case GAME_MODE_VALENTINE:
         ovl_entry = (u32) &D_80132274;
         break;
-    case MODE_NEW_YEAR_A:
+    case GAME_MODE_NEW_YEAR_A:
         ovl_entry = (u32) &D_8013D180;
         break;
-    case MODE_NEW_YEAR_B:
+    case GAME_MODE_NEW_YEAR_B:
         ovl_entry = (u32) &D_801322D4;
         break;
-    case MODE_SEASONAL_PARTY:
+    case GAME_MODE_SEASONAL_PARTY:
         ovl_entry = (u32) &D_8013B484;
         break;
-    case MODE_MEETING:
+    case GAME_MODE_MEETING:
         ovl_entry = (u32) &D_80137144;
         break;
-    case MODE_OPTION:
+    case GAME_MODE_OPTION:
         ovl_entry = (u32) &D_801335E8;
         break;
-    case MODE_OPTION_2:
+    case GAME_MODE_OPTION_2:
         ovl_entry = (u32) &D_801389A0;
         break;
-    case MODE_OPTION_3:
+    case GAME_MODE_OPTION_3:
         ovl_entry = (u32) &D_8013C780;
         break;
     default:
@@ -556,7 +556,7 @@ void func_8007959C(void) {
             mode_stage_set((s32) game_state.saved_mode_stage);
             mode_step_set((s32) game_state.saved_mode_step);
         } else {
-            game_mode_set(MODE_BOOT);
+            game_mode_set(GAME_MODE_BOOT);
             actor_clear_range(0);
             draw2d3d(0U, 0U);
             sprite_tables_clear();

@@ -499,7 +499,7 @@ typedef struct GameState {
     /* 0x71D */ u8 day_event_count_today; /* HYPOTHESIS: ++ each time a girl encounter record (types 0x44/0x46/0x47) is run; cleared by day_event_today_clear each day */
     /* 0x71E */ u8 day_event_done_bits;
     /* 0x71F */ u8 daily_check_done; /* HYPOTHESIS: set to 1 before the telephone/appointment prompt (mode 0x43) and by the day-start code; cleared when a new queue is built */
-    /* 0x720 */ u8 saved_game_mode; /* MainMode */
+    /* 0x720 */ u8 saved_game_mode; /* GameMode */
     /* 0x721 */ u8 saved_mode_stage;
     /* 0x722 */ u8 saved_mode_step;
     /* 0x723 */ u8 unk_723;
@@ -568,7 +568,7 @@ typedef struct GameState {
     /* 0x110B */ s8 game_mode_scratch;
     /* 0x110C */ s8 mode_stage_scratch;
     /* 0x110D */ u8 substep;
-    /* 0x110E */ u8 ovl_target_game_mode; /* MainMode */
+    /* 0x110E */ u8 ovl_target_game_mode; /* GameMode */
     /* 0x110F */ u8 restart_request;
     /* 0x1110 */ u8 paused;
     /* 0x1111 */ u8 pause_allowed;

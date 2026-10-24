@@ -24,10 +24,10 @@ void func_80142B80(void) {
         tpage_buf_clear();
         if (game_state.current_girl >= GIRL_YOSHIO) {
             if (game_state.options_dirty != 0) {
-                game_mode_set(MODE_TITLE);
+                game_mode_set(GAME_MODE_TITLE);
                 return;
             }
-            game_mode_set(MODE_ETC_C4);
+            game_mode_set(GAME_MODE_ETC_C4);
             return;
         }
         D_8015014C = 0;

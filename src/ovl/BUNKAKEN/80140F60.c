@@ -156,7 +156,7 @@ void func_80141088(void) {
         }
         D_80122EB0 = (s32) g->mode_stage;
         D_80122EB4 = g->mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 14:
         portrait_read_step(0x525B);
@@ -757,7 +757,7 @@ void func_801422C4(void) {
         }
         D_80122EB0 = (s32) g->mode_stage;
         D_80122EB4 = g->mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 14:
         portrait_read_step(0x522E);

@@ -36,7 +36,7 @@ void func_80132000(void) {
     }
     cursor_update();
     if (game_state.pad_pressed & PAD_START) {
-        game_mode_set(MODE_COMMAND_SCREEN);
+        game_mode_set(GAME_MODE_COMMAND_SCREEN);
     }
     func_801323CC();
     message_window_title_update();
@@ -107,7 +107,7 @@ void func_80132294(void) {
 }
 
 void func_801323AC(void) {
-    game_mode_set(MODE_COMMAND_SCREEN);
+    game_mode_set(GAME_MODE_COMMAND_SCREEN);
 }
 
 void func_801323CC(void) {

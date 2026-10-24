@@ -226,7 +226,7 @@ s32 func_800430C0(void) {
                 func_800789E0();
                 func_800591D8(0);
                 game_state_init(0);
-                game_mode_set(MODE_BOOT);
+                game_mode_set(GAME_MODE_BOOT);
                 sprite_tables_clear();
                 func_80048DD0(0);
                 back_clear_switch(1);
@@ -254,7 +254,7 @@ s32 func_800430C0(void) {
                 func_800789E0();
                 func_800591D8(0);
                 game_state_init(0);
-                game_mode_set(MODE_PROLOGUE);
+                game_mode_set(GAME_MODE_OPENING);
                 sprite_tables_clear();
                 func_80048DD0(0);
                 back_clear_switch(1);

@@ -276,7 +276,7 @@ void func_80132AB8(void) {
     if (game_state.screen_brightness < 2U) {
         game_state.screen_brightness = 0;
         actor_clear_range(0);
-        game_mode_set(MODE_TITLE);
+        game_mode_set(GAME_MODE_TITLE);
     }
 }
 
@@ -530,11 +530,11 @@ s32 func_80133330(void) {
         }
     }
     if ((D_800B3220 == 1) && ((game_state.pad_held & 0xF) == 0xF)) {
-        game_mode_set(MODE_OPTION_2);
+        game_mode_set(GAME_MODE_OPTION_2);
     }
     /* FAKE: 8-bit bitfield view prevents uopt from CSE-ing D_800B3220 across the untaken first branch; real source unknown. T-24117 */
     if ((((OptionByteBf *)&D_800B3220)->x == 1) && ((game_state.pad_held & 0xF0000) == 0xF0000)) {
-        game_mode_set(MODE_OPTION_3);
+        game_mode_set(GAME_MODE_OPTION_3);
     }
     if (game_state.pad_pressed & PAD_CROSS) {
         game_state.menu_cursor_0 = 7;
@@ -2099,7 +2099,7 @@ s32 func_801376A8(void) {
                 audio_command(0x501);
                 actor_clear_range(0);
                 text_system_reset();
-                game_mode_set(MODE_TT_GAME);
+                game_mode_set(GAME_MODE_TT_GAME);
             }
             break;
         case 1:
@@ -2109,7 +2109,7 @@ s32 func_801376A8(void) {
                 audio_command(0x501);
                 actor_clear_range(0);
                 text_system_reset();
-                game_mode_set(MODE_SHOOTER);
+                game_mode_set(GAME_MODE_SHOOTER);
             }
             break;
         }
@@ -2428,7 +2428,7 @@ void func_801385F0(void) {
 void func_801386C8(void) {
     actor_clear_range(0);
     game_state.current_girl = D_800E7D68;
-    game_mode_set(MODE_ALBUM);
+    game_mode_set(GAME_MODE_ALBUM);
     func_801320C0();
 }
 
@@ -2457,7 +2457,7 @@ void func_80138708(void) {
 
 void func_801387A8(void) {
     if (cd_read_sync_status() & 1) {
-        game_mode_set(MODE_ENDING);
+        game_mode_set(GAME_MODE_ENDING);
         mode_stage_set(3);
     }
 }
@@ -2468,7 +2468,7 @@ s32 func_801387E4(void) {
     } else {
         actor_clear_upper();
         sprite_tables_clear();
-        game_mode_set(MODE_ENDING);
+        game_mode_set(GAME_MODE_ENDING);
         mode_stage_set(7);
         mode_step_set(0xF);
     }

@@ -105,14 +105,14 @@ s32 func_8013DAAC(void) {
         !(*(u8 *)&game_state.day_event_done_bits & 0x20)) {
         *(u8 *)&game_state.day_event_done_bits |= 0x20;
         game_state.day_events[game_state.day_event_index].girl = 0;
-        game_mode_set(MODE_GIRL_BIRTHDAY);
+        game_mode_set(GAME_MODE_GIRL_BIRTHDAY);
         return 0;
     }
     if (((WordView *)&game_state.player_birthday)->date.month == 12 &&
         ((WordView *)&game_state.player_birthday)->date.day == 24 &&
         !(*(u8 *)&game_state.day_event_done_bits & 0x40)) {
         *(u8 *)&game_state.day_event_done_bits |= 0x40;
-        game_mode_set(MODE_PLAYER_BIRTHDAY);
+        game_mode_set(GAME_MODE_PLAYER_BIRTHDAY);
         return 0;
     }
     draw2d3d(1, 0);

@@ -363,7 +363,7 @@ void func_80062524(void) {
         actor_clear_range(0);
         audio_command(0x7F);
         cursor_show(0);
-        game_mode_set(MODE_PROLOGUE);
+        game_mode_set(GAME_MODE_OPENING);
     }
 }
 
@@ -398,15 +398,15 @@ void func_800626B0(void) {
     func_8004AC18(0xFF);
     switch (*(u32 *)&D_801230D0) {
     case 0:
-        game_mode_set(MODE_NAME_ENTRY);
+        game_mode_set(GAME_MODE_FILE_SELECT);
         break;
     case 1:
-        game_mode_set(MODE_OPTION);
+        game_mode_set(GAME_MODE_OPTION);
         if (D_800B3220 == 1) {
             if (game_state.pad_held & PAD_RIGHT) {
-                game_mode_set(MODE_OPTION_2);
+                game_mode_set(GAME_MODE_OPTION_2);
             } else if (game_state.pad_held & PAD_LEFT) {
-                game_mode_set(MODE_OPTION_3);
+                game_mode_set(GAME_MODE_OPTION_3);
             }
         }
         break;
@@ -464,7 +464,7 @@ void title_mode_handler(void) {
             if (game_state.mode_stage >= 2) {
                 cursor_show(0);
                 audio_command(0x7F);
-                game_mode_set(MODE_PROLOGUE);
+                game_mode_set(GAME_MODE_OPENING);
                 mode_stage_set(1);
                 audio_command(0x501);
             }
@@ -533,5 +533,5 @@ void func_80062C28(void) {
     func_80041168(0);
     func_8009C674(0);
     back_clear_switch(1);
-    game_mode_set(MODE_BOOT);
+    game_mode_set(GAME_MODE_BOOT);
 }

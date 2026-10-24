@@ -592,7 +592,7 @@ void func_801438F8(void) {
         D_80122EAC = 4;
         D_80122EB0 = (s32) g->mode_stage;
         D_80122EB4 = g->mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
         cd_read_sectors(9U, 0x801E8000, 0x4B0A);

@@ -146,7 +146,7 @@ void func_800755B4(void) {
         talk_work = 8;
         parameter_show_init();
         parameter_show_init();
-        game_mode_set(MODE_SPECIAL_EVENT);
+        game_mode_set(GAME_MODE_SPECIAL_EVENT);
         return;
     }
     sprite_tables_clear();
@@ -737,7 +737,7 @@ void appointment_launch(void) {
     game_state.current_girl = game_state.unk_54C_0.unk_25;
     game_state.date_girl = game_state.unk_54C_0.unk_25;
     game_state.appointment_flag = ((AppointmentBits *)&game_state.unk_54C[0])->flag;
-    game_mode_set(MODE_DATE);
+    game_mode_set(GAME_MODE_DATE);
 }
 
 void func_80076EC0(void) {
@@ -1047,7 +1047,7 @@ void func_80077900(void) {
                         && !((ClubFlagBits *)&gs->clubs[club])->b29
                         && !gs->girls[girl].flags.f.b18) {
                         gs->girls[girl].flags.f.b18 = 1;
-                        game_mode_set(MODE_CLUB_CAMP_2, club);
+                        game_mode_set(GAME_MODE_CLUB_CAMP_2, club);
                         return;
                     }
                 }
@@ -1055,14 +1055,14 @@ void func_80077900(void) {
                     && !((ClubFlagBits *)&gs->clubs[club])->b29
                     && !gs->girls[girl].flags.f.b18) {
                     gs->girls[girl].flags.f.b18 = 1;
-                    game_mode_set(MODE_CLUB_CAMP_2, club);
+                    game_mode_set(GAME_MODE_CLUB_CAMP_2, club);
                     return;
                 }
             } else if (gs->girls[girl].flags.f.met && gs->girls[girl].flags.f.b2
                        && !((ClubFlagBits *)&gs->clubs[club])->b29
                        && !gs->girls[girl].flags.f.b18) {
                 gs->girls[girl].flags.f.b18 = 1;
-                game_mode_set(MODE_CLUB_CAMP_2, club);
+                game_mode_set(GAME_MODE_CLUB_CAMP_2, club);
                 return;
             }
         }
@@ -1267,21 +1267,21 @@ s32 holiday_tel_exit(void) {
         g->menu_cursor_0 = 0;
         k_sub_reset();
         restore_bgm();
-        game_mode_set(MODE_TELEPHONE_PROFILE);
+        game_mode_set(GAME_MODE_TELEPHONE_PROFILE);
         mode_stage_set(0);
     } else if (g->current_girl == GIRL_MIHARU) {
         k_sub_reset();
         g->menu_cursor_0 = 12;
         D_801230D0 = 11;
         restore_bgm();
-        game_mode_set(MODE_TELEPHONE_PROFILE);
+        game_mode_set(GAME_MODE_TELEPHONE_PROFILE);
         mode_stage_set(1);
     } else {
         k_sub_reset();
         g->menu_cursor_0 = g->current_girl + 1;
         D_801230D0 = g->current_girl;
         restore_bgm();
-        game_mode_set(MODE_TELEPHONE_PROFILE);
+        game_mode_set(GAME_MODE_TELEPHONE_PROFILE);
         mode_stage_set(1);
     }
 }
@@ -1382,7 +1382,7 @@ void func_8007866C(void) {
 void holiday_club_exit(void) {
     actor_clear_upper();
     if (func_8005352C() == 1 && (u32)(game_state.day + 6) / 7 == 3 && game_state.month % 3U == 0 && game_state.weekday == WEEKDAY_SUNDAY) {
-        game_mode_set(MODE_PRACTICE_MATCH);
+        game_mode_set(GAME_MODE_PRACTICE_MATCH);
         return;
     }
     mode_stage_set(5);

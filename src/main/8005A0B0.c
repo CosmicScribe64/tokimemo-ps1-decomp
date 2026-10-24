@@ -411,7 +411,7 @@ s32 func_8005AF28(void) {
 s32 func_8005AFC8(void) {
     if (cursor_x < 0x50 && cursor_x >= 0x41 && cursor_y < -0x10 && cursor_y >= -0x1F) {
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            game_mode_set(MODE_HELP);
+            game_mode_set(GAME_MODE_HELP);
             return 1;
         }
     }
@@ -538,7 +538,7 @@ s32 func_8005B43C(void) {
                     if ((temp_v0 != -1) && game_state.girls[temp_v0].flags.f.b2) {
                         game_state.girls[temp_v0].affection += 1;
                     }
-                    game_mode_set(MODE_SCHEDULE);
+                    game_mode_set(GAME_MODE_SCHEDULE);
                     game_state.last_command.date.month = game_state.menu_cursor_0;
                 }
             }
@@ -559,7 +559,7 @@ s32 func_8005B43C(void) {
                 } else {
                     audio_command(0x50D);
                 }
-                game_mode_set(MODE_SCHEDULE);
+                game_mode_set(GAME_MODE_SCHEDULE);
                 game_state.last_command.date.month = game_state.menu_cursor_0;
             }
             break;
@@ -586,14 +586,14 @@ s32 func_8005B43C(void) {
                 temp_v0_2 = (&game_state.month_calendar[0].marker[1])[game_state.day];
                 if (temp_v0_2 == 5) {
                     audio_command(0x500);
-                    game_mode_set(MODE_SCHEDULE);
+                    game_mode_set(GAME_MODE_SCHEDULE);
                     sndisp("明日からテストだ）", 0, 0x1F);
                 } else if (temp_v0_2 == 0xB) {
                     audio_command(0x500);
-                    game_mode_set(MODE_SCHEDULE);
+                    game_mode_set(GAME_MODE_SCHEDULE);
                     sndisp("明日から修学旅行だ）", 0, 0x1F);
                 } else {
-                    game_mode_set(MODE_SCHEDULE);
+                    game_mode_set(GAME_MODE_SCHEDULE);
                     game_state.last_command.date.month = 7;
                 }
             }
@@ -1409,12 +1409,12 @@ s32 func_8005D804(void) {
             message_disp_switch(0);
             func_8006764C(0);
             audio_bank_start(0, 0);
-            game_mode_set(MODE_NAME_ENT_3);
+            game_mode_set(GAME_MODE_NAME_ENTRY);
         }
         break;
     case 0xFF:
         message_window_title_show(0);
-        game_mode_set(MODE_COMMAND_SCREEN);
+        game_mode_set(GAME_MODE_COMMAND_SCREEN);
         mode_stage_set(0xFF);
         func_800674B0();
         break;
@@ -2595,7 +2595,7 @@ s32 join_club_message(void) {
 
 void join_club_exit(void) {
     actor_clear_upper();
-    game_mode_set(MODE_SCHEDULE);
+    game_mode_set(GAME_MODE_SCHEDULE);
 }
 
 void func_80060958(void) {
@@ -2667,7 +2667,7 @@ void func_80060B78(void) {
     }
 }
 void uwasa_exit0(void) {
-    game_mode_set(MODE_DAY_SCREEN);
+    game_mode_set(GAME_MODE_DAY_SCREEN);
 }
 
 s32 uwasa0(void) {
@@ -2730,7 +2730,7 @@ s32 pre_xmas(void) {
         xa_wait();
         break;
     case 1:
-        game_mode_set(MODE_NEW_YEAR_A);
+        game_mode_set(GAME_MODE_NEW_YEAR_A);
         break;
     }
 }
@@ -2789,7 +2789,7 @@ void func_80061044(void) {
         return;
     }
     set_dec_bri(0);
-    game_mode_set(MODE_NEW_YEAR_B);
+    game_mode_set(GAME_MODE_NEW_YEAR_B);
 }
 
 void pre_syogatu_init1(void) {
@@ -2935,7 +2935,7 @@ s32 pre_syogatu1(void) {
         xa_wait();
         return;
     case 2:
-        game_mode_set(MODE_NEW_YEAR_B);
+        game_mode_set(GAME_MODE_NEW_YEAR_B);
         return;
     }
 }

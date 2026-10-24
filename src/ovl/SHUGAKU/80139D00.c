@@ -233,7 +233,7 @@ void func_8013A59C(void) {
     game_state.saved_mode_step = 0x32;
     hizuke_disp_switch(0);
     k_reset(0);
-    game_mode_set(MODE_RPG_BATTLE);
+    game_mode_set(GAME_MODE_RPG_BATTLE);
 }
 
 void func_8013A648(void) {

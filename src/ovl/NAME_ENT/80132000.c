@@ -2581,7 +2581,7 @@ s32 func_80139684(void) {
         set_dec_bri(*(u8 *)&game_state.screen_brightness);
         return;
     case 2:
-        game_mode_set(MODE_NAME_ENT_4);
+        game_mode_set(GAME_MODE_PROLOGUE);
         text_set_advance(0xE);
         break;
     }

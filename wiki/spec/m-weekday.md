@@ -9,7 +9,7 @@ sources: ["src/main/800737A0.c", "config/renames/proposals/m-weekday.tsv", "conf
 
 Roadmap phase 2, unit `m-weekday` ([[tickets/T-27012-p2-m-weekday]], parent [[tickets/T-27000-phase-2]]).
 The unit is `src/main/800737A0.c`, 19 functions. It plays one school day: the main-mode handler `week_day`
-(mode 0x40, `MODE_SCHOOL_DAY` in the core table), the rule that turns the day's command into parameter changes
+(mode 0x40, `GAME_MODE_SCHOOL_DAY` in the core table), the rule that turns the day's command into parameter changes
 (`parameter_up_down`), the same scene for vacation days (`vacation_day_init`), and the last stage of the
 weekly health check (`week_end_exit`, mode 0x32). Facts only, from the matched C and from runs of the game in
 the emulator; guesses are marked HYPOTHESIS. Proposed names are in `config/renames/proposals/m-weekday.tsv`;

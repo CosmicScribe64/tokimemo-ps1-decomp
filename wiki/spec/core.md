@@ -8,7 +8,7 @@ sources: ["include/main_api.h", "include/game.h", "src/main/", "wiki/game-state.
 
 Unit `core` of phase 2 ([[tickets/T-27010-p2-core]], parent [[tickets/T-27000-phase-2]]). It describes the state and rules that every other unit reads, with the names proposed in `config/renames/proposals/core.tsv`. Old names are given in backticks where a reader needs the link to the current code. Facts are as the matched C implements them; a claim of game meaning that the code does not prove is marked HYPOTHESIS. No emulator run was used (the emulator image is not built in this tree); every statement comes from reading the matched C, the decoded data tables and the English-patch reference.
 
-Status: applied on branch `p2-core-apply` ([[tickets/T-27004-shared-core-names]]). The names in this page are the applied ones, including the T-27004 review fix (game mode machine `game_mode_`/`mode_stage_`/`mode_step_`, `portrait_`, `talk_`, `memory_card_`, `audio_`, `scene_`, `ovl_`); the proposals in `config/renames/proposals/core.tsv` keep the first names, and `rename.py lookup NAME` maps either to the current one. The `MainMode` enum and its `MODE_` constants keep their first names (the tool has no row kind for them).
+Status: applied on branch `p2-core-apply` ([[tickets/T-27004-shared-core-names]]). The names in this page are the applied ones, including the T-27004 review fix (game mode machine `game_mode_`/`mode_stage_`/`mode_step_`, `portrait_`, `talk_`, `memory_card_`, `audio_`, `scene_`, `ovl_`); the proposals in `config/renames/proposals/core.tsv` keep the first names, and `rename.py lookup NAME` maps either to the current one. The `GameMode` enum and `GAME_MODE_*` members are applied by T-27043 through the reviewed enum-capable tool. NAME_ENT labels now follow source-confirmed roles (0x11 opening,0x13 file selection,0x14 name entry,0x15 prologue); numeric values and fixed-width fields are unchanged.
 
 Scope (user decision of 2026-10-24): enough for the Godot port. Game logic, state and flow are described fully; the PS1 hardware layer (GPU, VRAM, sound driver, CD/XA, memory card, MDEC, movie) is named at module level with its entry points, section 9.
 
@@ -54,55 +54,56 @@ Reset matrix (what each setter clears, besides writing its own value):
 | `mode_stage_set`, `mode_stage_next` | (written) | 0 | no | yes | yes | no | yes | yes |
 | `mode_step_set`, `mode_step_next` | no | (written) | no | no | yes | no | no | yes |
 
-`game_mode_set` finishes with `game_mode_request_overlay`: if the new mode is an overlay mode (the case list at 0x11, 0x13-0x15, 0x20-0x22, 0x35-0x37, 0x3A, 0x43, 0x45, 0x50-0x63, 0x70-0x76, 0x80-0x82, 0x90, 0x91, 0xC2-0xC4) the mode is stored in `ovl_target_game_mode` and `mode` becomes 2 (`MODE_OVERLAY_LOAD`). The loader state machine picks the disc position from the target mode (a switch with hard-coded sectors), reads 0x60 sectors to 0x80132000, verifies a 16-bit byte sum stored at the file end, sets `ovl_entry` (`D_80123110`) to the overlay entry for that mode and restores `mode = ovl_target_game_mode`. Resident modes never go through the loader. An overlay returns to the caller's context with the `saved_game_mode/stage/step` triple (section 3.7), restored by the developer function `return_step()`. `game_mode_reset_to_title()` is the universal error path (the `default:` of mode switches, 514 uses): reset loader, game state without clearing, sprite tables, sound, backgrounds and texture slots, then `game_mode_set(0x12)`.
+`game_mode_set` finishes with `game_mode_request_overlay`: if the new mode is an overlay mode (the case list at 0x11, 0x13-0x15, 0x20-0x22, 0x35-0x37, 0x3A, 0x43, 0x45, 0x50-0x63, 0x70-0x76, 0x80-0x82, 0x90, 0x91, 0xC2-0xC4) the mode is stored in `ovl_target_game_mode` and `mode` becomes 2 (`GAME_MODE_OVERLAY_LOAD`). The loader state machine picks the disc position from the target mode (a switch with hard-coded sectors), reads 0x60 sectors to 0x80132000, verifies a 16-bit byte sum stored at the file end, sets `ovl_entry` (`D_80123110`) to the overlay entry for that mode and restores `mode = ovl_target_game_mode`. Resident modes never go through the loader. An overlay returns to the caller's context with the `saved_game_mode/stage/step` triple (section 3.7), restored by the developer function `return_step()`. `game_mode_reset_to_title()` is the universal error path (the `default:` of mode switches, 514 uses): reset loader, game state without clearing, sprite tables, sound, backgrounds and texture slots, then `game_mode_set(0x12)`.
 
 ### 2.2 Mode table
 
-`MainMode` (const rows). Resident handlers are named `mode_<name>` in the table; overlay modes list the overlay and entry. The queue type that leads to a mode is in section 3.5.
+`GameMode` (const rows). Resident handlers are named `mode_<name>` in the table; overlay modes list the overlay and entry. The queue type that leads to a mode is in section 3.5.
 
 | mode | name | where | notes |
 |---|---|---|---|
-| 0x00 | `MODE_BOOT` | main `func_8005A06C` | loads the shared system textures (stage 0), then goes to the title |
-| 0x01 | `MODE_BOOT_WAIT` | main | waits for `boot_hold`; HYPOTHESIS |
-| 0x02 | `MODE_OVERLAY_LOAD` | main loader | section 2.1 |
-| 0x03 | `MODE_CALL_ENTRY` | main | calls `ovl_entry` directly |
-| 0x10 | `MODE_START` | main | initial mode; prepares the screen, then mode 0 |
-| 0x11 | `MODE_PROLOGUE` | NAME_ENT 0x80144AD0 | voiced prologue; also started by the title idle timeout |
-| 0x12 | `MODE_TITLE` | main `func_80062840` | four stages; stage 2 and later can time out to 0x11 |
-| 0x13 | `MODE_NAME_ENTRY` | NAME_ENT 0x8014231C | new game: names, birthday, blood type |
-| 0x14, 0x15 | `MODE_NAME_ENT_3/4` | NAME_ENT | roles not settled |
-| 0x20-0x22 | `MODE_OPTION`, `_2`, `_3` | OPTION | 0x22 is also entered in-game when `D_800B3C6C` is set |
-| 0x30 | `MODE_SCHEDULE` | main `schedule_init` | builds the queue for the coming week |
-| 0x31 | `MODE_DAY_SCREEN` | main | shows the day, then `day_event_dispatch` |
-| 0x32 | `MODE_WEEK_END` | main | weekly health check (section 5.2) |
-| 0x34 | `MODE_COMMAND_SCREEN` | main `func_8005A0B0` | weekday command screen: the player picks the next week's command; reached when the queue reader hits the end marker 0xFF; stage 5 is club joining |
-| 0x35-0x37 | `MODE_EXAM`, `MODE_CAREER_GUIDANCE`, `MODE_CAREER_CHOICE` | ETC | final exams and rank list; career talks; job or college choice |
-| 0x38, 0x39 | `MODE_MONTH_START`, `MODE_DAY_NOTICE` | main | queue types 0xFE and 0xFD |
-| 0x3A | `MODE_HELP` | OLH | on-line help |
-| 0x40 | `MODE_SCHOOL_DAY` | main `week_day` | school-day command screen and the day's parameter changes |
-| 0x41, 0x42 | `MODE_NEW_YEAR_PREP`, `MODE_CHRISTMAS_PREP` | main | pre_syogatu, pre_xmas |
-| 0x43, 0x45 | `MODE_TELEPHONE`, `MODE_TELEPHONE_PROFILE` | TEL | calls; profile page (HYPOTHESIS for 0x45) |
-| 0x44 | `MODE_RUMOR` | main `uwasa_main` | rumor report |
-| 0x46 | `MODE_HOLIDAY` | main | holiday command screen, telephone, club joining, appointments |
-| 0x50 | `MODE_DATE` | DATE | an appointment starts here; 0x5E hosts the girl-specific scenes |
-| 0x51 | `MODE_SCHOOL_TRIP` | SHUGAKU | |
-| 0x52, 0x53, 0x55 | `MODE_NEW_YEAR_A`, `_B`, `MODE_SEASONAL_PARTY` | SHOUGATU | New Year and party flows (HYPOTHESIS names: the English form of the overlay prefix); 0x5B `MODE_MEETING` (HYPOTHESIS name: SHOUGATU hosts generic scenes there) is also in SHOUGATU |
-| 0x54 | `MODE_VALENTINE` | VALEN | |
-| 0x56, 0x57 | `MODE_PLAYER_BIRTHDAY`, `MODE_GIRL_BIRTHDAY` | GEKO | |
-| 0x58, 0x5C | `MODE_AMUSEMENT_PARK`, `_2` | DATE2 | |
-| 0x59, 0x5A, 0x5D | `MODE_GIRL_ENCOUNTER`, `MODE_GIRL_INVITATION`, `MODE_SPECIAL_EVENT` | GEKO | HYPOTHESIS name for 0x59 (and for `DAY_EVENT_GIRL_ENCOUNTER`); the prefix GEKO stays untranslated |
-| 0x5F, 0x60 | `MODE_CLUB_CAMP`, `_2` | KANGEI | HYPOTHESIS names: the overlay is rated low confidence; queue type 0x42 comes six in a row in the club season |
-| 0x61, 0x62 | `MODE_SICK_VISIT`, `_2` | OMIMAI | |
-| 0x63 | `MODE_ENDING` | ENDING | |
-| 0x70, 0x71 | `MODE_CULTURE_FESTIVAL_A/B` | BUNKASAI / BUNKAKEN | chosen by the player's club: id < 6 gets A |
-| 0x72 | `MODE_SPORTS_FESTIVAL` | TAIIKU | |
-| 0x73 | `MODE_PRACTICE_MATCH` | RENSYU | |
-| 0x74-0x76 | `MODE_CLUB_MASTER_A/B/C` | MASTER | HYPOTHESIS for the meaning |
-| 0x80-0x82 | `MODE_CULTURE_STAGE`, `MODE_RPG_BATTLE`, `MODE_FESTIVAL_STALLS` | BUNKA_SD, RPG_BAT, EN_NICHI | HYPOTHESIS name for 0x82; the prefix EN_NICHI stays untranslated |
-| 0x90, 0x91 | `MODE_SHOOTER`, `MODE_ALBUM` | TACO, ETC | extras |
-| 0xC2-0xC4 | `MODE_ETC_C2/C3/C4` | ETC | album/memory-card flows after the ending |
-| 0xD0 | `MODE_TT_GAME` | TT | own loader |
-| 0xFE, 0xFF | `MODE_DEBUG_VRAM_VIEW`, `MODE_EXIT` | main | |
+| 0x00 | `GAME_MODE_BOOT` | main `func_8005A06C` | loads the shared system textures (stage 0), then goes to the title |
+| 0x01 | `GAME_MODE_BOOT_WAIT` | main | waits for `boot_hold`; HYPOTHESIS |
+| 0x02 | `GAME_MODE_OVERLAY_LOAD` | main loader | section 2.1 |
+| 0x03 | `GAME_MODE_CALL_ENTRY` | main | calls `ovl_entry` directly |
+| 0x10 | `GAME_MODE_START` | main | initial mode; prepares the screen, then mode 0 |
+| 0x11 | `GAME_MODE_OPENING` | NAME_ENT 0x80144AD0 | attract picture story and opening movie |
+| 0x12 | `GAME_MODE_TITLE` | main `func_80062840` | four stages; stage 2 and later can time out to 0x11 |
+| 0x13 | `GAME_MODE_FILE_SELECT` | NAME_ENT 0x8014231C | memory-card, system-file and album selection |
+| 0x14 | `GAME_MODE_NAME_ENTRY` | NAME_ENT 0x8013209C | player names, birthdays and blood types |
+| 0x15 | `GAME_MODE_PROLOGUE` | NAME_ENT 0x8014AF28 | voiced first-school-day sequence |
+| 0x20-0x22 | `GAME_MODE_OPTION`, `_2`, `_3` | OPTION | 0x22 is also entered in-game when `D_800B3C6C` is set |
+| 0x30 | `GAME_MODE_SCHEDULE` | main `schedule_init` | builds the queue for the coming week |
+| 0x31 | `GAME_MODE_DAY_SCREEN` | main | shows the day, then `day_event_dispatch` |
+| 0x32 | `GAME_MODE_WEEK_END` | main | weekly health check (section 5.2) |
+| 0x34 | `GAME_MODE_COMMAND_SCREEN` | main `func_8005A0B0` | weekday command screen: the player picks the next week's command; reached when the queue reader hits the end marker 0xFF; stage 5 is club joining |
+| 0x35-0x37 | `GAME_MODE_EXAM`, `GAME_MODE_CAREER_GUIDANCE`, `GAME_MODE_CAREER_CHOICE` | ETC | final exams and rank list; career talks; job or college choice |
+| 0x38, 0x39 | `GAME_MODE_MONTH_START`, `GAME_MODE_DAY_NOTICE` | main | queue types 0xFE and 0xFD |
+| 0x3A | `GAME_MODE_HELP` | OLH | on-line help |
+| 0x40 | `GAME_MODE_SCHOOL_DAY` | main `week_day` | school-day command screen and the day's parameter changes |
+| 0x41, 0x42 | `GAME_MODE_NEW_YEAR_PREP`, `GAME_MODE_CHRISTMAS_PREP` | main | pre_syogatu, pre_xmas |
+| 0x43, 0x45 | `GAME_MODE_TELEPHONE`, `GAME_MODE_TELEPHONE_PROFILE` | TEL | calls; profile page (HYPOTHESIS for 0x45) |
+| 0x44 | `GAME_MODE_RUMOR` | main `uwasa_main` | rumor report |
+| 0x46 | `GAME_MODE_HOLIDAY` | main | holiday command screen, telephone, club joining, appointments |
+| 0x50 | `GAME_MODE_DATE` | DATE | an appointment starts here; 0x5E hosts the girl-specific scenes |
+| 0x51 | `GAME_MODE_SCHOOL_TRIP` | SHUGAKU | |
+| 0x52, 0x53, 0x55 | `GAME_MODE_NEW_YEAR_A`, `_B`, `GAME_MODE_SEASONAL_PARTY` | SHOUGATU | New Year and party flows (HYPOTHESIS names: the English form of the overlay prefix); 0x5B `GAME_MODE_MEETING` (HYPOTHESIS name: SHOUGATU hosts generic scenes there) is also in SHOUGATU |
+| 0x54 | `GAME_MODE_VALENTINE` | VALEN | |
+| 0x56, 0x57 | `GAME_MODE_PLAYER_BIRTHDAY`, `GAME_MODE_GIRL_BIRTHDAY` | GEKO | |
+| 0x58, 0x5C | `GAME_MODE_AMUSEMENT_PARK`, `_2` | DATE2 | |
+| 0x59, 0x5A, 0x5D | `GAME_MODE_GIRL_ENCOUNTER`, `GAME_MODE_GIRL_INVITATION`, `GAME_MODE_SPECIAL_EVENT` | GEKO | HYPOTHESIS name for 0x59 (and for `DAY_EVENT_GIRL_ENCOUNTER`); the prefix GEKO stays untranslated |
+| 0x5F, 0x60 | `GAME_MODE_CLUB_CAMP`, `_2` | KANGEI | HYPOTHESIS names: the overlay is rated low confidence; queue type 0x42 comes six in a row in the club season |
+| 0x61, 0x62 | `GAME_MODE_SICK_VISIT`, `_2` | OMIMAI | |
+| 0x63 | `GAME_MODE_ENDING` | ENDING | |
+| 0x70, 0x71 | `GAME_MODE_CULTURE_FESTIVAL_A/B` | BUNKASAI / BUNKAKEN | chosen by the player's club: id < 6 gets A |
+| 0x72 | `GAME_MODE_SPORTS_FESTIVAL` | TAIIKU | |
+| 0x73 | `GAME_MODE_PRACTICE_MATCH` | RENSYU | |
+| 0x74-0x76 | `GAME_MODE_CLUB_MASTER_A/B/C` | MASTER | HYPOTHESIS for the meaning |
+| 0x80-0x82 | `GAME_MODE_CULTURE_STAGE`, `GAME_MODE_RPG_BATTLE`, `GAME_MODE_FESTIVAL_STALLS` | BUNKA_SD, RPG_BAT, EN_NICHI | HYPOTHESIS name for 0x82; the prefix EN_NICHI stays untranslated |
+| 0x90, 0x91 | `GAME_MODE_SHOOTER`, `GAME_MODE_ALBUM` | TACO, ETC | extras |
+| 0xC2-0xC4 | `GAME_MODE_ETC_C2/C3/C4` | ETC | album/memory-card flows after the ending |
+| 0xD0 | `GAME_MODE_TT_GAME` | TT | own loader |
+| 0xFE, 0xFF | `GAME_MODE_DEBUG_VRAM_VIEW`, `GAME_MODE_EXIT` | main | |
 
 EVENT and GYOZI are never loaded (no loader builds their sectors); they were linked against another main layout, so their calls to main addresses are stale. Their uses are excluded from every count in this spec.
 
@@ -227,7 +228,7 @@ Old name, new name, use count (direct `D_800E6280.` reads and writes in `src/`, 
 | 0x10FC | s32 | `unk_10FC` | `game_mode_timer` | 5 | ++ after each mode dispatch, reset by every mode change |
 | 0x1100 | s32 | `unk_1100` | `mode_stage_timer` | 74 | reset by mode and stage changes; overlays count frames in it |
 | 0x1104 | GsWord | `unk_1104` | `mode_step_timer` | 582 | frames in the current step; reset by every step, stage and mode change (582 uses) |
-| 0x1108 | u8 | `unk_1108` | `game_mode` | 55 | main state; MainMode; set by game_mode_set; dispatched by game_mode_dispatch |
+| 0x1108 | u8 | `unk_1108` | `game_mode` | 55 | main state; GameMode; set by game_mode_set; dispatched by game_mode_dispatch |
 | 0x1109 | u8 | `unk_1109` | `mode_stage` | 289 | stage inside the mode; mode_stage_set / mode_stage_next |
 | 0x110A | u8 | `unk_110A` | `mode_step` | 1152 | step inside the stage; mode_step_set / mode_step_next (1,152 uses) |
 | 0x110B | s8 | `unk_110B` | `game_mode_scratch` | 38 | s8, cleared on mode change; BUNKA_SD uses it as a brightness value |
@@ -281,11 +282,11 @@ Old name, new name, use count (direct `D_800E6280.` reads and writes in `src/`, 
 
 `year/month/day/weekday` are bytes: year is the calendar year modulo 100 and rolls over in January (95 = April-December 1995, 96, 97, 98 = January-March 1998, where the game ends), month 1-12, day 1-31, weekday 0 (Monday) to 6 (Sunday). Start: 1995-04-04, a Tuesday (weekday 1). `calendar_advance_day` adds one day: weekday wraps at 7; month length 31 for months 1,3,5,7,8,10,12, 30 for 4,6,9,11, February 29 days in year 96 and 28 otherwise; after December the month is 1 and the year +1. `day_count` (u16) is incremented once per advance (days since the start; the code uses 730 and `/365` as year boundaries). In appointment and birthday checks month 13 means January of the following year.
 
-From year 98, month 3 (day != 0) the queue reader stops dispatching and calls `mode_step_next`; step 1 of the day screen then loads the ending sound bank and starts `MODE_ENDING` (0x63). The graduation-day scenes before that (exam rank list, career choice, confession counting) are ETC modes selected by queue types.
+From year 98, month 3 (day != 0) the queue reader stops dispatching and calls `mode_step_next`; step 1 of the day screen then loads the ending sound bank and starts `GAME_MODE_ENDING` (0x63). The graduation-day scenes before that (exam rank list, career choice, confession counting) are ETC modes selected by queue types.
 
 ### 3.2 Month tables
 
-`month_calendar[2]` holds this month and next month. Each record has `day_kind[0x20]` (`[0]` = days in the month, `[d]` = day kind) and `marker[0x20]` (`[0]` = weekday of the 1st, `[d]` = marker). At the end of a month the second record moves to the first and the new second record is loaded from `month_data_table` (`D_800B3748`, 36 month blobs indexed `(year - 95) * 12 + month - 4`; each blob is a 0x2000-byte calendar image followed by words: the day count, the first weekday, then n day kinds and n markers, of which only the low byte is kept). The initial table (April and May 1995) is written by `func_800418B0`. The blobs live in memory loaded from disc, not in the executable: **the port must read them from the disc data**. Mode 0x38 (`MODE_MONTH_START`) loads them at every month start: step 0 reads 0x95 sectors from LBA 0x9B94 to 0x801A0000, step 1 calls `func_80068938(year, month, 1)`, and the mode shows its screen only when the month is divisible by 3 (the new-term message in September, except on 1 September 1996, where it just continues). `func_80068938` loads blobs `idx` and `idx + 1` only while `idx < 35`.
+`month_calendar[2]` holds this month and next month. Each record has `day_kind[0x20]` (`[0]` = days in the month, `[d]` = day kind) and `marker[0x20]` (`[0]` = weekday of the 1st, `[d]` = marker). At the end of a month the second record moves to the first and the new second record is loaded from `month_data_table` (`D_800B3748`, 36 month blobs indexed `(year - 95) * 12 + month - 4`; each blob is a 0x2000-byte calendar image followed by words: the day count, the first weekday, then n day kinds and n markers, of which only the low byte is kept). The initial table (April and May 1995) is written by `func_800418B0`. The blobs live in memory loaded from disc, not in the executable: **the port must read them from the disc data**. Mode 0x38 (`GAME_MODE_MONTH_START`) loads them at every month start: step 0 reads 0x95 sectors from LBA 0x9B94 to 0x801A0000, step 1 calls `func_80068938(year, month, 1)`, and the mode shows its screen only when the month is divisible by 3 (the new-term message in September, except on 1 September 1996, where it just continues). `func_80068938` loads blobs `idx` and `idx + 1` only while `idx < 35`.
 
 Day kinds: 0 school day, 1 Sunday, 2 national holiday, 3 break day (HYPOTHESIS: events of the summer and winter breaks are gated on kind 3). Markers (HYPOTHESIS for names that are not tied to an event): 2/6/10/14/16/20 push a day-notice record, 4 sports festival, 5 exam period, 8 club season, 11 school trip, 12 culture festival, 13 Christmas preparations, 15 New Year preparations, 17 Valentine's day, 18 career choice (year 98), 19 seasonal party.
 
@@ -297,7 +298,7 @@ Day kinds: 0 school day, 1 Sunday, 2 national holiday, 3 break day (HYPOTHESIS: 
 
 The player picks a command for the coming week on the schedule screen: `last_command` low nibble is the weekday command (an icon index; commands 0-7 have a row in `school_day_command_deltas`, command 4 is club activity, 0xE means none chosen yet), bits 4-7 hold the last holiday command. `parameter_up_down(command, flag, half)` applies a command: for each of parameters 0-7 the delta comes from row `command` of `school_day_command_deltas` (signed bytes, 9 per row; the club command uses `club_activity_deltas[club]`): a positive delta is multiplied by `0x1000 * (4 if flag else 1) / (2 if half else 1) / div_a / div_b`, a delta of zero or less is `delta << 12` and is never scaled; stress (index 8) mirrors this: a negative delta (relief) gets the scale factor, a delta of zero or more is `delta << 12`, and one whole point is added to stress when `half` is set. `div_a` is 2 when the player is sick (health 3); `div_b` is 2 for injured or neurotic (health 1 or 2), except when the command id (the first argument, not the parameter index) is 5, 6 or 7. `parameter_change(i, delta)` adds the 16.16 delta to parameter i, floors it at 0 and caps the value at 999. (HYPOTHESIS: command 7 is rest; it selects a sick-bed picture when the player is sick.)
 
-The command screen (mode 0x34) ends in `MODE_SCHEDULE` (`schedule_init`), which runs five steps once per queue build: 0 preparation (`func_8006CD14`), 1 `day_event_queue_build_week`, 2 `schedule_girls_gakko` (resolve encounter placeholders), 3 `schdeule_girls_param` (the weekly girl decay of section 5.3), 4 `func_80070ECC` (`calendar_advance_day`, stop CD audio when it plays, mode 0x31). `day_event_queue_build_week` (`func_8006D7EC`) fills `day_events` from tomorrow until Sunday. Order of its work, as coded:
+The command screen (mode 0x34) ends in `GAME_MODE_SCHEDULE` (`schedule_init`), which runs five steps once per queue build: 0 preparation (`func_8006CD14`), 1 `day_event_queue_build_week`, 2 `schedule_girls_gakko` (resolve encounter placeholders), 3 `schdeule_girls_param` (the weekly girl decay of section 5.3), 4 `func_80070ECC` (`calendar_advance_day`, stop CD audio when it plays, mode 0x31). `day_event_queue_build_week` (`func_8006D7EC`) fills `day_events` from tomorrow until Sunday. Order of its work, as coded:
 
 1. Increment the command counter `progress_state[0x15 + command % 9]`, count down girl 11's `scene_counters[0]`, count met girls 1-9, decrement the 3-bit `recovery_days`, clear the queue (`day_event_queue_clear`: type 0xFF everywhere, index 0).
 2. If the next day is the first of a month, put `DAY_EVENT_MONTH_START` first.
@@ -342,7 +343,7 @@ Every pass of the reader starts with two housekeeping calls. `func_80071280` (`g
 
 ### 3.6 Appointments
 
-`appointment_slots` are eight words (date promises). Bits 0-4 place + 1, 12-15 month, 16-20 day, 24 a flag, 25-28 girl, 29 active. `appointment_find_today(year, month, day)` returns the 1-based slot whose month and day match (it returns -1 on December 24, on January 1 and from March 1998 on, whatever the slots hold; otherwise 0 when no slot matches). `appointment_launch` pushes the place into `appt_place_*`, stores a `DAY_EVENT_APPOINTMENT` record (girl, place), copies the girl to `current_girl` and `date_girl`, the flag to `appointment_flag`, and enters `MODE_DATE`. The list is sorted by month and day with January treated as month 13 in December (`func_8006B0C8`).
+`appointment_slots` are eight words (date promises). Bits 0-4 place + 1, 12-15 month, 16-20 day, 24 a flag, 25-28 girl, 29 active. `appointment_find_today(year, month, day)` returns the 1-based slot whose month and day match (it returns -1 on December 24, on January 1 and from March 1998 on, whatever the slots hold; otherwise 0 when no slot matches). `appointment_launch` pushes the place into `appt_place_*`, stores a `DAY_EVENT_APPOINTMENT` record (girl, place), copies the girl to `current_girl` and `date_girl`, the flag to `appointment_flag`, and enters `GAME_MODE_DATE`. The list is sorted by month and day with January treated as month 13 in December (`func_8006B0C8`).
 
 ### 3.7 Return context and the event log
 
@@ -514,12 +515,12 @@ Field renames of the shared records (243 `field` rows, 140 in `GameState`) use t
 
 ## 11. Enums and masks (const rows)
 
-Proposed for `include/game_enums.h` (238 rows): `GirlId` (16, `GIRL_*`), `Parameter` (9), `Month` (12), `Weekday` (7), `Club` (12 including `CLUB_NONE`), `Place` (21), `HealthState` (4), `Vacation` (4), `DayKind` (4), `CalendarMarker` (18), `DayEventType` (31), `MainMode` (68), `InputDevice`, `VoiceMode`, `MenuMode`, `IconMode`, `PadBits` (14, PsyQ layout, `PAD_` prefix), `MouseButtons`, `PlayerFlag`. Rules for applying them:
+Proposed for `include/game_enums.h` (238 rows): `GirlId` (16, `GIRL_*`), `Parameter` (9), `Month` (12), `Weekday` (7), `Club` (12 including `CLUB_NONE`), `Place` (21), `HealthState` (4), `Vacation` (4), `DayKind` (4), `CalendarMarker` (18), `DayEventType` (31), `GameMode` (68), `InputDevice`, `VoiceMode`, `MenuMode`, `IconMode`, `PadBits` (14, PsyQ layout, `PAD_` prefix), `MouseButtons`, `PlayerFlag`. Rules for applying them:
 
 - Fields and variables keep their fixed-width types (an `enum` variable is 4 bytes and signed and would change code); the field gets a `/* GirlId */` comment.
 - A literal is replaced only where the other operand is a named site: comparisons and assignments of the field, `case` labels of a `switch` on it, and arguments of the named functions (`game_mode_set`, `mode_stage_set`, `mode_step_set`, `icon_can_use_set`, `get_g_zyotai_*`, `birth_day_check_days` for `GirlId`).
 - `Place` values stored in appointment words are place + 1; do not replace the stored value.
-- Placeholders until the overlay analysts settle them: `MODE_NAME_ENT_3/4`, `MODE_TELEPHONE_PROFILE`, `MODE_CLUB_MASTER_*`, `MODE_ETC_C2..C4`, `MARKER_NOTICE_*`, `DAY_EVENT_CLUB_MASTER_*`.
+- Placeholders until the overlay analysts settle them: `GAME_MODE_NAME_ENTRY/4`, `GAME_MODE_TELEPHONE_PROFILE`, `MODE_CLUB_MASTER_*`, `GAME_MODE_ETC_C2..C4`, `MARKER_NOTICE_*`, `DAY_EVENT_CLUB_MASTER_*`.
 
 ## 12. The 100 most used main functions
 
@@ -662,7 +663,7 @@ NAME_ENT then collects the player's name, birthday and blood type and the birthd
 
 1. `girl_cleared` (`unk_53C`): the mascot menu and ETC graduation count it with the saved per-girl flag. Is it an "ending seen" flag? The overlay analysts for ETC and OPTION can settle it.
 2. `story_stage` (flag bits 9-11) and flag bit 2 of `GirlFlags` ("introduced"?): events set them in many overlays; needs the DATE/GEKO analysts.
-3. `MODE_NAME_ENT_3/4`, `MODE_ETC_C2..C4`, `MODE_TELEPHONE_PROFILE`, `MODE_CLUB_MASTER_*`: roles unsettled.
+3. `GAME_MODE_NAME_ENTRY/4`, `GAME_MODE_ETC_C2..C4`, `GAME_MODE_TELEPHONE_PROFILE`, `MODE_CLUB_MASTER_*`: roles unsettled.
 4. Calendar marker values 2, 6, 10, 14, 16, 20 (notice records) and what the notice mode 0x39 shows.
 5. `progress_state` flag bytes (21): which HUD facts they record (first-time hints?).
 6. `unk_F6E` (`sd_anim_fast`): the in-game hint names it the SD character animation speed switch (pad 2 START); the animations it changes besides actors 96 and 97 and the parameter panel are not checked.

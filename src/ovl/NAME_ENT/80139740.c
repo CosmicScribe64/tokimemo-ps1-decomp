@@ -984,10 +984,10 @@ void func_8013C6FC(void) {
 void func_8013C7C0(void) {
     if (game_state.pad_pressed & PAD_START) {
         func_8013B77C();
-        game_mode_set(MODE_NAME_ENT_3);
+        game_mode_set(GAME_MODE_NAME_ENTRY);
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
         func_8013B77C();
-        game_mode_set(MODE_NAME_ENT_3);
+        game_mode_set(GAME_MODE_NAME_ENTRY);
     } else if (game_state.pad_pressed & PAD_CROSS) {
         mode_step_next();
     }
@@ -1446,7 +1446,7 @@ void func_8013D9A0(void) {
 void func_8013DA08(void) {
     if (game_state.pad_pressed & 0x820) {
         func_8013B77C();
-        game_mode_set(MODE_NAME_ENT_3);
+        game_mode_set(GAME_MODE_NAME_ENTRY);
     }
 }
 
@@ -1564,7 +1564,7 @@ s32 func_8013DD94(void) {
     case 3:
         memory_card_stop();
         func_8013B77C();
-        game_mode_set(MODE_NAME_ENT_3);
+        game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
@@ -1650,7 +1650,7 @@ void func_8013DF88(void) {
     case 7:
         memory_card_stop();
         func_8013B77C();
-        game_mode_set(MODE_NAME_ENT_3);
+        game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
@@ -1806,7 +1806,7 @@ void func_8013E80C(void) {
         func_80041878();
         func_80042058();
         func_8013B77C();
-        game_mode_set(MODE_NAME_ENT_3);
+        game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
@@ -1854,7 +1854,7 @@ void func_8013E9FC(void) {
         func_80041878();
         func_80042058();
         func_8013B77C();
-        game_mode_set(MODE_NAME_ENT_3);
+        game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
@@ -1918,7 +1918,7 @@ void func_8013EBEC(void) {
         break;
     case 6:
         func_8013B77C();
-        game_mode_set(MODE_NAME_ENT_3);
+        game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
@@ -1965,7 +1965,7 @@ void func_8013EE7C(void) {
         break;
     case 4:
         func_8013B77C();
-        game_mode_set(MODE_NAME_ENT_3);
+        game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
@@ -2489,7 +2489,7 @@ void func_80140044(void) {
         return;
     default:
         func_8013B77C();
-        game_mode_set(MODE_START);
+        game_mode_set(GAME_MODE_START);
         return;
     }
 }
@@ -2696,16 +2696,16 @@ void func_80140BA4(void) {
             func_80041878();
             func_80041F48();
             game_state.event_log_count = 0;
-            game_mode_set(MODE_NAME_ENT_3);
+            game_mode_set(GAME_MODE_NAME_ENTRY);
         } else if (game_state.year == 0x5F && game_state.month == 4 && game_state.day == 4) {
             func_8013E71C();
             func_80041878();
             func_80041F48();
             game_state.event_log_count = 0;
-            game_mode_set(MODE_NAME_ENT_3);
+            game_mode_set(GAME_MODE_NAME_ENTRY);
         } else {
             func_800674B0();
-            game_mode_set(MODE_COMMAND_SCREEN);
+            game_mode_set(GAME_MODE_COMMAND_SCREEN);
             mode_stage_set(0xFF);
         }
     }

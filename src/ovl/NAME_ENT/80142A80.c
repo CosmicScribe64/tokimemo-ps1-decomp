@@ -100,7 +100,7 @@ void func_80142A80(void) {
     func_80041168(0);
     func_8009C674(0);
     func_80048DD0(0);
-    game_mode_set(MODE_TITLE);
+    game_mode_set(GAME_MODE_TITLE);
     func_8004ADAC((s32) sp43);
     k_speed_set((u8) sp3C);
     func_8006C760(0);

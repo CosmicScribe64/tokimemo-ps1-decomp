@@ -164,7 +164,7 @@ void func_80138170(void) {
 }
 
 void func_801381A4(void) {
-    game_mode_set(MODE_DATE);
+    game_mode_set(GAME_MODE_DATE);
     mode_stage_set(1);
     mode_step_set(0x11);
 }

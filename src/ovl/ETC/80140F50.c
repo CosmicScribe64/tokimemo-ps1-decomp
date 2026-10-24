@@ -125,7 +125,7 @@ void func_801413FC(void) {
     printf("データセーブ");
     if (game_state.options_dirty != 0) {
         audio_bank_state_reset();
-        game_mode_set(MODE_TITLE);
+        game_mode_set(GAME_MODE_TITLE);
         return;
     }
     text_system_reset();
@@ -193,7 +193,7 @@ void func_80141700(void) {
         mode_step_next();
     } else if (game_state.pad_pressed & PAD_CROSS) {
         audio_bank_state_reset();
-        game_mode_set(MODE_ETC_C4);
+        game_mode_set(GAME_MODE_ETC_C4);
     }
     dec_bg_draw(2);
 }
@@ -353,7 +353,7 @@ s32 func_80141BE8(void) {
         if (game_state.screen_brightness-- < 8) {
             game_state.screen_brightness = 0;
             audio_bank_state_reset();
-            game_mode_set(MODE_ETC_C4);
+            game_mode_set(GAME_MODE_ETC_C4);
             game_state.current_girl += 0x10;
         }
         set_dec_bri(game_state.screen_brightness);
@@ -395,7 +395,7 @@ void func_80141E10(void) {
             g->substep += 1;
         } else if (g->pad_pressed & PAD_CROSS) {
             audio_bank_state_reset();
-            game_mode_set(MODE_ETC_C4);
+            game_mode_set(GAME_MODE_ETC_C4);
         }
         break;
     case 4:
@@ -470,7 +470,7 @@ void func_801421AC(void) {
             mode_step_set(4);
         } else if (game_state.pad_pressed & PAD_CROSS) {
             audio_bank_state_reset();
-            game_mode_set(MODE_ETC_C4);
+            game_mode_set(GAME_MODE_ETC_C4);
         }
         break;
     }
@@ -509,7 +509,7 @@ void func_80142390(void) {
             mode_step_set(4);
         } else if (game_state.pad_pressed & PAD_CROSS) {
             audio_bank_state_reset();
-            game_mode_set(MODE_ETC_C4);
+            game_mode_set(GAME_MODE_ETC_C4);
         }
         break;
     }
@@ -551,7 +551,7 @@ void func_80142574(void) {
             g->substep += 1;
         } else if (g->pad_pressed & PAD_CROSS) {
             audio_bank_state_reset();
-            game_mode_set(MODE_ETC_C4);
+            game_mode_set(GAME_MODE_ETC_C4);
         }
         break;
     case 4:
@@ -613,15 +613,15 @@ void func_80142974(void) {
     if (cd_audio_state() & 4) {
         if (game_state.pad_pressed & 0x200000) {
             if (game_state.options_dirty != 0) {
-                game_mode_set(MODE_PROLOGUE);
+                game_mode_set(GAME_MODE_OPENING);
             } else {
-                game_mode_set(MODE_ETC_C4);
+                game_mode_set(GAME_MODE_ETC_C4);
             }
         } else if (game_state.pad_pressed & 0x400000) {
             if (game_state.options_dirty != 0) {
-                game_mode_set(MODE_PROLOGUE);
+                game_mode_set(GAME_MODE_OPENING);
             } else {
-                game_mode_set(MODE_ALBUM);
+                game_mode_set(GAME_MODE_ALBUM);
             }
         }
     }

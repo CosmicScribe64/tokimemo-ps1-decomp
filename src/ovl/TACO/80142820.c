@@ -171,7 +171,7 @@ void func_80142DE0(void) {
         hizuke_disp_switch(1);
         return;
     }
-    game_mode_set(MODE_TITLE);
+    game_mode_set(GAME_MODE_TITLE);
 }
 
 void func_80142EC4(void) {

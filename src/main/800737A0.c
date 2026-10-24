@@ -446,7 +446,7 @@ void week_day_exit0(void) {
     game_state.day_event_index++;
     actor_clear(0x60);
     actor_clear(0x61);
-    game_mode_set(MODE_DAY_SCREEN);
+    game_mode_set(GAME_MODE_DAY_SCREEN);
 }
 
 /* Apply the command's parameter deltas, scaling gains and stress by the day's result. */

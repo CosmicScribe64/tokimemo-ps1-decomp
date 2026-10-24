@@ -53,9 +53,9 @@ s32 func_80137890(void) {
         break;
     case 0x10:
         if ((u32) ((u16) game_state.player_flags.h >> 0xC) < 6U) {
-            game_mode_set(MODE_CULTURE_FESTIVAL_A);
+            game_mode_set(GAME_MODE_CULTURE_FESTIVAL_A);
         } else {
-            game_mode_set(MODE_CULTURE_FESTIVAL_B);
+            game_mode_set(GAME_MODE_CULTURE_FESTIVAL_B);
         }
         mode_stage_set((u8)D_80122EB0);
         mode_step_set((u8)D_80122EB4);

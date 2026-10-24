@@ -132,7 +132,7 @@ void func_80135994(void) {
     game_state.saved_mode_stage = game_state.mode_stage;
     game_state.saved_mode_step = 0x38;
     k_reset(0);
-    game_mode_set(MODE_RPG_BATTLE);
+    game_mode_set(GAME_MODE_RPG_BATTLE);
 }
 
 void func_80135A04(void) {

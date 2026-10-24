@@ -255,7 +255,7 @@ void func_80149C1C(void) {
         if ((u8)game_state.event_log_count < 0xFEU) {
             game_state.event_log_count -= 1;
         }
-        game_mode_set(MODE_DATE);
+        game_mode_set(GAME_MODE_DATE);
         mode_stage_set(3);
         return;
     }

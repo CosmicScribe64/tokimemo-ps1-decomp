@@ -106,7 +106,7 @@ void func_8013B25C(void) {
         D_80122EAC = 3;
         D_80122EB0 = (s32) game->mode_stage;
         D_80122EB4 = game->mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 11:
         portrait_read_step(0x525B);
@@ -587,7 +587,7 @@ void func_8013C0AC(void) {
         D_80122EAC = 3;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 9:
         portrait_read_step(0x522E);

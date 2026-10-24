@@ -257,7 +257,7 @@ void func_8013C634(void) {
         D_80122EAC = 3;
         D_80122EB0 = (s32) g->mode_stage;
         D_80122EB4 = g->mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
         cd_read_sectors(7U, 0x801E8000, 0x4AB6);
@@ -396,7 +396,7 @@ void func_8013CA6C(void) {
     case 7:
         D_80122EB0 = (s32) g->mode_stage;
         D_80122EB4 = g->mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
         cd_read_sectors(7U, 0x801E8000, 0x4AB6);

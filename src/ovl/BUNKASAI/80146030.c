@@ -451,7 +451,7 @@ void func_80146A78(void) {
         D_80122EAC = 6;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        game_mode_set(MODE_CULTURE_STAGE);
+        game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 10:
         portrait_read_step(0x58AF);

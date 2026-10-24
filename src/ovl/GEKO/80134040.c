@@ -54,7 +54,7 @@ s32 func_80134228(void) {
 
     if (game_state.day_event_done_bits & 0x40) {
         audio_command(0xCF);
-        game_mode_set(MODE_NEW_YEAR_A);
+        game_mode_set(GAME_MODE_NEW_YEAR_A);
         return 0;
     }
     /* FAKE: read through a u8 view so the base and the result share $v0 (T-24035). */

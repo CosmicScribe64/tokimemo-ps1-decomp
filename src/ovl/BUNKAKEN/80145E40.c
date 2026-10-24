@@ -200,7 +200,7 @@ void func_801463E4(void) {
             actor_clear_range(0);
             cursor_show(0);
             set_dec_bri(0);
-            game_mode_set(MODE_TT_GAME);
+            game_mode_set(GAME_MODE_TT_GAME);
         }
         break;
     default:

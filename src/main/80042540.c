@@ -11,7 +11,7 @@ void game_mode_dispatch(void) {
         break;
     case 0x1:
         if (*(u8 *)&game_state.boot_hold == 0) {
-            game_mode_set(MODE_BOOT);
+            game_mode_set(GAME_MODE_BOOT);
         }
         break;
     case 0xFF:
