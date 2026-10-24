@@ -99,11 +99,11 @@ func	RPG_BAT	func_80136A9C	rpg_battle_literature_step_7	move phase called from s
 func	RPG_BAT	func_80136BD8	rpg_battle_literature_step_8	move phase called from step 8 (shakes effect records via rpg_battle_effects_shift)
 func	RPG_BAT	func_80136CCC	rpg_battle_literature_step_9	move phase called from step 9
 func	RPG_BAT	func_801505B8	rpg_battle_club_move_drama	club 1 special move; steps 0..5, girl assist 6..18, wrap-up 0x64.., Himoo case 0xC8..0xD1
-func	RPG_BAT	func_80151108	rpg_battle_drama_step_3	three audience lines (random from 41-line table), three beats
+func	RPG_BAT	func_80151108	rpg_battle_drama_step_3	three beats, each showing one of three different random lines from the 41-line table
 func	RPG_BAT	func_80150F84	rpg_battle_drama_pick_lines	picks 3 different random lines out of the 41-entry table D_8015EEF0
-func	RPG_BAT	func_80151380	rpg_battle_drama_fade_audience	writes fade levels into three audience records
-func	RPG_BAT	func_801513C8	rpg_battle_drama_audience_spawn	shows 3 (trio) or 1 (boss) audience records and loads their palette
-func	RPG_BAT	func_801515F0	rpg_battle_drama_audience_hide	hides the audience records
+func	RPG_BAT	func_80151380	rpg_battle_drama_overlay_fade	writes a fade level into the three overlay records placed over the enemies
+func	RPG_BAT	func_801513C8	rpg_battle_drama_overlay_spawn	shows 3 (trio) or 1 (boss) overlay records at the enemy positions
+func	RPG_BAT	func_801515F0	rpg_battle_drama_overlay_hide	hides the overlay records
 func	RPG_BAT	func_801504E0	rpg_battle_dialog_himoo_scolds_manzai	Himoo line during the drama move in the robot encounter (case 0xCD)
 func	RPG_BAT	func_801421E0	rpg_battle_club_move_science	club 2 special move (a robot appears and attacks 3 times)
 func	RPG_BAT	func_80142544	rpg_battle_science_step_7	move phase called from step 7
