@@ -1,8 +1,10 @@
 """Turn splat symbol_addrs files into a linker script of `name = addr;` lines.
 
 Overlays call into the main exe by name. splat only applies a symbol_addrs
-file to its own segment, so names that live in the main exe (O.BIN and SDK
-names) are handed to each overlay link through this script instead.
+file to its own segment, so the main-exe names that the overlay yamls do not load
+(main-only sizes, EVENT-range names, aggregate bases) are handed to each overlay link
+through this script instead. The O.BIN and SDK names are loaded by the overlay yamls
+since T-27003 and reach the link through each overlay's undefined_funcs_auto file.
 
 Usage: python3 tools/syms_to_ld.py OUT.ld SYMBOL_ADDRS.txt...
 """

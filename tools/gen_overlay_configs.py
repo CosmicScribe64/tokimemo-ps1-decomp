@@ -73,7 +73,9 @@ options:
   auto_link_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
-    - config/symbol_addrs.txt{extra}
+    - config/symbol_addrs.txt
+    - config/symbol_addrs_obin.txt
+    - config/symbol_addrs_sdk.txt{extra}
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/{name}_undefined_funcs_auto.txt

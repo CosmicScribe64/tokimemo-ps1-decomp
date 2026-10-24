@@ -40,9 +40,9 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
-    # SDK names live at 0x80086810-0x800AF340, inside the main exe only; overlay configs would reject them
+    # SDK names (T-0010) live at 0x80086810-0x800AF340; the overlay yamls load them too, so overlay asm uses them (T-27003)
     - config/symbol_addrs_sdk.txt
-    # provisional game names from O.BIN (T-0600), hypotheses; see wiki/obin.md
+    # game names from O.BIN (T-0600), kept as they are; the overlay yamls load them too (T-27003); see wiki/obin.md
     - config/symbol_addrs_obin.txt
     # main-exe-only function sizes (T-0500)
     - config/symbol_addrs_main.txt

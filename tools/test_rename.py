@@ -968,6 +968,22 @@ class SymtabTest(Fixture):
         self.assertIn("evt_name = 0x800F6200 lies in the range of EVT", p)
         self.assertIn("differ only in case: Case, case", p)
 
+    def test_event_range_in_obin_and_hypotheses_files(self):
+        """Every yaml loads the O.BIN, SDK and hypotheses files (T-27003): a main name in EVENT's range there is refused."""
+        for yaml in ("config/SLPM_86.053.yaml", "config/overlays/AAA.yaml", "config/overlays/EVT.yaml"):
+            self.write(yaml, self.read(yaml).replace(
+                "    - config/symbol_addrs.txt\n",
+                "    - config/symbol_addrs.txt\n    - config/symbol_addrs_obin.txt\n    - config/symbol_addrs_hypotheses.txt\n", 1))
+        self.write("config/symbol_addrs_obin.txt", "obin_ok = 0x80041200; // type:func\nobin_evt = 0x800F6300;\n")
+        self.write("config/symbol_addrs_hypotheses.txt", "// HYPOTHESES\nhyp_evt = 0x800F6400;\n")
+        p = "\n".join(symtab.SymbolTable(self.root).problems())
+        self.assertIn("config/symbol_addrs_obin.txt:2: obin_evt = 0x800F6300 lies in the range of EVT", p)
+        self.assertIn("config/symbol_addrs_hypotheses.txt:2: hyp_evt = 0x800F6400 lies in the range of EVT", p)
+        self.assertNotIn("obin_ok", p)
+        self.write("config/symbol_addrs_obin.txt", "obin_ok = 0x80041200; // type:func\n")
+        self.write("config/symbol_addrs_hypotheses.txt", "// HYPOTHESES\n")
+        self.assertEqual(symtab.SymbolTable(self.root).problems(), [])
+
     def test_check_symbols_cli(self):
         import check_symbols
         with unittest.mock.patch("sys.stdout", io.StringIO()):
