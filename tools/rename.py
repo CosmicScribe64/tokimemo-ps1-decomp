@@ -18,7 +18,8 @@ Usage (inside Docker, from the repo root):
   rename.py const --header H (--enum NAME | --defines) --values FILE --site SITE... [--apply]
                                                     add an enum or #defines and use them at the named sites
 
-Table rows (whitespace separated, `#` starts a comment, the rest of the line is the note):
+Table rows (whitespace separated; a line that starts with `#` is a comment; the rest of a row is its
+note, a `#` inside it included):
   # kind scope            old            new               note
   func   main             func_8004284C  pad_trigger_any   T-26010 returns the edge bits of the pad word
   data   DATE             D_8015DFCC     date_scene_timer  T-26100
@@ -84,7 +85,7 @@ Ledger: config/renames/<NAME>.txt, one file per work unit (default: the first ro
 `kind scope old new key note` (key: the address for func, data and file, else `-`). Rows of one key
 form a chain (a later row may rename a name again); replay maps every earlier name of a chain to its
 last name, in any order of the ledger files. The lint refuses branching chains and cycles. In a
-ledger only a line that starts with # is a comment (a note may hold a #).
+table and in a ledger only a line that starts with # is a comment (a note keeps its #).
 Tests: tools/test_rename.py (synthetic trees, no game data).
 """
 import argparse
@@ -150,6 +151,7 @@ class Row:
     def __init__(self, kind, scope, old, new, note="", where="", key="-"):
         self.kind, self.scope, self.old, self.new = kind, scope, old, new
         self.note, self.where, self.key = note, where, key
+        self.uses_only = False      # replay of a member chain: the declaration holds another name of the chain
 
     @property
     def hypothesis(self):
@@ -174,7 +176,7 @@ def strip_comment(line):
 
 
 def strip_line_comment(line):
-    """Ledger lines: only a line that starts with # is a comment (a note may hold ' #')."""
+    """Tables and ledgers: only a line that starts with # is a comment (a note may hold ' #')."""
     return "" if line.lstrip().startswith("#") else line
 
 
@@ -182,7 +184,7 @@ def parse_rows(text, where, ledger=False):
     """Rows of a table (kind scope old new note) or a ledger (kind scope old new key note)."""
     rows = []
     for n, line in enumerate(text.splitlines(), 1):
-        parts = (strip_line_comment(line) if ledger else strip_comment(line)).split()
+        parts = strip_line_comment(line).split()
         if not parts:
             continue
         need = 5 if ledger else 4
@@ -880,18 +882,45 @@ def edit_symbol_files(ctx, row, owner, addr, is_func, table):
         text = tree.read(path)
         if text is None or row.new not in text:
             continue
-        seen, out, changed = set(), [], False
-        for l in text.splitlines(True):
-            m = symtab.LINE_RE.match(l)
-            if m and m.group(1) == row.new:
-                key = (m.group(1), int(m.group(2), 0))
-                if key in seen:
-                    changed = True
-                    continue
-                seen.add(key)
+        out = dedupe_symbol_lines(ctx, row, text, path)
+        if out != text:
+            tree.write(path, out)
+
+
+def dedupe_symbol_lines(ctx, row, text, path):
+    """`text` with a repeated `row.new = ADDR;` line dropped: the first stays, and takes the splat attributes
+    (type:func size:0x10) of the dropped lines that it lacks. A different value of an attribute that
+    both have stays as the first line has it, and is listed."""
+    lines = text.splitlines(True)
+    first = {}              # (name, address) -> index of the kept line in `out`
+    out = []
+    for l in lines:
+        m = symtab.LINE_RE.match(l)
+        if not (m and m.group(1) == row.new):
             out.append(l)
-        if changed:
-            tree.write(path, "".join(out))
+            continue
+        key = (m.group(1), int(m.group(2), 0))
+        if key not in first:
+            first[key] = len(out)
+            out.append(l)
+            continue
+        k = first[key]
+        kept = symtab.LINE_RE.match(out[k])
+        have = {a.split(":", 1)[0]: a for a in splat_attrs(kept.group(3))}
+        extra = []
+        for a in splat_attrs(m.group(3)):
+            name = a.split(":", 1)[0]
+            if name not in have:
+                have[name] = a
+                extra.append(a)
+            elif have[name] != a:
+                ctx.note(row, "%s: %s has %s, the dropped duplicate line has %s (kept the first)" % (
+                    path, row.new, have[name], a))
+        if extra:
+            body = out[k].rstrip("\r\n")
+            eol = out[k][len(body):]
+            out[k] = body + ("" if "//" in kept.group(3) else " //") + " " + " ".join(extra) + eol
+    return "".join(out)
 
 
 def edit_config_keys(ctx, row, owner, addr, accept):
@@ -1104,7 +1133,7 @@ def plan_fields(ctx, rows, use_gcc=True):
             ctx.problem(row, "%s already has a member %s" % (row.scope, row.new))
             continue
         if len(hits) != 1:
-            if ctx.merge and not hits and news:
+            if ctx.merge and not hits and (news or row.uses_only):
                 batch.append((row, path, {tag, td} - {None}, None))
                 continue
             ctx.problem(row, "%s has %d members named %s" % (row.scope, len(hits), row.old))
@@ -1526,7 +1555,17 @@ def config_text_files(tree):
             if tree.exists(p)]
 
 
+ISLAND_TYPES = ("c", ".rodata", ".data", ".bss")
+
+
+def stem_of(name):
+    return name.rsplit("/", 1)[-1]
+
+
 def plan_file(ctx, row):
+    """Rename the object `row.old` (an address stem or a name) of a unit to `row.new`. Replay (ctx.merge) also
+    settles what a stale branch left under the old name when the yaml c line has the new name already or
+    never had the old one: island lines, the C file at the old path, path strings."""
     tree = ctx.tree
     if row.scope == "include":
         return plan_header(ctx, row)
@@ -1534,35 +1573,53 @@ def plan_file(ctx, row):
         return ctx.problem(row, "unknown unit %s" % row.scope)
     unit = row.scope
     subs = tree.c_names(unit)
-    mine = [(v, n) for v, n in subs if n.rsplit("/", 1)[-1] == row.old]
-    if len(mine) != 1:
-        if ctx.merge and any(n.rsplit("/", 1)[-1] == row.new for _v, n in subs):
+    mine = [(v, n) for v, n in subs if stem_of(n) == row.old]
+    if len(mine) == 1:
+        start, oname = mine[0]
+        nname = "%s/%s" % (oname.rsplit("/", 1)[0], row.new)
+    elif ctx.merge and not mine:
+        # the object's c line has the new name, or another name of the chain; stale parts keep the old one
+        here = [(v, n) for v, n in subs if "0x%08X" % v == row.key]
+        if len(here) != 1:
             return
+        start, cur = here[0]
+        oname = "%s/%s" % (cur.rsplit("/", 1)[0], row.old)
+        nname = "%s/%s" % (cur.rsplit("/", 1)[0], row.new)
+    else:
         return ctx.problem(row, "%s has %d c subsegments named */%s" % (unit, len(mine), row.old))
-    start, oname = mine[0]
-    folder = oname.rsplit("/", 1)[0]
-    nname = "%s/%s" % (folder, row.new)
     why = stem_problem(row.new)
     if why and not ctx.merge:
         return ctx.problem(row, why)
-    if any(n.lower() == nname.lower() for _v, n in subs):
+    if mine and any(n.lower() == nname.lower() for _v, n in subs):
         return ctx.problem(row, "%s exists already in %s (names are compared without case)" % (nname, unit))
     osrc, nsrc = tree.source_path(unit, oname), tree.source_path(unit, nname)
-    if not tree.exists(osrc):
-        return ctx.problem(row, "%s does not exist" % osrc)
-    if tree.exists(nsrc):
-        return ctx.problem(row, "%s exists already" % nsrc)
+    have_old, have_new = tree.exists(osrc), tree.exists(nsrc)
+    if ctx.merge:
+        if have_old and have_new:
+            return ctx.problem(row, "%s and %s both exist (a branch kept the old path); merge the code into %s by "
+                                    "hand, delete %s, and replay again" % (osrc, nsrc, nsrc, osrc))
+        if mine and not have_old and not have_new:
+            return ctx.problem(row, "neither %s nor %s exists" % (osrc, nsrc))
+        move = have_old
+    else:
+        if not have_old:
+            return ctx.problem(row, "%s does not exist" % osrc)
+        if have_new:
+            return ctx.problem(row, "%s exists already" % nsrc)
+        move = True
     # yaml: the c subsegment and its .rodata/.data islands (same name)
     y = tree.yaml_path(unit)
-    ytext = tree.read(y)
-    out = []
-    for line in ytext.splitlines(True):
+    out, n_yaml = [], 0
+    for line in tree.read(y).splitlines(True):
         m = SUB_RE.match(line)
-        if m and m.group(4) == oname and (m.group(2) or m.group(3)) in ("c", ".rodata", ".data", ".bss"):
+        if m and m.group(4) == oname and (m.group(2) or m.group(3)) in ISLAND_TYPES:
             line = line[:m.start(4)] + nname + line[m.end(4):]
+            n_yaml += 1
         out.append(line)
-    tree.write(y, "".join(out))
-    tree.move(osrc, nsrc)
+    if n_yaml:
+        tree.write(y, "".join(out))
+    if move:
+        tree.move(osrc, nsrc)
     asm_rx = re.compile(r"(?<=/)%s(?=[./\"])" % re.escape(oname))
     n_str = path_rewrite(tree, all_code_files(tree), asm_rx, nname, comments=False,
                          prefix_ok=lambda s: s.startswith('"asm/'))
@@ -1571,63 +1628,92 @@ def plan_file(ctx, row):
     n_cfg = 0
     for p in config_text_files(tree):
         n_cfg += config_line_rewrite(tree, p, word, lambda m: m.group(1) + nname)
+    if ctx.merge and not (n_yaml or move or n_str or n_com or n_cfg):
+        return                                  # renamed already
     lo, hi = object_range(tree, unit, start)
     desc = TICKET_RE.sub("", row.note).strip().rstrip(".")
     rng = "0x%08X-0x%08X" % (lo, hi) if hi else "0x%08X" % lo
-    first = "/* %s.c: %s%s (config/objects/%s.txt). */\n" % (
-        row.new, (desc + ". Original object ") if desc else "original object ", rng, unit)
-    text = tree.read(nsrc)
-    if re.match(r"^/\* \w+\.c: .*\(config/objects/\w+\.txt\)\. \*/\n", text):
-        text = text[text.index("\n") + 1:]
-    tree.write(nsrc, first + text)
+    if move:
+        first = "/* %s.c: %s%s (config/objects/%s.txt). */\n" % (
+            row.new, (desc + ". Original object ") if desc else "original object ", rng, unit)
+        text = tree.read(nsrc)
+        if re.match(r"^/\* \w+\.c: .*\(config/objects/\w+\.txt\)\. \*/\n", text):
+            text = text[text.index("\n") + 1:]
+        tree.write(nsrc, first + text)
     row.key = "0x%08X" % start
-    ctx.report.append("%s: %s -> %s (%s), %d asm path strings, %d comment mentions, %d config keys" % (
-        row, osrc, nsrc, rng, n_str, n_com, n_cfg))
+    ctx.report.append("%s: %s -> %s (%s), %d yaml lines, %d asm path strings, %d comment mentions, %d config keys" % (
+        row, osrc, nsrc, rng, n_yaml, n_str, n_com, n_cfg))
     ctx.done.append(row)
     tree._index = None
 
 
 def plan_dir(ctx, row):
+    """Move an overlay's folder src/ovl/<old> to src/ovl/<new>. Replay (ctx.merge) moves only what still uses the
+    old folder: objects, island lines and C files a stale branch added or edited there."""
     tree = ctx.tree
     unit = row.scope
     if unit not in tree.unit_names or unit == "main":
         return ctx.problem(row, "dir rows rename an overlay's folder (src/ovl/<folder>)")
     subs = tree.c_names(unit)
-    if not subs or any(n.split("/", 1)[0] != row.old for _v, n in subs if "/" in n):
-        if ctx.merge and all(n.split("/", 1)[0] == row.new for _v, n in subs):
-            return
-        return ctx.problem(row, "the c subsegments of %s are not all in %s/" % (unit, row.old))
+    y = tree.yaml_path(unit)
+    lines = tree.read(y).splitlines(True)
+    prefix = row.old + "/"
+    if ctx.merge:
+        stale = [(v, n) for v, n in subs if n.startswith(prefix)]
+        named = [m.group(4) for m in map(SUB_RE.match, lines) if m and m.group(4).startswith(prefix)]
+        old_files = tree.listdir("src/ovl/%s/*.c" % row.old)
+        if not (stale or named or old_files):
+            return                              # renamed already (or never in this tree)
+        stems = {n[len(prefix):] for n in named} | {os.path.basename(f)[:-2] for f in old_files}
+        sources = {tree.source_path(unit, n) for _v, n in stale} | set(old_files)
+    else:
+        if not subs or any(n.split("/", 1)[0] != row.old for _v, n in subs if "/" in n):
+            return ctx.problem(row, "the c subsegments of %s are not all in %s/" % (unit, row.old))
+        stems = {n.split("/", 1)[1] for _v, n in subs if "/" in n}
+        sources = {tree.source_path(unit, n) for _v, n in subs}
     why = stem_problem(row.new)
     if why and not ctx.merge:
         return ctx.problem(row, why)
     others = [u for u in tree.unit_names if u != unit and any(n.split("/", 1)[0].lower() == row.new.lower()
                                                                for _v, n in tree.c_names(u))]
-    if others or os.path.exists(os.path.join(tree.root, "src/ovl", row.new)):
+    if others or (not ctx.merge and os.path.exists(os.path.join(tree.root, "src/ovl", row.new))):
         return ctx.problem(row, "src/ovl/%s is taken" % row.new)
-    y = tree.yaml_path(unit)
-    out = []
-    for line in tree.read(y).splitlines(True):
+    moves = []
+    for src in sorted(sources):
+        dst = "src/ovl/%s%s" % (row.new, src[len("src/ovl/") + len(row.old):])
+        if ctx.merge and not tree.exists(src):
+            if not tree.exists(dst):
+                return ctx.problem(row, "neither %s nor %s exists" % (src, dst))
+            continue
+        if ctx.merge and tree.exists(dst):
+            return ctx.problem(row, "%s and %s both exist (a branch kept the old path); merge the code into %s by "
+                                    "hand, delete %s, and replay again" % (src, dst, dst, src))
+        moves.append((src, dst))
+    out, n_yaml = [], 0
+    for line in lines:
         m = SUB_RE.match(line)
-        if m and m.group(4).startswith(row.old + "/"):
+        if m and m.group(4).startswith(prefix):
             line = line[:m.start(4)] + row.new + m.group(4)[len(row.old):] + line[m.end(4):]
+            n_yaml += 1
         out.append(line)
     tree.write(y, "".join(out))
-    for _v, n in subs:
-        tree.move(tree.source_path(unit, n), tree.source_path(unit, row.new + n[len(row.old):]))
+    for src, dst in moves:
+        tree.move(src, dst)
     asm_rx = re.compile(r"(?<=/%s/)(?:non)?matchings/%s(?=/)|(?<=/%s/)data/%s(?=/)" % (
         re.escape(unit), re.escape(row.old), re.escape(unit), re.escape(row.old)))
     n_str = path_rewrite(tree, all_code_files(tree), asm_rx, lambda m: m.group(0)[:-len(row.old)] + row.new,
                          comments=False, prefix_ok=lambda s: s.startswith('"asm/'))
-    stems = sorted({n.split("/", 1)[1] for _v, n in subs if "/" in n}, key=len, reverse=True)
-    word = re.compile(r"(?<![\w/])((?:src/ovl/)?)%s/(%s)(?![\w])" % (re.escape(row.old), "|".join(map(re.escape, stems))))
-    n_com = path_rewrite(tree, all_code_files(tree), word, lambda m: m.group(1) + row.new + "/" + m.group(2),
-                         strings=False)
-    n_cfg = 0
-    for p in config_text_files(tree):
-        n_cfg += config_line_rewrite(tree, p, word, lambda m: m.group(1) + row.new + "/" + m.group(2))
+    n_com = n_cfg = 0
+    if stems:
+        word = re.compile(r"(?<![\w/])((?:src/ovl/)?)%s/(%s)(?![\w])" % (
+            re.escape(row.old), "|".join(map(re.escape, sorted(stems, key=len, reverse=True)))))
+        n_com = path_rewrite(tree, all_code_files(tree), word, lambda m: m.group(1) + row.new + "/" + m.group(2),
+                             strings=False)
+        for p in config_text_files(tree):
+            n_cfg += config_line_rewrite(tree, p, word, lambda m: m.group(1) + row.new + "/" + m.group(2))
     row.key = "-"
-    ctx.report.append("%s: %d files moved to src/ovl/%s, %d asm path strings, %d comment mentions, %d config keys"
-                      % (row, len(subs), row.new, n_str, n_com, n_cfg))
+    ctx.report.append("%s: %d files moved to src/ovl/%s, %d yaml lines, %d asm path strings, %d comment mentions, "
+                      "%d config keys" % (row, len(moves), row.new, n_yaml, n_str, n_com, n_cfg))
     ctx.done.append(row)
     tree._index = None
 
@@ -1644,21 +1730,24 @@ def guard_of(path):
 def plan_header(ctx, row):
     tree = ctx.tree
     old, new = row.old, row.new
-    if not tree.exists("include/" + old):
-        if ctx.merge and tree.exists("include/" + new):
-            return
+    move = tree.exists("include/" + old)
+    if not move and not ctx.merge:
         return ctx.problem(row, "include/%s does not exist" % old)
-    if os.path.basename(old) in TOOL_HEADERS:
-        return ctx.problem(row, "tools find include/%s by name (tools/sync_protos.py, tools/check_headers.py); "
-                                "change them first" % old)
-    why = stem_problem(new, header=True)
-    if why and not ctx.merge:
-        return ctx.problem(row, why)
-    if old.startswith("ovl/") != new.startswith("ovl/"):
-        return ctx.problem(row, "an overlay's own header stays in include/ovl/ (tools find it there)")
-    if tree.exists("include/" + new) or any(h.lower() == ("include/" + new).lower() for h in tree.index()["headers"]):
-        return ctx.problem(row, "include/%s exists already" % new)
-    tree.move("include/" + old, "include/" + new)
+    # replay without the old header: it is renamed already (or has another name of the chain); a stale
+    # branch may still include it by the old name
+    if move:
+        if os.path.basename(old) in TOOL_HEADERS:
+            return ctx.problem(row, "tools find include/%s by name (tools/sync_protos.py, tools/check_headers.py); "
+                                    "change them first" % old)
+        why = stem_problem(new, header=True)
+        if why and not ctx.merge:
+            return ctx.problem(row, why)
+        if old.startswith("ovl/") != new.startswith("ovl/"):
+            return ctx.problem(row, "an overlay's own header stays in include/ovl/ (tools find it there)")
+        if tree.exists("include/" + new) or any(h.lower() == ("include/" + new).lower()
+                                                for h in tree.index()["headers"]):
+            return ctx.problem(row, "include/%s exists already" % new)
+        tree.move("include/" + old, "include/" + new)
     n_inc = 0
     for f in all_code_files(tree):
         text = tree.read(f)
@@ -1678,9 +1767,9 @@ def plan_header(ctx, row):
         if nt != text:
             tree.write(f, nt)
             n_inc += sum(1 for _ in re.finditer(r'^[ \t]*#[ \t]*include[ \t]*"', nt, re.M)) and c
-    text = tree.read("include/" + new)
     og, ng = guard_of(old), guard_of(new)
-    if re.search(r"^#ifndef %s\b" % og, text, re.M):
+    text = tree.read("include/" + new) if move else None
+    if text and re.search(r"^#ifndef %s\b" % og, text, re.M):
         text = re.sub(r"(?<![\w])%s(?![\w])" % og, ng, text)
         tree.write("include/" + new, text)
     word = re.compile(r"(?<![\w/])((?:include/)?)%s(?![\w])" % re.escape(old))
@@ -1692,6 +1781,8 @@ def plan_header(ctx, row):
             t = f.read()
         if ("include/" + old) in t or ('"%s"' % old) in t:
             tools.append(os.path.relpath(p, tree.root))
+    if ctx.merge and not (move or n_inc or n_com or n_cfg):
+        return                                  # renamed already
     for t in tools:
         ctx.note(row, "%s names include/%s (check that it still works)" % (t, old))
     row.key = "-"
@@ -2285,13 +2376,21 @@ def old_name_hits(tree, ch, key, o, files, idx, table):
             if o in ident_tokens(body):
                 hits.append("%s (definition of %s)" % (d[0], tname))
     elif kind == "file":
+        # the object's c line or an island of it named `o`, or its C file at the old path
         unit = key[1]
-        if any(n.rsplit("/", 1)[-1] == o for v, n in tree.c_names(unit) if "0x%08X" % v == key[2]):
-            hits.append(tree.yaml_path(unit))
+        subs = tree.subsegments(unit)
+        for folder in sorted({n.rsplit("/", 1)[0] for v, t, n in subs if t == "c" and "0x%08X" % v == key[2]}):
+            oname = "%s/%s" % (folder, o)
+            if any(n == oname and t in ISLAND_TYPES for _v, t, n in subs):
+                hits.append(tree.yaml_path(unit))
+            if tree.exists(tree.source_path(unit, oname)):
+                hits.append(tree.source_path(unit, oname))
     elif kind == "dir":
+        # a yaml line (c or island) in the old folder, or a C file there
         unit = key[1]
-        if any(n.split("/", 1)[0] == o for _v, n in tree.c_names(unit)):
+        if any(n.startswith(o + "/") for _v, _t, n in tree.subsegments(unit)):
             hits.append(tree.yaml_path(unit))
+        hits += tree.listdir("src/ovl/%s/*.c" % o)
     elif kind == "header":
         if tree.exists("include/" + o):
             hits.append("include/" + o)
@@ -2369,7 +2468,10 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
         if not any(r.where in sel_where for r in rs):
             continue
         final = names[-1]
-        for o in names[:-1]:
+        # moves of files, folders and headers: the newest earlier name first, so a stale path of the oldest name
+        # meets the file of the current name and not a half-renamed one
+        olds = names[:-1][::-1] if key[0] in ("file", "dir", "header") else names[:-1]
+        for o in olds:
             r0 = next(r for r in rs if r.old == o)
             row = Row(r0.kind, r0.scope, o, final, r0.note, r0.where, r0.key)
             # symbols, types, locals: the old name still in the chain's scope (as check sees it); fields are
@@ -2391,10 +2493,13 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
         members = set()
         for u in list(tree.index()["sources"]) + tree.index()["headers"]:
             members |= ident_tokens(tree.read(u) or "", members=True)
+        groups = {}
         for r in fields:
             r.scope = current_type_name(ctx, r.scope)
             if r.old in members:
-                need.append(r)
+                groups.setdefault((r.scope, r.new), []).append(r)
+        for (scope, final), rs in groups.items():
+            need += settle_field_chain(ctx, scope, final, rs)
         if need:
             plan_fields(ctx, need, use_gcc=use_gcc)
     for line in ctx.report:
@@ -2407,6 +2512,29 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
     out.write("replay: %d rows run (old name still in scope; %d chains), %d files changed\n" % (
         len(ctx.done), len(ch), len(ctx.tree.changed())))
     return 0
+
+
+def settle_field_chain(ctx, scope, final, rows):
+    """The rows of one member chain for replay (one row per earlier name still in use, all to `final`).
+    The type's definition holds one name of the chain (or `final` already): the row of the name it holds
+    renames the declaration, the others only follow the uses gcc reports (`uses_only`), so the chain is
+    walked from whatever name the tree has. Returns the rows to plan."""
+    tree = ctx.tree
+    defs = find_type(tree, scope)
+    if len(defs) != 1:
+        return rows                         # plan_fields reports it
+    path, _tag, _td, b, e, _end = defs[0]
+    body = blank_comments(tree.read(path))[b:e]
+    held = [r for r in rows if any(k == "id" and body[s:x] == r.old for k, s, x in tokens(body))]
+    has_final = any(k == "id" and body[s:x] == final for k, s, x in tokens(body))
+    if len(held) > 1 or (held and has_final):
+        names = ", ".join(sorted({r.old for r in held} | ({final} if has_final else set())))
+        ctx.problem(held[0], "%s declares %s: replay cannot tell which one the ledger chain renamed" % (scope, names))
+        return []
+    if held or has_final:
+        for r in rows:
+            r.uses_only = r not in held
+    return rows
 
 
 # ======================================================================================= lookup, export

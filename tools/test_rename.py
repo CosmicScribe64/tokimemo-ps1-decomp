@@ -250,7 +250,7 @@ class TableTest(Fixture):
     def test_rows_and_notes(self):
         rows = R.parse_rows("# c\nfunc main func_80041000 boot T-1 entry # tail\n\n", "t")
         self.assertEqual((rows[0].kind, rows[0].scope, rows[0].old, rows[0].new, rows[0].note),
-                         ("func", "main", "func_80041000", "boot", "T-1 entry"))
+                         ("func", "main", "func_80041000", "boot", "T-1 entry # tail"))
         self.assertFalse(rows[0].hypothesis)
         self.assertTrue(R.parse_rows("data main D_80041000 x HYPOTHESIS: y\n", "t")[0].hypothesis)
         with self.assertRaises(R.RenameError):
@@ -577,6 +577,45 @@ class LedgerTest(Fixture):
         self.assertEqual(R.replay(self.root, out=out, use_gcc=HAVE_GCC), 0, out.getvalue())
         self.assertIn("0 files changed", out.getvalue())
 
+    def field_chain_tree(self, held):
+        """A tree whose GameState holds `held` (unk_02, step or stage) while its code uses all three names."""
+        self.write("config/renames/main.txt", "field GameState unk_02 step -\nfield GameState step stage -\n")
+        h = self.read("include/game.h")
+        self.write("include/game.h", h.replace("s16 unk_02;", "s16 %s;" % held))
+        self.write("src/main/80041100.c", self.read("src/main/80041100.c").replace("D_800E6280.unk_02", "D_800E6280.%s" % held))
+        self.write("src/ovl/AAA/80132100.c", self.read("src/ovl/AAA/80132100.c")
+                   + "void again(void) { D_800E6280.unk_02 = 1; D_800E6280.step = 2; D_800E6280.stage = 3; }\n")
+
+    @unittest.skipUnless(HAVE_GCC and HAVE_PYCPARSER, "needs gcc and pycparser (Docker image)")
+    def test_replay_field_chain_walks_from_the_name_the_tree_has(self):
+        # unk_02 -> step -> stage (B1 of the T-27002 review): the definition holds any one of the three names
+        for held in ("unk_02", "step", "stage"):
+            with self.subTest(held=held):
+                self.tearDown()
+                self.setUp()
+                self.field_chain_tree(held)
+                out = io.StringIO()
+                self.assertEqual(R.replay(self.root, out=out), 0, out.getvalue())
+                self.assertIn("/* 0x02 */ s16 stage;", self.read("include/game.h"))
+                self.assertNotIn("unk_02", self.read("include/game.h").split("Rec38")[0])
+                self.assertIn("D_800E6280.stage = arg0;", self.read("src/main/80041100.c"))
+                self.assertIn("void again(void) { D_800E6280.stage = 1; D_800E6280.stage = 2; D_800E6280.stage = 3; }",
+                              self.read("src/ovl/AAA/80132100.c"))
+                self.assertIn("D_80132100 = D_800E6280.stage;", self.read("src/ovl/AAA/80132000.c"))
+                self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+                out = io.StringIO()
+                self.assertEqual(R.replay(self.root, out=out), 0, out.getvalue())
+                self.assertIn("0 files changed", out.getvalue())
+
+    @unittest.skipUnless(HAVE_GCC and HAVE_PYCPARSER, "needs gcc and pycparser (Docker image)")
+    def test_replay_field_chain_with_two_names_declared(self):
+        self.field_chain_tree("step")
+        self.write("include/game.h", self.read("include/game.h").replace("s16 step;", "s16 step;\n    s16 unk_02;"))
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out), 1, out.getvalue())
+        self.assertIn("cannot tell which one", out.getvalue())
+        self.assertIn("unk_02;", self.read("include/game.h"))          # nothing written
+
     def test_replay_local_row_before_its_function_rename(self):
         self.write("config/renames/a.txt", "local main:func_80041000 index mode_value -\n")
         self.write("config/renames/b.txt", "func main func_80041000 boot_a 0x80041000\n"
@@ -599,6 +638,32 @@ class LedgerTest(Fixture):
         R.replay(self.root, out=io.StringIO(), use_gcc=False)
         self.assertEqual(self.read("config/symbol_addrs_main.txt").count("text_merge"), 1)
         self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+
+    def test_replay_symbol_line_dedupe_keeps_attributes(self):
+        self.ok("func main func_80041180 text_merge\n")
+        # the kept line has no size; the repeats carry attributes
+        main = self.read("config/symbol_addrs_main.txt")
+        self.write("config/symbol_addrs_main.txt", main.replace("// type:func size:0x20", "// type:func")
+                   + "func_80041180 = 0x80041180; // type:func size:0x10 align:4\n"
+                   + "func_80041180 = 0x80041180;\n")
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out, use_gcc=False), 0, out.getvalue())
+        lines = [l for l in self.read("config/symbol_addrs_main.txt").splitlines() if "text_merge" in l]
+        self.assertEqual(lines, ["text_merge = 0x80041180; // type:func size:0x10 align:4"])
+        # a conflicting value stays as the first line has it, and is listed
+        main = self.read("config/symbol_addrs_main.txt")
+        self.write("config/symbol_addrs_main.txt", main + "func_80041180 = 0x80041180; // size:0x99\n")
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out, use_gcc=False), 0, out.getvalue())
+        self.assertEqual([l for l in self.read("config/symbol_addrs_main.txt").splitlines() if "text_merge" in l],
+                         ["text_merge = 0x80041180; // type:func size:0x10 align:4"])
+
+    def test_table_note_keeps_hash(self):
+        self.ok("func AAA func_80132000 aaa_start T-1 see issue #3 # and more\n")
+        row = R.read_ledger(self.root)[0]
+        self.assertEqual(row.note, "T-1 see issue #3 # and more")
+        self.assertIn("func AAA func_80132000 aaa_start 0x80132000 T-1 see issue #3 # and more",
+                      self.read("config/renames/AAA.txt"))
 
     def test_check_other_kinds(self):
         self.ok("local main:func_80041000 index mode_value\n")
@@ -630,6 +695,192 @@ class LedgerTest(Fixture):
 
 
 @unittest.skipUnless(HAVE_GCC and HAVE_PYCPARSER, "needs gcc and pycparser (Docker image)")
+class ReplayMovesTest(Fixture):
+    """Replay of file, folder and header rows on trees where a stale branch left things under the old name
+    (B2 of the T-27002 review)."""
+
+    STALE_C = ('#include "ovl/AAA.h"\n\nINCLUDE_RODATA("asm/ovl/AAA/data/AAA/80132200.rodata", D_80132280);\n\n'
+               'void func_80132200(void) {\n}\nINCLUDE_ASM("asm/ovl/AAA/nonmatchings/AAA/80132200", func_80132240);\n')
+
+    def add_stale_object(self, folder):
+        """What a branch that forked before the rename adds: an object under the old folder."""
+        y = self.read("config/overlays/AAA.yaml")
+        self.write("config/overlays/AAA.yaml", y.replace(
+            "  - [0x300, data, AAA_data]",
+            "  - [0x280, c, %s/80132200]\n  - [0x2c0, .rodata, %s/80132200]\n  - [0x300, data, AAA_data]" % (folder, folder)))
+        self.write("src/ovl/%s/80132200.c" % folder, self.STALE_C)
+        self.write("config/toolchains.txt", self.read("config/toolchains.txt") + "%s/80132200 ido 5.3\n" % folder)
+
+    def remove(self, path):
+        os.remove(os.path.join(self.root, path))
+
+    def replay_ok(self, expect_changed=True):
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out, use_gcc=False), 0, out.getvalue())
+        if not expect_changed:
+            self.assertIn("0 files changed", out.getvalue())
+        return out.getvalue()
+
+    def assert_stable(self):
+        """check is clean and a second replay changes nothing."""
+        out = io.StringIO()
+        self.assertEqual(R.check(self.root, out=out), 0, out.getvalue())
+        self.replay_ok(expect_changed=False)
+
+    def test_dir_object_added_under_the_old_folder(self):
+        self.ok("dir AAA AAA alpha_event T-1\n")
+        self.add_stale_object("AAA")
+        out = io.StringIO()
+        self.assertGreater(R.check(self.root, out=out), 0)
+        self.assertIn("AAA was renamed to alpha_event", out.getvalue())
+        self.replay_ok()
+        y = self.read("config/overlays/AAA.yaml")
+        self.assertIn("[0x280, c, alpha_event/80132200]", y)
+        self.assertIn("[0x2c0, .rodata, alpha_event/80132200]", y)
+        self.assertNotIn("AAA/8", y)
+        self.assertIsNone(self.read("src/ovl/AAA/80132200.c"))
+        c = self.read("src/ovl/alpha_event/80132200.c")
+        self.assertIn('"asm/ovl/AAA/data/alpha_event/80132200.rodata"', c)
+        self.assertIn('"asm/ovl/AAA/nonmatchings/alpha_event/80132200"', c)
+        self.assertIn("alpha_event/80132200 ido 5.3", self.read("config/toolchains.txt"))
+        self.assertNotIn("AAA/80132200", self.read("config/toolchains.txt"))
+        self.assert_stable()
+
+    def test_dir_c_file_kept_at_the_old_path(self):
+        # the yaml says alpha_event already, the branch's copy of the C file sits in the old folder
+        self.ok("dir AAA AAA alpha_event T-1\n")
+        self.add_stale_object("alpha_event")
+        self.write("src/ovl/AAA/80132200.c", self.read("src/ovl/alpha_event/80132200.c"))
+        self.remove("src/ovl/alpha_event/80132200.c")
+        out = io.StringIO()
+        self.assertGreater(R.check(self.root, out=out), 0)
+        self.replay_ok()
+        self.assertIsNone(self.read("src/ovl/AAA/80132200.c"))
+        self.assertIn("void func_80132200(void)", self.read("src/ovl/alpha_event/80132200.c"))
+        self.assert_stable()
+
+    def test_dir_old_and_new_file_both_exist(self):
+        self.ok("dir AAA AAA alpha_event T-1\n")
+        self.add_stale_object("AAA")
+        self.write("src/ovl/alpha_event/80132200.c", "/* another */\n")
+        before = {p: self.read(p) for p in ("config/overlays/AAA.yaml", "src/ovl/AAA/80132200.c")}
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out, use_gcc=False), 1)
+        self.assertIn("both exist", out.getvalue())
+        self.assertEqual(before, {p: self.read(p) for p in before})
+
+    def test_dir_chain_of_three_names(self):
+        self.write("config/renames/AAA.txt", "dir AAA AAA alpha_event -\ndir AAA alpha_event beta_event -\n")
+        self.replay_ok()                                    # the tree has the first name
+        self.assertIn("[0x0, c, beta_event/80132000]", self.read("config/overlays/AAA.yaml"))
+        self.assertIsNotNone(self.read("src/ovl/beta_event/80132100.c"))
+        self.assertIsNone(self.read("src/ovl/AAA/80132100.c"))
+        self.assert_stable()
+        # the tree has the middle name, and a stale object under the first one
+        self.tearDown()
+        self.setUp()
+        self.ok("dir AAA AAA alpha_event T-1\n", ledger="scratch")
+        self.remove("config/renames/scratch.txt")
+        self.write("config/renames/AAA.txt", "dir AAA AAA alpha_event -\ndir AAA alpha_event beta_event -\n")
+        self.add_stale_object("AAA")
+        self.replay_ok()
+        self.assertIn("[0x280, c, beta_event/80132200]", self.read("config/overlays/AAA.yaml"))
+        self.assertIsNotNone(self.read("src/ovl/beta_event/80132200.c"))
+        self.assert_stable()
+
+    def test_file_island_added_under_the_old_name(self):
+        # data_island.py in a branch adds a .data island named after the object, and its C text
+        self.ok("file AAA 80132100 aaa_tables T-1 the tables of AAA\n")
+        y = self.read("config/overlays/AAA.yaml")
+        self.write("config/overlays/AAA.yaml", y.replace(
+            "  - [0x300, data, AAA_data]", "  - [0x2c0, .data, AAA/80132100]\n  - [0x300, data, AAA_data]"))
+        c = self.read("src/ovl/AAA/aaa_tables.c")
+        self.write("src/ovl/AAA/aaa_tables.c", c + 'INCLUDE_RODATA("asm/ovl/AAA/data/AAA/80132100.data", D_801321C0);\n')
+        out = io.StringIO()
+        self.assertGreater(R.check(self.root, out=out), 0)
+        self.assertIn("80132100 was renamed to aaa_tables", out.getvalue())
+        self.replay_ok()
+        self.assertIn("[0x2c0, .data, AAA/aaa_tables]", self.read("config/overlays/AAA.yaml"))
+        self.assertIn('"asm/ovl/AAA/data/AAA/aaa_tables.data"', self.read("src/ovl/AAA/aaa_tables.c"))
+        self.assert_stable()
+
+    def test_file_c_file_kept_at_the_old_path(self):
+        self.ok("file AAA 80132100 aaa_tables T-1 the tables of AAA\n")
+        self.remove("src/ovl/AAA/aaa_tables.c")
+        self.write("src/ovl/AAA/80132100.c", '#include "ovl/AAA.h"\nINCLUDE_ASM("asm/ovl/AAA/nonmatchings/AAA/80132100", func_80132180);\n')
+        out = io.StringIO()
+        self.assertGreater(R.check(self.root, out=out), 0)
+        self.replay_ok()
+        self.assertIsNone(self.read("src/ovl/AAA/80132100.c"))
+        c = self.read("src/ovl/AAA/aaa_tables.c")
+        self.assertTrue(c.startswith("/* aaa_tables.c: the tables of AAA. Original object 0x80132100-0x80132200 "), c)
+        self.assertIn('"asm/ovl/AAA/nonmatchings/AAA/aaa_tables"', c)
+        self.assert_stable()
+
+    def test_file_added_object_with_the_old_yaml_line(self):
+        # a branch that forked before the rename: the old yaml line and the old file came back with the new file
+        self.ok("file AAA 80132100 aaa_tables T-1 the tables of AAA\n")
+        self.write("config/overlays/AAA.yaml", self.read("config/overlays/AAA.yaml").replace(
+            "AAA/aaa_tables", "AAA/80132100"))
+        self.remove("src/ovl/AAA/aaa_tables.c")
+        self.write("src/ovl/AAA/80132100.c", '#include "ovl/AAA.h"\nvoid f(void) {}\n')
+        self.replay_ok()
+        self.assertIn("[0x100, c, AAA/aaa_tables]", self.read("config/overlays/AAA.yaml"))
+        self.assertIn("[0x200, .rodata, AAA/aaa_tables]", self.read("config/overlays/AAA.yaml"))
+        self.assertIn("void f(void) {}", self.read("src/ovl/AAA/aaa_tables.c"))
+        self.assert_stable()
+
+    def test_file_old_and_new_file_both_exist(self):
+        self.ok("file AAA 80132100 aaa_tables T-1 the tables of AAA\n")
+        self.write("src/ovl/AAA/80132100.c", "/* the branch's copy */\n")
+        before = self.read("src/ovl/AAA/aaa_tables.c")
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out, use_gcc=False), 1)
+        self.assertIn("both exist", out.getvalue())
+        self.assertEqual(before, self.read("src/ovl/AAA/aaa_tables.c"))
+        self.assertEqual(self.read("src/ovl/AAA/80132100.c"), "/* the branch's copy */\n")
+
+    def test_file_chain_of_three_names(self):
+        self.write("config/renames/AAA.txt", "file AAA 80132100 tables_a 0x80132100 T-1 the tables\n"
+                                              "file AAA tables_a tables_b 0x80132100 T-2\n")
+        self.replay_ok()                                    # the tree has the oldest name
+        self.assertIn("[0x100, c, AAA/tables_b]", self.read("config/overlays/AAA.yaml"))
+        self.assertIsNotNone(self.read("src/ovl/AAA/tables_b.c"))
+        self.assert_stable()
+        # the tree has the middle name
+        self.tearDown()
+        self.setUp()
+        self.ok("file AAA 80132100 tables_a 0x80132100 T-1 the tables\n", ledger="scratch")
+        self.remove("config/renames/scratch.txt")
+        self.write("config/renames/AAA.txt", "file AAA 80132100 tables_a 0x80132100 T-1 the tables\n"
+                                              "file AAA tables_a tables_b 0x80132100 T-2\n")
+        self.replay_ok()
+        self.assertIn("[0x100, c, AAA/tables_b]", self.read("config/overlays/AAA.yaml"))
+        self.assertIsNone(self.read("src/ovl/AAA/tables_a.c"))
+        self.assert_stable()
+
+    def test_header_chain_of_three_names(self):
+        self.write("config/renames/main.txt", "file include ovl/AAA.h ovl/alpha.h - T-1\n"
+                                               "file include ovl/alpha.h ovl/beta.h - T-2\n")
+        self.replay_ok()
+        self.assertIsNotNone(self.read("include/ovl/beta.h"))
+        self.assertIn('#include "ovl/beta.h"', self.read("src/ovl/AAA/80132000.c"))
+        self.assertIn("#ifndef OVL_BETA_H", self.read("include/ovl/beta.h"))
+        self.assert_stable()
+        # the tree has the middle name; a stale file includes the first one
+        self.tearDown()
+        self.setUp()
+        self.ok("file include ovl/AAA.h ovl/alpha.h T-1\n", ledger="scratch")
+        self.remove("config/renames/scratch.txt")
+        self.write("src/ovl/EVT/800F6000.c", '#include "ovl/AAA.h"\n' + self.read("src/ovl/EVT/800F6000.c"))
+        self.write("config/renames/main.txt", "file include ovl/AAA.h ovl/alpha.h - T-1\n"
+                                               "file include ovl/alpha.h ovl/beta.h - T-2\n")
+        self.replay_ok()
+        self.assertIsNone(self.read("include/ovl/alpha.h"))
+        self.assertIn('#include "ovl/beta.h"', self.read("src/ovl/EVT/800F6000.c"))
+        self.assert_stable()
+
+
 class ConstTest(Fixture):
     def test_enum_at_sites(self):
         values = R.parse_values("AAA_MODE_IDLE 0 idle\nAAA_MODE_RUN 2\n", "v")
