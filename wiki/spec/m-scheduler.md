@@ -219,7 +219,7 @@ After the loop, independent of the 5/16 roll: girl 12's flag byte 3 (HYPOTHESIS:
 
 ## 11. The queue reader (`day_event_dispatch`) and the other modes
 
-Emulator probe of the whole table below: a one-record queue of each type was poked into the title-menu state and the reader run; every type reached the mode listed (overlay modes are requested through loader mode 2 and appear in `overlay_target_mode`), 0xFA and unknown types led to mode 0x34, and a type-0x44 record for an unmet girl was skipped.
+Emulator probe of the whole table below: a one-record queue of each type was poked into the title-menu state and the reader run; every type reached the mode listed (overlay modes are requested through loader mode 2 and appear in `overlay_target_mode`; type 0x24 was probed with the player's club at 11, giving 0x71), 0xFA and unknown types led to mode 0x34, and a type-0x44 record for an unmet girl was skipped. The branches with a girl or appointment condition (0x44 to mode 0x59, 0x46 skipped by an active appointment) were not run.
 
 The day screen runs `day_event_dispatch` in stage 0 step 0. Each pass:
 
