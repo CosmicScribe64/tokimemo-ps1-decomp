@@ -93,6 +93,7 @@ table and in a ledger only a line that starts with # is a comment (a note keeps 
 Tests: tools/test_rename.py (synthetic trees, no game data).
 """
 import argparse
+import copy
 import functools
 import glob
 import os
@@ -2604,7 +2605,7 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
         sel = [r for r in rows if r.where.split(":")[0] in keep]
     else:
         sel = rows
-    ch = chains(rows)
+    ch = chains(link_member_rows(rows))
     ctx = Context(root, ledger_rows=rows, merge=True)
     tree = ctx.tree
     files = all_code_files(tree)
@@ -2664,6 +2665,20 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
     out.write("replay: %d rows run (old name still in scope; %d chains), %d files changed\n" % (
         len(ctx.done), len(ch), len(ctx.tree.changed())))
     return 0
+
+
+def link_member_rows(rows):
+    """Replay: field rows under the type's current name, so a member chain that crosses a type rename
+    (`Rec38 unk_00 -> frac`, then the type becomes GirlRecord, then `GirlRecord frac -> fraction`) is one
+    chain and not two. Copies of the field rows; the others are the ledger's own."""
+    ch = chains(rows)
+    out = []
+    for r in rows:
+        if r.kind == "field":
+            r = copy.copy(r)
+            r.scope = current_type_name_rows(ch, r.scope)
+        out.append(r)
+    return out
 
 
 def settle_field_chain(ctx, scope, final, rows):

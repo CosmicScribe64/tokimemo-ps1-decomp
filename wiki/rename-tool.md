@@ -183,6 +183,12 @@ as they are (an enum variable would change the code); a member of a type of the 
   struct that declares two names of the chain stops the replay. Symbols run first, then types, locals
   and parameters (a local row finds its function under any name of the function's chain), members,
   and file, folder and header rows last (the newest earlier name of a chain first).
+- A member chain that crosses a type rename is one chain for replay: the field rows are put under
+  the type's current name first (`link_member_rows`), so `Rec38 unk_00 -> frac`, the type rename to
+  `GirlRecord`, and `GirlRecord frac -> fraction` walk as one chain from whatever name the tree has.
+  Before this (T-27004 merge), replay took the first row for a chain ending at `frac` and stopped with
+  "has 0 members named unk_00". `check` and `lookup` are unchanged (`check` resolves the type name at
+  the search, as before).
 - Replay also moves what a stale branch left under an old file or folder name. An object, an island
   line (`.rodata`, `.data`) or a C file under the old folder (`dir`) or the old file name (`file`)
   goes to the new path, and its yaml lines, `INCLUDE_ASM`/`INCLUDE_RODATA` paths and config keys

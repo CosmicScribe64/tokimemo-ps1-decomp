@@ -686,6 +686,24 @@ class LedgerTest(Fixture):
                 self.assertEqual(R.replay(self.root, out=out), 0, out.getvalue())
                 self.assertIn("0 files changed", out.getvalue())
 
+    def test_replay_field_chain_across_a_type_rename(self):
+        # Rec38 unk_00 -> frac, the type becomes GirlRecord, then frac -> fraction (T-27004 merge): the tree has
+        # the last names, and `unk_00` is still a member of another type (GameState), so the first row is a candidate
+        self.write("config/renames/main.txt",
+                   "type main Rec38 GirlRecord -\n"
+                   "field Rec38 unk_00 frac -\n"
+                   "field GirlRecord frac fraction -\n")
+        h = self.read("include/game.h").replace("typedef struct Rec38 {", "typedef struct GirlRecord {")
+        h = h.replace("    /* 0x00 */ s16 unk_00;\n} Rec38;", "    /* 0x00 */ s16 fraction;\n} GirlRecord;")
+        self.write("include/game.h", h)
+        self.write("src/main/80041100.c", self.read("src/main/80041100.c").replace("Rec38 r;", "GirlRecord r;").replace("r.unk_00", "r.fraction"))
+        self.assertIn("s16 fraction;", self.read("include/game.h"))
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out, use_gcc=False), 0, out.getvalue())
+        self.assertNotIn("PROBLEM", out.getvalue())
+        self.assertIn("0 files changed", out.getvalue())
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+
     @unittest.skipUnless(HAVE_GCC and HAVE_PYCPARSER, "needs gcc and pycparser (Docker image)")
     def test_replay_field_chain_with_two_names_declared(self):
         self.field_chain_tree("step")

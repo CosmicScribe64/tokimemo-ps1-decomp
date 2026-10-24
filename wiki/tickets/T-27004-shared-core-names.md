@@ -164,3 +164,15 @@ uses). Conventions: `docs/adr/0001-phase-2-naming.md`; stems: `GLOSSARY.md`.
     `dec_bg_brightness`, `dec_bg_lba_cache`, `dec_bg_last_screen_mode`. The ADR main map row is `bg_`, with `dec_bg_` for
     O.BIN names, and the glossary stem for dec_bg is `bg`; the fix applied the rule "only O.BIN names keep the stem" to
     `bustup` but not to this. Rename them to `bg_*` in the same follow-up batch, or record the choice in the ADR.
+- 2026-10-24 merge into the integration tree, attempt 1 failed in `rename.py replay` (11 PROBLEM lines such as `field GirlRecord
+  unk_00 -> tokimeki_frac: GirlRecord has 0 members named unk_00`). Cause, a tool defect: `chains()` keys member rows by the
+  type name of the row, so `field Rec38 unk_00 tokimeki_frac` (before the type rename) and `field GirlRecord tokimeki_frac
+  tokimeki_fraction` (after it) were two chains, and replay took the first for a chain that ends at `tokimeki_frac`, a name the
+  tree no longer holds. Fix after the review, in its own commit: `link_member_rows()` in `tools/rename.py` puts the field rows
+  under the type's current name before replay builds its chains, plus the test `test_replay_field_chain_across_a_type_rename`
+  (fails without the fix with the exact message above). Only `replay` changes; `check`, `lookup` and the plan code are as
+  reviewed. After merging `w2-good` (conflicts in `wiki/log.md` and `wiki/spec/core.md` only; in `core.md` the w2-good
+  wording with the final core names): replay 127 rows run, 0 files changed; clean build 27 of 27 sha1 OK, `ninja progress`
+  6,952 of 6,952; `check_headers.py`, `migrate_globals.py --check`, `sync_protos.py --check-branch`, `rename.py check`
+  (724 ledger rows) OK; tool suite 1,647 tests OK (3 skipped). The tool commit came after the round 2 review and wants a
+  look in the next review of `tools/rename.py`.
