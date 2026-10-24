@@ -4,7 +4,7 @@ title: Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py
 status: In Review
 assignee: w17-ugen41 (Opus)
 created: 2026-10-23
-updated: 2026-10-24
+updated: 2026-10-23
 links: [[[tickets/T-25608-gate-main-func_8006B0C8]], [[ido-52-evaluation]], [[toolchain]]]
 ---
 
@@ -24,7 +24,7 @@ Prototype: `drafts/T-25608/ido41/ugen_pass_41rule.py` (on the w16-ido41 branch, 
 
 ## Comments
 
-### 2026-10-24, w17-ugen41 (Opus): implemented, In Review
+### 2026-10-23, w17-ugen41 (Opus): implemented, In Review
 
 - `tools/ugen_pass.py`: the 4.1 rule (`copy_states`: B at entry, F at `Uistr`/`Uistv`, B at a `Ufjp`/`Utjp` whose compare has a non-constant right operand, `Ulnot` and `Urstr` skipped, a branch with no condition record raises PassError). The T-25608 lock (`_is_signed_blt_pos_imm_jump`, the armed/sticky state) is gone. Tests: `tools/test_ugen_pass.py`, the 30 cases as synthetic ucode (all match 4.1; the old rule misses the 8 that T-25608 listed) plus the rule's parts. End to end, the real uopt output of the 30 case files gives 4.1's state in all 30.
 - Census (full rebuild, 566 procedures with a `Umov`): against the T-25608 rule only main `strCallback` (F to B) and `func_8005938C` (FFF to BBF) change; main fails, 26/27. `func_8006B0C8` stays BBBB.
@@ -33,3 +33,13 @@ Prototype: `drafts/T-25608/ido41/ugen_pass_41rule.py` (on the w16-ido41 branch, 
 - Finding (IDO 4.1, [[ido-52-evaluation]] "T-26000"): 4.1 also sets F at a branch on a value (`and`, `ilod`, bit fields, `shr`, ...; 5 new case files). With the respelled tests 4.1 gives F for `strCallback` and FFF for `func_8005938C` without the arms. Not modelled: it would put `func_8006B0C8`'s compaction copy (after a one-bit field test) in F, where the original is B. Follow-up candidate: measure the 4-byte copy's state in 4.1 and stored compares, then decide whether the value-branch F can be added.
 - Proof: clean rebuild 27/27 sha1 OK; `tools.test_ugen_pass` OK (24 tests); full suite 11 failures + 1 error, the same as main (test_build_deps, test_protoverride); check_headers, migrate_globals --check, sync_protos --check-branch OK; funcdiff `--resolve --version default` MATCH for func_8006B0C8, strCallback, func_8005938C, func_80054FC0, func_80145650.
 
+### 2026-10-23, w17-ugen41 (Opus): review fixes
+
+- Blocking (standards, section 7): the four never-true FAKE arms are cut down to `if ((u32)G < 0) { *(u8 *)0 = 0; }`; the `while ((s32)G < 1)` loop compared against a constant and did nothing under the rule. main `strCallback`, `func_8005938C` and MASTER `func_801344E0`, `func_801363F4` (T-25107, its comments also named the old "signed loop test") all MATCH; without the arm all four differ (MASTER checked here: end register one slot high, state B). [[playbook]] recipe and table updated.
+- Evidence (the review's point on `copy_ne0_left_if`): new case `copy_store_then_ne0_left_if.c` (indirect store first). IDO 4.1 gives F there, the pass gave B, so the first version's clause "a compare with the constant on the left counts as a register compare" was wrong. `copy_store_then_eq0_left_if.c` agrees (4.1 F). Fixed: a compare sets B only when neither operand is an `Uldc`; a compare with fewer than two operands raises PassError. Census against the first version (temporary hook, full rebuild): 0 of 566 procedures change state; `func_8006B0C8` BBBB, `strCallback` F, `func_8005938C` FFF.
+- Finding: 4.1 (and raw 5.3) ignore a store in an arm that ugen drops as never entered (`copy_dropped_arm_store.c` B, control `copy_live_arm_zero_store.c` F). That explains the T-25608 reading "4.1 gives B for the old `strCallback` body with the arm". The pass counts the store; the four FAKE arms rely on it. Written down as a known limit.
+- Docstring: the overclaim is reworded (every matched function builds to the original bytes with this rule, some through the FAKEs listed); known limits list the value branch, the dropped-arm store, and the unmeasured stored compares, `Uxjp` and `Uijp` (also in [[toolchain]]).
+- `drafts/T-25608/ido41/utrace.py`: no longer calls the removed `_is_signed_blt_pos_imm_jump` (marks `<` only with a pass that has it).
+- End to end, all 39 case files with IDO 4.1 and the pass: 34 agree; the 5 that differ are the 4 value-branch cases and `copy_dropped_arm_store`, all documented.
+- Dates: ticket `updated` and the [[toolchain]] census corrected to 2026-10-23; the earlier log entry keeps its 2026-10-24 date (log entries are not edited).
+- Follow-up to file (needs a board card, left to the orchestrator): measure in 4.1 the 4-byte copy's state of `func_8006B0C8`, stored compares, `Uxjp` and `Uijp`; then decide whether to model F at a branch on a value and the dropped-arm store, which would let the two main arms go.
