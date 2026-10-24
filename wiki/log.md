@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] decision | Rotate exhausted scheduler lane to a concrete trace question
-
-Live T-25023 consultation found no supported source lever to separate local year-load ordering from global filler selection. Preserve packet and four-row guard; assigned same Sol chat T-25025 GYOZI func_80140E0C reaching-zero-definition trace investigation, explicitly excluding prior zero-local/promotion grids. Claim transfer recorded in [[tickets/T-25017-completion-plan]]. TEL whole-unit target1645/candidate1643 baseline aligned costs1038/970 confirm substantial reconstruction remains; MAIN preserves semantic reload repairs alongside lower-score partial candidates. No match claimed.
-
-## [2026-10-22] ticket | MAIN reload-boundary investigation
-
-Created [[tickets/T-25022-main-reload-boundary]] In Progress in an isolated worktree pinned to883760224, following [[plan-remaining]]. Exclusive source src/main/8004F870.c; first hypothesis restores mode reload across k_disp_inc using the T-25021 full-TU checkpoint. No shared-header edits or root-checkout edits.
-
 ## [2026-10-22] build | MAIN call-boundary checkpoint
 
 [[tickets/T-25022-main-reload-boundary]] reproduces T-25021 and repairs the first mode reload:315target/314built words,127aligned/127printed. Preserved the semantically corrected later reload body despite worse310words,179/179; partial lower-score source is diagnostic only. Exact64-byte frame and homes remain. Bounded negative tests and callee effects are in drafts/T-25022/main/func_8005215C/README.md; normal/traced full-TU objects resolve identically. No C match or production change. Prepared a bounded consultation packet for read placement and conversion-web recovery.
@@ -1716,6 +1708,7 @@ Second review of [[tickets/T-27020-p2-h-graphics]] (three blocking findings, sev
 
 ## [2026-10-24] ticket | T-27020 Done
 [[tickets/T-27020-p2-h-graphics]] passed the third review (approved, no findings): the texture-block cache section and the `prim_box_gouraud` mode table in [[spec/h-graphics]] and `config/renames/proposals/h-graphics.tsv` match `src/main/80047550.c` and `src/main/800490C0.c`. The branch changes no `src/`, `include/` or symbol files. Moves to Done.
+
 ## [2026-10-24] ticket | T-27028 review round 3 fixes for the TACO table and spec
 Fixed both blocking findings of the round 3 review of [[tickets/T-27028-p2-o-taco]]: the boss start damage percents are 36, 51 and 63 (integer division of `shooter_boss_damage_percent`, thresholds tested on the integer) and the left/right names now use the sign of x (world +x is screen left). Non-blocking items done in `config/renames/proposals/o-taco.tsv` (912 rows) and [[spec/o-taco]]: stale pad conflict notes, comment row columns, `sound_bank` names that follow core, separate particle view type, `TcActor.unk7A` named `counter`, score digit claim, behaviour-label note, table header, no symbols file row. Not touched by design: `wiki/index.md` (needs a line for [[spec/index]]), `wiki/kanban.md`, and the umbrella ticket link that has no file yet.
 
