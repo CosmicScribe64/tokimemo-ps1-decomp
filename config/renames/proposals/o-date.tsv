@@ -256,7 +256,7 @@ func	DATE	func_8014B080	date_virtual_ship_gte_b	GTE matrix helper of the ship sc
 func	DATE	func_8014B194	date_virtual_ship_next_stage	stage += 1, clears the sub-stage counters
 func	DATE	func_8014B1C4	date_virtual_ship_next_substage	sub-stage += 1, clears the counters
 func	DATE	func_8014B1F0	date_event_sections_init	sets about 900 pointers: for every event scene the script section tables inside the event script file read to 0x80198000
-func	DATE	func_8014C08C	date_event_entry	overlay entry of mode 0x5E: switches on the girl (date_event_girl) to the girl's dispatcher, then runs the shared screen updates
+func	DATE	func_8014C08C	date_event_entry	overlay entry of mode 0x5E: switches on the girl (dialogue_work.girl) to the girl's dispatcher, then runs the shared screen updates
 func	DATE	func_8014C20C	date_event_end	last step of an event scene: loads main data, stores the last date spot (looks >= 35, 30 for Mira), logs the scene, syoushin -40, Golden Week tokimeki +2, updates the place history and returns with day_event_next
 func	DATE	func_8014C550	date_event_speak_012	speaks the event script sections with choice 0xFF (order of options kept)
 func	DATE	func_8014C5C8	date_event_speak	speaks the event script sections (selectors D_800CA150/154, tables D_8015E208/20C/210) with the current choice
@@ -272,7 +272,7 @@ func	DATE	func_8014CDA0	date_event_yuko_autumn_data_init	sets the scene's resour
 func	DATE	func_8014CE50	date_event_yuko_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_8014CF00	date_event_yuko_december_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_8014CFB0	date_event_yuko_spring_data_init_2	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_8014D000	date_event_yuko_dispatch	scene dispatcher of mode 0x5E for yuko: switch on date_event_scene to the season handlers
+func	DATE	func_8014D000	date_event_yuko_dispatch	scene dispatcher of mode 0x5E for yuko: switch on dialogue_work.scene to the season handlers
 func	DATE	func_8014D0A0	date_event_yuko_spring_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_8014D298	date_event_yuko_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_8014D57C	date_event_yuko_autumn_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -350,7 +350,7 @@ func	DATE	func_80150010	date_event_yuina_spring_data_init	sets the scene's resou
 func	DATE	func_80150080	date_event_yuina_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80150130	date_event_yuina_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80150200	date_event_yuina_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_801502B0	date_event_yuina_dispatch	scene dispatcher of mode 0x5E for yuina: switch on date_event_scene to the season handlers
+func	DATE	func_801502B0	date_event_yuina_dispatch	scene dispatcher of mode 0x5E for yuina: switch on dialogue_work.scene to the season handlers
 func	DATE	func_80150344	date_event_yuina_spring_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_80150460	date_event_yuina_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_801505B4	date_event_yuina_autumn_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -383,7 +383,7 @@ func	DATE	func_80151510	date_event_ayako_summer_data_init	sets the scene's resou
 func	DATE	func_801515C0	date_event_ayako_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80151670	date_event_ayako_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80151720	date_event_ayako_spring_data_init_2	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_80151734	date_event_ayako_dispatch	scene dispatcher of mode 0x5E for ayako: switch on date_event_scene to the season handlers
+func	DATE	func_80151734	date_event_ayako_dispatch	scene dispatcher of mode 0x5E for ayako: switch on dialogue_work.scene to the season handlers
 func	DATE	func_801517C8	date_event_ayako_spring_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_801518B8	date_event_ayako_spring_still_setup	second event still of the scene: texture slots 5-10, palette, event_still_show, event_anim_show
 func	DATE	func_80151A20	date_event_ayako_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -419,7 +419,7 @@ func	DATE	func_80152FC0	date_event_mira_spring_data_init	sets the scene's resour
 func	DATE	func_80153070	date_event_mira_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80153120	date_event_mira_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_801531D0	date_event_mira_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_80153280	date_event_mira_dispatch	scene dispatcher of mode 0x5E for mira: switch on date_event_scene to the season handlers
+func	DATE	func_80153280	date_event_mira_dispatch	scene dispatcher of mode 0x5E for mira: switch on dialogue_work.scene to the season handlers
 func	DATE	func_80153320	date_event_mira_spring_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_8015347C	date_event_mira_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_801535D8	date_event_mira_autumn_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -455,7 +455,7 @@ func	DATE	func_80154260	date_event_mio_spring_data_init	sets the scene's resourc
 func	DATE	func_80154310	date_event_mio_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_801543C0	date_event_mio_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80154470	date_event_mio_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_80154520	date_event_mio_dispatch	scene dispatcher of mode 0x5E for mio: switch on date_event_scene to the season handlers
+func	DATE	func_80154520	date_event_mio_dispatch	scene dispatcher of mode 0x5E for mio: switch on dialogue_work.scene to the season handlers
 func	DATE	func_801545B4	date_event_mio_spring_ride_select	selects ride 3 (scream machine) and the event sections
 func	DATE	func_8015460C	date_event_mio_spring_still_setup	second event still of the scene
 func	DATE	func_801546BC	date_event_mio_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -489,7 +489,7 @@ func	DATE	func_801552B0	date_event_yukari_spring_data_init	sets the scene's reso
 func	DATE	func_80155360	date_event_yukari_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80155410	date_event_yukari_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_801554C0	date_event_yukari_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_80155530	date_event_yukari_dispatch	scene dispatcher of mode 0x5E for yukari: switch on date_event_scene to the season handlers
+func	DATE	func_80155530	date_event_yukari_dispatch	scene dispatcher of mode 0x5E for yukari: switch on dialogue_work.scene to the season handlers
 func	DATE	func_801555C4	date_event_yukari_spring_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_801556D8	date_event_yukari_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_801559C0	date_event_yukari_autumn_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -520,7 +520,7 @@ func	DATE	func_80156600	date_event_nozomi_spring_data_init	sets the scene's reso
 func	DATE	func_801566B0	date_event_nozomi_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80156760	date_event_nozomi_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80156810	date_event_nozomi_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_801568C0	date_event_nozomi_dispatch	scene dispatcher of mode 0x5E for nozomi: switch on date_event_scene to the season handlers
+func	DATE	func_801568C0	date_event_nozomi_dispatch	scene dispatcher of mode 0x5E for nozomi: switch on dialogue_work.scene to the season handlers
 func	DATE	func_80156954	date_event_nozomi_spring_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_80156B20	date_event_nozomi_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_80156C40	date_event_nozomi_autumn_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -557,7 +557,7 @@ func	DATE	func_80157880	date_event_megumi_spring_data_init	sets the scene's reso
 func	DATE	func_80157930	date_event_megumi_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_801579E0	date_event_megumi_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80157A90	date_event_megumi_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_80157B40	date_event_megumi_dispatch	scene dispatcher of mode 0x5E for megumi: switch on date_event_scene to the season handlers
+func	DATE	func_80157B40	date_event_megumi_dispatch	scene dispatcher of mode 0x5E for megumi: switch on dialogue_work.scene to the season handlers
 func	DATE	func_80157BD4	date_event_megumi_spring_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_80157D68	date_event_megumi_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_80157E88	date_event_megumi_autumn_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -587,7 +587,7 @@ func	DATE	func_801586A0	date_event_saki_spring_data_init	sets the scene's resour
 func	DATE	func_80158750	date_event_saki_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80158800	date_event_saki_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_801588B0	date_event_saki_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_80158960	date_event_saki_dispatch	scene dispatcher of mode 0x5E for saki: switch on date_event_scene to the season handlers
+func	DATE	func_80158960	date_event_saki_dispatch	scene dispatcher of mode 0x5E for saki: switch on dialogue_work.scene to the season handlers
 func	DATE	func_801589F4	date_event_saki_spring_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_80158B1C	date_event_saki_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_80158C8C	date_event_saki_autumn_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -617,7 +617,7 @@ func	DATE	func_801594B0	date_event_yumi_spring_data_init	sets the scene's resour
 func	DATE	func_80159560	date_event_yumi_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_80159610	date_event_yumi_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
 func	DATE	func_801596C0	date_event_yumi_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
-func	DATE	func_80159770	date_event_yumi_dispatch	scene dispatcher of mode 0x5E for yumi: switch on date_event_scene to the season handlers
+func	DATE	func_80159770	date_event_yumi_dispatch	scene dispatcher of mode 0x5E for yumi: switch on dialogue_work.scene to the season handlers
 func	DATE	func_80159804	date_event_yumi_spring_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_8015996C	date_event_yumi_summer_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
 func	DATE	func_80159A98	date_event_yumi_autumn_setup	step: points the event script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
@@ -646,14 +646,14 @@ func	DATE	func_8015A288	date_event_yumi_winter	scene dispatcher (mode 0x5E, yumi
 func	DATE	func_8015A328	date_event_yumi_winter_sound_1	step: snd_command(0x501) then main_step_next
 func	DATE	func_8015A350	date_event_yumi_winter_sound_2	step: snd_command(0x500) then main_step_next
 func	DATE	func_8015A378	date_event_yumi_winter_load_data	step: cd_read_sectors of the scene's event data to 0x801B0000 and its pointer table init, then main_step_next
-func	DATE	func_8015A3B0	date_event_miharu_dispatch	scene dispatcher of mode 0x5E for miharu: switch on date_event_scene to the season handlers
+func	DATE	func_8015A3B0	date_event_miharu_dispatch	scene dispatcher of mode 0x5E for miharu: switch on dialogue_work.scene to the season handlers
 func	DATE	func_8015A414	date_event_miharu_start	shows the title, takes the unnamed woman (girl 11) as speaker, logs the scene and wires the event sections
 func	DATE	func_8015A4A8	date_event_miharu_spring	scene dispatcher (mode 0x5E, miharu, scene 3, spring): copies the step table and calls the handler of the current step
 func	DATE	func_8015A530	date_event_miharu_restore_girl	restores the date girl as current girl and the dialogue names
 func	DATE	func_8015A564	date_event_miharu_spring_read_portrait	starts the CD read of Miharu's portrait (spring scene)
 func	DATE	func_8015A58C	date_event_miharu_summer	scene dispatcher (mode 0x5E, miharu, scene 5, summer): copies the step table and calls the handler of the current step
 func	DATE	func_8015A610	date_event_miharu_summer_read_portrait	starts the CD read of Miharu's portrait (summer scene)
-func	DATE	date_shiori_dispatch	date_event_shiori_dispatch	scene dispatcher of mode 0x5E for shiori: switch on date_event_scene to the season handlers (old patch name date_shiori_dispatch)
+func	DATE	date_shiori_dispatch	date_event_shiori_dispatch	scene dispatcher of mode 0x5E for shiori: switch on dialogue_work.scene to the season handlers (old patch name date_shiori_dispatch)
 data	DATE	D_8015BF50	date_stage_arrival_steps	76-step table of stage 0 (arrival, loads, greeting); step 9 is replaced by the place setup
 data	DATE	D_8015C080	date_neighborhood_park_steps	stage 1 step table of place 0 (neighborhood_park), 18 entries; selected by date_stage_place from the place id
 data	DATE	D_8015C0C8	date_central_park_steps	stage 1 step table of place 1 (central_park), 35 entries; selected by date_stage_place from the place id
@@ -850,6 +850,20 @@ data	main	D_80122D34	date_parade_sign_visible	HYPOTHESIS: 1 while the night-para
 data	main	D_80122D4C	date_ambush_talk_active	1 while the ambush talk sections are in use
 data	main	D_80122CE0	rpg_launch_code	dialogue_work word +0x10: launch code of RPG_BAT (4 gang ambush, 5 boss ambush) and, after the battle, its result (0 won); DATE tests it in date_end
 data	main	D_80122E9C	festival_stall_result	HYPOTHESIS: result 0-4 of the festival stall game (EN_NICHI, stall meaning of the overlay name unproven), written by EN_NICHI, read by the shrine steps of DATE
+data	DATE	D_8015CF1C	date_player_birthday_text	pointer: text table of the girl's player-birthday greeting (set by date_player_birthday_pick_sections)
+data	DATE	D_8015CF20	date_player_birthday_command	pointer: command table of the player-birthday greeting
+data	DATE	D_8015CF24	date_player_birthday_voice	pointer: voice table of the player-birthday greeting
+data	DATE	D_8015D06C	date_gift_text	pointer: text table of the current gift section (set per girl by date_gift_start)
+data	DATE	D_8015D070	date_gift_command	pointer: command table of the current gift section
+data	DATE	D_8015D074	date_gift_voice	pointer: voice table of the current gift section
+data	DATE	D_8015D078	date_gift_saved_text	copy of date_gift_text kept while the gift choice section is shown (date_gift_choice_sections_set)
+data	DATE	D_8015D07C	date_gift_saved_command	copy of date_gift_command kept during the gift choice
+data	DATE	D_8015D080	date_gift_saved_voice	copy of date_gift_voice kept during the gift choice
+data	DATE	D_8015D08C	date_gift_saved_group	copy of date_gift_group kept during the gift choice
+data	DATE	D_8015CF9C	date_ride_frame	u16 frame counter of the ride animation functions of rides 2 and 3 (reset at the start of a ride, +1 per frame)
+data	DATE	D_8015DE40	date_virtual_ship_stage	stage of the virtual ship ride: 0 load, 1 run, 2 portrait read, 3 wait, 4 build portrait
+data	DATE	D_8015DE44	date_virtual_ship_substage	sub-stage inside stage 1 of the virtual ship ride (0 set up, 1 run, 2 finish)
+data	DATE	D_8015DE48	date_virtual_ship_step	frame step counter of the virtual ship run
 field	DateChoice8	unk_00	request_a	first word of the pair: first argument of cd_audio_request_set
 field	DateChoice8	unk_04	request_b	second word of the pair: second argument of cd_audio_request_set
 field	DateEventChoice6	kind	group	halfword view of date_opening_group (D_8015BF1C)
@@ -1044,54 +1058,54 @@ const	DateSpecialDay	1	DATE_SPECIAL_DAY_FIREWORKS_SUNDAY	1995-07-23, 1996-07-28,
 const	DateSpecialDay	2	DATE_SPECIAL_DAY_EQUINOX_AUTUMN_A	September 22/23, frame count odd
 const	DateSpecialDay	3	DATE_SPECIAL_DAY_EQUINOX_AUTUMN_B	September 22/23, frame count even
 const	DateSpecialDay	4	DATE_SPECIAL_DAY_DECEMBER_23	December 23
-const	DateEventSceneShiori	3	DATE_EVENT_SHIORI_AUTUMN	date_event_scene value of the autumn special date event of shiori
-const	DateEventSceneShiori	4	DATE_EVENT_SHIORI_SPRING	date_event_scene value of the spring special date event of shiori
-const	DateEventSceneShiori	5	DATE_EVENT_SHIORI_WINTER	date_event_scene value of the winter special date event of shiori
-const	DateEventSceneShiori	6	DATE_EVENT_SHIORI_SUMMER	date_event_scene value of the summer special date event of shiori
-const	DateEventSceneMio	2	DATE_EVENT_MIO_SPRING	date_event_scene value of the spring special date event of mio
-const	DateEventSceneMio	3	DATE_EVENT_MIO_SUMMER	date_event_scene value of the summer special date event of mio
-const	DateEventSceneMio	4	DATE_EVENT_MIO_AUTUMN	date_event_scene value of the autumn special date event of mio
-const	DateEventSceneMio	5	DATE_EVENT_MIO_WINTER	date_event_scene value of the winter special date event of mio
-const	DateEventSceneYuina	2	DATE_EVENT_YUINA_SPRING	date_event_scene value of the spring special date event of yuina
-const	DateEventSceneYuina	3	DATE_EVENT_YUINA_SUMMER	date_event_scene value of the summer special date event of yuina
-const	DateEventSceneYuina	4	DATE_EVENT_YUINA_AUTUMN	date_event_scene value of the autumn special date event of yuina
-const	DateEventSceneYuina	5	DATE_EVENT_YUINA_WINTER	date_event_scene value of the winter special date event of yuina
-const	DateEventSceneAyako	2	DATE_EVENT_AYAKO_SPRING	date_event_scene value of the spring special date event of ayako
-const	DateEventSceneAyako	3	DATE_EVENT_AYAKO_SUMMER	date_event_scene value of the summer special date event of ayako
-const	DateEventSceneAyako	4	DATE_EVENT_AYAKO_AUTUMN	date_event_scene value of the autumn special date event of ayako
-const	DateEventSceneAyako	5	DATE_EVENT_AYAKO_WINTER	date_event_scene value of the winter special date event of ayako
-const	DateEventSceneSaki	2	DATE_EVENT_SAKI_SPRING	date_event_scene value of the spring special date event of saki
-const	DateEventSceneSaki	3	DATE_EVENT_SAKI_SUMMER	date_event_scene value of the summer special date event of saki
-const	DateEventSceneSaki	4	DATE_EVENT_SAKI_AUTUMN	date_event_scene value of the autumn special date event of saki
-const	DateEventSceneSaki	5	DATE_EVENT_SAKI_WINTER	date_event_scene value of the winter special date event of saki
-const	DateEventSceneYukari	3	DATE_EVENT_YUKARI_SPRING	date_event_scene value of the spring special date event of yukari
-const	DateEventSceneYukari	4	DATE_EVENT_YUKARI_SUMMER	date_event_scene value of the summer special date event of yukari
-const	DateEventSceneYukari	5	DATE_EVENT_YUKARI_AUTUMN	date_event_scene value of the autumn special date event of yukari
-const	DateEventSceneYukari	6	DATE_EVENT_YUKARI_WINTER	date_event_scene value of the winter special date event of yukari
-const	DateEventSceneNozomi	2	DATE_EVENT_NOZOMI_SPRING	date_event_scene value of the spring special date event of nozomi
-const	DateEventSceneNozomi	3	DATE_EVENT_NOZOMI_SUMMER	date_event_scene value of the summer special date event of nozomi
-const	DateEventSceneNozomi	4	DATE_EVENT_NOZOMI_AUTUMN	date_event_scene value of the autumn special date event of nozomi
-const	DateEventSceneNozomi	5	DATE_EVENT_NOZOMI_WINTER	date_event_scene value of the winter special date event of nozomi
-const	DateEventSceneMira	2	DATE_EVENT_MIRA_SPRING	date_event_scene value of the spring special date event of mira
-const	DateEventSceneMira	3	DATE_EVENT_MIRA_SUMMER	date_event_scene value of the summer special date event of mira
-const	DateEventSceneMira	4	DATE_EVENT_MIRA_AUTUMN	date_event_scene value of the autumn special date event of mira
-const	DateEventSceneMira	5	DATE_EVENT_MIRA_WINTER	date_event_scene value of the winter special date event of mira
-const	DateEventSceneMira	6	DATE_EVENT_MIRA_SPECIAL	date_event_scene value of the special special date event of mira
-const	DateEventSceneYuko	2	DATE_EVENT_YUKO_SPRING	date_event_scene value of the spring special date event of yuko
-const	DateEventSceneYuko	3	DATE_EVENT_YUKO_SUMMER	date_event_scene value of the summer special date event of yuko
-const	DateEventSceneYuko	4	DATE_EVENT_YUKO_AUTUMN	date_event_scene value of the autumn special date event of yuko
-const	DateEventSceneYuko	5	DATE_EVENT_YUKO_WINTER	date_event_scene value of the winter special date event of yuko
-const	DateEventSceneYuko	6	DATE_EVENT_YUKO_DECEMBER	date_event_scene value of the december special date event of yuko
-const	DateEventSceneMegumi	3	DATE_EVENT_MEGUMI_SPRING	date_event_scene value of the spring special date event of megumi
-const	DateEventSceneMegumi	4	DATE_EVENT_MEGUMI_SUMMER	date_event_scene value of the summer special date event of megumi
-const	DateEventSceneMegumi	5	DATE_EVENT_MEGUMI_AUTUMN	date_event_scene value of the autumn special date event of megumi
-const	DateEventSceneMegumi	6	DATE_EVENT_MEGUMI_WINTER	date_event_scene value of the winter special date event of megumi
-const	DateEventSceneYumi	3	DATE_EVENT_YUMI_SPRING	date_event_scene value of the spring special date event of yumi
-const	DateEventSceneYumi	4	DATE_EVENT_YUMI_SUMMER	date_event_scene value of the summer special date event of yumi
-const	DateEventSceneYumi	5	DATE_EVENT_YUMI_AUTUMN	date_event_scene value of the autumn special date event of yumi
-const	DateEventSceneYumi	6	DATE_EVENT_YUMI_WINTER	date_event_scene value of the winter special date event of yumi
-const	DateEventSceneMiharu	3	DATE_EVENT_MIHARU_SPRING	date_event_scene value of the spring special date event of miharu
-const	DateEventSceneMiharu	5	DATE_EVENT_MIHARU_SUMMER	date_event_scene value of the summer special date event of miharu
+const	DateEventSceneShiori	3	DATE_EVENT_SHIORI_AUTUMN	dialogue_work.scene value of the autumn special date event of shiori
+const	DateEventSceneShiori	4	DATE_EVENT_SHIORI_SPRING	dialogue_work.scene value of the spring special date event of shiori
+const	DateEventSceneShiori	5	DATE_EVENT_SHIORI_WINTER	dialogue_work.scene value of the winter special date event of shiori
+const	DateEventSceneShiori	6	DATE_EVENT_SHIORI_SUMMER	dialogue_work.scene value of the summer special date event of shiori
+const	DateEventSceneMio	2	DATE_EVENT_MIO_SPRING	dialogue_work.scene value of the spring special date event of mio
+const	DateEventSceneMio	3	DATE_EVENT_MIO_SUMMER	dialogue_work.scene value of the summer special date event of mio
+const	DateEventSceneMio	4	DATE_EVENT_MIO_AUTUMN	dialogue_work.scene value of the autumn special date event of mio
+const	DateEventSceneMio	5	DATE_EVENT_MIO_WINTER	dialogue_work.scene value of the winter special date event of mio
+const	DateEventSceneYuina	2	DATE_EVENT_YUINA_SPRING	dialogue_work.scene value of the spring special date event of yuina
+const	DateEventSceneYuina	3	DATE_EVENT_YUINA_SUMMER	dialogue_work.scene value of the summer special date event of yuina
+const	DateEventSceneYuina	4	DATE_EVENT_YUINA_AUTUMN	dialogue_work.scene value of the autumn special date event of yuina
+const	DateEventSceneYuina	5	DATE_EVENT_YUINA_WINTER	dialogue_work.scene value of the winter special date event of yuina
+const	DateEventSceneAyako	2	DATE_EVENT_AYAKO_SPRING	dialogue_work.scene value of the spring special date event of ayako
+const	DateEventSceneAyako	3	DATE_EVENT_AYAKO_SUMMER	dialogue_work.scene value of the summer special date event of ayako
+const	DateEventSceneAyako	4	DATE_EVENT_AYAKO_AUTUMN	dialogue_work.scene value of the autumn special date event of ayako
+const	DateEventSceneAyako	5	DATE_EVENT_AYAKO_WINTER	dialogue_work.scene value of the winter special date event of ayako
+const	DateEventSceneSaki	2	DATE_EVENT_SAKI_SPRING	dialogue_work.scene value of the spring special date event of saki
+const	DateEventSceneSaki	3	DATE_EVENT_SAKI_SUMMER	dialogue_work.scene value of the summer special date event of saki
+const	DateEventSceneSaki	4	DATE_EVENT_SAKI_AUTUMN	dialogue_work.scene value of the autumn special date event of saki
+const	DateEventSceneSaki	5	DATE_EVENT_SAKI_WINTER	dialogue_work.scene value of the winter special date event of saki
+const	DateEventSceneYukari	3	DATE_EVENT_YUKARI_SPRING	dialogue_work.scene value of the spring special date event of yukari
+const	DateEventSceneYukari	4	DATE_EVENT_YUKARI_SUMMER	dialogue_work.scene value of the summer special date event of yukari
+const	DateEventSceneYukari	5	DATE_EVENT_YUKARI_AUTUMN	dialogue_work.scene value of the autumn special date event of yukari
+const	DateEventSceneYukari	6	DATE_EVENT_YUKARI_WINTER	dialogue_work.scene value of the winter special date event of yukari
+const	DateEventSceneNozomi	2	DATE_EVENT_NOZOMI_SPRING	dialogue_work.scene value of the spring special date event of nozomi
+const	DateEventSceneNozomi	3	DATE_EVENT_NOZOMI_SUMMER	dialogue_work.scene value of the summer special date event of nozomi
+const	DateEventSceneNozomi	4	DATE_EVENT_NOZOMI_AUTUMN	dialogue_work.scene value of the autumn special date event of nozomi
+const	DateEventSceneNozomi	5	DATE_EVENT_NOZOMI_WINTER	dialogue_work.scene value of the winter special date event of nozomi
+const	DateEventSceneMira	2	DATE_EVENT_MIRA_SPRING	dialogue_work.scene value of the spring special date event of mira
+const	DateEventSceneMira	3	DATE_EVENT_MIRA_SUMMER	dialogue_work.scene value of the summer special date event of mira
+const	DateEventSceneMira	4	DATE_EVENT_MIRA_AUTUMN	dialogue_work.scene value of the autumn special date event of mira
+const	DateEventSceneMira	5	DATE_EVENT_MIRA_WINTER	dialogue_work.scene value of the winter special date event of mira
+const	DateEventSceneMira	6	DATE_EVENT_MIRA_SPECIAL	dialogue_work.scene value of the special special date event of mira
+const	DateEventSceneYuko	2	DATE_EVENT_YUKO_SPRING	dialogue_work.scene value of the spring special date event of yuko
+const	DateEventSceneYuko	3	DATE_EVENT_YUKO_SUMMER	dialogue_work.scene value of the summer special date event of yuko
+const	DateEventSceneYuko	4	DATE_EVENT_YUKO_AUTUMN	dialogue_work.scene value of the autumn special date event of yuko
+const	DateEventSceneYuko	5	DATE_EVENT_YUKO_WINTER	dialogue_work.scene value of the winter special date event of yuko
+const	DateEventSceneYuko	6	DATE_EVENT_YUKO_DECEMBER	dialogue_work.scene value of the december special date event of yuko
+const	DateEventSceneMegumi	3	DATE_EVENT_MEGUMI_SPRING	dialogue_work.scene value of the spring special date event of megumi
+const	DateEventSceneMegumi	4	DATE_EVENT_MEGUMI_SUMMER	dialogue_work.scene value of the summer special date event of megumi
+const	DateEventSceneMegumi	5	DATE_EVENT_MEGUMI_AUTUMN	dialogue_work.scene value of the autumn special date event of megumi
+const	DateEventSceneMegumi	6	DATE_EVENT_MEGUMI_WINTER	dialogue_work.scene value of the winter special date event of megumi
+const	DateEventSceneYumi	3	DATE_EVENT_YUMI_SPRING	dialogue_work.scene value of the spring special date event of yumi
+const	DateEventSceneYumi	4	DATE_EVENT_YUMI_SUMMER	dialogue_work.scene value of the summer special date event of yumi
+const	DateEventSceneYumi	5	DATE_EVENT_YUMI_AUTUMN	dialogue_work.scene value of the autumn special date event of yumi
+const	DateEventSceneYumi	6	DATE_EVENT_YUMI_WINTER	dialogue_work.scene value of the winter special date event of yumi
+const	DateEventSceneMiharu	3	DATE_EVENT_MIHARU_SPRING	dialogue_work.scene value of the spring special date event of miharu
+const	DateEventSceneMiharu	5	DATE_EVENT_MIHARU_SUMMER	dialogue_work.scene value of the summer special date event of miharu
 comment	DATE	date_event_trigger	Start a special date event: store the scene id, mark the event flag, set the special-event marker and switch to mode 0x5E	name kept (patch-note name); English one-liner
 comment	DATE	date_event_choose	Check, once per call in the date steps, whether a special date event of the current girl is due (place, season, mood, step) and start it with date_event_trigger	name kept (patch-note name); English one-liner
 comment	DATE	date_fill_sections_shiori	Set the 27 section pointers (text, command, voice) of Shiori's date script file	name kept (patch-note name); English one-liner
