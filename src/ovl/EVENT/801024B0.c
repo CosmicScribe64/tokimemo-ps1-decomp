@@ -1,4 +1,4 @@
-#define MAIN_API_OVERRIDE_func_8004C6B0 /* s32 return (like DATE sibling event_anim_show in src/main/8007C030.c): consumes $v0 in ugen for func_80102E54 (T-24090) */
+#define MAIN_API_OVERRIDE_func_8004C6B0 /* s32 return (like DATE sibling scene_anim_show in src/main/8007C030.c): consumes $v0 in ugen for func_80102E54 (T-24090) */
 #include "common.h"
 #include "ovl/EVENT.h"
 

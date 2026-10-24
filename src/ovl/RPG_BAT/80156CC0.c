@@ -279,7 +279,7 @@ void func_80157640(void) {
         break;
     case 8:
         D_8015EBFC.unk_18 = 1;
-        main_stage_next();
+        mode_stage_next();
         break;
     }
 }

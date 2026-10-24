@@ -6,7 +6,7 @@ void func_8013AA70(void) {
     ShFnTbl25 tbl;
 
     tbl = D_8013CC20;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
@@ -25,7 +25,7 @@ void func_8013AAEC(void) {
         break;
     }
     D_800CA2DC += D_800CA2F4 * (1 - D_800CA2EC);
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_8013ABAC(void) {
@@ -35,12 +35,12 @@ s32 func_8013ABAC(void) {
         game_state.substep += 1;
     }
     if (game_state.substep == 1) {
-        if ((u32)game_state.step_timer.w++ >= 0x400U) {
-            cd_cmd_reset();
-            snd_bank_state_reset();
+        if ((u32)game_state.mode_step_timer.w++ >= 0x400U) {
+            cd_command_reset();
+            audio_bank_state_reset();
             game_state.substep = 0;
         }
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             game_state.substep += 1;
         } else {
             return 0;

@@ -41,8 +41,8 @@ s32 D_8013E738 = 0;
 s32 D_8013E73C = 0;
 
 void func_801389A0(void) {
-    game_state.stage_timer += 1;
-    switch (game_state.stage) {
+    game_state.mode_stage_timer += 1;
+    switch (game_state.mode_stage) {
     case 0:
         func_80138A24();
         break;
@@ -50,10 +50,10 @@ void func_801389A0(void) {
         func_80138A8C();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
-    screen_frame_draw(0);
+    hud_screen_frame_draw(0);
     message_window_title_update();
 }
 
@@ -62,13 +62,13 @@ void func_80138A24(void) {
         cd_read_sectors(0x3A, 0x80180000, 0xA1AB);
         game_state.substep += 1;
     } else if (cd_read_sync_status() & 1) {
-        main_stage_next();
+        mode_stage_next();
     }
 }
 
 void func_80138A8C(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_80139198();
         return;
@@ -88,7 +88,7 @@ void func_80138A8C(void) {
         func_80138DF8();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
@@ -136,7 +136,7 @@ void func_80138C20(void) {
                 k_disp_switch(next, 1);
                 i++;
             } while (i != 7);
-            main_step_set(2);
+            mode_step_set(2);
         }
     }
     i = 0;
@@ -177,7 +177,7 @@ void func_80138DF8(void) {
             for (i = 0; i < 7; i++) {
                 k_disp_switch(i + 1, 1);
             }
-            main_step_set(2);
+            mode_step_set(2);
         }
     }
     i = 0;
@@ -226,7 +226,7 @@ void func_80138FC0(void) {
                 k_disp_switch(next, 1);
                 i++;
             } while (i != 7);
-            main_step_set(2);
+            mode_step_set(2);
         }
     }
     i = 0;
@@ -254,7 +254,7 @@ s32 func_80139198(void) {
 
     func_8004ADAC(4);
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(0);
@@ -302,12 +302,12 @@ s32 func_80139198(void) {
         p[96].unk_18 = i;
         p[96].dx = 3 - (rand() & 7);
         p[96].dy = 4 - (rand() & 7);
-        p[96].dx_frac = rand();
-        p[96].dy_frac = rand();
+        p[96].dx_fraction = rand();
+        p[96].dy_fraction = rand();
         p[96].x = 0;
         p[96].y = 0;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: s32 without an explicit return keeps $v0 live at epilogue so as1 retains move $v0, $zero in the third loop preheader. T-24126 */
@@ -402,14 +402,14 @@ void func_80139878(void) {
     if (t >= 0x80) {
         *(u8 *)&game_state.screen_brightness = 0x80;
         k_disp_start(7);
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_8013990C(void) {
-    D_801220EC = rsin(game_state.step_timer.w << 5);
-    D_801220EE = rsin(game_state.step_timer.w << 5);
-    D_801220F0 = game_state.step_timer.w << 0xC;
+    D_801220EC = rsin(game_state.mode_step_timer.w << 5);
+    D_801220EE = rsin(game_state.mode_step_timer.w << 5);
+    D_801220F0 = game_state.mode_step_timer.w << 0xC;
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
@@ -472,10 +472,10 @@ void func_80139A30(void) {
             func_80139E3C(0);
             break;
         case 1:
-            main_step_set(3);
+            mode_step_set(3);
             break;
         case 2:
-            main_step_set(4);
+            mode_step_set(4);
             break;
         case 3:
             func_8013A010();
@@ -485,7 +485,7 @@ void func_80139A30(void) {
             break;
         case 5:
             if (game_state.pad_pressed & PAD_START) {
-                main_step_set(5);
+                mode_step_set(5);
             } else {
                 func_80139F04();
             }
@@ -609,7 +609,7 @@ void func_80139E3C(s32 arg0) {
         t2 = (t + ((s32)t * 0)) + v * 2;
         cd_audio_request_set(t2[0] + T2_BOOST_9E3C, t2[1], ((D_8013D3B8 = v) * 0) + (u32)(void *)game_state.current_girl);
     }
-    snd_command(0x300);
+    audio_command(0x300);
 }
 #undef F80_BOOST_9E3C
 #undef T_BOOST_9E3C
@@ -629,7 +629,7 @@ void func_80139F04(void) {
     if (D_8013E730 >= 0x21) {
         D_8013E730 = 0;
     }
-    snd_command((D_8013E730 | 0x500) & 0xFFFF);
+    audio_command((D_8013E730 | 0x500) & 0xFFFF);
 }
 
 /* FAKE: width-staged locals preserve raw-byte and call-argument ranges. T-10850 */
@@ -655,16 +655,16 @@ void func_80139F8C(void)
     {
         value = D_8013D3A8;
         code = (value & 0xFFFF) | 0x1200; /* FAKE: the redundant mask makes IDO copy the byte to a0 first. T-24142 */
-        snd_command(code);
+        audio_command(code);
     }
 }
 
 void func_8013A010(void) {
-    snd_bank_start(0, D_8013D3A8);
+    audio_bank_start(0, D_8013D3A8);
 }
 
 void func_8013A038(void) {
-    snd_bank_start(1, D_8013D3A8);
+    audio_bank_start(1, D_8013D3A8);
 }
 
 void func_8013A060(void) {
@@ -680,12 +680,12 @@ void func_8013A09C(void) {
 
     switch (t) {
     case 1:
-        snd_bank_load_start(1, 0xBF98, 0xBF79, D_8013E340[D_8013D3A0 % 63], D_8013E244[D_8013D3A0 % 63],
+        audio_bank_load_start(1, 0xBF98, 0xBF79, D_8013E340[D_8013D3A0 % 63], D_8013E244[D_8013D3A0 % 63],
                       D_8013E148[D_8013D3A0 % 63]);
         D_8013D3B4 += 1;
         break;
     case 2:
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             D_8013D3B4 = 0;
             strcpy(D_8013D3CC, D_8013D968[D_8013D3A0 % 63]);
             strcpy(D_8013D3E0, D_8013D3F8[D_8013D3DC % 58]);
@@ -699,12 +699,12 @@ void func_8013A1BC(void) {
 
     switch (t) {
     case 1:
-        snd_bank_load_start(0, D_8013D880[D_8013D3DC % 58], D_8013D798[D_8013D3DC % 58], D_8013E634[D_8013D3A4 % 63],
+        audio_bank_load_start(0, D_8013D880[D_8013D3DC % 58], D_8013D798[D_8013D3DC % 58], D_8013E634[D_8013D3A4 % 63],
                       D_8013E538[D_8013D3A4 % 63], D_8013E43C[D_8013D3A4 % 63]);
         D_8013D3B0 += 1;
         break;
     case 2:
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             D_8013D3B0 = 0;
             strcpy(D_8013D3BC, D_8013DD58[D_8013D3A4 % 63]);
             strcpy(D_8013D3E0, D_8013D3F8[D_8013D3DC % 58]);

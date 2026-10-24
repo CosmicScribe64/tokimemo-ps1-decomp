@@ -1,22 +1,22 @@
-#define MAIN_API_OVERRIDE_cd_cmd_reset /* implicit int view: the call's $v0 result moves the promoted state byte unk_1109 to $v1 in func_8013B5B0 (T-20600) */
+#define MAIN_API_OVERRIDE_cd_command_reset /* implicit int view: the call's $v0 result moves the promoted state byte unk_1109 to $v1 in func_8013B5B0 (T-20600) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-s32 cd_cmd_reset();
+s32 cd_command_reset();
 
 void func_8013B5B0(void) {
-    if (game_state.stage >= 6 && game_state.stage < 0xA) {
+    if (game_state.mode_stage >= 6 && game_state.mode_stage < 0xA) {
         func_8013BEA8();
     }
-    if (game_state.stage != 9 && !(game_state.menu_mode & 1)) {
+    if (game_state.mode_stage != 9 && !(game_state.menu_mode & 1)) {
         cursor_update();
     }
-    if (game_state.stage >= 5 && game_state.stage < 0xC) {
+    if (game_state.mode_stage >= 5 && game_state.mode_stage < 0xC) {
         prim_gradient_rect(-0xA0, 0x30, 8, 0x48, 2, 0, 1);
         prim_gradient_rect(-0xA0, 0x70, 0x140, 8, 2, 0, 1);
         prim_gradient_rect(0x98, 0x30, 8, 0x48, 2, 0, 1);
     }
-    switch (game_state.stage) {
+    switch (game_state.mode_stage) {
     case 0:
         func_8014E780();
         func_80144010();
@@ -36,7 +36,7 @@ void func_8013B5B0(void) {
         func_80141A64();
         func_801525B0();
         func_8014B294();
-        main_stage_next();
+        mode_stage_next();
         break;
     case 5:
         func_80153784();
@@ -56,37 +56,37 @@ void func_8013B5B0(void) {
         break;
     case 8:
         if (D_8015EB98 == 0x80000000) {
-            snd_bank_start(1, 0x200);
+            audio_bank_start(1, 0x200);
         }
-        main_stage_next();
+        mode_stage_next();
         break;
     case 9:
         func_8013B910();
         break;
     case 10:
-        snd_command(0xC1);
-        main_stage_next();
+        audio_command(0xC1);
+        mode_stage_next();
         break;
     case 11:
         func_8013C32C();
         func_801528DC();
         break;
     case 12:
-        snd_bank_state_reset();
-        cd_cmd_reset();
-        main_stage_next();
+        audio_bank_state_reset();
+        cd_command_reset();
+        mode_stage_next();
         break;
     case 13:
         func_800674B0();
-        main_stage_next();
+        mode_stage_next();
         break;
     case 14:
-        if ((u32)++game_state.stage_timer > 0x400U) {
-            snd_bank_state_reset();
-            cd_cmd_reset();
-            game_state.stage = 0xD;
-        } else if (snd_bank_load_poll() == 1) {
-            main_stage_next();
+        if ((u32)++game_state.mode_stage_timer > 0x400U) {
+            audio_bank_state_reset();
+            cd_command_reset();
+            game_state.mode_stage = 0xD;
+        } else if (audio_bank_load_poll() == 1) {
+            mode_stage_next();
         }
         break;
     case 15:
@@ -110,7 +110,7 @@ s32 func_8013B910(void) {
         return 0;
     } else {
         if ((game_state.pad_pressed & PAD_CROSS) && D_8015EC24 == 0) {
-            snd_command(0x74);
+            audio_command(0x74);
             if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
                 D_8015EE44.unk_08 = D_8015E744 + 1;
             }
@@ -262,8 +262,8 @@ void func_8013BEA8(void) {
     }
     if ((game_state.pad_pressed & PAD_START) && D_8015EC24 == 0) {
         if (!(D_8015EDC4 & 0xFF) && !(D_8015ED98 & 0xFF) && !(D_8015EDF0 & 0xFF) && !(D_8015EE1C & 0xFF) &&
-            D_8015EB9C == 9 && D_8015EC20 == 0 && game_state.stage == 9) {
-            snd_command(0x74);
+            D_8015EB9C == 9 && D_8015EC20 == 0 && game_state.mode_stage == 9) {
+            audio_command(0x74);
             if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
                 D_8015EE44.unk_08 = D_8015E744 - 5;
             }
@@ -280,7 +280,7 @@ void func_8013BEA8(void) {
             func_8013E7C0(0x1C, 0x33, 1, 0);
             D_8015EC24 = 2;
         } else {
-            snd_command(0x74);
+            audio_command(0x74);
             if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
                 D_8015EE44.unk_08 = D_8015E744 - 5;
             }

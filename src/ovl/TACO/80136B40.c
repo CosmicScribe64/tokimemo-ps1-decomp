@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_80136B40(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_80136C00();
         return;
@@ -11,7 +11,7 @@ void func_80136B40(void) {
         return;
     case 2:
         D_8015F400 = 0;
-        main_step_next();
+        mode_step_next();
         return;
     case 3:
         func_80136D78();
@@ -42,7 +42,7 @@ void func_80136C00(void) {
     back_clear_switch(1);
     D_8015EDB0 = 0;
     func_80059048();
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_80136C60(void) {
@@ -50,13 +50,13 @@ s32 func_80136C60(void) {
     D_8015F4F0 = 0x80 - game_state.substep * 3;
     game_state.substep++;
     if (game_state.substep * 3 > 0x80) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_80136CD8(void) {
-    snd_command(0xC1);
-    main_stage_set(2);
+    audio_command(0xC1);
+    mode_stage_set(2);
 }
 
 void func_80136D00(void) {
@@ -67,7 +67,7 @@ void func_80136D00(void) {
     D_8015F4F4 += 4;
     if (D_8015F4F4 > 0x100) {
         D_8015F4F0 = 0x80;
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -80,7 +80,7 @@ void func_80136D78(void) {
     func_8013A790(1, 0);
     func_80136FBC(D_8015F400, 3);
     if (D_8015F400 > 0x1000) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -90,7 +90,7 @@ void func_80136E08(void) {
     func_80136FBC(D_8015F400, 0);
     if (D_8015F400 >= 0x9001) {
         D_8015F400 = 0;
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -109,10 +109,10 @@ void func_80136F4C(void) {
     func_8013A790(1, 0);
     func_80136FBC(0x1000, 3);
     if (game_state.pad_held & PAD_CROSS) {
-        main_step_next();
+        mode_step_next();
     }
     if (game_state.pad_pressed & PAD_CIRCLE) {
-        main_step_next();
+        mode_step_next();
     }
 }
 

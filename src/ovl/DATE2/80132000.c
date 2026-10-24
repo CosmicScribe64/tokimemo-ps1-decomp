@@ -38,8 +38,8 @@ void func_80132000(void) {
 }
 
 void func_80132214(void) {
-    bustup_wink_update();
-    switch (game_state.stage) {
+    portrait_wink_update();
+    switch (game_state.mode_stage) {
     case 0:
         func_801326F0();
         break;
@@ -56,16 +56,16 @@ void func_80132214(void) {
         func_80136FC4();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     check_k_scroll();
     k_disp_inc2();
-    if ((game_state.stage == 0) && ((u8) game_state.step < 0x13U)) {
+    if ((game_state.mode_stage == 0) && ((u8) game_state.mode_step < 0x13U)) {
         parameter_show();
         dec_bg_draw(0);
     } else {
-        screen_frame_draw(2);
+        hud_screen_frame_draw(2);
         func_80083A10();
     }
     message_window_show();
@@ -74,72 +74,72 @@ void func_80132214(void) {
 }
 
 void func_80132334(void) {
-    dialogue_tables = &D_8013A428;
+    talk_tables = &D_8013A428;
     D_800CA138 = &D_8013A42C;
     D_800CA13C = D_8013A404;
     D_800CA140 = D_8013A408;
     D_800CA144 = D_8013A40C;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }
 
 void func_801323B0(void) {
-    dialogue_tables = &D_8013A430;
+    talk_tables = &D_8013A430;
     D_800CA138 = &D_8013A434;
     D_800CA13C = D_8013A384;
     D_800CA140 = D_8013A3B0;
     D_800CA144 = D_8013A3DC;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }
 
 void func_8013242C(void) {
-    dialogue_tables = &D_8013A438;
+    talk_tables = &D_8013A438;
     D_800CA138 = &D_8013A43C;
     D_800CA13C = D_8013A410;
     D_800CA140 = D_8013A414;
     D_800CA144 = D_8013A418;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }
 
 void func_801324A8(void) {
     if (D_80122CDC != 0) {
-        dialogue_tables = &D_8013A438;
+        talk_tables = &D_8013A438;
         D_800CA138 = &D_8013A43C;
         D_800CA13C = D_8013A410;
         D_800CA140 = D_8013A414;
         D_800CA144 = D_8013A418;
     } else {
-        dialogue_tables = &D_8013A430;
+        talk_tables = &D_8013A430;
         D_800CA138 = &D_8013A434;
         D_800CA13C = D_8013A384;
         D_800CA140 = D_8013A3B0;
         D_800CA144 = D_8013A3DC;
     }
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }
 
 void func_8013257C(void) {
-    dialogue_tables = &D_8013A428;
+    talk_tables = &D_8013A428;
     D_800CA138 = &D_8013A42C;
     D_800CA13C = D_8013A404;
     D_800CA140 = D_8013A408;
     D_800CA144 = D_8013A40C;
-    dialogue_run(0xFF, 1, 0);
+    talk_run(0xFF, 1, 0);
 }
 
 void func_801325F4(void) {
-    dialogue_tables = &D_8013A428;
+    talk_tables = &D_8013A428;
     D_800CA138 = &D_8013A42C;
     D_800CA13C = D_8013A404;
     D_800CA140 = D_8013A408;
     D_800CA144 = D_8013A40C;
-    dialogue_run(D_80122CDC, 1, 2);
+    talk_run(D_80122CDC, 1, 2);
 }
 
 void func_80132670(void) {
-    dialogue_tables = (u8 *) &D_8013A428;
+    talk_tables = (u8 *) &D_8013A428;
     D_800CA138 = (u8 *) &D_8013A42C;
     D_800CA13C = D_8013A404;
     D_800CA140 = D_8013A408;
     D_800CA144 = D_8013A40C;
-    dialogue_run(D_80122CDC, 1, 1);
+    talk_run(D_80122CDC, 1, 1);
 }

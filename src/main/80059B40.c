@@ -7,7 +7,7 @@ extern s32 D_800C9730[11];
 extern s32 D_800C5FCC[2];
 
 void func_80059B40(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_80059E00();
         return;
@@ -16,17 +16,17 @@ void func_80059B40(void) {
         return;
     case 2:
         func_8004ADE4();
-        main_step_next();
+        mode_step_next();
         return;
     default:
-        main_stage_next();
+        mode_stage_next();
         return;
     }
 }
 
 void func_80059BC0(void) {
     func_80059BE8();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80059BE8(void) {
@@ -84,7 +84,7 @@ s32 func_80059E00(void) {
             *(u8 *)&game_state.substep += 1;
         }
     } else if (*(u8 *)&game_state.substep == 2 && (cd_read_sync_status() & 1)) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -125,10 +125,10 @@ void func_80059EF0(void) {
     message_window_title_show(0);
 }
 
-void mode_boot(void) {
-    if (game_state.stage == 0) {
+void boot_mode_handler(void) {
+    if (game_state.mode_stage == 0) {
         func_80059B40();
         return;
     }
-    main_state_set(MODE_TITLE);
+    game_mode_set(MODE_TITLE);
 }

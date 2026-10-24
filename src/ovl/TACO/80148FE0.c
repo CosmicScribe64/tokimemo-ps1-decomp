@@ -2,10 +2,10 @@
 #include "ovl/TACO.h"
 
 void func_80148FE0(void) {
-    if (((u32) game_state.stage_timer < 0x60U) && (game_state.frame_count & 0x10)) {
+    if (((u32) game_state.mode_stage_timer < 0x60U) && (game_state.frame_count & 0x10)) {
         func_801432F0("2ST BOSS", -0x30, 0, 2);
     }
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_801490B4();
         break;
@@ -58,7 +58,7 @@ void func_801490B4(void) {
         }
         func_801478F8(0x23, D_8015FC94);
         func_80149B7C();
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -72,15 +72,15 @@ void func_8014927C(void) {
     for (i = 0; i < 0xC; i++) {
         func_801497EC(D_8015FCA8[i], i, D_8015FCD8, D_8015FCB4, D_8015FCC0);
     }
-    if (game_state.step_timer.u % 240 == 0 && rand() % 3 == 0) {
+    if (game_state.mode_step_timer.u % 240 == 0 && rand() % 3 == 0) {
         func_801335A0(0, 0x500);
     }
-    if (game_state.step_timer.u < 0x12C) {
+    if (game_state.mode_step_timer.u < 0x12C) {
         func_80146F74(0, 0, -2, -0x28, 0, 0, 0, 0x3C, 0x3C);
     } else {
-        main_step_next();
+        mode_step_next();
     }
-    game_state.step_timer.u++;
+    game_state.mode_step_timer.u++;
 }
 
 void func_801493D4(void) {
@@ -91,7 +91,7 @@ void func_801493D4(void) {
     }
     func_80149D1C();
     func_80151C30();
-    if (game_state.step_timer.u % 240 == 0) {
+    if (game_state.mode_step_timer.u % 240 == 0) {
         if (rand() % 3 == 0) {
             func_801335A0(0, 0x500);
         }
@@ -101,10 +101,10 @@ void func_801493D4(void) {
         if (*((u8 *) D_8015EDB4 + 0x905) == 0 && *((u8 *) D_8015EDB4 + 0x98D) == 0 && *((u8 *) D_8015EDB4 + 0x905) == 0) {
             func_80154230(0x80196000, 9);
             D_8015EDCC += 1;
-            main_step_next();
+            mode_step_next();
         }
     }
-    game_state.step_timer.u++;
+    game_state.mode_step_timer.u++;
 }
 
 void func_80149538(void) {
@@ -112,18 +112,18 @@ void func_80149538(void) {
     u8 shade;
 
     func_80146F74(0, 3, 5, -0x14, 0, 0, 0, 0, 0);
-    if ((game_state.step_timer.w >= 0xB4) && (game_state.step_timer.w < 0xC7)) {
+    if ((game_state.mode_step_timer.w >= 0xB4) && (game_state.mode_step_timer.w < 0xC7)) {
         func_80153E78(1, 0xE0, 0xE0, 0xE0);
-    } else if (game_state.step_timer.w == 0xC7) {
+    } else if (game_state.mode_step_timer.w == 0xC7) {
         func_801335A0(0, 0x504);
-    } else if ((game_state.step_timer.w >= 0xC8) && (game_state.step_timer.w < 0x140)) {
-        if ((game_state.step_timer.w % 3) == 0) {
+    } else if ((game_state.mode_step_timer.w >= 0xC8) && (game_state.mode_step_timer.w < 0x140)) {
+        if ((game_state.mode_step_timer.w % 3) == 0) {
             func_80153E78(1, 0xF0, 0xF0, 0xF0);
         }
-    } else if ((game_state.step_timer.w >= 0x140) && (game_state.step_timer.w < 0x1B8)) {
-        shade = (game_state.step_timer.w * 2) - 0x280;
+    } else if ((game_state.mode_step_timer.w >= 0x140) && (game_state.mode_step_timer.w < 0x1B8)) {
+        shade = (game_state.mode_step_timer.w * 2) - 0x280;
         func_80153E78(2, shade, shade, shade);
-    } else if (game_state.step_timer.w == 0x1B8) {
+    } else if (game_state.mode_step_timer.w == 0x1B8) {
         i = 1;
         do {
             D_80127080[i++].unk0 = 0x80000000;
@@ -151,7 +151,7 @@ void func_80149538(void) {
         D_8012278D = 0x60;
         D_8012278E = 0x60;
         func_8009AD70(2, &D_80122780);
-        main_stage_set(0x1F);
+        mode_stage_set(0x1F);
     }
     /* FAKE: the frame counter is read through its own symbol for the final `+= 1`. The original reads it twice, as two uopt
      * variables (the compare chain, then the increment); through GameState both reads join one web and the function is 33

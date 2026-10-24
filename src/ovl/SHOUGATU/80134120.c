@@ -1,7 +1,7 @@
-#define MAIN_API_OVERRIDE_dialogue_names_set /* Word argument at this call; T-9520. */
+#define MAIN_API_OVERRIDE_talk_names_set /* Word argument at this call; T-9520. */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
-void dialogue_names_set();
+void talk_names_set();
 
 void func_80134120(void) {
     void (**p)();
@@ -9,15 +9,15 @@ void func_80134120(void) {
 
     tbl = D_80143D24;
     if (D_80143B20 != 0) {
-        p = &tbl.f[game_state.step];
-        if (*p == normal_date_girl_in || tbl.f[game_state.step] == normal_date_girl_out) {
-            tbl.f[game_state.step] = main_step_next;
+        p = &tbl.f[game_state.mode_step];
+        if (*p == normal_date_girl_in || tbl.f[game_state.mode_step] == normal_date_girl_out) {
+            tbl.f[game_state.mode_step] = mode_step_next;
             /* FAKE: empty double test (decomp-permuter, score 0); it only shifts the register choice of base, index and pointer to the original's; real source unknown. T-4090 */
-            if (!game_state.step && !game_state.step) {
+            if (!game_state.mode_step && !game_state.mode_step) {
             }
         }
     }
-    tbl.f[game_state.step](0x80);
+    tbl.f[game_state.mode_step](0x80);
 }
 
 void func_801341E4(void) {
@@ -48,18 +48,18 @@ void func_801341E4(void) {
 void func_8013428C(void) {
     func_801323D4();
     if ((D_80143B04 == 2) && (game_state.substep == 0) && (D_8011ED5B & 0x80)) {
-        snd_command(0x202);
+        audio_command(0x202);
         game_state.substep += 1;
     }
     if ((game_state.substep == 0) && (D_80143B04 == 3)) {
-        snd_command(0x202);
+        audio_command(0x202);
         game_state.substep += 1;
     }
 }
 
 void func_80134340(void) {
     game_state.date_girl = game_state.current_girl;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013436C(void) {
@@ -71,7 +71,7 @@ void func_8013436C(void) {
         }
     }
     bg_read_sub2(0x41F6);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80134400(void) {
@@ -94,7 +94,7 @@ void func_80134400(void) {
         game_state.current_girl = GIRL_SOTOI;
     }
     check_para_limit();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80134554(void) {
@@ -110,7 +110,7 @@ void func_80134554(void) {
         D_80143B00 += 2;
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801345C8(void) {
@@ -127,7 +127,7 @@ void func_801345C8(void) {
             }
         }
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80134648(void) {
@@ -148,16 +148,16 @@ void func_80134648(void) {
     } else {
         D_80143B00 += 2;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801346E8(void) {
     if (D_80122CDC != 2) {
-        main_step_next();
-        main_step_next();
-        main_step_next();
+        mode_step_next();
+        mode_step_next();
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: empty do loops and size ^ 0 preserve the two original multiplications
@@ -167,7 +167,7 @@ void func_80134730(void)
 {
     u32 size;
     s32 index;
-    dialogue_names_set(D_80122CDC);
+    talk_names_set(D_80122CDC);
     size = 0x38;
     index = D_80122CDC;
     do { } while (0);
@@ -175,22 +175,22 @@ void func_80134730(void)
     ((GameState *) (((u32) (&game_state)) + (index * (size ^ 0))))->girls[0].affection += 1;
     do { check_para_limit(size, index); } while (0);
     game_state.current_girl = GIRL_SOTOI;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801347B4(void) {
     D_80122CEC = D_80122CDC;
-    main_step_next();
+    mode_step_next();
 }
 
-/* FAKE: passing girl to dialogue_names_set colors the entry range to $a0, and the outer * 0 subtree reserves $v1 so game_state.current_girl is promoted to $a0 after get_g_zyotai_s without emitting instructions in ugen. T-24137 */
+/* FAKE: passing girl to talk_names_set colors the entry range to $a0, and the outer * 0 subtree reserves $v1 so game_state.current_girl is promoted to $a0 after get_g_zyotai_s without emitting instructions in ugen. T-24137 */
 void func_801347E0(void) {
     u32 state;
     s32 girl;
 
     girl = game_state.date_girl;
     game_state.current_girl = girl;
-    dialogue_names_set(girl);
+    talk_names_set(girl);
     D_80122CDC = D_80122CEC;
     state = (u8)get_g_zyotai_s(GIRL_NOZOMI) & 0x7F;
     if ((((((D_80143B00 * 0) + (D_80143B00 * 0) + (D_80143B00 * 0)) * 0) + game_state.current_girl) == ((game_state.current_girl * 0) + 6)) && (state < 2) && (D_80143B20 == 0)) {
@@ -198,5 +198,5 @@ void func_801347E0(void) {
         D_80143AF8 = D_80143A9C;
         D_80143AFC = D_80143AD8;
     }
-    main_step_next();
+    mode_step_next();
 }

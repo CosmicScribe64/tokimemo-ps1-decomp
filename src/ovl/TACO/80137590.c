@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 s32 func_80137590(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_8013760C();
         break;
@@ -73,7 +73,7 @@ s32 func_8013760C(void) {
             load_csr_tp(0x80162000, 0xE, 1, 0, 0, 0x100, 0x100);
             load_csr_tp(0x80172000, 0xC, 1, 0, 0, 0x100, 0x100);
             load_csr_tp(0x80182000, 0xA, 1, 0, 0, 0x80, 0x80);
-            main_step_next();
+            mode_step_next();
         }
         break;
     default:
@@ -91,10 +91,10 @@ void func_8013788C(void) {
         func_80059048();
         func_8015ABF0();
         func_800591D8(0);
-        main_stage_set(2);
+        mode_stage_set(2);
     } else {
         game_state.pad_pressed |= PAD_CIRCLE;
-        t = game_state.stage_timer & 0x1FF;
+        t = game_state.mode_stage_timer & 0x1FF;
         game_state.pad_held |= PAD_CIRCLE;
         if (t >= 0x79 && t < 0x8C) {
             game_state.pad_held |= PAD_RIGHT;
@@ -124,12 +124,12 @@ void func_8013788C(void) {
         func_8013F250();
         func_80132FE8();
     }
-    if ((u32) game_state.stage_timer >= 0x709U) {
+    if ((u32) game_state.mode_stage_timer >= 0x709U) {
         func_80143AF4();
         func_801347A8();
         func_80059048();
         func_8015ABF0();
         func_800591D8(0);
-        main_stage_set(2);
+        mode_stage_set(2);
     }
 }

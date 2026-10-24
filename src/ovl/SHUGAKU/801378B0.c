@@ -13,13 +13,13 @@ void func_801378F0(void) {
     ShFnTbl41 tbl;
 
     tbl = D_8013C884;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_80137978(void) {
     D_800CA2DC = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013799C(void) {
@@ -44,73 +44,73 @@ void func_8013799C(void) {
             }
         }
     } else {
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_80137AF8(void) {
     func_801386C4();
-    if ((D_800CA2E0 == 2) && (game_state.step_timer.w == 1)) {
+    if ((D_800CA2E0 == 2) && (game_state.mode_step_timer.w == 1)) {
         D_80122CFC = 0x3C;
     }
-    game_state.step_timer.w += 1;
+    game_state.mode_step_timer.w += 1;
 }
 
 void func_80137B54(void) {
     D_800B3D60 = 0;
-    snd_bank_load_start(1, 0xC512, 0xC4E7, 0xD557, 0xD508, 0xD4F1);
-    if (snd_bank_load_poll() == 1) {
-        main_step_next();
+    audio_bank_load_start(1, 0xC512, 0xC4E7, 0xD557, 0xD508, 0xD4F1);
+    if (audio_bank_load_poll() == 1) {
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80137BBC(void) {
-    if (snd_bank_load_poll() == 1) {
-        main_step_next();
+    if (audio_bank_load_poll() == 1) {
+        mode_step_next();
     }
-    if ((u32) game_state.step_timer.w++ >= 0x400U) {
-        cd_cmd_reset();
-        snd_bank_state_reset();
-        main_step_set((game_state.step - 1) & 0xFF);
+    if ((u32) game_state.mode_step_timer.w++ >= 0x400U) {
+        cd_command_reset();
+        audio_bank_state_reset();
+        mode_step_set((game_state.mode_step - 1) & 0xFF);
     }
 }
 
 void func_80137C3C(void) {
-    snd_command(0x23);
-    snd_command(0x24);
-    snd_command(0x2E);
+    audio_command(0x23);
+    audio_command(0x24);
+    audio_command(0x2E);
     switch (D_800CA2CC) {
     case 0:
-        snd_command(0x200);
+        audio_command(0x200);
         break;
     case 1:
-        snd_command(0x201);
+        audio_command(0x201);
         break;
     default:
-        snd_command(0x202);
+        audio_command(0x202);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80137CC0(void) {
     cd_read_sectors(0x2D, 0x80197000, 0xAF7C);
     func_80136380();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80137CFC(void) {
     s16 i;
 
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    dialogue_clear();
+    talk_clear();
     strcpy(D_800CA19C, "修学旅行");
     k_reset(1);
     game_state.tile_layer_enabled = 0;
@@ -124,7 +124,7 @@ void func_80137CFC(void) {
     for (i = 0; i < 0xF; i++) {
         icon_can_use_set(i, 0);
     }
-    icon_bar_update(1);
+    hud_icon_bar_update(1);
     parameter_show_init();
     parameter_show_init();
     dec_bg_brightness = 0x80;
@@ -133,8 +133,8 @@ void func_80137CFC(void) {
     addr_init_bustup();
     hizuke_init();
     text_marker_hide();
-    dialogue_names_set(0);
-    strcpy(name_buf_girl_short, game_state.player_family_name);
+    talk_names_set(0);
+    strcpy(name_code_girl_short, game_state.player_family_name);
     func_80136380();
     D_800CA2D0 = D_8013C44C;
     D_800CA2D4 = D_8013C480;
@@ -146,7 +146,7 @@ void func_80137CFC(void) {
     }
     D_800CA2B0[10] = 0;
     D_800CA2F0 = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80137F04(void) {
@@ -156,41 +156,41 @@ void func_80137F04(void) {
     D_800B3D60 = 0;
     temp_v0 = dec_bg_cd_read(0x3FAD, 0);
     if (temp_v0 == *dec_bg_show) {
-        main_step_next();
-        main_step_next();
-        main_step_next();
+        mode_step_next();
+        mode_step_next();
+        mode_step_next();
     } else if (temp_v0 == (1 - *dec_bg_show)) {
-        main_step_next();
-        main_step_next();
+        mode_step_next();
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_80137F90(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
-        main_step_next();
-        game_state.step -= 3;
+        mode_step_next();
+        game_state.mode_step -= 3;
         return 0;
     }
     dec_bg_decode_to_vram(0);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013801C(void) {
     dec_bg_show_switch(0);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138044(void) {
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    dialogue_clear();
+    talk_clear();
     strcpy(D_800CA19C, "修学旅行");
     k_reset(1);
     game_state.tile_layer_enabled = 0;
@@ -212,7 +212,7 @@ void func_80138044(void) {
         bg_read_sub2(0x4213);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138154(void) {
@@ -229,7 +229,7 @@ void func_80138154(void) {
         bg_read_sub2(0x4241);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801381BC(void) {
@@ -248,7 +248,7 @@ void func_801381BC(void) {
         strcpy(D_800CA1DC, "北海道");
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138290(void) {
@@ -265,17 +265,17 @@ void func_80138290(void) {
         strcpy(D_800CA23C, "北海道");
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138320(void) {
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         func_801383C8();
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            game_state.step_timer.w += 1;
+            game_state.mode_step_timer.w += 1;
         }
         break;
     case 2:
@@ -285,14 +285,14 @@ void func_80138320(void) {
         func_801385A8();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
 
 void func_801383C8(void) {
     cd_read_sectors(0xD, 0x801D0000, 0xBB98);
-    game_state.step_timer.w += 1;
+    game_state.mode_step_timer.w += 1;
 }
 
 void func_80138400(void) {
@@ -331,15 +331,15 @@ void func_80138400(void) {
     D_80120657 = 0x80;
     D_80120655 = 1;
     D_80120654 = 0;
-    snd_command(0x501);
-    game_state.step_timer.w += 1;
+    audio_command(0x501);
+    game_state.mode_step_timer.w += 1;
 }
 
 s16 func_801385A8(void) {
     if (D_80120676 < -0x1DF) {
         k_reset(1);
         actor_clear(0x60);
-        main_step_next();
+        mode_step_next();
     }
     D_80120676 -= 3;
     if (game_state.pad_held & 0x600060) {
@@ -349,21 +349,21 @@ s16 func_801385A8(void) {
 }
 
 void func_8013864C(void) {
-    dialogue_tables = &D_800CA2DC;
+    talk_tables = &D_800CA2DC;
     D_800CA138 = &D_800CA2E0;
     D_800CA13C = D_800CA2D0;
     D_800CA140 = D_800CA2D4;
     D_800CA144 = D_800CA2D8;
-    dialogue_run(0xFF, 1, 0);
+    talk_run(0xFF, 1, 0);
 }
 
 void func_801386C4(void) {
-    dialogue_tables = &D_800CA2DC;
+    talk_tables = &D_800CA2DC;
     D_800CA138 = &D_800CA2E0;
     D_800CA13C = D_800CA2D0;
     D_800CA140 = D_800CA2D4;
     D_800CA144 = D_800CA2D8;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }
 
 void func_80138740(void) {
@@ -374,33 +374,33 @@ void func_80138740(void) {
     s = D_800CA2CC;
     s = get_g_zyotai_s(g->current_girl);
     if (((g->girls[0].birthday.w & 0xF) == g->month) && (((u32) (g->girls[0].birthday.w << 0x17) >> 0x1B) == g->day)) {
-        g->saved_stage = g->stage + 1;
-        g->saved_step = 0;
+        g->saved_mode_stage = g->mode_stage + 1;
+        g->saved_mode_step = 0;
         g->date_girl = g->current_girl;
         g->current_girl = GIRL_SHIORI;
-        main_stage_set(6);
+        mode_stage_set(6);
         return;
     }
     if ((g->month == (g->player_birthday & 0xF)) && (g->day == ((u32) (g->player_birthday << 0x17) >> 0x1B))) {
-        g->saved_stage = g->stage + 1;
-        g->saved_step = 0;
+        g->saved_mode_stage = g->mode_stage + 1;
+        g->saved_mode_step = 0;
         g->date_girl = g->current_girl;
-        main_stage_set(7);
+        mode_stage_set(7);
         return;
     }
-    if ((g->stage == 4) && (g->current_girl == GIRL_YUINA) && (D_800CA2CC == 2)) {
-        g->saved_stage = g->stage + 1;
-        g->saved_step = 0;
-        main_stage_set(8);
+    if ((g->mode_stage == 4) && (g->current_girl == GIRL_YUINA) && (D_800CA2CC == 2)) {
+        g->saved_mode_stage = g->mode_stage + 1;
+        g->saved_mode_step = 0;
+        mode_stage_set(8);
         return;
     }
-    if ((g->stage == 2) && (g->current_girl == GIRL_YUKARI) && ((u8) (s & 0x7F) < 2)) {
-        g->saved_stage = g->stage + 1;
-        g->saved_step = 0;
-        main_stage_set(0xB);
+    if ((g->mode_stage == 2) && (g->current_girl == GIRL_YUKARI) && ((u8) (s & 0x7F) < 2)) {
+        g->saved_mode_stage = g->mode_stage + 1;
+        g->saved_mode_step = 0;
+        mode_stage_set(0xB);
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801388D8(void) {
@@ -411,29 +411,29 @@ void func_801388D8(void) {
     s = get_g_zyotai_s(g->current_girl);
     if (((g->girls[0].birthday.w & 0xF) == g->month) && (((u32) (g->girls[0].birthday.w << 0x17) >> 0x1B) == g->day)) {
         if ((g->current_girl == GIRL_SAKI) && ((u8) (s & 0x7F) < 2)) {
-            g->saved_stage = g->stage;
-            g->saved_step = g->step + 1;
+            g->saved_mode_stage = g->mode_stage;
+            g->saved_mode_step = g->mode_step + 1;
         } else {
-            g->saved_stage = g->stage + 1;
-            g->saved_step = 0;
+            g->saved_mode_stage = g->mode_stage + 1;
+            g->saved_mode_step = 0;
         }
         g->date_girl = g->current_girl;
         g->current_girl = GIRL_SHIORI;
-        main_stage_set(6);
+        mode_stage_set(6);
         return;
     }
     if ((g->month == (g->player_birthday & 0xF)) && (g->day == ((u32) (g->player_birthday << 0x17) >> 0x1B))) {
         if ((g->current_girl == GIRL_SAKI) && ((u8) (s & 0x7F) < 2)) {
-            g->saved_stage = g->stage;
-            g->saved_step = g->step + 1;
+            g->saved_mode_stage = g->mode_stage;
+            g->saved_mode_step = g->mode_step + 1;
         } else {
-            g->saved_stage = g->stage + 1;
-            g->saved_step = 0;
+            g->saved_mode_stage = g->mode_stage + 1;
+            g->saved_mode_step = 0;
         }
         g->date_girl = g->current_girl;
         g->current_girl = g->current_girl;
-        main_stage_set(7);
+        mode_stage_set(7);
         return;
     }
-    main_step_next();
+    mode_step_next();
 }

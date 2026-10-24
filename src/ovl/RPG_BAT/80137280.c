@@ -854,7 +854,7 @@ void func_80139460(void) {
     case 0:
         D_8015ED98 = 0x1000;
         func_8013E7C0(0x30, 7, 1, 1);
-        snd_bank_start(1, 0x203);
+        audio_bank_start(1, 0x203);
         func_8014EF3C();
         return;
     case 1:
@@ -865,7 +865,7 @@ void func_80139460(void) {
         return;
     case 3:
         D_8015EC14 = 1;
-        main_stage_next();
+        mode_stage_next();
         return;
     }
 }
@@ -945,7 +945,7 @@ void func_80139510(void) {
             func_8013E7C0(0x1D, 4, 1, 1);
             break;
         }
-        snd_bank_start(1, 0x202);
+        audio_bank_start(1, 0x202);
         strcpy(D_8015E9E0, "戦闘に勝った！！");
         strcpy(D_8015EA08, "経験値　：２３６０ＥＸＰ");
         strcpy(D_8015EA30, "お金　　：３６００ゴールド");
@@ -961,7 +961,7 @@ void func_80139510(void) {
         if (func_801447B8() != 0) {
             func_8014F500();
         } else {
-            main_stage_next();
+            mode_stage_next();
         }
         break;
     case 7:
@@ -990,7 +990,7 @@ void func_80139510(void) {
         func_8013E7C0(0x3B, 2, 1, 1);
         D_8015EE30.unk_08 += 8;
         if (D_8015EE30.unk_08 >= 0x81) {
-            snd_bank_start(1, 0x201);
+            audio_bank_start(1, 0x201);
             k_disp_switch(D_8015EE40, 1);
             func_8014F500();
         }
@@ -1013,7 +1013,7 @@ void func_80139510(void) {
         }
         break;
     case 16:
-        snd_bank_start(1, 0x203);
+        audio_bank_start(1, 0x203);
         func_8013EA30(0xFF);
         D_8015EE30.unk_08 += 1;
         if (D_8015EE30.unk_08 >= 5) {
@@ -1112,7 +1112,7 @@ void func_80139510(void) {
     case 33:
         D_8015EE1C = 0;
         D_8015EE30.unk_00 = 0;
-        snd_bank_start(1, 0x204);
+        audio_bank_start(1, 0x204);
         if (D_8015EDF0 != 0x40000000) {
             D_8015EDF0 = 0;
         }
@@ -1244,11 +1244,11 @@ void func_8013A034(void) {
     case 3:
         game_state.current_girl = GIRL_SOTOI;
         cd_audio_request_set(0x1C0000A8, 0x0F0000B7, 0xE);
-        snd_command(0x300);
+        audio_command(0x300);
         func_8014F524();
         break;
     case 4:
-        snd_command(0xE4);
+        audio_command(0xE4);
         func_8014F524();
         break;
     case 5:

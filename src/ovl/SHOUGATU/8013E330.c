@@ -1,12 +1,12 @@
 #define MAIN_API_OVERRIDE_printf /* FAKE: integer result keeps the retry flag in v1. T-25038 */
-#define MAIN_API_OVERRIDE_dialogue_names_set /* FAKE: integer return view keeps E50C's loop counter in v1. T-25033 */
+#define MAIN_API_OVERRIDE_talk_names_set /* FAKE: integer return view keeps E50C's loop counter in v1. T-25033 */
 #define MAIN_API_OVERRIDE_get_g_zyotai_s /* matched with s32() (main_api.h: s32(s32)) */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
 s32 get_g_zyotai_s();
 
-s32 dialogue_names_set();
+s32 talk_names_set();
 s32 printf(void *arg0, ...);
 
 /* Existing exception: EVENT owns a table at this overlapping address; moving
@@ -19,7 +19,7 @@ s32 func_8013E330(void) {
     ShoCalendarFn28 table;
 
     table = D_8014605C;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     table.f[idx](0x80);
     ((Actor *)actor_pool)[96].brightness = dec_bg_brightness;
     if (((Actor *)actor_pool)[96].unk_18 == 0 && ((Actor *)actor_pool)[96].unk_08 == 0) {
@@ -38,13 +38,13 @@ void func_8013E410(void) {
         func_8013D2A8();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013E464(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     if (((u8)get_g_zyotai_s(game_state.current_girl) & 0x7F) != 4) {
-        main_step_next();
+        mode_step_next();
         return;
     }
     func_8013D2A8();
@@ -58,7 +58,7 @@ void func_8013E4B4(void) {
             D_80145F2C += 2;
         }
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013E50C(void) {
@@ -84,7 +84,7 @@ void func_8013E50C(void) {
     D_80145F20 = D_80145AD4;
     D_80145F24 = D_80145B08;
     D_80145F28 = D_80145B3C;
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     game_state.girls[game_state.current_girl].affection += 4;
     for (i = 0; i < 7; i++) {
         if (game_state.param_looks.value < sp40.v[i]) {
@@ -94,7 +94,7 @@ void func_8013E50C(void) {
     game_state.girls[game_state.current_girl].tokimeki += sp30.v[i];
     check_para_limit();
     event_log_add(4, 0);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013E6E4(void) {
@@ -146,19 +146,19 @@ void func_8013E6E4(void) {
         D_80145F2C++;
     }
     func_8013EE30();
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     if (!game_state.girls[game_state.current_girl].flags.f.met || (D_80146050 != 0 && game_state.current_girl == GIRL_MEGUMI)) {
         game_state.girls[game_state.current_girl].flags.f.met = 1;
-        game_state.saved_mode = game_state.mode;
-        game_state.saved_stage = game_state.stage;
-        game_state.saved_step = 0x11;
+        game_state.saved_game_mode = game_state.game_mode;
+        game_state.saved_mode_stage = game_state.mode_stage;
+        game_state.saved_mode_step = 0x11;
         D_80122D48 = 3;
         if (D_80146050 != 0) {
             event_log_add(8, game_state.current_girl * 10);
         } else {
             event_log_add(4, 0);
         }
-        main_stage_set(5);
+        mode_stage_set(5);
         return;
     }
     game_state.girls[game_state.current_girl].affection += 4;
@@ -170,7 +170,7 @@ void func_8013E6E4(void) {
     game_state.girls[game_state.current_girl].tokimeki += sp40.v[i];
     event_log_add(4, 0);
     check_para_limit();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013EA98(void) {
@@ -238,15 +238,15 @@ void func_8013EA98(void) {
     func_8013EE30();
     /* FAKE (T-25501): the byte view passes the selector itself, which pins
      * its range to a0 here and forces uopt to split the loop piece. */
-    dialogue_names_set(*(u8 *)&game_state.current_girl);
+    talk_names_set(*(u8 *)&game_state.current_girl);
     if (!game_state.girls[game_state.current_girl].flags.f.met) {
         game_state.girls[game_state.current_girl].flags.f.met = 1;
-        game_state.saved_mode = game_state.mode;
-        game_state.saved_stage = game_state.stage;
-        game_state.saved_step = 0x18;
+        game_state.saved_game_mode = game_state.game_mode;
+        game_state.saved_mode_stage = game_state.mode_stage;
+        game_state.saved_mode_step = 0x18;
         D_80122D48 = 3;
         event_log_add(4, 0);
-        main_stage_set(5);
+        mode_stage_set(5);
     } else {
         game_state.girls[game_state.current_girl].affection += 4;
         for (i = 0; i < 7; i++) {
@@ -256,7 +256,7 @@ void func_8013EA98(void) {
         }
         game_state.girls[game_state.current_girl].tokimeki += sp40.v[i];
         event_log_add(4, 0);
-        main_step_next();
+        mode_step_next();
     }
     check_para_limit();
 }
@@ -321,42 +321,42 @@ void func_8013EE30(void) {
 void func_8013F070(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        bustup_read_start(0x56C0);
+        portrait_read_start(0x56C0);
         break;
     case GIRL_MIO:
-        bustup_read_start(0x5E7C);
+        portrait_read_start(0x5E7C);
         break;
     case GIRL_YUINA:
-        bustup_read_start(0x5369);
+        portrait_read_start(0x5369);
         break;
     case GIRL_AYAKO:
-        bustup_read_start(0x59EA);
+        portrait_read_start(0x59EA);
         break;
     case GIRL_SAKI:
-        bustup_read_start(0x6827);
+        portrait_read_start(0x6827);
         break;
     case GIRL_YUKARI:
-        bustup_read_start(0x611F);
+        portrait_read_start(0x611F);
         break;
     case GIRL_NOZOMI:
-        bustup_read_start(0x6395);
+        portrait_read_start(0x6395);
         break;
     case GIRL_MIRA:
-        bustup_read_start(0x5C60);
+        portrait_read_start(0x5C60);
         break;
     case GIRL_YUKO:
-        bustup_read_start(0x51A7);
+        portrait_read_start(0x51A7);
         break;
     case GIRL_MEGUMI:
         if (D_80146050 != 0) {
-            bustup_read_start(0x6638);
+            portrait_read_start(0x6638);
         } else {
-            bustup_read_start(0x65DE);
+            portrait_read_start(0x65DE);
         }
         break;
     case GIRL_YUMI:
-        bustup_read_start(0x6A9D);
+        portrait_read_start(0x6A9D);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }

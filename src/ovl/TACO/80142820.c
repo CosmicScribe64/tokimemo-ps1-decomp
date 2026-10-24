@@ -5,7 +5,7 @@
 s32 strncpy();
 
 void func_80142820(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_801428DC();
         break;
@@ -59,14 +59,14 @@ void func_801428DC(void) {
     func_8009C210(3);
     func_80097D90(0x140, 0xF0, 0, 0, 0);
     if (func_80045288() == 0) {
-        cd_cmd_reset();
+        cd_command_reset();
     }
     func_8005907C();
     func_80059048();
     func_801347A8();
     actor_clear_range(0);
-    actors_draw_enable(0);
-    main_step_next();
+    actor_draw_enable(0);
+    mode_step_next();
 }
 
 void func_80142AF0(void) {
@@ -78,24 +78,24 @@ void func_80142AF0(void) {
         if (func_80053F04() != 0) {
             /* FAKE: the first read of unk_1115 goes through a local so the three tests share a
              * register range that takes $v1 (found by tools/autotweak.py); T-19009 */
-            temp = gs->card_result;
+            temp = gs->memory_card_result;
             if (temp == 1) {
                 gs->substep += 1;
-            } else if (gs->card_result == 0xF1) {
+            } else if (gs->memory_card_result == 0xF1) {
                 gs->substep += 1;
-            } else if (gs->card_result == 0xFF) {
+            } else if (gs->memory_card_result == 0xFF) {
                 gs->substep += 1;
             }
-        } else if ((u32)gs->card_timer >= 0x201U) {
+        } else if ((u32)gs->memory_card_timer >= 0x201U) {
             gs->substep += 1;
         }
         break;
     case 1:
-        card_stop();
-        if (gs->card_result == 1) {
+        memory_card_stop();
+        if (gs->memory_card_result == 1) {
             if (func_80054AF4(0) == 1) {
                 gs->substep += 1;
-                card_start();
+                memory_card_start();
                 func_8005C4CC(0);
             } else {
                 gs->substep = 0xFF;
@@ -106,10 +106,10 @@ void func_80142AF0(void) {
         break;
     case 2:
         if (func_80054284() == 3) {
-            card_stop();
+            memory_card_stop();
             gs->substep += 1;
-        } else if (((u32)gs->card_timer >= 0x201U) || (gs->card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32)gs->memory_card_timer >= 0x201U) || (gs->memory_card_result == 0xF0)) {
+            memory_card_stop();
             gs->substep = 0xFF;
         }
         break;
@@ -123,24 +123,24 @@ void func_80142AF0(void) {
         }
         break;
     case 4:
-        card_start();
+        memory_card_start();
         D_800E7D36 = 0;
         gs->substep += 1;
         break;
     case 5:
         if (func_80054388() == 0x13) {
-            snd_command(0x50F);
-            card_stop();
+            audio_command(0x50F);
+            memory_card_stop();
             gs->substep += 1;
-        } else if (((u32)gs->card_timer >= 0x201U) || (gs->card_result == 0xF0)) {
-            snd_command(0x502);
-            card_stop();
+        } else if (((u32)gs->memory_card_timer >= 0x201U) || (gs->memory_card_result == 0xF0)) {
+            audio_command(0x502);
+            memory_card_stop();
             gs->substep += 1;
         }
         break;
     case 0xFF:
     default:
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -155,14 +155,14 @@ void func_80142DE0(void) {
     text_system_reset();
     dec_bg_reset();
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     *(s32 *) &game_state.menu_hit[3] = 0x9F;
     if (((TcBits *) &D_800E7D50)->flag == 1) {
         actor_clear_range(0);
         tpage_buf_clear();
-        main_state_set(game_state.saved_mode);
-        main_stage_set(game_state.saved_stage);
-        main_step_set(game_state.saved_step);
+        game_mode_set(game_state.saved_game_mode);
+        mode_stage_set(game_state.saved_mode_stage);
+        mode_step_set(game_state.saved_mode_step);
         cursor_actor_init(0);
         text_marker_set(0);
         message_window_init();
@@ -171,7 +171,7 @@ void func_80142DE0(void) {
         hizuke_disp_switch(1);
         return;
     }
-    main_state_set(MODE_TITLE);
+    game_mode_set(MODE_TITLE);
 }
 
 void func_80142EC4(void) {
@@ -180,12 +180,12 @@ void func_80142EC4(void) {
 
 void func_80142EE4(void) {
     func_80059BE8();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80142F0C(void) {
     func_8004ADE4();
-    main_step_next();
+    mode_step_next();
 }
 
 u8 func_80142F34(void) {
@@ -201,7 +201,7 @@ u8 func_80142F34(void) {
         }
         break;
     case 2:
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -209,22 +209,22 @@ u8 func_80142F34(void) {
 u8 func_80142FE8(void) {
     switch (game_state.substep) {
     case 0:
-        snd_bank_state_reset();
+        audio_bank_state_reset();
         func_800674B0();
         game_state.substep += 1;
         break;
     case 1:
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             game_state.substep += 1;
         }
         break;
     case 2:
         if (D_800B3220 == 0) {
-            card_start();
+            memory_card_start();
         } else {
-            main_step_next();
+            mode_step_next();
         }
-        main_step_next();
+        mode_step_next();
         break;
     }
 }

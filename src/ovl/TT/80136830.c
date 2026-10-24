@@ -173,22 +173,22 @@ void func_80136C64(void) {
                     return;
                 }
                 func_80133970();
-                snd_command(0x21);
-                snd_command(0x22);
-                snd_command(0x2F);
-                snd_command(4);
-                snd_command(0x201);
+                audio_command(0x21);
+                audio_command(0x22);
+                audio_command(0x2F);
+                audio_command(4);
+                audio_command(0x201);
                 break;
             default:
-                snd_command(0xB1);
+                audio_command(0xB1);
                 break;
             }
         } else {
-            snd_command(0x21);
-            snd_command(0x22);
-            snd_command(0x2F);
-            snd_command(4);
-            snd_command(0x201);
+            audio_command(0x21);
+            audio_command(0x22);
+            audio_command(0x2F);
+            audio_command(4);
+            audio_command(0x201);
         }
         bzero(c, 0x20);
         bzero((u8 *)p, 0x20);
@@ -277,11 +277,11 @@ void func_80136C64(void) {
         break;
     case 1:
         func_80133A60();
-        snd_command(0x21);
-        snd_command(0x22);
-        snd_command(0x2F);
-        snd_command(4);
-        snd_command(0x201);
+        audio_command(0x21);
+        audio_command(0x22);
+        audio_command(0x2F);
+        audio_command(4);
+        audio_command(0x201);
         func_8014A7E0();
         func_80146BE0();
         func_80148DB0();

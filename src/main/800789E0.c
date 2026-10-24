@@ -55,7 +55,7 @@ void func_800789E0(void) {
     ovl_load_lba = 0;
 }
 
-void mode_overlay_loader(void) {
+void ovl_loader_mode_handler(void) {
     u8 sel = ovl_load_state; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
     switch (sel) {
@@ -93,22 +93,22 @@ void func_80078A94(void) {
         n += 1;
     }
     if (*D_8011F3FF & 0x80) {
-        mascot_update();
+        hud_mascot_update();
         n += 1;
     }
     if (D_8011ECD3 & 0x80) {
         cursor_update();
         n += 1;
     }
-    if (game_state.overlay_target_mode == MODE_TELEPHONE_PROFILE) {
+    if (game_state.ovl_target_game_mode == MODE_TELEPHONE_PROFILE) {
         cal_base_show();
     }
     if (n != 0) {
-        screen_frame_draw(0);
+        hud_screen_frame_draw(0);
         switch (D_800B6D30) {
         case 0:
             if (D_80122D44 & 1) {
-                light_effect_draw();
+                sprite_light_effect_draw();
             }
             if (D_80122D44 & 2) {
                 message_window_title_update();
@@ -136,7 +136,7 @@ s32 func_80078C48(void) {
     back_clear_switch(1);
     ovl_load_buf = 0x80132000;
     D_800B6D30 = 0;
-    switch (g->overlay_target_mode) {
+    switch (g->ovl_target_game_mode) {
     case 8:
     case MODE_NAME_ENTRY:
     case MODE_EXAM:
@@ -157,7 +157,7 @@ s32 func_80078C48(void) {
     if ((g->player_flags.b[1] & 0xF) == 3) {
         sprite_quads[0].flags = 0x80000000;
     }
-    switch (g->overlay_target_mode) {
+    switch (g->ovl_target_game_mode) {
     case MODE_HELP:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x96AA;
@@ -315,184 +315,184 @@ void func_80079070(void) {
     s32 arg; /* s32 and passed as is, so its range is precoloured $a0 (a u8 converted at the call took $v0) */
 
     gs = &game_state;
-    switch (gs->overlay_target_mode) {
+    switch (gs->ovl_target_game_mode) {
     case MODE_HELP:
-        overlay_entry = (u32) &D_80132000;
+        ovl_entry = (u32) &D_80132000;
         break;
     case MODE_FESTIVAL_STALLS:
-        overlay_entry = (u32) &D_80132000;
+        ovl_entry = (u32) &D_80132000;
         break;
     case MODE_CLUB_MASTER_C:
-        overlay_entry = (u32) &D_80132140;
+        ovl_entry = (u32) &D_80132140;
         break;
     case MODE_CLUB_MASTER_B:
-        overlay_entry = (u32) &D_80139150;
+        ovl_entry = (u32) &D_80139150;
         break;
     case MODE_CLUB_MASTER_A:
-        overlay_entry = (u32) &D_80133A2C;
+        ovl_entry = (u32) &D_80133A2C;
         break;
     case MODE_CULTURE_STAGE:
-        overlay_entry = (u32) &D_80137890;
+        ovl_entry = (u32) &D_80137890;
         break;
     case MODE_RPG_BATTLE:
-        overlay_entry = (u32) &D_8013B5B0;
+        ovl_entry = (u32) &D_8013B5B0;
         break;
     case MODE_SPORTS_FESTIVAL:
-        overlay_entry = (u32) &D_80141280;
+        ovl_entry = (u32) &D_80141280;
         break;
     case MODE_CLUB_CAMP_2:
-        overlay_entry = (u32) &D_80132000;
+        ovl_entry = (u32) &D_80132000;
         break;
     case MODE_CLUB_CAMP:
-        overlay_entry = (u32) &D_80132FF8;
+        ovl_entry = (u32) &D_80132FF8;
         break;
     case MODE_PRACTICE_MATCH:
-        overlay_entry = (u32) &D_80132040;
+        ovl_entry = (u32) &D_80132040;
         break;
     case MODE_CULTURE_FESTIVAL_A:
-        overlay_entry = (u32) &D_80142700;
+        ovl_entry = (u32) &D_80142700;
         break;
     case MODE_CULTURE_FESTIVAL_B:
-        overlay_entry = (u32) &D_80144F70;
+        ovl_entry = (u32) &D_80144F70;
         break;
     case MODE_PROLOGUE:
-        overlay_entry = (u32) &D_80144AD0;
+        ovl_entry = (u32) &D_80144AD0;
         break;
     case MODE_NAME_ENT_3:
-        overlay_entry = (u32) &D_8013209C;
+        ovl_entry = (u32) &D_8013209C;
         break;
     case MODE_NAME_ENT_4:
-        overlay_entry = (u32) &D_8014AF28;
+        ovl_entry = (u32) &D_8014AF28;
         break;
     case MODE_NAME_ENTRY:
-        overlay_entry = (u32) &D_8014231C;
+        ovl_entry = (u32) &D_8014231C;
         break;
     case MODE_TELEPHONE:
-        overlay_entry = (u32) &D_801397D0;
+        ovl_entry = (u32) &D_801397D0;
         break;
     case MODE_TELEPHONE_PROFILE:
-        overlay_entry = (u32) &D_80132000;
+        ovl_entry = (u32) &D_80132000;
         break;
     case MODE_ENDING:
-        overlay_entry = (u32) &D_80132334;
+        ovl_entry = (u32) &D_80132334;
         break;
     case MODE_ETC_C4:
-        overlay_entry = (u32) &D_80145A6C;
+        ovl_entry = (u32) &D_80145A6C;
         break;
     case MODE_CAREER_CHOICE:
-        overlay_entry = (u32) &D_801492C0;
+        ovl_entry = (u32) &D_801492C0;
         break;
     case MODE_CAREER_GUIDANCE:
-        overlay_entry = (u32) &D_8014ABD0;
+        ovl_entry = (u32) &D_8014ABD0;
         break;
     case MODE_ETC_C2:
-        overlay_entry = (u32) &D_80142974;
+        ovl_entry = (u32) &D_80142974;
         break;
     case MODE_ALBUM:
-        overlay_entry = (u32) &D_801407F0;
+        ovl_entry = (u32) &D_801407F0;
         break;
     case MODE_ETC_C3:
-        overlay_entry = (u32) &D_8014636C;
+        ovl_entry = (u32) &D_8014636C;
         break;
     case MODE_EXAM:
-        overlay_entry = (u32) &D_801465F8;
+        ovl_entry = (u32) &D_801465F8;
         break;
     case MODE_DATE_SCENE:
-        overlay_entry = (u32) &D_8014C08C;
+        ovl_entry = (u32) &D_8014C08C;
         break;
     case MODE_DATE:
-        overlay_entry = (u32) &D_801448D4;
+        ovl_entry = (u32) &D_801448D4;
         break;
     case MODE_AMUSEMENT_PARK_2:
-        overlay_entry = (u32) &D_80137F64;
+        ovl_entry = (u32) &D_80137F64;
         break;
     case MODE_AMUSEMENT_PARK:
-        overlay_entry = (u32) &D_80132214;
+        ovl_entry = (u32) &D_80132214;
         break;
     case MODE_SICK_VISIT_2:
-        overlay_entry = (u32) &D_80132000;
+        ovl_entry = (u32) &D_80132000;
         break;
     case MODE_SICK_VISIT:
-        overlay_entry = (u32) &D_80133120;
+        ovl_entry = (u32) &D_80133120;
         break;
     case MODE_GIRL_ENCOUNTER:
-        overlay_entry = (u32) &D_80132244;
+        ovl_entry = (u32) &D_80132244;
         break;
     case MODE_PLAYER_BIRTHDAY:
-        overlay_entry = (u32) &D_80134040;
+        ovl_entry = (u32) &D_80134040;
         break;
     case MODE_GIRL_BIRTHDAY:
-        overlay_entry = (u32) &D_80134C90;
+        ovl_entry = (u32) &D_80134C90;
         break;
     case MODE_SPECIAL_EVENT:
-        overlay_entry = (u32) &D_8013882C;
+        ovl_entry = (u32) &D_8013882C;
         break;
     case MODE_GIRL_INVITATION:
-        overlay_entry = (u32) &D_801426D0;
+        ovl_entry = (u32) &D_801426D0;
         break;
     case MODE_SCHOOL_TRIP:
-        overlay_entry = (u32) &D_80137490;
+        ovl_entry = (u32) &D_80137490;
         break;
     case MODE_VALENTINE:
-        overlay_entry = (u32) &D_80132274;
+        ovl_entry = (u32) &D_80132274;
         break;
     case MODE_NEW_YEAR_A:
-        overlay_entry = (u32) &D_8013D180;
+        ovl_entry = (u32) &D_8013D180;
         break;
     case MODE_NEW_YEAR_B:
-        overlay_entry = (u32) &D_801322D4;
+        ovl_entry = (u32) &D_801322D4;
         break;
     case MODE_SEASONAL_PARTY:
-        overlay_entry = (u32) &D_8013B484;
+        ovl_entry = (u32) &D_8013B484;
         break;
     case MODE_MEETING:
-        overlay_entry = (u32) &D_80137144;
+        ovl_entry = (u32) &D_80137144;
         break;
     case MODE_OPTION:
-        overlay_entry = (u32) &D_801335E8;
+        ovl_entry = (u32) &D_801335E8;
         break;
     case MODE_OPTION_2:
-        overlay_entry = (u32) &D_801389A0;
+        ovl_entry = (u32) &D_801389A0;
         break;
     case MODE_OPTION_3:
-        overlay_entry = (u32) &D_8013C780;
+        ovl_entry = (u32) &D_8013C780;
         break;
     default:
-        overlay_entry = (u32) &D_80132000;
+        ovl_entry = (u32) &D_80132000;
         break;
     }
     ovl_load_state = 0;
-    sp32 = game_state.step;
+    sp32 = game_state.mode_step;
     sp31 = game_state.substep;
     /* FAKE: T-17003, unk_110B/unk_110C are s8 in GameState but the original loads them with lbu,
      * so they are read through a u8 view (through gs they compile to lb). */
-    sp2F = *(u8 *)&game_state.stage_scratch;
-    sp30 = *(u8 *)&game_state.mode_scratch;
-    arg = gs->stage;
-    game_state.mode = game_state.overlay_target_mode;
-    main_stage_set(arg);
-    main_step_set((s32) sp32);
+    sp2F = *(u8 *)&game_state.mode_stage_scratch;
+    sp30 = *(u8 *)&game_state.game_mode_scratch;
+    arg = gs->mode_stage;
+    game_state.game_mode = game_state.ovl_target_game_mode;
+    mode_stage_set(arg);
+    mode_step_set((s32) sp32);
     game_state.substep = sp31;
-    game_state.stage_scratch = sp2F;
-    game_state.mode_scratch = sp30;
+    game_state.mode_stage_scratch = sp2F;
+    game_state.game_mode_scratch = sp30;
 }
 
 s32 func_80079524(void) {
-    if (game_state.mode == 0xD0 || game_state.mode == 0xD1) {
+    if (game_state.game_mode == 0xD0 || game_state.game_mode == 0xD1) {
         return 1;
     }
     return 0;
 }
 
 s32 func_80079554(void) {
-    if (game_state.mode == 0x90) {
+    if (game_state.game_mode == 0x90) {
         return 1;
     }
     return 0;
 }
 
 s32 func_80079578(void) {
-    if (game_state.mode == 0x21) {
+    if (game_state.game_mode == 0x21) {
         return 1;
     }
     return 0;
@@ -500,7 +500,7 @@ s32 func_80079578(void) {
 
 void func_8007959C(void) {
     ovl_load_buf = 0x80132000;
-    switch (game_state.stage) {
+    switch (game_state.mode_stage) {
     case 0:
         ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
         D_800B3220 = 0;
@@ -510,53 +510,53 @@ void func_8007959C(void) {
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x9A6A;
         cd_read_sectors(0x60U, ovl_load_buf, 0x9A6A);
-        main_stage_next();
+        mode_stage_next();
     default:
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            main_stage_next();
+            mode_stage_next();
         }
         break;
     case 2:
         if (file_checksum_ok((s32) ovl_load_sectors, 0x80132000) != 0) {
-            main_stage_next();
+            mode_stage_next();
             func_80042458();
             func_8009C5E0(0);
         } else {
-            main_stage_set(0);
+            mode_stage_set(0);
         }
         break;
     case 3:
-        overlay_entry = (u32) &D_8013E850;
+        ovl_entry = (u32) &D_8013E850;
         func_8009C674(0);
         func_8009C210(3);
         CloseEvent(D_8011ECA8);
-        ((s32 (*)()) overlay_entry)();
+        ((s32 (*)()) ovl_entry)();
         func_80041168(0xFF);
-        main_stage_next();
+        mode_stage_next();
         break;
     case 4:
         func_8009C674(0);
         func_8009C210(3);
         func_80042488();
-        snd_bank_state_reset();
+        audio_bank_state_reset();
         dec_bg_reset();
-        cd_cmd_reset();
-        snd_command(0x7F);
+        cd_command_reset();
+        audio_command(0x7F);
         func_800451E0(0x801B8000);
-        main_stage_next();
+        mode_stage_next();
         break;
     case 5:
         func_80079800();
         break;
     case 6:
         if (game_state.options_dirty == 0) {
-            main_state_set((s32) game_state.saved_mode);
-            main_stage_set((s32) game_state.saved_stage);
-            main_step_set((s32) game_state.saved_step);
+            game_mode_set((s32) game_state.saved_game_mode);
+            mode_stage_set((s32) game_state.saved_mode_stage);
+            mode_step_set((s32) game_state.saved_mode_step);
         } else {
-            main_state_set(MODE_BOOT);
+            game_mode_set(MODE_BOOT);
             actor_clear_range(0);
             draw2d3d(0U, 0U);
             sprite_tables_clear();
@@ -572,32 +572,32 @@ void func_80079800(void) {
 
     switch (gs->substep) {
     case 0:
-        card_start();
+        memory_card_start();
         gs->substep += 1;
         break;
     case 1:
         if (func_80053F04() != 0) {
             /* FAKE: the first read of unk_1115 goes through a local so the three tests share a
              * register range that takes $v1 (the TACO func_80142AF0 idiom); T-17003 */
-            temp = gs->card_result;
+            temp = gs->memory_card_result;
             if (temp == 1) {
                 gs->substep += 1;
-            } else if (gs->card_result == 0xF1) {
+            } else if (gs->memory_card_result == 0xF1) {
                 gs->substep += 1;
-            } else if (gs->card_result == 0xFF) {
+            } else if (gs->memory_card_result == 0xFF) {
                 gs->substep += 1;
             }
-        } else if ((u32) gs->card_timer >= 0x201U) {
+        } else if ((u32) gs->memory_card_timer >= 0x201U) {
             gs->substep += 1;
         }
         break;
     case 2:
         func_8005C4CC(0);
-        card_stop();
-        if (gs->card_result == 1) {
+        memory_card_stop();
+        if (gs->memory_card_result == 1) {
             if (func_80054AF4(0) == 1) {
                 gs->substep += 1;
-                card_start();
+                memory_card_start();
             } else {
                 gs->substep = 0xFF;
             }
@@ -607,10 +607,10 @@ void func_80079800(void) {
         break;
     case 3:
         if (func_80054284() == 3) {
-            card_stop();
+            memory_card_stop();
             gs->substep += 1;
-        } else if (((u32) gs->card_timer >= 0x201U) || (gs->card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32) gs->memory_card_timer >= 0x201U) || (gs->memory_card_result == 0xF0)) {
+            memory_card_stop();
             gs->substep = 0xFF;
         }
         break;
@@ -623,24 +623,24 @@ void func_80079800(void) {
         func_8005C4CC(1);
         break;
     case 5:
-        card_start();
+        memory_card_start();
         D_800E7D36 = 0;
         gs->substep += 1;
         break;
     case 6:
         if (func_80054388() == 0x13) {
-            snd_command(0x50F);
-            card_stop();
+            audio_command(0x50F);
+            memory_card_stop();
             gs->substep += 1;
-        } else if (((u32) gs->card_timer >= 0x201U) || (gs->card_result == 0xF0)) {
-            snd_command(0x502);
-            card_stop();
+        } else if (((u32) gs->memory_card_timer >= 0x201U) || (gs->memory_card_result == 0xF0)) {
+            audio_command(0x502);
+            memory_card_stop();
             gs->substep += 1;
         }
         break;
     case 0xFF:
     default:
-        main_stage_next();
+        mode_stage_next();
         break;
     }
 }

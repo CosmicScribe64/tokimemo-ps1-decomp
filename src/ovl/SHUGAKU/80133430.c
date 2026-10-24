@@ -53,18 +53,18 @@ void func_801336A4(void) {
     ShFnTbl43 tbl;
 
     tbl = D_8013BF20;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_80133720(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
     func_80133430();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133758(void) {
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     func_80133430();
     func_80133A68();
     if (*(u8 *)&D_800CA2F0 != 2) {
@@ -76,9 +76,9 @@ void func_80133758(void) {
     }
     D_8013BF18 = 0;
     D_8013BF1C = 0;
-    main_step_next();
+    mode_step_next();
     if (*(u8 *)&D_800CA2F0 == 2) {
-        game_state.step += 2;
+        game_state.mode_step += 2;
     }
 }
 
@@ -106,17 +106,17 @@ s32 func_801337FC(void) {
         }
     }
     s = get_g_zyotai_s(best_i) & 0x7F;
-    if (best_i == 4 && s < 2U && game_state.saved_stage == 5) {
-        if (game_state.event_flags[0x20] != 0) {
-            game_state.daily_event_bits |= 8;
+    if (best_i == 4 && s < 2U && game_state.saved_mode_stage == 5) {
+        if (game_state.scene_flags[0x20] != 0) {
+            game_state.day_event_done_bits |= 8;
         }
     }
-    if (best_i != 0xFF && s < 2U && !(game_state.daily_event_bits & 8)) {
+    if (best_i != 0xFF && s < 2U && !(game_state.day_event_done_bits & 8)) {
         /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $s7, 0xff` (T-24122). */
         game_state.current_girl = (best_i & 0) + best_i;
-        dialogue_names_set(game_state.current_girl);
+        talk_names_set(game_state.current_girl);
         func_80133A68();
-        if (game_state.saved_mode != 6) {
+        if (game_state.saved_game_mode != 6) {
             event_log_add(0xD, 0x26);
         } else {
             switch (D_800CA2CC) {
@@ -137,10 +137,10 @@ s32 func_801337FC(void) {
         D_8013BF14 = D_8013BF04;
         D_8013BF18 = 0;
         D_8013BF1C = 0;
-        game_state.step += 0x20;
+        game_state.mode_step += 0x20;
         return 0;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133A68(void) {
@@ -206,10 +206,10 @@ void func_80133A68(void) {
 }
 
 void func_80133CD8(void) {
-    dialogue_tables = (u8 *) &D_8013BF18;
+    talk_tables = (u8 *) &D_8013BF18;
     D_800CA138 = (u8 *) &D_8013BF1C;
     D_800CA13C = D_8013BF0C;
     D_800CA140 = D_8013BF10;
     D_800CA144 = D_8013BF14;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }

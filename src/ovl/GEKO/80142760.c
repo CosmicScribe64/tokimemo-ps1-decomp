@@ -53,7 +53,7 @@ void func_801429D4(void) {
     FnTbl32 tbl;
 
     tbl = D_801476E4;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
@@ -63,12 +63,12 @@ s32 func_80142A5C(void) {
         game_state.substep += 1;
     }
     if (game_state.substep == 1) {
-        if (game_state.step_timer.u++ >= 0x400U) {
-            cd_cmd_reset();
-            snd_bank_state_reset();
+        if (game_state.mode_step_timer.u++ >= 0x400U) {
+            cd_command_reset();
+            audio_bank_state_reset();
             game_state.substep = 0;
         }
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             game_state.substep += 1;
         } else {
             return 0;
@@ -80,33 +80,33 @@ s32 func_80142A5C(void) {
 void func_80142B20(void) {
     u8 *p = &game_state.day_events[game_state.day_event_index].girl;
 
-    snd_bank_load_start(1, 0xBF98, 0xBF79, D_800B3688[*p], D_800B36C8[*p], D_800B3708[*p]);
-    if (snd_bank_load_poll() == 1) {
-        main_step_next();
+    audio_bank_load_start(1, 0xBF98, 0xBF79, D_800B3688[*p], D_800B36C8[*p], D_800B3708[*p]);
+    if (audio_bank_load_poll() == 1) {
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80142BB8(void) {
-    if (snd_bank_load_poll() == 1) {
-        main_step_next();
+    if (audio_bank_load_poll() == 1) {
+        mode_step_next();
     }
-    if ((u32) game_state.step_timer.w++ >= 0x400U) {
-        cd_cmd_reset();
-        snd_bank_state_reset();
-        main_step_set((game_state.step - 1) & 0xFF);
+    if ((u32) game_state.mode_step_timer.w++ >= 0x400U) {
+        cd_command_reset();
+        audio_bank_state_reset();
+        mode_step_set((game_state.mode_step - 1) & 0xFF);
     }
 }
 
 void func_80142C38(void) {
-    snd_command(0x200);
-    main_step_next();
+    audio_command(0x200);
+    mode_step_next();
 }
 
 void func_80142C60(void) {
     cd_read_sectors(0x10, 0x80197000, 0xAF23);
     func_80142760();
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: T-24503, the unused locals pad0, pad1 and pad2 keep the original's stack slots.
@@ -164,7 +164,7 @@ void func_80142C9C(void) {
     day = func_80144198(2);
     *(u8 *)&game_state.current_girl = game_state.day_events[*(u8 *)&game_state.day_event_index].girl;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -217,14 +217,14 @@ void func_80142C9C(void) {
         if ((game_state.progress_state[i] == 1) &&
             (year >= minYear.v[i]) &&
             ((year != minYear.v[i]) || (month >= minMonth.v[i])) &&
-            ((i != 0xE) || !(game_state.girl_event_bits[*(u8 *)&game_state.current_girl] & 1)) &&
-            ((i != 0xF) || !(game_state.girl_event_bits[*(u8 *)&game_state.current_girl] & 2)) &&
-            ((i != 7) || !(game_state.girl_event_bits[*(u8 *)&game_state.current_girl] & 4)) &&
+            ((i != 0xE) || !(game_state.girl_scene_bits[*(u8 *)&game_state.current_girl] & 1)) &&
+            ((i != 0xF) || !(game_state.girl_scene_bits[*(u8 *)&game_state.current_girl] & 2)) &&
+            ((i != 7) || !(game_state.girl_scene_bits[*(u8 *)&game_state.current_girl] & 4)) &&
             ((i != 0xE) || (tblA.v[*(u8 *)&game_state.current_girl * 0xC + slot] != 0)) &&
             ((i != 0xF) || (tblB.v[*(u8 *)&game_state.current_girl * 0xC + slot] != 0)) &&
-            ((i != 7) || (((year != 0x61) || (month < 9U) || (month >= 0xCU) || (game_state.girls[*(u8 *)&game_state.current_girl].event_counters[0xC] == 0)) &&
-                          ((year != 0x61) || (month < 3U) || (month >= 6U) || (game_state.girls[*(u8 *)&game_state.current_girl].event_counters[0xD] == 0)) &&
-                          ((year != 0x5F) || (month < 9U) || (month >= 0xCU) || (game_state.girls[*(u8 *)&game_state.current_girl].event_counters[0xE] == 0)))) &&
+            ((i != 7) || (((year != 0x61) || (month < 9U) || (month >= 0xCU) || (game_state.girls[*(u8 *)&game_state.current_girl].scene_counters[0xC] == 0)) &&
+                          ((year != 0x61) || (month < 3U) || (month >= 6U) || (game_state.girls[*(u8 *)&game_state.current_girl].scene_counters[0xD] == 0)) &&
+                          ((year != 0x5F) || (month < 9U) || (month >= 0xCU) || (game_state.girls[*(u8 *)&game_state.current_girl].scene_counters[0xE] == 0)))) &&
             (i != 0) && (i != 1) && (i != 0x12) &&
             ((i != 0xD) || ((month != 2) && (month != 0xC))) &&
             ((i != 0xE) || (year != 0x5F) || (month >= 6U)) &&
@@ -287,7 +287,7 @@ void func_80142C9C(void) {
     k_reset(1);
     *(s8 *)&game_state.tile_layer_enabled = 0;
     *(s32 *)&game_state.quads_enabled = 1;
-    dialogue_clear();
+    talk_clear();
     *(u8 *)&game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
     D_800B5940 = 0;
@@ -297,7 +297,7 @@ void func_80142C9C(void) {
     text_marker_hide();
     D_801476D8 = 0;
     D_801476DC = 0;
-    dialogue_names_set(*(u8 *)&game_state.current_girl);
+    talk_names_set(*(u8 *)&game_state.current_girl);
     func_80142760();
     switch (*(u8 *)&game_state.current_girl) {
     case 0:
@@ -362,47 +362,47 @@ void func_80142C9C(void) {
         break;
     }
     strcpy(D_800CA280, names.v[D_801476E0]);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80143AE4(void) {
     bg_read_sub2(0x403B);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80143B0C(void) {
-    dialogue_tables = &D_801476D8;
+    talk_tables = &D_801476D8;
     D_800CA138 = &D_801476DC;
     D_800CA13C = D_801476CC;
     D_800CA140 = D_801476D0;
     D_800CA144 = D_801476D4;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }
 
 void func_80143B88(void) {
-    dialogue_tables = &D_801476D8;
+    talk_tables = &D_801476D8;
     D_800CA138 = &D_801476DC;
     D_800CA13C = D_801476CC;
     D_800CA140 = D_801476D0;
     D_800CA144 = D_801476D4;
-    dialogue_run(0xFF, 1, 0);
+    talk_run(0xFF, 1, 0);
 }
 
 void func_80143C00(void) {
     if (D_80122CDC != 0) {
         D_801476D8 = 0x17;
         game_state.girls[game_state.current_girl].syoushin += 0xF;
-        main_step_set(0x18);
+        mode_step_set(0x18);
     } else {
         D_801476D8 += D_801476E0;
-        main_step_next();
+        mode_step_next();
     }
     check_para_limit();
 }
 
 void func_80143C94(void) {
     D_801476D8 = 0x14;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80143CBC(void) {
@@ -417,7 +417,7 @@ void func_80143CBC(void) {
             D_801476D8 = 0x17;
         }
         game_state.girls[game_state.current_girl].syoushin += 0x14;
-        main_step_set(0x18);
+        mode_step_set(0x18);
     } else {
         D_801476D8 = 0x15;
         for (i = 0; i < 0xB; i++) {
@@ -431,7 +431,7 @@ void func_80143CBC(void) {
                 }
             }
         }
-        main_step_next();
+        mode_step_next();
     }
     check_para_limit();
 }
@@ -446,7 +446,7 @@ void func_80143EA4(void) {
         return;
     }
     game_state.girls[game_state.current_girl].affection += 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80143F48(void) {
@@ -477,16 +477,16 @@ void func_80143F48(void) {
         func_8006B5BC(entry.word);
         kind = tbl.v[D_801476E0];
         if (kind == 0xE) {
-            game_state.girl_event_bits[game_state.current_girl] |= 1;
+            game_state.girl_scene_bits[game_state.current_girl] |= 1;
         }
         if (kind == 0xF) {
-            game_state.girl_event_bits[game_state.current_girl] |= 2;
+            game_state.girl_scene_bits[game_state.current_girl] |= 2;
         }
         if (kind == 7) {
-            game_state.girl_event_bits[game_state.current_girl] |= 4;
+            game_state.girl_scene_bits[game_state.current_girl] |= 4;
         }
     }
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_80144198(s32 selector) {
@@ -535,48 +535,48 @@ void func_80144270(void) {
     GekoBytes21 tbl;
 
     tbl = D_80147C6C;
-    if ((*(u8 *)&game_state.current_girl == 1) && (*(u8 *)&game_state.year == 0x60) && ((*(u8 *)&game_state.month == 0xC) || (*(u8 *)&game_state.month == 1) || ((*(u8 *)&game_state.month == 2) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.event_flags[0xC] == 0)) {
+    if ((*(u8 *)&game_state.current_girl == 1) && (*(u8 *)&game_state.year == 0x60) && ((*(u8 *)&game_state.month == 0xC) || (*(u8 *)&game_state.month == 1) || ((*(u8 *)&game_state.month == 2) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.scene_flags[0xC] == 0)) {
         D_801476E0 = tbl.v[0xE];
         game_state.progress_state[0xE] = 1;
     }
-    if ((*(u8 *)&game_state.current_girl == 3) && (*(u8 *)&game_state.year == 0x61) && ((*(u8 *)&game_state.month == 9) || (*(u8 *)&game_state.month == 0xA) || ((*(u8 *)&game_state.month == 0xB) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.event_flags[0x18] == 0)) {
+    if ((*(u8 *)&game_state.current_girl == 3) && (*(u8 *)&game_state.year == 0x61) && ((*(u8 *)&game_state.month == 9) || (*(u8 *)&game_state.month == 0xA) || ((*(u8 *)&game_state.month == 0xB) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.scene_flags[0x18] == 0)) {
         D_801476E0 = tbl.v[7];
         game_state.progress_state[7] = 1;
     }
-    if ((*(u8 *)&game_state.current_girl == 4) && ((*(u8 *)&game_state.month == 9) || ((*(u8 *)&game_state.month == 0xA) && (*(u8 *)&game_state.day < 0x15U))) && (*(u8 *)&game_state.year >= 0x60U) && (game_state.event_flags[0x1E] == 0)) {
+    if ((*(u8 *)&game_state.current_girl == 4) && ((*(u8 *)&game_state.month == 9) || ((*(u8 *)&game_state.month == 0xA) && (*(u8 *)&game_state.day < 0x15U))) && (*(u8 *)&game_state.year >= 0x60U) && (game_state.scene_flags[0x1E] == 0)) {
         D_801476E0 = tbl.v[0xD];
         game_state.progress_state[0xD] = 1;
     }
-    if ((*(u8 *)&game_state.current_girl == 7) && ((*(u8 *)&game_state.month == 3) || (*(u8 *)&game_state.month == 4) || ((*(u8 *)&game_state.month == 5) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.event_flags[0x2F] == 0)) {
+    if ((*(u8 *)&game_state.current_girl == 7) && ((*(u8 *)&game_state.month == 3) || (*(u8 *)&game_state.month == 4) || ((*(u8 *)&game_state.month == 5) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.scene_flags[0x2F] == 0)) {
         D_801476E0 = tbl.v[2];
         game_state.progress_state[2] = 1;
     }
     if (*(u8 *)&game_state.current_girl == 0xA) {
         if (*(u8 *)&game_state.year >= 0x60U) {
-            if ((*(u8 *)&game_state.month == 0xA) && (*(u8 *)&game_state.day < 0x15U) && (game_state.event_flags[0x47] == 0)) {
+            if ((*(u8 *)&game_state.month == 0xA) && (*(u8 *)&game_state.day < 0x15U) && (game_state.scene_flags[0x47] == 0)) {
                 D_801476E0 = tbl.v[0xD];
                 game_state.progress_state[0xD] = 1;
             }
         }
     }
     if (*(u8 *)&game_state.current_girl == 8) {
-        if ((((*(u8 *)&game_state.year == 0x5F) && (*(u8 *)&game_state.month == 0xC)) || ((*(u8 *)&game_state.year == 0x60) && (*(u8 *)&game_state.month == 1)) || ((*(u8 *)&game_state.year == 0x60) && (*(u8 *)&game_state.month == 2) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.girls[8].event_counters[6] == 0)) {
+        if ((((*(u8 *)&game_state.year == 0x5F) && (*(u8 *)&game_state.month == 0xC)) || ((*(u8 *)&game_state.year == 0x60) && (*(u8 *)&game_state.month == 1)) || ((*(u8 *)&game_state.year == 0x60) && (*(u8 *)&game_state.month == 2) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.girls[8].scene_counters[6] == 0)) {
             D_801476E0 = tbl.v[3];
             game_state.progress_state[3] = 1;
         }
-        if ((*(u8 *)&game_state.year == 0x60) && (game_state.girls[8].event_counters[9] == 0) && ((*(u8 *)&game_state.month == 6) || (*(u8 *)&game_state.month == 7))) {
+        if ((*(u8 *)&game_state.year == 0x60) && (game_state.girls[8].scene_counters[9] == 0) && ((*(u8 *)&game_state.month == 6) || (*(u8 *)&game_state.month == 7))) {
             D_801476E0 = tbl.v[5];
             game_state.progress_state[5] = 1;
         }
-        if ((*(u8 *)&game_state.year == 0x60) && (game_state.girls[8].event_counters[0x12] == 0) && ((*(u8 *)&game_state.month == 9) || (*(u8 *)&game_state.month == 0xA) || ((*(u8 *)&game_state.month == 0xB) && (*(u8 *)&game_state.day < 0x15U)))) {
+        if ((*(u8 *)&game_state.year == 0x60) && (game_state.girls[8].scene_counters[0x12] == 0) && ((*(u8 *)&game_state.month == 9) || (*(u8 *)&game_state.month == 0xA) || ((*(u8 *)&game_state.month == 0xB) && (*(u8 *)&game_state.day < 0x15U)))) {
             D_801476E0 = tbl.v[0xA];
             game_state.progress_state[0xA] = 1;
         }
-        if ((*(u8 *)&game_state.year == 0x61) && (game_state.girls[8].event_counters[0x13] == 0) && ((*(u8 *)&game_state.month == 3) || (*(u8 *)&game_state.month == 4) || ((*(u8 *)&game_state.month == 5) && (*(u8 *)&game_state.day < 0x15U)))) {
+        if ((*(u8 *)&game_state.year == 0x61) && (game_state.girls[8].scene_counters[0x13] == 0) && ((*(u8 *)&game_state.month == 3) || (*(u8 *)&game_state.month == 4) || ((*(u8 *)&game_state.month == 5) && (*(u8 *)&game_state.day < 0x15U)))) {
             D_801476E0 = tbl.v[0xB];
             game_state.progress_state[0xB] = 1;
         }
-        if ((*(u8 *)&game_state.year == 0x61) && (game_state.event_flags[0x39] == 0) && ((*(u8 *)&game_state.month == 9) || (*(u8 *)&game_state.month == 0xA) || ((*(u8 *)&game_state.month == 0xB) && (*(u8 *)&game_state.day < 0x15U)))) {
+        if ((*(u8 *)&game_state.year == 0x61) && (game_state.scene_flags[0x39] == 0) && ((*(u8 *)&game_state.month == 9) || (*(u8 *)&game_state.month == 0xA) || ((*(u8 *)&game_state.month == 0xB) && (*(u8 *)&game_state.day < 0x15U)))) {
             D_801476E0 = tbl.v[0xF];
             game_state.progress_state[0xF] = 1;
         }

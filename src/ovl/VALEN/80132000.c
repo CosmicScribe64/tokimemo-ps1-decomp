@@ -43,8 +43,8 @@ void func_80132000(void) {
 }
 
 void func_80132274(void) {
-    bustup_wink_update();
-    switch (game_state.stage) {
+    portrait_wink_update();
+    switch (game_state.mode_stage) {
     case 0:
         func_801323D0();
         break;
@@ -58,12 +58,12 @@ void func_80132274(void) {
         func_80133EE4();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     check_k_scroll();
     k_disp_inc2();
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     hizuke_show();
@@ -71,10 +71,10 @@ void func_80132274(void) {
 }
 
 void func_80132348(void) {
-    dialogue_tables = (u8 *)&D_80134498;
+    talk_tables = (u8 *)&D_80134498;
     D_800CA138 = (u8 *)&D_8013449C;
     D_800CA13C = D_8013448C;
     D_800CA140 = D_80134490;
     D_800CA144 = D_80134494;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }

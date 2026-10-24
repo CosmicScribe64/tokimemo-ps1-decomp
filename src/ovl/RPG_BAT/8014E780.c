@@ -65,12 +65,12 @@ void func_8014E780(void) {
     (*(s8 *)&game_state.clear_color_g) = 0;
     back_clear_switch(1);
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     hizuke_disp_switch(0);
     message_window_title_show(0);
     message_disp_switch(0);
-    snd_command(0x7F);
+    audio_command(0x7F);
     func_8014E994();
     D_8015EC18 = (s32) game_state.current_girl;
     D_8015EB9C = (s32) game_state.current_girl;
@@ -99,7 +99,7 @@ void func_8014E780(void) {
         D_8015EB98 = 0x80000000;
         break;
     }
-    main_stage_next();
+    mode_stage_next();
 }
 
 void func_8014E8F4(void) {
@@ -112,9 +112,9 @@ void func_8014E8F4(void) {
     back_clear_switch(1);
     D_80122CE0 = D_8015EC14;
     game_state.current_girl = (s8) D_8015EC18;
-    main_state_set((s32) game_state.saved_mode);
-    main_stage_set((s32) game_state.saved_stage);
-    main_step_set((s32) game_state.saved_step);
+    game_mode_set((s32) game_state.saved_game_mode);
+    mode_stage_set((s32) game_state.saved_mode_stage);
+    mode_step_set((s32) game_state.saved_mode_step);
 }
 
 /* FAKE: the three clear loops share one counter (it keeps the first two rolled

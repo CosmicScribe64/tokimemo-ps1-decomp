@@ -5,7 +5,7 @@
 void set_c_girl();
 
 void func_80132000(void) {
-    switch (game_state.stage) {
+    switch (game_state.mode_stage) {
     case 0:
         func_80132060();
         return;
@@ -13,14 +13,14 @@ void func_80132000(void) {
         func_80134BE0();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
 
 void func_80132060(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_80132138();
         break;
@@ -37,11 +37,11 @@ void func_80132060(void) {
         func_801345C4();
         break;
     }
-    screen_frame_draw(1);
+    hud_screen_frame_draw(1);
     parameter_show();
     message_window_show();
     hizuke_show();
-    mascot_update();
+    hud_mascot_update();
     message_window_title_update();
     cursor_update();
 }
@@ -49,12 +49,12 @@ void func_80132060(void) {
 void func_80132138(void) {
     if (*(u8 *)&game_state.substep == 0) {
         sndi("Ｔｒｒｒｒ…", 0, 0x2F);
-        snd_command(0x508);
+        audio_command(0x508);
         k_sub_disp_start(0);
         D_801230D0 = (rand() & 3) + 1;
         *(u8 *)&game_state.substep = 1;
     } else if (*(u8 *)&game_state.substep == 1) {
-        if ((game_state.step_timer.u & 0x7F) == 1) {
+        if ((game_state.mode_step_timer.u & 0x7F) == 1) {
             k_sub_reset();
             sndi("Ｔｒｒｒｒ…", 0, 0x2F);
             k_sub_disp_start(0);
@@ -62,13 +62,13 @@ void func_80132138(void) {
                 D_801230D0 -= 1;
             }
             if (D_801230D0 > 0) {
-                snd_command(0x508);
+                audio_command(0x508);
             }
         }
         if (D_801230D0 <= 0 || (game_state.pad_pressed & PAD_CROSS)) {
-            snd_command(0x1508);
-            snd_command(0x50B);
-            main_step_next();
+            audio_command(0x1508);
+            audio_command(0x50B);
+            mode_step_next();
         }
     }
     menu_bar_show(0);
@@ -100,12 +100,12 @@ void func_8013226C(void) {
         k_sub_reset();
         gnsx(D_800B3628);
         sndi("ハイ、早乙女です。", 0, 0xD);
-        voice_play(0x1E000048, 0x0D00004D, -1, 0xD);
+        talk_voice_play(0x1E000048, 0x0D00004D, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x2:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x3:
         k_sub_reset();
@@ -129,12 +129,12 @@ void func_8013226C(void) {
         strcat(sp3C, "か。");
         sndi(sp3C, 0, 0xD);
         sndi("良くかけて来てくれたな。", 1, 0xD);
-        voice_play((s32) &D_80144E3C, (s32) &D_80144E44, 0, 0xD);
+        talk_voice_play((s32) &D_80144E3C, (s32) &D_80144E44, 0, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x6:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x7:
         k_sub_reset();
@@ -153,12 +153,12 @@ void func_8013226C(void) {
         gnsx(D_800B3628);
         sndi("もちろん。", 0, 0xD);
         sndi("何について聞きたいんだ？", 1, 0xD);
-        voice_play(0x180000B8, 0x140000C1, -1, 0xD);
+        talk_voice_play(0x180000B8, 0x140000C1, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0xA:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0xB:
         game_state.substep = 0x20;
@@ -167,12 +167,12 @@ void func_8013226C(void) {
         k_sub_reset();
         gnsx(D_800B361C);
         sndi("ハイ、早乙女です。", 0, 0xA);
-        voice_play(0x01000143, 0x1E000149, -1, 0xA);
+        talk_voice_play(0x01000143, 0x1E000149, -1, 0xA);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x11:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x12:
         k_sub_reset();
@@ -191,23 +191,23 @@ void func_8013226C(void) {
         sndi("あっ、お兄ちゃんですね。", 0, 0xA);
         sndi("ちょっと待ってて下さい。", 1, 0xA);
         sndi("おにーちゃーん、電話ー！", 2, 0xA);
-        voice_play(0x020001A9, 0x1F0001C4, -1, 0xA);
+        talk_voice_play(0x020001A9, 0x1F0001C4, -1, 0xA);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x15:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x16:
         k_sub_reset();
         gnsx(D_800B3628);
         sndi("ハイ、早乙女です。", 0, 0xD);
-        voice_play(0x1E000048, 0x0D00004D, -1, 0xD);
+        talk_voice_play(0x1E000048, 0x0D00004D, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x17:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x18:
         k_sub_reset();
@@ -228,12 +228,12 @@ void func_8013226C(void) {
         strcat(sp3C, game_state.player_family_name);
         strcat(sp3C, "か。");
         sndi(sp3C, 0, 0xD);
-        voice_play(0x1E000056, 0x10000059, -1, 0xD);
+        talk_voice_play(0x1E000056, 0x10000059, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x1B:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x1C:
         k_sub_reset();
@@ -252,12 +252,12 @@ void func_8013226C(void) {
         sndi("あたりまえのこと聞くなよ。", 0, 0xD);
         sndi("ところで", 1, 0xD);
         sndi("どうしたんだ今日は？", 2, 0xD);
-        voice_play(0x1400009A, 0x0C0000AB, -1, 0xD);
+        talk_voice_play(0x1400009A, 0x0C0000AB, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x1F:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x20:
         k_sub_reset();
@@ -276,7 +276,7 @@ void func_8013226C(void) {
                 game_state.substep = 0x22;
                 break;
             case 1:
-                main_step_set(2);
+                mode_step_set(2);
                 break;
             }
         }
@@ -298,38 +298,38 @@ void func_8013226C(void) {
         gnsx(D_800B3628);
         sndi("評価か…。", 0, 0xD);
         sndi("ちょっと待ってくれよ。", 1, 0xD);
-        voice_play(0x19000085, 0x0D00008F, -1, 0xD);
+        talk_voice_play(0x19000085, 0x0D00008F, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x25:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x26:
         k_sub_reset();
         gnsx(D_800B3628);
         sndi("女の子の、", 0, 0xD);
         sndi("お前に対する評価は…。", 1, 0xD);
-        voice_play(0x19000090, 0x0E00009C, -1, 0xD);
+        talk_voice_play(0x19000090, 0x0E00009C, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x27:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x28:
-        main_step_set(3);
+        mode_step_set(3);
         break;
     case 0x30:
         k_sub_reset();
         gnsx(D_800B3628);
         sndi("はい、早乙女です。", 0, 0xD);
-        voice_play(0x1E000048, 0x0D00004D, -1, 0xD);
+        talk_voice_play(0x1E000048, 0x0D00004D, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x31:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x32:
         k_sub_reset();
@@ -351,12 +351,12 @@ void func_8013226C(void) {
         strcat(sp3C, game_state.player_family_name);
         strcat(sp3C, "か。");
         sndi(sp3C, 0, 0xD);
-        voice_play(0x1E000056, 0x10000059, -1, 0xD);
+        talk_voice_play(0x1E000056, 0x10000059, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x35:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x36:
         k_sub_reset();
@@ -375,12 +375,12 @@ void func_8013226C(void) {
         sndi("あたりまえのこと聞くなよ。", 0, 0xD);
         sndi("ところで、", 1, 0xD);
         sndi("どうしたんだ今日は？", 2, 0xD);
-        voice_play(0x1400009A, 0x0C0000AB, -1, 0xD);
+        talk_voice_play(0x1400009A, 0x0C0000AB, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x39:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x3A:
         game_state.substep = 0x20;
@@ -478,12 +478,12 @@ void func_80132FC4(void) {
         gnsx(D_800B3628);
         sndi("悪いな。今は特に無いんだ。", 0, 0xD);
         sndi("別の事なら教えてやれるぜ。", 1, 0xD);
-        voice_play(0x140000D0, 0x0F0000E2, -1, 0xD);
+        talk_voice_play(0x140000D0, 0x0F0000E2, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x4:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x5:
         k_sub_reset();
@@ -508,9 +508,9 @@ void func_80132FC4(void) {
         menu_cursor_update(1);
         if (game_state.pad_pressed & PAD_CIRCLE) {
             if (game_state.menu_cursor_1 == 0xB) {
-                main_step_set(4);
+                mode_step_set(4);
             } else if (game_state.menu_cursor_1 == 0xA) {
-                main_step_set(3);
+                mode_step_set(3);
                 game_state.substep = 0x20;
             } else if ((game_state.menu_cursor_1 != -1) && (game_state.girls[game_state.menu_cursor_1].flags.f.met)) {
                 game_state.substep += 1;
@@ -533,13 +533,13 @@ void func_80132FC4(void) {
             strcat(sp3C, girl_short_name_table[game_state.menu_cursor_1]);
         }
         strcat(sp3C, "‥‥と。");
-        voice_play((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) game_state.menu_cursor_1, 0xD);
+        talk_voice_play((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) game_state.menu_cursor_1, 0xD);
         sndi(sp3C, 0, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0xB:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0xC:
         k_sub_reset();
@@ -547,15 +547,15 @@ void func_80132FC4(void) {
         sndi("あったあった。", 0, 0xD);
         sndi("耳かっぽじって", 1, 0xD);
         sndi("よく聞けよ。", 2, 0xD);
-        voice_play(0x19000064, 0x0A00006E, -1, 0xD);
+        talk_voice_play(0x19000064, 0x0A00006E, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0xD:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0xE:
-        main_step_set(4);
+        mode_step_set(4);
         break;
     case 0x10:
         k_sub_reset();
@@ -563,12 +563,12 @@ void func_80132FC4(void) {
         sndi("ちょっと遠いけど、", 0, 0xD);
         sndi("きらめき中央公園なんて", 1, 0xD);
         sndi("わりといい雰囲気だぜ。", 2, 0xD);
-        voice_play(0x15000001, 0x02000015, -1, 0xD);
+        talk_voice_play(0x15000001, 0x02000015, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x11:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x12:
         game_state.substep = 0xF0;
@@ -579,12 +579,12 @@ void func_80132FC4(void) {
         sndi("この間、", 0, 0xD);
         sndi("美術館が出来たんだよ。", 1, 0xD);
         sndi("わりといいらしいぜ。", 2, 0xD);
-        voice_play(0x15000016, 0x03000024, -1, 0xD);
+        talk_voice_play(0x15000016, 0x03000024, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x21:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x22:
         game_state.substep = 0xF0;
@@ -594,12 +594,12 @@ void func_80132FC4(void) {
         gnsx(D_800B3628);
         sndi("今、水族館が", 0, 0xD);
         sndi("人気あるみたいだぜ。", 1, 0xD);
-        voice_play(0x1900009D, 0x0F0000A7, -1, 0xD);
+        talk_voice_play(0x1900009D, 0x0F0000A7, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x31:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x32:
         game_state.substep = 0xF0;
@@ -609,12 +609,12 @@ void func_80132FC4(void) {
         gnsx(D_800B3628);
         sndi("スタジアムが出来たの", 0, 0xD);
         sndi("知ってたか？", 1, 0xD);
-        voice_play(0x190000A8, 0x100000AF, -1, 0xD);
+        talk_voice_play(0x190000A8, 0x100000AF, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x41:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x42:
         game_state.substep = 0xF0;
@@ -624,12 +624,12 @@ void func_80132FC4(void) {
         gnsx(D_800B3628);
         sndi("植物園なんて", 0, 0xD);
         sndi("いいんじゃないか？", 1, 0xD);
-        voice_play(0x190000B0, 0x110000BA, -1, 0xD);
+        talk_voice_play(0x190000B0, 0x110000BA, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x51:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x52:
         game_state.substep = 0xF0;
@@ -639,12 +639,12 @@ void func_80132FC4(void) {
         gnsx(D_800B3628);
         sndi("隣町のボーリング場なんて", 0, 0xD);
         sndi("どうだ？", 1, 0xD);
-        voice_play(0x1A000007, 0x0300000F, -1, 0xD);
+        talk_voice_play(0x1A000007, 0x0300000F, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x61:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x62:
         game_state.substep = 0xF0;
@@ -654,12 +654,12 @@ void func_80132FC4(void) {
         gnsx(D_800B3628);
         sndi("プラネタリウムなんて", 0, 0xD);
         sndi("暗くていいぜ。", 1, 0xD);
-        voice_play(0x1A000010, 0x0400001B, -1, 0xD);
+        talk_voice_play(0x1A000010, 0x0400001B, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x71:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x72:
         game_state.substep = 0xF0;
@@ -669,12 +669,12 @@ void func_80132FC4(void) {
         gnsx(D_800B3628);
         sndi("やっと、この街にも", 0, 0xD);
         sndi("カラオケが出来たんだよ。", 1, 0xD);
-        voice_play(0x1A00001C, 0x05000027, -1, 0xD);
+        talk_voice_play(0x1A00001C, 0x05000027, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0x81:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x82:
         game_state.substep = 0xF0;
@@ -695,12 +695,12 @@ void func_80132FC4(void) {
         gnsx(D_800B3628);
         sndi("お前も", 0, 0xD);
         sndi("まめに情報誌でも読めよ。", 1, 0xD);
-        voice_play(0x1A000028, 0x06000032, -1, 0xD);
+        talk_voice_play(0x1A000028, 0x06000032, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 0xF3:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0xF4:
         text_system_reset();
@@ -732,12 +732,12 @@ void func_80133D54(void) {
         k_sub_reset();
         gnsx(D_800B3628);
         sndi("こんなとこだな。", 0, 0xD);
-        voice_play(0x1E00005E, 0x12000061, -1, 0xD);
+        talk_voice_play(0x1E00005E, 0x12000061, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 2:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 3:
         k_sub_reset();
@@ -785,7 +785,7 @@ void func_80133D54(void) {
         if (game_state.menu_cursor_1 == 0xA) {
             game_state.substep = 0x20;
         } else if (game_state.menu_cursor_1 == 0xB) {
-            main_step_set(4);
+            mode_step_set(4);
         } else {
             game_state.substep += 1;
         }
@@ -798,12 +798,12 @@ void func_80133D54(void) {
         gnsx(D_800B3628);
         sndi("あぁ、いいぜ。", 0, 0xD);
         sndi("ちょっと待ってくれよ。", 1, 0xD);
-        voice_play(0x180000C2, 0x150000C9, -1, 0xD);
+        talk_voice_play(0x180000C2, 0x150000C9, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 10:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 11:
         k_sub_reset();
@@ -819,12 +819,12 @@ void func_80133D54(void) {
         }
         strcat(sp5C, "‥‥と。");
         sndi(sp5C, 0, 0xD);
-        voice_play((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) game_state.menu_cursor_1, 0xD);
+        talk_voice_play((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) game_state.menu_cursor_1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 12:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 13:
         k_sub_reset();
@@ -832,15 +832,15 @@ void func_80133D54(void) {
         sndi("あったあった。", 0, 0xD);
         sndi("耳かっぽじって", 1, 0xD);
         sndi("よく聞けよ。", 2, 0xD);
-        voice_play(0x19000064, 0x0A00006E, -1, 0xD);
+        talk_voice_play(0x19000064, 0x0A00006E, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 14:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 15:
-        main_step_set(4);
+        mode_step_set(4);
         break;
     case 32:
         xa_wait();
@@ -850,12 +850,12 @@ void func_80133D54(void) {
         gnsx(D_800B3628);
         sndi("何だ、お前。", 0, 0xD);
         sndi("優美に気があるのか？", 1, 0xD);
-        voice_play(0x1900006F, 0x0B00007A, -1, 0xD);
+        talk_voice_play(0x1900006F, 0x0B00007A, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 34:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 35:
         k_sub_reset();
@@ -874,24 +874,24 @@ void func_80133D54(void) {
         sndi("別に隠さなくてもいいよ。", 0, 0xD);
         sndi("へぇ、お前が優美をねぇ。", 1, 0xD);
         sndi("よし、特別に教えてやろう。", 2, 0xD);
-        voice_play(0x120000C7, 0x090000E5, -1, 0xD);
+        talk_voice_play(0x120000C7, 0x090000E5, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 38:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 39:
-        main_step_set(4);
+        mode_step_set(4);
         break;
     }
     var_s0 = &((ActorFixed *)actor_pool)[0x61];
     var_s1 = 0x61;
     do {
         if (var_s0->frame == 0x60) {
-            var_s0->unk_1C = (s16) ((rsin((game_state.step_timer.w + var_s1) << 6) / 3) + 0xAAA);
-            var_s0->unk_1A = (s16) ((rsin((game_state.step_timer.w + var_s1) * 0x5A) / 4) + 0xC00);
-            var_s0->dy = (s32) (rsin(game_state.step_timer.w << 6) * 4);
+            var_s0->unk_1C = (s16) ((rsin((game_state.mode_step_timer.w + var_s1) << 6) / 3) + 0xAAA);
+            var_s0->unk_1A = (s16) ((rsin((game_state.mode_step_timer.w + var_s1) * 0x5A) / 4) + 0xC00);
+            var_s0->dy = (s32) (rsin(game_state.mode_step_timer.w << 6) * 4);
             var_s0->draw_flags = (u8) (var_s0->draw_flags | 0x10);
         }
         var_s1 += 1;
@@ -933,12 +933,12 @@ void func_801345C4(void) {
         k_sub_reset();
         gnsx(D_800B3628);
         sndi("って、とこだな。", 0, 0xD);
-        voice_play(0x1E00005A, 0x1100005D, -1, 0xD);
+        talk_voice_play(0x1E00005A, 0x1100005D, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 6:
         k_sub_reset();
@@ -957,16 +957,16 @@ void func_801345C4(void) {
         sndi("なーに、いいってことよ。", 0, 0xD);
         sndi("女の子の情報なら", 1, 0xD);
         sndi("俺に任せてくれよ。", 2, 0xD);
-        voice_play(0x140000BE, 0x0E0000CF, -1, 0xD);
+        talk_voice_play(0x140000BE, 0x0E0000CF, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
         break;
     case 9:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 10:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
@@ -987,12 +987,12 @@ void func_801345C4(void) {
         k_sub_reset();
         gnsx(D_800B3628);
         sndi("って、とこだな。", 0, 0xD);
-        voice_play(0x1E00005A, 0x1100005D, -1, 0xD);
+        talk_voice_play(0x1E00005A, 0x1100005D, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
         break;
     case 34:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 35:
         k_sub_reset();
@@ -1010,12 +1010,12 @@ void func_801345C4(void) {
         sndi("なんなら、", 0, 0xD);
         sndi("俺が優美に", 1, 0xD);
         sndi("言ってやろうか？", 2, 0xD);
-        voice_play(0x1900007B, 0x0C000084, -1, 0xD);
+        talk_voice_play(0x1900007B, 0x0C000084, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
         break;
     case 38:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 39:
         k_sub_reset();
@@ -1033,16 +1033,16 @@ void func_801345C4(void) {
         gnsx(D_800B3628);
         sndi("まぁ、いいか。", 0, 0xD);
         sndi("じゃ、頑張れよ。", 1, 0xD);
-        voice_play(0x0A0000E3, 0x0E0000EA, -1, 0xD);
+        talk_voice_play(0x0A0000E3, 0x0E0000EA, -1, 0xD);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
         break;
     case 42:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 43:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
@@ -1065,8 +1065,8 @@ void func_801345C4(void) {
 }
 
 void func_80134BE0(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0x0:
         func_80134DA0();
         break;
@@ -1128,18 +1128,18 @@ void func_80134BE0(void) {
         func_801393A8();
         break;
     }
-    screen_frame_draw(1);
+    hud_screen_frame_draw(1);
     parameter_show();
     message_window_show();
     hizuke_show();
-    mascot_update();
+    hud_mascot_update();
     cursor_update();
 }
 
 void func_80134DA0(void) {
     if (*(u8 *)&game_state.substep == 0) {
         sndi("Ｔｒｒｒｒ…", 0, 0x2F);
-        snd_command(0x508);
+        audio_command(0x508);
         k_sub_disp_start(0);
         D_801230D0 = (rand() & 3) + 1;
         *(u8 *)&game_state.substep = 1;
@@ -1149,31 +1149,31 @@ void func_80134DA0(void) {
             D_801405E4 = *(u8 *)&game_state.current_girl;
         }
     } else if (*(u8 *)&game_state.substep == 1) {
-        if ((game_state.step_timer.u & 0x7F) == 1) {
+        if ((game_state.mode_step_timer.u & 0x7F) == 1) {
             k_sub_reset();
             sndi("Ｔｒｒｒｒ…", 0, 0x2F);
             k_sub_disp_start(0);
             if (D_801230D0 > 0) {
-                snd_command(0x508);
+                audio_command(0x508);
             }
             if (D_801230D0 != 0) {
                 D_801230D0 -= 1;
             }
         }
         if (D_801230D0 <= 0 || (game_state.pad_pressed & PAD_CROSS)) {
-            snd_command(0x1508);
-            snd_command(0x50B);
+            audio_command(0x1508);
+            audio_command(0x50B);
             if (appointment_find_today(*(u8 *)&game_state.year, *(u8 *)&game_state.month, *(u8 *)&game_state.day) != 0 &&
                 *(u8 *)&game_state.current_girl == (u32)(game_state.unk_54C[0].w << 3) >> 0x1C) {
-                main_step_set(0x10);
+                mode_step_set(0x10);
             } else if (*(u8 *)&game_state.year == 0x62 && *(u8 *)&game_state.month == 2 && *(u8 *)&game_state.day == 0x16) {
-                main_step_set(0x10);
+                mode_step_set(0x10);
             } else if (func_8013655C() == 0) {
-                main_step_set(0x10);
+                mode_step_set(0x10);
             } else if (D_801405E4 == 0xC) {
-                main_step_set(0x40);
+                mode_step_set(0x40);
             } else {
-                main_step_next();
+                mode_step_next();
             }
         }
     }
@@ -1194,10 +1194,10 @@ void func_80134FE4(void) {
         sndi(D_801406E0[D_801405E4], 0, D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
-        voice_play((s32) D_80140710, (s32) D_80140770, (s32) D_801405E4, (s32) D_801405E4);
+        talk_voice_play((s32) D_80140710, (s32) D_80140770, (s32) D_801405E4, (s32) D_801405E4);
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -1212,7 +1212,7 @@ void func_80134FE4(void) {
     case 4:
         if (get_g_zyotai_s(D_801405E4) == 4) {
             game_state.girls[D_801405E4].affection = 0x10;
-            main_step_set(3);
+            mode_step_set(3);
             if (D_801405E4 == 7) {
                 game_state.substep = 0;
             } else {
@@ -1223,27 +1223,27 @@ void func_80134FE4(void) {
             if (zy < 2U) {
                 zy = D_801405E4;
                 if (zy == 0) {
-                    main_step_set(8);
+                    mode_step_set(8);
                 } else if ((zy == 7) && (game_state.girls[zy].flags.b[3] & 1)) {
-                    main_step_set(9);
+                    mode_step_set(9);
                 } else if (zy == 9) {
-                    main_step_set(0xA);
+                    mode_step_set(0xA);
                 } else {
-                    main_step_set(4);
+                    mode_step_set(4);
                 }
             } else if (zy == 2) {
                 zy = D_801405E4;
                 if ((zy == 0xA) && (game_state.girls[zy].flags.b[3] & 1)) {
-                    main_step_set(7);
+                    mode_step_set(7);
                 }
-                main_step_set(5);
+                mode_step_set(5);
             } else {
-                main_step_set(6);
+                mode_step_set(6);
             }
         }
         break;
     default:
-        main_step_set(0x10);
+        mode_step_set(0x10);
         break;
     }
     menu_bar_show(0);
@@ -1256,12 +1256,12 @@ void func_801352F0(void) {
         k_sub_reset();
         gnsx(D_800B3610);
         sndi("ああ、脇役君ね。", 0, 7);
-        voice_play(0x05000000, 0x0100000B, -1, 7);
+        talk_voice_play(0x05000000, 0x0100000B, -1, 7);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -1278,12 +1278,12 @@ void func_801352F0(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_801434D4[D_801405E4], 0, (s32) D_801405E4);
-        voice_play((s32) &D_80143500, (s32) &D_80143558, (s32) D_801405E4, (s32) D_801405E4);
+        talk_voice_play((s32) &D_80143500, (s32) &D_80143558, (s32) D_801405E4, (s32) D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 6:
         k_sub_reset();
@@ -1299,12 +1299,12 @@ void func_801352F0(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80143958[D_801405E4], 0, (s32) D_801405E4);
-        voice_play((s32) &D_80143984, (s32) &D_801439DC, (s32) D_801405E4, (s32) D_801405E4);
+        talk_voice_play((s32) &D_80143984, (s32) &D_801439DC, (s32) D_801405E4, (s32) D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 9:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 10:
         k_sub_reset();
@@ -1342,16 +1342,16 @@ void func_801352F0(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80143BA0[D_801405E4], 0, (s32) D_801405E4);
-        voice_play((s32) &D_80143BCC, (s32) &D_80143C24, (s32) D_801405E4, (s32) D_801405E4);
+        talk_voice_play((s32) &D_80143BCC, (s32) &D_80143C24, (s32) D_801405E4, (s32) D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 21:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 22:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         game_state.substep += 1;
@@ -1361,7 +1361,7 @@ void func_801352F0(void) {
         break;
     case 24:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         gnsx(game_state.player_family_name);
         sndisp("良かった。 何とか、Gの機嫌も 直ったみたいだぞ。）", 0, 0x1F);
         k_sub_disp_start(0);
@@ -1394,12 +1394,12 @@ void func_8013586C(void) {
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_8014107C, 0, (s32) D_801405E4);
         girl = D_801405E4;
-        voice_play((s32) table, (s32) table, 0, (s32) girl);
+        talk_voice_play((s32) table, (s32) table, 0, (s32) girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -1416,15 +1416,15 @@ void func_8013586C(void) {
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140AD8[D_801405E4], 0, (s32) D_801405E4);
         girl = D_801405E4;
-        voice_play((s32) D_80140B04, (s32) D_80140B5C, (s32) girl, (s32) girl);
+        talk_voice_play((s32) D_80140B04, (s32) D_80140B5C, (s32) girl, (s32) girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     default:
-        main_step_set(0x20);
+        mode_step_set(0x20);
         break;
     }
     menu_bar_show(0);
@@ -1442,12 +1442,12 @@ void func_80135A44(void) {
         temp_hi = (u32) ((u8) game_state.girls[D_801405E4].flags.b[3] >> 1) % 3U;
         sp28 = temp_hi;
         sndisp(D_801410BC[temp_hi], 0, (s32) D_801405E4);
-        voice_play((s32) &D_801410D4, (s32) &D_80141104, (s32) sp28, (s32) D_801405E4);
+        talk_voice_play((s32) &D_801410D4, (s32) &D_80141104, (s32) sp28, (s32) D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -1463,15 +1463,15 @@ void func_80135A44(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_801410CC, 0, (s32) D_801405E4);
-        voice_play((s32) &D_801410D4, (s32) &D_80141104, 4, (s32) D_801405E4);
+        talk_voice_play((s32) &D_801410D4, (s32) &D_80141104, 4, (s32) D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     default:
-        main_step_set(0x20);
+        mode_step_set(0x20);
         break;
     }
     menu_bar_show(0);
@@ -1484,12 +1484,12 @@ void func_80135C4C(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80141094, 0, (s32) D_801405E4);
-        voice_play((s32) &D_8014109C, (s32) &D_801410AC, 0, (s32) D_801405E4);
+        talk_voice_play((s32) &D_8014109C, (s32) &D_801410AC, 0, (s32) D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -1505,15 +1505,15 @@ void func_80135C4C(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140AD8[D_801405E4], 0, (s32) D_801405E4);
-        voice_play((s32) D_80140B04, (s32) D_80140B5C, (s32) D_801405E4, (s32) D_801405E4);
+        talk_voice_play((s32) D_80140B04, (s32) D_80140B5C, (s32) D_801405E4, (s32) D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     default:
-        main_step_set(0x20);
+        mode_step_set(0x20);
         break;
     }
     menu_bar_show(0);
@@ -1526,12 +1526,12 @@ void func_80135E28(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80141040, 0, (s32) D_801405E4);
-        voice_play((s32) &D_8014104C, (s32) &D_80141064, 0, (s32) D_801405E4);
+        talk_voice_play((s32) &D_8014104C, (s32) &D_80141064, 0, (s32) D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -1547,15 +1547,15 @@ void func_80135E28(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80141048, 0, (s32) D_801405E4);
-        voice_play((s32) &D_8014104C, (s32) &D_80141064, 2, (s32) D_801405E4);
+        talk_voice_play((s32) &D_8014104C, (s32) &D_80141064, 2, (s32) D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     default:
-        main_step_set(0x20);
+        mode_step_set(0x20);
         break;
     }
     menu_bar_show(0);
@@ -1568,15 +1568,15 @@ void func_80135FFC(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140AD8[D_801405E4], 0, D_801405E4);
-        voice_play(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
+        talk_voice_play(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     default:
-        main_step_set(0x20);
+        mode_step_set(0x20);
         break;
     }
     menu_bar_show(0);
@@ -1589,15 +1589,15 @@ void func_801360E4(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140AD8[D_801405E4], 0, D_801405E4);
-        voice_play(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
+        talk_voice_play(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     default:
-        main_step_set(0x20);
+        mode_step_set(0x20);
         break;
     }
     menu_bar_show(0);
@@ -1610,15 +1610,15 @@ void func_801361CC(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140D18[D_801405E4], 0, D_801405E4);
-        voice_play(D_80140D44, D_80140D9C, D_801405E4, D_801405E4);
+        talk_voice_play(D_80140D44, D_80140D9C, D_801405E4, D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     default:
-        main_step_set(0x20);
+        mode_step_set(0x20);
         break;
     }
     menu_bar_show(0);
@@ -1631,15 +1631,15 @@ void func_801362B4(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140F0C[D_801405E4], 0, D_801405E4);
-        voice_play(D_80140F38, D_80140F90, D_801405E4, D_801405E4);
+        talk_voice_play(D_80140F38, D_80140F90, D_801405E4, D_801405E4);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     default:
-        main_step_set(0x20);
+        mode_step_set(0x20);
         break;
     }
     menu_bar_show(0);
@@ -1680,7 +1680,7 @@ void func_8013639C(void) {
         break;
     default:
         menu_bar_color(0x10, 0x2F2F7F, 3, 0);
-        main_step_set(0x30);
+        mode_step_set(0x30);
         break;
     }
     func_80068EC0();
@@ -1761,9 +1761,9 @@ void func_80136724(void) {
     case 0x1:
         menu_check(0, cursor_x, cursor_y);
         menu_cursor_update(0);
-        if ((g->step_timer.u >= 0x11U) && (g->pad_pressed & PAD_CIRCLE)) {
+        if ((g->mode_step_timer.u >= 0x11U) && (g->pad_pressed & PAD_CIRCLE)) {
             if (g->menu_cursor_0 == 0xA) {
-                snd_command(0x50D);
+                audio_command(0x50D);
                 g->substep = 2;
             } else if (g->menu_cursor_0 >= 0) {
                 g->substep = 4;
@@ -1784,9 +1784,9 @@ void func_80136724(void) {
         menu_check(0, cursor_x, cursor_y);
         menu_cursor_update(0);
         menu_bar_show(0);
-        if ((g->step_timer.u >= 0x11U) && (g->pad_pressed & PAD_CIRCLE)) {
+        if ((g->mode_step_timer.u >= 0x11U) && (g->pad_pressed & PAD_CIRCLE)) {
             if (g->menu_cursor_0 == 0xA) {
-                snd_command(0x50D);
+                audio_command(0x50D);
                 g->substep = 0;
             } else if (g->menu_cursor_0 >= 0) {
                 g->substep = 4;
@@ -1897,12 +1897,12 @@ void func_80136724(void) {
         func_8006B0C8();
         gnsx(girl_short_name_table[g->current_girl]);
         sndisp(D_801413C8[D_801405E4], 0, (s32) g->current_girl);
-        voice_play((s32) D_801413F8, (s32) D_80141458, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_801413F8, (s32) D_80141458, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
     case 0x21:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x22:
         k_sub_reset();
@@ -1932,12 +1932,12 @@ void func_80136724(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
         sndisp(D_80141680[D_801405E4], 0, (s32) g->current_girl);
-        voice_play((s32) D_801416B0, (s32) D_80141710, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_801416B0, (s32) D_80141710, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
     case 0x25:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x26:
         k_sub_reset();
@@ -1965,10 +1965,10 @@ void func_80136724(void) {
             k_sub_disp_start(0);
             g->substep += 1;
         }
-        voice_play((s32) D_801419AC, (s32) D_80141A0C, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_801419AC, (s32) D_80141A0C, (s32) D_801405E4, (s32) g->current_girl);
         break;
     case 0x29:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x2A:
         k_sub_reset();
@@ -1990,7 +1990,7 @@ void func_80136724(void) {
         break;
     case 0x2D:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         g->substep += 1;
@@ -2000,7 +2000,7 @@ void func_80136724(void) {
         break;
     case 0x2F:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         gnsx(g->player_family_name);
         strcpy(sp78, "やったー。 ");
         strcat(sp78, D_800B3288[D_80140558]);
@@ -2039,11 +2039,11 @@ void func_80136724(void) {
         }
         sndisp(D_80141D80[D_801405E4], 0, (s32) g->current_girl);
         k_sub_disp_start(0);
-        voice_play((s32) D_80141DB4, (s32) D_80141E1C, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_80141DB4, (s32) D_80141E1C, (s32) D_801405E4, (s32) g->current_girl);
         g->substep += 1;
         break;
     case 0x41:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x42:
         k_sub_reset();
@@ -2059,12 +2059,12 @@ void func_80136724(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
         sndisp(D_80142254[D_801405E4], 0, (s32) g->current_girl);
-        voice_play((s32) D_80142288, (s32) D_801422F0, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_80142288, (s32) D_801422F0, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
     case 0x45:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x46:
         k_sub_reset();
@@ -2081,7 +2081,7 @@ void func_80136724(void) {
             g->substep = 0x4D;
         } else {
             k_sub_reset();
-            snd_command(0x50B);
+            audio_command(0x50B);
             sndi("ガチャ", 0, 0x2F);
             k_sub_disp_start(0);
             g->substep += 1;
@@ -2093,7 +2093,7 @@ void func_80136724(void) {
     case 0x4A:
         k_sub_reset();
         gnsx(g->player_family_name);
-        snd_command(0x50C);
+        audio_command(0x50C);
         if (g->current_girl == GIRL_YUKARI) {
             sndisp("言葉うつっちゃったよ。）", 0, 0x1F);
         } else {
@@ -2112,12 +2112,12 @@ void func_80136724(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
         sndisp("あの…。 また今度、 誘って下さい…。", 0, (s32) g->current_girl);
-        voice_play(0x02000163, 0x19000170, -1, (s32) g->current_girl);
+        talk_voice_play(0x02000163, 0x19000170, -1, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
     case 0x4E:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x4F:
         k_sub_reset();
@@ -2131,7 +2131,7 @@ void func_80136724(void) {
         break;
     case 0x51:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         g->substep += 1;
@@ -2146,12 +2146,12 @@ void func_80136724(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
         sndisp(D_80142798[D_801405E4], 0, (s32) g->current_girl);
-        voice_play((s32) D_801427C8, (s32) D_80142828, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_801427C8, (s32) D_80142828, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
     case 0x61:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x62:
         k_sub_reset();
@@ -2167,12 +2167,12 @@ void func_80136724(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
         sndisp(D_80142B40[D_801405E4], 0, (s32) g->current_girl);
-        voice_play((s32) D_80142B70, (s32) D_80142BD0, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_80142B70, (s32) D_80142BD0, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
     case 0x65:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x66:
         if (*D_80142CB0[D_801405E4] == 0x20) {
@@ -2190,7 +2190,7 @@ void func_80136724(void) {
         break;
     case 0x68:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         g->substep += 1;
@@ -2200,7 +2200,7 @@ void func_80136724(void) {
         break;
     case 0x6A:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         gnsx(g->player_family_name);
         sndisp("あーあ、間が悪かったかな。", 0, 0xF);
         k_sub_disp_start(0);
@@ -2216,12 +2216,12 @@ void func_80136724(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
         sndisp(D_80142E70[D_801405E4], 0, (s32) g->current_girl);
-        voice_play((s32) D_80142EA0, (s32) D_80142F00, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_80142EA0, (s32) D_80142F00, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
     case 0x81:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x82:
         k_sub_reset();
@@ -2237,12 +2237,12 @@ void func_80136724(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
         sndisp(D_801431E8[D_801405E4], 0, (s32) g->current_girl);
-        voice_play((s32) D_80143218, (s32) D_80143278, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_80143218, (s32) D_80143278, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
     case 0x85:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 0x86:
         if (*D_8014333C[D_801405E4] == 0x20) {
@@ -2260,7 +2260,7 @@ void func_80136724(void) {
         break;
     case 0x88:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         g->substep += 1;
@@ -2271,7 +2271,7 @@ void func_80136724(void) {
     case 0x8A:
         k_sub_reset();
         gnsx(g->player_family_name);
-        snd_command(0x50C);
+        audio_command(0x50C);
         sndisp("やっぱり、だめか…。", 0, 0xF);
         k_sub_disp_start(0);
         g->substep += 1;
@@ -2287,7 +2287,7 @@ void func_80136724(void) {
         break;
     case 0xFE:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         g->substep = 0xFD;
         break;
@@ -2312,12 +2312,12 @@ void func_801380D8(void) {
         game_state.girls[12].flags.b[3] += 1;
         gnsx(D_800B3624);
         sndisp(D_80144194, 0, 0xC);
-        voice_play((s32) &D_801441A8, (s32) &D_801441D0, 0, 0xC);
+        talk_voice_play((s32) &D_801441A8, (s32) &D_801441D0, 0, 0xC);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -2335,19 +2335,19 @@ void func_801380D8(void) {
             temp_hi = (u8) girl->flags.b[3] % 3U;
             switch (temp_hi) {
             case 0:
-                main_step_set(0x43);
+                mode_step_set(0x43);
                 break;
             case 1:
-                main_step_set(0x44);
+                mode_step_set(0x44);
                 break;
             case 2:
-                main_step_set(0x45);
+                mode_step_set(0x45);
                 break;
             }
         } else if ((u8) girl->flags.b[3] >= 0x1FU) {
-            main_step_set(0x42);
+            mode_step_set(0x42);
         } else if ((u8) girl->flags.b[3] >= 0x15U) {
-            main_step_set(0x41);
+            mode_step_set(0x41);
         } else {
             game_state.substep = (state = game_state.substep) + 1;
         }
@@ -2356,12 +2356,12 @@ void func_801380D8(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144198, 0, 0xC);
-        voice_play((s32) &D_801441A8, (s32) &D_801441D0, 1, 0xC);
+        talk_voice_play((s32) &D_801441A8, (s32) &D_801441D0, 1, 0xC);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
         break;
     case 6:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 7:
         k_sub_reset();
@@ -2377,16 +2377,16 @@ void func_801380D8(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_801441A0, 0, 0xC);
-        voice_play((s32) &D_801441A8, (s32) &D_801441D0, 3, 0xC);
+        talk_voice_play((s32) &D_801441A8, (s32) &D_801441D0, 3, 0xC);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
         break;
     case 10:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 11:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         game_state.substep = (state = game_state.substep) + 1;
@@ -2396,7 +2396,7 @@ void func_801380D8(void) {
         break;
     case 13:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         gnsx(game_state.player_family_name);
         sndisp(D_801441A4, 0, 0xF);
         k_sub_disp_start(0);
@@ -2412,7 +2412,7 @@ void func_801380D8(void) {
         day_event_next(0);
         break;
     default:
-        main_step_set(0x10);
+        mode_step_set(0x10);
         break;
     }
     menu_bar_show(0);
@@ -2425,12 +2425,12 @@ void func_801384F0(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_801441F8, 0, 0xC);
-        voice_play((s32) &D_80144210, (s32) &D_80144240, 0, 0xC);
+        talk_voice_play((s32) &D_80144210, (s32) &D_80144240, 0, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -2446,12 +2446,12 @@ void func_801384F0(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144200, 0, 0xC);
-        voice_play((s32) &D_80144210, (s32) &D_80144240, 2, 0xC);
+        talk_voice_play((s32) &D_80144210, (s32) &D_80144240, 2, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 6:
         k_sub_reset();
@@ -2467,16 +2467,16 @@ void func_801384F0(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144208, 0, 0xC);
-        voice_play((s32) &D_80144210, (s32) &D_80144240, 4, 0xC);
+        talk_voice_play((s32) &D_80144210, (s32) &D_80144240, 4, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 9:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 10:
         k_sub_reset();
-        snd_command(0x50B);
+        audio_command(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         game_state.substep += 1;
@@ -2486,7 +2486,7 @@ void func_801384F0(void) {
         break;
     case 12:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         gnsx(game_state.player_family_name);
         sndisp(D_8014420C, 0, 0xF);
         k_sub_disp_start(0);
@@ -2502,7 +2502,7 @@ void func_801384F0(void) {
         day_event_next(0);
         break;
     default:
-        main_step_set(0x10);
+        mode_step_set(0x10);
         break;
     }
     menu_bar_show(0);
@@ -2515,12 +2515,12 @@ void func_8013883C(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144270, 0, 0xC);
-        voice_play((s32) &D_80144298, (s32) &D_801442E8, 0, 0xC);
+        talk_voice_play((s32) &D_80144298, (s32) &D_801442E8, 0, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -2536,12 +2536,12 @@ void func_8013883C(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144278, 0, 0xC);
-        voice_play((s32) &D_80144298, (s32) &D_801442E8, 2, 0xC);
+        talk_voice_play((s32) &D_80144298, (s32) &D_801442E8, 2, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 6:
         k_sub_reset();
@@ -2557,12 +2557,12 @@ void func_8013883C(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144280, 0, 0xC);
-        voice_play((s32) &D_80144298, (s32) &D_801442E8, 4, 0xC);
+        talk_voice_play((s32) &D_80144298, (s32) &D_801442E8, 4, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 9:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 10:
         k_sub_reset();
@@ -2578,12 +2578,12 @@ void func_8013883C(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144288, 0, 0xC);
-        voice_play((s32) &D_80144298, (s32) &D_801442E8, 6, 0xC);
+        talk_voice_play((s32) &D_80144298, (s32) &D_801442E8, 6, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 13:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 14:
         k_sub_reset();
@@ -2599,16 +2599,16 @@ void func_8013883C(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144290, 0, 0xC);
-        voice_play((s32) &D_80144298, (s32) &D_801442E8, 8, 0xC);
+        talk_voice_play((s32) &D_80144298, (s32) &D_801442E8, 8, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 17:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 18:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         game_state.substep += 1;
@@ -2633,7 +2633,7 @@ void func_8013883C(void) {
         day_event_next(0);
         break;
     default:
-        main_step_set(0x10);
+        mode_step_set(0x10);
         break;
     }
     menu_bar_show(0);
@@ -2646,12 +2646,12 @@ void func_80138D20(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144338, 0, 0xC);
-        voice_play((s32) &D_80144350, (s32) &D_80144380, 0, 0xC);
+        talk_voice_play((s32) &D_80144350, (s32) &D_80144380, 0, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -2667,12 +2667,12 @@ void func_80138D20(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144340, 0, 0xC);
-        voice_play((s32) &D_80144350, (s32) &D_80144380, 2, 0xC);
+        talk_voice_play((s32) &D_80144350, (s32) &D_80144380, 2, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 6:
         k_sub_reset();
@@ -2688,16 +2688,16 @@ void func_80138D20(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144348, 0, 0xC);
-        voice_play((s32) &D_80144350, (s32) &D_80144380, 4, 0xC);
+        talk_voice_play((s32) &D_80144350, (s32) &D_80144380, 4, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 9:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 10:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         game_state.substep += 1;
@@ -2722,7 +2722,7 @@ void func_80138D20(void) {
         day_event_next(0);
         break;
     default:
-        main_step_set(0x10);
+        mode_step_set(0x10);
         break;
     }
     menu_bar_show(0);
@@ -2735,12 +2735,12 @@ void func_80139064(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_801443B0, 0, 0xC);
-        voice_play((s32) &D_801443C8, (s32) &D_801443F8, 0, 0xC);
+        talk_voice_play((s32) &D_801443C8, (s32) &D_801443F8, 0, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -2756,12 +2756,12 @@ void func_80139064(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_801443B8, 0, 0xC);
-        voice_play((s32) &D_801443C8, (s32) &D_801443F8, 2, 0xC);
+        talk_voice_play((s32) &D_801443C8, (s32) &D_801443F8, 2, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 6:
         k_sub_reset();
@@ -2777,16 +2777,16 @@ void func_80139064(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_801443C0, 0, 0xC);
-        voice_play((s32) &D_801443C8, (s32) &D_801443F8, 4, 0xC);
+        talk_voice_play((s32) &D_801443C8, (s32) &D_801443F8, 4, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 9:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 10:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         game_state.substep += 1;
@@ -2811,7 +2811,7 @@ void func_80139064(void) {
         day_event_next(0);
         break;
     default:
-        main_step_set(0x10);
+        mode_step_set(0x10);
         break;
     }
     menu_bar_show(0);
@@ -2824,12 +2824,12 @@ void func_801393A8(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144428, 0, 0xC);
-        voice_play((s32) &D_80144440, (s32) &D_80144470, 0, 0xC);
+        talk_voice_play((s32) &D_80144440, (s32) &D_80144470, 0, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 1:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 2:
         k_sub_reset();
@@ -2845,12 +2845,12 @@ void func_801393A8(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144430, 0, 0xC);
-        voice_play((s32) &D_80144440, (s32) &D_80144470, 2, 0xC);
+        talk_voice_play((s32) &D_80144440, (s32) &D_80144470, 2, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 5:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 6:
         k_sub_reset();
@@ -2866,16 +2866,16 @@ void func_801393A8(void) {
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144438, 0, 0xC);
-        voice_play((s32) &D_80144440, (s32) &D_80144470, 4, 0xC);
+        talk_voice_play((s32) &D_80144440, (s32) &D_80144470, 4, 0xC);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
     case 9:
-        dialogue_text_step();
+        talk_text_step();
         break;
     case 10:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
         game_state.substep += 1;
@@ -2900,7 +2900,7 @@ void func_801393A8(void) {
         day_event_next(0);
         break;
     default:
-        main_step_set(0x10);
+        mode_step_set(0x10);
         break;
     }
     menu_bar_show(0);
@@ -2911,7 +2911,7 @@ void func_801396EC(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
-        snd_command(0x50C);
+        audio_command(0x50C);
         gnsx(game_state.player_family_name);
         sndi("あ〜あ、留守みたいだな。", 0, 0x1F);
         sndi("今日はあきらめるか……。）", 1, 0x1F);
@@ -2924,7 +2924,7 @@ void func_801396EC(void) {
     case 2:
         text_system_reset();
         actor_clear_upper();
-        main_state_set(MODE_HOLIDAY);
+        game_mode_set(MODE_HOLIDAY);
         break;
     }
     menu_bar_show(0);

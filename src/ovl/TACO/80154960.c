@@ -105,7 +105,7 @@ void func_80154960(void) {
         D_801604C0 += 3;
         if (D_801604C0 >= 0x80) {
             func_8015ABF0();
-            main_step_next();
+            mode_step_next();
         }
         break;
     }

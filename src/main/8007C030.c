@@ -2,7 +2,7 @@
 #define MAIN_API_OVERRIDE_prim_gradient_line /* Transition calls narrow four coordinates at the call site. T-10870. */
 #define MAIN_API_OVERRIDE_SsVabTransCompleted /* SD_GetCDLevel reads the transfer status; canonical legacy view is void. T-10870. */
 #define MAIN_API_OVERRIDE_func_80084C98 /* promoted s32 index view avoids call-site narrowing; existing callee performs the s16 conversion, T-9540 */
-#define MAIN_API_OVERRIDE_dialogue_work /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
+#define MAIN_API_OVERRIDE_talk_work /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
 #define MAIN_API_OVERRIDE_select_girl_init /* K&R byte parameter is narrowed in the callee. T-10900. */
 #define MAIN_API_OVERRIDE_get_now_k /* implicit declaration, as matched (main_api.h: u8(void)) */
 #include "common.h"
@@ -23,20 +23,20 @@ INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA120);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA124);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA128);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA130);
-INCLUDE_RODATA("asm/data/main/8007C030.data", dialogue_tables);
+INCLUDE_RODATA("asm/data/main/8007C030.data", talk_tables);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA138);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA13C);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA140);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA144);
-INCLUDE_RODATA("asm/data/main/8007C030.data", dialogue_group);
-INCLUDE_RODATA("asm/data/main/8007C030.data", dialogue_line);
-INCLUDE_RODATA("asm/data/main/8007C030.data", dialogue_text_table);
-INCLUDE_RODATA("asm/data/main/8007C030.data", dialogue_command_table);
-INCLUDE_RODATA("asm/data/main/8007C030.data", dialogue_voice_table);
-INCLUDE_RODATA("asm/data/main/8007C030.data", name_buf_family);
-INCLUDE_RODATA("asm/data/main/8007C030.data", name_buf_given);
-INCLUDE_RODATA("asm/data/main/8007C030.data", name_buf_player_form);
-INCLUDE_RODATA("asm/data/main/8007C030.data", name_buf_girl_short);
+INCLUDE_RODATA("asm/data/main/8007C030.data", talk_group);
+INCLUDE_RODATA("asm/data/main/8007C030.data", talk_line);
+INCLUDE_RODATA("asm/data/main/8007C030.data", talk_text_table);
+INCLUDE_RODATA("asm/data/main/8007C030.data", talk_command_table);
+INCLUDE_RODATA("asm/data/main/8007C030.data", talk_voice_table);
+INCLUDE_RODATA("asm/data/main/8007C030.data", name_code_family);
+INCLUDE_RODATA("asm/data/main/8007C030.data", name_code_given);
+INCLUDE_RODATA("asm/data/main/8007C030.data", name_code_player_form);
+INCLUDE_RODATA("asm/data/main/8007C030.data", name_code_girl_short);
 INCLUDE_RODATA("asm/data/main/8007C030.data", girl_name_buf);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA19C);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA1DC);
@@ -63,7 +63,7 @@ INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA36C);
 /* FAKE: typed view of the existing same-address alias keeps the byte argument load in a1 and the index conversion inside the matched callee. T-9540 */
 void func_80084C98(s32 idx, u8 val);
 /* FAKE: minimum array view inferred from clearing words 5 through 30; full object extent remains unknown. T-9540 */
-extern s32 dialogue_work[];
+extern s32 talk_work[];
 /* Declared here, not in main_api.h: EVENT src/ovl/EVENT/80103B60.c declares the same address as
  * a function table (FnTbl55); moving it needs a MAIN_API_OVERRIDE there. T-11590 */
 extern s32 D_80122D48;
@@ -266,37 +266,37 @@ void func_8007C784(void) {
     u8 sp29;
 
     if (cd_read_sync_status() & 1) {
-        main_step_next();
+        mode_step_next();
         return;
     }
-    if ((u32)game_state.step_timer.w++ >= 0x401) {
-        cd_cmd_reset();
+    if ((u32)game_state.mode_step_timer.w++ >= 0x401) {
+        cd_command_reset();
         sp29 = D_800B5939;
-        sp2A = *(u8 *)&last_screen_mode;
+        sp2A = *(u8 *)&dec_bg_last_screen_mode;
         sp2B = dec_bg_brightness;
         dec_bg_reset();
-        *(u8 *)&last_screen_mode = sp2A;
+        *(u8 *)&dec_bg_last_screen_mode = sp2A;
         dec_bg_brightness = sp2B;
         D_800B5939 = sp29;
-        game_state.step -= 1;
+        game_state.mode_step -= 1;
     }
 }
 
 void func_8007C844(void) {
     D_80122CF8 = 1;
     dec_bg_brightness = 0x80;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8007C878(void) {
     D_80122CF8 = 0;
     dec_bg_brightness = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8007C8A4(void) {
     if (func_8007C8D8() == 1) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -311,7 +311,7 @@ s32 func_8007C8D8(void) {
 
     g = &game_state;
     srand(g->frame_count);
-    if (g->step_timer.u == 0) {
+    if (g->mode_step_timer.u == 0) {
         D_80122D3C = g->month % 7U;
     }
     if (D_80122D3C != 6) {
@@ -323,13 +323,13 @@ s32 func_8007C8D8(void) {
     }
     switch (D_80122D3C) {
     case 1:
-        for (outer = g->step_timer.u * 5; outer < 0x50; outer++) {
+        for (outer = g->mode_step_timer.u * 5; outer < 0x50; outer++) {
             prim_gradient_line(-0xA0, -0x29 - outer, 0xA0, -0x29 - outer, 0, 0, 0xD);
             prim_gradient_line(-0xA0, outer - 0x29, 0xA0, outer - 0x29, 0, 0, 0xD);
         }
         break;
     case 2:
-        for (outer = g->step_timer.u; outer < 0x10; outer++) {
+        for (outer = g->mode_step_timer.u; outer < 0x10; outer++) {
             for (left_x = 0; left_x < 10; left_x++) {
                 top_y = left_x * 16 + outer - 0x78;
                 prim_gradient_line(-0xA0, top_y, 0xA0, top_y, 0, 0, 0xD);
@@ -337,7 +337,7 @@ s32 func_8007C8D8(void) {
         }
         break;
     case 3:
-        for (outer = g->step_timer.u << 5; outer < 0x1E0; outer++) {
+        for (outer = g->mode_step_timer.u << 5; outer < 0x1E0; outer++) {
             if (outer < 0xA0) {
                 prim_gradient_line(outer - 0xa0, -0x78, -0xA0, outer - 0x78, 0, 0, 0xD);
             } else if (outer < 0x140) {
@@ -348,7 +348,7 @@ s32 func_8007C8D8(void) {
         }
         break;
     case 4:
-        for (outer = g->step_timer.u << 6; outer < 0x1E0; outer += 4) {
+        for (outer = g->mode_step_timer.u << 6; outer < 0x1E0; outer += 4) {
             if (outer < 0xA0) {
                 prim_gradient_line(outer - 0xa0, -0x78, -0xA0, outer - 0x78, 0, 0, 0xD);
             } else if (outer < 0x140) {
@@ -357,7 +357,7 @@ s32 func_8007C8D8(void) {
                 prim_gradient_line(0xA0, outer - 0x1b8, outer - 0x140, 0x27, 0, 0, 0xD);
             }
         }
-        for (outer = g->step_timer.u << 6; outer < 0x1E0; outer += 4) {
+        for (outer = g->mode_step_timer.u << 6; outer < 0x1E0; outer += 4) {
             if (outer < 0xA0) {
                 prim_gradient_line(outer - 0x9f, -0x78, -0xA0, outer - 0x77, 0, 0, 0xD);
             } else if (outer < 0x140) {
@@ -366,8 +366,8 @@ s32 func_8007C8D8(void) {
                 prim_gradient_line(0xA0, outer - 0x1b7, outer - 0x13f, 0x27, 0, 0, 0xD);
             }
         }
-        if ((g->step_timer.u << 6) < 0x1E0U) left_x = 0;
-        else left_x = (g->step_timer.u << 6) - 0x1E0;
+        if ((g->mode_step_timer.u << 6) < 0x1E0U) left_x = 0;
+        else left_x = (g->mode_step_timer.u << 6) - 0x1E0;
         for (outer = left_x; outer < 0x1E0; outer += 4) {
             if (outer < 0xA0) {
                 prim_gradient_line(outer - 0x9e, -0x78, -0xA0, outer - 0x76, 0, 0, 0xD);
@@ -388,7 +388,7 @@ s32 func_8007C8D8(void) {
         }
         break;
     case 5:
-        for (outer = g->step_timer.u * 10; outer < 0xA0; outer++) {
+        for (outer = g->mode_step_timer.u * 10; outer < 0xA0; outer++) {
             width = 0xA0 - outer;
             left_x = width - 0xA0;
             top_y = (width / 2) - 0x78;
@@ -400,29 +400,29 @@ s32 func_8007C8D8(void) {
         }
         break;
     case 6:
-        if (g->step_timer.u < 0x10U) set_tarao_bg(g->step_timer.u >> 1);
+        if (g->mode_step_timer.u < 0x10U) set_tarao_bg(g->mode_step_timer.u >> 1);
         else set_tarao_bg(8);
         break;
     default:
         for (outer = 0; outer < 0xF; outer++) {
             if ((outer << 5) < 0xA0) {
-                for (left_x = g->step_timer.u * 2; left_x < 0x20; left_x++) {
+                for (left_x = g->mode_step_timer.u * 2; left_x < 0x20; left_x++) {
                     prim_gradient_line((outer << 5)+left_x-0xA0, -0x78, -0xA0, (outer << 5)+left_x-0x78, 0, 0, 0xD);
                 }
             } else if ((outer << 5) < 0x140) {
-                for (left_x = g->step_timer.u * 2; left_x < 0x20; left_x++) {
+                for (left_x = g->mode_step_timer.u * 2; left_x < 0x20; left_x++) {
                     prim_gradient_line((outer << 5)+left_x-0xA0, -0x78, (outer << 5)+left_x-0x140, 0x28, 0, 0, 0xD);
                 }
             } else {
-                for (left_x = g->step_timer.u * 2; left_x < 0x20; left_x++) {
+                for (left_x = g->mode_step_timer.u * 2; left_x < 0x20; left_x++) {
                     prim_gradient_line(0xA0, (outer << 5)+left_x-0x1B8, (outer << 5)+left_x-0x140, 0x28, 0, 0, 0xD);
                 }
             }
         }
         break;
     }
-    g->step_timer.u++;
-    if (g->step_timer.u >= 16U) {
+    g->mode_step_timer.u++;
+    if (g->mode_step_timer.u >= 16U) {
         D_80122CF8 = 2;
         return 1;
     }
@@ -535,7 +535,7 @@ void set_tarao_rect(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u8 arg5, u
 
 void normal_date_bg_out(void) {
     if (func_8007D8AC() == 1) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -554,7 +554,7 @@ s32 func_8007D8AC(void) {
     if ((u8)dec_bg_brightness >= 0x81U) {
         dec_bg_brightness = 0;
     }
-    if (game_state.step_timer.u == 0) {
+    if (game_state.mode_step_timer.u == 0) {
         D_80122D3C = (u8) game_state.month % 7U;
     }
     if (D_80122D3C == 6) {
@@ -562,7 +562,7 @@ s32 func_8007D8AC(void) {
     }
     switch (D_80122D3C) {
     case 1:
-        limit = (s16)(((WordView *)&game_state.step_timer)->u * 5);
+        limit = (s16)(((WordView *)&game_state.mode_step_timer)->u * 5);
         if (limit > 0x50) limit = 0x50;
         for (outer=0; outer<limit; outer++) {
             prim_gradient_line(-0xA0, outer-0x78, 0xA0, outer-0x78, 0, 0, 6);
@@ -570,7 +570,7 @@ s32 func_8007D8AC(void) {
         }
         break;
     case 2:
-        limit = (s16) game_state.step_timer.h[0];
+        limit = (s16) game_state.mode_step_timer.h[0];
         if (limit >= 0x11) {
             limit = 0x10;
         }
@@ -588,7 +588,7 @@ s32 func_8007D8AC(void) {
         }
         break;
     case 3:
-        limit = (s16)(game_state.step_timer.u << 5);
+        limit = (s16)(game_state.mode_step_timer.u << 5);
         if (limit >= 0x1E1) {
             limit = 0x1E0;
         }
@@ -610,7 +610,7 @@ s32 func_8007D8AC(void) {
         }
         break;
     case 4:
-        limit = (s16)(game_state.step_timer.u << 6);
+        limit = (s16)(game_state.mode_step_timer.u << 6);
         if (limit >= 0x1E1) {
             limit = 0x1E0;
         }
@@ -647,7 +647,7 @@ s32 func_8007D8AC(void) {
             } while (outer < limit);
             outer = 0;
         }
-        limit = (s16)((game_state.step_timer.u << 6) - 0x1E0);
+        limit = (s16)((game_state.mode_step_timer.u << 6) - 0x1E0);
         if (limit >= 0x1E1) {
             limit = 0x1E0;
         }
@@ -684,7 +684,7 @@ s32 func_8007D8AC(void) {
         }
         break;
     case 5:
-        limit = (s16)(game_state.step_timer.u * 0xA);
+        limit = (s16)(game_state.mode_step_timer.u * 0xA);
         if (limit >= 0xA1) {
             limit = 0xA0;
         }
@@ -704,14 +704,14 @@ s32 func_8007D8AC(void) {
         }
         break;
     case 6:
-        if ((u32) game_state.step_timer.u < 0x10U) {
-            set_tarao_bg(8 - ((u32) game_state.step_timer.u >> 1));
+        if ((u32) game_state.mode_step_timer.u < 0x10U) {
+            set_tarao_bg(8 - ((u32) game_state.mode_step_timer.u >> 1));
         } else {
             set_tarao_bg(0);
         }
         break;
     default:
-        limit = (s16)(game_state.step_timer.u * 2);
+        limit = (s16)(game_state.mode_step_timer.u * 2);
         if (limit >= 0x21) {
             limit = 0x20;
         }
@@ -748,8 +748,8 @@ s32 func_8007D8AC(void) {
         }
         break;
     }
-    game_state.step_timer.u++;
-    if (game_state.step_timer.u >= 0x12U) {
+    game_state.mode_step_timer.u++;
+    if (game_state.mode_step_timer.u >= 0x12U) {
         D_80122CF8 = 0;
         return 1;
     }
@@ -758,7 +758,7 @@ s32 func_8007D8AC(void) {
 
 /* Slide the girl's portrait in */
 void normal_date_girl_in(void) {
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         normal_date_girl_in_init();
         break;
@@ -766,7 +766,7 @@ void normal_date_girl_in(void) {
         normal_date_girl_in_main();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     func_80057D28(1);
@@ -779,14 +779,14 @@ s32 normal_date_girl_in_init(void) {
     D_800B5940 = 0;
     D_80122CF8 = 0;
     D_80122CF4 = 1;
-    game_state.step_timer.w += 1;
+    game_state.mode_step_timer.w += 1;
 }
 
 s32 normal_date_girl_in_main(void) {
     if (D_800B5940 < 0x80) {
         D_800B5940 += 8;
     } else {
-        main_step_next();
+        mode_step_next();
         D_80122CF8 = 1;
         sprite_quads[0].flags &= 0x7FFFFFFF;
         sprite_quads[1].flags &= 0x7FFFFFFF;
@@ -801,12 +801,12 @@ s32 normal_date_girl_suddenin(void) {
     actor_pool[0x843] = 0x80;
     sprite_quads[0].tint_r = sprite_quads[0].tint_g = sprite_quads[0].tint_b = 0x80;
     sprite_quads[1].tint_r = sprite_quads[1].tint_g = sprite_quads[1].tint_b = 0x80;
-    main_step_next();
+    mode_step_next();
 }
 
 /* Slide the girl's portrait out */
 void normal_date_girl_out(void) {
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         normal_date_girl_out_init();
         break;
@@ -814,7 +814,7 @@ void normal_date_girl_out(void) {
         normal_date_girl_out_main();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     func_80057D28(1);
@@ -823,7 +823,7 @@ void normal_date_girl_out(void) {
 void normal_date_girl_out_init(void) {
     D_800B5940 = 0x80;
     D_80122CF8 = 0;
-    game_state.step_timer.w = game_state.step_timer.w + 1;
+    game_state.mode_step_timer.w = game_state.mode_step_timer.w + 1;
 }
 
 s32 normal_date_girl_out_main(void) {
@@ -832,7 +832,7 @@ s32 normal_date_girl_out_main(void) {
     } else {
         actor_pool[0x83F] &= ~0x80;
         actor_pool[0x7FB] &= ~0x80;
-        main_step_next();
+        mode_step_next();
         sprite_quads[0].flags |= 0x80000000;
         sprite_quads[1].flags |= 0x80000000;
         sprite_quads[0].tint_r = sprite_quads[0].tint_g = sprite_quads[0].tint_b = 0x80;
@@ -854,7 +854,7 @@ s32 normal_date_girl_suddenout(void) {
     sprite_quads[1].tint_r = sprite_quads[1].tint_g = sprite_quads[1].tint_b = 0x80;
     D_80122CF4 = 0;
     D_80122CF8 = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 /* Fade the scene background in */
@@ -866,7 +866,7 @@ s32 normal_date_bg_fadein(void) {
     }
     if (dec_bg_brightness >= 0x7D) {
         dec_bg_brightness = 0x80;
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -896,7 +896,7 @@ void normal_date_bg_fadeout(void) {
     if (dec_bg_brightness < 4) {
         D_80122CF8 = 0;
         dec_bg_brightness = 0;
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -923,7 +923,7 @@ s32 normal_date_bggirl_fadeout(void) {
 }
 
 void normal_date_move_place(void) {
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         normal_date_move_place_init();
         return;
@@ -931,7 +931,7 @@ void normal_date_move_place(void) {
         normal_date_move_place_main();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
@@ -940,7 +940,7 @@ void normal_date_move_place_init(void) {
     k_reset(1);
     D_800B5940 = 0x80;
     D_80122CF8 = 0;
-    game_state.step_timer.w = game_state.step_timer.w + 1;
+    game_state.mode_step_timer.w = game_state.mode_step_timer.w + 1;
     func_80058398(1);
 }
 
@@ -950,7 +950,7 @@ s32 normal_date_move_place_main(void) {
     } else {
         func_80058398(1);
         dec_bg_show_switch(1);
-        main_step_next();
+        mode_step_next();
         sprite_quads[0].flags |= 0x80000000;
         sprite_quads[1].flags |= 0x80000000;
         sprite_quads[0].tint_r = sprite_quads[0].tint_g = sprite_quads[0].tint_b = 0x80;
@@ -965,30 +965,30 @@ s32 normal_date_move_place_main(void) {
 void place_init(void) {
     k_reset(0);
     message_window_set_title(D_800CA19C);
-    main_step_next();
+    mode_step_next();
 }
 
 void place_init2(void) {
     k_reset(0);
     message_window_set_title(D_800CA1DC);
-    main_step_next();
+    mode_step_next();
 }
 
 void change_dec_bg(void) {
     dec_bg_show_switch(1);
-    main_step_next();
+    mode_step_next();
 }
 
 s32 dec_init(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
         dec_bg_lba_cache[2] = 0;
         dec_bg_lba_cache[3] = 0;
-        main_step_next();
-        game_state.step -= 3;
+        mode_step_next();
+        game_state.mode_step -= 3;
         return 0;
     }
     dec_bg_decode_to_vram(1);
-    main_step_next();
+    mode_step_next();
 }
 
 /* Background read helper: starts the read of the scene background */
@@ -998,12 +998,12 @@ void bg_read_sub2(s32 arg0) {
     D_800B3D60 = 0;
     t = dec_bg_cd_read(arg0, 1);
     if (t == D_800B5939) {
-        main_step_next();
-        main_step_next();
-        main_step_next();
+        mode_step_next();
+        mode_step_next();
+        mode_step_next();
     } else if (t == 1 - D_800B5939) {
-        main_step_next();
-        main_step_next();
+        mode_step_next();
+        mode_step_next();
     }
 }
 
@@ -1059,26 +1059,26 @@ void check_k_scroll(void) {
 }
 
 void wait_sub_sub(s16 arg0) {
-    s32 t = game_state.step_timer.w + 1;
-    game_state.step_timer.w = t;
+    s32 t = game_state.mode_step_timer.w + 1;
+    game_state.mode_step_timer.w = t;
     if ((u32)t >= (u32)arg0) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
 /* Matched: T-24021. The two incremented-Y calls need an early argument definition. */
-s32 dialogue_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+s32 talk_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
 u8 arg1;
 u8 arg2;
-DialogueVoiceRef ***arg3;
+TalkVoiceRef ***arg3;
 u16 arg4;
 u16 arg5;
 u8 arg6;
 {
     s16 temp_s1;
     s16 var_v1;
-    DialogueWork *dialogue;
+    TalkWork *dialogue;
     s16 sp286;
     s16 var_a1_2;
     u8 *sp27C;
@@ -1086,12 +1086,12 @@ u8 arg6;
     u8 sp7C[0x200];
     u8 sp74[8];
     u8 sp68[12];
-    DialogueSelectors sp58;
+    TalkSelectors sp58;
     /* FAKE: reuse the former padding word for the call argument's live range;
      * the observed frame remains 0x290 bytes. T-24021. */
     s32 render_x;
 
-    dialogue = (DialogueWork *)dialogue_work;
+    dialogue = (TalkWork *)talk_work;
     sp58 = D_800CA36C;
     /* FAKE: line grouping preserves as1 scheduling; T-10730. */
     if (arg1 != 0xFF) { strcpy(sp7C, arg0); }
@@ -1104,7 +1104,7 @@ u8 arg6;
         if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && (*(u8 *)&game_state.voice_mode != 0)) {
             if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
                 cd_audio_request_set(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[game_state.current_girl]);
-                snd_command(0x300);
+                audio_command(0x300);
             }
             if (D_800CA2AC < 0x400) {
                 if (!(cd_audio_state() & 4) && dialogue->unk_14 == 0) {
@@ -1117,7 +1117,7 @@ u8 arg6;
             } else {
                 D_800CA2AC = 0;
                 func_8007B640();
-                snd_command(0x74);
+                audio_command(0x74);
                 return 0x64;
             }
             dialogue->unk_20 = 1;
@@ -1129,63 +1129,63 @@ u8 arg6;
             sprintf(sp68, "%s ", sp74);
             set_kanji_string(-0x78, temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "", "", 0);
         } else if (sp7C[0] == 0x2D) {
             strncpy(sp74, &sp7C[1], 6);
             sp74[6] = 0;
             sprintf(sp68, "%s ", sp74);
             set_kanji_string(-0x80, temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[7], 0, "", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[7], 0, "", "", 0);
         } else if (sp7C[0] == 0x2B) {
             strncpy(sp74, &sp7C[1], 2);
             sp74[2] = 0;
             sprintf(sp68, "%s ", sp74);
             set_kanji_string(-0x70, temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[3], 0, "", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[3], 0, "", "", 0);
         } else if (sp7C[0] == 0x3C) {
             strncpy(sp74, &sp7C[1], 4);
             sp74[4] = 0;
             sprintf(sp68, "%s ", sp74);
             set_kanji_string(-0x78, temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "（", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "）", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "）", "", 0);
         } else if ((render_x = strcmp(sp7C, "そして…")) == 0) {
             /* FAKE: the zero mask removes the strcmp-result dependency while
              * retaining an early definition of a0, ahead of Y narrowing and
              * outgoing string stores. A literal -40 schedules too late. T-24021. */
             render_x = (render_x & 0) - 40;
             temp_s1 += 0x10;
-            dialogue_render(render_x, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            talk_render(render_x, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         } else if ((strcmp(sp7C, "ガチャ") == 0) || (strcmp(sp7C, "カチャ") == 0) || (strcmp(sp7C, "ガラッ") == 0) || (strcmp(sp7C, "ごそごそ") == 0)) {
-            dialogue_render(-0x80, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x80, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
         } else if ((strcmp(sp7C, "ジロジロ") == 0) || (strcmp(sp7C, "ドン") == 0)) {
-            dialogue_render(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
         } else if ((render_x = strcmp(sp7C, "ピンポーン")) == 0) {
             /* FAKE: preserve the same early argument definition as above. T-24021. */
             render_x = (render_x & 0) - 40;
             temp_s1 += 0x10;
-            dialogue_render(render_x, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
+            talk_render(render_x, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
         } else {
-            dialogue_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         }
         dialogue->unk_14 = 1;
         break;
     case 0x10:
-        dialogue_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        talk_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         dialogue->unk_30 = 1;
         break;
     case 0x11:
-        dialogue_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        talk_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         dialogue->unk_30 = 1;
         break;
     case 0x9:
         if (sp7C[0] != 0) {
             if (strcmp(sp7C, "ドン") == 0) {
-                dialogue_render(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
+                talk_render(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
             }
-            dialogue_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         }
         break;
     case 0x0:
@@ -1193,35 +1193,35 @@ u8 arg6;
         if ((sp7C[sp286 - 1] == 0x6E) && (sp7C[sp286 - 2] == 0x6E)) {
             if (dialogue->unk_0C == 0) {
                 sp7C[sp286 - 2] = 0;
-                sp286 = strlen(name_buf_family);
-                sprintf(sp68, "%s ", name_buf_family);
+                sp286 = strlen(name_code_family);
+                sprintf(sp68, "%s ", name_code_family);
                 set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "『 ", 0);
-                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
-            sp286 = strlen(name_buf_family);
-            sprintf(sp68, "%s ", name_buf_family);
+            sp286 = strlen(name_code_family);
+            sprintf(sp68, "%s ", name_code_family);
             set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "『 ", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
     case 0xE:
-        sp286 = strlen(name_buf_family);
-        sprintf(sp68, "%s ", name_buf_family);
+        sp286 = strlen(name_code_family);
+        sprintf(sp68, "%s ", name_code_family);
         set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
         set_kanji_string(-0x56, temp_s1, arg6, "（ ", 0);
-        dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
+        talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
         break;
     case 0x1:
         sp286 = strlen(sp7C);
         if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && ((*(u8 *)&game_state.voice_mode != 0) && ((sp7C[sp286 - 1] != 0x6E) || (sp7C[sp286 - 2] != 0x6E) || (dialogue->unk_0C == 0)))) {
                 if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
                     cd_audio_request_set(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[game_state.current_girl]);
-                    snd_command(0x300);
+                    audio_command(0x300);
                 }
                 if (D_800CA2AC < 0x400) {
                     if (!(cd_audio_state() & 4) && dialogue->unk_14 == 0) {
@@ -1234,7 +1234,7 @@ u8 arg6;
                 } else {
                     D_800CA2AC = 0;
                     func_8007B640();
-                    snd_command(0x74);
+                    audio_command(0x74);
                     return 0x64;
                 }
                 dialogue->unk_20 = 1;
@@ -1244,19 +1244,19 @@ u8 arg6;
         if ((p[-1] == 0x6E) && (p[-2] == 0x6E)) {
             if (dialogue->unk_0C == 0) {
                 p[-2] = 0U;
-                sp286 = strlen(name_buf_girl_short);
-                sprintf(sp68, "%s ", name_buf_girl_short);
+                sp286 = strlen(name_code_girl_short);
+                sprintf(sp68, "%s ", name_code_girl_short);
                 set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
-            sp286 = strlen(name_buf_girl_short);
-            sprintf(sp68, "%s ", name_buf_girl_short);
+            sp286 = strlen(name_code_girl_short);
+            sprintf(sp68, "%s ", name_code_girl_short);
             set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
@@ -1264,7 +1264,7 @@ u8 arg6;
         if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && (*(u8 *)&game_state.voice_mode != 0)) {
             if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
                 cd_audio_request_set(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[game_state.current_girl]);
-                snd_command(0x300);
+                audio_command(0x300);
             }
             if (D_800CA2AC < 0x400) {
                 if (!(cd_audio_state() & 4) && dialogue->unk_14 == 0) {
@@ -1277,17 +1277,17 @@ u8 arg6;
             } else {
                 D_800CA2AC = 0;
                 func_8007B640();
-                snd_command(0x74);
+                audio_command(0x74);
                 return 0x64;
             }
             dialogue->unk_20 = 1;
             D_800CA2AC = 0;
         }
-        sp286 = strlen(name_buf_girl_short);
-        sprintf(sp68, "%s ", name_buf_girl_short);
+        sp286 = strlen(name_code_girl_short);
+        sprintf(sp68, "%s ", name_code_girl_short);
         set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
         set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-        dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         dialogue->unk_48 = 1;
         break;
     case 0xC:
@@ -1296,7 +1296,7 @@ u8 arg6;
         if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && (*(u8 *)&game_state.voice_mode != 0)) {
             if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
                 cd_audio_request_set(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[game_state.current_girl]);
-                snd_command(0x300);
+                audio_command(0x300);
             }
             if (D_800CA2AC < 0x400) {
                 if (!(cd_audio_state() & 4) && dialogue->unk_14 == 0) {
@@ -1309,7 +1309,7 @@ u8 arg6;
             } else {
                 D_800CA2AC = 0;
                 func_8007B640();
-                snd_command(0x74);
+                audio_command(0x74);
                 return 0x64;
             }
             dialogue->unk_20 = 1;
@@ -1319,19 +1319,19 @@ u8 arg6;
         if ((p[-1] == 0x6E) && (p[-2] == 0x6E)) {
             if (dialogue->unk_0C == 0) {
                 p[-2] = 0U;
-                sp286 = strlen(name_buf_girl_short);
-                sprintf(sp68, "%s ", name_buf_girl_short);
+                sp286 = strlen(name_code_girl_short);
+                sprintf(sp68, "%s ", name_code_girl_short);
                 set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_30 = 1;
             }
         } else {
-            sp286 = strlen(name_buf_girl_short);
-            sprintf(sp68, "%s ", name_buf_girl_short);
+            sp286 = strlen(name_code_girl_short);
+            sprintf(sp68, "%s ", name_code_girl_short);
             set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_30 = 1;
         }
         break;
@@ -1340,7 +1340,7 @@ u8 arg6;
         if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && (*(u8 *)&game_state.voice_mode != 0) && (D_800CA2C4 == 0)) {
             if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
                 cd_audio_request_set(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[game_state.current_girl]);
-                snd_command(0x300);
+                audio_command(0x300);
             }
             if (D_800CA2AC < 0x400) {
                 if (!(cd_audio_state() & 4) && dialogue->unk_14 == 0) {
@@ -1353,7 +1353,7 @@ u8 arg6;
             } else {
                 D_800CA2AC = 0;
                 func_8007B640();
-                snd_command(0x74);
+                audio_command(0x74);
                 return 0x64;
             }
             dialogue->unk_20 = 1;
@@ -1363,12 +1363,12 @@ u8 arg6;
         if ((p[-1] == 0x6E) && (p[-2] == 0x6E)) {
             if (dialogue->unk_0C == 0) {
                 p[-2] = 0U;
-                dialogue_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                talk_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
             set_kanji_string(-0x56, temp_s1, arg6, "　 ", 0);
-            dialogue_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
@@ -1379,7 +1379,7 @@ u8 arg6;
                 if (D_800CA2C4 == 0) {
                     if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
                             cd_audio_request_set(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[game_state.current_girl]);
-                        snd_command(0x300);
+                        audio_command(0x300);
                     }
                     if (D_800CA2AC < 0x400) {
                         if (!(cd_audio_state() & 4) && dialogue->unk_14 == 0) {
@@ -1392,7 +1392,7 @@ u8 arg6;
                     } else {
                         D_800CA2AC = 0;
                         func_8007B640();
-                        snd_command(0x74);
+                        audio_command(0x74);
                         return 0x64;
                     }
                     dialogue->unk_20 = 1;
@@ -1401,7 +1401,7 @@ u8 arg6;
             }
         }
         set_kanji_string(-0x56, temp_s1, arg6, "　 ", 0);
-        dialogue_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        talk_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         dialogue->unk_30 = 1;
         break;
     case 0xB:
@@ -1409,7 +1409,7 @@ u8 arg6;
         if ((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) { /* FAKE: same-line branches preserve scheduling, T-10730. */ if (*(u8 *)&game_state.voice_mode != 0) {
                 if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
                     cd_audio_request_set(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, 0);
-                    snd_command(0x300);
+                    audio_command(0x300);
                 }
                 if (D_800CA2AC < 0x400) {
                     if (!(cd_audio_state() & 4) && dialogue->unk_14 == 0) {
@@ -1422,7 +1422,7 @@ u8 arg6;
                 } else {
                     D_800CA2AC = 0;
                     func_8007B640();
-                    snd_command(0x74);
+                    audio_command(0x74);
                     return 0x64;
                 }
                 dialogue->unk_20 = 1;
@@ -1435,13 +1435,13 @@ u8 arg6;
                 p[-2] = 0U;
                 set_kanji_string((s16) (-0x68 - ((s16) strlen("藤崎") * 4)), temp_s1, arg6, "藤崎", 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
             set_kanji_string((s16) (-0x68 - ((s16) strlen("藤崎") * 4)), temp_s1, arg6, "藤崎", 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
@@ -1450,7 +1450,7 @@ u8 arg6;
         if ((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) { /* FAKE: same-line branches preserve scheduling, T-10730. */ if (*(u8 *)&game_state.voice_mode != 0) {
                 if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
                     cd_audio_request_set(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, 0xD);
-                    snd_command(0x300);
+                    audio_command(0x300);
                 }
                 if (D_800CA2AC < 0x400) {
                     if (!(cd_audio_state() & 4) && dialogue->unk_14 == 0) {
@@ -1463,7 +1463,7 @@ u8 arg6;
                 } else {
                     D_800CA2AC = 0;
                     func_8007B640();
-                    snd_command(0x74);
+                    audio_command(0x74);
                     return 0x64;
                 }
                 dialogue->unk_20 = 1;
@@ -1476,23 +1476,23 @@ u8 arg6;
                 p[-2] = 0U;
                 set_kanji_string((s16) (-0x68 - ((s16) strlen("好雄") * 4)), temp_s1, arg6, "好雄", 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
             set_kanji_string((s16) (-0x68 - ((s16) strlen("好雄") * 4)), temp_s1, arg6, "好雄", 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
     case 0x4:
     case 0x6:
-        sp286 = strlen(name_buf_family);
-        sprintf(sp68, "%s ", name_buf_family);
+        sp286 = strlen(name_code_family);
+        sprintf(sp68, "%s ", name_code_family);
         set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
         set_kanji_string(-0x56, temp_s1, arg6, "（ ", 0);
-        dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
+        talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
         dialogue->unk_14 = 1;
         break;
     case 0x3:
@@ -1504,24 +1504,24 @@ u8 arg6;
             D_800CA2A4[1] = 1;
             D_800CA2A4[2] = 2;
         }
-        k_disp_start(dialogue_render(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
+        k_disp_start(talk_render(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
         break;
     case 0x8:
         D_800CA2A4[0] = 0;
         D_800CA2A4[1] = 1;
-        k_disp_start(dialogue_render(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
+        k_disp_start(talk_render(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
         break;
     case 0x13:
         D_800CA2A4[0] = 0;
         D_800CA2A4[1] = 1;
-        k_disp_start(dialogue_render(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "（", 1));
+        k_disp_start(talk_render(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "（", 1));
         break;
     case 0x2:
     case 0x5:
         if ((((s32 *)arg3[arg4][arg5])[dialogue->unk_0C * 2] != 0) && (*(u8 *)&game_state.voice_mode != 0)) {
             if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
                 cd_audio_request_set(((s32 *)arg3[arg4][arg5])[dialogue->unk_0C * 2], ((s32 *)arg3[arg4][arg5])[dialogue->unk_0C * 2 + 1], sp58.value[game_state.current_girl]);
-                snd_command(0x300);
+                audio_command(0x300);
             }
             if (D_800CA2AC < 0x400) {
                 if (!(cd_audio_state() & 4) && dialogue->unk_14 == 0) {
@@ -1534,7 +1534,7 @@ u8 arg6;
             } else {
                 D_800CA2AC = 0;
                 func_8007B640();
-                snd_command(0x74);
+                audio_command(0x74);
                 return 0x64;
             }
             dialogue->unk_20 = 1;
@@ -1563,19 +1563,19 @@ u8 arg6;
         }
         if (*p != 0x6E) {
             sp27C = p;
-            sp286 = strlen(name_buf_girl_short);
-            sprintf(sp68, "%s ", name_buf_girl_short);
+            sp286 = strlen(name_code_girl_short);
+            sprintf(sp68, "%s ", name_code_girl_short);
             set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp27C, 0, "", "", 0);
+            talk_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp27C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
     case 0xFF:
-        main_step_next();
+        mode_step_next();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     return 0;
@@ -1584,7 +1584,7 @@ u8 arg6;
 void func_80081128(void) {
     if (D_800CA2AC > 0x200) {
         if (game_state.pad_pressed & 0x600060) {
-            snd_command(0xB4);
+            audio_command(0xB4);
             D_800CA2A8 = 0;
             D_800CA2AC = 0;
             D_800CA2C4 = 1;
@@ -1593,7 +1593,7 @@ void func_80081128(void) {
 }
 
 /* Split a script string into lines and queue them with name code expansion */
-s32 dialogue_render(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+s32 talk_render(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
     s16 arg0;
     s16 arg1;
     u8 arg2;
@@ -1659,15 +1659,15 @@ parse_next:
         for (out_index = 0, in_index = 0; out_index < length; out_index += 2, in_index += 2) {
             if (line[out_index] == 'P') {
                 copy = 0;
-                if (strlen(name_buf_player_form) > 0) {
+                if (strlen(name_code_player_form) > 0) {
                     do {
-                        line[out_index + copy] = name_buf_player_form[copy];
+                        line[out_index + copy] = name_code_player_form[copy];
                         copy++;
-                    } while (copy < strlen(name_buf_player_form));
+                    } while (copy < strlen(name_code_player_form));
                 }
                 strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
-                length += strlen(name_buf_player_form) - 1;
-                out_index += strlen(name_buf_player_form); out_index -= 2; in_index--;
+                length += strlen(name_code_player_form) - 1;
+                out_index += strlen(name_code_player_form); out_index -= 2; in_index--;
             }
             else if (line[out_index] == 'S') {
                 copy = 0;
@@ -1695,15 +1695,15 @@ parse_next:
             }
             else if (line[out_index] == 'p') {
                 copy = 0;
-                if (strlen(name_buf_family) > 0) {
+                if (strlen(name_code_family) > 0) {
                     do {
-                        line[out_index + copy] = name_buf_family[copy];
+                        line[out_index + copy] = name_code_family[copy];
                         copy++;
-                    } while (copy < strlen(name_buf_family));
+                    } while (copy < strlen(name_code_family));
                 }
                 strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
-                length += strlen(name_buf_family) - 1;
-                out_index += strlen(name_buf_family); out_index -= 2; in_index--;
+                length += strlen(name_code_family) - 1;
+                out_index += strlen(name_code_family); out_index -= 2; in_index--;
             }
             else if (line[out_index] == 'Y') {
                 strcpy(name, "好雄");
@@ -1719,7 +1719,7 @@ parse_next:
                 out_index += strlen(name); out_index -= 2; in_index--;
             }
             else if (line[out_index] == 'F') {
-                sprintf(name, "%s%s", name_buf_family, name_buf_given);
+                sprintf(name, "%s%s", name_code_family, name_code_given);
                 copy = 0;
                 if (strlen(name) > 0) {
                     do {
@@ -1732,7 +1732,7 @@ parse_next:
                 out_index += strlen(name); out_index -= 2; in_index--;
             }
             else if (line[out_index] == 'm') {
-                strcpy(name, name_buf_given);
+                strcpy(name, name_code_given);
                 copy = 0;
                 if (strlen(name) > 0) {
                     do {
@@ -1820,15 +1820,15 @@ parse_next:
     for (out_index = 0, in_index = 0; out_index < length; out_index += 2, in_index += 2) {
         if (line[out_index] == 'P') {
             copy = 0;
-            if (strlen(name_buf_player_form) > 0) {
+            if (strlen(name_code_player_form) > 0) {
                 do {
-                    line[out_index + copy] = name_buf_player_form[copy];
+                    line[out_index + copy] = name_code_player_form[copy];
                     copy++;
-                } while (copy < strlen(name_buf_player_form));
+                } while (copy < strlen(name_code_player_form));
             }
             strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
-            length += strlen(name_buf_player_form) - 1;
-            out_index += strlen(name_buf_player_form); out_index -= 2; in_index--;
+            length += strlen(name_code_player_form) - 1;
+            out_index += strlen(name_code_player_form); out_index -= 2; in_index--;
         }
         else if (line[out_index] == 'S') {
             copy = 0;
@@ -1856,15 +1856,15 @@ parse_next:
         }
         else if (line[out_index] == 'p') {
             copy = 0;
-            if (strlen(name_buf_family) > 0) {
+            if (strlen(name_code_family) > 0) {
                 do {
-                    line[out_index + copy] = name_buf_family[copy];
+                    line[out_index + copy] = name_code_family[copy];
                     copy++;
-                } while (copy < strlen(name_buf_family));
+                } while (copy < strlen(name_code_family));
             }
             strncpy(&line[out_index + copy], (text + i) + in_index + 1, -out_index - copy + 0x40);
-            length += strlen(name_buf_family) - 1;
-            out_index += strlen(name_buf_family); out_index -= 2; in_index--;
+            length += strlen(name_code_family) - 1;
+            out_index += strlen(name_code_family); out_index -= 2; in_index--;
         }
         else if (line[out_index] == 'Y') {
             strcpy(name, "好雄");
@@ -1880,7 +1880,7 @@ parse_next:
             out_index += strlen(name); out_index -= 2; in_index--;
         }
         else if (line[out_index] == 'F') {
-            sprintf(name, "%s%s", name_buf_family, name_buf_given);
+            sprintf(name, "%s%s", name_code_family, name_code_given);
             copy = 0;
             if (strlen(name) > 0) {
                 do {
@@ -1893,7 +1893,7 @@ parse_next:
             out_index += strlen(name); out_index -= 2; in_index--;
         }
         else if (line[out_index] == 'm') {
-            strcpy(name, name_buf_given);
+            strcpy(name, name_code_given);
             copy = 0;
             if (strlen(name) > 0) {
                 do {
@@ -1966,25 +1966,25 @@ parse_next:
     return final_y;
 }
 
-s32 dialogue_run(arg0, arg1, arg2)
+s32 talk_run(arg0, arg1, arg2)
 u8 arg0;
 u8 arg1;
 u8 arg2;
 {
-    DialogueTables *tables;
-    DialogueWork *dialogue;
+    TalkTables *tables;
+    TalkWork *dialogue;
     s16 group;
     s32 result;
     u8 command;
 
-    tables = (DialogueTables *)&dialogue_tables;
-    dialogue = (DialogueWork *)dialogue_work;
+    tables = (TalkTables *)&talk_tables;
+    dialogue = (TalkWork *)talk_work;
     if (dialogue->unk_30 != 0) {
         if ((check_end_k() != 0) && ((dialogue->unk_20 == 0) || ((dialogue->unk_20 == 1) && (cd_audio_state() != 4)) || ((*(u8 *)&game_state.voice_mode) == 0))) {
             dialogue->unk_30 = 0;
             D_800CA2AC = 0;
         } else if ((game_state.pad_pressed & 0x400040) && ((*(u8 *)&game_state.voice_mode) == 2)) {
-            snd_command(0xB4);
+            audio_command(0xB4);
             dialogue->unk_30 = 2;
             D_800CA2AC = 0;
             D_800CA2C4 = 1;
@@ -2001,7 +2001,7 @@ u8 arg2;
         }
     } else if (dialogue->unk_14 != 0) {
         if ((game_state.pad_pressed & 0x400040) && ((*(u8 *)&game_state.voice_mode) == 2)) {
-            snd_command(0xB4);
+            audio_command(0xB4);
             D_800CA2C4 = 1;
             dialogue->unk_14 = 2;
             D_800CA2AC = 0;
@@ -2030,9 +2030,9 @@ u8 arg2;
         }
     } else {
         D_800CA2C8 = 0;
-        game_state.step_timer.w = 0;
+        game_state.mode_step_timer.w = 0;
         group = *tables->group;
-        result = dialogue_speak_part(tables->text[group][*tables->line], (s32) tables->command[group][*tables->line], (s32) arg0, tables->voice, (s32) group, (s32) (*tables->line), (s32) arg2);
+        result = talk_speak_part(tables->text[group][*tables->line], (s32) tables->command[group][*tables->line], (s32) arg0, tables->voice, (s32) group, (s32) (*tables->line), (s32) arg2);
         if ((arg1 != 0) && (D_800CA2A8 == 0) && ((result & 0xFF) != 0x64)) {
             /* FAKE: expression statement seeds uopt CSE on *tables->line to preserve load and addu operand order. T-11060 */
             *tables->line;
@@ -2106,7 +2106,7 @@ s32 junban_init(void) {
 }
 
 void normal_date_three_select(void) {
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         normal_date_three_select_init();
         return;
@@ -2114,7 +2114,7 @@ void normal_date_three_select(void) {
         normal_date_three_select_main();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
@@ -2136,7 +2136,7 @@ s32 normal_date_three_select_init(void) {
     menu_set(1, 3, x, y, w, h);
     game_state.menu_cursor_1 = 0;
     D_80122D30 = 1;
-    game_state.step_timer.w++;
+    game_state.mode_step_timer.w++;
 }
 
 s32 normal_date_three_select_main(void) {
@@ -2157,13 +2157,13 @@ s32 normal_date_three_select_main(void) {
             D_8011ECD3 &= 0xFF7F;
             D_80122D30 = 0;
             k_reset(1);
-            main_step_next();
+            mode_step_next();
         }
     }
 }
 
 void normal_date_two_select(void) {
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         normal_date_two_select_init();
         return;
@@ -2171,7 +2171,7 @@ void normal_date_two_select(void) {
         normal_date_two_select_main();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
@@ -2191,7 +2191,7 @@ void normal_date_two_select_init(void) {
     menu_set(1, 2, x, y, w, h);
     game_state.menu_cursor_1 = 0;
     D_80122D30 = 1;
-    game_state.step_timer.w++;
+    game_state.mode_step_timer.w++;
 }
 
 s32 normal_date_two_select_main(void) {
@@ -2210,69 +2210,69 @@ s32 normal_date_two_select_main(void) {
             D_8011ECD3 &= 0xFF7F;
             D_80122D30 = 0;
             k_reset(1);
-            main_step_next();
+            mode_step_next();
         }
     }
 }
 
 void func_80083338(void) {
-    bustup_layout_set(get_g_zyotai_h(game_state.current_girl) & 0x7F);
-    main_step_next();
+    portrait_layout_set(get_g_zyotai_h(game_state.current_girl) & 0x7F);
+    mode_step_next();
 }
 
 void func_80083378(void) {
-    bustup_layout_set(0);
-    main_step_next();
+    portrait_layout_set(0);
+    mode_step_next();
 }
 
 void func_800833A0(void) {
-    bustup_layout_set(1);
-    main_step_next();
+    portrait_layout_set(1);
+    mode_step_next();
 }
 
 void func_800833C8(void) {
-    bustup_layout_set(2);
-    main_step_next();
+    portrait_layout_set(2);
+    mode_step_next();
 }
 
 void func_800833F0(void) {
-    bustup_layout_set(3);
-    main_step_next();
+    portrait_layout_set(3);
+    mode_step_next();
 }
 
 void func_80083418(void) {
-    bustup_layout_set(4);
-    main_step_next();
+    portrait_layout_set(4);
+    mode_step_next();
 }
 
-void bustup_layout_set(u8 arg0) {
-    bustup_quad_offsets(arg0);
+void portrait_layout_set(u8 arg0) {
+    portrait_quad_offsets(arg0);
     func_800634FC(arg0);
 }
 
-s32 bustup_show_checked(void) {
+s32 portrait_show_checked(void) {
     u8 var_v1;
 
     if ((((s32 *)D_800CA120)[0] != 0x801820AC || ((s32 *)D_800CA120)[1] != 0x801860AC ||
          ((s32 *)D_800CA120)[2] != 0x8018A0AC || ((s32 *)D_800CA120)[3] != 0x8018E0AC ||
          ((s32 *)D_800CA120)[4] != 0x801920AC || ((s32 *)D_800CA128)[0] != 0x8018005C ||
          ((s32 *)D_800CA128)[1] != 0x80180070 || *(s32 *)D_800CA124 != 0x80180000) &&
-        game_state.mode >= 0x50 && game_state.mode < 0x70) {
-        game_state.step -= 3;
-        main_step_next();
+        game_state.game_mode >= 0x50 && game_state.game_mode < 0x70) {
+        game_state.mode_step -= 3;
+        mode_step_next();
         return 0;
     }
-    if (game_state.mode >= 0x50 && game_state.mode < 0x70 && file_checksum_ok(0x2D, 0x80180000) == 0) {
-        main_step_next();
-        game_state.step -= 3;
+    if (game_state.game_mode >= 0x50 && game_state.game_mode < 0x70 && file_checksum_ok(0x2D, 0x80180000) == 0) {
+        mode_step_next();
+        game_state.mode_step -= 3;
         return 0;
     }
     var_v1 = get_g_zyotai_h((s32) game_state.current_girl) & 0x7F;
     if ((u8) game_state.current_girl >= GIRL_REI) {
         var_v1 = 0;
     }
-    bustup_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
-    main_step_next();
+    portrait_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
+    mode_step_next();
 }
 
 void func_80083628(void) {
@@ -2282,35 +2282,35 @@ void func_80083628(void) {
     if ((u8) game_state.current_girl >= GIRL_REI) {
         var_v1 = 0;
     }
-    bustup_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
-    main_step_next();
+    portrait_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
+    mode_step_next();
 }
 
 s32 func_800836A0(void) {
     /* The two early failure paths return zero; the success path falls through. */
     if ((((s32 *)D_800CA120)[0] != 0x801820AC) || (((s32 *)D_800CA120)[1] != 0x801860AC) || (((s32 *)D_800CA120)[2] != 0x8018A0AC) || (((s32 *)D_800CA120)[3] != 0x8018E0AC) || (((s32 *)D_800CA120)[4] != 0x801920AC)) {
-        game_state.step -= 4;
+        game_state.mode_step -= 4;
         return 0;
     }
     if (file_checksum_ok(0x2D, 0x80180000) == 0) {
-        main_step_next();
-        game_state.step -= 5;
+        mode_step_next();
+        game_state.mode_step -= 5;
         return 0;
     }
     /* FAKE: narrowing before the mask preserves temporary allocation. T-10020. */
-    bustup_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, (u8)get_g_zyotai_h((s32) game_state.current_girl) & 0x7F);
+    portrait_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, (u8)get_g_zyotai_h((s32) game_state.current_girl) & 0x7F);
     /* One record-table view keeps the byte clear before the flag updates. */
     actor_pool[31 * 0x44 + 7] = 0;
     *(s32 *)&actor_pool[31 * 0x44 + 0x38] |= 0x81000000;
     *(s32 *)&actor_pool[30 * 0x44 + 0x38] |= 0x81000000;
     sprite_quads->flags |= 0x81000000;
     sprite_quads[1].flags |= 0x81000000;
-    main_step_next();
+    mode_step_next();
 }
 
 /* s32 without a return value: the ~0x80 mask is then loaded into v0 (li v0,-129) as in the
  * original, although the byte clears use andi 0xFF7F. T-11590 */
-s32 bustup_wink_update(void) {
+s32 portrait_wink_update(void) {
     if (D_80122CF4 != 0) {
         actor_pool[0x83F] |= 0x80;
         actor_pool[0x7FB] |= 0x80;
@@ -2366,306 +2366,306 @@ void func_80083A10(void) {
 
 void hizuke_hide(void) {
     hizuke_disp_switch(0);
-    main_step_next();
+    mode_step_next();
 }
 
 void hizuke_appear(void) {
     hizuke_disp_switch(1);
-    main_step_next();
+    mode_step_next();
 }
 
 void read_bustup(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x55B2);
+            portrait_read_start(0x55B2);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x55DF);
+            portrait_read_start(0x55DF);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x560C);
+            portrait_read_start(0x560C);
         } else {
-            bustup_read_start(0x5639);
+            portrait_read_start(0x5639);
         }
         break;
     case GIRL_MIO:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x5D9B);
+            portrait_read_start(0x5D9B);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x5DC8);
+            portrait_read_start(0x5DC8);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x5DF5);
+            portrait_read_start(0x5DF5);
         } else {
-            bustup_read_start(0x5E22);
+            portrait_read_start(0x5E22);
         }
         break;
     case GIRL_YUINA:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x5288);
+            portrait_read_start(0x5288);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x52B5);
+            portrait_read_start(0x52B5);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x52E2);
+            portrait_read_start(0x52E2);
         } else {
-            bustup_read_start(0x530F);
+            portrait_read_start(0x530F);
         }
         break;
     case GIRL_AYAKO:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x5909);
+            portrait_read_start(0x5909);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x5936);
+            portrait_read_start(0x5936);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x5963);
+            portrait_read_start(0x5963);
         } else {
-            bustup_read_start(0x5990);
+            portrait_read_start(0x5990);
         }
         break;
     case GIRL_SAKI:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x6719);
+            portrait_read_start(0x6719);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x6746);
+            portrait_read_start(0x6746);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x6773);
+            portrait_read_start(0x6773);
         } else {
-            bustup_read_start(0x67A0);
+            portrait_read_start(0x67A0);
         }
         break;
     case GIRL_YUKARI:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x6011);
+            portrait_read_start(0x6011);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x603E);
+            portrait_read_start(0x603E);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x606B);
+            portrait_read_start(0x606B);
         } else {
-            bustup_read_start(0x6098);
+            portrait_read_start(0x6098);
         }
         break;
     case GIRL_NOZOMI:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x6287);
+            portrait_read_start(0x6287);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x62B4);
+            portrait_read_start(0x62B4);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x62E1);
+            portrait_read_start(0x62E1);
         } else {
-            bustup_read_start(0x630E);
+            portrait_read_start(0x630E);
         }
         break;
     case GIRL_MIRA:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x5B52);
+            portrait_read_start(0x5B52);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x5B7F);
+            portrait_read_start(0x5B7F);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x5BAC);
+            portrait_read_start(0x5BAC);
         } else {
-            bustup_read_start(0x5BD9);
+            portrait_read_start(0x5BD9);
         }
         break;
     case GIRL_YUKO:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x503F);
+            portrait_read_start(0x503F);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x506C);
+            portrait_read_start(0x506C);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x5099);
+            portrait_read_start(0x5099);
         } else {
-            bustup_read_start(0x50C6);
+            portrait_read_start(0x50C6);
         }
         break;
     case GIRL_MEGUMI:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x64FD);
+            portrait_read_start(0x64FD);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x652A);
+            portrait_read_start(0x652A);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x6557);
+            portrait_read_start(0x6557);
         } else {
-            bustup_read_start(0x6584);
+            portrait_read_start(0x6584);
         }
         break;
     case GIRL_YUMI:
         if (game_state.month >= 3U && game_state.month < 6U) {
-            bustup_read_start(0x698F);
+            portrait_read_start(0x698F);
         } else if (game_state.month >= 6U && game_state.month < 9U) {
-            bustup_read_start(0x69BC);
+            portrait_read_start(0x69BC);
         } else if (game_state.month >= 9U && game_state.month < 12U) {
-            bustup_read_start(0x69E9);
+            portrait_read_start(0x69E9);
         } else {
-            bustup_read_start(0x6A16);
+            portrait_read_start(0x6A16);
         }
         break;
     case GIRL_YOSHIO:
-        bustup_read_start(0x6C8C);
+        portrait_read_start(0x6C8C);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void read_bustup_uniform(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x541D);
+            portrait_read_start(0x541D);
         } else {
-            bustup_read_start(0x544A);
+            portrait_read_start(0x544A);
         }
         break;
     case GIRL_MIO:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x5D14);
+            portrait_read_start(0x5D14);
         } else {
-            bustup_read_start(0x5D41);
+            portrait_read_start(0x5D41);
         }
         break;
     case GIRL_YUINA:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x5201);
+            portrait_read_start(0x5201);
         } else {
-            bustup_read_start(0x522E);
+            portrait_read_start(0x522E);
         }
         break;
     case GIRL_AYAKO:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x5882);
+            portrait_read_start(0x5882);
         } else {
-            bustup_read_start(0x58AF);
+            portrait_read_start(0x58AF);
         }
         break;
     case GIRL_SAKI:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x6692);
+            portrait_read_start(0x6692);
         } else {
-            bustup_read_start(0x66BF);
+            portrait_read_start(0x66BF);
         }
         break;
     case GIRL_YUKARI:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x5F8A);
+            portrait_read_start(0x5F8A);
         } else {
-            bustup_read_start(0x5FB7);
+            portrait_read_start(0x5FB7);
         }
         break;
     case GIRL_NOZOMI:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x6200);
+            portrait_read_start(0x6200);
         } else {
-            bustup_read_start(0x622D);
+            portrait_read_start(0x622D);
         }
         break;
     case GIRL_MIRA:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x5AF8);
+            portrait_read_start(0x5AF8);
         } else {
-            bustup_read_start(0x5B25);
+            portrait_read_start(0x5B25);
         }
         break;
     case GIRL_YUKO:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x4FE5);
+            portrait_read_start(0x4FE5);
         } else {
-            bustup_read_start(0x5012);
+            portrait_read_start(0x5012);
         }
         break;
     case GIRL_MEGUMI:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x64A3);
+            portrait_read_start(0x64A3);
         } else {
-            bustup_read_start(0x64D0);
+            portrait_read_start(0x64D0);
         }
         break;
     case GIRL_YUMI:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x6908);
+            portrait_read_start(0x6908);
         } else {
-            bustup_read_start(0x6935);
+            portrait_read_start(0x6935);
         }
         break;
     case GIRL_REI:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x57FB);
+            portrait_read_start(0x57FB);
         } else {
-            bustup_read_start(0x5828);
+            portrait_read_start(0x5828);
         }
         break;
     case GIRL_MIHARU:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x6B51);
+            portrait_read_start(0x6B51);
         } else {
-            bustup_read_start(0x6B7E);
+            portrait_read_start(0x6B7E);
         }
         break;
     case GIRL_YOSHIO:
         if (game_state.month >= 6U && game_state.month < 10U) {
-            bustup_read_start(0x6C32);
+            portrait_read_start(0x6C32);
         } else {
-            bustup_read_start(0x6C5F);
+            portrait_read_start(0x6C5F);
         }
         break;
     case GIRL_SOTOI:
-        bustup_read_start(0x6B24);
+        portrait_read_start(0x6B24);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void read_bustup_swimsuit(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        bustup_read_start(0x5666);
+        portrait_read_start(0x5666);
         break;
     case GIRL_MIO:
-        bustup_read_start(0x5E4F);
+        portrait_read_start(0x5E4F);
         break;
     case GIRL_YUINA:
-        bustup_read_start(0x533C);
+        portrait_read_start(0x533C);
         break;
     case GIRL_AYAKO:
-        bustup_read_start(0x59BD);
+        portrait_read_start(0x59BD);
         break;
     case GIRL_SAKI:
-        bustup_read_start(0x67CD);
+        portrait_read_start(0x67CD);
         break;
     case GIRL_YUKARI:
-        bustup_read_start(0x60C5);
+        portrait_read_start(0x60C5);
         break;
     case GIRL_NOZOMI:
-        bustup_read_start(0x633B);
+        portrait_read_start(0x633B);
         break;
     case GIRL_MIRA:
-        bustup_read_start(0x5C06);
+        portrait_read_start(0x5C06);
         break;
     case GIRL_YUKO:
         if (game_state.year == 0x5F) {
-            bustup_read_start(0x50F3);
+            portrait_read_start(0x50F3);
         } else if (game_state.year == 0x60) {
-            bustup_read_start(0x5120);
+            portrait_read_start(0x5120);
         } else {
-            bustup_read_start(0x514D);
+            portrait_read_start(0x514D);
         }
         break;
     case GIRL_MEGUMI:
-        bustup_read_start(0x65B1);
+        portrait_read_start(0x65B1);
         break;
     case GIRL_YUMI:
-        bustup_read_start(0x6A43);
+        portrait_read_start(0x6A43);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void bustup_return(void) {
     read_bustup();
 }
 
-/* Restore the main mode, stage and step saved in saved_mode, saved_stage and saved_step by calling main_state_set,
- * main_stage_set and main_step_set */
+/* Restore the main mode, stage and step saved in saved_mode, saved_stage and saved_step by calling game_mode_set,
+ * mode_stage_set and mode_step_set */
 void return_step(void) {
-    main_state_set(game_state.saved_mode);
-    main_stage_set(game_state.saved_stage);
-    main_step_set(game_state.saved_step);
+    game_mode_set(game_state.saved_game_mode);
+    mode_stage_set(game_state.saved_mode_stage);
+    mode_step_set(game_state.saved_mode_step);
 }
 
 void k_disp_inc2(void) {
@@ -2684,35 +2684,35 @@ void k_disp_inc2(void) {
 }
 
 void yosi_trans(void) {
-    snd_bank_start(0, 0x200);
-    main_step_next();
+    audio_bank_start(0, 0x200);
+    mode_step_next();
 }
 
 void change_yoshio(void) {
     game_state.current_girl = GIRL_YOSHIO;
-    main_step_next();
+    mode_step_next();
 }
 
 void change_girl(void) {
     game_state.current_girl = game_state.date_girl;
-    main_step_next();
+    mode_step_next();
 }
 
-void dialogue_names_set(u8 arg0) {
+void talk_names_set(u8 arg0) {
     s32 t;
 
-    strcpy(name_buf_family, game_state.player_family_name);
-    strcpy(name_buf_given, game_state.player_given_name);
+    strcpy(name_code_family, game_state.player_family_name);
+    strcpy(name_code_given, game_state.player_given_name);
     if (arg0 < 0xE) {
         t = arg0;
-        get_p_name(name_buf_player_form, t);
-        strcpy(name_buf_girl_short, girl_short_name_table[arg0]);
+        get_p_name(name_code_player_form, t);
+        strcpy(name_code_girl_short, girl_short_name_table[arg0]);
         get_g_name(girl_name_buf, t);
     }
 }
 
 void select_girl(void) {
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         select_girl_init(0);
         return;
@@ -2720,13 +2720,13 @@ void select_girl(void) {
         select_girl_main(0);
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
 
 void select_girl2(void) {
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         select_girl_init(1);
         return;
@@ -2734,7 +2734,7 @@ void select_girl2(void) {
         select_girl_main(1);
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
@@ -2775,7 +2775,7 @@ u8 arg0;
         }
     }
     D_80122D30 = 1;
-    game_state.step_timer.w++;
+    game_state.mode_step_timer.w++;
 }
 
 s32 select_girl_main(s32 arg0) {
@@ -2793,7 +2793,7 @@ s32 select_girl_main(s32 arg0) {
                 D_8011ECD3 &= 0xFF7F;
                 D_80122D30 = 0;
                 k_reset(1);
-                main_step_next();
+                mode_step_next();
                 return 0;
             }
         }
@@ -2821,7 +2821,7 @@ void day_plus(void) {
         hizuke_disp_switch(0);
     }
     hizuke_show();
-    main_step_next();
+    mode_step_next();
 }
 
 /* Clamp girl tokimeki/affection (0..0x80), syoushin (0..0xFF) and the nine parameters (0..999); the queue reader
@@ -2831,19 +2831,19 @@ void check_para_limit(void) {
 
     for (i = 0; i < 11; i++) {
         if (game_state.girls[i].tokimeki < 0) {
-            *(s32 *) &game_state.girls[i].tokimeki_frac = 0; /* word store over the s16 pair */
+            *(s32 *) &game_state.girls[i].tokimeki_fraction = 0; /* word store over the s16 pair */
         }
         if (game_state.girls[i].tokimeki >= 0x80) {
             game_state.girls[i].tokimeki = 0x80;
         }
         if (game_state.girls[i].affection < 0) {
-            *(s32 *) &game_state.girls[i].affection_frac = 0;
+            *(s32 *) &game_state.girls[i].affection_fraction = 0;
         }
         if (game_state.girls[i].affection >= 0x80) {
             game_state.girls[i].affection = 0x80;
         }
         if (game_state.girls[i].syoushin < 0) {
-            *(s32 *) &game_state.girls[i].syoushin_frac = 0;
+            *(s32 *) &game_state.girls[i].syoushin_fraction = 0;
         }
         if (game_state.girls[i].syoushin >= 0xFF) {
             game_state.girls[i].syoushin = 0xFF;
@@ -2865,11 +2865,11 @@ void text_marker_hide(void) {
 
 void func_80084E6C(void) {
     D_80122D20 = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 /* s32 without a return value: the last chain value stays in v0 (andi v0,a0,0xffff). T-11590 */
-s32 event_still_show(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+s32 scene_still_show(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     s16 i;
 
     D_80122D04 = 0;
@@ -2914,7 +2914,7 @@ s32 event_still_show(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
     sprite_quads[61].h = sprite_quads[62].h = sprite_quads[63].h = 0x20;
 }
 
-s32 event_anim_show(arg0, arg1, arg2, arg3)
+s32 scene_anim_show(arg0, arg1, arg2, arg3)
     s32 arg0;
     s32 arg1;
     s32 arg2;
@@ -3014,9 +3014,9 @@ void func_800853FC(void) {
     u8 temp_s0;
     u8 state;
 
-    temp_s0 = game_state.step;
+    temp_s0 = game_state.mode_step;
     normal_date_bg_fadeout();
-    state = game_state.step;
+    state = game_state.mode_step;
     if (state != temp_s0) {
         func_80085234(0);
         D_80122D04 = 0;
@@ -3034,59 +3034,59 @@ void func_800853FC(void) {
 void event_face0(void) {
     D_80120666 = 2;
     D_801206AA = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void event_face1(void) {
     D_80120666 = 3;
     D_801206AA = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void event_face2(void) {
     D_80120666 = 6;
     D_801206AA = 4;
-    main_step_next();
+    mode_step_next();
 }
 
 void event_face3(void) {
     D_80120666 = 7;
     D_801206AA = 5;
-    main_step_next();
+    mode_step_next();
 }
 
 void event_face_kuchi0(void) {
     D_80120666 = 2;
-    main_step_next();
+    mode_step_next();
 }
 
 void event_face_kuchi1(void) {
     D_80120666 = 3;
-    main_step_next();
+    mode_step_next();
 }
 
 void event_kuchi_ani_no(void) {
     D_80122D10 = 0;
     D_80120652 = 4;
-    main_step_next();
+    mode_step_next();
 }
 
 void event_kuchi_ani_yes(void) {
     D_80122D10 = 1;
     D_80120652 = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void ev_me_on(void) {
     D_80122D0C = 0;
     D_80120696 = 5;
-    main_step_next();
+    mode_step_next();
 }
 
 void ev_me_on_continue(void) {
     D_80122D0C = 1;
     D_80120696 = 5;
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: the explicit "& 0xFF" masks leave the colour shifts in ugen temporaries (t6..t9), and each
@@ -3119,10 +3119,10 @@ void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
     AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg4 * 4, (s32)p);
 }
 
-void dialogue_clear(void) {
+void talk_clear(void) {
     s16 i;
     for (i = 5; i < 31;) {
-        dialogue_work[i] = 0;
+        talk_work[i] = 0;
         i++;
     }
     D_800CA2AC = 0;
@@ -3136,44 +3136,44 @@ void dialogue_clear(void) {
 
 void don_init2(void) {
     func_80047550();
-    main_step_next();
+    mode_step_next();
 }
 
 void don_wait(void) {
-    if ((u32)game_state.step_timer.w++ >= 0x81U) {
+    if ((u32)game_state.mode_step_timer.w++ >= 0x81U) {
         k_reset(1);
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void normal_date_speak_1line(void) {
-    dialogue_tables = (u8 *)&dialogue_group;
-    D_800CA138 = (u8 *)&dialogue_line;
-    D_800CA13C = dialogue_text_table;
-    D_800CA140 = dialogue_command_table;
-    D_800CA144 = dialogue_voice_table;
-    if (dialogue_run(D_80122CDC, 1, 0) == 1) {
-        main_step_next();
+    talk_tables = (u8 *)&talk_group;
+    D_800CA138 = (u8 *)&talk_line;
+    D_800CA13C = talk_text_table;
+    D_800CA140 = talk_command_table;
+    D_800CA144 = talk_voice_table;
+    if (talk_run(D_80122CDC, 1, 0) == 1) {
+        mode_step_next();
     }
 }
 
 void normal_date_speak_012(void) {
-    dialogue_tables = &dialogue_group;
-    D_800CA138 = &dialogue_line;
-    D_800CA13C = dialogue_text_table;
-    D_800CA140 = dialogue_command_table;
-    D_800CA144 = dialogue_voice_table;
-    dialogue_run(0xFF, 1, 0);
+    talk_tables = &talk_group;
+    D_800CA138 = &talk_line;
+    D_800CA13C = talk_text_table;
+    D_800CA140 = talk_command_table;
+    D_800CA144 = talk_voice_table;
+    talk_run(0xFF, 1, 0);
 }
 
 /* Wire the dialogue table pointers and run the talk runner for the current scene girl */
 void normal_date_speak(void) {
-    dialogue_tables = &dialogue_group;
-    D_800CA138 = &dialogue_line;
-    D_800CA13C = dialogue_text_table;
-    D_800CA140 = dialogue_command_table;
-    D_800CA144 = dialogue_voice_table;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_tables = &talk_group;
+    D_800CA138 = &talk_line;
+    D_800CA13C = talk_text_table;
+    D_800CA140 = talk_command_table;
+    D_800CA144 = talk_voice_table;
+    talk_run(D_80122CDC, 1, 0);
 }
 
 void vram_bustup_clear(void) {
@@ -3184,7 +3184,7 @@ void vram_bustup_clear(void) {
     for (i = 5; i < 0xA; i++) {
         game_state.tpage_buf[i] = -1;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 s32 event_log_add(arg0, arg1)
@@ -3212,7 +3212,7 @@ s32 event_log_add(arg0, arg1)
     }
 }
 
-void bustup_quad_offsets(u8 a) {
+void portrait_quad_offsets(u8 a) {
     switch (a) {
     case 0:
         sprite_quads[0].unk_0C = 7;

@@ -21,7 +21,7 @@ u8 D_800B3D4C = 0;
 u8 D_800B3D50 = 0;
 u8 D_800B3D54[12] = { 0 };
 
-void frame_render(s32 arg0) {
+void draw_frame(s32 arg0) {
     u32 *obj;
     SpriteQuad *rec;
     /* FAKE: T-25003, two spare words keep the original frame (0xA8) and the work areas at sp+0x50/0x70;
@@ -34,8 +34,8 @@ void frame_render(s32 arg0) {
 
     D_800B3D10[1] = func_80098650();
     func_80049044();
-    if (g->actors_draw_enabled == 1) {
-        actors_draw();
+    if (g->actor_draw_enabled == 1) {
+        actor_draw_all();
     }
     if ((u8)g->tile_layer_enabled != 0) {
         srn_set(0);
@@ -77,14 +77,14 @@ void frame_render(s32 arg0) {
         D_800B3D10[2] = func_80098650();
         csr_load_vram(0);
         palette_load_vram(0);
-        if (g->mode != 0x90 || g->stage < 10 || g->stage == 12) {
+        if (g->game_mode != 0x90 || g->mode_stage < 10 || g->mode_stage == 12) {
             func_8009C674(0);
         }
         D_800B3D10[3] = func_80098650();
-        if (g->mode == 0x90 && g->stage >= 10) {
+        if (g->game_mode == 0x90 && g->mode_stage >= 10) {
             func_800AD950(2);
             func_8009C210(1);
-        } else if (func_80098650() < g->frame_hcount_limit) {
+        } else if (func_80098650() < g->frame_scanline_limit) {
             func_800AD950(0);
         }
         D_800B3D10[0] = func_80098650();
@@ -414,7 +414,7 @@ void func_80044700(s32 arg0, s32 arg1, s32 arg2) {
     func_8009C93C(&rect, 0x100, arg2 + 0x1E0);
 }
 
-s32 snd_command(s32 arg0) {
+s32 audio_command(s32 arg0) {
     func_80079B10(arg0 & 0xFFFF);
     return 1;
 }
@@ -432,9 +432,9 @@ s32 func_80044774(s32 arg0) {
         return -1;
     }
     if (arg0 != 0) {
-        snd_bank_start(D_800B3D44, D_800B3D48, arg0);
+        audio_bank_start(D_800B3D44, D_800B3D48, arg0);
     } else {
-        snd_command(0x1200);
+        audio_command(0x1200);
     }
     D_800B3D40 = arg0;
     return arg0 & 0xFF;
@@ -449,7 +449,7 @@ u8 func_8004481C(void) {
 }
 
 
-void snd_bank_state_reset(void) {
+void audio_bank_state_reset(void) {
     D_800B3D54[0] = 0;
     D_800B3D54[1] = 0;
     D_800B3D44 = 0xFF;
@@ -464,7 +464,7 @@ void snd_bank_state_reset(void) {
     D_800B3D48 = 0;
 }
 
-void snd_bank_load_start(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f) {
+void audio_bank_load_start(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f) {
     D_800B3D44 = 0xFF;
     D_800B3D28 = 0;
     D_800B3D2C = 0;
@@ -586,40 +586,40 @@ s32 func_80044D54(void) {
     if (D_800B3D24 == 0) {
         if (D_800B3D28 == 0 && D_800B3D2C == 0) {
             func_800451E0(0x801B8000);
-            snd_command(0x11);
+            audio_command(0x11);
             return 1;
         }
         if (D_800B3D28 == 0) {
             func_800451E0(0x801B8000);
-            snd_command(0x13);
+            audio_command(0x13);
             return 1;
         }
         if (D_800B3D2C == 0) {
             func_800451E0(0x801C8000);
-            snd_command(0x14);
+            audio_command(0x14);
             return 1;
         }
         return 0;
     }
     if (D_800B3D28 == 0 && D_800B3D2C == 0) {
         func_800451E0(0x801B8000);
-        snd_command(0x12);
+        audio_command(0x12);
         return 1;
     }
     if (D_800B3D28 == 0) {
         func_800451E0(0x801E0000);
-        snd_command(0x16);
+        audio_command(0x16);
         return 1;
     }
     if (D_800B3D2C == 0) {
         func_800451E0(0x801B8000);
-        snd_command(0x15);
+        audio_command(0x15);
         return 1;
     }
     return 0;
 }
 
-s32 snd_bank_load_poll(void) {
+s32 audio_bank_load_poll(void) {
     if ((u32) (((cd_done_count() - D_800B3D20) + 0x100) & 0xFF) >= 5U) {
         if (D_800B3D4C == 0) {
             func_80044D54();
@@ -629,13 +629,13 @@ s32 snd_bank_load_poll(void) {
              * increment in one register range ($v1), as in the original (T-17019). */
             if ((++D_800B3D4C > 0xC0U) || (func_80044F94((s32) D_800B3D24) != 0)) {
                 if (D_800B3D24 == 0) {
-                    snd_command(0x22);
-                    snd_command(0x21);
-                    snd_command(0x2F);
+                    audio_command(0x22);
+                    audio_command(0x21);
+                    audio_command(0x2F);
                 } else {
-                    snd_command(0x23);
-                    snd_command(0x24);
-                    snd_command(0x2E);
+                    audio_command(0x23);
+                    audio_command(0x24);
+                    audio_command(0x2E);
                 }
                 D_800B3D54[D_800B3D24] = 0;
                 return 1;
@@ -658,7 +658,7 @@ s32 func_80044F94(s32 arg0) {
     return 0;
 }
 
-s32 snd_bank_start(s32 arg0, s32 arg1) {
+s32 audio_bank_start(s32 arg0, s32 arg1) {
     s32 *var_v0_2;
 
     if (arg0 != 0) {
@@ -670,20 +670,20 @@ s32 snd_bank_start(s32 arg0, s32 arg1) {
         return -1;
     }
     if (arg0 == 0) {
-        snd_command(0x22);
-        snd_command(0x21);
-        snd_command(0x2F);
-        snd_command((arg1 | 0x200) & 0xFFFF);
+        audio_command(0x22);
+        audio_command(0x21);
+        audio_command(0x2F);
+        audio_command((arg1 | 0x200) & 0xFFFF);
     } else {
-        snd_command(0x23);
-        snd_command(0x24);
-        snd_command(0x2E);
-        snd_command((arg1 | 0x200) & 0xFFFF);
+        audio_command(0x23);
+        audio_command(0x24);
+        audio_command(0x2E);
+        audio_command((arg1 | 0x200) & 0xFFFF);
     }
     D_800B3D44 = (u8) arg0;
     D_800B3D48 = (u8) arg1;
     D_800B3D40 = 1;
-    /* no return here: the original returns the v0 of the last snd_command call (implicit int) */
+    /* no return here: the original returns the v0 of the last audio_command call (implicit int) */
 }
 
 s32 func_800450F4(s32 arg0, s32 arg1) {
@@ -698,16 +698,16 @@ s32 func_800450F4(s32 arg0, s32 arg1) {
         return -1;
     }
     if (arg0 == 0) {
-        snd_command(0x22);
-        snd_command(0x2F);
-        snd_command((arg1 | 0x200) & 0xFFFF);
+        audio_command(0x22);
+        audio_command(0x2F);
+        audio_command((arg1 | 0x200) & 0xFFFF);
     } else {
-        snd_command(0x23);
-        snd_command(0x2E);
-        snd_command((arg1 | 0x200) & 0xFFFF);
+        audio_command(0x23);
+        audio_command(0x2E);
+        audio_command((arg1 | 0x200) & 0xFFFF);
     }
     D_800B3D44 = (u8) arg0;
     D_800B3D48 = (u8) arg1;
     D_800B3D40 = 1;
-    /* no return here: the original returns the v0 of the last snd_command call (implicit int) */
+    /* no return here: the original returns the v0 of the last audio_command call (implicit int) */
 }

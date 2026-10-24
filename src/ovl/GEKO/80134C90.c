@@ -2,11 +2,11 @@
 #include "ovl/GEKO.h"
 
 void func_80134C90(void) {
-    bustup_wink_update();
-    if (game_state.stage == 0) {
+    portrait_wink_update();
+    if (game_state.mode_stage == 0) {
         func_801351F8();
     } else {
-        game_reset_to_title();
+        game_mode_reset_to_title();
     }
     check_k_scroll();
     k_disp_inc2();

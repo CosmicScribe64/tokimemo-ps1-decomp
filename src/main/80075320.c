@@ -42,10 +42,10 @@ INCLUDE_RODATA("asm/data/main/80075320.data", D_800B6CF8);
 
 void func_80053418();
 
-void mode_holiday(void) {
+void holiday_mode_handler(void) {
     /* FAKE: byte view of the u8 field avoids the redundant selector copy (move v0,v1), as in TEL
      * (T-10630). T-17000 */
-    switch (*(u8 *)&game_state.stage) {
+    switch (*(u8 *)&game_state.mode_stage) {
     case 0x0:
         func_80075468();
         break;
@@ -78,18 +78,18 @@ void mode_holiday(void) {
         break;
     }
     if (((Actor *)actor_pool)[27].draw_flags & 0x80) {
-        mascot_update();
+        hud_mascot_update();
     }
     message_window_show();
     dec_bg_draw(0);
     hizuke_show();
     parameter_show();
     cursor_update();
-    screen_frame_draw(1);
+    hud_screen_frame_draw(1);
 }
 
 void func_80075468(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
     default:
         func_800755B4();
@@ -99,7 +99,7 @@ void func_80075468(void) {
         break;
     }
     message_window_title_update();
-    icon_bar_update(0);
+    hud_icon_bar_update(0);
 }
 
 /* FAKE: T-24108, dead entry read of unk_03F satisfies cvt_pass's entry condition and keeps m's stack slot (placing rank/points at sp+0x4C/0x2C) so unk_03F is promoted to $v0 across the month tests and copied to $a1 in the appointment_find_today delay slot. */
@@ -143,10 +143,10 @@ void func_800755B4(void) {
     hizuke_init();
     if (func_800754C0() != 0) {
         D_80122CD4 = 0;
-        dialogue_work = 8;
+        talk_work = 8;
         parameter_show_init();
         parameter_show_init();
-        main_state_set(MODE_SPECIAL_EVENT);
+        game_mode_set(MODE_SPECIAL_EVENT);
         return;
     }
     sprite_tables_clear();
@@ -160,7 +160,7 @@ void func_800755B4(void) {
     func_800654D0((s32) (u8) game_state.icon_count);
     func_80075AF8();
     gnsx(game_state.player_family_name);
-    if (game_state.player_flags_hi.h & 1) {
+    if (game_state.player_flags_upper.h & 1) {
         game_state.icon_count = 0xE;
         func_8006509C();
         func_800654D0((s32) (u8) game_state.icon_count);
@@ -229,10 +229,10 @@ void func_800755B4(void) {
         if ((r == 0) || (r == 1)) {
             set_dec_bri(0x80U);
             dec_bg_show_set(0, r);
-            main_stage_next();
+            mode_stage_next();
         }
     } else {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -244,7 +244,7 @@ void func_80075A64(void) {
             dec_bg_cd_read(D_800B5960[func_80066A2C()], 0);
         } else {
             set_dec_bri(0x80);
-            main_stage_next();
+            mode_stage_next();
         }
     }
 }
@@ -277,11 +277,11 @@ void func_80075AF8(void) {
 }
 
 void func_80075BE8(void) {
-    if (game_state.step == 0) {
+    if (game_state.mode_step == 0) {
         func_80075C24();
     }
     message_window_title_update();
-    icon_bar_update(0);
+    hud_icon_bar_update(0);
 }
 
 void func_80075C24(void) {
@@ -307,17 +307,17 @@ s32 func_80075C84(void) {
         case 0x20:
             D_800B6990[D_800B6998] = 0;
             D_800B6998++;
-            snd_command(0x505);
+            audio_command(0x505);
             break;
         case 0x40:
             D_800B6990[D_800B6998] = 1;
             D_800B6998++;
-            snd_command(0x506);
+            audio_command(0x506);
             break;
         case 0x10:
             D_800B6990[D_800B6998] = 2;
             D_800B6998++;
-            snd_command(0x507);
+            audio_command(0x507);
             break;
         }
         if (D_800B6998 >= 7) {
@@ -327,7 +327,7 @@ s32 func_80075C84(void) {
             for (i = 0; i < 13; i++) {
                 k = D_800B6998 + 7;
                 for (j = 0; j < 7; k++, j++) {
-                    if (D_800B6990[k % 7] != phone_numbers[i][j]) {
+                    if (D_800B6990[k % 7] != girl_phone_digits[i][j]) {
                         break;
                     }
                     if ((j == 6) && ((u32)(game_state.girls[i].flags.w << 28) >> 31)) {
@@ -344,12 +344,12 @@ s32 func_80075C84(void) {
                         }
                         random = rand();
                         /* The original adds to the full first record word. */
-                        *(s32 *)&game_state.girls[i].tokimeki_frac += random & 0x7FFF;
-                        if (game_state.player_flags_hi.h & 1) {
+                        *(s32 *)&game_state.girls[i].tokimeki_fraction += random & 0x7FFF;
+                        if (game_state.player_flags_upper.h & 1) {
                             game_state.param_stress.value += 0x20;
                         }
-                        main_stage_set(0x10);
-                        main_step_set(2);
+                        mode_stage_set(0x10);
+                        mode_step_set(2);
                         game_state.substep = 11;
                         text_system_reset();
                         icon_disp_switch(0);
@@ -400,21 +400,21 @@ s32 func_80076000(void) {
         if (*(s8 *)&game_state.menu_cursor_0 >= 0) {
             handled = 1;
             cd_audio_command(9, 0, 0);
-            snd_command(3);
+            audio_command(3);
             if (func_8004480C() == 0) {
-                snd_bank_start(0, 0);
+                audio_bank_start(0, 0);
             }
         }
         switch (*(s8 *)&game_state.menu_cursor_0) {
         case 4:
             if (get_icon_can_use((s32) *(s8 *)&game_state.menu_cursor_0) != 0) {
-                snd_command(0x500);
+                audio_command(0x500);
                 if (game_state.weekday == WEEKDAY_SUNDAY) {
                     if (((u16) game_state.player_flags.h >> 0xC) == 0xB) {
                         ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
                         game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
                         game_state.day_events[game_state.day_event_index].scene = func_8006BDA8(1);
-                        main_stage_set(7);
+                        mode_stage_set(7);
                     } else {
                         game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
                         game_state.day_events[game_state.day_event_index].scene = func_8006BDA8(1);
@@ -424,7 +424,7 @@ s32 func_80076000(void) {
                         if ((girl != -1) && (((s32)(game_state.girls[girl].flags.u << 29) >> 31) != 0)) {
                             game_state.girls[girl].affection += 1;
                         }
-                        main_stage_set(6);
+                        mode_stage_set(6);
                     }
                 } else {
                     other_girl = func_80053564((s32) ((u16) game_state.player_flags.h >> 0xC));
@@ -435,7 +435,7 @@ s32 func_80076000(void) {
                     game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
                     game_state.day_events[game_state.day_event_index].scene = func_8006BDA8(1);
                     ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
-                    main_stage_set(5);
+                    mode_stage_set(5);
                 }
             }
             break;
@@ -448,39 +448,39 @@ s32 func_80076000(void) {
         case 7:
             if (get_icon_can_use((s32) *(s8 *)&game_state.menu_cursor_0) != 0) {
                 ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
-                snd_command(0x500);
+                audio_command(0x500);
                 game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
                 game_state.day_events[game_state.day_event_index].scene = func_8006BDA8(1);
-                main_stage_set(5);
+                mode_stage_set(5);
             }
             break;
         case 9:
             if ((get_icon_can_use((s32) *(s8 *)&game_state.menu_cursor_0) != 0) && (appointment_find_today((s32) game_state.year, (s32) game_state.month, (s32) game_state.day) > 0)) {
                 ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
-                snd_command(0x500);
-                main_stage_set(0xFE);
+                audio_command(0x500);
+                mode_stage_set(0xFE);
             }
             break;
         case 8:
             if (get_icon_can_use((s32) *(s8 *)&game_state.menu_cursor_0) != 0) {
                 ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
-                snd_command(0x50D);
-                main_stage_set(0x10);
+                audio_command(0x50D);
+                mode_stage_set(0x10);
             }
             break;
         case 10:
             if (get_icon_can_use((s32) *(s8 *)&game_state.menu_cursor_0) != 0) {
-                snd_command(0x50D);
-                main_stage_set(0x20);
+                audio_command(0x50D);
+                mode_stage_set(0x20);
             }
             break;
         case 12:
-            snd_command(0x50D);
-            main_stage_set(0x30);
+            audio_command(0x50D);
+            mode_stage_set(0x30);
             break;
         case 11:
-            snd_command(0x50D);
-            main_stage_set(0x40);
+            audio_command(0x50D);
+            mode_stage_set(0x40);
             break;
         }
     }
@@ -554,10 +554,10 @@ void func_80076630(void) {
     s32 pad[1];
     u32 buf[32];
 
-    game_state.appt_place_0 = 0xFF;
-    game_state.appt_place_1 = 0xFF;
-    game_state.appt_place_2 = 0xFF;
-    game_state.appt_place_3 = 0xFF;
+    game_state.appointment_place_0 = 0xFF;
+    game_state.appointment_place_1 = 0xFF;
+    game_state.appointment_place_2 = 0xFF;
+    game_state.appointment_place_3 = 0xFF;
     func_8006B640();
     if (func_800764AC(buf) >= 2) {
         k_reset(1);
@@ -565,13 +565,13 @@ void func_80076630(void) {
         gnsx(game_state.player_family_name);
         sndisp((u8 *)"どこで、 待ち合わせだったかな？）", 0, 0x1F);
         k_sub_disp_start(1);
-        main_step_next();
+        mode_step_next();
         return;
     } else {
-        game_state.appt_place_0 = game_state.unk_54C_0.unk_00;
-        game_state.appt_place_1 = game_state.unk_54C_0.unk_00;
-        game_state.appt_place_2 = 0xFF;
-        game_state.appt_place_3 = 0xFF;
+        game_state.appointment_place_0 = game_state.unk_54C_0.unk_00;
+        game_state.appointment_place_1 = game_state.unk_54C_0.unk_00;
+        game_state.appointment_place_2 = 0xFF;
+        game_state.appointment_place_3 = 0xFF;
         game_state.day_events[game_state.day_event_index].type = DAY_EVENT_APPOINTMENT;
         game_state.day_events[game_state.day_event_index].girl = ((AppointmentBits *)&game_state.unk_54C[0])->girl;
         game_state.day_events[game_state.day_event_index].scene = ((AppointmentBits *)&game_state.unk_54C[0])->place;
@@ -579,7 +579,7 @@ void func_80076630(void) {
         game_state.date_girl = game_state.unk_54C_0.unk_25;
         game_state.appointment_flag = ((AppointmentBits *)&game_state.unk_54C[0])->flag;
     }
-    main_step_set(2);
+    mode_step_set(2);
 }
 
 /* T-24501: 932-byte literal match. The split stack padding preserves the
@@ -609,7 +609,7 @@ void func_800767A4(void) {
         first = choices[var_v1_2 % 3];
         second = choices[(s32) (var_v1_2 + 1) % 3];
         third = choices[(s32) (var_v1_2 + 2) % 3];
-        game_state.appt_place_0 = 2;
+        game_state.appointment_place_0 = 2;
         x_taku_menu_set(1, 3);
         strcpy(text1, "『");
         strcat(text1, place_name_table[first]);
@@ -629,7 +629,7 @@ void func_800767A4(void) {
         first = choices[var_v1_2 % 2];
         second = choices[(s32) (var_v1_2 + 1) % 2];
         third = 0xFF;
-        game_state.appt_place_0 = 1;
+        game_state.appointment_place_0 = 1;
         x_taku_menu_set(1, 2);
         strcpy(text1, "『");
         strcat(text1, place_name_table[first]);
@@ -639,9 +639,9 @@ void func_800767A4(void) {
         strcat(text2, &D_800B69BC);
         x_taku_string_set((s32) text1, (s32) text2, 0, 2);
     }
-    game_state.appt_place_1 = (u8) first;
-    game_state.appt_place_2 = (u8) second;
-    game_state.appt_place_3 = (u8) third;
+    game_state.appointment_place_1 = (u8) first;
+    game_state.appointment_place_2 = (u8) second;
+    game_state.appointment_place_3 = (u8) third;
 }
 
 s32 func_80076B48(void) {
@@ -666,13 +666,13 @@ s32 func_80076B48(void) {
             case 0:                                 /* switch 2 */
             case 1:                                 /* switch 2 */
                 /* FAKE: index the two adjacent scalar choice bytes as a table. T-9910. */
-                g->appt_place_0 = *(&g->appt_place_1 + g->menu_cursor_1);
-                main_step_next();
+                g->appointment_place_0 = *(&g->appointment_place_1 + g->menu_cursor_1);
+                mode_step_next();
                 break;
             case 2:                                 /* switch 2 */
-                if (g->appt_place_0 == 2) {
-                    g->appt_place_0 = g->appt_place_3;
-                    main_step_next();
+                if (g->appointment_place_0 == 2) {
+                    g->appointment_place_0 = g->appointment_place_3;
+                    mode_step_next();
                 }
                 break;
             }
@@ -696,7 +696,7 @@ s32 func_80076C7C(void) {
         k_sub_reset();
         gnsx(game_state.player_family_name);
         strcpy(sp4C, "それじゃ、 ");
-        strcat(sp4C, place_name_table[game_state.appt_place_0]);
+        strcat(sp4C, place_name_table[game_state.appointment_place_0]);
         strcat(sp4C, "で、 ");
         get_g_name(sp2C, (u32)(game_state.unk_54C[0].w * 8) >> 0x1C);
         strcat(sp4C, sp2C);
@@ -709,7 +709,7 @@ s32 func_80076C7C(void) {
         xa_wait();
         return;
     case 2:
-        main_step_next();
+        mode_step_next();
         return;
     }
 }
@@ -721,13 +721,13 @@ void appointment_launch(void) {
     s32 arr[3];
 
     g = &game_state;
-    arr[0] = game_state.appt_place_1;
-    arr[1] = game_state.appt_place_2;
-    arr[2] = game_state.appt_place_3;
-    game_state.appt_place_1 = game_state.unk_54C_0.unk_00;
+    arr[0] = game_state.appointment_place_1;
+    arr[1] = game_state.appointment_place_2;
+    arr[2] = game_state.appointment_place_3;
+    game_state.appointment_place_1 = game_state.unk_54C_0.unk_00;
     for (i = 0, j = 2; i < 3; i++) {
         if (arr[i] != (g->unk_54C[0].w & 0x1F)) {
-            (&game_state.appt_place_0)[j] = arr[i];
+            (&game_state.appointment_place_0)[j] = arr[i];
             j++;
         }
     }
@@ -737,11 +737,11 @@ void appointment_launch(void) {
     game_state.current_girl = game_state.unk_54C_0.unk_25;
     game_state.date_girl = game_state.unk_54C_0.unk_25;
     game_state.appointment_flag = ((AppointmentBits *)&game_state.unk_54C[0])->flag;
-    main_state_set(MODE_DATE);
+    game_mode_set(MODE_DATE);
 }
 
 void func_80076EC0(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_80076630();
         break;
@@ -759,8 +759,8 @@ void func_80076EC0(void) {
 }
 
 void func_80076F48(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_8007739C();
         break;
@@ -773,7 +773,7 @@ void func_80076F48(void) {
     }
     parameter_show();
     message_window_title_update();
-    icon_bar_update(1);
+    hud_icon_bar_update(1);
 }
 
 void func_80076FDC(void) {
@@ -907,7 +907,7 @@ void func_8007739C(void) {
         gs->progress_state[0x15 + (gs->last_command.b[0] >> 4) % 9]++;
         if ((gs->last_command.b[0] >> 4) == 4) {
             if (((PlayerFlagBits *)&gs->player_flags)->club < CLUB_NONE) {
-                gs->clubs[((PlayerFlagBits *)&gs->player_flags)->club].exp += 6;
+                gs->clubs[((PlayerFlagBits *)&gs->player_flags)->club].practice_points += 6;
             }
         }
         r = func_80077330();
@@ -931,7 +931,7 @@ void func_8007739C(void) {
         }
     } else if (gs->substep == 2) {
         func_80076FDC();
-        if (((gs->player_flags.b[1] & 0xF) == 3) && !(gs->player_flags_hi.h & 1)) {
+        if (((gs->player_flags.b[1] & 0xF) == 3) && !(gs->player_flags_upper.h & 1)) {
             cd_read_sectors(9, 0x801E0000, 0x7D8A);
             gs->substep = 3;
         } else if (gs->day_events[gs->day_event_index].girl != 4) {
@@ -943,7 +943,7 @@ void func_8007739C(void) {
         }
     } else if (gs->substep == 3) {
         if (cd_read_sync_status() & 1) {
-            main_step_next();
+            mode_step_next();
         }
     }
 }
@@ -956,7 +956,7 @@ void func_80077694(void) {
 
     actor_clear(0x60);
     temp = game_state.day_events[game_state.day_event_index].scene;
-    if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_hi.h & 1)) {
+    if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_upper.h & 1)) {
         addr_init_else_sd(2);
         temp = 0;
     } else if (game_state.day_events[game_state.day_event_index].girl == 4) {
@@ -1003,10 +1003,10 @@ void func_80077694(void) {
     ((Actor *)actor_pool)[96].sequence_slot = temp;
     ((Actor *)actor_pool)[96].x = -0x50;
     ((Actor *)actor_pool)[96].y = -0x40;
-    main_step_next();
+    mode_step_next();
 }
 
-/* The original passes club to main_state_set as a second argument (the definition takes one; main_api.h keeps
+/* The original passes club to game_mode_set as a second argument (the definition takes one; main_api.h keeps
  * the `()` declaration): club lives in a1 from its second read on. */
 void func_80077900(void) {
     GameState *gs = &game_state;
@@ -1014,13 +1014,13 @@ void func_80077900(void) {
     s32 girl;
     u32 club;
 
-    if (gs->step_timer.w == 0x20) {
+    if (gs->mode_step_timer.w == 0x20) {
         switch (((Actor *)actor_pool)[96].sequence_slot & 1) {
         case 0:
-            snd_command(0x501);
+            audio_command(0x501);
             break;
         case 1:
-            snd_command(0x502);
+            audio_command(0x502);
             break;
         }
         b = gs->day_events[gs->day_event_index].scene;
@@ -1028,13 +1028,13 @@ void func_80077900(void) {
         parameter_show_init();
         return;
     }
-    if (gs->step_timer.u <= 0x40) {
+    if (gs->mode_step_timer.u <= 0x40) {
         return;
     }
     actor_clear(0x60);
     actor_clear(0x61);
     if ((gs->weekday == WEEKDAY_SUNDAY) && (gs->day_events[gs->day_event_index].girl == 4)
-        && ((club = gs->player_flags.h >> 12) != 11) && (gs->clubs[club].exp == 6)) {
+        && ((club = gs->player_flags.h >> 12) != 11) && (gs->clubs[club].practice_points == 6)) {
         girl = func_80053564(club);
         gs->date_girl = girl;
         if ((girl != -1) && (gs->day_count < 0x2DA)) {
@@ -1047,7 +1047,7 @@ void func_80077900(void) {
                         && !((ClubFlagBits *)&gs->clubs[club])->b29
                         && !gs->girls[girl].flags.f.b18) {
                         gs->girls[girl].flags.f.b18 = 1;
-                        main_state_set(MODE_CLUB_CAMP_2, club);
+                        game_mode_set(MODE_CLUB_CAMP_2, club);
                         return;
                     }
                 }
@@ -1055,14 +1055,14 @@ void func_80077900(void) {
                     && !((ClubFlagBits *)&gs->clubs[club])->b29
                     && !gs->girls[girl].flags.f.b18) {
                     gs->girls[girl].flags.f.b18 = 1;
-                    main_state_set(MODE_CLUB_CAMP_2, club);
+                    game_mode_set(MODE_CLUB_CAMP_2, club);
                     return;
                 }
             } else if (gs->girls[girl].flags.f.met && gs->girls[girl].flags.f.b2
                        && !((ClubFlagBits *)&gs->clubs[club])->b29
                        && !gs->girls[girl].flags.f.b18) {
                 gs->girls[girl].flags.f.b18 = 1;
-                main_state_set(MODE_CLUB_CAMP_2, club);
+                game_mode_set(MODE_CLUB_CAMP_2, club);
                 return;
             }
         }
@@ -1071,7 +1071,7 @@ void func_80077900(void) {
 }
 
 void func_80077BE0(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_80077C50();
         break;
@@ -1092,7 +1092,7 @@ void func_80077C50(void) {
     func_8006A2CC();
     icon_disp_switch(0);
     hizuke_disp_switch(0);
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: T-24108, omitting default return keeps the selector copy in the first beq delay slot; the always-true >= 0 check in case 0x62 promotes unk_03F to $v0 across the branch and is folded away by uopt. */
@@ -1164,7 +1164,7 @@ void func_80077E30(void) {
             game_state.substep += 1;
             return;
         }
-        main_step_next();
+        mode_step_next();
         return;
     case 2:
         k_sub_reset();
@@ -1178,7 +1178,7 @@ void func_80077E30(void) {
         return;
     case 4:
     default:
-        main_step_next();
+        mode_step_next();
         return;
     }
 }
@@ -1186,12 +1186,12 @@ void func_80077E30(void) {
 void magazine_exit(void) {
     func_8006D138();
     hizuke_disp_switch(1);
-    main_stage_set(0);
+    mode_stage_set(0);
 }
 
 void holiday_tel(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         holiday_tel_init();
         break;
@@ -1215,7 +1215,7 @@ void holiday_tel_init(void) {
     gnsx(game_state.player_family_name);
     sndi((u8 *)"誰に電話かけようかな？）", 0, 0x1F);
     k_sub_disp_start(2);
-    main_step_next();
+    mode_step_next();
 }
 
 void holiday_tel_call(void) {
@@ -1224,15 +1224,15 @@ void holiday_tel_call(void) {
     menu_cursor_update(0);
     k_disp_inc();
     if (game_state.pad_pressed & PAD_CROSS) {
-        main_stage_set(0);
+        mode_stage_set(0);
         return;
     }
     if ((game_state.pad_pressed & PAD_CIRCLE) && game_state.menu_cursor_0 != -1) {
         if (game_state.menu_cursor_0 == 0xD) {
-            main_stage_set(0);
+            mode_stage_set(0);
             return;
         }
-        snd_command(0x50A);
+        audio_command(0x50A);
         if (game_state.menu_cursor_0 == 0) {
             game_state.current_girl = GIRL_YOSHIO;
         } else if (game_state.menu_cursor_0 == 0xC) {
@@ -1240,7 +1240,7 @@ void holiday_tel_call(void) {
         } else {
             game_state.current_girl = game_state.menu_cursor_0 - 1;
         }
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -1250,15 +1250,15 @@ s32 holiday_tel_exit(void) {
     s32 k;
 
     if (g->substep != 11) {
-        if ((g->step_timer.w & 7) == 7) {
+        if ((g->mode_step_timer.w & 7) == 7) {
             if (g->substep == 0) {
-                snd_command(0x504);
+                audio_command(0x504);
             } else if (g->substep >= 4) {
                 k = g->substep - 4;
                 if (g->current_girl == GIRL_YOSHIO) {
-                    snd_command((u16)(phone_numbers[10][k] + 0x505));
+                    audio_command((u16)(girl_phone_digits[10][k] + 0x505));
                 } else {
-                    snd_command((u16)(phone_numbers[g->current_girl][k] + 0x505));
+                    audio_command((u16)(girl_phone_digits[g->current_girl][k] + 0x505));
                 }
             }
             g->substep++;
@@ -1267,22 +1267,22 @@ s32 holiday_tel_exit(void) {
         g->menu_cursor_0 = 0;
         k_sub_reset();
         restore_bgm();
-        main_state_set(MODE_TELEPHONE_PROFILE);
-        main_stage_set(0);
+        game_mode_set(MODE_TELEPHONE_PROFILE);
+        mode_stage_set(0);
     } else if (g->current_girl == GIRL_MIHARU) {
         k_sub_reset();
         g->menu_cursor_0 = 12;
         D_801230D0 = 11;
         restore_bgm();
-        main_state_set(MODE_TELEPHONE_PROFILE);
-        main_stage_set(1);
+        game_mode_set(MODE_TELEPHONE_PROFILE);
+        mode_stage_set(1);
     } else {
         k_sub_reset();
         g->menu_cursor_0 = g->current_girl + 1;
         D_801230D0 = g->current_girl;
         restore_bgm();
-        main_state_set(MODE_TELEPHONE_PROFILE);
-        main_stage_set(1);
+        game_mode_set(MODE_TELEPHONE_PROFILE);
+        mode_stage_set(1);
     }
 }
 
@@ -1343,7 +1343,7 @@ void holiday_club_init(void) {
     x_taku_menu_set(1, 2);
     game_state.menu_cursor_1 = 0;
     k_disp_start(2);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8007866C(void) {
@@ -1354,16 +1354,16 @@ void func_8007866C(void) {
     menu_bar_show(1);
     menu_cursor_update(1);
     if (game_state.pad_pressed & PAD_CROSS) {
-        main_stage_set(0);
+        mode_stage_set(0);
         return;
     }
     if (game_state.pad_pressed & PAD_CIRCLE) {
         switch (game_state.menu_cursor_1) {
         case 0:
-            main_step_next();
+            mode_step_next();
             return;
         case 1:
-            main_step_set((game_state.step + 2) & 0xFF);
+            mode_step_set((game_state.mode_step + 2) & 0xFF);
             text_system_reset();
             strcpy(buf, club_name_table[(u16) game_state.player_flags.h >> 0xC]);
             strcat(buf, "部を退部した。");
@@ -1382,21 +1382,21 @@ void func_8007866C(void) {
 void holiday_club_exit(void) {
     actor_clear_upper();
     if (func_8005352C() == 1 && (u32)(game_state.day + 6) / 7 == 3 && game_state.month % 3U == 0 && game_state.weekday == WEEKDAY_SUNDAY) {
-        main_state_set(MODE_PRACTICE_MATCH);
+        game_mode_set(MODE_PRACTICE_MATCH);
         return;
     }
-    main_stage_set(5);
+    mode_stage_set(5);
 }
 
 void holiday_taibu_club_exit(void) {
     actor_clear_upper();
     if (game_state.pad_pressed & 0x60) {
-        main_stage_set(0);
+        mode_stage_set(0);
     }
 }
 
 s32 holiday_club(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         holiday_club_init();
         break;
@@ -1415,11 +1415,11 @@ s32 holiday_club(void) {
 void holiday_club_join_exit(void) {
     actor_clear_upper();
     icon_disp_switch(1);
-    main_stage_set(5);
+    mode_stage_set(5);
 }
 
 void func_8007894C(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         join_club_init();
         break;

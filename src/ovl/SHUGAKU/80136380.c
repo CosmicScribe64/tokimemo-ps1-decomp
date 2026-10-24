@@ -286,11 +286,11 @@ void func_801365F4(void) {
 void func_80137490(void) {
     GameState *g = &game_state;
 
-    bustup_wink_update();
-    if ((g->stage == 0) && (g->step < 0x11)) {
-        icon_bar_update(1);
+    portrait_wink_update();
+    if ((g->mode_stage == 0) && (g->mode_step < 0x11)) {
+        hud_icon_bar_update(1);
     }
-    switch (g->stage) {
+    switch (g->mode_stage) {
     case 0:
         func_801378F0();
         break;
@@ -328,19 +328,19 @@ void func_80137490(void) {
         func_80134560();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     check_k_scroll();
     k_disp_inc2();
     if (D_80122CE0 == 0xFF) {
-        if ((g->stage == 0) && (g->step < 0x11)) {
-            screen_frame_draw(1);
+        if ((g->mode_stage == 0) && (g->mode_step < 0x11)) {
+            hud_screen_frame_draw(1);
             dec_bg_draw(0);
             parameter_show();
         } else {
             func_80083A10();
-            screen_frame_draw(2);
+            hud_screen_frame_draw(2);
             parameter_show();
         }
         if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((g->pad_held & 0xF000F000) || (D_80122D30 == 1))) {
@@ -356,7 +356,7 @@ void func_80137490(void) {
     message_window_title_update();
     message_window_show();
     hizuke_show();
-    screen_shake_update();
+    draw_shake_update();
 }
 
 void func_80137700(void) {
@@ -400,9 +400,9 @@ void func_80137700(void) {
         cd_read_sectors(7U, 0x80198000, 0xAE53);
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     func_801365F4();
-    main_step_next();
+    mode_step_next();
 }

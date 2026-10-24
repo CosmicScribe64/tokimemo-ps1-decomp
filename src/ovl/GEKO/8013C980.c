@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_dialogue_work /* matched as u32 (main_api.h: s32), switch selector in $v1 (T-6010) */
+#define MAIN_API_OVERRIDE_talk_work /* matched as u32 (main_api.h: s32), switch selector in $v1 (T-6010) */
 #include "common.h"
 #include "ovl/GEKO.h"
 
-extern u32 dialogue_work;
+extern u32 talk_work;
 
 typedef struct {
     void (*f[38])();
@@ -29,7 +29,7 @@ void func_8013C980(void) {
 }
 
 void func_8013CA30(void) {
-    switch (dialogue_work) {
+    switch (talk_work) {
     case 1:
         func_8013CA94();
         return;
@@ -37,17 +37,17 @@ void func_8013CA30(void) {
         func_8013CC60();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
 
 void func_8013CA94(void) {
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         func_8013CAD0();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 void func_8013CAD0(void) {
@@ -55,45 +55,45 @@ void func_8013CAD0(void) {
     FnTbl38 tbl;
 
     tbl = D_80146ACC;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_8013CB58(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8440);
     func_8013C980();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013CB90(void) {
     D_800B5A60 = 1;
     game_state.current_girl = GIRL_SOTOI;
-    strcpy(name_buf_girl_short, "男子１");
+    strcpy(name_code_girl_short, "男子１");
     D_80120666 = 4;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013CBE4(void) {
-    strcpy(name_buf_girl_short, "男子２");
+    strcpy(name_code_girl_short, "男子２");
     D_80120666 = 5;
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: scalar byte store followed by member read preserves argument/constant scheduling. T-9550 */
 void func_8013CC20(void) {
     D_800B5A60 = 0;
     *(u8 *)&game_state.current_girl = 7;
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     D_80120666 = 2;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013CC60(void) {
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         func_8013CC9C();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 void func_8013CC9C(void) {
@@ -101,7 +101,7 @@ void func_8013CC9C(void) {
     FnTbl22 tbl;
 
     tbl = D_80146B64;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
@@ -110,7 +110,7 @@ void func_8013CD18(void) {
 
     game_state.current_girl = GIRL_MIRA;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -133,8 +133,8 @@ void func_8013CD18(void) {
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
-    dialogue_names_set(game_state.current_girl);
-    dialogue_clear();
+    talk_names_set(game_state.current_girl);
+    talk_clear();
     func_80137990();
     D_80146274 = D_80145F38;
     D_80146278 = D_80146074;
@@ -143,21 +143,21 @@ void func_8013CD18(void) {
     game_state.girls[7].affection += 1;
     check_para_limit();
     D_800CA368 = 0x2E;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013CE98(void) {
     func_8013C980();
     load_palette(D_80146AB0, 0x11, 1, 2, 0);
-    event_still_show(D_80146AB4, D_80146AB8, D_80146ABC, D_80146AC0, D_80146AC4, D_80146AC8);
-    event_anim_show(D_80146AA4, D_80146AA8, D_80146AA0, D_80146AAC);
-    main_step_next();
+    scene_still_show(D_80146AB4, D_80146AB8, D_80146ABC, D_80146AC0, D_80146AC4, D_80146AC8);
+    scene_anim_show(D_80146AA4, D_80146AA8, D_80146AA0, D_80146AAC);
+    mode_step_next();
 }
 
 void func_8013CF40(void) {
     game_state.current_girl = GIRL_MIRA;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -174,28 +174,28 @@ void func_8013CF40(void) {
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
-    dialogue_names_set(game_state.current_girl);
-    dialogue_clear();
+    talk_names_set(game_state.current_girl);
+    talk_clear();
     func_80137990();
     D_80146274 = D_80145F50;
     D_80146278 = D_8014608C;
     D_8014627C = D_801461C8;
     strcpy(D_800CA19C, "廊下");
     D_800CA368 = 0x35;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013D06C(void) {
     bg_read_sub2(0x403B);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013D094(void) {
     bg_read_sub2(0x403B);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013D0BC(void) {
     bg_read_sub2(0x403B);
-    main_step_next();
+    mode_step_next();
 }

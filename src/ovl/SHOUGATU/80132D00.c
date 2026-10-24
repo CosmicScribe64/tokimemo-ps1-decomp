@@ -6,23 +6,23 @@ void func_80132D00(void) {
     FnTbl23 tbl;
 
     tbl = D_80143B60;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_80132D88(void) {
-    snd_command(0x603);
-    main_step_next();
+    audio_command(0x603);
+    mode_step_next();
 }
 
 void func_80132DB0(void) {
     strcpy(D_800CA1DC, "正月");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132DE4(void) {
     bg_read_sub2(0x4144);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132E0C(void) {
@@ -34,7 +34,7 @@ void func_80132E0C(void) {
         func_800833F0();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132E8C(void) {
@@ -47,52 +47,52 @@ void func_80132E8C(void) {
         game_state.girls[game_state.current_girl].tokimeki += 1;
     }
     check_para_limit();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132F90(void) {
     if (D_80122CDC == 0) {
-        main_stage_set(3);
+        mode_stage_set(3);
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132FCC(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        bustup_read_start(0x571A);
+        portrait_read_start(0x571A);
         break;
     case GIRL_MIO:
-        bustup_read_start(0x5E22);
+        portrait_read_start(0x5E22);
         break;
     case GIRL_YUINA:
-        bustup_read_start(0x530F);
+        portrait_read_start(0x530F);
         break;
     case GIRL_AYAKO:
-        bustup_read_start(0x5990);
+        portrait_read_start(0x5990);
         break;
     case GIRL_SAKI:
-        bustup_read_start(0x67A0);
+        portrait_read_start(0x67A0);
         break;
     case GIRL_YUKARI:
-        bustup_read_start(0x614C);
+        portrait_read_start(0x614C);
         break;
     case GIRL_NOZOMI:
-        bustup_read_start(0x630E);
+        portrait_read_start(0x630E);
         break;
     case GIRL_MIRA:
-        bustup_read_start(0x5BD9);
+        portrait_read_start(0x5BD9);
         break;
     case GIRL_YUKO:
-        bustup_read_start(0x50C6);
+        portrait_read_start(0x50C6);
         break;
     case GIRL_MEGUMI:
-        bustup_read_start(0x6584);
+        portrait_read_start(0x6584);
         break;
     case GIRL_YUMI:
-        bustup_read_start(0x6A16);
+        portrait_read_start(0x6A16);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }

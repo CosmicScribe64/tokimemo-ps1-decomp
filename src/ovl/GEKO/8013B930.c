@@ -1,4 +1,4 @@
-#define MAIN_API_OVERRIDE_dialogue_work /* switched as u32 (main_api.h: s32), T-6030 */
+#define MAIN_API_OVERRIDE_talk_work /* switched as u32 (main_api.h: s32), T-6030 */
 #include "common.h"
 #include "ovl/GEKO.h"
 
@@ -12,16 +12,16 @@ typedef struct {
 } FnTbl39; /* size 0x9C */
 extern FnTbl39 D_80146884;
 
-extern u32 dialogue_work;
+extern u32 talk_work;
 
 void func_8013B930(void) {
     bg_read_sub2(0x46A3);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013B958(void) {
     bg_read_sub2(0x42D8);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013B980(void) {
@@ -35,7 +35,7 @@ void func_8013B980(void) {
 }
 
 void func_8013B9F0(void) {
-    switch (dialogue_work) {
+    switch (talk_work) {
     case 1:
         func_8013BA6C();
         return;
@@ -46,51 +46,51 @@ void func_8013B9F0(void) {
         func_8013BAE4();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
 
 void func_8013BA6C(void) {
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         func_8013BBE0();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 void func_8013BAA8(void) {
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         func_8013BD04();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 void func_8013BAE4(void) {
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         func_8013BE58();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 void func_8013BB20(void) {
-    snd_bank_start(0, 0x200);
-    main_step_next();
+    audio_bank_start(0, 0x200);
+    mode_step_next();
 }
 
 s32 func_8013BB4C(void) {
-    snd_command(0xCF);
-    if ((u32)game_state.step_timer.w++ < 0x40U) {
+    audio_command(0xCF);
+    if ((u32)game_state.mode_step_timer.w++ < 0x40U) {
         return 0;
     }
     D_800B3D60 = 0;
-    snd_bank_load_start(0, 0, 0, 0xD989, 0xD949, 0xD941);
-    if (snd_bank_load_poll() == 1) {
-        main_step_next();
+    audio_bank_load_start(0, 0, 0, 0xD989, 0xD949, 0xD941);
+    if (audio_bank_load_poll() == 1) {
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 typedef struct {
@@ -103,21 +103,21 @@ void func_8013BBE0(void) {
     FnTbl58 tbl;
 
     tbl = D_8014679C;
-    if (game_state.step == 0x1B) {
-        snd_command(0xCF);
+    if (game_state.mode_step == 0x1B) {
+        audio_command(0xCF);
     }
-    tbl.f[game_state.step](0x80);
+    tbl.f[game_state.mode_step](0x80);
 }
 
 void func_8013BC74(void) {
     s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
     s32 prev;
 
-    prev = game_state.step;
+    prev = game_state.mode_step;
     func_8007C8A4();
-    cur = game_state.step;
+    cur = game_state.mode_step;
     if (prev != cur) {
-        game_state.step = cur - 1;
+        game_state.mode_step = cur - 1;
         place_init();
     }
 }
@@ -126,11 +126,11 @@ void func_8013BCBC(void) {
     s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
     s32 prev;
 
-    prev = game_state.step;
+    prev = game_state.mode_step;
     normal_date_bg_fadein();
-    cur = game_state.step;
+    cur = game_state.mode_step;
     if (prev != cur) {
-        game_state.step = cur - 1;
+        game_state.mode_step = cur - 1;
         place_init2();
     }
 }
@@ -140,32 +140,32 @@ void func_8013BD04(void) {
     FnTbl39 tbl;
 
     tbl = D_80146884;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_8013BD78(void) {
     cd_audio_request_set(0, 0, 0xC);
-    snd_command(0x300);
-    main_step_next();
+    audio_command(0x300);
+    mode_step_next();
 }
 
 s32 func_8013BDB0(void) {
-    if ((u32)game_state.step_timer.w++ >= 0x11U) {
+    if ((u32)game_state.mode_step_timer.w++ >= 0x11U) {
         k_reset(1);
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_8013BDF8(void) {
-    snd_command(0x500);
-    main_step_next();
+    audio_command(0x500);
+    mode_step_next();
 }
 
 void func_8013BE20(void) {
     cd_read_sectors(0x35, 0x801B0000, 0x8265);
     func_8013B980();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013BE58(void) {
@@ -173,7 +173,7 @@ void func_8013BE58(void) {
     FnTbl50 tbl;
 
     tbl = D_80146920;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
@@ -188,36 +188,36 @@ s32 func_8013BEE0(void) {
             D_800CA2AC = 0;
             D_800CA150 = (u16) D_800CA150 + 1;
             D_800CA154 = 0;
-            main_step_next();
+            mode_step_next();
         }
     }
 }
 
 void func_8013BFA4(void) {
-    snd_command(0x24);
-    snd_command(0x503);
-    main_step_next();
+    audio_command(0x24);
+    audio_command(0x503);
+    mode_step_next();
 }
 
 void func_8013BFD4(void) {
     if (D_80122CDC != 0) {
         D_800CA150 = (u16) D_800CA150 + 5;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C014(void) {
-    main_step_next();
+    mode_step_next();
     if (D_80122CDC != 0) {
-        game_state.step += 0x14;
-        game_state.event_flags[0x4F] = 1;
+        game_state.mode_step += 0x14;
+        game_state.scene_flags[0x4F] = 1;
         return;
     }
-    game_state.event_flags[0x4F] = 2;
+    game_state.scene_flags[0x4F] = 2;
 }
 
 void func_8013C070(void) {
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C090(void) {
@@ -225,7 +225,7 @@ void func_8013C090(void) {
      * li v0,12 for both, as the original (T-9210). */
     (&game_state.current_girl)[0] = (&game_state.date_girl)[0] = 0xC;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -242,27 +242,27 @@ void func_8013C090(void) {
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
-    dialogue_names_set(game_state.current_girl);
-    dialogue_clear();
+    talk_names_set(game_state.current_girl);
+    talk_clear();
     func_80137990();
     D_80146274 = D_80145F14;
     D_80146278 = D_80146050;
     D_8014627C = D_8014618C;
     strcpy(D_800CA19C, "廊下");
     strcpy(D_800CA1DC, "廃工場前");
-    if (dialogue_work == 1) {
+    if (talk_work == 1) {
         game_state.param_stress.value += 5;
     }
     check_para_limit();
     D_800CA368 = 0x4F;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C200(void) {
     /* Same chain as func_8013C090 (T-9210). */
     (&game_state.current_girl)[0] = (&game_state.date_girl)[0] = 0xC;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -279,23 +279,23 @@ void func_8013C200(void) {
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
-    dialogue_names_set(game_state.current_girl);
-    dialogue_clear();
+    talk_names_set(game_state.current_girl);
+    talk_clear();
     func_80137990();
     D_80146274 = D_80145F18;
     D_80146278 = D_80146054;
     D_8014627C = D_80146190;
     strcpy(D_800CA19C, "廊下");
     D_800CA368 = 0x50;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C330(void) {
     func_8013B980();
     load_palette(D_80146780, 0x11, 1, 2, 0);
-    event_still_show(D_80146784, D_80146788, D_8014678C, D_80146790, D_80146794, D_80146798);
-    event_anim_show(0, 0, 0, 0);
-    main_step_next();
+    scene_still_show(D_80146784, D_80146788, D_8014678C, D_80146790, D_80146794, D_80146798);
+    scene_anim_show(0, 0, 0, 0);
+    mode_step_next();
 }
 
 void func_8013C3C4(void) {
@@ -303,25 +303,25 @@ void func_8013C3C4(void) {
     D_80146278 = D_80146058;
     D_8014627C = D_80146194;
     D_800CA368 = 0x51;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C41C(void) {
     bg_read_sub2(0x4045);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C444(void) {
     bg_read_sub2(0x4943);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C46C(void) {
     bg_read_sub2(0x403B);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C494(void) {
     bg_read_sub2(0x403B);
-    main_step_next();
+    mode_step_next();
 }

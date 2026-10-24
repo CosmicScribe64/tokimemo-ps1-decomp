@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80132000(void) {
-    switch (game_state.stage) {
+    switch (game_state.mode_stage) {
     case 0x0:
         func_80132114();
         break;
@@ -36,7 +36,7 @@ void func_80132000(void) {
     }
     cursor_update();
     if (game_state.pad_pressed & PAD_START) {
-        main_state_set(MODE_COMMAND_SCREEN);
+        game_mode_set(MODE_COMMAND_SCREEN);
     }
     func_801323CC();
     message_window_title_update();
@@ -68,7 +68,7 @@ void func_80132114(void) {
     menu_set(0, 8, a, b, c, d);
     r = set_kanji_string(-0x10, -0x50, 0xF, (s32)"項目を選んでください", 0);
     k_disp_start(r);
-    main_stage_next();
+    mode_stage_next();
 }
 
 void func_80132294(void) {
@@ -76,38 +76,38 @@ void func_80132294(void) {
     menu_bar_show(0);
     menu_cursor_update(0);
     if ((game_state.pad_pressed & PAD_CIRCLE) && game_state.menu_cursor_0 != -1) {
-        snd_command(0x501);
+        audio_command(0x501);
         switch (*(u8 *)&game_state.menu_cursor_0) { /* FAKE: u8 view keeps the selector load as lbu, as in the original (T-5010) */
         case 0:
-            main_stage_set(0x10);
+            mode_stage_set(0x10);
             break;
         case 1:
-            main_stage_set(0x20);
+            mode_stage_set(0x20);
             break;
         case 2:
-            main_stage_set(0x30);
+            mode_stage_set(0x30);
             break;
         case 3:
-            main_stage_set(0x40);
+            mode_stage_set(0x40);
             break;
         case 4:
-            main_stage_set(0x50);
+            mode_stage_set(0x50);
             break;
         case 5:
-            main_stage_set(0x60);
+            mode_stage_set(0x60);
             break;
         case 6:
-            main_stage_set(0x70);
+            mode_stage_set(0x70);
             break;
         case 7:
-            main_stage_set(2);
+            mode_stage_set(2);
             break;
         }
     }
 }
 
 void func_801323AC(void) {
-    main_state_set(MODE_COMMAND_SCREEN);
+    game_mode_set(MODE_COMMAND_SCREEN);
 }
 
 void func_801323CC(void) {

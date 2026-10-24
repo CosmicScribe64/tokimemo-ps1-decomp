@@ -22,7 +22,7 @@ void func_80138BA0(void) {
     FnTbl22 tbl;
 
     tbl = D_80145170;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
@@ -31,7 +31,7 @@ void func_80138C1C(void) {
     FnTbl20 tbl;
 
     tbl = D_801451C8;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
@@ -40,13 +40,13 @@ void func_80138CA4(void) {
     FnTbl20 tbl;
 
     tbl = D_80145218;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
 void func_80138D2C(void) {
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -54,7 +54,7 @@ void func_80138D2C(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dialogue_clear();
+    talk_clear();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
     D_800B5940 = 0;
@@ -63,19 +63,19 @@ void func_80138D2C(void) {
     message_window_init();
     text_marker_hide();
     /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom); T-10520 */
-    dialogue_names_set(*(u8 *)&game_state.current_girl = 3);
+    talk_names_set(*(u8 *)&game_state.current_girl = 3);
     func_80136F90();
     D_80144DFC = D_80144D98;
     D_80144E00 = D_80144DBC;
     D_80144E04 = D_80144DE0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138E1C(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "中庭");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138E60(void) {
@@ -83,7 +83,7 @@ void func_80138E60(void) {
     D_80144E08 = 8;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "美術室");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138ED4(void) {
@@ -91,22 +91,22 @@ void func_80138ED4(void) {
     D_80144E08 = 0xB;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "音楽室");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138F48(void) {
     bg_read_sub2(0x4071);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138F70(void) {
     bg_read_sub2(0x40E2);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138F98(void) {
     bg_read_sub2(0x40D9);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138FC0(void) {
@@ -132,5 +132,5 @@ void func_80138FC0(void) {
             game_state.girls[game_state.current_girl].flags.f.b2 = 0;
         }
     }
-    main_step_next();
+    mode_step_next();
 }

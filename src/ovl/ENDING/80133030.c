@@ -7,12 +7,12 @@ void func_80133030(void) {
     EdFnTbl16 tbl;
 
     tbl = D_8013C370;
-    bustup_wink_update();
-    idx = game_state.step;
+    portrait_wink_update();
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
     check_k_scroll();
     k_disp_inc2();
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     hizuke_show();
@@ -36,7 +36,7 @@ void func_801330E4(void) {
     game_state.weekday = WEEKDAY_SUNDAY;
     func_80053418(rank, points);
     game_state.current_girl = GIRL_YOSHIO;
-    if (points[0] < 0x1F4 && game_state.girls[0xC].flags.b[3] >= 0x46 && game_state.event_flags[0x4F] == 2) {
+    if (points[0] < 0x1F4 && game_state.girls[0xC].flags.b[3] >= 0x46 && game_state.scene_flags[0x4F] == 2) {
         game_state.current_girl = GIRL_REI;
     } else {
         best = 0x1F3;
@@ -55,19 +55,19 @@ void func_801330E4(void) {
         if (game_state.girls[0xB].flags.u) {
         }
         level = game_state.girls[0xB].flags.f.story_stage;
-        level += (game_state.event_flags[0x4C] > 0) * 2;
-        level += (game_state.event_flags[0x4E] > 0) * 2;
+        level += (game_state.scene_flags[0x4C] > 0) * 2;
+        level += (game_state.scene_flags[0x4E] > 0) * 2;
         if (level >= 0x12) {
             level = 0x11;
         }
-        if (game_state.girls[0xB].flags.f.story_stage != 0 && game_state.event_flags[0x4D] == 0) {
+        if (game_state.girls[0xB].flags.f.story_stage != 0 && game_state.scene_flags[0x4D] == 0) {
             if (rand() % 256 < chance.v[level]) {
                 game_state.current_girl = GIRL_MIHARU;
             }
         }
     }
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -77,7 +77,7 @@ void func_801330E4(void) {
     strcpy(D_800CA1DC, "教室");
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dialogue_clear();
+    talk_clear();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
     D_800B5940 = 0;
@@ -85,34 +85,34 @@ void func_801330E4(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dialogue_group = 0;
-    dialogue_line = 0;
-    dialogue_names_set(game_state.current_girl);
+    talk_group = 0;
+    talk_line = 0;
+    talk_names_set(game_state.current_girl);
     func_80132000();
-    dialogue_text_table = D_8013C280[0][3];
-    dialogue_command_table = D_8013C280[1][3];
-    dialogue_voice_table = D_8013C280[2][3];
-    main_step_next();
+    talk_text_table = D_8013C280[0][3];
+    talk_command_table = D_8013C280[1][3];
+    talk_voice_table = D_8013C280[2][3];
+    mode_step_next();
 }
 
 void func_80133400(void) {
     bg_read_sub2(0x4045);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133428(void) {
     cd_read_sectors(0x11, 0x801F0000, 0xAE07);
     func_80132000();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133460(void) {
     if (((u8) game_state.current_girl >= GIRL_YOSHIO) && ((u32) ((u32) (game_state.girls[14].flags.w << 0x14) >> 0x1D) < 3U)) {
-        main_stage_set(7);
+        mode_stage_set(7);
         D_800E7D34 |= 8;
         return;
     }
-    main_step_next();
+    mode_step_next();
     D_800E7D34 |= 4;
 }
 
@@ -121,5 +121,5 @@ void func_801334E4(void) {
         normal_date_speak();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }

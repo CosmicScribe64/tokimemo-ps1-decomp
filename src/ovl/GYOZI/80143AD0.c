@@ -1,4 +1,4 @@
-#define MAIN_API_OVERRIDE_func_8008FF60 /* s32 return (like DATE sibling event_anim_show in main_api.h): consumes $v0 in ugen for func_801444CC and func_80145084 (T-24098) */
+#define MAIN_API_OVERRIDE_func_8008FF60 /* s32 return (like DATE sibling scene_anim_show in main_api.h): consumes $v0 in ugen for func_801444CC and func_80145084 (T-24098) */
 #define GYOZI_OVERRIDE_func_80140050 /* s32 return consumes $v0 in ugen for func_8014494C (T-24098) */
 #include "common.h"
 #include "ovl/GYOZI.h"

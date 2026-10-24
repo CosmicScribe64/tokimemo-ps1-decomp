@@ -274,7 +274,7 @@ INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80134D20.data", D_8013CA1C);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80134D20.data", D_8013CA38);
 EdFnTbl9 D_8013CA3C = { {
     func_80135ECC, func_80136EE4, func_8007C784, func_80137128, func_8007C784,
-    func_80135F4C, func_80136BE0, main_stage_next, game_reset_to_title,
+    func_80135F4C, func_80136BE0, mode_stage_next, game_mode_reset_to_title,
 } };
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80134D20.data", D_8013CA60);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80134D20.data", D_8013CA7C);
@@ -599,7 +599,7 @@ void func_80135DD0(void) {
     EdFnTbl9 tbl;
 
     tbl = D_8013CA3C;
-    tbl.f[game_state.step](0x80);
+    tbl.f[game_state.mode_step](0x80);
     if (D_8013CA38 != 0) {
         _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
         dtd_on(0xE);
@@ -622,7 +622,7 @@ void func_80135ECC(void) {
     k_reset(1);
     func_8004E500(3);
     D_8013CA38 = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 /* The switch's range-check load delay stays empty only because D_8013CA3C (in this file's
@@ -642,7 +642,7 @@ void func_80135F4C(void) {
     sp60 = D_8013CA7C;
     D_8013C358 = 0;
     D_8013C35C = 0;
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     func_80134D20();
     tpage_buf_clear_all();
     game_state.tpage_buf[0x1C] = 1;
@@ -842,20 +842,20 @@ void func_80135F4C(void) {
     }
     D_8013CA38 = 1;
     cd_audio_request_set(0, 0, (s32) game_state.current_girl);
-    snd_command(0x300);
-    main_step_next();
+    audio_command(0x300);
+    mode_step_next();
 }
 
 void func_80136BE0(void) {
-    if (!(game_state.step_timer.w & 3)) {
+    if (!(game_state.mode_step_timer.w & 3)) {
         func_80136C5C(1);
     }
-    if (!(game_state.step_timer.w & 0xF)) {
+    if (!(game_state.mode_step_timer.w & 0xF)) {
         func_80136CD0(1);
     }
-    game_state.step_timer.w += 1;
-    if ((u32) game_state.step_timer.w >= 0x440U) {
-        main_step_next();
+    game_state.mode_step_timer.w += 1;
+    if ((u32) game_state.mode_step_timer.w >= 0x440U) {
+        mode_step_next();
     }
 }
 
@@ -981,14 +981,14 @@ void func_80136EE4(void) {
         func_80135AA0();
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 
 void func_80137128(void) {
     cd_read_sectors(0x3D, 0x80180000, 0x7B1B);
     func_80134D20();
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: p = &unk_F5F before the D_8011F522 store puts the lui for the selector first, as in the original; found with the permuter, T-9380 */

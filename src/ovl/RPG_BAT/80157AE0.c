@@ -737,7 +737,7 @@ void func_80159620(void) {
         func_8014F080(0x14);
         return;
     case 3:
-        snd_bank_start(1, 0x203);
+        audio_bank_start(1, 0x203);
         func_8014EF3C();
         return;
     case 4:
@@ -745,7 +745,7 @@ void func_80159620(void) {
         return;
     case 5:
         D_8015EC14 = 1;
-        main_stage_next();
+        mode_stage_next();
         return;
     }
 }
@@ -850,7 +850,7 @@ void func_801596E8(void) {
         strcpy(D_8015EA30, "お金　　：６５５３５ゴールド");
         func_80159B40();
         func_8014B738((s32) D_8015EB70, D_8015ED14, 0x5A);
-        snd_bank_start(1, 0x202);
+        audio_bank_start(1, 0x202);
         func_8014F500();
         break;
     case 11:
@@ -858,7 +858,7 @@ void func_801596E8(void) {
         break;
     case 12:
         D_8015EC14 = 0;
-        main_stage_next();
+        mode_stage_next();
         break;
     }
 }

@@ -7,11 +7,11 @@ void func_80133540(void) {
     EdFnTbl43 tbl;
 
     tbl = D_8013C3E4;
-    bustup_wink_update();
-    tbl.f[game_state.step](0x80);
+    portrait_wink_update();
+    tbl.f[game_state.mode_step](0x80);
     check_k_scroll();
     k_disp_inc2();
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     hizuke_show();
@@ -20,18 +20,18 @@ void func_80133540(void) {
 
 void func_801335F4(void) {
     if (D_8013C3E0 == 0xC) {
-        bustup_layout_set(4);
+        portrait_layout_set(4);
     } else {
-        bustup_layout_set(0);
+        portrait_layout_set(0);
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013363C(void) {
-    memcpy((void *)(0x801A0000 + game_state.step_timer.w * 0x2800), 0x80180000 + game_state.step_timer.w * 0x2800, 0x2800);
-    game_state.step_timer.w += 1;
-    if (game_state.step_timer.w == 9) {
-        main_step_next();
+    memcpy((void *)(0x801A0000 + game_state.mode_step_timer.w * 0x2800), 0x80180000 + game_state.mode_step_timer.w * 0x2800, 0x2800);
+    game_state.mode_step_timer.w += 1;
+    if (game_state.mode_step_timer.w == 9) {
+        mode_step_next();
     }
 }
 
@@ -49,14 +49,14 @@ void func_801336A8(void) {
     game_state.tpage_buf[40] = 1;
     game_state.tpage_buf[41] = 1;
     game_state.tpage_buf[42] = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133738(void) {
-    memcpy((void *)(0x80180000 + game_state.step_timer.w * 0x2800), 0x801A0000 + game_state.step_timer.w * 0x2800, 0x2800);
-    game_state.step_timer.w += 1;
-    if (game_state.step_timer.w == 9) {
-        main_step_next();
+    memcpy((void *)(0x80180000 + game_state.mode_step_timer.w * 0x2800), 0x801A0000 + game_state.mode_step_timer.w * 0x2800, 0x2800);
+    game_state.mode_step_timer.w += 1;
+    if (game_state.mode_step_timer.w == 9) {
+        mode_step_next();
     }
 }
 
@@ -67,16 +67,16 @@ void func_801337A4(void) {
     rect.w = 0x180;
     rect.h = 0x80;
     func_8009C8E0(&rect, (void *)0x80180000);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801337F0(void) {
-    if (dialogue_line == 4) {
-        bustup_layout_set(4);
+    if (talk_line == 4) {
+        portrait_layout_set(4);
         load_palette(D_800CA130, 0x10, 1, 2, 1);
     }
     normal_date_speak();
-    if (dialogue_line == 7) {
+    if (talk_line == 7) {
         D_80122D20 = 1;
         return;
     }
@@ -85,64 +85,64 @@ void func_801337F0(void) {
 
 void func_80133870(void) {
     if (game_state.date_girl == GIRL_SOTOI) {
-        bustup_read_start(0x6B24);
+        portrait_read_start(0x6B24);
     } else {
-        bustup_read_start(0x5828);
+        portrait_read_start(0x5828);
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801338B8(void) {
     load_palette(D_800CA130, 0x10, 1, 2, 1);
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_801338F8(void) {
     if ((u32)game_state.girls[14].flags.w << 0x14 >> 0x1D < 3U) {
-        main_stage_next();
+        mode_stage_next();
         return 0;
     }
     D_8013C3E0 = game_state.current_girl;
     game_state.current_girl = GIRL_REI;
     game_state.date_girl = GIRL_REI;
-    dialogue_group = 0;
-    dialogue_line = 0;
-    strcpy(name_buf_girl_short, "外井");
+    talk_group = 0;
+    talk_line = 0;
+    strcpy(name_code_girl_short, "外井");
     func_80132000();
-    dialogue_text_table = D_8013C280[0][15];
-    dialogue_command_table = D_8013C280[1][15];
-    dialogue_voice_table = D_8013C280[2][15];
-    main_step_next();
+    talk_text_table = D_8013C280[0][15];
+    talk_command_table = D_8013C280[1][15];
+    talk_voice_table = D_8013C280[2][15];
+    mode_step_next();
 }
 
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFB8);
 
 void func_801339C0(void) {
     game_state.date_girl = GIRL_REI;
-    strcpy(name_buf_girl_short, D_8013BFB8);
-    main_step_next();
+    strcpy(name_code_girl_short, D_8013BFB8);
+    mode_step_next();
 }
 
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFC0);
 
 void func_80133A00(void) {
     game_state.date_girl = GIRL_SOTOI;
-    strcpy(name_buf_girl_short, D_8013BFC0);
-    main_step_next();
+    strcpy(name_code_girl_short, D_8013BFC0);
+    mode_step_next();
 }
 
 void func_80133A40(void) {
     game_state.current_girl = D_8013C3E0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133A6C(void) {
     if (game_state.current_girl >= GIRL_YOSHIO) {
-        main_stage_set(7);
+        mode_stage_set(7);
         D_800E7D34 |= 8;
         return;
     }
-    main_step_next();
+    mode_step_next();
     D_800E7D34 |= 4;
 }
 
@@ -151,11 +151,11 @@ void func_80133AD0(void) {
     EdFnTbl9 tbl;
 
     tbl = D_8013C490;
-    bustup_wink_update();
-    tbl.f[game_state.step](0x80);
+    portrait_wink_update();
+    tbl.f[game_state.mode_step](0x80);
     check_k_scroll();
     k_disp_inc2();
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     hizuke_show();
@@ -163,16 +163,16 @@ void func_80133AD0(void) {
 }
 
 void func_80133B80(void) {
-    dialogue_group = 0;
-    dialogue_line = 0;
+    talk_group = 0;
+    talk_line = 0;
     func_80132000();
-    dialogue_text_table = D_8013C280[0][13];
-    dialogue_command_table = D_8013C280[1][13];
-    dialogue_voice_table = D_8013C280[2][13];
-    main_step_next();
+    talk_text_table = D_8013C280[0][13];
+    talk_command_table = D_8013C280[1][13];
+    talk_voice_table = D_8013C280[2][13];
+    mode_step_next();
 }
 
 void func_80133BE0(void) {
     bg_read_sub2(0x4055);
-    main_step_next();
+    mode_step_next();
 }

@@ -59,42 +59,42 @@ void func_80133F1C(void) {
     EdFnTbl13 tbl;
 
     tbl = D_8013C5BC;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 s32 func_80133F98(void) {
-    game_state.step_timer.w += 1;
-    if ((u32)game_state.step_timer.w < 2U) {
+    game_state.mode_step_timer.w += 1;
+    if ((u32)game_state.mode_step_timer.w < 2U) {
         func_80132000();
         draw2d3d(1, 0);
-        actors_draw_enable(1);
+        actor_draw_enable(1);
         back_clear_switch(1);
         tpage_buf_clear();
         sprite_tables_clear();
         actor_clear_range(0);
         cursor_show(0);
         text_system_reset();
-        dialogue_clear();
+        talk_clear();
         game_state.screen_brightness = 0x80;
         dec_bg_brightness = 0;
         D_800B5940 = 0;
         return 0;
     }
-    if (game_state.step_timer.w == 5) {
+    if (game_state.mode_step_timer.w == 5) {
         func_8009C5E0(0);
-    } else if ((u32)game_state.step_timer.w < 0xBU) {
+    } else if ((u32)game_state.mode_step_timer.w < 0xBU) {
         return 0;
     }
     func_80134140();
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_8013408C(void) {
-    game_state.step_timer.w += 1;
-    if ((u32)game_state.step_timer.w < 2U) {
+    game_state.mode_step_timer.w += 1;
+    if ((u32)game_state.mode_step_timer.w < 2U) {
         draw2d3d(1, 0);
-        actors_draw_enable(1);
+        actor_draw_enable(1);
         back_clear_switch(1);
         tpage_buf_clear();
         sprite_tables_clear();
@@ -104,11 +104,11 @@ s32 func_8013408C(void) {
         k_reset(1);
         return 0;
     }
-    if ((u32)game_state.step_timer.w < 0xBU) {
+    if ((u32)game_state.mode_step_timer.w < 0xBU) {
         return 0;
     }
     func_801341D8();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80134140(void) {
@@ -287,13 +287,13 @@ s32 func_80134270(void) {
      * hidden temporary for the first two (struct-field chains store 038 first); GameState
      * fields unk_036..unk_038, as in TACO func_8013B2A0 (T-19030). T-25311 */
     (&game_state.clear_color_r)[0] = (&game_state.clear_color_r)[1] = (&game_state.clear_color_r)[2] = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801349A8(void) {
     cd_read_sectors(0x78, 0x80180000, 0x7B58);
     func_80133C10();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801349E0(void) {
@@ -312,7 +312,7 @@ void func_801349E0(void) {
         ((Actor *)actor_pool)[96].unk_08 = 0;
         ((Actor *)actor_pool)[97].draw_flags |= 0x80;
         ((Actor *)actor_pool)[97].flags = 5;
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -322,7 +322,7 @@ void func_80134AA8(void) {
         D_80120668 = 0;
         D_80120658 = 0;
         D_80120652 = 5;
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -342,14 +342,14 @@ void func_80134B18(void) {
     }
     if (((Actor *)actor_pool_96)->brightness >= 0x80) {
         ((Actor *)actor_pool_96)->flags = 5;
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_80134BE8(void) {
     if (D_80120668 == 2) {
         if (D_80120658 == 0x2F) {
-            main_step_next();
+            mode_step_next();
         }
     }
 }
@@ -371,7 +371,7 @@ void func_80134C2C(void) {
     if (((Actor *)actor_pool_96)->brightness < 4) {
         ((Actor *)actor_pool_96)->draw_flags &= 0xFF7F;
         ((Actor *)actor_pool_96)[1].draw_flags &= 0xFF7F;
-        main_step_next();
+        mode_step_next();
     }
 }
 

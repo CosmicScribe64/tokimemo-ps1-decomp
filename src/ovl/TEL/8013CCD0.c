@@ -43,7 +43,7 @@ void func_8013CCD0(void) {
     idx = 0x61;
     func_80053418(rank, points);
     for (i = 0; i != 11; i++) {
-        game_state.girls[0xF].event_counters[i] = 0;
+        game_state.girls[0xF].scene_counters[i] = 0;
         if (game_state.girls[i].flags.f.met) {
             x = (i / 6) * 0x82;
             y = (i % 6) * 0x10;
@@ -77,7 +77,7 @@ void func_8013CCD0(void) {
                 SET_REC(idx, 0x60, x - 0x12, y - 0x44);
                 idx++;
             }
-            game_state.girls[0xF].event_counters[i] = stars + 1;
+            game_state.girls[0xF].scene_counters[i] = stars + 1;
         }
     }
     D_801230D4 = set_kanji_string(-0x80, -0x62, 4, "女の子からの評価", 0);
@@ -108,13 +108,13 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     p->flags.f.b6 = 1;
     p->flags.f.b2 = 1;
     p->flags.f.b7 = 1;
-    game_state.overlay_tpage_table = 0x801B01B0;
-    game_state.overlay_frame_table = 0x801B01C0;
-    game_state.overlay_sequence_table = 0;
-    game_state.overlay_palette_a = 0x801B0200;
+    game_state.ovl_tpage_table = 0x801B01B0;
+    game_state.ovl_frame_table = 0x801B01C0;
+    game_state.ovl_sequence_table = 0;
+    game_state.ovl_palette_a = 0x801B0200;
     q = (GameState *)((u8 *)p - 0x1BC);
     for (i = 0; i < 0x10; i++) {
-        load_palette(game_state.overlay_palette_a, (i + 0x10) & 0xFF, 1, 2, i);
+        load_palette(game_state.ovl_palette_a, (i + 0x10) & 0xFF, 1, 2, i);
     }
     actor_clear_upper();
     for (i = 0; i < 8; i++) {
@@ -130,13 +130,13 @@ void func_8013D03C(s32 arg0, s32 arg1) {
         REC(i + 0x60).unk_04 = 8;
         REC(i + 0x60).unk_05 = 1;
     }
-    SET_REC(0x60, phone_numbers[n][0] + 0x4E, 0x27, -0x5A);
-    SET_REC(0x61, phone_numbers[n][1] + 0x4E, 0x31, -0x5A);
-    SET_REC(0x62, phone_numbers[n][2] + 0x4E, 0x3B, -0x5A);
-    SET_REC(0x63, phone_numbers[n][3] + 0x4E, 0x4C, -0x5A);
-    SET_REC(0x64, phone_numbers[n][4] + 0x4E, 0x56, -0x5A);
-    SET_REC(0x65, phone_numbers[n][5] + 0x4E, 0x60, -0x5A);
-    SET_REC(0x66, phone_numbers[n][6] + 0x4E, 0x6A, -0x5A);
+    SET_REC(0x60, girl_phone_digits[n][0] + 0x4E, 0x27, -0x5A);
+    SET_REC(0x61, girl_phone_digits[n][1] + 0x4E, 0x31, -0x5A);
+    SET_REC(0x62, girl_phone_digits[n][2] + 0x4E, 0x3B, -0x5A);
+    SET_REC(0x63, girl_phone_digits[n][3] + 0x4E, 0x4C, -0x5A);
+    SET_REC(0x64, girl_phone_digits[n][4] + 0x4E, 0x56, -0x5A);
+    SET_REC(0x65, girl_phone_digits[n][5] + 0x4E, 0x60, -0x5A);
+    SET_REC(0x66, girl_phone_digits[n][6] + 0x4E, 0x6A, -0x5A);
     SET_REC(0x67, 0x41, -0x10, -0x1B);
     for (i = 8; i != 9; i++) {
         actor_clear(i + 0x60);
@@ -144,9 +144,9 @@ void func_8013D03C(s32 arg0, s32 arg1) {
         REC(i + 0x60).flags = 0x40;
         REC(i + 0x60).quad_flags = 0x01000000;
         REC(i + 0x60).draw_flags = 0x84;
-        REC(i + 0x60).frame_table = (u8 *)game_state.overlay_frame_table;
-        REC(i + 0x60).sequence_table = (u8 *)game_state.overlay_sequence_table;
-        REC(i + 0x60).tpage_table = (u8 *)game_state.overlay_tpage_table;
+        REC(i + 0x60).frame_table = (u8 *)game_state.ovl_frame_table;
+        REC(i + 0x60).sequence_table = (u8 *)game_state.ovl_sequence_table;
+        REC(i + 0x60).tpage_table = (u8 *)game_state.ovl_tpage_table;
         REC(i + 0x60).unk_14 = 0;
         REC(i + 0x60).unk_04 = 8;
         REC(i + 0x60).unk_05 = 0x80;

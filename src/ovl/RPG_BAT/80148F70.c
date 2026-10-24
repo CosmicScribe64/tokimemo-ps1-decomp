@@ -7,7 +7,7 @@ void func_80148F70(void) {
     s32 base;
     s32 half;
 
-    stat = game_state.clubs[D_8015EBA0].exp;
+    stat = game_state.clubs[D_8015EBA0].practice_points;
     if (stat < 50) {
         base = 50;
     } else if (stat > 550) {

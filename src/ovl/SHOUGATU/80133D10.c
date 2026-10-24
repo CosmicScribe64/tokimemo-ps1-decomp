@@ -6,7 +6,7 @@ void func_80133D10(void) {
     FnTbl23 tbl;
 
     tbl = D_80143CC0;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
@@ -28,7 +28,7 @@ void func_80133D98(void) {
             D_80143B00 = var_v0;
         }
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133E30(void) {
@@ -36,7 +36,7 @@ void func_80133E30(void) {
         func_801323D4();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133E6C(void) {
@@ -56,27 +56,27 @@ void func_80133EA8(void) {
         }
     }
     bg_read_sub2(0x41ED);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133F24(void) {
     if ((game_state.current_girl != GIRL_YUKARI) || (D_80143B20 != 0) || (D_80143B18 == 0)) {
-        main_stage_next();
+        mode_stage_next();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133F88(void) {
     if (D_80143B20 != 0) {
-        game_state.step += 4;
+        game_state.mode_step += 4;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133FC8(void) {
     if (D_80143B18 == 0) {
-        main_step_next();
+        mode_step_next();
         return;
     }
     func_801323D4();
@@ -87,7 +87,7 @@ void func_80134004(void) {
         func_801323D4();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80134058(void) {
@@ -95,7 +95,7 @@ void func_80134058(void) {
         func_801323D4();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80134094(void) {
@@ -107,5 +107,5 @@ void func_80134094(void) {
         game_state.girls[5].tokimeki += 1;
     }
     check_para_limit();
-    main_step_next();
+    mode_step_next();
 }

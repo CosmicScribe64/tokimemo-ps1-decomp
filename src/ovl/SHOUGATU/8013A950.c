@@ -22,7 +22,7 @@ void func_8013A9B0(void) {
     FnTbl42 tbl;
 
     tbl = D_80145760;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
@@ -31,7 +31,7 @@ void func_8013AA24(void) {
     FnTbl20 tbl;
 
     tbl = D_80145808;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
@@ -40,18 +40,18 @@ void func_8013AAAC(void) {
     FnTbl20 tbl;
 
     tbl = D_80145858;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
 void func_8013AB34(void) {
-    bustup_read_start(0x66EC);
-    main_step_next();
+    portrait_read_start(0x66EC);
+    mode_step_next();
 }
 
 void func_8013AB5C(void) {
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -59,7 +59,7 @@ void func_8013AB5C(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dialogue_clear();
+    talk_clear();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
     D_800B5940 = 0;
@@ -68,34 +68,34 @@ void func_8013AB5C(void) {
     message_window_init();
     text_marker_hide();
     /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom); T-9120 */
-    dialogue_names_set(*(u8 *)&game_state.current_girl = 4);
+    talk_names_set(*(u8 *)&game_state.current_girl = 4);
     func_80136F90();
     D_80144DFC = D_80144DAC;
     D_80144E00 = D_80144DD0;
     D_80144E04 = D_80144DF4;
     game_state.girls[game_state.current_girl].flags.f.b2 = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013AC7C(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "教室");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013ACC0(void) {
     D_80144E08 = 0xC;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "グランド");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013AD08(void) {
     D_80144E08 = 0xF;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "グランド");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013AD50(void) {
@@ -104,19 +104,19 @@ void func_8013AD50(void) {
     } else {
         bg_read_sub2(0x4055);
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013ADA4(void) {
     bg_read_sub2(0x4097);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013ADCC(void) {
     if (((u32) game_state.girls[4].flags.b[2] >> 4) == 7) {
         D_80144E08 = 6;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013AE0C(void) {
@@ -132,20 +132,20 @@ void func_8013AE0C(void) {
             D_80144E08 = 8;
         }
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013AE6C(void) {
     if (((u32) game_state.girls[4].flags.b[2] >> 4) != ((u32) game_state.player_flags.h >> 0xC)) {
         D_80144E08 = 4;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013AEB4(void) {
     if (((u32) game_state.girls[4].flags.b[2] >> 4) == ((u32) game_state.player_flags.h >> 0xC)) {
-        game_state.step += 0xD;
+        game_state.mode_step += 0xD;
         return;
     }
-    main_step_next();
+    mode_step_next();
 }

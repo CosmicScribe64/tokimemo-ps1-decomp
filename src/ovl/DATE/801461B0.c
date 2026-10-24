@@ -67,11 +67,11 @@ u16 func_801462B0(void) {
     g = &game_state;
     movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
-    switch (g->step_timer.u) {
+    switch (g->mode_step_timer.u) {
     case 0:
         D_80122D2C = 1;
         srand(game_state.frame_count);
-        snd_command(0x206);
+        audio_command(0x206);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
         movie->unk_04 = 0;
@@ -127,7 +127,7 @@ u16 func_801462B0(void) {
             game_state.quad_layer[i + 6] = 0xB;
         }
         dec_bg_cd_read(0x43CB, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -137,12 +137,12 @@ u16 func_801462B0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x80183000);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 2:
         dec_bg_cd_read(0x43D4, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
@@ -152,12 +152,12 @@ u16 func_801462B0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801A1000);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 4:
         dec_bg_cd_read(0x43DE, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
@@ -167,12 +167,12 @@ u16 func_801462B0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801BF000);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 6:
         dec_bg_cd_read(0x43E7, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 7:
         if (cd_read_sync_status() & 1) {
@@ -182,15 +182,15 @@ u16 func_801462B0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801DD000);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 8:
         for (i = 0; i < 4; i++) {
             sprite_quads[i + 4].flags = 0x02000000;
         }
-        g->step_timer.u += 1;
-        snd_command(0x500);
+        g->mode_step_timer.u += 1;
+        audio_command(0x500);
         break;
     case 9:
         value = sprite_quads[4].tint_r;
@@ -209,7 +209,7 @@ u16 func_801462B0(void) {
         sprite_quads[4].tint_g = color;
         sprite_quads[4].tint_r = color;
         if (value == 0x80) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 10:
@@ -234,17 +234,17 @@ u16 func_801462B0(void) {
             for (i = 0; i < 4; i++) {
                 sprite_quads[i + 4].flags = 0x82000000;
             }
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 12:
-        sp50 = game_state.step;
-        sp4C = g->step_timer.u;
+        sp50 = game_state.mode_step;
+        sp4C = g->mode_step_timer.u;
         read_bustup();
         /* FAKE: one source line preserves as1 callback load scheduling. T-24089. */
-        g->step_timer.u = sp4C; if (sp50 != game_state.step) {
-            game_state.step--;
-            g->step_timer.u += 1;
+        g->mode_step_timer.u = sp4C; if (sp50 != game_state.mode_step) {
+            game_state.mode_step--;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 13:
@@ -253,63 +253,63 @@ u16 func_801462B0(void) {
     case 21:
     case 23:
         if (cd_read_sync_status() & 1) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 14:
-        sp4C = g->step_timer.u;
-        sp50 = game_state.step;
-        bustup_show_checked();
-        if (game_state.step != sp50 + 1) {
-            game_state.step = sp50;
-            g->step_timer.u = 12;
+        sp4C = g->mode_step_timer.u;
+        sp50 = game_state.mode_step;
+        portrait_show_checked();
+        if (game_state.mode_step != sp50 + 1) {
+            game_state.mode_step = sp50;
+            g->mode_step_timer.u = 12;
             break;
         }
-        game_state.step--;
-        g->step_timer.u = sp4C + 1;
+        game_state.mode_step--;
+        g->mode_step_timer.u = sp4C + 1;
         break;
     case 15:
         cd_read_sectors_nowait(0xA, 0x80162000, 0x4359);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 17:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->step_timer.u -= 2;
+            g->mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 18:
-        snd_command(0x200);
-        sp4C = g->step_timer.u;
+        audio_command(0x200);
+        sp4C = g->mode_step_timer.u;
         func_8013E7B0();
-        game_state.step -= 1;
-        g->step_timer.u = sp4C + 1;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp4C + 1;
         break;
     case 20:
-        sp4C = g->step_timer.u;
+        sp4C = g->mode_step_timer.u;
         func_8013E980();
-        game_state.step -= 1;
-        g->step_timer.u = sp4C + 1;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp4C + 1;
         break;
     case 22:
-        sp4C = g->step_timer.u;
+        sp4C = g->mode_step_timer.u;
         func_8013E9BC();
-        game_state.step -= 1;
-        g->step_timer.u = sp4C + 1;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp4C + 1;
         break;
     default:
         hizuke_disp_switch(1);
         D_80122D2C = 0;
-        main_step_next();
+        mode_step_next();
         break;
     }
-    if (g->step_timer.u < 9 || g->step_timer.u >= 12) {
+    if (g->mode_step_timer.u < 9 || g->mode_step_timer.u >= 12) {
         return 0;
     }
     p = sprite_quads;
@@ -397,7 +397,7 @@ u16 func_801462B0(void) {
     timer = (D_8015CF9C + 1) & 0xFFFF;
     D_8015CF9C = timer;
     if (timer == 0x12C) {
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
     }
 }
 
@@ -415,9 +415,9 @@ s32 func_8014718C(void) {
     g = &game_state;
     movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
-    switch (g->step_timer.u) {
+    switch (g->mode_step_timer.u) {
     case 0:
-        snd_command(0x201);
+        audio_command(0x201);
         D_80122D2C = 1;
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -452,18 +452,18 @@ s32 func_8014718C(void) {
             game_state.quad_layer[var_v1 + 10] = 0xC;
         }
         dec_bg_cd_read(0x43C2, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 1:
         if (cd_read_sync_status() & 1) {
             func_800536AC(0x140, 0x100, 0x140, 0xA0);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         return 0;
     case 2:
         cd_read_sectors(0x31, 0x801AE000, 0xBCD1);
         func_801461B0();
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 3:
     case 11:
@@ -471,19 +471,19 @@ s32 func_8014718C(void) {
     case 16:
     case 18:
         if (cd_read_sync_status() & 1) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         return 0;
     case 4:
         load_palette(D_8015CF80, 0x11, 1, 0, 0);
         func_80149268(D_8015CF84, D_8015CF88, D_8015CF8C, D_8015CF90, D_8015CF94, D_8015CF98);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 5:
         for (var_v1 = 0; var_v1 < 8; var_v1++) {
             sprite_quads[var_v1 + 4].flags &= 0x7FFFFFFF;
         }
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 6:
         x = (sprite_quads[4].tint_r += 1); y = sprite_quads[4].tint_g = x; sprite_quads[4].tint_b = y; /* FAKE: one source line preserves store order. T-24028. */
@@ -491,7 +491,7 @@ s32 func_8014718C(void) {
             sprite_quads[var_v1 + 4].tint_r = sprite_quads[var_v1 + 4].tint_g = sprite_quads[var_v1 + 4].tint_b = sprite_quads[4].tint_r;
         }
         if (sprite_quads[4].tint_r == 0x40) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         return 0;
     case 7:
@@ -500,7 +500,7 @@ s32 func_8014718C(void) {
             sprite_quads[var_v1 + 4].tint_r = sprite_quads[var_v1 + 4].tint_g = sprite_quads[var_v1 + 4].tint_b = sprite_quads[4].tint_r;
         }
         if (sprite_quads[4].tint_r == 0x80) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 8:
@@ -514,53 +514,53 @@ s32 func_8014718C(void) {
             for (var_v1 = 0; var_v1 < 8; var_v1++) {
                 sprite_quads[var_v1 + 4].flags |= 0x80000000;
             }
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 10:
         cd_read_sectors_nowait(0xA, 0x80162000, 0x4350);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 12:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->step_timer.u -= 2;
+            g->mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 13:
-        sp30 = g->step_timer.u;
+        sp30 = g->mode_step_timer.u;
 
         func_8013E7B0();
-        game_state.step -= 1;
-        g->step_timer.u = sp30;
-        g->step_timer.u++;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp30;
+        g->mode_step_timer.u++;
         return 0;
     case 15:
-        sp30 = g->step_timer.u;
+        sp30 = g->mode_step_timer.u;
 
         func_8013E980();
-        game_state.step -= 1;
-        g->step_timer.u = sp30;
-        g->step_timer.u++;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp30;
+        g->mode_step_timer.u++;
         return 0;
     case 17:
-        sp30 = g->step_timer.u;
+        sp30 = g->mode_step_timer.u;
 
         func_8013E9BC();
-        game_state.step -= 1;
-        g->step_timer.u = sp30;
-        g->step_timer.u++;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp30;
+        g->mode_step_timer.u++;
         return 0;
     default:
-        main_step_next();
+        mode_step_next();
         D_80122D2C = 0;
-        snd_command(0x200);
+        audio_command(0x200);
         hizuke_disp_switch(1);
         return 0;
     }
@@ -584,7 +584,7 @@ s32 func_8014718C(void) {
         }
     }
     if (D_8015CF9C == (y = 0x12C)) {
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
     }
 }
 
@@ -606,9 +606,9 @@ s32 func_80147958(void) {
     g = &game_state;
     movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
-    switch (g->step_timer.u) {
+    switch (g->mode_step_timer.u) {
     case 0:
-        snd_command(0x7F);
+        audio_command(0x7F);
         D_80122D2C = 1;
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -664,7 +664,7 @@ s32 func_80147958(void) {
             game_state.quad_layer[var_v1 + 6] = 0xb;
         }
         dec_bg_cd_read(0x43B1, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 1:
     case 4:
@@ -679,7 +679,7 @@ s32 func_80147958(void) {
     case 47:
     case 49:
         if (cd_read_sync_status() & 1) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
             return;
         }
         return;
@@ -690,11 +690,11 @@ s32 func_80147958(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x80183000);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 3:
         dec_bg_cd_read(0x43AA, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 5:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -703,11 +703,11 @@ s32 func_80147958(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x8019C000);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 6:
         dec_bg_cd_read(0x43A3, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 8:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -716,11 +716,11 @@ s32 func_80147958(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x801B5000);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 9:
         dec_bg_cd_read(0x439C, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 11:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -729,37 +729,37 @@ s32 func_80147958(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x801CE000);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 12:
         dec_bg_cd_read(0x4395, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 14:
         func_800536AC(0x140, 0, 0x140, 0xA0);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 15:
         dec_bg_cd_read(0x437D, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 17:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 18:
         dec_bg_cd_read(0x4385, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 20:
         func_800536AC(0x280, 0, 0x140, 0xA0);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 21:
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
             sprite_quads[var_v1 + 4].flags = (s32) (sprite_quads[var_v1 + 4].flags & 0x7FFFFFFF);
         }
-        g->step_timer.u++;
+        g->mode_step_timer.u++;
         return;
     case 22:
         value = sprite_quads[4].tint_r;
@@ -779,7 +779,7 @@ s32 func_80147958(void) {
         sprite_quads[4].tint_r = color;
 
         if (value == 0x80) {
-            g->step_timer.u++;
+            g->mode_step_timer.u++;
             return;
         }
         break;
@@ -787,27 +787,27 @@ s32 func_80147958(void) {
         if (!(D_8015CF9C & 7)) {
             func_80148924(4);
                 if (((u16) D_8015CF9C % 24U) == 0) {
-                snd_command(0x503);
+                audio_command(0x503);
                     }
         }
         if (++D_8015CF9C == 0x140) {
             D_8015CF9C = 0;
-            game_state.step_timer.u += 1;
+            game_state.mode_step_timer.u += 1;
         }
         break;
     case 24:
-        g->step_timer.u++;
+        g->mode_step_timer.u++;
         return;
     case 25:
         back_clear_switch(0);
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
             sprite_quads[var_v1 + 4].flags = (s32) (sprite_quads[var_v1 + 4].flags | 0x80000000);
         }
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 26:
         dec_bg_cd_read(0x438D, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 28:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -816,7 +816,7 @@ s32 func_80147958(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C93C(&rect, 0x280, 0);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         back_clear_switch(1);
         return;
     case 29:
@@ -833,15 +833,15 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
-        snd_command(0x500);
-        g->step_timer.u += 1;
+        audio_command(0x500);
+        g->mode_step_timer.u += 1;
         return;
     case 30:
     case 32:
     case 34:
         func_80148924(8);
         if (++D_8015CF9C == 0x14) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
             return;
         }
         break;
@@ -863,7 +863,7 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 33:
         rect.x = 0x280;
@@ -883,7 +883,7 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 35:
         rect.x = 0x280;
@@ -903,7 +903,7 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 36:
         func_80148924(8);
@@ -925,7 +925,7 @@ s32 func_80147958(void) {
         sprite_quads[4].tint_r = color;
         }
         if (++D_8015CF9C == 0x14) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
             return;
         }
         break;
@@ -947,7 +947,7 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 38:
         func_80148924(8);
@@ -968,7 +968,7 @@ s32 func_80147958(void) {
         sprite_quads[4].tint_r = color;
 
         if (value < 4U) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
             return;
         }
         break;
@@ -976,73 +976,73 @@ s32 func_80147958(void) {
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
             sprite_quads[var_v1 + 4].flags = (s32) (sprite_quads[var_v1 + 4].flags | 0x80000000);
         }
-        g->step_timer.u++;
+        g->mode_step_timer.u++;
         return;
     case 40:
-        sp50 = g->step_timer.u;
+        sp50 = g->mode_step_timer.u;
 
-        sp54 = (s32) game_state.step;
+        sp54 = (s32) game_state.mode_step;
         /* FAKE: one source line preserves as1 callback load scheduling. T-12100. */
-        read_bustup(game_state.step); g->step_timer.u = sp50; if (sp54 != game_state.step) { game_state.step -= 1; g->step_timer.u++; } break;
+        read_bustup(game_state.mode_step); g->mode_step_timer.u = sp50; if (sp54 != game_state.mode_step) { game_state.mode_step -= 1; g->mode_step_timer.u++; } break;
     case 42:
-        sp54 = game_state.step;
-        sp50 = g->step_timer.u;
+        sp54 = game_state.mode_step;
+        sp50 = g->mode_step_timer.u;
 
-        bustup_show_checked();
+        portrait_show_checked();
         current = sp54 + 1;
-        if (game_state.step != current) {
-            game_state.step = sp54;
-            g->step_timer.u = 0x28;
+        if (game_state.mode_step != current) {
+            game_state.mode_step = sp54;
+            g->mode_step_timer.u = 0x28;
             return;
         }
-        game_state.step -= 1;
-        g->step_timer.u = sp50;
-        g->step_timer.u++;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp50;
+        g->mode_step_timer.u++;
         return;
     case 43:
         cd_read_sectors_nowait(0xAU, 0x80162000, 0x433E);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 45:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->step_timer.u -= 2;
+            g->mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 46:
-        sp50 = g->step_timer.u;
+        sp50 = g->mode_step_timer.u;
 
         func_8013E7B0();
-        game_state.step -= 1;
-        g->step_timer.u = sp50;
-        g->step_timer.u++;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp50;
+        g->mode_step_timer.u++;
         return;
     case 48:
-        sp50 = g->step_timer.u;
+        sp50 = g->mode_step_timer.u;
 
         func_8013E980();
-        game_state.step -= 1;
-        g->step_timer.u = sp50;
-        g->step_timer.u++;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp50;
+        g->mode_step_timer.u++;
         return;
     case 50:
-        sp50 = g->step_timer.u;
+        sp50 = g->mode_step_timer.u;
 
         func_8013E9BC();
-        game_state.step -= 1;
-        g->step_timer.u = sp50;
-        g->step_timer.u++;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp50;
+        g->mode_step_timer.u++;
         return;
     default:
-        main_step_next();
+        mode_step_next();
         D_80122D2C = 0;
-        snd_command(0x200);
+        audio_command(0x200);
         hizuke_disp_switch(1);
         break;
     }
@@ -1072,7 +1072,7 @@ s32 func_801489D0(void) {
     u8 temp_s0;
     u8 temp_s0_2;
 
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         D_80122D2C = 1;
         D_8015CFC4 = 0x64;
@@ -1086,7 +1086,7 @@ s32 func_801489D0(void) {
         D_8015CFAC[0] = -0x28;
         D_8015CFAC[1] = 0;
         D_8015CFAC[2] = -0x3C;
-        game_state.step_timer.u += 1;
+        game_state.mode_step_timer.u += 1;
         D_8015CFB4[0] = (rand() % 3) - 1;
         D_8015CFB4[1] = (rand() % 3) - 1;
         D_8015CFB4[2] = (rand() % 3) - 1;
@@ -1096,7 +1096,7 @@ s32 func_801489D0(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            game_state.step_timer.u += 1;
+            game_state.mode_step_timer.u += 1;
             break;
         }
         break;
@@ -1105,23 +1105,23 @@ s32 func_801489D0(void) {
             printf("DEC_BS header Error \n");
             ((RECT *)dec_bg_lba_cache)[0].w = 0;
             ((RECT *)dec_bg_lba_cache)[0].h = 0;
-            game_state.step_timer.u -= 2;
+            game_state.mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        snd_command(0x203);
-        game_state.step_timer.u += 1;
+        audio_command(0x203);
+        game_state.mode_step_timer.u += 1;
         break;
     case 3:
-        temp_s0 = game_state.step;
-        temp_s1 = game_state.step_timer.u;
+        temp_s0 = game_state.mode_step;
+        temp_s1 = game_state.mode_step_timer.u;
         normal_date_bg_fadein();
-        game_state.step_timer.u = temp_s1;
-        if (temp_s0 != game_state.step) {
-            game_state.step_timer.u = temp_s1 + 1;
+        game_state.mode_step_timer.u = temp_s1;
+        if (temp_s0 != game_state.mode_step) {
+            game_state.mode_step_timer.u = temp_s1 + 1;
         }
-        game_state.step = temp_s0;
+        game_state.mode_step = temp_s0;
         break;
     case 4:
         var_s3 = 0;
@@ -1166,46 +1166,46 @@ s32 func_801489D0(void) {
         func_8004A814((s32) D_8015CFA4[2], (s32) D_8015CFAC[2], 0xA, 2, 2, 0x800000, 3, 1);
         if (((u32) (*(s32 *)&game_state.frame_count) % 50U) == 0) {
             if (!(rand() & 3)) {
-                snd_command(0x504);
+                audio_command(0x504);
             } else if ((rand() % 4) == 1) {
-                snd_command(0x505);
+                audio_command(0x505);
             } else if ((rand() % 4) == 2) {
-                snd_command(0x506);
+                audio_command(0x506);
             } else {
-                snd_command(0x507);
+                audio_command(0x507);
                 D_8015CFC4 = 0;
             }
         }
         if (D_8015CFC4++ == 0x14) {
-            snd_command(0x507);
+            audio_command(0x507);
         }
         if (D_8015CFC4 >= 0x65) {
             D_8015CFC4 = 0x64;
         }
         if (D_8015CF9C++ == 0x12C) {
-            game_state.step_timer.u += 1;
+            game_state.mode_step_timer.u += 1;
             break;
         }
         break;
     case 5:
-        temp_s0_2 = game_state.step;
-        temp_s1_3 = game_state.step_timer.u;
+        temp_s0_2 = game_state.mode_step;
+        temp_s1_3 = game_state.mode_step_timer.u;
         normal_date_bg_fadeout();
-        game_state.step_timer.u = temp_s1_3;
-        if (temp_s0_2 != game_state.step) {
-            game_state.step_timer.u = temp_s1_3 + 1;
+        game_state.mode_step_timer.u = temp_s1_3;
+        if (temp_s0_2 != game_state.mode_step) {
+            game_state.mode_step_timer.u = temp_s1_3 + 1;
         }
-        game_state.step = temp_s0_2;
+        game_state.mode_step = temp_s0_2;
         break;
     case 6:
         dec_bg_show_switch(1);
-        game_state.step_timer.u += 1;
+        game_state.mode_step_timer.u += 1;
         break;
     default:
-        snd_command(0x200);
+        audio_command(0x200);
         D_80122D2C = 0;
         hizuke_disp_switch(1);
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -1217,12 +1217,12 @@ void func_801491E4(s32 arg0) {
     temp_v0 = dec_bg_cd_read(arg0, 1);
     if (temp_v0 == D_800B5939) {
         printf("same\n");
-        game_state.step_timer.w += 3;
+        game_state.mode_step_timer.w += 3;
         return;
     }
     if (temp_v0 == (1 - D_800B5939)) {
         printf("another\n");
-        game_state.step_timer.w += 2;
+        game_state.mode_step_timer.w += 2;
     }
 }
 
@@ -1231,7 +1231,7 @@ s32 func_80149268(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     SpriteQuad *record;
     s16 i;
 
-    event_still_show(arg0, arg1, arg2, arg3, arg4, arg5);
+    scene_still_show(arg0, arg1, arg2, arg3, arg4, arg5);
     /* FAKE: shared setup/loop line preserves instruction scheduling (T-9780). */
     i = 0; do {
         record = &sprite_quads[i];

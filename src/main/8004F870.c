@@ -968,7 +968,7 @@ void text_wait_confirm(void) {
     }
 }
 
-void voice_play(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void talk_voice_play(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 selector;
 
     if (arg2 == -1) {
@@ -976,7 +976,7 @@ void voice_play(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         if (selector != 15) {
             if ((u8)game_state.voice_mode != VOICE_OFF) {
                 cd_audio_request_set(arg0, arg1, arg3);
-                snd_command(0x300);
+                audio_command(0x300);
             }
         }
     } else {
@@ -984,7 +984,7 @@ void voice_play(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         if (selector != 15) {
             if ((u8)game_state.voice_mode != VOICE_OFF) {
                 cd_audio_request_set(((s32 *)arg0)[arg2 * 2], ((s32 *)arg0)[arg2 * 2 + 1], arg3);
-                snd_command(0x300);
+                audio_command(0x300);
             }
         }
     }
@@ -998,7 +998,7 @@ void voice_play(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_80125C00 = 0;
 }
 
-void dialogue_text_step(void) {
+void talk_text_step(void) {
     /* FAKE: two unused home words above the spills; the original frame is 8 bytes larger, as in xa_wait. T-25101 */
     s32 pad[2];
     s32 r;
@@ -1064,7 +1064,7 @@ void dialogue_text_step(void) {
             if (D_80125BFC != -1) {
                 if (((s32 *)D_80125BF4)[D_80125BFC * 2] != ((s32 *)D_80125BF8)[D_80125BFC * 2] && ((s32 *)D_80125BF4)[D_80125BFC * 2] == k[2]) {
                     cd_audio_request_set(((s32 *)D_80125BF8)[D_80125BFC * 2], ((s32 *)D_80125BF8)[D_80125BFC * 2 + 1], game_state.current_girl);
-                    snd_command(0x300);
+                    audio_command(0x300);
                     D_80125C00 = 0;
                 } else {
                     D_80125C00 = 2;
@@ -1092,7 +1092,7 @@ void dialogue_text_step(void) {
         if (r == 1) {
             if ((*(u8 *)&game_state.voice_mode) == 2) {
                 D_80125C00 = 2;
-                snd_command(0x74);
+                audio_command(0x74);
                 cd_audio_command(9, 0, 0);
             }
             game_state.text_scroll_state = 0;
@@ -1391,7 +1391,7 @@ s32 func_80052E60(u8 *arg0, s16 *arg1) {
     } while (i < 8);
     sum = 0;
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-    for (i = 1; i < 36; i++) sum += game_state.girls[0].event_counters[i];
+    for (i = 1; i < 36; i++) sum += game_state.girls[0].scene_counters[i];
     if (sum < 8) {
         return 0;
     }
@@ -1456,7 +1456,7 @@ s32 func_80052F68(u8 *arg0, s16 *arg1) {
     for (m = 1; m < 11; m++) {
         sum = 0;
         for (i = 1; i < 36; i++) {
-            sum += g->girls[m].event_counters[i];
+            sum += g->girls[m].scene_counters[i];
         }
         if (sum >= 4) {
             val[m] += sum * 10;

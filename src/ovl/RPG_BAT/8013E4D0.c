@@ -388,7 +388,7 @@ void func_8013F0F4(s32 a, s32 b, s32 c) {
         b = -1;
     }
     if (D_8015ED3C[c] == 0) {
-        snd_command((u16)((a & 0xFF) | 0x600));
+        audio_command((u16)((a & 0xFF) | 0x600));
         D_8015ED3C[c] = b;
     }
     D_8015ED3C[c] -= 1;
@@ -399,7 +399,7 @@ void func_8013F15C(s32 a, s32 b, s32 c) {
         b = -1;
     }
     if (D_8015ED3C[c] == 0) {
-        snd_command((u16)((a & 0xFF) | 0x500));
+        audio_command((u16)((a & 0xFF) | 0x500));
         D_8015ED3C[c] = b;
     }
     D_8015ED3C[c] -= 1;
@@ -412,7 +412,7 @@ void func_8013F1C4(s32 a, s32 b, s32 c) {
     if (*p == 0) {
         game_state.current_girl = GIRL_SOTOI;
         cd_audio_request_set(a, b, 0xE);
-        snd_command(0x300);
+        audio_command(0x300);
         *p = 1;
     }
 }
@@ -433,7 +433,7 @@ void func_8013F250(s32 arg0) {
         D_8015EBE4 += 1;
         if (cd_audio_state() == 4 || D_8015EBE4 >= 0x3D) {
             if (D_8015EBE4 >= 0x3D) {
-                snd_command(0x74);
+                audio_command(0x74);
             }
             D_8015EE44.unk_04 = 4;
             D_8015ED8C[1] = 1;

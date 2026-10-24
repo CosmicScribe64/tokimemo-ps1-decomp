@@ -284,8 +284,8 @@ void func_8013C2E4(void) {
 }
 
 void shougatu_stage_dispatch(void) {
-    bustup_wink_update();
-    switch (game_state.stage) {
+    portrait_wink_update();
+    switch (game_state.mode_stage) {
     case 0:
         func_8013D660();
         break;
@@ -314,36 +314,36 @@ void shougatu_stage_dispatch(void) {
         func_801430A0();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     check_k_scroll();
     k_disp_inc2();
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     hizuke_show();
     func_80083A10();
-    screen_shake_update();
+    draw_shake_update();
 }
 
 void func_8013D2A8(void) {
-    dialogue_tables = &D_80145F2C;
+    talk_tables = &D_80145F2C;
     D_800CA138 = &D_80145F30;
     D_800CA13C = D_80145F20;
     D_800CA140 = D_80145F24;
     D_800CA144 = D_80145F28;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }
 
 void func_8013D324(void) {
-    dialogue_tables = (u8 *)&D_80145F2C;
+    talk_tables = (u8 *)&D_80145F2C;
     D_800CA138 = (u8 *)&D_80145F30;
     D_800CA13C = D_80145F20;
     D_800CA140 = D_80145F24;
     D_800CA144 = D_80145F28;
-    if (dialogue_run(D_80122CDC, 1, 0) == 1) {
-        main_step_next();
+    if (talk_run(D_80122CDC, 1, 0) == 1) {
+        mode_step_next();
     }
 }
 
@@ -388,27 +388,27 @@ void func_8013D3B4(void) {
         cd_read_sectors(7U, 0x80198000, 0xAE53);
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     func_8013C2E4();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013D560(void) {
-    dialogue_tables = &D_800CA150;
+    talk_tables = &D_800CA150;
     D_800CA138 = &D_800CA154;
     D_800CA13C = D_80145F34;
     D_800CA140 = D_80145F38;
     D_800CA144 = D_80145F3C;
-    dialogue_run(0xFF, 1, 0);
+    talk_run(0xFF, 1, 0);
 }
 
 void func_8013D5D8(void) {
-    dialogue_tables = (u8 *) &D_800CA150;
+    talk_tables = (u8 *) &D_800CA150;
     D_800CA138 = (u8 *) &D_800CA154;
     D_800CA13C = D_80145F34;
     D_800CA140 = D_80145F38;
     D_800CA144 = D_80145F3C;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }

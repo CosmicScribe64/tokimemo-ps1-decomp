@@ -9,14 +9,14 @@ s32 func_80135160(void) {
         cd_read_sectors(0x61, 0x80180000, 0x4E4E);
         game_state.substep += 1;
     } else if ((game_state.substep == 1) && (cd_read_sync_status() & 1)) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_801351DC(void) {
     s32 i;
 
-    if ((game_state.step >= 3) && (game_state.step < 9)) {
+    if ((game_state.mode_step >= 3) && (game_state.mode_step < 9)) {
         if (game_state.pad_held & PAD_CIRCLE) {
             func_801352F4();
             D_80120656 = 0x82;
@@ -36,17 +36,17 @@ void func_801351DC(void) {
             }
         }
     }
-    if ((game_state.step >= 3) && (game_state.step < 8) && (game_state.pad_held & PAD_CROSS)) {
-        main_step_set(7);
+    if ((game_state.mode_step >= 3) && (game_state.mode_step < 8) && (game_state.pad_held & PAD_CROSS)) {
+        mode_step_set(7);
     }
     func_801352F4();
 }
 
 void func_801352F4(void) {
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_80134260();
         return;
@@ -69,9 +69,9 @@ void func_801352F4(void) {
         func_801354C8();
         return;
     case 7:
-        snd_command(0xC1);
+        audio_command(0xC1);
         k_reset(1);
-        main_step_next();
+        mode_step_next();
         return;
     case 8:
         func_801344A8();
@@ -80,36 +80,36 @@ void func_801352F4(void) {
         func_80134314();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
 
 void func_8013540C(void) {
-    snd_bank_start(1, 0x201);
+    audio_bank_start(1, 0x201);
     func_80135630();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135440(void) {
-    if (game_state.step_timer.u == 0) {
+    if (game_state.mode_step_timer.u == 0) {
         D_80120652 = 5;
     }
-    game_state.step_timer.u += 1;
+    game_state.mode_step_timer.u += 1;
     if (D_80122EAC == 3) {
-        if (game_state.step_timer.u >= 0x1C2) {
-            main_step_next();
+        if (game_state.mode_step_timer.u >= 0x1C2) {
+            mode_step_next();
         }
     } else {
         if (!(D_80120652 & 1)) {
-            main_step_next();
+            mode_step_next();
         }
     }
 }
 
 s32 func_801354C8(void) {
-    if (game_state.step_timer.u == 0) {
-        *(u8 *)&game_state.mode_scratch = 0x80;
+    if (game_state.mode_step_timer.u == 0) {
+        *(u8 *)&game_state.game_mode_scratch = 0x80;
         D_80120653 = 0;
         D_801206DB = 0;
         D_8012069B = 0x80;
@@ -117,14 +117,14 @@ s32 func_801354C8(void) {
         D_80120696 = 5;
     }
     message_window_title_update();
-    game_state.step_timer.u += 1;
-    if (game_state.step_timer.u % 9U == 0) {
+    game_state.mode_step_timer.u += 1;
+    if (game_state.mode_step_timer.u % 9U == 0) {
         if ((D_801206D7 += 1) >= 0x15U) {
             D_801206D7 = 0x11;
         }
     }
     if (!(D_80120696 & 1)) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -134,15 +134,15 @@ s32 func_801355AC(void) {
     s32 i;
 
     message_window_title_update();
-    ((Actor *)actor_pool_96)[0].brightness = *(u8 *)&game_state.mode_scratch;
-    ((Actor *)actor_pool_96)[2].brightness = *(u8 *)&game_state.mode_scratch;
-    *(u8 *)&game_state.mode_scratch -= 2;
-    if (*(u8 *)&game_state.mode_scratch == 0) {
-        *(u8 *)&game_state.mode_scratch *= 0;
+    ((Actor *)actor_pool_96)[0].brightness = *(u8 *)&game_state.game_mode_scratch;
+    ((Actor *)actor_pool_96)[2].brightness = *(u8 *)&game_state.game_mode_scratch;
+    *(u8 *)&game_state.game_mode_scratch -= 2;
+    if (*(u8 *)&game_state.game_mode_scratch == 0) {
+        *(u8 *)&game_state.game_mode_scratch *= 0;
         for (i = 0; i < 0x40; i++) {
-            ((Actor *)actor_pool_96)[i].brightness = *(u8 *)&game_state.mode_scratch;
+            ((Actor *)actor_pool_96)[i].brightness = *(u8 *)&game_state.game_mode_scratch;
         }
-        main_step_next();
+        mode_step_next();
     }
 }
 

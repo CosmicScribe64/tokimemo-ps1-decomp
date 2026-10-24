@@ -3,8 +3,8 @@
 
 /* s32 with no return (the caller uses it as implicit int): v0 is live at the exit, so as1 cannot fill the delay slot of the branch before the last call with lui v0 and takes the move a1,zero instead. T-16562 */
 s32 func_80133870(void) {
-    game_state.step_timer.u += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.u += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_80133980();
         break;
@@ -21,10 +21,10 @@ s32 func_80133870(void) {
         func_80134500();
         break;
     }
-    if (game_state.step_timer.u & 0x10) {
+    if (game_state.mode_step_timer.u & 0x10) {
         func_801432F0((s32) "NOW LOADING DATA ", -0x60, 0, 1);
     }
-    if ((game_state.step_timer.u != 0) && ((u32) game_state.step_timer.u < 0x400U)) {
+    if ((game_state.mode_step_timer.u != 0) && ((u32) game_state.mode_step_timer.u < 0x400U)) {
         func_801430D0(D_8015EDEC--, 0, 0x32, 6);
     }
 }
@@ -32,7 +32,7 @@ s32 func_80133870(void) {
 s32 func_80133980(void) {
     switch (game_state.substep) {
     case 0:
-        snd_command(0x24);
+        audio_command(0x24);
         D_8015EDEC = 0x400;
         draw2d3d(1, 0);
         game_state.clear_color_r = 0;
@@ -59,12 +59,12 @@ s32 func_80133980(void) {
         }
         return;
     case 3:
-        game_state.overlay_palette_a = 0x8018A000;
-        game_state.overlay_frame_table = 0x801FAA7C;
-        game_state.overlay_sequence_table = 0x801FAA88;
-        game_state.overlay_tpage_table = 0x801FAA68;
+        game_state.ovl_palette_a = 0x8018A000;
+        game_state.ovl_frame_table = 0x801FAA7C;
+        game_state.ovl_sequence_table = 0x801FAA88;
+        game_state.ovl_tpage_table = 0x801FAA68;
         func_801342CC();
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -72,7 +72,7 @@ s32 func_80133980(void) {
 void func_80133AF4(void) {
     switch (game_state.substep) {
     case 0:
-        snd_bank_load_start(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
+        audio_bank_load_start(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
         game_state.substep += 1;
         return;
     case 1:
@@ -83,7 +83,7 @@ void func_80133AF4(void) {
     default:
         return;
     case 2:
-        snd_bank_load_start(1, 0xC54B, 0xC519, 0xC7BB, 0xC777, 0xC766);
+        audio_bank_load_start(1, 0xC54B, 0xC519, 0xC7BB, 0xC777, 0xC766);
         game_state.substep += 1;
         return;
     case 3:
@@ -93,7 +93,7 @@ void func_80133AF4(void) {
         }
         break;
     case 4:
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -163,7 +163,7 @@ void func_80133C08(void) {
             load_palette(0x80188000, temp_a1, 1, 3, temp_a1);
             var_s0 += 1;
         } while (var_s0 != 0xF);
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -267,7 +267,7 @@ s32 func_80133E98(void) {
         D_8015EDB4 = (TcActor *) D_8011ED58;
         *(s32 *)&game_state.menu_hit[3] = 1;
         *(s32 *)&game_state.menu_hit[7] = 2;
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -328,7 +328,7 @@ s32 func_80134500(void) {
         game_state.substep += 1;
         break;
     case 1:
-        main_stage_set(1);
+        mode_stage_set(1);
         break;
     }
 }

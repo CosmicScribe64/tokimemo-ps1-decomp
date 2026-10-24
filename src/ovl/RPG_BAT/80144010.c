@@ -14,7 +14,7 @@ void func_80144010(void) {
         if (((ClubFlagBits *)&game_state.clubs[i])->unk_25 == 3) {
             D_8015EBA0 = i;
         }
-        sum += game_state.clubs[i].exp;
+        sum += game_state.clubs[i].practice_points;
     }
     if (D_8015EBA0 == 0xB) {
         if (sum == 0) {

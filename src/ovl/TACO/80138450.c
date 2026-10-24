@@ -2,11 +2,11 @@
 #include "ovl/TACO.h"
 
 void func_80138450(void) {
-    if ((u32)game_state.stage_timer < 0x60 && (game_state.frame_count & 0x10)) {
+    if ((u32)game_state.mode_stage_timer < 0x60 && (game_state.frame_count & 0x10)) {
         func_801432F0((s32)"2ND STAGE", -0x40, 0, 2);
     }
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_80138520();
         break;
@@ -24,7 +24,7 @@ void func_80138450(void) {
 
 void func_80138520(void) {
     func_800450F4(0, 0x203);
-    snd_command(0x24);
+    audio_command(0x24);
     func_8014394C();
     func_80132220();
     func_801334BC();
@@ -35,7 +35,7 @@ void func_80138520(void) {
     D_8015EDBC = 0x24;
     D_8015EDC0 = 0;
     func_8015ABF0();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801385B4(void) {
@@ -56,6 +56,6 @@ void func_80138634(void) {
         func_8015ABF0();
         D_8015EDBC = 0x28;
         func_800450F4(1, 0x201);
-        main_stage_set(0x16);
+        mode_stage_set(0x16);
     }
 }

@@ -3,7 +3,7 @@
 
 /* No return value on purpose: implicit-int function, see func_80137BD8. T-6070 */
 s32 func_80137A60(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_80137BD8();
         break;
@@ -18,9 +18,9 @@ s32 func_80137A60(void) {
         break;
     }
     if (game_state.pad_pressed & PAD_CROSS) {
-        snd_command(0x74);
-        snd_command(0xB1);
-        main_stage_set(2);
+        audio_command(0x74);
+        audio_command(0xB1);
+        mode_stage_set(2);
     }
 }
 
@@ -30,9 +30,9 @@ void func_80137B14(s32 arg0) {
     D_8011ED4C = 0;
     D_8011ED16 = 0x40;
     D_8011ED17 = 0x84;
-    D_8011ED20 = game_state.overlay_frame_table;
-    D_8011ED24 = game_state.overlay_sequence_table;
-    D_8011ED48 = game_state.overlay_tpage_table;
+    D_8011ED20 = game_state.ovl_frame_table;
+    D_8011ED24 = game_state.ovl_sequence_table;
+    D_8011ED48 = game_state.ovl_tpage_table;
     D_8011ED18 = 8;
     D_8011ED19 = 0x81;
     D_8011ED57 = 0xF;
@@ -51,7 +51,7 @@ s32 func_80137BD8(void) {
         cd_read_sectors(9U, 0x80162000, 0xB380);
         k_reset(0);
         D_8015EDEC = 0;
-        actors_draw_enable(1);
+        actor_draw_enable(1);
         draw2d3d(1, 0);
         func_80137B14(1);
         game_state.substep += 1;
@@ -60,7 +60,7 @@ s32 func_80137BD8(void) {
         if (cd_read_sync_status() & 1) {
             func_800536AC(0x2C0, 0, 0x140, 0xF0);
             func_80135944();
-            main_step_next();
+            mode_step_next();
         }
         break;
     }
@@ -73,7 +73,7 @@ void func_80137CBC(s32 arg0) {
     i = arg0; /* FAKE: copy of the argument reproduces the original's `move t6,a0`; real source unknown. T-6070 */
     p = &D_8015F440[i * 2];
     cd_audio_request_set(p[0], p[1], 8);
-    snd_command(0x300);
+    audio_command(0x300);
 }
 
 void func_80137D00(void) {
@@ -86,7 +86,7 @@ void func_80137D00(void) {
             D_8015EDEC += 1;
             game_state.substep += 1;
         } else {
-            main_step_next();
+            mode_step_next();
             /* FAKE: absolute-address load; uopt then colours the pointer $v1 with `lui t9; lw v1,lo(t9)` as the original does (reading D_801FAA84 gives `lw t9,0(t9)`); real source unknown. T-19002 */
             p = *(u16 **)0x801FAA84;
             p[5] = 0x28;
@@ -123,7 +123,7 @@ void func_80137E48(void) {
             D_8015EDEC += 1;
             game_state.substep += 1;
         } else {
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 1:
@@ -144,6 +144,6 @@ void func_80137E48(void) {
 }
 void func_80137F54(void) {
     func_80137CBC(8);
-    snd_command(0xB1);
-    main_stage_set(2);
+    audio_command(0xB1);
+    mode_stage_set(2);
 }

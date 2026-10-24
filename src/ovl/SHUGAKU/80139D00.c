@@ -18,16 +18,16 @@ void func_80139D40(void) {
 
     tbl = D_8013CB08;
     if (D_800CA2EC != 0) {
-        index = game_state.step;
+        index = game_state.mode_step;
         if (tbl.f[index] == normal_date_two_select) {
             tbl.f[index] = normal_date_three_select;
         }
     }
-    tbl.f[game_state.step](0x40);
-    if (tbl.f[game_state.step] == func_8013864C && D_8013CB04 == 0) {
+    tbl.f[game_state.mode_step](0x40);
+    if (tbl.f[game_state.mode_step] == func_8013864C && D_8013CB04 == 0) {
         kind = ((u8 **)D_800CA2D4)[D_800CA2DC][D_800CA2E0];
         if (kind == 8 || kind == 3) {
-            snd_command(0x207);
+            audio_command(0x207);
             D_8013CB04 = 1;
         }
     }
@@ -39,14 +39,14 @@ void func_80139E8C(void) {
     RECT rect;
 
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     cursor_show(0);
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    dialogue_clear();
+    talk_clear();
     k_reset(1);
     rect.x = 0x140;
     rect.y = 0x1A0;
@@ -63,7 +63,7 @@ void func_80139E8C(void) {
         var_a0 = 0xD;
     }
     game_state.current_girl = var_a0;
-    dialogue_names_set(var_a0);
+    talk_names_set(var_a0);
     addr_init_bustup();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
@@ -72,13 +72,13 @@ void func_80139E8C(void) {
     text_marker_hide();
     D_80122CE0 = 0xFF;
     D_800CA2F4 = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_80139FD4(void) {
     if (D_800CA2CC == 1) {
         if (((*(s32 *)D_8013CAF0) != 0x801E2120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (4)) != 0x801E6120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (8)) != 0x801EA120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (12)) != 0x801EE120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (16)) != 0x801F2120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (20)) != 0x801F6120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (24)) != 0x801FA120) || (*(s32 *)D_8013CAF8 != 0x801E20A8)) {
-            game_state.step -= 2;
+            game_state.mode_step -= 2;
             return 0;
         }
         load_palette(D_8013CB00, 0x11, 0, 1, 0);
@@ -103,11 +103,11 @@ s32 func_80139FD4(void) {
         goto block_11;
     }
 block_11:
-    return main_step_next();
+    return mode_step_next();
 }
 
 void func_8013A1B4(void) {
-    main_step_set(0x22);
+    mode_step_set(0x22);
 }
 
 /* FAKE: T-24108, dead entry read of unk_F5F satisfies cvt_pass's entry condition; dead s32 result from func_801386C4 takes the sp+0x2C slot (placing temp_a0 at sp+0x2B) and blocks $v0 after the call so unk_F5F is promoted to $v1. */
@@ -120,11 +120,11 @@ void func_8013A1D4(void) {
     if (game_state.current_girl == GIRL_YUINA) {
         temp_a0 = get_g_zyotai_h(game_state.current_girl);
         if ((D_800CA2E0 == 7) && (D_80122CDC != 0)) {
-            bustup_layout_set(temp_a0);
+            portrait_layout_set(temp_a0);
         }
         if (D_800CA2E0 == 6) {
             if (D_80122CDC == 0) {
-                bustup_layout_set(temp_a0);
+                portrait_layout_set(temp_a0);
             }
         }
     }
@@ -132,17 +132,17 @@ void func_8013A1D4(void) {
 
 void func_8013A274(void) {
     if (game_state.current_girl == GIRL_YUINA) {
-        bustup_layout_set(3);
+        portrait_layout_set(3);
     }
     if (game_state.current_girl == GIRL_MIRA && D_800CA2F4 == 0) {
-        bustup_layout_set(4);
+        portrait_layout_set(4);
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A2D8(void) {
     if (D_80122CDC == 0) {
-        main_step_next();
+        mode_step_next();
         return;
     }
     func_801386C4();
@@ -153,16 +153,16 @@ void func_8013A314(void) {
         bg_read_sub2(0x4225);
         strcpy(D_800CA19C, "ホテル・ロビー");
     } else {
-        main_step_next();
-        main_step_next();
-        main_step_next();
+        mode_step_next();
+        mode_step_next();
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A37C(void) {
     D_800CA2DC += D_800CA2CC;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A3B4(void) {
@@ -171,7 +171,7 @@ void func_8013A3B4(void) {
     } else {
         D_800CA2DC = (D_800CA2DC - (D_80122CDC * 2)) + 4;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A42C(void) {
@@ -195,7 +195,7 @@ void func_8013A42C(void) {
     if (D_800CA2EC == 0) {
         event_log_add(3, D_800CA2CC + 3);
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A4F8(void) {
@@ -215,7 +215,7 @@ void func_8013A4F8(void) {
         strcpy(D_800CA19C, "クラーク像前");
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A59C(void) {
@@ -228,12 +228,12 @@ void func_8013A59C(void) {
     }
     actor_clear_range(0);
     cursor_show(0);
-    game_state.saved_mode = game_state.mode;
-    game_state.saved_stage = game_state.stage;
-    game_state.saved_step = 0x32;
+    game_state.saved_game_mode = game_state.game_mode;
+    game_state.saved_mode_stage = game_state.mode_stage;
+    game_state.saved_mode_step = 0x32;
     hizuke_disp_switch(0);
     k_reset(0);
-    main_state_set(MODE_RPG_BATTLE);
+    game_mode_set(MODE_RPG_BATTLE);
 }
 
 void func_8013A648(void) {
@@ -252,18 +252,18 @@ void func_8013A648(void) {
             game_state.current_girl = 0xFF;
         }
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A74C(void) {
     if (D_800CA2CC == 1) {
         cd_read_sectors(0x3D, 0x801E0000, 0xBD04);
         func_80139D00();
-        main_step_next();
+        mode_step_next();
         return;
     }
-    main_step_next();
-    main_step_next();
+    mode_step_next();
+    mode_step_next();
 }
 
 void func_8013A7AC(void) {
@@ -287,10 +287,10 @@ void func_8013A7AC(void) {
         D_8012069B = 0;
         D_80120699 = 1;
         D_80120698 = 0;
-        main_step_next();
+        mode_step_next();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A8D8(void) {
@@ -325,11 +325,11 @@ void func_8013A9E0(void) {
 
     temp_t8 = (u8)get_g_zyotai_s(GIRL_SAKI) & 0x7F;
     if (game_state.current_girl != GIRL_SAKI || temp_t8 >= 2U) {
-        main_step_next();
+        mode_step_next();
         return;
     }
-    game_state.saved_stage = game_state.stage;
-    game_state.saved_step = game_state.step + 2;
+    game_state.saved_mode_stage = game_state.mode_stage;
+    game_state.saved_mode_step = game_state.mode_step + 2;
     game_state.date_girl = GIRL_SAKI;
-    main_stage_set(0xA);
+    mode_stage_set(0xA);
 }

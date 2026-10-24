@@ -6,7 +6,7 @@ void func_8013BA00(void) {
     FnTbl19 tbl;
 
     tbl = D_80145A80;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
@@ -18,12 +18,12 @@ s32 func_8013BA7C(void) {
         game_state.substep += 1;
     }
     if (game_state.substep == 1) {
-        if (game_state.step_timer.u++ >= 0x400U) {
-            cd_cmd_reset();
-            snd_bank_state_reset();
+        if (game_state.mode_step_timer.u++ >= 0x400U) {
+            cd_command_reset();
+            audio_bank_state_reset();
             game_state.substep = 0;
         }
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             game_state.substep += 1;
         } else {
             return 0;
@@ -61,14 +61,14 @@ void func_8013BC2C(void) {
     for (i = 0; i < 0xB; i++) {
         D_800CA2B0[i] = (game_state.girls[i].flags.b[1] & 1) >= 1;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013BCE0(void) {
     game_state.current_girl = (u8) D_80122CDC;
     event_log_add(7, 0);
-    dialogue_names_set(game_state.current_girl);
-    main_step_next();
+    talk_names_set(game_state.current_girl);
+    mode_step_next();
 }
 
 void func_8013BD2C(void) {
@@ -85,9 +85,9 @@ void func_8013BD2C(void) {
         D_80145A08 += 2;
     }
     if (game_state.current_girl == GIRL_MEGUMI && s < 2U) {
-        bustup_layout_set(0);
+        portrait_layout_set(0);
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013BDE0(void) {
@@ -150,5 +150,5 @@ void func_8013BDE0(void) {
         D_80145A04 = D_801459F8;
         break;
     }
-    main_step_next();
+    mode_step_next();
 }

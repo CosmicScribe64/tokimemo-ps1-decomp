@@ -257,7 +257,7 @@ void func_801494D8(void) {
     q[0x39] = 0x40;
     q[0x3A] = 0x40;
     if ((*(u16 *)(input + 4) & 0x800) || (*(u16 *)(input + 4) & 0x20)) {
-        snd_command(0xB1);
+        audio_command(0xB1);
         func_80133AD0(0x612);
         state[0x22] = 0;
         *(u16 *)(state + 2) += 1;
@@ -700,9 +700,9 @@ void func_8014A2B4(void) {
         *(u16 *)(s + 2) = 1;
         break;
     case 1:
-        snd_command(0x22);
-        snd_command(0x2F);
-        snd_command(0x205);
+        audio_command(0x22);
+        audio_command(0x2F);
+        audio_command(0x205);
         func_8014CBD0();
         func_80148210();
         func_80143570();
@@ -733,7 +733,7 @@ void func_8014A2B4(void) {
         if (*(u16 *)(D_80158A60 + 0xA4) != 0) {
             k = cd_done_count();
             if ((s32)((k - func_801430C4() + 0x100) & 0xFF) >= 5) {
-                snd_command(0x12);
+                audio_command(0x12);
                 *(u16 *)(s + 2) += 1;
             }
         } else {

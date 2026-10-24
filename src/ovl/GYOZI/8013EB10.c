@@ -314,7 +314,7 @@ void func_8013FBF8(void) {
         func_80145384();
         break;
     default:
-        voice_play();
+        talk_voice_play();
         break;
     }
     func_8008A148();
@@ -388,7 +388,7 @@ void func_8013FE2C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         func_80051DD8(7, 0x80198000, 0xA30F);
         break;
     default:
-        voice_play(arg0, arg1, arg2, arg3);
+        talk_voice_play(arg0, arg1, arg2, arg3);
         break;
     }
     func_8013ED84();

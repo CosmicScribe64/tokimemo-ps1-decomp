@@ -16,7 +16,7 @@ extern FnTbl33 D_80139C80;
 
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-/* Scene table, indexed by game_state.step in func_801341E8. Defining it here as the
+/* Scene table, indexed by game_state.mode_step in func_801341E8. Defining it here as the
  * original did matters for code: as1 treats every function named in this file's data as
  * an address-taken label, so the jump-table dispatch of func_80134724 gets an edge back to
  * that function's entry. The resulting loop changes as1's block weights and its choice for
@@ -25,9 +25,9 @@ FnTbl30 D_80139B30 = { {
     func_80134374, func_8013425C, func_801342EC, func_80133CB0, func_8007C784,
     func_80133CEC, func_8007C784, func_80134724, func_80134BC4, func_8007C784,
     dec_init, change_dec_bg, func_8007C8A4, place_init, func_8013454C,
-    func_8007C784, bustup_show_checked, normal_date_girl_in, func_80133EF8, normal_date_girl_out,
+    func_8007C784, portrait_show_checked, normal_date_girl_in, func_80133EF8, normal_date_girl_out,
     normal_date_bg_out, func_801338B4, func_80133734, func_80133834, func_80133CB0,
-    func_8007C784, func_80133CEC, func_8007C784, func_80133C84, game_reset_to_title,
+    func_8007C784, func_80133CEC, func_8007C784, func_80133C84, game_mode_reset_to_title,
 } };
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BA8);
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.data", D_80139BD4);
@@ -44,7 +44,7 @@ void func_80134120(void) {
         func_80134DB0();
         return;
     }
-    main_stage_next();
+    mode_stage_next();
 }
 
 void func_801341E8(void) {
@@ -52,28 +52,28 @@ void func_801341E8(void) {
     FnTbl30 tbl;
 
     tbl = D_80139B30;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x20);
 }
 
 void func_8013425C(void) {
-    snd_bank_load_start(1, 0xBF98, 0xBF79, (&D_800B3688)[game_state.current_girl], (&D_800B36C8)[game_state.current_girl], (&D_800B3708)[game_state.current_girl]);
-    if (snd_bank_load_poll() == 1) {
-        snd_command(0x200);
-        main_step_next();
+    audio_bank_load_start(1, 0xBF98, 0xBF79, (&D_800B3688)[game_state.current_girl], (&D_800B36C8)[game_state.current_girl], (&D_800B3708)[game_state.current_girl]);
+    if (audio_bank_load_poll() == 1) {
+        audio_command(0x200);
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801342EC(void) {
-    if (snd_bank_load_poll() == 1) {
-        snd_command(0x200);
-        main_step_next();
+    if (audio_bank_load_poll() == 1) {
+        audio_command(0x200);
+        mode_step_next();
     }
-    if ((u32) game_state.step_timer.w++ >= 0x400U) {
-        cd_cmd_reset();
-        snd_bank_state_reset();
-        main_step_set((game_state.step - 1) & 0xFF);
+    if ((u32) game_state.mode_step_timer.w++ >= 0x400U) {
+        cd_command_reset();
+        audio_bank_state_reset();
+        mode_step_set((game_state.mode_step - 1) & 0xFF);
     }
 }
 
@@ -82,7 +82,7 @@ void func_80134374(void) {
     u32 v;
 
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     back_clear_switch(1);
     actor_clear_range(0);
@@ -93,7 +93,7 @@ void func_80134374(void) {
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     dec_bg_brightness = 0;
-    dialogue_clear();
+    talk_clear();
     parameter_disp_switch(0);
     icon_disp_switch(0);
     D_80139ADC = 0;
@@ -111,13 +111,13 @@ void func_80134374(void) {
     if (v == 0xA && game_state.girls[0].tokimeki + game_state.girls[0].affection < game_state.girls[10].tokimeki + game_state.girls[10].affection && game_state.year >= 0x60) {
         game_state.current_girl = GIRL_YUMI;
     }
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     func_80132E74();
     D_80139AD0 = (KObj *)D_80139A5C[0][6];
     D_80139AD4 = D_80139A5C[1][6];
     D_80139AD8 = D_80139A5C[2][6];
     D_80139AC0 = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013454C(void) {
@@ -134,31 +134,31 @@ void func_8013454C(void) {
     girl = game_state.current_girl;
     switch (girl) {
     case 0:
-        bustup_read_start(all.unk_00[game_state.player_flags.h >> 12]);
+        portrait_read_start(all.unk_00[game_state.player_flags.h >> 12]);
         break;
     case 1:
-        bustup_read_start(first.unk_00[game_state.player_flags.h >> 12]);
+        portrait_read_start(first.unk_00[game_state.player_flags.h >> 12]);
         break;
     case 2:
-        bustup_read_start(second.unk_00[(game_state.player_flags.h >> 12) - 2]);
+        portrait_read_start(second.unk_00[(game_state.player_flags.h >> 12) - 2]);
         break;
     case 3:
-        bustup_read_start(third.unk_00[(game_state.player_flags.h >> 12) - 4]);
+        portrait_read_start(third.unk_00[(game_state.player_flags.h >> 12) - 4]);
         break;
     case 4:
-        bustup_read_start(0x66EC);
+        portrait_read_start(0x66EC);
         break;
     case 5:
-        bustup_read_start(0x5FE4);
+        portrait_read_start(0x5FE4);
         break;
     case 6:
-        bustup_read_start(0x625A);
+        portrait_read_start(0x625A);
         break;
     default:
-        bustup_read_start(0x6962);
+        portrait_read_start(0x6962);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 /* The switch's range-check delay slot holds the dispatch `sll` only because D_80139B30 (above)
@@ -180,14 +180,14 @@ void func_80134724(void) {
     } else {
         s = 3;
     }
-    v = game_state.clubs[(u16)game_state.player_flags.h >> 12].exp / 50;
-    if (game_state.clubs[(u16)game_state.player_flags.h >> 12].exp >= 0x64U) {
+    v = game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points / 50;
+    if (game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points >= 0x64U) {
         v = 2;
     }
-    if (game_state.clubs[(u16)game_state.player_flags.h >> 12].exp >= 0xC8U) {
+    if (game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points >= 0xC8U) {
         v = 3;
     }
-    if (game_state.clubs[(u16)game_state.player_flags.h >> 12].exp >= 0x164U) {
+    if (game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points >= 0x164U) {
         v = 4;
     }
     D_80139AE0 = 0;
@@ -196,13 +196,13 @@ void func_80134724(void) {
         c2 = (u16)game_state.player_flags.h >> 12;
         if (((u16)game_state.player_flags.h >> 12) == 9) {
             c2 = 8;
-            if (game_state.clubs[(u16)game_state.player_flags.h >> 12].exp >= 0x164U) {
+            if (game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points >= 0x164U) {
                 v = 5;
             }
         }
         if (((u16)game_state.player_flags.h >> 12) == 10) {
             c2 = 8;
-            if (game_state.clubs[(u16)game_state.player_flags.h >> 12].exp >= 0x164U) {
+            if (game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points >= 0x164U) {
                 v = 6;
             }
         }
@@ -239,7 +239,7 @@ void func_80134724(void) {
         break;
     }
     func_801349D4();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801349D4(void) {
@@ -340,7 +340,7 @@ void func_80134BC4(void) {
         break;
     }
     event_log_add(0xE, (s32) ((u16) game_state.player_flags.h >> 0xC));
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80134DB0(void) {
@@ -351,11 +351,11 @@ void func_80134DB0(void) {
     tblA = D_80139BEC;
     tblB = D_80139C80;
     if ((u8)game_state.date_girl < GIRL_SAKI) {
-        tblA.f[game_state.step](0x80);
+        tblA.f[game_state.mode_step](0x80);
         D_80139AC8 = 1;
         return;
     }
-    tblB.f[game_state.step](0x80);
+    tblB.f[game_state.mode_step](0x80);
 }
 
 void func_80134EA8(void) {
@@ -363,16 +363,16 @@ void func_80134EA8(void) {
     u32 sp;
 
     game_state.current_girl = GIRL_SOTOI;
-    sp = game_state.step;
+    sp = game_state.mode_step;
     func_80133EF8();
-    if (sp != game_state.step) {
+    if (sp != game_state.mode_step) {
         game_state.current_girl = game_state.date_girl;
     }
 }
 
 void func_80134F00(void) {
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     back_clear_switch(1);
     actor_clear_range(0);
@@ -383,20 +383,20 @@ void func_80134F00(void) {
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     dec_bg_brightness = 0;
-    dialogue_clear();
+    talk_clear();
     parameter_disp_switch(0);
     icon_disp_switch(0);
     D_80139ADC = 0;
     D_80139AE0 = 0;
     addr_init_bustup();
     text_marker_hide();
-    dialogue_names_set(game_state.date_girl);
+    talk_names_set(game_state.date_girl);
     func_80132E74();
     D_80139AD0 = (KObj *) D_80139A5C[0][6];
     D_80139AD4 = D_80139A5C[1][6];
     D_80139AD8 = D_80139A5C[2][6];
     D_80139AC0 = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: entry read of unk_F5F puts it in cvt_pass's entry set ($v1) and keeps rect at
@@ -410,7 +410,7 @@ void func_80135004(void) {
     func_80133EF8();
     if (D_80139AE0 == 2) {
         if (rect.x == 1U) {}
-        if (*(u32 *)&game_state.step_timer == 1U) {
+        if (*(u32 *)&game_state.mode_step_timer == 1U) {
             if ((game_state.current_girl == GIRL_MIO) || (game_state.current_girl == GIRL_AYAKO)) {
                 rect.x = 0x140;
                 rect.y = 0x80;
@@ -418,18 +418,18 @@ void func_80135004(void) {
                 rect.h = 0x80;
                 func_8009C8E0(&rect, (void *)0x80180000);
                 func_8009C674(0);
-                bustup_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, (u8)get_g_zyotai_h(game_state.current_girl) & 0x7F);
+                portrait_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, (u8)get_g_zyotai_h(game_state.current_girl) & 0x7F);
                 func_80063668();
             }
         }
     }
-    game_state.step_timer.w += 1;
+    game_state.mode_step_timer.w += 1;
 }
 
 void func_801350E0(void) {
     RECT rect;
 
-    bustup_show_checked();
+    portrait_show_checked();
     rect.x = 0x140;
     rect.y = 0x80;
     rect.w = 0x180;
@@ -439,7 +439,7 @@ void func_801350E0(void) {
 
 void func_8013512C(void) {
     game_state.girls[game_state.current_girl].affection = 0x32;
-    snd_command(0x24);
+    audio_command(0x24);
     func_80135438();
 }
 
@@ -448,32 +448,32 @@ void func_80135178(void) {
         don_wait();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801351B8(void) {
-    snd_command(0x23);
-    snd_command(0x24);
-    snd_command(0x2E);
+    audio_command(0x23);
+    audio_command(0x24);
+    audio_command(0x2E);
     if ((u8) game_state.current_girl < GIRL_SAKI) {
-        snd_command(0x202);
+        audio_command(0x202);
     } else {
-        snd_command(0x201);
+        audio_command(0x201);
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135220(void) {
-    snd_command(0x24);
-    snd_command(0x501);
-    main_step_next();
+    audio_command(0x24);
+    audio_command(0x501);
+    mode_step_next();
 }
 
 void func_80135250(void) {
     game_state.girls[game_state.current_girl].affection = 0x46;
     D_80139ADC = 3;
     func_801349D4();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801352A4(void) {
@@ -484,7 +484,7 @@ void func_801352A4(void) {
         bg_read_sub2(0x4296);
         strcpy(D_800CA19C, "グランド");
     }
-    main_step_next();
+    mode_step_next();
 }
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.rodata", D_8013980C);
@@ -493,13 +493,13 @@ void func_80135314(void) {
     bg_read_sub2(0x42C6);
     event_log_add(0xE, 0xB);
     strcpy(D_800CA1DC, &D_8013980C);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013535C(void) {
     bg_read_sub2(0x429F);
     event_log_add(0xE, 0xC);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135390(void) {
@@ -509,9 +509,9 @@ void func_80135390(void) {
         D_80139AE4 = 0;
     }
     func_80133EF8();
-    if ((D_80139AE0 == 3) && (game_state.step_timer.w++ == 0)) {
+    if ((D_80139AE0 == 3) && (game_state.mode_step_timer.w++ == 0)) {
         if (game_state.current_girl == GIRL_NOZOMI) {
-            snd_command(0x503);
+            audio_command(0x503);
             func_80047550();
         }
     }
@@ -521,51 +521,51 @@ void func_80135390(void) {
 void func_80135438(void) {
     game_state.girls[game_state.current_girl].flags.f.met = 1;
     game_state.girls[game_state.current_girl].flags.f.b2 = 1;
-    main_stage_next();
+    mode_stage_next();
 }
 
 void func_801354AC(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        bustup_read_start(0x55DF);
+        portrait_read_start(0x55DF);
         break;
     case GIRL_MIO:
-        bustup_read_start(0x5F03);
+        portrait_read_start(0x5F03);
         break;
     case GIRL_YUINA:
-        bustup_read_start(0x53C3);
+        portrait_read_start(0x53C3);
         break;
     case GIRL_AYAKO:
-        bustup_read_start(0x5A71);
+        portrait_read_start(0x5A71);
         break;
     case GIRL_SAKI:
-        bustup_read_start(0x68AE);
+        portrait_read_start(0x68AE);
         break;
     case GIRL_YUKARI:
-        bustup_read_start(0x61A6);
+        portrait_read_start(0x61A6);
         break;
     case GIRL_NOZOMI:
-        bustup_read_start(0x641C);
+        portrait_read_start(0x641C);
         break;
     default:
-        bustup_read_start(0x69BC);
+        portrait_read_start(0x69BC);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135570(void) {
     switch (game_state.current_girl) {
     case GIRL_MIO:
-        bustup_read_start(0x5F30);
+        portrait_read_start(0x5F30);
         break;
     case GIRL_AYAKO:
-        bustup_read_start(0x5A9E);
+        portrait_read_start(0x5A9E);
         break;
     default:
-        main_step_next();
-        main_step_next();
+        mode_step_next();
+        mode_step_next();
         break;
     }
-    main_step_next();
+    mode_step_next();
 }

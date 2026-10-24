@@ -59,7 +59,7 @@ void func_80138784(void) {
         func_80139D34();
         break;
     default:
-        voice_play();
+        talk_voice_play();
         break;
     }
     func_8008A148();

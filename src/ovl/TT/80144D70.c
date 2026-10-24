@@ -23,15 +23,15 @@ void func_80144D70(void) {
     r = g->unk_02;
     switch (r) {
     case 0x0:
-        snd_command(0x22);
-        snd_command(0x2F);
+        audio_command(0x22);
+        audio_command(0x2F);
         func_8014AF3C();
         func_80132F4C();
         func_80133B70();
         g->unk_11 = 0;
         if (ctl[0xB] < 3) {
-            snd_command(4);
-            snd_command(0x202);
+            audio_command(4);
+            audio_command(0x202);
             r = ctl[0xB];
             switch (r) {
             case 0:
@@ -57,8 +57,8 @@ void func_80144D70(void) {
             func_8014304C(0x801C2000, 0xBF9C, 0x1A680);
             pool->x = -0x38;
         } else {
-            snd_command(4);
-            snd_command(0x200);
+            audio_command(4);
+            audio_command(0x200);
             pool->x = -0x20;
         }
         pool->y = 0x74;

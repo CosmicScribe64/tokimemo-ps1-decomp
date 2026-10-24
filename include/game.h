@@ -22,8 +22,8 @@ typedef struct SaveConfigBlock {
     /* 0x010 */ WordView flags; /* HYPOTHESIS: 0x14-byte settings record copied by the save routines; protection flag in the last byte */
 } SaveConfigBlock; /* size 0x14 */
 
-typedef struct SaveTacoSettings {
-    /* 0x000 */ TacoSettingsBits bits;
+typedef struct SaveShooterSettings {
+    /* 0x000 */ ShooterSettingsBits bits;
     /* 0x002 */ u8 name0[3];
     /* 0x005 */ u8 name1[3];
     /* 0x008 */ u8 name2[3];
@@ -31,7 +31,7 @@ typedef struct SaveTacoSettings {
     /* 0x00C */ s32 w0;
     /* 0x010 */ s32 w1;
     /* 0x014 */ s32 w2; /* HYPOTHESIS: 0x18-byte copy of SystemData +0x40.. (settings bits, three names, three words) */
-} SaveTacoSettings; /* size 0x18 */
+} SaveShooterSettings; /* size 0x18 */
 
 typedef union SaveAlbumParam {
     /* 0x000 */ AlbumParam metric;
@@ -46,7 +46,7 @@ typedef struct SystemSaveImage {
     /* 0x026 */ u8 selected_slot;
     /* 0x027 */ u8 unk_27;
     /* 0x028 */ SaveConfigBlock config0;
-    /* 0x03C */ SaveTacoSettings config1;
+    /* 0x03C */ SaveShooterSettings config1;
     /* 0x054 */ u8 unk_54[2];
     /* 0x056 */ u8 records[0x800];
     /* 0x856 */ u8 year[16];
@@ -66,7 +66,7 @@ typedef struct SystemSaveImage {
 typedef struct SystemDataSaveView {
     /* 0x000 */ u8 prefix[0x2C];
     /* 0x02C */ SaveConfigBlock config0;
-    /* 0x040 */ SaveTacoSettings config1;
+    /* 0x040 */ SaveShooterSettings config1;
 } SystemDataSaveView; /* size 0x58 */
 
 /* GameState +0xC4..+0x140 (text buffers, +0xF8 and the nine +0xFC records) as the game save
@@ -76,9 +76,9 @@ typedef struct ProfileBlock {
 } ProfileBlock; /* size 0x7C */
 
 /* GameState +0x56C..+0x66C as the game save copies it: one byte-aligned 0x100-byte record. T-25105 */
-typedef struct EventFlagBlock {
+typedef struct SceneFlagBlock {
     /* 0x000 */ u8 b[0x100];
-} EventFlagBlock; /* size 0x100 */
+} SceneFlagBlock; /* size 0x100 */
 
 /* One bank of the memory-card image holding a game save (func_8005557C writes it from GameState;
  * the comments name the source field). T-25105 */
@@ -97,7 +97,7 @@ typedef struct GameSaveImage {
     /* 0x488 */ u8 unk_488[16];         /* unk_53C */
     /* 0x498 */ WordView unk_498[8];      /* unk_54C */
     /* 0x4B8 */ WordView unk_4B8[12];     /* unk_66C */
-    /* 0x4E8 */ EventFlagBlock unk_4E8;     /* unk_56C */
+    /* 0x4E8 */ SceneFlagBlock unk_4E8;     /* unk_56C */
     /* 0x5E8 */ u8 unk_5E8[4];          /* unk_728 */
     /* 0x5EC */ u8 unk_5EC[16];         /* unk_72C */
     /* 0x5FC */ u8 unk_5FC[16];         /* unk_73C */
@@ -122,7 +122,7 @@ typedef struct GameSaveImage {
 typedef struct TextEntry {
     /* 0x00 */ s16 x;
     /* 0x02 */ s16 y;
-    /* 0x04 */ u8 attr;
+    /* 0x04 */ u8 attribute;
     /* 0x05 */ u8 glyph_count;
     /* 0x06 */ u8 extra;
     /* 0x07 */ s8 active;
@@ -130,10 +130,10 @@ typedef struct TextEntry {
 
 /* Stack request of the memory-card file functions (func_80054694, func_80054704): name buffer plus a retry
  * counter; layout read from the frame (counter at +0x20 in func_80054704). */
-typedef struct CardFileRequest {
+typedef struct MemoryCardFileRequest {
     /* 0x00 */ u8 name[32];
     /* 0x20 */ s32 retry;
-} CardFileRequest; /* size 0x24 */
+} MemoryCardFileRequest; /* size 0x24 */
 
 /* Packed icon choice at GameState +0xF68, bits 4..7. */
 typedef struct LastCommandBits {
@@ -174,13 +174,13 @@ typedef struct Actor {
     /* 0x1E */ s16 unk_1E;
     /* 0x20 */ s16 rotation;
     /* 0x22 */ s16 unk_22;
-    /* 0x24 */ s16 x_frac;
+    /* 0x24 */ s16 x_fraction;
     /* 0x26 */ s16 x;
-    /* 0x28 */ s16 y_frac;
+    /* 0x28 */ s16 y_fraction;
     /* 0x2A */ s16 y;
-    /* 0x2C */ s16 dx_frac; /* HYPOTHESIS: x step per frame */
+    /* 0x2C */ s16 dx_fraction; /* HYPOTHESIS: x step per frame */
     /* 0x2E */ s16 dx; /* HYPOTHESIS: integer part of the x step; the parameter panel (parameter_show) also uses it as a 0/1/2 animation phase */
-    /* 0x30 */ s16 dy_frac; /* HYPOTHESIS: y step per frame */
+    /* 0x30 */ s16 dy_fraction; /* HYPOTHESIS: y step per frame */
     /* 0x32 */ s16 dy; /* HYPOTHESIS: integer part of the y step */
     /* 0x34 */ u8 *tpage_table;
     /* 0x38 */ s32 quad_flags;
@@ -223,7 +223,7 @@ typedef struct ActorFixed {
     /* 0x1A */ s16 unk_1A;
     /* 0x1C */ s16 unk_1C;
     /* 0x1E */ s16 unk_1E;
-    /* 0x20 */ s32 unk_20; /* rotate, copied as one word by actors_draw (lw 0x20, T-25606) */
+    /* 0x20 */ s32 unk_20; /* rotate, copied as one word by actor_draw_all (lw 0x20, T-25606) */
     /* 0x24 */ Fix32 x;
     /* 0x28 */ Fix32 y;
     /* 0x2C */ s32 dx;
@@ -238,7 +238,7 @@ typedef struct ActorFixed {
     /* 0x43 */ u8 unk_43;
 } ActorFixed; /* size 0x44 */
 
-/* T-10890: image metadata consumed by bustup_build; eight observed parts. */
+/* T-10890: image metadata consumed by portrait_build; eight observed parts. */
 typedef struct SpritePart {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
@@ -316,7 +316,7 @@ typedef struct NibbleView {
 
 #ifndef TOKIMEMO_SCHEDULE_FLAGS_H
 #define TOKIMEMO_SCHEDULE_FLAGS_H
-/* T-10880: word view at GameState +0xF4 in day_events_build_week.
+/* T-10880: word view at GameState +0xF4 in day_event_queue_build_week.
  * Bit 18 is tested with lw/sll 13/srl 31 and stored through byte +0xF6.
  * Bits 21..23 are a three-bit counter read and decremented through +0xF6.
  * T-20900: also DATE's DateFlag17 and DateFlags0F4 and OPTION's OptionPlayerBits (unk_08, unk_12: its f8,
@@ -394,7 +394,7 @@ typedef struct AlbumSlotRecord {
 #ifndef TOKIMEMO_SCHEDULE_GIRL_FLAGS_H
 #define TOKIMEMO_SCHEDULE_GIRL_FLAGS_H
 /* Additional views of GirlRecord.unk_0C, used by the scheduling routines. T-10880. */
-typedef struct GirlFlagBitsSched {
+typedef struct ScheduleGirlFlagBits {
     /* 0x00 */ u32 unk_00 : 16;
     /* 0x00 */ u32 b16 : 1;
     /* 0x00 */ u32 b17 : 1;
@@ -402,7 +402,7 @@ typedef struct GirlFlagBitsSched {
     /* 0x00 */ u32 unk_19 : 1;
     /* 0x00 */ u32 unk_20 : 4;
     /* 0x00 */ u32 unk_24 : 8;
-} GirlFlagBitsSched; /* size 0x04 */
+} ScheduleGirlFlagBits; /* size 0x04 */
 #endif
 
 #ifndef GAME_T10880_CALL_PAIRS

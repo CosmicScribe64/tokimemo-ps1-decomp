@@ -92,8 +92,8 @@ s32 func_80134A18(void) {
 
 
 void func_80134D8C(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_80134EBC();
         break;
@@ -115,16 +115,16 @@ void func_80134D8C(void) {
     }
     func_80134A18();
     func_8013506C();
-    if (game_state.stage_timer == 0xA0) {
+    if (game_state.mode_stage_timer == 0xA0) {
         func_801335A0(0, 0x504);
     }
-    if (game_state.stage_timer == 0x40) {
+    if (game_state.mode_stage_timer == 0x40) {
         func_801335A0(0, 0x505);
     }
-    if (game_state.stage_timer == 0x80) {
+    if (game_state.mode_stage_timer == 0x80) {
         func_801335A0(0, 0x506);
     }
-    if (game_state.stage_timer == 0xC0) {
+    if (game_state.mode_stage_timer == 0xC0) {
         func_801335A0(0, 0x507);
     }
 }
@@ -139,7 +139,7 @@ void func_80134EBC(void) {
     game_state.clear_color_b = 0;
     func_80059048();
     draw2d3d(1, 1);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     k_reset(0);
     StoreSquare(0, 0x1EF, 0x100, 1, &game_state.scratch_words[0]);
     for (i = 56; i < 72; i++) {
@@ -151,7 +151,7 @@ void func_80134EBC(void) {
     load_palette(&game_state.scratch_words[0], 0x1F, 1, 1, 0);
     func_80134FB8();
     func_80134930();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80134FB8(void) {
@@ -160,9 +160,9 @@ void func_80134FB8(void) {
     D_8011ED4C = 0;
     D_8011ED16 = 0x40;
     D_8011ED17 = 0x84;
-    D_8011ED20 = game_state.overlay_frame_table;
-    D_8011ED24 = game_state.overlay_sequence_table;
-    D_8011ED48 = game_state.overlay_tpage_table;
+    D_8011ED20 = game_state.ovl_frame_table;
+    D_8011ED24 = game_state.ovl_sequence_table;
+    D_8011ED48 = game_state.ovl_tpage_table;
     D_8011ED18 = 8;
     D_8011ED19 = 0x81;
     D_8011ED57 = 0xF;
@@ -203,7 +203,7 @@ s32 func_8013515C(void) {
     for (i = 56; i < 72; i++) {
         if (game_state.scratch_words[i] == 0) {
             if ((rand() & 0xFF) < 0x7F && n == 0) {
-                game_state.scratch_words[i] = ((s32 *)game_state.overlay_palette_a)[i];
+                game_state.scratch_words[i] = ((s32 *)game_state.ovl_palette_a)[i];
             } else {
                 n++;
             }
@@ -214,46 +214,46 @@ s32 func_8013515C(void) {
 }
 
 void func_80135220(void) {
-    if ((u32)game_state.step_timer.w >= 0xD1U) {
-        main_step_next();
+    if ((u32)game_state.mode_step_timer.w >= 0xD1U) {
+        mode_step_next();
     } else if (game_state.pad_pressed & 0x860) {
-        main_step_set(5);
+        mode_step_set(5);
     }
 }
 
 void func_80135278(void) {
     if (func_8013515C() == 0) {
-        main_step_next();
+        mode_step_next();
     } else if (game_state.pad_pressed & 0x860) {
-        main_step_set(5);
+        mode_step_set(5);
     }
 }
 
 void func_801352CC(void) {
-    if ((u32)game_state.step_timer.w < 0xFFU) {
+    if ((u32)game_state.mode_step_timer.w < 0xFFU) {
         if (game_state.pad_pressed != 0) {
-            main_step_set(5);
+            mode_step_set(5);
             return;
         }
-        func_8004AC18(0xFF - game_state.step_timer.w);
+        func_8004AC18(0xFF - game_state.mode_step_timer.w);
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135330(void) {
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135350(void) {
     func_80059048();
-    load_palette(game_state.overlay_palette_a, 0x1F, 1, 1, 0);
-    main_stage_set(3);
+    load_palette(game_state.ovl_palette_a, 0x1F, 1, 1, 0);
+    mode_stage_set(3);
 }
 
 void func_80135394(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_80135418();
         break;
@@ -273,7 +273,7 @@ void func_80135418(void) {
     func_80134FB8();
     D_8011ED1B = 0x40;
     D_8011ED3E = -0x78;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013546C(void) {
@@ -297,11 +297,11 @@ void func_8013546C(void) {
     }
     if (game_state.pad_pressed & 0x820) {
         func_801335A0(0, 0x501);
-        main_step_next();
+        mode_step_next();
     }
     func_8013555C();
-    if ((u32) game_state.stage_timer >= 0x385U) {
-        main_stage_set(6);
+    if ((u32) game_state.mode_stage_timer >= 0x385U) {
+        mode_stage_set(6);
     }
 }
 
@@ -328,29 +328,29 @@ s32 func_8013555C(void) {
 
 /* The switch reads D_8015EDE8 as an unsigned byte, as func_8013555C does. T-16560 */
 s32 func_80135638(void) {
-    if ((u32) game_state.step_timer.u >= 0x41U) {
+    if ((u32) game_state.mode_step_timer.u >= 0x41U) {
         switch (*(u8 *)&D_8015EDE8) {
         case 0:
-            main_stage_set(0xA);
+            mode_stage_set(0xA);
             break;
         case 1:
-            main_stage_set(4);
+            mode_stage_set(4);
             break;
         case 2:
-            main_stage_set(5);
+            mode_stage_set(5);
             break;
         case 3:
-            main_stage_set(7);
+            mode_stage_set(7);
             break;
         case 4:
-            main_stage_set(0x2E);
+            mode_stage_set(0x2E);
             break;
         }
     }
-    if (game_state.stage != 3) {
-        actors_draw_enable(0);
+    if (game_state.mode_stage != 3) {
+        actor_draw_enable(0);
     }
-    if (game_state.step_timer.u & 4) {
+    if (game_state.mode_step_timer.u & 4) {
         func_8013555C();
     }
 }

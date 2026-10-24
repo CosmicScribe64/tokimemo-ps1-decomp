@@ -100,7 +100,7 @@ void func_80142A80(void) {
     func_80041168(0);
     func_8009C674(0);
     func_80048DD0(0);
-    main_state_set(MODE_TITLE);
+    game_mode_set(MODE_TITLE);
     func_8004ADAC((s32) sp43);
     k_speed_set((u8) sp3C);
     func_8006C760(0);
@@ -128,7 +128,7 @@ void func_80142E24(void) {
     case 0:
         game_state.screen_brightness = 0x80;
         draw2d3d(1, 0);
-        actors_draw_enable(1);
+        actor_draw_enable(1);
         cursor_show(0);
         func_80048DD0(0);
         actor_clear_upper();
@@ -138,13 +138,13 @@ void func_80142E24(void) {
         game_state.clear_color_g = 0;
         game_state.clear_color_r = 0;
         game_state.clear_color_b = 0;
-        snd_command(0x7F);
-        snd_bank_load_start(1, 0xC592, 0xC580, 0xCFA7, 0xCF8B, 0xCF83);
+        audio_command(0x7F);
+        audio_bank_load_start(1, 0xC592, 0xC580, 0xCFA7, 0xCF8B, 0xCF83);
         game_state.substep = game_state.substep + 1;
         return;
     case 1:
-        if (snd_bank_load_poll() == 1) {
-            snd_bank_start(1, 0);
+        if (audio_bank_load_poll() == 1) {
+            audio_bank_start(1, 0);
             cd_read_sectors(0x21U, 0x80180000, 0x9FD5);
             game_state.substep = game_state.substep + 1;
             return;
@@ -232,7 +232,7 @@ void func_80142E24(void) {
     case 13:
         if (cd_read_sync_status() & 1) {
             cd_audio_request_set(0x06000BC8, 0x11000CBA, 0xF);
-            snd_command(0x300);
+            audio_command(0x300);
             text_system_reset();
             set_kanji_string(-0x90, 0x14, 0, "始まりがあれば終わりがあるように、", 0);
             set_kanji_string(-0x90, 0x24, 0, "出会いがあればまた、別れもあるのです。", 0);
@@ -243,7 +243,7 @@ void func_80142E24(void) {
             k_disp_switch(1, 0);
             k_disp_switch(2, 0);
             k_disp_switch(3, 0);
-            main_step_next();
+            mode_step_next();
         }
         break;
     }
@@ -252,7 +252,7 @@ void func_80142E24(void) {
 void func_80143498(void) {
     if ((cd_audio_state() & 2) && D_8014D170 == 0) {
         cd_audio_request_set(0x06000CBB, 0x12000E0C, 0xF);
-        snd_command(0x300);
+        audio_command(0x300);
         text_system_reset();
         set_kanji_string(-0x90, 0x14, 0, "ここ、きらめき高校には、", 0);
         set_kanji_string(-0x90, 0x24, 0, "一つの伝説があります。", 0);
@@ -407,7 +407,7 @@ void func_80143580(void) {
     case 8:
         if ((game_state.frame_count & 3) == 3) {
             if (sprite_quads[0].x-- < -0x160) {
-                snd_command(0xD1);
+                audio_command(0xD1);
                 text_system_reset();
                 cd_read_sectors(0x31U, 0x80180000U, 0xA017);
                 ((BgLayer *)&bg_layers)[0].unk_10 = 0;
@@ -465,17 +465,17 @@ void func_80143580(void) {
             ((Actor *)actor_pool)[i].unk_05 = 0x80;
             ((Actor *)actor_pool)[i].x = -0xA0;
             ((Actor *)actor_pool)[i].y = -0x78;
-            game_state.step_timer.u = 0;
+            game_state.mode_step_timer.u = 0;
             game_state.substep++;
         }
         break;
     case 12:
-        if (game_state.step_timer.u == 0xC8) {
+        if (game_state.mode_step_timer.u == 0xC8) {
             D_80120652 |= 1;
         }
         if (((BgLayer *)&bg_layers)[1].unk_10 != 0) {
             func_8004AC18(((BgLayer *)&bg_layers)[1].unk_10--);
-        } else if ((u32) game_state.step_timer.u >= 0x12DU) {
+        } else if ((u32) game_state.mode_step_timer.u >= 0x12DU) {
             game_state.substep++;
         } else if (!(D_80120652 & 1)) {
             game_state.substep++;
@@ -506,17 +506,17 @@ void func_80143580(void) {
         actor_clear_upper();
         text_system_reset();
         cd_audio_request_set(0x39D, 0x060003A9, 0xF);
-        snd_command(0x300);
+        audio_command(0x300);
         text_system_reset();
         set_kanji_string(-0x90, 0x44, 0, "あなたが…、", 0);
         k_disp_start(1);
         k_disp_switch(0, 0);
-        game_state.step_timer.u = 0;
+        game_state.mode_step_timer.u = 0;
         game_state.substep++;
         break;
     case 14:
         if (cd_audio_state() & 4) {
-            game_state.step_timer.u = 0;
+            game_state.mode_step_timer.u = 0;
             game_state.substep++;
         }
         break;
@@ -525,9 +525,9 @@ void func_80143580(void) {
         func_80144908();
         if (game_state.pad_pressed & 0xFFFF) {
             game_state.substep++;
-        } else if ((u32) game_state.step_timer.u >= 0x101U) {
+        } else if ((u32) game_state.mode_step_timer.u >= 0x101U) {
             game_state.substep++;
-        } else if ((cd_audio_state() & 2) && ((u32) game_state.step_timer.u >= 0x79U)) {
+        } else if ((cd_audio_state() & 2) && ((u32) game_state.mode_step_timer.u >= 0x79U)) {
             game_state.substep++;
         }
         break;
@@ -561,7 +561,7 @@ void func_80143580(void) {
         ((Actor *)actor_pool)[i].unk_05 = 0x80;
         ((Actor *)actor_pool)[i].x = -0xA0;
         ((Actor *)actor_pool)[i].y = -0x78;
-        game_state.step_timer.u = 0;
+        game_state.mode_step_timer.u = 0;
         game_state.substep++;
         if (game_state.current_girl >= 0x11U) {
             game_state.current_girl = (game_state.current_girl & 0xF) + 0x10;
@@ -573,34 +573,34 @@ void func_80143580(void) {
             set_kanji_string(-0x90, 0x44, 0, "す・き・で・す", 0);
             k_disp_start(1);
             k_disp_switch(0, 0);
-            snd_command(0x300);
+            audio_command(0x300);
         }
         break;
     case 17:
         if (game_state.current_girl == 0x10) {
-            if ((cd_audio_state() & 4) && ((u32) game_state.step_timer.u >= 0x21U)) {
+            if ((cd_audio_state() & 4) && ((u32) game_state.mode_step_timer.u >= 0x21U)) {
                 D_80120652 = 3;
                 D_80120668 = 1;
-                game_state.step_timer.u = 0;
+                game_state.mode_step_timer.u = 0;
                 game_state.substep++;
             }
         } else {
             D_80120652 = 3;
             D_80120668 = 1;
             game_state.substep++;
-            game_state.step_timer.u = 0;
+            game_state.mode_step_timer.u = 0;
         }
         break;
     case 18:
-        if ((u32) game_state.step_timer.u >= 0x41U) {
-            game_state.step_timer.u = 0;
+        if ((u32) game_state.mode_step_timer.u >= 0x41U) {
+            game_state.mode_step_timer.u = 0;
             game_state.substep++;
         }
         break;
     case 19:
-        func_8004AC18((s32) game_state.step_timer.u);
-        if ((u32) game_state.step_timer.u >= 0xFFU) {
-            main_step_next();
+        func_8004AC18((s32) game_state.mode_step_timer.u);
+        if ((u32) game_state.mode_step_timer.u >= 0xFFU) {
+            mode_step_next();
         }
         break;
     }
@@ -632,7 +632,7 @@ void func_8014472C(void) {
     } else {
         level = 0;
         if (((u32)game_state.pad_held >> 16) != 0) {
-            level = game_state.stage_timer & 0x3F;
+            level = game_state.mode_stage_timer & 0x3F;
         }
     }
     D_80125C80[game_state.frame_count & 3] = level;
@@ -685,18 +685,18 @@ void func_80144908(void) {
 
 void func_801449DC(void) {
     func_8004AC18(0xFF);
-    cd_cmd_reset();
+    cd_command_reset();
     func_80041168(0);
     sprite_tables_clear();
     func_80048DD0(0);
-    snd_command(0x71);
-    snd_command(0x7F);
-    main_stage_next();
+    audio_command(0x71);
+    audio_command(0x7F);
+    mode_stage_next();
 }
 
 void func_80144A34(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_80142E24();
         break;
@@ -708,6 +708,6 @@ void func_80144A34(void) {
         break;
     }
     if (game_state.pad_pressed & 0x860) {
-        main_step_set(2);
+        mode_step_set(2);
     }
 }

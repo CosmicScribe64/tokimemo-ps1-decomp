@@ -59,7 +59,7 @@ void func_8013A2F4(void) {
     case 4:
         switch (D_801474B0) {
         case 0:
-            voice_play();
+            talk_voice_play();
             break;
         case 1:
             func_8013C4D0();
@@ -86,13 +86,13 @@ void func_8013A2F4(void) {
             func_8013A920();
             break;
         case 9:
-            voice_play();
+            talk_voice_play();
             break;
         case 10:
             func_8013DB50();
             break;
         default:
-            voice_play();
+            talk_voice_play();
             break;
         }
         break;
@@ -100,7 +100,7 @@ void func_8013A2F4(void) {
         func_8013A4E8();
         break;
     default:
-        voice_play();
+        talk_voice_play();
         break;
     }
     func_8008A148();

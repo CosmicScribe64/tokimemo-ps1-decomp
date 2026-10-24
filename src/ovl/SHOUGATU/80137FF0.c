@@ -30,12 +30,12 @@ void func_8013808C(void) {
     FnTbl20 tbl;
 
     tbl = D_80144F14;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
     if (D_80144E08 == 1) {
         if (D_80144E0C == 8) {
-            if (game_state.step_timer.w++ == 0) {
-                snd_command(0x500);
+            if (game_state.mode_step_timer.w++ == 0) {
+                audio_command(0x500);
             }
         }
     }
@@ -44,9 +44,9 @@ void func_8013808C(void) {
 s32 func_80138158(void) {
     func_80137AB4();
     if (D_80144E0C == 2) {
-        if (game_state.step_timer.w++ == 1) {
-            snd_command(0x24);
-            snd_command(0x501);
+        if (game_state.mode_step_timer.w++ == 1) {
+            audio_command(0x24);
+            audio_command(0x501);
         }
     }
 }
@@ -56,7 +56,7 @@ void func_801381B8(void) {
     FnTbl20 tbl;
 
     tbl = D_80144F64;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
@@ -65,41 +65,41 @@ void func_80138240(void) {
     FnTbl37 table;
 
     table = D_80144FB4;
-    idx = game_state.step;
-    if (D_80144F10 == 0 && game_state.step >= 0x13 && game_state.step < 0x1C) {
+    idx = game_state.mode_step;
+    if (D_80144F10 == 0 && game_state.mode_step >= 0x13 && game_state.mode_step < 0x1C) {
         func_8004A414(0x60, -0x10, 0x30, 8, 8, 0xD);
     }
-    if (D_80144F10 == 1 && game_state.step >= 0x13 && game_state.step < 0x1C) {
+    if (D_80144F10 == 1 && game_state.mode_step >= 0x13 && game_state.mode_step < 0x1C) {
         func_8004A414(-0x3C, -0x20, 0x20, 8, 8, 0xD);
     }
-    idx = game_state.step;
+    idx = game_state.mode_step;
     table.f[idx]();
 }
 
 void func_80138354(void) {
     func_80137AB4();
-    if (game_state.step_timer.w++ == 0) {
+    if (game_state.mode_step_timer.w++ == 0) {
         if (D_80144E0C == 3) {
-            snd_command(0x500);
+            audio_command(0x500);
         }
     }
 }
 
 void func_801383AC(void) {
-    snd_command(0x500);
-    main_step_next();
+    audio_command(0x500);
+    mode_step_next();
 }
 
 void func_801383D4(void) {
-    snd_command(0x501);
-    main_step_next();
+    audio_command(0x501);
+    mode_step_next();
 }
 
 void func_801383FC(void) {
     if (D_80144F10 != 0) {
         D_80144E08 += 1;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013843C(void) {
@@ -107,7 +107,7 @@ void func_8013843C(void) {
     FnTbl30 tbl;
 
     tbl = D_80145048;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
@@ -116,7 +116,7 @@ void func_801384B0(void) {
     FnTbl24 tbl;
 
     tbl = D_801450C0;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
@@ -125,13 +125,13 @@ void func_80138524(void) {
     FnTbl20 tbl;
 
     tbl = D_80145120;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
 void func_801385AC(void) {
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -139,7 +139,7 @@ void func_801385AC(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dialogue_clear();
+    talk_clear();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
     D_800B5940 = 0;
@@ -147,7 +147,7 @@ void func_801385AC(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dialogue_names_set(*(u8 *)&game_state.current_girl = 2);
+    talk_names_set(*(u8 *)&game_state.current_girl = 2);
     func_80136F90();
     D_80144DFC = D_80144D94;
     D_80144E00 = D_80144DB8;
@@ -157,21 +157,21 @@ void func_801385AC(void) {
     } else {
         D_80144F10 = 0;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801386CC(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "教室");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138710(void) {
     D_80144E08 = 3;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "教室");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138758(void) {
@@ -190,7 +190,7 @@ void func_80138758(void) {
     D_80144E0C = 0;
     strcpy(D_800CA19C, "廊下");
     strcpy(D_800CA1DC, "実験室");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138868(void) {
@@ -199,7 +199,7 @@ void func_80138868(void) {
     D_80144E0C = 0;
     strcpy(D_800CA19C, "教室");
     strcpy(D_800CA1DC, "実験室");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801388F0(void) {
@@ -207,7 +207,7 @@ void func_801388F0(void) {
     D_80144E08 = 0x12;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "実験室");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138964(void) {
@@ -215,17 +215,17 @@ void func_80138964(void) {
     D_80144E08 = 0x17;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "実験室");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801389D8(void) {
     bg_read_sub2(0x405F);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138A00(void) {
     bg_read_sub2(0x403B);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138A28(void) {
@@ -234,29 +234,29 @@ void func_80138A28(void) {
     } else {
         bg_read_sub2(0x40C6);
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138A6C(void) {
     bg_read_sub2(0x40C6);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138A94(void) {
     bg_read_sub2(0x40D0);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138ABC(void) {
     if (D_80144F10 != 0) {
         D_80144E08 += 1;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80138AFC(void) {
     if (D_80144F10 == 0) {
         D_80144E08 += 1;
     }
-    main_step_next();
+    mode_step_next();
 }

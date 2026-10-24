@@ -121,6 +121,7 @@ The 21 date places, ids 0-20 in the order of `date_place_names` (DATE). Kirameki
 | term | meaning | stem | K/T | source |
 |---|---|---|---|---|
 | Kirameki | the town and the school | `kirameki` | K | strings |
+| place | one of the 21 date places, id 0-20 (enum `Place`) | `place` | T | code (`place_name_table`) |
 | neighborhood park | place 0 | `neighborhood_park` | T | strings |
 | Kirameki Central Park | place 1 | `central_park` | T | strings |
 | shopping street | place 2 | `shopping_street` | T | strings |
@@ -216,12 +217,16 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 
 | term | meaning | stem | K/T | source |
 |---|---|---|---|---|
-| main state | the game mode byte (GameState 0x1108) that selects the screen or overlay; the patch name `main_state_set` becomes `game_mode_set` | `game_mode` | T | patch (`main_state_set`), code |
+| main state | the game mode byte (GameState 0x1108) that selects the screen or overlay; the patch name `main_state_set` is now `game_mode_set` | `game_mode` | T | patch (`main_state_set`), code |
+| game state | the GameState record at `D_800E6280`: calendar, names, parameters, girl records, day-event queue, mode and input words | `game_state` | T | code (`wiki/game-state.md`) |
+| system data | the SystemData record right after GameState (saved settings, random seed) | `system_data` | T | code |
+| actor | one of the 160 display objects (type `Actor`) that the draw pass turns into sprite quads; actors 0, 2, 3.. and 96-159 are reused by scenes | `actor` | T | code (`actor_pool`) |
+| sound driver | the SPU sound driver with its command queue, bank loads and work area; the driver's own names are not SDK names | `audio` | T | code, sound |
 | stage, step | the two bytes after the game mode that a mode's code steps through | `mode_stage`, `mode_step` | T | code |
 | overlay | an `.EXN` file loaded into the shared code slot | `ovl` | T | O.BIN, patch (`ovl_load_*`) |
 | scene | a scripted sequence that an overlay plays | `scene` | T | code |
 | menu mode | the cursor control setting (mouse-like, A, B, mouse and A) | `menu_mode` | T | strings, code |
-| bustup | a character portrait sprite | `portrait` | T | O.BIN (`bustup_*`) |
+| bustup | a character portrait sprite; only the 8 O.BIN names keep the stem `bustup_` | `portrait` | T | O.BIN (`bustup_*`) |
 | SD | a super-deformed (small, big-headed) character sprite | `sd` | K | disc (`*_SD`), O.BIN (`addr_init_*_sd`) |
 | event face | a girl's face picture in a scene | `event_face` | T | O.BIN (`ev_*`) |
 | kuchi | a mouth picture of an event face | `mouth` | T | O.BIN |
@@ -246,7 +251,7 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | BGM, SE | music tracks and sound effects | `bgm`, `se` | K | sound |
 | johoshi | the information magazine | `magazine` | T | O.BIN |
 
-Developer abbreviations not resolved yet (`srn`, `mod`, `dtd`, `don`, `tarao`, `Sw_`, `Hw_`) keep their O.BIN form until the code shows what they mean.
+Developer abbreviations not resolved yet (`srn`, `mod`, `csr`, `dtd`, `don`, `tarao`, `Sw_`, `Hw_`) keep their O.BIN form until the code shows what they mean.
 
 ## Mini games
 
@@ -286,6 +291,8 @@ or of a stem for one of its scenes.
 | `boot` | startup | main, `80041000`, `800420D0` | plain word |
 | `draw` | 2D drawing | main, `80043510` | plain word |
 | `sprite` | sprites | main, `80047550`, `800490C0` | plain word |
+| `actor` | the display actors of the draw pass | main, `80047550`, `800490C0` | plain word |
+| `audio` | the sound driver | main, `80043510`, `80079B10` | plain word |
 | `color` | color bars and palettes | main, `80049FF0`, `8004AD60` | plain word |
 | `layer` | screen layers | main, `8004C3F0` | plain word |
 | `model` | 3D model transfer | main, `8004C3F0` | plain word |

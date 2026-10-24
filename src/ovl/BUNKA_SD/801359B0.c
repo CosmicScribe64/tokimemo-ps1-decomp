@@ -9,14 +9,14 @@ s32 func_801359B0(void) {
         cd_read_sectors(0x6D, 0x80180000, 0x4F73);
         game_state.substep += 1;
     } else if ((game_state.substep == 1) && (cd_read_sync_status() & 1)) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_80135A2C(void) {
     s32 i;
 
-    if ((game_state.step >= 3) && (game_state.step < 7)) {
+    if ((game_state.mode_step >= 3) && (game_state.mode_step < 7)) {
         if (game_state.pad_held & PAD_CIRCLE) {
             func_80135B44();
             D_80120656 = 0x82;
@@ -36,17 +36,17 @@ void func_80135A2C(void) {
             }
         }
     }
-    if ((game_state.step >= 3) && (game_state.step < 6) && (game_state.pad_held & PAD_CROSS)) {
-        main_step_set(5);
+    if ((game_state.mode_step >= 3) && (game_state.mode_step < 6) && (game_state.pad_held & PAD_CROSS)) {
+        mode_step_set(5);
     }
     func_80135B44();
 }
 
 void func_80135B44(void) {
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_80134260();
         return;
@@ -63,9 +63,9 @@ void func_80135B44(void) {
         func_80135C70();
         return;
     case 5:
-        snd_command(0xC1);
+        audio_command(0xC1);
         k_reset(1);
-        main_step_next();
+        mode_step_next();
         return;
     case 6:
         func_801344A8();
@@ -74,15 +74,15 @@ void func_80135B44(void) {
         func_80134314();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
 
 void func_80135C3C(void) {
-    snd_bank_start(1, 0x201);
+    audio_bank_start(1, 0x201);
     func_80135CD4();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135C70(void) {
@@ -90,11 +90,11 @@ void func_80135C70(void) {
 
     func_80135F38();
     func_801361B8();
-    t = game_state.step_timer.u + 1;
-    game_state.step_timer.u = t;
+    t = game_state.mode_step_timer.u + 1;
+    game_state.mode_step_timer.u = t;
     if (t >= 0x21) {
         if (!(D_80120652 & 1)) {
-            main_step_next();
+            mode_step_next();
         }
     }
 }
@@ -141,73 +141,73 @@ void func_80135CD4(void) {
 }
 
 void func_80135F38(void) {
-    switch ((u32)game_state.step_timer.w) {
+    switch ((u32)game_state.mode_step_timer.w) {
     case 0x92:
-        snd_command(0x503);
+        audio_command(0x503);
         break;
     case 0x175:
-        snd_command(0x503);
+        audio_command(0x503);
         break;
     case 0x205:
-        snd_command(0x503);
+        audio_command(0x503);
         break;
     case 0x293:
-        snd_command(0x503);
+        audio_command(0x503);
         break;
     case 0x45F:
-        snd_command(0x503);
+        audio_command(0x503);
         break;
     case 0x4C3:
-        snd_command(0x503);
+        audio_command(0x503);
         break;
     case 0x529:
-        snd_command(0x503);
+        audio_command(0x503);
         break;
     case 0x269:
-        snd_command(0x507);
+        audio_command(0x507);
         break;
     case 0x3C6:
-        snd_command(0x50B);
+        audio_command(0x50B);
         break;
     case 0x3C7:
-        snd_command(0x506);
+        audio_command(0x506);
         break;
     case 0x3E6:
-        snd_command(0x506);
+        audio_command(0x506);
         break;
     case 0x406:
-        snd_command(0x506);
+        audio_command(0x506);
         break;
     case 0x426:
-        snd_command(0x506);
+        audio_command(0x506);
         break;
     case 0x2DA:
-        snd_command(0x504);
+        audio_command(0x504);
         break;
     case 0x31A:
-        snd_command(0x504);
+        audio_command(0x504);
         break;
     case 0x35A:
-        snd_command(0x504);
+        audio_command(0x504);
         break;
     }
     /* FAKE: (&D_80122EAC)[0] is a non-plain operand, so IDO keeps the constant first in the
      * compares (beq a0,v1); the original probably reads a field of a main-exe aggregate around
      * D_80122EA8 that is not declared yet. T-18100 */
-    if ((&D_80122EAC)[0] != 3 && game_state.step_timer.w == 0x3A7) {
-        snd_command(0x505);
-    } else if ((&D_80122EAC)[0] == 3 && game_state.step_timer.w == 0x39D) {
-        snd_command(0x505);
+    if ((&D_80122EAC)[0] != 3 && game_state.mode_step_timer.w == 0x3A7) {
+        audio_command(0x505);
+    } else if ((&D_80122EAC)[0] == 3 && game_state.mode_step_timer.w == 0x39D) {
+        audio_command(0x505);
     }
 }
 
 void func_801361B8(void) {
-    if (game_state.step_timer.u == 0) {
+    if (game_state.mode_step_timer.u == 0) {
         D_80120652 = 5;
         D_80120696 = 5;
         D_801206DA = 5;
     }
-    if (game_state.step_timer.u == 0x3A6) {
+    if (game_state.mode_step_timer.u == 0x3A6) {
         D_8012071F = 0x80;
         D_8012071E = 5;
         D_80120723 = 0x80;

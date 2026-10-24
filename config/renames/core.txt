@@ -463,3 +463,136 @@ data main D_800B5920 dec_bg_lba_cache 0x800B5920 LBAs of the last backgrounds re
 data main D_800B5C08 mascot_choice 0x800B5C08 HYPOTHESIS: mascot menu result (14 items = 13 girls + none); 0 or >= 14 hides the mascot; saved in the free-icon block (unk_163C[34])
 data main D_8011ECF6 cursor_x 0x8011ECF6 alias label inside actor_pool[0] (x); mouse/pad pointer x
 data main D_8011ECFA cursor_y 0x8011ECFA alias label inside actor_pool[0] (y)
+func main main_step_next mode_step_next 0x8004284C review fix: glossary stem mode_step (was main_step_next); step += 1
+func main main_stage_set mode_stage_set 0x80042908 review fix: glossary stem mode_stage (was main_stage_set)
+func main main_step_set mode_step_set 0x80042940 review fix: glossary stem mode_step (was main_step_set)
+func main main_stage_next mode_stage_next 0x80042808 review fix: glossary stem mode_stage (was main_stage_next)
+func main main_state_next game_mode_next 0x80042798 review fix: glossary row 'main state': stem game_mode (was main_state_next)
+func main main_state_request_overlay game_mode_request_overlay 0x80042960 review fix: stem game_mode (was main_state_request_overlay)
+func main main_state_dispatch game_mode_dispatch 0x80042540 review fix: stem game_mode (was main_state_dispatch); object 80042540 owns game_mode_
+func main main_state_set game_mode_set 0x80042878 review fix: the English-patch name fails the glossary row 'main state': game_mode_set (phase2 re-check list, M1)
+func main main_loop boot_loop 0x80042134 review fix: object 800420D0 owns boot_ (ADR main map); bare main_ is not a prefix
+func main game_reset_to_title game_mode_reset_to_title 0x80046500 review fix: bare game_ is not a prefix; it is the game-mode reset (default branch of the mode switches)
+func main snd_command audio_command 0x80044750 review fix: snd_ is an SDK stem (ADR); audio_ is the sound-driver prefix added to the ADR main map
+func main snd_command_pump audio_command_pump 0x80079B34 review fix: snd_ is an SDK stem; audio_ prefix
+func main snd_bank_load_start audio_bank_load_start 0x80044890 review fix: snd_ is an SDK stem; audio_ prefix
+func main snd_bank_load_poll audio_bank_load_poll 0x80044E8C review fix: snd_ is an SDK stem; audio_ prefix
+func main snd_bank_start audio_bank_start 0x8004500C review fix: snd_ is an SDK stem; audio_ prefix
+func main snd_bank_state_reset audio_bank_state_reset 0x8004482C review fix: snd_ is an SDK stem; audio_ prefix
+func main bustup_read_start portrait_read_start 0x80062CD0 review fix: glossary row 'bustup': stem portrait (only the O.BIN names keep bustup_)
+func main bustup_read_step portrait_read_step 0x800866A0 review fix: stem portrait
+func main bustup_show_checked portrait_show_checked 0x80083474 review fix: stem portrait
+func main bustup_build portrait_build 0x80062DBC review fix: stem portrait
+func main bustup_layout_set portrait_layout_set 0x80083440 review fix: stem portrait
+func main bustup_quad_offsets portrait_quad_offsets 0x80085CD4 HYPOTHESIS: stem portrait; sets quad offsets per girl id of the two portrait quads
+func main bustup_wink_update portrait_wink_update 0x80083808 review fix: stem portrait
+func main dialogue_names_set talk_names_set 0x800847B8 review fix: glossary row 'kaiwa': stem talk
+func main dialogue_clear talk_clear 0x8008585C review fix: stem talk
+func main dialogue_run talk_run 0x80082764 review fix: stem talk (the talk runner)
+func main dialogue_text_step talk_text_step 0x8005215C review fix: stem talk
+func main dialogue_render talk_render 0x80081190 review fix: stem talk (phase2 re-check list, M9)
+func main dialogue_speak_part talk_speak_part 0x8007EF48 review fix: stem talk (phase2 re-check list, M9)
+func main voice_play talk_voice_play 0x80052060 review fix: voice is not a prefix; the voice line belongs to the talk runner (sends sound command 0x300 for a dialogue line)
+func main event_still_show scene_still_show 0x80084E90 review fix: trap word event: a scripted scene picture (callers KANGEI, SHOUGATU) takes scene
+func main event_anim_show scene_anim_show 0x800850D4 review fix: trap word event: scene animation (DATE event scenes) takes scene
+func main icon_bar_update hud_icon_bar_update 0x80065B0C HYPOTHESIS: icon_ is not a prefix; the command icon bar is part of the HUD (hud_)
+func main mascot_update hud_mascot_update 0x80067870 HYPOTHESIS: mascot_ is not a prefix; drawn by the HUD file 800674B0 (hud_)
+func main screen_frame_draw hud_screen_frame_draw 0x80066C08 HYPOTHESIS: screen_ is not a prefix; the screen frame is drawn by the HUD file (hud_)
+func main light_effect_draw sprite_light_effect_draw 0x8006B900 HYPOTHESIS: light_ is not a prefix; layered effect sprites (sprite_)
+func main frame_render draw_frame 0x80043510 review fix: frame_ is not a prefix; file 80043510 owns draw_ (the per-frame draw pass)
+func main screen_shake_update draw_shake_update 0x80047560 review fix: screen_ is not a prefix; it moves the draw origin screen_center_x/y (draw_)
+func main debug_number_show draw_debug_number 0x8004AE28 review fix: debug_ is OPTION's debug_menu_ stem; this draws a number (draw_)
+func main actors_draw_enable actor_draw_enable 0x80048DAC review fix: actor_ added to the ADR main map (sprite module); plural prefix dropped
+func main actors_draw actor_draw_all 0x800476C0 review fix: actor_ prefix; draws every visible actor of the pool
+func main cd_cmd_reset cd_command_reset 0x800452C4 review fix: cmd is not in the abbreviation table
+func main cd_cmd_push cd_command_push 0x80045318 review fix: cmd is not in the abbreviation table
+func main cd_cmd_pump cd_command_pump 0x800455C4 review fix: cmd is not in the abbreviation table
+func main card_start memory_card_start 0x80053CE0 review fix: trap word card: stem memory_card
+func main card_stop memory_card_stop 0x80053D10 review fix: trap word card: stem memory_card
+func main day_events_build_week day_event_queue_build_week 0x8006D7EC review fix: prefix day_event_ (ADR) instead of the plural day_events_
+func main day_events_clear day_event_queue_clear 0x8006CF38 review fix: prefix day_event_ instead of day_events_
+func main ending_start schedule_ending_start 0x80070FD0 review fix: ending_ is the ENDING overlay's prefix (One owner); this is step 1 of the day screen in the scheduler object 8006CB30 (schedule_)
+func main quarter_flags_rotate schedule_quarter_flags_rotate 0x800722C4 review fix: quarter_ is not a prefix; object 8006CB30 owns schedule_
+func main daily_flags_clear day_event_today_clear 0x8007259C review fix: daily_ is not a prefix; clears the per-day queue bits and the day's event count (day_event_)
+func main mode_command_screen schedule_command_screen_handler 0x8005A0B0 review fix: trap word mode: handler of the command screen that ends in schedule_init (mode 0x34)
+func main mode_day_screen schedule_day_screen_handler 0x80070F14 review fix: trap word mode: handler of the day screen (mode 0x31) in object 8006CB30 (schedule_)
+func main mode_boot boot_mode_handler 0x8005A06C review fix: trap word mode: handler of game mode 0x00 (boot_)
+func main mode_title title_mode_handler 0x80062840 review fix: trap word mode: handler of game mode 0x12, title menu object 80061710 (title_)
+func main mode_holiday holiday_mode_handler 0x80075320 review fix: trap word mode: handler of game mode 0x46, days-off object 80075320 (holiday_)
+func main mode_overlay_loader ovl_loader_mode_handler 0x80078A0C review fix: trap word mode: handler of game mode 0x02, loader object 800789E0 (ovl_)
+data main card_block memory_card_block 0x80123120 review fix: trap word card: stem memory_card
+data main cd_cmd_ring cd_command_ring 0x80125130 review fix: cmd is not in the abbreviation table
+data main overlay_entry ovl_entry 0x80123110 review fix: glossary row 'overlay': stem ovl
+data main dialogue_tables talk_tables 0x800CA134 review fix: stem talk
+data main dialogue_group talk_group 0x800CA148 review fix: stem talk
+data main dialogue_line talk_line 0x800CA14C review fix: stem talk
+data main dialogue_text_table talk_text_table 0x800CA160 review fix: stem talk
+data main dialogue_command_table talk_command_table 0x800CA164 review fix: stem talk
+data main dialogue_voice_table talk_voice_table 0x800CA168 review fix: stem talk
+data main dialogue_work talk_work 0x80122CD0 review fix: stem talk
+data main name_buf_family name_code_family 0x800CA16C review fix: glossary row 'name codes': stem name_code
+data main name_buf_given name_code_given 0x800CA174 review fix: stem name_code
+data main name_buf_player_form name_code_player_form 0x800CA17C review fix: stem name_code
+data main name_buf_girl_short name_code_girl_short 0x800CA188 review fix: stem name_code
+data main parameter_name_table param_name_table 0x800B331C review fix: glossary row 'parameter': stem param
+data main command_deltas school_day_command_deltas 0x800B68E0 review fix: command_ is not a prefix; read only by the school-day object 800737A0 (school_day_)
+data main phone_numbers girl_phone_digits 0x800B3778 review fix: phone_ is the TEL overlay's prefix (One owner); 13 rows of 7 digits, one per girl (girl_)
+data main last_screen_mode dec_bg_last_screen_mode 0x800B5948 review fix: last_ is not a prefix; selects the dec_bg draw variant (read in the MDEC background object 80057390)
+data main mascot_choice hud_mascot_choice 0x800B5C08 HYPOTHESIS: mascot_ is not a prefix; read by hud_mascot_update
+type main DialogueWork TalkWork - review fix: stem talk (phase2 re-check list, M9)
+type main DialogueTables TalkTables - review fix: stem talk
+type main DialogueVoiceRef TalkVoiceRef - review fix: stem talk
+type main DialogueSelectors TalkSelectors - review fix: stem talk
+type main CardFileRequest MemoryCardFileRequest - review fix: trap word card: stem memory_card
+type main EventFlagBlock SceneFlagBlock - review fix: trap word event: the block holds the one-shot scene flags (field scene_flags)
+type main TacoSettingsBits ShooterSettingsBits - review fix: TACO's stem is shooter (disc name Taco is not a stem)
+type main SaveTacoSettings SaveShooterSettings - review fix: TACO's stem is shooter
+type main GirlFlagBitsSched ScheduleGirlFlagBits - review fix: sched is not in the abbreviation table
+type main PlayerFlagsHiBits PlayerFlagsUpperBits - review fix: hi is not in the abbreviation table
+field GameState mode game_mode - review fix: trap word mode: stem game_mode; set by game_mode_set, dispatched by game_mode_dispatch
+field GameState stage mode_stage - review fix: glossary row 'stage, step': mode_stage
+field GameState step mode_step - review fix: glossary row 'stage, step': mode_step
+field GameState mode_timer game_mode_timer - review fix: stem game_mode
+field GameState stage_timer mode_stage_timer - review fix: stem mode_stage
+field GameState step_timer mode_step_timer - review fix: stem mode_step
+field GameState mode_scratch game_mode_scratch - review fix: stem game_mode
+field GameState stage_scratch mode_stage_scratch - review fix: stem mode_stage
+field GameState saved_mode saved_game_mode - review fix: stem game_mode
+field GameState saved_stage saved_mode_stage - review fix: stem mode_stage
+field GameState saved_step saved_mode_step - review fix: stem mode_step
+field GameState overlay_target_mode ovl_target_game_mode - review fix: glossary row 'overlay': stem ovl; stem game_mode
+field GameState overlay_tpage_table ovl_tpage_table - review fix: stem ovl
+field GameState overlay_frame_table ovl_frame_table - review fix: stem ovl
+field GameState overlay_sequence_table ovl_sequence_table - review fix: stem ovl
+field GameState overlay_palette_a ovl_palette_a - review fix: stem ovl
+field GameState overlay_image_buffer ovl_image_buffer - review fix: stem ovl
+field GameState overlay_palette_b ovl_palette_b - review fix: stem ovl
+field GameState card_busy memory_card_busy - review fix: trap word card: stem memory_card
+field GameState card_result memory_card_result - review fix: stem memory_card
+field GameState card_job memory_card_job - review fix: stem memory_card
+field GameState card_step memory_card_step - review fix: stem memory_card
+field GameState card_retry_count memory_card_retry_count - review fix: stem memory_card
+field GameState card_timer memory_card_timer - review fix: stem memory_card
+field GameState event_flags scene_flags - review fix: trap word event: one-shot scene bytes indexed by the scene number
+field GameState events_today day_event_count_today - review fix: trap word event: counts the day-event records run today
+field GameState daily_event_bits day_event_done_bits - review fix: trap word event: per-day done bits of the day-event queue reader
+field GameState girl_event_bits girl_scene_bits - HYPOTHESIS: trap word event: GEKO tests and sets bits for its scenes
+field GameState appt_place_0 appointment_place_0 - review fix: appt is not in the abbreviation table
+field GameState appt_place_1 appointment_place_1 - review fix: appt is not in the abbreviation table
+field GameState appt_place_2 appointment_place_2 - review fix: appt is not in the abbreviation table
+field GameState appt_place_3 appointment_place_3 - review fix: appt is not in the abbreviation table
+field GameState actors_draw_enabled actor_draw_enabled - review fix: follows actor_draw_enable
+field GameState player_flags_hi player_flags_upper - review fix: hi is not in the abbreviation table
+field GameState frame_hcount_limit frame_scanline_limit - HYPOTHESIS: hcount is not in the abbreviation table; scanline count the frame waits for
+field GameState tpage_req tpage_slot_state - review fix: req is not in the abbreviation table; 64 per-frame texture-page slot states
+field GirlRecord tokimeki_frac tokimeki_fraction - review fix: frac is not in the abbreviation table
+field GirlRecord affection_frac affection_fraction - review fix: frac is not in the abbreviation table
+field GirlRecord syoushin_frac syoushin_fraction - review fix: frac is not in the abbreviation table
+field GirlRecord event_counters scene_counters - HYPOTHESIS: trap word event: per-girl progress bytes indexed by the scene number
+field ParamValue frac fraction - review fix: frac is not in the abbreviation table
+field Actor x_frac x_fraction - review fix: frac is not in the abbreviation table
+field Actor y_frac y_fraction - review fix: frac is not in the abbreviation table
+field Actor dx_frac dx_fraction - HYPOTHESIS: frac is not in the abbreviation table; x step per frame
+field Actor dy_frac dy_fraction - HYPOTHESIS: frac is not in the abbreviation table; y step per frame
+field TextEntry attr attribute - review fix: attr is not in the abbreviation table
+field ClubRecord exp practice_points - HYPOTHESIS: exp is not in the abbreviation table; club practice points

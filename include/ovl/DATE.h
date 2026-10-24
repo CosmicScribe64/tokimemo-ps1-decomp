@@ -2,7 +2,7 @@
 #define OVL_DATE_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_bustup_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
+#define MAIN_API_OVERRIDE_portrait_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
 #define MAIN_API_OVERRIDE_normal_date_girl_in /* implicit int declaration: func_80132000 returns its result (void in main_api.h) */
 
 #define MAIN_API_OVERRIDE_D_800CA158 /* matched as s16 (main_api.h: u8) */
@@ -547,7 +547,7 @@ void func_80132004(void);
 void func_80151720(void);
 void func_80132288(void);
 void func_8014F300(void);
-s32 bustup_layout_set(s32 arg0);
+s32 portrait_layout_set(s32 arg0);
 void func_80145EC4(void);
 extern u8 D_8015B670;
 extern u8 date_arrival;

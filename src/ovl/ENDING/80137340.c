@@ -7,14 +7,14 @@ s32 func_80137340(void) {
     EdFnTbl6 tbl;
 
     tbl = D_8013CAA4;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
-    if (game_state.step >= 3 || game_state.stage >= 6) {
+    if (game_state.mode_step >= 3 || game_state.mode_stage >= 6) {
         return 0;
     }
     func_80132F18();
     k_disp_inc();
-    if (tbl.f[game_state.step] == func_80132D98) {
+    if (tbl.f[game_state.mode_step] == func_80132D98) {
         func_80137730();
     }
     _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
@@ -28,17 +28,17 @@ s32 func_80137340(void) {
 
 void func_801374BC(void) {
     if (game_state.options_dirty != 0) {
-        main_state_set(MODE_ETC_C2);
+        game_mode_set(MODE_ETC_C2);
         return;
     }
-    main_stage_next();
+    mode_stage_next();
 }
 
 void func_801374F8(void) {
     _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
     dtd_on(0xE);
-    if (game_state.step_timer.w++ >= 0x81U) {
-        main_step_next();
+    if (game_state.mode_step_timer.w++ >= 0x81U) {
+        mode_step_next();
     }
 }
 
@@ -68,7 +68,7 @@ void func_8013759C(void) {
     actor_pool[0x843] -= 1;
     if (actor_pool[0x843] < 8U) {
         actor_pool[0x843] = 0;
-        main_step_next();
+        mode_step_next();
     }
     actor_pool[0x7FF] = actor_pool[0x843];
     for (i = 4; i < 0x13; i++) {
@@ -93,7 +93,7 @@ void func_801376FC(void) {
     D_80122CE4 = 0;
     D_8013C364 = 0;
     D_8013C360 = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 /* Falls through without a return statement on the last path (K&R), as the original does. T-16930 */
@@ -301,7 +301,7 @@ s32 func_80137BB4(void) {
             D_8011F4DE = 5;
         }
     }
-    if (game_state.step == 2) {
+    if (game_state.mode_step == 2) {
         D_8011F4DE = 5;
         D_8011F4CA = 1;
     }
@@ -461,7 +461,7 @@ void func_80138278(void) {
             func_801396A4(2, 1U);
             D_80122D0C = 0;
         }
-    } else if ((game_state.step == 2) && (game_state.step_timer.w == 0)) {
+    } else if ((game_state.mode_step == 2) && (game_state.mode_step_timer.w == 0)) {
         func_801396A4(5, 5U);
         D_80122D0C = 1;
     }
@@ -846,7 +846,7 @@ void func_801391E4(void) {
             D_8011F4CA = 1;
         }
     }
-    if (game_state.step == 2) {
+    if (game_state.mode_step == 2) {
         D_8011F4DE = 2;
         D_8011F4CA = 1;
     }

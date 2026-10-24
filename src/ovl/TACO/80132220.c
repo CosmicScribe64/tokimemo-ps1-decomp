@@ -396,13 +396,13 @@ void func_80133374(void) {
         D_8015EDEC -= 1;
     }
     if (D_8015EDEC == 0) {
-        main_stage_set(0x2D);
+        mode_stage_set(0x2D);
     }
     if (game_state.pad_pressed & PAD_START) {
-        main_stage_set(0x2D);
+        mode_stage_set(0x2D);
     }
     if (D_8015EDB4->unk84[1] == 0) {
-        main_stage_set(0x2D);
+        mode_stage_set(0x2D);
     }
 }
 

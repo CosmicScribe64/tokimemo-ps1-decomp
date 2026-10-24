@@ -6,7 +6,7 @@ void func_80047550(void) {
     D_801255DC = 4;
 }
 
-void screen_shake_update(void) {
+void draw_shake_update(void) {
     s32 sum;
     s32 i;
     s32 q;
@@ -43,7 +43,7 @@ void screen_shake_update(void) {
     }
 }
 
-void actors_draw(void) {
+void actor_draw_all(void) {
     GameState *gs;
     SpriteQuad spr;
     s32 step;
@@ -74,8 +74,8 @@ void actors_draw(void) {
                 (((((ActorFixed *)actor_pool)[i].draw_flags & 0x40) != 0x40) || (game_state.frame_count % (((ActorFixed *)actor_pool)[i].unk_06 + 1) != 0)) &&
                 !(((ActorFixed *)actor_pool)[i].flags & 0x80)) {
                 if (!(*(s32 *)((ActorFixed *)actor_pool)[i].tpage_table & 0x80000000) || !(*(s32 *)((ActorFixed *)actor_pool)[i].frame_table & 0x80000000)) {
-                    printf("cls%x[m%xs%xs%xf%x] ", i, game_state.mode, game_state.stage,
-                           game_state.step, game_state.substep);
+                    printf("cls%x[m%xs%xs%xf%x] ", i, game_state.game_mode, game_state.mode_stage,
+                           game_state.mode_step, game_state.substep);
                 /* FAKE: T-25606, label for the never-taken goto at the end of the main path (see there) */
                 print_done:
                     continue;
@@ -458,19 +458,19 @@ s32 search_tpage_multi(s32 arg0, u8 arg1) {
 
     for (i = 0xF; i >= 5; i--) {
         for (j = 3; j >= 0; j--) {
-            if (game_state.tpage_req[i + j * 16] == 0x7FFE && game_state.tpage_buf[i + j * 16] == arg0) {
+            if (game_state.tpage_slot_state[i + j * 16] == 0x7FFE && game_state.tpage_buf[i + j * 16] == arg0) {
                 return (j * 16 + i) & 0xFFFF;
             }
         }
     }
     for (i = 0; i < 0x40; i++) {
-        if (arg0 == game_state.tpage_req[i]) {
+        if (arg0 == game_state.tpage_slot_state[i]) {
             return i & 0xFFFF;
         }
     }
     for (i = 0; i < 0x40; i++) {
-        if (game_state.tpage_req[i] == 0x7FFF) {
-            game_state.tpage_req[i] = arg0;
+        if (game_state.tpage_slot_state[i] == 0x7FFF) {
+            game_state.tpage_slot_state[i] = arg0;
             if (i < 0x20) {
                 load_csr_tp(arg0, i & 0xFF, arg1, 0, 0, 0x80, 0x80);
             } else {
@@ -493,9 +493,9 @@ s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
     if (arg0 == 0x7FFF) {
         for (i = 0; i < 64; i++) {
             if (game_state.tpage_buf[i] == -1) {
-                game_state.tpage_req[i] = 0x7FFF;
+                game_state.tpage_slot_state[i] = 0x7FFF;
             } else {
-                game_state.tpage_req[i] = 0x7FFE;
+                game_state.tpage_slot_state[i] = 0x7FFE;
             }
         }
         return 0;
@@ -504,20 +504,20 @@ s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
     index = (s16)(arg0 >> 6);
     for (i = 0xF; i >= 5; i--) {
         for (j = 3; j >= 0; j--) {
-            if (game_state.tpage_req[i + j * 16] == 0x7FFE &&
+            if (game_state.tpage_slot_state[i + j * 16] == 0x7FFE &&
                 game_state.tpage_buf[i + j * 16] == ((s32 *)record->tpage_table)[index]) {
                 return (j * 16 + i) & 0xFFFF;
             }
         }
     }
     for (i = 0; i < 0x40; i++) {
-        if (game_state.tpage_req[i] == ((s32 *)record->tpage_table)[index]) {
+        if (game_state.tpage_slot_state[i] == ((s32 *)record->tpage_table)[index]) {
             return i & 0xFFFF;
         }
     }
     for (i = 0; i < 0x40; i++) {
-        if (game_state.tpage_req[i] == 0x7FFF) {
-            game_state.tpage_req[i] = ((s32 *)record->tpage_table)[index];
+        if (game_state.tpage_slot_state[i] == 0x7FFF) {
+            game_state.tpage_slot_state[i] = ((s32 *)record->tpage_table)[index];
             if (i < 0x20) {
                 load_csr_tp(((s32 *)record->tpage_table)[index], i & 0xFF, arg2, 0, 0, 0x80, 0x80);
             } else {
@@ -540,9 +540,9 @@ s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
     if (arg0 == 0x7FFF) {
         for (i = 0; i < 64; i++) {
             if (game_state.tpage_buf[i] == -1) {
-                game_state.tpage_req[i] = 0x7FFF;
+                game_state.tpage_slot_state[i] = 0x7FFF;
             } else {
-                game_state.tpage_req[i] = 0x7FFE;
+                game_state.tpage_slot_state[i] = 0x7FFE;
             }
         }
         return 0;
@@ -551,20 +551,20 @@ s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
     index = (s16)(arg0 >> 8);
     for (i = 0xF; i >= 5; i--) {
         for (j = 3; j >= 0; j--) {
-            if (game_state.tpage_req[i + j * 16] == 0x7FFE &&
+            if (game_state.tpage_slot_state[i + j * 16] == 0x7FFE &&
                 game_state.tpage_buf[i + j * 16] == ((s32 *)record->tpage_table)[index]) {
                 return (j * 16 + i) & 0xFFFF;
             }
         }
     }
     for (i = 0; i < 0x40; i++) {
-        if (game_state.tpage_req[i] == ((s32 *)record->tpage_table)[index]) {
+        if (game_state.tpage_slot_state[i] == ((s32 *)record->tpage_table)[index]) {
             return i & 0xFFFF;
         }
     }
     for (i = 0; i < 0x40; i++) {
-        if (game_state.tpage_req[i] == 0x7FFF) {
-            game_state.tpage_req[i] = ((s32 *)record->tpage_table)[index];
+        if (game_state.tpage_slot_state[i] == 0x7FFF) {
+            game_state.tpage_slot_state[i] = ((s32 *)record->tpage_table)[index];
             if (i < 0x20) {
                 load_csr_tp(((s32 *)record->tpage_table)[index], i & 0xFF, arg2, 0, 0, 0x80, 0x80);
             } else {
@@ -592,11 +592,11 @@ void func_80048CF8(void) {
     }
 }
 
-void actors_draw_enable(s32 arg0) {
+void actor_draw_enable(s32 arg0) {
     if (arg0 != 0) {
-        game_state.actors_draw_enabled = 1;
+        game_state.actor_draw_enabled = 1;
     } else {
-        game_state.actors_draw_enabled = 0;
+        game_state.actor_draw_enabled = 0;
     }
 }
 

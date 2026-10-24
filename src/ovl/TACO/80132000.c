@@ -2,8 +2,8 @@
 #include "ovl/TACO.h"
 
 void func_80132000(void) {
-    game_state.stage_timer += 1;
-    switch (game_state.stage) {
+    game_state.mode_stage_timer += 1;
+    switch (game_state.mode_stage) {
     case 0:
         func_80133870();
         break;
@@ -62,7 +62,7 @@ void func_80132000(void) {
         func_80142820();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     func_80143E9C();

@@ -868,14 +868,14 @@ void func_80140D84(void) {
     case 0:
         func_80142570();
         if (*(u16 *)(s + 4) == 0) {
-            snd_command(0xB1);
+            audio_command(0xB1);
             func_800451E0(0x8019A000);
-            snd_command(0x12);
-            snd_command(0x23);
-            snd_command(0x2E);
-            snd_command(0x21);
-            snd_command(4);
-            snd_command(0x200);
+            audio_command(0x12);
+            audio_command(0x23);
+            audio_command(0x2E);
+            audio_command(0x21);
+            audio_command(4);
+            audio_command(0x200);
         }
         *(s16 *)(s + 0x32) = 0;
         *(s16 *)(s + 0x34) = 0x1000;
@@ -941,13 +941,13 @@ void func_80140D84(void) {
         func_8013F878();
         break;
     case 0x80:
-        snd_command(0xC1);
+        audio_command(0xC1);
         e[0x52] = 1;
         s[0x1C] = 0x11;
         func_8013FBD0();
         break;
     case 0xA0:
-        snd_command(0xB1);
+        audio_command(0xB1);
         p[0] = 0;
         s[0x12] = 0;
         t = (u8 *)D_80158A70;

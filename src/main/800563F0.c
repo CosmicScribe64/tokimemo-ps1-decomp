@@ -269,7 +269,7 @@ s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
         if (!(D_800B5900 & 1)) {
             func_800422C8();
             func_8005715C((game_state.timer_ticks - start) / 6);
-            actors_draw();
+            actor_draw_all();
             disp_string();
             func_8009AC20();
             func_8009AD00((u8 *)&D_800E8C70 + draw_buffer * 0x14);

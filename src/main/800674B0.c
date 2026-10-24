@@ -1,5 +1,5 @@
 #define MAIN_API_OVERRIDE_prim_gradient_line /* Line draw calls narrow four coordinates at the call site. T-11060. */
-#define MAIN_API_OVERRIDE_D_8011F414    /* Stored as s16 in mascot_update. T-11100. */
+#define MAIN_API_OVERRIDE_D_8011F414    /* Stored as s16 in hud_mascot_update. T-11100. */
 #define MAIN_API_OVERRIDE_actor_pool    /* Indexed as Actor[] in func_8006A2CC. T-11100. */
 #define MAIN_API_OVERRIDE_strncat       /* func_800696DC calls strncat with 2 args for club name. T-11100. */
 #include "common.h"
@@ -15,8 +15,8 @@ void func_800674B0(void) {
     u8 v;
     s32 i;
 
-    snd_command(5);
-    snd_command(0x71);
+    audio_command(5);
+    audio_command(0x71);
     v = game_state.vacation;
     if (game_state.year == 0x60 && game_state.month == 9 && game_state.day == 1) {
         v = 1;
@@ -24,24 +24,24 @@ void func_800674B0(void) {
     switch (v) {
     case 0:
         i = func_80066A2C() & 3;
-        snd_bank_load_start(0, 0xBF98, 0xBF79, D_800B5BE8[i], D_800B5BF8[i], D_800B5BD8[i]);
+        audio_bank_load_start(0, 0xBF98, 0xBF79, D_800B5BE8[i], D_800B5BF8[i], D_800B5BD8[i]);
         break;
     case 1:
-        snd_bank_load_start(0, 0xBF98, 0xBF79, 0xD7D1, 0xD7AF, 0xD7A4);
+        audio_bank_load_start(0, 0xBF98, 0xBF79, 0xD7D1, 0xD7AF, 0xD7A4);
         break;
     case 2:
-        snd_bank_load_start(0, 0xBF98, 0xBF79, 0xD73F, 0xD71E, 0xD717);
+        audio_bank_load_start(0, 0xBF98, 0xBF79, 0xD73F, 0xD71E, 0xD717);
         break;
     case 3:
-        snd_bank_load_start(0, 0xBF98, 0xBF79, 0xD780, 0xD752, 0xD743);
+        audio_bank_load_start(0, 0xBF98, 0xBF79, 0xD780, 0xD752, 0xD743);
         break;
     }
 }
 
 void func_80067610(void) {
-    if (snd_bank_load_poll() == 1) {
-        snd_bank_start(0, 0);
-        main_stage_next();
+    if (audio_bank_load_poll() == 1) {
+        audio_bank_start(0, 0);
+        mode_stage_next();
     }
 }
 
@@ -64,11 +64,11 @@ void func_800676AC(s32 arg0) {
         D_80125C52 = -0x37;
         D_80125C54 = 0xF;
         D_80125C55 = 8;
-        mascot_choice = 0;
+        hud_mascot_choice = 0;
         func_8006764C(0);
         return;
     }
-    mascot_choice = arg0;
+    hud_mascot_choice = arg0;
     if (arg0) {
     }
     actor_clear(0x1B);
@@ -83,7 +83,7 @@ void func_800676AC(s32 arg0) {
     actor_pool[0x1B].unk_04 = 8;
     actor_pool[0x1B].unk_05 = 1;
     actor_pool[0x1B].sequence_slot = 0;
-    actor_pool[0x1B].unk_18 = mascot_choice - 1;
+    actor_pool[0x1B].unk_18 = hud_mascot_choice - 1;
     actor_clear(0x1C);
     actor_pool[0x1C].unk_01 = 1;
     actor_pool[0x1C].flags = 0x40;
@@ -99,19 +99,19 @@ void func_800676AC(s32 arg0) {
     actor_pool[0x1C].unk_18 = 0xD;
 }
 
-void mascot_update(void) {
+void hud_mascot_update(void) {
     s32 x1;
     s16 dx;
     s16 dy;
     s32 y1;
     s32 r;
 
-    if (mascot_choice == 0 || mascot_choice >= 0xE) {
+    if (hud_mascot_choice == 0 || hud_mascot_choice >= 0xE) {
         func_800676AC(0);
         return;
     }
-    func_800676AC(mascot_choice);
-    if (mascot_choice < 0xE) {
+    func_800676AC(hud_mascot_choice);
+    if (hud_mascot_choice < 0xE) {
         if ((u32)game_state.pad_pressed >> 16) {
             D_80125C55 = (D_80125C54 + 1) / 2;
         }
@@ -133,7 +133,7 @@ void mascot_update(void) {
          * s16 view gives cfe equal operand weights, so the sum comes out as `addu t1,a0,a2` (D_80125C52 first). */
         y1 = *(u8 *)&D_80125C54 + *(s16 *)&D_80125C52;
         actor_pool[0x1B].y = y1 - dy;
-        actor_pool[0x1B].unk_18 = mascot_choice - 1;
+        actor_pool[0x1B].unk_18 = hud_mascot_choice - 1;
         actor_pool[0x1C].x = D_80125C50;
         actor_pool[0x1C].y = D_80125C52;
         if (game_state.pad_held & PAD_R2) {
@@ -798,7 +798,7 @@ void func_800696DC(s32 arg0, s32 arg1) {
         var_s0 = 0;
         KEEP_UNK_1117();
         for (i = 0; i < 13; i++) {
-            if (((AlbumSlotRecord *)card_block)[game_state.album_slot].flags[i] != 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].flags[i] != 0) {
                 var_s0 += 1;
             }
         }
@@ -811,34 +811,34 @@ void func_800696DC(s32 arg0, s32 arg1) {
             strncat(spC8, "番アルバム", 2);
             set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
             KEEP_UNK_1117();
-            strcpy(spC8, D_800B3288[(u8) ((AlbumSlotRecord *)card_block)[game_state.album_slot].year / 10U]);
+            strcpy(spC8, D_800B3288[(u8) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].year / 10U]);
             KEEP_UNK_1117();
-            strncat(spC8, D_800B3288[(u8) ((AlbumSlotRecord *)card_block)[game_state.album_slot].year % 10U], 2);
+            strncat(spC8, D_800B3288[(u8) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].year % 10U], 2);
             strncat(spC8, "年", 2);
             KEEP_UNK_1117();
-            strncat(spC8, D_800B3288[((AlbumSlotRecord *)card_block)[game_state.album_slot].month], 4);
+            strncat(spC8, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].month], 4);
             strncat(spC8, "月", 2);
             KEEP_UNK_1117();
-            if (((AlbumSlotRecord *)card_block)[game_state.album_slot].day >= 0xAU) {
-                strncat(spC8, D_800B3288[((AlbumSlotRecord *)card_block)[game_state.album_slot].day / 10U], 2);
+            if (((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].day >= 0xAU) {
+                strncat(spC8, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].day / 10U], 2);
             }
-            strncat(spC8, D_800B3288[((AlbumSlotRecord *)card_block)[game_state.album_slot].day % 10U], 2);
+            strncat(spC8, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].day % 10U], 2);
             strncat(spC8, "日", 2);
             set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
             strcpy(spA8, "名前…");
             KEEP_UNK_1117();
-            strncat(spA8, ((AlbumSlotRecord *)card_block)[game_state.album_slot].family_name, 6);
+            strncat(spA8, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].family_name, 6);
             KEEP_UNK_1117();
-            strncat(spA8, ((AlbumSlotRecord *)card_block)[game_state.album_slot].given_name, 6);
+            strncat(spA8, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].given_name, 6);
             strcpy(sp88, "あだ名…");
             KEEP_UNK_1117();
-            strncat(sp88, ((AlbumSlotRecord *)card_block)[game_state.album_slot].nickname, 0xD);
+            strncat(sp88, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].nickname, 0xD);
             set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
             set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
             strcpy(sp68, "所属部‥");
             KEEP_UNK_1117();
             /* two arguments as in the original: no count is loaded into $a2 before this call */
-            strncat(sp68, club_name_table[((AlbumSlotRecord *)card_block)[game_state.album_slot].club >> 12]);
+            strncat(sp68, club_name_table[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].club >> 12]);
             set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
             strcpy(sp48, "クリア人数‥");
             if (var_s0 >= 0x64) {
@@ -1352,7 +1352,7 @@ void club_list_menu(void) {
     k_sub_disp_start(1);
 }
 
-void light_effect_draw(void) {
+void sprite_light_effect_draw(void) {
     s32 i;
 
     _sprite_set_light_effect1(-0x120, -0xF8, D_800B66E0[0], 0x3C, 0xA0, 0x3C, 9, 0xA0A0A0, D_800B66F4[0]);
@@ -1536,7 +1536,7 @@ s32 func_8006BDA8(s32 arg0) {
             score = func_8006C334(1, 0, 0, 16);
             break;
         }
-        score += (u16)game_state.clubs[(u16)game_state.player_flags.h >> 12].exp >> 4;
+        score += (u16)game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points >> 4;
         break;
     case 5:
         score = func_8006C334(0, 1, 0, 16) + game_state.param_trivia.value / 16;

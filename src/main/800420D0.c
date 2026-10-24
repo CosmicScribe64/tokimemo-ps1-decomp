@@ -7,10 +7,10 @@ void func_800420D0(void) {
     InitHeap(0x801FF800, 0x7F0);
     bzero((void *)0x800E60A0, 0x45498);
     D_80125120 = GetGp();
-    main_loop();
+    boot_loop();
 }
 
-void main_loop(void) {
+void boot_loop(void) {
     GameState *g = &game_state;
     ResetCallback();
     func_80087730();
@@ -20,7 +20,7 @@ void main_loop(void) {
     func_8004111C();
 loop_1:
     func_8007B844();
-    cd_cmd_reset();
+    cd_command_reset();
     gpu_init();
     game_state_init(1);
     if (game_state.restart_request != 0) {
@@ -29,7 +29,7 @@ loop_1:
     do {
         func_800422C8();
         if (game_state.paused == 0) {
-            main_state_dispatch();
+            game_mode_dispatch();
         } else {
             func_80043504();
         }
@@ -44,10 +44,10 @@ loop_1:
             }
         }
         if (game_state.restart_request == 0) {
-            frame_render(1);
-            cd_cmd_pump();
+            draw_frame(1);
+            cd_command_pump();
             if (game_state.sound_active != 0) {
-                snd_command_pump();
+                audio_command_pump();
             }
         }
     } while (g->restart_request == 0);
@@ -56,7 +56,7 @@ loop_1:
 
 void func_800422C8(void) {
     draw_buffer = func_80098370();
-    if (game_state.mode == 0x90) {
+    if (game_state.game_mode == 0x90) {
         func_800985E0((s32) D_800FD4A0 + draw_buffer * 0x10C00);
         SetWorkBase((s32) D_800E94A0 + draw_buffer * 0xA000, draw_buffer);
     } else {

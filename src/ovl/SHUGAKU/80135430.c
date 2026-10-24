@@ -15,9 +15,9 @@ s32 func_80135480(void) {
     ShFnTbl74 table;
 
     table = D_8013C2F0;
-    index = game_state.step;
+    index = game_state.mode_step;
     table.f[index](0x80);
-    index = game_state.step;
+    index = game_state.mode_step;
     if (D_80085368 == table.f[index]) {
         ((Actor *)actor_pool)[98].draw_flags |= 0x80;
     }
@@ -42,7 +42,7 @@ void func_801355D4(void) {
 }
 
 void func_80135610(void) {
-    main_step_set(0x1F);
+    mode_step_set(0x1F);
 }
 
 void func_80135630(void) {
@@ -50,14 +50,14 @@ void func_80135630(void) {
     RECT r;
 
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     cursor_show(0);
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    dialogue_clear();
+    talk_clear();
     k_reset(1);
     r.x = 0x140;
     r.y = 0x1A0;
@@ -71,7 +71,7 @@ void func_80135630(void) {
     game_state.quads_enabled = 1;
     /* FAKE: byte store then member read shares the constant in a0, as in GEKO func_8013B3C0 (T-9770). T-18000 */
     *(u8 *)&game_state.current_girl = 2;
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     addr_init_bustup();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
@@ -86,7 +86,7 @@ void func_80135630(void) {
     D_8013BFFC = D_8013C508;
     D_8013C000 = D_8013C644;
     D_8013C004 = D_8013C780;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801357AC(void) {
@@ -97,7 +97,7 @@ void func_801357AC(void) {
     for (i = 0; i < 6; i++) {
         sprite_quads[58 + i].w = 0;
     }
-    event_anim_show(D_8013C2D4, D_8013C2D8, D_8013C2D0, (s32) D_8013C2DC);
+    scene_anim_show(D_8013C2D4, D_8013C2D8, D_8013C2D0, (s32) D_8013C2DC);
     ((Actor *)actor_pool)[97].unk_04 = 8;
     ((Actor *)actor_pool)[96].unk_04 = 8;
     ((Actor *)actor_pool)[97].unk_01 = 0xB;
@@ -109,36 +109,36 @@ void func_801357AC(void) {
     load_palette((s32) game_state.scratch_words, 0x1F, 1, 3, 0);
     game_state.tpage_buf[0x25] = 1;
     func_80046754(0x801C4000, 0x25, 0x80);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135938(void) {
-    snd_command(0x203);
-    main_step_next();
+    audio_command(0x203);
+    mode_step_next();
 }
 
 void func_80135960(void) {
     if (D_8013C2EC == 0) {
-        snd_command(0x202);
+        audio_command(0x202);
     }
-    main_stage_set(5);
+    mode_stage_set(5);
 }
 
 void func_80135994(void) {
     D_80122CE0 = 7;
     actor_clear_range(0);
     cursor_show(0);
-    game_state.saved_mode = game_state.mode;
-    game_state.saved_stage = game_state.stage;
-    game_state.saved_step = 0x38;
+    game_state.saved_game_mode = game_state.game_mode;
+    game_state.saved_mode_stage = game_state.mode_stage;
+    game_state.saved_mode_step = 0x38;
     k_reset(0);
-    main_state_set(MODE_RPG_BATTLE);
+    game_mode_set(MODE_RPG_BATTLE);
 }
 
 void func_80135A04(void) {
     cd_read_sectors(0x25, 0x801B0000, 0x8240);
     func_80135430();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135A3C(void) {
@@ -168,7 +168,7 @@ void func_80135AF4(void) {
     ((Actor *)actor_pool_96)[1].sequence_slot = 7;
     ((Actor *)actor_pool_96)[2].flags = 0x40;
     ((Actor *)actor_pool_96)[2].unk_18 = 0x14;
-    main_step_next();
+    mode_step_next();
 }
 
 u32 func_80135B68(void) {
@@ -194,26 +194,26 @@ void func_80135C14(void) {
     D_801206AA = 0;
     D_801206DA = 0x40;
     D_801206F0 = 0x14;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135C5C(void) {
     D_8013C2E4 = 0;
     D_800B5BD4 = 0xF;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135C8C(void) {
-    snd_command(0x203);
+    audio_command(0x203);
     bg_read_sub2(0x4761);
     event_log_add(2, 0x13);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135CC8(void) {
-    snd_command(0x203);
+    audio_command(0x203);
     bg_read_sub2(0x4761);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135CF8(void) {
@@ -225,7 +225,7 @@ void func_80135CF8(void) {
     ((Actor *)actor_pool_96)[3].flags = 9;
     ((Actor *)actor_pool_96)[3].x = -0x60;
     ((Actor *)actor_pool_96)[3].y = -0x48;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135DB8(void) {
@@ -237,9 +237,9 @@ void func_80135DB8(void) {
         game_state.girls[(s32) game_state.current_girl].affection += 1;
         check_para_limit();
         D_800CA2E4 += 2;
-        game_state.step += 0xB;
+        game_state.mode_step += 0xB;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135EA4(void) {
@@ -263,7 +263,7 @@ void func_80135EA4(void) {
     for (i = 0; i < 6; i++) {
         sprite_quads[58 + i].w = 0;
     }
-    event_anim_show(D_8013C2D4, D_8013C2D8, D_8013C2D0, (s32) D_8013C2DC);
+    scene_anim_show(D_8013C2D4, D_8013C2D8, D_8013C2D0, (s32) D_8013C2DC);
     ((Actor *)actor_pool)[97].unk_04 = 8;
     ((Actor *)actor_pool)[96].unk_04 = 8;
     ((Actor *)actor_pool)[97].unk_01 = 0xB;
@@ -275,7 +275,7 @@ void func_80135EA4(void) {
     load_palette((s32) game_state.scratch_words, 0x1F, 1, 3, 0);
     game_state.tpage_buf[0x25] = 1;
     func_80046754(0x801C4000, 0x25, 0x80);
-    main_step_next();
+    mode_step_next();
 }
 
 /* Record 99 of the actor_pool display table: unk_24..unk_30 are two 16.16 position pairs (the s32 views below).
@@ -288,24 +288,24 @@ s32 func_801360B0(void) {
     if ((D_80120732 == 5) && !(((Actor *)actor_pool)[99].draw_flags & 0x80)) {
         *(s16 *)&D_8013C2E8 += 1;
         if (*(s16 *)&D_8013C2E8 >= 0x29) {
-            snd_command(0x500);
+            audio_command(0x500);
             *(s16 *)&D_8013C2E8 = 0;
             D_80120732 = 6;
             D_80120734 = 0;
             ((Actor *)actor_pool)[99].unk_08 = 0;
             ((Actor *)actor_pool)[99].draw_flags |= 0x80;
             D_8012071E = 1;
-            *(s32 *)&((Actor *)actor_pool)[99].dx_frac = 0x64000;
-            *(s32 *)&((Actor *)actor_pool)[99].dy_frac = 0x12000;
+            *(s32 *)&((Actor *)actor_pool)[99].dx_fraction = 0x64000;
+            *(s32 *)&((Actor *)actor_pool)[99].dy_fraction = 0x12000;
         }
     }
     if ((((Actor *)actor_pool)[99].draw_flags & 0x80) && (D_80120732 == 6)) {
-        *(s32 *)&((Actor *)actor_pool)[99].dx_frac -= 0x1800;
-        *(s32 *)&((Actor *)actor_pool)[99].x_frac +=
-            *(s32 *)&((Actor *)actor_pool)[99].dx_frac;
-        *(s32 *)&((Actor *)actor_pool)[99].dy_frac -= 0x600;
-        *(s32 *)&((Actor *)actor_pool)[99].y_frac +=
-            *(s32 *)&((Actor *)actor_pool)[99].dy_frac;
+        *(s32 *)&((Actor *)actor_pool)[99].dx_fraction -= 0x1800;
+        *(s32 *)&((Actor *)actor_pool)[99].x_fraction +=
+            *(s32 *)&((Actor *)actor_pool)[99].dx_fraction;
+        *(s32 *)&((Actor *)actor_pool)[99].dy_fraction -= 0x600;
+        *(s32 *)&((Actor *)actor_pool)[99].y_fraction +=
+            *(s32 *)&((Actor *)actor_pool)[99].dy_fraction;
         if (((Actor *)actor_pool)[99].x < -0xA0) {
             ((Actor *)actor_pool)[99].draw_flags &= 0xFF7F;
         }
@@ -316,7 +316,7 @@ s32 func_801360B0(void) {
             func_80135B68();
         }
         if (*(s16 *)&D_8013C2E8 == 0xA) {
-            snd_command(0x502);
+            audio_command(0x502);
         }
         if ((D_801206F0 == 1) && (D_801206E0 == 0x21)) {
             func_80135BB8();

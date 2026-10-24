@@ -5,7 +5,7 @@
 
 void prim_gradient_rect();
 
-void bustup_read_start(s32 arg0) {
+void portrait_read_start(s32 arg0) {
     cd_read_sectors(0x2D, 0x80180000, arg0);
     D_8011F50F = 0;
     D_8011F4CB = 0;
@@ -25,7 +25,7 @@ void func_80062D0C(s32 arg0) {
     }
 }
 
-void bustup_build(s32 arg0, s32 *arg1, u8 **arg2, u8 *arg3, s32 arg4) {
+void portrait_build(s32 arg0, s32 *arg1, u8 **arg2, u8 *arg3, s32 arg4) {
     s16 x0;
     s16 y0;
     s16 w0;
@@ -984,7 +984,7 @@ s32 func_80065964(s32 idx, s32 dx, s32 dy) {
  * the icon records 64 + i and 80 + i, and the tail sets the page counter limits as func_80065900 does.
  * The selection index is read through `g`: the stores to D_80125C10 then reload the index expression (the
  * original recomputes the address for the y store), and uopt keeps the index in $s3, re-read after each call. */
-void icon_bar_update(s32 a) {
+void hud_icon_bar_update(s32 a) {
     s32 dx;
     s32 dy;
     s32 n;
@@ -1095,7 +1095,7 @@ void icon_bar_update(s32 a) {
             }
         }
     }
-    if (g->card_busy) {
+    if (g->memory_card_busy) {
         D_8012059A[0] = 0xE;
         if (D_8012059A[1] >= 4) {
             D_8012059A[1] = 0;
@@ -1326,7 +1326,7 @@ s32 func_80066B40(s32 arg0, s32 arg1) {
     return 0;
 }
 
-void screen_frame_draw(s32 a) {
+void hud_screen_frame_draw(s32 a) {
     s32 x;
     s32 y;
     s32 old_index;
@@ -1474,8 +1474,8 @@ void func_800673B8(void) {
 void func_80067438(void) {
     s32 v;
 
-    snd_command(5);
-    snd_command(0x71);
+    audio_command(5);
+    audio_command(0x71);
     v = func_80066A2C() & 3;
-    snd_bank_load_start(0, 0xBF98, 0xBF79, D_800B5BE8[v], D_800B5BF8[v], D_800B5BD8[v]);
+    audio_bank_load_start(0, 0xBF98, 0xBF79, D_800B5BE8[v], D_800B5BF8[v], D_800B5BD8[v]);
 }

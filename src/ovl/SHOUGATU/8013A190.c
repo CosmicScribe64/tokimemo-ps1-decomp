@@ -21,13 +21,13 @@ void func_8013A1CC(void) {
     FnTbl26 tbl;
 
     tbl = D_801455E0;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
 void func_8013A254(void) {
-    snd_command(0x502);
-    main_step_next();
+    audio_command(0x502);
+    mode_step_next();
 }
 
 void func_8013A27C(void) {
@@ -35,13 +35,13 @@ void func_8013A27C(void) {
     FnTbl19 tbl;
 
     tbl = D_80145648;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
 void func_8013A2F8(void) {
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -49,7 +49,7 @@ void func_8013A2F8(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dialogue_clear();
+    talk_clear();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
     D_800B5940 = 0;
@@ -61,38 +61,38 @@ void func_8013A2F8(void) {
     /* FAKE: the dead triple test preserves the original argument/store scheduling.
      * IDO removes all of its reads and tests. T-9720. */
     if ((!D_80122EBC) && (!D_80122EBC) && (!D_80122EBC)) {}
-    dialogue_names_set(*((u8 *) (&game_state.current_girl)) = 5);
+    talk_names_set(*((u8 *) (&game_state.current_girl)) = 5);
     func_80136F90();
     D_80144DFC = D_80144DA4;
     D_80144E00 = D_80144DC8;
     D_80144E04 = D_80144DEC;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A3FC(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "グランド");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A440(void) {
     D_80144E08 = 5;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "グランド");
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A488(void) {
     bg_read_sub2(0x4097);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013A4B0(void) {
     if (game_state.current_girl == GIRL_YUKARI) {
-        bustup_read_start(0x5FE4);
+        portrait_read_start(0x5FE4);
     } else {
-        bustup_read_start(0x552B);
+        portrait_read_start(0x552B);
     }
-    main_step_next();
+    mode_step_next();
 }

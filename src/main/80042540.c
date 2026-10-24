@@ -4,14 +4,14 @@
 /* Byte views of both selectors: the original reads them with lbu (unk_111A is
  * s8 in GameState), and a plain unk_1108 switch keeps a copy in v1 (the
  * switch-selector idiom of T-10860). */
-void main_state_dispatch(void) {
-    switch (*(u8 *)&game_state.mode) {
+void game_mode_dispatch(void) {
+    switch (*(u8 *)&game_state.game_mode) {
     case 0x0:
-        mode_boot();
+        boot_mode_handler();
         break;
     case 0x1:
         if (*(u8 *)&game_state.boot_hold == 0) {
-            main_state_set(MODE_BOOT);
+            game_mode_set(MODE_BOOT);
         }
         break;
     case 0xFF:
@@ -24,19 +24,19 @@ void main_state_dispatch(void) {
         schedule_init();
         break;
     case 0x31:
-        mode_day_screen();
+        schedule_day_screen_handler();
         break;
     case 0x34:
-        mode_command_screen();
+        schedule_command_screen_handler();
         break;
     case 0x12:
-        mode_title();
+        title_mode_handler();
         break;
     case 0x40:
         week_day();
         break;
     case 0x46:
-        mode_holiday();
+        holiday_mode_handler();
         break;
     case 0x44:
         uwasa_main();
@@ -48,7 +48,7 @@ void main_state_dispatch(void) {
         func_80060DF8();
         break;
     case 0x3:
-        ((s32 (*)()) overlay_entry)();
+        ((s32 (*)()) ovl_entry)();
         break;
     case 0x10:
         func_80062C28();
@@ -63,7 +63,7 @@ void main_state_dispatch(void) {
         func_80072BC0();
         break;
     case 0x2:
-        mode_overlay_loader();
+        ovl_loader_mode_handler();
         break;
     case 0xD0:
         func_8007959C();
@@ -117,41 +117,41 @@ void main_state_dispatch(void) {
     case 0xC3:
     case 0xC4:
         func_8004B338((s32)"LOAD FUNC EXEC", 0x14, 0x2C);
-        ((s32 (*)()) overlay_entry)();
+        ((s32 (*)()) ovl_entry)();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
-    game_state.mode_timer += 1;
+    game_state.game_mode_timer += 1;
 }
 
-void main_state_next(void) {
-    game_state.mode += 1;
-    game_state.stage = 0;
-    game_state.step = 0;
-    game_state.mode_timer = 0;
-    game_state.stage_timer = 0;
-    game_state.step_timer.w = 0;
-    game_state.mode_scratch = 0;
-    game_state.stage_scratch = 0;
+void game_mode_next(void) {
+    game_state.game_mode += 1;
+    game_state.mode_stage = 0;
+    game_state.mode_step = 0;
+    game_state.game_mode_timer = 0;
+    game_state.mode_stage_timer = 0;
+    game_state.mode_step_timer.w = 0;
+    game_state.game_mode_scratch = 0;
+    game_state.mode_stage_scratch = 0;
     game_state.substep = 0;
-    main_state_request_overlay();
+    game_mode_request_overlay();
 }
 
 /* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
  * store and as1 puts that store in the jr delay slot, as the original does; no
  * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
  * return. T-11610 */
-s32 main_stage_next(void) {
+s32 mode_stage_next(void) {
     s32 *p;
     s32 z;
 
-    game_state.stage += 1;
-    game_state.step = 0;
-    game_state.stage_timer = 0;
-    game_state.step_timer.w = 0;
-    game_state.stage_scratch = 0;
+    game_state.mode_stage += 1;
+    game_state.mode_step = 0;
+    game_state.mode_stage_timer = 0;
+    game_state.mode_step_timer.w = 0;
+    game_state.mode_stage_scratch = 0;
     z = 0;
     p = &z;
     game_state.substep = *p;
@@ -161,32 +161,32 @@ s32 main_stage_next(void) {
  * store and as1 puts that store in the jr delay slot, as the original does; no
  * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
  * return. T-11610 */
-s32 main_step_next(void) {
+s32 mode_step_next(void) {
     s32 *p;
     s32 z;
 
-    game_state.step += 1;
-    game_state.step_timer.w = 0;
+    game_state.mode_step += 1;
+    game_state.mode_step_timer.w = 0;
     z = 0;
     p = &z;
     game_state.substep = *p;
 }
 
 /* Switch to a mode and reset stage, step, timers, substep */
-void main_state_set(s32 arg0) {
+void game_mode_set(s32 arg0) {
     u32 t;
 
-    game_state.mode = arg0;
-    game_state.stage = 0;
-    game_state.step = 0;
-    game_state.mode_timer = 0;
-    game_state.stage_timer = 0;
-    game_state.step_timer.w = 0;
-    game_state.mode_scratch = 0;
-    game_state.stage_scratch = 0;
+    game_state.game_mode = arg0;
+    game_state.mode_stage = 0;
+    game_state.mode_step = 0;
+    game_state.game_mode_timer = 0;
+    game_state.mode_stage_timer = 0;
+    game_state.mode_step_timer.w = 0;
+    game_state.game_mode_scratch = 0;
+    game_state.mode_stage_scratch = 0;
     game_state.substep = 0;
-    main_state_request_overlay();
-    t = game_state.overlay_target_mode;
+    game_mode_request_overlay();
+    t = game_state.ovl_target_game_mode;
     D_800CA2AC = 0;
     if (t != 0x5E) {
         if (t != 0x50) {
@@ -199,15 +199,15 @@ void main_state_set(s32 arg0) {
  * store and as1 puts that store in the jr delay slot, as the original does; no
  * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
  * return. T-11610 */
-s32 main_stage_set(s32 arg0) {
+s32 mode_stage_set(s32 arg0) {
     s32 *p;
     s32 z;
 
-    game_state.stage = arg0;
-    game_state.step = 0;
-    game_state.stage_timer = 0;
-    game_state.step_timer.w = 0;
-    game_state.stage_scratch = 0;
+    game_state.mode_stage = arg0;
+    game_state.mode_step = 0;
+    game_state.mode_stage_timer = 0;
+    game_state.mode_step_timer.w = 0;
+    game_state.mode_stage_scratch = 0;
     z = 0;
     p = &z;
     game_state.substep = *p;
@@ -217,19 +217,19 @@ s32 main_stage_set(s32 arg0) {
  * store and as1 puts that store in the jr delay slot, as the original does; no
  * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
  * return. T-11610 */
-s32 main_step_set(s32 arg0) {
+s32 mode_step_set(s32 arg0) {
     s32 *p;
     s32 z;
 
-    game_state.step = arg0;
-    game_state.step_timer.w = 0;
+    game_state.mode_step = arg0;
+    game_state.mode_step_timer.w = 0;
     z = 0;
     p = &z;
     game_state.substep = *p;
 }
 
-s32 main_state_request_overlay(void) {
-    switch (*(u8 *)&game_state.mode) {
+s32 game_mode_request_overlay(void) {
+    switch (*(u8 *)&game_state.game_mode) {
     case 0x11:
     case 0x13:
     case 0x14:
@@ -278,8 +278,8 @@ s32 main_state_request_overlay(void) {
     case 0xC2:
     case 0xC3:
     case 0xC4:
-        game_state.overlay_target_mode = game_state.mode;
-        game_state.mode = 2;
+        game_state.ovl_target_game_mode = game_state.game_mode;
+        game_state.game_mode = 2;
         return;
     }
 }

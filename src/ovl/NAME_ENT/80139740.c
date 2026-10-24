@@ -1,10 +1,10 @@
 #define MAIN_API_OVERRIDE_prim_gradient_rect /* Original calls pass promoted integer coordinates. T-10880. */
-#define MAIN_API_OVERRIDE_card_start /* The original reads $v0 after the call in func_8013D2AC. T-22023. */
+#define MAIN_API_OVERRIDE_memory_card_start /* The original reads $v0 after the call in func_8013D2AC. T-22023. */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 
 void prim_gradient_rect();
-s32 card_start();
+s32 memory_card_start();
 
 s32 func_80139740(u32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
@@ -47,7 +47,7 @@ void func_801398EC(void) {
         if ((u32)sprite_quads[i].flags < 0) {} /* FAKE: T-25057, erased test orders record induction. */
         tile[0] = game_state.frame_count; /* FAKE: T-25057, dead initialization orders frame before index; removed by uopt. */
         if (tmp == 0) {
-            if (((AlbumSlotRecord *)card_block)[D_800E8BEF].flags[i] == 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[D_800E8BEF].flags[i] == 0) {
                 sprite_quads[i].flags = 0;
                 tile[0] = (game_state.frame_count >> 2) % 3;
                 sprite_quads[i].unk_0E = (i / 8) * 0x30 - (0U - tile[0] * 0x10) + 0x80; /* FAKE: T-25057, unsigned identity preserves row-before-tile evaluation. */
@@ -126,10 +126,10 @@ void func_80139CB4(void) {
     strncpy(sp30, D_800B3288[game_state.save_slot], 5);
     strcat(sp30, "番");
     set_kanji_string(-0x20, -0x5C, 0xF, (s32) sp30, 0);
-    set_kanji_string(0x20, -0x4B, 0xF, (s32) ((AlbumSlotRecord *)card_block)[game_state.album_slot].family_name, 0);
-    set_kanji_string(0x4E, -0x4B, 0xF, (s32) ((AlbumSlotRecord *)card_block)[game_state.album_slot].given_name, 0);
-    set_kanji_string(0x20, -0x3B, 0xF, (s32) ((AlbumSlotRecord *)card_block)[game_state.album_slot].nickname, 0);
-    set_kanji_string(0x20, -0x2B, 0xF, (s32) club_name_table[((AlbumSlotRecord *)card_block)[game_state.album_slot].club >> 0xC], 0);
+    set_kanji_string(0x20, -0x4B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].family_name, 0);
+    set_kanji_string(0x4E, -0x4B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].given_name, 0);
+    set_kanji_string(0x20, -0x3B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].nickname, 0);
+    set_kanji_string(0x20, -0x2B, 0xF, (s32) club_name_table[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].club >> 0xC], 0);
 }
 
 void func_80139F30(void) {
@@ -218,65 +218,65 @@ void func_80139F30(void) {
             ((Actor *)actor_pool)[136].draw_flags &= 0x7F;
         }
     } else {
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[0] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[0], -4, 0x1E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[0] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[0], -4, 0x1E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[1] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[1], -4, 0x2E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[1] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[1], -4, 0x2E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[2] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[2], -4, 0x3E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[2] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[2], -4, 0x3E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[3] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[3], -4, 0x4E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[3] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[3], -4, 0x4E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[4] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[4], 0x3C, 0x1E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[4] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[4], 0x3C, 0x1E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[5] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[5], 0x3C, 0x2E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[5] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[5], 0x3C, 0x2E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[6] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[6], 0x3C, 0x3E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[6] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[6], 0x3C, 0x3E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[7] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[7], 0x3C, 0x4E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[7] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[7], 0x3C, 0x4E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[12] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[12], 0x88, 0xE);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12], 0x88, 0xE);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[8] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[8], 0x88, 0x1E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[8] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[8], 0x88, 0x1E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[9] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[9], 0x88, 0x2E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[9] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[9], 0x88, 0x2E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[10] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[10], 0x88, 0x3E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[10] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[10], 0x88, 0x3E);
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[11] != 0) {
-            func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].flags[11], 0x88, 0x4E);
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[11] != 0) {
+            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[11], 0x88, 0x4E);
         }
         for (i = 0; i < 4; i++) {
-            if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[i] != 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
                 func_80139AD8(i, -0x23, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 4; i < 8; i++) {
-            if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[i] != 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
                 func_80139AD8(i, 0x1E, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 8; i < 12; i++) {
-            if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[i] != 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
                 func_80139AD8(i, 0x69, (i % 4) * 0x10 + 0x1D);
             }
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[12] != 0) {
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12] != 0) {
             func_80139AD8(12, 0x69, 0xD);
         }
         for (i = 0; i < 8; i++) {
-            if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[i] == 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] == 0) {
                 ((Actor *)actor_pool)[i + 128].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 128].draw_flags |= 0x80;
             } else {
@@ -284,14 +284,14 @@ void func_80139F30(void) {
             }
         }
         for (i = 8; i < 12; i++) {
-            if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[i] == 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] == 0) {
                 ((Actor *)actor_pool)[i + 129].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 129].unk_01 = 4;
             } else {
                 ((Actor *)actor_pool)[i + 129].draw_flags &= 0x7F;
             }
         }
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[12] == 0) {
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12] == 0) {
             ((Actor *)actor_pool)[136].draw_flags |= 0x80;
             ((Actor *)actor_pool)[136].unk_01 = 4;
         } else {
@@ -335,30 +335,30 @@ void func_8013A9C8(void) {
         }
     } else {
         for (i = 0; i < 8; i++) {
-            if (((GirlFlagBits *)&((AlbumSlotRecord *)card_block)[g->album_slot].unk_2E8[0x2C + i * 0x38])->met == 0 ||
-                ((AlbumSlotRecord *)card_block)[g->album_slot].unk_2E8[0x37C + i] == 0) {
+            if (((GirlFlagBits *)&((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x2C + i * 0x38])->met == 0 ||
+                ((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] == 0) {
                 ((Actor *)actor_pool)[i + 128].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 128].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
             } else {
                 ((Actor *)actor_pool)[i + 128].draw_flags &= 0x7F;
                 ((Actor *)actor_pool)[i + 141].draw_flags |= 0x80;
-                if (((AlbumSlotRecord *)card_block)[g->album_slot].unk_2E8[0x37C + i] != 0) {
-                    ((Actor *)actor_pool)[i + 141].unk_18 = (((AlbumSlotRecord *)card_block)[g->album_slot].unk_2E8[0x37C + i] & 7) + 0x58;
+                if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] != 0) {
+                    ((Actor *)actor_pool)[i + 141].unk_18 = (((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] & 7) + 0x58;
                 }
             }
         }
         for (i = 8; i < 11; i++) {
-            if (((GirlFlagBits *)&((AlbumSlotRecord *)card_block)[g->album_slot].unk_2E8[0x2C + i * 0x38])->met == 0 ||
-                ((AlbumSlotRecord *)card_block)[g->album_slot].unk_2E8[0x37C + i] == 0) {
+            if (((GirlFlagBits *)&((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x2C + i * 0x38])->met == 0 ||
+                ((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] == 0) {
                 ((Actor *)actor_pool)[i + 129].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 129].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
             } else {
                 ((Actor *)actor_pool)[i + 129].draw_flags &= 0x7F;
                 ((Actor *)actor_pool)[i + 141].draw_flags |= 0x80;
-                if (((AlbumSlotRecord *)card_block)[g->album_slot].unk_2E8[0x37C + i] != 0) {
-                    ((Actor *)actor_pool)[i + 141].unk_18 = (((AlbumSlotRecord *)card_block)[g->album_slot].unk_2E8[0x37C + i] & 7) + 0x58;
+                if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] != 0) {
+                    ((Actor *)actor_pool)[i + 141].unk_18 = (((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] & 7) + 0x58;
                 }
             }
         }
@@ -382,15 +382,15 @@ void func_8013ACA4(void) {
         func_80139740(system_data.metrics[8][D_800E7D36].unk_02, 128, 78);
         return;
     }
-    func_80139740(((AlbumSlotRecord *)card_block)[game_state.album_slot].metrics[0].unk_02, 16, 30);
-    func_80139740(((AlbumSlotRecord *)card_block)[game_state.album_slot].metrics[1].unk_02, 16, 46);
-    func_80139740(((AlbumSlotRecord *)card_block)[game_state.album_slot].metrics[2].unk_02, 16, 62);
-    func_80139740(((AlbumSlotRecord *)card_block)[game_state.album_slot].metrics[3].unk_02, 16, 78);
-    func_80139740(((AlbumSlotRecord *)card_block)[game_state.album_slot].metrics[4].unk_02, 128, 14);
-    func_80139740(((AlbumSlotRecord *)card_block)[game_state.album_slot].metrics[5].unk_02, 128, 30);
-    func_80139740(((AlbumSlotRecord *)card_block)[game_state.album_slot].metrics[6].unk_02, 128, 46);
-    func_80139740(((AlbumSlotRecord *)card_block)[game_state.album_slot].metrics[7].unk_02, 128, 62);
-    func_80139740(((AlbumSlotRecord *)card_block)[game_state.album_slot].metrics[8].unk_02, 128, 78);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[0].unk_02, 16, 30);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[1].unk_02, 16, 46);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[2].unk_02, 16, 62);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[3].unk_02, 16, 78);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[4].unk_02, 128, 14);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[5].unk_02, 128, 30);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[6].unk_02, 128, 46);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[7].unk_02, 128, 62);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[8].unk_02, 128, 78);
 }
 
 s32 func_8013AF78(s32 arg0) {
@@ -456,16 +456,16 @@ s32 func_8013B0A0(void) {
 
     a = 0;
     b = 0;
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         return 0;
     }
     c = 0;
     d = 0;
-    if (game_state.step < 0xA0U) {
+    if (game_state.mode_step < 0xA0U) {
         a = 1;
-    } else if (game_state.step < 0xC0U) {
+    } else if (game_state.mode_step < 0xC0U) {
         b = 1;
-    } else if (game_state.step < 0xE0U) {
+    } else if (game_state.mode_step < 0xE0U) {
         c = 1;
     } else {
         d = 1;
@@ -529,7 +529,7 @@ void func_8013B1D8(void) {
     }
     count = 0;
     for (i = 0; i < 13; i++) {
-        if (((AlbumSlotRecord *)card_block)[g->album_slot].flags[i] != 0) {
+        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
             count++;
         }
     }
@@ -546,9 +546,9 @@ void func_8013B1D8(void) {
         D_80120C92 = idx / 7 * 0x1F - 0x82;
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].year, 0x30, -0x60);
-    func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].month, 0x50, -0x60);
-    func_80139740(((AlbumSlotRecord *)card_block)[g->album_slot].day, 0x70, -0x60);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].year, 0x30, -0x60);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].month, 0x50, -0x60);
+    func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].day, 0x70, -0x60);
     func_80139740(count, 0x5A, -0x1D);
 }
 
@@ -575,7 +575,7 @@ void func_8013B59C(void) {
 }
 
 void func_8013B5F0(void) {
-    if ((game_state.stage != 0 || game_state.step != 0) && D_8014D0E0 < 0x4001) {
+    if ((game_state.mode_stage != 0 || game_state.mode_step != 0) && D_8014D0E0 < 0x4001) {
         D_8014D0E0 = (D_8014D0E0 * 16 + 0x70) / 15;
         D_8014D0E4 += D_8014D0EC;
         D_8014D0E8 += D_8014D0F0;
@@ -700,7 +700,7 @@ void func_8013BB24(void) {
     case 0:
         D_800B3C6C = 0;
         draw2d3d(1, 0);
-        actors_draw_enable(1);
+        actor_draw_enable(1);
         sprite_tables_clear();
         *(s32 *)&game_state.menu_hit[3] = 0xA0;
         actor_clear_upper();
@@ -752,12 +752,12 @@ void func_8013BB24(void) {
         make_color_bar16(game_state.scratch_words, 0xDF7FCF, 0xDF7FCF, 0x10, 0);
         load_palette(game_state.scratch_words, 0x17, 1, 1, 0);
         func_80046754(0x80180000, 0x1A, 0);
-        snd_bank_load_start(0, 0xBF98, 0xBF79, 0xCD21, 0xCCD9, 0xCCD1);
+        audio_bank_load_start(0, 0xBF98, 0xBF79, 0xCD21, 0xCCD9, 0xCCD1);
         game_state.substep++;
         break;
     case 1:
-        if (snd_bank_load_poll() == 1) {
-            main_step_next();
+        if (audio_bank_load_poll() == 1) {
+            mode_step_next();
         }
         break;
     }
@@ -775,7 +775,7 @@ void func_8013BE18(void) {
     }
     switch (g->substep) {
     case 0:
-        snd_bank_start(0, 0);
+        audio_bank_start(0, 0);
         cd_read_sectors(5, 0x801E0000, 0x9DBA);
         g->substep++;
         break;
@@ -798,7 +798,7 @@ void func_8013BE18(void) {
         }
         break;
     case 3:
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -896,11 +896,11 @@ void func_8013BF74(void) {
     func_8004A1A0((s32) addresses, 0, 6, 3, 2, 0x1FF, -0xA0, -0x78, 0xA, 0xD);
     func_8004A1A0((s32) addresses2, 1, 6, 3, 2, 0x1F0, -0xA0, -0x78, 8, 0xA);
     actor_clear(0x72);
-    main_stage_next();
+    mode_stage_next();
 }
 
 void func_8013C4A8(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_8013BB24();
         return;
@@ -922,7 +922,7 @@ void func_8013C510(void) {
     set_kanji_string(-0x40, 0x20, 0xF, D_8014B7B4, 0);
     set_kanji_string(-0x40, 0x30, 0xF, D_8014B7C8, 0);
     k_disp_start(2);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C580(void) {
@@ -931,24 +931,24 @@ void func_8013C580(void) {
 
     if (func_80053F04() != 0) {
         cursor_show(1);
-        card_stop();
+        memory_card_stop();
         g = &game_state;
-        sel = g->card_result;
+        sel = g->memory_card_result;
         if (sel == 1) {
             printf("EXIST CARD!");
-            main_stage_next();
+            mode_stage_next();
         } else if (sel == 0xF1) {
             printf("FILE_SEL UNFORMAT FIND!");
-            main_stage_set(0xC0);
+            mode_stage_set(0xC0);
         } else if (sel == 0xFF) {
             printf("NO CARD!");
-            main_step_next();
+            mode_step_next();
         }
-    } else if ((u32)game_state.card_timer >= 0x201U) {
+    } else if ((u32)game_state.memory_card_timer >= 0x201U) {
         cursor_show(1);
-        card_stop();
+        memory_card_stop();
         printf("NO COMUNICATION!");
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -961,12 +961,12 @@ void func_8013C664(void) {
     set_kanji_string(-0x40, 0x20, 0xF, D_8014B824, 0);
     set_kanji_string(-0x40, 0x30, 0xF, D_8014B838, 0);
     k_disp_start(2);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C6CC(void) {
     if (game_state.pad_pressed & 0x860) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -978,18 +978,18 @@ void func_8013C6FC(void) {
     set_kanji_string(-0x40, 0x40, 0xF, D_800B3C88, 0);
     set_kanji_string(0x14, 0x40, 2, func_8006CAE0(), 0);
     k_disp_start(5);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C7C0(void) {
     if (game_state.pad_pressed & PAD_START) {
         func_8013B77C();
-        main_state_set(MODE_NAME_ENT_3);
+        game_mode_set(MODE_NAME_ENT_3);
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
         func_8013B77C();
-        main_state_set(MODE_NAME_ENT_3);
+        game_mode_set(MODE_NAME_ENT_3);
     } else if (game_state.pad_pressed & PAD_CROSS) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -1000,20 +1000,20 @@ void func_8013C834(void) {
     set_kanji_string(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
     set_kanji_string(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
     set_kanji_string(-0x40, 0x40, 1, func_8006CA9C(), 0);
-    card_stop();
+    memory_card_stop();
     k_disp_start(5);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C8FC(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         func_80056284();
-        main_step_set(0);
+        mode_step_set(0);
     }
 }
 
 void func_8013C934(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_8013C510();
         break;
@@ -1049,17 +1049,17 @@ s32 func_8013C9F0(void) {
 
     switch (game_state.substep) {
     case 0:
-        card_start();
+        memory_card_start();
         game_state.substep++;
         break;
     case 1:
         if (func_80054140() == 2) {
             printf("SEARCH_CARD");
             game_state.substep++;
-        } else if (game_state.step_timer.u >= 0x201U) {
+        } else if (game_state.mode_step_timer.u >= 0x201U) {
             func_80056284();
-            main_stage_set(1);
-            card_stop();
+            mode_stage_set(1);
+            memory_card_stop();
         }
         break;
     case 2:
@@ -1071,11 +1071,11 @@ s32 func_8013C9F0(void) {
         }
         text_system_reset();
         if (D_800E8BEE != 0) {
-            main_step_next();
+            mode_step_next();
         } else if (count != 0) {
-            main_step_set(0x20);
+            mode_step_set(0x20);
         } else {
-            main_step_set(0x40);
+            mode_step_set(0x40);
         }
         break;
     case 3:
@@ -1092,17 +1092,17 @@ void func_8013CB44(void) {
 
     switch (g->substep) {
     case 0:
-        card_start();
+        memory_card_start();
         g->substep++;
         break;
     case 1:
         if (func_80054284() == 3) {
-            card_stop();
+            memory_card_stop();
             g->substep++;
-        } else if (((u32) g->card_timer >= 0x201U) || (g->card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32) g->memory_card_timer >= 0x201U) || (g->memory_card_result == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 2:
@@ -1130,7 +1130,7 @@ void func_8013CB44(void) {
             k_sub_reset_point_set();
             k_sub_disp_start(0);
             D_8014D0D4 = 1;
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 3:
@@ -1138,7 +1138,7 @@ void func_8013CB44(void) {
         set_kanji_string(-0x40, 0x20, 0xF, (s32) "システムファイルは", 0);
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
         k_disp_start(2);
-        card_stop();
+        memory_card_stop();
         g->substep++;
         break;
     case 4:
@@ -1166,11 +1166,11 @@ void func_8013CB44(void) {
                     break;
                 }
             }
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 7:
-        main_stage_set(0xD0);
+        mode_stage_set(0xD0);
         break;
     }
 }
@@ -1191,8 +1191,8 @@ void func_8013CEC8(void) {
     }
     if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1) && D_800E7D15[n] == 1) {
         if (D_800E7D36 == n + 1) {
-            snd_command(0x501);
-            main_step_set(3);
+            audio_command(0x501);
+            mode_step_set(3);
             g->save_slot = D_800E7D36;
         } else {
             D_800E7D36 = g->menu_cursor_0 + 1;
@@ -1214,19 +1214,19 @@ void func_8013D054(void) {
 
     switch (game_state.substep) {
     case 0:
-        card_start();
+        memory_card_start();
         game_state.substep++;
         break;
     case 1:
         if (func_8005448C() == 4) {
-            card_stop();
+            memory_card_stop();
             game_state.substep++;
-        } else if ((state = game_state.card_result) == 0xF0) {
+        } else if ((state = game_state.memory_card_result) == 0xF0) {
             func_80056284();
-            main_stage_set(1);
-        } else if (((u32) game_state.card_timer >= 0x201U) || (state == 0xD0)) {
-            card_stop();
-            main_stage_set(0xFF);
+            mode_stage_set(1);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (state == 0xD0)) {
+            memory_card_stop();
+            mode_stage_set(0xFF);
         }
         break;
     case 2:
@@ -1234,34 +1234,34 @@ void func_8013D054(void) {
             game_state.substep++;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
-            main_stage_set(0xF0);
+            mode_stage_set(0xF0);
         }
         break;
     case 3:
         if (func_80055AFC(0) == 1) {
             func_8013BB10();
             printf("SYS0 DATA OK!");
-            card_stop();
-            snd_command(0x501);
-            card_start();
+            memory_card_stop();
+            audio_command(0x501);
+            memory_card_start();
             D_800E7D36 = game_state.save_slot;
             func_80054E6C();
             game_state.substep++;
         } else {
-            state = game_state.card_result;
+            state = game_state.memory_card_result;
             printf("s->mem_stat %d \n", state);
             D_800E7D14[game_state.save_slot] = 0xFF;
-            main_stage_set(0xF0);
+            mode_stage_set(0xF0);
         }
         break;
     case 4:
         if (func_80054388() == 0x13) {
-            card_stop();
-            main_stage_set(3);
-        } else if (((u32) game_state.card_timer >= 0x201U) || ((state = game_state.card_result) == 0xF0)) {
-            card_stop();
+            memory_card_stop();
+            mode_stage_set(3);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((state = game_state.memory_card_result) == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     }
@@ -1277,7 +1277,7 @@ void func_8013D2AC(void) {
 
     switch (g->substep) {
     case 0:
-        card_start();
+        memory_card_start();
         for (i = 1; i < 15; i++) {
             if (system_data.slot_status[i] == 1) {
                 g->save_slot = i;
@@ -1287,27 +1287,27 @@ void func_8013D2AC(void) {
         if (i < 15) {
             g->substep++;
         } else {
-            card_stop();
-            main_step_set(0x40);
+            memory_card_stop();
+            mode_step_set(0x40);
         }
         printf("load file %d \n", g->save_slot);
         break;
     case 1:
         if (func_8005448C() == 4) {
             g->substep++;
-        } else if ((state = g->card_result) == 0xF0) {
+        } else if ((state = g->memory_card_result) == 0xF0) {
             func_80056284();
-            main_stage_set(1);
-        } else if (((u32) g->card_timer >= 0x201U) || (state == 0xD0)) {
-            card_stop();
+            mode_stage_set(1);
+        } else if (((u32) g->memory_card_timer >= 0x201U) || (state == 0xD0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 2:
         if (func_80055A38(0) == 1) {
             func_8013B59C();
-            main_step_next();
+            mode_step_next();
         } else {
             text_system_reset();
             strcpy(text, D_800B3288[g->save_slot]);
@@ -1315,7 +1315,7 @@ void func_8013D2AC(void) {
             set_kanji_string(-0x40, 0x20, 0xF, (s32) text, 0);
             set_kanji_string(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
             D_800E7D14[g->save_slot] = 0xFF;
-            card_stop();
+            memory_card_stop();
             g->substep = 0;
         }
         break;
@@ -1337,9 +1337,9 @@ void func_8013D4CC(void) {
     }
     if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1) && D_800E7D15[idx] == 1) {
         if (g->save_slot == idx + 1) {
-            main_step_set(0x24);
+            mode_step_set(0x24);
         } else {
-            main_step_set(0x22);
+            mode_step_set(0x22);
             g->save_slot = g->menu_cursor_0 + 1;
         }
     }
@@ -1359,34 +1359,34 @@ void func_8013D62C(void) {
     set_kanji_string(-0x40, 0x20, 0xF, buf, 0);
     set_kanji_string(-0x40, 0x30, 0xF, "ロードしています。", 0);
     k_disp_start(2);
-    main_step_next();
+    mode_step_next();
 }
 
 /* Original implicit-int dispatch falls through without a return statement. */
 s32 func_8013D6C0(void) {
     switch (game_state.substep) {
     case 0:
-        card_start();
+        memory_card_start();
         game_state.substep += 1;
         break;
     case 1:
         if (func_8005448C() == 4) {
             game_state.substep += 1;
-        } else if (game_state.card_result == 0xF0) {
+        } else if (game_state.memory_card_result == 0xF0) {
             func_80056284();
-            main_stage_set(1);
-        } else if (((u32) game_state.card_timer >= 0x201U) || (game_state.card_result == 0xD0)) {
-            card_stop();
-            main_stage_set(0xFF);
+            mode_stage_set(1);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xD0)) {
+            memory_card_stop();
+            mode_stage_set(0xFF);
         }
         break;
     case 2:
         if (func_80055A38(0) == 1) {
             func_8013B59C();
-            main_step_set(0x21);
+            mode_step_set(0x21);
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
-            main_stage_set(0xFF);
+            mode_stage_set(0xFF);
         }
         break;
     }
@@ -1400,13 +1400,13 @@ void func_8013D7F4(void) {
     if (func_80055AFC(0) == 1) {
         func_8013BB10();
         printf(D_8014B998);
-        card_stop();
-        snd_command(0x501);
-        main_stage_set(3);
+        memory_card_stop();
+        audio_command(0x501);
+        mode_stage_set(3);
     } else {
         printf(D_8014B9A4);
         func_80056284();
-        main_stage_set(1);
+        mode_stage_set(1);
     }
     func_8013B1D8();
 }
@@ -1420,14 +1420,14 @@ void func_8013D874(void) {
     set_kanji_string(6, 0x50, 1, func_8006CA9C(), 0);
     set_kanji_string(0x5A, 0x50, 2, func_8006CAE0(), 0);
     k_disp_start(6);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013D954(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
-        main_step_set(0x44);
+        mode_step_set(0x44);
     } else if (game_state.pad_pressed & PAD_CROSS) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -1440,13 +1440,13 @@ void func_8013D9A0(void) {
     set_kanji_string(-0x40, 0x20, 0xF, D_8014BA28, 0);
     set_kanji_string(-0x40, 0x30, 0xF, D_8014BA44, 0);
     k_disp_start(2);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013DA08(void) {
     if (game_state.pad_pressed & 0x820) {
         func_8013B77C();
-        main_state_set(MODE_NAME_ENT_3);
+        game_mode_set(MODE_NAME_ENT_3);
     }
 }
 
@@ -1462,7 +1462,7 @@ void func_8013DA40(void) {
     set_kanji_string(-0x40, 0x30, 0xF, D_8014BA78, 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_8014BA88, 0);
     k_disp_start(3);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013DAC4(void) {
@@ -1479,7 +1479,7 @@ void func_8013DAC4(void) {
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
     if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1)) {
-        main_step_next();
+        mode_step_next();
         g->save_slot = g->menu_cursor_0 + 1;
     }
 }
@@ -1496,12 +1496,12 @@ void func_8013DBD0(void) {
     set_kanji_string(-0x40, 0x30, 0xF, D_8014BAC4, 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_8014BAE0, 0);
     k_disp_start(3);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013DC54(void) {
     if (game_state.pad_pressed & 0x860) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -1513,14 +1513,14 @@ void func_8013DC84(void) {
     set_kanji_string(-0x40, 0x40, 0xF, D_800B3C88, 0);
     set_kanji_string(0x14, 0x40, 2, func_8006CAE0(), 0);
     k_disp_start(5);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013DD48(void) {
     if (game_state.pad_pressed & 0x820) {
-        main_step_set(0x4C);
+        mode_step_set(0x4C);
     } else if (game_state.pad_pressed & PAD_CROSS) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -1543,11 +1543,11 @@ s32 func_8013DD94(void) {
         } else if (func_80054694((s32) game_state.save_slot) == 1) {
             game_state.substep += 1;
         } else {
-            main_stage_set(4);
+            mode_stage_set(4);
         }
         break;
     case 1:
-        card_start();
+        memory_card_start();
         func_80041878();
         func_80042058();
         game_state.substep += 1;
@@ -1555,16 +1555,16 @@ s32 func_8013DD94(void) {
     case 2:
         if (func_80054590() == 0x14) {
             game_state.substep += 1;
-        } else if (((u32) game_state.card_timer >= 0x201U) || (game_state.card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 3:
-        card_stop();
+        memory_card_stop();
         func_8013B77C();
-        main_state_set(MODE_NAME_ENT_3);
+        game_mode_set(MODE_NAME_ENT_3);
         break;
     }
 }
@@ -1591,7 +1591,7 @@ void func_8013DF88(void) {
         if (func_80054694((s32) game_state.save_slot) == 1) {
             game_state.substep += 1;
         } else {
-            main_stage_set(4);
+            mode_stage_set(4);
         }
         break;
     case 2:
@@ -1599,11 +1599,11 @@ void func_8013DF88(void) {
             game_state.substep += 1;
         } else {
             func_80054704((s32) game_state.save_slot);
-            main_stage_set(4);
+            mode_stage_set(4);
         }
         break;
     case 3:
-        card_stop();
+        memory_card_stop();
         D_800E7D36 = game_state.save_slot;
         i = 0;
         while (i < 15) {
@@ -1613,22 +1613,22 @@ void func_8013DF88(void) {
         D_800E7D14[game_state.save_slot] = 1;
         *D_800E7D14 = 1;
         game_state.save_slot = 0;
-        card_start();
+        memory_card_start();
         func_80054E6C();
         game_state.substep += 1;
         break;
     case 4:
         if (func_80054388() == 0x13) {
-            card_stop();
+            memory_card_stop();
             game_state.substep += 1;
-        } else if (((u32) (*(u32 *)&game_state.card_timer) >= 0x201U) || (game_state.card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 5:
-        card_start();
+        memory_card_start();
         func_80041878();
         func_80042058();
         func_80042058();
@@ -1641,16 +1641,16 @@ void func_8013DF88(void) {
         if (func_80054590() == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
-        } else if (((u32) (*(u32 *)&game_state.card_timer) >= 0x201U) || (game_state.card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 7:
-        card_stop();
+        memory_card_stop();
         func_8013B77C();
-        main_state_set(MODE_NAME_ENT_3);
+        game_mode_set(MODE_NAME_ENT_3);
         break;
     }
 }
@@ -1667,12 +1667,12 @@ void func_8013E30C(void) {
     set_kanji_string(-0x40, 0x30, 0xF, D_8014BBA8, 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_8014BBC0, 0);
     k_disp_start(3);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013E390(void) {
     if (game_state.pad_pressed & 0x860) {
-        main_step_next();
+        mode_step_next();
     }
     func_80142880();
 }
@@ -1686,7 +1686,7 @@ void func_8013E3C8(void) {
     set_kanji_string(-0x40, 0x20, 0xF, D_8014BBD4, 0);
     set_kanji_string(-0x40, 0x30, 0xF, D_8014BBEC, 0);
     k_disp_start(2);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013E430(void) {
@@ -1704,15 +1704,15 @@ void func_8013E430(void) {
         D_80120C96 = n % 7 * 0x10 - 0xB;
     }
     if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1)) {
-        snd_command(0x501);
+        audio_command(0x501);
         g->save_slot = n + 1;
         if (D_800E7D15[n] != 0) {
-            main_step_next();
+            mode_step_next();
             g->save_slot = g->menu_cursor_0 + 1;
         } else if (D_800E8BEE != 0) {
-            main_step_set(0xA8);
+            mode_step_set(0xA8);
         } else {
-            main_step_set(0xA9);
+            mode_step_set(0xA9);
         }
     }
     func_80142880();
@@ -1732,18 +1732,18 @@ void func_8013E59C(void) {
     set_kanji_string(-0x40, 0x50, 0xF, D_800B3C88, 0);
     set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
     k_disp_start(6);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013E6A8(void) {
     if (game_state.pad_pressed & PAD_CROSS) {
-        snd_command(0x501);
-        main_step_set(0);
+        audio_command(0x501);
+        mode_step_set(0);
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
         if (D_800E8BEE) {
-            main_step_set(0xA6);
+            mode_step_set(0xA6);
         } else {
-            main_step_set(0xA7);
+            mode_step_set(0xA7);
         }
     }
 }
@@ -1766,21 +1766,21 @@ void func_8013E71C(void) {
 void func_8013E80C(void) {
     switch (game_state.substep) {
     case 0:
-        card_start();
+        memory_card_start();
         printf("NEW FILE %d \n", game_state.save_slot);
         game_state.substep += 1;
     default:
         break;
     case 1:
         if (func_8005448C() == 4) {
-            card_stop();
+            memory_card_stop();
             game_state.substep += 1;
-        } else if (game_state.card_result == 0xF0) {
+        } else if (game_state.memory_card_result == 0xF0) {
             func_80056284();
-            main_stage_set(1);
-        } else if (((u32) game_state.card_timer >= 0x201U) || (game_state.card_result == 0xD0)) {
-            card_stop();
-            main_stage_set(0xFF);
+            mode_stage_set(1);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xD0)) {
+            memory_card_stop();
+            mode_stage_set(0xFF);
         }
         break;
     case 2:
@@ -1788,7 +1788,7 @@ void func_8013E80C(void) {
             game_state.substep += 1;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
-            main_stage_set(0xFF);
+            mode_stage_set(0xFF);
         }
         break;
     case 3:
@@ -1798,7 +1798,7 @@ void func_8013E80C(void) {
             game_state.substep += 1;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
-            main_stage_set(0xFF);
+            mode_stage_set(0xFF);
         }
         break;
     case 4:
@@ -1806,7 +1806,7 @@ void func_8013E80C(void) {
         func_80041878();
         func_80042058();
         func_8013B77C();
-        main_state_set(MODE_NAME_ENT_3);
+        game_mode_set(MODE_NAME_ENT_3);
         break;
     }
 }
@@ -1814,21 +1814,21 @@ void func_8013E80C(void) {
 void func_8013E9FC(void) {
     switch (game_state.substep) {
     case 0:
-        card_start();
+        memory_card_start();
         printf("NEW FILE %d \n", game_state.save_slot);
         game_state.substep += 1;
     default:
         break;
     case 1:
         if (func_8005448C() == 4) {
-            card_stop();
+            memory_card_stop();
             game_state.substep += 1;
-        } else if (game_state.card_result == 0xF0) {
+        } else if (game_state.memory_card_result == 0xF0) {
             func_80056284();
-            main_stage_set(1);
-        } else if (((u32) game_state.card_timer >= 0x201U) || (game_state.card_result == 0xD0)) {
-            card_stop();
-            main_stage_set(0xFF);
+            mode_stage_set(1);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xD0)) {
+            memory_card_stop();
+            mode_stage_set(0xFF);
         }
         break;
     case 2:
@@ -1836,7 +1836,7 @@ void func_8013E9FC(void) {
             game_state.substep += 1;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
-            main_stage_set(0xFF);
+            mode_stage_set(0xFF);
         }
         break;
     case 3:
@@ -1846,7 +1846,7 @@ void func_8013E9FC(void) {
             game_state.substep += 1;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
-            main_stage_set(0xFF);
+            mode_stage_set(0xFF);
         }
         break;
     case 4:
@@ -1854,7 +1854,7 @@ void func_8013E9FC(void) {
         func_80041878();
         func_80042058();
         func_8013B77C();
-        main_state_set(MODE_NAME_ENT_3);
+        game_mode_set(MODE_NAME_ENT_3);
         break;
     }
 }
@@ -1880,11 +1880,11 @@ void func_8013EBEC(void) {
         if ((result = func_80054694((s32) game_state.save_slot)) == 1) {
             game_state.substep += 1;
         } else {
-            main_stage_set(4);
+            mode_stage_set(4);
         }
         break;
     case 2:
-        card_start();
+        memory_card_start();
         func_80041878();
         func_80042058();
         game_state.substep += 1;
@@ -1893,32 +1893,32 @@ void func_8013EBEC(void) {
         if ((result = func_80054590()) == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
-        } else if (((u32) (*(u32 *)&game_state.card_timer) >= 0x201U) || (game_state.card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 4:
-        card_stop();
-        card_start();
+        memory_card_stop();
+        memory_card_start();
         D_800E7D36 = game_state.save_slot;
         func_80054E6C();
         game_state.substep += 1;
         break;
     case 5:
         if ((result = func_80054388()) == 0x13) {
-            card_stop();
+            memory_card_stop();
             game_state.substep += 1;
-        } else if (((u32) (*(u32 *)&game_state.card_timer) >= 0x201U) || (game_state.card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 6:
         func_8013B77C();
-        main_state_set(MODE_NAME_ENT_3);
+        game_mode_set(MODE_NAME_ENT_3);
         break;
     }
 }
@@ -1944,11 +1944,11 @@ void func_8013EE7C(void) {
         if ((result = func_80054694((s32) game_state.save_slot)) == 1) {
             game_state.substep += 1;
         } else {
-            main_stage_set(4);
+            mode_stage_set(4);
         }
         break;
     case 2:
-        card_start();
+        memory_card_start();
         func_80041878();
         func_80042058();
         game_state.substep += 1;
@@ -1957,15 +1957,15 @@ void func_8013EE7C(void) {
         if ((result = func_80054590()) == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
-        } else if (((u32) (*(u32 *)&game_state.card_timer) >= 0x201U) || (game_state.card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 4:
         func_8013B77C();
-        main_state_set(MODE_NAME_ENT_3);
+        game_mode_set(MODE_NAME_ENT_3);
         break;
     }
 }
@@ -1982,7 +1982,7 @@ void func_8013F058(void) {
     set_kanji_string(-0x40, 0x30, 0xF, D_8014BCCC, 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_8014BCE0, 0);
     k_disp_start(3);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013F0DC(void) {
@@ -2000,8 +2000,8 @@ void func_8013F0DC(void) {
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
     if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1) && D_800E7D15[idx] == 1) {
-        snd_command(0x501);
-        main_step_next();
+        audio_command(0x501);
+        mode_step_next();
         g->save_slot = idx + 1;
     }
     func_80142880();
@@ -2028,19 +2028,19 @@ s32 func_8013F208(void) {
     state = game_state.substep;
     switch (state) {
     case 0:
-        card_start();
+        memory_card_start();
         game_state.substep++;
     default:
         break;
     case 1:
         if (func_8005448C() == 4) {
             game_state.substep++;
-        } else if ((mode = game_state.card_result) == 0xF0) {
+        } else if ((mode = game_state.memory_card_result) == 0xF0) {
             func_80056284();
-            main_stage_set(1);
-        } else if (((u32) game_state.card_timer >= 0x201U) || (mode == 0xD0)) {
-            card_stop();
-            main_stage_set(0xFF);
+            mode_stage_set(1);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (mode == 0xD0)) {
+            memory_card_stop();
+            mode_stage_set(0xFF);
         }
         break;
     case 2:
@@ -2049,7 +2049,7 @@ s32 func_8013F208(void) {
             game_state.substep++;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
-            main_stage_set(0xFF);
+            mode_stage_set(0xFF);
         }
         break;
     case 3:
@@ -2060,7 +2060,7 @@ s32 func_8013F208(void) {
             game_state.substep++;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
-            main_stage_set(0xFF);
+            mode_stage_set(0xFF);
         }
         break;
     case 4:
@@ -2071,7 +2071,7 @@ s32 func_8013F208(void) {
         set_kanji_string(-0x40, 0x30, 0xF, "どのアルバムにコピーしますか？", 0);
         set_kanji_string(-0x40, 0x40, 0xF, "カーソルで選んで下さい。", 0);
         k_disp_start(3);
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -2095,12 +2095,12 @@ void func_8013F454(void) {
         if (g->menu_cursor_0 != -1) {
             g->save_slot = g->menu_cursor_0 + 1;
             if (D_800E7D15[idx] != 0) {
-                main_step_next();
+                mode_step_next();
             } else if (func_80054694(g->save_slot) == 1) {
-                snd_command(0x501);
-                main_step_set(0xC6);
+                audio_command(0x501);
+                mode_step_set(0xC6);
             } else {
-                main_stage_set(4);
+                mode_stage_set(4);
             }
         }
     }
@@ -2119,24 +2119,24 @@ void func_8013F5B0(void) {
     set_kanji_string(-0x40, 0x50, 0xF, D_800B3C88, 0);
     set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
     k_disp_start(6);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013F6BC(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
-        snd_command(0x501);
-        main_step_next();
+        audio_command(0x501);
+        mode_step_next();
     } else if (game_state.pad_pressed & PAD_CROSS) {
-        main_step_set(0);
+        mode_step_set(0);
         game_state.substep = 2;
     }
 }
 
 void func_8013F71C(void) {
     if (D_800E8BEE) {
-        main_step_set(0xC7);
+        mode_step_set(0xC7);
     } else {
-        main_step_set(0xC8);
+        mode_step_set(0xC8);
     }
 }
 
@@ -2151,38 +2151,38 @@ s32 func_8013F758(void) {
         set_kanji_string(-0x40, 0x20, 0xF, (s32) sp38, 0);
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
         k_disp_start(2);
-        card_start();
+        memory_card_start();
         game_state.substep += 1;
         break;
     case 1:
         if (func_80054590() == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
-            card_stop();
-        } else if (((u32) game_state.card_timer >= 0x201U) || (game_state.card_result == 0xF0)) {
+            memory_card_stop();
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             printf("NO MEM CARD \n");
-            card_stop();
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 2:
-        card_stop();
+        memory_card_stop();
         D_800E7D36 = game_state.save_slot;
         game_state.save_slot = 0;
-        card_start();
+        memory_card_start();
         func_80054E6C();
         game_state.substep += 1;
         break;
     case 3:
         if (func_80054388() == 0x13) {
-            card_stop();
-            main_step_set(0);
+            memory_card_stop();
+            mode_step_set(0);
             game_state.substep = 2;
-        } else if (((u32) game_state.card_timer >= 0x201U) || (game_state.card_result == 0xF0)) {
-            card_stop();
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     }
@@ -2200,23 +2200,23 @@ s32 func_8013F984(void) {
         set_kanji_string(-0x40, 0x20, 0xF, (s32) sp38, 0);
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
         k_disp_start(2);
-        card_start();
+        memory_card_start();
         game_state.substep += 1;
         break;
     case 1:
         if (func_80054590() == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
-            card_stop();
-        } else if (((u32) game_state.card_timer >= 0x201U) || (game_state.card_result == 0xF0)) {
+            memory_card_stop();
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             printf("NO MEM CARD \n");
-            card_stop();
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 2:
-        main_step_set(0);
+        mode_step_set(0);
         game_state.substep = 2;
         break;
     }
@@ -2235,7 +2235,7 @@ void func_8013FB08(void) {
     set_kanji_string(-0x40, 0x30, 0xF, D_8014BE00, 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_8014BE10, 0);
     k_disp_start(3);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013FB8C(void) {
@@ -2252,8 +2252,8 @@ void func_8013FB8C(void) {
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
     if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1) && D_800E7D15[idx] != 0) {
-        main_step_next();
-        snd_command(0x501);
+        mode_step_next();
+        audio_command(0x501);
         g->save_slot = g->menu_cursor_0 + 1;
     }
     func_80142880();
@@ -2273,19 +2273,19 @@ void func_8013FCBC(void) {
     set_kanji_string(-0x40, 0x50, 0xF, D_800B3C88, 0);
     set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
     k_disp_start(6);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013FDC8(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
-        snd_command(0x501);
+        audio_command(0x501);
         if (D_800E8BEE) {
-            main_step_set(0xE4);
+            mode_step_set(0xE4);
         } else {
-            main_step_set(0xE5);
+            mode_step_set(0xE5);
         }
     } else if (game_state.pad_pressed & PAD_CROSS) {
-        main_step_set(0);
+        mode_step_set(0);
     }
 }
 
@@ -2297,26 +2297,26 @@ void func_8013FE40(void) {
             D_800E7D14[game_state.save_slot] = 0;
             game_state.substep += 1;
         } else {
-            card_stop();
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 1:
-        card_start();
+        memory_card_start();
         D_800E7D36 = game_state.save_slot;
         game_state.save_slot = 0;
         game_state.substep += 1;
         break;
     case 2:
         if (func_80054388() == 0x13) {
-            card_stop();
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
-        } else if (((u32) game_state.card_timer >= 0x201U) || (game_state.card_result == 0xF0)) {
-            card_stop();
+            mode_stage_set(1);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     }
@@ -2327,24 +2327,24 @@ void func_8013FF98(void) {
         if (func_80054704(game_state.save_slot) == 1) {
             printf("DELETE OK");
             D_800E7D14[game_state.save_slot] = 0;
-            main_step_set(0);
+            mode_step_set(0);
             game_state.substep = 2;
             return;
         }
-        card_stop();
+        memory_card_stop();
         func_80056284();
-        main_stage_set(1);
+        mode_stage_set(1);
     }
 }
 
 void func_80140024(void) {
-    main_step_set(0);
+    mode_step_set(0);
 }
 
 void func_80140044(void) {
     u8 state;
-    game_state.step_timer.w += 1;
-    state = game_state.step;
+    game_state.mode_step_timer.w += 1;
+    state = game_state.mode_step;
     switch (state) {
     case 0x0:
         func_8013C9F0();
@@ -2489,7 +2489,7 @@ void func_80140044(void) {
         return;
     default:
         func_8013B77C();
-        main_state_set(MODE_START);
+        game_mode_set(MODE_START);
         return;
     }
 }
@@ -2502,7 +2502,7 @@ s32 func_80140430(void) {
     case 0:
         i = game_state.save_slot - 1;
         cd_audio_request_set(D_800B3A3C[i * 2], D_800B3A3C[i * 2 + 1], i % 13);
-        snd_command(0x300);
+        audio_command(0x300);
         printf("CALL XA");
         game_state.substep++;
         break;
@@ -2517,13 +2517,13 @@ s32 func_80140430(void) {
         }
         break;
     case 3:
-        card_stop();
+        memory_card_stop();
         if (D_800E8BEE != 0) {
-            main_stage_set(2);
-            main_step_set(2);
+            mode_stage_set(2);
+            mode_step_set(2);
         } else {
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     }
@@ -2537,7 +2537,7 @@ s32 func_80140574(void) {
     case 0:
         i = game_state.save_slot - 1;
         cd_audio_request_set(D_800B394C[i * 2], D_800B394C[i * 2 + 1], i % 13);
-        snd_command(0x300);
+        audio_command(0x300);
         printf("CALL XA");
         game_state.substep++;
         break;
@@ -2552,9 +2552,9 @@ s32 func_80140574(void) {
         }
         break;
     case 3:
-        card_stop();
+        memory_card_stop();
         func_80056284();
-        main_stage_set(1);
+        mode_stage_set(1);
         break;
     }
 }
@@ -2584,22 +2584,22 @@ void func_8014068C(void) {
             if (*(u8 *)&game_state.year == 0x62 && game_state.month == 3 && game_state.day == 1) {
             } else if (*(u8 *)&game_state.year == 0x5F && game_state.month == 4 && game_state.day == 4) {
             } else {
-                snd_command(5);
-                snd_command(0xC1);
+                audio_command(5);
+                audio_command(0xC1);
             }
             *(u8 *)&game_state.substep = 4;
         } else if (i == 11) {
-            if (game_state.event_flags[0x4D] != 0) {
+            if (game_state.scene_flags[0x4D] != 0) {
                 j = 1;
                 pair = D_800B3B9C + i * 4 + j * 2;
                 cd_audio_request_set(pair[0], pair[1], i);
-                snd_command(0x300);
+                audio_command(0x300);
                 *(u8 *)&game_state.substep += 1;
             } else {
                 j = 0;
                 pair = D_800B3B9C + i * 4 + j * 2;
                 cd_audio_request_set(pair[0], pair[1], i);
-                snd_command(0x300);
+                audio_command(0x300);
                 *(u8 *)&game_state.substep += 1;
             }
         } else if (i == 12) {
@@ -2612,13 +2612,13 @@ void func_8014068C(void) {
                 pair = D_800B3B9C + i * 4 + j * 2;
                 cd_audio_request_set(pair[0], pair[1], i);
                 printf("伊集院A");
-                snd_command(0x300);
+                audio_command(0x300);
                 *(u8 *)&game_state.substep += 1;
             } else if ((u8)game_state.girls[12].flags.b[3] >= 0x29U) {
                 j = 1;
                 pair = D_800B3B9C + i * 4 + j * 2;
                 cd_audio_request_set(pair[0], pair[1], i);
-                snd_command(0x300);
+                audio_command(0x300);
                 printf("伊集院B");
                 *(u8 *)&game_state.substep += 1;
             } else {
@@ -2633,7 +2633,7 @@ void func_8014068C(void) {
             }
             pair = D_800B3B9C + i * 4 + j * 2;
             cd_audio_request_set(pair[0], pair[1], i);
-            snd_command(0x300);
+            audio_command(0x300);
             *(u8 *)&game_state.substep += 1;
         }
         break;
@@ -2651,8 +2651,8 @@ void func_8014068C(void) {
             if (*(u8 *)&game_state.year == 0x62 && game_state.month == 3 && game_state.day == 1) {
             } else if (*(u8 *)&game_state.year == 0x5F && game_state.month == 4 && game_state.day == 4) {
             } else {
-                snd_command(5);
-                snd_command(0xC1);
+                audio_command(5);
+                audio_command(0xC1);
             }
         }
         break;
@@ -2665,7 +2665,7 @@ void func_8014068C(void) {
             game_state.clear_color_g = 0;
             game_state.clear_color_r = 0;
             game_state.clear_color_b = 0;
-            main_step_next();
+            mode_step_next();
         }
         break;
     }
@@ -2696,24 +2696,24 @@ void func_80140BA4(void) {
             func_80041878();
             func_80041F48();
             game_state.event_log_count = 0;
-            main_state_set(MODE_NAME_ENT_3);
+            game_mode_set(MODE_NAME_ENT_3);
         } else if (game_state.year == 0x5F && game_state.month == 4 && game_state.day == 4) {
             func_8013E71C();
             func_80041878();
             func_80041F48();
             game_state.event_log_count = 0;
-            main_state_set(MODE_NAME_ENT_3);
+            game_mode_set(MODE_NAME_ENT_3);
         } else {
             func_800674B0();
-            main_state_set(MODE_COMMAND_SCREEN);
-            main_stage_set(0xFF);
+            game_mode_set(MODE_COMMAND_SCREEN);
+            mode_stage_set(0xFF);
         }
     }
     D_8011ECA4 = 1;
 }
 
 s32 func_80140CCC(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_8014068C();
         break;
@@ -2729,7 +2729,7 @@ void func_80140D20(void) {
     text_system_reset();
     set_kanji_string(-0x40, 0x20, 0xF, D_8014BEB0, 0);
     k_disp_start(2);
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: biased byte cursor, alternate end expression and statement layout preserve addressing and scheduling, T-9580. */
@@ -2751,16 +2751,16 @@ void func_80140D6C(void)
     new_var = ((u8 *) (&system_data)) - -15;
     if (p == new_var)
     {
-      main_step_next();
+      mode_step_next();
       return;
     }
-    main_stage_set(2);
+    mode_stage_set(2);
     if (D_800E8BEE != 0)
     {
-      main_step_set(1);
+      mode_step_set(1);
       return;
     }
-    main_step_set(0x20);
+    mode_step_set(0x20);
   }
 }
 
@@ -2770,18 +2770,18 @@ void func_80140E18(void) {
     set_kanji_string(-0x40, 0x30, 0xF, "１にセットするか、他のゲームの", 0);
     set_kanji_string(-0x40, 0x40, 0xF, "データを消去してください。", 0);
     k_disp_start(2);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80140E9C(void) {
     if (game_state.pad_pressed & 0x860) {
-        main_stage_set(1);
-        main_step_set(6);
+        mode_stage_set(1);
+        mode_step_set(6);
     }
 }
 
 void func_80140ED4(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_80140D20();
         return;
@@ -2799,9 +2799,9 @@ void func_80140ED4(void) {
 
 void func_80140F54(void) {
     if (D_800E8BEE) {
-        main_step_set(1);
+        mode_step_set(1);
     } else {
-        main_step_set(2);
+        mode_step_set(2);
     }
 }
 
@@ -2832,7 +2832,7 @@ void func_80140F90(void) {
             game_state.substep++;
         } else if (game_state.pad_pressed & PAD_CROSS) {
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 2:
@@ -2844,7 +2844,7 @@ void func_80140F90(void) {
         game_state.substep++;
         break;
     case 3:
-        if ((game_state.pad_pressed != 0) || ((u32) game_state.step_timer.w >= 0x41U)) {
+        if ((game_state.pad_pressed != 0) || ((u32) game_state.mode_step_timer.w >= 0x41U)) {
             game_state.substep++;
         }
         break;
@@ -2853,7 +2853,7 @@ void func_80140F90(void) {
         set_kanji_string(-0x40, 0x20, 0xF, (s32) "準備が出来たら、", 0);
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "何かボタンを押してください。", 0);
         k_disp_start(2);
-        game_state.step_timer.w = 0;
+        game_state.mode_step_timer.w = 0;
         game_state.substep++;
         break;
     case 5:
@@ -2903,20 +2903,20 @@ void func_80140F90(void) {
             if (game_state.substep != 32) {
                 w->selected_slot = game_state.save_slot;
                 game_state.substep++;
-                card_start();
+                memory_card_start();
             }
         }
         break;
     case 8:
         if (func_8005448C() == 4) {
-            card_stop();
+            memory_card_stop();
             game_state.substep++;
-        } else if ((state = game_state.card_result) == 0xF0) {
+        } else if ((state = game_state.memory_card_result) == 0xF0) {
             func_80056284();
-            main_stage_set(1);
-        } else if (((u32) game_state.card_timer >= 0x201U) || (state == 0xD0)) {
-            card_stop();
-            main_stage_set(0xFF);
+            mode_stage_set(1);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (state == 0xD0)) {
+            memory_card_stop();
+            mode_stage_set(0xFF);
         }
         break;
     case 9:
@@ -2945,21 +2945,21 @@ void func_80140F90(void) {
         }
         break;
     case 32:
-        card_start();
+        memory_card_start();
         w->selected_slot = 0;
         game_state.substep++;
         break;
     case 33:
         if (func_80054388() == 0x13) {
-            card_stop();
-            main_stage_set(2);
-            main_step_set(0);
+            memory_card_stop();
+            mode_stage_set(2);
+            mode_step_set(0);
             game_state.substep = 2;
-            snd_command(0x50F);
-        } else if (((u32) game_state.card_timer >= 0x201U) || ((state = game_state.card_result) == 0xF0)) {
-            card_stop();
+            audio_command(0x50F);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((state = game_state.memory_card_result) == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     }
@@ -2989,7 +2989,7 @@ s32 func_80141820(void) {
             game_state.substep++;
         } else if (game_state.pad_pressed & PAD_CROSS) {
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     case 2:
@@ -2998,11 +2998,11 @@ s32 func_80141820(void) {
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "途中でメモリーカードを", 0);
         set_kanji_string(-0x40, 0x40, 0xF, (s32) "抜かないで下さい。", 0);
         k_disp_start(3);
-        game_state.step_timer.w = 0;
+        game_state.mode_step_timer.w = 0;
         game_state.substep++;
         break;
     case 3:
-        if ((game_state.pad_pressed != 0) || ((u32) game_state.step_timer.w >= 0x41U)) {
+        if ((game_state.pad_pressed != 0) || ((u32) game_state.mode_step_timer.w >= 0x41U)) {
             game_state.substep++;
         }
         break;
@@ -3031,7 +3031,7 @@ s32 func_80141820(void) {
             D_800E8BEE = 1;
             game_state.substep++;
         } else {
-            main_stage_set(4);
+            mode_stage_set(4);
         }
         break;
     case 8:
@@ -3054,20 +3054,20 @@ s32 func_80141820(void) {
             if (game_state.substep != 32) {
                 w->selected_slot = game_state.save_slot;
                 game_state.substep++;
-                card_start();
+                memory_card_start();
             }
         }
         break;
     case 9:
         if (func_8005448C() == 4) {
-            card_stop();
+            memory_card_stop();
             game_state.substep++;
-        } else if ((state = game_state.card_result) == 0xF0) {
+        } else if ((state = game_state.memory_card_result) == 0xF0) {
             func_80056284();
-            main_stage_set(1);
-        } else if (((u32) game_state.card_timer >= 0x201U) || (state == 0xD0)) {
-            card_stop();
-            main_stage_set(0xFF);
+            mode_stage_set(1);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (state == 0xD0)) {
+            memory_card_stop();
+            mode_stage_set(0xFF);
         }
         break;
     case 10:
@@ -3096,29 +3096,29 @@ s32 func_80141820(void) {
         }
         break;
     case 32:
-        card_start();
+        memory_card_start();
         w->selected_slot = 0;
         game_state.substep++;
         break;
     case 33:
         if (func_80054388() == 0x13) {
-            card_stop();
-            main_stage_set(2);
-            main_step_set(0);
+            memory_card_stop();
+            mode_stage_set(2);
+            mode_step_set(0);
             game_state.substep = 2;
-            snd_command(0x50F);
-        } else if (((u32) game_state.card_timer >= 0x201U) || ((state = game_state.card_result) == 0xF0)) {
-            card_stop();
+            audio_command(0x50F);
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((state = game_state.memory_card_result) == 0xF0)) {
+            memory_card_stop();
             func_80056284();
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     }
 }
 
 s32 func_80141FA4(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_80140F54();
         break;
@@ -3159,9 +3159,9 @@ s32 func_80142028(void) {
     case 3:
         if (game_state.pad_pressed & PAD_CIRCLE) {
             if (func_80054108() == 1) {
-                main_stage_set(2);
+                mode_stage_set(2);
             } else {
-                main_stage_set(1);
+                mode_stage_set(1);
             }
         } else if (game_state.pad_pressed & PAD_CROSS) {
             game_state.substep++;
@@ -3179,14 +3179,14 @@ s32 func_80142028(void) {
         break;
     case 5:
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            main_stage_set(1);
+            mode_stage_set(1);
         }
         break;
     }
 }
 
 void func_801422F0(void) {
-    if (game_state.step == 0) {
+    if (game_state.mode_step == 0) {
         func_80142028();
     }
 }
@@ -3202,8 +3202,8 @@ void func_8014231C(void) {
         ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
     }
     func_8013AF78(0);
-    game_state.stage_timer += 1;
-    switch (game_state.stage) {
+    game_state.mode_stage_timer += 1;
+    switch (game_state.mode_stage) {
     case 0x0:
         func_8013C4A8();
         break;
@@ -3245,7 +3245,7 @@ void func_8014231C(void) {
 }
 
 void func_80142560(void) {
-    if ((game_state.stage | game_state.step) != 0) {
+    if ((game_state.mode_stage | game_state.mode_step) != 0) {
         D_801230D0 -= 1;
     }
     if (D_801230D0 > 0) {
@@ -3267,7 +3267,7 @@ s32 func_801425C0(void) {
         }
     }
     dtd_on_tpage(0, 0, 2, 2, 0);
-    if (game_state.stage != 0) {
+    if (game_state.mode_stage != 0) {
         if (D_800E8BEE != 0) {
             temp_t7 = game_state.frame_count & 0x1F;
             if (temp_t7 != 0) {
@@ -3304,21 +3304,21 @@ void func_80142880(void) {
         switch (*sel) {
         case 0:
             func_80142A3C();
-            main_step_set(0xC0);
+            mode_step_set(0xC0);
             printf("0");
             break;
         case 1:
             func_80142A3C();
-            main_step_set(0xA0);
+            mode_step_set(0xA0);
             printf("1");
             break;
         case 2:
             func_80142A3C();
-            main_step_set(0xE0);
+            mode_step_set(0xE0);
             printf("2");
             break;
         case 3:
-            main_step_set(0);
+            mode_step_set(0);
             printf("3");
             break;
         }
@@ -3336,8 +3336,8 @@ s32 func_801429BC(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         if (cursor_x < -0x50 && cursor_x >= -0x8F) {
             if (cursor_y < -0x18 && cursor_y >= -0x27) {
-                snd_command(0x50F);
-                main_stage_set(0xD0);
+                audio_command(0x50F);
+                mode_stage_set(0xD0);
                 return 1;
             }
         }

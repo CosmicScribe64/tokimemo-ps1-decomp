@@ -16,19 +16,19 @@ void func_8013C4C0(void) {
 }
 
 void func_8013C570(void) {
-    if (dialogue_work == 1) {
+    if (talk_work == 1) {
         func_8013C5B0();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 void func_8013C5B0(void) {
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         func_8013C5EC();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 typedef struct {
@@ -41,14 +41,14 @@ void func_8013C5EC(void) {
     FnTbl32 tbl;
 
     tbl = D_80146A1C;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_8013C674(void) {
     D_80122D10 = 2;
     D_80120652 = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C6A4(void) {
@@ -65,13 +65,13 @@ void func_8013C6A4(void) {
 void func_8013C704(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x829A);
     func_8013C4C0();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C73C(void) {
     game_state.current_girl = GIRL_AYAKO;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -88,8 +88,8 @@ void func_8013C73C(void) {
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
-    dialogue_names_set(game_state.current_girl);
-    dialogue_clear();
+    talk_names_set(game_state.current_girl);
+    talk_clear();
     func_80137990();
     D_80146274 = D_80145F20;
     D_80146278 = D_8014605C;
@@ -98,24 +98,24 @@ void func_8013C73C(void) {
     game_state.girls[3].affection += 2;
     check_para_limit();
     D_800CA368 = 0x15;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C87C(void) {
     func_8013C4C0();
     load_palette(D_80146A00, 0x11, 1, 2, 0);
-    event_still_show(D_80146A04, D_80146A08, D_80146A0C, D_80146A10, D_80146A14, D_80146A18);
-    event_anim_show(D_801469F4, D_801469F8, D_801469F0, D_801469FC);
+    scene_still_show(D_80146A04, D_80146A08, D_80146A0C, D_80146A10, D_80146A14, D_80146A18);
+    scene_anim_show(D_801469F4, D_801469F8, D_801469F0, D_801469FC);
     D_800CA360 = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C92C(void) {
     bg_read_sub2(0x407A);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013C954(void) {
     bg_read_sub2(0x46BC);
-    main_step_next();
+    mode_step_next();
 }

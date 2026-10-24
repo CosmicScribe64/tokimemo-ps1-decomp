@@ -19,7 +19,7 @@ s32 func_8013DDD0(void) {
     ShoCallbacks23 table;
 
     table = D_80145FE8;
-    index = game_state.step;
+    index = game_state.mode_step;
     table.f[index](0x80);
     ((Actor *)actor_pool_96)->brightness = dec_bg_brightness;
     if (((Actor *)actor_pool_96)->unk_18 == 0 && ((Actor *)actor_pool_96)->unk_08 == 0) {
@@ -31,13 +31,13 @@ s32 func_8013DDD0(void) {
 }
 
 void func_8013DEBC(void) {
-    snd_command(0x204);
-    main_step_next();
+    audio_command(0x204);
+    mode_step_next();
 }
 
 void func_8013DEE4(void) {
     D_80120653 |= 0x80;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013DF14(void) {
@@ -50,11 +50,11 @@ void func_8013DF14(void) {
     if (state->girls[12].flags.f.story_stage >= 4) {
         game_state.girls[12].flags.f.story_stage = 3;
     }
-    strcpy(name_buf_girl_short, "伊集院");
+    strcpy(name_code_girl_short, "伊集院");
     strcpy(girl_name_buf, "伊集院");
     strcpy(D_800CA1DC, "パーティー会場");
     D_80145F2C = 9;
-    main_step_next();
+    mode_step_next();
     func_8013DD90();
     load_palette(D_80145FE0, 0x11, 1, 3, 0);
     actor_clear(0x60);
@@ -78,23 +78,23 @@ void func_8013DF14(void) {
 
 void func_8013E0C8(void) {
     bg_read_sub2(0x41D4);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013E0F0(void) {
     D_80145F2C += game_state.girls[12].flags.f.story_stage * 3 - 3;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013E13C(void) {
-    bustup_read_start(0x5855);
-    main_step_next();
+    portrait_read_start(0x5855);
+    mode_step_next();
 }
 
 void func_8013E164(void) {
     cd_read_sectors(0xD, 0x801A0000, 0xBD9F);
     func_8013DD90();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013E19C(void) {
@@ -106,20 +106,20 @@ void func_8013E19C(void) {
     a = get_g_zyotai_s(GIRL_MIRA);
     r = get_g_zyotai_h(GIRL_MIRA);
     b = 0xFF;
-    if (((Bit1Flag *)&game_state.girls[7].flags.w)->f && game_state.event_flags[52] == 0 && a == 0x80 && r == 0) {
+    if (((Bit1Flag *)&game_state.girls[7].flags.w)->f && game_state.scene_flags[52] == 0 && a == 0x80 && r == 0) {
         b = 7;
     }
     a = get_g_zyotai_s(GIRL_SHIORI);
     r = get_g_zyotai_h(GIRL_SHIORI);
-    if (game_state.event_flags[6] == 0 && a == 0x80 && r == 0 && (b == 0xFF || (b == 7 && game_state.girls[0].syoushin < game_state.girls[7].syoushin))) {
+    if (game_state.scene_flags[6] == 0 && a == 0x80 && r == 0 && (b == 0xFF || (b == 7 && game_state.girls[0].syoushin < game_state.girls[7].syoushin))) {
         b = 0;
     }
     a = get_g_zyotai_s(GIRL_MEGUMI);
     r = get_g_zyotai_h(GIRL_MEGUMI);
-    if (((Bit1Flag *)&game_state.girls[9].flags.w)->f && game_state.event_flags[66] == 0 && a == 0x80 && r == 0 &&
+    if (((Bit1Flag *)&game_state.girls[9].flags.w)->f && game_state.scene_flags[66] == 0 && a == 0x80 && r == 0 &&
         (b == 0xFF || (b == 7 && game_state.girls[9].syoushin < game_state.girls[7].syoushin) || (b == 0 && game_state.girls[9].syoushin < game_state.girls[0].syoushin))) {
         b = 9;
     }
     D_80145FE4 = b;
-    main_step_next();
+    mode_step_next();
 }

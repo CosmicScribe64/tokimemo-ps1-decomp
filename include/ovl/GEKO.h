@@ -3,7 +3,7 @@
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_D_801206DA /* matched as u8 (main_api.h: s8) */
-#define MAIN_API_OVERRIDE_dialogue_names_set /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
+#define MAIN_API_OVERRIDE_talk_names_set /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
 #define MAIN_API_OVERRIDE_func_80046094 /* matched with s32(): the result is compared unmasked (main_api.h: u8(void)) */
 
 #include "common.h"
@@ -776,7 +776,7 @@ typedef struct GekoNames12 {
 } GekoNames12; /* size 0xF0 */
 extern GekoNames12 D_80144D8C;
 
-/* Picture ids passed to bustup_read_start (func_80136C20). */
+/* Picture ids passed to portrait_read_start (func_80136C20). */
 typedef struct GekoWords11 {
     /* 0x00 */ s32 v[11];
 } GekoWords11; /* size 0x2C */

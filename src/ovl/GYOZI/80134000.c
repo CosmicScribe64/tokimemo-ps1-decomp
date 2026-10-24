@@ -71,7 +71,7 @@ void func_801342A4(void) {
         func_80137798();
         break;
     default:
-        voice_play();
+        talk_voice_play();
         break;
     }
     func_8008A148();

@@ -11,35 +11,35 @@ void func_80132550(void) {
     FnTbl13 tbl;
 
     tbl = D_80143B28;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_801325CC(void) {
-    snd_bank_load_start(1, 0xC4E5, 0xC4C7, 0xD294, 0xD264, 0xD25E);
-    if (snd_bank_load_poll() == 1) {
-        snd_command(0x200);
-        main_step_next();
+    audio_bank_load_start(1, 0xC4E5, 0xC4C7, 0xD294, 0xD264, 0xD25E);
+    if (audio_bank_load_poll() == 1) {
+        audio_command(0x200);
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132634(void) {
-    if (snd_bank_load_poll() == 1) {
-        snd_command(0x200);
-        main_step_next();
+    if (audio_bank_load_poll() == 1) {
+        audio_command(0x200);
+        mode_step_next();
     }
-    if ((u32) game_state.step_timer.w++ >= 0x400U) {
-        cd_cmd_reset();
-        snd_bank_state_reset();
-        main_step_set((game_state.step - 1) & 0xFF);
+    if ((u32) game_state.mode_step_timer.w++ >= 0x400U) {
+        cd_command_reset();
+        audio_bank_state_reset();
+        mode_step_set((game_state.mode_step - 1) & 0xFF);
     }
 }
 
 void func_801326BC(void) {
     cd_read_sectors(0x34, 0x80197000, 0xAF48);
     func_80132000();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801326F8(void) {
@@ -48,7 +48,7 @@ void func_801326F8(void) {
     u8 *flags;
 
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -57,17 +57,17 @@ void func_801326F8(void) {
     strcpy(D_800CA19C, "正月");
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dialogue_clear();
+    talk_clear();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
     D_800B5940 = 0;
-    daily_flags_clear(0);
+    day_event_today_clear(0);
     addr_init_bustup();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     func_80132000();
-    dialogue_names_set(0U);
+    talk_names_set(0U);
     D_80143B00 = 0;
     D_80143B04 = 0;
     D_80143B18 = 0;
@@ -79,12 +79,12 @@ void func_801326F8(void) {
     for (i = 0; i < 11; i++) {
         flags[i] = g->girls[i].flags.f.met >= 1;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132864(void) {
     bg_read_sub2(0x4167);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013288C(void) {
@@ -116,17 +116,17 @@ void func_8013288C(void) {
         D_80143B1C = best_i;
         /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $fp, 0xff` (T-24122). */
         game_state.current_girl = (best_i & 0) + best_i;
-        dialogue_names_set(game_state.current_girl);
+        talk_names_set(game_state.current_girl);
         func_80132A34();
         D_80143B00 = 0;
         D_80143B04 = 0;
         D_80143B14 = 1;
         D_80122D40 = best_i + 1;
-        game_state.daily_event_bits |= 0x80;
-        main_stage_set(1);
+        game_state.day_event_done_bits |= 0x80;
+        mode_stage_set(1);
     } else {
         D_80143B14 = 0;
-        main_stage_set(2);
+        mode_stage_set(2);
     }
 }
 

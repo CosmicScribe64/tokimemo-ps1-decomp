@@ -2,20 +2,20 @@
 #include "game.h"
 #include "psx_types.h"
 
-s32 game_reset_to_title(void) {
+s32 game_mode_reset_to_title(void) {
     func_800789E0();
     game_state_init(0);
-    main_state_set(MODE_TITLE);
+    game_mode_set(MODE_TITLE);
     sprite_tables_clear();
     func_80048DD0(0);
     back_clear_switch(1);
     dec_bg_reset();
-    snd_bank_state_reset();
+    audio_bank_state_reset();
     tpage_buf_clear();
-    snd_command(0x7F);
+    audio_command(0x7F);
     func_8007BDE8();
     func_8007B844();
-    cd_cmd_reset();
+    cd_command_reset();
     func_80041878();
     func_80042058();
     return -1;

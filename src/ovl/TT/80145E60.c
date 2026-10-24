@@ -308,10 +308,10 @@ void func_80146924(void) {
     c = D_80158A6C;
     switch (*(u16 *)(s + 2)) {
     case 0:
-        snd_command(0x22);
-        snd_command(0x2F);
-        snd_command(4);
-        snd_command(0x206);
+        audio_command(0x22);
+        audio_command(0x2F);
+        audio_command(4);
+        audio_command(0x206);
         s[0x1C] = 1;
         func_8014CBD0();
         func_80148210();

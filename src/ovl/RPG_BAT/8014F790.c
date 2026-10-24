@@ -238,7 +238,7 @@ void func_8014FDBC(void) {
         strcpy(D_8015E9E0, "宇宙人は去っていった。");
         func_8014B738(D_8015EB70, 1, 0x3C);
         func_8013E7C0(0x30, 9, 1, 1);
-        snd_bank_start(1, 0x202);
+        audio_bank_start(1, 0x202);
         func_8014F230();
         return;
     case 16:
@@ -267,7 +267,7 @@ void func_8014FDBC(void) {
         return;
     case 23:
         D_8015EC14 = 0;
-        main_stage_next();
+        mode_stage_next();
         /* fallthrough */
     default:
         return;

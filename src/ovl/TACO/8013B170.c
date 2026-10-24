@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_8013B170(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_8013B2A0();
         break;
@@ -13,7 +13,7 @@ void func_8013B170(void) {
         func_8013B3C4();
         break;
     }
-    if (game_state.step != 0) {
+    if (game_state.mode_step != 0) {
         if (game_state.frame_count & 0x10) {
             if ((u8) D_8015EDCC >= 3U) {
                 func_801432F0((s32) "MISSION COMPLETE", -0x40, 0, 2);
@@ -51,20 +51,20 @@ void func_8013B2A0(void) {
         D_8015EDB0 = 0;
         D_8015EDBC = 0x44;
         func_800450F4(0, 0x202);
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_8013B398(void) {
     if (game_state.pad_pressed != 0) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_8013B3C4(void) {
     if (D_8015EDBC == 0) {
         if (func_80044C98() == 1) {
-            main_stage_set(8);
+            mode_stage_set(8);
         }
     }
 }

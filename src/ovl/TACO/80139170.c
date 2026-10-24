@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_80139170(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_8013920C();
         return;
@@ -57,21 +57,21 @@ void func_8013920C(void) {
         D_8015EE00 = D_8015EDF0;
         strncpy(D_8015EE0C, "   ", 4);
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80139394(void) {
     game_state.substep += 1;
     func_8013A790(0, 0);
     if ((u32)(game_state.substep * 3) >= 0x81U) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_801393F4(void) {
-    main_stage_set(5);
-    main_step_next();
-    main_step_next();
+    mode_stage_set(5);
+    mode_step_next();
+    mode_step_next();
 }
 
 /* Draws glyph arg0 ('0'-'9', 'A'-'Z', ". - ! @ * #", other: a fallback cell) as a POLY_FT4 centred
@@ -179,7 +179,7 @@ void func_80139AB0(void) {
     func_80139FB8(0x41, 0, 0x280 - D_8015F4F8, 0);
     D_8015F4F8 += 4;
     if (D_8015F4F8 >= 0x1E1) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -189,7 +189,7 @@ void func_80139B54(void) {
     func_80139FB8(D_8015F4E0, 0, 0x280 - D_8015F4F8, 0);
     D_8015F4F8 -= 8;
     if (D_8015F4F8 < 0) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -270,7 +270,7 @@ void func_80139BCC(void) {
         if (D_8015F4E0 == 0x27) {
             /* the original passes the byte itself as the destination (a lost &); T-19021 */
             strncpy((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
-            main_step_next();
+            mode_step_next();
         } else if (D_8015F4DC != 3) {
             strncpy(&D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], &D_8015F4B0[D_8015F4E0], 1);
             D_8015F4DC += 1;
@@ -278,7 +278,7 @@ void func_80139BCC(void) {
     }
     if ((game_state.pad_pressed & PAD_START) && !(game_state.pad_pressed & PAD_CROSS)) {
         strncpy((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
-        main_step_next();
+        mode_step_next();
     }
     if ((game_state.pad_pressed & PAD_CROSS) && D_8015F4DC != 0) {
         strncpy(&D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC - 1], " ", 1);

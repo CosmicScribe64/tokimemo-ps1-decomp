@@ -21,12 +21,12 @@ void func_8013E850(void) {
     for (;;) {
         b[0xE] = 0;
         b[0x10] = 0;
-        snd_command(0x21);
-        snd_command(0x22);
-        snd_command(0x2F);
-        snd_command(0x21);
-        snd_command(0xF1);
-        cd_cmd_reset();
+        audio_command(0x21);
+        audio_command(0x22);
+        audio_command(0x2F);
+        audio_command(0x21);
+        audio_command(0xF1);
+        cd_command_reset();
         for (;;) {
             func_8013EF38();
             if (func_8013EE88() != 0) {
@@ -71,8 +71,8 @@ void func_8013E850(void) {
             func_800AD950(0);
             func_80142110();
             func_8013EFAC();
-            snd_command_pump();
-            cd_cmd_pump();
+            audio_command_pump();
+            cd_command_pump();
             func_80133B3C();
         }
         func_8013E320();
@@ -154,7 +154,7 @@ void func_8013ED70(void) {
     c = D_80158AA8 + 0x9EC;
     if (b[0x10] != 0) {
         if (*(u16 *)(a + 0x14) & 0x800) {
-            snd_command(0xF1);
+            audio_command(0xF1);
             b[0x10] = 0;
             c[0] = 0;
         }
@@ -166,7 +166,7 @@ void func_8013ED70(void) {
         }
     } else if (*(u16 *)(D_80158A60 + 0x14) & 0x800) {
         func_8008FD68(0);
-        snd_command(0xE1);
+        audio_command(0xE1);
         func_80133AD0(0x600);
         b[0x10] = 1;
         *(s16 *)(c + 0xA) = -0x14;

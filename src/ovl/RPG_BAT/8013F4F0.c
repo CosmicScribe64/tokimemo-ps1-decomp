@@ -195,7 +195,7 @@ void func_8013F82C(void) {
         func_8014F080(0x3C);
         break;
     case 5:
-        main_stage_next();
+        mode_stage_next();
         break;
     }
 }

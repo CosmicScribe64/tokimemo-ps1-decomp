@@ -57,8 +57,8 @@ void func_80140810(void) {
 s32 func_80140A90(void) {
     s32 i;
 
-    bustup_wink_update();
-    switch (game_state.step) {
+    portrait_wink_update();
+    switch (game_state.mode_step) {
     case 0:
         D_80122EA0 = 0;
         text_system_reset();
@@ -67,46 +67,46 @@ s32 func_80140A90(void) {
         actor_clear_upper();
         dec_bg_cd_read(0x413C, 1);
         D_8014A064 = 0;
-        main_step_next();
+        mode_step_next();
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
             dec_bg_decode_to_vram(1);
-            bustup_read_start(0x5F5D);
-            main_step_next();
+            portrait_read_start(0x5F5D);
+            mode_step_next();
         }
         break;
     case 2:
         normal_date_move_place();
         break;
     case 3:
-        light_effect_draw();
+        sprite_light_effect_draw();
         if (cd_read_sync_status() & 1) {
             k_reset(0);
             message_window_set_title((s32) "グラウンド");
             k_disp_start(1);
             addr_init_bustup();
             game_state.current_girl = GIRL_MIO;
-            bustup_show_checked();
+            portrait_show_checked();
         }
         break;
     case 4:
-        light_effect_draw();
+        sprite_light_effect_draw();
         cd_read_sectors(1U, 0x801E8000, 0xB7BE);
-        main_step_next();
+        mode_step_next();
         break;
     case 5:
-        light_effect_draw();
+        sprite_light_effect_draw();
         if (cd_read_sync_status() & 1) {
             text_marker_hide();
-            dialogue_names_set(1U);
+            talk_names_set(1U);
             func_80141B70();
-            dialogue_group = 0;
-            dialogue_line = 0;
-            dialogue_text_table = D_8014A0A0;
-            dialogue_command_table = D_8014A0A4;
-            dialogue_voice_table = D_8014A0A8;
-            main_step_next();
+            talk_group = 0;
+            talk_line = 0;
+            talk_text_table = D_8014A0A0;
+            talk_command_table = D_8014A0A4;
+            talk_voice_table = D_8014A0A8;
+            mode_step_next();
         }
         break;
     case 6:
@@ -114,42 +114,42 @@ s32 func_80140A90(void) {
     case 12:
     case 14:
         normal_date_speak();
-        light_effect_draw();
+        sprite_light_effect_draw();
         break;
     case 7:
         normal_date_girl_in();
-        light_effect_draw();
+        sprite_light_effect_draw();
         break;
     case 9:
         normal_date_two_select();
-        light_effect_draw();
+        sprite_light_effect_draw();
         break;
     case 10:
         /* FAKE: scalar view keeps uopt from promoting D_80122CDC into $v0; the original selector
          * is in $v1. T-16554 */
         switch (*(s32 *)&D_80122CDC) {
         case 0:
-            main_step_set(0x11);
+            mode_step_set(0x11);
             break;
         case 1:
-            main_step_set(0xB);
+            mode_step_set(0xB);
             break;
         }
-        light_effect_draw();
+        sprite_light_effect_draw();
         break;
     case 11:
         game_state.girls[1].affection -= 1;
         game_state.girls[1].tokimeki -= 1;
         game_state.girls[1].syoushin += 0xA;
-        bustup_layout_set(3U);
+        portrait_layout_set(3U);
         func_80063668();
-        dialogue_group = 0xA;
-        dialogue_line = 0;
-        light_effect_draw();
-        main_step_next();
+        talk_group = 0xA;
+        talk_line = 0;
+        sprite_light_effect_draw();
+        mode_step_next();
         break;
     case 13:
-        light_effect_draw();
+        sprite_light_effect_draw();
         normal_date_girl_out();
         break;
     case 15:
@@ -160,12 +160,12 @@ s32 func_80140A90(void) {
         break;
     case 17:
         normal_date_speak();
-        light_effect_draw();
+        sprite_light_effect_draw();
         break;
     case 18:
-        light_effect_draw();
+        sprite_light_effect_draw();
         dec_bg_cd_read(0x407A, 1);
-        main_step_next();
+        mode_step_next();
         break;
     case 19:
         normal_date_bggirl_fadeout();
@@ -177,8 +177,8 @@ s32 func_80140A90(void) {
             D_80125CA0 = 0xC0;
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0x45U, 0x80197000, 0xBB15);
-            snd_bank_start(0, 0x201);
-            main_step_next();
+            audio_bank_start(0, 0x201);
+            mode_step_next();
         }
         break;
     case 21:
@@ -188,14 +188,14 @@ s32 func_80140A90(void) {
         if (cd_read_sync_status() & 1) {
             func_80142180();
             load_palette(D_8014A0F0, 0x11, 1, 2, 0);
-            event_still_show(D_8014A0F4, D_8014A0F8, D_8014A0FC, D_8014A100, D_8014A104, D_8014A108);
-            event_anim_show(D_8014A0E4, D_8014A0E8, D_8014A0E0, (s32) D_8014A0EC);
+            scene_still_show(D_8014A0F4, D_8014A0F8, D_8014A0FC, D_8014A100, D_8014A104, D_8014A108);
+            scene_anim_show(D_8014A0E4, D_8014A0E8, D_8014A0E0, (s32) D_8014A0EC);
             for (i = 0; i < 2; i++) {
                 ((Actor *)actor_pool)[96 + i].unk_04 |= 8;
             }
             ((Actor *)actor_pool)[98] = ((Actor *)actor_pool)[96];
             ((Actor *)actor_pool)[98].sequence_slot = 4;
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 23:
@@ -205,15 +205,15 @@ s32 func_80140A90(void) {
         func_80047550();
         k_reset(1);
         set_kanji_string(-0x80, 0x32, 0, (s32) "ドシン", 0);
-        snd_command(0x60A);
+        audio_command(0x60A);
         Vblnk_Timer_Init();
-        main_step_next();
+        mode_step_next();
         break;
     case 25:
         if (Vblnk_Timer() >= 0x3D) {
             dec_bg_cd_read(0x4721, 1);
             k_reset(1);
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 26:
@@ -222,7 +222,7 @@ s32 func_80140A90(void) {
     case 27:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 28:
@@ -247,7 +247,7 @@ s32 func_80140A90(void) {
         break;
     case 31:
         ((Actor *)actor_pool)[98].sequence_slot = 5;
-        main_step_next();
+        mode_step_next();
         break;
     case 32:
         normal_date_speak();
@@ -263,7 +263,7 @@ s32 func_80140A90(void) {
         ((Actor *)actor_pool)[97].sequence_slot = 1;
         ((Actor *)actor_pool)[97].unk_18 = 0;
         ((Actor *)actor_pool)[97].unk_08 = 0;
-        main_step_next();
+        mode_step_next();
         break;
     case 34:
         normal_date_speak();
@@ -294,7 +294,7 @@ s32 func_80140A90(void) {
         game_state.girls[1].tokimeki += 1;
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     Default_Disp();

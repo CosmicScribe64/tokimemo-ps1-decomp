@@ -22,16 +22,16 @@ void func_8013B760(void) {
     EdFnTbl25 tbl;
 
     tbl = D_8013CBE4;
-    if (game_state.stage == 7 && game_state.step < 0x10) {
-        bustup_wink_update();
+    if (game_state.mode_stage == 7 && game_state.mode_step < 0x10) {
+        portrait_wink_update();
     }
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
-    if (game_state.stage == 7) {
-        if (game_state.step < 0x10) {
+    if (game_state.mode_stage == 7) {
+        if (game_state.mode_step < 0x10) {
             check_k_scroll();
             k_disp_inc2();
-            screen_frame_draw(2);
+            hud_screen_frame_draw(2);
             message_window_show();
             message_window_title_update();
             hizuke_show();
@@ -41,16 +41,16 @@ void func_8013B760(void) {
 }
 
 void func_8013B868(void) {
-    main_stage_set(6);
+    mode_stage_set(6);
 }
 
 void func_8013B888(void) {
-    main_stage_set(8);
+    mode_stage_set(8);
 }
 
 void func_8013B8A8(void) {
-    if (game_state.event_flags[82] != 0) {
-        main_step_next();
+    if (game_state.scene_flags[82] != 0) {
+        mode_step_next();
         return;
     }
     normal_date_girl_out();
@@ -59,33 +59,33 @@ void func_8013B8A8(void) {
 void func_8013B8E4(void) {
     cd_read_sectors(0x45, 0x801A0000, 0x727A);
     func_8013B6A0();
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_8013B91C(void) {
-    if (game_state.event_flags[82] != 0) {
-        if ((u32) game_state.step_timer.w++ < 0x78U) {
+    if (game_state.scene_flags[82] != 0) {
+        if ((u32) game_state.mode_step_timer.w++ < 0x78U) {
             return 0;
         }
     }
     game_state.current_girl = GIRL_YOSHIO;
-    dialogue_group = 0;
-    dialogue_line = 0;
-    dialogue_names_set(game_state.event_flags[82]);
+    talk_group = 0;
+    talk_line = 0;
+    talk_names_set(game_state.scene_flags[82]);
     func_80132000();
-    dialogue_text_table = D_8013C280[0][0];
-    dialogue_command_table = D_8013C280[1][0];
-    dialogue_voice_table = D_8013C280[2][0];
-    if (game_state.event_flags[82] != 0) {
-        dialogue_group = 2;
-        game_state.step += 0xA;
+    talk_text_table = D_8013C280[0][0];
+    talk_command_table = D_8013C280[1][0];
+    talk_voice_table = D_8013C280[2][0];
+    if (game_state.scene_flags[82] != 0) {
+        talk_group = 2;
+        game_state.mode_step += 0xA;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013B9F0(void) {
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     cursor_show(0);
@@ -97,15 +97,15 @@ void func_8013B9F0(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dialogue_clear();
+    talk_clear();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
     D_800B5940 = 0;
     func_8013B6A0();
     load_palette(D_8013CBB0.unk_10[1], 0x11, 1, 2, 0);
     load_palette(D_8013CBB0.unk_10[0], 0x12, 1, 2, 0);
-    event_still_show(D_8013CBB0.unk_10[2], D_8013CBB0.unk_10[3], D_8013CBB0.unk_10[4], D_8013CBB0.unk_10[5], D_8013CBB0.unk_10[6], D_8013CBB0.unk_10[7]);
-    event_anim_show(D_8013CBB0.unk_04, D_8013CBB0.unk_08, D_8013CBB0.unk_00, D_8013CBB0.unk_0C);
+    scene_still_show(D_8013CBB0.unk_10[2], D_8013CBB0.unk_10[3], D_8013CBB0.unk_10[4], D_8013CBB0.unk_10[5], D_8013CBB0.unk_10[6], D_8013CBB0.unk_10[7]);
+    scene_anim_show(D_8013CBB0.unk_04, D_8013CBB0.unk_08, D_8013CBB0.unk_00, D_8013CBB0.unk_0C);
     sprite_quads[61].h = sprite_quads[62].h = sprite_quads[63].h = 0x70;
     actor_clear(0x61);
     D_80120666 = 0;
@@ -113,7 +113,7 @@ void func_8013B9F0(void) {
     D_80120693 = 0x12;
     D_80120652 = 0;
     D_80120653 = 4;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013BB9C(void) {
@@ -121,17 +121,17 @@ void func_8013BB9C(void) {
     EdWords4 v;
 
     v = D_8013CD90;
-    snd_command(0xBF);
-    if (game_state.event_flags[82] != 0) {
+    audio_command(0xBF);
+    if (game_state.scene_flags[82] != 0) {
         cd_audio_request_set(v.w[2], v.w[3], 0xF);
     } else {
         cd_audio_request_set(v.w[0], v.w[1], 0xF);
     }
-    snd_command(0x300);
+    audio_command(0x300);
     r = set_kanji_string(-0x50, 0x50, 0, "『女々しい野郎どもの詩』", 0);
     k_disp_start(r);
     D_8013CBE0 = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013BC58(void) {
@@ -162,7 +162,7 @@ void func_8013BC58(void) {
         D_8013CBE0 += 1;
     }
     if (func_80046094() == 9) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -174,7 +174,7 @@ void func_8013BDD8(s16 arg0) {
 }
 
 void func_8013BE64(void) {
-    if (game_state.step_timer.w == 0) {
+    if (game_state.mode_step_timer.w == 0) {
         D_80120652 = 5;
     }
     if ((D_80120668 == 2) && (D_80120658 == 4)) {
@@ -183,7 +183,7 @@ void func_8013BE64(void) {
         D_80120658 = 0;
         D_80120666 = 1;
     }
-    if ((u32)++game_state.step_timer.w >= 0xB5U) {
-        main_step_next();
+    if ((u32)++game_state.mode_step_timer.w >= 0xB5U) {
+        mode_step_next();
     }
 }

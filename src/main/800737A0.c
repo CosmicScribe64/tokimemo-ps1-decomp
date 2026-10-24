@@ -9,14 +9,14 @@ void func_800737A0(void) {
     parameter_show();
     message_window_show();
     hizuke_show();
-    icon_bar_update(0);
-    mascot_update();
-    screen_frame_draw(1);
+    hud_icon_bar_update(0);
+    hud_mascot_update();
+    hud_screen_frame_draw(1);
     dec_bg_draw(get_last_gamen_mode());
 }
 
 void week_day(void) {
-    switch (game_state.stage) {
+    switch (game_state.mode_stage) {
     case 0:
         week_day_init();
         break;
@@ -30,30 +30,30 @@ void week_day(void) {
         vacation_day_init();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     parameter_show();
     message_window_show();
     hizuke_show();
-    icon_bar_update(1);
+    hud_icon_bar_update(1);
     dec_bg_draw(0);
-    screen_frame_draw(1);
+    hud_screen_frame_draw(1);
     if (D_8011F3FF[0] & 0x80) {
-        mascot_update();
+        hud_mascot_update();
     }
 }
 
 void week_day_exit(void) {
-    game_state.step_timer.w += 1;
-    if (game_state.step == 0) {
+    game_state.mode_step_timer.w += 1;
+    if (game_state.mode_step == 0) {
         week_day_exit0();
     }
 }
 
 u8 week_day_init(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         return func_80073AD8();
     case 1:
@@ -64,8 +64,8 @@ u8 week_day_init(void) {
 }
 
 void week_day_main(void) {
-    game_state.step_timer.w += 1;
-    if (game_state.step == 0) {
+    game_state.mode_step_timer.w += 1;
+    if (game_state.mode_step == 0) {
         week_day_main0();
     }
 }
@@ -85,7 +85,7 @@ s32 get_weekly_bg_sector(void) {
 s32 func_80073A40(void) {
     s32 ret;
 
-    if ((game_state.player_flags.b[1] & 0xF) == 3 && !(*(u16 *)&game_state.player_flags_hi.b[0] & 1) && (game_state.last_command.w & 0xF) == 7) {
+    if ((game_state.player_flags.b[1] & 0xF) == 3 && !(*(u16 *)&game_state.player_flags_upper.b[0] & 1) && (game_state.last_command.w & 0xF) == 7) {
         ret = dec_bg_cd_read(D_800B5950[func_80066A2C()], 0);
     } else {
         ret = dec_bg_cd_read(get_weekly_bg_sector(), 0);
@@ -96,10 +96,10 @@ s32 func_80073A40(void) {
 u8 func_80073AD8(void) {
     s32 temp_v0;
 
-    daily_flags_clear(0);
+    day_event_today_clear(0);
     if (game_state.vacation != VACATION_NONE) {
         sprite_tables_clear();
-        main_stage_set(0xA);
+        mode_stage_set(0xA);
         return 0;
     } else {
         switch (game_state.substep) {                       /* irregular */
@@ -118,7 +118,7 @@ u8 func_80073AD8(void) {
             parameter_disp_switch(1);
             message_window_init();
             func_8005AD1C();
-            if (game_state.player_flags_hi.h & 1) {
+            if (game_state.player_flags_upper.h & 1) {
                 sprite_quads->flags = 0x80000000;
             } else {
                 func_8005AD70();
@@ -149,7 +149,7 @@ u8 func_80073AD8(void) {
             break;
         default:
         case 2:
-            main_step_next();
+            mode_step_next();
             break;
         }
     }
@@ -316,7 +316,7 @@ void func_80073CB0(void) {
 u8 func_800741B8(void) {
     if (game_state.substep == 0) {
         func_80073CB0();
-        if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_hi.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
+        if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_upper.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
             cd_read_sectors(9, 0x801E0000, 0x7D8A);
             game_state.substep = 1;
         } else if (game_state.day_events[game_state.day_event_index].girl != 4) {
@@ -328,15 +328,15 @@ u8 func_800741B8(void) {
         }
     } else if (game_state.substep == 1) {
         if (cd_read_sync_status() & 1) {
-            if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_hi.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
+            if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_upper.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
                 if (file_checksum_ok(9, 0x801E0000) != 0) {
-                    main_step_next();
+                    mode_step_next();
                 } else {
                     game_state.substep = 0;
                 }
             } else {
                 if (file_checksum_ok(0x29, 0x801E0000) != 0) {
-                    main_step_next();
+                    mode_step_next();
                 } else {
                     game_state.substep = 0;
                 }
@@ -354,7 +354,7 @@ u8 func_8007437C(void) {
     actor_clear(0x61);
     rec = &game_state.day_events[game_state.day_event_index];
     temp = rec->scene;
-    if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_hi.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
+    if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_upper.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
         addr_init_else_sd(2);
         temp = 0;
     } else if (rec->girl == 4) {
@@ -407,7 +407,7 @@ u8 func_8007437C(void) {
             ((Actor *)actor_pool)[97].y = -0x40;
         }
     }
-    main_stage_next();
+    mode_stage_next();
 }
 
 s32 week_day_main0(void) {
@@ -419,26 +419,26 @@ s32 week_day_main0(void) {
             state = &D_80120666;
             switch ((u32)(*state & 1)) {                      /* irregular */
             case 0:
-                snd_command(0x501);
+                audio_command(0x501);
                 break;
             case 1:
-                snd_command(0x502);
+                audio_command(0x502);
                 break;
             }
             sp28 = game_state.day_events[game_state.day_event_index].girl;
             parameter_up_down(sp28, 0, (s32) game_state.day_events[game_state.day_event_index].scene);
             parameter_show_init();
             if (sp28 == 4) {
-                game_state.clubs[(game_state.player_flags.h >> 12) % 11].exp += 1;
+                game_state.clubs[(game_state.player_flags.h >> 12) % 11].practice_points += 1;
             }
         }
         if (D_80120658++ >= 0xD) {
-            main_stage_next();
+            mode_stage_next();
         }
     }
-    if ((u32) game_state.step_timer.u >= 0x259U) {
-        cd_cmd_reset();
-        main_stage_next();
+    if ((u32) game_state.mode_step_timer.u >= 0x259U) {
+        cd_command_reset();
+        mode_stage_next();
     }
 }
 
@@ -446,7 +446,7 @@ void week_day_exit0(void) {
     game_state.day_event_index++;
     actor_clear(0x60);
     actor_clear(0x61);
-    main_state_set(MODE_DAY_SCREEN);
+    game_mode_set(MODE_DAY_SCREEN);
 }
 
 s32 parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
@@ -496,7 +496,7 @@ s32 parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
             parameter_change(8, (row[8] << 12) + (arg2 << 16) + 0xFFFF0000);
         }
     } else {
-        row = command_deltas[arg0];
+        row = school_day_command_deltas[arg0];
         p = row;
         for (i = 0; i != 8; i++) {
             if (*p > 0) {
@@ -515,8 +515,8 @@ s32 parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 u8 vacation_day_init(void) {
-    game_state.step_timer.w += 1;
-    switch (game_state.step) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
     case 0:
         return func_80074DE0();
     case 1:
@@ -580,7 +580,7 @@ u8 func_80074DE0(void) {
         break;
     default:
     case 2:
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -588,7 +588,7 @@ u8 func_80074DE0(void) {
 u8 func_80074F24(void) {
     if (game_state.substep == 0) {
         func_80076FDC();
-        if ((game_state.player_flags.b[1] & 0xF) == 3 && !(*(u16 *)&game_state.player_flags_hi.b[0] & 1) && (game_state.last_command.w & 0xF) == 7) {
+        if ((game_state.player_flags.b[1] & 0xF) == 3 && !(*(u16 *)&game_state.player_flags_upper.b[0] & 1) && (game_state.last_command.w & 0xF) == 7) {
             cd_read_sectors(9, 0x801E0000, 0x7D8A);
             game_state.substep = 1;
         } else if (game_state.day_events[game_state.day_event_index].girl != 4) {
@@ -599,7 +599,7 @@ u8 func_80074F24(void) {
             game_state.substep = 1;
         }
     } else if ((game_state.substep == 1) && (cd_read_sync_status() & 1)) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -610,7 +610,7 @@ u8 func_8007505C(void) {
     actor_clear(0x60);
     rec = &game_state.day_events[game_state.day_event_index];
     temp = rec->scene;
-    if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_hi.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
+    if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_upper.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
         addr_init_else_sd(2);
         temp = 0;
     } else if (rec->girl == 4) {
@@ -656,8 +656,8 @@ u8 func_8007505C(void) {
     ((Actor *)actor_pool)[96].x = -0x50;
     ((Actor *)actor_pool)[96].y = -0x40;
     if (game_state.day_events[0].type == DAY_EVENT_CLUB_CAMP) {
-        main_stage_next();
+        mode_stage_next();
     } else {
-        main_stage_set(1);
+        mode_stage_set(1);
     }
 }

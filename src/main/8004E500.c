@@ -48,7 +48,7 @@ void text_system_reset(void) {
     for (i = 0; i < 0x34; i++) {
         ((TextEntry *)text_list)[i].x = 0;
         ((TextEntry *)text_list)[i].y = 0;
-        ((TextEntry *)text_list)[i].attr = 0;
+        ((TextEntry *)text_list)[i].attribute = 0;
         ((TextEntry *)text_list)[i].glyph_count = 0;
         ((TextEntry *)text_list)[i].extra = 0;
         ((TextEntry *)text_list)[i].active = 0;
@@ -88,7 +88,7 @@ s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
         ((TextEntry *)text_list)[text_list_count.count].active = 0;
     } else {
         ((TextEntry *)text_list)[text_list_count.count].y = y;
-        ((TextEntry *)text_list)[text_list_count.count].attr = col;
+        ((TextEntry *)text_list)[text_list_count.count].attribute = col;
         ((TextEntry *)text_list)[text_list_count.count].x = x;
         ((TextEntry *)text_list)[text_list_count.count].glyph_count = load_string(str, y, col);
         ((TextEntry *)text_list)[text_list_count.count].extra = arg4;
@@ -133,7 +133,7 @@ void set_k_work(s32 arg0, TextEntry arg1) {
 
     p->x = arg1.x;
     p->y = arg1.y;
-    p->attr = arg1.attr;
+    p->attribute = arg1.attribute;
     p->glyph_count = arg1.glyph_count;
     p->extra = arg1.extra;
     p->active = arg1.active;
@@ -274,7 +274,7 @@ void disp_string(void) {
             p->y0 = ((TextEntry *)text_list)[j].y + game_state.screen_center_y[draw_buffer];
             /* FAKE: T-24141, same-line UV/Y stores reproduce original as1 instruction scheduling. */
             p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
-            p->clut = func_8009ED74((((TextEntry *)text_list)[j].attr & 8) * 4 + 0x100, (((TextEntry *)text_list)[j].attr & 7) + 0x1F8);
+            p->clut = func_8009ED74((((TextEntry *)text_list)[j].attribute & 8) * 4 + 0x100, (((TextEntry *)text_list)[j].attribute & 7) + 0x1F8);
             AddPrim(&D_800E8CA0[(draw_buffer << 10) + ot * 4], p);
 
             p = (SPRT_8 *)GetWorkBase(0x10, draw_buffer);
@@ -287,7 +287,7 @@ void disp_string(void) {
             p->x0 = ((TextEntry *)text_list)[j].x + game_state.screen_center_x[draw_buffer] + k * text_list_count.unk_6A + 1;
             /* FAKE: T-24141, same-line Y/UV stores reproduce original as1 instruction scheduling. */
             p->y0 = ((TextEntry *)text_list)[j].y + game_state.screen_center_y[draw_buffer] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
-            p->clut = func_8009ED74((((TextEntry *)text_list)[j].attr & 8) * 4 + 0x110, (((TextEntry *)text_list)[j].attr & 7) + 0x1F8);
+            p->clut = func_8009ED74((((TextEntry *)text_list)[j].attribute & 8) * 4 + 0x110, (((TextEntry *)text_list)[j].attribute & 7) + 0x1F8);
             AddPrim(&D_800E8CA0[(draw_buffer << 10) + ot * 4], p);
 
             if (i == 0x7F) {

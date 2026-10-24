@@ -11,44 +11,44 @@ void func_801323E0(void) {
     FnTbl33 tbl;
 
     tbl = D_80144C5C;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_80132454(void) {
     cd_read_sectors(0x24, 0x80197000, 0xAEC8);
     func_80132000();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132490(void) {
-    snd_bank_load_start(1, 0xC043, 0xC01D, D_800B3688[game_state.current_girl], D_800B36C8[game_state.current_girl], D_800B3708[game_state.current_girl]);
-    if (snd_bank_load_poll() == 1) {
-        main_step_next();
+    audio_bank_load_start(1, 0xC043, 0xC01D, D_800B3688[game_state.current_girl], D_800B36C8[game_state.current_girl], D_800B3708[game_state.current_girl]);
+    if (audio_bank_load_poll() == 1) {
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132518(void) {
-    if (snd_bank_load_poll() == 1) {
-        main_step_next();
+    if (audio_bank_load_poll() == 1) {
+        mode_step_next();
     }
-    if ((u32) game_state.step_timer.w++ >= 0x400U) {
-        cd_cmd_reset();
-        snd_bank_state_reset();
-        main_step_set((game_state.step - 1) & 0xFF);
+    if ((u32) game_state.mode_step_timer.w++ >= 0x400U) {
+        cd_command_reset();
+        audio_bank_state_reset();
+        mode_step_set((game_state.mode_step - 1) & 0xFF);
     }
 }
 
 void func_80132598(void) {
-    snd_command(0x200);
-    main_step_next();
+    audio_command(0x200);
+    mode_step_next();
 }
 
 s32 func_801325C0(void) {
     game_state.current_girl = game_state.day_events[game_state.day_event_index].girl;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -59,7 +59,7 @@ s32 func_801325C0(void) {
     k_reset(1);
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dialogue_clear();
+    talk_clear();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
     D_800B5940 = 0;
@@ -71,7 +71,7 @@ s32 func_801325C0(void) {
     D_80144C3C = 0;
     /* T-9510: this initializer and func_801327AC store a full halfword. */
     *(s16 *)&D_80144C40 = 0;
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     func_80132000();
     D_80144C30 = D_80144BC8;
     D_80144C34 = D_80144BF8;
@@ -85,8 +85,8 @@ s32 func_801325C0(void) {
     } else {
         D_80144C58 = 0;
     }
-    main_step_next();
-    cd_cmd_push(9, 0, 0);
+    mode_step_next();
+    cd_command_push(9, 0, 0);
 }
 
 void func_801327AC(void) {
@@ -151,7 +151,7 @@ void func_801327AC(void) {
         D_80144C38 = D_80144C2C;
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: s32 fall-through preserves narrowing through v0 (T-9780). */
@@ -310,7 +310,7 @@ s32 func_80133024(void) {
 
 void func_8013313C(void) {
     bg_read_sub2(0x4032);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133164(void) {
@@ -318,7 +318,7 @@ void func_80133164(void) {
         func_801322E8();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801331A0(void) {
@@ -327,7 +327,7 @@ void func_801331A0(void) {
     temp_v0 = get_g_zyotai_s(game_state.current_girl);
     if (((temp_v0 & 0x7F) == 4) || (D_80144C58 != 0)) {
         D_80144C3C += 0x12;
-        bustup_layout_set(4U);
+        portrait_layout_set(4U);
         D_80144C54 = 0;
     } else {
         if ((temp_v0 & 0x7F) == 2) {
@@ -337,7 +337,7 @@ void func_801331A0(void) {
             D_80144C3C += 0xC;
         }
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133250(void) {
@@ -345,17 +345,17 @@ void func_80133250(void) {
 
     temp_v0 = get_g_zyotai_s(game_state.current_girl);
     if (((temp_v0 & 0x7F) == 4) || (D_80144C58 != 0)) {
-        main_step_next();
-        main_step_next();
-        main_step_next();
-        main_step_next();
+        mode_step_next();
+        mode_step_next();
+        mode_step_next();
+        mode_step_next();
     } else if ((game_state.current_girl == GIRL_NOZOMI) && ((temp_v0 & 0x7F) < 2U)) {
-        main_step_next();
-        main_step_next();
-        main_step_next();
-        main_step_next();
+        mode_step_next();
+        mode_step_next();
+        mode_step_next();
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 /* FAKE: T-24503, the empty index test controls the saved constant ranges;
@@ -399,7 +399,7 @@ void func_80133308(void) {
         } while (var_s1 < 0xB);
     }
     check_para_limit();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133598(void) {
@@ -409,15 +409,15 @@ void func_80133598(void) {
     result = get_g_zyotai_s(game_state.current_girl);
     status = result & 0x7F;
     if ((status == 4) || (D_80144C58 != 0) || ((game_state.current_girl == GIRL_NOZOMI) && (status < 2U))) {
-        snd_command(0x24);
-        snd_command(0x507);
+        audio_command(0x24);
+        audio_command(0x507);
     }
     if (((u8) D_80144C54 != 0) && ((D_80144C50 == 0) || (game_state.girls[game_state.current_girl].flags.w & 1))) {
-        main_step_next();
+        mode_step_next();
         return;
     }
     if (((u8) D_80144C54 == 0) && (game_state.current_girl == GIRL_NOZOMI) && (status < 2U)) {
-        main_step_next();
+        mode_step_next();
         return;
     }
     if ((u8) D_80144C54 == 0) {
@@ -430,10 +430,10 @@ void func_80133598(void) {
                 D_80144C3C = 5;
             }
         }
-        main_step_next();
+        mode_step_next();
         return;
     }
-    main_stage_next();
+    mode_stage_next();
 }
 
 void func_8013375C(void) {
@@ -448,7 +448,7 @@ void func_8013375C(void) {
         func_800833F0();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_801337EC(void) {
@@ -457,12 +457,12 @@ s32 func_801337EC(void) {
         game_state.substep += 1;
     }
     if (game_state.substep == 1) {
-        if ((u32)game_state.step_timer.w++ >= 0x400U) {
-            cd_cmd_reset();
-            snd_bank_state_reset();
+        if ((u32)game_state.mode_step_timer.w++ >= 0x400U) {
+            cd_command_reset();
+            audio_bank_state_reset();
             game_state.substep = 0;
         }
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             game_state.substep += 1;
         } else {
             return 0;

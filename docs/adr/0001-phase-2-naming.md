@@ -106,7 +106,10 @@ reviews check.
   `date_sasoi_judge` (0x80070850), is an O.BIN name and stays, as every O.BIN name does. The sound driver
   is hardware layer. Game code that plays music or effects puts the stems `bgm` or `se` after its own
   module's prefix (`title_bgm_start`). `sound_` is not a main prefix (the OPTION overlay owns `sound_test_`),
-  and `snd_`, `Ss` and `Spu` are SDK names.
+  and `snd_`, `Ss` and `Spu` are SDK names. The driver's own commands, bank loads and work area take `audio_`
+  (T-27004 review: `audio_command`, `audio_state`).
+- **Mode handlers.** The function that runs one game mode takes the prefix of its screen's module and ends in
+  `_mode_handler` (`title_mode_handler`, `holiday_mode_handler`); the bare word `mode` is a trap word.
 - The two tables below are the starting maps. A unit that needs another prefix, or a different folder name,
   changes the row in the same commit as the first name that uses it; review checks it.
 
@@ -118,7 +121,7 @@ reviews check.
   labels, which are SDK bss such as `_snd_openflag` and `RingBase`) have no C definition. Their comment is
   optional, like all SDK names, and goes on the name's line in `config/symbol_addrs_obin.txt`.
 - Every other name that exists before phase 2 follows the conventions: the English-patch names (T-11090, in
-  `config/symbol_addrs.txt` and `config/symbols_<DISC>.txt`, such as `dialogue_render` and `main_state_set`)
+  `config/symbol_addrs.txt` and `config/symbols_<DISC>.txt`, such as `talk_render` and `game_mode_set`, renamed from the patch names `dialogue_render` and `main_state_set` by the T-27004 review fix)
   and the names that matching tickets gave. Each unit re-checks the non-O.BIN names in its range against the
   glossary, the maps and the abbreviation table. A name that fails (an unlisted prefix, a bare trap word such
   as `event`, an abbreviation outside the table) is renamed through `tools/rename.py` in the unit's first
@@ -158,7 +161,7 @@ reviews check.
 - `enum` for closed sets (girls, places, clubs, parameters, game modes, day-event types), `#define` for bit
   masks, sizes and counts. SDK names where the SDK has them (GPU primitive codes, CD commands).
 - A field or variable keeps its declared fixed-width type; an `enum` type would make it 4 bytes and signed and
-  change the code. The field gets a comment naming the enum: `/* 0x0F5F */ u8 girl; /* enum Girl */`.
+  change the code. The field gets a comment naming the enum: `/* 0x0F5F */ u8 current_girl; /* GirlId */` (the enum's name, as `rename.py const` writes it).
 - A literal is replaced only where it is tied to a named site: compared with, assigned to, a `case` of, or
   passed as an argument that has the enum's meaning. Bit patterns and offsets are written in hex, counts in
   decimal. Game logic gets this treatment (the scope table); hardware-layer code may keep raw hex.
@@ -253,11 +256,11 @@ Each prefix is in one row (rule "One owner" above).
 | module (today's files) | prefixes |
 |---|---|
 | boot and startup (`80041000`, `800420D0`) | `boot_` |
-| main loop and game mode (`80042540`) | `game_mode_`; O.BIN `game_main` |
+| main loop and game mode (`80042540`) | `game_mode_`, `mode_stage_`, `mode_step_`; O.BIN `game_main` |
 | pad and system helpers (`80042A00`) | `pad_`, `sys_` |
 | 2D drawing, palettes, VRAM loads (`80043510`) | `draw_`, `vram_` |
 | CD reads (`800451D0`, `80046500`) | `cd_` |
-| texture pages, sprites, GPU setup (`80047550`, `800490C0`) | `tpage_`, `sprite_`, `gpu_` |
+| texture pages, sprites, display actors, GPU setup (`80047550`, `800490C0`) | `tpage_`, `sprite_`, `actor_`, `gpu_` |
 | primitives, color bars, sepia (`80049FF0`, `8004AD60`) | `prim_`, `color_` |
 | screen layers, model transfer (`8004C3F0`) | `layer_`, `model_`; O.BIN `srn_`, `mod_` |
 | kanji text (`8004E500`) | `text_`; O.BIN `k_disp_`, `set_kanji_` |
@@ -273,8 +276,10 @@ Each prefix is in one row (rule "One owner" above).
 | school-day loop (`800737A0`) | `school_day_` |
 | days off: appointments, calls, clubs (`80075320`) | `holiday_`, `appointment_` |
 | overlay loader (`800789E0`) | `ovl_` |
-| dates, girl selection, faces, SD sprites, dialogue (`80079B10`, `8007C030`) | `face_`, `sd_`, `talk_`, `select_girl_`; O.BIN `normal_date_` |
+| dates, girl selection, faces, SD sprites, dialogue, scene pictures (`80079B10`, `8007C030`) | `face_`, `sd_`, `talk_`, `name_code_`, `scene_`, `select_girl_`; O.BIN `normal_date_` |
 | vsync timer, scroll, fades, finger cursor (`80085E30`) | `vsync_`, `fade_`, `cursor_` |
+| sound driver: command queue, bank loads, work area (functions in `80043510` and `80079B10`, `audio_state`) | `audio_` |
+| shared records and name tables (`game_state`, `system_data`, `place_name_table`) | `game_state`, `system_data`, `place_` |
 | files `80059A20`, `80059B40` | chosen by the unit that names them |
 
 ## Out of scope

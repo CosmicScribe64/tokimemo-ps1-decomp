@@ -22,9 +22,9 @@ s32 b;
         v = b & 0xFF;
     }
     if (a & 1) {
-        snd_command((v | 0x500) & 0xFFFF);
+        audio_command((v | 0x500) & 0xFFFF);
     } else {
-        snd_command((v | 0x600) & 0xFFFF);
+        audio_command((v | 0x600) & 0xFFFF);
     }
 }
 
@@ -51,7 +51,7 @@ void func_80133738(void) {
     s32 idx;
 
     idx = 3;
-    if ((game_state.stage & 1) && (game_state.step == 1)) {
+    if ((game_state.mode_stage & 1) && (game_state.mode_step == 1)) {
         if ((D_8015EDBC == 0) && (game_state.pad_pressed & PAD_TRIANGLE) && (game_state.frame_count & 0xFF)) {
             if (func_80045288() == 1) {
                 if (cd_audio_state() & 2) {
@@ -62,7 +62,7 @@ void func_80133738(void) {
                     }
                     p = &D_8015E238[idx * 2];
                     cd_audio_request_set(p[0], p[1], 8);
-                    snd_command(0x300);
+                    audio_command(0x300);
                 }
             }
         }

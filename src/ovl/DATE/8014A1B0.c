@@ -46,7 +46,7 @@ void func_8014A1E4(void) {
         func_8014A39C();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
@@ -72,9 +72,9 @@ void func_8014A2AC(void) {
 }
 
 void func_8014A314(void) {
-    snd_command(0x200);
+    audio_command(0x200);
     read_bustup();
-    game_state.step -= 1;
+    game_state.mode_step -= 1;
     D_8015DE40 += 1;
 }
 
@@ -99,9 +99,9 @@ s32 func_8014A39C(void) {
     if (game_state.current_girl >= GIRL_REI) {
         var_v1 = 0;
     }
-    bustup_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
+    portrait_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
     hizuke_disp_switch(1);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8014A4DC(void) {
@@ -125,11 +125,11 @@ void func_8014A4DC(void) {
     default:
         return;
     case 2:
-        snd_command(0xCF);
-        snd_command(0x202);
+        audio_command(0xCF);
+        audio_command(0x202);
         tpage_buf_clear();
         back_clear_switch(1);
-        actors_draw_enable(1);
+        actor_draw_enable(1);
         game_state.clear_color_g = 0;
         game_state.clear_color_r = 0;
         game_state.clear_color_b = 0;
@@ -226,7 +226,7 @@ s32 func_8014A8FC(void) {
     s32 j;
 
     message_window_show();
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_title_update();
     frame = D_8015DE4C;
     if (frame < 0x20) {

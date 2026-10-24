@@ -16,19 +16,19 @@ void func_8013DB80(void) {
 }
 
 void func_8013DC30(void) {
-    if (dialogue_work == 1) {
+    if (talk_work == 1) {
         func_8013DC70();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 void func_8013DC70(void) {
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         func_8013DCAC();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 typedef struct {
@@ -41,20 +41,20 @@ void func_8013DCAC(void) {
     FnTbl33 tbl;
 
     tbl = D_80146DCC;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
 void func_8013DD20(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8947);
     func_8013DB80();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013DD58(void) {
     game_state.current_girl = GIRL_NOZOMI;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -68,8 +68,8 @@ void func_8013DD58(void) {
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
-    dialogue_names_set(game_state.current_girl);
-    dialogue_clear();
+    talk_names_set(game_state.current_girl);
+    talk_clear();
     func_80137990();
     D_80146274 = D_80145F84;
     D_80146278 = D_801460C0;
@@ -79,19 +79,19 @@ void func_8013DD58(void) {
     game_state.girls[6].affection += 2;
     check_para_limit();
     D_800CA368 = 0x28;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013DE90(void) {
     func_8013DB80();
     load_palette(D_80146DB0, 0x11, 1, 2, 0);
-    event_still_show(D_80146DB4, D_80146DB8, D_80146DBC, D_80146DC0, D_80146DC4, D_80146DC8);
-    event_anim_show(D_80146DA4, D_80146DA8, D_80146DA0, D_80146DAC);
+    scene_still_show(D_80146DB4, D_80146DB8, D_80146DBC, D_80146DC0, D_80146DC4, D_80146DC8);
+    scene_anim_show(D_80146DA4, D_80146DA8, D_80146DA0, D_80146DAC);
     D_800CA360 = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013DF40(void) {
     bg_read_sub2(0x403B);
-    main_step_next();
+    mode_step_next();
 }

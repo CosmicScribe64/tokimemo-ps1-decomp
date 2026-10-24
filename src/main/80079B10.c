@@ -13,7 +13,7 @@ void func_80079B10(u16 arg0) {
     func_8007B5EC(arg0);
 }
 
-void snd_command_pump(void) {
+void audio_command_pump(void) {
     u16 r;
 
     r = func_8007B64C();

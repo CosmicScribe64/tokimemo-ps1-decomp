@@ -23,8 +23,8 @@ u8 *func_80140F94(void) {
 
 void func_80140FD8(void) {
     GameState *g = &game_state;
-    g->step_timer.w += 1;
-    switch ((u8) g->step) {
+    g->mode_step_timer.w += 1;
+    switch ((u8) g->mode_step) {
     case 0x0:
         func_801413FC();
         break;
@@ -94,9 +94,9 @@ void func_80141154(void) {
     case 3:
         if (game_state.pad_pressed & PAD_CIRCLE) {
             if (func_80054108() == 1) {
-                main_step_set(4);
+                mode_step_set(4);
             } else {
-                main_step_set(2);
+                mode_step_set(2);
             }
         } else if (game_state.pad_pressed & PAD_CROSS) {
             game_state.substep += 1;
@@ -114,7 +114,7 @@ void func_80141154(void) {
         break;
     case 5:
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            main_step_set(4);
+            mode_step_set(4);
         }
         break;
     }
@@ -124,14 +124,14 @@ void func_80141154(void) {
 void func_801413FC(void) {
     printf("データセーブ");
     if (game_state.options_dirty != 0) {
-        snd_bank_state_reset();
-        main_state_set(MODE_TITLE);
+        audio_bank_state_reset();
+        game_mode_set(MODE_TITLE);
         return;
     }
     text_system_reset();
     set_dec_bri(0);
     game_state.screen_brightness = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_80141468(void) {
@@ -159,7 +159,7 @@ s32 func_80141468(void) {
             dec_bg_draw(2);
             return;
         }
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -180,8 +180,8 @@ void func_801415A4(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if ((u32)game_state.step_timer.w >= 0x41U) {
-            main_step_next();
+        if ((u32)game_state.mode_step_timer.w >= 0x41U) {
+            mode_step_next();
         }
         break;
     }
@@ -190,10 +190,10 @@ void func_801415A4(void) {
 
 void func_80141700(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
-        main_step_next();
+        mode_step_next();
     } else if (game_state.pad_pressed & PAD_CROSS) {
-        snd_bank_state_reset();
-        main_state_set(MODE_ETC_C4);
+        audio_bank_state_reset();
+        game_mode_set(MODE_ETC_C4);
     }
     dec_bg_draw(2);
 }
@@ -205,46 +205,46 @@ void func_8014175C(void) {
         set_kanji_string(-0x78, 0x30, 0, (s32) "メモリーカードをチェックしています。", 0);
         k_sub_disp_start(1);
         game_state.substep += 1;
-        card_start();
+        memory_card_start();
         break;
     case 1:
         if (func_80053F04() != 0) {
-            if (game_state.card_result == 1) {
-                card_stop();
+            if (game_state.memory_card_result == 1) {
+                memory_card_stop();
                 printf("EXIST_CARD!");
                 game_state.substep += 1;
-            } else if (game_state.card_result == 0xF1) {
-                card_stop();
+            } else if (game_state.memory_card_result == 0xF1) {
+                memory_card_stop();
                 printf("UNFORMAT CARD!");
-                main_step_set(0xA0);
-            } else if (game_state.card_result == 0xFF) {
-                card_stop();
+                mode_step_set(0xA0);
+            } else if (game_state.memory_card_result == 0xFF) {
+                memory_card_stop();
                 printf("NO_CARD !");
-                main_step_set(0xFF);
+                mode_step_set(0xFF);
             }
-        } else if ((u32) game_state.card_timer >= 0x201U) {
-            card_stop();
+        } else if ((u32) game_state.memory_card_timer >= 0x201U) {
+            memory_card_stop();
             printf("NO COMUNICATION!");
-            main_step_set(0xFF);
+            mode_step_set(0xFF);
         }
         break;
     case 2:
-        card_start();
+        memory_card_start();
         game_state.substep += 1;
         break;
     case 3:
         if (func_80054140() == 2) {
             game_state.substep += 1;
-            card_stop();
-        } else if ((u32) game_state.card_timer >= 0x201U) {
-            main_step_set(0xFF);
+            memory_card_stop();
+        } else if ((u32) game_state.memory_card_timer >= 0x201U) {
+            mode_step_set(0xFF);
         }
         break;
     case 4:
         if ((u8) D_800E8BEE != 0) {
-            main_step_next();
+            mode_step_next();
         } else {
-            main_step_set(0xF0);
+            mode_step_set(0xF0);
         }
         break;
     }
@@ -258,23 +258,23 @@ void func_80141980(void) {
         set_kanji_string(-0x78, 0x30, 0, "ただいま、セーブ中です。", 0);
         k_sub_disp_start(2);
         game_state.substep += 1;
-        card_start();
+        memory_card_start();
         break;
     case 1:
         if (func_80054284() == 3) {
-            card_stop();
+            memory_card_stop();
             printf("LOAD SYSTEM OK");
             game_state.substep += 1;
-        } else if ((u32)game_state.card_timer >= 0x201U || game_state.card_result == 0xF0) {
-            card_stop();
-            main_step_set(0xFF);
+        } else if ((u32)game_state.memory_card_timer >= 0x201U || game_state.memory_card_result == 0xF0) {
+            memory_card_stop();
+            mode_step_set(0xFF);
         }
         break;
     case 2:
         if (func_800552DC(0) == -1) {
-            main_step_set(0xFD);
+            mode_step_set(0xFD);
         } else {
-            main_step_next();
+            mode_step_next();
         }
         break;
     }
@@ -312,17 +312,17 @@ s32 func_80141BE8(void) {
 
     switch (game_state.substep) {
     case 0:
-        card_start();
+        memory_card_start();
         func_80141ABC();
         game_state.substep += 1;
         break;
     case 1:
         if (func_80054388() == 0x13) {
-            card_stop();
+            memory_card_stop();
             game_state.substep += 1;
-        } else if (((u32)game_state.card_timer >= 0x201U) || (game_state.card_result == 0xF0)) {
-            card_stop();
-            main_step_set(0xFF);
+        } else if (((u32)game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
+            memory_card_stop();
+            mode_step_set(0xFF);
         }
         break;
     case 2:
@@ -336,7 +336,7 @@ s32 func_80141BE8(void) {
             pair = D_800B37D4 + (game_state.current_girl & 0xF) * 2;
             cd_audio_request_set(pair[0], pair[1], game_state.current_girl & 0xF);
         }
-        snd_command(0x300);
+        audio_command(0x300);
         game_state.substep += 1;
         break;
     case 3:
@@ -352,8 +352,8 @@ s32 func_80141BE8(void) {
     case 5:
         if (game_state.screen_brightness-- < 8) {
             game_state.screen_brightness = 0;
-            snd_bank_state_reset();
-            main_state_set(MODE_ETC_C4);
+            audio_bank_state_reset();
+            game_mode_set(MODE_ETC_C4);
             game_state.current_girl += 0x10;
         }
         set_dec_bri(game_state.screen_brightness);
@@ -372,10 +372,10 @@ void func_80141E10(void) {
         set_kanji_string(-0x78, 0x4C, 0, (s32) "アルバムモードのセーブはできません）", 0);
         k_sub_disp_start(3);
         g->substep += 1;
-        card_start();
+        memory_card_start();
         break;
     case 1:
-        if ((u32) g->step_timer.u >= 0x41U) {
+        if ((u32) g->mode_step_timer.u >= 0x41U) {
             g->substep += 1;
         }
         break;
@@ -394,8 +394,8 @@ void func_80141E10(void) {
         if (g->pad_pressed & PAD_CIRCLE) {
             g->substep += 1;
         } else if (g->pad_pressed & PAD_CROSS) {
-            snd_bank_state_reset();
-            main_state_set(MODE_ETC_C4);
+            audio_bank_state_reset();
+            game_mode_set(MODE_ETC_C4);
         }
         break;
     case 4:
@@ -411,28 +411,28 @@ void func_80141E10(void) {
         if (func_80054694(0) == 1) {
             g->substep += 1;
         } else {
-            main_step_set(0xFE);
+            mode_step_set(0xFE);
         }
         break;
     case 6:
         D_800E7D36 = g->save_slot;
         *D_800E7D14 = 1;
         g->save_slot = 0;
-        card_start();
+        memory_card_start();
         func_80054E6C();
         g->substep += 1;
         break;
     case 7:
         if (func_80054388() == 0x13) {
-            card_stop();
+            memory_card_stop();
             g->substep += 1;
-        } else if (((u32) g->card_timer >= 0x201U) || (g->card_result == 0xF0)) {
-            card_stop();
-            main_step_set(0xFF);
+        } else if (((u32) g->memory_card_timer >= 0x201U) || (g->memory_card_result == 0xF0)) {
+            memory_card_stop();
+            mode_step_set(0xFF);
         }
         break;
     case 8:
-        main_step_set(5);
+        mode_step_set(5);
         break;
     }
     dec_bg_draw(2);
@@ -451,7 +451,7 @@ void func_801421AC(void) {
         *state += 1;
         break;
     case 1:
-        if ((u32) game_state.step_timer.u >= 0x41U) {
+        if ((u32) game_state.mode_step_timer.u >= 0x41U) {
             *state += 1;
         }
         break;
@@ -467,10 +467,10 @@ void func_801421AC(void) {
         break;
     case 3:
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            main_step_set(4);
+            mode_step_set(4);
         } else if (game_state.pad_pressed & PAD_CROSS) {
-            snd_bank_state_reset();
-            main_state_set(MODE_ETC_C4);
+            audio_bank_state_reset();
+            game_mode_set(MODE_ETC_C4);
         }
         break;
     }
@@ -490,7 +490,7 @@ void func_80142390(void) {
         *state += 1;
         break;
     case 1:
-        if ((u32) game_state.step_timer.u >= 0x41U) {
+        if ((u32) game_state.mode_step_timer.u >= 0x41U) {
             *state += 1;
         }
         break;
@@ -506,10 +506,10 @@ void func_80142390(void) {
         break;
     case 3:
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            main_step_set(4);
+            mode_step_set(4);
         } else if (game_state.pad_pressed & PAD_CROSS) {
-            snd_bank_state_reset();
-            main_state_set(MODE_ETC_C4);
+            audio_bank_state_reset();
+            game_mode_set(MODE_ETC_C4);
         }
         break;
     }
@@ -527,7 +527,7 @@ void func_80142574(void) {
         g->substep += 1;
         break;
     case 1:
-        if ((u32) g->step_timer.u >= 0x41U) {
+        if ((u32) g->mode_step_timer.u >= 0x41U) {
             g->substep += 1;
         }
         break;
@@ -550,22 +550,22 @@ void func_80142574(void) {
             k_sub_disp_start(5);
             g->substep += 1;
         } else if (g->pad_pressed & PAD_CROSS) {
-            snd_bank_state_reset();
-            main_state_set(MODE_ETC_C4);
+            audio_bank_state_reset();
+            game_mode_set(MODE_ETC_C4);
         }
         break;
     case 4:
         if (func_80054704(0) == 1) {
             g->substep += 1;
         } else {
-            main_step_set(0xFF);
+            mode_step_set(0xFF);
         }
         break;
     case 5:
         if (func_80054694(0) == 1) {
             g->substep += 1;
         } else {
-            main_step_set(0xFF);
+            mode_step_set(0xFF);
         }
         break;
     case 6:
@@ -577,15 +577,15 @@ void func_80142574(void) {
         break;
     case 7:
         if (func_80054388() == 0x13) {
-            card_stop();
+            memory_card_stop();
             g->substep += 1;
-        } else if (((u32) g->card_timer >= 0x201U) || (g->card_result == 0xF0)) {
-            card_stop();
-            main_step_set(0xFF);
+        } else if (((u32) g->memory_card_timer >= 0x201U) || (g->memory_card_result == 0xF0)) {
+            memory_card_stop();
+            mode_step_set(0xFF);
         }
         break;
     case 8:
-        main_step_set(5);
+        mode_step_set(5);
         break;
     }
     dec_bg_draw(2);
@@ -602,7 +602,7 @@ s32 func_801428EC(void) {
 }
 
 void func_80142974(void) {
-    switch (game_state.stage) {
+    switch (game_state.mode_stage) {
     case 0:
         func_80143644();
         break;
@@ -613,15 +613,15 @@ void func_80142974(void) {
     if (cd_audio_state() & 4) {
         if (game_state.pad_pressed & 0x200000) {
             if (game_state.options_dirty != 0) {
-                main_state_set(MODE_PROLOGUE);
+                game_mode_set(MODE_PROLOGUE);
             } else {
-                main_state_set(MODE_ETC_C4);
+                game_mode_set(MODE_ETC_C4);
             }
         } else if (game_state.pad_pressed & 0x400000) {
             if (game_state.options_dirty != 0) {
-                main_state_set(MODE_PROLOGUE);
+                game_mode_set(MODE_PROLOGUE);
             } else {
-                main_state_set(MODE_ALBUM);
+                game_mode_set(MODE_ALBUM);
             }
         }
     }

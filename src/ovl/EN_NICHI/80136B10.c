@@ -23,7 +23,7 @@ u8 D_80139C3C[8] = { 0 };
 u8 D_80139C44[8] = { 0 };
 s16 D_80139C4C[6] = { 0 };
 u16 D_80139C58 = 0;
-/* Scene table, indexed by game_state.stage in func_80136B10. Defining it here as the
+/* Scene table, indexed by game_state.mode_stage in func_80136B10. Defining it here as the
  * original did matters for code: as1 treats every function named in this file's data as an
  * address-taken label, so the jump-table dispatch inside func_80136DEC gets an edge back to
  * that function's entry, and the resulting loop decides its delay-slot fills (T-25201). */
@@ -42,25 +42,25 @@ void func_80136B10(void) {
     FnTbl3 tbl;
 
     tbl = D_80139C5C;
-    tbl.f[game_state.stage]();
+    tbl.f[game_state.mode_stage]();
 }
 
 void func_80136B74(void) {
     s32 i;
 
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         scene_screen_reset(1, 0);
         cursor_show(0);
         hizuke_disp_switch(0);
         message_disp_switch(0);
         srand(game_state.timer_ticks);
-        snd_command(0xCF);
-        main_step_next();
+        audio_command(0xCF);
+        mode_step_next();
         return;
     case 1:
         cd_read_sectors(0x6C, 0x801B0000, 0x7D0B);
-        main_step_next();
+        mode_step_next();
         return;
     case 2:
         if (cd_read_sync_status() & 1) {
@@ -73,19 +73,19 @@ void func_80136B74(void) {
             srn_init(0, (u32 *) D_801391F8, 0);
             srn_vram_set(0, 5, 0x580, 0xF0);
             Fade_In_Init();
-            main_step_next();
+            mode_step_next();
         }
         return;
     case 3:
-        snd_command(0x203);
-        main_step_next();
+        audio_command(0x203);
+        mode_step_next();
         return;
     case 4:
         Fade_In_Main();
         if (game_state.pad_pressed & 0x60) {
-            snd_command(0x74);
+            audio_command(0x74);
             Fade_Out_Init();
-            main_step_next();
+            mode_step_next();
         }
         Scroll(0, 0xF, 0, 0xF0, 0x280);
         return;
@@ -95,12 +95,12 @@ void func_80136B74(void) {
                 game_state.tpage_buf[i + 5] = -1;
                 game_state.tpage_buf[i + 37] = -1;
             }
-            main_stage_next();
+            mode_stage_next();
         }
         Scroll(0, 0xF, 0, 0xF0, 0x280);
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
@@ -122,7 +122,7 @@ void func_80136DEC(void) {
     ys = D_80139CC0;
     kinds = D_80139CEC;
     gs = &game_state;
-    switch (gs->step) {
+    switch (gs->mode_step) {
     case 0:
         load_tpage_buf_lock(5, ((s32 *)D_801391E4)[7], 1);
         for (i = 0; i < 7; i++) {
@@ -131,7 +131,7 @@ void func_80136DEC(void) {
         for (i = 8; i < 10; i++) {
             search_load_tpage_buf_lock(((s32 *)D_801391E4)[i], 1);
         }
-        main_step_next();
+        mode_step_next();
         return;
     case 1:
         for (i = 0; i < 22; i++) {
@@ -157,13 +157,13 @@ void func_80136DEC(void) {
         for (i = 0; i < 21; i++) {
             ((Actor *)actor_pool)[96 + i].draw_flags |= 0x80;
         }
-        main_step_next();
+        mode_step_next();
         return;
     case 2:
         if (((Actor *)actor_pool)[96].brightness >= 0x80U) {
             gs->screen_brightness = 0x80;
             ((Actor *)actor_pool)[96].brightness = 0x80;
-            main_step_next();
+            mode_step_next();
         } else {
             ((Actor *)actor_pool)[96].brightness += 4;
         }
@@ -175,7 +175,7 @@ void func_80136DEC(void) {
         switch (gs->substep) {
         case 0:
             cd_audio_request_set(0x07000002, 0x03000008, 0xE);
-            snd_command(0x300);
+            audio_command(0x300);
             gs->substep += 1;
             return;
         case 1:
@@ -189,7 +189,7 @@ void func_80136DEC(void) {
         case 2:
             if (cd_audio_state() == 2) {
                 cd_audio_request_set(0x08000001, 0x02000004, 0xE);
-                snd_command(0x300);
+                audio_command(0x300);
                 gs->substep += 1;
                 return;
             }
@@ -205,14 +205,14 @@ void func_80136DEC(void) {
                 }
                 ((Actor *)actor_pool)->x = 0;
                 ((Actor *)actor_pool)->y = 0;
-                main_stage_next();
+                mode_stage_next();
                 return;
             }
             break;
         }
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
@@ -221,7 +221,7 @@ void func_8013735C(void) {
     s32 i;
     s32 n;
 
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         cursor_update();
         ((Actor *)actor_pool)[103].x = ((Actor *)actor_pool)[0].x;
@@ -235,12 +235,12 @@ void func_8013735C(void) {
             ((Actor *)actor_pool + 98)[D_80139C30].x = ((Actor *)actor_pool)[103].x;
             ((Actor *)actor_pool + 98)[D_80139C30].y = ((Actor *)actor_pool)[103].y;
             ((Actor *)actor_pool + 98)[D_80139C30].unk_01 = 4;
-            snd_command(0x50C);
+            audio_command(0x50C);
         }
         func_80137C58();
         func_80138CCC();
         if (D_80139C30 == 0 && D_80139C34[0] == 0 && D_80139C34[1] == 0 && D_80139C34[2] == 0 && D_80139C34[3] == 0 && D_80139C34[4] == 0) {
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 1:
@@ -262,22 +262,22 @@ void func_8013735C(void) {
         }
         Vblnk_Timer_Init();
         D_80139C30 = 0;
-        main_step_next();
+        mode_step_next();
         break;
     case 2:
         if (Vblnk_Timer() >= 0x2E) {
             if (((Actor *)actor_pool + 98)[D_80139C30].unk_18 == 0xFF || D_80139C30 >= 5) {
                 if (D_80139C4C[0] == 0x1F && D_80139C4C[1] == 0x1F && D_80139C4C[2] == 0x1F && D_80139C4C[3] == 0x1F && D_80139C4C[4] == 0x1F) {
-                    main_step_set(5);
+                    mode_step_set(5);
                 } else if (D_80139C4C[0] == 0x20 && D_80139C4C[1] == 0x20 && D_80139C4C[2] == 0x20 && D_80139C4C[3] == 0x20 && D_80139C4C[4] == 0x20) {
-                    main_step_set(6);
+                    mode_step_set(6);
                 } else {
                     Vblnk_Timer_Init();
-                    main_step_next();
+                    mode_step_next();
                 }
-                snd_command(0x50B);
+                audio_command(0x50B);
             } else {
-                snd_command(0x50A);
+                audio_command(0x50A);
                 ((Actor *)actor_pool + 98)[D_80139C30].draw_flags = 0x84;
                 ((Actor *)actor_pool + 98)[D_80139C30].x = (D_80139C30 << 6) - 0x80;
                 ((Actor *)actor_pool + 98)[D_80139C30].y = 0x38;
@@ -290,7 +290,7 @@ void func_8013735C(void) {
         if (Vblnk_Timer() >= 0x79) {
             if (((Actor *)actor_pool)[96].brightness < 4U) {
                 actor_clear_range(0);
-                main_step_next();
+                mode_step_next();
             } else {
                 ((Actor *)actor_pool)[96].brightness -= 4;
             }
@@ -320,15 +320,15 @@ void func_8013735C(void) {
         } else {
             D_80122E9C = 4;
         }
-        main_state_set(game_state.saved_mode);
-        main_stage_set(game_state.saved_stage);
-        main_step_set(game_state.saved_step);
+        game_mode_set(game_state.saved_game_mode);
+        mode_stage_set(game_state.saved_mode_stage);
+        mode_step_set(game_state.saved_mode_step);
         break;
     case 5:
         switch (game_state.substep) {
         case 0:
             cd_audio_request_set(0x1A0000B1, 0x170000B7, 0xE);
-            snd_command(0x300);
+            audio_command(0x300);
             game_state.substep += 1;
             break;
         case 1:
@@ -338,7 +338,7 @@ void func_8013735C(void) {
             break;
         case 2:
             if (cd_audio_state() == 2) {
-                snd_command(0x74);
+                audio_command(0x74);
                 game_state.substep += 1;
             }
             break;
@@ -349,11 +349,11 @@ void func_8013735C(void) {
         case 4:
             if (Vblnk_Timer() >= 0x79) {
                 Vblnk_Timer_Init();
-                main_step_set(3);
+                mode_step_set(3);
             }
             break;
         default:
-            game_reset_to_title();
+            game_mode_reset_to_title();
             break;
         }
         break;
@@ -361,7 +361,7 @@ void func_8013735C(void) {
         switch (game_state.substep) {
         case 0:
             cd_audio_request_set(0x03000000, 0x01000007, 0xE);
-            snd_command(0x300);
+            audio_command(0x300);
             game_state.substep += 1;
             break;
         case 1:
@@ -371,7 +371,7 @@ void func_8013735C(void) {
             break;
         case 2:
             if (cd_audio_state() == 2) {
-                snd_command(0x74);
+                audio_command(0x74);
                 game_state.substep += 1;
             }
             break;
@@ -382,16 +382,16 @@ void func_8013735C(void) {
         case 4:
             if (Vblnk_Timer() >= 0x79) {
                 Vblnk_Timer_Init();
-                main_step_set(3);
+                mode_step_set(3);
             }
             break;
         default:
-            game_reset_to_title();
+            game_mode_reset_to_title();
             break;
         }
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
@@ -422,12 +422,12 @@ void func_80137C58(void) {
                 if (func_80137FEC(i) != 0) {
                     *(s16 *)(r + 0x1A20) = 0x27;
                     if ((D_80139C4C[i] < 0x10) || (D_80139C4C[i] >= 0x14)) {
-                        snd_command(0x508);
+                        audio_command(0x508);
                     } else {
-                        snd_command(0x509);
+                        audio_command(0x509);
                     }
                 } else {
-                    snd_command(0x507);
+                    audio_command(0x507);
                     *(s16 *)(r + 0x1A20) = 0x26;
                 }
                 *(s16 *)(r + 0x1A22) = 0x1000;

@@ -4,13 +4,13 @@
 void func_8013B990(void) {
     func_8013C1F4();
     func_8013C440();
-    if (game_state.stage == 0xC && D_8015EDCC != 0) {
+    if (game_state.mode_stage == 0xC && D_8015EDCC != 0) {
         return;
     }
-    if (game_state.stage == 0x16 && D_8015EDCC >= 2) {
+    if (game_state.mode_stage == 0x16 && D_8015EDCC >= 2) {
         return;
     }
-    if (game_state.stage == 0x20 && D_8015EDCC >= 3) {
+    if (game_state.mode_stage == 0x20 && D_8015EDCC >= 3) {
         return;
     }
     func_8013BAC4(D_8015E270, 1, 0);
@@ -45,7 +45,7 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
     /* FAKE: through the byte view, tools/cvt_pass.py does not see a switch on an unsigned global
      * and leaves global copy propagation on. The y distances then fold into their compares, as in
      * the original (no `move a0,v0`), and the stage is still compared in v1. T-25111. */
-    switch (*(u8 *)&game_state.stage) {
+    switch (*(u8 *)&game_state.mode_stage) {
     case 0xC:
         for (j = 0; j < 256; j++) scores[j] = 0x190;
         break;

@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_dialogue_work /* switched as u32: selector in $v1 (main_api.h: s32) */
+#define MAIN_API_OVERRIDE_talk_work /* switched as u32: selector in $v1 (main_api.h: s32) */
 #include "common.h"
 #include "ovl/DATE.h"
 
-extern u32 dialogue_work;
+extern u32 talk_work;
 
 void func_801594B0(void) {
     D_801607E0 = 0x801CE0F4;
@@ -61,7 +61,7 @@ void func_801596C0(void) {
 }
 
 void func_80159770(void) {
-    switch (dialogue_work) {
+    switch (talk_work) {
     case 3:
         func_80159EC4();
         return;
@@ -75,7 +75,7 @@ void func_80159770(void) {
         func_8015A288();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
@@ -90,8 +90,8 @@ void func_80159804(void) {
     check_para_limit();
     func_801594B0();
     load_palette(D_801607F0, 0x11, 1, 2, 0);
-    event_still_show(D_801607F4, D_801607F8, D_801607FC, D_80160800, D_80160804, D_80160808);
-    event_anim_show(D_801607E4, D_801607E8, D_801607E0, D_801607EC);
+    scene_still_show(D_801607F4, D_801607F8, D_801607FC, D_80160800, D_80160804, D_80160808);
+    scene_anim_show(D_801607E4, D_801607E8, D_801607E0, D_801607EC);
     D_800CA360 = 1;
     D_800CA224[0] = 2;
     D_800CA224[1] = 2;
@@ -99,7 +99,7 @@ void func_80159804(void) {
     D_800CA234[0] = 1;
     D_800CA234[1] = 1;
     D_800CA234[2] = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8015996C(void) {
@@ -113,9 +113,9 @@ void func_8015996C(void) {
     check_para_limit();
     func_80159560();
     load_palette(D_8016081C, 0x11, 1, 2, 0);
-    event_still_show(D_80160820, D_80160824, D_80160828, D_8016082C, D_80160830, D_80160834);
-    event_anim_show(D_80160810, D_80160814, D_8016080C, D_80160818);
-    main_step_next();
+    scene_still_show(D_80160820, D_80160824, D_80160828, D_8016082C, D_80160830, D_80160834);
+    scene_anim_show(D_80160810, D_80160814, D_8016080C, D_80160818);
+    mode_step_next();
 }
 
 void func_80159A98(void) {
@@ -127,10 +127,10 @@ void func_80159A98(void) {
     check_para_limit();
     func_80159610();
     load_palette(D_80160848, 0x11, 1, 2, 0);
-    event_still_show(D_8016084C, D_80160850, D_80160854, D_80160858, D_8016085C, D_80160860);
-    event_anim_show(D_8016083C, D_80160840, D_80160838, D_80160844);
+    scene_still_show(D_8016084C, D_80160850, D_80160854, D_80160858, D_8016085C, D_80160860);
+    scene_anim_show(D_8016083C, D_80160840, D_80160838, D_80160844);
     D_800CA360 = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159BA4(void) {
@@ -143,8 +143,8 @@ void func_80159BA4(void) {
     check_para_limit();
     func_801596C0();
     load_palette(D_80160874, 0x11, 1, 2, 0);
-    event_still_show(D_80160878, D_8016087C, D_80160880, D_80160884, D_80160888, D_8016088C);
-    event_anim_show(D_80160868, D_8016086C, D_80160864, D_80160870);
+    scene_still_show(D_80160878, D_8016087C, D_80160880, D_80160884, D_80160888, D_8016088C);
+    scene_anim_show(D_80160868, D_8016086C, D_80160864, D_80160870);
     D_800CA360 = 1;
     D_800CA224[0] = 2;
     D_800CA224[1] = 2;
@@ -152,62 +152,62 @@ void func_80159BA4(void) {
     D_800CA234[0] = 1;
     D_800CA234[1] = 1;
     D_800CA234[2] = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159D0C(void) {
     bg_read_sub2(0x4821);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159D34(void) {
     bg_read_sub2(0x432B);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159D5C(void) {
     bg_read_sub2(0x4335);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159D84(void) {
     bg_read_sub2(0x42FD);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159DAC(void) {
     bg_read_sub2(0x47E8);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159DD4(void) {
     bg_read_sub2(0x42EB);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159DFC(void) {
     bg_read_sub2(0x4913);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159E24(void) {
     bg_read_sub2(0x45F8);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159E4C(void) {
     bg_read_sub2(0x489A);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159E74(void) {
     bg_read_sub2(0x4562);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159E9C(void) {
     bg_read_sub2(0x4558);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159EC4(void) {
@@ -215,19 +215,19 @@ void func_80159EC4(void) {
     FnTbl44 tbl;
 
     tbl = D_80160890;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_80159F4C(void) {
-    snd_command(0x508);
-    main_step_next();
+    audio_command(0x508);
+    mode_step_next();
 }
 
 void func_80159F74(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8E02);
     func_801594B0();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80159FAC(void) {
@@ -238,10 +238,10 @@ void func_80159FAC(void) {
     if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
          (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
          (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
-        dec_bg_brightness == 0x80 && D_80122D04 == 0 && (g->step < 0xD || g->step >= 0x21)) {
-        light_effect_draw();
+        dec_bg_brightness == 0x80 && D_80122D04 == 0 && (g->mode_step < 0xD || g->mode_step >= 0x21)) {
+        sprite_light_effect_draw();
     }
-    tbl.f[g->step](0x80);
+    tbl.f[g->mode_step](0x80);
     if (D_80122D04 != 0 && g->frame_count % 150 == 0) {
         func_8015A170();
     }
@@ -249,13 +249,13 @@ void func_80159FAC(void) {
 
 s32 func_8015A114(void) {
     func_8014C5C8();
-    if (game_state.step_timer.w++ == 1) {
+    if (game_state.mode_step_timer.w++ == 1) {
         if ((u16)D_800CA154 == 3) {
-            bustup_layout_set(1);
+            portrait_layout_set(1);
         }
     }
 }
 
 void func_8015A170(void) {
-    snd_command(0x500);
+    audio_command(0x500);
 }

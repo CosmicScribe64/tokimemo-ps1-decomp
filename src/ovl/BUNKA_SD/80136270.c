@@ -6,14 +6,14 @@ s32 func_80136270(void) {
         cd_read_sectors(0x6F, 0x80180000, 0x4C59);
         game_state.substep += 1;
     } else if ((game_state.substep == 1) && (cd_read_sync_status() & 1)) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_801362EC(void) {
     s32 i;
 
-    if (game_state.step >= 3 && game_state.step < 7) {
+    if (game_state.mode_step >= 3 && game_state.mode_step < 7) {
         if (game_state.pad_held & PAD_CIRCLE) {
             func_801363BC();
             for (i = 0; i < 3; i++) {
@@ -25,17 +25,17 @@ void func_801362EC(void) {
             }
         }
     }
-    if (game_state.step >= 3 && game_state.step < 6 && (game_state.pad_held & PAD_CROSS)) {
-        main_step_set(5);
+    if (game_state.mode_step >= 3 && game_state.mode_step < 6 && (game_state.pad_held & PAD_CROSS)) {
+        mode_step_set(5);
     }
     func_801363BC();
 }
 
 void func_801363BC(void) {
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_80134260();
         return;
@@ -52,9 +52,9 @@ void func_801363BC(void) {
         func_801364F0();
         return;
     case 5:
-        snd_command(0xC1);
+        audio_command(0xC1);
         k_reset(1);
-        main_step_next();
+        mode_step_next();
         return;
     case 6:
         func_801344A8();
@@ -63,28 +63,28 @@ void func_801363BC(void) {
         func_80134314();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
 
 void func_801364B4(void) {
-    snd_bank_start(1, 0x201);
+    audio_bank_start(1, 0x201);
     func_80136578();
     D_80120696 = 1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801364F0(void) {
     func_80136904();
     func_801369AC();
-    game_state.step_timer.u += 1;
+    game_state.mode_step_timer.u += 1;
     if (D_80122EAC == 3) {
-        if (game_state.step_timer.u >= 0x25B) {
-            main_step_next();
+        if (game_state.mode_step_timer.u >= 0x25B) {
+            mode_step_next();
         }
     } else if (!(D_80120652 & 1)) {
-        main_step_next();
+        mode_step_next();
     }
 }
 
@@ -158,28 +158,28 @@ void func_80136578(void) {
 
 void func_80136904(void) {
     if (D_80122EAC == 3) {
-        switch (game_state.step_timer.u) {
+        switch (game_state.mode_step_timer.u) {
         case 0x14C:
-            snd_command(0x501);
+            audio_command(0x501);
             return;
         case 0x1BF:
-            snd_command(0x502);
+            audio_command(0x502);
             return;
         }
     } else {
-        switch (game_state.step_timer.u) {
+        switch (game_state.mode_step_timer.u) {
         case 0x157:
-            snd_command(0x501);
+            audio_command(0x501);
             return;
         case 0x1CA:
-            snd_command(0x502);
+            audio_command(0x502);
             return;
         }
     }
 }
 
 void func_801369AC(void) {
-    if (game_state.step_timer.w == 0) {
+    if (game_state.mode_step_timer.w == 0) {
         D_80120652 = 5;
     }
 }

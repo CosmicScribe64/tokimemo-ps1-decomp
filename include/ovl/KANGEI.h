@@ -2,7 +2,7 @@
 #define OVL_KANGEI_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_bustup_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
+#define MAIN_API_OVERRIDE_portrait_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
 #define MAIN_API_OVERRIDE_D_800B3688 /* matched as s32 (main_api.h: s32[]) */
 #define MAIN_API_OVERRIDE_D_800B36C8 /* matched as s32 (main_api.h: s32[]) */
 #define MAIN_API_OVERRIDE_D_800B3708 /* matched as s32 (main_api.h: s32[]) */
@@ -89,7 +89,7 @@ extern s32 D_801398EC;
 extern s32 D_801398F0;
 extern s32 D_801398F4;
 void func_80139540(void);
-void bustup_layout_set(s32 arg0); /* overlay view; main_only.h has the u8 view */
+void portrait_layout_set(s32 arg0); /* overlay view; main_only.h has the u8 view */
 extern s32 D_80139DCC;
 extern s32 D_80139DD0;
 extern s32 D_80139DD4;

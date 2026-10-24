@@ -299,7 +299,7 @@ void func_80133108(void) {
         func_8014F080(0x3C);
         break;
     case 26:
-        snd_bank_start(1, 0x202);
+        audio_bank_start(1, 0x202);
         func_8014EF3C();
         break;
     case 27:
@@ -314,7 +314,7 @@ void func_80133108(void) {
         func_8014F178(0);
         break;
     case 29:
-        main_stage_next();
+        mode_stage_next();
         break;
     default:
         func_8014EF8C();

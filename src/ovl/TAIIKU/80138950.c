@@ -63,7 +63,7 @@ void func_80138950(void) {
     a = D_801498E8;
     b = D_80149914;
     cd_audio_request_set(a.v[D_801491DC], b.v[D_801491DC], D_801491DC);
-    snd_command(0x300);
+    audio_command(0x300);
 }
 
 typedef struct {
@@ -77,7 +77,7 @@ void func_80138A34(void) {
     FnTbl9 tbl;
 
     tbl = D_80149E08;
-    idx = game_state.stage;
+    idx = game_state.mode_stage;
     tbl.f[idx]();
 }
 
@@ -96,7 +96,7 @@ void func_80138AA8(void) {
     tpage = D_80149E2C;
     tbl = D_80149E34;
     rgb = D_80149E7C;
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         scene_screen_reset(1, 1);
         for (i = 0; i < 3; i++) {
@@ -118,19 +118,19 @@ void func_80138AA8(void) {
         for (i = 1; i < 5; i++) {
             D_80149DF4[i] = rgb.v[i];
         }
-        main_step_next();
+        mode_step_next();
         break;
     case 1:
         cd_read_sectors(0x1E, 0x80180000, 0xBAD0);
         Fade_Out_Init();
-        main_step_next();
+        mode_step_next();
         break;
     case 2:
         Fade_Out_Main();
         if (cd_read_sync_status() & 1) {
             p = 0x8018F000;
             cd_read_sectors(0x27, p, 0xBAEE);
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 3:
@@ -149,11 +149,11 @@ void func_80138AA8(void) {
             func_80139AB0();
             func_80139DDC();
             func_80139E34();
-            main_stage_next();
+            mode_stage_next();
         }
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
@@ -172,7 +172,7 @@ void func_80138DF8(void) {
 
     tblA = D_80149E90;
     tblB = D_80149EBC;
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         /* FAKE: T-16552. i = 0 between the call and the test puts `move s0,zero` in the beqz delay slot; the goto
          * enters the loop without an entry test (with one, uopt leaves the pointer start as `sll t9,zero,2`) and
@@ -200,8 +200,8 @@ void func_80138DF8(void) {
             }
             cd_read_sectors(3, 0x801F8000, 0xBE2A);
             Fade_In_Init();
-            snd_command(0x200);
-            main_step_next();
+            audio_command(0x200);
+            mode_step_next();
         }
         break;
     case 1:
@@ -214,7 +214,7 @@ void func_80138DF8(void) {
                 p = 0x801F8000;
                 func_801406A8(p);
                 func_80140738(p, 0);
-                main_step_next();
+                mode_step_next();
             }
         }
         Scroll(0, 0xF, 0, 0xF0, 0x280);
@@ -232,8 +232,8 @@ void func_80138DF8(void) {
                     ((Actor *)actor_pool)[96 + i].draw_flags != 0) {
                     D_80149940 = i;
                     Fade_Out_Init();
-                    snd_command(0x74);
-                    main_step_next();
+                    audio_command(0x74);
+                    mode_step_next();
                 }
             }
         }
@@ -242,13 +242,13 @@ void func_80138DF8(void) {
         Scroll(0, 0xF, 0, 0xF0, 0x280);
         if (cd_audio_state() == 2) {
             cd_read_sectors(0x87, 0x8018F000, 0xB98F);
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 4:
         Scroll(0, 0xF, 0, 0xF0, 0x280);
         if (Fade_Out_Main() != 0) {
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 5:
@@ -263,61 +263,61 @@ void func_80138DF8(void) {
             }
             func_8013A314();
             D_80122EA0 = 0;
-            snd_bank_load_start(0, 0xBF98, 0xBF79, tblA.value[D_80149940], tblB.value[D_80149940], 0xD6B7);
+            audio_bank_load_start(0, 0xBF98, 0xBF79, tblA.value[D_80149940], tblB.value[D_80149940], 0xD6B7);
             Fade_In_Init();
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 6:
         func_800867CC();
         if (Fade_In_Main() != 0) {
             Vblnk_Timer_Init();
-            main_stage_next();
+            mode_stage_next();
         }
         func_8013DDB8();
         func_8013D788();
         func_8013D2B4();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
 
 void func_80139330(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_800867CC();
         if (D_80122EA0 != 0) {
-            snd_command(0x2E);
+            audio_command(0x2E);
             D_80149990.unk_00 = 0;
-            main_step_next();
+            mode_step_next();
         }
         func_8013DDB8();
         func_8013D788();
         func_8013D2B4();
         return;
     case 1:
-        snd_command(0x24);
+        audio_command(0x24);
         func_8013DDB8();
         func_8013D788();
         func_8013D2B4();
-        main_step_next();
+        mode_step_next();
         return;
     case 2:
-        snd_command(0x23);
+        audio_command(0x23);
         func_8013DDB8();
         func_8013D788();
         func_8013D2B4();
-        main_step_next();
+        mode_step_next();
         return;
     case 3:
-        snd_command(0x502);
+        audio_command(0x502);
         func_8013DDB8();
         func_8013D788();
         func_8013D2B4();
         Vblnk_Timer_Init();
-        main_step_next();
+        mode_step_next();
         return;
     case 4:
         func_8013A63C();
@@ -343,7 +343,7 @@ void func_80139330(void) {
         func_8013FC5C();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
@@ -351,7 +351,7 @@ void func_80139330(void) {
 void func_80139550(void) {
     s32 i;
 
-    snd_command(0x504);
+    audio_command(0x504);
     i = 0;
     while (D_801499D4[i] != 0xFF) {
         i++;
@@ -364,21 +364,21 @@ void func_80139550(void) {
     func_8013D788();
     D_80149954 = 0x1200;
     D_8012082F = 0;
-    main_stage_next();
+    mode_stage_next();
 }
 
 void func_80139610(void) {
     s32 pad; /* FAKE: T-11640, unused local; its slot puts the spills of the case 3 loop where the original has them */
     s32 i;
 
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         if (D_80149954 < 0x80) {
             actor_clear_upper();
             D_80149954 = 0;
             Fade_Out_Init();
             game_state.screen_brightness = 0;
-            main_step_next();
+            mode_step_next();
         }
         func_8013FEF0();
         func_8013DDB8();
@@ -388,17 +388,17 @@ void func_80139610(void) {
         func_801400D8();
         Fade_In_Init();
         func_80133258();
-        main_step_next();
+        mode_step_next();
         break;
     case 2:
         if (Fade_In_Main() != 0) {
             if (D_801499D4[0] == 0 || D_801499D4[1] == 0) {
-                snd_command(0x205);
+                audio_command(0x205);
             } else {
-                snd_command(0x206);
+                audio_command(0x206);
             }
             Vblnk_Timer_Init();
-            main_step_next();
+            mode_step_next();
         }
         Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
@@ -413,7 +413,7 @@ void func_80139610(void) {
             func_8014038C();
             D_801499D8 = 0;
             Vblnk_Timer_Init();
-            main_step_next();
+            mode_step_next();
         }
         Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
@@ -422,14 +422,14 @@ void func_80139610(void) {
         func_80140414();
         if (Vblnk_Timer() >= 0xB5) {
             Vblnk_Timer_Init();
-            main_step_next();
+            mode_step_next();
         }
         Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
     case 5:
         if (Vblnk_Timer() >= 0xF1) {
             Fade_Out_Init();
-            main_step_next();
+            mode_step_next();
         }
         Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
@@ -448,24 +448,24 @@ void func_80139610(void) {
                 game_state.girls[D_80149940].tokimeki += 1;
                 game_state.girls[D_80149940].affection += 5;
             }
-            main_stage_next();
+            mode_stage_next();
         }
         Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
 
 void func_80139A20(void) {
-    if ((girl_state_rank(6) < 2) && (((u32) (game_state.girls[6].flags.w << 0x1E) >> 0x1F) == 1) && (D_80149940 == 6) && (game_state.event_flags[45] == 0)) {
-        game_state.event_flags[45] = 1;
-        main_stage_next();
+    if ((girl_state_rank(6) < 2) && (((u32) (game_state.girls[6].flags.w << 0x1E) >> 0x1F) == 1) && (D_80149940 == 6) && (game_state.scene_flags[45] == 0)) {
+        game_state.scene_flags[45] = 1;
+        mode_stage_next();
         return;
     }
-    game_state.stage = 0;
-    game_state.step = 0;
+    game_state.mode_stage = 0;
+    game_state.mode_step = 0;
     D_80122ECC = 1;
 }
 
@@ -857,12 +857,12 @@ void func_8013A6FC(void) {
             }
             break;
         default:
-            game_reset_to_title();
+            game_mode_reset_to_title();
             break;
         }
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     D_80149944 = func_8013AF74();
@@ -1019,7 +1019,7 @@ void func_8013B104(void) {
         func_8013C33C();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
@@ -1050,16 +1050,16 @@ void func_8013B200(void) {
     }
     if (((u16 *)&D_801499A0)[1] >= 0x23A) {
         ((u16 *)D_801499B0)[1] = 0;
-        snd_command(0x802);
+        audio_command(0x802);
         ((u16 *)&D_801499A0)[1] = 0;
     }
     if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 30 == 0) {
         if (((u16 *)D_801499B0)[1] == 0) {
             ((u16 *)D_801499B0)[1] = 1;
-            snd_command(0x800);
+            audio_command(0x800);
         } else {
             ((u16 *)D_801499B0)[1] = 0;
-            snd_command(0x801);
+            audio_command(0x801);
         }
         ((u16 *)&D_801499A0)[1]++;
     }
@@ -1072,7 +1072,7 @@ void func_8013B3B0(void) {
     s16 v;
 
     if (D_801499A2 == 0x258) {
-        snd_command(0x802);
+        audio_command(0x802);
         ((u16 *)D_801499B0)[0] = 1;
         D_801499A0.unk_08 = 0;
         D_801499A0.unk_0C = 0;
@@ -1106,10 +1106,10 @@ void func_8013B3B0(void) {
     if (((u16 *)D_801499B0)[0] == 0 && ((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 45 == 0) {
         if (((u16 *)D_801499B0)[1] == 0) {
             ((u16 *)D_801499B0)[1] = 1;
-            snd_command(0x800);
+            audio_command(0x800);
         } else {
             ((u16 *)D_801499B0)[1] = 0;
-            snd_command(0x801);
+            audio_command(0x801);
         }
         ((u16 *)&D_801499A0)[1]++;
     }
@@ -1117,7 +1117,7 @@ void func_8013B3B0(void) {
 
 void func_8013B5C0(void) {
     if (D_801499A0.unk_02 == 1) {
-        snd_command(0x800);
+        audio_command(0x800);
         return;
     }
     if ((u32)(u16)D_801499A0.unk_02 >= 0x2D1) {
@@ -1135,7 +1135,7 @@ void func_8013B608(void) {
 
     if (((u16 *)&D_801499A0)[1] >= 0x258) {
         ((u16 *)D_801499B0)[1] = 0;
-        snd_command(0x802);
+        audio_command(0x802);
         ((u16 *)&D_801499A0)[1] = 0;
     }
     func_8013C5C8(0x10000);
@@ -1157,10 +1157,10 @@ void func_8013B608(void) {
     if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 45 == 0) {
         if (((u16 *)D_801499B0)[1] == 0) {
             ((u16 *)D_801499B0)[1] = 1;
-            snd_command(0x800);
+            audio_command(0x800);
         } else {
             ((u16 *)D_801499B0)[1] = 0;
-            snd_command(0x801);
+            audio_command(0x801);
         }
         ((u16 *)&D_801499A0)[1]++;
     }
@@ -1175,7 +1175,7 @@ void func_8013B78C(void) {
 
     if (((u16 *)&D_801499A0)[1] >= 0x230) {
         ((u16 *)D_801499B0)[1] = 0;
-        snd_command(0x802);
+        audio_command(0x802);
         ((u16 *)&D_801499A0)[1] = 0;
     }
     tmp2 = ((u16 *)&D_801499A0)[1];
@@ -1205,10 +1205,10 @@ void func_8013B78C(void) {
         if (((u16 *)&D_801499A0)[1] % 35 == 0) {
             if (((u16 *)D_801499B0)[1] == 0) {
                 ((u16 *)D_801499B0)[1] = 1;
-                snd_command(0x800);
+                audio_command(0x800);
             } else {
                 ((u16 *)D_801499B0)[1] = 0;
-                snd_command(0x801);
+                audio_command(0x801);
             }
             ((u16 *)&D_801499A0)[1]++;
         }
@@ -1223,7 +1223,7 @@ void func_8013B94C(void) {
     if (D_801499A2 == 1) {
         if (((D_80149968.unk_1C[0] >> 3) - D_801206BA >= 0x21 && D_80149974 > 0) ||
             ((D_80149968.unk_1C[0] >> 3) - D_801206BA < -0x20 && D_80149968.unk_0C < 0)) {
-            snd_command(0x802);
+            audio_command(0x802);
             D_801499B2 = 2;
         }
     }
@@ -1248,11 +1248,11 @@ void func_8013B94C(void) {
     if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 90 == 0) {
         if (((u16 *)D_801499B0)[1] == 0) {
             D_801499B2 = 1;
-            snd_command(0x800);
+            audio_command(0x800);
             ((u16 *)&D_801499A0)[1]++;
         } else if (*(u16 *)&D_801499B2 == 1) {
             D_801499B2 = 0;
-            snd_command(0x801);
+            audio_command(0x801);
             ((u16 *)&D_801499A0)[1]++;
         }
     }
@@ -1263,7 +1263,7 @@ void func_8013BB3C(void) {
     s32 tmp;
 
     if (D_80149968.unk_10 == 0 && D_801499B2 != 2) {
-        snd_command(0x802);
+        audio_command(0x802);
         D_801499B2 = 2;
         ((u16 *)&D_801499A0)[1] = 0;
     }
@@ -1285,11 +1285,11 @@ void func_8013BB3C(void) {
     if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 30 == 0 && ((u16 *)&D_801499A0)[1] >= 60) {
         if (D_801499B2 == 0) {
             D_801499B2 = 1;
-            snd_command(0x800);
+            audio_command(0x800);
             ((u16 *)&D_801499A0)[1]++;
         } else if (*(u16 *)&D_801499B2 == 1) {
             D_801499B2 = 0;
-            snd_command(0x801);
+            audio_command(0x801);
             ((u16 *)&D_801499A0)[1]++;
         } else {
             D_801499B2 = 0;
@@ -1308,10 +1308,10 @@ void func_8013BCEC(void) {
         ((u16 *)D_801499B0)[0] = 1;
         if (((u16 *)D_801499B0)[1] == 0) {
             ((u16 *)D_801499B0)[1] = 1;
-            snd_command(0x800);
+            audio_command(0x800);
         } else {
             ((u16 *)D_801499B0)[1] = 0;
-            snd_command(0x801);
+            audio_command(0x801);
         }
         D_801499A0.unk_08 = 0;
         D_801499A0.unk_0C = 0;
@@ -1386,17 +1386,17 @@ void func_8013BEF8(void) {
             if (D_801206BA < (D_80149968.unk_1C[0] >> 3) - 0x18) {
                 ((u16 *)D_801499B0)[1] = 1;
                 ((u16 *)&D_801499A0)[1] = 0;
-                snd_command(0x802);
+                audio_command(0x802);
             } else {
-                snd_command(0x801);
+                audio_command(0x801);
             }
         } else if (D_80149968.unk_0C < 0) {
             if ((D_80149968.unk_1C[0] >> 3) + 0x18 < D_801206BA) {
                 ((u16 *)D_801499B0)[1] = 1;
                 ((u16 *)&D_801499A0)[1] = 0;
-                snd_command(0x802);
+                audio_command(0x802);
             } else {
-                snd_command(0x800);
+                audio_command(0x800);
             }
         }
         ((u16 *)&D_801499A0)[1]++;
@@ -1438,11 +1438,11 @@ void func_8013C0E4(void) {
         if (((u16 *)D_801499B0)[1] == 0) {
             ((u16 *)D_801499B0)[1] = 1;
             ((u16 *)&D_801499A0)[1]++;
-            snd_command(0x800);
+            audio_command(0x800);
         } else if (((u16 *)D_801499B0)[1] == 1) {
             ((u16 *)D_801499B0)[1] = 0;
             ((u16 *)&D_801499A0)[1]++;
-            snd_command(0x801);
+            audio_command(0x801);
         } else {
             ((u16 *)D_801499B0)[1] = 0;
         }
@@ -1460,7 +1460,7 @@ void func_8013C33C(void) {
     if (D_80149968.unk_10 == 0 && D_801499B2 != 2) {
         D_801499B2 = 2;
         ((u16 *)&D_801499A0)[1] = 0;
-        snd_command(0x802);
+        audio_command(0x802);
     }
     if (((u16 *)&D_801499A0)[1] > 600) {
         ((u16 *)&D_801499A0)[1] = 0;
@@ -1480,11 +1480,11 @@ void func_8013C33C(void) {
     if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 30 == 0 && ((u16 *)&D_801499A0)[1] >= 60) {
         if (D_801499B2 == 0) {
             D_801499B2 = 1;
-            snd_command(0x800);
+            audio_command(0x800);
             ((u16 *)&D_801499A0)[1]++;
         } else if (*(u16 *)&D_801499B2 == 1) {
             D_801499B2 = 0;
-            snd_command(0x801);
+            audio_command(0x801);
             ((u16 *)&D_801499A0)[1]++;
         } else {
             D_801499B2 = 0;
@@ -1685,7 +1685,7 @@ void func_8013C978(void) {
     case 7:
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
@@ -1845,7 +1845,7 @@ void func_8013D114(void) {
 }
 
 void func_8013D254(void) {
-    snd_command(0x504);
+    audio_command(0x504);
     D_80149988.unk_00 = 0;
     D_8014999C = 0;
     D_801499B0[0].unk0 = 0;
@@ -2126,7 +2126,7 @@ void func_8013DDB8(void) {
                 D_80149968.unk_04 = 0;
                 D_80149960 = 0;
                 ((TaiikuWork *)D_80122DD0)->step = 0;
-                main_stage_next();
+                mode_stage_next();
             }
         }
         D_801499C0.word = pos;
@@ -2911,7 +2911,7 @@ void func_801400D8(void) {
             ((TaiikuActor44 *)actor_pool)[96 + i].unk_18 = 0x4D;
             break;
         default:
-            game_reset_to_title();
+            game_mode_reset_to_title();
             break;
         }
     }

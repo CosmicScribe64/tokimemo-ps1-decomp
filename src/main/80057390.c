@@ -10,7 +10,7 @@ u8 dec_bg_show[4] = { 0 };
 u8 dec_bg_brightness = 0;
 u8 D_800B5940 = 0;
 s32 D_800B5944 = 0;
-s32 last_screen_mode = 0;
+s32 dec_bg_last_screen_mode = 0;
 s32 D_800B594C = 0;
 
 /* Set the brightness tint of the decoded backgrounds */
@@ -20,7 +20,7 @@ void set_dec_bri(u8 arg0) {
 
 /* Return the last screen mode (selects the background draw variant) */
 s32 get_last_gamen_mode(void) {
-    return last_screen_mode;
+    return dec_bg_last_screen_mode;
 }
 
 /* Clear the background cache, show flags and brightness (0x80) */
@@ -32,7 +32,7 @@ void dec_bg_reset(void) {
     dec_bg_show[1] = 0;
     dec_bg_show[0] = 0;
     dec_bg_brightness = 0x80;
-    last_screen_mode = -1;
+    dec_bg_last_screen_mode = -1;
     D_800B5934 = 0;
     dec_bg_show[2] = 0;
 }
@@ -179,7 +179,7 @@ void dec_bg_draw(s32 a) {
     u8 *flags;
 
     if (a != -1) {
-        last_screen_mode = a;
+        dec_bg_last_screen_mode = a;
         sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
         func_8009F0A4(sprite);
         SetSemiTrans(sprite, 0);

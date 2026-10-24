@@ -4,7 +4,7 @@
 
 void scene_screen_reset(s32 arg0, s32 arg1) {
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_upper();
     back_clear_switch(arg0);
@@ -138,9 +138,9 @@ void Default_Disp(void) {
     func_80083A10();
     message_window_show();
     hizuke_show();
-    screen_frame_draw(2);
+    hud_screen_frame_draw(2);
     message_window_title_update();
-    screen_shake_update();
+    draw_shake_update();
 }
 
 s32 func_8008647C(void) {
@@ -206,9 +206,9 @@ s32 girl_state_rank(s32 a) {
     return (u8)get_g_zyotai_s(a) & 0x7F;
 }
 
-void bustup_read_step(void) {
+void portrait_read_step(void) {
     if (game_state.substep == 0) {
-        bustup_read_start();
+        portrait_read_start();
         game_state.substep += 1;
         return;
     }
@@ -221,13 +221,13 @@ void bustup_read_step(void) {
             game_state.substep = 0;
             return;
         }
-        main_step_next();
+        mode_step_next();
     }
 }
 
 void func_800867CC(void) {
     if (D_80122EA0 == 0) {
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             D_80122EA0 = 1;
         }
     }

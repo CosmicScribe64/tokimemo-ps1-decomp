@@ -2,14 +2,14 @@
 #define OVL_ENDING_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_dialogue_render /* T-18300: func_8013A2E8 stores the result in dialogue_work (main_api.h: void), as main k_disp_start does */
+#define MAIN_API_OVERRIDE_talk_render /* T-18300: func_8013A2E8 stores the result in talk_work (main_api.h: void), as main k_disp_start does */
 
 #include "common.h"
 #include "libgpu.h"
 #include "main_api.h"
 
 extern u8 D_8013C3E0;
-s32 dialogue_render(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
+s32 talk_render(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
 extern u32 D_8013C360; /* compares take their own constant register: unsigned (T-9020) */
 extern u8 D_8013C364; /* T-20930: lbu/sb only in the original (was s8) */
 void func_80132000(void);
@@ -98,7 +98,7 @@ extern EdShorts14 D_8013CA7C; /* func_80135F4C: y positions of the 14 sprites */
  * address order) and the readers. All are .data with the same initial values the initialisers write. */
 
 /* Message scripts: one row per message table, one entry per scene; a scene's three entries are copied
- * together into dialogue_text_table/164/168 (main) or into D_8013C34C. Entries are message block addresses
+ * together into talk_text_table/164/168 (main) or into D_8013C34C. Entries are message block addresses
  * (D_8013CAC0[0][12] is read as a block whose first word is a message pointer table, func_8013A2E8). */
 extern s32 D_8013C280[3][17]; /* size 0xCC */
 extern s32 D_8013CAC0[3][15]; /* size 0xB4 */
@@ -112,7 +112,7 @@ typedef struct EdScriptSet {
 extern EdScriptSet D_8013C34C;
 
 /* Scene image records: three TIM addresses and a halfword read from the TIM data (the order of
- * func_80137160's and event_anim_show's arguments: +0x04, +0x08, +0x00, +0x0C go to the display record's
+ * func_80137160's and scene_anim_show's arguments: +0x04, +0x08, +0x00, +0x0C go to the display record's
  * unk_0C, unk_10, unk_34 and unk_14), then the addresses of the scene's texture pages. */
 typedef struct EdScene30 {
     /* 0x00 */ s32 unk_00;

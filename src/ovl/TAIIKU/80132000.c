@@ -21,14 +21,14 @@ void func_80132000(void) {
     TaiWords11 sp3C;
 
     sp3C = D_80148EC4;
-    bustup_wink_update();
-    switch (game_state.step) {
+    portrait_wink_update();
+    switch (game_state.mode_step) {
     case 0:
-        snd_bank_load_start(0, 0xBF98, 0xBF79, 0xD712, 0xD6C3, 0xD6B7);
+        audio_bank_load_start(0, 0xBF98, 0xBF79, 0xD712, 0xD6C3, 0xD6B7);
         scene_screen_reset(1, 0);
         dec_bg_reset();
         set_dec_bri(0);
-        dialogue_clear();
+        talk_clear();
         actor_clear_upper();
         k_reset(0);
         message_window_set_title((s32) "フォークダンス");
@@ -39,10 +39,10 @@ void func_80132000(void) {
         message_window_init();
         srand(game_state.timer_ticks);
         D_80122E90 = 0;
-        main_step_next();
+        mode_step_next();
         break;
     case 1:
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             count = 0;
             if (j) {} /* FAKE: empty test splits the live range of j. T-19031 */
             for (j = 0; j < 11; j++) {
@@ -84,18 +84,18 @@ void func_80132000(void) {
                     D_80148EC0[k] = m;
                     D_80148EC0[l] = t;
                 }
-                main_step_next();
+                mode_step_next();
             }
         }
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80132970();
-            snd_bank_start(0, 0x200);
+            audio_bank_start(0, 0x200);
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            bustup_read_start(sp3C.value[D_80148EC0[0]]);
+            portrait_read_start(sp3C.value[D_80148EC0[0]]);
             message_window_title_show(1);
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 3:
@@ -105,24 +105,24 @@ void func_80132000(void) {
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
             game_state.current_girl = D_80148EC0[0];
-            bustup_show_checked();
+            portrait_show_checked();
         }
         break;
     case 5:
         cd_read_sectors(2, 0x801E8000, 0xB6DC);
-        main_step_next();
+        mode_step_next();
         break;
     case 6:
         if (cd_read_sync_status() & 1) {
             text_marker_hide();
-            dialogue_names_set(D_80148EC0[0]);
+            talk_names_set(D_80148EC0[0]);
             func_80133BF0();
-            dialogue_group = 0;
-            dialogue_line = 0;
-            dialogue_text_table = D_801491B0;
-            dialogue_command_table = D_801491B4;
-            dialogue_voice_table = D_801491B8;
-            main_step_next();
+            talk_group = 0;
+            talk_line = 0;
+            talk_text_table = D_801491B0;
+            talk_command_table = D_801491B4;
+            talk_voice_table = D_801491B8;
+            mode_step_next();
         }
         break;
     case 7:
@@ -143,17 +143,17 @@ void func_80132000(void) {
         switch (girl_state_rank(D_80148EC0[0])) {
         case 0:
         case 1:
-            dialogue_group = D_80148EC0[0] * 3 + 5;
+            talk_group = D_80148EC0[0] * 3 + 5;
             break;
         case 2:
         case 3:
-            dialogue_group = D_80148EC0[0] * 3 + 6;
+            talk_group = D_80148EC0[0] * 3 + 6;
             break;
         case 4:
-            dialogue_group = D_80148EC0[0] * 3 + 7;
+            talk_group = D_80148EC0[0] * 3 + 7;
             break;
         }
-        main_step_next();
+        mode_step_next();
         break;
     case 11:
     case 20:
@@ -168,82 +168,82 @@ void func_80132000(void) {
         break;
     case 14:
     case 24:
-        dialogue_group = 1;
-        dialogue_line = 0;
-        main_step_next();
+        talk_group = 1;
+        talk_line = 0;
+        mode_step_next();
         break;
     case 16:
-        dialogue_names_set(D_80148EC0[1]);
-        main_step_next();
+        talk_names_set(D_80148EC0[1]);
+        mode_step_next();
         break;
     case 18:
-        bustup_read_start(sp3C.value[D_80148EC0[1]]);
-        main_step_next();
+        portrait_read_start(sp3C.value[D_80148EC0[1]]);
+        mode_step_next();
         break;
     case 19:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
             game_state.current_girl = D_80148EC0[1];
-            bustup_show_checked();
+            portrait_show_checked();
         }
         break;
     case 21:
         switch (girl_state_rank(D_80148EC0[1])) {
         case 0:
         case 1:
-            dialogue_group = D_80148EC0[1] * 3 + 5;
+            talk_group = D_80148EC0[1] * 3 + 5;
             break;
         case 2:
         case 3:
-            dialogue_group = D_80148EC0[1] * 3 + 6;
+            talk_group = D_80148EC0[1] * 3 + 6;
             break;
         case 4:
-            dialogue_group = D_80148EC0[1] * 3 + 7;
+            talk_group = D_80148EC0[1] * 3 + 7;
             break;
         }
-        main_step_next();
+        mode_step_next();
         break;
     case 26:
-        dialogue_names_set(D_80148EC0[2]);
-        main_step_next();
+        talk_names_set(D_80148EC0[2]);
+        mode_step_next();
         break;
     case 28:
-        bustup_read_start(sp3C.value[D_80148EC0[2]]);
-        main_step_next();
+        portrait_read_start(sp3C.value[D_80148EC0[2]]);
+        mode_step_next();
         break;
     case 29:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
             game_state.current_girl = D_80148EC0[2];
-            bustup_show_checked();
+            portrait_show_checked();
         }
         break;
     case 31:
         if ((game_state.girls[D_80148EC0[2]].syoushin >= 0x4C) || (girl_state_rank(D_80148EC0[2]) == 4)) {
-            snd_command(0xBF);
-            bustup_layout_set(4);
-            main_step_set(0x26);
+            audio_command(0xBF);
+            portrait_layout_set(4);
+            mode_step_set(0x26);
         } else {
             switch (girl_state_rank(D_80148EC0[2])) {
             case 0:
             case 1:
-                dialogue_group = D_80148EC0[2] * 3 + 5;
+                talk_group = D_80148EC0[2] * 3 + 5;
                 break;
             case 2:
             case 3:
-                dialogue_group = D_80148EC0[2] * 3 + 6;
+                talk_group = D_80148EC0[2] * 3 + 6;
                 break;
             case 4:
-                dialogue_group = D_80148EC0[2] * 3 + 7;
+                talk_group = D_80148EC0[2] * 3 + 7;
                 break;
             }
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 34:
-        dialogue_group = 3;
-        dialogue_line = 0;
-        main_step_next();
+        talk_group = 3;
+        talk_line = 0;
+        mode_step_next();
         break;
     case 36:
     case 41:
@@ -257,12 +257,12 @@ void func_80132000(void) {
         D_80122ECC = 2;
         break;
     case 39:
-        dialogue_group = 4;
-        dialogue_line = 0;
-        main_step_next();
+        talk_group = 4;
+        talk_line = 0;
+        mode_step_next();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     Default_Disp();

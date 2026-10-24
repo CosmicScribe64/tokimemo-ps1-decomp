@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_801447D0(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_8014488C();
         break;
@@ -19,9 +19,9 @@ void func_801447D0(void) {
         func_80144998();
         break;
     }
-    if (game_state.step != 5) {
+    if (game_state.mode_step != 5) {
         if (game_state.pad_pressed & 0x860) {
-            main_step_set(4);
+            mode_step_set(4);
         }
     }
 }
@@ -48,14 +48,14 @@ void func_8014488C(void) {
     D_80128880[2].x = -0x5A;
     D_80128880[2].z = 0;
     D_80128880[2].y = -0x5A;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80144998(void) {
     D_80127090.unk0 = 0x80000000;
     D_801270A0.unk0 = 0x80000000;
     draw2d3d(1, 0);
-    main_stage_set(2);
+    mode_stage_set(2);
 }
 
 void func_801449D8(s32 *arg0, s32 arg1, s32 arg2) {
@@ -404,7 +404,7 @@ s32 func_80145DC4(void) {
 
     D_8012274C = 0;
     D_80122750 = D_80127480[1].unk1C;
-    t = game_state.step_timer.w;
+    t = game_state.mode_step_timer.w;
     D_80122754 = -0x7D0;
     func_80099540(&D_80122740);
     switch (game_state.substep) {
@@ -444,7 +444,7 @@ s32 func_80145DC4(void) {
                 func_80147488(i + 1, D_8015F82C[i], 8);
             }
         } else if (t == 0x168) {
-            game_state.step_timer.w = 0;
+            game_state.mode_step_timer.w = 0;
             game_state.substep += 1;
         }
         if (t == 0x1E) {
@@ -462,17 +462,17 @@ s32 func_80145DC4(void) {
             D_80127080[1].unk0 = 0x80000000;
             D_80127080[2].unk0 = 0x80000000;
         } else if (t >= 0x3C) {
-            main_step_next();
+            mode_step_next();
         }
         break;
     }
-    game_state.step_timer.w += 1;
+    game_state.mode_step_timer.w += 1;
 }
 
 s32 func_8014616C(void) {
     s32 t;
 
-    t = game_state.step_timer.w;
+    t = game_state.mode_step_timer.w;
     if (t == 1) {
         func_80144DF8(1);
         func_80147488(1, D_8015F82C[0], 9);
@@ -569,7 +569,7 @@ s32 func_8014616C(void) {
     }
     if (t == 0x280) {
         D_80127090.unk0 = 0x80000000;
-        main_step_next();
+        mode_step_next();
     }
     /* FAKE: the frame counter is read through its own symbol for the final `+= 1`. The original reads it twice, as two uopt
      * variables (the compare chain, then the increment); through GameState both reads join one web and the function is 165
@@ -581,7 +581,7 @@ s32 func_80146754(void) {
     s32 t;
     s32 x;
 
-    t = game_state.step_timer.w;
+    t = game_state.mode_step_timer.w;
     if (t == 1) {
         func_80144DF8(2);
         func_80147488(2, D_8015F82C[1], 9);
@@ -671,7 +671,7 @@ s32 func_80146754(void) {
         func_801449D8((s32 *)game_state.scratch_buffer, 5, -8);
     }
     if (t == 0x226) {
-        main_step_set(4);
+        mode_step_set(4);
     }
     /* FAKE: the frame counter is read through its own symbol for the final `+= 1`. The original reads it twice, as two uopt
      * variables (the compare chain, then the increment); through GameState both reads join one web and the function is 156

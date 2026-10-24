@@ -37,15 +37,15 @@ void func_80132DE0(void) {
     FnTbl58 tbl;
 
     tbl = D_8013A4C8;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_80132E5C(void) {
-    memcpy((void *)(0x80180000 + game_state.step_timer.w * 0x1400), 0x801C0000 + game_state.step_timer.w * 0x1400, 0x1400);
-    game_state.step_timer.w += 1;
-    if (game_state.step_timer.w == 0x12) {
-        main_step_next();
+    memcpy((void *)(0x80180000 + game_state.mode_step_timer.w * 0x1400), 0x801C0000 + game_state.mode_step_timer.w * 0x1400, 0x1400);
+    game_state.mode_step_timer.w += 1;
+    if (game_state.mode_step_timer.w == 0x12) {
+        mode_step_next();
     }
 }
 
@@ -53,14 +53,14 @@ void func_80132EC8(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    temp_v0 = game_state.step_timer.w * 0x1400;
+    temp_v0 = game_state.mode_step_timer.w * 0x1400;
     memcpy(temp_v0 + 0x80180000, temp_v0 + 0x801A0000, 0x1400);
-    temp_v0_2 = game_state.step_timer.w + 1;
-    game_state.step_timer.w = temp_v0_2;
+    temp_v0_2 = game_state.mode_step_timer.w + 1;
+    game_state.mode_step_timer.w = temp_v0_2;
     if (temp_v0_2 == 0x12) {
         game_state.current_girl = GIRL_SHIORI;
-        get_p_name(name_buf_player_form, 0);
-        main_step_next();
+        get_p_name(name_code_player_form, 0);
+        mode_step_next();
     }
 }
 
@@ -74,31 +74,31 @@ void func_80132F48(void) {
     rect.h = 0x80;
     func_8009C8E0(&rect, (void *)0x80180000);
     game_state.current_girl = game_state.date_girl;
-    dialogue_names_set(game_state.date_girl);
+    talk_names_set(game_state.date_girl);
     func_80133258();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132FB0(void) {
-    memcpy((void *)(0x801C0000 + game_state.step_timer.w * 0x1400), 0x80180000 + game_state.step_timer.w * 0x1400, 0x1400);
-    game_state.step_timer.w += 1;
-    if (game_state.step_timer.w == 0x12) {
-        bustup_show_checked();
+    memcpy((void *)(0x801C0000 + game_state.mode_step_timer.w * 0x1400), 0x80180000 + game_state.mode_step_timer.w * 0x1400, 0x1400);
+    game_state.mode_step_timer.w += 1;
+    if (game_state.mode_step_timer.w == 0x12) {
+        portrait_show_checked();
     }
 }
 
 void func_8013301C(void) {
-    memcpy((void *)(0x801A0000 + game_state.step_timer.w * 0x1400), 0x80180000 + game_state.step_timer.w * 0x1400, 0x1400);
-    game_state.step_timer.w += 1;
-    if (game_state.step_timer.w == 0x12) {
-        bustup_show_checked();
+    memcpy((void *)(0x801A0000 + game_state.mode_step_timer.w * 0x1400), 0x80180000 + game_state.mode_step_timer.w * 0x1400, 0x1400);
+    game_state.mode_step_timer.w += 1;
+    if (game_state.mode_step_timer.w == 0x12) {
+        portrait_show_checked();
     }
 }
 
 void func_80133088(void) {
     RECT rect;
 
-    bustup_show_checked();
+    portrait_show_checked();
     rect.x = 0x140;
     rect.y = 0x80;
     rect.w = 0x180;
@@ -120,9 +120,9 @@ void func_801330D4(void) {
     for (i = 1; i < 10; i++) {
         sums[i] = 0;
         for (j = 1; j < 0x25; j++) {
-            sums[i] += g->girls[i].event_counters[j]; /* j = 0x24 reads the byte after unk_14 (the original does) */
+            sums[i] += g->girls[i].scene_counters[j]; /* j = 0x24 reads the byte after unk_14 (the original does) */
         }
-        sums[i] -= g->girls[i].event_counters[0x1A];
+        sums[i] -= g->girls[i].scene_counters[0x1A];
     }
 
     for (i = 1; i < 10; i++) {
@@ -131,14 +131,14 @@ void func_801330D4(void) {
             best = sums[i];
         }
     }
-    dialogue_names_set(game_state.date_girl = game_state.current_girl);
+    talk_names_set(game_state.date_girl = game_state.current_girl);
     game_state.current_girl = GIRL_SHIORI;
     event_log_add(0xC, 0);
     game_state.current_girl = game_state.date_girl;
     event_log_add(0xC, 0);
     func_80133258();
     func_801338F8();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133258(void) {
@@ -220,24 +220,24 @@ void func_80133494(void) {
         strcpy(D_800CA1DC, "ゴーストハウス");
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013357C(void) {
-    bustup_read_start(0x6C8C);
-    main_step_next();
+    portrait_read_start(0x6C8C);
+    mode_step_next();
 }
 
 void func_801335A4(void) {
     game_state.current_girl = GIRL_SHIORI;
-    get_p_name(&name_buf_player_form, 0);
-    bustup_read_start(0x55DF);
-    main_step_next();
+    get_p_name(&name_code_player_form, 0);
+    portrait_read_start(0x55DF);
+    mode_step_next();
 }
 
 void func_801335E4(void) {
     game_state.current_girl = game_state.date_girl;
-    dialogue_names_set(game_state.date_girl);
+    talk_names_set(game_state.date_girl);
     func_80133258();
     read_bustup();
 }
@@ -245,37 +245,37 @@ void func_801335E4(void) {
 void func_80133620(void) {
     game_state.current_girl = game_state.date_girl;
     func_80133258();
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     switch (game_state.current_girl) {
     case GIRL_MIO:
-        bustup_read_start(0x5DC8);
+        portrait_read_start(0x5DC8);
         break;
     case GIRL_YUINA:
-        bustup_read_start(0x52B5);
+        portrait_read_start(0x52B5);
         break;
     case GIRL_AYAKO:
-        bustup_read_start(0x5936);
+        portrait_read_start(0x5936);
         break;
     case GIRL_SAKI:
-        bustup_read_start(0x6746);
+        portrait_read_start(0x6746);
         break;
     case GIRL_YUKARI:
-        bustup_read_start(0x603E);
+        portrait_read_start(0x603E);
         break;
     case GIRL_NOZOMI:
-        bustup_read_start(0x62B4);
+        portrait_read_start(0x62B4);
         break;
     case GIRL_MIRA:
-        bustup_read_start(0x5B7F);
+        portrait_read_start(0x5B7F);
         break;
     case GIRL_YUKO:
-        bustup_read_start(0x506C);
+        portrait_read_start(0x506C);
         break;
     case GIRL_MEGUMI:
-        bustup_read_start(0x652A);
+        portrait_read_start(0x652A);
         break;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133720(void) {
@@ -315,20 +315,20 @@ void func_80133784(void) {
         break;
     }
     func_801338F8();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133884(void) {
     if (D_8013A4C0 == 2) {
-        main_stage_next();
+        mode_stage_next();
         return;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801338C4(void) {
     D_8013A4C0 += 1;
-    main_step_set(0x1B);
+    mode_step_set(0x1B);
 }
 
 /* FAKE: s32 fall-through keeps the original counter/result register. T-10010. */
@@ -405,11 +405,11 @@ s32 func_80133AF0(void) {
     g = &game_state;
     movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
-    switch (g->step_timer.u) {
+    switch (g->mode_step_timer.u) {
     case 0:
         D_80122D2C = 1;
         srand(game_state.frame_count);
-        snd_command(0x206);
+        audio_command(0x206);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
         movie->unk_04 = 0;
@@ -465,7 +465,7 @@ s32 func_80133AF0(void) {
             game_state.quad_layer[i + 6] = 0xB;
         }
         dec_bg_cd_read(0x43CB, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -475,12 +475,12 @@ s32 func_80133AF0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x80183000);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 2:
         dec_bg_cd_read(0x43D4, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
@@ -490,12 +490,12 @@ s32 func_80133AF0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801A1000);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 4:
         dec_bg_cd_read(0x43DE, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
@@ -505,12 +505,12 @@ s32 func_80133AF0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801BF000);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 6:
         dec_bg_cd_read(0x43E7, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 7:
         if (cd_read_sync_status() & 1) {
@@ -520,15 +520,15 @@ s32 func_80133AF0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801DD000);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 8:
         for (i = 0; i < 4; i++) {
             sprite_quads[i + 4].flags = 0x02000000;
         }
-        g->step_timer.u += 1;
-        snd_command(0x500);
+        g->mode_step_timer.u += 1;
+        audio_command(0x500);
         break;
     case 9:
         value = sprite_quads[4].tint_r;
@@ -547,7 +547,7 @@ s32 func_80133AF0(void) {
         sprite_quads[4].tint_g = color;
         sprite_quads[4].tint_r = color;
         if (value == 0x80) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 10:
@@ -572,17 +572,17 @@ s32 func_80133AF0(void) {
             for (i = 0; i < 4; i++) {
                 sprite_quads[i + 4].flags = 0x82000000;
             }
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 12:
-        sp50 = game_state.step;
-        sp4C = g->step_timer.u;
+        sp50 = game_state.mode_step;
+        sp4C = g->mode_step_timer.u;
         read_bustup();
-        g->step_timer.u = sp4C;
-        if (sp50 != game_state.step) {
-            game_state.step--;
-            g->step_timer.u += 1;
+        g->mode_step_timer.u = sp4C;
+        if (sp50 != game_state.mode_step) {
+            game_state.mode_step--;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 13:
@@ -591,45 +591,45 @@ s32 func_80133AF0(void) {
     case 21:
     case 23:
         if (cd_read_sync_status() & 1) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 14:
-        sp4C = g->step_timer.u;
-        bustup_show_checked();
-        game_state.step -= 1;
-        g->step_timer.u = sp4C + 1;
+        sp4C = g->mode_step_timer.u;
+        portrait_show_checked();
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp4C + 1;
         break;
     case 15:
         cd_read_sectors_nowait(0xA, 0x80162000, 0x4359);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 17:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->step_timer.u -= 2;
+            g->mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         break;
     case 18:
-        snd_command(0x200);
-        sp4C = g->step_timer.u;
+        audio_command(0x200);
+        sp4C = g->mode_step_timer.u;
         func_80132BB0();
-        game_state.step -= 1;
-        g->step_timer.u = sp4C + 1;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp4C + 1;
         break;
     default:
         hizuke_disp_switch(1);
         D_80122D2C = 0;
-        main_step_next();
+        mode_step_next();
         break;
     }
-    if (g->step_timer.u < 9 || g->step_timer.u >= 12) {
+    if (g->mode_step_timer.u < 9 || g->mode_step_timer.u >= 12) {
         return 0;
     }
     p = sprite_quads;
@@ -717,7 +717,7 @@ s32 func_80133AF0(void) {
     timer = (D_8013A5CC + 1) & 0xFFFF;
     D_8013A5CC = timer;
     if (timer == 0x96) {
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
     }
 }
 
@@ -735,10 +735,10 @@ s32 func_801348F0(void) {
     g = &game_state;
     movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
-    switch (g->step_timer.u) {
+    switch (g->mode_step_timer.u) {
     case 0:
         D_80122D2C = 1;
-        snd_command(0x201);
+        audio_command(0x201);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
         movie->unk_04 = 0;
@@ -771,7 +771,7 @@ s32 func_801348F0(void) {
             game_state.quad_layer[i + 10] = 0xC;
         }
         func_801365DC(0x43C2);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -779,17 +779,17 @@ s32 func_801348F0(void) {
                 printf("DEC_BS header Error \n");
                 movie->unk_04 = 0;
                 movie->unk_06 = 0;
-                g->step_timer.u -= 1;
+                g->mode_step_timer.u -= 1;
                 return 0;
             }
             func_800536AC(0x140, 0x100, 0x140, 0xA0);
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         return 0;
     case 2:
         cd_read_sectors(0x31, 0x801AE000, 0xBCD1);
         func_801339F8();
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 3:
     case 11:
@@ -797,13 +797,13 @@ s32 func_801348F0(void) {
     case 16:
     case 18:
         if (cd_read_sync_status() & 1) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         return 0;
     case 4:
         load_palette(D_8013A5B0, 0x11, 1, 0, 0);
-        event_still_show(D_8013A5B4, D_8013A5B8, D_8013A5BC, D_8013A5C0, D_8013A5C4, D_8013A5C8);
-        g->step_timer.u += 1;
+        scene_still_show(D_8013A5B4, D_8013A5B8, D_8013A5BC, D_8013A5C0, D_8013A5C4, D_8013A5C8);
+        g->mode_step_timer.u += 1;
         return 0;
     case 5:
         for (i = 10; i < 12; i++) {
@@ -812,7 +812,7 @@ s32 func_801348F0(void) {
         for (i = 58; i < 64; i++) {
             sprite_quads[i].flags &= 0x7FFFFFFF;
         }
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 6:
         x = (sprite_quads[58].tint_r += 4); y = sprite_quads[58].tint_g = x; sprite_quads[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
@@ -823,7 +823,7 @@ s32 func_801348F0(void) {
             sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = sprite_quads[58].tint_r;
         }
         if (sprite_quads[58].tint_r == 0x40) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         return 0;
     case 7:
@@ -835,7 +835,7 @@ s32 func_801348F0(void) {
             sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = sprite_quads[58].tint_r;
         }
         if (sprite_quads[58].tint_r == 0x80) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 8:
@@ -855,43 +855,43 @@ s32 func_801348F0(void) {
             for (i = 58; i < 64; i++) {
                 sprite_quads[i].flags |= 0x80000000;
             }
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
         }
         break;
     case 10:
         cd_read_sectors_nowait(0xA, 0x80162000, 0x4350);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 12:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->step_timer.u -= 2;
+            g->mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return 0;
     case 13:
-        sp30 = g->step_timer.u;
+        sp30 = g->mode_step_timer.u;
         func_80132BB0();
-        game_state.step -= 1;
-        g->step_timer.u = sp30;
-        g->step_timer.u++;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp30;
+        g->mode_step_timer.u++;
         return 0;
     default:
-        main_step_next();
+        mode_step_next();
         D_80122D2C = 0;
-        snd_command(0x200);
+        audio_command(0x200);
         hizuke_disp_switch(1);
         return 0;
     }
     timer = (D_8013A5CC + 1) & 0xFFFF;
     D_8013A5CC = timer;
     if (timer == 0x96) {
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
     }
 }
 
@@ -910,9 +910,9 @@ s32 func_801350A4(void) {
     g = &game_state;
     movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
-    switch (g->step_timer.u) {
+    switch (g->mode_step_timer.u) {
     case 0:
-        snd_command(0xCF);
+        audio_command(0xCF);
         D_80122D2C = 1;
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -968,7 +968,7 @@ s32 func_801350A4(void) {
             game_state.quad_layer[i + 6] = 0xB;
         }
         dec_bg_cd_read(0x43B1, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 1:
     case 4:
@@ -980,7 +980,7 @@ s32 func_801350A4(void) {
     case 34:
     case 37:
         if (cd_read_sync_status() & 1) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
             return;
         }
         return;
@@ -991,11 +991,11 @@ s32 func_801350A4(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x80183000);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 3:
         dec_bg_cd_read(0x43AA, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 5:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -1004,11 +1004,11 @@ s32 func_801350A4(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x8019C000);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 6:
         dec_bg_cd_read(0x43A3, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 8:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -1017,11 +1017,11 @@ s32 func_801350A4(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x801B5000);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 9:
         dec_bg_cd_read(0x439C, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 11:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -1030,29 +1030,29 @@ s32 func_801350A4(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x801CE000);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 12:
         dec_bg_cd_read(0x4395, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 14:
         func_800536AC(0x280, 0, 0x140, 0xA0);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 15:
         dec_bg_cd_read(0x438D, 1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 17:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 18:
         for (i = 0; i < 4; i++) {
             sprite_quads[i + 4].flags = (s32) (sprite_quads[i + 4].flags & 0x7FFFFFFF);
         }
-        g->step_timer.u++;
+        g->mode_step_timer.u++;
         return;
     case 19:
         for (i = 4; i < 8; i++) {
@@ -1071,15 +1071,15 @@ s32 func_801350A4(void) {
             sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        snd_command(0x500);
-        g->step_timer.u += 1;
+        audio_command(0x500);
+        g->mode_step_timer.u += 1;
         return;
     case 20:
     case 22:
     case 24:
         func_80135DA4(8);
         if (++D_8013A5CC == 0x14) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
             return;
         }
         break;
@@ -1101,7 +1101,7 @@ s32 func_801350A4(void) {
             sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 23:
         rect.x = 0x280;
@@ -1121,7 +1121,7 @@ s32 func_801350A4(void) {
             sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 25:
         rect.x = 0x280;
@@ -1141,7 +1141,7 @@ s32 func_801350A4(void) {
             sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 26:
         func_80135DA4(8);
@@ -1163,7 +1163,7 @@ s32 func_801350A4(void) {
             sprite_quads[4].tint_r = color;
         }
         if (++D_8013A5CC == 0x14) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
             return;
         }
         break;
@@ -1185,7 +1185,7 @@ s32 func_801350A4(void) {
             sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 28:
         func_80135DA4(8);
@@ -1205,7 +1205,7 @@ s32 func_801350A4(void) {
         sprite_quads[4].tint_g = color;
         sprite_quads[4].tint_r = color;
         if (value < 4U) {
-            g->step_timer.u += 1;
+            g->mode_step_timer.u += 1;
             return;
         }
         break;
@@ -1213,54 +1213,54 @@ s32 func_801350A4(void) {
         for (i = 0; i < 4; i++) {
             sprite_quads[i + 4].flags = (s32) (sprite_quads[i + 4].flags | 0x80000000);
         }
-        g->step_timer.u++;
+        g->mode_step_timer.u++;
         return;
     case 30:
-        sp50 = g->step_timer.u;
+        sp50 = g->mode_step_timer.u;
 
-        sp54 = game_state.step;
+        sp54 = game_state.mode_step;
         read_bustup();
-        g->step_timer.u = sp50; if (sp54 != game_state.step) { /* FAKE: one source line keeps the as1 load order T-11880 */
-            game_state.step -= 1;
-            g->step_timer.u++;
+        g->mode_step_timer.u = sp50; if (sp54 != game_state.mode_step) { /* FAKE: one source line keeps the as1 load order T-11880 */
+            game_state.mode_step -= 1;
+            g->mode_step_timer.u++;
         }
         break;
     case 32:
-        sp50 = g->step_timer.u;
+        sp50 = g->mode_step_timer.u;
 
-        bustup_show_checked();
-        game_state.step -= 1;
-        g->step_timer.u = sp50;
-        g->step_timer.u++;
+        portrait_show_checked();
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp50;
+        g->mode_step_timer.u++;
         return;
     case 33:
         cd_read_sectors_nowait(0xAU, 0x80162000, 0x433E);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 35:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->step_timer.u -= 2;
+            g->mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        g->step_timer.u += 1;
+        g->mode_step_timer.u += 1;
         return;
     case 36:
-        sp50 = g->step_timer.u;
+        sp50 = g->mode_step_timer.u;
 
         func_80132BB0();
-        game_state.step -= 1;
-        g->step_timer.u = sp50;
-        g->step_timer.u++;
+        game_state.mode_step -= 1;
+        g->mode_step_timer.u = sp50;
+        g->mode_step_timer.u++;
         return;
     default:
-        main_step_next();
+        mode_step_next();
         D_80122D2C = 0;
-        snd_command(0x200);
+        audio_command(0x200);
         hizuke_disp_switch(1);
         break;
     }
@@ -1292,7 +1292,7 @@ s32 func_80135E50(void) {
     u8 temp_s0;
     u8 temp_s0_2;
 
-    switch (game_state.step_timer.u) {
+    switch (game_state.mode_step_timer.u) {
     case 0:
         D_80122D2C = 1;
         srand((*(s32 *)&game_state.frame_count));
@@ -1305,7 +1305,7 @@ s32 func_80135E50(void) {
         D_8013A5DC[0] = -0x28;
         D_8013A5DC[1] = 0;
         D_8013A5DC[2] = -0x3C;
-        game_state.step_timer.u += 1;
+        game_state.mode_step_timer.u += 1;
         D_8013A5E4[0] = (rand() % 3) - 1;
         D_8013A5E4[1] = (rand() % 3) - 1;
         D_8013A5E4[2] = (rand() % 3) - 1;
@@ -1315,7 +1315,7 @@ s32 func_80135E50(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            game_state.step_timer.u += 1;
+            game_state.mode_step_timer.u += 1;
             break;
         }
         break;
@@ -1324,23 +1324,23 @@ s32 func_80135E50(void) {
             printf("DEC_BS header Error \n");
             ((RECT *)dec_bg_lba_cache)[0].w = 0;
             ((RECT *)dec_bg_lba_cache)[0].h = 0;
-            game_state.step_timer.u -= 2;
+            game_state.mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        snd_command(0x203);
-        game_state.step_timer.u += 1;
+        audio_command(0x203);
+        game_state.mode_step_timer.u += 1;
         break;
     case 3:
-        temp_s0 = game_state.step;
-        temp_s1 = game_state.step_timer.u;
+        temp_s0 = game_state.mode_step;
+        temp_s1 = game_state.mode_step_timer.u;
         normal_date_bg_fadein();
-        game_state.step_timer.u = temp_s1;
-        if (temp_s0 != game_state.step) {
-            game_state.step_timer.u = temp_s1 + 1;
+        game_state.mode_step_timer.u = temp_s1;
+        if (temp_s0 != game_state.mode_step) {
+            game_state.mode_step_timer.u = temp_s1 + 1;
         }
-        game_state.step = temp_s0;
+        game_state.mode_step = temp_s0;
         break;
     case 4:
         var_s3 = 0;
@@ -1389,29 +1389,29 @@ s32 func_80135E50(void) {
         if (var_s3) {
         }
         if (D_8013A5CC++ == 0x96) {
-            game_state.step_timer.u += 1;
+            game_state.mode_step_timer.u += 1;
             break;
         }
         break;
     case 5:
-        temp_s0_2 = game_state.step;
-        temp_s1_3 = game_state.step_timer.u;
+        temp_s0_2 = game_state.mode_step;
+        temp_s1_3 = game_state.mode_step_timer.u;
         normal_date_bg_fadeout();
-        game_state.step_timer.u = temp_s1_3;
-        if (temp_s0_2 != game_state.step) {
-            game_state.step_timer.u = temp_s1_3 + 1;
+        game_state.mode_step_timer.u = temp_s1_3;
+        if (temp_s0_2 != game_state.mode_step) {
+            game_state.mode_step_timer.u = temp_s1_3 + 1;
         }
-        game_state.step = temp_s0_2;
+        game_state.mode_step = temp_s0_2;
         break;
     case 6:
         dec_bg_show_switch(1);
-        game_state.step_timer.u += 1;
+        game_state.mode_step_timer.u += 1;
         break;
     default:
-        snd_command(0x200);
+        audio_command(0x200);
         D_80122D2C = 0;
         hizuke_disp_switch(1);
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -1423,12 +1423,12 @@ void func_801365DC(s32 arg0) {
     v = dec_bg_cd_read(arg0, 1);
     if (v == D_800B5939) {
         printf("same\n");
-        game_state.step_timer.w += 3;
+        game_state.mode_step_timer.w += 3;
         return;
     }
     if (v == 1 - D_800B5939) {
         printf("another\n");
-        game_state.step_timer.w += 2;
+        game_state.mode_step_timer.w += 2;
     }
 }
 
@@ -1437,7 +1437,7 @@ void func_80136660(void) {
     FnTbl44 tbl;
 
     tbl = D_8013A600;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
@@ -1447,14 +1447,14 @@ s32 func_801366E8(void) {
     v = get_g_zyotai_s(GIRL_SHIORI);
     if ((game_state.player_birthday & 0xF) == game_state.month && ((u32)(game_state.player_birthday << 0x17) >> 0x1B) == game_state.day) {
         if (((u8)v & 0x7F) < 2U) {
-            game_state.daily_event_bits |= 4;
-            game_state.saved_step = game_state.step + 1;
-            main_stage_set(4);
+            game_state.day_event_done_bits |= 4;
+            game_state.saved_mode_step = game_state.mode_step + 1;
+            mode_stage_set(4);
             return 0;
         }
-        game_state.daily_event_bits |= 8;
+        game_state.day_event_done_bits |= 8;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 /* The selected girl and the game_state flag bytes are read through a state
@@ -1468,17 +1468,17 @@ s32 func_80136794(void) {
     v = get_g_zyotai_s(game_state.current_girl); /* FAKE: direct symbol here but g-> below; the mix decides which loads uopt keeps in registers T-11880 */
     if ((g->player_birthday & 0xF) == g->month && ((u32)(g->player_birthday << 0x17) >> 0x1B) == g->day) {
         if (((u8)v & 0x7F) < 2U) {
-            g->daily_event_bits &= ~8;
-            g->daily_event_bits |= 4;
-            g->saved_step = g->step + 1;
+            g->day_event_done_bits &= ~8;
+            g->day_event_done_bits |= 4;
+            g->saved_mode_step = g->mode_step + 1;
             g->current_girl = g->date_girl;
-            dialogue_names_set(g->current_girl);
-            main_stage_set(4);
+            talk_names_set(g->current_girl);
+            mode_stage_set(4);
             return 0;
         }
-        g->daily_event_bits |= 8;
+        g->day_event_done_bits |= 8;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 s32 func_80136860(void) {
@@ -1490,12 +1490,12 @@ s32 func_80136860(void) {
         game_state.substep++;
     }
     if (game_state.substep == 1) {
-        if (game_state.step_timer.w++ >= 0x400U) {
-            cd_cmd_reset();
-            snd_bank_state_reset();
+        if (game_state.mode_step_timer.w++ >= 0x400U) {
+            cd_command_reset();
+            audio_bank_state_reset();
             game_state.substep = 0;
         }
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             game_state.substep++;
         } else {
             return 0;
@@ -1530,12 +1530,12 @@ void func_80136A90(void) {
     if (((u8) get_g_zyotai_s(game_state.date_girl) & 0x7F) == 4 && (rand() % 2) && (game_state.date_girl != GIRL_NOZOMI)) {
         D_8013A438 += 1;
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80136B7C(void) {
     bg_read_sub2(0x432B);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80136BA4(void) {
@@ -1554,20 +1554,20 @@ void func_80136BA4(void) {
             D_8013A428 += 1;
         } else {
             D_8013A428 += 4;
-            main_step_next();
-            main_step_next();
+            mode_step_next();
+            mode_step_next();
         }
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80136CEC(void) {
     D_8013A428 = 0x17;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80136D14(void) {
-    dialogue_names_set((u8) *(s8 *)&game_state.current_girl);
+    talk_names_set((u8) *(s8 *)&game_state.current_girl);
     D_8013A428 = 0x15;
-    main_step_next();
+    mode_step_next();
 }

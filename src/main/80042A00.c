@@ -34,7 +34,7 @@ s32 func_80042AC8(void) {
                 g->input_device = INPUT_PAD;
             }
         }
-    } else if (D_800E8BF0[0] != 0xFF || g->card_busy == 0) {
+    } else if (D_800E8BF0[0] != 0xFF || g->memory_card_busy == 0) {
         g->input_device = INPUT_NONE;
     }
     if (old != g->input_device && (g->input_device != INPUT_NONE || old != 0xFF)) {
@@ -212,38 +212,38 @@ s32 func_800430C0(void) {
         if (game_state.pad_pressed & 0x08000800) {
             if (game_state.paused == 0) {
                 game_state.paused = 1;
-                game_state.actors_draw_enabled = 0;
+                game_state.actor_draw_enabled = 0;
             } else {
-                game_state.actors_draw_enabled = 1;
+                game_state.actor_draw_enabled = 1;
                 game_state.paused = 0;
             }
         }
     }
-    if (game_state.mode != 0xD0 && game_state.mode != 0x20 && game_state.mode != 0x90 && game_state.input_device == INPUT_PAD) {
+    if (game_state.game_mode != 0xD0 && game_state.game_mode != 0x20 && game_state.game_mode != 0x90 && game_state.input_device == INPUT_PAD) {
         if ((game_state.pad_held & 0x90C) == 0x90C) {
             if (D_800B3CA4++ >= 0x81) {
                 D_800B3CA4 = 0;
                 func_800789E0();
                 func_800591D8(0);
                 game_state_init(0);
-                main_state_set(MODE_BOOT);
+                game_mode_set(MODE_BOOT);
                 sprite_tables_clear();
                 func_80048DD0(0);
                 back_clear_switch(1);
                 dec_bg_reset();
-                snd_bank_state_reset();
+                audio_bank_state_reset();
                 tpage_buf_clear();
-                snd_command(0x7F);
+                audio_command(0x7F);
                 func_800424FC();
                 func_8007BDE8();
                 func_8007B844();
                 func_80042488();
-                cd_cmd_reset();
+                cd_command_reset();
                 func_80041878();
                 func_80042058();
                 func_80041F48();
-                if (game_state.card_busy != 0) {
-                    card_stop();
+                if (game_state.memory_card_busy != 0) {
+                    memory_card_stop();
                 }
                 cursor_actor_init(0);
                 return -1;
@@ -254,24 +254,24 @@ s32 func_800430C0(void) {
                 func_800789E0();
                 func_800591D8(0);
                 game_state_init(0);
-                main_state_set(MODE_PROLOGUE);
+                game_mode_set(MODE_PROLOGUE);
                 sprite_tables_clear();
                 func_80048DD0(0);
                 back_clear_switch(1);
                 dec_bg_reset();
-                snd_bank_state_reset();
+                audio_bank_state_reset();
                 tpage_buf_clear();
-                snd_command(0x7F);
+                audio_command(0x7F);
                 func_800424FC();
                 func_8007BDE8();
                 func_8007B844();
                 func_80042488();
-                cd_cmd_reset();
+                cd_command_reset();
                 func_80041878();
                 func_80042058();
                 func_80041F48();
-                if (game_state.card_busy != 0) {
-                    card_stop();
+                if (game_state.memory_card_busy != 0) {
+                    memory_card_stop();
                 }
                 cursor_actor_init(0);
                 return -1;

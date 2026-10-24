@@ -255,7 +255,7 @@ void func_80143B58(void) {
         D_8015EDBC += 1;
         break;
     case 0x14:
-        snd_bank_load_start(0, 0xBF43, 0xBF26, 0xD310, 0xD2C2, 0xD29D);
+        audio_bank_load_start(0, 0xBF43, 0xBF26, 0xD310, 0xD2C2, 0xD29D);
         D_8015EDBC += 1;
         break;
     case 0x18:
@@ -270,7 +270,7 @@ void func_80143B58(void) {
         D_8015EDBC += 1;
         break;
     case 0x24:
-        snd_bank_load_start(0, 0xBF61, 0xBF45, 0xD310, 0xD2C2, 0xD29D);
+        audio_bank_load_start(0, 0xBF61, 0xBF45, 0xD310, 0xD2C2, 0xD29D);
         D_8015EDBC += 1;
         break;
     case 0x28:
@@ -285,7 +285,7 @@ void func_80143B58(void) {
         D_8015EDBC += 1;
         break;
     case 0x34:
-        snd_bank_load_start(0, 0xBF77, 0xBF63, 0xD310, 0xD2C2, 0xD29D);
+        audio_bank_load_start(0, 0xBF77, 0xBF63, 0xD310, 0xD2C2, 0xD29D);
         D_8015EDBC += 1;
         break;
     case 0x38:
@@ -296,7 +296,7 @@ void func_80143B58(void) {
         D_8015EDBC += 1;
         break;
     case 0x44:
-        snd_bank_load_start(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
+        audio_bank_load_start(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
         D_8015EDBC += 1;
         break;
     default:

@@ -66,9 +66,9 @@ void func_801528DC(void) {
     s32 i;
     u8 *p;
 
-    p = (u8 *)&game_state.stage_scratch;
-    if (game_state.stage_timer == 0) {
-        game_state.stage_timer += 1;
+    p = (u8 *)&game_state.mode_stage_scratch;
+    if (game_state.mode_stage_timer == 0) {
+        game_state.mode_stage_timer += 1;
         *p = 0x80;
     }
     i = 0;
@@ -87,15 +87,15 @@ void func_801528DC(void) {
         actor_clear_range(0);
         cursor_actor_init(0);
         back_clear_switch(1);
-        main_stage_next();
+        mode_stage_next();
     }
 }
 
 void func_801529B4(void) {
     func_8014B79C();
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
-        snd_bank_start(1, 0x200);
+        audio_bank_start(1, 0x200);
         switch (D_8015EB98) {
         case 0x10000:
             strcpy(D_8015E9E0, "ハブ・ロードが襲ってきた！");
@@ -178,41 +178,41 @@ void func_801529B4(void) {
         if (D_8015EB98 == 0x08000000) {
             func_8013E97C(0x3B, -0x58, 0x70);
         }
-        main_step_next();
+        mode_step_next();
         break;
     case 1:
-        func_8013E97C(0x30, 0x160 - game_state.step_timer.u, 0x58);
-        func_8013E97C(0x1D, 0x168 - game_state.step_timer.u, 0x88);
-        func_8013E97C(0x3B, (game_state.step_timer.u * 2) - 0x58, 0x60);
+        func_8013E97C(0x30, 0x160 - game_state.mode_step_timer.u, 0x58);
+        func_8013E97C(0x1D, 0x168 - game_state.mode_step_timer.u, 0x88);
+        func_8013E97C(0x3B, (game_state.mode_step_timer.u * 2) - 0x58, 0x60);
         if (D_8015EB98 == 0x100000) {
-            func_8013E97C(0x3B, (game_state.step_timer.u * 2) - 0x28, 0x68);
-            func_8013E97C(0x3C, (game_state.step_timer.u * 2) - 0x60, 0x58);
-            func_8013E97C(0x3D, (game_state.step_timer.u * 2) - 0x68, 0x88);
+            func_8013E97C(0x3B, (game_state.mode_step_timer.u * 2) - 0x28, 0x68);
+            func_8013E97C(0x3C, (game_state.mode_step_timer.u * 2) - 0x60, 0x58);
+            func_8013E97C(0x3D, (game_state.mode_step_timer.u * 2) - 0x68, 0x88);
         }
         if (D_8015EB98 == 0x08000000) {
-            func_8013E97C(0x3B, (game_state.step_timer.u * 2) - 0x58, 0x70);
+            func_8013E97C(0x3B, (game_state.mode_step_timer.u * 2) - 0x58, 0x70);
         }
-        game_state.step_timer.u += 4;
-        if (game_state.step_timer.u >= 0x51) {
+        game_state.mode_step_timer.u += 4;
+        if (game_state.mode_step_timer.u >= 0x51) {
             func_8013E97C(0x30, 0, 0);
             func_8013E7C0(0x30, 0, 1, 1);
             func_8013E97C(0x1D, 0, 0);
             if (D_8015EB9C != 0xE) {
                 func_8013E7C0(0x1D, 0, 1, 1);
             }
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 2:
-        game_state.step_timer.u += 1;
-        if (game_state.step_timer.u >= 0x3D) {
-            main_stage_next();
+        game_state.mode_step_timer.u += 1;
+        if (game_state.mode_step_timer.u >= 0x3D) {
+            mode_stage_next();
         }
         break;
     }
 }
 
-/* FAKE: x and y are unused locals that place color at sp+0x3C in the 0x48 frame; *(u8 *)&game_state.step bypasses cvt_pass.py
+/* FAKE: x and y are unused locals that place color at sp+0x3C in the 0x48 frame; *(u8 *)&game_state.mode_step bypasses cvt_pass.py
  * widening so the four loads of unk_110A stay in ugen temporaries ($t7..$t9); in case 3, the *(s32 *)& reads of D_8015EC38/3C/40/44/4C
  * keep D_8015EC38 and D_8015EC3C promoted to $a1/$a2 across the function and allocate $v0, $v1, $a3 to D_8015EC44, D_8015EC40,
  * D_8015EC4C so uopt flushes the six stores in the original order. T-24124 */
@@ -250,20 +250,20 @@ void func_80152F30(void) {
         break;
     }
     func_8014B79C();
-    switch (*(u8 *)&game_state.step) {
+    switch (*(u8 *)&game_state.mode_step) {
     case 0:
         game_state.current_girl = GIRL_SOTOI;
         cd_audio_request_set(0x1C0000A8, 0x0F0000B7, 0xE);
-        snd_command(0x300);
-        main_step_next();
+        audio_command(0x300);
+        mode_step_next();
         break;
     case 1:
-        snd_command(0xE4);
-        main_step_next();
+        audio_command(0xE4);
+        mode_step_next();
         break;
     case 2:
         if (cd_audio_state() & 4) {
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 3:
@@ -284,13 +284,13 @@ void func_80152F30(void) {
         func_8013E810(0x2F, 2, 1, 1);
         func_8013E97C(0x2E, D_8015EC38, D_8015EC3C);
         func_8013E810(0x2E, 6, 1, 1);
-        main_step_next();
+        mode_step_next();
         break;
     case 4:
-        func_8013E97C(0x30, 0x160 - game_state.step_timer.u, 0x58);
-        func_8013E97C(0x1D, 0x168 - game_state.step_timer.u, 0x88);
-        game_state.step_timer.u += 4;
-        if (game_state.step_timer.u >= 0x51U) {
+        func_8013E97C(0x30, 0x160 - game_state.mode_step_timer.u, 0x58);
+        func_8013E97C(0x1D, 0x168 - game_state.mode_step_timer.u, 0x88);
+        game_state.mode_step_timer.u += 4;
+        if (game_state.mode_step_timer.u >= 0x51U) {
             func_8013E97C(0x30, 0, 0);
             func_8013E7C0(0x30, 0, 1, 1);
             func_8013E97C(0x1D, 0, 0);
@@ -298,50 +298,50 @@ void func_80152F30(void) {
             func_8013E97C(0x38, 0, 0);
             func_8013E7C0(0x38, 9, 1, 1);
             ((Actor *)actor_pool)[152].unk_01 = 2;
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 5:
-        prim_gradient_rect(-0x5C - (game_state.step_timer.u >> 1), -0x78, (game_state.step_timer.u >> 1) * 2, 0xA8, 3, color.word, 0x81);
+        prim_gradient_rect(-0x5C - (game_state.mode_step_timer.u >> 1), -0x78, (game_state.mode_step_timer.u >> 1) * 2, 0xA8, 3, color.word, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
-        game_state.step_timer.u += 1;
-        if (game_state.step_timer.u >= 0x41U) {
-            main_step_next();
+        game_state.mode_step_timer.u += 1;
+        if (game_state.mode_step_timer.u >= 0x41U) {
+            mode_step_next();
         }
         break;
     case 6:
         prim_gradient_rect(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
-        func_8013E97C(0x3B, 0x48, game_state.step_timer.u - 0x80);
+        func_8013E97C(0x3B, 0x48, game_state.mode_step_timer.u - 0x80);
         func_8013E810(0x3B, 8, 1, 1);
-        game_state.step_timer.u += 1;
-        if (game_state.step_timer.u >= 0xE9U) {
+        game_state.mode_step_timer.u += 1;
+        if (game_state.mode_step_timer.u >= 0xE9U) {
             k_disp_switch(D_8015EDE8, 1);
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 7:
         prim_gradient_rect(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
-        game_state.step_timer.u += 1;
+        game_state.mode_step_timer.u += 1;
         dtd_on_tpage(0, 0, 3, 1, 0);
-        if (game_state.step_timer.u >= 0x79U) {
-            main_step_next();
+        if (game_state.mode_step_timer.u >= 0x79U) {
+            mode_step_next();
         }
         break;
     case 8:
-        prim_gradient_rect(game_state.step_timer.u - 0x7C, -0x78, 0x40 - (game_state.step_timer.u * 2), 0xA8, 3, color.word, 0x81);
+        prim_gradient_rect(game_state.mode_step_timer.u - 0x7C, -0x78, 0x40 - (game_state.mode_step_timer.u * 2), 0xA8, 3, color.word, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
-        game_state.step_timer.u += 1;
-        if (game_state.step_timer.u >= 0x21U) {
-            main_step_next();
+        game_state.mode_step_timer.u += 1;
+        if (game_state.mode_step_timer.u >= 0x21U) {
+            mode_step_next();
         }
         break;
     case 9:
         D_8015EC38 = 0x40;
-        D_8015EC3C = game_state.step_timer.u - 0x40;
-        game_state.step_timer.u += 1;
-        if (game_state.step_timer.u >= 0x59U) {
-            main_step_next();
+        D_8015EC3C = game_state.mode_step_timer.u - 0x40;
+        game_state.mode_step_timer.u += 1;
+        if (game_state.mode_step_timer.u >= 0x59U) {
+            mode_step_next();
         }
         break;
     case 10:
@@ -350,30 +350,30 @@ void func_80152F30(void) {
         func_8013E7C0(0x38, 0xFF, 1, 0);
         func_8013E97C(0x3B, 0, 0);
         func_8013E7C0(0x3B, 0, 1, 1);
-        main_step_next();
+        mode_step_next();
         break;
     case 11:
         if (D_8015EE48 == 0) {
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 12:
         func_8013E97C(0x1E, 0, 0);
         func_8013E7C0(0x1E, 0, 5, 1);
-        main_step_next();
+        mode_step_next();
         break;
     case 13:
         func_801535E4();
         break;
     case 14:
         D_8015EDF0 = 0x10001000;
-        main_stage_next();
+        mode_stage_next();
         break;
     }
-    if (*(u8 *)&game_state.step >= 9) {
+    if (*(u8 *)&game_state.mode_step >= 9) {
         func_8015785C();
     }
-    if ((*(u8 *)&game_state.step >= 5) && (*(u8 *)&game_state.step < 8)) {
+    if ((*(u8 *)&game_state.mode_step >= 5) && (*(u8 *)&game_state.mode_step < 8)) {
         func_8013F15C(0x505, 0x6E, 7);
     }
 }
@@ -381,7 +381,7 @@ void func_80152F30(void) {
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801535E4(void) {
     if (game_state.pad_pressed & PAD_CROSS) {
-        snd_command(0x74);
+        audio_command(0x74);
         if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
             D_8015EE44.unk_08 = D_8015E744 + 1;
         }
@@ -411,7 +411,7 @@ s32 func_801535E4(void) {
     case 5:
         func_8013E7C0(0x1D, 0x18, 1, 1);
         func_8013F220();
-        main_step_next();
+        mode_step_next();
         return;
     }
 }
@@ -425,7 +425,7 @@ s32 func_80153784(void) {
     s32 i;
 
     /* FAKE: x/y and w/h of each RECT share a source line; as1 then stores y, x, h, w as the original does. T-17112 */
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         r0.x = 0x240; r0.y = 0x100;
         r0.w = 0x40; r0.h = 0x28;
@@ -450,7 +450,7 @@ s32 func_80153784(void) {
         D_8015EC3C = 0x80;
         /* FAKE: D_8015ED28 through the D_8015EC38 symbol as in case 1; under its own name uopt moves this store above the D_8015EC38 store. T-17112 */
         (&D_8015EC38)[60] = 0;
-        main_step_next();
+        mode_step_next();
         break;
     case 1:
         /* FAKE: D_8015EC40 and D_8015ED28..D_8015ED38 (+0x08, +0xF0..+0x100) are reached through the D_8015EC38 symbol; the original
@@ -471,7 +471,7 @@ s32 func_80153784(void) {
         D_8015ED2C += 1;
         D_8015EC3C -= 1;
         if (D_8015EC3C == 0) {
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 2:
@@ -479,13 +479,13 @@ s32 func_80153784(void) {
         r2.w = 1; r2.h = 0x28;
         func_8009C93C(&r2, 0x220, 0x100);
         func_8013E7C0(0x1F, 0, 1, 1);
-        main_step_next();
+        mode_step_next();
         break;
     case 3:
         D_8015EC74 = 0;
         /* FAKE: the 48 words from D_8015EC7C through the first symbol, with D_8015EC78 on the loop's line to keep its store behind the loop setup. T-17112 */
         D_8015EC78 = 0; for (i = 0; i < 48; i++) (&D_8015EC7C)[i] = 0;
-        main_stage_next();
+        mode_stage_next();
         break;
     }
 }

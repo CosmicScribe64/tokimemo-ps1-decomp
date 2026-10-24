@@ -2,8 +2,8 @@
 #include "ovl/TACO.h"
 
 s32 func_80138890(void) {
-    game_state.stage_timer += 1;
-    switch (game_state.step) {
+    game_state.mode_stage_timer += 1;
+    switch (game_state.mode_step) {
     case 0:
         func_80138B2C();
         break;
@@ -14,10 +14,10 @@ s32 func_80138890(void) {
         func_80139118();
         break;
     }
-    if (game_state.step < 2) {
+    if (game_state.mode_step < 2) {
         /* u32 view of unk_1100: the compare and the subtraction then share one load, as in the original */
-        if (*(u32 *)&game_state.stage_timer < 0x32U) {
-            return func_8013B460(0x64 - *(u32 *)&game_state.stage_timer);
+        if (*(u32 *)&game_state.mode_stage_timer < 0x32U) {
+            return func_8013B460(0x64 - *(u32 *)&game_state.mode_stage_timer);
         }
         return func_8013B460(0x32);
     }
@@ -101,10 +101,10 @@ s32 arg0;
         arg0 = 0x98967F + *(u8 *)&D_8015EDCC * 0;
         D_8015F490[4] = arg0;
     }
-    snd_command(0x24);
+    audio_command(0x24);
     func_80059048();
     func_80143AF4();
-    main_step_next();
+    mode_step_next();
 }
 
 /* No return value on purpose: implicit-int function (v0 of the last call falls through). T-16564 */
@@ -204,7 +204,7 @@ s32 func_80138D08(void) {
         } else {
             D_8015EDF0 = D_8015F490[4];
             func_80059308();
-            main_step_next();
+            mode_step_next();
         }
     }
 }
@@ -212,8 +212,8 @@ s32 func_80138D08(void) {
 void func_80139118(void) {
     func_800591D8(0);
     if (D_8015EE00 < D_8015EDF0) {
-        main_stage_set(9);
+        mode_stage_set(9);
         return;
     }
-    main_stage_set(5);
+    mode_stage_set(5);
 }

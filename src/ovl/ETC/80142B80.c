@@ -12,7 +12,7 @@ void func_80142B80(void) {
     case 0:
         D_80150148 = 0;
         game_state.screen_brightness = 0x80;
-        snd_command(0xD1);
+        audio_command(0xD1);
         game_state.clear_color_g = 0;
         game_state.clear_color_r = 0;
         D_8015018C = 0;
@@ -24,10 +24,10 @@ void func_80142B80(void) {
         tpage_buf_clear();
         if (game_state.current_girl >= GIRL_YOSHIO) {
             if (game_state.options_dirty != 0) {
-                main_state_set(MODE_TITLE);
+                game_mode_set(MODE_TITLE);
                 return;
             }
-            main_state_set(MODE_ETC_C4);
+            game_mode_set(MODE_ETC_C4);
             return;
         }
         D_8015014C = 0;
@@ -143,7 +143,7 @@ void func_80142B80(void) {
         }
         break;
     case 21:
-        main_step_next();
+        mode_step_next();
         break;
     default:
         if (cd_read_sync_status() & 1) {

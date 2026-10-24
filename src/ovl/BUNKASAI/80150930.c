@@ -14,7 +14,7 @@ void func_80150930(void) {
     FnTbl165 tbl;
 
     tbl = D_80160810;
-    idx = game_state.stage;
+    idx = game_state.mode_stage;
     tbl.f[idx]();
 }
 
@@ -37,40 +37,40 @@ void func_801509A4(void) {
     D_80122EBC = temp_v1;
     switch (temp_v1) {
     case 0:
-        main_stage_set(0xF);
+        mode_stage_set(0xF);
         return;
     case 1:
-        main_stage_set(0x1C);
+        mode_stage_set(0x1C);
         return;
     case 2:
-        main_stage_set(0x2E);
+        mode_stage_set(0x2E);
         return;
     case 3:
-        main_stage_set(0x41);
+        mode_stage_set(0x41);
         return;
     case 4:
-        main_stage_set(0x55);
+        mode_stage_set(0x55);
         return;
     case 5:
-        main_stage_set(0x61);
+        mode_stage_set(0x61);
         return;
     case 6:
-        main_stage_set(0x6D);
+        mode_stage_set(0x6D);
         return;
     case 7:
-        main_stage_set(0x79);
+        mode_stage_set(0x79);
         return;
     case 8:
-        main_stage_set(0x85);
+        mode_stage_set(0x85);
         return;
     case 9:
-        main_stage_set(0x91);
+        mode_stage_set(0x91);
         return;
     case 10:
-        main_stage_set(0x9A);
+        mode_stage_set(0x9A);
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
@@ -83,11 +83,11 @@ void func_80150B7C(void) {
      * game_state directly; the split is what gives the hoisted constant 1 the register $v0 (all-game: 50 rows). */
     GameState *game = &game_state;
 
-    temp_v1 = game_state.step;
+    temp_v1 = game_state.mode_step;
     switch (temp_v1) {
     case 0:
-        dialogue_group = ((((u16) game_state.player_flags.h >> 0xC) * 3) + game_state.year) - 0x4D;
-        main_step_next();
+        talk_group = ((((u16) game_state.player_flags.h >> 0xC) * 3) + game_state.year) - 0x4D;
+        mode_step_next();
         return;
     case 1:
         normal_date_speak();
@@ -99,88 +99,88 @@ void func_80150B7C(void) {
         switch (temp_t2) {
         case 0:
             if (((u8) game->girls[0].flags.h[1] >> 4) == 0) {
-                main_stage_set(1);
+                mode_stage_set(1);
                 return;
             }
             if ((((u8) game->girls[1].flags.b[2] >> 4) == 0) && (game->girls[1].flags.f.met == 1)) {
-                main_stage_set(0x2A);
+                mode_stage_set(0x2A);
                 return;
             }
-            main_stage_set(0xE);
+            mode_stage_set(0xE);
             return;
         case 1:
             if (((u8) game->girls[0].flags.h[1] >> 4) == 1) {
-                main_stage_set(1);
+                mode_stage_set(1);
                 return;
             }
             if ((((u8) game->girls[1].flags.b[2] >> 4) == 1) && (game->girls[1].flags.f.met == 1)) {
-                main_stage_set(0x2A);
+                mode_stage_set(0x2A);
                 return;
             }
-            main_stage_set(0xE);
+            mode_stage_set(0xE);
             return;
         case 2:
             if (((u8) game->girls[0].flags.h[1] >> 4) == 2) {
-                main_stage_set(1);
+                mode_stage_set(1);
                 return;
             }
             if ((((u8) game->girls[2].flags.b[2] >> 4) == 2) && (game->girls[2].flags.f.met == 1)) {
-                main_stage_set(0x3B);
+                mode_stage_set(0x3B);
                 return;
             }
-            main_stage_set(0xE);
+            mode_stage_set(0xE);
             return;
         case 3:
             if (((u8) game->girls[0].flags.h[1] >> 4) == 3) {
-                main_stage_set(1);
+                mode_stage_set(1);
                 return;
             }
             if ((((u8) game->girls[2].flags.b[2] >> 4) == 3) && (game->girls[2].flags.f.met == 1)) {
-                main_stage_set(0x3B);
+                mode_stage_set(0x3B);
                 return;
             }
-            main_stage_set(0xE);
+            mode_stage_set(0xE);
             return;
         case 4:
             if (((u8) game->girls[0].flags.h[1] >> 4) == 4) {
-                main_stage_set(1);
+                mode_stage_set(1);
                 return;
             }
             if ((((u8) game->girls[3].flags.b[2] >> 4) == 4) && (game->girls[3].flags.f.met == 1)) {
-                main_stage_set(0x50);
+                mode_stage_set(0x50);
                 return;
             }
-            main_stage_set(0xE);
+            mode_stage_set(0xE);
             return;
         case 5:
             if (((u8) game->girls[0].flags.h[1] >> 4) == 5) {
-                main_stage_set(1);
+                mode_stage_set(1);
                 return;
             }
             if ((((u8) game->girls[3].flags.b[2] >> 4) == 5) && (game->girls[3].flags.f.met == 1)) {
-                main_stage_set(0x50);
+                mode_stage_set(0x50);
                 return;
             }
-            main_stage_set(0xE);
+            mode_stage_set(0xE);
             return;
         default:
-            game_reset_to_title();
+            game_mode_reset_to_title();
             return;
         }
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
 
 void func_80150F20(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         actor_clear_range(0);
         cursor_show(0);
         func_80041168(0xFF);
-        main_step_next();
+        mode_step_next();
         return;
     case 1:
         func_80059E00();
@@ -190,16 +190,16 @@ void func_80150F20(void) {
         return;
     case 3:
         func_8004ADE4();
-        main_step_next();
+        mode_step_next();
         return;
     case 4:
         cd_read_sectors(0x95U, 0x801A0000, 0x9B94);
-        main_step_next();
+        mode_step_next();
         return;
     case 5:
         if (cd_read_sync_status() & 1) {
             func_80068938(game_state.year, game_state.month, 0);
-            main_step_next();
+            mode_step_next();
             return;
         }
         return;
@@ -207,20 +207,20 @@ void func_80150F20(void) {
         cursor_actor_init(0);
         cursor_show(0);
         D_800B5BC8 = 0xFE;
-        main_stage_set((s32) (*(u8 *)&D_80122EB0));
-        main_step_set((s32) (*(u8 *)&D_80122EB4));
+        mode_stage_set((s32) (*(u8 *)&D_80122EB0));
+        mode_step_set((s32) (*(u8 *)&D_80122EB4));
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
 
 void func_80151064(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         cd_read_sectors(1U, 0x801E8000, 0x4B7F);
-        main_step_next();
+        mode_step_next();
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -229,14 +229,14 @@ void func_80151064(void) {
             k_disp_start(1);
             func_801323DC();
             game_state.current_girl = GIRL_YUKO;
-            dialogue_names_set(8U);
-            strcpy(name_buf_girl_short, "　");
-            dialogue_group = 0;
-            dialogue_line = 0;
-            dialogue_text_table = (s32) D_801604F0;
-            dialogue_command_table = (s32) D_801604F4;
-            dialogue_voice_table = (s32) D_801604F8;
-            main_step_next();
+            talk_names_set(8U);
+            strcpy(name_code_girl_short, "　");
+            talk_group = 0;
+            talk_line = 0;
+            talk_text_table = (s32) D_801604F0;
+            talk_command_table = (s32) D_801604F4;
+            talk_voice_table = (s32) D_801604F8;
+            mode_step_next();
         }
         break;
     case 2:
@@ -250,11 +250,11 @@ void func_80151064(void) {
             actor_clear_range(0);
             cursor_show(0);
             set_dec_bri(0);
-            main_state_set(MODE_TT_GAME);
+            game_mode_set(MODE_TT_GAME);
         }
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }

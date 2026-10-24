@@ -1,6 +1,6 @@
 #define MAIN_API_OVERRIDE_cd_audio_command /* K&R u8 arg0 narrows the command byte on entry (T-24123). */
 #define MAIN_API_OVERRIDE_func_800AD950 /* implicit int declaration (VSync returns int): a void prototype gives the
-                                          * cd_cmd_pump wait-loop counter $v0 instead of $v1 (T-25123) */
+                                          * cd_command_pump wait-loop counter $v0 instead of $v1 (T-25123) */
 #include "common.h"
 #include "game.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
@@ -42,7 +42,7 @@ s32 func_80045288(void) {
     return 0;
 }
 
-void cd_cmd_reset(void) {
+void cd_command_reset(void) {
     D_80125128 = 0;
     D_80125129 = 0;
     cd_read_status = 2;
@@ -54,7 +54,7 @@ void cd_cmd_reset(void) {
     D_800B3D6C = 0;
 }
 
-s32 cd_cmd_push(arg0, arg1, arg2)
+s32 cd_command_push(arg0, arg1, arg2)
 u8 arg0;
 s32 arg1;
 s32 arg2;
@@ -66,13 +66,13 @@ s32 arg2;
     if (((D_80125129 + 1) % 0x30U) == (D_80125128 % 0x30U)) {
         return -1;
     }
-    cd_cmd_ring[D_80125129].cmd = arg0;
-    cd_cmd_ring[D_80125129].arg = arg1;
-    cd_cmd_ring[D_80125129].data[15] = 0;
+    cd_command_ring[D_80125129].cmd = arg0;
+    cd_command_ring[D_80125129].arg = arg1;
+    cd_command_ring[D_80125129].data[15] = 0;
     if (src == 1) {
-        cd_cmd_ring[D_80125129].data[15] = 0xFF;
+        cd_command_ring[D_80125129].data[15] = 0xFF;
     } else if (src != 0) {
-        memcpy(cd_cmd_ring[D_80125129].data, src, 0x10);
+        memcpy(cd_command_ring[D_80125129].data, src, 0x10);
     }
     /* FAKE: `D = D + 1` rather than `D++`, which gives another register order. T-11330 */
     D_80125129 = D_80125129 + 1;
@@ -92,43 +92,43 @@ u8 *arg2;
     arg1 = ((u32) arg1 >= 0x4AB51U) ? 0x4AB50 : arg1;
     switch (arg0) {
     case 0:
-        cd_cmd_push(0, 0, 0);
+        cd_command_push(0, 0, 0);
         break;
     case 9:
-        cd_cmd_push(9, 0, 0);
+        cd_command_push(9, 0, 0);
         break;
     case 6:
         D_800B3D6C = arg1;
-        cd_cmd_push(6, arg1, (s32) arg2);
+        cd_command_push(6, arg1, (s32) arg2);
         break;
     case 14:
-        cd_cmd_push(0xE, 0, (s32) arg2);
+        cd_command_push(0xE, 0, (s32) arg2);
         break;
     case 13:
         if (arg1 == 0) {
-            cd_cmd_push(0xD, 0, (s32) arg2);
+            cd_command_push(0xD, 0, (s32) arg2);
         } else {
-            cd_cmd_push(0xD, 0, (s32) arg2);
-            cd_cmd_push(2, arg1, 0);
-            cd_cmd_push(0x1B, arg1, 0);
+            cd_command_push(0xD, 0, (s32) arg2);
+            cd_command_push(2, arg1, 0);
+            cd_command_push(0x1B, arg1, 0);
             D_800B3D6C = arg1;
         }
         break;
     case 2:
-        cd_cmd_push(2, arg1, 0);
+        cd_command_push(2, arg1, 0);
         break;
     case 21:
-        cd_cmd_push(2, arg1, 0);
-        cd_cmd_push(0x15, arg1, 0);
+        cd_command_push(2, arg1, 0);
+        cd_command_push(0x15, arg1, 0);
         break;
     case 10:
-        cd_cmd_push(0xA, arg1, 0);
+        cd_command_push(0xA, arg1, 0);
         break;
     case 3:
         buf[0x10] = 5;
-        cd_cmd_push(0xE, 0, (s32) &buf[0x10]);
-        cd_cmd_push(2, arg1, 0);
-        cd_cmd_push(3, 0, 0);
+        cd_command_push(0xE, 0, (s32) &buf[0x10]);
+        cd_command_push(2, arg1, 0);
+        cd_command_push(3, 0, 0);
         break;
     case 27:
         break;
@@ -148,7 +148,7 @@ extern u16 D_800B3D64;
 extern u32 *D_801255BC;
 void func_80046478(void);
 
-void cd_cmd_pump(void) {
+void cd_command_pump(void) {
     s32 i; /* home 0x4C unused: the loop test is strength-reduced (see the FAKE at the loop) */
     u32 sp48;
     s32 sp44;
@@ -160,7 +160,7 @@ void cd_cmd_pump(void) {
     if (((CdRingState *)&D_80125128)->tail != ((CdRingState *)&D_80125128)->head) {
         func_800463E8();
         if (((CdRingState *)&D_80125128)->phase == -1) {
-            switch (cd_cmd_ring[((CdRingState *)&D_80125128)->head].cmd) {
+            switch (cd_command_ring[((CdRingState *)&D_80125128)->head].cmd) {
             case 0:
                 if (func_80087954(1, &sp30) != 0) {
                     D_801255B4 = 0;
@@ -182,7 +182,7 @@ void cd_cmd_pump(void) {
                 if (func_80087954(1, &sp30) != 0) {
                     ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    if (func_800879D0(0xD, cd_cmd_ring[((CdRingState *)&D_80125128)->head].data, &D_801255D0) == 1) {
+                    if (func_800879D0(0xD, cd_command_ring[((CdRingState *)&D_80125128)->head].data, &D_801255D0) == 1) {
                         ((CdRingState *)&D_80125128)->phase = -1;
                         ((CdRingState *)&D_80125128)->head += 1;
                     }
@@ -201,7 +201,7 @@ void cd_cmd_pump(void) {
                 if (func_80087954(1, &sp30) != 0) {
                     ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    if (func_800879D0(0xE, cd_cmd_ring[((CdRingState *)&D_80125128)->head].data, &D_801255D0) == 1) {
+                    if (func_800879D0(0xE, cd_command_ring[((CdRingState *)&D_80125128)->head].data, &D_801255D0) == 1) {
                         ((CdRingState *)&D_80125128)->phase = -1;
                         ((CdRingState *)&D_80125128)->head += 1;
                     }
@@ -211,7 +211,7 @@ void cd_cmd_pump(void) {
                 if (func_80087954(1, &sp30) != 0) {
                     ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    func_80087EE8(cd_cmd_ring[((CdRingState *)&D_80125128)->head].arg, sp38);
+                    func_80087EE8(cd_command_ring[((CdRingState *)&D_80125128)->head].arg, sp38);
                     if (func_800879D0(2, sp38, &D_801255D0) == 1) {
                         ((CdRingState *)&D_80125128)->phase = -1;
                         ((CdRingState *)&D_80125128)->head += 1;
@@ -222,7 +222,7 @@ void cd_cmd_pump(void) {
                 if (func_80087954(1, &sp30) != 0) {
                     ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    func_80087EE8(cd_cmd_ring[((CdRingState *)&D_80125128)->head].arg, sp38);
+                    func_80087EE8(cd_command_ring[((CdRingState *)&D_80125128)->head].arg, sp38);
                     if (func_80087B1C(0x15, sp38) == 1) {
                         ((CdRingState *)&D_80125128)->phase = 1;
                     }
@@ -235,7 +235,7 @@ void cd_cmd_pump(void) {
                     func_800879A8(0);
                     func_80087E08(0);
                     func_80088070();
-                    func_80087EE8(cd_cmd_ring[((CdRingState *)&D_80125128)->head].arg, sp38);
+                    func_80087EE8(cd_command_ring[((CdRingState *)&D_80125128)->head].arg, sp38);
                     if (func_80087C64(2, sp38, 0) == 0) {
                         do {
 
@@ -265,9 +265,9 @@ void cd_cmd_pump(void) {
                 if (func_80087954(1, &sp30) != 0) {
                     ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    sp44 = (*(u32 *)cd_cmd_ring[((CdRingState *)&D_80125128)->head].data & 0xFFFFFF) + 0x80000000;
-                    sp48 = *(u32 *)cd_cmd_ring[((CdRingState *)&D_80125128)->head].data >> 24;
-                    D_801255BC = (u32 *)((*(u32 *)cd_cmd_ring[((CdRingState *)&D_80125128)->head].data & 0xFFFFFF) + (sp48 << 11) + 0x7FFFFFFC);
+                    sp44 = (*(u32 *)cd_command_ring[((CdRingState *)&D_80125128)->head].data & 0xFFFFFF) + 0x80000000;
+                    sp48 = *(u32 *)cd_command_ring[((CdRingState *)&D_80125128)->head].data >> 24;
+                    D_801255BC = (u32 *)((*(u32 *)cd_command_ring[((CdRingState *)&D_80125128)->head].data & 0xFFFFFF) + (sp48 << 11) + 0x7FFFFFFC);
                     func_800879A8(0);
                     func_80087E08(0);
                     D_801255B8 = 0x84;
@@ -276,7 +276,7 @@ void cd_cmd_pump(void) {
 
                         } while (func_80087C64(0xE, &D_801255B8, 0) == 0);
                     }
-                    func_80087EE8(cd_cmd_ring[((CdRingState *)&D_80125128)->head].arg, sp38);
+                    func_80087EE8(cd_command_ring[((CdRingState *)&D_80125128)->head].arg, sp38);
                     if (func_80087C64(2, sp38, 0) == 0) {
                         do {
 
@@ -293,7 +293,7 @@ void cd_cmd_pump(void) {
                 break;
             }
         } else if (((CdRingState *)&D_80125128)->phase == 1) {
-            switch (cd_cmd_ring[((CdRingState *)&D_80125128)->head].cmd) {
+            switch (cd_command_ring[((CdRingState *)&D_80125128)->head].cmd) {
             case 0:
                 if ((func_80087954(1, D_801255D0.bytes) != 0) && (func_800879D0(1, 0, &D_801255D0) == 1) && !(D_801255D0.bytes[0] & 0x40)) {
                     D_801255B4 = 2;
@@ -376,7 +376,7 @@ void cd_cmd_pump(void) {
                     if (D_801255D0.bytes[0] & 0x20) {
                         ((CdRingState *)&D_80125128)->status = 0;
                         ((CdRingState *)&D_80125128)->phase = -1;
-                        if (cd_cmd_ring[((CdRingState *)&D_80125128)->head].data[15] != 0xFF) {
+                        if (cd_command_ring[((CdRingState *)&D_80125128)->head].data[15] != 0xFF) {
                             D_801255B4 = 4;
                         }
                         ((CdRingState *)&D_80125128)->head += 1;
@@ -406,7 +406,7 @@ void cd_cmd_pump(void) {
 }
 
 u8 func_80046094(void) {
-    return cd_cmd_ring[(D_80125128 + 0x2FU) % 0x30U].cmd;
+    return cd_command_ring[(D_80125128 + 0x2FU) % 0x30U].cmd;
 }
 
 /* Return the CD read status byte (bit 0 = read finished) */
@@ -490,7 +490,7 @@ void cd_read_sectors_nowait(u8 arg0, s32 arg1, s32 arg2) {
      * the real type of this buffer is unknown. T-0016 */
     u8 buf[0x20];
 
-    snd_command(6);
+    audio_command(6);
     func_800462BC(arg0, arg1, (s32 *)buf);
     cd_audio_command(6, arg2, buf);
     D_800B3D60 = 0;
@@ -502,7 +502,7 @@ void cd_read_sectors(u8 arg0, s32 arg1, s32 arg2) {
      * the real type of this buffer is unknown. T-0016 */
     u8 buf[0x20];
 
-    snd_command(6);
+    audio_command(6);
     func_800462BC(arg0, arg1, (s32 *)buf);
     cd_audio_command(6, arg2, buf);
     D_800B3D60 = 1;

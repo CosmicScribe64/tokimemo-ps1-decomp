@@ -167,11 +167,11 @@ void func_80133438(void) {
 }
 
 void func_80133494(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
-        snd_command(0xBF);
+        audio_command(0xBF);
         actor_clear_range(0);
-        main_step_next();
+        mode_step_next();
         break;
     case 1:
         func_80059E00();
@@ -187,33 +187,33 @@ void func_80133494(void) {
         text_marker_hide();
         hizuke_init();
         message_window_init();
-        dialogue_names_set(0U);
+        talk_names_set(0U);
         text_system_reset();
         k_reset(0);
         message_window_set_title((s32) "　");
         message_window_title_show(0);
         game_state.screen_brightness = 0x80;
         Default_Disp();
-        main_step_next();
+        mode_step_next();
         break;
     case 4:
         cd_read_sectors(0x95U, 0x801A0000, 0x9B94);
         Default_Disp();
-        main_step_next();
+        mode_step_next();
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
             func_80068938(game_state.year, game_state.month, 0);
-            main_step_next();
+            mode_step_next();
         }
         Default_Disp();
         break;
     case 6:
         Default_Disp();
-        main_stage_next();
+        mode_stage_next();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     func_8006764C(0);
@@ -223,58 +223,58 @@ void func_80133494(void) {
 }
 
 void func_80133644(void) {
-    bustup_wink_update();
-    switch (game_state.step) {
+    portrait_wink_update();
+    switch (game_state.mode_step) {
     case 0:
         switch (game_state.input_device) {
         case INPUT_MOUSE:
         case INPUT_NONE:
-            main_step_next();
+            mode_step_next();
             break;
         case INPUT_PAD:
-            main_stage_next();
+            mode_stage_next();
             break;
         }
         break;
     case 1:
-        bustup_read_step(0x541D);
+        portrait_read_step(0x541D);
         break;
     case 2:
         game_state.current_girl = GIRL_SHIORI;
         addr_init_bustup();
-        bustup_show_checked();
-        bustup_layout_set(1U);
+        portrait_show_checked();
+        portrait_layout_set(1U);
         break;
     case 3:
         normal_date_girl_in();
         break;
     case 4:
-        dialogue_names_set(0U);
+        talk_names_set(0U);
         func_80132B90();
-        dialogue_group = 3;
-        dialogue_line = 0;
-        dialogue_text_table = D_80148F00;
-        dialogue_command_table = D_80148F04;
-        dialogue_voice_table = D_80148F08;
+        talk_group = 3;
+        talk_line = 0;
+        talk_text_table = D_80148F00;
+        talk_command_table = D_80148F04;
+        talk_voice_table = D_80148F08;
         if (game_state.input_device == INPUT_NONE) {
-            main_step_set(6);
+            mode_step_set(6);
         } else {
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 5:
         normal_date_speak();
         break;
     case 6:
-        dialogue_group = 4;
-        main_step_next();
+        talk_group = 4;
+        mode_step_next();
         break;
     case 7:
         normal_date_speak();
         break;
     case 8:
         if (game_state.input_device == INPUT_PAD) {
-            main_step_next();
+            mode_step_next();
         }
         break;
     case 9:
@@ -282,12 +282,12 @@ void func_80133644(void) {
         break;
     case 10:
         if (game_state.pad_pressed != 0) {
-            dialogue_clear();
-            main_stage_next();
+            talk_clear();
+            mode_stage_next();
         }
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     Default_Disp();
@@ -312,7 +312,7 @@ u8 arg1;
     }
     column = arg1;
     cd_audio_request_set(a.unk_00[arg0][column], b.unk_00[arg0][column], index);
-    snd_command(0x300);
+    audio_command(0x300);
 }
 
 void func_80133928(s32 arg0) {

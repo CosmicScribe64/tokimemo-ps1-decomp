@@ -1,10 +1,10 @@
 // HYPOTHESES, not facts: names of main-exe symbols (every yaml loads this file) that claim a game meaning the code does not prove
 // (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
-icon_bar_update = 0x80065B0C; // type:func
-screen_frame_draw = 0x80066C08; // type:func
-mascot_update = 0x80067870; // type:func
-light_effect_draw = 0x8006B900; // type:func
+hud_icon_bar_update = 0x80065B0C; // type:func
+hud_screen_frame_draw = 0x80066C08; // type:func
+hud_mascot_update = 0x80067870; // type:func
+sprite_light_effect_draw = 0x8006B900; // type:func
 text_marker_set = 0x8006C848; // type:func
 girl_flag4_may_clear = 0x80071280; // type:func
-bustup_quad_offsets = 0x80085CD4; // type:func
-mascot_choice = 0x800B5C08;
+portrait_quad_offsets = 0x80085CD4; // type:func
+hud_mascot_choice = 0x800B5C08;

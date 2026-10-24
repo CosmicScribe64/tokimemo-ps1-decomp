@@ -48,40 +48,40 @@ void func_80145D14(void) {
     FnTbl15 tbl;
 
     tbl = D_8015CF3C;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if ((D_80122D44 & 1) && (dec_bg_brightness == 0x80)) {
-        light_effect_draw();
+        sprite_light_effect_draw();
     }
 }
 
 void func_80145DB8(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
     func_80145AA0();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80145DF0(void) {
     u8 x;
 
-    game_state.daily_event_bits |= 8;
+    game_state.day_event_done_bits |= 8;
     x = get_g_zyotai_s(game_state.current_girl);
     if ((x & 0x7F) >= 2U) {
-        main_step_set(9);
+        mode_step_set(9);
         return;
     }
-    game_state.daily_event_bits |= 4;
+    game_state.day_event_done_bits |= 4;
     event_log_add(0xD, D_80122D08);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80145E74(void) {
     D_8015CF34 = 1;
     D_8015CF38 = 0;
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     func_80145AA0();
     func_80145EC4();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80145EC4(void) {
@@ -147,10 +147,10 @@ void func_80145EC4(void) {
 }
 
 void func_80146134(void) {
-    dialogue_tables = &D_8015CF34;
+    talk_tables = &D_8015CF34;
     D_800CA138 = &D_8015CF38;
     D_800CA13C = D_8015CF1C;
     D_800CA140 = D_8015CF20;
     D_800CA144 = D_8015CF24;
-    dialogue_run(D_80122CDC, 1, 0);
+    talk_run(D_80122CDC, 1, 0);
 }

@@ -9,7 +9,7 @@ void func_80135720(void) {
 }
 
 s32 func_80135744(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0:
         func_8013587C();
         break;
@@ -66,7 +66,7 @@ s32 func_8013587C(void) {
     case 2:
         func_800536AC(0x2C0, 0, 0x140, 0xF0);
         func_80135944();
-        main_step_next();
+        mode_step_next();
         break;
     }
 }
@@ -83,7 +83,7 @@ void func_80135944(void) {
 }
 
 void func_80135994(void) {
-    main_stage_set(2);
+    mode_stage_set(2);
 }
 
 void func_801359B4(void) {
@@ -374,13 +374,13 @@ void func_80136988(void) {
         case 4:
             if (game_state.pad_pressed & PAD_CIRCLE) {
                 func_801335A0(0, 0x502);
-                main_step_next();
+                mode_step_next();
             }
             break;
         }
     }
     if (game_state.pad_pressed & 0x840) {
         func_801335A0(0, 0x502);
-        main_step_next();
+        mode_step_next();
     }
 }

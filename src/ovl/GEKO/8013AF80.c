@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_dialogue_work /* matched as u32 (main_api.h: s32), switch selector in $v1 (T-6010) */
+#define MAIN_API_OVERRIDE_talk_work /* matched as u32 (main_api.h: s32), switch selector in $v1 (T-6010) */
 #include "common.h"
 #include "ovl/GEKO.h"
 
-extern u32 dialogue_work;
+extern u32 talk_work;
 
 typedef struct {
     void (*f[41])();
@@ -24,7 +24,7 @@ void func_8013AF80(void) {
 }
 
 void func_8013B030(void) {
-    switch (dialogue_work) {
+    switch (talk_work) {
     case 1:
         func_8013B094();
         return;
@@ -32,25 +32,25 @@ void func_8013B030(void) {
         func_8013B0D0();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         return;
     }
 }
 
 void func_8013B094(void) {
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         func_8013B10C();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 void func_8013B0D0(void) {
-    if (game_state.stage == 0) {
+    if (game_state.mode_stage == 0) {
         func_8013B2C8();
         return;
     }
-    game_reset_to_title();
+    game_mode_reset_to_title();
 }
 
 s32 func_8013B10C(void) {
@@ -59,7 +59,7 @@ s32 func_8013B10C(void) {
     GekoFnTbl42 tbl;
 
     tbl = D_80146630;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0) {
         /* FAKE: Actor view on the first two stores keeps as1 from hoisting the unk_03C load above sb D_80120723. T-24095 */
@@ -96,7 +96,7 @@ s32 func_8013B10C(void) {
 void func_8013B290(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x80FF);
     func_8013AF80();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013B2C8(void) {
@@ -104,7 +104,7 @@ void func_8013B2C8(void) {
     FnTbl41 tbl;
 
     tbl = D_801466D8;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
@@ -112,10 +112,10 @@ void func_8013B350(void) {
     D_80122CE0 = 6;
     actor_clear_range(0);
     cursor_show(0);
-    game_state.saved_mode = game_state.mode;
-    game_state.saved_stage = game_state.stage;
-    game_state.saved_step = game_state.step + 1;
-    main_state_set(MODE_RPG_BATTLE);
+    game_state.saved_game_mode = game_state.game_mode;
+    game_state.saved_mode_stage = game_state.mode_stage;
+    game_state.saved_mode_step = game_state.mode_step + 1;
+    game_mode_set(MODE_RPG_BATTLE);
 }
 
 void func_8013B3C0(void) {
@@ -123,14 +123,14 @@ void func_8013B3C0(void) {
     RECT r;
 
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     cursor_show(0);
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    dialogue_clear();
+    talk_clear();
     k_reset(1);
     r.x = 0x140;
     r.y = 0x100;
@@ -144,7 +144,7 @@ void func_8013B3C0(void) {
     game_state.quads_enabled = 1;
     /* FAKE: scalar byte store then member read preserves argument scheduling; sibling func_8013CC20 uses the same idiom. T-9770 */
     *(u8 *)&game_state.current_girl = 2;
-    dialogue_names_set(game_state.current_girl);
+    talk_names_set(game_state.current_girl);
     addr_init_bustup();
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
@@ -155,13 +155,13 @@ void func_8013B3C0(void) {
     D_80146274 = D_80145F10;
     D_80146278 = D_8014604C;
     D_8014627C = D_80146188;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013B510(void) {
     game_state.current_girl = GIRL_YUINA;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -176,8 +176,8 @@ void func_8013B510(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dialogue_names_set(game_state.current_girl);
-    dialogue_clear();
+    talk_names_set(game_state.current_girl);
+    talk_clear();
     func_80137990();
     D_80146274 = D_80145EF8;
     D_80146278 = D_80146034;
@@ -188,14 +188,14 @@ void func_8013B510(void) {
     game_state.girls[2].affection += 2;
     check_para_limit();
     D_800CA368 = 0xE;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013B65C(void) {
     func_8013AF80();
     load_palette(D_80146610, 0x11, 1, 2, 0);
-    event_still_show(D_80146614, D_80146618, D_8014661C, D_80146620, D_80146624, D_80146628);
-    event_anim_show(0, 0, 0, 0);
+    scene_still_show(D_80146614, D_80146618, D_8014661C, D_80146620, D_80146624, D_80146628);
+    scene_anim_show(0, 0, 0, 0);
     actor_clear(0x63);
     D_8012071D = 0xA;
     D_8012071E = 0;
@@ -216,7 +216,7 @@ void func_8013B65C(void) {
     D_80120721 = 0;
     D_80120720 = 0;
     game_state.tpage_buf[26] = -1;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013B7D0(void) {
@@ -226,7 +226,7 @@ void func_8013B7D0(void) {
     game_state.weekday = WEEKDAY_SATURDAY;
     game_state.current_girl = GIRL_YUINA;
     draw2d3d(1, 0);
-    actors_draw_enable(1);
+    actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
@@ -239,18 +239,18 @@ void func_8013B7D0(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dialogue_names_set(game_state.current_girl);
-    dialogue_clear();
+    talk_names_set(game_state.current_girl);
+    talk_clear();
     func_80137990();
     D_80146274 = D_80145F10;
     D_80146278 = D_8014604C;
     D_8014627C = D_80146188;
     strcpy(D_800CA19C, "近所の公園");
     D_800CA368 = 0x14;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_8013B908(void) {
     bg_read_sub2(0x412C);
-    main_step_next();
+    mode_step_next();
 }

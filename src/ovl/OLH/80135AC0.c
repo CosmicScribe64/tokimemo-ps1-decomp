@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80135AC0(void) {
-    switch (game_state.step) {
+    switch (game_state.mode_step) {
     case 0x0:
         func_80135B8C();
         break;
@@ -53,7 +53,7 @@ void func_80135B8C(void) {
     }
     menu_set(0, 7, a, b, c, d);
     k_disp_start(r);
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80135CB4(void) {
@@ -62,34 +62,34 @@ void func_80135CB4(void) {
     menu_cursor_update(0);
     if (game_state.pad_pressed & PAD_CIRCLE) {
         if (game_state.menu_cursor_0 != -1) {
-            snd_command(0x501);
+            audio_command(0x501);
             /* FAKE: lbu view of the s8 field (the compare above is lb); original declaration unknown. T-9180 */
             switch (*(u8 *)&game_state.menu_cursor_0) {
             case 0:
-                main_step_set(0x10);
+                mode_step_set(0x10);
                 break;
             case 1:
-                main_step_set(0x20);
+                mode_step_set(0x20);
                 break;
             case 2:
-                main_step_set(0x30);
+                mode_step_set(0x30);
                 break;
             case 3:
-                main_step_set(0x40);
+                mode_step_set(0x40);
                 break;
             case 4:
-                main_step_set(0x60);
+                mode_step_set(0x60);
                 break;
             case 5:
-                main_step_set(0x70);
+                mode_step_set(0x70);
                 break;
             case 6:
-                main_stage_set(0);
+                mode_stage_set(0);
                 break;
             }
         }
     } else if (game_state.pad_pressed & PAD_CROSS) {
-        main_stage_set(0);
+        mode_stage_set(0);
     }
 }
 
@@ -107,7 +107,7 @@ s32 func_80135DD4(void) {
         text_wait_confirm();
         return;
     case 2:
-        main_step_set(0);
+        mode_step_set(0);
         return;
     }
 }
@@ -129,7 +129,7 @@ s32 func_80135EC0(void) {
         text_wait_confirm();
         return;
     case 2:
-        main_step_set(0);
+        mode_step_set(0);
         return;
     }
 }
@@ -150,7 +150,7 @@ s32 func_80136000(void) {
         text_wait_confirm();
         return;
     case 2:
-        main_step_set(0);
+        mode_step_set(0);
         return;
     }
 }
@@ -169,7 +169,7 @@ s32 func_80136124(void) {
         text_wait_confirm();
         return;
     case 2:
-        main_step_set(0);
+        mode_step_set(0);
         return;
     }
 }
@@ -186,7 +186,7 @@ s32 func_80136210(void) {
         text_wait_confirm();
         return;
     case 2:
-        main_step_set(0);
+        mode_step_set(0);
         return;
     }
 }
@@ -206,7 +206,7 @@ s32 func_801362C4(void) {
         text_wait_confirm();
         return;
     case 2:
-        main_step_set(0);
+        mode_step_set(0);
         return;
     }
 }
@@ -226,7 +226,7 @@ s32 func_801363CC(void) {
         text_wait_confirm();
         return;
     case 2:
-        main_step_set(0);
+        mode_step_set(0);
         return;
     }
 }

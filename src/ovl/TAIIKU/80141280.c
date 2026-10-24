@@ -15,11 +15,11 @@ void func_80141280(void) {
 
     switch (D_80122EC8) {
     case 0:
-        snd_command(0xBF);
-        snd_bank_load_start(1, 0xC5B7, 0xC594, 0xD6B2, 0xD664, 0xD643);
+        audio_command(0xBF);
+        audio_bank_load_start(1, 0xC5B7, 0xC594, 0xD6B2, 0xD664, 0xD643);
         scene_screen_reset(1, 0);
         D_80122ECC = 0;
-        dialogue_clear();
+        talk_clear();
         for (i = 0; i < 6; i++) {
             D_8014A070[i] = tbl[i];
         }
@@ -41,8 +41,8 @@ void func_80141280(void) {
         Default_Disp();
         return;
     case 2:
-        if (snd_bank_load_poll() == 1) {
-            snd_command(0x202);
+        if (audio_bank_load_poll() == 1) {
+            audio_command(0x202);
             dec_bg_cd_read(0x4020, 1);
             D_80122EC8 += 1;
         }
@@ -59,8 +59,8 @@ void func_80141280(void) {
         return;
     case 4:
         normal_date_bg_fadein();
-        if (game_state.step != 0) {
-            game_state.step = 0;
+        if (game_state.mode_step != 0) {
+            game_state.mode_step = 0;
             D_80122EC8 += 1;
         }
         Default_Disp();
@@ -69,42 +69,42 @@ void func_80141280(void) {
         if (cd_read_sync_status() & 1) {
             D_80122EC8 += 1;
             text_marker_hide();
-            dialogue_names_set(0);
+            talk_names_set(0);
             func_80132B90();
             func_80141B70();
-            dialogue_group = 0;
+            talk_group = 0;
             /* FAKE: the (u8) narrowing adds the ugen temporary the original has for this test (T-19032) */
             if ((u8)(game_state.player_flags.b[1] & 2)) {
-                dialogue_group = 6;
+                talk_group = 6;
             }
-            dialogue_line = 0;
-            dialogue_text_table = D_80148F00;
-            dialogue_command_table = D_80148F04;
-            dialogue_voice_table = D_80148F08;
+            talk_line = 0;
+            talk_text_table = D_80148F00;
+            talk_command_table = D_80148F04;
+            talk_voice_table = D_80148F08;
         }
         Default_Disp();
         return;
     case 6:
         normal_date_speak();
-        if (game_state.step != 0) {
-            dialogue_group = 1;
+        if (game_state.mode_step != 0) {
+            talk_group = 1;
             D_80122EC8 += 1;
-            game_state.step = 0;
+            game_state.mode_step = 0;
         }
         Default_Disp();
         return;
     case 7:
         normal_date_speak_012();
-        if (game_state.step != 0) {
+        if (game_state.mode_step != 0) {
             func_80141964();
-            game_state.step = 0;
+            game_state.mode_step = 0;
             D_80122EC8 = 8;
         }
         Default_Disp();
         return;
     case 8:
         func_801419F8();
-        if (game_state.step != 0) {
+        if (game_state.mode_step != 0) {
             /* FAKE: u32 view through the address gives the selector $v1, as in the original (T-19032) */
             switch (*(u32 *)&D_80122CDC) {
             case 0:
@@ -117,24 +117,24 @@ void func_80141280(void) {
                 func_80141AE8();
                 break;
             default:
-                game_reset_to_title();
+                game_mode_reset_to_title();
                 break;
             }
-            game_state.step = 0;
+            game_state.mode_step = 0;
         }
         Default_Disp();
         return;
     case 9:
         normal_date_speak_012();
-        if (game_state.step != 0) {
+        if (game_state.mode_step != 0) {
             D_80122EC8 = 0xA;
-            game_state.step = 0;
+            game_state.mode_step = 0;
         }
         Default_Disp();
         return;
     case 10:
         func_801419F8();
-        if (game_state.step != 0) {
+        if (game_state.mode_step != 0) {
             /* FAKE: u32 view through the address gives the selector $v1, as in the original (T-19032) */
             switch (*(u32 *)&D_80122CDC) {
             case 0:
@@ -147,18 +147,18 @@ void func_80141280(void) {
                 func_80141B28();
                 break;
             default:
-                game_reset_to_title();
+                game_mode_reset_to_title();
                 break;
             }
-            game_state.step = 0;
+            game_state.mode_step = 0;
         }
         Default_Disp();
         return;
     case 11:
         normal_date_speak_012();
-        if (game_state.step != 0) {
+        if (game_state.mode_step != 0) {
             D_80122EC8 = 8;
-            game_state.step = 0;
+            game_state.mode_step = 0;
         }
         Default_Disp();
         return;
@@ -193,13 +193,13 @@ void func_80141280(void) {
         }
         break;
     case 17:
-        snd_command(0xBF);
+        audio_command(0xBF);
         func_800674B0();
         Default_Disp();
         D_80122EC8 += 1;
         break;
     case 18:
-        if (snd_bank_load_poll() == 1) {
+        if (audio_bank_load_poll() == 1) {
             dec_bg_reset();
             set_dec_bri(0);
             /* D_80122DD0 is a u8[0x100] in main_api.h (main bzeroes it); here it is 16 records of 4 words, and
@@ -217,7 +217,7 @@ void func_80141280(void) {
         Default_Disp();
         return;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
@@ -259,21 +259,21 @@ s32 func_801419F8(void) {
             }
             ((Actor *)actor_pool)->draw_flags &= 0xFF7F;
             k_reset(1);
-            main_step_next();
+            mode_step_next();
         }
     }
 }
 
 void func_80141AE8(void) {
     D_80122EC8 = 9;
-    dialogue_group = 2;
-    dialogue_line = 0;
+    talk_group = 2;
+    talk_line = 0;
     k_reset(1);
 }
 
 void func_80141B28(void) {
     D_80122EC8 = 0xB;
-    dialogue_group = 1;
-    dialogue_line = 0;
+    talk_group = 1;
+    talk_line = 0;
     k_reset(1);
 }

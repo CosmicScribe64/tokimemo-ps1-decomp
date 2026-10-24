@@ -126,18 +126,18 @@ void game_state_init(s32 arg0) {
     game_state.screen_center_y[0] = 0x168;
     game_state.screen_center_y[1] = 0x78;
     game_state.frame_count = 0;
-    game_state.mode_timer = 0;
-    game_state.stage_timer = 0;
-    game_state.step_timer.w = 0;
-    game_state.mode = 0x10;
-    game_state.stage = 0;
-    game_state.step = 0;
+    game_state.game_mode_timer = 0;
+    game_state.mode_stage_timer = 0;
+    game_state.mode_step_timer.w = 0;
+    game_state.game_mode = 0x10;
+    game_state.mode_stage = 0;
+    game_state.mode_step = 0;
     game_state.pad_pressed = 0;
     game_state.pad_prev = 0;
     game_state.pad_held = 0;
     game_state.paused = 0;
     game_state.restart_request = 0;
-    game_state.frame_hcount_limit = 0x106;
+    game_state.frame_scanline_limit = 0x106;
     /* Word initialization overlaps the byte selectors read by the menus. */
     *(s32 *)&game_state.menu_hit[3] = 0x9F;
     func_8004902C();
@@ -151,7 +151,7 @@ void game_state_init(s32 arg0) {
     sprite_tables_clear();
     actor_clear_range(0);
     dec_bg_reset();
-    snd_bank_state_reset();
+    audio_bank_state_reset();
     menu_bar_color(0x10, 0, 0, 8);
     func_80041840();
     strncpy(game_state.player_full_name, "ときめき", 0x10);
@@ -168,7 +168,7 @@ void game_state_init(s32 arg0) {
     func_80041878();
     func_80054C4C();
     bzero(D_80122DD0, 0x100);
-    bzero(&dialogue_work, 0x100);
+    bzero(&talk_work, 0x100);
     bzero(&D_801230D0, 0x40);
     func_80042058();
 }
@@ -258,7 +258,7 @@ void func_80041840(void) {
     game_state.input_device = INPUT_PAD;
     game_state.cursor_speed = 3;
     game_state.menu_mode = MENU_MODE_A;
-    overlay_entry = 0x80132000;
+    ovl_entry = 0x80132000;
 }
 
 void func_80041878(void) {
@@ -299,12 +299,12 @@ void func_800418B0(void) {
 }
 
 /* Three flag bits at GameState +0xF6, cleared at init (lbu/andi/sb per bit). */
-typedef struct PlayerFlagsHiBits {
+typedef struct PlayerFlagsUpperBits {
     /* 0x00, bit 0 */ u8 b0 : 1;
     /* 0x00, bit 1 */ u8 b1 : 1;
     /* 0x00, bit 2 */ u8 b2 : 1;
     /* 0x00, bits 3-7 */ u8 unk_03 : 5;
-} PlayerFlagsHiBits; /* size 0x01 */
+} PlayerFlagsUpperBits; /* size 0x01 */
 
 void func_800419FC(void) {
     s32 i;
@@ -313,9 +313,9 @@ void func_800419FC(void) {
     game_state.player_flags.b[0] = 0;
     ((NibbleView *)&game_state.player_flags.b[1])->low = 0;
     ((NibbleView *)&game_state.player_flags.b[1])->high = 0xB;
-    ((PlayerFlagsHiBits *)&game_state.player_flags_hi)->b0 = 0;
-    ((PlayerFlagsHiBits *)&game_state.player_flags_hi)->b1 = 0;
-    ((PlayerFlagsHiBits *)&game_state.player_flags_hi)->b2 = 0;
+    ((PlayerFlagsUpperBits *)&game_state.player_flags_upper)->b0 = 0;
+    ((PlayerFlagsUpperBits *)&game_state.player_flags_upper)->b1 = 0;
+    ((PlayerFlagsUpperBits *)&game_state.player_flags_upper)->b2 = 0;
     ((BirthdayBits *)&game_state.player_birthday)->blood_type = 1;
     ((BirthdayBits *)&game_state.player_birthday)->month = 1;
     ((BirthdayBits *)&game_state.player_birthday)->day = 1;
@@ -418,10 +418,10 @@ void func_80041F48(void) {
         ((WordView *)&game_state.day_events[i])->w = 0;
     }
     for (i = 0; i < 256; i++) {
-        ((GameStateClearBlock *)game_state.event_flags)->bytes[i] = 0;
+        ((GameStateClearBlock *)game_state.scene_flags)->bytes[i] = 0;
     }
     for (i = 0; i < 4; i++) {
-        ((WordView *)&game_state.appt_place_0)->b[i] = 0;
+        ((WordView *)&game_state.appointment_place_0)->b[i] = 0;
     }
     game_state.date_girl = GIRL_SHIORI;
     for (i = 0; i < 4; i++) {

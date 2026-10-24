@@ -52,13 +52,13 @@ void func_80133EE4(void) {
     FnTbl12 tbl;
 
     tbl = D_801346FC;
-    idx = game_state.step;
+    idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
 void func_80133F58(void) {
     if (game_state.current_girl == GIRL_MEGUMI) {
-        main_step_next();
+        mode_step_next();
         return;
     }
     normal_date_girl_in();
@@ -67,7 +67,7 @@ void func_80133F58(void) {
 void func_80133F98(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
     func_80133C70();
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80133FD0(void) {
@@ -76,7 +76,7 @@ void func_80133FD0(void) {
     D_80134494 = D_80134468;
     D_80134498 = 0xC;
     D_8013449C = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 /* T-24211, T-24900: matches with the default arm's three globals declared volatile in VALEN.h
@@ -84,8 +84,8 @@ void func_80133FD0(void) {
 void func_80134030(void) {
     func_80133C70();
     /* two statements: the single expression (x & 0xFFF7) | 4 takes $t6/$t7/$t8 where the original has $v0, $t7, $t9 */
-    game_state.daily_event_bits &= 0xFFF7;
-    game_state.daily_event_bits |= 4;
+    game_state.day_event_done_bits &= 0xFFF7;
+    game_state.day_event_done_bits |= 4;
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         D_8013448C = D_80134664;
@@ -145,10 +145,10 @@ void func_80134030(void) {
     }
     D_80134498 = 1;
     D_8013449C = 0;
-    main_step_next();
+    mode_step_next();
 }
 
 void func_801342E8(void) {
-    main_stage_set(game_state.saved_stage);
-    main_step_set(game_state.saved_step);
+    mode_stage_set(game_state.saved_mode_stage);
+    mode_step_set(game_state.saved_mode_step);
 }

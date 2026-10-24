@@ -1,8 +1,8 @@
 #include "ovl/OMIMAI.h"
 
 void func_80132000(void) {
-    bustup_wink_update();
-    switch (game_state.stage) {
+    portrait_wink_update();
+    switch (game_state.mode_stage) {
     case 0:
         func_801322E4();
         break;
@@ -10,7 +10,7 @@ void func_80132000(void) {
         func_80132D44();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
     check_k_scroll();

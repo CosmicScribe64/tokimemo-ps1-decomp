@@ -440,7 +440,7 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
 }
 
 /* Matching notes (T-25104): sp is the sprite handed to func_80098B80 (GsSortSprite); the u16 priority
- * of its prototype, declared here because frame_render calls it without one, converts pri at each
+ * of its prototype, declared here because draw_frame calls it without one, converts pri at each
  * call. Each tile field is masked and shifted in one statement:
  * the split form (mask, then shift) gives uv and clut more uses, and clut then outranks the x position
  * and col for the saved registers. The y position is written row * w + y with a signed row. */

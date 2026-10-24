@@ -58,7 +58,7 @@ void func_80132000(void) {
 }
 
 void func_80132334(void) {
-    switch (game_state.stage) {
+    switch (game_state.mode_stage) {
     case 0:
         func_80133030();
         return;
@@ -90,7 +90,7 @@ void func_80132334(void) {
 }
 
 void func_80132400(void) {
-    main_state_set(MODE_ETC_C2);
+    game_mode_set(MODE_ETC_C2);
 }
 
 /* The scene dialogue entry: shows message text (kind 0 and 6: a title in brackets, 1 and 0xC: a spoken line
@@ -124,7 +124,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         k_speed_set(0x10);
         x[1] = -0x66;
         set_kanji_string(x[1], 0x48, 0, "『 ", 0);
-        dialogue_render(x[1] + 0xE, 0x48, 0, buf, 0, "", "", 0);
+        talk_render(x[1] + 0xE, 0x48, 0, buf, 0, "", "", 0);
         D_80122D00 = 1;
         break;
     case 0x6:
@@ -132,7 +132,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         k_speed_set(0x10);
         x[1] = -0x66;
         set_kanji_string(x[1], 0x48, 0, "（ ", 0);
-        dialogue_render(x[1] + 0xE, 0x48, 0, buf, 0, "）", "", 0);
+        talk_render(x[1] + 0xE, 0x48, 0, buf, 0, "）", "", 0);
         D_80122D00 = 1;
         break;
     case 0x1:
@@ -141,7 +141,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
                 cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
-                snd_command(0x300);
+                audio_command(0x300);
             }
             if (!(cd_audio_state() & 4) && D_80122CE4 == 0) {
                 D_800CA2A8 = 1;
@@ -151,7 +151,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
             D_800CA2AC = 0;
         }
         set_kanji_string(-0x90, 0x48, color, "「 ", 0);
-        dialogue_render(-0x82, 0x48, color, buf, 0, "", "", 0);
+        talk_render(-0x82, 0x48, color, buf, 0, "", "", 0);
         D_80122CE4 = 1;
         break;
     case 0xC:
@@ -160,7 +160,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
                 cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
-                snd_command(0x300);
+                audio_command(0x300);
             }
             if (!(cd_audio_state() & 4) && D_80122CE4 == 0) {
                 D_800CA2A8 = 1;
@@ -170,7 +170,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
             D_800CA2AC = 0;
         }
         set_kanji_string(-0x90, 0x48, color, "「 ", 0);
-        dialogue_render(-0x82, 0x48, color, buf, 0, "", "", 0);
+        talk_render(-0x82, 0x48, color, buf, 0, "", "", 0);
         D_80122D18 = 1;
         break;
     case 0xD:
@@ -183,7 +183,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
                 cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
-                snd_command(0x300);
+                audio_command(0x300);
             }
             if (!(cd_audio_state() & 4) && D_80122CE4 == 0) {
                 D_800CA2A8 = 1;
@@ -192,7 +192,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
             D_80122CF0 = 1;
             D_800CA2AC = 0;
         }
-        dialogue_render(-0x82, D_800CA2C0, color, buf, 0, "", "", 0);
+        talk_render(-0x82, D_800CA2C0, color, buf, 0, "", "", 0);
         D_80122D18 = 1;
         break;
     case 0xF:
@@ -205,7 +205,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
                 cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
-                snd_command(0x300);
+                audio_command(0x300);
             }
             if (!(cd_audio_state() & 4) && D_80122CE4 == 0) {
                 D_800CA2A8 = 1;
@@ -214,26 +214,26 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
             D_80122CF0 = 1;
             D_800CA2AC = 0;
         }
-        dialogue_render(-0x82, D_800CA2C0, color, buf, 0, "", "", 0);
+        talk_render(-0x82, D_800CA2C0, color, buf, 0, "", "", 0);
         D_80122CE4 = 1;
         break;
     case 0xFF:
-        main_step_next();
+        mode_step_next();
         break;
     default:
-        game_reset_to_title();
+        game_mode_reset_to_title();
         break;
     }
 }
 
-/* Steps the scene dialogue: dialogue_tables/138 point at the page and step halfwords (D_8013C358, D_8013C35C),
+/* Steps the scene dialogue: talk_tables/138 point at the page and step halfwords (D_8013C358, D_8013C35C),
  * D_800CA13C/140/144 hold the text, kind and voice tables of the scene (func_80132D98). Returns 1 when a
  * message has finished. T-20930 */
 s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2) {
     if (D_80122D00 != 0) {
         if (check_end_k() != 0) {
             if (D_80122CF0 == 0 || (D_80122CF0 == 1 && func_80046094() == 9)) {
-                if ((u32)++game_state.step_timer.w >= 0x3C) {
+                if ((u32)++game_state.mode_step_timer.w >= 0x3C) {
                     D_80122D00 = 0;
                     k_reset(1);
                     return 1;
@@ -256,12 +256,12 @@ s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2) {
             }
         }
     } else {
-        game_state.step_timer.w = 0;
-        func_80132420(((u8 ***)D_800CA13C)[*(s16 *)dialogue_tables][*(s16 *)D_800CA138], ((u8 **)D_800CA140)[*(s16 *)dialogue_tables][*(s16 *)D_800CA138], (u8)arg0, D_800CA144, *(s16 *)dialogue_tables, *(s16 *)D_800CA138, (u8)arg2);
+        game_state.mode_step_timer.w = 0;
+        func_80132420(((u8 ***)D_800CA13C)[*(s16 *)talk_tables][*(s16 *)D_800CA138], ((u8 **)D_800CA140)[*(s16 *)talk_tables][*(s16 *)D_800CA138], (u8)arg0, D_800CA144, *(s16 *)talk_tables, *(s16 *)D_800CA138, (u8)arg2);
         if (D_8013C364 == 0) {
             if ((u8)arg1 != 0 && D_800CA2A8 == 0) {
-                if (((u8 **)D_800CA140)[*(s16 *)dialogue_tables][*(s16 *)D_800CA138] == 0xFF) {
-                    *(s16 *)dialogue_tables += 1;
+                if (((u8 **)D_800CA140)[*(s16 *)talk_tables][*(s16 *)D_800CA138] == 0xFF) {
+                    *(s16 *)talk_tables += 1;
                     *(s16 *)D_800CA138 = 0;
                 } else {
                     *(s16 *)D_800CA138 += 1;
@@ -273,7 +273,7 @@ s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void func_80132D98(void) {
-    dialogue_tables = (u8 *)&D_8013C358;
+    talk_tables = (u8 *)&D_8013C358;
     D_800CA138 = (u8 *)&D_8013C35C;
     D_800CA13C = D_8013C34C.unk_00;
     D_800CA140 = D_8013C34C.unk_04;
@@ -282,27 +282,27 @@ void func_80132D98(void) {
 }
 
 void func_80132E10(void) {
-    snd_bank_load_start(1, 0xBF98, 0xBF79, 0xCE6D, 0xCE33, 0xCE1E);
-    if (snd_bank_load_poll() == 1) {
-        main_step_next();
+    audio_bank_load_start(1, 0xBF98, 0xBF79, 0xCE6D, 0xCE33, 0xCE1E);
+    if (audio_bank_load_poll() == 1) {
+        mode_step_next();
     }
-    main_step_next();
+    mode_step_next();
 }
 
 void func_80132E70(void) {
-    if (snd_bank_load_poll() == 1) {
-        main_step_next();
+    if (audio_bank_load_poll() == 1) {
+        mode_step_next();
     }
-    if ((u32) game_state.step_timer.w++ >= 0x400U) {
-        cd_cmd_reset();
-        snd_bank_state_reset();
-        main_step_set((game_state.step - 1) & 0xFF);
+    if ((u32) game_state.mode_step_timer.w++ >= 0x400U) {
+        cd_command_reset();
+        audio_bank_state_reset();
+        mode_step_set((game_state.mode_step - 1) & 0xFF);
     }
 }
 
 void func_80132EF0(void) {
-    snd_command(0x200);
-    main_step_next();
+    audio_command(0x200);
+    mode_step_next();
 }
 
 /* Port of main check_k_scroll (src/main/8007C030.c), with ENDING's own limits. The unsigned
