@@ -16,7 +16,7 @@ BUNKASAI plays the school culture festival for a player who belongs to one of th
 
 Who gets this overlay, and who gets BUNKAKEN: the queue record of type `DAY_EVENT_CULTURE_FESTIVAL` (0x24) is turned into mode 0x70 (`MODE_CULTURE_FESTIVAL_A`, this overlay) when the player's club id is below 6 (`CLUB_LITERATURE` .. `CLUB_BRASS_BAND`), and into mode 0x71 (BUNKAKEN) for every other club id, see [[spec/m-scheduler]] and [[spec/core]]. So the nibble the knowledge notes asked about is the player's club: this overlay is the club-member festival; BUNKAKEN is the festival of a player whose club has no exhibit (the glossary calls it the tour; HYPOTHESIS that it tours the culture clubs).
 
-Unit size: 207 functions in 20 C files; the data starts at 0x801603xx (the largest part is strings, which have no rows). The overlay is the usual 0x30000-byte slot at 0x80132000 (sector 0x916A, `overlays`), entry `culture_festival_entry` at 0x80142700. About 20 functions hold rules; the other 180 are scripted scene steps of one pattern (sections 5 and 6).
+Unit size: 207 functions in 20 C files; the data starts at 0x801603xx (the largest part is strings, which have no rows). The overlay is the usual 0x30000-byte slot at 0x80132000 (sector 0x916A, `overlays`), entry `culture_festival_entry` at 0x80142700. Of the 207 functions, 17 are framework and rule functions (sections 4, 5.1, 5.2, 7, 8), 22 set script pointers, 18 start a girl's script, 15 are block entries that map club and year to a stage, and 135 are scripted scene functions of one pattern (sections 5 and 6).
 
 The overlay depends on three other overlays: BUNKA_SD (mode 0x80, the stage shows with SD sprites, section 7.2), TT (mode 0xD0, the TwinBee game exhibit, section 7.4) and the shared main-exe scene helpers (`normal_date_*`, `dialogue_run`, `dec_bg_*`, `bustup_*`).
 
@@ -157,7 +157,7 @@ The member blocks exist only for the clubs the girl can be in (Mio: literature a
 
 Megumi and Yumi have no 1995 scenes (their gain-table rows are zero for 95 and the entries test only `year == 96`, sending every other year to the later scene). HYPOTHESIS: they are not met before 1996.
 
-## 6. The visit scene pattern (about 150 functions)
+## 6. The visit scene pattern (135 scene functions)
 
 Every visit or member scene is one function with 15 to 30 steps. The steps are the same few operations in a fixed order (step numbers vary by 1 or 2 between exhibits):
 
@@ -361,7 +361,7 @@ The old addresses of the framework and rule functions (the stage functions follo
 
 ## 13. Notes for the port
 
-- The 150 scene functions are copies of one template with per-girl parameters (portrait file, script file and sector count, the group numbers per rank, the TT thresholds). A data-driven scene runner (one step list, one parameter record per girl and exhibit) reproduces them; the exceptions are the Mio science scenes (three stages by year), Ayako's follow-up (stage 79), Yumi's two-speaker sketching scene (stage 160), and the game scenes that launch TT.
+- The 135 scene functions are copies of one template with per-girl parameters (portrait file, script file and sector count, the group numbers per rank, the TT thresholds). A data-driven scene runner (one step list, one parameter record per girl and exhibit) reproduces them; the exceptions are the Mio science scenes (three stages by year), Ayako's follow-up (stage 79), Yumi's two-speaker sketching scene (stage 160), and the game scenes that launch TT.
 - The overlay reload is a hardware-era workaround: a port keeps `culture_phase`, the stage, the step, the return point and the visitor in one scene state and needs no reload or "stage 163" re-initialisation.
 - State changes that matter for the rest of the game: the result formula (8.1) at the end of the day, the birthday scene rewards (7.5), the festival-call flags (8.4), the event log entry (8.2), `acquainted` of the member girl, and `tt_unlocked`. Everything else is presentation.
 - Random choice: only the visitor pick (5.2); any generator works. The visitor list contains the met heroines 0..10 with equal weight.
