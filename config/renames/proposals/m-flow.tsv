@@ -37,9 +37,9 @@ func	main	func_80042BD4	mouse_driver_init	InitMouse on the two raw buffers, Sens
 func	main	func_80042C30	pad_driver_init	InitPAD on the two 8-byte raw buffers, StartPAD, no auto clear
 func	main	func_80042C74	pad_state_clear	zeroes cursor_x/cursor_y, mouse_x/mouse_y and the three pad words (held, previous, pressed)
 func	main	func_80042CB0	mouse_to_pad	mouse to pointer and pad bits: motion * cursor_speed / 3 added to mouse_x (-0x96..0x8C) and mouse_y (-0x64..0x64) and copied to the cursor actor; left and right button become circle (0x20) and cross (0x40) through confirm_button; double-click mode needs two clicks of one button within double_click_interval + 8 frames; a digital pad in port 2 adds its buttons to the upper half-word
-func	main	func_80043010	pad_raw_read	builds the pad word from the two buffers: (~p2 byte2 << 24) | (~p2 byte3 << 16) | (~p1 byte2 << 8) | ~p1 byte3; its mouse branch (the two mouse buttons as 0x20 and 0x40) is never reached from pad_poll; 0 when no device
+func	main	func_80043010	pad_raw_read	builds the pad word from the two buffers: (~p2 byte2 << 24) | (~p2 byte3 << 16) | (~p1 byte2 << 8) | ~p1 byte3; its mouse branch (the two mouse buttons as 0x20 and 0x40) is never reached from pad_poll; with no device (0xFF) the function has no return statement (that path is unreachable from pad_poll)
 func	main	func_800430C0	pad_poll	pad mode: pad_held from pad_raw_read (a half-word of 0xFFFF is dropped), pad_pressed, pad_released, turbo (circle injected every other frame), pause toggle (dead: pause_allowed is never set), soft reset on the frame where pad_reset_frames already holds 0x81 (the 130th frame of SELECT+START+L1+R1; pad 2: to mode 0x11) outside modes 0x20, 0x90, 0xD0, then pad_code_update; emu: reset at frame 140 after a hold from frame 10, mode 0x10 then 0 then title
-func	main	func_80043448	pad_code_update	secret code: pad_held must equal pad_code_table[pad_code_index] exactly; each match advances and restarts a 16-frame window, the window running out resets the index; 18 matches set pad_code_entered, which expires after 240 frames; emu: the code at the title menu enters mode 0x11 at stage 1
+func	main	func_80043448	pad_code_update	secret code: pad_held must equal pad_code_table[pad_code_index] exactly; each match advances and sets pad_code_timer to 0x10, which the same call decrements, so the next step has to match within 15 frames or the index resets; 18 matches set pad_code_entered, which stays set for 241 frames counting the frame of the last match (240 more frames); emu: the code at the title menu enters mode 0x11 at stage 1
 func	main	func_80043504	main_paused_step	empty handler main_loop calls instead of main_state_dispatch while paused
 func	main	func_800789E0	ovl_load_reset	loader state 0, sectors 0, buffer 0, lba 0 (forgets the resident overlay) and screen mode 0; game_reset_to_title and the soft reset call it
 func	main	func_80078A94	ovl_load_screen_draw	runs after the loader step every frame: runs the per-frame functions of the HUD pieces that are visible (date panel, message window, parameter panel, mascot, cursor) and, when at least one is visible, draws the screen frame and then, by ovl_load_screen_mode, the backdrop: 0 optional light effect and title slide (scene_effect_flags bits 0 and 1) and the last background, 1 wipe lines over the captured frame, else a cleared screen; the calendar picture is drawn while overlay_target_mode is 0x45
@@ -64,7 +64,7 @@ func	main	func_800623E4	title_menu_cursor_update	selection (scene_work word 0): 
 func	main	func_80062524	title_menu_select_step	stage 2 step 1: cursor update; START or circle hides the cursor, step_next, sound 0x501; step_timer >= 0x259 (601) or SELECT: actors cleared, SND_CMD_STOP_ALL, main_state_set(0x11); emu: idle timeout at 601 frames
 func	main	func_800625C0	title_menu_highlight	sets bit 0x40 of the byte at +3 of the chosen item's actor (actor 97 + selection)
 func	main	func_800625F4	title_menu_confirm_step	stage 2 step 2: highlight the chosen item; stage_next after 0x21 frames
-func	main	func_80062634	title_menu_stage	stage 2 handler: step_timer += 1, steps 0-2
+func	main	func_80062634	title_menu_stage	stage 2 handler: step_timer += 1, steps 0-2; step_timer is the idle clock and restarts on every pad up or down press even when the selection stays the same (mouse mode: on every frame the pointer rests on an item)
 func	main	func_800626B0	title_exit_dispatch_step	stage 3 step 1: full flash level, then selection 0: main_state_set(0x13) (NAME_ENT file and name entry), selection 1: main_state_set(0x20) (OPTION; with debug_hud_enabled pad right gives 0x21 and pad left 0x22), anything else game_reset_to_title; emu: item 0 leaves 162 frames after the press
 func	main	func_80062764	title_exit_fade_step	stage 3 step 0: SND_CMD_FADE_BGM_SLOW every frame, flash level step_timer * 2; at 0x80 frames actors and cursor cleared, sprite tables cleared, step_next
 func	main	func_800627DC	title_exit_stage	stage 3 handler: step_timer += 1, steps 0-1
@@ -87,7 +87,7 @@ func	main	func_80054694	card_file_create	builds the name, opens with create and 
 func	main	func_80054704	card_file_delete	deletes the file; after a failure it retries while a retry counter stays below 3, and the matched C reads that stack counter before it is set (its start value is undefined); 1 or -1
 func	main	func_8005478C	card_file_read	clears card_block, opens the file for reading (async, 16 tries), reads 0x2000 bytes (16 tries); 1 or -1
 func	main	func_80054884	card_file_write	opens the file for writing (creates it on failure), fills the 0x200 header (magic, icon flag 0x13, one block, title, and the palette and three icon frames of the girl in the latest date-like log entry: scene 0, 1, 2 or 0xF, else girl 0), the bank (system_bank_build for file 0, game_bank_build else), copies bank 0 into bank 1, writes 0x2000 bytes (16 tries); 1 or -1
-func	main	func_80054AF4	card_file_exists	opens the file once with write access and closes it: 1 when it opens within 16 tries (8 for save files); 0 else
+func	main	func_80054AF4	card_file_exists	opens the file once with write access and closes it: 1 when it opens, trying once and then retrying up to 16 more times for the system file (17 opens at most) or 8 more for a save file (9 opens at most); 0 else
 func	main	func_80054BA8	card_system_file_probe	slot_info_from_system_data = card_file_exists(0); no caller in src
 func	main	func_80054BE4	card_save_files_probe	slot_status[i] = card_file_exists(i) for the 14 save files; returns 14; no caller in src
 func	main	func_80054C4C	card_block_clear	zeroes the 0x2000-byte card_block
@@ -110,8 +110,8 @@ data	main	D_800B3CA0	pad_turbo	1 after the four face buttons of pad 2 were held 
 data	main	D_800B3CA4	pad_reset_frames	frames in a row with SELECT+START+L1+R1 held (pad 1, or pad 2 for the opening reset); the reset runs on the frame where it already holds 0x81 (the 130th frame of the hold), any other pad state clears it
 data	main	D_800B3CA8	pad_code_table	18 words: up, release, up, release, down, release, down, release, left, release, right, release, left, release, right, release, cross, circle (0 = nothing held)
 data	main	D_800B3CF8	pad_code_index	next entry of pad_code_table; cleared by title_setup_stage and the NAME_ENT opening movie
-data	main	D_800B3CFC	pad_code_entered	1 for 240 frames after the whole code was entered; mode_title tests it from stage 2 on; cleared by title_setup_stage and after the NAME_ENT opening movie
-data	main	D_800B3D00	pad_code_timer	u8: 0x10 after each match and counted down per frame (reaching 0 resets pad_code_index); while pad_code_entered is set it counts up from 0x10 and clears the flag when it wraps to 0
+data	main	D_800B3CFC	pad_code_entered	1 for 241 frames counting the frame of the last match after the whole code was entered; mode_title tests it from stage 2 on; cleared by title_setup_stage and after the NAME_ENT opening movie
+data	main	D_800B3D00	pad_code_timer	u8: 0x10 after each match and counted down per frame (reaching 0 resets pad_code_index); while pad_code_entered is set it counts up from 0x0F (the value after the final match's decrement) and clears the flag when it wraps to 0
 data	main	D_800E8BF0	pad_buffer_1	raw controller buffer of port 1 given to InitPAD and InitMouse: status, id, two button bytes (mouse: two motion bytes after them)
 data	main	D_800E8C30	pad_buffer_2	raw controller buffer of port 2 (same layout)
 data	main	D_8011ECAC	card_sw_event_done	handle of the software card event for a finished operation (event spec 0x0004), opened by Sw_Start; Sw_Test result 1
@@ -141,7 +141,7 @@ data	main	D_80123320	card_banks	label of card_block +0x200: CardBank[2], two ide
 data	main	D_800E7D13	system_data_plus3	alias label of system_data +3 (odd offset): base of the loop in card_state_reset that clears slot_status[3..14]
 data	main	D_800E7D15	save_slot_status_1	alias label of system_data.slot_status[1], the first save file
 data	main	D_800E7D16	save_slot_status_2	alias label of system_data.slot_status[2]
-data	main	D_800E7D4F	extra_mode_flags	byte at system_data +0x3F (ExtraModeFlags view): bit 0 set by every TT start, bit 1 direct mode, bits 2-4 stage (o-tt spec); also the last byte of the TT record that system_bank_load protects
+data	main	D_800E7D4F	extra_mode_flags	HYPOTHESIS: the name and the extras meaning follow core (its ExtraModeFlags type is a hypothesis). Facts seen here: byte at system_data +0x3F (ExtraModeFlags view): bit 0 set by every TT start, bit 1 direct mode, bits 2-4 stage (o-tt spec); also the last byte of the TT record that system_bank_load protects
 data	main	D_80125C04	mdec_bitstream	address of the compressed still picture (0x80162000 in every caller)
 data	main	D_80125C08	mdec_vlc_buffer	work buffer of the VLC decode (0x80167000)
 data	main	D_80125C0C	mdec_out_buffer	decode output for one 16-pixel-wide slice (0x80162000 or 0x80188000)
@@ -221,16 +221,16 @@ const	OvlLoadState	3	OVL_LOAD_ENTER	ovl_load_enter sets the entry and returns to
 const	OvlLoadScreen	0	OVL_SCREEN_SCENE	loader screen shows the last scene backdrop (default)
 const	OvlLoadScreen	1	OVL_SCREEN_WIPE	loader screen wipes over a captured frame
 const	OvlLoadScreen	2	OVL_SCREEN_BLANK	any other value: cleared screen; never written
-const	OvlLba	0x910A	OVL_LBA_CULTURE_FESTIVAL_TOUR	BUNKAKEN.EXN, mode 0x71
+const	OvlLba	0x910A	OVL_LBA_CULTURE_FESTIVAL_TOUR	HYPOTHESIS: the folder name culture_festival_tour is unproven (the ADR map keeps it as confirm). Disc file and mode are facts: BUNKAKEN.EXN, mode 0x71
 const	OvlLba	0x916A	OVL_LBA_CULTURE_FESTIVAL	BUNKASAI.EXN, mode 0x70
 const	OvlLba	0x91CA	OVL_LBA_CULTURE_STAGE_SHOWS	BUNKA_SD.EXN, mode 0x80
 const	OvlLba	0x922A	OVL_LBA_DATE	DATE.EXN, modes 0x50 and 0x5E
 const	OvlLba	0x928A	OVL_LBA_AMUSEMENT_PARK_DATE	DATE2.EXN, modes 0x58 and 0x5C
 const	OvlLba	0x92EA	OVL_LBA_ENDING	ENDING.EXN, mode 0x63
 const	OvlLba	0x934A	OVL_LBA_FESTIVAL_STALLS	EN_NICHI.EXN, mode 0x82
-const	OvlLba	0x93AA	OVL_LBA_MISC_SCENES	ETC.EXN, modes 0x35 0x36 0x37 0x91 0xC2 0xC3 0xC4
-const	OvlLba	0x946A	OVL_LBA_GIRL_ENCOUNTERS	GEKO.EXN, modes 0x56 0x57 0x59 0x5A 0x5D
-const	OvlLba	0x952A	OVL_LBA_SUMMER_CAMP	KANGEI.EXN, modes 0x5F and 0x60
+const	OvlLba	0x93AA	OVL_LBA_MISC_SCENES	HYPOTHESIS: the meaning of modes 0xC2-0xC4 inside misc_scenes is unproven (the ADR map keeps them as confirm). Disc file and modes are facts: ETC.EXN, modes 0x35 0x36 0x37 0x91 0xC2 0xC3 0xC4
+const	OvlLba	0x946A	OVL_LBA_GIRL_ENCOUNTERS	HYPOTHESIS: the folder name girl_encounters is unproven (the ADR map keeps it as confirm). Disc file and modes are facts: GEKO.EXN, modes 0x56 0x57 0x59 0x5A 0x5D
+const	OvlLba	0x952A	OVL_LBA_SUMMER_CAMP	HYPOTHESIS: the folder name summer_camp is unproven (the ADR map keeps it as confirm; core also marks modes 0x5F/0x60 as a hypothesis). Disc file and modes are facts: KANGEI.EXN, modes 0x5F and 0x60
 const	OvlLba	0x958A	OVL_LBA_CLUB_MASTER	MASTER.EXN, modes 0x74 0x75 0x76
 const	OvlLba	0x95EA	OVL_LBA_NAME_ENTRY	NAME_ENT.EXN, modes 0x11 0x13 0x14 0x15
 const	OvlLba	0x96AA	OVL_LBA_HELP	OLH.EXN, mode 0x3A
@@ -238,7 +238,7 @@ const	OvlLba	0x970A	OVL_LBA_SICK_VISIT	OMIMAI.EXN, modes 0x61 and 0x62
 const	OvlLba	0x976A	OVL_LBA_OPTIONS	OPTION.EXN, modes 0x20 0x21 0x22
 const	OvlLba	0x97CA	OVL_LBA_PRACTICE_MATCH	RENSYU.EXN, mode 0x73
 const	OvlLba	0x982A	OVL_LBA_RPG_BATTLE	RPG_BAT.EXN, mode 0x81
-const	OvlLba	0x988A	OVL_LBA_NEW_YEAR_CHRISTMAS	SHOUGATU.EXN, modes 0x52 0x53 0x55 0x5B
+const	OvlLba	0x988A	OVL_LBA_NEW_YEAR_CHRISTMAS	HYPOTHESIS: the folder name new_year_christmas is unproven (the ADR map keeps it as confirm; core also marks mode 0x55 as a hypothesis). Disc file and modes are facts: SHOUGATU.EXN, modes 0x52 0x53 0x55 0x5B
 const	OvlLba	0x98EA	OVL_LBA_SCHOOL_TRIP	SHUGAKU.EXN, mode 0x51
 const	OvlLba	0x994A	OVL_LBA_SHOOTER_3D	TACO.EXN, the default arm: every mode the table does not list, in practice 0x90
 const	OvlLba	0x99AA	OVL_LBA_SPORTS_FESTIVAL	TAIIKU.EXN, mode 0x72
@@ -273,7 +273,7 @@ const	CardResult	4	CARD_RESULT_SAVE_READ_DONE	card_save_read_poll finished
 const	CardResult	0x13	CARD_RESULT_SYSTEM_WRITE_DONE	card_system_write_poll finished
 const	CardResult	0x14	CARD_RESULT_SAVE_WRITE_DONE	card_save_write_poll finished
 const	CardResult	0xD0	CARD_RESULT_FILE_ERROR	a file read or write could not start (open or read failed 16 times)
-const	CardResult	0xF0	CARD_RESULT_IO_ERROR	set when a file job reaches card_step 16; callers treat it like a timeout; no code in src sets that step
+const	CardResult	0xF0	CARD_RESULT_IO_ERROR	HYPOTHESIS: name only, as in the m-sysmenu row; set when a file job reaches card_step 16; callers treat it like a timeout; no code in src sets that step
 const	CardResult	0xF1	CARD_RESULT_UNFORMATTED	card_check_poll: the card reports a new card after the reload
 const	CardResult	0xFF	CARD_RESULT_NO_CARD	card_event_handle: three timeouts within one job
 const	CardEvent	1	CARD_EVENT_DONE	Sw_Test: the operation finished

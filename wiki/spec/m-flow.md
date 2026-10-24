@@ -158,26 +158,26 @@ Disc file = `/CDROM/EXEDIR/<name>.EXN`, 0x60 sectors (196608 bytes) each, read t
 | 0x45 | `MODE_TELEPHONE_PROFILE` | `telephone` | 0x9A0A | 0x80132000 |
 | 0x50 | `MODE_DATE` | `date` (DATE) | 0x922A | 0x801448D4 |
 | 0x51 | `MODE_SCHOOL_TRIP` | `school_trip` (SHUGAKU) | 0x98EA | 0x80137490 |
-| 0x52 | `MODE_NEW_YEAR_A` | `new_year_christmas` (SHOUGATU) | 0x988A | 0x8013D180 |
-| 0x53 | `MODE_NEW_YEAR_B` | `new_year_christmas` | 0x988A | 0x801322D4 |
+| 0x52 | `MODE_NEW_YEAR_A` | `new_year_christmas` (SHOUGATU) HYPOTHESIS | 0x988A | 0x8013D180 |
+| 0x53 | `MODE_NEW_YEAR_B` | `new_year_christmas` HYPOTHESIS | 0x988A | 0x801322D4 |
 | 0x54 | `MODE_VALENTINE` | `valentine` (VALEN) | 0x9ACA | 0x80132274 |
-| 0x55 | `MODE_SEASONAL_PARTY` | `new_year_christmas` | 0x988A | 0x8013B484 |
-| 0x56 | `MODE_PLAYER_BIRTHDAY` | `girl_encounters` (GEKO) | 0x946A | 0x80134040 |
-| 0x57 | `MODE_GIRL_BIRTHDAY` | `girl_encounters` | 0x946A | 0x80134C90 |
+| 0x55 | `MODE_SEASONAL_PARTY` | `new_year_christmas` HYPOTHESIS | 0x988A | 0x8013B484 |
+| 0x56 | `MODE_PLAYER_BIRTHDAY` | `girl_encounters` (GEKO) HYPOTHESIS | 0x946A | 0x80134040 |
+| 0x57 | `MODE_GIRL_BIRTHDAY` | `girl_encounters` HYPOTHESIS | 0x946A | 0x80134C90 |
 | 0x58 | `MODE_AMUSEMENT_PARK` | `amusement_park_date` (DATE2) | 0x928A | 0x80132214 |
-| 0x59 | `MODE_GIRL_ENCOUNTER` | `girl_encounters` | 0x946A | 0x80132244 |
-| 0x5A | `MODE_GIRL_INVITATION` | `girl_encounters` | 0x946A | 0x801426D0 |
-| 0x5B | `MODE_MEETING` | `new_year_christmas` | 0x988A | 0x80137144 |
+| 0x59 | `MODE_GIRL_ENCOUNTER` | `girl_encounters` HYPOTHESIS | 0x946A | 0x80132244 |
+| 0x5A | `MODE_GIRL_INVITATION` | `girl_encounters` HYPOTHESIS | 0x946A | 0x801426D0 |
+| 0x5B | `MODE_MEETING` | `new_year_christmas` HYPOTHESIS | 0x988A | 0x80137144 |
 | 0x5C | `MODE_AMUSEMENT_PARK_2` | `amusement_park_date` | 0x928A | 0x80137F64 |
-| 0x5D | `MODE_SPECIAL_EVENT` | `girl_encounters` | 0x946A | 0x8013882C |
+| 0x5D | `MODE_SPECIAL_EVENT` | `girl_encounters` HYPOTHESIS | 0x946A | 0x8013882C |
 | 0x5E | `MODE_DATE_SCENE` | `date` | 0x922A | 0x8014C08C |
-| 0x5F | `MODE_CLUB_CAMP` | `summer_camp` (KANGEI) | 0x952A | 0x80132FF8 |
-| 0x60 | `MODE_CLUB_CAMP_2` | `summer_camp` | 0x952A | 0x80132000 |
+| 0x5F | `MODE_CLUB_CAMP` | `summer_camp` (KANGEI) HYPOTHESIS | 0x952A | 0x80132FF8 |
+| 0x60 | `MODE_CLUB_CAMP_2` | `summer_camp` HYPOTHESIS | 0x952A | 0x80132000 |
 | 0x61 | `MODE_SICK_VISIT` | `sick_visit` (OMIMAI) | 0x970A | 0x80133120 |
 | 0x62 | `MODE_SICK_VISIT_2` | `sick_visit` | 0x970A | 0x80132000 |
 | 0x63 | `MODE_ENDING` | `ending` (ENDING) | 0x92EA | 0x80132334 |
 | 0x70 | `MODE_CULTURE_FESTIVAL_A` | `culture_festival` (BUNKASAI) | 0x916A | 0x80142700 |
-| 0x71 | `MODE_CULTURE_FESTIVAL_B` | `culture_festival_tour` (BUNKAKEN) | 0x910A | 0x80144F70 |
+| 0x71 | `MODE_CULTURE_FESTIVAL_B` | `culture_festival_tour` (BUNKAKEN) HYPOTHESIS | 0x910A | 0x80144F70 |
 | 0x72 | `MODE_SPORTS_FESTIVAL` | `sports_festival` (TAIIKU) | 0x99AA | 0x80141280 |
 | 0x73 | `MODE_PRACTICE_MATCH` | `practice_match` (RENSYU) | 0x97CA | 0x80132040 |
 | 0x74 | `MODE_CLUB_MASTER_A` | `club_master` (MASTER) | 0x958A | 0x80133A2C |
@@ -188,11 +188,13 @@ Disc file = `/CDROM/EXEDIR/<name>.EXN`, 0x60 sectors (196608 bytes) each, read t
 | 0x82 | `MODE_FESTIVAL_STALLS` | `festival_stalls` (EN_NICHI) | 0x934A | 0x80132000 |
 | 0x90 | `MODE_SHOOTER` | `shooter_3d` (TACO) | 0x994A (default arm) | 0x80132000 (default) |
 | 0x91 | `MODE_ALBUM` | `misc_scenes` | 0x93AA | 0x801407F0 |
-| 0xC2 | `MODE_ETC_C2` | `misc_scenes` | 0x93AA | 0x80142974 |
-| 0xC3 | `MODE_ETC_C3` | `misc_scenes` | 0x93AA | 0x8014636C |
-| 0xC4 | `MODE_ETC_C4` | `misc_scenes` | 0x93AA | 0x80145A6C |
+| 0xC2 | `MODE_ETC_C2` | `misc_scenes` HYPOTHESIS | 0x93AA | 0x80142974 |
+| 0xC3 | `MODE_ETC_C3` | `misc_scenes` HYPOTHESIS | 0x93AA | 0x8014636C |
+| 0xC4 | `MODE_ETC_C4` | `misc_scenes` HYPOTHESIS | 0x93AA | 0x80145A6C |
 
 The sector switch names 47 of the 48 overlay modes (0x90 takes the default arm) and also lists 0xD0, which can never reach it (0xD0 is not an overlay-request mode); the entry switch names the same 47 modes and falls back to 0x80132000 for the rest. The EVENT.EXN (0x940A) and GYOZI.EXN (0x94CA) files are not in either table, so no code loads them.
+
+HYPOTHESIS marks in the table: the ADR map still lists `summer_camp` (KANGEI), `culture_festival_tour` (BUNKAKEN), `girl_encounters` (GEKO), `new_year_christmas` (SHOUGATU) and the modes 0xC2-0xC4 of `misc_scenes` (ETC) as `confirm`, and core marks the matching mode names (0x5F/0x60, 0x55) as hypotheses. The disc file names, LBAs, modes and entries are facts from the loader code; only these folder names and the scene meanings behind them are unproven, and the five `OvlLba` constants carry the mark in the table.
 
 Core's `MainMode` rows for 0x74, 0x75, 0x76 give the entries 0x80132140, 0x80133A2C, 0x80139150; the loader code has 0x74 -> 0x80133A2C, 0x75 -> 0x80139150, 0x76 -> 0x80132140 (see open question 1). The loader's `extern` labels (`D_8013xxxx`) are overlay addresses; each overlay unit names its entry function and asks for a request row in `config/renames/requests.txt` so the loader follows.
 
@@ -213,9 +215,9 @@ Mode 0xD0 is not an overlay mode. `mode_tt_game` loads the TT file itself and ru
 
 | stage | action |
 |---|---|
-| 0 | `extra_mode_flags` bit 0 := 1 (the extras menu entry appears after the first start), `debug_hud_enabled` := 0, VRAM cleared, sprite tables cleared, read 0x60 sectors from 0x9A6A to 0x80132000 |
+| 0 | `extra_mode_flags` bit 0 := 1 (HYPOTHESIS: this is the flag that makes the extras menu entry appear after the first start; that reading comes from OPTION and core, this unit only sees the store), `debug_hud_enabled` := 0, VRAM cleared, sprite tables cleared, read 0x60 sectors from 0x9A6A to 0x80132000 |
 | 1 | wait for the read |
-| 2 | `file_checksum_ok` -> next stage, `sys_cache_flush`; mismatch -> stage 0 |
+| 2 | `file_checksum_ok` -> next stage, `sys_cache_flush`, then an unnamed SDK call with argument 0 (`func_8009C5E0`; HYPOTHESIS: it blanks the display, the movie player calls it with 1 to switch the display back on); mismatch -> stage 0 |
 | 3 | `overlay_entry` := 0x8013E850 (`tt_main`), timer event closed, call it; it runs its own frame loop and returns when the game is left; VRAM cleared |
 | 4 | timer event reopened, `snd_bank_state_reset`, `dec_bg_reset`, `cd_cmd_reset`, `SND_CMD_STOP_ALL`, load base 0x801B8000 |
 | 5 | `mode_tt_game_save_step`: write the system file (substeps: card check, file 0 exists, read it, `system_bank_load`, `selected_slot` := 0, write it; success plays sound 0x50F, a timeout of 0x201 frames or result 0xF0 plays 0x502); a failure anywhere skips the rest |
@@ -253,11 +255,11 @@ Literal `main_state_set(mode)` calls in `src/`, by requester (calls with a compu
 
 ## 4. Input
 
-`pad_update` runs inside `frame_render`. If `pad_device_detect` reports a change this frame, nothing else runs. Otherwise `mouse_to_pad` (mouse) or `pad_poll` (pad) runs, then: the turbo is cancelled by any pressed button except circle (mask `PAD_MASK_TURBO_CANCEL`), enabled while pad 2 holds triangle, circle, cross and square together, and pad 2 START flips `sd_anim_fast`.
+`pad_update` runs at the end of `frame_render`; the movie player (`movie_play`), the VRAM view function and the TT pad reader (`tt_pad_update`) also call it. If `pad_device_detect` reports a change this frame, nothing else runs. Otherwise `mouse_to_pad` (mouse) or `pad_poll` (pad) runs, then: the turbo is cancelled by any pressed button except circle (mask `PAD_MASK_TURBO_CANCEL`), enabled while pad 2 holds triangle, circle, cross and square together, and pad 2 START flips `sd_anim_fast`.
 
 **Device** (`pad_device_detect`, port 1 buffer `pad_buffer_1`): status byte 0 and id high nibble 1 -> mouse (and `menu_mode` := 0); status 0 otherwise -> pad; a bad status -> none (0xFF), except a 0xFF status while a card job is busy, which keeps the old device (the BIOS cannot read the port during card access). A change re-initialises the drivers (`pad_driver_init`, `mouse_driver_init`), clears the state (`pad_state_clear`) and returns 1. `INPUT_PAD` is the default.
 
-**Pad word.** `pad_raw_read` builds one 32-bit word: pad 2 in the upper half, pad 1 in the lower, each (direction/system byte << 8) | button byte, all inverted so a pressed button is 1. `PadBits`: low byte L2, R2, L1, R1, triangle, circle, cross, square (0x01-0x80); second byte SELECT, L3, R3, START, up, right, down, left (0x100-0x8000). `pad_raw_read` also has a mouse branch (the two mouse buttons as 0x20 and 0x40) that `pad_poll` never reaches, because mouse mode uses `mouse_to_pad`. `pad_poll`:
+**Pad word.** `pad_raw_read` builds one 32-bit word: pad 2 in the upper half, pad 1 in the lower, each (direction/system byte << 8) | button byte, all inverted so a pressed button is 1. `PadBits`: low byte L2, R2, L1, R1, triangle, circle, cross, square (0x01-0x80); second byte SELECT, L3, R3, START, up, right, down, left (0x100-0x8000). `pad_raw_read` also has a mouse branch (the two mouse buttons as 0x20 and 0x40) that `pad_poll` never reaches, because mouse mode uses `mouse_to_pad`; with no device (0xFF) the C has no return statement on that path, which `pad_poll` cannot reach either. `pad_poll`:
 
 1. `pad_prev` := `pad_held`; `pad_held` := the word. A half-word with all 16 buttons set cannot be a real input (a port read glitch): an upper half of 0xFFFF is dropped, a lower half of 0xFFFF with a real upper part keeps only the upper part, both give 0.
 2. `pad_pressed` := `~pad_prev & pad_held`, `pad_released` := `pad_prev & ~pad_held`.
@@ -268,7 +270,7 @@ Literal `main_state_set(mode)` calls in `src/`, by requester (calls with a compu
 
 **Mouse** (`mouse_to_pad`): the two motion bytes times `cursor_speed` / 3 move `mouse_x` (clamped -0x96 to 0x8C) and `mouse_y` (-0x64 to 0x64), which are copied to the cursor actor (`cursor_x`, `cursor_y`). The buttons: `mouse_held` is the inverted port byte 3, `mouse_buttons` (core) the newly pressed ones. Buttons map to the pad word as circle (0x20, confirm) and cross (0x40, cancel): with `confirm_button` 0 the left button (8) confirms and the right (4) cancels, with 1 the opposite. With `click_mode` 0 a button maps on every frame it is held. With a non-zero `click_mode` (double click) the first press of the right or left button starts `click_timer` = `double_click_interval` + 8 and remembers the button in `click_button`; a second press of the same button before the timer runs out maps for that one frame; nothing else maps. A digital pad in port 2 (id 0x4x) still adds its buttons to the upper half. The press and release words are derived the same way as for the pad.
 
-**The secret code** (`pad_code_update`, pad mode only, every frame, not during a reset): `pad_held` must equal `pad_code_table[pad_code_index]` exactly; a match advances the index and restarts a 16-frame window (`pad_code_timer` := 0x10); the window running out resets the index. The table is up, release, up, release, down, release, down, release, left, release, right, release, left, release, right, release, cross, circle (18 steps, so cross has to be replaced by circle with no frame of nothing between). Entering it sets `pad_code_entered` for 240 frames. Only `mode_title` reads it (section 5.4). Emulator: the sequence typed at the title menu enters mode 0x11 at stage 1 on the frame of the circle.
+**The secret code** (`pad_code_update`, pad mode only, every frame, not during a reset): `pad_held` must equal `pad_code_table[pad_code_index]` exactly; a match advances the index and sets `pad_code_timer` to 0x10, which the same call decrements, so the next step has to match within 15 frames or the index resets. The table is up, release, up, release, down, release, down, release, left, release, right, release, left, release, right, release, cross, circle (18 steps, so cross has to be replaced by circle with no frame of nothing between). Entering it sets `pad_code_entered`; it stays set for 241 frames counting the frame of the last match (240 more frames: the timer, 0x0F after the final decrement, counts up and clears the flag when it wraps). Only `mode_title` reads it (section 5.4). Emulator: the sequence typed at the title menu enters mode 0x11 at stage 1 on the frame of the circle.
 
 ## 5. The title screen (mode 0x12)
 
@@ -287,7 +289,7 @@ Literal `main_state_set(mode)` calls in `src/`, by requester (calls with a compu
 
 `title_photos_update` (every frame of stage 1): photo i (0 to 12) spins from `frame_count` with a speed that depends on `i & 3` and sits at x = `scene_work[i + 1]` (start -400 - 100 * i from `title_photo_offsets`), which grows by 2 or 3 per frame; y = a sine wobble minus x / 2, z = -4 * x - 400. Nothing wraps; the intro ends before the photos leave the scene. `title_models_link` links record i to TMD object (rand() + i) % 13, so the order of the 13 pictures changes with every start.
 
-**Stage 2, the menu.** Two items in one menu (`menu_set(0, 2, ...)`: item rectangles x -0x30, width 0xA0, height 0x14 at y 0x42 and 0x52), selection in `scene_work[0]` (0 = `TITLE_ITEM_GAME_START`, 1 = `TITLE_ITEM_OPTIONS`), the white clear colour, the pointer actor and two label actors (97, 98). In pad mode, up selects item 0 and down item 1 (the pointer sits at y = item * 16 + 0x46); in mouse mode the item under the pointer is selected; each change restarts `step_timer`, which is the idle clock (in mouse mode it restarts on every frame the pointer rests on an item). Step 1: START or circle hides the pointer, plays sound 0x501 and goes to step 2; with 601 frames (`TITLE_WAIT_FRAMES`) without a change, or SELECT, the actors are cleared, `SND_CMD_STOP_ALL` is sent and `main_state_set(0x11)` starts the opening (NAME_ENT, which ends by returning to the title). Step 2 highlights the chosen item for 0x21 frames, then stage 3. Emulator: the idle timeout fires 601 frames after the menu appeared, the overlay loads, and mode 0x11 runs at frame 2270.
+**Stage 2, the menu.** Two items in one menu (`menu_set(0, 2, ...)`: item rectangles x -0x30, width 0xA0, height 0x14 at y 0x42 and 0x52), selection in `scene_work[0]` (0 = `TITLE_ITEM_GAME_START`, 1 = `TITLE_ITEM_OPTIONS`), the white clear colour, the pointer actor and two label actors (97, 98). In pad mode, up selects item 0 and down item 1 (the pointer sits at y = item * 16 + 0x46); in mouse mode the item under the pointer is selected; each up or down press restarts `step_timer`, which is the idle clock, even when the selection does not change (in mouse mode it restarts on every frame the pointer rests on an item). Step 1: START or circle hides the pointer, plays sound 0x501 and goes to step 2; with 601 frames (`TITLE_WAIT_FRAMES`) without an up or down press (mouse mode: without the pointer resting on an item), or SELECT, the actors are cleared, `SND_CMD_STOP_ALL` is sent and `main_state_set(0x11)` starts the opening (NAME_ENT, which ends by returning to the title). Step 2 highlights the chosen item for 0x21 frames, then stage 3. Emulator: the idle timeout fires 601 frames after the menu appeared, the overlay loads, and mode 0x11 runs at frame 2270.
 
 **Stage 3, the exit.** Step 0: `SND_CMD_FADE_BGM_SLOW` every frame, flash level `step_timer * 2`; at 0x80 frames the actors, pointer and sprite tables are cleared. Step 1: full flash level, then item 0 -> `main_state_set(0x13)`, item 1 -> `main_state_set(0x20)`; with `debug_hud_enabled` set and item 1 chosen, pad right held gives mode 0x21 and pad left held mode 0x22; any other value -> `game_reset_to_title`. Emulator: choosing item 0 at frame 10 calls `main_state_set(0x13)` at frame 172 (0x21 + 0x80 + 1 frames after the press); NAME_ENT was already resident in that run, so the loader skipped the read and mode 0x13 ran from frame 174.
 
@@ -298,7 +300,7 @@ Literal `main_state_set(mode)` calls in `src/`, by requester (calls with a compu
 ### 6.1 Layers
 
 1. BIOS events (O.BIN names, kept): `card_ev_set` opens the software events (`Sw_Start`: done, error, timeout, new card, class 0xF4000001) and the hardware events (`Hw_Start`, class 0xF0000011), inits and starts the card driver and turns the BIOS auto-detect off. `Sw_Test` polls the four software events and stores 1, 2, 4 or 8 in `card_result` (0 when none), clearing them; `Hw_Test` spins until a hardware event fires and stores 0x81, 0x82, 0x84 or 0x88.
-2. File jobs: a caller runs `card_start()`, then calls one poll function every frame until `card_result` shows the expected code, handling the timeout itself, then `card_stop()`. Each poll call adds one to `card_timer`; callers end the job when it is above 0x200 (`CARD_TIMEOUT_FRAMES`) or when the result is 0xF0 (`CARD_RESULT_IO_ERROR`). `card_busy` is 1 while a job runs and also keeps `pad_device_detect` from dropping the pad.
+2. File jobs: a caller runs `card_start()`, then calls one poll function every frame until `card_result` shows the expected code, handling the timeout itself, then `card_stop()`. Each poll call adds one to `card_timer`; callers end the job when it is above 0x200 (`CARD_TIMEOUT_FRAMES`) or when the result is 0xF0 (`CARD_RESULT_IO_ERROR`, HYPOTHESIS: the name; no code sets that result, see 6.2). `card_busy` is 1 while a job runs and also keeps `pad_device_detect` from dropping the pad.
 3. Images: `system_bank_build/load` and `game_bank_build/load` convert between the images and `system_data`/`game_state`.
 
 ### 6.2 Poll functions
@@ -330,7 +332,7 @@ File 0 is the system file, files 1 to 14 are the save slots (the name builder ac
 | 0x200 | bank 0 (0xF00 bytes) |
 | 0x1100 | bank 1, an identical copy of bank 0 |
 
-The icon is the girl of the latest date-like log entry (scene 0, 1, 2 or 0xF; `event_log_scan`), or icon 0 when there is none or the value is 13 or more: 13 icons. The writer (`card_file_write`) opens for writing and creates the file when that fails (16 tries each), builds header and bank, copies bank 0 over bank 1 and writes the 0x2000 bytes (16 tries). `card_file_read` clears the block, opens, and reads 0x2000 bytes (16 tries). `card_file_exists` opens a file once for writing and closes it (8 tries for a save file, 16 for the system file). `card_file_create` makes a one-block file, `card_file_delete` removes it (after a failed delete it retries while a counter stays below 3; the original reads that counter before setting it, so the number of tries is undefined); the save screens create then delete a file to test that it can be created.
+The icon is the girl of the latest date-like log entry (scene 0, 1, 2 or 0xF; `event_log_scan`), or icon 0 when there is none or the value is 13 or more: 13 icons. The writer (`card_file_write`) opens for writing and creates the file when that fails (16 tries each), builds header and bank, copies bank 0 over bank 1 and writes the 0x2000 bytes (16 tries). `card_file_read` clears the block, opens, and reads 0x2000 bytes (16 tries). `card_file_exists` opens a file once for writing and closes it (one open and up to 8 retries for a save file, up to 16 retries for the system file: 9 and 17 opens at most). `card_file_create` makes a one-block file, `card_file_delete` removes it (after a failed delete it retries while a counter stays below 3; the original reads that counter before setting it, so the number of tries is undefined); the save screens create then delete a file to test that it can be created.
 
 ### 6.4 Banks and validity
 
@@ -404,7 +406,7 @@ Everything a save contains is in the two tables above; the byte layout, the two 
 | `D_8011ECAC` to `D_8011ECC8` | `card_sw_event_*`, `card_hw_event_*` | the eight BIOS event handles (done, error, timeout, new card; software then hardware class) |
 | `D_80123122` to `D_80123320` | `card_header_*`, `card_banks` | alias labels inside `card_block` |
 | `D_800E7D13`, `D_800E7D15`, `D_800E7D16` | `system_data_plus3`, `save_slot_status_1`, `save_slot_status_2` | alias labels inside `system_data` |
-| `D_800E7D4F` | `extra_mode_flags` | TT flags byte |
+| `D_800E7D4F` | `extra_mode_flags` | TT flags byte (HYPOTHESIS: name and extras meaning follow core) |
 | `D_80125C04`, `D_80125C08`, `D_80125C0C` | `mdec_bitstream`, `mdec_vlc_buffer`, `mdec_out_buffer` | still-image decode buffers |
 | `D_8011ED17`, `D_8011F553`, `D_80122D44` | `message_window_draw_flags`, `parameter_panel_draw_flags`, `scene_effect_flags` | read by the loader screen |
 
@@ -441,3 +443,5 @@ Quirks of the original that a port should not copy: `vram_clear_blocks` with 0 o
 8. The meaning of `slot_girl_marks` (per-girl values 0 to 7 shown as icons in the file screens) and of the bits of `karaoke_unlock_bits` (no setter in `src/`) is open.
 9. `card_step` 16 and result 0xF0 have no setter in this unit.
 10. The 13 title photos: the code shows 13 textures and 13 TMD objects and the screenshot shows pictures of characters; which picture belongs to which texture slot was not traced.
+11. `D_80122D44` is `scene_effect_flags` here and `date_light_effect_flags` in the o-date table (scope `main`). The loader code backs this name: bit 0 gates `light_effect_draw` and bit 1 gates `message_window_title_update` in `ovl_load_screen_draw`, and GEKO also writes the flag. The o-date note for bit 1 ("special date event running") does not match that use. An overlay table may not rename a main symbol, so at merge the m-flow name stays and the o-date row becomes a request or is dropped.
+12. core, h-graphics and h-cdio still disagree on a few shared names: `func_80044750` (`snd_command` or `sound_request`), `D_8011ECA0` (`draw_buffer` or `draw_buffer_index`), `func_80043510` (`frame_render` or `render_frame`). This table follows core. About 15 data rows are alias labels named by offset (`system_data_plus3`, `save_slot_status_1/2`, `ot_table_0_tags`, `ot_table_1`, `ot_table_1_tags`, `ot_tags_1`, `card_header_*`, `message_window_draw_flags`, `parameter_panel_draw_flags`); they may be left as `D_` placeholders until the code indexes the parent array. `memory_card.c` still holds the two MDEC still-image helpers (6.8) and moves with the MDEC background module later.
