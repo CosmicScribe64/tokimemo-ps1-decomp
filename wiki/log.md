@@ -7,38 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ticket | T-25036 MAIN counter late-fold investigation
-
-Created [[tickets/T-25036-main-counter-late-fold]] in an isolated worktree at 242c0c3a3. Reused [[tickets/T-25026-main-d7ec-near-candidate]] phase evidence and prior negatives; next test is a late-folded zero producer that preserves the original increment dependency without extra instructions.
-
-## [2026-10-22] build | T-25036 identifies second constant-fold barrier
-
-Whole-TU Docker donor transfer retains the counter addition through uopt and ugen but stock as1's initial-node expansion folds it to one. Final output remains 1,173 words with one differing instruction. [[tickets/T-25036-main-counter-late-fold]] records the phase evidence. Read-only donor and tracer reused; production sources and compiler unchanged.
-
-## [2026-10-22] build | T-25036 closes MAIN 4692-byte counter dependency
-
-Promoted `src/main/8006CB30.c` function `func_8006D7EC` using the T-25033 late-zero producer and a late-eliminated identity arm. Whole-TU guarded and default C each pass literal 4,692-byte linked proof and complete MAIN SHA1; header/global/prototype checks pass. Both source controls are FAKE-annotated and add no emitted operations. Root standards/spec review has no findings. [[tickets/T-25036-main-counter-late-fold]] moves to In Review for full integration verification; `drafts/T-25036/` preserves reproduction and phase evidence.
-
-## [2026-10-22] build | MAIN 4692-byte match accepted
-
-Root integrated abc02da59 and independently proved default-C func_8006D7EC literal4692bytes. Fresh27/27binary checksums, headers/globals and prototypes0new/15known pass. Standards/spec review has no findings; marked late-zero and unreachable identity controls introduce no observable effects or compiler exceptions. T-25036 moves Done. Progress6836/6952functions,2110228/2276920bytes (92.7%);116functions/166692bytes remain. Updated [[status]]. Worker continues T-25040 on same-file func_8006D138,872bytes, selected against larger7132C's broad unresolved structure. BUNKA candidate not yet counted.
-
-## [2026-10-22] ticket | T-25037 BUNKA_SD upstream emission
-
-Claimed [[tickets/T-25037-bunka-upstream-emission]] in an isolated worktree from 242c0c3a3. Read the T-25020/T-25023 evidence and retained the existing four-position guarded source. New work focuses on uopt/ugen emission before further source experiments; no coverage added.
-
-## [2026-10-22] build | T-25037 optimized-ucode evidence
-
-[[tickets/T-25037-bunka-upstream-emission]] reproduced the four-position guarded C difference and captured the actual uopt-output/ugen-input boundary. The first three targeted comparison probes do not separate constant and memory preloads: early year still precedes constant, and the 0x60 comparison leaves two extra instructions. Best source remains unchanged; no match claimed.
-
-## [2026-10-22] build | T-25037 closes BUNKA_SD case0x49 ordering
-
-[[tickets/T-25037-bunka-upstream-emission]] found a source form that independently stages the constant and year preloads. An empty frame==0x60 test followed by an unsigned-false year test removes the case0x49 residue without changing any other instruction:379 words, remaining cost2 at positions171/172 in case0x66. Source stays guarded; no coverage credit until the remaining pair matches.
-
-## [2026-10-22] build | T-25037 literal BUNKA_SD match
-
-[[tickets/T-25037-bunka-upstream-emission]] promotes func_80139290 after separate guarded and default-C private links prove all1516 bytes. Rebuilt all11 BUNKA_SD C units and normal link/hash commands pass BUNKA_SD.bin SHA1; declaration/global/prototype guards pass with0 new disagreements. Root standards/spec review has no findings. Ticket moves to In Review pending root full27 integration. Negative source ledger is preserved in drafts/T-25037/README.md; no compiler or header changes.
-
 ## [2026-10-22] lint | T-25037 integration checkpoint
 
 Wiki lint reports0 broken links and0 status mismatches; two large pages are data/t0018-cases and the append-only log. The draft README prose check has no strong hits; its one weak colon introduces the explicit hash result and is retained. git diff --check passes. [[tickets/T-25037-bunka-upstream-emission]] remains In Review for integration.
@@ -1556,6 +1524,7 @@ Fixed the three blocking review findings of [[tickets/T-27018-p2-m-menutext]] an
 
 ## [2026-10-24] ticket | T-27018 Done
 [[tickets/T-27018-p2-m-menutext]] passed review round 2 (approved, no findings): the NAME_CODE rows are gone and the spec cites m-dates-b's `NAME_CODE_PLAYER_FORM` and `NAME_CODE_GIRL`, and the renamed names use the ADR main-map prefixes. One follow-up for the m-sysmenu merge: its three `TEXT_SPEED_*` rows duplicate this table's `TextSpeed` rows and must be dropped there (spec section 16 of [[spec/m-menutext]]). The branch changes only `config/renames/proposals/m-menutext.tsv`, [[spec/m-menutext]], [[spec/index]], [[spec/m-scheduler]] (one line), `GLOSSARY.md` and wiki pages; nothing under `src/`, `include/` or the symbol files. Merged as p2a-m-menutext.
+
 ## [2026-10-24] ingest | T-27017 phase 2 m-sysmenu: names and port spec for the player's room screens (src/main/8005A0B0.c)
 [[tickets/T-27017-p2-m-sysmenu]] (In Review): the file behind the unit label "system menus, clubs, rumors, holiday prep" holds eight screens over the player's room picture: the weekly command screen (mode 0x34, stages 0, 1, 0xFF), the calendar check, the memory-card data screen, the system settings with the mascot list, club joining, the rumor report (mode 0x44) and the Christmas and New Year preparation (modes 0x42, 0x41). `config/renames/proposals/m-sysmenu.tsv` has 264 rows (92 func, 27 data, 1 field, 126 const, 16 comment, 2 file; 7 HYPOTHESIS); the spec is [[spec/m-sysmenu]].
 Findings: the build step of the command screen picks usable icons by tomorrow's calendar marker (exam, club season, culture festival, school trip), the remedial week flag and health; weekday club joining cannot be reached (icon 4 is locked without a club); the data screen keeps a slot directory in the system file and a background write job; loading a first-day or ending-day save starts a new run; the click speed change always yields the minimum; the mascot menu starts one item off. Emulator checks used the HUD unit's command screen state: icon to stage mapping, settings flow, calendar, the three click spots in mouse-like mode, and the data screen through a real save and load on the virtual card (the scan is slow there; a load at an ordinary date rebuilds the command screen twice). `tools/rename.py plan` on the func, data and field rows: no collision. Unapplied O.BIN names (`system_config_*`, `data_save_load*`, `game_mode*`) are quoted in notes as evidence only.
