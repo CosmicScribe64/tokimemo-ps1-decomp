@@ -214,6 +214,31 @@ All exhibit handlers (stages 5-139 without the routers) are one of three step pa
 - **TT game exhibit** (computer club, 1996: stages 12 solo, 25, 38, 51, 65, 79, 92, 105, 117, 127, 136): the girl talks, then `tt_direct` (`D_800E7D4F` bit 1) and `tt_direct_stage` (bits 2-4) are set, `saved_mode/stage/step` = mode, stage, step + 1, and TT starts. Two launch kinds: (a) stages 79 (Yukari, TT stage 1), 92 (Nozomi, 2), 117 (Yuko, 4) and 136 (Yumi, 3) first call `main_state_set(0xD0)` directly with the recorded run of that TT stage (TT's direct mode plays a demo without player input, o-tt spec); (b) every stage then (or alone, in the other seven) sets `tt_direct_stage` 0 and enters stage 141, the narrator scene (it explains the game; emulator: observed), whose step 4 calls `main_state_set(0xD0)` only when `input_device` is the pad (with a mouse it waits forever); with stage 0 selected TT shows its own title and the player plays himself. TT returns to the step after the launch; that step stores `festival_return_stage/step` again, sets `festival_display_skip` and enters stage 140 (`festival_visit_stage_resume`), which reloads cursor, boot data, HUD textures, debug font, the 0x95-sector calendar data (disc sector 0x9B94) and the month calendar, then returns to the stored step; the following steps restart the sound set, background and portrait. Reaction: after the run `tt_stages_cleared` (`D_800E7D4E`) below a threshold adds 1 to the reaction group: threshold 2 in stages 25, 38, 51, 65, 92 and 105, 3 in stage 136, 4 in stage 117 (the thresholds of 92, 117 and 136 equal the demo stage of that block; HYPOTHESIS: the player is compared with the girl's recorded run); stages 12, 79 and 127 do not test it. At the end the exhibit sets `tt_unlocked` (bit 0 of `D_800E7D4F`).
 - **Fortune telling** (computer club, 1995, `stage_fortune_telling` = stage 11): the exhibit stage stores its return stage and step, `snd_command(0x202)`, and `main_stage_set(0xB)`. Stage 11: step 0 reads URANAI (1 sector from 0x4B80) and refreshes the picker flags; step 1: if there is no companion, or a computer-club girl (girl 0 or 2 with club 3) is absent (rank 4 or refused), the player picks a girl (`select_girl2`, no back item) and `festival_companion` becomes the pick, else the present girl is used; the terminal screen lists the girl's name, "blood type" and her type, the player's name and type, each line after 0x15 frames, then a confirm press; then `festival_visit_fortune_result` (6.8) gives the result; step 23 waits 0x3D frames, stores `festival_fortune_result` and sets group (result + 3); step 25 re-sets the companion to girl 0 or 2 when that computer-club girl was absent, and returns through the saved stage and step. The calling stage adds `festival_fortune_result` to a group base to pick the reaction lines.
 
+### 5.7 Worked examples
+
+Solo template with a stage show: stage 9, `festival_visit_stage_solo_science` (16 steps).
+
+| Step | Does |
+| --- | --- |
+| 0 | start reading the lab background (D_01_69) |
+| 1 | fade the screen out (`normal_date_bg_fadeout`) |
+| 2 | when read: window title for club 2, decode and show the background, start reading BUN_PC |
+| 3 | fade in |
+| 4 | when read: group 0x3A, `festival_visit_solo_script_begin` |
+| 5 | speak the arrival lines |
+| 6 | fade out |
+| 7 | `festival_show_variant` = 1, return pair = (this stage, step + 1), `main_state_set(0x80)`; BUNKA_SD plays the show and returns to step 8 |
+| 8 | title again, `title_banner_timer` = 0xC0, start re-reading BUN_PC |
+| 9 | fade in |
+| 10 | when read: group (year - 0x24) = 0x3B, 0x3C or 0x3D (reaction by year), script begin |
+| 11 | speak |
+| 12 | fade out |
+| 13 | group 0x52 (wrap-up) |
+| 14 | speak |
+| 15 | `festival_visit_finish_visit` |
+
+Companion template: stage 59, `festival_visit_stage_saki_lit_poems` (14 steps): 0 start reading the literature background; 1 fade out (`normal_date_bggirl_fadeout`, background and girl); 2 when read: title, decode, read NI_S6W (12 sectors); 3 fade in with the girl; 4 when read: group 2 for mood ranks 0-1 or 4 otherwise, `festival_visit_saki_script_begin`; 5 speak; 6 group 1 and fade out; 7 speak (the scene without her); 8 group 3 (ranks 0-1) or 5, fade in with her; 9 speak; 10 fade out; 11 group 0 (closing lines); 12 speak; 13 finish. Emulator: with companion 4 this stage ran from frame 1150 to 2440 of the run (the lines are voiced and last long) and the gains were applied in the finish phase.
+
 ## 6. Rules
 
 ### 6.1 Group choice by mood
