@@ -56,7 +56,9 @@ def source_config(source, root="."):
     if source.is_absolute():
         source = source.relative_to(Path(root).resolve())
     parts = source.parts
-    wanted = parts[2] if len(parts) > 2 and parts[:2] == ("src", "ovl") else "main"
+    # the overlay of a src/ovl/<folder>/ file: the folder may be a readable name (T-27002)
+    wanted = (srcscan.unit_of_source(Path(root) / source) or parts[2]) \
+        if len(parts) > 2 and parts[:2] == ("src", "ovl") else "main"
     config = Path(root) / ("config/SLPM_86.053.yaml" if wanted == "main"
                            else "config/overlays/%s.yaml" % wanted)
     with config.open() as f:

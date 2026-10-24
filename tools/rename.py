@@ -548,30 +548,29 @@ def row_key(tree, row, table=None):
 
 
 def chains(rows):
-    """{key: [names in order]} from ledger rows; raises RenameError on branching or cycles."""
+    """{key + (n,): (names in order, rows)} from ledger rows: the rows of one key (one address, or one
+    type's members, one unit's types, ...) split into chains of connected names. Raises RenameError
+    on a branching chain (one name renamed to two names) or a cycle."""
     by_key = {}
     for r in rows:
-        if r.kind == "const":
-            continue
-        key = row_key(None, r)
-        by_key.setdefault(key, []).append(r)
-    out = {}
-    problems = []
+        if r.kind != "const":
+            by_key.setdefault(row_key(None, r), []).append(r)
+    out, problems = {}, []
     for key, rs in by_key.items():
-        if key[0] in ("field", "type", "local", "dir"):
-            # several chains share a key (several fields of one type): split by connected names
-            groups = []
-            for r in rs:
-                g = next((g for g in groups if r.old in g["names"] or r.new in g["names"]), None)
-                if g is None:
-                    g = {"names": set(), "rows": []}
-                    groups.append(g)
-                g["names"].update((r.old, r.new))
-                g["rows"].append(r)
-            for n, g in enumerate(groups):
-                out[key + (n,)] = chain_of(g["rows"], problems)
-        else:
-            out[key] = chain_of(rs, problems)
+        parent = {}
+
+        def find(x):
+            while parent.setdefault(x, x) != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+        for r in rs:
+            parent[find(r.old)] = find(r.new)
+        groups = {}
+        for r in rs:
+            groups.setdefault(find(r.old), []).append(r)
+        for n, g in enumerate(groups.values()):
+            out[key + (n,)] = chain_of(g, problems)
     if problems:
         raise RenameError("ledger: " + "; ".join(problems))
     return out
