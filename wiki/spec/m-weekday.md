@@ -13,7 +13,7 @@ The unit is `src/main/800737A0.c`, 19 functions. It plays one school day: the ma
 (`parameter_up_down`), the same scene for vacation days (`vacation_day_init`), and the last stage of the
 weekly health check (`week_end_exit`, mode 0x32). Facts only, from the matched C and from runs of the game in
 the emulator; guesses are marked HYPOTHESIS. Proposed names are in `config/renames/proposals/m-weekday.tsv`;
-core names (`game_state`, `day_events`, `main_stage_next`, ...) are used as in `p2a-core`. Names of functions
+core names (`game_state`, `day_events`, `mode_stage_next`, ...) are used as in `p2a-core`. Names of functions
 owned by other units (`command_girl_select`, `command_roll_poor_result`, `icon_bar_init`, `season_index`,
 `in_summer_months`, `dec_bg_*`, `holiday_activity_bg_sector`, `holiday_activity_pick_sd_set`, `holiday_sd_set_*`) are
 the proposals of the sibling drafts of the same day (m-scheduler, m-hud, h-cdio, m-holiday) and must be reconciled at
@@ -21,10 +21,14 @@ review.
 
 Naming: O.BIN developer names (`week_day`, `week_day_init`, `week_day_main`, `week_day_exit`, `week_day_main0`,
 `week_day_exit0`, `get_weekly_bg_sector`, `parameter_up_down`, `vacation_day_init`) are kept with an English
-comment row. New names extend their stems: `week_day_*` for the school day, `vacation_day_*` for the vacation
-setup, `week_end_exit` for the week-end check. `week_day` means "school day" here, not the day of the week
+comment row. Applied helper names use the ADR prefix `school_day_*`, including
+`school_day_vacation_*` for vacation setup. `week_end_exit` remains a proposed name for the week-end check. `week_day` means "school day" here, not the day of the week
 (glossary trap). SD = super-deformed (chibi) sprite, the small animated figure of the player. An SD set id picks
 one SD pack, a 41-sector disc file with the figures, frames and animation sequences of one scene.
+
+Applied batch: [[tickets/T-27040-school-day-readable-batch]] names nine helpers and the essential
+parameters/locals of `parameter_up_down`; its evidence is in `config/renames/school-day.txt`. Other
+function/data/constant names in this spec remain proposals unless the committed ledger lists them.
 
 ## What the scene does
 
@@ -70,7 +74,7 @@ different mode; only its last stage, `week_end_exit`, lives in this file.
 ## The record and who builds it
 
 `day_events[day_event_index]` is a `DayEvent` (type, girl, scene, extra; core names). For type 0x00 records
-(school day or break day, built by `day_events_build_week` for day kinds 0 and 3) the fields mean:
+(school day or break day, built by `day_event_queue_build_week` for day kinds 0 and 3) the fields mean:
 
 | field (core name) | meaning for type 0x00 | set by |
 |---|---|---|
@@ -98,27 +102,27 @@ low stress make poor days rarer.
 
 ## Mode 0x40: stages and steps
 
-`week_day` is called once per frame by `main_state_dispatch`. It switches on `stage` (`unk_1109`):
+`week_day` is called once per frame by `game_mode_dispatch`. It switches on `stage` (`unk_1109`):
 
 | stage | name | handler | notes |
 |---|---|---|---|
-| 0 | `WEEK_DAY_STAGE_INIT` | `week_day_init` | `step_timer` + 1 per call, then switch on `step`: 0 `week_day_init_screen`, 1 `week_day_init_sd_load`, 2 `week_day_init_sd_actors`; each ends with `main_step_next`, the last with `main_stage_next` |
+| 0 | `WEEK_DAY_STAGE_INIT` | `week_day_init` | `step_timer` + 1 per call, then switch on `step`: 0 `school_day_screen_init`, 1 `school_day_sd_load`, 2 `school_day_sd_actors_init`; each ends with `mode_step_next`, the last with `mode_stage_next` |
 | 1 | `WEEK_DAY_STAGE_MAIN` | `week_day_main` | `step_timer` + 1, step 0 runs `week_day_main0` |
 | 2 | `WEEK_DAY_STAGE_EXIT` | `week_day_exit` | `step_timer` + 1, step 0 runs `week_day_exit0` |
 | 10 | `WEEK_DAY_STAGE_VACATION` | `vacation_day_init` | same three-step shape; ends in stage 1 |
-| other | | `game_reset_to_title` | unexpected stage: reset to the title (never happens in normal play) |
+| other | | `game_mode_reset_to_title` | unexpected stage: reset to the title (never happens in normal play) |
 
 After the stage handler, every frame of the mode draws the day HUD in this order: `parameter_show`,
-`message_window_show`, `hizuke_show`, `icon_bar_update(1)`, `dec_bg_draw(0)`, `screen_frame_draw(1)`, and
-`mascot_update` when the mascot actor (actor 27) is visible (`D_8011F3FF & 0x80`, flag bit 7 of its
+`message_window_show`, `hizuke_show`, `hud_icon_bar_update(1)`, `dec_bg_draw(0)`, `hud_screen_frame_draw(1)`, and
+`hud_mascot_update` when the mascot actor (actor 27) is visible (`D_8011F3FF & 0x80`, flag bit 7 of its
 `draw_flags`). These are HUD calls owned by the m-hud unit; the port draws its HUD itself.
 
-### Stage 0, step 0: `week_day_init_screen`
+### Stage 0, step 0: `school_day_screen_init`
 
 Runs every frame of the step; the part before the switch runs each time.
 
-1. `daily_flags_clear` (clears `daily_event_bits` and `events_today`).
-2. If `vacation` != 0: clear the sprite tables (`sprite_tables_clear`), `main_stage_set(10)` and return (the
+1. `day_event_today_clear` (clears `daily_event_bits` and `events_today`).
+2. If `vacation` != 0: clear the sprite tables (`sprite_tables_clear`), `mode_stage_set(10)` and return (the
    vacation setup takes over with step 0).
 3. Otherwise a three-state switch on `substep` (`unk_110D`):
    - substep 0 (one frame): clear actors 96-159, background brightness 0x80, clear-screen on, texture-block
@@ -131,14 +135,14 @@ Runs every frame of the step; the part before the switch runs each time.
      `func_8005AD70` sets quad 0 up when `health` == sick (the sick overlay: the command screen loads the same graphics in
      its sick branch);
      reset the text system, hide the window title, start the typewriter at entry 0 (no text is queued, the
-     window stays empty); then `week_day_bg_read`. Its result: 0 or 1 = the background is already resident in that
+     window stays empty); then `school_day_background_read`. Its result: 0 or 1 = the background is already resident in that
      buffer (show it, substep 2); -1 = a read was started (substep 1).
    - substep 1: wait until the CD read finishes (`cd_read_sync_status() & 1`), decode it into VRAM
      (`dec_bg_decode`, h-cdio name), show the decoded buffer; if the decode reports -1 (bad data) reset the
      background cache and start the read again (stay in substep 1); else substep 2.
-   - substep 2: `main_step_next`.
+   - substep 2: `mode_step_next`.
 
-### `week_day_bg_read` and `get_weekly_bg_sector`
+### `school_day_background_read` and `get_weekly_bg_sector`
 
 - Sick-rest special: `health` == 3 (sick) and not the remedial week (bit 16 of `player_flags`) and the last chosen
   command (`last_command` low nibble) == rest (7): the background is `room_bg_sectors_weekday[season]`, the
@@ -158,9 +162,9 @@ swimming, basketball); the room uses `C_02_02` plus the season letter H (spring)
 (winter). Scenes seen in the emulator on 1995-04-05 to 04-10: command 0 library, 1 classroom,
 2 park (sketching), 3 street (jogging), 5 classroom with several friends, 6 wash room, 7 outdoors (lying asleep).
 
-### Stage 0, step 1: `week_day_init_sd_load` (with `week_day_pick_sd_set`)
+### Stage 0, step 1: `school_day_sd_load` (with `school_day_sd_set_select`)
 
-Substep 0: `week_day_pick_sd_set` chooses the SD set id (the index of an SD pack file) and stores it in `scene_work[0]` (`D_801230D0`); then the
+Substep 0: `school_day_sd_set_select` chooses the SD set id (the index of an SD pack file) and stores it in `scene_work[0]` (`D_801230D0`); then the
 read is queued:
 
 - sick-rest special (same test as above): read 9 sectors at sector 32138 (`SD_SICK_BED_PACK_LBA`, the sick-bed pack of
@@ -170,8 +174,8 @@ read is queued:
 - else (club): 41 sectors at `club_sd_set_sectors[id]` (directory `CLUB_SD`, 32 files, 27834 + 41 * id).
 
 Then substep 1. Substep 1: when the read has finished, check the file checksum (`file_checksum_ok`: 16-bit byte sum
-equals the value stored at the end of the file); on success `main_step_next`, else substep 0 again (reselect, reread).
-`week_day_pick_sd_set` details:
+equals the value stored at the end of the file); on success `mode_step_next`, else substep 0 again (reselect, reread).
+`school_day_sd_set_select` details:
 
 - `variant` = 0 when the record's `extra` is 0; 2 when the command is athletics and `extra` is 5; else 1 (this
   includes 0xF, nobody).
@@ -199,7 +203,7 @@ equals the value stored at the end of the file); on success `main_step_next`, el
   computer 8/10, 9/11; club 4 art 26/28, 27/29; club 5 brass band 22/24, 23/25; baseball 12/13, soccer 14/15,
   swimming 18/19, tennis 20/21, basketball 16/17, the same in both seasons).
 
-### Stage 0, step 2: `week_day_init_sd_actors`
+### Stage 0, step 2: `school_day_sd_actors_init`
 
 1. Clear actors 96 and 97.
 2. Pick the pack tables: sick-rest special: `addr_init_else_sd(2)`, poor flag read as 0 for the actor; club command:
@@ -226,7 +230,7 @@ equals the value stored at the end of the file); on success `main_step_next`, el
    shows girl 0, with `extra` 1, 2 or 5 the same girl 1; command 1 girl 2; command 2 girl 3; command 3 variant 1 girl 6,
    variant 2 girl 5; command 5 girl 8 beside the friend; command 6 girl 7). So `extra` acts only as 0 / nonzero (plus the
    value 5 for athletics) and 0xF = nobody; the port can pick the figure by (command, variant).
-6. `main_stage_next` (stage 1).
+6. `mode_stage_next` (stage 1).
 
 ### Stage 1: `week_day_main0` (applies the command)
 
@@ -238,9 +242,9 @@ equals the value stored at the end of the file); on success `main_step_next`, el
     `parameter_up_down(command, 0, poor)` with the record's `girl` and `scene` bytes; then `parameter_show_init()`
     (re-reads the nine parameters for the panel; changed digits are drawn in another colour); and for the club
     command only: `clubs[club % 11].exp += 1` (u16 club practice points).
-  - Every such frame: if the timer was 13 or more before the increment, `main_stage_next`; the timer (the actor's
+  - Every such frame: if the timer was 13 or more before the increment, `mode_stage_next`; the timer (the actor's
     own `anim_timer` field, idle after the animation stopped) is incremented each frame, so the result stays on screen 14 frames.
-- If `step_timer` >= 601 (0x259; counted since stage 1 began), reset the CD command ring and `main_stage_next` even
+- If `step_timer` >= 601 (0x259; counted since stage 1 began), reset the CD command ring and `mode_stage_next` even
   if the animation never stops (a safety valve).
 
 Emulator timeline of the first school day (1995-04-05, command 0, healthy; frame 1 is the second frame of the mode):
@@ -252,7 +256,7 @@ steps 0 and 1 is CD read time and need not be reproduced; the animation length c
 
 ### Stage 2: `week_day_exit0`
 
-`day_event_index += 1`; clear actors 96 and 97; `main_state_set(0x31)` (day screen). Unlike `day_event_next` it does not
+`day_event_index += 1`; clear actors 96 and 97; `game_mode_set(0x31)` (day screen). Unlike `day_event_next` it does not
 test the debug switch `D_800B3C6C` (which would go to mode 0x22).
 
 ## `parameter_up_down(command, holiday, poor)`
@@ -267,7 +271,7 @@ health  = player_flags.health                       # 0 ok, 1 injured, 2 neuroti
 div_a   = 2 if health == SICK else 1
 div_b   = 2 if health in (INJURED, NEUROTIC) and command not in (TRIVIA, LOOKS, REST) else 1
 k       = (4 if holiday else 1) * 0x1000 / (2 if poor else 1) / div_a / div_b      # integer divisions, in this order
-row     = club_activity_deltas[club] if command == CLUB else command_deltas[command]  # s8[9]
+row     = club_activity_deltas[club] if command == CLUB else school_day_command_deltas[command]  # s8[9]
 for i in 0..7:   change(i, row[i] * k       if row[i] > 0 else row[i] * 0x1000)      # gains scaled, costs not
 d8 = row[8] * k if row[8] < 0 else row[8] * 0x1000      # stress: relief (negative) scaled, a rise is not
 change(8, d8 + (0x10000 if poor else 0))                 # one call: a poor day adds one more full point of stress
@@ -281,7 +285,7 @@ Facts the port needs:
   costs. Poor, sick and injured/neurotic each halve the gains and they stack (a poor day while sick gives a quarter).
   Commands 5 (trivia), 6 (looks) and 7 (rest) are exempt from the injured/neurotic halving only; the sick halving
   applies to every command.
-- `command_deltas` is 8 rows of 9 signed bytes (row 4 is all zero because the club command uses its own table);
+- `school_day_command_deltas` is 8 rows of 9 signed bytes (row 4 is all zero because the club command uses its own table);
   `club_activity_deltas` is 11 rows (club ids 0-10; the club 11, no club, row does not exist, and the command screen
   disables the club icon for a player without club). The headline of each command row: 0 liberal arts +15, condition
   -12, stress +12; 1 science +15; 2 art +15; 3 athletics +52, guts +22, condition -38, looks -7; 5 trivia +24, looks
@@ -306,24 +310,24 @@ Entered when school-day step 0 sees `vacation` != 0 (summer, winter or spring br
 type 0x00 records for break-day kind 3 days), and called directly by the KANGEI overlay (club camp, queue type 0x42) at
 six of its own stages (3, 7, 13, 18, 23 and 27 of its day dispatcher). The three steps mirror the school-day setup:
 
-- Step 0 `vacation_day_init_screen`: HUD setup as school-day step 0 minus the daily flag clear, the cursor actor, the sick
-  overlay (quad 0 is always hidden); background by `vacation_day_bg_read`; no decode retry. Background rule: when the
+- Step 0 `school_day_vacation_screen_init`: HUD setup as school-day step 0 minus the daily flag clear, the cursor actor, the sick
+  overlay (quad 0 is always hidden); background by `school_day_vacation_background_read`; no decode retry. Background rule: when the
   first record of the queue has type 0x25 or 0x42 (tournament or camp week) or the player is not (sick and resting) it is
   the holiday background table (`holiday_activity_bg_sector`, `func_80075FA0`; per command: 0-2 the home-room file `C_02_03`, 3 `C_29_02`, 5 `C_29_10`, 6 and 7 the
   school files `C_01_43` and `C_01_44`; the club command `club_bg_sectors[club]`); when the player is sick and the last
   command is rest (and it is no camp or tournament week) `room_bg_sectors_holiday[season]` (emulator, sick and resting on 1995-07-24: the player sleeps in his room by day). Unlike the school-day
   version this test does not look at the remedial-week flag, while steps 1 and 2 of the vacation setup do. Emulator:
   command 0 on 1995-07-24 shows the player at a desk in a room with bookshelves, white shirt.
-- Step 1 `vacation_day_init_sd_load`: the SD set id comes from the holiday module (`holiday_activity_pick_sd_set`,
+- Step 1 `school_day_vacation_sd_load`: the SD set id comes from the holiday module (`holiday_activity_pick_sd_set`,
   `func_80076FDC`: summer table `holiday_sd_set_summer` = ids 0, 2, 4, 12, -, 10, 8, 6 per command, other months
   `holiday_sd_set_other` = 1, 3, 5, 12, -, 11, 9, 7; the club
   command goes through `club_sd_set_*`, variant 1 unless `command_girl_select(4)` returns 0; this lookup is made live,
   the record's `extra` is not used here); read 41 sectors at `holiday_sd_set_sectors[id]`
   (directory `HOLI_SD`, 13 files from sector 41446; id 12 is a `MAIN_SD` file) or `club_sd_set_sectors[id]`, or the 9-sector
   sick-bed pack. It only waits for the read (no checksum).
-- Step 2 `vacation_day_init_sd_actors`: as school-day step 2 with `addr_init_holiday_sd` (13 ids), the ids 6 and 7
+- Step 2 `school_day_vacation_sd_actors_init`: as school-day step 2 with `addr_init_holiday_sd` (13 ids), the ids 6 and 7
   (rest, summer and winter) clear the poor flag, actor B only for the club command when `command_girl_select(4)` is not
-  0xF. Then `main_stage_set(1)` for a school-day record (play and exit as above), or `main_stage_next` when the first
+  0xF. Then `mode_stage_set(1)` for a school-day record (play and exit as above), or `mode_stage_next` when the first
   record of the queue is a camp record (KANGEI continues its own stage machine).
 
 ## Interfaces and shared state
@@ -339,7 +343,7 @@ State the unit reads or writes (core names; offsets in `game_state`):
 | `param_*` | 0x0FC-0x11C, 9 x `ParamValue` (u16 frac, u16 value) | changed only through `parameter_change` |
 | `clubs[club].exp` | 0x66C + 4 * club, u16 | +1 per club-command day |
 | `day_events[]`, `day_event_index` | 0x69C 32 x 4 bytes, 0x71C u8 | the record of the day; the index moves on at the exit |
-| `events_today`, `daily_event_bits` | 0x71D, 0x71E u8 | cleared by `daily_flags_clear` in step 0 |
+| `events_today`, `daily_event_bits` | 0x71D, 0x71E u8 | cleared by `day_event_today_clear` in step 0 |
 | `last_command` | 0xF68 u32 (low nibble) | sick-rest test (rest = 7) |
 | `sd_anim_fast` | 0xF6E s8 | animation speed byte 0x82 instead of 1 when nonzero |
 | `step_timer`, `mode`, `stage`, `step`, `substep` | 0x1104 u32, 0x1108-0x110A, 0x110D u8 | the four-level state machine |
@@ -351,13 +355,13 @@ Reads: `day_events[day_event_index]`, `last_command`, `player_flags` (health, cl
 `vacation`, `month`, `day`, `month_calendar[0].day_kind`, `sd_anim_fast`, the nine parameters, `clubs`. Writes:
 the nine parameters (through `parameter_change`), `clubs[club].exp`, `day_event_index`, `daily_event_bits` and
 `events_today` (cleared), `scene_work[0]` (the SD id), the SD pointer globals, actors 96 and 97, mode.
-Callers: `main_state_dispatch` (mode 0x40 -> `week_day`), the day-screen queue reader (type 0x00 records ->
-`main_state_set(0x40)` after enabling only the command's icon), KANGEI (`vacation_day_init`, `parameter_up_down`),
+Callers: `game_mode_dispatch` (mode 0x40 -> `week_day`), the day-screen queue reader (type 0x00 records ->
+`game_mode_set(0x40)` after enabling only the command's icon), KANGEI (`vacation_day_init`, `parameter_up_down`),
 the holiday module (`parameter_up_down`), `func_80072BC0` (mode 0x32 default stage -> `week_end_exit`).
 
-`week_end_exit` (mode 0x32, stage 0xFF): `day_event_next(0)` (queue index + 1, `main_state_set(0x31)`, or mode 0x22 when the
-debug switch is set), then the day HUD calls (`parameter_show`, `message_window_show`, `hizuke_show`, `icon_bar_update(0)`,
-`mascot_update`, `screen_frame_draw(1)`, `dec_bg_draw(get_last_gamen_mode())`). The weekly health check
+`week_end_exit` (mode 0x32, stage 0xFF): `day_event_next(0)` (queue index + 1, `game_mode_set(0x31)`, or mode 0x22 when the
+debug switch is set), then the day HUD calls (`parameter_show`, `message_window_show`, `hizuke_show`, `hud_icon_bar_update(0)`,
+`hud_mascot_update`, `hud_screen_frame_draw(1)`, `dec_bg_draw(get_last_gamen_mode())`). The weekly health check
 (injury, neurosis, illness, recovery messages; core spec section 4.2) sets stage 0xFF when it is done. Emulator: runs
 once on each Saturday night with mode 0x32, stage 0xFF.
 
@@ -396,4 +400,4 @@ once on each Saturday night with mode 0x32, stage 0xFF.
 7. `room_bg_sectors_*`: the weekday table shows the player's room at night (command screen, sick-rest school day), the
    holiday table the same room by day (sick-rest vacation day, emulator, 1995-07-24); other holiday uses are the holiday
    unit's.
-8. `D_800B6928` has 11 club rows; a command 4 with club id 11 would read padding bytes (cannot happen: the icon is disabled).
+8. `club_activity_deltas` has 11 club rows; a command 4 with club id 11 would read padding bytes (cannot happen: the icon is disabled).

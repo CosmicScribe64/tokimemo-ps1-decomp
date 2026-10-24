@@ -949,7 +949,7 @@ void func_8007739C(void) {
 }
 
 void func_80077694(void) {
-    /* FAKE: T-20940, unused local declared first, as the sibling func_8007437C declares its record pointer; IDO gives
+    /* FAKE: T-20940, unused local declared first, as the sibling school_day_sd_actors_init declares its record pointer; IDO gives
      * every local a slot, so temp spills at sp+0x30 as in the original (sp+0x34 without it). */
     DayEvent *rec;
     s32 temp;
@@ -971,7 +971,7 @@ void func_80077694(void) {
             ((Actor *)actor_pool)[97].tpage_table = (u8 *)D_80125CB0;
             ((Actor *)actor_pool)[97].unk_05 = 2;
             /* FAKE: u8 view of the s8 flag unk_F6E (both reads in this function; the original loads it with lbu).
-             * Same view as in func_8007437C (800737A0.c, T-17016). Matches; real source unknown. T-20940 */
+             * Same view as in school_day_sd_actors_init (800737A0.c, T-17016). Matches; real source unknown. T-20940 */
             if (*(u8 *)&game_state.sd_anim_fast != 0) {
                 ((Actor *)actor_pool)[97].blink_period = 0x82;
             }

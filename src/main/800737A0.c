@@ -55,11 +55,11 @@ u8 week_day_init(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        return func_80073AD8();
+        return school_day_screen_init();
     case 1:
-        return func_800741B8();
+        return school_day_sd_load();
     case 2:
-        return func_8007437C();
+        return school_day_sd_actors_init();
     }
 }
 
@@ -82,7 +82,7 @@ s32 get_weekly_bg_sector(void) {
     return D_800B6780[h >> 0xC];
 }
 
-s32 func_80073A40(void) {
+s32 school_day_background_read(void) {
     s32 ret;
 
     if ((game_state.player_flags.b[1] & 0xF) == 3 && !(*(u16 *)&game_state.player_flags_upper.b[0] & 1) && (game_state.last_command.w & 0xF) == 7) {
@@ -93,7 +93,7 @@ s32 func_80073A40(void) {
     return ret;
 }
 
-u8 func_80073AD8(void) {
+u8 school_day_screen_init(void) {
     s32 temp_v0;
 
     day_event_today_clear(0);
@@ -126,7 +126,7 @@ u8 func_80073AD8(void) {
             text_system_reset();
             message_window_title_show(0);
             k_disp_start(0);
-            temp_v0 = func_80073A40();
+            temp_v0 = school_day_background_read();
             if (temp_v0 != -1) {
                 if ((temp_v0 == 0) || (temp_v0 == 1)) {
                     game_state.substep = 2;
@@ -141,7 +141,7 @@ u8 func_80073AD8(void) {
                 dec_bg_show_set(0, dec_bg_decode_to_vram(0));
                 if (D_800B594C == -1) {
                     dec_bg_reset();
-                    func_80073A40();
+                    school_day_background_read();
                 } else {
                     game_state.substep = 2;
                 }
@@ -155,7 +155,7 @@ u8 func_80073AD8(void) {
     }
 }
 
-void func_80073CB0(void) {
+void school_day_sd_set_select(void) {
     /* FAKE: T-25049, this saved selection local preserves the original
      * call-spill home; removing it changes four instructions. */
     s32 sp28;
@@ -313,9 +313,9 @@ void func_80073CB0(void) {
     }
 }
 
-u8 func_800741B8(void) {
+u8 school_day_sd_load(void) {
     if (game_state.substep == 0) {
-        func_80073CB0();
+        school_day_sd_set_select();
         if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_upper.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
             cd_read_sectors(9, 0x801E0000, 0x7D8A);
             game_state.substep = 1;
@@ -345,7 +345,7 @@ u8 func_800741B8(void) {
     }
 }
 
-u8 func_8007437C(void) {
+u8 school_day_sd_actors_init(void) {
     DayEvent *rec;
     s32 temp;
     u8 *tbl;
@@ -449,67 +449,68 @@ void week_day_exit0(void) {
     game_mode_set(MODE_DAY_SCREEN);
 }
 
-s32 parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
+/* Apply the command's parameter deltas, scaling gains and stress by the day's result. */
+s32 parameter_up_down(s32 command, s32 holiday_factor, s32 result_divisor) {
     s32 i;
-    s32 div_a;
-    s32 div_b;
-    s8 *row;
-    s8 *p;
+    s32 sick_gain_divisor;
+    s32 restricted_command_divisor;
+    s8 *deltas;
+    s8 *delta;
     u32 h;
 
-    div_a = 1;
-    div_b = 1;
+    sick_gain_divisor = 1;
+    restricted_command_divisor = 1;
     /* FAKE: T-25044, the extra raw-byte use keeps the byte in v1 while
      * the nibble is assigned directly to v0, avoiding an extra copy. */
     if (game_state.player_flags.b[1]) {}
     h = game_state.player_flags.b[1] & 0xF;
     if (h == 3) {
-        div_a = 2;
-    } else if (((h == 1) || (h == 2)) && (arg0 != 5) && (arg0 != 7) && (arg0 != 6)) {
-        div_b = 2;
+        sick_gain_divisor = 2;
+    } else if (((h == 1) || (h == 2)) && (command != 5) && (command != 7) && (command != 6)) {
+        restricted_command_divisor = 2;
     }
-    if (arg1 != 0) {
-        arg1 = 4;
+    if (holiday_factor != 0) {
+        holiday_factor = 4;
     } else {
-        arg1 = 1;
+        holiday_factor = 1;
     }
-    if (arg2 != 0) {
-        arg2 = 2;
+    if (result_divisor != 0) {
+        result_divisor = 2;
     } else {
-        arg2 = 1;
+        result_divisor = 1;
     }
-    if (arg0 == 4) {
+    if (command == 4) {
         h = game_state.player_flags.h;
-        row = club_activity_deltas[h >> 12];
-        p = row;
+        deltas = club_activity_deltas[h >> 12];
+        delta = deltas;
         for (i = 0; i != 8; i++) {
-            if (*p > 0) {
-                parameter_change(i, *p * (u32)(arg1 * 0x1000 / arg2 / div_a / div_b));
+            if (*delta > 0) {
+                parameter_change(i, *delta * (u32)(holiday_factor * 0x1000 / result_divisor / sick_gain_divisor / restricted_command_divisor));
             } else {
-                parameter_change(i, *p << 12);
+                parameter_change(i, *delta << 12);
             }
-            p++;
+            delta++;
         }
-        if (row[8] < 0) {
-            parameter_change(8, row[8] * (u32)(arg1 * 0x1000 / arg2 / div_a / div_b) + (arg2 << 16) + 0xFFFF0000);
+        if (deltas[8] < 0) {
+            parameter_change(8, deltas[8] * (u32)(holiday_factor * 0x1000 / result_divisor / sick_gain_divisor / restricted_command_divisor) + (result_divisor << 16) + 0xFFFF0000);
         } else {
-            parameter_change(8, (row[8] << 12) + (arg2 << 16) + 0xFFFF0000);
+            parameter_change(8, (deltas[8] << 12) + (result_divisor << 16) + 0xFFFF0000);
         }
     } else {
-        row = school_day_command_deltas[arg0];
-        p = row;
+        deltas = school_day_command_deltas[command];
+        delta = deltas;
         for (i = 0; i != 8; i++) {
-            if (*p > 0) {
-                parameter_change(i, *p * (u32)(arg1 * 0x1000 / arg2 / div_a / div_b));
+            if (*delta > 0) {
+                parameter_change(i, *delta * (u32)(holiday_factor * 0x1000 / result_divisor / sick_gain_divisor / restricted_command_divisor));
             } else {
-                parameter_change(i, *p << 12);
+                parameter_change(i, *delta << 12);
             }
-            p++;
+            delta++;
         }
-        if (row[8] < 0) {
-            parameter_change(8, row[8] * (u32)(arg1 * 0x1000 / arg2 / div_a / div_b) + (arg2 << 16) + 0xFFFF0000);
+        if (deltas[8] < 0) {
+            parameter_change(8, deltas[8] * (u32)(holiday_factor * 0x1000 / result_divisor / sick_gain_divisor / restricted_command_divisor) + (result_divisor << 16) + 0xFFFF0000);
         } else {
-            parameter_change(8, (row[8] << 12) + (arg2 << 16) + 0xFFFF0000);
+            parameter_change(8, (deltas[8] << 12) + (result_divisor << 16) + 0xFFFF0000);
         }
     }
 }
@@ -518,15 +519,15 @@ u8 vacation_day_init(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        return func_80074DE0();
+        return school_day_vacation_screen_init();
     case 1:
-        return func_80074F24();
+        return school_day_vacation_sd_load();
     case 2:
-        return func_8007505C();
+        return school_day_vacation_sd_actors_init();
     }
 }
 
-s32 func_80074D28(void) {
+s32 school_day_vacation_background_read(void) {
     s32 ret;
 
     if ((game_state.day_events[0].type == DAY_EVENT_CLUB_MASTER_A) || (game_state.day_events[0].type == DAY_EVENT_CLUB_CAMP)) {
@@ -539,7 +540,7 @@ s32 func_80074D28(void) {
     return ret;
 }
 
-u8 func_80074DE0(void) {
+u8 school_day_vacation_screen_init(void) {
     s32 temp_v0;
     GameState *g;
 
@@ -562,7 +563,7 @@ u8 func_80074DE0(void) {
         text_system_reset();
         message_window_title_show(0);
         k_disp_start(0);
-        temp_v0 = func_80074D28();
+        temp_v0 = school_day_vacation_background_read();
         if (temp_v0 != -1) {
             if ((temp_v0 == 0) || (temp_v0 == 1)) {
                 g->substep = 2;
@@ -585,7 +586,7 @@ u8 func_80074DE0(void) {
     }
 }
 
-u8 func_80074F24(void) {
+u8 school_day_vacation_sd_load(void) {
     if (game_state.substep == 0) {
         func_80076FDC();
         if ((game_state.player_flags.b[1] & 0xF) == 3 && !(*(u16 *)&game_state.player_flags_upper.b[0] & 1) && (game_state.last_command.w & 0xF) == 7) {
@@ -603,7 +604,7 @@ u8 func_80074F24(void) {
     }
 }
 
-u8 func_8007505C(void) {
+u8 school_day_vacation_sd_actors_init(void) {
     DayEvent *rec;
     s32 temp;
 
