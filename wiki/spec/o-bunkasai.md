@@ -281,13 +281,15 @@ Gain tables (rows girls, columns clubs 0 literature, 1 drama, 2 science, 3 compu
 
 ### 8.2 The event log entry (`culture_event_log_add`)
 
-Appends an `EventLogEntry` (girl = `culture_visitor_girl`, scene 20, flag, rank = `get_g_zyotai_h(girl)`, then year, month, day, weekday), advancing `event_log_count` and capping it at 0xFE. The flag is `4 * club + 1` for the club, plus 1 when girl 0 is in that club or the club mate (girl 1 for clubs 0 and 1, girl 2 for 2 and 3, girl 3 for 4 and 5) is in the club and met. Quirk: when the club is 4 (art), the visitor is girl 10, her `girl_state_rank` is 4 and neither condition holds, the function returns before writing the entry. The album and ending read this log (core).
+Appends an `EventLogEntry` (girl = `culture_visitor_girl`, scene 20, flag, rank = `get_g_zyotai_h(girl)`, then year, month, day, weekday), advancing `event_log_count` and capping it at 0xFE. The flag is `4 * club + 1` for the club, plus 1 when girl 0 is in that club or the club mate (girl 1 for clubs 0 and 1, girl 2 for 2 and 3, girl 3 for 4 and 5) is in the club and met. Quirk: when the club is 4 (art), the visitor is girl 10, her `girl_state_rank` is 4 and neither condition holds, the function returns before writing the entry. The album and ending read this log (core). Emulator check: literature club 1995 with girl 0 as the only met heroine gives the entry (girl 0, flag 1, scene 0x14, rank 0, 95-10-15, weekday 6) and count 1; Yuina as club mate of a science-club player gives flag 10; Ayako as club mate of an art-club player in 1997 gives flag 18.
 
 ### 8.3 Club-points thresholds in the member scenes
 
 The scenes of a club mate (and Shiori's own) compare the club's `exp` word: literature (club 0) and drama (club 1) scenes: `exp >= (year - 94) * 100` picks the better of two closing groups (95: 100, 96: 200, 97: 300; stage 45 also tests 300 in 1997); brass band (club 5) scenes: `exp < (year - 94) * 100` adds 1; every portrait drawing scene (art 95, visit and member blocks) tests `clubs[4].exp < 100` (adds 1 to the group); the oil painting scenes of the Shiori and Ayako member blocks (art 97) test `clubs[4].exp < 300`; Shiori's science scene tests `clubs[2].exp < 100` together with `girl_state_rank(0) >= 2`. These tests pick between two dialogue groups; they change no stat.
 
 ### 8.4 Flags set by the scenes
+
+Emulator check: the literature scene sets bit 12 of girl 0 at its end (club 0, year 95, rank below 4); the Yuina and Ayako member entries set bit 2 of their girl on entry.
 
 - `girls[g].flags` bit 2 (`acquainted`, m-scheduler's HYPOTHESIS name) is set by the entry of a member block (girls 0, 1, 2, 3).
 - Bit 12 (`festival_call_95`) in year 95 and bit 13 (`festival_call_96`) otherwise are set at the end of the literature exhibit scene of each visit block (and of the Ayako follow-up) when the girl's rank is not 4: girls 0, 2..9 and, in year 96 only, girl 10. Girl 1's scene and the member blocks do not set them. The scheduler turns them into the phone calls of the festival Sundays ([[spec/m-scheduler]]).
