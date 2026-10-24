@@ -10,7 +10,7 @@ Unit `core` of phase 2 ([[tickets/T-27010-p2-core]], parent [[tickets/T-27000-ph
 
 Scope (user decision of 2026-10-24): enough for the Godot port. Game logic, state and flow are described fully; the PS1 hardware layer (GPU, VRAM, sound driver, CD/XA, memory card, MDEC, movie) is named at module level with its entry points, section 9.
 
-Table size: 742 rows (92 `func`, 39 `data`, 236 `field`, 75 `type`, 238 `const`, 60 `comment`, 2 `file`); 85 rows carry HYPOTHESIS. Reviewed once (4 blocking findings, fixed 2026-10-24); the cross-unit name list is in section 17.
+Table size: 751 rows (92 `func`, 39 `data`, 243 `field`, 75 `type`, 238 `const`, 62 `comment`, 2 `file`); 97 rows carry HYPOTHESIS. Reviewed twice (4 blocking findings fixed on 2026-10-24, then 3 blocking and 10 non-blocking findings of the second review); the cross-unit name list is in section 17.
 
 How to read the table file: `kind scope old new note`. Apply `field` rows with the scope written as the type name *before* the `type` rows rename it (`Rec38`, `GsRec69C`, ...). `const` rows give `old` = literal, `new` = constant, `scope` = enum or mask group. `comment` rows carry an English one-liner for an O.BIN or patch name that stays.
 
@@ -25,8 +25,8 @@ Naming prefixes proposed for main (used by this table, to be followed by the mod
 `main_loop` (`func_80042134`): boot (`func_800420D0` clears 0x45498 bytes from 0x800E60A0, sets the stack, heap and gp), then init (`gpu_init`, CD ring reset, `game_state_init(1)`), then per frame:
 
 1. `func_800422C8`: `draw_buffer` = the active buffer (0 or 1); point the draw environment and the primitive arena at that buffer (`SetWorkBase`); the shooter mode 0x90 uses other arenas.
-2. If `paused` is 0, `main_state_dispatch()`, else the paused frame (`func_80043504`). Afterwards `mode_timer++`.
-3. `frame_count++`.
+2. If `paused` is 0, `main_state_dispatch()`, else the paused frame (`func_80043504`). `main_state_dispatch` itself does `mode_timer++` after the mode handler returns (end of `func_80042540`), so paused frames do not advance `mode_timer`.
+3. `frame_count++` (every loop iteration, paused or not; this is the loop-level counter).
 4. Debug pad combinations (only while the debug flag `D_800B3220` is set): two pad bits held together enter `debug_vram_view` (mode 0xFE), another pair triggers `func_8004AD60(1)`.
 5. If `restart_request` is 0: `frame_render(1)` (draw everything and present), `cd_cmd_pump()` and, while `sound_active` is set, `snd_command_pump()`.
 6. When `restart_request` becomes nonzero the loop re-runs the boot-time initialisation (`gpu_init`, `game_state_init(1)`) and starts again.
@@ -52,7 +52,7 @@ Reset matrix (what each setter clears, besides writing its own value):
 | `main_stage_set`, `main_stage_next` | (written) | 0 | no | yes | yes | no | yes | yes |
 | `main_step_set`, `main_step_next` | no | (written) | no | no | yes | no | no | yes |
 
-`main_state_set` finishes with `main_state_request_overlay`: if the new mode is an overlay mode (the case list at 0x11, 0x13-0x15, 0x20-0x22, 0x35-0x37, 0x3A, 0x43, 0x45, 0x50-0x63, 0x70-0x76, 0x80-0x82, 0x90, 0x91, 0xC2-0xC4) the mode is stored in `overlay_target_mode` and `mode` becomes 2 (`MODE_OVERLAY_LOAD`). The loader state machine picks the disc position from the target mode (a switch with hard-coded sectors), reads 0x60 sectors to 0x80132000, verifies a 16-bit byte sum stored at the file end, sets `overlay_entry` (`D_80123110`) to the overlay entry for that mode and restores `mode = overlay_target_mode`. Resident modes never go through the loader. An overlay returns to the caller's context with the `return_mode/stage/step` triple (section 3.7). `game_reset_to_title()` is the universal error path (the `default:` of mode switches, 514 uses): reset loader, game state without clearing, sprite tables, sound, backgrounds and texture slots, then `main_state_set(0x12)`.
+`main_state_set` finishes with `main_state_request_overlay`: if the new mode is an overlay mode (the case list at 0x11, 0x13-0x15, 0x20-0x22, 0x35-0x37, 0x3A, 0x43, 0x45, 0x50-0x63, 0x70-0x76, 0x80-0x82, 0x90, 0x91, 0xC2-0xC4) the mode is stored in `overlay_target_mode` and `mode` becomes 2 (`MODE_OVERLAY_LOAD`). The loader state machine picks the disc position from the target mode (a switch with hard-coded sectors), reads 0x60 sectors to 0x80132000, verifies a 16-bit byte sum stored at the file end, sets `overlay_entry` (`D_80123110`) to the overlay entry for that mode and restores `mode = overlay_target_mode`. Resident modes never go through the loader. An overlay returns to the caller's context with the `saved_mode/stage/step` triple (section 3.7), restored by the developer function `return_step()`. `game_reset_to_title()` is the universal error path (the `default:` of mode switches, 514 uses): reset loader, game state without clearing, sprite tables, sound, backgrounds and texture slots, then `main_state_set(0x12)`.
 
 ### 2.2 Mode table
 
@@ -80,7 +80,7 @@ Reset matrix (what each setter clears, besides writing its own value):
 | 0x40 | `MODE_SCHOOL_DAY` | main `week_day` | school-day command screen and the day's parameter changes |
 | 0x41, 0x42 | `MODE_NEW_YEAR_PREP`, `MODE_CHRISTMAS_PREP` | main | pre_syogatu, pre_xmas |
 | 0x43, 0x45 | `MODE_TELEPHONE`, `MODE_TELEPHONE_PROFILE` | TEL | calls; profile page (HYPOTHESIS for 0x45) |
-| 0x44 | `MODE_RUMOR` | main `uwasa_main` | rumour report |
+| 0x44 | `MODE_RUMOR` | main `uwasa_main` | rumor report |
 | 0x46 | `MODE_HOLIDAY` | main | holiday command screen, telephone, club joining, appointments |
 | 0x50 | `MODE_DATE` | DATE | an appointment starts here; 0x5E hosts the girl-specific scenes |
 | 0x51 | `MODE_SCHOOL_TRIP` | SHUGAKU | |
@@ -88,7 +88,7 @@ Reset matrix (what each setter clears, besides writing its own value):
 | 0x54 | `MODE_VALENTINE` | VALEN | |
 | 0x56, 0x57 | `MODE_PLAYER_BIRTHDAY`, `MODE_GIRL_BIRTHDAY` | GEKO | |
 | 0x58, 0x5C | `MODE_AMUSEMENT_PARK`, `_2` | DATE2 | |
-| 0x59, 0x5A, 0x5D | `MODE_GIRL_ENCOUNTER`, `MODE_GIRL_INVITATION`, `MODE_SPECIAL_EVENT` | GEKO | |
+| 0x59, 0x5A, 0x5D | `MODE_GIRL_ENCOUNTER`, `MODE_GIRL_INVITATION`, `MODE_SPECIAL_EVENT` | GEKO | HYPOTHESIS name for 0x59 (and for `DAY_EVENT_GIRL_ENCOUNTER`); the prefix GEKO stays untranslated |
 | 0x5F, 0x60 | `MODE_CLUB_CAMP`, `_2` | KANGEI | HYPOTHESIS names: the overlay is rated low confidence; queue type 0x42 comes six in a row in the club season |
 | 0x61, 0x62 | `MODE_SICK_VISIT`, `_2` | OMIMAI | |
 | 0x63 | `MODE_ENDING` | ENDING | |
@@ -96,7 +96,7 @@ Reset matrix (what each setter clears, besides writing its own value):
 | 0x72 | `MODE_SPORTS_FESTIVAL` | TAIIKU | |
 | 0x73 | `MODE_PRACTICE_MATCH` | RENSYU | |
 | 0x74-0x76 | `MODE_CLUB_MASTER_A/B/C` | MASTER | HYPOTHESIS for the meaning |
-| 0x80-0x82 | `MODE_CULTURE_STAGE`, `MODE_RPG_BATTLE`, `MODE_FESTIVAL_STALLS` | BUNKA_SD, RPG_BAT, EN_NICHI | |
+| 0x80-0x82 | `MODE_CULTURE_STAGE`, `MODE_RPG_BATTLE`, `MODE_FESTIVAL_STALLS` | BUNKA_SD, RPG_BAT, EN_NICHI | HYPOTHESIS name for 0x82; the prefix EN_NICHI stays untranslated |
 | 0x90, 0x91 | `MODE_SHOOTER`, `MODE_ALBUM` | TACO, ETC | extras |
 | 0xC2-0xC4 | `MODE_ETC_C2/C3/C4` | ETC | album/memory-card flows after the ending |
 | 0xD0 | `MODE_TT_GAME` | TT | own loader |
@@ -128,7 +128,7 @@ Old name, new name, use count (direct `D_800E6280.` reads and writes in `src/`, 
 | 0x03B | u8 | `unk_03B` | `brightness_step` | 7 | s8 fade speed per frame added to screen_brightness by func_80049044 (func_800490B4 sets it) |
 | 0x03C | u8 | `unk_03C` | `voice_mode` | 52 | OPTION/main settings: 0 always off, 1 always on, 2 on but cancelled by the cross button; dialogue and voice code test it |
 | 0x03D | u8 | `unk_03D` | `vacation` | 8 | 0 school term, 1 summer break, 2 winter break, 3 spring break; set by func_800726F0 on the day before a break; selects the... |
-| 0x03E | u8 | `unk_03E` | `year` | 414 | 95/96/97 = 1995/1996/1997 school years, 98 = final months; starts at 0x5F; compared 0x5F/0x60/0x61/0x62 in the event builders |
+| 0x03E | u8 | `unk_03E` | `year` | 414 | calendar year modulo 100, rolled over in January by `calendar_advance_day` (`func_80072338`): 95 = April-December 1995, 96 and 97 full years, 98 = January-March 1998 (the ending starts in March); starts at 0x5F; compared 0x5F/0x60/0x61/0x62 in the event builders |
 | 0x03F | u8 | `unk_03F` | `month` | 370 | 1-12; starts at 4; December rolls to month 1 and year + 1 in func_80072338 |
 | 0x040 | u8 | `unk_040` | `day` | 125 | day of month 1-31; starts at 4 |
 | 0x041 | u8 | `unk_041` | `weekday` | 37 | 0 = Monday .. 6 = Sunday; starts at 1 (Tuesday 1995-04-04); calendar sprite frame is 0x52 + weekday |
@@ -160,11 +160,11 @@ Old name, new name, use count (direct `D_800E6280.` reads and writes in `src/`, 
 | 0x69C | GsRec69C[32] | `unk_69C` | `day_events` | 115 | 32 DayEvent records: the queue of events for the coming days, built by the weekly queue builder (func_8006D7EC) |
 | 0x71C | u8 | `unk_71C` | `day_event_index` | 103 | read position in day_events; advanced by day_event_next |
 | 0x71D | u8 | `unk_71D` | `events_today` | 6 | HYPOTHESIS: ++ each time a girl encounter record (types 0x44/0x46/0x47) is run; cleared by func_8007259C each day |
-| 0x71E | u8 | `unk_71E` | `birthday_done_bits` | 70 | bit 1 = Shiori's birthday scene played, bit 2 = another girl's, bit 4 = the player's (set by the birthday overlays); the queue... |
+| 0x71E | u8 | `unk_71E` | `daily_event_bits` | 70 | per-day done byte, cleared by `daily_flags_clear`; bits 1, 2 and 4 are the birthday bits the queue reader tests (1: type 0x32 with sub-id 0, Shiori's; 2: type 0x32 with a non-zero sub-id; 4: type 0x33); HYPOTHESIS: bits 8, 0x10, 0x20, 0x40, 0x80 are other done-today marks (see section 3.5), meaning unknown |
 | 0x71F | u8 | `unk_71F` | `daily_check_done` | 12 | HYPOTHESIS: set to 1 before the telephone/appointment prompt (mode 0x43) and by the day-start code; cleared when a new queue... |
-| 0x720 | u8 | `unk_720` | `return_mode` | 38 | saved main mode to resume after a sub-scene (set from mode, restored with main_state_set) |
-| 0x721 | u8 | `unk_721` | `return_stage` | 59 | saved stage, restored with main_stage_set |
-| 0x722 | u8 | `unk_722` | `return_step` | 49 | saved step (often step + 1), restored with main_step_set |
+| 0x720 | u8 | `unk_720` | `saved_mode` | 38 | saved main mode to resume after a sub-scene (set from mode, restored with main_state_set) |
+| 0x721 | u8 | `unk_721` | `saved_stage` | 59 | saved stage, restored with main_stage_set |
+| 0x722 | u8 | `unk_722` | `saved_step` | 49 | saved step (often step + 1), restored with main_step_set |
 | 0x723 | u8 | `unk_723` | - (kept) | 0 | unused or not proven (see open questions) |
 | 0x724 | u8 | `unk_724` | `appt_place_0` | 19 | HYPOTHESIS: recent appointment places; unk_725 is the newest (appointment_launch shifts the others), compared with unk_724 to... |
 | 0x725 | u8 | `unk_725` | `appt_place_1` | 18 | see appt_place_0 |
@@ -176,7 +176,7 @@ Old name, new name, use count (direct `D_800E6280.` reads and writes in `src/`, 
 | 0x74C | u8[0x10] | `unk_74C` | `girl_event_bits` | 7 | HYPOTHESIS: one byte per girl; GEKO tests/sets bits 1, 2, 4 for scenes 0xE, 0xF, 7 |
 | 0x75C | u8 | `unk_75C` | `appointment_flag` | 4 | copy of appointment_slots[0] bit 24, stored by appointment_launch |
 | 0x75D | u8 | `unk_75D` | `date_girl` | 90 | girl of the current date or event (copied from current_girl at launch); read by DATE, KANGEI, SHUGAKU, DATE2 |
-| 0x75E | GsRec75E[256] | `unk_75E` | `event_log` | 85 | 256 EventLogEntry records (girl, scene, rank, date) appended by event_log_add |
+| 0x75E | GsRec75E[256] | `unk_75E` | `event_log` | 85 | 256 EventLogEntry records (girl, scene, rank from `get_g_zyotai_h`, date) appended by event_log_add |
 | 0xF5E | u8 | `unk_F5E` | `event_log_count` | 126 | number of valid entries in event_log, capped at 0xFE |
 | 0xF5F | u8 | `unk_F5F` | `current_girl` | 1219 | index of the girl record in use (1,219 uses); set by select_girl/change_girl and by the event launchers |
 | 0xF60 | u8 | `unk_F60` | `text_lines_total` | 5 | HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step func_8005215C |
@@ -209,7 +209,7 @@ Old name, new name, use count (direct `D_800E6280.` reads and writes in `src/`, 
 | 0xF90 | GsRecF90[32] | `unk_F90` | `menu_items` | 14 | 16 x 2 MenuItem rects (menu 0 and 1) set by menu_set, tested by menu_check |
 | 0x1090 | u8 | `unk_1090` | `menu_count_0` | 4 | item count of menu 0 (MenuSelection view at +0x1090) |
 | 0x1091 | u8 | `unk_1091` | `menu_count_1` | 0 | item count of menu 1 |
-| 0x1092 | u8 | `unk_1092` | `menu_mode` | 22 | settings: 0 mouse-like, 1 menu A, 2 menu B, 3 mouse-like + A (low 2 bits) |
+| 0x1092 | u8 | `unk_1092` | `menu_mode` | 22 | settings: 0 mouse-like, 1 menu A, 2 mouse-like + A (L1 held switches to the pad cursor), 3 menu B (directional cursor); stored value, not the screen item number (low 2 bits) |
 | 0x1093 | s8 | `unk_1093` | `menu_cursor_0` | 100 | pad cursor item of menu 0 (-1 none) |
 | 0x1094 | s8 | `unk_1094` | `menu_cursor_1` | 118 | pad cursor item of menu 1; settings screens switch on it after confirm |
 | 0x1095 | s8[0xD] | `unk_1095` | `menu_hit` | 10 | menu_hit[menu] = item under the pointer/cursor (-1 none); bytes [3..6] double as the s32 actor_draw_last |
@@ -259,25 +259,25 @@ Old name, new name, use count (direct `D_800E6280.` reads and writes in `src/`, 
 | 0x142A | u8[2] | `unk_142A` | - (kept) | 0 | unused or not proven (see open questions) |
 | 0x142C | GsRec142C[33] | `unk_142C` | `csr_queue` | 0 | 33 CsrLoad records queued by load_csr_ab/load_csr_tp and flushed by csr_load_vram |
 | 0x163C | s32[128] | `unk_163C` | `scratch_words` | 57 | HYPOTHESIS: 128-word scratch used by TACO and the VRAM loaders; its first 0x50 bytes also hold the saved free-icon layout... |
-| 0x183C | u8[0x200] | `unk_183C` | - (kept) | 11 | unused or not proven (see open questions) |
-| 0x1A3C | s32 | `unk_1A3C` | - (kept) | 12 | unused or not proven (see open questions) |
+| 0x183C | u8[0x200] | `unk_183C` | `scratch_buffer` | 11 | HYPOTHESIS: overlay scratch; NAME_ENT stages a 128-word palette in it before `load_palette`, TACO keeps 25 (x, y) word pairs of a drawing effect in it |
+| 0x1A3C | s32 | `unk_1A3C` | `overlay_tpage_table` | 12 | HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into the actors' `tpage_table` |
 | 0x1A40 | u8[0xC] | `unk_1A40` | - (kept) | 0 | unused or not proven (see open questions) |
-| 0x1A4C | s32 | `unk_1A4C` | - (kept) | 10 | unused or not proven (see open questions) |
+| 0x1A4C | s32 | `unk_1A4C` | `overlay_frame_table` | 10 | HYPOTHESIS: same use, copied into the actors' `frame_table` |
 | 0x1A50 | u8[0xC] | `unk_1A50` | - (kept) | 0 | unused or not proven (see open questions) |
-| 0x1A5C | s32 | `unk_1A5C` | - (kept) | 10 | unused or not proven (see open questions) |
+| 0x1A5C | s32 | `unk_1A5C` | `overlay_sequence_table` | 10 | HYPOTHESIS: same use, copied into the actors' `sequence_table` |
 | 0x1A60 | u8[0xC] | `unk_1A60` | - (kept) | 0 | unused or not proven (see open questions) |
-| 0x1A6C | s32 | `unk_1A6C` | - (kept) | 7 | unused or not proven (see open questions) |
+| 0x1A6C | s32 | `unk_1A6C` | `overlay_palette_a` | 7 | HYPOTHESIS: palette block passed to `load_palette` by TEL, NAME_ENT, TACO; TACO also copies 128 words from it into `scratch_words` |
 | 0x1A70 | u8[0xC] | `unk_1A70` | - (kept) | 0 | unused or not proven (see open questions) |
-| 0x1A7C | s32 | `unk_1A7C` | - (kept) | 2 | unused or not proven (see open questions) |
+| 0x1A7C | s32 | `unk_1A7C` | `overlay_image_buffer` | 2 | HYPOTHESIS: base of six 0x4000-byte image blocks (NAME_ENT) |
 | 0x1A80 | u8[4] | `unk_1A80` | - (kept) | 0 | unused or not proven (see open questions) |
-| 0x1A84 | s32 | `unk_1A84` | - (kept) | 2 | unused or not proven (see open questions) |
+| 0x1A84 | s32 | `unk_1A84` | `overlay_palette_b` | 2 | HYPOTHESIS: second palette block, passed to `func_80043914` slot 0x18 by NAME_ENT |
 | 0x1A88 | u8[8] | `unk_1A88` | - (kept) | 0 | unused or not proven (see open questions) |
 
 ## 3. Calendar, day structure and the event queue
 
 ### 3.1 Date
 
-`year/month/day/weekday` are bytes: year 95, 96, 97 (the three school years; the last months are year 98), month 1-12, day 1-31, weekday 0 (Monday) to 6 (Sunday). Start: 1995-04-04, a Tuesday (weekday 1). `calendar_advance_day` adds one day: weekday wraps at 7; month length 31 for months 1,3,5,7,8,10,12, 30 for 4,6,9,11, February 29 days in year 96 and 28 otherwise; after December the month is 1 and the year +1. `day_count` (u16) is incremented once per advance (days since the start; the code uses 730 and `/365` as year boundaries). In appointment and birthday checks month 13 means January of the following year.
+`year/month/day/weekday` are bytes: year is the calendar year modulo 100 and rolls over in January (95 = April-December 1995, 96, 97, 98 = January-March 1998, where the game ends), month 1-12, day 1-31, weekday 0 (Monday) to 6 (Sunday). Start: 1995-04-04, a Tuesday (weekday 1). `calendar_advance_day` adds one day: weekday wraps at 7; month length 31 for months 1,3,5,7,8,10,12, 30 for 4,6,9,11, February 29 days in year 96 and 28 otherwise; after December the month is 1 and the year +1. `day_count` (u16) is incremented once per advance (days since the start; the code uses 730 and `/365` as year boundaries). In appointment and birthday checks month 13 means January of the following year.
 
 From year 98, month 3 (day != 0) the queue reader stops dispatching and calls `main_step_next`; step 1 of the day screen then loads the ending sound bank and starts `MODE_ENDING` (0x63). The graduation-day scenes before that (exam rank list, career choice, confession counting) are ETC modes selected by queue types.
 
@@ -309,9 +309,9 @@ The exact random thresholds are in the matched C (`func_8006D7EC`); they are not
 
 ### 3.5 The queue reader
 
-`day_event_dispatch` (`func_8007132C`, run by the day screen, stage 0 step 0) first applies fixed rules (from 1998-03 on it hands over to the ending, section 3.1; two fixed late-February specials; a forced encounter (mode 0x59) with a met girl whose syoushin is at least 0x4C and whose bit 16 is still clear (the reader sets bit 16 when it starts the encounter, and `girl_counters_clamp` clears it again while her syoushin is below 0x32, see below); skipping birthday records whose `birthday_done_bits` bit is set; appointment prompt: if the first appointment is today it opens the telephone mode with stage 2 when the girl's state rank is 4, 0 when the place history changed, 1 otherwise), then switches on `day_events[day_event_index].type`. Type 0xFA is skipped. Type 0xFB (end of a day) never reaches the switch: the reader checks for telephone calls (mode 0x43 with a stage code 3-9 chosen by date and girl state), for a rumour report (mode 0x44 when a met girl has `syoushin` of 0x3D or more and her flag bit 17 is clear; the reader sets bit 17 for every such girl in the pass, and `girl_counters_clamp` clears it while syoushin is below 0x32), then does `day_event_index++` and `calendar_advance_day()` and continues with the next record. The type 0xFF at the end of the queue also runs the Sunday telephone checks before it goes to the command screen.
+`day_event_dispatch` (`func_8007132C`, run by the day screen, stage 0 step 0) first applies fixed rules (from 1998-03 on it hands over to the ending, section 3.1; two fixed late-February specials; a forced encounter (mode 0x59) with a met girl whose syoushin is at least 0x4C and whose bit 16 is still clear (the reader sets bit 16 when it starts the encounter, and `girl_counters_clamp` clears it again while her syoushin is below 0x32, see below); skipping birthday records (types 0x32 and 0x33) whose bit in `daily_event_bits` is set (bit 1, 2 or 4, see the field map); appointment prompt: if the first appointment is today it opens the telephone mode with stage 2 when `get_g_zyotai_s` of the appointment girl is 4, 0 when the place history changed, 1 otherwise), then switches on `day_events[day_event_index].type`. Type 0xFA is skipped. Type 0xFB (end of a day) never reaches the switch: the reader checks for telephone calls (mode 0x43 with a stage code 3-9 chosen by date and girl state), for a rumor report (mode 0x44 when a met girl has `syoushin` of 0x3D or more and her flag bit 17 is clear; the reader sets bit 17 for every such girl in the pass, and `girl_counters_clamp` clears it while syoushin is below 0x32), then does `day_event_index++` and `calendar_advance_day()` and continues with the next record. The type 0xFF at the end of the queue also runs the Sunday telephone checks before it goes to the command screen.
 
-Every pass of the reader starts with two housekeeping calls. `func_80071280` (`girl_flag4_may_clear`) clears flag bit 4 of girls 0-10 on May 6 (HYPOTHESIS: a once-a-year May flag; DATE sets it on a May 3-4 date and a date on May 4-5 gives a girl that has it 2 extra tokimeki). `func_80071038` (`girl_counters_clamp`) clamps tokimeki, affection and syoushin of girls 0-10 to 0..0x80 and clears flag bits 16 and 17 whenever the girl's syoushin is below 0x32. So the forced encounter and the rumour are not one-time events: both re-arm each time a girl's syoushin falls below 0x32 and later climbs again, and the effective syoushin cap seen by the rules is 0x80, not the 0xFF of `check_para_limit`.
+Every pass of the reader starts with two housekeeping calls. `func_80071280` (`girl_flag4_may_clear`) clears flag bit 4 of girls 0-10 on May 6 (HYPOTHESIS: a once-a-year May flag; DATE sets it on a May 3-4 date and a date on May 4-5 gives a girl that has it 2 extra tokimeki). `func_80071038` (`girl_counters_clamp`) clamps tokimeki, affection and syoushin of girls 0-10 to 0..0x80 and clears flag bits 16 and 17 whenever the girl's syoushin is below 0x32. So the forced encounter and the rumor are not one-time events: both re-arm each time a girl's syoushin falls below 0x32 and later climbs again, and the effective syoushin cap seen by the rules is 0x80, not the 0xFF of `check_para_limit`.
 
 | type | mode | note |
 |---|---|---|
@@ -336,13 +336,15 @@ Every pass of the reader starts with two housekeeping calls. `func_80071280` (`g
 
 `day_event_next` advances the index and returns to mode 0x31. Encounter placeholders are resolved when the week is built by `schedule_girls_gakko`: for each 0x44, if the next record is a birthday or sick visit, or the player is ill (health 3), it becomes a skip (0xFA); otherwise a special event (0x45) is chosen by `special_event_select`, else an invitation (0x46, at most one per week) by `date_sasoi_judge`, else the placeholder is kept for `geko_judge` to fill the girl, else skipped.
 
+`daily_event_bits` (`unk_71E`) is cleared, together with `events_today`, by `daily_flags_clear`, which the queue reader calls at its calendar advance and which `week_day_init` (`func_80073AD8`) calls at its start. The reader tests only bits 1, 2 and 4 (birthday records, see the field map). Bits 8, 0x10, 0x20, 0x40 and 0x80 are other per-day done marks that scene overlays set and GEKO tests; their meaning is HYPOTHESIS (open question 16). A port should keep the byte as a plain bit set and not give the bits birthday-only names.
+
 ### 3.6 Appointments
 
-`appointment_slots` are eight words (date promises). Bits 0-4 place + 1, 12-15 month, 16-20 day, 24 a flag, 25-28 girl, 29 active. `appointment_find_today(year, month, day)` returns the 1-based slot whose month and day match (it returns -1 for the last day of a school year and the days it excludes). `appointment_launch` pushes the place into `appt_place_*`, stores a `DAY_EVENT_APPOINTMENT` record (girl, place), copies the girl to `current_girl` and `date_girl`, the flag to `appointment_flag`, and enters `MODE_DATE`. The list is sorted by month and day with January treated as month 13 in December (`func_8006B0C8`).
+`appointment_slots` are eight words (date promises). Bits 0-4 place + 1, 12-15 month, 16-20 day, 24 a flag, 25-28 girl, 29 active. `appointment_find_today(year, month, day)` returns the 1-based slot whose month and day match (it returns -1 on December 24, on January 1 and from March 1998 on, whatever the slots hold; otherwise 0 when no slot matches). `appointment_launch` pushes the place into `appt_place_*`, stores a `DAY_EVENT_APPOINTMENT` record (girl, place), copies the girl to `current_girl` and `date_girl`, the flag to `appointment_flag`, and enters `MODE_DATE`. The list is sorted by month and day with January treated as month 13 in December (`func_8006B0C8`).
 
 ### 3.7 Return context and the event log
 
-A scene that must resume after a sub-scene saves `return_mode`, `return_stage` and `return_step` (usually the step + 1) and restores them with the three setters. `event_log_add(scene, flag)` appends an `EventLogEntry` at `event_log_count` (capped at 0xFE) with the current girl, the girl's state rank (or the override in `D_80122D48` minus one; rank 0 for girl 12) and the date; MASTER, DATE and others read the entries back (index `count - 1` is the latest).
+A scene that must resume after a sub-scene saves `saved_mode`, `saved_stage` and `saved_step` (usually the step + 1) and restores them with the three setters (the developer function `return_step()` does exactly this). `event_log_add(scene, flag)` appends an `EventLogEntry` at `event_log_count` (capped at 0xFE) with the current girl, the rank `get_g_zyotai_h(girl)` (not `girl_state_rank`; the two functions have different thresholds, section 5.2) or the override in `D_80122D48` minus one when it is 1-6 (the override is cleared after the call), rank 0 for girl 12, and the date; MASTER, DATE and others read the entries back (index `count - 1` is the latest).
 
 ## 4. Player state
 
@@ -368,7 +370,7 @@ Nine records `param_*` in `PARAM_*` order: condition, liberal arts, science, art
 
 `girls[16]`, index = `GIRL_*` (0 Shiori, 1 Mio, 2 Yuina, 3 Ayako, 4 Saki, 5 Yukari, 6 Nozomi, 7 Mira, 8 Yuko, 9 Megumi, 10 Yumi, 11 Miharu, 12 Rei, 13 Yoshio, 14 Sotoi). The 11 heroines 0-10 are walked by most loops; scoring uses `girl % 13`. Fields: `tokimeki`, `affection`, `syoushin` (16.16 words, value at +2/+6/+0xA), `flags` (`GirlFlags`), `birthday` (month, day, blood type), `event_counters[0x24]`.
 
-`flags` bits (named): `met` bit 1 (set at start for girls 0 and 12), `club` bits 20-23 (club id, 11 = none; new-game setup in NAME_ENT: girl 0 gets `(day * 3 + month) % 11` from her birthday; girls 1-4 each have two possible clubs (literature or drama, science or computer, art or brass band, baseball or soccer) and take the one that differs from girl 0's club when girl 0 is in one of the two, else a random one; girl 5 tennis, girl 6 swimming, girl 10 basketball, girls 7-9 explicitly none; girls 11-14 keep the none value 11 that `func_80041C2C` gives all 16 records, because the club setup only writes girls 0-10), `story_stage` bits 9-11 (HYPOTHESIS). Bit 0 is cleared daily for girls 0-10 (`girl_met_today_clear`). Other bits (2, 3, 6, 12-14, 16-19) are tested by events; the bit 2 pairs with `met` in club-related checks (HYPOTHESIS: introduced).
+`flags` bits (named): `met` bit 1 (set at start for girls 0 and 12), `club` bits 20-23 (club id, 11 = none; new-game setup in NAME_ENT: girl 0 gets `(day * 3 + month) % 11` from her birthday; girls 1-4 each have two possible clubs (literature or drama, science or computer, art or brass band, baseball or soccer) and take the one that differs from girl 0's club when girl 0 is in one of the two, else a random one; girl 5 tennis, girl 6 swimming, girl 10 basketball, girls 7-9 explicitly none; girls 11-14 keep the none value 11 that `func_80041C2C` gives all 16 records, because the club setup only writes girls 0-10), `story_stage` bits 9-11 (HYPOTHESIS). Bit 0 is set for the current girl by GEKO (`func_80133C50`) and cleared for girls 0-10 by `girl_flags_bit0_clear` when the queue reader starts a record of type 0xFD, 0x20, 0x24, 0x28, 0x2C, 0x40, 0x41 or 0x43; it is not cleared once per day, and its meaning is unknown (HYPOTHESIS: a scene-played mark for the current stretch). Other bits (2, 3, 6, 12-14, 16-19) are tested by events; the bit 2 pairs with `met` in club-related checks (HYPOTHESIS: introduced).
 
 ### 5.2 Scores and state ranks
 
@@ -376,10 +378,11 @@ Nine records `param_*` in `PARAM_*` order: condition, liberal arts, science, art
 - `get_h_tokimeki(g)` = clamp(`tokimeki * D_800B4100[g] / 100` + the preference bonus, 0, 100). The preference bonus: let `mask = D_800B4110[g]`, `kind = D_800B4120[g]` (1..6; 0 for girls 11 and 12), thresholds `lv[0..6] = {128, 100, 90, 70, 50, 30, 10}` (`D_800B4198`). For each parameter index i in 1..6 with `mask` bit i set, find the first k in 0..6 such that `param_i.value > lv[k] + offset(kind, k)` and add `D_800B4130[g][k]` (signed bytes); if none matches add entry 7. Offsets per kind (k = 0..6): kind 1 `50,35,20,20,5,5,0`; kind 2 all 0; kind 3 `50,50,50,20,20,20,20`; kind 4 `10,10,10,10,0,0,0`; kind 5 `20,20,20,20,0,-5,0`; kind 6 `0,0,0,0,-5,-5,-5`. (Girls 11 and 12 use zero weights and masks.)
 - `get_g_zyotai_h(g)` (rank 0 best, 4 worst): yuukou < 10 -> 4; < 50 -> 3; tokimeki < 50 -> 2; < 80 -> 1; else 0.
 - `get_g_zyotai_s(g)`: yuukou < 10 -> 4; < 30 -> 3; < 50 -> (tokimeki < 50 ? 3 : 1); < 80 -> (tokimeki < 50 ? 2 : 1); else (tokimeki < 50 ? 0x82 : 0x80). Bit 7 means "affection at least 80". `girl_state_rank(g)` = this value & 0x7F.
+- The two functions disagree for the same girl: with affection 40 and tokimeki 60, `_h` returns 3 and `_s` returns 1. Scenes switch on `girl_state_rank` (`_s`); the appointment prompt tests `_s == 4`; only `event_log_add` stores the `_h` value. A port must keep both.
 
 ### 5.3 Daily changes and caps
 
-`check_para_limit` caps girls 0-10: tokimeki and affection at 0..0x80 (the word is zeroed when negative), syoushin at 0..0xFF; the queue reader's `girl_counters_clamp` (`func_80071038`) then clamps all three to 0..0x80, so 0x80 is the working cap of syoushin. `yuukou_down`: for every met girl, affection -1 (floor 0) when `day / 7 == 0` (days 1-6), and for girl 0 also when `day / 7 == 2` (days 14-20). `syoushin_up`: for every met girl with weighted affection < 10, syoushin +5. Both run once per queue build (weekly, mode 0x30 step 3) and only while `vacation` is 0. Effects of syoushin: >= 0x3C blocks encounters and phone calls; >= 0x4C allows a forced encounter (flag bit 16 is set when it fires and cleared again once syoushin is below 0x32); >= 0x3D at a day end queues a rumour report (flag bit 17, same re-arm). HYPOTHESIS: resentment counter; the name is kept from the developer's function.
+`check_para_limit` caps girls 0-10: tokimeki and affection at 0..0x80 (the word is zeroed when negative), syoushin at 0..0xFF; the queue reader's `girl_counters_clamp` (`func_80071038`) then clamps all three to 0..0x80, so 0x80 is the working cap of syoushin. `yuukou_down`: for every met girl, affection -1 (floor 0) when `day / 7 == 0` (days 1-6), and for girl 0 also when `day / 7 == 2` (days 14-20). `syoushin_up`: for every met girl with weighted affection < 10, syoushin +5. Both run once per queue build (weekly, mode 0x30 step 3) and only while `vacation` is 0. Effects of syoushin: >= 0x3C blocks encounters and phone calls; >= 0x4C allows a forced encounter (flag bit 16 is set when it fires and cleared again once syoushin is below 0x32); >= 0x3D at a day end queues a rumor report (flag bit 17, same re-arm). HYPOTHESIS: resentment counter; the name is kept from the developer's function.
 
 ### 5.4 Per-girl arrays
 
@@ -421,7 +424,7 @@ Text: `set_kanji_string(x, y, attr, string, extra)` appends a `TextEntry` to the
 
 ## 10. Shared records and types
 
-All shared types and their proposed names (the 88 types of `include/game.h` and `include/main_api.h`; the rest keep their names). A size suffix is dropped once a role name exists.
+All shared types and their proposed names (the 73 types of `include/game.h` and `include/main_api.h` plus 12 file-local views in `src/main`: 75 renames and 10 types that keep their names, listed below the table). A size suffix is dropped once a role name exists.
 
 
 | old | new | role |
@@ -450,7 +453,7 @@ All shared types and their proposed names (the 88 types of `include/game.h` and 
 | `GsRec0FC` | `ParamValue` | one player parameter: 16.16 fixed point, frac at +0, value at +2 |
 | `GsRec66C` | `ClubRecord` | per club: u16 exp at +0, level byte at +2, flag byte at +3 (ClubFlagBits view of the word) |
 | `GsRec69C` | `DayEvent` | queue record: type, girl, scene, flags |
-| `GsRec75E` | `EventLogEntry` | girl, flag, scene, girl rank, year, month, day, weekday |
+| `GsRec75E` | `EventLogEntry` | girl, flag, scene, rank (`get_g_zyotai_h`), year, month, day, weekday |
 | `GsRecF90` | `MenuItem` | menu item rectangle x, y, w, h, hover flag, disabled flag |
 | `GsRec1328` | `PaletteLoad` | queued palette upload: source pointer and 4 parameter bytes |
 | `GsRec142C` | `CsrLoad` | queued image upload: source pointer, tpage slot, rect (x, y, w, h) |
@@ -505,7 +508,7 @@ All shared types and their proposed names (the 88 types of `include/game.h` and 
 
 Kept as they are: `DialogueWork`, `DialogueTables`, `GameState`, `FontRange`, `SaveBank`, `StHEADER`, `StrCtx`, `CdLevelWork`, `Fix32` (descriptive or PsyQ-style names) and `TaiikuBig` (owned by the TAIIKU analyst). The two bit-field views of the byte at GameState +0xF6 (`GsF6Bits`, `F6Bits`), the two `SpriteQuad` views (`Rec24`, `SprEnt`) and `AppointmentEntry`/`AppointmentBits` are merge candidates for a later pass (the matched code needs the separate views today).
 
-Field renames of the shared records (234 `field` rows, 133 in `GameState` including the two macro aliases) use the pre-rename type name as scope. Fields with no proven role keep `unk_XX` (30 of the 161 top-level `GameState` members: unused bytes, the unknown 0x200-byte area at +0x183C and the pointer words at +0x1A3C..+0x1A84).
+Field renames of the shared records (243 `field` rows, 140 in `GameState`) use the pre-rename type name as scope. Two of the `GameState` rows (`unk_54C`, `unk_54C_0`) rename macro aliases of `u54C`, not struct members; the apply step renames them in `include/main_api.h` with the `#define`. Fields with no proven role keep `unk_XX` (23 of the 161 top-level `GameState` members: unused bytes and alignment gaps; 21 have no use in matched code, `unk_F63` and `unk_F71` one each). Seven members that are used but not understood have HYPOTHESIS names (`scratch_buffer`, `overlay_*`).
 
 ## 11. Enums and masks (const rows)
 
@@ -662,7 +665,7 @@ NAME_ENT then collects the player's name, birthday and blood type and the birthd
 5. `progress_state` flag bytes (21): which HUD facts they record (first-time hints?).
 6. `unk_F6E` (`sd_anim_fast`): the in-game hint names it the SD character animation speed switch (pad 2 START); the animations it changes besides actors 96 and 97 and the parameter panel are not checked.
 7. `unk_71F` (`daily_check_done`) and `unk_71D` (`events_today`): names are inferred from set/clear sites only.
-8. `scratch_words`/`unk_183C`/`unk_1A3C..`: the shared scratch areas; TACO and NAME_ENT hand pointers through the latter.
+8. `scratch_words`, `scratch_buffer` and the `overlay_*` pointers (+0x1A3C..+0x1A84): HYPOTHESIS names from the call sites. `scratch_buffer` is a palette staging area in NAME_ENT and a table of 25 (x, y) pairs in TACO; the pointers are set by TEL and NAME_ENT to addresses in overlay RAM. The overlay analysts for TEL, NAME_ENT and TACO can confirm or rename them.
 9. `frame_hcount_limit`: needs a timing check in the emulator (the emulator image is not built in this tree).
 10. Mostly answered, see section 3.2: the first `month_data_table` entry points at the 0x801A0000 read address and 0x95 sectors hold 36 blobs of about 0x2100 bytes, so the blobs come from that one read (the other table entries were not decoded). Still open: whether every blob's marker table is complete.
 11. `D_800B3220` (debug flag), `D_800B3C6C` (switches the in-game option mode), `D_80122D48` (rank override of `event_log_add`) have no names yet.
@@ -670,6 +673,8 @@ NAME_ENT then collects the player's name, birthday and blood type and the birthd
 13. `unk_1095[0xD]` overlaps an `s32` (`actor_draw_last`, written as `*(s32 *)&unk_1095[3]`, 0x9F or 0xA0 in most scenes). The field rename gives `menu_hit`; splitting it into `menu_hit[3]` + `s32 actor_draw_last` + padding needs a header change that the apply step must check byte by byte.
 14. `include/main_api.h` (3,227 lines) keeps its name; splitting it per main module (and moving the enums into `include/game_enums.h`) is a later step. `include/game.h` is proposed to become `include/game_types.h`.
 15. File names: only the two headers have `file` rows. The `src/main/*.c` module files that hold the top-100 functions get no English name here; another unit (module level, or the hardware units for the CD, sound and GPU files) must own them, otherwise file rows are added later.
+16. `daily_event_bits` (`unk_71E`): only bits 1, 2 and 4 are understood (the birthday skips of the queue reader). Bits 8, 0x10, 0x20, 0x40 and 0x80 are set by DATE, DATE2, GEKO, SHUGAKU, SHOUGATU, VALEN and MASTER and tested by GEKO (for example bit 8 blocks a forced encounter, bit 0x10 feeds a GEKO flag); VALEN, KANGEI and others also set bit 4. The DATE, GEKO and SHOUGATU analysts can name the bits.
+17. `girl_flags_bit0_clear` (`func_8006CF80`): GirlFlags bit 0 is set by GEKO and cleared before eight kinds of queue records; its meaning is open (it is not a once-a-day mark).
 
 ## 17. Reconciliation with the hardware units
 
