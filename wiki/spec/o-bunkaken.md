@@ -386,7 +386,7 @@ Overlay tables (`data` rows in the table): `festival_visit_stage_table` (142 poi
 - Stage 141 waits forever with a mouse instead of a pad.
 - The second clause of the player-birthday test (companion 0xB) can never be true, and phase 10's switch case for id 11 is dead.
 - `festival_visit_script_ayako_club` stores the command-table pointer twice; the second value is the one that stays.
-- In 1996 girls of the art and drama clubs cannot invite; girl 0 additionally can lose the invitation by the final rule.
+- In 1996 the invitation pick ignores girls whose club is drama or art; when girl 0 is the only candidate and is in one of those clubs nobody invites the player at all.
 - Entry-phase 0 increments the phase through an aliasing store; a port should just set phase 1.
 
 ## 13. Open questions
