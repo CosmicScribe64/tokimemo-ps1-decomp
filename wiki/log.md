@@ -7,18 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ticket | T-25016 queue verification: top bulk candidates funcdiff-verified (best 210 resolved lines); packet scores flatter by ~10x; Tier 1 re-labelled a reconstruction backlog
-
-## [2026-10-22] ticket | T-25013, T-25014, T-25015 marked Done (merged in PR #66); T-25016 to In Review with its PR; status page next-step rewritten for the post-lever state
-
-## [2026-10-22] decision | Replan completion after contributor research
-
-Fetched and fast-forwarded clean main to 7c87f223e, read T-25013 through T-25016 research and closeout evidence, and independently ran Docker progress: 6833/6952 functions, 2104676/2276920 bytes. Corrected stale remaining count to119. Updated [[plan-remaining]] with artifact recovery, whole-TU measurement, two Sol medium lanes, bounded Astra escalation and strict integration gates; created Ready [[tickets/T-25017-completion-plan]]. Remote queue/candidates/traces must be recovered before repeating the completed salvage programme. No matching workers dispatched by this planning action, no production changes.
-
-## [2026-10-22] ticket | Start bounded completion execution
-
-Moved [[tickets/T-25017-completion-plan]] to In Progress with board synchronized. One Sol 6.1 medium worker owns KANGEI func_8013852C under T-25018 in isolation; no other live subagents. Issue65 remains open and its contributor expects to return Friday; select KANGEI first to avoid GEKO/OPTION overlap. No open PRs. Remote artifact access is unresolved; requested location from user while independent near-match work proceeds. No contributor messages posted.
-
 ## [2026-10-22] ingest | Recover Octa scratch archive
 
 User supplied /Users/lila/Downloads/t25016-scratch-2026-10-22.tar.gz (SHA256 fd41defd56adcbd8ff2ed3dfa7969f31ad3e329d772ed9ccff5e2aab6c048d68). Extracted privately to /private/tmp/t25016-recovered-20261022 after listing members. Includes corpus/QUEUE.md, census/ledger/precedent records and compiler traces/objects; raw outputs remain uncommitted. Queue confirms already-matched entries and packet-score caveats, so membership and score require whole-TU verification. Sol T-25019 will resolve candidate provenance and TACO func_80138B2C baseline; KANGEI worker reproduced its exhausted two-row scheduler tie without repeating sweeps. See [[tickets/T-25017-completion-plan]].
@@ -1742,6 +1730,7 @@ Every game function is C and every binary rebuilds byte for byte ([[status]]). C
 ## [2026-10-24] query | T-25900 phase 2 naming audit
 
 drafts/T-25900/audit.md: naming state per unit (6,649 of 6,952 functions and 16,629 data labels still placeholders, 437 address-named files), how renames flow today and their gaps (the merge-time rename table matches no files since the per-object split), the design of tools/rename.py, naming conventions and the phase 2 work order.
+
 ## [2026-10-24] build | T-26000 IDO 4.1 block-copy rule adopted
 tools/ugen_pass.py now follows IDO 4.1's block-copy state rule (30 cases as unit tests); main strCallback and func_8005938C re-steered by respelling a test, two obsolete empty-test FAKEs removed, clean build 27/27 ([[tickets/T-26000-ugen-block-copy-41-rule]]).
 4.1 also sets F at a branch on a value; not modelled because of main func_8006B0C8 ([[ido-52-evaluation]] "T-26000", [[toolchain]], [[matching-notes]]).
