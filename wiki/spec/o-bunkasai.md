@@ -205,7 +205,7 @@ Differences by exhibit (all other steps follow the pattern):
 - **Art scenes (portrait drawing, sketching session, oil painting)**: no show and no sub-scene; two or three rounds of conversation with rank groups and the `clubs[4].exp` tests of section 8.3 (the Yumi sketching scene adds Yoshio as a second speaker).
 - **Rank 4**: usually shortens the scene (the girl does not enter, or leaves at once, and the closing group differs) and suppresses the festival-call flags.
 
-Two quirks the port must keep: the rank-4 variants skip portrait fades, and the Yumi sketching scene (stage 160) has two speakers, Yumi and girl 13 (Yoshio), but only one portrait buffer at 0x80180000: the scene reads both portraits (0x6C5F, 0x6935), keeps copies at 0x80197000 (Yoshio) and 0x801AE000 (Yumi) and copies one back when the displayed girl changes. It switches `current_girl` and the speaker names for every line, and sets `scene_mouth_lock` to 1 while Yumi speaks over Yoshio's portrait so that the shown mouth stays still, and to 0 while Yoshio speaks.
+Two quirks the port must keep: the rank-4 variants skip portrait fades, and the Yumi sketching scene (stage 160) has two speakers, Yumi and girl 13 (Yoshio), but only one portrait buffer at 0x80180000: the scene reads both portraits (0x6C5F, 0x6935), keeps copies at 0x80197000 (Yoshio) and 0x801AE000 (Yumi) and copies one back when the displayed girl changes. It switches `current_girl` and the speaker names for every line, and sets `scene_mouth_lock` to 1 while the speaking girl is not the one whose portrait is shown (so the shown mouth stays still) and to 0 otherwise.
 
 ## 7. Special scenes
 
