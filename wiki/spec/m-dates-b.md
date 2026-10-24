@@ -330,7 +330,7 @@ All runs started from a boot-to-title save state with memory writes that set the
 8. BUNKAKEN with the command byte of group 1 line 1 poked from 8 to 3: the shuffle of section 7.5.
 9. Voice cancel: in the GEKO scene a cross press 50 frames after `snd_command(0x300)` (frame 780) sent `snd_command(0xB4)` in the same frame (830) and the line ended on its own 12 frames later (next line requested at frame 842).
 
-Not run: the three-way menu itself (`normal_date_three_select`, `junban_init` rule only), a cover wipe of another kind than the month's (the kind follows the same month % 7), `select_girl2`, `bustup_show_checked_hidden`, the holiday, club and else SD loaders.
+Not run: the three-way menu itself (`normal_date_three_select`, `junban_init` rule only), a cover wipe of another kind than the month's (the kind follows the same month % 7), `select_girl2`, `bustup_show_checked_hidden`, the `check_k_scroll` scroll path (no run reached a fourth text row), the holiday, club and else SD loaders.
 
 ## 16. Open questions
 
