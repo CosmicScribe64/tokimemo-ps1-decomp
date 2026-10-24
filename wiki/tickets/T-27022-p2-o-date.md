@@ -1,7 +1,7 @@
 ---
 id: T-27022
 title: Phase 2 naming and port spec for overlay DATE (dates)
-status: In Review
+status: Done
 assignee: p2a-o-date (Sonnet)
 created: 2026-10-24
 updated: 2026-10-24
@@ -37,3 +37,14 @@ The reviewer returned the table with three blocking findings and a list of small
 - HYPOTHESIS marks: all five names with `narration` carry the mark, the other notes say what the code shows (speaker 14, core `GIRL_SOTOI`).
 - Content errors: skating rink reaction line 6 (not 5), the reaction step has no sea, the looks thresholds of `date_scene_end` (30, 35 for Mira); `date_load_festival_portrait` is `date_load_special_portrait`; `DateScreenCoords8` and the park talk cursors (`date_park_parade_*`) got neutral, consistent notes.
 - Smaller items: alias row for `func_80132004`; `noop`, `gte`, `addr`, `arg`, `Alt` spelled out; literal names replaced (`date_shrine_wait_long`, `date_scene_speak_unshuffled`, `date_scene_sequence_start_unused`); spec index says 48 scenes; spec section 14 notes mode 0x5C and DATE2; spec frontmatter has `unit` and `ticket`; poke addresses recorded in spec section 13. The board card for this ticket is not touched here (the kanban sync belongs to the orchestrator).
+
+### Review round 2 (2026-10-24, Opus 5.5, approved, no findings)
+
+All three blocking findings of round 1 are resolved.
+
+- Main-symbol collision: the `D_80122D44` row is gone from `config/renames/proposals/o-date.tsv`, and the other 17 main rows moved to `config/renames/proposals/o-date-main-requests.tsv`. The spec uses `scene_effect_flags` with bit 1 described as "title banner on", and its writer list matches the C: the trigger does `|= 2`, the place 0xB karaoke hand-off sets the word to 2 before mode 0x5C, Miharu's spring intrusion does `|= 2`, Miharu's summer sea intrusion does `|= 3`, `date_end` and `date_scene_end` clear the word, and the main loader screen reads bits 0 and 1.
+- Glossary trap word: no new-name column entry contains `event`. `date_event_trigger` and `date_event_choose` are rename rows to `date_scene_trigger` and `date_scene_choose`, and `DateEventChoice6` became `DateOpeningCursorView`. The remaining `event` tokens are established terms (`event_flags`, `event_counters`, `day_event_next`, `event_still_*`) or old-name citations.
+- HYPOTHESIS marks: the five names containing `narration` carry the mark. Spec section 5.6 marks the claim and states what the code shows; the other two rows' notes no longer assert narration.
+- The non-blocking content errors (skating rink line 6, special reaction places, Mira 35 against 30) are fixed and match the C.
+
+`rename.py plan` was not run by the reviewer (Docker only per project rules); the author's run over the func, data, type and field rows reported 0 problems. The reviewer found no new clear errors in the touched rows or spec lines. The branch changes only the two tables, the spec, the spec index, the ticket and the log: nothing under `src/`, `include/` or `config/symbol*` (checked against the merge base). Set Done. The last acceptance item (merging the table into the rename tool input) stays open and is not part of this branch.
