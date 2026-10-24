@@ -1,29 +1,30 @@
 # kind	scope	old	new	note
 file	main	src/main/8007C030.c	src/main/scene_library.c	one original object (0x8007C030-0x80085E30): the shared scene step library every event scene calls (background load and wipes, portrait load and fades, dialogue runner, choice menus, event still, girl menu) plus the CD level meter, the SD sprite address tables, day_plus and check_para_limit
+file	main	-	include/main/scene.h	declarations of the scene library (step functions, dialogue engine, CD level meter, SD tables) once include/main_api.h is split per module; the shared types DialogueWork, DialogueTables and DialogueVoice8 move with them (new file, not a rename; same pattern as include/main/hud.h in the m-hud table)
 func	main	func_8007C784	scene_wait_cd_read	step: main_step_next once cd_read_sync_status bit 0 is set; after 0x401 frames in the step (step_timer) it resets the CD ring and the decoded-background cache (keeping layer-1 shown buffer, last layer and brightness) and steps back one; 304 DATE, 144 GEKO, 129 SHOUGATU table refs; emu: 110 calls while the GEKO scene loads (frames 208-327)
 func	main	func_8007C844	scene_bg_show	scene_bg_visible = 1, dec_bg_brightness = 0x80, main_step_next; no C caller and no overlay table entry in asm/ (dead code)
-func	main	func_8007C878	scene_bg_hide	scene_bg_visible = 0, dec_bg_brightness = 0, main_step_next; KANGEI, SHOUGATU and GEKO tables
+func	main	func_8007C878	scene_bg_hide	scene_bg_visible = 0, dec_bg_brightness = 0, main_step_next; table refs SHOUGATU 3, KANGEI 2, GEKO 1
 func	main	func_8007C8A4	scene_bg_wipe_in	step: calls scene_bg_wipe_in_step every frame and steps when it returns 1; emu: 16 calls in the GEKO scene (frames 329-344)
 func	main	func_8007C8D8	scene_bg_wipe_in_step	one frame of the reveal wipe: kind = month % 7 chosen when step_timer == 0, brightness +8 per frame up to 0x80, black prim_line_gradient lines drawn per kind; returns 1 at the 16th frame; emu: kind 4 in April, brightness 8..0x78 over frames 330-344
 func	main	func_8007D8AC	scene_bg_wipe_out_step	one frame of the cover wipe called by normal_date_bg_out: same seven kinds drawn from the other end, brightness -8 per frame to 0, returns 1 at the 18th frame (step_timer >= 0x12); kind 6 also clears scene_bg_visible
 func	main	func_80081128	dialogue_voice_skip_check	called while a line waits for its voice to start: once dialogue_voice_wait_frames > 0x200 a circle or cross press (pad_pressed & 0x600060) sends sound command 0xB4 (the command the driver sends itself at the end of a clip), clears the wait flag and sets dialogue_voice_cancelled; 9 call sites in dialogue_speak_part
-func	main	func_80083338	bustup_expression_mood	HYPOTHESIS: bustup_layout_set(get_g_zyotai_h(current_girl) & 0x7F) then main_step_next: face cells picked by the girl's mood rank; DATE 79 and SHOUGATU table refs
-func	main	func_80083378	bustup_expression_0	HYPOTHESIS: bustup_layout_set(0) then main_step_next (expression index 0 = mood rank 0, the best mood); DATE, GEKO, VALEN, ENDING tables
-func	main	func_800833A0	bustup_expression_1	HYPOTHESIS: bustup_layout_set(1) then main_step_next; DATE, VALEN, GEKO, SHUGAKU tables
-func	main	func_800833C8	bustup_expression_2	HYPOTHESIS: bustup_layout_set(2) then main_step_next; DATE 14, SHOUGATU, GEKO tables
-func	main	func_800833F0	bustup_expression_3	HYPOTHESIS: bustup_layout_set(3) then main_step_next; KANGEI table
-func	main	func_80083418	bustup_expression_4	HYPOTHESIS: bustup_layout_set(4) then main_step_next (rank 4 = the worst mood); ENDING table
-func	main	func_80083628	bustup_show	builds the portrait (bustup_build) from the file loaded at 0x80180000 without the integrity check; rank = get_g_zyotai_h & 0x7F, 0 for girls >= 12; main_step_next; DATE2 and ENDING tables
-func	main	func_800836A0	bustup_show_checked_hidden	like bustup_show_checked but retries four steps back unless the five image pointers and the file checksum are right, then builds the portrait and leaves actors 30 and 31 and sprites 0 and 1 hidden at brightness 0 for a later fade-in; only the DATE tables use it
+func	main	func_80083338	bustup_expression_mood	HYPOTHESIS: bustup_layout_set(get_g_zyotai_h(current_girl) & 0x7F) then main_step_next: face cells picked by the girl's mood rank; table refs DATE 79, SHOUGATU 2, GEKO 2, DATE2 2, SHUGAKU 1
+func	main	func_80083378	bustup_expression_0	HYPOTHESIS: bustup_layout_set(0) then main_step_next (expression index 0 = mood rank 0, the best mood); table refs DATE 12, GEKO 4, SHOUGATU 2, VALEN 2, ENDING 1; C: DATE 4
+func	main	func_800833A0	bustup_expression_1	HYPOTHESIS: bustup_layout_set(1) then main_step_next; table refs DATE 15, VALEN 2, GEKO 1, SHUGAKU 1; C: DATE 5, SHOUGATU 1
+func	main	func_800833C8	bustup_expression_2	HYPOTHESIS: bustup_layout_set(2) then main_step_next; table refs DATE 14, SHOUGATU 1, GEKO 1
+func	main	func_800833F0	bustup_expression_3	HYPOTHESIS: bustup_layout_set(3) then main_step_next; table refs DATE 24, SHOUGATU 3, KANGEI 1, GEKO 1, SHUGAKU 1; C: SHOUGATU 2, DATE 3, GEKO 2, SHUGAKU 1
+func	main	func_80083418	bustup_expression_4	HYPOTHESIS: bustup_layout_set(4) then main_step_next (rank 4 = the worst mood); table refs DATE 4, SHOUGATU 3, GEKO 3, ENDING 1; C: DATE 5, GEKO 2, SHOUGATU 1, SHUGAKU 1
+func	main	func_80083628	bustup_show	builds the portrait (bustup_build) from the file loaded at 0x80180000 without the integrity check; rank = get_g_zyotai_h & 0x7F, 0 for girls >= 12; main_step_next; table refs DATE2 6, ENDING 3
+func	main	func_800836A0	bustup_show_checked_hidden	like bustup_show_checked but retries four steps back unless the five image pointers and the file checksum are right, then builds the portrait and leaves actors 30 and 31 and sprites 0 and 1 hidden at brightness 0 for a later fade-in; only the DATE tables use it (2 refs)
 func	main	func_80083A10	scene_frame_update	per-frame helper every scene handler calls: dec_bg_draw(1) while scene_bg_visible, shows the pad cursor (actor 0) when a direction button is held and scene_cursor_hide and scene_event_still_visible are 0, hides it when either is set, forces it on while scene_menu_active is 1, and runs cursor_update while it is shown; called by the frame handlers of 9 overlays (KANGEI, VALEN, SHOUGATU, DATE, GEKO, SHUGAKU, DATE2, ENDING, OMIMAI)
 func	main	func_80084E6C	scene_mouth_lock_clear	HYPOTHESIS: scene_mouth_lock = 0 then main_step_next; SHOUGATU table
-func	main	func_80085234	event_still_layer_set	shows (arg != 0) or hides the event still layer: actors 96 and 97 (draw_flags bit 7) and sprites 58-63 (hidden bit 31); on show it swaps event_anim_flag with event_anim_flag_saved, on hide it copies the saved value back
+func	main	func_80085234	event_still_layer_set	shows (arg != 0) or hides the event still layer: actors 96 and 97 (draw_flags bit 7) and sprites 58-63 (hidden bit 31); on show it swaps mouth_frames_reversed (m-hud name of D_800B5A60) with mouth_frames_reversed_saved, on hide it copies the saved value back; called by event_still_fade_in and event_still_fade_out and once from GEKO
 func	main	func_80085368	event_still_fade_in	step_timer-driven fade-in of the event still: normal_date_bg_fadein (+4 per frame), shows the layer when the brightness is 4, sets scene_event_still_visible, hides the window title, copies the brightness to actors 96 and 97 and sprites 58-63 (sprite_brightness)
 func	main	func_800853FC	event_still_fade_out	fade-out of the event still: normal_date_bg_fadeout (-4 per frame); when its step change shows (brightness reached 0) the layer is hidden, scene_event_still_visible cleared and the window title shown again; tint of actors 96 and 97 and sprites 58-63 follows the brightness
-comment	main	SD_GetCDLevel	Measure the CD-audio output level: reads 0x200-byte SPU capture buffers at SPU RAM 0 and 0x400, takes peak or average of N sample pairs, optional square and shaping curves, writes left and right level scaled by the precision field.	O.BIN name kept; body read from src/main/8007C030.c; emu: called once per frame from the sound driver while XA voice plays, work area D_80125E60 holds precision 8, 32 samples, method average
+comment	main	SD_GetCDLevel	Measure the CD-audio output level: reads 0x200-byte SPU capture buffers at SPU RAM 0 and 0x400, takes peak or average of N sample pairs, optional square and shaping curves, writes left and right level scaled by the precision_bits field.	O.BIN name kept; body read from src/main/8007C030.c; the sound driver (snd_xa_check_end, m-dates-a) calls it once per frame while an XA voice plays with the work area snd_cd_level (D_80125E60); emu: precision_bits 8, sample_count 32, options 0x212 (average); it measures only while the top byte of audio_request_flags (D_80125D14) is 0, bit 0x4000 of audio_state is clear and the SPU transfer calls report idle
 comment	main	SD_DetectCDPeak	Peak mode of the CD level meter: scans N evenly spaced samples of the left and right capture buffers and keeps the largest absolute value, doubled.	O.BIN name kept; body read
 comment	main	SD_CalcCDAve	Average mode of the CD level meter: mean absolute value of N evenly spaced samples of each capture buffer, doubled.	O.BIN name kept; body read
-comment	main	getCDlevel	Return the mean of the left and right CD-audio level while metering is enabled (audio_state bit 0x400), else 0; used to drive the portrait mouth during voiced lines.	O.BIN name kept; callers NAME_ENT, GEKO and the portrait speech code; emu: audio_state bit 0x400 set during a voice
+comment	main	getCDlevel	Return the mean of the left and right CD-audio level while metering is enabled (audio_state bit 0x400), else 0; used to drive the portrait mouth during voiced lines.	O.BIN name kept; callers NAME_ENT 9, GEKO 1, ENDING 1 and the HUD portrait and event mouth code (80062CD0.c, 800674B0.c); emu: audio_state bit 0x400 set during a voice
 comment	main	addr_init_weekly_sd	Point the SD sprite palette, frame table, sequence table and texture-block pointers at entry n (mod 25) of the school-day SD table (n = the SD index the weekday handler computes from the command); the matching data file is loaded at 0x801E0000.	O.BIN name kept; callers 800737A0.c; table D_800C9F60; emu: weekday screen, command 1 -> entry 1, pointers 0x801E0480/04B8/0478
 comment	main	addr_init_holiday_sd	Same for the holiday SD table (13 entries, n mod 13).	O.BIN name kept; callers 800737A0.c and 80075320.c; table D_800C9FF8
 comment	main	addr_init_club_sd	Same for the club-activity SD table (32 entries, n mod 32).	O.BIN name kept; callers 800737A0.c and 80075320.c; table D_800CA048
@@ -31,12 +32,12 @@ comment	main	addr_init_else_sd	Same for the third table (3 entries, n mod 3); ca
 comment	main	set_tarao_bg	Draw the mosaic wipe: 32 columns by 20 rows of strips from the shown background buffer, each n lines tall, even columns anchored at the top of their 8-line cell and odd columns at the bottom.	O.BIN name kept ('tarao' is a developer word); body read; wipe kind 6
 comment	main	set_tarao_sprt	Queue one textured strip sprite (x, y, width, height, u, v, ordering slot, rgb) in the primitive arena of the active draw buffer.	O.BIN name kept; body read
 comment	main	set_tarao_rect	Queue one flat rectangle (x, y, w, h, ordering slot, rgb) in the primitive arena of the active draw buffer.	O.BIN name kept; no caller in src/ (unused)
-comment	main	normal_date_bg_out	Scene step: run the cover wipe each frame (scene_bg_wipe_out_step) and step on when it finishes.	O.BIN name kept; KANGEI, SHOUGATU, SHUGAKU and other tables
-comment	main	normal_date_girl_in	Scene step: dispatch on step_timer to the portrait fade-in (init, then main), then draw the faded background layer.	O.BIN name kept; DATE2, ENDING, OMIMAI tables and C calls in many overlays; supersedes the core.tsv comment (slide): the code ramps tint and brightness, it never moves the portrait in x
+comment	main	normal_date_bg_out	Scene step: run the cover wipe each frame (scene_bg_wipe_out_step) and step on when it finishes.	O.BIN name kept; table refs SHOUGATU 35, GEKO 23, SHUGAKU 11, KANGEI 9, OMIMAI 3, VALEN 1, DATE2 1, ENDING 1; C: GEKO 1
+comment	main	normal_date_girl_in	Scene step: dispatch on step_timer to the portrait fade-in (init, then main), then draw the faded background layer.	O.BIN name kept; table refs DATE 141, GEKO 30, DATE2 12, SHUGAKU 11, KANGEI 7, VALEN 7, ENDING 5, OMIMAI 3 and C calls in 10 overlays (BUNKASAI 105, BUNKAKEN 44); supersedes the core.tsv comment (slide): the code ramps tint and brightness, it never moves the portrait in x
 comment	main	normal_date_girl_in_init	Portrait fade-in, first frame: zero the portrait brightness, the sprite tints and the fade amount, mark the portrait visible, switch the plain background draw off.	O.BIN name kept; body read
 comment	main	normal_date_girl_in_main	Portrait fade-in, later frames: raise the fade amount by 8 per frame to 0x80 (16 frames) and copy it to the portrait tint; on the next call unhide sprites 0 and 1, show the background layer and step on.	O.BIN name kept; body read
 comment	main	normal_date_girl_suddenin	Scene step: show the portrait at full brightness at once.	O.BIN name kept; GEKO table
-comment	main	normal_date_girl_out	Scene step: dispatch on step_timer to the portrait fade-out (init, then main), then draw the faded background layer.	O.BIN name kept; DATE 160, GEKO 30 table refs; supersedes the core.tsv comment (slide): the code ramps tint, it never moves the portrait in x
+comment	main	normal_date_girl_out	Scene step: dispatch on step_timer to the portrait fade-out (init, then main), then draw the faded background layer.	O.BIN name kept; table refs DATE 160, GEKO 30, DATE2 11, SHUGAKU 10, KANGEI 9, VALEN 7, ENDING 4, OMIMAI 3; supersedes the core.tsv comment (slide): the code ramps tint, it never moves the portrait in x
 comment	main	normal_date_girl_out_init	Portrait fade-out, first frame: fade amount 0x80, plain background draw off.	O.BIN name kept; body read
 comment	main	normal_date_girl_out_main	Portrait fade-out, later frames: lower the fade amount by 8 per frame (16 frames) and tint the portrait with it; on the next call hide actors 30 and 31 and sprites 0 and 1, restore their tint, mark the portrait gone, show the background layer and step on.	O.BIN name kept; body read
 comment	main	normal_date_girl_suddenout	Scene step: hide the portrait at once.	O.BIN name kept; SHOUGATU, DATE, GEKO tables
@@ -44,13 +45,13 @@ comment	main	normal_date_bg_fadein	Raise the background brightness by 4 per fram
 comment	main	normal_date_bggirl_fadein	Fade in background and portrait together: bg_fadein plus portrait actor and sprite tint following the brightness.	O.BIN name kept; body read
 comment	main	normal_date_bg_fadeout	Lower the background brightness by 4 per frame to 0, then hide it and step on.	O.BIN name kept; body read
 comment	main	normal_date_bggirl_fadeout	Fade out background and portrait together; the portrait is hidden when the brightness drops below 8.	O.BIN name kept; body read
-comment	main	normal_date_move_place	Scene step: change of location, dispatch on step_timer to init, then main.	O.BIN name kept; DATE, GEKO, SHUGAKU, MASTER, TAIIKU tables
+comment	main	normal_date_move_place	Scene step: change of location, dispatch on step_timer to init, then main.	O.BIN name kept; table refs DATE 70, SHOUGATU 9, VALEN 5, GEKO 3, DATE2 3, ENDING 2, KANGEI 1, SHUGAKU 1; C: MASTER 8, SHUGAKU 2, DATE 1, GEKO 1, TAIIKU 1
 comment	main	normal_date_move_place_init	Move-place first frame: clear the text list, fade amount 0x80, plain background draw off.	O.BIN name kept; body read
 comment	main	normal_date_move_place_main	Move-place later frames: cross-fade from the old to the newly decoded background (fade amount -8 per frame, 16 frames), tint the portrait with it; at the end swap the shown buffer, hide the portrait sprites and step on.	O.BIN name kept; body read
 comment	main	place_init	Scene step: clear the text list and show scene_place_title in the message window title, then step on.	O.BIN name kept; body read
 comment	main	place_init2	Same as place_init with the second title buffer scene_place_title_2.	O.BIN name kept; body read
 comment	main	change_dec_bg	Scene step: swap the shown buffer of background layer 1 so the freshly decoded background appears, then step on.	O.BIN name kept; emu: runs right after dec_init in the GEKO scene
-comment	main	dec_init	Scene step: check the MDEC header of the loaded background (magic 0x3800 and version bits); on failure forget the cached LBAs of layer 1 and go two steps back to re-read, else decode the picture into the hidden buffer and step on.	O.BIN name kept; body read
+comment	main	dec_init	Scene step: check the MDEC header of the loaded background (first word: high half 0x3800; second word: top byte 0 and bit 16 set, the version bit); on failure forget the cached LBAs of layer 1 and go two steps back to re-read, else decode the picture into the hidden buffer and step on.	O.BIN name kept; body read: (word0 & 0xFFFF0000) == 0x38000000 and (word1 & 0xFF010000) == 0x00010000 on the buffer D_80125C04 (MDEC input pointer, unnamed in every table, also read by 80053650.c); a bad header sets the cached LBAs of layer 1 to 0 and net steps back two
 comment	main	check_k_scroll	Per-frame dialogue window scroll: when the next text row would fall below the third row (y >= 0x60) hold it, then move all earlier rows up 0x10 and hide the top one.	O.BIN name kept; body read; called from every scene handler
 comment	main	wait_sub_sub	Scene step with a parameter: wait n frames (step_timer counts up), then step on; the scene dispatcher passes one wait length for the whole table.	O.BIN name kept; tables are called as f[step](n) (KANGEI 0x20, GEKO 0x80)
 comment	main	make_three_select	Shuffle the three options of a choice line: split the text at q or space separators and rejoin it in the order dialogue_choice_order.	O.BIN name kept; emu: reached by poking a line's command byte to 3 in BUNKAKEN
@@ -71,34 +72,31 @@ comment	main	k_disp_inc2	Typewriter step with fast-forward: counts dialogue_text
 comment	main	yosi_trans	Scene step: restart sequence 0 of sound bank 0 (bgm_play(0, 0x200)), then step on; used in the Yoshio scenes of SHOUGATU and GEKO.	O.BIN name kept ('yoshio transition'); body read
 comment	main	change_yoshio	Scene step: set current_girl to 13 (Yoshio) so portrait, name and voice code address him, then step on.	O.BIN name kept; SHOUGATU and GEKO tables
 comment	main	change_girl	Scene step: set current_girl back to date_girl (the girl of the scene), then step on.	O.BIN name kept; SHOUGATU and GEKO tables
-comment	main	select_girl	Scene step: heroine picker with a back button, dispatch on step_timer to init(0), then main(0).	O.BIN name kept; BUNKAKEN stage 1 step 8, SHOUGATU and SHUGAKU tables
-comment	main	select_girl2	Same picker without the back button (menu of 11 items).	O.BIN name kept; SHOUGATU tables
+comment	main	select_girl	Scene step: heroine picker with a back button, dispatch on step_timer to init(0), then main(0).	O.BIN name kept; BUNKAKEN stage 1 step 8 (C), table refs SHOUGATU 1, SHUGAKU 1
+comment	main	select_girl2	Same picker without the back button (menu of 11 items).	O.BIN name kept; table refs SHOUGATU 2, C calls BUNKASAI 1, BUNKAKEN 1
 comment	main	select_girl_init	Lay the heroine picker out: 11 names in a 4x3 grid (x -0x80 + 0x40 per column, y 0x30 + 0x10 per row, item width = characters * 14) for the girls flagged in girl_menu_enabled, plus the back item at (0x40, 0x50) unless arg0 is 1; cursor on the first listed girl.	O.BIN name kept; emu: BUNKAKEN step 8 draws one name (girl 0 only met) and the back item
 comment	main	select_girl_main	Run the picker; on circle store the index of the hovered listed girl (11 = back) in dialogue_choice, hide the cursor and step on.	O.BIN name kept; emu: the circle press writes dialogue_choice from select_girl_main
 comment	main	sprite_brightness	Set the red, green and blue tint of sprite quad idx to val.	O.BIN name kept; same address as the alias func_80084C98 in config/symbol_addrs.txt
 comment	main	day_plus	Scene step: advance the calendar by one day (calendar_advance_day), rebuild the date HUD keeping its visibility, clear trip_day_state, then step on.	O.BIN name kept; SHUGAKU tables (once per trip day)
-comment	main	event_face0	Scene step: event picture face 0: sequence slot 2 on actor 96, slot 0 on actor 97.	O.BIN name kept; SHOUGATU, GEKO, SHUGAKU tables
+comment	main	event_face0	Scene step: event picture face 0: sequence slot 2 on actor 96, slot 0 on actor 97.	O.BIN name kept; table refs DATE 4, GEKO 2, SHOUGATU 1, SHUGAKU 1; C: DATE 1
 comment	main	event_face1	Event face 1: slot 3 on actor 96, slot 1 on actor 97.	O.BIN name kept
 comment	main	event_face2	Event face 2: slot 6 on actor 96, slot 4 on actor 97.	O.BIN name kept
 comment	main	event_face3	Event face 3: slot 7 on actor 96, slot 5 on actor 97.	O.BIN name kept
 comment	main	event_face_kuchi0	Event mouth 0: slot 2 on actor 96 only.	O.BIN name kept; no table entry in asm (unused)
 comment	main	event_face_kuchi1	Event mouth 1: slot 3 on actor 96 only.	O.BIN name kept; DATE table
-comment	main	event_kuchi_ani_no	Event mouth animation off: scene_event_mouth_anim = 0 and actor 96 anim_flags = 4.	O.BIN name kept; DATE and GEKO tables
-comment	main	event_kuchi_ani_yes	Event mouth animation on: scene_event_mouth_anim = 1 and actor 96 anim_flags = 0.	O.BIN name kept; DATE table
+comment	main	event_kuchi_ani_no	Event mouth mode 0: scene_event_mouth_anim = 0 (mouth follows the voice level) and actor 96 anim_flags = 4.	O.BIN name kept; DATE and GEKO tables
+comment	main	event_kuchi_ani_yes	Event mouth mode 1: scene_event_mouth_anim = 1 (periodic mouth animation every 240 frames) and actor 96 anim_flags = 0.	O.BIN name kept; DATE table
 comment	main	ev_me_on	Event eyes on: scene_event_eyes_hold = 0 (periodic blink allowed) and actor 97 anim_flags = 5.	O.BIN name kept ('me' = eyes); DATE table
 comment	main	ev_me_on_continue	Event eyes on and held: scene_event_eyes_hold = 1 (no periodic blink) and actor 97 anim_flags = 5.	O.BIN name kept; SHOUGATU, DATE, GEKO tables
-comment	main	_sprite_set_box_shade_tarao	Queue a four-corner gradient box (x, y, w, h, ordering slot, two packed rgb colours) in the primitive arena.	O.BIN name kept; callers DATE, GEKO, ENDING
+comment	main	_sprite_set_box_shade_tarao	Queue a four-corner gradient box (x, y, w, h, ordering slot, two packed rgb colours) in the primitive arena.	O.BIN name kept; callers SHOUGATU 2 and ENDING 4 (DATE, GEKO and EVENT only mention it in comments next to their own copies of the routine)
 comment	main	don_init2	Scene step: start the screen shake (screen_shake_start), then step on.	O.BIN name kept ('don' = thud word); body read
 comment	main	don_wait	Scene step: wait 0x81 frames, clear the text list and step on.	O.BIN name kept; body read
-comment	main	normal_date_speak_1line	Scene step: wire the dialogue tables and run exactly one line of the script; steps on when dialogue_run returns 1.	O.BIN name kept; OMIMAI and SHOUGATU tables
-comment	main	normal_date_speak_012	Scene step: run the dialogue with choice 0xFF, so a three-option line keeps the order 0, 1, 2.	O.BIN name kept ('012' = fixed option order); DATE 6, DATE2 and TAIIKU refs
-comment	main	normal_date_speak	Scene step: wire the dialogue tables and run one frame of the dialogue runner with dialogue_choice as the reply index; core entry of every scripted scene (BUNKASAI 663, BUNKAKEN 384 calls).	O.BIN name kept; core comment names the role (Wire the dialogue table pointers...)
+comment	main	normal_date_speak_1line	Scene step: wire the dialogue tables and run exactly one line of the script; steps on when dialogue_run returns 1.	O.BIN name kept; table ref SHOUGATU 1, C call OMIMAI 1
+comment	main	normal_date_speak_012	Scene step: run the dialogue with choice 0xFF, so a three-option line keeps the order 0, 1, 2.	O.BIN name kept ('012' = fixed option order); table refs DATE 6, DATE2 1, C calls TAIIKU 3
+comment	main	normal_date_speak	Scene step: wire the dialogue tables and run one frame of the dialogue runner with dialogue_choice as the reply index; core entry of every scripted scene.	O.BIN name kept; table refs DATE 91, ENDING 9, SHOUGATU 8, DATE2 8, OMIMAI 8, KANGEI 1; C calls BUNKASAI 762, BUNKAKEN 572, MASTER 50, DATE 24, TAIIKU 15, RENSYU 7, ENDING 2, GEKO 1; core comment names the role (Wire the dialogue table pointers...)
 comment	main	vram_bustup_clear	Scene step: reset actors 30 and 31 and free the five portrait texture slots 5-9, then step on.	O.BIN name kept; SHOUGATU and GEKO tables
 comment	main	dialogue_speak_part	Speak one script line: copy the text, switch on the command byte (20 codes) to pick label, quote style, voice request and wait mode, draw the line with dialogue_render and set the line-wait state; 0xFF steps the scene on.	name from config/symbol_addrs.txt (English-patch notes); body read; emu: command sequences of two scenes
-data	main	D_800B67AC	sd_file_sector_weekday	u32[25]: start sector of SD data file n of the MAIN_SD folder (step 0x29 = 41 sectors = the 83,968-byte size of every file; first 0xA5B2); read to 0x801E0000 by the weekday screen setup (800737A0.c); owned by the weekday and holiday units, proposed here because sd_table_weekday is indexed with it
-data	main	D_800B6810	sd_file_sector_club	u32[32]: start sector of SD data file n of the CLUB_SD folder (step 0x29; first 0x6CBA); read to 0x801E0000 for club activity days
-data	main	D_800B69E0	sd_file_sector_holiday	u32[13]: start sector of SD data file n of the HOLI_SD folder (step 0x29 from 0xA1E6 for entries 0-11); entry 12 is 0xA79E, the same file as weekday entry 12
-data	main	D_800C9F60	sd_table_weekday	25 entries of three u16 offsets (palette base is fixed at 0x801E0000): n -> frame table, sequence table, texture blocks of the SD sprite for school-day command n; read by addr_init_weekly_sd; disc MAIN_SD holds 25 files, read in table order through sd_file_sector_weekday
+data	main	D_800C9F60	sd_table_weekday	25 entries of three u16 offsets (palette base is fixed at 0x801E0000): n -> frame table, sequence table, texture blocks of the SD sprite for school-day command n; read by addr_init_weekly_sd; disc MAIN_SD holds 25 files, read in table order through the sector table D_800B67AC (named by the m-weekday table)
 data	main	D_800C9FF8	sd_table_holiday	13 entries of three u16 offsets for holiday commands; read by addr_init_holiday_sd; disc HOLI_SD holds 12 files, entry 12 repeats weekly entry 12
 data	main	D_800CA048	sd_table_club	32 entries of three u16 offsets for club activities; read by addr_init_club_sd; disc CLUB_SD holds 32 files
 data	main	D_800CA108	sd_table_else	3 entries of three u16 offsets; read by addr_init_else_sd; disc ETC_SD holds 3 files
@@ -110,8 +108,8 @@ data	main	D_800CA138	dialogue_tables_line	alias label of the second pointer in d
 data	main	D_800CA13C	dialogue_tables_text	alias label of the third pointer in dialogue_tables (text table); normal_date_speak copies D_800CA160 here
 data	main	D_800CA140	dialogue_tables_command	alias label of the fourth pointer in dialogue_tables (command table); copy of D_800CA164
 data	main	D_800CA144	dialogue_tables_voice	alias label of the fifth pointer in dialogue_tables (voice table); copy of D_800CA168
-data	main	D_800CA19C	scene_place_title	0x40-byte place name buffer filled by the scene (DATE 74 uses) and shown by place_init through message_window_set_title
-data	main	D_800CA1DC	scene_place_title_2	second 0x40-byte place name buffer shown by place_init2 (VALEN, KANGEI, GEKO fill it)
+data	main	D_800CA19C	scene_place_title	0x40-byte place name buffer filled by the scenes (source references DATE 31, GEKO 45, SHOUGATU 32, KANGEI 27, OMIMAI 15, SHUGAKU 15, VALEN 4, DATE2 1, ENDING 1) and shown by place_init through message_window_set_title
+data	main	D_800CA1DC	scene_place_title_2	second 0x40-byte place name buffer shown by place_init2; filled by DATE (51 source references), VALEN (13), GEKO (9), SHOUGATU (5), DATE2 (5), SHUGAKU (3), KANGEI (1), ENDING (1)
 data	main	D_800CA23C	name_buf_s	dialogue name code S buffer; SHUGAKU stores the trip destination here
 data	main	D_800CA248	name_buf_o	dialogue name code O buffer; SHOUGATU stores a label from a table here
 data	main	D_800CA250	name_buf_w	dialogue name code W buffer; SHOUGATU stores the entry picked by dialogue_choice here
@@ -129,19 +127,18 @@ data	main	D_800CA300	girl_menu_x	s16[12]: x of each picker item (-0x80 + 0x40 pe
 data	main	D_800CA318	girl_menu_y	s16[12]: y of each picker item (0x30 + 0x10 per row, back item 0x50)
 data	main	D_800CA330	girl_menu_w	s16[12]: width of each picker item (characters * 14; 0 = not listed; back item 0x2A or 0)
 data	main	D_800CA348	girl_menu_h	s16[12]: height of each picker item, 16
-data	main	D_800CA360	event_anim_flag_saved	HYPOTHESIS: saved copy of event_anim_flag; DATE sets it to 1 (23 uses), event_anim_show clears it for mode >= 2, event_still_layer_set swaps the pair
+data	main	D_800CA360	mouth_frames_reversed_saved	HYPOTHESIS: swap partner of mouth_frames_reversed (D_800B5A60, named in the m-hud table; the only reader is the ENDING lip sync, which uses 3 - level while it is set); DATE sets this byte to 1 in 23 places, GEKO in 4, SHOUGATU in 1; event_anim_show clears it for mode >= 2; event_still_layer_set swaps the pair on show (when actor 96 is in use) and copies it back on hide
 data	main	D_800CA36C	voice_speaker_by_girl	16 bytes: voice speaker id passed as third argument of xa_clip_request_set for each girl id (0-10 identity, 11 -> 9, 12 and 13 -> 0xD, 14 -> 0xE, 15 -> 0xF); emu: speaker 0 for girl 0
 data	main	D_800B5939	dec_bg_shown_1	alias label of dec_bg_shown[1] (VRAM buffer shown for background layer 1); bg_read_sub2 compares the cache hit with it
-data	main	D_800B5A60	event_anim_flag	HYPOTHESIS: live 0/1 flag the event animation code sets in DATE, GEKO, SHOUGATU, ENDING; event_still_layer_set swaps it with event_anim_flag_saved
 data	main	D_8011ECD3	cursor_draw_flags	alias label of actor_pool[0].draw_flags (bit 7 = visible): the pad cursor actor
 data	main	D_8011ED5B	text_marker_draw_flags	alias label of actor_pool[2].draw_flags: the continue marker; dialogue_run sets bit 7 when a line is ready for the confirm press
 data	main	D_8011F113	hizuke_draw_flags	alias label of actor_pool[16].draw_flags: first actor of the calendar date HUD (actors 16-23); day_plus reads it to keep the HUD on or off
-data	main	D_80120652	event_mouth_flags	HYPOTHESIS: alias label of actor_pool[96].anim_flags (event picture, mouth layer): 4 after event_kuchi_ani_no, 0 after event_kuchi_ani_yes
-data	main	D_80120657	event_mouth_brightness	HYPOTHESIS: alias label of actor_pool[96].brightness; the event still fades it
-data	main	D_80120666	event_mouth_sequence	HYPOTHESIS: alias label of actor_pool[96].sequence_index; event_face0-3 and event_face_kuchi0/1 write 2, 3, 6 or 7
-data	main	D_80120696	event_eyes_flags	HYPOTHESIS: alias label of actor_pool[97].anim_flags (event picture, eyes layer): 5 after ev_me_on and ev_me_on_continue
-data	main	D_8012069B	event_eyes_brightness	HYPOTHESIS: alias label of actor_pool[97].brightness
-data	main	D_801206AA	event_eyes_sequence	HYPOTHESIS: alias label of actor_pool[97].sequence_index; event_face0-3 write 0, 1, 4 or 5
+data	main	D_80120652	actor96_anim_flags	same row as m-weekday.tsv (identical key and name): alias label of actor_pool[96].anim_flags (+2); event_kuchi_ani_yes writes 0 and event_kuchi_ani_no writes 4 (bit 0 = animation running per m-weekday and m-hud; the bit 2 of the value 4 is not explained by this object)
+data	main	D_80120657	actor96_brightness	alias label of actor_pool[96].brightness (+7); the event still fades it with the picture
+data	main	D_80120666	actor96_sequence_index	same row as m-weekday.tsv (identical key and name): alias label of actor_pool[96].sequence_index (+0x16); event_face0-3 and event_face_kuchi0/1 write 2, 3, 6 or 7
+data	main	D_80120696	actor97_anim_flags	alias label of actor_pool[97].anim_flags (+2); ev_me_on and ev_me_on_continue write 5
+data	main	D_8012069B	actor97_brightness	alias label of actor_pool[97].brightness (+7)
+data	main	D_801206AA	actor97_sequence_index	alias label of actor_pool[97].sequence_index (+0x16); event_face0-3 write 0, 1, 4 or 5
 data	main	D_80122CDC	dialogue_choice	result of the last menu pick: heroine index from select_girl (11 = back), 0/1 from the two-way menu, original option index from the three-way menu; also the reply index normal_date_speak passes to the runner; 311 uses; emu: written by select_girl_main on circle
 data	main	D_80122CE4	dialogue_line_wait	alias label of DialogueWork.line_wait: 1 while a spoken line waits for the confirm press, 2 after its voice was cancelled; SHOUGATU and ENDING also test it
 data	main	D_80122CEC	dialogue_choice_saved	copy of dialogue_choice that SHOUGATU and DATE keep across a sub-scene and restore afterwards
@@ -152,7 +149,7 @@ data	main	D_80122CFC	dialogue_text_delay	frames left before k_disp_inc2 reveals 
 data	main	D_80122D00	dialogue_line_auto	alias label of DialogueWork.line_auto: 1 for lines that advance on text and voice end without a confirm press (codes 0xC, 0x10-0x12), 2 after cancel
 data	main	D_80122D04	scene_event_still_visible	1 while the full-screen event still (sprites 58-63) is shown: set by event_still_fade_in, cleared by event_still_show and event_still_fade_out; hides the pad cursor
 data	main	D_80122D0C	scene_event_eyes_hold	HYPOTHESIS: 0 after ev_me_on (periodic blink every 240 frames), 1 after ev_me_on_continue (no blink)
-data	main	D_80122D10	scene_event_mouth_anim	1 = the event mouth is animated every 240 frames, 0 = static mouth; set by event_kuchi_ani_yes and event_kuchi_ani_no
+data	main	D_80122D10	scene_event_mouth_anim	mouth mode of the event picture: 0 = the mouth follows the voice level (bustup_wink_update calls func_80067C28, m-hud event_mouth_lipsync, every frame while the still is shown and no portrait is; with voice_mode 0 that function does nothing and dialogue_run starts the mouth animation for lines typed without voice instead); 1 = periodic mouth animation started every 240 frames (func_80067DFC, m-hud event_mouth_anim_start); 2 (set by DATE and GEKO) = the library drives neither; written by event_still_show (0), event_kuchi_ani_no (0), event_kuchi_ani_yes (1), SHUGAKU (0), GEKO (1 and 2), DATE (2)
 data	main	D_80122D1C	dialogue_text_silent	set by dialogue_render: 1 when the text contains only ellipsis or punctuation marks and control letters, so the speaking mouth does not move
 data	main	D_80122D20	scene_mouth_lock	HYPOTHESIS: while nonzero the portrait speech animation is off and sprite 0 keeps its v offset 0; DATE, SHOUGATU, ENDING, BUNKASAI and BUNKAKEN set it
 data	main	D_80122D2C	scene_cursor_hide	while nonzero scene_frame_update hides the pad cursor; set by DATE and DATE2 around their own menus
@@ -163,9 +160,9 @@ data	main	D_80125CA4	sd_palette	pointer to the SD sprite 16-colour palette (alwa
 data	main	D_80125CA8	sd_image_table	pointer stored by addr_init_*_sd into actor_pool[96/97].image_table
 data	main	D_80125CAC	sd_sequence_table	pointer stored by addr_init_*_sd into actor_pool[96/97].sequence_table
 data	main	D_80125CB0	sd_texture_blocks	pointer stored by addr_init_*_sd into actor_pool[96/97].texture_blocks
-data	main	D_80125E60	cd_level_work	CdLevelWork: left and right level out, precision, sample count, mode; the sound driver passes it to SD_GetCDLevel each frame; emu: precision 8, 32 samples, mode 0x212 (average)
-data	main	D_80125E62	cd_level_right	alias label of cd_level_work.right; getCDlevel adds it to the left value
-data	main	D_80126080	cd_level_samples	s16[0x400] scratch: two 0x200-entry halves read from SPU RAM by SD_GetCDLevel (left capture at +0, right at +0x200 entries)
+data	main	D_80125E60	snd_cd_level	same row as m-dates-a.tsv (identical key and name): CdLevelMeter work area of the CD level meter (this table's field rows still use the old type name CdLevelWork, the key of the m-dates-a type row); the sound driver passes it to SD_GetCDLevel each frame; emu: precision_bits 8, sample_count 32, options 0x212 (average)
+data	main	D_80125E62	snd_cd_level_right	same row as m-dates-a.tsv (identical key and name): ALIAS of snd_cd_level.right (+2); getCDlevel adds it to the left value
+data	main	D_80126080	snd_cd_level_samples	s16[0x400] scratch of the CD level meter (prefix snd_ follows snd_cd_level of m-dates-a): two 0x200-entry halves read from SPU RAM by SD_GetCDLevel (left capture at +0, right capture at +0x200 entries)
 field	DialogueWork	unk_0C	choice	alias dialogue_choice (D_80122CDC): last menu pick and the reply index of the dialogue runner
 field	DialogueWork	unk_14	line_wait	1 while a spoken line waits for the confirm press, 2 after the voice was cancelled; set by dialogue_speak_part, cleared by dialogue_run
 field	DialogueWork	unk_1C	choice_saved	copy of choice kept across a sub-scene by SHOUGATU and DATE
@@ -177,7 +174,7 @@ field	DialogueWork	unk_30	line_auto	1 for lines that end by themselves (codes 0x
 field	DialogueWork	unk_34	event_still_visible	alias scene_event_still_visible
 field	DialogueWork	unk_38	date_spot	date spot id of the current date (core spec 5.4); cleared by dialogue_clear with the other scene words, 96 uses mostly DATE
 field	DialogueWork	unk_3C	event_eyes_hold	HYPOTHESIS: alias scene_event_eyes_hold
-field	DialogueWork	unk_40	event_mouth_anim	alias scene_event_mouth_anim
+field	DialogueWork	unk_40	event_mouth_anim	alias scene_event_mouth_anim: event picture mouth mode, 0 voice-driven, 1 periodic animation every 240 frames, 2 neither
 field	DialogueWork	unk_48	line_clear	1 for code 0xF lines: after text and voice end the line list is cut (k_reset 1) without a confirm press
 field	DialogueWork	unk_4C	text_silent	alias dialogue_text_silent: no mouth movement for this line
 field	DialogueWork	unk_50	mouth_lock	HYPOTHESIS: alias scene_mouth_lock
@@ -188,31 +185,31 @@ field	DialogueWork	unk_6C	wipe_kind	alias scene_wipe_kind
 field	DialogueWork	unk_78	rank_override	alias event_log_rank_override
 field	DialogueVoice8	unk_00	clip_start	first word of the clip pair passed to xa_clip_request_set; emu: 0x180001C3 for girl 0's first voiced line; both words 0 = no voice
 field	DialogueVoice8	unk_04	clip_end	second word of the clip pair; emu: 0x210001D6
-field	CdLevelWork	unk_00	left	left level out (u16, scaled to the precision)
-field	CdLevelWork	unk_02	right	right level out
-field	CdLevelWork	unk_04	precision	output bit width: the level is shifted right by 16 - precision; emu: 8
-field	CdLevelWork	unk_06	sample_count	number of sample pairs measured (spread over 256 samples); emu: 32
-field	CdLevelWork	unk_08	mode	bits 0-3 method (1 peak, 2 average), bits 4-7 = 2 squares the value, bits 8-11 shaping curve 1, 4 or 8; emu: 0x212 = average, no square, no curve
-const	SpeakCode	0x00	SPEAK_PLAYER	player line: label is the player's family name, spoken-quote style; waits for confirm; text ending in the skip marker n n is shown only when dialogue_choice is 0
-const	SpeakCode	0x01	SPEAK_GIRL	girl line: label is the girl's short name (name_buf_girl_short), voice clip for the current girl, waits for confirm; same n n rule
+field	CdLevelWork	unk_00	left	same row as m-dates-a.tsv (identical key and name): left level out (u16, scaled to the precision)
+field	CdLevelWork	unk_02	right	same row as m-dates-a.tsv (identical key and name): right level out
+field	CdLevelWork	unk_04	precision_bits	same row as m-dates-a.tsv (identical key and name): output bit width: the level is shifted right by 16 - precision_bits; emu: 8
+field	CdLevelWork	unk_06	sample_count	same row as m-dates-a.tsv (identical key and name): number of sample pairs measured (spread over 256 samples); emu: 32
+field	CdLevelWork	unk_08	options	same row as m-dates-a.tsv (identical key and name): bits 0-3 method (1 peak, 2 average), bits 4-7 = 2 squares the value, bits 8-11 shaping curve 1, 4 or 8; emu: 0x212 = average, no square, no curve
+const	SpeakCode	0x00	SPEAK_PLAYER	player line: label is the player's family name, spoken-quote style; waits for confirm; text ending in two ASCII n bytes (nn, no space) is shown only when dialogue_choice is 0 (the two bytes are cut off)
+const	SpeakCode	0x01	SPEAK_GIRL	girl line: label is the girl's short name (name_buf_girl_short), voice clip for the current girl, waits for confirm; same nn rule (the voice request is skipped too when the text is hidden)
 const	SpeakCode	0x02	SPEAK_GIRL_REPLY	girl reply chosen by dialogue_choice: the text holds q-separated variants, variant number dialogue_choice is shown (a variant starting with n is skipped), voice clip pair number dialogue_choice
 const	SpeakCode	0x03	SPEAK_CHOICE_3	three-option menu: options are shuffled with junban_init unless the runner got choice 0xFF; options drawn with quote brackets; scene then runs normal_date_three_select
-const	SpeakCode	0x04	SPEAK_THOUGHT	player thought in parentheses with the family-name label; waits for confirm (same handler as 6)
-const	SpeakCode	0x05	SPEAK_GIRL_REPLY_B	same handler as 2
-const	SpeakCode	0x06	SPEAK_THOUGHT_B	same handler as 4; the GEKO scene starts with one; emu: group 0 line 0 of the GEKO girl-0 scene
+const	SpeakCode	0x04	SPEAK_PLAYER_PAREN	line with the player's family-name label and the text in parentheses; waits for confirm; the same case as 6 in dialogue_speak_part (HYPOTHESIS: the player's inner thought)
+const	SpeakCode	0x05	SPEAK_GIRL_REPLY_B	same case as 2 in dialogue_speak_part; what differs from 2, if anything, is outside this file
+const	SpeakCode	0x06	SPEAK_PLAYER_PAREN_B	same case as 4 in dialogue_speak_part (a difference, if any, is outside this file); the GEKO scene starts with one; emu: group 0 line 0 of the GEKO girl-0 scene
 const	SpeakCode	0x07	SPEAK_INLINE	line whose speaker label is in the text: first byte > (4-byte label), - (6-byte label), + (2-byte label) or < (4-byte label, parenthesised) selects the style; a short list of fixed sound-effect words and one linking phrase are placed and coloured separately; optional voice; waits for confirm
 const	SpeakCode	0x08	SPEAK_CHOICE_2	two-option menu (fixed order 0, 1) with quote brackets; scene then runs normal_date_two_select; emu: BUNKAKEN group 1 line 1
 const	SpeakCode	0x09	SPEAK_EFFECT	unlabelled sound-effect text at x -0x80; the thud word is drawn twice (colour 1 then the line colour); does not wait
-const	SpeakCode	0x0A	SPEAK_YOSHIO	line spoken by Yoshio: fixed label, voice speaker 0xD, waits for confirm, same n n rule
-const	SpeakCode	0x0B	SPEAK_SHIORI	line spoken by Shiori while another girl is the scene girl: fixed label, voice speaker 0, waits for confirm, same n n rule
+const	SpeakCode	0x0A	SPEAK_YOSHIO	line spoken by Yoshio: fixed label, voice speaker 0xD, waits for confirm, same nn rule
+const	SpeakCode	0x0B	SPEAK_SHIORI	line spoken by Shiori while another girl is the scene girl: fixed label, voice speaker 0, waits for confirm, same nn rule
 const	SpeakCode	0x0C	SPEAK_GIRL_AUTO	girl line that ends by itself when text and voice are done (line_auto = 1); clears dialogue_voice_cancelled
 const	SpeakCode	0x0D	SPEAK_GIRL_CONTINUE	voiced continuation of the previous girl line on the next rows (y = dialogue_next_row_y) with a blank label; waits for confirm; no voice request while dialogue_voice_cancelled
-const	SpeakCode	0x0E	SPEAK_THOUGHT_NOWAIT	player thought in parentheses; does not set line_wait, so the runner moves on at once
+const	SpeakCode	0x0E	SPEAK_PLAYER_PAREN_NOWAIT	player family-name label and parenthesised text like 4; does not set line_wait, so the runner moves on at once
 const	SpeakCode	0x0F	SPEAK_GIRL_CLEAR	girl line with voice that is cut (k_reset 1) when text and voice end, without a confirm press (line_clear = 1)
-const	SpeakCode	0x10	SPEAK_NARRATION_AUTO	plain unlabelled text at x -0x80 that ends by itself (line_auto = 1)
+const	SpeakCode	0x10	SPEAK_PLAIN_AUTO	plain unlabelled text at x -0x80 that ends by itself (line_auto = 1); HYPOTHESIS: narration
 const	SpeakCode	0x11	SPEAK_CONTINUE_AUTO	unlabelled continuation on the next rows (x -0x48, y = dialogue_next_row_y) that ends by itself
 const	SpeakCode	0x12	SPEAK_GIRL_CONTINUE_AUTO	voiced continuation with a blank label on the next rows that ends by itself; no voice request while dialogue_voice_cancelled
-const	SpeakCode	0x13	SPEAK_CHOICE_2_THOUGHT	two-option menu drawn with parenthesis brackets (thought style)
+const	SpeakCode	0x13	SPEAK_CHOICE_2_PAREN	two-option menu drawn with parenthesis brackets (code 8 uses quote brackets), fixed order 0, 1
 const	SpeakCode	0xFF	SPEAK_END	end of the script group: main_step_next; dialogue_run then moves to the next group (group + 1, line 0)
 const	NameCode	0x50	NAME_CODE_PLAYER_FORM	P: how the scene girl addresses the player (name_buf_player_form); one ASCII byte inside the Shift-JIS text; dialogue_render expands it and advances by one byte
 const	NameCode	0x70	NAME_CODE_PLAYER_FAMILY	p: player family name (name_buf_family); one ASCII byte inside the Shift-JIS text; dialogue_render expands it and advances by one byte
@@ -227,7 +224,7 @@ const	NameCode	0x41	NAME_CODE_A	A: name_buf_a; one ASCII byte inside the Shift-J
 const	NameCode	0x4D	NAME_CODE_M	M: name_buf_m; one ASCII byte inside the Shift-JIS text; dialogue_render expands it and advances by one byte
 const	TextMark	0x20	TEXT_MARK_BREAK_SPACE	ASCII space inside a script string: line break in dialogue_render (next row 16 px down) and option separator in make_three_select; inside reply variants (codes 2 and 5) it is just one byte
 const	TextMark	0x71	TEXT_MARK_BREAK	ASCII q: line break in dialogue_render, option separator in make_three_select and the only separator of reply variants (codes 2 and 5)
-const	TextMark	0x6E	TEXT_MARK_SKIP	ASCII n: a variant or a line ending in n n is not shown for dialogue_choice != 0
+const	TextMark	0x6E	TEXT_MARK_SKIP	ASCII n: two consecutive n bytes (nn, no space) at the end of a line's text (codes 0, 1, 0xA, 0xB, 0xC and 0xD) mean the line is shown only when dialogue_choice is 0 and are cut off; a reply variant that starts with n is skipped (codes 2 and 5)
 const	SceneWipe	0	SCENE_WIPE_DIAGONAL_BLOCKS	default kind: 15 diagonal bands 32 px apart; each band gains (cover) or loses (reveal) 2 black lines per frame; kind = calendar month % 7
 const	SceneWipe	1	SCENE_WIPE_CENTER_LINES	horizontal black lines around the row y = -0x29: the cover closes from the top and bottom edges, the reveal opens from that row; 5 lines per frame; kind = calendar month % 7
 const	SceneWipe	2	SCENE_WIPE_BLINDS	ten bands of horizontal black lines 16 px apart, one line per band per frame; kind = calendar month % 7
@@ -235,15 +232,15 @@ const	SceneWipe	3	SCENE_WIPE_DIAGONAL_SWEEP	one diagonal sweep of black lines, 3
 const	SceneWipe	4	SCENE_WIPE_DIAGONAL_HATCH	like kind 3 with four interleaved line sets (hatching), 64 per frame; emu: the kind used in April, black hatch lines retreat from the top-left; kind = calendar month % 7
 const	SceneWipe	5	SCENE_WIPE_IRIS	nested black rectangle outlines, 10 px more horizontal inset per frame: the cover works from the borders inward; kind = calendar month % 7
 const	SceneWipe	6	SCENE_WIPE_MOSAIC	strip mosaic of the shown background buffer (set_tarao_bg), strip height step_timer / 2 on the reveal and 8 - step_timer / 2 on the cover; kind = calendar month % 7
-const	ActorSlot	0	ACTOR_CURSOR	pad and mouse cursor actor (cursor_x and cursor_y are its position)
-const	ActorSlot	2	ACTOR_TEXT_MARKER	continue marker shown when a line is ready for the confirm press
-const	ActorSlot	16	ACTOR_HIZUKE_FIRST	first of eight calendar date HUD actors (16-23)
-const	ActorSlot	30	ACTOR_BUSTUP_B	second half of the portrait (sequence slot 1), built by bustup_build
-const	ActorSlot	31	ACTOR_BUSTUP_A	first half of the portrait (sequence slot 0); girl_out hides actors 30 and 31 together
-const	ActorSlot	96	ACTOR_EVENT_MOUTH	HYPOTHESIS: first actor of the scene-owned half: SD sprite (weekday screens) and event picture layer written by event_anim_show
-const	ActorSlot	97	ACTOR_EVENT_EYES	HYPOTHESIS: second scene-owned actor: second SD sprite and event picture eyes layer
-const	SpriteSlot	0	SPRITE_BUSTUP_FACE_A	HYPOTHESIS: first 16x16 face cell sprite of the portrait; tint follows the portrait fade
-const	SpriteSlot	1	SPRITE_BUSTUP_FACE_B	HYPOTHESIS: second 16x16 face cell sprite of the portrait
+const	ActorSlot	0	ACTOR_CURSOR	same row as m-hud.tsv (identical key and name): pad and mouse cursor actor (cursor_x and cursor_y are its position); scene_frame_update shows and hides it
+const	ActorSlot	2	ACTOR_TEXT_MARKER	same row as m-hud.tsv (identical key and name): continue marker shown when a line is ready for the confirm press (dialogue_run)
+const	ActorSlot	16	ACTOR_HIZUKE_FIRST	same row as m-hud.tsv (identical key and name): first of eight calendar date HUD actors (16-23); hizuke_hide, hizuke_appear and day_plus act on them
+const	ActorSlot	30	ACTOR_BUSTUP_EYES	same row as m-hud.tsv (identical key and name; this table had ACTOR_BUSTUP_B): animation driver of the portrait eyes, quad 1 takes its V from the frame of this actor in bustup_face_update; normal_date_girl_out and vram_bustup_clear treat actors 30 and 31 together
+const	ActorSlot	31	ACTOR_BUSTUP_MOUTH	same row as m-hud.tsv (identical key and name; this table had ACTOR_BUSTUP_A): animation driver of the portrait mouth, quad 0 takes its V from the frame of this actor when voice_mode is 0
+const	ActorSlot	96	ACTOR_EVENT_MOUTH	same row as m-hud.tsv (identical key and name): mouth layer of the event picture; confirmed by event_mouth_lipsync, which sets its frame from the voice-level thresholds like the portrait mouth; the weekday and holiday screens use the slot for the SD sprite
+const	ActorSlot	97	ACTOR_EVENT_EYES	same row as m-hud.tsv (identical key and name): eyes layer of the event picture (event_eyes_anim_start restarts its blink every 240 frames); the SD screens use the slot for their second SD sprite
+const	SpriteSlot	0	SPRITE_BUSTUP_MOUTH	16x16 mouth cell quad of the portrait: bustup_face_update sets its V (16 * frame, 0-3) from the voice-level thresholds or the frame of ACTOR_BUSTUP_MOUTH; tint follows the portrait fade
+const	SpriteSlot	1	SPRITE_BUSTUP_EYES	16x16 eye cell quad of the portrait: bustup_face_update sets its V (32 * frame) from the frame of ACTOR_BUSTUP_EYES
 const	SpriteSlot	58	SPRITE_EVENT_STILL_0	first of six 128-pixel tiles (58-63, a 3 x 2 grid from x -0xA0, y -0x78) of the full-screen event still set up by event_still_show
 const	GirlMenu	11	GIRL_MENU_BACK	dialogue_choice value select_girl stores for the back item (select_girl2 has none)
 const	GirlMenu	12	GIRL_MENU_ITEMS	items of the picker with the back item; 11 without (0xC - arg0)
