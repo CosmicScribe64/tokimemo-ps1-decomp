@@ -348,5 +348,5 @@ The old addresses of the framework and rule functions (the stage functions follo
 | `func_80146FA0`, `func_80147214`, `func_80147F8C` | `culture_birthday_tables_init`, `culture_birthday_scene`, `culture_birthday_choice_name_set` | birthday scene (7.5) |
 | `func_80132000` .. `func_80132444` (22) | `culture_script_set_*` | script pointer setters (9.1) |
 | 15 block entries | `culture_<girl>_<visit|member>_entry` | (club, year) -> stage tables of 5.3 |
-| 19 start functions | `culture_<girl>_<visit|member>_script_[a-c_]start` | name codes, script set, line 0, tables, next step |
+| 18 start functions | `culture_<girl>_<visit|member>_script_[a-c_]start` | name codes, script set, line 0, tables, next step |
 | `func_8013FA20`, `func_8013FA28` | `culture_ayako_visit_unused_stage`, `culture_ayako_visit_followup` | stages 78 and 79 (7.1) |
