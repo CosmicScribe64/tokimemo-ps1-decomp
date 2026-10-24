@@ -297,14 +297,14 @@ func	ETC	func_80142B80	staff_roll_load_step	stage 0 step 0 (22 substeps): picks 
 func	ETC	func_80143240	etc_all_girls_cleared	1 when each of girls 0-12 has a nonzero ending counter in girl_cleared or in system_data.flags; used by the staff roll, the last photo and the album secret mode
 func	ETC	func_80143334	staff_roll_start_variant	stage 0 step 1: 3D variant (models, 2D off) or picture variant (music, pictures, step 0xFF); then main_stage_next
 func	ETC	func_801433E4	staff_roll_model_matrix_update	builds the model matrix from rotation, scale 1.0 and the position variables
-func	ETC	func_8014354C	staff_roll_models_init	loads the model table at 0x801F9004, links 16 objects, resets position (-0x60,0x20,-0x300) and rotation
+func	ETC	func_8014354C	staff_roll_models_init	loads the 3D object table at 0x801F9004 (emu: the objects are flat picture planes carrying the girl's art), links 16 objects, resets position (-0x60,0x20,-0x300) and rotation
 func	ETC	func_80143644	staff_roll_stage_load	stage 0 step switch 0 load, 1 start variant; then picture fade update
 func	ETC	func_8014369C	staff_roll_music_start	stage 1 step 0: stops BGM, requests the CD clip, sound 0x300, main_step_next
 func	ETC	func_801436E4	staff_roll_girl_textures_load	binds the three texture slots 5-7 of the girl's model from the loaded art
 func	ETC	func_80143758	staff_roll_credit_lines_init	sets up the 7 scrolling credit-line actors from the credit table
 func	ETC	func_8014387C	staff_roll_credit_line_reset	re-initialises one credit-line actor with the next table entry
 func	ETC	func_80143968	staff_roll_credit_lines_update	moves the 7 lines up one pixel per frame and recycles the ones that left; stops after 0x11D entries
-func	ETC	func_80143A88	staff_roll_models_step	stage 1 step 1 (3D variant): 701-frame segments, one girl model per segment in staff_roll_girl_order, model path by sine/cosine, pad-driven debug controls, ends after 0x259 frames when the CD clip is done
+func	ETC	func_80143A88	staff_roll_models_step	stage 1 step 1 (3D variant): 701-frame segments, one girl's picture plane per segment in staff_roll_girl_order, path by sine/cosine, pad-driven debug controls, ends after 0x259 frames when the CD clip is done; emu: the sepia art is skewed by perspective as it moves
 func	ETC	func_80143F24	staff_roll_models_leave	stage 1 step 2: fades the pictures, moves the model away, then mode 0x12 (title) when current_girl is 13 or more, else mode 0xC3
 func	ETC	func_80143FE0	staff_roll_stage_run	stage 1 step switch 0 music, 1 models, 2 leave, 0xFF pictures; then the model matrix update
 func	ETC	func_8014407C	staff_roll_pictures_place	places three picture quads with random y offsets (fixed positions for one girl value 0xE)
