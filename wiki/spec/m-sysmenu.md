@@ -10,7 +10,7 @@ Phase 2 spec for [[tickets/T-27017-p2-m-sysmenu]] ([[tickets/T-27000-phase-2]]).
 
 Table size: 264 rows (92 `func`, 27 `data`, 1 `field`, 126 `const`, 16 `comment`, 2 `file`); 7 rows carry HYPOTHESIS. All 109 functions of the file are covered: 92 renamed, 16 O.BIN-named (kept, English comment rows), 1 named by core (`mode_command_screen`).
 
-Evidence used: the matched C and every caller in `src/` and `asm/`; core's field map; the English-patch name `system_settings_init`; the O.BIN developer table (names that are not applied in `config/symbol_addrs_obin.txt` are quoted in notes as evidence of role and order, never used as the new name); and the emulator from the HUD unit's saved state of the weekday command screen on 1995-04-09 (a Sunday, no club, layout A, menu mode A). Emulator facts are marked (emu). The memory-card screens cannot be run to the end in the emulator (section 5).
+Evidence used: the matched C and every caller in `src/` and `asm/`; core's field map; the English-patch name `system_settings_init`; the O.BIN developer table (names that are not applied in `config/symbol_addrs_obin.txt` are quoted in notes as evidence of role and order, never used as the new name); and the emulator from the HUD unit's saved state of the weekday command screen on 1995-04-09 (a Sunday, no club, layout A, menu mode A). Emulator facts are marked (emu). The memory-card screens were run through save and load against the emulator's empty virtual card (section 5.4); the mascot spots, the club, rumor and preparation scenes, and the sick, exam and trip rows of the build step could not be reached.
 
 ## 1. What the file is
 
@@ -63,7 +63,7 @@ Where the player picks the command for the coming week. Reached when the queue r
 | 3 | `COMMAND_SCREEN_STAGE_DATA` | section 5 |
 | 4 | `COMMAND_SCREEN_STAGE_SETTINGS` | section 6 |
 | 5 | `COMMAND_SCREEN_STAGE_JOIN_CLUB` | section 7 (unreachable from here) |
-| 0xFF | `COMMAND_SCREEN_STAGE_RELOAD` | 0 reset, 1 `command_screen_reload_calendar`, 2 build, 3 background wait; the brightness rises 4 per frame to 0x80 from step 2 on |
+| 0xFF | `COMMAND_SCREEN_STAGE_RELOAD` | 0 reset, 1 `command_screen_reload_calendar`, 2 build, 3 background wait; the brightness rises 4 per frame to 0x80 from step 2 on; with the room picture cached the build runs a second time in stage 0 (section 5.4) |
 
 `mode_command_screen` also calls `mascot_update` when the mascot is visible and ends with `screen_frame_draw(0)`. Stages 2-5 return to the screen with `main_stage_set(0)` + `main_step_set(2)`: the build step runs again, the reset and the one-frame wait do not.
 
@@ -123,7 +123,7 @@ The card is handled asynchronously by the memory-card module (80053650; not this
 
 `D_800E8BEE` is set when the card's slot 0 file opens (the system file exists), by the scan, and cleared by the card reset (`func_80056284`, `func_80054BE4`), by ETC, and by the scan when three tries fail. HUD calls it `slot_info_from_system_data`. With it set, the slot summaries come from the SystemData arrays; without it each slot must be read from the card to show its information.
 
-The slot summary (`func_80054E6C`, run after a save for slot `selected_slot & 0xF`): year, month, day, family name, given name, nickname, the nine parameter words, 16 bytes of girl record 15 (event counters; meaning unknown) and the club nibble, stored in SystemData arrays that are written to the system file.
+The slot summary (`func_80054E6C`, run after a save for slot `selected_slot & 0xF`): year, month, day, family name, given name, nickname, the nine parameter words, 16 bytes of girl record 15's event counters and the club nibble, stored in SystemData arrays that are written to the system file. The 16 bytes are filled by the TEL overlay's girl evaluation page (0 for a girl who is not met, else her star rating + 1); the slot panel counts them as the "cleared" figure (HUD spec section 17); whether a nonzero value really means a cleared girl is not shown by the code.
 
 ### 5.2 Steps
 
@@ -154,7 +154,12 @@ The loaded GameState replaces the live one first. Then:
 
 ### 5.4 What the player sees (emu)
 
-Icon 13 enters stage 3 at frame 46; `save_load_menu_init` runs once and the card check runs on, showing a blank two-page notebook with the "checking the memory card" line and the animated dots. In the emulator the check never ends (no card image; the game waits inside the card status call), so steps 2 and later were not run. The `icon_layout_stash` call fires once at frame 45.
+Run from the command screen state against the empty virtual card (`build/emu/memcard1.mcd`):
+
+- Icon 13 at frame 45: `icon_layout_stash(0)` once, stage 3 at 46, `save_load_menu_init` once. The screen is a blank two-page notebook with the checking line and animated dots. The check ends at about frame 483 (the BIOS file open of the emulator takes about 34 frames per call, so the slot scan is slow; the real console is much faster): detection ok, no system file, then the two choices (save on the left page, load on the right) with a one-line instruction.
+- Save: circle on save: `save_load_save_init` and the prompt at once (no used slot), 14 numbered slots in 3 columns on the left page, all dimmed, the cursor on slot 1. Circle on slot 1: the create test passes, the slot gets the second tint and the overwrite question with the yes and no lines appears (frame 115). Circle at 250: the write ends before frame 391, then `icon_layout_stash(1)` and the command screen is rebuilt from stage 0 step 2 (frame 392); the slot is now status 1.
+- Load (card with that save): circle on load: the scan found slot 1 used; its summary is read (about 130 frames) and `save_load_load_select` starts at frame 165 with the right-page list (slot 1 undimmed). The left page shows the slot number, the date, the player's name, the nickname, the club and a count of clears. Circle on slot 1 starts `save_load_load_read`, which reads, validates and asks whether to play on with this data (yes and no lines). Circle at 700: apply, `save_load_load_finish` for 65 frames, then stage 0xFF: reset (frame 767), the month data reload (76 frames), the build step (844). The saved date 1995-04-09 is an ordinary date, so the special branch was not taken.
+- Stage 0xFF quirk: the room picture was already decoded, so `room_bg_load_start` called `main_stage_next` from stage 0xFF, and the stage byte wrapped to 0: the setup ran a second time (reset, wait, build; `command_screen_build` ran twice). When the picture has to be read, step 3 of stage 0xFF ends with `main_stage_set(1)` and there is no second pass.
 
 ### 5.5 The background system-file write
 
@@ -264,7 +269,8 @@ Roles shown by this file's use, with suggested names for the owners (no rows in 
 5. The mascot menu starts one item off (section 6); merely opening it and pressing cross can change or hide the mascot, because the preview runs every frame.
 6. The save screen asks "overwrite?" before writing to an empty slot as well.
 7. Cursor speed thresholds differ between the label set and the message wording (section 6).
-8. `D_800E7D11` (`system_data_plus1`) and `D_800E7D2C` (`system_flags_8`) are byte aliases into SystemData used through an odd cast; `settings_unlocked_mascot_count` and the cursor speed screen should read `SystemData.flags[]` when the code is cleaned.
+8. After a load the command screen is built twice when the room picture is cached (section 5.4): the first pass runs in stage 0xFF, `main_stage_next` wraps the stage byte to 0 and stage 0 runs again.
+9. `D_800E7D11` (`system_data_plus1`) and `D_800E7D2C` (`system_flags_8`) are byte aliases into SystemData used through an odd cast; `settings_unlocked_mascot_count` and the cursor speed screen should read `SystemData.flags[]` when the code is cleaned.
 
 ## 13. Prefix and glossary requests
 
@@ -279,5 +285,5 @@ New prefixes for the module row of `8005A0B0` in the ADR map (the ADR row today 
 5. The room spots: what each one does is confirmed in the emulator (section 2); which object a spot stands for (`radio`, `window`) comes only from the developer names and the picture. The two mascot spots were not run.
 6. Mode 0x14: this unit only shows that NAME_ENT's new-run entry is used for clear data and first-day saves; its role is for the NAME_ENT unit.
 7. `scratch_words` layout: core says the layout occupies the first 0x50 bytes; the code shows 0x40 bytes at +0 and five words at +0x80..+0x93.
-8. The meaning of the 16 bytes of girl record 15 stored in each slot summary.
+8. Whether the "cleared" count of the slot summary (nonzero entries among the 16 bytes of girl record 15, filled by TEL's evaluation page) means cleared girls; the value 1 is the case "points >= 500" in TEL, which looks like a completion state.
 9. Where the rumor's effect on the girls is applied, if anywhere.
