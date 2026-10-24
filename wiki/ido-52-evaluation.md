@@ -366,6 +366,40 @@ on every case; a combination of the two fails too (`copy_if_then_lt8_loop` needs
 third candidate. On the corpus it differs from the build only in `func_8006B0C8` and in the two FAKE-steered
 copies.
 
+## T-26000: branches the 30 cases leave out
+
+[[tickets/T-26000-ugen-block-copy-41-rule]] made the 4.1 rule of the previous section the build's rule. Its
+cases test compares only, so the same harness ran one-line bodies before the 0x44-byte copy in `void test(void)`,
+with no indirect store, against 4.1's ugen and the new pass (case files for the shapes that matter:
+`tools/ido_eval_cases/ugen_copy_state/`, README section "T-26000"):
+
+| body | ucode before the copy | 4.1 | pass |
+|---|---|---|---|
+| copy at entry; after `G1 = 0;`; after a call and a store; after a procedure that ends with an indirect store; `void test(int n)` | `M`, `S`, `C S` | B | B |
+| `if (G1) f();`, `if (G1 != 0) f();`, `if (G1 < 0) f();` | `f[neq 0]`, `f[les 0]` | B | B |
+| `G2 = G1 & 1;` | `and S` | B | B |
+| `if ((G1 & 1) == 0) f();` | `f[0 equ and]` (constant on the left) | B | B |
+| `odd = G1 & 1; if (odd != 0 && G2 != 0) ...` (old main `strCallback`) | `f[0 neq R]` | B | B |
+| `if (G1 & 1)`, `& 0x80`, `& 0x80000000`, `!(G1 & 1)`, `G1 & G2`, `G1 \| G2` | `and`/`ior` then `fjp`/`tjp` | F | B |
+| `if (G1 >> 3)`, `>> 31` signed and unsigned, `if (G1 + 3)`, `if (G1 % 3)` | `shr`/`add`/`rem` then `fjp` | F | B |
+| `if (P[1])`, `if (P[1] & 0x80)` | `ilod fjp`, `ilod and fjp` | F | B |
+| bit fields: one bit (`sll; bgez`), the low 29 bits, the top 2 bits | `ilod shl shr`, `ilod cvtl`, `ilod shr` then `fjp` | F | B |
+| `if ((G1 & 1) && G2) ...` (new main `strCallback`) | `lod R; fjp` | F | B |
+
+So 4.1 sets F at a branch whose condition is not a compare (5.3's raw ugen gives B in these). A compare with the
+constant on the left counts as a register compare in 4.1 too, as the rule says, although the code is `beqz`.
+
+On the corpus (scratch census of the full build with that addition): states change in four procedures, two of
+them (GYOZI `func_8014494C`, SHOUGATU `func_8014265C`) only because that census read a `Urstr` before the jump as
+the condition; the build skips it, and their compares are against 0. The other two: main `func_8005938C` becomes FFF, the original's, even without its arm (4.1 itself gives FFF there
+without the arm, and B for the two MATRIX copies when the `r->flags & 0x80` test is removed: 124 and 90 changed
+lines). main `func_8006B0C8` becomes FBBB and fails: its compaction copy follows the one-bit field test
+`active`, and the original is B there. 4.1 gives F at that copy (0 words changed by the F injection, also as a
+0x44-byte probe, T-25608), so the original differs from 4.1 at this branch, or its 4-byte copy reacts to the state
+differently. One function for the addition, one against it: not adopted. The build keeps the 30-case rule and the
+FAKE arms of `strCallback` and `func_8005938C` (re-marked T-26000, [[matching-notes]] "T-26000"). Open: the 4-byte
+copy's state in 4.1 and in the original, and compares whose value is stored (`x = a < b;`), never measured.
+
 ## What this says about the original compiler
 
 - Release 3.18 (stamp) with code that 5.3 (3.19) reproduces exactly wherever no known gap applies. That fits an IDO 5.2-generation suite, and 5.2 behaves identically to 5.3 on everything measured.

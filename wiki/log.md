@@ -1749,3 +1749,7 @@ Section added to [[ido-52-evaluation]]; harness in `drafts/T-25608/ido41/`.
 ## [2026-10-23] ticket | T-25608 Done: main func_8006B0C8 matched; every game function is C
 
 The last function matched with a narrowed block-copy state rule in tools/ugen_pass.py; an IDO 4.1 check (user-approved download) confirmed the three swap copies' state and showed a better general rule, now [[tickets/T-26000-ugen-block-copy-41-rule]]. With this merge all 6,952 game functions are matched ([[tickets/T-25600-finish-gate]]).
+
+## [2026-10-24] build | T-26000 IDO 4.1 block-copy rule adopted
+tools/ugen_pass.py now follows IDO 4.1's block-copy state rule (30 cases as unit tests); main strCallback and func_8005938C re-steered by respelling a test, two obsolete empty-test FAKEs removed, clean build 27/27 ([[tickets/T-26000-ugen-block-copy-41-rule]]).
+4.1 also sets F at a branch on a value; not modelled because of main func_8006B0C8 ([[ido-52-evaluation]] "T-26000", [[toolchain]], [[matching-notes]]).
