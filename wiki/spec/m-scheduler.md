@@ -219,6 +219,8 @@ After the loop, independent of the 5/16 roll: girl 12's flag byte 3 (HYPOTHESIS:
 
 ## 11. The queue reader (`day_event_dispatch`) and the other modes
 
+Emulator probe of the whole table below: a one-record queue of each type was poked into the title-menu state and the reader run; every type reached the mode listed (overlay modes are requested through loader mode 2 and appear in `overlay_target_mode`), 0xFA and unknown types led to mode 0x34, and a type-0x44 record for an unmet girl was skipped.
+
 The day screen runs `day_event_dispatch` in stage 0 step 0. Each pass:
 
 1. Housekeeping: `girl_flag4_may_clear` (May 6), `girl_counters_clamp` (tokimeki, affection, syoushin capped 0..0x80; when a girl's syoushin is below 0x32 her flag bits 16 and 17 are cleared so the forced encounter and the rumor can fire again).
@@ -256,7 +258,7 @@ The day screen runs `day_event_dispatch` in stage 0 step 0. Each pass:
 | 0xFE | 0x38 (`mode_month_start`) | |
 | 0xFF or unknown | 0x34 | |
 
-`day_event_next(flag)` leaves a scene: when `debug_menu_active` is nonzero it returns to mode 0x22; else `day_event_index += 1` (after restarting BGM if `flag == 1`) and mode 0x31.
+`day_event_next(flag)` leaves a scene: when `debug_menu_active` is nonzero it returns to mode 0x22; else `day_event_index += 1` (after restarting BGM if `flag == 1`) and mode 0x31. `debug_menu_active` starts at 1 in the data section and NAME_ENT clears it when a game is started, so every normal game runs with it 0; a probe from the title-menu state, where it is still 1, ended a skipped record in mode 0x22.
 
 ### 11.1 Day notice (mode 0x39) and vacations
 
@@ -343,4 +345,4 @@ These addresses belong to other main units; the rows are not in the table to kee
 8. `ClubRecord` flag byte: the 2-bit counter (`ClubFlagBits` unk_25) incremented for the "no club" record during club seasons has no known reader name (HYPOTHESIS: seasons skipped).
 9. Marker 0x17 (written by ETC after three failed subjects) has no branch in the builder: how the command screen turns it into the forced study week belongs to the command-screen unit.
 10. The `amusement_park_done` alternative branch `year 97 && day == 28` can never differ from the first alternative (both need bit 18 clear); dead code, no behaviour.
-11. `debug_menu_active` (0x800B3C6C) is set by the OPTION debug page; a port without the debug page can drop the test in `day_event_next`.
+11. `debug_menu_active` (0x800B3C6C, initial value 1, cleared when a game starts) belongs to the OPTION debug page; a port without the debug page can drop the test in `day_event_next`.
