@@ -1741,3 +1741,7 @@ Case `copy_store_then_ne0_left_if` (indirect store first) showed that IDO 4.1 ke
 ## [2026-10-24] ticket | T-26000 Done
 [[tickets/T-26000-ugen-block-copy-41-rule]] passed the standards and spec reviews (approved, four non-blocking follow-ups noted in the ticket) and moves to Done.
 Merged as w17-ugen41; follow-up still to file: the 4.1 census of F at a value branch, `func_8006B0C8`'s 4-byte copy, stored compares, `Uxjp`, `Uijp`.
+
+## [2026-10-24] ingest | T-27021 phase 2 h-cdio: names and port spec for the CD, movie, MDEC, 3D and mouse layer
+[[tickets/T-27021-p2-h-cdio]] (In Review): nine main files (80 functions) read against their callers and three cold-boot emulator runs. Wrote config/renames/proposals/h-cdio.tsv (200 rows: 53 func, 49 data, 37 const, 27 comment, 17 field, 9 file, 8 type; 8 hypotheses) and [[spec/h-cdio]] (linked from [[spec/index]]).
+Findings: the CD layer is a 48-entry command ring over libcd with an end-of-file marker test on checked reads; both movies play in 24-bit mode (movie flag starts at 1, never written), so the caption branch is not reached; `initLight`, `initCoordinate` and the mouse read functions have no caller in src/. No change to src/, include/ or symbol files.
