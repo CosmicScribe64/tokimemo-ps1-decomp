@@ -1,7 +1,7 @@
 ---
 id: T-27012
 title: Phase 2 naming proposals and port spec for the school-day command loop (m-weekday)
-status: In Review
+status: Done
 assignee: claude
 created: 2026-10-24
 updated: 2026-10-24
@@ -17,7 +17,7 @@ Roadmap phase 2 (readable code), unit `m-weekday`: `src/main/800737A0.c` (19 fun
 - [x] `config/renames/proposals/m-weekday.tsv` has one row per rename (kinds func, data, const, file) and a comment row for each of the nine O.BIN-named functions; no `src/`, `include/` or symbol-file edits.
 - [x] `wiki/spec/m-weekday.md` covers the record, the stages and steps, background and SD-pack selection, the parameter formula with worked examples, the vacation variant, the interfaces, port notes and open questions; linked from `wiki/spec/index.md`.
 - [x] Uncertain game-meaning claims start with `HYPOTHESIS:` in the note column.
-- [ ] Review of the table and spec by the phase-2 reviewer.
+- [x] Review of the table and spec by the phase-2 reviewer.
 
 ## Notes
 
@@ -33,3 +33,12 @@ Roadmap phase 2 (readable code), unit `m-weekday`: `src/main/800737A0.c` (19 fun
 ### Open for the orchestrator (2026-10-24)
 
 This ticket has no card in `wiki/kanban.md` (the task forbids editing the board), and the parent `T-27000-phase-2` does not exist in this tree, so `tools/wiki.py lint` reports one status mismatch and one broken link for this ticket and its spec, the same as for T-27020 and T-27028. Review by the phase-2 reviewer is pending.
+
+### Review (2026-10-24): approved
+
+- Read at a5a3aad64. Approved with three non-blocking findings, none fixed on this branch.
+- Duplicate constants: the 8 `WeekdayCommand` / `COMMAND_*` rows repeat m-scheduler's rows, which are already on w2-good (m-scheduler also has `COMMAND_NONE` 14). `rename.py const` refuses an enumerator that already exists in the header closure, so only one table may carry them. Decision for open question 1: m-scheduler owns group `WeekdayCommand`. At consolidation, drop these 8 rows here and keep the per-command scene facts in the spec; m-holiday should switch from group `Command` to `WeekdayCommand`.
+- Spec open question 4 is stale: on w2-good, m-hud names actor 96 `ACTOR_EVENT_MOUTH` and actor 97 `ACTOR_EVENT_EYES`, and `ACTOR_CALENDAR_MARK_FIRST` no longer exists as a constant (the calendar page reuses slot 97). The `ACTOR_SD_A` / `ACTOR_SD_B` alias proposal stands. The spec should also say that its emulator results settle two HYPOTHESES in sibling specs: core's `sd_anim_fast` note (actors 96 and 97 are SD figures on the weekday and holiday screens) and m-scheduler's note (the companion girl appears in the command's picture).
+- Cross-unit: p2a-m-dates-b (not yet on w2-good) names four of the same addresses differently (`D_800B67AC`, `D_800B6810`, `D_80120652`, `D_80120666`), so those names need one decision at consolidation.
+- Scope: the diff against w2-good touches only `config/renames/proposals/m-weekday.tsv`, `wiki/spec/m-weekday.md`, `wiki/spec/index.md`, this ticket and `wiki/log.md`. No `src/`, `include/` or `config/symbol*` edits.
+- Board: the card is added to the Done column by the kanban sync after the merge (this branch does not edit `wiki/kanban.md`).
