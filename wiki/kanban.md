@@ -42,6 +42,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
+- [ ] [[tickets/T-26003-ugen-value-branch-dropped-arm|T-26003 Model IDO 4.1's value-branch F and dropped-arm stores in tools/ugen_pass.py]]
 
 ## Ready
 

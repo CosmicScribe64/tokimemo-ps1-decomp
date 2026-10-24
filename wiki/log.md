@@ -1738,3 +1738,7 @@ Census of the full build (566 procedures with a `Umov`, throwaway logging shim, 
 
 ## [2026-10-24] ticket | T-26002 Done
 [[tickets/T-26002-fake-sweep-41-rule]] passed the standards and spec review (approved, no blocking findings; comment-only change in src/, no FAKE removed). Kanban card added under Done, and the comments of `strCallback` and `func_8005938C` now cite the full path of `copy_dropped_arm_store.c`. Merging as w20-fake-sweep.
+
+## [2026-10-24] ticket | T-26003 opened (Backlog)
+
+[[tickets/T-26003-ugen-value-branch-dropped-arm]]: the two IDO 4.1 behaviours the T-26000 rule does not model yet (value-branch F, dropped-arm stores), which keep four never-true FAKE arms alive per the T-26002 sweep.
