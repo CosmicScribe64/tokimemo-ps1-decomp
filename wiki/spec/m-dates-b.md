@@ -37,7 +37,7 @@ The same order (read, wait, decode, show; portrait read, wait, build; wipe; titl
 
 ## 2. Step reference
 
-Names: proposed new name (current name). "Table refs" counts distinct `.word` references in the overlay data asm (the aggregated and the per-object data files; a per-symbol island file that repeats a word of them is counted once); "C" counts calls in the overlay C sources, comments excluded, under the O.BIN name and the `func_` name together.
+Names: proposed new name (current name). "Table refs" counts distinct `.word` references in the overlay data asm (the aggregated and the per-object data files; a per-symbol island file that repeats a word of them is counted once: a raw `grep` over all data files finds 27 `scene_bg_wipe_in` words in GEKO and 25 `bustup_expression_3` words in DATE, the distinct words are 26 and 24); "C" counts calls in the overlay C sources, comments excluded, under the O.BIN name and the `func_` name together.
 
 ### 2.1 Background
 
