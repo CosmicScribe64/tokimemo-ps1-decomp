@@ -779,8 +779,8 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 
 ```
 0:place_init 1:place_bank_load 2:place_bgm_start 3:common_script_load 4:wait_cd 5:date_script_load 6:wait_cd 7:place_tables_load
-8:wait_cd 9:place_neighborhood_park_arrival 10:wait_cd 11:dec_init 12:change_bg 13:place_intro 14:dev_80045BEC 15:place_init
-16:meeting_names 17:arrival_talk_step_common 18:meeting_choice_menu 19:meeting_decide 20:arrival_talk_step_common 21:bg_fadeout 22:place_neighborhood_park_arrival 23:wait_cd
+8:wait_cd 9:arrival 10:wait_cd 11:dec_init 12:change_bg 13:place_intro 14:dev_80045BEC 15:place_init
+16:meeting_names 17:arrival_talk_step_common 18:meeting_choice_menu 19:meeting_decide 20:arrival_talk_step_common 21:bg_fadeout 22:arrival 23:wait_cd
 24:dec_init 25:change_bg 26:place_bank_load 27:place_bgm_start 28:bg_fadein 29:place_init 30:meeting_place_check 31:arrival_talk_step_common
 32:mira_mood_jump 33:portrait_read_pair 34:read_bustup 35:wait_cd 36:bustup_addr_init 37:dev_8004AB74 38:reaction_rows_build 39:arrival_wait
 40:low_looks_penalty 41:date_event_choose 42:arrival_talk_gate 43:wait_sub 44:girl_in 45:arrival_talk 46:all_places_equal 47:special_day_talk
@@ -791,7 +791,7 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 0 neighborhood_park, stage 1 (`spot_place_neighborhood_park_steps`, 18 steps)
 
 ```
-0:mood 1:date_event_choose 2:speak012 3:select2 4:case 5:speak 6:variant 7:expr1
+0:branch_on_mood 1:date_event_choose 2:speak012 3:select2 4:special_case 5:speak 6:talk_variant 7:expr1
 8:result_talk 9:expr_mood 10:birthday_check 11:skip_step_unless_flag 12:year_talk 13:mood_talk 14:girl_out 15:return
 16:scene_close 17:BAD_STATE
 ```
@@ -799,8 +799,8 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 1 kirameki_central_park, stage 1 (`spot_place_kirameki_central_park_steps`, 35 steps)
 
 ```
-0:expr_mood 1:date_event_choose 2:branch 3:speak 4:girl_out 5:load 6:wait_cd 7:dec_init
-8:load 9:wait_cd 10:step 11:move_place 12:dev_80046900 13:date_event_choose 14:girl_in 15:speak
+0:expr_mood 1:date_event_choose 2:branch 3:speak 4:girl_out 5:bg_load 6:wait_cd 7:dec_init
+8:assets_load 9:wait_cd 10:step 11:move_place 12:dev_80046900 13:date_event_choose 14:girl_in 15:speak
 16:select3 17:outcome_apply 18:speak 19:talk_until_done 20:girl_out 21:move_place 22:place_init 23:girl_in
 24:birthday_check 25:face_from_row 26:result_talk 27:expr_mood 28:skip_step_unless_flag 29:year_talk 30:mood_talk 31:girl_out
 32:return 33:scene_close 34:BAD_STATE
@@ -809,18 +809,18 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 2 shopping_street, stage 1 (`spot_place_shopping_street_steps`, 48 steps)
 
 ```
-0:expr_mood 1:speak012 2:select3 3:case 4:branch 5:speak 6:branch 7:girl_out
-8:shopping_street_shop_choose 9:wait_cd 10:dec_init 11:start 12:move_place 13:dev_80046900 14:girl_in 15:date_event_choose
-16:mood 17:speak 18:mood 19:girl_out 20:speak 21:girl_in 22:state 23:speak
+0:expr_mood 1:speak012 2:select3 3:special_case 4:branch 5:speak 6:speak_branch 7:girl_out
+8:shopping_street_shop_choose 9:wait_cd 10:dec_init 11:bgm_start 12:move_place 13:dev_80046900 14:girl_in 15:date_event_choose
+16:branch_on_mood 17:speak 18:branch_on_mood 19:girl_out 20:speak 21:girl_in 22:set_state 23:speak
 24:select3 25:outcome_apply 26:speak 27:branch 28:speak 29:expression 30:speak 31:talk_until_done
-32:girl_out 33:move_place 34:start 35:place_init 36:girl_in 37:birthday_check 38:face_from_row 39:result_talk
+32:girl_out 33:move_place 34:bgm_start 35:place_init 36:girl_in 37:birthday_check 38:face_from_row 39:result_talk
 40:expr_mood 41:skip_step_unless_flag 42:year_talk 43:mood_talk 44:girl_out 45:return 46:scene_close 47:BAD_STATE
 ```
 
 ### place 3 aquarium, stage 1 (`spot_place_aquarium_steps`, 32 steps)
 
 ```
-0:expr_mood 1:date_event_choose 2:speak 3:girl_out 4:load 5:wait_cd 6:dec_init 7:move_place
+0:expr_mood 1:date_event_choose 2:speak 3:girl_out 4:bg_load 5:wait_cd 6:dec_init 7:move_place
 8:dev_80046900 9:date_event_choose 10:girl_in 11:speak 12:select3 13:outcome_apply 14:speak 15:speak_branch
 16:talk_until_done 17:girl_out 18:move_place 19:place_init 20:girl_in 21:birthday_check 22:face_from_row 23:result_talk
 24:expr_mood 25:skip_step_unless_flag 26:year_talk 27:mood_talk 28:girl_out 29:return 30:scene_close 31:BAD_STATE
@@ -829,9 +829,9 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 4 zoo, stage 1 (`spot_place_zoo_steps`, 35 steps)
 
 ```
-0:expr_mood 1:case 2:speak 3:girl_out 4:load 5:wait_cd 6:dec_init 7:move_place
+0:expr_mood 1:special_case 2:speak 3:girl_out 4:bg_load 5:wait_cd 6:dec_init 7:move_place
 8:dev_80046900 9:date_event_choose 10:girl_in 11:speak 12:select3 13:outcome_apply 14:speak 15:branch
-16:dev_800463C0 17:speak 18:state 19:talk_until_done 20:girl_out 21:move_place 22:place_init 23:girl_in
+16:dev_800463C0 17:speak 18:set_state 19:talk_until_done 20:girl_out 21:move_place 22:place_init 23:girl_in
 24:birthday_check 25:face_from_row 26:result_talk 27:expr_mood 28:skip_step_unless_flag 29:year_talk 30:mood_talk 31:girl_out
 32:return 33:scene_close 34:BAD_STATE
 ```
@@ -839,7 +839,7 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 5 botanical_garden, stage 1 (`spot_place_botanical_garden_steps`, 34 steps)
 
 ```
-0:expr_mood 1:date_event_choose 2:speak 3:girl_out 4:load 5:wait_cd 6:dec_init 7:move_place
+0:expr_mood 1:date_event_choose 2:speak 3:girl_out 4:bg_load 5:wait_cd 6:dec_init 7:move_place
 8:dev_80046900 9:date_event_choose 10:girl_in 11:speak 12:select3 13:branch 14:speak 15:speak
 16:outcome_apply 17:speak 18:talk_until_done 19:girl_out 20:move_place 21:place_init 22:girl_in 23:birthday_check
 24:face_from_row 25:result_talk 26:expr_mood 27:skip_step_unless_flag 28:year_talk 29:mood_talk 30:girl_out 31:return
@@ -849,7 +849,7 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 6 planetarium, stage 1 (`spot_place_planetarium_steps`, 36 steps)
 
 ```
-0:speak 1:girl_out 2:load 3:wait_cd 4:dec_init 5:move_place 6:dev_80046900 7:girl_in
+0:speak 1:girl_out 2:bg_load 3:wait_cd 4:dec_init 5:move_place 6:dev_80046900 7:girl_in
 8:speak 9:bggirl_fadeout 10:wait_sub 11:date_event_choose 12:dev_800464E8 13:speak 14:branch 15:speak
 16:select3 17:outcome_apply 18:speak 19:speak_branch 20:talk_until_done 21:girl_out 22:move_place 23:place_init
 24:girl_in 25:birthday_check 26:face_from_row 27:result_talk 28:expr_mood 29:skip_step_unless_flag 30:year_talk 31:mood_talk
@@ -859,9 +859,9 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 7 art_museum, stage 1 (`spot_place_art_museum_steps`, 37 steps)
 
 ```
-0:speak 1:girl_out 2:load 3:wait_cd 4:dec_init 5:move_place 6:dev_80046900 7:date_event_choose
-8:girl_in 9:step 10:speak 11:mood 12:select3 13:expression 14:expression 15:speak
-16:outcome_apply 17:speak 18:outcome_apply 19:speak 20:branch 21:talk_until_done 22:girl_out 23:move_place
+0:speak 1:girl_out 2:bg_load 3:wait_cd 4:dec_init 5:move_place 6:dev_80046900 7:date_event_choose
+8:girl_in 9:step 10:speak 11:branch_on_mood 12:select3 13:expression 14:expression 15:speak
+16:outcome_apply 17:speak 18:outcome_apply 19:speak 20:speak_branch 21:talk_until_done 22:girl_out 23:move_place
 24:place_init 25:girl_in 26:birthday_check 27:face_from_row 28:result_talk 29:expr_mood 30:skip_step_unless_flag 31:year_talk
 32:mood_talk 33:girl_out 34:return 35:scene_close 36:BAD_STATE
 ```
@@ -869,7 +869,7 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 8 library, stage 1 (`spot_place_library_steps`, 36 steps)
 
 ```
-0:date_event_choose 1:expr_mood 2:date_event_choose 3:speak 4:branch 5:girl_out 6:load 7:wait_cd
+0:date_event_choose 1:expr_mood 2:date_event_choose 3:speak 4:branch 5:girl_out 6:bg_load 7:wait_cd
 8:dec_init 9:move_place 10:dev_80046900 11:date_event_choose 12:girl_in 13:speak 14:select3 15:outcome_apply
 16:speak 17:branch 18:speak 19:branch 20:talk_until_done 21:girl_out 22:move_place 23:place_init
 24:girl_in 25:birthday_check 26:face_from_row 27:result_talk 28:expr_mood 29:skip_step_unless_flag 30:year_talk 31:mood_talk
@@ -879,9 +879,9 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 9 game_center, stage 1 (`spot_place_game_center_steps`, 39 steps)
 
 ```
-0:speak 1:branch 2:speak012 3:select2 4:set 5:reaction_rows_build 6:girl_out 7:load
+0:speak 1:branch 2:speak012 3:select2 4:label_set 5:reaction_rows_build 6:girl_out 7:bg_load
 8:wait_cd 9:dec_init 10:move_place 11:dev_80046900 12:girl_in 13:date_event_choose 14:speak 15:select3
-16:outcome_apply 17:branch 18:branch 19:expression 20:branch 21:expression 22:speak 23:talk_until_done
+16:outcome_apply 17:speak_branch 18:speak_branch 19:expression 20:speak_branch 21:expression 22:speak 23:talk_until_done
 24:girl_out 25:move_place 26:place_init 27:girl_in 28:birthday_check 29:face_from_row 30:result_talk 31:expr_mood
 32:skip_step_unless_flag 33:year_talk 34:mood_talk 35:girl_out 36:return 37:scene_close 38:BAD_STATE
 ```
@@ -889,8 +889,8 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 10 bowling_alley, stage 1 (`spot_place_bowling_alley_steps`, 32 steps)
 
 ```
-0:expr_mood 1:date_event_choose 2:speak 3:girl_out 4:load 5:wait_cd 6:dec_init 7:move_place
-8:dev_80046900 9:date_event_choose 10:girl_in 11:speak 12:select3 13:outcome_apply 14:speak 15:branch
+0:expr_mood 1:date_event_choose 2:speak 3:girl_out 4:bg_load 5:wait_cd 6:dec_init 7:move_place
+8:dev_80046900 9:date_event_choose 10:girl_in 11:speak 12:select3 13:outcome_apply 14:speak 15:speak_branch
 16:talk_until_done 17:girl_out 18:move_place 19:place_init 20:girl_in 21:birthday_check 22:face_from_row 23:result_talk
 24:expr_mood 25:skip_step_unless_flag 26:year_talk 27:mood_talk 28:girl_out 29:return 30:scene_close 31:BAD_STATE
 ```
@@ -898,8 +898,8 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 11 karaoke, stage 1 (`spot_place_karaoke_steps`, 32 steps)
 
 ```
-0:expr_mood 1:date_event_choose 2:speak 3:girl_out 4:load 5:wait_cd 6:dec_init 7:move_place
-8:dev_80046900 9:date_event_choose 10:girl_in 11:speak 12:select3 13:outcome_apply 14:branch 15:speak
+0:expr_mood 1:date_event_choose 2:speak 3:girl_out 4:bg_load 5:wait_cd 6:dec_init 7:move_place
+8:dev_80046900 9:date_event_choose 10:girl_in 11:speak 12:select3 13:outcome_apply 14:speak_branch 15:speak
 16:talk_until_done 17:girl_out 18:move_place 19:place_init 20:girl_in 21:birthday_check 22:face_from_row 23:result_talk
 24:expr_mood 25:skip_step_unless_flag 26:year_talk 27:mood_talk 28:girl_out 29:return 30:scene_close 31:BAD_STATE
 ```
@@ -907,26 +907,26 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 12 amusement_park, stage 1 (`spot_place_amusement_park_steps`, 103 steps)
 
 ```
-0:speak 1:set 2:girl_out 3:load 4:wait_cd 5:dec_init 6:move_place 7:dev_80046900
-8:date_event_choose 9:girl_in 10:branch 11:speak012 12:select2 13:branch 14:speak 15:state
-16:speak012 17:select2 18:branch 19:speak 20:girl_out 21:labeled 22:wait_cd 23:dec_init
-24:move_place 25:place_init 26:girl_in 27:step 28:speak 29:case 30:speak 31:expr_mood
+0:speak 1:label_set 2:girl_out 3:bg_load 4:wait_cd 5:dec_init 6:move_place 7:dev_80046900
+8:date_event_choose 9:girl_in 10:branch 11:speak012 12:select2 13:branch 14:speak 15:set_state
+16:speak012 17:select2 18:speak_branch 19:speak 20:girl_out 21:bg_load_labeled 22:wait_cd 23:dec_init
+24:move_place 25:place_init 26:girl_in 27:face 28:speak 29:special_case 30:speak 31:expr_mood
 32:branch 33:speak 34:select3 35:date_event_choose 36:girl_out 37:amusement_ride_choose 38:wait_cd 39:dec_init
-40:move_place 41:place_init 42:girl_in 43:case 44:case 45:case 46:girl_out 47:bg_fadeout
-48:ride_movie_run 49:bg_fadein 50:girl_in 51:state 52:case 53:select3 54:outcome_apply 55:branch
-56:date_event_choose 57:branch 58:talk_until_done 59:step 60:date_event_choose 61:ride_talk 62:select2 63:branch
-64:girl_out 65:labeled 66:wait_cd 67:dec_init 68:move_place 69:dev_80046900 70:girl_in 71:expression
-72:ride_talk 73:branch 74:ride_talk 75:state 76:girl_out 77:labeled 78:wait_cd 79:dec_init
+40:move_place 41:place_init 42:girl_in 43:special_case 44:special_case 45:special_case 46:girl_out 47:bg_fadeout
+48:ride_movie_run 49:bg_fadein 50:girl_in 51:set_state 52:special_case 53:select3 54:outcome_apply 55:speak_branch
+56:date_event_choose 57:speak_branch 58:talk_until_done 59:face 60:date_event_choose 61:ride_talk 62:select2 63:branch
+64:girl_out 65:bg_load_labeled 66:wait_cd 67:dec_init 68:move_place 69:dev_80046900 70:girl_in 71:expression
+72:ride_talk 73:branch 74:ride_talk 75:set_state 76:girl_out 77:bg_load_labeled 78:wait_cd 79:dec_init
 80:move_place 81:dev_80046900 82:girl_in 83:birthday_check 84:face_from_row 85:result_talk 86:expr_mood 87:skip_step_unless_flag
 88:year_talk 89:mood_talk 90:girl_out 91:return 92:scene_close 93:BAD_STATE 94:speak 95:expr2
-96:speak 97:girl_out 98:speak 99:girl_in 100:speak 101:place_amusement_park_jump_101 102:BAD_STATE
+96:speak 97:girl_out 98:speak 99:girl_in 100:speak 101:jump_101 102:BAD_STATE
 ```
 
 ### place 13 stadium, stage 1 (`spot_place_stadium_steps`, 29 steps)
 
 ```
 0:speak 1:girl_out 2:step 3:wait_cd 4:dec_init 5:move_place 6:dev_80046900 7:girl_in
-8:date_event_choose 9:speak 10:select3 11:outcome_apply 12:variant 13:talk_until_done 14:girl_out 15:move_place
+8:date_event_choose 9:speak 10:select3 11:outcome_apply 12:talk_variant 13:talk_until_done 14:girl_out 15:move_place
 16:place_init 17:girl_in 18:birthday_check 19:face_from_row 20:result_talk 21:expr_mood 22:skip_step_unless_flag 23:year_talk
 24:mood_talk 25:girl_out 26:return 27:scene_close 28:BAD_STATE
 ```
@@ -934,9 +934,9 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 14 movie_theater, stage 1 (`spot_place_movie_theater_steps`, 45 steps)
 
 ```
-0:speak 1:girl_out 2:load 3:wait_cd 4:dec_init 5:move_place 6:dev_80046900 7:girl_in
-8:speak 9:girl_out 10:bg_fadeout 11:load 12:wait_cd 13:dec_init 14:change_bg 15:bg_fadein
-16:variant 17:date_event_choose 18:bg_fadeout 19:change_bg 20:bg_fadein 21:speak 22:load 23:wait_cd
+0:speak 1:girl_out 2:bg_load 3:wait_cd 4:dec_init 5:move_place 6:dev_80046900 7:girl_in
+8:speak 9:girl_out 10:bg_fadeout 11:bg_load 12:wait_cd 13:dec_init 14:change_bg 15:bg_fadein
+16:talk_variant 17:date_event_choose 18:bg_fadeout 19:change_bg 20:bg_fadein 21:speak 22:bg_load 23:wait_cd
 24:dec_init 25:move_place 26:girl_in 27:place_init 28:speak 29:select3 30:branch 31:outcome_apply
 32:speak 33:talk_until_done 34:birthday_check 35:face_from_row 36:result_talk 37:expr_mood 38:skip_step_unless_flag 39:year_talk
 40:mood_talk 41:girl_out 42:return 43:scene_close 44:BAD_STATE
@@ -945,9 +945,9 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 15 concert_hall, stage 1 (`spot_place_concert_hall_steps`, 41 steps)
 
 ```
-0:speak 1:girl_out 2:load 3:wait_cd 4:dec_init 5:move_place 6:dev_80046900 7:girl_in
-8:speak 9:girl_out 10:bg_fadeout 11:load 12:wait_cd 13:dec_init 14:change_bg 15:bg_fadein
-16:variant 17:date_event_choose 18:load 19:wait_cd 20:dec_init 21:move_place 22:place_init 23:girl_in
+0:speak 1:girl_out 2:bg_load 3:wait_cd 4:dec_init 5:move_place 6:dev_80046900 7:girl_in
+8:speak 9:girl_out 10:bg_fadeout 11:bg_load 12:wait_cd 13:dec_init 14:change_bg 15:bg_fadein
+16:talk_variant 17:date_event_choose 18:bg_load 19:wait_cd 20:dec_init 21:move_place 22:place_init 23:girl_in
 24:speak 25:select3 26:branch 27:outcome_apply 28:speak 29:talk_until_done 30:birthday_check 31:face_from_row
 32:result_talk 33:expr_mood 34:skip_step_unless_flag 35:year_talk 36:mood_talk 37:girl_out 38:return 39:scene_close
 40:BAD_STATE
@@ -956,21 +956,21 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 16 pool, stage 1 (`spot_place_pool_steps`, 37 steps)
 
 ```
-0:speak 1:girl_out 2:dev_8004B9B8 3:wait_cd 4:show_checked 5:load 6:wait_cd 7:dec_init
+0:speak 1:girl_out 2:dev_8004B9B8 3:wait_cd 4:show_checked 5:bg_load 6:wait_cd 7:dec_init
 8:move_place 9:dev_80046900 10:date_event_choose 11:girl_in 12:speak 13:select3 14:outcome_apply 15:speak
 16:athletics_check_talk 17:talk_until_done 18:girl_out 19:move_place 20:place_init 21:read_bustup 22:wait_cd 23:show_checked
-24:step 25:girl_in 26:birthday_check 27:face_from_row 28:result_talk 29:expr_mood 30:skip_step_unless_flag 31:year_talk
+24:face 25:girl_in 26:birthday_check 27:face_from_row 28:result_talk 29:expr_mood 30:skip_step_unless_flag 31:year_talk
 32:mood_talk 33:girl_out 34:return 35:scene_close 36:BAD_STATE
 ```
 
 ### place 17 sea, stage 1 (`spot_place_sea_steps`, 47 steps)
 
 ```
-0:speak 1:girl_out 2:dev_8004B9B8 3:wait_cd 4:show_checked 5:load 6:wait_cd 7:dec_init
+0:speak 1:girl_out 2:dev_8004B9B8 3:wait_cd 4:show_checked 5:bg_load 6:wait_cd 7:dec_init
 8:move_place 9:dev_80046900 10:date_event_choose 11:step 12:branch 13:speak 14:girl_out 15:speak
-16:wait_sub 17:dev_8004A89C 18:girl_in 19:speak 20:state 21:speak 22:select3 23:outcome_apply
-24:speak 25:branch 26:step 27:athletics_check_talk 28:talk_until_done 29:girl_out 30:move_place 31:place_init
-32:read_bustup 33:wait_cd 34:show_checked 35:step 36:girl_in 37:birthday_check 38:result_talk 39:expr_mood
+16:wait_sub 17:dev_8004A89C 18:girl_in 19:speak 20:set_state 21:speak 22:select3 23:outcome_apply
+24:speak 25:speak_branch 26:face 27:athletics_check_talk 28:talk_until_done 29:girl_out 30:move_place 31:place_init
+32:read_bustup 33:wait_cd 34:show_checked 35:face 36:girl_in 37:birthday_check 38:result_talk 39:expr_mood
 40:skip_step_unless_flag 41:year_talk 42:mood_talk 43:girl_out 44:return 45:scene_close 46:BAD_STATE
 ```
 
@@ -978,11 +978,11 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 
 ```
 0:branch 1:speak012 2:select2 3:expression 4:speak 5:next 6:speak 7:expr_mood
-8:case 9:speak 10:case 11:speak 12:expr1 13:speak 14:girl_out 15:bg_fadeout
-16:next 17:bg_fadein 18:girl_in 19:jump 20:speak 21:case 22:update 23:expr1
+8:special_case 9:speak 10:special_case 11:speak 12:expr1 13:speak 14:girl_out 15:bg_fadeout
+16:next 17:bg_fadein 18:girl_in 19:jump 20:speak 21:special_case 22:stat_update 23:expr1
 24:speak 25:girl_out 26:bg_fadeout 27:next 28:bg_fadein 29:girl_in 30:jump 31:speak
-32:girl_out 33:step 34:next 35:bg_fadeout 36:show 37:step 38:state 39:speak
-40:case 41:select3 42:outcome_apply 43:speak 44:branch 45:talk_until_done 46:load 47:bg_fadein
+32:girl_out 33:step 34:next 35:bg_fadeout 36:still_show 37:step 38:set_state 39:speak
+40:special_case 41:select3 42:outcome_apply 43:speak 44:speak_branch 45:talk_until_done 46:palette_load 47:bg_fadein
 48:place_init 49:girl_in 50:birthday_check 51:face_from_row 52:result_talk 53:expr_mood 54:skip_step_unless_flag 55:year_talk
 56:mood_talk 57:girl_out 58:return 59:scene_close 60:BAD_STATE
 ```
@@ -990,7 +990,7 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 19 skating_rink, stage 1 (`spot_place_skating_rink_steps`, 22 steps)
 
 ```
-0:date_event_choose 1:speak 2:girl_out 3:load 4:wait_cd 5:dec_init 6:move_place 7:dev_80046900
+0:date_event_choose 1:speak 2:girl_out 3:bg_load 4:wait_cd 5:dec_init 6:move_place 7:dev_80046900
 8:date_event_choose 9:girl_in 10:speak 11:select3 12:outcome_apply 13:speak 14:athletics_check_talk 15:talk_until_done
 16:girl_out 17:move_place 18:place_init 19:girl_in 20:birthday_check 21:face_from_row
 ```
@@ -998,7 +998,7 @@ Generated listing of the 95 step tables of [[spec/o-event]]: for each table the 
 ### place 20 ski_resort, stage 1 (`spot_place_ski_resort_steps`, 31 steps)
 
 ```
-0:date_event_choose 1:speak 2:girl_out 3:load 4:wait_cd 5:dec_init 6:move_place 7:dev_80046900
+0:date_event_choose 1:speak 2:girl_out 3:bg_load 4:wait_cd 5:dec_init 6:move_place 7:dev_80046900
 8:date_event_choose 9:girl_in 10:speak 11:select3 12:outcome_apply 13:speak 14:athletics_check_talk 15:talk_until_done
 16:girl_out 17:move_place 18:place_init 19:girl_in 20:birthday_check 21:face_from_row 22:result_talk 23:expr_mood
 24:skip_step_unless_flag 25:year_talk 26:mood_talk 27:girl_out 28:return 29:scene_close 30:BAD_STATE
