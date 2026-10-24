@@ -97,7 +97,7 @@ Names are the core proposals. Offsets are from `game_state` (0x800E6280).
 | `card_job`, `card_timer`, `card_result` | 0x111B, 0x1120, 0x1115 | memory-card save started by the command screen, polled by `schedule_memory_card_save_poll` |
 | `system_data.seed` | 0x800E7D10 | word stepped by the timer; used as a cheap random start index (`% 11`) and for the neurosis roll (`& 0xFF`) |
 
-Main-exe globals used: `schedule_last_picked_girl` (0x800B6740, s8, owned by this object), the five `schedule_command_rank_bar_liberal_arts_athletics..e` words (0x800B6748-0x800B6758, owned), `talk_work.scene` / `.girl` (0x80122CD0 / 0x80122CD4, core names; the scene and girl handed to a special-event scene), `overlay_scratch` (0x80122DD0, 0x100 bytes, cleared before the sports and culture festivals; users: TAIIKU as camera and 16 records, BUNKASAI and BUNKAKEN as a word array, OPTION as a buffer), `debug_menu_active` (0x800B3C6C, HYPOTHESIS), `D_800B5BC8` (season-picture fade counter of the HUD, set to 0xEF by `schedule_month_data_load_step`).
+Main-exe globals used: `schedule_last_picked_girl` (0x800B6740, s8, owned by this object), the five words `schedule_command_rank_bar_liberal_arts_athletics`, `schedule_command_rank_bar_art`, `schedule_command_rank_bar_trivia`, `schedule_command_rank_bar_shiori_athletics`, `schedule_command_rank_bar_science_looks` (0x800B6748-0x800B6758, owned), `talk_work` / `D_80122CD4` (0x80122CD0 / 0x80122CD4, core names; the scene and girl handed to a special-event scene), `D_80122DD0` (proposed `overlay_scratch`, 0x80122DD0, 0x100 bytes, cleared before the sports and culture festivals; users: TAIIKU as camera and 16 records, BUNKASAI and BUNKAKEN as a word array, OPTION as a buffer), `D_800B3C6C` (proposed `debug_menu_active`, HYPOTHESIS), `D_800B5BC8` (season-picture fade counter of the HUD, set to 0xEF by `schedule_month_data_load_step`).
 
 ### 3.1 `schedule_progress_state_update` windows (HYPOTHESIS: date-spot tips)
 
@@ -169,13 +169,13 @@ Wave average (`func_8006C334`): each selected wave adds its value when positive 
 
 | command | girl(s) | her bar | Shiori's own bar |
 |---|---|---|---|
-| 0 liberal arts | 1 | `schedule_command_rank_bar_liberal_arts_athletics` (40) | a |
-| 1 science | 2 | `schedule_command_rank_bar_science_looks` (55) | e |
-| 2 art | 3 | `schedule_command_rank_bar_art` (35) | b |
-| 3 athletics | 5 and 6 | a | `schedule_command_rank_bar_shiori_athletics` (45) |
+| 0 liberal arts | 1 | `schedule_command_rank_bar_liberal_arts_athletics` (40) | `schedule_command_rank_bar_liberal_arts_athletics` |
+| 1 science | 2 | `schedule_command_rank_bar_science_looks` (55) | `schedule_command_rank_bar_science_looks` |
+| 2 art | 3 | `schedule_command_rank_bar_art` (35) | `schedule_command_rank_bar_art` |
+| 3 athletics | 5 and 6 | `schedule_command_rank_bar_liberal_arts_athletics` | `schedule_command_rank_bar_shiori_athletics` (45) |
 | 4 club | the heroine of the player's club (clubs 0-1 girl 1, 2-3 girl 2, 4-5 girl 3, 6-7 girl 4, 8 girl 5, 9 girl 6, 10 girl 10), who must be met, have flag bit 2 and her own club equal to the player's; when Shiori shares the club her value is rank - 11 (0 without bit 2) and girl 10 is still checked in club 10 | 11 | 11 |
-| 5 trivia | 8 | `schedule_command_rank_bar_trivia` (25) | c |
-| 6 looks | 7 | e | e |
+| 5 trivia | 8 | `schedule_command_rank_bar_trivia` (25) | `schedule_command_rank_bar_trivia` |
+| 6 looks | 7 | `schedule_command_rank_bar_science_looks` | `schedule_command_rank_bar_science_looks` |
 | 7 rest | none | | |
 
 Result: the girl when she is met, her excess is positive and larger than Shiori's; else 0 when Shiori's excess is positive; else 0xF. `0` means Shiori. In the school-day record it is `extra`; the weekday handler maps it to a picture variant (0 default, non-zero another variant; command 3 with girl 5 a third variant; HYPOTHESIS: the girl appears in the picture of the command). The visit rules in section 5 use `sel` as well.
@@ -232,7 +232,7 @@ Run for a placeholder slot. `counts[g]` = sum of `girls[g].event_counters[1..20]
 | 9 | 3% | 0 | 60 | (9,1); or with flag 60 == 1 and her flag bit 14 set, no roll: bit cleared, flag 61 +1, (9,2) |
 | 10 | 3% | 1, and flag 27 nonzero | 67 | (10,1); or 10%, September 1997 day 14 or later, flag 68 clear: (10,2) |
 
-After the loop, independent of the 5/16 roll: girl 12's flag byte 3 (HYPOTHESIS: number of telephone calls with her, incremented by TEL) at least 0x15, flag 80 clear and season 0: (12,2); at least 0x29 and flag 79 clear: (12,1); at least 0x41 and flag 81 clear: (12,3). Then girl 11: `rand % 100 < 4`, flag 77 clear, `girls[11].event_counters[0] == 0`, her `story_stage` below 5 and `day_count >= 0x1D`: increment flag 74, set the counter to 4 (four weekly builds), (11,1). Last: flag 53 clear and flag 52 == 1: flag 53 +1, (7,8). Output of a success: `(girl, scene)` for a type-0x45 record (mode 0x5D, scene host in GEKO: the reader copies girl to `talk_work.girl` and scene to `talk_work.scene`).
+After the loop, independent of the 5/16 roll: girl 12's flag byte 3 (HYPOTHESIS: number of telephone calls with her, incremented by TEL) at least 0x15, flag 80 clear and season 0: (12,2); at least 0x29 and flag 79 clear: (12,1); at least 0x41 and flag 81 clear: (12,3). Then girl 11: `rand % 100 < 4`, flag 77 clear, `girls[11].event_counters[0] == 0`, her `story_stage` below 5 and `day_count >= 0x1D`: increment flag 74, set the counter to 4 (four weekly builds), (11,1). Last: flag 53 clear and flag 52 == 1: flag 53 +1, (7,8). Output of a success: `(girl, scene)` for a type-0x45 record (mode 0x5D, scene host in GEKO: the reader copies girl to `D_80122CD4` and scene to `talk_work`).
 
 `event_flags` layout, from the indices above: each heroine owns a block (girl 0 from 0, 1 from 8, 2 from 14, 3 from 21, 4 from 27, 5 from 33, 6 from 40, 7 from 46, 8 from 54, 9 from 60, 10 from 67, 11 from 74, 12 from 79) and the scene number minus one is the offset in the block. The constants are the `EventFlag` rows of the table.
 
@@ -267,10 +267,10 @@ The day screen runs `day_event_dispatch` in stage 0 step 0. Each pass:
 | 0x42 | 0x5F | |
 | 0x43 | 0x36 | same bit-0 clear |
 | 0x44 | 0x59, or `day_event_next` when the player is sick, the previous record is 0x28 or 0x47, or the girl is not met | `events_today += 1` |
-| 0x45 | 0x5D | `talk_work.girl = record girl`, `talk_work.scene = record scene` |
+| 0x45 | 0x5D | `D_80122CD4 = record girl`, `talk_work = record scene` |
 | 0x46 | 0x5A, or `day_event_next` when appointment 0 is active | `events_today += 1` |
 | 0x47 | 0x61 | `events_today += 1` |
-| 0x48 | 0x5B | `current_girl = girl`, affection 0x32, syoushin 0, `talk_work.scene = scene` |
+| 0x48 | 0x5B | `current_girl = girl`, affection 0x32, syoushin 0, `talk_work = scene` |
 | 0x49 | 0x58 | |
 | 0x4A | 0x37 | |
 | 0x25 / 0x26 / 0x27 | 0x74 / 0x75 / 0x76 | |
