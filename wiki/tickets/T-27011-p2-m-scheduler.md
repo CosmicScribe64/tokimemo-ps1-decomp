@@ -23,7 +23,7 @@ Roadmap phase 2 (readable code), unit `m-scheduler`: name every function, owned 
 
 ## Notes
 
-- 116 rows: 33 func, 11 comment, 8 data, 9 field, 54 const, 1 file. 17 notes start with `HYPOTHESIS:`.
+- 116 rows: 33 func, 11 comment, 8 data, 9 field, 54 const, 1 file. 15 notes start with `HYPOTHESIS:`.
 - Prefix choice: main code has no unit prefix; module stems `schedule_` (O.BIN style), `day_events_`, `meeting_`, `command_`, `health_`, `month_start_`, `vacation_`. File proposal `src/main/scheduler.c`.
 - Emulator evidence (`build/emu` is not committed): from the title-menu save state the main mode byte was poked to 0x30, 0x32 or 0x39 with chosen calendar and parameter bytes and the run stopped at a known step. Results: the first week queue (Wednesday to Saturday, `fc fb`, Sunday `10`), a Sunday build with a national holiday on Saturday, girl 0 affection 0x32 to 0x31 by `yuukou_down` on day 16, a meeting record for girl 1 from command 0 with liberal arts 0x40, the injury step with condition 0, and the `vacation` transitions 0 to 1, 2, 3 and back to 0. A first attempt through the GDB stub failed because writes to memory made the target run; the probes used a small Lua job on the existing PCSX-Redux image instead (not added to `tools/`).
 - Quirks kept in the spec: the `health_check_roll` sick-visit loop tests the random start girl instead of the loop girl; the marker 11 and 8 tests read this month's table even when tomorrow is in the next month; `date_sasoi_judge` stores a girl in `week_picked_girl` even when the invitation is discarded.
