@@ -1762,3 +1762,14 @@ The finish gate's block-by-block lens matched main func_800476C0 (3,132 bytes) i
 ## [2026-10-23] ticket | T-25604 Done: NAME_ENT func_80143580 matched
 
 The fresh start's history digest found a 122-row body; its guided-search lens closed it (4,308 bytes), with the case 9 record chain confirmed against the Rev 1 copy of the function ([[tickets/T-25600-finish-gate]]). Merged directly after an orchestrator review.
+
+## [2026-10-23] query | T-25608 IDO 4.1 ugen on the block-copy rule candidates
+
+Ran the build's 5.3 front end and uopt with IDO 4.1's ugen (re-downloaded, sha256 verified, gitignored) on
+the T-20710 reproducers (states as recorded) and on 24 new cases in `tools/ido_eval_cases/ugen_copy_state/`
+(README there). Neither candidate rule for [[tickets/T-25608-gate-main-func_8006B0C8]] agrees with 4.1 on
+every case: rule A misses 8, rule B 8, the build rule 7. For `func_8006B0C8`, 4.1 gives B for the three swap
+copies (injection test), which both rules predict. 4.1's own rule (F after an indirect store, B only at a
+register-register compare branch) fits all 30 cases. As a ucode pass it changes three procedures in the corpus:
+`func_8006B0C8` matches, and main `strCallback` and `func_8005938C` fail because of their FAKE steering loops.
+Section added to [[ido-52-evaluation]]; harness in `drafts/T-25608/ido41/`.

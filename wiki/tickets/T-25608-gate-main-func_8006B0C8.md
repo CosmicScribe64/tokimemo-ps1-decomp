@@ -21,3 +21,11 @@ Match main:func_8006B0C8 (318 words, `src/main/800674B0.c`) through the finish g
 If an earlier wave matches it before its turn, this ticket closes as not needed.
 
 ## Comments
+
+- 2026-10-23 (w16-ido41): IDO 4.1's ugen run on the two candidate `tools/ugen_pass.py` rules (rule A: no jump
+  between the store and the `<` branch; rule B: constants of 2 or more). Verdict: neither. 4.1 agrees with each
+  rule on some of 24 new synthetic cases and with neither on all of them. For `func_8006B0C8`, 4.1 gives B for
+  the three swap copies, as both rules do. 4.1's own rule fits all 30 cases: an indirect store sets F, and only
+  a branch that compares two registers sets B. As a ucode pass it gives 26/27 binaries; only main `strCallback`
+  and `func_8005938C` fail, and both have FAKE dead loops written for the build rule. Details:
+  [[ido-52-evaluation]] "T-25608: 4.1 ugen on the rule candidates"; harness `drafts/T-25608/ido41/`.

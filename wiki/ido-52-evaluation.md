@@ -1,7 +1,7 @@
 ---
 type: research
-updated: 2026-10-17
-ticket: T-3110, T-20700
+updated: 2026-10-23
+ticket: T-3110, T-20700, T-20710, T-25608
 sources: ["tools/ido_eval.py", "tools/test_ido_eval.py", "tools/ido_eval_cases/", "wiki/data/t0018-cases.md", "wiki/original-compiler.md", "disc/files/CDROM/EXEDIR/O.BIN"]
 ticket: T-3110
 sources: ["tools/ido_eval.py", "tools/ido_eval_cases/", "wiki/data/t0018-cases.md", "wiki/original-compiler.md", "disc/files/CDROM/EXEDIR/O.BIN"]
@@ -295,6 +295,76 @@ functions.
 was run on have exactly 5.3's lines and 3 have more. A first run that handed it 5.3's `pic0` record matched VALEN
 `func_80134030`, but in that mode 4.1's as1 leaves delay slots empty in 1,054 matched functions: the option
 mismatch, not 4.1's scheduler. A harness that feeds 4.1's as1 must give it `pic1`.
+
+## T-25608: 4.1 ugen on the rule candidates
+
+Question ([[tickets/T-25608-gate-main-func_8006B0C8]]): main `func_8006B0C8` matches only with a change to
+`tools/ugen_pass.py`, and two changes both give the match and 27/27. Rule A: the F lock at a signed-immediate `<`
+branch after an indirect store needs no `fjp`/`tjp` between the store and that branch (one version also counts
+`ujp`). Rule B: a compare against 1 does not lock, because ugen emits it as `blez`/`bgtz`; only constants of 2 or
+more do. Which one does IDO 4.1's ugen follow?
+
+Method: IDO 4.1 downloaded again (sha256 as in the provenance table) into the gitignored `tools/local-compilers/`.
+The harness is `drafts/T-25608/ido41/`: the build's 5.3 front end and uopt (K&R, cvt pass), then 4.1's ugen under
+qemu-irix-4.0 with `.option pic` set to 0, then 5.3's as1, in the `tokimemo-decomp-ido52` image. The state is read
+from the end register of a 0x44-byte copy. For the 4-byte copies of `func_8006B0C8` it is read by injection instead:
+the pass's F gadget (an indirect store of `$zero`) is put before one copy. In 4.1 an indirect store sets F, so the
+code changes only where the copy was B. Check: the six T-20710 reproducers give the states of the table above
+(5.3: B F F F B B, 4.1: B B B F B B), and the injection changes `copy_entry`/`copy_after_loop` (B) but not
+`copy_after_istr` (F).
+
+24 new cases in `tools/ido_eval_cases/ugen_copy_state/` (README there; the header of each file has the branch it
+emits). Columns: IDO 4.1 ugen, IDO 5.3 ugen, then the pass rules (build = w2-good, A, A with `ujp`, B):
+
+| case | ucode before the copy | 4.1 | 5.3 | build | A | A+ujp | B |
+|---|---|---|---|---|---|---|---|
+| `copy_if_then_lt8_loop` | `I f[neq 0] C t[les 8]<` | F | F | F | **B** | **B** | F |
+| `copy_if_then_ge2` | `I f[neq 0] C f[geq 2]<` | F | F | F | **B** | **B** | F |
+| `copy_while_lt8` | `I f[les 8] C t[les 8]<` | F | F | F | **B** | **B** | F |
+| `copy_store_loop_then_lt8_loop` | `I t(reg) ... t[les 8]<` | B | F | **F** | B | B | **F** |
+| `copy_ge1`, `copy_gt0` (`blez`) | `I f[geq 1]< C` | F | F | F | F | F | **B** |
+| `copy_lt1_loop` (`blez`) | `I C t[les 1]<` | F | F | F | F | F | **B** |
+| `copy_var_loop_guard` | `I f[geq 1]< C t(reg)` | B | F | **F** | **F** | **F** | B |
+| `copy_store_loop_then_var_loop` (shape of `func_8006B0C8`) | `I t(reg) ... f[geq 1]< C t(reg)` | B | F | **F** | B | B | B |
+| `copy_ujp_then_lt8_loop` | `I C u C t[les 8]<` | F | F | F | F | **B** | F |
+| `copy_ge2`, `copy_lt8_loop`, `copy_lt2_loop` | `I ... <` | F | F | F | F | F | F |
+| `copy_lt8_loop_then_call` | `I C t[les 8]< C S` | F | B | F | F | F | F |
+| `copy_store_then_gstore` | `I S` | F | B | **B** | **B** | **B** | **B** |
+| `copy_store_then_if` (`beqz`) | `I f[neq 0] C` | F | F | **B** | **B** | **B** | **B** |
+| `copy_store_then_ge8_loop` (`slti; beqz`) | `I C t[geq 8]` | F | F | **B** | **B** | **B** | **B** |
+| `copy_store_then_ne3_if` (`li at,3; beq`) | `I f[neq 3] C` | F | F | **B** | **B** | **B** | **B** |
+| `copy_store_then_call`, `copy_two_after_store` | `I C`, `I M` | F | F | F | F | F | F |
+| `copy_store_then_ne_loop` (3 in `s0`), `copy_store_then_eq_reg_if`, `copy_store_then_lt_reg_if` | `I ... t(reg)` / `f(reg)` | B | F | B | B | B | B |
+| `copy_after_proc_store` | copy at entry, store in the previous procedure | B | B | B | B | B | B |
+
+Bold: disagrees with 4.1. Rule A misses 8 cases (A with `ujp` 9), rule B 8, the build rule 7. Four misses are
+common to all rules (a direct store or a branch against a constant right after the store keeps F in 4.1). Beyond
+those, rule A is wrong where a branch against a constant lies between the store and the `<` branch, and rule B on
+the compares against 1, which keep F in 4.1 although they emit `blez`.
+
+What 4.1 does instead fits all 30 cases. A procedure starts in B; nothing carries over from the previous
+procedure. An indirect store sets F. A conditional branch that compares two registers (`bne`/`beq` of two
+registers, `slt` then a branch) sets B. Everything else keeps the state: branches on a value or against a
+constant (`beqz`, `blez`, `slti`, `li at` then `beq`), calls, direct stores, labels and copies. Written as a ucode
+rule (`drafts/T-25608/ido41/ugen_pass_41rule.py`: F at `Uistr`/`Uistv`, B at an `fjp`/`tjp` whose compare has a
+non-constant right operand), it gives 4.1's end register in all 30 cases.
+
+`func_8006B0C8` (both matched bodies, rule A's and rule B's worktree): with 4.1's ugen the F injection changes 41,
+47 and 31 of the 317 words at the three swap copies, so all three are B, as in the original. The compaction copy
+does not react (0 words), so its state cannot be read this way. A probe with the four copies made 0x44-byte copies
+gives the same (82, 70, 52 and 0 words). Rules A and B both give BBBB; the build rule gives BFFF.
+
+Corpus check of the 4.1 rule (scratch, not adopted): with it in place of `tools/ugen_pass.py` and rule A's body
+of `func_8006B0C8`, 26 of 27 binaries are OK. Only three procedures get other states than under the build rule:
+`func_8006B0C8` (BBBB, matches), and main `strCallback` and `func_8005938C`, which fail. Both copies there are
+steered into F by a FAKE dead loop written for the build rule's detector (T-25303, T-25147); 4.1's own ugen also
+gives B for the `strCallback` copy (the injection changes 77 words).
+
+**Verdict: neither.** IDO 4.1's ugen agrees with rule A on some cases and with rule B on others, and with neither
+on every case; a combination of the two fails too (`copy_if_then_lt8_loop` needs the lock across a jump). For
+`func_8006B0C8` itself 4.1 gives B for the three swap copies, which both rules predict. The 4.1 rule above is a
+third candidate. On the corpus it differs from the build only in `func_8006B0C8` and in the two FAKE-steered
+copies.
 
 ## What this says about the original compiler
 
