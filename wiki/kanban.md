@@ -43,6 +43,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 - [ ] [[tickets/T-26003-ugen-value-branch-dropped-arm|T-26003 Model IDO 4.1's value-branch F and dropped-arm stores in tools/ugen_pass.py]]
+- [ ] [[tickets/T-27003-pilot-obin-names-overlays|T-27003 Pilot: O.BIN names into the overlays (alias debt)]]
+- [ ] [[tickets/T-27004-shared-core-names|T-27004 Shared core: GameState fields, core types, first enums, top 100 functions]]
 
 ## Ready
 
@@ -82,6 +84,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24502-taco-completion|T-24502 Match remaining TACO functions]]
 - [ ] [[tickets/T-24501-main-tail|T-24501 Match MAIN remaining functions]]
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
+- [ ] [[tickets/T-27000-phase-2|T-27000 Phase 2: human-readable codebase]]
 
 ## In Review
 
@@ -967,6 +970,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-27021-p2-h-cdio|T-27021 Phase 2 naming and spec for h-cdio (CD, movies, MDEC backgrounds, 3D, mouse)]]
 - [ ] [[tickets/T-27027-p2-o-rpgbat|T-27027 Phase 2 naming and port spec for overlay RPG_BAT (RPG battle scene)]]
 - [ ] [[tickets/T-27024-p2-o-tt|T-27024 Phase 2 analysis of overlay TT (TwinBee Time Attack)]]
+- [ ] [[tickets/T-27001-phase-2-conventions|T-27001 Phase 2 naming conventions: ADR, standards, glossary, plan]]
 
 
 %% kanban:settings
