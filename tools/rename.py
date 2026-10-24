@@ -32,6 +32,11 @@ members in --header; the entire enum must have explicit nonnegative int-range in
 Duplicate numeric values, shadowing and mismatches are rejected. Original U/L
 suffix types are retained with casts. No enum declaration or field type changes. Reuse always proves
 inverse/gcc/prototype preservation before apply and restores sources/ledger on failed post-write check.
+
+Caller-scoped legacy const sites (T-27072) wrap an existing selector as
+`in:UNIT:CALLER:BASE_SELECTOR`, for example `in:AAA:run_mode:GameState.mode`. The unit and active
+function must resolve uniquely. Wrapped sites always use the strict signed provenance collector and
+its ledger/replay proofs, including for positive values. Existing unwrapped selectors are unchanged.
 Versioned const ledger metadata supports check/replay and follows header/tag/member/function renames.
 An expression changed by a field/local rename requires renewed site evidence; it fails closed.
 
@@ -1985,6 +1990,14 @@ def parse_values(text, where):
 
 
 def parse_site(spec):
+    if spec.startswith("in:"):
+        parts = spec.split(":", 3)
+        if len(parts) != 4 or not IDENT_RE.match(parts[1]) or not IDENT_RE.match(parts[2]):
+            raise RenameError("caller site: expected in:UNIT:CALLER:BASE_SELECTOR")
+        base = parse_site(parts[3])
+        if base[0] == "caller":
+            raise RenameError("nested caller sites are not supported")
+        return ("caller", parts[1], parts[2], base)
     m = re.match(r"^(\w+):(\w+)\(arg(\d+)\)$", spec)
     if m:
         return ("arg", m.group(1), m.group(2), int(m.group(3)))
@@ -2420,7 +2433,7 @@ SIGNED_PREFIX = "signed-v1:"
 
 def signed_definitions(tree, header, enum, defines, values):
     """Validate the exact generated declarations before signed-request check/replay."""
-    from pycparser import c_parser
+    from pycparser import c_ast, c_parser
     text = blank_comments(tree.read(header) or "")
     wanted = {name: int(value, 0) for name, value, _comment in values}
     scratch = Scratch(tree)
@@ -2468,19 +2481,22 @@ def signed_definitions(tree, header, enum, defines, values):
         raise RenameError("signed enum member value mismatch")
 
 
-def signed_hits(tree, source, pp, ast, sites, ops, names, defines):
+def signed_hits(tree, source, pp, ast, sites, ops, names, defines, caller_filter=None):
     """Whole-expression edits bound to one unchanged function token stream, never to a leaf's value alone."""
     from pycparser import c_ast
     edits, unresolved = [], []
     by_value = {int(value, 0): name for name, value, _comment in names}
     for function in (n for n in ast.ext if isinstance(n, c_ast.FuncDef)):
+        if caller_filter and (file_unit(tree, source) != caller_filter[0]
+                              or function.decl.name != caller_filter[1]):
+            continue
         selected = []
         for node, value in const_hits(function.body, sites, ops, whole=True):
             if value in by_value:
                 selected.append((node, value))
             else:
                 unresolved.append("%s:%d: %s has no name in the values file" % (node.coord.file, node.coord.line, value))
-        if not selected:
+        if not selected and not caller_filter:
             continue
         name = function.decl.name
         text = tree.read(source)
@@ -2519,6 +2535,8 @@ def signed_hits(tree, source, pp, ast, sites, ops, names, defines):
         nodes.sort(key=lambda n: (n.coord.line, n.coord.column))
         if [n.value for n in nodes] != [expanded[i][0] for i in numeric]:
             raise RenameError("signed integer token provenance is ambiguous: %s" % name)
+        if not selected:
+            continue
         positions = {id(n): i for n, i in zip(nodes, numeric)}
         stack, pairs = [], {}
         for i, token in enumerate(expanded):
@@ -2609,8 +2627,21 @@ def signed_request(row, ch):
             if key[0] == "sym" and rows[0].kind == "func":
                 for i, site in enumerate(data["sites"]):
                     parsed = parse_site(site)
+                    wrapped = parsed[0] == "caller"
+                    if wrapped:
+                        if parsed[1] == key[1] and parsed[2] in names:
+                            parsed = ("caller", parsed[1], names[-1], parsed[3])
                     if parsed[0] == "arg" and parsed[1] == key[1] and parsed[2] in names:
-                        data["sites"][i] = "%s:%s(arg%d)" % (key[1], names[-1], parsed[3])
+                        parsed = ("arg", parsed[1], names[-1], parsed[3])
+                    if wrapped:
+                        base = parsed[3]
+                        if base[0] == "arg" and base[1] == key[1] and base[2] in names:
+                            base = ("arg", base[1], names[-1], base[3])
+                        base_text = ("%s:%s(arg%d)" % (base[1], base[2], base[3]) if base[0] == "arg"
+                                     else "%s.%s" % (base[1], base[2]) if base[0] == "member" else base[1])
+                        data["sites"][i] = "in:%s:%s:%s" % (parsed[1], parsed[2], base_text)
+                    elif parsed[0] == "arg":
+                        data["sites"][i] = "%s:%s(arg%d)" % (parsed[1], parsed[2], parsed[3])
         return data
     except (ValueError, TypeError, KeyError, UnicodeError) as exc:
         raise RenameError("invalid signed constant ledger metadata: %s" % row.where) from exc
@@ -2623,11 +2654,15 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
         ctx = Context(root)
         const_reuse_plan(ctx, header, enum, values, sites)
         return ctx.tree, ctx.report, ctx.problems
+    if not _signed and any(s.startswith("in:") for s in sites):
+        ctx = Context(root)
+        signed_const_plan(ctx, header, enum, defines, values, sites, note)
+        return ctx.tree, ctx.report, ctx.problems
     if not _signed and any(int(v, 0) < 0 for _n, v, _c in values):
         ctx = Context(root)
         signed_const_plan(ctx, header, enum, defines, values, sites, note)
         return ctx.tree, ctx.report, ctx.problems
-    from pycparser import c_parser
+    from pycparser import c_ast, c_parser
     tree = _tree if _tree is not None else Tree(root)
     problems, report = [], []
     hpath = header if header.startswith("include/") else "include/" + header
@@ -2648,7 +2683,21 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
     by_value = {}
     for name, v, _c in values:
         by_value.setdefault(int(v, 0), name)
-    sites = [parse_site(s) for s in sites]
+    parsed_sites = [parse_site(s) for s in sites]
+    caller_sites = [s for s in parsed_sites if s[0] == "caller"]
+    caller_filter = None
+    if caller_sites:
+        if len(caller_sites) != len(parsed_sites):
+            return tree, report, ["caller-scoped and unscoped sites cannot be mixed"]
+        filters = {(s[1], s[2]) for s in caller_sites}
+        if len(filters) != 1:
+            return tree, report, ["caller-scoped sites must name one exact unit and function"]
+        caller_filter = next(iter(filters))
+        if not _signed:
+            return tree, report, ["caller-scoped sites require the signed provenance collector"]
+        sites = [s[3] for s in caller_sites]
+    else:
+        sites = parsed_sites
     for s in sites:
         if s[0] == "member" and s[1] != "*":
             owners = [d for d in find_type(tree, s[1])]
@@ -2669,10 +2718,12 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
     if _existing:
         signed_definitions(tree, hpath, enum, defines, values)
     words = {s[2] if s[0] in ("member", "arg") else s[1] for s in sites}
-    cands = [u for u in users if any(w in (tree.read(u) or "") for w in words)]
+    cands = ([u for u in users if file_unit(tree, u) == caller_filter[0]] if caller_filter else
+             [u for u in users if any(w in (tree.read(u) or "") for w in words)])
     ops = CMP_OPS + (BIT_OPS if defines else ())
     edits = {}      # path -> [(start, end, name)]
     unresolved = []
+    caller_definitions = 0
     scratch = Scratch(tree)
     try:
         scratch.sync()
@@ -2685,7 +2736,15 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
                 problems.append("%s: pycparser: %s" % (u, str(e)[:120]))
                 continue
             if _signed:
-                signed_edits, unknown = signed_hits(tree, u, pp, ast, sites, ops, values, defines)
+                if caller_filter and file_unit(tree, u) == caller_filter[0]:
+                    active = [n for n in ast.ext if isinstance(n, c_ast.FuncDef)
+                              and n.decl.name == caller_filter[1]]
+                    raw = [n for n in function_spans(tree.read(u) or "", caller_filter[1])]
+                    if len(active) != len(raw):
+                        problems.append("caller source provenance is ambiguous: %s:%s" % caller_filter)
+                    caller_definitions += len(active)
+                signed_edits, unknown = signed_hits(tree, u, pp, ast, sites, ops, values, defines,
+                                                   caller_filter=caller_filter)
                 unresolved += unknown
                 for path, start, end, replacement in signed_edits:
                     edits.setdefault(path, set()).add((start, end, replacement))
@@ -2719,6 +2778,11 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
                 edits.setdefault(c.file, set()).add((pos, pos + len(node.value), by_value[val]))
     finally:
         scratch.close()
+    if caller_filter and caller_definitions != 1:
+        problems.append("caller must resolve to one active definition in %s: %s (%d found)" % (
+            caller_filter[0], caller_filter[1], caller_definitions))
+    if problems:
+        return tree, report, problems
     n = 0
     for path, es in edits.items():
         text = tree.read(path)
@@ -3537,7 +3601,7 @@ def main(argv=None):
                     row = reuse_ledger_row(ctx.tree, a.header, a.reuse, values, a.site, a.note)
                     apply_reuse(ctx, row, a.ledger or row.scope, sys.stdout)
                 return 0
-            if any(int(v, 0) < 0 for _n, v, _c in values):
+            if any(site.startswith("in:") for site in a.site) or any(int(v, 0) < 0 for _n, v, _c in values):
                 ctx = Context(a.root)
                 signed_const_plan(ctx, a.header, a.enum, a.defines, values, a.site, a.note)
                 for line in ctx.report:

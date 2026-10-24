@@ -1160,6 +1160,86 @@ class ReplayMovesTest(Fixture):
 
 
 class ConstTest(Fixture):
+    def test_cli_positive_caller_apply_check_replay_and_repeat(self):
+        import contextlib
+        import io
+        path = "src/ovl/AAA/80132000.c"
+        original = self.read(path) + "\nvoid caller_cli(void) { if (D_800E6280.unk_02 == 0) {} }\n"
+        self.write(path, original)
+        values_path = os.path.join(self.root, "values.txt")
+        self.write("values.txt", "AAA_MODE_ZERO 0\n")
+        args = ["--root", self.root, "const", "--header", "include/ovl/AAA.h", "--enum", "AaaMode",
+                "--values", values_path, "--site", "in:AAA:caller_cli:GameState.unk_02", "--apply"]
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(R.main(args), 0)
+        applied_source = self.read(path)
+        applied_header = self.read("include/ovl/AAA.h")
+        self.assertIn("D_800E6280.unk_02 == AAA_MODE_ZERO", applied_source)
+        self.assertIn("AAA_MODE_ZERO = 0", applied_header)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.write(path, original)
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(R.main(["--root", self.root, "replay"]), 0)
+        self.assertEqual(self.read(path), applied_source)
+        self.assertEqual(self.read("include/ovl/AAA.h"), applied_header)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(R.main(["--root", self.root, "replay"]), 0)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+
+    def test_caller_site_is_unit_and_function_scoped(self):
+        path = "src/ovl/AAA/80132000.c"
+        original = self.read(path)
+        self.write(path, original + "\nvoid caller_a(void) { if (D_800E6280.unk_02 == 0) {} }\n"
+                   "void caller_b(void) { if (D_800E6280.unk_02 == 2) {} }\n")
+        main = "src/main/80041000.c"
+        self.write(main, self.read(main) + "\nvoid caller_a(void) { if (D_800E6280.unk_02 == 0) {} }\n")
+        values = R.parse_values("AAA_ZERO 0\n", "v")
+        tree, report, problems = R.const_plan(self.root, "include/game.h", "AaaMode", False,
+                                              values, ["in:AAA:caller_a:GameState.unk_02"])
+        self.assertEqual(problems, [], (report, problems))
+        tree.flush()
+        text = self.read(path)
+        self.assertIn("D_800E6280.unk_02 == AAA_ZERO", text)
+        self.assertIn("D_800E6280.unk_02 == 2", text)
+        self.assertIn("D_800E6280.unk_02 == 0", self.read(main))
+
+    def test_caller_site_rejects_unknown_unit_or_function(self):
+        values = R.parse_values("AAA_ZERO 0\n", "v")
+        for site, expected in (("in:BAD:caller_a:GameState.unk_02", "one active definition"),
+                               ("in:AAA:missing:GameState.unk_02", "one active definition")):
+            _tree, _report, problems = R.const_plan(self.root, "include/ovl/AAA.h", "AaaMode", False,
+                                                    values, [site], _signed=True)
+            self.assertTrue(any(expected in p for p in problems), problems)
+
+    def test_caller_site_rejects_inactive_or_macro_origin(self):
+        path = "src/ovl/AAA/80132000.c"
+        original = self.read(path)
+        self.write(path, original + "\n#define MODE_TEST(value) if (D_800E6280.unk_02 == value) {}\n"
+                   "#if 0\nvoid caller_a(void) { if (D_800E6280.unk_02 == 0) {} }\n#endif\n"
+                   "void caller_b(void) { MODE_TEST(0); }\n")
+        values = R.parse_values("AAA_ZERO 0\n", "v")
+        _tree, _report, problems = R.const_plan(self.root, "include/ovl/AAA.h", "AaaMode", False,
+                                                values, ["in:AAA:caller_a:GameState.unk_02"], _signed=True)
+        self.assertTrue(any("one active definition" in p for p in problems), problems)
+        self.write(path, original + "\n#define MODE_TEST(value) if (D_800E6280.unk_02 == value) {}\n"
+                   "void caller_a(void) { MODE_TEST(0); }\n")
+        ctx = R.Context(self.root)
+        R.signed_const_plan(ctx, "include/ovl/AAA.h", "AaaMode", False, values,
+                            ["in:AAA:caller_a:GameState.unk_02"], verify=False)
+        self.assertTrue(any("tokens changed after preprocessing" in p for p in ctx.problems), ctx.problems)
+
+    def test_caller_filter_supports_a_local_selector(self):
+        path = "src/ovl/AAA/80132000.c"
+        self.write(path, self.read(path) + "\nvoid caller_local(void) { s32 phase; phase = 1; if (phase == 0) {} }\n")
+        values = R.parse_values("AAA_ZERO 0\n", "v")
+        tree, _report, problems = R.const_plan(self.root, "include/ovl/AAA.h", "AaaMode", False,
+                                              values, ["in:AAA:caller_local:phase"], _signed=True)
+        self.assertEqual(problems, [])
+        tree.flush()
+        self.assertIn("if (phase == AAA_ZERO)", self.read(path))
+
     def test_enum_at_sites(self):
         values = R.parse_values("AAA_MODE_IDLE 0 idle\nAAA_MODE_RUN 2\n", "v")
         tree, report, problems = R.const_plan(self.root, "include/ovl/AAA.h", "AaaMode", False, values,
@@ -1437,6 +1517,22 @@ class SignedConstantTest(Fixture):
         ctx = self.plan_signed(sites=self.sites[1:])
         self.assertEqual(ctx.problems, [])
         self.assertIn("signed_sink(((SIGNED_NEGATIVE_ONE)));", ctx.tree.read(self.path))
+
+    def test_caller_scoped_signed_sites_keep_suffix_and_replay(self):
+        sites = ["in:main:signed_rule:direction", "in:main:signed_rule:main:signed_sink(arg0)"]
+        ctx = self.plan_signed(sites=sites)
+        self.assertEqual(ctx.problems, [])
+        changed = ctx.tree.read(self.path)
+        self.assertIn("signed_sink(((unsigned long int)SIGNED_NEGATIVE_ONE));", changed)
+        row = R.signed_ledger_row(ctx.tree, "include/common.h", None, True, self.values, sites, "T-27072")
+        R.apply_reuse(ctx, row, "caller", io.StringIO())
+        applied = self.read(self.path)
+        self.write(self.path, self.before)
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
+        self.assertEqual(self.read(self.path), applied)
+        self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
 
     def test_compiler_checks_value_and_suffix_type_of_replacement(self):
         import subprocess
