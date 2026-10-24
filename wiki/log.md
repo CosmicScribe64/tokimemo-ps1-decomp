@@ -1754,3 +1754,7 @@ copies (injection test), which both rules predict. 4.1's own rule (F after an in
 register-register compare branch) fits all 30 cases. As a ucode pass it changes three procedures in the corpus:
 `func_8006B0C8` matches, and main `strCallback` and `func_8005938C` fail because of their FAKE steering loops.
 Section added to [[ido-52-evaluation]]; harness in `drafts/T-25608/ido41/`.
+
+## [2026-10-24] ticket | T-26001 Done: stale tool tests fixed
+
+[[tickets/T-26001-stale-tool-tests]]: test_build_deps now copies tools/ugen_pass.py into its fake project and the protoverride compile_unit test gives its fake context a name; the full tool suite passes (1572 OK, 3 skipped).
