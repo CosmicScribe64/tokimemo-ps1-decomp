@@ -160,7 +160,7 @@ void func_801467C4(void) {
     tpage_buf_clear();
     func_8006509C();
     icon_disp_switch(1);
-    func_8006CE84();
+    schedule_command_icons_lock_to_record();
     for (var_s0 = 0; var_s0 != 14; var_s0++) {
         icon_can_use_set(var_s0, 0);
     }

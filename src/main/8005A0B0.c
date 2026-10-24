@@ -2611,7 +2611,7 @@ void func_80060958(void) {
     cursor_actor_init(0);
     func_8006509C();
     icon_disp_switch(1);
-    func_8006CE84();
+    schedule_command_icons_lock_to_record();
     icon_can_use_set(0, 0);
     icon_can_use_set(game_state.last_command.w & 0xF, 1);
     tpage_buf_clear();

@@ -797,7 +797,7 @@ void func_80076FDC(void) {
         }
     }
     if (D_801230D0 == 0xFF) {
-        col = func_8006F524(4);
+        col = schedule_command_girl_select(4);
         if (col != 0) {
             col = 1;
         }
@@ -961,7 +961,7 @@ void func_80077694(void) {
         temp = 0;
     } else if (game_state.day_events[game_state.day_event_index].girl == 4) {
         addr_init_club_sd(D_801230D0);
-        if (func_8006F524(4) != 0xF) {
+        if (schedule_command_girl_select(4) != 0xF) {
             ((Actor *)actor_pool)[97].unk_01 = 1;
             ((Actor *)actor_pool)[97].flags = 5;
             ((Actor *)actor_pool)[97].quad_flags = 0x01000000;
@@ -1184,7 +1184,7 @@ void func_80077E30(void) {
 }
 
 void magazine_exit(void) {
-    func_8006D138();
+    schedule_progress_state_update();
     hizuke_disp_switch(1);
     mode_stage_set(0);
 }

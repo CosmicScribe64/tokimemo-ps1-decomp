@@ -584,7 +584,7 @@ void func_801344E0(void) {
         game_state.day_event_done_bits = game_state.day_event_done_bits | 0x10;
         talk_clear();
         set_dec_bri(0);
-        func_8006D6E0();
+        day_event_queue_resync_after_master();
         day_event_next(1);
         break;
     default:
@@ -1747,7 +1747,7 @@ void func_80137B5C(void) {
         game_state.day_event_done_bits |= 0x10;
         talk_clear();
         set_dec_bri(0);
-        func_8006D6E0();
+        day_event_queue_resync_after_master();
         day_event_next(1);
     }
     Default_Disp();

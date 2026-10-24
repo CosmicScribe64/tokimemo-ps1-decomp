@@ -54,13 +54,13 @@ void game_mode_dispatch(void) {
         func_80062C28();
         break;
     case 0x38:
-        func_800728A4();
+        schedule_month_start_mode_handler();
         break;
     case 0x39:
-        func_800725B0();
+        schedule_day_notice_mode_handler();
         break;
     case 0x32:
-        func_80072BC0();
+        schedule_week_end_mode_handler();
         break;
     case 0x2:
         ovl_loader_mode_handler();

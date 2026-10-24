@@ -1,4 +1,4 @@
-#define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, func_8006EA40); main_api.h has s32 */
+#define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, schedule_miharu_scene4_ready); main_api.h has s32 */
 #define MAIN_API_OVERRIDE_func_80066104 /* the original callers pass a string the callee ignores; main_api.h has (void) */
 #include "common.h"
 #include "game.h"
@@ -16,7 +16,7 @@ void schedule_init(void) {
 void _schedule_init(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8006CD14();
+        schedule_step_prepare();
         break;
     case 1:
         day_event_queue_build_week();
@@ -28,7 +28,7 @@ void _schedule_init(void) {
         schdeule_girls_param();
         break;
     case 4:
-        func_80070ECC();
+        schedule_step_advance_day();
         break;
     }
     parameter_show();
@@ -55,7 +55,7 @@ void restore_bgm(void) {
     }
 }
 
-void func_8006CD14(void) {
+void schedule_step_prepare(void) {
     switch (game_state.substep) {
     case 0:
         if (game_state.day_events[game_state.day_event_index].type != DAY_EVENT_EXAM) {
@@ -66,7 +66,7 @@ void func_8006CD14(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if (func_8006CDD4() != 0) {
+        if (schedule_memory_card_save_poll() != 0) {
             game_state.substep += 1;
         }
         break;
@@ -76,7 +76,7 @@ void func_8006CD14(void) {
     }
 }
 
-s32 func_8006CDD4(void) {
+s32 schedule_memory_card_save_poll(void) {
     if (game_state.memory_card_job == 1) {
         if (func_80054388() == 0x13) {
             audio_command(0x50F);
@@ -94,7 +94,7 @@ s32 func_8006CDD4(void) {
     return 0;
 }
 
-void func_8006CE84(void) {
+void schedule_command_icons_lock_to_record(void) {
     s32 i;
 
     for (i = 0; i != 0xE; i++) {
@@ -127,13 +127,13 @@ void girl_flags_bit0_clear(void) {
     }
 }
 
-void func_8006D00C(void) {
+void schedule_amusement_park_flag_reset(void) {
     if (game_state.month == 9) {
         game_state.player_flags_upper.b[0] &= 0xFFFB;
     }
 }
 
-void func_8006D038(void) {
+void schedule_girl_spots_expire(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
@@ -144,7 +144,7 @@ void func_8006D038(void) {
     }
 }
 
-void func_8006D138(void) {
+void schedule_progress_state_update(void) {
     GameState *gs = &game_state;
     u32 flags;
 
@@ -264,7 +264,7 @@ void func_8006D138(void) {
 }
 
 
-void func_8006D4A0(void) {
+void schedule_club_flag0_clear(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
@@ -272,7 +272,7 @@ void func_8006D4A0(void) {
     }
 }
 
-void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
+void day_event_queue_push_birthdays(s32 *arg0, s32 arg1, s32 arg2) {
     s32 i;
 
     if (birth_day_check_days(GIRL_SHIORI, game_state.month + arg1, arg2) == 1) {
@@ -299,7 +299,7 @@ void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
 
 /* s32 with no return (T-17004): $v0 is live at the exit of an int function, so as1 keeps
  * the second loop's start-index copy (move v1,v0) instead of folding it into the sll. */
-s32 func_8006D6E0(void) {
+s32 day_event_queue_resync_after_master(void) {
     GameState *gs;
     s32 n;
     s32 i;
@@ -376,13 +376,13 @@ void day_event_queue_build_week(void) {
     if (game_state.girls[11].scene_counters[0] != 0) {
         game_state.girls[11].scene_counters[0] -= 1;
     }
-    sel = func_8006F524(gs->last_command.w & 0xF) & 0xF;
+    sel = schedule_command_girl_select(gs->last_command.w & 0xF) & 0xF;
     for (j = 1, cnt = 0; j < 10; j++) {
         if (game_state.girls[j].flags.f.met) {
             cnt++;
         }
     }
-    D_800B6740 = -1;
+    schedule_last_picked_girl = -1;
     day = game_state.day;
     monthOff = 0;
     month = game_state.month;
@@ -408,7 +408,7 @@ void day_event_queue_build_week(void) {
         idx++;
         gs->day_events[idx].type = DAY_EVENT_HOLIDAY;
         idx++;
-        func_8006D52C(&idx, monthOff, day + 6);
+        day_event_queue_push_birthdays(&idx, monthOff, day + 6);
         mode_step_next();
         return;
     }
@@ -418,40 +418,40 @@ void day_event_queue_build_week(void) {
             if ((gs->player_flags.h >> 12) == 6 && (*(u16 *)&game_state.clubs[6].level & 0xF) >= 8) {
                 gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
-                func_8006D52C(&idx, monthOff, day);
+                day_event_queue_push_birthdays(&idx, monthOff, day);
                 gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
                 gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
-                func_8006D52C(&idx, monthOff, day + 1);
+                day_event_queue_push_birthdays(&idx, monthOff, day + 1);
                 gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
                 gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
-                func_8006D52C(&idx, monthOff, day + 2);
-                gs->day_events[idx].type = DAY_EVENT_DAY_END;
-                idx++;
-                gs->day_events[idx].girl = 7;
-                gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
-                idx++;
-                func_8006D52C(&idx, monthOff, day + 3);
+                day_event_queue_push_birthdays(&idx, monthOff, day + 2);
                 gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
                 gs->day_events[idx].girl = 7;
                 gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
-                func_8006D52C(&idx, monthOff, day + 4);
+                day_event_queue_push_birthdays(&idx, monthOff, day + 3);
                 gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
                 gs->day_events[idx].girl = 7;
                 gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
-                func_8006D52C(&idx, monthOff, day + 5);
+                day_event_queue_push_birthdays(&idx, monthOff, day + 4);
+                gs->day_events[idx].type = DAY_EVENT_DAY_END;
+                idx++;
+                gs->day_events[idx].girl = 7;
+                gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
+                idx++;
+                day_event_queue_push_birthdays(&idx, monthOff, day + 5);
                 gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
                 gs->day_events[idx].type = DAY_EVENT_HOLIDAY;
                 idx++;
-                func_8006D52C(&idx, monthOff, day + 6);
+                day_event_queue_push_birthdays(&idx, monthOff, day + 6);
                 mode_step_next();
                 return;
             }
@@ -464,7 +464,7 @@ void day_event_queue_build_week(void) {
             }
             gs->day_events[idx].type = DAY_EVENT_HOLIDAY;
             idx++;
-            func_8006D52C(&idx, monthOff, day + 6);
+            day_event_queue_push_birthdays(&idx, monthOff, day + 6);
             mode_step_next();
             return;
         }
@@ -515,12 +515,12 @@ void day_event_queue_build_week(void) {
             gs->day_events[idx].girl = 0xA;
             gs->day_events[idx].type = DAY_EVENT_MEETING;
             idx++;
-            func_8006D4A0();
+            schedule_club_flag0_clear();
         } else if (gs->month_calendar[monthOff].marker[day] == 2 && game_state.year == 0x61) {
             gs->day_events[idx++].type = DAY_EVENT_CAREER_GUIDANCE;
-            func_8006D4A0();
+            schedule_club_flag0_clear();
         } else if (gs->month_calendar[monthOff].day_kind[day] == 1 || gs->month_calendar[monthOff].day_kind[day] == 2) {
-            if (func_8006EA40() != 0) {
+            if (schedule_miharu_scene4_ready() != 0) {
                 game_state.scene_flags[77]++;
                 gs->day_events[idx].type = DAY_EVENT_SPECIAL_EVENT;
                 gs->day_events[idx].girl = 0xB;
@@ -595,7 +595,7 @@ void day_event_queue_build_week(void) {
                     if (game_state.year != 0x5F || game_state.month != 4) {
                         if (game_state.day_count < 0x2D6 && nSpecial == 0) {
                             if (cnt < 2) {
-                                if (func_8006EB64(&argA, &argB) != 0) {
+                                if (schedule_meeting_select_catchup(&argA, &argB) != 0) {
                                     nSpecial++;
                                     gs->day_events[idx].type = DAY_EVENT_MEETING;
                                     gs->day_events[idx].girl = argA;
@@ -603,7 +603,7 @@ void day_event_queue_build_week(void) {
                                     idx++;
                                 }
                             } else {
-                                if (func_8006EEC4(&argA, &argB) != 0) {
+                                if (schedule_meeting_select_normal(&argA, &argB) != 0) {
                                     nSpecial++;
                                     gs->day_events[idx].type = DAY_EVENT_MEETING;
                                     gs->day_events[idx].girl = argA;
@@ -611,7 +611,7 @@ void day_event_queue_build_week(void) {
                                     idx++;
                                 }
                             }
-                            if ((game_state.last_command.w & 0xF) == 4 && func_8006F218(&argA, &argB) != 0) {
+                            if ((game_state.last_command.w & 0xF) == 4 && schedule_meeting_select_club(&argA, &argB) != 0) {
                                 nSpecial++;
                                 gs->day_events[idx].type = DAY_EVENT_MEETING;
                                 gs->day_events[idx].girl = argA;
@@ -695,7 +695,7 @@ void day_event_queue_build_week(void) {
     mode_step_next();
 }
 
-s32 func_8006EA40(void) {
+s32 schedule_miharu_scene4_ready(void) {
     s32 count;
     s32 i;
     /* FAKE: the helper writes 16 bytes; four extra bytes reproduce the original frame and buffer slots. T-11670. */
@@ -717,7 +717,7 @@ s32 func_8006EA40(void) {
     return 0;
 }
 
-s32 func_8006EB64(u8 *arg0, u8 *arg1) {
+s32 schedule_meeting_select_catchup(u8 *arg0, u8 *arg1) {
     /* The flag word's f9 field is read through a pointer: an indirect load is not a plain variable for uopt, so the
      * compares keep their constant-first order and no phantom local holds $v1 (T-17004). */
     GameState *g = &game_state;
@@ -787,8 +787,8 @@ s32 func_8006EB64(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-s32 func_8006EEC4(u8 *arg0, u8 *arg1) {
-    /* Read through a pointer like func_8006EB64 (T-17004). */
+s32 schedule_meeting_select_normal(u8 *arg0, u8 *arg1) {
+    /* Read through a pointer like schedule_meeting_select_catchup (T-17004). */
     GameState *g = &game_state;
 
     if (rand() & 7) {
@@ -856,7 +856,7 @@ s32 func_8006EEC4(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-s32 func_8006F218(u8 *arg0, u8 *arg1) {
+s32 schedule_meeting_select_club(u8 *arg0, u8 *arg1) {
     GameState *g;
     s32 club;
 
@@ -922,7 +922,7 @@ s32 func_8006F218(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-s32 func_8006F524(u32 arg0) {
+s32 schedule_command_girl_select(u32 arg0) {
     /* FAKE: the helper writes 16 bytes; four extra bytes reproduce the original frame. T-10730. */
     u8 rank[20];
     s16 points[16];
@@ -944,35 +944,35 @@ s32 func_8006F524(u32 arg0) {
     case 0:
         if (g->girls[1].flags.f.met) {
             firstGirl = 1;
-            firstScore = rank[1] - D_800B6748;
+            firstScore = rank[1] - schedule_command_rank_bar_liberal_arts_athletics;
         }
-        selfScore = rank[0] - D_800B6748;
+        selfScore = rank[0] - schedule_command_rank_bar_liberal_arts_athletics;
     default:
         break;
     case 1:
         if (g->girls[2].flags.f.met) {
             firstGirl = 2;
-            firstScore = rank[2] - D_800B6758;
+            firstScore = rank[2] - schedule_command_rank_bar_science_looks;
         }
-        selfScore = rank[0] - D_800B6758;
+        selfScore = rank[0] - schedule_command_rank_bar_science_looks;
         break;
     case 2:
         if (g->girls[3].flags.f.met) {
             firstGirl = 3;
-            firstScore = rank[3] - D_800B674C;
+            firstScore = rank[3] - schedule_command_rank_bar_art;
         }
-        selfScore = rank[0] - D_800B674C;
+        selfScore = rank[0] - schedule_command_rank_bar_art;
         break;
     case 3:
         if (g->girls[5].flags.f.met) {
             firstGirl = 5;
-            firstScore = rank[5] - D_800B6748;
+            firstScore = rank[5] - schedule_command_rank_bar_liberal_arts_athletics;
         }
         if (g->girls[6].flags.f.met) {
             secondGirl = 6;
-            secondScore = rank[6] - D_800B6748;
+            secondScore = rank[6] - schedule_command_rank_bar_liberal_arts_athletics;
         }
-        selfScore = rank[0] - D_800B6754;
+        selfScore = rank[0] - schedule_command_rank_bar_shiori_athletics;
         break;
     case 4:
         if (((u16)g->player_flags.h >> 12) == (((u8) g->girls[0].flags.b[2] >> 4))) {
@@ -1093,16 +1093,16 @@ s32 func_8006F524(u32 arg0) {
     case 5:
         if (g->girls[8].flags.f.met) {
             firstGirl = 8;
-            firstScore = rank[8] - D_800B6750;
+            firstScore = rank[8] - schedule_command_rank_bar_trivia;
         }
-        selfScore = rank[0] - D_800B6750;
+        selfScore = rank[0] - schedule_command_rank_bar_trivia;
         break;
     case 6:
         if (g->girls[7].flags.f.met) {
             firstGirl = 7;
-            firstScore = rank[7] - D_800B6758;
+            firstScore = rank[7] - schedule_command_rank_bar_science_looks;
         }
-        selfScore = rank[0] - D_800B6758;
+        selfScore = rank[0] - schedule_command_rank_bar_science_looks;
         break;
     case 7:
         break;
@@ -1135,7 +1135,7 @@ block_97:
 
 /* Plain char outputs preserve IDO's separate byte-store constant range.
  * Explicit s8/u8 outputs change sharing with signed helper results. T-10730 */
-s32 special_event_select(char *arg0, char *arg1) {
+s32 schedule_special_scene_select(char *arg0, char *arg1) {
     GameState *g;
     /* FAKE: 11 counts are used; the extra bytes and pad reproduce sp+0x7C
      * in the original 0xA8 frame. T-10730 */
@@ -1354,9 +1354,9 @@ s32 geko_judge(s8 *arg0) {
     for (i = 0, idx = n; i != 11; i++, idx++) {
         n = idx % 11;
         if ((game_state.girls[n].flags.f.met != 0) && (game_state.girls[n].syoushin < 0x3C) && (get_g_zyotai_s(n) != 4) && (sp7C[n] >= 0x11) && ((rand() % 100) < 0x32)) {
-            if (D_800B6740 != n) {
+            if (schedule_last_picked_girl != n) {
                 *arg0 = n;
-                D_800B6740 = n;
+                schedule_last_picked_girl = n;
                 return 1;
             }
         }
@@ -1397,9 +1397,9 @@ s32 date_sasoi_judge(s8 *arg0) {
     for (i = 0, idx = n; i != 11; i++, idx++) {
         n = idx % 11;
         if ((game_state.girls[n].flags.f.met != 0) && (game_state.girls[n].syoushin < 0x3C) && (get_g_zyotai_s(n) != 4) && (sp7C[n] >= 0x21) && ((rand() % 100) < 8)) {
-            if (D_800B6740 != n) {
+            if (schedule_last_picked_girl != n) {
                 *arg0 = n;
-                D_800B6740 = n;
+                schedule_last_picked_girl = n;
                 return 1;
             }
         }
@@ -1421,7 +1421,7 @@ void schedule_girls_gakko(void) {
                 game_state.day_events[i].type = DAY_EVENT_SKIP;
             } else if ((game_state.player_flags.b[1] & 0xF) == 3) {
                 game_state.day_events[i].type = DAY_EVENT_SKIP;
-            } else if (special_event_select(&girl, &arg)) {
+            } else if (schedule_special_scene_select(&girl, &arg)) {
                 game_state.day_events[i].type = DAY_EVENT_SPECIAL_EVENT;
                 game_state.day_events[i].girl = girl;
                 game_state.day_events[i].scene = arg;
@@ -1482,7 +1482,7 @@ void schdeule_girls_param(void) {
     mode_step_next();
 }
 
-void func_80070ECC(void) {
+void schedule_step_advance_day(void) {
     calendar_advance_day();
     if (cd_audio_state() & 4) {
         cd_audio_command(9, 0, 0);
@@ -1492,7 +1492,7 @@ void func_80070ECC(void) {
 
 void schedule_day_screen_handler(void) {
     if (game_state.mode_stage == 0) {
-        func_80070F80();
+        schedule_day_screen_step_dispatch();
     }
     parameter_show();
     message_window_show();
@@ -1503,7 +1503,7 @@ void schedule_day_screen_handler(void) {
     hud_screen_frame_draw(1);
 }
 
-void func_80070F80(void) {
+void schedule_day_screen_step_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
         day_event_dispatch();
@@ -1552,7 +1552,7 @@ void girl_counters_clamp(void) {
     }
 }
 
-s32 func_80071110(void) {
+s32 schedule_yuina_highest_points_check(void) {
     /* FAKE: buffer sizes chosen to reproduce the 0x70 frame and the 0x3C/0x5C slots; real sizes unknown. T-7020 */
     u8 buf[20];
     s16 v[16];
@@ -1628,15 +1628,15 @@ void day_event_dispatch(void) {
         }
     }
     if ((*(u8 *)&game_state.year) >= 0x62U && (*(u8 *)&game_state.month) == 2 && (*(u8 *)&game_state.day) == 0x1C
-        && func_80071110() != 0 && game_state.scene_flags[20] == 0) {
+        && schedule_yuina_highest_points_check() != 0 && game_state.scene_flags[20] == 0) {
         D_80122CD4 = 2;
         talk_work = 7;
         game_state.scene_flags[20] += 1;
         game_mode_set(MODE_SPECIAL_EVENT);
         return;
     }
-    func_8006D138();
-    func_8006D00C();
+    schedule_progress_state_update();
+    schedule_amusement_park_flag_reset();
     if (((*(u8 *)&game_state.month) != 0xC || (*(u8 *)&game_state.day) != 0x18) && game_state.day_event_count_today == 0 && game_state.weekday != WEEKDAY_SUNDAY
         && game_state.month_calendar[0].day_kind[(*(u8 *)&game_state.day)] == 0 && game_state.day_events[game_state.day_event_index].type == DAY_EVENT_DAY_END
         && game_state.day_events[0].type != DAY_EVENT_EXAM && game_state.day_events[game_state.day_event_index - 1].type == DAY_EVENT_SCHOOL_DAY) {
@@ -2014,7 +2014,7 @@ void calendar_advance_day(void) {
     }
     ((HalfView *)&game_state.day_count)->h++;
     if ((*(u8 *)&game_state.month) % 3 == 0) {
-        func_8006D038();
+        schedule_girl_spots_expire();
     }
     if (game_state.day_event_index != 0) {
         day_event_today_clear(0);
@@ -2034,10 +2034,10 @@ void day_event_today_clear(u8 arg0) {
     game_state.day_event_count_today = arg0;
 }
 
-void func_800725B0(void) {
+void schedule_day_notice_mode_handler(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_800726F0();
+        schedule_vacation_notice_step();
         break;
     case 1:
         game_state.day_event_index += 1;
@@ -2067,7 +2067,7 @@ void func_800725B0(void) {
     hud_mascot_update();
     hud_screen_frame_draw(0);
 }
-void func_800726F0(void) {
+void schedule_vacation_notice_step(void) {
     GameState *g = &game_state;
     /* FAKE: the first test reads unk_03D through a local copy and the second re-reads the field (found by autotweak).
      * With both tests on the field, unk_03D is promoted into $v0 (sharing it with the month range) instead of the
@@ -2115,10 +2115,10 @@ void func_800726F0(void) {
     }
 }
 
-void func_800728A4(void) {
+void schedule_month_start_mode_handler(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_80072944();
+        schedule_month_start_step_dispatch();
         break;
     case 1:
         game_state.day_event_index += 1;
@@ -2133,19 +2133,19 @@ void func_800728A4(void) {
     hud_mascot_update();
     hud_screen_frame_draw(1);
 }
-s32 func_80072944(void) {
+s32 schedule_month_start_step_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80072998();
+        schedule_month_data_load_step();
         break;
     case 1:
-        func_80072B20();
+        schedule_month_start_music_wait();
         break;
     }
 }
 
-s32 func_80072998(void) {
-    /* Fields are read through a pointer, as in func_8006EB64: the month byte keeps the original's a1/v0 allocation across
+s32 schedule_month_data_load_step(void) {
+    /* Fields are read through a pointer, as in schedule_meeting_select_catchup: the month byte keeps the original's a1/v0 allocation across
      * the call and the argument loads keep the original order (T-17004). */
     GameState *g = &game_state;
 
@@ -2175,7 +2175,7 @@ s32 func_80072998(void) {
                     func_800674B0();
                     mode_step_next();
                 }
-                func_8006D00C();
+                schedule_amusement_park_flag_reset();
                 D_800B5BC8 = 0xEF;
             } else {
                 mode_stage_next();
@@ -2185,7 +2185,7 @@ s32 func_80072998(void) {
     }
 }
 
-void func_80072B20(void) {
+void schedule_month_start_music_wait(void) {
     if (audio_bank_load_poll() == 1) {
         audio_bank_start(0, 0);
         mode_stage_next();
@@ -2205,13 +2205,13 @@ s32 day_event_next(s32 arg0) {
     /* no return on this path: the original leaves $v0 as the call result */
 }
 
-void func_80072BC0(void) {
+void schedule_week_end_mode_handler(void) {
     switch (game_state.mode_stage) {
     case 0x0:
-        func_80072C68();
+        schedule_week_end_hud_init();
         break;
     case 0x1:
-        func_80072CA0();
+        schedule_health_step_dispatch();
         break;
     default:
     case 0xFF:
@@ -2226,36 +2226,36 @@ void func_80072BC0(void) {
     hud_screen_frame_draw(1);
     dec_bg_draw(get_last_gamen_mode());
 }
-void func_80072C68(void) {
+void schedule_week_end_hud_init(void) {
     parameter_show_init();
     hizuke_init();
     message_window_init();
     mode_stage_next();
 }
 
-void func_80072CA0(void) {
+void schedule_health_step_dispatch(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80072D70();
+        schedule_health_check_roll();
         return;
     case 1:
-        func_80073198();
+        schedule_health_injury_start();
         return;
     case 2:
-        func_800732F8();
+        schedule_health_neurosis_start();
         return;
     case 3:
-        func_800733D8();
+        schedule_health_sick_start();
         return;
     case 5:
-        func_800734C4();
+        schedule_health_injury_recover();
         return;
     case 6:
-        func_800735B8();
+        schedule_health_neurosis_recover();
         return;
     case 7:
-        func_800736AC();
+        schedule_health_sick_recover();
         return;
     default:
         mode_stage_set(0xFF);
@@ -2263,7 +2263,7 @@ void func_80072CA0(void) {
     }
 }
 
-s32 func_80072D70(void) {
+s32 schedule_health_check_roll(void) {
     s32 state;
     s32 lim;
     s32 i;
@@ -2376,7 +2376,7 @@ s32 func_80072D70(void) {
     }
 }
 
-s32 func_80073198(void) {
+s32 schedule_health_injury_start(void) {
     switch (*(u8 *)&game_state.substep) {
     case 0:
         text_system_reset();
@@ -2408,7 +2408,7 @@ s32 func_80073198(void) {
     }
 }
 
-s32 func_800732F8(void) {
+s32 schedule_health_neurosis_start(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
@@ -2429,7 +2429,7 @@ s32 func_800732F8(void) {
     }
 }
 
-s32 func_800733D8(void) {
+s32 schedule_health_sick_start(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
@@ -2451,7 +2451,7 @@ s32 func_800733D8(void) {
     }
 }
 
-s32 func_800734C4(void) {
+s32 schedule_health_injury_recover(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
@@ -2473,7 +2473,7 @@ s32 func_800734C4(void) {
     }
 }
 
-s32 func_800735B8(void) {
+s32 schedule_health_neurosis_recover(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
@@ -2495,7 +2495,7 @@ s32 func_800735B8(void) {
     }
 }
 
-s32 func_800736AC(void) {
+s32 schedule_health_sick_recover(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();

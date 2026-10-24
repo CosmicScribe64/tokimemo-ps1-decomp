@@ -112,7 +112,7 @@ u8 school_day_screen_init(void) {
             hizuke_init();
             func_8006509C();
             icon_disp_switch(1);
-            func_8006CE84();
+            schedule_command_icons_lock_to_record();
             parameter_show_init();
             cursor_actor_init(0);
             parameter_disp_switch(1);
@@ -555,7 +555,7 @@ u8 school_day_vacation_screen_init(void) {
         hizuke_init();
         func_8006509C();
         icon_disp_switch(1);
-        func_8006CE84();
+        schedule_command_icons_lock_to_record();
         parameter_show_init();
         parameter_disp_switch(1);
         message_window_init();
@@ -616,7 +616,7 @@ u8 school_day_vacation_sd_actors_init(void) {
         temp = 0;
     } else if (rec->girl == 4) {
         addr_init_club_sd(D_801230D0);
-        if (func_8006F524(4) != 0xF) {
+        if (schedule_command_girl_select(4) != 0xF) {
             ((Actor *)actor_pool)[97].unk_01 = 1;
             ((Actor *)actor_pool)[97].flags = 5;
             ((Actor *)actor_pool)[97].quad_flags = 0x01000000;
