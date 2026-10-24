@@ -347,11 +347,6 @@ s32 func_80145650(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     func_800A0ECC(&matrix, &input, &output);
     arg0[2]->x0 = output.vx + x;
     arg0[2]->y0 = output.vy + y;
-    /* FAKE: T-25136. The empty signed test emits no code; it puts the three later matrix copies in
-     * ugen's block-copy state F (tools/ugen_pass.py), as in the original. Testing x + y keeps the
-     * saved-register order x, y, angle. */
-    if (x + y > 0) {
-    }
     input.vx = arg0[2]->x1 - x;
     input.vy = arg0[2]->y1 - y;
     input.vz = 0;
