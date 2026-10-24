@@ -324,6 +324,7 @@ Other disc reads: gate background 0x4029, intro script 5 @ 0x49BA, birthday scri
 - Main scene helpers used by every scene: `normal_date_speak`, `normal_date_girl_in/out`, `normal_date_bg_fadein/out`, `normal_date_bggirl_fadein/out`, the two- and three-way selects, `dec_bg_cd_read`, `dec_bg_show_set`, `bustup_*` ([[spec/m-dates-b]]); `girl_state_rank`, `get_g_zyotai_h`, `event_log_add` fields ([[spec/core]]).
 - BUNKA_SD (stage shows), TT ([[spec/o-tt]], game exhibit and `tt_stages_cleared`), BUNKAKEN (the same variables and, by sibling code, the same fortune stage logic).
 - OPTION: lists the TT game after bit 0 of `tt_mode_flags` is set.
+- Sound ([[spec/m-dates-a]] for the command classes): phase 0 and every re-entry after a sub-scene send command 0xBF (fade both channels), start sound bank 1 with the id list 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200 and, when the bank is ready, command 0x200 (BGM sequence 0 of the pack). The fortune hand-over sends 0x202 (BGM sequence 2); the fortune printout sends the sound effects 0x50A (twice), 0x508 and 0x50C; the birthday scene starts with 0xCF (fade both, the second fade variant). The festival has no other sound code; the stage show and the TT game bring their own.
 
 ## 11. Open questions
 
