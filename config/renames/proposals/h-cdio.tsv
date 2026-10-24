@@ -27,7 +27,7 @@ func	main	func_800462BC	cd_read_param_pack	writes dest address into a word and t
 func	main	func_800462C8	cd_read_sectors_unchecked	like cd_read_sectors but clears D_800B3D60, so no end-of-file marker test; used by dec_bg_cd_read, boot DUM.TMD read
 func	main	func_800463E8	cd_busy_marker_draw	draws two yellow lines at (0x9E,0x5A) when D_8011ED17&0x80 and frame counter bit 2; called only while the ring is busy (363 emu hits)
 func	main	func_80046478	cd_error_recover	CdControlB(Setmode 0x84), then 512 VSync(0); called when CdSync reports a disk error during an XA read
-func	main	func_80046500	game_reset_to_title	reloads the game state, main_state_set(0x12) (title sequence, handler func_80062840), clears tpage, bg, CD ring; default arm of 482 stage switches
+func	main	func_80046500	game_reset_to_title	reloads the game state, main_state_set(0x12) (title sequence, handler func_80062840), clears tpage, bg, CD ring; default arm of a mode/stage switch at 471 of 517 references in src
 func	main	func_80046590	decimal_digit	(value, position): position 1 = ones; returns 0 for position >= 6; used by hizuke_init, parameter_show_init (HUD numbers)
 func	main	func_80046684	bcd_to_int	sums eight nibbles times powers of 10; used on the CdlGetlocL minute/second/frame bytes
 func	main	func_80046754	iris_texture_build	fills a 128x128 4bpp buffer with a radial shade or flat circle mask, LoadSquare 32x128 words; NAME_ENT, SHUGAKU
@@ -37,22 +37,22 @@ func	main	func_800570B8	movie_caption_bar_draw	HYPOTHESIS: caption band; three f
 func	main	func_8005715C	movie_captions_update	HYPOTHESIS: caption/lyric timing: walks the 22-entry mark table D_800B5904 against (frame-start)/6 and drives k_disp_switch/k_disp_start; only reached when D_800B5900&1==0, emu: 0 hits in the first 292 frames of the NAME_ENT movie
 func	main	func_8005751C	dec_bg_decode	MDEC-decodes the data at 0x80162000 into the hidden buffer of a layer (func_800536AC rect), returns the buffer index
 func	main	func_80057640	dec_bg_capture_screen	MoveImage of the displayed frame (320 x arg0 lines) into the hidden layer-1 buffer, then shows it; callers 80061044, 80078C48, NAME_ENT
-func	main	func_80057710	dec_bg_wipe_step	per call: brightness D_800B593C -= 8, wipe step +1, draws 15 bands of 1..32 diagonal black lines; callers 80078A94, pre_syogatu_init1
+func	main	func_80057710	dec_bg_wipe_step	per call: brightness D_800B593C -= 8, D_800B5944 (dec_bg_wipe_count) +1, draws 15 bands of 1..32 diagonal black lines; callers 80078A94, pre_syogatu_init1
 func	main	func_800578F4	dec_bg_draw	draws layer a (0: 88 lines, 1: 160 lines, 2: 240 lines) as a 192-wide and a 128-wide SPRT at brightness D_800B593C; records D_800B5948
-func	main	func_80057D1C	dec_bg_crossfade_set	stores D_800B5940, the blend amount 0..0x80 read by the two crossfade draws
-func	main	func_80057D28	dec_bg_crossfade_draw	draws the shown buffer semi-transparent at 0x80-amount and the hidden one at amount; callers normal_date_girl_in/out
-func	main	func_80058398	dec_bg_crossfade_draw_swapped	same as dec_bg_crossfade_draw with the two buffers exchanged; callers normal_date_move_place_*, NAME_ENT
-func	main	func_80058F9C	model_link_tmd_object	(tmd, slot, object index): maps the TMD, links object n (n<count, count clamped to 15) into model slot; 1 on success, -1 if out of range; TACO func_801321A0
+func	main	func_80057D1C	dec_bg_fade_set	stores D_800B5940, the amount 0..0x80 read by dec_bg_fade_draw and dec_bg_crossfade_draw; NAME_ENT sets 0x80 then lowers it by 3 per frame to below 0x11, then raises it by 4
+func	main	func_80057D28	dec_bg_fade_draw	4 sprites, all from the SHOWN buffer of layer arg0 (1: 160 lines, else 88 lines; no layer 2 case): 2 semi-transparent with colour 0x80-amount at ordering slot 10, 2 opaque with colour amount at slot 13; each pair is a 192-wide and a 128-wide piece; HYPOTHESIS: fades one picture in or out; callers normal_date_girl_in/out
+func	main	func_80058398	dec_bg_crossfade_draw	6 sprites: 2 semi-transparent from the HIDDEN buffer (colour 0x80-amount, slot 10), 2 opaque from the SHOWN buffer (colour amount, slot 12), 2 opaque from the HIDDEN buffer (colour amount, slot 13); not a mirror of dec_bg_fade_draw; HYPOTHESIS: cross-fade between the shown and the newly decoded picture; callers normal_date_move_place_*, NAME_ENT
+func	main	func_80058F9C	model_link_tmd_object	(tmd, slot, object index): maps the TMD, links object n into model slot; count word above 16 is replaced by 15 (16 passes unchanged); 1 on success, -1 when n >= count; TACO func_801321A0
 func	main	func_80059048	model_slots_clear	sets word 0 of each of the 16 object records at D_80122640 to 0x80000000 (hidden); title, TACO, ETC
 func	main	func_8005907C	display_reinit	libgs display reset sequence: sets D_8011ECA0 from the active buffer, InitGeom; used after a width change
 func	main	func_800590CC	display_set_256_or_320	width 0x100 when arg0!=0 else 0x140, height 0xF0, centre x 0x80/0xA0, then GsInitGraph-like call and back_clear_switch; ETC
 func	main	func_800591D8	display_set_512_or_320	clears both 256-wide halves of VRAM, then switches to width 0x200 or 0x140 only if different; TACO
 func	main	func_80059308	vram_clear_frame_buffers	clears two 256x480 VRAM rects at x=0 and x=0x100 via func_8009C7F8
-func	main	func_8005938C	models_update_draw	for slots 0..159 (stride 2 x 0x44) with active and flags&0x80: rot*scale matrix, position += velocity if flags&0x10, GsGetLws, sort into OT; emu: 2026 calls from func_80043510
+func	main	func_8005938C	models_update_draw	for display records i = word at GameState+0x109C, i += 2 up to 0xA0 (stride 2 x 0x44) with active and flags&0x80: rot*scale matrix, position += velocity if flags&0x10, GsGetLws, sort into OT; emu: 2026 calls from func_80043510
 func	main	func_80059688	model_record_init	sets active=1, flags 0, rotation 0, scale 0x1000, position/velocity 0 and byte 0x85=1 for one record; TACO func_80143AF4
 func	main	func_80059860	mouse_read	updates the cursor (mouse_update) and fills x, y, buttons (~raw&0xC, or -0x100 when no mouse); no caller in src
 func	main	func_80059938	mouse_update	when the port buffer has status 0 and type 0x12: adds dx/dy to the position and clamps to the range rectangle
-func	main	func_80059A20	debug_state_numbers_draw	prints mode, stage, step, frame counters, D_800E7D34 and the stack pointer as numbers; main loop calls it only if D_800B3220!=0 (0 emu hits)
+func	main	func_80059A20	debug_state_numbers_draw	prints mode, stage, step, substep (unk_110D), four counters (unk_1104, unk_1100, unk_10FC, unk_10F4), a byte at D_800E7D34 and the stack pointer as numbers; main loop calls it only if D_800B3220!=0 (0 emu hits)
 func	main	func_80059B04	snd_load_error_report	HYPOTHESIS: sound bank load failure; printf of the code, then flag D_800B3D54[D_800B3D24]=1; 80079B10 callers pass (slot<<8)|0x0101xxxx after -1 from func_8008C1B0/func_8008C620/func_800900A0
 func	main	func_80059B40	boot_mode_step	dispatch on step unk_110A: 0 boot_data_load_step, 1 boot_hud_textures_step, 2 func_8004ADE4, else func_80042808 (stage+1)
 func	main	func_80059BC0	boot_hud_textures_step	boot_hud_textures_load then next step
@@ -74,7 +74,7 @@ data	main	D_801255C8	cd_sync_result	result buffer of CdSync in cd_sync_poll
 data	main	D_801255D0	cd_result	last CdControl result bytes (type WordBytes4)
 data	main	D_801255D8	load_dest_base	RAM base for the next load group
 data	main	D_800B3D60	cd_read_checked	1 after cd_read_sectors, 0 after the unchecked read; selects the end-marker test
-data	main	D_800B3D64	cd_read_retry_count	counts failed end-marker tests; every 4th pauses the drive
+data	main	D_800B3D64	cd_read_retry_count	counts failed end-marker tests; when (count & 3) == 3 (3rd, 7th, 11th failure) the drive is reinitialised (command 0xA) and 512 vblanks are waited
 data	main	D_800B3D68	cd_sectors_left	last CdReadSync result: sectors left, 0 done, -1 error
 data	main	D_800B3D6C	cd_last_read_lba	set by ids 6 and 13; never read in src
 data	main	D_800B3D70	xa_clip_request	4 words: speaker, table offset, start clip, end clip
@@ -89,8 +89,8 @@ data	main	D_80125C58	movie_ctx	pointer, fixed at 0x80180000 by movie_play (type 
 data	main	D_800B5920	dec_bg_lba_cache	4 words: [0..1] layer 0, [2..3] layer 1, one per VRAM buffer
 data	main	D_800B5938	dec_bg_shown	4 bytes: shown VRAM buffer (0/1) per layer, [2] unused
 data	main	D_800B593C	dec_bg_brightness	0x80 normal, set_dec_bri, wipe step lowers it
-data	main	D_800B5940	dec_bg_crossfade	blend amount for the crossfade draws
-data	main	D_800B5944	dec_bg_wipe_step	call counter of dec_bg_wipe_step, reset by dec_bg_capture_screen
+data	main	D_800B5940	dec_bg_fade_amount	amount 0..0x80 for dec_bg_fade_draw and dec_bg_crossfade_draw (0x80 = picture at full brightness)
+data	main	D_800B5944	dec_bg_wipe_count	call counter of dec_bg_wipe_step, reset by dec_bg_capture_screen
 data	main	D_800B5948	dec_bg_last_layer	last layer drawn by dec_bg_draw, -1 after reset (get_last_gamen_mode)
 data	main	D_800B594C	dec_bg_decode_result	return value of the MDEC decode call
 data	main	D_80122640	model_objects	16 records of 16 bytes (GsDOBJ2-like), word 0 = 0x80000000 hidden
@@ -109,7 +109,7 @@ data	main	D_800E36E0	mouse_y_min	scaled clamp
 data	main	D_800E36E4	mouse_y_max	scaled clamp
 data	main	D_800E36E8	mouse_sense_x	u16 multiplier set by SenseMouse
 data	main	D_800E36EA	mouse_sense_y	u16 multiplier set by SenseMouse
-type	main	Ring18	CdCommand	one entry of the 48-entry CD ring; main_api.h
+type	main	Ring18	CdCommand	one entry of the 48-entry CD ring; main_api.h; core proposes the same name
 type	main	CdRingView	CdQueueState	FAKE view of the four ring state bytes D_80125128..2B in 800451D0.c
 type	main	StrDecEnv30	StrDecEnv	PsyQ movie sample DECENV; drop the size suffix
 type	main	StrCtx	StrContext	movie state at 0x80180000 behind D_80125C58
@@ -117,7 +117,7 @@ type	main	MouseOut	MouseReading	local type of 80059710.c: x, y, buttons
 type	main	ModelRec88	ModelRecord	model record in 80058D20.c, two DisplayActor44 slots wide
 type	main	OtRec20	OtHeader	20-byte ordering table header, one per frame buffer
 type	main	TaiikuBig	GsCoordinate2	0x50 bytes with the libgs GsCOORDINATE2 layout (TACO.h says so); not TAIIKU-specific
-field	Ring18	cmd	command	queue command code, see CdQueueCmd
+field	Ring18	cmd	command	libcd command code of the entry: 2 CdlSetloc, 3 CdlPlay, 6 read, 9 CdlPause, 10 CdlInit, 13 CdlSetfilter, 14 CdlSetmode, 21 CdlSeekL, 27 CdlReadS
 field	Ring18	arg	lba	sector passed to CdIntToPos for ids 2, 6, 21
 field	Ring18	data	param	16 parameter bytes; read: word = dest address (low 24 bits) + sector count (top byte); byte 15 = 0xFF means no state change at the end
 field	StrCtx	pos	start_pos	CdlLOC of the movie start (file.pos or CdIntToPos)
@@ -126,42 +126,28 @@ field	StrCtx	endflag	end_flag	set when the stream header frame count reaches the
 field	MouseOut	unk_0	x	position / sensitivity x
 field	MouseOut	unk_4	y	position / sensitivity y
 field	MouseOut	unk_8	buttons	~raw buttons & 0xC, or -0x100 when no mouse is plugged
-field	ModelRec88	active	active	unchanged name; slot used when 1 (model_record_init)
-field	GsCoordinate2	unk0	flag	libgs flg word; 0 marks the local matrix valid
+field	GsCoordinate2	unk0	flag	libgs flg word; models_update_draw clears it after writing a new matrix into the record (HYPOTHESIS: libgs then recomputes the world matrix)
 field	GsCoordinate2	unk20	translate_z	offset 0x20 = coord.t[2]; initCoordinate stores -0xFA0
-field	GameState	unk_000	screen_width	stored 0x100, 0x140, 0x200 by display_set_*; passed as first argument to the libgs init call
-field	GameState	unk_002	screen_height	always 0xF0; second argument of the init call
-field	GameState	unk_004	screen_interlace	HYPOTHESIS: interlace mode; stored 0 and passed third to the libgs init call, which matches GsInitGraph(w,h,intmode,..)
-field	GameState	unk_014	screen_center_x	s16[2] per frame buffer; 0x80/0xA0 = half the width; sprites subtract 0xA0 for the left edge
-field	GameState	unk_018	screen_center_y	HYPOTHESIS: value not seen; s16[2] per frame buffer; sprites use unk_018 - 0x78 as the top edge of a 240-line picture, so 0x78 expected
-const	CdCommand	0	CD_CMD_PAUSE_ALT	dispatcher runs the CdlPause path, same as 9; no src caller passes 0
-const	CdCommand	2	CD_CMD_SETLOC	pushes entry 2 (CdlSetloc with lba)
-const	CdCommand	3	CD_CMD_PLAY_DA	Setmode 5, Setloc, CdlPlay
-const	CdCommand	6	CD_CMD_READ	CdRead into the address in the param word
-const	CdCommand	9	CD_CMD_PAUSE	CdlPause then wait; 10 callers
-const	CdCommand	10	CD_CMD_INIT	CdlInit; emu frame 1256
-const	CdCommand	13	CD_CMD_XA_START	SetFilter(param) then, if lba!=0, Setloc + ReadS; 80079B10 func_8007A924
-const	CdCommand	14	CD_CMD_SET_MODE	CdlSetmode with the param byte; emu frame 621
-const	CdCommand	21	CD_CMD_SEEK	Setloc then CdlSeekL
-const	CdQueueCmd	2	CDQ_SETLOC	internal ring command codes equal the CdControl codes
-const	CdQueueCmd	3	CDQ_PLAY	CdlPlay
-const	CdQueueCmd	6	CDQ_READ	CdRead path
-const	CdQueueCmd	9	CDQ_PAUSE	CdlPause
-const	CdQueueCmd	10	CDQ_INIT	CdlInit
-const	CdQueueCmd	13	CDQ_SETFILTER	CdlSetfilter
-const	CdQueueCmd	14	CDQ_SETMODE	CdlSetmode
-const	CdQueueCmd	21	CDQ_SEEKL	CdlSeekL
-const	CdQueueCmd	27	CDQ_READS	CdlReadS: XA stream read
+field	GameState	unk_000	screen_width	stored 0x100, 0x140, 0x200 by display_set_*; passed as first argument to the libgs init call; core proposes video_width
+field	GameState	unk_002	screen_height	always 0xF0; second argument of the init call; core proposes video_height
+field	GameState	unk_004	screen_interlace	HYPOTHESIS: interlace mode; stored 0 and passed third to the libgs init call, which matches GsInitGraph(w,h,intmode,..); core proposes video_interlace
+field	GameState	unk_014	draw_origin_x	s16[2] per draw buffer: added to every hand-built primitive x; 0xA0 (half the 320 width) plus shake (src/main/80041000.c, 80047550.c); h-graphics name, adopted here
+field	GameState	unk_018	draw_origin_y	s16[2] per draw buffer: added to every hand-built primitive y; 0x168 for buffer 0 and 0x78 for buffer 1 plus shake (src/main/80041000.c:126-127, 80047550.c); h-graphics name, adopted here
+const	CdCommandId	0	CD_CMD_PAUSE_ALT	dispatcher runs the CdlPause path, same as 9; no src caller passes 0
+const	CdCommandId	2	CD_CMD_SETLOC	pushes entry 2 (CdlSetloc with lba)
+const	CdCommandId	3	CD_CMD_PLAY_DA	Setmode 5, Setloc, CdlPlay
+const	CdCommandId	6	CD_CMD_READ	CdRead into the address in the param word
+const	CdCommandId	9	CD_CMD_PAUSE	CdlPause then wait; 10 callers
+const	CdCommandId	10	CD_CMD_INIT	CdlInit; emu frame 1256
+const	CdCommandId	13	CD_CMD_XA_START	SetFilter(param) then, if lba!=0, Setloc + ReadS; 80079B10 func_8007A924
+const	CdCommandId	14	CD_CMD_SET_MODE	CdlSetmode with the param byte; emu frame 621
+const	CdCommandId	21	CD_CMD_SEEK	Setloc then CdlSeekL
 const	CdState	0	CD_STATE_BUSY	cd_state at command start
 const	CdState	2	CD_STATE_DONE	set when a pause, seek or read finishes; overlays test &2
 const	CdState	4	CD_STATE_XA_PLAYING	set when ReadS reports the reading status bit; overlays test &4
 const	CdReadStatus	1	CD_READ_DONE	bit 0 of cd_read_status; cd_read_sync_status()&1 in every loader
 const	CdQueuePhase	-1	CD_PHASE_START	command at head not yet issued
 const	CdQueuePhase	1	CD_PHASE_WAIT	command issued, waiting
-const	MainMode	0	MODE_BOOT	func_8005A06C; emu frames 1256-1322
-const	MainMode	16	MODE_LOGO_MOVIE	HYPOTHESIS: content is the publisher logo (file name KONAMIC3.STR); func_80062C28 plays the movie at LBA 400 then main_state_set(0); initial mode set in 80041000.c, emu frame 622
-const	MainMode	18	MODE_TITLE	func_80062840 title sequence; also set by game_reset_to_title
-const	MainMode	255	MODE_EXIT_TO_SHELL	dispatcher calls exit_function
 const	DecBgLayer	0	DEC_BG_STRIP_88	88-line layer, VRAM (0x2C0,0xA0) or (0x140,0x1A0), 320 wide
 const	DecBgLayer	1	DEC_BG_PANEL_160	160-line layer, VRAM (0x2C0,0) or (0x140,0x100), 320 wide
 const	DecBgLayer	2	DEC_BG_FULL_240	draw-only value of dec_bg_draw: 240 lines read from buffer 0
@@ -189,7 +175,7 @@ comment	main	dec_bg_reset	Clears the cache, shown buffers and last layer and res
 comment	main	dec_bg_show_switch	Toggles which VRAM buffer of a background layer is shown.	O.BIN name kept; comment states behaviour read from the code
 comment	main	dec_bg_show_set	Selects the shown VRAM buffer (0 or 1) of a background layer.	O.BIN name kept; comment states behaviour read from the code
 comment	main	dec_bg_cd_read	Starts loading a compressed background into the hidden buffer unless cached; returns the buffer holding it or -1 when a read was started.	O.BIN name kept; comment states behaviour read from the code
-comment	main	initView	Sets projection distance 1000, near clip and far clip, and a camera at z=1000 looking at the origin.	O.BIN name kept; comment states behaviour read from the code
+comment	main	initView	Sets projection distance 1000, calls two setters with 100 and 0x10000 (HYPOTHESIS: near and far clip), and sets the reference view with the eye at z=1000 looking at the origin.	O.BIN name kept; comment states behaviour read from the code
 comment	main	initLight	Sets three directional lights (white, green, red) and zero ambient; no caller in src.	O.BIN name kept; comment states behaviour read from the code
 comment	main	initCoordinate	Initialises the 16 model coordinate records, each at z=-4000; no caller in src.	O.BIN name kept; comment states behaviour read from the code
 comment	main	initModelingData_init	Maps a TMD and links its objects to the 16 model slots.	O.BIN name kept; comment states behaviour read from the code
