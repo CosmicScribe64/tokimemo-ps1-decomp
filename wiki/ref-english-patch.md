@@ -189,3 +189,35 @@ OPTION.EXN text offsets: Menu Mode choices 0xB30C, descriptions 0xA8F0-0xAA6B, i
 - Agree with [[obin]] names: `set_kanji_string`, `load_string`, `vload_font`, `k_disp_inc`, `get_now_k`, `get_g_name`, `get_g_zyotai_s/h`, `get_h_yuukou/tokimeki`, the speaker-label helpers.
 - Do not obviously agree: `make_color_bar` (0x8004B778), `get_fnt` (0x8004D6B8) and `mod_trans_vram` (0x8004D3C8) versus the roles the notes give; treat both sides as unverified.
 - The notes call some routines "unreferenced" that are PsyQ names here (`SsUtKeyOn`, `SsUtChangePitch`, `initLight`): their scan only covered the main exe.
+
+## Asset-inventory cross-check (2026-10-24)
+
+T-28005 inspected [the fan repository at commit 50dc2b9](https://github.com/gothamor/tokimeki-memorial-english-patch/tree/50dc2b9bbac66a2bf7c888c80aefad0c09753da8).
+Its Git tree is `a1a3850a93e2535eaf6e9993e2b42e428d27ba01`; GitHub reports no
+declared license. This work retains facts about original paths, offsets, load bases and
+format structure. It does not import implementation, translated wording or replacement art.
+
+The independently repeated per-file comparison found the same 90 dialogue containers:
+46 BUNKA and 44 SERIFU files, with identical load bases. Every one of the patch metadata's
+29,403 unique file-relative dialogue offsets appears in our 30,036-offset export. There are
+zero patch-only offsets and 633 local-only offsets across 65 files (162 BUNKA, 471 SERIFU).
+The largest local-only sets are SHUGAKU (143) and GEKO (109). These are investigation
+candidates: patch entries may omit unchanged or intentionally retained records. This result
+does not establish exhaustive source-root coverage, runtime reachability or translation readiness.
+
+The patch metadata also provides source-region leads for image lettering, including
+FILESEL, EXAMINE, OPTION, TITLE, NAME_ENT and MAINROM NBN files, plus battle and sports
+instruction graphics. Three static SHOUGATU.EXN patch sites at offsets `0x11680`, `0x1168C`
+and `0x1169C` are distinct from SERIFU/SHOGATU.BIN roots; their presence does not resolve
+our dynamic root-selection proof. Full patch-tree inventory counts were inspected by the
+reference author but were not independently recomputed from the retained bounded metadata.
+
+Ignored evidence: `.claude/orchestrator/state/T-28005/crosscheck.md`, independent
+`review.md`, and `.asset-cache/reference-audit/fan-script-offsets.json` (SHA-256
+`756aa302f3c8fdaffb57cdf5797c78ae019fd884c7a91ed5c692146bfe4c75d0`). The latter
+contains only original file paths, bases and integer offsets. Findings were handed to
+[[assets-text]] and [[assets-media]]; their completion gates remain open under T-28001/T-28004.
+
+The user clarified that the future port will not inherit the PS1 textbox size limit.
+Original line, glyph and buffer limits remain provenance for the original game's behavior;
+they do not constrain future translation wording or layout. No direct Godot work is included.

@@ -63,7 +63,8 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-28005-fan-patch-crosscheck|T-28005 Cross-check text and image-text coverage against the fan patch]]
+- [ ] [[tickets/T-27070-signed-constant-replacement|T-27070 Preserve whole signed expressions in constant replacement]]
+
 
 
 
@@ -227,6 +228,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-28005-fan-patch-crosscheck|T-28005 Cross-check text and image-text coverage against the fan patch]]
 
 - [ ] [[tickets/T-27068-existing-constant-sites|T-27068 Reuse proven constants at precise literal sites]]
 

@@ -1664,3 +1664,65 @@ User pointed to [[ref-english-patch]]. GitHubprimaryfetch confirms repositorydef
 ## [2026-10-24] build | Preserve matching after proven constants and corrected views
 
 [[tickets/T-27068-existing-constant-sites]]Done:2baseball6literalsnamedthroughverifiedtool; girl7unexplainedandunchanged. [[tickets/T-27067-core-scheduler-essential-completion]]27quartercastcorrections/15O.BINcommentsappliedwithreviewedexactrebase. [[tickets/T-27064-complex-overlay-reconciliation]]RPGinvalidmemberreferencecorrectedtooffset03Ascreen_brightnesswithsigned-bytestorepreserved. Actual-sourcereviewpasses; currentmain/TEL/RPGrebuiltchecksumsandindependentall27hashesmatch,6952functionsunchanged.
+
+## [2026-10-24] ticket | Fix the known signed-literal blocker
+
+[[tickets/T-27070-signed-constant-replacement]] addresses the reproducedT27062negative-literal sign-reversalbug; unsafe negative sites remain unapplied until reviewedfix/proof. Existingpositiveconstantandidentifierworkcontinues.
+
+## [2026-10-24] build | Apply reviewed main local and parameter names
+
+Applied 305 main local/parameter rows plus six core follow-up rows through the rename tool.
+Its final guard caught a new parameter reusing a retired global alias; a scoped rename chain
+to mascot_selection is being proved. Actual-source review and matching verification remain
+pending in [[tickets/T-27062-main-essential-locals-constants]]. The next overlay packets are
+being frozen for integration while text and media work continues independently.
+
+## [2026-10-24] query | Compare fan-patch dialogue locations with the source export
+
+[[tickets/T-28005-fan-patch-crosscheck]] found identical 90-container sets and load bases;
+all 29403 patch dialogue offsets occur among the 30036 local offsets. The 633 local-only
+offsets are reconciliation leads, not a completeness claim. Routed those and image-region
+metadata to the asset owners. User clarified that the future port will not inherit the PS1
+textbox limit; patch wording and replacement images remain outside our translation work.
+
+## [2026-10-24] ticket | Complete the bounded fan-patch reference audit
+
+[[tickets/T-28005-fan-patch-crosscheck]] Done after independent per-file metadata review.
+Recorded the exact commit/tree pin, repeated 90-file/load-base/offset comparisons, and explicit
+limits in [[ref-english-patch]]. Full-tree image/direct-string counts remain reference leads;
+runtime and translation completeness remain open with the text/media owners. No translated
+wording, implementation or image data was imported into tracked files.
+
+## [2026-10-24] decision | Authorize the final verified push
+
+User requested a push to the repository after the final Astra review, separate Astra fixes,
+reviewer verification and final matching check. Recorded the push gate in [[phase2]],
+[[tickets/T-27000-phase-2]] and [[tickets/T-27056-final-astra-fixes]], and updated the existing
+continuation automation. Current weekly usage is 49%; reduce repeated coordination/proofs
+and reserve remaining usage for real implementation and the final reviews.
+
+## [2026-10-24] build | Integrate the reviewed signed-constant correction
+
+[[tickets/T-27070-signed-constant-replacement]] exact frozen two-file patch passed Luna
+Standards and independent Sol Spec review, then all 111 integrated Docker tests. Three real
+HUD negative-scale sites have read-only inverse/compiler/view proof; their source application
+and matching check follow the large identifier wave. User requested cheaper agents and more
+automation: bounded work uses Luna, proofs run in scripted batches, and Astra remains reserved
+for the final review/fix pair.
+
+## [2026-10-24] build | Validate the frozen text semantics checkpoint with media tooling
+
+The reviewed T-28001 semantic packet contributes 32 Python source/test files. Tested its exact
+hashes against committed media tooling in an ephemeral Docker copy; the combined asset suite
+passes. Live asset work and ignored original/export data were preserved. Staging the reviewed
+source-only checkpoint remains separate from comprehensive text-coverage completion.
+
+
+## [2026-10-24] decision | Defer overlapping scene-effect data label
+
+Removed `D_80122D44` from the m-flow standalone data proposals because it is `TalkWork + 0x74`; updated [[spec/m-flow]] and [[spec/m-dates-b]] to retain the unknown field and describe main-loader/DATE/GEKO evidence. Expanded cross-file prefix ownership in `src/main/README.md` and reconciled stale naming references in [[spec/h-cdio]] and [[spec/m-dates-a]]. Fresh independent review and stable Docker plans remain pending.
+
+
+## [2026-10-24] decision | Close safe-subset Standards and Spec review
+
+Final independent Sol 6.1 review passes the five primary apply packets, current `src/main/README.md` prefix ownership map, and synchronized [[spec/m-flow]], [[spec/h-cdio]], [[spec/m-dates-a]], and [[spec/m-dates-b]]. `TalkWork.unk_74` remains deferred as a field label; no independent D_80122D44 row remains. Stable Docker dry-run validation awaits root's source batch completion.

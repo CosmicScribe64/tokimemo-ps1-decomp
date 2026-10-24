@@ -139,6 +139,10 @@ the reviewer verifies resolution, and the final clean matching proof runs before
 complete. Track this in T-27055 and T-27056. This final gate supplements the unit reviews and is not
 a reason to spend Astra work on routine ongoing batches.
 
+User authorization (2026-10-24): after this final review/fix/verification sequence and final
+matching check pass, push the reviewed changes to the repository and report the remote
+branch and commit. This authorization supersedes the earlier local-commit-only instruction.
+
 Continuation model assignment (user, 2026-10-24): use Luna for bounded analysis and Sol 6.1 for
 harder analysis and independent review. This supersedes the historical Sonnet/Opus assignments below;
 the evidence requirements and review gates remain in force.

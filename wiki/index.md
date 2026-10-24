@@ -59,7 +59,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[data-types]] - structs and arrays recovered from access patterns (`tools/type_recovery.py`)
 - [[game-state]] - `GameState D_800E6280`: field map, evidence, `tools/migrate_globals.py`
 - `families/` - per-overlay type maps and results: [[families/bunka-family-results]], [[families/bunka-sd-family-results]], [[families/bunkasai-family-results]], [[families/date-family-results]], [[families/en-nichi-family-results]], [[families/ending-family-results]], [[families/etc-family-results]], [[families/event-family-results]], [[families/geko-family-results]], [[families/kangei-family-results]], [[families/main-family-results]], [[families/master-family-results]], [[families/master-types-pilot]], [[families/name-ent-family-results]], [[families/option-family-results]], [[families/rpg-bat-family-results]], [[families/scenes-family-results]], [[families/shougatu-family-results]], [[families/shugaku-family-results]], [[families/taco-family-results]], [[families/taiiku-family-results]]
-- [[ref-english-patch]] - facts-only reference: ~150 addresses by area from the English-patch notes
+- [[ref-english-patch]] - facts-only address reference and independently checked dialogue-offset inventory
 - Data tables: [[data/true-gaps]], [[data/t0018-cases]], [[data/shared-at-groups]], [[data/t13600-remaining-census]]
 
 ## Build and toolchain

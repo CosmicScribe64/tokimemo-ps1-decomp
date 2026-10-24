@@ -18,6 +18,8 @@ A distinct gpt-6-astra agent consumes the final review and fixes its findings us
 - [ ] Concrete evidence-backed output matching this scope.
 - [ ] Independent review findings resolved and appropriate Docker proofs recorded before Done.
 - [ ] No false phase2-completion claim; wiki/tracker and original game data preserved.
+- [ ] After reviewer verification and the final matching check pass, root pushes the reviewed
+      changes to origin and records the remote branch/commit (user request 2026-10-24).
 
 ## Notes
 
