@@ -20,7 +20,7 @@ void func_80141BA0(void) {
 }
 
 void func_80141BC0(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_80141BFC();
         return;
     }
@@ -37,7 +37,7 @@ void func_80141BFC(void) {
     FnTbl43 tbl;
 
     tbl = D_80147560;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
     if (D_8014755C != 0) {
         func_80063668();
@@ -57,18 +57,18 @@ void func_80141CCC(void) {
     /* records of 0x44 / 0x24 bytes: indexing from the first symbol keeps IDO from hoisting the loads above the stores (T-4070) */
     (&D_8011F4CB)[0x44] |= 0x80;
     D_8011F4CB |= 0x80;
-    D_801217D0[0].unk_00 &= 0x7FFFFFFF;
-    D_801217D0[1].unk_00 &= 0x7FFFFFFF;
-    if ((u32)D_800E6280.unk_10F8 % 240U == 0) {
+    D_801217D0[0].flags &= 0x7FFFFFFF;
+    D_801217D0[1].flags &= 0x7FFFFFFF;
+    if ((u32)D_800E6280.frame_count % 240U == 0) {
         bustup_wink();
     }
 }
 
 void func_80141D74(void) {
-    D_800E6280.unk_56C[82] = D_800E6280.unk_75D;
-    D_800E6280.unk_F5F = D_800E6280.unk_75D;
-    func_800847B8(D_800E6280.unk_75D);
-    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0] = D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0] & 0xFFFD;
+    D_800E6280.event_flags[82] = D_800E6280.date_girl;
+    D_800E6280.current_girl = D_800E6280.date_girl;
+    func_800847B8(D_800E6280.date_girl);
+    D_800E6280.girls[D_800E6280.current_girl].flags.b[0] = D_800E6280.girls[D_800E6280.current_girl].flags.b[0] & 0xFFFD;
     func_8004284C();
 }
 
@@ -88,9 +88,9 @@ void func_80141E48(void) {
         (&D_8011F4CB)[0x44] |= 0x80;
         D_8011F4CB |= 0x80;
         D_8011F524 = 0;
-        D_801217D0[0].unk_00 &= 0x7FFFFFFF;
-        D_801217D0[1].unk_00 &= 0x7FFFFFFF;
-        if ((u32)D_800E6280.unk_10F8 % 240U == 0) {
+        D_801217D0[0].flags &= 0x7FFFFFFF;
+        D_801217D0[1].flags &= 0x7FFFFFFF;
+        if ((u32)D_800E6280.frame_count % 240U == 0) {
             bustup_wink();
         }
     } else {
@@ -98,18 +98,18 @@ void func_80141E48(void) {
         D_80122CF4 = 1;
         (&D_8011F4CB)[0x44] |= 0x80;
         D_8011F4CB |= 0x80;
-        D_801217D0[0].unk_00 &= 0x7FFFFFFF;
-        D_801217D0[1].unk_00 &= 0x7FFFFFFF;
+        D_801217D0[0].flags &= 0x7FFFFFFF;
+        D_801217D0[1].flags &= 0x7FFFFFFF;
         D_80120652 = 0;
         D_80120668 = 0;
-        if ((u32)D_800E6280.unk_10F8 % 240U == 0x78) {
+        if ((u32)D_800E6280.frame_count % 240U == 0x78) {
             func_80067DD4();
         }
     }
 }
 
 void func_80141FB8(void) {
-    D_800CA150 = (u16) D_800CA150 + D_800E6280.unk_F5F;
+    D_800CA150 = (u16) D_800CA150 + D_800E6280.current_girl;
     func_8004284C();
 }
 
@@ -134,8 +134,8 @@ s32 func_80142018(void) {
         D_80122CF4 = 0;
         (&D_8011F4CB)[0x44] &= mask;
         D_8011F4CB &= mask;
-        D_801217D0[0].unk_00 |= 0x80000000;
-        D_801217D0[1].unk_00 |= 0x80000000;
+        D_801217D0[0].flags |= 0x80000000;
+        D_801217D0[1].flags |= 0x80000000;
     }
 }
 
@@ -151,15 +151,15 @@ void func_801420E4(void) {
     g = &D_800E6280;
     scores = D_8014760C;
     girls = D_80147618;
-    D_800E6280.unk_75D = 1;
+    D_800E6280.date_girl = 1;
     /* FAKE: break the equal-priority tie between girls[2] and girls[5],
      * preserving their t3/t4 allocation without emitted code. T-24605. */
     if (girls.v[2]) {}
     /* FAKE: the shared line schedules the record base/stride before
      * the initial girl index. T-24605. */
     girl = 9; do {
-        if (g->unk_1BC[girl].unk_0C.f.b1) {
-            if ((g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06) >= scores.v[0]) {
+        if (g->girls[girl].flags.f.met) {
+            if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[0]) {
                 scores.v[5] = scores.v[4];
                 girls.v[5] = girls.v[4];
                 scores.v[4] = scores.v[3];
@@ -170,9 +170,9 @@ void func_801420E4(void) {
                 girls.v[2] = girls.v[1];
                 scores.v[1] = scores.v[0];
                 girls.v[1] = girls.v[0];
-                scores.v[0] = g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06;
+                scores.v[0] = g->girls[girl].tokimeki + g->girls[girl].affection;
                 girls.v[0] = girl;
-            } else if ((g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06) >= scores.v[1]) {
+            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[1]) {
                 scores.v[5] = scores.v[4];
                 girls.v[5] = girls.v[4];
                 scores.v[4] = scores.v[3];
@@ -181,38 +181,38 @@ void func_801420E4(void) {
                 girls.v[3] = girls.v[2];
                 scores.v[2] = scores.v[1];
                 girls.v[2] = girls.v[1];
-                scores.v[1] = g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06;
+                scores.v[1] = g->girls[girl].tokimeki + g->girls[girl].affection;
                 girls.v[1] = girl;
-            } else if ((g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06) >= scores.v[2]) {
+            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[2]) {
                 scores.v[5] = scores.v[4];
                 girls.v[5] = girls.v[4];
                 scores.v[4] = scores.v[3];
                 girls.v[4] = girls.v[3];
                 scores.v[3] = scores.v[2];
                 girls.v[3] = girls.v[2];
-                scores.v[2] = g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06;
+                scores.v[2] = g->girls[girl].tokimeki + g->girls[girl].affection;
                 girls.v[2] = girl;
-            } else if ((g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06) >= scores.v[3]) {
+            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[3]) {
                 scores.v[5] = scores.v[4];
                 girls.v[5] = girls.v[4];
                 scores.v[4] = scores.v[3];
                 girls.v[4] = girls.v[3];
-                scores.v[3] = g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06;
+                scores.v[3] = g->girls[girl].tokimeki + g->girls[girl].affection;
                 girls.v[3] = girl;
-            } else if ((g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06) >= scores.v[4]) {
+            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[4]) {
                 scores.v[5] = scores.v[4];
                 girls.v[5] = girls.v[4];
-                scores.v[4] = g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06;
+                scores.v[4] = g->girls[girl].tokimeki + g->girls[girl].affection;
                 girls.v[4] = girl;
-            } else if ((g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06) >= scores.v[5]) {
-                scores.v[5] = g->unk_1BC[girl].unk_02 + g->unk_1BC[girl].unk_06;
+            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[5]) {
+                scores.v[5] = g->girls[girl].tokimeki + g->girls[girl].affection;
                 girls.v[5] = girl;
             }
         }
         girl--;
     } while (girl > 0);
-    D_800E6280.unk_75D = (u8)girls.v[5];
-    D_800E6280.unk_F5F = 0xD;
+    D_800E6280.date_girl = (u8)girls.v[5];
+    D_800E6280.current_girl = 0xD;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -221,8 +221,8 @@ void func_801420E4(void) {
     tpage_buf_clear();
     func_8004E58C();
     func_8006612C((s32) "");
-    ((DisplayActor44 *)D_8011ECD0)[3].unk_03 = 0;
-    ((DisplayActor44 *)D_8011ECD0)[4].unk_03 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[3].draw_flags = 0;
+    ((DisplayActor44 *)D_8011ECD0)[4].draw_flags = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
@@ -231,7 +231,7 @@ void func_801420E4(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145FF8;
@@ -241,7 +241,7 @@ void func_801420E4(void) {
     D_8014755C = 0;
     D_800CA368 = 0xFF;
     func_8004284C();
-    D_800E6280.unk_56C[0x52] = D_800E6280.unk_56C[0x52] + 1;
+    D_800E6280.event_flags[0x52] = D_800E6280.event_flags[0x52] + 1;
 }
 
 void func_801425CC(void) {

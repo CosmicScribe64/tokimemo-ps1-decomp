@@ -8,7 +8,7 @@ void func_80133030(void) {
 
     tbl = D_8013C370;
     func_80083808();
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
     check_k_scroll();
     k_disp_inc2();
@@ -30,39 +30,39 @@ void func_801330E4(void) {
     EdShorts18 chance;
 
     chance = D_8013C3B0;
-    D_800E6280.unk_03E = 0x62;
-    D_800E6280.unk_03F = 3;
-    D_800E6280.unk_040 = 1;
-    D_800E6280.unk_041 = 6;
+    D_800E6280.year = 0x62;
+    D_800E6280.month = 3;
+    D_800E6280.day = 1;
+    D_800E6280.weekday = 6;
     func_80053418(rank, points);
-    D_800E6280.unk_F5F = 0xD;
-    if (points[0] < 0x1F4 && D_800E6280.unk_1BC[0xC].unk_0C.b[3] >= 0x46 && D_800E6280.unk_56C[0x4F] == 2) {
-        D_800E6280.unk_F5F = 0xC;
+    D_800E6280.current_girl = 0xD;
+    if (points[0] < 0x1F4 && D_800E6280.girls[0xC].flags.b[3] >= 0x46 && D_800E6280.event_flags[0x4F] == 2) {
+        D_800E6280.current_girl = 0xC;
     } else {
         best = 0x1F3;
         for (i = 0; i < 0xB; i++) {
             p = &points[i];
-            if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && best < *p) {
-                D_800E6280.unk_F5F = i;
+            if (D_800E6280.girls[i].flags.f.met && best < *p) {
+                D_800E6280.current_girl = i;
                 best = *p;
             }
         }
     }
-    if (D_800E6280.unk_F5F == 0xD) {
+    if (D_800E6280.current_girl == 0xD) {
         /* FAKE: T-25145, a second read of the flag word: IDO 5.3 then keeps the word in a register
          * (a0), as the original compiler did for its one read (wiki/original-compiler.md rule 3),
          * so ugen shifts it into v0 and copies the f9 temporary back after the sum */
-        if (D_800E6280.unk_1BC[0xB].unk_0C.u) {
+        if (D_800E6280.girls[0xB].flags.u) {
         }
-        level = D_800E6280.unk_1BC[0xB].unk_0C.f.f9;
-        level += (D_800E6280.unk_56C[0x4C] > 0) * 2;
-        level += (D_800E6280.unk_56C[0x4E] > 0) * 2;
+        level = D_800E6280.girls[0xB].flags.f.story_stage;
+        level += (D_800E6280.event_flags[0x4C] > 0) * 2;
+        level += (D_800E6280.event_flags[0x4E] > 0) * 2;
         if (level >= 0x12) {
             level = 0x11;
         }
-        if (D_800E6280.unk_1BC[0xB].unk_0C.f.f9 != 0 && D_800E6280.unk_56C[0x4D] == 0) {
+        if (D_800E6280.girls[0xB].flags.f.story_stage != 0 && D_800E6280.event_flags[0x4D] == 0) {
             if (rand() % 256 < chance.v[level]) {
-                D_800E6280.unk_F5F = 0xB;
+                D_800E6280.current_girl = 0xB;
             }
         }
     }
@@ -75,10 +75,10 @@ void func_801330E4(void) {
     func_8004E58C();
     strcpy(D_800CA19C, "廊下");
     strcpy(D_800CA1DC, "教室");
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     func_8008585C();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     addr_init_bustup();
@@ -87,7 +87,7 @@ void func_801330E4(void) {
     func_80084E4C();
     D_800CA148 = 0;
     D_800CA14C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_80132000();
     D_800CA160 = D_8013C280[0][3];
     D_800CA164 = D_8013C280[1][3];
@@ -107,7 +107,7 @@ void func_80133428(void) {
 }
 
 void func_80133460(void) {
-    if (((u8) D_800E6280.unk_F5F >= 0xDU) && ((u32) ((u32) (D_800E6280.unk_1BC[14].unk_0C.w << 0x14) >> 0x1D) < 3U)) {
+    if (((u8) D_800E6280.current_girl >= 0xDU) && ((u32) ((u32) (D_800E6280.girls[14].flags.w << 0x14) >> 0x1D) < 3U)) {
         func_80042908(7);
         D_800E7D34 |= 8;
         return;
@@ -117,7 +117,7 @@ void func_80133460(void) {
 }
 
 void func_801334E4(void) {
-    if ((((u32)(D_800E6280.unk_1BC[1].unk_0C.w << 0x1E) >> 0x1F)) && (get_h_tokimeki(1) >= 0x46U)) {
+    if ((((u32)(D_800E6280.girls[1].flags.w << 0x1E) >> 0x1F)) && (get_h_tokimeki(1) >= 0x46U)) {
         normal_date_speak();
         return;
     }

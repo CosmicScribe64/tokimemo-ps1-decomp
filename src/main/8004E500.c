@@ -46,12 +46,12 @@ void func_8004E58C(void) {
     r.h = 8;
     func_8009C7F8(&r, 0x80, 0x80, 0x80);
     for (i = 0; i < 0x34; i++) {
-        ((Entry8 *)text_list)[i].unk_00 = 0;
-        ((Entry8 *)text_list)[i].unk_02 = 0;
-        ((Entry8 *)text_list)[i].unk_04 = 0;
-        ((Entry8 *)text_list)[i].unk_05 = 0;
-        ((Entry8 *)text_list)[i].unk_06 = 0;
-        ((Entry8 *)text_list)[i].unk_07 = 0;
+        ((Entry8 *)text_list)[i].x = 0;
+        ((Entry8 *)text_list)[i].y = 0;
+        ((Entry8 *)text_list)[i].attr = 0;
+        ((Entry8 *)text_list)[i].glyph_count = 0;
+        ((Entry8 *)text_list)[i].extra = 0;
+        ((Entry8 *)text_list)[i].active = 0;
     }
     text_list_count.total = 0;
     text_list_count.count = 0;
@@ -82,16 +82,16 @@ s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
         return -1;
     }
     if (str == 0) {
-        ((Entry8 *)text_list)[text_list_count.count].unk_07 = 0;
+        ((Entry8 *)text_list)[text_list_count.count].active = 0;
     } else if (str[0] == 0 || str[1] == 0) {
-        ((Entry8 *)text_list)[text_list_count.count].unk_07 = 0;
+        ((Entry8 *)text_list)[text_list_count.count].active = 0;
     } else {
-        ((Entry8 *)text_list)[text_list_count.count].unk_02 = y;
-        ((Entry8 *)text_list)[text_list_count.count].unk_04 = col;
-        ((Entry8 *)text_list)[text_list_count.count].unk_00 = x;
-        ((Entry8 *)text_list)[text_list_count.count].unk_05 = load_string(str, y, col);
-        ((Entry8 *)text_list)[text_list_count.count].unk_06 = arg4;
-        ((Entry8 *)text_list)[text_list_count.count].unk_07 = 1;
+        ((Entry8 *)text_list)[text_list_count.count].y = y;
+        ((Entry8 *)text_list)[text_list_count.count].attr = col;
+        ((Entry8 *)text_list)[text_list_count.count].x = x;
+        ((Entry8 *)text_list)[text_list_count.count].glyph_count = load_string(str, y, col);
+        ((Entry8 *)text_list)[text_list_count.count].extra = arg4;
+        ((Entry8 *)text_list)[text_list_count.count].active = 1;
     }
     return ++text_list_count.count;
 }
@@ -127,12 +127,12 @@ s16 *get_ksys(void) {
 void set_k_work(s32 arg0, Entry8 arg1) {
     Entry8 *p = (Entry8 *)text_list + arg0;
 
-    p->unk_00 = arg1.unk_00;
-    p->unk_02 = arg1.unk_02;
-    p->unk_04 = arg1.unk_04;
-    p->unk_05 = arg1.unk_05;
-    p->unk_06 = arg1.unk_06;
-    p->unk_07 = arg1.unk_07;
+    p->x = arg1.x;
+    p->y = arg1.y;
+    p->attr = arg1.attr;
+    p->glyph_count = arg1.glyph_count;
+    p->extra = arg1.extra;
+    p->active = arg1.active;
 }
 
 void k_reset(s32 arg0) {
@@ -187,7 +187,7 @@ u8 get_k_speed(void) {
 }
 
 s32 k_disp_inc(void) {
-    if (D_800E6280.unk_10F8 % (text_list_count.speed + 1) == 0) {
+    if (D_800E6280.frame_count % (text_list_count.speed + 1) == 0) {
         if (text_list_count.pos < text_list_count.total) {
             text_list_count.pos += 1;
             return 0;
@@ -235,19 +235,19 @@ void disp_string(void) {
     s32 flag;
 
     j = 0;
-    ot = ((Entry8 *)text_list)[0].unk_06;
+    ot = ((Entry8 *)text_list)[0].extra;
     if (ot == 0) {
         ot = 1;
     }
     flag = 1;
     for (i = 0, k = 0; i < text_list_count.total && i < text_list_count.pos; i++, k++) {
-        if (k >= ((Entry8 *)text_list)[j].unk_05) {
+        if (k >= ((Entry8 *)text_list)[j].glyph_count) {
             k = 0;
             j++;
         }
-        if (((Entry8 *)text_list)[j].unk_07 == 1) {
-            if (ot != ((Entry8 *)text_list)[j].unk_06) {
-                ot = ((Entry8 *)text_list)[j].unk_06;
+        if (((Entry8 *)text_list)[j].active == 1) {
+            if (ot != ((Entry8 *)text_list)[j].extra) {
+                ot = ((Entry8 *)text_list)[j].extra;
                 flag = 1;
                 if (ot == 0) {
                     ot = 1;
@@ -257,14 +257,14 @@ void disp_string(void) {
             func_8009F090(p);
             SetSemiTrans(p, 0);
             SetShadeTex(p, 0);
-            p->r0 = D_800E6280.unk_03A;
-            p->g0 = D_800E6280.unk_03A;
-            p->b0 = D_800E6280.unk_03A;
-            p->x0 = ((Entry8 *)text_list)[j].unk_00 + D_800E6280.unk_014[D_8011ECA0] + k * text_list_count.unk_6A;
-            p->y0 = ((Entry8 *)text_list)[j].unk_02 + D_800E6280.unk_018[D_8011ECA0];
+            p->r0 = D_800E6280.screen_brightness;
+            p->g0 = D_800E6280.screen_brightness;
+            p->b0 = D_800E6280.screen_brightness;
+            p->x0 = ((Entry8 *)text_list)[j].x + D_800E6280.screen_center_x[D_8011ECA0] + k * text_list_count.unk_6A;
+            p->y0 = ((Entry8 *)text_list)[j].y + D_800E6280.screen_center_y[D_8011ECA0];
             /* FAKE: T-24141, same-line UV/Y stores reproduce original as1 instruction scheduling. */
             p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
-            p->clut = func_8009ED74((((Entry8 *)text_list)[j].unk_04 & 8) * 4 + 0x100, (((Entry8 *)text_list)[j].unk_04 & 7) + 0x1F8);
+            p->clut = func_8009ED74((((Entry8 *)text_list)[j].attr & 8) * 4 + 0x100, (((Entry8 *)text_list)[j].attr & 7) + 0x1F8);
             AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ot * 4], p);
 
             p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
@@ -274,10 +274,10 @@ void disp_string(void) {
             p->r0 = 0;
             p->g0 = 0;
             p->b0 = 0;
-            p->x0 = ((Entry8 *)text_list)[j].unk_00 + D_800E6280.unk_014[D_8011ECA0] + k * text_list_count.unk_6A + 1;
+            p->x0 = ((Entry8 *)text_list)[j].x + D_800E6280.screen_center_x[D_8011ECA0] + k * text_list_count.unk_6A + 1;
             /* FAKE: T-24141, same-line Y/UV stores reproduce original as1 instruction scheduling. */
-            p->y0 = ((Entry8 *)text_list)[j].unk_02 + D_800E6280.unk_018[D_8011ECA0] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
-            p->clut = func_8009ED74((((Entry8 *)text_list)[j].unk_04 & 8) * 4 + 0x110, (((Entry8 *)text_list)[j].unk_04 & 7) + 0x1F8);
+            p->y0 = ((Entry8 *)text_list)[j].y + D_800E6280.screen_center_y[D_8011ECA0] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
+            p->clut = func_8009ED74((((Entry8 *)text_list)[j].attr & 8) * 4 + 0x110, (((Entry8 *)text_list)[j].attr & 7) + 0x1F8);
             AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ot * 4], p);
 
             if (i == 0x7F) {

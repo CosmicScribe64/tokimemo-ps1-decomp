@@ -21,10 +21,10 @@ void func_801447E0(void) {
     s32 k;
     s32 lim;
 
-    if (D_800E6280.unk_118.unk_02 >= 0x97) {
+    if (D_800E6280.param_guts.value >= 0x97) {
         lim = 0x96;
     } else {
-        lim = D_800E6280.unk_118.unk_02;
+        lim = D_800E6280.param_guts.value;
     }
     if (D_8015EB98 & 0x80000000) {
         switch (D_8015EDC4 & 0xFFFF) {
@@ -124,10 +124,10 @@ s32 func_80144C84(void) {
     s32 lim;
     s32 roll;
 
-    if (D_800E6280.unk_118.unk_02 >= 0x97) {
+    if (D_800E6280.param_guts.value >= 0x97) {
         lim = 0x96;
     } else {
-        lim = D_800E6280.unk_118.unk_02;
+        lim = D_800E6280.param_guts.value;
     }
     sel = func_8013E9A8(3);
     switch (sel) {

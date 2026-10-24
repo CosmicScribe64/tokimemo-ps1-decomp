@@ -25,10 +25,10 @@ u8 flags;
     /* FAKE: explicit colour masks and comma grouping preserve renderer scheduling (T-20600, T-24041). */
     line->r0 = (c0 >> 16) & 0xFF, line->g0 = (c0 >> 8) & 0xFF, line->b0 = c0 & 0xFF;
     line->r1 = (c1 >> 16) & 0xFF, line->g1 = (c1 >> 8) & 0xFF, line->b1 = c1 & 0xFF;
-    line->x0 = g->unk_014[D_8011ECA0] + x0;
-    line->y0 = g->unk_018[D_8011ECA0] + y0;
-    line->x1 = g->unk_014[D_8011ECA0] + x1;
-    line->y1 = g->unk_018[D_8011ECA0] + y1;
+    line->x0 = g->screen_center_x[D_8011ECA0] + x0;
+    line->y0 = g->screen_center_y[D_8011ECA0] + y0;
+    line->x1 = g->screen_center_x[D_8011ECA0] + x1;
+    line->y1 = g->screen_center_y[D_8011ECA0] + y1;
     AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ((flags & 0x7F) * 4)], line);
 }
 
@@ -90,7 +90,7 @@ void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x,
             }
         }
     }
-    D_800E6280.unk_10EC[slot] = flag;
+    D_800E6280.bg_layer_order[slot] = flag;
 }
 
 void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
@@ -119,14 +119,14 @@ void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
                     /* FAKE: T-25122, hand expansions of the PsyQ macros setXYWH, setUVWH(poly, 0xC0, 0x50, 0x10, 0x10)
                      * and setRGB0..setRGB3, one comma statement per macro as they expand. One statement per field
                      * gives other saved-register colours, constant registers and store order (142 diff lines). */
-                    poly->x0 = g->unk_014[D_8011ECA0] + (s16)x - arg3 / 2,
-                        poly->y0 = g->unk_018[D_8011ECA0] + (s16)y - arg4 / 2,
-                        poly->x1 = g->unk_014[D_8011ECA0] + (s16)x - arg3 / 2 + (s16)arg3,
-                        poly->y1 = g->unk_018[D_8011ECA0] + (s16)y - arg4 / 2,
-                        poly->x2 = g->unk_014[D_8011ECA0] + (s16)x - arg3 / 2,
-                        poly->y2 = g->unk_018[D_8011ECA0] + (s16)y - arg4 / 2 + (s16)arg4,
-                        poly->x3 = g->unk_014[D_8011ECA0] + (s16)x - arg3 / 2 + (s16)arg3,
-                        poly->y3 = g->unk_018[D_8011ECA0] + (s16)y - arg4 / 2 + (s16)arg4;
+                    poly->x0 = g->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2,
+                        poly->y0 = g->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2,
+                        poly->x1 = g->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2 + (s16)arg3,
+                        poly->y1 = g->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2,
+                        poly->x2 = g->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2,
+                        poly->y2 = g->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2 + (s16)arg4,
+                        poly->x3 = g->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2 + (s16)arg3,
+                        poly->y3 = g->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2 + (s16)arg4;
                     poly->u0 = 0xC0, poly->v0 = 0x50,
                         poly->u1 = 0xC0 + 0x10, poly->v1 = 0x50,
                         poly->u2 = 0xC0, poly->v2 = 0x50 + 0x10,
@@ -136,8 +136,8 @@ void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
                     poly->r2 = 0x80, poly->g2 = 0x80, poly->b2 = 0x80;
                     poly->r3 = 0x80, poly->g3 = 0x80, poly->b3 = 0x80;
                     poly->tpage = func_8009ECB0(0, 0, 0x3C0, 0x100);
-                    poly->clut = func_8009ED74(g->unk_014[D_8011ECA0] + (s16)x + (rand() & 8),
-                                               (s16)y + g->unk_018[D_8011ECA0] + (rand() & 8));
+                    poly->clut = func_8009ED74(g->screen_center_x[D_8011ECA0] + (s16)x + (rand() & 8),
+                                               (s16)y + g->screen_center_y[D_8011ECA0] + (rand() & 8));
                     AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + arg5 * 4], poly);
                 }
                 y += arg4;
@@ -180,11 +180,11 @@ void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
                     func_8009F0F4(tile);
                     SetSemiTrans(tile, 1);
                     state = &D_800E6280;
-                    tile->x0 = state->unk_014[D_8011ECA0] + (s16)x - arg3 / 2;
+                    tile->x0 = state->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2;
                     /* FAKE: T-24501, narrow only the stored 16-bit coordinate.
                      * The full-width y loop/distance values are unchanged. The
                      * erased conversion preserves original temporary allocation. */
-                    tile->y0 = state->unk_018[D_8011ECA0] + (s16)y - arg4 / 2;
+                    tile->y0 = state->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2;
                     /* The target uses the x step for both dimensions. */
                     setWH(tile, arg3, arg3);
                     abs_x = abs(arg0 - x);

@@ -103,7 +103,7 @@ void func_80133108(void) {
         }
         break;
     case 6:
-        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcpy(D_8015E828, D_800E6280.player_family_name);
         strcat(D_8015E828, "「だめだ！　喰われてしまう！");
         strcpy(D_8015E850, "くそったれめー！");
         func_8014B738((s32) D_8015E8F0, 2, 0x78);
@@ -146,10 +146,10 @@ void func_80133108(void) {
         break;
     case 9:
         for (i = 0; i < 32; i++) {
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_0C = (u8 *) D_8015EEAC;
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_10 = (u8 *) D_8015EEC4;
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_34 = (u8 *) D_8015EE94;
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_38 = 0x41000000;
+            ((DisplayActor44 *)D_8011ECD0)[i + 64].frame_table = (u8 *) D_8015EEAC;
+            ((DisplayActor44 *)D_8011ECD0)[i + 64].sequence_table = (u8 *) D_8015EEC4;
+            ((DisplayActor44 *)D_8011ECD0)[i + 64].tpage_table = (u8 *) D_8015EE94;
+            ((DisplayActor44 *)D_8011ECD0)[i + 64].quad_flags = 0x41000000;
             ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_43 = 0x18;
         }
         func_8014EF3C();

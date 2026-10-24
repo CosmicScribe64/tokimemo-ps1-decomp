@@ -15,7 +15,7 @@ void func_8015A1C8(void) {
     FnTbl44 tbl;
 
     tbl = D_801609F8;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -29,10 +29,10 @@ void func_8015A288(void) {
     s32 idx;
     DateDispatch8015A288 tbl;
     tbl = D_80160AA8;
-    if ((D_800E6280.unk_110A >= 0x1D) && (D_800E6280.unk_110A < 0x26)) {
+    if ((D_800E6280.step >= 0x1D) && (D_800E6280.step < 0x26)) {
         func_8006B900();
     }
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x3C);
 }
 
@@ -68,7 +68,7 @@ void func_8015A3B0(void) {
 
 void func_8015A414(void) {
     func_80065F34(1);
-    D_800E6280.unk_F5F = 0xB;
+    D_800E6280.current_girl = 0xB;
     strcpy(D_800CA188, "謎の女");
     func_80085B3C(0xB, D_80122D08);
     D_8015E208 = D_8015DF80;
@@ -84,13 +84,13 @@ void func_8015A4A8(void) {
     FnTbl20 tbl;
 
     tbl = D_80160B80;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
 void func_8015A530(void) {
-    D_800E6280.unk_F5F = D_800E6280.unk_75D;
-    func_800847B8(D_800E6280.unk_75D);
+    D_800E6280.current_girl = D_800E6280.date_girl;
+    func_800847B8(D_800E6280.date_girl);
     func_8004284C();
 }
 
@@ -105,7 +105,7 @@ void func_8015A58C(void) {
 
     tbl = D_80160BD0;
     func_8006B900();
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 

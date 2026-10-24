@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80132FA0(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0x0:
         func_8013306C();
         break;
@@ -65,10 +65,10 @@ void func_801331C8(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if (D_800E6280.unk_F88 & 0x20) {
-        if (D_800E6280.unk_1093 != -1) {
+    if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.menu_cursor_0 != -1) {
             func_80044750(0x501);
-            switch (*(u8 *)&D_800E6280.unk_1093) {
+            switch (*(u8 *)&D_800E6280.menu_cursor_0) {
             case 0:
                 func_80042940(0x10);
                 break;
@@ -95,20 +95,20 @@ void func_801331C8(void) {
                 break;
             }
         }
-    } else if (D_800E6280.unk_F88 & 0x40) {
+    } else if (D_800E6280.pad_pressed & 0x40) {
         func_80042908(0);
     }
 }
 
 s32 func_801332F8(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013AF20, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　ときめきメモリアルでは、１ブロックに", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "一つのアルバムを作成します。", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "　アルバムの最大数は、１４です。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -120,7 +120,7 @@ s32 func_801332F8(void) {
 }
 
 s32 func_801333E4(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013AF24, 0);
@@ -129,7 +129,7 @@ s32 func_801333E4(void) {
         set_kanji_string(-0x88, -0x10, 0xF, "きるようになります。", 0);
         set_kanji_string(-0x88, 0, 0xF, "　システムファイルも、１ブロックを必要", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "とします。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -141,7 +141,7 @@ s32 func_801333E4(void) {
 }
 
 s32 func_80133508(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013AF28, 0);
@@ -150,7 +150,7 @@ s32 func_80133508(void) {
         set_kanji_string(-0x88, -0x10, 0xF, "　　『セーブ中』", 0);
         set_kanji_string(-0x88, 0, 0xF, "と表示されている間は、絶対にメモリーカ", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "ードの抜き差しをしないでください。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -162,7 +162,7 @@ s32 func_80133508(void) {
 }
 
 s32 func_8013362C(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013AF2C, 0);
@@ -172,7 +172,7 @@ s32 func_8013362C(void) {
         set_kanji_string(-0x88, 0, 0xF, "セーブして下さい。", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "　ゲーム中は、ときめきメモリアル以外の", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "データの消去はできません。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -184,7 +184,7 @@ s32 func_8013362C(void) {
 }
 
 s32 func_8013376C(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013AF30, 0);
@@ -195,7 +195,7 @@ s32 func_8013376C(void) {
         set_kanji_string(-0x88, 0x10, 0xF, "お", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "か", 0);
         set_kanji_string(-0x88, 0x30, 0xF, "き", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -207,7 +207,7 @@ s32 func_8013376C(void) {
 }
 
 s32 func_801338C8(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013AF34, 0);
@@ -218,7 +218,7 @@ s32 func_801338C8(void) {
         set_kanji_string(-0x88, 0x20, 0xF, "お", 0);
         set_kanji_string(-0x88, 0x30, 0xF, "か", 0);
         set_kanji_string(-0x88, 0x40, 0xF, "き", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -230,7 +230,7 @@ s32 func_801338C8(void) {
 }
 
 s32 func_80133A24(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013AF38, 0);
@@ -241,7 +241,7 @@ s32 func_80133A24(void) {
         set_kanji_string(-0x88, 0x20, 0xF, "お", 0);
         set_kanji_string(-0x88, 0x30, 0xF, "か", 0);
         set_kanji_string(-0x88, 0x40, 0xF, "き", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();

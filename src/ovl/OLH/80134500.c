@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80134500(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0x0:
         func_801345CC();
         break;
@@ -60,10 +60,10 @@ void func_801346F4(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if (D_800E6280.unk_F88 & 0x20) {
-        if (D_800E6280.unk_1093 != -1) {
+    if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.menu_cursor_0 != -1) {
             func_80044750(0x501);
-            switch (*(u8 *)&D_800E6280.unk_1093) {
+            switch (*(u8 *)&D_800E6280.menu_cursor_0) {
             case 0:
                 func_80042940(0x10);
                 break;
@@ -90,19 +90,19 @@ void func_801346F4(void) {
                 break;
             }
         }
-    } else if (D_800E6280.unk_F88 & 0x40) {
+    } else if (D_800E6280.pad_pressed & 0x40) {
         func_80042908(0);
     }
 }
 
 s32 func_80134824(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF60, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　明るくアニメーションしているアイコン", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "が、現在選択できるアイコンです。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_80052000();
@@ -114,7 +114,7 @@ s32 func_80134824(void) {
 }
 
 s32 func_801348F4(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF64, 0);
@@ -122,7 +122,7 @@ s32 func_801348F4(void) {
         set_kanji_string(-0x88, -0x20, 0xF, "ルを実行するときに使います。", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "　アイコンモード・フリーのときは、通常", 0);
         set_kanji_string(-0x88, 0, 0xF, "時でも画面表示されます。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -134,7 +134,7 @@ s32 func_801348F4(void) {
 }
 
 s32 func_801349FC(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF68, 0);
@@ -144,7 +144,7 @@ s32 func_801349FC(void) {
         set_kanji_string(-0x88, 0, 0xF, "好きな場所に移動することが出来ます。", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "　アイコンの位置は、システムファイルを", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "作成した場合のみセーブされます。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -156,14 +156,14 @@ s32 func_801349FC(void) {
 }
 
 s32 func_80134B3C(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF6C, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　システムを選択し、カーソルの移動速度", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "を遅くしてから、アイコンを移動してくだ", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "さい。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_80052000();
@@ -175,14 +175,14 @@ s32 func_80134B3C(void) {
 }
 
 s32 func_80134C28(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF70, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　マウスでは、アイコンを動かせません。", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "コントローラにつなぎ替えて、アイコンを", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "移動してから、御遊び下さい。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_80052000();
@@ -194,14 +194,14 @@ s32 func_80134C28(void) {
 }
 
 s32 func_80134D14(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF74, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　システムを選択し、アイコンモードを", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "　　ＴＹＰＥ‐ＡまたはＴＹＰＥ‐Ｂ", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "にしてください。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -213,7 +213,7 @@ s32 func_80134D14(void) {
 }
 
 s32 func_80134E00(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF78, 0);
@@ -223,7 +223,7 @@ s32 func_80134E00(void) {
         set_kanji_string(-0x88, 0, 0xF, "アイコンモードを変更してから、ゲームを", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "始めてください。", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "（オプションでの設定が優先されます）", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();

@@ -52,12 +52,12 @@ void func_80133EE4(void) {
     FnTbl12 tbl;
 
     tbl = D_801346FC;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
 void func_80133F58(void) {
-    if (D_800E6280.unk_F5F == 9) {
+    if (D_800E6280.current_girl == 9) {
         func_8004284C();
         return;
     }
@@ -84,9 +84,9 @@ void func_80133FD0(void) {
 void func_80134030(void) {
     func_80133C70();
     /* two statements: the single expression (x & 0xFFF7) | 4 takes $t6/$t7/$t8 where the original has $v0, $t7, $t9 */
-    D_800E6280.unk_71E &= 0xFFF7;
-    D_800E6280.unk_71E |= 4;
-    switch (D_800E6280.unk_F5F) {
+    D_800E6280.daily_event_bits &= 0xFFF7;
+    D_800E6280.daily_event_bits |= 4;
+    switch (D_800E6280.current_girl) {
     case 0:
         D_8013448C = D_80134664;
         D_80134490 = D_80134698;
@@ -149,6 +149,6 @@ void func_80134030(void) {
 }
 
 void func_801342E8(void) {
-    func_80042908(D_800E6280.unk_721);
-    func_80042940(D_800E6280.unk_722);
+    func_80042908(D_800E6280.saved_stage);
+    func_80042940(D_800E6280.saved_step);
 }

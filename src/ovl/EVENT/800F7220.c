@@ -443,20 +443,20 @@ void func_800F8784(void) {
 
 void func_800F87BC(void) {
     func_8004C90C();
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_03 |= 0x80;
-    ((DisplayActor44 *)D_800EAFA0)[3].unk_03 |= 0x80;
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_07 = ((DisplayActor44 *)D_800EAFA0)->unk_07;
-    ((DisplayActor44 *)D_800EAFA0)[3].unk_07 = ((DisplayActor44 *)D_800EAFA0)->unk_07;
+    ((DisplayActor44 *)D_800EAFA0)[2].draw_flags |= 0x80;
+    ((DisplayActor44 *)D_800EAFA0)[3].draw_flags |= 0x80;
+    ((DisplayActor44 *)D_800EAFA0)[2].brightness = ((DisplayActor44 *)D_800EAFA0)->brightness;
+    ((DisplayActor44 *)D_800EAFA0)[3].brightness = ((DisplayActor44 *)D_800EAFA0)->brightness;
 }
 
 void func_800F8818(void) {
     func_8004C984();
-    if (((DisplayActor44 *)D_800EAFA0)->unk_07 == 0) {
-        ((DisplayActor44 *)D_800EAFA0)[2].unk_03 &= 0xFF7F;
-        ((DisplayActor44 *)D_800EAFA0)[3].unk_03 &= 0xFF7F;
+    if (((DisplayActor44 *)D_800EAFA0)->brightness == 0) {
+        ((DisplayActor44 *)D_800EAFA0)[2].draw_flags &= 0xFF7F;
+        ((DisplayActor44 *)D_800EAFA0)[3].draw_flags &= 0xFF7F;
     }
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_07 = ((DisplayActor44 *)D_800EAFA0)->unk_07;
-    ((DisplayActor44 *)D_800EAFA0)[3].unk_07 = ((DisplayActor44 *)D_800EAFA0)->unk_07;
+    ((DisplayActor44 *)D_800EAFA0)[2].brightness = ((DisplayActor44 *)D_800EAFA0)->brightness;
+    ((DisplayActor44 *)D_800EAFA0)[3].brightness = ((DisplayActor44 *)D_800EAFA0)->brightness;
 }
 
 s32 func_800F8878(void) {

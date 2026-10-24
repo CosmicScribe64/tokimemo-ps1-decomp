@@ -53,7 +53,7 @@ void func_801336A4(void) {
     ShFnTbl43 tbl;
 
     tbl = D_8013BF20;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -64,7 +64,7 @@ void func_80133720(void) {
 }
 
 void func_80133758(void) {
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_80133430();
     func_80133A68();
     if (*(u8 *)&D_800CA2F0 != 2) {
@@ -78,7 +78,7 @@ void func_80133758(void) {
     D_8013BF1C = 0;
     func_8004284C();
     if (*(u8 *)&D_800CA2F0 == 2) {
-        D_800E6280.unk_110A += 2;
+        D_800E6280.step += 2;
     }
 }
 
@@ -106,17 +106,17 @@ s32 func_801337FC(void) {
         }
     }
     s = get_g_zyotai_s(best_i) & 0x7F;
-    if (best_i == 4 && s < 2U && D_800E6280.unk_721 == 5) {
-        if (D_800E6280.unk_56C[0x20] != 0) {
-            D_800E6280.unk_71E |= 8;
+    if (best_i == 4 && s < 2U && D_800E6280.saved_stage == 5) {
+        if (D_800E6280.event_flags[0x20] != 0) {
+            D_800E6280.daily_event_bits |= 8;
         }
     }
-    if (best_i != 0xFF && s < 2U && !(D_800E6280.unk_71E & 8)) {
+    if (best_i != 0xFF && s < 2U && !(D_800E6280.daily_event_bits & 8)) {
         /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $s7, 0xff` (T-24122). */
-        D_800E6280.unk_F5F = (best_i & 0) + best_i;
-        func_800847B8(D_800E6280.unk_F5F);
+        D_800E6280.current_girl = (best_i & 0) + best_i;
+        func_800847B8(D_800E6280.current_girl);
         func_80133A68();
-        if (D_800E6280.unk_720 != 6) {
+        if (D_800E6280.saved_mode != 6) {
             func_80085B3C(0xD, 0x26);
         } else {
             switch (D_800CA2CC) {
@@ -137,14 +137,14 @@ s32 func_801337FC(void) {
         D_8013BF14 = D_8013BF04;
         D_8013BF18 = 0;
         D_8013BF1C = 0;
-        D_800E6280.unk_110A += 0x20;
+        D_800E6280.step += 0x20;
         return 0;
     }
     func_8004284C();
 }
 
 void func_80133A68(void) {
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
         D_8013BF0C = D_8013BE74;
         D_8013BF10 = D_8013BEA8;

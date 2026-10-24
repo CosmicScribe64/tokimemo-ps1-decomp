@@ -473,7 +473,7 @@ block_68:
             if ((g->unk_035 = date_ok = ((g->unk_036 * 1) == 12 && g->unk_037 == 10)) ||
                   (g->unk_035 = date_ok = ((g->unk_036 ^ 0) == 12 && g->unk_037 == 8)) ||
                   (g->unk_035 = date_ok = ((g->unk_036 | 0) == 12 && g->unk_037 == 7))) {
-                if ((sp2B < 3U) && g->unk_0E4.f.b1 && (g->unk_1295 == 1) && (g->unk_1296 == 0)) {
+                if ((sp2B < 3U) && g->unk_0E4.f.met && (g->unk_1295 == 1) && (g->unk_1296 == 0)) {
                     D_800EECB0 = 6;
                     func_80011E28(0x60);
                     g->unk_5CA[0x37] = 1;
@@ -3716,34 +3716,34 @@ void func_8011B190(void) {
         func_800189C4(i + 96);
         p = (DisplayFixActor44 *)D_800E9620 + i;
         p[96].unk_01 = 13;
-        p[96].unk_02 = 1;
-        p[96].unk_38 = 0x1000000;
-        p[96].unk_03 = 4;
-        p[96].unk_0C = D_80125274;
-        p[96].unk_10 = D_80125278;
-        p[96].unk_34 = D_80125270;
+        p[96].flags = 1;
+        p[96].quad_flags = 0x1000000;
+        p[96].draw_flags = 4;
+        p[96].frame_table = D_80125274;
+        p[96].sequence_table = D_80125278;
+        p[96].tpage_table = D_80125270;
         p[96].unk_14 = D_8012527C;
-        p[96].unk_16 = 3;
-        p[96].unk_18 = 0;
+        p[96].sequence_slot = 3;
+        p[96].frame = 0;
         p[96].unk_06 = 1;
         p[96].unk_43 = 0;
-        p[96].unk_24.h[1] = (func_800789A0() % 256) - 0x80;
-        p[96].unk_28.h[1] = 0xA0;
+        p[96].x.h[1] = (func_800789A0() % 256) - 0x80;
+        p[96].y.h[1] = 0xA0;
         p[96].unk_07 = 0;
         p[96].unk_05 = 0x80;
         p[96].unk_04 = 8;
-        p[96].unk_2C = (func_800789A0() % 0x8000) - 0x4000;
+        p[96].dx = (func_800789A0() % 0x8000) - 0x4000;
         D_801257DC[i] = ((u32)-(func_800789A0() % 9) << 16) - 0x280000;
     }
-    ((DisplayFixActor44 *)D_800E9620)[96].unk_03 |= 0x80;
+    ((DisplayFixActor44 *)D_800E9620)[96].draw_flags |= 0x80;
     func_8004C46C(D_8012528C, D_80125290, D_80125294, D_80125298, D_8012529C, D_801252A0);
     for (i = 0; i < 6; i++) {
-        ((Rec24 *)D_800EC190)[i + 4].unk_00 &= 0x7FFFFFFF;
+        ((Rec24 *)D_800EC190)[i + 4].flags &= 0x7FFFFFFF;
         ((Rec24 *)D_800EC190)[i + 4].unk_12 = 0x1EE;
         ((EventEffectTables *)D_800B0860)->unk_1031[i] = 12;
     }
     for (i = 0; i < 6; i++) {
-        ((Rec24 *)D_800EC190)[i + 4].unk_14 = ((Rec24 *)D_800EC190)[i + 4].unk_15 = ((Rec24 *)D_800EC190)[i + 4].unk_16 = 0x80;
+        ((Rec24 *)D_800EC190)[i + 4].tint_r = ((Rec24 *)D_800EC190)[i + 4].tint_g = ((Rec24 *)D_800EC190)[i + 4].tint_b = 0x80;
     }
     func_80011DFC();
 }
@@ -3765,24 +3765,24 @@ void func_8011B60C(void) {
 
     D_80125864 -= 4;
     ((DisplayFixActor44 *)D_800E9620)[31].unk_07 = D_80125864;
-    ((Rec24 *)D_800EC190)[0].unk_14 = ((Rec24 *)D_800EC190)[0].unk_15 = ((Rec24 *)D_800EC190)[0].unk_16 = ((DisplayFixActor44 *)D_800E9620)[31].unk_07;
-    ((Rec24 *)D_800EC190)[1].unk_14 = ((Rec24 *)D_800EC190)[1].unk_15 = ((Rec24 *)D_800EC190)[1].unk_16 = ((DisplayFixActor44 *)D_800E9620)[31].unk_07;
+    ((Rec24 *)D_800EC190)[0].tint_r = ((Rec24 *)D_800EC190)[0].tint_g = ((Rec24 *)D_800EC190)[0].tint_b = ((DisplayFixActor44 *)D_800E9620)[31].unk_07;
+    ((Rec24 *)D_800EC190)[1].tint_r = ((Rec24 *)D_800EC190)[1].tint_g = ((Rec24 *)D_800EC190)[1].tint_b = ((DisplayFixActor44 *)D_800E9620)[31].unk_07;
     for (i = 0; i < 4; i++) {
         ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_07 = ((DisplayFixActor44 *)D_800E9620)[31].unk_07;
     }
     for (i = 0; i < 6; i++) {
-        ((Rec24 *)D_800EC190)[i + 4].unk_14 = ((Rec24 *)D_800EC190)[i + 4].unk_15 = ((Rec24 *)D_800EC190)[i + 4].unk_16 = ((DisplayFixActor44 *)D_800E9620)[31].unk_07;
+        ((Rec24 *)D_800EC190)[i + 4].tint_r = ((Rec24 *)D_800EC190)[i + 4].tint_g = ((Rec24 *)D_800EC190)[i + 4].tint_b = ((DisplayFixActor44 *)D_800E9620)[31].unk_07;
     }
     if (((DisplayFixActor44 *)D_800E9620)[31].unk_07 == 0) {
         D_800EECF0 = 0;
         D_800EECD0 = 0;
-        ((DisplayFixActor44 *)D_800E9620)[31].unk_03 &= ~0x80;
-        ((Rec24 *)D_800EC190)[0].unk_14 = ((Rec24 *)D_800EC190)[0].unk_15 = ((Rec24 *)D_800EC190)[0].unk_16 = 0x80;
-        ((Rec24 *)D_800EC190)[1].unk_14 = ((Rec24 *)D_800EC190)[1].unk_15 = ((Rec24 *)D_800EC190)[1].unk_16 = 0x80;
-        ((Rec24 *)D_800EC190)[0].unk_00 |= 0x80000000;
-        ((Rec24 *)D_800EC190)[1].unk_00 |= 0x80000000;
+        ((DisplayFixActor44 *)D_800E9620)[31].draw_flags &= ~0x80;
+        ((Rec24 *)D_800EC190)[0].tint_r = ((Rec24 *)D_800EC190)[0].tint_g = ((Rec24 *)D_800EC190)[0].tint_b = 0x80;
+        ((Rec24 *)D_800EC190)[1].tint_r = ((Rec24 *)D_800EC190)[1].tint_g = ((Rec24 *)D_800EC190)[1].tint_b = 0x80;
+        ((Rec24 *)D_800EC190)[0].flags |= 0x80000000;
+        ((Rec24 *)D_800EC190)[1].flags |= 0x80000000;
         for (i = 0; i < 6; i++) {
-            ((Rec24 *)D_800EC190)[i + 4].unk_00 |= 0x80000000;
+            ((Rec24 *)D_800EC190)[i + 4].flags |= 0x80000000;
         }
         func_80012D64(D_80094710, 0x10, 1, 2, 0);
         for (i = 11; i < 16; i++) {
@@ -3808,66 +3808,66 @@ void func_8011B848(void) {
     if ((D_8012585C % ((func_800789A0() % 60) + 60)) == 0) {
         if (D_80125860 < 4) {
             D_80125860 += 1;
-            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].unk_16 = 3;
-            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].unk_03 |= 0x80;
-            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].unk_18 = 0;
+            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].sequence_slot = 3;
+            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].draw_flags |= 0x80;
+            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].frame = 0;
             ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].unk_08 = 0;
-            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].unk_02 = 1;
-            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].unk_28.h[1] = 0xA0;
-            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].unk_2C = (func_800789A0() % 0x8000) - 0x4000;
+            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].flags = 1;
+            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].y.h[1] = 0xA0;
+            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].dx = (func_800789A0() % 0x8000) - 0x4000;
             D_801257DC[D_80125860 - 1] = ((u32)-(func_800789A0() % 9) << 16) - 0x480000;
-            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].unk_24.h[1] = (func_800789A0() % 256) - 0x80;
+            ((DisplayFixActor44 *)D_800E9620)[D_80125860 + 95].x.h[1] = (func_800789A0() % 256) - 0x80;
         }
     }
     if (D_800B1AF6 >= 0x26U) {
         D_80125860 = 1;
         for (i = 1; i < 4; i++) {
-            ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_03 &= 0x7F;
+            ((DisplayFixActor44 *)D_800E9620)[i + 96].draw_flags &= 0x7F;
         }
     }
     for (i = 0; i < D_80125860; i++) {
-        if (((DisplayFixActor44 *)D_800E9620)[i + 96].unk_16 == 3) {
-            ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_28.w += (((Fix32 *)D_801257DC)[i].w - ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_28.w) >> 5;
-            ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_24.w += ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_2C;
-            y_diff = ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_28.h[1] - ((Fix32 *)D_801257DC)[i].h[1];
+        if (((DisplayFixActor44 *)D_800E9620)[i + 96].sequence_slot == 3) {
+            ((DisplayFixActor44 *)D_800E9620)[i + 96].y.w += (((Fix32 *)D_801257DC)[i].w - ((DisplayFixActor44 *)D_800E9620)[i + 96].y.w) >> 5;
+            ((DisplayFixActor44 *)D_800E9620)[i + 96].x.w += ((DisplayFixActor44 *)D_800E9620)[i + 96].dx;
+            y_diff = ((DisplayFixActor44 *)D_800E9620)[i + 96].y.h[1] - ((Fix32 *)D_801257DC)[i].h[1];
             ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_07 = (y_diff / 2) + 0x40;
             if (y_diff < 10) {
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_16 = (((DisplayFixActor44 *)D_800E9620)[i + 96].unk_16 - (func_800789A0() % 2)) - 1;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].sequence_slot = (((DisplayFixActor44 *)D_800E9620)[i + 96].sequence_slot - (func_800789A0() % 2)) - 1;
                 if ((D_800B1AF6 == 0x25) && ((u32)D_800B1AF0 >= 0x1F5U)) {
                     if (i < 2) {
-                        ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_16 = 0;
+                        ((DisplayFixActor44 *)D_800E9620)[i + 96].sequence_slot = 0;
                     }
                 }
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_18 = 0;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].frame = 0;
                 ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_08 = 0;
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_02 = 3;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].flags = 3;
                 ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_07 = 0x80;
             }
-        } else if ((((DisplayFixActor44 *)D_800E9620)[i + 96].unk_18 == 0) && (((DisplayFixActor44 *)D_800E9620)[i + 96].unk_08 == 0)) {
+        } else if ((((DisplayFixActor44 *)D_800E9620)[i + 96].frame == 0) && (((DisplayFixActor44 *)D_800E9620)[i + 96].unk_08 == 0)) {
             if ((D_800B1AF6 == 0x25) && ((u32)D_800B1AF0 >= 0xC9U) && ((u32)D_800B1AF0 < 0x1F5U)) {
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_03 &= ~0x80;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].draw_flags &= ~0x80;
             } else if ((D_800B1AF6 == 0x25) && ((u32)D_800B1AF0 >= 0x2BDU)) {
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_03 &= ~0x80;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].draw_flags &= ~0x80;
             } else if ((D_800B1AF6 == 0x25) && ((u32)D_800B1AF0 >= 0x1F5U) && (i >= 2)) {
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_03 &= ~0x80;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].draw_flags &= ~0x80;
             } else {
                 func_800433D0(0x500);
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_03 |= 0x80;
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_16 = 3;
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_18 = 0;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].draw_flags |= 0x80;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].sequence_slot = 3;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].frame = 0;
                 ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_08 = 0;
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_02 = 1;
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_28.h[1] = 0xA0;
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_2C = (func_800789A0() % 0x8000) - 0x4000;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].flags = 1;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].y.h[1] = 0xA0;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].dx = (func_800789A0() % 0x8000) - 0x4000;
                 D_801257DC[i] = ((u32)-(func_800789A0() % 9) << 16) - 0x280000;
-                ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_24.h[1] = (func_800789A0() % 256) - 0x80;
+                ((DisplayFixActor44 *)D_800E9620)[i + 96].x.h[1] = (func_800789A0() % 256) - 0x80;
                 if ((D_800B1AF6 == 0x25) && ((u32)D_800B1AF0 >= 0x1F5U)) {
                     if (i == 0) {
-                        ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_24.h[1] = -0x50;
+                        ((DisplayFixActor44 *)D_800E9620)[i + 96].x.h[1] = -0x50;
                     } else if (i == 1) {
-                        ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_24.h[1] = 0x50;
+                        ((DisplayFixActor44 *)D_800E9620)[i + 96].x.h[1] = 0x50;
                     } else {
-                        ((DisplayFixActor44 *)D_800E9620)[i + 96].unk_03 &= 0x7F;
+                        ((DisplayFixActor44 *)D_800E9620)[i + 96].draw_flags &= 0x7F;
                     }
                 }
             }
@@ -3904,20 +3904,20 @@ void func_8011BE00(void) {
     }
     for (i = 0; i < 0x14; i++) {
         func_800189C4(i + 0x62);
-        ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_38 = 0x01000000;
+        ((DisplayFixActor44 *) D_800E9620)[i + 98].quad_flags = 0x01000000;
         ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_01 = 0xD;
-        ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_02 = 1;
-        ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_03 = 4;
+        ((DisplayFixActor44 *) D_800E9620)[i + 98].flags = 1;
+        ((DisplayFixActor44 *) D_800E9620)[i + 98].draw_flags = 4;
         if (D_8012531C == 2) {
-            ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_0C = (u8 *)D_801252C4;
-            ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_10 = (u8 *)D_801252CC;
-            ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_34 = (u8 *)D_801252BC;
+            ((DisplayFixActor44 *) D_800E9620)[i + 98].frame_table = (u8 *)D_801252C4;
+            ((DisplayFixActor44 *) D_800E9620)[i + 98].sequence_table = (u8 *)D_801252CC;
+            ((DisplayFixActor44 *) D_800E9620)[i + 98].tpage_table = (u8 *)D_801252BC;
         } else {
-            ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_0C = (u8 *)D_801252C8;
-            ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_10 = (u8 *)D_801252D0;
-            ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_34 = (u8 *)D_801252C0;
+            ((DisplayFixActor44 *) D_800E9620)[i + 98].frame_table = (u8 *)D_801252C8;
+            ((DisplayFixActor44 *) D_800E9620)[i + 98].sequence_table = (u8 *)D_801252D0;
+            ((DisplayFixActor44 *) D_800E9620)[i + 98].tpage_table = (u8 *)D_801252C0;
         }
-        ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_16 = (s16) (func_800789A0() % 8);
+        ((DisplayFixActor44 *) D_800E9620)[i + 98].sequence_slot = (s16) (func_800789A0() % 8);
         ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_43 = 0x12;
         choice = func_800789A0() % 2;
         scale = 0x1000 / ((s32) ((((s16) choice) * 2) + 2));
@@ -3926,14 +3926,14 @@ void func_8011BE00(void) {
         ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_1C = (s16) scale;
         ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_07 = 0x80;
         position = &D_80125868[i];
-        ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_24.h[1] = (s16) ((func_800789A0() % 300) - 0x96);
-        position->w = (s32) ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_24.w;
+        ((DisplayFixActor44 *) D_800E9620)[i + 98].x.h[1] = (s16) ((func_800789A0() % 300) - 0x96);
+        position->w = (s32) ((DisplayFixActor44 *) D_800E9620)[i + 98].x.w;
         random_span = func_800789A0();
         divisor = size_variant + 1;
         drift = ((s32) (((((func_800789A0() % 2) * 2) - 1) * (random_span % 8)) + 8)) / divisor;
         position->h[1] = (s16) (((s16) position->h[1]) + drift);
-        ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_28.h[1] = (s16) ((func_800789A0() % 160) - 0x78);
-        ((DisplayFixActor44 *) D_800E9620)[i + 98].unk_30 = (s32) (0x8000 / divisor);
+        ((DisplayFixActor44 *) D_800E9620)[i + 98].y.h[1] = (s16) ((func_800789A0() % 160) - 0x78);
+        ((DisplayFixActor44 *) D_800E9620)[i + 98].dy = (s32) (0x8000 / divisor);
     }
 
     func_80011DFC();
@@ -3943,7 +3943,7 @@ void func_8011C11C(void) {
     s16 i;
 
     for (i = 0; i < 20; i++) {
-        ((DisplayActor44 *)D_800E9620)[i + 98].unk_03 &= 0x7F;
+        ((DisplayActor44 *)D_800E9620)[i + 98].draw_flags &= 0x7F;
     }
 }
 
@@ -3963,25 +3963,25 @@ s32 func_8011C164(void) {
         return 0;
     }
     for (i = 0; i < 20; i++) {
-        ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_03 |= 0x80;
-        ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_2C += (D_80125868[i].w - ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_24.w) >> 8;
-        ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_24.w += ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_2C;
-        ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_28.w += ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_30;
-        if (((DisplayFixActor44 *)D_800E9620)[i + 98].unk_28.h[1] >= 0x29) {
-            ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_28.h[1] = -0x78;
+        ((DisplayFixActor44 *)D_800E9620)[i + 98].draw_flags |= 0x80;
+        ((DisplayFixActor44 *)D_800E9620)[i + 98].dx += (D_80125868[i].w - ((DisplayFixActor44 *)D_800E9620)[i + 98].x.w) >> 8;
+        ((DisplayFixActor44 *)D_800E9620)[i + 98].x.w += ((DisplayFixActor44 *)D_800E9620)[i + 98].dx;
+        ((DisplayFixActor44 *)D_800E9620)[i + 98].y.w += ((DisplayFixActor44 *)D_800E9620)[i + 98].dy;
+        if (((DisplayFixActor44 *)D_800E9620)[i + 98].y.h[1] >= 0x29) {
+            ((DisplayFixActor44 *)D_800E9620)[i + 98].y.h[1] = -0x78;
             choice = func_800789A0() % 2;
             scale = 0x1000 / (((s16)choice * 2) + 2);
             size_variant = (s16)choice;
             ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_1A = scale;
             ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_1C = scale;
             ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_07 = 0x80;
-            ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_24.h[1] = (func_800789A0() % 300) - 0x96;
-            D_80125868[i].w = ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_24.w;
+            ((DisplayFixActor44 *)D_800E9620)[i + 98].x.h[1] = (func_800789A0() % 300) - 0x96;
+            D_80125868[i].w = ((DisplayFixActor44 *)D_800E9620)[i + 98].x.w;
             random_span = func_800789A0();
             divisor = size_variant + 1;
             /* FAKE: s16 lvalue cast on GsWord.h[1] emits lh with += operand order in ugen. T-24083 */
             *(s16 *)&D_80125868[i].h[1] += ((((func_800789A0() % 2) * 2) - 1) * (random_span % 8) + 8) / divisor;
-            ((DisplayFixActor44 *)D_800E9620)[i + 98].unk_30 = 0x8000 / divisor;
+            ((DisplayFixActor44 *)D_800E9620)[i + 98].dy = 0x8000 / divisor;
         }
     }
 }

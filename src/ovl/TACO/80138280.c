@@ -2,10 +2,10 @@
 #include "ovl/TACO.h"
 
 void func_80138280(void) {
-    if ((u32) D_800E6280.unk_1100 < 0x60 && (D_800E6280.unk_10F8 & 0x10)) {
+    if ((u32) D_800E6280.stage_timer < 0x60 && (D_800E6280.frame_count & 0x10)) {
         func_801432F0("1ST STAGE", -0x40, 0, 2);
     }
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80138348();
         break;

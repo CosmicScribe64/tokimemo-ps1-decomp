@@ -182,20 +182,20 @@ void func_800578F4(s32 a) {
         sprite->g0 = (u8) D_800B593C;
         sprite->b0 = (u8) D_800B593C;
         if (a == 1) {
-            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0);
-            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0);
+            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
             sprite->v0 = 0;
             sprite->u0 = 0;
             setWH(sprite, 0xC0, 0xA0);
         } else if (a == 2) {
-            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0);
-            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0);
+            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
             sprite->v0 = 0;
             sprite->u0 = 0;
             setWH(sprite, 0xC0, 0xF0);
         } else {
-            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0);
-            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0);
+            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
             sprite->v0 = 0xA0;
             sprite->u0 = 0;
             setWH(sprite, 0xC0, 0x58);
@@ -216,20 +216,20 @@ void func_800578F4(s32 a) {
         sprite->g0 = (u8) D_800B593C;
         sprite->b0 = (u8) D_800B593C;
         if (a == 1) {
-            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20);
-            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20);
+            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
             sprite->v0 = 0;
             sprite->u0 = 0;
             setWH(sprite, 0x80, 0xA0);
         } else if (a == 2) {
-            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20);
-            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20);
+            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
             sprite->v0 = 0;
             sprite->u0 = 0;
             setWH(sprite, 0x80, 0xF0);
         } else {
-            sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20);
-            sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20);
+            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
             sprite->v0 = 0xA0;
             sprite->u0 = 0;
             setWH(sprite, 0x80, 0x58);
@@ -262,11 +262,11 @@ void func_80057D28(s32 arg0) {
     sprite->g0 = (0x80 - D_800B5940);
     sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
@@ -286,11 +286,11 @@ void func_80057D28(s32 arg0) {
     sprite->g0 = (0x80 - D_800B5940);
     sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }
@@ -308,11 +308,11 @@ void func_80057D28(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
@@ -330,11 +330,11 @@ void func_80057D28(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }
@@ -361,11 +361,11 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (0x80 - D_800B5940);
     sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
@@ -385,11 +385,11 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (0x80 - D_800B5940);
     sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }
@@ -407,11 +407,11 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
@@ -429,11 +429,11 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }
@@ -451,11 +451,11 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
@@ -473,11 +473,11 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }

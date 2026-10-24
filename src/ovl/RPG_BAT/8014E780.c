@@ -55,14 +55,14 @@ s32 D_8015EE88 = 2;
 s32 D_8015EE8C = 0;
 
 void func_8014E780(void) {
-    srand(D_800E6280.unk_10F4);
+    srand(D_800E6280.timer_ticks);
     func_80048EB8(0);
     func_8006BC28(0);
     func_8004E58C();
     tpage_buf_clear();
-    D_800E6280.unk_036 = 0;
-    (*(s8 *)&D_800E6280.unk_038) = 0;
-    (*(s8 *)&D_800E6280.unk_037) = 0;
+    D_800E6280.clear_color_r = 0;
+    (*(s8 *)&D_800E6280.clear_color_b) = 0;
+    (*(s8 *)&D_800E6280.clear_color_g) = 0;
     back_clear_switch(1);
     draw2d3d(1, 0);
     func_80048DAC(1);
@@ -72,8 +72,8 @@ void func_8014E780(void) {
     message_disp_switch(0);
     func_80044750(0x7F);
     func_8014E994();
-    D_8015EC18 = (s32) D_800E6280.unk_F5F;
-    D_8015EB9C = (s32) D_800E6280.unk_F5F;
+    D_8015EC18 = (s32) D_800E6280.current_girl;
+    D_8015EB9C = (s32) D_800E6280.current_girl;
     switch (D_80122CE0) {
     case 1:
         D_8015EB98 = 0x10000;
@@ -111,10 +111,10 @@ void func_8014E8F4(void) {
     func_8006BD6C(0);
     back_clear_switch(1);
     D_80122CE0 = D_8015EC14;
-    D_800E6280.unk_F5F = (s8) D_8015EC18;
-    main_state_set((s32) D_800E6280.unk_720);
-    func_80042908((s32) D_800E6280.unk_721);
-    func_80042940((s32) D_800E6280.unk_722);
+    D_800E6280.current_girl = (s8) D_8015EC18;
+    main_state_set((s32) D_800E6280.saved_mode);
+    func_80042908((s32) D_800E6280.saved_stage);
+    func_80042940((s32) D_800E6280.saved_step);
 }
 
 /* FAKE: the three clear loops share one counter (it keeps the first two rolled

@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_80139170(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_8013920C();
         return;
@@ -30,9 +30,9 @@ void func_8013920C(void) {
     func_8013A764();
     func_8013AFDC();
     func_800450F4(0, 0x202);
-    D_800E6280.unk_036 = 0;
-    D_800E6280.unk_037 = 0;
-    D_800E6280.unk_038 = 0;
+    D_800E6280.clear_color_r = 0;
+    D_800E6280.clear_color_g = 0;
+    D_800E6280.clear_color_b = 0;
     back_clear_switch(1);
     D_8015EDB0 = 0;
     /* FAKE: the scalar address view and shared source line retain the two
@@ -61,9 +61,9 @@ void func_8013920C(void) {
 }
 
 void func_80139394(void) {
-    D_800E6280.unk_110D += 1;
+    D_800E6280.substep += 1;
     func_8013A790(0, 0);
-    if ((u32)(D_800E6280.unk_110D * 3) >= 0x81U) {
+    if ((u32)(D_800E6280.substep * 3) >= 0x81U) {
         func_8004284C();
     }
 }
@@ -75,7 +75,7 @@ void func_801393F4(void) {
 }
 
 /* Draws glyph arg0 ('0'-'9', 'A'-'Z', ". - ! @ * #", other: a fallback cell) as a POLY_FT4 centred
- * on D_800E6280.unk_014/unk_018[D_8011ECA0] plus (arg4, arg5), half sizes from arg6/arg7, clut row arg1, ordering-table
+ * on D_800E6280.screen_center_x/unk_018[D_8011ECA0] plus (arg4, arg5), half sizes from arg6/arg7, clut row arg1, ordering-table
  * slot arg2, grey level arg3; arg8 == 3 selects the wide cell, arg8 == 1 anchors the glyph at its
  * bottom edge. Called without a prototype (K&R definition, the u8 parameter is narrowed at entry).
  * Matching notes (T-25112): every vertex coordinate is its own full expression with the offset
@@ -118,21 +118,21 @@ s32 arg8;
     SetSemiTrans(p, 0);
     p->b0 = p->g0 = p->r0 = arg3;
     dx = (w * arg6) / 8192;
-    x0 = D_800E6280.unk_014[D_8011ECA0] + (arg4 - dx);
-    x3 = D_800E6280.unk_014[D_8011ECA0] + (arg4 + dx);
-    x1 = D_800E6280.unk_014[D_8011ECA0] + (arg4 + dx);
-    x2 = D_800E6280.unk_014[D_8011ECA0] + (arg4 - dx);
+    x0 = D_800E6280.screen_center_x[D_8011ECA0] + (arg4 - dx);
+    x3 = D_800E6280.screen_center_x[D_8011ECA0] + (arg4 + dx);
+    x1 = D_800E6280.screen_center_x[D_8011ECA0] + (arg4 + dx);
+    x2 = D_800E6280.screen_center_x[D_8011ECA0] + (arg4 - dx);
     if (arg8 != 1) {
         dy = (arg7 * 12) / 8192;
-        y0 = D_800E6280.unk_018[D_8011ECA0] + (arg5 - dy);
-        y1 = D_800E6280.unk_018[D_8011ECA0] + (arg5 - dy);
-        y2 = D_800E6280.unk_018[D_8011ECA0] + (arg5 + dy);
-        y3 = D_800E6280.unk_018[D_8011ECA0] + (arg5 + dy);
+        y0 = D_800E6280.screen_center_y[D_8011ECA0] + (arg5 - dy);
+        y1 = D_800E6280.screen_center_y[D_8011ECA0] + (arg5 - dy);
+        y2 = D_800E6280.screen_center_y[D_8011ECA0] + (arg5 + dy);
+        y3 = D_800E6280.screen_center_y[D_8011ECA0] + (arg5 + dy);
     } else {
-        y0 = D_800E6280.unk_018[D_8011ECA0] + (arg5 - (arg7 * 12) / 4096);
-        y1 = D_800E6280.unk_018[D_8011ECA0] + (arg5 - (arg7 * 12) / 4096);
-        y2 = D_800E6280.unk_018[D_8011ECA0] + arg5;
-        y3 = D_800E6280.unk_018[D_8011ECA0] + arg5;
+        y0 = D_800E6280.screen_center_y[D_8011ECA0] + (arg5 - (arg7 * 12) / 4096);
+        y1 = D_800E6280.screen_center_y[D_8011ECA0] + (arg5 - (arg7 * 12) / 4096);
+        y2 = D_800E6280.screen_center_y[D_8011ECA0] + arg5;
+        y3 = D_800E6280.screen_center_y[D_8011ECA0] + arg5;
     }
     p->tpage = func_8009ECB0(0, 0, 0x340, 0x180);
     p->x0 = x0;
@@ -212,7 +212,7 @@ void func_80139BCC(void) {
     func_8013A790(0, 0);
     /* pad is tested again in the zero-speed block (five uses, so it is coloured before the masks),
        and left is assigned before right; both are needed for the original's register split (T-19021) */
-    pad = D_800E6280.unk_F80;
+    pad = D_800E6280.pad_held;
     left = pad & 0x8000;
     right = pad & 0x2000;
     if (right != 0 && D_8015F4E8 < 0) {
@@ -266,7 +266,7 @@ void func_80139BCC(void) {
     if (D_8015F4E0 < 0) {
         D_8015F4E0 = 0x27;
     }
-    if ((D_800E6280.unk_F88 & 0x20) && !(D_800E6280.unk_F88 & 0x40)) {
+    if ((D_800E6280.pad_pressed & 0x20) && !(D_800E6280.pad_pressed & 0x40)) {
         if (D_8015F4E0 == 0x27) {
             /* the original passes the byte itself as the destination (a lost &); T-19021 */
             strncpy((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
@@ -276,11 +276,11 @@ void func_80139BCC(void) {
             D_8015F4DC += 1;
         }
     }
-    if ((D_800E6280.unk_F88 & 0x800) && !(D_800E6280.unk_F88 & 0x40)) {
+    if ((D_800E6280.pad_pressed & 0x800) && !(D_800E6280.pad_pressed & 0x40)) {
         strncpy((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
         func_8004284C();
     }
-    if ((D_800E6280.unk_F88 & 0x40) && D_8015F4DC != 0) {
+    if ((D_800E6280.pad_pressed & 0x40) && D_8015F4DC != 0) {
         strncpy(&D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC - 1], " ", 1);
         D_8015F4DC -= 1;
     }
@@ -405,10 +405,10 @@ void func_8013A790(s32 arg0, s32 arg1) {
     divisor = 30000;
     scroll = 0;
     if (arg1 == 0) {
-        if (D_800E6280.unk_F80 & 1) divisor = 10000;
-        else if (D_800E6280.unk_F80 & 2) divisor = 50000;
-        if (D_800E6280.unk_F80 & 4) scroll = 40;
-        if (D_800E6280.unk_F80 & 8) scroll = -40;
+        if (D_800E6280.pad_held & 1) divisor = 10000;
+        else if (D_800E6280.pad_held & 2) divisor = 50000;
+        if (D_800E6280.pad_held & 4) scroll = 40;
+        if (D_800E6280.pad_held & 8) scroll = -40;
     } else if (arg1 == 1) {
         if ((D_8015EDB4->unk2 & 1) == 1) scroll = 40;
         if ((D_8015EDB4->unk2 & 2) == 2) scroll = -40;
@@ -489,11 +489,11 @@ void func_8013AD64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     p[4] = r;
     p[5] = g;
     p[6] = b;
-    x = (arg1 * rsin(arg0) >> 12) + D_800E6280.unk_014[D_8011ECA0];
+    x = (arg1 * rsin(arg0) >> 12) + D_800E6280.screen_center_x[D_8011ECA0];
     if (arg3 == 0) {
-        y = (arg1 * func_800A0140(arg0) >> 12) + D_800E6280.unk_018[D_8011ECA0] - 0x28;
+        y = (arg1 * func_800A0140(arg0) >> 12) + D_800E6280.screen_center_y[D_8011ECA0] - 0x28;
     } else {
-        y = (arg1 * func_800A0140(arg0) >> 12) + D_800E6280.unk_018[D_8011ECA0];
+        y = (arg1 * func_800A0140(arg0) >> 12) + D_800E6280.screen_center_y[D_8011ECA0];
     }
     *(s16 *)(p + 8) = x;
     *(s16 *)(p + 0xA) = y;
@@ -507,8 +507,8 @@ void func_8013AD64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 void func_8013AFDC(void) {
     s32 i;
 
-    srand(D_800E6280.unk_10F4);
-    D_8015F4EC = (TacoRnd *)D_800E6280.unk_163C;
+    srand(D_800E6280.timer_ticks);
+    D_8015F4EC = (TacoRnd *)D_800E6280.scratch_words;
     D_8015F4F0 = 0;
     D_8015F4F4 = 0;
     for (i = 0; i < 0x64; i++) {

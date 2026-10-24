@@ -2,9 +2,9 @@
 #include "ovl/RPG_BAT.h"
 
 u8 func_8013D780(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
-        D_800E6280.unk_F5F = 0xE;
+        D_800E6280.current_girl = 0xE;
         func_80046290(0x1C0000A8, 0x0F0000B7, 0xE);
         func_80044750(0x300);
         func_8004284C();
@@ -22,7 +22,7 @@ u8 func_8013D780(void) {
 }
 
 void func_8013D834(void) {
-    if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.substep == 0) {
         switch (D_8015EB98) {
         case 0x10000:
             func_80044890(1, 0xC3A8, 0xC38D, 0xD1FB, 0xD1AD, 0xD1A2);
@@ -61,16 +61,16 @@ void func_8013D834(void) {
             }
             break;
         }
-        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
-    } else if (D_800E6280.unk_110D == 1) {
+        D_800E6280.substep = D_800E6280.substep + 1;
+    } else if (D_800E6280.substep == 1) {
         if (func_80044E8C() == 1) {
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         }
-    } else if (D_800E6280.unk_110D == 2) {
+    } else if (D_800E6280.substep == 2) {
         if (func_80044F94(1) == 1) {
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         }
-    } else if (D_800E6280.unk_110D == 3) {
+    } else if (D_800E6280.substep == 3) {
         if (D_8015EBA4 == 1) {
             switch (D_8015EBA0) {
             case 1:
@@ -94,20 +94,20 @@ void func_8013D834(void) {
                 func_80044890(0, 0xC286, 0xC267, 0, 0, 0);
                 break;
             }
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         } else {
             /* three single increments: ugen takes a temporary per step, a +3 leaves every later temporary two registers low */
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         }
-    } else if (D_800E6280.unk_110D == 4) {
+    } else if (D_800E6280.substep == 4) {
         if (func_80044E8C() == 1) {
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         }
-    } else if (D_800E6280.unk_110D == 5) {
+    } else if (D_800E6280.substep == 5) {
         if (func_80044F94(0) == 1) {
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         }
     } else {
         func_80042808();
@@ -117,7 +117,7 @@ void func_8013D834(void) {
 /* s32 without a return: v0 live at the exit keeps as1 from filling the branch delay slots with the next block's lui,
  * as in the original (T-17109). */
 s32 func_8013DC60(void) {
-    if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.substep == 0) {
         switch (D_8015EB98) {
         case 0x10000:
             cd_read_sectors(0x80, 0x80180000, 0x3A56);
@@ -138,23 +138,23 @@ s32 func_8013DC60(void) {
             cd_read_sectors(0x62, 0x80180000, 0x396B);
             break;
         }
-        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
-    } else if (D_800E6280.unk_110D == 1) {
+        D_800E6280.substep = D_800E6280.substep + 1;
+    } else if (D_800E6280.substep == 1) {
         if (cd_read_sync_status() & 1) {
             if (D_8015EB98 != 0x100000) {
-                D_800E6280.unk_110D = 4;
+                D_800E6280.substep = 4;
             } else {
-                D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+                D_800E6280.substep = D_800E6280.substep + 1;
             }
         }
-    } else if (D_800E6280.unk_110D == 2) {
+    } else if (D_800E6280.substep == 2) {
         cd_read_sectors(0x2B, 0x801B1000, 0x3C33);
-        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
-    } else if (D_800E6280.unk_110D == 3) {
+        D_800E6280.substep = D_800E6280.substep + 1;
+    } else if (D_800E6280.substep == 3) {
         if (cd_read_sync_status() & 1) {
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         }
-    } else if (D_800E6280.unk_110D == 4) {
+    } else if (D_800E6280.substep == 4) {
         if (D_8015EBA4 == 1) {
             switch (D_8015EBA0) {
             case 0:
@@ -194,17 +194,17 @@ s32 func_8013DC60(void) {
                 cd_read_sectors(0x3B, 0x801D8000, 0x3AF8);
                 break;
             }
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         } else {
             /* two single increments: ugen takes a temporary per step, a +2 leaves every later temporary one register low */
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         }
-    } else if (D_800E6280.unk_110D == 5) {
+    } else if (D_800E6280.substep == 5) {
         if (cd_read_sync_status() & 1) {
-            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+            D_800E6280.substep = D_800E6280.substep + 1;
         }
-    } else if (D_800E6280.unk_110D == 6) {
+    } else if (D_800E6280.substep == 6) {
         switch (D_8015EB9C) {
         case 0:
             cd_read_sectors(9, 0x801C7000, 0x3B33);
@@ -250,8 +250,8 @@ s32 func_8013DC60(void) {
             func_80042808();
             break;
         }
-        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
-    } else if (D_800E6280.unk_110D == 7) {
+        D_800E6280.substep = D_800E6280.substep + 1;
+    } else if (D_800E6280.substep == 7) {
         if (cd_read_sync_status() & 1) {
             func_80042808();
         }

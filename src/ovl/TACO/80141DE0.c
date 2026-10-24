@@ -17,7 +17,7 @@ s32 func_80141DE0(s32 arg0) {
     }
     if (func_80142220(arg0) != 4 && func_80142220(arg0) != 3) {
         if (func_80142220(arg0) == 1) {
-            if (!(D_800E6280.unk_10F8 & 3) && D_80160464 >= 0x41) {
+            if (!(D_800E6280.frame_count & 3) && D_80160464 >= 0x41) {
                 func_8013CE78();
                 func_801335A0(1, 0x505);
             }
@@ -214,7 +214,7 @@ void func_801424A8(s32 arg0, s32 arg1) {
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
         /* FAKE: indirect load via (u8 *)&D_8011ECA0 + local y keeps uopt from copy-propagating k in BB_cond1 so k gets $a1 directly (T-24120). */
         k = *(s32 *)((u8 *)&D_8011ECA0);
-        y = D_800E6280.unk_018[k];
+        y = D_800E6280.screen_center_y[k];
         if (((s16 *)pt)[3] >= y - 0x200
             && y + 0x200 >= ((s16 *)pt)[7]) {
             side = (rec->unk12 >> 2) & 1;

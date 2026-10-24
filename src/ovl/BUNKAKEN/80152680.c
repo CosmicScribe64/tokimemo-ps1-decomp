@@ -68,11 +68,11 @@ void func_80152680(void) {
     names = D_80156470;
     blood_types = D_801564A0;
     player_blood_types = D_801564CC;
-    switch (g->unk_110A) {
+    switch (g->step) {
     case 0:
         cd_read_sectors(1U, 0x801E8000, 0x4B80);
         for (i = 0; i < 11; i++) {
-            D_800CA2B0[i] = g->unk_1BC[i].unk_0C.f.b1;
+            D_800CA2B0[i] = g->girls[i].flags.f.met;
         }
         func_8004284C();
         break;
@@ -83,7 +83,7 @@ void func_80152680(void) {
             D_800CA160 = (s32) D_80155E90;
             D_800CA164 = (s32) D_80155E94;
             D_800CA168 = (s32) D_80155E98;
-            if ((D_80122EBC == 0xFF) || ((((u16) g->unk_0F4.h >> 0xC) != 3) && ((func_8008667C(0) == 4) || (D_80122EA4 == 0)) && (((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 3)) || ((((u16) g->unk_0F4.h >> 0xC) != 3) && ((func_8008667C(2) == 4) || (D_80122EA4 == 2)) && (((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 3))) {
+            if ((D_80122EBC == 0xFF) || ((((u16) g->player_flags.h >> 0xC) != 3) && ((func_8008667C(0) == 4) || (D_80122EA4 == 0)) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) || ((((u16) g->player_flags.h >> 0xC) != 3) && ((func_8008667C(2) == 4) || (D_80122EA4 == 2)) && (((u8) g->girls[2].flags.b[2] >> 4) == 3))) {
                 D_800CA148 = 0;
                 func_8004284C();
             } else {
@@ -148,7 +148,7 @@ void func_80152680(void) {
         break;
     case 12:
         if ((D_80122EBC == 0) || (D_80122EBC == 0xB)) {
-            set_kanji_string(0x28, 0x42, 0, (s32)player_blood_types.text[(u32) (g->unk_1BC[0].unk_10.w << 0x15) >> 0x1E], 0);
+            set_kanji_string(0x28, 0x42, 0, (s32)player_blood_types.text[(u32) (g->girls[0].birthday.w << 0x15) >> 0x1E], 0);
         } else {
             set_kanji_string(0x28, 0x42, 0, (s32)blood_types.text[D_80122EBC], 0);
         }
@@ -167,8 +167,8 @@ void func_80152680(void) {
         func_8004284C();
         break;
     case 15:
-        set_kanji_string(-0x80, 0x52, 0, (s32) g->unk_0D4, 0);
-        set_kanji_string(-0x48, 0x52, 0, (s32) g->unk_0DC, 0);
+        set_kanji_string(-0x80, 0x52, 0, (s32) g->player_family_name, 0);
+        set_kanji_string(-0x48, 0x52, 0, (s32) g->player_given_name, 0);
         k_disp_start(8);
         D_801564DC = 0;
         func_8004284C();
@@ -193,7 +193,7 @@ void func_80152680(void) {
         }
         break;
     case 19:
-        set_kanji_string(0x28, 0x52, 0, (s32)player_blood_types.text[(u32) (g->unk_0F8 << 0x15) >> 0x1E], 0);
+        set_kanji_string(0x28, 0x52, 0, (s32)player_blood_types.text[(u32) (g->player_birthday << 0x15) >> 0x1E], 0);
         k_disp_start(0xA);
         func_8004284C();
         break;
@@ -203,7 +203,7 @@ void func_80152680(void) {
             D_8011ED5B ^= 0x80;
             D_801564DC = 0;
         }
-        if ((g->unk_F88 & 0xF0) && (check_end_k() != 0)) {
+        if ((g->pad_pressed & 0xF0) && (check_end_k() != 0)) {
             k_reset(1);
             D_8011ED5B &= 0x7F;
             func_8004284C();
@@ -228,9 +228,9 @@ void func_80152680(void) {
         normal_date_speak();
         break;
     case 25:
-        if (((func_8008667C(0) == 4) || (D_80122EA4 == 0)) && (((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 3)) {
+        if (((func_8008667C(0) == 4) || (D_80122EA4 == 0)) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) {
             D_80122EBC = 0;
-        } else if (((func_8008667C(2) == 4) || (D_80122EA4 == 2)) && (((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 3)) {
+        } else if (((func_8008667C(2) == 4) || (D_80122EA4 == 2)) && (((u8) g->girls[2].flags.b[2] >> 4) == 3)) {
             D_80122EBC = 2;
         }
         func_80042908((s32) *(u8 *)&D_80122EB0);
@@ -249,10 +249,10 @@ s32 func_80152F4C(void)
   u32 pad;
   BunkakenGrid4 choices;
   choices = D_801564E0;
-  if ((((D_80122EBC == 2) && ((D_800E6280.unk_1BC[2].unk_0C.b[2] >> 4) == 3)) && (func_8008667C(2) < 4)) && (D_80122EA4 != 2))
+  if ((((D_80122EBC == 2) && ((D_800E6280.girls[2].flags.b[2] >> 4) == 3)) && (func_8008667C(2) < 4)) && (D_80122EA4 != 2))
   {
     return 3;
   }
-  result = choices.values[(D_800E6280.unk_1BC[D_80122EBC].unk_10.u << 21) >> 30][(((u32) D_800E6280.unk_0F8) << 21) >> 30];
+  result = choices.values[(D_800E6280.girls[D_80122EBC].birthday.u << 21) >> 30][(((u32) D_800E6280.player_birthday) << 21) >> 30];
   return result;
 }

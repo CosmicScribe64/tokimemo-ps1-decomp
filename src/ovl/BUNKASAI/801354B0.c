@@ -5,10 +5,10 @@ void func_801354B0(void) {
     BunkaDispatch8 *work = (BunkaDispatch8 *)&D_80122EB8;
     s32 selector = work->unk_00;
     work->unk_04 = 1;
-    D_800E6280.unk_1BC[1].unk_0C.f.b2 = 1;
+    D_800E6280.girls[1].flags.f.b2 = 1;
     switch (selector) {
     case 0:
-        if (D_800E6280.unk_03E == 0x61) {
+        if (D_800E6280.year == 0x61) {
             func_80042908(0x2C);
             return;
         }
@@ -27,7 +27,7 @@ void func_80135554(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         dec_bg_cd_read(0x40EA, 1);
         func_8004284C();
@@ -44,7 +44,7 @@ void func_80135554(void) {
         dec_bg_show_set(1, func_8005751C(1));
         func_801431D4();
         addr_init_bustup();
-        D_800E6280.unk_F5F = 1;
+        D_800E6280.current_girl = 1;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;
@@ -69,7 +69,7 @@ void func_80135554(void) {
                 D_800CA148 = 8;
                 break;
             }
-            if (D_800E6280.unk_03E == 0x60) {
+            if (D_800E6280.year == 0x60) {
                 D_800CA148 += 8;
             }
             func_80136230();
@@ -111,7 +111,7 @@ void func_80135554(void) {
             D_800CA148 = 0x18;
             break;
         }
-        if ((u16) D_800E6280.unk_66C[0].unk_00 < (u32) ((D_800E6280.unk_03E * 0x64) - 0x24B8)) {
+        if ((u16) D_800E6280.clubs[0].exp < (u32) ((D_800E6280.year * 0x64) - 0x24B8)) {
             D_800CA148 += 1;
         }
         func_8004284C();
@@ -124,7 +124,7 @@ void func_80135554(void) {
         break;
     case 15:
         if (func_8008667C(1) == 4) {
-            if ((u16) D_800E6280.unk_66C[0].unk_00 < (u32) ((D_800E6280.unk_03E * 0x64) - 0x24B8)) {
+            if ((u16) D_800E6280.clubs[0].exp < (u32) ((D_800E6280.year * 0x64) - 0x24B8)) {
                 D_800CA148 = 0x3D;
             } else {
                 D_800CA148 = 0x3E;
@@ -160,7 +160,7 @@ void func_80135914(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         dec_bg_cd_read(0x40F4, 1);
         func_8004284C();
@@ -177,7 +177,7 @@ void func_80135914(void) {
         dec_bg_show_set(1, func_8005751C(1));
         func_8014338C();
         addr_init_bustup();
-        D_800E6280.unk_F5F = 1;
+        D_800E6280.current_girl = 1;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;
@@ -213,8 +213,8 @@ void func_80135914(void) {
         break;
     case 8:
         D_80122EAC = 3;
-        D_80122EB0 = (s32) D_800E6280.unk_1109;
-        D_80122EB4 = D_800E6280.unk_110A + 1;
+        D_80122EB0 = (s32) D_800E6280.stage;
+        D_80122EB4 = D_800E6280.step + 1;
         main_state_set(0x80);
         break;
     case 9:
@@ -224,7 +224,7 @@ void func_80135914(void) {
         func_8014338C();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.unk_F5F = 1;
+        D_800E6280.current_girl = 1;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;
@@ -284,7 +284,7 @@ void func_80135C4C(void) {
     u32 choice3;
 
     state = &D_800E6280;
-    switch (state->unk_110A) {
+    switch (state->step) {
     case 0:
         dec_bg_cd_read(0x40F4, 1);
         func_8004284C();
@@ -301,7 +301,7 @@ void func_80135C4C(void) {
         dec_bg_show_set(1, func_8005751C(1));
         func_8014338C();
         addr_init_bustup();
-        state->unk_F5F = 1;
+        state->current_girl = 1;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;
@@ -310,7 +310,7 @@ void func_80135C4C(void) {
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
-            if (state->unk_03E == 0x60) {
+            if (state->year == 0x60) {
                 choice = func_8008667C(1);
                 switch (choice) {
                 case 0:
@@ -342,7 +342,7 @@ void func_80135C4C(void) {
                     D_800CA148 = 0x25;
                     break;
                 }
-                if (state->unk_03E == 0x61) {
+                if (state->year == 0x61) {
                     D_800CA148 += 7;
                 }
             }
@@ -353,7 +353,7 @@ void func_80135C4C(void) {
         normal_date_speak();
         break;
     case 7:
-        if ((state->unk_03E == 0x61) && (func_8008667C(1) == 4)) {
+        if ((state->year == 0x61) && (func_8008667C(1) == 4)) {
             D_800CA148 = 0x3E;
             normal_date_girl_out();
         } else {
@@ -361,7 +361,7 @@ void func_80135C4C(void) {
         }
         break;
     case 8:
-        if ((state->unk_03E == 0x61) && (func_8008667C(1) == 4)) {
+        if ((state->year == 0x61) && (func_8008667C(1) == 4)) {
             normal_date_speak();
         } else {
             func_80042940(0xA);
@@ -371,8 +371,8 @@ void func_80135C4C(void) {
         normal_date_bg_fadeout();
         break;
     case 10:
-        D_80122EB0 = (s32) state->unk_1109;
-        D_80122EB4 = state->unk_110A + 1;
+        D_80122EB0 = (s32) state->stage;
+        D_80122EB4 = state->step + 1;
         main_state_set(0x80);
         break;
     case 11:
@@ -391,7 +391,7 @@ void func_80135C4C(void) {
         func_8014338C();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        state->unk_F5F = 1;
+        state->current_girl = 1;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;
@@ -416,10 +416,10 @@ void func_80135C4C(void) {
                 D_800CA148 = 0x33;
                 break;
             }
-            if ((u16) state->unk_66C[1].unk_00 < (u32) ((state->unk_03E * 0x64) - 0x24B8)) {
+            if ((u16) state->clubs[1].exp < (u32) ((state->year * 0x64) - 0x24B8)) {
                 D_800CA148 += 1;
             }
-            if (state->unk_03E == 0x61) {
+            if (state->year == 0x61) {
                 D_800CA148 = D_800CA148 + 8;
             }
             func_80136230();
@@ -433,11 +433,11 @@ void func_80135C4C(void) {
         break;
     case 18:
         if (func_8008667C(1) == 4) {
-            if (((u8) state->unk_03E < 0x61U) && ((u16) state->unk_66C[1].unk_00 >= (u32) ((state->unk_03E * 0x64) - 0x24B8))) {
+            if (((u8) state->year < 0x61U) && ((u16) state->clubs[1].exp >= (u32) ((state->year * 0x64) - 0x24B8))) {
                 D_800CA148 = 0x3E;
                 func_8004284C();
-            } else if (state->unk_03E == 0x61) {
-                if ((u16) state->unk_66C[1].unk_00 >= 0x12CU) {
+            } else if (state->year == 0x61) {
+                if ((u16) state->clubs[1].exp >= 0x12CU) {
                     D_800CA148 = 0x3E;
                     func_8004284C();
                 } else {

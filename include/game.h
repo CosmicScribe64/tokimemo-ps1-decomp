@@ -120,12 +120,12 @@ typedef struct SaveGameView {
 
 /* 8-byte record of the array at text_list (stride 8; see k_disp_switch). */
 typedef struct Entry8 {
-    /* 0x00 */ s16 unk_00;
-    /* 0x02 */ s16 unk_02;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ s8 unk_07;
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+    /* 0x04 */ u8 attr;
+    /* 0x05 */ u8 glyph_count;
+    /* 0x06 */ u8 extra;
+    /* 0x07 */ s8 active;
 } Entry8; /* size 0x08 */
 
 /* Stack request of the memory-card file functions (func_80054694, func_80054704): name buffer plus a retry
@@ -156,34 +156,34 @@ typedef struct MenuIconBits {
 typedef struct DisplayActor44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
+    /* 0x02 */ u8 flags;
+    /* 0x03 */ u8 draw_flags;
     /* 0x04 */ u8 unk_04;
     /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
+    /* 0x06 */ u8 blink_period;
+    /* 0x07 */ u8 brightness;
     /* 0x08 */ s16 unk_08;
     /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ u8 *unk_0C;
-    /* 0x10 */ u8 *unk_10;
+    /* 0x0C */ u8 *frame_table;
+    /* 0x10 */ u8 *sequence_table;
     /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
+    /* 0x16 */ s16 sequence_slot;
     /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s16 unk_1C;
+    /* 0x1A */ s16 scale_x; /* HYPOTHESIS: 0x1000 = 1.0 (actor_clear default) */
+    /* 0x1C */ s16 scale_y; /* HYPOTHESIS: 0x1000 = 1.0 */
     /* 0x1E */ s16 unk_1E;
-    /* 0x20 */ s16 unk_20;
+    /* 0x20 */ s16 rotation;
     /* 0x22 */ s16 unk_22;
-    /* 0x24 */ s16 unk_24;
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ s16 unk_28;
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ s16 unk_2C;
-    /* 0x2E */ s16 unk_2E;
-    /* 0x30 */ s16 unk_30;
-    /* 0x32 */ s16 unk_32;
-    /* 0x34 */ u8 *unk_34;
-    /* 0x38 */ s32 unk_38;
+    /* 0x24 */ s16 x_frac;
+    /* 0x26 */ s16 x;
+    /* 0x28 */ s16 y_frac;
+    /* 0x2A */ s16 y;
+    /* 0x2C */ s16 dx_frac; /* HYPOTHESIS: x step per frame */
+    /* 0x2E */ s16 dx; /* HYPOTHESIS: integer part of the x step; the parameter panel (parameter_show) also uses it as a 0/1/2 animation phase */
+    /* 0x30 */ s16 dy_frac; /* HYPOTHESIS: y step per frame */
+    /* 0x32 */ s16 dy; /* HYPOTHESIS: integer part of the y step */
+    /* 0x34 */ u8 *tpage_table;
+    /* 0x38 */ s32 quad_flags;
     /* 0x3C */ s16 unk_3C;
     /* 0x3E */ s16 unk_3E;
     /* 0x40 */ u8 unk_40;
@@ -207,29 +207,29 @@ typedef union Fix32 {
 typedef struct DisplayFixActor44 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
+    /* 0x02 */ u8 flags;
+    /* 0x03 */ u8 draw_flags;
     /* 0x04 */ u8 unk_04;
     /* 0x05 */ u8 unk_05;
     /* 0x06 */ u8 unk_06;
     /* 0x07 */ u8 unk_07;
     /* 0x08 */ s16 unk_08;
     /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ u8 *unk_0C;
-    /* 0x10 */ u8 *unk_10;
+    /* 0x0C */ u8 *frame_table;
+    /* 0x10 */ u8 *sequence_table;
     /* 0x14 */ s16 unk_14;
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ s16 unk_18;
+    /* 0x16 */ s16 sequence_slot;
+    /* 0x18 */ s16 frame;
     /* 0x1A */ s16 unk_1A;
     /* 0x1C */ s16 unk_1C;
     /* 0x1E */ s16 unk_1E;
     /* 0x20 */ s32 unk_20; /* rotate, copied as one word by func_800476C0 (lw 0x20, T-25606) */
-    /* 0x24 */ Fix32 unk_24;
-    /* 0x28 */ Fix32 unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ u8 *unk_34;
-    /* 0x38 */ s32 unk_38;
+    /* 0x24 */ Fix32 x;
+    /* 0x28 */ Fix32 y;
+    /* 0x2C */ s32 dx;
+    /* 0x30 */ s32 dy;
+    /* 0x34 */ u8 *tpage_table;
+    /* 0x38 */ s32 quad_flags;
     /* 0x3C */ s16 unk_3C;
     /* 0x3E */ s16 unk_3E;
     /* 0x40 */ u8 unk_40;
@@ -323,14 +323,14 @@ typedef struct GsByteNibbles {
  * f12; bits 16..20 tested one by one). */
 typedef struct ScheduleFlags {
     /* 0x00 */ u32 unk_00 : 8;
-    /* 0x00 */ u32 unk_08 : 4;
-    /* 0x00 */ u32 unk_12 : 4;
+    /* 0x00 */ u32 health : 4;
+    /* 0x00 */ u32 club : 4;
     /* 0x00 */ u32 b16 : 1;
     /* 0x00 */ u32 b17 : 1;
     /* 0x00 */ u32 b18 : 1;
     /* 0x00 */ u32 b19 : 1;
     /* 0x00 */ u32 b20 : 1;
-    /* 0x00 */ u32 unk_21 : 3;
+    /* 0x00 */ u32 recovery_days : 3;
     /* 0x00 */ u32 unk_24 : 8;
 } ScheduleFlags; /* size 0x04 */
 
@@ -361,10 +361,10 @@ typedef struct ScheduleEntryDate {
 /* T-20900: also main's TelEntryFlags, EntryFlags54C and EntryFlags29 (idx: unk_00, nib: unk_25, b29: active),
  * TEL's TelEntryFlags and OPTION's OptionScheduleBits (f0: unk_00, f25: unk_25). */
 typedef struct ScheduleEntryFlags {
-    /* 0x00 */ u32 unk_00 : 5;
+    /* 0x00 */ u32 place : 5;
     /* 0x00 */ u32 unk_05 : 19;
-    /* 0x00 */ u32 b24 : 1;
-    /* 0x00 */ u32 unk_25 : 4;
+    /* 0x00 */ u32 flag : 1;
+    /* 0x00 */ u32 girl : 4;
     /* 0x00 */ u32 active : 1;
     /* 0x00 */ u32 unk_30 : 2;
 } ScheduleEntryFlags; /* size 0x04 */

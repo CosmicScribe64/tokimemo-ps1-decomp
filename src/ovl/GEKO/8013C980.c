@@ -43,7 +43,7 @@ void func_8013CA30(void) {
 }
 
 void func_8013CA94(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013CAD0();
         return;
     }
@@ -55,7 +55,7 @@ void func_8013CAD0(void) {
     FnTbl38 tbl;
 
     tbl = D_80146ACC;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -67,7 +67,7 @@ void func_8013CB58(void) {
 
 void func_8013CB90(void) {
     D_800B5A60 = 1;
-    D_800E6280.unk_F5F = 0xE;
+    D_800E6280.current_girl = 0xE;
     strcpy(D_800CA188, "男子１");
     D_80120666 = 4;
     func_8004284C();
@@ -82,14 +82,14 @@ void func_8013CBE4(void) {
 /* FAKE: scalar byte store followed by member read preserves argument/constant scheduling. T-9550 */
 void func_8013CC20(void) {
     D_800B5A60 = 0;
-    *(u8 *)&D_800E6280.unk_F5F = 7;
-    func_800847B8(D_800E6280.unk_F5F);
+    *(u8 *)&D_800E6280.current_girl = 7;
+    func_800847B8(D_800E6280.current_girl);
     D_80120666 = 2;
     func_8004284C();
 }
 
 void func_8013CC60(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013CC9C();
         return;
     }
@@ -101,14 +101,14 @@ void func_8013CC9C(void) {
     FnTbl22 tbl;
 
     tbl = D_80146B64;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
 void func_8013CD18(void) {
     s16 i;
 
-    D_800E6280.unk_F5F = 7;
+    D_800E6280.current_girl = 7;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -122,10 +122,10 @@ void func_8013CD18(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     for (i = 0; i < 5; i++) {
-        D_800E6280.unk_1228[i + 11] = 1;
-        D_800E6280.unk_1228[i + 43] = 1;
-        D_800E6280.unk_1228[i + 21] = 1;
-        D_800E6280.unk_1228[i + 53] = 1;
+        D_800E6280.tpage_buf[i + 11] = 1;
+        D_800E6280.tpage_buf[i + 43] = 1;
+        D_800E6280.tpage_buf[i + 21] = 1;
+        D_800E6280.tpage_buf[i + 53] = 1;
     }
     addr_init_bustup(i, &D_800E6280);
     func_80137990();
@@ -133,14 +133,14 @@ void func_8013CD18(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145F38;
     D_80146278 = D_80146074;
     D_8014627C = D_801461B0;
     strcpy(D_800CA19C, "廊下");
-    D_800E6280.unk_1BC[7].unk_06 += 1;
+    D_800E6280.girls[7].affection += 1;
     check_para_limit();
     D_800CA368 = 0x2E;
     func_8004284C();
@@ -155,7 +155,7 @@ void func_8013CE98(void) {
 }
 
 void func_8013CF40(void) {
-    D_800E6280.unk_F5F = 7;
+    D_800E6280.current_girl = 7;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -174,7 +174,7 @@ void func_8013CF40(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145F50;

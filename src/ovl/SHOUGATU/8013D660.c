@@ -6,7 +6,7 @@ void func_8013D660(void) {
     FnTbl33 tbl;
 
     tbl = D_80145F40;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -23,10 +23,10 @@ void func_8013D734(void) {
         func_80044750(0x202);
         func_8004284C();
     }
-    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
+    if ((u32) D_800E6280.step_timer.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
+        func_80042940((D_800E6280.step - 1) & 0xFF);
     }
 }
 
@@ -42,17 +42,17 @@ void func_8013D7F8(void) {
 }
 
 void func_8013D820(void) {
-    s16 thresh = D_800E6280.unk_1BC[12].unk_0C.f.f9 * 25 + 150;
+    s16 thresh = D_800E6280.girls[12].flags.f.story_stage * 25 + 150;
 
-    if (D_800E6280.unk_10C.unk_02 >= thresh &&
-        D_800E6280.unk_1BC[14].unk_0C.f.f9 != 0) {
+    if (D_800E6280.param_athletics.value >= thresh &&
+        D_800E6280.girls[14].flags.f.story_stage != 0) {
         func_8004284C();
         func_8004284C();
         func_8004284C();
         func_8004284C();
         return;
     }
-    if (D_800E6280.unk_114.unk_02 >= (s16)(D_800E6280.unk_1BC[12].unk_0C.f.f9 * 30 - (D_800E6280.unk_1BC[12].unk_0C.f.f9 >= 2) * 10 + 70)) {
+    if (D_800E6280.param_looks.value >= (s16)(D_800E6280.girls[12].flags.f.story_stage * 30 - (D_800E6280.girls[12].flags.f.story_stage >= 2) * 10 + 70)) {
         func_8004284C();
         return;
     }
@@ -67,16 +67,16 @@ void func_8013D92C(void) {
     /* FAKE: GameState *g splits the second unk_1BC[14].unk_0C access from the first so uopt keeps it in $t2 instead of promoting to $v0. T-24130 */
     GameState *g = &D_800E6280;
 
-    v = D_800E6280.unk_1BC[12].unk_0C.f.f9 * 25 + 150;
-    if (D_800E6280.unk_10C.unk_02 >= v) {
-        D_80145F2C = (D_800E6280.unk_1BC[14].unk_0C.f.f9 >= 1) * 3 + 4;
-        g->unk_1BC[14].unk_0C.f.f9 += 1;
+    v = D_800E6280.girls[12].flags.f.story_stage * 25 + 150;
+    if (D_800E6280.param_athletics.value >= v) {
+        D_80145F2C = (D_800E6280.girls[14].flags.f.story_stage >= 1) * 3 + 4;
+        g->girls[14].flags.f.story_stage += 1;
         func_8004284C();
         return;
     }
     D_80145F2C += 1;
-    D_800E6280.unk_118.unk_02 += 10;
-    D_800E6280.unk_11C.unk_02 += 10;
+    D_800E6280.param_guts.value += 10;
+    D_800E6280.param_stress.value += 10;
     check_para_limit();
     func_8004284C();
     func_8004284C();
@@ -89,7 +89,7 @@ void func_8013D92C(void) {
 }
 
 void func_8013DA5C(void) {
-    if (((u32) (D_800E6280.unk_1BC[14].unk_0C.w << 0x14) >> 0x1D) == 1) {
+    if (((u32) (D_800E6280.girls[14].flags.w << 0x14) >> 0x1D) == 1) {
         func_8013D2A8();
         return;
     }
@@ -100,18 +100,18 @@ void func_8013DA5C(void) {
 s32 func_8013DAAC(void) {
     GameState *g;
 
-    if (D_800E6280.unk_1BC[0].unk_10.date.month == 12 &&
-        D_800E6280.unk_1BC[0].unk_10.date.day == 24 &&
-        !(*(u8 *)&D_800E6280.unk_71E & 0x20)) {
-        *(u8 *)&D_800E6280.unk_71E |= 0x20;
-        D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 = 0;
+    if (D_800E6280.girls[0].birthday.date.month == 12 &&
+        D_800E6280.girls[0].birthday.date.day == 24 &&
+        !(*(u8 *)&D_800E6280.daily_event_bits & 0x20)) {
+        *(u8 *)&D_800E6280.daily_event_bits |= 0x20;
+        D_800E6280.day_events[D_800E6280.day_event_index].girl = 0;
         main_state_set(0x57);
         return 0;
     }
-    if (((GsWord *)&D_800E6280.unk_0F8)->date.month == 12 &&
-        ((GsWord *)&D_800E6280.unk_0F8)->date.day == 24 &&
-        !(*(u8 *)&D_800E6280.unk_71E & 0x40)) {
-        *(u8 *)&D_800E6280.unk_71E |= 0x40;
+    if (((GsWord *)&D_800E6280.player_birthday)->date.month == 12 &&
+        ((GsWord *)&D_800E6280.player_birthday)->date.day == 24 &&
+        !(*(u8 *)&D_800E6280.daily_event_bits & 0x40)) {
+        *(u8 *)&D_800E6280.daily_event_bits |= 0x40;
         main_state_set(0x56);
         return 0;
     }
@@ -124,9 +124,9 @@ s32 func_8013DAAC(void) {
     func_8004E58C();
     func_8008585C();
     strcpy(D_800CA19C, "伊集院邸");
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     D_80145F2C = 0;
@@ -136,16 +136,16 @@ s32 func_8013DAAC(void) {
     message_window_init();
     func_80084E4C();
     g = &D_800E6280;
-    strcpy(D_800CA16C, g->unk_0D4);
-    if (g->unk_1BC[12].unk_0C.f.f9 >= 3) {
-        g->unk_1BC[12].unk_0C.f.f9 = 2;
+    strcpy(D_800CA16C, g->player_family_name);
+    if (g->girls[12].flags.f.story_stage >= 3) {
+        g->girls[12].flags.f.story_stage = 2;
     }
-    if (g->unk_1BC[12].unk_0C.f.f9 == 0) {
+    if (g->girls[12].flags.f.story_stage == 0) {
         strcpy(D_800CA188, "黒服");
     } else {
         strcpy(D_800CA188, "外井");
     }
-    D_800E6280.unk_F5F = 12;
+    D_800E6280.current_girl = 12;
     func_8013C070();
     D_80145F20 = D_80145AFC;
     D_80145F24 = D_80145B30;

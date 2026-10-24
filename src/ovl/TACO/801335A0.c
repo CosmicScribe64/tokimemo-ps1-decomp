@@ -51,13 +51,13 @@ void func_80133738(void) {
     s32 idx;
 
     idx = 3;
-    if ((D_800E6280.unk_1109 & 1) && (D_800E6280.unk_110A == 1)) {
-        if ((D_8015EDBC == 0) && (D_800E6280.unk_F88 & 0x10) && (D_800E6280.unk_10F8 & 0xFF)) {
+    if ((D_800E6280.stage & 1) && (D_800E6280.step == 1)) {
+        if ((D_8015EDBC == 0) && (D_800E6280.pad_pressed & 0x10) && (D_800E6280.frame_count & 0xFF)) {
             if (func_80045288() == 1) {
                 if (func_800460EC() & 2) {
                     if (D_8015EDB4[8].unk78 < D_8015EDB4->unk78) {
                         idx = (rand() & 1) + 2;
-                    } else if (D_800E6280.unk_10F4 & 1) {
+                    } else if (D_800E6280.timer_ticks & 1) {
                         idx = rand() % 6;
                     }
                     p = &D_8015E238[idx * 2];

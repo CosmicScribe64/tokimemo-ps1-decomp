@@ -34,16 +34,16 @@ void func_80043510(s32 arg0) {
 
     D_800B3D10[1] = func_80098650();
     func_80049044();
-    if (g->unk_1112 == 1) {
+    if (g->actors_draw_enabled == 1) {
         func_800476C0();
     }
-    if ((u8)g->unk_10A2 != 0) {
+    if ((u8)g->tile_layer_enabled != 0) {
         srn_set(0);
     }
-    if (g->unk_1114 != 0 && g->unk_10E8 != 0) {
+    if (g->draw_2d_enabled != 0 && g->quads_enabled != 0) {
         rec = D_801217D0;
         for (i = 0; i < 0x40; i++) {
-            v = g->unk_10A5[i];
+            v = g->quad_layer[i];
             if (v & 0x80) {
                 func_80098680(rec, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14, (u8)(v - 1) & 0x7F);
             } else {
@@ -52,16 +52,16 @@ void func_80043510(s32 arg0) {
             rec++;
         }
         disp_string();
-        if (g->unk_10E8 != 0) {
+        if (g->quads_enabled != 0) {
             for (i = 0; i < 2; i++) {
-                v = g->unk_10EC[i];
+                v = g->bg_layer_order[i];
                 if (v < 0x80) {
                     func_80098D00((u8 *)&D_801220D0 + i * 0x24, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14, (u16)(v - 1));
                 }
             }
         }
     }
-    if (g->unk_1113 != 0) {
+    if (g->draw_3d_enabled != 0) {
         func_80099540(&D_80122740);
         obj = D_80122640; do {
             func_80099B10(obj[1], &sp50, &sp70);
@@ -77,14 +77,14 @@ void func_80043510(s32 arg0) {
         D_800B3D10[2] = func_80098650();
         csr_load_vram(0);
         palette_load_vram(0);
-        if (g->unk_1108 != 0x90 || g->unk_1109 < 10 || g->unk_1109 == 12) {
+        if (g->mode != 0x90 || g->stage < 10 || g->stage == 12) {
             func_8009C674(0);
         }
         D_800B3D10[3] = func_80098650();
-        if (g->unk_1108 == 0x90 && g->unk_1109 >= 10) {
+        if (g->mode == 0x90 && g->stage >= 10) {
             func_800AD950(2);
             func_8009C210(1);
-        } else if (func_80098650() < g->unk_10F0) {
+        } else if (func_80098650() < g->frame_hcount_limit) {
             func_800AD950(0);
         }
         D_800B3D10[0] = func_80098650();
@@ -93,22 +93,22 @@ void func_80043510(s32 arg0) {
     func_8009C210(1);
     func_8009ABF0();
     func_8009AC20();
-    if (g->unk_039 != 0) {
-        func_8009824C(g->unk_036, g->unk_037, g->unk_038, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14);
+    if (g->back_clear != 0) {
+        func_8009824C(g->clear_color_r, g->clear_color_g, g->clear_color_b, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14);
     }
     func_8009AD00((u8 *)&D_800E8C70 + D_8011ECA0 * 0x14);
 }
 
 void draw2d3d(u8 arg0, u8 arg1) {
-    D_800E6280.unk_1114 = arg0;
-    D_800E6280.unk_1113 = arg1;
+    D_800E6280.draw_2d_enabled = arg0;
+    D_800E6280.draw_3d_enabled = arg1;
 }
 
 void back_clear_switch(s32 arg0) {
     if (arg0 != 0) {
-        D_800E6280.unk_039 = 1;
+        D_800E6280.back_clear = 1;
     } else {
-        D_800E6280.unk_039 = 0;
+        D_800E6280.back_clear = 0;
     }
 }
 
@@ -125,14 +125,14 @@ u8 arg4;
     GameState *g;
 
     g = &D_800E6280;
-    index = D_800E6280.unk_1428;
+    index = D_800E6280.palette_queue_count;
     if (index < 32) {
-        g->unk_1328[index].unk_00 = arg0;
-        g->unk_1328[index].unk_04 = arg1;
-        g->unk_1328[index].unk_05 = arg2;
-        g->unk_1328[index].unk_06 = arg3;
-        g->unk_1328[index].unk_07 = arg4;
-        g->unk_1428++;
+        g->palette_queue[index].source = arg0;
+        g->palette_queue[index].unk_04 = arg1;
+        g->palette_queue[index].unk_05 = arg2;
+        g->palette_queue[index].unk_06 = arg3;
+        g->palette_queue[index].unk_07 = arg4;
+        g->palette_queue_count++;
         return 1;
     }
     return 0;
@@ -150,18 +150,18 @@ u16 arg5;
     GameState *g;
 
     g = &D_800E6280;
-    index = D_800E6280.unk_1429;
+    index = D_800E6280.csr_queue_count;
     if (index < 32) {
-        g->unk_142C[index].unk_00 = arg0;
-        g->unk_142C[index].unk_04 = arg1;
-        g->unk_142C[index].unk_05 = 0;
-        g->unk_142C[index].unk_06 = 0;
-        g->unk_142C[index].unk_07 = 0;
-        g->unk_142C[index].unk_08 = arg2;
-        g->unk_142C[index].unk_0A = arg3;
-        g->unk_142C[index].unk_0C = arg4;
-        g->unk_142C[index].unk_0E = arg5;
-        g->unk_1429++;
+        g->csr_queue[index].source = arg0;
+        g->csr_queue[index].slot = arg1;
+        g->csr_queue[index].unk_05 = 0;
+        g->csr_queue[index].unk_06 = 0;
+        g->csr_queue[index].unk_07 = 0;
+        g->csr_queue[index].unk_08 = arg2;
+        g->csr_queue[index].unk_0A = arg3;
+        g->csr_queue[index].unk_0C = arg4;
+        g->csr_queue[index].unk_0E = arg5;
+        g->csr_queue_count++;
         return 1;
     }
     return 0;
@@ -180,18 +180,18 @@ u16 arg6;
     GameState *g;
 
     g = &D_800E6280;
-    index = D_800E6280.unk_1429;
+    index = D_800E6280.csr_queue_count;
     if (index < 32) {
-        g->unk_142C[index].unk_00 = arg0;
-        g->unk_142C[index].unk_04 = arg1;
-        g->unk_142C[index].unk_05 = arg2;
-        g->unk_142C[index].unk_06 = 0;
-        g->unk_142C[index].unk_07 = 0;
-        g->unk_142C[index].unk_08 = arg3;
-        g->unk_142C[index].unk_0A = arg4;
-        g->unk_142C[index].unk_0C = arg5;
-        g->unk_142C[index].unk_0E = arg6;
-        g->unk_1429++;
+        g->csr_queue[index].source = arg0;
+        g->csr_queue[index].slot = arg1;
+        g->csr_queue[index].unk_05 = arg2;
+        g->csr_queue[index].unk_06 = 0;
+        g->csr_queue[index].unk_07 = 0;
+        g->csr_queue[index].unk_08 = arg3;
+        g->csr_queue[index].unk_0A = arg4;
+        g->csr_queue[index].unk_0C = arg5;
+        g->csr_queue[index].unk_0E = arg6;
+        g->csr_queue_count++;
         return 1;
     }
     return 0;
@@ -207,21 +207,21 @@ void csr_load_vram(s32 arg0) {
 
     base = &D_800E6280;
     var_s1 = 0;
-    if (base->unk_1429 != 0) {
+    if (base->csr_queue_count != 0) {
         do {
-            if ((temp_v0 = base->unk_142C[var_s1].unk_04) == 0) {
-                LoadSquare(base->unk_142C[var_s1].unk_08, base->unk_142C[var_s1].unk_0A, base->unk_142C[var_s1].unk_0C, base->unk_142C[var_s1].unk_0E, (void *) base->unk_142C[var_s1].unk_00);
+            if ((temp_v0 = base->csr_queue[var_s1].slot) == 0) {
+                LoadSquare(base->csr_queue[var_s1].unk_08, base->csr_queue[var_s1].unk_0A, base->csr_queue[var_s1].unk_0C, base->csr_queue[var_s1].unk_0E, (void *) base->csr_queue[var_s1].source);
             } else {
                 /* FAKE: self-assignment gives the shift subtree greater expression depth so cfe evaluates it before the array-indexed load. T-24135 */
-                x = base->unk_142C[var_s1].unk_08 + (((temp_v0 = temp_v0) & 0xF) << 6);
-                y = base->unk_142C[var_s1].unk_0A + (((temp_v0 = temp_v0) & 0x10) * 0x10);
-                w = (u16) base->unk_142C[var_s1].unk_0C >> base->unk_142C[var_s1].unk_05;
-                LoadSquare(x, y, w, base->unk_142C[var_s1].unk_0E, (void *) base->unk_142C[var_s1].unk_00);
+                x = base->csr_queue[var_s1].unk_08 + (((temp_v0 = temp_v0) & 0xF) << 6);
+                y = base->csr_queue[var_s1].unk_0A + (((temp_v0 = temp_v0) & 0x10) * 0x10);
+                w = (u16) base->csr_queue[var_s1].unk_0C >> base->csr_queue[var_s1].unk_05;
+                LoadSquare(x, y, w, base->csr_queue[var_s1].unk_0E, (void *) base->csr_queue[var_s1].source);
             }
             var_s1 += 1;
-        } while (var_s1 < (u8) base->unk_1429);
+        } while (var_s1 < (u8) base->csr_queue_count);
     }
-    base->unk_1429 = 0U;
+    base->csr_queue_count = 0U;
 }
 
 /* Uploads the queued palettes base->unk_1328[0..unk_1428-1] to VRAM and empties the queue.
@@ -243,21 +243,21 @@ void palette_load_vram(s32 arg0) {
 
     base = &D_800E6280;
     index = 0;
-    if (base->unk_1428 != 0) {
+    if (base->palette_queue_count != 0) {
         do {
-            y = (base->unk_1328[index].unk_04 & 31) + 0x1E0;
-            first = base->unk_1328[index].unk_07 << 7;
-            if (base->unk_1328[index].unk_04 < 32) {
+            y = (base->palette_queue[index].unk_04 & 31) + 0x1E0;
+            first = base->palette_queue[index].unk_07 << 7;
+            if (base->palette_queue[index].unk_04 < 32) {
                 width = 0x100;
                 x = 0;
-                switch (base->unk_1328[index].unk_06) {
+                switch (base->palette_queue[index].unk_06) {
                 case 0:
                     for (j = first; j < first + 128; j++) {
-                        if (base->unk_1328[index].unk_00[j] & 0x80000000) {
-                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        if (base->palette_queue[index].source[j] & 0x80000000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
                         }
-                        if (base->unk_1328[index].unk_00[j] & 0x8000) {
-                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        if (base->palette_queue[index].source[j] & 0x8000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
                         }
                     }
                     break;
@@ -267,65 +267,65 @@ void palette_load_vram(s32 arg0) {
                     break;
                 case 2:
                     for (j = first; j < first + 120; j++) {
-                        if (base->unk_1328[index].unk_00[j] & 0x80000000) {
-                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        if (base->palette_queue[index].source[j] & 0x80000000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
                         }
-                        if (base->unk_1328[index].unk_00[j] & 0x8000) {
-                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        if (base->palette_queue[index].source[j] & 0x8000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
                         }
                     }
                     for (k = first + 120; k < first + 128; k++) {
-                        if (base->unk_1328[index].unk_00[k] & 0x7FFF0000) {
-                            base->unk_1328[index].unk_00[k] |= 0x80000000;
+                        if (base->palette_queue[index].source[k] & 0x7FFF0000) {
+                            base->palette_queue[index].source[k] |= 0x80000000;
                         }
-                        if (base->unk_1328[index].unk_00[k] & 0x7FFF) {
-                            base->unk_1328[index].unk_00[k] |= 0x8000;
+                        if (base->palette_queue[index].source[k] & 0x7FFF) {
+                            base->palette_queue[index].source[k] |= 0x8000;
                         }
                     }
                     break;
                 case 3:
                     for (j = first; j < first + 128; j++) {
-                        if (base->unk_1328[index].unk_00[j] & 0x7FFF0000) {
-                            base->unk_1328[index].unk_00[j] |= 0x80000000;
+                        if (base->palette_queue[index].source[j] & 0x7FFF0000) {
+                            base->palette_queue[index].source[j] |= 0x80000000;
                         }
-                        if (base->unk_1328[index].unk_00[j] & 0x7FFF) {
-                            base->unk_1328[index].unk_00[j] |= 0x8000;
+                        if (base->palette_queue[index].source[j] & 0x7FFF) {
+                            base->palette_queue[index].source[j] |= 0x8000;
                         }
                     }
                     break;
                 case 4:
                     for (j = first; j < first + 112; j++) {
-                        if (base->unk_1328[index].unk_00[j] & 0x80000000) {
-                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        if (base->palette_queue[index].source[j] & 0x80000000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
                         }
-                        if (base->unk_1328[index].unk_00[j] & 0x8000) {
-                            base->unk_1328[index].unk_00[j] &= 0x7FFF7FFF;
+                        if (base->palette_queue[index].source[j] & 0x8000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
                         }
                     }
                     for (k = first + 112; k < first + 128; k++) {
-                        if (base->unk_1328[index].unk_00[k] & 0x7FFF0000) {
-                            base->unk_1328[index].unk_00[k] |= 0x80000000;
+                        if (base->palette_queue[index].source[k] & 0x7FFF0000) {
+                            base->palette_queue[index].source[k] |= 0x80000000;
                         }
-                        if (base->unk_1328[index].unk_00[k] & 0x7FFF) {
-                            base->unk_1328[index].unk_00[k] |= 0x8000;
+                        if (base->palette_queue[index].source[k] & 0x7FFF) {
+                            base->palette_queue[index].source[k] |= 0x8000;
                         }
                     }
                     break;
                 }
             } else {
                 width = 0x20;
-                if (base->unk_1328[index].unk_04 < 0x40) {
+                if (base->palette_queue[index].unk_04 < 0x40) {
                     x = 0x100;
                 } else {
                     x = 0x120;
                 }
             }
             height = 1;
-            LoadSquare(x, y, width, height, base->unk_1328[index].unk_00 + first);
+            LoadSquare(x, y, width, height, base->palette_queue[index].source + first);
             index++;
-        } while (index < base->unk_1428);
+        } while (index < base->palette_queue_count);
     }
-    base->unk_1428 = 0;
+    base->palette_queue_count = 0;
 }
 
 void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {

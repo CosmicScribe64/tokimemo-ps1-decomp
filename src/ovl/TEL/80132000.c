@@ -5,7 +5,7 @@
 void set_c_girl();
 
 void func_80132000(void) {
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         func_80132060();
         return;
@@ -19,8 +19,8 @@ void func_80132000(void) {
 }
 
 void func_80132060(void) {
-    D_800E6280.unk_1104.w += 1;
-    switch (D_800E6280.unk_110A) {
+    D_800E6280.step_timer.w += 1;
+    switch (D_800E6280.step) {
     case 0:
         func_80132138();
         break;
@@ -47,14 +47,14 @@ void func_80132060(void) {
 }
 
 void func_80132138(void) {
-    if (*(u8 *)&D_800E6280.unk_110D == 0) {
+    if (*(u8 *)&D_800E6280.substep == 0) {
         sndi("Ｔｒｒｒｒ…", 0, 0x2F);
         func_80044750(0x508);
         k_sub_disp_start(0);
         D_801230D0 = (rand() & 3) + 1;
-        *(u8 *)&D_800E6280.unk_110D = 1;
-    } else if (*(u8 *)&D_800E6280.unk_110D == 1) {
-        if ((D_800E6280.unk_1104.u & 0x7F) == 1) {
+        *(u8 *)&D_800E6280.substep = 1;
+    } else if (*(u8 *)&D_800E6280.substep == 1) {
+        if ((D_800E6280.step_timer.u & 0x7F) == 1) {
             k_sub_reset();
             sndi("Ｔｒｒｒｒ…", 0, 0x2F);
             k_sub_disp_start(0);
@@ -65,7 +65,7 @@ void func_80132138(void) {
                 func_80044750(0x508);
             }
         }
-        if (D_801230D0 <= 0 || (D_800E6280.unk_F88 & 0x40)) {
+        if (D_801230D0 <= 0 || (D_800E6280.pad_pressed & 0x40)) {
             func_80044750(0x1508);
             func_80044750(0x50B);
             func_8004284C();
@@ -81,20 +81,20 @@ void func_8013226C(void) {
     u8 sp3C[36];
     u8 sp2C[16];
 
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0x0:
-        if (D_800E6280.unk_1BC[13].unk_0C.b[3] == 0) {
-            D_800E6280.unk_110D = 1;
-        } else if ((appointment_find_today((s32) D_800E6280.unk_03E, (s32) D_800E6280.unk_03F, (s32) D_800E6280.unk_040) > 0) && (((u32) (D_800E6280.unk_54C[0].w * 8) >> 0x1C) == 0xA)) {
-            D_800E6280.unk_110D = 0x30;
+        if (D_800E6280.girls[13].flags.b[3] == 0) {
+            D_800E6280.substep = 1;
+        } else if ((appointment_find_today((s32) D_800E6280.year, (s32) D_800E6280.month, (s32) D_800E6280.day) > 0) && (((u32) (D_800E6280.unk_54C[0].w * 8) >> 0x1C) == 0xA)) {
+            D_800E6280.substep = 0x30;
         } else if (get_g_zyotai_h(0xA) == 4) {
-            D_800E6280.unk_110D = 0x30;
-        } else if (D_800E6280.unk_1BC[13].unk_0C.b[3] & 1) {
-            D_800E6280.unk_110D = 0x10;
+            D_800E6280.substep = 0x30;
+        } else if (D_800E6280.girls[13].flags.b[3] & 1) {
+            D_800E6280.substep = 0x10;
         } else {
-            D_800E6280.unk_110D = 0x30;
+            D_800E6280.substep = 0x30;
         }
-        D_800E6280.unk_1BC[13].unk_0C.b[3] += 1;
+        D_800E6280.girls[13].flags.b[3] += 1;
         break;
     case 0x1:
         k_sub_reset();
@@ -102,20 +102,20 @@ void func_8013226C(void) {
         sndi("ハイ、早乙女です。", 0, 0xD);
         func_80052060(0x1E000048, 0x0D00004D, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x2:
         func_8005215C();
         break;
     case 0x3:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("もしもし、", 0, 0xF);
-        strcpy(sp3C, D_800E6280.unk_0D4);
+        strcpy(sp3C, D_800E6280.player_family_name);
         strcat(sp3C, "ですけど。");
         sndi(sp3C, 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x4:
         xa_wait();
@@ -131,19 +131,19 @@ void func_8013226C(void) {
         sndi("良くかけて来てくれたな。", 1, 0xD);
         func_80052060((s32) &D_80144E3C, (s32) &D_80144E44, 0, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x6:
         func_8005215C();
         break;
     case 0x7:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("女の子の事なら", 0, 0xF);
         sndi("任せておけって、", 1, 0xF);
         sndi("言ってたよな…。", 2, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x8:
         xa_wait();
@@ -155,13 +155,13 @@ void func_8013226C(void) {
         sndi("何について聞きたいんだ？", 1, 0xD);
         func_80052060(0x180000B8, 0x140000C1, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0xA:
         func_8005215C();
         break;
     case 0xB:
-        D_800E6280.unk_110D = 0x20;
+        D_800E6280.substep = 0x20;
         break;
     case 0x10:
         k_sub_reset();
@@ -169,18 +169,18 @@ void func_8013226C(void) {
         sndi("ハイ、早乙女です。", 0, 0xA);
         func_80052060(0x01000143, 0x1E000149, -1, 0xA);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x11:
         func_8005215C();
         break;
     case 0x12:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("好雄君は、", 0, 0xF);
         sndi("いらっしゃいますか？", 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x13:
         xa_wait();
@@ -193,7 +193,7 @@ void func_8013226C(void) {
         sndi("おにーちゃーん、電話ー！", 2, 0xA);
         func_80052060(0x020001A9, 0x1F0001C4, -1, 0xA);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x15:
         func_8005215C();
@@ -204,19 +204,19 @@ void func_8013226C(void) {
         sndi("ハイ、早乙女です。", 0, 0xD);
         func_80052060(0x1E000048, 0x0D00004D, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x17:
         func_8005215C();
         break;
     case 0x18:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("もしもし", 0, 0xF);
-        sndi(D_800E6280.unk_0D4, 1, 0xF);
+        sndi(D_800E6280.player_family_name, 1, 0xF);
         sndi("ですけど。", 2, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x19:
         xa_wait();
@@ -225,23 +225,23 @@ void func_8013226C(void) {
         k_sub_reset();
         gnsx(D_800B3628);
         strcpy(sp3C, "なんだ、");
-        strcat(sp3C, D_800E6280.unk_0D4);
+        strcat(sp3C, D_800E6280.player_family_name);
         strcat(sp3C, "か。");
         sndi(sp3C, 0, 0xD);
         func_80052060(0x1E000056, 0x10000059, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x1B:
         func_8005215C();
         break;
     case 0x1C:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("何だその残念そうな声は。", 0, 0xF);
         sndi("俺からじゃ不満か？", 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x1D:
         xa_wait();
@@ -254,7 +254,7 @@ void func_8013226C(void) {
         sndi("どうしたんだ今日は？", 2, 0xD);
         func_80052060(0x1400009A, 0x0C0000AB, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x1F:
         func_8005215C();
@@ -264,16 +264,16 @@ void func_8013226C(void) {
         x_taku_string_set("女の子の評価を聞く", "デートスポットを聞く", 0, 2);
         x_taku_menu_set(1, 2);
         k_sub_disp_start(2);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x21:
         menu_check(1, D_8011ECF6, D_8011ECFA);
         menu_bar_show(1);
         func_8004FC10(1);
-        if (D_800E6280.unk_F88 & 0x20) {
-            switch (D_800E6280.unk_1094) {
+        if (D_800E6280.pad_pressed & 0x20) {
+            switch (D_800E6280.menu_cursor_1) {
             case 0:
-                D_800E6280.unk_110D = 0x22;
+                D_800E6280.substep = 0x22;
                 break;
             case 1:
                 func_80042940(2);
@@ -283,12 +283,12 @@ void func_8013226C(void) {
         break;
     case 0x22:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("女の子達が、", 0, 0xF);
         sndi("俺をどう思ってるか", 1, 0xF);
         sndi("知りたいんだ。", 2, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x23:
         xa_wait();
@@ -300,7 +300,7 @@ void func_8013226C(void) {
         sndi("ちょっと待ってくれよ。", 1, 0xD);
         func_80052060(0x19000085, 0x0D00008F, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x25:
         func_8005215C();
@@ -312,7 +312,7 @@ void func_8013226C(void) {
         sndi("お前に対する評価は…。", 1, 0xD);
         func_80052060(0x19000090, 0x0E00009C, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x27:
         func_8005215C();
@@ -326,20 +326,20 @@ void func_8013226C(void) {
         sndi("はい、早乙女です。", 0, 0xD);
         func_80052060(0x1E000048, 0x0D00004D, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x31:
         func_8005215C();
         break;
     case 0x32:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("もしもし、", 0, 0xF);
-        strcpy(sp3C, D_800E6280.unk_0D4);
+        strcpy(sp3C, D_800E6280.player_family_name);
         strcat(sp3C, "ですけど。");
         sndi(sp3C, 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x33:
         xa_wait();
@@ -348,23 +348,23 @@ void func_8013226C(void) {
         k_sub_reset();
         gnsx(D_800B3628);
         strcpy(sp3C, "なんだ、");
-        strcat(sp3C, D_800E6280.unk_0D4);
+        strcat(sp3C, D_800E6280.player_family_name);
         strcat(sp3C, "か。");
         sndi(sp3C, 0, 0xD);
         func_80052060(0x1E000056, 0x10000059, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x35:
         func_8005215C();
         break;
     case 0x36:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("何だその残念そうな声は。", 0, 0xF);
         sndi("俺からじゃ不満か？", 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x37:
         xa_wait();
@@ -377,13 +377,13 @@ void func_8013226C(void) {
         sndi("どうしたんだ今日は？", 2, 0xD);
         func_80052060(0x1400009A, 0x0C0000AB, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x39:
         func_8005215C();
         break;
     case 0x3A:
-        D_800E6280.unk_110D = 0x20;
+        D_800E6280.substep = 0x20;
         break;
     }
     menu_bar_show(0);
@@ -400,75 +400,75 @@ void func_80132FC4(void) {
     var_v1 = 0;
     var_a2 = 0;
     /* FAKE: scalar byte view avoids the redundant selector copy. T-10630. */
-    switch (*(u8 *)&D_800E6280.unk_110D) {
+    switch (*(u8 *)&D_800E6280.substep) {
     case 0x0:
         for (var_a0 = 0; var_a0 < 21; var_a0++) {
-            if (D_800E6280.unk_120[var_a0] & 0x80) {
+            if (D_800E6280.progress_state[var_a0] & 0x80) {
                 var_v1++;
             }
         }
         if (var_v1 != 0) {
-            if (D_800E6280.unk_120[0] & 0x80) {
+            if (D_800E6280.progress_state[0] & 0x80) {
                 var_v1--;
                 if (var_v1 == 0) {
-                    D_800E6280.unk_120[0] = 1;
+                    D_800E6280.progress_state[0] = 1;
                 }
             }
             for (var_a0 = 1; var_a0 < 21; var_a0++) {
-                if (D_800E6280.unk_120[var_a0] & 0x80) {
+                if (D_800E6280.progress_state[var_a0] & 0x80) {
                     var_v1--;
                     if (var_v1 == 0) {
                         var_a2 = var_a0;
-                        D_800E6280.unk_120[var_a0] = 1;
+                        D_800E6280.progress_state[var_a0] = 1;
                     }
                 }
             }
             if (var_a2 == 1) {
-                D_800E6280.unk_110D = 0x10;
-                ((CharFlags *)D_800E6280.unk_F64)->b1 = 1;
+                D_800E6280.substep = 0x10;
+                ((CharFlags *)D_800E6280.quarter_flags)->met = 1;
 
             } else if (var_a2 == 7) {
-                D_800E6280.unk_110D = 0x20;
-                ((CharFlags *)D_800E6280.unk_F64)->b2 = 1;
+                D_800E6280.substep = 0x20;
+                ((CharFlags *)D_800E6280.quarter_flags)->b2 = 1;
 
             } else if (var_a2 == 3) {
-                D_800E6280.unk_110D = 0x30;
-                ((CharFlags *)D_800E6280.unk_F64)->b3 = 1;
+                D_800E6280.substep = 0x30;
+                ((CharFlags *)D_800E6280.quarter_flags)->b3 = 1;
 
             } else if (var_a2 == 0xD) {
-                D_800E6280.unk_110D = 0x40;
-                ((CharFlags *)D_800E6280.unk_F64)->b4 = 1;
+                D_800E6280.substep = 0x40;
+                ((CharFlags *)D_800E6280.quarter_flags)->b4 = 1;
 
             } else if (var_a2 == 5) {
-                D_800E6280.unk_110D = 0x50;
-                ((CharFlags *)D_800E6280.unk_F64)->b5 = 1;
+                D_800E6280.substep = 0x50;
+                ((CharFlags *)D_800E6280.quarter_flags)->b5 = 1;
 
             } else if (var_a2 == 0xA) {
-                D_800E6280.unk_110D = 0x60;
-                ((CharFlags *)D_800E6280.unk_F64)->b6 = 1;
+                D_800E6280.substep = 0x60;
+                ((CharFlags *)D_800E6280.quarter_flags)->b6 = 1;
 
             } else if (var_a2 == 6) {
-                D_800E6280.unk_110D = 0x70;
-                ((CharFlags *)D_800E6280.unk_F64)->b7 = 1;
+                D_800E6280.substep = 0x70;
+                ((CharFlags *)D_800E6280.quarter_flags)->b7 = 1;
 
             } else if (var_a2 == 0xB) {
-                ((CharFlags *)D_800E6280.unk_F64)->b8 = 1;
-                D_800E6280.unk_110D = 0x80;
+                ((CharFlags *)D_800E6280.quarter_flags)->b8 = 1;
+                D_800E6280.substep = 0x80;
 
             } else {
-                D_800E6280.unk_110D = 1;
+                D_800E6280.substep = 1;
             }
         } else {
-            D_800E6280.unk_110D = 1;
+            D_800E6280.substep = 1;
         }
         break;
     case 0x1:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("いいデートスポットを", 0, 0xF);
         sndi("教えて欲しいんだ。", 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x2:
         xa_wait();
@@ -480,18 +480,18 @@ void func_80132FC4(void) {
         sndi("別の事なら教えてやれるぜ。", 1, 0xD);
         func_80052060(0x140000D0, 0x0F0000E2, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x4:
         func_8005215C();
         break;
     case 0x5:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("女の子の情報でも", 0, 0x1F);
         sndi("聞いてみようかな）", 1, 0x1F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x6:
         xa_wait();
@@ -500,43 +500,43 @@ void func_80132FC4(void) {
         k_sub_reset();
         menu_girl_taku_set(1, &D_801230D8);
         k_disp_start(D_801230D8 + 1);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x8:
         menu_check(1, D_8011ECF6, D_8011ECFA);
         menu_bar_show(1);
         func_8004FC10(1);
-        if (D_800E6280.unk_F88 & 0x20) {
-            if (D_800E6280.unk_1094 == 0xB) {
+        if (D_800E6280.pad_pressed & 0x20) {
+            if (D_800E6280.menu_cursor_1 == 0xB) {
                 func_80042940(4);
-            } else if (D_800E6280.unk_1094 == 0xA) {
+            } else if (D_800E6280.menu_cursor_1 == 0xA) {
                 func_80042940(3);
-                D_800E6280.unk_110D = 0x20;
-            } else if ((D_800E6280.unk_1094 != -1) && (D_800E6280.unk_1BC[D_800E6280.unk_1094].unk_0C.f.b1)) {
-                D_800E6280.unk_110D += 1;
+                D_800E6280.substep = 0x20;
+            } else if ((D_800E6280.menu_cursor_1 != -1) && (D_800E6280.girls[D_800E6280.menu_cursor_1].flags.f.met)) {
+                D_800E6280.substep += 1;
             }
         }
         break;
     case 0x9:
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0xA:
         k_sub_reset();
         gnsx(D_800B3628);
-        if (D_800E6280.unk_1094 == 0xB) {
+        if (D_800E6280.menu_cursor_1 == 0xB) {
             strcpy(sp3C, D_800B3624);
             strcat(sp3C, "、");
             strcat(sp3C, D_800B3624);
         } else {
-            strcpy(sp3C, girl_short_name_table[D_800E6280.unk_1094]);
+            strcpy(sp3C, girl_short_name_table[D_800E6280.menu_cursor_1]);
             strcat(sp3C, "、");
-            strcat(sp3C, girl_short_name_table[D_800E6280.unk_1094]);
+            strcat(sp3C, girl_short_name_table[D_800E6280.menu_cursor_1]);
         }
         strcat(sp3C, "‥‥と。");
-        func_80052060((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) D_800E6280.unk_1094, 0xD);
+        func_80052060((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) D_800E6280.menu_cursor_1, 0xD);
         sndi(sp3C, 0, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0xB:
         func_8005215C();
@@ -549,7 +549,7 @@ void func_80132FC4(void) {
         sndi("よく聞けよ。", 2, 0xD);
         func_80052060(0x19000064, 0x0A00006E, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0xD:
         func_8005215C();
@@ -565,13 +565,13 @@ void func_80132FC4(void) {
         sndi("わりといい雰囲気だぜ。", 2, 0xD);
         func_80052060(0x15000001, 0x02000015, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x11:
         func_8005215C();
         break;
     case 0x12:
-        D_800E6280.unk_110D = 0xF0;
+        D_800E6280.substep = 0xF0;
         break;
     case 0x20:
         k_sub_reset();
@@ -581,13 +581,13 @@ void func_80132FC4(void) {
         sndi("わりといいらしいぜ。", 2, 0xD);
         func_80052060(0x15000016, 0x03000024, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x21:
         func_8005215C();
         break;
     case 0x22:
-        D_800E6280.unk_110D = 0xF0;
+        D_800E6280.substep = 0xF0;
         break;
     case 0x30:
         k_sub_reset();
@@ -596,13 +596,13 @@ void func_80132FC4(void) {
         sndi("人気あるみたいだぜ。", 1, 0xD);
         func_80052060(0x1900009D, 0x0F0000A7, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x31:
         func_8005215C();
         break;
     case 0x32:
-        D_800E6280.unk_110D = 0xF0;
+        D_800E6280.substep = 0xF0;
         break;
     case 0x40:
         k_sub_reset();
@@ -611,13 +611,13 @@ void func_80132FC4(void) {
         sndi("知ってたか？", 1, 0xD);
         func_80052060(0x190000A8, 0x100000AF, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x41:
         func_8005215C();
         break;
     case 0x42:
-        D_800E6280.unk_110D = 0xF0;
+        D_800E6280.substep = 0xF0;
         break;
     case 0x50:
         k_sub_reset();
@@ -626,13 +626,13 @@ void func_80132FC4(void) {
         sndi("いいんじゃないか？", 1, 0xD);
         func_80052060(0x190000B0, 0x110000BA, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x51:
         func_8005215C();
         break;
     case 0x52:
-        D_800E6280.unk_110D = 0xF0;
+        D_800E6280.substep = 0xF0;
         break;
     case 0x60:
         k_sub_reset();
@@ -641,13 +641,13 @@ void func_80132FC4(void) {
         sndi("どうだ？", 1, 0xD);
         func_80052060(0x1A000007, 0x0300000F, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x61:
         func_8005215C();
         break;
     case 0x62:
-        D_800E6280.unk_110D = 0xF0;
+        D_800E6280.substep = 0xF0;
         break;
     case 0x70:
         k_sub_reset();
@@ -656,13 +656,13 @@ void func_80132FC4(void) {
         sndi("暗くていいぜ。", 1, 0xD);
         func_80052060(0x1A000010, 0x0400001B, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x71:
         func_8005215C();
         break;
     case 0x72:
-        D_800E6280.unk_110D = 0xF0;
+        D_800E6280.substep = 0xF0;
         break;
     case 0x80:
         k_sub_reset();
@@ -671,21 +671,21 @@ void func_80132FC4(void) {
         sndi("カラオケが出来たんだよ。", 1, 0xD);
         func_80052060(0x1A00001C, 0x05000027, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0x81:
         func_8005215C();
         break;
     case 0x82:
-        D_800E6280.unk_110D = 0xF0;
+        D_800E6280.substep = 0xF0;
         break;
     case 0xF0:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("サンキュー。", 0, 0xF);
         sndi("いつも悪いな。", 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0xF1:
         xa_wait();
@@ -697,7 +697,7 @@ void func_80132FC4(void) {
         sndi("まめに情報誌でも読めよ。", 1, 0xD);
         func_80052060(0x1A000028, 0x06000032, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 0xF3:
         func_8005215C();
@@ -720,13 +720,13 @@ void func_80133D54(void) {
     DisplayFixActor44 *var_s0;
     s32 var_s1;
 
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         func_8004E58C();
         func_8013CCD0();
         k_sub_reset_point_set();
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         k_sub_reset();
@@ -734,18 +734,18 @@ void func_80133D54(void) {
         sndi("こんなとこだな。", 0, 0xD);
         func_80052060(0x1E00005E, 0x12000061, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 2:
         func_8005215C();
         break;
     case 3:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("女の子の情報でも", 0, 0x1F);
         sndi("聞いてみようかな）", 1, 0x1F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 4:
         xa_wait();
@@ -754,27 +754,27 @@ void func_80133D54(void) {
         k_sub_reset();
         menu_girl_taku_set(1, &D_801230D8);
         k_disp_start(D_801230D8 + 1);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 6:
         menu_check(1, D_8011ECF6, D_8011ECFA);
         menu_bar_show(1);
         func_8004FC10(1);
-        if ((D_800E6280.unk_F88 & 0x20) && (D_800E6280.unk_1094 != -1)) {
-            if (D_800E6280.unk_1094 == 0xB) {
-                D_800E6280.unk_110D += 1;
-            } else if (D_800E6280.unk_1BC[D_800E6280.unk_1094].unk_0C.f.b1) {
-                D_800E6280.unk_110D += 1;
+        if ((D_800E6280.pad_pressed & 0x20) && (D_800E6280.menu_cursor_1 != -1)) {
+            if (D_800E6280.menu_cursor_1 == 0xB) {
+                D_800E6280.substep += 1;
+            } else if (D_800E6280.girls[D_800E6280.menu_cursor_1].flags.f.met) {
+                D_800E6280.substep += 1;
             }
         }
         break;
     case 7:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
-        if (D_800E6280.unk_1094 == 0xB) {
+        gnsx(D_800E6280.player_family_name);
+        if (D_800E6280.menu_cursor_1 == 0xB) {
             get_g_name(sp3C, 0xC);
         } else {
-            get_g_name(sp3C, D_800E6280.unk_1094);
+            get_g_name(sp3C, D_800E6280.menu_cursor_1);
         }
         strcpy(sp5C, sp3C);
         strcat(sp5C, "の");
@@ -782,12 +782,12 @@ void func_80133D54(void) {
         sndi("ことについて", 1, 0xF);
         sndi("知りたいんだけど。", 2, 0xF);
         k_sub_disp_start(0);
-        if (D_800E6280.unk_1094 == 0xA) {
-            D_800E6280.unk_110D = 0x20;
-        } else if (D_800E6280.unk_1094 == 0xB) {
+        if (D_800E6280.menu_cursor_1 == 0xA) {
+            D_800E6280.substep = 0x20;
+        } else if (D_800E6280.menu_cursor_1 == 0xB) {
             func_80042940(4);
         } else {
-            D_800E6280.unk_110D += 1;
+            D_800E6280.substep += 1;
         }
         break;
     case 8:
@@ -800,7 +800,7 @@ void func_80133D54(void) {
         sndi("ちょっと待ってくれよ。", 1, 0xD);
         func_80052060(0x180000C2, 0x150000C9, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 10:
         func_8005215C();
@@ -808,20 +808,20 @@ void func_80133D54(void) {
     case 11:
         k_sub_reset();
         gnsx(D_800B3628);
-        if (D_800E6280.unk_1094 == 0xB) {
+        if (D_800E6280.menu_cursor_1 == 0xB) {
             strcpy(sp5C, D_800B3624);
             strcat(sp5C, "、");
             strcat(sp5C, D_800B3624);
         } else {
-            strcpy(sp5C, girl_short_name_table[D_800E6280.unk_1094]);
+            strcpy(sp5C, girl_short_name_table[D_800E6280.menu_cursor_1]);
             strcat(sp5C, "、");
-            strcat(sp5C, girl_short_name_table[D_800E6280.unk_1094]);
+            strcat(sp5C, girl_short_name_table[D_800E6280.menu_cursor_1]);
         }
         strcat(sp5C, "‥‥と。");
         sndi(sp5C, 0, 0xD);
-        func_80052060((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) D_800E6280.unk_1094, 0xD);
+        func_80052060((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) D_800E6280.menu_cursor_1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 12:
         func_8005215C();
@@ -834,7 +834,7 @@ void func_80133D54(void) {
         sndi("よく聞けよ。", 2, 0xD);
         func_80052060(0x19000064, 0x0A00006E, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 14:
         func_8005215C();
@@ -852,18 +852,18 @@ void func_80133D54(void) {
         sndi("優美に気があるのか？", 1, 0xD);
         func_80052060(0x1900006F, 0x0B00007A, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 34:
         func_8005215C();
         break;
     case 35:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("い、いや。", 0, 0xF);
         sndi("そう言う訳じゃないけど…。", 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 36:
         xa_wait();
@@ -876,7 +876,7 @@ void func_80133D54(void) {
         sndi("よし、特別に教えてやろう。", 2, 0xD);
         func_80052060(0x120000C7, 0x090000E5, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 38:
         func_8005215C();
@@ -888,11 +888,11 @@ void func_80133D54(void) {
     var_s0 = &((DisplayFixActor44 *)D_8011ECD0)[0x61];
     var_s1 = 0x61;
     do {
-        if (var_s0->unk_18 == 0x60) {
-            var_s0->unk_1C = (s16) ((rsin((D_800E6280.unk_1104.w + var_s1) << 6) / 3) + 0xAAA);
-            var_s0->unk_1A = (s16) ((rsin((D_800E6280.unk_1104.w + var_s1) * 0x5A) / 4) + 0xC00);
-            var_s0->unk_30 = (s32) (rsin(D_800E6280.unk_1104.w << 6) * 4);
-            var_s0->unk_03 = (u8) (var_s0->unk_03 | 0x10);
+        if (var_s0->frame == 0x60) {
+            var_s0->unk_1C = (s16) ((rsin((D_800E6280.step_timer.w + var_s1) << 6) / 3) + 0xAAA);
+            var_s0->unk_1A = (s16) ((rsin((D_800E6280.step_timer.w + var_s1) * 0x5A) / 4) + 0xC00);
+            var_s0->dy = (s32) (rsin(D_800E6280.step_timer.w << 6) * 4);
+            var_s0->draw_flags = (u8) (var_s0->draw_flags | 0x10);
         }
         var_s1 += 1;
         var_s0++;
@@ -906,28 +906,28 @@ void func_80133D54(void) {
 
 void func_801345C4(void) {
     u8 state;
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         cd_read_sectors(0x26U, 0x801A0000, 0x9D5F);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+            D_800E6280.substep = (state = D_800E6280.substep) + 1;
         }
         break;
     case 2:
         func_8004E58C();
-        func_8013D03C((s32) D_800E6280.unk_1094, (s32) &D_801230D4);
+        func_8013D03C((s32) D_800E6280.menu_cursor_1, (s32) &D_801230D4);
         k_sub_reset_point_set();
         k_sub_disp_start(0);
-        if (D_800E6280.unk_1094 == 0xA) {
-            D_800E6280.unk_110D = 0x20;
+        if (D_800E6280.menu_cursor_1 == 0xA) {
+            D_800E6280.substep = 0x20;
         }
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 3:
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 4:
         k_sub_reset();
@@ -935,18 +935,18 @@ void func_801345C4(void) {
         sndi("って、とこだな。", 0, 0xD);
         func_80052060(0x1E00005A, 0x1100005D, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 5:
         func_8005215C();
         break;
     case 6:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("サンキュー。", 0, 0xF);
         sndi("いつも悪いな。", 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 7:
         xa_wait();
@@ -959,7 +959,7 @@ void func_801345C4(void) {
         sndi("俺に任せてくれよ。", 2, 0xD);
         func_80052060(0x140000BE, 0x0E0000CF, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 9:
         func_8005215C();
@@ -969,7 +969,7 @@ void func_801345C4(void) {
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 11:
         xa_wait();
@@ -989,17 +989,17 @@ void func_801345C4(void) {
         sndi("って、とこだな。", 0, 0xD);
         func_80052060(0x1E00005A, 0x1100005D, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 34:
         func_8005215C();
         break;
     case 35:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("サンキュー。", 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 36:
         xa_wait();
@@ -1012,18 +1012,18 @@ void func_801345C4(void) {
         sndi("言ってやろうか？", 2, 0xD);
         func_80052060(0x1900007B, 0x0C000084, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 38:
         func_8005215C();
         break;
     case 39:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("だから、", 0, 0xF);
         sndi("そんなんじゃないって。", 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 40:
         xa_wait();
@@ -1035,7 +1035,7 @@ void func_801345C4(void) {
         sndi("じゃ、頑張れよ。", 1, 0xD);
         func_80052060(0x0A0000E3, 0x0E0000EA, -1, 0xD);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 42:
         func_8005215C();
@@ -1045,7 +1045,7 @@ void func_801345C4(void) {
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 44:
         xa_wait();
@@ -1065,8 +1065,8 @@ void func_801345C4(void) {
 }
 
 void func_80134BE0(void) {
-    D_800E6280.unk_1104.w += 1;
-    switch (D_800E6280.unk_110A) {
+    D_800E6280.step_timer.w += 1;
+    switch (D_800E6280.step) {
     case 0x0:
         func_80134DA0();
         break;
@@ -1137,19 +1137,19 @@ void func_80134BE0(void) {
 }
 
 void func_80134DA0(void) {
-    if (*(u8 *)&D_800E6280.unk_110D == 0) {
+    if (*(u8 *)&D_800E6280.substep == 0) {
         sndi("Ｔｒｒｒｒ…", 0, 0x2F);
         func_80044750(0x508);
         k_sub_disp_start(0);
         D_801230D0 = (rand() & 3) + 1;
-        *(u8 *)&D_800E6280.unk_110D = 1;
-        if (*(u8 *)&D_800E6280.unk_F5F == 0xB) {
+        *(u8 *)&D_800E6280.substep = 1;
+        if (*(u8 *)&D_800E6280.current_girl == 0xB) {
             D_801405E4 = 0xC;
         } else {
-            D_801405E4 = *(u8 *)&D_800E6280.unk_F5F;
+            D_801405E4 = *(u8 *)&D_800E6280.current_girl;
         }
-    } else if (*(u8 *)&D_800E6280.unk_110D == 1) {
-        if ((D_800E6280.unk_1104.u & 0x7F) == 1) {
+    } else if (*(u8 *)&D_800E6280.substep == 1) {
+        if ((D_800E6280.step_timer.u & 0x7F) == 1) {
             k_sub_reset();
             sndi("Ｔｒｒｒｒ…", 0, 0x2F);
             k_sub_disp_start(0);
@@ -1160,13 +1160,13 @@ void func_80134DA0(void) {
                 D_801230D0 -= 1;
             }
         }
-        if (D_801230D0 <= 0 || (D_800E6280.unk_F88 & 0x40)) {
+        if (D_801230D0 <= 0 || (D_800E6280.pad_pressed & 0x40)) {
             func_80044750(0x1508);
             func_80044750(0x50B);
-            if (appointment_find_today(*(u8 *)&D_800E6280.unk_03E, *(u8 *)&D_800E6280.unk_03F, *(u8 *)&D_800E6280.unk_040) != 0 &&
-                *(u8 *)&D_800E6280.unk_F5F == (u32)(D_800E6280.unk_54C[0].w << 3) >> 0x1C) {
+            if (appointment_find_today(*(u8 *)&D_800E6280.year, *(u8 *)&D_800E6280.month, *(u8 *)&D_800E6280.day) != 0 &&
+                *(u8 *)&D_800E6280.current_girl == (u32)(D_800E6280.unk_54C[0].w << 3) >> 0x1C) {
                 func_80042940(0x10);
-            } else if (*(u8 *)&D_800E6280.unk_03E == 0x62 && *(u8 *)&D_800E6280.unk_03F == 2 && *(u8 *)&D_800E6280.unk_040 == 0x16) {
+            } else if (*(u8 *)&D_800E6280.year == 0x62 && *(u8 *)&D_800E6280.month == 2 && *(u8 *)&D_800E6280.day == 0x16) {
                 func_80042940(0x10);
             } else if (func_8013655C() == 0) {
                 func_80042940(0x10);
@@ -1185,15 +1185,15 @@ void func_80134DA0(void) {
 void func_80134FE4(void) {
     u8 zy;
 
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_c_girl(D_801405E4);
-        D_800E6280.unk_1BC[D_801405E4].unk_0C.b[3] += 1;
+        D_800E6280.girls[D_801405E4].flags.b[3] += 1;
         gnsx(girl_short_name_table[D_801405E4]);
         sndi(D_801406E0[D_801405E4], 0, D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         func_80052060((s32) D_80140710, (s32) D_80140770, (s32) D_801405E4, (s32) D_801405E4);
         break;
     case 1:
@@ -1201,22 +1201,22 @@ void func_80134FE4(void) {
         break;
     case 2:
         k_sub_reset();
-        gnsx(&D_800E6280.unk_0D4[0]);
+        gnsx(&D_800E6280.player_family_name[0]);
         sndisp("えっと… Pって言いますけど。", 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
         break;
     case 4:
         if (get_g_zyotai_s(D_801405E4) == 4) {
-            D_800E6280.unk_1BC[D_801405E4].unk_06 = 0x10;
+            D_800E6280.girls[D_801405E4].affection = 0x10;
             func_80042940(3);
             if (D_801405E4 == 7) {
-                D_800E6280.unk_110D = 0;
+                D_800E6280.substep = 0;
             } else {
-                D_800E6280.unk_110D = 4;
+                D_800E6280.substep = 4;
             }
         } else {
             zy = get_g_zyotai_s(D_801405E4) & 0x7F;
@@ -1224,7 +1224,7 @@ void func_80134FE4(void) {
                 zy = D_801405E4;
                 if (zy == 0) {
                     func_80042940(8);
-                } else if ((zy == 7) && (D_800E6280.unk_1BC[zy].unk_0C.b[3] & 1)) {
+                } else if ((zy == 7) && (D_800E6280.girls[zy].flags.b[3] & 1)) {
                     func_80042940(9);
                 } else if (zy == 9) {
                     func_80042940(0xA);
@@ -1233,7 +1233,7 @@ void func_80134FE4(void) {
                 }
             } else if (zy == 2) {
                 zy = D_801405E4;
-                if ((zy == 0xA) && (D_800E6280.unk_1BC[zy].unk_0C.b[3] & 1)) {
+                if ((zy == 0xA) && (D_800E6280.girls[zy].flags.b[3] & 1)) {
                     func_80042940(7);
                 }
                 func_80042940(5);
@@ -1251,25 +1251,25 @@ void func_80134FE4(void) {
 }
 
 void func_801352F0(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(D_800B3610);
         sndi("ああ、脇役君ね。", 0, 7);
         func_80052060(0x05000000, 0x0100000B, -1, 7);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("違うよ。", 0, 0xF);
         sndi("Pだよ。", 1, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -1280,17 +1280,17 @@ void func_801352F0(void) {
         sndisp(D_801434D4[D_801405E4], 0, (s32) D_801405E4);
         func_80052060((s32) &D_80143500, (s32) &D_80143558, (s32) D_801405E4, (s32) D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
         break;
     case 6:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_801437BC[D_801405E4], 0, 0x1F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 7:
         xa_wait();
@@ -1301,27 +1301,27 @@ void func_801352F0(void) {
         sndisp(D_80143958[D_801405E4], 0, (s32) D_801405E4);
         func_80052060((s32) &D_80143984, (s32) &D_801439DC, (s32) D_801405E4, (s32) D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 9:
         func_8005215C();
         break;
     case 10:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp("あっ、 ちょっと待って。", 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
 
     case 11:
         xa_wait();
         break;
     case 12:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp("俺は、とりあえず Gの機嫌を とることにした。）", 0, 0x1F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
 
     case 13:
         xa_wait();
@@ -1330,13 +1330,13 @@ void func_801352F0(void) {
         k_sub_reset();
         sndisp("　　　　　・ 　　　　・ 　　　　・", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 15:
         xa_wait();
         break;
     case 16:
-        D_800E6280.unk_110D = 0x14;
+        D_800E6280.substep = 0x14;
         break;
     case 20:
         k_sub_reset();
@@ -1344,7 +1344,7 @@ void func_801352F0(void) {
         sndisp(D_80143BA0[D_801405E4], 0, (s32) D_801405E4);
         func_80052060((s32) &D_80143BCC, (s32) &D_80143C24, (s32) D_801405E4, (s32) D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 21:
         func_8005215C();
@@ -1354,7 +1354,7 @@ void func_801352F0(void) {
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 23:
         xa_wait();
@@ -1362,17 +1362,17 @@ void func_801352F0(void) {
     case 24:
         k_sub_reset();
         func_80044750(0x50C);
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp("良かった。 何とか、Gの機嫌も 直ったみたいだぞ。）", 0, 0x1F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 25:
         xa_wait();
         break;
     default:
-        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 = 0xF;
-        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 = 0xF;
+        D_800E6280.girls[D_800E6280.current_girl].affection = 0xF;
+        D_800E6280.girls[D_800E6280.current_girl].affection = 0xF;
         func_80048E78();
         func_8004E58C();
         set_dec_bri(0);
@@ -1387,7 +1387,7 @@ void func_8013586C(void) {
     /* T-10040: share the XA table address across dialogue setup. */
     u8 girl;
     u32 *table;
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         table = D_80141084;
         k_sub_reset();
@@ -1396,17 +1396,17 @@ void func_8013586C(void) {
         girl = D_801405E4;
         func_80052060((s32) table, (s32) table, 0, (s32) girl);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_80141080, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -1418,7 +1418,7 @@ void func_8013586C(void) {
         girl = D_801405E4;
         func_80052060((s32) D_80140B04, (s32) D_80140B5C, (s32) girl, (s32) girl);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
@@ -1435,26 +1435,26 @@ void func_80135A44(void) {
     u32 sp28;
     u32 temp_hi;
 
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
-        temp_hi = (u32) ((u8) D_800E6280.unk_1BC[D_801405E4].unk_0C.b[3] >> 1) % 3U;
+        temp_hi = (u32) ((u8) D_800E6280.girls[D_801405E4].flags.b[3] >> 1) % 3U;
         sp28 = temp_hi;
         sndisp(D_801410BC[temp_hi], 0, (s32) D_801405E4);
         func_80052060((s32) &D_801410D4, (s32) &D_80141104, (s32) sp28, (s32) D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_801410C8, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -1465,7 +1465,7 @@ void func_80135A44(void) {
         sndisp(D_801410CC, 0, (s32) D_801405E4);
         func_80052060((s32) &D_801410D4, (s32) &D_80141104, 4, (s32) D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
@@ -1479,24 +1479,24 @@ void func_80135A44(void) {
 }
 
 void func_80135C4C(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80141094, 0, (s32) D_801405E4);
         func_80052060((s32) &D_8014109C, (s32) &D_801410AC, 0, (s32) D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_80141098, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -1507,7 +1507,7 @@ void func_80135C4C(void) {
         sndisp(D_80140AD8[D_801405E4], 0, (s32) D_801405E4);
         func_80052060((s32) D_80140B04, (s32) D_80140B5C, (s32) D_801405E4, (s32) D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
@@ -1521,24 +1521,24 @@ void func_80135C4C(void) {
 }
 
 void func_80135E28(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80141040, 0, (s32) D_801405E4);
         func_80052060((s32) &D_8014104C, (s32) &D_80141064, 0, (s32) D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_80141044, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -1549,7 +1549,7 @@ void func_80135E28(void) {
         sndisp(D_80141048, 0, (s32) D_801405E4);
         func_80052060((s32) &D_8014104C, (s32) &D_80141064, 2, (s32) D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
@@ -1563,14 +1563,14 @@ void func_80135E28(void) {
 }
 
 void func_80135FFC(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140AD8[D_801405E4], 0, D_801405E4);
         func_80052060(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
@@ -1584,14 +1584,14 @@ void func_80135FFC(void) {
 }
 
 void func_801360E4(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140AD8[D_801405E4], 0, D_801405E4);
         func_80052060(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
@@ -1605,14 +1605,14 @@ void func_801360E4(void) {
 }
 
 void func_801361CC(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140D18[D_801405E4], 0, D_801405E4);
         func_80052060(D_80140D44, D_80140D9C, D_801405E4, D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
@@ -1626,14 +1626,14 @@ void func_801361CC(void) {
 }
 
 void func_801362B4(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(girl_short_name_table[D_801405E4]);
         sndisp(D_80140F0C[D_801405E4], 0, D_801405E4);
         func_80052060(D_80140F38, D_80140F90, D_801405E4, D_801405E4);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
@@ -1649,7 +1649,7 @@ void func_801362B4(void) {
 void func_8013639C(void) {
     /* T-10040: separate signed-byte loads through an unsigned index home. */
     u32 choice;
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         func_80067E34();
         cal_sprite_init();
@@ -1657,25 +1657,25 @@ void func_8013639C(void) {
         func_8004E58C();
         set_kanji_string(-0x80, 0x32, 0, (s32) "デートする日を選んで下さい", 0);
         k_disp_start(1);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         menu_bar_color(1, 0x2F7FAF, 5, 0);
         break;
     case 1:
         menu_check(1, D_8011ECF6, D_8011ECFA);
         func_8004FC10(1);
         menu_bar_show(1);
-        choice = D_800E6280.unk_1094;
-        if ((choice != -1) && (D_800E6280.unk_F88 & 0x20)) {
+        choice = D_800E6280.menu_cursor_1;
+        if ((choice != -1) && (D_800E6280.pad_pressed & 0x20)) {
             cal_sprite_disp_switch(0);
-            D_80140558 = D_801405A4[D_800E6280.unk_1094];
-            choice = D_800E6280.unk_1094;
+            D_80140558 = D_801405A4[D_800E6280.menu_cursor_1];
+            choice = D_800E6280.menu_cursor_1;
             D_80140554 = D_80140564[choice];
-            if ((D_800E6280.unk_03F == 0xC) && (D_80140558 == 1)) {
-                D_8014055C = D_800E6280.unk_03E + 1;
+            if ((D_800E6280.month == 0xC) && (D_80140558 == 1)) {
+                D_8014055C = D_800E6280.year + 1;
             } else {
-                D_8014055C = (s32) D_800E6280.unk_03E;
+                D_8014055C = (s32) D_800E6280.year;
             }
-            D_800E6280.unk_110D += 1;
+            D_800E6280.substep += 1;
         }
         break;
     default:
@@ -1698,27 +1698,27 @@ s32 func_8013655C(void) {
     u8 temp_v0;
     u32 var_s0;
 
-    var_s0 = D_800E6280.unk_040;
+    var_s0 = D_800E6280.day;
     var_t0 = 0;
     var_s6 = 0;
     var_a3 = 0;
     do {
         var_s0 += 1;
-        if ((u8) D_800E6280.unk_044[0].unk_00[0] < var_s0) {
+        if ((u8) D_800E6280.month_calendar[0].day_kind[0] < var_s0) {
             var_s0 = 1;
             var_s6 = 1;
         }
-        temp_v0 = D_800E6280.unk_044[var_s6].unk_00[var_s0];
+        temp_v0 = D_800E6280.month_calendar[var_s6].day_kind[var_s0];
         if ((temp_v0 == 1) || (temp_v0 == 2)) {
 
-            if (appointment_find_today((s32) D_800E6280.unk_03E, D_800E6280.unk_03F + var_s6, (s32) var_s0) == 0) {
+            if (appointment_find_today((s32) D_800E6280.year, D_800E6280.month + var_s6, (s32) var_s0) == 0) {
 
                 (&spEC[0])[var_t0] = func_80068898(var_s6, (var_s0 - 1)) - 0x10;
                 (&spCC[0])[var_t0] = func_800688F0(var_s6, (var_s0 - 1)) - 0x10;
                 (&spAC[0])[var_t0] = 0x10;
                 (&sp8C[0])[var_t0] = 0x10;
                 D_80140564[var_t0] = (s32) var_s0;
-                D_801405A4[var_t0] = var_s6 + D_800E6280.unk_03F;
+                D_801405A4[var_t0] = var_s6 + D_800E6280.month;
                 var_t0++;
             }
         }
@@ -1726,7 +1726,7 @@ s32 func_8013655C(void) {
     } while (var_a3 != 0x1C);
 
     menu_set(1, var_t0 & 0xFF, &spEC[0], &spCC[0], &spAC[0], &sp8C[0]);
-    D_800E6280.unk_1094 = 0;
+    D_800E6280.menu_cursor_1 = 0;
     return var_t0;
 }
 
@@ -1748,7 +1748,7 @@ void func_80136724(void) {
 
     cal_base_show();
     menu_bar_show(0);
-    switch (g->unk_110D) {
+    switch (g->substep) {
     case 0x0:
         func_8004E58C();
         func_80048E78();
@@ -1756,18 +1756,18 @@ void func_80136724(void) {
         k_sub_reset_point_set();
         set_kanji_string(-0x80, 0x32, 0, "デートする場所を選んで下さい", 0);
         k_disp_start(check_set_k());
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x1:
         menu_check(0, D_8011ECF6, D_8011ECFA);
         func_8004FC10(0);
-        if ((g->unk_1104.u >= 0x11U) && (g->unk_F88 & 0x20)) {
-            if (g->unk_1093 == 0xA) {
+        if ((g->step_timer.u >= 0x11U) && (g->pad_pressed & 0x20)) {
+            if (g->menu_cursor_0 == 0xA) {
                 func_80044750(0x50D);
-                g->unk_110D = 2;
-            } else if (g->unk_1093 >= 0) {
-                g->unk_110D = 4;
-                D_80140550 = (s32) g->unk_1093;
+                g->substep = 2;
+            } else if (g->menu_cursor_0 >= 0) {
+                g->substep = 4;
+                D_80140550 = (s32) g->menu_cursor_0;
             }
         }
         break;
@@ -1778,29 +1778,29 @@ void func_80136724(void) {
         k_sub_reset_point_set();
         set_kanji_string(-0x80, 0x32, 0, "デートする場所を選んで下さい", 0);
         k_disp_start(check_set_k());
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x3:
         menu_check(0, D_8011ECF6, D_8011ECFA);
         func_8004FC10(0);
         menu_bar_show(0);
-        if ((g->unk_1104.u >= 0x11U) && (g->unk_F88 & 0x20)) {
-            if (g->unk_1093 == 0xA) {
+        if ((g->step_timer.u >= 0x11U) && (g->pad_pressed & 0x20)) {
+            if (g->menu_cursor_0 == 0xA) {
                 func_80044750(0x50D);
-                g->unk_110D = 0;
-            } else if (g->unk_1093 >= 0) {
-                g->unk_110D = 4;
-                if (g->unk_1093 < 6) {
-                    D_80140550 = g->unk_1093 + 0xA;
+                g->substep = 0;
+            } else if (g->menu_cursor_0 >= 0) {
+                g->substep = 4;
+                if (g->menu_cursor_0 < 6) {
+                    D_80140550 = g->menu_cursor_0 + 0xA;
                 }
-                if ((g->unk_1093 == 6) || (g->unk_1093 == 7)) {
-                    if ((g->unk_03F == 6) || (g->unk_03F == 7) || (g->unk_03F == 8)) {
-                        D_80140550 = g->unk_1093 + 0xA;
+                if ((g->menu_cursor_0 == 6) || (g->menu_cursor_0 == 7)) {
+                    if ((g->month == 6) || (g->month == 7) || (g->month == 8)) {
+                        D_80140550 = g->menu_cursor_0 + 0xA;
                     } else {
-                        D_80140550 = g->unk_1093 + 0xD;
+                        D_80140550 = g->menu_cursor_0 + 0xD;
                     }
                 }
-                if (g->unk_1093 == 9) {
+                if (g->menu_cursor_0 == 9) {
                     D_80140550 = 0x12;
                 }
             }
@@ -1808,7 +1808,7 @@ void func_80136724(void) {
         break;
     case 0x4:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         if (D_80140558 == 0xD) {
             D_80140558 = 1;
         }
@@ -1824,7 +1824,7 @@ void func_80136724(void) {
         strcat(sp78, "へ 行かない？");
         sndisp(sp78, 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x5:
         xa_wait();
@@ -1833,53 +1833,53 @@ void func_80136724(void) {
         func_80053418(sp68, sp48);
         /* FAKE: this false unsigned test keeps the girl range profitable in
          * uopt; ugen removes it. Restores colors and address sharing, T-25055. */
-        if ((u32) g->unk_F5F < 0) {
+        if ((u32) g->current_girl < 0) {
         }
-        lim = sp68[g->unk_F5F] >> 2;
-        hp = (s16) g->unk_110.unk_02 / 4;
+        lim = sp68[g->current_girl] >> 2;
+        hp = (s16) g->param_trivia.value / 4;
         if (hp < (s32) lim) {
             total = lim;
         } else {
             total = (u32) hp;
         }
-        ent = D_80141134[g->unk_F5F][D_80140550];
+        ent = D_80141134[g->current_girl][D_80140550];
         if (ent != 0) {
             total = ent + total;
         } else {
             total = 0;
         }
-        if (g->unk_114.unk_02 < 0x28) {
-            total = (g->unk_114.unk_02 + total) - 0x28;
+        if (g->param_looks.value < 0x28) {
+            total = (g->param_looks.value + total) - 0x28;
         }
         rnd = rand() & 0xFF;
         if (rnd < total) {
-            g->unk_110D = 0x20;
+            g->substep = 0x20;
         } else {
             if ((total - rnd) < 0x66) {
-                g->unk_110D = 0x40;
+                g->substep = 0x40;
             } else if ((total - rnd) < 0xB3) {
-                g->unk_110D = 0x60;
+                g->substep = 0x60;
             } else {
-                g->unk_110D = 0x80;
+                g->substep = 0x80;
             }
-            g->unk_11C.unk_02 += 9;
-            g->unk_118.unk_02 += rand() & 7;
+            g->param_stress.value += 9;
+            g->param_guts.value += rand() & 7;
             parameter_show_init();
             parameter_show_init();
         }
-        g->unk_1BC[g->unk_F5F].unk_06 += g->unk_10F8 & 3;
-        g->unk_1BC[g->unk_F5F].unk_0A -= 0xC;
-        if (g->unk_1BC[g->unk_F5F].unk_0A < 0) {
-            g->unk_1BC[g->unk_F5F].unk_0A = 0;
+        g->girls[g->current_girl].affection += g->frame_count & 3;
+        g->girls[g->current_girl].syoushin -= 0xC;
+        if (g->girls[g->current_girl].syoushin < 0) {
+            g->girls[g->current_girl].syoushin = 0;
         }
-        if (g->unk_F5F == 6) {
-            if ((u32) (get_g_zyotai_s(g->unk_F5F) & 0x7F) < 2U) {
+        if (g->current_girl == 6) {
+            if ((u32) (get_g_zyotai_s(g->current_girl) & 0x7F) < 2U) {
                 D_801405E4 = 0xB;
             } else {
-                D_801405E4 = g->unk_F5F;
+                D_801405E4 = g->current_girl;
             }
         } else {
-            D_801405E4 = g->unk_F5F;
+            D_801405E4 = g->current_girl;
         }
         break;
     case 0x20:
@@ -1890,23 +1890,23 @@ void func_80136724(void) {
         sp44.bits.day = D_80140554;
         sp44.bits.unk_21 = D_80140560;
         sp44.bits.unk_24 = 0;
-        sp44.bits.girl = g->unk_F5F;
+        sp44.bits.girl = g->current_girl;
         sp44.bits.active = 1;
         sp44.bits.unk_30 = 0;
         func_8006B5BC(sp44.word);
         func_8006B0C8();
-        gnsx(girl_short_name_table[g->unk_F5F]);
-        sndisp(D_801413C8[D_801405E4], 0, (s32) g->unk_F5F);
-        func_80052060((s32) D_801413F8, (s32) D_80141458, (s32) D_801405E4, (s32) g->unk_F5F);
+        gnsx(girl_short_name_table[g->current_girl]);
+        sndisp(D_801413C8[D_801405E4], 0, (s32) g->current_girl);
+        func_80052060((s32) D_801413F8, (s32) D_80141458, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x21:
         func_8005215C();
         break;
     case 0x22:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         strcpy(sp78, "それじゃ、");
         if (D_80140558 == 0xD) {
             D_80140558 = 1;
@@ -1923,32 +1923,32 @@ void func_80136724(void) {
         strcat(sp78, "の前で 待ち合わせということで。");
         sndisp(sp78, 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x23:
         xa_wait();
         break;
     case 0x24:
         k_sub_reset();
-        gnsx(girl_short_name_table[g->unk_F5F]);
-        sndisp(D_80141680[D_801405E4], 0, (s32) g->unk_F5F);
-        func_80052060((s32) D_801416B0, (s32) D_80141710, (s32) D_801405E4, (s32) g->unk_F5F);
+        gnsx(girl_short_name_table[g->current_girl]);
+        sndisp(D_80141680[D_801405E4], 0, (s32) g->current_girl);
+        func_80052060((s32) D_801416B0, (s32) D_80141710, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x25:
         func_8005215C();
         break;
     case 0x26:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         text = D_801418D0[D_801405E4];
         if (*text == 0x20) {
-            g->unk_110D = 0x2D;
+            g->substep = 0x2D;
         } else {
             sndisp(text, 0, 0xF);
             k_sub_disp_start(0);
-            g->unk_110D += 1;
+            g->substep += 1;
         }
         break;
     case 0x27:
@@ -1956,44 +1956,44 @@ void func_80136724(void) {
         break;
     case 0x28:
         k_sub_reset();
-        gnsx(girl_short_name_table[g->unk_F5F]);
+        gnsx(girl_short_name_table[g->current_girl]);
         text = D_8014197C[D_801405E4];
         if (*text == 0x20) {
-            g->unk_110D = 0x2D;
+            g->substep = 0x2D;
         } else {
-            sndisp(text, 0, (s32) g->unk_F5F);
+            sndisp(text, 0, (s32) g->current_girl);
             k_sub_disp_start(0);
-            g->unk_110D += 1;
+            g->substep += 1;
         }
-        func_80052060((s32) D_801419AC, (s32) D_80141A0C, (s32) D_801405E4, (s32) g->unk_F5F);
+        func_80052060((s32) D_801419AC, (s32) D_80141A0C, (s32) D_801405E4, (s32) g->current_girl);
         break;
     case 0x29:
         func_8005215C();
         break;
     case 0x2A:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         text = D_80141AB0[D_801405E4];
         if (*text == 0x20) {
-            g->unk_110D = 0x2D;
+            g->substep = 0x2D;
         } else {
             sndisp(text, 0, 0xF);
             k_sub_disp_start(0);
-            g->unk_110D += 1;
+            g->substep += 1;
         }
         break;
     case 0x2B:
         xa_wait();
         break;
     case 0x2C:
-        g->unk_110D = 0x2D;
+        g->substep = 0x2D;
         break;
     case 0x2D:
         k_sub_reset();
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x2E:
         xa_wait();
@@ -2001,7 +2001,7 @@ void func_80136724(void) {
     case 0x2F:
         k_sub_reset();
         func_80044750(0x50C);
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         strcpy(sp78, "やったー。 ");
         strcat(sp78, D_800B3288[D_80140558]);
         strcat(sp78, "月");
@@ -2013,78 +2013,78 @@ void func_80136724(void) {
         strcat(sp78, "が、楽しみだぜ。 ");
         sndisp(sp78, 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x30:
         xa_wait();
         break;
     case 0x31:
-        g->unk_110D = 0xFF;
+        g->substep = 0xFF;
         break;
     case 0x40:
         k_sub_reset();
-        gnsx(girl_short_name_table[g->unk_F5F]);
-        if ((g->unk_F5F == 6) && ((u32) (get_g_zyotai_s(g->unk_F5F) & 0x7F) < 2U)) {
+        gnsx(girl_short_name_table[g->current_girl]);
+        if ((g->current_girl == 6) && ((u32) (get_g_zyotai_s(g->current_girl) & 0x7F) < 2U)) {
             D_801405E4 = 0xB;
         }
-        if (g->unk_F5F == 4) {
+        if (g->current_girl == 4) {
             hp = (D_80140554 + 6) / 7;
             /* FAKE: the second comparison uses * 1 to retain expression
              * operand order; no runtime instruction remains, T-25055. */
-            if ((hp == 3) && (D_80140558 == g->unk_03F) && (g->unk_044[0].unk_00[D_80140554] == 1)) {
+            if ((hp == 3) && (D_80140558 == g->month) && (g->month_calendar[0].day_kind[D_80140554] == 1)) {
                 D_801405E4 = 0xC;
-            } else if (((hp * 1) == 3) && (D_80140558 != g->unk_03F) && (g->unk_044[1].unk_00[D_80140554] == 1)) {
+            } else if (((hp * 1) == 3) && (D_80140558 != g->month) && (g->month_calendar[1].day_kind[D_80140554] == 1)) {
                 D_801405E4 = 0xC;
             }
         }
-        sndisp(D_80141D80[D_801405E4], 0, (s32) g->unk_F5F);
+        sndisp(D_80141D80[D_801405E4], 0, (s32) g->current_girl);
         k_sub_disp_start(0);
-        func_80052060((s32) D_80141DB4, (s32) D_80141E1C, (s32) D_801405E4, (s32) g->unk_F5F);
-        g->unk_110D += 1;
+        func_80052060((s32) D_80141DB4, (s32) D_80141E1C, (s32) D_801405E4, (s32) g->current_girl);
+        g->substep += 1;
         break;
     case 0x41:
         func_8005215C();
         break;
     case 0x42:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         sndisp(D_80141FE0[D_801405E4], 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         /* fallthrough */
     case 0x43:
         xa_wait();
         break;
     case 0x44:
         k_sub_reset();
-        gnsx(girl_short_name_table[g->unk_F5F]);
-        sndisp(D_80142254[D_801405E4], 0, (s32) g->unk_F5F);
-        func_80052060((s32) D_80142288, (s32) D_801422F0, (s32) D_801405E4, (s32) g->unk_F5F);
+        gnsx(girl_short_name_table[g->current_girl]);
+        sndisp(D_80142254[D_801405E4], 0, (s32) g->current_girl);
+        func_80052060((s32) D_80142288, (s32) D_801422F0, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x45:
         func_8005215C();
         break;
     case 0x46:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         sndisp(D_80142570[D_801405E4], 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x47:
         xa_wait();
         break;
     case 0x48:
-        if (g->unk_F5F == 9) {
-            g->unk_110D = 0x4D;
+        if (g->current_girl == 9) {
+            g->substep = 0x4D;
         } else {
             k_sub_reset();
             func_80044750(0x50B);
             sndi("ガチャ", 0, 0x2F);
             k_sub_disp_start(0);
-            g->unk_110D += 1;
+            g->substep += 1;
         }
         break;
     case 0x49:
@@ -2092,39 +2092,39 @@ void func_80136724(void) {
         break;
     case 0x4A:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         func_80044750(0x50C);
-        if (g->unk_F5F == 5) {
+        if (g->current_girl == 5) {
             sndisp("言葉うつっちゃったよ。）", 0, 0x1F);
         } else {
             sndisp("くそ、次こそ絶対 誘ってみせるぜ。）", 0, 0x1F);
         }
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x4B:
         xa_wait();
         break;
     case 0x4C:
-        g->unk_110D = 0xFF;
+        g->substep = 0xFF;
         break;
     case 0x4D:
         k_sub_reset();
-        gnsx(girl_short_name_table[g->unk_F5F]);
-        sndisp("あの…。 また今度、 誘って下さい…。", 0, (s32) g->unk_F5F);
-        func_80052060(0x02000163, 0x19000170, -1, (s32) g->unk_F5F);
+        gnsx(girl_short_name_table[g->current_girl]);
+        sndisp("あの…。 また今度、 誘って下さい…。", 0, (s32) g->current_girl);
+        func_80052060(0x02000163, 0x19000170, -1, (s32) g->current_girl);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x4E:
         func_8005215C();
         break;
     case 0x4F:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         sndisp("うん、そうするよ。 じゃあ。", 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x50:
         xa_wait();
@@ -2134,55 +2134,55 @@ void func_80136724(void) {
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x52:
         xa_wait();
         break;
     case 0x53:
-        g->unk_110D = 0x4A;
+        g->substep = 0x4A;
         break;
     case 0x60:
         k_sub_reset();
-        gnsx(girl_short_name_table[g->unk_F5F]);
-        sndisp(D_80142798[D_801405E4], 0, (s32) g->unk_F5F);
-        func_80052060((s32) D_801427C8, (s32) D_80142828, (s32) D_801405E4, (s32) g->unk_F5F);
+        gnsx(girl_short_name_table[g->current_girl]);
+        sndisp(D_80142798[D_801405E4], 0, (s32) g->current_girl);
+        func_80052060((s32) D_801427C8, (s32) D_80142828, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x61:
         func_8005215C();
         break;
     case 0x62:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         sndisp(D_801429E0[D_801405E4], 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x63:
         xa_wait();
         break;
     case 0x64:
         k_sub_reset();
-        gnsx(girl_short_name_table[g->unk_F5F]);
-        sndisp(D_80142B40[D_801405E4], 0, (s32) g->unk_F5F);
-        func_80052060((s32) D_80142B70, (s32) D_80142BD0, (s32) D_801405E4, (s32) g->unk_F5F);
+        gnsx(girl_short_name_table[g->current_girl]);
+        sndisp(D_80142B40[D_801405E4], 0, (s32) g->current_girl);
+        func_80052060((s32) D_80142B70, (s32) D_80142BD0, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x65:
         func_8005215C();
         break;
     case 0x66:
         if (*D_80142CB0[D_801405E4] == 0x20) {
-            g->unk_110D = 0x68;
+            g->substep = 0x68;
         } else {
             k_sub_reset();
-            gnsx(g->unk_0D4);
+            gnsx(g->player_family_name);
             sndisp(D_80142CB0[D_801405E4], 0, 0xF);
             k_sub_disp_start(0);
-            g->unk_110D += 1;
+            g->substep += 1;
         }
         break;
     case 0x67:
@@ -2193,7 +2193,7 @@ void func_80136724(void) {
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x69:
         xa_wait();
@@ -2201,58 +2201,58 @@ void func_80136724(void) {
     case 0x6A:
         k_sub_reset();
         func_80044750(0x50C);
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         sndisp("あーあ、間が悪かったかな。", 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x6B:
         xa_wait();
         break;
     case 0x6C:
-        g->unk_110D = 0xFF;
+        g->substep = 0xFF;
         break;
     case 0x80:
         k_sub_reset();
-        gnsx(girl_short_name_table[g->unk_F5F]);
-        sndisp(D_80142E70[D_801405E4], 0, (s32) g->unk_F5F);
-        func_80052060((s32) D_80142EA0, (s32) D_80142F00, (s32) D_801405E4, (s32) g->unk_F5F);
+        gnsx(girl_short_name_table[g->current_girl]);
+        sndisp(D_80142E70[D_801405E4], 0, (s32) g->current_girl);
+        func_80052060((s32) D_80142EA0, (s32) D_80142F00, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x81:
         func_8005215C();
         break;
     case 0x82:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         sndisp(D_8014306C[D_801405E4], 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x83:
         xa_wait();
         break;
     case 0x84:
         k_sub_reset();
-        gnsx(girl_short_name_table[g->unk_F5F]);
-        sndisp(D_801431E8[D_801405E4], 0, (s32) g->unk_F5F);
-        func_80052060((s32) D_80143218, (s32) D_80143278, (s32) D_801405E4, (s32) g->unk_F5F);
+        gnsx(girl_short_name_table[g->current_girl]);
+        sndisp(D_801431E8[D_801405E4], 0, (s32) g->current_girl);
+        func_80052060((s32) D_80143218, (s32) D_80143278, (s32) D_801405E4, (s32) g->current_girl);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x85:
         func_8005215C();
         break;
     case 0x86:
         if (*D_8014333C[D_801405E4] == 0x20) {
-            g->unk_110D = 0x88;
+            g->substep = 0x88;
         } else {
             k_sub_reset();
-            gnsx(g->unk_0D4);
+            gnsx(g->player_family_name);
             sndisp(D_8014333C[D_801405E4], 0, 0xF);
             k_sub_disp_start(0);
-            g->unk_110D += 1;
+            g->substep += 1;
         }
         break;
     case 0x87:
@@ -2263,24 +2263,24 @@ void func_80136724(void) {
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x89:
         xa_wait();
         break;
     case 0x8A:
         k_sub_reset();
-        gnsx(g->unk_0D4);
+        gnsx(g->player_family_name);
         func_80044750(0x50C);
         sndisp("やっぱり、だめか…。", 0, 0xF);
         k_sub_disp_start(0);
-        g->unk_110D += 1;
+        g->substep += 1;
         break;
     case 0x8B:
         xa_wait();
         break;
     case 0x8C:
-        g->unk_110D = 0xFF;
+        g->substep = 0xFF;
         break;
     case 0xFD:
         xa_wait();
@@ -2289,7 +2289,7 @@ void func_80136724(void) {
         k_sub_reset();
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
-        g->unk_110D = 0xFD;
+        g->substep = 0xFD;
         break;
     case 0xFF:
     default:
@@ -2306,33 +2306,33 @@ void func_801380D8(void) {
     u8 state;
     u32 temp_hi;
 
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
-        D_800E6280.unk_1BC[12].unk_0C.b[3] += 1;
+        D_800E6280.girls[12].flags.b[3] += 1;
         gnsx(D_800B3624);
         sndisp(D_80144194, 0, 0xC);
         func_80052060((s32) &D_801441A8, (s32) &D_801441D0, 0, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp("もしもし、 Pですけど。", 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 3:
         xa_wait();
         break;
     case 4:
-        girl = &D_800E6280.unk_1BC[12];
-        if ((u8) girl->unk_0C.b[3] >= 0x29U) {
-            temp_hi = (u8) girl->unk_0C.b[3] % 3U;
+        girl = &D_800E6280.girls[12];
+        if ((u8) girl->flags.b[3] >= 0x29U) {
+            temp_hi = (u8) girl->flags.b[3] % 3U;
             switch (temp_hi) {
             case 0:
                 func_80042940(0x43);
@@ -2344,12 +2344,12 @@ void func_801380D8(void) {
                 func_80042940(0x45);
                 break;
             }
-        } else if ((u8) girl->unk_0C.b[3] >= 0x1FU) {
+        } else if ((u8) girl->flags.b[3] >= 0x1FU) {
             func_80042940(0x42);
-        } else if ((u8) girl->unk_0C.b[3] >= 0x15U) {
+        } else if ((u8) girl->flags.b[3] >= 0x15U) {
             func_80042940(0x41);
         } else {
-            D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+            D_800E6280.substep = (state = D_800E6280.substep) + 1;
         }
         break;
     case 5:
@@ -2358,17 +2358,17 @@ void func_801380D8(void) {
         sndisp(D_80144198, 0, 0xC);
         func_80052060((s32) &D_801441A8, (s32) &D_801441D0, 1, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 6:
         func_8005215C();
         break;
     case 7:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_8014419C, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 8:
         xa_wait();
@@ -2379,7 +2379,7 @@ void func_801380D8(void) {
         sndisp(D_801441A0, 0, 0xC);
         func_80052060((s32) &D_801441A8, (s32) &D_801441D0, 3, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 10:
         func_8005215C();
@@ -2389,7 +2389,7 @@ void func_801380D8(void) {
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 12:
         xa_wait();
@@ -2397,10 +2397,10 @@ void func_801380D8(void) {
     case 13:
         k_sub_reset();
         func_80044750(0x50C);
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_801441A4, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D = (state = D_800E6280.unk_110D) + 1;
+        D_800E6280.substep = (state = D_800E6280.substep) + 1;
         break;
     case 14:
         xa_wait();
@@ -2420,24 +2420,24 @@ void func_801380D8(void) {
 }
 
 void func_801384F0(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_801441F8, 0, 0xC);
         func_80052060((s32) &D_80144210, (s32) &D_80144240, 0, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_801441FC, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -2448,17 +2448,17 @@ void func_801384F0(void) {
         sndisp(D_80144200, 0, 0xC);
         func_80052060((s32) &D_80144210, (s32) &D_80144240, 2, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
         break;
     case 6:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi(D_80144204, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 7:
         xa_wait();
@@ -2469,7 +2469,7 @@ void func_801384F0(void) {
         sndisp(D_80144208, 0, 0xC);
         func_80052060((s32) &D_80144210, (s32) &D_80144240, 4, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 9:
         func_8005215C();
@@ -2479,7 +2479,7 @@ void func_801384F0(void) {
         func_80044750(0x50B);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         /* fallthrough */
     case 11:
         xa_wait();
@@ -2487,10 +2487,10 @@ void func_801384F0(void) {
     case 12:
         k_sub_reset();
         func_80044750(0x50C);
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_8014420C, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 13:
         xa_wait();
@@ -2510,24 +2510,24 @@ void func_801384F0(void) {
 }
 
 void func_8013883C(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144270, 0, 0xC);
         func_80052060((s32) &D_80144298, (s32) &D_801442E8, 0, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_80144274, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -2538,17 +2538,17 @@ void func_8013883C(void) {
         sndisp(D_80144278, 0, 0xC);
         func_80052060((s32) &D_80144298, (s32) &D_801442E8, 2, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
         break;
     case 6:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi(D_8014427C, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 7:
         xa_wait();
@@ -2559,17 +2559,17 @@ void func_8013883C(void) {
         sndisp(D_80144280, 0, 0xC);
         func_80052060((s32) &D_80144298, (s32) &D_801442E8, 4, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 9:
         func_8005215C();
         break;
     case 10:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_80144284, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         /* fallthrough */
     case 11:
         xa_wait();
@@ -2580,17 +2580,17 @@ void func_8013883C(void) {
         sndisp(D_80144288, 0, 0xC);
         func_80052060((s32) &D_80144298, (s32) &D_801442E8, 6, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 13:
         func_8005215C();
         break;
     case 14:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_8014428C, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 15:
         xa_wait();
@@ -2601,7 +2601,7 @@ void func_8013883C(void) {
         sndisp(D_80144290, 0, 0xC);
         func_80052060((s32) &D_80144298, (s32) &D_801442E8, 8, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 17:
         func_8005215C();
@@ -2611,17 +2611,17 @@ void func_8013883C(void) {
         func_80044750(0x50C);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 19:
         xa_wait();
         break;
     case 20:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_80144294, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 21:
         xa_wait();
@@ -2641,24 +2641,24 @@ void func_8013883C(void) {
 }
 
 void func_80138D20(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144338, 0, 0xC);
         func_80052060((s32) &D_80144350, (s32) &D_80144380, 0, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_8014433C, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -2669,17 +2669,17 @@ void func_80138D20(void) {
         sndisp(D_80144340, 0, 0xC);
         func_80052060((s32) &D_80144350, (s32) &D_80144380, 2, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
         break;
     case 6:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi(D_80144344, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 7:
         xa_wait();
@@ -2690,7 +2690,7 @@ void func_80138D20(void) {
         sndisp(D_80144348, 0, 0xC);
         func_80052060((s32) &D_80144350, (s32) &D_80144380, 4, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 9:
         func_8005215C();
@@ -2700,17 +2700,17 @@ void func_80138D20(void) {
         func_80044750(0x50C);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         /* fallthrough */
     case 11:
         xa_wait();
         break;
     case 12:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_8014434C, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 13:
         xa_wait();
@@ -2730,24 +2730,24 @@ void func_80138D20(void) {
 }
 
 void func_80139064(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_801443B0, 0, 0xC);
         func_80052060((s32) &D_801443C8, (s32) &D_801443F8, 0, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_801443B4, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -2758,17 +2758,17 @@ void func_80139064(void) {
         sndisp(D_801443B8, 0, 0xC);
         func_80052060((s32) &D_801443C8, (s32) &D_801443F8, 2, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
         break;
     case 6:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi(D_801443BC, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 7:
         xa_wait();
@@ -2779,7 +2779,7 @@ void func_80139064(void) {
         sndisp(D_801443C0, 0, 0xC);
         func_80052060((s32) &D_801443C8, (s32) &D_801443F8, 4, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 9:
         func_8005215C();
@@ -2789,17 +2789,17 @@ void func_80139064(void) {
         func_80044750(0x50C);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         /* fallthrough */
     case 11:
         xa_wait();
         break;
     case 12:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_801443C4, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 13:
         xa_wait();
@@ -2819,24 +2819,24 @@ void func_80139064(void) {
 }
 
 void func_801393A8(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         gnsx(D_800B3624);
         sndisp(D_80144428, 0, 0xC);
         func_80052060((s32) &D_80144440, (s32) &D_80144470, 0, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_8005215C();
         break;
     case 2:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_8014442C, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 3:
         xa_wait();
@@ -2847,17 +2847,17 @@ void func_801393A8(void) {
         sndisp(D_80144430, 0, 0xC);
         func_80052060((s32) &D_80144440, (s32) &D_80144470, 2, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 5:
         func_8005215C();
         break;
     case 6:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi(D_80144434, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 7:
         xa_wait();
@@ -2868,7 +2868,7 @@ void func_801393A8(void) {
         sndisp(D_80144438, 0, 0xC);
         func_80052060((s32) &D_80144440, (s32) &D_80144470, 4, 0xC);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 9:
         func_8005215C();
@@ -2878,17 +2878,17 @@ void func_801393A8(void) {
         func_80044750(0x50C);
         sndi("ガチャ", 0, 0x2F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         /* fallthrough */
     case 11:
         xa_wait();
         break;
     case 12:
         k_sub_reset();
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp(D_8014443C, 0, 0xF);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 13:
         xa_wait();
@@ -2908,15 +2908,15 @@ void func_801393A8(void) {
 }
 
 void func_801396EC(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         func_80044750(0x50C);
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndi("あ〜あ、留守みたいだな。", 0, 0x1F);
         sndi("今日はあきらめるか……。）", 1, 0x1F);
         k_sub_disp_start(0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         xa_wait();

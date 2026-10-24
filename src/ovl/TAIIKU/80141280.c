@@ -59,8 +59,8 @@ void func_80141280(void) {
         return;
     case 4:
         normal_date_bg_fadein();
-        if (D_800E6280.unk_110A != 0) {
-            D_800E6280.unk_110A = 0;
+        if (D_800E6280.step != 0) {
+            D_800E6280.step = 0;
             D_80122EC8 += 1;
         }
         Default_Disp();
@@ -74,7 +74,7 @@ void func_80141280(void) {
             func_80141B70();
             D_800CA148 = 0;
             /* FAKE: the (u8) narrowing adds the ugen temporary the original has for this test (T-19032) */
-            if ((u8)(D_800E6280.unk_0F4.b[1] & 2)) {
+            if ((u8)(D_800E6280.player_flags.b[1] & 2)) {
                 D_800CA148 = 6;
             }
             D_800CA14C = 0;
@@ -86,25 +86,25 @@ void func_80141280(void) {
         return;
     case 6:
         normal_date_speak();
-        if (D_800E6280.unk_110A != 0) {
+        if (D_800E6280.step != 0) {
             D_800CA148 = 1;
             D_80122EC8 += 1;
-            D_800E6280.unk_110A = 0;
+            D_800E6280.step = 0;
         }
         Default_Disp();
         return;
     case 7:
         normal_date_speak_012();
-        if (D_800E6280.unk_110A != 0) {
+        if (D_800E6280.step != 0) {
             func_80141964();
-            D_800E6280.unk_110A = 0;
+            D_800E6280.step = 0;
             D_80122EC8 = 8;
         }
         Default_Disp();
         return;
     case 8:
         func_801419F8();
-        if (D_800E6280.unk_110A != 0) {
+        if (D_800E6280.step != 0) {
             /* FAKE: u32 view through the address gives the selector $v1, as in the original (T-19032) */
             switch (*(u32 *)&D_80122CDC) {
             case 0:
@@ -120,21 +120,21 @@ void func_80141280(void) {
                 func_80046500();
                 break;
             }
-            D_800E6280.unk_110A = 0;
+            D_800E6280.step = 0;
         }
         Default_Disp();
         return;
     case 9:
         normal_date_speak_012();
-        if (D_800E6280.unk_110A != 0) {
+        if (D_800E6280.step != 0) {
             D_80122EC8 = 0xA;
-            D_800E6280.unk_110A = 0;
+            D_800E6280.step = 0;
         }
         Default_Disp();
         return;
     case 10:
         func_801419F8();
-        if (D_800E6280.unk_110A != 0) {
+        if (D_800E6280.step != 0) {
             /* FAKE: u32 view through the address gives the selector $v1, as in the original (T-19032) */
             switch (*(u32 *)&D_80122CDC) {
             case 0:
@@ -150,15 +150,15 @@ void func_80141280(void) {
                 func_80046500();
                 break;
             }
-            D_800E6280.unk_110A = 0;
+            D_800E6280.step = 0;
         }
         Default_Disp();
         return;
     case 11:
         normal_date_speak_012();
-        if (D_800E6280.unk_110A != 0) {
+        if (D_800E6280.step != 0) {
             D_80122EC8 = 8;
-            D_800E6280.unk_110A = 0;
+            D_800E6280.step = 0;
         }
         Default_Disp();
         return;
@@ -246,18 +246,18 @@ s32 func_801419F8(void) {
     menu_bar_show(0);
     func_8006BD6C(1);
     func_8006BA40();
-    if (D_800E6280.unk_F88 & 0x20) {
+    if (D_800E6280.pad_pressed & 0x20) {
         if (check_end_k() != 0) {
-            if (D_800E6280.unk_F90[0].unk_06 != 0) {
+            if (D_800E6280.menu_items[0].hover != 0) {
                 D_80122CDC = 0;
-            } else if (D_800E6280.unk_F90[2].unk_06 != 0) {
+            } else if (D_800E6280.menu_items[2].hover != 0) {
                 D_80122CDC = 1;
-            } else if (D_800E6280.unk_F90[4].unk_06 != 0) {
+            } else if (D_800E6280.menu_items[4].hover != 0) {
                 D_80122CDC = 2;
             } else {
                 return 0;
             }
-            ((DisplayActor44 *)D_8011ECD0)->unk_03 &= 0xFF7F;
+            ((DisplayActor44 *)D_8011ECD0)->draw_flags &= 0xFF7F;
             k_reset(1);
             func_8004284C();
         }

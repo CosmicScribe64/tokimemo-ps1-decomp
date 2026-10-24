@@ -87,7 +87,7 @@ void func_80156D78(void) {
         if (D_8015EBB0 >= D_8015ED94) {
             D_8015EBB0 = D_8015ED94 - 1;
         }
-        func_8014D11C((s32) D_8015E828, (s32) D_800E6280.unk_0D4, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
+        func_8014D11C((s32) D_8015E828, (s32) D_800E6280.player_family_name, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
         func_8013E810(0x28, 0xFF, 1, 0);
         func_8014EF3C();
@@ -155,7 +155,7 @@ void func_80157158(void) {
         break;
     case 0x4:
         func_8013E97C(0x28, 0, 0);
-        ((DisplayActor44 *)D_8011ECD0)[136].unk_38 = 0x51000000;
+        ((DisplayActor44 *)D_8011ECD0)[136].quad_flags = 0x51000000;
         func_8013E7C0(0x28, 3, 5, 1);
         func_8014EF3C();
         break;
@@ -175,11 +175,11 @@ void func_80157158(void) {
         D_8015EDD8 = 0x50;
         break;
     case 0x50:
-        if (!(((DisplayActor44 *)D_8011ECD0)[137].unk_02 & 1)) {
+        if (!(((DisplayActor44 *)D_8011ECD0)[137].flags & 1)) {
             func_8013F15C(0x508, 1, 0);
             D_8015EC74 -= 1;
             if (D_8015EC74 == 0) {
-                ((DisplayActor44 *)D_8011ECD0)[136].unk_38 = 0x41000000;
+                ((DisplayActor44 *)D_8011ECD0)[136].quad_flags = 0x41000000;
                 func_8013E810(0x28, 0xFF, 1, 0);
                 func_8013E810(0x29, 0xFF, 1, 0);
                 func_8014EF3C();
@@ -195,7 +195,7 @@ void func_80157158(void) {
         if (D_8015EBB0 >= D_8015ED94) {
             D_8015EBB0 = D_8015ED94 - 1;
         }
-        func_8014D11C((s32) D_8015E828, (s32) D_800E6280.unk_0D4, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
+        func_8014D11C((s32) D_8015E828, (s32) D_800E6280.player_family_name, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
         func_8014EF3C();
         break;
@@ -252,7 +252,7 @@ void func_80157640(void) {
         func_8014F080(0x1E);
         break;
     case 3:
-        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcpy(D_8015E828, D_800E6280.player_family_name);
         strcat(D_8015E828, "達は逃げ出した。");
         func_8014B738(D_8015E8F0, 1, 0x5A);
         func_8014EF3C();
@@ -261,14 +261,14 @@ void func_80157640(void) {
         func_8014F178(0);
         break;
     case 5:
-        ((DisplayActor44 *)D_8011ECD0)[125].unk_03 = 0x81;
+        ((DisplayActor44 *)D_8011ECD0)[125].draw_flags = 0x81;
         func_8013E7C0(0x30, 2, 1, 1);
         func_8013F15C(0x503, 1, 0);
         func_8014EF3C();
         break;
     case 6:
-        ((DisplayActor44 *)D_8011ECD0)[125].unk_26 += 4;
-        ((DisplayActor44 *)D_8011ECD0)[144].unk_26 += 4;
+        ((DisplayActor44 *)D_8011ECD0)[125].x += 4;
+        ((DisplayActor44 *)D_8011ECD0)[144].x += 4;
         D_8015EDE0 += 1;
         if (D_8015EDE0 >= 0x21) {
             func_8014EF3C();

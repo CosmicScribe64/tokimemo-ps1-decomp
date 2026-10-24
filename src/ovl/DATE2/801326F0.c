@@ -11,9 +11,9 @@ void func_801326F0(void) {
     FnTbl31 tbl;
 
     tbl = D_8013A440;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
-    if (D_800E6280.unk_1109 == 0 && (u8)D_800E6280.unk_110A < 0x13U) {
+    if (D_800E6280.stage == 0 && (u8)D_800E6280.step < 0x13U) {
         func_80066C08(1);
     }
 }
@@ -38,7 +38,7 @@ s32 func_8013281C(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
         func_8004284C();
-        D_800E6280.unk_110A -= 3;
+        D_800E6280.step -= 3;
         return 0;
     }
     func_8005751C(0);
@@ -52,7 +52,7 @@ void func_801328A8(void) {
 
 /* FAKE: s32 fall-through preserves the original implicit v0 result. T-10010. */
 s32 func_801328D0(void) {
-    if ((D_800E6280.unk_F88 & 0x400040) && D_800E6280.unk_1104.u >= 2U) {
+    if ((D_800E6280.pad_pressed & 0x400040) && D_800E6280.step_timer.u >= 2U) {
         func_80044750(0x1508);
         D_80122D00 = 0;
         k_reset(1);
@@ -63,14 +63,14 @@ s32 func_801328D0(void) {
         return 0;
     }
     if (check_end_k()) {
-        if (D_800E6280.unk_110D++ < 0x40U) {
+        if (D_800E6280.substep++ < 0x40U) {
             return 0;
         }
-        D_800E6280.unk_110D = 0;
+        D_800E6280.substep = 0;
         k_reset(1);
     }
     func_801325F4();
-    if (D_800E6280.unk_1104.u++ == 0) {
+    if (D_800E6280.step_timer.u++ == 0) {
         if (D_8013A42C < 3 && D_8013A428 == 0) {
             func_80044750(0x609);
         }
@@ -79,7 +79,7 @@ s32 func_801328D0(void) {
 
 void func_801329F0(void) {
     func_80132670();
-    if (D_800E6280.unk_1104.w++ == 0) {
+    if (D_800E6280.step_timer.w++ == 0) {
         if (D_8013A42C == 1) {
             func_80044750(0x60A);
         }
@@ -87,7 +87,7 @@ void func_801329F0(void) {
 }
 void func_80132A48(void) {
     func_80132670();
-    if (D_800E6280.unk_1104.w++ == 0) {
+    if (D_800E6280.step_timer.w++ == 0) {
         if (D_8013A42C == 1) {
             func_80044750(0x60B);
         }
@@ -106,10 +106,10 @@ void func_80132B08(void) {
     if (func_80044E8C() == 1) {
         func_8004284C();
     }
-    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
+    if ((u32) D_800E6280.step_timer.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
+        func_80042940((D_800E6280.step - 1) & 0xFF);
     }
 }
 
@@ -139,15 +139,15 @@ void func_80132BEC(void) {
 }
 
 void func_80132C60(void) {
-    D_800E6280.unk_71E |= 0x10;
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.daily_event_bits |= 0x10;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     func_8004E58C();
     strcpy(D_800CA19C, "遊園地");
     strcpy(D_800CA1DC, "園内");
     k_reset(1);
     func_8008585C();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0x80;
     D_800B5940 = 0;
     addr_init_bustup();

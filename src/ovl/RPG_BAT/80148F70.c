@@ -7,7 +7,7 @@ void func_80148F70(void) {
     s32 base;
     s32 half;
 
-    stat = D_800E6280.unk_66C[D_8015EBA0].unk_00;
+    stat = D_800E6280.clubs[D_8015EBA0].exp;
     if (stat < 50) {
         base = 50;
     } else if (stat > 550) {
@@ -177,7 +177,7 @@ void func_801495DC(void) {
     s32 base;
     s32 r;
 
-    rate = D_800E6280.unk_10C.unk_02;
+    rate = D_800E6280.param_athletics.value;
     lv = (rate > 300) ? 300 : rate;
     base = func_8013EA00(100, 100) + lv * 9 / 2;
     r = func_8013E9A8(0x1000);

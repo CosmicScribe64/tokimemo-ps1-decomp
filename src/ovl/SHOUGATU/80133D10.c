@@ -6,7 +6,7 @@ void func_80133D10(void) {
     FnTbl23 tbl;
 
     tbl = D_80143CC0;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -23,7 +23,7 @@ void func_80133D98(void) {
     if (D_80143B18 == 0) {
         var_v0 = var_v0;
         D_80143B00 = var_v0;
-        if (D_800E6280.unk_F5F == 5) {
+        if (D_800E6280.current_girl == 5) {
             var_v0 = 2 + var_v0;
             D_80143B00 = var_v0;
         }
@@ -48,7 +48,7 @@ void func_80133E6C(void) {
 }
 
 void func_80133EA8(void) {
-    if ((D_80143B20 == 0) && (((u32) D_800E6280.unk_10F8 % 3U) == 0)) {
+    if ((D_80143B20 == 0) && (((u32) D_800E6280.frame_count % 3U) == 0)) {
         if (D_80143B24 != 0) {
             func_80085B3C(5, 3);
         } else {
@@ -60,7 +60,7 @@ void func_80133EA8(void) {
 }
 
 void func_80133F24(void) {
-    if ((D_800E6280.unk_F5F != 5) || (D_80143B20 != 0) || (D_80143B18 == 0)) {
+    if ((D_800E6280.current_girl != 5) || (D_80143B20 != 0) || (D_80143B18 == 0)) {
         func_80042808();
         return;
     }
@@ -69,7 +69,7 @@ void func_80133F24(void) {
 
 void func_80133F88(void) {
     if (D_80143B20 != 0) {
-        D_800E6280.unk_110A += 4;
+        D_800E6280.step += 4;
     }
     func_8004284C();
 }
@@ -83,7 +83,7 @@ void func_80133FC8(void) {
 }
 
 void func_80134004(void) {
-    if ((D_800E6280.unk_F5F == 5) && (D_80143B18 == 0)) {
+    if ((D_800E6280.current_girl == 5) && (D_80143B18 == 0)) {
         func_801323D4();
         return;
     }
@@ -100,11 +100,11 @@ void func_80134058(void) {
 
 void func_80134094(void) {
     if (D_80122CDC != 0) {
-        D_800E6280.unk_1BC[5].unk_06 -= 1;
-        D_800E6280.unk_1BC[5].unk_02 -= 1;
-        D_800E6280.unk_1BC[5].unk_0A += 0xA;
+        D_800E6280.girls[5].affection -= 1;
+        D_800E6280.girls[5].tokimeki -= 1;
+        D_800E6280.girls[5].syoushin += 0xA;
     } else {
-        D_800E6280.unk_1BC[5].unk_02 += 1;
+        D_800E6280.girls[5].tokimeki += 1;
     }
     check_para_limit();
     func_8004284C();

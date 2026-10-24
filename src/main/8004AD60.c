@@ -62,8 +62,8 @@ void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
                 p->r0 = 0x80;
                 p->g0 = 0x80;
                 p->b0 = 0x80;
-                p->x0 = D_800E6280.unk_014[D_8011ECA0] + a1 - n * 5;
-                p->y0 = D_800E6280.unk_018[D_8011ECA0] + a2;
+                p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + a1 - n * 5;
+                p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + a2;
                 p->u0 = D_800B3D84[(v % 10) * 2];
                 p->v0 = D_800B3D84[(v % 10) * 2 + 1];
                 p->clut = func_8009ED74(tpx, tpy);
@@ -85,8 +85,8 @@ void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
             p->r0 = 0x80;
             p->g0 = 0x80;
             p->b0 = 0x80;
-            p->x0 = D_800E6280.unk_014[D_8011ECA0] + a1 - n * 5;
-            p->y0 = D_800E6280.unk_018[D_8011ECA0] + a2;
+            p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + a1 - n * 5;
+            p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + a2;
             p->u0 = D_800B3D84[0x12] + 8;
             p->v0 = D_800B3D84[0x13];
             p->clut = func_8009ED74(tpx, tpy);
@@ -112,9 +112,9 @@ void func_8004B19C(s32 arg0, s32 arg1, s32 arg2) {
             p[4] = 0x80;
             p[5] = 0x80;
             p[6] = 0x80;
-            *(s16 *)(p + 8) = D_800E6280.unk_014[D_8011ECA0] + arg1 - n * 6;
+            *(s16 *)(p + 8) = D_800E6280.screen_center_x[D_8011ECA0] + arg1 - n * 6;
             e = D_800B3D84 + (x & 0xF) * 2;
-            *(s16 *)(p + 0xA) = D_800E6280.unk_018[D_8011ECA0] + arg2;
+            *(s16 *)(p + 0xA) = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
             p[0xC] = e[0];
             p[0xD] = e[1];
             *(s16 *)(p + 0xE) = func_8009ED74(0x100, 0x1FF);
@@ -163,8 +163,8 @@ s32 func_8004B358(s32 a0, s32 a1, s32 a2, s32 a3) {
         p->r0 = 0x80;
         p->g0 = 0x80;
         p->b0 = 0x80;
-        p->x0 = D_800E6280.unk_014[D_8011ECA0] + x;
-        p->y0 = D_800E6280.unk_018[D_8011ECA0] + a2;
+        p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + x;
+        p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + a2;
         if (flag != 0) {
             x += 6;
         } else {

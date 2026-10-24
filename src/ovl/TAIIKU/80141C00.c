@@ -2,12 +2,12 @@
 #include "ovl/TAIIKU.h"
 
 void func_80141C00(void) {
-    if ((func_8008667C(6) < 2) && (((u32) (D_800E6280.unk_1BC[6].unk_0C.w << 0x1E) >> 0x1F) == 1) && (D_800E6280.unk_56C[45] == 0)) {
-        D_800E6280.unk_56C[45] = 1;
+    if ((func_8008667C(6) < 2) && (((u32) (D_800E6280.girls[6].flags.w << 0x1E) >> 0x1F) == 1) && (D_800E6280.event_flags[45] == 0)) {
+        D_800E6280.event_flags[45] = 1;
         func_80042808();
     } else {
-        D_800E6280.unk_1109 = 0;
-        D_800E6280.unk_110A = 0;
+        D_800E6280.stage = 0;
+        D_800E6280.step = 0;
         D_80122ECC = 1;
     }
     Default_Disp();
@@ -19,8 +19,8 @@ void func_80141C88(void) {
     temp_v0 = func_80141CDC();
     if (temp_v0 != 0) {
         if (temp_v0 == 1) {
-            D_800E6280.unk_1109 = 0;
-            D_800E6280.unk_110A = 0;
+            D_800E6280.stage = 0;
+            D_800E6280.step = 0;
             D_80122ECC = 1;
             return;
         }
@@ -32,7 +32,7 @@ s32 func_80141CDC(void) {
     s32 i;
 
     func_80083808();
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80044890(0, 0xBF98, 0xBF79, 0xD712, 0xD6C3, 0xD6B7);
         D_8014A0C0 = 0;
@@ -64,7 +64,7 @@ s32 func_80141CDC(void) {
     case 3:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.unk_F5F = 6;
+            D_800E6280.current_girl = 6;
             func_80083474();
             cd_read_sectors(1U, 0x801E8000, 0xB7BF);
         }
@@ -96,7 +96,7 @@ s32 func_80141CDC(void) {
         break;
     case 6:
         normal_date_bg_fadein();
-        if (D_800E6280.unk_110A == 7) {
+        if (D_800E6280.step == 7) {
             func_8004500C(0, 0x202);
         }
         break;
@@ -147,8 +147,8 @@ s32 func_80141CDC(void) {
     case 21:
         D_8014A0C0 = 1;
         func_80085B3C(2, 0x2D);
-        D_800E6280.unk_1BC[6].unk_06 += 2;
-        D_800E6280.unk_1BC[6].unk_02 += 1;
+        D_800E6280.girls[6].affection += 2;
+        D_800E6280.girls[6].tokimeki += 1;
         break;
     default:
         func_80046500();

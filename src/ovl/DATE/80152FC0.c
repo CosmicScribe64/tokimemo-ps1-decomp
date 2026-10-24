@@ -107,9 +107,9 @@ void func_8015347C(void) {
     D_8015E208 = D_8015DED0;
     D_8015E20C = D_8015E00C;
     D_8015E210 = D_8015E148;
-    D_800E6280.unk_1BC[7].unk_02 += 1;
-    D_800E6280.unk_1BC[7].unk_06 += 1;
-    D_800E6280.unk_1BC[7].unk_0A -= 0x14;
+    D_800E6280.girls[7].tokimeki += 1;
+    D_800E6280.girls[7].affection += 1;
+    D_800E6280.girls[7].syoushin -= 0x14;
     check_para_limit();
     func_80153070();
     load_palette(D_8015F19C, 0x11, 1, 2, 0);
@@ -161,9 +161,9 @@ void func_801537C0(void) {
     D_8015E208 = D_8015DED8;
     D_8015E20C = D_8015E014;
     D_8015E210 = D_8015E150;
-    D_800E6280.unk_1BC[7].unk_02 += 3;
-    D_800E6280.unk_1BC[7].unk_06 += 2;
-    D_800E6280.unk_1BC[7].unk_0A -= 0x14;
+    D_800E6280.girls[7].tokimeki += 3;
+    D_800E6280.girls[7].affection += 2;
+    D_800E6280.girls[7].syoushin -= 0x14;
     check_para_limit();
     func_801531D0();
     load_palette(D_8015F1F4, 0x11, 1, 2, 0);
@@ -183,8 +183,8 @@ void func_80153928(void) {
     D_8015E208 = D_8015DEDC;
     D_8015E20C = D_8015E018;
     D_8015E210 = D_8015E154;
-    D_800E6280.unk_1BC[7].unk_02 += 3;
-    D_800E6280.unk_1BC[7].unk_06 += 2;
+    D_800E6280.girls[7].tokimeki += 3;
+    D_800E6280.girls[7].affection += 2;
     check_para_limit();
     func_8004284C();
 }
@@ -222,7 +222,7 @@ void func_80153A74(void) {
 
 void func_80153A9C(void) {
     bg_read_sub2(0x4347);
-    D_800E6280.unk_F5E -= 1;
+    D_800E6280.event_log_count -= 1;
     func_80085B3C(0, D_80122D08);
     func_8004284C();
 }
@@ -242,7 +242,7 @@ void func_80153B38(void) {
     FnTbl41 tbl;
 
     tbl = D_8015F210;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -277,11 +277,11 @@ void func_80153CEC(void) {
     DateCallbacks39 table;
 
     table = D_8015F2B4;
-    index = D_800E6280.unk_110A;
+    index = D_800E6280.step;
     if ((index >= 27 || index < 8) && D_800B593C == 0x80) {
         func_8006B900();
     }
-    index = D_800E6280.unk_110A;
+    index = D_800E6280.step;
     table.callback[index](0x80);
 }
 
@@ -304,7 +304,7 @@ void func_80153E1C(void) {
     FnTbl57 tbl;
 
     tbl = D_8015F350;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -314,16 +314,16 @@ void func_80153E90(void) {
         func_80042940(0x24);
         return;
     }
-    D_800E6280.unk_56C[0x31] = 1;
-    D_800E6280.unk_1BC[7].unk_06 -= 1;
-    D_800E6280.unk_1BC[7].unk_0A += 0xA;
+    D_800E6280.event_flags[0x31] = 1;
+    D_800E6280.girls[7].affection -= 1;
+    D_800E6280.girls[7].syoushin += 0xA;
     check_para_limit();
     func_8004284C();
 }
 
 void func_80153F10(void) {
     func_8014C5C8();
-    if (D_800E6280.unk_1104.w == 1) {
+    if (D_800E6280.step_timer.w == 1) {
         if ((u16) D_800CA154 == 7) {
             func_80083440(1);
         }
@@ -336,9 +336,9 @@ void func_80153F5C(void) {
 }
 
 void func_80153F84(void) {
-    if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.substep == 0) {
         func_80044750(0x205);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
     }
     func_8014C5C8();
 }
@@ -353,13 +353,13 @@ void func_80154004(void) {
     s32 idx;
     DateDispatch80154004 tbl;
     tbl = D_8015F434;
-    if (D_800E6280.unk_110A < 9) {
+    if (D_800E6280.step < 9) {
         func_8006B900();
     }
-    if ((D_800E6280.unk_110A >= 0x16) && (D_800E6280.unk_110A < 0x1C)) {
+    if ((D_800E6280.step >= 0x16) && (D_800E6280.step < 0x1C)) {
         func_8006B900();
     }
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -382,10 +382,10 @@ void func_80154118(void) {
     FnTbl15 tbl;
 
     tbl = D_8015F4DC;
-    if (g->unk_110A < 0xC) {
-        if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
-             (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
-             (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+    if (g->step < 0xC) {
+        if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
+             (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
+             (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
             D_800B593C == 0x80) {
             func_8006B900();
         } else if (((DateSelectionView *)&D_800CA2F8)->place == 0x11 ||
@@ -393,5 +393,5 @@ void func_80154118(void) {
             func_8006B900();
         }
     }
-    tbl.f[g->unk_110A](0x80);
+    tbl.f[g->step](0x80);
 }

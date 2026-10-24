@@ -6,16 +6,16 @@ void func_80138490(void) {
     u32 temp_v0_2;
 
     func_80083808();
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
-        D_800E6280.unk_71C += 1;
-        D_800E6280.unk_71E |= 1;
+        D_800E6280.day_event_index += 1;
+        D_800E6280.daily_event_bits |= 1;
         func_80044750(0xCF);
         Vblnk_Timer_Init();
-        if ((D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF)) && (D_800E6280.unk_040 == ((u32) (D_800E6280.unk_0F8 << 0x17) >> 0x1B))) {
-            if (!(D_800E6280.unk_71E & 4)) {
+        if ((D_800E6280.month == (D_800E6280.player_birthday & 0xF)) && (D_800E6280.day == ((u32) (D_800E6280.player_birthday << 0x17) >> 0x1B))) {
+            if (!(D_800E6280.daily_event_bits & 4)) {
                 if (func_8008667C(0) < 2) {
-                    D_800E6280.unk_71E |= 4;
+                    D_800E6280.daily_event_bits |= 4;
                     cd_read_sectors(3U, 0x801B0000, 0xAF43);
                     func_80042940(0x1B);
                 } else {
@@ -37,7 +37,7 @@ block_8:
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80044890(1, 0xC043, 0xC01D, 0xCA95, 0xCA4F, 0xCA3E);
-            D_800E6280.unk_F5F = 0;
+            D_800E6280.current_girl = 0;
             func_800847B8(0U);
             func_801336E8();
             D_800CA148 = 0;
@@ -62,8 +62,8 @@ block_8:
         }
         break;
     case 6:
-        D_800E6280.unk_1BC[0].unk_06 -= 1;
-        D_800E6280.unk_1BC[0].unk_0A += 5;
+        D_800E6280.girls[0].affection -= 1;
+        D_800E6280.girls[0].syoushin += 5;
         func_80042808();
         break;
     case 7:
@@ -160,22 +160,22 @@ block_8:
         case 0:
             D_800CA148 = 0x1B;
             func_80083440(1U);
-            D_800E6280.unk_1BC[0].unk_02 += 3;
-            D_800E6280.unk_1BC[0].unk_06 += 2;
-            D_800E6280.unk_1BC[0].unk_0A -= 0xF;
+            D_800E6280.girls[0].tokimeki += 3;
+            D_800E6280.girls[0].affection += 2;
+            D_800E6280.girls[0].syoushin -= 0xF;
             break;
         case 1:
             D_800CA148 = 0x1D;
             func_80083440(2U);
-            D_800E6280.unk_1BC[0].unk_02 += 2;
-            D_800E6280.unk_1BC[0].unk_06 += 1;
-            D_800E6280.unk_1BC[0].unk_0A -= 0xA;
+            D_800E6280.girls[0].tokimeki += 2;
+            D_800E6280.girls[0].affection += 1;
+            D_800E6280.girls[0].syoushin -= 0xA;
             break;
         case 2:
             D_800CA148 = 0x1F;
             func_80083440(3U);
-            D_800E6280.unk_1BC[0].unk_06 += 1;
-            D_800E6280.unk_1BC[0].unk_0A += 0xA;
+            D_800E6280.girls[0].affection += 1;
+            D_800E6280.girls[0].syoushin += 0xA;
             break;
         }
         func_80063668();
@@ -195,12 +195,12 @@ block_8:
         func_80042808();
         break;
     case 27:
-        D_800E6280.unk_71C += 1;
+        D_800E6280.day_event_index += 1;
         normal_date_move_place();
         break;
     case 28:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.unk_F5F = 0;
+            D_800E6280.current_girl = 0;
             func_800847B8(0U);
             func_801337B8();
             D_800CA148 = 0;
@@ -275,22 +275,22 @@ block_8:
         case 0:
             D_800CA148 = 0x1B;
             func_80083440(1U);
-            D_800E6280.unk_1BC[0].unk_02 += 3;
-            D_800E6280.unk_1BC[0].unk_06 += 2;
-            D_800E6280.unk_1BC[0].unk_0A -= 0xF;
+            D_800E6280.girls[0].tokimeki += 3;
+            D_800E6280.girls[0].affection += 2;
+            D_800E6280.girls[0].syoushin -= 0xF;
             break;
         case 1:
             D_800CA148 = 0x1D;
             func_80083440(2U);
-            D_800E6280.unk_1BC[0].unk_02 += 2;
-            D_800E6280.unk_1BC[0].unk_06 += 1;
-            D_800E6280.unk_1BC[0].unk_0A -= 0xA;
+            D_800E6280.girls[0].tokimeki += 2;
+            D_800E6280.girls[0].affection += 1;
+            D_800E6280.girls[0].syoushin -= 0xA;
             break;
         case 2:
             D_800CA148 = 0x1F;
             func_80083440(3U);
-            D_800E6280.unk_1BC[0].unk_06 += 1;
-            D_800E6280.unk_1BC[0].unk_0A += 0xA;
+            D_800E6280.girls[0].affection += 1;
+            D_800E6280.girls[0].syoushin += 0xA;
             break;
         }
         func_80063668();

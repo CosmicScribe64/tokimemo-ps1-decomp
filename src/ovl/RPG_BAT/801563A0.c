@@ -56,24 +56,24 @@ void func_801564F0(void) {
         *D_8015ED8C += 1;
         return;
     case 2:
-        ((DisplayActor44 *)D_8011ECD0)[155].unk_03 |= func_8013E9A8(2);
-        ((DisplayActor44 *)D_8011ECD0)[156].unk_03 |= func_8013E9A8(2);
-        ((DisplayActor44 *)D_8011ECD0)[157].unk_03 |= func_8013E9A8(2);
+        ((DisplayActor44 *)D_8011ECD0)[155].draw_flags |= func_8013E9A8(2);
+        ((DisplayActor44 *)D_8011ECD0)[156].draw_flags |= func_8013E9A8(2);
+        ((DisplayActor44 *)D_8011ECD0)[157].draw_flags |= func_8013E9A8(2);
         *D_8015ED8C += 1;
         return;
     case 3:
         if (((s32) D_8015EE0C % 15) == 0xE) {
-            ((DisplayActor44 *)D_8011ECD0)[155].unk_03 ^= 1;
-            ((DisplayActor44 *)D_8011ECD0)[156].unk_03 ^= 1;
-            ((DisplayActor44 *)D_8011ECD0)[157].unk_03 ^= 1;
+            ((DisplayActor44 *)D_8011ECD0)[155].draw_flags ^= 1;
+            ((DisplayActor44 *)D_8011ECD0)[156].draw_flags ^= 1;
+            ((DisplayActor44 *)D_8011ECD0)[157].draw_flags ^= 1;
         }
         D_8015EE0C += 1;
         func_8013F250(0);
         return;
     case 4:
-        ((DisplayActor44 *)D_8011ECD0)[155].unk_03 &= 0xFE;
-        ((DisplayActor44 *)D_8011ECD0)[156].unk_03 &= 0xFE;
-        ((DisplayActor44 *)D_8011ECD0)[157].unk_03 &= 0xFE;
+        ((DisplayActor44 *)D_8011ECD0)[155].draw_flags &= 0xFE;
+        ((DisplayActor44 *)D_8011ECD0)[156].draw_flags &= 0xFE;
+        ((DisplayActor44 *)D_8011ECD0)[157].draw_flags &= 0xFE;
         func_8013E7C0(0x1D, 0, 1, 1);
         func_8013F220();
         func_8014F230();

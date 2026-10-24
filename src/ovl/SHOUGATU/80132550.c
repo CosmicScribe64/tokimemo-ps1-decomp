@@ -11,7 +11,7 @@ void func_80132550(void) {
     FnTbl13 tbl;
 
     tbl = D_80143B28;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -29,10 +29,10 @@ void func_80132634(void) {
         func_80044750(0x200);
         func_8004284C();
     }
-    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
+    if ((u32) D_800E6280.step_timer.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
+        func_80042940((D_800E6280.step - 1) & 0xFF);
     }
 }
 
@@ -55,10 +55,10 @@ void func_801326F8(void) {
     tpage_buf_clear();
     func_8004E58C();
     strcpy(D_800CA19C, "正月");
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     func_8008585C();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     func_8007259C(0);
@@ -77,7 +77,7 @@ void func_801326F8(void) {
     g = &D_800E6280;
     flags = D_800CA2B0;
     for (i = 0; i < 11; i++) {
-        flags[i] = g->unk_1BC[i].unk_0C.f.b1 >= 1;
+        flags[i] = g->girls[i].flags.f.met >= 1;
     }
     func_8004284C();
 }
@@ -99,7 +99,7 @@ void func_8013288C(void) {
     for (i = 0; i < 11; i++) {
         /* FAKE: dead branch adjusts the loop basic-block count so uopt assigns best_s to $s5 (T-24122, T-24128). */
         if (1) {}
-        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 != 0) {
+        if (D_800E6280.girls[i].flags.f.met != 0) {
             s = get_g_zyotai_s(i) & 0x7F;
             /* FAKE: duplicate `s == best_s` shifts uopt's live-range priority between s and best_s (T-24122). */
             if (s < best_s ||
@@ -115,14 +115,14 @@ void func_8013288C(void) {
     if (best_i != 0xFF && s < 2U) {
         D_80143B1C = best_i;
         /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $fp, 0xff` (T-24122). */
-        D_800E6280.unk_F5F = (best_i & 0) + best_i;
-        func_800847B8(D_800E6280.unk_F5F);
+        D_800E6280.current_girl = (best_i & 0) + best_i;
+        func_800847B8(D_800E6280.current_girl);
         func_80132A34();
         D_80143B00 = 0;
         D_80143B04 = 0;
         D_80143B14 = 1;
         D_80122D40 = best_i + 1;
-        D_800E6280.unk_71E |= 0x80;
+        D_800E6280.daily_event_bits |= 0x80;
         func_80042908(1);
     } else {
         D_80143B14 = 0;
@@ -133,7 +133,7 @@ void func_8013288C(void) {
 void func_80132A34(void) {
     u8 state;
 
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
         D_80143AF4 = D_80143A48;
         D_80143AF8 = D_80143A84;

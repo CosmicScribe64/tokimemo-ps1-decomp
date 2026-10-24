@@ -96,13 +96,13 @@ void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3) {
     SetSemiTrans(poly, 1);
     SetShadeTex(poly, 1);
     poly->x0 = 0;
-    poly->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+    poly->y0 = D_800E6280.screen_center_y[D_8011ECA0] - 0x78;
     poly->x1 = 0x200;
-    poly->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+    poly->y1 = D_800E6280.screen_center_y[D_8011ECA0] - 0x78;
     poly->x2 = 0;
-    poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+    poly->y2 = D_800E6280.screen_center_y[D_8011ECA0] + 0x78;
     poly->x3 = 0x200;
-    poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+    poly->y3 = D_800E6280.screen_center_y[D_8011ECA0] + 0x78;
     poly->r0 = arg1;
     poly->g0 = arg2;
     poly->b0 = arg3;

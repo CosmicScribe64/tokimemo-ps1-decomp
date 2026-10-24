@@ -46,8 +46,8 @@ typedef struct DialogueBytes16 {
 /* T-10730: minimum dialogue work range at D_80122CD0. Reset clears words
  * 5..30; retain existing scalar/array declarations as views in older users. */
 typedef struct DialogueWork {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
+    /* 0x00 */ s32 scene;
+    /* 0x04 */ s32 girl;
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ s32 unk_0C;
     /* 0x10 */ s32 unk_10;
@@ -129,7 +129,7 @@ typedef struct Rec34 {
 typedef struct GsDateBits {
     /* 0x00 */ u32 month : 4;
     u32 day : 5;
-    u32 unk_09 : 2; /* T-17021: set to 1 at init (func_800419FC); OptionDateBits.f9 */
+    u32 blood_type : 2; /* T-17021: set to 1 at init (func_800419FC); OptionDateBits.f9 */
     u32 rest : 21;
 } GsDateBits; /* size 0x04 */
 
@@ -190,7 +190,7 @@ typedef struct WorkSetBits {
  * loader still reads +0x40 through its own word/byte union (TcSave), ETC the 8-byte records from +0x58 through
  * EtcConfig8. */
 typedef struct Work800E7D10 {
-    /* 0x000 */ s32 unk_000;
+    /* 0x000 */ s32 seed;
     /* 0x004 */ u8 slot_status[16];
     /* 0x014 */ u8 flags[16];
     /* 0x024 */ u8 unk_024[2];
@@ -224,7 +224,7 @@ typedef struct Work800E7D10 {
  * a bit-field store loads the byte into another register than its lui. T-9020 (was a view per file). */
 typedef struct CharFlags {
     /* 0x00 */ u32 b0 : 1;
-    /* 0x00 */ u32 b1 : 1;
+    /* 0x00 */ u32 met : 1;
     /* 0x00 */ u32 b2 : 1;
     /* 0x00 */ u32 b3 : 1;
     /* 0x00 */ u32 b4 : 1;
@@ -232,20 +232,20 @@ typedef struct CharFlags {
     /* 0x00 */ u32 b6 : 1;
     /* 0x00 */ u32 b7 : 1;
     /* 0x00 */ u32 b8 : 1;
-    /* 0x00 */ u32 f9 : 3;
+    /* 0x00 */ u32 story_stage : 3; /* HYPOTHESIS: 3-bit per-girl story counter (+1 by SHOUGATU events, compared to 3/4 in main and ENDING) */
     /* 0x00 */ u32 b12 : 1;
     /* 0x00 */ u32 b13 : 1;
     /* 0x00 */ u32 b14 : 1;
     /* 0x00 */ u32 b15 : 1;
-    /* 0x00 */ u32 b16 : 1;
-    /* 0x00 */ u32 b17 : 1;
+    /* 0x00 */ u32 encounter_done : 1; /* HYPOTHESIS: name: set by day_event_dispatch when it starts the forced encounter (mode 0x59) for a met girl with syoushin >= 0x4C; cleared again by girl_counters_clamp whenever her syoushin is below 0x32, so the encounter can fire again later */
+    /* 0x00 */ u32 rumor_done : 1; /* HYPOTHESIS: name: set by day_event_dispatch for every met girl with syoushin >= 0x3D when it queues the rumor report (mode 0x44); cleared by girl_counters_clamp whenever her syoushin is below 0x32 */
     /* 0x00 */ u32 b18 : 1;            /* T-20940: func_80077900 tests it (sll 13) and sets it (byte +2, ori 4) */
     /* 0x00 */ u32 b19 : 1;
-    u32 f20 : 4;
+    u32 club : 4;
     u32 rest : 8;
 } CharFlags; /* size 0x04 */
 
-/* Flag word at GameState +0xF64 (D_800E6280.unk_F64) as single bits. func_8006A044 sets them with
+/* Flag word at GameState +0xF64 (D_800E6280.quarter_flags) as single bits. func_8006A044 sets them with
  * bit-field stores, which load the byte into another register than its lui (T-25103): bits 0-11 by
  * year (0x5F, 0x60, 0x61) and month group (2-4, 5-7, 8-10, 11-1), bit 13 in months 2, 5, 8 and 11,
  * bit 14 in the other months, bit 15 in months 5-7. */
@@ -280,41 +280,41 @@ typedef union Rec38Flags {
 
 /* 0x38-byte record of the table at GameState +0x1BC (16 records: a loop walks it with stride 0x38 up
  * to +0x53C; DATE, KANGEI and SHOUGATU index it; most code reads one record per girl, indexed by
- * GameState.unk_F5F). The first 0xC bytes are walked as four 0xC-byte steps elsewhere. +0x0C and
+ * GameState.current_girl). The first 0xC bytes are walked as four 0xC-byte steps elsewhere. +0x0C and
  * +0x10 are bit-field words read through the word and through single bytes (+0x10: bits 0-3 and
  * 4-8 are compared with the month and day at GameState +0x3F/+0x40). */
 typedef struct Rec38 {
-    /* 0x00 */ s16 unk_00;
-    /* 0x02 */ s16 unk_02;
-    /* 0x04 */ s16 unk_04;
-    /* 0x06 */ s16 unk_06;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ Rec38Flags unk_0C;
-    /* 0x10 */ GsWord unk_10;
-    /* 0x14 */ u8 unk_14[0x24];
+    /* 0x00 */ s16 tokimeki_frac;
+    /* 0x02 */ s16 tokimeki;
+    /* 0x04 */ s16 affection_frac;
+    /* 0x06 */ s16 affection;
+    /* 0x08 */ s16 syoushin_frac;
+    /* 0x0A */ s16 syoushin; /* HYPOTHESIS: resentment counter; developer term kept (syoushin_up): +5 per weekly queue build while weighted affection < 10; check_para_limit allows 0..0xFF but girl_counters_clamp (run at the top of every queue-reader pass) clamps it to 0..0x80, so 0x80 is the working cap; >= 0x3C blocks encounters and phone calls; >= 0x4C forces an encounter (flag b16, re-armed once syoushin is below 0x32); >= 0x3D at day end queues a rumor report (flag b17, same re-arm) */
+    /* 0x0C */ Rec38Flags flags;
+    /* 0x10 */ GsWord birthday;
+    /* 0x14 */ u8 event_counters[0x24]; /* HYPOTHESIS: 0x24 per-girl progress bytes indexed by event number (DATE, GEKO, TEL read them; [0] of girl 11 is decremented once per weekly queue build by day_events_build_week) */
 } Rec38; /* size 0x38 */
 
 /* 0x24-byte record of the table at D_801217D0 (at least 12 records: ENDING walks 12; indexed with
  * stride 0x24, and code that reads entry i - 1 makes splat name D_801217AC). Record 0 is set field by
  * field in func_8005AD70; records 0-5 have a flag in bit 31 of unk_00. */
 typedef struct Rec24 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s16 unk_04;
-    /* 0x06 */ s16 unk_06;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ u16 unk_0A;
+    /* 0x00 */ s32 flags;
+    /* 0x04 */ s16 x;
+    /* 0x06 */ s16 y;
+    /* 0x08 */ s16 w;
+    /* 0x0A */ u16 h;
     /* 0x0C */ s16 unk_0C;
     /* 0x0E */ u8 unk_0E;
     /* 0x0F */ u8 unk_0F;
     /* 0x10 */ s16 unk_10;
     /* 0x12 */ s16 unk_12;
-    /* 0x14 */ u8 unk_14;
-    /* 0x15 */ u8 unk_15;
-    /* 0x16 */ u8 unk_16;
+    /* 0x14 */ u8 tint_r;
+    /* 0x15 */ u8 tint_g;
+    /* 0x16 */ u8 tint_b;
     /* 0x17 */ u8 pad17;
-    /* 0x18 */ s16 unk_18;
-    /* 0x1A */ s16 unk_1A;
+    /* 0x18 */ s16 anchor_x;
+    /* 0x1A */ s16 anchor_y;
     /* 0x1C */ s16 unk_1C;
     /* 0x1E */ s16 unk_1E;
     /* 0x20 */ s32 unk_20;
@@ -366,65 +366,65 @@ typedef struct Work80125D10 {
 
 /* Two records at +0x1C, one per D_8011ECA0 (SetWorkBase stores a work address and two words). */
 typedef struct GsRec01C {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-    /* 0x08 */ s32 unk_08;
+    /* 0x00 */ s32 size;
+    /* 0x04 */ s32 used;
+    /* 0x08 */ s32 base;
 } GsRec01C; /* size 0x0C */
 
 /* Two 0x40-byte records at +0x44 (bzero'd together, indexed by 0/1 with stride 0x40): two arrays
  * of 0x20 bytes indexed by a day number (+0x00[0] = 30 and +0x20[0] = 5 at init). */
 typedef struct GsRec044 {
-    /* 0x00 */ u8 unk_00[0x20];
-    /* 0x20 */ u8 unk_20[0x20];
+    /* 0x00 */ u8 day_kind[0x20];
+    /* 0x20 */ u8 marker[0x20];
 } GsRec044; /* size 0x40 */
 
 /* Nine records at +0xFC (separate members); the s16 at +2 holds the nine values parameter_show_init reads, KANGEI
  * copies whole records. */
 typedef struct GsRec0FC {
-    /* 0x00 */ s16 unk_00;
-    /* 0x02 */ s16 unk_02;
+    /* 0x00 */ s16 frac;
+    /* 0x02 */ s16 value;
 } GsRec0FC; /* size 0x04 */
 
 /* Twelve records at +0x66C (bzero 0x30 at init). */
 typedef struct GsRec66C {
-    /* 0x00 */ u16 unk_00;
-    /* 0x02 */ u8 unk_02;
+    /* 0x00 */ u16 exp; /* HYPOTHESIS: club practice points (KANGEI +2, thresholds 0x64/0xC8/0x164, ETC >> 4, 0x19B) */
+    /* 0x02 */ u8 level; /* HYPOTHESIS: low nibble read through a u16 view is a team level; RENSYU adds 5, MASTER compares 8/10 */
     /* 0x03 */ u8 unk_03;
 } GsRec66C; /* size 0x04 */
 
-/* 32 records at +0x69C (cleared as words, then byte +0 set to 0xFF; indexed by GameState.unk_71C). */
+/* 32 records at +0x69C (cleared as words, then byte +0 set to 0xFF; indexed by GameState.day_event_index). */
 typedef struct GsRec69C {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
+    /* 0x00 */ u8 type;
+    /* 0x01 */ u8 girl;
+    /* 0x02 */ u8 scene;
+    /* 0x03 */ u8 extra;
 } GsRec69C; /* size 0x04 */
 
 /* 256 byte records at +0x75E (saved 8 bytes at a time; indexed from 1: code reads record i - 1). */
 typedef struct GsRec75E {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02;
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
+    /* 0x00 */ u8 girl;
+    /* 0x01 */ u8 flag;
+    /* 0x02 */ u8 scene;
+    /* 0x03 */ u8 rank;
+    /* 0x04 */ u8 year;
+    /* 0x05 */ u8 month;
+    /* 0x06 */ u8 day;
+    /* 0x07 */ u8 weekday;
 } GsRec75E; /* size 0x08 */
 
 /* 32 records at +0xF90 (indexed with stride 8 and in pairs with stride 16). */
 typedef struct GsRecF90 {
-    /* 0x00 */ s16 unk_00;
-    /* 0x02 */ s16 unk_02;
-    /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
-    /* 0x07 */ u8 unk_07;
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+    /* 0x04 */ u8 w;
+    /* 0x05 */ u8 h;
+    /* 0x06 */ u8 hover;
+    /* 0x07 */ u8 disabled;
 } GsRecF90; /* size 0x08 */
 
 /* 32 records at +0x1328 (palette_load_vram). */
 typedef struct GsRec1328 {
-    /* 0x00 */ u32 *unk_00;
+    /* 0x00 */ u32 *source;
     /* 0x04 */ u8 unk_04;
     /* 0x05 */ u8 unk_05;
     /* 0x06 */ u8 unk_06;
@@ -433,8 +433,8 @@ typedef struct GsRec1328 {
 
 /* 33 records at +0x142C (csr_load_vram). */
 typedef struct GsRec142C {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ u8 unk_04;
+    /* 0x00 */ s32 source;
+    /* 0x04 */ u8 slot;
     /* 0x05 */ u8 unk_05;
     /* 0x06 */ u8 unk_06;
     /* 0x07 */ u8 unk_07;
@@ -445,166 +445,166 @@ typedef struct GsRec142C {
 } GsRec142C; /* size 0x10 */
 
 typedef struct GameState {
-    /* 0x000 */ u16 unk_000;
-    /* 0x002 */ u16 unk_002;
-    /* 0x004 */ u16 unk_004;
+    /* 0x000 */ u16 video_width;
+    /* 0x002 */ u16 video_height;
+    /* 0x004 */ u16 video_interlace; /* HYPOTHESIS: third argument of the display-mode call, 0 everywhere it is set */
     /* 0x006 */ u8 unk_006[0xE];
-    /* 0x014 */ s16 unk_014[2];        /* indexed by D_8011ECA0 */
-    /* 0x018 */ s16 unk_018[2];        /* indexed by D_8011ECA0 */
-    /* 0x01C */ GsRec01C unk_01C[2];  /* indexed by D_8011ECA0 (SetWorkBase) */
-    /* 0x034 */ u8 unk_034;
-    /* 0x035 */ u8 unk_035;
-    /* 0x036 */ u8 unk_036;
-    /* 0x037 */ u8 unk_037;
-    /* 0x038 */ u8 unk_038;
-    /* 0x039 */ u8 unk_039;
-    /* 0x03A */ u8 unk_03A;
-    /* 0x03B */ u8 unk_03B;
-    /* 0x03C */ u8 unk_03C;
-    /* 0x03D */ u8 unk_03D;
-    /* 0x03E */ u8 unk_03E;            /* 0x5F at init; with +0x3F..+0x41 a date (year, month, day, weekday?) */
-    /* 0x03F */ u8 unk_03F;            /* 4 at init; compared with Rec38.unk_10 bits 0-3 */
-    /* 0x040 */ u8 unk_040;            /* 4 at init; compared with Rec38.unk_10 bits 4-8 */
-    /* 0x041 */ u8 unk_041;
-    /* 0x042 */ u16 unk_042;
-    /* 0x044 */ GsRec044 unk_044[2];
-    /* 0x0C4 */ u8 unk_0C4[0x10];      /* +0xC4..+0xF4: text buffers (NAME_ENT) */
-    /* 0x0D4 */ u8 unk_0D4[8];
-    /* 0x0DC */ u8 unk_0DC[8];
-    /* 0x0E4 */ u8 unk_0E4[0x10];
-    /* 0x0F4 */ GsHalf unk_0F4;
-    /* 0x0F6 */ GsHalf unk_0F6;
-    /* 0x0F8 */ s32 unk_0F8;
-    /* 0x0FC */ GsRec0FC unk_0FC;        /* +0xFC..+0x120: nine records, members (an array sums in another order, ETC func_8014A32C) */
-    /* 0x100 */ GsRec0FC unk_100;
-    /* 0x104 */ GsRec0FC unk_104;
-    /* 0x108 */ GsRec0FC unk_108;
-    /* 0x10C */ GsRec0FC unk_10C;
-    /* 0x110 */ GsRec0FC unk_110;
-    /* 0x114 */ GsRec0FC unk_114;
-    /* 0x118 */ GsRec0FC unk_118;
-    /* 0x11C */ GsRec0FC unk_11C;
-    /* 0x120 */ u8 unk_120[0x9C];
-    /* 0x1BC */ Rec38 unk_1BC[16];
-    /* 0x53C */ u8 unk_53C[0x10];
+    /* 0x014 */ s16 screen_center_x[2];        /* indexed by D_8011ECA0 */
+    /* 0x018 */ s16 screen_center_y[2];        /* indexed by D_8011ECA0 */
+    /* 0x01C */ GsRec01C prim_arena[2];  /* indexed by D_8011ECA0 (SetWorkBase) */
+    /* 0x034 */ u8 sound_active;
+    /* 0x035 */ u8 card_busy;
+    /* 0x036 */ u8 clear_color_r;
+    /* 0x037 */ u8 clear_color_g;
+    /* 0x038 */ u8 clear_color_b;
+    /* 0x039 */ u8 back_clear;
+    /* 0x03A */ u8 screen_brightness;
+    /* 0x03B */ u8 brightness_step;
+    /* 0x03C */ u8 voice_mode;
+    /* 0x03D */ u8 vacation;
+    /* 0x03E */ u8 year;            /* 0x5F at init; with +0x3F..+0x41 a date (year, month, day, weekday?) */
+    /* 0x03F */ u8 month;            /* 4 at init; compared with Rec38.birthday bits 0-3 */
+    /* 0x040 */ u8 day;            /* 4 at init; compared with Rec38.birthday bits 4-8 */
+    /* 0x041 */ u8 weekday;
+    /* 0x042 */ u16 day_count;
+    /* 0x044 */ GsRec044 month_calendar[2];
+    /* 0x0C4 */ u8 player_full_name[0x10];      /* +0xC4..+0xF4: text buffers (NAME_ENT) */
+    /* 0x0D4 */ u8 player_family_name[8];
+    /* 0x0DC */ u8 player_given_name[8];
+    /* 0x0E4 */ u8 player_nickname[0x10];
+    /* 0x0F4 */ GsHalf player_flags;
+    /* 0x0F6 */ GsHalf player_flags_hi;
+    /* 0x0F8 */ s32 player_birthday;
+    /* 0x0FC */ GsRec0FC param_condition;        /* +0xFC..+0x120: nine records, members (an array sums in another order, ETC func_8014A32C) */
+    /* 0x100 */ GsRec0FC param_liberal_arts;
+    /* 0x104 */ GsRec0FC param_science;
+    /* 0x108 */ GsRec0FC param_art;
+    /* 0x10C */ GsRec0FC param_athletics;
+    /* 0x110 */ GsRec0FC param_trivia;
+    /* 0x114 */ GsRec0FC param_looks;
+    /* 0x118 */ GsRec0FC param_guts;
+    /* 0x11C */ GsRec0FC param_stress;
+    /* 0x120 */ u8 progress_state[0x9C]; /* HYPOTHESIS: 0x9C bytes = 21 one-shot flag bytes (+0..0x14, set by HUD code), 9 command counters (+0x15, ++ per chosen command), and the 0x7C-byte profile snapshot at +0x20 that parameter_show_init compares with the live values to colour changes */
+    /* 0x1BC */ Rec38 girls[16];
+    /* 0x53C */ u8 girl_cleared[0x10]; /* HYPOTHESIS: per-girl flag; the mascot menu lists girl i when this or the saved SystemData.flags[i] is set; ETC graduation counts them */
     /* 0x54C */ GsSlot54C u54C;
-    /* 0x56C */ u8 unk_56C[0xFC];
+    /* 0x56C */ u8 event_flags[0xFC];
     /* 0x668 */ u8 unk_668[4];
-    /* 0x66C */ GsRec66C unk_66C[12];
-    /* 0x69C */ GsRec69C unk_69C[32];
-    /* 0x71C */ u8 unk_71C;
-    /* 0x71D */ u8 unk_71D;
-    /* 0x71E */ u8 unk_71E;
-    /* 0x71F */ u8 unk_71F;
-    /* 0x720 */ u8 unk_720;
-    /* 0x721 */ u8 unk_721;
-    /* 0x722 */ u8 unk_722;
+    /* 0x66C */ GsRec66C clubs[12];
+    /* 0x69C */ GsRec69C day_events[32];
+    /* 0x71C */ u8 day_event_index;
+    /* 0x71D */ u8 events_today; /* HYPOTHESIS: ++ each time a girl encounter record (types 0x44/0x46/0x47) is run; cleared by func_8007259C each day */
+    /* 0x71E */ u8 daily_event_bits;
+    /* 0x71F */ u8 daily_check_done; /* HYPOTHESIS: set to 1 before the telephone/appointment prompt (mode 0x43) and by the day-start code; cleared when a new queue is built */
+    /* 0x720 */ u8 saved_mode;
+    /* 0x721 */ u8 saved_stage;
+    /* 0x722 */ u8 saved_step;
     /* 0x723 */ u8 unk_723;
-    /* 0x724 */ u8 unk_724;
-    /* 0x725 */ u8 unk_725;
-    /* 0x726 */ u8 unk_726;
-    /* 0x727 */ u8 unk_727;
-    /* 0x728 */ u8 unk_728[4];
-    /* 0x72C */ u8 unk_72C[0x10];      /* +0x72C, +0x73C, +0x74C: one byte per girl (loops of 11) */
-    /* 0x73C */ u8 unk_73C[0x10];
-    /* 0x74C */ u8 unk_74C[0x10];
-    /* 0x75C */ u8 unk_75C;
-    /* 0x75D */ u8 unk_75D;
-    /* 0x75E */ GsRec75E unk_75E[256];
-    /* 0xF5E */ u8 unk_F5E;
-    /* 0xF5F */ u8 unk_F5F;            /* index of the current girl's Rec38 record */
-    /* 0xF60 */ u8 unk_F60;
-    /* 0xF61 */ u8 unk_F61;
-    /* 0xF62 */ u8 unk_F62;
+    /* 0x724 */ u8 appt_place_0; /* HYPOTHESIS: recent appointment places; unk_725 is the newest (appointment_launch shifts the others), compared with unk_724 to detect a changed plan */
+    /* 0x725 */ u8 appt_place_1;
+    /* 0x726 */ u8 appt_place_2;
+    /* 0x727 */ u8 appt_place_3;
+    /* 0x728 */ u8 date_place_history[4]; /* HYPOTHESIS: 4 places of the latest dates; DATE compares [0]==[1]==chosen place to detect a repeated place (sets player_flags bit 19) */
+    /* 0x72C */ u8 girl_last_date_spot[0x10];      /* +0x72C, +0x73C, +0x74C: one byte per girl (loops of 11) */
+    /* 0x73C */ u8 girl_last_date_spot_timer[0x10];
+    /* 0x74C */ u8 girl_event_bits[0x10]; /* HYPOTHESIS: one byte per girl; GEKO tests/sets bits 1, 2, 4 for scenes 0xE, 0xF, 7 */
+    /* 0x75C */ u8 appointment_flag;
+    /* 0x75D */ u8 date_girl;
+    /* 0x75E */ GsRec75E event_log[256];
+    /* 0xF5E */ u8 event_log_count;
+    /* 0xF5F */ u8 current_girl;            /* index of the current girl's Rec38 record */
+    /* 0xF60 */ u8 text_lines_total; /* HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step func_8005215C */
+    /* 0xF61 */ u8 text_first_line; /* HYPOTHESIS: index of the first visible dialogue line in the text list */
+    /* 0xF62 */ u8 text_scroll_state; /* HYPOTHESIS: bit 7 = scrolling active, low bits = phase of the two-line scroll */
     /* 0xF63 */ s8 unk_F63;
-    /* 0xF64 */ u8 unk_F64[4];
-    /* 0xF68 */ GsWord unk_F68;
-    /* 0xF6C */ u8 unk_F6C;
-    /* 0xF6D */ u8 unk_F6D;
-    /* 0xF6E */ u8 unk_F6E;
-    /* 0xF6F */ u8 unk_F6F;
-    /* 0xF70 */ u8 unk_F70;
+    /* 0xF64 */ u8 quarter_flags[4]; /* HYPOTHESIS: FlagsF64 bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (func_800722C4); TEL also sets bits */
+    /* 0xF68 */ GsWord last_command;
+    /* 0xF6C */ u8 icon_mode;
+    /* 0xF6D */ u8 icon_count;
+    /* 0xF6E */ u8 sd_anim_fast;
+    /* 0xF6F */ u8 cursor_speed;
+    /* 0xF70 */ u8 click_mode;
     /* 0xF71 */ s8 unk_F71;
     /* 0xF72 */ u8 unk_F72;
-    /* 0xF73 */ u8 unk_F73;
-    /* 0xF74 */ u8 unk_F74;
-    /* 0xF75 */ u8 unk_F75;
+    /* 0xF73 */ u8 double_click_interval;
+    /* 0xF74 */ u8 input_device;
+    /* 0xF75 */ u8 confirm_button;
     /* 0xF76 */ u8 unk_F76;
-    /* 0xF77 */ u8 unk_F77;
+    /* 0xF77 */ u8 mouse_buttons;
     /* 0xF78 */ u8 unk_F78;
     /* 0xF79 */ u8 unk_F79;
-    /* 0xF7A */ s16 unk_F7A;
-    /* 0xF7C */ s16 unk_F7C;
+    /* 0xF7A */ s16 mouse_x;
+    /* 0xF7C */ s16 mouse_y;
     /* 0xF7E */ u8 unk_F7E[2];
-    /* 0xF80 */ s32 unk_F80;
-    /* 0xF84 */ s32 unk_F84;
-    /* 0xF88 */ s32 unk_F88;
-    /* 0xF8C */ s32 unk_F8C;
-    /* 0xF90 */ GsRecF90 unk_F90[32];
-    /* 0x1090 */ u8 unk_1090;
-    /* 0x1091 */ u8 unk_1091;
-    /* 0x1092 */ u8 unk_1092;
-    /* 0x1093 */ s8 unk_1093;           /* menu_check indexes +0x1093 by menu number (lb/sb) */
-    /* 0x1094 */ s8 unk_1094;
-    /* 0x1095 */ s8 unk_1095[0xD];
-    /* 0x10A2 */ s8 unk_10A2;
+    /* 0xF80 */ s32 pad_held;
+    /* 0xF84 */ s32 pad_prev;
+    /* 0xF88 */ s32 pad_pressed;
+    /* 0xF8C */ s32 pad_released;
+    /* 0xF90 */ GsRecF90 menu_items[32];
+    /* 0x1090 */ u8 menu_count_0;
+    /* 0x1091 */ u8 menu_count_1;
+    /* 0x1092 */ u8 menu_mode;
+    /* 0x1093 */ s8 menu_cursor_0;           /* menu_check indexes +0x1093 by menu number (lb/sb) */
+    /* 0x1094 */ s8 menu_cursor_1;
+    /* 0x1095 */ s8 menu_hit[0xD];
+    /* 0x10A2 */ s8 tile_layer_enabled;
     /* 0x10A3 */ u8 unk_10A3;
     /* 0x10A4 */ u8 unk_10A4;
-    /* 0x10A5 */ u8 unk_10A5[0x43];    /* one byte per entry of the Rec24 table at D_801217D0 */
-    /* 0x10E8 */ s32 unk_10E8;
-    /* 0x10EC */ u8 unk_10EC[4];
-    /* 0x10F0 */ s32 unk_10F0;
-    /* 0x10F4 */ s32 unk_10F4;
-    /* 0x10F8 */ u32 unk_10F8;
-    /* 0x10FC */ s32 unk_10FC;
-    /* 0x1100 */ s32 unk_1100;
-    /* 0x1104 */ GsWord unk_1104;      /* the move/place selector (normal_date_move_place); BUNKA_SD reads it as u32 */
-    /* 0x1108 */ u8 unk_1108;
-    /* 0x1109 */ u8 unk_1109;
-    /* 0x110A */ u8 unk_110A;
-    /* 0x110B */ s8 unk_110B;
-    /* 0x110C */ s8 unk_110C;
-    /* 0x110D */ u8 unk_110D;
-    /* 0x110E */ u8 unk_110E;
-    /* 0x110F */ u8 unk_110F;
-    /* 0x1110 */ u8 unk_1110;
-    /* 0x1111 */ u8 unk_1111;
-    /* 0x1112 */ u8 unk_1112;
-    /* 0x1113 */ u8 unk_1113;
-    /* 0x1114 */ u8 unk_1114;
-    /* 0x1115 */ u8 unk_1115;
+    /* 0x10A5 */ u8 quad_layer[0x43];    /* one byte per entry of the Rec24 table at D_801217D0 */
+    /* 0x10E8 */ s32 quads_enabled;
+    /* 0x10EC */ u8 bg_layer_order[4];
+    /* 0x10F0 */ s32 frame_hcount_limit; /* HYPOTHESIS: 0x106 scanline count; the frame waits for vsync only while the elapsed count is below it */
+    /* 0x10F4 */ s32 timer_ticks;
+    /* 0x10F8 */ u32 frame_count;
+    /* 0x10FC */ s32 mode_timer;
+    /* 0x1100 */ s32 stage_timer;
+    /* 0x1104 */ GsWord step_timer;      /* the move/place selector (normal_date_move_place); BUNKA_SD reads it as u32 */
+    /* 0x1108 */ u8 mode;
+    /* 0x1109 */ u8 stage;
+    /* 0x110A */ u8 step;
+    /* 0x110B */ s8 mode_scratch;
+    /* 0x110C */ s8 stage_scratch;
+    /* 0x110D */ u8 substep;
+    /* 0x110E */ u8 overlay_target_mode;
+    /* 0x110F */ u8 restart_request;
+    /* 0x1110 */ u8 paused;
+    /* 0x1111 */ u8 pause_allowed;
+    /* 0x1112 */ u8 actors_draw_enabled;
+    /* 0x1113 */ u8 draw_3d_enabled;
+    /* 0x1114 */ u8 draw_2d_enabled;
+    /* 0x1115 */ u8 card_result;
     /* 0x1116 */ u8 unk_1116;
-    /* 0x1117 */ u8 unk_1117;
-    /* 0x1118 */ u8 unk_1118;
+    /* 0x1117 */ u8 album_slot;
+    /* 0x1118 */ u8 save_slot;
     /* 0x1119 */ u8 unk_1119;
-    /* 0x111A */ s8 unk_111A;
-    /* 0x111B */ u8 unk_111B;
-    /* 0x111C */ u8 unk_111C;
-    /* 0x111D */ u8 unk_111D;
+    /* 0x111A */ s8 boot_hold; /* HYPOTHESIS: mode 1 waits until it is 0 and then starts mode 0 */
+    /* 0x111B */ u8 card_job;
+    /* 0x111C */ u8 card_step;
+    /* 0x111D */ u8 card_retry_count;
     /* 0x111E */ u8 unk_111E[2];
-    /* 0x1120 */ s32 unk_1120;
-    /* 0x1124 */ u8 unk_1124;
+    /* 0x1120 */ s32 card_timer;
+    /* 0x1124 */ u8 options_dirty;
     /* 0x1125 */ u8 unk_1125[3];
-    /* 0x1128 */ s32 unk_1128[64];     /* search_tpage: set from +0x1228 */
-    /* 0x1228 */ s32 unk_1228[64];
-    /* 0x1328 */ GsRec1328 unk_1328[32];
-    /* 0x1428 */ u8 unk_1428;
-    /* 0x1429 */ u8 unk_1429;
+    /* 0x1128 */ s32 tpage_req[64];     /* search_tpage: set from +0x1228 */
+    /* 0x1228 */ s32 tpage_buf[64];
+    /* 0x1328 */ GsRec1328 palette_queue[32];
+    /* 0x1428 */ u8 palette_queue_count;
+    /* 0x1429 */ u8 csr_queue_count;
     /* 0x142A */ u8 unk_142A[2];
-    /* 0x142C */ GsRec142C unk_142C[33];
-    /* 0x163C */ s32 unk_163C[128];    /* OPTION fills it as words; +0x163C..+0x167C saved by memcpy */
-    /* 0x183C */ u8 unk_183C[0x200];
-    /* 0x1A3C */ s32 unk_1A3C;         /* +0x1A3C..+0x1A84: addresses set by NAME_ENT */
+    /* 0x142C */ GsRec142C csr_queue[33];
+    /* 0x163C */ s32 scratch_words[128];    /* OPTION fills it as words; +0x163C..+0x167C saved by memcpy */ /* HYPOTHESIS: 128-word scratch used by TACO and the VRAM loaders; its first 0x50 bytes also hold the saved free-icon layout (main 8005A0B0) */
+    /* 0x183C */ u8 scratch_buffer[0x200]; /* HYPOTHESIS: 0x200-byte overlay scratch; NAME_ENT stages a 128-word palette in it before load_palette (a copy of scratch_words or the col2sepia output), TACO keeps 25 (x, y) word pairs of a drawing effect in it */
+    /* 0x1A3C */ s32 overlay_tpage_table;         /* +0x1A3C..+0x1A84: addresses set by NAME_ENT */ /* HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into DisplayActor44.tpage_table of its actors */
     /* 0x1A40 */ u8 unk_1A40[0xC];
-    /* 0x1A4C */ s32 unk_1A4C;
+    /* 0x1A4C */ s32 overlay_frame_table; /* HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into DisplayActor44.frame_table of its actors */
     /* 0x1A50 */ u8 unk_1A50[0xC];
-    /* 0x1A5C */ s32 unk_1A5C;
+    /* 0x1A5C */ s32 overlay_sequence_table; /* HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into DisplayActor44.sequence_table of its actors */
     /* 0x1A60 */ u8 unk_1A60[0xC];
-    /* 0x1A6C */ s32 unk_1A6C;
+    /* 0x1A6C */ s32 overlay_palette_a; /* HYPOTHESIS: pointer to a palette block that TEL, NAME_ENT and TACO pass to load_palette; TACO also copies 128 words from it into scratch_words */
     /* 0x1A70 */ u8 unk_1A70[0xC];
-    /* 0x1A7C */ s32 unk_1A7C;
+    /* 0x1A7C */ s32 overlay_image_buffer; /* HYPOTHESIS: base address of six 0x4000-byte image blocks (NAME_ENT) */
     /* 0x1A80 */ u8 unk_1A80[4];
-    /* 0x1A84 */ s32 unk_1A84;
+    /* 0x1A84 */ s32 overlay_palette_b; /* HYPOTHESIS: pointer to a second palette block that NAME_ENT passes to func_80043914 (slot 0x18) */
     /* 0x1A88 */ u8 unk_1A88[8];
 } GameState; /* size 0x1A90 */
 
@@ -713,7 +713,7 @@ extern s32 **D_800B3748;
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
 extern u8 D_800B3750[][3];
 /* T-20940: the 13 telephone numbers, seven digits each (0x5B bytes, D_800B37D4 follows after one pad
- * byte): holiday_tel_exit plays digit k of number D_800E6280.unk_F5F (row 10 as D_800B37BE), and
+ * byte): holiday_tel_exit plays digit k of number D_800E6280.current_girl (row 10 as D_800B37BE), and
  * func_80075C84 compares each row with the last seven keys in D_800B6990. */
 extern u8 D_800B3778[13][7];
 extern s32 D_800B37D4[];
@@ -885,7 +885,7 @@ extern s8 D_800B6928[][9];
  * the position with its own lui $at and the three remainder keys with one shared lui $at, which as1 does only
  * for separate symbols of the same object. The original reloads pos after the store into keys[pos] in
  * func_80075C84. D_800B69BC is a 0x14-byte string in .data
- * (strcat argument of func_800767A4). D_800B69D0 and D_800B69D8 map GameState.unk_69C[].unk_01 (0..7) to a
+ * (strcat argument of func_800767A4). D_800B69D0 and D_800B69D8 map GameState.day_events[].unk_01 (0..7) to a
  * background in func_80076FDC, one table per func_80066A84() result. */
 extern u8 D_800B6990[8];
 extern u8 D_800B6998;
@@ -1037,8 +1037,8 @@ extern u16 D_800E36EA;
 extern s32 D_800E36F0;
 extern s32 D_800E36F4;
 extern GameState D_800E6280;
-extern u8 D_800E71DF; /* selected girl, GameState.unk_F5F: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820, T-24099, T-25501) */
-extern s32 D_800E7384; /* frame counter, GameState.unk_1104.w: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820) */
+extern u8 D_800E71DF; /* selected girl, GameState.current_girl: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820, T-24099, T-25501) */
+extern s32 D_800E7384; /* frame counter, GameState.step_timer.w: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820) */
 #ifndef MAIN_API_OVERRIDE_D_800E7D10
 extern Work800E7D10 D_800E7D10;
 #endif

@@ -20,12 +20,12 @@ s32 func_80140780(void) {
     tbl = D_801486E8;
     idx = D_800F647A;
     tbl.f[idx](0x80);
-    D_8012B8C0[0].unk_07 = *(u8 *)&D_801317EB;
+    D_8012B8C0[0].brightness = *(u8 *)&D_801317EB;
     if (D_8012B8C0[0].unk_18 == 0) {
         if (D_8012B8C0[0].unk_08 == 0) {
-            D_8012B8C0[0].unk_16 += 1;
-            if (D_8012B8C0[0].unk_16 >= 3) {
-                D_8012B8C0[0].unk_16 = 0;
+            D_8012B8C0[0].sequence_slot += 1;
+            if (D_8012B8C0[0].sequence_slot >= 3) {
+                D_8012B8C0[0].sequence_slot = 0;
             }
         }
     }

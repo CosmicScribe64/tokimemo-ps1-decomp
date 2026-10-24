@@ -38,7 +38,7 @@ void func_8013B030(void) {
 }
 
 void func_8013B094(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013B10C();
         return;
     }
@@ -46,7 +46,7 @@ void func_8013B094(void) {
 }
 
 void func_8013B0D0(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013B2C8();
         return;
     }
@@ -59,13 +59,13 @@ s32 func_8013B10C(void) {
     GekoFnTbl42 tbl;
 
     tbl = D_80146630;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0) {
         /* FAKE: DisplayActor44 view on the first two stores keeps as1 from hoisting the unk_03C load above sb D_80120723. T-24095 */
-        ((DisplayActor44 *)D_80120650)[3].unk_07 = D_800B593C;
-        ((DisplayActor44 *)D_80120650)[3].unk_03 |= 0x80;
-        if ((u8)D_800E6280.unk_03C != 0) {
+        ((DisplayActor44 *)D_80120650)[3].brightness = D_800B593C;
+        ((DisplayActor44 *)D_80120650)[3].draw_flags |= 0x80;
+        if ((u8)D_800E6280.voice_mode != 0) {
             if (!D_8014662C) {
                 D_8012071E = 3;
             }
@@ -104,7 +104,7 @@ void func_8013B2C8(void) {
     FnTbl41 tbl;
 
     tbl = D_801466D8;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -112,9 +112,9 @@ void func_8013B350(void) {
     D_80122CE0 = 6;
     func_80048EB8(0);
     func_8006BD6C(0);
-    D_800E6280.unk_720 = D_800E6280.unk_1108;
-    D_800E6280.unk_721 = D_800E6280.unk_1109;
-    D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
+    D_800E6280.saved_mode = D_800E6280.mode;
+    D_800E6280.saved_stage = D_800E6280.stage;
+    D_800E6280.saved_step = D_800E6280.step + 1;
     main_state_set(0x81);
 }
 
@@ -140,13 +140,13 @@ void func_8013B3C0(void) {
     r.x = 0x2C0;
     r.y = 0;
     func_8009C7F8(&r, 8, 0, 0);
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     /* FAKE: scalar byte store then member read preserves argument scheduling; sibling func_8013CC20 uses the same idiom. T-9770 */
-    *(u8 *)&D_800E6280.unk_F5F = 2;
-    func_800847B8(D_800E6280.unk_F5F);
+    *(u8 *)&D_800E6280.current_girl = 2;
+    func_800847B8(D_800E6280.current_girl);
     addr_init_bustup();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     hizuke_init();
     message_window_init();
@@ -159,7 +159,7 @@ void func_8013B3C0(void) {
 }
 
 void func_8013B510(void) {
-    D_800E6280.unk_F5F = 2;
+    D_800E6280.current_girl = 2;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -176,7 +176,7 @@ void func_8013B510(void) {
     hizuke_init();
     message_window_init();
     func_80084E4C();
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145EF8;
@@ -184,8 +184,8 @@ void func_8013B510(void) {
     D_8014627C = D_80146170;
     strcpy(D_800CA19C, "屋上");
     D_8014662C = 0;
-    D_800E6280.unk_1BC[2].unk_02 += 1;
-    D_800E6280.unk_1BC[2].unk_06 += 2;
+    D_800E6280.girls[2].tokimeki += 1;
+    D_800E6280.girls[2].affection += 2;
     check_para_limit();
     D_800CA368 = 0xE;
     func_8004284C();
@@ -215,16 +215,16 @@ void func_8013B65C(void) {
     D_80120723 = 0;
     D_80120721 = 0;
     D_80120720 = 0;
-    D_800E6280.unk_1228[26] = -1;
+    D_800E6280.tpage_buf[26] = -1;
     func_8004284C();
 }
 
 void func_8013B7D0(void) {
-    D_800E6280.unk_03E = 0x62;
-    D_800E6280.unk_03F = 2;
-    D_800E6280.unk_040 = 0x1C;
-    D_800E6280.unk_041 = 5;
-    D_800E6280.unk_F5F = 2;
+    D_800E6280.year = 0x62;
+    D_800E6280.month = 2;
+    D_800E6280.day = 0x1C;
+    D_800E6280.weekday = 5;
+    D_800E6280.current_girl = 2;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -239,7 +239,7 @@ void func_8013B7D0(void) {
     hizuke_init();
     message_window_init();
     func_80084E4C();
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145F10;

@@ -84,9 +84,9 @@ void func_80159804(void) {
     D_8015E208 = D_8015DF64;
     D_8015E20C = D_8015E0A0;
     D_8015E210 = D_8015E1DC;
-    D_800E6280.unk_1BC[10].unk_02 += 1;
-    D_800E6280.unk_1BC[10].unk_06 += 1;
-    D_800E6280.unk_1BC[10].unk_0A -= 0xA;
+    D_800E6280.girls[10].tokimeki += 1;
+    D_800E6280.girls[10].affection += 1;
+    D_800E6280.girls[10].syoushin -= 0xA;
     check_para_limit();
     func_801594B0();
     load_palette(D_801607F0, 0x11, 1, 2, 0);
@@ -107,9 +107,9 @@ void func_8015996C(void) {
     D_8015E20C = D_8015E0A4;
     D_8015E210 = D_8015E1E0;
     strcpy(D_800CA1DC, "池");
-    D_800E6280.unk_1BC[10].unk_02 += 3;
-    D_800E6280.unk_1BC[10].unk_06 += 2;
-    D_800E6280.unk_1BC[10].unk_0A -= 0x14;
+    D_800E6280.girls[10].tokimeki += 3;
+    D_800E6280.girls[10].affection += 2;
+    D_800E6280.girls[10].syoushin -= 0x14;
     check_para_limit();
     func_80159560();
     load_palette(D_8016081C, 0x11, 1, 2, 0);
@@ -122,8 +122,8 @@ void func_80159A98(void) {
     D_8015E208 = D_8015DF6C;
     D_8015E20C = D_8015E0A8;
     D_8015E210 = D_8015E1E4;
-    D_800E6280.unk_1BC[10].unk_06 += 2;
-    D_800E6280.unk_1BC[10].unk_0A -= 0xA;
+    D_800E6280.girls[10].affection += 2;
+    D_800E6280.girls[10].syoushin -= 0xA;
     check_para_limit();
     func_80159610();
     load_palette(D_80160848, 0x11, 1, 2, 0);
@@ -137,9 +137,9 @@ void func_80159BA4(void) {
     D_8015E208 = D_8015DF70;
     D_8015E20C = D_8015E0AC;
     D_8015E210 = D_8015E1E8;
-    D_800E6280.unk_1BC[10].unk_02 += 2;
-    D_800E6280.unk_1BC[10].unk_06 += 1;
-    D_800E6280.unk_1BC[10].unk_0A -= 0x14;
+    D_800E6280.girls[10].tokimeki += 2;
+    D_800E6280.girls[10].affection += 1;
+    D_800E6280.girls[10].syoushin -= 0x14;
     check_para_limit();
     func_801596C0();
     load_palette(D_80160874, 0x11, 1, 2, 0);
@@ -215,7 +215,7 @@ void func_80159EC4(void) {
     FnTbl44 tbl;
 
     tbl = D_80160890;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -235,21 +235,21 @@ void func_80159FAC(void) {
     FnTbl46 tbl;
 
     tbl = D_80160940;
-    if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
-         (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
-         (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
-        D_800B593C == 0x80 && D_80122D04 == 0 && (g->unk_110A < 0xD || g->unk_110A >= 0x21)) {
+    if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
+         (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
+         (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
+        D_800B593C == 0x80 && D_80122D04 == 0 && (g->step < 0xD || g->step >= 0x21)) {
         func_8006B900();
     }
-    tbl.f[g->unk_110A](0x80);
-    if (D_80122D04 != 0 && g->unk_10F8 % 150 == 0) {
+    tbl.f[g->step](0x80);
+    if (D_80122D04 != 0 && g->frame_count % 150 == 0) {
         func_8015A170();
     }
 }
 
 s32 func_8015A114(void) {
     func_8014C5C8();
-    if (D_800E6280.unk_1104.w++ == 1) {
+    if (D_800E6280.step_timer.w++ == 1) {
         if ((u16)D_800CA154 == 3) {
             func_80083440(1);
         }

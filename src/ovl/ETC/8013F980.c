@@ -105,8 +105,8 @@ void func_8013FC64(s32 a, s32 b, s32 c, s32 d) {
             p->r0 = 0x80;
             p->g0 = 0x80;
             p->b0 = 0x80;
-            p->x0 = D_800E6280.unk_014[D_8011ECA0] + b - n * 8;
-            p->y0 = D_800E6280.unk_018[D_8011ECA0] + c;
+            p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + b - n * 8;
+            p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + c;
             p->u0 = D_801500A0[(v % 10) * 2];
             p->v0 = D_801500A0[(v % 10) * 2 + 1];
             p->clut = func_8009ED74(tpx, 0x1FD);
@@ -130,8 +130,8 @@ void func_8013FC64(s32 a, s32 b, s32 c, s32 d) {
         p->r0 = 0x80;
         p->g0 = 0x80;
         p->b0 = 0x80;
-        p->x0 = D_800E6280.unk_014[D_8011ECA0] + b - xoff;
-        p->y0 = D_800E6280.unk_018[D_8011ECA0] + c;
+        p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + b - xoff;
+        p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + c;
         p->u0 = D_801500B4;
         p->v0 = D_801500B5;
         p->clut = func_8009ED74(tpx, 0x1FD);

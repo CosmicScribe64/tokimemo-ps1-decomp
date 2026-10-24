@@ -8,7 +8,7 @@ void func_801330C0(void) {
     FnTbl60 tbl;
 
     tbl = D_80143BC4;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -19,7 +19,7 @@ void func_80133134(void) {
 
 s32 func_8013315C(void) {
     func_801323D4();
-    if (D_800E6280.unk_1104.w++ == 0) {
+    if (D_800E6280.step_timer.w++ == 0) {
         if (((u8 **)D_80143AF8)[D_80143B00][D_80143B04 - 1] == 7) {
             if (strcmp(((s32 **)D_80143AF4)[D_80143B00][D_80143B04 - 1], "ガチャ") == 0) {
                 func_80044750(0x60C);
@@ -31,9 +31,9 @@ s32 func_8013315C(void) {
 s32 func_80133208(void) {
     s32 sound_id;
 
-    if ((D_800E6280.unk_F88 & 0x400040) &&
+    if ((D_800E6280.pad_pressed & 0x400040) &&
         D_80143B04 > 0 && D_80143B04 < 5 &&
-        (u32)D_800E6280.unk_1104.w >= 2U) {
+        (u32)D_800E6280.step_timer.w >= 2U) {
         func_80044750(0x1508);
         D_80122D00 = 0;
         k_reset(1);
@@ -52,34 +52,34 @@ s32 func_80133208(void) {
                     }
                     return 0;
                 }
-                if (!(D_800E6280.unk_110D & 7)) {
-                    sound_id = (((D_800B3778[D_800E6280.unk_F5F][D_800E6280.unk_110D >> 3] + 0x505) & 0xFF) | 0x600) & 0xFFFF;
+                if (!(D_800E6280.substep & 7)) {
+                    sound_id = (((D_800B3778[D_800E6280.current_girl][D_800E6280.substep >> 3] + 0x505) & 0xFF) | 0x600) & 0xFFFF;
                     /* FAKE: retain the original unchanged-byte store before the call.
                      * Direct self-assignment is removed; original spelling unknown. T-24052. */
-                    D_800E6280.unk_110D |= 0;
+                    D_800E6280.substep |= 0;
                     func_80044750(sound_id);
                 }
             }
-            if (D_800E6280.unk_110D++ < 0x28U) {
+            if (D_800E6280.substep++ < 0x28U) {
                 return 0;
             }
-            D_800E6280.unk_110D = 0;
+            D_800E6280.substep = 0;
             k_reset(1);
         }
     }
     func_801323D4();
-    if ((D_80143B04 < 5) && (D_800E6280.unk_1104.w == 1)) {
+    if ((D_80143B04 < 5) && (D_800E6280.step_timer.w == 1)) {
         func_80044750(0x608);
     }
-    D_800E6280.unk_1104.w += 1;
+    D_800E6280.step_timer.w += 1;
 }
 
 s32 func_801333F0(void) {
     s32 sound_id;
 
-    if ((D_800E6280.unk_F88 & 0x400040) &&
+    if ((D_800E6280.pad_pressed & 0x400040) &&
         D_80143B04 > 0 && D_80143B04 < 3 &&
-        (u32)D_800E6280.unk_1104.w >= 2U) {
+        (u32)D_800E6280.step_timer.w >= 2U) {
         func_80044750(0x1508);
         D_80122D00 = 0;
         k_reset(1);
@@ -98,34 +98,34 @@ s32 func_801333F0(void) {
                     }
                     return 0;
                 }
-                if (!(D_800E6280.unk_110D & 7)) {
-                    sound_id = (((D_800B3778[D_800E6280.unk_F5F][D_800E6280.unk_110D >> 3] + 0x505) & 0xFF) | 0x600) & 0xFFFF;
+                if (!(D_800E6280.substep & 7)) {
+                    sound_id = (((D_800B3778[D_800E6280.current_girl][D_800E6280.substep >> 3] + 0x505) & 0xFF) | 0x600) & 0xFFFF;
                     /* FAKE: retain the original unchanged-byte store before the call.
                      * Direct self-assignment is removed; original spelling unknown. T-24052. */
-                    D_800E6280.unk_110D |= 0;
+                    D_800E6280.substep |= 0;
                     func_80044750(sound_id);
                 }
             }
-            if (D_800E6280.unk_110D++ < 0x28U) {
+            if (D_800E6280.substep++ < 0x28U) {
                 return 0;
             }
-            D_800E6280.unk_110D = 0;
+            D_800E6280.substep = 0;
             k_reset(1);
         }
     }
     func_801323D4();
-    if ((D_80143B04 < 3) && (D_800E6280.unk_1104.w == 1)) {
+    if ((D_80143B04 < 3) && (D_800E6280.step_timer.w == 1)) {
         /* FAKE: preserve the original unchanged halfword store. T-24052. */
         D_80143B04 = D_80143B04;
         func_80044750(0x608);
     } else {
         /* FAKE: preserve the original unchanged halfword store. T-24052. */
         D_80143B04 = D_80143B04;
-        if ((D_80143B04 == 3) && (D_800E6280.unk_1104.w == 1)) {
+        if ((D_80143B04 == 3) && (D_800E6280.step_timer.w == 1)) {
             func_80044750(0x60B);
         }
     }
-    D_800E6280.unk_1104.w += 1;
+    D_800E6280.step_timer.w += 1;
 }
 
 void func_80133610(void) {
@@ -147,7 +147,7 @@ void func_80133698(void) {
         k_reset(0);
         func_8006612C(D_800CA19C);
     } else {
-        D_800E6280.unk_110A += 3;
+        D_800E6280.step += 3;
     }
     func_8004284C();
 }
@@ -171,12 +171,12 @@ s32 func_80133760(void) {
         return 0;
     }
     girl = D_80122CDC;
-    previous = D_800E6280.unk_F5F;
+    previous = D_800E6280.current_girl;
     if (previous == girl && D_80143B14 != 0) {
         func_8004284C();
         return 0;
     }
-    if (D_800E6280.unk_1BC[D_80122CDC].unk_0C.f.b3 == 0) {
+    if (D_800E6280.girls[D_80122CDC].flags.f.b3 == 0) {
         D_80143B00 = 0;
         D_80143AF4 = D_80143A78;
         D_80143AF8 = D_80143AB4;
@@ -185,9 +185,9 @@ s32 func_80133760(void) {
         func_8004284C();
         return 0;
     }
-    D_800E6280.unk_F5F = (u8)girl;
+    D_800E6280.current_girl = (u8)girl;
     func_80132A34();
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     D_80143B00 = 9;
     func_8004284C();
     func_8004284C();
@@ -200,12 +200,12 @@ void func_80133874(void) {
     D_80143AF8 = D_80143A84;
     D_80143AFC = D_80143AC0;
     func_8004284C();
-    D_800E6280.unk_110A -= 5;
+    D_800E6280.step -= 5;
 }
 
 void func_801338DC(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    if (((u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F) != 4) {
+    if (((u8)get_g_zyotai_s(D_800E6280.current_girl) & 0x7F) != 4) {
         D_80143B00 += 1;
         func_8004284C();
         func_8004284C();
@@ -235,7 +235,7 @@ void func_801339DC(void) {
     s32 temp_t6;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    temp_t6 = (u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
+    temp_t6 = (u8)get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
     switch (temp_t6) {
     case 0:
         break;
@@ -258,15 +258,15 @@ void func_80133A60(void) {
 void func_80133A88(void) {
     if (D_80122CDC != 0) {
         D_80143B00 += 1;
-        D_800E6280.unk_1BC[0].unk_02 -= 1;
-        D_800E6280.unk_1BC[0].unk_06 -= 1;
-        D_800E6280.unk_1BC[0].unk_0A += 0xA;
+        D_800E6280.girls[0].tokimeki -= 1;
+        D_800E6280.girls[0].affection -= 1;
+        D_800E6280.girls[0].syoushin += 0xA;
         D_80143B24 = 0;
         func_8004284C();
         func_8004284C();
         func_8004284C();
     } else {
-        D_800E6280.unk_1BC[0].unk_02 += 1;
+        D_800E6280.girls[0].tokimeki += 1;
     }
     check_para_limit();
     func_8004284C();
@@ -281,8 +281,8 @@ void func_80133B44(void) {
 
     /* FAKE: narrowing is redundant after the final s16 cast, but spends the two
      * temporary slots needed by the original register sequence. T-24523 */
-    if (D_800E6280.unk_F5F != 0) {
-        if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.current_girl != 0) {
+        if (D_800E6280.substep == 0) {
             set_kanji_string((s16)(-0x68 - (s16)(strlen(D_800CA16C) * 4)), 0x30, 0, (s32)D_800CA16C, 0);
             set_kanji_string(-0x56, 0x30, 0, (s32)"『 ", 0);
             dialogue_render(-0x48, 0x30, 0, (s32)"それじゃ、神社に行くか。", 0, "", "", 0);
@@ -292,11 +292,11 @@ void func_80133B44(void) {
             ((u8 ***)D_80143AF4)[0][0][0] = sp40[0];
             ((u8 ***)D_80143AF4)[0][0][1] = sp40[1];
             ((u8 ***)D_80143AF4)[0][0][2] = 0;
-            D_800E6280.unk_110D = 1;
+            D_800E6280.substep = 1;
         }
-        sp44 = D_800E6280.unk_110A;
+        sp44 = D_800E6280.step;
         func_801323D4();
-        if (sp44 != D_800E6280.unk_110A) {
+        if (sp44 != D_800E6280.step) {
             func_80042808();
         }
     } else {

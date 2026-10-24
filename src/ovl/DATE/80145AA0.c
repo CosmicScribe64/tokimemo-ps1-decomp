@@ -48,7 +48,7 @@ void func_80145D14(void) {
     FnTbl15 tbl;
 
     tbl = D_8015CF3C;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
     if ((D_80122D44 & 1) && (D_800B593C == 0x80)) {
         func_8006B900();
@@ -64,13 +64,13 @@ void func_80145DB8(void) {
 void func_80145DF0(void) {
     u8 x;
 
-    D_800E6280.unk_71E |= 8;
-    x = get_g_zyotai_s(D_800E6280.unk_F5F);
+    D_800E6280.daily_event_bits |= 8;
+    x = get_g_zyotai_s(D_800E6280.current_girl);
     if ((x & 0x7F) >= 2U) {
         func_80042940(9);
         return;
     }
-    D_800E6280.unk_71E |= 4;
+    D_800E6280.daily_event_bits |= 4;
     func_80085B3C(0xD, D_80122D08);
     func_8004284C();
 }
@@ -78,14 +78,14 @@ void func_80145DF0(void) {
 void func_80145E74(void) {
     D_8015CF34 = 1;
     D_8015CF38 = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_80145AA0();
     func_80145EC4();
     func_8004284C();
 }
 
 void func_80145EC4(void) {
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
         D_8015CF1C = D_8015CE84;
         D_8015CF20 = D_8015CEB8;

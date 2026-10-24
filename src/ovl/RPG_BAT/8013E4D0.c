@@ -8,19 +8,19 @@ void func_8013E4D0(void) {
     p = (DisplayActor44 *)D_8011ECD0;
     for (i = 40; i < 64; i++) {
         p[96 + i].unk_01 = 5;
-        p[96 + i].unk_38 = 0x41000000;
-        p[96 + i].unk_02 = 0x1;
-        p[96 + i].unk_06 = 0x1;
-        p[96 + i].unk_1A = 0x1000;
-        p[96 + i].unk_1C = 0x1000;
+        p[96 + i].quad_flags = 0x41000000;
+        p[96 + i].flags = 0x1;
+        p[96 + i].blink_period = 0x1;
+        p[96 + i].scale_x = 0x1000;
+        p[96 + i].scale_y = 0x1000;
     }
     for (i = 29; i < 31; i++) {
         p[96 + i].unk_01 = 5;
-        p[96 + i].unk_38 = 0x41000000;
-        p[96 + i].unk_02 = 0x1;
-        p[96 + i].unk_06 = 0x1;
-        p[96 + i].unk_1A = 0x1000;
-        p[96 + i].unk_1C = 0x1000;
+        p[96 + i].quad_flags = 0x41000000;
+        p[96 + i].flags = 0x1;
+        p[96 + i].blink_period = 0x1;
+        p[96 + i].scale_x = 0x1000;
+        p[96 + i].scale_y = 0x1000;
     }
 }
 
@@ -64,7 +64,7 @@ s32 func_8013E54C(s32 arg0) {
             *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE8C;
             ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0;
             ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 3;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_03 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i + 96].draw_flags = 0;
         }
         break;
     }
@@ -169,14 +169,14 @@ void func_8013EA30(s32 arg0) {
     s32 i;
 
     for (i = 0; i < 96; i++) {
-        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_07 = arg0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].brightness = arg0;
     }
 }
 
 void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     switch (arg1) {
     case 0:
-        ((DisplayActor44 *)D_8011ECD0)[155].unk_03 &= 0xFFFE;
+        ((DisplayActor44 *)D_8011ECD0)[155].draw_flags &= 0xFFFE;
         RPG_GAUGE->flag[0] = 0;
         RPG_GAUGE->cur[0] -= arg2;
         if (RPG_GAUGE->cur[0] < 0) {
@@ -189,7 +189,7 @@ void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         func_8014BFE4(arg0, 0x74, 0x77, arg2, arg3);
         return;
     case 1:
-        ((DisplayActor44 *)D_8011ECD0)[156].unk_03 &= 0xFFFE;
+        ((DisplayActor44 *)D_8011ECD0)[156].draw_flags &= 0xFFFE;
         RPG_GAUGE->flag[1] = 0;
         RPG_GAUGE->cur[1] -= arg2;
         if (RPG_GAUGE->cur[1] < 0) {
@@ -202,7 +202,7 @@ void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         func_8014BFE4(arg0, 0x3B, 0x67, arg2, arg3);
         return;
     case 2:
-        ((DisplayActor44 *)D_8011ECD0)[157].unk_03 &= 0xFFFE;
+        ((DisplayActor44 *)D_8011ECD0)[157].draw_flags &= 0xFFFE;
         RPG_GAUGE->flag[2] = 0;
         RPG_GAUGE->cur[2] -= arg2;
         if (RPG_GAUGE->cur[2] < 0) {
@@ -410,7 +410,7 @@ void func_8013F1C4(s32 a, s32 b, s32 c) {
 
     p = &D_8015ED64[0][c];
     if (*p == 0) {
-        D_800E6280.unk_F5F = 0xE;
+        D_800E6280.current_girl = 0xE;
         func_80046290(a, b, 0xE);
         func_80044750(0x300);
         *p = 1;
@@ -485,13 +485,13 @@ void func_8013F3F0(s32 arg0, s32 arg1) {
 
     p = (DisplayActor44 *)D_8011ECD0;
     for (i = 40; i < 64; i++) {
-        p[96 + i].unk_26 += arg0;
-        p[96 + i].unk_2A += arg1;
+        p[96 + i].x += arg0;
+        p[96 + i].y += arg1;
     }
-    ((DisplayActor44 *)D_8011ECD0)[125].unk_26 += arg0;
-    ((DisplayActor44 *)D_8011ECD0)[126].unk_26 += arg0;
-    ((DisplayActor44 *)D_8011ECD0)[127].unk_26 += arg0;
-    ((DisplayActor44 *)D_8011ECD0)[125].unk_2A += arg1;
-    ((DisplayActor44 *)D_8011ECD0)[126].unk_2A += arg1;
-    ((DisplayActor44 *)D_8011ECD0)[127].unk_2A += arg1;
+    ((DisplayActor44 *)D_8011ECD0)[125].x += arg0;
+    ((DisplayActor44 *)D_8011ECD0)[126].x += arg0;
+    ((DisplayActor44 *)D_8011ECD0)[127].x += arg0;
+    ((DisplayActor44 *)D_8011ECD0)[125].y += arg1;
+    ((DisplayActor44 *)D_8011ECD0)[126].y += arg1;
+    ((DisplayActor44 *)D_8011ECD0)[127].y += arg1;
 }

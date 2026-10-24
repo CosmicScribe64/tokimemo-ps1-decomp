@@ -34,7 +34,7 @@ void func_801391F4(void) {
     FnTbl62 tbl;
 
     tbl = D_801452B8;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
     if (D_80144E08 == 0) {
         if (D_80144E0C == 3) {
@@ -64,7 +64,7 @@ s32 func_80139334(void) {
     s32 x;
 
     if (D_80144E0C == 2) {
-        D_800E6280.unk_F5F = 7;
+        D_800E6280.current_girl = 7;
     }
     /* FAKE: capturing implicit-int return of func_80137AB4 and referencing x after the branches reserves $v0 and colors D_80144E0C to $a0 and 2 to $v1. T-24130 */
     x = func_80137AB4();
@@ -80,16 +80,16 @@ s32 func_80139334(void) {
     }
     if (x) {}
     if (D_80144E0C == 2 && check_end_k() != 0 &&
-        (*(u8 *)&D_800E6280.unk_03C == 0 || (*(u8 *)&D_800E6280.unk_03C != 0 && func_80046094() == 9))) {
+        (*(u8 *)&D_800E6280.voice_mode == 0 || (*(u8 *)&D_800E6280.voice_mode != 0 && func_80046094() == 9))) {
         k_reset(1);
         D_80122CE4 = 0;
         D_80122CF0 = 0;
         D_8011ED5B &= 0xFF7F;
         D_800CA2AC = 0;
-        D_800E6280.unk_1104.w = 0;
-    } else if (D_800E6280.unk_1104.u++ >= 0x1AU) {
+        D_800E6280.step_timer.w = 0;
+    } else if (D_800E6280.step_timer.u++ >= 0x1AU) {
         if (D_80144E0C == 3 && check_end_k() != 0 &&
-            (*(u8 *)&D_800E6280.unk_03C == 0 || (*(u8 *)&D_800E6280.unk_03C != 0 && func_80046094() == 9))) {
+            (*(u8 *)&D_800E6280.voice_mode == 0 || (*(u8 *)&D_800E6280.voice_mode != 0 && func_80046094() == 9))) {
             D_80122D20 = 1;
             D_80144E08 += 1;
             D_80122CE4 = 0;
@@ -110,18 +110,18 @@ void func_80139514(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     func_8008585C();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
     func_80084E4C();
-    *(u8 *)&D_800E6280.unk_75D = *(u8 *)&D_800E6280.unk_F5F = 7;
-    func_800847B8(*(u8 *)&D_800E6280.unk_F5F);
+    *(u8 *)&D_800E6280.date_girl = *(u8 *)&D_800E6280.current_girl = 7;
+    func_800847B8(*(u8 *)&D_800E6280.current_girl);
     func_80136F90();
     D_80144DFC = D_80144D9C;
     D_80144E00 = D_80144DC0;
@@ -131,7 +131,7 @@ void func_80139514(void) {
 
 void func_8013960C(void) {
     func_801390C0();
-    if (((u8)D_800E6280.unk_03F >= 6U) && ((u8)D_800E6280.unk_03F < 0xAU)) {
+    if (((u8)D_800E6280.month >= 6U) && ((u8)D_800E6280.month < 0xAU)) {
         load_palette((s32)D_80145280, 0x11, 1, 2, 0);
         func_80084E90((s32)D_80145288, (s32)D_8014528C, (s32)D_80145290, (s32)D_80145294, (s32)D_80145298, (s32)D_8014529C);
     } else {

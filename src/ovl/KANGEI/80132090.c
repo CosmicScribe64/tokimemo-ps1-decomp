@@ -30,7 +30,7 @@ INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_801399A0);
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_801399A4);
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_801399A8);
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80132090.data", D_801399AC);
-/* Scene table, indexed by D_800E6280.unk_110A in func_80132214. Defining it here as the
+/* Scene table, indexed by D_800E6280.step in func_80132214. Defining it here as the
  * original did matters for code: as1 treats every function named in this file's data as an
  * address-taken label, so a jump-table dispatch in this file gets an edge back to the entry of
  * each named function (T-25150, T-25139). */
@@ -78,23 +78,23 @@ void func_80132214(void) {
     FnTbl22 tbl;
 
     tbl = D_801399B0;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
 s32 func_80132290(void) {
-    if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.substep == 0) {
         func_800674B0();
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
     }
-    if (D_800E6280.unk_110D == 1) {
-        if (D_800E6280.unk_1104.u++ >= 0x400U) {
+    if (D_800E6280.substep == 1) {
+        if (D_800E6280.step_timer.u++ >= 0x400U) {
             func_800452C4();
             func_8004482C();
-            D_800E6280.unk_110D = 0;
+            D_800E6280.substep = 0;
         }
         if (func_80044E8C() == 1) {
-            D_800E6280.unk_110D += 1;
+            D_800E6280.substep += 1;
         } else {
             return 0;
         }
@@ -106,7 +106,7 @@ void func_80132354(void) {
     u32 v;
     s32 lo;
 
-    v = get_g_zyotai_h(D_800E6280.unk_F5F);
+    v = get_g_zyotai_h(D_800E6280.current_girl);
     lo = v & 0xFF;
     if (v >= 3U) {
         func_80083440(3);
@@ -117,7 +117,7 @@ void func_80132354(void) {
 }
 
 void func_801323A8(void) {
-    func_80044890(1, 0xBF98, 0xBF79, (&D_800B3688)[D_800E6280.unk_F5F], (&D_800B36C8)[D_800E6280.unk_F5F], (&D_800B3708)[D_800E6280.unk_F5F]);
+    func_80044890(1, 0xBF98, 0xBF79, (&D_800B3688)[D_800E6280.current_girl], (&D_800B36C8)[D_800E6280.current_girl], (&D_800B3708)[D_800E6280.current_girl]);
     if (func_80044E8C() == 1) {
         func_8004284C();
     }
@@ -128,10 +128,10 @@ void func_80132430(void) {
     if (func_80044E8C() == 1) {
         func_8004284C();
     }
-    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
+    if ((u32) D_800E6280.step_timer.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
+        func_80042940((D_800E6280.step - 1) & 0xFF);
     }
 }
 
@@ -155,10 +155,10 @@ void func_80132514(void) {
     tpage_buf_clear();
     func_8004E58C();
     k_reset(1);
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     func_8008585C();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     hizuke_init();
@@ -170,14 +170,14 @@ void func_80132514(void) {
 }
 
 void func_801325D0(void) {
-    D_800E6280.unk_F5F = D_800E6280.unk_75D;
-    func_800847B8(D_800E6280.unk_75D);
+    D_800E6280.current_girl = D_800E6280.date_girl;
+    func_800847B8(D_800E6280.date_girl);
     func_80132090();
     func_8013260C();
 }
 
 void func_8013260C(void) {
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
         D_800CA160 = D_80139950[0][0];
         D_800CA164 = D_80139950[1][0];
@@ -228,10 +228,10 @@ void func_801327DC(void) {
      * CVT); with them uopt keeps the halfword in a register range and every read of it is
      * `lui v1; lhu v1`, as in the original. Any two such tests anywhere in the function do it,
      * one is not enough. T-25139 */
-    if (D_800E6280.unk_0F4.h) {}
-    func_80085B3C(0x10, D_800E6280.unk_0F4.h >> 12);
-    if (D_800E6280.unk_0F4.h) {} /* FAKE: second plain use, see above. T-25139 */
-    switch (D_800E6280.unk_0F4.h >> 12) {
+    if (D_800E6280.player_flags.h) {}
+    func_80085B3C(0x10, D_800E6280.player_flags.h >> 12);
+    if (D_800E6280.player_flags.h) {} /* FAKE: second plain use, see above. T-25139 */
+    switch (D_800E6280.player_flags.h >> 12) {
     case 0:
         strcpy(D_800CA19C, "文芸部");
         bg_read_sub2(0x40BC);
@@ -278,9 +278,9 @@ void func_801327DC(void) {
         break;
     }
     D_800CA14C = 0;
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
-        club = D_800E6280.unk_0F4.h >> 12;
+        club = D_800E6280.player_flags.h >> 12;
         if (club < 6) {
             D_800CA148 = 0;
         } else if (club == 6) {
@@ -290,37 +290,37 @@ void func_801327DC(void) {
         } else {
             D_800CA148 = 6;
         }
-        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+        if (!D_800E6280.girls[D_800E6280.current_girl].flags.f.b2) {
             D_800CA148 += 1;
         }
         break;
     case 1:
         D_800CA148 = 0;
-        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+        if (!D_800E6280.girls[D_800E6280.current_girl].flags.f.b2) {
             D_800CA148 = 1;
         }
         break;
     case 2:
         D_800CA148 = 0;
-        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+        if (!D_800E6280.girls[D_800E6280.current_girl].flags.f.b2) {
             D_800CA148 = 1;
         }
-        if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b19) {
+        if (D_800E6280.girls[D_800E6280.current_girl].flags.f.b19) {
             D_800CA148 = 2;
         }
         break;
     case 3:
-        if ((D_800E6280.unk_0F4.h >> 12) == 4) {
+        if ((D_800E6280.player_flags.h >> 12) == 4) {
             D_800CA148 = 0;
         } else {
             D_800CA148 = 1;
         }
-        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+        if (!D_800E6280.girls[D_800E6280.current_girl].flags.f.b2) {
             D_800CA148 += 2;
         }
         break;
     case 4:
-        if ((D_800E6280.unk_0F4.h >> 12) == 6) {
+        if ((D_800E6280.player_flags.h >> 12) == 6) {
             D_800CA148 = 0;
         } else {
             D_800CA148 = 1;
@@ -328,7 +328,7 @@ void func_801327DC(void) {
         break;
     case 5:
         D_800CA148 = 0;
-        if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2) {
+        if (!D_800E6280.girls[D_800E6280.current_girl].flags.f.b2) {
             D_800CA148 = 1;
         }
         break;
@@ -358,7 +358,7 @@ void func_80132C24(void) {
     first = D_80139A34;
     second = D_80139A3C;
     third = D_80139A44;
-    if ((D_800E6280.unk_03F < 6) || (D_800E6280.unk_03F >= 10)) {
+    if ((D_800E6280.month < 6) || (D_800E6280.month >= 10)) {
         all.unk_00[0] = 0x544A;
         all.unk_00[3] = 0x544A;
         all.unk_00[5] = 0x544A;
@@ -366,19 +366,19 @@ void func_80132C24(void) {
         second.unk_00[1] = 0x522E;
         third.unk_00[1] = 0x58AF;
     }
-    girl = D_800E6280.unk_F5F;
+    girl = D_800E6280.current_girl;
     switch (girl) {
     case 0:
-        func_80062CD0(all.unk_00[D_800E6280.unk_0F4.h >> 12]);
+        func_80062CD0(all.unk_00[D_800E6280.player_flags.h >> 12]);
         break;
     case 1:
-        func_80062CD0(first.unk_00[D_800E6280.unk_0F4.h >> 12]);
+        func_80062CD0(first.unk_00[D_800E6280.player_flags.h >> 12]);
         break;
     case 2:
-        func_80062CD0(second.unk_00[(D_800E6280.unk_0F4.h >> 12) - 2]);
+        func_80062CD0(second.unk_00[(D_800E6280.player_flags.h >> 12) - 2]);
         break;
     case 3:
-        func_80062CD0(third.unk_00[(D_800E6280.unk_0F4.h >> 12) - 4]);
+        func_80062CD0(third.unk_00[(D_800E6280.player_flags.h >> 12) - 4]);
         break;
     case 4:
         func_80062CD0(0x66EC);

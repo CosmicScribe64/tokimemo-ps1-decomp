@@ -4,13 +4,13 @@
 void func_8013B990(void) {
     func_8013C1F4();
     func_8013C440();
-    if (D_800E6280.unk_1109 == 0xC && D_8015EDCC != 0) {
+    if (D_800E6280.stage == 0xC && D_8015EDCC != 0) {
         return;
     }
-    if (D_800E6280.unk_1109 == 0x16 && D_8015EDCC >= 2) {
+    if (D_800E6280.stage == 0x16 && D_8015EDCC >= 2) {
         return;
     }
-    if (D_800E6280.unk_1109 == 0x20 && D_8015EDCC >= 3) {
+    if (D_800E6280.stage == 0x20 && D_8015EDCC >= 3) {
         return;
     }
     func_8013BAC4(D_8015E270, 1, 0);
@@ -45,7 +45,7 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
     /* FAKE: through the byte view, tools/cvt_pass.py does not see a switch on an unsigned global
      * and leaves global copy propagation on. The y distances then fold into their compares, as in
      * the original (no `move a0,v0`), and the stage is still compared in v1. T-25111. */
-    switch (*(u8 *)&D_800E6280.unk_1109) {
+    switch (*(u8 *)&D_800E6280.stage) {
     case 0xC:
         for (j = 0; j < 256; j++) scores[j] = 0x190;
         break;
@@ -62,7 +62,7 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
     D_8015F500 = 0;
     if (arg0->unk13 & 0x20) {
         for (i = 0; i != 2; i++) {
-            if (D_800E6280.unk_10F8 & 1) {
+            if (D_800E6280.frame_count & 1) {
                 x = (i + arg0)->unk0;
                 y = (i + arg0)->unk2;
                 if (arg2 == 0) z = D_8015EDB4[0].unk78;
@@ -436,7 +436,7 @@ s32 func_8013CC40(void) {
     u32 i;
     for (i = 16; i < 64; i++) {
         if (((i + D_8015EDB4)->unk84[1] == 0) && ((i + D_8015EDB4)->unk0[1] & 0x80)) {
-            if (!(D_800E6280.unk_10F8 & 0x1F)) {
+            if (!(D_800E6280.frame_count & 0x1F)) {
                 func_801335A0(1, 0x508);
             }
             func_8013D1E0(*(TcPos *)&(i + D_8015EDB4)->unk74, *(TcPos *)&(i + D_8015EDB4)->unk7C, 0);

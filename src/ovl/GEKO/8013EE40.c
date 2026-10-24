@@ -29,7 +29,7 @@ void func_8013EEF0(void) {
 }
 
 void func_8013EF30(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013EF6C();
         return;
     }
@@ -41,7 +41,7 @@ void func_8013EF6C(void) {
     FnTbl35 tbl;
 
     tbl = D_80146FBC;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx]();
 }
 
@@ -52,10 +52,10 @@ void func_8013EFF4(void) {
 }
 
 void func_8013F02C(void) {
-    if (D_800E6280.unk_56C[28] == 1 && D_800E6280.unk_56C[27] == 1) {
+    if (D_800E6280.event_flags[28] == 1 && D_800E6280.event_flags[27] == 1) {
         D_800CA150 = (u16) D_800CA150 + 4;
         D_800CA154 = 0;
-    } else if (D_800E6280.unk_56C[27] >= 2U) {
+    } else if (D_800E6280.event_flags[27] >= 2U) {
         D_800CA150 = (u16) D_800CA150 + 2;
         D_800CA154 = 0;
     }
@@ -63,7 +63,7 @@ void func_8013F02C(void) {
 }
 
 void func_8013F0BC(void) {
-    D_800E6280.unk_F5F = 4;
+    D_800E6280.current_girl = 4;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -82,21 +82,21 @@ void func_8013F0BC(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145FB4;
     D_80146278 = D_801460F0;
     D_8014627C = D_8014622C;
     strcpy(D_800CA19C, "廊下");
-    if (D_800E6280.unk_56C[27] >= 3U) {
-        D_800E6280.unk_56C[27] = 2;
+    if (D_800E6280.event_flags[27] >= 3U) {
+        D_800E6280.event_flags[27] = 2;
     }
-    if (D_800E6280.unk_56C[28] == 0 && D_800E6280.unk_56C[27] == 1) {
-        D_800E6280.unk_1BC[4].unk_02 += 1;
+    if (D_800E6280.event_flags[28] == 0 && D_800E6280.event_flags[27] == 1) {
+        D_800E6280.girls[4].tokimeki += 1;
     }
-    D_800E6280.unk_1BC[4].unk_06 += 1;
-    D_800E6280.unk_0FC.unk_02 += 0xA;
+    D_800E6280.girls[4].affection += 1;
+    D_800E6280.param_condition.value += 0xA;
     check_para_limit();
     D_800CA368 = 0x1B;
     func_8004284C();

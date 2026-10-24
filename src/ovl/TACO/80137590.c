@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 s32 func_80137590(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_8013760C();
         break;
@@ -10,7 +10,7 @@ s32 func_80137590(void) {
         func_8013788C();
         break;
     }
-    if (D_800E6280.unk_10F8 & 0x10) {
+    if (D_800E6280.frame_count & 0x10) {
         func_801432F0("DEMO PLAY", -0x40, 0, 2);
     }
 }
@@ -21,7 +21,7 @@ s32 func_8013760C(void) {
     s32 i;
     s32 end;
 
-    switch (*(u8 *)&D_800E6280.unk_110D) {
+    switch (*(u8 *)&D_800E6280.substep) {
     case 0:
         func_8013AFDC();
         D_8015F4F0 = 0x80;
@@ -31,9 +31,9 @@ s32 func_8013760C(void) {
         D_8015EDEC = 0x4650;
         func_80134884();
         D_8015EDBC = 0x10;
-        D_800E6280.unk_036 = 0;
-        D_800E6280.unk_037 = 0;
-        D_800E6280.unk_038 = 0;
+        D_800E6280.clear_color_r = 0;
+        D_800E6280.clear_color_g = 0;
+        D_800E6280.clear_color_b = 0;
         func_800591D8(1);
         k_reset(0);
         back_clear_switch(1);
@@ -54,7 +54,7 @@ s32 func_8013760C(void) {
         func_80132220();
         func_801334BC();
         D_8011ED17 &= 0x7F;
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         if (D_8015EDBC == 0) {
@@ -62,7 +62,7 @@ s32 func_8013760C(void) {
             D_8015EDB0 = 0x80;
             D_8015EDB4[0].unk84[1] = 0xFF;
             D_8015EDB4[8].unk84[1] = 0xFF;
-            switch (D_800E6280.unk_10F8 & 3) {
+            switch (D_800E6280.frame_count & 3) {
             case 0:
                 D_8015EDB4[0].unk72 = 0;
                 break;
@@ -85,7 +85,7 @@ void func_8013788C(void) {
     u32 t;
 
     func_80154960();
-    if (D_800E6280.unk_F88 != 0) {
+    if (D_800E6280.pad_pressed != 0) {
         func_80143AF4();
         func_801347A8();
         func_80059048();
@@ -93,38 +93,38 @@ void func_8013788C(void) {
         func_800591D8(0);
         func_80042908(2);
     } else {
-        D_800E6280.unk_F88 |= 0x20;
-        t = D_800E6280.unk_1100 & 0x1FF;
-        D_800E6280.unk_F80 |= 0x20;
+        D_800E6280.pad_pressed |= 0x20;
+        t = D_800E6280.stage_timer & 0x1FF;
+        D_800E6280.pad_held |= 0x20;
         if (t >= 0x79 && t < 0x8C) {
-            D_800E6280.unk_F80 |= 0x2000;
+            D_800E6280.pad_held |= 0x2000;
         }
         if (t >= 0xAB && t < 0xBE) {
-            D_800E6280.unk_F80 |= 0x4000;
+            D_800E6280.pad_held |= 0x4000;
         }
         if (t >= 0xDD && t < 0xF0) {
-            D_800E6280.unk_F80 |= 0x8000;
+            D_800E6280.pad_held |= 0x8000;
         }
         if (t >= 0x10F && t < 0x122) {
-            D_800E6280.unk_F80 |= 0x1000;
+            D_800E6280.pad_held |= 0x1000;
         }
         if (t >= 0x191 && t < 0x1B8) {
-            D_800E6280.unk_F80 |= 0x3000;
+            D_800E6280.pad_held |= 0x3000;
         }
         if (t >= 0x1CD && t < 0x1E0) {
-            D_800E6280.unk_F80 |= 0xC000;
+            D_800E6280.pad_held |= 0xC000;
         }
         if (t >= 0x191 && t < 0x1B8) {
-            D_800E6280.unk_F80 |= 0x6000;
+            D_800E6280.pad_held |= 0x6000;
         }
         if (t >= 0x1CD && t < 0x1E0) {
-            D_800E6280.unk_F80 |= 0x9000;
+            D_800E6280.pad_held |= 0x9000;
         }
         func_8013A790(1, 1);
         func_8013F250();
         func_80132FE8();
     }
-    if ((u32) D_800E6280.unk_1100 >= 0x709U) {
+    if ((u32) D_800E6280.stage_timer >= 0x709U) {
         func_80143AF4();
         func_801347A8();
         func_80059048();

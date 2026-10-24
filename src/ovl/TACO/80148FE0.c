@@ -2,10 +2,10 @@
 #include "ovl/TACO.h"
 
 void func_80148FE0(void) {
-    if (((u32) D_800E6280.unk_1100 < 0x60U) && (D_800E6280.unk_10F8 & 0x10)) {
+    if (((u32) D_800E6280.stage_timer < 0x60U) && (D_800E6280.frame_count & 0x10)) {
         func_801432F0("2ST BOSS", -0x30, 0, 2);
     }
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_801490B4();
         break;
@@ -72,15 +72,15 @@ void func_8014927C(void) {
     for (i = 0; i < 0xC; i++) {
         func_801497EC(D_8015FCA8[i], i, D_8015FCD8, D_8015FCB4, D_8015FCC0);
     }
-    if (D_800E6280.unk_1104.u % 240 == 0 && rand() % 3 == 0) {
+    if (D_800E6280.step_timer.u % 240 == 0 && rand() % 3 == 0) {
         func_801335A0(0, 0x500);
     }
-    if (D_800E6280.unk_1104.u < 0x12C) {
+    if (D_800E6280.step_timer.u < 0x12C) {
         func_80146F74(0, 0, -2, -0x28, 0, 0, 0, 0x3C, 0x3C);
     } else {
         func_8004284C();
     }
-    D_800E6280.unk_1104.u++;
+    D_800E6280.step_timer.u++;
 }
 
 void func_801493D4(void) {
@@ -91,7 +91,7 @@ void func_801493D4(void) {
     }
     func_80149D1C();
     func_80151C30();
-    if (D_800E6280.unk_1104.u % 240 == 0) {
+    if (D_800E6280.step_timer.u % 240 == 0) {
         if (rand() % 3 == 0) {
             func_801335A0(0, 0x500);
         }
@@ -104,7 +104,7 @@ void func_801493D4(void) {
             func_8004284C();
         }
     }
-    D_800E6280.unk_1104.u++;
+    D_800E6280.step_timer.u++;
 }
 
 void func_80149538(void) {
@@ -112,18 +112,18 @@ void func_80149538(void) {
     u8 shade;
 
     func_80146F74(0, 3, 5, -0x14, 0, 0, 0, 0, 0);
-    if ((D_800E6280.unk_1104.w >= 0xB4) && (D_800E6280.unk_1104.w < 0xC7)) {
+    if ((D_800E6280.step_timer.w >= 0xB4) && (D_800E6280.step_timer.w < 0xC7)) {
         func_80153E78(1, 0xE0, 0xE0, 0xE0);
-    } else if (D_800E6280.unk_1104.w == 0xC7) {
+    } else if (D_800E6280.step_timer.w == 0xC7) {
         func_801335A0(0, 0x504);
-    } else if ((D_800E6280.unk_1104.w >= 0xC8) && (D_800E6280.unk_1104.w < 0x140)) {
-        if ((D_800E6280.unk_1104.w % 3) == 0) {
+    } else if ((D_800E6280.step_timer.w >= 0xC8) && (D_800E6280.step_timer.w < 0x140)) {
+        if ((D_800E6280.step_timer.w % 3) == 0) {
             func_80153E78(1, 0xF0, 0xF0, 0xF0);
         }
-    } else if ((D_800E6280.unk_1104.w >= 0x140) && (D_800E6280.unk_1104.w < 0x1B8)) {
-        shade = (D_800E6280.unk_1104.w * 2) - 0x280;
+    } else if ((D_800E6280.step_timer.w >= 0x140) && (D_800E6280.step_timer.w < 0x1B8)) {
+        shade = (D_800E6280.step_timer.w * 2) - 0x280;
         func_80153E78(2, shade, shade, shade);
-    } else if (D_800E6280.unk_1104.w == 0x1B8) {
+    } else if (D_800E6280.step_timer.w == 0x1B8) {
         i = 1;
         do {
             D_80127080[i++].unk0 = 0x80000000;

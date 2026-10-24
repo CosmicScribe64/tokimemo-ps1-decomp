@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80132000(void) {
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0x0:
         func_80132114();
         break;
@@ -35,7 +35,7 @@ void func_80132000(void) {
         break;
     }
     func_8006BA40();
-    if (D_800E6280.unk_F88 & 0x800) {
+    if (D_800E6280.pad_pressed & 0x800) {
         main_state_set(0x34);
     }
     func_801323CC();
@@ -54,7 +54,7 @@ void func_80132114(void) {
     func_8004E58C();
     func_80048EB8(0);
     back_clear_switch(1);
-    col = (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = (&D_800E6280.unk_036)[2] = 0xA0;
+    col = (&D_800E6280.clear_color_r)[0] = (&D_800E6280.clear_color_r)[1] = (&D_800E6280.clear_color_r)[2] = 0xA0;
     func_8006612C("Ｑ＆Ａコーナー");
     set_kanji_string(-0x68, 0x5C, 2, (s32)"スタートボタンでゲームに戻れます", 0);
     k_sub_reset_point_set();
@@ -75,9 +75,9 @@ void func_80132294(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if ((D_800E6280.unk_F88 & 0x20) && D_800E6280.unk_1093 != -1) {
+    if ((D_800E6280.pad_pressed & 0x20) && D_800E6280.menu_cursor_0 != -1) {
         func_80044750(0x501);
-        switch (*(u8 *)&D_800E6280.unk_1093) { /* FAKE: u8 view keeps the selector load as lbu, as in the original (T-5010) */
+        switch (*(u8 *)&D_800E6280.menu_cursor_0) { /* FAKE: u8 view keeps the selector load as lbu, as in the original (T-5010) */
         case 0:
             func_80042908(0x10);
             break;

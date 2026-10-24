@@ -45,7 +45,7 @@ void func_8013B210(void) {
 
 void func_8013B484(void) {
     func_80083808();
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         func_8013B5B0();
         break;

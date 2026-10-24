@@ -186,7 +186,7 @@ void func_8014AC74(void) {
         if ((&D_8015EBAC)[i + 0x32] == 1) {
             t = i * 3;
             t5 = t + 5;
-            if (!(((DisplayActor44 *)D_8011ECD0)[t + 100].unk_02 & 1)) {
+            if (!(((DisplayActor44 *)D_8011ECD0)[t + 100].flags & 1)) {
                 func_8013E810(t + 4, 7, 1, 1);
             }
             v = ((DisplayActor44 *)D_8011ECD0)[t + 102].unk_18;
@@ -194,7 +194,7 @@ void func_8014AC74(void) {
                 v = 0x1E - v;
             }
             func_8013E97C(t5, (&D_8015EBAC)[i * 2 + 55], (&D_8015EBAC)[i * 2 + 56] - v * 8);
-            if (!(((DisplayActor44 *)D_8011ECD0)[t + 102].unk_02 & 1)) {
+            if (!(((DisplayActor44 *)D_8011ECD0)[t + 102].flags & 1)) {
                 func_8013E810(t + 4, 0xFF, 1, 0);
                 func_8013E810(t5, 0xFF, 1, 0);
                 func_8013E810(t + 6, 0xFF, 1, 0);

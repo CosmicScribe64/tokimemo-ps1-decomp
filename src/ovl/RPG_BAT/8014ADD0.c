@@ -34,27 +34,27 @@ s32 func_8014ADD0(s32 arg0, s32 arg1) {
         }
     }
     if (D_8015ECF0 != 0) {
-        ((DisplayActor44 *)D_8011ECD0)[140].unk_2A = (arg1 - (D_8015ECF0 * 4)) - 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[140].y = (arg1 - (D_8015ECF0 * 4)) - 0x80;
         D_8015ECF0 += 1;
         if (D_8015ECF0 >= 0x21) {
             D_8015ECF0 = 0;
         }
     }
     if (D_8015ECF4 != 0) {
-        ((DisplayActor44 *)D_8011ECD0)[141].unk_2A = (arg1 - (D_8015ECF4 * 4)) - 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[141].y = (arg1 - (D_8015ECF4 * 4)) - 0x80;
         D_8015ECF4 += 1;
         if (D_8015ECF4 >= 0x21) {
             D_8015ECF4 = 0;
         }
     }
     if (D_8015ECF8 != 0) {
-        ((DisplayActor44 *)D_8011ECD0)[142].unk_2A = (arg1 - (D_8015ECF8 * 4)) - 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[142].y = (arg1 - (D_8015ECF8 * 4)) - 0x80;
         D_8015ECF8 += 1;
         if (D_8015ECF8 >= 0x21) {
             D_8015ECF8 = 0;
         }
     }
-    if (!(((DisplayActor44 *)D_8011ECD0)[139].unk_02 & 1)) {
+    if (!(((DisplayActor44 *)D_8011ECD0)[139].flags & 1)) {
         func_8013E810(0x2B, 0xF, 5, 1);
         D_8015ECEC += 1;
         if (D_8015ECEC == 5) {
@@ -75,7 +75,7 @@ s32 func_8014ADD0(s32 arg0, s32 arg1) {
     if ((D_8015ECEC == 0x10) && (((DisplayActor44 *)D_8011ECD0)[139].unk_18 == 0x10)) {
         func_8013E810(0x2A, 0xFF, 1, 0);
     }
-    if (!(((DisplayActor44 *)D_8011ECD0)[143].unk_02 & 1)) {
+    if (!(((DisplayActor44 *)D_8011ECD0)[143].flags & 1)) {
         func_8013E810(0x2F, 0xFF, 1, 0);
     }
     D_8015EDB4 += 1;
@@ -97,11 +97,11 @@ void func_8014B294(void) {
             if (D_8015EB9C != 0xE) {
                 k_disp_switch(D_8015EE14, 0);
             }
-            ((DisplayActor44 *)D_8011ECD0)[129].unk_03 = 0;
-            ((DisplayActor44 *)D_8011ECD0)[119 - i].unk_03 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[129].draw_flags = 0;
+            ((DisplayActor44 *)D_8011ECD0)[119 - i].draw_flags = 0;
         } else {
             k_disp_switch(D_8015EE14, 1);
-            ((DisplayActor44 *)D_8011ECD0)[129].unk_03 = 0x80;
+            ((DisplayActor44 *)D_8011ECD0)[129].draw_flags = 0x80;
             if (D_8015EDEC / div != 0) {
                 func_8013E7C0(0x17 - i, ((D_8015EDEC / div) % 10) + 9, 1, 1);
             } else {
@@ -113,23 +113,23 @@ void func_8014B294(void) {
                 k_disp_switch(D_8015EE40, 0);
             }
             if (D_8015EB9C != 0xE) {
-                ((DisplayActor44 *)D_8011ECD0)[128].unk_03 = 0;
-                ((DisplayActor44 *)D_8011ECD0)[123 - i].unk_03 = 0;
+                ((DisplayActor44 *)D_8011ECD0)[128].draw_flags = 0;
+                ((DisplayActor44 *)D_8011ECD0)[123 - i].draw_flags = 0;
             } else {
-                ((DisplayActor44 *)D_8011ECD0)[129].unk_03 = 0;
-                ((DisplayActor44 *)D_8011ECD0)[119 - i].unk_03 = 0;
+                ((DisplayActor44 *)D_8011ECD0)[129].draw_flags = 0;
+                ((DisplayActor44 *)D_8011ECD0)[119 - i].draw_flags = 0;
             }
         } else {
             k_disp_switch(D_8015EE40, 1);
             if (D_8015EB9C != 0xE) {
-                ((DisplayActor44 *)D_8011ECD0)[128].unk_03 = 0x80;
+                ((DisplayActor44 *)D_8011ECD0)[128].draw_flags = 0x80;
                 if (D_8015EE18 / div != 0) {
                     func_8013E7C0(0x1B - i, ((D_8015EE18 / div) % 10) + 9, 1, 1);
                 } else {
                     func_8013E7C0(0x1B - i, 0xFF, 1, 0);
                 }
             } else {
-                ((DisplayActor44 *)D_8011ECD0)[129].unk_03 = 0x80;
+                ((DisplayActor44 *)D_8011ECD0)[129].draw_flags = 0x80;
                 if (D_8015EE18 / div != 0) {
                     func_8013E7C0(0x17 - i, ((D_8015EE18 / div) % 10) + 9, 1, 1);
                 } else {
@@ -293,7 +293,7 @@ void func_8014BB80(void) {
 
     gs = &D_800E6280;
     sp34 = D_8015E720;
-    if (D_8015EE50.unk_00 != 3 && !(D_800E6280.unk_1092 & 1)) {
+    if (D_8015EE50.unk_00 != 3 && !(D_800E6280.menu_mode & 1)) {
         func_8006BA40();
     }
     if (!(D_8015ED98 & 0x10000) && D_8015EE50.unk_00 != 4 && D_8015EE50.unk_00 != 5) {
@@ -328,7 +328,7 @@ void func_8014BB80(void) {
         menu_check(0, D_8011ECF6, D_8011ECFA);
         func_8004FC10(0);
         func_8013E7C0(0x22, 0xFF, 1, 1);
-        switch (gs->unk_1093) {
+        switch (gs->menu_cursor_0) {
         case 0:
             func_8013E7C0(0x22, 5, 1, 1);
             break;
@@ -342,10 +342,10 @@ void func_8014BB80(void) {
             func_8013E7C0(0x22, 0xFF, 1, 0);
             break;
         }
-        if ((D_800E6280.unk_1093 != -1) && (D_800E6280.unk_F88 & 0x20)) {
+        if ((D_800E6280.menu_cursor_0 != -1) && (D_800E6280.pad_pressed & 0x20)) {
             func_8013E7C0(0x22, 0xFF, 1, 0);
             func_8013E7C0(0x23, 0xFF, 1, 0);
-            switch (gs->unk_1093) {
+            switch (gs->menu_cursor_0) {
             case 0:
                 D_8015ED98 ^= 0x01000000;
                 break;
@@ -428,12 +428,12 @@ void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     /* FAKE: one line, so as1 schedules the record pointer before the store of t[0]; T-25144 */
     t[0] = arg0 * 12; j = t[0]; for (i = 0; i < 4; j++, i++) {
         k = j + 0x40;
-        ((DisplayActor44 *) D_8011ECD0)[64 + j].unk_26 = arg1 - i * 9;
-        ((DisplayActor44 *) D_8011ECD0)[64 + j].unk_2A = arg2;
-        ((DisplayActor44 *) D_8011ECD0)[68 + j].unk_26 = arg1 - i * 9;
-        ((DisplayActor44 *) D_8011ECD0)[68 + j].unk_2A = arg2;
-        ((DisplayActor44 *) D_8011ECD0)[72 + j].unk_26 = arg1 - i * 9;
-        ((DisplayActor44 *) D_8011ECD0)[72 + j].unk_2A = arg2;
+        ((DisplayActor44 *) D_8011ECD0)[64 + j].x = arg1 - i * 9;
+        ((DisplayActor44 *) D_8011ECD0)[64 + j].y = arg2;
+        ((DisplayActor44 *) D_8011ECD0)[68 + j].x = arg1 - i * 9;
+        ((DisplayActor44 *) D_8011ECD0)[68 + j].y = arg2;
+        ((DisplayActor44 *) D_8011ECD0)[72 + j].x = arg1 - i * 9;
+        ((DisplayActor44 *) D_8011ECD0)[72 + j].y = arg2;
         if (arg3 / div != 0) {
             func_8013E864(k + 4, arg3 / div % 10 + 0x27, 0);
             func_8013E864(k + 8, arg3 / div % 10 + 0x27, 0);
@@ -443,22 +443,22 @@ void func_8014BFE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
                 func_8013E864(k, arg3 / div % 10 + 0x13, 0);
             }
         } else {
-            ((DisplayActor44 *) D_8011ECD0)[k].unk_26 = 0xA0;
-            ((DisplayActor44 *) D_8011ECD0)[k].unk_2A = 0x78;
-            ((DisplayActor44 *) D_8011ECD0)[k + 4].unk_26 = 0xA0;
-            ((DisplayActor44 *) D_8011ECD0)[k + 4].unk_2A = 0x78;
-            ((DisplayActor44 *) D_8011ECD0)[k + 8].unk_26 = 0xA0;
-            ((DisplayActor44 *) D_8011ECD0)[k + 8].unk_2A = 0x78;
+            ((DisplayActor44 *) D_8011ECD0)[k].x = 0xA0;
+            ((DisplayActor44 *) D_8011ECD0)[k].y = 0x78;
+            ((DisplayActor44 *) D_8011ECD0)[k + 4].x = 0xA0;
+            ((DisplayActor44 *) D_8011ECD0)[k + 4].y = 0x78;
+            ((DisplayActor44 *) D_8011ECD0)[k + 8].x = 0xA0;
+            ((DisplayActor44 *) D_8011ECD0)[k + 8].y = 0x78;
         }
         div *= 10;
     }
     if (arg3 == 0) {
-        ((DisplayActor44 *) D_8011ECD0)[64 + t[0]].unk_2A = arg2;
-        ((DisplayActor44 *) D_8011ECD0)[68 + t[0]].unk_2A = arg2;
-        ((DisplayActor44 *) D_8011ECD0)[72 + t[0]].unk_2A = arg2;
-        ((DisplayActor44 *) D_8011ECD0)[64 + t[0]].unk_26 = arg1;
-        ((DisplayActor44 *) D_8011ECD0)[68 + t[0]].unk_26 = arg1;
-        ((DisplayActor44 *) D_8011ECD0)[72 + t[0]].unk_26 = arg1;
+        ((DisplayActor44 *) D_8011ECD0)[64 + t[0]].y = arg2;
+        ((DisplayActor44 *) D_8011ECD0)[68 + t[0]].y = arg2;
+        ((DisplayActor44 *) D_8011ECD0)[72 + t[0]].y = arg2;
+        ((DisplayActor44 *) D_8011ECD0)[64 + t[0]].x = arg1;
+        ((DisplayActor44 *) D_8011ECD0)[68 + t[0]].x = arg1;
+        ((DisplayActor44 *) D_8011ECD0)[72 + t[0]].x = arg1;
         func_8013E864(t[0] + 0x44, 0x27, 0);
         idx = t[0] + 0x40;
         func_8013E864(idx + 8, 0x27, 0);
@@ -503,22 +503,22 @@ void func_8014C360(s32 arg0, s32 arg1, s32 arg2) {
     rec = (DisplayActor44 *) D_8011ECD0;
     t = arg0 * 12;
     u = t + 0x40; /* named local: t and u get the two spill slots of the original; T-17110 */
-    rec[64 + t].unk_26 = arg1;
-    rec[64 + t].unk_2A = arg2;
-    rec[68 + t].unk_26 = arg1;
-    rec[68 + t].unk_2A = arg2;
-    rec[72 + t].unk_26 = arg1;
-    rec[72 + t].unk_2A = arg2;
+    rec[64 + t].x = arg1;
+    rec[64 + t].y = arg2;
+    rec[68 + t].x = arg1;
+    rec[68 + t].y = arg2;
+    rec[72 + t].x = arg1;
+    rec[72 + t].y = arg2;
     func_8013E864(u, 0x34, 0);
     func_8013E864(u + 4, 0x35, 0);
     func_8013E864(u + 8, 0x35, 0);
     for (i = 1; i < 4; i++) {
-        rec[64 + t + i].unk_26 = 0xA0;
-        rec[64 + t + i].unk_2A = 0x78;
-        rec[68 + t + i].unk_26 = 0xA0;
-        rec[68 + t + i].unk_2A = 0x78;
-        rec[72 + t + i].unk_26 = 0xA0;
-        rec[72 + t + i].unk_2A = 0x78;
+        rec[64 + t + i].x = 0xA0;
+        rec[64 + t + i].y = 0x78;
+        rec[68 + t + i].x = 0xA0;
+        rec[68 + t + i].y = 0x78;
+        rec[72 + t + i].x = 0xA0;
+        rec[72 + t + i].y = 0x78;
     }
 }
 

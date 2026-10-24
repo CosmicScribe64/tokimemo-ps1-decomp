@@ -39,7 +39,7 @@ void func_80132000(void) {
 
 void func_80132214(void) {
     func_80083808();
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         func_801326F0();
         break;
@@ -61,7 +61,7 @@ void func_80132214(void) {
     }
     check_k_scroll();
     k_disp_inc2();
-    if ((D_800E6280.unk_1109 == 0) && ((u8) D_800E6280.unk_110A < 0x13U)) {
+    if ((D_800E6280.stage == 0) && ((u8) D_800E6280.step < 0x13U)) {
         parameter_show();
         func_800578F4(0);
     } else {

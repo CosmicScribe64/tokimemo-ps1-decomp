@@ -53,7 +53,7 @@ void func_80136FC4(void) {
     FnTbl8 tbl;
 
     tbl = D_8013A74C;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -66,13 +66,13 @@ void func_80137064(void) {
 void func_8013709C(void) {
     D_800CA148 = 1;
     D_800CA14C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_801370E4();
     func_8004284C();
 }
 
 void func_801370E4(void) {
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
         D_800CA160 = D_8013A6B4;
         D_800CA164 = D_8013A6E8;

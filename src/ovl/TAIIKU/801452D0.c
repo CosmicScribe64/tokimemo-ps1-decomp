@@ -79,7 +79,7 @@ void func_801452D0(void) {
     FnTbl8 tbl;
 
     tbl = D_8014A54C;
-    idx = D_800E6280.unk_1109;
+    idx = D_800E6280.stage;
     tbl.f[idx]();
 }
 
@@ -93,14 +93,14 @@ void func_80145370(void) {
     a[0] = D_8014A56C;
     b = D_8014A570;
     c = D_8014A5A0;
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80085E30(1, 1);
         for (i = 0; i < 11; i++) {
-            D_800E6280.unk_1228[i + 5] = 8;
+            D_800E6280.tpage_buf[i + 5] = 8;
         }
         for (i = 0; i < 3; i++) {
-            D_800E6280.unk_1228[i + 0x25] = 8;
+            D_800E6280.tpage_buf[i + 0x25] = 8;
         }
         D_8014A4F4 = a[0];
         for (i = 0; i < 12; i++) {
@@ -151,16 +151,16 @@ void func_80145640(void) {
     s32 slot;
     s32 i;
 
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         if (cd_read_sync_status() & 1) {
             for (i = 0; i < 0xC; i++) {
                 slot = search_load_tpage_buf_lock(D_8014A4F8[i], 1);
-                D_8014A4F8[i] = D_800E6280.unk_1228[slot] = i + 0x80000100;
+                D_8014A4F8[i] = D_800E6280.tpage_buf[slot] = i + 0x80000100;
             }
             for (i = 5; i < 9; i++) {
                 slot = search_load_tpage_buf_lock(D_8014A528[i], 1);
-                D_8014A528[i] = D_800E6280.unk_1228[slot] = i + 0x80000200;
+                D_8014A528[i] = D_800E6280.tpage_buf[slot] = i + 0x80000200;
             }
             func_8004284C();
         }
@@ -174,7 +174,7 @@ void func_80145640(void) {
         if (Fade_In_Main() != 0) {
             func_8004284C();
         }
-        if (D_800E6280.unk_F88 & 0xF0) {
+        if (D_800E6280.pad_pressed & 0xF0) {
             Fade_Out_Init();
             func_80042940(4);
         }
@@ -182,38 +182,38 @@ void func_80145640(void) {
         break;
     case 3:
         Scroll(0, 0xF, 0, 0xF0, 0x280);
-        switch (D_800E6280.unk_110D) {
+        switch (D_800E6280.substep) {
         case 0:
             func_80046290(0x1F000330, 0x3F000356, 0);
             func_80044750(0x300);
-            D_800E6280.unk_110D += 1;
+            D_800E6280.substep += 1;
             break;
         case 1:
         case 3:
             if (func_800460EC() == 4) {
-                D_800E6280.unk_110D += 1;
+                D_800E6280.substep += 1;
             }
             break;
         case 2:
             if (func_800460EC() == 2) {
                 func_80046290(0x1F000357, 0x40000360, 0);
                 func_80044750(0x300);
-                D_800E6280.unk_110D += 1;
+                D_800E6280.substep += 1;
             }
             break;
         case 4:
             if (func_800460EC() == 2) {
                 Vblnk_Timer_Init();
-                D_800E6280.unk_110D += 1;
+                D_800E6280.substep += 1;
             }
             break;
         case 5:
             if (Vblnk_Timer() >= 0xB5) {
-                D_800E6280.unk_110D = 0;
+                D_800E6280.substep = 0;
             }
             break;
         }
-        if (D_800E6280.unk_F88 & 0xF0) {
+        if (D_800E6280.pad_pressed & 0xF0) {
             Fade_Out_Init();
             func_80044750(0x74);
             func_8004284C();
@@ -241,7 +241,7 @@ void func_80145640(void) {
     case 6:
         func_80048F64(0x60);
         func_801330D4();
-        D_800E6280.unk_1228[21] = -1;
+        D_800E6280.tpage_buf[21] = -1;
         func_80132BD0();
         func_80146338();
         func_80044750(0x505);
@@ -255,7 +255,7 @@ void func_80145640(void) {
 }
 
 void func_80145A78(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         if (Fade_In_Main() != 0) {
             Vblnk_Timer_Init();
@@ -306,7 +306,7 @@ void func_80145C28(void) {
     u8 *p;
 
     Scroll(0, 0xF, 0, 0xF0, 0x280);
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80044750(0x50B);
         Fade_In_Init();
@@ -360,11 +360,11 @@ void func_80145C28(void) {
         if (Fade_Out_Main() != 0) {
             if (D_8014A3D8[0] == 1) {
                 for (j = 0; j < 13; j++) {
-                    D_800E6280.unk_1BC[j].unk_02 += 5;
+                    D_800E6280.girls[j].tokimeki += 5;
                 }
             } else if (D_8014A3D8[1] == 1) {
                 for (j = 0; j < 13; j++) {
-                    D_800E6280.unk_1BC[j].unk_02 += 3;
+                    D_800E6280.girls[j].tokimeki += 3;
                 }
             }
             func_80042808();
@@ -383,10 +383,10 @@ void func_80145EF4(void) {
     srn_init(0, D_80148EFC, 0);
     srn_vram_set(0, 5, 0x580, 0xF0);
     for (i = 0; i < 3; i++) {
-        D_800E6280.unk_1228[i + 5] = 8;
+        D_800E6280.tpage_buf[i + 5] = 8;
     }
     for (i = 0; i < 3; i++) {
-        D_800E6280.unk_1228[i + 0x25] = 8;
+        D_800E6280.tpage_buf[i + 0x25] = 8;
     }
 }
 
@@ -455,9 +455,9 @@ void func_8014607C(void) {
     D_8014A3DC = 0;
     D_8014A3C4 = 0;
     gs = &D_800E6280;
-    raw = gs->unk_0F4.b[1];
+    raw = gs->player_flags.b[1];
     if (raw) {}
-    var_v0_2 = gs->unk_10C.unk_02;
+    var_v0_2 = gs->param_athletics.value;
     temp_v1 = raw & 0xF;
     raw = 0;
     if ((temp_v1 & 1) || (temp_v1 & 2)) {
@@ -479,7 +479,7 @@ void func_8014607C(void) {
         D_8014A3D0 = 0x100;
         D_8014A3D4 = 0x18000;
     }
-    srand(D_800E6280.unk_10F4);
+    srand(D_800E6280.timer_ticks);
 }
 
 void func_80146338(void) {
@@ -491,40 +491,40 @@ void func_80146338(void) {
     b = D_8014A5DC;
     for (i = 0; i < 12; i++) {
         func_80048F64(i + 0x60);
-        DISP(96 + i).unk_38 = 0x01000000;
-        DISP(96 + i).unk_07 = 0x80;
-        DISP(96 + i).unk_0C = (u8 *)D_80149FD4;
-        DISP(96 + i).unk_10 = (u8 *)D_8014A00C;
-        DISP(96 + i).unk_34 = (u8 *)D_8014A4F8;
+        DISP(96 + i).quad_flags = 0x01000000;
+        DISP(96 + i).brightness = 0x80;
+        DISP(96 + i).frame_table = (u8 *)D_80149FD4;
+        DISP(96 + i).sequence_table = (u8 *)D_8014A00C;
+        DISP(96 + i).tpage_table = (u8 *)D_8014A4F8;
         DISP(96 + i).unk_14 = D_8014A044;
         DISP(96 + i).unk_04 = 0;
         DISP(96 + i).unk_05 = 0x80;
-        DISP(96 + i).unk_1A = 0x1000;
-        DISP(96 + i).unk_1C = 0x1000;
-        DISP(96 + i).unk_06 = 2;
-        DISP(96 + i).unk_2A = a.v[i];
+        DISP(96 + i).scale_x = 0x1000;
+        DISP(96 + i).scale_y = 0x1000;
+        DISP(96 + i).blink_period = 2;
+        DISP(96 + i).y = a.v[i];
         DISP(96 + i).unk_18 = b.v[i];
     }
     for (i = 0; i < 4; i++) {
         DISP(96 + i).unk_01 = i * 2 + 3;
-        DISP(96 + i).unk_26 = i * 8 - 0xA0;
-        DISP(96 + i).unk_02 = 0x40;
-        DISP(96 + i).unk_03 = 0xA4;
+        DISP(96 + i).x = i * 8 - 0xA0;
+        DISP(96 + i).flags = 0x40;
+        DISP(96 + i).draw_flags = 0xA4;
     }
     for (i = 0; i < 4; i++) {
         DISP(100 + i).unk_01 = i * 2 + 2;
-        DISP(100 + i).unk_26 = DISP(96 + i).unk_26 + 0x37;
-        DISP(100 + i).unk_2A = DISP(96 + i).unk_2A + 0x1C;
-        DISP(100 + i).unk_02 = 0x40;
-        DISP(100 + i).unk_03 = 0xA4;
+        DISP(100 + i).x = DISP(96 + i).x + 0x37;
+        DISP(100 + i).y = DISP(96 + i).y + 0x1C;
+        DISP(100 + i).flags = 0x40;
+        DISP(100 + i).draw_flags = 0xA4;
     }
     DISP(104).unk_01 = 9;
     DISP(105).unk_01 = 8;
     DISP(106).unk_01 = 9;
     DISP(107).unk_01 = 9;
-    DISP(107).unk_26 = -0x30;
-    DISP(107).unk_02 = 0x40;
-    DISP(107).unk_03 = 0xA4;
+    DISP(107).x = -0x30;
+    DISP(107).flags = 0x40;
+    DISP(107).draw_flags = 0xA4;
 }
 
 s32 func_8014666C(void) {
@@ -577,7 +577,7 @@ void func_80146884(void) {
         D_8014A3E4.unk_10 = -0x300;
         return;
     }
-    if (D_800E6280.unk_F88 & 0x20) {
+    if (D_800E6280.pad_pressed & 0x20) {
         D_8014A3C4 = 1;
         return;
     }
@@ -630,7 +630,7 @@ void func_80146A60(void) {
 
     if (D_8014A454[0].unk_0C == 0) {
         func_80146B8C();
-        flags = D_800E6280.unk_F80;
+        flags = D_800E6280.pad_held;
         if ((flags & 0xA) && !(flags & 5)) {
             if (D_8014A3E4.unk_02 >= 0x15 && D_8014A3E0 > 0) {
                 func_80044750(0x507);
@@ -686,38 +686,38 @@ s32 func_80146D18(void) {
     TkS16x4 tbl;
 
     tbl = D_8014A5F4;
-    if (DISP(104).unk_02 == 0 && D_8014A3DE >= 0x781) {
+    if (DISP(104).flags == 0 && D_8014A3DE >= 0x781) {
         for (k = 0; k < 3; k++) {
-            DISP(104 + k).unk_02 = 0x40;
-            DISP(104 + k).unk_03 = 0xA4;
+            DISP(104 + k).flags = 0x40;
+            DISP(104 + k).draw_flags = 0xA4;
             if (D_8014A400[k].unk_01 == 1) {
-                DISP(105).unk_03 = 0;
+                DISP(105).draw_flags = 0;
             }
         }
     }
     if (DISP(105).unk_18 == 0x4F) {
-        DISP(105).unk_03 |= 0x40;
+        DISP(105).draw_flags |= 0x40;
     }
     for (k = 0; k < 3; k++) {
-        if (D_8014A400[k].unk_01 == 1 && DISP(97 + k).unk_26 >= DISP(105).unk_26 + 0x30) {
-            DISP(105).unk_03 = 0;
-            DISP(105).unk_02 = 0;
+        if (D_8014A400[k].unk_01 == 1 && DISP(97 + k).x >= DISP(105).x + 0x30) {
+            DISP(105).draw_flags = 0;
+            DISP(105).flags = 0;
         }
     }
     for (k = 0; &tbl.v[k] < &tbl.v[4]; k++) {
-        DISP(104 + k).unk_26 = tbl.v[k] - D_8014A3DE * 2 - 0xA0;
+        DISP(104 + k).x = tbl.v[k] - D_8014A3DE * 2 - 0xA0;
     }
-    if (DISP(107).unk_26 < -0xDC && DISP(107).unk_03 != 0) {
-        DISP(107).unk_03 = 0;
+    if (DISP(107).x < -0xDC && DISP(107).draw_flags != 0) {
+        DISP(107).draw_flags = 0;
     }
     if (DISP(105).unk_18 == 0x4F) {
-        DISP(105).unk_26 = DISP(104).unk_26 + 0x20;
+        DISP(105).x = DISP(104).x + 0x20;
     }
-    if (DISP(96).unk_26 + 0x40 >= DISP(104).unk_26) {
+    if (DISP(96).x + 0x40 >= DISP(104).x) {
         if (D_8014A3D8[0] == 0) {
-            DISP(105).unk_03 = 0xE4;
+            DISP(105).draw_flags = 0xE4;
             DISP(105).unk_18 = 0x4F;
-            DISP(105).unk_26 = DISP(106).unk_26 + 0x20;
+            DISP(105).x = DISP(106).x + 0x20;
         }
         k = 0;
         while (D_8014A3D8[k] != 0) {
@@ -919,10 +919,10 @@ void func_80147594(void) {
             i = 0;
             do {
                 if (DISP(97 + k).unk_18 == D_8014A4D8[i] + (k * 0x13 + 0x13)) {
-                    if (DISP(97 + k).unk_26 + 0x4F < DISP(101 + k).unk_26 && (rand() & 0xFF) < thr.v[k]) {
+                    if (DISP(97 + k).x + 0x4F < DISP(101 + k).x && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 -= 0x22;
                     }
-                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x40 && (rand() & 0xFF) < thr.v[k]) {
+                    if (DISP(101 + k).x < DISP(97 + k).x + 0x40 && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 += 0x22;
                     }
                 }
@@ -931,10 +931,10 @@ void func_80147594(void) {
             i = 0;
             do {
                 if (DISP(97 + k).unk_18 == D_8014A4E8[i] + (k * 0x13 + 0x13)) {
-                    if (DISP(97 + k).unk_26 + 0x2D < DISP(101 + k).unk_26 && (rand() & 0xFF) < thr.v[k]) {
+                    if (DISP(97 + k).x + 0x2D < DISP(101 + k).x && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 -= 0x22;
                     }
-                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x28 && (rand() & 0xFF) < thr.v[k]) {
+                    if (DISP(101 + k).x < DISP(97 + k).x + 0x28 && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 += 0x22;
                     }
                 }
@@ -943,10 +943,10 @@ void func_80147594(void) {
             i = 0;
             do {
                 if (DISP(97 + k).unk_18 == D_8014A4C4[i] + (k * 0x13 + 0x13)) {
-                    if (DISP(97 + k).unk_26 + 0x2D < DISP(101 + k).unk_26 && (rand() & 0xFF) < thr.v[k]) {
+                    if (DISP(97 + k).x + 0x2D < DISP(101 + k).x && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 -= 0x22;
                     }
-                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x28 && (rand() & 0xFF) < thr.v[k]) {
+                    if (DISP(101 + k).x < DISP(97 + k).x + 0x28 && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 += 0x22;
                     }
                 }
@@ -976,14 +976,14 @@ void func_80147928(void) {
                 D_8014A454[0].unk_14 = 0;
             }
         }
-        if ((D_800E6280.unk_F80 & 0xA) && !(D_800E6280.unk_F80 & 5)) {
+        if ((D_800E6280.pad_held & 0xA) && !(D_800E6280.pad_held & 5)) {
             D_8014A454[0].unk_08 -= 0xB;
             if (D_8014A454[0].unk_08 == 0) {
                 D_8014A454[0].unk_14 = 0;
             }
         }
-        if (D_800E6280.unk_F80 & 5) {
-            if ((D_800E6280.unk_F80 & 0xA) == 0) {
+        if (D_800E6280.pad_held & 5) {
+            if ((D_800E6280.pad_held & 0xA) == 0) {
                 D_8014A454[0].unk_08 += 0xB;
                 if (D_8014A454[0].unk_08 == 0) {
                     D_8014A454[0].unk_14 = 0;
@@ -1025,9 +1025,9 @@ void func_80147B14(s32 index) {
     t4C = D_8014A634;
     t3C = D_8014A648;
     t2C = D_8014A658;
-    px.w = ((DisplayFixActor44 *)D_8011ECD0)[index + 96].unk_24.w;
+    px.w = ((DisplayFixActor44 *)D_8011ECD0)[index + 96].x.w;
     px.w += *(s32 *)&D_8014A454[index].unk_00;
-    py.w = ((DisplayFixActor44 *)D_8011ECD0)[index + 96].unk_28.w;
+    py.w = ((DisplayFixActor44 *)D_8011ECD0)[index + 96].y.w;
     py.w += *(s32 *)&D_8014A454[index].unk_04;
     i = 0;
     do {
@@ -1053,13 +1053,13 @@ void func_80147B14(s32 index) {
             py.h[1] += t2C.h[i];
         }
     }
-    DISP(index + 100).unk_26 = px.h[1];
-    DISP(index + 100).unk_2A = py.h[1];
+    DISP(index + 100).x = px.h[1];
+    DISP(index + 100).y = py.h[1];
     for (index = 0; index < 3; index++) {
         if (D_8014A400[index].position.h[1] - D_8014A3DE >= 0x1E1 || D_8014A400[index].position.h[1] - D_8014A3DE < -0xA0) {
-            DISP(101 + index).unk_03 = 0;
+            DISP(101 + index).draw_flags = 0;
         } else {
-            DISP(101 + index).unk_03 = 0xA4;
+            DISP(101 + index).draw_flags = 0xA4;
         }
     }
 }
@@ -1084,10 +1084,10 @@ void func_80147F58(s32 arg0) {
         i = 0;
         do {
             if (DISP(arg0 + 96).unk_18 == D_8014A4C4[i] + arg0 * 0x13) {
-                if (tbl.h[i] + DISP(arg0 + 96).unk_26 + 0x46 < DISP(arg0 + 100).unk_26) {
+                if (tbl.h[i] + DISP(arg0 + 96).x + 0x46 < DISP(arg0 + 100).x) {
                     func_80148194(arg0);
                 }
-                if (DISP(arg0 + 100).unk_26 < tbl.h[i] + DISP(arg0 + 96).unk_26 + 0x23) {
+                if (DISP(arg0 + 100).x < tbl.h[i] + DISP(arg0 + 96).x + 0x23) {
                     func_80148228(arg0);
                 }
             }
@@ -1096,10 +1096,10 @@ void func_80147F58(s32 arg0) {
         i = 0;
         do {
             if (DISP(arg0 + 96).unk_18 == D_8014A4D8[i] + arg0 * 0x13) {
-                if (DISP(arg0 + 96).unk_26 + 0x5E < DISP(arg0 + 100).unk_26) {
+                if (DISP(arg0 + 96).x + 0x5E < DISP(arg0 + 100).x) {
                     func_80148194(arg0);
                 }
-                if (DISP(arg0 + 100).unk_26 < DISP(arg0 + 96).unk_26 + 0x3B) {
+                if (DISP(arg0 + 100).x < DISP(arg0 + 96).x + 0x3B) {
                     func_80148228(arg0);
                 }
             }
@@ -1108,10 +1108,10 @@ void func_80147F58(s32 arg0) {
         i = 0;
         do {
             if (DISP(arg0 + 96).unk_18 == D_8014A4E8[i] + arg0 * 0x13) {
-                if (DISP(arg0 + 96).unk_26 + 0x3C < DISP(arg0 + 100).unk_26) {
+                if (DISP(arg0 + 96).x + 0x3C < DISP(arg0 + 100).x) {
                     func_80148194(arg0);
                 }
-                if (DISP(arg0 + 100).unk_26 < DISP(arg0 + 96).unk_26 + 0x19) {
+                if (DISP(arg0 + 100).x < DISP(arg0 + 96).x + 0x19) {
                     func_80148228(arg0);
                 }
             }
@@ -1191,37 +1191,37 @@ s32 func_80148370(void) {
 
     func_80048E78();
     for (i = 0; i < 9; i++) {
-        DISP(96 + i).unk_38 = 0x01000000;
-        DISP(96 + i).unk_07 = 0x80;
-        DISP(96 + i).unk_02 = 0x40;
-        DISP(96 + i).unk_03 = 0xA4;
-        DISP(96 + i).unk_0C = (u8 *)D_80149FD8;
-        DISP(96 + i).unk_10 = (u8 *)D_8014A010;
-        DISP(96 + i).unk_34 = (u8 *)D_8014A528;
+        DISP(96 + i).quad_flags = 0x01000000;
+        DISP(96 + i).brightness = 0x80;
+        DISP(96 + i).flags = 0x40;
+        DISP(96 + i).draw_flags = 0xA4;
+        DISP(96 + i).frame_table = (u8 *)D_80149FD8;
+        DISP(96 + i).sequence_table = (u8 *)D_8014A010;
+        DISP(96 + i).tpage_table = (u8 *)D_8014A528;
         DISP(96 + i).unk_14 = D_8014A048;
         DISP(96 + i).unk_04 = 0;
         DISP(96 + i).unk_05 = 0x80;
-        DISP(96 + i).unk_1A = 0x1000;
-        DISP(96 + i).unk_1C = 0x1000;
-        DISP(96 + i).unk_06 = 2;
+        DISP(96 + i).scale_x = 0x1000;
+        DISP(96 + i).scale_y = 0x1000;
+        DISP(96 + i).blink_period = 2;
     }
     for (i = 0; i < 4; i++) {
         DISP(96 + i).unk_01 = 3;
         DISP(96 + i).unk_18 = D_8014A3D8[i] * 5 + 0x1D;
-        DISP(96 + i).unk_2A = -8;
-        DISP(96 + i).unk_26 = i * 0x30 - 0x70;
+        DISP(96 + i).y = -8;
+        DISP(96 + i).x = i * 0x30 - 0x70;
     }
     for (i = 0; i < 4; i++) {
         DISP(100 + i).unk_01 = 3;
         DISP(100 + i).unk_18 = D_8014A3D8[i] * 5 + 0xD;
-        DISP(100 + i).unk_26 = DISP(96 + i).unk_26;
-        DISP(100 + i).unk_2A = DISP(96 + i).unk_2A;
+        DISP(100 + i).x = DISP(96 + i).x;
+        DISP(100 + i).y = DISP(96 + i).y;
     }
     DISP(104).unk_01 = 3;
-    DISP(104).unk_16 = 9;
-    DISP(104).unk_26 = 0xC0;
-    DISP(104).unk_2A = -0x20;
-    DISP(104).unk_02 = 1;
+    DISP(104).sequence_slot = 9;
+    DISP(104).x = 0xC0;
+    DISP(104).y = -0x20;
+    DISP(104).flags = 1;
 }
 
 s32 func_801485C4(void) {
@@ -1238,12 +1238,12 @@ s32 func_801485C4(void) {
         index++;
         p++;
     } while (index < 4);
-    if (chosen * 48 - 64 < ((DisplayFixActor44 *)D_8011ECD0)[104].unk_24.h[1]) {
-        ((DisplayFixActor44 *)D_8011ECD0)[104].unk_24.w += 0xFFFE8000;
+    if (chosen * 48 - 64 < ((DisplayFixActor44 *)D_8011ECD0)[104].x.h[1]) {
+        ((DisplayFixActor44 *)D_8011ECD0)[104].x.w += 0xFFFE8000;
         return 0;
     }
-    ((DisplayFixActor44 *)D_8011ECD0)[104].unk_02 = 64;
-    ((DisplayFixActor44 *)D_8011ECD0)[104].unk_18 = 61;
+    ((DisplayFixActor44 *)D_8011ECD0)[104].flags = 64;
+    ((DisplayFixActor44 *)D_8011ECD0)[104].frame = 61;
     Vblnk_Timer_Init();
     return 1;
 }
@@ -1254,7 +1254,7 @@ s32 func_80148678(void) {
 
     if (Vblnk_Timer() >= 0x2E) {
         ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x3C;
-        ((DisplayActor44 *)D_8011ECD0)[104].unk_2A = -8;
+        ((DisplayActor44 *)D_8011ECD0)[104].y = -8;
         for (i = 0; i < 4; i++) {
             if (D_8014A3D8[i] == 1) {
                 n = i;
@@ -1262,7 +1262,7 @@ s32 func_80148678(void) {
         }
         for (i = 0; i < 4; i++) {
             if (n < i) {
-                ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_26 += 0x30;
+                ((DisplayActor44 *)D_8011ECD0)[i + 96].x += 0x30;
                 *(s16 *)&D_8011ECD0[0x19A6 + 0x110 + i * 0x44] += 0x30;
             }
         }

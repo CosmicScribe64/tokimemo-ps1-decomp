@@ -24,7 +24,7 @@ void func_8013C570(void) {
 }
 
 void func_8013C5B0(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013C5EC();
         return;
     }
@@ -41,7 +41,7 @@ void func_8013C5EC(void) {
     FnTbl32 tbl;
 
     tbl = D_80146A1C;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -53,11 +53,11 @@ void func_8013C674(void) {
 
 void func_8013C6A4(void) {
     if ((u16) D_800CA154 == 0) {
-        D_800E6280.unk_F5F = 0xE;
+        D_800E6280.current_girl = 0xE;
     } else if ((u16) D_800CA154 == 1) {
-        D_800E6280.unk_F5F = 0xD;
+        D_800E6280.current_girl = 0xD;
     } else {
-        D_800E6280.unk_F5F = 3;
+        D_800E6280.current_girl = 3;
     }
     func_80138AF8();
 }
@@ -69,7 +69,7 @@ void func_8013C704(void) {
 }
 
 void func_8013C73C(void) {
-    D_800E6280.unk_F5F = 3;
+    D_800E6280.current_girl = 3;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -88,14 +88,14 @@ void func_8013C73C(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145F20;
     D_80146278 = D_8014605C;
     D_8014627C = D_80146198;
     strcpy(D_800CA19C, "校舎裏");
-    D_800E6280.unk_1BC[3].unk_06 += 2;
+    D_800E6280.girls[3].affection += 2;
     check_para_limit();
     D_800CA368 = 0x15;
     func_8004284C();

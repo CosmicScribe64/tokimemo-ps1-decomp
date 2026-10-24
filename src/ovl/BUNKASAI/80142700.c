@@ -15,7 +15,7 @@ void func_80142700(void) {
         func_80085E30(1, 0);
         func_8008585C();
         for (i = 0; i < 11; i++) {
-            D_800CA2B0[i] = g->unk_1BC[i].unk_0C.f.b1;
+            D_800CA2B0[i] = g->girls[i].flags.f.met;
         }
         dec_bg_reset();
         message_window_init();
@@ -76,11 +76,11 @@ void func_80142700(void) {
         func_80150930();
         break;
     case 8:
-        if ((g->unk_03F == (g->unk_1BC[0].unk_10.w & 0xF)) && (g->unk_040 == ((u32) (g->unk_1BC[0].unk_10.w << 0x17) >> 0x1B)) && !(g->unk_71E & 1)) {
+        if ((g->month == (g->girls[0].birthday.w & 0xF)) && (g->day == ((u32) (g->girls[0].birthday.w << 0x17) >> 0x1B)) && !(g->daily_event_bits & 1)) {
             D_80122EC0 = 9;
-            g->unk_1109 = 0;
-            g->unk_110A = 0;
-        } else if (g->unk_1109 == 0) {
+            g->stage = 0;
+            g->step = 0;
+        } else if (g->stage == 0) {
             func_80044750(0xBF);
             func_800674B0();
             func_80042808();
@@ -109,15 +109,15 @@ void func_80142700(void) {
 }
 
 void func_80142B98(void) {
-    if (D_800E6280.unk_110A != 0) {
-        D_800E6280.unk_110A = 0;
+    if (D_800E6280.step != 0) {
+        D_800E6280.step = 0;
         D_80122EC0 += 1;
     }
 }
 
 void func_80142BC8(void) {
-    D_800E6280.unk_1109 = 0;
-    D_800E6280.unk_110A = 0;
+    D_800E6280.stage = 0;
+    D_800E6280.step = 0;
     D_80122EC0 = 8;
 }
 
@@ -139,49 +139,49 @@ s32 func_80142BE8(void) {
     first = D_80160534;
     second = D_80160584;
     third = D_801605D4;
-    bonus = ((u32) (g->unk_66C[g->unk_0F4.h >> 12].unk_00 >> 3) / (u32) (g->unk_03E - 94) +
-             (&g->unk_0FC)[sel.v[g->unk_0F4.h >> 12]].unk_02 / 20) & 0xFF;
+    bonus = ((u32) (g->clubs[g->player_flags.h >> 12].exp >> 3) / (u32) (g->year - 94) +
+             (&g->param_condition)[sel.v[g->player_flags.h >> 12]].value / 20) & 0xFF;
     if (bonus >= 11) {
         bonus = 10;
     }
-    switch ((g->unk_03E - 95) & 0xFF) {
+    switch ((g->year - 95) & 0xFF) {
     case 0:
         for (i = 0; i < 13; i++) {
-            val = first.v[i][g->unk_0F4.h >> 12] >> 1;
-            g->unk_1BC[i].unk_02 += bonus;
-            g->unk_1BC[i].unk_02 += val;
+            val = first.v[i][g->player_flags.h >> 12] >> 1;
+            g->girls[i].tokimeki += bonus;
+            g->girls[i].tokimeki += val;
         }
-        amount = first.v[D_80122EBC][g->unk_0F4.h >> 12];
+        amount = first.v[D_80122EBC][g->player_flags.h >> 12];
         break;
     case 1:
         for (i = 0; i < 13; i++) {
-            val = second.v[i][g->unk_0F4.h >> 12] >> 1;
-            g->unk_1BC[i].unk_02 += bonus;
-            g->unk_1BC[i].unk_02 += val;
+            val = second.v[i][g->player_flags.h >> 12] >> 1;
+            g->girls[i].tokimeki += bonus;
+            g->girls[i].tokimeki += val;
         }
-        amount = second.v[D_80122EBC][g->unk_0F4.h >> 12];
+        amount = second.v[D_80122EBC][g->player_flags.h >> 12];
         break;
     case 2:
         for (i = 0; i < 13; i++) {
-            val = third.v[i][g->unk_0F4.h >> 12] >> 1;
-            g->unk_1BC[i].unk_02 += bonus;
-            g->unk_1BC[i].unk_02 += val;
+            val = third.v[i][g->player_flags.h >> 12] >> 1;
+            g->girls[i].tokimeki += bonus;
+            g->girls[i].tokimeki += val;
         }
-        amount = third.v[D_80122EBC][g->unk_0F4.h >> 12];
+        amount = third.v[D_80122EBC][g->player_flags.h >> 12];
         break;
     }
     if (amount != 0) {
         amount--;
     }
-    g->unk_1BC[D_80122EBC].unk_06 += 2;
-    g->unk_1BC[D_80122EBC].unk_02 += amount;
+    g->girls[D_80122EBC].affection += 2;
+    g->girls[D_80122EBC].tokimeki += amount;
 }
 
 void func_801431D4(void) {
     k_reset(0);
     switch (D_80122EB8) {
     case 0:
-        switch (D_800E6280.unk_03E) {
+        switch (D_800E6280.year) {
         case 0x5F:
             func_8006612C((s32) "詩集展示");
             break;
@@ -200,7 +200,7 @@ void func_801431D4(void) {
         func_8006612C((s32) "実験ショー");
         break;
     case 3:
-        switch (D_800E6280.unk_03E) {
+        switch (D_800E6280.year) {
         case 0x5F:
             func_8006612C((s32) "パソコン占い");
             break;
@@ -213,7 +213,7 @@ void func_801431D4(void) {
         }
         break;
     case 4:
-        switch (D_800E6280.unk_03E) {
+        switch (D_800E6280.year) {
         case 0x5F:
             func_8006612C((s32) "似顔絵");
             break;
@@ -246,42 +246,42 @@ void func_801433C0(void) {
     u8 sp2B;
     GameState *game = &D_800E6280;
 
-    switch (game->unk_0F4.h >> 12) {
+    switch (game->player_flags.h >> 12) {
     case 0:
-        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 0) ||
-            ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 0) && (game->unk_1BC[1].unk_0C.f.b1 == 1))) {
+        if ((((u8) game->girls[0].flags.b[2] >> 4) == 0) ||
+            ((((u8) game->girls[1].flags.b[2] >> 4) == 0) && (game->girls[1].flags.f.met == 1))) {
             sp2B = 2;
         } else {
             sp2B = 1;
         }
         break;
     case 1:
-        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 1) ||
-            ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 1) && (game->unk_1BC[1].unk_0C.f.b1 == 1))) {
+        if ((((u8) game->girls[0].flags.b[2] >> 4) == 1) ||
+            ((((u8) game->girls[1].flags.b[2] >> 4) == 1) && (game->girls[1].flags.f.met == 1))) {
             sp2B = 6;
         } else {
             sp2B = 5;
         }
         break;
     case 2:
-        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 2) ||
-            ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 2) && (game->unk_1BC[2].unk_0C.f.b1 == 1))) {
+        if ((((u8) game->girls[0].flags.b[2] >> 4) == 2) ||
+            ((((u8) game->girls[2].flags.b[2] >> 4) == 2) && (game->girls[2].flags.f.met == 1))) {
             sp2B = 10;
         } else {
             sp2B = 9;
         }
         break;
     case 3:
-        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 3) ||
-            ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 3) && (game->unk_1BC[2].unk_0C.f.b1 == 1))) {
+        if ((((u8) game->girls[0].flags.b[2] >> 4) == 3) ||
+            ((((u8) game->girls[2].flags.b[2] >> 4) == 3) && (game->girls[2].flags.f.met == 1))) {
             sp2B = 14;
         } else {
             sp2B = 13;
         }
         break;
     case 4:
-        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 4) ||
-            ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 4) && (game->unk_1BC[3].unk_0C.f.b1 == 1))) {
+        if ((((u8) game->girls[0].flags.b[2] >> 4) == 4) ||
+            ((((u8) game->girls[3].flags.b[2] >> 4) == 4) && (game->girls[3].flags.f.met == 1))) {
             sp2B = 18;
         } else {
             if ((D_80122EBC == 10) && (func_8008667C(10) == 4)) {
@@ -292,23 +292,23 @@ void func_801433C0(void) {
         }
         break;
     case 5:
-        if ((((u8) game->unk_1BC[0].unk_0C.b[2] >> 4) == 5) ||
-            ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 5) && (game->unk_1BC[3].unk_0C.f.b1 == 1))) {
+        if ((((u8) game->girls[0].flags.b[2] >> 4) == 5) ||
+            ((((u8) game->girls[3].flags.b[2] >> 4) == 5) && (game->girls[3].flags.f.met == 1))) {
             sp2B = 22;
         } else {
             sp2B = 21;
         }
         break;
     }
-    game->unk_75E[game->unk_F5E].unk_00 = D_80122EBC;
-    game->unk_75E[game->unk_F5E].unk_02 = 20;
-    game->unk_75E[game->unk_F5E].unk_01 = sp2B;
-    game->unk_75E[game->unk_F5E].unk_03 = get_g_zyotai_h(D_80122EBC);
-    game->unk_75E[game->unk_F5E].unk_04 = game->unk_03E;
-    game->unk_75E[game->unk_F5E].unk_05 = game->unk_03F;
-    game->unk_75E[game->unk_F5E].unk_06 = game->unk_040;
-    game->unk_75E[game->unk_F5E].unk_07 = game->unk_041;
-    if (++game->unk_F5E >= 0xFF) {
-        game->unk_F5E = 0xFE;
+    game->event_log[game->event_log_count].girl = D_80122EBC;
+    game->event_log[game->event_log_count].scene = 20;
+    game->event_log[game->event_log_count].flag = sp2B;
+    game->event_log[game->event_log_count].rank = get_g_zyotai_h(D_80122EBC);
+    game->event_log[game->event_log_count].year = game->year;
+    game->event_log[game->event_log_count].month = game->month;
+    game->event_log[game->event_log_count].day = game->day;
+    game->event_log[game->event_log_count].weekday = game->weekday;
+    if (++game->event_log_count >= 0xFF) {
+        game->event_log_count = 0xFE;
     }
 }

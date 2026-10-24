@@ -48,7 +48,7 @@ void func_8013D5B0(void) {
 }
 
 void func_8013D614(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013D68C();
         return;
     }
@@ -56,7 +56,7 @@ void func_8013D614(void) {
 }
 
 void func_8013D650(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013D74C();
         return;
     }
@@ -68,7 +68,7 @@ void func_8013D68C(void) {
     FnTbl32 tbl;
 
     tbl = D_80146CBC;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -88,12 +88,12 @@ void func_8013D74C(void) {
     FnTbl23 tbl;
 
     tbl = D_80146D3C;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx]();
 }
 
 void func_8013D7D4(void) {
-    D_800E6280.unk_F5F = 5;
+    D_800E6280.current_girl = 5;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -109,7 +109,7 @@ void func_8013D7D4(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145F68;
@@ -117,8 +117,8 @@ void func_8013D7D4(void) {
     D_8014627C = D_801461E0;
     strcpy(D_800CA19C, "廊下");
     if (D_80122CD0 == 1) {
-        D_800E6280.unk_1BC[5].unk_06 += 1;
-        D_800E6280.unk_1BC[5].unk_0A -= 1;
+        D_800E6280.girls[5].affection += 1;
+        D_800E6280.girls[5].syoushin -= 1;
         check_para_limit();
     }
     D_800CA368 = 0x21;
@@ -134,7 +134,7 @@ void func_8013D91C(void) {
 }
 
 void func_8013D9C4(void) {
-    D_800E6280.unk_F5F = 5;
+    D_800E6280.current_girl = 5;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -153,14 +153,14 @@ void func_8013D9C4(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145F6C;
     D_80146278 = D_801460A8;
     D_8014627C = D_801461E4;
     strcpy(D_800CA19C, "廊下");
-    D_800E6280.unk_1BC[5].unk_02 += 1;
+    D_800E6280.girls[5].tokimeki += 1;
     check_para_limit();
     D_800CA368 = 0x22;
     func_8004284C();

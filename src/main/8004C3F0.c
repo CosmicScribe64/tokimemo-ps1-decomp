@@ -42,15 +42,15 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         SetSemiTrans(poly, 0);
     }
     SetShadeTex(poly, 0);
-    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->r0 = g->screen_brightness, poly->g0 = g->screen_brightness, poly->b0 = g->screen_brightness;
     poly->u0 = 0, poly->v0 = (arg0 & 0x20) * 4,
         poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
         poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
         poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
-    poly->x0 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x1 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x2 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x1 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x2 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
     poly->clut = func_8009ED74(arg6, arg7);
     AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
@@ -64,15 +64,15 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         SetSemiTrans(poly, 0);
     }
     SetShadeTex(poly, 0);
-    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->r0 = g->screen_brightness, poly->g0 = g->screen_brightness, poly->b0 = g->screen_brightness;
     poly->u0 = arg4 / 256 * 4 + 3, poly->v0 = 0,
         poly->u1 = arg4 / 256 * 4 + 4, poly->v1 = 0,
         poly->u2 = arg4 / 256 * 4 + 3, poly->v2 = arg3->h,
         poly->u3 = arg4 / 256 * 4 + 4, poly->v3 = arg3->h;
-    poly->x0 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x1 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 1, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x2 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->unk_014[D_8011ECA0] - (arg4 & 0xFF) + arg3->x + 0x100, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x1 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 1, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x2 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[D_8011ECA0] - (arg4 & 0xFF) + arg3->x + 0x100, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, 0x3C0, 0);
     poly->clut = func_8009ED74(arg6, arg7);
     AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4 - 4], poly);
@@ -86,15 +86,15 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         SetSemiTrans(poly, 0);
     }
     SetShadeTex(poly, 0);
-    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->r0 = g->screen_brightness, poly->g0 = g->screen_brightness, poly->b0 = g->screen_brightness;
     poly->u0 = 0, poly->v0 = (arg0 & 0x20) * 4,
         poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
         poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
         poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
-    poly->x0 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x1 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x2 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x1 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x2 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor + pageWidth, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
     poly->clut = func_8009ED74(arg6, arg7);
     AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
@@ -108,15 +108,15 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         SetSemiTrans(poly, 0);
     }
     SetShadeTex(poly, 0);
-    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->r0 = g->screen_brightness, poly->g0 = g->screen_brightness, poly->b0 = g->screen_brightness;
     poly->u0 = arg4 / 256 * 4 + 7, poly->v0 = 0,
         poly->u1 = arg4 / 256 * 4 + 8, poly->v1 = 0,
         poly->u2 = arg4 / 256 * 4 + 7, poly->v2 = arg3->h,
         poly->u3 = arg4 / 256 * 4 + 8, poly->v3 = arg3->h;
-    poly->x0 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x1 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x101, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x2 = g->unk_014[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->unk_014[D_8011ECA0] - (arg4 & 0xFF) + arg3->x + 0x200, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x1 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x101, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x2 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[D_8011ECA0] - (arg4 & 0xFF) + arg3->x + 0x200, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, 0x3C0, 0);
     poly->clut = func_8009ED74(arg6, arg7);
     AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
@@ -130,15 +130,15 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         SetSemiTrans(poly, 0);
     }
     SetShadeTex(poly, 0);
-    poly->r0 = g->unk_03A, poly->g0 = g->unk_03A, poly->b0 = g->unk_03A;
+    poly->r0 = g->screen_brightness, poly->g0 = g->screen_brightness, poly->b0 = g->screen_brightness;
     poly->u0 = 0, poly->v0 = (arg0 & 0x20) * 4,
         poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
         poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
         poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
-    poly->x0 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y0 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x1 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y1 = g->unk_018[D_8011ECA0] + arg3->y,
-        poly->x2 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y2 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->unk_014[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y3 = g->unk_018[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x1 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
+        poly->x2 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor + pageWidth * 2, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
     poly->clut = func_8009ED74(arg6, arg7);
     AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
@@ -467,36 +467,36 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     p = (ModRec14 *)(D_801217A0 + idx * 0x14);
     /* FAKE: T-25104, one line per case so that as1 stores mode before the attribute in cases 3 to 5 */
     switch (p->unk_08) {
-    case 0: sp.unk_00 = 0x01000000; mode = 1; break;
-    case 1: mode = 2; sp.unk_00 = 0; break;
-    case 2: mode = 2; sp.unk_00 = 0; break;
-    case 3: sp.unk_00 = 0x01000000; mode = 1; break;
-    case 4: sp.unk_00 = 0x01000000; mode = 1; break;
-    case 5: sp.unk_00 = 0x01000000; mode = 1; break;
-    default: sp.unk_00 = 0x01000000; mode = 1; break;
+    case 0: sp.flags = 0x01000000; mode = 1; break;
+    case 1: mode = 2; sp.flags = 0; break;
+    case 2: mode = 2; sp.flags = 0; break;
+    case 3: sp.flags = 0x01000000; mode = 1; break;
+    case 4: sp.flags = 0x01000000; mode = 1; break;
+    case 5: sp.flags = 0x01000000; mode = 1; break;
+    default: sp.flags = 0x01000000; mode = 1; break;
     }
     rows = p->unk_0D;
     cols = p->unk_0C;
     w = p->unk_0E[0];
-    sp.unk_0A = p->unk_0E[1];
-    sp.unk_18 = 0;
-    sp.unk_1A = 0;
-    sp.unk_14 = bright;
-    sp.unk_15 = bright;
-    sp.unk_16 = bright;
+    sp.h = p->unk_0E[1];
+    sp.anchor_x = 0;
+    sp.anchor_y = 0;
+    sp.tint_r = bright;
+    sp.tint_g = bright;
+    sp.tint_b = bright;
     sp.unk_20 = 0;
     sp.unk_1C = 0x1000;
     sp.unk_1E = 0x1000;
     row = 0;
-    sp.unk_08 = w;
+    sp.w = w;
     data = rows * frame * cols + p->unk_04;
     if (rows != 0) {
         do {
             col = 0;
             if (cols != 0) {
                 do {
-                    sp.unk_04 = x + col * w;
-                    sp.unk_06 = row * w + y;
+                    sp.x = x + col * w;
+                    sp.y = row * w + y;
                     uv = (*data & 0xFF0000) >> 16;
                     word = (*data & 0xFF000000) >> 24;
                     clut = (*data & 0xFF00) >> 8;

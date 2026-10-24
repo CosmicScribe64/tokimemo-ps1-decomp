@@ -58,12 +58,12 @@ s32 func_80140A90(void) {
     s32 i;
 
     func_80083808();
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         D_80122EA0 = 0;
         func_8004E58C();
         tpage_buf_clear();
-        D_800E6280.unk_1228[0x1A] = -1;
+        D_800E6280.tpage_buf[0x1A] = -1;
         func_80048E78();
         dec_bg_cd_read(0x413C, 1);
         D_8014A064 = 0;
@@ -86,7 +86,7 @@ s32 func_80140A90(void) {
             func_8006612C((s32) "グラウンド");
             k_disp_start(1);
             addr_init_bustup();
-            D_800E6280.unk_F5F = 1;
+            D_800E6280.current_girl = 1;
             func_80083474();
         }
         break;
@@ -138,9 +138,9 @@ s32 func_80140A90(void) {
         func_8006B900();
         break;
     case 11:
-        D_800E6280.unk_1BC[1].unk_06 -= 1;
-        D_800E6280.unk_1BC[1].unk_02 -= 1;
-        D_800E6280.unk_1BC[1].unk_0A += 0xA;
+        D_800E6280.girls[1].affection -= 1;
+        D_800E6280.girls[1].tokimeki -= 1;
+        D_800E6280.girls[1].syoushin += 0xA;
         func_80083440(3U);
         func_80063668();
         D_800CA148 = 0xA;
@@ -194,7 +194,7 @@ s32 func_80140A90(void) {
                 ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_04 |= 8;
             }
             ((DisplayActor44 *)D_8011ECD0)[98] = ((DisplayActor44 *)D_8011ECD0)[96];
-            ((DisplayActor44 *)D_8011ECD0)[98].unk_16 = 4;
+            ((DisplayActor44 *)D_8011ECD0)[98].sequence_slot = 4;
             func_8004284C();
         }
         break;
@@ -227,40 +227,40 @@ s32 func_80140A90(void) {
         break;
     case 28:
         func_80085368();
-        ((DisplayActor44 *)D_8011ECD0)[98].unk_03 |= 0x80;
-        ((DisplayActor44 *)D_8011ECD0)[98].unk_07 += 4;
-        if (((DisplayActor44 *)D_8011ECD0)[98].unk_07 >= 0x80) {
-            ((DisplayActor44 *)D_8011ECD0)[98].unk_07 = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[98].draw_flags |= 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[98].brightness += 4;
+        if (((DisplayActor44 *)D_8011ECD0)[98].brightness >= 0x80) {
+            ((DisplayActor44 *)D_8011ECD0)[98].brightness = 0x80;
         }
         break;
     case 29:
         normal_date_speak();
         if (check_end_k() != 0) {
-            ((DisplayActor44 *)D_8011ECD0)[98].unk_02 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[98].flags = 0;
             ((DisplayActor44 *)D_8011ECD0)[98].unk_18 = 0;
         } else {
-            ((DisplayActor44 *)D_8011ECD0)[98].unk_02 = 1;
+            ((DisplayActor44 *)D_8011ECD0)[98].flags = 1;
         }
         break;
     case 30:
         normal_date_speak();
         break;
     case 31:
-        ((DisplayActor44 *)D_8011ECD0)[98].unk_16 = 5;
+        ((DisplayActor44 *)D_8011ECD0)[98].sequence_slot = 5;
         func_8004284C();
         break;
     case 32:
         normal_date_speak();
         if (check_end_k() != 0) {
-            ((DisplayActor44 *)D_8011ECD0)[98].unk_02 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[98].flags = 0;
             ((DisplayActor44 *)D_8011ECD0)[98].unk_18 = 0;
         } else {
-            ((DisplayActor44 *)D_8011ECD0)[98].unk_02 = 1;
+            ((DisplayActor44 *)D_8011ECD0)[98].flags = 1;
         }
         break;
     case 33:
-        ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 3;
-        ((DisplayActor44 *)D_8011ECD0)[97].unk_16 = 1;
+        ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = 3;
+        ((DisplayActor44 *)D_8011ECD0)[97].sequence_slot = 1;
         ((DisplayActor44 *)D_8011ECD0)[97].unk_18 = 0;
         ((DisplayActor44 *)D_8011ECD0)[97].unk_08 = 0;
         func_8004284C();
@@ -271,10 +271,10 @@ s32 func_80140A90(void) {
     case 35:
         normal_date_speak();
         if (check_end_k() != 0) {
-            ((DisplayActor44 *)D_8011ECD0)[98].unk_02 = 0;
+            ((DisplayActor44 *)D_8011ECD0)[98].flags = 0;
             ((DisplayActor44 *)D_8011ECD0)[98].unk_18 = 0;
         } else {
-            ((DisplayActor44 *)D_8011ECD0)[98].unk_02 = 1;
+            ((DisplayActor44 *)D_8011ECD0)[98].flags = 1;
         }
         break;
     case 36:
@@ -282,16 +282,16 @@ s32 func_80140A90(void) {
         break;
     case 37:
         func_800853FC();
-        ((DisplayActor44 *)D_8011ECD0)[98].unk_07 -= 4;
-        if (((DisplayActor44 *)D_8011ECD0)[98].unk_07 < 3) {
-            ((DisplayActor44 *)D_8011ECD0)[98].unk_07 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[98].brightness -= 4;
+        if (((DisplayActor44 *)D_8011ECD0)[98].brightness < 3) {
+            ((DisplayActor44 *)D_8011ECD0)[98].brightness = 0;
         }
         break;
     case 38:
         D_8014A064 = 1;
         func_80085B3C(2, 0xD);
-        D_800E6280.unk_1BC[1].unk_06 += 2;
-        D_800E6280.unk_1BC[1].unk_02 += 1;
+        D_800E6280.girls[1].affection += 2;
+        D_800E6280.girls[1].tokimeki += 1;
         break;
     default:
         func_80046500();

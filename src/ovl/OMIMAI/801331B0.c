@@ -52,12 +52,12 @@ void func_80133424(void) {
     FnTbl26 tbl;
 
     tbl = D_80134CD0;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
 void func_801334AC(void) {
-    if ((D_800E6280.unk_F5F == 4) && (D_800CA148 == 5)) {
+    if ((D_800E6280.current_girl == 4) && (D_800CA148 == 5)) {
         normal_date_speak_1line();
         return;
     }
@@ -65,18 +65,18 @@ void func_801334AC(void) {
 }
 
 s32 func_80133500(void) {
-    if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.substep == 0) {
         func_800674B0();
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
     }
-    if (D_800E6280.unk_110D == 1) {
-        if (D_800E6280.unk_1104.u++ >= 0x400U) {
+    if (D_800E6280.substep == 1) {
+        if (D_800E6280.step_timer.u++ >= 0x400U) {
             func_800452C4();
             func_8004482C();
-            D_800E6280.unk_110D = 0;
+            D_800E6280.substep = 0;
         }
         if (func_80044E8C() == 1) {
-            D_800E6280.unk_110D += 1;
+            D_800E6280.substep += 1;
         } else {
             return 0;
         }
@@ -85,7 +85,7 @@ s32 func_80133500(void) {
 }
 
 void func_801335C4(void) {
-    func_80044890(1, 0xBF98, 0xBF79, D_800B3688[D_800E6280.unk_F5F], D_800B36C8[D_800E6280.unk_F5F], D_800B3708[D_800E6280.unk_F5F]);
+    func_80044890(1, 0xBF98, 0xBF79, D_800B3688[D_800E6280.current_girl], D_800B36C8[D_800E6280.current_girl], D_800B3708[D_800E6280.current_girl]);
     if (func_80044E8C() == 1) {
         func_8004284C();
     }
@@ -96,10 +96,10 @@ void func_8013364C(void) {
     if (func_80044E8C() == 1) {
         func_8004284C();
     }
-    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
+    if ((u32) D_800E6280.step_timer.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
+        func_80042940((D_800E6280.step - 1) & 0xFF);
     }
 }
 
@@ -123,10 +123,10 @@ void func_80133730(void) {
     tpage_buf_clear();
     func_8004E58C();
     k_reset(1);
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     func_8008585C();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     hizuke_init();
@@ -138,9 +138,9 @@ void func_80133730(void) {
 }
 
 void func_801337EC(void) {
-    func_800847B8(D_800E6280.unk_F5F = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01);
+    func_800847B8(D_800E6280.current_girl = D_800E6280.day_events[D_800E6280.day_event_index].girl);
     func_801331B0();
-    if (D_800E6280.unk_F5F == 0xC) {
+    if (D_800E6280.current_girl == 0xC) {
         D_800CA148 = 8;
     } else {
         D_800CA148 = 0;
@@ -154,19 +154,19 @@ void func_801337EC(void) {
 /* FAKE: uopt priority and cvt_pass NO_WIDEN helpers so unk_F68.w and unk_0F4.h
  * promote to $v1 per case, unk_03E promotes to $a0 in case 4, and D_800CA148
  * colours into $a0; T-24140 */
-#define F68_SEL_388C ((((D_800E6280.unk_F68.w ^ 1) * 0) + (D_800E6280.unk_F68.w & 0xF)))
-#define F0F4_SHR_388C (D_800E6280.unk_0F4.h >> (((pad = 0) * 0) + 0xC))
-#define F0F4_DIV_388C (D_800E6280.unk_0F4.h / (((pad = 0) * 0) + 0x1000U))
-#define F0F4_BOOST_388C ((D_800E6280.unk_0F4.h - (((pad = 0) * 0) + 1)) * 0)
+#define F68_SEL_388C ((((D_800E6280.last_command.w ^ 1) * 0) + (D_800E6280.last_command.w & 0xF)))
+#define F0F4_SHR_388C (D_800E6280.player_flags.h >> (((pad = 0) * 0) + 0xC))
+#define F0F4_DIV_388C (D_800E6280.player_flags.h / (((pad = 0) * 0) + 0x1000U))
+#define F0F4_BOOST_388C ((D_800E6280.player_flags.h - (((pad = 0) * 0) + 1)) * 0)
 
 void func_8013388C(void) {
     s32 pad; /* FAKE: 4-byte frame pad and dead-store target for SWP NO_WIDEN, T-24140 */
     u8 sp2B;
 
-    pad = (D_800E6280.unk_03E == 0);
-    sp2B = get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
-    srand(D_800E6280.unk_10F8);
-    switch (D_800E6280.unk_F5F) {
+    pad = (D_800E6280.year == 0);
+    sp2B = get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
+    srand(D_800E6280.frame_count);
+    switch (D_800E6280.current_girl) {
     case 0:
         if (F68_SEL_388C < 2U) {
             D_80134CCC = 0;
@@ -237,7 +237,7 @@ void func_8013388C(void) {
             if (rand() % 2) {
                 D_800CA148 += 1;
             }
-        } else if ((rand() % 2) || ((F0F4_SHR_388C == 6) && ((D_800E6280.unk_03E == 0x62) || ((D_800E6280.unk_03E == 0x61) && (D_800E6280.unk_03F >= 9U)))) || (((((D_800E6280.unk_03E == 0) * 0) + F0F4_SHR_388C) == 7) && (D_800E6280.unk_03E == 0x62))) {
+        } else if ((rand() % 2) || ((F0F4_SHR_388C == 6) && ((D_800E6280.year == 0x62) || ((D_800E6280.year == 0x61) && (D_800E6280.month >= 9U)))) || (((((D_800E6280.year == 0) * 0) + F0F4_SHR_388C) == 7) && (D_800E6280.year == 0x62))) {
             if (sp2B < 2U) {
                 D_80134CCC = 6;
                 D_800CA148 = 4;
@@ -337,13 +337,13 @@ void func_8013388C(void) {
 #undef F0F4_BOOST_388C
 
 s32 func_80134030(void) {
-    if (D_800E6280.unk_F5F == 9) {
+    if (D_800E6280.current_girl == 9) {
         if (D_800CA148 == 2) {
             func_8004284C();
             return 0;
         }
     }
-    if (D_800E6280.unk_F5F == 8) {
+    if (D_800E6280.current_girl == 8) {
         func_8004284C();
         func_8004284C();
         return 0;
@@ -356,7 +356,7 @@ s32 func_80134030(void) {
 }
 
 void func_801340E4(void) {
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
         D_800CA160 = D_80134C30[1];
         D_800CA164 = D_80134C64[1];
@@ -421,14 +421,14 @@ void func_801340E4(void) {
 }
 
 void func_80134384(void) {
-    switch (D_800E6280.unk_F68.w & 0xF) {
+    switch (D_800E6280.last_command.w & 0xF) {
     case 0:
         strcpy(D_800CA19C, "図書室");
         bg_read_sub2(0x40BC);
         break;
     case 1:
         strcpy(D_800CA19C, "教室");
-        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+        if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             bg_read_sub2(0x404D);
         } else {
             bg_read_sub2(0x4055);
@@ -443,7 +443,7 @@ void func_80134384(void) {
         bg_read_sub2(0x414C);
         break;
     case 4:
-        switch (D_800E6280.unk_0F4.h >> 12) {
+        switch (D_800E6280.player_flags.h >> 12) {
         case 0:
             strcpy(D_800CA19C, "図書室");
             bg_read_sub2(0x40BC);
@@ -503,7 +503,7 @@ void func_80134628(void) {
     first = D_80134D64;
     second = D_80134D6C;
     third = D_80134D74;
-    if ((D_800E6280.unk_03F < 6U) || (D_800E6280.unk_03F >= 0xAU)) {
+    if ((D_800E6280.month < 6U) || (D_800E6280.month >= 0xAU)) {
         all.unk_00[0] = 0x544A;
         all.unk_00[3] = 0x544A;
         all.unk_00[5] = 0x544A;
@@ -511,20 +511,20 @@ void func_80134628(void) {
         second.unk_00[1] = 0x522E;
         third.unk_00[1] = 0x58AF;
     }
-    if ((D_800E6280.unk_F68.w & 0xF) == 4) {
-        girl = D_800E6280.unk_F5F;
+    if ((D_800E6280.last_command.w & 0xF) == 4) {
+        girl = D_800E6280.current_girl;
         switch (girl) {
         case 0:
-            func_80062CD0(all.unk_00[D_800E6280.unk_0F4.h >> 12]);
+            func_80062CD0(all.unk_00[D_800E6280.player_flags.h >> 12]);
             break;
         case 1:
-            func_80062CD0(first.unk_00[D_800E6280.unk_0F4.h >> 12]);
+            func_80062CD0(first.unk_00[D_800E6280.player_flags.h >> 12]);
             break;
         case 2:
-            func_80062CD0(second.unk_00[(D_800E6280.unk_0F4.h >> 12) - 2]);
+            func_80062CD0(second.unk_00[(D_800E6280.player_flags.h >> 12) - 2]);
             break;
         case 3:
-            func_80062CD0(third.unk_00[(D_800E6280.unk_0F4.h >> 12) - 4]);
+            func_80062CD0(third.unk_00[(D_800E6280.player_flags.h >> 12) - 4]);
             break;
         case 4:
             func_80062CD0(0x66EC);
@@ -542,7 +542,7 @@ void func_80134628(void) {
             func_80062CD0(0x64D0);
             break;
         default:
-            if ((D_800E6280.unk_03F >= 6U) && (D_800E6280.unk_03F < 0xAU)) {
+            if ((D_800E6280.month >= 6U) && (D_800E6280.month < 0xAU)) {
                 func_80062CD0(0x57FB);
             } else {
                 func_80062CD0(0x5828);

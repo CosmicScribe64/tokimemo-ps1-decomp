@@ -285,7 +285,7 @@ void func_8013C2E4(void) {
 
 void shougatu_stage_dispatch(void) {
     func_80083808();
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         func_8013D660();
         break;
@@ -348,7 +348,7 @@ void func_8013D324(void) {
 }
 
 void func_8013D3B4(void) {
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
         cd_read_sectors(6U, 0x80198000, 0xAE25);
         break;

@@ -29,7 +29,7 @@ void func_8013D1A0(void) {
 }
 
 void func_8013D1E0(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013D21C();
         return;
     }
@@ -41,7 +41,7 @@ void func_8013D21C(void) {
     FnTbl39 tbl;
 
     tbl = D_80146BEC;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -52,7 +52,7 @@ void func_8013D290(void) {
 }
 
 void func_8013D2C8(void) {
-    D_800E6280.unk_F5F = 1;
+    D_800E6280.current_girl = 1;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -76,8 +76,8 @@ void func_8013D2C8(void) {
     D_80146278 = D_80146090;
     D_8014627C = D_801461CC;
     strcpy(D_800CA19C, "廊下");
-    D_800E6280.unk_1BC[1].unk_02 += 1;
-    D_800E6280.unk_1BC[1].unk_06 += 2;
+    D_800E6280.girls[1].tokimeki += 1;
+    D_800E6280.girls[1].affection += 2;
     check_para_limit();
     D_800CA368 = 8;
     func_8004284C();

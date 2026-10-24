@@ -82,20 +82,20 @@ void Hw_Start(void) {
 }
 
 u8 Sw_Test(void) {
-    D_800E6280.unk_1115 = 0;
+    D_800E6280.card_result = 0;
     if (TestEvent(D_8011ECAC) != 0) {
-        D_800E6280.unk_1115 = 1;
+        D_800E6280.card_result = 1;
     } else if (TestEvent(D_8011ECB0) != 0) {
-        D_800E6280.unk_1115 = 2;
+        D_800E6280.card_result = 2;
     } else if (TestEvent(D_8011ECB4) != 0) {
-        D_800E6280.unk_1115 = 4;
+        D_800E6280.card_result = 4;
     } else if (TestEvent(D_8011ECB8) != 0) {
-        D_800E6280.unk_1115 = 8;
+        D_800E6280.card_result = 8;
     }
-    if (D_800E6280.unk_1115 != 0) {
+    if (D_800E6280.card_result != 0) {
         Sw_Clear();
     }
-    return D_800E6280.unk_1115;
+    return D_800E6280.card_result;
 }
 
 void Sw_Clear(void) {
@@ -106,20 +106,20 @@ void Sw_Clear(void) {
 }
 
 u8 Hw_Test(void) {
-    D_800E6280.unk_1115 = 0;
+    D_800E6280.card_result = 0;
     do {
         if (TestEvent(D_8011ECBC) != 0) {
-            D_800E6280.unk_1115 = 0x81;
+            D_800E6280.card_result = 0x81;
         } else if (TestEvent(D_8011ECC0) != 0) {
-            D_800E6280.unk_1115 = 0x82;
+            D_800E6280.card_result = 0x82;
         } else if (TestEvent(D_8011ECC4) != 0) {
-            D_800E6280.unk_1115 = 0x84;
+            D_800E6280.card_result = 0x84;
         } else if (TestEvent(D_8011ECC8) != 0) {
-            D_800E6280.unk_1115 = 0x88;
+            D_800E6280.card_result = 0x88;
         }
-    } while (D_800E6280.unk_1115 == 0);
+    } while (D_800E6280.card_result == 0);
     Hw_Clear();
-    return D_800E6280.unk_1115;
+    return D_800E6280.card_result;
 }
 
 void Hw_Clear(void) {
@@ -139,26 +139,26 @@ void Hw_Stop(void) {
 }
 
 void func_80053CAC(u8 arg0) {
-    D_800E6280.unk_1115 = 0;
-    D_800E6280.unk_111C = arg0;
+    D_800E6280.card_result = 0;
+    D_800E6280.card_step = arg0;
 }
 
 void func_80053CC0(void) {
-    D_800E6280.unk_1115 = 0;
-    D_800E6280.unk_111C += 1;
+    D_800E6280.card_result = 0;
+    D_800E6280.card_step += 1;
 }
 
 void func_80053CE0(void) {
-    D_800E6280.unk_035 = 1;
-    D_800E6280.unk_111C = 0;
-    D_800E6280.unk_1115 = 0;
-    D_800E6280.unk_111D = 0;
-    D_800E6280.unk_1120 = 0;
+    D_800E6280.card_busy = 1;
+    D_800E6280.card_step = 0;
+    D_800E6280.card_result = 0;
+    D_800E6280.card_retry_count = 0;
+    D_800E6280.card_timer = 0;
 }
 
 void func_80053D10(void) {
-    D_800E6280.unk_035 = 0;
-    D_800E6280.unk_1120 = 0;
+    D_800E6280.card_busy = 0;
+    D_800E6280.card_timer = 0;
 }
 
 void func_80053D24(u8 arg0) {
@@ -170,11 +170,11 @@ void func_80053D24(u8 arg0) {
         func_80053CAC(arg0);
         return;
     case 4:
-        D_800E6280.unk_111D += 1;
+        D_800E6280.card_retry_count += 1;
         func_80053CAC(0);
-        if ((u32)D_800E6280.unk_111D >= 3) {
-            D_800E6280.unk_035 = 0;
-            D_800E6280.unk_1115 = 0xFF;
+        if ((u32)D_800E6280.card_retry_count >= 3) {
+            D_800E6280.card_busy = 0;
+            D_800E6280.card_result = 0xFF;
             return;
         }
     case 0:
@@ -206,12 +206,12 @@ s32 func_80053DDC(void) {
         close(D_800B58E4);
         break;
     case 0x11:
-        D_800E6280.unk_111D += 1;
+        D_800E6280.card_retry_count += 1;
         func_80053CAC(0);
         close(D_800B58E4);
         break;
     case 0x21:
-        D_800E6280.unk_111D += 1;
+        D_800E6280.card_retry_count += 1;
         func_80053CAC(0);
         close(D_800B58E4);
         break;
@@ -220,13 +220,13 @@ s32 func_80053DDC(void) {
 }
 
 s32 func_80053F04(void) {
-    D_800E6280.unk_1120 += 1;
-    if (D_800E6280.unk_035 != 0) {
+    D_800E6280.card_timer += 1;
+    if (D_800E6280.card_busy != 0) {
         /* FAKE: byte view of the u8 field avoids the redundant selector copy (move v0,v1), as in
          * TEL (T-10630). T-17000 */
-        switch (*(u8 *)&D_800E6280.unk_111C) {
+        switch (*(u8 *)&D_800E6280.card_step) {
         case 0x0:
-            D_800E6280.unk_1115 = 0;
+            D_800E6280.card_result = 0;
             Sw_Clear();
             if (_card_info(0) == 1) {
                 func_80053CC0();
@@ -244,8 +244,8 @@ s32 func_80053F04(void) {
             func_80053D24(0x40);
             break;
         case 0x4:
-            D_800E6280.unk_035 = 0;
-            D_800E6280.unk_1115 = 1;
+            D_800E6280.card_busy = 0;
+            D_800E6280.card_result = 1;
             break;
         case 0x20:
             func_800AD950(0);
@@ -254,7 +254,7 @@ s32 func_80053F04(void) {
                 func_80053CAC(0);
             } else {
                 Hw_Test();
-                switch (D_800E6280.unk_1115) {
+                switch (D_800E6280.card_result) {
                 default:
                 case 0x0:
                 case 0x81:
@@ -275,16 +275,16 @@ s32 func_80053F04(void) {
             func_80053D24(0x40);
             break;
         case 0x32:
-            D_800E6280.unk_035 = 0;
-            D_800E6280.unk_1115 = 1;
+            D_800E6280.card_busy = 0;
+            D_800E6280.card_result = 1;
             break;
         case 0x40:
-            D_800E6280.unk_035 = 0;
-            D_800E6280.unk_1115 = 0xF1;
+            D_800E6280.card_busy = 0;
+            D_800E6280.card_result = 0xF1;
             break;
         }
     }
-    return (s32) D_800E6280.unk_1115;
+    return (s32) D_800E6280.card_result;
 }
 
 s32 func_80054108(void) {
@@ -297,49 +297,49 @@ s32 func_80054108(void) {
 s32 func_80054140(void) {
     GameState *g = &D_800E6280;
 
-    g->unk_1120 += 1;
-    if (g->unk_035 != 0) {
-        if (g->unk_111C == 0) {
-            g->unk_1115 = 0;
-            g->unk_1118 = g->unk_111C;
-            if (func_80054AF4(g->unk_111C) == 1) {
+    g->card_timer += 1;
+    if (g->card_busy != 0) {
+        if (g->card_step == 0) {
+            g->card_result = 0;
+            g->save_slot = g->card_step;
+            if (func_80054AF4(g->card_step) == 1) {
                 D_800E8BEE = 1;
                 func_80053CC0();
             } else {
-                g->unk_111D += 1;
-                if (g->unk_111D >= 3U) {
+                g->card_retry_count += 1;
+                if (g->card_retry_count >= 3U) {
                     D_800E8BEE = 0;
                     func_80053CC0();
                 }
             }
-        } else if (g->unk_111C < 0xFU) {
-            g->unk_1118 = g->unk_111C;
-            if (func_80054AF4(g->unk_1118) == 1) {
-                D_800E7D14[g->unk_1118] = 1;
+        } else if (g->card_step < 0xFU) {
+            g->save_slot = g->card_step;
+            if (func_80054AF4(g->save_slot) == 1) {
+                D_800E7D14[g->save_slot] = 1;
             } else {
-                D_800E7D14[g->unk_1118] = 0;
+                D_800E7D14[g->save_slot] = 0;
             }
-            g->unk_111C += 1;
+            g->card_step += 1;
         } else {
-            g->unk_035 = 0;
-            g->unk_1115 = 2;
+            g->card_busy = 0;
+            g->card_result = 2;
         }
     }
-    return (s32) g->unk_1115;
+    return (s32) g->card_result;
 }
 
 u8 func_80054284(void) {
-    D_800E6280.unk_1120 += 1;
-    if (D_800E6280.unk_035 != 0) {
-        switch (D_800E6280.unk_111C) {
+    D_800E6280.card_timer += 1;
+    if (D_800E6280.card_busy != 0) {
+        switch (D_800E6280.card_step) {
         case 0:
             Sw_Clear();
-            D_800E6280.unk_1118 = 0;
+            D_800E6280.save_slot = 0;
             if (func_8005478C(0) == 1) {
                 func_80053CC0();
             } else {
-                D_800E6280.unk_1115 = 0xD0;
-                D_800E6280.unk_035 = 0;
+                D_800E6280.card_result = 0xD0;
+                D_800E6280.card_busy = 0;
             }
             break;
         case 1:
@@ -348,30 +348,30 @@ u8 func_80054284(void) {
             }
             break;
         case 2:
-            D_800E6280.unk_1115 = 3;
-            D_800E6280.unk_035 = 0;
+            D_800E6280.card_result = 3;
+            D_800E6280.card_busy = 0;
             break;
         case 16:
-            D_800E6280.unk_035 = 0;
-            D_800E6280.unk_1115 = 0xF0;
+            D_800E6280.card_busy = 0;
+            D_800E6280.card_result = 0xF0;
             break;
         }
     }
-    return D_800E6280.unk_1115;
+    return D_800E6280.card_result;
 }
 
 s32 func_80054388(void) {
-    D_800E6280.unk_1120 += 1;
-    if (D_800E6280.unk_035 != 0) {
-        switch (D_800E6280.unk_111C) {
+    D_800E6280.card_timer += 1;
+    if (D_800E6280.card_busy != 0) {
+        switch (D_800E6280.card_step) {
         case 0:
             Sw_Clear();
-            D_800E6280.unk_1118 = 0;
+            D_800E6280.save_slot = 0;
             if (func_80054884(0) == 1) {
                 func_80053CC0();
             } else {
-                D_800E6280.unk_1115 = 0xD0;
-                D_800E6280.unk_035 = 0;
+                D_800E6280.card_result = 0xD0;
+                D_800E6280.card_busy = 0;
             }
             break;
         case 1:
@@ -380,29 +380,29 @@ s32 func_80054388(void) {
             }
             break;
         case 2:
-            D_800E6280.unk_1115 = 0x13;
-            D_800E6280.unk_035 = 0;
+            D_800E6280.card_result = 0x13;
+            D_800E6280.card_busy = 0;
             break;
         case 16:
-            D_800E6280.unk_035 = 0;
-            D_800E6280.unk_1115 = 0xF0;
+            D_800E6280.card_busy = 0;
+            D_800E6280.card_result = 0xF0;
             break;
         }
     }
-    return (s32) D_800E6280.unk_1115;
+    return (s32) D_800E6280.card_result;
 }
 
 u8 func_8005448C(void) {
-    D_800E6280.unk_1120 += 1;
-    if (D_800E6280.unk_035 != 0) {
-        switch (D_800E6280.unk_111C) {
+    D_800E6280.card_timer += 1;
+    if (D_800E6280.card_busy != 0) {
+        switch (D_800E6280.card_step) {
         case 0:
             Sw_Clear();
-            if (func_8005478C(D_800E6280.unk_1118) == 1) {
+            if (func_8005478C(D_800E6280.save_slot) == 1) {
                 func_80053CC0();
             } else {
-                D_800E6280.unk_1115 = 0xD0;
-                D_800E6280.unk_035 = 0;
+                D_800E6280.card_result = 0xD0;
+                D_800E6280.card_busy = 0;
             }
             break;
         case 1:
@@ -411,29 +411,29 @@ u8 func_8005448C(void) {
             }
             break;
         case 2:
-            D_800E6280.unk_1115 = 4;
-            D_800E6280.unk_035 = 0;
+            D_800E6280.card_result = 4;
+            D_800E6280.card_busy = 0;
             break;
         case 16:
-            D_800E6280.unk_035 = 0;
-            D_800E6280.unk_1115 = 0xF0;
+            D_800E6280.card_busy = 0;
+            D_800E6280.card_result = 0xF0;
             break;
         }
     }
-    return D_800E6280.unk_1115;
+    return D_800E6280.card_result;
 }
 
 u8 func_80054590(void) {
-    D_800E6280.unk_1120 += 1;
-    if (D_800E6280.unk_035 != 0) {
-        switch (D_800E6280.unk_111C) {
+    D_800E6280.card_timer += 1;
+    if (D_800E6280.card_busy != 0) {
+        switch (D_800E6280.card_step) {
         case 0:
             Sw_Clear();
-            if (func_80054884(D_800E6280.unk_1118) == 1) {
+            if (func_80054884(D_800E6280.save_slot) == 1) {
                 func_80053CC0();
             } else {
-                D_800E6280.unk_1115 = 0xD0;
-                D_800E6280.unk_035 = 0;
+                D_800E6280.card_result = 0xD0;
+                D_800E6280.card_busy = 0;
             }
             break;
         case 1:
@@ -442,16 +442,16 @@ u8 func_80054590(void) {
             }
             break;
         case 2:
-            D_800E6280.unk_1115 = 0x14;
-            D_800E6280.unk_035 = 0;
+            D_800E6280.card_result = 0x14;
+            D_800E6280.card_busy = 0;
             break;
         case 16:
-            D_800E6280.unk_035 = 0;
-            D_800E6280.unk_1115 = 0xF0;
+            D_800E6280.card_busy = 0;
+            D_800E6280.card_result = 0xF0;
             break;
         }
     }
-    return D_800E6280.unk_1115;
+    return D_800E6280.card_result;
 }
 
 s32 func_80054694(s32 arg0) {
@@ -696,20 +696,20 @@ void func_80054E6C(void) {
     s32 slot;
 
     slot = w->selected_slot & 0xF;
-    w->year[slot] = g->unk_03E;
-    w->month[slot] = g->unk_03F;
-    w->day[slot] = g->unk_040;
-    memcpy(w->family_name[slot], g->unk_0D4, 8);
-    memcpy(w->given_name[slot], g->unk_0DC, 8);
-    memcpy(w->nickname[slot], g->unk_0E4, 0x10);
+    w->year[slot] = g->year;
+    w->month[slot] = g->month;
+    w->day[slot] = g->day;
+    memcpy(w->family_name[slot], g->player_family_name, 8);
+    memcpy(w->given_name[slot], g->player_given_name, 8);
+    memcpy(w->nickname[slot], g->player_nickname, 0x10);
     for (i = 0; i < 9; i++) {
         /* each 4-byte record is copied as one word */
-        *(s32 *)&w->metrics[i][slot] = ((s32 *)&g->unk_0FC)[i];
+        *(s32 *)&w->metrics[i][slot] = ((s32 *)&g->param_condition)[i];
     }
     for (i = 0; i < 16; i++) {
-        w->unk_CC8[slot][i] = g->unk_1BC[15].unk_14[i];
+        w->unk_CC8[slot][i] = g->girls[15].event_counters[i];
     }
-    w->club[slot] = g->unk_0F4.h >> 12;
+    w->club[slot] = g->player_flags.h >> 12;
 }
 
 s32 func_80054FC0(s32 arg0) {
@@ -741,7 +741,7 @@ s32 func_80054FC0(s32 arg0) {
     memcpy(bank->club, D_800E7D10.club, 16);
     memcpy(bank->metrics, D_800E7D10.metrics, 0x240);
     memcpy(bank->unk_CD8, D_800E7D10.unk_CC8, 0x100);
-    if (D_800E6280.unk_1124 == 0) {
+    if (D_800E6280.options_dirty == 0) {
         if (D_800E7D10.selected_slot != 0) {
             memcpy(D_800E7D10.unk_DC8, D_80125C10, 0x40);
             memcpy(&D_800E7D10.unk_DC8[0xF0], &D_80125C50, 4);
@@ -772,7 +772,7 @@ s32 func_800552DC(s32 arg0) {
     /* FAKE: T-24501, integer address arithmetic keeps the bank offset grouped
      * before adding the image base; pointer arithmetic reassociates +0x200 and
      * changes temporary numbering throughout both aggregate copies. */
-    bank = (SaveImageView *)((D_800E6280.unk_1117 * 0xF00 + 0x200) + (u32)D_80123120);
+    bank = (SaveImageView *)((D_800E6280.album_slot * 0xF00 + 0x200) + (u32)D_80123120);
     memcpy(D_800E7D10.flags, bank->flags, 16);
     D_800E7D10.unk_024[0] |= bank->unk_24[0];
     D_800E7D10.unk_024[1] = bank->unk_24[1];
@@ -817,56 +817,56 @@ s32 func_8005557C(s32 arg0) {
     u32 i; /* one counter for every loop: only the last loop (the byte sum) is unrolled */
 
     g = &D_800E6280;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004 = g->unk_03D;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 = g->unk_03E;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 = g->unk_03F;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007 = g->unk_040;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008 = g->unk_041;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A = g->unk_042;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[0] = g->unk_044[0];
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[1] = g->unk_044[1];
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C = *(GsBlockC4 *)g->unk_0C4;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004 = g->vacation;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 = g->year;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 = g->month;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007 = g->day;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008 = g->weekday;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A = g->day_count;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[0] = g->month_calendar[0];
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[1] = g->month_calendar[1];
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C = *(GsBlockC4 *)g->player_full_name;
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_108[i] = g->unk_1BC[i];
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_108[i] = g->girls[i];
     }
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_488[i] = g->unk_53C[i];
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_488[i] = g->girl_cleared[i];
     }
     for (i = 0; i < 8; i++) {
         ((SaveGameView *)&D_80123120[0x200])[arg0].unk_498[i] = g->unk_54C[i];
     }
     for (i = 0; i < 12; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_4B8[i] = ((GsWord *)g->unk_66C)[i];
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_4B8[i] = ((GsWord *)g->clubs)[i];
     }
     g->unk_668[3] = get_k_speed();
     g->unk_668[2] = D_800B6708;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8 = *(GsBlock56C *)g->unk_56C;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8 = *(GsBlock56C *)g->event_flags;
     for (i = 0; i < 4; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5E8[i] = g->unk_728[i];
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5E8[i] = g->date_place_history[i];
     }
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5EC[i] = g->unk_72C[i];
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5EC[i] = g->girl_last_date_spot[i];
     }
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5FC[i] = g->unk_73C[i];
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5FC[i] = g->girl_last_date_spot_timer[i];
     }
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_60C[i] = g->unk_74C[i];
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_60C[i] = g->girl_event_bits[i];
     }
     for (i = 0; i < 256; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_61C[i] = g->unk_75E[i];
+        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_61C[i] = g->event_log[i];
     }
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C = g->unk_F6C;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D = g->unk_F6D;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E = g->unk_1092;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F = g->unk_F6E;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20 = g->unk_03C;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24 = g->unk_F68;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28 = g->unk_F6F;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29 = g->unk_F70;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A = g->unk_F73;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B = g->unk_F75;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C = *(GsWord *)g->unk_F64;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C = g->icon_mode;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D = g->icon_count;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E = g->menu_mode;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F = g->sd_anim_fast;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20 = g->voice_mode;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24 = g->last_command;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28 = g->cursor_speed;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29 = g->click_mode;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A = g->double_click_interval;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B = g->confirm_button;
+    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C = *(GsWord *)g->quarter_flags;
     /* byte sum of the bank's data; the checksum store is a FAKE address form as in func_80054FC0 (T-25105) */
     p = &D_80123120[arg0 * 0xF00 + 0x204];
     sum = 0;
@@ -901,7 +901,7 @@ s32 func_80055A38(s32 arg0) {
             sum += *p++;
         }
         if (sum == *(s32 *)(r + 0x200) && n != 0) {
-            D_800E6280.unk_1117 = b;
+            D_800E6280.album_slot = b;
             return 1;
         }
         r += 0xF00;
@@ -910,10 +910,10 @@ s32 func_80055A38(s32 arg0) {
     return -1;
 }
 
-/* The load half of func_8005557C: copies bank D_800E6280.unk_1117 & 1 back into GameState, field by field
+/* The load half of func_8005557C: copies bank D_800E6280.album_slot & 1 back into GameState, field by field
    in the same order (T-25310). The bank address has the writer's two spellings (FAKE: T-25310, the same
    address forms as func_8005557C, see its comment).
-   The slot byte is read through g, set before the func_80055A38 call: a plain D_800E6280.unk_1117 read
+   The slot byte is read through g, set before the func_80055A38 call: a plain D_800E6280.album_slot read
    lets IDO fold arg0 into the bank base, which then splits into two live ranges. */
 s32 func_80055AFC(s32 arg0) {
     GameState *g;
@@ -925,69 +925,69 @@ s32 func_80055AFC(s32 arg0) {
     if (func_80055A38(0) == -1) {
         return -1;
     }
-    arg0 = g->unk_1117 & 1;
+    arg0 = g->album_slot & 1;
     if (((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 == 0) {
         return -1;
     }
     if (((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 == 0) {
         return -1;
     }
-    g->unk_03D = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004;
-    g->unk_03E = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005;
-    g->unk_03F = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006;
-    g->unk_040 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007;
-    g->unk_041 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008;
-    g->unk_042 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A;
+    g->vacation = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004;
+    g->year = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005;
+    g->month = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006;
+    g->day = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007;
+    g->weekday = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008;
+    g->day_count = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A;
     for (i = 0; i < 2; i++) {
-        g->unk_044[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_00C[i];
+        g->month_calendar[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_00C[i];
     }
-    *(GsBlockC4 *)g->unk_0C4 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C;
+    *(GsBlockC4 *)g->player_full_name = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C;
     for (i = 0; i < 16; i++) {
-        g->unk_1BC[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_108[i];
+        g->girls[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_108[i];
     }
     for (i = 0; i < 16; i++) {
-        g->unk_53C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_488[i];
+        g->girl_cleared[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_488[i];
     }
     for (i = 0; i < 8; i++) {
         g->unk_54C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_498[i];
     }
     for (i = 0; i < 12; i++) {
-        ((GsWord *)g->unk_66C)[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_4B8[i];
+        ((GsWord *)g->clubs)[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_4B8[i];
     }
-    *(GsBlock56C *)g->unk_56C = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8;
+    *(GsBlock56C *)g->event_flags = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8;
     k_speed_set(g->unk_668[3]);
     D_800B6708 = g->unk_668[2];
     for (i = 0; i < 4; i++) {
-        g->unk_728[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5E8[i];
+        g->date_place_history[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5E8[i];
     }
     for (i = 0; i < 16; i++) {
-        g->unk_72C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5EC[i];
+        g->girl_last_date_spot[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5EC[i];
     }
     for (i = 0; i < 16; i++) {
-        g->unk_73C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5FC[i];
+        g->girl_last_date_spot_timer[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5FC[i];
     }
     for (i = 0; i < 16; i++) {
-        g->unk_74C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_60C[i];
+        g->girl_event_bits[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_60C[i];
     }
     /* FAKE: T-25310, the result is stored and never read; the original reads bzero's v0 after the call,
        which keeps v0 out of the unrolled loop's start values (end pointer in v0, the counter range in t4,
        the bank bases in t5 and ra). Its real use is unknown. */
-    p = bzero(g->unk_75E, 0x800);
+    p = bzero(g->event_log, 0x800);
     for (i = 0; i < 256; i++) {
-        g->unk_75E[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_61C[i];
+        g->event_log[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_61C[i];
     }
-    g->unk_F5E = func_8006C988(&g->unk_F5F, &g->unk_75D, 1);
-    g->unk_F6C = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C;
-    g->unk_F6D = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D;
-    g->unk_1092 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E;
-    g->unk_F6E = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F;
-    g->unk_03C = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20;
-    g->unk_F68 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24;
-    g->unk_F6F = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28;
-    g->unk_F70 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29;
-    g->unk_F73 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A;
-    g->unk_F75 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B;
-    *(GsWord *)g->unk_F64 = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C;
+    g->event_log_count = func_8006C988(&g->current_girl, &g->date_girl, 1);
+    g->icon_mode = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C;
+    g->icon_count = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D;
+    g->menu_mode = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E;
+    g->sd_anim_fast = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F;
+    g->voice_mode = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20;
+    g->last_command = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24;
+    g->cursor_speed = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28;
+    g->click_mode = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29;
+    g->double_click_interval = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A;
+    g->confirm_button = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B;
+    *(GsWord *)g->quarter_flags = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C;
     return 1;
 }
 

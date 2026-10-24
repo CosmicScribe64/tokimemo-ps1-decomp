@@ -100,7 +100,7 @@ void func_80078A94(void) {
         func_8006BA40();
         n += 1;
     }
-    if (D_800E6280.unk_110E == 0x45) {
+    if (D_800E6280.overlay_target_mode == 0x45) {
         cal_base_show();
     }
     if (n != 0) {
@@ -136,7 +136,7 @@ s32 func_80078C48(void) {
     back_clear_switch(1);
     ovl_load_buf = 0x80132000;
     D_800B6D30 = 0;
-    switch (g->unk_110E) {
+    switch (g->overlay_target_mode) {
     case 8:
     case 0x13:
     case 0x35:
@@ -154,10 +154,10 @@ s32 func_80078C48(void) {
         D_800B6D30 = 1;
         break;
     }
-    if ((g->unk_0F4.b[1] & 0xF) == 3) {
-        D_801217D0[0].unk_00 = 0x80000000;
+    if ((g->player_flags.b[1] & 0xF) == 3) {
+        D_801217D0[0].flags = 0x80000000;
     }
-    switch (g->unk_110E) {
+    switch (g->overlay_target_mode) {
     case 0x3A:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x96AA;
@@ -315,7 +315,7 @@ void func_80079070(void) {
     s32 arg; /* s32 and passed as is, so its range is precoloured $a0 (a u8 converted at the call took $v0) */
 
     gs = &D_800E6280;
-    switch (gs->unk_110E) {
+    switch (gs->overlay_target_mode) {
     case 0x3A:
         D_80123110 = (u32) &D_80132000;
         break;
@@ -462,37 +462,37 @@ void func_80079070(void) {
         break;
     }
     ovl_load_state = 0;
-    sp32 = D_800E6280.unk_110A;
-    sp31 = D_800E6280.unk_110D;
+    sp32 = D_800E6280.step;
+    sp31 = D_800E6280.substep;
     /* FAKE: T-17003, unk_110B/unk_110C are s8 in GameState but the original loads them with lbu,
      * so they are read through a u8 view (through gs they compile to lb). */
-    sp2F = *(u8 *)&D_800E6280.unk_110C;
-    sp30 = *(u8 *)&D_800E6280.unk_110B;
-    arg = gs->unk_1109;
-    D_800E6280.unk_1108 = D_800E6280.unk_110E;
+    sp2F = *(u8 *)&D_800E6280.stage_scratch;
+    sp30 = *(u8 *)&D_800E6280.mode_scratch;
+    arg = gs->stage;
+    D_800E6280.mode = D_800E6280.overlay_target_mode;
     func_80042908(arg);
     func_80042940((s32) sp32);
-    D_800E6280.unk_110D = sp31;
-    D_800E6280.unk_110C = sp2F;
-    D_800E6280.unk_110B = sp30;
+    D_800E6280.substep = sp31;
+    D_800E6280.stage_scratch = sp2F;
+    D_800E6280.mode_scratch = sp30;
 }
 
 s32 func_80079524(void) {
-    if (D_800E6280.unk_1108 == 0xD0 || D_800E6280.unk_1108 == 0xD1) {
+    if (D_800E6280.mode == 0xD0 || D_800E6280.mode == 0xD1) {
         return 1;
     }
     return 0;
 }
 
 s32 func_80079554(void) {
-    if (D_800E6280.unk_1108 == 0x90) {
+    if (D_800E6280.mode == 0x90) {
         return 1;
     }
     return 0;
 }
 
 s32 func_80079578(void) {
-    if (D_800E6280.unk_1108 == 0x21) {
+    if (D_800E6280.mode == 0x21) {
         return 1;
     }
     return 0;
@@ -500,7 +500,7 @@ s32 func_80079578(void) {
 
 void func_8007959C(void) {
     ovl_load_buf = 0x80132000;
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
         D_800B3220 = 0;
@@ -551,10 +551,10 @@ void func_8007959C(void) {
         func_80079800();
         break;
     case 6:
-        if (D_800E6280.unk_1124 == 0) {
-            main_state_set((s32) D_800E6280.unk_720);
-            func_80042908((s32) D_800E6280.unk_721);
-            func_80042940((s32) D_800E6280.unk_722);
+        if (D_800E6280.options_dirty == 0) {
+            main_state_set((s32) D_800E6280.saved_mode);
+            func_80042908((s32) D_800E6280.saved_stage);
+            func_80042940((s32) D_800E6280.saved_step);
         } else {
             main_state_set(0);
             func_80048EB8(0);
@@ -570,72 +570,72 @@ void func_80079800(void) {
     GameState *gs = &D_800E6280;
     s32 temp;
 
-    switch (gs->unk_110D) {
+    switch (gs->substep) {
     case 0:
         func_80053CE0();
-        gs->unk_110D += 1;
+        gs->substep += 1;
         break;
     case 1:
         if (func_80053F04() != 0) {
             /* FAKE: the first read of unk_1115 goes through a local so the three tests share a
              * register range that takes $v1 (the TACO func_80142AF0 idiom); T-17003 */
-            temp = gs->unk_1115;
+            temp = gs->card_result;
             if (temp == 1) {
-                gs->unk_110D += 1;
-            } else if (gs->unk_1115 == 0xF1) {
-                gs->unk_110D += 1;
-            } else if (gs->unk_1115 == 0xFF) {
-                gs->unk_110D += 1;
+                gs->substep += 1;
+            } else if (gs->card_result == 0xF1) {
+                gs->substep += 1;
+            } else if (gs->card_result == 0xFF) {
+                gs->substep += 1;
             }
-        } else if ((u32) gs->unk_1120 >= 0x201U) {
-            gs->unk_110D += 1;
+        } else if ((u32) gs->card_timer >= 0x201U) {
+            gs->substep += 1;
         }
         break;
     case 2:
         func_8005C4CC(0);
         func_80053D10();
-        if (gs->unk_1115 == 1) {
+        if (gs->card_result == 1) {
             if (func_80054AF4(0) == 1) {
-                gs->unk_110D += 1;
+                gs->substep += 1;
                 func_80053CE0();
             } else {
-                gs->unk_110D = 0xFF;
+                gs->substep = 0xFF;
             }
         } else {
-            gs->unk_110D = 0xFF;
+            gs->substep = 0xFF;
         }
         break;
     case 3:
         if (func_80054284() == 3) {
             func_80053D10();
-            gs->unk_110D += 1;
-        } else if (((u32) gs->unk_1120 >= 0x201U) || (gs->unk_1115 == 0xF0)) {
+            gs->substep += 1;
+        } else if (((u32) gs->card_timer >= 0x201U) || (gs->card_result == 0xF0)) {
             func_80053D10();
-            gs->unk_110D = 0xFF;
+            gs->substep = 0xFF;
         }
         break;
     case 4:
         if (func_800552DC(0) == -1) {
-            gs->unk_110D = 0xFF;
+            gs->substep = 0xFF;
         } else {
-            gs->unk_110D += 1;
+            gs->substep += 1;
         }
         func_8005C4CC(1);
         break;
     case 5:
         func_80053CE0();
         D_800E7D36 = 0;
-        gs->unk_110D += 1;
+        gs->substep += 1;
         break;
     case 6:
         if (func_80054388() == 0x13) {
             func_80044750(0x50F);
             func_80053D10();
-            gs->unk_110D += 1;
-        } else if (((u32) gs->unk_1120 >= 0x201U) || (gs->unk_1115 == 0xF0)) {
+            gs->substep += 1;
+        } else if (((u32) gs->card_timer >= 0x201U) || (gs->card_result == 0xF0)) {
             func_80044750(0x502);
             func_80053D10();
-            gs->unk_110D += 1;
+            gs->substep += 1;
         }
         break;
     case 0xFF:

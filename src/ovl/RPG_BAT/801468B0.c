@@ -113,7 +113,7 @@ void func_80146C30(void) {
         func_8014EF3C();
         break;
     case 1:
-        if (!(((DisplayActor44 *)D_8011ECD0)[152].unk_02 & 1)) {
+        if (!(((DisplayActor44 *)D_8011ECD0)[152].flags & 1)) {
             func_8013E7C0(0x38, 0xFF, 1, 0);
         }
         func_8014F080(0x32);
@@ -162,7 +162,7 @@ void func_80146C30(void) {
         func_8014F080(0xA);
         break;
     case 9:
-        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcpy(D_8015E828, D_800E6280.player_family_name);
         strcat(D_8015E828, "「だめだ！　体が動かない！");
         func_8014B738((s32) D_8015E8F0, 1, 0x78);
         func_8014EF3C();
@@ -174,7 +174,7 @@ void func_80146C30(void) {
         func_801468B0();
         break;
     case 12:
-        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcpy(D_8015E828, D_800E6280.player_family_name);
         strcat(D_8015E828, "「？！");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
         func_8014EF3C();
@@ -274,7 +274,7 @@ void func_80146C30(void) {
         }
         break;
     case 24:
-        ((DisplayActor44 *)D_8011ECD0)[155].unk_03 = 0x81;
+        ((DisplayActor44 *)D_8011ECD0)[155].draw_flags = 0x81;
         D_8015EDE0 += 6;
         func_8013E97C(0x3B, -D_8015EDE0, 0);
         if (D_8015EDE0 >= 0x89) {

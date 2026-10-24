@@ -74,7 +74,7 @@ void func_8014A2AC(void) {
 void func_8014A314(void) {
     func_80044750(0x200);
     read_bustup();
-    D_800E6280.unk_110A -= 1;
+    D_800E6280.step -= 1;
     D_8015DE40 += 1;
 }
 
@@ -94,9 +94,9 @@ s32 func_8014A39C(void) {
         D_8015DE40 -= 2;
         return 0;
     }
-    r = get_g_zyotai_h(D_800E6280.unk_F5F);
+    r = get_g_zyotai_h(D_800E6280.current_girl);
     var_v1 = r & 0x7F;
-    if (D_800E6280.unk_F5F >= 0xCU) {
+    if (D_800E6280.current_girl >= 0xCU) {
         var_v1 = 0;
     }
     func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
@@ -130,9 +130,9 @@ void func_8014A4DC(void) {
         tpage_buf_clear();
         back_clear_switch(1);
         func_80048DAC(1);
-        D_800E6280.unk_037 = 0;
-        D_800E6280.unk_036 = 0;
-        D_800E6280.unk_038 = 0;
+        D_800E6280.clear_color_g = 0;
+        D_800E6280.clear_color_r = 0;
+        D_800E6280.clear_color_b = 0;
         hizuke_disp_switch(0);
         func_800462C8(2U, 0x801F8000, 0xB471);
         D_8015DE48 += 1;
@@ -241,7 +241,7 @@ s32 func_8014A8FC(void) {
             func_8009AD70(2, &D_80122780);
         }
         if (frame < 0xF) {
-            D_800E6280.unk_038 += 1;
+            D_800E6280.clear_color_b += 1;
         }
     } else if (frame >= 0x20 && frame < 0x54) {
         for (i = 0; i != 2; i++) {
@@ -283,7 +283,7 @@ s32 func_8014A8FC(void) {
             func_8009AD70(2, &D_80122780);
         }
         if (frame < 0x11D) {
-            D_800E6280.unk_038 -= 1;
+            D_800E6280.clear_color_b -= 1;
         }
         /* FAKE: the byte view makes this second read of D_8012276C a reload; with the plain global uopt promotes it into $v0 and the first test is no longer a $t2 load. T-17208 */
         if (*(u8 *)&D_8012276C == 0) {

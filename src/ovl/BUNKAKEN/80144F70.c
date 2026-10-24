@@ -17,7 +17,7 @@ void func_80144F70(void) {
         func_80044890(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
         func_80085E30(1, 0);
         for (i = 0; i < 11; i++) {
-            D_800CA2B0[i] = g->unk_1BC[i].unk_0C.f.b1;
+            D_800CA2B0[i] = g->girls[i].flags.f.met;
         }
         func_8008585C();
         dec_bg_reset();
@@ -79,17 +79,17 @@ void func_80144F70(void) {
         func_80145E40();
         break;
     case 8:
-        if (((g->unk_1BC[0].unk_10.w & 0xF) == g->unk_03F) && (((u32) (g->unk_1BC[0].unk_10.w << 0x17) >> 0x1B) == g->unk_040) && !(g->unk_71E & 1) && ((D_80122EBC == 0) || (D_80122EBC == 0xB))) {
+        if (((g->girls[0].birthday.w & 0xF) == g->month) && (((u32) (g->girls[0].birthday.w << 0x17) >> 0x1B) == g->day) && !(g->daily_event_bits & 1) && ((D_80122EBC == 0) || (D_80122EBC == 0xB))) {
             D_80122EC0 = 9;
-            g->unk_1109 = 0;
-            g->unk_110A = 0;
+            g->stage = 0;
+            g->step = 0;
         } else {
             /* FAKE: T-22018, the original stores the heroine index it just read back to D_80122EBC before the call */
-            if (((g->unk_0F8 & 0xF) == g->unk_03F) && (((u32) (g->unk_0F8 << 0x17) >> 0x1B) == g->unk_040) && !(g->unk_71E & 4) && (D_80122EBC >= 4) && (D_80122EBC < 0xB) && ((D_80122EBC = D_80122EBC, func_8008667C(D_80122EBC) < 2) || ((D_80122EBC == 0xB) && (func_8008667C(0) < 2)))) {
+            if (((g->player_birthday & 0xF) == g->month) && (((u32) (g->player_birthday << 0x17) >> 0x1B) == g->day) && !(g->daily_event_bits & 4) && (D_80122EBC >= 4) && (D_80122EBC < 0xB) && ((D_80122EBC = D_80122EBC, func_8008667C(D_80122EBC) < 2) || ((D_80122EBC == 0xB) && (func_8008667C(0) < 2)))) {
                 D_80122EC0 = 0xA;
-                g->unk_1109 = 0;
-                g->unk_110A = 0;
-            } else if (g->unk_1109 == 0) {
+                g->stage = 0;
+                g->step = 0;
+            } else if (g->stage == 0) {
                 func_80044750(0xBF);
                 func_800674B0();
                 func_80042808();
@@ -127,15 +127,15 @@ void func_80144F70(void) {
 }
 
 void func_80145500(void) {
-    if (D_800E6280.unk_110A != 0) {
-        D_800E6280.unk_110A = 0;
+    if (D_800E6280.step != 0) {
+        D_800E6280.step = 0;
         D_80122EC0 += 1;
     }
 }
 
 void func_80145530(void) {
-    D_800E6280.unk_1109 = 0;
-    D_800E6280.unk_110A = 0;
+    D_800E6280.stage = 0;
+    D_800E6280.step = 0;
     D_80122EC0 = 8;
 }
 
@@ -151,9 +151,9 @@ void func_80145550(void) {
     a = D_80155F9C;
     b = D_80155FD4;
     c = D_80156018;
-    sel = (g->unk_03E - 0x5F) & 0xFF;
+    sel = (g->year - 0x5F) & 0xFF;
     if (D_80122EBC == 0xB) {
-        g->unk_1BC[0].unk_06 += 2;
+        g->girls[0].affection += 2;
         switch (sel) {
         case 0:
             v = a.b[0][D_80122EB8];
@@ -168,9 +168,9 @@ void func_80145550(void) {
         if (v != 0) {
             v--;
         }
-        g->unk_1BC[0].unk_02 += v;
+        g->girls[0].tokimeki += v;
     } else if (D_80122EBC < 0xB) {
-        g->unk_1BC[D_80122EBC].unk_06 += 2;
+        g->girls[D_80122EBC].affection += 2;
         switch (sel) {
         case 0:
             v = a.b[D_80122EBC][D_80122EB8];
@@ -185,11 +185,11 @@ void func_80145550(void) {
         if (v != 0) {
             v--;
         }
-        g->unk_1BC[D_80122EBC].unk_02 += v;
+        g->girls[D_80122EBC].tokimeki += v;
     }
     if (D_80122EA4 != 0xFF) {
-        g->unk_1BC[D_80122EA4].unk_06 -= 0xA;
-        g->unk_1BC[D_80122EA4].unk_0A += 0xA;
+        g->girls[D_80122EA4].affection -= 0xA;
+        g->girls[D_80122EA4].syoushin += 0xA;
     }
 }
 
@@ -197,7 +197,7 @@ void func_80145844(void) {
     k_reset(0);
     switch (D_80122EB8) {
     case 0:
-        switch (D_800E6280.unk_03E) {
+        switch (D_800E6280.year) {
         case 0x5F:
             func_8006612C((s32) "詩集展示");
             break;
@@ -216,7 +216,7 @@ void func_80145844(void) {
         func_8006612C((s32) "実験ショー");
         break;
     case 3:
-        switch (D_800E6280.unk_03E) {
+        switch (D_800E6280.year) {
         case 0x5F:
             func_8006612C((s32) "パソコン占い");
             break;
@@ -229,7 +229,7 @@ void func_80145844(void) {
         }
         break;
     case 4:
-        switch (D_800E6280.unk_03E) {
+        switch (D_800E6280.year) {
         case 0x5F:
             func_8006612C((s32) "似顔絵");
             break;
@@ -271,54 +271,54 @@ void func_80145A64(void) {
     if ((func_8008667C(D_80122EBC) != 4) && (D_80122EA4 != D_80122EBC)) {
         switch (D_80122EB8) {
         case 0:
-            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 0) && (D_80122EBC == 0)) {
+            if ((((u8) g->girls[0].flags.b[2] >> 4) == 0) && (D_80122EBC == 0)) {
                 v = 0x3;
-            } else if ((((u8) g->unk_1BC[1].unk_0C.b[2] >> 4) == 0) && (D_80122EBC == 1)) {
+            } else if ((((u8) g->girls[1].flags.b[2] >> 4) == 0) && (D_80122EBC == 1)) {
                 v = 0x3;
             } else {
                 v = 0x4;
             }
             break;
         case 1:
-            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 1) && (D_80122EBC == 0)) {
+            if ((((u8) g->girls[0].flags.b[2] >> 4) == 1) && (D_80122EBC == 0)) {
                 v = 0x7;
-            } else if ((((u8) g->unk_1BC[1].unk_0C.b[2] >> 4) == 1) && (D_80122EBC == 1)) {
+            } else if ((((u8) g->girls[1].flags.b[2] >> 4) == 1) && (D_80122EBC == 1)) {
                 v = 0x7;
             } else {
                 v = 0x8;
             }
             break;
         case 2:
-            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 2) && (D_80122EBC == 0)) {
+            if ((((u8) g->girls[0].flags.b[2] >> 4) == 2) && (D_80122EBC == 0)) {
                 v = 0xB;
-            } else if ((((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 2) && (D_80122EBC == 2)) {
+            } else if ((((u8) g->girls[2].flags.b[2] >> 4) == 2) && (D_80122EBC == 2)) {
                 v = 0xB;
             } else {
                 v = 0xC;
             }
             break;
         case 3:
-            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 3) && (D_80122EBC == 0)) {
+            if ((((u8) g->girls[0].flags.b[2] >> 4) == 3) && (D_80122EBC == 0)) {
                 v = 0xF;
-            } else if ((((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 3) && (D_80122EBC == 2)) {
+            } else if ((((u8) g->girls[2].flags.b[2] >> 4) == 3) && (D_80122EBC == 2)) {
                 v = 0xF;
             } else {
                 v = 0x10;
             }
             break;
         case 4:
-            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 4) && (D_80122EBC == 0)) {
+            if ((((u8) g->girls[0].flags.b[2] >> 4) == 4) && (D_80122EBC == 0)) {
                 v = 0x13;
-            } else if ((((u8) g->unk_1BC[3].unk_0C.b[2] >> 4) == 4) && (D_80122EBC == 3)) {
+            } else if ((((u8) g->girls[3].flags.b[2] >> 4) == 4) && (D_80122EBC == 3)) {
                 v = 0x13;
             } else {
                 v = 0x14;
             }
             break;
         case 5:
-            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 5) && (D_80122EBC == 0)) {
+            if ((((u8) g->girls[0].flags.b[2] >> 4) == 5) && (D_80122EBC == 0)) {
                 v = 0x17;
-            } else if ((((u8) g->unk_1BC[3].unk_0C.b[2] >> 4) == 5) && (D_80122EBC == 3)) {
+            } else if ((((u8) g->girls[3].flags.b[2] >> 4) == 5) && (D_80122EBC == 3)) {
                 v = 0x17;
             } else {
                 v = 0x18;
@@ -326,21 +326,21 @@ void func_80145A64(void) {
             break;
         }
         if (D_80122EBC == 0xB) {
-            g->unk_75E[g->unk_F5E].unk_00 = 0;
-            g->unk_75E[g->unk_F5E].unk_03 = get_g_zyotai_h(0, v);
+            g->event_log[g->event_log_count].girl = 0;
+            g->event_log[g->event_log_count].rank = get_g_zyotai_h(0, v);
         } else {
-            g->unk_75E[g->unk_F5E].unk_00 = D_80122EBC;
-            g->unk_75E[g->unk_F5E].unk_03 = get_g_zyotai_h(D_80122EBC, v);
+            g->event_log[g->event_log_count].girl = D_80122EBC;
+            g->event_log[g->event_log_count].rank = get_g_zyotai_h(D_80122EBC, v);
         }
-        g->unk_75E[g->unk_F5E].unk_02 = 0x14;
-        g->unk_75E[g->unk_F5E].unk_01 = v;
-        g->unk_75E[g->unk_F5E].unk_04 = g->unk_03E;
-        g->unk_75E[g->unk_F5E].unk_05 = g->unk_03F;
-        g->unk_75E[g->unk_F5E].unk_06 = g->unk_040;
-        g->unk_75E[g->unk_F5E].unk_07 = g->unk_041;
-        g->unk_F5E++;
-        if (g->unk_F5E >= 0xFF) {
-            g->unk_F5E = 0xFE;
+        g->event_log[g->event_log_count].scene = 0x14;
+        g->event_log[g->event_log_count].flag = v;
+        g->event_log[g->event_log_count].year = g->year;
+        g->event_log[g->event_log_count].month = g->month;
+        g->event_log[g->event_log_count].day = g->day;
+        g->event_log[g->event_log_count].weekday = g->weekday;
+        g->event_log_count++;
+        if (g->event_log_count >= 0xFF) {
+            g->event_log_count = 0xFE;
         }
     }
 }

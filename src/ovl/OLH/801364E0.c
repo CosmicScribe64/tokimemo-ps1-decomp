@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_801364E0(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0x0:
         func_801365AC();
         break;
@@ -60,10 +60,10 @@ void func_801366D4(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if (D_800E6280.unk_F88 & 0x20) {
-        if (D_800E6280.unk_1093 != -1) {
+    if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.menu_cursor_0 != -1) {
             func_80044750(0x501);
-            switch (*(u8 *)&D_800E6280.unk_1093) {
+            switch (*(u8 *)&D_800E6280.menu_cursor_0) {
             case 0:
                 func_80042940(0x10);
                 break;
@@ -90,13 +90,13 @@ void func_801366D4(void) {
                 break;
             }
         }
-    } else if (D_800E6280.unk_F88 & 0x40) {
+    } else if (D_800E6280.pad_pressed & 0x40) {
         func_80042908(0);
     }
 }
 
 s32 func_80136804(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013D6C0, 0);
@@ -107,7 +107,7 @@ s32 func_80136804(void) {
         set_kanji_string(-0x88, 0x10, 0xF, "モリーカードからデータをコピーした場合", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "は、システムの作り直しを行なってくださ", 0);
         set_kanji_string(-0x88, 0x30, 0xF, "い。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -119,13 +119,13 @@ s32 func_80136804(void) {
 }
 
 s32 func_80136960(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013D6C4, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　同じメモリーカード内で、データをコピ", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "ーすることができます。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_80052000();
@@ -137,13 +137,13 @@ s32 func_80136960(void) {
 }
 
 s32 func_80136A30(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013D6C8, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　クリア人数そのままで、ゲームをプロロ", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "ーグからやり直すことが出来ます。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_80052000();
@@ -155,13 +155,13 @@ s32 func_80136A30(void) {
 }
 
 s32 func_80136B00(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013D6CC, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　ときめきメモリアルのデータを消去する", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "ことが出来ます。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         func_80052000();
@@ -173,7 +173,7 @@ s32 func_80136B00(void) {
 }
 
 s32 func_80136BD0(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013D6D0, 0);
@@ -182,7 +182,7 @@ s32 func_80136BD0(void) {
         set_kanji_string(-0x88, -0x10, 0xF, "されます。", 0);
         set_kanji_string(-0x88, 0, 0xF, "　システムファイルがない場合は、選んだ", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "アルバムのクリア人数が表示されます。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -194,7 +194,7 @@ s32 func_80136BD0(void) {
 }
 
 s32 func_80136CF4(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013D6D4, 0);
@@ -203,7 +203,7 @@ s32 func_80136CF4(void) {
         set_kanji_string(-0x88, -0x10, 0xF, "白抜き数字で番号が表示されているアルバ", 0);
         set_kanji_string(-0x88, 0, 0xF, "ムをもう一度クリックすると、そのアルバ", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "ムでゲームが再開されます。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();
@@ -215,7 +215,7 @@ s32 func_80136CF4(void) {
 }
 
 s32 func_80136E18(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013D6D8, 0);
@@ -225,7 +225,7 @@ s32 func_80136E18(void) {
         set_kanji_string(-0x88, 0, 0xF, "　青くパラメータと表示されている部分を", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "クリックしても、表示を変えることができ", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "ます。", 0);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         return;
     case 1:
         func_80052000();

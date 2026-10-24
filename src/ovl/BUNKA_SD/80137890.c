@@ -3,7 +3,7 @@
 
 /* Implicit int (K&R), no return value: the switch copy in $v0 stays live as the result. */
 s32 func_80137890(void) {
-    switch (*(u8 *)&D_800E6280.unk_1109) { /* FAKE: T-22003, scalar view keeps the selector in $v1 with the $v0 switch copy */
+    switch (*(u8 *)&D_800E6280.stage) { /* FAKE: T-22003, scalar view keeps the selector in $v1 with the $v0 switch copy */
     case 0x0:
         func_80066C08(2);
         hizuke_disp_switch(0);
@@ -13,7 +13,7 @@ s32 func_80137890(void) {
     case 0x1:
         switch (D_80122EB8) {
         case 2:
-            switch (D_800E6280.unk_03E) {
+            switch (D_800E6280.year) {
             case 0x5F:
                 func_80042908(0xF0);
                 break;
@@ -35,7 +35,7 @@ s32 func_80137890(void) {
             func_80042908(0xF5);
             break;
         case 1:
-            switch (D_800E6280.unk_03E) {
+            switch (D_800E6280.year) {
             case 0x5F:
                 func_80042908(0xF6);
                 break;
@@ -52,7 +52,7 @@ s32 func_80137890(void) {
         }
         break;
     case 0x10:
-        if ((u32) ((u16) D_800E6280.unk_0F4.h >> 0xC) < 6U) {
+        if ((u32) ((u16) D_800E6280.player_flags.h >> 0xC) < 6U) {
             main_state_set(0x70);
         } else {
             main_state_set(0x71);

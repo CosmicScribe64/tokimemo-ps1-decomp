@@ -134,20 +134,20 @@ void func_800590CC(s32 arg0) {
     func_800AD950(0);
     func_8009C5E0(0);
     if (arg0 != 0) {
-        D_800E6280.unk_014[0] = 0x80;
-        D_800E6280.unk_014[1] = 0x80;
-        D_800E6280.unk_000 = 0x100;
-        D_800E6280.unk_002 = 0xF0;
-        D_800E6280.unk_004 = 0;
+        D_800E6280.screen_center_x[0] = 0x80;
+        D_800E6280.screen_center_x[1] = 0x80;
+        D_800E6280.video_width = 0x100;
+        D_800E6280.video_height = 0xF0;
+        D_800E6280.video_interlace = 0;
         func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
     } else {
-        D_800E6280.unk_000 = 0x140;
-        D_800E6280.unk_002 = 0xF0;
-        D_800E6280.unk_014[0] = 0xA0;
-        D_800E6280.unk_014[1] = 0xA0;
-        D_800E6280.unk_004 = 0;
+        D_800E6280.video_width = 0x140;
+        D_800E6280.video_height = 0xF0;
+        D_800E6280.screen_center_x[0] = 0xA0;
+        D_800E6280.screen_center_x[1] = 0xA0;
+        D_800E6280.video_interlace = 0;
         func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
@@ -165,21 +165,21 @@ void func_800591D8(s32 arg0) {
     func_8009C674(0);
     func_8009C210(1);
     func_8009C5E0(0);
-    if ((arg0 != 0) && (D_800E6280.unk_000 != 0x200)) {
-        D_800E6280.unk_002 = 0xF0;
-        D_800E6280.unk_014[0] = 0x100;
-        D_800E6280.unk_014[1] = 0x100;
-        D_800E6280.unk_000 = 0x200;
-        D_800E6280.unk_004 = 0;
+    if ((arg0 != 0) && (D_800E6280.video_width != 0x200)) {
+        D_800E6280.video_height = 0xF0;
+        D_800E6280.screen_center_x[0] = 0x100;
+        D_800E6280.screen_center_x[1] = 0x100;
+        D_800E6280.video_width = 0x200;
+        D_800E6280.video_interlace = 0;
         func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
-    } else if ((arg0 == 0) && (D_800E6280.unk_000 != 0x140)) {
-        D_800E6280.unk_000 = 0x140;
-        D_800E6280.unk_002 = 0xF0;
-        D_800E6280.unk_014[0] = 0xA0;
-        D_800E6280.unk_014[1] = 0xA0;
-        D_800E6280.unk_004 = 0;
+    } else if ((arg0 == 0) && (D_800E6280.video_width != 0x140)) {
+        D_800E6280.video_width = 0x140;
+        D_800E6280.video_height = 0xF0;
+        D_800E6280.screen_center_x[0] = 0xA0;
+        D_800E6280.screen_center_x[1] = 0xA0;
+        D_800E6280.video_interlace = 0;
         func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
@@ -245,7 +245,7 @@ void func_8005938C(void) {
     if ((u32)D_800B0896 < 0) {
         *(u8 *)0 = 0;
     }
-    for (i = *(s32 *)&D_800E6280.unk_1095[7]; i < 0xA0; i += 2) {
+    for (i = *(s32 *)&D_800E6280.menu_hit[7]; i < 0xA0; i += 2) {
         r = (ModelRec88 *)(D_8011ECD0 + i * 0x44);
         if (r->active && (r->flags & 0x80)) {
             p = &rot;

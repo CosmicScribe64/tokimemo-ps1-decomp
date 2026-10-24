@@ -10,7 +10,7 @@ s32 func_80146400(void)
     s32 a;
     s32 r;
     s32 d;
-    switch (D_800E6280.unk_03E)
+    switch (D_800E6280.year)
     {
         case 0x5F:
             x = 0;
@@ -30,11 +30,11 @@ s32 func_80146400(void)
 
     }
 
-    if (D_800E6280.unk_03F != 2)
+    if (D_800E6280.month != 2)
     {
-        if (D_800E6280.unk_03F != 7)
+        if (D_800E6280.month != 7)
         {
-            if (D_800E6280.unk_03F == 0xC)
+            if (D_800E6280.month == 0xC)
             {
                 x += 1;
             }
@@ -64,24 +64,24 @@ s32 func_801464D4(s32 mode) {
 
     g = &D_800E6280;
     for (i = 0; i < 256; i++) {
-        if (g->unk_75E[i].unk_04 == 0) {
+        if (g->event_log[i].year == 0) {
             break;
         }
-        if (g->unk_03E == g->unk_75E[i].unk_04 &&
-            g->unk_03F == g->unk_75E[i].unk_05) {
-            if (mode == 8 && g->unk_75E[i].unk_02 == 2 &&
-                g->unk_75E[i].unk_01 == 0x3B) {
+        if (g->year == g->event_log[i].year &&
+            g->month == g->event_log[i].month) {
+            if (mode == 8 && g->event_log[i].scene == 2 &&
+                g->event_log[i].flag == 0x3B) {
                 return 9;
             }
-            if (mode == 0xB && g->unk_75E[i].unk_02 == 0xB &&
-                g->unk_75E[i].unk_01 == 0xF) {
+            if (mode == 0xB && g->event_log[i].scene == 0xB &&
+                g->event_log[i].flag == 0xF) {
                 return 1;
             }
-            if (g->unk_75E[i].unk_02 == 0 && g->unk_75E[i].unk_01 == 0xF) {
+            if (g->event_log[i].scene == 0 && g->event_log[i].flag == 0xF) {
                 if (mode == 0xF) {
                     return 1;
                 }
-                if (mode == g->unk_75E[i].unk_00) {
+                if (mode == g->event_log[i].girl) {
                     return 1;
                 }
             }
@@ -94,7 +94,7 @@ void func_801465F8(void) {
     s32 *p;
     s32 y;
 
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         func_80146B40();
         break;
@@ -111,7 +111,7 @@ void func_801465F8(void) {
     parameter_show();
     func_8006BA40();
     func_80065B0C(1);
-    if (D_800E6280.unk_041 == 5) {
+    if (D_800E6280.weekday == 5) {
         func_8006764C(0);
     } else {
         func_80067870();
@@ -125,8 +125,8 @@ void func_801465F8(void) {
     }
 }
 void func_80146714(void) {
-    D_800E6280.unk_1104.w += 1;
-    switch (D_800E6280.unk_041) {
+    D_800E6280.step_timer.w += 1;
+    switch (D_800E6280.weekday) {
     case 0:
         func_80147650();
         return;
@@ -164,14 +164,14 @@ void func_801467C4(void) {
     for (var_s0 = 0; var_s0 != 14; var_s0++) {
         icon_can_use_set(var_s0, 0);
     }
-    func_800654D0(*(u8 *)&D_800E6280.unk_F6D);
+    func_800654D0(*(u8 *)&D_800E6280.icon_count);
     func_8006BD6C(1);
     hizuke_init();
     parameter_show_init();
     parameter_show_init();
-    if (D_800E6280.unk_041 == 0) {
+    if (D_800E6280.weekday == 0) {
         func_80044890(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
-    } else if (((EtcStateFlagsView *)&D_800E6280)->records[D_800E6280.unk_71C].unk_00 != 0x40) {
+    } else if (((EtcStateFlagsView *)&D_800E6280)->records[D_800E6280.day_event_index].type != 0x40) {
         func_80044890(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
     }
     func_8004284C();
@@ -181,7 +181,7 @@ void func_801468FC(void) {
     s32 r2;
     s32 r;
 
-    if (D_800E6280.unk_041 == 0 || *(u8 *) &D_800E6280.unk_66C[10 + D_800E6280.unk_71C] != 0x40) {
+    if (D_800E6280.weekday == 0 || *(u8 *) &D_800E6280.clubs[10 + D_800E6280.day_event_index] != 0x40) {
         if (func_80044E8C() == 1) {
             func_8004500C(1, 0x205);
             r = dec_bg_cd_read(0x3FA4, 0);
@@ -231,7 +231,7 @@ void func_80146A38(void) {
 void func_80146AC0(void) {
     s32 i;
 
-    if (D_800E6280.unk_041 == 0) {
+    if (D_800E6280.weekday == 0) {
         for (i = 0; i < 6; i++) {
             ((EtcWork40 *)&D_801230D0)->unk_10[i] = 0;
             ((EtcWork40 *)&D_801230D0)->unk_28[i] = 0;
@@ -241,7 +241,7 @@ void func_80146AC0(void) {
 }
 
 s32 func_80146B40(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_801467C4();
         break;
@@ -258,10 +258,10 @@ s32 func_80146B40(void) {
 }
 
 s32 func_80146BC4(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         cd_read_sectors(9U, 0x801E0000, *(s32 *)&D_80150720[-(func_80066A84() * 4)]);
-        D_800E6280.unk_110D = 1;
+        D_800E6280.substep = 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -276,18 +276,18 @@ void func_80146C68(s32 arg0) {
     func_80048F64(0x60);
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
     ((DisplayActor44 *)D_80120650)->unk_01 = 1;
-    ((DisplayActor44 *)D_80120650)->unk_02 = 4;
-    ((DisplayActor44 *)D_80120650)->unk_38 = 0x01000000;
-    ((DisplayActor44 *)D_80120650)->unk_03 = 0x84;
+    ((DisplayActor44 *)D_80120650)->flags = 4;
+    ((DisplayActor44 *)D_80120650)->quad_flags = 0x01000000;
+    ((DisplayActor44 *)D_80120650)->draw_flags = 0x84;
     *(u8 **)&D_80120650[0xC] = D_80125CA8;
     *(u8 **)&D_80120650[0x10] = D_80125CAC;
     *(u8 **)&D_80120650[0x34] = D_80125CB0;
     ((DisplayActor44 *)D_80120650)->unk_05 = 2;
-    ((DisplayActor44 *)D_80120650)->unk_06 = 1;
+    ((DisplayActor44 *)D_80120650)->blink_period = 1;
     ((DisplayActor44 *)D_80120650)->unk_43 = 0x10;
-    ((DisplayActor44 *)D_80120650)->unk_16 = arg0;
-    ((DisplayActor44 *)D_80120650)->unk_26 = -0x50;
-    ((DisplayActor44 *)D_80120650)->unk_2A = -0x40;
+    ((DisplayActor44 *)D_80120650)->sequence_slot = arg0;
+    ((DisplayActor44 *)D_80120650)->x = -0x50;
+    ((DisplayActor44 *)D_80120650)->y = -0x40;
 }
 
 s32 func_80146D4C(void) {
@@ -302,34 +302,34 @@ s32 func_80146D4C(void) {
 
     main = 0;
     sub = 0;
-    switch (g->unk_041) {
+    switch (g->weekday) {
     case 0:
-        main = g->unk_100.unk_02;
+        main = g->param_liberal_arts.value;
         bio = func_8006C334(0, 0, 1, 0x10);
         break;
     case 1:
-        main = g->unk_104.unk_02;
+        main = g->param_science.value;
         bio = func_8006C334(0, 0, 1, 0x10);
         break;
     case 2:
-        main = g->unk_104.unk_02 * 7 / 10;
-        sub = g->unk_110.unk_02 * 3 / 10;
+        main = g->param_science.value * 7 / 10;
+        sub = g->param_trivia.value * 3 / 10;
         if (sub >= 0x27) {
             sub = 0x26;
         }
         bio = func_8006C334(0, 1, 1, 0x10);
         break;
     case 3:
-        sub = g->unk_100.unk_02 * 3 / 10;
-        main = g->unk_110.unk_02 * 7 / 10;
+        sub = g->param_liberal_arts.value * 3 / 10;
+        main = g->param_trivia.value * 7 / 10;
         bio = func_8006C334(0, 0, 1, 0x10);
         if (sub >= 0x27) {
             sub = 0x26;
         }
         break;
     case 4:
-        main = g->unk_108.unk_02 * 8 / 10;
-        sub = g->unk_110.unk_02 * 2 / 10;
+        main = g->param_art.value * 8 / 10;
+        sub = g->param_trivia.value * 2 / 10;
         bio = func_8006C334(0, 1, 0, 0x10);
         if (sub >= 0x1A) {
             sub = 0x19;
@@ -341,7 +341,7 @@ s32 func_80146D4C(void) {
     }
     ret = main + sub + bio - 8;
     /* FAKE: T-25007, the nibble view loads the flag byte into its own temporary as the original does */
-    if (((GsByteNibbles *)&g->unk_0F4.b[1])->low & 2) {
+    if (((GsByteNibbles *)&g->player_flags.b[1])->low & 2) {
         ret /= 2;
     }
     printf("main %d sub %d bio %d ret %d ", main, sub, bio, ret);
@@ -353,18 +353,18 @@ s32 func_80146D4C(void) {
     ret = (rand() % 10) * sub + ret;
     w = (EtcWork40 *)&D_801230D0;
     if (ret < 0x80) {
-        w->unk_28[g->unk_041] = ret * 100 / 128;
+        w->unk_28[g->weekday] = ret * 100 / 128;
     } else {
-        w->unk_28[g->unk_041] = 100 - (rand() & 3);
+        w->unk_28[g->weekday] = 100 - (rand() & 3);
     }
-    printf("今日の成績 %d\t", w->unk_28[g->unk_041]);
-    score = w->unk_28[g->unk_041] + w->unk_28[5];
+    printf("今日の成績 %d\t", w->unk_28[g->weekday]);
+    score = w->unk_28[g->weekday] + w->unk_28[5];
     w->unk_28[5] = score;
     /* FAKE: T-25045, the late-folded zero and two identities spend one ugen
      * temporary before as1 removes them, preserving the final index registers. */
-    zero = g->unk_041 * 0;
+    zero = g->weekday * 0;
     printf("合計点 %d\n", (score + zero) | zero);
-    ret = w->unk_28[g->unk_041];
+    ret = w->unk_28[g->weekday];
     if (ret < 0x28) {
         ret = 0;
     } else if (ret < 0x3C) {
@@ -380,17 +380,17 @@ s32 func_80146D4C(void) {
         D_801230F4 += 1;
         /* FAKE: T-25007, an extra read of unk_041 raises the priority of its promoted range so every
          * read sits in a3 as in the original (found by the permuter) */
-        if (g->unk_041) {
+        if (g->weekday) {
         }
     }
-    w->unk_10[g->unk_041] = ret;
+    w->unk_10[g->weekday] = ret;
     return ret;
 }
 
 void func_8014716C(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    gnsx(D_800E6280.unk_0D4);
+    gnsx(D_800E6280.player_family_name);
     k_disp_start(2);
     sndisp("第一日目の試験科目は 語学だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -404,7 +404,7 @@ void func_8014716C(void) {
 void func_801471F4(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    gnsx(D_800E6280.unk_0D4);
+    gnsx(D_800E6280.player_family_name);
     k_disp_start(2);
     sndisp("第二日目の試験科目は 数学だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -418,7 +418,7 @@ void func_801471F4(void) {
 void func_8014727C(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    gnsx(D_800E6280.unk_0D4);
+    gnsx(D_800E6280.player_family_name);
     k_disp_start(2);
     sndisp("第三日目の試験科目は 理科だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -432,7 +432,7 @@ void func_8014727C(void) {
 void func_80147304(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    gnsx(D_800E6280.unk_0D4);
+    gnsx(D_800E6280.player_family_name);
     k_disp_start(2);
     sndisp("第四日目の試験科目は 社会だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -446,7 +446,7 @@ void func_80147304(void) {
 void func_8014738C(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    gnsx(D_800E6280.unk_0D4);
+    gnsx(D_800E6280.player_family_name);
     k_disp_start(2);
     sndisp("第五日目の試験科目は 美術だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -459,7 +459,7 @@ void func_8014738C(void) {
 
 void func_80147414(void) {
     s16 *mode; /* pointer local: the switch reads the flag through it, as the permuter-found form that matches (T-6050) */
-    if (D_800E6280.unk_1104.w == 0x20) {
+    if (D_800E6280.step_timer.w == 0x20) {
         D_80120652 |= 1;
     }
     if (!(D_80120652 & 1) && (D_80120668 != 0)) {
@@ -482,10 +482,10 @@ void func_80147414(void) {
 }
 
 void func_801474FC(void) {
-    if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.substep == 0) {
         k_reset(1);
-        gnsx(D_800E6280.unk_0D4);
-        switch (D_801230E0[D_800E6280.unk_041]) {
+        gnsx(D_800E6280.player_family_name);
+        switch (D_801230E0[D_800E6280.weekday]) {
         case 0:
             sndisp("もうだめだー。）", 0, 0x1F);
             break;
@@ -502,7 +502,7 @@ void func_801474FC(void) {
             sndisp("バッチリだ。）", 0, 0x1F);
             break;
         }
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
     } else {
         k_disp_inc();
         if (check_end_k() != 0) {
@@ -516,7 +516,7 @@ void func_80147630(void) {
 }
 
 void func_80147650(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80146BC4();
         return;
@@ -538,7 +538,7 @@ void func_80147650(void) {
 }
 
 void func_801476DC(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80146BC4();
         return;
@@ -560,7 +560,7 @@ void func_801476DC(void) {
 }
 
 void func_80147768(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80146BC4();
         return;
@@ -582,7 +582,7 @@ void func_80147768(void) {
 }
 
 void func_801477F4(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80146BC4();
         return;
@@ -604,7 +604,7 @@ void func_801477F4(void) {
 }
 
 void func_80147880(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80146BC4();
         return;
@@ -640,23 +640,23 @@ s32 func_8014790C(void) {
     s16 y;
     s32 v;
 
-    switch (*(u8 *)&D_800E6280.unk_110D) {
+    switch (*(u8 *)&D_800E6280.substep) {
     case 0:
         func_8004E58C();
         func_8006612C("結果発表 ");
-        gnsx(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.player_family_name);
         sndisp("今日は、試験結果の 発表の日だ。）", 0, 0x1F);
         k_sub_reset_point_set();
         k_sub_disp_start(0);
         func_8004500C(1, 0x202);
         hizuke_init();
         func_80048E78();
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         cd_read_sectors(0xD, 0x801E0000, 0x9CA8);
         break;
     case 1:
-        if ((u32) D_800E6280.unk_1104.w >= 0x101) {
-            D_800E6280.unk_110D += 1;
+        if ((u32) D_800E6280.step_timer.w >= 0x101) {
+            D_800E6280.substep += 1;
         }
         break;
     case 2:
@@ -667,18 +667,18 @@ s32 func_8014790C(void) {
             hizuke_disp_switch(0);
             func_80048F64(0x60);
             ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 4;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 0x40;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0xA4;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = (u8 *) 0x801E64A0;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = (u8 *) 0x801E6520;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (u8 *) 0x801E6494;
+            ((DisplayActor44 *)D_8011ECD0)[96].flags = 0x40;
+            ((DisplayActor44 *)D_8011ECD0)[96].quad_flags = 0;
+            ((DisplayActor44 *)D_8011ECD0)[96].draw_flags = 0xA4;
+            ((DisplayActor44 *)D_8011ECD0)[96].frame_table = (u8 *) 0x801E64A0;
+            ((DisplayActor44 *)D_8011ECD0)[96].sequence_table = (u8 *) 0x801E6520;
+            ((DisplayActor44 *)D_8011ECD0)[96].tpage_table = (u8 *) 0x801E6494;
             ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0;
             ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 1;
             ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 8;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = 0;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x28;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = 0x80;
+            ((DisplayActor44 *)D_8011ECD0)[96].x = 0;
+            ((DisplayActor44 *)D_8011ECD0)[96].y = -0x28;
+            ((DisplayActor44 *)D_8011ECD0)[96].brightness = 0x80;
             func_80148E98();
             func_80148EE8();
             func_801480D0();
@@ -686,43 +686,43 @@ s32 func_8014790C(void) {
              * uopt, keeping the walked base separate from the indexed base.
              * Keep i's initialization and the following do on one line for
              * the original address schedule. */
-            do { r = D_8011ECD0; } while ((u32)D_800E6280.unk_041 < 0); i = 0; do {
+            do { r = D_8011ECD0; } while ((u32)D_800E6280.weekday < 0); i = 0; do {
                 x = D_80150630[i];
                 y = D_8015064C[i];
                 v = D_80150684[i];
                 ((DisplayActor44 *)r)[0x61].unk_01 = 3;
-                ((DisplayActor44 *)r)[0x61].unk_02 = 0x40;
-                ((DisplayActor44 *)r)[0x61].unk_38 = 0;
-                ((DisplayActor44 *)r)[0x61].unk_03 = 0x24;
-                ((DisplayActor44 *)r)[0x61].unk_0C = (u8 *)0x801E64A0;
-                ((DisplayActor44 *)r)[0x61].unk_10 = (u8 *)0x801E6520;
-                ((DisplayActor44 *)r)[0x61].unk_34 = (u8 *)0x801E6494;
+                ((DisplayActor44 *)r)[0x61].flags = 0x40;
+                ((DisplayActor44 *)r)[0x61].quad_flags = 0;
+                ((DisplayActor44 *)r)[0x61].draw_flags = 0x24;
+                ((DisplayActor44 *)r)[0x61].frame_table = (u8 *)0x801E64A0;
+                ((DisplayActor44 *)r)[0x61].sequence_table = (u8 *)0x801E6520;
+                ((DisplayActor44 *)r)[0x61].tpage_table = (u8 *)0x801E6494;
                 ((DisplayActor44 *)r)[0x61].unk_18 = 0x1F;
                 ((DisplayActor44 *)r)[0x61].unk_05 = 1;
                 ((DisplayActor44 *)r)[0x61].unk_04 = 8;
-                ((DisplayActor44 *)r)[0x61].unk_07 = 0x80;
-                ((DisplayActor44 *)r)[0x61].unk_26 = x;
-                ((DisplayActor44 *)r)[0x61].unk_2A = y;
+                ((DisplayActor44 *)r)[0x61].brightness = 0x80;
+                ((DisplayActor44 *)r)[0x61].x = x;
+                ((DisplayActor44 *)r)[0x61].y = y;
                 if (v == 0xD) {
-                    strncpy((char *) buf, (char *) D_800E6280.unk_0D4, 8);
-                    strncat((char *) buf, (char *) D_800E6280.unk_0DC, 8);
+                    strncpy((char *) buf, (char *) D_800E6280.player_family_name, 8);
+                    strncat((char *) buf, (char *) D_800E6280.player_given_name, 8);
                     set_kanji_string(D_80150630[i] + 0x18, D_8015064C[i], 3, buf, 0);
-                    printf("%s\n", D_800E6280.unk_0C4);
+                    printf("%s\n", D_800E6280.player_full_name);
                 } else if (v == 0xA) {
                     set_kanji_string(x + 0x18, y, 3, D_800B3538[13], 0);
                 } else if (v == 0xB) {
-                    if (D_800E6280.unk_1BC[11].unk_0C.f.f9 != 0) {
+                    if (D_800E6280.girls[11].flags.f.story_stage != 0) {
                         set_kanji_string(x + 0x18, y, 3, D_800B3538[11], 0);
                     } else {
                         /* FAKE: T-25054, this late-folded zero prevents uopt
                          * from distributing 0x61 into the field displacement.
                          * The same identity is used in the final else arm. */
-                        ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].unk_03 = 0xA4;
+                        ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
                     }
-                } else if (D_800E6280.unk_1BC[v].unk_0C.f.b1) {
+                } else if (D_800E6280.girls[v].flags.f.met) {
                     set_kanji_string(x + 0x18, y, 3, D_800B3538[v], 0);
                 } else {
-                    ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].unk_03 = 0xA4;
+                    ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
                 }
                 r += 0x44;
                 i += 1;
@@ -745,21 +745,21 @@ typedef struct {
 
 void func_80147D74(void) {
     func_80148BC8();
-    D_800E6280.unk_0F6.b[0] &= 0xFFFD;
-    if (D_800E6280.unk_1104.u >= 0x79U) {
-        gnsx(D_800E6280.unk_0D4);
+    D_800E6280.player_flags_hi.b[0] &= 0xFFFD;
+    if (D_800E6280.step_timer.u >= 0x79U) {
+        gnsx(D_800E6280.player_family_name);
         if (D_801230F4 >= 3) {
             sndisp("３科目以上赤点だった。 明日から、一週間補習だぁ。 勉強しかできないー！）", 0, 0x1F);
             func_8004500C(1, 0x203);
-            ((GsBits0F6 *)&D_800E6280.unk_0F6.b[0])->f0 = 1;
-            D_800E6280.unk_044[0].unk_20[D_800E6280.unk_040 + 1] = 0x17;
-            ((GsBits0F6 *)&D_800E6280.unk_0F6.b[0])->f1 = 1;
+            ((GsBits0F6 *)&D_800E6280.player_flags_hi.b[0])->f0 = 1;
+            D_800E6280.month_calendar[0].marker[D_800E6280.day + 1] = 0x17;
+            ((GsBits0F6 *)&D_800E6280.player_flags_hi.b[0])->f1 = 1;
         } else if (D_801506F0 < 2) {
             sndisp("やったー、一番だ！ これで試験の帝王だな。）", 0, 0x1F);
             func_8004500C(1, 0x204);
         } else if (D_801506F4 != 0) {
             sndisp("今回の試験は終了した。）", 0, 0x1F);
-            ((GsBits0F6 *)&D_800E6280.unk_0F6.b[0])->f1 = 1;
+            ((GsBits0F6 *)&D_800E6280.player_flags_hi.b[0])->f1 = 1;
             func_8004500C(1, 0x200);
         } else {
             sndisp("今回の試験は終了した。）", 0, 0x1F);
@@ -775,7 +775,7 @@ void func_80147D74(void) {
 }
 
 void func_80147F0C(void) {
-    if (((D_800E6280.unk_F88 & 0x20) && (u32)D_800E6280.unk_1104.w >= 0x101) || (D_800E6280.unk_F88 & 0x40)) {
+    if (((D_800E6280.pad_pressed & 0x20) && (u32)D_800E6280.step_timer.w >= 0x101) || (D_800E6280.pad_pressed & 0x40)) {
         func_8006BD6C(1);
         func_80042808();
     }
@@ -785,8 +785,8 @@ void func_80147F0C(void) {
 }
 
 s32 func_80147F7C(void) {
-    D_800E6280.unk_1104.w += 1;
-    switch (D_800E6280.unk_110A) {
+    D_800E6280.step_timer.w += 1;
+    switch (D_800E6280.step) {
     case 0:
         func_8014790C();
         break;
@@ -808,14 +808,14 @@ void func_80147FFC(void) {
 }
 
 void func_8014803C(void) {
-    if (D_800E6280.unk_041 == 5) {
+    if (D_800E6280.weekday == 5) {
         func_8004500C(0, 0);
     }
     func_80072B5C(0);
 }
 
 void func_80148078(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80147FFC();
         break;
@@ -844,7 +844,7 @@ void func_801480D0(void) {
     s32 values[14];
     s32 pad;
 
-    srand(D_800E6280.unk_10F8);
+    srand(D_800E6280.frame_count);
     for (i = 0; i < 13; i++) {
         first_random = rand();
         noise = (first_random % (s32)D_80150738[i]) * (((rand() & 1) * 2) - 1);
@@ -973,17 +973,17 @@ void func_801480D0(void) {
     }
     for (i = 0; i < 11; i++) {
         if (D_80150668[i] < D_80150668[13]) {
-            if (D_800E6280.unk_56C[0xC8 + i] == 0) {
-                D_800E6280.unk_1BC[i].unk_02 += 11;
-                D_800E6280.unk_56C[0xC8 + i] = 1;
+            if (D_800E6280.event_flags[0xC8 + i] == 0) {
+                D_800E6280.girls[i].tokimeki += 11;
+                D_800E6280.event_flags[0xC8 + i] = 1;
             } else {
-                D_800E6280.unk_1BC[i].unk_02 += 2;
+                D_800E6280.girls[i].tokimeki += 2;
             }
         }
     }
     if (D_801506BC[13] == 1) {
         for (i = 0; i < 11; i++) {
-            D_800E6280.unk_1BC[i].unk_02 += 2;
+            D_800E6280.girls[i].tokimeki += 2;
         }
     }
 }
@@ -1014,14 +1014,14 @@ s32 func_80148BC8() {
             func_80148F7C(0, *x + 0x8E, *y, 0, 0);
             func_80148F7C(D_801506E4, *x + 4, *y, 0, 1);
         } else if (D_80150684[i] == 0xB) {
-            if (D_800E6280.unk_1BC[11].unk_0C.f.f9 != 0) {
+            if (D_800E6280.girls[11].flags.f.story_stage != 0) {
                 x = &D_80150630[i];
                 y = &D_8015064C[i];
                 func_80148F7C(D_8015067E, *x + 0x86, *y, 1, 0);
                 func_80148F7C(0, *x + 0x8E, *y, 0, 0);
                 func_80148F7C(D_801506E8, *x + 4, *y, 0, 1);
             }
-        } else if (D_800E6280.unk_1BC[D_80150684[i]].unk_0C.f.b1) {
+        } else if (D_800E6280.girls[D_80150684[i]].flags.f.met) {
             x = &D_80150630[i];
             y = &D_8015064C[i];
             func_80148F7C(D_80150668[D_80150684[i]], *x + 0x86, *y, 1, 0);
@@ -1079,24 +1079,24 @@ void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
             temp_v0->b0 = 0x80;
             switch (arg3) {
             case 0:
-                temp_v0->x0 = ((D_800E6280.unk_014[D_8011ECA0] + arg1) - (var_s4 * 8)) - (arg4 * 2);
-                temp_v0->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+                temp_v0->x0 = ((D_800E6280.screen_center_x[D_8011ECA0] + arg1) - (var_s4 * 8)) - (arg4 * 2);
+                temp_v0->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
                 temp_v0->w = 8;
                 temp_v0->h = 0xC;
                 temp_v0->u0 = D_80150748[var_s1 % 10U];
                 temp_v0->v0 = 0;
                 break;
             case 1:
-                temp_v0->x0 = ((D_800E6280.unk_014[D_8011ECA0] + arg1) - (var_s4 * 8)) + (arg4 * 4);
-                temp_v0->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+                temp_v0->x0 = ((D_800E6280.screen_center_x[D_8011ECA0] + arg1) - (var_s4 * 8)) + (arg4 * 4);
+                temp_v0->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
                 temp_v0->w = 8;
                 temp_v0->h = 0xC;
                 temp_v0->u0 = D_80150748[var_s1 % 10U];
                 temp_v0->v0 = 0x10;
                 break;
             case 2:
-                temp_v0->x0 = ((D_800E6280.unk_014[D_8011ECA0] + arg1) - (var_s4 * 6)) + (arg4 * 4);
-                temp_v0->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+                temp_v0->x0 = ((D_800E6280.screen_center_x[D_8011ECA0] + arg1) - (var_s4 * 6)) + (arg4 * 4);
+                temp_v0->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
                 temp_v0->w = 6;
                 temp_v0->h = 0xC;
                 temp_v0->u0 = D_80150748[var_s1 % 10U];

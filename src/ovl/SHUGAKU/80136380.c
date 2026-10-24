@@ -287,10 +287,10 @@ void func_80137490(void) {
     GameState *g = &D_800E6280;
 
     func_80083808();
-    if ((g->unk_1109 == 0) && (g->unk_110A < 0x11)) {
+    if ((g->stage == 0) && (g->step < 0x11)) {
         func_80065B0C(1);
     }
-    switch (g->unk_1109) {
+    switch (g->stage) {
     case 0:
         func_801378F0();
         break;
@@ -334,7 +334,7 @@ void func_80137490(void) {
     check_k_scroll();
     k_disp_inc2();
     if (D_80122CE0 == 0xFF) {
-        if ((g->unk_1109 == 0) && (g->unk_110A < 0x11)) {
+        if ((g->stage == 0) && (g->step < 0x11)) {
             func_80066C08(1);
             func_800578F4(0);
             parameter_show();
@@ -343,7 +343,7 @@ void func_80137490(void) {
             func_80066C08(2);
             parameter_show();
         }
-        if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((g->unk_F80 & 0xF000F000) || (D_80122D30 == 1))) {
+        if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((g->pad_held & 0xF000F000) || (D_80122D30 == 1))) {
             D_8011ECD3 |= 0x80;
         }
         if (D_80122D04 != 0) {
@@ -360,7 +360,7 @@ void func_80137490(void) {
 }
 
 void func_80137700(void) {
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
         cd_read_sectors(6U, 0x80198000, 0xAE25);
         break;

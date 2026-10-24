@@ -6,7 +6,7 @@ void func_8013B5B0(void) {
     FnTbl25 tbl;
 
     tbl = D_80145A14;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -24,10 +24,10 @@ void func_8013B694(void) {
         func_80044750(0x202);
         func_8004284C();
     }
-    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
+    if ((u32) D_800E6280.step_timer.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
+        func_80042940((D_800E6280.step - 1) & 0xFF);
     }
 }
 
@@ -48,10 +48,10 @@ void func_8013B758(void) {
     tpage_buf_clear();
     func_8004E58C();
     strcpy(D_800CA19C, "廊下");
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     func_8008585C();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     addr_init_bustup();
@@ -59,7 +59,7 @@ void func_8013B758(void) {
     message_window_init();
     func_80084E4C();
     /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom); T-9320 */
-    func_800847B8(*(u8 *)&D_800E6280.unk_F5F = 0xC);
+    func_800847B8(*(u8 *)&D_800E6280.current_girl = 0xC);
     func_8013B210();
     D_801459FC = D_8014596C;
     D_80145A00 = D_801459A0;
@@ -68,7 +68,7 @@ void func_8013B758(void) {
     D_80145A0C = 0;
     D_80145A10 = 0;
     for (i = 0; i < 0xB; i++) {
-        if (D_800E6280.unk_1BC[i].unk_0C.b[1] & 1) {
+        if (D_800E6280.girls[i].flags.b[1] & 1) {
             D_80145A10 = 1;
         }
     }
@@ -82,7 +82,7 @@ void func_8013B8CC(void) {
 }
 
 void func_8013B900(void) {
-    D_80145A08 += ((u8) D_800E6280.unk_03E >= 0x61U) * 4;
+    D_80145A08 += ((u8) D_800E6280.year >= 0x61U) * 4;
     func_8004284C();
 }
 

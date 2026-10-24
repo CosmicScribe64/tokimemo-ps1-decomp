@@ -477,7 +477,7 @@ void func_80138324(void) {
         func_8014B738(D_8015E8F0, 3, 0x3C);
         func_8013E810((*(u32 *)&D_8015EBAC) + 0x3B, 1, 5, 1);
         func_8013F15C(0x505, 1, 0);
-        ((DisplayActor44 *)D_8011ECD0)[(*(u32 *)&D_8015EBAC) + 0x9B].unk_03 |= 1;
+        ((DisplayActor44 *)D_8011ECD0)[(*(u32 *)&D_8015EBAC) + 0x9B].draw_flags |= 1;
         func_8014EF3C();
         return;
     case 1:
@@ -485,7 +485,7 @@ void func_80138324(void) {
         return;
     case 2:
         func_8013E810((*(u32 *)&D_8015EBAC) + 0x3B, 0, 1, 1);
-        ((DisplayActor44 *)D_8011ECD0)[(*(u32 *)&D_8015EBAC) + 0x9B].unk_03 |= 1;
+        ((DisplayActor44 *)D_8011ECD0)[(*(u32 *)&D_8015EBAC) + 0x9B].draw_flags |= 1;
         func_8014EF3C();
         return;
     case 3:
@@ -564,7 +564,7 @@ void func_801387F0(void) {
             break;
         }
         strcpy(D_8015E850, "不良パンチ");
-        func_8014D11C(D_8015E878, D_800E6280.unk_0D4, "は", D_8015EBB0, "のダメージを受けた");
+        func_8014D11C(D_8015E878, D_800E6280.player_family_name, "は", D_8015EBB0, "のダメージを受けた");
         func_8014B738(D_8015E8F0, 3, 0x3C);
         func_8013E810((*(u32 *) &D_8015EBAC) + 0x3B, 1, 5, 1);
         func_8013F15C(0x505, 1, 0);
@@ -661,7 +661,7 @@ void func_80138B9C(void) {
             break;
         }
         strcpy(D_8015E850, "不良パンチ");
-        func_8014D11C(D_8015E878, D_800E6280.unk_0D4, "は", D_8015EBB0, "のダメージを受けた");
+        func_8014D11C(D_8015E878, D_800E6280.player_family_name, "は", D_8015EBB0, "のダメージを受けた");
         func_8014B738(D_8015E8F0, 3, 0x3C);
         func_8013E810((*(u32 *) &D_8015EBAC) + 0x3B, 1, 5, 1);
         func_8013F15C(0x505, 1, 0);
@@ -761,11 +761,11 @@ void func_80138F6C(void) {
             break;
         }
         strcpy(D_8015E850, "不良パンチ");
-        strcpy(D_8015E878, D_800E6280.unk_0D4);
+        strcpy(D_8015E878, D_800E6280.player_family_name);
         strcat(D_8015E878, "は");
         strcat(D_8015E878, girl_short_name_table[D_8015EB9C]);
         strcat(D_8015E878, "をかばった");
-        func_8014D11C((s32) D_8015E8A0, (s32) D_800E6280.unk_0D4, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
+        func_8014D11C((s32) D_8015E8A0, (s32) D_800E6280.player_family_name, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
         func_8014B738((s32) D_8015E8F0, 4, 0x3C);
         func_8013E810(D_8015EBAC + 0x3B, 1, 5, 1);
         func_8013F15C(0x505, 1, 0);
@@ -895,9 +895,9 @@ void func_80139510(void) {
         }
         D_8015EE30.unk_08 += 8;
         k_disp_switch(D_8015EDE8, 0);
-        ((DisplayActor44 *)D_8011ECD0)[155].unk_26 = (s16) (((DisplayActor44 *)D_8011ECD0)[155].unk_26 - 8);
-        ((DisplayActor44 *)D_8011ECD0)[156].unk_26 = (s16) (((DisplayActor44 *)D_8011ECD0)[156].unk_26 - 8);
-        ((DisplayActor44 *)D_8011ECD0)[157].unk_26 = (s16) (((DisplayActor44 *)D_8011ECD0)[157].unk_26 - 8);
+        ((DisplayActor44 *)D_8011ECD0)[155].x = (s16) (((DisplayActor44 *)D_8011ECD0)[155].x - 8);
+        ((DisplayActor44 *)D_8011ECD0)[156].x = (s16) (((DisplayActor44 *)D_8011ECD0)[156].x - 8);
+        ((DisplayActor44 *)D_8011ECD0)[157].x = (s16) (((DisplayActor44 *)D_8011ECD0)[157].x - 8);
         if (D_8015EE30.unk_08 >= 0x91) {
             func_8014F500();
         }
@@ -968,7 +968,7 @@ void func_80139510(void) {
         func_8014F5DC(0x3C);
         break;
     case 8:
-        ((DisplayActor44 *)D_8011ECD0)[127].unk_07 = 0x40;
+        ((DisplayActor44 *)D_8011ECD0)[127].brightness = 0x40;
         func_8013E7C0(0x30, 0, 1, 1);
         func_8013E7C0(0x1D, 0, 1, 1);
         func_8014F500();
@@ -977,7 +977,7 @@ void func_80139510(void) {
         func_801375F8();
         break;
     case 10:
-        strcpy(D_8015E9E0, D_800E6280.unk_0D4);
+        strcpy(D_8015E9E0, D_800E6280.player_family_name);
         strcat(D_8015E9E0, "「誰だっ！");
         func_8014B738((s32) D_8015EB70, 1, 0x3C);
         func_8014F500();
@@ -1022,7 +1022,7 @@ void func_80139510(void) {
         break;
     case 17:
         func_8013EA30(0x80);
-        ((DisplayActor44 *)D_8011ECD0)[127].unk_07 = (s8) (0x40 - D_8015EE30.unk_08);
+        ((DisplayActor44 *)D_8011ECD0)[127].brightness = (s8) (0x40 - D_8015EE30.unk_08);
         D_8015EE30.unk_08 += 1;
         if (D_8015EE30.unk_08 >= 0x41) {
             func_8014F500();
@@ -1068,7 +1068,7 @@ void func_80139510(void) {
         func_80137E74();
         break;
     case 28:
-        strcpy(D_8015E9E0, D_800E6280.unk_0D4);
+        strcpy(D_8015E9E0, D_800E6280.player_family_name);
         strcat(D_8015E9E0, "「もう超眼力は見切ったぜ！");
         strcpy(D_8015EA08, "番長！　負ける訳にはいかない！！");
         func_8014B738((s32) D_8015EB70, 2, 0x5A);
@@ -1102,7 +1102,7 @@ void func_80139510(void) {
         func_8014F500();
         break;
     case 32:
-        ((DisplayActor44 *)D_8011ECD0)[127].unk_07 = (s8) D_8015EE30.unk_08;
+        ((DisplayActor44 *)D_8011ECD0)[127].brightness = (s8) D_8015EE30.unk_08;
         func_8013E7C0(0x1F, 0, 1, 0);
         D_8015EE30.unk_08 += 1;
         if (D_8015EE30.unk_08 >= 0x81) {
@@ -1216,33 +1216,33 @@ void func_8013A034(void) {
         *(s32 **) &D_8015EE8C = (s32 *) 0x801C5DC8;
         *(s32 *) &D_8015EEA4 = 0x801C5DDC;
         *(s32 *) &D_8015EEBC = 0x801C5EE4;
-        D_800E6280.unk_1228[0x15] = -1;
-        D_800E6280.unk_1228[0x16] = -1;
-        D_800E6280.unk_1228[0x17] = -1;
-        D_800E6280.unk_1228[0x18] = -1;
-        D_800E6280.unk_1228[0x19] = -1;
+        D_800E6280.tpage_buf[0x15] = -1;
+        D_800E6280.tpage_buf[0x16] = -1;
+        D_800E6280.tpage_buf[0x17] = -1;
+        D_800E6280.tpage_buf[0x18] = -1;
+        D_800E6280.tpage_buf[0x19] = -1;
         load_tpage_buf_lock(0x15, D_8015EE8C[0], 1);
         load_tpage_buf_lock(0x16, D_8015EE8C[1], 1);
         load_tpage_buf_lock(0x17, D_8015EE8C[2], 1);
         load_tpage_buf_lock(0x18, D_8015EE8C[3], 1);
         load_tpage_buf_lock(0x19, D_8015EE8C[4], 1);
         for (i = 0; i < 72; i++) {
-            ((DisplayActor44 *) D_8011ECD0)[64 + i].unk_0C = (u8 *) D_8015EEA4;
-            ((DisplayActor44 *) D_8011ECD0)[64 + i].unk_10 = (u8 *) D_8015EEBC;
-            ((DisplayActor44 *) D_8011ECD0)[64 + i].unk_34 = (u8 *) D_8015EE8C;
+            ((DisplayActor44 *) D_8011ECD0)[64 + i].frame_table = (u8 *) D_8015EEA4;
+            ((DisplayActor44 *) D_8011ECD0)[64 + i].sequence_table = (u8 *) D_8015EEBC;
+            ((DisplayActor44 *) D_8011ECD0)[64 + i].tpage_table = (u8 *) D_8015EE8C;
         }
         if (D_8015EB9C != 0xE) {
             for (i = 29; i < 31; i++) {
-                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_0C = (u8 *) D_8015EEB8;
-                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_10 = (u8 *) D_8015EED0;
-                ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_34 = (u8 *) D_8015EEA0;
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].frame_table = (u8 *) D_8015EEB8;
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].sequence_table = (u8 *) D_8015EED0;
+                ((DisplayActor44 *) D_8011ECD0)[96 + i].tpage_table = (u8 *) D_8015EEA0;
                 ((DisplayActor44 *) D_8011ECD0)[96 + i].unk_43 = 0x1C;
             }
         }
         func_8014F524();
         break;
     case 3:
-        D_800E6280.unk_F5F = 0xE;
+        D_800E6280.current_girl = 0xE;
         func_80046290(0x1C0000A8, 0x0F0000B7, 0xE);
         func_80044750(0x300);
         func_8014F524();

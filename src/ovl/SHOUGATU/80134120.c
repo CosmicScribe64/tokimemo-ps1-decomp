@@ -9,15 +9,15 @@ void func_80134120(void) {
 
     tbl = D_80143D24;
     if (D_80143B20 != 0) {
-        p = &tbl.f[D_800E6280.unk_110A];
-        if (*p == normal_date_girl_in || tbl.f[D_800E6280.unk_110A] == normal_date_girl_out) {
-            tbl.f[D_800E6280.unk_110A] = func_8004284C;
+        p = &tbl.f[D_800E6280.step];
+        if (*p == normal_date_girl_in || tbl.f[D_800E6280.step] == normal_date_girl_out) {
+            tbl.f[D_800E6280.step] = func_8004284C;
             /* FAKE: empty double test (decomp-permuter, score 0); it only shifts the register choice of base, index and pointer to the original's; real source unknown. T-4090 */
-            if (!D_800E6280.unk_110A && !D_800E6280.unk_110A) {
+            if (!D_800E6280.step && !D_800E6280.step) {
             }
         }
     }
-    tbl.f[D_800E6280.unk_110A](0x80);
+    tbl.f[D_800E6280.step](0x80);
 }
 
 void func_801341E4(void) {
@@ -30,10 +30,10 @@ void func_801341E4(void) {
      * operand order. T-10010. */
     six = 6;
     if (D_80143B20 == 0) {
-        result = (u8) get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
-        if ((D_800E6280.unk_F5F == 4) && (result >= 2U)) {
-            mode = (u8) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4;
-            if (D_800E6280.unk_1BC[4].unk_0C.b[2]) {
+        result = (u8) get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
+        if ((D_800E6280.current_girl == 4) && (result >= 2U)) {
+            mode = (u8) D_800E6280.girls[4].flags.b[2] >> 4;
+            if (D_800E6280.girls[4].flags.b[2]) {
             }
             if ((mode == six) && (D_80143B04 == 1)) {
                 D_80143B04 = 2;
@@ -47,23 +47,23 @@ void func_801341E4(void) {
 
 void func_8013428C(void) {
     func_801323D4();
-    if ((D_80143B04 == 2) && (D_800E6280.unk_110D == 0) && (D_8011ED5B & 0x80)) {
+    if ((D_80143B04 == 2) && (D_800E6280.substep == 0) && (D_8011ED5B & 0x80)) {
         func_80044750(0x202);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
     }
-    if ((D_800E6280.unk_110D == 0) && (D_80143B04 == 3)) {
+    if ((D_800E6280.substep == 0) && (D_80143B04 == 3)) {
         func_80044750(0x202);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
     }
 }
 
 void func_80134340(void) {
-    D_800E6280.unk_75D = D_800E6280.unk_F5F;
+    D_800E6280.date_girl = D_800E6280.current_girl;
     func_8004284C();
 }
 
 void func_8013436C(void) {
-    if ((D_80143B20 == 0) && !(D_800E6280.unk_10F8 & 1) && (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 != 5)) {
+    if ((D_80143B20 == 0) && !(D_800E6280.frame_count & 1) && (D_800E6280.event_log[D_800E6280.event_log_count - 1].scene != 5)) {
         if (D_80143B24 != 0) {
             func_80085B3C(5, 4);
         } else {
@@ -82,16 +82,16 @@ void func_80134400(void) {
     D_80143D20 = D_80122CDC;
     D_80143B00 += D_80122CDC;
     strcpy(D_800CA250, tbl.s[D_80122CDC]);
-    if (D_80143B20 == 0 && D_800E6280.unk_75D == 3 && D_80122CDC == 2) {
+    if (D_80143B20 == 0 && D_800E6280.date_girl == 3 && D_80122CDC == 2) {
         strcpy(D_800CA250, tbl.s[1]);
     }
     if (D_80122CDC == 0) {
-        D_800E6280.unk_100.unk_02 += 0xA;
-        D_800E6280.unk_104.unk_02 += 0xA;
-        D_800E6280.unk_F5F = 0xE;
+        D_800E6280.param_liberal_arts.value += 0xA;
+        D_800E6280.param_science.value += 0xA;
+        D_800E6280.current_girl = 0xE;
     } else if (D_80122CDC == 1) {
-        D_800E6280.unk_0FC.unk_02 += 0x19;
-        D_800E6280.unk_F5F = 0xE;
+        D_800E6280.param_condition.value += 0x19;
+        D_800E6280.current_girl = 0xE;
     }
     check_para_limit();
     func_8004284C();
@@ -118,7 +118,7 @@ void func_801345C8(void) {
 
     if (D_80143B20 == 0) {
         /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-        v = (u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
+        v = (u8)get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
         if ((v != 0) && (v != 1)) {
             if (v != 2) {
                 D_80143B00 += 2;
@@ -135,7 +135,7 @@ void func_80134648(void) {
 
     if (D_80143B20 == 0) {
         /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-        v = (u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
+        v = (u8)get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
         switch (v) {
         case 0:
         case 1:
@@ -171,10 +171,10 @@ void func_80134730(void)
     size = 0x38;
     index = D_80122CDC;
     do { } while (0);
-    ((GameState *) (((u32) (&D_800E6280)) + (index * size)))->unk_1BC[0].unk_02 += 5;
-    ((GameState *) (((u32) (&D_800E6280)) + (index * (size ^ 0))))->unk_1BC[0].unk_06 += 1;
+    ((GameState *) (((u32) (&D_800E6280)) + (index * size)))->girls[0].tokimeki += 5;
+    ((GameState *) (((u32) (&D_800E6280)) + (index * (size ^ 0))))->girls[0].affection += 1;
     do { check_para_limit(size, index); } while (0);
-    D_800E6280.unk_F5F = 0xE;
+    D_800E6280.current_girl = 0xE;
     func_8004284C();
 }
 
@@ -183,17 +183,17 @@ void func_801347B4(void) {
     func_8004284C();
 }
 
-/* FAKE: passing girl to func_800847B8 colors the entry range to $a0, and the outer * 0 subtree reserves $v1 so D_800E6280.unk_F5F is promoted to $a0 after get_g_zyotai_s without emitting instructions in ugen. T-24137 */
+/* FAKE: passing girl to func_800847B8 colors the entry range to $a0, and the outer * 0 subtree reserves $v1 so D_800E6280.current_girl is promoted to $a0 after get_g_zyotai_s without emitting instructions in ugen. T-24137 */
 void func_801347E0(void) {
     u32 state;
     s32 girl;
 
-    girl = D_800E6280.unk_75D;
-    D_800E6280.unk_F5F = girl;
+    girl = D_800E6280.date_girl;
+    D_800E6280.current_girl = girl;
     func_800847B8(girl);
     D_80122CDC = D_80122CEC;
     state = (u8)get_g_zyotai_s(6) & 0x7F;
-    if ((((((D_80143B00 * 0) + (D_80143B00 * 0) + (D_80143B00 * 0)) * 0) + D_800E6280.unk_F5F) == ((D_800E6280.unk_F5F * 0) + 6)) && (state < 2) && (D_80143B20 == 0)) {
+    if ((((((D_80143B00 * 0) + (D_80143B00 * 0) + (D_80143B00 * 0)) * 0) + D_800E6280.current_girl) == ((D_800E6280.current_girl * 0) + 6)) && (state < 2) && (D_80143B20 == 0)) {
         D_80143AF4 = D_80143A60;
         D_80143AF8 = D_80143A9C;
         D_80143AFC = D_80143AD8;

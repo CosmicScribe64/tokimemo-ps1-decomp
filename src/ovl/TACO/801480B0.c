@@ -2,10 +2,10 @@
 #include "ovl/TACO.h"
 
 void func_801480B0(void) {
-    if ((u32)D_800E6280.unk_1100 < 0x60 && (D_800E6280.unk_10F8 & 0x10)) {
+    if ((u32)D_800E6280.stage_timer < 0x60 && (D_800E6280.frame_count & 0x10)) {
         func_801432F0((s32)"1ST BOSS", -0x30, 0, 2);
     }
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80148184();
         break;
@@ -54,16 +54,16 @@ void func_80148308(void) {
     u32 t;
 
     func_8013A790(1, 1);
-    t = D_800E6280.unk_1104.u;
+    t = D_800E6280.step_timer.u;
     if (t < 0x47E) {
-        D_800E6280.unk_1104.u = t; /* FAKE: the original writes the counter back before the call (store in the jal delay slot), source unknown. T-9370 */
+        D_800E6280.step_timer.u = t; /* FAKE: the original writes the counter back before the call (store in the jal delay slot), source unknown. T-9370 */
         func_8014AB50(t);
     } else {
         func_80148B58(1);
         for (i = 1; i < 0x1F; i++) D_80127080[i].unk0 = 0;
         func_8004284C();
     }
-    D_800E6280.unk_1104.u += 1;
+    D_800E6280.step_timer.u += 1;
 }
 
 void func_801483B0(void) {
@@ -74,7 +74,7 @@ void func_801483B0(void) {
         func_801487A4(D_8015FA44[i], i, D_8015FA80, D_8015FA50, D_8015FA68);
     }
     func_80148D6C();
-    func_8014B2A4(D_800E6280.unk_1104.w);
+    func_8014B2A4(D_800E6280.step_timer.w);
     if (func_80147B24(0xB, D_8015FA68) >= 0x50) {
         D_80127090.unk0 = 0x40000000;
         for (i = 3; i < 0x1F; i++) {
@@ -86,7 +86,7 @@ void func_801483B0(void) {
         D_8015EDCC += 1;
         func_8004284C();
     }
-    D_800E6280.unk_1104.w += 1;
+    D_800E6280.step_timer.w += 1;
 }
 
 /* s32 with no return (v0 live at the exit): with void the first spill of the counter is `sw v0` instead of the original's
@@ -98,7 +98,7 @@ s32 func_801484E4() {
     u8 b;
     s32 i;
 
-    t = D_800E6280.unk_1104.w;
+    t = D_800E6280.step_timer.w;
     if (t < 0x78) {
         if (t % 60 == 0) {
             func_801335A0(0, 0x508);
@@ -200,7 +200,7 @@ void func_801487A4(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4) {
         st = D_8015EDB4[sel].unk84[1];
     }
     if (st == 0) {
-        if ((D_800E6280.unk_1104.w & 1) == 0) {
+        if ((D_800E6280.step_timer.w & 1) == 0) {
             D_80127080[arg0].unk0 = 0x40000000;
         } else {
             D_80127080[arg0].unk0 = 0x80000000;

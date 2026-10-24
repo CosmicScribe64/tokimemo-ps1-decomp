@@ -5,10 +5,10 @@
 extern u8 D_80120656;
 
 s32 func_80134540(void) {
-    if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.substep == 0) {
         cd_read_sectors(0x85, 0x80180000, 0x4BD4);
-        D_800E6280.unk_110D += 1;
-    } else if ((D_800E6280.unk_110D == 1) && (cd_read_sync_status() & 1)) {
+        D_800E6280.substep += 1;
+    } else if ((D_800E6280.substep == 1) && (cd_read_sync_status() & 1)) {
         func_8004284C();
     }
 }
@@ -17,8 +17,8 @@ s32 func_80134540(void) {
 void func_801345BC(void) {
     s32 i;
 
-    if ((D_800E6280.unk_110A >= 3) && (D_800E6280.unk_110A < 7)) {
-        if (D_800E6280.unk_F80 & 0x20) {
+    if ((D_800E6280.step >= 3) && (D_800E6280.step < 7)) {
+        if (D_800E6280.pad_held & 0x20) {
             func_801346D4();
             D_80120656 = 0x82;
             D_8012069A = 0x82; for (i = 0; i < 2; i++) {
@@ -37,7 +37,7 @@ void func_801345BC(void) {
             }
         }
     }
-    if ((D_800E6280.unk_110A >= 3) && (D_800E6280.unk_110A < 6) && (D_800E6280.unk_F80 & 0x40)) {
+    if ((D_800E6280.step >= 3) && (D_800E6280.step < 6) && (D_800E6280.pad_held & 0x40)) {
         func_80042940(5);
     }
     func_801346D4();
@@ -47,7 +47,7 @@ void func_801346D4(void) {
     func_80066C08(2);
     message_window_show();
     func_80066334();
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80134260();
         return;
@@ -91,36 +91,36 @@ void func_80134800(void) {
 
     func_80134B88();
     func_80134D94();
-    t = D_800E6280.unk_1104.u + 1;
-    D_800E6280.unk_1104.u = t;
+    t = D_800E6280.step_timer.u + 1;
+    D_800E6280.step_timer.u = t;
     if (t >= 0x818) {
         func_8004284C();
     }
 }
 
-/* FAKE: T-22021. The bytes D_800E6280.unk_110B and unk_110C are read and written only as u8 views, so uopt promotes each to one register (see func_8013987C in 801388D0.c); `*= 0` keeps the `move v1,zero` that a plain `= 0` folds into `sb zero`; `s32` without a return matches the implicit-int call earlier in this file (no prototype); the original source is unknown. */
+/* FAKE: T-22021. The bytes D_800E6280.mode_scratch and unk_110C are read and written only as u8 views, so uopt promotes each to one register (see func_8013987C in 801388D0.c); `*= 0` keeps the `move v1,zero` that a plain `= 0` folds into `sb zero`; `s32` without a return matches the implicit-int call earlier in this file (no prototype); the original source is unknown. */
 s32 func_80134850(void) {
     s32 i;
     u32 q;
 
     if (D_80122EAC == 3) {
         D_80120762 = 0x40;
-        q = *(u8 *)&D_800E6280.unk_110C / 14;
+        q = *(u8 *)&D_800E6280.stage_scratch / 14;
         if (q >= 2) {
-            *(u8 *)&D_800E6280.unk_110C = 0;
+            *(u8 *)&D_800E6280.stage_scratch = 0;
             q = 0;
         }
         D_80120778 = q + 0xA2;
-        *(u8 *)&D_800E6280.unk_110C += 1;
+        *(u8 *)&D_800E6280.stage_scratch += 1;
     }
     for (i = 0; i < 5; i++) {
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].brightness = *(u8 *)&D_800E6280.mode_scratch;
     }
-    *(u8 *)&D_800E6280.unk_110B -= 2;
-    if (*(u8 *)&D_800E6280.unk_110B == 0) {
-        *(u8 *)&D_800E6280.unk_110B *= 0;
+    *(u8 *)&D_800E6280.mode_scratch -= 2;
+    if (*(u8 *)&D_800E6280.mode_scratch == 0) {
+        *(u8 *)&D_800E6280.mode_scratch *= 0;
         for (i = 0; i < 0x40; i++) {
-            ((DisplayActor44 *)D_80120650)[i].unk_07 = *(u8 *)&D_800E6280.unk_110B;
+            ((DisplayActor44 *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
         }
         func_8004284C();
     }
@@ -134,38 +134,38 @@ void func_80134938(void) {
     }
     func_80048F64(0x60);
     ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 5;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x01000000;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0x80;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = D_8013C714;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = D_8013C718;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = (u8 *)D_8013C710;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0xA;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = 0;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0xA0;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = -0x78;
+    ((DisplayActor44 *)D_8011ECD0)[96].quad_flags = 0x01000000;
+    ((DisplayActor44 *)D_8011ECD0)[96].draw_flags = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[96].frame_table = D_8013C714;
+    ((DisplayActor44 *)D_8011ECD0)[96].sequence_table = D_8013C718;
+    ((DisplayActor44 *)D_8011ECD0)[96].tpage_table = (u8 *)D_8013C710;
+    ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = 0xA;
+    ((DisplayActor44 *)D_8011ECD0)[96].brightness = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].x = -0xA0;
+    ((DisplayActor44 *)D_8011ECD0)[96].y = -0x78;
     ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 0x80;
     ((DisplayActor44 *)D_8011ECD0)[96].unk_43 = 0;
     ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 0;
     for (i = 1; i < 5; i++) {
         func_80048F64(i + 0x60);
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_01 = 4;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_38 = 0x01000000;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_03 = 0;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_0C = D_8013C714;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_10 = D_8013C718;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_34 = (u8 *)D_8013C710;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_16 = i - 1;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_06 = 1;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_07 = 0;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 = -0xA0;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_2A = -0x78;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].quad_flags = 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].draw_flags = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].frame_table = D_8013C714;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].sequence_table = D_8013C718;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].tpage_table = (u8 *)D_8013C710;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].sequence_slot = i - 1;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].blink_period = 1;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].brightness = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].x = -0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[96 + i].y = -0x78;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_05 = 0x80;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_43 = 0;
         ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_04 = 0;
     }
-    ((DisplayActor44 *)D_8011ECD0)[99].unk_16 = D_80122EAC * 2 + 2;
-    ((DisplayActor44 *)D_8011ECD0)[99].unk_03 = 0x80;
-    ((DisplayActor44 *)D_8011ECD0)[100].unk_16 = D_80122EAC * 2 + 3;
+    ((DisplayActor44 *)D_8011ECD0)[99].sequence_slot = D_80122EAC * 2 + 2;
+    ((DisplayActor44 *)D_8011ECD0)[99].draw_flags = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[100].sequence_slot = D_80122EAC * 2 + 3;
     search_load_tpage_buf_lock(D_8013C710[11], 1);
     search_load_tpage_buf_lock(D_8013C710[12], 1);
     search_load_tpage_buf_lock(D_8013C710[13], 1);
@@ -174,7 +174,7 @@ void func_80134938(void) {
 
 void func_80134B88(void) {
     /* u32 selector: sltiu compares and the selector stays in $v0 (T-8020) */
-    switch ((u32)D_800E6280.unk_1104.w) {                     /* irregular */
+    switch ((u32)D_800E6280.step_timer.w) {                     /* irregular */
     case 0x4F2:
         func_80044750(0x509);
         break;
@@ -245,10 +245,10 @@ s32 func_80134D94(void) {
     GameState *g;
 
     g = &D_800E6280;
-    if (g->unk_1104.u == 0) {
+    if (g->step_timer.u == 0) {
         D_8012071E = 5;
     }
-    if (g->unk_1104.u == 0xFE) {
+    if (g->step_timer.u == 0xFE) {
         D_80120697 = 0x80;
         D_80120696 = 5;
         D_8012069B = 0x80;
@@ -256,13 +256,13 @@ s32 func_80134D94(void) {
     if ((D_80120696 & 1) == 0) {
         D_80120697 = 0;
     }
-    if (g->unk_1104.u == 0x29C) {
+    if (g->step_timer.u == 0x29C) {
         D_801206DB = 0x80;
         D_801206DA = 5;
         D_801206DF = 0x80;
     }
-    if (g->unk_1104.u >= 0xFF && g->unk_1104.u < 0x5A3) {
-        b = g->unk_110D;
+    if (g->step_timer.u >= 0xFF && g->step_timer.u < 0x5A3) {
+        b = g->substep;
         D_8012071E = 0x40;
         /* FAKE: T-25306. A copy of the counter that uopt keeps as its own range and as1 folds back into the
          * divu; it holds v1 in this block, so q, b and the frame counter get a0, a1 and t0 as in the original. */
@@ -290,54 +290,54 @@ s32 func_80134D94(void) {
             break;
         case 3:
         default:
-            if (g->unk_1104.u < 0x4C2) {
+            if (g->step_timer.u < 0x4C2) {
                 D_80120734 = t + 0x9D;
             } else {
                 D_80120734 = t + 0x9F;
             }
             break;
         }
-        g->unk_110D = b + 1;
+        g->substep = b + 1;
     }
-    if (g->unk_1104.u == 0x4C2 && D_80122EAC != 3) {
+    if (g->step_timer.u == 0x4C2 && D_80122EAC != 3) {
         D_8012071F = 0;
         D_80120763 = 0x80;
         D_80120762 = 5;
         D_80120767 = 0x80;
     }
-    if (g->unk_1104.u == 0x58F && D_80122EAC == 3) {
+    if (g->step_timer.u == 0x58F && D_80122EAC == 3) {
         D_8012071F = 0;
         D_80120763 = 0x80;
         D_80120762 = 5;
         D_80120767 = 0x80;
     }
-    if (g->unk_1104.u == 0x606 || g->unk_1104.u == 0x609 || g->unk_1104.u == 0x60C) {
+    if (g->step_timer.u == 0x606 || g->step_timer.u == 0x609 || g->step_timer.u == 0x60C) {
         func_80049A40(-0xA0, -0x78, 0x140, 0xA0, 2, 0xFFFFFF, 0x81);
         dtd_on_tpage(0, 0, 2, 0, 0);
     }
-    if (g->unk_1104.u == 0x606) {
+    if (g->step_timer.u == 0x606) {
         D_801206F0 = 0x48;
         D_801206E0 = 0;
     }
-    if (g->unk_1104.u >= 0x60F && g->unk_1104.u < 0x68E) {
-        col = 0x68E - g->unk_1104.u;
+    if (g->step_timer.u >= 0x60F && g->step_timer.u < 0x68E) {
+        col = 0x68E - g->step_timer.u;
         col += col << 8;
         col += col << 8;
         func_80049A40(-0x130, -0x78, 0x140, 0xA0, 2, col, 0x86);
         func_80049A40(0x10, -0x78, 0x140, 0xA0, 2, col, 0x85);
         dtd_on_tpage(0, 0, 2, 1, 0);
     }
-    if (g->unk_1104.u == 0x67E) {
+    if (g->step_timer.u == 0x67E) {
         D_80120657 = 0x80;
         D_801206DF = 0x80;
         D_80120767 = 0x80;
     }
-    if (g->unk_1104.u >= 0x723 && D_80122EAC == 3) {
+    if (g->step_timer.u >= 0x723 && D_80122EAC == 3) {
         u32 w;
         u32 n;
 
         /* FAKE: T-25306. u8 view of the s8 counter, read with lbu as in func_80134850 (T-22021). */
-        n = *(u8 *)&g->unk_110C;
+        n = *(u8 *)&g->stage_scratch;
         D_80120762 = 0x40;
         w = n / 14;
         if (w >= 2) {
@@ -350,7 +350,7 @@ s32 func_80134D94(void) {
          * first block stays at the switch. */
         if (w) {}
         if (D_80122EAC) {}
-        *(u8 *)&g->unk_110C = n + 1;
+        *(u8 *)&g->stage_scratch = n + 1;
 /* FAKE: T-25306. as1 breaks the tie between this store and `move v0,v1` by source line, smaller first
  * (wiki/as1-scheduler-rule.md, T-25137); the original copies w before the store, so the return gets an
  * earlier line and the next `#line` restores the numbering. */

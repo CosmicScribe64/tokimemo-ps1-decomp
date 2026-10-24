@@ -251,13 +251,13 @@ void func_800FA0D0(void) {
     records = (Rec24 *)D_800EC190;
     for (i = 4; i < 19; i++) {
         if (D_800F19AB < 96) {
-            records[i].unk_14 = records[i].unk_15 = records[i].unk_16 = D_800F19AB;
+            records[i].tint_r = records[i].tint_g = records[i].tint_b = D_800F19AB;
         }
     }
     after = D_800B1AF6;
     if (before != after) {
         for (i = 4; i < 19; i++) {
-            records[i].unk_00 |= 0x80000000;
+            records[i].flags |= 0x80000000;
         }
     }
 }
@@ -269,14 +269,14 @@ void func_800FA194(void) {
     if (D_800B1AF0 == 0) {
         records = (Rec24 *)D_800EC190;
         for (i = 4; i < 19; i++) {
-            records[i].unk_00 &= 0x7FFFFFFF;
+            records[i].flags &= 0x7FFFFFFF;
         }
     }
     func_8004C90C();
     records = (Rec24 *)D_800EC190;
     for (i = 4; i < 19; i++) {
         if (D_800F19AB < 97) {
-            records[i].unk_14 = records[i].unk_15 = records[i].unk_16 = D_800F19AB;
+            records[i].tint_r = records[i].tint_g = records[i].tint_b = D_800F19AB;
         }
     }
 }
@@ -286,21 +286,21 @@ s32 func_800FA25C(void) {
     s16 i;
 
     for (i = 4; i < 0x13; i++) {
-        ((Rec24 *)D_800EC190)[i].unk_06 += 0xA;
-        if (((func_800789A0() & 3) == 0 && ((Rec24 *)D_800EC190)[i].unk_06 >= 0x11 && D_80120CF0[i - 4] == 0 && D_80120D10[i - 4] == 0) ||
+        ((Rec24 *)D_800EC190)[i].y += 0xA;
+        if (((func_800789A0() & 3) == 0 && ((Rec24 *)D_800EC190)[i].y >= 0x11 && D_80120CF0[i - 4] == 0 && D_80120D10[i - 4] == 0) ||
             D_80120CF0[i - 4] != 0 || D_80120D10[i - 4] != 0) {
-            ((Rec24 *)D_800EC190)[i].unk_06 -= 0xA;
+            ((Rec24 *)D_800EC190)[i].y -= 0xA;
             if (D_80120CF0[i - 4] == 0) {
                 if (D_80120D10[i - 4] == 0) {
-                    if (((Rec24 *)D_800EC190)[i].unk_04 < -0x57) {
-                        ((Rec24 *)D_800EC190)[i].unk_06 = func_800789A0() % 4 + 0x1C;
+                    if (((Rec24 *)D_800EC190)[i].x < -0x57) {
+                        ((Rec24 *)D_800EC190)[i].y = func_800789A0() % 4 + 0x1C;
                     } else {
-                        ((Rec24 *)D_800EC190)[i].unk_06 = func_800789A0() % 15 + 0x11;
+                        ((Rec24 *)D_800EC190)[i].y = func_800789A0() % 15 + 0x11;
                     }
-                    ((Rec24 *)D_800EC190)[i].unk_04 -= 0xC;
+                    ((Rec24 *)D_800EC190)[i].x -= 0xC;
                     /* FAKE: EventRec24 signed views of unk_0E/unk_0A share constants 8 and 0x18 with unk_08 in $s3/$s5 while preserving ixa addressing. T-24081 */
                     ((EventRec24 *)D_800EC190)[i].unk_0E = 8;
-                    ((Rec24 *)D_800EC190)[i].unk_08 = 0x18;
+                    ((Rec24 *)D_800EC190)[i].w = 0x18;
                     ((EventRec24 *)D_800EC190)[i].unk_0A = 8;
                     D_80120D10[i - 4] += 1;
                 } else {
@@ -309,13 +309,13 @@ s32 func_800FA25C(void) {
                 }
             } else if (D_80120CF0[i - 4] == 5) {
                 ((Rec24 *)D_800EC190)[i].unk_0E = 0;
-                ((Rec24 *)D_800EC190)[i].unk_08 = 8;
+                ((Rec24 *)D_800EC190)[i].w = 8;
                 ((EventRec24 *)D_800EC190)[i].unk_0A = 0x18;
-                ((Rec24 *)D_800EC190)[i].unk_04 = func_800789A0() % 167 - 0x9F;
-                if (((Rec24 *)D_800EC190)[i].unk_04 >= -0x57) {
-                    ((Rec24 *)D_800EC190)[i].unk_04 += 0x99;
+                ((Rec24 *)D_800EC190)[i].x = func_800789A0() % 167 - 0x9F;
+                if (((Rec24 *)D_800EC190)[i].x >= -0x57) {
+                    ((Rec24 *)D_800EC190)[i].x += 0x99;
                 }
-                ((Rec24 *)D_800EC190)[i].unk_06 = -0x5F;
+                ((Rec24 *)D_800EC190)[i].y = -0x5F;
                 D_80120CF0[i - 4] = 0;
                 D_80120D10[i - 4] = 0;
             } else if (D_80120CF0[i - 4] == 4) {
@@ -335,12 +335,12 @@ s32 func_800FA25C(void) {
                     D_80120CF0[i - 4] += 1;
                 }
             }
-        } else if (((Rec24 *)D_800EC190)[i].unk_06 >= 0x11 && D_80120CF0[i - 4] == 0 && D_80120D10[i - 4] == 0) {
-            ((Rec24 *)D_800EC190)[i].unk_04 = func_800789A0() % 167 - 0x9F;
-            if (((Rec24 *)D_800EC190)[i].unk_04 >= -0x57) {
-                ((Rec24 *)D_800EC190)[i].unk_04 += 0x99;
+        } else if (((Rec24 *)D_800EC190)[i].y >= 0x11 && D_80120CF0[i - 4] == 0 && D_80120D10[i - 4] == 0) {
+            ((Rec24 *)D_800EC190)[i].x = func_800789A0() % 167 - 0x9F;
+            if (((Rec24 *)D_800EC190)[i].x >= -0x57) {
+                ((Rec24 *)D_800EC190)[i].x += 0x99;
             }
-            ((Rec24 *)D_800EC190)[i].unk_06 = -0x5F;
+            ((Rec24 *)D_800EC190)[i].y = -0x5F;
         }
     }
 }
@@ -467,22 +467,22 @@ void func_800FAA04(void) {
         p = (Rec24 *)(D_800EC190 + i * 0x24);
         /* FAKE: u16 clut local before unk_04 call shifts the i * 2 CSE temporary to $v0. T-24081 */
         clut = 0x1F2;
-        p->unk_00 = 0xC1000000;
-        p->unk_04 = func_800789A0() % 320 - 0x9F;
-        p->unk_06 = -0x78;
-        p->unk_08 = 8;
+        p->flags = 0xC1000000;
+        p->x = func_800789A0() % 320 - 0x9F;
+        p->y = -0x78;
+        p->w = 8;
         /* FAKE: s16 view of the u16 member shares constant 8 with unk_08 in $s2. T-24081 */
-        *(s16 *)&p->unk_0A = 8;
+        *(s16 *)&p->h = 8;
         p->unk_0C = 5;
         p->unk_0E = 0;
         p->unk_0F = 0;
         p->unk_10 = 0;
         p->unk_12 = clut;
-        p->unk_14 = 0;
-        p->unk_15 = 0;
-        p->unk_16 = 0;
-        p->unk_18 = 0;
-        p->unk_1A = 0;
+        p->tint_r = 0;
+        p->tint_g = 0;
+        p->tint_b = 0;
+        p->anchor_x = 0;
+        p->anchor_y = 0;
         p->unk_1C = 0x1000;
         p->unk_1E = 0x1000;
         p->unk_20 = 0;
@@ -563,7 +563,7 @@ void func_800FAE6C(void) {
     ((DisplayActor44 *)D_800EAFA0)[1].unk_04 = 8;
     ((DisplayActor44 *)D_800EAFA0)->unk_04 = 8;
     ((DisplayActor44 *)D_800EAFA0)[2] = ((DisplayActor44 *)D_800EAFA0)[0];
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_16 = 4;
+    ((DisplayActor44 *)D_800EAFA0)[2].sequence_slot = 4;
     func_80011DFC();
 }
 

@@ -21,23 +21,23 @@ void func_80132BD0(void) {
     sp68 = D_80148F88;
     for (i = 0; i < 0x17; i++) {
         func_80048F64(i + 1);
-        DISP(i + 1).unk_38 = 0x01000000;
+        DISP(i + 1).quad_flags = 0x01000000;
         DISP(i + 1).unk_04 = 0;
         DISP(i + 1).unk_05 = 0x80;
         DISP(i + 1).unk_01 = spF8.v[i];
-        DISP(i + 1).unk_06 = 2;
+        DISP(i + 1).blink_period = 2;
         DISP(i + 1).unk_08 = 0;
-        DISP(i + 1).unk_0C = (u8 *)D_80149FCC;
-        DISP(i + 1).unk_10 = (u8 *)D_8014A004;
-        DISP(i + 1).unk_34 = (u8 *)D_8014A070;
+        DISP(i + 1).frame_table = (u8 *)D_80149FCC;
+        DISP(i + 1).sequence_table = (u8 *)D_8014A004;
+        DISP(i + 1).tpage_table = (u8 *)D_8014A070;
         DISP(i + 1).unk_14 = D_8014A03C;
-        DISP(i + 1).unk_1A = 0x1000;
-        DISP(i + 1).unk_1C = 0x1000;
-        DISP(i + 1).unk_07 = 0x80;
-        DISP(i + 1).unk_26 = spC8.v[i] - 0xA0;
-        DISP(i + 1).unk_2A = sp98.v[i] - 0x78;
+        DISP(i + 1).scale_x = 0x1000;
+        DISP(i + 1).scale_y = 0x1000;
+        DISP(i + 1).brightness = 0x80;
+        DISP(i + 1).x = spC8.v[i] - 0xA0;
+        DISP(i + 1).y = sp98.v[i] - 0x78;
         DISP(i + 1).unk_18 = 0;
-        DISP(i + 1).unk_16 = sp68.v[i];
+        DISP(i + 1).sequence_slot = sp68.v[i];
     }
 }
 
@@ -64,15 +64,15 @@ s32 arg1;
                 spA8[0] = spA8[j];
             }
         }
-        DISP(i + 1).unk_26 = spA8[0];
+        DISP(i + 1).x = spA8[0];
     }
     for (i = 0; i < 0x17; i++) {
-        if ((DISP(i + 1).unk_26 < 0xB1) && (DISP(i + 1).unk_26 >= -0x127)) {
-            DISP(i + 1).unk_02 = 1;
-            DISP(i + 1).unk_03 = 0xA4;
+        if ((DISP(i + 1).x < 0xB1) && (DISP(i + 1).x >= -0x127)) {
+            DISP(i + 1).flags = 1;
+            DISP(i + 1).draw_flags = 0xA4;
         } else {
-            DISP(i + 1).unk_02 = 0;
-            DISP(i + 1).unk_03 = 0;
+            DISP(i + 1).flags = 0;
+            DISP(i + 1).draw_flags = 0;
             DISP(i + 1).unk_18 = 0;
             DISP(i + 1).unk_08 = 0;
         }
@@ -101,7 +101,7 @@ void func_801330FC(void) {
     srn_vram_set(0, 5, 0x580, 0xF0);
     func_8009C93C(&rect, 0x3C0, 0);
     for (index = 0; index < 11; index++) {
-        D_800E6280.unk_1228[index + 5] = 8;
+        D_800E6280.tpage_buf[index + 5] = 8;
     }
 }
 
@@ -121,7 +121,7 @@ void func_801331D0(void) {
         i += 0x40;
     } while (i < 0x200);
     for (i = 0; i < 3; i++) {
-        D_800E6280.unk_1228[i + 0x25] = 8;
+        D_800E6280.tpage_buf[i + 0x25] = 8;
     }
 }
 
@@ -141,22 +141,22 @@ void func_80133258(void) {
     }
     for (i = 0; i < 10; i++) {
         /* FAKE: the (u8) narrowing takes one ugen temporary and emits no code; the original's temporaries (t6 first in the loop) need it, real source unknown. T-19031 */
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_38 = ((u8)(i & 1) << 0x1E) | 0x01000000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].quad_flags = ((u8)(i & 1) << 0x1E) | 0x01000000;
         ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_05 = 0x80;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_06 = 2;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_0C = (u8 *)D_80149FCC;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_10 = (u8 *)D_8014A004;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_34 = (u8 *)D_8014A070;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].blink_period = 2;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].frame_table = (u8 *)D_80149FCC;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].sequence_table = (u8 *)D_8014A004;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].tpage_table = (u8 *)D_8014A070;
         ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_14 = D_8014A03C;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_1A = 0x1000;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_1C = 0x1000;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_07 = 0x80;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_02 = 1;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_03 = 0xA4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].scale_x = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].scale_y = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].brightness = 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].flags = 1;
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].draw_flags = 0xA4;
         ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_01 = sp88.v[i];
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_26 = sp74.h[i];
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_2A = sp60.h[i];
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_16 = sp4C.h[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].x = sp74.h[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].y = sp60.h[i];
+        ((DisplayActor44 *)D_8011ECD0)[i + 1].sequence_slot = sp4C.h[i];
     }
 }
 
@@ -167,7 +167,7 @@ void func_80133438(void) {
 }
 
 void func_80133494(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80044750(0xBF);
         func_80048EB8(0);
@@ -192,7 +192,7 @@ void func_80133494(void) {
         k_reset(0);
         func_8006612C((s32) "　");
         func_80065F34(0);
-        D_800E6280.unk_03A = 0x80;
+        D_800E6280.screen_brightness = 0x80;
         Default_Disp();
         func_8004284C();
         break;
@@ -203,7 +203,7 @@ void func_80133494(void) {
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
-            func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 0);
+            func_80068938(D_800E6280.year, D_800E6280.month, 0);
             func_8004284C();
         }
         Default_Disp();
@@ -224,9 +224,9 @@ void func_80133494(void) {
 
 void func_80133644(void) {
     func_80083808();
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
-        switch (D_800E6280.unk_F74) {
+        switch (D_800E6280.input_device) {
         case 0:
         case 0xFF:
             func_8004284C();
@@ -240,7 +240,7 @@ void func_80133644(void) {
         func_800866A0(0x541D);
         break;
     case 2:
-        D_800E6280.unk_F5F = 0;
+        D_800E6280.current_girl = 0;
         addr_init_bustup();
         func_80083474();
         func_80083440(1U);
@@ -256,7 +256,7 @@ void func_80133644(void) {
         D_800CA160 = D_80148F00;
         D_800CA164 = D_80148F04;
         D_800CA168 = D_80148F08;
-        if (D_800E6280.unk_F74 == 0xFF) {
+        if (D_800E6280.input_device == 0xFF) {
             func_80042940(6);
         } else {
             func_8004284C();
@@ -273,7 +273,7 @@ void func_80133644(void) {
         normal_date_speak();
         break;
     case 8:
-        if (D_800E6280.unk_F74 == 1) {
+        if (D_800E6280.input_device == 1) {
             func_8004284C();
         }
         break;
@@ -281,7 +281,7 @@ void func_80133644(void) {
         normal_date_speak();
         break;
     case 10:
-        if (D_800E6280.unk_F88 != 0) {
+        if (D_800E6280.pad_pressed != 0) {
             func_8008585C();
             func_80042808();
         }
@@ -341,7 +341,7 @@ s32 arg0;
     s32 *ptr; /* FAKE: the pointer to the selector word moves the load into $v1 as in the original; found with decomp-permuter. T-10910 */
     int sel;
 
-    sel = *(ptr = &D_800E6280.unk_F80) & 0xF000;
+    sel = *(ptr = &D_800E6280.pad_held) & 0xF000;
 
     switch (sel) {
     case 0x3000:

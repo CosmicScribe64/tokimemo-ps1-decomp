@@ -155,56 +155,56 @@ s32 func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s3
         }
         switch (quadrant) {
         case 0:
-            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
-            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] + arg5);
+            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4);
+            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5);
             radius = (s32) (arg3 << 7) / 4096;
-            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->unk_018[D_8011ECA0] + arg5);
-            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
-            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
-            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4 + radius);
+            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5);
+            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4);
+            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4 + radius);
+            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5 + radius);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
             /* FAKE: T-25124 (from T-25034), the one-line comma groups of UV stores and the goto
                to the shared label after case 3 reproduce the original UV store and branch
                layout; the original source is unknown. */
             goto block_16;
         case 1:
-            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
-            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] + arg5);
+            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4);
+            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5);
             radius = (s32) (arg3 << 7) / 4096;
-            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->unk_018[D_8011ECA0] + arg5);
+            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4 + radius);
+            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5);
             extent = -radius;
-            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
-            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
-            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4);
+            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4 + radius);
+            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5 + extent);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
             goto block_16;
         case 2:
-            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
-            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] + arg5);
+            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4);
+            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5);
             radius = (s32) (arg3 << 7) / 4096;
             extent = -radius;
-            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->unk_018[D_8011ECA0] + arg5);
-            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
-            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
-            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4 + extent);
+            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5);
+            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4);
+            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4 + extent);
+            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5 + radius);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
             goto block_16;
         case 3:
-            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
-            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] + arg5);
+            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4);
+            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5);
             extent = -((s32) (arg3 << 7) / 4096);
-            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->unk_018[D_8011ECA0] + arg5);
-            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->unk_014[D_8011ECA0] + arg4);
-            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
-            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4 + extent);
+            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5);
+            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4);
+            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4 + extent);
+            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5 + extent);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
 block_16:
             break;
@@ -229,8 +229,8 @@ block_16:
             ((TILE *)primitive)->b0 = (u16)(arg6 & 0xFF);
             switch (quadrant) {
             case 0:
-                ((TILE *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] - 0xA0);
-                ((TILE *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] - 0x78);
+                ((TILE *)primitive)->x0 = (s16) (gs->screen_center_x[D_8011ECA0] - 0xA0);
+                ((TILE *)primitive)->y0 = (s16) (gs->screen_center_y[D_8011ECA0] - 0x78);
                 ((TILE *)primitive)->w = 0x140;
                 extent = (arg5 - ((s32) (arg3 << 7) / 4096)) + 0x78;
                 ((TILE *)primitive)->h = extent;
@@ -239,8 +239,8 @@ block_16:
                 }
                 break;
             case 1:
-                ((TILE *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] - 0xA0);
-                ((TILE *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] - 0x78);
+                ((TILE *)primitive)->x0 = (s16) (gs->screen_center_x[D_8011ECA0] - 0xA0);
+                ((TILE *)primitive)->y0 = (s16) (gs->screen_center_y[D_8011ECA0] - 0x78);
                 extent = (arg4 - ((s32) (arg3 << 7) / 4096)) + 0xA0;
                 ((TILE *)primitive)->w = extent;
                 ((TILE *)primitive)->h = 0xF0;
@@ -249,10 +249,10 @@ block_16:
                 }
                 break;
             case 2:
-                ((TILE *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] - 0xA0);
+                ((TILE *)primitive)->x0 = (s16) (gs->screen_center_x[D_8011ECA0] - 0xA0);
                 radius = (s32) (arg3 << 7) / 4096;
                 extent = (-arg5 - radius) + 0x78;
-                ((TILE *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] + arg5 + radius);
+                ((TILE *)primitive)->y0 = (s16) (gs->screen_center_y[D_8011ECA0] + arg5 + radius);
                 ((TILE *)primitive)->h = extent;
                 ((TILE *)primitive)->w = 0x140;
                 if (extent > 0) {
@@ -261,9 +261,9 @@ block_16:
                 break;
             case 3:
                 radius = (s32) (arg3 << 7) / 4096;
-                ((TILE *)primitive)->x0 = (s16) (gs->unk_014[D_8011ECA0] + arg4 + radius);
+                ((TILE *)primitive)->x0 = (s16) (gs->screen_center_x[D_8011ECA0] + arg4 + radius);
                 extent = (-arg4 - radius) + 0xA0;
-                ((TILE *)primitive)->y0 = (s16) (gs->unk_018[D_8011ECA0] - 0x78);
+                ((TILE *)primitive)->y0 = (s16) (gs->screen_center_y[D_8011ECA0] - 0x78);
                 ((TILE *)primitive)->w = extent;
                 ((TILE *)primitive)->h = 0xF0;
                 if (extent > 0) {

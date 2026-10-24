@@ -19,13 +19,13 @@ s32 func_8013DDD0(void) {
     ShoCallbacks23 table;
 
     table = D_80145FE8;
-    index = D_800E6280.unk_110A;
+    index = D_800E6280.step;
     table.f[index](0x80);
-    ((DisplayActor44 *)D_80120650)->unk_07 = D_800B593C;
+    ((DisplayActor44 *)D_80120650)->brightness = D_800B593C;
     if (((DisplayActor44 *)D_80120650)->unk_18 == 0 && ((DisplayActor44 *)D_80120650)->unk_08 == 0) {
-        ((DisplayActor44 *)D_80120650)->unk_16++;
-        if (((DisplayActor44 *)D_80120650)->unk_16 >= 3) {
-            ((DisplayActor44 *)D_80120650)->unk_16 = 0;
+        ((DisplayActor44 *)D_80120650)->sequence_slot++;
+        if (((DisplayActor44 *)D_80120650)->sequence_slot >= 3) {
+            ((DisplayActor44 *)D_80120650)->sequence_slot = 0;
         }
     }
 }
@@ -46,9 +46,9 @@ void func_8013DF14(void) {
 
     state = &D_800E6280;
     func_80085B3C(4, 0);
-    state->unk_1BC[12].unk_0C.f.f9 += 1;
-    if (state->unk_1BC[12].unk_0C.f.f9 >= 4) {
-        D_800E6280.unk_1BC[12].unk_0C.f.f9 = 3;
+    state->girls[12].flags.f.story_stage += 1;
+    if (state->girls[12].flags.f.story_stage >= 4) {
+        D_800E6280.girls[12].flags.f.story_stage = 3;
     }
     strcpy(D_800CA188, "伊集院");
     strcpy(girl_name_buf, "伊集院");
@@ -82,7 +82,7 @@ void func_8013E0C8(void) {
 }
 
 void func_8013E0F0(void) {
-    D_80145F2C += D_800E6280.unk_1BC[12].unk_0C.f.f9 * 3 - 3;
+    D_80145F2C += D_800E6280.girls[12].flags.f.story_stage * 3 - 3;
     func_8004284C();
 }
 
@@ -106,18 +106,18 @@ void func_8013E19C(void) {
     a = get_g_zyotai_s(7);
     r = get_g_zyotai_h(7);
     b = 0xFF;
-    if (((Bit1Flag *)&D_800E6280.unk_1BC[7].unk_0C.w)->f && D_800E6280.unk_56C[52] == 0 && a == 0x80 && r == 0) {
+    if (((Bit1Flag *)&D_800E6280.girls[7].flags.w)->f && D_800E6280.event_flags[52] == 0 && a == 0x80 && r == 0) {
         b = 7;
     }
     a = get_g_zyotai_s(0);
     r = get_g_zyotai_h(0);
-    if (D_800E6280.unk_56C[6] == 0 && a == 0x80 && r == 0 && (b == 0xFF || (b == 7 && D_800E6280.unk_1BC[0].unk_0A < D_800E6280.unk_1BC[7].unk_0A))) {
+    if (D_800E6280.event_flags[6] == 0 && a == 0x80 && r == 0 && (b == 0xFF || (b == 7 && D_800E6280.girls[0].syoushin < D_800E6280.girls[7].syoushin))) {
         b = 0;
     }
     a = get_g_zyotai_s(9);
     r = get_g_zyotai_h(9);
-    if (((Bit1Flag *)&D_800E6280.unk_1BC[9].unk_0C.w)->f && D_800E6280.unk_56C[66] == 0 && a == 0x80 && r == 0 &&
-        (b == 0xFF || (b == 7 && D_800E6280.unk_1BC[9].unk_0A < D_800E6280.unk_1BC[7].unk_0A) || (b == 0 && D_800E6280.unk_1BC[9].unk_0A < D_800E6280.unk_1BC[0].unk_0A))) {
+    if (((Bit1Flag *)&D_800E6280.girls[9].flags.w)->f && D_800E6280.event_flags[66] == 0 && a == 0x80 && r == 0 &&
+        (b == 0xFF || (b == 7 && D_800E6280.girls[9].syoushin < D_800E6280.girls[7].syoushin) || (b == 0 && D_800E6280.girls[9].syoushin < D_800E6280.girls[0].syoushin))) {
         b = 9;
     }
     D_80145FE4 = b;

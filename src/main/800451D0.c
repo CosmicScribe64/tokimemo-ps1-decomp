@@ -541,7 +541,7 @@ u8 *buf;
 
 /* s32 fallthrough preserves original constant scheduling (T-9710). */
 s32 func_800463E8(void) {
-    if ((D_8011ED17 & 0x80) && (D_800E6280.unk_10F8 & 4)) {
+    if ((D_8011ED17 & 0x80) && (D_800E6280.frame_count & 4)) {
         func_80049FF0(0x9E, 0x5A, 0x9E, 0x62, 0xFFFF00, 0xFFFF00, 0x80);
         func_80049FF0(0x9D, 0x5A, 0x9D, 0x62, 0xFFFF00, 0xFFFF00, 0x80);
     }

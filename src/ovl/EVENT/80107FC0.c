@@ -308,7 +308,7 @@ void func_80108D00(void) {
     }
     D_80123988 = 0;
     for (i = 0; i < 0xA; i++) {
-        ((DisplayActor44 *)D_800E9620)[i + 99].unk_03 |= 0x80;
+        ((DisplayActor44 *)D_800E9620)[i + 99].draw_flags |= 0x80;
     }
     D_8012398C = 1;
     func_80011DFC();
@@ -480,16 +480,16 @@ void func_80109404(void) {
     ((DisplayActor44 *)D_800EAFA0)->unk_01 = 0xC;
     ((DisplayActor44 *)D_800EAFA0)[2] = ((DisplayActor44 *)D_800EAFA0)[0];
     ((DisplayActor44 *)D_800EAFA0)[2].unk_01 = 0xB;
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_02 = 0x40;
+    ((DisplayActor44 *)D_800EAFA0)[2].flags = 0x40;
     ((DisplayActor44 *)D_800EAFA0)[2].unk_18 = 0x14;
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_26 = -6;
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_2A = -0x30;
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_07 = 0x80;
+    ((DisplayActor44 *)D_800EAFA0)[2].x = -6;
+    ((DisplayActor44 *)D_800EAFA0)[2].y = -0x30;
+    ((DisplayActor44 *)D_800EAFA0)[2].brightness = 0x80;
     for (i = 0; i < 0xA; i++) {
         ((DisplayActor44 *)D_800E9620)[i + 99] = ((DisplayActor44 *)D_800EAFA0)[2];
         ((DisplayActor44 *)D_800E9620)[i + 99].unk_18 = t0.v[i];
-        ((DisplayActor44 *)D_800E9620)[i + 99].unk_26 = t1.v[i] - 0xA0;
-        ((DisplayActor44 *)D_800E9620)[i + 99].unk_2A = t2.v[i] - 0x78;
+        ((DisplayActor44 *)D_800E9620)[i + 99].x = t1.v[i] - 0xA0;
+        ((DisplayActor44 *)D_800E9620)[i + 99].y = t2.v[i] - 0x78;
     }
     func_80011DFC();
 }

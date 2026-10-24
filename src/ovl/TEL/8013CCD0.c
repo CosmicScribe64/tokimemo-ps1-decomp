@@ -6,10 +6,10 @@
 #define REC(n) (((DisplayActor44 *)D_8011ECD0)[n])
 
 /* Frame and position of display record n, one source line (as1 schedules the three stores by line). */
-#define SET_REC(n, frame, px, py) (REC(n).unk_18 = (frame), REC(n).unk_26 = (px), REC(n).unk_2A = (py))
+#define SET_REC(n, frame, px, py) (REC(n).unk_18 = (frame), REC(n).x = (px), REC(n).y = (py))
 
 /* The packed flag word at GameState +0xF64 of state gs, as single bits. */
-#define FLAGS_F64(gs) ((FlagsF64 *)(gs)->unk_F64)
+#define FLAGS_F64(gs) ((FlagsF64 *)(gs)->quarter_flags)
 
 void func_8013CCD0(void) {
     DisplayActor44 *rec;
@@ -25,16 +25,16 @@ void func_8013CCD0(void) {
         func_80048F64(i + 0x60);
         rec = &REC(i + 0x60);
         rec->unk_01 = 4;
-        rec->unk_02 = 0x40;
-        rec->unk_38 = 0x40000000;
-        rec->unk_03 = 0x84;
-        rec->unk_0C = sprite_frame_table;
-        rec->unk_10 = D_800C9A14;
-        rec->unk_34 = D_800C9730;
+        rec->flags = 0x40;
+        rec->quad_flags = 0x40000000;
+        rec->draw_flags = 0x84;
+        rec->frame_table = sprite_frame_table;
+        rec->sequence_table = D_800C9A14;
+        rec->tpage_table = D_800C9730;
         rec->unk_14 = D_800C9A54;
         rec->unk_04 = 8;
         rec->unk_05 = 1;
-        rec->unk_26 = 0x200;
+        rec->x = 0x200;
     }
     D_80120668 = 0x42;
     D_80120676 = -0x10;
@@ -43,8 +43,8 @@ void func_8013CCD0(void) {
     idx = 0x61;
     func_80053418(rank, points);
     for (i = 0; i != 11; i++) {
-        D_800E6280.unk_1BC[0xF].unk_14[i] = 0;
-        if (D_800E6280.unk_1BC[i].unk_0C.f.b1) {
+        D_800E6280.girls[0xF].event_counters[i] = 0;
+        if (D_800E6280.girls[i].flags.f.met) {
             x = (i / 6) * 0x82;
             y = (i % 6) * 0x10;
             set_kanji_string(x - 0x82, y - 0x48, 3, D_800B3538[i], 0);
@@ -67,17 +67,17 @@ void func_8013CCD0(void) {
             }
             SET_REC(idx, stars + 0x59, x - 0x22, y - 0x44);
             idx++;
-            if (D_800E6280.unk_1BC[i].unk_0A >= 0x3C) {
+            if (D_800E6280.girls[i].syoushin >= 0x3C) {
                 /* Store, then test the field (not the assignment): the value stays a ugen temporary and ugen
                  * forwards the stored byte with andi 0xff. T-19027 */
-                REC(idx).unk_06 = -(abs(D_800E6280.unk_1BC[i].unk_0A - 0x3C) / 10) * 2 + 8;
-                if (REC(idx).unk_06 == 0) {
-                    REC(idx).unk_06 = 1;
+                REC(idx).blink_period = -(abs(D_800E6280.girls[i].syoushin - 0x3C) / 10) * 2 + 8;
+                if (REC(idx).blink_period == 0) {
+                    REC(idx).blink_period = 1;
                 }
                 SET_REC(idx, 0x60, x - 0x12, y - 0x44);
                 idx++;
             }
-            D_800E6280.unk_1BC[0xF].unk_14[i] = stars + 1;
+            D_800E6280.girls[0xF].event_counters[i] = stars + 1;
         }
     }
     D_801230D4 = set_kanji_string(-0x80, -0x62, 4, "女の子からの評価", 0);
@@ -103,29 +103,29 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     } else {
         n = arg0;
     }
-    p = &D_800E6280.unk_1BC[n];
-    p->unk_0C.f.b3 = 1;
-    p->unk_0C.f.b6 = 1;
-    p->unk_0C.f.b2 = 1;
-    p->unk_0C.f.b7 = 1;
-    D_800E6280.unk_1A3C = 0x801B01B0;
-    D_800E6280.unk_1A4C = 0x801B01C0;
-    D_800E6280.unk_1A5C = 0;
-    D_800E6280.unk_1A6C = 0x801B0200;
+    p = &D_800E6280.girls[n];
+    p->flags.f.b3 = 1;
+    p->flags.f.b6 = 1;
+    p->flags.f.b2 = 1;
+    p->flags.f.b7 = 1;
+    D_800E6280.overlay_tpage_table = 0x801B01B0;
+    D_800E6280.overlay_frame_table = 0x801B01C0;
+    D_800E6280.overlay_sequence_table = 0;
+    D_800E6280.overlay_palette_a = 0x801B0200;
     q = (GameState *)((u8 *)p - 0x1BC);
     for (i = 0; i < 0x10; i++) {
-        load_palette(D_800E6280.unk_1A6C, (i + 0x10) & 0xFF, 1, 2, i);
+        load_palette(D_800E6280.overlay_palette_a, (i + 0x10) & 0xFF, 1, 2, i);
     }
     func_80048E78();
     for (i = 0; i < 8; i++) {
         func_80048F64(i + 0x60);
         REC(i + 0x60).unk_01 = 4;
-        REC(i + 0x60).unk_02 = 0x40;
-        REC(i + 0x60).unk_38 = 0x40000000;
-        REC(i + 0x60).unk_03 = 0x84;
-        REC(i + 0x60).unk_0C = sprite_frame_table;
-        REC(i + 0x60).unk_10 = D_800C9A14;
-        REC(i + 0x60).unk_34 = D_800C9730;
+        REC(i + 0x60).flags = 0x40;
+        REC(i + 0x60).quad_flags = 0x40000000;
+        REC(i + 0x60).draw_flags = 0x84;
+        REC(i + 0x60).frame_table = sprite_frame_table;
+        REC(i + 0x60).sequence_table = D_800C9A14;
+        REC(i + 0x60).tpage_table = D_800C9730;
         REC(i + 0x60).unk_14 = D_800C9A54;
         REC(i + 0x60).unk_04 = 8;
         REC(i + 0x60).unk_05 = 1;
@@ -141,12 +141,12 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     for (i = 8; i != 9; i++) {
         func_80048F64(i + 0x60);
         REC(i + 0x60).unk_01 = 4;
-        REC(i + 0x60).unk_02 = 0x40;
-        REC(i + 0x60).unk_38 = 0x01000000;
-        REC(i + 0x60).unk_03 = 0x84;
-        REC(i + 0x60).unk_0C = (u8 *)D_800E6280.unk_1A4C;
-        REC(i + 0x60).unk_10 = (u8 *)D_800E6280.unk_1A5C;
-        REC(i + 0x60).unk_34 = (u8 *)D_800E6280.unk_1A3C;
+        REC(i + 0x60).flags = 0x40;
+        REC(i + 0x60).quad_flags = 0x01000000;
+        REC(i + 0x60).draw_flags = 0x84;
+        REC(i + 0x60).frame_table = (u8 *)D_800E6280.overlay_frame_table;
+        REC(i + 0x60).sequence_table = (u8 *)D_800E6280.overlay_sequence_table;
+        REC(i + 0x60).tpage_table = (u8 *)D_800E6280.overlay_tpage_table;
         REC(i + 0x60).unk_14 = 0;
         REC(i + 0x60).unk_04 = 8;
         REC(i + 0x60).unk_05 = 0x80;
@@ -159,21 +159,21 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     }
     set_kanji_string(-0x20, -0x62, 5, "電話番号", 0);
     set_kanji_string(-0x8A, -0x4E, 4, "誕生日", 0);
-    strcpy(buf, D_800B32CC[q->unk_1BC[0].unk_10.date.month - 1]);
+    strcpy(buf, D_800B32CC[q->girls[0].birthday.date.month - 1]);
     strcat(buf, "月");
-    day = q->unk_1BC[0].unk_10.date.day;
+    day = q->girls[0].birthday.date.day;
     if (day >= 10) {
         strcat(buf, D_800B3288[(s32)day / 10]);
     } else {
         strcat(buf, D_800B3644);
     }
-    strcat(buf, D_800B3288[(s32)q->unk_1BC[0].unk_10.date.day % 10]);
+    strcat(buf, D_800B3288[(s32)q->girls[0].birthday.date.day % 10]);
     strcat(buf, "日");
     set_kanji_string(-0x58, -0x4E, 3, buf, 0);
     set_kanji_string(-0x8A, -0x1E, 4, "ＢＷＨ", 0);
-    if (D_800E6280.unk_042 >= 0x2DA) {
+    if (D_800E6280.day_count >= 0x2DA) {
         j = 2;
-    } else if (D_800E6280.unk_042 >= 0x16D) {
+    } else if (D_800E6280.day_count >= 0x16D) {
         j = 1;
     } else {
         j = 0;
@@ -183,22 +183,22 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     days = D_80146FD0;
     /* FAKE: remove the local pointer's volatile read view for this pair only;
      * the original shares one birthday word across both field extracts. T-24045 */
-    v = (*(GameState **)&q)->unk_1BC[0].unk_10.date.month - 1;
-    if (days.w[v] < (*(GameState **)&q)->unk_1BC[0].unk_10.date.day) {
+    v = (*(GameState **)&q)->girls[0].birthday.date.month - 1;
+    if (days.w[v] < (*(GameState **)&q)->girls[0].birthday.date.day) {
         v++;
     }
     set_kanji_string(-0x58, -0x3E, 3, (u8 *)0x801B22BC + (v % 12) * 10, 0);
     set_kanji_string(-0x8A, -0x2E, 4, "血液型", 0);
     if (arg0 == 0xB) {
-        set_kanji_string(-0x58, -0x2E, 3, (u8 *)0x801B229C + (((u32)(D_800E6280.unk_1BC[12].unk_10.w << 0x15)) >> 0x1E) * 8, 0);
+        set_kanji_string(-0x58, -0x2E, 3, (u8 *)0x801B229C + (((u32)(D_800E6280.girls[12].birthday.w << 0x15)) >> 0x1E) * 8, 0);
     } else {
-        set_kanji_string(-0x58, -0x2E, 3, (u8 *)0x801B229C + (((u32)(q->unk_1BC[0].unk_10.w << 0x15)) >> 0x1E) * 8, 0);
+        set_kanji_string(-0x58, -0x2E, 3, (u8 *)0x801B229C + (((u32)(q->girls[0].birthday.w << 0x15)) >> 0x1E) * 8, 0);
     }
     set_kanji_string(-0x8A, -0xE, 4, "クラブ", 0);
     if (arg0 == 0xB) {
         set_kanji_string(-0x58, -0xE, 3, "私設部", 0);
     } else {
-        set_kanji_string(-0x58, -0xE, 3, (u8 *)0x801B2200 + (q->unk_1BC[0].unk_0C.b[2] >> 4) * 12, 0);
+        set_kanji_string(-0x58, -0xE, 3, (u8 *)0x801B2200 + (q->girls[0].flags.b[2] >> 4) * 12, 0);
     }
     set_kanji_string(-0x8A, 2, 4, "備考", 0);
     notes = (u8 *)0x801B25F4 + ((arg0 * 6 + j * 2) << 5);
@@ -233,7 +233,7 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         set_kanji_string(-0x80, -0x52, 3, "デートスポット", 0);
         set_kanji_string(0, -0x52, 3, "次のページへ", 0);
         for (i = 0; i < 10; i++) {
-            if (g->unk_120[i] & 0x7F) {
+            if (g->progress_state[i] & 0x7F) {
                 avail[i] = 0x74;
             } else {
                 avail[i] = 0;
@@ -282,7 +282,7 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         set_kanji_string(-0x80, -0x52, 3, "デートスポット", 0);
         set_kanji_string(0, -0x52, 3, "前のページへ", 0);
         for (i = 0; i < 6; i++) {
-            if (g->unk_120[i + 10] & 0x7F) {
+            if (g->progress_state[i + 10] & 0x7F) {
                 if (i < 3) {
                     avail[i] = 0x74;
                 } else if (i == 3) {
@@ -290,11 +290,11 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                      * moves the register of the 0x74 constant. T-25133 */
                     if (arg2 == 12 || arg2 == 2 || arg2 == 0 || arg2 == 14) {
                     } else {
-                        if (arg2 == g->unk_03F) {
+                        if (arg2 == g->month) {
                             if (FLAGS_F64(g)->b14 == 1) {
                                 avail[i] = 0x74;
                             }
-                        } else if (g->unk_03F % 3U == 2) {
+                        } else if (g->month % 3U == 2) {
                             if (FLAGS_F64(g)->b13 == 1) {
                                 avail[i] = 0x74;
                             }
@@ -303,11 +303,11 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                         }
                     }
                 } else if (i == 4) {
-                    if (arg2 == g->unk_03F) {
+                    if (arg2 == g->month) {
                         if (FLAGS_F64(g)->b14 == 1) {
                             avail[i] = 0x74;
                         }
-                    } else if (g->unk_03F % 3U == 2) {
+                    } else if (g->month % 3U == 2) {
                         if (FLAGS_F64(g)->b13 == 1) {
                             avail[i] = 0x74;
                         }
@@ -315,11 +315,11 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                         avail[i] = 0x74;
                     }
                 } else if (i == 5) {
-                    if (arg2 == g->unk_03F) {
+                    if (arg2 == g->month) {
                         if (FLAGS_F64(g)->b14 == 1) {
                             avail[i] = 0x74;
                         }
-                    } else if (g->unk_03F % 3U == 2) {
+                    } else if (g->month % 3U == 2) {
                         if (FLAGS_F64(g)->b13 == 1) {
                             avail[i] = 0x74;
                         }
@@ -343,12 +343,12 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                     }
                     break;
                 case 3:
-                    if (FLAGS_F64(&D_800E6280)->b13 == 1 && g->unk_03F == 2 && arg2 == 3 && g->unk_03E == 0x60) {
+                    if (FLAGS_F64(&D_800E6280)->b13 == 1 && g->month == 2 && arg2 == 3 && g->year == 0x60) {
                         avail[i] = 0x74;
                     }
                     break;
                 case 4:
-                    if (FLAGS_F64(&D_800E6280)->b13 == 1 && arg1 == 0x5F && arg2 == 6 && g->unk_03F == 5) {
+                    if (FLAGS_F64(&D_800E6280)->b13 == 1 && arg1 == 0x5F && arg2 == 6 && g->month == 5) {
                         avail[i] = 0x74;
                     }
                     break;
@@ -402,18 +402,18 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         }
     }
     menu_set(0, 0xB, x, y, avail, step);
-    D_800E6280.unk_1093 = 0xA;
+    D_800E6280.menu_cursor_0 = 0xA;
     func_80048F64(0x60);
     REC(96).unk_01 = 4;
-    REC(96).unk_02 = 0x40;
-    REC(96).unk_38 = 0x40000000;
-    REC(96).unk_03 = 0x84;
-    REC(96).unk_0C = sprite_frame_table;
-    REC(96).unk_10 = D_800C9A14;
-    REC(96).unk_34 = D_800C9730;
+    REC(96).flags = 0x40;
+    REC(96).quad_flags = 0x40000000;
+    REC(96).draw_flags = 0x84;
+    REC(96).frame_table = sprite_frame_table;
+    REC(96).sequence_table = D_800C9A14;
+    REC(96).tpage_table = D_800C9730;
     REC(96).unk_04 = 8;
     REC(96).unk_05 = 1;
     REC(96).unk_18 = 0x40;
-    REC(96).unk_26 = -0x10;
-    REC(96).unk_2A = -0x13;
+    REC(96).x = -0x10;
+    REC(96).y = -0x13;
 }

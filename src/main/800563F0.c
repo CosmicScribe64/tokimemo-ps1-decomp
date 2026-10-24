@@ -261,14 +261,14 @@ s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
     }
     func_8009CCF4(&disp);
     func_8009CC04(&draw);
-    start = D_800E6280.unk_10F4;
+    start = D_800E6280.timer_ticks;
     for (;;) {
         func_800868BC(D_80125C58->dec.vlcbuf[D_80125C58->dec.vlcid], (D_800B5900 & 1) + 2);
         func_80086944(D_80125C58->dec.imgbuf, D_80125C58->dec.slice.w * D_80125C58->dec.slice.h / 2);
         strNextVlc(&D_80125C58->dec);
         if (!(D_800B5900 & 1)) {
             func_800422C8();
-            func_8005715C((D_800E6280.unk_10F4 - start) / 6);
+            func_8005715C((D_800E6280.timer_ticks - start) / 6);
             func_800476C0();
             disp_string();
             func_8009AC20();
@@ -293,13 +293,13 @@ s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
         if (!(D_800B58F0 < arg1 - 3 && frames < arg1 - 0xF)) {
             break;
         }
-        D_800E6280.unk_10F8 += 1;
+        D_800E6280.frame_count += 1;
         frames++;
         if (D_80125C58->endflag == 1) {
             break;
         }
         func_80042A00();
-        if (D_800E6280.unk_F88 & 0x860) {
+        if (D_800E6280.pad_pressed & 0x860) {
             break;
         }
     }

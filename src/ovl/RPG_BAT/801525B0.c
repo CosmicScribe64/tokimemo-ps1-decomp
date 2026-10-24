@@ -9,8 +9,8 @@ void func_801525B0(void) {
     s32 sp28; /* FAKE (T-17100): dead copy of the column; without it the 0x28 spill of var_a3 and the frame change */
     s32 var_a3;
 
-    D_800E6280.unk_03A = 0;
-    D_8015EDBC = func_8013E934(0xB1, 0xB3, (s32) D_800E6280.unk_0D4) - 1;
+    D_800E6280.screen_brightness = 0;
+    D_8015EDBC = func_8013E934(0xB1, 0xB3, (s32) D_800E6280.player_family_name) - 1;
     if (D_8015EB9C != 0xE) {
         sp28 = 0xD3;
         var_a3 = 0xD3;
@@ -66,15 +66,15 @@ void func_801528DC(void) {
     s32 i;
     u8 *p;
 
-    p = (u8 *)&D_800E6280.unk_110C;
-    if (D_800E6280.unk_1100 == 0) {
-        D_800E6280.unk_1100 += 1;
+    p = (u8 *)&D_800E6280.stage_scratch;
+    if (D_800E6280.stage_timer == 0) {
+        D_800E6280.stage_timer += 1;
         *p = 0x80;
     }
     i = 0;
     do {
-        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_07 = *p;
-        D_800E6280.unk_03A = *p;
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].brightness = *p;
+        D_800E6280.screen_brightness = *p;
         if (D_8015EB98 == 0x20000 && *p >= 0x61) {
             D_80120E93 = 0x60;
         }
@@ -83,7 +83,7 @@ void func_801528DC(void) {
     *p -= 2;
     if (*p == 0) {
         func_8004E58C();
-        D_800E6280.unk_03A = 0x80;
+        D_800E6280.screen_brightness = 0x80;
         func_80048EB8(0);
         func_8006BC28(0);
         back_clear_switch(1);
@@ -93,7 +93,7 @@ void func_801528DC(void) {
 
 void func_801529B4(void) {
     func_8014B79C();
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_8004500C(1, 0x200);
         switch (D_8015EB98) {
@@ -181,19 +181,19 @@ void func_801529B4(void) {
         func_8004284C();
         break;
     case 1:
-        func_8013E97C(0x30, 0x160 - D_800E6280.unk_1104.u, 0x58);
-        func_8013E97C(0x1D, 0x168 - D_800E6280.unk_1104.u, 0x88);
-        func_8013E97C(0x3B, (D_800E6280.unk_1104.u * 2) - 0x58, 0x60);
+        func_8013E97C(0x30, 0x160 - D_800E6280.step_timer.u, 0x58);
+        func_8013E97C(0x1D, 0x168 - D_800E6280.step_timer.u, 0x88);
+        func_8013E97C(0x3B, (D_800E6280.step_timer.u * 2) - 0x58, 0x60);
         if (D_8015EB98 == 0x100000) {
-            func_8013E97C(0x3B, (D_800E6280.unk_1104.u * 2) - 0x28, 0x68);
-            func_8013E97C(0x3C, (D_800E6280.unk_1104.u * 2) - 0x60, 0x58);
-            func_8013E97C(0x3D, (D_800E6280.unk_1104.u * 2) - 0x68, 0x88);
+            func_8013E97C(0x3B, (D_800E6280.step_timer.u * 2) - 0x28, 0x68);
+            func_8013E97C(0x3C, (D_800E6280.step_timer.u * 2) - 0x60, 0x58);
+            func_8013E97C(0x3D, (D_800E6280.step_timer.u * 2) - 0x68, 0x88);
         }
         if (D_8015EB98 == 0x08000000) {
-            func_8013E97C(0x3B, (D_800E6280.unk_1104.u * 2) - 0x58, 0x70);
+            func_8013E97C(0x3B, (D_800E6280.step_timer.u * 2) - 0x58, 0x70);
         }
-        D_800E6280.unk_1104.u += 4;
-        if (D_800E6280.unk_1104.u >= 0x51) {
+        D_800E6280.step_timer.u += 4;
+        if (D_800E6280.step_timer.u >= 0x51) {
             func_8013E97C(0x30, 0, 0);
             func_8013E7C0(0x30, 0, 1, 1);
             func_8013E97C(0x1D, 0, 0);
@@ -204,15 +204,15 @@ void func_801529B4(void) {
         }
         break;
     case 2:
-        D_800E6280.unk_1104.u += 1;
-        if (D_800E6280.unk_1104.u >= 0x3D) {
+        D_800E6280.step_timer.u += 1;
+        if (D_800E6280.step_timer.u >= 0x3D) {
             func_80042808();
         }
         break;
     }
 }
 
-/* FAKE: x and y are unused locals that place color at sp+0x3C in the 0x48 frame; *(u8 *)&D_800E6280.unk_110A bypasses cvt_pass.py
+/* FAKE: x and y are unused locals that place color at sp+0x3C in the 0x48 frame; *(u8 *)&D_800E6280.step bypasses cvt_pass.py
  * widening so the four loads of unk_110A stay in ugen temporaries ($t7..$t9); in case 3, the *(s32 *)& reads of D_8015EC38/3C/40/44/4C
  * keep D_8015EC38 and D_8015EC3C promoted to $a1/$a2 across the function and allocate $v0, $v1, $a3 to D_8015EC44, D_8015EC40,
  * D_8015EC4C so uopt flushes the six stores in the original order. T-24124 */
@@ -250,9 +250,9 @@ void func_80152F30(void) {
         break;
     }
     func_8014B79C();
-    switch (*(u8 *)&D_800E6280.unk_110A) {
+    switch (*(u8 *)&D_800E6280.step) {
     case 0:
-        D_800E6280.unk_F5F = 0xE;
+        D_800E6280.current_girl = 0xE;
         func_80046290(0x1C0000A8, 0x0F0000B7, 0xE);
         func_80044750(0x300);
         func_8004284C();
@@ -287,10 +287,10 @@ void func_80152F30(void) {
         func_8004284C();
         break;
     case 4:
-        func_8013E97C(0x30, 0x160 - D_800E6280.unk_1104.u, 0x58);
-        func_8013E97C(0x1D, 0x168 - D_800E6280.unk_1104.u, 0x88);
-        D_800E6280.unk_1104.u += 4;
-        if (D_800E6280.unk_1104.u >= 0x51U) {
+        func_8013E97C(0x30, 0x160 - D_800E6280.step_timer.u, 0x58);
+        func_8013E97C(0x1D, 0x168 - D_800E6280.step_timer.u, 0x88);
+        D_800E6280.step_timer.u += 4;
+        if (D_800E6280.step_timer.u >= 0x51U) {
             func_8013E97C(0x30, 0, 0);
             func_8013E7C0(0x30, 0, 1, 1);
             func_8013E97C(0x1D, 0, 0);
@@ -302,45 +302,45 @@ void func_80152F30(void) {
         }
         break;
     case 5:
-        func_80049A40(-0x5C - (D_800E6280.unk_1104.u >> 1), -0x78, (D_800E6280.unk_1104.u >> 1) * 2, 0xA8, 3, color.word, 0x81);
+        func_80049A40(-0x5C - (D_800E6280.step_timer.u >> 1), -0x78, (D_800E6280.step_timer.u >> 1) * 2, 0xA8, 3, color.word, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
-        D_800E6280.unk_1104.u += 1;
-        if (D_800E6280.unk_1104.u >= 0x41U) {
+        D_800E6280.step_timer.u += 1;
+        if (D_800E6280.step_timer.u >= 0x41U) {
             func_8004284C();
         }
         break;
     case 6:
         func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
-        func_8013E97C(0x3B, 0x48, D_800E6280.unk_1104.u - 0x80);
+        func_8013E97C(0x3B, 0x48, D_800E6280.step_timer.u - 0x80);
         func_8013E810(0x3B, 8, 1, 1);
-        D_800E6280.unk_1104.u += 1;
-        if (D_800E6280.unk_1104.u >= 0xE9U) {
+        D_800E6280.step_timer.u += 1;
+        if (D_800E6280.step_timer.u >= 0xE9U) {
             k_disp_switch(D_8015EDE8, 1);
             func_8004284C();
         }
         break;
     case 7:
         func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
-        D_800E6280.unk_1104.u += 1;
+        D_800E6280.step_timer.u += 1;
         dtd_on_tpage(0, 0, 3, 1, 0);
-        if (D_800E6280.unk_1104.u >= 0x79U) {
+        if (D_800E6280.step_timer.u >= 0x79U) {
             func_8004284C();
         }
         break;
     case 8:
-        func_80049A40(D_800E6280.unk_1104.u - 0x7C, -0x78, 0x40 - (D_800E6280.unk_1104.u * 2), 0xA8, 3, color.word, 0x81);
+        func_80049A40(D_800E6280.step_timer.u - 0x7C, -0x78, 0x40 - (D_800E6280.step_timer.u * 2), 0xA8, 3, color.word, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
-        D_800E6280.unk_1104.u += 1;
-        if (D_800E6280.unk_1104.u >= 0x21U) {
+        D_800E6280.step_timer.u += 1;
+        if (D_800E6280.step_timer.u >= 0x21U) {
             func_8004284C();
         }
         break;
     case 9:
         D_8015EC38 = 0x40;
-        D_8015EC3C = D_800E6280.unk_1104.u - 0x40;
-        D_800E6280.unk_1104.u += 1;
-        if (D_800E6280.unk_1104.u >= 0x59U) {
+        D_8015EC3C = D_800E6280.step_timer.u - 0x40;
+        D_800E6280.step_timer.u += 1;
+        if (D_800E6280.step_timer.u >= 0x59U) {
             func_8004284C();
         }
         break;
@@ -370,17 +370,17 @@ void func_80152F30(void) {
         func_80042808();
         break;
     }
-    if (*(u8 *)&D_800E6280.unk_110A >= 9) {
+    if (*(u8 *)&D_800E6280.step >= 9) {
         func_8015785C();
     }
-    if ((*(u8 *)&D_800E6280.unk_110A >= 5) && (*(u8 *)&D_800E6280.unk_110A < 8)) {
+    if ((*(u8 *)&D_800E6280.step >= 5) && (*(u8 *)&D_800E6280.step < 8)) {
         func_8013F15C(0x505, 0x6E, 7);
     }
 }
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801535E4(void) {
-    if (D_800E6280.unk_F88 & 0x40) {
+    if (D_800E6280.pad_pressed & 0x40) {
         func_80044750(0x74);
         if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
             D_8015EE44.unk_08 = D_8015E744 + 1;
@@ -425,7 +425,7 @@ s32 func_80153784(void) {
     s32 i;
 
     /* FAKE: x/y and w/h of each RECT share a source line; as1 then stores y, x, h, w as the original does. T-17112 */
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         r0.x = 0x240; r0.y = 0x100;
         r0.w = 0x40; r0.h = 0x28;
@@ -498,7 +498,7 @@ void func_80153A60(void) {
     i = 0;
     p = &D_8015EC74;
     do {
-        ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_07 = *p;
+        ((DisplayActor44 *)D_8011ECD0)[i + 64].brightness = *p;
         *(s8 *)&D_800E6280.unk_3A = *p;
         if (D_8015EB98 == 0x20000 && (dead = *p) >= 0x61) {
             D_80120E93 = 0x60;

@@ -43,7 +43,7 @@ void func_80152080(void) {
             strcpy(D_8015E828, "　　　　クラッシュ・クロー　　　　");
             break;
         }
-        func_8014D11C(D_8015E850, D_800E6280.unk_0D4, "は", D_8015EBB0, "のダメージを受けた");
+        func_8014D11C(D_8015E850, D_800E6280.player_family_name, "は", D_8015EBB0, "のダメージを受けた");
         func_8014B738(D_8015E8F0, 2, 0x3C);
         func_8014EF3C();
     default:

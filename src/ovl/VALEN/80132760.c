@@ -21,7 +21,7 @@ void func_80132760(void) {
     FnTbl56 tbl;
 
     tbl = D_8013454C;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -31,7 +31,7 @@ void func_801327E8(void) {
 }
 
 void func_80132810(void) {
-    D_800E6280.unk_F5F = 0;
+    D_800E6280.current_girl = 0;
     func_8004284C();
 }
 
@@ -55,53 +55,53 @@ void func_80132834(void) {
     D_8013453C = 0;
     D_80134544 = 0;
     count = 0;
-    if (D_800E6280.unk_1BC[9].unk_0C.f.b1 == 0 &&
-        D_800E6280.unk_1BC[9].unk_02 >= 20) {
+    if (D_800E6280.girls[9].flags.f.met == 0 &&
+        D_800E6280.girls[9].tokimeki >= 20) {
         D_80134544 = 1;
-        D_800E6280.unk_1BC[9].unk_06 = 50;
+        D_800E6280.girls[9].affection = 50;
     }
     D_80134540[0] = D_80134540[1] = D_80134540[2] = 0xFF;
     rank_scores[0] = rank_scores[1] = rank_scores[2] = 0;
     for (i = 0; i < 11; i++) {
-        if (state->unk_1BC[i].unk_0C.f.b1 != 0 &&
+        if (state->girls[i].flags.f.met != 0 &&
             get_h_tokimeki(i) >= 0x46U) {
-            if (rank_scores[0] < state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02) {
+            if (rank_scores[0] < state->girls[i].affection + state->girls[i].tokimeki) {
                 rank_scores[2] = rank_scores[1];
                 rank_scores[1] = rank_scores[0];
-                rank_scores[0] = state->unk_1BC[i].unk_02 + state->unk_1BC[i].unk_06;
+                rank_scores[0] = state->girls[i].tokimeki + state->girls[i].affection;
                 D_80134540[2] = D_80134540[1];
                 D_80134540[1] = D_80134540[0];
                 D_80134540[0] = i;
-            } else if (rank_scores[1] < state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02) {
+            } else if (rank_scores[1] < state->girls[i].affection + state->girls[i].tokimeki) {
                 rank_scores[2] = rank_scores[1];
-                rank_scores[1] = state->unk_1BC[i].unk_02 + state->unk_1BC[i].unk_06;
+                rank_scores[1] = state->girls[i].tokimeki + state->girls[i].affection;
                 D_80134540[2] = D_80134540[1];
                 D_80134540[1] = i;
-            } else if (rank_scores[2] < state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02) {
-                rank_scores[2] = state->unk_1BC[i].unk_06 + state->unk_1BC[i].unk_02;
+            } else if (rank_scores[2] < state->girls[i].affection + state->girls[i].tokimeki) {
+                rank_scores[2] = state->girls[i].affection + state->girls[i].tokimeki;
                 D_80134540[2] = i;
             }
         }
     }
     for (i = 0; i < 11; i++) {
-        if ((D_800E6280.unk_1BC[i].unk_0C.f.b1 != 0 ||
+        if ((D_800E6280.girls[i].flags.f.met != 0 ||
              (i == 9 && D_80134544 == 1)) &&
             (get_h_yuukou(i) >= 0x32U || (D_80134544 == 1 && i == 9))) {
             candidates[count] = i;
             count += 1;
             D_8013453C += 1;
-            D_800E6280.unk_1BC[i].unk_0C.f.b8 = 1;
+            D_800E6280.girls[i].flags.f.b8 = 1;
         }
     }
     if (D_8013453C > 0) {
-        r = (u32)state->unk_10F8 % (u32)D_8013453C;
+        r = (u32)state->frame_count % (u32)D_8013453C;
         for (i = 0; i < D_8013453C; i++) {
             D_80134524[i] = candidates[(i + r) % D_8013453C];
         }
         func_8013387C();
     }
     for (i = 0; i < D_8013453C; i++) {
-        if (D_80134524[i] == 0 && D_800E6280.unk_1BC[0].unk_02 >= 70) {
+        if (D_80134524[i] == 0 && D_800E6280.girls[0].tokimeki >= 70) {
             D_80134524[i] = D_80134524[D_8013453C - 1];
             D_80134524[D_8013453C - 1] = 0;
         } else if (D_80134524[i] == 0 && D_80134544 != 0) {
@@ -134,26 +134,26 @@ s32 func_80132D0C(void) {
         func_80042808();
         return 0;
     }
-    state->unk_F5F = D_80134524[D_80134520];
-    func_800847B8(state->unk_F5F);
-    D_80134498 = get_h_tokimeki(state->unk_F5F) >= 0x46U;
-    if (state->unk_F5F == 0) {
-        D_80134498 = state->unk_1BC[0].unk_02 >= 0x46;
+    state->current_girl = D_80134524[D_80134520];
+    func_800847B8(state->current_girl);
+    D_80134498 = get_h_tokimeki(state->current_girl) >= 0x46U;
+    if (state->current_girl == 0) {
+        D_80134498 = state->girls[0].tokimeki >= 0x46;
     }
-    if (state->unk_F5F == 9) {
+    if (state->current_girl == 9) {
         mode = D_80134544;
         if (mode == 1) {
             D_80134498 = 3;
         }
     }
     mode = D_80134544;
-    if ((state->unk_F5F == 0) && (mode == 1) && (state->unk_1BC[0].unk_02 >= 0x46)) {
+    if ((state->current_girl == 0) && (mode == 1) && (state->girls[0].tokimeki >= 0x46)) {
         D_80134498 = 3;
     }
-    if ((state->unk_F5F == 0) && (mode == 1) && (state->unk_1BC[0].unk_02 < 0x46)) {
+    if ((state->current_girl == 0) && (mode == 1) && (state->girls[0].tokimeki < 0x46)) {
         D_80134498 = 5;
     }
-    switch (state->unk_F5F) {
+    switch (state->current_girl) {
     case 0:
         D_8013448C = D_801343F8;
         D_80134490 = D_8013442C;
@@ -221,16 +221,16 @@ void func_80133088(void) {
     /* FAKE: dead entry store (every arm below rewrites the global); it gives the promoted
      * global $v0 and the random word $v1 (without it they take $v1 and $a0), as the entry
      * stores of the GYOZI twin func_801393C8 do (T-24130). T-25117 */
-    D_80134548 = state->unk_10F8 & 7;
-    if ((state->unk_10F8 & 7) == 0) {
+    D_80134548 = state->frame_count & 7;
+    if ((state->frame_count & 7) == 0) {
         D_80134548 = 3;
-    } else if ((state->unk_10F8 & 7) < 4U) {
+    } else if ((state->frame_count & 7) < 4U) {
         D_80134548 = 0;
     } else {
         D_80134548 = 1;
     }
-    if (state->unk_F5F == 0) {
-        D_80134548 = state->unk_10F8 & 1;
+    if (state->current_girl == 0) {
+        D_80134548 = state->frame_count & 1;
     }
     switch (D_80134548) {
     case 0:
@@ -250,7 +250,7 @@ void func_80133088(void) {
         id = 0x4084;
         break;
     }
-    if (state->unk_F5F != 0) {
+    if (state->current_girl != 0) {
         if (D_80134520 + 1 == D_8013453C) {
             strcpy(D_800CA1DC, "校門前");
             id = 0x4032;
@@ -262,23 +262,23 @@ void func_80133088(void) {
     }
     /* FAKE: non-volatile view of D_80134544 (volatile in VALEN.h for func_80132D0C, T-24903)
      * so as1 may hoist its lui above the affinity test, as the original does. T-25117 */
-    if ((D_80134520 + 1 == D_8013453C) && (state->unk_F5F == 0) &&
-        ((state->unk_1BC[0].unk_02 >= 0x46) || (*(u8 *)&D_80134544 != 0))) {
+    if ((D_80134520 + 1 == D_8013453C) && (state->current_girl == 0) &&
+        ((state->girls[0].tokimeki >= 0x46) || (*(u8 *)&D_80134544 != 0))) {
         strcpy(D_800CA1DC, "自宅前");
         id = 0x414C;
     }
-    if ((state->unk_F5F == 9) && (D_80134544 == 1)) {
+    if ((state->current_girl == 9) && (D_80134544 == 1)) {
         strcpy(D_800CA1DC, "教室");
         id = 0x4055;
     }
-    if (state->unk_F5F == 0) {
-        if (state->unk_1BC[0].unk_02 >= 0x46) {
+    if (state->current_girl == 0) {
+        if (state->girls[0].tokimeki >= 0x46) {
             D_80122D48 = 1;
         } else {
             D_80122D48 = 2;
         }
     } else {
-        if (get_h_tokimeki(state->unk_F5F) >= 0x46U) {
+        if (get_h_tokimeki(state->current_girl) >= 0x46U) {
             D_80122D48 = 1;
         } else {
             D_80122D48 = 2;
@@ -304,19 +304,19 @@ void func_80133088(void) {
         func_80085B3C(6, 2);
         break;
     }
-    if ((state->unk_F5F == 9) && (D_80134544 == 1)) {
-        state->unk_F5E -= 1;
+    if ((state->current_girl == 9) && (D_80134544 == 1)) {
+        state->event_log_count -= 1;
         D_80122D48 = 1;
         func_80085B3C(6, 3);
     }
     bg_read_sub2(id);
-    if (get_h_tokimeki(state->unk_F5F) >= 0x46U) {
+    if (get_h_tokimeki(state->current_girl) >= 0x46U) {
         func_80083440(0);
     } else {
         func_80083440(1);
     }
-    if (state->unk_F5F == 0) {
-        if (state->unk_1BC[0].unk_02 >= 0x46) {
+    if (state->current_girl == 0) {
+        if (state->girls[0].tokimeki >= 0x46) {
             func_80083440(0);
         } else {
             func_80083440(1);
@@ -339,8 +339,8 @@ void func_80133510(void) {
 }
 
 void func_80133568(void) {
-    if ((D_80134544 == 1) && (D_800E6280.unk_F5F == 9)) {
-        D_800E6280.unk_110A += 6;
+    if ((D_80134544 == 1) && (D_800E6280.current_girl == 9)) {
+        D_800E6280.step += 6;
         return;
     }
     func_8004284C();
@@ -369,7 +369,7 @@ s32 func_80133670(void) {
     GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
 
     g = &D_800E6280;
-    if ((D_800E6280.unk_040 == ((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B)) && (D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF)) && (get_h_tokimeki(g->unk_F5F) >= 0x46U) && ((D_80134540[0] == g->unk_F5F) || (D_80134540[1] == g->unk_F5F) || (D_80134540[2] == g->unk_F5F)) && (g->unk_F5F == 9)) {
+    if ((D_800E6280.day == ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B)) && (D_800E6280.month == (D_800E6280.player_birthday & 0xF)) && (get_h_tokimeki(g->current_girl) >= 0x46U) && ((D_80134540[0] == g->current_girl) || (D_80134540[1] == g->current_girl) || (D_80134540[2] == g->current_girl)) && (g->current_girl == 9)) {
         func_8004284C();
         return 0;
     }
@@ -381,13 +381,13 @@ s32 func_80133728(void) {
     GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
 
     g = &D_800E6280;
-    if ((D_800E6280.unk_040 == ((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B)) && (D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF)) && (((get_h_tokimeki(g->unk_F5F) >= 0x46U) && (g->unk_F5F != 0)) || ((D_800E6280.unk_1BC[0].unk_02 >= 0x46) && (g->unk_F5F == 0))) && ((D_80134540[0] == g->unk_F5F) || (D_80134540[1] == g->unk_F5F) || (D_80134540[2] == g->unk_F5F))) {
-        D_800E6280.unk_721 = D_800E6280.unk_1109;
-        D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
+    if ((D_800E6280.day == ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B)) && (D_800E6280.month == (D_800E6280.player_birthday & 0xF)) && (((get_h_tokimeki(g->current_girl) >= 0x46U) && (g->current_girl != 0)) || ((D_800E6280.girls[0].tokimeki >= 0x46) && (g->current_girl == 0))) && ((D_80134540[0] == g->current_girl) || (D_80134540[1] == g->current_girl) || (D_80134540[2] == g->current_girl))) {
+        D_800E6280.saved_stage = D_800E6280.stage;
+        D_800E6280.saved_step = D_800E6280.step + 1;
         func_80042908(3);
         return 0;
     }
-    if (((get_h_tokimeki(g->unk_F5F) >= 0x46U) && (g->unk_F5F != 0)) || ((D_800E6280.unk_1BC[0].unk_02 >= 0x46) && (g->unk_F5F == 0))) {
+    if (((get_h_tokimeki(g->current_girl) >= 0x46U) && (g->current_girl != 0)) || ((D_800E6280.girls[0].tokimeki >= 0x46) && (g->current_girl == 0))) {
         func_80132348();
         return;
     }
@@ -401,7 +401,7 @@ void func_8013387C(void) {
     s16 k;
     s16 t;
 
-    srand(D_800E6280.unk_10F8);
+    srand(D_800E6280.frame_count);
     n = rand() % 256 + 10;
     for (i = 0; i < n; i++) {
         j = rand() % D_8013453C;

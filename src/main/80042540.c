@@ -5,12 +5,12 @@
  * s8 in GameState), and a plain unk_1108 switch keeps a copy in v1 (the
  * switch-selector idiom of T-10860). */
 void func_80042540(void) {
-    switch (*(u8 *)&D_800E6280.unk_1108) {
+    switch (*(u8 *)&D_800E6280.mode) {
     case 0x0:
         func_8005A06C();
         break;
     case 0x1:
-        if (*(u8 *)&D_800E6280.unk_111A == 0) {
+        if (*(u8 *)&D_800E6280.boot_hold == 0) {
             main_state_set(0);
         }
         break;
@@ -123,19 +123,19 @@ void func_80042540(void) {
         func_80046500();
         break;
     }
-    D_800E6280.unk_10FC += 1;
+    D_800E6280.mode_timer += 1;
 }
 
 void func_80042798(void) {
-    D_800E6280.unk_1108 += 1;
-    D_800E6280.unk_1109 = 0;
-    D_800E6280.unk_110A = 0;
-    D_800E6280.unk_10FC = 0;
-    D_800E6280.unk_1100 = 0;
-    D_800E6280.unk_1104.w = 0;
-    D_800E6280.unk_110B = 0;
-    D_800E6280.unk_110C = 0;
-    D_800E6280.unk_110D = 0;
+    D_800E6280.mode += 1;
+    D_800E6280.stage = 0;
+    D_800E6280.step = 0;
+    D_800E6280.mode_timer = 0;
+    D_800E6280.stage_timer = 0;
+    D_800E6280.step_timer.w = 0;
+    D_800E6280.mode_scratch = 0;
+    D_800E6280.stage_scratch = 0;
+    D_800E6280.substep = 0;
     func_80042960();
 }
 
@@ -147,14 +147,14 @@ s32 func_80042808(void) {
     s32 *p;
     s32 z;
 
-    D_800E6280.unk_1109 += 1;
-    D_800E6280.unk_110A = 0;
-    D_800E6280.unk_1100 = 0;
-    D_800E6280.unk_1104.w = 0;
-    D_800E6280.unk_110C = 0;
+    D_800E6280.stage += 1;
+    D_800E6280.step = 0;
+    D_800E6280.stage_timer = 0;
+    D_800E6280.step_timer.w = 0;
+    D_800E6280.stage_scratch = 0;
     z = 0;
     p = &z;
-    D_800E6280.unk_110D = *p;
+    D_800E6280.substep = *p;
 }
 
 /* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
@@ -165,27 +165,27 @@ s32 func_8004284C(void) {
     s32 *p;
     s32 z;
 
-    D_800E6280.unk_110A += 1;
-    D_800E6280.unk_1104.w = 0;
+    D_800E6280.step += 1;
+    D_800E6280.step_timer.w = 0;
     z = 0;
     p = &z;
-    D_800E6280.unk_110D = *p;
+    D_800E6280.substep = *p;
 }
 
 void main_state_set(s32 arg0) {
     u32 t;
 
-    D_800E6280.unk_1108 = arg0;
-    D_800E6280.unk_1109 = 0;
-    D_800E6280.unk_110A = 0;
-    D_800E6280.unk_10FC = 0;
-    D_800E6280.unk_1100 = 0;
-    D_800E6280.unk_1104.w = 0;
-    D_800E6280.unk_110B = 0;
-    D_800E6280.unk_110C = 0;
-    D_800E6280.unk_110D = 0;
+    D_800E6280.mode = arg0;
+    D_800E6280.stage = 0;
+    D_800E6280.step = 0;
+    D_800E6280.mode_timer = 0;
+    D_800E6280.stage_timer = 0;
+    D_800E6280.step_timer.w = 0;
+    D_800E6280.mode_scratch = 0;
+    D_800E6280.stage_scratch = 0;
+    D_800E6280.substep = 0;
     func_80042960();
-    t = D_800E6280.unk_110E;
+    t = D_800E6280.overlay_target_mode;
     D_800CA2AC = 0;
     if (t != 0x5E) {
         if (t != 0x50) {
@@ -202,14 +202,14 @@ s32 func_80042908(s32 arg0) {
     s32 *p;
     s32 z;
 
-    D_800E6280.unk_1109 = arg0;
-    D_800E6280.unk_110A = 0;
-    D_800E6280.unk_1100 = 0;
-    D_800E6280.unk_1104.w = 0;
-    D_800E6280.unk_110C = 0;
+    D_800E6280.stage = arg0;
+    D_800E6280.step = 0;
+    D_800E6280.stage_timer = 0;
+    D_800E6280.step_timer.w = 0;
+    D_800E6280.stage_scratch = 0;
     z = 0;
     p = &z;
-    D_800E6280.unk_110D = *p;
+    D_800E6280.substep = *p;
 }
 
 /* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
@@ -220,15 +220,15 @@ s32 func_80042940(s32 arg0) {
     s32 *p;
     s32 z;
 
-    D_800E6280.unk_110A = arg0;
-    D_800E6280.unk_1104.w = 0;
+    D_800E6280.step = arg0;
+    D_800E6280.step_timer.w = 0;
     z = 0;
     p = &z;
-    D_800E6280.unk_110D = *p;
+    D_800E6280.substep = *p;
 }
 
 s32 func_80042960(void) {
-    switch (*(u8 *)&D_800E6280.unk_1108) {
+    switch (*(u8 *)&D_800E6280.mode) {
     case 0x11:
     case 0x13:
     case 0x14:
@@ -277,8 +277,8 @@ s32 func_80042960(void) {
     case 0xC2:
     case 0xC3:
     case 0xC4:
-        D_800E6280.unk_110E = D_800E6280.unk_1108;
-        D_800E6280.unk_1108 = 2;
+        D_800E6280.overlay_target_mode = D_800E6280.mode;
+        D_800E6280.mode = 2;
         return;
     }
 }

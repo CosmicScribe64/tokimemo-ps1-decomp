@@ -9,7 +9,7 @@ void func_80135720(void) {
 }
 
 s32 func_80135744(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_8013587C();
         break;
@@ -51,16 +51,16 @@ s32 arg6;
 }
 
 s32 func_8013587C(void) {
-    switch (D_800E6280.unk_110D) {
+    switch (D_800E6280.substep) {
     case 0:
         dec_bg_reset();
         cd_read_sectors(8, 0x80162000, 0xB378);
         func_80135720();
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.unk_110D += 1;
+            D_800E6280.substep += 1;
         }
         break;
     case 2:
@@ -330,22 +330,22 @@ void func_801368D8(u8 *arg0, u8 arg1) {
     }
     v = *arg0;
     D_8015F3F8 = v;
-    if (D_800E6280.unk_F88 & 0x2020) {
+    if (D_800E6280.pad_pressed & 0x2020) {
         *arg0 = ((u32)v + arg1 + 1) % (u32)arg1;
     }
-    if (D_800E6280.unk_F88 & 0x8000) {
+    if (D_800E6280.pad_pressed & 0x8000) {
         *arg0 = (*arg0 + arg1 - 1U) % (u32)arg1;
     }
 }
 
 void func_80136988(void) {
-    if (D_800E6280.unk_F88 & 0x5000) {
+    if (D_800E6280.pad_pressed & 0x5000) {
         func_801335A0(0, 0x500);
     }
-    if (D_800E6280.unk_F88 & 0x1000) {
+    if (D_800E6280.pad_pressed & 0x1000) {
         D_8015F3F0 -= 1;
     }
-    if (D_800E6280.unk_F88 & 0x4000) {
+    if (D_800E6280.pad_pressed & 0x4000) {
         D_8015F3F0 += 1;
     }
     if (D_8015F3F0 < 0) {
@@ -354,7 +354,7 @@ void func_80136988(void) {
     if (D_8015F3F0 >= 5) {
         D_8015F3F0 = 0;
     }
-    if (D_800E6280.unk_F88 & 0xA020) {
+    if (D_800E6280.pad_pressed & 0xA020) {
         if (D_8015F3F0 != 4) {
             func_801335A0(0, 0x501);
         }
@@ -372,14 +372,14 @@ void func_80136988(void) {
             func_801368D8(&D_8015EDE4, 3);
             break;
         case 4:
-            if (D_800E6280.unk_F88 & 0x20) {
+            if (D_800E6280.pad_pressed & 0x20) {
                 func_801335A0(0, 0x502);
                 func_8004284C();
             }
             break;
         }
     }
-    if (D_800E6280.unk_F88 & 0x840) {
+    if (D_800E6280.pad_pressed & 0x840) {
         func_801335A0(0, 0x502);
         func_8004284C();
     }

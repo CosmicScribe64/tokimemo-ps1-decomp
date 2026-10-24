@@ -5,18 +5,18 @@
 s32 func_800452C4();
 
 void func_8013B5B0(void) {
-    if (D_800E6280.unk_1109 >= 6 && D_800E6280.unk_1109 < 0xA) {
+    if (D_800E6280.stage >= 6 && D_800E6280.stage < 0xA) {
         func_8013BEA8();
     }
-    if (D_800E6280.unk_1109 != 9 && !(D_800E6280.unk_1092 & 1)) {
+    if (D_800E6280.stage != 9 && !(D_800E6280.menu_mode & 1)) {
         func_8006BA40();
     }
-    if (D_800E6280.unk_1109 >= 5 && D_800E6280.unk_1109 < 0xC) {
+    if (D_800E6280.stage >= 5 && D_800E6280.stage < 0xC) {
         func_80049A40(-0xA0, 0x30, 8, 0x48, 2, 0, 1);
         func_80049A40(-0xA0, 0x70, 0x140, 8, 2, 0, 1);
         func_80049A40(0x98, 0x30, 8, 0x48, 2, 0, 1);
     }
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         func_8014E780();
         func_80144010();
@@ -81,10 +81,10 @@ void func_8013B5B0(void) {
         func_80042808();
         break;
     case 14:
-        if ((u32)++D_800E6280.unk_1100 > 0x400U) {
+        if ((u32)++D_800E6280.stage_timer > 0x400U) {
             func_8004482C();
             func_800452C4();
-            D_800E6280.unk_1109 = 0xD;
+            D_800E6280.stage = 0xD;
         } else if (func_80044E8C() == 1) {
             func_80042808();
         }
@@ -94,7 +94,7 @@ void func_8013B5B0(void) {
         func_8014E8F4();
         break;
     }
-    if (!(D_800E6280.unk_1092 & 1)) {
+    if (!(D_800E6280.menu_mode & 1)) {
         func_8006BD6C(1);
         return;
     }
@@ -109,7 +109,7 @@ s32 func_8013B910(void) {
         func_8014B79C();
         return 0;
     } else {
-        if ((D_800E6280.unk_F88 & 0x40) && D_8015EC24 == 0) {
+        if ((D_800E6280.pad_pressed & 0x40) && D_8015EC24 == 0) {
             func_80044750(0x74);
             if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
                 D_8015EE44.unk_08 = D_8015E744 + 1;
@@ -260,9 +260,9 @@ void func_8013BEA8(void) {
             }
         }
     }
-    if ((D_800E6280.unk_F88 & 0x800) && D_8015EC24 == 0) {
+    if ((D_800E6280.pad_pressed & 0x800) && D_8015EC24 == 0) {
         if (!(D_8015EDC4 & 0xFF) && !(D_8015ED98 & 0xFF) && !(D_8015EDF0 & 0xFF) && !(D_8015EE1C & 0xFF) &&
-            D_8015EB9C == 9 && D_8015EC20 == 0 && D_800E6280.unk_1109 == 9) {
+            D_8015EB9C == 9 && D_8015EC20 == 0 && D_800E6280.stage == 9) {
             func_80044750(0x74);
             if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
                 D_8015EE44.unk_08 = D_8015E744 - 5;

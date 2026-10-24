@@ -2,11 +2,11 @@
 #include "ovl/TACO.h"
 
 void func_80138450(void) {
-    if ((u32)D_800E6280.unk_1100 < 0x60 && (D_800E6280.unk_10F8 & 0x10)) {
+    if ((u32)D_800E6280.stage_timer < 0x60 && (D_800E6280.frame_count & 0x10)) {
         func_801432F0((s32)"2ND STAGE", -0x40, 0, 2);
     }
-    D_800E6280.unk_1104.w += 1;
-    switch (D_800E6280.unk_110A) {
+    D_800E6280.step_timer.w += 1;
+    switch (D_800E6280.step) {
     case 0:
         func_80138520();
         break;
@@ -28,9 +28,9 @@ void func_80138520(void) {
     func_8014394C();
     func_80132220();
     func_801334BC();
-    D_800E6280.unk_036 = 0x78;
-    D_800E6280.unk_037 = 0xA8;
-    D_800E6280.unk_038 = 0xF0;
+    D_800E6280.clear_color_r = 0x78;
+    D_800E6280.clear_color_g = 0xA8;
+    D_800E6280.clear_color_b = 0xF0;
     D_8015EDB0 = 3;
     D_8015EDBC = 0x24;
     D_8015EDC0 = 0;

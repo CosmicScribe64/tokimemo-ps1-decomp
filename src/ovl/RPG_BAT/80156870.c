@@ -82,7 +82,7 @@ void func_801568A4(void) {
         func_8014F230();
         break;
     case 9:
-        if (D_800E6280.unk_F88 & 0x40) {
+        if (D_800E6280.pad_pressed & 0x40) {
             func_8013E7C0(0x1D, 7, 5, 1);
             if (D_8015EE48 == 3) {
                 D_8015EE48 = 1;

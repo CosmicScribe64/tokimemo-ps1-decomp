@@ -24,7 +24,7 @@ void func_80139470(void) {
 }
 
 void func_801394B0(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_801394EC();
         return;
     }
@@ -41,14 +41,14 @@ void func_801394EC(void) {
     FnTbl53 tbl;
 
     tbl = D_801462AC;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
     D_80120652 = 1;
 }
 
 void func_8013957C(void) {
     normal_date_move_place();
-    if (D_800E6280.unk_110D++ == 0) {
+    if (D_800E6280.substep++ == 0) {
         func_80044750(0x501);
     }
 }
@@ -62,12 +62,12 @@ void func_801395C0(void) {
 void func_801395F8(void) {
     func_800634FC(get_g_zyotai_h(8));
     func_80044750(0x501);
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8004284C();
 }
 
 void func_80139640(void) {
-    D_800E6280.unk_F5F = 8;
+    D_800E6280.current_girl = 8;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -86,7 +86,7 @@ void func_80139640(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     strcpy(D_800CA188, "先生");
     func_8008585C();
     func_80137990();
@@ -95,7 +95,7 @@ void func_80139640(void) {
     D_8014627C = D_80146138;
     strcpy(D_800CA19C, "廊下");
     strcpy(D_800CA1DC, "職員室");
-    D_800E6280.unk_1BC[8].unk_06 += 1;
+    D_800E6280.girls[8].affection += 1;
     check_para_limit();
     D_800CA368 = 0x36;
     func_8004284C();

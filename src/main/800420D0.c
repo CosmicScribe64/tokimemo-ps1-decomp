@@ -23,40 +23,40 @@ loop_1:
     func_800452C4();
     func_80041000();
     func_800412E0(1);
-    if (D_800E6280.unk_110F != 0) {
+    if (D_800E6280.restart_request != 0) {
         goto loop_1;
     }
     do {
         func_800422C8();
-        if (D_800E6280.unk_1110 == 0) {
+        if (D_800E6280.paused == 0) {
             func_80042540();
         } else {
             func_80043504();
         }
-        D_800E6280.unk_10F8 += 1;
+        D_800E6280.frame_count += 1;
         if (D_800B3220 != 0) {
             func_80059A20();
-            if ((D_800E6280.unk_F80 & 0xC0000) == 0xC0000) {
+            if ((D_800E6280.pad_held & 0xC0000) == 0xC0000) {
                 func_8004F6B0();
             }
-            if (D_800E6280.unk_F88 & 0xA0000) {
+            if (D_800E6280.pad_pressed & 0xA0000) {
                 func_8004AD60(1);
             }
         }
-        if (D_800E6280.unk_110F == 0) {
+        if (D_800E6280.restart_request == 0) {
             func_80043510(1);
             func_800455C4();
-            if (D_800E6280.unk_034 != 0) {
+            if (D_800E6280.sound_active != 0) {
                 func_80079B34();
             }
         }
-    } while (g->unk_110F == 0);
+    } while (g->restart_request == 0);
     goto loop_1;
 }
 
 void func_800422C8(void) {
     D_8011ECA0 = func_80098370();
-    if (D_800E6280.unk_1108 == 0x90) {
+    if (D_800E6280.mode == 0x90) {
         func_800985E0((s32) D_800FD4A0 + D_8011ECA0 * 0x10C00);
         SetWorkBase((s32) D_800E94A0 + D_8011ECA0 * 0xA000, D_8011ECA0);
     } else {
@@ -68,13 +68,13 @@ void func_800422C8(void) {
 }
 
 void func_800423D4(void) {
-    D_800E6280.unk_10F4 += 1;
-    D_800E7D10.unk_000 += 0x377;
+    D_800E6280.timer_ticks += 1;
+    D_800E7D10.seed += 0x377;
 }
 
 s32 func_80042400(void) {
-    D_800E7D10.unk_000 += 0x377;
-    return D_800E7D10.unk_000;
+    D_800E7D10.seed += 0x377;
+    return D_800E7D10.seed;
 }
 
 void func_80042418(void) {

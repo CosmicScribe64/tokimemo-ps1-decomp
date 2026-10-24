@@ -2,19 +2,19 @@
 #include "ovl/ETC.h"
 
 void func_80132000(void) {
-    if ((D_800E6280.unk_F88 & 0x40) || ((D_800E6280.unk_10F8 & 0x2FF) == 0x2FF)) {
+    if ((D_800E6280.pad_pressed & 0x40) || ((D_800E6280.frame_count & 0x2FF) == 0x2FF)) {
         func_80042808();
     }
 }
 
 void func_80132048(u8 arg0) {
-    if ((D_800E6280.unk_F88 & 0x40) || (D_800E6280.unk_10F8 & 0x2FF) == 0x2FF) {
+    if ((D_800E6280.pad_pressed & 0x40) || (D_800E6280.frame_count & 0x2FF) == 0x2FF) {
         main_state_set(arg0);
     }
 }
 
 void func_80132098(void) {
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         func_80132148();
         break;
@@ -36,7 +36,7 @@ void func_80132098(void) {
     func_80066334();
 }
 void func_80132148(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80132198();
         break;
@@ -59,7 +59,7 @@ void func_80132198(void) {
 }
 
 void func_80132204(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80132254();
         break;
@@ -76,7 +76,7 @@ void func_80132254(void) {
 }
 
 void func_80132290(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_801322E0();
         break;
@@ -96,7 +96,7 @@ void func_801322E0(void) {
 }
 
 void func_80132344(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80132394();
         break;
@@ -113,7 +113,7 @@ void func_80132394(void) {
 }
 
 void func_801323D0(void) {
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         func_80132460();
         break;
@@ -131,7 +131,7 @@ void func_801323D0(void) {
     func_80066334();
 }
 void func_80132460(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_801324B0();
         break;
@@ -141,9 +141,9 @@ void func_80132460(void) {
     }
 }
 void func_801324B0(void) {
-    if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.substep == 0) {
         func_80044890(0, 0, 0, 0xCE6D, 0xCE33, 0xCE1E);
-        D_800E6280.unk_110D += 1;
+        D_800E6280.substep += 1;
     } else if (func_80044E8C() == 1) {
         func_80044750(0x201);
         func_80048EB8(0);
@@ -155,7 +155,7 @@ void func_801324B0(void) {
 }
 
 void func_80132558(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_801325A8();
         break;
@@ -172,7 +172,7 @@ void func_801325A8(void) {
 }
 
 void func_801325E4(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80132634();
         break;
@@ -189,7 +189,7 @@ void func_80132634(void) {
 }
 
 void func_80132670(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_801326C0();
         break;
@@ -206,7 +206,7 @@ void func_801326C0(void) {
 }
 
 void func_801326FC(void) {
-    switch (D_800E6280.unk_1109) {
+    switch (D_800E6280.stage) {
     case 0:
         func_8013275C();
         break;
@@ -218,7 +218,7 @@ void func_801326FC(void) {
     func_80066C08(0);
 }
 void func_8013275C(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_801327AC();
         break;
@@ -236,7 +236,7 @@ void func_801327AC(void) {
 }
 
 void func_801327F0(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80132840();
         break;

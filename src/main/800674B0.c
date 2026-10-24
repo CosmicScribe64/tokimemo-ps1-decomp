@@ -17,8 +17,8 @@ void func_800674B0(void) {
 
     func_80044750(5);
     func_80044750(0x71);
-    v = D_800E6280.unk_03D;
-    if (D_800E6280.unk_03E == 0x60 && D_800E6280.unk_03F == 9 && D_800E6280.unk_040 == 1) {
+    v = D_800E6280.vacation;
+    if (D_800E6280.year == 0x60 && D_800E6280.month == 9 && D_800E6280.day == 1) {
         v = 1;
     }
     switch (v) {
@@ -73,29 +73,29 @@ void func_800676AC(s32 arg0) {
     }
     func_80048F64(0x1B);
     D_8011ECD0[0x1B].unk_01 = 1;
-    D_8011ECD0[0x1B].unk_02 = 0x40;
-    D_8011ECD0[0x1B].unk_38 = 0x40000000;
-    D_8011ECD0[0x1B].unk_03 = 0x84;
-    D_8011ECD0[0x1B].unk_0C = D_800C5FD4;
-    D_8011ECD0[0x1B].unk_10 = D_800C6010;
-    D_8011ECD0[0x1B].unk_34 = (u8 *)&D_800C5FCC;
+    D_8011ECD0[0x1B].flags = 0x40;
+    D_8011ECD0[0x1B].quad_flags = 0x40000000;
+    D_8011ECD0[0x1B].draw_flags = 0x84;
+    D_8011ECD0[0x1B].frame_table = D_800C5FD4;
+    D_8011ECD0[0x1B].sequence_table = D_800C6010;
+    D_8011ECD0[0x1B].tpage_table = (u8 *)&D_800C5FCC;
     D_8011ECD0[0x1B].unk_14 = D_800C6014;
     D_8011ECD0[0x1B].unk_04 = 8;
     D_8011ECD0[0x1B].unk_05 = 1;
-    D_8011ECD0[0x1B].unk_16 = 0;
+    D_8011ECD0[0x1B].sequence_slot = 0;
     D_8011ECD0[0x1B].unk_18 = D_800B5C08 - 1;
     func_80048F64(0x1C);
     D_8011ECD0[0x1C].unk_01 = 1;
-    D_8011ECD0[0x1C].unk_02 = 0x40;
-    D_8011ECD0[0x1C].unk_38 = 0x40000000;
-    D_8011ECD0[0x1C].unk_03 = 0x84;
-    D_8011ECD0[0x1C].unk_0C = D_800C5FD4;
-    D_8011ECD0[0x1C].unk_10 = D_800C6010;
-    D_8011ECD0[0x1C].unk_34 = (u8 *)&D_800C5FCC;
+    D_8011ECD0[0x1C].flags = 0x40;
+    D_8011ECD0[0x1C].quad_flags = 0x40000000;
+    D_8011ECD0[0x1C].draw_flags = 0x84;
+    D_8011ECD0[0x1C].frame_table = D_800C5FD4;
+    D_8011ECD0[0x1C].sequence_table = D_800C6010;
+    D_8011ECD0[0x1C].tpage_table = (u8 *)&D_800C5FCC;
     D_8011ECD0[0x1C].unk_14 = D_800C6014;
     D_8011ECD0[0x1C].unk_04 = 8;
     D_8011ECD0[0x1C].unk_05 = 1;
-    D_8011ECD0[0x1C].unk_16 = 0;
+    D_8011ECD0[0x1C].sequence_slot = 0;
     D_8011ECD0[0x1C].unk_18 = 0xD;
 }
 
@@ -112,13 +112,13 @@ void func_80067870(void) {
     }
     func_800676AC(D_800B5C08);
     if (D_800B5C08 < 0xE) {
-        if ((u32)D_800E6280.unk_F88 >> 16) {
+        if ((u32)D_800E6280.pad_pressed >> 16) {
             D_80125C55 = (D_80125C54 + 1) / 2;
         }
-        if ((D_800E6280.unk_10F8 & 0x3F) == 0x3F && D_80125C55 != 0) {
+        if ((D_800E6280.frame_count & 0x3F) == 0x3F && D_80125C55 != 0) {
             D_80125C55--;
         }
-        dx = (rsin((D_800E6280.unk_10F8 & 0x7F) << 5) * D_80125C55) >> 12;
+        dx = (rsin((D_800E6280.frame_count & 0x7F) << 5) * D_80125C55) >> 12;
         D_8011F41C = ((-dx * 2) / 3) << 12;
         /* FAKE T-25406: one factor through a byte view. tools/cvt_pass.py writes no CVT for that read, so
          * D_80125C54 stays one $a2 range with no cvt(D_80125C54) range beside it (T-0018 gap); both factors
@@ -128,17 +128,17 @@ void func_80067870(void) {
         /* FAKE T-25406: with a plain D_80125C50 read, cvt(D_80125C54) comes back as its own $v0 range and
          * every colour after it moves (146 rows). */
         x1 = *(s16 *)&D_80125C50 + dx;
-        D_8011ECD0[0x1B].unk_26 = x1;
+        D_8011ECD0[0x1B].x = x1;
         /* FAKE T-25406: both operands through views. The byte view keeps D_80125C54 out of a cvt range; the
          * s16 view gives cfe equal operand weights, so the sum comes out as `addu t1,a0,a2` (D_80125C52 first). */
         y1 = *(u8 *)&D_80125C54 + *(s16 *)&D_80125C52;
-        D_8011ECD0[0x1B].unk_2A = y1 - dy;
+        D_8011ECD0[0x1B].y = y1 - dy;
         D_8011ECD0[0x1B].unk_18 = D_800B5C08 - 1;
-        D_8011ECD0[0x1C].unk_26 = D_80125C50;
-        D_8011ECD0[0x1C].unk_2A = D_80125C52;
-        if (D_800E6280.unk_F80 & 2) {
+        D_8011ECD0[0x1C].x = D_80125C50;
+        D_8011ECD0[0x1C].y = D_80125C52;
+        if (D_800E6280.pad_held & 2) {
             D_8011ECD0[0x1C].unk_18 = 0xE;
-            switch (D_800E6280.unk_F80 & 0x5000) {
+            switch (D_800E6280.pad_held & 0x5000) {
             case 0x1000:
                 if (D_80125C54 >= 3) {
                     D_80125C54 -= 2;
@@ -154,10 +154,10 @@ void func_80067870(void) {
                 }
                 break;
             }
-        } else if (D_800E6280.unk_F80 & 8) {
+        } else if (D_800E6280.pad_held & 8) {
             D_8011ECD0[0x1C].unk_18 = 0xE;
             /* FAKE T-25103 layout, kept by T-25406: each store and sum on one line keeps as1's order (4 rows split). */
-            switch (D_800E6280.unk_F80 & 0x5000) {
+            switch (D_800E6280.pad_held & 0x5000) {
             case 0x1000:
                 D_80125C52 -= 4; y1 = D_80125C52 + D_80125C54;
                 break;
@@ -165,7 +165,7 @@ void func_80067870(void) {
                 D_80125C52 += 4; y1 = D_80125C52 + D_80125C54;
                 break;
             }
-            switch (D_800E6280.unk_F80 & 0xA000) {
+            switch (D_800E6280.pad_held & 0xA000) {
             case 0x8000:
                 D_80125C50 -= 4;
                 x1 -= 4;
@@ -203,13 +203,13 @@ void func_80067C28(void) {
     s32 i;
     u8 k;
 
-    if (*(u8 *)&D_800E6280.unk_03C != 0) {
+    if (*(u8 *)&D_800E6280.voice_mode != 0) {
         if (func_800460EC() & 4) {
             level = getCDlevel() + 1;
         } else {
             level = 0;
         }
-        D_80125C80[D_800E6280.unk_10F8 & 3] = level;
+        D_80125C80[D_800E6280.frame_count & 3] = level;
         max = 0;
         for (i = 0; i < 4; i++) {
             if (max < D_80125C80[i]) {
@@ -223,7 +223,7 @@ void func_80067C28(void) {
             }
         }
         n = 0;
-        k = D_800E6280.unk_F5F;
+        k = D_800E6280.current_girl;
         for (i = 0; i < 3; i++) {
             if (D_800B5A68[k][i] < level) {
                 n = i + 1;
@@ -232,7 +232,7 @@ void func_80067C28(void) {
         if (n >= 4) {
             n = 3;
         }
-        if (D_80120668 == 0 || !(D_800E6280.unk_10F8 & 1)) {
+        if (D_80120668 == 0 || !(D_800E6280.frame_count & 1)) {
             if (level == 0) {
                 D_80120668 = 0;
             } else if (n == 0) {
@@ -302,11 +302,11 @@ void func_80067E34(void) {
  * 1 next month), then the next record. The four statements expand on one source line, which as1 schedules as one
  * group (the frame store after the argument copy where the record address is a constant). T-25103 */
 #define CAL_MARK(frame, side, d) \
-    D_8011ECD0[n + 0x61].unk_18 = (frame); D_8011ECD0[n + 0x61].unk_26 = func_80068898((side), (d)); \
-    D_8011ECD0[n + 0x61].unk_2A = func_800688F0((side), (d)); n++
+    D_8011ECD0[n + 0x61].unk_18 = (frame); D_8011ECD0[n + 0x61].x = func_80068898((side), (d)); \
+    D_8011ECD0[n + 0x61].y = func_800688F0((side), (d)); n++
 /* Frame of the schedule entry of day i + 1 in column `side`; every use reads it again (the original reloads it
  * after each call). T-25103 */
-#define DAY_KIND(side) D_800B5C10[D_800E6280.unk_044[side].unk_20[i + 1]]
+#define DAY_KIND(side) D_800B5C10[D_800E6280.month_calendar[side].marker[i + 1]]
 
 /* Calendar marks in records 0x61.. of D_8011ECD0 (at most 0x3F): the date word at +0xF8, the flagged Rec38 dates,
  * the active +0x54C entries, two 0x6F marks in periods 6..10, the day-schedule frames of both months (a multi-day
@@ -333,39 +333,39 @@ void func_80067F04(void) {
     for (i = 0; i < 0x20; i++) {
         func_80048F64(i + 0x61);
         D_8011ECD0[i + 0x61].unk_01 = 3;
-        D_8011ECD0[i + 0x61].unk_02 = 0x40;
-        D_8011ECD0[i + 0x61].unk_38 = 0;
-        D_8011ECD0[i + 0x61].unk_03 = 0x8C;
-        D_8011ECD0[i + 0x61].unk_0C = sprite_frame_table;
-        D_8011ECD0[i + 0x61].unk_10 = D_800C9A14;
-        D_8011ECD0[i + 0x61].unk_34 = D_800C9730;
+        D_8011ECD0[i + 0x61].flags = 0x40;
+        D_8011ECD0[i + 0x61].quad_flags = 0;
+        D_8011ECD0[i + 0x61].draw_flags = 0x8C;
+        D_8011ECD0[i + 0x61].frame_table = sprite_frame_table;
+        D_8011ECD0[i + 0x61].sequence_table = D_800C9A14;
+        D_8011ECD0[i + 0x61].tpage_table = D_800C9730;
         D_8011ECD0[i + 0x61].unk_14 = D_800C9A54;
         D_8011ECD0[i + 0x61].unk_04 = 8;
         D_8011ECD0[i + 0x61].unk_05 = 1;
-        D_8011ECD0[i + 0x61].unk_06 = 8;
+        D_8011ECD0[i + 0x61].blink_period = 8;
         D_8011ECD0[i + 0x61].unk_18 = 0x62;
-        D_8011ECD0[i + 0x61].unk_26 = 0x100;
-        D_8011ECD0[i + 0x61].unk_2A = 0x100;
-        D_8011ECD0[i + 0x61].unk_07 = 0x80;
+        D_8011ECD0[i + 0x61].x = 0x100;
+        D_8011ECD0[i + 0x61].y = 0x100;
+        D_8011ECD0[i + 0x61].brightness = 0x80;
     }
     left = 0;
     n = 0;
-    month = ((GsWord *)&D_800E6280.unk_0F8)->date.month;
-    day = ((GsWord *)&D_800E6280.unk_0F8)->date.day;
-    if (month == gs->unk_03F) {
+    month = ((GsWord *)&D_800E6280.player_birthday)->date.month;
+    day = ((GsWord *)&D_800E6280.player_birthday)->date.day;
+    if (month == gs->month) {
         CAL_MARK(0x6E, 0, day - 1);
     }
-    if (month == D_800E6280.unk_03F + 1) {
+    if (month == D_800E6280.month + 1) {
         CAL_MARK(0x6E, 1, day - 1);
     }
     for (i = 0; i < 11; i++) {
-        month = D_800E6280.unk_1BC[i].unk_10.date.month;
-        day = D_800E6280.unk_1BC[i].unk_10.date.day;
-        if (D_800E6280.unk_1BC[i].unk_0C.f.b6) {
-            if (month == gs->unk_03F) {
+        month = D_800E6280.girls[i].birthday.date.month;
+        day = D_800E6280.girls[i].birthday.date.day;
+        if (D_800E6280.girls[i].flags.f.b6) {
+            if (month == gs->month) {
                 CAL_MARK(0x6D, 0, day - 1);
             }
-            if (month == D_800E6280.unk_03F + 1 || D_800E6280.unk_03F + 1 == month + 12) {
+            if (month == D_800E6280.month + 1 || D_800E6280.month + 1 == month + 12) {
                 CAL_MARK(0x6D, 1, day - 1);
             }
         }
@@ -374,32 +374,32 @@ void func_80067F04(void) {
         month = D_800E6280.unk_54C[i].h[0] >> 12;
         day = D_800E6280.unk_54C[i].h[1] & 0x1F;
         if (((GsEntry54C *)&D_800E6280.unk_54C[i])->active) {
-            if (month == gs->unk_03F) {
+            if (month == gs->month) {
                 CAL_MARK(0x62, 0, day - 1);
             }
-            if (month == D_800E6280.unk_03F % 12 + 1) {
+            if (month == D_800E6280.month % 12 + 1) {
                 CAL_MARK(0x62, 1, day - 1);
             }
         }
     }
-    if ((D_800E6280.unk_0F4.h >> 12) >= 6 && (D_800E6280.unk_0F4.h >> 12) < 11) {
-        day0 = 0x15 - D_800E6280.unk_044[0].unk_20[0];
-        day1 = 0x15 - D_800E6280.unk_044[1].unk_20[0];
+    if ((D_800E6280.player_flags.h >> 12) >= 6 && (D_800E6280.player_flags.h >> 12) < 11) {
+        day0 = 0x15 - D_800E6280.month_calendar[0].marker[0];
+        day1 = 0x15 - D_800E6280.month_calendar[1].marker[0];
         CAL_MARK(0x6F, 0, day0 - 1);
-        if (D_800E6280.unk_03E != 0x62 || D_800E6280.unk_03F != 2) {
+        if (D_800E6280.year != 0x62 || D_800E6280.month != 2) {
             CAL_MARK(0x6F, 1, day1 - 1);
         }
     }
-    for (i = 0; i < gs->unk_044[0].unk_00[0]; i++) {
-        if (D_800E6280.unk_044[0].unk_20[i + 1] != 0 && DAY_KIND(0) != 0xFF) {
+    for (i = 0; i < gs->month_calendar[0].day_kind[0]; i++) {
+        if (D_800E6280.month_calendar[0].marker[i + 1] != 0 && DAY_KIND(0) != 0xFF) {
             if (DAY_KIND(0) == 0x6F) {
-                if (D_800E6280.unk_03F == 8 && (D_800E6280.unk_0F4.h >> 12) < 11) {
+                if (D_800E6280.month == 8 && (D_800E6280.player_flags.h >> 12) < 11) {
                     CAL_MARK(DAY_KIND(0), 0, i);
                 }
             } else {
                 CAL_MARK(DAY_KIND(0), 0, i);
             }
-            if (DAY_KIND(0) == 0x66 && D_800E6280.unk_03F != 2) {
+            if (DAY_KIND(0) == 0x66 && D_800E6280.month != 2) {
                 kind = DAY_KIND(0);
                 left = 6;
             } else if (DAY_KIND(0) == 0x6C) {
@@ -408,8 +408,8 @@ void func_80067F04(void) {
             } else if (DAY_KIND(0) == 0x67) {
                 kind = DAY_KIND(0);
                 left = 7;
-            } else if (DAY_KIND(0) == 0x6F && D_800E6280.unk_03F == 8 &&
-                       (D_800E6280.unk_0F4.h >> 12) < 11) {
+            } else if (DAY_KIND(0) == 0x6F && D_800E6280.month == 8 &&
+                       (D_800E6280.player_flags.h >> 12) < 11) {
                 kind = DAY_KIND(0);
                 left = 6;
             }
@@ -422,16 +422,16 @@ void func_80067F04(void) {
         }
     }
     left = 0;
-    for (i = 0; i < gs->unk_044[1].unk_00[0]; i++) {
-        if (D_800E6280.unk_044[1].unk_20[i + 1] != 0 && DAY_KIND(1) != 0xFF) {
+    for (i = 0; i < gs->month_calendar[1].day_kind[0]; i++) {
+        if (D_800E6280.month_calendar[1].marker[i + 1] != 0 && DAY_KIND(1) != 0xFF) {
             if (DAY_KIND(1) == 0x6F) {
-                if (D_800E6280.unk_03F == 7 && (D_800E6280.unk_0F4.h >> 12) < 11) {
+                if (D_800E6280.month == 7 && (D_800E6280.player_flags.h >> 12) < 11) {
                     CAL_MARK(DAY_KIND(1), 1, i);
                 }
             } else {
                 CAL_MARK(DAY_KIND(1), 1, i);
             }
-            if (DAY_KIND(1) == 0x66 && D_800E6280.unk_03F != 1) {
+            if (DAY_KIND(1) == 0x66 && D_800E6280.month != 1) {
                 kind = DAY_KIND(1);
                 left = 6;
             } else if (DAY_KIND(1) == 0x6C) {
@@ -440,8 +440,8 @@ void func_80067F04(void) {
             } else if (DAY_KIND(1) == 0x67) {
                 kind = DAY_KIND(1);
                 left = 7;
-            } else if (DAY_KIND(1) == 0x6F && D_800E6280.unk_03F == 7 &&
-                       (D_800E6280.unk_0F4.h >> 12) < 11) {
+            } else if (DAY_KIND(1) == 0x6F && D_800E6280.month == 7 &&
+                       (D_800E6280.player_flags.h >> 12) < 11) {
                 kind = DAY_KIND(1);
                 left = 6;
             }
@@ -454,12 +454,12 @@ void func_80067F04(void) {
         }
     }
     for (i = 0; i < 0x100; i++) {
-        year = D_800E6280.unk_75E[i].unk_04;
-        month = D_800E6280.unk_75E[i].unk_05;
-        day = D_800E6280.unk_75E[i].unk_06;
-        if (year == D_800E6280.unk_03E && month == D_800E6280.unk_03F) {
-            if (D_800E6280.unk_75E[i].unk_00 == 0xC) {
-                if (D_800E7D10.flags[12] != 0 || D_800E6280.unk_53C[12] != 0) {
+        year = D_800E6280.event_log[i].year;
+        month = D_800E6280.event_log[i].month;
+        day = D_800E6280.event_log[i].day;
+        if (year == D_800E6280.year && month == D_800E6280.month) {
+            if (D_800E6280.event_log[i].girl == 0xC) {
+                if (D_800E7D10.flags[12] != 0 || D_800E6280.girl_cleared[12] != 0) {
                     CAL_MARK(0x62, 0, day - 1);
                 }
             } else {
@@ -469,7 +469,7 @@ void func_80067F04(void) {
         if (n + 0x61 >= 0xA0) {
             return;
         }
-        if (D_800E6280.unk_75E[i].unk_04 == 0) {
+        if (D_800E6280.event_log[i].year == 0) {
             return;
         }
     }
@@ -479,7 +479,7 @@ void func_80067F04(void) {
 #undef DAY_KIND
 
 s16 func_80068898(s32 arg0, s32 arg1) {
-    s32 v = D_800E6280.unk_044[0].unk_20[arg0 * 0x40];
+    s32 v = D_800E6280.month_calendar[0].marker[arg0 * 0x40];
 
     if (v == 6) {
         v -= 7;
@@ -488,7 +488,7 @@ s16 func_80068898(s32 arg0, s32 arg1) {
 }
 
 s16 func_800688F0(s32 arg0, s32 arg1) {
-    s32 v = D_800E6280.unk_044[0].unk_20[arg0 * 0x40];
+    s32 v = D_800E6280.month_calendar[0].marker[arg0 * 0x40];
 
     if (v == 6) {
         v -= 7;
@@ -511,16 +511,16 @@ void func_80068938(u8 arg0, u8 arg1, s32 arg2) {
         LoadSquare(0x3A0, 0x100, 0x20, 0x80, D_800B3748[idx]);
         LoadSquare(0x3A0, 0x180, 0x20, 0x80, D_800B3748[idx + 1]);
         if (arg2 != 0) {
-            memcpy(&D_800E6280.unk_044[0], &D_800E6280.unk_044[1], 0x40);
+            memcpy(&D_800E6280.month_calendar[0], &D_800E6280.month_calendar[1], 0x40);
             gs = &D_800E6280;
             q = D_800B3748[idx + 1] + 0x800;
             n = q[0];
             m = q[1];
-            D_800E6280.unk_044[1].unk_00[0] = n;
-            D_800E6280.unk_044[1].unk_20[0] = m;
+            D_800E6280.month_calendar[1].day_kind[0] = n;
+            D_800E6280.month_calendar[1].marker[0] = m;
             for (i = 0; i < n; i++) {
-                gs->unk_044[1].unk_00[i + 1] = D_800B3748[idx + 1][0x802 + i];
-                gs->unk_044[1].unk_20[i + 1] = D_800B3748[idx + 1][0x802 + n + i];
+                gs->month_calendar[1].day_kind[i + 1] = D_800B3748[idx + 1][0x802 + i];
+                gs->month_calendar[1].marker[i + 1] = D_800B3748[idx + 1][0x802 + n + i];
             }
         }
     }
@@ -541,27 +541,27 @@ void func_80068BE4(void) {
     s32 phase;
     s32 pad;
 
-    phase = D_800E6280.unk_10F8;
-    if ((s32) D_800E6280.unk_10F8 & 0x80) {
-        half = (0x7F - ((s32) D_800E6280.unk_10F8 & 0x7F)) / 2;
+    phase = D_800E6280.frame_count;
+    if ((s32) D_800E6280.frame_count & 0x80) {
+        half = (0x7F - ((s32) D_800E6280.frame_count & 0x7F)) / 2;
     } else {
-        half = ((s32) D_800E6280.unk_10F8 & 0x7F) / 2;
+        half = ((s32) D_800E6280.frame_count & 0x7F) / 2;
     }
     func_80049FF0(-0x80, -0xC, 0x7C, -0xC, half * 0x10101, half * 0x10101, 0x81);
-    saved = D_800E6280.unk_042;
-    D_800E6280.unk_042 = saved - 8;
+    saved = D_800E6280.day_count;
+    D_800E6280.day_count = saved - 8;
     for (i = 0; i != 0x10; i++) {
         sp10C[i] = func_8006C334(1, 0, 0, -0x20);
         spCC[i] = func_8006C334(0, 1, 0, -0x20);
         sp8C[i] = func_8006C334(0, 0, 1, -0x20);
-        D_800E6280.unk_042 += 1;
+        D_800E6280.day_count += 1;
         if (i != 0) {
             func_80049FF0(i * 0x10 - 0x90, sp10C[i - 1] - 0xC, i * 0x10 - 0x80, sp10C[i] - 0xC, (((i + phase) & 0xF) * 4 + half) * 0x101, (((i + phase) & 0xF) * 4 + half) * 0x101, 0x81);
             func_80049FF0(i * 0x10 - 0x90, spCC[i - 1] - 0xC, i * 0x10 - 0x80, spCC[i] - 0xC, (((i + phase) & 0xF) * 4 + half) * 0x10100 + 0xF0F00, (((i + phase) & 0xF) * 4 + half) * 0x10100 + 0xF0F00, 0x81);
             func_80049FF0(i * 0x10 - 0x90, sp8C[i - 1] - 0xC, i * 0x10 - 0x80, sp8C[i] - 0xC, (((i + phase) & 0xF) * 4 + half) * 0x10001, (((i + phase) & 0xF) * 4 + half) * 0x10001, 0x81);
         }
     }
-    D_800E6280.unk_042 = saved;
+    D_800E6280.day_count = saved;
 }
 
 void func_80068EC0(void) {
@@ -575,20 +575,20 @@ void func_80068EC0(void) {
     for (i = 0x61; i < 0xA0; i++) {
         switch ((t >> 6) & 3) {
         case 0:
-            ((DisplayActor44 *)D_8011ECD0)[i].unk_1A = (t & 0x3F) << 6;
-            ((DisplayActor44 *)D_8011ECD0)[i].unk_1C = (t & 0x3F) << 6;
+            ((DisplayActor44 *)D_8011ECD0)[i].scale_x = (t & 0x3F) << 6;
+            ((DisplayActor44 *)D_8011ECD0)[i].scale_y = (t & 0x3F) << 6;
             break;
         case 1:
-            ((DisplayActor44 *)D_8011ECD0)[i].unk_1A = 0x1000;
-            ((DisplayActor44 *)D_8011ECD0)[i].unk_1C = 0x1000;
+            ((DisplayActor44 *)D_8011ECD0)[i].scale_x = 0x1000;
+            ((DisplayActor44 *)D_8011ECD0)[i].scale_y = 0x1000;
             break;
         case 2:
-            ((DisplayActor44 *)D_8011ECD0)[i].unk_1A = (0x3F - (t & 0x3F)) << 6;
-            ((DisplayActor44 *)D_8011ECD0)[i].unk_1C = (0x3F - (t & 0x3F)) << 6;
+            ((DisplayActor44 *)D_8011ECD0)[i].scale_x = (0x3F - (t & 0x3F)) << 6;
+            ((DisplayActor44 *)D_8011ECD0)[i].scale_y = (0x3F - (t & 0x3F)) << 6;
             break;
         case 3:
-            ((DisplayActor44 *)D_8011ECD0)[i].unk_1A = 0;
-            ((DisplayActor44 *)D_8011ECD0)[i].unk_1C = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i].scale_x = 0;
+            ((DisplayActor44 *)D_8011ECD0)[i].scale_y = 0;
             break;
         }
     }
@@ -611,95 +611,95 @@ void magazine_base_show(void) {
 
 void cal_sprite_disp_switch(s32 arg0) {
     if (arg0 == 1) {
-        D_801217D0[0].unk_00 &= 0x7FFFFFFF;
-        D_801217D0[1].unk_00 &= 0x7FFFFFFF;
-        D_801217D0[2].unk_00 &= 0x7FFFFFFF;
-        D_801217D0[3].unk_00 &= 0x7FFFFFFF;
+        D_801217D0[0].flags &= 0x7FFFFFFF;
+        D_801217D0[1].flags &= 0x7FFFFFFF;
+        D_801217D0[2].flags &= 0x7FFFFFFF;
+        D_801217D0[3].flags &= 0x7FFFFFFF;
         return;
     }
-    D_801217D0[0].unk_00 |= 0x80000000;
-    D_801217D0[1].unk_00 |= 0x80000000;
-    D_801217D0[2].unk_00 |= 0x80000000;
-    D_801217D0[3].unk_00 |= 0x80000000;
+    D_801217D0[0].flags |= 0x80000000;
+    D_801217D0[1].flags |= 0x80000000;
+    D_801217D0[2].flags |= 0x80000000;
+    D_801217D0[3].flags |= 0x80000000;
 }
 
 void cal_sprite_init(void) {
-    D_801217D0[2].unk_00 = 0;
-    D_801217D0[2].unk_04 = -0x88;
-    D_801217D0[2].unk_06 = -0x58;
-    D_801217D0[2].unk_08 = 0x7E;
-    D_801217D0[2].unk_0A = 0x7E;
+    D_801217D0[2].flags = 0;
+    D_801217D0[2].x = -0x88;
+    D_801217D0[2].y = -0x58;
+    D_801217D0[2].w = 0x7E;
+    D_801217D0[2].h = 0x7E;
     D_801217D0[2].unk_0C = 0x1E;
     D_801217D0[2].unk_0E = 0x80;
     D_801217D0[2].unk_0F = 0;
     D_801217D0[2].unk_10 = 0xC0;
     D_801217D0[2].unk_12 = 0x1E0;
-    D_801217D0[2].unk_14 = 0x80;
-    D_801217D0[2].unk_15 = 0x80;
-    D_801217D0[2].unk_16 = 0x80;
-    D_801217D0[2].unk_18 = 0;
-    D_801217D0[2].unk_1A = 0;
+    D_801217D0[2].tint_r = 0x80;
+    D_801217D0[2].tint_g = 0x80;
+    D_801217D0[2].tint_b = 0x80;
+    D_801217D0[2].anchor_x = 0;
+    D_801217D0[2].anchor_y = 0;
     D_801217D0[2].unk_1C = 0x1000;
     D_801217D0[2].unk_1E = 0x1000;
     D_801217D0[2].unk_20 = 0;
-    D_800E6280.unk_10A5[2] = 0x84;
-    D_801217D0[3].unk_00 = 0;
-    D_801217D0[3].unk_04 = 0;
-    D_801217D0[3].unk_06 = -0x58;
-    D_801217D0[3].unk_08 = 0x7F;
-    D_801217D0[3].unk_0A = 0x7F;
+    D_800E6280.quad_layer[2] = 0x84;
+    D_801217D0[3].flags = 0;
+    D_801217D0[3].x = 0;
+    D_801217D0[3].y = -0x58;
+    D_801217D0[3].w = 0x7F;
+    D_801217D0[3].h = 0x7F;
     D_801217D0[3].unk_0C = 0x1E;
     D_801217D0[3].unk_0E = 0x80;
     D_801217D0[3].unk_0F = 0x80;
     D_801217D0[3].unk_10 = 0xC0;
     D_801217D0[3].unk_12 = 0x1E0;
-    D_801217D0[3].unk_14 = 0x80;
-    D_801217D0[3].unk_15 = 0x80;
-    D_801217D0[3].unk_16 = 0x80;
-    D_801217D0[3].unk_18 = 0;
-    D_801217D0[3].unk_1A = 0;
+    D_801217D0[3].tint_r = 0x80;
+    D_801217D0[3].tint_g = 0x80;
+    D_801217D0[3].tint_b = 0x80;
+    D_801217D0[3].anchor_x = 0;
+    D_801217D0[3].anchor_y = 0;
     D_801217D0[3].unk_1C = 0x1000;
     D_801217D0[3].unk_1E = 0x1000;
     D_801217D0[3].unk_20 = 0;
-    D_800E6280.unk_10A5[3] = 0x84;
-    D_801217D0[0].unk_00 = 0;
-    D_801217D0[0].unk_04 = -0x58;
-    D_801217D0[0].unk_06 = -0x58;
-    D_801217D0[0].unk_08 = 0x18;
-    D_801217D0[0].unk_0A = 0x10;
+    D_800E6280.quad_layer[3] = 0x84;
+    D_801217D0[0].flags = 0;
+    D_801217D0[0].x = -0x58;
+    D_801217D0[0].y = -0x58;
+    D_801217D0[0].w = 0x18;
+    D_801217D0[0].h = 0x10;
     D_801217D0[0].unk_0C = 0x1E;
     D_801217D0[0].unk_0E = 0xB0;
     D_801217D0[0].unk_0F = 0;
     D_801217D0[0].unk_10 = 0xB0;
     D_801217D0[0].unk_12 = 0x1E0;
-    D_801217D0[0].unk_14 = 0x80;
-    D_801217D0[0].unk_15 = 0x80;
-    D_801217D0[0].unk_16 = 0x80;
-    D_801217D0[0].unk_18 = 0;
-    D_801217D0[0].unk_1A = 0;
+    D_801217D0[0].tint_r = 0x80;
+    D_801217D0[0].tint_g = 0x80;
+    D_801217D0[0].tint_b = 0x80;
+    D_801217D0[0].anchor_x = 0;
+    D_801217D0[0].anchor_y = 0;
     D_801217D0[0].unk_1C = 0x1000;
     D_801217D0[0].unk_1E = 0x1000;
     D_801217D0[0].unk_20 = 0;
-    D_800E6280.unk_10A5[0] = 0x84;
-    D_801217D0[1].unk_00 = 0;
-    D_801217D0[1].unk_04 = 0x30;
-    D_801217D0[1].unk_06 = -0x58;
-    D_801217D0[1].unk_08 = 0x18;
-    D_801217D0[1].unk_0A = 0x10;
+    D_800E6280.quad_layer[0] = 0x84;
+    D_801217D0[1].flags = 0;
+    D_801217D0[1].x = 0x30;
+    D_801217D0[1].y = -0x58;
+    D_801217D0[1].w = 0x18;
+    D_801217D0[1].h = 0x10;
     D_801217D0[1].unk_0C = 0x1E;
     D_801217D0[1].unk_0E = 0xB0;
     D_801217D0[1].unk_0F = 0x80;
     D_801217D0[1].unk_10 = 0xB0;
     D_801217D0[1].unk_12 = 0x1E0;
-    D_801217D0[1].unk_14 = 0x80;
-    D_801217D0[1].unk_15 = 0x80;
-    D_801217D0[1].unk_16 = 0x80;
-    D_801217D0[1].unk_18 = 0;
-    D_801217D0[1].unk_1A = 0;
+    D_801217D0[1].tint_r = 0x80;
+    D_801217D0[1].tint_g = 0x80;
+    D_801217D0[1].tint_b = 0x80;
+    D_801217D0[1].anchor_x = 0;
+    D_801217D0[1].anchor_y = 0;
     D_801217D0[1].unk_1C = 0x1000;
     D_801217D0[1].unk_1E = 0x1000;
     D_801217D0[1].unk_20 = 0;
-    D_800E6280.unk_10A5[1] = 0x84;
+    D_800E6280.quad_layer[1] = 0x84;
 }
 
 void data_save_load_class_init(void) {
@@ -722,7 +722,7 @@ void data_save_load_class_init(void) {
 /* FAKE: KEEP_UNK_1117 is an empty test that gives the byte a second use in each call-free stretch of the else branch, so uopt
  * promotes it to $a3 and reloads it after every call as the original does (register cheat sheet, "narrow selector the
  * original reloads after every call"); the test emits no code. T-17002 */
-#define KEEP_UNK_1117() if ((s32)D_800E6280.unk_1117) { }
+#define KEEP_UNK_1117() if ((s32)D_800E6280.album_slot) { }
 void func_800696DC(s32 arg0, s32 arg1) {
     s32 i;
     s32 var_s0;
@@ -798,47 +798,47 @@ void func_800696DC(s32 arg0, s32 arg1) {
         var_s0 = 0;
         KEEP_UNK_1117();
         for (i = 0; i < 13; i++) {
-            if (((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].flags[i] != 0) {
+            if (((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].flags[i] != 0) {
                 var_s0 += 1;
             }
         }
-        if (D_800E7D10.slot_status[D_800E6280.unk_1118] == 0) {
+        if (D_800E7D10.slot_status[D_800E6280.save_slot] == 0) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "未使用", 0);
-        } else if (D_800E7D10.slot_status[D_800E6280.unk_1118] == 0xFF) {
+        } else if (D_800E7D10.slot_status[D_800E6280.save_slot] == 0xFF) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "データ異常", 0);
         } else {
-            strcpy(spC8, D_800B3288[D_800E6280.unk_1118]);
+            strcpy(spC8, D_800B3288[D_800E6280.save_slot]);
             strncat(spC8, "番アルバム", 2);
             set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
             KEEP_UNK_1117();
-            strcpy(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].year / 10U]);
+            strcpy(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].year / 10U]);
             KEEP_UNK_1117();
-            strncat(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].year % 10U], 2);
+            strncat(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].year % 10U], 2);
             strncat(spC8, "年", 2);
             KEEP_UNK_1117();
-            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].month], 4);
+            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].month], 4);
             strncat(spC8, "月", 2);
             KEEP_UNK_1117();
-            if (((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day >= 0xAU) {
-                strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day / 10U], 2);
+            if (((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].day >= 0xAU) {
+                strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].day / 10U], 2);
             }
-            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].day % 10U], 2);
+            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].day % 10U], 2);
             strncat(spC8, "日", 2);
             set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
             strcpy(spA8, "名前…");
             KEEP_UNK_1117();
-            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 6);
+            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].family_name, 6);
             KEEP_UNK_1117();
-            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 6);
+            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].given_name, 6);
             strcpy(sp88, "あだ名…");
             KEEP_UNK_1117();
-            strncat(sp88, ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0xD);
+            strncat(sp88, ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].nickname, 0xD);
             set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
             set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
             strcpy(sp68, "所属部‥");
             KEEP_UNK_1117();
             /* two arguments as in the original: no count is loaded into $a2 before this call */
-            strncat(sp68, club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 12]);
+            strncat(sp68, club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].club >> 12]);
             set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
             strcpy(sp48, "クリア人数‥");
             if (var_s0 >= 0x64) {
@@ -864,79 +864,79 @@ s32 arg1;
 
     /* FAKE: T-25103, the dead read numbers the flag byte before the month (uopt colours unconstrained
      * ranges in that order), so the byte takes $v0 and the month $v1; uopt then removes the load. */
-    x = D_800E6280.unk_F64[1];
-    if (D_800E6280.unk_03F != 2 && D_800E6280.unk_03F != 5 && D_800E6280.unk_03F != 8 && D_800E6280.unk_03F != 11) {
-        ((FlagsF64 *)D_800E6280.unk_F64)->b14 = 1;
+    x = D_800E6280.quarter_flags[1];
+    if (D_800E6280.month != 2 && D_800E6280.month != 5 && D_800E6280.month != 8 && D_800E6280.month != 11) {
+        ((FlagsF64 *)D_800E6280.quarter_flags)->b14 = 1;
     } else {
-        ((FlagsF64 *)D_800E6280.unk_F64)->b13 = 1;
+        ((FlagsF64 *)D_800E6280.quarter_flags)->b13 = 1;
     }
-    if (D_800E6280.unk_03E == 0x5F && D_800E6280.unk_03F == 4) {
-        ((FlagsF64 *)D_800E6280.unk_F64)->b13 = 1;
-        ((FlagsF64 *)D_800E6280.unk_F64)->b14 = 1;
+    if (D_800E6280.year == 0x5F && D_800E6280.month == 4) {
+        ((FlagsF64 *)D_800E6280.quarter_flags)->b13 = 1;
+        ((FlagsF64 *)D_800E6280.quarter_flags)->b14 = 1;
     }
-    switch (D_800E6280.unk_03F) {
+    switch (D_800E6280.month) {
     case 2:
     case 3:
     case 4:
-        if (D_800E6280.unk_03E == 0x5F) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b0 = 1;
+        if (D_800E6280.year == 0x5F) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b0 = 1;
         }
-        if (D_800E6280.unk_03E == 0x60) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b4 = 1;
+        if (D_800E6280.year == 0x60) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b4 = 1;
         }
-        if (D_800E6280.unk_03E == 0x61) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b8 = 1;
+        if (D_800E6280.year == 0x61) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b8 = 1;
         }
         break;
     case 5:
     case 6:
     case 7:
-        if (D_800E6280.unk_03E == 0x5F) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b1 = 1;
+        if (D_800E6280.year == 0x5F) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b1 = 1;
         }
-        if (D_800E6280.unk_03E == 0x60) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b5 = 1;
+        if (D_800E6280.year == 0x60) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b5 = 1;
         }
-        if (D_800E6280.unk_03E == 0x61) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b9 = 1;
+        if (D_800E6280.year == 0x61) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b9 = 1;
         }
-        ((FlagsF64 *)D_800E6280.unk_F64)->b15 = 1;
+        ((FlagsF64 *)D_800E6280.quarter_flags)->b15 = 1;
         break;
     case 8:
     case 9:
     case 10:
-        if (D_800E6280.unk_03E == 0x5F) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b2 = 1;
+        if (D_800E6280.year == 0x5F) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b2 = 1;
         }
-        if (D_800E6280.unk_03E == 0x60) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b6 = 1;
+        if (D_800E6280.year == 0x60) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b6 = 1;
         }
-        if (D_800E6280.unk_03E == 0x61) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b10 = 1;
+        if (D_800E6280.year == 0x61) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b10 = 1;
         }
         break;
     case 11:
     case 12:
     case 13:
-        if (D_800E6280.unk_03E == 0x5F) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b3 = 1;
+        if (D_800E6280.year == 0x5F) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b3 = 1;
         }
-        if (D_800E6280.unk_03E == 0x60) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b7 = 1;
+        if (D_800E6280.year == 0x60) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b7 = 1;
         }
-        if (D_800E6280.unk_03E == 0x61) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b11 = 1;
+        if (D_800E6280.year == 0x61) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b11 = 1;
         }
         break;
     case 1:
-        if (D_800E6280.unk_03E == 0x60) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b3 = 1;
+        if (D_800E6280.year == 0x60) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b3 = 1;
         }
-        if (D_800E6280.unk_03E == 0x61) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b7 = 1;
+        if (D_800E6280.year == 0x61) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b7 = 1;
         }
-        if (D_800E6280.unk_03E == 0x62) {
-            ((FlagsF64 *)D_800E6280.unk_F64)->b11 = 1;
+        if (D_800E6280.year == 0x62) {
+            ((FlagsF64 *)D_800E6280.quarter_flags)->b11 = 1;
         }
         break;
     }
@@ -954,76 +954,76 @@ void func_8006A2CC(void) {
     eight = 8;
     /* FAKE: dead reads of both selectors; without them uopt does not promote unk_03E and gives unk_03F $a2 instead
      * of $t0. T-11690 */
-    i = D_800E6280.unk_03F;
-    n = D_800E6280.unk_03E;
+    i = D_800E6280.month;
+    n = D_800E6280.year;
     func_80048E78();
     func_80048F64(0x60);
     D_8011ECD0[96].unk_01 = 5;
-    D_8011ECD0[96].unk_02 = 0x40;
-    D_8011ECD0[96].unk_38 = 0x40000000;
-    D_8011ECD0[96].unk_03 = 0x84;
-    D_8011ECD0[96].unk_0C = sprite_frame_table;
-    D_8011ECD0[96].unk_10 = D_800C9A14;
-    D_8011ECD0[96].unk_34 = D_800C9730;
+    D_8011ECD0[96].flags = 0x40;
+    D_8011ECD0[96].quad_flags = 0x40000000;
+    D_8011ECD0[96].draw_flags = 0x84;
+    D_8011ECD0[96].frame_table = sprite_frame_table;
+    D_8011ECD0[96].sequence_table = D_800C9A14;
+    D_8011ECD0[96].tpage_table = D_800C9730;
     D_8011ECD0[96].unk_14 = D_800C9A54;
     D_8011ECD0[96].unk_04 = 8;
     D_8011ECD0[96].unk_05 = 1;
     D_8011ECD0[96].unk_18 = 0x76;
-    D_8011ECD0[96].unk_26 = 0;
-    D_8011ECD0[96].unk_2A = -0x28;
+    D_8011ECD0[96].x = 0;
+    D_8011ECD0[96].y = -0x28;
     for (i = 0; i < 0x20; i++) {
         func_80048F64(i + 0x61);
         D_8011ECD0[i + 0x61].unk_01 = 4;
-        D_8011ECD0[i + 0x61].unk_02 = 0x40;
-        D_8011ECD0[i + 0x61].unk_38 = 0;
-        D_8011ECD0[i + 0x61].unk_03 = 0x84;
-        D_8011ECD0[i + 0x61].unk_0C = sprite_frame_table;
-        D_8011ECD0[i + 0x61].unk_10 = D_800C9A14;
-        D_8011ECD0[i + 0x61].unk_34 = D_800C9730;
+        D_8011ECD0[i + 0x61].flags = 0x40;
+        D_8011ECD0[i + 0x61].quad_flags = 0;
+        D_8011ECD0[i + 0x61].draw_flags = 0x84;
+        D_8011ECD0[i + 0x61].frame_table = sprite_frame_table;
+        D_8011ECD0[i + 0x61].sequence_table = D_800C9A14;
+        D_8011ECD0[i + 0x61].tpage_table = D_800C9730;
         D_8011ECD0[i + 0x61].unk_14 = D_800C9A54;
         D_8011ECD0[i + 0x61].unk_04 = 8;
         D_8011ECD0[i + 0x61].unk_05 = 1;
-        D_8011ECD0[i + 0x61].unk_06 = 8;
+        D_8011ECD0[i + 0x61].blink_period = 8;
         D_8011ECD0[i + 0x61].unk_18 = 0;
-        D_8011ECD0[i + 0x61].unk_26 = 0x100;
-        D_8011ECD0[i + 0x61].unk_2A = 0x100;
-        D_8011ECD0[i + 0x61].unk_07 = 0x80;
+        D_8011ECD0[i + 0x61].x = 0x100;
+        D_8011ECD0[i + 0x61].y = 0x100;
+        D_8011ECD0[i + 0x61].brightness = 0x80;
     }
     n = 0x61;
-    switch (D_800E6280.unk_03F) {
+    switch (D_800E6280.month) {
     case 2:
     case 3:
     case 4:
-        if (D_800E6280.unk_03E == 0x5F) {
+        if (D_800E6280.year == 0x5F) {
             D_8011ECD0[0x61].unk_18 = 0x79;
-            D_8011ECD0[0x61].unk_26 = 0;
+            D_8011ECD0[0x61].x = 0;
             kind = 0;
-            D_8011ECD0[0x61].unk_2A = -0x28;
+            D_8011ECD0[0x61].y = -0x28;
             n++;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E0C, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E25, 0);
         }
-        if (D_800E6280.unk_03E == 0x60) {
+        if (D_800E6280.year == 0x60) {
             kind = 4;
-            if (D_800E6280.unk_03F != 2) {
-                D_800E6280.unk_120[13] = 1;
+            if (D_800E6280.month != 2) {
+                D_800E6280.progress_state[13] = 1;
             }
-            D_8011ECD0[n].unk_18 = 0x7A; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x7A; D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
             n++;
-            D_8011ECD0[n].unk_18 = 0x81; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x81; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x61) {
+        if (D_800E6280.year == 0x61) {
             kind = 8;
-            if (D_800E6280.unk_03F != 2) {
-                D_800E6280.unk_120[11] = 1;
+            if (D_800E6280.month != 2) {
+                D_800E6280.progress_state[11] = 1;
             }
-            D_8011ECD0[n].unk_18 = 0x7A; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x7A; D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
             n++;
-            D_8011ECD0[n].unk_18 = 0x84; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x84; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x62) {
+        if (D_800E6280.year == 0x62) {
             kind = 0xC;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E70, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E89, 0);
@@ -1032,25 +1032,25 @@ void func_8006A2CC(void) {
     case 5:
     case 6:
     case 7:
-        D_8011ECD0[0x61].unk_18 = 0x7B; D_8011ECD0[0x61].unk_26 = 0; D_8011ECD0[0x61].unk_2A = -0x28;
+        D_8011ECD0[0x61].unk_18 = 0x7B; D_8011ECD0[0x61].x = 0; D_8011ECD0[0x61].y = -0x28;
         n++;
-        if (D_800E6280.unk_03E == 0x5F) {
+        if (D_800E6280.year == 0x5F) {
             kind = 1;
-            if (D_800E6280.unk_03F != 5) {
-                D_800E6280.unk_120[1] = 1;
+            if (D_800E6280.month != 5) {
+                D_800E6280.progress_state[1] = 1;
             }
-            D_8011ECD0[n].unk_18 = 0x7E; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x7E; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x60) {
+        if (D_800E6280.year == 0x60) {
             kind = 5;
-            if (D_800E6280.unk_03F != 5) {
-                D_800E6280.unk_120[5] = 1;
+            if (D_800E6280.month != 5) {
+                D_800E6280.progress_state[5] = 1;
             }
-            D_8011ECD0[n].unk_18 = 0x82; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x82; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x61) {
+        if (D_800E6280.year == 0x61) {
             kind = 9;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E3E, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E57, 0);
@@ -1059,25 +1059,25 @@ void func_8006A2CC(void) {
     case 8:
     case 9:
     case 10:
-        D_8011ECD0[0x61].unk_18 = 0x7C; D_8011ECD0[0x61].unk_26 = 0; D_8011ECD0[0x61].unk_2A = -0x28;
+        D_8011ECD0[0x61].unk_18 = 0x7C; D_8011ECD0[0x61].x = 0; D_8011ECD0[0x61].y = -0x28;
         n++;
-        if (D_800E6280.unk_03E == 0x5F) {
+        if (D_800E6280.year == 0x5F) {
             kind = 2;
-            if (D_800E6280.unk_03F != eight) {
-                D_800E6280.unk_120[7] = 1;
+            if (D_800E6280.month != eight) {
+                D_800E6280.progress_state[7] = 1;
             }
-            D_8011ECD0[n].unk_18 = 0x7F; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x7F; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x60) {
+        if (D_800E6280.year == 0x60) {
             kind = 6;
-            if (D_800E6280.unk_03F != eight) {
-                D_800E6280.unk_120[10] = 1;
+            if (D_800E6280.month != eight) {
+                D_800E6280.progress_state[10] = 1;
             }
-            D_8011ECD0[n].unk_18 = 0x83; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x83; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x61) {
+        if (D_800E6280.year == 0x61) {
             kind = 0xA;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E3E, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E57, 0);
@@ -1085,92 +1085,92 @@ void func_8006A2CC(void) {
         break;
     case 11:
     case 12:
-        D_8011ECD0[0x61].unk_18 = 0x7D; D_8011ECD0[0x61].unk_26 = 0; D_8011ECD0[0x61].unk_2A = -0x28;
+        D_8011ECD0[0x61].unk_18 = 0x7D; D_8011ECD0[0x61].x = 0; D_8011ECD0[0x61].y = -0x28;
         n++;
-        if (D_800E6280.unk_03E == 0x5F) {
+        if (D_800E6280.year == 0x5F) {
             kind = 3;
-            if (D_800E6280.unk_03F == 0xC) {
-                D_800E6280.unk_120[3] = 1;
+            if (D_800E6280.month == 0xC) {
+                D_800E6280.progress_state[3] = 1;
             }
-            D_8011ECD0[n].unk_18 = 0x80; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x80; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x60) {
+        if (D_800E6280.year == 0x60) {
             kind = 7;
-            if (D_800E6280.unk_03F == 0xC) {
-                D_800E6280.unk_120[6] = 1;
+            if (D_800E6280.month == 0xC) {
+                D_800E6280.progress_state[6] = 1;
             }
-            D_8011ECD0[n].unk_18 = 0x85; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_8011ECD0[n].unk_18 = 0x85; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x61) {
+        if (D_800E6280.year == 0x61) {
             kind = 0xB;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E70, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E89, 0);
         }
         break;
     case 1:
-        D_8011ECD0[0x61].unk_18 = 0x7D; D_8011ECD0[0x61].unk_26 = 0; D_8011ECD0[0x61].unk_2A = -0x28;
+        D_8011ECD0[0x61].unk_18 = 0x7D; D_8011ECD0[0x61].x = 0; D_8011ECD0[0x61].y = -0x28;
         n++;
-        if (D_800E6280.unk_03E == 0x60) {
+        if (D_800E6280.year == 0x60) {
             kind = 3;
-            D_800E6280.unk_120[3] = 1;
-            D_8011ECD0[n].unk_18 = 0x80; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_800E6280.progress_state[3] = 1;
+            D_8011ECD0[n].unk_18 = 0x80; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x61) {
+        if (D_800E6280.year == 0x61) {
             kind = 7;
-            D_800E6280.unk_120[6] = 1;
-            D_8011ECD0[n].unk_18 = 0x85; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            D_800E6280.progress_state[6] = 1;
+            D_8011ECD0[n].unk_18 = 0x85; D_8011ECD0[n].x = 8; D_8011ECD0[n].y = -0x28;
             n++;
         }
-        if (D_800E6280.unk_03E == 0x62) {
+        if (D_800E6280.year == 0x62) {
             kind = 0xB;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E70, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E89, 0);
         }
         break;
     }
-    if ((D_800E6280.unk_03E != 0x5F) || (D_800E6280.unk_03F >= 6U)) {
-        D_8011ECD0[n].unk_18 = 0x77; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+    if ((D_800E6280.year != 0x5F) || (D_800E6280.month >= 6U)) {
+        D_8011ECD0[n].unk_18 = 0x77; D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
         n++;
     }
-    if (D_800E6280.unk_03E == 0x5F) {
-        D_8011ECD0[n].unk_18 = (s16) (kind + 0x97); D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+    if (D_800E6280.year == 0x5F) {
+        D_8011ECD0[n].unk_18 = (s16) (kind + 0x97); D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
         n++;
-    } else if ((D_800E6280.unk_03E == 0x60) && (D_800E6280.unk_03F < 2U)) {
-        D_8011ECD0[n].unk_18 = (s16) (kind + 0x97); D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+    } else if ((D_800E6280.year == 0x60) && (D_800E6280.month < 2U)) {
+        D_8011ECD0[n].unk_18 = (s16) (kind + 0x97); D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
         n++;
     } else {
         D_8011ECD0[n].unk_01++;
-        D_8011ECD0[n].unk_18 = 0x78; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        D_8011ECD0[n].unk_18 = 0x78; D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
         n++;
-        D_8011ECD0[n].unk_18 = (s16) (D_800B3750[kind][0] + 0x90); D_8011ECD0[n].unk_26 = 0x110; D_8011ECD0[n].unk_2A = 0x18;
+        D_8011ECD0[n].unk_18 = (s16) (D_800B3750[kind][0] + 0x90); D_8011ECD0[n].x = 0x110; D_8011ECD0[n].y = 0x18;
         n++;
-        D_8011ECD0[n].unk_18 = (s16) (D_800B3750[kind][1] + 0x90); D_8011ECD0[n].unk_26 = 0x110; D_8011ECD0[n].unk_2A = 0x28;
+        D_8011ECD0[n].unk_18 = (s16) (D_800B3750[kind][1] + 0x90); D_8011ECD0[n].x = 0x110; D_8011ECD0[n].y = 0x28;
         n++;
-        D_8011ECD0[n].unk_18 = (s16) (D_800B3750[kind][2] + 0x90); D_8011ECD0[n].unk_26 = 0x110; D_8011ECD0[n].unk_2A = 0x38;
+        D_8011ECD0[n].unk_18 = (s16) (D_800B3750[kind][2] + 0x90); D_8011ECD0[n].x = 0x110; D_8011ECD0[n].y = 0x38;
         n++;
         set_kanji_string(0x100, 0x10, 6U, D_800B32CC[(kind * 3 + 2) % 12], 0);
         set_kanji_string(0x100, 0x20, 6U, D_800B32CC[(kind * 3 + 3) % 12], 0);
         set_kanji_string(0x100, 0x30, 6U, D_800B32CC[(kind * 3 + 4) % 12], 0);
     }
     if (D_800B5DFC[kind] != 0xFF) {
-        D_8011ECD0[n].unk_18 = (s16) D_800B5DFC[kind]; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        D_8011ECD0[n].unk_18 = (s16) D_800B5DFC[kind]; D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
         n++;
     }
     set_kanji_string(0x20, -0x5E, 7U, D_800B5D1C[kind], 0);
     if (D_800B5D0C[kind] != 0xFF) {
-        D_8011ECD0[n].unk_18 = (s16) D_800B5D0C[kind]; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        D_8011ECD0[n].unk_18 = (s16) D_800B5D0C[kind]; D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
         n++;
     }
     set_kanji_string(0x20, -0x3E, 8U, D_800B5C2C[kind], 0);
     if (kind < 4) {
-        D_8011ECD0[n].unk_18 = (s16) ((kind & 3) + 0x97); D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        D_8011ECD0[n].unk_18 = (s16) ((kind & 3) + 0x97); D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
         n++;
     }
     if (kind >= 4) {
-        D_8011ECD0[n].unk_18 = (s16) ((kind & 3) + 0x93); D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        D_8011ECD0[n].unk_18 = (s16) ((kind & 3) + 0x93); D_8011ECD0[n].x = 0; D_8011ECD0[n].y = -0x28;
         n++;
     }
     set_kanji_string(-0x8F, -0xE, 6U, D_800B5EA4[kind][0], 0);
@@ -1178,7 +1178,7 @@ void func_8006A2CC(void) {
     set_kanji_string(-0x8F, 0x12, 6U, D_800B5EA4[kind][2], 0);
     k_sub_reset_point_set();
     k_sub_disp_start(0);
-    gnsx(&D_800E6280.unk_0D4[0]);
+    gnsx(&D_800E6280.player_family_name[0]);
     sndisp(D_800B66A4[kind], 0, 0x1F);
 }
 
@@ -1216,7 +1216,7 @@ s32 func_8006B014(s32 arg0) {
 
     n = 0;
     for (i = 0; i < 8; i++) {
-        if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && arg0 == ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_25) {
+        if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && arg0 == ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->girl) {
             n++;
         }
     }
@@ -1247,7 +1247,7 @@ void func_8006B0C8(void) {
     for (j = n; j < 8; j++) {
         bzero(&g->unk_54C[j], 4);
     }
-    if (g->unk_03F == 12) {
+    if (g->month == 12) {
         for (j = 0; j < n; j++) {
             if (SCHED_DATE(j)->month == 1) {
                 SCHED_DATE(j)->month = 13;
@@ -1330,7 +1330,7 @@ void club_list_menu(void) {
         y[i] = (i % 5) * 0x10 - 0x38;
         w[i] = 0x40;
         h[i] = 0x10;
-        if (!(D_800E6280.unk_66C[i].unk_03 & 1)) {
+        if (!(D_800E6280.clubs[i].unk_03 & 1)) {
             set_kanji_string(x[i], y[i], 3, club_name_table[i], 0);
             if (first == -1) {
                 first = i;
@@ -1346,7 +1346,7 @@ void club_list_menu(void) {
     h[i] = 0x10;
     set_kanji_string(x[i], y[i], 3, "取り消し", 0);
     menu_set(1, 0xC, x, y, w, h);
-    D_800E6280.unk_1094 = first;
+    D_800E6280.menu_cursor_1 = first;
     k_sub_reset_point_set();
     sndi("入部する部活を選択してください", 0, 0xFF);
     k_sub_disp_start(1);
@@ -1371,20 +1371,20 @@ void func_8006BA40(void) {
     u8 temp; /* FAKE: T-25003, first test through a u8 copy keeps the D_800B6708 value in $v0 */
 
     if ((u8)D_8011ECA4 == 0) {
-        speed = g->unk_F6F;
+        speed = g->cursor_speed;
         D_8011ECA4 = (u8)D_8011ECA4 + 1;
         if (speed == 0) {
             speed = 1;
         }
-        g->unk_F6F = speed;
+        g->cursor_speed = speed;
         step = speed;
-        if (!(g->unk_1092 & 3) && (g->unk_F80 & 0xFF)) {
+        if (!(g->menu_mode & 3) && (g->pad_held & 0xFF)) {
             step = speed * 2;
         }
         /* FAKE: T-25008, the u8 cast spends the ugen temporary the original spends before the switch */
-        if ((u8)g->unk_F80 & 0xF) {
+        if ((u8)g->pad_held & 0xF) {
         } else {
-            switch (g->unk_F80 & 0x5000) {
+            switch (g->pad_held & 0x5000) {
             case 0x1000:
                 D_8011ECFA -= step;
                 break;
@@ -1392,7 +1392,7 @@ void func_8006BA40(void) {
                 D_8011ECFA += step;
                 break;
             }
-            switch (g->unk_F80 & 0xA000) {
+            switch (g->pad_held & 0xA000) {
             case 0x2000:
                 D_8011ECF6 += step;
                 break;
@@ -1413,7 +1413,7 @@ void func_8006BA40(void) {
         if (D_8011ECFA >= 0x65) {
             D_8011ECFA = 0x64;
         }
-        if (g->unk_F88 & 0x80) {
+        if (g->pad_pressed & 0x80) {
             temp = D_800B6708;
             if (temp == 0) {
                 D_800B6708 = 0x9B;
@@ -1433,20 +1433,20 @@ void func_8006BC28(s32 arg0) {
     s16 sp2E;
     s16 sp2C;
 
-    sp2E = D_8011ECD0[0].unk_26;
-    sp2C = D_8011ECD0[0].unk_2A;
+    sp2E = D_8011ECD0[0].x;
+    sp2C = D_8011ECD0[0].y;
     func_80048F64(0);
     D_8011ECD0[0].unk_01 = 1;
-    D_8011ECD0[0].unk_02 = 0x40;
-    D_8011ECD0[0].unk_38 = 0;
-    D_8011ECD0[0].unk_03 = 0x84;
-    D_8011ECD0[0].unk_0C = sprite_frame_table;
-    D_8011ECD0[0].unk_10 = D_800C9A14;
-    D_8011ECD0[0].unk_34 = D_800C9730;
+    D_8011ECD0[0].flags = 0x40;
+    D_8011ECD0[0].quad_flags = 0;
+    D_8011ECD0[0].draw_flags = 0x84;
+    D_8011ECD0[0].frame_table = sprite_frame_table;
+    D_8011ECD0[0].sequence_table = D_800C9A14;
+    D_8011ECD0[0].tpage_table = D_800C9730;
     D_8011ECD0[0].unk_14 = D_800C9A54;
     D_8011ECD0[0].unk_04 = 8;
     D_8011ECD0[0].unk_05 = 1;
-    D_8011ECD0[0].unk_16 = 0;
+    D_8011ECD0[0].sequence_slot = 0;
     if ((s32)D_800B6708) {
     }
     switch (arg0) {
@@ -1462,8 +1462,8 @@ void func_8006BC28(s32 arg0) {
         }
         break;
     }
-    D_8011ECD0[0].unk_26 = sp2E;
-    D_8011ECD0[0].unk_2A = sp2C;
+    D_8011ECD0[0].x = sp2E;
+    D_8011ECD0[0].y = sp2C;
 }
 
 void func_8006BD6C(s32 arg0) {
@@ -1483,25 +1483,25 @@ s32 func_8006BDA8(s32 arg0) {
     u16 old_day;
     s32 factor;
 
-    old_day = D_800E6280.unk_042;
+    old_day = D_800E6280.day_count;
     day = old_day;
-    D_800E6280.unk_042 = old_day + arg0;
+    D_800E6280.day_count = old_day + arg0;
     score = 0;
-    switch (D_800E6280.unk_F68.w & 15) {
+    switch (D_800E6280.last_command.w & 15) {
     case 0:
-        score = func_8006C334(0, 0, 1, 16) + D_800E6280.unk_100.unk_02 / 16;
+        score = func_8006C334(0, 0, 1, 16) + D_800E6280.param_liberal_arts.value / 16;
         break;
     case 1:
-        score = func_8006C334(0, 0, 1, 16) + D_800E6280.unk_104.unk_02 / 16;
+        score = func_8006C334(0, 0, 1, 16) + D_800E6280.param_science.value / 16;
         break;
     case 2:
-        score = func_8006C334(0, 1, 0, 16) + D_800E6280.unk_108.unk_02 / 16;
+        score = func_8006C334(0, 1, 0, 16) + D_800E6280.param_art.value / 16;
         break;
     case 3:
-        score = func_8006C334(1, 0, 0, 16) + D_800E6280.unk_10C.unk_02 / 16;
+        score = func_8006C334(1, 0, 0, 16) + D_800E6280.param_athletics.value / 16;
         break;
     case 4:
-        switch ((u16)D_800E6280.unk_0F4.h >> 12) {
+        switch ((u16)D_800E6280.player_flags.h >> 12) {
         case 0:
             score = func_8006C334(0, 0, 1, 16);
             break;
@@ -1536,13 +1536,13 @@ s32 func_8006BDA8(s32 arg0) {
             score = func_8006C334(1, 0, 0, 16);
             break;
         }
-        score += (u16)D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 12].unk_00 >> 4;
+        score += (u16)D_800E6280.clubs[(u16)D_800E6280.player_flags.h >> 12].exp >> 4;
         break;
     case 5:
-        score = func_8006C334(0, 1, 0, 16) + D_800E6280.unk_110.unk_02 / 16;
+        score = func_8006C334(0, 1, 0, 16) + D_800E6280.param_trivia.value / 16;
         break;
     case 6:
-        score = func_8006C334(0, 1, 0, 16) + D_800E6280.unk_114.unk_02 / 16;
+        score = func_8006C334(0, 1, 0, 16) + D_800E6280.param_looks.value / 16;
         break;
     case 7:
         func_8006C334(1, 1, 1, 16);
@@ -1550,10 +1550,10 @@ s32 func_8006BDA8(s32 arg0) {
         break;
     }
     score += 6;
-    if (D_800E6280.unk_11C.unk_02 >= 97) {
+    if (D_800E6280.param_stress.value >= 97) {
         factor = 4;
     } else {
-        factor = D_800E6280.unk_11C.unk_02 / 32;
+        factor = D_800E6280.param_stress.value / 32;
     }
     score = rand() % (score + 4);
     score = (8 - factor) * score / 8;
@@ -1570,7 +1570,7 @@ s32 func_8006BDA8(s32 arg0) {
     if (failures == 3) {
         score /= 4;
     }
-    D_800E6280.unk_042 = day;
+    D_800E6280.day_count = day;
     if (score >= 4) {
         return 0;
     }
@@ -1592,7 +1592,7 @@ s32 func_8006C334(s32 a, s32 b, s32 c, s32 scale) {
     s32 count;
     s32 total;
 
-    wave_a = rsin((day = (offset = func_8006C700()) + (u16)D_800E6280.unk_042) * 0xB2);
+    wave_a = rsin((day = (offset = func_8006C700()) + (u16)D_800E6280.day_count) * 0xB2);
     wave_b = rsin(day * 0x92);
     wave_c = rsin(day * 0x7C);
     bad = 0;
@@ -1660,9 +1660,9 @@ s32 func_8006C334(s32 a, s32 b, s32 c, s32 scale) {
 
 s32 func_8006C700(void) {
     s32 result;
-    result = -(s32)D_800B670A[D_800E6280.unk_0F8 & 0xF] - (((u32)D_800E6280.unk_0F8 << 23) >> 27) + 0x1563;
-    if ((D_800E6280.unk_0F8 & 0xF) == 4 && (((u32)D_800E6280.unk_0F8 << 23) >> 27) < 4U) {
-        result = -(s32)D_800B670A[3] - (((u32)D_800E6280.unk_0F8 << 23) >> 27) + 0x1582;
+    result = -(s32)D_800B670A[D_800E6280.player_birthday & 0xF] - (((u32)D_800E6280.player_birthday << 23) >> 27) + 0x1563;
+    if ((D_800E6280.player_birthday & 0xF) == 4 && (((u32)D_800E6280.player_birthday << 23) >> 27) < 4U) {
+        result = -(s32)D_800B670A[3] - (((u32)D_800E6280.player_birthday << 23) >> 27) + 0x1582;
     }
     return result;
 }
@@ -1712,7 +1712,7 @@ void func_8006C848(s32 arg0) {
 
 s16 func_8006C934(void) {
     if (D_8011ED82 < 0x4F) {
-        if (!(D_800E6280.unk_10F8 & 3)) {
+        if (!(D_800E6280.frame_count & 3)) {
             D_8011ED82 += 1;
         }
     } else {
@@ -1720,7 +1720,7 @@ s16 func_8006C934(void) {
     }
 }
 
-/* Scans the event records of D_800E6280.unk_75E (unk_04 == 0 ends the list): `last` gets the
+/* Scans the event records of D_800E6280.event_log (unk_04 == 0 ends the list): `last` gets the
  * unk_00 of the final record, `first` that of the final record whose type unk_02 is 0, 1, 2 or
  * 0xF. Clears unk_04 of every record after the list and returns the count, at most 0xFF.
  * T-25103: the for loop orders the induction init before `i = 0`, and `n++` ahead of the join copy
@@ -1746,21 +1746,21 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     cur = 0;
     n = 0;
     for (i = 0; i < 0x100; i++) {
-        if (g->unk_75E[n].unk_04 == 0) {
+        if (g->event_log[n].year == 0) {
             break;
         }
-        type = g->unk_75E[n].unk_02;
+        type = g->event_log[n].scene;
         if (type != 0 && type != 1 && type != 2 && type != 0xF) {
-            val = g->unk_75E[n].unk_00;
+            val = g->event_log[n].girl;
         } else {
-            val = g->unk_75E[n].unk_00;
+            val = g->event_log[n].girl;
             sel = val;
         }
         n++;
         cur = val;
     }
     for (i = n; i < 0x100; i++) {
-        g->unk_75E[i].unk_04 = 0;
+        g->event_log[i].year = 0;
     }
     *first = sel;
     *last = cur;
@@ -1771,8 +1771,8 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
 }
 
 u8 *func_8006CA9C(void) {
-    if (D_800E6280.unk_F74 == 0) {
-        if (D_800E6280.unk_F75 != 0) {
+    if (D_800E6280.input_device == 0) {
+        if (D_800E6280.confirm_button != 0) {
             return D_800B672C;
         }
         return D_800B6730;
@@ -1781,8 +1781,8 @@ u8 *func_8006CA9C(void) {
 }
 
 u8 *func_8006CAE0(void) {
-    if (D_800E6280.unk_F74 == 0) {
-        if (D_800E6280.unk_F75 != 0) {
+    if (D_800E6280.input_device == 0) {
+        if (D_800E6280.confirm_button != 0) {
             return D_800B6730;
         }
         return D_800B672C;

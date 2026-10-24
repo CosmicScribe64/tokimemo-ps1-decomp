@@ -122,24 +122,24 @@ void func_8015A744(void) {
     m = (RpgMotion20 *)&D_8015EC50;
     a = (DisplayActor44 *)D_8011ECD0;
     for (i = 0; i < 8; i++) {
-        if (a[i + 136].unk_26 < -0xB4 || a[i + 136].unk_2A >= 0x8D) {
+        if (a[i + 136].x < -0xB4 || a[i + 136].y >= 0x8D) {
             if (func_8013E9A8(5) == 0) {
                 func_8013F0F4(0x501, 2, 2);
                 func_8013E97C(i + 0x28, 0xF0, 0x28);
                 D_8015EC50 = func_8013E9A8(8) + 5;
                 D_8015EC54 = func_8013E9A8(D_8015EC50);
                 m->dx = -m->dx;
-                a[i + 136].unk_03 = 0x94;
-                a[i + 136].unk_2E = m->dx;
-                a[i + 136].unk_32 = D_8015EC54;
+                a[i + 136].draw_flags = 0x94;
+                a[i + 136].dx = m->dx;
+                a[i + 136].dy = D_8015EC54;
             } else {
                 func_8013E810(i + 0x28, 7, 1, 0);
             }
         }
-        m->rect.unk_10 = a[i + 136].unk_26;
+        m->rect.unk_10 = a[i + 136].x;
         r = ((0x70 - m->rect.unk_10) << 12) / 240;
-        a[i + 136].unk_1A = r;
-        a[i + 136].unk_1C = r;
+        a[i + 136].scale_x = r;
+        a[i + 136].scale_y = r;
     }
 }
 

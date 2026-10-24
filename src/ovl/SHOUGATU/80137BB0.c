@@ -27,7 +27,7 @@ void func_80137C28(void) {
     FnTbl24 tbl;
 
     tbl = D_80144E20;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx]();
 }
 
@@ -47,7 +47,7 @@ void func_80137CD4(void) {
 
 s32 func_80137D0C(void) {
     func_80137AB4();
-    if (D_800E6280.unk_1104.w++ == 1) {
+    if (D_800E6280.step_timer.w++ == 1) {
         if (D_80144E0C == 3) {
             func_80083440(3);
         }
@@ -59,7 +59,7 @@ void func_80137D68(void) {
     FnTbl34 tbl;
 
     tbl = D_80144E80;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx]();
 }
 
@@ -84,18 +84,18 @@ void func_80137E54(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     func_8008585C();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
     func_80084E4C();
-    *(u8 *)&D_800E6280.unk_75D = *(u8 *)&D_800E6280.unk_F5F = 8;
-    func_800847B8(*(u8 *)&D_800E6280.unk_F5F);
+    *(u8 *)&D_800E6280.date_girl = *(u8 *)&D_800E6280.current_girl = 8;
+    func_800847B8(*(u8 *)&D_800E6280.current_girl);
     if ((u8) D_80144E14 < 3U) {
         strcpy(D_800CA188, "女生徒");
     }

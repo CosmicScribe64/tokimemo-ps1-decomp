@@ -14,7 +14,7 @@ void func_80150930(void) {
     FnTbl165 tbl;
 
     tbl = D_80160810;
-    idx = D_800E6280.unk_1109;
+    idx = D_800E6280.stage;
     tbl.f[idx]();
 }
 
@@ -25,10 +25,10 @@ void func_801509A4(void) {
     BunkasaiGirlList sp30;
 
     sp30 = D_80160AA4;
-    srand(D_800E6280.unk_10F4);
+    srand(D_800E6280.timer_ticks);
     count = 0;
     for (i = 0; i < 11; i++) {
-        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 == 1) {
+        if (D_800E6280.girls[i].flags.f.met == 1) {
             sp30.v[count] = i;
             count++;
         }
@@ -83,81 +83,81 @@ void func_80150B7C(void) {
      * D_800E6280 directly; the split is what gives the hoisted constant 1 the register $v0 (all-game: 50 rows). */
     GameState *game = &D_800E6280;
 
-    temp_v1 = D_800E6280.unk_110A;
+    temp_v1 = D_800E6280.step;
     switch (temp_v1) {
     case 0:
-        D_800CA148 = ((((u16) D_800E6280.unk_0F4.h >> 0xC) * 3) + D_800E6280.unk_03E) - 0x4D;
+        D_800CA148 = ((((u16) D_800E6280.player_flags.h >> 0xC) * 3) + D_800E6280.year) - 0x4D;
         func_8004284C();
         return;
     case 1:
         normal_date_speak();
         return;
     case 2:
-        temp_v1_2 = D_800E6280.unk_0F4.h;
-        D_80122EB8 = (s32) ((u16) D_800E6280.unk_0F4.h >> 0xC);
+        temp_v1_2 = D_800E6280.player_flags.h;
+        D_80122EB8 = (s32) ((u16) D_800E6280.player_flags.h >> 0xC);
         temp_t2 = temp_v1_2 >> 0xC;
         switch (temp_t2) {
         case 0:
-            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 0) {
+            if (((u8) game->girls[0].flags.h[1] >> 4) == 0) {
                 func_80042908(1);
                 return;
             }
-            if ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 0) && (game->unk_1BC[1].unk_0C.f.b1 == 1)) {
+            if ((((u8) game->girls[1].flags.b[2] >> 4) == 0) && (game->girls[1].flags.f.met == 1)) {
                 func_80042908(0x2A);
                 return;
             }
             func_80042908(0xE);
             return;
         case 1:
-            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 1) {
+            if (((u8) game->girls[0].flags.h[1] >> 4) == 1) {
                 func_80042908(1);
                 return;
             }
-            if ((((u8) game->unk_1BC[1].unk_0C.b[2] >> 4) == 1) && (game->unk_1BC[1].unk_0C.f.b1 == 1)) {
+            if ((((u8) game->girls[1].flags.b[2] >> 4) == 1) && (game->girls[1].flags.f.met == 1)) {
                 func_80042908(0x2A);
                 return;
             }
             func_80042908(0xE);
             return;
         case 2:
-            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 2) {
+            if (((u8) game->girls[0].flags.h[1] >> 4) == 2) {
                 func_80042908(1);
                 return;
             }
-            if ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 2) && (game->unk_1BC[2].unk_0C.f.b1 == 1)) {
+            if ((((u8) game->girls[2].flags.b[2] >> 4) == 2) && (game->girls[2].flags.f.met == 1)) {
                 func_80042908(0x3B);
                 return;
             }
             func_80042908(0xE);
             return;
         case 3:
-            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 3) {
+            if (((u8) game->girls[0].flags.h[1] >> 4) == 3) {
                 func_80042908(1);
                 return;
             }
-            if ((((u8) game->unk_1BC[2].unk_0C.b[2] >> 4) == 3) && (game->unk_1BC[2].unk_0C.f.b1 == 1)) {
+            if ((((u8) game->girls[2].flags.b[2] >> 4) == 3) && (game->girls[2].flags.f.met == 1)) {
                 func_80042908(0x3B);
                 return;
             }
             func_80042908(0xE);
             return;
         case 4:
-            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 4) {
+            if (((u8) game->girls[0].flags.h[1] >> 4) == 4) {
                 func_80042908(1);
                 return;
             }
-            if ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 4) && (game->unk_1BC[3].unk_0C.f.b1 == 1)) {
+            if ((((u8) game->girls[3].flags.b[2] >> 4) == 4) && (game->girls[3].flags.f.met == 1)) {
                 func_80042908(0x50);
                 return;
             }
             func_80042908(0xE);
             return;
         case 5:
-            if (((u8) game->unk_1BC[0].unk_0C.h[1] >> 4) == 5) {
+            if (((u8) game->girls[0].flags.h[1] >> 4) == 5) {
                 func_80042908(1);
                 return;
             }
-            if ((((u8) game->unk_1BC[3].unk_0C.b[2] >> 4) == 5) && (game->unk_1BC[3].unk_0C.f.b1 == 1)) {
+            if ((((u8) game->girls[3].flags.b[2] >> 4) == 5) && (game->girls[3].flags.f.met == 1)) {
                 func_80042908(0x50);
                 return;
             }
@@ -175,7 +175,7 @@ void func_80150B7C(void) {
 }
 
 void func_80150F20(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80048EB8(0);
         func_8006BD6C(0);
@@ -198,7 +198,7 @@ void func_80150F20(void) {
         return;
     case 5:
         if (cd_read_sync_status() & 1) {
-            func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 0);
+            func_80068938(D_800E6280.year, D_800E6280.month, 0);
             func_8004284C();
             return;
         }
@@ -217,7 +217,7 @@ void func_80150F20(void) {
 }
 
 void func_80151064(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         cd_read_sectors(1U, 0x801E8000, 0x4B7F);
         func_8004284C();
@@ -228,7 +228,7 @@ void func_80151064(void) {
             func_8006612C((s32) "天の声");
             k_disp_start(1);
             func_801323DC();
-            D_800E6280.unk_F5F = 8;
+            D_800E6280.current_girl = 8;
             func_800847B8(8U);
             strcpy(D_800CA188, "　");
             D_800CA148 = 0;
@@ -246,7 +246,7 @@ void func_80151064(void) {
         normal_date_bg_fadeout();
         break;
     case 4:
-        if (D_800E6280.unk_F74 == 1) {
+        if (D_800E6280.input_device == 1) {
             func_80048EB8(0);
             func_8006BD6C(0);
             set_dec_bri(0);

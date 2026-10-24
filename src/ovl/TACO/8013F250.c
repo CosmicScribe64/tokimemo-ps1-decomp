@@ -78,7 +78,7 @@ void func_8013F468(void) {
     poly->x3 = ((s16 *)pt)[6];
     poly->y3 = ((s16 *)pt)[7];
     AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 4, poly);
-    if (D_800E6280.unk_10F8 & 8) {
+    if (D_800E6280.frame_count & 8) {
         poly = GetWorkBase(0x28, D_8011ECA0);
         func_8009F040(poly);
         SetSemiTrans(poly, 1);
@@ -133,10 +133,10 @@ void func_8013F874(s32 arg0, s32 arg1, s32 arg2) {
     sprite->r0 = 0x80;
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
-    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + arg0;
-    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg1;
+    sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] + arg0;
+    sprite->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg1;
     sprite->u0 = 0xC0; sprite->v0 = arg2 * 16 - 0x30;
-    palette = ((D_800E6280.unk_10F8 >> 1) % 14) * 16;
+    palette = ((D_800E6280.frame_count >> 1) % 14) * 16;
     if (arg2 == 3) {
         sprite->clut = func_8009ED74(palette, 0x1EA);
     } else {
@@ -161,8 +161,8 @@ void func_8013F9C0(void) {
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
     dy = (D_8015EDB4->unk2 & 0x40) >> 2;
-    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + 0xC8;
-    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + dy + 0x28;
+    sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] + 0xC8;
+    sprite->y0 = D_800E6280.screen_center_y[D_8011ECA0] + dy + 0x28;
     sprite->u0 = 0xE0;
     sprite->v0 = 0;
     if (D_8015EDB4->unk84[1] < 0x20) {
@@ -179,8 +179,8 @@ void func_8013F9C0(void) {
     sprite->r0 = 0x80;
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
-    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + 0xC8;
-    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + 0x48;
+    sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] + 0xC8;
+    sprite->y0 = D_800E6280.screen_center_y[D_8011ECA0] + 0x48;
     sprite->u0 = 0xE0; sprite->v0 = 0x20;
     if (D_8015EDB4->unk84[1] < 0x20) {
         sprite->clut = func_8009ED74(0x10, 0x1EF);
@@ -210,8 +210,8 @@ void func_8013FBF0(void) {
     sprite->r0 = 0xFF;
     sprite->g0 = 0xFF;
     sprite->b0 = 0xFF;
-    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] - 0xC8;
-    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + 0x28;
+    sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] - 0xC8;
+    sprite->y0 = D_800E6280.screen_center_y[D_8011ECA0] + 0x28;
     sprite->u0 = 0x80; sprite->v0 = 0x40;
     sprite->clut = func_8009ED74(0x10, 0x1EF);
     AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
@@ -234,7 +234,7 @@ void func_8013FBF0(void) {
         g = 0;
         b = 0;
     }
-    value = (0x1000 - rsin(D_800E6280.unk_10F8 * 240)) / 128 + 0x40;
+    value = (0x1000 - rsin(D_800E6280.frame_count * 240)) / 128 + 0x40;
     r *= value;
     g *= value;
     b *= value;
@@ -247,8 +247,8 @@ void func_8013FBF0(void) {
     sprite->r0 = 0x80;
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
-    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] - 0xC8;
-    sprite->y0 = ((0xFF - D_8015EDB4->unk84[1]) >> 2) + D_800E6280.unk_018[D_8011ECA0] + 0x18;
+    sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] - 0xC8;
+    sprite->y0 = ((0xFF - D_8015EDB4->unk84[1]) >> 2) + D_800E6280.screen_center_y[D_8011ECA0] + 0x18;
     sprite->u0 = 0xA0; sprite->v0 = 0x60;
     sprite->clut = func_8009ED74(0x20, 0x1EF);
     AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
@@ -260,8 +260,8 @@ void func_8013FBF0(void) {
     sprite->r0 = 0x80;
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
-    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] - 0xCE;
-    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + 0x68;
+    sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] - 0xCE;
+    sprite->y0 = D_800E6280.screen_center_y[D_8011ECA0] + 0x68;
     sprite->u0 = 0xA0; sprite->v0 = 0x40;
     sprite->clut = func_8009ED74(0x20, 0x1EF);
     AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
@@ -307,7 +307,7 @@ void func_80140028(s32 arg0) {
         }
         if (particle->unk13 & 0x80) {
             if ((particle->unk13 & 1) && particle->unk12 >= 0x11) {
-                if (!(D_800E6280.unk_10F8 & 3)) {
+                if (!(D_800E6280.frame_count & 3)) {
                     target = particle->unk11;
                     if (target != -1) {
                         actor = D_8015EDB4 + target;
@@ -509,7 +509,7 @@ s32 func_801407D4(s32 *arg0, TcPos pos) {
     *arg0 = -1;
     count = 0;
     best = 0x09C40000;
-    start = D_800E6280.unk_10F8 % 48;
+    start = D_800E6280.frame_count % 48;
     for (i = 0; i <= 48; i++) {
         idx = (start + i) % 48;
         j = idx + 16;
@@ -559,8 +559,8 @@ void func_80140ADC(Tc14 *arg0, s32 arg1) {
         rot += 0x20;
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= D_800E6280.unk_018[D_8011ECA0] - 0x200
-            && D_800E6280.unk_018[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= D_800E6280.screen_center_y[D_8011ECA0] - 0x200
+            && D_800E6280.screen_center_y[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
             side = (rec->unk12 >> 4) & 1;
             dist = (D_80122754 - rec->unk4) / 127;
             if (dist >= 0x100) {

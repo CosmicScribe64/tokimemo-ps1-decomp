@@ -22,7 +22,7 @@ void func_80132000(void) {
 
     sp3C = D_80148EC4;
     func_80083808();
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80044890(0, 0xBF98, 0xBF79, 0xD712, 0xD6C3, 0xD6B7);
         func_80085E30(1, 0);
@@ -37,7 +37,7 @@ void func_80132000(void) {
         parameter_disp_switch(0);
         icon_disp_switch(0);
         message_window_init();
-        srand(D_800E6280.unk_10F4);
+        srand(D_800E6280.timer_ticks);
         D_80122E90 = 0;
         func_8004284C();
         break;
@@ -46,7 +46,7 @@ void func_80132000(void) {
             count = 0;
             if (j) {} /* FAKE: empty test splits the live range of j. T-19031 */
             for (j = 0; j < 11; j++) {
-                if (D_800E6280.unk_1BC[j].unk_0C.f.b1 == 1) {
+                if (D_800E6280.girls[j].flags.f.met == 1) {
                     sp74[count] = j;
                     count++;
                 }
@@ -57,7 +57,7 @@ void func_80132000(void) {
                 if (D_80122E90 == 0) {
                     dec_bg_cd_read(0x4133, 1);
                 }
-                D_800E6280.unk_03A = 0x80;
+                D_800E6280.screen_brightness = 0x80;
                 a = sp74[rand() % count];
                 b = sp74[rand() % count];
                 if (D_80122E90 != 0) {
@@ -104,7 +104,7 @@ void func_80132000(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.unk_F5F = D_80148EC0[0];
+            D_800E6280.current_girl = D_80148EC0[0];
             func_80083474();
         }
         break;
@@ -183,7 +183,7 @@ void func_80132000(void) {
     case 19:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.unk_F5F = D_80148EC0[1];
+            D_800E6280.current_girl = D_80148EC0[1];
             func_80083474();
         }
         break;
@@ -214,12 +214,12 @@ void func_80132000(void) {
     case 29:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.unk_F5F = D_80148EC0[2];
+            D_800E6280.current_girl = D_80148EC0[2];
             func_80083474();
         }
         break;
     case 31:
-        if ((D_800E6280.unk_1BC[D_80148EC0[2]].unk_0A >= 0x4C) || (func_8008667C(D_80148EC0[2]) == 4)) {
+        if ((D_800E6280.girls[D_80148EC0[2]].syoushin >= 0x4C) || (func_8008667C(D_80148EC0[2]) == 4)) {
             func_80044750(0xBF);
             func_80083440(4);
             func_80042940(0x26);
@@ -252,7 +252,7 @@ void func_80132000(void) {
     case 37:
     case 42:
         for (i = 0; i < 3; i++) {
-            D_800E6280.unk_1BC[D_80148EC0[i]].unk_06 += 1;
+            D_800E6280.girls[D_80148EC0[i]].affection += 1;
         }
         D_80122ECC = 2;
         break;
@@ -276,20 +276,20 @@ void func_80132970(void) {
 
     gs = &D_800E6280;
     for (i = 0; i < 3; i++) {
-        gs->unk_75E[gs->unk_F5E].unk_00 = D_80148EC0[i];
-        gs->unk_75E[gs->unk_F5E].unk_02 = 0x13;
-        gs->unk_75E[gs->unk_F5E].unk_01 = 0;
-        gs->unk_75E[gs->unk_F5E].unk_03 = get_g_zyotai_h(D_80148EC0[i]);
-        if ((i == 2) && (gs->unk_1BC[D_80148EC0[i]].unk_0A >= 0x4C)) {
-            gs->unk_75E[gs->unk_F5E].unk_03 = 4;
+        gs->event_log[gs->event_log_count].girl = D_80148EC0[i];
+        gs->event_log[gs->event_log_count].scene = 0x13;
+        gs->event_log[gs->event_log_count].flag = 0;
+        gs->event_log[gs->event_log_count].rank = get_g_zyotai_h(D_80148EC0[i]);
+        if ((i == 2) && (gs->girls[D_80148EC0[i]].syoushin >= 0x4C)) {
+            gs->event_log[gs->event_log_count].rank = 4;
         }
-        gs->unk_75E[gs->unk_F5E].unk_04 = gs->unk_03E;
-        gs->unk_75E[gs->unk_F5E].unk_05 = gs->unk_03F;
-        gs->unk_75E[gs->unk_F5E].unk_06 = gs->unk_040;
-        gs->unk_75E[gs->unk_F5E].unk_07 = gs->unk_041;
-        gs->unk_F5E++;
-        if (gs->unk_F5E >= 0xFF) {
-            gs->unk_F5E = 0xFE;
+        gs->event_log[gs->event_log_count].year = gs->year;
+        gs->event_log[gs->event_log_count].month = gs->month;
+        gs->event_log[gs->event_log_count].day = gs->day;
+        gs->event_log[gs->event_log_count].weekday = gs->weekday;
+        gs->event_log_count++;
+        if (gs->event_log_count >= 0xFF) {
+            gs->event_log_count = 0xFE;
         }
     }
 }

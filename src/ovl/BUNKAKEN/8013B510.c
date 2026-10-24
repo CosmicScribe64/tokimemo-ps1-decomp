@@ -9,7 +9,7 @@ s32 func_8013BD84(void);
 void func_8013BFA0(void);
 
 void func_8013B510(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         if (func_8013BD84() != 0) {
             func_8004284C();
@@ -23,9 +23,9 @@ void func_8013B510(void) {
     case 2:
         addr_init_bustup();
         if (D_80122EBC == 0xB) {
-            D_800E6280.unk_F5F = 0;
+            D_800E6280.current_girl = 0;
         } else {
-            D_800E6280.unk_F5F = D_80122EBC;
+            D_800E6280.current_girl = D_80122EBC;
         }
         func_80083474();
         cd_read_sectors(D_80155F00[D_80122EBC], 0x801E8000, D_80155F0C[D_80122EBC]);
@@ -123,14 +123,14 @@ void func_8013B510(void) {
         break;
     case 17:
         /* The halfword conversion preserves the original temporary order. T-24134. */
-        D_800CA148 = (s16) ((u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) + 1;
+        D_800CA148 = (s16) ((u8) D_800E6280.girls[0].flags.b[2] >> 4) + 1;
         func_8004284C();
         break;
     case 18:
         normal_date_speak();
         break;
     case 19:
-        D_800E6280.unk_1BC[0].unk_0C.f.b2 = 1;
+        D_800E6280.girls[0].flags.f.b2 = 1;
         D_800CA148 = 7;
         func_8004284C();
         break;
@@ -155,7 +155,7 @@ void func_8013B510(void) {
             func_80042940(0x1C);
         } else {
             /* The halfword conversion preserves the original temporary order. T-24134. */
-            D_800CA148 = (s16) ((u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) + 9;
+            D_800CA148 = (s16) ((u8) D_800E6280.girls[0].flags.b[2] >> 4) + 9;
             func_8004284C();
         }
         break;
@@ -166,7 +166,7 @@ void func_8013B510(void) {
         normal_date_speak();
         break;
     case 27:
-        D_80122EB8 = (u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4;
+        D_80122EB8 = (u8) D_800E6280.girls[0].flags.b[2] >> 4;
         D_80122EBC = 0xFF;
         func_80042908(4);
         break;
@@ -187,21 +187,21 @@ void func_8013B510(void) {
     case 32:
         switch (D_80122EBC) {
         case 1:
-            if (((u8) D_800E6280.unk_1BC[1].unk_0C.b[2] >> 4) == 0) {
+            if (((u8) D_800E6280.girls[1].flags.b[2] >> 4) == 0) {
                 D_800CA148 = 1;
             } else {
                 D_800CA148 = 2;
             }
             break;
         case 2:
-            if (((u8) D_800E6280.unk_1BC[2].unk_0C.b[2] >> 4) == 2) {
+            if (((u8) D_800E6280.girls[2].flags.b[2] >> 4) == 2) {
                 D_800CA148 = 1;
             } else {
                 D_800CA148 = 2;
             }
             break;
         case 3:
-            if (((u8) D_800E6280.unk_1BC[3].unk_0C.b[2] >> 4) == 4) {
+            if (((u8) D_800E6280.girls[3].flags.b[2] >> 4) == 4) {
                 D_800CA148 = 1;
             } else {
                 D_800CA148 = 2;
@@ -211,7 +211,7 @@ void func_8013B510(void) {
             func_80046500();
             break;
         }
-        D_800E6280.unk_1BC[D_80122EBC].unk_0C.f.b2 = 1;
+        D_800E6280.girls[D_80122EBC].flags.f.b2 = 1;
         func_8004284C();
         break;
     case 33:
@@ -247,21 +247,21 @@ void func_8013B510(void) {
         } else {
             switch (D_80122EBC) {
             case 1:
-                if (((u8) D_800E6280.unk_1BC[1].unk_0C.b[2] >> 4) == 0) {
+                if (((u8) D_800E6280.girls[1].flags.b[2] >> 4) == 0) {
                     D_800CA148 = 5;
                 } else {
                     D_800CA148 = 6;
                 }
                 break;
             case 2:
-                if (((u8) D_800E6280.unk_1BC[2].unk_0C.b[2] >> 4) == 2) {
+                if (((u8) D_800E6280.girls[2].flags.b[2] >> 4) == 2) {
                     D_800CA148 = 5;
                 } else {
                     D_800CA148 = 6;
                 }
                 break;
             case 3:
-                if (((u8) D_800E6280.unk_1BC[3].unk_0C.b[2] >> 4) == 4) {
+                if (((u8) D_800E6280.girls[3].flags.b[2] >> 4) == 4) {
                     D_800CA148 = 5;
                 } else {
                     D_800CA148 = 6;
@@ -281,7 +281,7 @@ void func_8013B510(void) {
         normal_date_speak();
         break;
     case 42:
-        D_80122EB8 = (u8) D_800E6280.unk_1BC[D_80122EBC].unk_0C.b[2] >> 4;
+        D_80122EB8 = (u8) D_800E6280.girls[D_80122EBC].flags.b[2] >> 4;
         D_80122EBC = 0xFF;
         func_80042908(4);
         break;
@@ -314,21 +314,21 @@ s32 func_8013BD84(void) {
 
     best = 0;
     if ((get_h_yuukou(0) >= 0x32U) && (get_h_yuukou(0) >= 0x50U)) {
-        max = D_800E6280.unk_1BC[0].unk_06 + D_800E6280.unk_1BC[0].unk_02;
+        max = D_800E6280.girls[0].affection + D_800E6280.girls[0].tokimeki;
     } else {
         max = 0;
     }
-    flags = D_800E6280.unk_1BC[0].unk_0C.b[2];
-    if (D_800E6280.unk_03E == 0x60) {
+    flags = D_800E6280.girls[0].flags.b[2];
+    if (D_800E6280.year == 0x60) {
         if (((flags >> 4) == 4) || ((flags >> 4) == 1)) {
             max = 0;
         }
     }
     for (i = 1; i < 11; i++) {
-        if ((get_h_tokimeki(i) >= 0x32U) && (get_h_yuukou(i) >= 0x50U) && (D_800E6280.unk_1BC[i].unk_0C.f.b1 == 1)) {
-            v = D_800E6280.unk_1BC[i].unk_06 + D_800E6280.unk_1BC[i].unk_02;
-            if (D_800E6280.unk_03E == 0x60) {
-                if ((((u8) D_800E6280.unk_1BC[i].unk_0C.b[2] >> 4) == 4) || (((u8) D_800E6280.unk_1BC[i].unk_0C.b[2] >> 4) == 1)) {
+        if ((get_h_tokimeki(i) >= 0x32U) && (get_h_yuukou(i) >= 0x50U) && (D_800E6280.girls[i].flags.f.met == 1)) {
+            v = D_800E6280.girls[i].affection + D_800E6280.girls[i].tokimeki;
+            if (D_800E6280.year == 0x60) {
+                if ((((u8) D_800E6280.girls[i].flags.b[2] >> 4) == 4) || (((u8) D_800E6280.girls[i].flags.b[2] >> 4) == 1)) {
                     v = 0;
                 }
             }
@@ -339,8 +339,8 @@ s32 func_8013BD84(void) {
         }
     }
     if ((get_h_tokimeki(best) >= 0x32U) && (get_h_yuukou(best) >= 0x50U)) {
-        flags = D_800E6280.unk_1BC[0].unk_0C.b[2];
-        if ((best == 0) && (D_800E6280.unk_03E == 0x60)) {
+        flags = D_800E6280.girls[0].flags.b[2];
+        if ((best == 0) && (D_800E6280.year == 0x60)) {
             if (((flags >> 4) == 4) || ((flags >> 4) == 1)) {
                 return 0;
             }

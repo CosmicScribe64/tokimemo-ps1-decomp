@@ -20,7 +20,7 @@ void func_80134560(void) {
     ShFnTbl38 tbl;
 
     tbl = D_8013C0EC;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -51,8 +51,8 @@ void func_80134658(void) {
     D_80120654 = D_80120698;
     D_800CA2E4 = 0;
     D_800CA2E8 = 0;
-    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
-    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
+    D_800E6280.girls[D_800E6280.current_girl].tokimeki += 1;
+    D_800E6280.girls[D_800E6280.current_girl].affection += 2;
     check_para_limit();
     strcpy(D_800CA19C, "ホテル・廊下");
     func_8004284C();
@@ -73,7 +73,7 @@ void func_80134824(void) {
     s32 pad; /* FAKE: unused local above `unused`, puts it at sp+0x2B as in the original; real source unknown. T-4010 */
     u8 unused; /* read uninitialised: the original passes the stack byte */
 
-    get_g_zyotai_h(D_800E6280.unk_F5F);
+    get_g_zyotai_h(D_800E6280.current_girl);
     func_800634FC(unused);
     func_80048F64(0x60);
     func_80048F64(0x61);

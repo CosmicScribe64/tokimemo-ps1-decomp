@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_80136B40(void) {
-    switch (D_800E6280.unk_110A) {
+    switch (D_800E6280.step) {
     case 0:
         func_80136C00();
         return;
@@ -36,9 +36,9 @@ void func_80136B40(void) {
 void func_80136C00(void) {
     func_8013AFDC();
     func_800450F4(0, 0x202);
-    D_800E6280.unk_036 = 0;
-    D_800E6280.unk_037 = 0;
-    D_800E6280.unk_038 = 0;
+    D_800E6280.clear_color_r = 0;
+    D_800E6280.clear_color_g = 0;
+    D_800E6280.clear_color_b = 0;
     back_clear_switch(1);
     D_8015EDB0 = 0;
     func_80059048();
@@ -47,9 +47,9 @@ void func_80136C00(void) {
 
 s32 func_80136C60(void) {
     func_8013A790(1, 0);
-    D_8015F4F0 = 0x80 - D_800E6280.unk_110D * 3;
-    D_800E6280.unk_110D++;
-    if (D_800E6280.unk_110D * 3 > 0x80) {
+    D_8015F4F0 = 0x80 - D_800E6280.substep * 3;
+    D_800E6280.substep++;
+    if (D_800E6280.substep * 3 > 0x80) {
         func_8004284C();
     }
 }
@@ -72,7 +72,7 @@ void func_80136D00(void) {
 }
 
 void func_80136D78(void) {
-    if (D_800E6280.unk_F80 & 0x40) {
+    if (D_800E6280.pad_held & 0x40) {
         D_8015F400 += 0x78;
     } else {
         D_8015F400 += 0x3C;
@@ -108,10 +108,10 @@ void func_80136E70(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 void func_80136F4C(void) {
     func_8013A790(1, 0);
     func_80136FBC(0x1000, 3);
-    if (D_800E6280.unk_F80 & 0x40) {
+    if (D_800E6280.pad_held & 0x40) {
         func_8004284C();
     }
-    if (D_800E6280.unk_F88 & 0x20) {
+    if (D_800E6280.pad_pressed & 0x20) {
         func_8004284C();
     }
 }

@@ -2,8 +2,8 @@
 #include "ovl/TACO.h"
 
 void func_80132000(void) {
-    D_800E6280.unk_1100 += 1;
-    switch (D_800E6280.unk_1109) {
+    D_800E6280.stage_timer += 1;
+    switch (D_800E6280.stage) {
     case 0:
         func_80133870();
         break;

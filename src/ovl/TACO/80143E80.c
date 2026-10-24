@@ -106,7 +106,7 @@ void func_80144094(void) {
         for (j = 0; j < 12; j++) {
             q = (s16 *)&sxy[j][i];
             if (q[20] >= 0 && q[2] < 0x201) {
-                if (q[1] >= D_800E6280.unk_018[k] - 0x200 && D_800E6280.unk_018[k] + 0x400 >= q[3]) {
+                if (q[1] >= D_800E6280.screen_center_y[k] - 0x200 && D_800E6280.screen_center_y[k] + 0x400 >= q[3]) {
                     poly = GetWorkBase(0x28, k);
                     func_8009F040(poly);
                     poly->r0 = 0x80;
@@ -214,7 +214,7 @@ void func_801446D8(void) {
     u32 sp50[8];
     Tc10 *var_s0;
 
-    if (D_800E6280.unk_1113 != 0) {
+    if (D_800E6280.draw_3d_enabled != 0) {
         func_80099540(&D_80122740);
         var_s0 = D_80127080; do {
             func_80099B10(var_s0->unk4[0], &sp50, &sp70);

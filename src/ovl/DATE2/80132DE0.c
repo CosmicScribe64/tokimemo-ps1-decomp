@@ -37,14 +37,14 @@ void func_80132DE0(void) {
     FnTbl58 tbl;
 
     tbl = D_8013A4C8;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
 void func_80132E5C(void) {
-    memcpy((void *)(0x80180000 + D_800E6280.unk_1104.w * 0x1400), 0x801C0000 + D_800E6280.unk_1104.w * 0x1400, 0x1400);
-    D_800E6280.unk_1104.w += 1;
-    if (D_800E6280.unk_1104.w == 0x12) {
+    memcpy((void *)(0x80180000 + D_800E6280.step_timer.w * 0x1400), 0x801C0000 + D_800E6280.step_timer.w * 0x1400, 0x1400);
+    D_800E6280.step_timer.w += 1;
+    if (D_800E6280.step_timer.w == 0x12) {
         func_8004284C();
     }
 }
@@ -53,12 +53,12 @@ void func_80132EC8(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    temp_v0 = D_800E6280.unk_1104.w * 0x1400;
+    temp_v0 = D_800E6280.step_timer.w * 0x1400;
     memcpy(temp_v0 + 0x80180000, temp_v0 + 0x801A0000, 0x1400);
-    temp_v0_2 = D_800E6280.unk_1104.w + 1;
-    D_800E6280.unk_1104.w = temp_v0_2;
+    temp_v0_2 = D_800E6280.step_timer.w + 1;
+    D_800E6280.step_timer.w = temp_v0_2;
     if (temp_v0_2 == 0x12) {
-        D_800E6280.unk_F5F = 0;
+        D_800E6280.current_girl = 0;
         get_p_name(D_800CA17C, 0);
         func_8004284C();
     }
@@ -73,24 +73,24 @@ void func_80132F48(void) {
     rect.w = 0x180;
     rect.h = 0x80;
     func_8009C8E0(&rect, (void *)0x80180000);
-    D_800E6280.unk_F5F = D_800E6280.unk_75D;
-    func_800847B8(D_800E6280.unk_75D);
+    D_800E6280.current_girl = D_800E6280.date_girl;
+    func_800847B8(D_800E6280.date_girl);
     func_80133258();
     func_8004284C();
 }
 
 void func_80132FB0(void) {
-    memcpy((void *)(0x801C0000 + D_800E6280.unk_1104.w * 0x1400), 0x80180000 + D_800E6280.unk_1104.w * 0x1400, 0x1400);
-    D_800E6280.unk_1104.w += 1;
-    if (D_800E6280.unk_1104.w == 0x12) {
+    memcpy((void *)(0x801C0000 + D_800E6280.step_timer.w * 0x1400), 0x80180000 + D_800E6280.step_timer.w * 0x1400, 0x1400);
+    D_800E6280.step_timer.w += 1;
+    if (D_800E6280.step_timer.w == 0x12) {
         func_80083474();
     }
 }
 
 void func_8013301C(void) {
-    memcpy((void *)(0x801A0000 + D_800E6280.unk_1104.w * 0x1400), 0x80180000 + D_800E6280.unk_1104.w * 0x1400, 0x1400);
-    D_800E6280.unk_1104.w += 1;
-    if (D_800E6280.unk_1104.w == 0x12) {
+    memcpy((void *)(0x801A0000 + D_800E6280.step_timer.w * 0x1400), 0x80180000 + D_800E6280.step_timer.w * 0x1400, 0x1400);
+    D_800E6280.step_timer.w += 1;
+    if (D_800E6280.step_timer.w == 0x12) {
         func_80083474();
     }
 }
@@ -115,26 +115,26 @@ void func_801330D4(void) {
 
     best = 100; /* set before the loops: the original holds 100 in a2 from the entry */
     D_8013A4C0 = 0;
-    D_800E6280.unk_F5F = 1;
+    D_800E6280.current_girl = 1;
     g = &D_800E6280;
     for (i = 1; i < 10; i++) {
         sums[i] = 0;
         for (j = 1; j < 0x25; j++) {
-            sums[i] += g->unk_1BC[i].unk_14[j]; /* j = 0x24 reads the byte after unk_14 (the original does) */
+            sums[i] += g->girls[i].event_counters[j]; /* j = 0x24 reads the byte after unk_14 (the original does) */
         }
-        sums[i] -= g->unk_1BC[i].unk_14[0x1A];
+        sums[i] -= g->girls[i].event_counters[0x1A];
     }
 
     for (i = 1; i < 10; i++) {
-        if (sums[i] < best && g->unk_1BC[i].unk_0C.f.b1) {
-            g->unk_F5F = i; /* through g: the store may alias sums, so sums[i] is reloaded below */
+        if (sums[i] < best && g->girls[i].flags.f.met) {
+            g->current_girl = i; /* through g: the store may alias sums, so sums[i] is reloaded below */
             best = sums[i];
         }
     }
-    func_800847B8(D_800E6280.unk_75D = D_800E6280.unk_F5F);
-    D_800E6280.unk_F5F = 0;
+    func_800847B8(D_800E6280.date_girl = D_800E6280.current_girl);
+    D_800E6280.current_girl = 0;
     func_80085B3C(0xC, 0);
-    D_800E6280.unk_F5F = D_800E6280.unk_75D;
+    D_800E6280.current_girl = D_800E6280.date_girl;
     func_80085B3C(0xC, 0);
     func_80133258();
     func_801338F8();
@@ -142,7 +142,7 @@ void func_801330D4(void) {
 }
 
 void func_80133258(void) {
-    switch (D_800E6280.unk_F5F) {
+    switch (D_800E6280.current_girl) {
     case 0:
         D_8013A410 = D_8013A384;
         D_8013A414 = D_8013A3B0;
@@ -207,7 +207,7 @@ void func_80133494(void) {
         strcpy(D_800CA1DC, "観覧車");
         break;
     case 1:
-        if ((u8) D_800E6280.unk_03E >= 0x61U) {
+        if ((u8) D_800E6280.year >= 0x61U) {
             bg_read_sub2(0x4359);
             strcpy(D_800CA1DC, "絶叫マシーンビビール");
         } else {
@@ -229,24 +229,24 @@ void func_8013357C(void) {
 }
 
 void func_801335A4(void) {
-    D_800E6280.unk_F5F = 0;
+    D_800E6280.current_girl = 0;
     get_p_name(&D_800CA17C, 0);
     func_80062CD0(0x55DF);
     func_8004284C();
 }
 
 void func_801335E4(void) {
-    D_800E6280.unk_F5F = D_800E6280.unk_75D;
-    func_800847B8(D_800E6280.unk_75D);
+    D_800E6280.current_girl = D_800E6280.date_girl;
+    func_800847B8(D_800E6280.date_girl);
     func_80133258();
     read_bustup();
 }
 
 void func_80133620(void) {
-    D_800E6280.unk_F5F = D_800E6280.unk_75D;
+    D_800E6280.current_girl = D_800E6280.date_girl;
     func_80133258();
-    func_800847B8(D_800E6280.unk_F5F);
-    switch (D_800E6280.unk_F5F) {
+    func_800847B8(D_800E6280.current_girl);
+    switch (D_800E6280.current_girl) {
     case 1:
         func_80062CD0(0x5DC8);
         break;
@@ -297,7 +297,7 @@ void func_80133784(void) {
         D_8013A438 = 1;
         break;
     case 1:
-        if ((u8) D_800E6280.unk_03E >= 0x61U) {
+        if ((u8) D_800E6280.year >= 0x61U) {
             D_8013A430 = 5;
             D_8013A438 = 5;
             D_8013A428 += 2;
@@ -309,7 +309,7 @@ void func_80133784(void) {
     case 2:
         D_8013A430 = 7;
         D_8013A438 = 7;
-        if ((u8) D_800E6280.unk_03E < 0x61U) {
+        if ((u8) D_800E6280.year < 0x61U) {
             D_8013A428 += 2;
         }
         break;
@@ -345,7 +345,7 @@ s32 func_801338F8(void) {
     if (first_state == 4) {
         D_8013A430 += 0xA;
     }
-    previous_state = get_g_zyotai_s(D_800E6280.unk_75D) & 0x7F;
+    previous_state = get_g_zyotai_s(D_800E6280.date_girl) & 0x7F;
     if (previous_state >= 2U) {
         D_8013A438 += 0xA;
     }
@@ -375,7 +375,7 @@ void func_80133A6C(void) {
         func_801348F0();
         return;
     case 1:
-        if ((u8) D_800E6280.unk_03E >= 0x61U) {
+        if ((u8) D_800E6280.year >= 0x61U) {
             func_80133AF0();
             return;
         }
@@ -405,10 +405,10 @@ s32 func_80133AF0(void) {
     g = &D_800E6280;
     movie = (DateMovieWork *)D_800B5920;
     D_800B3D60 = 0;
-    switch (g->unk_1104.u) {
+    switch (g->step_timer.u) {
     case 0:
         D_80122D2C = 1;
-        srand(D_800E6280.unk_10F8);
+        srand(D_800E6280.frame_count);
         func_80044750(0x206);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -421,51 +421,51 @@ s32 func_80133AF0(void) {
         movie->unk_1A = 0;
         hizuke_disp_switch(0);
         D_8013A5D0 = 2;
-        D_800E6280.unk_110D = 0;
+        D_800E6280.substep = 0;
         D_8013A5CC = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order (as in func_801348F0) T-11880 */
-            D_801217D0[i + 4].unk_08 = (i << 6) + 0x80;
-            D_801217D0[i + 4].unk_00 = 0x82000000;
-            D_801217D0[i + 4].unk_0A = 0;
+            D_801217D0[i + 4].w = (i << 6) + 0x80;
+            D_801217D0[i + 4].flags = 0x82000000;
+            D_801217D0[i + 4].h = 0;
             D_801217D0[i + 4].unk_0E = 0;
             D_801217D0[i + 4].unk_0F = 0xA0;
             D_801217D0[i + 4].unk_10 = 0;
             D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
             D_801217D0[i + 4].unk_12 = 0x1E0;
-            D_801217D0[i + 4].unk_14 = 0;
-            D_801217D0[i + 4].unk_15 = 0;
-            D_801217D0[i + 4].unk_16 = 0;
-            D_801217D0[i + 4].unk_18 = 0;
-            D_801217D0[i + 4].unk_1A = 0;
+            D_801217D0[i + 4].tint_r = 0;
+            D_801217D0[i + 4].tint_g = 0;
+            D_801217D0[i + 4].tint_b = 0;
+            D_801217D0[i + 4].anchor_x = 0;
+            D_801217D0[i + 4].anchor_y = 0;
             D_801217D0[i + 4].unk_1C = 0x1000;
             D_801217D0[i + 4].unk_1E = 0x1000;
             D_801217D0[i + 4].unk_20 = 0;
-            D_801217D0[i + 4].unk_04 = (i << 7) - 0xA0;
-            D_801217D0[i + 4].unk_06 = -0x78;
-            D_800E6280.unk_10A5[i + 4] = 0xB;
+            D_801217D0[i + 4].x = (i << 7) - 0xA0;
+            D_801217D0[i + 4].y = -0x78;
+            D_800E6280.quad_layer[i + 4] = 0xB;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].unk_08 = (i << 6) + 0x80;
-            D_801217D0[i + 6].unk_00 = 0x82000000;
-            D_801217D0[i + 6].unk_0A = 0xA0;
+            D_801217D0[i + 6].w = (i << 6) + 0x80;
+            D_801217D0[i + 6].flags = 0x82000000;
+            D_801217D0[i + 6].h = 0xA0;
             D_801217D0[i + 6].unk_0E = 0;
             D_801217D0[i + 6].unk_0F = 0;
             D_801217D0[i + 6].unk_10 = 0;
             D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
             D_801217D0[i + 6].unk_12 = 0x1E0;
-            D_801217D0[i + 6].unk_14 = 0;
-            D_801217D0[i + 6].unk_15 = 0;
-            D_801217D0[i + 6].unk_16 = 0;
-            D_801217D0[i + 6].unk_18 = 0;
-            D_801217D0[i + 6].unk_1A = 0;
+            D_801217D0[i + 6].tint_r = 0;
+            D_801217D0[i + 6].tint_g = 0;
+            D_801217D0[i + 6].tint_b = 0;
+            D_801217D0[i + 6].anchor_x = 0;
+            D_801217D0[i + 6].anchor_y = 0;
             D_801217D0[i + 6].unk_1C = 0x1000;
             D_801217D0[i + 6].unk_1E = 0x1000;
             D_801217D0[i + 6].unk_20 = 0;
-            D_801217D0[i + 6].unk_04 = (i << 7) - 0xA0;
-            D_801217D0[i + 6].unk_06 = -0x78;
-            D_800E6280.unk_10A5[i + 6] = 0xB;
+            D_801217D0[i + 6].x = (i << 7) - 0xA0;
+            D_801217D0[i + 6].y = -0x78;
+            D_800E6280.quad_layer[i + 6] = 0xB;
         }
         dec_bg_cd_read(0x43CB, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -475,12 +475,12 @@ s32 func_80133AF0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x80183000);
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         break;
     case 2:
         dec_bg_cd_read(0x43D4, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
@@ -490,12 +490,12 @@ s32 func_80133AF0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801A1000);
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         break;
     case 4:
         dec_bg_cd_read(0x43DE, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
@@ -505,12 +505,12 @@ s32 func_80133AF0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801BF000);
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         break;
     case 6:
         dec_bg_cd_read(0x43E7, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         break;
     case 7:
         if (cd_read_sync_status() & 1) {
@@ -520,69 +520,69 @@ s32 func_80133AF0(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801DD000);
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         break;
     case 8:
         for (i = 0; i < 4; i++) {
-            D_801217D0[i + 4].unk_00 = 0x02000000;
+            D_801217D0[i + 4].flags = 0x02000000;
         }
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         func_80044750(0x500);
         break;
     case 9:
-        value = D_801217D0[4].unk_14;
+        value = D_801217D0[4].tint_r;
         value += 2;
         color = (value & 0xFF);
-        D_801217D0[7].unk_16 = color;
-        D_801217D0[7].unk_15 = color;
-        D_801217D0[7].unk_14 = color;
-        D_801217D0[6].unk_16 = color;
-        D_801217D0[6].unk_15 = color;
-        D_801217D0[6].unk_14 = color;
-        D_801217D0[5].unk_16 = color;
-        D_801217D0[5].unk_15 = color;
-        D_801217D0[5].unk_14 = color;
-        D_801217D0[4].unk_16 = color;
-        D_801217D0[4].unk_15 = color;
-        D_801217D0[4].unk_14 = color;
+        D_801217D0[7].tint_b = color;
+        D_801217D0[7].tint_g = color;
+        D_801217D0[7].tint_r = color;
+        D_801217D0[6].tint_b = color;
+        D_801217D0[6].tint_g = color;
+        D_801217D0[6].tint_r = color;
+        D_801217D0[5].tint_b = color;
+        D_801217D0[5].tint_g = color;
+        D_801217D0[5].tint_r = color;
+        D_801217D0[4].tint_b = color;
+        D_801217D0[4].tint_g = color;
+        D_801217D0[4].tint_r = color;
         if (value == 0x80) {
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         break;
     case 10:
         break;
     case 11:
-        value = D_801217D0[4].unk_14;
+        value = D_801217D0[4].tint_r;
         value -= 2;
         color = (value & 0xFF);
-        D_801217D0[7].unk_16 = color;
-        D_801217D0[7].unk_15 = color;
-        D_801217D0[7].unk_14 = color;
-        D_801217D0[6].unk_16 = color;
-        D_801217D0[6].unk_15 = color;
-        D_801217D0[6].unk_14 = color;
-        D_801217D0[5].unk_16 = color;
-        D_801217D0[5].unk_15 = color;
-        D_801217D0[5].unk_14 = color;
-        D_801217D0[4].unk_16 = color;
-        D_801217D0[4].unk_15 = color;
-        D_801217D0[4].unk_14 = color;
+        D_801217D0[7].tint_b = color;
+        D_801217D0[7].tint_g = color;
+        D_801217D0[7].tint_r = color;
+        D_801217D0[6].tint_b = color;
+        D_801217D0[6].tint_g = color;
+        D_801217D0[6].tint_r = color;
+        D_801217D0[5].tint_b = color;
+        D_801217D0[5].tint_g = color;
+        D_801217D0[5].tint_r = color;
+        D_801217D0[4].tint_b = color;
+        D_801217D0[4].tint_g = color;
+        D_801217D0[4].tint_r = color;
         if (value == 0) {
             for (i = 0; i < 4; i++) {
-                D_801217D0[i + 4].unk_00 = 0x82000000;
+                D_801217D0[i + 4].flags = 0x82000000;
             }
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         break;
     case 12:
-        sp50 = D_800E6280.unk_110A;
-        sp4C = g->unk_1104.u;
+        sp50 = D_800E6280.step;
+        sp4C = g->step_timer.u;
         read_bustup();
-        g->unk_1104.u = sp4C;
-        if (sp50 != D_800E6280.unk_110A) {
-            D_800E6280.unk_110A--;
-            g->unk_1104.u += 1;
+        g->step_timer.u = sp4C;
+        if (sp50 != D_800E6280.step) {
+            D_800E6280.step--;
+            g->step_timer.u += 1;
         }
         break;
     case 13:
@@ -591,37 +591,37 @@ s32 func_80133AF0(void) {
     case 21:
     case 23:
         if (cd_read_sync_status() & 1) {
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         break;
     case 14:
-        sp4C = g->unk_1104.u;
+        sp4C = g->step_timer.u;
         func_80083474();
-        D_800E6280.unk_110A -= 1;
-        g->unk_1104.u = sp4C + 1;
+        D_800E6280.step -= 1;
+        g->step_timer.u = sp4C + 1;
         break;
     case 15:
         func_800462C8(0xA, 0x80162000, 0x4359);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         break;
     case 17:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->unk_1104.u -= 2;
+            g->step_timer.u -= 2;
             return 0;
         }
         func_8005751C(1);
         dec_bg_show_switch(1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         break;
     case 18:
         func_80044750(0x200);
-        sp4C = g->unk_1104.u;
+        sp4C = g->step_timer.u;
         func_80132BB0();
-        D_800E6280.unk_110A -= 1;
-        g->unk_1104.u = sp4C + 1;
+        D_800E6280.step -= 1;
+        g->step_timer.u = sp4C + 1;
         break;
     default:
         hizuke_disp_switch(1);
@@ -629,7 +629,7 @@ s32 func_80133AF0(void) {
         func_8004284C();
         break;
     }
-    if (g->unk_1104.u < 9 || g->unk_1104.u >= 12) {
+    if (g->step_timer.u < 9 || g->step_timer.u >= 12) {
         return 0;
     }
     p = D_801217D0;
@@ -649,75 +649,75 @@ s32 func_80133AF0(void) {
     p[5].unk_0E = v;
     p[4].unk_0E = v;
     if (x != 0) {
-        p[4].unk_0A += 0x14;
-        p[5].unk_0A += 0x14;
+        p[4].h += 0x14;
+        p[5].h += 0x14;
         x -= 0x14;
         p[5].unk_0F -= 0x14;
     } else {
-        p[4].unk_0A -= 0x14;
-        p[4].unk_06 += 0x14;
-        p[5].unk_0A -= 0x14;
-        p[5].unk_06 += 0x14;
+        p[4].h -= 0x14;
+        p[4].y += 0x14;
+        p[5].h -= 0x14;
+        p[5].y += 0x14;
     }
     if (p[6].unk_0F != 0) {
-        p[6].unk_0A += 0x14;
-        p[7].unk_0A += 0x14;
+        p[6].h += 0x14;
+        p[7].h += 0x14;
         p[6].unk_0F -= 0x14;
         p[7].unk_0F -= 0x14;
     } else {
-        p[6].unk_0A -= 0x14;
-        p[6].unk_06 += 0x14;
-        p[7].unk_0A -= 0x14;
-        p[7].unk_06 += 0x14;
+        p[6].h -= 0x14;
+        p[6].y += 0x14;
+        p[7].h -= 0x14;
+        p[7].y += 0x14;
     }
     p[4].unk_0F = x;
-    if ((x == 0 && (g->unk_110D == 1 || g->unk_110D == 3)) || (p[6].unk_0F == 0 && (g->unk_110D == 0 || g->unk_110D == 2))) {
-        switch (D_800E6280.unk_110D) { /* FAKE: g-> in the test, the symbol here; one access path keeps the byte in $v0 and drops the reload T-11880 */
+    if ((x == 0 && (g->substep == 1 || g->substep == 3)) || (p[6].unk_0F == 0 && (g->substep == 0 || g->substep == 2))) {
+        switch (D_800E6280.substep) { /* FAKE: g-> in the test, the symbol here; one access path keeps the byte in $v0 and drops the reload T-11880 */
         case 0:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 4].unk_0A = 0;
+                D_801217D0[i + 4].h = 0;
                 D_801217D0[i + 4].unk_0F = 0xA0;
-                D_801217D0[i + 4].unk_06 = -0x78;
+                D_801217D0[i + 4].y = -0x78;
                 D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
             }
             LoadSquare(0x140, 0x100, 0x180, 0xA0, 0x80183000);
             break;
         case 1:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 6].unk_0A = 0;
+                D_801217D0[i + 6].h = 0;
                 D_801217D0[i + 6].unk_0F = 0xA0;
-                D_801217D0[i + 6].unk_06 = -0x78;
+                D_801217D0[i + 6].y = -0x78;
                 D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
             }
             LoadSquare(0x280, 0, 0x180, 0xA0, 0x801A1000);
             break;
         case 2:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 4].unk_0A = 0;
+                D_801217D0[i + 4].h = 0;
                 D_801217D0[i + 4].unk_0F = 0xA0;
-                D_801217D0[i + 4].unk_06 = -0x78;
+                D_801217D0[i + 4].y = -0x78;
                 D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
             }
             LoadSquare(0x140, 0x100, 0x180, 0xA0, 0x801BF000);
             break;
         case 3:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 6].unk_0A = 0;
+                D_801217D0[i + 6].h = 0;
                 D_801217D0[i + 6].unk_0F = 0xA0;
-                D_801217D0[i + 6].unk_06 = -0x78;
+                D_801217D0[i + 6].y = -0x78;
                 D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
             }
             LoadSquare(0x280, 0, 0x180, 0xA0, 0x801DD000);
             break;
         }
-        if (++D_800E6280.unk_110D >= 4) {
-            D_800E6280.unk_110D = 0;
+        if (++D_800E6280.substep >= 4) {
+            D_800E6280.substep = 0;
         }
     }
     timer = (D_8013A5CC + 1) & 0xFFFF;
     D_8013A5CC = timer;
     if (timer == 0x96) {
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
     }
 }
 
@@ -735,7 +735,7 @@ s32 func_801348F0(void) {
     g = &D_800E6280;
     movie = (DateMovieWork *)D_800B5920;
     D_800B3D60 = 0;
-    switch (g->unk_1104.u) {
+    switch (g->step_timer.u) {
     case 0:
         D_80122D2C = 1;
         func_80044750(0x201);
@@ -750,28 +750,28 @@ s32 func_801348F0(void) {
         movie->unk_1A = 0;
         hizuke_disp_switch(0);
         D_8013A5CC = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order T-11880 */
-            D_801217D0[i + 10].unk_08 = (i << 6) + 0x80;
-            D_801217D0[i + 10].unk_00 = 0x82000000;
-            D_801217D0[i + 10].unk_0A = 0xA0;
+            D_801217D0[i + 10].w = (i << 6) + 0x80;
+            D_801217D0[i + 10].flags = 0x82000000;
+            D_801217D0[i + 10].h = 0xA0;
             D_801217D0[i + 10].unk_0E = 0;
             D_801217D0[i + 10].unk_0F = 0;
             D_801217D0[i + 10].unk_10 = 0;
             D_801217D0[i + 10].unk_0C = (i * 2) + 0x15;
             D_801217D0[i + 10].unk_12 = 0x1E0;
-            D_801217D0[i + 10].unk_14 = 0;
-            D_801217D0[i + 10].unk_15 = 0;
-            D_801217D0[i + 10].unk_16 = 0;
-            D_801217D0[i + 10].unk_18 = 0;
-            D_801217D0[i + 10].unk_1A = 0;
+            D_801217D0[i + 10].tint_r = 0;
+            D_801217D0[i + 10].tint_g = 0;
+            D_801217D0[i + 10].tint_b = 0;
+            D_801217D0[i + 10].anchor_x = 0;
+            D_801217D0[i + 10].anchor_y = 0;
             D_801217D0[i + 10].unk_1C = 0x1000;
             D_801217D0[i + 10].unk_1E = 0x1000;
             D_801217D0[i + 10].unk_20 = 0;
-            D_801217D0[i + 10].unk_04 = (i << 7) - 0xA0;
-            D_801217D0[i + 10].unk_06 = -0x96;
-            D_800E6280.unk_10A5[i + 10] = 0xC;
+            D_801217D0[i + 10].x = (i << 7) - 0xA0;
+            D_801217D0[i + 10].y = -0x96;
+            D_800E6280.quad_layer[i + 10] = 0xC;
         }
         func_801365DC(0x43C2);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return 0;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -779,17 +779,17 @@ s32 func_801348F0(void) {
                 printf("DEC_BS header Error \n");
                 movie->unk_04 = 0;
                 movie->unk_06 = 0;
-                g->unk_1104.u -= 1;
+                g->step_timer.u -= 1;
                 return 0;
             }
             func_800536AC(0x140, 0x100, 0x140, 0xA0);
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         return 0;
     case 2:
         cd_read_sectors(0x31, 0x801AE000, 0xBCD1);
         func_801339F8();
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return 0;
     case 3:
     case 11:
@@ -797,89 +797,89 @@ s32 func_801348F0(void) {
     case 16:
     case 18:
         if (cd_read_sync_status() & 1) {
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         return 0;
     case 4:
         load_palette(D_8013A5B0, 0x11, 1, 0, 0);
         func_80084E90(D_8013A5B4, D_8013A5B8, D_8013A5BC, D_8013A5C0, D_8013A5C4, D_8013A5C8);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return 0;
     case 5:
         for (i = 10; i < 12; i++) {
-            D_801217D0[i].unk_00 &= 0x7FFFFFFF;
+            D_801217D0[i].flags &= 0x7FFFFFFF;
         }
         for (i = 58; i < 64; i++) {
-            D_801217D0[i].unk_00 &= 0x7FFFFFFF;
+            D_801217D0[i].flags &= 0x7FFFFFFF;
         }
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return 0;
     case 6:
-        x = (D_801217D0[58].unk_14 += 4); y = D_801217D0[58].unk_15 = x; D_801217D0[58].unk_16 = y; /* FAKE: see y; one line keeps the store order T-11880 */
+        x = (D_801217D0[58].tint_r += 4); y = D_801217D0[58].tint_g = x; D_801217D0[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
         for (i = 10; i < 12; i++) {
-            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
         }
         for (i = 59; i < 64; i++) {
-            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
         }
-        if (D_801217D0[58].unk_14 == 0x40) {
-            g->unk_1104.u += 1;
+        if (D_801217D0[58].tint_r == 0x40) {
+            g->step_timer.u += 1;
         }
         return 0;
     case 7:
-        x = (D_801217D0[58].unk_14 += 4); y = D_801217D0[58].unk_15 = x; D_801217D0[58].unk_16 = y; /* FAKE: see y; one line keeps the store order T-11880 */
+        x = (D_801217D0[58].tint_r += 4); y = D_801217D0[58].tint_g = x; D_801217D0[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
         for (i = 10; i < 12; i++) {
-            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
         }
         for (i = 59; i < 64; i++) {
-            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
         }
-        if (D_801217D0[58].unk_14 == 0x80) {
-            g->unk_1104.u += 1;
+        if (D_801217D0[58].tint_r == 0x80) {
+            g->step_timer.u += 1;
         }
         break;
     case 8:
         break;
     case 9:
-        x = (D_801217D0[58].unk_14 -= 4); y = D_801217D0[58].unk_15 = x; D_801217D0[58].unk_16 = y; /* FAKE: see y; one line keeps the store order T-11880 */
+        x = (D_801217D0[58].tint_r -= 4); y = D_801217D0[58].tint_g = x; D_801217D0[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
         for (i = 10; i < 12; i++) {
-            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
         }
         for (i = 59; i < 64; i++) {
-            D_801217D0[i].unk_14 = D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[58].unk_14;
+            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
         }
-        if (D_801217D0[58].unk_14 == 0) {
+        if (D_801217D0[58].tint_r == 0) {
             for (i = 10; i < 12; i++) {
-                D_801217D0[i].unk_00 |= 0x80000000;
+                D_801217D0[i].flags |= 0x80000000;
             }
             for (i = 58; i < 64; i++) {
-                D_801217D0[i].unk_00 |= 0x80000000;
+                D_801217D0[i].flags |= 0x80000000;
             }
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
         }
         break;
     case 10:
         func_800462C8(0xA, 0x80162000, 0x4350);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return 0;
     case 12:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->unk_1104.u -= 2;
+            g->step_timer.u -= 2;
             return 0;
         }
         func_8005751C(1);
         dec_bg_show_switch(1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return 0;
     case 13:
-        sp30 = g->unk_1104.u;
+        sp30 = g->step_timer.u;
         func_80132BB0();
-        D_800E6280.unk_110A -= 1;
-        g->unk_1104.u = sp30;
-        g->unk_1104.u++;
+        D_800E6280.step -= 1;
+        g->step_timer.u = sp30;
+        g->step_timer.u++;
         return 0;
     default:
         func_8004284C();
@@ -891,7 +891,7 @@ s32 func_801348F0(void) {
     timer = (D_8013A5CC + 1) & 0xFFFF;
     D_8013A5CC = timer;
     if (timer == 0x96) {
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
     }
 }
 
@@ -910,7 +910,7 @@ s32 func_801350A4(void) {
     g = &D_800E6280;
     movie = (DateMovieWork *)D_800B5920;
     D_800B3D60 = 0;
-    switch (g->unk_1104.u) {
+    switch (g->step_timer.u) {
     case 0:
         func_80044750(0xCF);
         D_80122D2C = 1;
@@ -926,49 +926,49 @@ s32 func_801350A4(void) {
         hizuke_disp_switch(0);
         D_8013A5CC = 0;
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].unk_08 = (i << 6) + 0x80;
-            D_801217D0[i + 4].unk_00 = 0x82000000;
-            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].w = (i << 6) + 0x80;
+            D_801217D0[i + 4].flags = 0x82000000;
+            D_801217D0[i + 4].h = 0xA0;
             D_801217D0[i + 4].unk_0E = 0;
             D_801217D0[i + 4].unk_0F = 0;
             D_801217D0[i + 4].unk_10 = 0;
             D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
             D_801217D0[i + 4].unk_12 = 0x1E0;
-            D_801217D0[i + 4].unk_14 = 0;
-            D_801217D0[i + 4].unk_15 = 0;
-            D_801217D0[i + 4].unk_16 = 0;
-            D_801217D0[i + 4].unk_18 = 0;
-            D_801217D0[i + 4].unk_1A = 0;
+            D_801217D0[i + 4].tint_r = 0;
+            D_801217D0[i + 4].tint_g = 0;
+            D_801217D0[i + 4].tint_b = 0;
+            D_801217D0[i + 4].anchor_x = 0;
+            D_801217D0[i + 4].anchor_y = 0;
             D_801217D0[i + 4].unk_1C = 0x1000;
             D_801217D0[i + 4].unk_1E = 0x1000;
             D_801217D0[i + 4].unk_20 = 0;
-            D_801217D0[i + 4].unk_04 = (i << 7) - 0xA0;
-            D_801217D0[i + 4].unk_06 = -0x78;
-            D_800E6280.unk_10A5[i + 4] = 0xB;
+            D_801217D0[i + 4].x = (i << 7) - 0xA0;
+            D_801217D0[i + 4].y = -0x78;
+            D_800E6280.quad_layer[i + 4] = 0xB;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].unk_08 = (i << 6) + 0x80;
-            D_801217D0[i + 6].unk_00 = 0x82000000;
-            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].w = (i << 6) + 0x80;
+            D_801217D0[i + 6].flags = 0x82000000;
+            D_801217D0[i + 6].h = 0;
             D_801217D0[i + 6].unk_0E = 0;
             D_801217D0[i + 6].unk_0F = 0xA0;
             D_801217D0[i + 6].unk_10 = 0;
             D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
             D_801217D0[i + 6].unk_12 = 0x1E0;
-            D_801217D0[i + 6].unk_14 = 0;
-            D_801217D0[i + 6].unk_15 = 0;
-            D_801217D0[i + 6].unk_16 = 0;
-            D_801217D0[i + 6].unk_18 = 0;
-            D_801217D0[i + 6].unk_1A = 0;
+            D_801217D0[i + 6].tint_r = 0;
+            D_801217D0[i + 6].tint_g = 0;
+            D_801217D0[i + 6].tint_b = 0;
+            D_801217D0[i + 6].anchor_x = 0;
+            D_801217D0[i + 6].anchor_y = 0;
             D_801217D0[i + 6].unk_1C = 0x1000;
             D_801217D0[i + 6].unk_1E = 0x1000;
             D_801217D0[i + 6].unk_20 = 0;
-            D_801217D0[i + 6].unk_04 = (i << 7) - 0xA0;
-            D_801217D0[i + 6].unk_06 = -0x78;
-            D_800E6280.unk_10A5[i + 6] = 0xB;
+            D_801217D0[i + 6].x = (i << 7) - 0xA0;
+            D_801217D0[i + 6].y = -0x78;
+            D_800E6280.quad_layer[i + 6] = 0xB;
         }
         dec_bg_cd_read(0x43B1, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 1:
     case 4:
@@ -980,7 +980,7 @@ s32 func_801350A4(void) {
     case 34:
     case 37:
         if (cd_read_sync_status() & 1) {
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
             return;
         }
         return;
@@ -991,11 +991,11 @@ s32 func_801350A4(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x80183000);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 3:
         dec_bg_cd_read(0x43AA, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 5:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -1004,11 +1004,11 @@ s32 func_801350A4(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x8019C000);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 6:
         dec_bg_cd_read(0x43A3, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 8:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -1017,11 +1017,11 @@ s32 func_801350A4(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x801B5000);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 9:
         dec_bg_cd_read(0x439C, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 11:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -1030,56 +1030,56 @@ s32 func_801350A4(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x801CE000);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 12:
         dec_bg_cd_read(0x4395, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 14:
         func_800536AC(0x280, 0, 0x140, 0xA0);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 15:
         dec_bg_cd_read(0x438D, 1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 17:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 18:
         for (i = 0; i < 4; i++) {
-            D_801217D0[i + 4].unk_00 = (s32) (D_801217D0[i + 4].unk_00 & 0x7FFFFFFF);
+            D_801217D0[i + 4].flags = (s32) (D_801217D0[i + 4].flags & 0x7FFFFFFF);
         }
-        g->unk_1104.u++;
+        g->step_timer.u++;
         return;
     case 19:
         for (i = 4; i < 8; i++) {
             func_80084C98(i, 0x80);
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].unk_00 = 0x02000000;
-            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].flags = 0x02000000;
+            D_801217D0[i + 4].h = 0xA0;
             D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].unk_06 = -0x78;
+            D_801217D0[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].unk_00 = 0x02000000;
-            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].flags = 0x02000000;
+            D_801217D0[i + 6].h = 0;
             D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].unk_06 = -0x78;
+            D_801217D0[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
         func_80044750(0x500);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 20:
     case 22:
     case 24:
         func_80135DA4(8);
         if (++D_8013A5CC == 0x14) {
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
             return;
         }
         break;
@@ -1091,17 +1091,17 @@ s32 func_801350A4(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x801CE000);
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].h = 0xA0;
             D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].unk_06 = -0x78;
+            D_801217D0[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].h = 0;
             D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].unk_06 = -0x78;
+            D_801217D0[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 23:
         rect.x = 0x280;
@@ -1111,17 +1111,17 @@ s32 func_801350A4(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x801B5000);
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].h = 0xA0;
             D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].unk_06 = -0x78;
+            D_801217D0[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].h = 0;
             D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].unk_06 = -0x78;
+            D_801217D0[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 25:
         rect.x = 0x280;
@@ -1131,39 +1131,39 @@ s32 func_801350A4(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x8019C000);
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].h = 0xA0;
             D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].unk_06 = -0x78;
+            D_801217D0[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].h = 0;
             D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].unk_06 = -0x78;
+            D_801217D0[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 26:
         func_80135DA4(8);
         if ((u16) D_8013A5CC >= 8U) {
-            value = D_801217D0[4].unk_14;
+            value = D_801217D0[4].tint_r;
             value -= 4;
             color = (value & 0xFF);
-            D_801217D0[7].unk_16 = color;
-            D_801217D0[7].unk_15 = color;
-            D_801217D0[7].unk_14 = color;
-            D_801217D0[6].unk_16 = color;
-            D_801217D0[6].unk_15 = color;
-            D_801217D0[6].unk_14 = color;
-            D_801217D0[5].unk_16 = color;
-            D_801217D0[5].unk_15 = color;
-            D_801217D0[5].unk_14 = color;
-            D_801217D0[4].unk_16 = color;
-            D_801217D0[4].unk_15 = color;
-            D_801217D0[4].unk_14 = color;
+            D_801217D0[7].tint_b = color;
+            D_801217D0[7].tint_g = color;
+            D_801217D0[7].tint_r = color;
+            D_801217D0[6].tint_b = color;
+            D_801217D0[6].tint_g = color;
+            D_801217D0[6].tint_r = color;
+            D_801217D0[5].tint_b = color;
+            D_801217D0[5].tint_g = color;
+            D_801217D0[5].tint_r = color;
+            D_801217D0[4].tint_b = color;
+            D_801217D0[4].tint_g = color;
+            D_801217D0[4].tint_r = color;
         }
         if (++D_8013A5CC == 0x14) {
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
             return;
         }
         break;
@@ -1175,87 +1175,87 @@ s32 func_801350A4(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x80183000);
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].unk_0A = 0xA0;
+            D_801217D0[i + 4].h = 0xA0;
             D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].unk_06 = -0x78;
+            D_801217D0[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].unk_0A = 0;
+            D_801217D0[i + 6].h = 0;
             D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].unk_06 = -0x78;
+            D_801217D0[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 28:
         func_80135DA4(8);
-        value = D_801217D0[4].unk_14;
+        value = D_801217D0[4].tint_r;
         value -= 4;
         color = (value & 0xFF);
-        D_801217D0[7].unk_16 = color;
-        D_801217D0[7].unk_15 = color;
-        D_801217D0[7].unk_14 = color;
-        D_801217D0[6].unk_16 = color;
-        D_801217D0[6].unk_15 = color;
-        D_801217D0[6].unk_14 = color;
-        D_801217D0[5].unk_16 = color;
-        D_801217D0[5].unk_15 = color;
-        D_801217D0[5].unk_14 = color;
-        D_801217D0[4].unk_16 = color;
-        D_801217D0[4].unk_15 = color;
-        D_801217D0[4].unk_14 = color;
+        D_801217D0[7].tint_b = color;
+        D_801217D0[7].tint_g = color;
+        D_801217D0[7].tint_r = color;
+        D_801217D0[6].tint_b = color;
+        D_801217D0[6].tint_g = color;
+        D_801217D0[6].tint_r = color;
+        D_801217D0[5].tint_b = color;
+        D_801217D0[5].tint_g = color;
+        D_801217D0[5].tint_r = color;
+        D_801217D0[4].tint_b = color;
+        D_801217D0[4].tint_g = color;
+        D_801217D0[4].tint_r = color;
         if (value < 4U) {
-            g->unk_1104.u += 1;
+            g->step_timer.u += 1;
             return;
         }
         break;
     case 29:
         for (i = 0; i < 4; i++) {
-            D_801217D0[i + 4].unk_00 = (s32) (D_801217D0[i + 4].unk_00 | 0x80000000);
+            D_801217D0[i + 4].flags = (s32) (D_801217D0[i + 4].flags | 0x80000000);
         }
-        g->unk_1104.u++;
+        g->step_timer.u++;
         return;
     case 30:
-        sp50 = g->unk_1104.u;
+        sp50 = g->step_timer.u;
 
-        sp54 = D_800E6280.unk_110A;
+        sp54 = D_800E6280.step;
         read_bustup();
-        g->unk_1104.u = sp50; if (sp54 != D_800E6280.unk_110A) { /* FAKE: one source line keeps the as1 load order T-11880 */
-            D_800E6280.unk_110A -= 1;
-            g->unk_1104.u++;
+        g->step_timer.u = sp50; if (sp54 != D_800E6280.step) { /* FAKE: one source line keeps the as1 load order T-11880 */
+            D_800E6280.step -= 1;
+            g->step_timer.u++;
         }
         break;
     case 32:
-        sp50 = g->unk_1104.u;
+        sp50 = g->step_timer.u;
 
         func_80083474();
-        D_800E6280.unk_110A -= 1;
-        g->unk_1104.u = sp50;
-        g->unk_1104.u++;
+        D_800E6280.step -= 1;
+        g->step_timer.u = sp50;
+        g->step_timer.u++;
         return;
     case 33:
         func_800462C8(0xAU, 0x80162000, 0x433E);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 35:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->unk_1104.u -= 2;
+            g->step_timer.u -= 2;
             return 0;
         }
         func_8005751C(1);
         dec_bg_show_switch(1);
-        g->unk_1104.u += 1;
+        g->step_timer.u += 1;
         return;
     case 36:
-        sp50 = g->unk_1104.u;
+        sp50 = g->step_timer.u;
 
         func_80132BB0();
-        D_800E6280.unk_110A -= 1;
-        g->unk_1104.u = sp50;
-        g->unk_1104.u++;
+        D_800E6280.step -= 1;
+        g->step_timer.u = sp50;
+        g->step_timer.u++;
         return;
     default:
         func_8004284C();
@@ -1268,12 +1268,12 @@ s32 func_801350A4(void) {
 }
 
 s32 func_80135DA4(s16 arg0) {
-    D_801217D0[4].unk_06 += arg0;
-    D_801217D0[5].unk_06 += arg0;
-    D_801217D0[4].unk_0A -= arg0;
-    D_801217D0[5].unk_0A -= arg0;
-    D_801217D0[6].unk_0A += arg0;
-    D_801217D0[7].unk_0A += arg0;
+    D_801217D0[4].y += arg0;
+    D_801217D0[5].y += arg0;
+    D_801217D0[4].h -= arg0;
+    D_801217D0[5].h -= arg0;
+    D_801217D0[6].h += arg0;
+    D_801217D0[7].h += arg0;
     D_801217D0[6].unk_0F -= arg0;
     D_801217D0[7].unk_0F -= arg0;
 }
@@ -1292,10 +1292,10 @@ s32 func_80135E50(void) {
     u8 temp_s0;
     u8 temp_s0_2;
 
-    switch (D_800E6280.unk_1104.u) {
+    switch (D_800E6280.step_timer.u) {
     case 0:
         D_80122D2C = 1;
-        srand((*(s32 *)&D_800E6280.unk_10F8));
+        srand((*(s32 *)&D_800E6280.frame_count));
         D_8013A5CC = 0;
         hizuke_disp_switch(0);
         func_801365DC(0x43BA);
@@ -1305,7 +1305,7 @@ s32 func_80135E50(void) {
         D_8013A5DC[0] = -0x28;
         D_8013A5DC[1] = 0;
         D_8013A5DC[2] = -0x3C;
-        D_800E6280.unk_1104.u += 1;
+        D_800E6280.step_timer.u += 1;
         D_8013A5E4[0] = (rand() % 3) - 1;
         D_8013A5E4[1] = (rand() % 3) - 1;
         D_8013A5E4[2] = (rand() % 3) - 1;
@@ -1315,7 +1315,7 @@ s32 func_80135E50(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.unk_1104.u += 1;
+            D_800E6280.step_timer.u += 1;
             break;
         }
         break;
@@ -1324,32 +1324,32 @@ s32 func_80135E50(void) {
             printf("DEC_BS header Error \n");
             ((RECT *)D_800B5920)[0].w = 0;
             ((RECT *)D_800B5920)[0].h = 0;
-            D_800E6280.unk_1104.u -= 2;
+            D_800E6280.step_timer.u -= 2;
             return 0;
         }
         func_8005751C(1);
         dec_bg_show_switch(1);
         func_80044750(0x203);
-        D_800E6280.unk_1104.u += 1;
+        D_800E6280.step_timer.u += 1;
         break;
     case 3:
-        temp_s0 = D_800E6280.unk_110A;
-        temp_s1 = D_800E6280.unk_1104.u;
+        temp_s0 = D_800E6280.step;
+        temp_s1 = D_800E6280.step_timer.u;
         normal_date_bg_fadein();
-        D_800E6280.unk_1104.u = temp_s1;
-        if (temp_s0 != D_800E6280.unk_110A) {
-            D_800E6280.unk_1104.u = temp_s1 + 1;
+        D_800E6280.step_timer.u = temp_s1;
+        if (temp_s0 != D_800E6280.step) {
+            D_800E6280.step_timer.u = temp_s1 + 1;
         }
-        D_800E6280.unk_110A = temp_s0;
+        D_800E6280.step = temp_s0;
         break;
     case 4:
         var_s3 = 0;
         do {
-            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (rand() % 30)) {
+            if (((u32) (*(s32 *)&D_800E6280.frame_count) % 30U) == (rand() % 30)) {
                 (D_8013A5E4)[var_s3] = (rand() % 3) - 1;
             }
 
-            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (rand() % 30)) {
+            if (((u32) (*(s32 *)&D_800E6280.frame_count) % 30U) == (rand() % 30)) {
                 (D_8013A5EC)[var_s3] = (rand() % 3) - 1;
             }
 
@@ -1389,23 +1389,23 @@ s32 func_80135E50(void) {
         if (var_s3) {
         }
         if (D_8013A5CC++ == 0x96) {
-            D_800E6280.unk_1104.u += 1;
+            D_800E6280.step_timer.u += 1;
             break;
         }
         break;
     case 5:
-        temp_s0_2 = D_800E6280.unk_110A;
-        temp_s1_3 = D_800E6280.unk_1104.u;
+        temp_s0_2 = D_800E6280.step;
+        temp_s1_3 = D_800E6280.step_timer.u;
         normal_date_bg_fadeout();
-        D_800E6280.unk_1104.u = temp_s1_3;
-        if (temp_s0_2 != D_800E6280.unk_110A) {
-            D_800E6280.unk_1104.u = temp_s1_3 + 1;
+        D_800E6280.step_timer.u = temp_s1_3;
+        if (temp_s0_2 != D_800E6280.step) {
+            D_800E6280.step_timer.u = temp_s1_3 + 1;
         }
-        D_800E6280.unk_110A = temp_s0_2;
+        D_800E6280.step = temp_s0_2;
         break;
     case 6:
         dec_bg_show_switch(1);
-        D_800E6280.unk_1104.u += 1;
+        D_800E6280.step_timer.u += 1;
         break;
     default:
         func_80044750(0x200);
@@ -1423,12 +1423,12 @@ void func_801365DC(s32 arg0) {
     v = dec_bg_cd_read(arg0, 1);
     if (v == D_800B5939) {
         printf("same\n");
-        D_800E6280.unk_1104.w += 3;
+        D_800E6280.step_timer.w += 3;
         return;
     }
     if (v == 1 - D_800B5939) {
         printf("another\n");
-        D_800E6280.unk_1104.w += 2;
+        D_800E6280.step_timer.w += 2;
     }
 }
 
@@ -1437,7 +1437,7 @@ void func_80136660(void) {
     FnTbl44 tbl;
 
     tbl = D_8013A600;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -1445,14 +1445,14 @@ s32 func_801366E8(void) {
     s32 v;
 
     v = get_g_zyotai_s(0);
-    if ((D_800E6280.unk_0F8 & 0xF) == D_800E6280.unk_03F && ((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B) == D_800E6280.unk_040) {
+    if ((D_800E6280.player_birthday & 0xF) == D_800E6280.month && ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B) == D_800E6280.day) {
         if (((u8)v & 0x7F) < 2U) {
-            D_800E6280.unk_71E |= 4;
-            D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
+            D_800E6280.daily_event_bits |= 4;
+            D_800E6280.saved_step = D_800E6280.step + 1;
             func_80042908(4);
             return 0;
         }
-        D_800E6280.unk_71E |= 8;
+        D_800E6280.daily_event_bits |= 8;
     }
     func_8004284C();
 }
@@ -1465,18 +1465,18 @@ s32 func_80136794(void) {
     s32 v;
 
     g = &D_800E6280;
-    v = get_g_zyotai_s(D_800E6280.unk_F5F); /* FAKE: direct symbol here but g-> below; the mix decides which loads uopt keeps in registers T-11880 */
-    if ((g->unk_0F8 & 0xF) == g->unk_03F && ((u32)(g->unk_0F8 << 0x17) >> 0x1B) == g->unk_040) {
+    v = get_g_zyotai_s(D_800E6280.current_girl); /* FAKE: direct symbol here but g-> below; the mix decides which loads uopt keeps in registers T-11880 */
+    if ((g->player_birthday & 0xF) == g->month && ((u32)(g->player_birthday << 0x17) >> 0x1B) == g->day) {
         if (((u8)v & 0x7F) < 2U) {
-            g->unk_71E &= ~8;
-            g->unk_71E |= 4;
-            g->unk_722 = g->unk_110A + 1;
-            g->unk_F5F = g->unk_75D;
-            func_800847B8(g->unk_F5F);
+            g->daily_event_bits &= ~8;
+            g->daily_event_bits |= 4;
+            g->saved_step = g->step + 1;
+            g->current_girl = g->date_girl;
+            func_800847B8(g->current_girl);
             func_80042908(4);
             return 0;
         }
-        g->unk_71E |= 8;
+        g->daily_event_bits |= 8;
     }
     func_8004284C();
 }
@@ -1485,18 +1485,18 @@ s32 func_80136860(void) {
     u8 x;
     u8 count;
 
-    if (D_800E6280.unk_110D == 0) {
+    if (D_800E6280.substep == 0) {
         func_800674B0();
-        D_800E6280.unk_110D++;
+        D_800E6280.substep++;
     }
-    if (D_800E6280.unk_110D == 1) {
-        if (D_800E6280.unk_1104.w++ >= 0x400U) {
+    if (D_800E6280.substep == 1) {
+        if (D_800E6280.step_timer.w++ >= 0x400U) {
             func_800452C4();
             func_8004482C();
-            D_800E6280.unk_110D = 0;
+            D_800E6280.substep = 0;
         }
         if (func_80044E8C() == 1) {
-            D_800E6280.unk_110D++;
+            D_800E6280.substep++;
         } else {
             return 0;
         }
@@ -1504,17 +1504,17 @@ s32 func_80136860(void) {
     x = D_8013A4C4;
     count = ((x & 1) > 0) + ((x & 2) > 0) + ((x & 4) > 0);
     if (count == 0) {
-        D_800E6280.unk_1BC[0].unk_06 += 0xC;
-        D_800E6280.unk_1BC[D_800E6280.unk_75D].unk_0A += 7;
+        D_800E6280.girls[0].affection += 0xC;
+        D_800E6280.girls[D_800E6280.date_girl].syoushin += 7;
     } else if (count == 1) {
-        D_800E6280.unk_1BC[0].unk_06 += 3;
-        D_800E6280.unk_1BC[D_800E6280.unk_75D].unk_0A += 2;
+        D_800E6280.girls[0].affection += 3;
+        D_800E6280.girls[D_800E6280.date_girl].syoushin += 2;
     } else if (count == 2) {
-        D_800E6280.unk_1BC[D_800E6280.unk_75D].unk_06 += 3;
-        D_800E6280.unk_1BC[0].unk_0A += 2;
+        D_800E6280.girls[D_800E6280.date_girl].affection += 3;
+        D_800E6280.girls[0].syoushin += 2;
     } else {
-        D_800E6280.unk_1BC[D_800E6280.unk_75D].unk_06 += 0xC;
-        D_800E6280.unk_1BC[0].unk_0A += 7;
+        D_800E6280.girls[D_800E6280.date_girl].affection += 0xC;
+        D_800E6280.girls[0].syoushin += 7;
     }
     check_para_limit();
     func_80072B5C(1);
@@ -1527,7 +1527,7 @@ void func_80136A90(void) {
     if (((u8) get_g_zyotai_s(0) & 0x7F) == 4 && (rand() % 2)) {
         D_8013A430 += 1;
     }
-    if (((u8) get_g_zyotai_s(D_800E6280.unk_75D) & 0x7F) == 4 && (rand() % 2) && (D_800E6280.unk_75D != 6)) {
+    if (((u8) get_g_zyotai_s(D_800E6280.date_girl) & 0x7F) == 4 && (rand() % 2) && (D_800E6280.date_girl != 6)) {
         D_8013A438 += 1;
     }
     func_8004284C();
@@ -1539,18 +1539,18 @@ void func_80136B7C(void) {
 }
 
 void func_80136BA4(void) {
-    if (D_800E6280.unk_1BC[0].unk_06 < 0xA) {
+    if (D_800E6280.girls[0].affection < 0xA) {
         D_8013A428 += 2;
-        D_800E6280.unk_F5F = 0;
-    } else if (get_h_yuukou(D_800E6280.unk_F5F) < 0xA) {
+        D_800E6280.current_girl = 0;
+    } else if (get_h_yuukou(D_800E6280.current_girl) < 0xA) {
         D_8013A428 += 2;
-    } else if (D_800E6280.unk_1BC[0].unk_0A >= 0x33) {
-        D_800E6280.unk_F5F = 0;
-    } else if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A < 0x33) {
-        if (D_800E6280.unk_1BC[0].unk_02 >= 0x32) {
+    } else if (D_800E6280.girls[0].syoushin >= 0x33) {
+        D_800E6280.current_girl = 0;
+    } else if (D_800E6280.girls[D_800E6280.current_girl].syoushin < 0x33) {
+        if (D_800E6280.girls[0].tokimeki >= 0x32) {
             D_8013A428 += 1;
-            D_800E6280.unk_F5F = 0;
-        } else if (get_h_tokimeki(D_800E6280.unk_F5F) >= 0x32) {
+            D_800E6280.current_girl = 0;
+        } else if (get_h_tokimeki(D_800E6280.current_girl) >= 0x32) {
             D_8013A428 += 1;
         } else {
             D_8013A428 += 4;
@@ -1567,7 +1567,7 @@ void func_80136CEC(void) {
 }
 
 void func_80136D14(void) {
-    func_800847B8((u8) *(s8 *)&D_800E6280.unk_F5F);
+    func_800847B8((u8) *(s8 *)&D_800E6280.current_girl);
     D_8013A428 = 0x15;
     func_8004284C();
 }

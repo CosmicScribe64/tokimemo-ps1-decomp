@@ -70,11 +70,11 @@ void func_8015AF90(void) {
     names = D_80160AE0;
     blood_types = D_80160B10;
     player_blood_types = D_80160B3C;
-    switch (g->unk_110A) {
+    switch (g->step) {
     case 0:
         cd_read_sectors(1U, 0x801E8000, 0x4B80);
         for (i = 0; i < 11; i++) {
-            D_800CA2B0[i] = g->unk_1BC[i].unk_0C.f.b1;
+            D_800CA2B0[i] = g->girls[i].flags.f.met;
         }
         func_8004284C();
         break;
@@ -85,7 +85,7 @@ void func_8015AF90(void) {
             D_800CA160 = D_801604F0;
             D_800CA164 = D_801604F4;
             D_800CA168 = D_801604F8;
-            if ((D_80122EBC == 0xFF) || ((((u16) g->unk_0F4.h >> 0xC) != 3) && (func_8008667C(0) == 4) && (((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 3)) || ((((u16) g->unk_0F4.h >> 0xC) != 3) && (func_8008667C(2) == 4) && (((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 3))) {
+            if ((D_80122EBC == 0xFF) || ((((u16) g->player_flags.h >> 0xC) != 3) && (func_8008667C(0) == 4) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) || ((((u16) g->player_flags.h >> 0xC) != 3) && (func_8008667C(2) == 4) && (((u8) g->girls[2].flags.b[2] >> 4) == 3))) {
                 D_800CA148 = 0;
                 func_8004284C();
             } else {
@@ -150,7 +150,7 @@ void func_8015AF90(void) {
         break;
     case 12:
         if ((D_80122EBC == 0) || (D_80122EBC == 0xB)) {
-            set_kanji_string(0x28, 0x42, 0, (s32)player_blood_types.text[(u32) (g->unk_1BC[0].unk_10.w << 0x15) >> 0x1E], 0);
+            set_kanji_string(0x28, 0x42, 0, (s32)player_blood_types.text[(u32) (g->girls[0].birthday.w << 0x15) >> 0x1E], 0);
         } else {
             set_kanji_string(0x28, 0x42, 0, (s32)blood_types.text[D_80122EBC], 0);
         }
@@ -169,8 +169,8 @@ void func_8015AF90(void) {
         func_8004284C();
         break;
     case 15:
-        set_kanji_string(-0x80, 0x52, 0, (s32) g->unk_0D4, 0);
-        set_kanji_string(-0x48, 0x52, 0, (s32) g->unk_0DC, 0);
+        set_kanji_string(-0x80, 0x52, 0, (s32) g->player_family_name, 0);
+        set_kanji_string(-0x48, 0x52, 0, (s32) g->player_given_name, 0);
         k_disp_start(8);
         D_80160B4C = 0;
         func_8004284C();
@@ -195,7 +195,7 @@ void func_8015AF90(void) {
         }
         break;
     case 19:
-        set_kanji_string(0x28, 0x52, 0, (s32)player_blood_types.text[(u32) (g->unk_0F8 << 0x15) >> 0x1E], 0);
+        set_kanji_string(0x28, 0x52, 0, (s32)player_blood_types.text[(u32) (g->player_birthday << 0x15) >> 0x1E], 0);
         k_disp_start(0xA);
         func_8004284C();
         break;
@@ -205,7 +205,7 @@ void func_8015AF90(void) {
             D_8011ED5B ^= 0x80;
             D_80160B4C = 0;
         }
-        if ((g->unk_F88 & 0xF0) && (check_end_k() != 0)) {
+        if ((g->pad_pressed & 0xF0) && (check_end_k() != 0)) {
             k_reset(1);
             D_8011ED5B &= 0x7F;
             func_8004284C();
@@ -231,9 +231,9 @@ void func_8015AF90(void) {
         normal_date_speak();
         break;
     case 25:
-        if ((func_8008667C(0) == 4) && (((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 3)) {
+        if ((func_8008667C(0) == 4) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) {
             D_80122EBC = 0;
-        } else if ((func_8008667C(2) == 4) && (((u8) g->unk_1BC[2].unk_0C.b[2] >> 4) == 3)) {
+        } else if ((func_8008667C(2) == 4) && (((u8) g->girls[2].flags.b[2] >> 4) == 3)) {
             D_80122EBC = 2;
         }
         func_80042908((s32) *(u8 *)&D_80122EB0);
@@ -252,11 +252,11 @@ s32 func_8015B828(void) {
 
     table = D_80160B50;
     index = D_80122EBC;
-    if (index == 2 && ((u8) D_800E6280.unk_1BC[2].unk_0C.b[2] >> 4) == 3) {
-        if (((u16) D_800E6280.unk_0F4.h >> 12) != 3) {
+    if (index == 2 && ((u8) D_800E6280.girls[2].flags.b[2] >> 4) == 3) {
+        if (((u16) D_800E6280.player_flags.h >> 12) != 3) {
             return 3;
         }
     }
-    result = table.unk_00[(u32) (D_800E6280.unk_1BC[index].unk_10.w << 21) >> 30][(u32) (D_800E6280.unk_0F8 << 21) >> 30];
+    result = table.unk_00[(u32) (D_800E6280.girls[index].birthday.w << 21) >> 30][(u32) (D_800E6280.player_birthday << 21) >> 30];
     return result;
 }

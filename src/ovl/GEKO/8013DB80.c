@@ -24,7 +24,7 @@ void func_8013DC30(void) {
 }
 
 void func_8013DC70(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013DCAC();
         return;
     }
@@ -41,7 +41,7 @@ void func_8013DCAC(void) {
     FnTbl33 tbl;
 
     tbl = D_80146DCC;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx]();
 }
 
@@ -52,7 +52,7 @@ void func_8013DD20(void) {
 }
 
 void func_8013DD58(void) {
-    D_800E6280.unk_F5F = 6;
+    D_800E6280.current_girl = 6;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -68,15 +68,15 @@ void func_8013DD58(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145F84;
     D_80146278 = D_801460C0;
     D_8014627C = D_801461FC;
     strcpy(D_800CA19C, "廊下");
-    D_800E6280.unk_1BC[6].unk_02 += 1;
-    D_800E6280.unk_1BC[6].unk_06 += 2;
+    D_800E6280.girls[6].tokimeki += 1;
+    D_800E6280.girls[6].affection += 2;
     check_para_limit();
     D_800CA368 = 0x28;
     func_8004284C();

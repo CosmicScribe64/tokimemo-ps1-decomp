@@ -18,13 +18,13 @@ void func_80139D40(void) {
 
     tbl = D_8013CB08;
     if (D_800CA2EC != 0) {
-        index = D_800E6280.unk_110A;
+        index = D_800E6280.step;
         if (tbl.f[index] == normal_date_two_select) {
             tbl.f[index] = normal_date_three_select;
         }
     }
-    tbl.f[D_800E6280.unk_110A](0x40);
-    if (tbl.f[D_800E6280.unk_110A] == func_8013864C && D_8013CB04 == 0) {
+    tbl.f[D_800E6280.step](0x40);
+    if (tbl.f[D_800E6280.step] == func_8013864C && D_8013CB04 == 0) {
         kind = ((u8 **)D_800CA2D4)[D_800CA2DC][D_800CA2E0];
         if (kind == 8 || kind == 3) {
             func_80044750(0x207);
@@ -57,15 +57,15 @@ void func_80139E8C(void) {
     rect.y = 0xA0;
     func_8009C7F8(&rect, 8, 0, 0);
     var_a0 = ((u8 *)&D_800E6280)[0xF5F];
-    D_800E6280.unk_10A2 = 0;
-    D_800E6280.unk_10E8 = 1;
+    D_800E6280.tile_layer_enabled = 0;
+    D_800E6280.quads_enabled = 1;
     if (var_a0 >= 0xEU) {
         var_a0 = 0xD;
     }
-    D_800E6280.unk_F5F = var_a0;
+    D_800E6280.current_girl = var_a0;
     func_800847B8(var_a0);
     addr_init_bustup();
-    D_800E6280.unk_03A = 0x80;
+    D_800E6280.screen_brightness = 0x80;
     D_800B593C = 0;
     hizuke_init();
     message_window_init();
@@ -78,7 +78,7 @@ void func_80139E8C(void) {
 s32 func_80139FD4(void) {
     if (D_800CA2CC == 1) {
         if (((*(s32 *)D_8013CAF0) != 0x801E2120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (4)) != 0x801E6120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (8)) != 0x801EA120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (12)) != 0x801EE120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (16)) != 0x801F2120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (20)) != 0x801F6120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (24)) != 0x801FA120) || (*(s32 *)D_8013CAF8 != 0x801E20A8)) {
-            D_800E6280.unk_110A -= 2;
+            D_800E6280.step -= 2;
             return 0;
         }
         load_palette(D_8013CB00, 0x11, 0, 1, 0);
@@ -115,10 +115,10 @@ void func_8013A1D4(void) {
     s32 pad;
     u8 temp_a0;
 
-    pad = D_800E6280.unk_F5F;
+    pad = D_800E6280.current_girl;
     pad = func_801386C4();
-    if (D_800E6280.unk_F5F == 2) {
-        temp_a0 = get_g_zyotai_h(D_800E6280.unk_F5F);
+    if (D_800E6280.current_girl == 2) {
+        temp_a0 = get_g_zyotai_h(D_800E6280.current_girl);
         if ((D_800CA2E0 == 7) && (D_80122CDC != 0)) {
             func_80083440(temp_a0);
         }
@@ -131,10 +131,10 @@ void func_8013A1D4(void) {
 }
 
 void func_8013A274(void) {
-    if (D_800E6280.unk_F5F == 2) {
+    if (D_800E6280.current_girl == 2) {
         func_80083440(3);
     }
-    if (D_800E6280.unk_F5F == 7 && D_800CA2F4 == 0) {
+    if (D_800E6280.current_girl == 7 && D_800CA2F4 == 0) {
         func_80083440(4);
     }
     func_8004284C();
@@ -228,9 +228,9 @@ void func_8013A59C(void) {
     }
     func_80048EB8(0);
     func_8006BD6C(0);
-    D_800E6280.unk_720 = D_800E6280.unk_1108;
-    D_800E6280.unk_721 = D_800E6280.unk_1109;
-    D_800E6280.unk_722 = 0x32;
+    D_800E6280.saved_mode = D_800E6280.mode;
+    D_800E6280.saved_stage = D_800E6280.stage;
+    D_800E6280.saved_step = 0x32;
     hizuke_disp_switch(0);
     k_reset(0);
     main_state_set(0x81);
@@ -242,14 +242,14 @@ void func_8013A648(void) {
     if (D_80122CDC == 0) {
         func_80137C3C();
     } else {
-        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 5;
+        D_800E6280.girls[D_800E6280.current_girl].tokimeki += 5;
     }
     check_para_limit();
     if (D_800CA2EC != 0) {
         if (D_80122CDC == 2) {
-            D_800E6280.unk_F5F = 0xD;
+            D_800E6280.current_girl = 0xD;
         } else if (D_80122CDC == 1) {
-            D_800E6280.unk_F5F = 0xFF;
+            D_800E6280.current_girl = 0xFF;
         }
     }
     func_8004284C();
@@ -324,12 +324,12 @@ void func_8013A9E0(void) {
     u32 temp_t8;
 
     temp_t8 = (u8)get_g_zyotai_s(4) & 0x7F;
-    if (D_800E6280.unk_F5F != 4 || temp_t8 >= 2U) {
+    if (D_800E6280.current_girl != 4 || temp_t8 >= 2U) {
         func_8004284C();
         return;
     }
-    D_800E6280.unk_721 = D_800E6280.unk_1109;
-    D_800E6280.unk_722 = D_800E6280.unk_110A + 2;
-    D_800E6280.unk_75D = 4;
+    D_800E6280.saved_stage = D_800E6280.stage;
+    D_800E6280.saved_step = D_800E6280.step + 2;
+    D_800E6280.date_girl = 4;
     func_80042908(0xA);
 }

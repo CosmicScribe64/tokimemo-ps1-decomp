@@ -2,8 +2,8 @@
 #include "ovl/TACO.h"
 
 void func_80137F90(void) {
-    D_800E6280.unk_1104.w += 1;
-    switch (D_800E6280.unk_110A) {
+    D_800E6280.step_timer.w += 1;
+    switch (D_800E6280.step) {
     case 0:
         func_8013801C();
         break;
@@ -28,9 +28,9 @@ void func_8013801C(void) {
     D_8015EDEC = 0x4650;
     func_80134884();
     D_8015EDBC = 0x10;
-    D_800E6280.unk_036 = 0;
-    D_800E6280.unk_037 = 0;
-    D_800E6280.unk_038 = 0;
+    D_800E6280.clear_color_r = 0;
+    D_800E6280.clear_color_g = 0;
+    D_800E6280.clear_color_b = 0;
     func_801335A0(0, 0x503);
     func_800591D8(1);
     k_reset(0);

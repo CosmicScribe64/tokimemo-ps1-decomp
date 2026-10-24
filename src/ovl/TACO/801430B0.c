@@ -24,7 +24,7 @@ s32 arg3;
         n = arg0;
         sign = 1;
     }
-    if (sign != -1 || !(D_800E6280.unk_10F8 & 4)) {
+    if (sign != -1 || !(D_800E6280.frame_count & 4)) {
         xoff = 0;
         if (n >= 0) {
             do {
@@ -36,8 +36,8 @@ s32 arg3;
                 sprite->r0 = 0x80;
                 sprite->g0 = 0x80;
                 sprite->b0 = 0x80;
-                sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + arg1 - xoff;
-                sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+                sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] + arg1 - xoff;
+                sprite->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
                 uv = &D_8015F5A0[n % 10 * 2];
                 sprite->u0 = uv[0] + 0x80;
                 sprite->v0 = uv[1];
@@ -76,9 +76,9 @@ s32 arg3;
             sprite->r0 = 0x80;
             sprite->g0 = 0x80;
             sprite->b0 = 0x80;
-            sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + x;
+            sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] + x;
             x += 0xC;
-            sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+            sprite->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
             if (*s >= 0x30 && *s < 0x3A) {
                 idx = *s - 0x30;
                 sprite->u0 = D_8015F5A0[idx * 2] + 0x80;
@@ -121,26 +121,26 @@ void func_80143574(s32 arg0, s32 arg1, s32 arg2) {
     /* FAKE: p[4] and p[5] on one source line give the original's store order 5, 4, 6 (line-based scheduling). T-6070 */
     p[4] = (arg2 >> 16) & 0xFF; p[5] = (arg2 >> 8) & 0xFF;
     p[6] = arg2 & 0xFF;
-    *(s16 *)(p + 8) = D_800E6280.unk_014[D_8011ECA0] + arg0;
-    *(s16 *)(p + 0xA) = D_800E6280.unk_018[D_8011ECA0] + arg1;
+    *(s16 *)(p + 8) = D_800E6280.screen_center_x[D_8011ECA0] + arg0;
+    *(s16 *)(p + 0xA) = D_800E6280.screen_center_y[D_8011ECA0] + arg1;
     AddPrim((D_8011ECA0 << 10) + 0x3C + D_800E8CA0, p);
 }
 
 void func_80143644(void) {
-    D_800E6280.unk_1092 = 1;
-    if (D_800E6280.unk_F88 & 0x1000) {
-        if (D_800E6280.unk_1093 != 0) {
-            D_800E6280.unk_1093 -= 1;
+    D_800E6280.menu_mode = 1;
+    if (D_800E6280.pad_pressed & 0x1000) {
+        if (D_800E6280.menu_cursor_0 != 0) {
+            D_800E6280.menu_cursor_0 -= 1;
         } else {
-            D_800E6280.unk_1093 = D_800E6280.unk_1090 - 1;
+            D_800E6280.menu_cursor_0 = D_800E6280.menu_count_0 - 1;
         }
     }
-    if (D_800E6280.unk_F88 & 0x4000) {
-        if ((u32)D_800E6280.unk_1093 < (u32)(D_800E6280.unk_1090 - 1)) {
-            D_800E6280.unk_1093 += 1;
+    if (D_800E6280.pad_pressed & 0x4000) {
+        if ((u32)D_800E6280.menu_cursor_0 < (u32)(D_800E6280.menu_count_0 - 1)) {
+            D_800E6280.menu_cursor_0 += 1;
             return;
         }
-        D_800E6280.unk_1093 = 0;
+        D_800E6280.menu_cursor_0 = 0;
     }
 }
 

@@ -62,7 +62,7 @@ void func_8013F4C0(void) {
 }
 
 void func_8013F53C(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013F5F0();
         return;
     }
@@ -70,7 +70,7 @@ void func_8013F53C(void) {
 }
 
 void func_8013F578(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013F6A4();
         return;
     }
@@ -78,7 +78,7 @@ void func_8013F578(void) {
 }
 
 void func_8013F5B4(void) {
-    if (D_800E6280.unk_1109 == 0) {
+    if (D_800E6280.stage == 0) {
         func_8013F850();
         return;
     }
@@ -95,7 +95,7 @@ void func_8013F5F0(void) {
     FnTbl49 tbl;
 
     tbl = D_801470B0;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
@@ -110,12 +110,12 @@ void func_8013F6A4(void) {
     FnTbl23 tbl;
 
     tbl = D_80147174;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
 }
 
 void func_8013F72C(void) {
-    if ((u8) D_800E6280.unk_56C[67] >= 2U) {
+    if ((u8) D_800E6280.event_flags[67] >= 2U) {
         D_800CA150 = (u16) D_800CA150 + 5;
     }
     func_8004284C();
@@ -123,7 +123,7 @@ void func_8013F72C(void) {
 
 void func_8013F770(void) {
     func_800634FC(get_g_zyotai_h(0xA));
-    if ((u8) D_800E6280.unk_56C[67] >= 2U) {
+    if ((u8) D_800E6280.event_flags[67] >= 2U) {
         func_8004284C();
         func_8004284C();
         func_8004284C();
@@ -140,7 +140,7 @@ void func_8013F770(void) {
 void func_8013F800(void) {
     u8 s;
 
-    s = get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
+    s = get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
     if (s >= 2U) {
         D_800CA150 = (u16)D_800CA150 + 2;
     }
@@ -154,12 +154,12 @@ void func_8013F850(void) {
     FnTbl61 tbl;
 
     tbl = D_801471D0;
-    idx = D_800E6280.unk_110A;
+    idx = D_800E6280.step;
     tbl.f[idx](0x80);
-    if ((D_801470A8 != 0) && (D_800E6280.unk_110A >= 0x20U)) {
+    if ((D_801470A8 != 0) && (D_800E6280.step >= 0x20U)) {
         func_8013FD3C();
     }
-    if ((D_801470AC != 0) && (D_800E6280.unk_110A >= 0x20U)) {
+    if ((D_801470AC != 0) && (D_800E6280.step >= 0x20U)) {
         func_80140040();
     }
 }
@@ -184,7 +184,7 @@ s32 func_8013F9AC(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
         func_8004284C();
-        D_800E6280.unk_110A -= 3;
+        D_800E6280.step -= 3;
         return 0;
     }
     func_8005751C(0);
@@ -199,7 +199,7 @@ void func_8013FA38(void) {
 void func_8013FA60(void) {
     func_80138AF8();
     if ((u16)D_800CA154 == 2) {
-        if (D_800E6280.unk_1104.w++ == 0) {
+        if (D_800E6280.step_timer.w++ == 0) {
             func_80044750(0x603);
         }
     }
@@ -246,13 +246,13 @@ void func_8013FC00(void) {
     func_800634FC(get_g_zyotai_h(0xA));
     D_800B5BD4 = 0xF;
     for (i = 0; i < 0xA; i++) {
-        ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_03 &= ~0x80;
+        ((DisplayActor44 *)D_8011ECD0)[i + 99].draw_flags &= ~0x80;
     }
     func_8004284C();
 }
 
 s16 func_8013FC80(void) {
-    if (D_800E6280.unk_1104.w == 0) {
+    if (D_800E6280.step_timer.w == 0) {
         D_801206DB |= 0x80;
         D_801206F4 = 0;
         D_801206F2 = 0;
@@ -265,7 +265,7 @@ s16 func_8013FC80(void) {
         D_801470A8 = 1;
         func_8004284C();
     }
-    D_800E6280.unk_1104.w += 1;
+    D_800E6280.step_timer.w += 1;
 }
 
 void func_8013FD3C(void) {
@@ -288,14 +288,14 @@ void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s
     p->r1 = (arg4 >> 16) & 0xFF; p->g1 = (arg4 >> 8) & 0xFF; p->b1 = arg4 & 0xFF;
     p->r2 = (arg4 >> 16) & 0xFF; p->g2 = (arg4 >> 8) & 0xFF; p->b2 = arg4 & 0xFF;
     p->r3 = (arg4 >> 16) & 0xFF; p->g3 = (arg4 >> 8) & 0xFF; p->b3 = arg4 & 0xFF;
-    p->x0 = gs->unk_014[D_8011ECA0] + arg0;
-    p->y0 = gs->unk_018[D_8011ECA0] + arg1;
-    p->x1 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
-    p->y1 = gs->unk_018[D_8011ECA0] + arg1;
-    p->x2 = gs->unk_014[D_8011ECA0] + arg0;
-    p->y2 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
-    p->x3 = gs->unk_014[D_8011ECA0] + arg0 + arg2;
-    p->y3 = gs->unk_018[D_8011ECA0] + arg1 + arg3;
+    p->x0 = gs->screen_center_x[D_8011ECA0] + arg0;
+    p->y0 = gs->screen_center_y[D_8011ECA0] + arg1;
+    p->x1 = gs->screen_center_x[D_8011ECA0] + arg0 + arg2;
+    p->y1 = gs->screen_center_y[D_8011ECA0] + arg1;
+    p->x2 = gs->screen_center_x[D_8011ECA0] + arg0;
+    p->y2 = gs->screen_center_y[D_8011ECA0] + arg1 + arg3;
+    p->x3 = gs->screen_center_x[D_8011ECA0] + arg0 + arg2;
+    p->y3 = gs->screen_center_y[D_8011ECA0] + arg1 + arg3;
     AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg5 * 4, (s32)p);
 }
 
@@ -314,7 +314,7 @@ void func_8013FF64(void) {
     }
     D_801470A8 = 0;
     for (i = 0; i < 0xA; i++) {
-        ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_03 |= 0x80;
+        ((DisplayActor44 *)D_8011ECD0)[i + 99].draw_flags |= 0x80;
     }
     D_801470AC = 1;
     func_8004284C();
@@ -352,7 +352,7 @@ void func_80140040(void) {
 }
 
 void func_8014016C(void) {
-    D_800E6280.unk_F5F = 0xA;
+    D_800E6280.current_girl = 0xA;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -371,7 +371,7 @@ void func_8014016C(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145FCC;
@@ -379,10 +379,10 @@ void func_8014016C(void) {
     D_8014627C = D_80146244;
     strcpy(D_800CA19C, "廊下");
     if (D_80122CD0 == 1) {
-        D_800E6280.unk_1BC[0xA].unk_02 += 1;
-        D_800E6280.unk_1BC[0xA].unk_06 += 2;
-        D_800E6280.unk_0FC.unk_02 -= 5;
-        D_800E6280.unk_118.unk_02 += 5;
+        D_800E6280.girls[0xA].tokimeki += 1;
+        D_800E6280.girls[0xA].affection += 2;
+        D_800E6280.param_condition.value -= 5;
+        D_800E6280.param_guts.value += 5;
         check_para_limit();
     }
     D_800CA368 = 0x43;
@@ -400,7 +400,7 @@ void func_801402F8(void) {
 void func_801403A0(void) {
     u8 state;
 
-    D_800E6280.unk_F5F = 0xA;
+    D_800E6280.current_girl = 0xA;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -419,7 +419,7 @@ void func_801403A0(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145FD0;
@@ -427,9 +427,9 @@ void func_801403A0(void) {
     D_8014627C = D_80146248;
     state = get_g_zyotai_s(0xA) & 0x7F;
     if ((u32)state < 2U) {
-        D_800E6280.unk_1BC[10].unk_02 += 1;
+        D_800E6280.girls[10].tokimeki += 1;
     }
-    D_800E6280.unk_1BC[10].unk_06 += 2;
+    D_800E6280.girls[10].affection += 2;
     check_para_limit();
     D_800CA368 = 0x44;
     func_8004284C();
@@ -438,7 +438,7 @@ void func_801403A0(void) {
 void func_801404FC(void) {
     s16 i;
 
-    D_800E6280.unk_F5F = 0xA;
+    D_800E6280.current_girl = 0xA;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -467,14 +467,14 @@ void func_801404FC(void) {
     D_800B593C = 0x80;
     D_801470A8 = 0;
     D_801470AC = 0;
-    func_800847B8(D_800E6280.unk_F5F);
+    func_800847B8(D_800E6280.current_girl);
     func_80137990();
     D_80146274 = D_80145FE4;
     D_80146278 = D_80146120;
     D_8014627C = D_8014625C;
     strcpy(D_800CA19C, "玄関");
     strcpy(D_800CA1DC, "自宅前");
-    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
+    D_800E6280.girls[D_800E6280.current_girl].affection += 2;
     check_para_limit();
     D_800CA368 = 0x49;
     func_8004284C();
@@ -495,7 +495,7 @@ void func_801406CC(void) {
     load_palette(D_8014708C, 0x11, 1, 2, 0);
     func_80084E90(D_80147090, D_80147094, D_80147098, D_8014709C, D_801470A0, D_801470A4);
     for (i = 0; i < 6; i++) {
-        D_800E6280.unk_10A5[i + 0x3A] = 0xC;
+        D_800E6280.quad_layer[i + 0x3A] = 0xC;
     }
     func_800850D4(D_80147080, D_80147084, D_8014707C, D_80147088);
     D_800CA360 = 1;
@@ -505,16 +505,16 @@ void func_801406CC(void) {
     ((DisplayActor44 *)D_80120650)->unk_01 = 0xC;
     ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
     ((DisplayActor44 *)D_80120650)[2].unk_01 = 0xB;
-    ((DisplayActor44 *)D_80120650)[2].unk_02 = 0x40;
+    ((DisplayActor44 *)D_80120650)[2].flags = 0x40;
     ((DisplayActor44 *)D_80120650)[2].unk_18 = 0x14;
-    ((DisplayActor44 *)D_80120650)[2].unk_26 = -6;
-    ((DisplayActor44 *)D_80120650)[2].unk_2A = -0x30;
-    ((DisplayActor44 *)D_80120650)[2].unk_07 = 0x80;
+    ((DisplayActor44 *)D_80120650)[2].x = -6;
+    ((DisplayActor44 *)D_80120650)[2].y = -0x30;
+    ((DisplayActor44 *)D_80120650)[2].brightness = 0x80;
     for (i = 0; i < 0xA; i++) {
         ((DisplayActor44 *)D_8011ECD0)[i + 99] = ((DisplayActor44 *)D_80120650)[2];
         ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_18 = t0.v[i];
-        ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_26 = t1.v[i] - 0xA0;
-        ((DisplayActor44 *)D_8011ECD0)[i + 99].unk_2A = t2.v[i] - 0x78;
+        ((DisplayActor44 *)D_8011ECD0)[i + 99].x = t1.v[i] - 0xA0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 99].y = t2.v[i] - 0x78;
     }
     func_8004284C();
 }
