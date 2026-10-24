@@ -247,6 +247,24 @@ class Fixture(unittest.TestCase):
 
 
 class TableTest(Fixture):
+    def test_cached_closure_does_not_evaluate_fallback(self):
+        tree = R.Tree(self.root)
+        path = "src/main/80041000.c"
+        expected = {path} | tree.index()["closure"][path]
+        with unittest.mock.patch.object(tree, "closure", side_effect=AssertionError("unexpected scan")):
+            self.assertEqual(set(R.closure_files(tree, [path])), expected)
+            tree.index()["closure"][path] = set()
+            self.assertEqual(R.closure_files(tree, [path]), [path])
+
+    def test_unindexed_source_closure_uses_fallback(self):
+        path = "src/main/not_mapped.c"
+        self.write(path, '#include "game.h"\n')
+        tree = R.Tree(self.root)
+        self.assertNotIn(path, tree.index()["closure"])
+        result = R.closure_files(tree, [path])
+        self.assertIn(path, result)
+        self.assertIn("include/game.h", result)
+
     def test_rows_and_notes(self):
         rows = R.parse_rows("# c\nfunc main func_80041000 boot T-1 entry # tail\n\n", "t")
         self.assertEqual((rows[0].kind, rows[0].scope, rows[0].old, rows[0].new, rows[0].note),

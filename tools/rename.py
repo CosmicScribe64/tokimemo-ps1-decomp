@@ -710,7 +710,8 @@ def closure_files(tree, files):
     out = set(files)
     for f in files:
         if f.endswith(".c"):
-            out |= tree.index()["closure"].get(f, tree.closure(f))
+            cached = tree.index()["closure"].get(f)
+            out |= cached if cached is not None else tree.closure(f)
     return sorted(out)
 
 
