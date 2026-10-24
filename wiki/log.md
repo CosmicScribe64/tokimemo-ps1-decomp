@@ -1563,6 +1563,18 @@ Every game function is C and every binary rebuilds byte for byte ([[status]]). C
 
 [[emulator]]: PCSX-Redux (pinned 8288e927 plus upstream fix 3a24bbcc) with OpenBIOS (MIT) in Docker; the game boots headless to the title menu. tools/emu/run.sh drives breakpoints on main and overlay code, memory watches, call stacks, traces, scripted input, screenshots and save states for phase 2 naming. Ticket stays In Progress for its GameState naming pilot.
 
+## [2026-10-24] decision | Phase 2 naming conventions (ADR 0001)
+
+The user's four phase 2 decisions (names from code and emulator evidence, claims of game meaning marked as hypotheses; O.BIN names kept with one-line English comments; English file, folder and header names with a disc-name map; English game terms except iconic ones) are recorded in `docs/adr/0001-phase-2-naming.md` with the conventions: case, overlay prefixes from a disc-name map, main subsystem prefixes, enums and constants, hypothesis files, locals, offset comments, file and header naming. `CODING_STANDARDS.md` sections 4 and 5 rewritten (8 and 8a aligned, checklist updated). `GLOSSARY.md` created at the repo root from the local glossary seed (traps, people, parameters, calendar, places, clubs, events, systems, mini games). Plan: [[phase2]] ([[tickets/T-27001-phase-2-conventions]]).
+
+## [2026-10-24] ticket | Phase 2 tickets created
+
+[[tickets/T-27000-phase-2]] (umbrella, In Progress), [[tickets/T-27001-phase-2-conventions]] (In Review), [[tickets/T-27003-pilot-obin-names-overlays]] and [[tickets/T-27004-shared-core-names]] (Backlog, blocked by T-27002, the rename tool, which is written separately). Board cards are added by the kanban sync at merge.
+
+## [2026-10-24] decision | Phase 2 conventions: review fixes
+
+Fixes for the first review of [[tickets/T-27001-phase-2-conventions]] in `docs/adr/0001-phase-2-naming.md`, `CODING_STANDARDS.md`, `GLOSSARY.md` and [[phase2]]. Glossary: abbreviation table, `card` and `pad` traps, rows for the map's game-term prefixes; main prefixes `game_mode_` and `memory_card_`. Renames: none before the rename tool merges (ADR and section 4 now agree). Hypotheses: main names in EVENT's range go to the main-only files. File renames change the `.rodata`/`.data` subsegments and inner asm paths too. The ledger keeps the evidence notes. Section 10 states the no-game-text rule. Pending user decisions (audit questions 2 and 5) listed in the ADR. The GameState pilot of [[tickets/T-20500-emulator-assisted-naming]] moved to [[tickets/T-27004-shared-core-names]]; [[tickets/T-27000-phase-2]] gets the umbrella-header criterion and its first box unticked until T-27001 is Done. No status changes.
+
 ## [2026-10-24] query | T-25900 phase 2 naming audit
 
 drafts/T-25900/audit.md: naming state per unit (6,649 of 6,952 functions and 16,629 data labels still placeholders, 437 address-named files), how renames flow today and their gaps (the merge-time rename table matches no files since the per-object split), the design of tools/rename.py, naming conventions and the phase 2 work order.
@@ -1668,3 +1680,11 @@ Fixed the blocking finding of [[tickets/T-27024-p2-o-tt]]: a bell in state 0x70 
 
 ## [2026-10-24] ticket | T-27024 Done
 [[tickets/T-27024-p2-o-tt]] passed the third review (approved, no findings): the bell hazard rule (state 0x70 falls, hurts a ship that is not invulnerable, a shot frees it) in [[spec/o-tt]] 6.4 and 6.9 and the boss 4 beam table rows in `config/renames/proposals/o-tt.tsv` match `src/ovl/TT/8013BD10.c`, `80142D40.c`, `80144D70.c` and the asm data. The branch changes no `src/`, `include/` or symbol files. Moves to Done.
+## [2026-10-24] decision | Phase 2 conventions: user decisions, port-first scope, review round 2 fixes
+
+Third pass on [[tickets/T-27001-phase-2-conventions]] (still In Review): `docs/adr/0001-phase-2-naming.md`, `CODING_STANDARDS.md`, `GLOSSARY.md`, [[phase2]], [[tickets/T-27000-phase-2]], [[tickets/T-27003-pilot-obin-names-overlays]], [[tickets/T-27004-shared-core-names]]. User decisions of 2026-10-24: `tools/rename.py` is the only way to rename once it has merged (audit question 5, now the binding rule of section 4); old names stay in tickets, logs and old notes while current pages use the new names (audit question 2); the scope is port-first, "not 100%, just enough for the Godot port" (game logic in full, hardware layer at module level and entry points, locals and hex literals only where essential, SDK names optional, matching build exact). The Pending section is gone; the ADR has a Scope section; T-27000's criteria no longer ask for every symbol.
+
+Review fixes: the prefix rule is "a glossary stem, a listed abbreviation, or a row of the Module words table" everywhere (32 rows added, all 78 map prefixes pass a script check); non-O.BIN names are re-checked per unit and renamed through rename.py when they fail (cases in [[phase2]]); `buf`, `lba`, `init`, `src`, `dst` are abbreviations; `main_state_set` is a patch name; `girl_` has one owner, `sound_` is no main prefix, `spot_` replaces `spots_`; file names get the HYPOTHESIS rule; O.BIN comments go at the C definition; the SDK exception is recorded as the user's. T-27000 moved to `T-27000-phase-2.md` so the links of the other phase 2 units and the TACO ticket resolve (two links in earlier entries of this branch were updated). deslop: 0 strong hits; `tools/wiki.py lint` in Docker: 0 broken links.
+
+## [2026-10-24] ticket | T-27001 Done
+[[tickets/T-27001-phase-2-conventions]] passed the standards review in round 3 (approved, no blocking findings; `tools/wiki.py lint` 0 broken links) and moves to Done: `docs/adr/0001-phase-2-naming.md`, `CODING_STANDARDS.md` sections 4 and 5, `GLOSSARY.md`, [[phase2]]. [[tickets/T-27000-phase-2]]'s first criterion is ticked. The board cards for T-27000, T-27001, T-27003 and T-27004 come from the kanban sync at merge. Non-blocking: a Module words row for `pad` would make the `pad_` prefix explicit.

@@ -11,7 +11,7 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 Every game function is C: **6,952/6,952 functions, 2,276,920/2,276,920 bytes (100.0%)**, 27/27 sha1, merged at dbc017d86. The last ones: SHOUGATU func_8013EA98 and TAIIKU func_80137784 (stubborn-function attack, [[tickets/T-25500-stubborn-functions]]), main func_800476C0, func_80067870, NAME_ENT func_80143580 and main func_8006B0C8 (finish gate and its fresh-start runs, [[tickets/T-25600-finish-gate]]). func_8006B0C8 needed a narrowed block-copy rule in `tools/ugen_pass.py`; an IDO 4.1 check found the rule 4.1 itself follows, which [[tickets/T-26000-ugen-block-copy-41-rule]] is adopting. Lessons from the last ~100 matches: [[notes/wins-2026-10]] and [[playbook]].
 
-Next: roadmap phase 2, readable code (names for functions, globals, fields, types, files and headers), starting with a survey of the naming state, an emulator setup for runtime observation, and an overlay map.
+Next: roadmap phase 2, readable code, port-first (game logic named and explained in full, PS1 hardware layer at module level and entry points; the matching build stays 27/27). Plan and work order: [[phase2]]; conventions: `docs/adr/0001-phase-2-naming.md`, `CODING_STANDARDS.md` sections 4-5, `GLOSSARY.md` ([[tickets/T-27000-phase-2]]).
 
 ## Latest verified integration (2026-10-23, historical)
 

@@ -37,8 +37,9 @@ the conveyor is idle or between runs, or on Codex/Gemini capacity.
 ## Acceptance criteria
 
 - [x] Emulator spike: game boots headless in Docker with the open BIOS; memory watch and breakpoints work
-- [ ] GameState naming pilot with a rename table and enums, 27/27
-- [ ] Decision on scope for the full pass
+- Moved 2026-10-24: the GameState naming pilot (rename table and enums, 27/27) is now part of
+  [[tickets/T-27004-shared-core-names]], which waits for the rename tool (T-27002).
+- [x] Decision on scope for the full pass (port-first, recorded in `docs/adr/0001-phase-2-naming.md`; T-27001 Done)
 
 ## Comments
 
@@ -56,3 +57,8 @@ Shift-JIS string); writer of the mode byte `D_800E738E` (`func_80042960+0x7C` vi
 results and limits: [[emulator]]. Limits: about 3x real time without breakpoints, much slower with hundreds of
 breakpoints; REA's GDB tools need a Linux host GDB (use gdb-multiarch in the image). Containers run with 2 CPUs.
 Next: the GameState naming pilot (second criterion).
+
+2026-10-24 (w19-conventions): the GameState naming pilot moved to T-27004. ADR 0001
+(`docs/adr/0001-phase-2-naming.md`) lets no rename land before the rename tool (T-27002), and T-27004's criteria
+already cover the GameState fields and the first enums. The scope decision (last criterion) is the ADR's; tick
+it when T-27001 is Done.

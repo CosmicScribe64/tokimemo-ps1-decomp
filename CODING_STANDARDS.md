@@ -38,17 +38,28 @@ INCLUDE_ASM("asm/nonmatchings/foo", func_80012345);
 
 ## 4. Naming
 
-- Unknown symbols keep splat placeholders: `func_XXXXXXXX`, `D_XXXXXXXX`, `jtbl_XXXXXXXX`, `LXXXXXXXX` (8 hex digits, address in the original).
-- Once understood, rename to `snake_case` (functions, variables) and `PascalCase` (types) unless an established convention already exists in that file or module; match the neighbors.
-- Rename only through the splat symbol file (`symbol_addrs*.txt`), so asm, linker script, and C stay in sync. Never rename ad hoc in C alone or by search-and-replace over generated asm.
-- Provisional names (hypotheses) live only in a symbol file whose header says `HYPOTHESES` (today `config/symbol_addrs_obin.txt`, names from the O.BIN developer-build table, see `wiki/obin.md`); a name confirmed by evidence moves to `config/symbol_addrs.txt` with the evidence in the ticket. A hypothesis that is not from such a file gets a `/* HYPOTHESIS: ... */` comment at its definition.
-- Do not guess names. If a name is a hypothesis, say so in a comment and keep it easy to change.
-- Globals keep the `g_` prefix only if the module already uses it.
+Phase 2 names the game logic in full and the PS1 hardware layer at module level and entry points (scope table in the ADR). Decisions and the prefix maps: `docs/adr/0001-phase-2-naming.md`. Terms and stems: `GLOSSARY.md`.
+
+- Renames: once `tools/rename.py` (T-27002) has merged, it is the only way to rename a function, global, field, type, file or header, and any constant, local or parameter (user decision, 2026-10-24). The steps are a table, `plan`, `apply`, then the clean 27/27 build. Never rename by editing C, headers or symbol files by hand, and never by search-and-replace. Until the tool has merged, no rename lands.
+- Placeholders (`func_XXXXXXXX`, `D_XXXXXXXX`, `jtbl_XXXXXXXX`, `LXXXXXXXX`, 8 hex digits of the original address) stay only until the symbol is named. Hardware-layer internals, SDK functions and fields whose use shows nothing may keep them (scope in the ADR).
+- Case: functions, globals, fields, locals and parameters `snake_case`; types and struct tags `PascalCase`; enum constants and macros `UPPER_SNAKE` starting with the enum's or the module's prefix (`GIRL_SHIORI`). No address or size in a new name, no leading underscore, no `g_` prefix.
+- Language: English with American spelling. A game-term word (a thing in the game's world or rules) takes its stem from `GLOSSARY.md`. An ordinary technical word (`list`, `clear`, `glyph`) is plain English and needs no row. An abbreviation comes from the glossary's abbreviation table.
+- O.BIN names are the entries of `config/symbol_addrs_obin.txt` (`hizuke_init`, `k_disp_start`). They stay as they are, and a game-side one gets a one-line English comment at its C definition saying what it does. The SDK-side ones have no C definition; their comment is optional and goes on their line in the symbol file.
+- Prefixes: an overlay's own functions, globals, types and constants start with that overlay's prefix (`sports_`, `SportsActor`, `SPORTS_`); main symbols use their module's subsystem prefix (`cd_`, `text_`). Both maps are in the ADR (later `src/ovl/README.md` and `src/main/README.md`). A prefix is a glossary stem, a listed abbreviation, or a row of the glossary's Module words table. Each prefix belongs to one row of one map, and only that row's unit creates names with it.
+- Names already in the tree: the English-patch names and every other non-O.BIN name follow these rules. A unit re-checks the ones in its range and renames those that fail (an unlisted prefix, a bare trap word, an abbreviation outside the table) through `tools/rename.py`.
+- Evidence: a name says what the code or an emulator run (`wiki/emulator.md`) shows, and the note column of the rename table records that evidence; `tools/rename.py apply` keeps each row and its note in the unit's committed ledger (`config/renames/<unit>.txt`). A claim of game meaning the code does not prove is a hypothesis. A hypothesis name of a function or global goes in a HYPOTHESES symbol file (`config/symbol_addrs_hypotheses.txt`, `config/symbols_<DISC>_hypotheses.txt`; O.BIN names stay in `config/symbol_addrs_obin.txt`), and a field, type or constant carries `/* HYPOTHESIS: ... */` at its definition. Do not guess; section 8 says when a field stays `unk_XX`.
+- EVENT's range: EVENT's file covers main bss 0x800F6000-0x80126000, so a main name for an address there goes only into a main-only file (`config/symbol_addrs_main.txt`, or `config/symbol_addrs_main_hypotheses.txt` for a hypothesis), never into a file that EVENT loads (`tools/check_symbols.py`).
+- Uniqueness: a name is unique in its link unit without regard to case and does not collide with an SDK, libc, macro, typedef or enum name; no local or parameter shadows a global that its function uses.
+- Types: a type name loses its size or address suffix once it has a role name (`Rec38` to `GirlRecord`); union views keep one short name per view.
+- Constants: `enum` for closed sets, `#define` for bit masks, sizes and counts, SDK names where the SDK has them. A field or variable keeps its fixed-width type and gets a `/* enum Girl */` comment instead of an enum type. A literal is replaced only where it is tied to a named site (compared, assigned, `case`, argument). Masks and offsets in hex, counts in decimal. Game logic gets this treatment; hardware-layer code may keep raw hex.
+- Locals and parameters: a local that carries game logic gets a role name, `i`, `j`, `k` are loop counters, and a name that is given is never an m2c name (`var_*`, `temp_*`, `spXX`, `argN`, `phi_*`). Locals that carry nothing the port needs, and hardware-layer code, may keep m2c names. A temporary that exists only for the match keeps its `FAKE` comment and gets a name that says so (`fake_order`). Prototypes use the definition's parameter names.
 
 ## 5. File layout
 
-- `src/` mirrors the splat segments (one `.c` per segment or per split file, same path stem as in the splat config; the game code is one file per original object, `src/main/<address>.c` and `src/ovl/<NAME>/<address>.c` once `tools/split_objects.py` has run, see `wiki/source-files.md`).
-- `include/` holds headers (project and SDK). Each header has include guards.
+- `src/` mirrors the splat segments: one `.c` per original object, `src/main/` for the executable and `src/ovl/<folder>/` for each overlay, where `<folder>` is the overlay's English name from the disc-name map. Files a unit has not renamed yet keep their address names (`src/main/<address>.c`, `src/ovl/<DISC>/<address>.c`, see `wiki/source-files.md`).
+- A C file is named in `snake_case` for what its object does (`runner_race.c`), with no address, and its stem is unique without regard to case in its folder. Its first comment gives the original address range and points to `config/objects/<DISC>.txt` (`config/objects/main.txt` for the executable). The splat yaml keeps the disc name in `name`, `basename`, `target_path`, `asm_path` and `build_path`. A rename changes the object's `c` subsegment and the `.rodata` and `.data` subsegments of the same name; the asm under the disc-named root and the `INCLUDE_ASM`/`INCLUDE_RODATA` path strings follow (`asm/ovl/TAIIKU/data/sports_festival/runner_race.data`). A file or folder is named only from content that the code or the emulator proves; a name that claims more is a hypothesis, and the file's first comment carries `HYPOTHESIS: <what is unproven>`. A file rename is a commit with nothing else in it, made last in its unit.
+- Headers are named for what they declare: `include/main/<module>.h` for the symbols a main module defines, `include/game/<topic>.h` for shared game types, `include/ovl/<folder>.h` (or `include/ovl/<folder>/<topic>.h`) for an overlay. SDK headers keep their SDK names. Each header has an include guard built from its path (`include/main/cd.h`: `MAIN_CD_H`).
+- Each C file includes the headers whose symbols it uses. `include/main_api.h` and `include/game.h` stay as umbrellas until every part has moved to a topic header; the phase 2 final sweep then deletes them. A header split must not change any file's view of any symbol (`tools/sync_protos.py --snapshot`, then `--compare`).
 - `asm/` is generated by splat. Do not hand-edit generated asm. The only allowed change is migrating a function to C (remove its `.s` from the build via `INCLUDE_ASM`/split config, not by editing the body).
 - `config/` holds splat configs and symbol files; `tools/` holds Dockerfiles and scripts; `build/` and `expected/` are gitignored outputs.
 - Regenerate asm with the project script after config changes; commit config, not build output.
@@ -102,11 +113,13 @@ typedef struct Foo {
 } Foo; /* size 0x0C */
 ```
 
-- Mark unknown fields `unk_XX` (offset in hex) and padding `pad`. Do not invent semantics.
+- Name a field for its use when the code shows the use (section 4). Only a field that is unused, or whose use shows nothing, stays `unk_XX` (offset in hex); padding is `pad`. Do not invent semantics. A meaning the code does not prove is a hypothesis (section 4).
 - Prefer the real aggregate over "first symbol" tricks (T-5000). When neighbouring globals are fields of one struct or array (stride-indexed in the asm, walked by a pointer, or a load the original keeps after a store to its neighbour), declare that struct or array once and write plain field or element accesses; do not reach a later field through the first symbol (`(&D_X)[n]`, `*((u8 *)&D_X + k)`). `tools/type_recovery.py --sym D_X` lists the proposals for a symbol; `wiki/data-types.md` has the method and the types already recovered. A struct and an array of the same bytes can compile differently, and the base symbol must be the one the original relocations use; let the build decide. A trick is acceptable only as a marked `FAKE` when the aggregate is not known yet. Once an aggregate is declared, its fields are used only through it (`D_800E6280.unk_F5F`, not `D_800E71DF`): `tools/migrate_globals.py --apply` rewrites the old names, its `--check` fails the build on them, and a use that matches only through the old symbol is listed with its reason in `config/migrate_globals.txt` (T-5100, `wiki/game-state.md`).
 - Bit-fields only if the matching output requires them.
 
 ### 8a. Shared externs (T-1200, T-3340)
+
+While `include/main_api.h` is split into topic headers (section 5), read `main_api.h` below as "the one header that declares the symbol": each main-exe symbol is still declared once, with one type.
 
 - Every main-exe symbol (address 0x80041000-0x8012B537: game functions, SDK functions, globals; renamed ones are listed in `config/symbol_addrs*.txt`) is declared once, in `include/main_api.h`, and nowhere else. `include/game.h` holds the game structs only; `include/ovl/<NAME>.h` holds the overlay's own symbols (addresses from its load address up) and includes `main_api.h` (directly or through `game.h`). A `.c` file does not declare a symbol of `main_api.h` either. (A main-bss global that only one overlay reads through a struct defined in that overlay's header, such as `TaiikuBig D_801227A0[]`, stays in that header; `tools/check_headers.py` accepts it while nothing else declares the symbol.)
 - The type in `main_api.h` is the one the main-exe definition has (matched C in `src/main`). While the function is still `INCLUDE_ASM`, the type comes from the call sites; change it when a definition shows better. A `()` is kept where callers pass other arguments than the definition takes. Choose data types from the access widths of all users (`lbu` is `u8`, `lh` is `s16`, `lw` is `s32`/pointer).
@@ -136,6 +149,7 @@ typedef struct Foo {
 - Never commit disc images, the game zip, executables, extracted assets (graphics, audio, text dumps, scripts), or anything under `disc/`. These stay gitignored.
 - Commit only source, configs, and tooling. Small hex/asm excerpts needed to explain a match in a ticket are fine; bulk dumps are not.
 - Hashes and sizes of the original files are allowed.
+- Names, comments and rename notes carry no game text: only proper names and short terms, with stems from `GLOSSARY.md`. Evidence that cites a string names its label (`D_800B32D0`) and never quotes the text.
 
 ## 11. Scripts and tooling
 
@@ -145,7 +159,7 @@ typedef struct Foo {
 
 ## 12. Commits
 
-- Small and focused: one function, one file, or one config change per commit.
+- Small and focused: one function, one file, one rename table, or one config change per commit.
 - Message starts with the ticket id: `T-0123: match func_80012345`. Body notes anything non-obvious (fakematch, NON_MATCHING, symbol renames).
 - Do not mix refactors with matches. Do not commit build output or game data.
 - Agent commits end with the `Co-Authored-By` line from the project attribution rules.
@@ -160,13 +174,16 @@ Reviewer checklist:
 - [ ] Any `NON_MATCHING` is guarded, ticketed, and the default build still matches.
 - [ ] C89 only: declarations at block top, `/* */` comments, no inline/stdbool/C99.
 - [ ] SDK headers and types used; no SDK structs or prototypes redefined.
-- [ ] Placeholders kept until understood; renames done via splat symbol files.
-- [ ] Files in the right place; generated asm not hand-edited; `INCLUDE_ASM` used per section 6.
+- [ ] Names follow section 4: case, English, game-term words from the glossary, prefix from the map (a stem, an abbreviation or a Module words row; one owner per prefix). O.BIN names kept, each game-side one with a one-line English comment. Non-O.BIN names in the unit's range re-checked.
+- [ ] Every new name has evidence in its rename-table note, kept in the ledger; hypotheses sit in a HYPOTHESES file or carry `/* HYPOTHESIS: ... */`; `unk_XX` only where the use shows nothing.
+- [ ] Renames made with `tools/rename.py` only (no hand edit, no search-and-replace) and proved by a clean 27/27 build; no main name in EVENT's range outside a main-only symbol file.
+- [ ] Files and headers named and placed per section 5, a name that the code does not prove marked `HYPOTHESIS`; each file includes what it uses; a file rename is a commit of its own.
+- [ ] Generated asm not hand-edited; `INCLUDE_ASM` used per section 6.
 - [ ] Every fakematch carries a `FAKE` comment with reason and ticket. Toolchain emulation passes meet all points of section 7a.
 - [ ] Fixed-width types; struct offsets documented; neighbouring fields declared as their real struct or array, not reached through the first symbol (section 8).
 - [ ] Main-exe symbols declared once in `include/main_api.h` with one type, every override explained (section 8a); `tools/check_headers.py` passes.
 - [ ] Non-obvious tricks explained; no dead code or stray debug.
-- [ ] No copyrighted game data or assets staged.
+- [ ] No copyrighted game data or assets staged; no game text in names, comments or rename notes (section 10).
 - [ ] Scripts are Python 3, Docker-run, no host installs.
 - [ ] Commits small, ticket id in message, only intended files staged.
 - [ ] Wiki updated: ticket status/kanban match, `wiki/log.md` entry appended, index updated if pages were added.
