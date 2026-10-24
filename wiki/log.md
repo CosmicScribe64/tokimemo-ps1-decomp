@@ -1716,3 +1716,7 @@ Second review of [[tickets/T-27020-p2-h-graphics]] (three blocking findings, sev
 
 ## [2026-10-24] ticket | T-27020 Done
 [[tickets/T-27020-p2-h-graphics]] passed the third review (approved, no findings): the texture-block cache section and the `prim_box_gouraud` mode table in [[spec/h-graphics]] and `config/renames/proposals/h-graphics.tsv` match `src/main/80047550.c` and `src/main/800490C0.c`. The branch changes no `src/`, `include/` or symbol files. Moves to Done.
+
+## [2026-10-24] ingest | m-scheduler phase-2 table and port spec
+Unit m-scheduler (`src/main/8006CB30.c`, 56 functions): read the matched C, its callers and callees and the `p2a-core` table, probed behaviour with a small Lua job on the emulator image (mode byte poked from the title-menu state: first-week queue layout, Sunday build with a holiday, weekly affection decay, meeting record, injury step, vacation transitions), wrote `config/renames/proposals/m-scheduler.tsv` (116 rows: 33 func, 11 comment, 8 data, 9 field, 54 const, 1 file; 17 start with HYPOTHESIS) and [[spec/m-scheduler]] ([[tickets/T-27011-p2-m-scheduler]], In Review).
+Findings: the week queue is built on the Sunday that ends the previous queue; the command check is a 23/28/33-day biorhythm whose result is the half-effect flag; type 0x47 is a visit, queued after a poor Saturday, six good days or an exam week, not only for illness; the event_flags bytes are laid out in per-girl blocks; the meeting selectors (type 0x48) use parameter thresholds that rise once two girls are met.
