@@ -27,6 +27,8 @@ The overlay depends on three other overlays: BUNKA_SD (mode 0x80, the stage show
 - **The overlay is reloaded after every sub-scene.** BUNKA_SD, TT and the stage-163 path replace the code in the shared slot; when they finish, main mode 0x70 runs again and the loader reads BUNKASAI anew. All overlay-private state is lost (the script-pointer words, the fortune timers, the typed-line counter). Everything that must survive lives in main's bss, which is why the ten variables of section 3.2 sit at `D_80122E98..D_80122EC0` and `D_800E7D4E/F`. The scene continues at the saved stage and step; the call sites save "stage and step plus one" in `culture_return_stage/step` (shows, fortune, stage 163) or in `GameState.saved_mode/stage/step` (TT).
 - Emulator check (title-menu state with mode 2, overlay target 0x70, club and calendar poked): phases 0..6 change at frames 60, 61, 62, 202, 222, 254, 255, phase 7 at frame 302; the stage sequence for a literature-club player in 1995 with only girl 0 met is 0, 14, 15, 16 (step 0..0x11), then phase 8 and the overlay loader again at frame 906 (the poked state was not a real game, so `day_event_next` took its alternative target, mode 0x22).
 
+How the checks were made (for later probes): start from the title-menu save state of [[emulator]], poke `GameState` at frame 2 (main mode 0x1108 = 2, overlay target 0x110E = 0x70, the club halfword at +0xF4 = club << 12, the calendar bytes at +0x3E, per girl the flag word at +0x1BC + 0x38 g + 0xC: byte 2 = club << 4, byte 0 bit 1 = met, `input_device` +0xF74 = 1, `menu_mode` +0x1092 = 1), then press a face button every 14 frames (CIRCLE confirms menu rows) and log mode, stage, step and the scene variables whenever they change. The shipped `tools/emu` has no poke option; the scratch wrapper that added one lives in `build/emu_scratch/` of the worktree and is not committed.
+
 ## 3. State
 
 ### 3.1 Scene variables (main bss, shared with BUNKAKEN and BUNKA_SD)
@@ -168,6 +170,40 @@ Every visit or member scene is one function with 15 to 30 steps. The steps are t
 7. Closing: girl leaves (`normal_date_girl_out`), the picture fades out, a last group (1, 2 or 3 and 0x76 by rank, then group 0), and in the literature scenes the festival-call flags (8.4). The scene ends with `culture_scene_end`, which jumps to phase 8.
 
 `dialogue_run` increments `dialogue_group` by one when a group ends (seen in the emulator trace: after the intro group 0 the value is 1), but every speak step sets its group explicitly first.
+
+Worked example, `culture_shiori_visit_literature_exhibit` (stage 16, 18 steps; `rank` = `girl_state_rank(0)`):
+
+| Step | Does |
+|---|---|
+| 0 | read background 0x40EA, next |
+| 1 | fade the old picture out |
+| 2 | when the read is done: banner title for the exhibit, show the background in layer 1, start reading portrait 0x544A, next |
+| 3 | fade the background in |
+| 4 | when the portrait is read: `addr_init_bustup`, `current_girl` = 0, show portrait; group 0x24 (year 95) or 0x25 |
+| 5 | speak (narration) |
+| 6 | read the girl script (0x11 sectors from 0x49BF), next |
+| 7 | girl enters |
+| 8 | when the read is done: group 0xA (rank 0 or 1), 0xB, 0xC, 0xD (rank 4), plus 4 in year 96; `culture_shiori_visit_script_start` |
+| 9 | speak |
+| 10 | rank 4: jump to step 0xC; else group 1 (rank 0 or 1), 2 or 3; next |
+| 11 | speak |
+| 12 | group 0x90; girl leaves |
+| 13 | rank 4: speak; else next |
+| 14 | fade the picture out |
+| 15 | group 0, next |
+| 16 | speak |
+| 17 | if rank < 4: `festival_call_95` (year 95) or `festival_call_96` on girl 0; `culture_scene_end` |
+
+Any step number not listed in a switch falls to `game_reset_to_title()`.
+
+Differences by exhibit (all other steps follow the pattern):
+
+- **Literature exhibit**: the example above. In the Shiori and Mio member blocks the closing group also depends on `clubs[0].exp` (section 8.3); Yuina has no member scene for it.
+- **Stage-show scenes (speech contest, drama play, science show, computer experiment show, concert)**: the stage show of BUNKA_SD (section 7.2) is started in the middle of the scene: after the opening narration (speech contest, drama play, concert: the girl is not on screen yet) or after a first reaction round (science show, computer experiment show). The return point is stored first. When the overlay is back the scene shows the backstage banner, reads the portrait and the girl's script again (the overlay was replaced, so `culture_<girl>_script_start` sets the pointers again), fades the background and the girl in together and plays the post-show groups by rank (in the Shiori speech contest: 0x12..0x15, then 4, 5, 2, 3, 7 by rank 0..4); the Shiori concert uses 4 and 5 (0x85 and 0x86 in year 95) for rank 0 and 1, 2, 3 and 7.
+- **Computer fortune telling (year 95)**: opening group 0x2A, the girl enters, a first reaction group by rank, then a hand-over to the shared fortune stage (`main_stage_next` with `culture_return_stage/step` set and sound command 0x202); on return the girl enters again (skipped for rank 4) and the reaction group is chosen by rank plus `culture_fortune_result`.
+- **Game exhibit (year 96)**: opening group 0x2A, a reaction group by rank, the girl leaves (rank 4 is skipped), then the TT launch of section 7.4; after the return the scene reloads the background and portrait, the girl enters (the background alone for rank 4) and a rank group follows, increased by one when `tt_stages_cleared` is below the girl's threshold.
+- **Art scenes (portrait drawing, sketching session, oil painting)**: no show and no sub-scene; two or three rounds of conversation with rank groups and the `clubs[4].exp` tests of section 8.3 (the Yumi sketching scene adds Yoshio as a second speaker).
+- **Rank 4**: usually shortens the scene (the girl does not enter, or leaves at once, and the closing group differs) and suppresses the festival-call flags.
 
 Two quirks the port must keep: the rank-4 variants skip portrait fades, and the Yumi sketching scene (stage 160) shows two girls (Yumi and girl 13, Yoshio) in turn by copying portrait data between VRAM-side buffers (`memcpy` to 0x80197000 and 0x801AE000) and switching `current_girl`; Yoshio's lines use `scene_mouth_lock`.
 
