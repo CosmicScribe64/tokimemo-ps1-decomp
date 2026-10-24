@@ -471,7 +471,7 @@ void func_801344E0(void) {
             /* FAKE: T-25107 (cut down in T-26000): never-true arm that ugen drops.
              * Its indirect store puts both record copies below in block-copy
              * state F, as in the original (one scratch register before the end
-             * pointer; see tools/ugen_pass.py). */
+             * pointer; see tools/ugen_pass.py). Still needed in T-26002 (state B without it). */
             if ((u32)D_8013C578 < 0) {
                 *(u8 *)0 = 0;
             }
@@ -1207,7 +1207,7 @@ void func_801363F4(void) {
             /* FAKE: T-25107 (cut down in T-26000): never-true arm that ugen drops.
              * Its indirect store puts both record copies below in block-copy
              * state F, as in the original (one scratch register before the end
-             * pointer; see tools/ugen_pass.py). */
+             * pointer; see tools/ugen_pass.py). Still needed in T-26002 (state B without it). */
             if ((u32)D_8013C578 < 0) {
                 *(u8 *)0 = 0;
             }
