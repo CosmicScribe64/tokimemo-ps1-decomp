@@ -1,7 +1,7 @@
 ---
 id: T-27017
 title: Phase 2 naming and spec for m-sysmenu (src/main/8005A0B0.c, the player's room screens)
-status: In Review
+status: Done
 assignee: Sonnet 5.5 analyst (workflow p2a)
 created: 2026-10-24
 updated: 2026-10-24
@@ -18,7 +18,7 @@ Name every function and global of `src/main/8005A0B0.c` (109 functions: the week
 - [x] `wiki/spec/m-sysmenu.md`: what each screen does, its state and data with the new names, the rules (build rules of the command screen, icon table, save and load steps, settings tables, rumor and preparation rules), connections, peculiarities and dead code, prefix requests, open questions; linked from `wiki/spec/index.md`.
 - [x] Emulator checks from the HUD unit's saved state of the command screen (1995-04-09): icon to stage mapping, settings flow and frame numbers, calendar, the data screen through save and load, the click spots in mouse-like mode, icon 0 to mode 0x30, icon 4 without a club does nothing, d-pad icon order, click spots drawn on a screenshot.
 - [x] Facts only, no game text, no asm, no screenshots, nothing from `disc/`, `versions/`, `build/`. No edit of `src/`, `include/` or symbol files.
-- [ ] Review of names, evidence and hypothesis marks (Opus), then merge the table into the rename tool input.
+- [x] Review of names, evidence and hypothesis marks (Opus). Merging the table into the rename tool input is a later step.
 
 ## Notes
 
@@ -31,3 +31,9 @@ Name every function and global of `src/main/8005A0B0.c` (109 functions: the week
 
 - 2026-10-24 (workflow p2a): table, spec and this ticket written; status In Review.
 - 2026-10-24 (workflow p2a, review round 1 fix): dropped the `GsRec66C.unk_03` row (already `ClubRecord.flags` and `ClubFlagBits.quit` in the scheduler and HUD tables); `CharFlags.b2` is cited by its merged name `acquainted` with the meaning marked HYPOTHESIS; sound rows moved into `UiSe`; `CLUB_JOIN_MESSAGE_*`, `RumorStage`, `MascotMenuItem` split from `MascotChoice`, `system_data_flags_view`, `CardPoll` merged into `CardResult`; `room_click_window` marked HYPOTHESIS; spec corrections (stage 0xFF entries, ETC's own init clone, `room_` claims, foreign callee names from the flow and menutext tables, dialogue paraphrases reduced to topics); open questions 1a (romaji helper stem) and 1b (`room_` owner) added.
+- 2026-10-24 (review round 2): approved with no findings. Both blocking findings of round 1 are resolved.
+  - `quit_flags` clash: the `GsRec66C unk_03 -> quit_flags` row is gone. The table has 263 rows (92 func, 27 data, 126 const, 16 comment, 2 file, 0 field), every row has 5 columns, no duplicate names. Spec section 7 and this ticket use `ClubRecord.flags` and `ClubFlagBits.quit`.
+  - `CharFlags.b2` meaning: no `club_member` remains. The `command_screen_icon_confirm` row and the spec icon 4 row cite the bit as `acquainted`, point to m-scheduler's HYPOTHESIS and claim no meaning for it. This matches `src/main/8005A0B0.c` around lines 520-545 (`func_80053564(club)` finds the girl; if `unk_1BC[i].unk_0C.f.b2` is set, `unk_06 += 1`); the m-menutext table names `func_80053564` as `girl_find_by_club`.
+  - Spot checks of the non-blocking fixes against the C: NAME_ENT calls `main_state_set(0x34); func_80042908(0xFF)` (`80144AD0.c:2730`, `80139740.c:2708`) and OPTION calls only `main_state_set(0x34)` (`8013A550.c:723`); ETC has its own init clone `func_80144AC0` (`80143240.c:620`) calling only `func_8005C7C0` and `func_8005C7FC`; the sound rows are `UiSe` `UI_SE_CARD_JOB_DONE` and `UI_SE_DOORBELL`, no `SND_*` / `ICON_*` names remain.
+  - The branch changes only `config/renames/proposals/m-sysmenu.tsv`, [[spec/m-sysmenu]], [[spec/index]], this ticket and the log; nothing under `src/`, `include/` or `config/symbol*`, so no `CODING_STANDARDS.md` code checklist item applies. Moved to Done.
+  - Follow-up for the table merge: `m-sysmenu.tsv` still has the three `TextSpeed` const rows (`TEXT_SPEED_FAST`, `TEXT_SPEED_NORMAL`, `TEXT_SPEED_SLOW`, lines 211-213) that [[spec/m-menutext]] owns (see [[tickets/T-27018-p2-m-menutext]], review round 2). Same names and values; drop them from this table when it goes into the rename tool input. Nothing reads the proposals tables for duplicates yet, so the merge itself is unaffected.
