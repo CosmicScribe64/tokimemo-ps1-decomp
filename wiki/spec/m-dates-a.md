@@ -84,8 +84,8 @@ Modifier bits (`SndModifier`): 0x1000 = stop instead of start (classes 2, 3, 5 t
 | 0xB4, 0xC4, 0xD4 | `SND_CMD_FADE_XA_FAST/MEDIUM/SLOW` | fade out the voice clip |
 | 0xBF, 0xCF, 0xDF | `SND_CMD_FADE_BOTH_*` | both (bits 1 and 4 set) |
 | 0xB2, 0xC2 | `SND_CMD_NOP_B2`, `_C2` | no effect: bit value 2 is not tested in the fade family (sent by GEKO and TAIIKU). HYPOTHESIS: meant to fade the sound-effect voices |
-| 0xE1 / 0xE4 | `SND_CMD_PAUSE_BGM` / `_XA` | pause (0xE1 only TT; 0xE4 in RPG_BAT and BUNKA_SD) |
-| 0xF1 / 0xF4 | `SND_CMD_RESUME_BGM` / `_XA` | resume |
+| 0xE1 / 0xE4 | `SND_CMD_PAUSE_BGM` / `_XA` | 0xE1 pauses the sequence (TT only). 0xE4 is called pause for the voice clip (RPG_BAT 3 sites, BUNKA_SD 1) but, as a class-0 command, it is a cancel: with the CD start still pending it stops the CD and forgets the clip; with the clip playing it forgets the clip, cancels the fade it just started and issues no stop (section 8.4) |
+| 0xF1 / 0xF4 | `SND_CMD_RESUME_BGM` / `_XA` | 0xF1 resumes the sequence (TT only). 0xF4 never resumes a voice clip as a class-0 command: the paused bit is already clear, so it only forgets the clip (section 8.4); no sender in `src/` |
 
 The family test is `id & 0xF0` in {0x10, 0x20, 0x70, 0xB0, 0xC0, 0xD0, 0xE0, 0xF0}; any other value goes to `snd_cmd_system` which handles low bytes 1 to 6 (rows above) and ignores the rest.
 
@@ -101,7 +101,7 @@ The family test is `id & 0xF0` in {0x10, 0x20, 0x70, 0xB0, 0xC0, 0xD0, 0xE0, 0xF
 
 ### 3.3 Voice clip (class 3)
 
-`0x300` starts the clip prepared by `xa_clip_request_set` (section 8). `0x1300`, `0x2300`, `0x4300` stop, pause and resume it (same effect as 0x74, 0xE4, 0xF4 except for the extra step of the class-0 path, section 8.4). Only 0x300 is sent in `src/` (96 sites, `voice_play` among them).
+`0x300` starts the clip prepared by `xa_clip_request_set` (section 8). `0x1300`, `0x2300`, `0x4300` stop, pause and resume it: 0x1300 does the same as class-0 0x74 (stop, then `snd_xa_promote_next`), while 0x2300 and 0x4300 call `snd_xa_control(0xE4 / 0xF4)` **without** the promote that the class-0 forms 0xE4 and 0xF4 add, so they behave differently from them (section 8.4). Only 0x300 is sent in `src/` (96 sites, `voice_play` among them); the other three class-3 ids and 0xF4 have no sender.
 
 ### 3.4 Sound effects (classes 5 to 8)
 
@@ -117,7 +117,7 @@ Counts are literal arguments of `func_80044750(...)` in `src/` (computed ids suc
 | --- | ---: | --- |
 | 0x3 | 3 | main, NAME_ENT |
 | 0x4 | 12 | TT only |
-| 0x5 | 10 | NAME_ENT 7, main 3; every sender follows it at once with 0x71 or a BGM fade (0xB1, 0xC1, 0xD1), at a scene end or before a bank reload |
+| 0x5 | 10 | NAME_ENT 7, main 3; every sender follows it at once with 0x71 or a BGM fade (0xB1, 0xC1, 0xD1); six of the ten sit next to a bank load (section 6.4) |
 | 0x6 | 2 | main (the CD read functions) |
 | 0x11 to 0x16 | 2 + 8 + 4 | main bank loader, TT |
 | 0x21 to 0x24, 0x2E, 0x2F | 15 to 25 each | bank loader `main`, TT, KANGEI, SHOUGATU, DATE, GEKO, SHUGAKU, TAIIKU, TACO |
@@ -139,7 +139,7 @@ Computed senders: the bank loader (`seq | 0x200`), OPTION's sound test (`n | 0x5
 
 ## 4. Driver state
 
-All state is one 0x50-byte object `audio_state` (type `AudioState`, `D_80125D10`) plus a few arrays (section 5) and the queue. The original source also reached many of the fields through separate symbols (`D_80125D14` to `D_80125D5F`); the table rows `audio_*` mark them as aliases of the fields so the apply step can fold them.
+All state is one 0x50-byte object `audio_state` (type `AudioState`, `D_80125D10`) plus a few arrays (section 5) and the queue. The original source also reached many of the fields through separate symbols (`D_80125D14` to `D_80125D5F`); the table rows `audio_*` (the core object name plus the field) and the `_1` to `_3` array-element symbols mark them as aliases (24 of the 46 data rows). They stay in the table because the C declares those addresses as separate globals, so a rename is the only way to remove the `D_8012...` names; `D_80125D14` and `D_80125E62` are also used in `8007C030.c`. The apply step can drop the rows once the code reads the fields and array elements instead.
 
 | offset | name | meaning |
 | --- | --- | --- |
@@ -147,7 +147,7 @@ All state is one 0x50-byte object `audio_state` (type `AudioState`, `D_80125D10`
 | 0x04 | `request_flags` | pending work (section 4.1) |
 | 0x08 / 0x0C | `xa_clip_start` / `xa_clip_end` | sectors of the current clip (0 = none) |
 | 0x10 / 0x14 | `xa_next_start` / `xa_next_end` | sectors of the clip queued behind it |
-| 0x18 | `xa_resume_pos` | sector where a paused clip resumes (the start after a promote) |
+| 0x18 | `xa_resume_pos` | sector kept for a resume: the pause selector stores the playing position here (not below the clip start); `snd_xa_promote_next` overwrites it with the new clip start, so the class-0 pause never replays from it |
 | 0x1C / 0x1E | `xa_volume` / `xa_volume_full` | CD-audio volume now (faded) / at start (per speaker) |
 | 0x20 / 0x22 | `bgm_volume` / `bgm_volume_full` | sequence volume now / at start |
 | 0x24 / 0x26 | `se_volume` / `se_volume_default` | key-on volume of effects, and its default (always equal) |
@@ -175,7 +175,7 @@ Volumes are libsnd units, 0 to 127 (master volume 0x7F is full scale; the serial
 | 0x100 | `SND_STATE_BGM_PLAYING` | a sequence is open and playing |
 | 0x400 | `SND_STATE_XA_PLAYING` | a voice clip is playing and its end is watched; the level meter is read only then |
 | 0x1000 | `SND_STATE_BGM_PAUSED` | sequence paused |
-| 0x4000 | `SND_STATE_XA_PAUSED` | voice clip paused (also while a pause fade runs) |
+| 0x4000 | `SND_STATE_XA_PAUSED` | voice clip paused. Set by the pause selector, but the class-0 pause command clears it again in the same call (`snd_xa_promote_next`); it stays set only after the class-3 form 0x2300, which nothing sends (then also while the pause fade runs) |
 | 0x10000 << i | `SND_STATE_VAB_OPEN_0..3` | slot i's header is open (advisory: `snd_vab_dispose` closes the VAB without clearing it) |
 | 0x100000 | `SND_STATE_FADE_VIA_MASTER` | BGM fades through the master volume (section 6.4) |
 | 0x10000000 | `SND_STATE_SOUND_TEST_REVERB_OFF` | toggled by the sound test; read only in mode 0x21 |
@@ -208,7 +208,7 @@ Four **slots**, each a VAB (header + sample body). Layout fixed by `snd_vab_layo
 | 2 | 0x80016000 | 0x28000 | 0x39010 |
 | 3 | 0x8001A000 | 0x1A768 | 0x61010 |
 
-The sizes are stored in `snd_vab_body_size` and never read. SPU RAM below 0x1010 is left free (the capture buffers of section 8.5 live there). Slots 0 and 1 form **set 0**, slots 2 and 3 **set 1**; the loader in `80043510.c` (`sound_bank_load_*`) loads the files for one set while the other plays, then sends the transfer and assignment commands:
+The sizes are stored in `snd_vab_body_size` and never read. SPU RAM below 0x1010 is left free (the capture buffers of section 8.5 live there). Slots 0 and 1 form **set 0**, slots 2 and 3 **set 1**; the loader in `80043510.c` (`sound_bank_load_*`) sends the transfer and assignment commands for one set at a time (HYPOTHESIS: it loads the files of one set while the other set plays; this file does not show that):
 
 | set | transfer | slot roles | commands |
 | --- | --- | --- | --- |
@@ -257,7 +257,7 @@ The voice fade (`snd_xa_fade_start`) resets its accumulator only when none runs,
 
 ### 6.4 Fade end (`snd_bgm_fade_finish`)
 
-With `SND_STATE_FADE_VIA_MASTER` set and no voice clip playing, the fade did not touch the sequence volume but scaled the **master volume** (`bgm_volume * 0x7F / bgm_volume_full`), so effects fade too; at the end all voices are keyed off and the master volume is 0 (restored to 0x7F by the next effect or BGM start). Then in both cases the sequence is stopped (`snd_bgm_control(0x71)`, which promotes the queued id) and, if `bgm_seq_id != -1`, started. Command 0x05 sets the master-fade flag; the game sends it only before replacing a bank (for example with 0x71 or 0xB1 directly after).
+With `SND_STATE_FADE_VIA_MASTER` set and no voice clip playing, the fade did not touch the sequence volume but scaled the **master volume** (`bgm_volume * 0x7F / bgm_volume_full`), so effects fade too; at the end all voices are keyed off and the master volume is 0 (restored to 0x7F by the next effect or BGM start). Then in both cases the sequence is stopped (`snd_bgm_control(0x71)`, which promotes the queued id) and, if `bgm_seq_id != -1`, started. Command 0x05 sets the master-fade flag. All 10 senders in `src/` send 0x71 or a BGM fade (0xB1, 0xC1, 0xD1) directly after it; six of them sit next to a bank load (`func_80044890`), four do not (NAME_ENT `80132000.c:2374`, `80139740.c:2587`, `80139740.c:2654`, `80144AD0.c:2698`). HYPOTHESIS: it marks a scene exit or bank replacement where the effects should fade with the music.
 
 ## 7. Sound effects
 
@@ -281,14 +281,22 @@ Worked example from the emulator (NAME_ENT prologue, frame 3836): request words 
 
 ### 8.3 End
 
-Each frame while playing, `snd_xa_check_end` compares `xa_position_get()` (the sector the CD reports) with `xa_clip_end`: at or past the end it starts the fast fade (0xB4) once; otherwise it refreshes the level meter. The fade tick lowers `xa_volume` (section 6.3), and at 0 or less `snd_xa_fade_finish` stops the clip (`cd_command(9)`, mix off, clear flags), then if a clip is queued (`xa_next_start` after the promote) it starts it. So a clip is cut about 11 frames after the CD reaches the end sector (which already includes the 0x10-sector margin), and a queued clip starts right after.
+Each frame while playing, `snd_xa_check_end` compares `xa_position_get()` (the sector the CD reports) with `xa_clip_end`: at or past the end it starts the fast fade (0xB4) once; otherwise it refreshes the level meter. The fade tick lowers `xa_volume` (section 6.3), and at 0 or less `snd_xa_fade_finish` stops the clip (`cd_command(9)`, mix off, clear flags), then promotes the queued clip and, if there is one (`xa_clip_start != 0` after the promote), starts it. So a clip is cut about 11 frames after the CD reaches the end sector (which already includes the 0x10-sector margin), and a queued clip starts right after.
 
-### 8.4 Stop, pause, resume (`snd_xa_control`)
+### 8.4 Stop, pause, resume (`snd_xa_control` and its callers)
 
-- 0x74 (and 0x1300): mix off, `cd_command(9)`, clear playing, paused, starting and fade bits. Clip words stay unless forgotten (0x03) or reset (0x06).
-- 0xE4 (0x2300 uses the same routine): if a start is pending, set paused and stop the CD at once. If playing, remember the position (not before the clip start), set paused, clear playing and start a fast fade; when the fade ends `snd_xa_fade_finish` calls the stop selector, which clears paused again, so in practice **pause during playback is a fast fade-out and a stop**.
-- 0xF4 (0x4300): acts only if paused is still set (the pending-start case): clear it and either finish the chain (queued clip) or `snd_xa_play(xa_resume_pos)` (restart from the clip start).
-- The class-0 forms 0xE4 and 0xF4 additionally call `snd_xa_promote_next` right after, which clears the paused bit they just set; the class-3 forms do not. Pause and resume of voices occur only in RPG_BAT and BUNKA_SD (0xE4) in `src/`.
+`snd_xa_control(sel)` is the low-level routine. What a command does depends on which caller reaches it and on the call that follows.
+
+- **Stop (selector 0x74).** Mix off, `cd_command(9)`, clear playing, paused, starting and fade bits. The clip words stay. The commands 0x74 (class 0) and 0x1300 (class 3) follow it with `snd_xa_promote_next` (a queued clip becomes the current one without starting); `snd_xa_fade_finish` follows it with the promote and a start of the queued clip; forget (0x03) and reset (0x06) clear the words.
+- **Pause (selector 0xE4).** Three cases. Start pending (`SND_REQ_XA_STARTING`): set paused and `cd_command(9)`, a CD stop at once. Playing: store the position in `xa_resume_pos` (not before the clip start), clear playing, set paused and start the fast voice fade 0xB4 (this sets the fade-running bit; the later ticks lower the volume). Neither: nothing.
+- **Resume (selector 0xF4).** Only if paused is set: clear it; with a clip queued call `snd_xa_fade_finish`, else `snd_xa_play(xa_resume_pos)`.
+- **Class-0 forms 0xE4 and 0xF4, the only forms the game sends.** `snd_control_dispatch` calls `snd_xa_control` and then **always** `snd_xa_promote_next`. The promote clears playing, paused, starting and fade-running bits, overwrites `xa_resume_pos` and the clip words from the queue slot (empty unless a clip was queued), zeroes the level meter outputs and issues no CD command. Results:
+  - 0xE4 with the start pending: the CD is stopped at once and the clip is forgotten (a queued clip becomes the current one, not started).
+  - 0xE4 with the clip playing: the fast fade the pause just started is cancelled in the same call (the fade-running bit is cleared, so no tick ever lowers the volume), paused is cleared, the stored position is overwritten and **no stop is issued**. The CD stream keeps playing at the clip volume until another command stops it (a stop, a new clip, a reset) or the drive reaches the end of the data (not examined), while the driver has forgotten the clip: no end detection, no fade at the end, the level meter reads 0.
+  - 0xE4 with nothing playing or starting: only the promote.
+  - 0xF4: paused is already clear, so `snd_xa_control` does nothing; the promote alone forgets a playing clip exactly as in the second case. It never resumes anything.
+- **Class-3 forms 0x2300 and 0x4300** call `snd_xa_control(0xE4 / 0xF4)` without the promote, so paused can survive. A pause during playback is then a fast fade whose end calls the stop selector (which clears paused again) and starts a queued clip; a resume restarts the CD from `xa_resume_pos`, or finishes the chain when a clip is queued. This is read from the code only: nothing in `src/` sends these ids and no emulator run covered them.
+- **Senders.** Voice pause occurs only as the class-0 0xE4: RPG_BAT (3 sites) and BUNKA_SD (1 site); nothing sends 0xF4. In each RPG_BAT site the `case` that sends 0x300 is followed by the `case` that sends 0xE4 (the step counter advances in between); in two of the three sites the case after that waits for `cd_state_get() & 4`, the third counts a timer up to 0xB5. HYPOTHESIS: the 0xE4 arrives while the CD start is still pending (a seek and XA read take many frames), so it takes the first case: the clip is started and cancelled at once. No emulator run covered pause, so the branch taken is not observed. BUNKA_SD's site is in step 4 of its scene, once (the step then advances); the clip is started in step 2 (`func_80132000`), and step 3 (`func_80132148`) lies between, so the clip may be playing or already ended; its length was not examined.
 
 ### 8.5 Level meter
 
@@ -307,7 +315,7 @@ Identified from the argument shapes and the libsnd asm in `asm/libsnd.s` (intern
 | address | libsnd/libspu function (HYPOTHESIS by shape unless the asm names it) | used for |
 | --- | --- | --- |
 | 0x8008B8C4 | SsInit (asm calls `_SsInit`) | `snd_init` |
-| 0x8008BAA4 | SsSetTickMode, argument 1 (60 Hz mode as I recall `libsnd.h`) | `snd_init` |
+| 0x8008BAA4 | SsSetTickMode, argument 1 (the asm maps 0 and 1 to 60 ticks per second, 2 to 240 and 3 to 120; the PsyQ header names the value 1 `SS_TICK60`, HYPOTHESIS: the header is not in this repo) | `snd_init` |
 | 0x80090DF0 | SsSetReservedVoice(0x18) (asm accepts 1 to 24) | `snd_init` |
 | 0x8008B904 | SsSetTableSize(table, 1, 1) (asm stores `_snd_seq_s_max`/`_t_max`) | one sequence table |
 | 0x80090E30 | sets a byte read by SpuVmFlush; likely SsSetAutoKeyOffMode(1) | `snd_init` |
@@ -345,7 +353,7 @@ Cross-unit requests (not in this table): `func_80079524`, `func_80079554`, `func
 
 - **Replace**: libsnd, the SPU and CD-XA playback. **Keep**: the command ids (the contract) and their effects, the timing of fades in frames at 60 Hz, the one-BGM / one-voice-plus-one-queued model, the bank set discipline (the port can load whole sets), per-speaker voice loudness, the level meter output.
 - **Identity of content**. A BGM id is not global: `0x200 | n` indexes the current pack set, and the pack comes with the scene's bank load. An effect id means (bank slot of its class, program, note) and the slot's content comes from the scene's bank load. A voice clip is identified by (speaker, start word, end word) from the request. The port needs a table from (scene bank-load arguments) to packs and banks, which lives with the loader (h-graphics) and the callers.
-- **Quirks to decide on**: (a) a command word of 0 ends the drain and the rest of the queue is lost; (b) more than 32 commands in a frame are dropped; (c) `snd_bgm_bank_ready` ignores its argument; (d) a new BGM kills sounding effects, except in TT, TACO or when the BGM bank is slot 2; (e) pause of a voice during playback acts as stop; (f) ids 0xB2/0xC2 do nothing, 0x01/0x02 are never sent; (g) the same BGM fade id re-sent every frame must not restart or alter a running fade, while a voice fade takes the newest rate; (h) `getCDlevel` is 0 when not playing, so a mouth index is 0 outside voice.
+- **Quirks to decide on**: (a) a command word of 0 ends the drain and the rest of the queue is lost; (b) more than 32 commands in a frame are dropped; (c) `snd_bgm_bank_ready` ignores its argument; (d) a new BGM kills sounding effects, except in TT, TACO or when the BGM bank is slot 2; (e) the voice pause that the game sends (class-0 0xE4) is a cancel, not a pause: with the CD start pending it stops the CD and forgets the clip, during playback it only forgets the clip (cancelled fade, no stop, level meter 0, CD stream unstopped), and 0xF4 never resumes; the port must decide whether to copy this or to cancel the clip outright (section 8.4); (f) ids 0xB2/0xC2 do nothing, 0x01/0x02 are never sent; (g) the same BGM fade id re-sent every frame must not restart or alter a running fade, while a voice fade takes the newest rate; (h) `getCDlevel` is 0 when not playing, so a mouth index is 0 outside voice.
 - **Not needed**: the SPU layout, header RAM addresses, body sizes, `snd_vab_body_size`, the libsnd table buffer.
 
 ## 13. Emulator evidence
@@ -362,7 +370,7 @@ Cold boots with `tools/emu/run.sh break func_80079B10` (every command), `watch 0
 | 4820 to 4821 | 0x501 (button press on the title menu): `snd_cmd_se_a` calls `snd_se_play`, which keys on with bank word 0x0300 (slot 3, program 0), note word 0x1C00 (note index 1), volume 0x5A on both channels |
 | 4854 to 4911 | 0xD1 every frame |
 
-No emulator run covered pause, chained clips, SE ids other than 0x501, mono or the sound test.
+No emulator run covered pause, chained clips, SE ids other than 0x501, mono or the sound test. The pause and resume behaviour in section 8.4 is read from the matched C alone.
 
 ## 14. Function map
 
@@ -422,9 +430,10 @@ Addresses are in `src/main/80079B10.c` (proposed file name `src/main/sound_drive
 ## 15. Open questions
 
 1. The unit label (section 0): the `normal_date_*`, `read_bustup*`, `event_face*`, `set_tarao_*`, dialogue and `select_girl*` functions are in `8007C030.c`. Unit `m-dates-b`'s focus line lists only `select_girl*`, `change_girl`, `change_yoshio`, `day_plus`, `check_para_limit` and the SD sprite setup (SD here is super-deformed sprites, not the sound driver), so nothing in a focus list names the `normal_date_*` scene steps, the portrait loads or the event faces. They need an owner.
-2. Prefix and O.BIN policy: the table uses `snd_*` (core) with the developer's `SD_*` name in the note; only `SD_InitCDLevelInfo` (applied) keeps its O.BIN name. Whether to promote the other 49 `SD_*` names verbatim is a decision for the owner of `symbol_addrs_obin.txt`; the code reading agrees with all of them. `h-graphics` uses `sound_`/`bgm_` for the loader.
+2. Prefix and O.BIN policy: the table uses `snd_*` (core) with the developer's `SD_*` name in the note; only `SD_InitCDLevelInfo` (applied) keeps its O.BIN name. Whether to promote the other 49 `SD_*` names verbatim is a decision for the owner of `symbol_addrs_obin.txt`; the code reading agrees with all of them. `h-graphics` uses `sound_`/`bgm_` for the loader and names `func_80044750` `sound_request` where `core` says `snd_command`; that conflict is not this unit's to settle. Confirm the binding O.BIN decision: unapplied `SD_*` names are quoted as notes only (as `core` does for its O.BIN matches), and only the applied `SD_InitCDLevelInfo` is a comment row.
 3. `CdLevelWork` (`CdLevelMeter`) is shared with `8007C030.c`; the m-dates-b table should reuse these field names.
 4. What do the 16 notes of program 0 in each bank sound like, and which scene loads which bank into which slot? Needs the bank loader arguments (h-graphics) joined to the disc; a port data task, not a code question.
 5. HYPOTHESIS items to confirm with the disc data: that the speaker index is the girl index (the volume table), that sequences loop through events inside the SEQ data (repeat count 1 is passed), the meanings of ids 0x501 (menu sound?) and 0x50B/0x50C (telephone?).
 6. Which sound-effect classes 6 and 8 serve outside TAIIKU (class 8 is TAIIKU only, class 7 two sites).
 7. `func_80090E30(1)` (flag byte read by the SPU flush): likely manual key-off mode; matters only if the port models key-off timing.
+8. Voice pause (section 8.4): confirm the branch RPG_BAT takes with a short emulator run (`tools/emu/run.sh break func_8007A98C` from a save state at the RPG_BAT step that sends 0x300): start pending or playing, and whether the CD stream keeps running after 0xE4 (`cd_last_command()` stays at the XA read instead of 9). `h-cdio` section 2.4 says the sound driver queues the pauses that end a clip at `func_8007A98C` cases 0x74 and 0xE4; per this spec the 0xE4 pause is queued only in the start-pending branch.

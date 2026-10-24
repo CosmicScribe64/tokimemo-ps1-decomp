@@ -6,21 +6,21 @@ func	main	func_80079C70	snd_vab_transfer_schedule	takes the lowest slot i with r
 func	main	func_80079D28	snd_vab_transfer	SsVabOpenHeadSticky(header RAM, slot, SPU address) then state bit 0x10000<<slot, SsVabTransBody(body RAM, slot) and SsVabTransCompleted wait; on a -1 result reports (slot<<8)|0x01010000 or 0x01020000 via func_80059B04; emu: state word gains 0x40000 then 0xC0000 for slots 2,3; O.BIN SD_TransVAB (low)
 func	main	func_80079E00	snd_bgm_bank_ready	returns 1 when neither request bit nor running bit of the BGM slot (bgm_slot) is set; the argument is never read (asm stores a0 and ignores it), so the callers passing slots 0..3 all test the BGM slot; O.BIN SD_ISVabAvailable (med)
 func	main	func_80079E4C	snd_xa_frame_update	per frame: state 0x400 (voice playing) -> snd_xa_check_end; request 0x200 (start issued) -> snd_xa_start_poll; O.BIN SD_XATask (med)
-func	main	func_80079E9C	snd_xa_check_end	when xa_position_get() >= xa_clip_end and no fade runs: snd_xa_fade_start(0xB4); otherwise SD_GetCDLevel(&D_80125E60) refreshes the level meter; O.BIN SD_CheckXASector (med)
+func	main	func_80079E9C	snd_xa_check_end	at or past xa_clip_end (xa_position_get() >= it): snd_xa_fade_start(0xB4) unless a voice fade already runs (otherwise nothing happens); before the end: SD_GetCDLevel(&D_80125E60) refreshes the level meter; O.BIN SD_CheckXASector (med)
 func	main	func_80079F00	snd_xa_start_poll	once cd_state_get() has bit 4 (XA playing): clear request 0x200; a queued next clip -> stop, promote, start it; else if not paused set state 0x400, clear 0x100000, xa_volume = xa_volume_full, SsSetMVol(0x7F,0x7F), SsSetSerialVol(0,xa_volume), serial mix on; O.BIN SD_IsXAReady (low)
 func	main	func_8007A008	snd_pending_update	if request_flags != 0: top byte -> snd_vab_transfer_schedule, low byte -> snd_bgm_update, second byte -> snd_xa_fade_update; O.BIN SD_HandleVBL (low)
-func	main	func_8007A080	snd_control_dispatch	class 0 commands by id & 0xF0: 0x10 bank transfer, 0x20 bank assignment, 0x70 stop (bit 1 BGM, 2 voices, 4 voice clip), 0xB0/0xC0/0xD0 fade (bit 1 BGM, 4 voice clip), 0xE0 pause, 0xF0 resume, anything else snd_cmd_system; emu: 0x7F, 0x12, 0x23/0x24/0x2E, 0x6, 0x71 seen; O.BIN SD_BranchCTRL (med)
+func	main	func_8007A080	snd_control_dispatch	class 0 commands by id & 0xF0: 0x10 bank transfer, 0x20 bank assignment, 0x70 stop (bit 1 BGM, 2 voices, 4 voice clip), 0xB0/0xC0/0xD0 fade (bit 1 BGM, 4 voice clip), 0xE0 pause, 0xF0 resume (the voice-clip bits 0x74/0xE4/0xF4 call snd_xa_control and then snd_xa_promote_next), anything else snd_cmd_system; emu: 0x7F, 0x12, 0x23/0x24/0x2E, 0x6, 0x71 seen; O.BIN SD_BranchCTRL (med)
 func	main	func_8007A254	snd_cmd_bank_transfer	ids 0x11 (slots 0,1), 0x12 (slots 2,3), 0x13-0x16 (one slot): snd_vab_body_addr_set, then per slot snd_vab_dispose + snd_vab_request_transfer; emu: command 0x12 at frame 1462 sets request bits 0x04000000 then 0x0C000000; O.BIN SD_VABTransfer (med)
 func	main	func_8007A354	snd_cmd_bank_assign	ids 0x21/0x24 set se_slot_a,se_slot_b = 0,3 / 3,0; 0x22/0x23 set bgm_slot,bgm_aux_slot = 1,2 / 2,1; 0x2F/0x2E pick sequence pack set 0/1 (RAM 0x8001C000 / 0x8002E800) and index it; emu dump after 0x23,0x24,0x2E: slots 2,1,3,0 and set 1; O.BIN SD_BufferUpdate (med)
 func	main	func_8007A43C	snd_cmd_system	ids 1 mono, 2 stereo (snd_output_mode_set), 3 snd_xa_forget, 4 snd_voices_kill, 5 set state 0x100000 (next fade goes through master volume), 6 snd_xa_reset; emu: 6 is sent by func_800462C8 before every CD data read; O.BIN SD_HandleSys (low)
 func	main	func_8007A4DC	snd_xa_fade_update	runs snd_xa_fade_tick while request bit 0x100 (voice fade) is set; O.BIN SD_HandleVBLXA (med)
 func	main	func_8007A50C	snd_xa_fade_tick	while state has 0x400 or 0x4000: xa_fade_acc += xa_fade_rate, on carry past 0xFF xa_volume -= xa_fade_step; <= 0 calls snd_xa_fade_finish, else SsSetSerialVol(0,xa_volume,xa_volume); O.BIN SD_HandleXAFadeOut (med)
-func	main	func_8007A5BC	snd_xa_fade_finish	snd_xa_control(0x74) stop; if not paused, promote the queued clip and start it when xa_clip_start != 0; O.BIN SD_FinishFadeOutXA (med)
+func	main	func_8007A5BC	snd_xa_fade_finish	snd_xa_control(0x74) stop; then, when the paused bit is clear (always the case here, the stop just cleared it), promote the queued clip and start it when xa_clip_start != 0; O.BIN SD_FinishFadeOutXA (med)
 func	main	func_8007A618	snd_speaker_volume_set	HYPOTHESIS: the speaker index is the heroine index (h-cdio: 25 of 104 xa_clip_request_set calls pass the current girl) so this is a per-voice loudness correction; fact: xa_volume_full = 100, except speaker 6 -> 125, 7/9/11 -> 95, 10 -> 90, 12/13 -> 110, 15 -> 105; emu: speaker 15 gave 0x69 in the prologue; no O.BIN row
-func	main	func_8007A6AC	snd_cmd_xa	class 3: 0x300 starts a voice clip from the 4-word request of xa_clip_request_get (speaker, base sector, start word, end word), 0x1300 stop, 0x2300 pause, 0x4300 resume; start/end sectors = index*(0x20, or 8 for speaker 15)+channel+base -/+ 0x10; queues behind a playing clip with a fast fade; emu: 0x300 at frame 3836; O.BIN SD_XACall (low)
-func	main	func_8007A868	snd_xa_promote_next	queued clip becomes the current one: xa_clip_end = xa_next_end, xa_resume_pos = xa_clip_start = xa_next_start, filter bytes shift down (xa_params[4,6] = [5,7]), next fields and bytes 5,7 cleared, level meter outputs cleared, state 0x400/0x4000 and request 0x200/0x100 cleared; O.BIN SD_XAParamUpdate (med)
+func	main	func_8007A6AC	snd_cmd_xa	class 3: 0x300 starts a voice clip from the 4-word request of xa_clip_request_get (speaker, base sector, start word, end word), 0x1300 stop (then snd_xa_promote_next), 0x2300 pause and 0x4300 resume (snd_xa_control only, no promote; no sender); start/end sectors = index*(0x20, or 8 for speaker 15)+channel+base -/+ 0x10; queues behind a playing clip with a fast fade; emu: 0x300 at frame 3836; O.BIN SD_XACall (low)
+func	main	func_8007A868	snd_xa_promote_next	queued clip becomes the current one: xa_clip_end = xa_next_end, xa_resume_pos = xa_clip_start = xa_next_start, filter bytes shift down (xa_params[4,6] = [5,7]), next fields and bytes 5,7 cleared, level meter outputs cleared, state 0x400/0x4000 and request 0x200/0x100 cleared (so it also cancels a running voice fade and the paused mark, and issues no CD stop); the class-0 commands 0x74, 0xE4 and 0xF4 call it right after snd_xa_control; O.BIN SD_XAParamUpdate (med)
 func	main	func_8007A924	snd_xa_play	snd_cd_audio_init (mute, CD mode 0xC8), xa_params[0,1] = file,channel from bytes [6],[4], request 0x200, cd_command(0xD, start sector, xa_params); emu: break shows a0 = clip start 0x16E5C and the dumped state; O.BIN SD_PlayXA (med)
-func	main	func_8007A98C	snd_xa_control	selector 0x74 stop (mix off, cd_command 9, clear 0x400/0x4000/0x200/0x100), 0xE4 pause (remember position, state 0x4000, fast fade or direct CD stop while starting), 0xF4 resume (replay from xa_resume_pos or finish the chain); O.BIN SD_StopXA (low)
+func	main	func_8007A98C	snd_xa_control	selector 0x74 stop (mix off, cd_command 9, clear 0x400/0x4000/0x200/0x100); 0xE4 pause (start pending: state 0x4000 and cd_command 9; playing: remember position, state 0x400 -> 0x4000, snd_xa_fade_start(0xB4)); 0xF4 resume (only when 0x4000 is set: replay from xa_resume_pos or finish the chain). The game sends 0xE4/0xF4 only as class-0 commands, where snd_control_dispatch calls snd_xa_promote_next right after, which undoes 0x4000 and the fade request, so pause does not fade or stop a playing clip and 0xF4 never acts (spec 8.4); the class-3 forms 0x2300/0x4300 skip the promote but nothing sends them; O.BIN SD_StopXA (low)
 func	main	func_8007AB24	snd_xa_fade_start	if no voice fade runs: xa_fade_acc = 0 and request bit 0x100; rate/step are always (re)written: (0x100,10) for 0xB4 and any other id, (0x100,1) for 0xC4, (0x80,1) for 0xD4, so a later command changes a running fade (unlike the BGM fade); O.BIN SD_FadeXA (low)
 func	main	func_8007ABE0	snd_bgm_update	per frame: request bit 2 and snd_bgm_bank_ready -> snd_bgm_start; while BGM plays with request bit 1 (fade): bgm_fade_acc += rate, on carry bgm_volume -= step; < 0 -> snd_bgm_fade_finish, else SsSeqSetVol (or SsSetMVol scaled by bgm_volume*0x7F/bgm_volume_full when state 0x100000 and no voice clip); O.BIN SD_HandleVBLSEQ (low)
 func	main	func_8007AD6C	snd_bgm_fade_finish	fade end: with state 0x100000 and no voice clip SsUtAllKeyOff and master volume 0; snd_bgm_control(0x71); starts bgm_seq_id (promoted from bgm_next_seq_id) when it is not -1; O.BIN SD_FinishFadeOutSEQ (low)
@@ -41,7 +41,7 @@ func	main	func_8007B64C	snd_queue_pop	returns the oldest queued command (0 when 
 func	main	func_8007B6E0	snd_xa_forget	command 3: snd_xa_control(0x74) stop, then clears xa_clip_start/end, next, resume position and filter bytes 4,5; no O.BIN row; callers NAME_ENT, func_80075320, func_8005A0B0
 func	main	func_8007B734	snd_xa_reset	command 6: serial mix off, clears state 0x400/0x4000 and request 0x200/0x100, all XA bookkeeping words, the level meter outputs and bytes 4,5; emu: sent before every CD data read; O.BIN SD_KillXA (low)
 func	main	func_8007B7E0	snd_voices_kill	unless TT mode with BGM playing: SpuVmFlush guard, SsUtAllKeyOff(0), reverb off, reverb mode 3, reverb on (silences every sound-effect voice); command 4 and 0x72/0x73/0x7F bit 2; O.BIN SD_KillSPU (low)
-func	main	func_8007B844	snd_init	boot and reset: SsInit, tick mode argument 1, 24 reserved voices, sequence table 1x1, reverb type 3 depth 0x3C, master volume 0x7F, stereo, snd_state_init, snd_vab_layout_init, snd_cd_audio_init, SD_InitCDLevelInfo, snd_queue_clear, SsStart2; callers func_800420D0, func_80042A00 (twice), func_80046500; O.BIN SD_Init (low)
+func	main	func_8007B844	snd_init	boot and reset: SsInit, tick mode argument 1, 24 reserved voices, sequence table 1x1, reverb type 3 depth 0x3C, master volume 0x7F, stereo, snd_state_init, snd_vab_layout_init, snd_cd_audio_init, SD_InitCDLevelInfo, snd_queue_clear, SsStart2; callers func_80042134 (core: main_loop; func_800420D0 only sets up the stack and calls it), func_80042A00 (twice), func_80046500; O.BIN SD_Init (low)
 func	main	func_8007B8F8	snd_vab_layout_init	fills the fixed layout tables: header RAM 0x80010000/0x80012000/0x80016000/0x8001A000, SPU offsets 0x1010/0x11010/0x39010/0x61010, body sizes 0x10000/0x28000/0x28000/0x1A768 (sizes never read); O.BIN SD_SetVabAdrs (med)
 func	main	func_8007B99C	snd_vab_body_addr_set	body RAM address from func_800451D0 (load_dest_base_get): 0x11 slot0=v, slot1=v+0x10000; 0x12 slot2=v, slot3=v+0x28000; 0x13-0x16 the single slot=v; O.BIN SD_GetVabAdrs (med)
 func	main	func_8007BA54	snd_cd_audio_init	CD-audio setup: cd_mode_param[0] = 0xC8 (double speed, real time, XA filter), serial mix off and volume 0, cd_command(0xE, 0, mode param); O.BIN SD_InitCD (med)
@@ -111,7 +111,7 @@ field	Work80125D10	unk_08	xa_clip_start	start sector of the current/last voice c
 field	Work80125D10	unk_0C	xa_clip_end	end sector of the current clip; snd_xa_check_end fades when xa_position_get() >= it
 field	Work80125D10	unk_10	xa_next_start	start sector of a clip queued behind the current one, 0 = none
 field	Work80125D10	unk_14	xa_next_end	end sector of the queued clip
-field	Work80125D10	unk_18	xa_resume_pos	sector where a paused clip resumes; equals the clip start after a promote
+field	Work80125D10	unk_18	xa_resume_pos	sector kept for a resume: set by the pause selector while a clip plays (not before the clip start), then overwritten by snd_xa_promote_next with the new clip start (the class-0 pause promotes at once, so it is never replayed)
 field	Work80125D10	unk_1C	xa_volume	current CD-audio volume (SsSetSerialVol both channels), lowered by fades
 field	Work80125D10	unk_1E	xa_volume_full	volume at clip start, set per speaker by snd_speaker_volume_set (100 default); emu: 0x69 for speaker 15
 field	Work80125D10	unk_20	bgm_volume	current sequence volume (lowered by fades)
@@ -142,8 +142,8 @@ const	SndClass	0x600	SND_CLASS_SE_B	sound effect in the bank of se_slot_b
 const	SndClass	0x700	SND_CLASS_SE_BGM_BANK	sound effect in the bank of bgm_slot
 const	SndClass	0x800	SND_CLASS_SE_BGM_AUX	sound effect in the bank of bgm_aux_slot
 const	SndModifier	0x1000	SND_MOD_STOP	added to a class 2, 3, 5-8 id: stop instead of start (0x1200 stops the BGM, 0x1508 releases effect 0x508)
-const	SndModifier	0x2000	SND_MOD_PAUSE	class 2 and 3 only (0x2200 pause BGM, 0x2300 pause voice)
-const	SndModifier	0x4000	SND_MOD_RESUME	class 2 and 3 only (0x4200, 0x4300)
+const	SndModifier	0x2000	SND_MOD_PAUSE	class 2 and 3 only (0x2200 pause BGM, 0x2300 pause voice; 0x2300 has no sender in src/)
+const	SndModifier	0x4000	SND_MOD_RESUME	class 2 and 3 only (0x4200, 0x4300; 0x4300 has no sender in src/)
 const	SndTarget	1	SND_TARGET_BGM	bit of the low nibble in the 0x70/0xB0/0xC0/0xD0/0xE0/0xF0 control families: the BGM sequence
 const	SndTarget	2	SND_TARGET_VOICES	bit 2: only the 0x70 family handles it (snd_voices_kill); 0xB2 and 0xC2 therefore do nothing
 const	SndTarget	4	SND_TARGET_XA	bit 4: the voice clip (CD audio)
@@ -151,7 +151,7 @@ const	SndCommand	0x01	SND_CMD_OUTPUT_MONO	mono output (no sender in src; snd_ini
 const	SndCommand	0x02	SND_CMD_OUTPUT_STEREO	stereo output (no sender in src)
 const	SndCommand	0x03	SND_CMD_XA_FORGET	stop the voice clip and clear its bookkeeping (3 senders: NAME_ENT, holiday code, system menus)
 const	SndCommand	0x04	SND_CMD_VOICES_KILL	all sound-effect voices off and reverb reset (12 senders)
-const	SndCommand	0x05	SND_CMD_FADE_VIA_MASTER	next BGM fade goes through the master volume and ends muted; sent before a bank reload (10 senders)
+const	SndCommand	0x05	SND_CMD_FADE_VIA_MASTER	next BGM fade goes through the master volume and ends muted; all 10 senders (NAME_ENT 7, main 3) follow it at once with 0x71 or a BGM fade, 6 of them are within a few lines of a bank load (func_80044890), 4 are not (HYPOTHESIS: its purpose is a scene exit or bank replacement)
 const	SndCommand	0x06	SND_CMD_XA_RESET	reset the voice-clip state; sent before every CD data read
 const	SndCommand	0x11	SND_CMD_BANKS_TRANSFER_01	upload the bodies of slots 0 and 1 from the CD load base
 const	SndCommand	0x12	SND_CMD_BANKS_TRANSFER_23	upload slots 2 and 3 (emu: frame 1462)
@@ -180,9 +180,9 @@ const	SndCommand	0xD1	SND_CMD_FADE_BGM_SLOW	BGM fade, 0.5 units per frame (emu: 
 const	SndCommand	0xD4	SND_CMD_FADE_XA_SLOW	voice fade, 0.5 units per frame (handled, no sender)
 const	SndCommand	0xDF	SND_CMD_FADE_BOTH_SLOW	both slow (handled, no sender)
 const	SndCommand	0xE1	SND_CMD_PAUSE_BGM	pause the sequence (TT only)
-const	SndCommand	0xE4	SND_CMD_PAUSE_XA	pause the voice clip (RPG_BAT, BUNKA_SD); in practice a fast fade that ends in a stop
+const	SndCommand	0xE4	SND_CMD_PAUSE_XA	pause the voice clip (senders: RPG_BAT 3 sites, BUNKA_SD 1). As a class-0 command it runs snd_xa_control(0xE4) and then snd_xa_promote_next: if the CD start is still pending it stops the CD at once and forgets the clip; if the clip is playing the fade it starts is cancelled by the promote, no stop is issued, the CD stream keeps running and the driver forgets the clip (no end watch, level meter 0); no pause state survives. HYPOTHESIS: RPG_BAT sends it one step after 0x300 (start pending), not run in the emulator
 const	SndCommand	0xF1	SND_CMD_RESUME_BGM	resume the sequence (TT only)
-const	SndCommand	0xF4	SND_CMD_RESUME_XA	resume the voice clip; acts only when the pause hit during the start phase
+const	SndCommand	0xF4	SND_CMD_RESUME_XA	resume the voice clip; as a class-0 command it never resumes: the paused bit is already cleared (snd_xa_promote_next ran after 0xE4), so snd_xa_control does nothing and the promote only forgets the clip (unless a class-3 0x2300 pause set the bit first); no sender of 0xF4 in src/ (only the class-3 form 0x4300 could resume)
 const	SndCommand	0x1200	SND_CMD_STOP_BGM_SEQ	class 2 with stop modifier: stop BGM (bgm_stop, sound test)
 const	SndCommand	0x300	SND_CMD_VOICE_PLAY	start the voice clip prepared by xa_clip_request_set (voice_play; 96 senders)
 const	SndStateFlags	0x10	SND_STATE_STEREO	output mode flag, set at init
@@ -190,7 +190,7 @@ const	SndStateFlags	0x20	SND_STATE_MONO	output mode flag
 const	SndStateFlags	0x100	SND_STATE_BGM_PLAYING	a sequence is open and playing
 const	SndStateFlags	0x400	SND_STATE_XA_PLAYING	a voice clip is playing and its end is watched; getCDlevel reads the meter only then
 const	SndStateFlags	0x1000	SND_STATE_BGM_PAUSED	sequence paused
-const	SndStateFlags	0x4000	SND_STATE_XA_PAUSED	voice clip paused (also true while a pause fade runs)
+const	SndStateFlags	0x4000	SND_STATE_XA_PAUSED	voice clip paused: set by snd_xa_control(0xE4), cleared again at once by snd_xa_promote_next in the class-0 forms; stays set only after the class-3 form 0x2300, which nothing sends (then also true while the pause fade runs)
 const	SndStateFlags	0x10000	SND_STATE_VAB_OPEN_0	VAB slot 0 open; slot i uses 0x10000<<i (0x20000, 0x40000, 0x80000)
 const	SndStateFlags	0x100000	SND_STATE_FADE_VIA_MASTER	BGM fades through SsSetMVol and ends muted; set by command 5, cleared when a BGM or sound effect starts
 const	SndStateFlags	0x10000000	SND_STATE_SOUND_TEST_REVERB_OFF	toggled by the OPTION sound test; snd_bgm_start then uses reverb depth 0 in mode 0x21
