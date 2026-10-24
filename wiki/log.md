@@ -1756,3 +1756,6 @@ The last function matched with a narrowed block-copy state rule in tools/ugen_pa
 ## [2026-10-24] decision | Phase 1 complete: 6,952/6,952 game functions
 
 Every game function is C and every binary rebuilds byte for byte ([[status]]). Closed the wave 10/11, stubborn-function and finish-gate tickets (T-25300, T-25400, T-25500, T-25600 and their per-file tickets); T-26000 (IDO 4.1 block-copy rule) is in progress. ROADMAP.md marks phase 1 done and phase 2 (readable code) in progress; README.md says every game function is C.
+## [2026-10-24] build | T-20500 emulator probe merged
+
+[[emulator]]: PCSX-Redux (pinned 8288e927 plus upstream fix 3a24bbcc) with OpenBIOS (MIT) in Docker; the game boots headless to the title menu. tools/emu/run.sh drives breakpoints on main and overlay code, memory watches, call stacks, traces, scripted input, screenshots and save states for phase 2 naming. Ticket stays In Progress for its GameState naming pilot.

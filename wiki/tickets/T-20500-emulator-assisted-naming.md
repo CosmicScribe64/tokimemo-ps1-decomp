@@ -1,10 +1,10 @@
 ---
 id: T-20500
 title: Emulator-assisted naming and constants pass (phase 2 head start)
-status: Backlog
+status: In Progress
 assignee:
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-10-24
 links: [[speedup-research-2026-10-16]], [[ref-english-patch]], [[game-state]]
 ---
 
@@ -36,8 +36,23 @@ the conveyor is idle or between runs, or on Codex/Gemini capacity.
 
 ## Acceptance criteria
 
-- [ ] Emulator spike: game boots headless in Docker with the open BIOS; memory watch and breakpoints work
+- [x] Emulator spike: game boots headless in Docker with the open BIOS; memory watch and breakpoints work
 - [ ] GameState naming pilot with a rename table and enums, 27/27
 - [ ] Decision on scope for the full pass
 
 ## Comments
+
+2026-10-24: Emulator spike done (branch w15-emu, worktree tokimemo-wt/w15-emu). PCSX-Redux 8288e927 plus
+upstream fix 3a24bbcc, built from source in `tools/emu/Dockerfile` (arm64 native, interpreter, `-no-ui`), with
+OpenBIOS built from nugget d9384092; no Sony BIOS. The game boots under OpenBIOS to the intro movie, the NAME_ENT
+attract prologue and the title menu. `tools/emu/run.sh` (wrapper for `tools/emu/emu.py` and the Lua job runner
+`tools/emu/emu.lua`) gives `boot`, `break` (main exe and overlay code, overlay guarded by its code bytes; `--width`
+for ranges), `watch` (writes or reads), `trace`, `report` and `gdb` (GDB server, tested with gdb-multiarch in the
+image), plus `--input`/`--mash` pad presses, `--shot` screenshots, `--state`/`--save-state`, `--until-overlay`,
+`--dump`. Reports give arguments, pointed-to memory, a prologue-walk call stack, the resident overlay and
+GameState field offsets. Proofs: `disp_string` at the title menu (a1 alternates two buffers 0x14 apart);
+NAME_ENT `func_80142E24` (once per frame in the prologue, calls `set_kanji_string` with x=-144, y=0x14/0x24 and a
+Shift-JIS string); writer of the mode byte `D_800E738E` (`func_80042960+0x7C` via `main_state_set`). How to use,
+results and limits: [[emulator]]. Limits: about 3x real time without breakpoints, much slower with hundreds of
+breakpoints; REA's GDB tools need a Linux host GDB (use gdb-multiarch in the image). Containers run with 2 CPUs.
+Next: the GameState naming pilot (second criterion).
