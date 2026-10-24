@@ -7,30 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ticket | T-25025 GYOZI reaching-definition evidence
-
-Released the BUNKA source claim at separate T-25023 pin a9608aeba. Created [[tickets/T-25025-gyozi-zero-reaching-definition]] In Progress and board card before GYOZI work. Exclusive src/ovl/GYOZI/80140C90.c; inspect propagation before considering source. No old workers or automatic Astra.
-
-## [2026-10-22] query | T-25025 zero carrier dies before allocation
-
-Current and archived-v6 whole-TU measurements agree: 97:96 instructions, five printed lines, aligned cost 5. Input contains entry z and merge use; stale expression-table entries coexist with a propagated constant store, but no live z range reaches allocation. Optimized ucode recreates zero at merge; initial as1 nodes already use hardware zero. Stock/traced v6 four-section fidelity passes. No new variants, source edits or Astra. Preserved phase-boundary evidence and exact remaining internal trace question in drafts/T-25025/README.md and [[matching-notes]]. [[tickets/T-25025-gyozi-zero-reaching-definition]] moves to In Review, BUNKA claim remains released.
-
-## [2026-10-22] lint | T-25025 checkpoint checks
-
-Wiki lint has zero broken links and status mismatches, one existing data/t0018-cases size warning. `git diff --check` passes; no production/header/tool/config differences. [[tickets/T-25025-gyozi-zero-reaching-definition]] remains In Review for root review.
-
-## [2026-10-22] decision | Preserve zero-propagation evidence and qualify large near candidate
-
-Root reviewed T-25025 documentation-only scope; current and v6 both97:96 instructions, five printed lines, as1 input already hardware-zero uses. This closes allocation/scheduler tuning on that body without a new upstream mechanism. Preserving pin5c2954688. Same Sol chat now releases GYOZI and claims src/main/8006CB30.c under T-25026 solely to reconcile current4692-byte func_8006D7EC against historical one-row guard and later negative ledger. TEL remains TEL-only; no duplicate large-file ownership. MAIN reload consultation continues.
-
-## [2026-10-22] build | MAIN bounded Astra consultation
-
-[[tickets/T-25022-main-reload-boundary]] received one read-only Astra consultation while Sol idled. Signed diagnostic supplies target-like final reload topology but wrong load sign; conversion-web trace motivates two unsigned controls. Explicit signed-word zero tests give315target/309built words,198aligned/198printed. Word-mask mode reads give315/317,262/262 and retain lb+andi. Both rejected, source and findings preserved in drafts/T-25022/main/func_8005215C/. No third justified hypothesis, no sweeps, no production/shared-header edits or match claim.
-
-## [2026-10-22] ticket | T-25024 isolated TEL qualification
-
-Created [[tickets/T-25024-tel-qualification]] In Progress from exact pinned base 883760224a9ff9712c4850ca7662c5ce3df2625d after confirming ancestry under advanced main. Exclusive function is TEL func_80136724 in src/ovl/TEL/80132000.c; [[plan-remaining]] multi-chat qualification rules apply. Fresh worktree created successfully before local guidance/skills copy.
-
 ## [2026-10-22] ingest | T-25024 recovered TEL qualification baseline
 
 [[tickets/T-25024-tel-qualification]] verified GameState offset 0x110D as u8 against target LBU/SB. Recovered m2c body still has unknown stack aggregates, invalid stack-relative rank access, scalar packed-word aliases and case-0x40 label/index artifacts; older tracked drafts already address these. Fresh Docker TEL-only object build succeeded. Complete-TU resolved T-23001 baseline reproduces 1645 target / 1643 candidate words, 1048 printed lines, 1372 changed ordinal positions, 1038 aligned cost; adapted T-20830 pointer body is 1643/984/1403/970. Exact sources/results remain in private build/T-25024 pending archive. Matched rank-helper callers justify one void ABI control, rejected at aligned cost974 versus970. No C match or source promotion.
@@ -1699,6 +1675,7 @@ Fixed the three blocking findings and ten non-blocking ones of the second review
 
 ## [2026-10-24] ticket | T-27010 Done
 [[tickets/T-27010-p2-core]] passed the second review (approved, no findings; the `MenuMode` values, `daily_event_bits` and the event log rank were checked against the C) and moves to Done. The branch changes only `config/renames/proposals/core.tsv`, [[spec/core]], [[spec/index]], [[data/p2-core-name-conflicts]] and wiki pages; nothing under `src/`, `include/` or the symbol files. Merged as p2a-core.
+
 ## [2026-10-24] ingest | T-27021 phase 2 h-cdio: names and port spec for the CD, movie, MDEC, 3D and mouse layer
 [[tickets/T-27021-p2-h-cdio]] (In Review): nine main files (80 functions) read against their callers and three cold-boot emulator runs. Wrote config/renames/proposals/h-cdio.tsv (200 rows: 53 func, 49 data, 37 const, 27 comment, 17 field, 9 file, 8 type; 8 hypotheses) and [[spec/h-cdio]] (linked from [[spec/index]]).
 Findings: the CD layer is a 48-entry command ring over libcd with an end-of-file marker test on checked reads; both movies play in 24-bit mode (movie flag starts at 1, never written), so the caption branch is not reached; `initLight`, `initCoordinate` and the mouse read functions have no caller in src/. No change to src/, include/ or symbol files.
