@@ -26,17 +26,24 @@ function names carry 48% of all function-name uses, so the shared core comes fir
 |---|---|---|---|---|
 | 0 | Tooling: `tools/rename.py`, `tools/symtab.py`, tests, the tool fixes of audit 3.8, merge replay | T-27002 | about 1.5k lines of Python | Opus design and review, Sonnet code |
 | 1 | Pilot: O.BIN names into the overlays (overlay yamls load `symbol_addrs_obin.txt`; 105 names in 186 overlay files; 56 dual declarations merged; `cd_read_status` moved out of EVENT's range) | [[tickets/T-27003-pilot-obin-names-overlays]] | one build | Opus |
-| 2 | Shared core: GameState fields, the core types of `game.h` and `main_api.h` (the 0x44 display pools first), the first enums (girl, place, club, parameter, weekday, game mode, day-event type), the 100 most used main functions | [[tickets/T-27004-shared-core-names]] | 2-3 batches | Opus, with the emulator |
+| 2 | Shared core: GameState fields, the core types of `game.h` and `main_api.h` (the 0x44 display pools first), the first enums (girl, place, club, parameter, weekday, game mode, day-event type), the 100 most used main functions; takes over the GameState pilot of [[tickets/T-20500-emulator-assisted-naming]] | [[tickets/T-27004-shared-core-names]] | 2-3 batches | Opus, with the emulator |
 | 3 | Main modules, two at a time (table below): functions, file-private globals, O.BIN comments, then the module header and the file names | one ticket each | 9 units | Sonnet, Opus review |
 | 4 | Overlays, two at a time (table below), one header owner each | one ticket each | 25 passes | Sonnet, Opus review |
 | 5 | Locals and parameters per unit (11,174 m2c-style uses) | per unit | | Sonnet |
 | 6 | Constants per unit with the step 2 enums (53,215 hex literals; long tail) | per unit | | Sonnet |
 | 7 | SDK placeholders (479 asm-only functions) | optional | | Sonnet |
-| 8 | Final sweep: `count_names.py` residue, living wiki pages (`source-files`, `game-state`, `data-types`) refreshed | | 1 | Opus |
+| 8 | Final sweep: `count_names.py` residue; `include/main_api.h` and `include/game.h` deleted once every C file includes its topic headers, with CODING_STANDARDS section 8a and `tools/check_headers.py` moved to the topic headers; living wiki pages (`source-files`, `game-state`, `data-types`) refreshed | | 1 | Opus |
 
-Steps 1 and 2 wait for step 0. Inside every unit the order is: functions and globals, types and fields, the
+Steps 1 and 2 wait for step 0; no rename of any kind lands before the tool has merged. Inside every unit the order is: functions and globals, types and fields, the
 one-line English comments on O.BIN names, then the header split and the file renames, each in a commit of
 its own. File names come last because they need the contents understood.
+
+Step 2's enum list differs from the audit's on purpose. It adds place and club, whose orders are known from
+the name tables (`GLOSSARY.md`), the game mode (GameState 0x1108) and the day-event type. It leaves out the
+month, a number from 1 to 12 that the code compares and counts with. It also leaves out the selector bytes
+at 0x1109, 0x110A and 0x110D, which `main_state_set` clears when it sets the game mode. Step 2 names the
+first two fields (`mode_stage`, `mode_step`), but their values mean something else in every mode, so each
+mode's unit gives them constants; 0x110D waits for the units that use it.
 
 ### Main modules (step 3)
 
@@ -67,7 +74,8 @@ after DATE, BUNKAKEN after BUNKASAI.
 | group | EN_NICHI + OLH + OMIMAI + RENSYU + VALEN |
 
 Overlays marked "confirm" in the ADR map (BUNKAKEN, ETC, GEKO, KANGEI, SHOUGATU, TT, VALEN) check their
-contents with the emulator before they adopt the folder name and prefix.
+contents with the emulator before they adopt the folder name and prefix. EVENT and GYOZI ("confirm unused")
+look for a loader again before their folder names keep `_unused` ([[tickets/T-0200-event-gyozi-loader-and-address]]).
 
 ## Unit loop
 
@@ -79,7 +87,9 @@ contents with the emulator before they adopt the folder name and prefix.
 4. Opus reviews the table (below) before anything is applied.
 5. `rename.py apply`, then the clean build: `rm -rf asm build; configure; ninja` under `nice -n 19`, at most two
    builds on the machine at a time, Docker `--cpus=2`. Proof: 27/27 sha1 and `ninja progress` still 6,952.
-6. Commit one table per commit; the header split and each file rename in their own commits.
+6. Commit one table per commit; the header split and each file rename in their own commits. `apply` appends
+   each row with its note to the unit's ledger (`config/renames/<unit>.txt`), which is committed, so the
+   evidence stays next to the name.
 7. Ticket to In Review; the code-review skill checks the work against `CODING_STANDARDS.md`; then Done.
 
 Overlay units do not rename main symbols. They add requests to `config/renames/requests.txt`, and the owner
@@ -101,10 +111,13 @@ of the main module makes the rename.
 
 Tickets, logs and matching notes keep the placeholder names. `tools/rename.py lookup` gives the current name,
 and the function catalog ([[notes/functions]]) gets a current-name column. The unit that owns a topic
-refreshes its living pages. This follows the audit's proposal; the user has not ruled on it.
+refreshes its living pages. This follows the audit's proposal; the user has not ruled on it (audit question
+2). The rewrite of CODING_STANDARDS section 4 also waits for the user's approval (audit question 5). Both are
+listed as pending in the ADR.
 
 ## Open points
 
 - TT: names and folder need agreement with its contributor first.
-- The hypothesis file names in the ADR (`config/symbol_addrs_hypotheses.txt`, `config/symbols_<DISC>_hypotheses.txt`)
-  must match what T-27002 implements.
+- The hypothesis file names in the ADR (`config/symbol_addrs_hypotheses.txt`, `config/symbols_<DISC>_hypotheses.txt`,
+  and `config/symbol_addrs_main_hypotheses.txt` for main names in EVENT's range) must match what T-27002
+  implements; its `tools/symtab.py` (branch w19-rename, In Review) uses the same names.

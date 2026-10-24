@@ -1754,3 +1754,7 @@ The user's four phase 2 decisions (names from code and emulator evidence, claims
 ## [2026-10-24] ticket | Phase 2 tickets created
 
 [[tickets/T-27000-phase-2-readable-codebase]] (umbrella, In Progress), [[tickets/T-27001-phase-2-conventions]] (In Review), [[tickets/T-27003-pilot-obin-names-overlays]] and [[tickets/T-27004-shared-core-names]] (Backlog, blocked by T-27002, the rename tool, which is written separately). Board cards are added by the kanban sync at merge.
+
+## [2026-10-24] decision | Phase 2 conventions: review fixes
+
+Fixes for the first review of [[tickets/T-27001-phase-2-conventions]] in `docs/adr/0001-phase-2-naming.md`, `CODING_STANDARDS.md`, `GLOSSARY.md` and [[phase2]]. Glossary: abbreviation table, `card` and `pad` traps, rows for the map's game-term prefixes; main prefixes `game_mode_` and `memory_card_`. Renames: none before the rename tool merges (ADR and section 4 now agree). Hypotheses: main names in EVENT's range go to the main-only files. File renames change the `.rodata`/`.data` subsegments and inner asm paths too. The ledger keeps the evidence notes. Section 10 states the no-game-text rule. Pending user decisions (audit questions 2 and 5) listed in the ADR. The GameState pilot of [[tickets/T-20500-emulator-assisted-naming]] moved to [[tickets/T-27004-shared-core-names]]; [[tickets/T-27000-phase-2-readable-codebase]] gets the umbrella-header criterion and its first box unticked until T-27001 is Done. No status changes.

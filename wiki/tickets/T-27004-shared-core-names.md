@@ -32,7 +32,10 @@ uses). Conventions: `docs/adr/0001-phase-2-naming.md`; stems: `GLOSSARY.md`.
 
 ## Notes
 
-- Builds on the GameState naming pilot of T-20500 and the field map in [[game-state]].
+- Takes over the GameState naming pilot of T-20500 (moved here 2026-10-24, because no rename lands before
+  the rename tool), and builds on the field map in [[game-state]].
+- The enum list differs from the audit's on purpose (month and the mode selector values left out); the
+  reasons are in [[phase2]], step 2.
 - Tools that hardcode `D_800E6280` or field names (audit 2.2) have to be updated or moved to `tools/legacy/`
   by T-27002 first.
 

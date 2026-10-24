@@ -20,6 +20,10 @@ Sources:
 A row whose meaning comes only from a name or a guess says so; code built on such a row marks the name as a
 HYPOTHESIS.
 
+The overlay and module prefixes are listed in the maps of the ADR. Each prefix there is a stem below or a
+short form of one (`sports_` for `sports_festival`, `trip_` for `school_trip`). Abbreviations are allowed only
+from the table at the end.
+
 ## Traps
 
 Words with more than one sense. Use the stem in the right column, never the bare word.
@@ -27,13 +31,15 @@ Words with more than one sense. Use the stem in the right column, never the bare
 | word | senses | stems |
 |---|---|---|
 | date | a romantic outing; a calendar date; the DATE overlay | `date` (outing only); `calendar_date` or `day`; folder `date` |
-| event | a day-event record in the queue; a scripted scene with a girl; the EVENT overlay; a memory-card event | `day_event`; `scene`; folder `date_spots_unused`; `card_event` |
-| mode | the game mode byte that selects the running screen; the menu mode setting chosen in the options | `game_mode` (O.BIN `main_state`); `menu_mode` |
+| event | a day-event record in the queue; a scripted scene with a girl; the EVENT overlay; a memory-card event; a yearly school event (gyouji) | `day_event`; `scene`; folder `date_spots_unused`; `memory_card_event`; `annual_event`, folder `annual_events_unused` |
+| mode | the game mode byte that selects the running screen; the menu mode setting chosen in the options | `game_mode` (O.BIN `main_state`), also the prefix of the main loop module; `mode_stage` and `mode_step` for its two step bytes; `menu_mode` |
 | stage | the step of a game mode; a level of the TACO shooter; the culture-festival stage | `mode_stage`; `shooter_level`; `stage_show` |
 | state | the game mode (O.BIN `main_state`); a girl's rank (zyotai) | `game_mode`; `girl_state` |
 | week_day | O.BIN's name for the school-day command screen, not the day of the week | `school_day`; `weekday` for Monday-Sunday |
 | holiday | a day without school; the calendar's holiday table (GameState 0x044) | `holiday`; `holiday_table` |
 | master | mastering a club (the MASTER overlay); any other use of the word | `master` only for clubs |
+| card | a memory card; a karuta card of the stage show | `memory_card`; `karuta` |
+| pad | the controller; a padding field in a struct | `pad_` prefix of the controller code; `pad` field |
 
 O.BIN spellings stay as applied (`schdeule_girls_param`, `syogatu`, `zyotai`); new names use the stems below.
 
@@ -189,7 +195,12 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | hanabi taikai | the fireworks festival | `fireworks` | T | strings |
 | deeto | a date with a girl | `date` | T | O.BIN (`normal_date_*`), disc (`DATE.EXN`) |
 | sasoi | an invitation, from a girl or to her | `invite` | T | O.BIN (`date_sasoi_judge`), disc (`G_INVITE`) |
-| geko | walking home from school, and the meetings on the way | `walk_home` | T | O.BIN (`geko_judge`), disc (`GEKO.BIN`) |
+| geko | walking home from school; a meeting on the way is an encounter (next row) | `walk_home` | T | O.BIN (`geko_judge`), disc (`GEKO.BIN`) |
+| encounter | a meeting with a girl outside a date: on the way home, an invitation, a birthday; the GEKO overlay (folder `girl_encounters`, prefix `encounter_`) plays them | `encounter` | T | disc (`GEKO.EXN`); the grouping is a guess until GEKO is confirmed |
+| denwa | a phone call with a girl; the TEL overlay (folder `telephone`, prefix `phone_`), which also shows the girl profile page | `phone` | T | disc (`TEL.EXN`) |
+| kaiwa | a talk with a girl: the script sections, lines and choices that the talk runner steps through | `talk` | T | patch (the talk runner `func_80082764`) |
+| gyouji | a yearly school event; the GYOZI overlay's word, a near copy of SHOUGATU | `annual_event`, prefix `annual_` | T | disc (`GYOZI.EXN`); the meaning is a guess from the name |
+| bunkaken | the BUNKAKEN overlay's word; it plays a culture-festival tour that visits six culture clubs | `culture_festival_tour`, prefix `tour_` | T | disc (`BUNKAKEN.EXN`), code; a guess until BUNKAKEN is confirmed |
 | uwasa | a rumor report | `rumor` | T | O.BIN (`uwasa_main`) |
 | spot | a place inside a date or scene | `spot` | T | code |
 | arrival | whether the player arrives on time for a date | `arrival` | T | patch (`date_arrival`) |
@@ -218,6 +229,10 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | name codes | placeholders in text for the player's and girls' names | `name_code` | T | patch |
 | hud | the panels of the day screen: parameters, calendar date, portrait | `hud` | T | code |
 | save, load | the memory-card save and load | `save`, `load`, `memory_card` | T | O.BIN (`card_ev_set`) |
+| name entry | the entry of the player's name, birthday and blood type at the start; the NAME_ENT overlay | `name_entry` | T | disc (`NAME_ENT.EXN`), patch (kana grid) |
+| prologue | the voiced opening lines that NAME_ENT plays, in the attract run too | `prologue` | T | patch (`prologue_line_start`), emulator run (T-20500) |
+| sound test | the OPTION screen that plays music and sound effects by bank id | `sound_test` | T | sound, strings |
+| debug menu | a developer menu whose text is in OPTION | `debug_menu` | T | patch (OPTION text offsets) |
 | system file | the memory-card system file; its contents are not decoded yet | `system_file` | T | strings |
 | album | the album of scene pictures | `album` | T | strings |
 | dec_bg | a background picture decoded by the MDEC | `bg` | T | O.BIN (`dec_bg_*`) |
@@ -225,7 +240,6 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | XA | CD-XA streamed audio | `xa` | K | O.BIN (`xa_wait`) |
 | BGM, SE | music tracks and sound effects | `bgm`, `se` | K | sound |
 | johoshi | the information magazine | `magazine` | T | O.BIN |
-| tpage, clut, prim, ot, vram | PsyQ graphics words | as written | K | SDK |
 
 Developer abbreviations not resolved yet (`srn`, `mod`, `dtd`, `don`, `tarao`, `Sw_`, `Hw_`) keep their O.BIN form until the code shows what they mean.
 
@@ -241,3 +255,30 @@ Developer abbreviations not resolved yet (`srn`, `mod`, `dtd`, `don`, `tarao`, `
 | bancho | a delinquent gang boss, enemy of the RPG battle | `bancho` | K | strings |
 | karuta, Kintaro | culture-festival stage shows | `karuta`, `kintaro` | K | disc (`BUNKASD/`) |
 | UFO catcher | a crane game | `ufo_catcher` | T | disc (`UFOCATCH.BIN`) |
+
+## Abbreviations
+
+The only abbreviations a new name may use. A unit that needs another one adds its row in the same commit as
+the first name that uses it.
+
+| abbreviation | stands for | source |
+|---|---|---|
+| `2d`, `3d` | two- and three-dimensional; never at the start of a name (`shooter_3d`) | common use |
+| `bg` | a background picture decoded by the MDEC | O.BIN (`dec_bg_*`) |
+| `bgm`, `se` | music track, sound effect | sound |
+| `cd` | the CD-ROM drive and its reads | SDK (`libcd`) |
+| `clut` | color lookup table | SDK |
+| `gpu` | the graphics processor | SDK (`libgpu`) |
+| `hud` | the panels of the day screen | code |
+| `misc` | miscellaneous (the ETC overlay's folder `misc_scenes`) | disc (`ETC.EXN`) |
+| `ot` | ordering table | SDK |
+| `ovl` | overlay | O.BIN, patch |
+| `param` | parameter | O.BIN |
+| `prim` | GPU primitive | SDK |
+| `rpg` | role-playing game (the RPG battle) | strings |
+| `sd` | super-deformed sprite | disc, O.BIN |
+| `sys` | system helpers of the main executable, beside the pad code (`sys_` prefix) | ADR (main prefixes) |
+| `tpage` | texture page | SDK |
+| `vram` | video memory | SDK |
+| `vsync` | vertical blank sync | SDK (`VSync`) |
+| `xa` | CD-XA streamed audio | O.BIN (`xa_wait`) |

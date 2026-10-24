@@ -24,8 +24,9 @@ first unit to run through `tools/rename.py` (T-27002) and proves the tool on rea
       symbol left in `src/` or `include/` (`rename.py check`).
 - [ ] The 56 dual declarations merged; each of the 45 with a type difference resolved by the build
       (`tools/sync_protos.py --fix` overrides where needed); `config/proto_known.txt` alias rows cleared.
-- [ ] `cd_read_status` moved out of the shared symbol file (EVENT range, G3); `check_symbols.py` rejects
-      shared-file names in EVENT's range.
+- [ ] `cd_read_status` moved out of the shared symbol file (EVENT range, G3); `check_symbols.py` rejects a
+      main name in EVENT's range in every file that EVENT loads, `config/symbol_addrs_hypotheses.txt` and
+      `config/symbol_addrs_obin.txt` included (T-27002 may already do this; check it here).
 - [ ] Clean build 27/27 sha1, `ninja progress` unchanged.
 
 ## Notes

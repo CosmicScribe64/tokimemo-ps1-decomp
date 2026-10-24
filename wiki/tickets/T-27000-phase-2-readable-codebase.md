@@ -16,12 +16,15 @@ files or headers named by number; symbols, fields, types, constants and locals c
 
 ## Acceptance criteria
 
-- [x] Conventions decided and written: ADR 0001, CODING_STANDARDS sections 4 and 5, `GLOSSARY.md` (T-27001).
+- [ ] Conventions decided and written: ADR 0001, CODING_STANDARDS sections 4 and 5, `GLOSSARY.md` (T-27001;
+      tick when T-27001 is Done).
 - [ ] Rename tool with ledger, replay and check (T-27002).
 - [ ] O.BIN names reach the overlays; alias debt cleared (T-27003).
 - [ ] Shared core named: GameState fields, core types, first enums, top 100 main functions (T-27004).
 - [ ] Main modules M1-M9 and all 26 overlays named, each with English file and header names.
 - [ ] Locals, parameters and constants named per unit.
+- [ ] `include/main_api.h` and `include/game.h` deleted: every C file includes the topic headers it uses, and
+      CODING_STANDARDS section 8a and `tools/check_headers.py` name the topic headers.
 - [ ] Final sweep: `count_names.py` shows only placeholders the standards allow (unused or unknown fields,
       jump tables, optional SDK names); living wiki pages refreshed.
 
@@ -34,3 +37,5 @@ runtime evidence.
 ## Comments
 
 - 2026-10-24 (w19-conventions): created; conventions in T-27001.
+- 2026-10-24 (w19-conventions): review fixes. The first criterion is open again until T-27001 is Done; the
+  deletion of the two umbrella headers is a criterion of its own (final sweep, step 8 of [[phase2]]).

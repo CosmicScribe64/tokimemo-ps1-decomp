@@ -45,7 +45,8 @@ reviews check.
 - Functions, globals, struct fields, locals and parameters: `snake_case`. Types and struct tags: `PascalCase`.
   Enum constants and macros: `UPPER_SNAKE`, starting with the enum's or the module's prefix (`GIRL_SHIORI`).
 - English words, American spelling (`color`, as in the SDK and O.BIN's `make_color_bar`). Abbreviations only
-  from the glossary (`param`, `ovl`, `bg`, `cd`, `vram`, `tpage`, `clut`, `prim`, `ot`, `sd`).
+  from the glossary's abbreviation table (`param`, `ovl`, `bg`, `cd`, `gpu`, `vram`, `vsync`, ...). A unit that
+  needs another abbreviation adds its row in the same commit as the first name that uses it.
 - No address or size inside a new name, no leading underscore, no C or IDO keyword, nothing that collides
   with an SDK, libc or macro name. Names are unique without regard to case inside a link unit, because splat
   writes one `.s` file per function and macOS file systems ignore case.
@@ -57,21 +58,33 @@ reviews check.
   overlay's prefix from the map below (`sports_`, type `Sports...`, constant `SPORTS_`). An overlay that holds
   several unrelated scenes has one prefix per scene, all listed in the map. Two overlays may reuse a name,
   but the prefixes make that rare.
+- A prefix is a glossary stem or a short form of one that the map lists (`sports_` for `sports_festival`,
+  `trip_` for `school_trip`). Review checks the prefix against the map and the other words of a name against
+  the glossary.
 - **Main executable.** Each module uses the subsystem prefix from the table below, with no unit prefix in
   front; O.BIN names keep their own stems (`hizuke_`, `k_disp_`, `normal_date_`). `date_` belongs to the DATE
-  overlay; main's dating code uses O.BIN's `normal_date_`. Game-side sound code uses `sound_`, never `snd_`,
-  `Ss` or `Spu`, which are SDK names.
+  overlay; main's dating code uses O.BIN's `normal_date_`. The one main name with a `date_` stem,
+  `date_sasoi_judge` (0x80070850), is an O.BIN name and stays, as every O.BIN name does. Game-side sound code
+  uses `sound_`, never `snd_`, `Ss` or `Spu`, which are SDK names.
 - The two tables below are the starting maps. A unit that needs another prefix, or a different folder name,
   changes the row in the same commit as the first name that uses it; review checks it.
 
 ### Evidence and hypotheses
 
-- Every rename row carries its evidence in the note column of the rename table (T-27002): the callers, the
-  data read, the mode set, the string passed (by label, never quoted), or an emulator run (`wiki/emulator.md`).
-- Hypothesis files: `config/symbol_addrs_hypotheses.txt` for main and `config/symbols_<DISC>_hypotheses.txt`
-  for an overlay, each with `HYPOTHESES` in its header. Every yaml loads the main file, as it loads
+- Every rename row carries its evidence in the note column of the rename table (T-27002). The evidence is
+  the callers, the data read, the mode set, the string passed (by label, never quoted), or an emulator run
+  (`wiki/emulator.md`). After `tools/rename.py apply`, the unit's committed ledger
+  (`config/renames/<unit>.txt`) holds each row with its note. A later review finds the evidence there.
+- Hypothesis files, each with `HYPOTHESES` in its header: `config/symbol_addrs_hypotheses.txt` for main,
+  `config/symbols_<DISC>_hypotheses.txt` for an overlay. Every yaml loads the main file, as it loads
   `config/symbol_addrs.txt`, so overlay asm uses the same names. `config/symbol_addrs_obin.txt` stays a separate
   HYPOTHESES file, because O.BIN names are hypotheses about the developers' names, not descriptions.
+- Exception: EVENT's range. EVENT loads at 0x800F6000, so its file covers the main bss 0x800F6000-0x80126000
+  (`wiki/overlays.md`). A main name for an address in that range, in a file that every yaml loads, would label
+  EVENT's own data too, as `cd_read_status` did (audit gap G3). Such names go to the main-only files
+  `config/symbol_addrs_main.txt` and, for hypotheses, `config/symbol_addrs_main_hypotheses.txt`. Only the
+  main yaml loads them. `tools/check_symbols.py` checks every symbol file that a yaml loads, the hypothesis files
+  included, and rejects a main name in EVENT's range in any file that EVENT loads (T-27002, T-27003).
 - A name leaves its HYPOTHESES file, or loses its comment, when the code or an emulator run proves it; the
   evidence goes into the ticket.
 
@@ -104,9 +117,16 @@ reviews check.
 
 - A C file is named for what its original object does (`runner_race.c`, `cd_read.c`), in `snake_case`, with
   no address; stems are unique without regard to case in their folder. The first comment of the file keeps
-  the address range and points to `config/objects/<DISC>.txt`, which keeps the original object boundaries.
-- Overlay folders take the English names of the map. The splat yaml keeps the disc name (`name: ovl_TAIIKU`,
-  `basename`, `target_path`, `asm_path`, `build_path`); only the `c` subsegment names change.
+  the address range and points to `config/objects/<DISC>.txt` (`config/objects/main.txt` for the
+  executable), which keeps the original object boundaries.
+- Overlay folders take the English names of the map. The splat yaml keeps the disc name in
+  `name: ovl_TAIIKU`, `basename`, `target_path`, `asm_path` and `build_path`. What changes is the name of the
+  object's subsegments: the `c` subsegment and the `.rodata` and `.data` subsegments that carry the same name
+  (`TAIIKU/80133C80` becomes `sports_festival/runner_race`). The `<DISC>_data_<address>` subsegments keep
+  their names.
+- Because `src_path` is `src/ovl`, splat writes the object's asm under the new path inside the disc-named
+  root (`asm/ovl/TAIIKU/data/sports_festival/runner_race.data.s`), and the `INCLUDE_ASM` and `INCLUDE_RODATA`
+  path strings in the C file change with it. `tools/rename.py` makes these edits for `file` and `dir` rows.
 - A file rename is a commit of its own with nothing else in it, so git keeps the history. It comes last in
   each unit, once the contents are understood.
 
@@ -119,6 +139,9 @@ reviews check.
 - Each C file includes the headers whose symbols it uses. `include/main_api.h` and `include/game.h` stay as
   umbrellas that include the new headers until every part has moved out. The one-declaration rule of
   CODING_STANDARDS section 8a applies to whichever header declares the symbol.
+- The final sweep (step 8 of `wiki/phase2.md`) deletes the two umbrellas. By then every C file includes its
+  topic headers, and CODING_STANDARDS section 8a and `tools/check_headers.py` name the topic headers instead
+  of `main_api.h`.
 - A header split is a pure move: `tools/sync_protos.py --snapshot` before and `--compare` after show that no
   file sees a different type for any symbol.
 
@@ -127,6 +150,9 @@ reviews check.
 The living copy moves to `src/ovl/README.md` with the first folder rename, and the main table moves to
 `src/main/README.md` with the first main file rename. After that, rows change there. "Confirm" means the unit checks the
 contents (code and emulator) before it adopts the folder name and prefix; until then the name is a hypothesis.
+No loader has been found for EVENT and GYOZI, and their load addresses are inference (`wiki/overlays.md`,
+T-0200). For them, "confirm unused" means the unit looks for a loader again before it keeps `_unused` in the
+folder name.
 
 | disc file | contents | folder | prefix | status |
 |---|---|---|---|---|
@@ -138,9 +164,9 @@ contents (code and emulator) before it adopts the folder name and prefix; until 
 | ENDING.EXN | graduation ending and the girls' futures | `ending` | `ending_` | |
 | EN_NICHI.EXN | festival stall games: goldfish scooping, shooting gallery | `festival_stalls` | `stalls_` | |
 | ETC.EXN | exams and rank list, career guidance, job or college choice, album, end-of-game save | `misc_scenes` | `exam_`, `career_`, `album_`, `system_file_` | confirm 0xC2-0xC4 |
-| EVENT.EXN | an older set of date-place scenes; no code found loads it | `date_spots_unused` | `spots_` | |
+| EVENT.EXN | an older set of date-place scenes; no code found loads it | `date_spots_unused` | `spots_` | confirm unused |
 | GEKO.EXN | meetings outside dates: walking home, invitations, birthdays | `girl_encounters` | `encounter_` | confirm |
-| GYOZI.EXN | near copy of SHOUGATU; no code found loads it | `annual_events_unused` | `annual_` | |
+| GYOZI.EXN | near copy of SHOUGATU; no code found loads it | `annual_events_unused` | `annual_` | confirm unused |
 | KANGEI.EXN | club rooms, a lodge, a test of courage; probably the summer camp | `summer_camp` | `camp_` | confirm |
 | MASTER.EXN | club tournaments and prizes after mastering a club | `club_master` | `master_` | |
 | NAME_ENT.EXN | name, birthday and blood-type entry; the voiced prologue | `name_entry` | `name_entry_`, `prologue_` | |
@@ -162,7 +188,7 @@ contents (code and emulator) before it adopts the folder name and prefix; until 
 | module (today's files) | prefixes |
 |---|---|
 | boot and startup (`80041000`, `800420D0`) | `boot_` |
-| main loop and game mode (`80042540`) | `mode_`; O.BIN `game_main`, `main_state_set` |
+| main loop and game mode (`80042540`) | `game_mode_`; O.BIN `game_main`, `main_state_set` |
 | pad and system helpers (`80042A00`) | `pad_`, `sys_` |
 | 2D drawing, palettes, VRAM loads (`80043510`) | `draw_`, `vram_` |
 | CD reads (`800451D0`, `80046500`) | `cd_` |
@@ -171,7 +197,7 @@ contents (code and emulator) before it adopts the folder name and prefix; until 
 | screen layers, model transfer (`8004C3F0`) | `layer_`, `model_`; O.BIN `srn_`, `mod_` |
 | kanji text (`8004E500`) | `text_`; O.BIN `k_disp_`, `set_kanji_` |
 | menus, speaker labels, girl queries (`8004F6B0`, `8004F870`) | `menu_`, `speaker_`, `girl_` |
-| memory card, timers (`80053650`) | `card_`, `timer_` |
+| memory card, timers (`80053650`) | `memory_card_`, `timer_` |
 | STR movies (`80056300`, `800563F0`) | `movie_` |
 | MDEC backgrounds (`80057390`) | `bg_`; O.BIN `dec_bg_` |
 | 3D setup, mouse (`80058D20`, `80059710`) | `view_`, `mouse_` |
@@ -192,15 +218,18 @@ contents (code and emulator) before it adopts the folder name and prefix; until 
 - Moving `INCLUDE_RODATA` data into C definitions, removing `FAKE` code and `*_OVERRIDE_*` views, and splitting
   functions: phase 2 work, but not naming. They follow their own tickets.
 - Names in the PsyQ SDK region (479 asm-only placeholders): optional, last.
-- Rewriting history: tickets, logs and matching notes keep the old names; `tools/rename.py lookup` gives the
-  current one. The unit that owns a topic refreshes its living wiki pages.
-- Game text in names or comments beyond proper names and short terms (CODING_STANDARDS section 10). Translating the game is phase 5.
-- Disc and build artifacts: yaml names, asm paths, `build/ovl/<DISC>.bin` and the sha1 files keep disc names.
+- Old names in the wiki: not decided yet (see Pending).
+- Game text in names or comments beyond proper names and short terms (CODING_STANDARDS section 10). Translating
+  the game is phase 5.
+- Disc and build artifacts keep their disc names: the yaml fields listed under Files and folders, the asm root
+  `asm/ovl/<DISC>/`, `build/ovl/<DISC>.bin` and the sha1 files. Object paths inside the asm root follow the
+  file names.
 
 ## Consequences
 
 - Renames go through one table-driven tool (`tools/rename.py`, T-27002) that edits symbol files, sources and
-  configs, keeps a ledger and replays it on branches and contributor PRs. No phase 2 rename lands before it.
+  configs, keeps a ledger and replays it on branches and contributor PRs. No rename of any kind lands before
+  the tool has merged; until then placeholders stay. CODING_STANDARDS section 4 says the same.
 - Every main rename touches overlay files, so main units and overlay units coordinate through the ledger; an
   overlay unit asks for a main rename instead of making it.
 - The right yamls must load the hypothesis files; main names must reach the overlays' asm (the O.BIN alias
@@ -211,3 +240,14 @@ contents (code and emulator) before it adopts the folder name and prefix; until 
 - decomp.dev per-file history restarts for renamed files; totals stay.
 - Agents will want to name a field after one use. Review rejects a name without evidence and keeps the
   hypothesis marks honest.
+
+## Pending
+
+The four decisions above are accepted. These points from the audit's questions to the user are not decided
+yet:
+
+- Old names in the wiki (audit question 2). The plan follows the audit's proposal: tickets, logs and matching
+  notes keep the old names, `tools/rename.py lookup` gives the current one, and the unit that owns a topic
+  refreshes its living wiki pages.
+- The rewrite of CODING_STANDARDS section 4 (audit question 5), which makes `tools/rename.py` the one way to
+  rename. Phase 2 units apply it only after the user approves it.
