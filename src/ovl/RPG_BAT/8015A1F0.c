@@ -7,7 +7,7 @@ void func_8015A1F0(void) {
     }
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　　超球百裂弾　　　　　　　");
+        strcpy(D_8015E74C, "　　　　　　超球百裂弾　　　　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_80144480();
         func_80148F70();

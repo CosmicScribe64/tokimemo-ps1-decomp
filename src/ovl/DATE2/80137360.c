@@ -90,7 +90,7 @@ void func_8013775C(void) {
     if (D_80122CDC != 0) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 1;
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 5;
-        func_80084D3C();
+        check_para_limit();
         D_800E6280.unk_110A += 0xD;
         return;
     }
@@ -158,7 +158,7 @@ void func_80137A2C(void) {
     DateTxt tbl;
 
     tbl = D_8013A878;
-    func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_800E6280.unk_03E * 0x63 + D_80122CDC * 0x21 - 0x24BD]);
+    strcpy(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_800E6280.unk_03E * 0x63 + D_80122CDC * 0x21 - 0x24BD]);
 }
 
 void func_80137AF0(void) {
@@ -187,6 +187,6 @@ void func_80137B94(void) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 1;
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 0xA;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }

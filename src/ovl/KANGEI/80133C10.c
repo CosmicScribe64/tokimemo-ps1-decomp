@@ -36,24 +36,24 @@ void func_80133D28(void) {
     s16 i;
     u32 v;
 
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
-    func_800438F0(1);
+    back_clear_switch(1);
     func_80048EB8(0);
-    func_80064E84();
-    func_800649D4();
-    func_80048390();
+    message_window_init();
+    hizuke_init();
+    tpage_buf_clear();
     func_8004E58C();
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     D_800B593C = 0;
     func_8008585C();
-    func_80063930(0);
-    func_80064FA4(0);
+    parameter_disp_switch(0);
+    icon_disp_switch(0);
     D_80139ADC = 0;
     D_80139AE0 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80084E4C();
     D_800E6280.unk_F5F = 0xFF;
     v = D_800E6280.unk_0F4.h >> 12;
@@ -120,5 +120,5 @@ void func_80134084(void) {
     func_8009C7F8(&rect, 8, 0, 0);
     bg_read_sub2(0x428D);
     func_8004284C();
-    func_800AE0F0(D_800CA19C, "合宿所");
+    strcpy(D_800CA19C, "合宿所");
 }

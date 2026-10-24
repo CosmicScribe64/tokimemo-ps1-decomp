@@ -119,18 +119,18 @@ void func_80154F74(void) {
     s32 id;
     s32 r;
 
-    func_800AE120(D_801604C0 + 0x1E240);
-    r = func_800AE0D0();
-    pos.x = (func_800AE0D0() % 5000 + D_8015EDB4->unk74 + r % 3000) - 0xFA0;
-    r = func_800AE0D0();
-    pos.y = (func_800AE0D0() % 2500 + D_8015EDB4->unk76 + r % 1500) - 0x7D0;
+    srand(D_801604C0 + 0x1E240);
+    r = rand();
+    pos.x = (rand() % 5000 + D_8015EDB4->unk74 + r % 3000) - 0xFA0;
+    r = rand();
+    pos.y = (rand() % 2500 + D_8015EDB4->unk76 + r % 1500) - 0x7D0;
     pos.z = -0x8000;
-    vel.x = func_800AE0D0() % 4096;
-    vel.y = func_800AE0D0() % 4096;
-    vel.z = func_800AE0D0() % 4096;
-    vel.unk6 = func_800AE0D0() % 7;
-    vel.x = func_800AE0D0() % 3;
-    if (func_800AE0D0() % 3 == 0) {
+    vel.x = rand() % 4096;
+    vel.y = rand() % 4096;
+    vel.z = rand() % 4096;
+    vel.unk6 = rand() % 7;
+    vel.x = rand() % 3;
+    if (rand() % 3 == 0) {
         id = func_8015ACCC(0, 1, vel, pos, vel, vel.x * 4 + 4, 0x10);
     } else {
         id = func_8015ACCC(0, 1, vel, pos, vel, vel.x * 4 + 4, 0);
@@ -177,7 +177,7 @@ void func_801553AC(void) {
     TcPos sp48;
     TcPos sp40;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     sp50.x = D_8015EDB4->unk74;
     sp50.y = (D_8015EDB4->unk74 > 0) ? 1 : -1;
     sp50.z = -0x2BC;
@@ -204,7 +204,7 @@ void func_801557E8(s32 arg0) {
     s32 t;
 
     t = ((arg0 + D_8015EDB4)->unk7A - (arg0 + D_8015EDB4)->unk6A) * 7;
-    (D_8015EDB4 + arg0)->unk78 = (func_800A0070(t) * -0x3A98) >> 0xC;
+    (D_8015EDB4 + arg0)->unk78 = (rsin(t) * -0x3A98) >> 0xC;
     (D_8015EDB4 + arg0)->unk74 = (((func_800A0140(t) << 0xB) >> 0xC) * (D_8015EDB4 + arg0)->unk7E) + (D_8015EDB4 + arg0)->unk7C;
     (arg0 + D_8015EDB4)->unk76 = (arg0 + D_8015EDB4)->unk80;
     (D_8015EDB4 + arg0)->unk64 = 0;
@@ -228,11 +228,11 @@ void func_8015595C(void) {
     s32 id;
     s32 r;
 
-    func_800AE120(D_801604C0);
-    r = func_800AE0D0();
-    pos.x = (func_800AE0D0() % 250 + D_8015EDB4->unk74 + r % 150) - 0xC8;
-    r = func_800AE0D0();
-    pos.y = (func_800AE0D0() % 135 + D_8015EDB4->unk76 + r % 75) - 0x64;
+    srand(D_801604C0);
+    r = rand();
+    pos.x = (rand() % 250 + D_8015EDB4->unk74 + r % 150) - 0xC8;
+    r = rand();
+    pos.y = (rand() % 135 + D_8015EDB4->unk76 + r % 75) - 0x64;
     pos.z = -0x1D4C;
     vel.y = 0x800;
     vel.z = 0;
@@ -258,7 +258,7 @@ void func_80155C64(s32 arg0) {
 
     /* FAKE: byte-stride pointer calculations and xor-zero keep the original
      * addition and multiplication operand order. T-10010. */
-    trig = func_800A0070((arg0 + D_8015EDB4)->unk7A * 0x3C);
+    trig = rsin((arg0 + D_8015EDB4)->unk7A * 0x3C);
     actor = (TcActor *)((u8 *)D_8015EDB4 + arg0 * sizeof(TcActor));
     actor->unk74 = ((s32) ((trig ^ 0) * (0x3E8 - (actor->unk7A * 0xA))) >> 0xD) + actor->unk7C;
     trig = func_800A0140((arg0 + D_8015EDB4)->unk7A * 0x3C);
@@ -281,7 +281,7 @@ void func_80155C64(s32 arg0) {
 }
 
 void func_80155E10(s32 arg0) {
-    (arg0 + D_8015EDB4)->unk74 = ((func_800A0070((arg0 + D_8015EDB4)->unk7A * 0x3C + 0x800) * (0x3E8 - (D_8015EDB4 + arg0)->unk7A * 0xA)) >> 0xD) + (D_8015EDB4 + arg0)->unk7C;
+    (arg0 + D_8015EDB4)->unk74 = ((rsin((arg0 + D_8015EDB4)->unk7A * 0x3C + 0x800) * (0x3E8 - (D_8015EDB4 + arg0)->unk7A * 0xA)) >> 0xD) + (D_8015EDB4 + arg0)->unk7C;
     (arg0 + D_8015EDB4)->unk76 = ((func_800A0140((arg0 + D_8015EDB4)->unk7A * 0x3C + 0x800) * (0x3E8 - (D_8015EDB4 + arg0)->unk7A * 0xA)) >> 0xD) + (D_8015EDB4 + arg0)->unk7E;
     (arg0 + D_8015EDB4)->unk78 = (arg0 + D_8015EDB4)->unk80;
     if ((arg0 + D_8015EDB4)->unk7A >= 0x65) {
@@ -336,7 +336,7 @@ s32 func_80156178(void) {
     TcPos p2;
     TcPos pos;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     /* FAKE: x and y on one line so as1 orders their stores y, x like the original (decomp-permuter); real source unknown. T-9180 */
     pos.x = -0x100; pos.y = 0x800;
     pos.z = 0;
@@ -389,16 +389,16 @@ void func_801563E4(s32 arg0) {
     /* FAKE: reserves the unused word under the position locals (the spill temporary sits one word lower); real local unknown. T-16564 */
     u8 pad[4];
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     if (arg0 == 0) {
-        sp50.x = ((func_800AE0D0() % 2000) + ((func_800AE0D0() % 4000) + D_8015EDB4->unk74)) - 0xBB8;
-        sp50.y = ((func_800AE0D0() % 1500) + ((func_800AE0D0() % 2500) + D_8015EDB4->unk76)) - 0x7D0;
-        sp50.z = (func_800AE0D0() % 20000) + 0x8000;
-        sp58.x = (func_800AE0D0() % 30) + 0x28;
+        sp50.x = ((rand() % 2000) + ((rand() % 4000) + D_8015EDB4->unk74)) - 0xBB8;
+        sp50.y = ((rand() % 1500) + ((rand() % 2500) + D_8015EDB4->unk76)) - 0x7D0;
+        sp50.z = (rand() % 20000) + 0x8000;
+        sp58.x = (rand() % 30) + 0x28;
         sp48.y = 0x800;
         sp48.x = 0;
         sp48.z = 0;
-        sp58.y = func_800AE0D0() % 2;
+        sp58.y = rand() % 2;
         if (D_801604C0 < 0xF0) {
             func_8015ACCC(7, 7, sp58, sp50, sp48, 5, 0x50);
             return;
@@ -411,17 +411,17 @@ void func_801563E4(s32 arg0) {
     sp48.y = 0x800;
     sp48.x = 0;
     sp48.z = 0;
-    sp58.x = (func_800AE0D0() % 20) + 0x1E;
+    sp58.x = (rand() % 20) + 0x1E;
     sp50.x = 0;
-    sp58.y = func_800AE0D0() % 2;
+    sp58.y = rand() % 2;
     D_8015EDB4[func_8015ACCC(7, 7, sp58, sp50, sp48, 0x14, 0)].unk84[0] = 4;
-    sp58.x = (func_800AE0D0() % 20) + 0x1E;
+    sp58.x = (rand() % 20) + 0x1E;
     sp50.x = -0x3E8;
-    sp58.y = func_800AE0D0() % 2;
+    sp58.y = rand() % 2;
     D_8015EDB4[func_8015ACCC(7, 7, sp58, sp50, sp48, 0x14, 0)].unk84[0] = 4;
-    sp58.x = (func_800AE0D0() % 20) + 0x1E;
+    sp58.x = (rand() % 20) + 0x1E;
     sp50.x = 0x3E8;
-    sp58.y = func_800AE0D0() % 2;
+    sp58.y = rand() % 2;
     D_8015EDB4[func_8015ACCC(7, 7, sp58, sp50, sp48, 0x14, 0)].unk84[0] = 4;
 }
 

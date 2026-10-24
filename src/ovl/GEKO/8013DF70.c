@@ -71,14 +71,14 @@ void func_8013E11C(void) {
 }
 
 void func_8013E1A0(void) {
-    if (func_80052C88(9) >= 0x50U) {
+    if (get_h_yuukou(9) >= 0x50U) {
         D_800E6280.unk_1BC[9].unk_02 += 1;
         D_800E6280.unk_1BC[9].unk_06 += 2;
     } else {
         D_800E6280.unk_1BC[9].unk_0C.f.b14 = 1;
         D_800E6280.unk_1BC[9].unk_06 += 1;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
@@ -87,14 +87,14 @@ void func_8013E22C(void) {
     Rec24 *p;
 
     D_800E6280.unk_1228[5] = 1;
-    func_8004435C(0x140, 0, 0x40, 0x80, D_801463B0);
+    LoadSquare(0x140, 0, 0x40, 0x80, D_801463B0);
     func_8013DF70();
-    func_80043914(D_80146394, 0x12, 1, 3, 0);
+    load_palette(D_80146394, 0x12, 1, 3, 0);
     for (i = 4; i < 0xE; i++) {
         p = &D_801217D0[i];
         p->unk_00 = 0xC1000000;
-        p->unk_04 = func_800AE0D0() % 84 - 0x9F;
-        p->unk_06 = func_800AE0D0() % 130 - 0x5F;
+        p->unk_04 = rand() % 84 - 0x9F;
+        p->unk_06 = rand() % 130 - 0x5F;
         p->unk_08 = 8;
         p->unk_0A = 0x18;
         p->unk_0C = 5;
@@ -125,7 +125,7 @@ void func_8013E410(void) {
 
 void func_8013E448(void) {
     func_8013DF70();
-    func_80043914(D_80146E60, 0x11, 1, 2, 0);
+    load_palette(D_80146E60, 0x11, 1, 2, 0);
     func_80084E90(D_80146E64, D_80146E68, D_80146E6C, D_80146E70, D_80146E74, D_80146E78);
     func_800850D4(D_80146E54, D_80146E58, D_80146E50, D_80146E5C);
     func_8004284C();
@@ -215,22 +215,22 @@ void func_8013E760(void) {
 
 void func_8013E828(void) {
     D_800E6280.unk_F5F = 9;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8006612C("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);
@@ -239,7 +239,7 @@ void func_8013E828(void) {
     D_80146274 = D_80145F98;
     D_80146278 = D_801460D4;
     D_8014627C = D_80146210;
-    func_800AE0F0(D_800CA19C, "教室");
+    strcpy(D_800CA19C, "教室");
     D_800CA368 = 0x3C;
     func_8004284C();
 }
@@ -249,7 +249,7 @@ void func_8013E950(void) {
 
     for (i = 4; i < 0xE; i++) {
         D_801217D0[i].unk_06 += 0xA;
-        if (((func_800AE0D0() & 3) == 0 &&
+        if (((rand() & 3) == 0 &&
              ((D_801217D0[i].unk_06 >= -0x52 && D_801217D0[i].unk_06 < -0x39 && D_801217D0[i].unk_04 < -0x57) ||
               (D_801217D0[i].unk_06 >= -0x39 && D_801217D0[i].unk_06 < -0x1A && D_801217D0[i].unk_04 < -0x77) ||
               (D_801217D0[i].unk_06 >= -0xB && D_801217D0[i].unk_06 < 3 && D_801217D0[i].unk_04 >= -0x8D && D_801217D0[i].unk_04 < -0x6F) ||
@@ -279,7 +279,7 @@ void func_8013E950(void) {
                 D_801217D0[i].unk_08 = 8;
                 *(s16 *)&D_801217D0[i].unk_0A = 0x18;
                 /* FAKE: same-line stores place mfhi after the zero stores as in the original. T-24085 */
-                D_801217D0[i].unk_04 = func_800AE0D0() % 84 - 0x9F; D_801217D0[i].unk_06 = -0x78; D_80146400[i - 4] = 0; D_801463E0[i - 4] = 0;
+                D_801217D0[i].unk_04 = rand() % 84 - 0x9F; D_801217D0[i].unk_06 = -0x78; D_80146400[i - 4] = 0; D_801463E0[i - 4] = 0;
             } else if (D_801463E0[i - 4] == 5) {
                 if (D_80146400[i - 4] == 0) {
                     D_801217D0[i].unk_0E -= 0x18;
@@ -299,29 +299,29 @@ void func_8013E950(void) {
             }
         } else if (D_801217D0[i].unk_06 >= 0x19 && D_801463E0[i - 4] == 0 && D_80146400[i - 4] == 0) {
             /* FAKE: same-line store places mfhi after unk_06 = -0x78 as in the original. T-24085 */
-            D_801217D0[i].unk_04 = func_800AE0D0() % 84 - 0x9F; D_801217D0[i].unk_06 = -0x78;
+            D_801217D0[i].unk_04 = rand() % 84 - 0x9F; D_801217D0[i].unk_06 = -0x78;
         }
     }
 }
 
 void func_8013ECA8(void) {
     D_800E6280.unk_F5F = 9;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);
@@ -345,6 +345,6 @@ void func_8013EDEC(void) {
 }
 
 void func_8013EE14(void) {
-    func_8007ED84(0x403B);
+    bg_read_sub2(0x403B);
     func_8004284C();
 }

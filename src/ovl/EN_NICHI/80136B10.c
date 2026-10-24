@@ -54,7 +54,7 @@ void func_80136B74(void) {
         func_8006BD6C(0);
         hizuke_disp_switch(0);
         message_disp_switch(0);
-        func_800AE120(D_800E6280.unk_10F4);
+        srand(D_800E6280.unk_10F4);
         func_80044750(0xCF);
         func_8004284C();
         return;
@@ -124,12 +124,12 @@ void func_80136DEC(void) {
     gs = &D_800E6280;
     switch (gs->unk_110A) {
     case 0:
-        func_80048514(5, ((s32 *)D_801391E4)[7], 1);
+        load_tpage_buf_lock(5, ((s32 *)D_801391E4)[7], 1);
         for (i = 0; i < 7; i++) {
-            func_800485BC(((s32 *)D_801391E4)[i], 1);
+            search_load_tpage_buf_lock(((s32 *)D_801391E4)[i], 1);
         }
         for (i = 8; i < 10; i++) {
-            func_800485BC(((s32 *)D_801391E4)[i], 1);
+            search_load_tpage_buf_lock(((s32 *)D_801391E4)[i], 1);
         }
         func_8004284C();
         return;
@@ -452,10 +452,10 @@ void func_80137E2C(void) {
     u16 w;
     s32 a;
 
-    p = func_800490F0(0x24, D_8011ECA0);
+    p = GetWorkBase(0x24, D_8011ECA0);
     func_8009F054(p);
-    func_8009EF84(p, 1);
-    func_8009EFB0(p, 0);
+    SetSemiTrans(p, 1);
+    SetShadeTex(p, 0);
     w = D_80139C58;
     do {
     } while (0);
@@ -480,7 +480,7 @@ void func_80137E2C(void) {
     *(s16 *)(p + 0x1A) = D_800E6280.unk_018[D_8011ECA0] + 0x60;
     *(s16 *)(p + 0x20) = D_800E6280.unk_014[D_8011ECA0] + w + 0x20;
     *(s16 *)(p + 0x22) = D_800E6280.unk_018[D_8011ECA0] + 0x60;
-    func_8009EED0((D_8011ECA0 << 10) + 0xC + D_800E8CA0, p, w);
+    AddPrim((D_8011ECA0 << 10) + 0xC + D_800E8CA0, p, w);
 }
 
 /* FAKE: local reuse and the callback comma expression retain the table slots
@@ -986,12 +986,12 @@ void func_80138CCC(void) {
         n++;
     }
     for (i = 32; i < 48; i++) {
-        tbl.value[i] = girls.value[list[func_800AE0D0() % n]];
+        tbl.value[i] = girls.value[list[rand() % n]];
     }
     for (i = 0; i < 4; i++) {
         ((DisplayFixActor44 *)D_8011ECD0)[105 + i].unk_24.h[1]++;
         if (((DisplayFixActor44 *)D_8011ECD0)[105 + i].unk_24.h[1] >= 0xC1) {
-            r1 = func_800AE0D0() & 0x3F;
+            r1 = rand() & 0x3F;
             ((DisplayFixActor44 *)D_8011ECD0)[105 + i].unk_24.h[1] = ((DisplayFixActor44 *)D_8011ECD0)[105 + (i + 1) % 4].unk_24.h[1] - 0x60;
             ((DisplayFixActor44 *)D_8011ECD0)[105 + i].unk_18 = tbl.value[r1];
             if ((r1 & 1) && r1 < 0x20) {
@@ -1005,7 +1005,7 @@ void func_80138CCC(void) {
     for (i = 0; i < 4; i++) {
         ((DisplayFixActor44 *)D_8011ECD0)[109 + i].unk_24.w += 0xFFFF2000;
         if (((DisplayFixActor44 *)D_8011ECD0)[109 + i].unk_24.h[1] < -0xC0) {
-            r2 = func_800AE0D0() & 0x3F;
+            r2 = rand() & 0x3F;
             ((DisplayFixActor44 *)D_8011ECD0)[109 + i].unk_24.h[1] = ((DisplayFixActor44 *)D_8011ECD0)[109 + (i + 3) % 4].unk_24.h[1] + 0x60;
             ((DisplayFixActor44 *)D_8011ECD0)[109 + i].unk_18 = tbl.value[r2];
             if ((r2 & 1) && r2 < 0x20) {
@@ -1019,7 +1019,7 @@ void func_80138CCC(void) {
     for (i = 0; i < 4; i++) {
         ((DisplayFixActor44 *)D_8011ECD0)[113 + i].unk_24.w += 0xC000;
         if (((DisplayFixActor44 *)D_8011ECD0)[113 + i].unk_24.h[1] >= 0xC1) {
-            r3 = func_800AE0D0() & 0x3F;
+            r3 = rand() & 0x3F;
             ((DisplayFixActor44 *)D_8011ECD0)[113 + i].unk_24.h[1] = ((DisplayFixActor44 *)D_8011ECD0)[113 + (i + 1) % 4].unk_24.h[1] - 0x60;
             ((DisplayFixActor44 *)D_8011ECD0)[113 + i].unk_18 = tbl.value[r3];
             if ((r3 & 1) && r3 < 0x20) {

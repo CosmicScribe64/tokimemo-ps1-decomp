@@ -13,7 +13,7 @@ s32 func_80137340(void) {
         return 0;
     }
     func_80132F18();
-    func_8004EC24();
+    k_disp_inc();
     if (tbl.f[D_800E6280.unk_110A] == func_80132D98) {
         func_80137730();
     }
@@ -64,7 +64,7 @@ void func_8013759C(void) {
     s32 c1;
     s32 c2;
 
-    func_8004E9F4(0);
+    k_reset(0);
     D_8011ECD0[0x843] -= 1;
     if (D_8011ECD0[0x843] < 8U) {
         D_8011ECD0[0x843] = 0;
@@ -109,21 +109,21 @@ s32 func_80137730(void) {
     u8 v;
     Entry8 *e;
 
-    cnt = (s16 *)func_8004E99C();
+    cnt = (s16 *)get_ksys();
     if (D_8013C35C <= 0) {
         return 0;
     }
     b = ((u8 **)D_8013C34C.unk_04)[D_8013C358][D_8013C35C - 1];
     if ((b == 0) || (b == 6)) {
         for (i = 1; i <= *cnt; i++) {
-            e = (Entry8 *)func_8004E970(i);
+            e = (Entry8 *)get_k_work(i);
             e->unk_07 = 1;
         }
         D_8011F524 = 0;
         return 0;
     }
     if (func_800460EC() & 4) {
-        best = func_8007C51C();
+        best = getCDlevel();
     } else {
         best = 0;
     }
@@ -186,7 +186,7 @@ s32 func_80137730(void) {
     }
     if (g->unk_F80 != 0) {
         for (i = 1; i <= *cnt; i++) {
-            e = (Entry8 *)func_8004E970(i);
+            e = (Entry8 *)get_k_work(i);
             if (e->unk_02 >= 0x48) {
                 e->unk_07 = 1;
             }
@@ -194,7 +194,7 @@ s32 func_80137730(void) {
         return 0;
     }
     for (i = 1; i <= *cnt; i++) {
-        e = (Entry8 *)func_8004E970(i);
+        e = (Entry8 *)get_k_work(i);
         e->unk_07 = 0;
     }
 }
@@ -538,7 +538,7 @@ void func_8013855C(void) {
     }
     D_8013C360 += 1;
     if (D_8013C35C == 9 && D_8013C360 != 0) {
-        func_8004EBEC(0xE);
+        k_speed_set(0xE);
     }
 }
 

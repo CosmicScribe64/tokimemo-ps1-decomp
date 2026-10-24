@@ -668,12 +668,12 @@ void date_fill_sections_yumi(void) {
 }
 
 void func_80144720(void) {
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8008585C();
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
@@ -682,9 +682,9 @@ void func_80144720(void) {
     D_800E6280.unk_10E8 = 1;
     D_800E6280.unk_71E |= 8;
     func_8004E58C();
-    func_8004E9F4(1);
-    func_800649D4();
-    func_80064E84();
+    k_reset(1);
+    hizuke_init();
+    message_window_init();
     D_800CA2F8 = D_800E6280.unk_724;
     *(u32 *)&D_80122CD4 = D_800E6280.unk_75D;
     D_800CA148 = 0;

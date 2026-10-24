@@ -235,19 +235,19 @@ void func_80141964(void) {
     y[2] = 0x50;
     w[0] = w[1] = w[2] = 0xFC;
     h[0] = h[1] = h[2] = 0x10;
-    func_8004F870(0, 3, x, y, w, h);
+    menu_set(0, 3, x, y, w, h);
     func_8006BC28(0);
     func_8006BD6C(1);
 }
 
 s32 func_801419F8(void) {
-    func_8004F984(0, D_8011ECF6, D_8011ECFA);
+    menu_check(0, D_8011ECF6, D_8011ECFA);
     func_8004FC10(0);
-    func_80050B54(0);
+    menu_bar_show(0);
     func_8006BD6C(1);
     func_8006BA40();
     if (D_800E6280.unk_F88 & 0x20) {
-        if (func_8004ECB4() != 0) {
+        if (check_end_k() != 0) {
             if (D_800E6280.unk_F90[0].unk_06 != 0) {
                 D_80122CDC = 0;
             } else if (D_800E6280.unk_F90[2].unk_06 != 0) {
@@ -258,7 +258,7 @@ s32 func_801419F8(void) {
                 return 0;
             }
             ((DisplayActor44 *)D_8011ECD0)->unk_03 &= 0xFF7F;
-            func_8004E9F4(1);
+            k_reset(1);
             func_8004284C();
         }
     }

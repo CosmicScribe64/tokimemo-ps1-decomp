@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_func_800AE0F0 /* matched with strcpy returning its destination: with the void prototype the switch on D_8015EB98 in func_80152384 takes v0, not v1 (main_api.h: void). T-17101 */
+#define MAIN_API_OVERRIDE_strcpy /* matched with strcpy returning its destination: with the void prototype the switch on D_8015EB98 in func_80152384 takes v0, not v1 (main_api.h: void). T-17101 */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-void *func_800AE0F0(void *dst, void *src);
+void *strcpy(void *dst, void *src);
 
 void func_80151FC0(void) {
     if (D_8015EB98 == 0x40000) {
@@ -34,13 +34,13 @@ void func_80152080(void) {
         func_801447E0();
         switch (D_8015EB98) {
         case 0x10000:
-            func_800AE0F0(D_8015E828, "　　　　　テール・パンチ　　　　　");
+            strcpy(D_8015E828, "　　　　　テール・パンチ　　　　　");
             break;
         case 0x20000:
-            func_800AE0F0(D_8015E828, "　　　　　暴れん坊頭突き　　　　　");
+            strcpy(D_8015E828, "　　　　　暴れん坊頭突き　　　　　");
             break;
         case 0x40000:
-            func_800AE0F0(D_8015E828, "　　　　クラッシュ・クロー　　　　");
+            strcpy(D_8015E828, "　　　　クラッシュ・クロー　　　　");
             break;
         }
         func_8014D11C(D_8015E850, D_800E6280.unk_0D4, "は", D_8015EBB0, "のダメージを受けた");
@@ -160,16 +160,16 @@ void func_80152384(void) {
     }
     for (i = 0; i < 4; i++) {
         if (sp64.v[i] == 1) {
-            func_800AE0F0(((u8 **)D_8015EB70)[count + 4], "おたから：");
+            strcpy(((u8 **)D_8015EB70)[count + 4], "おたから：");
             switch (D_8015EB98) {
             case 0x10000:
-                func_800AE100(((u8 **)D_8015EB70)[count + 4], spA0.s[i]);
+                strcat(((u8 **)D_8015EB70)[count + 4], spA0.s[i]);
                 break;
             case 0x20000:
-                func_800AE100(((u8 **)D_8015EB70)[count + 4], sp90.s[i]);
+                strcat(((u8 **)D_8015EB70)[count + 4], sp90.s[i]);
                 break;
             case 0x40000:
-                func_800AE100(((u8 **)D_8015EB70)[count + 4], sp80.s[i]);
+                strcat(((u8 **)D_8015EB70)[count + 4], sp80.s[i]);
                 break;
             }
             count += 1;

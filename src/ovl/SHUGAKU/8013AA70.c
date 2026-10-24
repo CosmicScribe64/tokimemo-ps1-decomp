@@ -15,13 +15,13 @@ void func_8013AAEC(void) {
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
-        func_800AE0F0(D_800CA23C, "京都");
+        strcpy(D_800CA23C, "京都");
         break;
     case 1:
-        func_800AE0F0(D_800CA23C, "沖縄");
+        strcpy(D_800CA23C, "沖縄");
         break;
     case 2:
-        func_800AE0F0(D_800CA23C, "北海道");
+        strcpy(D_800CA23C, "北海道");
         break;
     }
     D_800CA2DC += D_800CA2F4 * (1 - D_800CA2EC);
@@ -30,7 +30,7 @@ void func_8013AAEC(void) {
 
 s32 func_8013ABAC(void) {
     if (D_800E6280.unk_110D == 0) {
-        func_800573AC();
+        dec_bg_reset();
         func_800674B0();
         D_800E6280.unk_110D += 1;
     }
@@ -53,6 +53,6 @@ s32 func_8013ABAC(void) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 1;
     }
-    func_80084D3C();
+    check_para_limit();
     return func_80072B5C(1);
 }

@@ -115,15 +115,15 @@ void func_80143574(s32 arg0, s32 arg1, s32 arg2) {
     s32 pad; /* FAKE: unused local declared first puts p at sp+0x28 as in the original; real source unknown. T-6070 */
     u8 *p;
 
-    p = func_800490F0(0xC, D_8011ECA0);
+    p = GetWorkBase(0xC, D_8011ECA0);
     func_8009F0B8(p);
-    func_8009EF84(p, 0);
+    SetSemiTrans(p, 0);
     /* FAKE: p[4] and p[5] on one source line give the original's store order 5, 4, 6 (line-based scheduling). T-6070 */
     p[4] = (arg2 >> 16) & 0xFF; p[5] = (arg2 >> 8) & 0xFF;
     p[6] = arg2 & 0xFF;
     *(s16 *)(p + 8) = D_800E6280.unk_014[D_8011ECA0] + arg0;
     *(s16 *)(p + 0xA) = D_800E6280.unk_018[D_8011ECA0] + arg1;
-    func_8009EED0((D_8011ECA0 << 10) + 0x3C + D_800E8CA0, p);
+    AddPrim((D_8011ECA0 << 10) + 0x3C + D_800E8CA0, p);
 }
 
 void func_80143644(void) {
@@ -162,10 +162,10 @@ void func_80143730(s32 arg0, s32 arg1) {
 
     x = (arg1 & 0xF) << 6;
     y = (arg1 & 0x10) << 4;
-    func_8004435C(x, y, 0x40, 0x80, arg0);
-    func_8004435C(x + 0x40, y, 0x40, 0x80, arg0 + 0x4000);
-    func_8004435C(x, y + 0x80, 0x40, 0x80, arg0 + 0x8000);
-    func_8004435C(x + 0x40, y + 0x80, 0x40, 0x80, arg0 + 0xC000);
+    LoadSquare(x, y, 0x40, 0x80, arg0);
+    LoadSquare(x + 0x40, y, 0x40, 0x80, arg0 + 0x4000);
+    LoadSquare(x, y + 0x80, 0x40, 0x80, arg0 + 0x8000);
+    LoadSquare(x + 0x40, y + 0x80, 0x40, 0x80, arg0 + 0xC000);
 }
 
 void func_80143814(s32 arg0, s32 arg1) {
@@ -174,10 +174,10 @@ void func_80143814(s32 arg0, s32 arg1) {
 
     x = (arg1 & 0xF) << 6;
     y = (arg1 & 0x10) << 4;
-    func_8004435C(x, y, 0x20, 0x80, arg0);
-    func_8004435C(x + 0x20, y, 0x20, 0x80, arg0 + 0x2000);
-    func_8004435C(x, y + 0x80, 0x20, 0x80, arg0 + 0x4000);
-    func_8004435C(x + 0x20, y + 0x80, 0x20, 0x80, arg0 + 0x6000);
+    LoadSquare(x, y, 0x20, 0x80, arg0);
+    LoadSquare(x + 0x20, y, 0x20, 0x80, arg0 + 0x2000);
+    LoadSquare(x, y + 0x80, 0x20, 0x80, arg0 + 0x4000);
+    LoadSquare(x + 0x20, y + 0x80, 0x20, 0x80, arg0 + 0x6000);
 }
 
 void func_801438F0(s32 arg0, s32 arg1, u8 *arg2) {
@@ -213,7 +213,7 @@ void func_8014394C(void) {
     D_8012278D = 0xFF;
     D_8012278E = 0xFF;
     func_8009AD70(2, &D_80122780);
-    func_8009B310(0x800, 0x800, 0x800);
+    GsSetAmbient(0x800, 0x800, 0x800);
     func_8009B340(0);
 }
 

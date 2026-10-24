@@ -16,7 +16,7 @@ void func_80132D88(void) {
 }
 
 void func_80132DB0(void) {
-    func_800AE0F0(D_800CA1DC, "正月");
+    strcpy(D_800CA1DC, "正月");
     func_8004284C();
 }
 
@@ -46,7 +46,7 @@ void func_80132E8C(void) {
     } else if (D_800E6280.unk_F5F == 0) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 

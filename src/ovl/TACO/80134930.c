@@ -138,17 +138,17 @@ void func_80134EBC(void) {
     D_8015EDE8 = 0;
     D_800E6280.unk_038 = 0;
     func_80059048();
-    func_800438DC(1, 1);
+    draw2d3d(1, 1);
     func_80048DAC(1);
-    func_8004E9F4(0);
-    func_800443F0(0, 0x1EF, 0x100, 1, &D_800E6280.unk_163C[0]);
+    k_reset(0);
+    StoreSquare(0, 0x1EF, 0x100, 1, &D_800E6280.unk_163C[0]);
     for (i = 56; i < 72; i++) {
         D_800E6280.unk_163C[i] = 0;
     }
     for (i = 0; i < 0x80; i++) {
         D_800E6280.unk_163C[128 + i] = 0;
     }
-    func_80043914(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
+    load_palette(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
     func_80134FB8();
     func_80134930();
     func_8004284C();
@@ -179,8 +179,8 @@ void func_8013506C(void) {
 
     for (i = 0; i < 0x80; i++) {
         if (D_800E6280.unk_163C[128 + i] == 0) {
-            x = func_800AE0D0() % 320;
-            y = func_800AE0D0() % 240;
+            x = rand() % 320;
+            y = rand() % 240;
             D_800E6280.unk_163C[128 + i] = (x << 16) + y;
             break;
         }
@@ -202,14 +202,14 @@ s32 func_8013515C(void) {
     n = 0;
     for (i = 56; i < 72; i++) {
         if (D_800E6280.unk_163C[i] == 0) {
-            if ((func_800AE0D0() & 0xFF) < 0x7F && n == 0) {
+            if ((rand() & 0xFF) < 0x7F && n == 0) {
                 D_800E6280.unk_163C[i] = ((s32 *)D_800E6280.unk_1A6C)[i];
             } else {
                 n++;
             }
         }
     }
-    func_80043914(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
+    load_palette(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
     return n;
 }
 

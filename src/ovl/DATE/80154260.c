@@ -102,13 +102,13 @@ void func_801546BC(void) {
     D_8015E20C = D_8015E028;
     D_8015E210 = D_8015E164;
     func_80154310();
-    func_80043914(D_8015F55C, 0x11, 1, 2, 0);
+    load_palette(D_8015F55C, 0x11, 1, 2, 0);
     func_80084E90(D_8015F560, D_8015F564, D_8015F568, D_8015F56C, D_8015F570, D_8015F574);
     func_800850D4(D_8015F550, D_8015F554, D_8015F54C, (s32) D_8015F558);
     D_800E6280.unk_1BC[1].unk_02 += 1;
     D_800E6280.unk_1BC[1].unk_06 += 2;
     D_800E6280.unk_1BC[1].unk_0A -= 0x14;
-    func_80084D3C();
+    check_para_limit();
     D_800CA21C[0] = 2;
     D_800CA21C[2] = 2;
     D_800CA21C[1] = 2;
@@ -129,7 +129,7 @@ void func_8015485C(void) {
     D_8015E20C = D_8015E02C;
     D_8015E210 = D_8015E168;
     func_801543C0();
-    func_80043914(D_8015F588, 0x11, 1, 2, 0);
+    load_palette(D_8015F588, 0x11, 1, 2, 0);
     func_80084E90(D_8015F58C, D_8015F590, D_8015F594, D_8015F598, D_8015F59C, D_8015F5A0);
     func_800850D4(D_8015F57C, D_8015F580, D_8015F578, D_8015F584);
     D_80120688 |= 0x80000000;
@@ -137,7 +137,7 @@ void func_8015485C(void) {
     D_800E6280.unk_1BC[1].unk_02 += 2;
     D_800E6280.unk_1BC[1].unk_06 += 2;
     D_800E6280.unk_1BC[1].unk_0A -= 0x14;
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
@@ -145,14 +145,14 @@ void func_80154990(void) {
     D_8015E208 = D_8015DEF4;
     D_8015E20C = D_8015E030;
     D_8015E210 = D_8015E16C;
-    func_80043914(D_8015F5B4, 0x11, 1, 2, 0);
-    func_80043914(D_8015F5B4, 0x12, 1, 2, 1);
+    load_palette(D_8015F5B4, 0x11, 1, 2, 0);
+    load_palette(D_8015F5B4, 0x12, 1, 2, 1);
     func_80084E90(D_8015F5B8, D_8015F5BC, D_8015F5C0, D_8015F5C4, D_8015F5C8, D_8015F5CC);
     func_800850D4(D_8015F5A8, D_8015F5AC, D_8015F5A4, (s32) D_8015F5B0);
     D_800E6280.unk_1BC[1].unk_02 += 3;
     D_800E6280.unk_1BC[1].unk_06 += 2;
     D_800E6280.unk_1BC[1].unk_0A -= 0x14;
-    func_80084D3C();
+    check_para_limit();
     D_8015F5D0 = 0;
     func_8004284C();
 }
@@ -244,12 +244,12 @@ void func_80154D38(void) {
     D_800E6280.unk_1BC[1].unk_02 -= 2;
     D_800E6280.unk_1BC[1].unk_06 -= 1;
     D_800E6280.unk_1BC[1].unk_0A += 0x14;
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
 void func_80154E14(void) {
-    func_800AE0F0(D_800CA1DC, "絶叫マシーンビビール");
+    strcpy(D_800CA1DC, "絶叫マシーンビビール");
     func_8004284C();
 }
 

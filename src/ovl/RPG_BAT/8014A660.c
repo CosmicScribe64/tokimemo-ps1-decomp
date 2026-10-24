@@ -4,7 +4,7 @@
 void func_8014A660(void) {
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　　　水竜破　　　　　　　");
+        strcpy(D_8015E74C, "　　　　　　　水竜破　　　　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_80144480();
         func_8013EEAC(D_8015EBAC);

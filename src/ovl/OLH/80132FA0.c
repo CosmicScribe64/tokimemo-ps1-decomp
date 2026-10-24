@@ -43,21 +43,21 @@ void func_8013306C(void) {
     s16 d[8];
     s32 pady[1];
 
-    func_8004EAAC();
-    func_8004E788(-0x50, -0x40, 0xF, (s32)"メモリーカード", 0);
+    k_sub_reset();
+    set_kanji_string(-0x50, -0x40, 0xF, (s32)"メモリーカード", 0);
     for (i = 0; i < 8; i++) {
         a[i] = -0x60;
         b[i] = i * 0x10 - 0x32;
         c[i] = 0xE8;
         d[i] = 0x10;
         if (i < 4) {
-            func_8004E788(a[i], b[i], 0xF, (&D_8013AF20)[i], 0);
+            set_kanji_string(a[i], b[i], 0xF, (&D_8013AF20)[i], 0);
         }
     }
     c[4] = c[5] = c[6] = 0;
-    r = func_8004E788(a[7], b[7], 0xF, D_8013AF3C, 0);
-    func_8004F870(0, 8, a, b, c, d);
-    func_8004E884(r);
+    r = set_kanji_string(a[7], b[7], 0xF, D_8013AF3C, 0);
+    menu_set(0, 8, a, b, c, d);
+    k_disp_start(r);
     func_8004284C();
 }
 
@@ -103,11 +103,11 @@ void func_801331C8(void) {
 s32 func_801332F8(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013AF20, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　ときめきメモリアルでは、１ブロックに", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "一つのアルバムを作成します。", 0);
-        func_8004E788(-0x88, -0x10, 0xF, "　アルバムの最大数は、１４です。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013AF20, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　ときめきメモリアルでは、１ブロックに", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "一つのアルバムを作成します。", 0);
+        set_kanji_string(-0x88, -0x10, 0xF, "　アルバムの最大数は、１４です。", 0);
         D_800E6280.unk_110D += 1;
         return;
     case 1:
@@ -122,13 +122,13 @@ s32 func_801332F8(void) {
 s32 func_801333E4(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013AF24, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　アルバムとは別に、システムファイルを", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "作成すると、オプションでおまけが使用で", 0);
-        func_8004E788(-0x88, -0x10, 0xF, "きるようになります。", 0);
-        func_8004E788(-0x88, 0, 0xF, "　システムファイルも、１ブロックを必要", 0);
-        func_8004E788(-0x88, 0x10, 0xF, "とします。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013AF24, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　アルバムとは別に、システムファイルを", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "作成すると、オプションでおまけが使用で", 0);
+        set_kanji_string(-0x88, -0x10, 0xF, "きるようになります。", 0);
+        set_kanji_string(-0x88, 0, 0xF, "　システムファイルも、１ブロックを必要", 0);
+        set_kanji_string(-0x88, 0x10, 0xF, "とします。", 0);
         D_800E6280.unk_110D += 1;
         return;
     case 1:
@@ -143,13 +143,13 @@ s32 func_801333E4(void) {
 s32 func_80133508(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013AF28, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　システムファイルがある場合、メモリー", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "カードアイコンが、", 0);
-        func_8004E788(-0x88, -0x10, 0xF, "　　『セーブ中』", 0);
-        func_8004E788(-0x88, 0, 0xF, "と表示されている間は、絶対にメモリーカ", 0);
-        func_8004E788(-0x88, 0x10, 0xF, "ードの抜き差しをしないでください。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013AF28, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　システムファイルがある場合、メモリー", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "カードアイコンが、", 0);
+        set_kanji_string(-0x88, -0x10, 0xF, "　　『セーブ中』", 0);
+        set_kanji_string(-0x88, 0, 0xF, "と表示されている間は、絶対にメモリーカ", 0);
+        set_kanji_string(-0x88, 0x10, 0xF, "ードの抜き差しをしないでください。", 0);
         D_800E6280.unk_110D += 1;
         return;
     case 1:
@@ -164,14 +164,14 @@ s32 func_80133508(void) {
 s32 func_8013362C(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013AF2C, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "『カードに空きがありません』", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "とのメッセージが表示された場合は、メモ", 0);
-        func_8004E788(-0x88, -0x10, 0xF, "リーカードの他のデータを消去してから、", 0);
-        func_8004E788(-0x88, 0, 0xF, "セーブして下さい。", 0);
-        func_8004E788(-0x88, 0x10, 0xF, "　ゲーム中は、ときめきメモリアル以外の", 0);
-        func_8004E788(-0x88, 0x20, 0xF, "データの消去はできません。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013AF2C, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "『カードに空きがありません』", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "とのメッセージが表示された場合は、メモ", 0);
+        set_kanji_string(-0x88, -0x10, 0xF, "リーカードの他のデータを消去してから、", 0);
+        set_kanji_string(-0x88, 0, 0xF, "セーブして下さい。", 0);
+        set_kanji_string(-0x88, 0x10, 0xF, "　ゲーム中は、ときめきメモリアル以外の", 0);
+        set_kanji_string(-0x88, 0x20, 0xF, "データの消去はできません。", 0);
         D_800E6280.unk_110D += 1;
         return;
     case 1:
@@ -186,15 +186,15 @@ s32 func_8013362C(void) {
 s32 func_8013376C(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013AF30, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "あ", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "い", 0);
-        func_8004E788(-0x88, -0x10, 0xF, "う", 0);
-        func_8004E788(-0x88, 0, 0xF, "え", 0);
-        func_8004E788(-0x88, 0x10, 0xF, "お", 0);
-        func_8004E788(-0x88, 0x20, 0xF, "か", 0);
-        func_8004E788(-0x88, 0x30, 0xF, "き", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013AF30, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "あ", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "い", 0);
+        set_kanji_string(-0x88, -0x10, 0xF, "う", 0);
+        set_kanji_string(-0x88, 0, 0xF, "え", 0);
+        set_kanji_string(-0x88, 0x10, 0xF, "お", 0);
+        set_kanji_string(-0x88, 0x20, 0xF, "か", 0);
+        set_kanji_string(-0x88, 0x30, 0xF, "き", 0);
         D_800E6280.unk_110D += 1;
         return;
     case 1:
@@ -209,15 +209,15 @@ s32 func_8013376C(void) {
 s32 func_801338C8(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013AF34, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "あ", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "い", 0);
-        func_8004E788(-0x88, 0, 0xF, "う", 0);
-        func_8004E788(-0x88, 0x10, 0xF, "え", 0);
-        func_8004E788(-0x88, 0x20, 0xF, "お", 0);
-        func_8004E788(-0x88, 0x30, 0xF, "か", 0);
-        func_8004E788(-0x88, 0x40, 0xF, "き", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013AF34, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "あ", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "い", 0);
+        set_kanji_string(-0x88, 0, 0xF, "う", 0);
+        set_kanji_string(-0x88, 0x10, 0xF, "え", 0);
+        set_kanji_string(-0x88, 0x20, 0xF, "お", 0);
+        set_kanji_string(-0x88, 0x30, 0xF, "か", 0);
+        set_kanji_string(-0x88, 0x40, 0xF, "き", 0);
         D_800E6280.unk_110D += 1;
         return;
     case 1:
@@ -232,15 +232,15 @@ s32 func_801338C8(void) {
 s32 func_80133A24(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013AF38, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "あ", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "い", 0);
-        func_8004E788(-0x88, 0, 0xF, "う", 0);
-        func_8004E788(-0x88, 0x10, 0xF, "え", 0);
-        func_8004E788(-0x88, 0x20, 0xF, "お", 0);
-        func_8004E788(-0x88, 0x30, 0xF, "か", 0);
-        func_8004E788(-0x88, 0x40, 0xF, "き", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013AF38, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "あ", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "い", 0);
+        set_kanji_string(-0x88, 0, 0xF, "う", 0);
+        set_kanji_string(-0x88, 0x10, 0xF, "え", 0);
+        set_kanji_string(-0x88, 0x20, 0xF, "お", 0);
+        set_kanji_string(-0x88, 0x30, 0xF, "か", 0);
+        set_kanji_string(-0x88, 0x40, 0xF, "き", 0);
         D_800E6280.unk_110D += 1;
         return;
     case 1:

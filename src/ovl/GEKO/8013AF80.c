@@ -122,16 +122,16 @@ void func_8013B3C0(void) {
     s32 pad; /* FAKE: unused scalar reproduces RECT home at +0x2C; original local unknown. T-9770 */
     RECT r;
 
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
     func_8006BD6C(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8008585C();
-    func_8004E9F4(1);
+    k_reset(1);
     r.x = 0x140;
     r.y = 0x100;
     r.w = 0x140;
@@ -145,11 +145,11 @@ void func_8013B3C0(void) {
     /* FAKE: scalar byte store then member read preserves argument scheduling; sibling func_8013CC20 uses the same idiom. T-9770 */
     *(u8 *)&D_800E6280.unk_F5F = 2;
     func_800847B8(D_800E6280.unk_F5F);
-    func_8007C740();
+    addr_init_bustup();
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     func_80137990();
     D_80146274 = D_80145F10;
@@ -160,21 +160,21 @@ void func_8013B3C0(void) {
 
 void func_8013B510(void) {
     D_800E6280.unk_F5F = 2;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     func_800847B8(D_800E6280.unk_F5F);
     func_8008585C();
@@ -182,11 +182,11 @@ void func_8013B510(void) {
     D_80146274 = D_80145EF8;
     D_80146278 = D_80146034;
     D_8014627C = D_80146170;
-    func_800AE0F0(D_800CA19C, "屋上");
+    strcpy(D_800CA19C, "屋上");
     D_8014662C = 0;
     D_800E6280.unk_1BC[2].unk_02 += 1;
     D_800E6280.unk_1BC[2].unk_06 += 2;
-    func_80084D3C();
+    check_para_limit();
     D_800CA368 = 0xE;
     func_8004284C();
 }
@@ -225,19 +225,19 @@ void func_8013B7D0(void) {
     D_800E6280.unk_040 = 0x1C;
     D_800E6280.unk_041 = 5;
     D_800E6280.unk_F5F = 2;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     func_800847B8(D_800E6280.unk_F5F);
     func_8008585C();
@@ -245,7 +245,7 @@ void func_8013B7D0(void) {
     D_80146274 = D_80145F10;
     D_80146278 = D_8014604C;
     D_8014627C = D_80146188;
-    func_800AE0F0(D_800CA19C, "近所の公園");
+    strcpy(D_800CA19C, "近所の公園");
     D_800CA368 = 0x14;
     func_8004284C();
 }

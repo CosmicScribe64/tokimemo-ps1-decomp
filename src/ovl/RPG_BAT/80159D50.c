@@ -4,7 +4,7 @@
 s32 func_80159D50(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E904, "古式「お父様ーーっ！！");
+        strcpy(D_8015E904, "古式「お父様ーーっ！！");
         func_8014B738(D_8015E9CC, 1, 0xAA);
         D_8015ED8C[0] += 1;
         return;
@@ -25,7 +25,7 @@ s32 func_80159D50(void) {
 void func_80159E28(void) {
     switch (D_8015EE04) {
     case 0:
-        func_800AE0F0(D_8015E904, "　　　　　　おやじの怒り　　　　　　");
+        strcpy(D_8015E904, "　　　　　　おやじの怒り　　　　　　");
         func_8014B738(D_8015E9CC, 1, 0x5A);
         func_80144480();
         func_8013EFD0(D_8015EBAC);

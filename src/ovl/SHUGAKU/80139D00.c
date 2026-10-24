@@ -38,16 +38,16 @@ void func_80139E8C(void) {
     u8 var_a0;
     RECT rect;
 
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
     func_8006BD6C(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8008585C();
-    func_8004E9F4(1);
+    k_reset(1);
     rect.x = 0x140;
     rect.y = 0x1A0;
     rect.w = 0x140;
@@ -64,11 +64,11 @@ void func_80139E8C(void) {
     }
     D_800E6280.unk_F5F = var_a0;
     func_800847B8(var_a0);
-    func_8007C740();
+    addr_init_bustup();
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_80122CE0 = 0xFF;
     D_800CA2F4 = 1;
@@ -150,8 +150,8 @@ void func_8013A2D8(void) {
 
 void func_8013A314(void) {
     if (D_80122CDC == 0) {
-        func_8007ED84(0x4225);
-        func_800AE0F0(D_800CA19C, "ホテル・ロビー");
+        bg_read_sub2(0x4225);
+        strcpy(D_800CA19C, "ホテル・ロビー");
     } else {
         func_8004284C();
         func_8004284C();
@@ -180,16 +180,16 @@ void func_8013A42C(void) {
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
-        func_8007ED84(0x4267);
-        func_800AE0F0(D_800CA19C, "土産屋");
+        bg_read_sub2(0x4267);
+        strcpy(D_800CA19C, "土産屋");
         break;
     case 1:
-        func_8007ED84(0x4255);
-        func_800AE0F0(D_800CA19C, "浜辺");
+        bg_read_sub2(0x4255);
+        strcpy(D_800CA19C, "浜辺");
         break;
     default:
-        func_8007ED84(0x427B);
-        func_800AE0F0(D_800CA19C, "クラーク像前");
+        bg_read_sub2(0x427B);
+        strcpy(D_800CA19C, "クラーク像前");
         break;
     }
     if (D_800CA2EC == 0) {
@@ -203,16 +203,16 @@ void func_8013A4F8(void) {
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
-        func_8007ED84(0x4267);
-        func_800AE0F0(D_800CA19C, "土産屋");
+        bg_read_sub2(0x4267);
+        strcpy(D_800CA19C, "土産屋");
         break;
     case 1:
-        func_8007ED84(0x4255);
-        func_800AE0F0(D_800CA19C, "浜辺");
+        bg_read_sub2(0x4255);
+        strcpy(D_800CA19C, "浜辺");
         break;
     default:
-        func_8007ED84(0x427B);
-        func_800AE0F0(D_800CA19C, "クラーク像前");
+        bg_read_sub2(0x427B);
+        strcpy(D_800CA19C, "クラーク像前");
         break;
     }
     func_8004284C();
@@ -231,8 +231,8 @@ void func_8013A59C(void) {
     D_800E6280.unk_720 = D_800E6280.unk_1108;
     D_800E6280.unk_721 = D_800E6280.unk_1109;
     D_800E6280.unk_722 = 0x32;
-    func_8006492C(0);
-    func_8004E9F4(0);
+    hizuke_disp_switch(0);
+    k_reset(0);
     main_state_set(0x81);
 }
 
@@ -244,7 +244,7 @@ void func_8013A648(void) {
     } else {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 5;
     }
-    func_80084D3C();
+    check_para_limit();
     if (D_800CA2EC != 0) {
         if (D_80122CDC == 2) {
             D_800E6280.unk_F5F = 0xD;
@@ -311,7 +311,7 @@ void func_8013A918(void) {
 }
 
 s32 func_8013A980(void) {
-    func_8007E99C();
+    normal_date_bggirl_fadeout();
     if (D_800CA2CC == 1) {
         D_8012069B = D_800B593C;
         if ((u8) D_800B593C < 8U) {
@@ -323,7 +323,7 @@ s32 func_8013A980(void) {
 void func_8013A9E0(void) {
     u32 temp_t8;
 
-    temp_t8 = (u8)func_80051A68(4) & 0x7F;
+    temp_t8 = (u8)get_g_zyotai_s(4) & 0x7F;
     if (D_800E6280.unk_F5F != 4 || temp_t8 >= 2U) {
         func_8004284C();
         return;

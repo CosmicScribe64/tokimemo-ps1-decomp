@@ -9,7 +9,7 @@ void func_801321D0(void) {
     }
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　ナイアガラダンク　　　　　");
+        strcpy(D_8015E74C, "　　　　　ナイアガラダンク　　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_80144480();
         func_8013EEAC(D_8015EBAC);
@@ -103,7 +103,7 @@ void func_80132348(void) {
         break;
     case 6:
         func_801328C4(p->rect.unk_10, p->rect.unk_14);
-        func_8013E97C(0x34, ((s32) ((0xF0 - p->rect.unk_08) * D_8015EDB0.unk_08) / 1000) + p->rect.unk_08, (p->rect.unk_0C + ((s32) ((0x58 - p->rect.unk_0C) * D_8015EDB0.unk_08) / 1000)) - (func_800A0070((s32) (D_8015EDB0.unk_08 << 0xB) / 1000) >> 7));
+        func_8013E97C(0x34, ((s32) ((0xF0 - p->rect.unk_08) * D_8015EDB0.unk_08) / 1000) + p->rect.unk_08, (p->rect.unk_0C + ((s32) ((0x58 - p->rect.unk_0C) * D_8015EDB0.unk_08) / 1000)) - (rsin((s32) (D_8015EDB0.unk_08 << 0xB) / 1000) >> 7));
         D_8015EDB0.unk_08 += 0x14;
         func_8013E810(0x34, 8, 1, 1);
         if (D_8015EDB0.unk_08 >= 0x3E9) {
@@ -121,7 +121,7 @@ void func_801328C4(s32 arg0, s32 arg1) {
 
     dirs = D_8015E4F0;
     for (i = 0; i < 8; i++) {
-        func_8013E97C(i + 0x28, (dirs.v[i * 2] * D_8015EDB0.unk_04) / 1000 + arg0, arg1 + (dirs.v[i * 2 + 1] * D_8015EDB0.unk_04) / 1000 - (func_800A0070((D_8015EDB0.unk_04 << 11) / 1000) >> 7));
+        func_8013E97C(i + 0x28, (dirs.v[i * 2] * D_8015EDB0.unk_04) / 1000 + arg0, arg1 + (dirs.v[i * 2 + 1] * D_8015EDB0.unk_04) / 1000 - (rsin((D_8015EDB0.unk_04 << 11) / 1000) >> 7));
     }
     D_8015EDB0.unk_04 += 0x19;
     if (D_8015EDB0.unk_04 > 1000) {

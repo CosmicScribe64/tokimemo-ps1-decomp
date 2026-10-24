@@ -38,9 +38,9 @@ void func_80132060(void) {
         break;
     }
     func_80066C08(1);
-    func_800646CC();
-    func_80064F48();
-    func_80064DEC();
+    parameter_show();
+    message_window_show();
+    hizuke_show();
     func_80067870();
     func_80066334();
     func_8006BA40();
@@ -48,16 +48,16 @@ void func_80132060(void) {
 
 void func_80132138(void) {
     if (*(u8 *)&D_800E6280.unk_110D == 0) {
-        func_80051010("Ｔｒｒｒｒ…", 0, 0x2F);
+        sndi("Ｔｒｒｒｒ…", 0, 0x2F);
         func_80044750(0x508);
-        func_8004EAD4(0);
-        D_801230D0 = (func_800AE0D0() & 3) + 1;
+        k_sub_disp_start(0);
+        D_801230D0 = (rand() & 3) + 1;
         *(u8 *)&D_800E6280.unk_110D = 1;
     } else if (*(u8 *)&D_800E6280.unk_110D == 1) {
         if ((D_800E6280.unk_1104.u & 0x7F) == 1) {
-            func_8004EAAC();
-            func_80051010("Ｔｒｒｒｒ…", 0, 0x2F);
-            func_8004EAD4(0);
+            k_sub_reset();
+            sndi("Ｔｒｒｒｒ…", 0, 0x2F);
+            k_sub_disp_start(0);
             if (D_801230D0 != 0) {
                 D_801230D0 -= 1;
             }
@@ -71,9 +71,9 @@ void func_80132138(void) {
             func_8004284C();
         }
     }
-    func_80050B54(0);
-    func_80069128();
-    func_8004EC24();
+    menu_bar_show(0);
+    cal_base_show();
+    k_disp_inc();
 }
 
 void func_8013226C(void) {
@@ -111,8 +111,8 @@ void func_8013226C(void) {
         k_sub_reset();
         gnsx(D_800E6280.unk_0D4);
         sndi("もしもし、", 0, 0xF);
-        func_800AE0F0(sp3C, D_800E6280.unk_0D4);
-        func_800AE100(sp3C, "ですけど。");
+        strcpy(sp3C, D_800E6280.unk_0D4);
+        strcat(sp3C, "ですけど。");
         sndi(sp3C, 1, 0xF);
         k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
@@ -123,10 +123,10 @@ void func_8013226C(void) {
     case 0x5:
         k_sub_reset();
         gnsx(D_800B3628);
-        func_800AE0F0(sp3C, "おっ、");
+        strcpy(sp3C, "おっ、");
         get_p_name(sp2C, 0xD);
-        func_800AE100(sp3C, sp2C);
-        func_800AE100(sp3C, "か。");
+        strcat(sp3C, sp2C);
+        strcat(sp3C, "か。");
         sndi(sp3C, 0, 0xD);
         sndi("良くかけて来てくれたな。", 1, 0xD);
         func_80052060((s32) &D_80144E3C, (s32) &D_80144E44, 0, 0xD);
@@ -224,9 +224,9 @@ void func_8013226C(void) {
     case 0x1A:
         k_sub_reset();
         gnsx(D_800B3628);
-        func_800AE0F0(sp3C, "なんだ、");
-        func_800AE100(sp3C, D_800E6280.unk_0D4);
-        func_800AE100(sp3C, "か。");
+        strcpy(sp3C, "なんだ、");
+        strcat(sp3C, D_800E6280.unk_0D4);
+        strcat(sp3C, "か。");
         sndi(sp3C, 0, 0xD);
         func_80052060(0x1E000056, 0x10000059, -1, 0xD);
         k_sub_disp_start(0);
@@ -335,8 +335,8 @@ void func_8013226C(void) {
         k_sub_reset();
         gnsx(D_800E6280.unk_0D4);
         sndi("もしもし、", 0, 0xF);
-        func_800AE0F0(sp3C, D_800E6280.unk_0D4);
-        func_800AE100(sp3C, "ですけど。");
+        strcpy(sp3C, D_800E6280.unk_0D4);
+        strcat(sp3C, "ですけど。");
         sndi(sp3C, 1, 0xF);
         k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
@@ -347,9 +347,9 @@ void func_8013226C(void) {
     case 0x34:
         k_sub_reset();
         gnsx(D_800B3628);
-        func_800AE0F0(sp3C, "なんだ、");
-        func_800AE100(sp3C, D_800E6280.unk_0D4);
-        func_800AE100(sp3C, "か。");
+        strcpy(sp3C, "なんだ、");
+        strcat(sp3C, D_800E6280.unk_0D4);
+        strcat(sp3C, "か。");
         sndi(sp3C, 0, 0xD);
         func_80052060(0x1E000056, 0x10000059, -1, 0xD);
         k_sub_disp_start(0);
@@ -498,7 +498,7 @@ void func_80132FC4(void) {
         break;
     case 0x7:
         k_sub_reset();
-        func_80051BDC(1, &D_801230D8);
+        menu_girl_taku_set(1, &D_801230D8);
         k_disp_start(D_801230D8 + 1);
         D_800E6280.unk_110D += 1;
         break;
@@ -524,15 +524,15 @@ void func_80132FC4(void) {
         k_sub_reset();
         gnsx(D_800B3628);
         if (D_800E6280.unk_1094 == 0xB) {
-            func_800AE0F0(sp3C, D_800B3624);
-            func_800AE100(sp3C, "、");
-            func_800AE100(sp3C, D_800B3624);
+            strcpy(sp3C, D_800B3624);
+            strcat(sp3C, "、");
+            strcat(sp3C, D_800B3624);
         } else {
-            func_800AE0F0(sp3C, girl_short_name_table[D_800E6280.unk_1094]);
-            func_800AE100(sp3C, "、");
-            func_800AE100(sp3C, girl_short_name_table[D_800E6280.unk_1094]);
+            strcpy(sp3C, girl_short_name_table[D_800E6280.unk_1094]);
+            strcat(sp3C, "、");
+            strcat(sp3C, girl_short_name_table[D_800E6280.unk_1094]);
         }
-        func_800AE100(sp3C, "‥‥と。");
+        strcat(sp3C, "‥‥と。");
         func_80052060((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) D_800E6280.unk_1094, 0xD);
         sndi(sp3C, 0, 0xD);
         k_sub_disp_start(0);
@@ -752,7 +752,7 @@ void func_80133D54(void) {
         break;
     case 5:
         k_sub_reset();
-        func_80051BDC(1, &D_801230D8);
+        menu_girl_taku_set(1, &D_801230D8);
         k_disp_start(D_801230D8 + 1);
         D_800E6280.unk_110D += 1;
         break;
@@ -776,8 +776,8 @@ void func_80133D54(void) {
         } else {
             get_g_name(sp3C, D_800E6280.unk_1094);
         }
-        func_800AE0F0(sp5C, sp3C);
-        func_800AE100(sp5C, "の");
+        strcpy(sp5C, sp3C);
+        strcat(sp5C, "の");
         sndi(sp5C, 0, 0xF);
         sndi("ことについて", 1, 0xF);
         sndi("知りたいんだけど。", 2, 0xF);
@@ -809,15 +809,15 @@ void func_80133D54(void) {
         k_sub_reset();
         gnsx(D_800B3628);
         if (D_800E6280.unk_1094 == 0xB) {
-            func_800AE0F0(sp5C, D_800B3624);
-            func_800AE100(sp5C, "、");
-            func_800AE100(sp5C, D_800B3624);
+            strcpy(sp5C, D_800B3624);
+            strcat(sp5C, "、");
+            strcat(sp5C, D_800B3624);
         } else {
-            func_800AE0F0(sp5C, girl_short_name_table[D_800E6280.unk_1094]);
-            func_800AE100(sp5C, "、");
-            func_800AE100(sp5C, girl_short_name_table[D_800E6280.unk_1094]);
+            strcpy(sp5C, girl_short_name_table[D_800E6280.unk_1094]);
+            strcat(sp5C, "、");
+            strcat(sp5C, girl_short_name_table[D_800E6280.unk_1094]);
         }
-        func_800AE100(sp5C, "‥‥と。");
+        strcat(sp5C, "‥‥と。");
         sndi(sp5C, 0, 0xD);
         func_80052060((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) D_800E6280.unk_1094, 0xD);
         k_sub_disp_start(0);
@@ -889,9 +889,9 @@ void func_80133D54(void) {
     var_s1 = 0x61;
     do {
         if (var_s0->unk_18 == 0x60) {
-            var_s0->unk_1C = (s16) ((func_800A0070((D_800E6280.unk_1104.w + var_s1) << 6) / 3) + 0xAAA);
-            var_s0->unk_1A = (s16) ((func_800A0070((D_800E6280.unk_1104.w + var_s1) * 0x5A) / 4) + 0xC00);
-            var_s0->unk_30 = (s32) (func_800A0070(D_800E6280.unk_1104.w << 6) * 4);
+            var_s0->unk_1C = (s16) ((rsin((D_800E6280.unk_1104.w + var_s1) << 6) / 3) + 0xAAA);
+            var_s0->unk_1A = (s16) ((rsin((D_800E6280.unk_1104.w + var_s1) * 0x5A) / 4) + 0xC00);
+            var_s0->unk_30 = (s32) (rsin(D_800E6280.unk_1104.w << 6) * 4);
             var_s0->unk_03 = (u8) (var_s0->unk_03 | 0x10);
         }
         var_s1 += 1;
@@ -901,7 +901,7 @@ void func_80133D54(void) {
         cal_base_show();
         return;
     }
-    func_80069178();
+    appraisal_base_show();
 }
 
 void func_801345C4(void) {
@@ -1061,7 +1061,7 @@ void func_801345C4(void) {
         cal_base_show();
         return;
     }
-    func_80069178();
+    appraisal_base_show();
 }
 
 void func_80134BE0(void) {
@@ -1129,19 +1129,19 @@ void func_80134BE0(void) {
         break;
     }
     func_80066C08(1);
-    func_800646CC();
-    func_80064F48();
-    func_80064DEC();
+    parameter_show();
+    message_window_show();
+    hizuke_show();
     func_80067870();
     func_8006BA40();
 }
 
 void func_80134DA0(void) {
     if (*(u8 *)&D_800E6280.unk_110D == 0) {
-        func_80051010("Ｔｒｒｒｒ…", 0, 0x2F);
+        sndi("Ｔｒｒｒｒ…", 0, 0x2F);
         func_80044750(0x508);
-        func_8004EAD4(0);
-        D_801230D0 = (func_800AE0D0() & 3) + 1;
+        k_sub_disp_start(0);
+        D_801230D0 = (rand() & 3) + 1;
         *(u8 *)&D_800E6280.unk_110D = 1;
         if (*(u8 *)&D_800E6280.unk_F5F == 0xB) {
             D_801405E4 = 0xC;
@@ -1150,9 +1150,9 @@ void func_80134DA0(void) {
         }
     } else if (*(u8 *)&D_800E6280.unk_110D == 1) {
         if ((D_800E6280.unk_1104.u & 0x7F) == 1) {
-            func_8004EAAC();
-            func_80051010("Ｔｒｒｒｒ…", 0, 0x2F);
-            func_8004EAD4(0);
+            k_sub_reset();
+            sndi("Ｔｒｒｒｒ…", 0, 0x2F);
+            k_sub_disp_start(0);
             if (D_801230D0 > 0) {
                 func_80044750(0x508);
             }
@@ -1177,9 +1177,9 @@ void func_80134DA0(void) {
             }
         }
     }
-    func_80050B54(0);
-    func_80069128();
-    func_8004EC24();
+    menu_bar_show(0);
+    cal_base_show();
+    k_disp_inc();
 }
 
 void func_80134FE4(void) {
@@ -1565,11 +1565,11 @@ void func_80135E28(void) {
 void func_80135FFC(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_80050DFC(girl_short_name_table[D_801405E4]);
-        func_80050E8C(D_80140AD8[D_801405E4], 0, D_801405E4);
+        k_sub_reset();
+        gnsx(girl_short_name_table[D_801405E4]);
+        sndisp(D_80140AD8[D_801405E4], 0, D_801405E4);
         func_80052060(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
-        func_8004EAD4(0);
+        k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -1579,18 +1579,18 @@ void func_80135FFC(void) {
         func_80042940(0x20);
         break;
     }
-    func_80050B54(0);
-    func_80069128();
+    menu_bar_show(0);
+    cal_base_show();
 }
 
 void func_801360E4(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_80050DFC(girl_short_name_table[D_801405E4]);
-        func_80050E8C(D_80140AD8[D_801405E4], 0, D_801405E4);
+        k_sub_reset();
+        gnsx(girl_short_name_table[D_801405E4]);
+        sndisp(D_80140AD8[D_801405E4], 0, D_801405E4);
         func_80052060(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
-        func_8004EAD4(0);
+        k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -1600,18 +1600,18 @@ void func_801360E4(void) {
         func_80042940(0x20);
         break;
     }
-    func_80050B54(0);
-    func_80069128();
+    menu_bar_show(0);
+    cal_base_show();
 }
 
 void func_801361CC(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_80050DFC(girl_short_name_table[D_801405E4]);
-        func_80050E8C(D_80140D18[D_801405E4], 0, D_801405E4);
+        k_sub_reset();
+        gnsx(girl_short_name_table[D_801405E4]);
+        sndisp(D_80140D18[D_801405E4], 0, D_801405E4);
         func_80052060(D_80140D44, D_80140D9C, D_801405E4, D_801405E4);
-        func_8004EAD4(0);
+        k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -1628,11 +1628,11 @@ void func_801361CC(void) {
 void func_801362B4(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_80050DFC(girl_short_name_table[D_801405E4]);
-        func_80050E8C(D_80140F0C[D_801405E4], 0, D_801405E4);
+        k_sub_reset();
+        gnsx(girl_short_name_table[D_801405E4]);
+        sndisp(D_80140F0C[D_801405E4], 0, D_801405E4);
         func_80052060(D_80140F38, D_80140F90, D_801405E4, D_801405E4);
-        func_8004EAD4(0);
+        k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -1658,7 +1658,7 @@ void func_8013639C(void) {
         set_kanji_string(-0x80, 0x32, 0, (s32) "デートする日を選んで下さい", 0);
         k_disp_start(1);
         D_800E6280.unk_110D += 1;
-        func_80050B00(1, 0x2F7FAF, 5, 0);
+        menu_bar_color(1, 0x2F7FAF, 5, 0);
         break;
     case 1:
         menu_check(1, D_8011ECF6, D_8011ECFA);
@@ -1666,7 +1666,7 @@ void func_8013639C(void) {
         menu_bar_show(1);
         choice = D_800E6280.unk_1094;
         if ((choice != -1) && (D_800E6280.unk_F88 & 0x20)) {
-            func_80069218(0);
+            cal_sprite_disp_switch(0);
             D_80140558 = D_801405A4[D_800E6280.unk_1094];
             choice = D_800E6280.unk_1094;
             D_80140554 = D_80140564[choice];
@@ -1679,7 +1679,7 @@ void func_8013639C(void) {
         }
         break;
     default:
-        func_80050B00(0x10, 0x2F2F7F, 3, 0);
+        menu_bar_color(0x10, 0x2F2F7F, 3, 0);
         func_80042940(0x30);
         break;
     }
@@ -1725,7 +1725,7 @@ s32 func_8013655C(void) {
         var_a3 += 1;
     } while (var_a3 != 0x1C);
 
-    func_8004F870(1, var_t0 & 0xFF, &spEC[0], &spCC[0], &spAC[0], &sp8C[0]);
+    menu_set(1, var_t0 & 0xFF, &spEC[0], &spCC[0], &spAC[0], &sp8C[0]);
     D_800E6280.unk_1094 = 0;
     return var_t0;
 }
@@ -2910,16 +2910,16 @@ void func_801393A8(void) {
 void func_801396EC(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
+        k_sub_reset();
         func_80044750(0x50C);
-        func_80050DFC(D_800E6280.unk_0D4);
-        func_80051010("あ〜あ、留守みたいだな。", 0, 0x1F);
-        func_80051010("今日はあきらめるか……。）", 1, 0x1F);
-        func_8004EAD4(0);
+        gnsx(D_800E6280.unk_0D4);
+        sndi("あ〜あ、留守みたいだな。", 0, 0x1F);
+        sndi("今日はあきらめるか……。）", 1, 0x1F);
+        k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        func_80051DBC();
+        xa_wait();
         break;
     case 2:
         func_8004E58C();
@@ -2927,6 +2927,6 @@ void func_801396EC(void) {
         main_state_set(0x46);
         break;
     }
-    func_80050B54(0);
-    func_80069128();
+    menu_bar_show(0);
+    cal_base_show();
 }

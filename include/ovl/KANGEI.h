@@ -197,7 +197,7 @@ void func_80136D58(void);
 void func_80138078(void);
 void func_80136810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7, s32 arg8);
 /* T-18400: club name tables that func_8013769C copies to the stack whole and passes
- * name[D_800E6280.unk_0F4.h >> 12] to func_800AE0F0 (as EVENT's EventTableE7, T-9940). */
+ * name[D_800E6280.unk_0F4.h >> 12] to strcpy (as EVENT's EventTableE7, T-9940). */
 typedef struct KangeiNames20 {
     /* 0x00 */ u8 name[11][20];
 } KangeiNames20; /* size 0xDC */

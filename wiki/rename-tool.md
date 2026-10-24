@@ -83,6 +83,15 @@ with its attributes, or moved when the row's role (fact or hypothesis) differs f
 `tools/check_symbols.py` (ninja `build/symbols.ok`) enforces one name per address and per unit, no
 main name in a file EVENT loads at an EVENT address, and no two names that differ only in case.
 
+## Alias rows (the O.BIN alias debt, T-27003)
+
+A row whose new name already names the address in `config/symbol_addrs_obin.txt` or `config/symbol_addrs_sdk.txt` carries that name to the uses of the placeholder (`--allow-alias`). O.BIN names stay as they are and SDK names keep their spelling, so the style rules (snake_case, libc names, leading underscore) do not apply to such a name; a C keyword, a placeholder shape and an address in the name are still refused.
+
+- After the symbol rows, `plan` and `apply` merge the declarations in `include/main_api.h` (CODING_STANDARDS 8a): the declaration that came from the old name goes, with its `#ifndef MAIN_API_OVERRIDE_<name>` wrapper, and the new name keeps its own declaration (the type of the main-exe definition) and takes the wrapper. A name with only the old declaration keeps that one, renamed in place.
+- Proof 2 lists a new gcc error that names an alias symbol as a note: IDO takes calls that gcc refuses (extra arguments to a `(void)` function). The clean build decides which files need another view.
+- Finding those files: compile every object (`ninja -k 0 -j2` after `check_headers.py` is clean), compare each `.o` section with the base build (`drafts/T-27003/objdiff.py`), and for each object that differs add the changed views as `MAIN_API_OVERRIDE_<name>` (`drafts/T-27003/ovr.py try FILE ALL` adds every changed view and drops each one the object does not need). `check_headers.py` also names a type that disagrees with a main-exe definition (`update main_api.h`): take the definition's type. A file that needs both views in different functions declares the other view inside the function that needs it (`extern void set_dec_bri();` in `func_80145AC4` of NAME_ENT; IDO accepts the block-scope redeclaration, a cast to a function pointer would turn the `jal` into a `jalr`).
+- Pilot result: 104 O.BIN rows (`config/renames/obin.txt`) and 24 SDK rows (`config/renames/sdk.txt`) over 5,171 uses in 274 files (269 overlay C files, 3 main C files, `include/main_api.h`, `include/ovl/KANGEI.h`). After the merge only 8 objects differed (7 units failed their sha1); 8 `MAIN_API_OVERRIDE_` lines (DATE 80132000 `tpage_buf_clear`; ENDING 80132000 and 801396E0 and main 8007C030 `get_now_k`; MASTER 80138490 `Vblnk_Timer_Init`; TAIIKU 80138950 `Rot_2D`; SHOUGATU 8013E330 `get_g_zyotai_s`; main 8004C3F0 `search_tpage_multi`) and the one block-scope declaration fixed them; `get_now_k`, `menu_set` and `search_tpage_multi` took the type of their main-exe definition. The SDK rows needed none.
+
 ## Members (gcc oracle)
 
 `field Type old new` (or `field UNIT:Type ...` when two units define a type of that name). The
@@ -135,7 +144,10 @@ as they are (an enum variable would change the code); a member of a type of the 
 
 - `rename.py check` (ninja `build/renames.ok`, default target): no earlier name of a ledger chain is
   back in `src/`, `include/` or `config/`, the ledger has no branching chain or cycle, the symbol
-  files are consistent. A failure names the ledger line and says to run replay.
+  files are consistent, and no placeholder (`func_`/`D_`/`jtbl_` plus the address) of a main address
+  that the symbol files name is left in `src/` or `include/` (an `alias-view` line is exempt:
+  `func_80084C98`). A ledger failure names the ledger line and says to run replay; the placeholder
+  rule says to rename it with a `func` or `data` row.
 - `rename.py replay [LEDGER...]`: every earlier name of every chain that is still present in the
   chain's scope (the search `check` makes) becomes the last name. A chain is walked from whatever
   name the tree has. In a member chain the struct holds one name, or the last one already. The row of

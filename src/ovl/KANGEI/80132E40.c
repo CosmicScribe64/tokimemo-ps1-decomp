@@ -218,15 +218,15 @@ void func_801335F0(void) {
     D_80139AC4 = 0;
     func_80133D28();
     D_800E6280.unk_040 -= 1;
-    func_800649D4();
+    hizuke_init();
     D_800E6280.unk_040 += 1;
     func_8006509C();
     for (var_s0 = 0; var_s0 < 15; var_s0++) {
-        func_80065048(var_s0, 0);
+        icon_can_use_set(var_s0, 0);
     }
     func_80065B0C(1);
-    func_800639D8();
-    func_800639D8();
+    parameter_show_init();
+    parameter_show_init();
     /* FAKE: dead byte test keeps the packed-record address in v0 (T-9580). */
     if (D_800E6280.unk_03A == 0) {}
     ((KangeiStateView *)&D_800E6280)->modes[(u16)D_800E6280.unk_0F4.h >> 12].mode++;
@@ -295,7 +295,7 @@ s32 func_801338EC(void) {
             return 0;
         }
     }
-    func_800573AC();
+    dec_bg_reset();
     rect.x = 0x140;
     rect.y = 0x100;
     rect.w = 0x140;

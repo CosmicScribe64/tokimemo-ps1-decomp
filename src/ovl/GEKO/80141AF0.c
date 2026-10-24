@@ -60,7 +60,7 @@ void func_80141CCC(void) {
     D_801217D0[0].unk_00 &= 0x7FFFFFFF;
     D_801217D0[1].unk_00 &= 0x7FFFFFFF;
     if ((u32)D_800E6280.unk_10F8 % 240U == 0) {
-        func_800638C4();
+        bustup_wink();
     }
 }
 
@@ -91,7 +91,7 @@ void func_80141E48(void) {
         D_801217D0[0].unk_00 &= 0x7FFFFFFF;
         D_801217D0[1].unk_00 &= 0x7FFFFFFF;
         if ((u32)D_800E6280.unk_10F8 % 240U == 0) {
-            func_800638C4();
+            bustup_wink();
         }
     } else {
         func_800634FC(0);
@@ -237,7 +237,7 @@ void func_801420E4(void) {
     D_80146274 = D_80145FF8;
     D_80146278 = D_80146134;
     D_8014627C = D_80146270;
-    func_800AE0F0(D_800CA19C, "教室");
+    strcpy(D_800CA19C, "教室");
     D_8014755C = 0;
     D_800CA368 = 0xFF;
     func_8004284C();
@@ -259,6 +259,6 @@ void func_8014267C(void) {
 }
 
 void func_801426A4(void) {
-    func_8007ED84(0x4690);
+    bg_read_sub2(0x4690);
     func_8004284C();
 }

@@ -110,7 +110,7 @@ void func_801321EC(void) {
     func_80044750(0x7F);
     func_8006BC28(0);
     func_8006BD6C(0);
-    func_800AE120(D_800E6280.unk_10F4);
+    srand(D_800E6280.unk_10F4);
     hizuke_disp_switch(0);
     func_80065F34(0);
     message_disp_switch(0);
@@ -121,13 +121,13 @@ void func_801321EC(void) {
 }
 
 void func_80132278(void) {
-    func_80048390();
+    tpage_buf_clear();
     func_80048E78();
     func_8006BC28(0);
     D_800E6280.unk_036 = 0;
     D_800E6280.unk_037 = 0;
     D_800E6280.unk_038 = 0;
-    func_800438F0(1);
+    back_clear_switch(1);
     D_800E6280.unk_F6F = (s8) D_80139B14;
     main_state_set((s32) D_800E6280.unk_720);
     func_80042908((s32) D_800E6280.unk_721);
@@ -691,7 +691,7 @@ void func_801339D4(s32 arg0) {
     D_8013984C[arg0].unk_24--;
     if (D_8013984C[arg0].unk_00 == 4) {
         D_8013984C[arg0].unk_14.w += (func_800A0140(D_8013984C[arg0].unk_1C) * 0x8000) >> 12;
-        D_8013984C[arg0].unk_18.w += (func_800A0070(D_8013984C[arg0].unk_1C) * 0x8000) >> 12;
+        D_8013984C[arg0].unk_18.w += (rsin(D_8013984C[arg0].unk_1C) * 0x8000) >> 12;
     } else {
         switch (D_8013984C[arg0].unk_28) {
         case 0:
@@ -760,7 +760,7 @@ void func_801339D4(s32 arg0) {
             D_8013984C[arg0].unk_1C += 0x1000;
         }
         D_8013984C[arg0].unk_14.w += (D_8013984C[arg0].unk_20 * func_800A0140(D_8013984C[arg0].unk_1C)) >> 12;
-        D_8013984C[arg0].unk_18.w += (D_8013984C[arg0].unk_20 * func_800A0070(D_8013984C[arg0].unk_1C)) >> 12;
+        D_8013984C[arg0].unk_18.w += (D_8013984C[arg0].unk_20 * rsin(D_8013984C[arg0].unk_1C)) >> 12;
     }
 }
 
@@ -911,16 +911,16 @@ void func_80134258(s32 arg0) {
 
     func_80134784(&n, &m);
     for (i = 0; i != 10; i++) {
-        if (D_8013984C[i].unk_00 == 0 && n * 10 < func_800AE0D0() % 100) {
-            r = func_800AE0D0();
+        if (D_8013984C[i].unk_00 == 0 && n * 10 < rand() % 100) {
+            r = rand();
             if (m == 0 && r % 100 >= 61) {
                 D_8013984C[i].unk_00 = 4;
                 m++;
             } else {
-                D_8013984C[i].unk_00 = func_800AE0D0() % 3 + 1;
+                D_8013984C[i].unk_00 = rand() % 3 + 1;
                 n++;
             }
-            r = func_800AE0D0() % 100;
+            r = rand() % 100;
             if (r < 20) {
                 D_8013984C[i].unk_04 = 0;
             } else if (r < 60) {
@@ -928,7 +928,7 @@ void func_80134258(s32 arg0) {
             } else {
                 D_8013984C[i].unk_04 = 2;
             }
-            r = func_800AE0D0() % 100;
+            r = rand() % 100;
             if (r < 20) {
                 D_8013984C[i].unk_08 = 0;
             } else if (r < 60) {
@@ -953,43 +953,43 @@ void func_801344F0(s32 arg0, s32 arg1) {
     EnObj *var_s0;
 
     if (arg1 == 1) {
-        temp_v1 = func_800AE0D0() % 4;
+        temp_v1 = rand() % 4;
         switch (temp_v1) {
         default:
             var_s0 = &D_8013984C[arg0];
             break;
         case 0:
-            temp_hi = func_800AE0D0() % 320 - 0xA0;
+            temp_hi = rand() % 320 - 0xA0;
             var_s0 = &D_8013984C[arg0];
             var_s0->unk_14.h[1] = temp_hi;
             var_s0->unk_18.h[1] = -0x96;
-            var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x200);
+            var_s0->unk_1C = (s32) ((rand() % 1024) + 0x200);
             break;
         case 1:
             var_s0 = &D_8013984C[arg0];
             var_s0->unk_14.h[1] = 0xBE;
-            var_s0->unk_18.h[1] = (s16) ((func_800AE0D0() % 240) - 0x78);
-            var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x600);
+            var_s0->unk_18.h[1] = (s16) ((rand() % 240) - 0x78);
+            var_s0->unk_1C = (s32) ((rand() % 1024) + 0x600);
             break;
         case 2:
-            temp_hi_2 = func_800AE0D0() % 320 - 0xA0;
+            temp_hi_2 = rand() % 320 - 0xA0;
             var_s0 = &D_8013984C[arg0];
             var_s0->unk_14.h[1] = temp_hi_2;
             var_s0->unk_18.h[1] = 0x96;
-            var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xA00);
+            var_s0->unk_1C = (s32) ((rand() % 1024) + 0xA00);
             break;
         case 3:
             var_s0 = &D_8013984C[arg0];
             var_s0->unk_14.h[1] = -0xBE;
-            var_s0->unk_18.h[1] = (s16) ((func_800AE0D0() % 240) - 0x78);
-            var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xE00);
+            var_s0->unk_18.h[1] = (s16) ((rand() % 240) - 0x78);
+            var_s0->unk_1C = (s32) ((rand() % 1024) + 0xE00);
             break;
         }
     } else {
         var_s0 = &D_8013984C[arg0];
-        var_s0->unk_14.h[1] = (s16) ((func_800AE0D0() % 320) - 0xA0);
-        var_s0->unk_18.h[1] = (s16) ((func_800AE0D0() % 240) - 0x78);
-        var_s0->unk_1C = (s32) (func_800AE0D0() % 4096);
+        var_s0->unk_14.h[1] = (s16) ((rand() % 320) - 0xA0);
+        var_s0->unk_18.h[1] = (s16) ((rand() % 240) - 0x78);
+        var_s0->unk_1C = (s32) (rand() % 4096);
     }
     var_s0->unk_24 = 1;
     if (var_s0->unk_1C >= 0x1000) {
@@ -1027,7 +1027,7 @@ void func_80134800(s32 arg0) {
     s32 r;
 
     if (D_8013984C[arg0].unk_24 <= 0) {
-        r = func_800AE0D0();
+        r = rand();
         switch (D_8013984C[arg0].unk_08) {
         case 0:
             if (r % 100 < 80) {
@@ -1053,7 +1053,7 @@ void func_80134800(s32 arg0) {
             }
             break;
         }
-        r = func_800AE0D0();
+        r = rand();
         if (D_8013984C[arg0].unk_2C == 0 || D_8013984C[arg0].unk_2C == 1) {
             if (r % 100 < 25) {
                 D_8013984C[arg0].unk_2C = 0;
@@ -1082,7 +1082,7 @@ void func_80134800(s32 arg0) {
             }
         }
         if ((D_8013984C[arg0].unk_2C & 0x10) || (D_8013984C[arg0].unk_2C & 0x20)) {
-            r = func_800AE0D0() % 100;
+            r = rand() % 100;
             if (r < 33) {
                 D_8013984C[arg0].unk_2C |= 1;
             } else if (r < 66) {
@@ -1092,7 +1092,7 @@ void func_80134800(s32 arg0) {
             }
         }
         if (D_8013984C[arg0].unk_2C == 0 || D_8013984C[arg0].unk_2C == 1) {
-            D_8013984C[arg0].unk_24 = func_800AE0D0() % 25 + 40;
+            D_8013984C[arg0].unk_24 = rand() % 25 + 40;
             if (D_8013984C[arg0].unk_28 >= 4) {
                 D_8013984C[arg0].unk_24 /= 4;
             }
@@ -1115,8 +1115,8 @@ s32 arg0;
 
     if (((EN_OBJ(arg0)->unk_2C & 0x40) || (EN_OBJ(arg0)->unk_2C & 0x80)) && EN_OBJ(arg0)->unk_24 <= 0) {
         EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
-        EN_OBJ(arg0)->unk_24 = func_800AE0D0() % 15 + 0x1E;
-        if (!(func_800AE0D0() & 1)) {
+        EN_OBJ(arg0)->unk_24 = rand() % 15 + 0x1E;
+        if (!(rand() & 1)) {
             EN_OBJ(arg0)->unk_2C = 0;
         } else {
             EN_OBJ(arg0)->unk_2C = 1;
@@ -1151,15 +1151,15 @@ void func_80134D74(s32 arg0, s32 arg1) {
         case 1:
             if (arg1 < 0x844) {
                 temp_s0->unk_28 = (s32) ((temp_s0->unk_08 * 2) + 4);
-                temp_s0->unk_24 = (s32) ((func_800AE0D0() % 15) + 0x1E);
-                if (!(func_800AE0D0() & 1)) {
+                temp_s0->unk_24 = (s32) ((rand() % 15) + 0x1E);
+                if (!(rand() & 1)) {
                     temp_s0->unk_2C = 0;
                 } else {
                     temp_s0->unk_2C = 1;
                 }
                 if (arg1 >= 0x191) {
                     temp_s0->unk_24 = 8;
-                    if (!(func_800AE0D0() & 1)) {
+                    if (!(rand() & 1)) {
                         temp_s0->unk_2C = 0x80;
                     } else {
                         temp_s0->unk_2C = 0x40;
@@ -1170,15 +1170,15 @@ void func_80134D74(s32 arg0, s32 arg1) {
         case 2:
             if (arg1 < 0xF04) {
                 temp_s0->unk_28 = (s32) ((temp_s0->unk_08 * 2) + 4);
-                temp_s0->unk_24 = (s32) ((func_800AE0D0() % 15) + 0x1E);
-                if (!(func_800AE0D0() & 1)) {
+                temp_s0->unk_24 = (s32) ((rand() % 15) + 0x1E);
+                if (!(rand() & 1)) {
                     temp_s0->unk_2C = 0;
                 } else {
                     temp_s0->unk_2C = 1;
                 }
                 if (arg1 >= 0x191) {
                     temp_s0->unk_24 = 4;
-                    if (!(func_800AE0D0() & 1)) {
+                    if (!(rand() & 1)) {
                         temp_s0->unk_2C = 0x81;
                     } else {
                         temp_s0->unk_2C = 0x41;
@@ -1204,7 +1204,7 @@ void func_80134F2C(s32 arg0, s32 arg1) {
             if (arg1 < 0x384) {
                 EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
                 EN_OBJ(arg0)->unk_2C = 0x80;
-                if (!(func_800AE0D0() & 1)) {
+                if (!(rand() & 1)) {
                     EN_OBJ(arg0)->unk_24 = 1;
                 } else {
                     EN_OBJ(arg0)->unk_24 = 2;
@@ -1215,7 +1215,7 @@ void func_80134F2C(s32 arg0, s32 arg1) {
             if (arg1 < 0x844) {
                 EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
                 EN_OBJ(arg0)->unk_2C = 0x81;
-                if (!(func_800AE0D0() & 1)) {
+                if (!(rand() & 1)) {
                     EN_OBJ(arg0)->unk_24 = 1;
                 } else {
                     EN_OBJ(arg0)->unk_24 = 2;
@@ -1240,7 +1240,7 @@ void func_80135044(s32 arg0, s32 arg1) {
             if (arg1 < 0x384) {
                 EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
                 EN_OBJ(arg0)->unk_2C = 0x40;
-                if (!(func_800AE0D0() & 1)) {
+                if (!(rand() & 1)) {
                     EN_OBJ(arg0)->unk_24 = 1;
                 } else {
                     EN_OBJ(arg0)->unk_24 = 2;
@@ -1251,7 +1251,7 @@ void func_80135044(s32 arg0, s32 arg1) {
             if (arg1 < 0x844) {
                 EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
                 EN_OBJ(arg0)->unk_2C = 0x41;
-                if (!(func_800AE0D0() & 1)) {
+                if (!(rand() & 1)) {
                     EN_OBJ(arg0)->unk_24 = 1;
                 } else {
                     EN_OBJ(arg0)->unk_24 = 2;
@@ -1276,24 +1276,24 @@ void func_8013515C(s32 arg0, s32 arg1) {
         switch (p->unk_04) {
         case 1:
             if (arg1 < 0xC4) {
-                if (!(func_800AE0D0() & 1)) {
+                if (!(rand() & 1)) {
                     p->unk_2C = 0;
                 } else {
                     p->unk_2C = 1;
                 }
                 p->unk_28 = p->unk_08 * 2 + 4;
-                p->unk_24 = func_800AE0D0() % 15 + 0x1E;
+                p->unk_24 = rand() % 15 + 0x1E;
             }
             break;
         case 2:
             if (arg1 < 0x384) {
-                if (!(func_800AE0D0() & 1)) {
+                if (!(rand() & 1)) {
                     p->unk_2C = 0;
                 } else {
                     p->unk_2C = 1;
                 }
                 p->unk_28 = p->unk_08 * 2 + 4;
-                p->unk_24 = func_800AE0D0() % 15 + 0x1E;
+                p->unk_24 = rand() % 15 + 0x1E;
             }
             break;
         }
@@ -1416,7 +1416,7 @@ void func_8013556C(void) {
     if (D_80139224 >= 0x1000) {
         D_80139224 = 0;
     }
-    D_801392A4 = (func_800A0070(D_80139224) * 8) >> 12;
+    D_801392A4 = (rsin(D_80139224) * 8) >> 12;
     D_801392A8 = (func_800A0140(D_80139224) * 0x10) >> 12;
     func_801359D0();
     func_80135F54();
@@ -1577,10 +1577,10 @@ void func_80135FBC(s32 arg0, s32 arg1) {
         v2 -= 0x80;
         v3 -= 0x80;
     }
-    poly = func_800490F0(0x28, D_8011ECA0);
+    poly = GetWorkBase(0x28, D_8011ECA0);
     func_8009F040(poly);
-    func_8009EFB0(poly, 0);
-    func_8009EF84(poly, 1);
+    SetShadeTex(poly, 0);
+    SetSemiTrans(poly, 1);
     poly->r0 = D_8013921C;
     poly->g0 = D_8013921C;
     poly->b0 = D_8013921C;
@@ -1601,7 +1601,7 @@ void func_80135FBC(s32 arg0, s32 arg1) {
     poly->v1 = v1;
     poly->v0 = v0;
     poly->u0 = u0;
-    func_8009EED0(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, poly);
+    AddPrim(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, poly);
 }
 
 s32 func_801362A4(void) {
@@ -1726,9 +1726,9 @@ void func_80136700(void) {
     s32 pad; /* FAKE: unused word above poly, puts poly at sp+0x30 as in the original (T-3330 slot rule) */
     POLY_F4 *poly;
 
-    poly = func_800490F0(0x18, D_8011ECA0);
+    poly = GetWorkBase(0x18, D_8011ECA0);
     func_8009F02C(poly);
-    func_8009EF84(poly, 1);
+    SetSemiTrans(poly, 1);
     poly->r0 = D_80139B20;
     poly->g0 = D_80139B20;
     poly->b0 = D_80139B20;
@@ -1740,8 +1740,8 @@ void func_80136700(void) {
     poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x30;
     poly->x3 = D_800E6280.unk_014[D_8011ECA0] + 0x58;
     poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x30;
-    func_8009EED0(D_8011ECA0 * 0x400 + 8 + D_800E8CA0, poly);
-    func_800494BC(0, 0, 2, 2, 0);
+    AddPrim(D_8011ECA0 * 0x400 + 8 + D_800E8CA0, poly);
+    dtd_on_tpage(0, 0, 2, 2, 0);
     if (D_80139B20 == 0) {
         D_801215FF = 0x80;
     }

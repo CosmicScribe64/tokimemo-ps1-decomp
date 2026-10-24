@@ -303,9 +303,9 @@ void func_8014BB80(void) {
     case 0:
         func_8013E7C0(0x25, 0x31, 5, 1);
         if (D_8015EBA8 == 1) {
-            func_8004F870(0, 3, sp34.v, &sp34.v[3], &sp34.v[6], &sp34.v[9]);
+            menu_set(0, 3, sp34.v, &sp34.v[3], &sp34.v[6], &sp34.v[9]);
         } else {
-            func_8004F870(0, 2, sp34.v, &sp34.v[3], &sp34.v[6], &sp34.v[9]);
+            menu_set(0, 2, sp34.v, &sp34.v[3], &sp34.v[6], &sp34.v[9]);
         }
         func_8014EB58(1);
     default:
@@ -755,10 +755,10 @@ void func_8014D11C(u8 *dst, u8 *name, u8 *label, s32 num, u8 *suffix) {
     s32 place;
     s32 base;
 
-    func_800AE0F0(dst, name);
-    func_800AE100(dst, label);
+    strcpy(dst, name);
+    strcat(dst, label);
     if (num == 0) {
-        func_800AE100(dst, "０");
+        strcat(dst, "０");
     }
     /* radix in one variable: with literal 10 the unsigned % and the signed / keep two copies in
      * two $s registers; T-17110 */
@@ -768,37 +768,37 @@ void func_8014D11C(u8 *dst, u8 *name, u8 *label, s32 num, u8 *suffix) {
         if (quot != 0) {
             switch (quot % base) {
             case 0:
-                func_800AE100(dst, "０");
+                strcat(dst, "０");
                 break;
             case 1:
-                func_800AE100(dst, "１");
+                strcat(dst, "１");
                 break;
             case 2:
-                func_800AE100(dst, "２");
+                strcat(dst, "２");
                 break;
             case 3:
-                func_800AE100(dst, "３");
+                strcat(dst, "３");
                 break;
             case 4:
-                func_800AE100(dst, "４");
+                strcat(dst, "４");
                 break;
             case 5:
-                func_800AE100(dst, "５");
+                strcat(dst, "５");
                 break;
             case 6:
-                func_800AE100(dst, "６");
+                strcat(dst, "６");
                 break;
             case 7:
-                func_800AE100(dst, "７");
+                strcat(dst, "７");
                 break;
             case 8:
-                func_800AE100(dst, "８");
+                strcat(dst, "８");
                 break;
             case 9:
-                func_800AE100(dst, "９");
+                strcat(dst, "９");
                 break;
             }
         }
     }
-    func_800AE100(dst, suffix);
+    strcat(dst, suffix);
 }

@@ -254,13 +254,13 @@ void func_80143498(void) {
         func_80046290(0x06000CBB, 0x12000E0C, 0xF);
         func_80044750(0x300);
         func_8004E58C();
-        func_8004E788(-0x90, 0x14, 0, "ここ、きらめき高校には、", 0);
-        func_8004E788(-0x90, 0x24, 0, "一つの伝説があります。", 0);
-        func_8004E788(-0x90, 0x34, 0, "校庭のはずれにある一本の古木。", 0);
-        func_8004E884(3);
-        func_8004E93C(0, 0);
-        func_8004E93C(1, 0);
-        func_8004E93C(2, 0);
+        set_kanji_string(-0x90, 0x14, 0, "ここ、きらめき高校には、", 0);
+        set_kanji_string(-0x90, 0x24, 0, "一つの伝説があります。", 0);
+        set_kanji_string(-0x90, 0x34, 0, "校庭のはずれにある一本の古木。", 0);
+        k_disp_start(3);
+        k_disp_switch(0, 0);
+        k_disp_switch(1, 0);
+        k_disp_switch(2, 0);
         D_8014D170 = 1;
     }
 }
@@ -628,7 +628,7 @@ void func_8014472C(void) {
     s32 avg;
 
     if (func_800460EC() & 4) {
-        level = func_8007C51C();
+        level = getCDlevel();
     } else {
         level = 0;
         if (((u32)D_800E6280.unk_F80 >> 16) != 0) {

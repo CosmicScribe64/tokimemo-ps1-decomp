@@ -76,8 +76,8 @@ s32 func_80135838(void) {
         func_80042808();
         return 0;
     }
-    func_800AE120(D_800E6280.unk_10F8);
-    if (((func_800AE0D0() % 256) >= 5) || (D_800E6280.unk_75D >= 0xB)) {
+    srand(D_800E6280.unk_10F8);
+    if (((rand() % 256) >= 5) || (D_800E6280.unk_75D >= 0xB)) {
         func_80042808();
         return 0;
     }
@@ -139,7 +139,7 @@ INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/801355F0.rodata", D_801398B0);
 
 void func_80135B18(void) {
     bg_read_sub2(0x42A9);
-    func_800AE0F0(D_800CA19C, &D_801398B0);
+    strcpy(D_800CA19C, &D_801398B0);
     func_8004284C();
 }
 
@@ -174,7 +174,7 @@ void func_80135B54(void) {
 }
 
 void func_80135C18(void) {
-    func_8007E390();
+    normal_date_girl_in();
     if ((D_800E6280.unk_F5F == 0xA) || (D_800E6280.unk_F5F == 3)) {
         ((DisplayActor44 *)D_8011ECD0)[96].unk_03 |= 0x80;
         ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = ((DisplayActor44 *)D_8011ECD0)[31].unk_07;

@@ -190,8 +190,8 @@ void func_80136C64(void) {
             func_80044750(4);
             func_80044750(0x201);
         }
-        func_800AE080(c, 0x20);
-        func_800AE080((u8 *)p, 0x20);
+        bzero(c, 0x20);
+        bzero((u8 *)p, 0x20);
         *(s16 *)(a + 0x50) = 0;
         func_8014CBD0();
         func_80148210();

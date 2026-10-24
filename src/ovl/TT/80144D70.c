@@ -1,4 +1,4 @@
-#define MAIN_API_OVERRIDE_func_800AE080 /* implicit int declaration, as matched: with the void prototype the reload of ctl after the call in func_80144D70 takes v0, not v1. T-11840 */
+#define MAIN_API_OVERRIDE_bzero /* implicit int declaration, as matched: with the void prototype the reload of ctl after the call in func_80144D70 takes v0, not v1. T-11840 */
 #include "common.h"
 #include "ovl/TT.h"
 
@@ -158,7 +158,7 @@ void func_80144D70(void) {
         pool++;
         pool->unk_00 = 0;
         list[0] = 0;
-        func_800AE080(stream, 0x20);
+        bzero(stream, 0x20);
         if ((u8)++ctl[0xB] < 4) {
             g->unk_00 = 2;
             g->unk_02 = 1;

@@ -7,7 +7,7 @@ s32 func_8013F0F4();
 void func_80155CC0(void) {
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　　火の鳥サーブ　　　　　　");
+        strcpy(D_8015E74C, "　　　　　　火の鳥サーブ　　　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_80144480();
         func_8013EEAC(D_8015EBAC);

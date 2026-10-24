@@ -182,7 +182,7 @@ void func_8013F92C(void) {
 
 s32 func_8013F9AC(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
-        func_800573AC();
+        dec_bg_reset();
         func_8004284C();
         D_800E6280.unk_110A -= 3;
         return 0;
@@ -321,7 +321,7 @@ void func_8013FF64(void) {
 }
 
 /* FAKE: byte-offset display-record view matches the EVENT sibling (fields add one register, T-20900);
- * `if (any == 0 && func_800AE0D0()) {}` (where EVENT sibling func_80108DD4 has a sound trigger inside the if)
+ * `if (any == 0 && rand()) {}` (where EVENT sibling func_80108DD4 has a sound trigger inside the if)
  * keeps the post-call label that prevents as1 from hoisting $ra into the branch delay slot. T-24090 */
 void func_80140040(void) {
     s16 i;
@@ -346,29 +346,29 @@ void func_80140040(void) {
         }
         i++;
     } while (i < 0xA);
-    if (any == 0 && func_800AE0D0()) {
+    if (any == 0 && rand()) {
     }
     D_801470AC += 1;
 }
 
 void func_8014016C(void) {
     D_800E6280.unk_F5F = 0xA;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8006612C("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);
@@ -377,13 +377,13 @@ void func_8014016C(void) {
     D_80146274 = D_80145FCC;
     D_80146278 = D_80146108;
     D_8014627C = D_80146244;
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     if (D_80122CD0 == 1) {
         D_800E6280.unk_1BC[0xA].unk_02 += 1;
         D_800E6280.unk_1BC[0xA].unk_06 += 2;
         D_800E6280.unk_0FC.unk_02 -= 5;
         D_800E6280.unk_118.unk_02 += 5;
-        func_80084D3C();
+        check_para_limit();
     }
     D_800CA368 = 0x43;
     func_8004284C();
@@ -408,7 +408,7 @@ void func_801403A0(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
@@ -425,7 +425,7 @@ void func_801403A0(void) {
     D_80146274 = D_80145FD0;
     D_80146278 = D_8014610C;
     D_8014627C = D_80146248;
-    state = func_80051A68(0xA) & 0x7F;
+    state = get_g_zyotai_s(0xA) & 0x7F;
     if ((u32)state < 2U) {
         D_800E6280.unk_1BC[10].unk_02 += 1;
     }
@@ -472,8 +472,8 @@ void func_801404FC(void) {
     D_80146274 = D_80145FE4;
     D_80146278 = D_80146120;
     D_8014627C = D_8014625C;
-    func_800AE0F0(D_800CA19C, "玄関");
-    func_800AE0F0(D_800CA1DC, "自宅前");
+    strcpy(D_800CA19C, "玄関");
+    strcpy(D_800CA1DC, "自宅前");
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
     check_para_limit();
     D_800CA368 = 0x49;
@@ -492,7 +492,7 @@ void func_801406CC(void) {
     t1 = D_801472D8;
     t2 = D_801472EC;
     func_8013F410();
-    func_80043914(D_8014708C, 0x11, 1, 2, 0);
+    load_palette(D_8014708C, 0x11, 1, 2, 0);
     func_80084E90(D_80147090, D_80147094, D_80147098, D_8014709C, D_801470A0, D_801470A4);
     for (i = 0; i < 6; i++) {
         D_800E6280.unk_10A5[i + 0x3A] = 0xC;

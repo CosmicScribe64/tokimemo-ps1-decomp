@@ -53,27 +53,27 @@ void func_80132114(void) {
 
     func_8004E58C();
     func_80048EB8(0);
-    func_800438F0(1);
+    back_clear_switch(1);
     col = (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = (&D_800E6280.unk_036)[2] = 0xA0;
     func_8006612C("Ｑ＆Ａコーナー");
-    func_8004E788(-0x68, 0x5C, 2, (s32)"スタートボタンでゲームに戻れます", 0);
-    func_8004EA98();
+    set_kanji_string(-0x68, 0x5C, 2, (s32)"スタートボタンでゲームに戻れます", 0);
+    k_sub_reset_point_set();
     for (i = 0; i < 8; i++) {
         a[i] = -0x60;
         b[i] = i * 0x10 - 0x3C;
         c[i] = 0x80;
         d[i] = 0x10;
-        func_8004E788(a[i], b[i], 0xF, (&D_80139EE0)[i], 0);
+        set_kanji_string(a[i], b[i], 0xF, (&D_80139EE0)[i], 0);
     }
-    func_8004F870(0, 8, a, b, c, d);
-    r = func_8004E788(-0x10, -0x50, 0xF, (s32)"項目を選んでください", 0);
-    func_8004E884(r);
+    menu_set(0, 8, a, b, c, d);
+    r = set_kanji_string(-0x10, -0x50, 0xF, (s32)"項目を選んでください", 0);
+    k_disp_start(r);
     func_80042808();
 }
 
 void func_80132294(void) {
-    func_8004F984(0, D_8011ECF6, D_8011ECFA);
-    func_80050B54(0);
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(0);
     func_8004FC10(0);
     if ((D_800E6280.unk_F88 & 0x20) && D_800E6280.unk_1093 != -1) {
         func_80044750(0x501);

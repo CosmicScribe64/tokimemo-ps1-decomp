@@ -168,7 +168,7 @@ void func_8014B274(u8 arg0) {
             }
         }
         *(s32 *)(p + 0x28) = func_800A0140(ang) << 5;
-        c = func_800A0070(ang);
+        c = rsin(ang);
         i += 1;
         p += 0x78;
         *(s32 *)(p - 0x4C) = c << 5;
@@ -239,9 +239,9 @@ void func_8014B4A4(u8 arg0) {
 
 void func_8014B5A4(u8 *arg0) {
     if (arg0[0x63] != 0) {
-        *(s32 *)(arg0 + 0x20) = -func_800A0070(*(s16 *)(arg0 + 0x16) << 5) * 0x600;
+        *(s32 *)(arg0 + 0x20) = -rsin(*(s16 *)(arg0 + 0x16) << 5) * 0x600;
     } else {
-        *(s32 *)(arg0 + 0x20) = func_800A0070(*(s16 *)(arg0 + 0x16) << 5) * 0x600;
+        *(s32 *)(arg0 + 0x20) = rsin(*(s16 *)(arg0 + 0x16) << 5) * 0x600;
     }
     if ((u32)*(u16 *)(arg0 + 0x5E) >= 0x11) {
         if (arg0[0x60] == 0) {
@@ -320,7 +320,7 @@ void func_8014B7A8(u8 *arg0) {
     case 1:
         if (arg0[0x63] != 0) {
             *(s32 *)(arg0 + 0x20) = func_800A0140(*(u16 *)(arg0 + 0x6E)) * 0x300;
-            *(s32 *)(arg0 + 0x24) = func_800A0070(*(u16 *)(arg0 + 0x6E)) * 0x300 + 0x680000;
+            *(s32 *)(arg0 + 0x24) = rsin(*(u16 *)(arg0 + 0x6E)) * 0x300 + 0x680000;
             *(s32 *)(arg0 + 0x28) = 0;
             if (*(u16 *)(arg0 + 0x6E) < 0xC00) {
                 *(u16 *)(arg0 + 6) = 2;
@@ -329,7 +329,7 @@ void func_8014B7A8(u8 *arg0) {
             idx = ((*(u16 *)(arg0 + 0x6E) + 0x100) & 0xFFF) / 512 * 3;
         } else {
             *(s32 *)(arg0 + 0x20) = func_800A0140(*(u16 *)(arg0 + 0x6E)) * 0x300;
-            *(s32 *)(arg0 + 0x24) = func_800A0070(*(u16 *)(arg0 + 0x6E)) * 0x300 + 0x680000;
+            *(s32 *)(arg0 + 0x24) = rsin(*(u16 *)(arg0 + 0x6E)) * 0x300 + 0x680000;
             *(s32 *)(arg0 + 0x28) = 0;
             if (*(u16 *)(arg0 + 0x6E) > 0x1C00) {
                 *(u16 *)(arg0 + 6) = 2;
@@ -406,10 +406,10 @@ void func_8014BB30(TtActor78 *arg0) {
     s32 value;
     u8 flag;
 
-    if ((s32)(func_800A0070(arg0->unk_24.w / 3072) << 9) < 0) {
-        value = -(func_800A0070(arg0->unk_24.w / 3072) << 9);
+    if ((s32)(rsin(arg0->unk_24.w / 3072) << 9) < 0) {
+        value = -(rsin(arg0->unk_24.w / 3072) << 9);
     } else {
-        value = func_800A0070(arg0->unk_24.w / 3072) << 9;
+        value = rsin(arg0->unk_24.w / 3072) << 9;
     }
     arg0->unk_20.w = (value + 0x100000) * (arg0->unk_50 - 2);
     if (((TtActorTail10 *)arg0->pad_5E)->unk_00 >= 0x19U) {
@@ -464,7 +464,7 @@ void func_8014BD68(u8 *arg0) {
     *(s32 *)(arg0 + 0x20) = (arg0[0x50] - 2) * (func_800A0140(*(u16 *)(arg0 + 0x6E) * 0x1E) << 9);
     t = *(u16 *)(arg0 + 0x6E);
     *(s32 *)(arg0 + 0x24) = (t - 0x10) << 16;
-    *(s32 *)(arg0 + 0x24) += (func_800A0070(t * 0x1E) << 9) * (arg0[0x50] - 2);
+    *(s32 *)(arg0 + 0x24) += (rsin(t * 0x1E) << 9) * (arg0[0x50] - 2);
     *(u16 *)(arg0 + 0x6E) += 1;
     if ((u32)*(u16 *)(arg0 + 0x5E) >= 0x19) {
         if (arg0[0x60] == 0) {

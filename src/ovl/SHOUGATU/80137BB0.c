@@ -70,19 +70,19 @@ void func_80137DE4(void) {
         if ((D_80144E0C && D_80144E0C) != 0) { }
         func_80083440(3);
     } else if ((D_80144E0C == 5) || (D_80144E0C == 13)) {
-        func_80083440(func_80051B48(8));
+        func_80083440(get_g_zyotai_h(8));
     }
     /* FAKE: zero increment promotes the selector into v1. T-9570 */
     D_80144E0C += 0;
 }
 
 void func_80137E54(void) {
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
@@ -90,14 +90,14 @@ void func_80137E54(void) {
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
-    func_8007C740();
-    func_800649D4();
-    func_80064E84();
+    addr_init_bustup();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     *(u8 *)&D_800E6280.unk_75D = *(u8 *)&D_800E6280.unk_F5F = 8;
     func_800847B8(*(u8 *)&D_800E6280.unk_F5F);
     if ((u8) D_80144E14 < 3U) {
-        func_800AE0F0(D_800CA188, "女生徒");
+        strcpy(D_800CA188, "女生徒");
     }
     func_80136F90();
     D_80144DFC = D_80144D90;
@@ -109,7 +109,7 @@ void func_80137E54(void) {
 void func_80137F70(void) {
     D_80144E08 = D_80144E14 * 3;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     func_8004284C();
 }
 

@@ -95,10 +95,10 @@ void func_8015AF90(void) {
         }
         break;
     case 2:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 3:
-        func_800848AC();
+        select_girl2();
         break;
     case 4:
         D_80122EBC = D_80122CDC;
@@ -106,12 +106,12 @@ void func_8015AF90(void) {
         func_8004284C();
         break;
     case 5:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 6:
-        func_8004E9F4(1);
-        func_8004E788(-0x80, 0x32, 0, (s32) "＊パソコン　ＮＭＳ＿９０００＊", 0);
-        func_8004E884(2);
+        k_reset(1);
+        set_kanji_string(-0x80, 0x32, 0, (s32) "＊パソコン　ＮＭＳ＿９０００＊", 0);
+        k_disp_start(2);
         func_8004284C();
         break;
     case 7:
@@ -120,12 +120,12 @@ void func_8015AF90(void) {
         break;
     case 8:
         if (D_80122EBC == 0xB) {
-            func_8004E788(-0x80, 0x42, 0, (s32) *girl_short_name_table, 0);
+            set_kanji_string(-0x80, 0x42, 0, (s32) *girl_short_name_table, 0);
         } else {
-            func_8004E788(-0x80, 0x42, 0, (s32) girl_short_name_table[D_80122EBC], 0);
+            set_kanji_string(-0x80, 0x42, 0, (s32) girl_short_name_table[D_80122EBC], 0);
         }
-        func_8004E788(-0x48, 0x42, 0, (s32)names.text[D_80122EBC], 0);
-        func_8004E884(4);
+        set_kanji_string(-0x48, 0x42, 0, (s32)names.text[D_80122EBC], 0);
+        k_disp_start(4);
         D_80160B4C = 0;
         func_8004284C();
         break;
@@ -137,8 +137,8 @@ void func_8015AF90(void) {
         }
         break;
     case 10:
-        func_8004E788(-0x10, 0x42, 0, (s32) "血液型", 0);
-        func_8004E884(5);
+        set_kanji_string(-0x10, 0x42, 0, (s32) "血液型", 0);
+        k_disp_start(5);
         func_8004284C();
         break;
     case 11:
@@ -150,11 +150,11 @@ void func_8015AF90(void) {
         break;
     case 12:
         if ((D_80122EBC == 0) || (D_80122EBC == 0xB)) {
-            func_8004E788(0x28, 0x42, 0, (s32)player_blood_types.text[(u32) (g->unk_1BC[0].unk_10.w << 0x15) >> 0x1E], 0);
+            set_kanji_string(0x28, 0x42, 0, (s32)player_blood_types.text[(u32) (g->unk_1BC[0].unk_10.w << 0x15) >> 0x1E], 0);
         } else {
-            func_8004E788(0x28, 0x42, 0, (s32)blood_types.text[D_80122EBC], 0);
+            set_kanji_string(0x28, 0x42, 0, (s32)blood_types.text[D_80122EBC], 0);
         }
-        func_8004E884(6);
+        k_disp_start(6);
         func_8004284C();
         break;
     case 13:
@@ -169,9 +169,9 @@ void func_8015AF90(void) {
         func_8004284C();
         break;
     case 15:
-        func_8004E788(-0x80, 0x52, 0, (s32) g->unk_0D4, 0);
-        func_8004E788(-0x48, 0x52, 0, (s32) g->unk_0DC, 0);
-        func_8004E884(8);
+        set_kanji_string(-0x80, 0x52, 0, (s32) g->unk_0D4, 0);
+        set_kanji_string(-0x48, 0x52, 0, (s32) g->unk_0DC, 0);
+        k_disp_start(8);
         D_80160B4C = 0;
         func_8004284C();
         break;
@@ -183,8 +183,8 @@ void func_8015AF90(void) {
         }
         break;
     case 17:
-        func_8004E788(-0x10, 0x52, 0, (s32) "血液型", 0);
-        func_8004E884(9);
+        set_kanji_string(-0x10, 0x52, 0, (s32) "血液型", 0);
+        k_disp_start(9);
         func_8004284C();
         break;
     case 18:
@@ -195,24 +195,24 @@ void func_8015AF90(void) {
         }
         break;
     case 19:
-        func_8004E788(0x28, 0x52, 0, (s32)player_blood_types.text[(u32) (g->unk_0F8 << 0x15) >> 0x1E], 0);
-        func_8004E884(0xA);
+        set_kanji_string(0x28, 0x52, 0, (s32)player_blood_types.text[(u32) (g->unk_0F8 << 0x15) >> 0x1E], 0);
+        k_disp_start(0xA);
         func_8004284C();
         break;
     case 20:
         D_80160B4C++;
-        if ((D_80160B4C >= 0x10U) && (func_8004ECB4() != 0)) {
+        if ((D_80160B4C >= 0x10U) && (check_end_k() != 0)) {
             D_8011ED5B ^= 0x80;
             D_80160B4C = 0;
         }
-        if ((g->unk_F88 & 0xF0) && (func_8004ECB4() != 0)) {
-            func_8004E9F4(1);
+        if ((g->unk_F88 & 0xF0) && (check_end_k() != 0)) {
+            k_reset(1);
             D_8011ED5B &= 0x7F;
             func_8004284C();
         }
         break;
     case 21:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 22:
         func_80044750(0x508);
@@ -228,7 +228,7 @@ void func_8015AF90(void) {
         }
         break;
     case 24:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 25:
         if ((func_8008667C(0) == 4) && (((u8) g->unk_1BC[0].unk_0C.b[2] >> 4) == 3)) {

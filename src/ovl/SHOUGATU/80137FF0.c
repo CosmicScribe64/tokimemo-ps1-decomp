@@ -130,12 +130,12 @@ void func_80138524(void) {
 }
 
 void func_801385AC(void) {
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
@@ -143,9 +143,9 @@ void func_801385AC(void) {
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
-    func_8007C740();
-    func_800649D4();
-    func_80064E84();
+    addr_init_bustup();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     func_800847B8(*(u8 *)&D_800E6280.unk_F5F = 2);
     func_80136F90();
@@ -163,14 +163,14 @@ void func_801385AC(void) {
 void func_801386CC(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "教室");
+    strcpy(D_800CA19C, "教室");
     func_8004284C();
 }
 
 void func_80138710(void) {
     D_80144E08 = 3;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "教室");
+    strcpy(D_800CA19C, "教室");
     func_8004284C();
 }
 
@@ -188,8 +188,8 @@ void func_80138758(void) {
     ((ShouByteFlags *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[2])->b3 = 1;
     D_80144E08 = 6;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "廊下");
-    func_800AE0F0(D_800CA1DC, "実験室");
+    strcpy(D_800CA19C, "廊下");
+    strcpy(D_800CA1DC, "実験室");
     func_8004284C();
 }
 
@@ -197,8 +197,8 @@ void func_80138868(void) {
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
     D_80144E08 = 0xE;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "教室");
-    func_800AE0F0(D_800CA1DC, "実験室");
+    strcpy(D_800CA19C, "教室");
+    strcpy(D_800CA1DC, "実験室");
     func_8004284C();
 }
 
@@ -206,7 +206,7 @@ void func_801388F0(void) {
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
     D_80144E08 = 0x12;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "実験室");
+    strcpy(D_800CA19C, "実験室");
     func_8004284C();
 }
 
@@ -214,7 +214,7 @@ void func_80138964(void) {
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
     D_80144E08 = 0x17;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "実験室");
+    strcpy(D_800CA19C, "実験室");
     func_8004284C();
 }
 

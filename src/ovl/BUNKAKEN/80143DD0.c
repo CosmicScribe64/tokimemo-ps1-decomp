@@ -531,26 +531,26 @@ void func_80144D38(void) {
     Tbl6_80144D38 tbl;
 
     tbl = D_80155F70;
-    func_8004E9F4(1);
+    k_reset(1);
     for (i = 0; i < 6; i++) {
         a[i] = (i & 1) * 0x78 - 0x80;
         b[i] = (i >> 1) * 0x10 + 0x32;
-        func_8004E788(a[i], b[i], 0, tbl.w[i], 0);
+        set_kanji_string(a[i], b[i], 0, tbl.w[i], 0);
         c[i] = 0x78;
         d[i] = 0x10;
     }
     D_80122D30 = 1;
-    func_8004E884(7);
-    func_8004F870(0, 6, a, b, c, d);
+    k_disp_start(7);
+    menu_set(0, 6, a, b, c, d);
     func_8006BC28(0);
 }
 
 void func_80144E9C(void) {
     s32 i;
 
-    func_8004F984(0, D_8011ECF6, D_8011ECFA);
+    menu_check(0, D_8011ECF6, D_8011ECFA);
     func_8004FC10(0);
-    func_80050B54(0);
+    menu_bar_show(0);
     func_8006BD6C(0);
     func_8006BA40();
     i = 0;
@@ -559,7 +559,7 @@ void func_80144E9C(void) {
             if (D_800E6280.unk_F90[i * 2].unk_06 != 0) {
                 D_80122CDC = i;
                 D_8011ECD3 &= ~0x80;
-                func_8004E9F4(1);
+                k_reset(1);
                 D_80122D30 = 0;
                 func_8004284C();
             }

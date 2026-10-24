@@ -11,7 +11,7 @@ s32 func_8013F15C();
 void func_80145CC0(void) {
     switch (D_8015EDD8) {
     case 0:
-        func_800AE0F0(D_8015E828, "　　　　アストラルファング　　　　");
+        strcpy(D_8015E828, "　　　　アストラルファング　　　　");
         func_8013E97C(0x38, 0, 0);
         D_80121531 = 4;
         func_8013E7C0(0x38, 1, 1, 1);
@@ -57,8 +57,8 @@ void func_80145CC0(void) {
         func_8014F080(0x96);
         break;
     case 9:
-        func_800AE0F0(D_8015E828, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E828, "「だめだ！　やられてしまう！");
+        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcat(D_8015E828, "「だめだ！　やられてしまう！");
         func_8014B738((s32) D_8015E8F0, 1, 0x78);
         func_8014EF3C();
         break;
@@ -66,7 +66,7 @@ void func_80145CC0(void) {
         func_8014F178(1);
         break;
     case 11:
-        func_800AE0F0(D_8015E828, "？？？「ピキィー！");
+        strcpy(D_8015E828, "？？？「ピキィー！");
         func_8014B738((s32) D_8015E8F0, 1, 0x5A);
         func_8014EF3C();
         break;
@@ -81,8 +81,8 @@ void func_80145CC0(void) {
         func_8014F178(1);
         break;
     case 15:
-        func_800AE0F0(D_8015E828, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E828, "「なっ、なんだ！");
+        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcat(D_8015E828, "「なっ、なんだ！");
         func_8014B738((s32) D_8015E8F0, 1, 0x5A);
         func_8014EF3C();
         break;
@@ -119,8 +119,8 @@ void func_80145CC0(void) {
         }
         break;
     case 18:
-        func_800AE0F0(D_8015E828, "正義のマングース参上！");
-        func_800AE0F0(D_8015E850, "　　　　　マングース斬鉄剣　　　　　");
+        strcpy(D_8015E828, "正義のマングース参上！");
+        strcpy(D_8015E850, "　　　　　マングース斬鉄剣　　　　　");
         func_8014B738((s32) D_8015E8F0, 2, 0x5A);
         D_8015EE18 ^= 0x10000000;
         func_8014EF3C();
@@ -188,10 +188,10 @@ void func_80145CC0(void) {
             func_8013E7C0(0x1D, 0, 1, 1);
         }
         k_disp_switch(D_8015EDE8, 0);
-        func_800AE0F0(D_8015E9E0, "戦闘に勝った！！");
-        func_800AE0F0(D_8015EA08, "ありがとう、正義のマングース");
-        func_800AE0F0(D_8015EA30, "経験値　：８２０ＥＸＰ");
-        func_800AE0F0(D_8015EA58, "お金　　：１７５ゴールド");
+        strcpy(D_8015E9E0, "戦闘に勝った！！");
+        strcpy(D_8015EA08, "ありがとう、正義のマングース");
+        strcpy(D_8015EA30, "経験値　：８２０ＥＸＰ");
+        strcpy(D_8015EA58, "お金　　：１７５ゴールド");
         func_80152384();
         func_8014EF3C();
         break;
@@ -249,7 +249,7 @@ s32 func_80146578(void) {
     case 1:
         D_8015EDE0 += 1;
         timer = D_8015EDE0;
-        bounce = func_800A0070((timer << 11) / 100) >> 8;
+        bounce = rsin((timer << 11) / 100) >> 8;
         x_neg = (timer * -0x30) / 100;
         func_8013E97C(0x34, x_neg, x_neg - bounce);
         y = x_neg - bounce;

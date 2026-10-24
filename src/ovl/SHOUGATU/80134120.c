@@ -30,7 +30,7 @@ void func_801341E4(void) {
      * operand order. T-10010. */
     six = 6;
     if (D_80143B20 == 0) {
-        result = (u8) func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+        result = (u8) get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
         if ((D_800E6280.unk_F5F == 4) && (result >= 2U)) {
             mode = (u8) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4;
             if (D_800E6280.unk_1BC[4].unk_0C.b[2]) {
@@ -81,9 +81,9 @@ void func_80134400(void) {
     tbl = D_80143D88;
     D_80143D20 = D_80122CDC;
     D_80143B00 += D_80122CDC;
-    func_800AE0F0(D_800CA250, tbl.s[D_80122CDC]);
+    strcpy(D_800CA250, tbl.s[D_80122CDC]);
     if (D_80143B20 == 0 && D_800E6280.unk_75D == 3 && D_80122CDC == 2) {
-        func_800AE0F0(D_800CA250, tbl.s[1]);
+        strcpy(D_800CA250, tbl.s[1]);
     }
     if (D_80122CDC == 0) {
         D_800E6280.unk_100.unk_02 += 0xA;
@@ -93,7 +93,7 @@ void func_80134400(void) {
         D_800E6280.unk_0FC.unk_02 += 0x19;
         D_800E6280.unk_F5F = 0xE;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
@@ -118,7 +118,7 @@ void func_801345C8(void) {
 
     if (D_80143B20 == 0) {
         /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-        v = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+        v = (u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
         if ((v != 0) && (v != 1)) {
             if (v != 2) {
                 D_80143B00 += 2;
@@ -135,7 +135,7 @@ void func_80134648(void) {
 
     if (D_80143B20 == 0) {
         /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-        v = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+        v = (u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
         switch (v) {
         case 0:
         case 1:
@@ -173,7 +173,7 @@ void func_80134730(void)
     do { } while (0);
     ((GameState *) (((u32) (&D_800E6280)) + (index * size)))->unk_1BC[0].unk_02 += 5;
     ((GameState *) (((u32) (&D_800E6280)) + (index * (size ^ 0))))->unk_1BC[0].unk_06 += 1;
-    do { func_80084D3C(size, index); } while (0);
+    do { check_para_limit(size, index); } while (0);
     D_800E6280.unk_F5F = 0xE;
     func_8004284C();
 }

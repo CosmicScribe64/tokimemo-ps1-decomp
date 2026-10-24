@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_get_now_k /* implicit declaration, as matched (main_api.h: u8(void)) */
 #include "common.h"
 #include "ovl/ENDING.h"
 #include "game.h"
@@ -113,7 +114,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
     u8 pad[8];
 
     if (kind != 0xFF) {
-        func_800AE0F0(buf, text);
+        strcpy(buf, text);
     }
     D_80122CF0 = 0;
     D_800CA2A8 = 0;

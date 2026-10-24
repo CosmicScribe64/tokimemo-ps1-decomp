@@ -40,6 +40,8 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/symbol_addrs_obin.txt
+    - config/symbol_addrs_sdk.txt
     - config/symbols_TACO.txt
     - config/labels/TACO.txt
   reloc_addrs_path:

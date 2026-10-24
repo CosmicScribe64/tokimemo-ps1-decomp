@@ -201,7 +201,7 @@ void func_801424A8(s32 arg0, s32 arg1) {
     }
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     rec = &D_8015E770[arg0];
     v.vz = rec->unk4;
     for (o = 0; o < 2; o++) {
@@ -218,7 +218,7 @@ void func_801424A8(s32 arg0, s32 arg1) {
         if (((s16 *)pt)[3] >= y - 0x200
             && y + 0x200 >= ((s16 *)pt)[7]) {
             side = (rec->unk12 >> 2) & 1;
-            poly = func_800490F0(0x28, k);
+            poly = GetWorkBase(0x28, k);
             func_8009F040(poly);
             SetSemiTrans(poly, 1);
             poly->r0 = 0x80;
@@ -235,7 +235,7 @@ void func_801424A8(s32 arg0, s32 arg1) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            func_8009EED0((D_8011ECA0 << 10) + 0x10 + D_800E8CA0, poly);
+            AddPrim((D_8011ECA0 << 10) + 0x10 + D_800E8CA0, poly);
         }
     }
 }

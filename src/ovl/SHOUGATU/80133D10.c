@@ -14,7 +14,7 @@ void func_80133D10(void) {
 void func_80133D98(void) {
     s16 var_v0;
 
-    func_800AE0F0(D_800CA19C, "初詣");
+    strcpy(D_800CA19C, "初詣");
     var_v0 = (D_80143B20 != 0) ? 0 : 0xF;
     if (D_80143B18 == 0) {
         var_v0 += 2;
@@ -106,6 +106,6 @@ void func_80134094(void) {
     } else {
         D_800E6280.unk_1BC[5].unk_02 += 1;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }

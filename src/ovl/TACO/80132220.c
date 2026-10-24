@@ -255,8 +255,8 @@ void func_801328B0(void) {
             break;
         case 6:
             act->unk0[1] = 0x90;
-            act->unk7C = 3 - (func_800AE0D0() & 7);
-            act->unk7E = 3 - (func_800AE0D0() & 7);
+            act->unk7C = 3 - (rand() & 7);
+            act->unk7E = 3 - (rand() & 7);
             act->unk2 += 1;
         case 7:
             if (D_8015EDB4->unk78 + 0x21 < act->unk78) {
@@ -268,16 +268,16 @@ void func_801328B0(void) {
             break;
         case 8:
             act->unk0[1] = 0x90;
-            in.vx = 0xF - (func_800AE0D0() & 0x1F);
-            in.vy = 0xF - (func_800AE0D0() & 0x1F);
-            in.vz = 0xF - (func_800AE0D0() & 0x1F);
+            in.vx = 0xF - (rand() & 0x1F);
+            in.vy = 0xF - (rand() & 0x1F);
+            in.vz = 0xF - (rand() & 0x1F);
             func_800AA460(&in, &out);
             act->unk7C = out.vx / 103;
             act->unk7E = out.vy / 103;
             act->unk80 = out.vz / 103;
             act->unk2 += 1;
         case 9:
-            if (!(func_800AE0D0() & 0x7F)) {
+            if (!(rand() & 0x7F)) {
                 act->unk2 = 8;
             }
             break;
@@ -304,14 +304,14 @@ void func_801328B0(void) {
     if (act->unk76 < -0x800) {
         act->unk76 = -0x800;
     }
-    if (!(func_800AE0D0() & 0x3F)) {
-        act->unk80 = 0xF - (func_800AE0D0() & 0x1F);
+    if (!(rand() & 0x3F)) {
+        act->unk80 = 0xF - (rand() & 0x1F);
     }
     if (D_8015EDB4->unk78 + 0x200 < act->unk78) {
-        act->unk80 = -(func_800AE0D0() & 0xF);
+        act->unk80 = -(rand() & 0xF);
     }
     if (act->unk78 < -0x1000) {
-        act->unk80 = func_800AE0D0() & 0xF;
+        act->unk80 = rand() & 0xF;
     }
     act->unk6C = 0x400;
     act->unk6E = 0x400;

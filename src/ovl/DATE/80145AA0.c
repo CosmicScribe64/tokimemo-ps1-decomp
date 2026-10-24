@@ -65,7 +65,7 @@ void func_80145DF0(void) {
     u8 x;
 
     D_800E6280.unk_71E |= 8;
-    x = func_80051A68(D_800E6280.unk_F5F);
+    x = get_g_zyotai_s(D_800E6280.unk_F5F);
     if ((x & 0x7F) >= 2U) {
         func_80042940(9);
         return;

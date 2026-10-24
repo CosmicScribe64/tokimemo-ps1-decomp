@@ -31,14 +31,14 @@ s32 func_80134314(void) {
             D_800E6280.unk_110D += 1;
         }
     } else {
-        func_80048390();
+        tpage_buf_clear();
         func_80048E78();
         if (D_80122EB8 == 1) {
-            func_800573AC();
-            func_800438F0(1);
+            dec_bg_reset();
+            back_clear_switch(1);
         }
-        func_8006492C(1);
-        func_8004EBEC(*(u8 *)&D_8013C700);
+        hizuke_disp_switch(1);
+        k_speed_set(*(u8 *)&D_8013C700);
         func_80042908(0x10);
         func_80044750(0x200);
     }

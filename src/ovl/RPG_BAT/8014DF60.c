@@ -76,7 +76,7 @@ void func_8014DF60(void) {
 }
 
 void func_8014E1A4(void) {
-    func_800AE0F0(D_8015E904, "鏡「また私のとりこが一人。");
+    strcpy(D_8015E904, "鏡「また私のとりこが一人。");
     func_8014B738(D_8015E9CC, 1, 0x8C);
     func_8013F1C4(0x0300001D, 0x04000025, 0);
     switch (D_8015EBAC) {
@@ -96,7 +96,7 @@ void func_8014E1A4(void) {
 }
 
 void func_8014E28C(void) {
-    func_800AE0F0(D_8015E904, "鏡「でなおしてらっしゃい！");
+    strcpy(D_8015E904, "鏡「でなおしてらっしゃい！");
     func_8014B738(D_8015E9CC, 1, 0x64);
     func_8013F1C4(0x1F000069, 0x1300006D, 0);
     func_8013E7C0(0x1D, 6, 1, 1);
@@ -114,10 +114,10 @@ void func_8014E300(void) {
     }
     if (D_8015EBAC == 0) {
         D_8015EE0C += 7;
-        func_8013E97C(0x1E, (p->dx * D_8015EE0C) / 1000 + 0xE0, (func_800A0070((D_8015EE0C << 0xD) / 1000) >> 8) + (p->dy * D_8015EE0C) / 1000 + 0x80);
+        func_8013E97C(0x1E, (p->dx * D_8015EE0C) / 1000 + 0xE0, (rsin((D_8015EE0C << 0xD) / 1000) >> 8) + (p->dy * D_8015EE0C) / 1000 + 0x80);
     } else {
         D_8015EE0C += 5;
-        func_8013E97C(0x1E, (p->dx * D_8015EE0C) / 1000 + 0xE0, (func_800A0070((D_8015EE0C * 0x3000) / 1000) >> 8) + (p->dy * D_8015EE0C) / 1000 + 0x80);
+        func_8013E97C(0x1E, (p->dx * D_8015EE0C) / 1000 + 0xE0, (rsin((D_8015EE0C * 0x3000) / 1000) >> 8) + (p->dy * D_8015EE0C) / 1000 + 0x80);
     }
     if (D_8015EE0C >= 0x3E9) {
         func_8013E97C(0x1E, p->x, p->y - 0xE);

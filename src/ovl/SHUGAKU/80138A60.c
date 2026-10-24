@@ -16,7 +16,7 @@ void func_80138A60(void) {
 }
 
 void func_80138ADC(void) {
-    func_8004E884(func_8004E788(-0x80, 0x30, 2, "【団体行動中】", 0));
+    k_disp_start(set_kanji_string(-0x80, 0x30, 2, "【団体行動中】", 0));
     func_8004284C();
 }
 
@@ -155,7 +155,7 @@ INCLUDE_RODATA("asm/ovl/SHUGAKU/data/SHUGAKU/80138A60.rodata", D_8013AEF0);
 
 void func_80139018(void) {
     bg_read_sub2(0x4225);
-    func_800AE0F0(D_800CA19C, &D_8013AEF0);
+    strcpy(D_800CA19C, &D_8013AEF0);
     func_8004284C();
 }
 
@@ -165,16 +165,16 @@ void func_80139054(void) {
     n = D_800CA2CC;
     switch (n) {
     case 0:
-        func_8007ED84(0x425E);
-        func_800AE0F0(D_800CA19C, "社寺巡り");
+        bg_read_sub2(0x425E);
+        strcpy(D_800CA19C, "社寺巡り");
         break;
     case 1:
-        func_8007ED84(0x424B);
-        func_800AE0F0(D_800CA19C, "守礼門");
+        bg_read_sub2(0x424B);
+        strcpy(D_800CA19C, "守礼門");
         break;
     default:
-        func_8007ED84(0x4271);
-        func_800AE0F0(D_800CA19C, "時計台前");
+        bg_read_sub2(0x4271);
+        strcpy(D_800CA19C, "時計台前");
         break;
     }
     if (D_800CA2EC == 0) {
@@ -264,13 +264,13 @@ void func_80139400(void) {
     selection = D_800CA2CC;
     switch (selection) {
     case 0:
-        func_800AE0F0(D_800CA23C, "京都");
+        strcpy(D_800CA23C, "京都");
         break;
     case 1:
-        func_800AE0F0(D_800CA23C, "那覇");
+        strcpy(D_800CA23C, "那覇");
         break;
     case 2:
-        func_800AE0F0(D_800CA23C, "札幌");
+        strcpy(D_800CA23C, "札幌");
         break;
     }
     func_8004284C();
@@ -321,7 +321,7 @@ void func_80139604(void) {
     u32 t;
 
     if (D_800CA2EC == 0) {
-        x = func_80051A68(D_800E6280.unk_F5F);
+        x = get_g_zyotai_s(D_800E6280.unk_F5F);
         t = x & 0x7F;
         if (t < 2U) {
             var_v0 = 0;
@@ -361,13 +361,13 @@ s32 func_80139740(void) {
     s32 state;
     u8 t; /* FAKE: narrow type shifts the temporary numbering to the original's (permuter, T-10310) */
 
-    t = func_80051A68(D_800E6280.unk_F5F);
+    t = get_g_zyotai_s(D_800E6280.unk_F5F);
     D_8013C97C = 0xFF;
     if ((t & 0x7F) == 4 && D_800CA2EC == 0) {
         D_8013C97C = D_800E6280.unk_F5F;
         if (D_800E6280.unk_F5F == 1) {
             state = D_800E6280.unk_110A;
-            func_8007E5A0();
+            normal_date_girl_out();
             if (state == D_800E6280.unk_110A) {
                 return 0;
             }
@@ -375,7 +375,7 @@ s32 func_80139740(void) {
         D_800CA2EC = 1;
         D_800E6280.unk_F5F = 0xD;
         func_800847B8(0xD);
-        func_80051438(girl_name_buf, D_8013C97C);
+        get_g_name(girl_name_buf, D_8013C97C);
         func_8004284C();
     } else {
         func_8004284C();

@@ -9,12 +9,12 @@ void func_80133540(void) {
     tbl = D_8013C3E4;
     func_80083808();
     tbl.f[D_800E6280.unk_110A](0x80);
-    func_8007EDF8();
-    func_800846C0();
+    check_k_scroll();
+    k_disp_inc2();
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
-    func_80064DEC();
+    hizuke_show();
     func_80083A10();
 }
 
@@ -28,7 +28,7 @@ void func_801335F4(void) {
 }
 
 void func_8013363C(void) {
-    func_800AE0A0((void *)(0x801A0000 + D_800E6280.unk_1104.w * 0x2800), 0x80180000 + D_800E6280.unk_1104.w * 0x2800, 0x2800);
+    memcpy((void *)(0x801A0000 + D_800E6280.unk_1104.w * 0x2800), 0x80180000 + D_800E6280.unk_1104.w * 0x2800, 0x2800);
     D_800E6280.unk_1104.w += 1;
     if (D_800E6280.unk_1104.w == 9) {
         func_8004284C();
@@ -53,7 +53,7 @@ void func_801336A8(void) {
 }
 
 void func_80133738(void) {
-    func_800AE0A0((void *)(0x80180000 + D_800E6280.unk_1104.w * 0x2800), 0x801A0000 + D_800E6280.unk_1104.w * 0x2800, 0x2800);
+    memcpy((void *)(0x80180000 + D_800E6280.unk_1104.w * 0x2800), 0x801A0000 + D_800E6280.unk_1104.w * 0x2800, 0x2800);
     D_800E6280.unk_1104.w += 1;
     if (D_800E6280.unk_1104.w == 9) {
         func_8004284C();
@@ -107,7 +107,7 @@ s32 func_801338F8(void) {
     D_800E6280.unk_75D = 0xC;
     D_800CA148 = 0;
     D_800CA14C = 0;
-    func_800AE0F0(D_800CA188, "外井");
+    strcpy(D_800CA188, "外井");
     func_80132000();
     D_800CA160 = D_8013C280[0][15];
     D_800CA164 = D_8013C280[1][15];
@@ -119,7 +119,7 @@ INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFB8);
 
 void func_801339C0(void) {
     D_800E6280.unk_75D = 0xC;
-    func_800AE0F0(D_800CA188, D_8013BFB8);
+    strcpy(D_800CA188, D_8013BFB8);
     func_8004284C();
 }
 
@@ -127,7 +127,7 @@ INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFC0);
 
 void func_80133A00(void) {
     D_800E6280.unk_75D = 0xE;
-    func_800AE0F0(D_800CA188, D_8013BFC0);
+    strcpy(D_800CA188, D_8013BFC0);
     func_8004284C();
 }
 
@@ -153,12 +153,12 @@ void func_80133AD0(void) {
     tbl = D_8013C490;
     func_80083808();
     tbl.f[D_800E6280.unk_110A](0x80);
-    func_8007EDF8();
-    func_800846C0();
+    check_k_scroll();
+    k_disp_inc2();
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
-    func_80064DEC();
+    hizuke_show();
     func_80083A10();
 }
 

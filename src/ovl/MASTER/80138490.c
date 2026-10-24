@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_Vblnk_Timer_Init /* implicit declaration, as matched (main_api.h: void(void)) */
 #include "ovl/MASTER.h"
 
 void func_80138490(void) {
@@ -10,7 +11,7 @@ void func_80138490(void) {
         D_800E6280.unk_71C += 1;
         D_800E6280.unk_71E |= 1;
         func_80044750(0xCF);
-        func_80085ED0();
+        Vblnk_Timer_Init();
         if ((D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF)) && (D_800E6280.unk_040 == ((u32) (D_800E6280.unk_0F8 << 0x17) >> 0x1B))) {
             if (!(D_800E6280.unk_71E & 4)) {
                 if (func_8008667C(0) < 2) {
@@ -31,7 +32,7 @@ block_8:
         }
         break;
     case 1:
-        func_8007EAAC();
+        normal_date_move_place();
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
@@ -48,14 +49,14 @@ block_8:
         }
         break;
     case 3:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 4:
-        func_80083174();
+        normal_date_two_select();
         break;
     case 5:
         if ((*(u32 *)&D_80122CDC) != 0) {
-            func_80085A60();
+            normal_date_speak();
         } else {
             func_80042940(7);
         }
@@ -74,17 +75,17 @@ block_8:
         }
         break;
     case 8:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 9:
         D_800CA148 = 5;
         func_8004284C();
         break;
     case 10:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 11:
-        func_80082F70();
+        normal_date_three_select();
         break;
     case 12:
         func_80138E58();
@@ -92,11 +93,11 @@ block_8:
         func_8004284C();
         break;
     case 13:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 14:
         if (cd_read_sync_status() & 1) {
-            func_8007C740();
+            addr_init_bustup();
             func_80083474();
         }
         break;
@@ -105,10 +106,10 @@ block_8:
         func_8004284C();
         break;
     case 16:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 17:
-        func_8007E390();
+        normal_date_girl_in();
         break;
     case 18:
         temp_v0 = func_8008667C(0);
@@ -130,7 +131,7 @@ block_8:
         func_8004284C();
         break;
     case 19:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 20:
         temp_v0_2 = func_8008667C(0);
@@ -152,7 +153,7 @@ block_8:
         func_8004284C();
         break;
     case 21:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 22:
         switch ((*(u32 *)&D_80122CDC)) {
@@ -181,13 +182,13 @@ block_8:
         func_8004284C();
         break;
     case 23:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 24:
-        func_8007E5A0();
+        normal_date_girl_out();
         break;
     case 25:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 26:
         func_80085B3C(0x15, 6);
@@ -195,7 +196,7 @@ block_8:
         break;
     case 27:
         D_800E6280.unk_71C += 1;
-        func_8007EAAC();
+        normal_date_move_place();
         break;
     case 28:
         if (cd_read_sync_status() & 1) {
@@ -213,7 +214,7 @@ block_8:
         break;
     case 29:
         if (cd_read_sync_status() & 1) {
-            func_8007C740();
+            addr_init_bustup();
             func_80083474();
             func_80044750(0xBF);
             func_80044890(1, 0xC043, 0xC01D, 0xCA95, 0xCA4F, 0xCA3E);
@@ -226,13 +227,13 @@ block_8:
         }
         break;
     case 31:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 32:
-        func_8007E390();
+        normal_date_girl_in();
         break;
     case 33:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 34:
         cd_read_sectors(3U, 0x801E8000, 0x49B7);
@@ -250,24 +251,24 @@ block_8:
         }
         break;
     case 36:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 37:
         D_800CA148 = 0x21;
         func_8004284C();
         break;
     case 38:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 39:
-        func_80082F70();
+        normal_date_three_select();
         break;
     case 40:
         D_800CA148 = 0x17;
         func_8004284C();
         break;
     case 41:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 42:
         switch ((*(u32 *)&D_80122CDC)) {
@@ -296,13 +297,13 @@ block_8:
         func_8004284C();
         break;
     case 43:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 44:
-        func_8007E5A0();
+        normal_date_girl_out();
         break;
     case 45:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 46:
         func_80085B3C(0x15, 6);
@@ -312,7 +313,7 @@ block_8:
         func_80046500();
         break;
     }
-    func_80086424();
+    Default_Disp();
 }
 
 void func_80138E58(void) {
@@ -320,7 +321,7 @@ void func_80138E58(void) {
     PtrTbl3 tbl;
 
     tbl = D_8013C700;
-    func_800AE0F0(D_800CA25C, tbl.p[D_80122CDC]);
+    strcpy(D_800CA25C, tbl.p[D_80122CDC]);
 }
 
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80138490.rodata", D_8013BFB0);

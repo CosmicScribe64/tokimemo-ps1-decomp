@@ -212,7 +212,7 @@ void func_80134060(void) {
             func_8004284C();
         }
         if (D_80120652 == 0) {
-            idx = func_800AE0D0();
+            idx = rand();
             D_80120652 = 5;
             D_80120653 = 0xA4;
             idx %= 9;
@@ -230,7 +230,7 @@ void func_80134060(void) {
     case 3:
         Scroll(0, 0xF, 0, 0xF0, 0x280);
         if (D_80120652 == 0) {
-            idx = func_800AE0D0();
+            idx = rand();
             D_80120652 = 5;
             D_80120653 = 0xA4;
             idx %= 9;
@@ -370,9 +370,9 @@ void func_801346FC(void) {
             ((DisplayActor44 *)D_8011ECD0)[105].unk_02 = 0x40;
             ((DisplayActor44 *)D_8011ECD0)[105].unk_03 = 0xA4;
             ((DisplayActor44 *)D_8011ECD0)[105].unk_18 = sprites.v[D_801491EC];
-            func_8004E788((s16) (((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x40), 0x40, 0, first_text.value[D_801491EC], 0);
-            func_8004E788((s16) (((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x48), 0x50, 0, second_text.value[D_801491EC], 0);
-            func_8004E884(2);
+            set_kanji_string((s16) (((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x40), 0x40, 0, first_text.value[D_801491EC], 0);
+            set_kanji_string((s16) (((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x48), 0x50, 0, second_text.value[D_801491EC], 0);
+            k_disp_start(2);
             text_x = ((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x30;
             ((DisplayActor44 *)D_8011ECD0)[105].unk_26 = text_x + 0x50;
             ((DisplayActor44 *)D_8011ECD0)[104].unk_26 = text_x;
@@ -655,7 +655,7 @@ void func_80135480(void) {
         D_801491E4 = 0x100;
         D_801491E8 = 0x18000;
     }
-    func_800AE120(D_800E6280.unk_10F4);
+    srand(D_800E6280.unk_10F4);
     for (i = 0; i < 2; i++) {
         D_801492A4[i] = 0xFF;
     }
@@ -769,7 +769,7 @@ void func_80135AD0(void) {
             available[count++] = i;
         }
     }
-    D_801491EC = characters.v[available[func_800AE0D0() % count]];
+    D_801491EC = characters.v[available[rand() % count]];
     for (i = 0; i < 30; i++) {
         if (i < 10) {
             row = 0;
@@ -808,15 +808,15 @@ s32 func_80135D24(void) {
     TaiRandomTable table;
 
     table = D_80149570;
-    random = func_800AE0D0() % 11;
+    random = rand() % 11;
     row = random;
     if (random >= D_801491EC) {
         row = random + 1;
     }
     if (row >= 11) {
-        row = func_800AE0D0() % 10;
+        row = rand() % 10;
     }
-    random = func_800AE0D0();
+    random = rand();
     return table.value[row][random % 10];
 }
 
@@ -830,7 +830,7 @@ void func_80135DF8(void) {
     table = D_8014964C;
     index = 0;
     for (row = 0; row < 10; row++) {
-        skip = func_800AE0D0() % 3;
+        skip = rand() % 3;
         for (column = 0; column < 3; column++) {
             if (skip != column) {
                 ((DisplayActor44 *)D_8011ECD0)[row * 3 + column + 46].unk_16 = table.value[D_801491EC][index];
@@ -870,20 +870,20 @@ void func_80135F3C(void) {
     player_codes = D_80149754;
     rival_codes = D_8014976C;
     flags = D_80149784;
-    D_80149208.player.unk_02 = func_800AE0D0() % 20 + 10;
+    D_80149208.player.unk_02 = rand() % 20 + 10;
     while (D_80149208.player.unk_02 == 19) {
-        D_80149208.player.unk_02 = func_800AE0D0() % 20 + 10;
+        D_80149208.player.unk_02 = rand() % 20 + 10;
     }
     RUNNER_DISP(D_80149208.player.unk_02).unk_16 = player_codes.v[D_801491EC];
     for (i = 0; i < 3; i++) {
-        D_80149208.cpu[i].unk_02 = func_800AE0D0() % 30;
+        D_80149208.cpu[i].unk_02 = rand() % 30;
         while (D_80149208.cpu[i].unk_02 == 19) {
-            D_80149208.cpu[i].unk_02 = func_800AE0D0() % 30;
+            D_80149208.cpu[i].unk_02 = rand() % 30;
         }
     }
     D_801491DC = func_8008647C();
     if (func_8008667C(D_801491DC) < 2 && D_801491DC != choices.value[D_801491EC]) {
-        D_801491D8 = func_800AE0D0() % 10;
+        D_801491D8 = rand() % 10;
         RUNNER_DISP(D_801491D8).unk_16 = rival_codes.v[D_801491DC];
         DISP(115).unk_16 = RUNNER_DISP(D_801491D8).unk_16 >> 3;
         DISP(115).unk_43 = flags.value[RUNNER_DISP(D_801491D8).unk_16 >> 3][RUNNER_DISP(D_801491D8).unk_16 & 7];
@@ -897,7 +897,7 @@ void func_80135F3C(void) {
         for (j = 1; j <= i + 1; j++) {
             while (RUNNER_DISP(D_80149208.cpu[i].unk_02).unk_16 == RUNNER_DISP(RUN(i + 1 - j).unk_02).unk_16
                    || RUNNER_DISP(D_80149208.cpu[i].unk_02).unk_16 == RUNNER_DISP(D_801491D8).unk_16) {
-                D_80149208.cpu[i].unk_02 = func_800AE0D0() % 30;
+                D_80149208.cpu[i].unk_02 = rand() % 30;
             }
         }
     }
@@ -922,7 +922,7 @@ void func_801365C8(void) {
         if (D_801492A8[i] >= 121U) {
             D_801492A8[i] = 0;
         } else if (D_801492A8[i] == 10) {
-            D_801492A4[i] = func_800AE0D0() % 20 + 10;
+            D_801492A4[i] = rand() % 20 + 10;
         } else if (D_801492A8[i] == 27) {
             D_801492A4[i] = 0xFF;
         } else if (D_801492A8[i] >= 19U && D_801492A4[i] != 0xFF) {
@@ -1123,7 +1123,7 @@ void func_80136EC0(void) {
         if (D_80149208.cpu[i].unk_01 != 0) {
             switch ((s32)D_80149208.cpu[i].unk_05) {
             case 0:
-                D_80149208.cpu[i].unk_08 = func_800AE0D0() % 120 + wait.value[i] + 60;
+                D_80149208.cpu[i].unk_08 = rand() % 120 + wait.value[i] + 60;
                 D_80149208.cpu[i].unk_05++;
                 break;
             case 1:
@@ -1298,7 +1298,7 @@ void func_80137544(void) {
     s32 one; /* FAKE: names the constant 1 so that it is the first operand of the three compares (bne v0,t8). */
 
     one = 1;
-    func_800863D4(0x6A);
+    Yubi(0x6A);
     if (D_800B3CFC != 0 && D_80122E94 == 0xFF) {
         if (one == D_80122EA0) {
             func_80044750(0x60E);

@@ -85,13 +85,13 @@ void func_80156954(void) {
     D_8015E20C = D_8015E054;
     D_8015E210 = D_8015E190;
     func_80156600();
-    func_80043914(D_8015FCF0, 0x11, 1, 2, 0);
+    load_palette(D_8015FCF0, 0x11, 1, 2, 0);
     func_80084E90(D_8015FCF4, D_8015FCF8, D_8015FCFC, D_8015FD00, D_8015FD04, D_8015FD08);
     func_800850D4(D_8015FCE4, D_8015FCE8, D_8015FCE0, (s32) D_8015FCEC);
     D_800E6280.unk_1BC[6].unk_02 += 1;
     D_800E6280.unk_1BC[6].unk_06 += 1;
     D_800E6280.unk_1BC[6].unk_0A -= 0x14;
-    func_80084D3C();
+    check_para_limit();
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0xD] += 1;
     D_800CA21C[0] = 2;
     D_800CA21C[2] = 2;
@@ -129,14 +129,14 @@ void func_80156C40(void) {
     D_8015E20C = D_8015E05C;
     D_8015E210 = D_8015E198;
     func_80156760();
-    func_80043914(D_8015FD48, 0x11, 1, 2, 0);
+    load_palette(D_8015FD48, 0x11, 1, 2, 0);
     func_80084E90(D_8015FD4C, D_8015FD50, D_8015FD54, D_8015FD58, D_8015FD5C, D_8015FD60);
     func_800850D4(D_8015FD3C, D_8015FD40, D_8015FD38, (s32) D_8015FD44);
     D_800CA360 = 1;
     D_800E6280.unk_1BC[6].unk_02 += 2;
     D_800E6280.unk_1BC[6].unk_06 += 2;
     D_800E6280.unk_1BC[6].unk_0A -= 0xA;
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
@@ -144,7 +144,7 @@ void func_80156D60(void) {
     D_8015E208 = D_8015DF24;
     D_8015E20C = D_8015E060;
     D_8015E210 = D_8015E19C;
-    if ((u8)(func_80051A68(6) & 0x7F) < 2) {
+    if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2) {
         D_800E6280.unk_1BC[6].unk_02 += 3;
         D_800E6280.unk_1BC[6].unk_06 += 2;
     } else {
@@ -152,7 +152,7 @@ void func_80156D60(void) {
         D_800E6280.unk_1BC[6].unk_06 += 3;
     }
     D_800E6280.unk_1BC[6].unk_0A -= 0x14;
-    func_80084D3C();
+    check_para_limit();
     func_80156810();
     load_palette(D_8015FD74, 0x11, 1, 2, 0);
     func_80084E90(D_8015FD78, D_8015FD7C, D_8015FD80, D_8015FD84, D_8015FD88, D_8015FD8C);
@@ -172,8 +172,8 @@ void func_80156EE8(void) {
 }
 
 void func_80156F10(void) {
-    func_800AE0F0(D_800CA1DC, "無人島");
-    func_8007ED84(0x45B6);
+    strcpy(D_800CA1DC, "無人島");
+    bg_read_sub2(0x45B6);
     func_8004284C();
 }
 
@@ -355,7 +355,7 @@ void func_80157698(void) {
 
     one = 1;
     func_8014C5C8();
-    x = func_80051A68(6);
+    x = get_g_zyotai_s(6);
     t = x & 0x7F;
     if ((t >= 2U) && (D_800CA154 == 8) && (one == D_800E6280.unk_1104.w)) {
         func_80083440(2);

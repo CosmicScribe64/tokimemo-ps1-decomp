@@ -6,7 +6,7 @@ void func_801421E0(void) {
 
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　　世界征服ロボ　　　　　　");
+        strcpy(D_8015E74C, "　　　　　　世界征服ロボ　　　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_8014EEF4();
         func_80144480();
@@ -55,7 +55,7 @@ void func_801421E0(void) {
         func_801426B0();
         break;
     case 11:
-        func_800AE0F0(D_8015E74C, "ロボ「服従パーンチ！");
+        strcpy(D_8015E74C, "ロボ「服従パーンチ！");
         func_8014B738((s32) &D_8015E814, 1, 0x3C);
         func_8014EBA8();
         break;
@@ -66,7 +66,7 @@ void func_801421E0(void) {
         func_801427E4();
         break;
     case 14:
-        func_800AE0F0(D_8015E74C, "ロボ「独裁ミサイールッ！");
+        strcpy(D_8015E74C, "ロボ「独裁ミサイールッ！");
         func_8014B738((s32) &D_8015E814, 1, 0x3C);
         func_8014EBA8();
         break;
@@ -80,7 +80,7 @@ void func_801421E0(void) {
         func_8014ED44(0x1E);
         break;
     case 18:
-        func_800AE0F0(D_8015E74C, "ロボ「世界征服ビィーム！");
+        strcpy(D_8015E74C, "ロボ「世界征服ビィーム！");
         func_8014B738((s32) &D_8015E814, 1, 0x3C);
         func_8014EBA8();
         break;

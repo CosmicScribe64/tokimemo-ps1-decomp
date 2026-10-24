@@ -1,10 +1,13 @@
-#define MAIN_API_OVERRIDE_func_800AE0B0 /* FAKE: integer result keeps the retry flag in v1. T-25038 */
+#define MAIN_API_OVERRIDE_printf /* FAKE: integer result keeps the retry flag in v1. T-25038 */
 #define MAIN_API_OVERRIDE_func_800847B8 /* FAKE: integer return view keeps E50C's loop counter in v1. T-25033 */
+#define MAIN_API_OVERRIDE_get_g_zyotai_s /* matched with s32() (main_api.h: s32(s32)) */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
+s32 get_g_zyotai_s();
+
 s32 func_800847B8();
-s32 func_800AE0B0(void *arg0, ...);
+s32 printf(void *arg0, ...);
 
 /* Existing exception: EVENT owns a table at this overlapping address; moving
  * this scalar to main_api.h needs its override first. T-11590, T-25038 */
@@ -30,7 +33,7 @@ s32 func_8013E330(void) {
 void func_8013E410(void) {
     u8 kind;
 
-    kind = func_80051A68(0) & 0x7F;
+    kind = get_g_zyotai_s(0) & 0x7F;
     if ((D_80146050 != 0) || (kind == 4)) {
         func_8013D2A8();
         return;
@@ -40,7 +43,7 @@ void func_8013E410(void) {
 
 void func_8013E464(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    if (((u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F) != 4) {
+    if (((u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F) != 4) {
         func_8004284C();
         return;
     }
@@ -77,7 +80,7 @@ void func_8013E50C(void) {
     }
     /* FAKE: narrowing spends the target's expression temporaries; the byte
      * argument view keeps the later index-reload base in a2. T-25033 */
-    D_80145F2C = (((u8)func_80051A68(*(u8 *)&D_800E6280.unk_F5F) & 0x7F) == 4) * 4;
+    D_80145F2C = (((u8)get_g_zyotai_s(*(u8 *)&D_800E6280.unk_F5F) & 0x7F) == 4) * 4;
     D_80145F20 = D_80145AD4;
     D_80145F24 = D_80145B08;
     D_80145F28 = D_80145B3C;
@@ -111,7 +114,7 @@ void func_8013E6E4(void) {
     do {
         /* FAKE: multiplication by one preserves the original sum operand order. T-25038 */
         D_800E6280.unk_F5F = (D_800E6280.unk_10F8 * 1 + i) % 10U + 1;
-        func_800AE0B0("num%d girl%d\n", count, D_800E6280.unk_F5F);
+        printf("num%d girl%d\n", count, D_800E6280.unk_F5F);
         i++;
         if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1 && D_800E6280.unk_F5F >= 9) {
             continue;
@@ -135,7 +138,7 @@ void func_8013E6E4(void) {
     D_80145F2C = 0;
     /* FAKE: narrowing spends the original temporary slots; the byte argument
      * view prevents selector promotion through the club filters. T-25038 */
-    status = (u8)func_80051A68(*(u8 *)&D_800E6280.unk_F5F);
+    status = (u8)get_g_zyotai_s(*(u8 *)&D_800E6280.unk_F5F);
     if (D_800E6280.unk_F5F == 6 && (status & 0x7F) >= 2U) {
         D_80145F2C++;
     }
@@ -225,7 +228,7 @@ void func_8013EA98(void) {
     D_80146058 = D_800E71DF;
     D_80145F2C = 0;
     /* FAKE: narrowing as in func_8013E6E4. T-25038 */
-    status = (u8)func_80051A68(D_800E71DF);
+    status = (u8)get_g_zyotai_s(D_800E71DF);
     if (D_800E6280.unk_F5F == 6 && (status & 0x7F) >= 2U) {
         D_80145F2C++;
     }

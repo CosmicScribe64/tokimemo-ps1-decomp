@@ -44,7 +44,7 @@ void func_80146E3C(void) {
     D_8012278D = 0x60;
     D_8012278E = 0x60;
     func_8009AD70(2, &D_80122780);
-    func_8009B310(0, 0, 0);
+    GsSetAmbient(0, 0, 0);
     func_8009B340(0);
 }
 
@@ -287,7 +287,7 @@ void func_80147C98(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s
     vec.vx = D_80127480[arg1].unk18;
     vec.vy = D_80127480[arg1].unk1C;
     vec.vz = D_80127480[arg1].unk20;
-    func_800A0ECC(&m, &vec, &rot);
+    ApplyMatrixSV(&m, &vec, &rot);
     out.x = D_80127480[arg0].unk18 + rot.vx + arg2;
     out.y = D_80127480[arg0].unk1C + rot.vy + arg3;
     out.z = D_80127480[arg0].unk20 + rot.vz + (s16)arg4;
@@ -312,7 +312,7 @@ void func_80147E80(s32 arg0) {
         temp_v0 = *(u8 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3539));
         var_s0 = var_s3 * 0x11;
         if ((temp_v0 != 0) && (temp_v0 < 9U)) {
-            var_s2 = func_800AE0D0() & 0xFF;
+            var_s2 = rand() & 0xFF;
             var_s0 = (s32) &D_8015EDB4->unk0[var_s1];
             var_s2 = var_s2;
             func_8013D838((s32) *(s16 *)((unsigned char *)var_s0 + (3652)), (s32) *(s16 *)((unsigned char *)var_s0 + (3654)), (s32) *(s16 *)((unsigned char *)var_s0 + (3656)), *(u8 *)((unsigned char *)var_s0 + (3539)) - 1);
@@ -324,9 +324,9 @@ void func_80147E80(s32 arg0) {
             func_8013D838((s32) *(s16 *)((unsigned char *)var_s0 + (3652)), (s32) (s16) (*(s16 *)((unsigned char *)var_s0 + (3654)) - var_s2), (s32) *(s16 *)((unsigned char *)var_s0 + (3656)), *(u8 *)((unsigned char *)var_s0 + (3539)) - 4);
         } else {
             var_s0 = var_s3 * 0x88;
-            *(s16 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3652)) = (s16) ((D_8015EDB4[var_s3].unk74 + (func_800AE0D0() & 0x3FF)) - 0x200);
-            *(s16 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3654)) = (s16) ((D_8015EDB4[var_s3].unk76 + (func_800AE0D0() & 0x3FF)) - 0x200);
-            *(s16 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3656)) = (s16) ((func_800AE0D0() & 0xFFF) - 0x1770);
+            *(s16 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3652)) = (s16) ((D_8015EDB4[var_s3].unk74 + (rand() & 0x3FF)) - 0x200);
+            *(s16 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3654)) = (s16) ((D_8015EDB4[var_s3].unk76 + (rand() & 0x3FF)) - 0x200);
+            *(s16 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3656)) = (s16) ((rand() & 0xFFF) - 0x1770);
             *(s8 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3539)) = 0;
         }
         if ((D_800E6280.unk_10F8 & 3) == 3) {

@@ -289,12 +289,12 @@ void func_8014C08C(void) {
         func_80046500();
         break;
     }
-    func_8007EDF8();
-    func_800846C0();
+    check_k_scroll();
+    k_disp_inc2();
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
-    func_80064DEC();
+    hizuke_show();
     func_80083A10();
     func_80047560();
 }
@@ -351,7 +351,7 @@ s32 func_8014C20C(void) {
     if ((g->unk_03F == 5) && ((g->unk_040 == 3) || (g->unk_040 == 4))) {
         g->unk_1BC[g->unk_F5F].unk_0C.f.b4 = 1;
     }
-    func_80084D3C();
+    check_para_limit();
     cur = D_800CA2F8;
     g->unk_724 = cur;
     g->unk_728[3] = g->unk_728[2];

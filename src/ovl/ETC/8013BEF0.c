@@ -1,9 +1,9 @@
-#define MAIN_API_OVERRIDE_func_800AE0A0 /* original called it undeclared (implicit int); T-24706 */
+#define MAIN_API_OVERRIDE_memcpy /* original called it undeclared (implicit int); T-24706 */
 #include "common.h"
 #include "psx_types.h"
 #include "ovl/ETC.h"
 
-extern s32 func_800AE0A0();
+extern s32 memcpy();
 
 typedef struct {
     /* 0x00 */ u32 tag;
@@ -304,27 +304,27 @@ s32 func_8013C8EC(void) {
         case 0:
             if (D_800E6280.unk_F5F == 0) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 20) || (D_801500C0 == 0));
             } else if (D_800E6280.unk_F5F == 2) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 8));
             } else if (D_800E6280.unk_F5F == 3) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 9));
             } else if (D_800E6280.unk_F5F == 4) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 13));
             } else if (D_800E6280.unk_F5F == 9) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 0));
             } else {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078));
             }
             D_80150078 = D_801500C0;
@@ -373,7 +373,7 @@ s32 func_8013CCE4(void) {
             D_800E6280.unk_110D += 1;
         } else if (D_80150068 > 0) {
             if (cd_read_sync_status() & 1) {
-                func_800AE0A0((void *)0x801E2000, 0x801A0600, 0x18000);
+                memcpy((void *)0x801E2000, 0x801A0600, 0x18000);
                 if (D_80150068 == 1) {
                     D_80150068 = 2;
                 }
@@ -603,10 +603,10 @@ void func_8013DEA0(s32 arg0) {
     SPRT *temp_v0;
     SPRT *temp_v0_2;
 
-    temp_v0 = (SPRT *)func_800490F0(0x14, D_8011ECA0);
+    temp_v0 = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
     func_8009F0A4(temp_v0);
-    func_8009EF84(temp_v0, 0);
-    func_8009EFB0(temp_v0, 0);
+    SetSemiTrans(temp_v0, 0);
+    SetShadeTex(temp_v0, 0);
     temp_v0->r0 = 0x80;
     temp_v0->g0 = 0x80;
     temp_v0->b0 = 0x80;
@@ -618,12 +618,12 @@ void func_8013DEA0(s32 arg0) {
         /* FAKE: paired stores share a source line for the original as1 order. T-9930. */
         temp_v0->w = 0xC0; temp_v0->h = 0xA0;
     }
-    func_8009EED0((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, temp_v0);
-    func_800493A8(0x140, 0x100, 0xD, 0, 2);
-    temp_v0_2 = (SPRT *)func_800490F0(0x14, D_8011ECA0);
+    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, temp_v0);
+    goto_tpage(0x140, 0x100, 0xD, 0, 2);
+    temp_v0_2 = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
     func_8009F0A4(temp_v0_2);
-    func_8009EF84(temp_v0_2, 0);
-    func_8009EFB0(temp_v0_2, 0);
+    SetSemiTrans(temp_v0_2, 0);
+    SetShadeTex(temp_v0_2, 0);
     temp_v0_2->r0 = 0x80;
     temp_v0_2->g0 = 0x80;
     temp_v0_2->b0 = 0x80;
@@ -635,8 +635,8 @@ void func_8013DEA0(s32 arg0) {
         /* FAKE: same dimension-store scheduling dependency as above. T-9930. */
         temp_v0_2->w = 0x80; temp_v0_2->h = 0xA0;
     }
-    func_8009EED0((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, temp_v0_2);
-    func_800493A8(0x200, 0x100, 0xD, 0, 2);
+    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, temp_v0_2);
+    goto_tpage(0x200, 0x100, 0xD, 0, 2);
 }
 
 void func_8013E094(u8 *arg0) {
@@ -683,10 +683,10 @@ s32 arg0;
     EtcPolyF4 *poly;
     s32 sprite;
 
-    poly = func_800490F0(0x18, D_8011ECA0);
+    poly = GetWorkBase(0x18, D_8011ECA0);
     func_8009F02C(poly);
-    func_8009EF84(poly, 1);
-    func_8009EFB0(poly, 0);
+    SetSemiTrans(poly, 1);
+    SetShadeTex(poly, 0);
     if (arg0 >= 0x100) {
         arg0 = 0xFF;
     }
@@ -701,11 +701,11 @@ s32 arg0;
     poly->b0 = arg0;
     poly->g0 = arg0;
     poly->r0 = arg0;
-    func_8009EED0(D_8011ECA0 * 0x400 + D_800E8CA0, poly);
-    sprite = func_800490F0(0xC, D_8011ECA0);
+    AddPrim(D_8011ECA0 * 0x400 + D_800E8CA0, poly);
+    sprite = GetWorkBase(0xC, D_8011ECA0);
     func_8009D294(sprite, 0, 0, func_8009ECB0(1, 2, 0, 0), 0);
-    func_8009EED0(D_8011ECA0 * 0x400 + D_800E8CA0, sprite);
-    func_80049450(0);
+    AddPrim(D_8011ECA0 * 0x400 + D_800E8CA0, sprite);
+    safe_env(0);
 }
 
 void func_8013E364(void) {
@@ -749,10 +749,10 @@ void func_8013E524(s32 a, s32 b) {
     poly->b0 = 0;
     poly->g0 = 0;
     poly->r0 = 0;
-    func_8009EED0(D_8011ECA0 * 0x400 + 0xC + D_800E8CA0, poly);
+    AddPrim(D_8011ECA0 * 0x400 + 0xC + D_800E8CA0, poly);
     sprite = GetWorkBase(0xC, D_8011ECA0);
     func_8009D294(sprite, 0, 0, func_8009ECB0(1, 0, 0, 0), 0);
-    func_8009EED0(D_8011ECA0 * 0x400 + 0xC + D_800E8CA0, sprite);
+    AddPrim(D_8011ECA0 * 0x400 + 0xC + D_800E8CA0, sprite);
     safe_env(3);
 }
 

@@ -51,7 +51,7 @@ void func_801320E0(void) {
         func_80065F34(0);
         dec_bg_reset();
         set_dec_bri(0);
-        func_800AE120(D_800E6280.unk_10F4);
+        srand(D_800E6280.unk_10F4);
         func_8004284C();
         break;
     case 1:
@@ -215,13 +215,13 @@ void func_80132390(void) {
             case 6:
             case 7:
             case 8:
-                func_8005742C(0x4097, 1);
+                dec_bg_cd_read(0x4097, 1);
                 break;
             case 9:
-                func_8005742C(0x40A0, 1);
+                dec_bg_cd_read(0x40A0, 1);
                 break;
             case 10:
-                func_8005742C(0x40A9, 1);
+                dec_bg_cd_read(0x40A9, 1);
                 break;
             default:
                 func_80046500();
@@ -234,14 +234,14 @@ void func_80132390(void) {
         if (cd_read_sync_status() & 1) {
             func_80065F34(1);
             D_80125CA0 = 0xC0;
-            func_80057418(1, func_8005751C(1));
+            dec_bg_show_set(1, func_8005751C(1));
             func_80044750(0xC1);
             func_80044890(1, 0xC043, 0xC01D, D_800B3688[D_801342D0], D_800B36C8[D_801342D0], D_800B3708[D_801342D0]);
             func_8004284C();
         }
         break;
     case 4:
-        func_8007E81C();
+        normal_date_bg_fadein();
         break;
     case 5:
         func_80044750(0x71);
@@ -303,7 +303,7 @@ void func_80132A28(void) {
             D_800CA168 = D_801342B8;
             D_800CA148 = tbl.v[D_801342D0];
             D_800CA14C = 0;
-            func_8007C740();
+            addr_init_bustup();
             D_800E6280.unk_F5F = D_801342D0;
             func_80083474();
             if (D_801342D0 == 0xC) {
@@ -316,11 +316,11 @@ void func_80132A28(void) {
         }
         break;
     case 3:
-        func_8007E390();
+        normal_date_girl_in();
         break;
     case 5:
         if (D_801342D0 == 0xB) {
-            func_8007E5A0();
+            normal_date_girl_out();
             D_800CA148 = 0x5E;
         } else {
             D_800CA148 = 0x10;
@@ -329,7 +329,7 @@ void func_80132A28(void) {
         break;
     case 6:
         func_80044750(0xC1 + (((pad + 1) + (pad + 1)) * 0));
-        func_80085ED0();
+        Vblnk_Timer_Init();
         func_8004284C();
         break;
     case 7:
@@ -343,7 +343,7 @@ void func_80132A28(void) {
         if (D_801342D0 == 0xB) {
             normal_date_bg_fadeout();
         } else {
-            func_8007E99C();
+            normal_date_bggirl_fadeout();
         }
         break;
     case 9:
@@ -416,19 +416,19 @@ void func_80132F10(void) {
     case 0:
         switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
         case 6:
-            func_8005742C(0x417A, 1);
+            dec_bg_cd_read(0x417A, 1);
             break;
         case 7:
-            func_8005742C(0x4183, 1);
+            dec_bg_cd_read(0x4183, 1);
             break;
         case 8:
-            func_8005742C(0x419E, 1);
+            dec_bg_cd_read(0x419E, 1);
             break;
         case 9:
-            func_8005742C(0x4195, 1);
+            dec_bg_cd_read(0x4195, 1);
             break;
         case 10:
-            func_8005742C(0x418D, 1);
+            dec_bg_cd_read(0x418D, 1);
             break;
         default:
             func_80046500();
@@ -438,7 +438,7 @@ void func_80132F10(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_80057418(1, func_8005751C(1));
+            dec_bg_show_set(1, func_8005751C(1));
             switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
             case 6:
                 cd_read_sectors(0x1BU, 0x80197000, 0xB03E);
@@ -464,12 +464,12 @@ void func_80132F10(void) {
         }
         break;
     case 2:
-        func_8007E81C();
+        normal_date_bg_fadein();
         break;
     case 3:
-        func_8004E9F4(1);
-        func_8004E788(-0x80, 0x32, 0, (s32) "試合中", 0);
-        func_8004E884(1);
+        k_reset(1);
+        set_kanji_string(-0x80, 0x32, 0, (s32) "試合中", 0);
+        k_disp_start(1);
         func_8004284C();
         break;
     case 4:
@@ -496,7 +496,7 @@ void func_80132F10(void) {
             }
             var_s0 = 0;
             do {
-                func_80043914(D_801343E0, (var_s0 + 0x10) & 0xFF, 1, 1, var_s0);
+                load_palette(D_801343E0, (var_s0 + 0x10) & 0xFF, 1, 1, var_s0);
                 var_s0 += 1;
             } while (var_s0 != 5);
             func_80042808();
@@ -506,7 +506,7 @@ void func_80132F10(void) {
         func_80046500();
         break;
     }
-    func_80086424();
+    Default_Disp();
 }
 
 /* FAKE: scalar byte views on unk_110A and D_801342C4 preserve the target live ranges and
@@ -553,7 +553,7 @@ void func_8013325C(void) {
             D_801342C8[i] = 1;
         }
         i = 0;
-        swap_count = func_800AE0D0() & 0xF;
+        swap_count = rand() & 0xF;
         if ((u8)(*(u8 *)&D_801342C4) >= 3U) {
             swap = D_801342C8[0];
             other = D_801342C8[4];
@@ -562,8 +562,8 @@ void func_8013325C(void) {
         }
         if (swap_count > 0) {
             do {
-                first = func_800AE0D0() & 3;
-                value = func_800AE0D0() & 3;
+                first = rand() & 3;
+                value = rand() & 3;
                 swap = D_801342C8[first];
                 i++;
                 other = D_801342C8[value];
@@ -603,7 +603,7 @@ void func_8013325C(void) {
         func_80046500();
         break;
     }
-    func_80086424();
+    Default_Disp();
 }
 
 /* FAKE: T-24138. Adding `(s32)&tbl * 0` in `case 0` keeps `&tbl` ($a0) live across
@@ -709,10 +709,10 @@ void func_80133990(void) {
     case 0:
         func_8004500C(1, 0);
         func_80083474();
-        func_800573F8(1);
+        dec_bg_show_switch(1);
         break;
     case 1:
-        func_8007E884();
+        normal_date_bggirl_fadein();
         break;
     case 2:
         if (D_801342C4 >= 3U) {
@@ -767,16 +767,16 @@ void func_80133990(void) {
         break;
     case 5:
         if (D_801342D0 == 0xC) {
-            func_8007E5A0();
+            normal_date_girl_out();
         } else {
             func_8004284C();
         }
         break;
     case 7:
         if (D_801342D0 == 0xC) {
-            func_8007E934();
+            normal_date_bg_fadeout();
         } else {
-            func_8007E99C();
+            normal_date_bggirl_fadeout();
         }
         break;
     case 8:

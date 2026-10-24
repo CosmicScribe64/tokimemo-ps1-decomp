@@ -25,8 +25,8 @@ void func_8013AD50(void) {
                 if (D_8015EDA4 == 0) {
                     D_8015EDA4 = 1;
                 }
-                func_800AE0F0(D_8015E74C, D_800E6280.unk_0D4);
-                func_800AE100(D_8015E74C, "の体力が５％回復した");
+                strcpy(D_8015E74C, D_800E6280.unk_0D4);
+                strcat(D_8015E74C, "の体力が５％回復した");
                 func_8014B738(&D_8015E814, 1, 0x3C);
                 func_8014EBA8();
             }
@@ -71,11 +71,11 @@ void func_8013AF1C(void) {
     default:
         return;
     case 2:
-        func_800AE0F0(D_8015E74C, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E74C, "の攻撃");
+        strcpy(D_8015E74C, D_800E6280.unk_0D4);
+        strcat(D_8015E74C, "の攻撃");
         if (D_8015EBB0 == 0) {
-            func_800AE0F0(D_8015E774, D_8015E74C);
-            func_800AE100(D_8015E774, "は失敗した");
+            strcpy(D_8015E774, D_8015E74C);
+            strcat(D_8015E774, "は失敗した");
         } else {
             func_8014D11C(D_8015E774, D_800E6280.unk_0D4, "は", D_8015EBB0, "のダメージを与えた");
         }

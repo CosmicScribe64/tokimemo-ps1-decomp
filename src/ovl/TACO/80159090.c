@@ -69,15 +69,15 @@ s32 func_80159260(void) {
     s32 r;
     u32 kind;
 
-    func_800AE120(D_801604C0);
-    r = func_800AE0D0();
-    pos.x = ((func_800AE0D0() % 2500) + (r % 1500)) - 0x7D0;
-    r = func_800AE0D0();
-    pos.y = ((func_800AE0D0() % 2000) + (r % 1000)) - 0x7D0;
-    pos.z = (func_800AE0D0() % 5000) - 0x61A8;
-    vel.x = (func_800AE0D0() % 200) - 0x64;
-    vel.y = (func_800AE0D0() % 200) - 0x64;
-    kind = func_800AE0D0() % 5U;
+    srand(D_801604C0);
+    r = rand();
+    pos.x = ((rand() % 2500) + (r % 1500)) - 0x7D0;
+    r = rand();
+    pos.y = ((rand() % 2000) + (r % 1000)) - 0x7D0;
+    pos.z = (rand() % 5000) - 0x61A8;
+    vel.x = (rand() % 200) - 0x64;
+    vel.y = (rand() % 200) - 0x64;
+    kind = rand() % 5U;
     switch (kind) {
     case 0:
         func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0x10);
@@ -99,7 +99,7 @@ s32 func_80159260(void) {
 
 void func_80159678(s32 arg0) {
     (arg0 + D_8015EDB4)->unk74 -= (((((arg0 + D_8015EDB4)->unk78 << 5) / 25000) * func_800A0140((arg0 + D_8015EDB4)->unk7A << 5)) >> 0xC);
-    (arg0 + D_8015EDB4)->unk76 -= (((((arg0 + D_8015EDB4)->unk78 << 4) / 25000) * func_800A0070((arg0 + D_8015EDB4)->unk7A << 7)) >> 0xC);
+    (arg0 + D_8015EDB4)->unk76 -= (((((arg0 + D_8015EDB4)->unk78 << 4) / 25000) * rsin((arg0 + D_8015EDB4)->unk7A << 7)) >> 0xC);
     if ((arg0 + D_8015EDB4)->unk7A >= 0x12D) {
         (arg0 + D_8015EDB4)->unk78 += 0x100;
         (arg0 + D_8015EDB4)->unk74 += ((D_8015EDB4->unk74 + (arg0 + D_8015EDB4)->unk7C) - (arg0 + D_8015EDB4)->unk74) / 10;
@@ -116,7 +116,7 @@ s32 func_80159878(s32 arg0) {
     TcPos sp50;
     TcPos sp48;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     sp48.x = 0;
     sp48.z = 0;
     sp50.z = -0x4E20;
@@ -175,7 +175,7 @@ void func_80159F60(s32 arg0) {
         (arg0 + D_8015EDB4)->unk7A = 0;
     }
     if (((arg0 + D_8015EDB4)->unk7A % 10) == 0) {
-        if (func_800AE0C0((arg0 + D_8015EDB4)->unk74) < 0x3E8) {
+        if (abs((arg0 + D_8015EDB4)->unk74) < 0x3E8) {
             pos.x = (arg0 + D_8015EDB4)->unk74;
             pos.y = (arg0 + D_8015EDB4)->unk76;
             pos.z = (arg0 + D_8015EDB4)->unk78;
@@ -208,7 +208,7 @@ void func_8015A164(s32 arg0) {
     s32 i;
     s32 j;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     pos.z = 0x4E20;
     func_8015ACCC(0xD, 0x23, D_801604D4, pos, D_801604E4, 0x28, 0xD0);
     i = 0;
@@ -219,7 +219,7 @@ void func_8015A164(s32 arg0) {
             vel.x = 0;
             vel.z = 0;
             vel.unk6 = j / arg0;
-            func_8015ACCC(0xD, 0x22, D_801604D4, pos, vel, 0x14, (func_800AE0D0() % 9) * 0x10);
+            func_8015ACCC(0xD, 0x22, D_801604D4, pos, vel, 0x14, (rand() % 9) * 0x10);
             i += 1;
             j += 0x1000;
         } while (i != arg0);
@@ -229,7 +229,7 @@ void func_8015A164(s32 arg0) {
 void func_8015A378(s32 arg0) {
     switch ((arg0 + D_8015EDB4)->unk7C) {
     case 0:
-        D_8015EDB4[arg0].unk74 = (func_800A0070((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC;
+        D_8015EDB4[arg0].unk74 = (rsin((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC;
         D_8015EDB4[arg0].unk76 = ((func_800A0140((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC) - 0x2BC;
         D_8015EDB4[arg0].unk78 = -0x4E20;
         D_8015EDB4[arg0].unk6E = 1;
@@ -244,7 +244,7 @@ void func_8015A378(s32 arg0) {
         }
         break;
     case 2:
-        D_8015EDB4[arg0].unk74 = (func_800A0070((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC;
+        D_8015EDB4[arg0].unk74 = (rsin((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC;
         D_8015EDB4[arg0].unk76 = ((func_800A0140((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC) - 0x2BC;
         (arg0 + D_8015EDB4)->unk6A += 0x20;
         if ((arg0 + D_8015EDB4)->unk7A >= 0x259) {

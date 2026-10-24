@@ -287,8 +287,8 @@ void func_8013CDC0(void) {
                 TtFrame80B8 *p1;
 
                 p1 = (TtFrame80B8 *)D_80158AB4;
-                func_8009F638(&p1[0].disp_rect, 0x140, 0, 0x140, 0xF0);
-                func_8009F638(&p1[1].disp_rect, 0, 0, 0x140, 0xF0);
+                SetDefDispEnv(&p1[0].disp_rect, 0x140, 0, 0x140, 0xF0);
+                SetDefDispEnv(&p1[1].disp_rect, 0, 0, 0x140, 0xF0);
             }
             break;
         }
@@ -305,8 +305,8 @@ void func_8013CDC0(void) {
                 TtFrame80B8 *p2;
 
                 p2 = (TtFrame80B8 *)D_80158AB4;
-                func_8009F638(&p2[0].disp_rect, 0x160, 0, 0x100, 0xF0);
-                func_8009F638(&p2[1].disp_rect, 0x20, 0, 0x100, 0xF0);
+                SetDefDispEnv(&p2[0].disp_rect, 0x160, 0, 0x100, 0xF0);
+                SetDefDispEnv(&p2[1].disp_rect, 0x20, 0, 0x100, 0xF0);
             }
             break;
         }
@@ -605,7 +605,7 @@ void func_8013D988(void) {
             x[j][i] = ((j - 8) * (0x8800 - ((TtCore36 *)c)->unk_34)) / 0x780;
             y[j][i] = ((i - 8) * (0x8800 - ((TtCore36 *)c)->unk_34)) / 0x780;
             x[j][i] += (s16)(func_800A0140((((TtCore36 *)c)->unk_32 << 5) + i * 0x200) / ((TtCore36 *)c)->unk_34);
-            y[j][i] += (s16)(func_800A0070((((TtCore36 *)c)->unk_32 << 5) + j * 0x200) / ((TtCore36 *)c)->unk_34);
+            y[j][i] += (s16)(rsin((((TtCore36 *)c)->unk_32 << 5) + j * 0x200) / ((TtCore36 *)c)->unk_34);
         }
     }
     scroll = 0x300 - st->time;

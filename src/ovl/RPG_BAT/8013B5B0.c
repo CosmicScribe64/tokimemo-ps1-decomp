@@ -117,11 +117,11 @@ s32 func_8013B910(void) {
         }
         if (D_8015EDC4 != 0x08000002 && (D_8015EDC4 & 0x08000000) && D_8015EE1C != 1) {
             if (D_8015EE50.unk_00 == 2 || D_8015EE50.unk_00 == 3) {
-                func_8004E93C(D_8015EE40, 1);
-                func_8004E93C(D_8015EDE8, 0);
+                k_disp_switch(D_8015EE40, 1);
+                k_disp_switch(D_8015EDE8, 0);
             } else {
-                func_8004E93C(D_8015EE40, 0);
-                func_8004E93C(D_8015EDE8, 1);
+                k_disp_switch(D_8015EE40, 0);
+                k_disp_switch(D_8015EDE8, 1);
             }
         }
         if (!(D_8015ED98 & 0xFF0111FF)) {
@@ -344,8 +344,8 @@ void func_8013C32C(void) {
         }
         do {
             endpoint = index + 7;
-            height = (func_800A0070(((index % D_8015EC44) << 12) / D_8015EC44 + ((D_8015EC38 << 12) / 2) / D_8015EC40) * D_8015EC3C) >> 13;
-            func_80153F3C(height, (func_800A0070(((endpoint % D_8015EC44) << 12) / D_8015EC44 + ((D_8015EC38 << 12) / 2) / D_8015EC40) * D_8015EC3C) >> 13, index, endpoint, 0, 0);
+            height = (rsin(((index % D_8015EC44) << 12) / D_8015EC44 + ((D_8015EC38 << 12) / 2) / D_8015EC40) * D_8015EC3C) >> 13;
+            func_80153F3C(height, (rsin(((endpoint % D_8015EC44) << 12) / D_8015EC44 + ((D_8015EC38 << 12) / 2) / D_8015EC40) * D_8015EC3C) >> 13, index, endpoint, 0, 0);
             index += 8;
         } while (index != 168);
     }

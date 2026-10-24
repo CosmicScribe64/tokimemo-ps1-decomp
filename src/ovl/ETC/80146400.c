@@ -45,8 +45,8 @@ s32 func_80146400(void)
         x -= 1;
     }
     /* The assignment inside the argument makes IDO load the format string's lui first (T-22029). */
-    func_800AE0B0("補正 %d ", *(p = &D_801506F8[x]));
-    r = func_800AE0D0() & 7;
+    printf("補正 %d ", *(p = &D_801506F8[x]));
+    r = rand() & 7;
     a = *p;
     d = r + a;
     d -= 8;
@@ -106,9 +106,9 @@ void func_801465F8(void) {
         break;
     }
     func_80066C08(1);
-    func_80064F48();
-    func_80064DEC();
-    func_800646CC();
+    message_window_show();
+    hizuke_show();
+    parameter_show();
     func_8006BA40();
     func_80065B0C(1);
     if (D_800E6280.unk_041 == 5) {
@@ -157,18 +157,18 @@ void func_801467C4(void) {
     func_8006612C((s32) "期末テスト");
     func_80041584();
     func_80048E78();
-    func_80048390();
+    tpage_buf_clear();
     func_8006509C();
-    func_80064FA4(1);
+    icon_disp_switch(1);
     func_8006CE84();
     for (var_s0 = 0; var_s0 != 14; var_s0++) {
-        func_80065048(var_s0, 0);
+        icon_can_use_set(var_s0, 0);
     }
     func_800654D0(*(u8 *)&D_800E6280.unk_F6D);
     func_8006BD6C(1);
-    func_800649D4();
-    func_800639D8();
-    func_800639D8();
+    hizuke_init();
+    parameter_show_init();
+    parameter_show_init();
     if (D_800E6280.unk_041 == 0) {
         func_80044890(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
     } else if (((EtcStateFlagsView *)&D_800E6280)->records[D_800E6280.unk_71C].unk_00 != 0x40) {
@@ -184,12 +184,12 @@ void func_801468FC(void) {
     if (D_800E6280.unk_041 == 0 || *(u8 *) &D_800E6280.unk_66C[10 + D_800E6280.unk_71C] != 0x40) {
         if (func_80044E8C() == 1) {
             func_8004500C(1, 0x205);
-            r = func_8005742C(0x3FA4, 0);
-            func_80057390(0);
+            r = dec_bg_cd_read(0x3FA4, 0);
+            set_dec_bri(0);
             if (r != -1) {
                 if (r == 0 || r == 1) {
-                    func_80057418(0, r);
-                    func_80057390(0x80);
+                    dec_bg_show_set(0, r);
+                    set_dec_bri(0x80);
                     func_80042940(3);
                 }
             } else {
@@ -200,12 +200,12 @@ void func_801468FC(void) {
         if (func_8004481C() == 0) {
             func_8004500C(1, 0x205);
         }
-        r2 = func_8005742C(0x3FA4, 0);
+        r2 = dec_bg_cd_read(0x3FA4, 0);
         if (r2 != -1) {
             if (r2 == 0 || r2 == 1) {
-                func_80057418(0, r2);
+                dec_bg_show_set(0, r2);
                 func_800578F4(0);
-                func_80057390(0x80);
+                set_dec_bri(0x80);
                 func_80042940(3);
             }
         } else {
@@ -265,7 +265,7 @@ s32 func_80146BC4(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_8007C6A8(1 - func_80066A84());
+            addr_init_else_sd(1 - func_80066A84());
             func_8004284C();
         }
         break;
@@ -344,26 +344,26 @@ s32 func_80146D4C(void) {
     if (((GsByteNibbles *)&g->unk_0F4.b[1])->low & 2) {
         ret /= 2;
     }
-    func_800AE0B0("main %d sub %d bio %d ret %d ", main, sub, bio, ret);
+    printf("main %d sub %d bio %d ret %d ", main, sub, bio, ret);
     if (ret < 0) {
         ret = 1;
     }
     ret = func_80146400() + ret;
     sub = func_801464D4(0xF);
-    ret = (func_800AE0D0() % 10) * sub + ret;
+    ret = (rand() % 10) * sub + ret;
     w = (EtcWork40 *)&D_801230D0;
     if (ret < 0x80) {
         w->unk_28[g->unk_041] = ret * 100 / 128;
     } else {
-        w->unk_28[g->unk_041] = 100 - (func_800AE0D0() & 3);
+        w->unk_28[g->unk_041] = 100 - (rand() & 3);
     }
-    func_800AE0B0("今日の成績 %d\t", w->unk_28[g->unk_041]);
+    printf("今日の成績 %d\t", w->unk_28[g->unk_041]);
     score = w->unk_28[g->unk_041] + w->unk_28[5];
     w->unk_28[5] = score;
     /* FAKE: T-25045, the late-folded zero and two identities spend one ugen
      * temporary before as1 removes them, preserving the final index registers. */
     zero = g->unk_041 * 0;
-    func_800AE0B0("合計点 %d\n", (score + zero) | zero);
+    printf("合計点 %d\n", (score + zero) | zero);
     ret = w->unk_28[g->unk_041];
     if (ret < 0x28) {
         ret = 0;
@@ -390,9 +390,9 @@ s32 func_80146D4C(void) {
 void func_8014716C(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    func_80050DFC(D_800E6280.unk_0D4);
-    func_8004E884(2);
-    func_80050E8C("第一日目の試験科目は 語学だ。）", 0, 0x1F);
+    gnsx(D_800E6280.unk_0D4);
+    k_disp_start(2);
+    sndisp("第一日目の試験科目は 語学だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
         func_80146C68(1);
     } else {
@@ -404,9 +404,9 @@ void func_8014716C(void) {
 void func_801471F4(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    func_80050DFC(D_800E6280.unk_0D4);
-    func_8004E884(2);
-    func_80050E8C("第二日目の試験科目は 数学だ。）", 0, 0x1F);
+    gnsx(D_800E6280.unk_0D4);
+    k_disp_start(2);
+    sndisp("第二日目の試験科目は 数学だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
         func_80146C68(1);
     } else {
@@ -418,9 +418,9 @@ void func_801471F4(void) {
 void func_8014727C(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    func_80050DFC(D_800E6280.unk_0D4);
-    func_8004E884(2);
-    func_80050E8C("第三日目の試験科目は 理科だ。）", 0, 0x1F);
+    gnsx(D_800E6280.unk_0D4);
+    k_disp_start(2);
+    sndisp("第三日目の試験科目は 理科だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
         func_80146C68(1);
     } else {
@@ -432,9 +432,9 @@ void func_8014727C(void) {
 void func_80147304(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    func_80050DFC(D_800E6280.unk_0D4);
-    func_8004E884(2);
-    func_80050E8C("第四日目の試験科目は 社会だ。）", 0, 0x1F);
+    gnsx(D_800E6280.unk_0D4);
+    k_disp_start(2);
+    sndisp("第四日目の試験科目は 社会だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
         func_80146C68(1);
     } else {
@@ -446,9 +446,9 @@ void func_80147304(void) {
 void func_8014738C(void) {
     func_8004E58C();
     func_8006612C("期末試験");
-    func_80050DFC(D_800E6280.unk_0D4);
-    func_8004E884(2);
-    func_80050E8C("第五日目の試験科目は 美術だ。）", 0, 0x1F);
+    gnsx(D_800E6280.unk_0D4);
+    k_disp_start(2);
+    sndisp("第五日目の試験科目は 美術だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
         func_80146C68(1);
     } else {
@@ -707,7 +707,7 @@ s32 func_8014790C(void) {
                     strncpy((char *) buf, (char *) D_800E6280.unk_0D4, 8);
                     strncat((char *) buf, (char *) D_800E6280.unk_0DC, 8);
                     set_kanji_string(D_80150630[i] + 0x18, D_8015064C[i], 3, buf, 0);
-                    func_800AE0B0("%s\n", D_800E6280.unk_0C4);
+                    printf("%s\n", D_800E6280.unk_0C4);
                 } else if (v == 0xA) {
                     set_kanji_string(x + 0x18, y, 3, D_800B3538[13], 0);
                 } else if (v == 0xB) {
@@ -747,26 +747,26 @@ void func_80147D74(void) {
     func_80148BC8();
     D_800E6280.unk_0F6.b[0] &= 0xFFFD;
     if (D_800E6280.unk_1104.u >= 0x79U) {
-        func_80050DFC(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.unk_0D4);
         if (D_801230F4 >= 3) {
-            func_80050E8C("３科目以上赤点だった。 明日から、一週間補習だぁ。 勉強しかできないー！）", 0, 0x1F);
+            sndisp("３科目以上赤点だった。 明日から、一週間補習だぁ。 勉強しかできないー！）", 0, 0x1F);
             func_8004500C(1, 0x203);
             ((GsBits0F6 *)&D_800E6280.unk_0F6.b[0])->f0 = 1;
             D_800E6280.unk_044[0].unk_20[D_800E6280.unk_040 + 1] = 0x17;
             ((GsBits0F6 *)&D_800E6280.unk_0F6.b[0])->f1 = 1;
         } else if (D_801506F0 < 2) {
-            func_80050E8C("やったー、一番だ！ これで試験の帝王だな。）", 0, 0x1F);
+            sndisp("やったー、一番だ！ これで試験の帝王だな。）", 0, 0x1F);
             func_8004500C(1, 0x204);
         } else if (D_801506F4 != 0) {
-            func_80050E8C("今回の試験は終了した。）", 0, 0x1F);
+            sndisp("今回の試験は終了した。）", 0, 0x1F);
             ((GsBits0F6 *)&D_800E6280.unk_0F6.b[0])->f1 = 1;
             func_8004500C(1, 0x200);
         } else {
-            func_80050E8C("今回の試験は終了した。）", 0, 0x1F);
+            sndisp("今回の試験は終了した。）", 0, 0x1F);
             func_8004500C(1, 0x201);
         }
-        func_8004EA98();
-        func_8004EAD4(0);
+        k_sub_reset_point_set();
+        k_sub_disp_start(0);
         func_8006BD6C(0);
         func_8004284C();
     }
@@ -823,7 +823,7 @@ void func_80148078(void) {
         func_8014803C();
         break;
     }
-    func_800646CC();
+    parameter_show();
 }
 /* T-25059: generate exam scores, order and ranks, then apply relationship bonuses. */
 void func_801480D0(void) {
@@ -844,25 +844,25 @@ void func_801480D0(void) {
     s32 values[14];
     s32 pad;
 
-    func_800AE120(D_800E6280.unk_10F8);
+    srand(D_800E6280.unk_10F8);
     for (i = 0; i < 13; i++) {
-        first_random = func_800AE0D0();
-        noise = (first_random % (s32)D_80150738[i]) * (((func_800AE0D0() & 1) * 2) - 1);
-        first_random = func_800AE0D0();
-        a = (first_random % (s32)D_80150738[i]) * ((func_800AE0D0() & 1) * 2 - 1);
+        first_random = rand();
+        noise = (first_random % (s32)D_80150738[i]) * (((rand() & 1) * 2) - 1);
+        first_random = rand();
+        a = (first_random % (s32)D_80150738[i]) * ((rand() & 1) * 2 - 1);
         D_80150668[i] = ((D_80150728[i] + a) * 5) + noise;
         j = func_801464D4(i);
         if (j != 1) {
             if (j == 9) {
-                D_80150668[i] += func_800AE0D0() % 250;
+                D_80150668[i] += rand() % 250;
             }
         } else {
-            D_80150668[i] += func_800AE0D0() % 50;
+            D_80150668[i] += rand() % 50;
         }
         if (D_80150668[i] >= 501) {
             D_80150668[i] = 500;
         }
-        func_800AE0B0("[%d:%d]\n", i, D_80150668[i]);
+        printf("[%d:%d]\n", i, D_80150668[i]);
     }
     D_80150668[13] = (s16) ((EtcWork40 *)&D_801230D0)->unk_28[5];
     do {
@@ -891,17 +891,17 @@ void func_801480D0(void) {
         values[selected] = 0;
         D_80150684[j] = selected;
     }
-    func_800AE0B0("順位計算\n ");
+    printf("順位計算\n ");
     for (i = 0; i < 14; i++) {
-        func_800AE0B0("[%d:%d] \n", i, D_80150684[i]);
+        printf("[%d:%d] \n", i, D_80150684[i]);
     }
-    func_800AE0B0("順位作成\n ");
-    offset = func_800AE0D0() & 3;
+    printf("順位作成\n ");
+    offset = rand() & 3;
     for (i = 0; i < 14; i++) {
         angle = (D_80150668[i] << 12) / 1000;
         sine = func_800A0140(angle);
         D_801506BC[i] = (sine * 200) / 4096 + offset + 200;
-        func_800AE0B0("[%d:%d %d %d] \n", i, angle, sine, D_801506BC[i]);
+        printf("[%d:%d %d %d] \n", i, angle, sine, D_801506BC[i]);
     }
     do {
         changed = 0;
@@ -918,9 +918,9 @@ void func_801480D0(void) {
             }
         }
     } while (changed != 0);
-    func_800AE0B0("順位ソート\n ");
+    printf("順位ソート\n ");
     for (i = 0; i < 14; i++) {
-        func_800AE0B0("[%d:%d] \n", i, D_801506BC[i]);
+        printf("[%d:%d] \n", i, D_801506BC[i]);
     }
     minimum = 1000;
     for (i = 0; i < 14; i++) {
@@ -929,7 +929,7 @@ void func_801480D0(void) {
         }
     }
     if (minimum >= 9) {
-        a = func_800AE0D0() % (minimum - 8) + minimum - 8;
+        a = rand() % (minimum - 8) + minimum - 8;
         for (i = 0; i < 14; i++) {
             D_801506BC[i] -= a;
         }
@@ -953,9 +953,9 @@ void func_801480D0(void) {
             D_801506BC[i] -= offset;
         }
     }
-    func_800AE0B0("順位確定\n ");
+    printf("順位確定\n ");
     for (i = 0; i < 14; i++) {
-        func_800AE0B0("[%d:%d] \n", i, D_801506BC[i]);
+        printf("[%d:%d] \n", i, D_801506BC[i]);
     }
     if (D_80150684[0] == 13 && D_80150684[1] == 0) {
         if (D_801506BC[0] < D_801506BC[13]) {

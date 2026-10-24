@@ -10,12 +10,12 @@ void func_80133030(void) {
     func_80083808();
     idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
-    func_8007EDF8();
-    func_800846C0();
+    check_k_scroll();
+    k_disp_inc2();
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
-    func_80064DEC();
+    hizuke_show();
     func_80083A10();
 }
 
@@ -73,8 +73,8 @@ void func_801330E4(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "廊下");
-    func_800AE0F0(D_800CA1DC, "教室");
+    strcpy(D_800CA19C, "廊下");
+    strcpy(D_800CA1DC, "教室");
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     func_8008585C();

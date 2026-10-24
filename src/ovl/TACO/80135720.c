@@ -53,7 +53,7 @@ s32 arg6;
 s32 func_8013587C(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_800573AC();
+        dec_bg_reset();
         cd_read_sectors(8, 0x80162000, 0xB378);
         func_80135720();
         D_800E6280.unk_110D += 1;

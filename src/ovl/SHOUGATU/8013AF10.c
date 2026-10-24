@@ -45,7 +45,7 @@ void func_8013AFEC(void) {
     /* Chain store through byte views keeps one li for both stores and the argument (T-9150 idiom). */
     *(u8 *)&D_800E6280.unk_75D = *(u8 *)&D_800E6280.unk_F5F = 0xA;
     func_800847B8(*(u8 *)&D_800E6280.unk_F5F);
-    func_800AE130(D_800CA17C, "%sさん", D_800E6280.unk_0D4);
+    sprintf(D_800CA17C, "%sさん", D_800E6280.unk_0D4);
     func_80136F90();
     D_80144DFC = D_80144DB0;
     D_80144E00 = D_80144DD4;
@@ -56,7 +56,7 @@ void func_8013AFEC(void) {
 void func_8013B114(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "学校前");
+    strcpy(D_800CA19C, "学校前");
     func_8004284C();
 }
 

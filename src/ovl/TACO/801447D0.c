@@ -30,7 +30,7 @@ void func_8014488C(void) {
     (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = 8;
     D_800E6280.unk_038 = 0x10;
     draw2d3d(1, 1);
-    func_80058D20();
+    initView();
     func_80146E3C();
     func_80146D60(-0xFA0);
     func_801471D0(0x8019C800);
@@ -82,9 +82,9 @@ void func_801449D8(s32 *arg0, s32 arg1, s32 arg2) {
             } else {
                 arg0[i * 2] = 0x140;
             }
-            arg0[i * 2 + 1] = func_800AE0D0() % 240 - 0x78;
+            arg0[i * 2 + 1] = rand() % 240 - 0x78;
         } else if ((y < 0) || (y >= 0x1E1)) {
-            arg0[i * 2] = func_800AE0D0() % 320;
+            arg0[i * 2] = rand() % 320;
             if (arg2 > 0) {
                 arg0[i * 2 + 1] = -0x78;
             } else {
@@ -99,7 +99,7 @@ void func_801449D8(s32 *arg0, s32 arg1, s32 arg2) {
         pkt[i]->y2 = y + 1;
         pkt[i]->x3 = x + 1;
         pkt[i]->y3 = y + 1;
-        if ((func_800AE0D0() % 5) >= 3) {
+        if ((rand() % 5) >= 3) {
             pkt[i]->r0 = 0x80;
             pkt[i]->g0 = 0x80;
             pkt[i]->b0 = 0x80;
@@ -108,7 +108,7 @@ void func_801449D8(s32 *arg0, s32 arg1, s32 arg2) {
             pkt[i]->g0 = 0xFF;
             pkt[i]->b0 = 0xFF;
         }
-        if ((func_800AE0D0() % 3) > 0) {
+        if ((rand() % 3) > 0) {
             AddPrim((D_8011ECA0 << 10) + 0x190 + D_800E8CA0, (s32)pkt[i]);
         }
     }
@@ -122,8 +122,8 @@ void func_80144CC0(u8 *arg0) {
     s32 i;
 
     for (i = 0; i != 0x19; i++) {
-        *(s32 *)(arg0 + i * 8) = func_800AE0D0() % 320;
-        *(s32 *)(arg0 + i * 8 + 4) = func_800AE0D0() % 240 - 0x78;
+        *(s32 *)(arg0 + i * 8) = rand() % 320;
+        *(s32 *)(arg0 + i * 8 + 4) = rand() % 240 - 0x78;
     }
 }
 
@@ -344,7 +344,7 @@ s32 func_80145650(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     matrix.t[1] = 0;
     matrix.t[2] = 0;
     func_8015CF30(angle, &matrix);
-    func_800A0ECC(&matrix, &input, &output);
+    ApplyMatrixSV(&matrix, &input, &output);
     arg0[2]->x0 = output.vx + x;
     arg0[2]->y0 = output.vy + y;
     input.vx = arg0[2]->x1 - x;
@@ -355,7 +355,7 @@ s32 func_80145650(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     matrix.t[2] = 0;
     matrix.t[0] = input.vx;
     func_8015CF30(angle, &matrix);
-    func_800A0ECC(&matrix, &input, &output);
+    ApplyMatrixSV(&matrix, &input, &output);
     arg0[2]->x1 = output.vx + x;
     arg0[2]->y1 = output.vy + y;
     input.vx = arg0[2]->x2 - x;
@@ -366,7 +366,7 @@ s32 func_80145650(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     matrix.t[2] = 0;
     matrix.t[0] = input.vx;
     func_8015CF30(angle, &matrix);
-    func_800A0ECC(&matrix, &input, &output);
+    ApplyMatrixSV(&matrix, &input, &output);
     arg0[2]->x2 = output.vx + x;
     arg0[2]->y2 = output.vy + y;
     input.vx = arg0[2]->x3 - x;
@@ -377,12 +377,12 @@ s32 func_80145650(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     matrix.t[2] = 0;
     matrix.t[0] = input.vx;
     func_8015CF30(angle, &matrix);
-    func_800A0ECC(&matrix, &input, &output);
+    ApplyMatrixSV(&matrix, &input, &output);
     arg0[2]->x3 = output.vx + x;
     arg0[2]->y3 = output.vy + y;
-    arg0[0]->x0 = arg0[2]->x0 + func_800A0070(angle) * arg2 / 3 / 4096;
+    arg0[0]->x0 = arg0[2]->x0 + rsin(angle) * arg2 / 3 / 4096;
     arg0[0]->y0 = arg0[2]->y0 - func_800A0140(angle) * arg2 / 3 / 4096;
-    arg0[0]->x1 = arg0[2]->x1 + func_800A0070(angle) * arg2 / 3 / 4096;
+    arg0[0]->x1 = arg0[2]->x1 + rsin(angle) * arg2 / 3 / 4096;
     arg0[0]->y1 = arg0[2]->y1 - func_800A0140(angle) * arg2 / 3 / 4096;
     arg0[0]->x2 = arg0[2]->x0;
     arg0[0]->y2 = arg0[2]->y0;
@@ -392,9 +392,9 @@ s32 func_80145650(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     arg0[1]->y0 = arg0[2]->y2;
     arg0[1]->x1 = arg0[2]->x3;
     arg0[1]->y1 = arg0[2]->y3;
-    arg0[1]->x2 = arg0[2]->x2 - func_800A0070(angle) * arg2 / 3 / 4096;
+    arg0[1]->x2 = arg0[2]->x2 - rsin(angle) * arg2 / 3 / 4096;
     arg0[1]->y2 = arg0[2]->y2 + func_800A0140(angle) * arg2 / 3 / 4096;
-    arg0[1]->x3 = arg0[2]->x3 - func_800A0070(angle) * arg2 / 3 / 4096;
+    arg0[1]->x3 = arg0[2]->x3 - rsin(angle) * arg2 / 3 / 4096;
     arg0[1]->y3 = arg0[2]->y3 + func_800A0140(angle) * arg2 / 3 / 4096;
 }
 

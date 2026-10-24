@@ -107,7 +107,7 @@ void func_80148584(u16 arg0, s32 arg1) {
 }
 
 void func_801486D8(s32 arg0, s32 arg1) {
-    func_800AE0A0(D_8015694C[arg1], arg0, 3);
+    memcpy(D_8015694C[arg1], arg0, 3);
 }
 
 void func_80148714(u16 arg0, s32 arg1) {

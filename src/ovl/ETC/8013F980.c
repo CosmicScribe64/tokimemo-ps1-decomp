@@ -16,7 +16,7 @@ void func_8013F980(void) {
     model = 0x801FA804;
     func_8009B3C0(model);
     model += 4;
-    func_800AE0B0("NOBJ %x\n", *(u32 *)model);
+    printf("NOBJ %x\n", *(u32 *)model);
     model += 4;
     /* FAKE: initializer/do line grouping reproduces setup order; original line layout unknown. T-24064. */
     object = D_80122640; record = D_801227A0; do {
@@ -53,12 +53,12 @@ void func_8013FA7C(void) {
     }
     m1 = *(MATRIX *)D_80125C60;
     m2 = *(MATRIX *)D_80125C60;
-    func_800A09D0(&rot, &m1);
+    RotMatrix(&rot, &m1);
     scale.vx = 0x1000;
     scale.vy = 0x1000;
     scale.vz = 0x1000;
-    func_800A0F4C(&m2, &scale);
-    func_800A0C64(&m1, &m2);
+    ScaleMatrix(&m2, &scale);
+    MulMatrix(&m1, &m2);
     m1.t[0] = D_801500C8;
     m1.t[1] = D_801500CC;
     m1.t[2] = D_801500D0;

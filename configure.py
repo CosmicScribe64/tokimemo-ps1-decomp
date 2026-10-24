@@ -177,7 +177,8 @@ def overlay_targets(n, overlays):
            command=("h=$$(cut -d' ' -f1 config/overlays/$name.sha1) && "
                     "echo \"$$h  $in\" | sha1sum -c && touch $out"),
            description="SHA1 CHECK $in")
-    # main-exe names (O.BIN, SDK, aggregate bases of T-5000) that overlays use by name; see tools/syms_to_ld.py
+    # main-exe names that the overlay yamls do not load (main-only sizes, EVENT-range names, aggregate bases of T-5000)
+    # and overlay C uses by name; the overlay yamls load the O.BIN and SDK names themselves (T-27003); see tools/syms_to_ld.py
     n.rule("symsld", command="python3 tools/syms_to_ld.py $out $in", description="SYMS $out")
     # inputs: the main yaml's symbol files that the overlay yamls do not load, and the aggregate bases
     # (symtab.SymbolTable.main_link_files, T-27002)

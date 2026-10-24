@@ -15,12 +15,12 @@ void func_801339D0(void) {
 }
 
 void func_80133A4C(void) {
-    if (func_800AEEB0(D_800CA1DC, "自宅前") == 0) {
+    if (strcmp(D_800CA1DC, "自宅前") == 0) {
         func_8004284C();
         return;
     }
-    func_800AE0F0(D_800CA1DC, "自宅前");
-    func_8007EC9C();
+    strcpy(D_800CA1DC, "自宅前");
+    place_init2();
 }
 
 s32 func_80133AA8(void) {

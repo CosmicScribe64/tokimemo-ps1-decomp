@@ -74,7 +74,7 @@ void func_8013BCE0(void) {
 void func_8013BD2C(void) {
     u8 s;
 
-    s = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    s = get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
     if (s >= 2U) {
         D_80145A08 += 2;
     }

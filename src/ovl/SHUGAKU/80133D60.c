@@ -99,7 +99,7 @@ void func_80134184(void) {
     D_800E6280.unk_F5F = 0xE;
     D_80120666 = 4;
     D_801206EE = 2;
-    func_800AE0F0(&D_800CA188, &D_8013AD70);
+    strcpy(&D_800CA188, &D_8013AD70);
     func_8004284C();
 }
 
@@ -125,7 +125,7 @@ void func_8013425C(void) {
     D_800CA2E4 = 0;
     D_800CA2E8 = 0;
     func_80133D60();
-    func_80043914(D_8013BFE0, 0x11, 1, 2, 0);
+    load_palette(D_8013BFE0, 0x11, 1, 2, 0);
     func_80084E90(D_8013BFE4, D_8013BFE8, D_8013BFEC, D_8013BFF0, D_8013BFF4, D_8013BFF8);
     func_800850D4(D_8013BFD4, D_8013BFD8, D_8013BFD0, D_8013BFDC);
     ((DisplayActor44 *)D_80120650)[1].unk_04 = 8;

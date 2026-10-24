@@ -10,7 +10,7 @@ void func_80132000(void) {
     default:
         break;
     case 7:
-        func_800AE0F0(D_8015E74C, "朝日奈「つまんな〜い！");
+        strcpy(D_8015E74C, "朝日奈「つまんな〜い！");
         func_8014B738((s32) &D_8015E814, 1, 0x1F4);
         func_8013E810(0x1D, 9, 1, 1);
         func_8013F1C4(0, 0x01000005, 0);

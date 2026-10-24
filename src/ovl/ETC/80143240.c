@@ -76,12 +76,12 @@ void func_801433E4(void) {
 
     m1 = *(MATRIX *)D_80125C60;
     m2 = *(MATRIX *)D_80125C60;
-    func_800A09D0(&D_8015013C, &m1);
+    RotMatrix(&D_8015013C, &m1);
     scale.vx = 0x1000;
     scale.vy = 0x1000;
     scale.vz = 0x1000;
-    func_800A0F4C(&m2, &scale);
-    func_800A0C64(&m1, &m2);
+    ScaleMatrix(&m2, &scale);
+    MulMatrix(&m1, &m2);
     m1.t[0] = D_80150130;
     m1.t[1] = D_80150134;
     m1.t[2] = D_80150138;
@@ -264,7 +264,7 @@ void func_80143A88(void) {
         if (((u32)D_800E6280.unk_1104.w % 701U) >= 0x26EU) {
             D_80150138 += 0x12C;
             *(s32 *)&sp28 = sp30 * 0x23D;
-            D_80150134 += func_800A0070(sp28) / 256;
+            D_80150134 += rsin(sp28) / 256;
             D_80150130 += func_800A0140(sp28) / 256;
         }
     }
@@ -375,7 +375,7 @@ void func_8014407C(s32 arg0) {
     for (i = 2, x = -0xB0; i != 5; i++) {
         record->unk_00 = 0;
         record->unk_04 = x;
-        remainder = func_800AE0D0() % 112;
+        remainder = rand() % 112;
         record->unk_06 = remainder - 0x78;
         record++;
         x += 0x6C;
@@ -519,8 +519,8 @@ s32 func_80144540(void) {
 void func_801446E4(void) {
     if (D_800E6280.unk_F88 & 0x20) {
         func_8004E58C();
-        func_8004E788(-0x90, -0x40, 0xF, "メモリーカードをチェックしています", 0);
-        func_8004E884(1);
+        set_kanji_string(-0x90, -0x40, 0xF, "メモリーカードをチェックしています", 0);
+        k_disp_start(1);
         D_800E8BEE = 0;
         func_80053CE0();
         func_80042808();
@@ -1027,10 +1027,10 @@ s32 func_80145AF8(void)
     }
     brightness_alias = &(*brightness);
     func_80049A40(-0xA0, -0x57, 0x11B, 0x7D, 2, (((s32) ((intensity = *brightness_alias) * 3)) / 2) * 0x10101, 2);
-    func_8004955C(2);
+    dtd_on(2);
     color = (intensity / 3) * 0x40401;
     func_80049A40(-0x85, 0x2E, 0x10A, 0x34, 2, color, 0x81);
-    func_800494BC(0, 0, 2, 0, 0);
+    dtd_on_tpage(0, 0, 2, 0, 0);
 }
 
 /* FAKE: unused pad[2] places sp5C at 0x5C in the 0x88 frame, and the single-line for loop

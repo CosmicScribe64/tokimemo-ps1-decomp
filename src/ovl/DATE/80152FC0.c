@@ -110,9 +110,9 @@ void func_8015347C(void) {
     D_800E6280.unk_1BC[7].unk_02 += 1;
     D_800E6280.unk_1BC[7].unk_06 += 1;
     D_800E6280.unk_1BC[7].unk_0A -= 0x14;
-    func_80084D3C();
+    check_para_limit();
     func_80153070();
-    func_80043914(D_8015F19C, 0x11, 1, 2, 0);
+    load_palette(D_8015F19C, 0x11, 1, 2, 0);
     func_80084E90(D_8015F1A0, D_8015F1A4, D_8015F1A8, D_8015F1AC, D_8015F1B0, D_8015F1B4);
     func_800850D4(D_8015F190, D_8015F194, D_8015F18C, D_8015F198);
     D_800CA224[0] = 3;
@@ -129,8 +129,8 @@ void func_801535D8(void) {
     D_8015E208 = D_8015DED4;
     D_8015E20C = D_8015E010;
     D_8015E210 = D_8015E14C;
-    func_800AE0F0(D_800CA19C, "遊園地");
-    func_800AE0F0(D_800CA19C, "ゴーストハウス");
+    strcpy(D_800CA19C, "遊園地");
+    strcpy(D_800CA19C, "ゴーストハウス");
     D_800CA21C[0] = 2;
     D_800CA21C[1] = 2;
     D_800CA21C[2] = 2;
@@ -144,7 +144,7 @@ void func_801535D8(void) {
     D_800CA234[1] = 1;
     D_800CA234[2] = 1;
     func_80153120();
-    func_80043914((s32) D_8015F1C8, 0x11, 1, 2, 0);
+    load_palette((s32) D_8015F1C8, 0x11, 1, 2, 0);
     func_80084E90((s32) D_8015F1CC, (s32) D_8015F1D0, (s32) D_8015F1D4, (s32) D_8015F1D8, (s32) D_8015F1DC, (s32) D_8015F1E0);
     func_800850D4((s32) D_8015F1BC, (s32) D_8015F1C0, (s32) D_8015F1B8, (s32) D_8015F1C4);
     D_800CA360 = 1;
@@ -164,9 +164,9 @@ void func_801537C0(void) {
     D_800E6280.unk_1BC[7].unk_02 += 3;
     D_800E6280.unk_1BC[7].unk_06 += 2;
     D_800E6280.unk_1BC[7].unk_0A -= 0x14;
-    func_80084D3C();
+    check_para_limit();
     func_801531D0();
-    func_80043914(D_8015F1F4, 0x11, 1, 2, 0);
+    load_palette(D_8015F1F4, 0x11, 1, 2, 0);
     func_80084E90(D_8015F1F8, D_8015F1FC, D_8015F200, D_8015F204, D_8015F208, D_8015F20C);
     func_800850D4(D_8015F1E8, D_8015F1EC, D_8015F1E4, (s32) D_8015F1F0);
     D_800CA360 = 1;
@@ -185,7 +185,7 @@ void func_80153928(void) {
     D_8015E210 = D_8015E154;
     D_800E6280.unk_1BC[7].unk_02 += 3;
     D_800E6280.unk_1BC[7].unk_06 += 2;
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
@@ -288,7 +288,7 @@ void func_80153CEC(void) {
 void func_80153D94(void) {
     u32 v;
 
-    v = func_80051B48(7);
+    v = get_g_zyotai_h(7);
     D_800CA150 = (v >= 1) + (v >= 2) + (v >= 3) + 1;
     func_8014C5C8();
 }
@@ -317,7 +317,7 @@ void func_80153E90(void) {
     D_800E6280.unk_56C[0x31] = 1;
     D_800E6280.unk_1BC[7].unk_06 -= 1;
     D_800E6280.unk_1BC[7].unk_0A += 0xA;
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 

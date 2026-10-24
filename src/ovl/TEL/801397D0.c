@@ -1,10 +1,10 @@
-#define MAIN_API_OVERRIDE_func_8004EAAC /* T-10860: legacy integer reset calls in three matched handlers. */
+#define MAIN_API_OVERRIDE_k_sub_reset /* T-10860: legacy integer reset calls in three matched handlers. */
 #include "common.h"
 #include "ovl/TEL.h"
 #include "game.h"
 
 /* The legacy call view returns int; canonical k_sub_reset retains void. */
-s32 func_8004EAAC();
+s32 k_sub_reset();
 
 void func_801397D0(void) {
     D_800E6280.unk_1104.w += 1;
@@ -40,9 +40,9 @@ void func_801397D0(void) {
         func_8013CB34();
         break;
     }
-    func_80064DEC();
-    func_80064F48();
-    func_800646CC();
+    hizuke_show();
+    message_window_show();
+    parameter_show();
     func_80065B0C(0);
     func_8006BA40();
     func_80066334();
@@ -61,7 +61,7 @@ void func_80139920(void) {
     for (i = 0; i != 8; i++) {
         if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && sel == ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_25) {
             D_800E6280.unk_54C[i].b[3] &= 0xFFDF;
-            func_800AE0B0("canceled %d \n", i);
+            printf("canceled %d \n", i);
         }
     }
     func_8006B0C8();
@@ -216,28 +216,28 @@ s32 func_80139E90(void) {
     case 0:
         func_80139E3C();
         k_sub_reset();
-        func_80050DFC(D_800E6280.unk_0D4);
-        func_800AE0F0(name, "しまった！！今日は、 ");
-        func_80051438(num, (u32)(D_800E6280.unk_54C[0].w * 8) >> 0x1C);
-        func_800AE100(name, num);
-        func_800AE100(name, "と デートの約束があったんだ。）");
-        func_80050E8C(name, 0, 0x1F);
-        func_8004EAD4(0);
+        gnsx(D_800E6280.unk_0D4);
+        strcpy(name, "しまった！！今日は、 ");
+        get_g_name(num, (u32)(D_800E6280.unk_54C[0].w * 8) >> 0x1C);
+        strcat(name, num);
+        strcat(name, "と デートの約束があったんだ。）");
+        sndisp(name, 0, 0x1F);
+        k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        func_80051DBC();
+        xa_wait();
         return;
     case 2:
         k_sub_reset();
-        func_80050DFC(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.unk_0D4);
         func_8004500C(0, 0x202);
-        func_80050E8C("これでは、おれは、 三国一の極悪人だ〜）", 0, 0x1F);
-        func_8004EAD4(0);
+        sndisp("これでは、おれは、 三国一の極悪人だ〜）", 0, 0x1F);
+        k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
         break;
     case 3:
-        func_80051DBC();
+        xa_wait();
         return;
     default:
         func_80139920();
@@ -266,7 +266,7 @@ void func_80139FEC(void) {
         D_800E6280.unk_110D = 0x32;
         return;
     case 0xA:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(girl_short_name_table[girl]);
         sndisp(D_80144738[girl], 0, (s32) girl);
         func_80052060((s32) D_80144768, (s32) D_801447B8, (s32) girl, (s32) girl);
@@ -277,7 +277,7 @@ void func_80139FEC(void) {
         func_8005215C();
         return;
     case 0x1E:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(girl_short_name_table[girl]);
         sndisp(D_80144AA4[girl], 0, (s32) girl);
         func_80052060((s32) D_80144AD4, (s32) D_80144B24, (s32) girl, (s32) girl);
@@ -288,7 +288,7 @@ void func_80139FEC(void) {
         func_8005215C();
         return;
     case 0x32:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(girl_short_name_table[girl]);
         sndisp(D_80144D6C[girl], 0, (s32) girl);
         func_80052060((s32) D_80144D9C, (s32) D_80144DEC, (s32) girl, (s32) girl);
@@ -340,24 +340,24 @@ s32 func_8013A2F0(void) {
     case 0:
         func_80139E3C();
         k_sub_reset();
-        func_80050DFC(D_800E6280.unk_0D4);
-        func_80050E8C("しまった！！ デートの場所を 間違えたのか〜。）", 0, 0x1F);
-        func_8004EAD4(0);
+        gnsx(D_800E6280.unk_0D4);
+        sndisp("しまった！！ デートの場所を 間違えたのか〜。）", 0, 0x1F);
+        k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        func_80051DBC();
+        xa_wait();
         return;
     case 2:
         k_sub_reset();
-        func_80050DFC(D_800E6280.unk_0D4);
+        gnsx(D_800E6280.unk_0D4);
         func_8004500C(0, 0x202);
-        func_80050E8C("おれは、なんという ボケをかまして しまったんだ〜）", 0, 0x1F);
-        func_8004EAD4(0);
+        sndisp("おれは、なんという ボケをかまして しまったんだ〜）", 0, 0x1F);
+        k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
         break;
     case 3:
-        func_80051DBC();
+        xa_wait();
         return;
     default:
         func_80139920();
@@ -750,7 +750,7 @@ s32 func_8013ADC0(void) {
         func_8004500C(0, 0x201);
         k_sub_reset();
         gnsx(&D_800E6280.unk_0D4[0]);
-        func_800AE0F0(text, "どうやら好雄の話では、俺が ");
+        strcpy(text, "どうやら好雄の話では、俺が ");
         get_g_name(name, func_8013BDDC());
         strcat(text, name);
         strcat(text, "を、 傷つけたといううわさが、 流れてたそうだ。）");
@@ -1030,7 +1030,7 @@ s32 func_8013B54C(void) {
     case 0xF1:
         k_sub_reset();
         gnsx(D_800E6280.unk_0D4);
-        func_800AE0F0(text, "そうかっ！ ");
+        strcpy(text, "そうかっ！ ");
         get_g_name(name, ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->unk_25);
         strcat(text, name);
         strcat(text, "は、 怒って来なかったのか。）");
@@ -1153,7 +1153,7 @@ s32 func_8013BFDC(void) {
         g->unk_110D = 0x1E;
         break;
     case 0xA:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(girl_short_name_table[girl]);
         sndisp(D_80146008[girl], 0, girl);
         func_80052060((s32) D_80146038, (s32) D_80146090, girl, girl);
@@ -1164,7 +1164,7 @@ s32 func_8013BFDC(void) {
         func_8005215C();
         break;
     case 0xC:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(&g->unk_0D4[0]);
         sndisp("喜んでもらえたかな。）", 0, 0x1F);
         k_sub_disp_start(0);
@@ -1177,7 +1177,7 @@ s32 func_8013BFDC(void) {
         g->unk_110D = 0xF0;
         break;
     case 0x1E:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(girl_short_name_table[girl]);
         sndisp(D_801462F0[girl], 0, girl);
         func_80052060((s32) D_80146320, (s32) D_80146378, girl, girl);
@@ -1188,7 +1188,7 @@ s32 func_8013BFDC(void) {
         func_8005215C();
         break;
     case 0x20:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(&g->unk_0D4[0]);
         sndisp("それなりに、 喜んでもらえたのかな。）", 0, 0x1F);
         k_sub_disp_start(0);
@@ -1201,7 +1201,7 @@ s32 func_8013BFDC(void) {
         g->unk_110D = 0xF0;
         break;
     case 0x32:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(girl_short_name_table[girl]);
         sndisp(D_801465B0[girl], 0, girl);
         func_80052060((s32) D_801465E0, (s32) D_80146638, girl, girl);
@@ -1212,7 +1212,7 @@ s32 func_8013BFDC(void) {
         func_8005215C();
         break;
     case 0x34:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(&g->unk_0D4[0]);
         sndisp("まあまあかな。）", 0, 0x1F);
         k_sub_disp_start(0);
@@ -1239,7 +1239,7 @@ s32 func_8013C3E0(void) {
 
     for (i = 0; i != 0xB; i++) {
         if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0C.f.b12 &&
-            func_80051A68(i) != 4) {
+            get_g_zyotai_s(i) != 4) {
             return i;
         }
     }
@@ -1285,7 +1285,7 @@ s32 func_8013C4D8(void) {
         g->unk_110D = 0x1E;
         break;
     case 0xA:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(girl_short_name_table[girl]);
         sndisp(D_80146904[girl], 0, girl);
         func_80052060((s32) D_80146934, (s32) D_8014698C, girl, girl);
@@ -1296,7 +1296,7 @@ s32 func_8013C4D8(void) {
         func_8005215C();
         break;
     case 0xC:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(&g->unk_0D4[0]);
         sndisp("喜んでもらえたかな。）", 0, 0x1F);
         k_sub_disp_start(0);
@@ -1309,7 +1309,7 @@ s32 func_8013C4D8(void) {
         g->unk_110D = 0xF0;
         break;
     case 0x1E:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(girl_short_name_table[girl]);
         sndisp(D_80146BF4[girl], 0, girl);
         func_80052060((s32) D_80146C24, (s32) D_80146C7C, girl, girl);
@@ -1320,7 +1320,7 @@ s32 func_8013C4D8(void) {
         func_8005215C();
         break;
     case 0x20:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(&g->unk_0D4[0]);
         sndisp("それなりに、 喜んでもらえたのかな。）", 0, 0x1F);
         k_sub_disp_start(0);
@@ -1333,7 +1333,7 @@ s32 func_8013C4D8(void) {
         g->unk_110D = 0xF0;
         break;
     case 0x32:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(girl_short_name_table[girl]);
         sndisp(D_80146EE4[girl], 0, girl);
         func_80052060((s32) D_80146F14, (s32) D_80146F6C, girl, girl);
@@ -1344,7 +1344,7 @@ s32 func_8013C4D8(void) {
         func_8005215C();
         break;
     case 0x34:
-        func_8004EAAC();
+        k_sub_reset();
         gnsx(&g->unk_0D4[0]);
         sndisp("まあまあかな。）", 0, 0x1F);
         k_sub_disp_start(0);
@@ -1371,7 +1371,7 @@ s32 func_8013C8DC(void) {
 
     for (i = 0; i != 0xB; i++) {
         if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0C.f.b13 &&
-            func_80051A68(i) != 4) {
+            get_g_zyotai_s(i) != 4) {
             return i;
         }
     }

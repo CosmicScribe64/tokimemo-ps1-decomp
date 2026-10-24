@@ -170,7 +170,7 @@ void func_80142C9C(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     func_80085B3C(9, 0);
     if (year == 0x5F) {
         if ((month >= 4U) && (month < 6U)) {
@@ -252,8 +252,8 @@ void func_80142C9C(void) {
             flags[i] = 1;
         }
     }
-    func_800AE120(*(u32 *)&D_800E6280.unk_10F8);
-    r = func_800AE0D0() % total;
+    srand(*(u32 *)&D_800E6280.unk_10F8);
+    r = rand() % total;
     total = 0;
     sel = 2;
     for (i = 0; i < 0x15; i++) {
@@ -361,7 +361,7 @@ void func_80142C9C(void) {
         D_801476D4 = D_801476C8;
         break;
     }
-    func_800AE0F0(D_800CA280, names.v[D_801476E0]);
+    strcpy(D_800CA280, names.v[D_801476E0]);
     func_8004284C();
 }
 
@@ -423,8 +423,8 @@ void func_80143CBC(void) {
         for (i = 0; i < 0xB; i++) {
             if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_F5F != i) {
                 a = D_800E6280.unk_1BC[i].unk_02 / 20;
-                b = func_800AE0D0() % (u32)(a + 1);
-                if ((u8)(func_80051A68(i) & 0x7F) < 2) {
+                b = rand() % (u32)(a + 1);
+                if ((u8)(get_g_zyotai_s(i) & 0x7F) < 2) {
                     D_800E6280.unk_1BC[i].unk_0A = D_800E6280.unk_1BC[i].unk_0A + b + 6;
                 } else {
                     D_800E6280.unk_1BC[i].unk_0A = D_800E6280.unk_1BC[i].unk_0A + b + 4;
@@ -433,7 +433,7 @@ void func_80143CBC(void) {
         }
         func_8004284C();
     }
-    func_80084D3C();
+    check_para_limit();
 }
 
 void func_80143EA4(void) {

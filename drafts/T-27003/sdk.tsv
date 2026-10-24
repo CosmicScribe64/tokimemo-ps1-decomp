@@ -1,0 +1,25 @@
+# kind scope old new note
+func main func_8009B310 GsSetAmbient T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_8009F638 SetDefDispEnv T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800A0070 rsin T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800A09D0 RotMatrix T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800A0C64 MulMatrix T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800A0ECC ApplyMatrixSV T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800A0F4C ScaleMatrix T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800A1070 SetRotMatrix T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE080 bzero T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE090 strncpy T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE0A0 memcpy T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE0B0 printf T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE0C0 abs T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE0D0 rand T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE0E0 strlen T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE0F0 strcpy T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE100 strcat T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE110 strncat T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE120 srand T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AE130 sprintf T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AEEB0 strcmp T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AEFE0 EnterCriticalSection T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AF000 ExitCriticalSection T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays
+func main func_800AF1A0 CloseEvent T-27003 SDK name (T-0010 signature match, wiki/psyq-sdk.md) carried into the overlays

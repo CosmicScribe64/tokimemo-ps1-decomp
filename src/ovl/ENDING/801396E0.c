@@ -1,7 +1,10 @@
+#define MAIN_API_OVERRIDE_get_now_k /* matched with s32() (main_api.h: u8(void)) */
 #include "common.h"
 #include "ovl/ENDING.h"
 #include "game.h"
 #include "psx_types.h"
+
+s32 get_now_k();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAC0);
@@ -189,8 +192,8 @@ void func_80139DA8(void) {
 
 s32 func_80139E08(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
-        func_800AE0B0("DEC_BS header Error \n");
-        func_800AE0B0("%x %x\n", ((u32 *)D_80125C04)[0], ((u32 *)D_80125C04)[1]);
+        printf("DEC_BS header Error \n");
+        printf("%x %x\n", ((u32 *)D_80125C04)[0], ((u32 *)D_80125C04)[1]);
         D_800B5920[2] = 0;
         D_800B5920[3] = 0;
         func_8004284C();
@@ -320,39 +323,39 @@ void func_8013A2E8(void) {
     D_80122CD0 = dialogue_render(-0x48, 0x48, 0, (*D_8013CAF0)[0], 0, "", "", 0);
     func_8013B640();
     if (D_800E6280.unk_0F6.b[1] & 1) {
-        func_800AE0F0(D_800CA280, "一流大学");
+        strcpy(D_800CA280, "一流大学");
     } else if (D_800E6280.unk_0F6.b[1] & 2) {
-        func_800AE0F0(D_800CA280, "二流大学");
+        strcpy(D_800CA280, "二流大学");
     } else if (D_800E6280.unk_0F6.b[1] & 4) {
-        func_800AE0F0(D_800CA280, "三流大学");
+        strcpy(D_800CA280, "三流大学");
     } else if (D_800E6280.unk_0F6.b[1] & 8) {
-        func_800AE0F0(D_800CA280, "一流企業");
+        strcpy(D_800CA280, "一流企業");
     } else if (D_800E6280.unk_0F6.b[1] & 0x10) {
-        func_800AE0F0(D_800CA280, "二流企業");
+        strcpy(D_800CA280, "二流企業");
     } else if (D_800E6280.unk_0F6.b[1] & 0x20) {
-        func_800AE0F0(D_800CA280, "三流企業");
+        strcpy(D_800CA280, "三流企業");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[0])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "小説家は");
+        strcpy(D_800CA280, "小説家は");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[1])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "俳優は");
+        strcpy(D_800CA280, "俳優は");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[2])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "製薬会社は");
+        strcpy(D_800CA280, "製薬会社は");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[3])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "有名ゲーム会社は ");
+        strcpy(D_800CA280, "有名ゲーム会社は ");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[4])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "画家は");
+        strcpy(D_800CA280, "画家は");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[5])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "音楽家は");
+        strcpy(D_800CA280, "音楽家は");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[6])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "プロ野球選手は");
+        strcpy(D_800CA280, "プロ野球選手は");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[7])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "Ｊリーガーは");
+        strcpy(D_800CA280, "Ｊリーガーは");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[8])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "プロテニスプレイヤーは ");
+        strcpy(D_800CA280, "プロテニスプレイヤーは ");
     } else if (((ScheduleClubFlags *)&D_800E6280.unk_66C[9])->unk_25 >= 3) {
-        func_800AE0F0(D_800CA280, "水泳の実業団は");
+        strcpy(D_800CA280, "水泳の実業団は");
     } else {
-        func_800AE0F0(D_800CA280, "プロバスケプレイヤーは ");
+        strcpy(D_800CA280, "プロバスケプレイヤーは ");
     }
     top = 0;
     idx = 0;
@@ -672,10 +675,10 @@ s32 func_8013B510(void) {
     if (D_800E6280.unk_10F8 & 3) {
         return 0;
     }
-    max = func_8004ECF0() & 0xFF;
+    max = get_now_k() & 0xFF;
     count = 0;
     do {
-        entry = (Entry8 *)func_8004E970(count);
+        entry = (Entry8 *)get_k_work(count);
         entry->unk_02--;
         y = entry->unk_02;
         count++;
@@ -696,7 +699,7 @@ s32 func_8013B5E4(void) {
     if ((u32)D_800E6280.unk_1104.w++ < 0x80U) {
         return 0;
     }
-    func_8004E884(D_80122CD0);
+    k_disp_start(D_80122CD0);
     D_80122CD4 = 1;
     func_8004284C();
 }

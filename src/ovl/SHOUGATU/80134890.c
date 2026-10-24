@@ -28,9 +28,9 @@ void func_80134930(void) {
     idx = D_800E6280.unk_110A;
     tbl.f[idx](0x40, idx);
     if (D_80143DDC != 0) {
-        func_80085678(-0xA0, -0x78, 0x140, 0x64, 0xD, 0xE0FF, 0xFFFF);
-        func_80085678(-0xA0, -0x14, 0x140, 0x3C, 0xD, 0x6060, 0xE0FF);
-        func_8004955C(0xD);
+        _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0x64, 0xD, 0xE0FF, 0xFFFF);
+        _sprite_set_box_shade_tarao(-0xA0, -0x14, 0x140, 0x3C, 0xD, 0x6060, 0xE0FF);
+        dtd_on(0xD);
     }
 }
 
@@ -371,7 +371,7 @@ void func_801359FC(void) {
     if (D_800E6280.unk_F5F == 3 && D_80143DD8 == 3) {
         D_80143DD8 = 4;
     }
-    func_800AE0F0(D_800CA248, labels.s[D_80143DD8]);
+    strcpy(D_800CA248, labels.s[D_80143DD8]);
     if (D_80143DD8 == 0) {
         D_800E6280.unk_11C.unk_02 -= 5;
     }

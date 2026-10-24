@@ -1,9 +1,9 @@
-#define MAIN_API_OVERRIDE_func_800AE090 /* FAKE: implicit int view, no prototype: func_80133510 calls it without the length, and the unused $v0 result keeps the address in func_80134B94 off $v0 (main_api.h: void, three parameters; T-20810, T-21520) */
+#define MAIN_API_OVERRIDE_strncpy /* FAKE: implicit int view, no prototype: func_80133510 calls it without the length, and the unused $v0 result keeps the address in func_80134B94 off $v0 (main_api.h: void, three parameters; T-20810, T-21520) */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 #include "game.h"
 
-s32 func_800AE090();
+s32 strncpy();
 
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
@@ -104,9 +104,9 @@ void func_80132000(s32 arg0) {
     s32 rem;
 
     rem = arg0 % 15;
-    func_800AE090(D_8014CC74, D_8014CE6C + rem * 8, 8);
-    func_800AE090(D_8014CC7C, D_8014CEE4 + rem * 8, 8);
-    func_800AE090(D_8014CC84, D_8014CF5C + rem * 0xC, 0xC);
+    strncpy(D_8014CC74, D_8014CE6C + rem * 8, 8);
+    strncpy(D_8014CC7C, D_8014CEE4 + rem * 8, 8);
+    strncpy(D_8014CC84, D_8014CF5C + rem * 0xC, 0xC);
 }
 
 void func_8013209C(void) {
@@ -220,7 +220,7 @@ void func_80132320(void) {
             D_801220D0 = 0x80000000;
             D_801220D4 = -0x18;
             func_8006BD6C(1);
-            func_800438F0(0);
+            back_clear_switch(0);
             func_80042808();
         }
     }
@@ -360,9 +360,9 @@ void func_80132A38(void) {
     for (i = 0; i < 6; i++) { buf[i] = (u32)D_800E6280.unk_1A7C + i * 0x4000; }
     func_8004A1A0(buf, 0, 6, 3, 2, 0x1F8, -0xA0, -0x78, 8, 0xD);
     D_801220D0 |= 0x40000000;
-    D_800E6280.unk_1228[func_800486A4(*(s32 *)D_800E6280.unk_1A3C, 2)] = *(s32 *)D_800E6280.unk_1A3C;
-    func_80043914(D_800E6280.unk_1A84, 0x18, 1, 2, 0);
-    func_80043914(D_800E6280.unk_1A6C, 0x10, 1, 2, 0);
+    D_800E6280.unk_1228[search_tpage_multi(*(s32 *)D_800E6280.unk_1A3C, 2)] = *(s32 *)D_800E6280.unk_1A3C;
+    load_palette(D_800E6280.unk_1A84, 0x18, 1, 2, 0);
+    load_palette(D_800E6280.unk_1A6C, 0x10, 1, 2, 0);
 }
 
 void func_80132B78(s32 arg0) {
@@ -627,15 +627,15 @@ INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.rodata", D_8014B4A4);
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.rodata", D_8014B4AC);
 
 void func_80132FD4(void) {
-    func_8004E788(-0x78, 0x38, 0xA, D_8014CD28, 0);
-    func_8004E788(-0x18, 0x38, 0xA, D_8014CD2C, 0);
-    func_8004E788(0x48, 0x38, 0xA, D_8014CD30, 0);
-    func_8004E788(-0x78, 0x48, 0xA, D_8014CD34, 0);
-    func_8004E788(-0x18, 0x48, 0xA, D_8014CD38, 0);
-    func_8004E788(0x48, 0x48, 0xA, D_8014CD3C, 0);
-    func_8004E788(-0x78, 0x58, 0xA, D_8014CD40, 0);
-    func_8004E788(-0x18, 0x58, 0xA, "やゆよ　わ", 0);
-    func_8004E788(0x48, 0x58, 0xA, D_8014CD48, 0);
+    set_kanji_string(-0x78, 0x38, 0xA, D_8014CD28, 0);
+    set_kanji_string(-0x18, 0x38, 0xA, D_8014CD2C, 0);
+    set_kanji_string(0x48, 0x38, 0xA, D_8014CD30, 0);
+    set_kanji_string(-0x78, 0x48, 0xA, D_8014CD34, 0);
+    set_kanji_string(-0x18, 0x48, 0xA, D_8014CD38, 0);
+    set_kanji_string(0x48, 0x48, 0xA, D_8014CD3C, 0);
+    set_kanji_string(-0x78, 0x58, 0xA, D_8014CD40, 0);
+    set_kanji_string(-0x18, 0x58, 0xA, "やゆよ　わ", 0);
+    set_kanji_string(0x48, 0x58, 0xA, D_8014CD48, 0);
 }
 
 void func_801330E8(s32 arg0) {
@@ -709,38 +709,38 @@ void func_80133510(u8 *arg0) {
             D_8014CCAC = 0;
         }
     }
-    D_8014CCB0 = func_800AE0E0(D_8014CE68[38]);
+    D_8014CCB0 = strlen(D_8014CE68[38]);
     text = D_8014CE68[38];
     text += D_8014CCAC * 32;
-    if (func_800AE0E0(text) < 0x20) {
-        func_800AE0F0(line0, text);
+    if (strlen(text) < 0x20) {
+        strcpy(line0, text);
     } else {
-        func_800AE090(line0, text, 0x20);
+        strncpy(line0, text, 0x20);
         p = text + 0x20;
-        if (func_800AE0E0(p) < 0x20) {
-            func_800AE0F0(line1, p);
+        if (strlen(p) < 0x20) {
+            strcpy(line1, p);
         } else {
-            func_800AE090(line1, p, 0x20);
+            strncpy(line1, p, 0x20);
             p = text + 0x40;
-            if (func_800AE0E0(p) < 0x20) {
-                func_800AE0F0(line2, p);
+            if (strlen(p) < 0x20) {
+                strcpy(line2, p);
             } else {
-                func_800AE090(line2, p, 0x20);
+                strncpy(line2, p, 0x20);
                 p = text + 0x60;
-                if (func_800AE0E0(p) < 0x20) {
-                    func_800AE0F0(line3, p);
+                if (strlen(p) < 0x20) {
+                    strcpy(line3, p);
                 } else {
-                    func_800AE090(line3, p, 0x20);
+                    strncpy(line3, p, 0x20);
                     p = text + 0x80;
-                    if (func_800AE0E0(p) < 0x20) {
-                        func_800AE0F0(line4, p);
+                    if (strlen(p) < 0x20) {
+                        strcpy(line4, p);
                     } else {
-                        func_800AE090(line4, p);
+                        strncpy(line4, p);
                         p = text + 0xA0;
-                        if (func_800AE0E0(p) < 0x20) {
-                            func_800AE0F0(line5, p);
+                        if (strlen(p) < 0x20) {
+                            strcpy(line5, p);
                         } else {
-                            func_800AE090(line5, p);
+                            strncpy(line5, p);
                         }
                     }
                 }
@@ -815,7 +815,7 @@ void func_801338DC(s32 arg0) {
         func_8004E58C();
         set_kanji_string(-0x98, -0x68, 0xA, D_8014D010, 0);
         set_kanji_string(-0x78, -0x30, 0xA, D_8014CDB0[D_8014CCB4], 0);
-        D_8014CCB0 = func_800AE0E0(D_8014CE68[D_8014CCB4]);
+        D_8014CCB0 = strlen(D_8014CE68[D_8014CCB4]);
         if (D_8014CE64[D_8014CCB4] < D_8014CCAC * 16 + 0x40) {
             D_8014CCAC = (D_8014CE64[D_8014CCB4] >> 4) - 4;
             if (D_8014CCAC < 0) {
@@ -824,26 +824,26 @@ void func_801338DC(s32 arg0) {
         }
         text = D_8014CE68[D_8014CCB4];
         text += D_8014CCAC * 32;
-        if (func_800AE0E0(text) < 0x20) {
-            func_800AE0F0(line0, text);
+        if (strlen(text) < 0x20) {
+            strcpy(line0, text);
         } else {
-            func_800AE090(line0, text, 0x20);
-            if (func_800AE0E0(text + 0x20) < 0x20) {
-                func_800AE0F0(line1, text + 0x20);
+            strncpy(line0, text, 0x20);
+            if (strlen(text + 0x20) < 0x20) {
+                strcpy(line1, text + 0x20);
             } else {
-                func_800AE090(line1, text + 0x20, 0x20);
-                if (func_800AE0E0(text + 0x40) < 0x20) {
-                    func_800AE0F0(line2, text + 0x40);
+                strncpy(line1, text + 0x20, 0x20);
+                if (strlen(text + 0x40) < 0x20) {
+                    strcpy(line2, text + 0x40);
                 } else {
-                    func_800AE090(line2, text + 0x40, 0x20);
-                    if (func_800AE0E0(text + 0x60) < 0x20) {
-                        func_800AE0F0(line3, text + 0x60);
+                    strncpy(line2, text + 0x40, 0x20);
+                    if (strlen(text + 0x60) < 0x20) {
+                        strcpy(line3, text + 0x60);
                     } else {
-                        func_800AE090(line3, text + 0x60, 0x20);
-                        if (func_800AE0E0(text + 0x80) < 0x20) {
-                            func_800AE0F0(line4, text + 0x80);
+                        strncpy(line3, text + 0x60, 0x20);
+                        if (strlen(text + 0x80) < 0x20) {
+                            strcpy(line4, text + 0x80);
                         } else {
-                            func_800AE090(line4, text + 0x80);
+                            strncpy(line4, text + 0x80);
                         }
                     }
                 }
@@ -1063,7 +1063,7 @@ void func_80134248(s32 arg0) {
                     dest[selected * 2 + 1] = D_800B3644[1];
                 }
             } else if (D_8014CCC4 == 0) {
-                if (D_8014CCC0 < func_800AE0E0(D_8014CDB0[D_8014CCB4]) / 2) {
+                if (D_8014CCC0 < strlen(D_8014CDB0[D_8014CCB4]) / 2) {
                     dest[selected * 2] = D_8014CDB0[D_8014CCB4][D_8014CCC0 * 2];
                     dest[selected * 2 + 1] = D_8014CDB0[D_8014CCB4][D_8014CCC0 * 2 + 1];
                 } else {
@@ -1101,7 +1101,7 @@ s32 func_80134B94(s32 arg0) {
     s32 n;
     s32 r;
 
-    r = func_800AE0D0() % 15;
+    r = rand() % 15;
     n = 0;
     if (arg0 == 0) {
         for (i = 0; i < 6; i++) {
@@ -1110,13 +1110,13 @@ s32 func_80134B94(s32 arg0) {
             }
         }
         if (D_8014CC74[n] == 0) {
-            func_800AE090(D_8014CC74, D_8014CE6C + r * 8, 8);
+            strncpy(D_8014CC74, D_8014CE6C + r * 8, 8);
         }
         if (n == 6) {
-            func_800AE090(D_8014CC74, D_8014CE6C + r * 8, 8);
+            strncpy(D_8014CC74, D_8014CE6C + r * 8, 8);
         }
         if (D_8014CC74[0] == 0) {
-            func_800AE090(D_8014CC74, D_8014CE6C + r * 8, 8);
+            strncpy(D_8014CC74, D_8014CE6C + r * 8, 8);
         }
     }
     if (arg0 == 1) {
@@ -1126,13 +1126,13 @@ s32 func_80134B94(s32 arg0) {
             }
         }
         if (D_8014CC7C[n] == 0) {
-            func_800AE090(D_8014CC7C, D_8014CEE4 + r * 8, 8);
+            strncpy(D_8014CC7C, D_8014CEE4 + r * 8, 8);
         }
         if (n == 6) {
-            func_800AE090(D_8014CC7C, D_8014CEE4 + r * 8, 8);
+            strncpy(D_8014CC7C, D_8014CEE4 + r * 8, 8);
         }
         if (D_8014CC7C[0] == 0) {
-            func_800AE090(D_8014CC7C, D_8014CEE4 + r * 8, 8);
+            strncpy(D_8014CC7C, D_8014CEE4 + r * 8, 8);
         }
     }
     if (arg0 == 2) {
@@ -1142,13 +1142,13 @@ s32 func_80134B94(s32 arg0) {
             }
         }
         if (D_8014CC84[n] == 0) {
-            func_800AE090(D_8014CC84, D_8014CF5C + r * 12, 12);
+            strncpy(D_8014CC84, D_8014CF5C + r * 12, 12);
         }
         if (n == 10) {
-            func_800AE090(D_8014CC84, D_8014CF5C + r * 12, 12);
+            strncpy(D_8014CC84, D_8014CF5C + r * 12, 12);
         }
         if (D_8014CC84[0] == 0) {
-            func_800AE090(D_8014CC84, D_8014CF5C + r * 12, 12);
+            strncpy(D_8014CC84, D_8014CF5C + r * 12, 12);
         }
     }
 }
@@ -1247,9 +1247,9 @@ void func_80135168(void) {
     /* u8 view of the s8 flag D_8014D0A4 (unsigned compare against 2). T-11650 */
     if (*(u8 *)&D_8014D0A4 < 2) {
         if (*(u8 *)&D_8014D0A4 == 1) {
-            func_800AE0A0(D_8014CC74, D_8014D070, 8);
-            func_800AE0A0(D_8014CC7C, D_8014D078, 8);
-            func_800AE0A0(D_8014CC84, D_8014D080, 0xC);
+            memcpy(D_8014CC74, D_8014D070, 8);
+            memcpy(D_8014CC7C, D_8014D078, 8);
+            memcpy(D_8014CC84, D_8014D080, 0xC);
             D_8014CC90 = (u8) D_8014D08C % 12;
             D_8014CC94 = (u8) D_8014D090 % 31;
             D_8014CC98 = (u8) D_8014D094 & 3;
@@ -1258,14 +1258,14 @@ void func_80135168(void) {
             D_8014CCA4 = (u8) D_8014D0A0 & 3;
         } else {
             for (p = D_8014CC74; p < &D_8014CC74[6]; p += 2) {
-                func_800AE0F0(p, D_800B3644);
+                strcpy(p, D_800B3644);
             }
             for (p = D_8014CC7C; p < &D_8014CC7C[6]; p += 2) {
-                func_800AE0F0(p, D_800B3644);
+                strcpy(p, D_800B3644);
             }
             /* FAKE: initialisation on the do line gives the original as1 order of the two addiu. T-11650 */
             p = D_8014CC84; do {
-                func_800AE0F0(p, D_800B3644);
+                strcpy(p, D_800B3644);
                 p += 2;
             } while (p != &D_8014CC8E);
             D_8014CC8E = 0;
@@ -1292,7 +1292,7 @@ void func_80135168(void) {
     func_801324AC();
     func_80046290(D_8014CC38, D_8014CC3C, 0);
     func_80044750(0x300);
-    func_8004EA98();
+    k_sub_reset_point_set();
     func_80134B18();
     *(u8 *)&D_8014D0A4 = 2;
     func_8004284C();
@@ -1318,7 +1318,7 @@ void func_80135434(s32 arg0) {
         func_80049A40(-0x1A, 0x36, 0x50, 0x30, 4, col, 0x83);
         func_80049A40(0x46, 0x36, 0x50, 0x30, 4, col, 0x83);
     }
-    func_800494BC(0, 0, 4, 0, 0);
+    dtd_on_tpage(0, 0, 4, 0, 0);
     if (!(D_800E6280.unk_F88 & 0x20) && !(D_800E6280.unk_F88 & 0x800)) {
         if (!(D_800E6280.unk_F88 & 0x40)) {
             func_80134F6C();
@@ -1391,35 +1391,35 @@ void func_801357F4(void) {
         }
         if (D_8014CCC8 == 3) {
             func_801338DC(1);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         } else if (D_8014CCC8 == 2) {
             func_80133510(D_8014CCE4);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 0) {
             D_8014CCC8 = 0;
             func_801330E8(D_8014CCE4);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 1) {
             D_8014CCC8 = 1;
             func_801332FC(D_8014CCE4);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 2) {
             D_8014CCC8 = 2;
             func_80133510(D_8014CCE4);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 3) {
             D_8014CCC8 = 3;
             func_801338DC(1);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 4) {
@@ -1499,35 +1499,35 @@ void func_80135BB4(void) {
         }
         if (D_8014CCC8 == 3) {
             func_801338DC(2);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         } else if (D_8014CCC8 == 2) {
             func_80133510(D_8014CD04);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 0) {
             D_8014CCC8 = 0;
             func_801330E8(D_8014CD04);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 1) {
             D_8014CCC8 = 1;
             func_801332FC(D_8014CD04);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 2) {
             D_8014CCC8 = 2;
             func_80133510(D_8014CD04);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 3) {
             D_8014CCC8 = 3;
             func_801338DC(2);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 4) {
@@ -1601,35 +1601,35 @@ void func_80135F74(void) {
         }
         if (D_8014CCC8 == 3) {
             func_801338DC(3);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         } else if (D_8014CCC8 == 2) {
             func_80133510(D_8014CD10);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 0) {
             D_8014CCC8 = 0;
             func_801330E8(D_8014CD10);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 1) {
             D_8014CCC8 = 1;
             func_801332FC(D_8014CD10);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 2) {
             D_8014CCC8 = 2;
             func_80133510(D_8014CD10);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 3) {
             D_8014CCC8 = 3;
             func_801338DC(3);
-            func_8004EA98();
+            k_sub_reset_point_set();
             func_80134B18();
         }
         if (D_8014CCCC == 4) {
@@ -1664,12 +1664,12 @@ void func_801362D0(void) {
     func_8004E58C();
     func_8013635C();
     D_8014CC70 = 0;
-    func_8004E788(-0x98, -0x68, 0xA, "誕生日と血液型も教えてね？", 0);
+    set_kanji_string(-0x98, -0x68, 0xA, "誕生日と血液型も教えてね？", 0);
     func_80046290(D_8014CC50, D_8014CC54, 0);
     func_80044750(0x300);
-    func_8004EA98();
+    k_sub_reset_point_set();
     func_801372A0(0);
-    func_8004EAD4(0);
+    k_sub_disp_start(0);
     func_8004284C();
 }
 
@@ -1864,48 +1864,48 @@ s32 arg0;
         b = D_8014CC94;
         c = D_8014CC98;
     }
-    func_8004EAAC();
+    k_sub_reset();
     if (a == 0xFF) {
-        func_8004E788(-0x50, -0x58, 0xE, "　", 0);
-        func_8004E788(-0x40, -0x58, 0xE, "　", 0);
+        set_kanji_string(-0x50, -0x58, 0xE, "　", 0);
+        set_kanji_string(-0x40, -0x58, 0xE, "　", 0);
     } else {
         if (a >= 9) {
-            func_8004E788(-0x50, -0x58, 0xE, D_800B3288[1], 0);
+            set_kanji_string(-0x50, -0x58, 0xE, D_800B3288[1], 0);
         } else {
-            func_8004E788(-0x50, -0x58, 0xE, "　", 0);
+            set_kanji_string(-0x50, -0x58, 0xE, "　", 0);
         }
-        func_8004E788(-0x40, -0x58, 0xE, D_800B3288[(a + 1) % 10], 0);
+        set_kanji_string(-0x40, -0x58, 0xE, D_800B3288[(a + 1) % 10], 0);
     }
     if (b == 0xFF) {
-        func_8004E788(-0x20, -0x58, 0xE, "　", 0);
-        func_8004E788(-0x10, -0x58, 0xE, "　", 0);
+        set_kanji_string(-0x20, -0x58, 0xE, "　", 0);
+        set_kanji_string(-0x10, -0x58, 0xE, "　", 0);
     } else {
         if (b >= 9) {
-            func_8004E788(-0x20, -0x58, 0xE, D_800B3288[(b + 1) / 10], 0);
+            set_kanji_string(-0x20, -0x58, 0xE, D_800B3288[(b + 1) / 10], 0);
         } else {
-            func_8004E788(-0x20, -0x58, 0xE, D_800B3644, 0);
+            set_kanji_string(-0x20, -0x58, 0xE, D_800B3644, 0);
         }
-        func_8004E788(-0x10, -0x58, 0xE, D_800B3288[(b + 1) % 10], 0);
+        set_kanji_string(-0x10, -0x58, 0xE, D_800B3288[(b + 1) % 10], 0);
     }
     switch (c) {
     case 0:
-        func_8004E788(0x60, -0x58, 0xE, "　", 0);
-        func_8004E788(0x70, -0x58, 0xE, "Ａ", 0);
+        set_kanji_string(0x60, -0x58, 0xE, "　", 0);
+        set_kanji_string(0x70, -0x58, 0xE, "Ａ", 0);
         break;
     case 1:
-        func_8004E788(0x60, -0x58, 0xE, "　", 0);
-        func_8004E788(0x70, -0x58, 0xE, "Ｂ", 0);
+        set_kanji_string(0x60, -0x58, 0xE, "　", 0);
+        set_kanji_string(0x70, -0x58, 0xE, "Ｂ", 0);
         break;
     case 2:
-        func_8004E788(0x60, -0x58, 0xE, "Ａ", 0);
-        func_8004E788(0x70, -0x58, 0xE, "Ｂ", 0);
+        set_kanji_string(0x60, -0x58, 0xE, "Ａ", 0);
+        set_kanji_string(0x70, -0x58, 0xE, "Ｂ", 0);
         break;
     case 3:
-        func_8004E788(0x60, -0x58, 0xE, "　", 0);
-        func_8004E788(0x70, -0x58, 0xE, "Ｏ", 0);
+        set_kanji_string(0x60, -0x58, 0xE, "　", 0);
+        set_kanji_string(0x70, -0x58, 0xE, "Ｏ", 0);
         break;
     }
-    func_8004EAD4(6);
+    k_sub_disp_start(6);
 }
 
 void func_80137608(s32 arg0) {
@@ -1966,13 +1966,13 @@ s32 arg0;
 
     if (arg0 != 0) {
         if (D_8014CC9C == 0xFF) {
-            D_8014CC9C = func_800AE0D0() % 12;
+            D_8014CC9C = rand() % 12;
         }
         if (D_8014CCA0 == 0xFF) {
-            D_8014CCA0 = func_800AE0D0() % 31;
+            D_8014CCA0 = rand() % 31;
         }
         if (D_8014CCA4 == 0xFF) {
-            D_8014CCA4 = func_800AE0D0() % 3;
+            D_8014CCA4 = rand() % 3;
         }
         a = D_8014CC9C + 1;
         if (a == 2 && D_8014CCA0 + 1 >= 0x1D) {
@@ -1992,13 +1992,13 @@ s32 arg0;
         }
     } else {
         if (D_8014CC90 == 0xFF) {
-            D_8014CC90 = func_800AE0D0() % 12;
+            D_8014CC90 = rand() % 12;
         }
         if (D_8014CC94 == 0xFF) {
-            D_8014CC94 = func_800AE0D0() % 31;
+            D_8014CC94 = rand() % 31;
         }
         if (D_8014CC98 == 0xFF) {
-            D_8014CC98 = func_800AE0D0() % 3;
+            D_8014CC98 = rand() % 3;
         }
         a = D_8014CC90 + 1;
         if (a == 2 && D_8014CC94 + 1 >= 0x1D) {
@@ -2035,16 +2035,16 @@ void func_80137AA0(void) {
     for (i = 0, y = -0x68; i != 9; i++, y += 0x18) {
         func_80137CA0(i + 0x17, y, 0x28);
     }
-    func_800493A8(0x140, 0, 2, 0, 0);
+    goto_tpage(0x140, 0, 2, 0, 0);
 }
 
 void func_80137B84(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
     u8 *q;
 
-    p = func_800490F0(0x14, D_8011ECA0);
+    p = GetWorkBase(0x14, D_8011ECA0);
     func_8009F0A4(p);
-    func_8009EF84(p, 0);
+    SetSemiTrans(p, 0);
     p[4] = D_800E6280.unk_03A;
     p[5] = D_800E6280.unk_03A;
     p[6] = D_800E6280.unk_03A;
@@ -2056,7 +2056,7 @@ void func_80137B84(s32 arg0, s32 arg1, s32 arg2) {
     *(s16 *)(p + 0x12) = 0x10;
     *(s16 *)(p + 0x10) = 0x10;
     *(s16 *)(p + 0xE) = func_8009ED74(0x10, 0x1F0);
-    func_8009EED0((D_8011ECA0 << 10) + 8 + D_800E8CA0, p);
+    AddPrim((D_8011ECA0 << 10) + 8 + D_800E8CA0, p);
 }
 
 void func_80137CA0(s32 arg0, s32 arg1, s32 arg2) {
@@ -2124,36 +2124,36 @@ void func_80137EE4(void) {
 void func_80137FC4(void) {
     func_8004E58C();
     func_80137EE4();
-    func_8004E788(-0x18, 0x40, 0xA, "これでいい？", 0);
-    func_8004E788(-0x38, -0x37, 0xA, D_8014CC74, 0);
-    func_8004E788(0, -0x37, 0xA, D_8014CC7C, 0);
-    func_8004E788(-0x38, -0x17, 0xA, D_8014CC84, 0);
+    set_kanji_string(-0x18, 0x40, 0xA, "これでいい？", 0);
+    set_kanji_string(-0x38, -0x37, 0xA, D_8014CC74, 0);
+    set_kanji_string(0, -0x37, 0xA, D_8014CC7C, 0);
+    set_kanji_string(-0x38, -0x17, 0xA, D_8014CC84, 0);
     if (D_8014CC90 + 1 >= 10) {
-        func_8004E788(-0x38, 8, 0xA, D_800B3288[(D_8014CC90 + 1) / 10], 0);
+        set_kanji_string(-0x38, 8, 0xA, D_800B3288[(D_8014CC90 + 1) / 10], 0);
     }
-    func_8004E788(-0x28, 8, 0xA, D_800B3288[(D_8014CC90 + 1) % 10], 0);
+    set_kanji_string(-0x28, 8, 0xA, D_800B3288[(D_8014CC90 + 1) % 10], 0);
     if (D_8014CC94 + 1 >= 10) {
-        func_8004E788(-8, 8, 0xA, D_800B3288[(D_8014CC94 + 1) / 10], 0);
+        set_kanji_string(-8, 8, 0xA, D_800B3288[(D_8014CC94 + 1) / 10], 0);
     }
-    func_8004E788(8, 8, 0xA, D_800B3288[(D_8014CC94 + 1) % 10], 0);
+    set_kanji_string(8, 8, 0xA, D_800B3288[(D_8014CC94 + 1) % 10], 0);
     switch (D_8014CC98) {
     case 0:
-        func_8004E788(-0x28, 0x28, 0xA, "Ａ", 0);
+        set_kanji_string(-0x28, 0x28, 0xA, "Ａ", 0);
         break;
     case 1:
-        func_8004E788(-0x28, 0x28, 0xA, "Ｂ", 0);
+        set_kanji_string(-0x28, 0x28, 0xA, "Ｂ", 0);
         break;
     case 2:
-        func_8004E788(-0x38, 0x28, 0xA, "ＡＢ", 0);
+        set_kanji_string(-0x38, 0x28, 0xA, "ＡＢ", 0);
         break;
     case 3:
-        func_8004E788(-0x28, 0x28, 0xA, "Ｏ", 0);
+        set_kanji_string(-0x28, 0x28, 0xA, "Ｏ", 0);
         break;
     }
     func_80046290(D_8014CC60, D_8014CC64, 0);
     func_80044750(0x300);
-    func_8004EA98();
-    func_8004EAD4(0);
+    k_sub_reset_point_set();
+    k_sub_disp_start(0);
     func_8004284C();
 }
 
@@ -2242,13 +2242,13 @@ void func_80138488(void) {
 void func_801385A8(void) {
     func_8004E58C();
     D_8014CC70 = 0;
-    func_8004E788(-0x98, -0x68, 0xA, "藤崎詩織の誕生日と血液型は覚えてる？", 0);
+    set_kanji_string(-0x98, -0x68, 0xA, "藤崎詩織の誕生日と血液型は覚えてる？", 0);
     func_8013635C();
     func_80046290(D_8014CC58, D_8014CC5C, 0);
     func_80044750(0x300);
-    func_8004EA98();
+    k_sub_reset_point_set();
     func_801372A0(1);
-    func_8004EAD4(0);
+    k_sub_disp_start(0);
     func_8004284C();
 }
 
@@ -2307,36 +2307,36 @@ void func_80138714(void) {
 
 void func_801387F4(void) {
     func_8004E58C();
-    func_8004E788(-0x18, 0x40, 0xA, "これでいい？", 0);
-    func_8004E788(-0x38, -0x38, 0xA, "藤崎", 0);
-    func_8004E788(0, -0x38, 0xA, "詩織", 0);
+    set_kanji_string(-0x18, 0x40, 0xA, "これでいい？", 0);
+    set_kanji_string(-0x38, -0x38, 0xA, "藤崎", 0);
+    set_kanji_string(0, -0x38, 0xA, "詩織", 0);
     if (D_8014CC9C + 1 >= 10) {
-        func_8004E788(-0x38, -0x18, 0xA, D_800B3288[(D_8014CC9C + 1) / 10], 0);
+        set_kanji_string(-0x38, -0x18, 0xA, D_800B3288[(D_8014CC9C + 1) / 10], 0);
     }
-    func_8004E788(-0x28, -0x18, 0xA, D_800B3288[(D_8014CC9C + 1) % 10], 0);
+    set_kanji_string(-0x28, -0x18, 0xA, D_800B3288[(D_8014CC9C + 1) % 10], 0);
     if (D_8014CCA0 + 1 >= 10) {
-        func_8004E788(-8, -0x18, 0xA, D_800B3288[(D_8014CCA0 + 1) / 10], 0);
+        set_kanji_string(-8, -0x18, 0xA, D_800B3288[(D_8014CCA0 + 1) / 10], 0);
     }
-    func_8004E788(8, -0x18, 0xA, D_800B3288[(D_8014CCA0 + 1) % 10], 0);
+    set_kanji_string(8, -0x18, 0xA, D_800B3288[(D_8014CCA0 + 1) % 10], 0);
     switch (D_8014CCA4) {
     case 0:
-        func_8004E788(-0x28, 8, 0xA, "Ａ", 0);
+        set_kanji_string(-0x28, 8, 0xA, "Ａ", 0);
         break;
     case 1:
-        func_8004E788(-0x28, 8, 0xA, "Ｂ", 0);
+        set_kanji_string(-0x28, 8, 0xA, "Ｂ", 0);
         break;
     case 2:
-        func_8004E788(-0x38, 8, 0xA, "ＡＢ", 0);
+        set_kanji_string(-0x38, 8, 0xA, "ＡＢ", 0);
         break;
     case 3:
-        func_8004E788(-0x28, 8, 0xA, "Ｏ", 0);
+        set_kanji_string(-0x28, 8, 0xA, "Ｏ", 0);
         break;
     }
     func_80138714();
     func_80046290(D_8014CC60, D_8014CC64, 0);
     func_80044750(0x300);
-    func_8004EA98();
-    func_8004EAD4(0);
+    k_sub_reset_point_set();
+    k_sub_disp_start(0);
     func_8004284C();
 }
 
@@ -2426,9 +2426,9 @@ s32 func_80138C1C(void) {
             n++;
         }
     }
-    func_800AE090(buf, D_800E6280.unk_0D4, 8);
-    func_800AE110(buf, D_800E6280.unk_0DC, 8);
-    func_800AE090(D_800E6280.unk_0C4, buf, 0x10);
+    strncpy(buf, D_800E6280.unk_0D4, 8);
+    strncat(buf, D_800E6280.unk_0DC, 8);
+    strncpy(D_800E6280.unk_0C4, buf, 0x10);
     /* FAKE: the redundant `& 3` on the two-bit fields spends the ugen temporary the original spends
      * there (as1 deletes the AND); without it every later temporary is one register low. T-25149 */
     ((GsWord *)&D_800E6280.unk_0F8)->date.month = D_8014CC90 + 1;
@@ -2472,7 +2472,7 @@ void func_80138F60(void) {
         D_800E6280.unk_1BC[1].unk_0C.f.f20 = 1;
     } else if (var_t0 == 1) {
         D_800E6280.unk_1BC[1].unk_0C.f.f20 = 0;
-    } else if (func_800AE0D0() & 1) {
+    } else if (rand() & 1) {
         D_800E6280.unk_1BC[1].unk_0C.f.f20 = 1;
     } else {
         D_800E6280.unk_1BC[1].unk_0C.f.f20 = 0;
@@ -2482,7 +2482,7 @@ void func_80138F60(void) {
         D_800E6280.unk_1BC[2].unk_0C.f.f20 = 3;
     } else if (var_t0 == 3) {
         D_800E6280.unk_1BC[2].unk_0C.f.f20 = 2;
-    } else if (func_800AE0D0() & 1) {
+    } else if (rand() & 1) {
         D_800E6280.unk_1BC[2].unk_0C.f.f20 = 3;
     } else {
         D_800E6280.unk_1BC[2].unk_0C.f.f20 = 2;
@@ -2492,7 +2492,7 @@ void func_80138F60(void) {
         D_800E6280.unk_1BC[3].unk_0C.f.f20 = 5;
     } else if (var_t0 == 5) {
         D_800E6280.unk_1BC[3].unk_0C.f.f20 = 4;
-    } else if (func_800AE0D0() & 1) {
+    } else if (rand() & 1) {
         D_800E6280.unk_1BC[3].unk_0C.f.f20 = 5;
     } else {
         D_800E6280.unk_1BC[3].unk_0C.f.f20 = 4;
@@ -2502,7 +2502,7 @@ void func_80138F60(void) {
         D_800E6280.unk_1BC[4].unk_0C.f.f20 = 7;
     } else if (var_t0 == 7) {
         D_800E6280.unk_1BC[4].unk_0C.f.f20 = 6;
-    } else if (func_800AE0D0() & 1) {
+    } else if (rand() & 1) {
         D_800E6280.unk_1BC[4].unk_0C.f.f20 = 7;
     } else {
         D_800E6280.unk_1BC[4].unk_0C.f.f20 = 6;
@@ -2531,12 +2531,12 @@ void func_80138F60(void) {
 void func_80139440(void) {
     s32 i;
 
-    if (func_800AEEB0(D_8014CC84, "こなみまん") == 0) {
+    if (strcmp(D_8014CC84, "こなみまん") == 0) {
         for (i = 0; i < 9; i++) {
             (&D_800E6280.unk_0FC)[i].unk_02 = 0x23D;
         }
     }
-    if (func_800AEEB0(D_8014CC74, "みんな") == 0 && func_800AEEB0(D_8014CC7C, "仲良し") == 0) {
+    if (strcmp(D_8014CC74, "みんな") == 0 && strcmp(D_8014CC7C, "仲良し") == 0) {
         D_800E6280.unk_1BC[0].unk_02 = 0x20;
         D_800E6280.unk_1BC[0].unk_06 = 0x40;
         for (i = 1; i < 9; i++) {
@@ -2548,14 +2548,14 @@ void func_80139440(void) {
             }
         }
     }
-    if (func_800AEEB0(D_8014CC74, "上上") == 0 && func_800AEEB0(D_8014CC7C, "下下") == 0
-        && func_800AEEB0(D_8014CC84, "左右左右×") == 0) {
+    if (strcmp(D_8014CC74, "上上") == 0 && strcmp(D_8014CC7C, "下下") == 0
+        && strcmp(D_8014CC84, "左右左右×") == 0) {
         for (i = 0; i < 9; i++) {
             (&D_800E6280.unk_0FC)[i].unk_02 = 0;
         }
     }
-    if (func_800AEEB0(D_8014CC74, "↑↑") == 0 && func_800AEEB0(D_8014CC7C, "↓↓") == 0
-        && func_800AEEB0(D_8014CC84, "←→←→×") == 0) {
+    if (strcmp(D_8014CC74, "↑↑") == 0 && strcmp(D_8014CC7C, "↓↓") == 0
+        && strcmp(D_8014CC84, "←→←→×") == 0) {
         for (i = 0; i < 9; i++) {
             (&D_800E6280.unk_0FC)[i].unk_02 = 0x3E7;
         }
@@ -2578,7 +2578,7 @@ s32 func_80139684(void) {
             *(u8 *)&D_800E6280.unk_110D += 1;
             *(u8 *)&D_800E6280.unk_03A = 0;
         }
-        func_80057390(*(u8 *)&D_800E6280.unk_03A);
+        set_dec_bri(*(u8 *)&D_800E6280.unk_03A);
         return;
     case 2:
         main_state_set(0x15);

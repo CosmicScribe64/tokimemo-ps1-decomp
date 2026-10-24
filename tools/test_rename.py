@@ -367,6 +367,40 @@ class SymbolRenameTest(Fixture):
         self.write("config/symbol_addrs_main.txt", "boot_view = 0x80041000; // type:func\n")
         self.refused("func main func_80041000 boot_view\n", "already names 0x80041000")
 
+    def test_carried_obin_and_sdk_names(self):
+        """A name from the O.BIN or SDK file keeps its spelling when it replaces the placeholder (T-27003)."""
+        self.write("config/symbol_addrs_obin.txt", "LoadSquare = 0x80041000; // type:func\n")
+        self.write("config/SLPM_86.053.yaml", self.read("config/SLPM_86.053.yaml").replace(
+            "    - config/symbol_addrs_main.txt\n",
+            "    - config/symbol_addrs_main.txt\n    - config/symbol_addrs_obin.txt\n"))
+        self.refused("func main func_80041000 LoadSquare\n", "already names 0x80041000")
+        rc, out = self.run_plan("func main func_80041000 LoadSquare\n", allow_alias=True)
+        self.assertEqual(rc, 0, out)
+        self.write("config/symbol_addrs_obin.txt", "memcpy = 0x80041000; // type:func\n")   # libc name, carried
+        rc, out = self.run_plan("func main func_80041000 memcpy\n", allow_alias=True)
+        self.assertEqual(rc, 0, out)
+        self.write("config/symbol_addrs_obin.txt", "")
+        self.write("config/symbol_addrs_main.txt", "plain_view = 0x80041000; // type:func\n")
+        self.refused("func main func_80041000 plain_view\n", "already names 0x80041000")   # not carried: needs the flag
+        self.write("config/symbol_addrs_main.txt", "LoadSquare = 0x80041000; // type:func\n")
+        self.refused("func main func_80041000 LoadSquare\n", "is not snake_case", allow_alias=True)   # not from O.BIN/SDK
+
+    def test_alias_merge_keeps_one_declaration(self):
+        """An alias row drops the declaration of the old name and keeps the new name's (T-27003)."""
+        self.write("config/symbol_addrs_obin.txt", "boot_view = 0x80041000; // type:func\n")
+        self.write("config/SLPM_86.053.yaml", self.read("config/SLPM_86.053.yaml").replace(
+            "    - config/symbol_addrs_main.txt\n",
+            "    - config/symbol_addrs_main.txt\n    - config/symbol_addrs_obin.txt\n"))
+        self.write("include/main_api.h", self.read("include/main_api.h").replace(
+            "void known_func(s32 arg0);\n", "void known_func(s32 arg0);\nvoid boot_view(s32 arg0);\n"))
+        out = self.ok("func main func_80041000 boot_view T-1 carried\n", allow_alias=True)
+        api = self.read("include/main_api.h")
+        self.assertEqual(api.count("boot_view"), 2, api)          # the wrapper and the declaration, nothing else
+        self.assertIn("#ifndef MAIN_API_OVERRIDE_boot_view\nvoid boot_view(s32 arg0);\n#endif\n", api)
+        self.assertNotIn("func_80041000", api)
+        self.assertIn("declaration of func_80041000 dropped", out)
+
+
 
 @unittest.skipUnless(HAVE_GCC, "needs the native gcc of the Docker image")
 class OracleTest(Fixture):
@@ -517,6 +551,21 @@ class FileRenameTest(Fixture):
         self.assertEqual(srcscan.unit_header("AAA", self.root), "ovl/alpha.h")
         self.refused("file include game.h world.h\n", "by name")
         self.refused("file include ovl/EVT.h evt.h\n", "stays in include/ovl/")
+
+
+class NamedPlaceholderTest(Fixture):
+    def test_check_reports_a_placeholder_of_a_named_symbol(self):
+        """check refuses func_80041100 in the sources while the symbol files name 0x80041100 (T-27003)."""
+        self.write("src/main/80041100.c", self.read("src/main/80041100.c") + "\nvoid use_it(void) {\n    func_80041100();\n}\n")
+        out = io.StringIO()
+        self.assertEqual(R.check(self.root, out=out), 1)
+        self.assertIn("src/main/80041100.c: func_80041100 is used for 0x80041100, which the symbol files name known_func",
+                      out.getvalue())
+        self.write("config/symbol_addrs.txt", self.read("config/symbol_addrs.txt")
+                   + "func_80041100 = 0x80041100; // alias-view call view\n")
+        out = io.StringIO()
+        self.assertEqual(R.check(self.root, out=out), 0, out.getvalue())     # a deliberate second name is exempt
+        self.assertIn("renames OK", out.getvalue())
 
 
 class LedgerTest(Fixture):
@@ -933,6 +982,22 @@ class SymtabTest(Fixture):
         self.assertNotIn("c_view in", p)
         self.assertIn("evt_name = 0x800F6200 lies in the range of EVT", p)
         self.assertIn("differ only in case: Case, case", p)
+
+    def test_event_range_in_obin_and_hypotheses_files(self):
+        """Every yaml loads the O.BIN, SDK and hypotheses files (T-27003): a main name in EVENT's range there is refused."""
+        for yaml in ("config/SLPM_86.053.yaml", "config/overlays/AAA.yaml", "config/overlays/EVT.yaml"):
+            self.write(yaml, self.read(yaml).replace(
+                "    - config/symbol_addrs.txt\n",
+                "    - config/symbol_addrs.txt\n    - config/symbol_addrs_obin.txt\n    - config/symbol_addrs_hypotheses.txt\n", 1))
+        self.write("config/symbol_addrs_obin.txt", "obin_ok = 0x80041200; // type:func\nobin_evt = 0x800F6300;\n")
+        self.write("config/symbol_addrs_hypotheses.txt", "// HYPOTHESES\nhyp_evt = 0x800F6400;\n")
+        p = "\n".join(symtab.SymbolTable(self.root).problems())
+        self.assertIn("config/symbol_addrs_obin.txt:2: obin_evt = 0x800F6300 lies in the range of EVT", p)
+        self.assertIn("config/symbol_addrs_hypotheses.txt:2: hyp_evt = 0x800F6400 lies in the range of EVT", p)
+        self.assertNotIn("obin_ok", p)
+        self.write("config/symbol_addrs_obin.txt", "obin_ok = 0x80041200; // type:func\n")
+        self.write("config/symbol_addrs_hypotheses.txt", "// HYPOTHESES\n")
+        self.assertEqual(symtab.SymbolTable(self.root).problems(), [])
 
     def test_check_symbols_cli(self):
         import check_symbols

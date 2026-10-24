@@ -36,7 +36,7 @@ void func_8013279C(void) {
 
 s32 func_8013281C(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
-        func_800573AC();
+        dec_bg_reset();
         func_8004284C();
         D_800E6280.unk_110A -= 3;
         return 0;
@@ -143,15 +143,15 @@ void func_80132C60(void) {
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "遊園地");
-    func_800AE0F0(D_800CA1DC, "園内");
-    func_8004E9F4(1);
+    strcpy(D_800CA19C, "遊園地");
+    strcpy(D_800CA1DC, "園内");
+    k_reset(1);
     func_8008585C();
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0x80;
     D_800B5940 = 0;
-    func_8007C740();
-    func_800649D4();
+    addr_init_bustup();
+    hizuke_init();
     func_80084E4C();
     func_800847B8(0);
     func_80132000();

@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_func_800AE0F0 /* FAKE: T-25002 implicit-int strcpy view (s32 return) keeps the original return register allocation in func_80133C50. */
+#define MAIN_API_OVERRIDE_strcpy /* FAKE: T-25002 implicit-int strcpy view (s32 return) keeps the original return register allocation in func_80133C50. */
 #include "common.h"
 #include "ovl/GEKO.h"
 
-extern s32 func_800AE0F0();
+extern s32 strcpy();
 
 typedef struct {
     void (*f[19])();
@@ -85,7 +85,7 @@ void func_80133C50(void) {
     u32 temp;
 
     names = D_80144D8C;
-    func_800AE0F0(&D_800CA280, names.name[D_800E6280.unk_0F4.h >> 12]);
+    strcpy(&D_800CA280, names.name[D_800E6280.unk_0F4.h >> 12]);
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b0 = 1;
     if (D_80144C50 == 10) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b6 = 1;

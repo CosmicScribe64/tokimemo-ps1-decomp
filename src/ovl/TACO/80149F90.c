@@ -118,7 +118,7 @@ s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 ar
     vec.vx = o->unk18;
     vec.vy = o->unk1C;
     vec.vz = o->unk20;
-    func_800A0ECC(&m, &vec, &rot);
+    ApplyMatrixSV(&m, &vec, &rot);
     /* FAKE: byte-pointer addition seeds uopt's Uadd ichain with D_8015EDB4 first for the partial-redundancy reload at the end of the if body (T-24120). */
     ((TcActor *)((u8 *)D_8015EDB4 + sel * 0x88))->unk74 = D_80127480[0].unk18 + rot.vx + px;
     D_8015EDB4[sel].unk76 = D_80127480[0].unk1C + rot.vy + py;
@@ -303,8 +303,8 @@ void func_8014AB50(s32 arg0) {
         }
     } else if ((arg0 >= 0x32A) && (arg0 < 0x3B6)) {
         func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0x64);
-        random = func_800AE0D0();
-        func_80147C98(0, 0x1B, (s16) ((random & 0x3FF) - 0x200), (s16) ((func_800AE0D0() & 0x3FF) - 0x200), 0x7D0, 0x190, 0x81);
+        random = rand();
+        func_80147C98(0, 0x1B, (s16) ((random & 0x3FF) - 0x200), (s16) ((rand() & 0x3FF) - 0x200), 0x7D0, 0x190, 0x81);
     } else if (arg0 == 0x3B6) {
         func_80147674(0, (s16 *)0x801E5BD0, 0x10, 0x14, 0x64);
         for (i = 1, j = 0; i != 0x1F; i++, j++) {
@@ -847,7 +847,7 @@ s32 func_8014CB24(s32 arg0) {
         input.vx = D_80127480[8].unk18;
         input.vy = D_80127480[8].unk1C;
         input.vz = D_80127480[8].unk20;
-        func_800A0ECC(&matrix, &input, &output);
+        ApplyMatrixSV(&matrix, &input, &output);
         D_8015EDB4[20].unk0[1] = 0x40;
         D_8015EDB4[20].unk74 = D_80127480[0].unk18 + output.vx;
         D_8015EDB4[20].unk76 = D_80127480[0].unk1C + output.vy;
@@ -917,11 +917,11 @@ void func_8014D3B4(s32 arg0) {
         D_8015EDB4[16].unk2 += 1;
         D_8015EDB4[16].unk3 = 0;
         if (!(D_8015EDB4[16].unk2 & 1)) {
-            func_80147C98(0, 0x1B, 0x1F4, (func_800AE0D0() & 0xFF) - 0x80, 0x7D0, 0x12C, 0);
-            func_80147C98(0, 0x1B, -0x1F4, (func_800AE0D0() & 0xFF) - 0x80, 0x7D0, 0x12C, 0);
+            func_80147C98(0, 0x1B, 0x1F4, (rand() & 0xFF) - 0x80, 0x7D0, 0x12C, 0);
+            func_80147C98(0, 0x1B, -0x1F4, (rand() & 0xFF) - 0x80, 0x7D0, 0x12C, 0);
         }
     }
-    if (D_8015EDB4[16].unk2 >= 0x3C || func_800AE0D0() % 200 == 0) {
+    if (D_8015EDB4[16].unk2 >= 0x3C || rand() % 200 == 0) {
         D_8015EDB4[16].unk2 = 0;
         D_8015EDB4[16].unk3 = D_8015EDB4[16].unk2;
         func_8014F044();
@@ -1019,13 +1019,13 @@ void func_8014DC94(void) {
         D_8015EDB4[16].unk3 = 0;
         if (!(D_8015EDB4[16].unk2 & 1)) {
             if (D_8015EDB4[17].unk2 == 1) {
-                func_80147C98(0, 0x15, (func_800AE0D0() & 0x1FF) + 0xF4, (func_800AE0D0() & 0x1FF) - 0x100, 0x7D0, 0xFA, 0x82);
-                func_80147C98(0, 0x15, (func_800AE0D0() & 0x1FF) - 0x2F4, (func_800AE0D0() & 0x1FF) - 0x100, 0x7D0, 0xFA, 0x82);
+                func_80147C98(0, 0x15, (rand() & 0x1FF) + 0xF4, (rand() & 0x1FF) - 0x100, 0x7D0, 0xFA, 0x82);
+                func_80147C98(0, 0x15, (rand() & 0x1FF) - 0x2F4, (rand() & 0x1FF) - 0x100, 0x7D0, 0xFA, 0x82);
             } else if (func_80147B24(0xB, D_8015FA68) < 0x32) {
-                func_80147C98(0, 0x15, (func_800AE0D0() & 0x1FF) + 0x2C, (func_800AE0D0() & 0x1FF) + 0x2E8, 0x7D0, 0xFA, 0x82);
-                func_80147C98(0, 0x15, (func_800AE0D0() & 0x1FF) - 0x22C, (func_800AE0D0() & 0x1FF) + 0x2E8, 0x7D0, 0xFA, 0x82);
+                func_80147C98(0, 0x15, (rand() & 0x1FF) + 0x2C, (rand() & 0x1FF) + 0x2E8, 0x7D0, 0xFA, 0x82);
+                func_80147C98(0, 0x15, (rand() & 0x1FF) - 0x22C, (rand() & 0x1FF) + 0x2E8, 0x7D0, 0xFA, 0x82);
             } else {
-                func_80147C98(0, 0x1B, (func_800AE0D0() & 0x3FF) - 0x200, (func_800AE0D0() & 0x3FF) - 0x200, 0x7D0, 0x190, 0x81);
+                func_80147C98(0, 0x1B, (rand() & 0x3FF) - 0x200, (rand() & 0x3FF) - 0x200, 0x7D0, 0x190, 0x81);
             }
         }
     }
@@ -1292,8 +1292,8 @@ void func_8014EC4C(void) {
         func_8014EDCC(D_8015EDB4[16].unk2);
         D_8015EDB4[16].unk2 += 1;
         D_8015EDB4[16].unk3 = 0;
-        func_80147C98(0, 0x1B, (func_800AE0D0() & 0x3FF) - 0x138, (func_800AE0D0() & 0x1FF) - 0x200, 0x7D0, 0xFA, 0x40);
-        func_80147C98(0, 0x1B, (func_800AE0D0() & 0x3FF) - 0x2C8, (func_800AE0D0() & 0x1FF) - 0x200, 0x7D0, 0xFA, 0x40);
+        func_80147C98(0, 0x1B, (rand() & 0x3FF) - 0x138, (rand() & 0x1FF) - 0x200, 0x7D0, 0xFA, 0x40);
+        func_80147C98(0, 0x1B, (rand() & 0x3FF) - 0x2C8, (rand() & 0x1FF) - 0x200, 0x7D0, 0xFA, 0x40);
     }
     if (D_8015EDB4[16].unk2 >= 0x32 || D_8015EDB4[17].unk84[2] == 1) {
         D_8015EDB4[16].unk2 = 0;
@@ -1352,7 +1352,7 @@ void func_8014F044(void) {
     s32 h;
     u8 t;
 
-    r = func_800AE0D0();
+    r = rand();
     t = D_8015EDB4[17].unk2;
     /* FAKE: `t ^ 0` only swaps the operands of the first bne (const reg first); found by the permuter, real source unknown. T-8030 */
     if ((t ^ 0) == 1) {
@@ -1392,7 +1392,7 @@ void func_8014F210(void) {
     func_80151264(5);
     func_8014FBD4(7);
     func_80146F74(0, 0, 1, 0, 0, 0, 0, 0x32, 0x1F4);
-    if (func_800AE0C0(D_8012749C - D_8015EDB4->unk76) < 0x64) {
+    if (abs(D_8012749C - D_8015EDB4->unk76) < 0x64) {
         func_8014A79C();
         func_8004284C();
     }
@@ -1406,7 +1406,7 @@ void func_8014F2A0(void) {
     func_80151264(5);
     func_8014F9B0();
     if (D_8015EDB4[20].unk2 < 0x4B && D_8015EDB4[18].unk84[2] == 0 && D_8015EDB4[19].unk84[1] != 0) {
-        if (func_800AE0D0() % 200 == 0) {
+        if (rand() % 200 == 0) {
             D_8015EDB4[18].unk84[2] = 1;
             for (i = 1, j = 0; i != 7; i++, j++) {
                 func_801472D4(i, 0, D_80160108[j * 2 - 2], D_80160108[j * 2 - 1], D_8016020A[j * 2 - 2], D_8016020A[j * 2 - 1]);
@@ -1416,7 +1416,7 @@ void func_8014F2A0(void) {
         }
     }
     if (D_8015EDB4[20].unk2 < 0x4B && D_8015EDB4[19].unk84[2] == 0 && D_8015EDB4[20].unk84[1] != 0) {
-        r = func_800AE0D0() % 200;
+        r = rand() % 200;
         if (r == 0) {
             D_8015EDB4[19].unk84[2] = 1;
             for (i = 7, j = 0; i != 0xD; i++, j++) {
@@ -1497,7 +1497,7 @@ s32 func_8014F820(void) {
 
     if (D_800E6280.unk_1104.u == 1) {
         for (i = 0; i < 0x21; i++) {
-            D_8015EDB4[i + 27].unk78 = (func_800AE0D0() % 8) + 5;
+            D_8015EDB4[i + 27].unk78 = (rand() % 8) + 5;
         }
     }
     for (i = 0; i < 0x21; i++) {
@@ -1643,12 +1643,12 @@ s32 func_8014FFDC(s32 arg0) {
         }
     }
     if (arg0 == 0x1B) {
-        random = func_800AE0D0();
-        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
-        random = func_800AE0D0();
-        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
-        random = func_800AE0D0();
-        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = rand();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((rand() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = rand();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((rand() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = rand();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((rand() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
         return;
     }
     if (arg0 >= 0x1C) {
@@ -1682,12 +1682,12 @@ s32 func_8014FFDC(s32 arg0) {
         }
     }
     if (arg0 == 0x22) {
-        random = func_800AE0D0();
-        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
-        random = func_800AE0D0();
-        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x12C, 0xC1);
-        random = func_800AE0D0();
-        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x1F4, 0xC1);
+        random = rand();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((rand() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = rand();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((rand() & 0x3F) - 0x20), 0x3E8, 0x12C, 0xC1);
+        random = rand();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((rand() & 0x3F) - 0x20), 0x3E8, 0x1F4, 0xC1);
         return;
     }
     if (arg0 >= 0x23) {
@@ -1721,12 +1721,12 @@ s32 func_8014FFDC(s32 arg0) {
         }
     }
     if (arg0 == 0x29) {
-        random = func_800AE0D0();
-        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
-        random = func_800AE0D0();
-        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
-        random = func_800AE0D0();
-        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((func_800AE0D0() & 0x3F) - 0x20), 0x3E8, 0x12C, 0xC1);
+        random = rand();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((rand() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = rand();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((rand() & 0x3F) - 0x20), 0x3E8, 0x190, 0xC1);
+        random = rand();
+        func_80147C98(0, 5, (s16) ((random & 0x7F) - 0x40), (s16) ((rand() & 0x3F) - 0x20), 0x3E8, 0x12C, 0xC1);
         return;
     }
     if (arg0 >= 0x2A) {
@@ -2023,7 +2023,7 @@ void func_80151678(void) {
     D_8012278D = 0x80;
     D_8012278E = 0x90;
     func_8009AD70(2, &D_80122780);
-    func_8009B310(0, 0, 0);
+    GsSetAmbient(0, 0, 0);
     func_8009B340(0);
 }
 
@@ -2065,8 +2065,8 @@ void func_8015185C(void) {
             func_80147C98(0, 0x19, 0, -0x5DC, 0x3E8, 0x190, 0x84);
         }
     } else if (D_8015EDB4[16].unk2 % 3 == 1) {
-        r = func_800AE0D0();
-        func_80147C98(0, 0x19, (r & 0x1FF) - 0x100, (func_800AE0D0() & 0x1FF) - 0x100, 0x3E8, 0x190, 0x84);
+        r = rand();
+        func_80147C98(0, 0x19, (r & 0x1FF) - 0x100, (rand() & 0x1FF) - 0x100, 0x3E8, 0x190, 0x84);
     }
     if ((D_8015EDB4[19].unk84[1] == 0 || D_8015EDB4[20].unk84[1] == 0) && !(D_8015EDB4[16].unk2 & 1)) {
         if (D_8015EDB4[21].unk84[1] != 0) {

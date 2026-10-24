@@ -116,18 +116,18 @@ void func_80145370(void) {
         break;
     case 1:
         cd_read_sectors(0x1E, 0x80180000, 0xBAD0);
-        func_800862D0();
+        Fade_Out_Init();
         func_8004284C();
         break;
     case 2:
-        func_800862F0();
+        Fade_Out_Main();
         if (cd_read_sync_status() & 1) {
             cd_read_sectors(0x26, 0x8018F000, 0xB969);
             func_8004284C();
         }
         break;
     case 3:
-        if ((func_800862F0() != 0) && (cd_read_sync_status() & 1)) {
+        if ((Fade_Out_Main() != 0) && (cd_read_sync_status() & 1)) {
             func_80140810();
             func_80132B40();
             search_load_tpage_buf_lock(D_8014A4F4, 1);
@@ -257,14 +257,14 @@ void func_80145640(void) {
 void func_80145A78(void) {
     switch (D_800E6280.unk_110A) {
     case 0:
-        if (func_80086370() != 0) {
-            func_80085ED0();
+        if (Fade_In_Main() != 0) {
+            Vblnk_Timer_Init();
             func_8004284C();
         }
         func_80133438();
         break;
     case 1:
-        if (func_80085EEC() >= 0x5B) {
+        if (Vblnk_Timer() >= 0x5B) {
             func_80044750(0x502);
             func_8004284C();
         }
@@ -280,14 +280,14 @@ void func_80145A78(void) {
         func_80147F10();
         if (func_80146D18() != 0) {
             func_80044750(0x504);
-            func_800862D0();
+            Fade_Out_Init();
             func_8004284C();
         }
         break;
     case 3:
         Scroll(D_8014A3DE, 0xF, 0, 0x70, 0x280);
         Scroll(D_8014A3DE % 128, 0xF, 0x70, 0x80, 0x80);
-        if (func_800862F0() != 0) {
+        if (Fade_Out_Main() != 0) {
             func_80044750(0xC2);
             func_80148370();
             func_80133258();
@@ -479,7 +479,7 @@ void func_8014607C(void) {
         D_8014A3D0 = 0x100;
         D_8014A3D4 = 0x18000;
     }
-    func_800AE120(D_800E6280.unk_10F4);
+    srand(D_800E6280.unk_10F4);
 }
 
 void func_80146338(void) {
@@ -902,7 +902,7 @@ void func_80147594(void) {
     i = 0;
     do {
         if (D_8014A454[i + 1].unk_14 >= 0x65) {
-            r = func_800AE0D0() & 0x1F;
+            r = rand() & 0x1F;
             if (r < 0xA) {
                 D_8014A454[i + 1].unk_08 = -0x64;
             } else if (r < 0x14) {
@@ -919,10 +919,10 @@ void func_80147594(void) {
             i = 0;
             do {
                 if (DISP(97 + k).unk_18 == D_8014A4D8[i] + (k * 0x13 + 0x13)) {
-                    if (DISP(97 + k).unk_26 + 0x4F < DISP(101 + k).unk_26 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                    if (DISP(97 + k).unk_26 + 0x4F < DISP(101 + k).unk_26 && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 -= 0x22;
                     }
-                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x40 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x40 && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 += 0x22;
                     }
                 }
@@ -931,10 +931,10 @@ void func_80147594(void) {
             i = 0;
             do {
                 if (DISP(97 + k).unk_18 == D_8014A4E8[i] + (k * 0x13 + 0x13)) {
-                    if (DISP(97 + k).unk_26 + 0x2D < DISP(101 + k).unk_26 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                    if (DISP(97 + k).unk_26 + 0x2D < DISP(101 + k).unk_26 && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 -= 0x22;
                     }
-                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x28 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x28 && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 += 0x22;
                     }
                 }
@@ -943,10 +943,10 @@ void func_80147594(void) {
             i = 0;
             do {
                 if (DISP(97 + k).unk_18 == D_8014A4C4[i] + (k * 0x13 + 0x13)) {
-                    if (DISP(97 + k).unk_26 + 0x2D < DISP(101 + k).unk_26 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                    if (DISP(97 + k).unk_26 + 0x2D < DISP(101 + k).unk_26 && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 -= 0x22;
                     }
-                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x28 && (func_800AE0D0() & 0xFF) < thr.v[k]) {
+                    if (DISP(101 + k).unk_26 < DISP(97 + k).unk_26 + 0x28 && (rand() & 0xFF) < thr.v[k]) {
                         D_8014A454[k + 1].unk_08 += 0x22;
                     }
                 }
@@ -965,7 +965,7 @@ void func_80147928(void) {
 
     if ((D_8014A3E4.unk_14 > 0) || (D_8014A3E0 != 0)) {
         if (D_8014A454[0].unk_14 >= 0x65 && D_8014A454[0].unk_08 == 0) {
-            r = func_800AE0D0();
+            r = rand();
             bonus = (D_8014A3E4.unk_14 == D_8014A3D4) ? 0xF : 0;
             chance = (r % 100) & 0xFFFF;
             if (chance < bonus + 0x19) {
@@ -1244,7 +1244,7 @@ s32 func_801485C4(void) {
     }
     ((DisplayFixActor44 *)D_8011ECD0)[104].unk_02 = 64;
     ((DisplayFixActor44 *)D_8011ECD0)[104].unk_18 = 61;
-    func_80085ED0();
+    Vblnk_Timer_Init();
     return 1;
 }
 
@@ -1252,7 +1252,7 @@ s32 func_80148678(void) {
     s32 i;
     s32 n;
 
-    if (func_80085EEC() >= 0x2E) {
+    if (Vblnk_Timer() >= 0x2E) {
         ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x3C;
         ((DisplayActor44 *)D_8011ECD0)[104].unk_2A = -8;
         for (i = 0; i < 4; i++) {
@@ -1277,7 +1277,7 @@ void func_801487B4(void) {
     for (i = 0; i < 4; i++) {
         ((DisplayActor44 *)D_8011ECD0)[i + 100].unk_18 -= 4 - i;
     }
-    func_80085ED0();
+    Vblnk_Timer_Init();
 }
 
 void func_80148820(void) {
@@ -1289,7 +1289,7 @@ void func_80148820(void) {
             n = i;
         }
     }
-    if (func_80085EEC() >= 0x33) {
+    if (Vblnk_Timer() >= 0x33) {
         for (i = 0; i < 4; i++) {
             ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_18 += i + 1;
         }

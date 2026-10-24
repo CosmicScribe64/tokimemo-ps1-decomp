@@ -18,43 +18,43 @@ void func_801321B0(void) {
         func_80044750(0xBF);
         func_80044890(1, 0xC043, 0xC01D, 0xC982, 0xC935, 0xC91B);
         func_80085E30(1, 0);
-        func_800573AC();
-        func_80057390(0);
+        dec_bg_reset();
+        set_dec_bri(0);
         func_8008585C();
-        func_80064E84();
-        func_800649D4();
-        func_80063930(0);
-        func_80064FA4(0);
+        message_window_init();
+        hizuke_init();
+        parameter_disp_switch(0);
+        icon_disp_switch(0);
         func_8006764C(0);
         func_8004284C();
         break;
     case 1:
         if (func_80044E8C() == 1) {
-            func_8004E9F4(0);
+            k_reset(0);
             switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
             case 0:
                 func_8006612C((s32) "植木賞授賞式");
-                func_8005742C(0x4644, 1);
+                dec_bg_cd_read(0x4644, 1);
                 break;
             case 1:
                 func_8006612C((s32) "演劇グランプリ");
-                func_8005742C(0x464D, 1);
+                dec_bg_cd_read(0x464D, 1);
                 break;
             case 2:
                 func_8006612C((s32) "ノーベル賞受賞");
-                func_8005742C(0x4656, 1);
+                dec_bg_cd_read(0x4656, 1);
                 break;
             case 3:
                 func_8006612C((s32) "ゲーム大賞");
-                func_8005742C(0x465F, 1);
+                dec_bg_cd_read(0x465F, 1);
                 break;
             case 4:
                 func_8006612C((s32) "目展大賞");
-                func_8005742C(0x4669, 1);
+                dec_bg_cd_read(0x4669, 1);
                 break;
             case 5:
                 func_8006612C((s32) "コンクール優勝");
-                func_8005742C(0x4673, 1);
+                dec_bg_cd_read(0x4673, 1);
                 break;
             default:
                 func_80046500();
@@ -70,7 +70,7 @@ void func_801321B0(void) {
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
-            func_80057418(1, func_8005751C(1));
+            dec_bg_show_set(1, func_8005751C(1));
             func_800847B8(0U);
             func_80084E4C();
             func_80065F34(1);
@@ -78,7 +78,7 @@ void func_801321B0(void) {
         }
         break;
     case 4:
-        func_8007E81C();
+        normal_date_bg_fadein();
         break;
     case 5:
         func_80042808();
@@ -87,7 +87,7 @@ void func_801321B0(void) {
         func_80046500();
         break;
     }
-    func_80086424();
+    Default_Disp();
 }
 
 void func_80132444(void) {
@@ -467,11 +467,11 @@ void func_80133374(void) {
     }
     ((ScheduleClubFlags *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->b30 = 1;
     func_8008585C();
-    func_800573AC();
-    func_80057390(0);
+    dec_bg_reset();
+    set_dec_bri(0);
     func_8013348C();
     func_80072B5C(1);
-    func_80086424();
+    Default_Disp();
 }
 
 void func_8013348C(void) {

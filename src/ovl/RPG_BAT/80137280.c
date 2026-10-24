@@ -15,8 +15,8 @@ extern s32 *D_8015EE8C;
 s32 func_80137280(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E828, "不良「そんな攻撃では、");
-        func_800AE0F0(D_8015E850, "俺達の拳とは語れねぇぜ！");
+        strcpy(D_8015E828, "不良「そんな攻撃では、");
+        strcpy(D_8015E850, "俺達の拳とは語れねぇぜ！");
         func_8014B738(D_8015E8F0, 2, 0xC8);
         D_8015ED8C[0] += 1;
         return;
@@ -45,8 +45,8 @@ s32 func_80137280(void) {
 s32 func_801373A8(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E828, "不良「口ほどにもないやつめ。");
-        func_800AE0F0(D_8015E850, "出直してきやがれ！");
+        strcpy(D_8015E828, "不良「口ほどにもないやつめ。");
+        strcpy(D_8015E850, "出直してきやがれ！");
         func_8014B738(D_8015E8F0, 2, 0xA0);
         D_8015ED8C[0] += 1;
         return;
@@ -75,8 +75,8 @@ s32 func_801373A8(void) {
 s32 func_801374D0(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "不良「くっ！　なかなかやるなっ！");
-        func_800AE0F0(D_8015EA08, "しかたねぇ、番長様に御報告だ！");
+        strcpy(D_8015E9E0, "不良「くっ！　なかなかやるなっ！");
+        strcpy(D_8015EA08, "しかたねぇ、番長様に御報告だ！");
         func_8014B738(D_8015EB70, 2, 0x104);
         D_8015ED8C[0] += 1;
         return;
@@ -104,7 +104,7 @@ s32 func_801374D0(void) {
 s32 func_801375F8(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "？？「ちょっと待てぇーい！");
+        strcpy(D_8015E9E0, "？？「ちょっと待てぇーい！");
         func_8014B738(D_8015EB70, 1, 0xA0);
         D_8015ED8C[0] += 1;
         return;
@@ -126,12 +126,12 @@ s32 func_801375F8(void) {
 s32 func_801376D4(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "番長「俺様は、この世界の番長だ！");
-        func_800AE0F0(D_8015EA08, "子分達が随分と世話になったようだな。");
-        func_800AE0F0(D_8015EA30, "だが、茶番はここまでだ！");
-        func_800AE0F0(D_8015EA58, "礼をさせてもらうぞ。");
-        func_800AE0F0(D_8015EA80, "これでもくらえぇーい！");
-        func_800AE0F0(D_8015EAA8, "超眼力！");
+        strcpy(D_8015E9E0, "番長「俺様は、この世界の番長だ！");
+        strcpy(D_8015EA08, "子分達が随分と世話になったようだな。");
+        strcpy(D_8015EA30, "だが、茶番はここまでだ！");
+        strcpy(D_8015EA58, "礼をさせてもらうぞ。");
+        strcpy(D_8015EA80, "これでもくらえぇーい！");
+        strcpy(D_8015EAA8, "超眼力！");
         func_8014B738(D_8015EB70, 6, 0x10E);
         D_8015ED8C[0] += 1;
         return;
@@ -188,9 +188,9 @@ s32 func_801376D4(void) {
 s32 func_8013794C(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "番長「ふっ、思い知ったか。");
-        func_800AE0F0(D_8015EA08, "俺様に逆らう者の末路はこうなるのだ。");
-        func_800AE0F0(D_8015EA30, "はっはっはっはっはっ・・・");
+        strcpy(D_8015E9E0, "番長「ふっ、思い知ったか。");
+        strcpy(D_8015EA08, "俺様に逆らう者の末路はこうなるのだ。");
+        strcpy(D_8015EA30, "はっはっはっはっはっ・・・");
         func_8014B738(D_8015EB70, 3, 0x118);
         D_8015ED8C[0] += 1;
         return;
@@ -225,9 +225,9 @@ s32 func_8013794C(void) {
 s32 func_80137AC8(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "天使の声「お願い、立ちあがって。");
-        func_800AE0F0(D_8015EA08, "あなたには、");
-        func_800AE0F0(D_8015EA30, "まだやるべきことがあるのよ！");
+        strcpy(D_8015E9E0, "天使の声「お願い、立ちあがって。");
+        strcpy(D_8015EA08, "あなたには、");
+        strcpy(D_8015EA30, "まだやるべきことがあるのよ！");
         func_8014B738(D_8015EB70, 3, 0xE6);
         D_8015ED8C[0] += 1;
         return;
@@ -274,9 +274,9 @@ s32 func_80137C44(void) {
     }
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "そうよ、あなたにならできるわ！");
-        func_800AE0F0(D_8015EA08, "新しい力をあげる。");
-        func_800AE0F0(D_8015EA30, "彼女を・・・守ってあげて！");
+        strcpy(D_8015E9E0, "そうよ、あなたにならできるわ！");
+        strcpy(D_8015EA08, "新しい力をあげる。");
+        strcpy(D_8015EA30, "彼女を・・・守ってあげて！");
         func_8014B738(D_8015EB70, 3, 0xF0);
         D_8015ED8C[0] += 1;
         break;
@@ -315,7 +315,7 @@ s32 func_80137C44(void) {
 s32 func_80137E74(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "番長「なにぃぃぃー！？");
+        strcpy(D_8015E9E0, "番長「なにぃぃぃー！？");
         func_8014B738(D_8015EB70, 1, 0xA0);
         D_8015ED8C[0] += 1;
         return;
@@ -337,10 +337,10 @@ s32 func_80137E74(void) {
 s32 func_80137F50(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "番長「こわっぱが、");
-        func_800AE0F0(D_8015EA08, "超眼力を見切った程度で図に乗りおって");
-        func_800AE0F0(D_8015EA30, "俺様の真の力を見せてくれる。");
-        func_800AE0F0(D_8015EA58, "ゆくぞーっ！");
+        strcpy(D_8015E9E0, "番長「こわっぱが、");
+        strcpy(D_8015EA08, "超眼力を見切った程度で図に乗りおって");
+        strcpy(D_8015EA30, "俺様の真の力を見せてくれる。");
+        strcpy(D_8015EA58, "ゆくぞーっ！");
         func_8014B738(D_8015EB70, 4, 0x118);
         D_8015ED8C[0] += 1;
         return;
@@ -397,16 +397,16 @@ void func_80138170(void) {
     case 0:
         switch ((*(u32 *)&D_8015EBAC)) {
         case 0:
-            func_800AE0F0(D_8015E828, "不良Ａの攻撃");
+            strcpy(D_8015E828, "不良Ａの攻撃");
             break;
         case 1:
-            func_800AE0F0(D_8015E828, "不良Ｂの攻撃");
+            strcpy(D_8015E828, "不良Ｂの攻撃");
             break;
         case 2:
-            func_800AE0F0(D_8015E828, "不良Ｃの攻撃");
+            strcpy(D_8015E828, "不良Ｃの攻撃");
             break;
         }
-        func_800AE0F0(D_8015E850, "不良パンチ");
+        strcpy(D_8015E850, "不良パンチ");
         func_8014B738(D_8015E8F0, 2, 0x3C);
         func_8013E810((*(u32 *)&D_8015EBAC) + 0x3B, 1, 5, 1);
         func_8013F15C(0x505, 1, 0);
@@ -450,19 +450,19 @@ void func_80138324(void) {
     case 0:
         switch ((*(u32 *)&D_8015EBAC)) {
         case 0:
-            func_800AE0F0(D_8015E828, "不良Ａの攻撃");
+            strcpy(D_8015E828, "不良Ａの攻撃");
             D_8015EC78 = (*(u32 *)&D_8015EBAC) + func_8013E9A8(2) + 1;
             break;
         case 1:
-            func_800AE0F0(D_8015E828, "不良Ｂの攻撃");
+            strcpy(D_8015E828, "不良Ｂの攻撃");
             D_8015EC78 = (*(u32 *)&D_8015EBAC) + func_8013E9A8(2) * 2 - 1;
             break;
         case 2:
-            func_800AE0F0(D_8015E828, "不良Ｃの攻撃");
+            strcpy(D_8015E828, "不良Ｃの攻撃");
             D_8015EC78 = (*(u32 *)&D_8015EBAC) - func_8013E9A8(2) - 1;
             break;
         }
-        func_800AE0F0(D_8015E850, "不良パンチ");
+        strcpy(D_8015E850, "不良パンチ");
         switch (D_8015EC78) {
         case 0:
             func_8014D11C(D_8015E878, "不良Ａ", "は", D_8015EBB0, "のダメージを受けた");
@@ -554,16 +554,16 @@ void func_801387F0(void) {
     case 0:
         switch ((*(u32 *) &D_8015EBAC)) {
         case 0:
-            func_800AE0F0(D_8015E828, "不良Ａの攻撃");
+            strcpy(D_8015E828, "不良Ａの攻撃");
             break;
         case 1:
-            func_800AE0F0(D_8015E828, "不良Ｂの攻撃");
+            strcpy(D_8015E828, "不良Ｂの攻撃");
             break;
         case 2:
-            func_800AE0F0(D_8015E828, "不良Ｃの攻撃");
+            strcpy(D_8015E828, "不良Ｃの攻撃");
             break;
         }
-        func_800AE0F0(D_8015E850, "不良パンチ");
+        strcpy(D_8015E850, "不良パンチ");
         func_8014D11C(D_8015E878, D_800E6280.unk_0D4, "は", D_8015EBB0, "のダメージを受けた");
         func_8014B738(D_8015E8F0, 3, 0x3C);
         func_8013E810((*(u32 *) &D_8015EBAC) + 0x3B, 1, 5, 1);
@@ -651,16 +651,16 @@ void func_80138B9C(void) {
     case 0:
         switch ((*(u32 *) &D_8015EBAC)) {
         case 0:
-            func_800AE0F0(D_8015E828, "不良Ａの攻撃");
+            strcpy(D_8015E828, "不良Ａの攻撃");
             break;
         case 1:
-            func_800AE0F0(D_8015E828, "不良Ｂの攻撃");
+            strcpy(D_8015E828, "不良Ｂの攻撃");
             break;
         case 2:
-            func_800AE0F0(D_8015E828, "不良Ｃの攻撃");
+            strcpy(D_8015E828, "不良Ｃの攻撃");
             break;
         }
-        func_800AE0F0(D_8015E850, "不良パンチ");
+        strcpy(D_8015E850, "不良パンチ");
         func_8014D11C(D_8015E878, D_800E6280.unk_0D4, "は", D_8015EBB0, "のダメージを受けた");
         func_8014B738(D_8015E8F0, 3, 0x3C);
         func_8013E810((*(u32 *) &D_8015EBAC) + 0x3B, 1, 5, 1);
@@ -751,20 +751,20 @@ void func_80138F6C(void) {
          * The original source spelling is unknown. T-20003. */
         switch (*(s32 *)&D_8015EBAC) {
         case 0:
-            func_800AE0F0(D_8015E828, "不良Ａの攻撃");
+            strcpy(D_8015E828, "不良Ａの攻撃");
             break;
         case 1:
-            func_800AE0F0(D_8015E828, "不良Ｂの攻撃");
+            strcpy(D_8015E828, "不良Ｂの攻撃");
             break;
         case 2:
-            func_800AE0F0(D_8015E828, "不良Ｃの攻撃");
+            strcpy(D_8015E828, "不良Ｃの攻撃");
             break;
         }
-        func_800AE0F0(D_8015E850, "不良パンチ");
-        func_800AE0F0(D_8015E878, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E878, "は");
-        func_800AE100(D_8015E878, girl_short_name_table[D_8015EB9C]);
-        func_800AE100(D_8015E878, "をかばった");
+        strcpy(D_8015E850, "不良パンチ");
+        strcpy(D_8015E878, D_800E6280.unk_0D4);
+        strcat(D_8015E878, "は");
+        strcat(D_8015E878, girl_short_name_table[D_8015EB9C]);
+        strcat(D_8015E878, "をかばった");
         func_8014D11C((s32) D_8015E8A0, (s32) D_800E6280.unk_0D4, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
         func_8014B738((s32) D_8015E8F0, 4, 0x3C);
         func_8013E810(D_8015EBAC + 0x3B, 1, 5, 1);
@@ -946,9 +946,9 @@ void func_80139510(void) {
             break;
         }
         func_8004500C(1, 0x202);
-        func_800AE0F0(D_8015E9E0, "戦闘に勝った！！");
-        func_800AE0F0(D_8015EA08, "経験値　：２３６０ＥＸＰ");
-        func_800AE0F0(D_8015EA30, "お金　　：３６００ゴールド");
+        strcpy(D_8015E9E0, "戦闘に勝った！！");
+        strcpy(D_8015EA08, "経験値　：２３６０ＥＸＰ");
+        strcpy(D_8015EA30, "お金　　：３６００ゴールド");
         func_80139E88();
         func_8014B738((s32) D_8015EB70, D_8015ED14, 0x5A);
         func_8014F500();
@@ -977,8 +977,8 @@ void func_80139510(void) {
         func_801375F8();
         break;
     case 10:
-        func_800AE0F0(D_8015E9E0, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E9E0, "「誰だっ！");
+        strcpy(D_8015E9E0, D_800E6280.unk_0D4);
+        strcat(D_8015E9E0, "「誰だっ！");
         func_8014B738((s32) D_8015EB70, 1, 0x3C);
         func_8014F500();
         break;
@@ -1039,7 +1039,7 @@ void func_80139510(void) {
         func_8013A034();
         break;
     case 21:
-        func_800AE0F0(D_8015E9E0, "（どこからともなく声が聞こえてきた）");
+        strcpy(D_8015E9E0, "（どこからともなく声が聞こえてきた）");
         func_8014B738((s32) D_8015EB70, 1, 0x5A);
         func_8014F500();
         break;
@@ -1068,9 +1068,9 @@ void func_80139510(void) {
         func_80137E74();
         break;
     case 28:
-        func_800AE0F0(D_8015E9E0, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E9E0, "「もう超眼力は見切ったぜ！");
-        func_800AE0F0(D_8015EA08, "番長！　負ける訳にはいかない！！");
+        strcpy(D_8015E9E0, D_800E6280.unk_0D4);
+        strcat(D_8015E9E0, "「もう超眼力は見切ったぜ！");
+        strcpy(D_8015EA08, "番長！　負ける訳にはいかない！！");
         func_8014B738((s32) D_8015EB70, 2, 0x5A);
         func_8014F500();
         break;
@@ -1182,8 +1182,8 @@ void func_80139E88(void) {
     }
     for (i = 0; i < 4; i++) {
         if (flags.v[i] == 1) {
-            func_800AE0F0(*(void **)(D_8015EB70 + n * 4 + 12), "おたから：");
-            func_800AE100(*(void **)(D_8015EB70 + n * 4 + 12), names.s[i]);
+            strcpy(*(void **)(D_8015EB70 + n * 4 + 12), "おたから：");
+            strcat(*(void **)(D_8015EB70 + n * 4 + 12), names.s[i]);
             n++;
         }
     }

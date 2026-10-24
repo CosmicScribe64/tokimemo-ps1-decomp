@@ -7,7 +7,7 @@ s32 func_8013E97C();
 void func_80134D30(void) {
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　ハーメルンのホラ吹き　　　　");
+        strcpy(D_8015E74C, "　　　　ハーメルンのホラ吹き　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_80144480();
         func_8013EEAC(D_8015EBAC);
@@ -212,9 +212,9 @@ s32 func_80135358(void) {
         func_8013F0F4(0x50C, 0, 3);
         func_8013E810(0x2F, 4, 1, 1);
         if (D_8015EDC4 & 0x100000) {
-            func_8013E97C(0x2F, cx, (h + -h + D_8015EC6C + cx) - D_8015EC68 - (func_800A0070((cx - D_8015EC68) * 0x800 / (h - D_8015EC6C)) >> 7));
+            func_8013E97C(0x2F, cx, (h + -h + D_8015EC6C + cx) - D_8015EC68 - (rsin((cx - D_8015EC68) * 0x800 / (h - D_8015EC6C)) >> 7));
         } else {
-            func_8013E97C(0x2F, cx, (h + -h + D_8015EC6C + cx) - D_8015EC68 - (func_800A0070((cx - D_8015EC68) * 0x800 / (h - D_8015EC6C)) >> 6));
+            func_8013E97C(0x2F, cx, (h + -h + D_8015EC6C + cx) - D_8015EC68 - (rsin((cx - D_8015EC68) * 0x800 / (h - D_8015EC6C)) >> 6));
         }
     }
     if (D_8015EC68 - (h - D_8015EC6C) * 2 < cx && cx < D_8015EC68) {
@@ -222,9 +222,9 @@ s32 func_80135358(void) {
         func_8013F0F4(0x50B, 0, 2);
         func_8013E810(0x2F, 4, 1, 1);
         if (D_8015EDC4 & 0x100000) {
-            func_8013E97C(0x2F, cx, (sp34 + D_8015EC6C + (D_8015EC68 - cx) / 2) - (func_800A0070((D_8015EC68 - cx) * 0x800 / ((h - D_8015EC6C) * 2)) >> 7));
+            func_8013E97C(0x2F, cx, (sp34 + D_8015EC6C + (D_8015EC68 - cx) / 2) - (rsin((D_8015EC68 - cx) * 0x800 / ((h - D_8015EC6C) * 2)) >> 7));
         } else {
-            func_8013E97C(0x2F, cx, (sp34 + D_8015EC6C + (D_8015EC68 - cx) / 2) - (func_800A0070((D_8015EC68 - cx) * 0x800 / ((h - D_8015EC6C) * 2)) >> 6));
+            func_8013E97C(0x2F, cx, (sp34 + D_8015EC6C + (D_8015EC68 - cx) / 2) - (rsin((D_8015EC68 - cx) * 0x800 / ((h - D_8015EC6C) * 2)) >> 6));
         }
     }
     if (cx == D_8015EC68 - (h - D_8015EC6C) * 2) {

@@ -54,8 +54,8 @@ s32 func_801325C0(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "校門前");
-    func_800AE0F0(D_800CA1DC, "近所の公園");
+    strcpy(D_800CA19C, "校門前");
+    strcpy(D_800CA1DC, "近所の公園");
     k_reset(1);
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
@@ -77,7 +77,7 @@ s32 func_801325C0(void) {
     D_80144C34 = D_80144BF8;
     D_80144C38 = D_80144C28;
     func_80133024();
-    if ((D_80144C50 == 0) && (D_800E6280.unk_F5F == 7) && !(func_800AE0D0() & 3)) {
+    if ((D_80144C50 == 0) && (D_800E6280.unk_F5F == 7) && !(rand() & 3)) {
         D_80144C50 = 0x64;
     }
     if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A >= 0x4C) {
@@ -324,7 +324,7 @@ void func_80133164(void) {
 void func_801331A0(void) {
     u8 temp_v0;
 
-    temp_v0 = func_80051A68(D_800E6280.unk_F5F);
+    temp_v0 = get_g_zyotai_s(D_800E6280.unk_F5F);
     if (((temp_v0 & 0x7F) == 4) || (D_80144C58 != 0)) {
         D_80144C3C += 0x12;
         func_80083440(4U);
@@ -343,7 +343,7 @@ void func_801331A0(void) {
 void func_80133250(void) {
     u8 temp_v0;
 
-    temp_v0 = func_80051A68(D_800E6280.unk_F5F);
+    temp_v0 = get_g_zyotai_s(D_800E6280.unk_F5F);
     if (((temp_v0 & 0x7F) == 4) || (D_80144C58 != 0)) {
         func_8004284C();
         func_8004284C();
@@ -393,7 +393,7 @@ void func_80133308(void) {
             if (var_s1) {}
             if ((((u32) (D_800E6280.unk_1BC[var_s1].unk_0C.w << 0x1E) >> 0x1F) != 0) && (var_s1 != (*(u8 *)&D_800E6280.unk_F5F))) {
                 temp_s2 = ((s16) D_800E6280.unk_1BC[var_s1].unk_02 / 20) & 0xFF;
-                D_800E6280.unk_1BC[var_s1].unk_0A = ((func_800AE0D0() % (u32) (temp_s2 + 1)) & 0xFF) + (D_800E6280.unk_1BC[var_s1].unk_0A + var_s6);
+                D_800E6280.unk_1BC[var_s1].unk_0A = ((rand() % (u32) (temp_s2 + 1)) & 0xFF) + (D_800E6280.unk_1BC[var_s1].unk_0A + var_s6);
             }
             var_s1 += 1;
         } while (var_s1 < 0xB);
@@ -439,7 +439,7 @@ void func_80133598(void) {
 void func_8013375C(void) {
     u8 temp_v0;
 
-    temp_v0 = func_80051A68(D_800E6280.unk_F5F);
+    temp_v0 = get_g_zyotai_s(D_800E6280.unk_F5F);
     if (((u32)(temp_v0 & 0x7F) < 2U) && (D_80122CDC != 0)) {
         if ((D_800E6280.unk_F5F == 2) || (D_800E6280.unk_F5F == 7) || (D_800E6280.unk_F5F == 9)) {
             func_80083418();
@@ -469,6 +469,6 @@ s32 func_801337EC(void) {
         }
     }
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
-    func_80084D3C();
+    check_para_limit();
     return func_80072B5C(1);
 }

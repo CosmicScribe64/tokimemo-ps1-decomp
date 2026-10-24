@@ -49,16 +49,16 @@ void func_80135630(void) {
     s32 pad; /* FAKE: unused scalar puts the RECT at +0x2C, as in GEKO func_8013B3C0 (T-9770); original local unknown. T-18000 */
     RECT r;
 
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
     func_8006BD6C(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8008585C();
-    func_8004E9F4(1);
+    k_reset(1);
     r.x = 0x140;
     r.y = 0x1A0;
     r.w = 0x140;
@@ -72,11 +72,11 @@ void func_80135630(void) {
     /* FAKE: byte store then member read shares the constant in a0, as in GEKO func_8013B3C0 (T-9770). T-18000 */
     *(u8 *)&D_800E6280.unk_F5F = 2;
     func_800847B8(D_800E6280.unk_F5F);
-    func_8007C740();
+    addr_init_bustup();
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_8013C2E4 = 0;
     D_8013C2E8 = 0;
@@ -131,7 +131,7 @@ void func_80135994(void) {
     D_800E6280.unk_720 = D_800E6280.unk_1108;
     D_800E6280.unk_721 = D_800E6280.unk_1109;
     D_800E6280.unk_722 = 0x38;
-    func_8004E9F4(0);
+    k_reset(0);
     main_state_set(0x81);
 }
 
@@ -232,10 +232,10 @@ void func_80135DB8(void) {
     if (D_8013C2EC == 0) {
         D_800E6280.unk_1BC[(s32) D_800E6280.unk_F5F].unk_02 += 1;
         D_800E6280.unk_1BC[(s32) D_800E6280.unk_F5F].unk_06 += 2;
-        func_80084D3C();
+        check_para_limit();
     } else {
         D_800E6280.unk_1BC[(s32) D_800E6280.unk_F5F].unk_06 += 1;
-        func_80084D3C();
+        check_para_limit();
         D_800CA2E4 += 2;
         D_800E6280.unk_110A += 0xB;
     }

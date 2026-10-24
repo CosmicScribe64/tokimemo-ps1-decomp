@@ -33,7 +33,7 @@ void func_801362EC(void) {
 
 void func_801363BC(void) {
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
     switch (D_800E6280.unk_110A) {
     case 0:
@@ -53,7 +53,7 @@ void func_801363BC(void) {
         return;
     case 5:
         func_80044750(0xC1);
-        func_8004E9F4(1);
+        k_reset(1);
         func_8004284C();
         return;
     case 6:

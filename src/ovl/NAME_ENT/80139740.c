@@ -114,22 +114,22 @@ void func_80139CB4(void) {
     u8 sp30[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
 
     if (D_800E8BEE != 0) {
-        func_800AE090(sp30, D_800B3288[D_800E7D36], 5);
-        func_800AE100(sp30, "番");
-        func_8004E788(-0x20, -0x5C, 0xF, (s32) sp30, 0);
-        func_8004E788(0x20, -0x4B, 0xF, (s32) D_800E7D10.family_name[D_800E7D36], 0);
-        func_8004E788(0x4E, -0x4B, 0xF, (s32) D_800E7D10.given_name[D_800E7D36], 0);
-        func_8004E788(0x20, -0x3B, 0xF, (s32) D_800E7D10.nickname[D_800E7D36], 0);
-        func_8004E788(0x20, -0x2B, 0xF, (s32) club_name_table[D_800E7D10.club[D_800E7D36]], 0);
+        strncpy(sp30, D_800B3288[D_800E7D36], 5);
+        strcat(sp30, "番");
+        set_kanji_string(-0x20, -0x5C, 0xF, (s32) sp30, 0);
+        set_kanji_string(0x20, -0x4B, 0xF, (s32) D_800E7D10.family_name[D_800E7D36], 0);
+        set_kanji_string(0x4E, -0x4B, 0xF, (s32) D_800E7D10.given_name[D_800E7D36], 0);
+        set_kanji_string(0x20, -0x3B, 0xF, (s32) D_800E7D10.nickname[D_800E7D36], 0);
+        set_kanji_string(0x20, -0x2B, 0xF, (s32) club_name_table[D_800E7D10.club[D_800E7D36]], 0);
         return;
     }
-    func_800AE090(sp30, D_800B3288[D_800E6280.unk_1118], 5);
-    func_800AE100(sp30, "番");
-    func_8004E788(-0x20, -0x5C, 0xF, (s32) sp30, 0);
-    func_8004E788(0x20, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 0);
-    func_8004E788(0x4E, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 0);
-    func_8004E788(0x20, -0x3B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0);
-    func_8004E788(0x20, -0x2B, 0xF, (s32) club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 0xC], 0);
+    strncpy(sp30, D_800B3288[D_800E6280.unk_1118], 5);
+    strcat(sp30, "番");
+    set_kanji_string(-0x20, -0x5C, 0xF, (s32) sp30, 0);
+    set_kanji_string(0x20, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 0);
+    set_kanji_string(0x4E, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 0);
+    set_kanji_string(0x20, -0x3B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0);
+    set_kanji_string(0x20, -0x2B, 0xF, (s32) club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 0xC], 0);
 }
 
 void func_80139F30(void) {
@@ -580,16 +580,16 @@ void func_8013B5F0(void) {
         D_8014D0E4 += D_8014D0EC;
         D_8014D0E8 += D_8014D0F0;
         if (D_8014D0E4 >= 0xA1) {
-            D_8014D0EC = -(func_800AE0D0() & 0xF);
+            D_8014D0EC = -(rand() & 0xF);
         }
         if (D_8014D0E8 >= 0x79) {
-            D_8014D0F0 = -(func_800AE0D0() & 0xF);
+            D_8014D0F0 = -(rand() & 0xF);
         }
         if (D_8014D0E4 < -0xA0) {
-            D_8014D0EC = func_800AE0D0() & 0xF;
+            D_8014D0EC = rand() & 0xF;
         }
         if (D_8014D0E8 < -0x78) {
-            D_8014D0F0 = func_800AE0D0() & 0xF;
+            D_8014D0F0 = rand() & 0xF;
         }
     }
     func_80046AC8(0x1A, 0, 0x1F7, D_8014D0E0, D_8014D0E4, D_8014D0E8, 0x01DF7FCF, 2);
@@ -597,46 +597,46 @@ void func_8013B5F0(void) {
 
 void func_8013B77C(void) {
     if (D_8014D0AC != 0) {
-        func_800AE0B0("option  kidou back ");
+        printf("option  kidou back ");
         if (D_8014D0AC & 0x80) {
             k_speed_set(D_8014D0B0);
         }
-        func_800AE0B0("kanji_speed%d \n", D_8014D0B0);
+        printf("kanji_speed%d \n", D_8014D0B0);
         if (D_8014D0B4 >= 3) {
             D_800E6280.unk_F6C = D_8014D0B4 % 3;
         }
-        func_800AE0B0("icon_mode %d \n", D_8014D0B4);
+        printf("icon_mode %d \n", D_8014D0B4);
         if (D_8014D0B8 >= 4) {
             D_800E6280.unk_1092 = D_8014D0B8 & 3;
         }
-        func_800AE0B0("menu_mode %d \n", D_8014D0B8);
+        printf("menu_mode %d \n", D_8014D0B8);
         if (D_8014D0AC & 8) {
             D_800E6280.unk_F6F = D_8014D0BC;
         }
-        func_800AE0B0("cursor_speed %d \n", D_8014D0BC);
+        printf("cursor_speed %d \n", D_8014D0BC);
         if (D_8014D0C0 >= 3) {
             D_800E6280.unk_03C = D_8014D0C0 % 3;
         }
-        func_800AE0B0("sound_mode %d \n", D_8014D0C0);
+        printf("sound_mode %d \n", D_8014D0C0);
         if (D_8014D0AC & 0x40) {
             D_800E6280.unk_F70 = D_8014D0C4;
         }
-        func_800AE0B0("click_mode %d \n", D_8014D0C4);
+        printf("click_mode %d \n", D_8014D0C4);
         if (D_8014D0AC & 0x20) {
             D_800E6280.unk_F73 = D_8014D0C8;
         }
-        func_800AE0B0("click_speed %d \n", D_8014D0C8);
+        printf("click_speed %d \n", D_8014D0C8);
         if (D_8014D0AC & 0x10) {
             D_800E6280.unk_F75 = D_8014D0CC;
         }
-        func_800AE0B0("mouse_ok %d \n", D_8014D0CC);
+        printf("mouse_ok %d \n", D_8014D0CC);
         if (*(u8 *)&D_800E6280.unk_F6C == 2) {
             D_800E6280.unk_F6D = 0xF;
         } else {
             D_800E6280.unk_F6D = 0xE;
         }
         func_8006509C();
-        func_80064FA4(0);
+        icon_disp_switch(0);
     }
     D_8014D0A8 = 0;
     func_8013BB1C();
@@ -673,14 +673,14 @@ void func_8013B994(void) {
             }
         }
     }
-    func_800AE0B0("err %d \n", err);
-    func_800AE0B0("zero %d \n", zero);
+    printf("err %d \n", err);
+    printf("zero %d \n", zero);
     if (zero >= 2) {
         if (err != 0) {
             saved = *(u8 *)&D_800E6280.unk_F6C;
             *(u8 *)&D_800E6280.unk_F6C = 0;
             func_8006509C();
-            func_80064FA4(0);
+            icon_disp_switch(0);
             *(u8 *)&D_800E6280.unk_F6C = saved;
         }
     }
@@ -699,32 +699,32 @@ void func_8013BB24(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         D_800B3C6C = 0;
-        func_800438DC(1, 0);
+        draw2d3d(1, 0);
         func_80048DAC(1);
         func_80041584();
         *(s32 *)&D_800E6280.unk_1095[3] = 0xA0;
         func_80048E78();
         if (D_800E6280.unk_1124 != 0) {
-            func_800AE0B0("option setting!");
+            printf("option setting!");
             D_8014D0AC = D_800E6280.unk_1124;
             speed = get_k_speed();
-            /* FAKE: single-line store+call schedules sb D_8014D0B0 before jal func_800AE0B0. T-11570 */
-            D_8014D0B0 = speed; func_800AE0B0("kanji_speed%d \n", speed);
+            /* FAKE: single-line store+call schedules sb D_8014D0B0 before jal printf. T-11570 */
+            D_8014D0B0 = speed; printf("kanji_speed%d \n", speed);
             /* FAKE: pointer views avoid cvt_pass widening on D_8014D0B4..D_8014D0CC so uopt CSEs the stores and schedules lui $a0 before lui $at. T-24106 */
             D_8014D0B4 = D_800E6280.unk_F6C;
-            func_800AE0B0("icon_mode %d \n", *(u8 *)&D_8014D0B4);
+            printf("icon_mode %d \n", *(u8 *)&D_8014D0B4);
             D_8014D0B8 = D_800E6280.unk_1092;
-            func_800AE0B0("menu_mode %d \n", *(u8 *)&D_8014D0B8);
+            printf("menu_mode %d \n", *(u8 *)&D_8014D0B8);
             D_8014D0BC = D_800E6280.unk_F6F;
-            func_800AE0B0("cursor_speed %d \n", *(u8 *)&D_8014D0BC);
+            printf("cursor_speed %d \n", *(u8 *)&D_8014D0BC);
             D_8014D0C0 = D_800E6280.unk_03C;
-            func_800AE0B0("sound_mode %d \n", *(u8 *)&D_8014D0C0);
+            printf("sound_mode %d \n", *(u8 *)&D_8014D0C0);
             D_8014D0C4 = D_800E6280.unk_F70;
-            func_800AE0B0("click_mode %d \n", *(u8 *)&D_8014D0C4);
+            printf("click_mode %d \n", *(u8 *)&D_8014D0C4);
             D_8014D0C8 = D_800E6280.unk_F73;
-            func_800AE0B0("click_speed %d \n", *(u8 *)&D_8014D0C8);
+            printf("click_speed %d \n", *(u8 *)&D_8014D0C8);
             D_8014D0CC = D_800E6280.unk_F75;
-            func_800AE0B0("mouse_ok %d \n", *(u8 *)&D_8014D0CC);
+            printf("mouse_ok %d \n", *(u8 *)&D_8014D0CC);
         } else {
             D_8014D0AC = 0;
         }
@@ -792,7 +792,7 @@ void func_8013BE18(void) {
             rect.h = 0x80;
             rect.w = 0x20;
             func_8009C884(&rect, (void *)0x801E0200);
-            func_80043914(0x801E0000, 0x18, 1, 2, 0);
+            load_palette(0x801E0000, 0x18, 1, 2, 0);
             g->unk_03A = 0x80;
             g->unk_110D = 3;
         }
@@ -823,7 +823,7 @@ void func_8013BF74(void) {
         width[i] = 32;
         height[i] = 16;
     }
-    func_8004F870(0, 14, x, y, width, height);
+    menu_set(0, 14, x, y, width, height);
     for (i = 0; i < 4; i++) {
         column = i & 1;
         row = i & 2;
@@ -832,7 +832,7 @@ void func_8013BF74(void) {
         width2[i] = 40;
         height2[i] = 20;
     }
-    func_8004F870(1, 4, x2, y2, width2, height2);
+    menu_set(1, 4, x2, y2, width2, height2);
     D_800E6280.unk_1093 = 0;
     D_800E6280.unk_1094 = -1;
     D_8014D0D0 = 0;
@@ -890,9 +890,9 @@ void func_8013BF74(void) {
     }
     ((DisplayActor44 *)D_8011ECD0)[126].unk_03 |= 0x80;
     ((DisplayActor44 *)D_8011ECD0)[127].unk_03 |= 0x80;
-    func_80043914(0x801A2000, 0x10, 1, 1, 0);
-    func_80043914(0x801A2000, 0x11, 1, 1, 1);
-    func_80043914(0x80180000, 0x1F, 1, 1, 0);
+    load_palette(0x801A2000, 0x10, 1, 1, 0);
+    load_palette(0x801A2000, 0x11, 1, 1, 1);
+    load_palette(0x80180000, 0x1F, 1, 1, 0);
     func_8004A1A0((s32) addresses, 0, 6, 3, 2, 0x1FF, -0xA0, -0x78, 0xA, 0xD);
     func_8004A1A0((s32) addresses2, 1, 6, 3, 2, 0x1F0, -0xA0, -0x78, 8, 0xA);
     func_80048F64(0x72);
@@ -935,19 +935,19 @@ void func_8013C580(void) {
         g = &D_800E6280;
         sel = g->unk_1115;
         if (sel == 1) {
-            func_800AE0B0("EXIST CARD!");
+            printf("EXIST CARD!");
             func_80042808();
         } else if (sel == 0xF1) {
-            func_800AE0B0("FILE_SEL UNFORMAT FIND!");
+            printf("FILE_SEL UNFORMAT FIND!");
             func_80042908(0xC0);
         } else if (sel == 0xFF) {
-            func_800AE0B0("NO CARD!");
+            printf("NO CARD!");
             func_8004284C();
         }
     } else if ((u32)D_800E6280.unk_1120 >= 0x201U) {
         func_8006BD6C(1);
         func_80053D10();
-        func_800AE0B0("NO COMUNICATION!");
+        printf("NO COMUNICATION!");
         func_8004284C();
     }
 }
@@ -972,12 +972,12 @@ void func_8013C6CC(void) {
 
 void func_8013C6FC(void) {
     func_8004E58C();
-    func_8004E788(-0x40, 0x20, 0xF, "新たにゲームを始めますか？", 0);
-    func_8004E788(-0x40, 0x30, 0xF, D_800B3C70, 0);
-    func_8004E788(0x14, 0x30, 1, func_8006CA9C(), 0);
-    func_8004E788(-0x40, 0x40, 0xF, D_800B3C88, 0);
-    func_8004E788(0x14, 0x40, 2, func_8006CAE0(), 0);
-    func_8004E884(5);
+    set_kanji_string(-0x40, 0x20, 0xF, "新たにゲームを始めますか？", 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_800B3C70, 0);
+    set_kanji_string(0x14, 0x30, 1, func_8006CA9C(), 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_800B3C88, 0);
+    set_kanji_string(0x14, 0x40, 2, func_8006CAE0(), 0);
+    k_disp_start(5);
     func_8004284C();
 }
 
@@ -995,13 +995,13 @@ void func_8013C7C0(void) {
 
 void func_8013C834(void) {
     func_8004E58C();
-    func_8004E788(-0x40, 0x20, 0xF, "メモリーカードを", 0);
-    func_8004E788(-0x40, 0x30, 1, "差し込み口１", 0);
-    func_8004E788(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
-    func_8004E788(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
-    func_8004E788(-0x40, 0x40, 1, func_8006CA9C(), 0);
+    set_kanji_string(-0x40, 0x20, 0xF, "メモリーカードを", 0);
+    set_kanji_string(-0x40, 0x30, 1, "差し込み口１", 0);
+    set_kanji_string(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
+    set_kanji_string(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
+    set_kanji_string(-0x40, 0x40, 1, func_8006CA9C(), 0);
     func_80053D10();
-    func_8004E884(5);
+    k_disp_start(5);
     func_8004284C();
 }
 
@@ -1054,7 +1054,7 @@ s32 func_8013C9F0(void) {
         break;
     case 1:
         if (func_80054140() == 2) {
-            func_800AE0B0("SEARCH_CARD");
+            printf("SEARCH_CARD");
             D_800E6280.unk_110D++;
         } else if (D_800E6280.unk_1104.u >= 0x201U) {
             func_80056284();
@@ -1127,17 +1127,17 @@ void func_8013CB44(void) {
                 func_8013B51C(slot);
             }
             func_80139CB4();
-            func_8004EA98();
-            func_8004EAD4(0);
+            k_sub_reset_point_set();
+            k_sub_disp_start(0);
             D_8014D0D4 = 1;
             func_8004284C();
         }
         break;
     case 3:
         func_8004E58C();
-        func_8004E788(-0x40, 0x20, 0xF, (s32) "システムファイルは", 0);
-        func_8004E788(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
-        func_8004E884(2);
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) "システムファイルは", 0);
+        set_kanji_string(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
+        k_disp_start(2);
         func_80053D10();
         g->unk_110D++;
         break;
@@ -1148,13 +1148,13 @@ void func_8013CB44(void) {
         break;
     case 5:
         func_8004E58C();
-        func_8004E788(-0x40, 0x20, 0xF, (s32) "システムファイルを", 0);
-        func_8004E788(-0x40, 0x30, 0xF, (s32) "作り直しますか？", 0);
-        func_8004E788(-0x40, 0x40, 0xF, (s32) D_800B3C70, 0);
-        func_8004E788(0x14, 0x40, 1, (s32) func_8006CA9C(), 0);
-        func_8004E788(-0x40, 0x50, 0xF, (s32) D_800B3C88, 0);
-        func_8004E788(0x14, 0x50, 2, (s32) func_8006CAE0(), 0);
-        func_8004E884(6);
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) "システムファイルを", 0);
+        set_kanji_string(-0x40, 0x30, 0xF, (s32) "作り直しますか？", 0);
+        set_kanji_string(-0x40, 0x40, 0xF, (s32) D_800B3C70, 0);
+        set_kanji_string(0x14, 0x40, 1, (s32) func_8006CA9C(), 0);
+        set_kanji_string(-0x40, 0x50, 0xF, (s32) D_800B3C88, 0);
+        set_kanji_string(0x14, 0x50, 2, (s32) func_8006CAE0(), 0);
+        k_disp_start(6);
         g->unk_110D++;
         break;
     case 6:
@@ -1198,8 +1198,8 @@ void func_8013CEC8(void) {
             D_800E7D36 = g->unk_1093 + 1;
             func_8004E58C();
             func_80139CB4();
-            func_8004EA98();
-            func_8004EAD4(0);
+            k_sub_reset_point_set();
+            k_sub_disp_start(0);
             func_8013B51C(n);
         }
     }
@@ -1240,7 +1240,7 @@ void func_8013D054(void) {
     case 3:
         if (func_80055AFC(0) == 1) {
             func_8013BB10();
-            func_800AE0B0("SYS0 DATA OK!");
+            printf("SYS0 DATA OK!");
             func_80053D10();
             func_80044750(0x501);
             func_80053CE0();
@@ -1249,7 +1249,7 @@ void func_8013D054(void) {
             D_800E6280.unk_110D++;
         } else {
             state = D_800E6280.unk_1115;
-            func_800AE0B0("s->mem_stat %d \n", state);
+            printf("s->mem_stat %d \n", state);
             D_800E7D14[D_800E6280.unk_1118] = 0xFF;
             func_80042908(0xF0);
         }
@@ -1290,7 +1290,7 @@ void func_8013D2AC(void) {
             func_80053D10();
             func_80042940(0x40);
         }
-        func_800AE0B0("load file %d \n", g->unk_1118);
+        printf("load file %d \n", g->unk_1118);
         break;
     case 1:
         if (func_8005448C() == 4) {
@@ -1310,10 +1310,10 @@ void func_8013D2AC(void) {
             func_8004284C();
         } else {
             func_8004E58C();
-            func_800AE0F0(text, D_800B3288[g->unk_1118]);
-            func_800AE100(text, "番アルバムのデータは");
-            func_8004E788(-0x40, 0x20, 0xF, (s32) text, 0);
-            func_8004E788(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
+            strcpy(text, D_800B3288[g->unk_1118]);
+            strcat(text, "番アルバムのデータは");
+            set_kanji_string(-0x40, 0x20, 0xF, (s32) text, 0);
+            set_kanji_string(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
             D_800E7D14[g->unk_1118] = 0xFF;
             func_80053D10();
             g->unk_110D = 0;
@@ -1354,11 +1354,11 @@ void func_8013D62C(void) {
     u8 buf[0x100];
 
     func_8004E58C();
-    func_800AE0F0(buf, D_800B3288[D_800E6280.unk_1118]);
+    strcpy(buf, D_800B3288[D_800E6280.unk_1118]);
     strcat(buf, "番アルバムを");
-    func_8004E788(-0x40, 0x20, 0xF, buf, 0);
-    func_8004E788(-0x40, 0x30, 0xF, "ロードしています。", 0);
-    func_8004E884(2);
+    set_kanji_string(-0x40, 0x20, 0xF, buf, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, "ロードしています。", 0);
+    k_disp_start(2);
     func_8004284C();
 }
 
@@ -1399,12 +1399,12 @@ INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014B9A4);
 void func_8013D7F4(void) {
     if (func_80055AFC(0) == 1) {
         func_8013BB10();
-        func_800AE0B0(D_8014B998);
+        printf(D_8014B998);
         func_80053D10();
         func_80044750(0x501);
         func_80042908(3);
     } else {
-        func_800AE0B0(D_8014B9A4);
+        printf(D_8014B9A4);
         func_80056284();
         func_80042908(1);
     }
@@ -1413,13 +1413,13 @@ void func_8013D7F4(void) {
 
 void func_8013D874(void) {
     func_8004E58C();
-    func_8004E788(-0x40, 0x20, 0xF, "このゲームのデータがありません", 0);
-    func_8004E788(-0x40, 0x30, 0xF, "新たにアルバムを作成し、", 0);
-    func_8004E788(-0x40, 0x40, 0xF, "ゲームをプレイしますか？", 0);
-    func_8004E788(-0x40, 0x50, 0xF, "　　はい…　　いいえ…　", 0);
-    func_8004E788(6, 0x50, 1, func_8006CA9C(), 0);
-    func_8004E788(0x5A, 0x50, 2, func_8006CAE0(), 0);
-    func_8004E884(6);
+    set_kanji_string(-0x40, 0x20, 0xF, "このゲームのデータがありません", 0);
+    set_kanji_string(-0x40, 0x30, 0xF, "新たにアルバムを作成し、", 0);
+    set_kanji_string(-0x40, 0x40, 0xF, "ゲームをプレイしますか？", 0);
+    set_kanji_string(-0x40, 0x50, 0xF, "　　はい…　　いいえ…　", 0);
+    set_kanji_string(6, 0x50, 1, func_8006CA9C(), 0);
+    set_kanji_string(0x5A, 0x50, 2, func_8006CAE0(), 0);
+    k_disp_start(6);
     func_8004284C();
 }
 
@@ -1507,12 +1507,12 @@ void func_8013DC54(void) {
 
 void func_8013DC84(void) {
     func_8004E58C();
-    func_8004E788(-0x40, 0x20, 0xF, "システムファイルを作成しますか", 0);
-    func_8004E788(-0x40, 0x30, 0xF, D_800B3C70, 0);
-    func_8004E788(0x14, 0x30, 1, func_8006CA9C(), 0);
-    func_8004E788(-0x40, 0x40, 0xF, D_800B3C88, 0);
-    func_8004E788(0x14, 0x40, 2, func_8006CAE0(), 0);
-    func_8004E884(5);
+    set_kanji_string(-0x40, 0x20, 0xF, "システムファイルを作成しますか", 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_800B3C70, 0);
+    set_kanji_string(0x14, 0x30, 1, func_8006CA9C(), 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_800B3C88, 0);
+    set_kanji_string(0x14, 0x40, 2, func_8006CAE0(), 0);
+    k_disp_start(5);
     func_8004284C();
 }
 
@@ -1531,10 +1531,10 @@ s32 func_8013DD94(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         func_8004E58C();
-        func_800AE0F0(sp38, D_800B32CC[D_800E6280.unk_1118 - 1]);
-        func_800AE100(sp38, "番アルバムを作成しています。");
-        func_8004E788(-0x40, 0x20, 0xF, (s32) sp38, 0);
-        func_8004E884(2);
+        strcpy(sp38, D_800B32CC[D_800E6280.unk_1118 - 1]);
+        strcat(sp38, "番アルバムを作成しています。");
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) sp38, 0);
+        k_disp_start(2);
         temp_v0 = D_800E7D14[D_800E6280.unk_1118];
         if (temp_v0 == 0xFF) {
             D_800E6280.unk_110D += 1;
@@ -1578,12 +1578,12 @@ void func_8013DF88(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         func_8004E58C();
-        func_800AE0F0(text, D_800B32CC[D_800E6280.unk_1118 - 1]);
+        strcpy(text, D_800B32CC[D_800E6280.unk_1118 - 1]);
         strcat(text, "番アルバム　と、");
-        func_8004E788(-0x40, 0x20, 0xF, (s32) text, 0);
-        func_8004E788(-0x40, 0x30, 0xF, (s32) "システムファイルを", 0);
-        func_8004E788(-0x40, 0x40, 0xF, (s32) "作成しています。", 0);
-        func_8004E884(3);
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) text, 0);
+        set_kanji_string(-0x40, 0x30, 0xF, (s32) "システムファイルを", 0);
+        set_kanji_string(-0x40, 0x40, 0xF, (s32) "作成しています。", 0);
+        k_disp_start(3);
         D_800E6280.unk_110D += 1;
     default:
         break;
@@ -1634,7 +1634,7 @@ void func_8013DF88(void) {
         func_80042058();
         D_800E6280.unk_1118 = D_800E7D36;
         /* FAKE: pointer view avoids cvt_pass widening on unk_1118 so uopt keeps unk_1118 in $a1 across the switch. T-24106 */
-        func_800AE0B0("s->file_no %x \n", *(u8 *)&D_800E6280.unk_1118);
+        printf("s->file_no %x \n", *(u8 *)&D_800E6280.unk_1118);
         D_800E6280.unk_110D += 1;
         break;
     case 6:
@@ -1723,15 +1723,15 @@ void func_8013E59C(void) {
     u8 buf[0x100];
 
     func_8004E58C();
-    func_800AE0F0(buf, D_800B3288[D_800E6280.unk_1118]);
+    strcpy(buf, D_800B3288[D_800E6280.unk_1118]);
     strcat(buf, "番アルバムを");
-    func_8004E788(-0x40, 0x20, 0xF, buf, 0);
-    func_8004E788(-0x40, 0x30, 0xF, "やりなおします。", 0);
-    func_8004E788(-0x40, 0x40, 0xF, D_800B3C70, 0);
-    func_8004E788(0x14, 0x40, 1, func_8006CA9C(), 0);
-    func_8004E788(-0x40, 0x50, 0xF, D_800B3C88, 0);
-    func_8004E788(0x14, 0x50, 2, func_8006CAE0(), 0);
-    func_8004E884(6);
+    set_kanji_string(-0x40, 0x20, 0xF, buf, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, "やりなおします。", 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_800B3C70, 0);
+    set_kanji_string(0x14, 0x40, 1, func_8006CA9C(), 0);
+    set_kanji_string(-0x40, 0x50, 0xF, D_800B3C88, 0);
+    set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
+    k_disp_start(6);
     func_8004284C();
 }
 
@@ -1751,9 +1751,9 @@ void func_8013E6A8(void) {
 /* Packed date word: day in bits 0-3, month in bits 4-8, week in bits 9-10. */
 
 void func_8013E71C(void) {
-    func_800AE0A0(D_8014D070, &D_800E6280.unk_0D4, 8);
-    func_800AE0A0(D_8014D078, &D_800E6280.unk_0DC, 8);
-    func_800AE0A0(D_8014D080, &D_800E6280.unk_0E4, 0xC);
+    memcpy(D_8014D070, &D_800E6280.unk_0D4, 8);
+    memcpy(D_8014D078, &D_800E6280.unk_0DC, 8);
+    memcpy(D_8014D080, &D_800E6280.unk_0E4, 0xC);
     D_8014D08C = ((GsDateBits *)&D_800E6280.unk_0F8)->month - 1;
     D_8014D090 = ((GsDateBits *)&D_800E6280.unk_0F8)->day - 1;
     D_8014D094 = (((GsDateBits *)&D_800E6280.unk_0F8)->unk_09 + 3) & 3;
@@ -1767,7 +1767,7 @@ void func_8013E80C(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         func_80053CE0();
-        func_800AE0B0("NEW FILE %d \n", D_800E6280.unk_1118);
+        printf("NEW FILE %d \n", D_800E6280.unk_1118);
         D_800E6280.unk_110D += 1;
     default:
         break;
@@ -1802,7 +1802,7 @@ void func_8013E80C(void) {
         }
         break;
     case 4:
-        func_800AE0B0("%d file replay", D_800E6280.unk_1118);
+        printf("%d file replay", D_800E6280.unk_1118);
         func_80041878();
         func_80042058();
         func_8013B77C();
@@ -1815,7 +1815,7 @@ void func_8013E9FC(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         func_80053CE0();
-        func_800AE0B0("NEW FILE %d \n", D_800E6280.unk_1118);
+        printf("NEW FILE %d \n", D_800E6280.unk_1118);
         D_800E6280.unk_110D += 1;
     default:
         break;
@@ -1850,7 +1850,7 @@ void func_8013E9FC(void) {
         }
         break;
     case 4:
-        func_800AE0B0("%d file replay", D_800E6280.unk_1118);
+        printf("%d file replay", D_800E6280.unk_1118);
         func_80041878();
         func_80042058();
         func_8013B77C();
@@ -1868,11 +1868,11 @@ void func_8013EBEC(void) {
     switch (state) {
     case 0:
         func_8004E58C();
-        func_800AE0F0(text, D_800B32CC[D_800E6280.unk_1118 - 1]);
+        strcpy(text, D_800B32CC[D_800E6280.unk_1118 - 1]);
         strcat(text, "番アルバム　を、");
-        func_8004E788(-0x40, 0x20, 0xF, (s32) text, 0);
-        func_8004E788(-0x40, 0x30, 0xF, (s32) "作成しています。", 0);
-        func_8004E884(2);
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) text, 0);
+        set_kanji_string(-0x40, 0x30, 0xF, (s32) "作成しています。", 0);
+        k_disp_start(2);
         D_800E6280.unk_110D += 1;
     default:
         break;
@@ -1932,11 +1932,11 @@ void func_8013EE7C(void) {
     switch (state) {
     case 0:
         func_8004E58C();
-        func_800AE0F0(text, D_800B32CC[D_800E6280.unk_1118 - 1]);
+        strcpy(text, D_800B32CC[D_800E6280.unk_1118 - 1]);
         strcat(text, "番アルバム　を、");
-        func_8004E788(-0x40, 0x20, 0xF, (s32) text, 0);
-        func_8004E788(-0x40, 0x30, 0xF, (s32) "作成しています。", 0);
-        func_8004E884(2);
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) text, 0);
+        set_kanji_string(-0x40, 0x30, 0xF, (s32) "作成しています。", 0);
+        k_disp_start(2);
         D_800E6280.unk_110D += 1;
     default:
         break;
@@ -2056,7 +2056,7 @@ s32 func_8013F208(void) {
         if (func_80055AFC(0) == 1) {
             func_8013BB10();
             D_8014D0A8 = 1;
-            func_800AE0B0("COPY LOAD SUM !\n");
+            printf("COPY LOAD SUM !\n");
             D_800E6280.unk_110D++;
         } else {
             D_800E7D14[D_800E6280.unk_1118] = 0xFF;
@@ -2065,12 +2065,12 @@ s32 func_8013F208(void) {
         break;
     case 4:
         func_8004E58C();
-        func_800AE0F0(text, D_800B3288[D_800E6280.unk_1118]);
-        func_800AE100(text, "番アルバムを");
-        func_8004E788(-0x40, 0x20, 0xF, text, 0);
-        func_8004E788(-0x40, 0x30, 0xF, "どのアルバムにコピーしますか？", 0);
-        func_8004E788(-0x40, 0x40, 0xF, "カーソルで選んで下さい。", 0);
-        func_8004E884(3);
+        strcpy(text, D_800B3288[D_800E6280.unk_1118]);
+        strcat(text, "番アルバムを");
+        set_kanji_string(-0x40, 0x20, 0xF, text, 0);
+        set_kanji_string(-0x40, 0x30, 0xF, "どのアルバムにコピーしますか？", 0);
+        set_kanji_string(-0x40, 0x40, 0xF, "カーソルで選んで下さい。", 0);
+        k_disp_start(3);
         func_8004284C();
         break;
     }
@@ -2110,15 +2110,15 @@ void func_8013F5B0(void) {
     u8 buf[0x108]; /* FAKE: 8 bytes more than the neighbours give the original frame (0x140). T-9170 */
 
     func_8004E58C();
-    func_800AE0F0(buf, D_800B3288[D_800E6280.unk_1118]);
+    strcpy(buf, D_800B3288[D_800E6280.unk_1118]);
     strcat(buf, "番アルバムに");
-    func_8004E788(-0x40, 0x20, 0xF, buf, 0);
-    func_8004E788(-0x40, 0x30, 0xF, "上書きしてもいいですか？", 0);
-    func_8004E788(-0x40, 0x40, 0xF, D_800B3C70, 0);
-    func_8004E788(0x14, 0x40, 1, func_8006CA9C(), 0);
-    func_8004E788(-0x40, 0x50, 0xF, D_800B3C88, 0);
-    func_8004E788(0x14, 0x50, 2, func_8006CAE0(), 0);
-    func_8004E884(6);
+    set_kanji_string(-0x40, 0x20, 0xF, buf, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, "上書きしてもいいですか？", 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_800B3C70, 0);
+    set_kanji_string(0x14, 0x40, 1, func_8006CA9C(), 0);
+    set_kanji_string(-0x40, 0x50, 0xF, D_800B3C88, 0);
+    set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
+    k_disp_start(6);
     func_8004284C();
 }
 
@@ -2146,11 +2146,11 @@ s32 func_8013F758(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         func_8004E58C();
-        func_800AE0F0(sp38, D_800B3288[D_800E6280.unk_1118]);
-        func_800AE100(sp38, "番アルバムに");
-        func_8004E788(-0x40, 0x20, 0xF, (s32) sp38, 0);
-        func_8004E788(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
-        func_8004E884(2);
+        strcpy(sp38, D_800B3288[D_800E6280.unk_1118]);
+        strcat(sp38, "番アルバムに");
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) sp38, 0);
+        set_kanji_string(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
+        k_disp_start(2);
         func_80053CE0();
         D_800E6280.unk_110D += 1;
         break;
@@ -2160,7 +2160,7 @@ s32 func_8013F758(void) {
             D_800E6280.unk_110D += 1;
             func_80053D10();
         } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
-            func_800AE0B0("NO MEM CARD \n");
+            printf("NO MEM CARD \n");
             func_80053D10();
             func_80056284();
             func_80042908(1);
@@ -2195,11 +2195,11 @@ s32 func_8013F984(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         func_8004E58C();
-        func_800AE0F0(sp38, D_800B3288[D_800E6280.unk_1118]);
-        func_800AE100(sp38, "番アルバムに");
-        func_8004E788(-0x40, 0x20, 0xF, (s32) sp38, 0);
-        func_8004E788(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
-        func_8004E884(2);
+        strcpy(sp38, D_800B3288[D_800E6280.unk_1118]);
+        strcat(sp38, "番アルバムに");
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) sp38, 0);
+        set_kanji_string(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
+        k_disp_start(2);
         func_80053CE0();
         D_800E6280.unk_110D += 1;
         break;
@@ -2209,7 +2209,7 @@ s32 func_8013F984(void) {
             D_800E6280.unk_110D += 1;
             func_80053D10();
         } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
-            func_800AE0B0("NO MEM CARD \n");
+            printf("NO MEM CARD \n");
             func_80053D10();
             func_80056284();
             func_80042908(1);
@@ -2264,15 +2264,15 @@ void func_8013FCBC(void) {
     u8 buf[0x100];
 
     func_8004E58C();
-    func_800AE0F0(buf, D_800B3288[D_800E6280.unk_1118]);
+    strcpy(buf, D_800B3288[D_800E6280.unk_1118]);
     strcat(buf, "番アルバムを");
-    func_8004E788(-0x40, 0x20, 0xF, buf, 0);
-    func_8004E788(-0x40, 0x30, 0xF, "本当に消去していいですか？", 0);
-    func_8004E788(-0x40, 0x40, 0xF, D_800B3C70, 0);
-    func_8004E788(0x14, 0x40, 1, func_8006CA9C(), 0);
-    func_8004E788(-0x40, 0x50, 0xF, D_800B3C88, 0);
-    func_8004E788(0x14, 0x50, 2, func_8006CAE0(), 0);
-    func_8004E884(6);
+    set_kanji_string(-0x40, 0x20, 0xF, buf, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, "本当に消去していいですか？", 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_800B3C70, 0);
+    set_kanji_string(0x14, 0x40, 1, func_8006CA9C(), 0);
+    set_kanji_string(-0x40, 0x50, 0xF, D_800B3C88, 0);
+    set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
+    k_disp_start(6);
     func_8004284C();
 }
 
@@ -2293,7 +2293,7 @@ void func_8013FE40(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         if (func_80054704((s32) D_800E6280.unk_1118) == 1) {
-            func_800AE0B0("DELETE OK");
+            printf("DELETE OK");
             D_800E7D14[D_800E6280.unk_1118] = 0;
             D_800E6280.unk_110D += 1;
         } else {
@@ -2325,7 +2325,7 @@ void func_8013FE40(void) {
 void func_8013FF98(void) {
     if (D_800E6280.unk_110D == 0) {
         if (func_80054704(D_800E6280.unk_1118) == 1) {
-            func_800AE0B0("DELETE OK");
+            printf("DELETE OK");
             D_800E7D14[D_800E6280.unk_1118] = 0;
             func_80042940(0);
             D_800E6280.unk_110D = 2;
@@ -2503,7 +2503,7 @@ s32 func_80140430(void) {
         i = D_800E6280.unk_1118 - 1;
         func_80046290(D_800B3A3C[i * 2], D_800B3A3C[i * 2 + 1], i % 13);
         func_80044750(0x300);
-        func_800AE0B0("CALL XA");
+        printf("CALL XA");
         D_800E6280.unk_110D++;
         break;
     case 1:
@@ -2538,7 +2538,7 @@ s32 func_80140574(void) {
         i = D_800E6280.unk_1118 - 1;
         func_80046290(D_800B394C[i * 2], D_800B394C[i * 2 + 1], i % 13);
         func_80044750(0x300);
-        func_800AE0B0("CALL XA");
+        printf("CALL XA");
         D_800E6280.unk_110D++;
         break;
     case 1:
@@ -2578,8 +2578,8 @@ void func_8014068C(void) {
         func_80041584();
         D_800E6280.unk_F5E = func_8006C988(&girl, &unk, 1);
         i = girl;
-        func_800AE0B0("girl %x \n", girl);
-        func_800AE0B0("i %x \n", i);
+        printf("girl %x \n", girl);
+        printf("i %x \n", i);
         if (i >= 13) {
             if (*(u8 *)&D_800E6280.unk_03E == 0x62 && D_800E6280.unk_03F == 3 && D_800E6280.unk_040 == 1) {
             } else if (*(u8 *)&D_800E6280.unk_03E == 0x5F && D_800E6280.unk_03F == 4 && D_800E6280.unk_040 == 4) {
@@ -2611,7 +2611,7 @@ void func_8014068C(void) {
                 }
                 pair = D_800B3B9C + i * 4 + j * 2;
                 func_80046290(pair[0], pair[1], i);
-                func_800AE0B0("伊集院A");
+                printf("伊集院A");
                 func_80044750(0x300);
                 *(u8 *)&D_800E6280.unk_110D += 1;
             } else if ((u8)D_800E6280.unk_1BC[12].unk_0C.b[3] >= 0x29U) {
@@ -2619,10 +2619,10 @@ void func_8014068C(void) {
                 pair = D_800B3B9C + i * 4 + j * 2;
                 func_80046290(pair[0], pair[1], i);
                 func_80044750(0x300);
-                func_800AE0B0("伊集院B");
+                printf("伊集院B");
                 *(u8 *)&D_800E6280.unk_110D += 1;
             } else {
-                func_800AE0B0("伊集院C");
+                printf("伊集院C");
                 *(u8 *)&D_800E6280.unk_110D = 4;
             }
         } else {
@@ -2661,7 +2661,7 @@ void func_8014068C(void) {
         break;
     case 4:
         if ((u8)D_800E6280.unk_03A < 4U) {
-            func_800AE0B0("A\n");
+            printf("A\n");
             D_800E6280.unk_037 = 0;
             D_800E6280.unk_036 = 0;
             D_800E6280.unk_038 = 0;
@@ -2682,7 +2682,7 @@ s32 func_80140B20(void) {
         /* the chain order sets the store order: D_801220E0 is stored last, the others from D_80122106 outward */
         D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = D_801220E0 = *(u8 *)&D_800E6280.unk_03A;
         if (*(u8 *)&D_800E6280.unk_03A < 0x80) {
-            func_80057390(*(u8 *)&D_800E6280.unk_03A);
+            set_dec_bri(*(u8 *)&D_800E6280.unk_03A);
         }
     }
 }
@@ -2690,7 +2690,7 @@ s32 func_80140B20(void) {
 void func_80140BA4(void) {
     if (D_800E6280.unk_110D++ >= 0x41U) {
         func_8013B77C();
-        func_80057390(0);
+        set_dec_bri(0);
         if (D_800E6280.unk_03E == 0x62 && D_800E6280.unk_03F == 3 && D_800E6280.unk_040 == 1) {
             func_8013E71C();
             func_80041878();
@@ -2766,10 +2766,10 @@ void func_80140D6C(void)
 
 void func_80140E18(void) {
     func_8004E58C();
-    func_8004E788(-0x40, 0x20, 0xF, "別のメモリーカードを差し込み口", 0);
-    func_8004E788(-0x40, 0x30, 0xF, "１にセットするか、他のゲームの", 0);
-    func_8004E788(-0x40, 0x40, 0xF, "データを消去してください。", 0);
-    func_8004E884(2);
+    set_kanji_string(-0x40, 0x20, 0xF, "別のメモリーカードを差し込み口", 0);
+    set_kanji_string(-0x40, 0x30, 0xF, "１にセットするか、他のゲームの", 0);
+    set_kanji_string(-0x40, 0x40, 0xF, "データを消去してください。", 0);
+    k_disp_start(2);
     func_8004284C();
 }
 
@@ -3136,8 +3136,8 @@ s32 func_80142028(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         func_8004E58C();
-        func_8004E788(-0x40, 0x20, 0xF, "未初期化のメモリーカードです。", 0);
-        func_8004E884(1);
+        set_kanji_string(-0x40, 0x20, 0xF, "未初期化のメモリーカードです。", 0);
+        k_disp_start(1);
         D_800E6280.unk_110D++;
     default:
         break;
@@ -3148,12 +3148,12 @@ s32 func_80142028(void) {
         break;
     case 2:
         func_8004E58C();
-        func_8004E788(-0x40, 0x20, 0xF, "初期化していいですか？", 0);
-        func_8004E788(-0x40, 0x30, 0xF, D_800B3C70, 0);
-        func_8004E788(0x14, 0x30, 1, func_8006CA9C(), 0);
-        func_8004E788(-0x40, 0x40, 0xF, D_800B3C88, 0);
-        func_8004E788(0x14, 0x40, 2, func_8006CAE0(), 0);
-        func_8004E884(5);
+        set_kanji_string(-0x40, 0x20, 0xF, "初期化していいですか？", 0);
+        set_kanji_string(-0x40, 0x30, 0xF, D_800B3C70, 0);
+        set_kanji_string(0x14, 0x30, 1, func_8006CA9C(), 0);
+        set_kanji_string(-0x40, 0x40, 0xF, D_800B3C88, 0);
+        set_kanji_string(0x14, 0x40, 2, func_8006CAE0(), 0);
+        k_disp_start(5);
         D_800E6280.unk_110D++;
         break;
     case 3:
@@ -3169,12 +3169,12 @@ s32 func_80142028(void) {
         break;
     case 4:
         func_8004E58C();
-        func_8004E788(-0x40, 0x20, 0xF, "別のメモリーカードを", 0);
-        func_8004E788(-0x40, 0x30, 1, "差し込み口１", 0);
-        func_8004E788(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
-        func_8004E788(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
-        func_8004E788(-0x40, 0x40, 1, func_8006CA9C(), 0);
-        func_8004E884(5);
+        set_kanji_string(-0x40, 0x20, 0xF, "別のメモリーカードを", 0);
+        set_kanji_string(-0x40, 0x30, 1, "差し込み口１", 0);
+        set_kanji_string(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
+        set_kanji_string(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
+        set_kanji_string(-0x40, 0x40, 1, func_8006CA9C(), 0);
+        k_disp_start(5);
         D_800E6280.unk_110D++;
         break;
     case 5:
@@ -3234,7 +3234,7 @@ void func_8014231C(void) {
     }
     func_8013B5F0();
     func_801398EC();
-    func_8004EC24();
+    k_disp_inc();
     func_8006BA40();
     func_8013B0A0();
     func_801425C0();
@@ -3266,7 +3266,7 @@ s32 func_801425C0(void) {
             func_80049A40(((var_s0 / 7) * 0x1F) - 0x90, ((var_s0 % 7) * 0x10) - 0x12, 0x1E, 0xF, 2, 0x8080, 0x81);
         }
     }
-    func_800494BC(0, 0, 2, 2, 0);
+    dtd_on_tpage(0, 0, 2, 2, 0);
     if (D_800E6280.unk_1109 != 0) {
         if (D_800E8BEE != 0) {
             temp_t7 = D_800E6280.unk_10F8 & 0x1F;
@@ -3305,21 +3305,21 @@ void func_80142880(void) {
         case 0:
             func_80142A3C();
             func_80042940(0xC0);
-            func_800AE0B0("0");
+            printf("0");
             break;
         case 1:
             func_80142A3C();
             func_80042940(0xA0);
-            func_800AE0B0("1");
+            printf("1");
             break;
         case 2:
             func_80142A3C();
             func_80042940(0xE0);
-            func_800AE0B0("2");
+            printf("2");
             break;
         case 3:
             func_80042940(0);
-            func_800AE0B0("3");
+            printf("3");
             break;
         }
         func_800415B4(0, 0x40);
