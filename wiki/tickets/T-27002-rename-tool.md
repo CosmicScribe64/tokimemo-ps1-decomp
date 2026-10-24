@@ -61,4 +61,8 @@ What landed (branch `w19-rename`):
 ## Comments
 
 - 2026-10-24 trial (scratch branch `w19-rename-trial`, worktree `../w19-rename-trial`, not for
-  merge; tables in `drafts/T-27002/`): see [[rename-tool]] ("Trial").
+  merge; tables in `drafts/T-27002/`): three clean builds under `nice -n 19`, 2 jobs, each 27/27
+  sha1 OK, 6,952/6,952 functions, `build/renames.ok`, `symbols.ok` and `globals.ok` passing. Trial 2
+  found that `tools/object_layout.py` derived the unit from the folder name (fixed). Trial 3 renamed
+  the GameState base (12,247 tokens) and one member (1,759 uses by the gcc oracle). Details:
+  [[rename-tool]] ("Trial"). The tool branch itself: clean build 27/27; tool suite in the commit log.

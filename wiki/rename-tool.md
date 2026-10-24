@@ -141,8 +141,15 @@ as they are (an enum variable would change the code); a member of a type of the 
 
 ## Trial (T-27002)
 
-On the scratch branch `w19-rename-trial`, RENSYU got four symbol renames (one into the hypotheses
-file), a type, a member (6 uses found by gcc), two locals, a file rename, an alias merge of a main
-symbol across DATE, MASTER and RENSYU, a const enum (26 literals named, the others listed), a folder rename
-(`src/ovl/club_practice/`) and a header rename. Each clean build gave 27 of 27 sha1 OK and 6,952
-of 6,952 functions; the trial was not merged.
+Three clean builds on the scratch branch `w19-rename-trial` (not merged; tables in
+`drafts/T-27002/`), each 27 of 27 sha1 OK with 6,952 of 6,952 functions:
+
+1. RENSYU: four symbols (one into the hypotheses file), a type, a member (6 uses found by gcc), two
+   locals and a file rename (`src/ovl/RENSYU/pointer_setup.c`).
+2. An alias merge of a main function across DATE, MASTER and RENSYU (`func_800573F8` to its O.BIN
+   name), a const enum (26 literals named, the others listed), the folder rename
+   `src/ovl/club_practice/` and the header rename `include/ovl/club_practice.h`. This build found
+   that `tools/object_layout.py` took the unit from the folder name; it now asks srcscan.
+3. Scale: `D_800E6280` to `game_state` (12,247 tokens in 295 files, the aggregate line of
+   `config/migrate_globals.txt`, the `symbol_addrs_types.txt` line) and `GameState.unk_F5F` (1,759
+   uses located by gcc in 437 C files). Plan and apply took under 40 seconds.

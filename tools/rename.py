@@ -88,7 +88,6 @@ Tests: tools/test_rename.py (synthetic trees, no game data).
 """
 import argparse
 import glob
-import json
 import os
 import re
 import shutil
@@ -546,7 +545,7 @@ def stem_problem(stem, header=False):
 
 # ======================================================================================= ledger chains
 
-def row_key(tree, row, table=None):
+def row_key(row):
     """Chain key of a ledger row: (kind group, unit, address or type or function)."""
     if row.kind in ("func", "data"):
         return ("sym", row.scope, row.key)
@@ -564,7 +563,7 @@ def chains(rows):
     by_key = {}
     for r in rows:
         if r.kind != "const":
-            by_key.setdefault(row_key(None, r), []).append(r)
+            by_key.setdefault(row_key(r), []).append(r)
     out, problems = {}, []
     for key, rs in by_key.items():
         parent = {}
@@ -1956,7 +1955,7 @@ def ledger_reuse(ctx, row):
     """Why row.new may not be used: an earlier ledger chain of the same kind and scope had it."""
     if row.kind in ("func", "data"):
         return None             # plan_symbol checks names across all units
-    kg = row_key(None, row)[:2]
+    kg = row_key(row)[:2]
     for key, (names, rs) in ctx.chains().items():
         if key[:2] == kg and row.new in names and names[-1] != row.old:
             return "%s was used before in the ledger (%s, %s)" % (row.new, " -> ".join(names), rs[0].where)
