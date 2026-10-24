@@ -107,7 +107,7 @@ data	main	D_800E94A0	gs_work_buffers	HYPOTHESIS: libgs packet work area: func_80
 data	main	D_800FD4A0	prim_arena_buffers	primitive arena of the game's own drawing, 0x10C00 bytes per draw buffer (the PrimArena size of core); given to SetWorkBase by frame_begin, except in mode 0x90
 data	main	D_800B6D30	ovl_load_screen_mode	0 backdrop of the last scene, 1 wipe over a captured frame (modes 0x54 0x55 0x59 0x5A 0x5B 0x5D 0x72), anything else a cleared screen (never set); written by ovl_load_start and ovl_load_reset
 data	main	D_800B3CA0	pad_turbo	1 after the four face buttons of pad 2 were held together: pad_poll then adds a circle press on every odd frame; a press of any other button clears it
-data	main	D_800B3CA4	pad_reset_frames	frames in a row with SELECT+START+L1+R1 held (pad 1, or pad 2 for the opening reset); the reset runs when it passes 0x80, any other pad state clears it
+data	main	D_800B3CA4	pad_reset_frames	frames in a row with SELECT+START+L1+R1 held (pad 1, or pad 2 for the opening reset); the reset runs on the frame where it already holds 0x81 (the 130th frame of the hold), any other pad state clears it
 data	main	D_800B3CA8	pad_code_table	18 words: up, release, up, release, down, release, down, release, left, release, right, release, left, release, right, release, cross, circle (0 = nothing held)
 data	main	D_800B3CF8	pad_code_index	next entry of pad_code_table; cleared by title_setup_stage and the NAME_ENT opening movie
 data	main	D_800B3CFC	pad_code_entered	1 for 240 frames after the whole code was entered; mode_title tests it from stage 2 on; cleared by title_setup_stage and after the NAME_ENT opening movie
@@ -155,7 +155,7 @@ field	GameState	unk_F76	mouse_held	mouse buttons held this frame (~port byte 3; 
 field	GameState	unk_F78	mouse_held_prev	mouse_held of the previous frame; unk_F77 (core mouse_buttons) is mouse_held & ~mouse_held_prev, the buttons pressed this frame
 field	Work800E7D10	unk_024	karaoke_unlock_bits	u8[2]: byte 0 bits 0, 2 and 3 make karaoke list rows 0, 2 and 3 appear in DATE2 (a debug word overrides); byte 0 is OR-merged on system-file load; no setter in src
 field	Work800E7D10	unk_027	album_state	byte 0 = album present, byte 1 = entry count (ETC writes both with album_entries); the array also spans the TT record at +0x2C-+0x3F, unk_027[0x18] is extra_mode_flags
-field	Work800E7D10	unk_058	album_entries	256 x 8-byte event-log entries that ETC copies for the chosen girl (its debug text says ALBUM_MODE IN SAVE); saved in the system file
+field	Work800E7D10	unk_058	album_entries	256 x 8-byte event-log entries that ETC copies for the chosen girl (its debug print names the album mode save); saved in the system file
 field	Work800E7D10	unk_CC8	slot_girl_marks	HYPOTHESIS: per save slot 16 bytes copied from girl record 15's event counters by card_slot_summary_store; NAME_ENT shows an icon of frame 0x58 + (v & 7) for each heroine 0-10 whose byte is non-zero (a per-girl state of that save)
 field	Work800E7D10	unk_DC8	layout_settings	0x100 bytes: +0 icon_positions (0x40), +0xF0 mascot anchor x (4), +0xF4 mascot_choice, +0xF5 mascot length, +0xF6 mascot swing; written by system_bank_build only while options_dirty is 0 and a game slot is selected, applied by system_bank_load
 field	SaveImageView	unk_24	karaoke_unlock_bits	image copy of system_data.karaoke_unlock_bits
