@@ -14,3 +14,4 @@ One line per unit. Specs are facts for the Godot port, in our own words; names a
 One line per unit. A spec states what a system does, its state with the proposed names, its rules and its links to the rest of the game, in the words of this project; no game text. Parent: [[tickets/T-27000-phase-2]].
 
 - [[spec/core]] - shared core: GameState map, mode/stage/step machine, calendar and day-event queue, player and girl state, shared record types, first enums, the 100 most used main functions (T-27010).
+- [[spec/m-holiday]] - main holiday screen (mode 0x46): command menu and icon rules, the activity step and SD sets, Sunday club flows and the first-activity scene, appointment place question and launch, phone book, dial shortcut and dial tones, information magazine, shared-birthday check ([[tickets/T-27013-p2-m-holiday]])

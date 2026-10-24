@@ -1,0 +1,141 @@
+# kind	scope	old	new	note
+func	main	func_80075468	holiday_stage_open	stage 0 of mode 0x46: step 0 holiday_open_init, step 1 holiday_open_wait_bg, then message_window_title_update and icon_bar_update(0); emu: forcing mode 0x46 runs icon_can_use_set from this path
+func	main	func_800754C0	holiday_birthday_event_due	returns 1 when player_birthday equals girls[0].birthday, month is 3 or April 1-3, appointment_find_today is 0 or -1, today is the player birthday (birth_day_check 0xF) and girl_state(0) has bit 0x80 (affection >= 80); holiday_open_init then starts special event scene 8 of girl 0 (mode 0x5D); unreachable with the default birthdays (girl 0 starts at 14 February)
+func	main	func_800755B4	holiday_open_init	step 0 of stage 0: clears the dial key ring, hizuke_init, birthday-event check, builds the holiday screen (icons, title, monologue by case: remedial week, sick, normal with appointment/club-day lines), reads the season background; emu: icon_can_use_set(9,0) (0xD,0) (4,0) on a Tuesday with no appointment and no club
+func	main	func_80075A64	holiday_open_wait_bg	step 1 of stage 0: waits for the CD read, decodes the room background to VRAM and shows it (re-reads when the decode result is -1), then main_stage_next to the menu stage; same code as room_bg_load_finish (m-sysmenu)
+func	main	func_80075AF8	holiday_icons_set_available	disables icon 9 without an appointment today, icon 0xD always, 0xE in free layout, icon 4 when the club command is useless (Sunday: all 11 club words have the quit flag; other days: no club); command_screen_icons_reset (func_8005AC70) is the weekday-side helper
+func	main	func_80075BE8	holiday_stage_menu	stage 1 of mode 0x46: step 0 holiday_menu_frame, then message_window_title_update and icon_bar_update(0)
+func	main	func_80075C24	holiday_menu_frame	per frame: k_disp_inc, cursor_update, then the first handler that returns nonzero wins: holiday_menu_click, holiday_phone_dial_shortcut, room_click_radio_holiday (m-sysmenu), else room_click_mascot_holiday (m-sysmenu); weekday twin command_screen_select_frame
+func	main	func_80075C84	holiday_phone_dial_shortcut	while the pointer is in a small hot spot (x -0x4F..-0x41, y -0xF..0x17) the circle/cross/triangle presses (keys 0/1/2, sounds 0x505-0x507) fill a 7-key ring; the last 7 keys equal to a phone_numbers row of a girl with phone_known dial her at once (tokimeki word + rand() & 0x7FFF, stress +0x20 in the remedial week); emu: ring 0,1,2,1,0,2,0 then stage 0x10, step 2, mode 0x45
+func	main	func_80075FA0	holiday_activity_bg_sector	background file (CD sector) of the chosen command: holiday_activity_bg_sectors[command], or the per-club table at 0x800B6780 for command 4; the weekday twin is get_weekly_bg_sector (800737A0.c); emu: command 0 reads sector 0x3FFB
+func	main	func_80076000	holiday_menu_click	weekday twin command_screen_icon_confirm; confirm press (pad_pressed 0x20) on an icon: cd_audio_command(9), snd_command(SND_CMD_XA_FORGET) and a BGM restart when none plays, then per icon: 0-3,5-7 and 4 set the command, UI_SE_COMMAND_CONFIRM and stage 5 (4 on Sunday: join menu or club menu); 9 appointment (stage 0xFE), 8 phone (0x10), 10 magazine (0x20), 12 calendar (0x30), 11 system (0x40); returns 1 when an item was hit; emu: icon 0 gives snd 3, 0x500, main_stage_set(5)
+func	main	func_800764AC	appointment_place_candidates	collects up to 3 distinct place ids among the active appointment slots (slots 16-20 excluded) and returns the count; returns 1 at once when slot 0 itself is place 16-20; with fewer than 2 distinct places out[0] gets slot 0 bit 29 (value 1) and the count is 1
+func	main	func_80076630	appointment_start	step 0 of the appointment stage: appt_place_0..3 = 0xFF; with 2 or more candidate places asks where the meeting was (step 1), else fixes the place and skips to step 2; calls appointment_prompt_noop (an empty function); the single-place path writes the queue record, current_girl, date_girl and appointment_flag
+func	main	func_800767A4	appointment_place_menu_build	builds the place question: 3 options (random rotation of the 3 candidates, appt_place_0 = 2) or 2 options (random swap, appt_place_0 = 1); option text = place name + a fixed suffix; stores the options in appt_place_1..3 (third 0xFF for 2 options); emu: slots 3 and 5 gave 1,3,5,0xFF
+func	main	func_80076B48	appointment_place_choose	step 1: substep 0 waits for the text, 1 builds the menu, 2 reads menu 1: item 0 or 1 sets appt_place_0 = appt_place_[1 + item], item 2 (3 options only) sets appt_place_3; then main_step_next; emu: choosing item 1 left 5,3,5,0xFF
+func	main	func_80076C7C	appointment_place_confirm	step 2: monologue naming the chosen place and the girl of slot 0, waits for a press, then main_step_next to appointment_launch
+func	main	func_80076EC0	holiday_stage_appointment	stage 0xFE: step 0 appointment_start, 1 appointment_place_choose, 2 appointment_place_confirm, 3 appointment_launch; then message_window_title_update
+func	main	func_80076F48	holiday_stage_activity	stage 5: adds 1 to step_timer, step 0 holiday_activity_load, 1 holiday_activity_sd_setup, 2 holiday_activity_play, then parameter_show, message_window_title_update, icon_bar_update(1)
+func	main	func_80076FDC	holiday_activity_pick_sd_set	chooses the SD animation set id in D_801230D0 (scene_work, m-weekday name); weekday twin week_day_pick_sd_set: table by command and warm season (months 6-9 use holiday_sd_set_summer, else holiday_sd_set_other); command 4 uses the per-club tables with column 0 when command_girl_select(4) is 0 (girl 0 takes part) else 1; emu: command 0 in April gives set 1
+func	main	func_80077330	holiday_activity_bg_read	starts the background read of the activity: room background of the season when sick, else holiday_activity_bg_sector; weekday twin week_day_bg_read; returns the dec_bg_cd_read result (-1 read started, 0/1 cached slot)
+func	main	func_8007739C	holiday_activity_load	step 0, substeps: 0 enables only the chosen icon, sets the holiday command nibble, adds 1 to the command counter, adds 6 club exp for command 4, starts the background read; 1 waits and decodes it; 2 picks the SD set and reads its 0x29 sectors to 0x801E0000 (sick: 9 sectors from 0x7D8A); 3 waits then main_step_next; emu: dec_bg_cd_read(0x3FFB) then cd_read_sectors(0x29, 0x801E0000, 0xA20F)
+func	main	func_80077694	holiday_activity_sd_setup	step 1: clears actor 96, binds the SD sprite set (sick: addr_init_else_sd(2); club: addr_init_club_sd and a second figure on actor 97 when command_girl_select(4) is not 0xF; else addr_init_holiday_sd), loads the palette, puts the main figure on actor 96 at (-0x50,-0x40) with frame = the poor-result flag; rest forces the flag to 0; emu: addr_init_holiday_sd(1)
+func	main	func_80077900	holiday_activity_play	step 2: at step_timer 0x20 plays UI_SE_ACTIVITY_GOOD (flag 0) or UI_SE_ACTIVITY_POOR (flag 1) and applies parameter_up_down(command, 1, flag); after 0x40 clears actors 96/97, then on a Sunday first club activity (club exp exactly 6, girl met and acquainted, day_count < 0x2DA, flags clear) starts mode 0x60 with the club, else day_event_next(0); emu: snd 0x501 at frame 32, parameter_up_down(0,1,0), day_event_next at 65
+func	main	func_80077BE0	holiday_stage_magazine	stage 0x20: step 0 magazine_init, 1 magazine_show, 2 magazine_exit, then message_window_title_update
+func	main	func_80077C50	magazine_init	step 0 of the magazine stage: marks the current quarter issue as read (magazine_mark_read), clears the text, sets the title, builds the page (magazine_page_build), hides the icons and the date panel, main_step_next
+func	main	func_80077CA8	magazine_hint_index	maps (year, month) to a hint index 0-13 (not the issue number of magazine_page_build): 1995 months <5 0, <8 1, <11 2, else 3; 1996 <2 3, <5 4, <8 5, <11 6, else 7; 1997 month 8 -> 13, <2 7, <5 8, <8 9, <11 10, else 11; 1998 <2 11, else 12
+func	main	func_80077E30	magazine_show	step 1: draws the page frame; substep 0 waits for a press, 1 shows the hint only while the secret-code latch D_800B3CFC is set (else main_step_next), 2 prints magazine_hints[magazine_hint_index()] as the player monologue, 3 waits, 4 main_step_next
+func	main	func_8007866C	holiday_club_select	step 1 of the club stage: menu 1 with 2 items; cross returns to the holiday menu; circle on item 0 goes to step 2 (activity), on item 1 leaves the club (step 3): message, club word left flag set, player club = 11 (none)
+func	main	func_8007894C	holiday_stage_club_join	stage 7 (Sunday, no club): step 0 join_club_init, 1 join_club_select, 2 join_club_message, 3 holiday_club_join_exit; then cal_base_show
+data	main	D_800B6990	holiday_dial_keys	u8[8]: ring of the last 7 dial keys (0 circle, 1 cross, 2 triangle), 0xFF = empty; cleared in holiday_open_init; the match walks it from the write position; splat labels D_800B6991/D_800B6992 lie inside it
+data	main	D_800B6998	holiday_dial_key_pos	u8: write position of holiday_dial_keys, wraps to 0 at 7; own symbol in the original (separate lui $at, T-20940)
+data	main	D_800B699C	holiday_activity_bg_sectors	s32[8]: CD sector of the activity background per command 0-7 (3FFB x3, 4003, 3FFB unused, 400C, 3F95, 3F9B); command 4 uses the per-club table instead; emu: command 0 read 0x3FFB
+data	main	D_800B69BC	appointment_choice_suffix	u8[0x14] string appended to a place name in the appointment question options (a fixed meet-at tail in quote marks)
+data	main	D_800B69D0	holiday_sd_set_summer	u8[8]: SD animation set per command 0-7 for months 6-9 (0,2,4,0xC,0xC,0xA,8,6); entry 4 unused (club path)
+data	main	D_800B69D8	holiday_sd_set_other	u8[8]: SD animation set per command 0-7 for the other months (1,3,5,0xC,0xC,0xB,9,7); entry 4 unused; emu: command 0 in April gave set 1
+data	main	D_800B69E0	holiday_sd_set_sectors	s32[13]: CD sector of SD animation set 0-12 (0xA1E6 + 0x29 * n for 0-11, 0xA79E for 12); each file is 0x29 sectors read to 0x801E0000; emu: set 1 = 0xA20F
+data	main	D_800B6A14	magazine_hint_biorhythm_legend	u8[] Shift-JIS monologue (text not copied here); hint 0: what the three biorhythm curves mean and the page centre marks today
+data	main	D_800B6A58	magazine_hint_biorhythm_crossing	u8[] Shift-JIS monologue (text not copied here); hint 1: crossing the black line means a bad day
+data	main	D_800B6A8C	magazine_hint_biorhythm_distance	u8[] Shift-JIS monologue (text not copied here); hint 2: far from the black line is good, equal distance prefers the upper curve
+data	main	D_800B6AD8	magazine_hint_phone	u8[] Shift-JIS monologue (text not copied here); hint 3: girls can be called directly by telephone
+data	main	D_800B6B10	magazine_hint_stereo_radio	u8[] Shift-JIS monologue (text not copied here); hint 4: the stereo radio reception is poor (a joke hint)
+data	main	D_800B6B4C	magazine_hint_mascot_unlock	u8[] Shift-JIS monologue (text not copied here); hint 5: clearing the game gives that girl a mascot doll
+data	main	D_800B6B8C	magazine_hint_mascot_controls	u8[] Shift-JIS monologue (text not copied here); hint 6: R1 moves the mascot, R2 stretches its string
+data	main	D_800B6BCC	magazine_hint_manual	u8[] Shift-JIS monologue (text not copied here); hint 7: a remark that the manual was left on the desk
+data	main	D_800B6C00	magazine_hint_pad2_shortcut	u8[] Shift-JIS monologue (text not copied here); hint 8: pad 2 face buttons together act as circle mashing on pad 1
+data	main	D_800B6C28	magazine_hint_cursor_shape	u8[] Shift-JIS monologue (text not copied here); hint 9: the square button chooses the cursor shape
+data	main	D_800B6C50	magazine_hint_menu_mode	u8[] Shift-JIS monologue (text not copied here); hint 10: select changes the menu mode
+data	main	D_800B6C80	magazine_hint_sd_speed	u8[] Shift-JIS monologue (text not copied here); hint 11: pad 2 start changes the SD character animation speed
+data	main	D_800B6CB8	magazine_hint_after_clear	u8[] Shift-JIS monologue (text not copied here); hint 12: no need to panic after clearing the game
+data	main	D_800B6CE0	magazine_hint_rpg_battle	HYPOTHESIS: hint 13 pairs an enemy-like term with a battle command (RPG_BAT context); shown only in August 1997 (Shift-JIS monologue, text not copied here)
+data	main	D_800B6CF8	magazine_hints	u8 *[14] table of the 14 magazine hints in index order; read by magazine_show with magazine_hint_index()
+field	CharFlags	b3	phone_known	set for girls 0 and 12 at game_state_init (and with b2, b6, b7 by the TEL profile page per m-scheduler); telephone_class_init lists a girl only when set and the dial shortcut needs it
+field	ScheduleClubFlags	b29	club_scene_blocked	HYPOTHESIS: tested clear by holiday_activity_play before the first-activity scene (mode 0x60); no writer found in C (m-scheduler lists b29 as read by the holiday club scene)
+field	MenuIconBits	low	weekday_command	low nibble of last_command: the weekday command (shared with the weekday unit)
+field	MenuIconBits	icon	holiday_command	high nibble of last_command: written by holiday_menu_click for commands 0-7, 8 and 9; holiday_activity_load rewrites it from the queue record; read by the queue builder and the TEL day-end check (!= 4)
+const	HolidayStage	0x00	HOLIDAY_STAGE_OPEN	stage byte of mode 0x46 (MODE_HOLIDAY); holiday_stage_open: build the screen and load the background
+const	HolidayStage	0x01	HOLIDAY_STAGE_MENU	stage byte of mode 0x46 (MODE_HOLIDAY); holiday_stage_menu: the command menu
+const	HolidayStage	0x05	HOLIDAY_STAGE_ACTIVITY	stage byte of mode 0x46 (MODE_HOLIDAY); holiday_stage_activity: play the chosen command
+const	HolidayStage	0x06	HOLIDAY_STAGE_CLUB_MENU	stage byte of mode 0x46 (MODE_HOLIDAY); holiday_club: Sunday club menu (activity or leave)
+const	HolidayStage	0x07	HOLIDAY_STAGE_CLUB_JOIN	stage byte of mode 0x46 (MODE_HOLIDAY); holiday_stage_club_join: Sunday join-a-club list
+const	HolidayStage	0x10	HOLIDAY_STAGE_TELEPHONE	stage byte of mode 0x46 (MODE_HOLIDAY); holiday_tel: phone book, dial tones, hand-over to TEL
+const	HolidayStage	0x20	HOLIDAY_STAGE_MAGAZINE	stage byte of mode 0x46 (MODE_HOLIDAY); holiday_stage_magazine: information magazine page
+const	HolidayStage	0x30	HOLIDAY_STAGE_CALENDAR	stage byte of mode 0x46 (MODE_HOLIDAY); func_8005B798: this-month/next-month calendar page (shared with mode 0x34 stage 2)
+const	HolidayStage	0x40	HOLIDAY_STAGE_SYSTEM	stage byte of mode 0x46 (MODE_HOLIDAY); func_8005D9B4: system settings (shared with mode 0x34 stage 4)
+const	HolidayStage	0xFE	HOLIDAY_STAGE_APPOINTMENT	stage byte of mode 0x46 (MODE_HOLIDAY); holiday_stage_appointment: date promise today, place question and launch of mode 0x50
+const	HudIcon	8	HUD_ICON_PHONE	icon id 8-12 on the holiday screen (0-7 are the WeekdayCommand ids of m-scheduler; 13 HUD_ICON_CARD and 14 HUD_ICON_EXTRA are m-hud rows, both off here): stage 0x10 (holiday_tel), UI_SE_MENU_SELECT
+const	HudIcon	9	HUD_ICON_APPOINTMENT	icon id 8-12 on the holiday screen (0-7 are the WeekdayCommand ids of m-scheduler; 13 HUD_ICON_CARD and 14 HUD_ICON_EXTRA are m-hud rows, both off here): needs an appointment today; stage 0xFE, UI_SE_COMMAND_CONFIRM
+const	HudIcon	10	HUD_ICON_MAGAZINE	icon id 8-12 on the holiday screen (0-7 are the WeekdayCommand ids of m-scheduler; 13 HUD_ICON_CARD and 14 HUD_ICON_EXTRA are m-hud rows, both off here): stage 0x20, UI_SE_MENU_SELECT
+const	HudIcon	11	HUD_ICON_SYSTEM	icon id 8-12 on the holiday screen (0-7 are the WeekdayCommand ids of m-scheduler; 13 HUD_ICON_CARD and 14 HUD_ICON_EXTRA are m-hud rows, both off here): stage 0x40 (system settings), no availability test
+const	HudIcon	12	HUD_ICON_CALENDAR	icon id 8-12 on the holiday screen (0-7 are the WeekdayCommand ids of m-scheduler; 13 HUD_ICON_CARD and 14 HUD_ICON_EXTRA are m-hud rows, both off here): stage 0x30 (calendar page), no availability test
+const	HolidaySdSet	0x0	HOLIDAY_SD_LIBERAL_ARTS_SUMMER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0x1	HOLIDAY_SD_LIBERAL_ARTS_OTHER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0x2	HOLIDAY_SD_SCIENCE_SUMMER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0x3	HOLIDAY_SD_SCIENCE_OTHER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0x4	HOLIDAY_SD_ART_SUMMER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0x5	HOLIDAY_SD_ART_OTHER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0x6	HOLIDAY_SD_REST_SUMMER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0x7	HOLIDAY_SD_REST_OTHER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0x8	HOLIDAY_SD_LOOKS_SUMMER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0x9	HOLIDAY_SD_LOOKS_OTHER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0xA	HOLIDAY_SD_TRIVIA_SUMMER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0xB	HOLIDAY_SD_TRIVIA_OTHER	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	HolidaySdSet	0xC	HOLIDAY_SD_ATHLETICS	SD animation set (holiday_sd_set_summer/_other values, sector in holiday_sd_set_sectors); named by the command that selects it
+const	UiSe	0x500	UI_SE_COMMAND_CONFIRM	snd_command id in class SND_CLASS_SE_A (m-dates-a) while the day-scene SE bank is loaded in slot A (TACO and TT load their own); snd_command id played when a command or the appointment icon is chosen; emu: after snd 3
+const	UiSe	0x501	UI_SE_ACTIVITY_GOOD	snd_command id in class SND_CLASS_SE_A (m-dates-a) while the day-scene SE bank is loaded in slot A (TACO and TT load their own); played at step_timer 0x20 of holiday_activity_play when the result flag is 0; emu: frame 32
+const	UiSe	0x502	UI_SE_ACTIVITY_POOR	snd_command id in class SND_CLASS_SE_A (m-dates-a) while the day-scene SE bank is loaded in slot A (TACO and TT load their own); same moment when the result flag is 1
+const	UiSe	0x504	UI_SE_DIAL_START	snd_command id in class SND_CLASS_SE_A (m-dates-a) while the day-scene SE bank is loaded in slot A (TACO and TT load their own); first dial sound of holiday_tel_exit (substep 0); emu: 0x504 then seven digit tones
+const	UiSe	0x505	UI_SE_DIAL_TONE_0	snd_command id in class SND_CLASS_SE_A (m-dates-a) while the day-scene SE bank is loaded in slot A (TACO and TT load their own); digit tone for key 0 (circle); id = 0x505 + digit; emu confirmed
+const	UiSe	0x506	UI_SE_DIAL_TONE_1	snd_command id in class SND_CLASS_SE_A (m-dates-a) while the day-scene SE bank is loaded in slot A (TACO and TT load their own); digit tone for key 1 (cross)
+const	UiSe	0x507	UI_SE_DIAL_TONE_2	snd_command id in class SND_CLASS_SE_A (m-dates-a) while the day-scene SE bank is loaded in slot A (TACO and TT load their own); digit tone for key 2 (triangle)
+const	UiSe	0x50A	UI_SE_PHONEBOOK_SELECT	snd_command id in class SND_CLASS_SE_A (m-dates-a) while the day-scene SE bank is loaded in slot A (TACO and TT load their own); played when a girl is picked in the phone book; emu: first hit after the menu press
+const	UiSe	0x50D	UI_SE_MENU_SELECT	snd_command id in class SND_CLASS_SE_A (m-dates-a) while the day-scene SE bank is loaded in slot A (TACO and TT load their own); played for icons 8, 10, 11, 12 (phone, magazine, system, calendar)
+const	DialKey	0	DIAL_KEY_CIRCLE	digit value of a phone number row and entry of holiday_dial_keys; pad bit 0x20
+const	DialKey	1	DIAL_KEY_CROSS	digit value of a phone number row and entry of holiday_dial_keys; pad bit 0x40
+const	DialKey	2	DIAL_KEY_TRIANGLE	digit value of a phone number row and entry of holiday_dial_keys; pad bit 0x10
+const	PhoneSlot	0xB	PHONE_SLOT_REI	value 11 in current_girl during the phone flow stands for girl 12 (Rei): phone-book item 12 shows entry 12 but stores 11, TEL maps 0xB to 0xC, number rows 11 and 12 are identical; emu: item 12 gave current_girl 0xB and TEL stage 1
+const	PhoneBook	7	PHONE_NUMBER_DIGITS	digits per number (each 0-2)
+const	PhoneBook	13	PHONE_NUMBER_ROWS	rows of phone_numbers (0xD)
+const	PhoneBook	14	PHONE_BOOK_ITEMS	menu items built by telephone_class_init (3 columns of 5, the last one is cancel)
+const	PhoneBookItem	13	PHONE_BOOK_CANCEL_ITEM	item index 13 (cancel, drawn one row lower); item 0 is Yoshio, items 1-11 are girls 0-10 (listed only if phone_known), item 12 is the rival
+const	MagazineHint	0	MAGAZINE_HINT_BIORHYTHM_LEGEND	index into magazine_hints (magazine_hint_biorhythm_legend)
+const	MagazineHint	1	MAGAZINE_HINT_BIORHYTHM_CROSSING	index into magazine_hints (magazine_hint_biorhythm_crossing)
+const	MagazineHint	2	MAGAZINE_HINT_BIORHYTHM_DISTANCE	index into magazine_hints (magazine_hint_biorhythm_distance)
+const	MagazineHint	3	MAGAZINE_HINT_PHONE	index into magazine_hints (magazine_hint_phone)
+const	MagazineHint	4	MAGAZINE_HINT_STEREO_RADIO	index into magazine_hints (magazine_hint_stereo_radio)
+const	MagazineHint	5	MAGAZINE_HINT_MASCOT_UNLOCK	index into magazine_hints (magazine_hint_mascot_unlock)
+const	MagazineHint	6	MAGAZINE_HINT_MASCOT_CONTROLS	index into magazine_hints (magazine_hint_mascot_controls)
+const	MagazineHint	7	MAGAZINE_HINT_MANUAL	index into magazine_hints (magazine_hint_manual)
+const	MagazineHint	8	MAGAZINE_HINT_PAD2_SHORTCUT	index into magazine_hints (magazine_hint_pad2_shortcut)
+const	MagazineHint	9	MAGAZINE_HINT_CURSOR_SHAPE	index into magazine_hints (magazine_hint_cursor_shape)
+const	MagazineHint	10	MAGAZINE_HINT_MENU_MODE	index into magazine_hints (magazine_hint_menu_mode)
+const	MagazineHint	11	MAGAZINE_HINT_SD_SPEED	index into magazine_hints (magazine_hint_sd_speed)
+const	MagazineHint	12	MAGAZINE_HINT_AFTER_CLEAR	index into magazine_hints (magazine_hint_after_clear)
+const	MagazineHint	13	MAGAZINE_HINT_RPG_BATTLE	index into magazine_hints (magazine_hint_rpg_battle)
+const	HolidayTiming	0x20	HOLIDAY_ACTIVITY_EFFECT_FRAME	step_timer value at which holiday_activity_play plays the result sound and applies the parameters; emu confirmed
+const	HolidayTiming	0x40	HOLIDAY_ACTIVITY_END_FRAME	activity ends when step_timer exceeds this (65th frame); emu: day_event_next at +65
+const	HolidayTiming	0x7	HOLIDAY_DIAL_TONE_PERIOD_MASK	holiday_tel_exit acts every 8th frame ((step_timer & 7) == 7)
+const	HolidayTiming	0x4	HOLIDAY_DIAL_FIRST_DIGIT_SUBSTEP	digit tones play from substep 4 to 10
+const	HolidayTiming	0xB	HOLIDAY_DIAL_DONE_SUBSTEP	substep 11 hands over to TEL; the dial shortcut jumps straight here
+const	HolidayRules	6	CLUB_ACTIVITY_EXP	club exp added per club activity (holiday_activity_load); exp == 6 after the add means the first activity ever
+const	HolidayRules	0x2DA	CLUB_SCENE_DAY_LIMIT	first-activity club scene only while day_count < 730
+const	HolidayRules	0x20	REMEDIAL_DIAL_STRESS_PENALTY	stress value added when a girl is dialed by the shortcut during the remedial week
+const	HolidayRules	0x7FFF	DIAL_TOKIMEKI_BONUS_MASK	dialing by the shortcut adds rand() & 0x7FFF to the girl tokimeki word (up to +0.5 point)
+const	ClubDay	3	CLUB_DAY_WEEK_OF_MONTH	third Sunday: (day + 6) / 7 == 3, i.e. days 15-21; used by the club-day message, the practice-match test and the day-end expulsion check
+const	PracticeMatch	3	PRACTICE_MATCH_MONTH_STEP	practice match when month % 3 == 0 (March, June, September, December) for a sports club member (club ids 6-10) on the club day
+const	HolidayRules	4	HOLIDAY_GAIN_MULTIPLIER	parameter_up_down(command, 1, flag): flag 1 makes positive gains 4x a school day (costs stay 1x); gains halve for a poor result, sick, or injured/neurotic except commands 5-7
+const	AppointmentRules	3	APPOINTMENT_MAX_CHOICES	options in the place question
+const	AppointmentRules	8	APPOINTMENT_SLOTS	slots scanned by appointment_place_candidates
+comment	main	magazine_exit	Leave the magazine page: apply the read marks (func_8006D138), show the date panel again and go back to stage 0, the holiday menu	body: func_8006D138, hizuke_disp_switch(1), main_stage_set(0)
+comment	main	holiday_tel	Telephone stage of the holiday mode: step 0 phone-book setup, 1 menu choice, 2 dial tones and hand-over to TEL; counts step_timer itself	body: step_timer += 1, switch on step, cal_base_show
+comment	main	holiday_tel_init	Set up the phone book: clear text and upper actors, hide the icon bar, build the 14-item menu and show the who-to-call monologue	body: telephone_class_init, k_sub_disp_start(2), main_step_next
+comment	main	holiday_tel_call	Phone-book step: cross returns to the holiday menu; circle on an item stores the girl in current_girl (item 0 = 13, item 12 = 11, else item - 1) and goes to the dial step	emu: item 12 gave current_girl 0xB, snd 0x50A
+comment	main	holiday_tel_exit	Dial step: every 8 frames play the start sound, then one tone per digit of her number; at substep 11 start the TEL scene (mode 0x45, stage 1 for girls, 0 for Yoshio)	emu: 0x504 then 0x505 0x507 0x506 0x505 0x507 0x506 0x505 every 8 frames, main_state_set(0x45)
+comment	main	telephone_class_init	Build the phone-book menu: 14 items in 3 columns of 5 (Yoshio, known girls, the rival, cancel) and the highlight actor on actor 96	body: set_kanji_string per item, menu_set(0, 14, ...), actor 96 setup
+comment	main	holiday_club_init	Open the Sunday club menu with two choices: do the club activity or leave the club	body: x_taku_string_set, x_taku_menu_set(1, 2)
+comment	main	holiday_club_exit	After choosing the activity: start the practice match (mode 0x73) for a sports club member on the third Sunday of March, June, September or December, else run the activity (stage 5)	body: func_8005352C, (day + 6) / 7 == 3, month % 3, weekday 6
+comment	main	holiday_taibu_club_exit	After leaving the club: wait for confirm or cancel, then return to the holiday menu (stage 0)	body: pad_pressed & 0x60 -> main_stage_set(0)
+comment	main	holiday_club	Club stage dispatcher: step 0 init, 1 menu, 2 exit to practice match or activity, 3 wait after leaving the club	body: switch on step
+comment	main	holiday_club_join_exit	After joining a club: clear the upper actors, show the icon bar again and run the activity (stage 5)	body: icon_disp_switch(1), main_stage_set(5)
+comment	main	appointment_launch	Start the date: keep the chosen place in appt_place_0, store the true place and the decoys, write queue record {0x80, girl, place}, set current_girl, date_girl and appointment_flag from slot 0, then enter mode 0x50	emu: choosing the decoy ended with 5,3,5,0xFF then main_state_set(0x50)
+file	main	src/main/80075320.c	src/main/holiday.c	holiday command screen (mode 0x46), appointment place question, phone book and dial shortcut, magazine, Sunday club menu; one original object, a later split could give appointment.c, phone.c, magazine.c
