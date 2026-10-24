@@ -4,8 +4,8 @@
  * Case: `odd = G1 & 1; if (odd != 0 && G2 != 0)` (uopt writes `ldc 0; lod R; neq`, the
  * constant on the left).
  * Ucode before the copy: and str(R) f[0 neq R] f[neq 0] C S and str(R) f[neq 0] S.
- * Measured: IDO 4.1 ugen B, IDO 5.3 ugen B; tools/ugen_pass.py B (a compare with a non-constant
- * right operand sets B). */
+ * Measured: IDO 4.1 ugen B, IDO 5.3 ugen B; tools/ugen_pass.py B (B from the entry; a compare
+ * with a constant on either side keeps the state, copy_store_then_ne0_left_if.c). */
 typedef struct { int w[17]; } R;
 typedef struct { unsigned a : 29; unsigned active : 1; unsigned c : 2; } BF;
 extern unsigned char A[];

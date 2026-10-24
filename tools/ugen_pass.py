@@ -9,31 +9,40 @@ a preceding ugen routine left in that stack slot (`< 0x7ff8` -> forward `F`,
 `>= 0x7ff8` -> backward `B`).
 
 The pass gives each copy the state that IDO 4.1's ugen gives it in the 30
-measured cases (T-26000); the original compiler that built Tokimeki Memorial
-agrees in every matched function. Each procedure is walked in ucode order:
+measured cases (T-26000). With this rule every matched function builds to the
+original bytes, some through FAKEs: the never-true arms under the known limits
+and the GYOZI and SHOUGATU duplicate copies (T-24092). Each procedure is walked
+in ucode order:
   - it starts in `B`; nothing carries over from the previous procedure;
   - an indirect store (`Uistr`/`Uistv`) sets `F`;
   - a conditional branch (`Ufjp`/`Utjp`) that tests a compare (`Uequ`, `Uneq`,
-    `Ules`, `Uleq`, `Ugrt`, `Ugeq`, also under `Ulnot` or after `Urstr`) whose
-    right operand is not a constant (`Uldc`) sets `B`: ugen compares two registers
-    there (`bne a1,t7`, or `slt` and then a branch). A compare that uopt writes
-    with the constant on the left (`Uldc 0; x; Uneq`) counts, as in 4.1;
-  - everything else keeps the state: compares against a constant (`beqz`,
-    `blez`, `slti`, `li at,3` and then `beq`), branches on any other value,
-    `Uujp`, calls, direct stores (`Ustr`), labels and the block copies themselves.
+    `Ules`, `Uleq`, `Ugrt`, `Ugeq`, also under `Ulnot` or after `Urstr`) of two
+    operands that are not constants (`Uldc`) sets `B`: ugen compares two
+    registers there (`bne a1,t7`, or `slt` and then a branch);
+  - everything else keeps the state: compares with a constant on either side
+    (`beqz`, `blez`, `slti`, `li at,3` and then `beq`; uopt writes some `x != 0`
+    as `Uldc 0; x; Uneq`), branches on any other value, `Uujp`, `Uxjp`, `Uijp`,
+    calls, direct stores (`Ustr`), labels and the block copies themselves.
 Each `Umov` is compiled in the state the walk has reached at it.
 
 Evidence: 30 one-function cases (tools/ido_eval_cases/ugen_copy_state/, T-20710
 and T-25608) compiled with the build's front end and uopt and IDO 4.1's ugen;
-the rule gives 4.1's state in all 30 (tests in tools/test_ugen_pass.py). It
-replaces the T-24092 rule and its T-25608 refinement (`F` locked by a signed
+the rule gives 4.1's state in all 30 (tests in tools/test_ugen_pass.py), and in
+the T-26000 cases with the constant on the left of a compare. It replaces the
+T-24092 rule and its T-25608 refinement (`F` locked by a signed
 positive-immediate `<` branch after an indirect store), which disagreed with 4.1
 in 7 and 8 of those cases.
-Known limit (T-26000): IDO 4.1's ugen also sets `F` at a branch on a value that
-is not a compare (`if (x & 1)`, `if (p[1])`, a one-bit field test). This pass
-keeps the state there, because main func_8006B0C8's original has `B` at a copy
-after such a branch. Compares whose value is stored (`x = a < b;`) were not
-measured. Details and census: wiki/toolchain.md, wiki/ido-52-evaluation.md and
+Known limits (T-26000), where the pass and IDO 4.1 differ:
+  - 4.1 also sets `F` at a branch on a value that is not a compare (`if (x & 1)`,
+    `if (p[1])`, a one-bit field test). The pass keeps the state there, because
+    main func_8006B0C8's original has `B` at a copy after such a branch.
+  - 4.1 ignores a store in an arm that ugen drops as never entered
+    (`if ((unsigned)g < 0)`); the pass counts it. The FAKE arms that put copies in
+    `F` rely on this: main strCallback and func_8005938C (T-26000), MASTER
+    func_801344E0 and func_801363F4 (T-25107).
+  - Not measured in 4.1: compares whose value is stored (`x = a < b;`), `Uxjp`
+    (switch) and `Uijp`.
+Details and census: wiki/toolchain.md, wiki/ido-52-evaluation.md and
 wiki/matching-notes.md (T-26000).
 
 In stock IDO 5.3 `ugen`, `f_jump` (`Ufjp`/`Utjp`) happens to leave `0` (`< 0x7ff8`)
@@ -113,7 +122,7 @@ SKIP_OPS = {
     ).split()
 }
 
-# Compares a conditional branch can test; a non-constant right operand sets state B.
+# Compares a conditional branch can test; two operands that are not constants set state B.
 CMP_OPS = {OP[n] for n in "equ neq les leq grt geq".split()}
 # Records that may stand between a conditional branch and its condition: the non-pushing
 # records above, `Ulnot` (uopt folds it into the branch sense) and `Urstr` (uopt writes a
@@ -211,10 +220,9 @@ def _procedures(insns):
     return procs
 
 
-def _mov_insert_index(insns, start, mov_idx):
-    """Index of the first instruction of `Umov`'s two address operands."""
-    need = 2
-    k = mov_idx - 1
+def _operands_first(insns, start, top, need, what):
+    """Index of the first record of the `need` expression operands that end at record `top`."""
+    k = top
     while k > start:
         opc = insns[k].opc
         if opc in SKIP_OPS:
@@ -223,16 +231,21 @@ def _mov_insert_index(insns, start, mov_idx):
         pops = EXPR_POP.get(opc)
         if pops is None:
             raise PassError(
-                "unexpected opcode %s in Umov operand at record %d"
-                % (OPS[opc], k)
+                "unexpected opcode %s in %s operand at record %d" % (OPS[opc], what, k)
             )
         need += pops - 1
         if need == 0:
-            while k - 1 > start and insns[k - 1].opc == OP["unal"]:
-                k -= 1
             return k
         k -= 1
-    raise PassError("cannot delimit operands of Umov at record %d" % mov_idx)
+    raise PassError("cannot delimit operands of %s at record %d" % (what, top + 1))
+
+
+def _mov_insert_index(insns, start, mov_idx):
+    """Index of the first instruction of `Umov`'s two address operands."""
+    k = _operands_first(insns, start, mov_idx - 1, 2, "Umov")
+    while k - 1 > start and insns[k - 1].opc == OP["unal"]:
+        k -= 1
+    return k
 
 
 def _skip_back(insns, start, idx, skip=SKIP_OPS):
@@ -243,9 +256,9 @@ def _skip_back(insns, start, idx, skip=SKIP_OPS):
 
 
 def _is_register_compare_jump(insns, start, jump_idx):
-    """True if the fjp/tjp at `jump_idx` tests a compare whose right operand is not a constant.
+    """True if the fjp/tjp at `jump_idx` tests a compare of two operands that are not constants.
 
-    False for a compare against a constant and for a branch on any other value.
+    False for a compare with a constant on either side and for a branch on any other value.
     """
     idx = _skip_back(insns, start, jump_idx - 1, COND_SKIP)
     if idx <= start or insns[idx].opc not in EXPR_POP:
@@ -257,7 +270,12 @@ def _is_register_compare_jump(insns, start, jump_idx):
     rhs_idx = _skip_back(insns, start, idx - 1, COND_SKIP - {OP["lnot"]})
     if rhs_idx <= start:
         raise PassError("compare at record %d has no operands" % idx)
-    return insns[rhs_idx].opc != OP["ldc"]
+    if insns[rhs_idx].opc == OP["ldc"]:
+        return False
+    lhs_idx = _skip_back(insns, start, _operands_first(insns, start, rhs_idx, 1, "compare") - 1)
+    if lhs_idx <= start or insns[lhs_idx].opc not in EXPR_POP:
+        raise PassError("compare at record %d has one operand" % idx)
+    return insns[lhs_idx].opc != OP["ldc"]
 
 
 def copy_states(insns, start, end):

@@ -244,10 +244,20 @@ class StateRules(unittest.TestCase):
                 self.assertEqual(self.states(*IST + br_const(cmp, 5) + COPY), "F")
                 self.assertEqual(self.states(*br_const(cmp, 5) + COPY), "B")
 
-    def test_constant_on_the_left_counts_as_a_register_compare(self):
-        # uopt writes `x != 0` as `ldc 0; x; neq` for some register values (main strCallback,
-        # func_8005938C); IDO 4.1's ugen sets B there although it emits beqz.
-        self.assertEqual(self.states(*IST + [ldc(0), reg(), op("neq"), fjp()] + COPY), "B")
+    def test_constant_on_the_left_keeps_the_state(self):
+        # uopt writes `x != 0` as `ldc 0; x; neq` for some register values and `(x & 1) == 0`
+        # as `ldc 0; x; and; equ`; IDO 4.1's ugen keeps the state there, as for a constant on
+        # the right (copy_store_then_ne0_left_if, copy_store_then_eq0_left_if).
+        self.assertEqual(self.states(*IST + [ldc(0), reg(), op("neq"), fjp()] + COPY), "F")
+        self.assertEqual(self.states(*[ldc(0), reg(), op("neq"), fjp()] + COPY), "B")
+        and_ = [ldc(0), lod(J), ldc(1), op("and"), op("equ"), fjp()]
+        self.assertEqual(self.states(*IST + and_ + COPY), "F")
+
+    def test_store_in_a_dropped_arm_counts(self):
+        # IDO 4.1 ignores a store in an arm that ugen drops as never entered
+        # (copy_dropped_arm_store: B); the pass counts it, and the never-true FAKE arms use that.
+        arm = br_const("les", 0, fjp, lod(J)) + [ldc(0), ldc(0), istr(J)] + [lab()]
+        self.assertEqual(self.states(*arm + COPY), "F")
 
     def test_compare_under_lnot_and_rstr_is_still_read(self):
         lnot = op("lnot")
@@ -267,9 +277,10 @@ class StateRules(unittest.TestCase):
         self.assertEqual(gadget_states(out), "FBFB")
 
     def test_compare_without_operands_raises(self):
-        insns = proc(2, op("neq"), fjp(), *COPY)
-        with self.assertRaises(up.PassError):
-            up.copy_states(insns, 0, len(insns) - 1)
+        for body in ([op("neq"), fjp()], [reg(), op("neq"), fjp()], [ldc(1), st(J), reg(), op("neq"), fjp()]):
+            insns = proc(2, *body + COPY)
+            with self.subTest(body=opnames(body)), self.assertRaises(up.PassError):
+                up.copy_states(insns, 0, len(insns) - 1)
 
     def test_branch_without_condition_raises(self):
         for body in ([fjp()], [ldc(1), st(J), tjp()]):
