@@ -251,6 +251,9 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | prologue | the voiced scene of the first school day that NAME_ENT plays after name entry (mode 0x15: 22 stages, 43 text lines); the attract run plays the separate `opening`, not this | `prologue` | T | patch (`prologue_line_start`), emulator run (T-20500), T-27030 |
 | sound test | the OPTION screen that plays music and sound effects by bank id | `sound_test` | T | sound, strings |
 | debug menu | a developer menu whose text is in OPTION | `debug_menu` | T | patch (OPTION text offsets) |
+| staff roll | ETC credits sequence, with scrolling credit lines and picture/model variants (mode 0xC2) | `staff_roll` | T | ETC entry 0x80142974; wiki/spec/o-etc |
+| last photo | ETC per-girl or all-clear closing photo (mode 0xC3) | `last_photo` | T | ETC entry 0x8014636C; wiki/spec/o-etc |
+| clear save | ETC card flow that increments ending counters and attempts to save the finished play (mode 0xC4) | `clear_save` | T | ETC entry 0x80145A6C; wiki/spec/o-etc |
 | system file | the memory-card system file; its contents are not decoded yet | `system_file` | T | strings |
 | album | the album of scene pictures | `album` | T | strings |
 | dec_bg | a background picture decoded by the MDEC | `bg` | T | O.BIN (`dec_bg_*`) |
@@ -298,11 +301,12 @@ or of a stem for one of its scenes.
 | `practice` | the club practice match | RENSYU | short form of `practice_match` |
 | `trip` | the school trip | SHUGAKU | short form of `school_trip` |
 | `sports` | the sports festival | TAIIKU | short form of `sports_festival` |
-| `boot` | startup | main, `80041000`, `800420D0` | plain word |
+| `boot` | startup and frame-loop helpers | main: game_init, main_loop, boot_assets; paused callback in pad_input | plain word |
+| `debug` | developer diagnostic display and its state | main: debug_display/debug_hud_palette debug helpers | plain word |
 | `draw` | 2D drawing | main, `80043510` | plain word |
 | `sprite` | sprites | main, `80047550`, `800490C0` | plain word |
 | `actor` | the display actors of the draw pass | main, `80047550`, `800490C0` | plain word |
-| `audio` | the sound driver | main, `80043510`, `80079B10` | plain word |
+| `audio` | sound driver, bank wait/error helpers and CD-level meter | main: frame_render_audio, sound_driver, leading scene_library meter helpers; bounded exceptions in src/main/README.md | plain word |
 | `color` | color bars and palettes | main, `80049FF0`, `8004AD60` | plain word |
 | `layer` | screen layers | main, `8004C3F0` | plain word |
 | `model` | 3D model transfer | main, `8004C3F0` | plain word |
@@ -338,6 +342,7 @@ the first name that uses it.
 | `init` | initialize | O.BIN (`hizuke_init`) |
 | `lba` | logical block address: a sector number on the disc | patch (`ovl_load_lba`) |
 | `misc` | miscellaneous (the ETC overlay's folder `misc_scenes`) | disc (`ETC.EXN`) |
+| `tt` | unexpanded technical identifier of TT.EXN; no English game title is adopted | disc identifier; technical namespace decision |
 | `ot` | ordering table | SDK |
 | `ovl` | overlay | O.BIN, patch |
 | `param` | parameter | O.BIN |

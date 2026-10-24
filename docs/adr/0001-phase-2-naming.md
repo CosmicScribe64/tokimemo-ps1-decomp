@@ -229,7 +229,7 @@ folder name.
 | DATE2.EXN | amusement park date with rides and karaoke | `amusement_park_date` | `amusement_` | |
 | ENDING.EXN | graduation ending and the girls' futures | `ending` | `ending_` | |
 | EN_NICHI.EXN | festival stall games: goldfish scooping, shooting gallery | `festival_stalls` | `stalls_` | |
-| ETC.EXN | exams and rank list, career guidance, job or college choice, album, end-of-game save | `misc_scenes` | `exam_`, `career_`, `album_`, `system_file_` | confirm 0xC2-0xC4 |
+| ETC.EXN | exams and rank list, career guidance and choice, album, staff roll, last photo, clear save, shared helpers and unused confession/epilogue stubs | `misc_scenes` | `exam_`, `career_`, `album_`, `system_file_`, `staff_roll_`, `last_photo_`, `clear_save_`, `confession_`, `epilogue_`, `misc_` | modes 0xC2-0xC4 source-confirmed; folder migration separate |
 | EVENT.EXN | an older set of date-place scenes; no code found loads it | `date_spots_unused` | `spot_` | confirm unused |
 | GEKO.EXN | meetings outside dates: walking home, invitations, birthdays | `girl_encounters` | `encounter_` | confirm |
 | GYOZI.EXN | near copy of SHOUGATU; no code found loads it | `annual_events_unused` | `annual_` | confirm unused |
@@ -246,7 +246,7 @@ folder name.
 | TACO.EXN | hidden 3D shooter | `shooter_3d` | `shooter_` | |
 | TAIIKU.EXN | sports festival races and folk dance | `sports_festival` | `sports_` | |
 | TEL.EXN | phone calls and the girl profile page | `telephone` | `phone_` | |
-| TT.EXN | hidden 2D shooter (TwinBee-like) | agree with its contributor | | confirm |
+| TT.EXN | hidden 2D shooter; branded identification unconfirmed | agree with its contributor | `tt_` (technical disc namespace only) | technical prefix adopted; English game/folder name awaits contributor agreement |
 | VALEN.EXN | Valentine's Day (White Day probably too) | `valentine` | `valentine_` | confirm White Day |
 
 ### Main subsystem prefixes
@@ -255,7 +255,7 @@ The living main object and prefix map is now [`src/main/README.md`](../../src/ma
 following the logical C filename migration. It retains the grouped prefix ownership and shared-data
 entries from this decision. Body-backed object attribution separates the sound driver at
 `80079B10` from the scene library at `8007C030`, and executable reload from STR playback. These
-corrections assign no new prefixes; undecided debug-display and boot-asset stems remain open.
+corrections preserve grouped ownership. The living map also assigns one boot/startup group, one debug subgroup, and bounded mixed-object audio helpers after source review.
 
 ## Out of scope
 
@@ -284,3 +284,7 @@ corrections assign no new prefixes; undecided debug-display and boot-asset stems
 - decomp.dev per-file history restarts for renamed files; totals stay.
 - Agents will want to name a field after one use. Review rejects a name without evidence and keeps the
   hypothesis marks honest.
+
+## 2026-10-24 prefix closure
+
+ETC retains one owner row including its source-backed ending-screen/stub subgroups; `misc_` is the existing English abbreviation for shared helpers. TT uses unexpanded technical `tt_` solely to distinguish TT.EXN from TACO's `shooter_`; no branded English title, English folder or contributor agreement is claimed. The reserved English TT term remains pending. Main boot/debug/audio mixed-object exceptions are listed once in src/main/README.md. This resolves technical namespace ownership without changing object boundaries or adopting an unproved game identity.
