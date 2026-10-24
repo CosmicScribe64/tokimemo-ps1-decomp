@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] build | T-25033 literal SHOUGATU E50C match
-
-Early selected-girl initialization plus the exact unsigned-byte status argument closes the function: full-TU 118/118, zero resolved differences. The diagnostic unsigned comparison minimized to `girl = D_800E6280.unk_F5F * 0; D_800E6280.unk_F5F = girl;` before the conditional. Private real linking proves all 472 function bytes equal the target. Literal zero regresses to 117 words/15 rows; removing result narrowing gives 78 aligned cost, and removing the integer847B8 view gives 117 words/25 rows. Retained meaningful girl local; deleting it shifts table homes. Promoted C in src/ovl/SHOUGATU/8013E330.c, removed the fallback, and marked the zero-carrier FAKE. Default-C checksum/declaration validation follows. [[tickets/T-25033-shougatu-canonical-call]].
-
-## [2026-10-22] ticket | T-25033 verified C match enters review
-
-Production default-C funcdiff confirms all 472 linked bytes; affected SHOUGATU checksum passes after compiling src/ovl/SHOUGATU/8013E330.c. Header/global guards pass; prototype branch check has 0 new / 15 known disagreements. Source review found no extra effects or unsafe arithmetic in the marked multiply-by-zero carrier. Updated [[playbook]], [[families/shougatu-family-results]] and drafts/T-25033/README.md; moved [[tickets/T-25033-shougatu-canonical-call]] and its board card to In Review. Coordinator owns formal review and full 27-binary integration.
-
 ## [2026-10-22] lint | T-25033 reviewed match checkpoint
 
 Coordinator source review of [[tickets/T-25033-shougatu-canonical-call]] found no issues. Independent default-preprocessed full-TU proof explicitly excludes the E50C assembly fallback and confirms 118 words / 472 literal bytes. Wiki lint reports zero broken links/status mismatches and the existing data/t0018-cases size warning; git diff check passes. Ticket remains In Review for the coordinator's combined integration gate.
@@ -1575,6 +1567,7 @@ Fixed the two blocking review findings of [[tickets/T-27015-p2-m-dates-b]] and t
 
 ## [2026-10-24] ticket | T-27003 Done
 [[tickets/T-27003-pilot-obin-names-overlays]] passed the standards and spec review (approved, no blocking findings) and moves to Done; five non-blocking follow-ups are in the ticket comments (stale names in `wiki/playbook.md` line 32 and `tools/redraft_extras.py`, one block-scope declaration in `src/ovl/NAME_ENT/80144AD0.c`, one placeholder-shaped file-local macro in `src/ovl/DATE2/80137D50.c`, the board card). Merging as p2-pilot through merge3.sh.
+
 ## [2026-10-24] ingest | Phase 2 m-holiday: names and port spec (T-27013)
 Read the matched C of `src/main/80075320.c` (the mode 0x46 handler: holiday command screen, Sunday club flows, appointment place question, phone book, magazine), the data tables of the object and of its neighbours, and the proposal tables of the units merged meanwhile. Wrote `config/renames/proposals/m-holiday.tsv` (140 rows: 28 func, 22 data, 4 field, 73 const, 12 comment, 1 file; 2 HYPOTHESIS) and [[spec/m-holiday]]; ticket [[tickets/T-27013-p2-m-holiday]] is In Review.
 Findings: the date place question is a memory test (`appt_place_0..3` = chosen, true, two decoys); appointment-word place values are 0-based; mode 0x60 starts at the first club activity; a holiday command pays four school-day gains for one school-day cost; phone slot 11 stands for the rival; the magazine hint is gated by the secret-code latch. Emulator probes (GDB on a title-menu state, forced mode 0x46) confirmed icon availability, command 0, the phone-book call, the dial shortcut, the place question, the first-club-activity scene, the Sunday join list and the practice-match path. Open questions: [[spec/m-holiday]] section 15.
