@@ -43,7 +43,6 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[build-system]] - configure.py / ninja pipeline, jump tables, rodata islands
 - [[tooling]] - every tool under `tools/` with its ticket
 - [[rename-tool]] - tools/rename.py: phase 2 renames from a table, proofs, ledger, check and replay
-
 - [[emulator]] - PCSX-Redux + OpenBIOS in Docker: breakpoints, memory watches, call stacks, traces, input, screenshots, save states (T-20500)
 - [[ci]] - GitHub Actions, encrypted game bundle, decomp.dev report
 - [[gcc-objects]] - PsyQ-gcc objects inside overlays, per-object toolchain table
