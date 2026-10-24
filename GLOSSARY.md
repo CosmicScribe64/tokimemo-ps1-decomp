@@ -237,7 +237,7 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | hud | the panels of the day screen: parameters, calendar date, portrait | `hud` | T | code |
 | save, load | the memory-card save and load | `save`, `load`, `memory_card` | T | O.BIN (`card_ev_set`) |
 | name entry | the entry of the player's name, birthday and blood type at the start; the NAME_ENT overlay | `name_entry` | T | disc (`NAME_ENT.EXN`), patch (kana grid) |
-| prologue | the voiced opening lines that NAME_ENT plays, in the attract run too | `prologue` | T | patch (`prologue_line_start`), emulator run (T-20500) |
+| prologue | the voiced scene of the first school day that NAME_ENT plays after name entry (mode 0x15: 22 stages, 43 text lines); the attract run plays the separate `opening`, not this | `prologue` | T | patch (`prologue_line_start`), emulator run (T-20500), T-27030 |
 | sound test | the OPTION screen that plays music and sound effects by bank id | `sound_test` | T | sound, strings |
 | debug menu | a developer menu whose text is in OPTION | `debug_menu` | T | patch (OPTION text offsets) |
 | system file | the memory-card system file; its contents are not decoded yet | `system_file` | T | strings |
@@ -280,6 +280,8 @@ or of a stem for one of its scenes.
 | `career` | career guidance and choice | ETC | short form of `career_guidance`, `career_choice` |
 | `annual` | the yearly school events | GYOZI | short form of `annual_event` |
 | `camp` | the summer camp | KANGEI | short form of `summer_camp` |
+| `file_select` | the file screens behind the title item "game start": memory-card check, 14 album slots, create, copy, clear | NAME_ENT | plain words |
+| `opening` | the attract opening: a narrated picture story, then the opening movie | NAME_ENT | plain word |
 | `help` | the help pages | OLH | plain word |
 | `options` | the options screen | OPTION | plain word |
 | `practice` | the club practice match | RENSYU | short form of `practice_match` |
@@ -332,6 +334,7 @@ the first name that uses it.
 | `src` | source; a parameter name of copy-like functions | SDK (`strcpy`) |
 | `sys` | system helpers of the main executable, beside the pad code (`sys_` prefix) | ADR (main prefixes) |
 | `tpage` | texture page | SDK |
+| `uv` | texture coordinates (u, v) of a sprite or glyph cell | SDK (`POLY_FT4` fields `u0`, `v0`) |
 | `vram` | video memory | SDK |
 | `vsync` | vertical blank sync | SDK (`VSync`) |
 | `xa` | CD-XA streamed audio | O.BIN (`xa_wait`) |

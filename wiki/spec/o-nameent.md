@@ -29,10 +29,10 @@ Frame rate 60; all timers are in frames. The screen is 320 x 240 with the origin
 
 | Old | New | Contents |
 | --- | --- | --- |
-| `src/ovl/NAME_ENT/80132000.c` | `src/ovl/name_entry/name_entry.c` | mode 0x14 (61 functions) |
+| `src/ovl/NAME_ENT/80132000.c` | `src/ovl/name_entry/name_entry.c` | mode 0x14 (62 functions) |
 | `src/ovl/NAME_ENT/80139740.c` | `src/ovl/name_entry/file_select.c` | mode 0x13 (104 functions) |
 | `src/ovl/NAME_ENT/80142A80.c` | `src/ovl/name_entry/opening.c` | mode 0x11 story and movie (9) |
-| `src/ovl/NAME_ENT/80144AD0.c` | `src/ovl/name_entry/prologue.c` | mode 0x11 entry and mode 0x15 (83) |
+| `src/ovl/NAME_ENT/80144AD0.c` | `src/ovl/name_entry/prologue.c` | mode 0x11 entry and mode 0x15 (82 functions, two keep their names) |
 | `include/ovl/NAME_ENT.h` | `include/ovl/name_entry.h` | header |
 
 The overlay's own read-only data starts at 0x8014B140 (kana rows, message strings, jump tables), its initialised data and state at 0x8014CC30, and the image ends with 82 KB of zero padding behind `prologue_line_clips_second`.
@@ -53,7 +53,7 @@ A screen with a slot list (14 boxes in two columns of 7, labelled with the slot 
 | `GameState.save_slot` | the slot an operation works on |
 | `GameState.album_slot` | which bank of the loaded card image is valid (index into `card_block`) |
 | `system_data.year/month/day[16]`, `family_name`, `given_name`, `nickname`, `club`, `metrics[9][16]`, `slot_girl_marks[16][16]` | per slot summary (written by `card_slot_summary_store`, main) |
-| `system_data.girl_clear_count[16]` (old `flags`) | per girl, how often her ending was reached (ETC adds 1, cap 99); also stored in each album image (`AlbumSlotRecord.girl_clear_count`) |
+| `system_data.girl_clear_count[16]` (old `flags`) | per girl, how often her ending was reached (ETC adds 1, cap 99); also stored in each album image (`AlbumSlotRecord.girl_clear_count`); evidence: ETC's `< 0x63` cap and +1 at the data save, and the page title and counts seen in the emulator (core's `GameState.unk_53C` `girl_cleared` is a different, hypothetical per-girl flag) |
 | `file_select_info_page` | page switch counter, page = value mod 3 |
 | `file_select_menu_mode_lock` | 1 while the screens run: `file_select_entry` writes `menu_mode = 0` every frame |
 | `file_select_saved_*` | snapshot of the option groups that changed (section 3.9) |
@@ -93,7 +93,7 @@ Stage 1 (card check):
 
 ### 3.5 Stage 2: the list and the operations
 
-Step 0 (`file_select_scan`): `card_start`, then `card_scan_poll` until result 2 (a 0x201-frame limit returns to stage 1). The scan fills `slot_status` and sets `slot_info_from_system_data`. Then: with the system file -> step 1; else, when any of `slot_status[0..13]` is non-zero (the loop stops one short of slot 14, so an album in slot 14 alone is not counted) -> step 0x20; else -> step 0x40.
+Step 0 (`file_select_scan`): `card_start`, then `card_scan_poll` until result 2 (a 0x201-frame limit returns to stage 1). The scan fills `slot_status` and sets `slot_info_from_system_data`. Then: with the system file -> step 1; else, when any of the 14 album slots `slot_status[1..14]` is non-zero (the C loops `i = 0..13` over the alias label `D_800E7D11 + 4 + i`, which is `slot_status[1 + i]`; the system file entry 0 is not counted, an album in slot 14 alone is) -> step 0x20; else -> step 0x40.
 
 Branch A, system file present (steps 1-3):
 
@@ -161,7 +161,7 @@ The 13 girl icon sprites of page 0 are shown by `file_select_girl_icons_visibili
 
 ### 3.9 Settings preservation
 
-`options_dirty` (OPTION marks changed groups) is copied with the values at the start of the screens and then cleared: bit 0x80 text speed, 0x40 click mode, 0x20 double-click interval, 0x10 confirm button, 8 cursor speed (the icon, menu and voice modes are copied too). While `file_select_menu_mode_lock` is 1 the menu mode is forced to 0. A load (`game_bank_load`) overwrites the settings with the saved ones; when the screens end `file_select_settings_restore` re-applies the changed groups (text speed through `k_speed_set`, the others by assignment), rebuilds the icon bar (icon count 0xF in free icon mode, else 0xE) and validates the icon layout (free mode: icon positions outside x -0x86..0x7C or y -0x54..0x54, or two or more at (0, 0), reset to mode 0). The restores of icon mode, menu mode and voice mode only run when the saved value is 3 or more, 4 or more and 3 or more; valid values (0-2, 0-3, 0-2) never are, so those three never take effect (as implemented).
+`options_dirty` (OPTION marks changed groups) is copied with the values at the start of the screens and then cleared: bit 0x80 text speed, 0x40 click mode, 0x20 double-click interval, 0x10 confirm button, 8 cursor speed (the icon, menu and voice modes are copied too). While `file_select_menu_mode_lock` is 1 the menu mode is forced to 0. A load (`game_bank_load`) overwrites the settings with the saved ones; when the screens end `file_select_settings_restore` re-applies the changed groups (text speed through `k_speed_set`, the others by assignment), rebuilds the icon bar (icon count 0xF in free icon mode, else 0xE) and validates the icon layout (`file_select_icon_layout_validate`; free mode only: it counts icon positions outside x -0x86..0x7C or y -0x54..0x54 as errors and positions at (0, 0) as zero entries, and resets the icon bar to mode 0 only when there are two or more zero entries and at least one error; either condition alone changes nothing). The restores of icon mode, menu mode and voice mode only run when the saved value is 3 or more, 4 or more and 3 or more; valid values (0-2, 0-3, 0-2) never are, so those three never take effect (as implemented).
 
 ## 4. Mode 0x14: name entry (`name_entry_*`)
 
@@ -255,6 +255,17 @@ The check runs after the setup, on the final names:
 - The Konami code spelled with the kanji words for up, down, left, right in the three names (up up / down down / left right left right and a cross): all nine parameters become 0.
 - The same code spelled with arrow glyphs: all nine parameters become 999 (0x3E7).
 
+The compared buffers are `name_entry_family_name` (0x8014CC74), `name_entry_given_name` (0x8014CC7C) and `name_entry_nickname` (0x8014CC84), compared with `strcmp` against Shift-JIS string literals in the overlay's rodata. The literals have no symbol of their own (the C holds them inline), so they are not in the table; a port extracts them from the NAME_ENT.EXN image at file offset = address - 0x80132000 (the image has no header):
+
+| Check | Family name | Given name | Nickname |
+| --- | --- | --- | --- |
+| nickname cheat (5 characters, 10 bytes) | not tested | not tested | 0x8014B590 |
+| friendly pair (3 characters, 6 bytes each) | 0x8014B59C | 0x8014B5A4 | not tested |
+| code with kanji (2, 2 and 5 characters) | 0x8014B5AC | 0x8014B5B4 | 0x8014B5BC |
+| code with arrow glyphs (2, 2 and 5 characters) | 0x8014B5C8 | 0x8014B5D0 | 0x8014B5D8 |
+
+The checks run in the order of the list above.
+
 (HYPOTHESIS: the meaning of flag bit 3 on the heroine records is not known from this unit.)
 
 ## 5. Mode 0x15: the prologue (`prologue_*`)
@@ -302,11 +313,13 @@ Every stage has one step except stage 0 (3 steps) and stage 1 (2 steps). Resourc
 | 20 | `prologue_stage_closing` | 42 | hold 0x3D frames, commands 5 and 0xD1 (BGM fade) |
 | 21 | `prologue_stage_finish` | none | resets CD queue and sound state, loads sound bank 0, text speed 3, `menu_mode` = 1, `main_state_set(0x34)` and `main_stage_set(0xFF)` |
 
+Evidence for the scene-content stage names. No saved emulator state covers the prologue stages (`build/emu/states` has only the attract run, the file screens and the end of the name entry, where the prologue is already over), so the names that say what a picture shows rest on the code and the line texts, and carry HYPOTHESIS in the table: `PROLOGUE_STAGE_BOARD` and `prologue_board_*` (a board), `PROLOGUE_STAGE_NAMES` and `prologue_names_crossfade` (names), `PROLOGUE_STAGE_REI_BANNER` and `prologue_rei_banner_run` (a banner of Rei; the speaker code of line 12 is 0x0C, girl 12, Rei), `PROLOGUE_STAGE_WINDOW_TREE` and `prologue_window_tree_run` (a tree seen through a window) and `prologue_petals_*` (the falling particles are pink; that they are petals is a guess). The other stage names rest on the speaker table (Yoshio, Rei, Shiori, the unnamed schoolgirls) and on the texts of their lines (for example line 3 and the childhood-friend stage, lines 38-41 and the legend stage). A port takes the behaviour (stage order, lines, loads, timings) from this table and looks at the pictures itself before it keeps the names.
+
 START (0x800) at any time after the first step jumps to stage 21. The dispatcher also draws the title window ("prologue" banner), the screen frame (type 0 at stage 0, type 2 later) and the message window, and the calendar panel at stage 0 shows 1995-04-04, Tuesday (emu: frame 750).
 
 ## 6. Mode 0x11: the attract opening (`opening_*`)
 
-Earlier notes call the stage 0 scene (old `func_80143580`) the "attract prologue"; the code shows it is a narrated picture story with its own voice clips, not the prologue lines of mode 0x15 (`GLOSSARY.md` still says the prologue plays in the attract run too).
+Earlier notes call the stage 0 scene (old `func_80143580`) the "attract prologue"; the code shows it is a narrated picture story with its own voice clips, not the prologue lines of mode 0x15 (the `GLOSSARY.md` row for `prologue` is corrected on this branch).
 
 Stage 0 (story): `opening_story_stage` adds 1 to `step_timer`; START, circle or cross (0x860) jumps to step 2. Step 0 (`opening_story_load`) stops the sound, loads sound bank 1, plays BGM 1 and reads seven pictures from FUKUTEST (O_31_05L, 07, 05R, 02, 04, 01, 03 in that order) into the two background slots with their palettes, then starts the first narration clip and four hidden text lines. Step 1 (`opening_story_scene`, 20 substeps) fades and pans the background slots (a slot's x decreases by 1 every fourth frame; the pictures are wider than the screen), starts a second narration clip as soon as the first has ended (`opening_second_narration_started`) and a third text block when slot 0 reaches x -0x118, builds three picture sprites that pan the same way, flashes to gray (sound 0xD1 fades the BGM), reads O_31_06 and the 0xAE-sector OPEN.NBN pack, converts the palettes to sepia (`col2sepia`), animates one character actor, plays a final voiced line, shows it for 0x41 frames and ends with a 255-step gray flash. While the triangle button is held the narration text is shown over a dark box; otherwise it stays hidden. The mouth actor follows the CD level; holding any button of pad 2 simulates a voice level (`stage_timer & 0x3F`) and also (at substep 16) plays an extra short voiced line and text; a pad 1 button press ends substep 15 early. Step 2 (`opening_story_end`) resets the CD queue, VRAM, sprites and actors, stops BGM and voice and goes to stage 1.
 
@@ -323,6 +336,7 @@ Stage 1 (`opening_movie`): sets the HUD level to 0, text speed 3, queues the 21 
 | `name_entry_candidate_counts`, `_lists` | 0x8014CE64, 0x8014CE68 | pointers into the NAME_KAN.NBN image at 0x801E0000 |
 | `name_entry_preset_family_names/given_names/nicknames` | 0x8014CE6C, 0x8014CEE4, 0x8014CF5C | 15 x 8, 15 x 8, 15 x 12 bytes |
 | `name_entry_small_digit_uv`, `name_entry_wide_digit_uv`, `file_select_digit_uv` | 0x8014D014, 0x8014D028, 0x8014D0F4 | (u, v) of the digit sprites |
+| cheat name literals (no symbols) | 0x8014B590-0x8014B5DF | nine Shift-JIS strings compared by `name_entry_cheat_names_apply` (section 4.8 lists each address) |
 | `name_entry_blood_compat_level`, `name_entry_initial_stats` | 0x8014D03C, 0x8014D04C | 4 x 4 grade table; four (affection, tokimeki, syoushin) triples |
 | `prologue_line_texts`, `_speakers`, `_clips`, `_clips_second` | 0x8014D958, 0x8014DA04, 0x8014DA30, 0x8014DB88 | the 43-line script |
 | `prologue_blood_texts` | 0x8014D1A0 | four letters, indexed by the stored blood value |
@@ -374,8 +388,8 @@ Everything else (card polling, CD sector reads, VRAM and palette handling, actor
 
 ## 12. Open questions
 
-1. Prefixes: the ADR lists only `name_entry_` and `prologue_` for this overlay; the proposal adds `file_select_` and `opening_`. The ADR row (and the audit's `name_ent_`) should be updated to match, or the 104 `file_select_*` names and 10 `opening_*` names renamed.
-2. The core table names the modes 0x11, 0x13, 0x14, 0x15 differently (section 1); the constants in `o-nameent.tsv` override them. The names `MODE_PROLOGUE` and `MODE_NAME_ENTRY` change value (0x11 to 0x15, 0x13 to 0x14), so the four rows must be applied together.
+1. Prefixes: the ADR lists only `name_entry_` and `prologue_` for this overlay; the proposal adds `file_select_` and `opening_`. This branch updates the ADR NAME_ENT row to list both prefixes and adds `file_select` and `opening` to the GLOSSARY module words (the audit's `name_ent_` remains outdated). The abbreviation `uv` is added to the GLOSSARY abbreviations; `ui`, `dx` and `dy` were renamed away (`file_select_init_menus`, `file_select_iris_x_speed`, `file_select_iris_y_speed`). The merge step has to de-duplicate the `uv` row with the h-graphics and o-taco units.
+2. The core table names the modes 0x11, 0x13, 0x14, 0x15 differently (section 1); the constants in `o-nameent.tsv` override them. The names `MODE_PROLOGUE` and `MODE_NAME_ENTRY` change value (0x11 to 0x15, 0x13 to 0x14), so the four rows must be applied together. Merge instruction: applying both tables gives duplicate enumerator names with different values (`MODE_PROLOGUE` 0x11 vs 0x15, `MODE_NAME_ENTRY` 0x13 vs 0x14). The merge step must delete core's `MainMode` rows for 0x11, 0x13, 0x14 and 0x15 (`MODE_PROLOGUE`, `MODE_NAME_ENTRY`, `MODE_NAME_ENT_3`, `MODE_NAME_ENT_4`) in the same step that applies this table's four, and the core owner must be told; each of the four const rows carries a MERGE note.
 3. Who owns `Work800E7D10.flags` and `NameRecordF00.flags`? They are renamed `girl_clear_count` here; ETC, OPTION and EN_NICHI use the same field.
 4. The main-side tables at 0x800B3A3C, 0x800B394C and the blank-character string at 0x800B3644 are named in this table with scope `main`; the main owners may take them over.
 5. `D_800B3DB0` (written 1 and 0 by the prologue, read by the tile upload to add `move_255_line`) has no name; it belongs to the h-graphics unit.

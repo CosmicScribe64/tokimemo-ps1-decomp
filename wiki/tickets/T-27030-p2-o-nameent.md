@@ -14,7 +14,7 @@ Roadmap phase 2 (readable code), port-first scope, for the unit `src/ovl/NAME_EN
 
 ## Acceptance criteria
 
-- [x] `config/renames/proposals/o-nameent.tsv`: one row per rename (kind scope old new note); all 257 functions of the overlay are covered (255 rows; `prologue_line_start` and `prologue_line_run` keep their names); 228 data rows (224 overlay, 4 main), 144 const, 5 file, 3 type, 4 field (639 rows in all); 20 rows start with HYPOTHESIS; the file starts with the same header comment as `core.tsv`.
+- [x] `config/renames/proposals/o-nameent.tsv`: one row per rename (kind scope old new note); all 257 functions of the overlay are covered (255 rows; `prologue_line_start` and `prologue_line_run` keep their names); 228 data rows (224 overlay, 4 main), 144 const, 5 file, 3 type, 4 field (639 rows in all); 35 rows start with HYPOTHESIS; the file starts with the same header comment as `core.tsv`.
 - [x] `wiki/spec/o-nameent.md`: modes and entry points, state machine of each mode (stage and step tables), state and data with the new names, rules (formulas, thresholds, conditions), connections, open questions; linked from `wiki/spec/index.md`.
 - [x] Emulator checks of the main claims (mode sequence 0x13, 0x14, 0x15, 0x34; the file screens on a blank card; the new game setup values; the SELECT chord preset); states under `build/emu/states/` stay ignored.
 - [x] No game text, assets, asm or screenshots committed; no edits under `src/`, `include/` or `config/symbol*` files.
@@ -28,6 +28,17 @@ Roadmap phase 2 (readable code), port-first scope, for the unit `src/ovl/NAME_EN
 - Results of note: the mode 0x13 stage 2 step machine has 47 step values (list, albums without a system file, empty card, New, Copy, Clear); the player's profile and the heroine Shiori's birthday and blood type are asked in two screens; Shiori's club is `(day * 3 + month) % 11`, her start scores come from a 4 x 4 blood compatibility table (45/10/10 to 55/25/0), the paired clubs of Mio, Yuina, Ayako and Saki depend on it; four cheat names are checked; the prologue is 43 lines in 22 stages with two answers built from the entered Shiori data.
 - Main-side data first named here (scope `main`): 0x800B3644 (blank character), 0x800B3A3C and 0x800B394C (per-slot voice clip pairs), 0x800E8BEF (an album record index byte nothing writes). `D_800B3DB0` (a flag the prologue sets for the tile upload) is left to h-graphics.
 - Field renames touch other units' files: `Work800E7D10.flags` and `NameRecordF00.flags` become `girl_clear_count` (ETC, OPTION and EN_NICHI use the same field).
-- Dead or odd code recorded as implemented: `file_select_scan` counts `slot_status[0..13]` only; the icon, menu and voice mode restores never take effect; `name_entry_birthday_buttons_update` reads two unassigned locals; steps 0xA6 and 0xA7 have identical bodies; some data words are never read (`file_select_unused_word_*`, an unused clip pair).
+- Dead or odd code recorded as implemented: `file_select_scan` reaches `slot_status[1..14]` through the alias label `D_800E7D11 + 4 + i`; the icon, menu and voice mode restores never take effect; `name_entry_birthday_buttons_update` reads two unassigned locals; steps 0xA6 and 0xA7 have identical bodies; some data words are never read (`file_select_unused_word_*`, an unused clip pair).
 
 ## Comments
+
+### Review round 1 fixes (2026-10-24)
+
+- `file_select_scan` counts the 14 album slots `slot_status[1..14]` (the C reads the alias label `D_800E7D11 + 4 + i`); the wrong "slot 14 is not counted" claim is removed from the table, the spec (3.5) and this ticket.
+- Spec 3.9 matches the table and the code: the free icon layout resets to mode 0 only with two or more zero entries and at least one out-of-range position.
+- File counts corrected: 62 functions in `name_entry.c`, 82 in `prologue.c` (80 renamed plus the two kept `prologue_line_*`); total still 257.
+- Abbreviations: `uv` gets a GLOSSARY row; `file_select_init_ui` is now `file_select_init_menus` and `file_select_iris_dx/dy` are `file_select_iris_x_speed/y_speed`. GLOSSARY module words get `file_select` and `opening`; the `prologue` GLOSSARY row no longer says the prologue plays in the attract run; the ADR NAME_ENT row lists `file_select_` and `opening_`.
+- MainMode rows 0x11, 0x13, 0x14, 0x15 carry a MERGE note: the merge step drops core's four rows in the same step; `NameEntryBirthdayBits` and `PrologueClipPair` notes name the core types to alias (`BirthdayBits`, `AudioRequestPair`).
+- Spec 4.8 lists the rodata addresses of the nine cheat string literals (0x8014B590-0x8014B5DF).
+- 15 scene-content names (board, names, Rei banner, window tree, petals; stage constants, stage functions and helpers) are marked HYPOTHESIS: no emulator state covers the prologue stages (`name_entry_end` is already past the prologue). `girl_clear_count` notes cite the code and emulator evidence and distinguish core's hypothetical `girl_cleared`.
+- `tools/rename.py plan` over the func, data, type and field rows (490): 0 problems.
