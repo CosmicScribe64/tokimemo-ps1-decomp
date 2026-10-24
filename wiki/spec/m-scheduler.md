@@ -352,7 +352,7 @@ These addresses belong to other main units; the rows are not in the table to kee
 | 8006B014 | `appointment_count_for_girl` | number of active appointment slots of a girl |
 | 8006B0C8 | `appointment_sort` | pack and sort appointment slots by date (January counted as month 13 in December) |
 | 80053418 | `girl_scores` | fills 11 rank bytes and 11 points (ending-candidate score) |
-| 80052E60, 80052F68 | `girl_points_shiori`, `girl_points_heroines` | points of girl 0 / girls 1-10 |
+| 80052E60, 80052F68 | `girl_points_shiori`, `girl_points_others` | points of girl 0 / girls 1-10 (m-menutext renamed the second from `girl_points_heroines`: the glossary keeps heroine for prose) |
 | 80068938 | `month_calendar_install` | install month blob(s) into `month_calendar` |
 | 800674B0 | `season_sound_set_load` | reload the season background and sound set |
 | 80054388 | `card_job_step` | memory-card step machine returning the result code |

@@ -7,174 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] lint | T-25033 reviewed match checkpoint
-
-Coordinator source review of [[tickets/T-25033-shougatu-canonical-call]] found no issues. Independent default-preprocessed full-TU proof explicitly excludes the E50C assembly fallback and confirms 118 words / 472 literal bytes. Wiki lint reports zero broken links/status mismatches and the existing data/t0018-cases size warning; git diff check passes. Ticket remains In Review for the coordinator's combined integration gate.
-
-## [2026-10-22] ticket | T-25035 GYOZI late-folded zero carrier
-
-Created [[tickets/T-25035-gyozi-late-folded-zero]] in an isolated checkout from 242c0c3a3. Read existing T-24907/T-25025 evidence and claimed only src/ovl/GYOZI/80140C90.c. New lead is the concurrent SHOUGATU late-folded carrier; old zero-local grids remain exhausted.
-
-## [2026-10-22] build | T-25035 donor transfer preserves entry zero
-
-Docker full-TU controls for [[tickets/T-25035-gyozi-late-folded-zero]] transfer the new SHOUGATU late-folded unsigned comparison: target and candidate now both have 97 words with exact zero initialization/store/first call, versus the old 97/96. Remaining aligned cost 4 is the second-call reload base and its schedule. Focused coalescing controls are negative; inspecting compiler allocation next. No production edits or coverage.
-
-## [2026-10-22] build | T-25035 GYOZI literal C match
-
-Transferred the improved T-25033 early-global-assignment form into GYOZI func_80140E0C. A marked late-folded multiply-by-zero expression preserves the entry a1 carrier; the early store lets allocation retain the later a1 reload base. Default C links to all 388 target bytes and GYOZI SHA1 passes. Headers/global/prototype guards pass after missing reference splits were generated. Removed the assembly fallback, documented controls in drafts/T-25035/README.md and [[matching-notes]], and moved [[tickets/T-25035-gyozi-late-folded-zero]] to In Review for root review/integration.
-
-## [2026-10-22] query | T-25035 independent source review
-
-Root reviewed the GYOZI change against standards and scope with no findings: defined zero expression, disjoint early-store move, marked FAKEs and no build exceptions. [[tickets/T-25035-gyozi-late-folded-zero]] stays In Review until the combined integration gate.
-
-## [2026-10-22] build | Two late-zero family matches verified on main
-
-Root combined T-25033/T-25035, reviewed source against standards/spec with no findings, and refreshed every binary checksum:27/27 pass. Default-C literal linked proofs pass SHOUGATU472bytes and GYOZI388bytes; neither function has an assembly fallback. Headers/globals pass, prototypes0new/15known. Docker progress6835/6952functions,2105536/2276920bytes (92.5%);117functions/171384bytes remain. Moved both reviewed tickets/cards to Done, updated [[status]] and regenerated catalog. Research workers continue MAIN counter/quadrant and BUNKA scheduling. No experimental follow-up counted.
-
-## [2026-10-22] decision | Continue successful workers on new functions
-
-After verified T-25033/T-25035 integration, reassigned their Astra capacity without duplicating active work. SHOUGATU chat reserves T-25038 for the next remaining function in8013E330.c, selecting E6E4 or EA98 by existing candidate evidence. Former GYOZI worker reserves T-25039 MAIN func_8005B43C in8005A0B0.c, releasing GYOZI. Both sustain implementation through literal proof; MAIN quadrant/counter and BUNKA scheduler workers continue. Root owns integration.
-
-## [2026-10-22] ticket | T-25036 MAIN counter late-fold investigation
-
-Created [[tickets/T-25036-main-counter-late-fold]] in an isolated worktree at 242c0c3a3. Reused [[tickets/T-25026-main-d7ec-near-candidate]] phase evidence and prior negatives; next test is a late-folded zero producer that preserves the original increment dependency without extra instructions.
-
-## [2026-10-22] build | T-25036 identifies second constant-fold barrier
-
-Whole-TU Docker donor transfer retains the counter addition through uopt and ugen but stock as1's initial-node expansion folds it to one. Final output remains 1,173 words with one differing instruction. [[tickets/T-25036-main-counter-late-fold]] records the phase evidence. Read-only donor and tracer reused; production sources and compiler unchanged.
-
-## [2026-10-22] build | T-25036 closes MAIN 4692-byte counter dependency
-
-Promoted `src/main/8006CB30.c` function `func_8006D7EC` using the T-25033 late-zero producer and a late-eliminated identity arm. Whole-TU guarded and default C each pass literal 4,692-byte linked proof and complete MAIN SHA1; header/global/prototype checks pass. Both source controls are FAKE-annotated and add no emitted operations. Root standards/spec review has no findings. [[tickets/T-25036-main-counter-late-fold]] moves to In Review for full integration verification; `drafts/T-25036/` preserves reproduction and phase evidence.
-
-## [2026-10-22] build | MAIN 4692-byte match accepted
-
-Root integrated abc02da59 and independently proved default-C func_8006D7EC literal4692bytes. Fresh27/27binary checksums, headers/globals and prototypes0new/15known pass. Standards/spec review has no findings; marked late-zero and unreachable identity controls introduce no observable effects or compiler exceptions. T-25036 moves Done. Progress6836/6952functions,2110228/2276920bytes (92.7%);116functions/166692bytes remain. Updated [[status]]. Worker continues T-25040 on same-file func_8006D138,872bytes, selected against larger7132C's broad unresolved structure. BUNKA candidate not yet counted.
-
-## [2026-10-22] ticket | T-25037 BUNKA_SD upstream emission
-
-Claimed [[tickets/T-25037-bunka-upstream-emission]] in an isolated worktree from 242c0c3a3. Read the T-25020/T-25023 evidence and retained the existing four-position guarded source. New work focuses on uopt/ugen emission before further source experiments; no coverage added.
-
-## [2026-10-22] build | T-25037 optimized-ucode evidence
-
-[[tickets/T-25037-bunka-upstream-emission]] reproduced the four-position guarded C difference and captured the actual uopt-output/ugen-input boundary. The first three targeted comparison probes do not separate constant and memory preloads: early year still precedes constant, and the 0x60 comparison leaves two extra instructions. Best source remains unchanged; no match claimed.
-
-## [2026-10-22] build | T-25037 closes BUNKA_SD case0x49 ordering
-
-[[tickets/T-25037-bunka-upstream-emission]] found a source form that independently stages the constant and year preloads. An empty frame==0x60 test followed by an unsigned-false year test removes the case0x49 residue without changing any other instruction:379 words, remaining cost2 at positions171/172 in case0x66. Source stays guarded; no coverage credit until the remaining pair matches.
-
-## [2026-10-22] build | T-25037 literal BUNKA_SD match
-
-[[tickets/T-25037-bunka-upstream-emission]] promotes func_80139290 after separate guarded and default-C private links prove all1516 bytes. Rebuilt all11 BUNKA_SD C units and normal link/hash commands pass BUNKA_SD.bin SHA1; declaration/global/prototype guards pass with0 new disagreements. Root standards/spec review has no findings. Ticket moves to In Review pending root full27 integration. Negative source ledger is preserved in drafts/T-25037/README.md; no compiler or header changes.
-
-## [2026-10-22] lint | T-25037 integration checkpoint
-
-Wiki lint reports0 broken links and0 status mismatches; two large pages are data/t0018-cases and the append-only log. The draft README prose check has no strong hits; its one weak colon introduces the explicit hash result and is retained. git diff --check passes. [[tickets/T-25037-bunka-upstream-emission]] remains In Review for integration.
-
-## [2026-10-22] build | BUNKA_SD scheduling match accepted
-
-Integrated5e132362 and independently verified default-C1516literal bytes plus fresh27/27binary checksums. Headers/globals and prototypes0new/15known pass. Root standards/spec review no findings; empty tests are marked FAKE and compile away without observable effects. T-25037 moves Done. Docker progress6837/6952functions,2111744/2276920bytes (92.7%);115functions/165176bytes remain. Four resumed matches add7068bytes. Worker continues T-25041 KANGEI8013852C in disjoint80137B90.c using current ledger and new preload mechanism; other four lanes continue. Updated [[status]] and catalog.
-
-## [2026-10-22] decision | Resume quadrant matching after newer instruction
-
-Root relayed newer direct human instruction to keep workers going until problems are resolved and matches made, superseding prior wrap-up. Reactivated existing Astra worker for [[tickets/T-25034-main-quadrant-extent]] from d8e482c4a, integrated by root as ff8a1c912. Same exclusive function, sole source writer, Docker only, no duplicate coordinator experiments or arbitrary stopping caps. Existing conservative361/381 and forward-join360/380 checkpoints retain full-word extent repair; no match yet.
-
-## [2026-10-22] build | Quadrant color result placement control
-
-Resumed Astra controls for [[tickets/T-25034-main-quadrant-extent]] show mask-before-shift moves the extra copy with expression order; explicit unsigned-byte consumers leave the best object unchanged. This narrows the remaining color issue to expression/result placement, not extraction arithmetic. Worker continues required primitive-field assignment propagation; no duplicate coordinator experiments, promotion or match.
-
-## [2026-10-22] build | Quadrant allocated mask still copies
-
-Astra trace for [[tickets/T-25034-main-quadrant-extent]] assigns the unsigned AND node itself to fp (priority7.625, uses5/defs2), but normal emission still routes the outer result through a temporary and copies back. Field assignment/grouping/remainder controls did not remove it. This rejects the simple outer-conversion allocation hypothesis and motivates output-ucode/lowering inspection. Production unchanged; source and negative evidence remain private pending a meaningful checkpoint.
-
-## [2026-10-22] build | Quadrant copy precedes assembly scheduling
-
-For [[tickets/T-25034-main-quadrant-extent]], Astra captured normal ugen inputs with and without CVT: both raw binasm streams already contain the extra masked-color copy, excluding as1 as its origin. Capture and normal object .text/all other sections match except .mdebug path metadata; resolved function identical. Destination forwarding into the shift child is next. This is diagnostic evidence, not justification for a compiler pass or a literal match.
-
-## [2026-10-22] build | Quadrant destination-forwarding mechanism confirmed
-
-For [[tickets/T-25034-main-quadrant-extent]], normal backend forwards fp into a single-use shift child, then rejects in-place AND and allocates/copies a temporary. Sharing the raw shift through one required color store suppresses forwarding and removes the copy in real C, confirming the mechanism. The control worsens overall output (668words/850aligned/862printed) through a0 allocation and remains diagnostic only. Astra continues source mechanisms; no backend changes or promotion.
-
-## [2026-10-22] ingest | Preserve active quadrant lowering evidence
-
-Root preserved587f8d5c1, documentation only: faithful capture excludes as1, required-store source control removes the extra color copy but worsens global allocation. No compiler patch or coverage claim. T-25034 continues. T-25038 SHOUGATU E6E4 reports zero resolved differences under literal verification; root authorized a narrow existing-pattern declaration override with all default declarations unchanged for other translation units. No experimental result counted.
-
-## [2026-10-22] ticket | T-25041 KANGEI scheduling follow-up
-
-Claimed [[tickets/T-25041-kangei-preload-schedule]] after pinning BUNKA_SD. Read T-24202/T-24901/T-25018 history; KANGEI's local readiness gap requires distinct dependency evidence. Sole source ownership is src/ovl/KANGEI/80137B90.c; no source experiments yet.
-
-## [2026-10-22] build | T-25041 KANGEI source scheduling breakthrough
-
-[[tickets/T-25041-kangei-preload-schedule]] captures a new empty stored-field test that changes uopt from direct str to promoted value plus later rstr. The final sum now precedes store-address lui despite unchanged besttime values. Removing the redundant signed conversion of the byte year restores t6 and gives45-word cost0. Literal proof follows; earlier readiness-only reasoning is corrected in the new ticket, with old logs preserved.
-
-## [2026-10-22] build | T-25041 KANGEI literal C match
-
-[[tickets/T-25041-kangei-preload-schedule]] promotes func_8013852C with separate guarded/default-C private links proving180 bytes. All8 current KANGEI C units rebuilt; normal overlay link/hash commands pass SHA1. Header/global/prototype guards pass with0 new disagreements. Root final-source review has no findings. Ticket and board move to In Review for root full27 integration; no compiler or header changes.
-
-## [2026-10-22] lint | T-25041 reviewed integration pin
-
-Wiki lint reports0 broken links and0 status mismatches; existing large data/log pages remain. The draft README prose checker reports no hits; git diff --check passes. [[tickets/T-25041-kangei-preload-schedule]] is ready for root integration with its source and complete experiment ledger.
-
-## [2026-10-22] ticket | T-25039 MAIN club carrier
-
-Created [[tickets/T-25039-main-club-carrier]] after GYOZI integration. Reused isolated checkout, fast-forwarded to 77eae26cf with prior private evidence retained; claimed only src/main/8005A0B0.c. Read T-25004/T-25008 controls and allocation history. Reproduce the baseline before testing distinct lifetime/phase mechanisms.
-
-## [2026-10-22] build | T-25039 club precolor boundary
-
-Docker full-TU baseline for [[tickets/T-25039-main-club-carrier]] is 215/215 words, three changed positions. Captured allocation confirms distinct shift-expression v1 and local a0 ranges; later coalescing produces the wrong a0. Repeated shift expression with a late-folded zero preserves the target v1 and argument move, leaving the halfword a0-versus-a1 carrier. Corrected actual function size to 860 bytes; no match or production edit yet.
-
-## [2026-10-22] build | T-25039 MAIN club carrier matched
-
-Moved the local club definition into its consuming else branch, before the existing empty halfword test, while comparing the raw shift beforehand. This closes both carriers without new late-zero arithmetic or ignored arguments. Default C matches all 860 linked bytes, MAIN SHA1 passes, and headers/global/prototype guards pass (zero new, 15 known). Root independently reviewed standards and scope with no findings. Recorded controls in drafts/T-25039/README.md and [[matching-notes]]; moved [[tickets/T-25039-main-club-carrier]] to In Review pending root integration.
-
-## [2026-10-22] build | MAIN club and KANGEI matches accepted
-
-Integrated cb6cc430b and c0249b80c. Root default-C literal860/180byte proofs, fresh27/27binary checksums, headers/globals and prototypes0new/15known pass. Independent standards/spec reviews no findings. T-25039/T-25041 move Done. Progress6839/6952functions,2112784/2276920bytes (92.8%);113functions/164136bytes remain. Six matches add8108bytes. User requested more agents: MAIN chat tasked to add two isolated Astra lanes T-25043 TACO8014AB50 and T-25044 parameter_up_down, keeping quadrant worker. T-25039 file now complete; its worker continues T-25045 ETC80146D4C. KANGEI worker continues T-25042. Root serializes integration.
-
-## [2026-10-22] ticket | T-25038 selects SHOUGATU E6E4
-
-Created [[tickets/T-25038-shougatu-selection-loop]] and its In Progress board card before experiments. The clean isolated tree fast-forwarded from d091557e4 to root integration77eae26cf, preserving prior work. Root reports E50C and GYOZI E0C Done with all27 hashes and860 literal bytes. Selected E6E4's preserved corrected187-edit body over EA98's284-edit corrected port; existing table-home fix and negative ledger are in drafts/T-24523/SHOUGATU/func_8013E6E4 and [[tickets/T-24523-seasonal-source-hypotheses]]. Same Astra worker continues sole ownership of src/ovl/SHOUGATU/8013E330.c through resolution; root retains integration ownership.
-
-## [2026-10-22] build | T-25038 selector access classes close resolved E6E4
-
-[[tickets/T-25038-shougatu-selection-loop]]: fresh canonical full-TU baseline187/187 has exact frame/tables and no saved56 residue. Integer debug return gives177; independent club6 byte read restores its reload; a byte-view status argument then removes the unwanted selector promotion and gives0/0,237/237 words. Literal/default-C proof and minimization remain pending. Private evidence in `build/t25038/`, concise ledger in `drafts/T-25038/README.md`. Coordinator's declaration audit found existing s32 D_80122D48 uses in main/DATE and an overlapping EVENT table view; shared-header ownership will be reconciled before promotion.
-
-## [2026-10-22] build | T-25038 default C verified and ready for integration
-
-Promoted SHOUGATU func_8013E6E4 with no fallback: private and production full-TU links match all 948 bytes, and an independent link of the actual Ninja object matches E6E4 plus preserved E50C472bytes. SHOUGATU SHA1 and headers/globals/prototype guards pass (0 new / 15 known). Removal controls document the integer debug return, two byte views, result narrowing and multiplication by one. Root approved the narrow debug guard, overlay forward prototype and existing T-11590 scalar-local exception; coordinator source review has no findings. Moved [[tickets/T-25038-shougatu-selection-loop]] and card to In Review pending root combined gate. Updated [[playbook]] and drafts/T-25038/README.md; raw evidence remains private.
-
-## [2026-10-22] build | SHOUGATU selection loop accepted
-
-Root reviewed ca9569534 source/header against standards/spec, no findings. Narrow debug-return guard leaves default declaration unchanged; existing scalar-local exception documented, overlay forward prototype consistent. Full520-step rebuild passes fresh27/27SHA. Default-C E6E4 literal948bytes and preserved E50C472bytes pass. Headers/globals/prototypes0new/15known pass. T-25038 moves Done. Docker progress6840/6952functions,2113732/2276920bytes (92.8%);112functions/163188bytes remain. Seven matches add9056bytes. Worker continues T-25046 EA98; TACO zero-diff candidate not yet counted. All seven lanes remain assigned.
-
-## [2026-10-22] ticket | T-25043 TACO constant tail claimed
-
-Created [[tickets/T-25043-taco-constant-tail]] In Progress in isolated managed worktree. Read [[index]], [[status]], [[playbook]], coding standards and prior [[tickets/T-24502-taco-completion]] evidence before matching.
-
-## [2026-10-22] query | T-25043 baseline and late-zero interference controls
-
-[[tickets/T-25043-taco-constant-tail]] reproduces the seven-word TACO constant-one allocation tail in the full translation unit. New controls based on late-zero comparisons do not close it: argument lifetime and loop-index priority change instead. Source remains unchanged; private replay is `build/t25043/` in the isolated tree. Prior T-25016 constant spellings and302 engine trials are excluded.
-
-## [2026-10-22] build | T-25043 literal TACO stage handler match
-
-`src/ovl/TACO/80149F90.c` now provides default C for func_8014AB50:1876 literal linked bytes and complete TACO SHA1 pass in Docker. A marked late-eliminated unsigned test keeps an existing helper result live across flag stores; allocator trace confirms constant-one moves to original v1. [[matching-notes]] and [[tickets/T-25043-taco-constant-tail]] preserve causal controls, semantic initialization check and failed candidates. Header/global checks pass; independent review pending.
-
-## [2026-10-22] ticket | T-25043 enters In Review
-
-Moved [[tickets/T-25043-taco-constant-tail]] and its [[kanban]] card to In Review after literal default-C and affected-unit proof. Coordinator owns independent standards/spec review and full27 integration.
-
-## [2026-10-22] query | T-25043 independent review passes
-
-Root reviewed [[tickets/T-25043-taco-constant-tail]] against coding standards and scope with no findings. Exact final source repeats literal default-C MATCH1876 bytes; prototype check reports0 new/15 known disagreements. Ticket stays In Review for root's full27 integration gate.
-
-## [2026-10-22] build | TACO stage handler accepted
-
-Integrated dfb51c5cb. Root independent default-C literal1876byte proof, fresh27/27 binary checksums, headers/globals and prototypes0new/15known pass. Standards/spec review has no findings; [[tickets/T-25043-taco-constant-tail]] moves Done. [[status]] now6841/6952functions,2115608/2276920bytes (92.9%),111functions/161312bytes remain. Eight matches add10932bytes. TACO worker continues under reserved T-25047; six other Astra workers remain active. GitHub check found no open PRs and unchanged contributor claim issue65; GEKO/OPTION remain reserved.
-
-## [2026-10-22] build | Quadrant shared flag/color value hoists
-
-For [[tickets/T-25034-main-quadrant-extent]], the required TILE-flag/red-mask shared high-word control hoists before the quad loop and adds a stack home (672words/810aligned/816printed), so it is rejected. Best source remains unchanged; Astra continues UV/control lifetimes. At newer root-relayed human request, coordinator also spawned independent Astra/high T-25043 TACO func_8014AB50 and T-25044 MAIN parameter_up_down workers in separate managed worktrees; no source ownership overlaps or root edits.
-
 ## [2026-10-22] build | Quadrant UV saved-register rotation explained
 
 Astra traced separate-case-break controls for [[tickets/T-25034-main-quadrant-extent]]: scaled-row priority rises8.2->9.111 and overtakes constant127/quadrant, rotating saved registers. If-chain reproduces rotation; standalone shared-u0/default bypass returns to existing360/380 best. UV byte-result cast leaves end_v in v1. Matching continues with required masking/store-chain mechanisms; production unchanged.
@@ -1574,6 +1406,68 @@ Findings: the date place question is a memory test (`appt_place_0..3` = chosen, 
 
 ## [2026-10-24] ticket | T-27013 Done
 [[tickets/T-27013-p2-m-holiday]] passed review (approved; four non-blocking findings recorded in the ticket Comments: `get_g_zyotai_s` instead of the nonexistent `girl_state`, the duplicate `HOLIDAY_GAIN_MULTIPLIER` / `PARAM_HOLIDAY_FACTOR`, the header note on the `file` row, and open question 1 contradicting `core.tsv` on 0-based place values). The branch changes only `config/renames/proposals/m-holiday.tsv`, [[spec/m-holiday]], [[spec/index]] and wiki pages; nothing under `src/`, `include/` or the symbol files. Merged as p2a-m-holiday.
+
+## [2026-10-24] ingest | m-menutext phase-2 table and port spec
+Unit m-menutext (`src/main/8004E500.c`, `src/main/8004F6B0.c`, `src/main/8004F870.c`, 61 functions): read the matched C, its callers and callees, the core and scheduler tables, and probed behaviour on the emulator (title-menu save state, GameState bytes poked, a copy of the probe runner with a `--poke` option kept in `build/scratch`): text entries, a dialogue block and its six-line scroll, menu navigation on the settings screen in menu modes 1 and 3, voice gating, the name builders for all 16 girl ids through TEL lines loaded by the overlay loader, and the girl score pipeline checked against a Python model. Wrote `config/renames/proposals/m-menutext.tsv` (150 rows: 10 func, 53 data, 3 field, 5 file, 56 const, 23 comment) and [[spec/m-menutext]], linked from [[spec/index]]; ticket [[tickets/T-27018-p2-m-menutext]] In Review.
+Findings: a text screen is a 52-entry list whose glyph slots are consecutive, so the mark/reset helpers rewind the glyph allocator; a dialogue block is a run of entries with a three-row window that scrolls from the fourth line; the player form in dialogue name codes always comes from the current girl; the two girl rank functions differ by design; girls 13 and 14 score as 0 and 1; the closeness grid and points formulas of `girl_scores` match the original for 11 girls in two poked scenarios; the spare name slot 15 is girl 10's given name. Disagreements with core are listed in the spec (section 16), not as second table rows.
+
+## [2026-10-24] ticket | T-27018 review round 1 fixes
+Fixed the three blocking review findings of [[tickets/T-27018-p2-m-menutext]] and the non-blocking ones in `config/renames/proposals/m-menutext.tsv` (153 rows: 10 func, 54 data, 4 field, 7 file, 54 const, 24 comment; 4 start with HYPOTHESIS), [[spec/m-menutext]], `GLOSSARY.md` (new rows `closeness`, `points`) and one line of [[spec/m-scheduler]] (`girl_points_others`). Blocking: the `NAME_CODE_PLAYER` and `NAME_CODE_GIRL` rows are dropped (m-dates-b owns `NameCode`), the `TextSpeed` rows stay here and m-sysmenu must drop its duplicates; the names with unlisted prefixes now use `girl_`, `speaker_` and `mode_` (`param_`, `voice_`, `debug_` are not used); `girl_points_heroines` is `girl_points_others`, `GIRL_HEROINE_COUNT` is `GIRL_SCORED_COUNT`, the honorific strings are `girl_name_suffix_familiar` and `girl_name_suffix_polite`. Non-blocking: the Shiori minimum table is labeled at 0x800B4340 with `D_800B4341` as alias, `girl_scores` lists its ten call sites, cd state masks are written as values, the reset keeps the speed, `TEXT_SPEED_CLAMP`, the page-wrap and break-capacity wording, a comment row for `text_set_advance`, headers split by topic. Core renames (`text_block_first`, `text_block_end`, `color`, `ot_slot`) and the `func_800460EC` double name (core versus h-cdio) are requests in spec section 16. `rename.py plan` on the 80 func, data and field rows: 0 problems.
+
+## [2026-10-24] ticket | T-27018 Done
+[[tickets/T-27018-p2-m-menutext]] passed review round 2 (approved, no findings): the NAME_CODE rows are gone and the spec cites m-dates-b's `NAME_CODE_PLAYER_FORM` and `NAME_CODE_GIRL`, and the renamed names use the ADR main-map prefixes. One follow-up for the m-sysmenu merge: its three `TEXT_SPEED_*` rows duplicate this table's `TextSpeed` rows and must be dropped there (spec section 16 of [[spec/m-menutext]]). The branch changes only `config/renames/proposals/m-menutext.tsv`, [[spec/m-menutext]], [[spec/index]], [[spec/m-scheduler]] (one line), `GLOSSARY.md` and wiki pages; nothing under `src/`, `include/` or the symbol files. Merged as p2a-m-menutext.
+
+## [2026-10-24] ingest | T-27017 phase 2 m-sysmenu: names and port spec for the player's room screens (src/main/8005A0B0.c)
+[[tickets/T-27017-p2-m-sysmenu]] (In Review): the file behind the unit label "system menus, clubs, rumors, holiday prep" holds eight screens over the player's room picture: the weekly command screen (mode 0x34, stages 0, 1, 0xFF), the calendar check, the memory-card data screen, the system settings with the mascot list, club joining, the rumor report (mode 0x44) and the Christmas and New Year preparation (modes 0x42, 0x41). `config/renames/proposals/m-sysmenu.tsv` has 264 rows (92 func, 27 data, 1 field, 126 const, 16 comment, 2 file; 7 HYPOTHESIS); the spec is [[spec/m-sysmenu]].
+Findings: the build step of the command screen picks usable icons by tomorrow's calendar marker (exam, club season, culture festival, school trip), the remedial week flag and health; weekday club joining cannot be reached (icon 4 is locked without a club); the data screen keeps a slot directory in the system file and a background write job; loading a first-day or ending-day save starts a new run; the click speed change always yields the minimum; the mascot menu starts one item off. Emulator checks used the HUD unit's command screen state: icon to stage mapping, settings flow, calendar, the three click spots in mouse-like mode, and the data screen through a real save and load on the virtual card (the scan is slow there; a load at an ordinary date rebuilds the command screen twice). `tools/rename.py plan` on the func, data and field rows: no collision. Unapplied O.BIN names (`system_config_*`, `data_save_load*`, `game_mode*`) are quoted in notes as evidence only.
+
+## [2026-10-24] ticket | T-27017 m-sysmenu review round 1 fixes
+[[tickets/T-27017-p2-m-sysmenu]] (still In Review): the reviewer found two blocking problems and several smaller ones in `config/renames/proposals/m-sysmenu.tsv` and [[spec/m-sysmenu]]. Fixed: the field row for the club flag byte is dropped (the scheduler and HUD tables already name `ClubRecord.flags` and `ClubFlagBits.quit`), so the table has 263 rows (0 field); the club activity affection bonus cites `CharFlags.b2` by its merged name `acquainted` and leaves its meaning to that table's HYPOTHESIS; two sound rows moved into the holiday unit's `UiSe`; `CLUB_JOIN_MESSAGE_*`, `RumorStage`, a separate `MascotMenuItem`, `system_data_flags_view`, and the card poll results merged into `CardResult` with the flow table's names; `room_click_window` marked HYPOTHESIS. Spec corrections: stage 0xFF is entered by NAME_ENT (twice) and the data screen load, not by OPTION; ETC has its own clone of the save init; the room background load is not shared with the weekday screen; foreign callee names now follow the flow and menutext tables; dialogue paraphrases cut to topics; open questions 1a (romaji helper stem) and 1b (`room_` owner) added. `tools/rename.py plan` on the 119 func and data rows: exit 0, 44 files, no problem (with and without the gcc proof).
+
+## [2026-10-24] ticket | T-27017 Done
+[[tickets/T-27017-p2-m-sysmenu]] passed review round 2 (approved, no findings): the `quit_flags` row is gone (the club flag byte stays `ClubRecord.flags` / `ClubFlagBits.quit`), `CharFlags.b2` is cited as `acquainted` with no meaning of its own, and the stage 0xFF, ETC init clone and `UiSe` sound rows match `src/main/8005A0B0.c`, `80144AD0.c`, `80139740.c`, `8013A550.c` and `80143240.c`. The branch changes only `config/renames/proposals/m-sysmenu.tsv`, [[spec/m-sysmenu]], [[spec/index]], the ticket and the log; nothing under `src/`, `include/` or the symbol files. Open follow-up for the table merge: the three `TEXT_SPEED_*` const rows duplicate [[spec/m-menutext]]'s `TextSpeed` rows and should be dropped from `m-sysmenu.tsv` then. Merged as p2a-m-sysmenu.
+
+## [2026-10-24] ingest | Phase 2 analysis of the main flow unit (T-27019)
+Read `src/main/80041000.c`, `800420D0.c`, `80042540.c`, `80042A00.c`, `800789E0.c`, `80061710.c` and `80053650.c` (115 functions: boot and `game_state_init`, the frame loop, the mode dispatcher and overlay loader with its sector and entry tables, the TT loader, pad and mouse polling, the title screen, the memory-card layer) with their callers, and probed the emulator from the title menu (title timings, the pad code, the soft reset, the loader read, the card check, initial game data). Wrote [[spec/m-flow]], `config/renames/proposals/m-flow.tsv` (312 rows, 3 HYPOTHESIS) and [[tickets/T-27019-p2-m-flow]] (In Review). Found: core's `MainMode` entries for modes 0x74-0x76 are in a different order than the loader code; `unk_1117` is a card bank index; the title pad code starts the opening movie; the loader skips the read for a resident file.
+
+## [2026-10-24] ingest | m-flow table and spec completed (T-27019)
+Finished [[spec/m-flow]] and `config/renames/proposals/m-flow.tsv` (324 rows: 87 func, 48 data, 44 field, 1 type, 10 comment, 14 file, 120 const; 3 HYPOTHESIS rows; every one of the 115 functions has a name, 28 from core, the patch or O.BIN). Added the eight card event handles, the ordering-table alias labels and the mode request table (section 3.9) after the first commit; the title pictures are `photo`, not `card`, so `card` stays the memory card. `tools/rename.py plan` on the func, data, field and type rows reported no problem. Open points for the reviewer are in section 10 of the spec (mode 0x74-0x76 entry order in core, `unk_1117` as a card bank, the shared `CardResult` names with m-sysmenu, prefix rows of the ADR and glossary).
+
+## [2026-10-24] ticket | m-flow review round 1 fixes (T-27019)
+[[tickets/T-27019-p2-m-flow]] review blocked on missing HYPOTHESIS marks. Added them to seven rows of `config/renames/proposals/m-flow.tsv` (the five overlay-folder `OvlLba` constants that the ADR map keeps as `confirm`, `CARD_RESULT_IO_ERROR`, `extra_mode_flags`) and to the matching places in [[spec/m-flow]] (3.4 table and note, 3.7, 6.1, 7); the table now has 10 HYPOTHESIS rows of 324. Applied the review's wording findings (`card_file_exists` open counts, the pad code window of 15 frames between steps and 241 frames set, the title idle clock restarting on every up or down press, the callers of `pad_update`, the unnamed display call in TT stage 2, the `pad_raw_read` no-device path) and added merge notes as spec open questions 11 and 12 (`D_80122D44` name versus the o-date table, shared-name disagreements, alias rows). No `src/`, `include/` or symbol-file change; the ticket stays In Review.
+
+## [2026-10-24] ticket | T-27019 Done
+Review round 2 of [[tickets/T-27019-p2-m-flow]] approved with no findings: the seven HYPOTHESIS marks added in `0cdb9358c` (five overlay-folder `OvlLba` constants, `CARD_RESULT_IO_ERROR`, `extra_mode_flags`) are in `config/renames/proposals/m-flow.tsv` (324 rows of 5 columns, 10 marked HYPOTHESIS) and in [[spec/m-flow]] (3.4, TT stage 0, 6.1, 7), and the reworded `card_file_exists` open counts, `pad_code_update` window and title idle clock match the C. The branch changes only the table and wiki files (nothing under `src/`, `include/` or `config/symbol*`). Ticket set to Done; branch p2a-m-flow goes to the merge into w2-good. Merging the table into the rename tool input stays open on the ticket.
+
+## [2026-10-24] ingest | T-27022 phase 2 naming proposals and port spec for overlay DATE (dates)
+Unit o-date (`src/ovl/DATE`, 668 functions, 19 files): read the matched C, the 72 step tables of the overlay data and the callers in main, grouped the 300 mechanical step functions by pattern and checked behaviour in about twenty short emulator runs from a boot-to-title state (a scratch copy of the emulator wrapper with a memory-poke option, kept in `build/`, wrote mode, girl, place, calendar and parameter values). Wrote `config/renames/proposals/o-date.tsv` (1,120 rows, 18 with a HYPOTHESIS mark) and [[spec/o-date]] under [[tickets/T-27022-p2-o-date]] (In Review). No `src/`, `include/` or symbol-file edits.
+Findings: mode 0x50 has four stages (arrival, place, girl birthday gifts, player birthday); the 21 places share one step template and the answer is scored `n x trivia tier x place affinity / 16` per counter (checked in the emulator); a meeting-place question arises when the chosen place differs from the true appointment place; `date_end` counts the visit, stores the last date spot (looks >= 35, or >= 30 except Mira), applies the Golden Week and festival bonuses and the -40 syoushin; a third date in a row at one place from 1996 starts the street-gang ambush; mode 0x5E hosts 48 special date events (11 girls x 4-5 seasons, plus two Miharu intrusions) with a trigger table and fixed rewards.
+
+## [2026-10-24] ticket | T-27022 review round 1 fixes
+Fix pass on [[tickets/T-27022-p2-o-date]] after the Opus review (not approved, three blocking findings). `config/renames/proposals/o-date.tsv` (now 1,103 rows): the main-symbol rows left the unit table (`D_80122D44` is `scene_effect_flags` from m-flow; the other 17 are 18 request rows in `config/renames/proposals/o-date-main-requests.tsv`, including a `DialogueWork` field row for the launch code); every `event` name became `scene` (about 450 tokens, the kept patch names `date_event_trigger` and `date_event_choose` are rename rows now); the five `narration` names carry HYPOTHESIS and the other notes say what the code shows (id 14, core `GIRL_SOTOI`); content errors in three notes fixed (special reaction lines, sea not covered, looks thresholds); neutral names for the festival portrait loader, the park talk cursors and the literal-bearing step names; alias row `func_80132004`. `rename.py plan` over the func, data, type and field rows: 0 problems. [[spec/o-date]] updated to match (section 3 requests, 5.6, 6, 13 run table with every memory write, 14 notes on mode 0x5C and id 14, 15 open questions 8-10); [[spec/index]] says 48 special date scenes. No source, header or symbol file touched. The ticket stays In Review for the second review.
+
+## [2026-10-24] ticket | T-27022 Done after review
+[[tickets/T-27022-p2-o-date]] passed review round 2 (approved, no findings): the `scene_effect_flags` writers in [[spec/o-date]] match the C, no new name contains the word `event`, and the five `narration` names carry HYPOTHESIS. Tables and wiki only, nothing under `src/`, `include/` or `config/symbol*` (checked against the merge base). Merged as p2a-o-date.
+
+## [2026-10-24] ingest | Phase 2 o-bunkaken: names and port spec (T-27026)
+
+Unit BUNKAKEN (`src/ovl/BUNKAKEN/`, 18 files, 201 functions, main mode 0x71, the culture festival for players outside the six culture clubs): read the matched C, the overlay data tables, the disc script, background, portrait and sound files by sector, the core and scheduler spec tables, and probed behaviour in the emulator (title-menu save state, loader forced to mode 0x71, a local copy of the probe runner with `--poke` and `--sample`, kept in `build/scratch`, not committed). Wrote `config/renames/proposals/o-bunkaken.tsv` (457 rows: 201 func, 172 const, 40 data, 19 file, 15 field, 10 type; 2 start with HYPOTHESIS) and [[spec/o-bunkaken]], linked from [[spec/index]]; ticket [[tickets/T-27026-p2-o-bunkaken]] (In Review). Prefix `festival_visit_`.
+Findings: the overlay is a table of 142 stage handlers (13 of them routers) run under an 11-phase entry; the visit is invitation (best-liked girl above 50 tokimeki and 80 affection), companion picker, six-club menu and one of 122 exhibit scenes chosen by club, year and girl; the only state it changes is the companion's affection and tokimeki (year tables, 9 + 11 + 11 rows), the refused girl's affection and syoushin, two birthday scenes, the `acquainted` bit and the event log; the festival words live inside the 0x100-byte `overlay_scratch` that the entry zeroes at the end; BUNKASAI differs by scoring from the player's own club and by setting the follow-up call flags.
+
+## [2026-10-24] ticket | T-27026 fix pass after review round 1
+Fixed the three blocking findings of [[tickets/T-27026-p2-o-bunkaken]] and the non-blocking ones. (1) Prefix: the table now uses the ADR row for BUNKAKEN, folder `culture_festival_tour`, prefix `tour_`, types `Tour*`, constants `TOUR_*`, header `include/ovl/culture_festival_tour.h` (the six-club menu and the visit structure confirm the "confirm" row; ADR and GLOSSARY are not edited). The nine shared festival words of main scope now carry the `culture` stem and agree with the BUNKASAI table where it names the address (`culture_phase`, `culture_exhibit_club`, `culture_visitor_girl`, `culture_show_variant`, `culture_return_stage`, `culture_return_step`, `culture_fortune_result`); D_80122E98 is `culture_display_skip` (BUNKASAI: `culture_default_disp_off`) and D_80122EA4 is `culture_refused_girl`. The TT flag bits use the o-tt names `direct_mode` and `stage_select`. (2) Abbreviations: `lit`, `comp`, `y95`-`y97`, `min`, `wrapup`, `fn` and `bustup` are spelled out (`literature`, `computer`, `1995`-`1997`, `minimum`, `wrap_up`, `handler`, `portrait`); `FV_` became `TOUR_`. (3) Spec 5.2 and the note of `tour_invitation_pick_girl` rewritten: girl 0 is gated by weighted affection only and seeds the running maximum, so a Shiori with affection of 80 or more and tokimeki under 50 blocks every girl with a smaller or equal sum; added to the quirks and confirmed in the emulator (title-menu save state, loader forced to mode 0x71; Shiori raw affection 100 and tokimeki 45 with girl 4 at sum 115: stage 1 and no invitation; girl 4 alone: companion 4). Also fixed: group wording of 5.3 steps 31-41 (second club), the per-route list of the solo fallback in 5.5, `acquainted` and `festival_call_95/96` cross-unit notes, setter note names (`tour_invite_script_setter[n]`), `tour_fortune_wait_counter`. Correction to the entry above: the table has 1 row that starts with HYPOTHESIS, not 2. `tools/rename.py plan` on the func, data, field and type rows: 266 rows, no problem (const and file rows are applied by other subcommands). The earlier entry keeps the name `festival_visit_` as history.
+
+## [2026-10-24] ticket | T-27026 Done after review
+[[tickets/T-27026-p2-o-bunkaken]] passed review round 2 (approved, no findings): all 457 rows follow the ADR row for BUNKAKEN (`culture_festival_tour`, `tour_`, `Tour*`, `TOUR_*`), the nine main-scope festival words carry the `culture` stem, and the abbreviations `lit`, `comp`, `y95` to `y97`, `min`, `wrapup`, `fn` and `bustup` are spelled out. The one open point is `tt` in four names, which is the TT overlay's own stem and not yet a glossary row (not blocking). Tables and wiki only, nothing under `src/`, `include/` or `config/symbol*` (checked against the merge base). Merged as p2a-o-bunkaken.
+
+## [2026-10-24] ingest | T-27023 phase 2 analysis of overlay EVENT
+Analysis of `src/ovl/EVENT` for [[tickets/T-27023-p2-o-event]] (phase [[tickets/T-27000-phase-2]]). The overlay is a dead development copy of the girl-scene, place-date and ride-movie code, linked against another build of the main program: none of its 135 main-side call targets is a function start of the shipped exe, 53 lie below the shipped text, its script loaders match the shipped `SERIFU/EVENT_xx.BIN` and `DATE_xx.BIN` sector counts for 10 of 12 and 10 of 11 files. Written: `config/renames/proposals/o-event.tsv` (1126 rows, passes `rename.py plan`), `o-event-devmain.tsv` (121 aliases of stale main addresses, which the tool refuses as overlay rows) and `o-event-deferred.tsv` (6 data names declared in `include/main_api.h`); the port spec [[spec/o-event]] and its step-table appendix [[spec/o-event-steps]]; the line in [[spec/index]]. Nothing under `src/`, `include/` or `config/symbol*`. Answers the EVENT half of [[tickets/T-0200-event-gyozi-loader-and-address]] (no loader exists). Ticket In Review; the board card is moved by the kanban sync.
+
+## [2026-10-24] ticket | T-27023 review round 1 fixes
+Fixed the three blocking findings of the review of [[tickets/T-27023-p2-o-event]] (still In Review) and the non-blocking ones; only tables and wiki pages changed (`config/renames/proposals/o-event.tsv`, `config/renames/proposals/o-event-devmain.tsv`, [[spec/o-event]], the ticket). Rule status: EVENT's outcome score and close step differ from the shipped DATE, so [[spec/o-event]] has a new section 7.0 (12 differences, DATE authoritative: factor b of the outcome score, the destination of the third term, the tokimeki bonuses and the 0x28 reduction in the close step, the repeat-reaction conditions, one athletics threshold, outcome ids one lower, the ride latch, a wrong girl index in the Yuina park bonus), and sections 7.5, 7.6, 10 and the function notes say so. The ride variant is bit 0 of the girl's event counter of the ride (the "ride-seen bit" reading is gone, game meaning HYPOTHESIS), and the other place variants use the same counter parity. EVENT's private views use core's names (`syoushin`, `event_counters`, `girl_last_date_spot`, `saved_mode/stage/step`, `appt_place_0`, `appointment_flag`, `pad_pressed`, `screen_center_x/y`), with a dev-to-shipped offset table in spec section 9; two names stay open between units (spec section 11). The table has 1136 rows (49 field rows, 17 whose note starts with HYPOTHESIS); `tools/rename.py plan` over its 1099 non-file/dir/const rows exits 0 with no PROBLEM line (`build/` output, not committed). Counts reworded and the 675 recount (closest sibling in DATE 559, GEKO 87) are in the spec; 25 position-only step names got behaviour notes.
+
+## [2026-10-24] ticket | T-27023 Done after review
+[[tickets/T-27023-p2-o-event]] passed the round 2 review (approved, no findings): the three blocking findings of round 1 are resolved, [[spec/o-event]] section 7.0 states that the shipped DATE is authoritative where EVENT's outcome score and close step differ, and the rows and spec lines of the fix pass match the C. Tables and wiki only; nothing under `src/`, `include/` or `config/symbol*`. Moved to Done; the board card is moved by the kanban sync in the merge step.
 
 ## [2026-10-24] ingest | Phase 2 o-bunkasai: names and port spec (T-27025)
 Unit `o-bunkasai` ([[tickets/T-27025-p2-o-bunkasai]], In Review): read the matched C of the BUNKASAI overlay (207 functions, 20 files in `src/ovl/BUNKASAI/`), its callers in the main exe and in BUNKA_SD, the TT spec and the core, scheduler and scene-library specs. Wrote [[spec/o-bunkasai]] and `config/renames/proposals/o-bunkasai.tsv` (prefix `culture_`). Findings: the overlay is the club-member festival (mode 0x70 for player club ids below 6; BUNKAKEN is the rest); it is one phase machine (10 phases) plus a 165-entry stage table of 15 blocks (visit blocks per heroine, four club-mate blocks, a shared fortune stage, a TT game launcher and its re-initialisation stage); the festival result adds a club-derived bonus plus half a 13x6 gain-table value to every girl's tokimeki and 2 affection to the visitor; the computer-club 1996 exhibit launches the TT game in demo mode and unlocks it; girl 0's birthday scene hangs on the end of the festival. The overlay is reloaded after every sub-scene, which is why its scene variables sit in main bss. Emulator probes (memory pokes into the title-menu state) confirmed the phase and stage order, the result formula, the fortune table and the birthday path. The table has 360 rows (208 func, 67 data, 8 field, 10 type, 21 file, 46 const; the `rename.py plan` dry run passes for func, data, field and type rows); 78 emulator runs reproduced the stage tables. Names go through `tools/rename.py` later; this pass wrote tables and wiki pages only.

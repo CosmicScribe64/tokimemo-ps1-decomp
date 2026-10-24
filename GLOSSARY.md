@@ -95,6 +95,8 @@ The nine parameters are words at GameState 0x0FC-0x11C, in the order of the name
 | tokimeki | a girl's heart-throb score (girl record +2); the tokimeki meter | `tokimeki` | K | O.BIN (`get_h_tokimeki`), code |
 | zyotai | a girl's state: a rank 0-4 computed from affection and tokimeki | `girl_state` | T | O.BIN (`get_g_zyotai_h`), code |
 | syoushin | a per-girl counter (record +0xA) that rises by 5 a day while affection is under 10; meaning unknown | none yet | | O.BIN (`syoushin_up`), code |
+| closeness | the first value `girl_scores` computes per girl: a lookup of her tokimeki and affection scores in a 20 x 20 grid; the scheduler's encounter and invitation tests, ETC's best-girl pick and the command screen's rank bars read it. The game has no word for it; the guess is only the English word | `closeness` | T | code (HYPOTHESIS: the word) |
+| points | the second value `girl_scores` computes per girl: closeness, syoushin, parameters and event counters combined; the scheduler and ENDING compare it with 500 (0x1F4). The ending-candidate reading is a guess; the number itself is plain | `points` | T | code (HYPOTHESIS: the ending-candidate reading) |
 | blood type | the player's blood type, entered at the start | `blood_type` | T | strings |
 
 ## Calendar and days
