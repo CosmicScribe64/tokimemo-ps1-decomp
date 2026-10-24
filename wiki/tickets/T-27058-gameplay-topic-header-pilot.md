@@ -1,7 +1,7 @@
 ---
 id: T-27058
 title: Extract scheduler, day-event and school-day topic headers
-status: In Progress
+status: Done
 assignee: integration
 created: 2026-10-24
 updated: 2026-10-24
@@ -14,10 +14,10 @@ Move the reviewed63existing declarations into include/main/schedule.h, day_event
 
 ## Acceptance criteria
 
-- [ ] Exact reviewed declaration extraction with preserved evidence comments, no duplicate canonical declarations.
-- [ ] All437snapshot payloads compare0benign/0check/0risky, header/rename/aggregate guards pass.
-- [ ] Clean Docker27/27hashes and6952functions, independent code review resolved before Done.
-- [ ] Living header/file documentation and tracker updated; umbrella deletion remains a later full-tree gate.
+- [x] Exact reviewed declaration extraction with preserved evidence comments, no duplicate canonical declarations.
+- [x] All437snapshot payloads compare0benign/0check/0risky, header/rename/aggregate guards pass.
+- [x] Clean Docker27/27hashes and6952functions, independent code review resolved before Done.
+- [x] Living header/file documentation and tracker updated; umbrella deletion remains a later full-tree gate.
 
 ## Comments
 
@@ -28,3 +28,5 @@ Move the reviewed63existing declarations into include/main/schedule.h, day_event
 2026-10-24 matching proof: strictCLIcompare0benign/0check/0risky; cleanDockerbuildexited0 with27/27SHA1and6952/6952functions(2276920/2276920bytes). All437Csourcefiles remain byte-unchanged in this extraction. The3topicheadersarelive. Independentfinalreview remains pending; removal of the forwarding umbrella and wider shared-type/header migration remain separate work.
 
 2026-10-24 final-review fixes: moved orphan T-25049 and T-14501evidence comments beside their declarations in school_day.h/schedule.h; added the plan's explicit topic includes to scheduler.c and school_day.c while retaining game.h state closure. No bodies/types change: both Cfiles differ only by5include lines; other435remainbyte-identical. Rechecked all437viewpayloads0/0/0 andheaderguard0problems. Original437unchanged claim describes the initial declaration-only extraction; finalsourceincludes are the deliberate reviewed follow-through. Post-fix matching rebuild is recorded separately.
+
+2026-10-24 closeout: integrated implementation and independent Standards/Spec reviews pass; all findings resolved. T-27044 has clean27/27 plus unchanged path-mapped declaration views; T-27054 has exact reviewed manifest integration and23header/95prototype tests; T-27057 has78rename tests and both reviews; T-27058 has63exact declaration moves, all437views0/0/0, clean27/27 and post-review27/27 with6952functions. The two T-27058 evidence/direct-include findings were fixed in0be7fbcb7 and independently verified. Broader phase2 remains In Progress.

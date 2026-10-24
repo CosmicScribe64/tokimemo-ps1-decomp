@@ -1468,3 +1468,167 @@ Regenerated [[tickets/catalog]]: 978 tickets, 598 sections, 3,106 functions. Fix
 ## [2026-10-24] lint | Finish the local continuation checkpoint
 
 Final wiki lint: zero broken links and zero ticket/kanban mismatches; only the pre-existing large-page warning. git diff --check is clean. Saved separate analysis commits f1da18ddd (sports), 8752deefc (GEKO), 028fa0a84 (seasonal) and f780ba05c (telephone/options), all explicitly In Progress. Applied weekday code is 6036b5a86 with documentation correction a7a3dd221; no source changes after clean proof. [[tickets/T-27040-school-day-readable-batch]] is Done; the broader [[phase2]] remains open. All subagents have handed off their outputs.
+
+## [2026-10-24] ticket | Continue phase 2 toward completion
+
+User requested continued work and notification on actual completion. Claimed [[tickets/T-27009-p2-reconcile]] for Sol 6.1 and [[tickets/T-27035-p2-o-master-ending]], [[tickets/T-27036-p2-o-bunkasd-shugaku]] for bounded Luna analysis. An hourly thread follow-up complete-tokimemo-phase-2 resumes verified work between sessions; no routine notifications, completion or required-action notifications only. Current completion criteria and clean 27/27 proof remain binding.
+
+## [2026-10-24] ticket | Claim scheduler application and enum tooling
+
+Created [[tickets/T-27041-scheduler-readable-batch]] for the reconciled scheduler batch and [[tickets/T-27042-enum-rename-support]] for the remaining enum rename blocker. Claimed [[tickets/T-27037-p2-o-small]] for Luna entry-flow analysis. Scheduler preflight currently resolves 40 body-backed rows; independent table review precedes application.
+
+## [2026-10-24] build | Add checked enum-identifier rename support
+
+[[tickets/T-27042-enum-rename-support]] implements enum tags with type rows and existing member names with enumerator rows. All 73 synthetic rename tests pass in Docker after correcting a new enumerator-vs-guard-suffix false positive. [[rename-tool]] documents the supported path; no game enum names applied. Independent review remains pending. [[tickets/T-27041-scheduler-readable-batch]] received independent Sol 6.1 table approval; evidence-note corrections are resolved before application.
+
+## [2026-10-24] build | Correct enum tooling review findings and build scheduler
+
+[[tickets/T-27042-enum-rename-support]] independent review found three P2 defects, now covered by synthetic regressions: declaration-scoped enum checks/replay, cross-header aliases and case-insensitive target collisions. All 76 rename tests pass in Docker. [[tickets/T-27041-scheduler-readable-batch]] apply passed with 780 ledger rows; clean Docker build and census are running. No enum game identifiers have been changed.
+
+## [2026-10-24] build | Apply and document the scheduler names
+
+[[tickets/T-27041-scheduler-readable-batch]] applies the approved forty-row table: all33 remaining scheduler placeholder functions, one pre-existing non-O.BIN name and six owned globals. rename.py plan/apply passed; [[spec/m-scheduler]] refreshed against ledgers with corrected last-picked-girl semantics. Clean build and final two-axis review remain pending. Enum tool review fixes were independently verified: all three P2 findings resolved and their three regressions pass.
+
+## [2026-10-24] ticket | Expand the fan-out across chats
+
+User explicitly requested many agents across multiple chats if necessary. Created [[tickets/T-27050-parallel-main-reconciliation]], [[tickets/T-27051-parallel-overlay-reconciliation]] and [[tickets/T-27052-phase2-completion-audit]] as disjoint coordination lanes. Worker chats may manage subagents, but only prepare/review assigned tables and specs; this primary chat remains the sole source applicator, build coordinator, committer and shared-wiki owner.
+
+## [2026-10-24] ticket | Dispatch parallel chats and prepare game-mode enums
+
+Three user-authorized chats now own disjoint main reconciliation, overlay reconciliation and completion/header planning lanes: [[tickets/T-27050-parallel-main-reconciliation]], [[tickets/T-27051-parallel-overlay-reconciliation]], [[tickets/T-27052-phase2-completion-audit]]. IDs and non-overlap rules are in their tickets and ignored orchestrator state. Created [[tickets/T-27043-game-mode-enum-names]] with 69 mechanical enum naming rows. Scheduler clean build passed 27/27 and 6,952/6,952; final spec corrections await narrow verification.
+
+## [2026-10-24] ticket | Enum tooling In Progress -> In Review
+
+[[tickets/T-27042-enum-rename-support]] In Review after 76 passing Docker synthetic tests, independent Standards review with zero findings and independent verification that all three Spec findings are resolved. The scheduler clean build also passed all27 hashes with the current tool checks.
+
+## [2026-10-24] ticket | Enum tooling In Review -> Done
+
+[[tickets/T-27042-enum-rename-support]] Done after 76 passing Docker synthetic tests, independent Standards review with zero findings and independent verification that all three Spec findings are resolved. The scheduler clean build also passed all27 hashes with the current tool checks.
+
+## [2026-10-24] decision | Correct stale NAME_ENT mode meanings before acceptance
+
+The completion-audit chat surfaced known NAME_ENT mode-label mismatches in the original core enum. [[tickets/T-27043-game-mode-enum-names]] prefix-only application was interrupted during check after its write, then its exact67owned files and new69row ledger were rolled back to the committed state. No other source edits were present. Revised table maps0x11toopening,0x13tofile selection,0x14toname entry and0x15toprologue using loader/spec evidence; fresh review precedes application. The verified scheduler batch remains committed and intact.
+
+## [2026-10-24] ticket | Scheduler readability In Progress -> In Review
+
+[[tickets/T-27041-scheduler-readable-batch]] In Review after clean Docker 27/27 SHA1, independent rehash27/27 and 6,952/6,952 functions. Standards found zero issues; Spec found two documentation issues fixed at c4151d9f6 and independently verified resolved. Normalized C/header diff matched the forty approved identifier substitutions exactly.
+
+## [2026-10-24] ticket | Scheduler readability In Review -> Done
+
+[[tickets/T-27041-scheduler-readable-batch]] Done after clean Docker 27/27 SHA1, independent rehash27/27 and 6,952/6,952 functions. Standards found zero issues; Spec found two documentation issues fixed at c4151d9f6 and independently verified resolved. Normalized C/header diff matched the forty approved identifier substitutions exactly.
+
+## [2026-10-24] ingest | Checkpoint the last three analysis-unit drafts
+
+[[spec/o-master-ending]], [[spec/o-bunkasd-shugaku]] and [[spec/o-small]] now exist with 10,7and13proposed function rows. Independent Sol6.1 audit corrected MASTER attribution/companion identity, ENDING audio-level purpose, DATE2/VALEN Shiori targets, VALEN candidate callback and KANGEI/OMIMAI entry dispatch. Verification resolved every finding; root clarified remaining flag-byte wording. Coverage remains partial and tickets In Progress. These drafts make all28unit spec pages present, not all28units complete.
+
+## [2026-10-24] lint | Normalize new draft table syntax
+
+Two Luna outputs used a bare header and function instead of the tool's func kind. Root normalized headers/kinds and leading hypothesis markers, then parsed all three new tables with tools/rename.py:10MASTER/ENDING,7stage/trip and13small-overlay rows. These remain documentary partial proposals, not application approval.
+
+## [2026-10-24] decision | Prioritize logical files, topic headers and proven constants
+
+User clarified that logical C filenames and header breakdown deserve explicit implementation time, and named constants should replace proven magic IDs/flags/thresholds throughout phase2. Shared priorities were sent to all three parallel chats: prepare separate supported file-move tables, exact header ownership/include plans and context-specific constants inventories, reusing core enums and leaving unclear literals alone. No blanket replacement or source restructuring is authorized in worker lanes; primary integrates with view and matching proofs.
+
+## [2026-10-24] build | Apply corrected game-mode names
+
+Revised [[tickets/T-27043-game-mode-enum-names]] collision-only dry plan passed69rows/67files; full apply then passed builtin gcc/prototype proofs and rename check (849ledger rows). Four NAME_ENT roles now read opening, file selection, name entry and prologue at0x11/13/14/15, and two stale source comments were corrected per independent review. Numeric values and ten existing hypothesis comments are unchanged. Clean Docker build/census are running; final proof and code review remain pending.
+
+## [2026-10-24] ticket | Start engine-independent asset export lanes
+
+User explicitly requested asset readers/exporters for the decomp, especially translation-ready text and standard image/audio outputs, while deferring direct Godot work. Existing T-0002 covers disc/build extraction only; created [[tickets/T-28000-asset-export-pipeline]] through [[tickets/T-28003-original-input-assets]]. [[asset-export]] records scope, primary SM64/OoT references and lossless/provenance requirements. Added .asset-cache/ to gitignore before extraction; build cleans must not delete export work.
+
+## [2026-10-24] ticket | Dispatch text and general asset exporter teams
+
+[[tickets/T-28001-text-script-export]] now has its own Sol6.1-led chat, while [[tickets/T-28002-media-asset-export]] and [[tickets/T-28003-original-input-assets]] share a separate media/input coordinator with disjoint module ownership. Both can delegate bounded Luna work and hard Sol review. No Godot project/integration is authorized. Hourly follow-up now preserves these user scope changes and tracks all five chat IDs without duplicate work; it reports actual phase2 completion separately from asset progress.
+
+## [2026-10-24] build | Verify enum names and correct legacy callback annotations
+
+[[tickets/T-27043-game-mode-enum-names]] clean Docker build passed all27hashes and6952functions. Corrected the three old MASTER callback-address comments against src/main/800789E0.c in addition to the reviewed NAME_ENT comments; an incremental rebuild follows those comment-only fixes. Refreshed primary-owned [[spec/core]], [[spec/m-flow]], [[spec/m-weekday]], [[spec/m-scheduler]], [[game-state]] and [[data-types]] to applied enum identifiers without editing other chats' active specs. Final code review is next.
+
+## [2026-10-24] ticket | Queue logical files, header tooling and final Astra gate
+
+Created [[tickets/T-27044-main-file-name-pilot]] and [[tickets/T-27054-topic-header-tooling]] for concrete structural implementation. User explicitly requested a phase-wide Astra reviewer near wrap-up followed by a separate Astra fix agent: [[tickets/T-27055-final-astra-review]] and [[tickets/T-27056-final-astra-fixes]] are Backlog final gates, not immediate expensive routine workers. [[phase2]] and parent criteria record the gate. Also resolved the final enum-spec finding by removing settled NAME_ENT aliases and updating MASTER prefixes in [[spec/core]].
+
+## [2026-10-24] decision | Require comprehensive text and visual localization coverage
+
+User clarified that all text must be handled masterfully for a comprehensive translation and every Japanese-text image asset must be listed, especially main-screen icons. The 44 unsupported SERIFU files are blocking backlog, not completion. Sent strengthened requirements to text/media chats and created [[tickets/T-28004-japanese-image-catalog]] for image-by-image source/frame/palette/context/review coverage. No translation or replacement art/Godot integration is started. Post-enum comment rebuild and independent hashes pass27/27 with6952functions.
+
+## [2026-10-24] ticket | Game-mode enums In Progress -> In Review
+
+[[tickets/T-27043-game-mode-enum-names]] In Review after clean27/27, post-commentrebuild27/27, independenthash27/27 and6952functions. Standards0findings; Spec1docfindingfixed2f0a3cef5 andverifiedresolved. All68valuesand10hypothesiscommentsunchanged; sourceis69approvedsubstitutionsplus5reviewedcommentfixes.
+
+## [2026-10-24] ticket | Game-mode enums In Review -> Done
+
+[[tickets/T-27043-game-mode-enum-names]] Done after clean27/27, post-commentrebuild27/27, independenthash27/27 and6952functions. Standards0findings; Spec1docfindingfixed2f0a3cef5 andverifiedresolved. All68valuesand10hypothesiscommentsunchanged; sourceis69approvedsubstitutionsplus5reviewedcommentfixes.
+
+## [2026-10-24] ticket | Remove repeated cached-closure fallback work
+
+[[tickets/T-27057-cache-header-closure-lookup]] addresses dict.get(f, tree.closure(f)) eagerly computing an ignored fallback for every already-indexed source. Shared enum-ledger checks amplify it across all437sourcefiles. Add behavioral tests for cached and unindexed paths; scope/proof results must stay identical.
+
+## [2026-10-24] decision | Keep source-paletted color previews for browsing
+
+User requested colored art exports for browsing. Root inspected local main-UI and calendar PNGs (already colored) and distinguished raw-index/STP diagnostic images from display previews. Media coordinator is adding clearly labelled source-CLUT color galleries/variants, preserving raw data and unresolved-palette status rather than inventing colors. [[asset-export]] records the requirement; actualimages remain ignored.
+
+## [2026-10-24] build | Apply the first logical C-file names
+
+[[tickets/T-27044-main-file-name-pilot]] moves src/main/8006CB30.c to src/main/scheduler.c and800737A0.c toschool_day.c throughrename.py. All437prototype-view payloads unchanged after onlythe2path-key mappings;0benign/0check/0risky. Clean27/27SHA1 and6952functions; originalobjectboundaries preserved. Regeneratedobjdiff paths follow names. Finalreview remains pending. User asked whether handoffs are integrated; root is prioritizing finished header-tool and symbol/file packets over new starts.
+
+## [2026-10-24] ticket | Begin live topic-header extraction
+
+[[tickets/T-27058-gameplay-topic-header-pilot]] is active in the primary chat, using the reviewed63declaration plan and integrated topic-aware tooling. User asked whether structural work is actively integrating; primary now performs real extraction, not further planning. Pre/post strict snapshots, guards and clean matching proof are required.
+
+## [2026-10-24] build | Extract the first three real topic headers
+
+[[tickets/T-27058-gameplay-topic-header-pilot]] now creates include/main/schedule.h, day_event.h andschool_day.h with32/5/26existing declarations. main_api.h forwards these leaves; no declarations are added or widened. All437Cfiles byte-unchanged,34intentional omissions preserved, headerguard0problems andstrictviewpayloads0/0/0. Clean matching build isrunning. This is live structural integration of the completed header-team handoff.
+
+## [2026-10-24] ticket | Start exhaustive logical C-file naming
+
+User explicitly requires all game-code C files to have understandable names and asked to start. Created [[tickets/T-27059-all-main-c-file-names]] and [[tickets/T-27060-all-overlay-c-file-names]]; [[phase2]] now makes zero address/number-only C basenames a completion gate. Existing symbol packets remain frozen while parallel coordinators prepare all remaining file-only mappings for root application.
+
+## [2026-10-24] build | Integrate topic-aware header tooling handoff
+
+[[tickets/T-27054-topic-header-tooling]] four-file unified patch is applied byte-for-byte; allbefore/afterhashes verified. Integrated23header and95prototype tests pass, supplementing independentworker355test/probe evidence. Live topicextraction T27058 passes63owners,34omissions,437unchanged Cfiles and0/0/0views. Parent is reviewing/committing completed packets; no new preparatory lane is being started in place of integration.
+
+## [2026-10-24] lint | Resolve live header-pilot review findings
+
+Independent integration review passed filepilotT27044andtoolingT27054. T27058had2findings: orphan evidence comments and missingplanned explicitleafincludes. Moved comments to the proper topicheaders, added5includes across the2logicalCfiles, retainedstateclosure andexactbodies. All437views still0/0/0, headercheck0issues;435Cfilesexactand2include-only changes. Post-fix matching rebuild is underway/completing before acceptance.
+
+## [2026-10-24] ticket | Close verified filename and header pilots
+
+[[tickets/T-27044-main-file-name-pilot]], [[tickets/T-27054-topic-header-tooling]], [[tickets/T-27057-cache-header-closure-lookup]] and [[tickets/T-27058-gameplay-topic-header-pilot]] moved to Done after independent Standards/Spec review and resolved findings. Header review fixes committed0be7fbcb7; exact437view payloads unchanged, clean and post-fix27/27hashes,6952functions.32remaining main file moves are now applying under [[tickets/T-27059-all-main-c-file-names]]; full phase2 is still open.
+
+## [2026-10-24] build | Apply all remaining logical main C filenames
+
+[[tickets/T-27059-all-main-c-file-names]] applied32file-only rows through tools/rename.py. All34main C basenames are now logical. Separate path-mapped snapshot comparison preserves all437declaration payloads exactly0/0/0; original snapshot retained. Standards review passed code/layout, with a stale living-page status finding corrected in [[spec/file-naming-main]]. Clean27hash proof remains pending. Registered completed worker spec/asset pages in [[index]].
+
+## [2026-10-24] ticket | Continue header extraction and essential game constants
+
+Registered [[tickets/T-27061-next-main-topic-extraction]] for the next exact reviewed extraction packet and [[tickets/T-27062-main-essential-locals-constants]] for the four main units' game-meaningful locals and literal sites. Existing247symbol rows remain frozen for root integration. Media lane continues remaining container/CLUT coverage and image-text review; no direct Godot work.
+
+## [2026-10-24] ticket | Cover remaining phase2 reconciliation units
+
+Created [[tickets/T-27063-hardware-main-reconciliation]], [[tickets/T-27064-complex-overlay-reconciliation]], [[tickets/T-27065-festival-overlay-reconciliation]] and [[tickets/T-27066-remaining-overlay-completion]] for disjoint remaining units. Source integration stays serialized in the primary chat while clean filename proof runs. Luna handles bounded reconciliation, Sol6.1 handles complex analysis/review. These are ongoing implementation tickets, not completed coverage.
+
+## [2026-10-24] ticket | Audit remaining core and daily-rule constants
+
+Created [[tickets/T-27067-core-scheduler-essential-completion]] for remaining shared core/scheduler/school-day semantics and exact proven literal sites; existing applied names remain authoritative. This fills the remaining unit ownership gap without changing production source.
+
+## [2026-10-24] decision | Freeze exhaustive overlay filename packet
+
+Committed c3053b47c with all403reviewed file-only mappings across26tables, [[spec/file-naming-overlays]] and its active ticket. All26frozen table hashes verified; full live aggregate plan is running. TT technical basenames preserve TT and assign no new module term/prefix; the folder-specific contributor note is not an extra approval gate for user-authorized basenames. Main32cleanbuild remains in progress with no failures so far. Persistent followup and ignored lane map now include all9chats and continued header/core/constant lanes.
+
+## [2026-10-24] decision | Install the living main object and prefix map
+
+Added src/main/README.md after independent narrow Sol review resolved the shared-data/grouped-ownership omissions. It maps all34logical objects and retains exact existing prefix ownership; corrected source attribution for sound driver/scene library and executable reload/STR playback adds no new prefixes. ADR0001 now points to this living map. [[spec/phase2-completion-audit]] has an explicit post-snapshot integration update without rewriting historical inventories.
+
+## [2026-10-24] ticket | Support precise reuse of existing constants
+
+[[tickets/T-27067-core-scheduler-essential-completion]] confirms club6 as CLUB_BASEBALL and its record index; girl7still has no proven consumer and is not renamed speculatively. Existing const-tool reuse/site limitations are tracked in [[tickets/T-27068-existing-constant-sites]]. Root caught and restored an overly broad ADR-tail edit before commit; Out-of-scope and Consequences sections remain exact.
+
+## [2026-10-24] build | All main C filenames verified and complete
+
+[[tickets/T-27059-all-main-c-file-names]] Done:32file-only moves applied,34logical names,437path-mapped declaration views0/0/0. CleanDocker27/27and6952functions/2276920bytes; independent rehash27/27. Both post-application reviews resolved; no body/prototype/boundary changes. Git staging briefly conflicted with live read-refresh operations; lock cleared normally after identifying active Git, without deleting a live lock. The403overlay file batch remains pending its full live plan.
+
+## [2026-10-24] lint | Review main README prose and final filename proof
+
+Committed5902c2c38 for all34logical main C filenames. Required deslop prose check found two curly-quote leads, removed with the living-map introduction clarification; two primitive/Primitives leads are accurate GPU terminology and retained. The grouped map and object evidence passed independent Sol review.

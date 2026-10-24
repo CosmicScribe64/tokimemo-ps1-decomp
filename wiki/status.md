@@ -11,15 +11,54 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 Continuation checkpoint (local commits, 2026-10-24):
 
+- [[tickets/T-27041-scheduler-readable-batch]] Done: all 33 remaining scheduler placeholder functions,
+  the prior non-O.BIN special-event selector and six owned globals named through rename.py. Independent
+  table/Standards/Spec reviews passed after two documentation corrections. Clean 27/27 SHA1, independent
+  rehash 27/27 and 6,952/6,952 functions. Ledger `config/renames/scheduler.txt`; [[spec/m-scheduler]].
+- [[tickets/T-27042-enum-rename-support]] Done: checked enum-tag/member renames, with all three independent
+  P2 review findings fixed and verified; 76 synthetic tests pass. [[tickets/T-27043-game-mode-enum-names]]
+  Done:69reviewed rows applied, including source-corrected NAME_ENT labels; clean27/27 and postcomment
+  rehash27/27 with6952functions. Values/widths/tenhypotheses unchanged; independent reviews resolved.
+- The phase2 final wrap-up now requires [[tickets/T-27055-final-astra-review]] by one Astra agent, then
+  [[tickets/T-27056-final-astra-fixes]] by a distinct Astra agent, verified fixes and final proof. Do not
+  trigger these expensive final gates during ordinary ongoing batches.
+- Three parallel phase2 chats are preparing/reviewing work only; this primary chat is the sole source applicator,
+  builder, committer and shared-wiki owner. Main units: [[tickets/T-27050-parallel-main-reconciliation]]
+  (chat `01a16f17-083d-73c0-bee3-1c5cdd62caa4`); DATE/NAME_ENT/GEKO:
+  [[tickets/T-27051-parallel-overlay-reconciliation]] (chat `01a16f17-10c2-7373-b02f-dd924f8e7108`);
+  completion/header plan: [[tickets/T-27052-phase2-completion-audit]]
+  (chat `01a16f17-1d7e-75b0-9108-f8600a581705`). Read compact wait_threads status before duplicating work;
+  exact ownership also lives in `.claude/orchestrator/state/p2-codex-parallel.json` (ignored).
+
+- Remaining unit reconciliation is assigned in four additional chats: main flow/hardware
+  [[tickets/T-27063-hardware-main-reconciliation]], complex overlays
+  [[tickets/T-27064-complex-overlay-reconciliation]], festival/miscellaneous overlays
+  [[tickets/T-27065-festival-overlay-reconciliation]] and remaining scenes
+  [[tickets/T-27066-remaining-overlay-completion]]. Luna is used for bounded passes, Sol6.1 for complex
+  analysis/review. Root still serializes all production source integration. Shared daily-rule residue is
+  [[tickets/T-27067-core-scheduler-essential-completion]]; next headers T-27061, essential main sites T-27062.
+
+- Asset/tooling work is separately authorized in [[asset-export]]: text chat `01a16f34-8c5e-7523-a4ff-82fed7cb1639`
+  owns comprehensive text/script extraction (44unsupported SERIFU files remain open); media/input chat
+  `01a16f34-9559-7a53-80cf-6152fc4b9ca6` owns standard image/audio exports, input inventory and Japanese-text
+  image catalog T-28004. No direct Godot work, translation or replacement art. Real outputs stay ignored
+  under `.asset-cache/`; never in build/ or committed fixtures.
+- [[tickets/T-27044-main-file-name-pilot]], [[tickets/T-27054-topic-header-tooling]],
+  [[tickets/T-27057-cache-header-closure-lookup]] and [[tickets/T-27058-gameplay-topic-header-pilot]] are Done.
+  scheduler.c/school_day.c and three real topic headers are integrated; all437views0/0/0,
+  clean27/27 and6952functions, independent reviews resolved. Main all-file naming T-27059 is Done (5902c2c38):34logical basenames, clean27/27and437exact views;
+  overlay all-file naming T-27060 is finishing review. Wider header migration remains open.
 - [[tickets/T-27040-school-day-readable-batch]] Done: nine school-day helpers and seven essential
   parameter/local roles applied through rename.py. Clean Docker build and independent hashes 27/27;
   6,952/6,952 functions, 2,276,920/2,276,920 bytes. Independent Luna Standards and Sol 6.1 Spec reviews
-  passed after one documentation correction. Start with [[spec/m-weekday]] and `src/main/800737A0.c`
+  passed after one documentation correction. Start with [[spec/m-weekday]] and `src/main/school_day.c`
   for the daily-command gameplay reference. Ledger: `config/renames/school-day.txt`.
 - Draft analyses: [[tickets/T-27031-p2-o-taiiku]], [[tickets/T-27032-p2-o-geko]],
   [[tickets/T-27033-p2-o-shougatu]] and [[tickets/T-27034-p2-o-tel-option]]. These remain In Progress;
   their tables/specs are proposals with explicit coverage limits, not applied names or completed units.
-  T-27035 through T-27037 remain Ready. Shared wiki edits and commits are serialized by the orchestrator.
+  T-27035 through T-27037 now also have independently corrected partial drafts and remain In Progress.
+  All 28 analysis-unit spec pages now exist; this does not imply complete coverage or applied names.
+  Shared wiki edits and commits are serialized by the orchestrator.
 - User model preference: Luna by default, Sol 6.1 for harder work and review. Immediate outcome is
   readable code sufficient to start Godot, beginning with a gameplay slice; exhaustive helper naming
   is not a prerequisite. Emulator, save-file and debugger evidence is authorized.
@@ -31,7 +70,7 @@ Continuation checkpoint (local commits, 2026-10-24):
 Scope: port-first readable code for the Godot port while the matching decomp stays exact (27/27 after every change); decisions in docs/adr/0001-phase-2-naming.md, plan in [[phase2]], umbrella [[tickets/T-27000-phase-2]].
 
 - Done: step 0 (conventions T-27001, GLOSSARY.md, `tools/rename.py` T-27002, [[rename-tool]]); emulator ([[emulator]]); analysis tables and port specs merged for the units listed in wiki/spec/index.md (`config/renames/proposals/<unit>.tsv`, `wiki/spec/<unit>.md`).
-- Applied and merged (27/27): the O.BIN/SDK-name pilot T-27003 (128 ledger rows, `config/renames/obin.txt`, `sdk.txt`) and the shared-core apply T-27004 (724 ledger rows: GameState fields, core types, top functions; game mode machine is `game_mode_*`/`mode_stage_*`/`mode_step_*`, `portrait_*`, `memory_card_*`, `audio_*`, `talk_*`). Left from T-27004: the `MainMode` enum tag and its `MODE_` constants (rename.py has no enum row kind yet; tool work, then one batch).
+- Applied and merged (27/27): the O.BIN/SDK-name pilot T-27003 (128 ledger rows, `config/renames/obin.txt`, `sdk.txt`) and the shared-core apply T-27004 (724 ledger rows: GameState fields, core types, top functions; game mode machine is `game_mode_*`/`mode_stage_*`/`mode_step_*`, `portrait_*`, `memory_card_*`, `audio_*`, `talk_*`). The remaining enum namespace/NAME_ENT-role correction is now applied by T-27043 as `GameMode`/`GAME_MODE_*`.
 - Earlier analysis-run snapshot (~08:40 UTC usage pause): 21 of 28 units merged. The continuation above
   starts four of the seven missing units. Existing proposals/specs may still use the first core names;
   T-27009 maps them to applied names through `rename.py lookup` and resolves ownership conflicts.

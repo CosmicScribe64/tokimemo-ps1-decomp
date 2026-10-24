@@ -24,6 +24,22 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[spec/o-geko]] - GEKO encounters: five mode entries, walk-home/birthday rules, invitation selection and appointments (In Progress)
 - [[spec/o-shougatu]] - New Year/Christmas and GYOZI: partial candidate, shrine, fortune and birthday rules (In Progress)
 - [[spec/o-tel-option]] - Telephone/options: partial invitation eligibility, relationship effects and sound-test flow (In Progress)
+- [[spec/o-master-ending]] - Partial mastery, companion-selection, ending-candidate and audio-level rules (In Progress)
+- [[spec/o-bunkasd-shugaku]] - Partial stage-show dispatch and school-trip response rules (In Progress)
+- [[spec/o-small]] - Seven small-overlay loader entries and partial outcome rules (In Progress)
+- [[spec/reconcile]] - Applied-ledger precedence, scheduler ownership decisions and executable-batch preparation
+- [[spec/file-naming-main]] - Exhaustive main C filename mapping and integration proof
+- [[spec/file-naming-overlays]] - Exhaustive overlay C filename mapping and review gates
+- [[spec/header-split-plan]] - Declaration ownership and staged topic-header extraction
+- [[spec/phase2-completion-audit]] - Remaining completion gates and source-backed census
+- [[spec/core-followup]] - Applied core/daily-rule residue reconciliation and exact constant-site evidence
+
+## Asset tooling
+
+- [[asset-export]] - engine-independent original-input readers, comprehensive text export and modern media/localization inventories; no direct Godot work
+- [[assets-input]] - Original-game input inventory and provenance
+- [[assets-text]] - Text/script extraction coverage and fidelity gates
+- [[assets-media]] - Image/audio readers, authentic palette galleries and visual-text catalog
 
 ## Matching
 

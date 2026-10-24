@@ -1,7 +1,7 @@
 ---
 id: T-27041
 title: Apply readable scheduler and day-event names
-status: In Progress
+status: Done
 assignee: orchestrator
 created: 2026-10-24
 updated: 2026-10-24
@@ -14,10 +14,10 @@ Reconcile and apply body-backed names from src/main/8006CB30.c, keeping the day 
 
 ## Acceptance criteria
 
-- [ ] Evidence and supported scope documented; no unsupported semantic claims.
-- [ ] Meaningful Docker validation; applied game names preserve clean 27/27 hashes and 6,952 functions.
-- [ ] Independent Standards and Spec review resolved before Done.
-- [ ] Wiki and ledger/replay behavior updated as relevant.
+- [x] Evidence and supported scope documented; no unsupported semantic claims.
+- [x] Meaningful Docker validation; applied game names preserve clean 27/27 hashes and 6,952 functions.
+- [x] Independent Standards and Spec review resolved before Done.
+- [x] Wiki and ledger/replay behavior updated as relevant.
 
 ## Comments
 
@@ -26,3 +26,5 @@ Reconcile and apply body-backed names from src/main/8006CB30.c, keeping the day 
 2026-10-24 pre-application review: independent Sol 6.1 checked all 40 target names, bodies/callers, six data globals, core retention, prefixes and collisions; approved with one evidence-note correction (weekly HUD initializer is stage0, not step0). Corrected that plus three requested precision notes: at least two met girls, state mask0x4 and year>=98 date predicate. Reconciler plan passed 40rows/10files before these note-only changes. Root will apply through rename.py and run clean proof; no post-change hash claim yet.
 
 2026-10-24 application: corrected plan exited0 (40rows/10files), apply exited0 with builtin proofs and renames OK(780ledger rows). Applied 34 function and6 data names, including all33 remaining func_ definitions in the scheduler object; retained existing core/O.BIN names. Living spec now uses applied ledger spellings and correctly describes last-picked-girl behavior (only consecutive repeats blocked). Clean Docker build is running; independent final code review remains pending.
+
+2026-10-24 final proof: clean Docker command rm -rf asm build; configure; nice ninja-j2; ninja progress under --cpus2 exited0.27/27sha1 and independent hashlib27/27;6952/6952functions,2276920/2276920bytes. Luna Standards0findings; Sol Spec2docfindings fixed c4151d9f6 and verifiedresolved. Source normalized against forty approved substitutions matches exactly all9C/headerfiles. Done; constants/locals/header/file/O.BINcomment followups remain outside this bounded ticket. Logs /private/tmp/tokimemo-t27041-apply.log and /private/tmp/tokimemo-t27041-clean.log are local only.

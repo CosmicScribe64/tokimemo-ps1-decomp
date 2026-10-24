@@ -17,6 +17,14 @@ entry points. The matching decompilation stays exact: 27/27 sha1 after every cha
 
 ## Scope
 
+### Complete C-file naming requirement
+
+User clarification (2026-10-24): every game-code C file, main and overlays, must have a somewhat
+understandable role-based name. No address or number-only basenames remain at completion; hardware
+files also receive technical role names. Preserve original object boundaries and require source evidence,
+case-insensitive per-folder uniqueness, separate file-only rename tables, API-view proof and matching
+verification. T-27059/T-27060 own the remaining exhaustive filename census and reviewed mappings.
+
 ### Readiness to start the Godot port
 
 User clarification (2026-10-24): the immediate outcome is code readable enough to start the Godot port.
@@ -124,6 +132,12 @@ Overlay units do not rename main symbols. They add requests to `config/renames/r
 of the main module makes the rename.
 
 ## Review rule
+
+Final phase review (user, 2026-10-24): when implementation is ready to wrap up, a `gpt-6-astra`
+agent reviews phase 2 as a whole. A separate `gpt-6-astra` agent resolves that review's findings;
+the reviewer verifies resolution, and the final clean matching proof runs before phase 2 is reported
+complete. Track this in T-27055 and T-27056. This final gate supplements the unit reviews and is not
+a reason to spend Astra work on routine ongoing batches.
 
 Continuation model assignment (user, 2026-10-24): use Luna for bounded analysis and Sol 6.1 for
 harder analysis and independent review. This supersedes the historical Sonnet/Opus assignments below;

@@ -6,6 +6,10 @@ kanban-plugin: board
 
 ## Backlog
 
+- [ ] [[tickets/T-27056-final-astra-fixes|T-27056 Resolve final phase 2 findings with a separate Astra agent]]
+
+- [ ] [[tickets/T-27055-final-astra-review|T-27055 Review phase 2 with Astra]]
+
 - [ ] [[tickets/T-21000-event-goto-loops-and-seq-views|T-21000 EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4 views]]
 - [ ] [[tickets/T-21001-recover-wave-10-list-6-near-misses|T-21001 Recover the wave-10 list 6 near misses: BUNKAKEN func_80143DD0 and RPG_BAT func_80139510]]
 - [ ] [[tickets/T-21002-game-state-unk120-second-record-set|T-21002 Declare the second set of nine GsRec0FC records in GameState instead of raw unk_120 casts]]
@@ -46,13 +50,9 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-27009-p2-reconcile|T-27009 Reconcile phase 2 proposal names and executable batches]]
 
-- [ ] [[tickets/T-27037-p2-o-small|T-27037 Phase 2 analysis - Remaining small overlays]]
 
-- [ ] [[tickets/T-27036-p2-o-bunkasd-shugaku|T-27036 Phase 2 analysis - Stage shows and school trip]]
 
-- [ ] [[tickets/T-27035-p2-o-master-ending|T-27035 Phase 2 analysis - Club mastery and endings]]
 
 
 - [ ] [[tickets/T-25058-main-screen-offset|T-25058 Match MAIN screen-offset easing]]
@@ -62,6 +62,56 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-27068-existing-constant-sites|T-27068 Reuse proven constants at precise literal sites]]
+
+- [ ] [[tickets/T-27067-core-scheduler-essential-completion|T-27067 Complete shared core scheduler and school-day semantic residue]]
+
+- [ ] [[tickets/T-27066-remaining-overlay-completion|T-27066 Complete remaining overlay semantic analysis]]
+
+- [ ] [[tickets/T-27065-festival-overlay-reconciliation|T-27065 Reconcile festival and miscellaneous overlay naming]]
+
+- [ ] [[tickets/T-27064-complex-overlay-reconciliation|T-27064 Reconcile EVENT TT RPG and TACO naming]]
+
+- [ ] [[tickets/T-27063-hardware-main-reconciliation|T-27063 Reconcile main flow and hardware entry points]]
+
+- [ ] [[tickets/T-27062-main-essential-locals-constants|T-27062 Prepare essential main locals and proven constants]]
+
+- [ ] [[tickets/T-27061-next-main-topic-extraction|T-27061 Prepare next bounded main topic-header extraction packet]]
+
+- [ ] [[tickets/T-27060-all-overlay-c-file-names|T-27060 Name every overlay C file]]
+
+
+
+
+- [ ] [[tickets/T-28004-japanese-image-catalog|T-28004 Catalog every image asset containing Japanese text]]
+
+
+
+- [ ] [[tickets/T-28003-original-input-assets|T-28003 Read original game inputs and inventory assets]]
+
+- [ ] [[tickets/T-28002-media-asset-export|T-28002 Export images and audio with format metadata]]
+
+- [ ] [[tickets/T-28001-text-script-export|T-28001 Export text and dialogue for translation]]
+
+- [ ] [[tickets/T-28000-asset-export-pipeline|T-28000 Reusable asset readers and modern exports]]
+
+
+- [ ] [[tickets/T-27052-phase2-completion-audit|T-27052 Phase 2 completion and header-split design]]
+
+- [ ] [[tickets/T-27051-parallel-overlay-reconciliation|T-27051 Parallel overlay reconciliation]]
+
+- [ ] [[tickets/T-27050-parallel-main-reconciliation|T-27050 Parallel main-module reconciliation]]
+
+- [ ] [[tickets/T-27037-p2-o-small|T-27037 Phase 2 analysis - Remaining small overlays]]
+
+
+
+- [ ] [[tickets/T-27036-p2-o-bunkasd-shugaku|T-27036 Phase 2 analysis - Stage shows and school trip]]
+
+- [ ] [[tickets/T-27035-p2-o-master-ending|T-27035 Phase 2 analysis - Club mastery and endings]]
+
+- [ ] [[tickets/T-27009-p2-reconcile|T-27009 Reconcile phase 2 proposal names and executable batches]]
 
 - [ ] [[tickets/T-27034-p2-o-tel-option|T-27034 Phase 2 analysis - Telephone and options]]
 
@@ -103,6 +153,9 @@ kanban-plugin: board
 - [ ] [[tickets/T-27000-phase-2|T-27000 Phase 2: human-readable codebase]]
 
 ## In Review
+
+
+
 
 
 - [ ] [[tickets/T-25057-name-ent-pass-investigation|T-25057 Reconstruct NAME_ENT record selector allocation]]
@@ -172,6 +225,22 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-27059-all-main-c-file-names|T-27059 Name every main executable C file]]
+
+- [ ] [[tickets/T-27058-gameplay-topic-header-pilot|T-27058 Extract scheduler, day-event and school-day topic headers]]
+
+- [ ] [[tickets/T-27057-cache-header-closure-lookup|T-27057 Avoid redundant header-closure scans in rename proofs]]
+
+- [ ] [[tickets/T-27054-topic-header-tooling|T-27054 Support canonical topic headers in header tooling]]
+
+- [ ] [[tickets/T-27044-main-file-name-pilot|T-27044 Give scheduler and school-day C files logical names]]
+
+- [ ] [[tickets/T-27043-game-mode-enum-names|T-27043 Apply consistent game-mode enum names]]
+
+- [ ] [[tickets/T-27041-scheduler-readable-batch|T-27041 Apply readable scheduler and day-event names]]
+
+- [ ] [[tickets/T-27042-enum-rename-support|T-27042 Support enum tags and enumerator renames]]
 
 - [ ] [[tickets/T-27040-school-day-readable-batch|T-27040 Apply a readable school-day gameplay batch]]
 

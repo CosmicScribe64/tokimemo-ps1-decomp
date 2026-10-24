@@ -1,7 +1,7 @@
 ---
 id: T-27054
 title: Support canonical topic headers in header tooling
-status: In Progress
+status: Done
 assignee: parallel-header-chat
 created: 2026-10-24
 updated: 2026-10-24
@@ -62,3 +62,5 @@ shared log/registration and ticket/board transition; worker leaves status In Pro
 kanban mismatch. Implementation output is complete and reviewed, ready for primary integration.
 
 2026-10-24 primary integration: applied the reviewed four-file patch after git apply --check; verified exact patch SHA, all four committed baseline SHA values and all four reviewed-result SHA values. The first path-filter expected git-style diff headers; corrected validation for the handoff's standard unified ---/+++ headers before accepting results. Root integrated tests pass23header+95prototype cases; live T27058extraction then confirms63canonical owners,437unchanged Cfiles,34omissions and0/0/0views. Broader worker355test/probe/review evidence is retained in ignoredmanifest. Tooling is now live, not merely waiting in scratch; final root review remains pending.
+
+2026-10-24 closeout: integrated implementation and independent Standards/Spec reviews pass; all findings resolved. T-27044 has clean27/27 plus unchanged path-mapped declaration views; T-27054 has exact reviewed manifest integration and23header/95prototype tests; T-27057 has78rename tests and both reviews; T-27058 has63exact declaration moves, all437views0/0/0, clean27/27 and post-review27/27 with6952functions. The two T-27058 evidence/direct-include findings were fixed in0be7fbcb7 and independently verified. Broader phase2 remains In Progress.

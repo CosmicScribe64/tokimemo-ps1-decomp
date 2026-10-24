@@ -1,7 +1,7 @@
 ---
 id: T-27043
 title: Apply consistent game-mode enum names
-status: In Progress
+status: Done
 assignee: orchestrator
 created: 2026-10-24
 updated: 2026-10-24
@@ -14,10 +14,10 @@ Close the shared-core enum naming remainder: MainMode -> GameMode and MODE_* -> 
 
 ## Acceptance criteria
 
-- [ ] Independent table review; no changed mode meanings/values or dropped hypotheses.
-- [ ] rename.py plan/apply/check and clean Docker 27/27 hashes, 6,952 matching functions.
-- [ ] Independent Standards/Spec reviews resolved before Done.
-- [ ] Ledger, living documentation and core handoff updated.
+- [x] Independent table review; no changed mode meanings/values or dropped hypotheses.
+- [x] rename.py plan/apply/check and clean Docker 27/27 hashes, 6,952 matching functions.
+- [x] Independent Standards/Spec reviews resolved before Done.
+- [x] Ledger, living documentation and core handoff updated.
 
 ## Comments
 
@@ -30,3 +30,5 @@ Close the shared-core enum naming remainder: MainMode -> GameMode and MODE_* -> 
 2026-10-24 revised review: Sol6.1 independently approved all69rows including four corrected NAME_ENT meanings, exact68valuecoverage, targetcollision scan and preservation of tenexistingHYPOTHESIScomments. Before landing also correct two stale enum definition comments (0x11opening,0x13file selection); these are prose corrections alongside the checked name application.
 
 2026-10-24 application proof: revised69row collision-only plan exited0 (full gcc/prototype proofs retained in apply); fullapply exited0 and renames check reports849ledgerrows. Clean Docker build passed27/27 hashes and6952/6952functions. Corrected two stale NAME_ENT role comments and three MASTER callback-address comments against actualloader; incremental verification after the last comment-only corrections is running. Primary-owned living core/flow/scheduler/weekday specs use GameMode/GAME_MODE_*; other chat-owned specs are coordinated separately. Final independent code review and post-comment proof remain pending.
+
+2026-10-24 final: Done. Clean proof27/27+6952; finalpostcommentincrementalproof27/27+6952; independenthash27/27. Sourceverification confirms all68numericvalues,10exacthypothesiscomments andfixedwidths unchanged;66of67C/headerfilesareexactsubstitutions, finalheaderadds5reviewedcommentfixes. Finalspecfindingfixed2f0a3cef5 andverified. Wholephase2isnotcomplete; finalAstrareview/fixgateremainsfuturework.

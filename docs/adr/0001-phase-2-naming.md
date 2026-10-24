@@ -251,36 +251,11 @@ folder name.
 
 ### Main subsystem prefixes
 
-Each prefix is in one row (rule "One owner" above).
-
-| module (today's files) | prefixes |
-|---|---|
-| boot and startup (`80041000`, `800420D0`) | `boot_` |
-| main loop and game mode (`80042540`) | `game_mode_`, `mode_stage_`, `mode_step_`; O.BIN `game_main` |
-| pad and system helpers (`80042A00`) | `pad_`, `sys_` |
-| 2D drawing, palettes, VRAM loads (`80043510`) | `draw_`, `vram_` |
-| CD reads (`800451D0`, `80046500`) | `cd_` |
-| texture pages, sprites, display actors, GPU setup (`80047550`, `800490C0`) | `tpage_`, `sprite_`, `actor_`, `gpu_` |
-| primitives, color bars, sepia (`80049FF0`, `8004AD60`) | `prim_`, `color_` |
-| screen layers, model transfer (`8004C3F0`) | `layer_`, `model_`; O.BIN `srn_`, `mod_` |
-| kanji text (`8004E500`) | `text_`; O.BIN `k_disp_`, `set_kanji_` |
-| menus, speaker labels, girl records and queries (`8004F6B0`, `8004F870`) | `menu_`, `speaker_`, `girl_` |
-| memory card, timers (`80053650`) | `memory_card_`, `timer_` |
-| STR movies (`80056300`, `800563F0`) | `movie_` |
-| MDEC backgrounds (`80057390`) | `bg_`; O.BIN `dec_bg_` |
-| 3D setup, mouse (`80058D20`, `80059710`) | `view_`, `mouse_` |
-| system menus: settings, club joining, rumors (`8005A0B0`) | `settings_`, `club_`, `rumor_` |
-| title menu (`80061710`) | `title_` |
-| HUD: portraits, parameters, calendar, message window (`80062CD0`, `800674B0`) | `hud_`, `portrait_`, `param_`, `calendar_`, `message_` |
-| scheduler and day events (`8006CB30`) | `schedule_`, `day_event_` |
-| school-day loop (`800737A0`) | `school_day_` |
-| days off: appointments, calls, clubs (`80075320`) | `holiday_`, `appointment_` |
-| overlay loader (`800789E0`) | `ovl_` |
-| dates, girl selection, faces, SD sprites, dialogue, scene pictures (`80079B10`, `8007C030`) | `face_`, `sd_`, `talk_`, `name_code_`, `scene_`, `select_girl_`; O.BIN `normal_date_` |
-| vsync timer, scroll, fades, finger cursor (`80085E30`) | `vsync_`, `fade_`, `cursor_` |
-| sound driver: command queue, bank loads, work area (functions in `80043510` and `80079B10`, `audio_state`) | `audio_` |
-| shared records and name tables (`game_state`, `system_data`, `place_name_table`) | `game_state`, `system_data`, `place_` |
-| files `80059A20`, `80059B40` | chosen by the unit that names them |
+The living main object and prefix map is now [`src/main/README.md`](../../src/main/README.md),
+following the logical C filename migration. It retains the grouped prefix ownership and shared-data
+entries from this decision. Body-backed object attribution separates the sound driver at
+`80079B10` from the scene library at `8007C030`, and executable reload from STR playback. These
+corrections assign no new prefixes; undecided debug-display and boot-asset stems remain open.
 
 ## Out of scope
 

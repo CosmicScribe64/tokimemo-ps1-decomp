@@ -5,6 +5,7 @@
 /disc/
 /build/
 /expected/
+/.asset-cache/
 /tools/bin/
 .DS_Store
 __pycache__/
