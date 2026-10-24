@@ -1397,3 +1397,6 @@ Fixed the five blocking findings of the review of [[tickets/T-27025-p2-o-bunkasa
 
 ## [2026-10-24] build | T-27004 replay fix for member chains across a type rename
 Merging `p2-core-apply` into the integration tree failed in `tools/rename.py replay` (11 member rows such as `GirlRecord unk_00 -> tokimeki_frac`): `chains()` keys member rows by the type name of the row, so a chain that crosses the type rename `Rec38` to `GirlRecord` was cut in two. `tools/rename.py` now puts the field rows under the type's current name before replay builds its chains (`link_member_rows`), with the test `test_replay_field_chain_across_a_type_rename`; `w2-good` merged into the branch (conflicts only in `wiki/log.md` and `wiki/spec/core.md`), rebuilt 27 of 27, 6,952 of 6,952, checks and the 1,647 tool tests OK. Details in [[tickets/T-27004-shared-core-names]] and [[rename-tool]]. The tool change came after the round 2 review.
+
+## [2026-10-24] decision | Phase 2 handoff after the core apply
+T-27003 and T-27004 are merged (27/27). [[status]] handoff now lists them as applied, the leftover enum-tag rename, and that the reconcile pass T-27009 must map the older proposal tables with `rename.py lookup`. Phase 2 stays paused for weekly usage (95%).
