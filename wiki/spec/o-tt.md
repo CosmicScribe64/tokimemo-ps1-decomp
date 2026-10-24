@@ -30,7 +30,7 @@ A self-contained vertical shooter in the style of the TwinBee series, played aga
 
 ## 3. Memory model
 
-All game state lives in 23 blocks laid out back to back at 0x80110000 (outside the overlay). The pointers sit at `D_80158A60..D_80158AB4` and never change. `tt_state_init` and `tt_state_clear_all` zero them (`func_800AE080`).
+All game state lives in 22 blocks laid out back to back at 0x80110000 (outside the overlay). The pointers sit at `D_80158A60..D_80158AB4` and never change. `tt_state_init` and `tt_state_clear_all` zero them (`func_800AE080`).
 
 | Pointer | Name | Address | Bytes | Content |
 | --- | --- | --- | --- | --- |
