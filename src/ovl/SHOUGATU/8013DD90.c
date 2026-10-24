@@ -103,19 +103,19 @@ void func_8013E19C(void) {
     u8 pad; /* FAKE: unused byte between a and b, real source unknown (frame layout) */
     u8 b;
 
-    a = get_g_zyotai_s(7);
-    r = get_g_zyotai_h(7);
+    a = get_g_zyotai_s(GIRL_MIRA);
+    r = get_g_zyotai_h(GIRL_MIRA);
     b = 0xFF;
     if (((Bit1Flag *)&D_800E6280.girls[7].flags.w)->f && D_800E6280.event_flags[52] == 0 && a == 0x80 && r == 0) {
         b = 7;
     }
-    a = get_g_zyotai_s(0);
-    r = get_g_zyotai_h(0);
+    a = get_g_zyotai_s(GIRL_SHIORI);
+    r = get_g_zyotai_h(GIRL_SHIORI);
     if (D_800E6280.event_flags[6] == 0 && a == 0x80 && r == 0 && (b == 0xFF || (b == 7 && D_800E6280.girls[0].syoushin < D_800E6280.girls[7].syoushin))) {
         b = 0;
     }
-    a = get_g_zyotai_s(9);
-    r = get_g_zyotai_h(9);
+    a = get_g_zyotai_s(GIRL_MEGUMI);
+    r = get_g_zyotai_h(GIRL_MEGUMI);
     if (((Bit1Flag *)&D_800E6280.girls[9].flags.w)->f && D_800E6280.event_flags[66] == 0 && a == 0x80 && r == 0 &&
         (b == 0xFF || (b == 7 && D_800E6280.girls[9].syoushin < D_800E6280.girls[7].syoushin) || (b == 0 && D_800E6280.girls[9].syoushin < D_800E6280.girls[0].syoushin))) {
         b = 9;

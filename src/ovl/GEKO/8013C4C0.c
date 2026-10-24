@@ -53,11 +53,11 @@ void func_8013C674(void) {
 
 void func_8013C6A4(void) {
     if ((u16) D_800CA154 == 0) {
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
     } else if ((u16) D_800CA154 == 1) {
-        D_800E6280.current_girl = 0xD;
+        D_800E6280.current_girl = GIRL_YOSHIO;
     } else {
-        D_800E6280.current_girl = 3;
+        D_800E6280.current_girl = GIRL_AYAKO;
     }
     func_80138AF8();
 }
@@ -69,7 +69,7 @@ void func_8013C704(void) {
 }
 
 void func_8013C73C(void) {
-    D_800E6280.current_girl = 3;
+    D_800E6280.current_girl = GIRL_AYAKO;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

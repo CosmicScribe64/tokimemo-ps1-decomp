@@ -64,7 +64,7 @@ void func_80147214(void) {
         if (Vblnk_Timer() >= 0x15) {
             if (cd_read_sync_status() & 1) {
                 func_80044890(1, 0xC478, 0xC44B, 0xCA95, 0xCA4F, 0xCA3E);
-                D_800E6280.current_girl = 0;
+                D_800E6280.current_girl = GIRL_SHIORI;
                 func_800847B8(0U);
                 func_80132444();
                 D_800CA148 = 0;

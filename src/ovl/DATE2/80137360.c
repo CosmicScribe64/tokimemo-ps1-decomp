@@ -130,7 +130,7 @@ void func_801378A4(void) {
 void func_80137948(void) {
     u32 t;
 
-    t = (u8)get_g_zyotai_s(0) & 0x7F;
+    t = (u8)get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
     if (D_800E6280.month == (D_800E6280.player_birthday & 0xF) && D_800E6280.day == ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B) && t < 2) {
         D_800E6280.daily_event_bits |= 4;
         func_80042908(4);

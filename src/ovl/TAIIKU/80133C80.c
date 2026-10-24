@@ -1005,7 +1005,7 @@ void func_801369F0(void) {
 }
 
 void func_80136A28(void) {
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         D_80149204 = 1;
     }
     if (D_80149208.player.unk_14 >= 0x10U) {
@@ -1306,7 +1306,7 @@ void func_80137544(void) {
             func_80044750(0x50E);
         }
         D_80122E94 = 1;
-    } else if (D_800E6280.pad_pressed & 0x20) {
+    } else if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         if (D_80149208.player.unk_07 >= 0x29U) {
             i = 0;
             a = -0xA0;

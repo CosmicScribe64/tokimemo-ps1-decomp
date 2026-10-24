@@ -266,7 +266,7 @@ void func_80139BCC(void) {
     if (D_8015F4E0 < 0) {
         D_8015F4E0 = 0x27;
     }
-    if ((D_800E6280.pad_pressed & 0x20) && !(D_800E6280.pad_pressed & 0x40)) {
+    if ((D_800E6280.pad_pressed & PAD_CIRCLE) && !(D_800E6280.pad_pressed & PAD_CROSS)) {
         if (D_8015F4E0 == 0x27) {
             /* the original passes the byte itself as the destination (a lost &); T-19021 */
             strncpy((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
@@ -276,11 +276,11 @@ void func_80139BCC(void) {
             D_8015F4DC += 1;
         }
     }
-    if ((D_800E6280.pad_pressed & 0x800) && !(D_800E6280.pad_pressed & 0x40)) {
+    if ((D_800E6280.pad_pressed & PAD_START) && !(D_800E6280.pad_pressed & PAD_CROSS)) {
         strncpy((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
         func_8004284C();
     }
-    if ((D_800E6280.pad_pressed & 0x40) && D_8015F4DC != 0) {
+    if ((D_800E6280.pad_pressed & PAD_CROSS) && D_8015F4DC != 0) {
         strncpy(&D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC - 1], " ", 1);
         D_8015F4DC -= 1;
     }
@@ -405,10 +405,10 @@ void func_8013A790(s32 arg0, s32 arg1) {
     divisor = 30000;
     scroll = 0;
     if (arg1 == 0) {
-        if (D_800E6280.pad_held & 1) divisor = 10000;
-        else if (D_800E6280.pad_held & 2) divisor = 50000;
-        if (D_800E6280.pad_held & 4) scroll = 40;
-        if (D_800E6280.pad_held & 8) scroll = -40;
+        if (D_800E6280.pad_held & PAD_L2) divisor = 10000;
+        else if (D_800E6280.pad_held & PAD_R2) divisor = 50000;
+        if (D_800E6280.pad_held & PAD_L1) scroll = 40;
+        if (D_800E6280.pad_held & PAD_R1) scroll = -40;
     } else if (arg1 == 1) {
         if ((D_8015EDB4->unk2 & 1) == 1) scroll = 40;
         if ((D_8015EDB4->unk2 & 2) == 2) scroll = -40;

@@ -68,7 +68,7 @@ void func_8015A3B0(void) {
 
 void func_8015A414(void) {
     func_80065F34(1);
-    D_800E6280.current_girl = 0xB;
+    D_800E6280.current_girl = GIRL_MIHARU;
     strcpy(D_800CA188, "謎の女");
     func_80085B3C(0xB, D_80122D08);
     D_8015E208 = D_8015DF80;

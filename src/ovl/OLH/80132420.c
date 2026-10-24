@@ -60,7 +60,7 @@ void func_80132614(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         if (D_800E6280.menu_cursor_0 != -1) {
             func_80044750(0x501);
             switch (*(u8 *)&D_800E6280.menu_cursor_0) {
@@ -90,7 +90,7 @@ void func_80132614(void) {
                 break;
             }
         }
-    } else if (D_800E6280.pad_pressed & 0x40) {
+    } else if (D_800E6280.pad_pressed & PAD_CROSS) {
         func_80042908(0);
     }
 }

@@ -64,7 +64,7 @@ s32 func_80139334(void) {
     s32 x;
 
     if (D_80144E0C == 2) {
-        D_800E6280.current_girl = 7;
+        D_800E6280.current_girl = GIRL_MIRA;
     }
     /* FAKE: capturing implicit-int return of func_80137AB4 and referencing x after the branches reserves $v0 and colors D_80144E0C to $a0 and 2 to $v1. T-24130 */
     x = func_80137AB4();

@@ -751,13 +751,13 @@ void func_80135F4C(void) {
     }
     func_80132000();
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_8013C34C.unk_00 = D_8013C280[0][2];
         D_8013C34C.unk_04 = D_8013C280[1][2];
         D_8013C34C.unk_08 = D_8013C280[2][2];
         func_80137160(D_8013C620->unk_00, D_8013C620->unk_04, D_8013C620->unk_08, (s32) D_8013C620->unk_0C);
         break;
-    case 1:
+    case GIRL_MIO:
         D_8013C34C.unk_00 = D_8013C280[0][8];
         D_8013C34C.unk_04 = D_8013C280[1][8];
         D_8013C34C.unk_08 = D_8013C280[2][8];
@@ -768,31 +768,31 @@ void func_80135F4C(void) {
             D_8013C358 = 1;
         }
         break;
-    case 2:
+    case GIRL_YUINA:
         D_8013C34C.unk_00 = D_8013C280[0][4];
         D_8013C34C.unk_04 = D_8013C280[1][4];
         D_8013C34C.unk_08 = D_8013C280[2][4];
         func_80137160(D_8013C620[2].unk_00, D_8013C620[2].unk_04, D_8013C620[2].unk_08, (s32) D_8013C620[2].unk_0C);
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_8013C34C.unk_00 = D_8013C280[0][6];
         D_8013C34C.unk_04 = D_8013C280[1][6];
         D_8013C34C.unk_08 = D_8013C280[2][6];
         func_80137160(D_8013C620[3].unk_00, D_8013C620[3].unk_04, D_8013C620[3].unk_08, (s32) D_8013C620[3].unk_0C);
         break;
-    case 4:
+    case GIRL_SAKI:
         D_8013C34C.unk_00 = D_8013C280[0][0xC];
         D_8013C34C.unk_04 = D_8013C280[1][0xC];
         D_8013C34C.unk_08 = D_8013C280[2][0xC];
         func_80137160(D_8013C620[4].unk_00, D_8013C620[4].unk_04, D_8013C620[4].unk_08, (s32) D_8013C620[4].unk_0C);
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_8013C34C.unk_00 = D_8013C280[0][9];
         D_8013C34C.unk_04 = D_8013C280[1][9];
         D_8013C34C.unk_08 = D_8013C280[2][9];
         func_80137160(D_8013C620[5].unk_00, D_8013C620[5].unk_04, D_8013C620[5].unk_08, (s32) D_8013C620[5].unk_0C);
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_8013C34C.unk_00 = D_8013C280[0][0xA];
         D_8013C34C.unk_04 = D_8013C280[1][0xA];
         D_8013C34C.unk_08 = D_8013C280[2][0xA];
@@ -803,31 +803,31 @@ void func_80135F4C(void) {
             D_8013C358 = 1;
         }
         break;
-    case 7:
+    case GIRL_MIRA:
         D_8013C34C.unk_00 = D_8013C280[0][7];
         D_8013C34C.unk_04 = D_8013C280[1][7];
         D_8013C34C.unk_08 = D_8013C280[2][7];
         func_80137160(D_8013C620[7].unk_00, D_8013C620[7].unk_04, D_8013C620[7].unk_08, (s32) D_8013C620[7].unk_0C);
         break;
-    case 8:
+    case GIRL_YUKO:
         D_8013C34C.unk_00 = D_8013C280[0][1];
         D_8013C34C.unk_04 = D_8013C280[1][1];
         D_8013C34C.unk_08 = D_8013C280[2][1];
         func_80137160(D_8013C620[8].unk_00, D_8013C620[8].unk_04, D_8013C620[8].unk_08, (s32) D_8013C620[8].unk_0C);
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_8013C34C.unk_00 = D_8013C280[0][0xB];
         D_8013C34C.unk_04 = D_8013C280[1][0xB];
         D_8013C34C.unk_08 = D_8013C280[2][0xB];
         func_80137160(D_8013C620[9].unk_00, D_8013C620[9].unk_04, D_8013C620[9].unk_08, (s32) D_8013C620[9].unk_0C);
         break;
-    case 10:
+    case GIRL_YUMI:
         D_8013C34C.unk_00 = D_8013C280[0][0xE];
         D_8013C34C.unk_04 = D_8013C280[1][0xE];
         D_8013C34C.unk_08 = D_8013C280[2][0xE];
         func_80137160(D_8013C620[0xA].unk_00, D_8013C620[0xA].unk_04, D_8013C620[0xA].unk_08, (s32) D_8013C620[0xA].unk_0C);
         break;
-    case 11:
+    case GIRL_MIHARU:
         D_8013C34C.unk_00 = D_8013C280[0][0x10];
         D_8013C34C.unk_04 = D_8013C280[1][0x10];
         D_8013C34C.unk_08 = D_8013C280[2][0x10];
@@ -918,11 +918,11 @@ void func_80136D60(void) {
 
 void func_80136EE4(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         cd_read_sectors(0x8DU, 0x801A0000, 0x734C);
         func_80134DE0();
         break;
-    case 1:
+    case GIRL_MIO:
         if (!D_800E6280.girls[1].flags.f.b14) {
             cd_read_sectors(0x85U, 0x801A0000, 0x7605);
             func_80134EF0();
@@ -931,23 +931,23 @@ void func_80136EE4(void) {
             func_80135BB0();
         }
         break;
-    case 2:
+    case GIRL_YUINA:
         cd_read_sectors(0x7DU, 0x801A0000, 0x73D9);
         func_80135000();
         break;
-    case 3:
+    case GIRL_AYAKO:
         cd_read_sectors(0x8DU, 0x801A0000, 0x74E3);
         func_80135110();
         break;
-    case 4:
+    case GIRL_SAKI:
         cd_read_sectors(0x8DU, 0x801A0000, 0x7974);
         func_80135220();
         break;
-    case 5:
+    case GIRL_YUKARI:
         cd_read_sectors(0x96U, 0x801A0000, 0x7717);
         func_80135330();
         break;
-    case 6:
+    case GIRL_NOZOMI:
         if (!(D_800E6280.girl_cleared[6] & 1)) {
             cd_read_sectors(0x9DU, 0x801A0000, 0x77AD);
             func_80135440();
@@ -956,23 +956,23 @@ void func_80136EE4(void) {
             func_80135CC0();
         }
         break;
-    case 7:
+    case GIRL_MIRA:
         cd_read_sectors(0x95U, 0x801A0000, 0x7570);
         func_80135550();
         break;
-    case 8:
+    case GIRL_YUKO:
         cd_read_sectors(0x8DU, 0x801A0000, 0x72BF);
         func_80135660();
         break;
-    case 9:
+    case GIRL_MEGUMI:
         cd_read_sectors(0x8DU, 0x801A0000, 0x78E7);
         func_80135770();
         break;
-    case 10:
+    case GIRL_YUMI:
         cd_read_sectors(0x8DU, 0x801A0000, 0x7A01);
         func_80135880();
         break;
-    case 11:
+    case GIRL_MIHARU:
         cd_read_sectors(0x8DU, 0x801A0000, 0x7A8E);
         func_80135990();
         break;

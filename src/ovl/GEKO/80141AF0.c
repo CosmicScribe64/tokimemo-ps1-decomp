@@ -151,7 +151,7 @@ void func_801420E4(void) {
     g = &D_800E6280;
     scores = D_8014760C;
     girls = D_80147618;
-    D_800E6280.date_girl = 1;
+    D_800E6280.date_girl = GIRL_MIO;
     /* FAKE: break the equal-priority tie between girls[2] and girls[5],
      * preserving their t3/t4 allocation without emitted code. T-24605. */
     if (girls.v[2]) {}
@@ -212,7 +212,7 @@ void func_801420E4(void) {
         girl--;
     } while (girl > 0);
     D_800E6280.date_girl = (u8)girls.v[5];
-    D_800E6280.current_girl = 0xD;
+    D_800E6280.current_girl = GIRL_YOSHIO;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

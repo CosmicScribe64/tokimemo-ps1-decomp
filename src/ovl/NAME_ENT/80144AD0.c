@@ -2311,7 +2311,7 @@ void func_80149E3C(void) {
         strncat(text, D_800B3288[((NameProfileFlags *)&g->girls[0].birthday)->day % 10U], 2);
         strncat(text, "日。", 4);
         sndisp(text, 0, 0xF);
-        g->current_girl = 0xF;
+        g->current_girl = GIRL_PLAYER;
         k_sub_disp_start(1);
         g->substep += 1;
         break;
@@ -2336,7 +2336,7 @@ void func_80149E3C(void) {
         strcpy(text, D_8014D1A0[((NameProfileFlags *)&g->girls[0].birthday)->blood_type]);
         strncat(text, "型。", 4);
         sndisp(text, 0, 0xF);
-        g->current_girl = 0xF;
+        g->current_girl = GIRL_PLAYER;
         k_sub_disp_start(1);
         g->substep += 1;
         break;
@@ -2726,8 +2726,8 @@ void func_8014AE2C(void) {
     case 1:
         D_800B3DB0 = 0;
         k_speed_set(3);
-        D_800E6280.menu_mode = 1;
-        main_state_set(0x34);
+        D_800E6280.menu_mode = MENU_MODE_A;
+        main_state_set(MODE_COMMAND_SCREEN);
         func_80042908(0xFF);
         return;
     }
@@ -2815,7 +2815,7 @@ void func_8014AF28(void) {
         func_80066C08(2);
     }
     message_window_show();
-    if (((D_800E6280.step != 0) || (D_800E6280.stage != 0)) && (D_800E6280.pad_pressed & 0x800)) {
+    if (((D_800E6280.step != 0) || (D_800E6280.stage != 0)) && (D_800E6280.pad_pressed & PAD_START)) {
         func_80042908(0x15);
     }
 }

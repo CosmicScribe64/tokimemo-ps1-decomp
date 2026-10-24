@@ -347,7 +347,7 @@ void func_80151108(void) {
         func_8014EBD0();
         return;
     case 1:
-        if (D_800E6280.pad_pressed & 0x40) {
+        if (D_800E6280.pad_pressed & PAD_CROSS) {
             func_8014EBD0();
             return;
         }
@@ -368,7 +368,7 @@ void func_80151108(void) {
         func_8014EBD0();
         return;
     case 5:
-        if (D_800E6280.pad_pressed & 0x40) {
+        if (D_800E6280.pad_pressed & PAD_CROSS) {
             func_8014EBD0();
             return;
         }
@@ -389,7 +389,7 @@ void func_80151108(void) {
         func_8014EBD0();
         return;
     case 9:
-        if (D_800E6280.pad_pressed & 0x40) {
+        if (D_800E6280.pad_pressed & PAD_CROSS) {
             func_8014EBD0();
             return;
         }

@@ -145,57 +145,57 @@ s32 func_801337FC(void) {
 
 void func_80133A68(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_8013BF0C = D_8013BE74;
         D_8013BF10 = D_8013BEA8;
         D_8013BF14 = D_8013BEDC;
         return;
-    case 1:
+    case GIRL_MIO:
         D_8013BF0C = D_8013BE88;
         D_8013BF10 = D_8013BEBC;
         D_8013BF14 = D_8013BEF0;
         return;
-    case 2:
+    case GIRL_YUINA:
         D_8013BF0C = D_8013BE7C;
         D_8013BF10 = D_8013BEB0;
         D_8013BF14 = D_8013BEE4;
         return;
-    case 3:
+    case GIRL_AYAKO:
         D_8013BF0C = D_8013BE80;
         D_8013BF10 = D_8013BEB4;
         D_8013BF14 = D_8013BEE8;
         return;
-    case 4:
+    case GIRL_SAKI:
         D_8013BF0C = D_8013BE98;
         D_8013BF10 = D_8013BECC;
         D_8013BF14 = D_8013BF00;
         return;
-    case 5:
+    case GIRL_YUKARI:
         D_8013BF0C = D_8013BE8C;
         D_8013BF10 = D_8013BEC0;
         D_8013BF14 = D_8013BEF4;
         return;
-    case 6:
+    case GIRL_NOZOMI:
         D_8013BF0C = D_8013BE90;
         D_8013BF10 = D_8013BEC4;
         D_8013BF14 = D_8013BEF8;
         return;
-    case 7:
+    case GIRL_MIRA:
         D_8013BF0C = D_8013BE84;
         D_8013BF10 = D_8013BEB8;
         D_8013BF14 = D_8013BEEC;
         return;
-    case 8:
+    case GIRL_YUKO:
         D_8013BF0C = D_8013BE70;
         D_8013BF10 = D_8013BEA4;
         D_8013BF14 = D_8013BED8;
         return;
-    case 9:
+    case GIRL_MEGUMI:
         D_8013BF0C = D_8013BE94;
         D_8013BF10 = D_8013BEC8;
         D_8013BF14 = D_8013BEFC;
         return;
-    case 10:
+    case GIRL_YUMI:
         D_8013BF0C = D_8013BEA0;
         D_8013BF10 = D_8013BED4;
         D_8013BF14 = D_8013BF08;

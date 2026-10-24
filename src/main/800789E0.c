@@ -100,7 +100,7 @@ void func_80078A94(void) {
         func_8006BA40();
         n += 1;
     }
-    if (D_800E6280.overlay_target_mode == 0x45) {
+    if (D_800E6280.overlay_target_mode == MODE_TELEPHONE_PROFILE) {
         cal_base_show();
     }
     if (n != 0) {
@@ -138,18 +138,18 @@ s32 func_80078C48(void) {
     D_800B6D30 = 0;
     switch (g->overlay_target_mode) {
     case 8:
-    case 0x13:
-    case 0x35:
-    case 0x50:
-    case 0x81:
+    case MODE_NAME_ENTRY:
+    case MODE_EXAM:
+    case MODE_DATE:
+    case MODE_RPG_BATTLE:
         break;
-    case 0x54:
-    case 0x55:
-    case 0x59:
-    case 0x5A:
-    case 0x5B:
-    case 0x5D:
-    case 0x72:
+    case MODE_VALENTINE:
+    case MODE_SEASONAL_PARTY:
+    case MODE_GIRL_ENCOUNTER:
+    case MODE_GIRL_INVITATION:
+    case MODE_MEETING:
+    case MODE_SPECIAL_EVENT:
+    case MODE_SPORTS_FESTIVAL:
         func_80057640(0xA0);
         D_800B6D30 = 1;
         break;
@@ -158,120 +158,120 @@ s32 func_80078C48(void) {
         D_801217D0[0].flags = 0x80000000;
     }
     switch (g->overlay_target_mode) {
-    case 0x3A:
+    case MODE_HELP:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x96AA;
         break;
-    case 0x82:
+    case MODE_FESTIVAL_STALLS:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x934A;
         break;
-    case 0x74:
-    case 0x75:
-    case 0x76:
+    case MODE_CLUB_MASTER_A:
+    case MODE_CLUB_MASTER_B:
+    case MODE_CLUB_MASTER_C:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x958A;
         break;
-    case 0x81:
+    case MODE_RPG_BATTLE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x982A;
         break;
-    case 0x80:
+    case MODE_CULTURE_STAGE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x91CA;
         break;
-    case 0x72:
+    case MODE_SPORTS_FESTIVAL:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x99AA;
         break;
-    case 0x5F:
-    case 0x60:
+    case MODE_CLUB_CAMP:
+    case MODE_CLUB_CAMP_2:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x952A;
         break;
-    case 0x73:
+    case MODE_PRACTICE_MATCH:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x97CA;
         break;
-    case 0x70:
+    case MODE_CULTURE_FESTIVAL_A:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x916A;
         break;
-    case 0x71:
+    case MODE_CULTURE_FESTIVAL_B:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x910A;
         break;
-    case 0x11:
-    case 0x13:
-    case 0x14:
-    case 0x15:
+    case MODE_PROLOGUE:
+    case MODE_NAME_ENTRY:
+    case MODE_NAME_ENT_3:
+    case MODE_NAME_ENT_4:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x95EA;
         break;
-    case 0x43:
-    case 0x45:
+    case MODE_TELEPHONE:
+    case MODE_TELEPHONE_PROFILE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x9A0A;
         break;
-    case 0x63:
+    case MODE_ENDING:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x92EA;
         break;
-    case 0x35:
-    case 0x36:
-    case 0x37:
-    case 0x91:
-    case 0xC2:
-    case 0xC3:
-    case 0xC4:
+    case MODE_EXAM:
+    case MODE_CAREER_GUIDANCE:
+    case MODE_CAREER_CHOICE:
+    case MODE_ALBUM:
+    case MODE_ETC_C2:
+    case MODE_ETC_C3:
+    case MODE_ETC_C4:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x93AA;
         break;
-    case 0x50:
-    case 0x5E:
+    case MODE_DATE:
+    case MODE_DATE_SCENE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x922A;
         break;
-    case 0x58:
-    case 0x5C:
+    case MODE_AMUSEMENT_PARK:
+    case MODE_AMUSEMENT_PARK_2:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x928A;
         break;
-    case 0x61:
-    case 0x62:
+    case MODE_SICK_VISIT:
+    case MODE_SICK_VISIT_2:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x970A;
         break;
-    case 0x56:
-    case 0x57:
-    case 0x59:
-    case 0x5A:
-    case 0x5D:
+    case MODE_PLAYER_BIRTHDAY:
+    case MODE_GIRL_BIRTHDAY:
+    case MODE_GIRL_ENCOUNTER:
+    case MODE_GIRL_INVITATION:
+    case MODE_SPECIAL_EVENT:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x946A;
         break;
-    case 0x51:
+    case MODE_SCHOOL_TRIP:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x98EA;
         break;
-    case 0x54:
+    case MODE_VALENTINE:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x9ACA;
         break;
-    case 0x52:
-    case 0x53:
-    case 0x55:
-    case 0x5B:
+    case MODE_NEW_YEAR_A:
+    case MODE_NEW_YEAR_B:
+    case MODE_SEASONAL_PARTY:
+    case MODE_MEETING:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x988A;
         break;
-    case 0x20:
-    case 0x21:
-    case 0x22:
+    case MODE_OPTION:
+    case MODE_OPTION_2:
+    case MODE_OPTION_3:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x976A;
         break;
-    case 0xD0:
+    case MODE_TT_GAME:
         ovl_load_sectors = 0x60;
         ovl_load_lba = 0x9A6A;
         break;
@@ -316,145 +316,145 @@ void func_80079070(void) {
 
     gs = &D_800E6280;
     switch (gs->overlay_target_mode) {
-    case 0x3A:
+    case MODE_HELP:
         D_80123110 = (u32) &D_80132000;
         break;
-    case 0x82:
+    case MODE_FESTIVAL_STALLS:
         D_80123110 = (u32) &D_80132000;
         break;
-    case 0x76:
+    case MODE_CLUB_MASTER_C:
         D_80123110 = (u32) &D_80132140;
         break;
-    case 0x75:
+    case MODE_CLUB_MASTER_B:
         D_80123110 = (u32) &D_80139150;
         break;
-    case 0x74:
+    case MODE_CLUB_MASTER_A:
         D_80123110 = (u32) &D_80133A2C;
         break;
-    case 0x80:
+    case MODE_CULTURE_STAGE:
         D_80123110 = (u32) &D_80137890;
         break;
-    case 0x81:
+    case MODE_RPG_BATTLE:
         D_80123110 = (u32) &D_8013B5B0;
         break;
-    case 0x72:
+    case MODE_SPORTS_FESTIVAL:
         D_80123110 = (u32) &D_80141280;
         break;
-    case 0x60:
+    case MODE_CLUB_CAMP_2:
         D_80123110 = (u32) &D_80132000;
         break;
-    case 0x5F:
+    case MODE_CLUB_CAMP:
         D_80123110 = (u32) &D_80132FF8;
         break;
-    case 0x73:
+    case MODE_PRACTICE_MATCH:
         D_80123110 = (u32) &D_80132040;
         break;
-    case 0x70:
+    case MODE_CULTURE_FESTIVAL_A:
         D_80123110 = (u32) &D_80142700;
         break;
-    case 0x71:
+    case MODE_CULTURE_FESTIVAL_B:
         D_80123110 = (u32) &D_80144F70;
         break;
-    case 0x11:
+    case MODE_PROLOGUE:
         D_80123110 = (u32) &D_80144AD0;
         break;
-    case 0x14:
+    case MODE_NAME_ENT_3:
         D_80123110 = (u32) &D_8013209C;
         break;
-    case 0x15:
+    case MODE_NAME_ENT_4:
         D_80123110 = (u32) &D_8014AF28;
         break;
-    case 0x13:
+    case MODE_NAME_ENTRY:
         D_80123110 = (u32) &D_8014231C;
         break;
-    case 0x43:
+    case MODE_TELEPHONE:
         D_80123110 = (u32) &D_801397D0;
         break;
-    case 0x45:
+    case MODE_TELEPHONE_PROFILE:
         D_80123110 = (u32) &D_80132000;
         break;
-    case 0x63:
+    case MODE_ENDING:
         D_80123110 = (u32) &D_80132334;
         break;
-    case 0xC4:
+    case MODE_ETC_C4:
         D_80123110 = (u32) &D_80145A6C;
         break;
-    case 0x37:
+    case MODE_CAREER_CHOICE:
         D_80123110 = (u32) &D_801492C0;
         break;
-    case 0x36:
+    case MODE_CAREER_GUIDANCE:
         D_80123110 = (u32) &D_8014ABD0;
         break;
-    case 0xC2:
+    case MODE_ETC_C2:
         D_80123110 = (u32) &D_80142974;
         break;
-    case 0x91:
+    case MODE_ALBUM:
         D_80123110 = (u32) &D_801407F0;
         break;
-    case 0xC3:
+    case MODE_ETC_C3:
         D_80123110 = (u32) &D_8014636C;
         break;
-    case 0x35:
+    case MODE_EXAM:
         D_80123110 = (u32) &D_801465F8;
         break;
-    case 0x5E:
+    case MODE_DATE_SCENE:
         D_80123110 = (u32) &D_8014C08C;
         break;
-    case 0x50:
+    case MODE_DATE:
         D_80123110 = (u32) &D_801448D4;
         break;
-    case 0x5C:
+    case MODE_AMUSEMENT_PARK_2:
         D_80123110 = (u32) &D_80137F64;
         break;
-    case 0x58:
+    case MODE_AMUSEMENT_PARK:
         D_80123110 = (u32) &D_80132214;
         break;
-    case 0x62:
+    case MODE_SICK_VISIT_2:
         D_80123110 = (u32) &D_80132000;
         break;
-    case 0x61:
+    case MODE_SICK_VISIT:
         D_80123110 = (u32) &D_80133120;
         break;
-    case 0x59:
+    case MODE_GIRL_ENCOUNTER:
         D_80123110 = (u32) &D_80132244;
         break;
-    case 0x56:
+    case MODE_PLAYER_BIRTHDAY:
         D_80123110 = (u32) &D_80134040;
         break;
-    case 0x57:
+    case MODE_GIRL_BIRTHDAY:
         D_80123110 = (u32) &D_80134C90;
         break;
-    case 0x5D:
+    case MODE_SPECIAL_EVENT:
         D_80123110 = (u32) &D_8013882C;
         break;
-    case 0x5A:
+    case MODE_GIRL_INVITATION:
         D_80123110 = (u32) &D_801426D0;
         break;
-    case 0x51:
+    case MODE_SCHOOL_TRIP:
         D_80123110 = (u32) &D_80137490;
         break;
-    case 0x54:
+    case MODE_VALENTINE:
         D_80123110 = (u32) &D_80132274;
         break;
-    case 0x52:
+    case MODE_NEW_YEAR_A:
         D_80123110 = (u32) &D_8013D180;
         break;
-    case 0x53:
+    case MODE_NEW_YEAR_B:
         D_80123110 = (u32) &D_801322D4;
         break;
-    case 0x55:
+    case MODE_SEASONAL_PARTY:
         D_80123110 = (u32) &D_8013B484;
         break;
-    case 0x5B:
+    case MODE_MEETING:
         D_80123110 = (u32) &D_80137144;
         break;
-    case 0x20:
+    case MODE_OPTION:
         D_80123110 = (u32) &D_801335E8;
         break;
-    case 0x21:
+    case MODE_OPTION_2:
         D_80123110 = (u32) &D_801389A0;
         break;
-    case 0x22:
+    case MODE_OPTION_3:
         D_80123110 = (u32) &D_8013C780;
         break;
     default:
@@ -556,7 +556,7 @@ void func_8007959C(void) {
             func_80042908((s32) D_800E6280.saved_stage);
             func_80042940((s32) D_800E6280.saved_step);
         } else {
-            main_state_set(0);
+            main_state_set(MODE_BOOT);
             func_80048EB8(0);
             draw2d3d(0U, 0U);
             func_80041584();

@@ -386,7 +386,7 @@ s32 func_8014B8CC(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         switch (D_800E6280.menu_cursor_0) {
         case 0:
             func_80042908(4);
@@ -440,7 +440,7 @@ void func_8014BA8C(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if ((D_800E6280.pad_pressed & 0x20) && D_800E6280.menu_cursor_0 != -1) {
+    if ((D_800E6280.pad_pressed & PAD_CIRCLE) && D_800E6280.menu_cursor_0 != -1) {
         k_sub_reset();
         gnsx(&D_800E6280.player_family_name);
         sndisp(D_80151358[D_800E6280.menu_cursor_0], 0, 0xF);

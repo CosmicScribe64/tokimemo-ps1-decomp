@@ -136,7 +136,7 @@ void func_80067870(void) {
         D_8011ECD0[0x1B].unk_18 = D_800B5C08 - 1;
         D_8011ECD0[0x1C].x = D_80125C50;
         D_8011ECD0[0x1C].y = D_80125C52;
-        if (D_800E6280.pad_held & 2) {
+        if (D_800E6280.pad_held & PAD_R2) {
             D_8011ECD0[0x1C].unk_18 = 0xE;
             switch (D_800E6280.pad_held & 0x5000) {
             case 0x1000:
@@ -154,7 +154,7 @@ void func_80067870(void) {
                 }
                 break;
             }
-        } else if (D_800E6280.pad_held & 8) {
+        } else if (D_800E6280.pad_held & PAD_R1) {
             D_8011ECD0[0x1C].unk_18 = 0xE;
             /* FAKE T-25103 layout, kept by T-25406: each store and sum on one line keeps as1's order (4 rows split). */
             switch (D_800E6280.pad_held & 0x5000) {
@@ -1413,7 +1413,7 @@ void func_8006BA40(void) {
         if (D_8011ECFA >= 0x65) {
             D_8011ECFA = 0x64;
         }
-        if (g->pad_pressed & 0x80) {
+        if (g->pad_pressed & PAD_SQUARE) {
             temp = D_800B6708;
             if (temp == 0) {
                 D_800B6708 = 0x9B;
@@ -1771,7 +1771,7 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
 }
 
 u8 *func_8006CA9C(void) {
-    if (D_800E6280.input_device == 0) {
+    if (D_800E6280.input_device == INPUT_MOUSE) {
         if (D_800E6280.confirm_button != 0) {
             return D_800B672C;
         }
@@ -1781,7 +1781,7 @@ u8 *func_8006CA9C(void) {
 }
 
 u8 *func_8006CAE0(void) {
-    if (D_800E6280.input_device == 0) {
+    if (D_800E6280.input_device == INPUT_MOUSE) {
         if (D_800E6280.confirm_button != 0) {
             return D_800B6730;
         }

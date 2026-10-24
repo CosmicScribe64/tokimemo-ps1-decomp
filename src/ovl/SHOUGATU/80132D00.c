@@ -27,7 +27,7 @@ void func_80132DE4(void) {
 
 void func_80132E0C(void) {
     if (D_80122CDC != 0) {
-        if ((D_800E6280.current_girl == 2) || (D_800E6280.current_girl == 7) || (D_800E6280.current_girl == 8) || (D_800E6280.current_girl == 9) || (D_800E6280.current_girl == 0xA)) {
+        if ((D_800E6280.current_girl == GIRL_YUINA) || (D_800E6280.current_girl == GIRL_MIRA) || (D_800E6280.current_girl == GIRL_YUKO) || (D_800E6280.current_girl == GIRL_MEGUMI) || (D_800E6280.current_girl == GIRL_YUMI)) {
             func_80083418();
             return;
         }
@@ -43,7 +43,7 @@ void func_80132E8C(void) {
         D_800E6280.girls[D_800E6280.current_girl].affection -= 1;
         D_800E6280.girls[D_800E6280.current_girl].tokimeki -= 1;
         D_800E6280.girls[D_800E6280.current_girl].syoushin += 0x14;
-    } else if (D_800E6280.current_girl == 0) {
+    } else if (D_800E6280.current_girl == GIRL_SHIORI) {
         D_800E6280.girls[D_800E6280.current_girl].tokimeki += 1;
     }
     check_para_limit();
@@ -60,37 +60,37 @@ void func_80132F90(void) {
 
 void func_80132FCC(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         func_80062CD0(0x571A);
         break;
-    case 1:
+    case GIRL_MIO:
         func_80062CD0(0x5E22);
         break;
-    case 2:
+    case GIRL_YUINA:
         func_80062CD0(0x530F);
         break;
-    case 3:
+    case GIRL_AYAKO:
         func_80062CD0(0x5990);
         break;
-    case 4:
+    case GIRL_SAKI:
         func_80062CD0(0x67A0);
         break;
-    case 5:
+    case GIRL_YUKARI:
         func_80062CD0(0x614C);
         break;
-    case 6:
+    case GIRL_NOZOMI:
         func_80062CD0(0x630E);
         break;
-    case 7:
+    case GIRL_MIRA:
         func_80062CD0(0x5BD9);
         break;
-    case 8:
+    case GIRL_YUKO:
         func_80062CD0(0x50C6);
         break;
-    case 9:
+    case GIRL_MEGUMI:
         func_80062CD0(0x6584);
         break;
-    case 10:
+    case GIRL_YUMI:
         func_80062CD0(0x6A16);
         break;
     }

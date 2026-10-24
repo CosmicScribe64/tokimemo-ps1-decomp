@@ -91,7 +91,7 @@ void func_80157BD4(void) {
     check_para_limit();
     func_80157880();
     D_80122D20 = 1;
-    D_800E6280.current_girl = 0xE;
+    D_800E6280.current_girl = GIRL_SOTOI;
     load_palette(D_801600B0, 0x11, 1, 2, 0);
     func_80084E90(D_801600B4, D_801600B8, D_801600BC, D_801600C0, D_801600C4, D_801600C8);
     func_800850D4(D_801600A4, D_801600A8, D_801600A0, (s32) D_801600AC);
@@ -158,7 +158,7 @@ void func_80157FE4(void) {
 }
 
 void func_801580FC(void) {
-    D_800E6280.current_girl = 9;
+    D_800E6280.current_girl = GIRL_MEGUMI;
     bg_read_sub2(0x4818);
     func_8004284C();
 }
@@ -199,14 +199,14 @@ void func_80158200(void) {
 }
 
 void func_80158288(void) {
-    D_800E6280.current_girl = 9;
+    D_800E6280.current_girl = GIRL_MEGUMI;
     D_80122D20 = 0;
     func_8014C5C8();
 }
 
 void func_801582B8(void) {
     if ((u16) D_800CA154 >= 4U) {
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
         D_80122D10 = 2;
     }
     func_8014C5C8();

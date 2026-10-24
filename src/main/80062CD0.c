@@ -307,7 +307,7 @@ void func_80063668(void) {
                 D_801217D0[0].unk_0F = 0x30;
             }
         }
-        if (D_800E6280.pad_held & 0x80) {
+        if (D_800E6280.pad_held & PAD_SQUARE) {
             D_800B5A98 = 0;
         }
         if (D_800B5A98 < level) {
@@ -676,9 +676,9 @@ void hizuke_init(void) {
     ((Actor *)D_8011ECD0)[23].unk_18 = D_800E6280.weekday + 0x52;
     ((Actor *)D_8011ECD0)[23].x = 0x92;
     ((Actor *)D_8011ECD0)[23].y = 0x1F;
-    if (D_800E6280.weekday == 5) {
+    if (D_800E6280.weekday == WEEKDAY_SATURDAY) {
         ((Actor *)D_8011ECD0)[23].unk_43 = 0x43;
-    } else if (D_800E6280.weekday == 6) {
+    } else if (D_800E6280.weekday == WEEKDAY_SUNDAY) {
         ((Actor *)D_8011ECD0)[23].unk_43 = 0x44;
     } else {
         ((Actor *)D_8011ECD0)[23].unk_43 = 0;
@@ -783,7 +783,7 @@ void func_8006509C(void) {
     s32 n;
     s32 j;
 
-    if (g->icon_mode == 2) {
+    if (g->icon_mode == ICON_MODE_FREE) {
         g->icon_count = 0xF;
     }
     for (i = 0; i < g->icon_count; i++) {
@@ -825,19 +825,19 @@ void func_8006509C(void) {
     ((Actor *)D_8011ECD0)[78].x = 0;
     ((Actor *)D_8011ECD0)[78].y = 0;
     switch (g->icon_mode) {
-    case 0:
+    case ICON_MODE_TYPE_A:
         for (i = 0; i < g->icon_count; i++) {
             ((s16 *)D_80125C10)[i * 2] = D_800B5AE4[i][0];
             ((s16 *)D_80125C10)[i * 2 + 1] = D_800B5AE4[i][1];
         }
         break;
-    case 1:
+    case ICON_MODE_TYPE_B:
         for (i = 0; i < g->icon_count; i++) {
             ((s16 *)D_80125C10)[i * 2] = D_800B5AA4[i][0];
             ((s16 *)D_80125C10)[i * 2 + 1] = D_800B5AA4[i][1];
         }
         break;
-    case 2:
+    case ICON_MODE_FREE:
         /* Two or more (0, 0) pairs: restore the default table. The copy reuses the counter n (T-25108). */
         n = 0;
         for (j = 0; j < 15; j++) {
@@ -987,7 +987,7 @@ void func_80065B0C(s32 a) {
     old = g->menu_cursor_0;
     dx = 0;
     dy = 0;
-    if (g->pad_held & 1) {
+    if (g->pad_held & PAD_L2) {
         if (g->icon_mode % 3U == 2) {
             switch (g->pad_held & 0xA000) {
             case 0x8000:
@@ -1050,7 +1050,7 @@ void func_80065B0C(s32 a) {
     if (g->icon_count == 15) {
         n = 15;
     }
-    if (g->icon_mode == 2) {
+    if (g->icon_mode == ICON_MODE_FREE) {
         n = 15;
     }
     for (i = 0; i < n; i++) {
@@ -1204,7 +1204,7 @@ void func_80066334(void) {
             work->x--; work->y--;
             return;
         }
-        if (D_800E6280.pad_held & 0x10) {
+        if (D_800E6280.pad_held & PAD_TRIANGLE) {
             for (i = 0; i < D_800B5B24 + 2; i++) {
                 ((Actor *)D_8011ECD0)[i + 3].x = (D_800B5B24 - i) * 14 - 135;
                 ((Actor *)D_8011ECD0)[i + 3].y = -81;

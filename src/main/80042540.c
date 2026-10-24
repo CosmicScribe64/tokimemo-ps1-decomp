@@ -11,7 +11,7 @@ void func_80042540(void) {
         break;
     case 0x1:
         if (*(u8 *)&D_800E6280.boot_hold == 0) {
-            main_state_set(0);
+            main_state_set(MODE_BOOT);
         }
         break;
     case 0xFF:

@@ -64,7 +64,7 @@ void func_80133D28(void) {
         }
     }
     if (v == 0xA && D_800E6280.girls[0].tokimeki + D_800E6280.girls[0].affection < D_800E6280.girls[10].tokimeki + D_800E6280.girls[10].affection && D_800E6280.year >= 0x60) {
-        D_800E6280.current_girl = 0xA;
+        D_800E6280.current_girl = GIRL_YUMI;
     }
     D_800E6280.date_girl = D_800E6280.current_girl;
     func_800847B8(D_800E6280.current_girl);

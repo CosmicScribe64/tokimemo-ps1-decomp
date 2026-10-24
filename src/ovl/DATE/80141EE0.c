@@ -689,7 +689,7 @@ void func_80144720(void) {
     *(u32 *)&D_80122CD4 = D_800E6280.date_girl;
     D_800CA148 = 0;
     date_arrival = 1;
-    if (!(D_800E6280.frame_count & 3) && (D_800E6280.date_girl != 2)) {
+    if (!(D_800E6280.frame_count & 3) && (D_800E6280.date_girl != GIRL_YUINA)) {
         date_arrival = 0;
     }
     D_8015BF4C = 0;

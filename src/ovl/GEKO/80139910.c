@@ -339,7 +339,7 @@ void func_8013A668(void) {
 }
 
 void func_8013A6D0(void) {
-    D_800E6280.current_girl = 0;
+    D_800E6280.current_girl = GIRL_SHIORI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -413,7 +413,7 @@ void func_8013A820(void) {
 }
 
 void func_8013AA1C(void) {
-    D_800E6280.current_girl = 0;
+    D_800E6280.current_girl = GIRL_SHIORI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -465,7 +465,7 @@ void func_8013AB4C(void) {
     D_800B593C = 0x80;
     D_800B5940 = 0;
     srand(D_800E6280.frame_count);
-    D_800E6280.current_girl = 0;
+    D_800E6280.current_girl = GIRL_SHIORI;
     strcpy(D_800CA19C, "詩織の部屋");
     strcpy(D_800CA1DC, "自宅前");
     D_800CA150 = 0;
@@ -537,7 +537,7 @@ void func_8013AF1C(void) {
 }
 
 void func_8013AF44(void) {
-    func_800634FC(get_g_zyotai_h(0));
+    func_800634FC(get_g_zyotai_h(GIRL_SHIORI));
     bg_read_sub2(0x4156);
     func_8004284C();
 }

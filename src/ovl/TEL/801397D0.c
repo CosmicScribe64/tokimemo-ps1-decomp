@@ -1111,7 +1111,7 @@ void func_8013BE38(void) {
 }
 
 void func_8013BF50(void) {
-    main_state_set(0x31);
+    main_state_set(MODE_DAY_SCREEN);
 }
 
 s32 func_8013BF70(void) {
@@ -1470,7 +1470,7 @@ s32 func_8013CBA0(void) {
         xa_wait();
         return;
     default:
-        main_state_set(0x34);
+        main_state_set(MODE_COMMAND_SCREEN);
         return;
     }
 }

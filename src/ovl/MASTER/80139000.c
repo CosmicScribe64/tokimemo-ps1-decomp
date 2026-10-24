@@ -1057,19 +1057,19 @@ void func_8013B448(void) {
         break;
     }
     switch (g->current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         g->event_log[g->event_log_count].rank = 1;
         break;
-    case 1:
+    case GIRL_MIO:
         g->event_log[g->event_log_count].rank = 1;
         break;
-    case 2:
+    case GIRL_YUINA:
         g->event_log[g->event_log_count].rank = 1;
         break;
-    case 3:
+    case GIRL_AYAKO:
         g->event_log[g->event_log_count].rank = 1;
         break;
-    case 4:
+    case GIRL_SAKI:
         if (((g->girls[4].flags.b[2] >> 4) == 7) && (((u16) g->player_flags.h >> 0xC) == 7)) {
             g->event_log[g->event_log_count].rank = 5;
             g->event_log[g->event_log_count].weekday = 0xFF;
@@ -1077,33 +1077,33 @@ void func_8013B448(void) {
             g->event_log[g->event_log_count].rank = 1;
         }
         break;
-    case 5:
+    case GIRL_YUKARI:
         g->event_log[g->event_log_count].rank = 1;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         if (((u16) g->player_flags.h >> 0xC) == 9) {
             g->event_log[g->event_log_count].rank = 1;
         } else {
             g->event_log[g->event_log_count].rank = 0;
         }
         break;
-    case 7:
+    case GIRL_MIRA:
         g->event_log[g->event_log_count].rank = 0;
         break;
-    case 8:
+    case GIRL_YUKO:
         g->event_log[g->event_log_count].rank = 1;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         g->event_log[g->event_log_count].rank = 5;
         g->event_log[g->event_log_count].weekday = 0xFF;
         break;
-    case 10:
+    case GIRL_YUMI:
         g->event_log[g->event_log_count].rank = 1;
         break;
-    case 11:
+    case GIRL_MIHARU:
         g->event_log[g->event_log_count].rank = 1;
         break;
-    case 12:
+    case GIRL_REI:
         g->event_log[g->event_log_count].rank = 1;
         break;
     }

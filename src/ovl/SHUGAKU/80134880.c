@@ -104,7 +104,7 @@ void func_80134C98(void) {
         D_800E6280.saved_stage = 5;
         D_800E6280.saved_step = 0;
         D_800E6280.date_girl = D_800E6280.current_girl;
-        D_800E6280.current_girl = 0;
+        D_800E6280.current_girl = GIRL_SHIORI;
         func_80042908(6);
         return;
     }
@@ -154,7 +154,7 @@ void func_80134E9C(void) {
 
 void func_80134ED4(void) {
     D_800E6280.date_girl = D_800E6280.current_girl;
-    D_800E6280.current_girl = 0xD;
+    D_800E6280.current_girl = GIRL_YOSHIO;
     func_800847B8(0xD);
     func_8004284C();
 }
@@ -209,7 +209,7 @@ void func_801351CC(void) {
         D_800E6280.saved_stage += 1;
         D_800E6280.saved_step = 0;
         D_800E6280.date_girl = D_800E6280.current_girl;
-        D_800E6280.current_girl = 0;
+        D_800E6280.current_girl = GIRL_SHIORI;
         func_80042908(6);
         return;
     }

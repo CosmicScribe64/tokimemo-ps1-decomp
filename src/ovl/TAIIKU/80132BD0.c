@@ -227,11 +227,11 @@ void func_80133644(void) {
     switch (D_800E6280.step) {
     case 0:
         switch (D_800E6280.input_device) {
-        case 0:
-        case 0xFF:
+        case INPUT_MOUSE:
+        case INPUT_NONE:
             func_8004284C();
             break;
-        case 1:
+        case INPUT_PAD:
             func_80042808();
             break;
         }
@@ -240,7 +240,7 @@ void func_80133644(void) {
         func_800866A0(0x541D);
         break;
     case 2:
-        D_800E6280.current_girl = 0;
+        D_800E6280.current_girl = GIRL_SHIORI;
         addr_init_bustup();
         func_80083474();
         func_80083440(1U);
@@ -256,7 +256,7 @@ void func_80133644(void) {
         D_800CA160 = D_80148F00;
         D_800CA164 = D_80148F04;
         D_800CA168 = D_80148F08;
-        if (D_800E6280.input_device == 0xFF) {
+        if (D_800E6280.input_device == INPUT_NONE) {
             func_80042940(6);
         } else {
             func_8004284C();
@@ -273,7 +273,7 @@ void func_80133644(void) {
         normal_date_speak();
         break;
     case 8:
-        if (D_800E6280.input_device == 1) {
+        if (D_800E6280.input_device == INPUT_PAD) {
             func_8004284C();
         }
         break;

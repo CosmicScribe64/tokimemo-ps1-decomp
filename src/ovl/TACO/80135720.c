@@ -333,7 +333,7 @@ void func_801368D8(u8 *arg0, u8 arg1) {
     if (D_800E6280.pad_pressed & 0x2020) {
         *arg0 = ((u32)v + arg1 + 1) % (u32)arg1;
     }
-    if (D_800E6280.pad_pressed & 0x8000) {
+    if (D_800E6280.pad_pressed & PAD_LEFT) {
         *arg0 = (*arg0 + arg1 - 1U) % (u32)arg1;
     }
 }
@@ -342,10 +342,10 @@ void func_80136988(void) {
     if (D_800E6280.pad_pressed & 0x5000) {
         func_801335A0(0, 0x500);
     }
-    if (D_800E6280.pad_pressed & 0x1000) {
+    if (D_800E6280.pad_pressed & PAD_UP) {
         D_8015F3F0 -= 1;
     }
-    if (D_800E6280.pad_pressed & 0x4000) {
+    if (D_800E6280.pad_pressed & PAD_DOWN) {
         D_8015F3F0 += 1;
     }
     if (D_8015F3F0 < 0) {
@@ -372,7 +372,7 @@ void func_80136988(void) {
             func_801368D8(&D_8015EDE4, 3);
             break;
         case 4:
-            if (D_800E6280.pad_pressed & 0x20) {
+            if (D_800E6280.pad_pressed & PAD_CIRCLE) {
                 func_801335A0(0, 0x502);
                 func_8004284C();
             }

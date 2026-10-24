@@ -49,7 +49,7 @@ s32 func_801389DC(void) {
 }
 
 void func_80138ADC(void) {
-    if ((u32)D_800E6280.step >= 3 && (u32)D_800E6280.step < 6 && (D_800E6280.pad_held & 0x40)) {
+    if ((u32)D_800E6280.step >= 3 && (u32)D_800E6280.step < 6 && (D_800E6280.pad_held & PAD_CROSS)) {
         func_80042940(5);
         func_80044750(0xC4);
     }

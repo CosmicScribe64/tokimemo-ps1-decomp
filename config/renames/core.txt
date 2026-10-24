@@ -314,3 +314,21 @@ type main Pix2Out PixelPairOut - two 5:5:5 pixels written by func_8004B590
 type main ModelRec88 ModelRecord - 0x88-byte model record of the 3D init code; size suffix dropped
 type main MouseOut MouseSample - three-word mouse state returned by func_80059860
 type main MenuSelection5 MenuSelection - count[2], mode and cursor[2] bytes at GameState +0x1090; the view the menu code casts to
+const main GirlId include/game_enums.h - T-27004 core.tsv GirlId
+const main Parameter include/game_enums.h - T-27004 core.tsv Parameter
+const main Weekday include/game_enums.h - T-27004 core.tsv Weekday
+const main Club include/game_enums.h - T-27004 core.tsv Club
+const main Place include/game_enums.h - T-27004 core.tsv Place
+const main HealthState include/game_enums.h - T-27004 core.tsv HealthState
+const main Vacation include/game_enums.h - T-27004 core.tsv Vacation
+const main DayKind include/game_enums.h - T-27004 core.tsv DayKind
+const main CalendarMarker include/game_enums.h - T-27004 core.tsv CalendarMarker
+const main DayEventType include/game_enums.h - T-27004 core.tsv DayEventType
+const main MainMode include/game_enums.h - T-27004 core.tsv MainMode
+const main InputDevice include/game_enums.h - T-27004 core.tsv InputDevice
+const main VoiceMode include/game_enums.h - T-27004 core.tsv VoiceMode
+const main MenuMode include/game_enums.h - T-27004 core.tsv MenuMode
+const main IconMode include/game_enums.h - T-27004 core.tsv IconMode
+const main defines include/game_enums.h - T-27004 core.tsv PadBits
+const main defines include/game_enums.h - T-27004 core.tsv MouseButtons
+const main defines include/game_enums.h - T-27004 core.tsv PlayerFlag

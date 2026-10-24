@@ -28,7 +28,7 @@ s32 func_80137340(void) {
 
 void func_801374BC(void) {
     if (D_800E6280.options_dirty != 0) {
-        main_state_set(0xC2);
+        main_state_set(MODE_ETC_C2);
         return;
     }
     func_80042808();
@@ -161,7 +161,7 @@ s32 func_80137730(void) {
         }
     }
     D_800B5A60 = 0;
-    if ((g->current_girl == 0) && (D_8011F522 == 8)) {
+    if ((g->current_girl == GIRL_SHIORI) && (D_8011F522 == 8)) {
         D_800B5A60 = 1;
     }
     if (lvl >= 4) {
@@ -201,40 +201,40 @@ s32 func_80137730(void) {
 
 void func_80137AA8(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         func_80137BB4();
         return;
-    case 1:
+    case GIRL_MIO:
         func_80137E40();
         return;
-    case 2:
+    case GIRL_YUINA:
         func_80137F64();
         return;
-    case 3:
+    case GIRL_AYAKO:
         func_801380B0();
         return;
-    case 4:
+    case GIRL_SAKI:
         func_80138278();
         return;
-    case 5:
+    case GIRL_YUKARI:
         func_8013855C();
         return;
-    case 6:
+    case GIRL_NOZOMI:
         func_801387B0();
         return;
-    case 7:
+    case GIRL_MIRA:
         func_80138A9C();
         return;
-    case 8:
+    case GIRL_YUKO:
         func_80138C70();
         return;
-    case 9:
+    case GIRL_MEGUMI:
         func_80138DC8();
         return;
-    case 10:
+    case GIRL_YUMI:
         func_80138FC8();
         return;
-    case 12:
+    case GIRL_REI:
         func_801391E4();
         return;
     default:

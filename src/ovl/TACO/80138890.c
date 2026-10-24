@@ -198,7 +198,7 @@ s32 func_80138D08(void) {
         }
         break;
     }
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         if ((u8) D_800E6280.substep < 0xAU) {
             D_800E6280.substep = 0xA;
         } else {

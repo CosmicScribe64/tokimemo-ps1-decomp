@@ -57,7 +57,7 @@ void func_80133EE4(void) {
 }
 
 void func_80133F58(void) {
-    if (D_800E6280.current_girl == 9) {
+    if (D_800E6280.current_girl == GIRL_MEGUMI) {
         func_8004284C();
         return;
     }
@@ -87,52 +87,52 @@ void func_80134030(void) {
     D_800E6280.daily_event_bits &= 0xFFF7;
     D_800E6280.daily_event_bits |= 4;
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_8013448C = D_80134664;
         D_80134490 = D_80134698;
         D_80134494 = D_801346CC;
         break;
-    case 1:
+    case GIRL_MIO:
         D_8013448C = D_80134678;
         D_80134490 = D_801346AC;
         D_80134494 = D_801346E0;
         break;
-    case 2:
+    case GIRL_YUINA:
         D_8013448C = D_8013466C;
         D_80134490 = D_801346A0;
         D_80134494 = D_801346D4;
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_8013448C = D_80134670;
         D_80134490 = D_801346A4;
         D_80134494 = D_801346D8;
         break;
-    case 4:
+    case GIRL_SAKI:
         D_8013448C = D_80134688;
         D_80134490 = D_801346BC;
         D_80134494 = D_801346F0;
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_8013448C = D_8013467C;
         D_80134490 = D_801346B0;
         D_80134494 = D_801346E4;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_8013448C = D_80134680;
         D_80134490 = D_801346B4;
         D_80134494 = D_801346E8;
         break;
-    case 7:
+    case GIRL_MIRA:
         D_8013448C = D_80134674;
         D_80134490 = D_801346A8;
         D_80134494 = D_801346DC;
         break;
-    case 8:
+    case GIRL_YUKO:
         D_8013448C = D_80134660;
         D_80134490 = D_80134694;
         D_80134494 = D_801346C8;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_8013448C = D_80134684;
         D_80134490 = D_801346B8;
         D_80134494 = D_801346EC;

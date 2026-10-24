@@ -5,7 +5,7 @@
 s32 func_8013E7C0();
 
 s32 func_80156870(void) {
-    if ((u32)(get_g_zyotai_s(6) & 0x7F) < 2) {
+    if ((u32)(get_g_zyotai_s(GIRL_NOZOMI) & 0x7F) < 2) {
         return 1;
     }
     return 0;
@@ -82,7 +82,7 @@ void func_801568A4(void) {
         func_8014F230();
         break;
     case 9:
-        if (D_800E6280.pad_pressed & 0x40) {
+        if (D_800E6280.pad_pressed & PAD_CROSS) {
             func_8013E7C0(0x1D, 7, 5, 1);
             if (D_8015EE48 == 3) {
                 D_8015EE48 = 1;

@@ -89,7 +89,7 @@ void func_8013A488(void) {
 }
 
 void func_8013A4B0(void) {
-    if (D_800E6280.current_girl == 5) {
+    if (D_800E6280.current_girl == GIRL_YUKARI) {
         func_80062CD0(0x5FE4);
     } else {
         func_80062CD0(0x552B);

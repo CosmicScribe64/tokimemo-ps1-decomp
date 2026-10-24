@@ -14,7 +14,7 @@ void func_801362EC(void) {
     s32 i;
 
     if (D_800E6280.step >= 3 && D_800E6280.step < 7) {
-        if (D_800E6280.pad_held & 0x20) {
+        if (D_800E6280.pad_held & PAD_CIRCLE) {
             func_801363BC();
             for (i = 0; i < 3; i++) {
                 ((Actor *)D_8011ECD0)[i + 96].blink_period = 0x82;
@@ -25,7 +25,7 @@ void func_801362EC(void) {
             }
         }
     }
-    if (D_800E6280.step >= 3 && D_800E6280.step < 6 && (D_800E6280.pad_held & 0x40)) {
+    if (D_800E6280.step >= 3 && D_800E6280.step < 6 && (D_800E6280.pad_held & PAD_CROSS)) {
         func_80042940(5);
     }
     func_801363BC();

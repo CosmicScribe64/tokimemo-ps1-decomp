@@ -2259,7 +2259,7 @@ s32 func_80083474(void) {
         return 0;
     }
     var_v1 = get_g_zyotai_h((s32) D_800E6280.current_girl) & 0x7F;
-    if ((u8) D_800E6280.current_girl >= 0xCU) {
+    if ((u8) D_800E6280.current_girl >= GIRL_REI) {
         var_v1 = 0;
     }
     func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
@@ -2270,7 +2270,7 @@ void func_80083628(void) {
     u8 var_v1;
 
     var_v1 = get_g_zyotai_h((s32) D_800E6280.current_girl) & 0x7F;
-    if ((u8) D_800E6280.current_girl >= 0xCU) {
+    if ((u8) D_800E6280.current_girl >= GIRL_REI) {
         var_v1 = 0;
     }
     func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
@@ -2367,7 +2367,7 @@ void hizuke_appear(void) {
 
 void read_bustup(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x55B2);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2378,7 +2378,7 @@ void read_bustup(void) {
             func_80062CD0(0x5639);
         }
         break;
-    case 1:
+    case GIRL_MIO:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x5D9B);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2389,7 +2389,7 @@ void read_bustup(void) {
             func_80062CD0(0x5E22);
         }
         break;
-    case 2:
+    case GIRL_YUINA:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x5288);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2400,7 +2400,7 @@ void read_bustup(void) {
             func_80062CD0(0x530F);
         }
         break;
-    case 3:
+    case GIRL_AYAKO:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x5909);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2411,7 +2411,7 @@ void read_bustup(void) {
             func_80062CD0(0x5990);
         }
         break;
-    case 4:
+    case GIRL_SAKI:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x6719);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2422,7 +2422,7 @@ void read_bustup(void) {
             func_80062CD0(0x67A0);
         }
         break;
-    case 5:
+    case GIRL_YUKARI:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x6011);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2433,7 +2433,7 @@ void read_bustup(void) {
             func_80062CD0(0x6098);
         }
         break;
-    case 6:
+    case GIRL_NOZOMI:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x6287);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2444,7 +2444,7 @@ void read_bustup(void) {
             func_80062CD0(0x630E);
         }
         break;
-    case 7:
+    case GIRL_MIRA:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x5B52);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2455,7 +2455,7 @@ void read_bustup(void) {
             func_80062CD0(0x5BD9);
         }
         break;
-    case 8:
+    case GIRL_YUKO:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x503F);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2466,7 +2466,7 @@ void read_bustup(void) {
             func_80062CD0(0x50C6);
         }
         break;
-    case 9:
+    case GIRL_MEGUMI:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x64FD);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2477,7 +2477,7 @@ void read_bustup(void) {
             func_80062CD0(0x6584);
         }
         break;
-    case 10:
+    case GIRL_YUMI:
         if (D_800E6280.month >= 3U && D_800E6280.month < 6U) {
             func_80062CD0(0x698F);
         } else if (D_800E6280.month >= 6U && D_800E6280.month < 9U) {
@@ -2488,7 +2488,7 @@ void read_bustup(void) {
             func_80062CD0(0x6A16);
         }
         break;
-    case 13:
+    case GIRL_YOSHIO:
         func_80062CD0(0x6C8C);
         break;
     }
@@ -2497,105 +2497,105 @@ void read_bustup(void) {
 
 void read_bustup_uniform(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x541D);
         } else {
             func_80062CD0(0x544A);
         }
         break;
-    case 1:
+    case GIRL_MIO:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x5D14);
         } else {
             func_80062CD0(0x5D41);
         }
         break;
-    case 2:
+    case GIRL_YUINA:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x5201);
         } else {
             func_80062CD0(0x522E);
         }
         break;
-    case 3:
+    case GIRL_AYAKO:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x5882);
         } else {
             func_80062CD0(0x58AF);
         }
         break;
-    case 4:
+    case GIRL_SAKI:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x6692);
         } else {
             func_80062CD0(0x66BF);
         }
         break;
-    case 5:
+    case GIRL_YUKARI:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x5F8A);
         } else {
             func_80062CD0(0x5FB7);
         }
         break;
-    case 6:
+    case GIRL_NOZOMI:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x6200);
         } else {
             func_80062CD0(0x622D);
         }
         break;
-    case 7:
+    case GIRL_MIRA:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x5AF8);
         } else {
             func_80062CD0(0x5B25);
         }
         break;
-    case 8:
+    case GIRL_YUKO:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x4FE5);
         } else {
             func_80062CD0(0x5012);
         }
         break;
-    case 9:
+    case GIRL_MEGUMI:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x64A3);
         } else {
             func_80062CD0(0x64D0);
         }
         break;
-    case 10:
+    case GIRL_YUMI:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x6908);
         } else {
             func_80062CD0(0x6935);
         }
         break;
-    case 12:
+    case GIRL_REI:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x57FB);
         } else {
             func_80062CD0(0x5828);
         }
         break;
-    case 11:
+    case GIRL_MIHARU:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x6B51);
         } else {
             func_80062CD0(0x6B7E);
         }
         break;
-    case 13:
+    case GIRL_YOSHIO:
         if (D_800E6280.month >= 6U && D_800E6280.month < 10U) {
             func_80062CD0(0x6C32);
         } else {
             func_80062CD0(0x6C5F);
         }
         break;
-    case 14:
+    case GIRL_SOTOI:
         func_80062CD0(0x6B24);
         break;
     }
@@ -2604,31 +2604,31 @@ void read_bustup_uniform(void) {
 
 void read_bustup_swimsuit(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         func_80062CD0(0x5666);
         break;
-    case 1:
+    case GIRL_MIO:
         func_80062CD0(0x5E4F);
         break;
-    case 2:
+    case GIRL_YUINA:
         func_80062CD0(0x533C);
         break;
-    case 3:
+    case GIRL_AYAKO:
         func_80062CD0(0x59BD);
         break;
-    case 4:
+    case GIRL_SAKI:
         func_80062CD0(0x67CD);
         break;
-    case 5:
+    case GIRL_YUKARI:
         func_80062CD0(0x60C5);
         break;
-    case 6:
+    case GIRL_NOZOMI:
         func_80062CD0(0x633B);
         break;
-    case 7:
+    case GIRL_MIRA:
         func_80062CD0(0x5C06);
         break;
-    case 8:
+    case GIRL_YUKO:
         if (D_800E6280.year == 0x5F) {
             func_80062CD0(0x50F3);
         } else if (D_800E6280.year == 0x60) {
@@ -2637,10 +2637,10 @@ void read_bustup_swimsuit(void) {
             func_80062CD0(0x514D);
         }
         break;
-    case 9:
+    case GIRL_MEGUMI:
         func_80062CD0(0x65B1);
         break;
-    case 10:
+    case GIRL_YUMI:
         func_80062CD0(0x6A43);
         break;
     }
@@ -2678,7 +2678,7 @@ void yosi_trans(void) {
 }
 
 void change_yoshio(void) {
-    D_800E6280.current_girl = 0xD;
+    D_800E6280.current_girl = GIRL_YOSHIO;
     func_8004284C();
 }
 
@@ -3186,7 +3186,7 @@ s32 func_80085B3C(arg0, arg1)
         D_800E6280.event_log[D_800E6280.event_log_count].rank = D_80122D48 - 1;
     }
     D_80122D48 = 0;
-    if (D_800E6280.current_girl == 0xC) {
+    if (D_800E6280.current_girl == GIRL_REI) {
         D_800E6280.event_log[D_800E6280.event_log_count].rank = 0;
     }
     D_800E6280.event_log[D_800E6280.event_log_count].year = D_800E6280.year;

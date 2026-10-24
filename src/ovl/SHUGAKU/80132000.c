@@ -204,62 +204,62 @@ void func_8013282C(void) {
     D_8013B088 = 0;
     func_800847B8(D_800E6280.current_girl);
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_8013B06C = D_8013AFD4;
         D_8013B070 = D_8013B008;
         D_8013B074 = D_8013B03C;
         break;
-    case 1:
+    case GIRL_MIO:
         D_8013B06C = D_8013AFE4;
         D_8013B070 = D_8013B018;
         D_8013B074 = D_8013B04C;
         break;
-    case 2:
+    case GIRL_YUINA:
         D_8013B06C = D_8013AFD8;
         D_8013B070 = D_8013B00C;
         D_8013B074 = D_8013B040;
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_8013B06C = D_8013AFDC;
         D_8013B070 = D_8013B010;
         D_8013B074 = D_8013B044;
         break;
-    case 4:
+    case GIRL_SAKI:
         D_8013B06C = D_8013AFF8;
         D_8013B070 = D_8013B02C;
         D_8013B074 = D_8013B060;
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_8013B06C = D_8013AFE8;
         D_8013B070 = D_8013B01C;
         D_8013B074 = D_8013B050;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_8013B06C = D_8013AFF0;
         D_8013B070 = D_8013B024;
         D_8013B074 = D_8013B058;
-        if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2) {
+        if ((u8)(get_g_zyotai_s(GIRL_NOZOMI) & 0x7F) < 2) {
             D_8013B06C = D_8013AFEC;
             D_8013B070 = D_8013B020;
             D_8013B074 = D_8013B054;
         }
         break;
-    case 7:
+    case GIRL_MIRA:
         D_8013B06C = D_8013AFE0;
         D_8013B070 = D_8013B014;
         D_8013B074 = D_8013B048;
         break;
-    case 8:
+    case GIRL_YUKO:
         D_8013B06C = D_8013AFD0;
         D_8013B070 = D_8013B004;
         D_8013B074 = D_8013B038;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_8013B06C = D_8013AFF4;
         D_8013B070 = D_8013B028;
         D_8013B074 = D_8013B05C;
         break;
-    case 10:
+    case GIRL_YUMI:
         D_8013B06C = D_8013B000;
         D_8013B070 = D_8013B034;
         D_8013B074 = D_8013B068;
@@ -439,7 +439,7 @@ void func_80133348(void) {
     u8 c; /* FAKE: copy of D_800CA2CC, gives the original's bne operand order; real source unknown. T-11440 */
 
     v = get_g_zyotai_s(D_800E6280.date_girl);
-    if (D_800E6280.saved_stage == 5 && D_800E6280.date_girl == 2 && (c = D_800CA2CC) == 2) {
+    if (D_800E6280.saved_stage == 5 && D_800E6280.date_girl == GIRL_YUINA && (c = D_800CA2CC) == 2) {
         D_800B593C = 0;
         func_80042908(8);
         return;

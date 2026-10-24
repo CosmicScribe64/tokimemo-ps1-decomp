@@ -60,14 +60,14 @@ void func_801395C0(void) {
 }
 
 void func_801395F8(void) {
-    func_800634FC(get_g_zyotai_h(8));
+    func_800634FC(get_g_zyotai_h(GIRL_YUKO));
     func_80044750(0x501);
     func_800847B8(D_800E6280.current_girl);
     func_8004284C();
 }
 
 void func_80139640(void) {
-    D_800E6280.current_girl = 8;
+    D_800E6280.current_girl = GIRL_YUKO;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

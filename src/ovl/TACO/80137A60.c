@@ -17,7 +17,7 @@ s32 func_80137A60(void) {
         func_80137F54();
         break;
     }
-    if (D_800E6280.pad_pressed & 0x40) {
+    if (D_800E6280.pad_pressed & PAD_CROSS) {
         func_80044750(0x74);
         func_80044750(0xB1);
         func_80042908(2);

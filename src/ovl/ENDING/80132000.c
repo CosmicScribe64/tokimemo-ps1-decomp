@@ -90,7 +90,7 @@ void func_80132334(void) {
 }
 
 void func_80132400(void) {
-    main_state_set(0xC2);
+    main_state_set(MODE_ETC_C2);
 }
 
 /* The scene dialogue entry: shows message text (kind 0 and 6: a title in brackets, 1 and 0xC: a spoken line

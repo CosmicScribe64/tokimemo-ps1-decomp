@@ -169,9 +169,9 @@ void func_80132788(void) {
 
 void func_801327BC(void) {
     func_800847B8(D_800E6280.date_girl);
-    D_800E6280.current_girl = 0xE;
+    D_800E6280.current_girl = GIRL_SOTOI;
     strcpy(D_800CA188, "母親");
-    D_800CA148 = (u32)D_800E6280.date_girl > 0;
+    D_800CA148 = (u32)D_800E6280.date_girl > GIRL_SHIORI;
     D_800CA14C = 0;
     func_801320A0();
     D_800CA160 = D_80134A8C;
@@ -182,57 +182,57 @@ void func_801327BC(void) {
 
 void func_8013285C(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_800CA160 = D_80134A60[1];
         D_800CA164 = D_80134A90[1];
         D_800CA168 = D_80134AC0[1];
         return;
-    case 1:
+    case GIRL_MIO:
         D_800CA160 = D_80134A60[5];
         D_800CA164 = D_80134A90[5];
         D_800CA168 = D_80134AC0[5];
         return;
-    case 2:
+    case GIRL_YUINA:
         D_800CA160 = D_80134A60[2];
         D_800CA164 = D_80134A90[2];
         D_800CA168 = D_80134AC0[2];
         return;
-    case 3:
+    case GIRL_AYAKO:
         D_800CA160 = D_80134A60[3];
         D_800CA164 = D_80134A90[3];
         D_800CA168 = D_80134AC0[3];
         return;
-    case 4:
+    case GIRL_SAKI:
         D_800CA160 = D_80134A60[9];
         D_800CA164 = D_80134A90[9];
         D_800CA168 = D_80134AC0[9];
         return;
-    case 5:
+    case GIRL_YUKARI:
         D_800CA160 = D_80134A60[6];
         D_800CA164 = D_80134A90[6];
         D_800CA168 = D_80134AC0[6];
         return;
-    case 6:
+    case GIRL_NOZOMI:
         D_800CA160 = D_80134A60[7];
         D_800CA164 = D_80134A90[7];
         D_800CA168 = D_80134AC0[7];
         return;
-    case 7:
+    case GIRL_MIRA:
         D_800CA160 = D_80134A60[4];
         D_800CA164 = D_80134A90[4];
         D_800CA168 = D_80134AC0[4];
         return;
-    case 8:
+    case GIRL_YUKO:
         D_800CA160 = D_80134A60[0];
         D_800CA164 = D_80134A90[0];
         D_800CA168 = D_80134AC0[0];
         return;
-    case 9:
+    case GIRL_MEGUMI:
         D_800CA160 = D_80134A60[8];
         D_800CA164 = D_80134A90[8];
         D_800CA168 = D_80134AC0[8];
         return;
-    case 10:
+    case GIRL_YUMI:
         D_800CA160 = D_80134A60[10];
         D_800CA164 = D_80134A90[10];
         D_800CA168 = D_80134AC0[10];

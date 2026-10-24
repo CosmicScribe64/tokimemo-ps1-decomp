@@ -178,37 +178,37 @@ void func_801325D0(void) {
 
 void func_8013260C(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_800CA160 = D_80139950[0][0];
         D_800CA164 = D_80139950[1][0];
         D_800CA168 = D_80139950[2][0];
         return;
-    case 1:
+    case GIRL_MIO:
         D_800CA160 = D_80139950[0][3];
         D_800CA164 = D_80139950[1][3];
         D_800CA168 = D_80139950[2][3];
         return;
-    case 2:
+    case GIRL_YUINA:
         D_800CA160 = D_80139950[0][1];
         D_800CA164 = D_80139950[1][1];
         D_800CA168 = D_80139950[2][1];
         return;
-    case 3:
+    case GIRL_AYAKO:
         D_800CA160 = D_80139950[0][2];
         D_800CA164 = D_80139950[1][2];
         D_800CA168 = D_80139950[2][2];
         return;
-    case 4:
+    case GIRL_SAKI:
         D_800CA160 = D_80139950[0][6];
         D_800CA164 = D_80139950[1][6];
         D_800CA168 = D_80139950[2][6];
         return;
-    case 5:
+    case GIRL_YUKARI:
         D_800CA160 = D_80139950[0][4];
         D_800CA164 = D_80139950[1][4];
         D_800CA168 = D_80139950[2][4];
         return;
-    case 6:
+    case GIRL_NOZOMI:
         D_800CA160 = D_80139950[0][5];
         D_800CA164 = D_80139950[1][5];
         D_800CA168 = D_80139950[2][5];
@@ -279,7 +279,7 @@ void func_801327DC(void) {
     }
     D_800CA14C = 0;
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         club = D_800E6280.player_flags.h >> 12;
         if (club < 6) {
             D_800CA148 = 0;
@@ -294,13 +294,13 @@ void func_801327DC(void) {
             D_800CA148 += 1;
         }
         break;
-    case 1:
+    case GIRL_MIO:
         D_800CA148 = 0;
         if (!D_800E6280.girls[D_800E6280.current_girl].flags.f.b2) {
             D_800CA148 = 1;
         }
         break;
-    case 2:
+    case GIRL_YUINA:
         D_800CA148 = 0;
         if (!D_800E6280.girls[D_800E6280.current_girl].flags.f.b2) {
             D_800CA148 = 1;
@@ -309,7 +309,7 @@ void func_801327DC(void) {
             D_800CA148 = 2;
         }
         break;
-    case 3:
+    case GIRL_AYAKO:
         if ((D_800E6280.player_flags.h >> 12) == 4) {
             D_800CA148 = 0;
         } else {
@@ -319,24 +319,24 @@ void func_801327DC(void) {
             D_800CA148 += 2;
         }
         break;
-    case 4:
+    case GIRL_SAKI:
         if ((D_800E6280.player_flags.h >> 12) == 6) {
             D_800CA148 = 0;
         } else {
             D_800CA148 = 1;
         }
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_800CA148 = 0;
         if (!D_800E6280.girls[D_800E6280.current_girl].flags.f.b2) {
             D_800CA148 = 1;
         }
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_800CA148 = 0;
         /* FAKE: the (u8) narrowing spends one ugen temporary that as1 deletes, which gives the
          * original's andi t1 and addiu t3. T-25139 */
-        if (((u8) get_g_zyotai_s(6) & 0x7F) < 2) {
+        if (((u8) get_g_zyotai_s(GIRL_NOZOMI) & 0x7F) < 2) {
             D_800CA148 += 1;
         }
         break;

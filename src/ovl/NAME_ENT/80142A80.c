@@ -100,7 +100,7 @@ void func_80142A80(void) {
     func_80041168(0);
     func_8009C674(0);
     func_80048DD0(0);
-    main_state_set(0x12);
+    main_state_set(MODE_TITLE);
     func_8004ADAC((s32) sp43);
     k_speed_set((u8) sp3C);
     func_8006C760(0);
@@ -608,7 +608,7 @@ void func_80143580(void) {
 }
 
 void func_80144654(void) {
-    if (D_800E6280.pad_held & 0x10) {
+    if (D_800E6280.pad_held & PAD_TRIANGLE) {
         k_disp_switch(0, 1);
         k_disp_switch(1, 1);
         k_disp_switch(2, 1);

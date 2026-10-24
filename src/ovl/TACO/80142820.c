@@ -171,7 +171,7 @@ void func_80142DE0(void) {
         hizuke_disp_switch(1);
         return;
     }
-    main_state_set(0x12);
+    main_state_set(MODE_TITLE);
 }
 
 void func_80142EC4(void) {

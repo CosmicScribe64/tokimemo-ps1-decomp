@@ -157,7 +157,7 @@ void func_80132444(void) {
             D_800E6280.saved_mode = D_800E6280.mode;
             D_800E6280.saved_stage = D_800E6280.stage + 1;
             D_800E6280.saved_step = 0;
-            main_state_set(0x90);
+            main_state_set(MODE_SHOOTER);
         } else {
             func_80042808();
         }

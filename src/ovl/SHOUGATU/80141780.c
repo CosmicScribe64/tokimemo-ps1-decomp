@@ -132,7 +132,7 @@ void func_80141CA0(void) {
 
 void func_80141CD8(void) {
     D_801467FC = 1;
-    if (D_800E6280.current_girl == 0) {
+    if (D_800E6280.current_girl == GIRL_SHIORI) {
         func_80044750(0x206);
     }
     D_801217D0[4].x = -0x64;

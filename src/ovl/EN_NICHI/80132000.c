@@ -426,7 +426,7 @@ void func_80132DC4(void) {
 
 void func_80132E3C(void) {
     func_801330D0();
-    if (D_800E6280.pad_held & 0x20) {
+    if (D_800E6280.pad_held & PAD_CIRCLE) {
         if (D_80121531 != 7) {
             func_80135A48(D_8011ECF6, D_8011ECFA);
             func_801369F4(0x501);
@@ -496,7 +496,7 @@ void func_801330D0(void) {
     } else {
         v = 2;
     }
-    if (D_800E6280.input_device == 1) {
+    if (D_800E6280.input_device == INPUT_PAD) {
         switch (sel & ~0x60) {
         case 0x1000:
             ((ActorFixed *)D_8011ECD0)->y.w -= v << 16;
@@ -556,7 +556,7 @@ s32 func_801333B0(void) {
 
     func_801330D0();
     D_80139AFC += 1;
-    if ((D_800E6280.pad_held & 0x20) && D_80139AFC >= 4) {
+    if ((D_800E6280.pad_held & PAD_CIRCLE) && D_80139AFC >= 4) {
         func_80135A48(D_8011ECF6, D_8011ECFA);
         func_801369F4(0x501);
         D_80139AF8 = 1;
@@ -593,7 +593,7 @@ s32 func_8013358C(void) {
             return 0;
         }
     }
-    if (!(D_800E6280.pad_held & 0x20) && D_80139AFC >= 4) {
+    if (!(D_800E6280.pad_held & PAD_CIRCLE) && D_80139AFC >= 4) {
         func_80135A48(D_8011ECF6, D_8011ECFA);
         func_801369F4(0x502);
         D_80139AF8 = 0;
@@ -1654,7 +1654,7 @@ s32 func_801362A4(void) {
             }
             D_800E6280.substep++;
         }
-        if (D_800E6280.pad_pressed & 0x40) {
+        if (D_800E6280.pad_pressed & PAD_CROSS) {
             func_80136904(D_80139B00, D_80139B04);
             if (D_80139B00 == 0 && D_80139B04 == 0) {
                 func_8004284C();
@@ -1697,7 +1697,7 @@ s32 func_801362A4(void) {
                 func_8004284C();
                 func_8004284C();
             }
-            if (D_800E6280.pad_pressed & 0x800) {
+            if (D_800E6280.pad_pressed & PAD_START) {
                 func_80044750(0x7F);
                 func_8004284C();
                 func_8004284C();

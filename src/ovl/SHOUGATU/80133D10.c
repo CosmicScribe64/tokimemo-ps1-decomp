@@ -23,7 +23,7 @@ void func_80133D98(void) {
     if (D_80143B18 == 0) {
         var_v0 = var_v0;
         D_80143B00 = var_v0;
-        if (D_800E6280.current_girl == 5) {
+        if (D_800E6280.current_girl == GIRL_YUKARI) {
             var_v0 = 2 + var_v0;
             D_80143B00 = var_v0;
         }
@@ -60,7 +60,7 @@ void func_80133EA8(void) {
 }
 
 void func_80133F24(void) {
-    if ((D_800E6280.current_girl != 5) || (D_80143B20 != 0) || (D_80143B18 == 0)) {
+    if ((D_800E6280.current_girl != GIRL_YUKARI) || (D_80143B20 != 0) || (D_80143B18 == 0)) {
         func_80042808();
         return;
     }
@@ -83,7 +83,7 @@ void func_80133FC8(void) {
 }
 
 void func_80134004(void) {
-    if ((D_800E6280.current_girl == 5) && (D_80143B18 == 0)) {
+    if ((D_800E6280.current_girl == GIRL_YUKARI) && (D_80143B18 == 0)) {
         func_801323D4();
         return;
     }

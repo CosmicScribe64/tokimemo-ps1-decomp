@@ -44,7 +44,7 @@ void func_80135554(void) {
         dec_bg_show_set(1, func_8005751C(1));
         func_801431D4();
         addr_init_bustup();
-        D_800E6280.current_girl = 1;
+        D_800E6280.current_girl = GIRL_MIO;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;
@@ -177,7 +177,7 @@ void func_80135914(void) {
         dec_bg_show_set(1, func_8005751C(1));
         func_8014338C();
         addr_init_bustup();
-        D_800E6280.current_girl = 1;
+        D_800E6280.current_girl = GIRL_MIO;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;
@@ -215,7 +215,7 @@ void func_80135914(void) {
         D_80122EAC = 3;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 9:
         func_800866A0(0x5D41);
@@ -224,7 +224,7 @@ void func_80135914(void) {
         func_8014338C();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 1;
+        D_800E6280.current_girl = GIRL_MIO;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;
@@ -301,7 +301,7 @@ void func_80135C4C(void) {
         dec_bg_show_set(1, func_8005751C(1));
         func_8014338C();
         addr_init_bustup();
-        state->current_girl = 1;
+        state->current_girl = GIRL_MIO;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;
@@ -373,7 +373,7 @@ void func_80135C4C(void) {
     case 10:
         D_80122EB0 = (s32) state->stage;
         D_80122EB4 = state->step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 11:
         dec_bg_reset();
@@ -391,7 +391,7 @@ void func_80135C4C(void) {
         func_8014338C();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        state->current_girl = 1;
+        state->current_girl = GIRL_MIO;
         func_80083474();
         cd_read_sectors(0xBU, 0x801E8000, 0x4AA9);
         break;

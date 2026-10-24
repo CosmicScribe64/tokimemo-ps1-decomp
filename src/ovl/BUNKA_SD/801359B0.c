@@ -17,7 +17,7 @@ void func_80135A2C(void) {
     s32 i;
 
     if ((D_800E6280.step >= 3) && (D_800E6280.step < 7)) {
-        if (D_800E6280.pad_held & 0x20) {
+        if (D_800E6280.pad_held & PAD_CIRCLE) {
             func_80135B44();
             D_80120656 = 0x82;
             D_8012069A = 0x82; for (i = 0; i < 2; i++) {
@@ -36,7 +36,7 @@ void func_80135A2C(void) {
             }
         }
     }
-    if ((D_800E6280.step >= 3) && (D_800E6280.step < 6) && (D_800E6280.pad_held & 0x40)) {
+    if ((D_800E6280.step >= 3) && (D_800E6280.step < 6) && (D_800E6280.pad_held & PAD_CROSS)) {
         func_80042940(5);
     }
     func_80135B44();

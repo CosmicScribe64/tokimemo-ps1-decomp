@@ -84,10 +84,10 @@ s32 menu_check(arg0, arg1, arg2)
         menu_check_2(arg0, arg1, arg2);
         return (&D_800E6280.menu_cursor_0)[arg0];
     }
-    if (D_800E6280.pad_pressed & 4) {
+    if (D_800E6280.pad_pressed & PAD_L1) {
         return menu_check_1(arg0, arg1, arg2);
     }
-    if (D_800E6280.pad_held & 4) {
+    if (D_800E6280.pad_held & PAD_L1) {
         return menu_check_2(arg0, arg1, arg2);
     }
     return menu_check_1(arg0, arg1, arg2);
@@ -119,7 +119,7 @@ s32 menu_check_1(arg0, arg1, arg2)
     if (cnt == 0) {
         ((MenuSelection *)&g->menu_count_0)->current[arg0] = -1;
     }
-    if (!(g->pad_held & 4) && sel != -1) {
+    if (!(g->pad_held & PAD_L1) && sel != -1) {
         g->menu_hit[arg0] = sel;
     }
     return sel;
@@ -149,7 +149,7 @@ s32 menu_check_2(arg0, arg1, arg2)
             i += 1;
         } while (i < ((MenuSelection *)&g->menu_count_0)->count[arg0]);
     }
-    if (!(g->pad_held & 4) && sel != -1) {
+    if (!(g->pad_held & PAD_L1) && sel != -1) {
         g->menu_hit[arg0] = sel;
     }
 }
@@ -163,7 +163,7 @@ void func_8004FC10(s32 menu) {
     g = &D_800E6280;
     dir = 0;
     n = 16;
-    if (g->pad_pressed & 0x100) {
+    if (g->pad_pressed & PAD_SELECT) {
         g->menu_mode++;
         ((MenuSelection *)&g->menu_count_0)->current[menu] = -1;
         return;
@@ -223,8 +223,8 @@ void func_8004FC10(s32 menu) {
         D_8011ECFA = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
         break;
     case 2:
-        if (g->pad_held & 4) {
-            if (g->pad_pressed & 4) {
+        if (g->pad_held & PAD_L1) {
+            if (g->pad_pressed & PAD_L1) {
                 ((MenuSelection *)&g->menu_count_0)->current[menu] = g->menu_hit[menu];
             } else {
                 switch (g->pad_pressed & 0xF000) {
@@ -964,7 +964,7 @@ void func_80052060(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg2 == -1) {
         selector = arg3 & 15;
         if (selector != 15) {
-            if ((u8)D_800E6280.voice_mode != 0) {
+            if ((u8)D_800E6280.voice_mode != VOICE_OFF) {
                 func_80046290(arg0, arg1, arg3);
                 func_80044750(0x300);
             }
@@ -972,7 +972,7 @@ void func_80052060(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     } else {
         selector = arg3 & 15;
         if (selector != 15) {
-            if ((u8)D_800E6280.voice_mode != 0) {
+            if ((u8)D_800E6280.voice_mode != VOICE_OFF) {
                 func_80046290(((s32 *)arg0)[arg2 * 2], ((s32 *)arg0)[arg2 * 2 + 1], arg3);
                 func_80044750(0x300);
             }
@@ -1078,7 +1078,7 @@ void func_8005215C(void) {
             func_8006C848(1);
         }
     }
-    if (D_800E6280.pad_pressed & 0x40) {
+    if (D_800E6280.pad_pressed & PAD_CROSS) {
         if (r == 1) {
             if ((*(u8 *)&D_800E6280.voice_mode) == 2) {
                 D_80125C00 = 2;

@@ -93,7 +93,7 @@ void func_8013D74C(void) {
 }
 
 void func_8013D7D4(void) {
-    D_800E6280.current_girl = 5;
+    D_800E6280.current_girl = GIRL_YUKARI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -134,7 +134,7 @@ void func_8013D91C(void) {
 }
 
 void func_8013D9C4(void) {
-    D_800E6280.current_girl = 5;
+    D_800E6280.current_girl = GIRL_YUKARI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

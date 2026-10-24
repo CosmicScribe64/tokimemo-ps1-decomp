@@ -77,7 +77,7 @@ s32 func_801325C0(void) {
     D_80144C34 = D_80144BF8;
     D_80144C38 = D_80144C28;
     func_80133024();
-    if ((D_80144C50 == 0) && (D_800E6280.current_girl == 7) && !(rand() & 3)) {
+    if ((D_80144C50 == 0) && (D_800E6280.current_girl == GIRL_MIRA) && !(rand() & 3)) {
         D_80144C50 = 0x64;
     }
     if (D_800E6280.girls[D_800E6280.current_girl].syoushin >= 0x4C) {
@@ -94,58 +94,58 @@ void func_801327AC(void) {
     /* T-9510: a full halfword store, as in the initializer above (T-16510). */
     *(s16 *)&D_80144C40 = 0;
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_80144C30 = D_80144BA4;
         D_80144C34 = D_80144BD4;
         D_80144C38 = D_80144C04;
         break;
-    case 1:
+    case GIRL_MIO:
         D_80144C30 = D_80144BB4;
         D_80144C34 = D_80144BE4;
         D_80144C38 = D_80144C14;
         break;
-    case 2:
+    case GIRL_YUINA:
         D_80144C30 = D_80144BA8;
         D_80144C34 = D_80144BD8;
         D_80144C38 = D_80144C08;
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_80144C30 = D_80144BAC;
         D_80144C34 = D_80144BDC;
         D_80144C38 = D_80144C0C;
         break;
-    case 4:
+    case GIRL_SAKI:
         D_80144C30 = D_80144BC4;
         D_80144C34 = D_80144BF4;
         D_80144C38 = D_80144C24;
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_80144C30 = D_80144BB8;
         D_80144C34 = D_80144BE8;
         D_80144C38 = D_80144C18;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_80144C30 = D_80144BBC;
         D_80144C34 = D_80144BEC;
         D_80144C38 = D_80144C1C;
-        get_g_zyotai_s(6);
+        get_g_zyotai_s(GIRL_NOZOMI);
         break;
-    case 7:
+    case GIRL_MIRA:
         D_80144C30 = D_80144BB0;
         D_80144C34 = D_80144BE0;
         D_80144C38 = D_80144C10;
         break;
-    case 8:
+    case GIRL_YUKO:
         D_80144C30 = D_80144BA0;
         D_80144C34 = D_80144BD0;
         D_80144C38 = D_80144C00;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_80144C30 = D_80144BC0;
         D_80144C34 = D_80144BF0;
         D_80144C38 = D_80144C20;
         break;
-    case 10:
+    case GIRL_YUMI:
         D_80144C30 = D_80144BCC;
         D_80144C34 = D_80144BFC;
         D_80144C38 = D_80144C2C;
@@ -225,7 +225,7 @@ s16 arg1;
     /* FAKE: indirect byte reads keep D_80144C50 in $t7 across the two compares instead of promoting it to $v1 (T-24115) */
     if ((*(u8 *)&D_80144C50 != 1) && (*(u8 *)&D_80144C50 != 0x10)) {
         if (D_800E6280.month_calendar[arg0].marker[arg1 + 1] == 0xC) {
-            if (D_800E6280.current_girl == 0) {
+            if (D_800E6280.current_girl == GIRL_SHIORI) {
                 if (((u32) ((u16) D_800E6280.player_flags.h >> 0xC) < 6U) || ((u32) (D_800E6280.girls[0].flags.b[2] >> 4) < 6U)) {
                     func_80132A4C(2);
                 }
@@ -237,13 +237,13 @@ s16 arg1;
             func_80132A4C(6);
         }
         if (D_800E6280.month_calendar[arg0].marker[arg1 + 1] == 0xB) {
-            if ((status < 2U) || (D_800E6280.current_girl == 0xA)) {
+            if ((status < 2U) || (D_800E6280.current_girl == GIRL_YUMI)) {
                 func_80132A4C(7);
             } else {
                 func_80132A4C(8);
             }
         }
-        if ((D_800E6280.year == 0x61) && (D_800E6280.month == 9) && ((u8) D_800E6280.day < 0xEU) && (D_800E6280.current_girl == 0xA)) {
+        if ((D_800E6280.year == 0x61) && (D_800E6280.month == 9) && ((u8) D_800E6280.day < 0xEU) && (D_800E6280.current_girl == GIRL_YUMI)) {
             func_80132A4C(8);
         }
         if (D_800E6280.month_calendar[arg0].marker[arg1 + 1] == 6) {
@@ -349,7 +349,7 @@ void func_80133250(void) {
         func_8004284C();
         func_8004284C();
         func_8004284C();
-    } else if ((D_800E6280.current_girl == 6) && ((temp_v0 & 0x7F) < 2U)) {
+    } else if ((D_800E6280.current_girl == GIRL_NOZOMI) && ((temp_v0 & 0x7F) < 2U)) {
         func_8004284C();
         func_8004284C();
         func_8004284C();
@@ -381,7 +381,7 @@ void func_80133308(void) {
         D_80144C3C += 2;
     } else {
         D_80144C54 = 1;
-        if ((D_800E6280.current_girl == 0) || (D_800E6280.current_girl == 7) || (D_800E6280.current_girl == 1) || (D_800E6280.current_girl == 2) || (D_800E6280.current_girl == 8) || (var_s6 = 4, (D_800E6280.current_girl == 9))) {
+        if ((D_800E6280.current_girl == GIRL_SHIORI) || (D_800E6280.current_girl == GIRL_MIRA) || (D_800E6280.current_girl == GIRL_MIO) || (D_800E6280.current_girl == GIRL_YUINA) || (D_800E6280.current_girl == GIRL_YUKO) || (var_s6 = 4, (D_800E6280.current_girl == GIRL_MEGUMI))) {
             var_s6 = 0;
             if ((u32) (temp_v0 & 0x7F & 0xFF) >= 3U) {
                 D_80144C54 = 0;
@@ -408,7 +408,7 @@ void func_80133598(void) {
 
     result = get_g_zyotai_s(D_800E6280.current_girl);
     status = result & 0x7F;
-    if ((status == 4) || (D_80144C58 != 0) || ((D_800E6280.current_girl == 6) && (status < 2U))) {
+    if ((status == 4) || (D_80144C58 != 0) || ((D_800E6280.current_girl == GIRL_NOZOMI) && (status < 2U))) {
         func_80044750(0x24);
         func_80044750(0x507);
     }
@@ -416,7 +416,7 @@ void func_80133598(void) {
         func_8004284C();
         return;
     }
-    if (((u8) D_80144C54 == 0) && (D_800E6280.current_girl == 6) && (status < 2U)) {
+    if (((u8) D_80144C54 == 0) && (D_800E6280.current_girl == GIRL_NOZOMI) && (status < 2U)) {
         func_8004284C();
         return;
     }
@@ -441,7 +441,7 @@ void func_8013375C(void) {
 
     temp_v0 = get_g_zyotai_s(D_800E6280.current_girl);
     if (((u32)(temp_v0 & 0x7F) < 2U) && (D_80122CDC != 0)) {
-        if ((D_800E6280.current_girl == 2) || (D_800E6280.current_girl == 7) || (D_800E6280.current_girl == 9)) {
+        if ((D_800E6280.current_girl == GIRL_YUINA) || (D_800E6280.current_girl == GIRL_MIRA) || (D_800E6280.current_girl == GIRL_MEGUMI)) {
             func_80083418();
             return;
         }

@@ -58,7 +58,7 @@ void func_80132EC8(void) {
     temp_v0_2 = D_800E6280.step_timer.w + 1;
     D_800E6280.step_timer.w = temp_v0_2;
     if (temp_v0_2 == 0x12) {
-        D_800E6280.current_girl = 0;
+        D_800E6280.current_girl = GIRL_SHIORI;
         get_p_name(D_800CA17C, 0);
         func_8004284C();
     }
@@ -115,7 +115,7 @@ void func_801330D4(void) {
 
     best = 100; /* set before the loops: the original holds 100 in a2 from the entry */
     D_8013A4C0 = 0;
-    D_800E6280.current_girl = 1;
+    D_800E6280.current_girl = GIRL_MIO;
     g = &D_800E6280;
     for (i = 1; i < 10; i++) {
         sums[i] = 0;
@@ -132,7 +132,7 @@ void func_801330D4(void) {
         }
     }
     func_800847B8(D_800E6280.date_girl = D_800E6280.current_girl);
-    D_800E6280.current_girl = 0;
+    D_800E6280.current_girl = GIRL_SHIORI;
     func_80085B3C(0xC, 0);
     D_800E6280.current_girl = D_800E6280.date_girl;
     func_80085B3C(0xC, 0);
@@ -143,52 +143,52 @@ void func_801330D4(void) {
 
 void func_80133258(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_8013A410 = D_8013A384;
         D_8013A414 = D_8013A3B0;
         D_8013A418 = D_8013A3DC;
         return;
-    case 1:
+    case GIRL_MIO:
         D_8013A410 = D_8013A394;
         D_8013A414 = D_8013A3C0;
         D_8013A418 = D_8013A3EC;
         return;
-    case 2:
+    case GIRL_YUINA:
         D_8013A410 = D_8013A388;
         D_8013A414 = D_8013A3B4;
         D_8013A418 = D_8013A3E0;
         return;
-    case 3:
+    case GIRL_AYAKO:
         D_8013A410 = D_8013A38C;
         D_8013A414 = D_8013A3B8;
         D_8013A418 = D_8013A3E4;
         return;
-    case 4:
+    case GIRL_SAKI:
         D_8013A410 = D_8013A3A4;
         D_8013A414 = D_8013A3D0;
         D_8013A418 = D_8013A3FC;
         return;
-    case 5:
+    case GIRL_YUKARI:
         D_8013A410 = D_8013A398;
         D_8013A414 = D_8013A3C4;
         D_8013A418 = D_8013A3F0;
         return;
-    case 6:
+    case GIRL_NOZOMI:
         D_8013A410 = D_8013A39C;
         D_8013A414 = D_8013A3C8;
         D_8013A418 = D_8013A3F4;
         return;
-    case 7:
+    case GIRL_MIRA:
         D_8013A410 = D_8013A390;
         D_8013A414 = D_8013A3BC;
         D_8013A418 = D_8013A3E8;
         return;
-    case 8:
+    case GIRL_YUKO:
         D_8013A410 = D_8013A380;
         D_8013A414 = D_8013A3AC;
         D_8013A418 = D_8013A3D8;
         return;
-    case 9:
+    case GIRL_MEGUMI:
         D_8013A410 = D_8013A3A0;
         D_8013A414 = D_8013A3CC;
         D_8013A418 = D_8013A3F8;
@@ -229,7 +229,7 @@ void func_8013357C(void) {
 }
 
 void func_801335A4(void) {
-    D_800E6280.current_girl = 0;
+    D_800E6280.current_girl = GIRL_SHIORI;
     get_p_name(&D_800CA17C, 0);
     func_80062CD0(0x55DF);
     func_8004284C();
@@ -247,31 +247,31 @@ void func_80133620(void) {
     func_80133258();
     func_800847B8(D_800E6280.current_girl);
     switch (D_800E6280.current_girl) {
-    case 1:
+    case GIRL_MIO:
         func_80062CD0(0x5DC8);
         break;
-    case 2:
+    case GIRL_YUINA:
         func_80062CD0(0x52B5);
         break;
-    case 3:
+    case GIRL_AYAKO:
         func_80062CD0(0x5936);
         break;
-    case 4:
+    case GIRL_SAKI:
         func_80062CD0(0x6746);
         break;
-    case 5:
+    case GIRL_YUKARI:
         func_80062CD0(0x603E);
         break;
-    case 6:
+    case GIRL_NOZOMI:
         func_80062CD0(0x62B4);
         break;
-    case 7:
+    case GIRL_MIRA:
         func_80062CD0(0x5B7F);
         break;
-    case 8:
+    case GIRL_YUKO:
         func_80062CD0(0x506C);
         break;
-    case 9:
+    case GIRL_MEGUMI:
         func_80062CD0(0x652A);
         break;
     }
@@ -335,7 +335,7 @@ void func_801338C4(void) {
 s32 func_801338F8(void) {
     u8 previous_state;
     u8 first_state;
-    first_state = get_g_zyotai_s(0U) & 0x7F;
+    first_state = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
     if (first_state >= 2U) {
         D_8013A430 += 0xA;
     }
@@ -1444,7 +1444,7 @@ void func_80136660(void) {
 s32 func_801366E8(void) {
     s32 v;
 
-    v = get_g_zyotai_s(0);
+    v = get_g_zyotai_s(GIRL_SHIORI);
     if ((D_800E6280.player_birthday & 0xF) == D_800E6280.month && ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B) == D_800E6280.day) {
         if (((u8)v & 0x7F) < 2U) {
             D_800E6280.daily_event_bits |= 4;
@@ -1524,10 +1524,10 @@ void func_80136A90(void) {
     D_8013A430 = 9;
     D_8013A438 = 9;
     func_801338F8();
-    if (((u8) get_g_zyotai_s(0) & 0x7F) == 4 && (rand() % 2)) {
+    if (((u8) get_g_zyotai_s(GIRL_SHIORI) & 0x7F) == 4 && (rand() % 2)) {
         D_8013A430 += 1;
     }
-    if (((u8) get_g_zyotai_s(D_800E6280.date_girl) & 0x7F) == 4 && (rand() % 2) && (D_800E6280.date_girl != 6)) {
+    if (((u8) get_g_zyotai_s(D_800E6280.date_girl) & 0x7F) == 4 && (rand() % 2) && (D_800E6280.date_girl != GIRL_NOZOMI)) {
         D_8013A438 += 1;
     }
     func_8004284C();
@@ -1541,15 +1541,15 @@ void func_80136B7C(void) {
 void func_80136BA4(void) {
     if (D_800E6280.girls[0].affection < 0xA) {
         D_8013A428 += 2;
-        D_800E6280.current_girl = 0;
+        D_800E6280.current_girl = GIRL_SHIORI;
     } else if (get_h_yuukou(D_800E6280.current_girl) < 0xA) {
         D_8013A428 += 2;
     } else if (D_800E6280.girls[0].syoushin >= 0x33) {
-        D_800E6280.current_girl = 0;
+        D_800E6280.current_girl = GIRL_SHIORI;
     } else if (D_800E6280.girls[D_800E6280.current_girl].syoushin < 0x33) {
         if (D_800E6280.girls[0].tokimeki >= 0x32) {
             D_8013A428 += 1;
-            D_800E6280.current_girl = 0;
+            D_800E6280.current_girl = GIRL_SHIORI;
         } else if (get_h_tokimeki(D_800E6280.current_girl) >= 0x32) {
             D_8013A428 += 1;
         } else {

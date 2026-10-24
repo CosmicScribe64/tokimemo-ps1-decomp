@@ -84,7 +84,7 @@ void func_801337F0(void) {
 }
 
 void func_80133870(void) {
-    if (D_800E6280.date_girl == 0xE) {
+    if (D_800E6280.date_girl == GIRL_SOTOI) {
         func_80062CD0(0x6B24);
     } else {
         func_80062CD0(0x5828);
@@ -103,8 +103,8 @@ s32 func_801338F8(void) {
         return 0;
     }
     D_8013C3E0 = D_800E6280.current_girl;
-    D_800E6280.current_girl = 0xC;
-    D_800E6280.date_girl = 0xC;
+    D_800E6280.current_girl = GIRL_REI;
+    D_800E6280.date_girl = GIRL_REI;
     D_800CA148 = 0;
     D_800CA14C = 0;
     strcpy(D_800CA188, "外井");
@@ -118,7 +118,7 @@ s32 func_801338F8(void) {
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFB8);
 
 void func_801339C0(void) {
-    D_800E6280.date_girl = 0xC;
+    D_800E6280.date_girl = GIRL_REI;
     strcpy(D_800CA188, D_8013BFB8);
     func_8004284C();
 }
@@ -126,7 +126,7 @@ void func_801339C0(void) {
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFC0);
 
 void func_80133A00(void) {
-    D_800E6280.date_girl = 0xE;
+    D_800E6280.date_girl = GIRL_SOTOI;
     strcpy(D_800CA188, D_8013BFC0);
     func_8004284C();
 }
@@ -137,7 +137,7 @@ void func_80133A40(void) {
 }
 
 void func_80133A6C(void) {
-    if (D_800E6280.current_girl >= 0xDU) {
+    if (D_800E6280.current_girl >= GIRL_YOSHIO) {
         func_80042908(7);
         D_800E7D34 |= 8;
         return;

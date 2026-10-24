@@ -270,12 +270,12 @@ void func_80159354(void) {
 }
 
 void func_801593C8(void) {
-    D_800E6280.current_girl = 4;
+    D_800E6280.current_girl = GIRL_SAKI;
     func_8014C5C8();
 }
 
 void func_801593F0(void) {
-    D_800E6280.current_girl = 0xE;
+    D_800E6280.current_girl = GIRL_SOTOI;
     func_8014C5C8();
 }
 
@@ -286,12 +286,12 @@ void func_80159418(void) {
 }
 
 void func_80159450(void) {
-    D_800E6280.current_girl = 0xE;
+    D_800E6280.current_girl = GIRL_SOTOI;
     D_80120666 = 4;
     func_8004284C();
 }
 
 void func_80159484(void) {
-    D_800E6280.current_girl = 4;
+    D_800E6280.current_girl = GIRL_SAKI;
     func_8004284C();
 }

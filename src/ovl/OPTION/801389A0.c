@@ -125,7 +125,7 @@ void func_80138C20(void) {
         } while (i != 7);
         D_800E6280.substep += 1;
     } else {
-        if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.pad_pressed & PAD_CIRCLE) {
             if (D_800E6280.menu_cursor_1 != -1) {
                 D_8013D3A4 = D_800E6280.menu_cursor_1 + D_8013D3A4;
             }
@@ -170,7 +170,7 @@ void func_80138DF8(void) {
         }
         D_800E6280.substep += 1;
     } else {
-        if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.pad_pressed & PAD_CIRCLE) {
             if (D_800E6280.menu_cursor_1 != -1) {
                 D_8013D3DC = D_800E6280.menu_cursor_1 + D_8013D3DC;
             }
@@ -215,7 +215,7 @@ void func_80138FC0(void) {
         } while (i != 7);
         D_800E6280.substep += 1;
     } else {
-        if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.pad_pressed & PAD_CIRCLE) {
             if (D_800E6280.menu_cursor_1 != -1) {
                 D_8013D3A0 = D_800E6280.menu_cursor_1 + D_8013D3A0;
             }
@@ -273,7 +273,7 @@ s32 func_80139198(void) {
     set_kanji_string(D_8013D364[6], D_8013D372[6], 3, "ＳＥＱーＮＵＭ", 0);
     D_800E6280.menu_cursor_0 = 0;
     D_800E6280.menu_cursor_1 = 0;
-    D_800E6280.menu_mode = 0;
+    D_800E6280.menu_mode = MENU_MODE_MOUSE_LIKE;
     func_8006BC28(0);
     ((Actor *)D_8011ECD0)[0].draw_flags |= 1;
     D_8013D3B0 = 0;
@@ -325,7 +325,7 @@ s32 func_801394F4(void) {
         dx = abs((((Actor *)D_8011ECD0)->x - p[96].x) & 0x3FF);
         func_8004AE54(abs((((Actor *)D_8011ECD0)->y - p[96].y) & 0x1FF) + dx, -0x8C, i * 8 - 0x64, 6);
         dx = abs((((Actor *)D_8011ECD0)->x - p[96].x) & 0x3FF);
-        if (((abs((((Actor *)D_8011ECD0)->y - p[96].y) & 0x1FF) + dx) < 0x20) && (D_800E6280.pad_pressed & 0x20)) {
+        if (((abs((((Actor *)D_8011ECD0)->y - p[96].y) & 0x1FF) + dx) < 0x20) && (D_800E6280.pad_pressed & PAD_CIRCLE)) {
             flags = p[96].draw_flags;
             if (flags & 0x10) {
                 p[96].draw_flags = flags & 0xFFEF;
@@ -421,7 +421,7 @@ void func_8013990C(void) {
 }
 
 void func_801399C0(void) {
-    if (D_800E6280.pad_pressed & 0x800) {
+    if (D_800E6280.pad_pressed & PAD_START) {
         D_8013D3F4 += 1;
         func_8007BFB8();
     }
@@ -444,16 +444,16 @@ void func_80139A30(void) {
         D_8013D3F0 = 1 - D_8013D3F0;
     }
     if ((D_8013D3F0 != 0) && (func_800460EC() & 2)) {
-        D_800E6280.pad_pressed |= 0x20;
-        D_800E6280.pad_held |= 4;
+        D_800E6280.pad_pressed |= PAD_CIRCLE;
+        D_800E6280.pad_held |= PAD_L1;
     }
     if (D_800E6280.pad_held & 5) {
-        if (D_800E6280.pad_pressed & 0x8000) {
+        if (D_800E6280.pad_pressed & PAD_LEFT) {
             character = game->current_girl;
             game->current_girl = character + 1;
         }
         character = game->current_girl;
-        if (D_800E6280.pad_pressed & 0x2000) {
+        if (D_800E6280.pad_pressed & PAD_RIGHT) {
             character = (character - 1) & 0xFF;
         }
         if (character == 0xFF) {
@@ -461,7 +461,7 @@ void func_80139A30(void) {
         }
         game->current_girl = character;
         if (character >= 0x11U) {
-            game->current_girl = 0;
+            game->current_girl = GIRL_SHIORI;
         }
     }
     if ((D_8013D3B0 | D_8013D3B4) != 0) {
@@ -484,7 +484,7 @@ void func_80139A30(void) {
             func_8013A038();
             break;
         case 5:
-            if (D_800E6280.pad_pressed & 0x800) {
+            if (D_800E6280.pad_pressed & PAD_START) {
                 func_80042940(5);
             } else {
                 func_80139F04();
@@ -597,10 +597,10 @@ void func_80139E3C(s32 arg0) {
         v++;
     }
     /* FAKE: zero-valued xor*0 and ptr[k]*0 terms reproduce uopt's priority ordering ($v0/$v1/$a3) and (void *) cast suppresses cvt_pass widening so ugen holds unk_F5F in $t2. T-24140 */
-    if ((D_800E6280.pad_held + F80_BOOST_9E3C) & 4) {
+    if ((D_800E6280.pad_held + F80_BOOST_9E3C) & PAD_L1) {
         v++;
     }
-    if ((D_800E6280.pad_held & 1) && (v != 0)) {
+    if ((D_800E6280.pad_held & PAD_L2) && (v != 0)) {
         v--;
     }
     t = D_8013D360[D_800E6280.current_girl & 0xF];
@@ -617,10 +617,10 @@ void func_80139E3C(s32 arg0) {
 
 
 void func_80139F04(void) {
-    if (D_800E6280.pad_held & 1) {
+    if (D_800E6280.pad_held & PAD_L2) {
         D_8013E730 -= 1;
     }
-    if (D_800E6280.pad_held & 4) {
+    if (D_800E6280.pad_held & PAD_L1) {
         D_8013E730 += 1;
     }
     if (D_8013E730 < 0) {

@@ -123,7 +123,7 @@ void func_801399B4(void) {
 }
 
 void func_80139A58(void) {
-    if (D_800E6280.current_girl == 0xD) {
+    if (D_800E6280.current_girl == GIRL_YOSHIO) {
         func_80042908(7);
         func_80042940(0xF);
         return;
@@ -182,7 +182,7 @@ void func_80139D54(void) {
 }
 
 void func_80139DA8(void) {
-    if (D_800E6280.current_girl != 0xD) {
+    if (D_800E6280.current_girl != GIRL_YOSHIO) {
         func_800462C8(9, 0x80162000, 0x497C);
     } else {
         func_800462C8(0xA, 0x80162000, 0x4985);

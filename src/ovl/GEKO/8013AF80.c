@@ -65,7 +65,7 @@ s32 func_8013B10C(void) {
         /* FAKE: Actor view on the first two stores keeps as1 from hoisting the unk_03C load above sb D_80120723. T-24095 */
         ((Actor *)D_80120650)[3].brightness = D_800B593C;
         ((Actor *)D_80120650)[3].draw_flags |= 0x80;
-        if ((u8)D_800E6280.voice_mode != 0) {
+        if ((u8)D_800E6280.voice_mode != VOICE_OFF) {
             if (!D_8014662C) {
                 D_8012071E = 3;
             }
@@ -115,7 +115,7 @@ void func_8013B350(void) {
     D_800E6280.saved_mode = D_800E6280.mode;
     D_800E6280.saved_stage = D_800E6280.stage;
     D_800E6280.saved_step = D_800E6280.step + 1;
-    main_state_set(0x81);
+    main_state_set(MODE_RPG_BATTLE);
 }
 
 void func_8013B3C0(void) {
@@ -159,7 +159,7 @@ void func_8013B3C0(void) {
 }
 
 void func_8013B510(void) {
-    D_800E6280.current_girl = 2;
+    D_800E6280.current_girl = GIRL_YUINA;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -223,8 +223,8 @@ void func_8013B7D0(void) {
     D_800E6280.year = 0x62;
     D_800E6280.month = 2;
     D_800E6280.day = 0x1C;
-    D_800E6280.weekday = 5;
-    D_800E6280.current_girl = 2;
+    D_800E6280.weekday = WEEKDAY_SATURDAY;
+    D_800E6280.current_girl = GIRL_YUINA;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

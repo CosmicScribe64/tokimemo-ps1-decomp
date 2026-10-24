@@ -624,7 +624,7 @@ void func_80139FE4(void) {
     m = n;
     for (i = 0; i < 0xB; i++) {
         if (((TaiikuBit1 *)&D_800E6280.girls[i].flags)->f == 1) {
-            if (D_800E6280.pad_held & 4) {
+            if (D_800E6280.pad_held & PAD_L1) {
                 ((Actor *)D_8011ECD0)[96 + i].x = ((Actor *)D_8011ECD0)[96 + i].x - 4;
             } else {
                 ((Actor *)D_8011ECD0)[96 + i].x = ((Actor *)D_8011ECD0)[96 + i].x - 1;
@@ -866,7 +866,7 @@ void func_8013A6FC(void) {
         break;
     }
     D_80149944 = func_8013AF74();
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         D_80149948 = 1;
     }
     if ((D_80149948 != 0) || (D_800E6280.pad_held & 0xF000) || (D_80149990.unk_00 != 0)) {
@@ -1708,7 +1708,7 @@ void func_8013CD34(void) {
     if (D_80149990.unk_00 != 0) {
         D_80149968.unk_00 = 0;
         D_80149968.unk_04 = 0;
-    } else if (func_8013CEF8() != 0 && (D_800E6280.pad_pressed & 0x20)) {
+    } else if (func_8013CEF8() != 0 && (D_800E6280.pad_pressed & PAD_CIRCLE)) {
         if (D_80149968.unk_10 < 0) {
             D_80149968.unk_10 = 0;
         }

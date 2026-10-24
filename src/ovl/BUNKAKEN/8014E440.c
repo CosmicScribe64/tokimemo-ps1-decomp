@@ -314,7 +314,7 @@ void func_8014EAF0(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) g->stage;
         D_80122EB4 = g->step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x5B25);
@@ -323,7 +323,7 @@ void func_8014EAF0(void) {
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        g->current_girl = 7;
+        g->current_girl = GIRL_MIRA;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4A52);
         break;
@@ -439,7 +439,7 @@ void func_8014EE54(void) {
     case 7:
         D_80122EB0 = (s32) g->stage;
         D_80122EB4 = g->step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         dec_bg_reset();
@@ -457,7 +457,7 @@ void func_8014EE54(void) {
         D_80125CA0 = 0xC0;
         dec_bg_show_set(1, func_8005751C(1));
         addr_init_bustup();
-        g->current_girl = 7;
+        g->current_girl = GIRL_MIRA;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4A52);
         break;
@@ -572,7 +572,7 @@ void func_8014F214(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) g->stage;
         D_80122EB4 = g->step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x5B25);
@@ -581,7 +581,7 @@ void func_8014F214(void) {
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        g->current_girl = 7;
+        g->current_girl = GIRL_MIRA;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4A52);
         break;
@@ -902,7 +902,7 @@ void func_8014F9D8(void) {
         break;
     case 13:
         addr_init_bustup();
-        g->current_girl = 7;
+        g->current_girl = GIRL_MIRA;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4A52);
         break;
@@ -1035,7 +1035,7 @@ void func_8014FEF4(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) g->stage;
         D_80122EB4 = g->step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x5B25);
@@ -1044,7 +1044,7 @@ void func_8014FEF4(void) {
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        g->current_girl = 7;
+        g->current_girl = GIRL_MIRA;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4A52);
         break;
@@ -1243,7 +1243,7 @@ void func_8015049C(void) {
         normal_date_girl_out();
         break;
     case 7:
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
         func_8004284C();
         break;
     case 8:
@@ -1429,7 +1429,7 @@ void func_80150958(void) {
         D_80122EAC = 0;
         D_80122EB0 = (s32) g->stage;
         D_80122EB4 = g->step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x5B25);
@@ -1438,7 +1438,7 @@ void func_80150958(void) {
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        g->current_girl = 7;
+        g->current_girl = GIRL_MIRA;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4A52);
         break;

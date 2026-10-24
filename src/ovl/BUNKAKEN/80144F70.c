@@ -327,7 +327,7 @@ void func_80145A64(void) {
         }
         if (D_80122EBC == 0xB) {
             g->event_log[g->event_log_count].girl = 0;
-            g->event_log[g->event_log_count].rank = get_g_zyotai_h(0, v);
+            g->event_log[g->event_log_count].rank = get_g_zyotai_h(GIRL_SHIORI, v);
         } else {
             g->event_log[g->event_log_count].girl = D_80122EBC;
             g->event_log[g->event_log_count].rank = get_g_zyotai_h(D_80122EBC, v);

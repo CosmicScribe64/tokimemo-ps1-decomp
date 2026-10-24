@@ -281,7 +281,7 @@ void func_80133B44(void) {
 
     /* FAKE: narrowing is redundant after the final s16 cast, but spends the two
      * temporary slots needed by the original register sequence. T-24523 */
-    if (D_800E6280.current_girl != 0) {
+    if (D_800E6280.current_girl != GIRL_SHIORI) {
         if (D_800E6280.substep == 0) {
             set_kanji_string((s16)(-0x68 - (s16)(strlen(D_800CA16C) * 4)), 0x30, 0, (s32)D_800CA16C, 0);
             set_kanji_string(-0x56, 0x30, 0, (s32)"『 ", 0);

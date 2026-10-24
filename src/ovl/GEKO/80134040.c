@@ -54,7 +54,7 @@ s32 func_80134228(void) {
 
     if (D_800E6280.daily_event_bits & 0x40) {
         func_80044750(0xCF);
-        main_state_set(0x52);
+        main_state_set(MODE_NEW_YEAR_A);
         return 0;
     }
     /* FAKE: read through a u8 view so the base and the result share $v0 (T-24035). */
@@ -274,57 +274,57 @@ void func_801349B8(void) {
 
 void func_80134A14(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_80144E80 = D_80144FB0;
         D_80144E84 = D_80144FE4;
         D_80144E88 = D_80145018;
         return;
-    case 1:
+    case GIRL_MIO:
         D_80144E80 = D_80144FC4;
         D_80144E84 = D_80144FF8;
         D_80144E88 = D_8014502C;
         return;
-    case 2:
+    case GIRL_YUINA:
         D_80144E80 = D_80144FB8;
         D_80144E84 = D_80144FEC;
         D_80144E88 = D_80145020;
         return;
-    case 3:
+    case GIRL_AYAKO:
         D_80144E80 = D_80144FBC;
         D_80144E84 = D_80144FF0;
         D_80144E88 = D_80145024;
         return;
-    case 4:
+    case GIRL_SAKI:
         D_80144E80 = D_80144FD4;
         D_80144E84 = D_80145008;
         D_80144E88 = D_8014503C;
         return;
-    case 5:
+    case GIRL_YUKARI:
         D_80144E80 = D_80144FC8;
         D_80144E84 = D_80144FFC;
         D_80144E88 = D_80145030;
         return;
-    case 6:
+    case GIRL_NOZOMI:
         D_80144E80 = D_80144FCC;
         D_80144E84 = D_80145000;
         D_80144E88 = D_80145034;
         return;
-    case 7:
+    case GIRL_MIRA:
         D_80144E80 = D_80144FC0;
         D_80144E84 = D_80144FF4;
         D_80144E88 = D_80145028;
         return;
-    case 8:
+    case GIRL_YUKO:
         D_80144E80 = D_80144FAC;
         D_80144E84 = D_80144FE0;
         D_80144E88 = D_80145014;
         return;
-    case 9:
+    case GIRL_MEGUMI:
         D_80144E80 = D_80144FD0;
         D_80144E84 = D_80145004;
         D_80144E88 = D_80145038;
         return;
-    case 10:
+    case GIRL_YUMI:
         D_80144E80 = D_80144FDC;
         D_80144E84 = D_80145010;
         D_80144E88 = D_80145044;

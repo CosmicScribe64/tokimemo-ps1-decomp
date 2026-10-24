@@ -70,7 +70,7 @@ void func_80137DE4(void) {
         if ((D_80144E0C && D_80144E0C) != 0) { }
         func_80083440(3);
     } else if ((D_80144E0C == 5) || (D_80144E0C == 13)) {
-        func_80083440(get_g_zyotai_h(8));
+        func_80083440(get_g_zyotai_h(GIRL_YUKO));
     }
     /* FAKE: zero increment promotes the selector into v1. T-9570 */
     D_80144E0C += 0;

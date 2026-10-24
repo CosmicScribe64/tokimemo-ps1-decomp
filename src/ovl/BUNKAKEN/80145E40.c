@@ -178,7 +178,7 @@ void func_801463E4(void) {
             func_8006612C((s32) "天の声");
             k_disp_start(1);
             func_80132514();
-            D_800E6280.current_girl = 8;
+            D_800E6280.current_girl = GIRL_YUKO;
             func_800847B8(8U);
             strcpy(D_800CA188, "　");
             D_800CA148 = 0;
@@ -196,11 +196,11 @@ void func_801463E4(void) {
         normal_date_bg_fadeout();
         break;
     case 4:
-        if (D_800E6280.input_device == 1) {
+        if (D_800E6280.input_device == INPUT_PAD) {
             func_80048EB8(0);
             func_8006BD6C(0);
             set_dec_bri(0);
-            main_state_set(0xD0);
+            main_state_set(MODE_TT_GAME);
         }
         break;
     default:

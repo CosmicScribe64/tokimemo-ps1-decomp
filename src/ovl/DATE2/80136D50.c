@@ -73,57 +73,57 @@ void func_8013709C(void) {
 
 void func_801370E4(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_800CA160 = D_8013A6B4;
         D_800CA164 = D_8013A6E8;
         D_800CA168 = D_8013A71C;
         return;
-    case 1:
+    case GIRL_MIO:
         D_800CA160 = D_8013A6C8;
         D_800CA164 = D_8013A6FC;
         D_800CA168 = D_8013A730;
         return;
-    case 2:
+    case GIRL_YUINA:
         D_800CA160 = D_8013A6BC;
         D_800CA164 = D_8013A6F0;
         D_800CA168 = D_8013A724;
         return;
-    case 3:
+    case GIRL_AYAKO:
         D_800CA160 = D_8013A6C0;
         D_800CA164 = D_8013A6F4;
         D_800CA168 = D_8013A728;
         return;
-    case 4:
+    case GIRL_SAKI:
         D_800CA160 = D_8013A6D8;
         D_800CA164 = D_8013A70C;
         D_800CA168 = D_8013A740;
         return;
-    case 5:
+    case GIRL_YUKARI:
         D_800CA160 = D_8013A6CC;
         D_800CA164 = D_8013A700;
         D_800CA168 = D_8013A734;
         return;
-    case 6:
+    case GIRL_NOZOMI:
         D_800CA160 = D_8013A6D0;
         D_800CA164 = D_8013A704;
         D_800CA168 = D_8013A738;
         return;
-    case 7:
+    case GIRL_MIRA:
         D_800CA160 = D_8013A6C4;
         D_800CA164 = D_8013A6F8;
         D_800CA168 = D_8013A72C;
         return;
-    case 8:
+    case GIRL_YUKO:
         D_800CA160 = D_8013A6B0;
         D_800CA164 = D_8013A6E4;
         D_800CA168 = D_8013A718;
         return;
-    case 9:
+    case GIRL_MEGUMI:
         D_800CA160 = D_8013A6D4;
         D_800CA164 = D_8013A708;
         D_800CA168 = D_8013A73C;
         return;
-    case 10:
+    case GIRL_YUMI:
         D_800CA160 = D_8013A6E0;
         D_800CA164 = D_8013A714;
         D_800CA168 = D_8013A748;

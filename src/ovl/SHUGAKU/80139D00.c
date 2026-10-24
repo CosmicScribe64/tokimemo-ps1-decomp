@@ -117,7 +117,7 @@ void func_8013A1D4(void) {
 
     pad = D_800E6280.current_girl;
     pad = func_801386C4();
-    if (D_800E6280.current_girl == 2) {
+    if (D_800E6280.current_girl == GIRL_YUINA) {
         temp_a0 = get_g_zyotai_h(D_800E6280.current_girl);
         if ((D_800CA2E0 == 7) && (D_80122CDC != 0)) {
             func_80083440(temp_a0);
@@ -131,10 +131,10 @@ void func_8013A1D4(void) {
 }
 
 void func_8013A274(void) {
-    if (D_800E6280.current_girl == 2) {
+    if (D_800E6280.current_girl == GIRL_YUINA) {
         func_80083440(3);
     }
-    if (D_800E6280.current_girl == 7 && D_800CA2F4 == 0) {
+    if (D_800E6280.current_girl == GIRL_MIRA && D_800CA2F4 == 0) {
         func_80083440(4);
     }
     func_8004284C();
@@ -233,7 +233,7 @@ void func_8013A59C(void) {
     D_800E6280.saved_step = 0x32;
     hizuke_disp_switch(0);
     k_reset(0);
-    main_state_set(0x81);
+    main_state_set(MODE_RPG_BATTLE);
 }
 
 void func_8013A648(void) {
@@ -247,7 +247,7 @@ void func_8013A648(void) {
     check_para_limit();
     if (D_800CA2EC != 0) {
         if (D_80122CDC == 2) {
-            D_800E6280.current_girl = 0xD;
+            D_800E6280.current_girl = GIRL_YOSHIO;
         } else if (D_80122CDC == 1) {
             D_800E6280.current_girl = 0xFF;
         }
@@ -323,13 +323,13 @@ s32 func_8013A980(void) {
 void func_8013A9E0(void) {
     u32 temp_t8;
 
-    temp_t8 = (u8)get_g_zyotai_s(4) & 0x7F;
-    if (D_800E6280.current_girl != 4 || temp_t8 >= 2U) {
+    temp_t8 = (u8)get_g_zyotai_s(GIRL_SAKI) & 0x7F;
+    if (D_800E6280.current_girl != GIRL_SAKI || temp_t8 >= 2U) {
         func_8004284C();
         return;
     }
     D_800E6280.saved_stage = D_800E6280.stage;
     D_800E6280.saved_step = D_800E6280.step + 2;
-    D_800E6280.date_girl = 4;
+    D_800E6280.date_girl = GIRL_SAKI;
     func_80042908(0xA);
 }

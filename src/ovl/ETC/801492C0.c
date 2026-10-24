@@ -116,7 +116,7 @@ s32 func_8014979C(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         switch (D_800E6280.menu_cursor_0) {
         case 0:
             if (D_800E6280.player_flags_hi.b[1] != 0) {
@@ -186,7 +186,7 @@ s32 func_80149A08(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         switch (D_800E6280.menu_cursor_0) {
         case 0:
             D_80150E98 = 0;

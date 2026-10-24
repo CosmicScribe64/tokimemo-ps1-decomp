@@ -140,7 +140,7 @@ void func_8013A118(void) {
         D_80122EAC = 4;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_80145844();
@@ -207,7 +207,7 @@ void func_8013A2FC(void) {
     case 7:
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         dec_bg_reset();
@@ -281,7 +281,7 @@ void func_8013A518(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_80145844();
@@ -509,7 +509,7 @@ void func_8013ABF0(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_80145844();
@@ -612,7 +612,7 @@ void func_8013AF00(void) {
         break;
     case 6:
         addr_init_bustup();
-        D_800E6280.current_girl = 0xD;
+        D_800E6280.current_girl = GIRL_YOSHIO;
         func_80083474();
         break;
     case 7:
@@ -761,7 +761,7 @@ void func_8013B2AC(void) {
         D_80122EAC = 0;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_80145844();

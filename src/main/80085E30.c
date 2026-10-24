@@ -162,8 +162,8 @@ s32 func_8008647C(void) {
             n = (n + 1) & 0xFF;
         }
     }
-    t = get_h_yuukou(0) & 0xFF;
-    bscore = get_h_tokimeki(0) + t;
+    t = get_h_yuukou(GIRL_SHIORI) & 0xFF;
+    bscore = get_h_tokimeki(GIRL_SHIORI) + t;
     best = 0;
     for (i = 1; i < n; i++) {
         t = get_h_tokimeki(list[i]) & 0xFF;

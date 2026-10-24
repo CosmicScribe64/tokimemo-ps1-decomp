@@ -52,7 +52,7 @@ void func_80133738(void) {
 
     idx = 3;
     if ((D_800E6280.stage & 1) && (D_800E6280.step == 1)) {
-        if ((D_8015EDBC == 0) && (D_800E6280.pad_pressed & 0x10) && (D_800E6280.frame_count & 0xFF)) {
+        if ((D_8015EDBC == 0) && (D_800E6280.pad_pressed & PAD_TRIANGLE) && (D_800E6280.frame_count & 0xFF)) {
             if (func_80045288() == 1) {
                 if (func_800460EC() & 2) {
                     if (D_8015EDB4[8].unk78 < D_8015EDB4->unk78) {

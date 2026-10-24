@@ -105,14 +105,14 @@ s32 func_8013DAAC(void) {
         !(*(u8 *)&D_800E6280.daily_event_bits & 0x20)) {
         *(u8 *)&D_800E6280.daily_event_bits |= 0x20;
         D_800E6280.day_events[D_800E6280.day_event_index].girl = 0;
-        main_state_set(0x57);
+        main_state_set(MODE_GIRL_BIRTHDAY);
         return 0;
     }
     if (((WordView *)&D_800E6280.player_birthday)->date.month == 12 &&
         ((WordView *)&D_800E6280.player_birthday)->date.day == 24 &&
         !(*(u8 *)&D_800E6280.daily_event_bits & 0x40)) {
         *(u8 *)&D_800E6280.daily_event_bits |= 0x40;
-        main_state_set(0x56);
+        main_state_set(MODE_PLAYER_BIRTHDAY);
         return 0;
     }
     draw2d3d(1, 0);
@@ -145,7 +145,7 @@ s32 func_8013DAAC(void) {
     } else {
         strcpy(D_800CA188, "外井");
     }
-    D_800E6280.current_girl = 12;
+    D_800E6280.current_girl = GIRL_REI;
     func_8013C070();
     D_80145F20 = D_80145AFC;
     D_80145F24 = D_80145B30;

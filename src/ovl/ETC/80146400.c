@@ -111,7 +111,7 @@ void func_801465F8(void) {
     parameter_show();
     func_8006BA40();
     func_80065B0C(1);
-    if (D_800E6280.weekday == 5) {
+    if (D_800E6280.weekday == WEEKDAY_SATURDAY) {
         func_8006764C(0);
     } else {
         func_80067870();
@@ -127,22 +127,22 @@ void func_801465F8(void) {
 void func_80146714(void) {
     D_800E6280.step_timer.w += 1;
     switch (D_800E6280.weekday) {
-    case 0:
+    case WEEKDAY_MONDAY:
         func_80147650();
         return;
-    case 1:
+    case WEEKDAY_TUESDAY:
         func_801476DC();
         return;
-    case 2:
+    case WEEKDAY_WEDNESDAY:
         func_80147768();
         return;
-    case 3:
+    case WEEKDAY_THURSDAY:
         func_801477F4();
         return;
-    case 4:
+    case WEEKDAY_FRIDAY:
         func_80147880();
         return;
-    case 5:
+    case WEEKDAY_SATURDAY:
         func_80147F7C();
         /* fallthrough */
     default:
@@ -169,9 +169,9 @@ void func_801467C4(void) {
     hizuke_init();
     parameter_show_init();
     parameter_show_init();
-    if (D_800E6280.weekday == 0) {
+    if (D_800E6280.weekday == WEEKDAY_MONDAY) {
         func_80044890(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
-    } else if (((EtcStateFlagsView *)&D_800E6280)->records[D_800E6280.day_event_index].type != 0x40) {
+    } else if (((EtcStateFlagsView *)&D_800E6280)->records[D_800E6280.day_event_index].type != DAY_EVENT_EXAM) {
         func_80044890(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
     }
     func_8004284C();
@@ -181,7 +181,7 @@ void func_801468FC(void) {
     s32 r2;
     s32 r;
 
-    if (D_800E6280.weekday == 0 || *(u8 *) &D_800E6280.clubs[10 + D_800E6280.day_event_index] != 0x40) {
+    if (D_800E6280.weekday == WEEKDAY_MONDAY || *(u8 *) &D_800E6280.clubs[10 + D_800E6280.day_event_index] != 0x40) {
         if (func_80044E8C() == 1) {
             func_8004500C(1, 0x205);
             r = dec_bg_cd_read(0x3FA4, 0);
@@ -231,7 +231,7 @@ void func_80146A38(void) {
 void func_80146AC0(void) {
     s32 i;
 
-    if (D_800E6280.weekday == 0) {
+    if (D_800E6280.weekday == WEEKDAY_MONDAY) {
         for (i = 0; i < 6; i++) {
             ((EtcWork40 *)&D_801230D0)->unk_10[i] = 0;
             ((EtcWork40 *)&D_801230D0)->unk_28[i] = 0;
@@ -303,15 +303,15 @@ s32 func_80146D4C(void) {
     main = 0;
     sub = 0;
     switch (g->weekday) {
-    case 0:
+    case WEEKDAY_MONDAY:
         main = g->param_liberal_arts.value;
         bio = func_8006C334(0, 0, 1, 0x10);
         break;
-    case 1:
+    case WEEKDAY_TUESDAY:
         main = g->param_science.value;
         bio = func_8006C334(0, 0, 1, 0x10);
         break;
-    case 2:
+    case WEEKDAY_WEDNESDAY:
         main = g->param_science.value * 7 / 10;
         sub = g->param_trivia.value * 3 / 10;
         if (sub >= 0x27) {
@@ -319,7 +319,7 @@ s32 func_80146D4C(void) {
         }
         bio = func_8006C334(0, 1, 1, 0x10);
         break;
-    case 3:
+    case WEEKDAY_THURSDAY:
         sub = g->param_liberal_arts.value * 3 / 10;
         main = g->param_trivia.value * 7 / 10;
         bio = func_8006C334(0, 0, 1, 0x10);
@@ -327,7 +327,7 @@ s32 func_80146D4C(void) {
             sub = 0x26;
         }
         break;
-    case 4:
+    case WEEKDAY_FRIDAY:
         main = g->param_art.value * 8 / 10;
         sub = g->param_trivia.value * 2 / 10;
         bio = func_8006C334(0, 1, 0, 0x10);
@@ -775,7 +775,7 @@ void func_80147D74(void) {
 }
 
 void func_80147F0C(void) {
-    if (((D_800E6280.pad_pressed & 0x20) && (u32)D_800E6280.step_timer.w >= 0x101) || (D_800E6280.pad_pressed & 0x40)) {
+    if (((D_800E6280.pad_pressed & PAD_CIRCLE) && (u32)D_800E6280.step_timer.w >= 0x101) || (D_800E6280.pad_pressed & PAD_CROSS)) {
         func_8006BD6C(1);
         func_80042808();
     }
@@ -808,7 +808,7 @@ void func_80147FFC(void) {
 }
 
 void func_8014803C(void) {
-    if (D_800E6280.weekday == 5) {
+    if (D_800E6280.weekday == WEEKDAY_SATURDAY) {
         func_8004500C(0, 0);
     }
     func_80072B5C(0);

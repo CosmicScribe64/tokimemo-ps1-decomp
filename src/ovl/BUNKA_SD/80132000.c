@@ -32,21 +32,21 @@ void func_80132148(void) {
     case 1:
         D_8013B7F0 = D_8013B794;
         D_8013B7F4 = D_8013B7B0;
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
         func_80046290(0x1E00004C, 0x10000051, 0xE);
         func_80044750(0x300);
         break;
     case 2:
         D_8013B7F0 = D_8013B670;
         D_8013B7F4 = D_8013B6B4;
-        D_800E6280.current_girl = 0;
+        D_800E6280.current_girl = GIRL_SHIORI;
         func_80046290(0x1C0002E9, 0x410002F3, 0);
         func_80044750(0x300);
         break;
     case 3:
         D_8013B7F0 = D_8013B6E4;
         D_8013B7F4 = D_8013B71C;
-        D_800E6280.current_girl = 1;
+        D_800E6280.current_girl = GIRL_MIO;
         func_80046290(0x1A0001B5, 0x150001CA, 1);
         func_80044750(0x300);
         break;
@@ -54,7 +54,7 @@ void func_80132148(void) {
     default:
         D_8013B7F0 = D_8013B7C8;
         D_8013B7F4 = D_8013B7DC;
-        D_800E6280.current_girl = 0xB;
+        D_800E6280.current_girl = GIRL_MIHARU;
         func_80046290(0x1F0000AD, 0x100000B3, 0xB);
         func_80044750(0x300);
         break;
@@ -66,7 +66,7 @@ void func_801322EC(void) {
     s32 i;
 
     if (D_800E6280.step >= 5U && D_800E6280.step < 15U) {
-        if (D_800E6280.pad_held & 0x20) {
+        if (D_800E6280.pad_held & PAD_CIRCLE) {
             if (func_800460EC() != 2) {
                 func_80044750(0x74);
             }
@@ -80,7 +80,7 @@ void func_801322EC(void) {
             }
         }
     }
-    if (D_800E6280.step >= 5U && D_800E6280.step < 14U && (D_800E6280.pad_held & 0x40)) {
+    if (D_800E6280.step >= 5U && D_800E6280.step < 14U && (D_800E6280.pad_held & PAD_CROSS)) {
         func_80044750(0xC4);
         func_80042940(13);
     }
@@ -504,14 +504,14 @@ void func_80132DFC(void) {
             break;
         case 1:
             set_kanji_string(-0x56, 0x30, 0, (s32) "「僕の存在」", 0);
-            if (!(D_800E6280.pad_held & 0x20)) {
+            if (!(D_800E6280.pad_held & PAD_CIRCLE)) {
                 func_80046290(0x1E00004C, 0x10000051, 0xE);
                 func_80044750(0x300);
             }
             break;
         case 2:
             set_kanji_string(-0x56, 0x30, 0, (s32) "「高校生活を振り返って」", 0);
-            if (!(D_800E6280.pad_held & 0x20)) {
+            if (!(D_800E6280.pad_held & PAD_CIRCLE)) {
                 func_80046290(0x1C0002E9, 0x410002F3, 0);
                 func_80044750(0x300);
             }
@@ -522,7 +522,7 @@ void func_80132DFC(void) {
         case 4:
         default:
             set_kanji_string(-0x56, 0x30, 0, (s32) "「届け私の想い」", 0);
-            if (!(D_800E6280.pad_held & 0x20)) {
+            if (!(D_800E6280.pad_held & PAD_CIRCLE)) {
                 func_80046290(0x1F0000AD, 0x100000B3, 0xB);
                 func_80044750(0x300);
             }
@@ -551,14 +551,14 @@ void func_80132FF0(void) {
             set_kanji_string((s16) (0x60 - (sp34 * 7)), 0x40, 0, (s32) sp38, 0);
             break;
         case 1:
-            if (!(D_800E6280.pad_held & 0x20)) {
+            if (!(D_800E6280.pad_held & PAD_CIRCLE)) {
                 func_80046290(0x0B00001B, 0x05000020, 0xE);
                 func_80044750(0x300);
             }
             set_kanji_string(0x36, 0x40, 0, (s32) "弁　論者", 0);
             break;
         case 2:
-            if (!(D_800E6280.pad_held & 0x20)) {
+            if (!(D_800E6280.pad_held & PAD_CIRCLE)) {
                 func_80046290(0x1D00005B, 0x0B000061, 0);
                 func_80044750(0x300);
             }
@@ -612,7 +612,7 @@ void func_80133204(void) {
                 set_kanji_string(-0x48, (s16) (((index - D_8013B7EC) * 0x10) + 0x30), 0, ((u8 **)D_8013B7F0)[index] + 1, 0);
                 command = *((u8 **)D_8013B7F0)[index];
                 if (command == 0x67) {
-                    if (!(D_800E6280.pad_held & 0x20) && (D_80122EAC != 0)) {
+                    if (!(D_800E6280.pad_held & PAD_CIRCLE) && (D_80122EAC != 0)) {
                         voice = (s32 *)D_8013B7F4 + D_800E6280.substep;
                         func_80046290(voice[0], voice[1], (s32) D_800E6280.current_girl);
                         func_80044750(0x300);
@@ -621,7 +621,7 @@ void func_80133204(void) {
                     D_8013B7EC = index + 1;
                     index = 0x64;
                 } else if (command == 0x45) {
-                    if (!(D_800E6280.pad_held & 0x20)) {
+                    if (!(D_800E6280.pad_held & PAD_CIRCLE)) {
                         if (D_80122EAC != 0) {
                             voice = (s32 *)D_8013B7F4 + D_800E6280.substep;
                             func_80046290(voice[0], voice[1], (s32) D_800E6280.current_girl);

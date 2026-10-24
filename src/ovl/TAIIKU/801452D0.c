@@ -577,7 +577,7 @@ void func_80146884(void) {
         D_8014A3E4.unk_10 = -0x300;
         return;
     }
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         D_8014A3C4 = 1;
         return;
     }

@@ -144,7 +144,7 @@ void func_80156D60(void) {
     D_8015E208 = D_8015DF24;
     D_8015E20C = D_8015E060;
     D_8015E210 = D_8015E19C;
-    if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2) {
+    if ((u8)(get_g_zyotai_s(GIRL_NOZOMI) & 0x7F) < 2) {
         D_800E6280.girls[6].tokimeki += 3;
         D_800E6280.girls[6].affection += 2;
     } else {
@@ -355,7 +355,7 @@ void func_80157698(void) {
 
     one = 1;
     func_8014C5C8();
-    x = get_g_zyotai_s(6);
+    x = get_g_zyotai_s(GIRL_NOZOMI);
     t = x & 0x7F;
     if ((t >= 2U) && (D_800CA154 == 8) && (one == D_800E6280.step_timer.w)) {
         func_80083440(2);

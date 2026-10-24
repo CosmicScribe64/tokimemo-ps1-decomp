@@ -31,7 +31,7 @@ void func_801327E8(void) {
 }
 
 void func_80132810(void) {
-    D_800E6280.current_girl = 0;
+    D_800E6280.current_girl = GIRL_SHIORI;
     func_8004284C();
 }
 
@@ -137,74 +137,74 @@ s32 func_80132D0C(void) {
     state->current_girl = D_80134524[D_80134520];
     func_800847B8(state->current_girl);
     D_80134498 = get_h_tokimeki(state->current_girl) >= 0x46U;
-    if (state->current_girl == 0) {
+    if (state->current_girl == GIRL_SHIORI) {
         D_80134498 = state->girls[0].tokimeki >= 0x46;
     }
-    if (state->current_girl == 9) {
+    if (state->current_girl == GIRL_MEGUMI) {
         mode = D_80134544;
         if (mode == 1) {
             D_80134498 = 3;
         }
     }
     mode = D_80134544;
-    if ((state->current_girl == 0) && (mode == 1) && (state->girls[0].tokimeki >= 0x46)) {
+    if ((state->current_girl == GIRL_SHIORI) && (mode == 1) && (state->girls[0].tokimeki >= 0x46)) {
         D_80134498 = 3;
     }
-    if ((state->current_girl == 0) && (mode == 1) && (state->girls[0].tokimeki < 0x46)) {
+    if ((state->current_girl == GIRL_SHIORI) && (mode == 1) && (state->girls[0].tokimeki < 0x46)) {
         D_80134498 = 5;
     }
     switch (state->current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_8013448C = D_801343F8;
         D_80134490 = D_8013442C;
         D_80134494 = D_80134460;
         break;
-    case 1:
+    case GIRL_MIO:
         D_8013448C = D_8013440C;
         D_80134490 = D_80134440;
         D_80134494 = D_80134474;
         break;
-    case 2:
+    case GIRL_YUINA:
         D_8013448C = D_801343FC;
         D_80134490 = D_80134430;
         D_80134494 = D_80134464;
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_8013448C = D_80134404;
         D_80134490 = D_80134438;
         D_80134494 = D_8013446C;
         break;
-    case 4:
+    case GIRL_SAKI:
         D_8013448C = D_8013441C;
         D_80134490 = D_80134450;
         D_80134494 = D_80134484;
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_8013448C = D_80134410;
         D_80134490 = D_80134444;
         D_80134494 = D_80134478;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_8013448C = D_80134414;
         D_80134490 = D_80134448;
         D_80134494 = D_8013447C;
         break;
-    case 7:
+    case GIRL_MIRA:
         D_8013448C = D_80134408;
         D_80134490 = D_8013443C;
         D_80134494 = D_80134470;
         break;
-    case 8:
+    case GIRL_YUKO:
         D_8013448C = D_801343F0;
         D_80134490 = D_80134424;
         D_80134494 = D_80134458;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_8013448C = D_80134418;
         D_80134490 = D_8013444C;
         D_80134494 = D_80134480;
         break;
-    case 10:
+    case GIRL_YUMI:
         D_8013448C = D_80134420;
         D_80134490 = D_80134454;
         D_80134494 = D_80134488;
@@ -229,7 +229,7 @@ void func_80133088(void) {
     } else {
         D_80134548 = 1;
     }
-    if (state->current_girl == 0) {
+    if (state->current_girl == GIRL_SHIORI) {
         D_80134548 = state->frame_count & 1;
     }
     switch (D_80134548) {
@@ -250,7 +250,7 @@ void func_80133088(void) {
         id = 0x4084;
         break;
     }
-    if (state->current_girl != 0) {
+    if (state->current_girl != GIRL_SHIORI) {
         if (D_80134520 + 1 == D_8013453C) {
             strcpy(D_800CA1DC, "校門前");
             id = 0x4032;
@@ -262,16 +262,16 @@ void func_80133088(void) {
     }
     /* FAKE: non-volatile view of D_80134544 (volatile in VALEN.h for func_80132D0C, T-24903)
      * so as1 may hoist its lui above the affinity test, as the original does. T-25117 */
-    if ((D_80134520 + 1 == D_8013453C) && (state->current_girl == 0) &&
+    if ((D_80134520 + 1 == D_8013453C) && (state->current_girl == GIRL_SHIORI) &&
         ((state->girls[0].tokimeki >= 0x46) || (*(u8 *)&D_80134544 != 0))) {
         strcpy(D_800CA1DC, "自宅前");
         id = 0x414C;
     }
-    if ((state->current_girl == 9) && (D_80134544 == 1)) {
+    if ((state->current_girl == GIRL_MEGUMI) && (D_80134544 == 1)) {
         strcpy(D_800CA1DC, "教室");
         id = 0x4055;
     }
-    if (state->current_girl == 0) {
+    if (state->current_girl == GIRL_SHIORI) {
         if (state->girls[0].tokimeki >= 0x46) {
             D_80122D48 = 1;
         } else {
@@ -304,7 +304,7 @@ void func_80133088(void) {
         func_80085B3C(6, 2);
         break;
     }
-    if ((state->current_girl == 9) && (D_80134544 == 1)) {
+    if ((state->current_girl == GIRL_MEGUMI) && (D_80134544 == 1)) {
         state->event_log_count -= 1;
         D_80122D48 = 1;
         func_80085B3C(6, 3);
@@ -315,7 +315,7 @@ void func_80133088(void) {
     } else {
         func_80083440(1);
     }
-    if (state->current_girl == 0) {
+    if (state->current_girl == GIRL_SHIORI) {
         if (state->girls[0].tokimeki >= 0x46) {
             func_80083440(0);
         } else {
@@ -339,7 +339,7 @@ void func_80133510(void) {
 }
 
 void func_80133568(void) {
-    if ((D_80134544 == 1) && (D_800E6280.current_girl == 9)) {
+    if ((D_80134544 == 1) && (D_800E6280.current_girl == GIRL_MEGUMI)) {
         D_800E6280.step += 6;
         return;
     }
@@ -369,7 +369,7 @@ s32 func_80133670(void) {
     GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
 
     g = &D_800E6280;
-    if ((D_800E6280.day == ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B)) && (D_800E6280.month == (D_800E6280.player_birthday & 0xF)) && (get_h_tokimeki(g->current_girl) >= 0x46U) && ((D_80134540[0] == g->current_girl) || (D_80134540[1] == g->current_girl) || (D_80134540[2] == g->current_girl)) && (g->current_girl == 9)) {
+    if ((D_800E6280.day == ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B)) && (D_800E6280.month == (D_800E6280.player_birthday & 0xF)) && (get_h_tokimeki(g->current_girl) >= 0x46U) && ((D_80134540[0] == g->current_girl) || (D_80134540[1] == g->current_girl) || (D_80134540[2] == g->current_girl)) && (g->current_girl == GIRL_MEGUMI)) {
         func_8004284C();
         return 0;
     }
@@ -381,13 +381,13 @@ s32 func_80133728(void) {
     GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
 
     g = &D_800E6280;
-    if ((D_800E6280.day == ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B)) && (D_800E6280.month == (D_800E6280.player_birthday & 0xF)) && (((get_h_tokimeki(g->current_girl) >= 0x46U) && (g->current_girl != 0)) || ((D_800E6280.girls[0].tokimeki >= 0x46) && (g->current_girl == 0))) && ((D_80134540[0] == g->current_girl) || (D_80134540[1] == g->current_girl) || (D_80134540[2] == g->current_girl))) {
+    if ((D_800E6280.day == ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B)) && (D_800E6280.month == (D_800E6280.player_birthday & 0xF)) && (((get_h_tokimeki(g->current_girl) >= 0x46U) && (g->current_girl != GIRL_SHIORI)) || ((D_800E6280.girls[0].tokimeki >= 0x46) && (g->current_girl == GIRL_SHIORI))) && ((D_80134540[0] == g->current_girl) || (D_80134540[1] == g->current_girl) || (D_80134540[2] == g->current_girl))) {
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
         func_80042908(3);
         return 0;
     }
-    if (((get_h_tokimeki(g->current_girl) >= 0x46U) && (g->current_girl != 0)) || ((D_800E6280.girls[0].tokimeki >= 0x46) && (g->current_girl == 0))) {
+    if (((get_h_tokimeki(g->current_girl) >= 0x46U) && (g->current_girl != GIRL_SHIORI)) || ((D_800E6280.girls[0].tokimeki >= 0x46) && (g->current_girl == GIRL_SHIORI))) {
         func_80132348();
         return;
     }

@@ -52,7 +52,7 @@ void func_8013DD20(void) {
 }
 
 void func_8013DD58(void) {
-    D_800E6280.current_girl = 6;
+    D_800E6280.current_girl = GIRL_NOZOMI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

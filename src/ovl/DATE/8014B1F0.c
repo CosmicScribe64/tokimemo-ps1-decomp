@@ -322,7 +322,7 @@ s32 func_8014C20C(void) {
             return 0;
         }
     }
-    if ((g->param_looks.value >= 0x23) || ((g->param_looks.value >= 0x1E) && (g->current_girl != 7))) {
+    if ((g->param_looks.value >= 0x23) || ((g->param_looks.value >= 0x1E) && (g->current_girl != GIRL_MIRA))) {
         if (D_80122D08 >= 0) {
             g->girl_last_date_spot[g->current_girl] = D_80122D08;
             g->girl_last_date_spot_timer[g->current_girl] = 0xC;
@@ -418,42 +418,42 @@ void func_8014C7D4(void) {
 
 void func_8014C7FC(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         cd_read_sectors(6U, 0x80198000, 0xAE25);
         break;
-    case 1:
+    case GIRL_MIO:
         cd_read_sectors(3U, 0x80198000, 0xAE39);
         break;
-    case 2:
+    case GIRL_YUINA:
         cd_read_sectors(4U, 0x80198000, 0xAE2B);
         break;
-    case 3:
+    case GIRL_AYAKO:
         cd_read_sectors(5U, 0x80198000, 0xAE2F);
         break;
-    case 4:
+    case GIRL_SAKI:
         cd_read_sectors(7U, 0x80198000, 0xAE4C);
         break;
-    case 5:
+    case GIRL_YUKARI:
         cd_read_sectors(5U, 0x80198000, 0xAE3C);
         break;
-    case 6:
+    case GIRL_NOZOMI:
         cd_read_sectors(6U, 0x80198000, 0xAE41);
         break;
-    case 7:
+    case GIRL_MIRA:
         cd_read_sectors(5U, 0x80198000, 0xAE34);
         break;
-    case 8:
+    case GIRL_YUKO:
         cd_read_sectors(4U, 0x80198000, 0xAE21);
         break;
-    case 9:
+    case GIRL_MEGUMI:
         cd_read_sectors(5U, 0x80198000, 0xAE47);
         break;
-    case 10:
+    case GIRL_YUMI:
         cd_read_sectors(6U, 0x80198000, 0xAE5A);
         break;
-    case 11:
-    case 12:
-    case 13:
+    case GIRL_MIHARU:
+    case GIRL_REI:
+    case GIRL_YOSHIO:
         cd_read_sectors(7U, 0x80198000, 0xAE53);
         break;
     default:

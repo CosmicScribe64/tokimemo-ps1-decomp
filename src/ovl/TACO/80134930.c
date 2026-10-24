@@ -278,13 +278,13 @@ void func_80135418(void) {
 
 void func_8013546C(void) {
     if (D_800E6280.pad_pressed & 0x5100) {
-        if (D_800E6280.pad_pressed & 0x1000) {
+        if (D_800E6280.pad_pressed & PAD_UP) {
             D_8015EDE8 -= 1;
         }
-        if (D_800E6280.pad_pressed & 0x4000) {
+        if (D_800E6280.pad_pressed & PAD_DOWN) {
             D_8015EDE8 += 1;
         }
-        if (D_800E6280.pad_pressed & 0x100) {
+        if (D_800E6280.pad_pressed & PAD_SELECT) {
             D_8015EDE8 += 1;
         }
         if (D_8015EDE8 < 0) {

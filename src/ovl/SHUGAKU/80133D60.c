@@ -46,7 +46,7 @@ void func_80133E10(void) {
 void func_80133F6C(void) {
     if (((D_800E6280.girls[0].birthday.w & 0xF) == D_800E6280.month) && (((u32) (D_800E6280.girls[0].birthday.w << 0x17) >> 0x1B) == D_800E6280.day)) {
         D_800E6280.date_girl = D_800E6280.current_girl;
-        D_800E6280.current_girl = 0;
+        D_800E6280.current_girl = GIRL_SHIORI;
         func_80042908(6);
         return;
     }
@@ -86,7 +86,7 @@ void func_80134100(void) {
 }
 
 void func_80134138(void) {
-    D_800E6280.current_girl = 3;
+    D_800E6280.current_girl = GIRL_AYAKO;
     D_80120666 = 2;
     D_801206EE = 4;
     func_800847B8(3);
@@ -96,7 +96,7 @@ void func_80134138(void) {
 INCLUDE_RODATA("asm/ovl/SHUGAKU/data/SHUGAKU/80133D60.rodata", D_8013AD70);
 
 void func_80134184(void) {
-    D_800E6280.current_girl = 0xE;
+    D_800E6280.current_girl = GIRL_SOTOI;
     D_80120666 = 4;
     D_801206EE = 2;
     strcpy(&D_800CA188, &D_8013AD70);

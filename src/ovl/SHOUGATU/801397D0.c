@@ -99,7 +99,7 @@ s32 func_80139C10(void) {
 }
 
 void func_80139C68(void) {
-    D_800E6280.current_girl = 1;
+    D_800E6280.current_girl = GIRL_MIO;
     func_80137AB4();
 }
 
@@ -177,7 +177,7 @@ void func_80139EC8(void) {
     D_80120688 |= 0x80000000;
     D_80120666 = 0;
     D_80122D0C = 1;
-    D_800E6280.current_girl = 0xE;
+    D_800E6280.current_girl = GIRL_SOTOI;
     func_8004284C();
 }
 

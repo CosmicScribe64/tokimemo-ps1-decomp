@@ -323,7 +323,7 @@ typedef struct NibbleView {
  * f12; bits 16..20 tested one by one). */
 typedef struct PlayerFlagBits {
     /* 0x00 */ u32 unk_00 : 8;
-    /* 0x00 */ u32 health : 4;
+    /* 0x00 */ u32 health : 4; /* HealthState */
     /* 0x00 */ u32 club : 4;
     /* 0x00 */ u32 b16 : 1;
     /* 0x00 */ u32 b17 : 1;

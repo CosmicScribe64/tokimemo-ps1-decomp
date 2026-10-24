@@ -3,9 +3,9 @@
 
 void func_80042A00(void) {
     if (func_80042AC8() == 0) {
-        if (D_800E6280.input_device == 0) {
+        if (D_800E6280.input_device == INPUT_MOUSE) {
             func_80042CB0();
-        } else if (D_800E6280.input_device != 0xFF) {
+        } else if (D_800E6280.input_device != INPUT_NONE) {
             func_800430C0();
         }
         if (D_800B3CA0 != 0 && (D_800E6280.pad_pressed & 0xF9DF)) {
@@ -28,23 +28,23 @@ s32 func_80042AC8(void) {
     if (D_800E8BF0[0] == 0) {
         if ((D_800E8BF0[1] & 0xF) * 2 <= 0x40) {
             if ((D_800E8BF0[1] & 0xF0) == 0x10) {
-                g->input_device = 0;
-                g->menu_mode = 0;
+                g->input_device = INPUT_MOUSE;
+                g->menu_mode = MENU_MODE_MOUSE_LIKE;
             } else {
-                g->input_device = 1;
+                g->input_device = INPUT_PAD;
             }
         }
     } else if (D_800E8BF0[0] != 0xFF || g->card_busy == 0) {
-        g->input_device = 0xFF;
+        g->input_device = INPUT_NONE;
     }
-    if (old != g->input_device && (g->input_device != 0xFF || old != 0xFF)) {
-        if (g->input_device == 0) {
+    if (old != g->input_device && (g->input_device != INPUT_NONE || old != 0xFF)) {
+        if (g->input_device == INPUT_MOUSE) {
             func_80042C30();
             func_80042C74();
             func_80042BD4();
             return 1;
         }
-        if (g->input_device == 1) {
+        if (g->input_device == INPUT_PAD) {
             func_80042C74();
             func_80042C30();
         }
@@ -114,10 +114,10 @@ void func_80042CB0(void) {
     g->pad_prev = g->pad_held;
     g->mouse_buttons = g->unk_F76 & ~g->unk_F78;
     if (*(u8 *)&g->click_mode != 0 && (*(u8 *)&g->unk_F71 == 0 || g->unk_F72 != g->mouse_buttons) && g->mouse_buttons != 0) {
-        if (g->mouse_buttons & 4) {
+        if (g->mouse_buttons & MOUSE_RIGHT) {
             *(u8 *)&g->unk_F71 = *(u8 *)&g->double_click_interval + 8;
             g->unk_F72 = g->mouse_buttons;
-        } else if (g->mouse_buttons & 8) {
+        } else if (g->mouse_buttons & MOUSE_LEFT) {
             *(u8 *)&g->unk_F71 = *(u8 *)&g->double_click_interval + 8;
             g->unk_F72 = g->mouse_buttons;
         }
@@ -128,14 +128,14 @@ void func_80042CB0(void) {
         *(u8 *)&g->unk_F71 = 0;
         if (g->confirm_button != 0) {
             if (g->unk_F76 & 4) {
-                g->pad_held |= 0x20;
+                g->pad_held |= PAD_CIRCLE;
             } else if (g->unk_F76 & 8) {
-                g->pad_held |= 0x40;
+                g->pad_held |= PAD_CROSS;
             }
         } else if (g->unk_F76 & 8) {
-            g->pad_held |= 0x20;
+            g->pad_held |= PAD_CIRCLE;
         } else if (g->unk_F76 & 4) {
-            g->pad_held |= 0x40;
+            g->pad_held |= PAD_CROSS;
         }
     }
     if (*(u8 *)&g->unk_F71 != 0) {
@@ -162,8 +162,8 @@ s32 func_80043010(void) {
     s32 b3;
     s32 a0;
 
-    if (D_800E6280.input_device != 0xFF) {
-        if (D_800E6280.input_device != 0) {
+    if (D_800E6280.input_device != INPUT_NONE) {
+        if (D_800E6280.input_device != INPUT_MOUSE) {
             b0 = ~D_800E8BF0[3];
             b1 = ~D_800E8BF0[2];
             b2 = ~D_800E8C30[3];
@@ -206,7 +206,7 @@ s32 func_800430C0(void) {
     /* FAKE: the (u32) cast keeps ugen's operand order (prev, ~pad) of the original; real source unknown. T-17009 */
     D_800E6280.pad_released = D_800E6280.pad_prev & (u32)~D_800E6280.pad_held;
     if (D_800B3CA0 != 0 && (D_800E6280.frame_count & 1)) {
-        D_800E6280.pad_pressed |= 0x20;
+        D_800E6280.pad_pressed |= PAD_CIRCLE;
     }
     if (D_800E6280.pause_allowed == 1) {
         if (D_800E6280.pad_pressed & 0x08000800) {
@@ -219,14 +219,14 @@ s32 func_800430C0(void) {
             }
         }
     }
-    if (D_800E6280.mode != 0xD0 && D_800E6280.mode != 0x20 && D_800E6280.mode != 0x90 && D_800E6280.input_device == 1) {
+    if (D_800E6280.mode != 0xD0 && D_800E6280.mode != 0x20 && D_800E6280.mode != 0x90 && D_800E6280.input_device == INPUT_PAD) {
         if ((D_800E6280.pad_held & 0x90C) == 0x90C) {
             if (D_800B3CA4++ >= 0x81) {
                 D_800B3CA4 = 0;
                 func_800789E0();
                 func_800591D8(0);
                 func_800412E0(0);
-                main_state_set(0);
+                main_state_set(MODE_BOOT);
                 func_80041584();
                 func_80048DD0(0);
                 back_clear_switch(1);
@@ -254,7 +254,7 @@ s32 func_800430C0(void) {
                 func_800789E0();
                 func_800591D8(0);
                 func_800412E0(0);
-                main_state_set(0x11);
+                main_state_set(MODE_PROLOGUE);
                 func_80041584();
                 func_80048DD0(0);
                 back_clear_switch(1);

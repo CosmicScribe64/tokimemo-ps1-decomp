@@ -164,7 +164,7 @@ void func_8013828C(void) {
 void func_80138320(void) {
     u8 s;
 
-    s = get_g_zyotai_s(0) & 0x7F;
+    s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
     if (s >= 2U) {
         D_800E6280.step -= 0xB;
         return;
@@ -245,7 +245,7 @@ void func_80138640(void) {
     func_80134374();
     D_80122CDC = (s32) sp2A;
     D_80139AC0 = 0;
-    D_800E6280.current_girl = 0;
+    D_800E6280.current_girl = GIRL_SHIORI;
     func_800847B8(0U);
     D_80139AD0 = (KObj *) D_8013A170[1][0][1];
     D_80139AD4 = D_8013A170[1][1][1];
@@ -256,7 +256,7 @@ void func_80138640(void) {
 void func_801386C4(void) {
     u8 s;
 
-    s = get_g_zyotai_s(0) & 0x7F;
+    s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
     if ((s < 2U) && (D_80122CDC < 2)) {
         func_80062CD0(0x5774);
     } else {
@@ -268,7 +268,7 @@ void func_801386C4(void) {
 void func_80138728(void) {
     u8 s;
 
-    s = get_g_zyotai_s(0) & 0x7F;
+    s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
     if (s == 2) {
         D_80139ADC += 2;
     } else if (s == 3) {
@@ -303,7 +303,7 @@ void func_8013885C(void) {
 void func_80138884(void) {
     u8 s;
 
-    s = get_g_zyotai_s(0) & 0x7F;
+    s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
     D_80139ADC = (s >= 2U) * 2 + (s >= 3U) * 2 + (s >= 4U) * 2 + 0x16;
     func_8004284C();
 }
@@ -311,7 +311,7 @@ void func_80138884(void) {
 void func_801388E4(void) {
     u8 s;
 
-    s = get_g_zyotai_s(0) & 0x7F;
+    s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
     D_80139ADC = (s >= 2U) * 2 + (s >= 3U) * 2 + (s >= 4U) * 2 + 6;
     func_8004284C();
 }
@@ -322,7 +322,7 @@ void func_80138944(void) {
         func_8004284C();
         func_8004284C();
     } else {
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
         D_80139AD0 = (KObj *) D_8013A170[0][0][2];
         D_80139AD4 = D_8013A170[0][1][2];
         D_80139AD8 = D_8013A170[0][2][2];
@@ -340,34 +340,34 @@ void func_801389F4(void) {
 
 void func_80138A34(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         func_80062CD0(0x541D);
         break;
-    case 1:
+    case GIRL_MIO:
         func_80062CD0(0x5D14);
         break;
-    case 2:
+    case GIRL_YUINA:
         func_80062CD0(0x5201);
         break;
-    case 3:
+    case GIRL_AYAKO:
         func_80062CD0(0x5882);
         break;
-    case 4:
+    case GIRL_SAKI:
         func_80062CD0(0x6692);
         break;
-    case 5:
+    case GIRL_YUKARI:
         func_80062CD0(0x5F8A);
         break;
-    case 6:
+    case GIRL_NOZOMI:
         func_80062CD0(0x6200);
         break;
-    case 7:
+    case GIRL_MIRA:
         func_80062CD0(0x5B7F);
         break;
-    case 8:
+    case GIRL_YUKO:
         func_80062CD0(0x506C);
         break;
-    case 9:
+    case GIRL_MEGUMI:
         func_80062CD0(0x652A);
         break;
     default:
@@ -452,7 +452,7 @@ void func_80138D40(void) {
     ((Actor *)D_80120650)->draw_flags &= 0x7F;
     ((Actor *)D_80120650)[1].draw_flags &= 0x7F;
     k_reset(1);
-    D_800E6280.current_girl = 0;
+    D_800E6280.current_girl = GIRL_SHIORI;
     D_80139ADC = 0;
     D_80139AE0 = 0;
     func_80137E04();
@@ -471,7 +471,7 @@ void func_80138E64(void) {
     s32 pad; /* FAKE: unused local above s, puts s at sp+0x2B as in the original; real source unknown (T-3330 layout) */
     u8 s;
 
-    s = get_g_zyotai_s(0) & 0x7F;
+    s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
     if (((u32)D_800E6280.player_flags.h >> 0xC) == ((u32)D_800E6280.girls[0].flags.b[2] >> 4)) {
         bg_read_sub2(0x42A9);
         if (s < 2U && D_80122CDC < 2) {
@@ -579,52 +579,52 @@ s32 func_80138F88(void) {
 
 void func_801392D4(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_80139AD0 = (KObj *) D_8013A170[0][0][1];
         D_80139AD4 = D_8013A170[0][1][1];
         D_80139AD8 = D_8013A170[0][2][1];
         return;
-    case 1:
+    case GIRL_MIO:
         D_80139AD0 = (KObj *) D_8013A170[0][0][6];
         D_80139AD4 = D_8013A170[0][1][6];
         D_80139AD8 = D_8013A170[0][2][6];
         return;
-    case 2:
+    case GIRL_YUINA:
         D_80139AD0 = (KObj *) D_8013A170[0][0][3];
         D_80139AD4 = D_8013A170[0][1][3];
         D_80139AD8 = D_8013A170[0][2][3];
         return;
-    case 3:
+    case GIRL_AYAKO:
         D_80139AD0 = (KObj *) D_8013A170[0][0][4];
         D_80139AD4 = D_8013A170[0][1][4];
         D_80139AD8 = D_8013A170[0][2][4];
         return;
-    case 4:
+    case GIRL_SAKI:
         D_80139AD0 = (KObj *) D_8013A170[0][0][10];
         D_80139AD4 = D_8013A170[0][1][10];
         D_80139AD8 = D_8013A170[0][2][10];
         return;
-    case 5:
+    case GIRL_YUKARI:
         D_80139AD0 = (KObj *) D_8013A170[0][0][7];
         D_80139AD4 = D_8013A170[0][1][7];
         D_80139AD8 = D_8013A170[0][2][7];
         return;
-    case 6:
+    case GIRL_NOZOMI:
         D_80139AD0 = (KObj *) D_8013A170[0][0][8];
         D_80139AD4 = D_8013A170[0][1][8];
         D_80139AD8 = D_8013A170[0][2][8];
         return;
-    case 7:
+    case GIRL_MIRA:
         D_80139AD0 = (KObj *) D_8013A170[0][0][5];
         D_80139AD4 = D_8013A170[0][1][5];
         D_80139AD8 = D_8013A170[0][2][5];
         return;
-    case 8:
+    case GIRL_YUKO:
         D_80139AD0 = (KObj *) D_8013A170[0][0][0];
         D_80139AD4 = D_8013A170[0][1][0];
         D_80139AD8 = D_8013A170[0][2][0];
         return;
-    case 9:
+    case GIRL_MEGUMI:
         D_80139AD0 = (KObj *) D_8013A170[0][0][9];
         D_80139AD4 = D_8013A170[0][1][9];
         D_80139AD8 = D_8013A170[0][2][9];

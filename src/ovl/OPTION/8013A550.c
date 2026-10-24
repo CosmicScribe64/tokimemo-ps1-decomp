@@ -3,23 +3,23 @@
 
 
 s32 func_8013A550(s32 arg0, s32 arg1, s32 arg2) {
-    if (D_800E6280.pad_pressed & 0x80) {
+    if (D_800E6280.pad_pressed & PAD_SQUARE) {
         arg0 += 1;
         if (arg1 < arg0) {
             arg0 = arg2;
         }
-    } else if ((D_800E6280.pad_held & 0x80) && (D_800E6280.pad_held & 5)) {
+    } else if ((D_800E6280.pad_held & PAD_SQUARE) && (D_800E6280.pad_held & 5)) {
         arg0 += 1;
         if (arg1 < arg0) {
             arg0 = arg2;
         }
     }
-    if (D_800E6280.pad_pressed & 0x10) {
+    if (D_800E6280.pad_pressed & PAD_TRIANGLE) {
         arg0 -= 1;
         if (arg0 < arg2) {
             arg0 = arg1;
         }
-    } else if ((D_800E6280.pad_held & 0x10) && (D_800E6280.pad_held & 5)) {
+    } else if ((D_800E6280.pad_held & PAD_TRIANGLE) && (D_800E6280.pad_held & 5)) {
         arg0 -= 1;
         if (arg0 < arg2) {
             arg0 = arg1;
@@ -107,9 +107,9 @@ s32 func_8013A7EC(void) {
             if (game->pad_pressed & 0x90) {
                 label_or_month = game->month;
                 day = 0;
-                if (D_800E6280.weekday != 6) {
+                if (D_800E6280.weekday != WEEKDAY_SUNDAY) {
                     day = D_800E6280.weekday;
-                    if ((s32) D_800E6280.weekday < 6) {
+                    if ((s32) D_800E6280.weekday < WEEKDAY_SUNDAY) {
                         do {
                             func_80072338();
                             day++;
@@ -153,7 +153,7 @@ s32 func_8013A7EC(void) {
             break;
         }
     }
-    if (game->pad_pressed & 0x800) {
+    if (game->pad_pressed & PAD_START) {
         func_80041878();
         func_80042940(0);
     }
@@ -720,58 +720,58 @@ void func_8013C52C(void) {
         switch (D_800E6280.menu_cursor_0) {
         case 0:
             D_800B3C6C = 0;
-            main_state_set(0x34);
+            main_state_set(MODE_COMMAND_SCREEN);
         default:
             break;
         case 1:
-            main_state_set(0x50);
+            main_state_set(MODE_DATE);
             break;
         case 2:
             func_8004E58C();
             func_80048DD0(0);
-            main_state_set(0x5D);
+            main_state_set(MODE_SPECIAL_EVENT);
             break;
         case 3:
-            main_state_set(0x57);
+            main_state_set(MODE_GIRL_BIRTHDAY);
             break;
         case 4:
-            main_state_set(0x56);
+            main_state_set(MODE_PLAYER_BIRTHDAY);
             break;
         case 5:
-            main_state_set(0x5A);
+            main_state_set(MODE_GIRL_INVITATION);
             break;
         case 6:
-            main_state_set(0x72);
+            main_state_set(MODE_SPORTS_FESTIVAL);
             break;
         case 7:
-            main_state_set(0x71);
+            main_state_set(MODE_CULTURE_FESTIVAL_B);
             if (D_800E6280.player_flags.h >> 0xC < 6) {
-                main_state_set(0x70);
+                main_state_set(MODE_CULTURE_FESTIVAL_A);
             }
             break;
         case 8:
-            main_state_set(0x51);
+            main_state_set(MODE_SCHOOL_TRIP);
             break;
         case 9:
-            main_state_set(0x53);
+            main_state_set(MODE_NEW_YEAR_B);
             break;
         case 10:
-            main_state_set(0x55);
+            main_state_set(MODE_SEASONAL_PARTY);
             break;
         case 11:
-            main_state_set(0x54);
+            main_state_set(MODE_VALENTINE);
             break;
         case 12:
-            main_state_set(0x58);
+            main_state_set(MODE_AMUSEMENT_PARK);
             break;
         case 13:
-            main_state_set(0x52);
+            main_state_set(MODE_NEW_YEAR_A);
             break;
         case 14:
-            main_state_set(0x5E);
+            main_state_set(MODE_DATE_SCENE);
             break;
         case 15:
-            main_state_set(0x59);
+            main_state_set(MODE_GIRL_ENCOUNTER);
             break;
         }
     }
@@ -807,10 +807,10 @@ void func_8013C780(void) {
         func_8013C72C();
         break;
     }
-    if (D_800E6280.stage != 0xFF && (D_800E6280.pad_pressed & 0x20)) {
+    if (D_800E6280.stage != 0xFF && (D_800E6280.pad_pressed & PAD_CIRCLE)) {
         func_80042808();
     }
-    if (D_800E6280.stage != 0 && (D_800E6280.pad_pressed & 0x40)) {
+    if (D_800E6280.stage != 0 && (D_800E6280.pad_pressed & PAD_CROSS)) {
         func_80042908((D_800E6280.stage - 1) & 0xFF);
     }
     func_80066C08(1);

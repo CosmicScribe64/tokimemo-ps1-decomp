@@ -68,7 +68,7 @@ void func_8013FEB4(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.current_girl = 0xA;
+            D_800E6280.current_girl = GIRL_YUMI;
             func_80083474();
             D_800CA148 = 0x25;
         }
@@ -198,7 +198,7 @@ void func_801401E8(void) {
         D_80122EAC = 0;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x6935);
@@ -207,7 +207,7 @@ void func_801401E8(void) {
         func_8014338C();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 0xA;
+        D_800E6280.current_girl = GIRL_YUMI;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;
@@ -324,7 +324,7 @@ void func_80140558(void) {
     case 6:
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 7:
         dec_bg_reset();
@@ -342,7 +342,7 @@ void func_80140558(void) {
         func_8014338C();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 0xA;
+        D_800E6280.current_girl = GIRL_YUMI;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;
@@ -469,7 +469,7 @@ void func_80140958(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.current_girl = 0xA;
+            D_800E6280.current_girl = GIRL_YUMI;
             func_80083474();
             D_800CA148 = 0x29;
         }
@@ -518,7 +518,7 @@ void func_80140958(void) {
         D_80122EAC = 0;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 12:
         func_800866A0(0x6935);
@@ -527,7 +527,7 @@ void func_80140958(void) {
         func_801431D4();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 0xA;
+        D_800E6280.current_girl = GIRL_YUMI;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;
@@ -658,7 +658,7 @@ void func_80140F4C(void) {
         break;
     case 4:
         addr_init_bustup();
-        D_800E6280.current_girl = 0xA;
+        D_800E6280.current_girl = GIRL_YUMI;
         func_80083474();
         func_801431D4();
         D_800CA148 = 0x2A;
@@ -722,7 +722,7 @@ void func_80140F4C(void) {
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
-        main_state_set(0xD0);
+        main_state_set(MODE_TT_GAME);
         break;
     case 16:
         D_80122E98 = 1;
@@ -763,7 +763,7 @@ void func_80140F4C(void) {
         break;
     case 21:
         addr_init_bustup();
-        D_800E6280.current_girl = 0xA;
+        D_800E6280.current_girl = GIRL_YUMI;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;
@@ -845,7 +845,7 @@ void func_80140F4C(void) {
         break;
     case 32:
         addr_init_bustup();
-        D_800E6280.current_girl = 0xA;
+        D_800E6280.current_girl = GIRL_YUMI;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;
@@ -969,7 +969,7 @@ void func_801417DC(void) {
         if (cd_read_sync_status() & 1) {
             memcpy((void *)0x801AE000, 0x80180000, 0x16800);
             addr_init_bustup();
-            g->current_girl = 0xA;
+            g->current_girl = GIRL_YUMI;
             func_80083474();
             D_800CA148 = 0x2C;
         }
@@ -1011,7 +1011,7 @@ void func_801417DC(void) {
     case 0xD:
         memcpy((void *)0x80180000, 0x80197000, 0x16800);
         addr_init_bustup();
-        g->current_girl = 0xD;
+        g->current_girl = GIRL_YOSHIO;
         func_800847B8(g->current_girl);
         func_80083474();
         break;
@@ -1027,7 +1027,7 @@ void func_801417DC(void) {
     case 0x11:
         memcpy((void *)0x80180000, 0x801AE000, 0x16800);
         addr_init_bustup();
-        g->current_girl = 0xA;
+        g->current_girl = GIRL_YUMI;
         func_800847B8(g->current_girl);
         func_80083474();
         break;
@@ -1043,7 +1043,7 @@ void func_801417DC(void) {
     case 0x15:
         memcpy((void *)0x80180000, 0x80197000, 0x16800);
         addr_init_bustup();
-        g->current_girl = 0xD;
+        g->current_girl = GIRL_YOSHIO;
         func_800847B8(g->current_girl);
         func_80083474();
         break;
@@ -1055,7 +1055,7 @@ void func_801417DC(void) {
         break;
     case 0x18:
         D_80122D20 = 1;
-        g->current_girl = 0xA;
+        g->current_girl = GIRL_YUMI;
         func_800847B8(g->current_girl);
         func_8004284C();
         break;
@@ -1064,7 +1064,7 @@ void func_801417DC(void) {
         break;
     case 0x1A:
         D_80122D20 = 0;
-        g->current_girl = 0xD;
+        g->current_girl = GIRL_YOSHIO;
         func_800847B8(g->current_girl);
         func_8004284C();
         break;
@@ -1073,7 +1073,7 @@ void func_801417DC(void) {
         break;
     case 0x1C:
         D_80122D20 = 1;
-        g->current_girl = 0xA;
+        g->current_girl = GIRL_YUMI;
         func_800847B8(g->current_girl);
         func_8004284C();
         break;
@@ -1082,7 +1082,7 @@ void func_801417DC(void) {
         break;
     case 0x1E:
         D_80122D20 = 0;
-        g->current_girl = 0xD;
+        g->current_girl = GIRL_YOSHIO;
         func_800847B8(g->current_girl);
         func_8004284C();
         break;
@@ -1094,7 +1094,7 @@ void func_801417DC(void) {
             func_80042940(0x22);
         } else {
             D_80122D20 = 1;
-            g->current_girl = 0xA;
+            g->current_girl = GIRL_YUMI;
         func_800847B8(g->current_girl);
             func_8004284C();
         }
@@ -1107,7 +1107,7 @@ void func_801417DC(void) {
             func_80042940(0x24);
         } else {
             D_80122D20 = 0;
-            g->current_girl = 0xD;
+            g->current_girl = GIRL_YOSHIO;
         func_800847B8(g->current_girl);
             func_8004284C();
         }
@@ -1121,7 +1121,7 @@ void func_801417DC(void) {
     case 0x25:
         memcpy((void *)0x80180000, 0x801AE000, 0x16800);
         addr_init_bustup();
-        g->current_girl = 0xA;
+        g->current_girl = GIRL_YUMI;
         func_800847B8(g->current_girl);
         func_80083474();
         break;
@@ -1136,7 +1136,7 @@ void func_801417DC(void) {
             func_80042940(0x2A);
         } else {
             D_80122D20 = 1;
-            g->current_girl = 0xD;
+            g->current_girl = GIRL_YOSHIO;
         func_800847B8(g->current_girl);
             func_8004284C();
         }
@@ -1146,7 +1146,7 @@ void func_801417DC(void) {
         break;
     case 0x2A:
         D_80122D20 = 0;
-        g->current_girl = 0xA;
+        g->current_girl = GIRL_YUMI;
         func_800847B8(g->current_girl);
         func_8004284C();
         break;
@@ -1184,7 +1184,7 @@ void func_801417DC(void) {
             func_80142694();
             D_800CA148 = 0x67;
             addr_init_bustup();
-            g->current_girl = 0xD;
+            g->current_girl = GIRL_YOSHIO;
         func_800847B8(g->current_girl);
             func_80083474();
         }
@@ -1235,7 +1235,7 @@ void func_80141F70(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.current_girl = 0xA;
+            D_800E6280.current_girl = GIRL_YUMI;
             func_80083474();
             D_800CA148 = 0x2D;
         }
@@ -1364,7 +1364,7 @@ void func_80142298(void) {
         D_80122EAC = 2;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x6935);
@@ -1373,7 +1373,7 @@ void func_80142298(void) {
         func_8014338C();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 0xA;
+        D_800E6280.current_girl = GIRL_YUMI;
         func_80083474();
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;

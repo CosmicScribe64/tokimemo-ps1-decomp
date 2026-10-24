@@ -122,7 +122,7 @@ void func_8013F72C(void) {
 }
 
 void func_8013F770(void) {
-    func_800634FC(get_g_zyotai_h(0xA));
+    func_800634FC(get_g_zyotai_h(GIRL_YUMI));
     if ((u8) D_800E6280.event_flags[67] >= 2U) {
         func_8004284C();
         func_8004284C();
@@ -243,7 +243,7 @@ void func_8013FB88(void) {
 void func_8013FC00(void) {
     s16 i;
 
-    func_800634FC(get_g_zyotai_h(0xA));
+    func_800634FC(get_g_zyotai_h(GIRL_YUMI));
     D_800B5BD4 = 0xF;
     for (i = 0; i < 0xA; i++) {
         ((Actor *)D_8011ECD0)[i + 99].draw_flags &= ~0x80;
@@ -352,7 +352,7 @@ void func_80140040(void) {
 }
 
 void func_8014016C(void) {
-    D_800E6280.current_girl = 0xA;
+    D_800E6280.current_girl = GIRL_YUMI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -400,7 +400,7 @@ void func_801402F8(void) {
 void func_801403A0(void) {
     u8 state;
 
-    D_800E6280.current_girl = 0xA;
+    D_800E6280.current_girl = GIRL_YUMI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -425,7 +425,7 @@ void func_801403A0(void) {
     D_80146274 = D_80145FD0;
     D_80146278 = D_8014610C;
     D_8014627C = D_80146248;
-    state = get_g_zyotai_s(0xA) & 0x7F;
+    state = get_g_zyotai_s(GIRL_YUMI) & 0x7F;
     if ((u32)state < 2U) {
         D_800E6280.girls[10].tokimeki += 1;
     }
@@ -438,7 +438,7 @@ void func_801403A0(void) {
 void func_801404FC(void) {
     s16 i;
 
-    D_800E6280.current_girl = 0xA;
+    D_800E6280.current_girl = GIRL_YUMI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

@@ -316,7 +316,7 @@ void func_80062210(void) {
 }
 
 void func_800623E4(void) {
-    if (D_800E6280.input_device != 0) {
+    if (D_800E6280.input_device != INPUT_MOUSE) {
         D_8011ECFA = D_801230D0 * 16 + 0x46;
         D_8011ECF6 = 0x40;
         switch (D_800E6280.pad_pressed & 0x5000) {
@@ -359,11 +359,11 @@ void func_80062524(void) {
         func_8004284C();
         func_80044750(0x501);
     }
-    if ((u32)D_800E6280.step_timer.w >= 0x259U || (D_800E6280.pad_pressed & 0x100)) {
+    if ((u32)D_800E6280.step_timer.w >= 0x259U || (D_800E6280.pad_pressed & PAD_SELECT)) {
         func_80048EB8(0);
         func_80044750(0x7F);
         func_8006BD6C(0);
-        main_state_set(0x11);
+        main_state_set(MODE_PROLOGUE);
     }
 }
 
@@ -398,15 +398,15 @@ void func_800626B0(void) {
     func_8004AC18(0xFF);
     switch (*(u32 *)&D_801230D0) {
     case 0:
-        main_state_set(0x13);
+        main_state_set(MODE_NAME_ENTRY);
         break;
     case 1:
-        main_state_set(0x20);
+        main_state_set(MODE_OPTION);
         if (D_800B3220 == 1) {
-            if (D_800E6280.pad_held & 0x2000) {
-                main_state_set(0x21);
-            } else if (D_800E6280.pad_held & 0x8000) {
-                main_state_set(0x22);
+            if (D_800E6280.pad_held & PAD_RIGHT) {
+                main_state_set(MODE_OPTION_2);
+            } else if (D_800E6280.pad_held & PAD_LEFT) {
+                main_state_set(MODE_OPTION_3);
             }
         }
         break;
@@ -464,7 +464,7 @@ void func_80062840(void) {
             if (D_800E6280.stage >= 2) {
                 func_8006BD6C(0);
                 func_80044750(0x7F);
-                main_state_set(0x11);
+                main_state_set(MODE_PROLOGUE);
                 func_80042908(1);
                 func_80044750(0x501);
             }
@@ -533,5 +533,5 @@ void func_80062C28(void) {
     func_80041168(0);
     func_8009C674(0);
     back_clear_switch(1);
-    main_state_set(0);
+    main_state_set(MODE_BOOT);
 }

@@ -33,11 +33,11 @@ void func_801330E4(void) {
     D_800E6280.year = 0x62;
     D_800E6280.month = 3;
     D_800E6280.day = 1;
-    D_800E6280.weekday = 6;
+    D_800E6280.weekday = WEEKDAY_SUNDAY;
     func_80053418(rank, points);
-    D_800E6280.current_girl = 0xD;
+    D_800E6280.current_girl = GIRL_YOSHIO;
     if (points[0] < 0x1F4 && D_800E6280.girls[0xC].flags.b[3] >= 0x46 && D_800E6280.event_flags[0x4F] == 2) {
-        D_800E6280.current_girl = 0xC;
+        D_800E6280.current_girl = GIRL_REI;
     } else {
         best = 0x1F3;
         for (i = 0; i < 0xB; i++) {
@@ -48,7 +48,7 @@ void func_801330E4(void) {
             }
         }
     }
-    if (D_800E6280.current_girl == 0xD) {
+    if (D_800E6280.current_girl == GIRL_YOSHIO) {
         /* FAKE: T-25145, a second read of the flag word: IDO 5.3 then keeps the word in a register
          * (a0), as the original compiler did for its one read (wiki/original-compiler.md rule 3),
          * so ugen shifts it into v0 and copies the f9 temporary back after the sum */
@@ -62,7 +62,7 @@ void func_801330E4(void) {
         }
         if (D_800E6280.girls[0xB].flags.f.story_stage != 0 && D_800E6280.event_flags[0x4D] == 0) {
             if (rand() % 256 < chance.v[level]) {
-                D_800E6280.current_girl = 0xB;
+                D_800E6280.current_girl = GIRL_MIHARU;
             }
         }
     }
@@ -107,7 +107,7 @@ void func_80133428(void) {
 }
 
 void func_80133460(void) {
-    if (((u8) D_800E6280.current_girl >= 0xDU) && ((u32) ((u32) (D_800E6280.girls[14].flags.w << 0x14) >> 0x1D) < 3U)) {
+    if (((u8) D_800E6280.current_girl >= GIRL_YOSHIO) && ((u32) ((u32) (D_800E6280.girls[14].flags.w << 0x14) >> 0x1D) < 3U)) {
         func_80042908(7);
         D_800E7D34 |= 8;
         return;
@@ -117,7 +117,7 @@ void func_80133460(void) {
 }
 
 void func_801334E4(void) {
-    if ((((u32)(D_800E6280.girls[1].flags.w << 0x1E) >> 0x1F)) && (get_h_tokimeki(1) >= 0x46U)) {
+    if ((((u32)(D_800E6280.girls[1].flags.w << 0x1E) >> 0x1F)) && (get_h_tokimeki(GIRL_MIO) >= 0x46U)) {
         normal_date_speak();
         return;
     }

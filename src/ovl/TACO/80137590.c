@@ -93,20 +93,20 @@ void func_8013788C(void) {
         func_800591D8(0);
         func_80042908(2);
     } else {
-        D_800E6280.pad_pressed |= 0x20;
+        D_800E6280.pad_pressed |= PAD_CIRCLE;
         t = D_800E6280.stage_timer & 0x1FF;
-        D_800E6280.pad_held |= 0x20;
+        D_800E6280.pad_held |= PAD_CIRCLE;
         if (t >= 0x79 && t < 0x8C) {
-            D_800E6280.pad_held |= 0x2000;
+            D_800E6280.pad_held |= PAD_RIGHT;
         }
         if (t >= 0xAB && t < 0xBE) {
-            D_800E6280.pad_held |= 0x4000;
+            D_800E6280.pad_held |= PAD_DOWN;
         }
         if (t >= 0xDD && t < 0xF0) {
-            D_800E6280.pad_held |= 0x8000;
+            D_800E6280.pad_held |= PAD_LEFT;
         }
         if (t >= 0x10F && t < 0x122) {
-            D_800E6280.pad_held |= 0x1000;
+            D_800E6280.pad_held |= PAD_UP;
         }
         if (t >= 0x191 && t < 0x1B8) {
             D_800E6280.pad_held |= 0x3000;

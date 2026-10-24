@@ -71,7 +71,7 @@ void func_8013E11C(void) {
 }
 
 void func_8013E1A0(void) {
-    if (get_h_yuukou(9) >= 0x50U) {
+    if (get_h_yuukou(GIRL_MEGUMI) >= 0x50U) {
         D_800E6280.girls[9].tokimeki += 1;
         D_800E6280.girls[9].affection += 2;
     } else {
@@ -150,21 +150,21 @@ s32 func_8013E56C(void) {
 }
 
 void func_8013E5C8(void) {
-    if (get_h_yuukou(9) < 0x50U) {
+    if (get_h_yuukou(GIRL_MEGUMI) < 0x50U) {
         D_800CA150 = (u16) D_800CA150 + 2;
     }
     func_8004284C();
 }
 
 void func_8013E60C(void) {
-    if (get_h_yuukou(9) < 0x50U) {
+    if (get_h_yuukou(GIRL_MEGUMI) < 0x50U) {
         D_800E6280.step += 0xE;
     }
     func_8004284C();
 }
 
 void func_8013E650(void) {
-    if (get_h_yuukou(9) >= 0x50U) {
+    if (get_h_yuukou(GIRL_MEGUMI) >= 0x50U) {
         func_8004284C();
         func_8004284C();
         func_8004284C();
@@ -214,7 +214,7 @@ void func_8013E760(void) {
 }
 
 void func_8013E828(void) {
-    D_800E6280.current_girl = 9;
+    D_800E6280.current_girl = GIRL_MEGUMI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -305,7 +305,7 @@ void func_8013E950(void) {
 }
 
 void func_8013ECA8(void) {
-    D_800E6280.current_girl = 9;
+    D_800E6280.current_girl = GIRL_MEGUMI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

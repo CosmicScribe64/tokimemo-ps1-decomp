@@ -20,20 +20,20 @@ s32 func_801369D0(void) {
         if (cd_read_sync_status() & 1) {
             D_8013CEC0 = D_8013C750;
             D_8013CEC4 = D_8013C7B4;
-            D_800E6280.current_girl = 0xE;
+            D_800E6280.current_girl = GIRL_SOTOI;
             func_8004284C();
         }
     }
 }
 
 void func_80136B3C(void) {
-    if (D_800E6280.step >= 3 && D_800E6280.step < 0x26 && (D_800E6280.pad_held & 0x20)) {
+    if (D_800E6280.step >= 3 && D_800E6280.step < 0x26 && (D_800E6280.pad_held & PAD_CIRCLE)) {
         if (func_800460EC() != 2) {
             func_80044750(0x74);
         }
         func_80136BFC();
     }
-    if (D_800E6280.step >= 3 && D_800E6280.step < 0x24 && (D_800E6280.pad_held & 0x40)) {
+    if (D_800E6280.step >= 3 && D_800E6280.step < 0x24 && (D_800E6280.pad_held & PAD_CROSS)) {
         func_80044750(0xC1);
         func_80044750(0xC4);
         func_80042940(0x23);
@@ -419,7 +419,7 @@ void func_80137620(void) {
             do {
                 set_kanji_string(-72, (s16)((index - D_8013CEBC) * 16 + 64), 0, (s32)(((u8 **)D_8013CEC0)[index] + 1), 0);
                 if (((u8 **)D_8013CEC0)[index][0] == 103) {
-                    if (!(D_800E6280.pad_held & 32)) {
+                    if (!(D_800E6280.pad_held & PAD_CIRCLE)) {
                         coordinates = (s32 *)D_8013CEC4;
                         coordinates += *(u8 *)&D_800E6280.stage_scratch;
                         func_80046290(coordinates[0], coordinates[1], D_800E6280.current_girl);

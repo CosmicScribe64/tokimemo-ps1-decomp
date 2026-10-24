@@ -255,9 +255,9 @@ void func_8004164C(s32 arg0, s32 arg1) {
 }
 
 void func_80041840(void) {
-    D_800E6280.input_device = 1;
+    D_800E6280.input_device = INPUT_PAD;
     D_800E6280.cursor_speed = 3;
-    D_800E6280.menu_mode = 1;
+    D_800E6280.menu_mode = MENU_MODE_A;
     D_80123110 = 0x80132000;
 }
 
@@ -269,11 +269,11 @@ void func_80041878(void) {
 }
 
 void func_800418B0(void) {
-    D_800E6280.vacation = 0;
+    D_800E6280.vacation = VACATION_NONE;
     D_800E6280.year = 0x5F;
     D_800E6280.month = 4;
     D_800E6280.day = 4;
-    D_800E6280.weekday = 1;
+    D_800E6280.weekday = WEEKDAY_TUESDAY;
     D_800E6280.day_count = 0;
     bzero(D_800E6280.month_calendar[0].day_kind, 0x80);
     bzero(D_800E6280.clubs, 0x30);
@@ -370,7 +370,7 @@ void func_80041C2C(void) {
         g->girls[i].flags.b[3] = 0;
         g->girls[i].flags.f.b7 = 0;
         g->girls[i].flags.f.story_stage = 0;
-        g->girls[i].flags.f.club = 11;
+        g->girls[i].flags.f.club = CLUB_NONE;
     }
     g->girls[0].flags.f.met = 1;
     g->girls[12].flags.f.met = 1;
@@ -423,7 +423,7 @@ void func_80041F48(void) {
     for (i = 0; i < 4; i++) {
         ((WordView *)&D_800E6280.appt_place_0)->b[i] = 0;
     }
-    D_800E6280.date_girl = 0;
+    D_800E6280.date_girl = GIRL_SHIORI;
     for (i = 0; i < 4; i++) {
         D_800E6280.date_place_history[i] = 0;
     }
@@ -438,13 +438,13 @@ void func_80041F48(void) {
 }
 
 void func_80042058(void) {
-    D_800E6280.current_girl = 0;
+    D_800E6280.current_girl = GIRL_SHIORI;
     D_800E6280.text_lines_total = 0;
     D_800E6280.text_first_line = 0;
     D_800E6280.text_scroll_state = 0;
     D_800E6280.unk_F63 = 0;
-    D_800E6280.icon_mode = 0;
-    D_800E6280.voice_mode = 2;
+    D_800E6280.icon_mode = ICON_MODE_TYPE_A;
+    D_800E6280.voice_mode = VOICE_CANCELABLE;
     D_800E6280.click_mode = 0;
     D_800E6280.unk_F71 = 0;
     D_800E6280.double_click_interval = 0x20;

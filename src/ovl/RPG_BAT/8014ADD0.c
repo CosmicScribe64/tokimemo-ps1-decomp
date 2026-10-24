@@ -342,7 +342,7 @@ void func_8014BB80(void) {
             func_8013E7C0(0x22, 0xFF, 1, 0);
             break;
         }
-        if ((D_800E6280.menu_cursor_0 != -1) && (D_800E6280.pad_pressed & 0x20)) {
+        if ((D_800E6280.menu_cursor_0 != -1) && (D_800E6280.pad_pressed & PAD_CIRCLE)) {
             func_8013E7C0(0x22, 0xFF, 1, 0);
             func_8013E7C0(0x23, 0xFF, 1, 0);
             switch (gs->menu_cursor_0) {

@@ -300,7 +300,7 @@ void func_80137CD8(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x66BF);
@@ -310,7 +310,7 @@ void func_80137CD8(void) {
             func_80145844();
             D_80125CA0 = 0xC0;
             addr_init_bustup();
-            D_800E6280.current_girl = 4;
+            D_800E6280.current_girl = GIRL_SAKI;
             func_80083474();
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
         }
@@ -406,7 +406,7 @@ void func_80137FB8(void) {
     case 7:
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         dec_bg_reset();
@@ -424,7 +424,7 @@ void func_80137FB8(void) {
         D_80125CA0 = 0xC0;
         dec_bg_show_set(1, func_8005751C(1));
         addr_init_bustup();
-        D_800E6280.current_girl = 4;
+        D_800E6280.current_girl = GIRL_SAKI;
         func_80083474();
         cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
         break;
@@ -525,7 +525,7 @@ void func_80138340(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x66BF);
@@ -535,7 +535,7 @@ void func_80138340(void) {
             func_80145844();
             D_80125CA0 = 0xC0;
             addr_init_bustup();
-            D_800E6280.current_girl = 4;
+            D_800E6280.current_girl = GIRL_SAKI;
             func_80083474();
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
         }
@@ -814,7 +814,7 @@ void func_80138A08(void) {
         break;
     case 13:
         addr_init_bustup();
-        g->current_girl = 4;
+        g->current_girl = GIRL_SAKI;
         func_80083474();
         cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
         break;
@@ -929,7 +929,7 @@ void func_80138EB8(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x66BF);
@@ -938,7 +938,7 @@ void func_80138EB8(void) {
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 4;
+        D_800E6280.current_girl = GIRL_SAKI;
         func_80083474();
         cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
         break;
@@ -1103,7 +1103,7 @@ void func_80139364(void) {
         normal_date_speak();
         break;
     case 8:
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
         func_8004284C();
         break;
     case 9:
@@ -1262,7 +1262,7 @@ void func_80139780(void) {
         D_80122EAC = 0;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x66BF);
@@ -1271,7 +1271,7 @@ void func_80139780(void) {
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 4;
+        D_800E6280.current_girl = GIRL_SAKI;
         func_80083474();
         cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
         break;
@@ -1369,7 +1369,7 @@ void func_80139A6C(void) {
         D_80122EAC = 0;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x66BF);
@@ -1377,7 +1377,7 @@ void func_80139A6C(void) {
     case 9:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.current_girl = 4;
+            D_800E6280.current_girl = GIRL_SAKI;
             func_80083474();
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
         }

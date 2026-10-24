@@ -65,7 +65,7 @@ void func_80132138(void) {
                 func_80044750(0x508);
             }
         }
-        if (D_801230D0 <= 0 || (D_800E6280.pad_pressed & 0x40)) {
+        if (D_801230D0 <= 0 || (D_800E6280.pad_pressed & PAD_CROSS)) {
             func_80044750(0x1508);
             func_80044750(0x50B);
             func_8004284C();
@@ -87,7 +87,7 @@ void func_8013226C(void) {
             D_800E6280.substep = 1;
         } else if ((appointment_find_today((s32) D_800E6280.year, (s32) D_800E6280.month, (s32) D_800E6280.day) > 0) && (((u32) (D_800E6280.unk_54C[0].w * 8) >> 0x1C) == 0xA)) {
             D_800E6280.substep = 0x30;
-        } else if (get_g_zyotai_h(0xA) == 4) {
+        } else if (get_g_zyotai_h(GIRL_YUMI) == 4) {
             D_800E6280.substep = 0x30;
         } else if (D_800E6280.girls[13].flags.b[3] & 1) {
             D_800E6280.substep = 0x10;
@@ -270,7 +270,7 @@ void func_8013226C(void) {
         menu_check(1, D_8011ECF6, D_8011ECFA);
         menu_bar_show(1);
         func_8004FC10(1);
-        if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.pad_pressed & PAD_CIRCLE) {
             switch (D_800E6280.menu_cursor_1) {
             case 0:
                 D_800E6280.substep = 0x22;
@@ -506,7 +506,7 @@ void func_80132FC4(void) {
         menu_check(1, D_8011ECF6, D_8011ECFA);
         menu_bar_show(1);
         func_8004FC10(1);
-        if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.pad_pressed & PAD_CIRCLE) {
             if (D_800E6280.menu_cursor_1 == 0xB) {
                 func_80042940(4);
             } else if (D_800E6280.menu_cursor_1 == 0xA) {
@@ -760,7 +760,7 @@ void func_80133D54(void) {
         menu_check(1, D_8011ECF6, D_8011ECFA);
         menu_bar_show(1);
         func_8004FC10(1);
-        if ((D_800E6280.pad_pressed & 0x20) && (D_800E6280.menu_cursor_1 != -1)) {
+        if ((D_800E6280.pad_pressed & PAD_CIRCLE) && (D_800E6280.menu_cursor_1 != -1)) {
             if (D_800E6280.menu_cursor_1 == 0xB) {
                 D_800E6280.substep += 1;
             } else if (D_800E6280.girls[D_800E6280.menu_cursor_1].flags.f.met) {
@@ -1160,7 +1160,7 @@ void func_80134DA0(void) {
                 D_801230D0 -= 1;
             }
         }
-        if (D_801230D0 <= 0 || (D_800E6280.pad_pressed & 0x40)) {
+        if (D_801230D0 <= 0 || (D_800E6280.pad_pressed & PAD_CROSS)) {
             func_80044750(0x1508);
             func_80044750(0x50B);
             if (appointment_find_today(*(u8 *)&D_800E6280.year, *(u8 *)&D_800E6280.month, *(u8 *)&D_800E6280.day) != 0 &&
@@ -1665,7 +1665,7 @@ void func_8013639C(void) {
         func_8004FC10(1);
         menu_bar_show(1);
         choice = D_800E6280.menu_cursor_1;
-        if ((choice != -1) && (D_800E6280.pad_pressed & 0x20)) {
+        if ((choice != -1) && (D_800E6280.pad_pressed & PAD_CIRCLE)) {
             cal_sprite_disp_switch(0);
             D_80140558 = D_801405A4[D_800E6280.menu_cursor_1];
             choice = D_800E6280.menu_cursor_1;
@@ -1761,7 +1761,7 @@ void func_80136724(void) {
     case 0x1:
         menu_check(0, D_8011ECF6, D_8011ECFA);
         func_8004FC10(0);
-        if ((g->step_timer.u >= 0x11U) && (g->pad_pressed & 0x20)) {
+        if ((g->step_timer.u >= 0x11U) && (g->pad_pressed & PAD_CIRCLE)) {
             if (g->menu_cursor_0 == 0xA) {
                 func_80044750(0x50D);
                 g->substep = 2;
@@ -1784,7 +1784,7 @@ void func_80136724(void) {
         menu_check(0, D_8011ECF6, D_8011ECFA);
         func_8004FC10(0);
         menu_bar_show(0);
-        if ((g->step_timer.u >= 0x11U) && (g->pad_pressed & 0x20)) {
+        if ((g->step_timer.u >= 0x11U) && (g->pad_pressed & PAD_CIRCLE)) {
             if (g->menu_cursor_0 == 0xA) {
                 func_80044750(0x50D);
                 g->substep = 0;
@@ -1872,7 +1872,7 @@ void func_80136724(void) {
         if (g->girls[g->current_girl].syoushin < 0) {
             g->girls[g->current_girl].syoushin = 0;
         }
-        if (g->current_girl == 6) {
+        if (g->current_girl == GIRL_NOZOMI) {
             if ((u32) (get_g_zyotai_s(g->current_girl) & 0x7F) < 2U) {
                 D_801405E4 = 0xB;
             } else {
@@ -2024,10 +2024,10 @@ void func_80136724(void) {
     case 0x40:
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
-        if ((g->current_girl == 6) && ((u32) (get_g_zyotai_s(g->current_girl) & 0x7F) < 2U)) {
+        if ((g->current_girl == GIRL_NOZOMI) && ((u32) (get_g_zyotai_s(g->current_girl) & 0x7F) < 2U)) {
             D_801405E4 = 0xB;
         }
-        if (g->current_girl == 4) {
+        if (g->current_girl == GIRL_SAKI) {
             hp = (D_80140554 + 6) / 7;
             /* FAKE: the second comparison uses * 1 to retain expression
              * operand order; no runtime instruction remains, T-25055. */
@@ -2077,7 +2077,7 @@ void func_80136724(void) {
         xa_wait();
         break;
     case 0x48:
-        if (g->current_girl == 9) {
+        if (g->current_girl == GIRL_MEGUMI) {
             g->substep = 0x4D;
         } else {
             k_sub_reset();
@@ -2094,7 +2094,7 @@ void func_80136724(void) {
         k_sub_reset();
         gnsx(g->player_family_name);
         func_80044750(0x50C);
-        if (g->current_girl == 5) {
+        if (g->current_girl == GIRL_YUKARI) {
             sndisp("言葉うつっちゃったよ。）", 0, 0x1F);
         } else {
             sndisp("くそ、次こそ絶対 誘ってみせるぜ。）", 0, 0x1F);
@@ -2924,7 +2924,7 @@ void func_801396EC(void) {
     case 2:
         func_8004E58C();
         func_80048E78();
-        main_state_set(0x46);
+        main_state_set(MODE_HOLIDAY);
         break;
     }
     menu_bar_show(0);

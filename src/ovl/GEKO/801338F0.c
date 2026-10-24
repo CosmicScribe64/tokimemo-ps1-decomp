@@ -38,7 +38,7 @@ void func_801339AC(void) {
         func_8004284C();
         func_8004284C();
         func_8004284C();
-    } else if (D_800E6280.current_girl == 4) {
+    } else if (D_800E6280.current_girl == GIRL_SAKI) {
         if (D_80144C3C == 0x26) {
             raw = D_800E6280.player_flags.h;
             if (((raw >> 0xC) == 6) && ((D_800E6280.girls[4].flags.b[2] >> 4) == 6)) {
@@ -64,16 +64,16 @@ s32 func_80133AA0() {
 
     state = get_g_zyotai_h(D_800E6280.current_girl);
     func_801322E8();
-    if (*(s16 *)&D_80144C40 == 2 && D_800E6280.current_girl == 8 && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
+    if (*(s16 *)&D_80144C40 == 2 && D_800E6280.current_girl == GIRL_YUKO && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
         func_80083440(3U);
     }
-    if (*(s16 *)&D_80144C40 == 4 && D_800E6280.current_girl == 8 && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
+    if (*(s16 *)&D_80144C40 == 4 && D_800E6280.current_girl == GIRL_YUKO && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
         func_80083440(state);
     }
-    if ((*(s16 *)&D_80144C40 == 1 || *(s16 *)&D_80144C40 == 5) && D_800E6280.current_girl == 0xA && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
+    if ((*(s16 *)&D_80144C40 == 1 || *(s16 *)&D_80144C40 == 5) && D_800E6280.current_girl == GIRL_YUMI && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
         func_80083440(2U);
     }
-    if (*(s16 *)&D_80144C40 == 3 && D_800E6280.current_girl == 0xA && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
+    if (*(s16 *)&D_80144C40 == 3 && D_800E6280.current_girl == GIRL_YUMI && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
         func_80083440(3U);
     }
 }

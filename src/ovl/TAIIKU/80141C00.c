@@ -64,7 +64,7 @@ s32 func_80141CDC(void) {
     case 3:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.current_girl = 6;
+            D_800E6280.current_girl = GIRL_NOZOMI;
             func_80083474();
             cd_read_sectors(1U, 0x801E8000, 0xB7BF);
         }

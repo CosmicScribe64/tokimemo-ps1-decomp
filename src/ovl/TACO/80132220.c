@@ -60,28 +60,28 @@ s32 func_8013240C() {
     if ((D_800E6280.pad_held & 0xA000) && (D_800E6280.pad_held & 0x5000)) {
         step = 0x2D;
     }
-    if (D_800E6280.pad_held & 0x8000) {
+    if (D_800E6280.pad_held & PAD_LEFT) {
         if (D_8015EDB4->unk74 > 0x800) {
             p->unk74 = p->unk74 + step * (0x1000 - p->unk74) / 2048;
         } else {
             p->unk74 = p->unk74 + step;
         }
     }
-    if (D_800E6280.pad_held & 0x2000) {
+    if (D_800E6280.pad_held & PAD_RIGHT) {
         if (p->unk74 < -0x800) {
             p->unk74 = p->unk74 + step * (-0x1000 - p->unk74) / 2048;
         } else {
             p->unk74 = p->unk74 - step;
         }
     }
-    if (D_800E6280.pad_held & 0x1000) {
+    if (D_800E6280.pad_held & PAD_UP) {
         if (p->unk76 < -0x700) {
             p->unk76 = p->unk76 + step * (-0x800 - p->unk76) / 256;
         } else {
             p->unk76 = p->unk76 - step;
         }
     }
-    if (D_800E6280.pad_held & 0x4000) {
+    if (D_800E6280.pad_held & PAD_DOWN) {
         if (p->unk76 > 0x80) {
             p->unk76 = p->unk76 + step * (0x180 - p->unk76) / 256;
         } else {
@@ -337,13 +337,13 @@ void func_80132FE8(void) {
         func_80140DF0();
         flags = 0;
         if (D_8015EDD8 != 0) {
-            if ((D_800E6280.pad_held & 0x20) && (D_8015EDE0 % 3 == 0) && !(D_800E6280.frame_count & 3)) {
+            if ((D_800E6280.pad_held & PAD_CIRCLE) && (D_8015EDE0 % 3 == 0) && !(D_800E6280.frame_count & 3)) {
                 flags = 0x20;
             }
-            if ((D_800E6280.pad_held & 0x40) && (D_8015EDE0 % 3 == 1) && !(D_800E6280.frame_count & 3)) {
+            if ((D_800E6280.pad_held & PAD_CROSS) && (D_8015EDE0 % 3 == 1) && !(D_800E6280.frame_count & 3)) {
                 flags |= 0x20;
             }
-            if ((D_800E6280.pad_held & 0x80) && (D_8015EDE0 % 3 == 2) && !(D_800E6280.frame_count & 3)) {
+            if ((D_800E6280.pad_held & PAD_SQUARE) && (D_8015EDE0 % 3 == 2) && !(D_800E6280.frame_count & 3)) {
                 flags |= 0x20;
             }
             btn = D_800E6280.pad_pressed;
@@ -398,7 +398,7 @@ void func_80133374(void) {
     if (D_8015EDEC == 0) {
         func_80042908(0x2D);
     }
-    if (D_800E6280.pad_pressed & 0x800) {
+    if (D_800E6280.pad_pressed & PAD_START) {
         func_80042908(0x2D);
     }
     if (D_8015EDB4->unk84[1] == 0) {

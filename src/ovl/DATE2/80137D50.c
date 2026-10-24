@@ -164,7 +164,7 @@ void func_80138170(void) {
 }
 
 void func_801381A4(void) {
-    main_state_set(0x50);
+    main_state_set(MODE_DATE);
     func_80042908(1);
     func_80042940(0x11);
 }
@@ -190,57 +190,57 @@ void func_8013820C(void) {
     D_8013B5D0 = 0;
     func_80137D50();
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_8013B5EC = D_8013B544;
         D_8013B5F0 = D_8013B570;
         D_8013B5F4 = D_8013B59C;
         break;
-    case 1:
+    case GIRL_MIO:
         D_8013B5EC = D_8013B554;
         D_8013B5F0 = D_8013B580;
         D_8013B5F4 = D_8013B5AC;
         break;
-    case 2:
+    case GIRL_YUINA:
         D_8013B5EC = D_8013B548;
         D_8013B5F0 = D_8013B574;
         D_8013B5F4 = D_8013B5A0;
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_8013B5EC = D_8013B54C;
         D_8013B5F0 = D_8013B578;
         D_8013B5F4 = D_8013B5A4;
         break;
-    case 4:
+    case GIRL_SAKI:
         D_8013B5EC = D_8013B564;
         D_8013B5F0 = D_8013B590;
         D_8013B5F4 = D_8013B5BC;
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_8013B5EC = D_8013B558;
         D_8013B5F0 = D_8013B584;
         D_8013B5F4 = D_8013B5B0;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_8013B5EC = D_8013B55C;
         D_8013B5F0 = D_8013B588;
         D_8013B5F4 = D_8013B5B4;
         break;
-    case 7:
+    case GIRL_MIRA:
         D_8013B5EC = D_8013B550;
         D_8013B5F0 = D_8013B57C;
         D_8013B5F4 = D_8013B5A8;
         break;
-    case 8:
+    case GIRL_YUKO:
         D_8013B5EC = D_8013B540;
         D_8013B5F0 = D_8013B56C;
         D_8013B5F4 = D_8013B598;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_8013B5EC = D_8013B560;
         D_8013B5F0 = D_8013B58C;
         D_8013B5F4 = D_8013B5B8;
         break;
-    case 10:
+    case GIRL_YUMI:
         D_8013B5EC = D_8013B568;
         D_8013B5F0 = D_8013B594;
         D_8013B5F4 = D_8013B5C0;
@@ -412,7 +412,7 @@ void func_80138BEC(void) {
     } else if ((D_800E6280.pad_pressed & 0x400040) && (D_8013B5C8 >= 0x79)) {
         t = get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
         D_8013B5F8 = D_8013B5F8 + (t == 2) + ((t == 3) * 2) + 1;
-        if (D_800E6280.current_girl == 0xA) {
+        if (D_800E6280.current_girl == GIRL_YUMI) {
             D_8013B5F8 = 2;
         }
         func_8004284C();

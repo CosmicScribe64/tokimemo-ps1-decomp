@@ -72,7 +72,7 @@ void func_80136D00(void) {
 }
 
 void func_80136D78(void) {
-    if (D_800E6280.pad_held & 0x40) {
+    if (D_800E6280.pad_held & PAD_CROSS) {
         D_8015F400 += 0x78;
     } else {
         D_8015F400 += 0x3C;
@@ -108,10 +108,10 @@ void func_80136E70(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 void func_80136F4C(void) {
     func_8013A790(1, 0);
     func_80136FBC(0x1000, 3);
-    if (D_800E6280.pad_held & 0x40) {
+    if (D_800E6280.pad_held & PAD_CROSS) {
         func_8004284C();
     }
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         func_8004284C();
     }
 }

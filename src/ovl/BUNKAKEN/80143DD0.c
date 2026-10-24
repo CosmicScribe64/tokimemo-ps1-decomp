@@ -105,7 +105,7 @@ void func_80143DD0(void) {
     case 14:
         addr_init_bustup();
         if (D_80122EBC == 0xB) {
-            D_800E6280.current_girl = 0;
+            D_800E6280.current_girl = GIRL_SHIORI;
         } else {
             D_800E6280.current_girl = (u8) D_80122EBC;
         }
@@ -338,7 +338,7 @@ void func_80143DD0(void) {
         break;
     case 42:
         if (D_80122EBC == 0xB) {
-            var_v0 = get_g_zyotai_s(0);
+            var_v0 = get_g_zyotai_s(GIRL_SHIORI);
         } else {
             /* FAKE: self-store preserves the original store in the call delay slot. T-24005. */
             D_80122EBC = D_80122EBC;
@@ -374,7 +374,7 @@ void func_80143DD0(void) {
         break;
     case 44:
         if (D_80122EBC == 0xB) {
-            var_v0_2 = get_g_zyotai_s(0);
+            var_v0_2 = get_g_zyotai_s(GIRL_SHIORI);
         } else {
             /* FAKE: self-store preserves the original store in the call delay slot. T-24005. */
             D_80122EBC = D_80122EBC;
@@ -431,7 +431,7 @@ void func_80144A70(void) {
         break;
     case 1:
         addr_init_bustup();
-        D_800E6280.current_girl = 0xD;
+        D_800E6280.current_girl = GIRL_YOSHIO;
         func_80083474();
         cd_read_sectors(5U, 0x801E8000, 0x49BA);
         break;
@@ -554,7 +554,7 @@ void func_80144E9C(void) {
     func_8006BD6C(0);
     func_8006BA40();
     i = 0;
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         for (i = 0; i < 6; i++) {
             if (D_800E6280.menu_items[i * 2].hover != 0) {
                 D_80122CDC = i;

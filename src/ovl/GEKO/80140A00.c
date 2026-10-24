@@ -184,7 +184,7 @@ void func_8014107C(void) {
 }
 
 void func_801410A4(void) {
-    D_800E6280.current_girl = 0xB;
+    D_800E6280.current_girl = GIRL_MIHARU;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -217,7 +217,7 @@ void func_801410A4(void) {
 void func_801411DC(void) {
     s16 i;
 
-    D_800E6280.current_girl = 0xB;
+    D_800E6280.current_girl = GIRL_MIHARU;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -257,7 +257,7 @@ void func_801411DC(void) {
 void func_80141374(void) {
     s16 var_s0;
 
-    D_800E6280.current_girl = 0xB;
+    D_800E6280.current_girl = GIRL_MIHARU;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

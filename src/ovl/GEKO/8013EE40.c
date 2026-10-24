@@ -63,7 +63,7 @@ void func_8013F02C(void) {
 }
 
 void func_8013F0BC(void) {
-    D_800E6280.current_girl = 4;
+    D_800E6280.current_girl = GIRL_SAKI;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

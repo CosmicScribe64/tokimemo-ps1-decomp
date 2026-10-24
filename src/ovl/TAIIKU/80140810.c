@@ -86,7 +86,7 @@ s32 func_80140A90(void) {
             func_8006612C((s32) "グラウンド");
             k_disp_start(1);
             addr_init_bustup();
-            D_800E6280.current_girl = 1;
+            D_800E6280.current_girl = GIRL_MIO;
             func_80083474();
         }
         break;

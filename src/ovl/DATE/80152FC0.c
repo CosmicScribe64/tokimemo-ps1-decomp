@@ -288,7 +288,7 @@ void func_80153CEC(void) {
 void func_80153D94(void) {
     u32 v;
 
-    v = get_g_zyotai_h(7);
+    v = get_g_zyotai_h(GIRL_MIRA);
     D_800CA150 = (v >= 1) + (v >= 2) + (v >= 3) + 1;
     func_8014C5C8();
 }

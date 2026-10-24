@@ -97,7 +97,7 @@ u8 func_80073AD8(void) {
     s32 temp_v0;
 
     func_8007259C(0);
-    if (D_800E6280.vacation != 0) {
+    if (D_800E6280.vacation != VACATION_NONE) {
         func_80041584();
         func_80042908(0xA);
         return 0;
@@ -446,7 +446,7 @@ void week_day_exit0(void) {
     D_800E6280.day_event_index++;
     func_80048F64(0x60);
     func_80048F64(0x61);
-    main_state_set(0x31);
+    main_state_set(MODE_DAY_SCREEN);
 }
 
 s32 parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
@@ -529,7 +529,7 @@ u8 vacation_day_init(void) {
 s32 func_80074D28(void) {
     s32 ret;
 
-    if ((D_800E6280.day_events[0].type == 0x25) || (D_800E6280.day_events[0].type == 0x42)) {
+    if ((D_800E6280.day_events[0].type == DAY_EVENT_CLUB_MASTER_A) || (D_800E6280.day_events[0].type == DAY_EVENT_CLUB_CAMP)) {
         ret = dec_bg_cd_read(func_80075FA0(), 0);
     } else if (((D_800E6280.player_flags.b[1] & 0xF) == 3) && ((D_800E6280.last_command.w & 0xF) == 7)) {
         ret = dec_bg_cd_read(D_800B5960[func_80066A2C()], 0);
@@ -655,7 +655,7 @@ u8 func_8007505C(void) {
     ((Actor *)D_8011ECD0)[96].sequence_slot = temp;
     ((Actor *)D_8011ECD0)[96].x = -0x50;
     ((Actor *)D_8011ECD0)[96].y = -0x40;
-    if (D_800E6280.day_events[0].type == 0x42) {
+    if (D_800E6280.day_events[0].type == DAY_EVENT_CLUB_CAMP) {
         func_80042808();
     } else {
         func_80042908(1);

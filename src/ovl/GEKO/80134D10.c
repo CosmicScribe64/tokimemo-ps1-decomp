@@ -550,57 +550,57 @@ void func_801355E8(void) {
     D_80145060 = 1;
     D_80145064 = 0;
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_80145048 = D_80144FB0;
         D_8014504C = D_80144FE4;
         D_80145050 = D_80145018;
         break;
-    case 1:
+    case GIRL_MIO:
         D_80145048 = D_80144FC4;
         D_8014504C = D_80144FF8;
         D_80145050 = D_8014502C;
         break;
-    case 2:
+    case GIRL_YUINA:
         D_80145048 = D_80144FB8;
         D_8014504C = D_80144FEC;
         D_80145050 = D_80145020;
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_80145048 = D_80144FBC;
         D_8014504C = D_80144FF0;
         D_80145050 = D_80145024;
         break;
-    case 4:
+    case GIRL_SAKI:
         D_80145048 = D_80144FD4;
         D_8014504C = D_80145008;
         D_80145050 = D_8014503C;
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_80145048 = D_80144FC8;
         D_8014504C = D_80144FFC;
         D_80145050 = D_80145030;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_80145048 = D_80144FCC;
         D_8014504C = D_80145000;
         D_80145050 = D_80145034;
         break;
-    case 7:
+    case GIRL_MIRA:
         D_80145048 = D_80144FC0;
         D_8014504C = D_80144FF4;
         D_80145050 = D_80145028;
         break;
-    case 8:
+    case GIRL_YUKO:
         D_80145048 = D_80144FAC;
         D_8014504C = D_80144FE0;
         D_80145050 = D_80145014;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_80145048 = D_80144FD0;
         D_8014504C = D_80145004;
         D_80145050 = D_80145038;
         break;
-    case 10:
+    case GIRL_YUMI:
         D_80145048 = D_80144FDC;
         D_8014504C = D_80145010;
         D_80145050 = D_80145044;
@@ -672,7 +672,7 @@ s32 func_80135AC8(void) {
 
     if (D_800E6280.daily_event_bits & 0x20) {
         func_80044750(0xCF);
-        main_state_set(0x52);
+        main_state_set(MODE_NEW_YEAR_A);
         return 0;
     }
     /* FAKE: read through a u8 view so the base and the result share $v0 (T-22010). */
@@ -702,7 +702,7 @@ s32 func_80135AC8(void) {
 
 void func_80135BC4(void) {
     D_800B3D60 = 0;
-    if (D_800E6280.day_events[0].type == 0x40) {
+    if (D_800E6280.day_events[0].type == DAY_EVENT_EXAM) {
         func_8004500C(0, 0x200);
     }
     func_80044890(1, 0xBF98, 0xBF79, 0xCA95, 0xCA4F, 0xCA3E);
@@ -761,11 +761,11 @@ s32 func_80135DC0(void) {
     GameState *gs = &D_800E6280;
 
     gs->current_girl = gs->day_events[gs->day_event_index].girl;
-    if ((gs->current_girl == 0 && (gs->daily_event_bits & 1)) || (gs->current_girl != 0 && (gs->daily_event_bits & 2))) {
+    if ((gs->current_girl == GIRL_SHIORI && (gs->daily_event_bits & 1)) || (gs->current_girl != GIRL_SHIORI && (gs->daily_event_bits & 2))) {
         func_80135AC8();
         return 0;
     }
-    if (!gs->girls[gs->current_girl].flags.f.b6 && gs->current_girl != 0) {
+    if (!gs->girls[gs->current_girl].flags.f.b6 && gs->current_girl != GIRL_SHIORI) {
         func_80135AC8();
         return 0;
     }
@@ -790,7 +790,7 @@ s32 func_80135DC0(void) {
      * FAKE: T-11900 the call reads the date through D_800E6280, not gs: through gs uopt keeps
      * unk_03E/unk_03F in the argument registers for the whole function. */
     if (gs->month != 12 || gs->day != 24) {
-        if (gs->weekday != 6 && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0xA && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0x10 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 1 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 2 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 3 && D_80145074 == 0) {
+        if (gs->weekday != WEEKDAY_SUNDAY && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0xA && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0x10 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 1 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 2 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 3 && D_80145074 == 0) {
             D_80145088 = 0;
         } else if ((gs->last_command.b[0] >> 4) == 4 && (gs->player_flags.h >> 12) == (gs->girls[gs->current_girl].flags.b[2] >> 4) && (appointment_find_today(D_800E6280.year, D_800E6280.month, D_800E6280.day) <= 0 || gs->current_girl != ((u32)(gs->unk_54C[0].w << 3) >> 28))) {
             D_80145088 = 0;
@@ -809,7 +809,7 @@ s32 func_80135DC0(void) {
     D_80122D2C = 0;
     gs->tile_layer_enabled = 0;
     gs->quads_enabled = 1;
-    if (gs->current_girl == 0) {
+    if (gs->current_girl == GIRL_SHIORI) {
         gs->daily_event_bits |= 1;
     } else {
         gs->daily_event_bits |= 2;
@@ -828,7 +828,7 @@ s32 func_80135DC0(void) {
     func_800847B8(gs->current_girl);
     func_80134D10();
     switch (gs->current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         strcpy(D_800CA1DC, "自宅前");
         D_80145048 = D_80144F14;
         D_8014504C = D_80144F48;
@@ -837,12 +837,12 @@ s32 func_80135DC0(void) {
         D_800CA164 = D_80144F48;
         D_800CA168 = D_80144F7C;
         break;
-    case 1:
+    case GIRL_MIO:
         D_80145048 = D_80144F24;
         D_8014504C = D_80144F58;
         D_80145050 = D_80144F8C;
         break;
-    case 2:
+    case GIRL_YUINA:
         D_80145048 = D_80144F18;
         D_8014504C = D_80144F4C;
         D_80145050 = D_80144F80;
@@ -850,22 +850,22 @@ s32 func_80135DC0(void) {
         D_800CA164 = D_80144F4C;
         D_800CA168 = D_80144F80;
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_80145048 = D_80144F1C;
         D_8014504C = D_80144F50;
         D_80145050 = D_80144F84;
         break;
-    case 4:
+    case GIRL_SAKI:
         D_80145048 = D_80144F38;
         D_8014504C = D_80144F6C;
         D_80145050 = D_80144FA0;
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_80145048 = D_80144F28;
         D_8014504C = D_80144F5C;
         D_80145050 = D_80144F90;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_80145048 = D_80144F30;
         D_8014504C = D_80144F64;
         D_80145050 = D_80144F98;
@@ -881,22 +881,22 @@ s32 func_80135DC0(void) {
             D_800CA168 = D_80144F94;
         }
         break;
-    case 7:
+    case GIRL_MIRA:
         D_80145048 = D_80144F20;
         D_8014504C = D_80144F54;
         D_80145050 = D_80144F88;
         break;
-    case 8:
+    case GIRL_YUKO:
         D_80145048 = D_80144F10;
         D_8014504C = D_80144F44;
         D_80145050 = D_80144F78;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_80145048 = D_80144F34;
         D_8014504C = D_80144F68;
         D_80145050 = D_80144F9C;
         break;
-    case 10:
+    case GIRL_YUMI:
         D_80145048 = D_80144F40;
         D_8014504C = D_80144F74;
         D_80145050 = D_80144FA8;
@@ -1022,7 +1022,7 @@ void func_801367EC(void) {
             func_80085B3C(10, (D_800E6280.player_flags.h >> 12) + 0x33);
         }
     } else if ((D_80145074 != 0) || (D_800E6280.daily_event_bits & 0x20)) {
-        if (D_800E6280.current_girl == 0) {
+        if (D_800E6280.current_girl == GIRL_SHIORI) {
             strcpy(D_800CA19C, "自宅前");
             bg_read_sub2(0x4156);
             func_80085B3C(0xA, 0x28);
@@ -1031,7 +1031,7 @@ void func_801367EC(void) {
             bg_read_sub2(0x42E2);
             func_80085B3C(0xA, 0x27);
         }
-    } else if (D_800E6280.current_girl == 0) {
+    } else if (D_800E6280.current_girl == GIRL_SHIORI) {
         strcpy(D_800CA19C, "自宅前");
         bg_read_sub2(0x414C);
         func_80085B3C(0xA, 0x2F);
@@ -1774,42 +1774,42 @@ s32 func_80138E10(void) {
 
 void func_80138F7C(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         cd_read_sectors(6U, 0x80198000, 0xAE25);
         break;
-    case 1:
+    case GIRL_MIO:
         cd_read_sectors(3U, 0x80198000, 0xAE39);
         break;
-    case 2:
+    case GIRL_YUINA:
         cd_read_sectors(4U, 0x80198000, 0xAE2B);
         break;
-    case 3:
+    case GIRL_AYAKO:
         cd_read_sectors(5U, 0x80198000, 0xAE2F);
         break;
-    case 4:
+    case GIRL_SAKI:
         cd_read_sectors(7U, 0x80198000, 0xAE4C);
         break;
-    case 5:
+    case GIRL_YUKARI:
         cd_read_sectors(5U, 0x80198000, 0xAE3C);
         break;
-    case 6:
+    case GIRL_NOZOMI:
         cd_read_sectors(6U, 0x80198000, 0xAE41);
         break;
-    case 7:
+    case GIRL_MIRA:
         cd_read_sectors(5U, 0x80198000, 0xAE34);
         break;
-    case 8:
+    case GIRL_YUKO:
         cd_read_sectors(4U, 0x80198000, 0xAE21);
         break;
-    case 9:
+    case GIRL_MEGUMI:
         cd_read_sectors(5U, 0x80198000, 0xAE47);
         break;
-    case 10:
+    case GIRL_YUMI:
         cd_read_sectors(6U, 0x80198000, 0xAE5A);
         break;
-    case 11:
-    case 12:
-    case 13:
+    case GIRL_MIHARU:
+    case GIRL_REI:
+    case GIRL_YOSHIO:
         cd_read_sectors(7U, 0x80198000, 0xAE53);
         break;
     default:

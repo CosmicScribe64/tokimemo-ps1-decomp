@@ -130,5 +130,5 @@ void func_8005A06C(void) {
         func_80059B40();
         return;
     }
-    main_state_set(0x12);
+    main_state_set(MODE_TITLE);
 }

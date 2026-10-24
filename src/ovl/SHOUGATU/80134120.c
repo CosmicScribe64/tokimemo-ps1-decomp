@@ -31,7 +31,7 @@ void func_801341E4(void) {
     six = 6;
     if (D_80143B20 == 0) {
         result = (u8) get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
-        if ((D_800E6280.current_girl == 4) && (result >= 2U)) {
+        if ((D_800E6280.current_girl == GIRL_SAKI) && (result >= 2U)) {
             mode = (u8) D_800E6280.girls[4].flags.b[2] >> 4;
             if (D_800E6280.girls[4].flags.b[2]) {
             }
@@ -82,16 +82,16 @@ void func_80134400(void) {
     D_80143D20 = D_80122CDC;
     D_80143B00 += D_80122CDC;
     strcpy(D_800CA250, tbl.s[D_80122CDC]);
-    if (D_80143B20 == 0 && D_800E6280.date_girl == 3 && D_80122CDC == 2) {
+    if (D_80143B20 == 0 && D_800E6280.date_girl == GIRL_AYAKO && D_80122CDC == 2) {
         strcpy(D_800CA250, tbl.s[1]);
     }
     if (D_80122CDC == 0) {
         D_800E6280.param_liberal_arts.value += 0xA;
         D_800E6280.param_science.value += 0xA;
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
     } else if (D_80122CDC == 1) {
         D_800E6280.param_condition.value += 0x19;
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
     }
     check_para_limit();
     func_8004284C();
@@ -174,7 +174,7 @@ void func_80134730(void)
     ((GameState *) (((u32) (&D_800E6280)) + (index * size)))->girls[0].tokimeki += 5;
     ((GameState *) (((u32) (&D_800E6280)) + (index * (size ^ 0))))->girls[0].affection += 1;
     do { check_para_limit(size, index); } while (0);
-    D_800E6280.current_girl = 0xE;
+    D_800E6280.current_girl = GIRL_SOTOI;
     func_8004284C();
 }
 
@@ -192,7 +192,7 @@ void func_801347E0(void) {
     D_800E6280.current_girl = girl;
     func_800847B8(girl);
     D_80122CDC = D_80122CEC;
-    state = (u8)get_g_zyotai_s(6) & 0x7F;
+    state = (u8)get_g_zyotai_s(GIRL_NOZOMI) & 0x7F;
     if ((((((D_80143B00 * 0) + (D_80143B00 * 0) + (D_80143B00 * 0)) * 0) + D_800E6280.current_girl) == ((D_800E6280.current_girl * 0) + 6)) && (state < 2) && (D_80143B20 == 0)) {
         D_80143AF4 = D_80143A60;
         D_80143AF8 = D_80143A9C;

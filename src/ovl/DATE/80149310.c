@@ -137,7 +137,7 @@ s32 func_801496C4(void) {
         g->step += 0x11;
         return 0;
     }
-    if (g->current_girl == 0) {
+    if (g->current_girl == GIRL_SHIORI) {
         g->daily_event_bits |= 1;
     } else {
         g->daily_event_bits |= 2;
@@ -151,63 +151,63 @@ s32 func_801496C4(void) {
     D_8015D088 = 0;
     func_800847B8(g->current_girl);
     switch (g->current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_8015D06C = D_8015CFD4;
         D_8015D070 = D_8015D008;
         D_8015D074 = D_8015D03C;
         break;
-    case 1:
+    case GIRL_MIO:
         D_8015D06C = D_8015CFE4;
         D_8015D070 = D_8015D018;
         D_8015D074 = D_8015D04C;
         break;
-    case 2:
+    case GIRL_YUINA:
         D_8015D06C = D_8015CFD8;
         D_8015D070 = D_8015D00C;
         D_8015D074 = D_8015D040;
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_8015D06C = D_8015CFDC;
         D_8015D070 = D_8015D010;
         D_8015D074 = D_8015D044;
         break;
-    case 4:
+    case GIRL_SAKI:
         D_8015D06C = D_8015CFF8;
         D_8015D070 = D_8015D02C;
         D_8015D074 = D_8015D060;
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_8015D06C = D_8015CFE8;
         D_8015D070 = D_8015D01C;
         D_8015D074 = D_8015D050;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_8015D06C = D_8015CFF0;
         D_8015D070 = D_8015D024;
         D_8015D074 = D_8015D058;
         /* (u8) as in the SHUGAKU twin func_8013282C: a plain compare gives slti and moves every later temporary. T-17205 */
-        if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2) {
+        if ((u8)(get_g_zyotai_s(GIRL_NOZOMI) & 0x7F) < 2) {
             D_8015D06C = D_8015CFEC;
             D_8015D070 = D_8015D020;
             D_8015D074 = D_8015D054;
         }
         break;
-    case 7:
+    case GIRL_MIRA:
         D_8015D06C = D_8015CFE0;
         D_8015D070 = D_8015D014;
         D_8015D074 = D_8015D048;
         break;
-    case 8:
+    case GIRL_YUKO:
         D_8015D06C = D_8015CFD0;
         D_8015D070 = D_8015D004;
         D_8015D074 = D_8015D038;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_8015D06C = D_8015CFF4;
         D_8015D070 = D_8015D028;
         D_8015D074 = D_8015D05C;
         break;
-    case 10:
+    case GIRL_YUMI:
         D_8015D06C = D_8015D000;
         D_8015D070 = D_8015D034;
         D_8015D074 = D_8015D068;
@@ -255,7 +255,7 @@ void func_80149C1C(void) {
         if ((u8)D_800E6280.event_log_count < 0xFEU) {
             D_800E6280.event_log_count -= 1;
         }
-        main_state_set(0x50);
+        main_state_set(MODE_DATE);
         func_80042908(3);
         return;
     }

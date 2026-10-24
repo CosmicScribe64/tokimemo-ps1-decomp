@@ -53,9 +53,9 @@ s32 func_80137890(void) {
         break;
     case 0x10:
         if ((u32) ((u16) D_800E6280.player_flags.h >> 0xC) < 6U) {
-            main_state_set(0x70);
+            main_state_set(MODE_CULTURE_FESTIVAL_A);
         } else {
-            main_state_set(0x71);
+            main_state_set(MODE_CULTURE_FESTIVAL_B);
         }
         func_80042908((u8)D_80122EB0);
         func_80042940((u8)D_80122EB4);

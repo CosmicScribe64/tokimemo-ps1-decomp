@@ -377,7 +377,7 @@ void func_80138740(void) {
         g->saved_stage = g->stage + 1;
         g->saved_step = 0;
         g->date_girl = g->current_girl;
-        g->current_girl = 0;
+        g->current_girl = GIRL_SHIORI;
         func_80042908(6);
         return;
     }
@@ -388,13 +388,13 @@ void func_80138740(void) {
         func_80042908(7);
         return;
     }
-    if ((g->stage == 4) && (g->current_girl == 2) && (D_800CA2CC == 2)) {
+    if ((g->stage == 4) && (g->current_girl == GIRL_YUINA) && (D_800CA2CC == 2)) {
         g->saved_stage = g->stage + 1;
         g->saved_step = 0;
         func_80042908(8);
         return;
     }
-    if ((g->stage == 2) && (g->current_girl == 5) && ((u8) (s & 0x7F) < 2)) {
+    if ((g->stage == 2) && (g->current_girl == GIRL_YUKARI) && ((u8) (s & 0x7F) < 2)) {
         g->saved_stage = g->stage + 1;
         g->saved_step = 0;
         func_80042908(0xB);
@@ -410,7 +410,7 @@ void func_801388D8(void) {
 
     s = get_g_zyotai_s(g->current_girl);
     if (((g->girls[0].birthday.w & 0xF) == g->month) && (((u32) (g->girls[0].birthday.w << 0x17) >> 0x1B) == g->day)) {
-        if ((g->current_girl == 4) && ((u8) (s & 0x7F) < 2)) {
+        if ((g->current_girl == GIRL_SAKI) && ((u8) (s & 0x7F) < 2)) {
             g->saved_stage = g->stage;
             g->saved_step = g->step + 1;
         } else {
@@ -418,12 +418,12 @@ void func_801388D8(void) {
             g->saved_step = 0;
         }
         g->date_girl = g->current_girl;
-        g->current_girl = 0;
+        g->current_girl = GIRL_SHIORI;
         func_80042908(6);
         return;
     }
     if ((g->month == (g->player_birthday & 0xF)) && (g->day == ((u32) (g->player_birthday << 0x17) >> 0x1B))) {
-        if ((g->current_girl == 4) && ((u8) (s & 0x7F) < 2)) {
+        if ((g->current_girl == GIRL_SAKI) && ((u8) (s & 0x7F) < 2)) {
             g->saved_stage = g->stage;
             g->saved_step = g->step + 1;
         } else {

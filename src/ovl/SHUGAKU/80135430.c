@@ -132,7 +132,7 @@ void func_80135994(void) {
     D_800E6280.saved_stage = D_800E6280.stage;
     D_800E6280.saved_step = 0x38;
     k_reset(0);
-    main_state_set(0x81);
+    main_state_set(MODE_RPG_BATTLE);
 }
 
 void func_80135A04(void) {
@@ -245,7 +245,7 @@ void func_80135DB8(void) {
 void func_80135EA4(void) {
     s16 i;
 
-    D_800E6280.current_girl = 2;
+    D_800E6280.current_girl = GIRL_YUINA;
     D_8013C2E4 = 0;
     D_8013C2E8 = 0;
     D_800CA2F4 = 1;

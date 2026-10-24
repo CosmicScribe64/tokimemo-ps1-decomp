@@ -226,7 +226,7 @@ void func_8013735C(void) {
         func_8006BA40();
         ((Actor *)D_8011ECD0)[103].x = ((Actor *)D_8011ECD0)[0].x;
         ((Actor *)D_8011ECD0)[103].y = ((Actor *)D_8011ECD0)[0].y;
-        if ((D_800E6280.pad_pressed & 0x20) && D_80139C30 != 0) {
+        if ((D_800E6280.pad_pressed & PAD_CIRCLE) && D_80139C30 != 0) {
             D_80139C30--;
             D_80139C34[D_80139C30] = 1;
             D_80139C3C[D_80139C30] = (D_80139C58 >> 4) + 1;
@@ -308,12 +308,12 @@ void func_8013735C(void) {
             do {
             } while ((u32)n < 0);
         }
-        if (D_80139C4C[0] == 0x10 && D_80139C4C[1] == 0x10 && D_80139C4C[2] == 0x10 && D_80139C4C[3] == 0x10 && D_80139C4C[4] == 0x10 && D_800E6280.current_girl == 2) {
+        if (D_80139C4C[0] == 0x10 && D_80139C4C[1] == 0x10 && D_80139C4C[2] == 0x10 && D_80139C4C[3] == 0x10 && D_80139C4C[4] == 0x10 && D_800E6280.current_girl == GIRL_YUINA) {
             /* FAKE: T-25109, a second use so uopt keeps unk_F5F of this test in v1 (register-cheatsheet). */
             if ((s32)D_800E6280.current_girl) {
             }
             D_80122E9C = 3;
-        } else if (D_800E6280.current_girl + 0x14 == D_80139C4C[0] && D_800E6280.current_girl + 0x14 == D_80139C4C[1] && D_800E6280.current_girl + 0x14 == D_80139C4C[2] && D_800E6280.current_girl + 0x14 == D_80139C4C[3] && D_800E6280.current_girl + 0x14 == D_80139C4C[4] && D_800E6280.current_girl != 2) {
+        } else if (D_800E6280.current_girl + 0x14 == D_80139C4C[0] && D_800E6280.current_girl + 0x14 == D_80139C4C[1] && D_800E6280.current_girl + 0x14 == D_80139C4C[2] && D_800E6280.current_girl + 0x14 == D_80139C4C[3] && D_800E6280.current_girl + 0x14 == D_80139C4C[4] && D_800E6280.current_girl != GIRL_YUINA) {
             D_80122E9C = 3;
         } else if (D_80139C4C[0] < 0x21 && D_80139C4C[1] < 0x21 && D_80139C4C[2] < 0x21 && D_80139C4C[3] < 0x21 && D_80139C4C[4] < 0x21) {
             D_80122E9C = 1;

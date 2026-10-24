@@ -22,6 +22,7 @@
 #include "common.h"
 #include "libgpu.h"
 #include "libgte.h"
+#include "game_enums.h"
 
 /* T-12010: D_801255D0 is saved as a word and read as four bytes. */
 typedef union WordBytes {
@@ -374,8 +375,8 @@ typedef struct PrimArena {
 /* Two 0x40-byte records at +0x44 (bzero'd together, indexed by 0/1 with stride 0x40): two arrays
  * of 0x20 bytes indexed by a day number (+0x00[0] = 30 and +0x20[0] = 5 at init). */
 typedef struct MonthCalendar {
-    /* 0x00 */ u8 day_kind[0x20];
-    /* 0x20 */ u8 marker[0x20];
+    /* 0x00 */ u8 day_kind[0x20]; /* DayKind */
+    /* 0x20 */ u8 marker[0x20]; /* CalendarMarker */
 } MonthCalendar; /* size 0x40 */
 
 /* Nine records at +0xFC (separate members); the s16 at +2 holds the nine values parameter_show_init reads, KANGEI
@@ -460,8 +461,8 @@ typedef struct GameState {
     /* 0x039 */ u8 back_clear;
     /* 0x03A */ u8 screen_brightness;
     /* 0x03B */ u8 brightness_step;
-    /* 0x03C */ u8 voice_mode;
-    /* 0x03D */ u8 vacation;
+    /* 0x03C */ u8 voice_mode; /* VoiceMode */
+    /* 0x03D */ u8 vacation; /* Vacation */
     /* 0x03E */ u8 year;            /* 0x5F at init; with +0x3F..+0x41 a date (year, month, day, weekday?) */
     /* 0x03F */ u8 month;            /* 4 at init; compared with GirlRecord.birthday bits 0-3 */
     /* 0x040 */ u8 day;            /* 4 at init; compared with GirlRecord.birthday bits 4-8 */
@@ -496,7 +497,7 @@ typedef struct GameState {
     /* 0x71D */ u8 events_today; /* HYPOTHESIS: ++ each time a girl encounter record (types 0x44/0x46/0x47) is run; cleared by func_8007259C each day */
     /* 0x71E */ u8 daily_event_bits;
     /* 0x71F */ u8 daily_check_done; /* HYPOTHESIS: set to 1 before the telephone/appointment prompt (mode 0x43) and by the day-start code; cleared when a new queue is built */
-    /* 0x720 */ u8 saved_mode;
+    /* 0x720 */ u8 saved_mode; /* MainMode */
     /* 0x721 */ u8 saved_stage;
     /* 0x722 */ u8 saved_step;
     /* 0x723 */ u8 unk_723;
@@ -509,17 +510,17 @@ typedef struct GameState {
     /* 0x73C */ u8 girl_last_date_spot_timer[0x10];
     /* 0x74C */ u8 girl_event_bits[0x10]; /* HYPOTHESIS: one byte per girl; GEKO tests/sets bits 1, 2, 4 for scenes 0xE, 0xF, 7 */
     /* 0x75C */ u8 appointment_flag;
-    /* 0x75D */ u8 date_girl;
+    /* 0x75D */ u8 date_girl; /* GirlId */
     /* 0x75E */ EventLogEntry event_log[256];
     /* 0xF5E */ u8 event_log_count;
-    /* 0xF5F */ u8 current_girl;            /* index of the current girl's GirlRecord record */
+    /* 0xF5F */ u8 current_girl;            /* index of the current girl's GirlRecord record */ /* GirlId */
     /* 0xF60 */ u8 text_lines_total; /* HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step func_8005215C */
     /* 0xF61 */ u8 text_first_line; /* HYPOTHESIS: index of the first visible dialogue line in the text list */
     /* 0xF62 */ u8 text_scroll_state; /* HYPOTHESIS: bit 7 = scrolling active, low bits = phase of the two-line scroll */
     /* 0xF63 */ s8 unk_F63;
     /* 0xF64 */ u8 quarter_flags[4]; /* HYPOTHESIS: QuarterFlagBits bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (func_800722C4); TEL also sets bits */
     /* 0xF68 */ WordView last_command;
-    /* 0xF6C */ u8 icon_mode;
+    /* 0xF6C */ u8 icon_mode; /* IconMode */
     /* 0xF6D */ u8 icon_count;
     /* 0xF6E */ u8 sd_anim_fast;
     /* 0xF6F */ u8 cursor_speed;
@@ -527,7 +528,7 @@ typedef struct GameState {
     /* 0xF71 */ s8 unk_F71;
     /* 0xF72 */ u8 unk_F72;
     /* 0xF73 */ u8 double_click_interval;
-    /* 0xF74 */ u8 input_device;
+    /* 0xF74 */ u8 input_device; /* InputDevice */
     /* 0xF75 */ u8 confirm_button;
     /* 0xF76 */ u8 unk_F76;
     /* 0xF77 */ u8 mouse_buttons;
@@ -543,7 +544,7 @@ typedef struct GameState {
     /* 0xF90 */ MenuItem menu_items[32];
     /* 0x1090 */ u8 menu_count_0;
     /* 0x1091 */ u8 menu_count_1;
-    /* 0x1092 */ u8 menu_mode;
+    /* 0x1092 */ u8 menu_mode; /* MenuMode */
     /* 0x1093 */ s8 menu_cursor_0;           /* menu_check indexes +0x1093 by menu number (lb/sb) */
     /* 0x1094 */ s8 menu_cursor_1;
     /* 0x1095 */ s8 menu_hit[0xD];
@@ -565,7 +566,7 @@ typedef struct GameState {
     /* 0x110B */ s8 mode_scratch;
     /* 0x110C */ s8 stage_scratch;
     /* 0x110D */ u8 substep;
-    /* 0x110E */ u8 overlay_target_mode;
+    /* 0x110E */ u8 overlay_target_mode; /* MainMode */
     /* 0x110F */ u8 restart_request;
     /* 0x1110 */ u8 paused;
     /* 0x1111 */ u8 pause_allowed;

@@ -252,7 +252,7 @@ void func_80152F30(void) {
     func_8014B79C();
     switch (*(u8 *)&D_800E6280.step) {
     case 0:
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
         func_80046290(0x1C0000A8, 0x0F0000B7, 0xE);
         func_80044750(0x300);
         func_8004284C();
@@ -380,7 +380,7 @@ void func_80152F30(void) {
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801535E4(void) {
-    if (D_800E6280.pad_pressed & 0x40) {
+    if (D_800E6280.pad_pressed & PAD_CROSS) {
         func_80044750(0x74);
         if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
             D_8015EE44.unk_08 = D_8015E744 + 1;

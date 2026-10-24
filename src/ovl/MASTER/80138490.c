@@ -37,7 +37,7 @@ block_8:
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80044890(1, 0xC043, 0xC01D, 0xCA95, 0xCA4F, 0xCA3E);
-            D_800E6280.current_girl = 0;
+            D_800E6280.current_girl = GIRL_SHIORI;
             func_800847B8(0U);
             func_801336E8();
             D_800CA148 = 0;
@@ -200,7 +200,7 @@ block_8:
         break;
     case 28:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.current_girl = 0;
+            D_800E6280.current_girl = GIRL_SHIORI;
             func_800847B8(0U);
             func_801337B8();
             D_800CA148 = 0;

@@ -325,7 +325,7 @@ void func_80146C8C(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x622D);
@@ -334,7 +334,7 @@ void func_80146C8C(void) {
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 6;
+        D_800E6280.current_girl = GIRL_NOZOMI;
         func_80083474();
         cd_read_sectors(0x10U, 0x801E8000, 0x4B23);
         break;
@@ -431,7 +431,7 @@ void func_80146F70(void) {
     case 7:
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         dec_bg_reset();
@@ -449,7 +449,7 @@ void func_80146F70(void) {
         D_80125CA0 = 0xC0;
         dec_bg_show_set(1, func_8005751C(1));
         addr_init_bustup();
-        D_800E6280.current_girl = 6;
+        D_800E6280.current_girl = GIRL_NOZOMI;
         func_80083474();
         cd_read_sectors(0x10U, 0x801E8000, 0x4B23);
         break;
@@ -548,7 +548,7 @@ void func_801472C4(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x622D);
@@ -557,7 +557,7 @@ void func_801472C4(void) {
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 6;
+        D_800E6280.current_girl = GIRL_NOZOMI;
         func_80083474();
         cd_read_sectors(0x10U, 0x801E8000, 0x4B23);
         break;
@@ -788,7 +788,7 @@ void func_80147914(void) {
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
-        main_state_set(0xD0);
+        main_state_set(MODE_TT_GAME);
         break;
     case 10:
         D_80122E98 = 1;
@@ -829,7 +829,7 @@ void func_80147914(void) {
         break;
     case 15:
         addr_init_bustup();
-        D_800E6280.current_girl = 6;
+        D_800E6280.current_girl = GIRL_NOZOMI;
         func_80083474();
         cd_read_sectors(0x10U, 0x801E8000, 0x4B23);
         break;
@@ -907,7 +907,7 @@ void func_80147914(void) {
         break;
     case 26:
         addr_init_bustup();
-        D_800E6280.current_girl = 6;
+        D_800E6280.current_girl = GIRL_NOZOMI;
         func_80083474();
         cd_read_sectors(0x10U, 0x801E8000, 0x4B23);
         break;
@@ -1028,14 +1028,14 @@ void func_80148094(void) {
         D_80122EAC = 1;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x622D);
         break;
     case 9:
         addr_init_bustup();
-        D_800E6280.current_girl = 6;
+        D_800E6280.current_girl = GIRL_NOZOMI;
         func_80083474();
         func_80083440(3U);
         cd_read_sectors(0x10U, 0x801E8000, 0x4B23);
@@ -1230,7 +1230,7 @@ void func_80148594(void) {
         normal_date_girl_out();
         break;
     case 11:
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
         func_8004284C();
         break;
     case 12:
@@ -1397,7 +1397,7 @@ void func_80148A28(void) {
         D_80122EAC = 0;
         D_80122EB0 = (s32) D_800E6280.stage;
         D_80122EB4 = D_800E6280.step + 1;
-        main_state_set(0x80);
+        main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         func_800866A0(0x622D);
@@ -1406,7 +1406,7 @@ void func_80148A28(void) {
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = 6;
+        D_800E6280.current_girl = GIRL_NOZOMI;
         func_80083474();
         cd_read_sectors(0x10U, 0x801E8000, 0x4B23);
         break;

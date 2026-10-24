@@ -411,7 +411,7 @@ void func_80143CBC(void) {
     u8 b;
 
     if (D_80122CDC != 0) {
-        if (D_800E6280.current_girl == 2) {
+        if (D_800E6280.current_girl == GIRL_YUINA) {
             D_801476D8 = 0x18;
         } else {
             D_801476D8 = 0x17;
@@ -438,7 +438,7 @@ void func_80143CBC(void) {
 
 void func_80143EA4(void) {
     if (D_80122CDC != 0) {
-        if (D_800E6280.current_girl == 2 || D_800E6280.current_girl == 7 || D_800E6280.current_girl == 9 || D_800E6280.current_girl == 0xA) {
+        if (D_800E6280.current_girl == GIRL_YUINA || D_800E6280.current_girl == GIRL_MIRA || D_800E6280.current_girl == GIRL_MEGUMI || D_800E6280.current_girl == GIRL_YUMI) {
             func_80083418();
             return;
         }

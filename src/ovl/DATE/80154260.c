@@ -321,7 +321,7 @@ void func_80155004(void) {
 
 void func_80155174(void) {
     if (D_800E6280.step_timer.w++ == 0) {
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
     } else {
         D_800E6280.current_girl = D_800E6280.date_girl;
     }

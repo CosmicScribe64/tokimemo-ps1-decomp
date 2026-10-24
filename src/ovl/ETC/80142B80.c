@@ -22,22 +22,22 @@ void func_80142B80(void) {
         func_80048EB8(0);
         back_clear_switch(1);
         tpage_buf_clear();
-        if (D_800E6280.current_girl >= 0xDU) {
+        if (D_800E6280.current_girl >= GIRL_YOSHIO) {
             if (D_800E6280.options_dirty != 0) {
-                main_state_set(0x12);
+                main_state_set(MODE_TITLE);
                 return;
             }
-            main_state_set(0xC4);
+            main_state_set(MODE_ETC_C4);
             return;
         }
         D_8015014C = 0;
-        if (D_800E6280.pad_held & 0x10) {
+        if (D_800E6280.pad_held & PAD_TRIANGLE) {
             D_8015014C = 1;
         }
         if (func_80143240() != 0) {
             D_8015014C = 1;
         }
-        if ((func_80143240() > 0) && (D_800E6280.pad_held & 0x10)) {
+        if ((func_80143240() > 0) && (D_800E6280.pad_held & PAD_TRIANGLE)) {
             D_8015014C = 0;
         }
         D_80150188 = 0;

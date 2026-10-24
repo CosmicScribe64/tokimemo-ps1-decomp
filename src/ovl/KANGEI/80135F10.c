@@ -114,7 +114,7 @@ void func_801362F0(void) {
         func_8004284C();
         func_8004284C();
     } else {
-        D_800E6280.current_girl = 0xB;
+        D_800E6280.current_girl = GIRL_MIHARU;
         D_80139DF8 = (u8) (rand() % 4);
         if ((((u16) D_800E6280.player_flags.h >> 0xC) == 0xA) && (rand() % 2)) {
             D_80139DF8 = 4;
@@ -270,7 +270,7 @@ void func_80136A24(void) {
 
 void func_80136A70(void) {
     srand(D_800E6280.frame_count);
-    D_800E6280.current_girl = 0xE;
+    D_800E6280.current_girl = GIRL_SOTOI;
     D_80139DFC = 0;
     D_80139ADC = 1;
     D_80139AE0 = 0;

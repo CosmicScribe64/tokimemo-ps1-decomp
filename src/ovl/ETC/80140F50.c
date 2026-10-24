@@ -2,7 +2,7 @@
 #include "ovl/ETC.h"
 
 u8 *func_80140F50(void) {
-    if (D_800E6280.input_device == 0) {
+    if (D_800E6280.input_device == INPUT_MOUSE) {
         if (D_800E6280.confirm_button != 0) {
             return D_80150128;
         }
@@ -12,7 +12,7 @@ u8 *func_80140F50(void) {
 }
 
 u8 *func_80140F94(void) {
-    if (D_800E6280.input_device == 0) {
+    if (D_800E6280.input_device == INPUT_MOUSE) {
         if (D_800E6280.confirm_button != 0) {
             return D_8015012C;
         }
@@ -92,13 +92,13 @@ void func_80141154(void) {
         D_800E6280.substep += 1;
         break;
     case 3:
-        if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.pad_pressed & PAD_CIRCLE) {
             if (func_80054108() == 1) {
                 func_80042940(4);
             } else {
                 func_80042940(2);
             }
-        } else if (D_800E6280.pad_pressed & 0x40) {
+        } else if (D_800E6280.pad_pressed & PAD_CROSS) {
             D_800E6280.substep += 1;
         }
         break;
@@ -113,7 +113,7 @@ void func_80141154(void) {
         k_disp_start(5);
         break;
     case 5:
-        if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.pad_pressed & PAD_CIRCLE) {
             func_80042940(4);
         }
         break;
@@ -125,7 +125,7 @@ void func_801413FC(void) {
     printf("データセーブ");
     if (D_800E6280.options_dirty != 0) {
         func_8004482C();
-        main_state_set(0x12);
+        main_state_set(MODE_TITLE);
         return;
     }
     func_8004E58C();
@@ -189,11 +189,11 @@ void func_801415A4(void) {
 }
 
 void func_80141700(void) {
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         func_8004284C();
-    } else if (D_800E6280.pad_pressed & 0x40) {
+    } else if (D_800E6280.pad_pressed & PAD_CROSS) {
         func_8004482C();
-        main_state_set(0xC4);
+        main_state_set(MODE_ETC_C4);
     }
     func_800578F4(2);
 }
@@ -353,7 +353,7 @@ s32 func_80141BE8(void) {
         if (D_800E6280.screen_brightness-- < 8) {
             D_800E6280.screen_brightness = 0;
             func_8004482C();
-            main_state_set(0xC4);
+            main_state_set(MODE_ETC_C4);
             D_800E6280.current_girl += 0x10;
         }
         set_dec_bri(D_800E6280.screen_brightness);
@@ -391,11 +391,11 @@ void func_80141E10(void) {
         g->substep += 1;
         break;
     case 3:
-        if (g->pad_pressed & 0x20) {
+        if (g->pad_pressed & PAD_CIRCLE) {
             g->substep += 1;
-        } else if (g->pad_pressed & 0x40) {
+        } else if (g->pad_pressed & PAD_CROSS) {
             func_8004482C();
-            main_state_set(0xC4);
+            main_state_set(MODE_ETC_C4);
         }
         break;
     case 4:
@@ -466,11 +466,11 @@ void func_801421AC(void) {
         *state += 1;
         break;
     case 3:
-        if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.pad_pressed & PAD_CIRCLE) {
             func_80042940(4);
-        } else if (D_800E6280.pad_pressed & 0x40) {
+        } else if (D_800E6280.pad_pressed & PAD_CROSS) {
             func_8004482C();
-            main_state_set(0xC4);
+            main_state_set(MODE_ETC_C4);
         }
         break;
     }
@@ -505,11 +505,11 @@ void func_80142390(void) {
         *state += 1;
         break;
     case 3:
-        if (D_800E6280.pad_pressed & 0x20) {
+        if (D_800E6280.pad_pressed & PAD_CIRCLE) {
             func_80042940(4);
-        } else if (D_800E6280.pad_pressed & 0x40) {
+        } else if (D_800E6280.pad_pressed & PAD_CROSS) {
             func_8004482C();
-            main_state_set(0xC4);
+            main_state_set(MODE_ETC_C4);
         }
         break;
     }
@@ -540,7 +540,7 @@ void func_80142574(void) {
         g->substep += 1;
         break;
     case 3:
-        if (g->pad_pressed & 0x20) {
+        if (g->pad_pressed & PAD_CIRCLE) {
             k_sub_reset();
             set_kanji_string(-0x78, 0x30, 0, (s32) "システムファイルを作成しています。", 0);
             set_kanji_string(-0x78, 0x3E, 0, (s32) "（アルバムモードのデータをセーブ後、", 0);
@@ -549,9 +549,9 @@ void func_80142574(void) {
             set_kanji_string(-0x78, 0x68, 0, (s32) "作り直してください）", 0);
             k_sub_disp_start(5);
             g->substep += 1;
-        } else if (g->pad_pressed & 0x40) {
+        } else if (g->pad_pressed & PAD_CROSS) {
             func_8004482C();
-            main_state_set(0xC4);
+            main_state_set(MODE_ETC_C4);
         }
         break;
     case 4:
@@ -613,15 +613,15 @@ void func_80142974(void) {
     if (func_800460EC() & 4) {
         if (D_800E6280.pad_pressed & 0x200000) {
             if (D_800E6280.options_dirty != 0) {
-                main_state_set(0x11);
+                main_state_set(MODE_PROLOGUE);
             } else {
-                main_state_set(0xC4);
+                main_state_set(MODE_ETC_C4);
             }
         } else if (D_800E6280.pad_pressed & 0x400000) {
             if (D_800E6280.options_dirty != 0) {
-                main_state_set(0x11);
+                main_state_set(MODE_PROLOGUE);
             } else {
-                main_state_set(0x91);
+                main_state_set(MODE_ALBUM);
             }
         }
     }

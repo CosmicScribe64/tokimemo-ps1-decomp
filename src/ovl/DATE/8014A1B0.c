@@ -96,7 +96,7 @@ s32 func_8014A39C(void) {
     }
     r = get_g_zyotai_h(D_800E6280.current_girl);
     var_v1 = r & 0x7F;
-    if (D_800E6280.current_girl >= 0xCU) {
+    if (D_800E6280.current_girl >= GIRL_REI) {
         var_v1 = 0;
     }
     func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);

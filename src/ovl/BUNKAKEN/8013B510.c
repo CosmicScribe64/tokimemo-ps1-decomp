@@ -23,7 +23,7 @@ void func_8013B510(void) {
     case 2:
         addr_init_bustup();
         if (D_80122EBC == 0xB) {
-            D_800E6280.current_girl = 0;
+            D_800E6280.current_girl = GIRL_SHIORI;
         } else {
             D_800E6280.current_girl = D_80122EBC;
         }
@@ -313,7 +313,7 @@ s32 func_8013BD84(void) {
     u8 flags;
 
     best = 0;
-    if ((get_h_yuukou(0) >= 0x32U) && (get_h_yuukou(0) >= 0x50U)) {
+    if ((get_h_yuukou(GIRL_SHIORI) >= 0x32U) && (get_h_yuukou(GIRL_SHIORI) >= 0x50U)) {
         max = D_800E6280.girls[0].affection + D_800E6280.girls[0].tokimeki;
     } else {
         max = 0;

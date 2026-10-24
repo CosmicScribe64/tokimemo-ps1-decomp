@@ -68,7 +68,7 @@ s32 func_8013B91C(void) {
             return 0;
         }
     }
-    D_800E6280.current_girl = 0xD;
+    D_800E6280.current_girl = GIRL_YOSHIO;
     D_800CA148 = 0;
     D_800CA14C = 0;
     func_800847B8(D_800E6280.event_flags[82]);

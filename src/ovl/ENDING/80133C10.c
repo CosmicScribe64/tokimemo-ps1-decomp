@@ -204,73 +204,73 @@ s32 func_80134270(void) {
     ((Actor *)D_80120650)[1].draw_flags = 4;
     ((Actor *)D_80120650)[1].x = 0x10;
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[1];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[1];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[1];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[1].unk_00;
         break;
-    case 1:
+    case GIRL_MIO:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[2];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[2];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[2];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[2].unk_00;
         break;
-    case 2:
+    case GIRL_YUINA:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[3];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[3];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[3];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[3].unk_00;
         break;
-    case 3:
+    case GIRL_AYAKO:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[4];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[4];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[4];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[4].unk_00;
         break;
-    case 4:
+    case GIRL_SAKI:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[5];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[5];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[5];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[5].unk_00;
         break;
-    case 5:
+    case GIRL_YUKARI:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[6];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[6];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[6];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[6].unk_00;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[7];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[7];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[7];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[7].unk_00;
         break;
-    case 7:
+    case GIRL_MIRA:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[8];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[8];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[8];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[8].unk_00;
         break;
-    case 8:
+    case GIRL_YUKO:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[9];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[9];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[9];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[9].unk_00;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[10];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[10];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[10];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[10].unk_00;
         break;
-    case 10:
+    case GIRL_YUMI:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[11];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[11];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[11];
         ((Actor *)D_80120650)[1].unk_14 = D_8013C4C0.unk_A8[11].unk_00;
         break;
-    case 12:
+    case GIRL_REI:
         ((Actor *)D_80120650)[1].frame_table = (u8 *)D_8013C4C0.unk_38[12];
         ((Actor *)D_80120650)[1].sequence_table = (u8 *)D_8013C4C0.unk_70[12];
         ((Actor *)D_80120650)[1].tpage_table = (u8 *)D_8013C4C0.unk_00[12];

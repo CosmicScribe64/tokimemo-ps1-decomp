@@ -67,7 +67,7 @@ void func_8013CB58(void) {
 
 void func_8013CB90(void) {
     D_800B5A60 = 1;
-    D_800E6280.current_girl = 0xE;
+    D_800E6280.current_girl = GIRL_SOTOI;
     strcpy(D_800CA188, "男子１");
     D_80120666 = 4;
     func_8004284C();
@@ -108,7 +108,7 @@ void func_8013CC9C(void) {
 void func_8013CD18(void) {
     s16 i;
 
-    D_800E6280.current_girl = 7;
+    D_800E6280.current_girl = GIRL_MIRA;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -155,7 +155,7 @@ void func_8013CE98(void) {
 }
 
 void func_8013CF40(void) {
-    D_800E6280.current_girl = 7;
+    D_800E6280.current_girl = GIRL_MIRA;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

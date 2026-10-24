@@ -579,7 +579,7 @@ s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
 void func_80048CF8(void) {
     s32 i;
 
-    if (D_800E6280.pad_held & 2) {
+    if (D_800E6280.pad_held & PAD_R2) {
         printf("PRINT_TPAGE_BUF\n");
         for (i = 0; i < 0x40; i++) {
             printf("[%d]%08x", i, D_800E6280.tpage_buf[i]);

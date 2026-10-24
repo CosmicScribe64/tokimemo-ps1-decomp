@@ -58,7 +58,7 @@ void restore_bgm(void) {
 void func_8006CD14(void) {
     switch (D_800E6280.substep) {
     case 0:
-        if (D_800E6280.day_events[D_800E6280.day_event_index].type != 0x40) {
+        if (D_800E6280.day_events[D_800E6280.day_event_index].type != DAY_EVENT_EXAM) {
             restore_bgm();
         }
         func_80065F34(0);
@@ -104,7 +104,7 @@ void func_8006CE84(void) {
             icon_can_use_set(i, 1);
         }
     }
-    if ((u8)D_800E6280.icon_mode == 2 && (D_800E6280.last_command.w & 0xF) != 0xEU) {
+    if ((u8)D_800E6280.icon_mode == ICON_MODE_FREE && (D_800E6280.last_command.w & 0xF) != 0xEU) {
         icon_can_use_set(0xE, 0);
     }
 }
@@ -114,7 +114,7 @@ void func_8006CF38(void) {
 
     for (i = 0; i < 32; i++) {
         *(s32 *)&D_800E6280.day_events[i] = 0;
-        D_800E6280.day_events[i].type = 0xFF;
+        D_800E6280.day_events[i].type = DAY_EVENT_NONE;
     }
     D_800E6280.day_event_index = 0;
 }
@@ -275,23 +275,23 @@ void func_8006D4A0(void) {
 void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
     s32 i;
 
-    if (birth_day_check_days(0, D_800E6280.month + arg1, arg2) == 1) {
-        D_800E6280.day_events[*arg0].type = 0x32;
+    if (birth_day_check_days(GIRL_SHIORI, D_800E6280.month + arg1, arg2) == 1) {
+        D_800E6280.day_events[*arg0].type = DAY_EVENT_GIRL_BIRTHDAY;
         D_800E6280.day_events[*arg0].girl = 0;
         *arg0 += 1;
     }
     for (i = 1; i != 0xB; i++) {
         if (D_800E6280.girls[i].flags.f.met && D_800E6280.girls[i].flags.f.b6) {
             if (birth_day_check_days(i, D_800E6280.month + arg1, arg2) == 1) {
-                D_800E6280.day_events[*arg0].type = 0x32;
+                D_800E6280.day_events[*arg0].type = DAY_EVENT_GIRL_BIRTHDAY;
                 D_800E6280.day_events[*arg0].girl = i;
                 *arg0 += 1;
             }
         }
     }
     if ((D_800E6280.player_flags.b[1] & 0xF) != 3) {
-        if (birth_day_check_days(0xF, D_800E6280.month + arg1, arg2) == 1) {
-            D_800E6280.day_events[*arg0].type = 0x33;
+        if (birth_day_check_days(GIRL_PLAYER, D_800E6280.month + arg1, arg2) == 1) {
+            D_800E6280.day_events[*arg0].type = DAY_EVENT_PLAYER_BIRTHDAY;
             *arg0 += 1;
         }
     }
@@ -307,12 +307,12 @@ s32 func_8006D6E0(void) {
     gs = &D_800E6280;
     n = D_800E6280.weekday;
     for (i = 0; i < 32; i++) {
-        if (D_800E6280.day_events[i].type == 0xFB) {
+        if (D_800E6280.day_events[i].type == DAY_EVENT_DAY_END) {
             if (n == 0) {
                 gs->day_event_index = i;
-                if (D_800E6280.day_events[i - 1].type != 0x25) {
+                if (D_800E6280.day_events[i - 1].type != DAY_EVENT_CLUB_MASTER_A) {
                     D_800E6280.day_event_index--;
-                    if (D_800E6280.day_events[i - 2].type != 0x25) {
+                    if (D_800E6280.day_events[i - 2].type != DAY_EVENT_CLUB_MASTER_A) {
                         D_800E6280.day_event_index--;
                     }
                 }
@@ -325,10 +325,10 @@ s32 func_8006D6E0(void) {
         gs->day_event_index--;
     }
     for (i = gs->day_event_index; i < 32; i++) {
-        if (D_800E6280.day_events[i].type == 0x25) {
-            D_800E6280.day_events[i].type = 0;
+        if (D_800E6280.day_events[i].type == DAY_EVENT_CLUB_MASTER_A) {
+            D_800E6280.day_events[i].type = DAY_EVENT_SCHOOL_DAY;
         }
-        if (D_800E6280.day_events[i].type == 0xFF) {
+        if (D_800E6280.day_events[i].type == DAY_EVENT_NONE) {
             break;
         }
     }
@@ -395,7 +395,7 @@ void func_8006D7EC(void) {
     /* FAKE: T-25036, unsigned < 0 is zero, but folds after uopt so idx keeps a register dependency. */
     idx = (u32)D_800E6280.current_girl < 0;
     if (day == monthDays) {
-        D_800E6280.day_events[0].type = 0xFE;
+        D_800E6280.day_events[0].type = DAY_EVENT_MONTH_START;
         /* FAKE: T-25036, this unreachable identity clears as1's zero substitution; it emits no code. */
         if (idx) { idx = idx + ((u32)day < 0); }
         idx++;
@@ -404,9 +404,9 @@ void func_8006D7EC(void) {
     }
     day++;
     if (gs->month_calendar[0].marker[day] == 0xB) {
-        gs->day_events[idx].type = 0x41;
+        gs->day_events[idx].type = DAY_EVENT_SCHOOL_TRIP;
         idx++;
-        gs->day_events[idx].type = 0x10;
+        gs->day_events[idx].type = DAY_EVENT_HOLIDAY;
         idx++;
         func_8006D52C(&idx, monthOff, day + 6);
         func_8004284C();
@@ -416,53 +416,53 @@ void func_8006D7EC(void) {
         /* FAKE: T-23003, the unsigned constant is a ucode constant of its own and takes $a1 as in the original */
         if ((gs->player_flags.h >> 12) != 0xB && ((u32)gs->last_command.w & 0xF) == 4U) {
             if ((gs->player_flags.h >> 12) == 6 && (*(u16 *)&D_800E6280.clubs[6].level & 0xF) >= 8) {
-                gs->day_events[idx].type = 0x25;
+                gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
                 func_8006D52C(&idx, monthOff, day);
-                gs->day_events[idx].type = 0xFB;
+                gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
-                gs->day_events[idx].type = 0x25;
+                gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
                 func_8006D52C(&idx, monthOff, day + 1);
-                gs->day_events[idx].type = 0xFB;
+                gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
-                gs->day_events[idx].type = 0x25;
+                gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
                 func_8006D52C(&idx, monthOff, day + 2);
-                gs->day_events[idx].type = 0xFB;
+                gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
                 gs->day_events[idx].girl = 7;
-                gs->day_events[idx].type = 0x25;
+                gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
                 func_8006D52C(&idx, monthOff, day + 3);
-                gs->day_events[idx].type = 0xFB;
+                gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
                 gs->day_events[idx].girl = 7;
-                gs->day_events[idx].type = 0x25;
+                gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
                 func_8006D52C(&idx, monthOff, day + 4);
-                gs->day_events[idx].type = 0xFB;
+                gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
                 gs->day_events[idx].girl = 7;
-                gs->day_events[idx].type = 0x25;
+                gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
                 func_8006D52C(&idx, monthOff, day + 5);
-                gs->day_events[idx].type = 0xFB;
+                gs->day_events[idx].type = DAY_EVENT_DAY_END;
                 idx++;
-                gs->day_events[idx].type = 0x10;
+                gs->day_events[idx].type = DAY_EVENT_HOLIDAY;
                 idx++;
                 func_8006D52C(&idx, monthOff, day + 6);
                 func_8004284C();
                 return;
             }
             for (j = 0; j < 6; j++) {
-                gs->day_events[idx].type = 0x42;
+                gs->day_events[idx].type = DAY_EVENT_CLUB_CAMP;
                 gs->day_events[idx].girl = 4;
                 gs->day_events[idx].extra = sel;
                 gs->day_events[idx].scene = func_8006BDA8(wd);
                 idx++;
             }
-            gs->day_events[idx].type = 0x10;
+            gs->day_events[idx].type = DAY_EVENT_HOLIDAY;
             idx++;
             func_8006D52C(&idx, monthOff, day + 6);
             func_8004284C();
@@ -474,69 +474,69 @@ void func_8006D7EC(void) {
     }
     while (wd < 7) {
         if (monthDays < day) {
-            gs->day_events[idx].type = 0xFE;
+            gs->day_events[idx].type = DAY_EVENT_MONTH_START;
             idx++;
             day = 1;
             monthOff = 1;
         }
         if (gs->month_calendar[monthOff].marker[day] == 6) {
-            gs->day_events[idx++].type = 0xFD;
+            gs->day_events[idx++].type = DAY_EVENT_DAY_NOTICE;
         }
         if (gs->month_calendar[monthOff].marker[day] == 0xE) {
-            gs->day_events[idx++].type = 0xFD;
+            gs->day_events[idx++].type = DAY_EVENT_DAY_NOTICE;
         }
         if (gs->month_calendar[monthOff].marker[day] == 0x14) {
-            gs->day_events[idx++].type = 0xFD;
+            gs->day_events[idx++].type = DAY_EVENT_DAY_NOTICE;
         }
         if (gs->month_calendar[monthOff].marker[day] == 0xA) {
-            gs->day_events[idx++].type = 0xFD;
+            gs->day_events[idx++].type = DAY_EVENT_DAY_NOTICE;
         }
         if (gs->month_calendar[monthOff].marker[day] == 0x10) {
-            gs->day_events[idx++].type = 0xFD;
+            gs->day_events[idx++].type = DAY_EVENT_DAY_NOTICE;
         }
         if (gs->month_calendar[monthOff].marker[day] == 2) {
-            gs->day_events[idx++].type = 0xFD;
+            gs->day_events[idx++].type = DAY_EVENT_DAY_NOTICE;
         }
         if (gs->month_calendar[monthOff].marker[day] == 4) {
-            gs->day_events[idx++].type = 0x20;
+            gs->day_events[idx++].type = DAY_EVENT_SPORTS_FESTIVAL;
         } else if (gs->month_calendar[monthOff].marker[day] == 0xC) {
-            gs->day_events[idx++].type = 0x24;
+            gs->day_events[idx++].type = DAY_EVENT_CULTURE_FESTIVAL;
         } else if (gs->month_calendar[monthOff].marker[day] == 0xD) {
-            gs->day_events[idx++].type = 0x28;
+            gs->day_events[idx++].type = DAY_EVENT_CHRISTMAS_PREP;
         } else if (gs->month_calendar[monthOff].marker[day] == 0xF) {
-            gs->day_events[idx++].type = 0x2C;
+            gs->day_events[idx++].type = DAY_EVENT_NEW_YEAR_PREP;
         } else if (gs->month_calendar[monthOff].marker[day] == 0x11) {
-            gs->day_events[idx++].type = 0x31;
+            gs->day_events[idx++].type = DAY_EVENT_VALENTINE;
         } else if (gs->month_calendar[monthOff].marker[day] == 0x13) {
-            gs->day_events[idx++].type = 0x30;
+            gs->day_events[idx++].type = DAY_EVENT_SEASONAL_PARTY;
         } else if (gs->month_calendar[monthOff].marker[day] == 2 && D_800E6280.year == 0x60) {
             D_800E6280.girls[10].syoushin = 0;
             D_800E6280.girls[10].affection = 0x32;
             gs->day_events[idx].girl = 0xA;
-            gs->day_events[idx].type = 0x48;
+            gs->day_events[idx].type = DAY_EVENT_MEETING;
             idx++;
             func_8006D4A0();
         } else if (gs->month_calendar[monthOff].marker[day] == 2 && D_800E6280.year == 0x61) {
-            gs->day_events[idx++].type = 0x43;
+            gs->day_events[idx++].type = DAY_EVENT_CAREER_GUIDANCE;
             func_8006D4A0();
         } else if (gs->month_calendar[monthOff].day_kind[day] == 1 || gs->month_calendar[monthOff].day_kind[day] == 2) {
             if (func_8006EA40() != 0) {
                 D_800E6280.event_flags[77]++;
-                gs->day_events[idx].type = 0x45;
+                gs->day_events[idx].type = DAY_EVENT_SPECIAL_EVENT;
                 gs->day_events[idx].girl = 0xB;
                 gs->day_events[idx].scene = 4;
                 idx++;
             } else {
-                gs->day_events[idx++].type = 0x10;
+                gs->day_events[idx++].type = DAY_EVENT_HOLIDAY;
             }
         } else if (D_800E6280.year == 0x61 && (month + monthOff) == 0xD && day == 3) {
             if (func_8005352C() == 1 && (gs->player_flags.h >> 12) != 6 && (*(u16 *)&gs->clubs[gs->player_flags.h >> 12].level & 0xF) >= 0xA) {
-                gs->day_events[idx++].type = 0x26;
+                gs->day_events[idx++].type = DAY_EVENT_CLUB_MASTER_B;
             } else {
                 if ((gs->player_flags.h >> 12) < 6 && gs->clubs[gs->player_flags.h >> 12].exp >= 0x17C) {
-                    gs->day_events[idx++].type = 0x27;
+                    gs->day_events[idx++].type = DAY_EVENT_CLUB_MASTER_C;
                 } else {
-                    gs->day_events[idx].type = 0;
+                    gs->day_events[idx].type = DAY_EVENT_SCHOOL_DAY;
                     gs->day_events[idx].girl = D_800E6280.last_command.w & 0xF;
                     gs->day_events[idx].extra = sel;
                     if (func_8006BDA8(wd) != 0) {
@@ -549,13 +549,13 @@ void func_8006D7EC(void) {
             }
         } else if (gs->month_calendar[monthOff].marker[day] == 0x12 && *(u8 *)((u8 *)&D_800E6280 + 0x3E) == 0x62) {
             /* FAKE: T-23003, the original reloads the byte at +0x3E here; a plain D_800E6280.year is CSE'd with the 0x61 test into $a1 and every later temporary shifts (first-symbol view, aggregate not known) */
-            gs->day_events[idx++].type = 0x4A;
+            gs->day_events[idx++].type = DAY_EVENT_CAREER_CHOICE;
         } else if (gs->month_calendar[monthOff].day_kind[day] == 0 || gs->month_calendar[monthOff].day_kind[day] == 3) {
-            if (gs->month_calendar[monthOff].marker[day] == 5 || D_800E6280.day_events[0].type == 0x40) {
-                gs->day_events[idx].type = 0x40;
+            if (gs->month_calendar[monthOff].marker[day] == 5 || D_800E6280.day_events[0].type == DAY_EVENT_EXAM) {
+                gs->day_events[idx].type = DAY_EVENT_EXAM;
                 idx++;
             } else {
-                gs->day_events[idx].type = 0;
+                gs->day_events[idx].type = DAY_EVENT_SCHOOL_DAY;
                 gs->day_events[idx].girl = D_800E6280.last_command.w & 0xF;
                 gs->day_events[idx].extra = sel;
                 res = func_8006BDA8(wd);
@@ -571,33 +571,33 @@ void func_8006D7EC(void) {
                 }
                 idx++;
                 if (gs->day_events[idx - 1].scene == 1 && (nYes + nNo) == 6 && gs->month_calendar[monthOff].day_kind[day] == 0 && (rand() & 0xF) < 2) {
-                    gs->day_events[idx].type = 0x47;
+                    gs->day_events[idx].type = DAY_EVENT_SICK_VISIT;
                     gs->day_events[idx].girl = 0xC;
                     idx++;
                 }
                 if (gs->month_calendar[monthOff].day_kind[day] == 3) {
-                    if (D_800E6280.vacation == 2 && D_800E6280.event_flags[73] < (u16)D_800E6280.day_count / 365U && D_800E6280.girls[10].flags.f.met && !(get_g_zyotai_h(0xA) & 0x7F) && (rand() & 0xF) <= 0) {
-                        gs->day_events[idx].type = 0x45;
+                    if (D_800E6280.vacation == VACATION_WINTER && D_800E6280.event_flags[73] < (u16)D_800E6280.day_count / 365U && D_800E6280.girls[10].flags.f.met && !(get_g_zyotai_h(GIRL_YUMI) & 0x7F) && (rand() & 0xF) <= 0) {
+                        gs->day_events[idx].type = DAY_EVENT_SPECIAL_EVENT;
                         gs->day_events[idx].girl = 0xA;
                         gs->day_events[idx].scene = 7;
                         idx++;
                     }
-                    if (D_800E6280.vacation == 1 && wd == 2 && (monthOff + D_800E6280.month) == 8 && (rand() % 100) < 0x14 && cnt != 0
+                    if (D_800E6280.vacation == VACATION_SUMMER && wd == 2 && (monthOff + D_800E6280.month) == 8 && (rand() % 100) < 0x14 && cnt != 0
                         && (!((GirlFlagBitsSched *)&gs->player_flags)->b18 || (D_800E6280.year == 0x61 && !((GirlFlagBitsSched *)&gs->player_flags)->b18 && day == 0x1C))) {
                         ((GirlFlagBitsSched *)&D_800E6280.player_flags)->b18 = 1;
-                        gs->day_events[idx].type = 0x49;
+                        gs->day_events[idx].type = DAY_EVENT_AMUSEMENT_PARK;
                         idx++;
                     }
                 }
             }
             if (gs->month_calendar[monthOff].day_kind[day] == 0) {
-                if (D_800E6280.day_events[0].type != 0x40) {
+                if (D_800E6280.day_events[0].type != DAY_EVENT_EXAM) {
                     if (D_800E6280.year != 0x5F || D_800E6280.month != 4) {
                         if (D_800E6280.day_count < 0x2D6 && nSpecial == 0) {
                             if (cnt < 2) {
                                 if (func_8006EB64(&argA, &argB) != 0) {
                                     nSpecial++;
-                                    gs->day_events[idx].type = 0x48;
+                                    gs->day_events[idx].type = DAY_EVENT_MEETING;
                                     gs->day_events[idx].girl = argA;
                                     gs->day_events[idx].scene = argB;
                                     idx++;
@@ -605,7 +605,7 @@ void func_8006D7EC(void) {
                             } else {
                                 if (func_8006EEC4(&argA, &argB) != 0) {
                                     nSpecial++;
-                                    gs->day_events[idx].type = 0x48;
+                                    gs->day_events[idx].type = DAY_EVENT_MEETING;
                                     gs->day_events[idx].girl = argA;
                                     gs->day_events[idx].scene = argB;
                                     idx++;
@@ -613,7 +613,7 @@ void func_8006D7EC(void) {
                             }
                             if ((D_800E6280.last_command.w & 0xF) == 4 && func_8006F218(&argA, &argB) != 0) {
                                 nSpecial++;
-                                gs->day_events[idx].type = 0x48;
+                                gs->day_events[idx].type = DAY_EVENT_MEETING;
                                 gs->day_events[idx].girl = argA;
                                 gs->day_events[idx].scene = argB;
                                 idx++;
@@ -623,7 +623,7 @@ void func_8006D7EC(void) {
                     if (nRand < 2) {
                         if ((rand() & 3) == 3) {
                             nRand++;
-                            gs->day_events[idx].type = 0x44;
+                            gs->day_events[idx].type = DAY_EVENT_GIRL_ENCOUNTER;
                             idx++;
                         }
                     }
@@ -631,62 +631,62 @@ void func_8006D7EC(void) {
             }
         }
         if (wd == 5 && D_800E6280.day_count >= 0x21) {
-            if (D_800E6280.day_events[0].type == 0x40) {
-                if ((rand() & 1) && D_800E6280.girls[9].flags.f.met && (rand() % 100) < 0x32 && get_g_zyotai_h(9) < 3U
+            if (D_800E6280.day_events[0].type == DAY_EVENT_EXAM) {
+                if ((rand() & 1) && D_800E6280.girls[9].flags.f.met && (rand() % 100) < 0x32 && get_g_zyotai_h(GIRL_MEGUMI) < 3U
                     && (D_800E6280.param_art.value + D_800E6280.param_liberal_arts.value + D_800E6280.param_science.value) >= 0x12D) {
                     gs->last_command.b[0] = (gs->last_command.b[0] & 0xFFF0) | 3;
-                    gs->day_events[idx].type = 0x47;
+                    gs->day_events[idx].type = DAY_EVENT_SICK_VISIT;
                     gs->day_events[idx].girl = 9;
                     idx++;
                 }
             } else if (gs->month_calendar[monthOff].day_kind[day] == 0 && (D_800E6280.last_command.w & 0xF) != 7 && (rand() & 3) && nYes == 0 && nNo == 6) {
                 if (sel != 0xF && sel != 0) {
                     if (!((D_800E6280.last_command.w & 0xF) == 5 && sel == 0)) {
-                        gs->day_events[idx].type = 0x47;
+                        gs->day_events[idx].type = DAY_EVENT_SICK_VISIT;
                         gs->day_events[idx].girl = sel;
                         idx++;
                     }
                 } else {
                     r = D_800E6280.last_command.w & 0xF;
                     /* FAKE: T-23003, unsigned 1: the original compares against $at, not the hoisted $s5 */
-                    if ((r == 0 || r == 1U || r == 3 || r == 2) && (rand() % 100) < 7 && get_g_zyotai_h(9) < 3U && D_800E6280.girls[9].flags.f.met) {
-                        gs->day_events[idx].type = 0x47;
+                    if ((r == 0 || r == 1U || r == 3 || r == 2) && (rand() % 100) < 7 && get_g_zyotai_h(GIRL_MEGUMI) < 3U && D_800E6280.girls[9].flags.f.met) {
+                        gs->day_events[idx].type = DAY_EVENT_SICK_VISIT;
                         gs->day_events[idx].girl = 9;
                         idx++;
                     } else if (sel == 0 && (D_800E6280.last_command.w & 0xF) != 5) {
-                        gs->day_events[idx].type = 0x47;
+                        gs->day_events[idx].type = DAY_EVENT_SICK_VISIT;
                         gs->day_events[idx].girl = 0;
                         idx++;
                     }
                 }
             }
         }
-        if (birth_day_check_days(0, D_800E6280.month + monthOff, day) == 1) {
-            gs->day_events[idx].type = 0x32;
+        if (birth_day_check_days(GIRL_SHIORI, D_800E6280.month + monthOff, day) == 1) {
+            gs->day_events[idx].type = DAY_EVENT_GIRL_BIRTHDAY;
             gs->day_events[idx].girl = 0;
             idx++;
         }
         for (j = 1; j < 0xB; j++) {
             if (D_800E6280.girls[j].flags.f.met && D_800E6280.girls[j].flags.f.b6) {
                 if (birth_day_check_days(j, D_800E6280.month + monthOff, day) == 1) {
-                    gs->day_events[idx].type = 0x32;
+                    gs->day_events[idx].type = DAY_EVENT_GIRL_BIRTHDAY;
                     gs->day_events[idx].girl = j;
                     idx++;
                 }
             }
         }
         if ((gs->player_flags.b[1] & 0xF) != 3) {
-            if (birth_day_check_days(0xF, D_800E6280.month + monthOff, day) == 1) {
-                gs->day_events[idx].type = 0x33;
+            if (birth_day_check_days(GIRL_PLAYER, D_800E6280.month + monthOff, day) == 1) {
+                gs->day_events[idx].type = DAY_EVENT_PLAYER_BIRTHDAY;
                 idx++;
             }
         }
         if (wd == 5) {
-            gs->day_events[idx].type = 0xFC;
+            gs->day_events[idx].type = DAY_EVENT_WEEK_END;
             idx++;
         }
         if (wd != 6) {
-            gs->day_events[idx].type = 0xFB;
+            gs->day_events[idx].type = DAY_EVENT_DAY_END;
             idx++;
         }
         wd++;
@@ -1415,23 +1415,23 @@ void schedule_girls_gakko(void) {
 
     cnt = 0;
     for (i = 0; i < 32; i++) {
-        if (D_800E6280.day_events[i].type == 0x44) {
-            if (D_800E6280.day_events[i + 1].type == 0x33 || D_800E6280.day_events[i + 1].type == 0x32 || D_800E6280.day_events[i + 1].type == 0x47) {
-                D_800E6280.day_events[i].type = 0xFA;
+        if (D_800E6280.day_events[i].type == DAY_EVENT_GIRL_ENCOUNTER) {
+            if (D_800E6280.day_events[i + 1].type == DAY_EVENT_PLAYER_BIRTHDAY || D_800E6280.day_events[i + 1].type == DAY_EVENT_GIRL_BIRTHDAY || D_800E6280.day_events[i + 1].type == DAY_EVENT_SICK_VISIT) {
+                D_800E6280.day_events[i].type = DAY_EVENT_SKIP;
             } else if ((D_800E6280.player_flags.b[1] & 0xF) == 3) {
-                D_800E6280.day_events[i].type = 0xFA;
+                D_800E6280.day_events[i].type = DAY_EVENT_SKIP;
             } else if (special_event_select(&girl, &arg)) {
-                D_800E6280.day_events[i].type = 0x45;
+                D_800E6280.day_events[i].type = DAY_EVENT_SPECIAL_EVENT;
                 D_800E6280.day_events[i].girl = girl;
                 D_800E6280.day_events[i].scene = arg;
             } else if (date_sasoi_judge(&girl) == 1 && cnt == 0) {
                 cnt++;
-                D_800E6280.day_events[i].type = 0x46;
+                D_800E6280.day_events[i].type = DAY_EVENT_GIRL_INVITATION;
                 D_800E6280.day_events[i].girl = girl;
             } else if (geko_judge(&girl)) {
                 D_800E6280.day_events[i].girl = girl;
             } else {
-                D_800E6280.day_events[i].type = 0xFA;
+                D_800E6280.day_events[i].type = DAY_EVENT_SKIP;
             }
         }
     }
@@ -1471,7 +1471,7 @@ void syoushin_up(void) {
 }
 
 void schdeule_girls_param(void) {
-    if (D_800E6280.vacation == 0) {
+    if (D_800E6280.vacation == VACATION_NONE) {
         yuukou_down();
         syoushin_up();
     }
@@ -1483,7 +1483,7 @@ void func_80070ECC(void) {
     if (func_800460EC() & 4) {
         func_80045414(9, 0, 0);
     }
-    main_state_set(0x31);
+    main_state_set(MODE_DAY_SCREEN);
 }
 
 void func_80070F14(void) {
@@ -1515,7 +1515,7 @@ void func_80070FD0(void) {
         D_800E6280.substep++;
     } else if (func_80044E8C() == 1) {
         func_80044750(0x200);
-        main_state_set(0x63);
+        main_state_set(MODE_ENDING);
     }
 }
 
@@ -1618,7 +1618,7 @@ void func_8007132C(void) {
                 D_800E6280.day_event_index--;
                 D_80122CD4 = 0xD;
                 D_80122CD0 = 0;
-                main_state_set(0x5D);
+                main_state_set(MODE_SPECIAL_EVENT);
                 return;
             }
         }
@@ -1628,14 +1628,14 @@ void func_8007132C(void) {
         D_80122CD4 = 2;
         D_80122CD0 = 7;
         D_800E6280.event_flags[20] += 1;
-        main_state_set(0x5D);
+        main_state_set(MODE_SPECIAL_EVENT);
         return;
     }
     func_8006D138();
     func_8006D00C();
-    if (((*(u8 *)&D_800E6280.month) != 0xC || (*(u8 *)&D_800E6280.day) != 0x18) && D_800E6280.events_today == 0 && D_800E6280.weekday != 6
-        && D_800E6280.month_calendar[0].day_kind[(*(u8 *)&D_800E6280.day)] == 0 && D_800E6280.day_events[D_800E6280.day_event_index].type == 0xFB
-        && D_800E6280.day_events[0].type != 0x40 && D_800E6280.day_events[D_800E6280.day_event_index - 1].type == 0) {
+    if (((*(u8 *)&D_800E6280.month) != 0xC || (*(u8 *)&D_800E6280.day) != 0x18) && D_800E6280.events_today == 0 && D_800E6280.weekday != WEEKDAY_SUNDAY
+        && D_800E6280.month_calendar[0].day_kind[(*(u8 *)&D_800E6280.day)] == 0 && D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_DAY_END
+        && D_800E6280.day_events[0].type != DAY_EVENT_EXAM && D_800E6280.day_events[D_800E6280.day_event_index - 1].type == DAY_EVENT_SCHOOL_DAY) {
         /* FAKE: T-25052, 11 + ((u32)i < 0) folds after uopt, so the bound 11 is not held in a register in the
          * three counter loops (plain loops: 92 rows, T-25318). */
         i = 0;
@@ -1647,21 +1647,21 @@ void func_8007132C(void) {
                 }
                 D_800E6280.events_today += 1;
                 D_800E6280.day_events[D_800E6280.day_event_index].girl = i;
-                main_state_set(0x59);
+                main_state_set(MODE_GIRL_ENCOUNTER);
                 return;
             }
             i++;
         } while (i != 11 + ((u32)i < 0));
     }
-    if (D_800E6280.day_events[0].type == 0x25 && D_800E6280.day_events[D_800E6280.day_event_index - 1].type == 0x25) {
-        if (D_800E6280.day_events[D_800E6280.day_event_index].type == 0x32) {
+    if (D_800E6280.day_events[0].type == DAY_EVENT_CLUB_MASTER_A && D_800E6280.day_events[D_800E6280.day_event_index - 1].type == DAY_EVENT_CLUB_MASTER_A) {
+        if (D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_GIRL_BIRTHDAY) {
             D_800E6280.day_event_index++;
         }
-        if (D_800E6280.day_events[D_800E6280.day_event_index].type == 0x33) {
+        if (D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_PLAYER_BIRTHDAY) {
             D_800E6280.day_event_index++;
         }
     }
-    if (D_800E6280.day_events[D_800E6280.day_event_index].type == 0x32) {
+    if (D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_GIRL_BIRTHDAY) {
         if (D_800E6280.day_events[D_800E6280.day_event_index].girl == 0 && (D_800E6280.daily_event_bits & 1)) {
             D_800E6280.day_event_index++;
         }
@@ -1669,43 +1669,43 @@ void func_8007132C(void) {
             D_800E6280.day_event_index++;
         }
     }
-    if (D_800E6280.day_events[D_800E6280.day_event_index].type == 0x33 && (D_800E6280.daily_event_bits & 4)) {
+    if (D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_PLAYER_BIRTHDAY && (D_800E6280.daily_event_bits & 4)) {
         D_800E6280.day_event_index++;
     }
-    if (D_800E6280.day_events[D_800E6280.day_event_index].type == 0xFA) {
+    if (D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_SKIP) {
         D_800E6280.day_event_index++;
     }
-    if (D_800E6280.day_events[D_800E6280.day_event_index].type == 0xFB || D_800E6280.day_events[D_800E6280.day_event_index].type == 0xFF) {
+    if (D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_DAY_END || D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_NONE) {
         func_8006B0C8();
         if (appointment_find_today((*(u8 *)&D_800E6280.year), (*(u8 *)&D_800E6280.month), (*(u8 *)&D_800E6280.day)) > 0) {
             if (get_g_zyotai_s(D_800E6280.unk_54C_0.unk_25) == 4) {
                 D_800E6280.unk_54C[0].b[3] &= 0xFFDF;
                 D_800E6280.daily_check_done = 1;
-                main_state_set(0x43);
+                main_state_set(MODE_TELEPHONE);
                 func_80042908(2);
                 return;
             }
             if (D_800E6280.appt_place_1 != D_800E6280.appt_place_0) {
                 D_800E6280.unk_54C[0].b[3] &= 0xFFDF;
                 D_800E6280.daily_check_done = 1;
-                main_state_set(0x43);
+                main_state_set(MODE_TELEPHONE);
                 func_80042908(0);
                 return;
             }
             if (D_800E6280.unk_54C_0.active) {
                 D_800E6280.unk_54C[0].b[3] &= 0xFFDF;
                 D_800E6280.daily_check_done = 1;
-                main_state_set(0x43);
+                main_state_set(MODE_TELEPHONE);
                 func_80042908(1);
                 return;
             }
         }
     }
-    if (D_800E6280.day_events[D_800E6280.day_event_index].type == 0xFF) {
+    if (D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_NONE) {
         hour = D_800E6280.player_flags.h >> 12;
         if (hour >= 6 && hour < 0xB) {
             if (((*(u8 *)&D_800E6280.day) + 6) / 7 == 3 && (D_800E6280.last_command.b[0] >> 4) != 4) {
-                main_state_set(0x43);
+                main_state_set(MODE_TELEPHONE);
                 func_80042908(8);
                 return;
             }
@@ -1714,7 +1714,7 @@ void func_8007132C(void) {
             && (((*(u8 *)&D_800E6280.year) == 0x5F && (*(u8 *)&D_800E6280.day) == 8)
                 || ((*(u8 *)&D_800E6280.year) == 0x60 && (*(u8 *)&D_800E6280.day) == 6)
                 || ((*(u8 *)&D_800E6280.year) == 0x61 && (*(u8 *)&D_800E6280.day) == 5))) {
-            main_state_set(0x43);
+            main_state_set(MODE_TELEPHONE);
             func_80042908(9);
             return;
         }
@@ -1725,7 +1725,7 @@ void func_8007132C(void) {
                 if (D_800E6280.girls[i].flags.f.met && D_800E6280.girls[i].flags.f.b12) {
                     if (get_g_zyotai_s(i) != 4 && func_8006B014(i) == 0) {
                         D_800E6280.daily_check_done = 1;
-                        main_state_set(0x43);
+                        main_state_set(MODE_TELEPHONE);
                         func_80042908(6);
                         return;
                     }
@@ -1740,7 +1740,7 @@ void func_8007132C(void) {
                 if (D_800E6280.girls[i].flags.f.met && D_800E6280.girls[i].flags.f.b13) {
                     if (get_g_zyotai_s(i) != 4 && func_8006B014(i) == 0) {
                         D_800E6280.daily_check_done = 1;
-                        main_state_set(0x43);
+                        main_state_set(MODE_TELEPHONE);
                         func_80042908(7);
                         return;
                     }
@@ -1750,7 +1750,7 @@ void func_8007132C(void) {
         }
     }
     t = 0;
-    if (D_800E6280.day_events[D_800E6280.day_event_index].type == 0xFB) {
+    if (D_800E6280.day_events[D_800E6280.day_event_index].type == DAY_EVENT_DAY_END) {
         for (i = 0; i < 11; i++) {
             if (D_800E6280.girls[i].flags.f.met && D_800E6280.girls[i].syoushin >= 0x3D && !D_800E6280.girls[i].flags.f.rumor_done) {
                 t++;
@@ -1758,23 +1758,23 @@ void func_8007132C(void) {
             }
         }
         if (t != 0) {
-            main_state_set(0x44);
+            main_state_set(MODE_RUMOR);
             return;
         }
         if (D_800E6280.daily_check_done == 0) {
             if ((*(u8 *)&D_800E6280.year) == 0x61 && (*(u8 *)&D_800E6280.month) == 7 && (*(u8 *)&D_800E6280.day) == 0x1A) {
                 D_800E6280.daily_check_done = 1;
-                main_state_set(0x43);
+                main_state_set(MODE_TELEPHONE);
                 func_80042908(5);
                 return;
             }
-            if (D_800E6280.vacation == 0 && (*(u8 *)&D_800E6280.year) != 0x62) {
+            if (D_800E6280.vacation == VACATION_NONE && (*(u8 *)&D_800E6280.year) != 0x62) {
                 for (i = 0; i < 11; i++) {
                     if (D_800E6280.girls[i].flags.f.met) {
                         if (D_800E6280.girls[i].syoushin >= 0x5B) {
                             func_80044750(0x50E);
                             D_800E6280.daily_check_done = 1;
-                            main_state_set(0x43);
+                            main_state_set(MODE_TELEPHONE);
                             func_80042908(4);
                             return;
                         }
@@ -1785,7 +1785,7 @@ void func_8007132C(void) {
                 && (D_800E6280.girls[11].flags.b[3] < 7U || (D_800E6280.girls[11].flags.b[3] >= 7U && D_800E6280.day_count >= 0x2DBU && D_800E6280.girls[11].flags.b[3] < 9U))
                 && !(rand() & 0x7F)) {
                 D_800E6280.daily_check_done = 1;
-                main_state_set(0x43);
+                main_state_set(MODE_TELEPHONE);
                 func_80042908(3);
                 return;
             }
@@ -1804,60 +1804,60 @@ void func_8007132C(void) {
                 icon_can_use_set(i, 1);
             }
         }
-        main_state_set(0x40);
+        main_state_set(MODE_SCHOOL_DAY);
         return;
     case 0x10:
-        main_state_set(0x46);
+        main_state_set(MODE_HOLIDAY);
         return;
     case 0xFE:
-        main_state_set(0x38);
+        main_state_set(MODE_MONTH_START);
         return;
     case 0xFD:
         func_8006CF80();
-        main_state_set(0x39);
+        main_state_set(MODE_DAY_NOTICE);
         return;
     case 0x20:
         func_8006CF80();
         bzero(D_80122DD0, 0x100);
-        main_state_set(0x72);
+        main_state_set(MODE_SPORTS_FESTIVAL);
         return;
     case 0x24:
         func_8006CF80();
         bzero(D_80122DD0, 0x100);
         if ((D_800E6280.player_flags.h >> 12) < 6U) {
-            main_state_set(0x70);
+            main_state_set(MODE_CULTURE_FESTIVAL_A);
             return;
         }
-        main_state_set(0x71);
+        main_state_set(MODE_CULTURE_FESTIVAL_B);
         return;
     case 0x28:
         func_8006CF80();
-        main_state_set(0x42);
+        main_state_set(MODE_CHRISTMAS_PREP);
         return;
     case 0x2C:
         func_8006CF80();
-        main_state_set(0x41);
+        main_state_set(MODE_NEW_YEAR_PREP);
         return;
     case 0x31:
-        main_state_set(0x54);
+        main_state_set(MODE_VALENTINE);
         return;
     case 0x30:
-        main_state_set(0x55);
+        main_state_set(MODE_SEASONAL_PARTY);
         return;
     case 0x40:
         func_8006CF80();
-        main_state_set(0x35);
+        main_state_set(MODE_EXAM);
         return;
     case 0x41:
         func_8006CF80();
-        main_state_set(0x51);
+        main_state_set(MODE_SCHOOL_TRIP);
         return;
     case 0x42:
-        main_state_set(0x5F);
+        main_state_set(MODE_CLUB_CAMP);
         return;
     case 0x43:
         func_8006CF80();
-        main_state_set(0x36);
+        main_state_set(MODE_CAREER_GUIDANCE);
         return;
     case 0x44:
         D_800E6280.events_today += 1;
@@ -1878,25 +1878,25 @@ void func_8007132C(void) {
             func_80072B5C(0);
             return;
         }
-        main_state_set(0x59);
+        main_state_set(MODE_GIRL_ENCOUNTER);
         return;
     case 0xFC:
-        main_state_set(0x32);
+        main_state_set(MODE_WEEK_END);
         return;
     case 0x32:
-        main_state_set(0x57);
+        main_state_set(MODE_GIRL_BIRTHDAY);
         return;
     case 0x33:
-        main_state_set(0x56);
+        main_state_set(MODE_PLAYER_BIRTHDAY);
         return;
     case 0x25:
-        main_state_set(0x74);
+        main_state_set(MODE_CLUB_MASTER_A);
         return;
     case 0x26:
-        main_state_set(0x75);
+        main_state_set(MODE_CLUB_MASTER_B);
         return;
     case 0x27:
-        main_state_set(0x76);
+        main_state_set(MODE_CLUB_MASTER_C);
         return;
     case 0x46:
         D_800E6280.events_today += 1;
@@ -1904,35 +1904,35 @@ void func_8007132C(void) {
             func_80072B5C(0);
             return;
         }
-        main_state_set(0x5A);
+        main_state_set(MODE_GIRL_INVITATION);
         return;
     case 0x45:
         D_80122CD4 = D_800E6280.day_events[D_800E6280.day_event_index].girl;
         /* FAKE: T-25318, the (s32) index cast keeps uopt from reusing the record address in $a1; the target
          * reloads the index here. */
         D_80122CD0 = D_800E6280.day_events[(s32)D_800E6280.day_event_index].scene;
-        main_state_set(0x5D);
+        main_state_set(MODE_SPECIAL_EVENT);
         return;
     case 0x47:
         D_800E6280.events_today += 1;
-        main_state_set(0x61);
+        main_state_set(MODE_SICK_VISIT);
         return;
     case 0x48:
         D_800E6280.current_girl = D_800E6280.day_events[D_800E6280.day_event_index].girl;
         D_800E6280.girls[D_800E6280.current_girl].affection = 0x32;
         D_800E6280.girls[D_800E6280.current_girl].syoushin = 0;
         D_80122CD0 = D_800E6280.day_events[D_800E6280.day_event_index].scene;
-        main_state_set(0x5B);
+        main_state_set(MODE_MEETING);
         return;
     case 0x49:
-        main_state_set(0x58);
+        main_state_set(MODE_AMUSEMENT_PARK);
         return;
     case 0x4A:
-        main_state_set(0x37);
+        main_state_set(MODE_CAREER_CHOICE);
         return;
     case 0xFF:
     default:
-        main_state_set(0x34);
+        main_state_set(MODE_COMMAND_SCREEN);
         return;
     }
 }
@@ -1963,7 +1963,7 @@ void func_800722C4(void) {
 void func_80072338(void) {
     D_800E6280.weekday++;
     if (D_800E6280.weekday == 7) {
-        D_800E6280.weekday = 0;
+        D_800E6280.weekday = WEEKDAY_MONDAY;
     }
     D_800E6280.day++;
     switch ((*(u8 *)&D_800E6280.month)) {
@@ -2019,7 +2019,7 @@ void func_80072338(void) {
         func_8007259C(0);
         D_800E6280.daily_check_done = 1;
     }
-    if ((D_800E6280.weekday == 6) && (*(u16 *)&D_800E6280.player_flags_hi & 1) && (D_800E6280.day_events[0].type != 0x40)) {
+    if ((D_800E6280.weekday == WEEKDAY_SUNDAY) && (*(u16 *)&D_800E6280.player_flags_hi & 1) && (D_800E6280.day_events[0].type != DAY_EVENT_EXAM)) {
         *(s8 *)&D_800E6280.player_flags_hi = (u8)D_800E6280.player_flags_hi.h & 0xFFFE;
     }
     func_8006B0C8();
@@ -2037,7 +2037,7 @@ void func_800725B0(void) {
         break;
     case 1:
         D_800E6280.day_event_index += 1;
-        main_state_set(0x31);
+        main_state_set(MODE_DAY_SCREEN);
         break;
     }
     if (D_8011F113 & 0x80) {
@@ -2078,22 +2078,22 @@ void func_800726F0(void) {
         gnsx(&g->player_family_name);
         flag = g->vacation;
         if (flag != 0 && g->day == 2) {
-            g->vacation = 0;
+            g->vacation = VACATION_NONE;
             sndisp("明日から新学期だ）", 0, 0x1F);
-        } else if (g->vacation != 0) {
-            g->vacation = 0;
+        } else if (g->vacation != VACATION_NONE) {
+            g->vacation = VACATION_NONE;
             sndisp("明日から新学期だ）", 0, 0x1F);
         } else if (g->month == 7) {
             sndisp("明日から夏休みだ）", 0, 0x1F);
-            g->vacation = 1;
+            g->vacation = VACATION_SUMMER;
         } else if (g->month == 0xC) {
             sndisp("明日から冬休みだ）", 0, 0x1F);
-            g->vacation = 2;
+            g->vacation = VACATION_WINTER;
         } else if (g->month == 3) {
             sndisp("明日から春休みだ）", 0, 0x1F);
-            g->vacation = 3;
+            g->vacation = VACATION_SPRING;
         } else {
-            g->vacation = 0;
+            g->vacation = VACATION_NONE;
         }
         func_800674B0();
         k_disp_start(3);
@@ -2118,7 +2118,7 @@ void func_800728A4(void) {
         break;
     case 1:
         D_800E6280.day_event_index += 1;
-        main_state_set(0x31);
+        main_state_set(MODE_DAY_SCREEN);
         break;
     }
     func_800578F4(get_last_gamen_mode());
@@ -2190,14 +2190,14 @@ void func_80072B20(void) {
 
 s32 func_80072B5C(s32 arg0) {
     if (D_800B3C6C != 0) {
-        main_state_set(0x22);
+        main_state_set(MODE_OPTION_3);
         return 0;
     }
     if (arg0 == 1) {
         func_8004500C(0, 0);
     }
     D_800E6280.day_event_index++;
-    main_state_set(0x31);
+    main_state_set(MODE_DAY_SCREEN);
     /* no return on this path: the original leaves $v0 as the call result */
 }
 
@@ -2356,7 +2356,7 @@ s32 func_80072D70(void) {
                 if (g->girls[k].flags.f.met && (get_h_tokimeki(k) >= 0x33U) && (get_g_zyotai_s(start) != 4)) {
                     if ((rand() & 0xFF) < 0x3F) {
                         g->date_girl = k;
-                        main_state_set(0x62);
+                        main_state_set(MODE_SICK_VISIT_2);
                         return 1;
                     }
                 }
@@ -2392,8 +2392,8 @@ s32 func_80073198(void) {
         }
         return;
     case 2:
-        if (((u32)(D_800E6280.frame_count & 0xFF) < 0x19U) && (D_800E6280.event_flags[0x4B] == 0) && (D_800E6280.vacation == 0)) {
-            main_state_set(0x5D);
+        if (((u32)(D_800E6280.frame_count & 0xFF) < 0x19U) && (D_800E6280.event_flags[0x4B] == 0) && (D_800E6280.vacation == VACATION_NONE)) {
+            main_state_set(MODE_SPECIAL_EVENT);
             D_80122CD4 = 0xB;
             D_80122CD0 = 2;
             D_800E6280.event_flags[0x4B] = 1;

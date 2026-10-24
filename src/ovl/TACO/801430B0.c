@@ -127,15 +127,15 @@ void func_80143574(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void func_80143644(void) {
-    D_800E6280.menu_mode = 1;
-    if (D_800E6280.pad_pressed & 0x1000) {
+    D_800E6280.menu_mode = MENU_MODE_A;
+    if (D_800E6280.pad_pressed & PAD_UP) {
         if (D_800E6280.menu_cursor_0 != 0) {
             D_800E6280.menu_cursor_0 -= 1;
         } else {
             D_800E6280.menu_cursor_0 = D_800E6280.menu_count_0 - 1;
         }
     }
-    if (D_800E6280.pad_pressed & 0x4000) {
+    if (D_800E6280.pad_pressed & PAD_DOWN) {
         if ((u32)D_800E6280.menu_cursor_0 < (u32)(D_800E6280.menu_count_0 - 1)) {
             D_800E6280.menu_cursor_0 += 1;
             return;

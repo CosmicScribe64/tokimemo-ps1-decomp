@@ -310,7 +310,7 @@ void func_8013FFD0(void) {
 s32 func_80140030(void) {
     D_80122D2C = 0;
     if (D_80145FE4 == 0) {
-        D_800E6280.current_girl = 0;
+        D_800E6280.current_girl = GIRL_SHIORI;
         D_80122CD4 = 0;
         D_80122CD0 = 7;
         func_80042908(6);
@@ -318,7 +318,7 @@ s32 func_80140030(void) {
         return 0;
     }
     if (D_80145FE4 == 7) {
-        D_800E6280.current_girl = 7;
+        D_800E6280.current_girl = GIRL_MIRA;
         D_80122CD4 = 7;
         D_80122CD0 = 7;
         func_80042908(7);
@@ -326,7 +326,7 @@ s32 func_80140030(void) {
         return 0;
     }
     if (D_80145FE4 == 9) {
-        D_800E6280.current_girl = 9;
+        D_800E6280.current_girl = GIRL_MEGUMI;
         D_80122CD4 = 9;
         D_80122CD0 = 7;
         func_80042908(8);
@@ -537,7 +537,7 @@ s32 func_80140AD8(void) {
         D_80145F20 = D_80145AF0;
         D_80145F24 = D_80145B24;
         D_80145F28 = D_80145B58;
-        D_800E6280.current_girl = 9;
+        D_800E6280.current_girl = GIRL_MEGUMI;
         func_80085B3C(4, 1);
         func_800847B8(D_800E6280.current_girl);
         func_8004284C();
@@ -597,37 +597,37 @@ s32 func_80140DC0(void) {
         func_800847B8(D_800E6280.current_girl);
     }
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         func_80046500();
         break;
-    case 1:
+    case GIRL_MIO:
         func_80140F54();
         break;
-    case 2:
+    case GIRL_YUINA:
         func_8014102C();
         break;
-    case 3:
+    case GIRL_AYAKO:
         func_80141180();
         break;
-    case 4:
+    case GIRL_SAKI:
         func_80141224();
         break;
-    case 5:
+    case GIRL_YUKARI:
         func_80141358();
         break;
-    case 6:
+    case GIRL_NOZOMI:
         func_801413F4();
         break;
-    case 7:
+    case GIRL_MIRA:
         func_801414E0();
         break;
-    case 8:
+    case GIRL_YUKO:
         func_801415C8();
         break;
-    case 9:
+    case GIRL_MEGUMI:
         func_80141678();
         break;
-    case 10:
+    case GIRL_YUMI:
         func_80046500();
         break;
     }

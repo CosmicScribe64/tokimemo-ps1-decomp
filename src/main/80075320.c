@@ -123,7 +123,7 @@ s32 func_800754C0(void) {
     if (birth_day_check(0xF) != 1) {
         return 0;
     }
-    if (get_g_zyotai_s(0) & 0x80) {
+    if (get_g_zyotai_s(GIRL_SHIORI) & 0x80) {
         return 1;
     }
     return 0;
@@ -146,7 +146,7 @@ void func_800755B4(void) {
         D_80122CD0 = 8;
         parameter_show_init();
         parameter_show_init();
-        main_state_set(0x5D);
+        main_state_set(MODE_SPECIAL_EVENT);
         return;
     }
     func_80041584();
@@ -190,7 +190,7 @@ void func_800755B4(void) {
             D_800E6280.menu_cursor_0 = 9;
             n = 1;
         }
-        if ((func_8005352C() == 1) && (((u32) (D_800E6280.day + 6) / 7U) == 3) && (D_800E6280.weekday == 6)) {
+        if ((func_8005352C() == 1) && (((u32) (D_800E6280.day + 6) / 7U) == 3) && (D_800E6280.weekday == WEEKDAY_SUNDAY)) {
             if (((u8) D_800E6280.month % 3U) == 0) {
                 if (n != 0) {
                     strcpy(buf, "（");
@@ -261,7 +261,7 @@ void func_80075AF8(void) {
     if (*(u8 *)&D_800E6280.icon_mode == 2) {
         icon_can_use_set(0xE, 0);
     }
-    if (D_800E6280.weekday == 6) {
+    if (D_800E6280.weekday == WEEKDAY_SUNDAY) {
         n = 0;
         for (i = 0; i < 11; i++) {
             if (D_800E6280.clubs[i].unk_03 & 1) {
@@ -334,7 +334,7 @@ s32 func_80075C84(void) {
                         if (i != 11) {
                             if (i == 12) {
                                 D_801230D0 = 11;
-                                D_800E6280.current_girl = 11;
+                                D_800E6280.current_girl = GIRL_MIHARU;
                                 D_800E6280.menu_cursor_0 = 12;
                             } else {
                                 D_801230D0 = i;
@@ -391,12 +391,12 @@ s32 func_80076000(void) {
     s32 other_girl;
 
     /* FAKE: unsigned read of the signed state byte reproduces the original lbu. */
-    if (((u8)D_800E6280.icon_mode == 2) && (D_800E6280.pad_held & 1)) {
+    if (((u8)D_800E6280.icon_mode == ICON_MODE_FREE) && (D_800E6280.pad_held & PAD_L2)) {
         return 1;
     }
     /* FAKE: explicit signed-byte views preserve the selector range across packed stores. */
     handled = 0;
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         if (*(s8 *)&D_800E6280.menu_cursor_0 >= 0) {
             handled = 1;
             func_80045414(9, 0, 0);
@@ -409,7 +409,7 @@ s32 func_80076000(void) {
         case 4:
             if (get_icon_can_use((s32) *(s8 *)&D_800E6280.menu_cursor_0) != 0) {
                 func_80044750(0x500);
-                if (D_800E6280.weekday == 6) {
+                if (D_800E6280.weekday == WEEKDAY_SUNDAY) {
                     if (((u16) D_800E6280.player_flags.h >> 0xC) == 0xB) {
                         ((LastCommandBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
                         D_800E6280.day_events[D_800E6280.day_event_index].girl = *(s8 *)&D_800E6280.menu_cursor_0;
@@ -572,7 +572,7 @@ void func_80076630(void) {
         D_800E6280.appt_place_1 = D_800E6280.unk_54C_0.unk_00;
         D_800E6280.appt_place_2 = 0xFF;
         D_800E6280.appt_place_3 = 0xFF;
-        D_800E6280.day_events[D_800E6280.day_event_index].type = 0x80;
+        D_800E6280.day_events[D_800E6280.day_event_index].type = DAY_EVENT_APPOINTMENT;
         D_800E6280.day_events[D_800E6280.day_event_index].girl = ((AppointmentBits *)&D_800E6280.unk_54C[0])->girl;
         D_800E6280.day_events[D_800E6280.day_event_index].scene = ((AppointmentBits *)&D_800E6280.unk_54C[0])->place;
         D_800E6280.current_girl = D_800E6280.unk_54C_0.unk_25;
@@ -661,7 +661,7 @@ s32 func_80076B48(void) {
         menu_check(1, (s32) D_8011ECF6, (s32) D_8011ECFA);
         func_8004FC10(1);
         menu_bar_show(1);
-        if (g->pad_pressed & 0x20) {
+        if (g->pad_pressed & PAD_CIRCLE) {
             switch (g->menu_cursor_1) {                   /* switch 2; irregular */
             case 0:                                 /* switch 2 */
             case 1:                                 /* switch 2 */
@@ -731,13 +731,13 @@ void appointment_launch(void) {
             j++;
         }
     }
-    D_800E6280.day_events[D_800E6280.day_event_index].type = 0x80;
+    D_800E6280.day_events[D_800E6280.day_event_index].type = DAY_EVENT_APPOINTMENT;
     D_800E6280.day_events[D_800E6280.day_event_index].girl = D_800E6280.unk_54C_0.unk_25;
     D_800E6280.day_events[D_800E6280.day_event_index].scene = D_800E6280.unk_54C_0.unk_00;
     D_800E6280.current_girl = D_800E6280.unk_54C_0.unk_25;
     D_800E6280.date_girl = D_800E6280.unk_54C_0.unk_25;
     D_800E6280.appointment_flag = ((AppointmentBits *)&D_800E6280.unk_54C[0])->flag;
-    main_state_set(0x50);
+    main_state_set(MODE_DATE);
 }
 
 void func_80076EC0(void) {
@@ -906,7 +906,7 @@ void func_8007739C(void) {
         ((NibbleView *)&gs->last_command.b[0])->high = gs->day_events[gs->day_event_index].girl;
         gs->progress_state[0x15 + (gs->last_command.b[0] >> 4) % 9]++;
         if ((gs->last_command.b[0] >> 4) == 4) {
-            if (((PlayerFlagBits *)&gs->player_flags)->club < 11) {
+            if (((PlayerFlagBits *)&gs->player_flags)->club < CLUB_NONE) {
                 gs->clubs[((PlayerFlagBits *)&gs->player_flags)->club].exp += 6;
             }
         }
@@ -1033,7 +1033,7 @@ void func_80077900(void) {
     }
     func_80048F64(0x60);
     func_80048F64(0x61);
-    if ((gs->weekday == 6) && (gs->day_events[gs->day_event_index].girl == 4)
+    if ((gs->weekday == WEEKDAY_SUNDAY) && (gs->day_events[gs->day_event_index].girl == 4)
         && ((club = gs->player_flags.h >> 12) != 11) && (gs->clubs[club].exp == 6)) {
         girl = func_80053564(club);
         gs->date_girl = girl;
@@ -1047,7 +1047,7 @@ void func_80077900(void) {
                         && !((ClubFlagBits *)&gs->clubs[club])->b29
                         && !gs->girls[girl].flags.f.b18) {
                         gs->girls[girl].flags.f.b18 = 1;
-                        main_state_set(0x60, club);
+                        main_state_set(MODE_CLUB_CAMP_2, club);
                         return;
                     }
                 }
@@ -1055,14 +1055,14 @@ void func_80077900(void) {
                     && !((ClubFlagBits *)&gs->clubs[club])->b29
                     && !gs->girls[girl].flags.f.b18) {
                     gs->girls[girl].flags.f.b18 = 1;
-                    main_state_set(0x60, club);
+                    main_state_set(MODE_CLUB_CAMP_2, club);
                     return;
                 }
             } else if (gs->girls[girl].flags.f.met && gs->girls[girl].flags.f.b2
                        && !((ClubFlagBits *)&gs->clubs[club])->b29
                        && !gs->girls[girl].flags.f.b18) {
                 gs->girls[girl].flags.f.b18 = 1;
-                main_state_set(0x60, club);
+                main_state_set(MODE_CLUB_CAMP_2, club);
                 return;
             }
         }
@@ -1223,20 +1223,20 @@ void holiday_tel_call(void) {
     menu_bar_show(0);
     func_8004FC10(0);
     k_disp_inc();
-    if (D_800E6280.pad_pressed & 0x40) {
+    if (D_800E6280.pad_pressed & PAD_CROSS) {
         func_80042908(0);
         return;
     }
-    if ((D_800E6280.pad_pressed & 0x20) && D_800E6280.menu_cursor_0 != -1) {
+    if ((D_800E6280.pad_pressed & PAD_CIRCLE) && D_800E6280.menu_cursor_0 != -1) {
         if (D_800E6280.menu_cursor_0 == 0xD) {
             func_80042908(0);
             return;
         }
         func_80044750(0x50A);
         if (D_800E6280.menu_cursor_0 == 0) {
-            D_800E6280.current_girl = 0xD;
+            D_800E6280.current_girl = GIRL_YOSHIO;
         } else if (D_800E6280.menu_cursor_0 == 0xC) {
-            D_800E6280.current_girl = 0xB;
+            D_800E6280.current_girl = GIRL_MIHARU;
         } else {
             D_800E6280.current_girl = D_800E6280.menu_cursor_0 - 1;
         }
@@ -1255,7 +1255,7 @@ s32 holiday_tel_exit(void) {
                 func_80044750(0x504);
             } else if (g->substep >= 4) {
                 k = g->substep - 4;
-                if (g->current_girl == 13) {
+                if (g->current_girl == GIRL_YOSHIO) {
                     func_80044750((u16)(D_800B3778[10][k] + 0x505));
                 } else {
                     func_80044750((u16)(D_800B3778[g->current_girl][k] + 0x505));
@@ -1263,25 +1263,25 @@ s32 holiday_tel_exit(void) {
             }
             g->substep++;
         }
-    } else if (g->current_girl == 13) {
+    } else if (g->current_girl == GIRL_YOSHIO) {
         g->menu_cursor_0 = 0;
         k_sub_reset();
         restore_bgm();
-        main_state_set(0x45);
+        main_state_set(MODE_TELEPHONE_PROFILE);
         func_80042908(0);
-    } else if (g->current_girl == 11) {
+    } else if (g->current_girl == GIRL_MIHARU) {
         k_sub_reset();
         g->menu_cursor_0 = 12;
         D_801230D0 = 11;
         restore_bgm();
-        main_state_set(0x45);
+        main_state_set(MODE_TELEPHONE_PROFILE);
         func_80042908(1);
     } else {
         k_sub_reset();
         g->menu_cursor_0 = g->current_girl + 1;
         D_801230D0 = g->current_girl;
         restore_bgm();
-        main_state_set(0x45);
+        main_state_set(MODE_TELEPHONE_PROFILE);
         func_80042908(1);
     }
 }
@@ -1353,11 +1353,11 @@ void func_8007866C(void) {
     menu_check(1, (s32) ((Actor *)D_8011ECD0)->x, (s32) ((Actor *)D_8011ECD0)->y);
     menu_bar_show(1);
     func_8004FC10(1);
-    if (D_800E6280.pad_pressed & 0x40) {
+    if (D_800E6280.pad_pressed & PAD_CROSS) {
         func_80042908(0);
         return;
     }
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         switch (D_800E6280.menu_cursor_1) {
         case 0:
             func_8004284C();
@@ -1381,8 +1381,8 @@ void func_8007866C(void) {
 
 void holiday_club_exit(void) {
     func_80048E78();
-    if (func_8005352C() == 1 && (u32)(D_800E6280.day + 6) / 7 == 3 && D_800E6280.month % 3U == 0 && D_800E6280.weekday == 6) {
-        main_state_set(0x73);
+    if (func_8005352C() == 1 && (u32)(D_800E6280.day + 6) / 7 == 3 && D_800E6280.month % 3U == 0 && D_800E6280.weekday == WEEKDAY_SUNDAY) {
+        main_state_set(MODE_PRACTICE_MATCH);
         return;
     }
     func_80042908(5);

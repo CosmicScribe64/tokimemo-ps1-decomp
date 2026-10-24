@@ -4,7 +4,7 @@
 u8 func_8013D780(void) {
     switch (D_800E6280.step) {
     case 0:
-        D_800E6280.current_girl = 0xE;
+        D_800E6280.current_girl = GIRL_SOTOI;
         func_80046290(0x1C0000A8, 0x0F0000B7, 0xE);
         func_80044750(0x300);
         func_8004284C();

@@ -20,20 +20,20 @@ s32 func_80133540(void) {
         if (cd_read_sync_status() & 1) {
             D_8013C6CC = D_8013B810;
             D_8013C6D0 = D_8013B938;
-            D_800E6280.current_girl = 0xE;
+            D_800E6280.current_girl = GIRL_SOTOI;
             func_8004284C();
         }
     }
 }
 
 void func_801336AC(void) {
-    if (D_800E6280.step >= 3 && D_800E6280.step < 0x28 && (D_800E6280.pad_held & 0x20)) {
+    if (D_800E6280.step >= 3 && D_800E6280.step < 0x28 && (D_800E6280.pad_held & PAD_CIRCLE)) {
         if (func_800460EC() != 2) {
             func_80044750(0x74);
         }
         func_8013376C();
     }
-    if (D_800E6280.step >= 3 && D_800E6280.step < 0x26 && (D_800E6280.pad_held & 0x40)) {
+    if (D_800E6280.step >= 3 && D_800E6280.step < 0x26 && (D_800E6280.pad_held & PAD_CROSS)) {
         func_80044750(0xC1);
         func_80044750(0xC4);
         func_80042940(0x25);
@@ -492,7 +492,7 @@ void func_80133FA4(void) {
                     set_kanji_string(-0x80, 0x70, 0, "奉行", 0);
                     set_kanji_string(-0x56, 0x80, 0, "「おのれー・・・。", 0);
                 }
-                if (!(D_800E6280.pad_held & 0x20)) {
+                if (!(D_800E6280.pad_held & PAD_CIRCLE)) {
                     /* FAKE: two statements load the table before the index; unk_110C is read
                      * as u8 here (lbu), as in func_80132708. T-11430 */
                     p = D_8013C6D0;

@@ -246,7 +246,7 @@ s32 func_801419F8(void) {
     menu_bar_show(0);
     func_8006BD6C(1);
     func_8006BA40();
-    if (D_800E6280.pad_pressed & 0x20) {
+    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
         if (check_end_k() != 0) {
             if (D_800E6280.menu_items[0].hover != 0) {
                 D_80122CDC = 0;

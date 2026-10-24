@@ -52,7 +52,7 @@ void func_8013D290(void) {
 }
 
 void func_8013D2C8(void) {
-    D_800E6280.current_girl = 1;
+    D_800E6280.current_girl = GIRL_MIO;
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();

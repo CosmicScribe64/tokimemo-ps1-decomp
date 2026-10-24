@@ -205,8 +205,8 @@ void func_80136148(void) {
 void func_80136178(void) {
     u32 temp_t8;
 
-    temp_t8 = (u8)get_g_zyotai_s(5) & 0x7F;
-    if (D_800E6280.current_girl == 5 && temp_t8 < 2U && D_80143B20 == 0) {
+    temp_t8 = (u8)get_g_zyotai_s(GIRL_YUKARI) & 0x7F;
+    if (D_800E6280.current_girl == GIRL_YUKARI && temp_t8 < 2U && D_80143B20 == 0) {
         if (D_800E6280.step_timer.w++ == 0) {
             D_80143B00 = 0x2A;
         }
@@ -223,7 +223,7 @@ void func_80136204(void) {
     if ((D_800E6280.day == ((u32)(D_800E6280.girls[D_800E6280.current_girl].birthday.w << 0x17) >> 0x1B)) &&
         (D_800E6280.month == (D_800E6280.girls[D_800E6280.current_girl].birthday.w & 0xF)) &&
         (D_80143B20 == 0) &&
-        (D_800E6280.current_girl == 0)) {
+        (D_800E6280.current_girl == GIRL_SHIORI)) {
         D_800E6280.daily_event_bits |= 1;
         D_800E6280.step += 4;
     /* FAKE: indirect reads of unk_040 and unk_0F8 prevent cross-branch CSE of unk_040 and match the ilod evaluation order of unk_1BC[] above, and the (u8) cast on r reserves the extra temp as in func_80136770 (T-2020); real source unknown. T-24080 */
@@ -253,7 +253,7 @@ void func_80136340(void) {
     girl = D_80143B1C;
     if (D_800E6280.year == 0x62) {
         D_80143B00 += 1;
-    } else if ((*(u8 *)&D_80143B20 == 0) && (D_800E6280.current_girl == 9) && (girl == 9) && (status < 2U)) {
+    } else if ((*(u8 *)&D_80143B20 == 0) && (D_800E6280.current_girl == GIRL_MEGUMI) && (girl == 9) && (status < 2U)) {
         D_80143B00 += 4;
     }
     if (*(u8 *)&D_80143B20 != 0) {
@@ -316,7 +316,7 @@ void func_801365F4(void) {
     D_800CA160 = D_80143EB4;
     D_800CA164 = D_80143EE8;
     D_800CA168 = D_80143F1C;
-    if ((D_800E6280.current_girl == 0) && (D_80143B24 == 1)) {
+    if ((D_800E6280.current_girl == GIRL_SHIORI) && (D_80143B24 == 1)) {
         func_80085B3C(0xA, 0x32);
     } else {
         func_80085B3C(0xA, 0x2E);
@@ -425,7 +425,7 @@ void func_80136BD4(void) {
         D_800E6280.step += 8;
         return;
     }
-    if (D_800E6280.current_girl == 0 && D_80143B24 == 1) {
+    if (D_800E6280.current_girl == GIRL_SHIORI && D_80143B24 == 1) {
         func_80085B3C(0xD, 0x2D);
     } else {
         func_80085B3C(0xD, 0x2C);
@@ -449,57 +449,57 @@ void func_80136CE0(void) {
 
 void func_80136D18(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_800CA160 = D_80143F50;
         D_800CA164 = D_80143F84;
         D_800CA168 = D_80143FB8;
         return;
-    case 1:
+    case GIRL_MIO:
         D_800CA160 = D_80143F64;
         D_800CA164 = D_80143F98;
         D_800CA168 = D_80143FCC;
         return;
-    case 2:
+    case GIRL_YUINA:
         D_800CA160 = D_80143F58;
         D_800CA164 = D_80143F8C;
         D_800CA168 = D_80143FC0;
         return;
-    case 3:
+    case GIRL_AYAKO:
         D_800CA160 = D_80143F5C;
         D_800CA164 = D_80143F90;
         D_800CA168 = D_80143FC4;
         return;
-    case 4:
+    case GIRL_SAKI:
         D_800CA160 = D_80143F74;
         D_800CA164 = D_80143FA8;
         D_800CA168 = D_80143FDC;
         return;
-    case 5:
+    case GIRL_YUKARI:
         D_800CA160 = D_80143F68;
         D_800CA164 = D_80143F9C;
         D_800CA168 = D_80143FD0;
         return;
-    case 6:
+    case GIRL_NOZOMI:
         D_800CA160 = D_80143F6C;
         D_800CA164 = D_80143FA0;
         D_800CA168 = D_80143FD4;
         return;
-    case 7:
+    case GIRL_MIRA:
         D_800CA160 = D_80143F60;
         D_800CA164 = D_80143F94;
         D_800CA168 = D_80143FC8;
         return;
-    case 8:
+    case GIRL_YUKO:
         D_800CA160 = D_80143F4C;
         D_800CA164 = D_80143F80;
         D_800CA168 = D_80143FB4;
         return;
-    case 9:
+    case GIRL_MEGUMI:
         D_800CA160 = D_80143F70;
         D_800CA164 = D_80143FA4;
         D_800CA168 = D_80143FD8;
         return;
-    case 10:
+    case GIRL_YUMI:
         D_800CA160 = D_80143F7C;
         D_800CA164 = D_80143FB0;
         D_800CA168 = D_80143FE4;

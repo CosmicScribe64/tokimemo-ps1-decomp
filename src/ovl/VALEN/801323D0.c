@@ -67,7 +67,7 @@ void func_80132578(void) {
     D_80134494 = D_80134468;
     D_80134498 = 0;
     D_8013449C = 0;
-    D_800E6280.current_girl = 0xC;
+    D_800E6280.current_girl = GIRL_REI;
     func_800847B8(0xC);
     D_800E6280.daily_event_bits |= 8;
     func_8004284C();

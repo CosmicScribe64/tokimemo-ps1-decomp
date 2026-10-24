@@ -41,7 +41,7 @@ void func_80138B20(void) {
 
 void func_80138BD8(void) {
     func_801386C4();
-    if (D_800E6280.current_girl == 4 && ((u32)D_800E6280.girls[4].flags.b[2] >> 4) == ((u32)D_800E6280.player_flags.h >> 0xC)) {
+    if (D_800E6280.current_girl == GIRL_SAKI && ((u32)D_800E6280.girls[4].flags.b[2] >> 4) == ((u32)D_800E6280.player_flags.h >> 0xC)) {
         *(u8 *)(*(s32 *)(D_800CA2D4 + D_800CA2DC * 4) + 3) = 0xFF;
     }
 }
@@ -91,7 +91,7 @@ void func_80138DD8(void) {
     u8 value;
 
     func_801386C4();
-    if (D_800E6280.current_girl == 1 && D_800CA2E0 == 3) {
+    if (D_800E6280.current_girl == GIRL_MIO && D_800CA2E0 == 3) {
         value = D_800CA2CC;
         if (value == 1) {
             D_80122CF4 = 0;
@@ -142,7 +142,7 @@ s32 func_80138E40(void) {
 }
 
 void func_80138FAC(void) {
-    if (D_800E6280.current_girl != 3 || D_800CA2CC != 1) {
+    if (D_800E6280.current_girl != GIRL_AYAKO || D_800CA2CC != 1) {
         normal_date_girl_out();
         return;
     }
@@ -230,7 +230,7 @@ s32 func_801392B4(void) {
     s32 previous_phase;
 
     if (D_80122CDC == 0) {
-        if (D_800E6280.current_girl == 8) {
+        if (D_800E6280.current_girl == GIRL_YUKO) {
             previous_phase = D_800E6280.step;
             six = 6;
             *(s16 *)&D_800CA2DC = (six & 0) + six;
@@ -278,7 +278,7 @@ void func_80139400(void) {
 
 void func_80139498(void) {
     if (D_80122CDC != 0) {
-        if (D_800E6280.current_girl == 2 || D_800E6280.current_girl == 7 || D_800E6280.current_girl == 9) {
+        if (D_800E6280.current_girl == GIRL_YUINA || D_800E6280.current_girl == GIRL_MIRA || D_800E6280.current_girl == GIRL_MEGUMI) {
             func_80083418();
             return;
         }
@@ -302,7 +302,7 @@ void func_80139548(void) {
         D_800CA2D4 = D_8013C484;
         D_800CA2D8 = D_8013C4B8;
         D_800CA2EC = 1;
-        D_800E6280.current_girl = 0xD;
+        D_800E6280.current_girl = GIRL_YOSHIO;
         func_800847B8(0xDU);
         D_800E6280.step = 0x33;
         return;
@@ -365,7 +365,7 @@ s32 func_80139740(void) {
     D_8013C97C = 0xFF;
     if ((t & 0x7F) == 4 && D_800CA2EC == 0) {
         D_8013C97C = D_800E6280.current_girl;
-        if (D_800E6280.current_girl == 1) {
+        if (D_800E6280.current_girl == GIRL_MIO) {
             state = D_800E6280.step;
             normal_date_girl_out();
             if (state == D_800E6280.step) {
@@ -373,7 +373,7 @@ s32 func_80139740(void) {
             }
         }
         D_800CA2EC = 1;
-        D_800E6280.current_girl = 0xD;
+        D_800E6280.current_girl = GIRL_YOSHIO;
         func_800847B8(0xD);
         get_g_name(girl_name_buf, D_8013C97C);
         func_8004284C();
@@ -443,57 +443,57 @@ s32 func_801398E8(void) {
 
 void func_801399F4(void) {
     switch (D_800E6280.current_girl) {
-    case 0:
+    case GIRL_SHIORI:
         D_800CA2D0 = D_8013C424;
         D_800CA2D4 = D_8013C458;
         D_800CA2D8 = D_8013C48C;
         break;
-    case 1:
+    case GIRL_MIO:
         D_800CA2D0 = D_8013C434;
         D_800CA2D4 = D_8013C468;
         D_800CA2D8 = D_8013C49C;
         break;
-    case 2:
+    case GIRL_YUINA:
         D_800CA2D0 = D_8013C428;
         D_800CA2D4 = D_8013C45C;
         D_800CA2D8 = D_8013C490;
         break;
-    case 3:
+    case GIRL_AYAKO:
         D_800CA2D0 = D_8013C42C;
         D_800CA2D4 = D_8013C460;
         D_800CA2D8 = D_8013C494;
         break;
-    case 4:
+    case GIRL_SAKI:
         D_800CA2D0 = D_8013C448;
         D_800CA2D4 = D_8013C47C;
         D_800CA2D8 = D_8013C4B0;
         break;
-    case 5:
+    case GIRL_YUKARI:
         D_800CA2D0 = D_8013C438;
         D_800CA2D4 = D_8013C46C;
         D_800CA2D8 = D_8013C4A0;
         break;
-    case 6:
+    case GIRL_NOZOMI:
         D_800CA2D0 = D_8013C440;
         D_800CA2D4 = D_8013C474;
         D_800CA2D8 = D_8013C4A8;
-        if ((u8)(get_g_zyotai_s(6) & 0x7F) < 2) {
+        if ((u8)(get_g_zyotai_s(GIRL_NOZOMI) & 0x7F) < 2) {
             D_800CA2D0 = D_8013C43C;
             D_800CA2D4 = D_8013C470;
             D_800CA2D8 = D_8013C4A4;
         }
         break;
-    case 7:
+    case GIRL_MIRA:
         D_800CA2D0 = D_8013C430;
         D_800CA2D4 = D_8013C464;
         D_800CA2D8 = D_8013C498;
         break;
-    case 8:
+    case GIRL_YUKO:
         D_800CA2D0 = D_8013C420;
         D_800CA2D4 = D_8013C454;
         D_800CA2D8 = D_8013C488;
         break;
-    case 9:
+    case GIRL_MEGUMI:
         D_800CA2D0 = D_8013C444;
         D_800CA2D4 = D_8013C478;
         D_800CA2D8 = D_8013C4AC;
