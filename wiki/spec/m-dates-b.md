@@ -53,7 +53,7 @@ Names: proposed new name (current name). "Table refs" counts `.word` references 
 | `normal_date_bg_out` (+ `func_8007D8AC`) | cover wipe, section 5 | 18 frames | SHOUGATU 35, SHUGAKU 11, KANGEI 9 |
 | `normal_date_bg_fadein`, `normal_date_bg_fadeout` | brightness +4 / -4 per frame (about 32 frames) | 32 | BUNKASAI 130 / 268 C calls, MASTER, DATE |
 | `normal_date_bggirl_fadein`, `normal_date_bggirl_fadeout` | the same with the portrait tinted by the same brightness; fade-out hides the portrait when the brightness is below 8 | 32 | DATE 34 (out), SHOUGATU, GEKO |
-| `normal_date_move_place` | change of location: cross-fade from the old to the newly decoded background, section 5 | 17 | DATE2, VALEN, SHOUGATU, ENDING |
+| `normal_date_move_place` | change of location: cross-fade from the old to the newly decoded background, section 5 | 18 (1 + 16 + 1) | DATE2, VALEN, SHOUGATU, ENDING |
 | `place_init`, `place_init2` | `k_reset(0)`, `message_window_set_title(scene_place_title)` (`_2`: `scene_place_title_2`), step | 1 | SHOUGATU 34, SHUGAKU 11 |
 
 ### 2.2 Portrait, HUD, girl
@@ -62,7 +62,7 @@ Names: proposed new name (current name). "Table refs" counts `.word` references 
 |---|---|---|
 | `read_bustup`, `read_bustup_uniform`, `read_bustup_swimsuit` (`bustup_return` calls `read_bustup`) | start the CD read of the portrait file of `current_girl`, section 6 | SHOUGATU 27 (uniform), DATE (swimsuit 2) |
 | `bustup_show_checked` (`func_80083474`), `bustup_show` (`func_80083628`), `bustup_show_checked_hidden` (`func_800836A0`) | verify (optional) and build the portrait from the loaded file, section 6 | SHOUGATU 56, GEKO 34, MASTER, BUNKASAI 182 C |
-| `normal_date_girl_in`, `normal_date_girl_out`, `normal_date_girl_suddenin`, `normal_date_girl_suddenout` | portrait fade in (17 frames) and out (17 frames), or at once, section 5 | DATE 160 (out), DATE2 12 (in), GEKO |
+| `normal_date_girl_in`, `normal_date_girl_out`, `normal_date_girl_suddenin`, `normal_date_girl_suddenout` | portrait fade in and out (18 frames each: 1 init + 16 + 1; emulator: 18 calls), or at once, section 5 | DATE 160 (out), DATE2 12 (in), GEKO |
 | `bustup_expression_mood`, `bustup_expression_0` .. `bustup_expression_4` (`func_80083338`, `func_80083378` .. `func_80083418`) | set the face cells of the portrait by mood rank (HYPOTHESIS: expression) | DATE 79 (mood), 14 (2), 4 (0) |
 | `vram_bustup_clear` | `actor_clear` 31 and 30, free `tpage_buf[5..9]` | SHOUGATU, GEKO |
 | `change_girl` | `current_girl = date_girl` (the girl of the scene) | SHOUGATU 3, GEKO 2 |
@@ -270,7 +270,7 @@ Emulator command sequences (group.line = code): GEKO girl-0 scene 1: 0.0 = 6, 0.
 
 ## 11. SD sprites and the CD level meter
 
-**SD (super-deformed) sprites.** The weekday and holiday screens show a small animated character acting out the chosen command (actors 96 and 97). `addr_init_weekly_sd(n)`, `addr_init_holiday_sd(n)`, `addr_init_club_sd(n)`, `addr_init_else_sd(n)` (n is `D_801230D0`, the command number of the day, except the fixed 2 of the `else` set) look up entry `n % 25`, `% 13`, `% 32`, `% 3` in `sd_table_weekday`, `sd_table_holiday`, `sd_table_club`, `sd_table_else` (three u16 per entry) and publish `sd_palette = 0x801E0000`, `sd_texture_blocks` (entry word 0), `sd_image_table` (word 1) and `sd_sequence_table` (word 2), each plus 0x801E0000. The weekday handler (`func_8007437C` in 800737A0.c) loads the palette with `load_palette(sd_palette, 0x10, 1, 1, 0)` and copies the three pointers into the actor fields of actors 96 and 97. HYPOTHESIS: the SD data files of the disc folders MAIN_SD (25 files), CLUB_SD (32), ETC_SD (3) and HOLI_SD (12; the table has 13 entries) are read to 0x801E0000 and the table index follows the file order; the read call was not located. `addr_init_else_sd(2)` is used while the player is sick on a school-day command. Emulator (school-day command screen, mode 0x40, command 1): `addr_init_weekly_sd(1)` ran every 83 frames and left the palette at 0x801E0000 and the pointers at 0x801E0480 (image table), 0x801E04B8 (sequence table) and 0x801E0478 (texture blocks), as the table predicts; the screen shows the player's small figure in the library scene. The offsets are in the header of each loaded file, so the tables are needed only when the original files are read; a port that converts the SD files needs the mapping from command number to file.
+**SD (super-deformed) sprites.** The weekday and holiday screens show a small animated character acting out the chosen command (actors 96 and 97). `addr_init_weekly_sd(n)`, `addr_init_holiday_sd(n)`, `addr_init_club_sd(n)`, `addr_init_else_sd(n)` (n is `D_801230D0`, the SD index that the weekday handler computes from the day's command and a 0/1 variant through the tables `D_800B68C0` and `D_800B68D0` (800737A0.c), 0xFF = no SD sprite; the `else` set is called with the fixed 2) look up entry `n % 25`, `% 13`, `% 32`, `% 3` in `sd_table_weekday`, `sd_table_holiday`, `sd_table_club`, `sd_table_else` (three u16 per entry) and publish `sd_palette = 0x801E0000`, `sd_texture_blocks` (entry word 0), `sd_image_table` (word 1) and `sd_sequence_table` (word 2), each plus 0x801E0000. The weekday handler (`func_8007437C` in 800737A0.c) loads the palette with `load_palette(sd_palette, 0x10, 1, 1, 0)` and copies the three pointers into the actor fields of actors 96 and 97. **Data files**: the setup code reads file n of the matching disc folder whole to 0x801E0000 with `cd_read_sectors(0x29, 0x801E0000, sector_table[n])` (`sd_file_sector_weekday` `D_800B67AC`, `sd_file_sector_club` `D_800B6810`, `sd_file_sector_holiday` `D_800B69E0`; 0x29 = 41 sectors = 83,968 bytes, the size of every file of MAIN_SD (25 files), CLUB_SD (32) and HOLI_SD (12); the sector tables ascend by 41, so entry n is file n in name order, e.g. MAIN_SD: P00, P00W, P01, P01W ... P05W, P06, P07, P08, P09, P09W ... P0D, P0DW) and the sick set with `cd_read_sectors(9, 0x801E0000, 0x7D8A)` (9 sectors = 18,432 bytes, the size of the three ETC_SD files; HYPOTHESIS: the file of entry 2). Holiday entry 12 (sector 0xA79E) reuses weekday file 12. The `W` files (every second entry) are the paired variants noted above. `addr_init_else_sd(2)` is used while the player is sick on a school-day command. Emulator (school-day command screen, mode 0x40, `D_801230D0` = 1): `addr_init_weekly_sd(1)` ran every 83 frames and left the palette at 0x801E0000 and the pointers at 0x801E0480 (image table), 0x801E04B8 (sequence table) and 0x801E0478 (texture blocks), as the table predicts; the screen shows the player's small figure in the library scene. The offsets are in the header of each loaded file, so the tables are needed only when the original files are read; a port that converts the SD files needs the mapping from command number to file.
 
 Table contents, hex offsets from 0x801E0000 written as image table / sequence table / texture blocks (the order in memory is texture blocks, image table, sequence table); entries repeat in pairs, which suggests two variants of one animation (HYPOTHESIS: the `W` files of the folders).
 
@@ -343,9 +343,10 @@ Not run: the three-way menu itself (`normal_date_three_select`, `junban_init` ru
 7. `voice_state == 0xA` (DATE) and `D_800CA2C8` (40 bytes, only cleared by the runner) are unexplained.
 8. The three-way menu was exercised only through a poked command byte (shuffle rule confirmed); the cover-wipe kinds other than the month's were read from code only.
 9. Script data: the SERIFU files hold the text, command and voice tables with absolute pointers for their load address (section 7.1); the load address and the three table addresses are constants in each overlay. No extraction tool exists; the port needs one (a Docker tool that, per scene, reads the file, relocates by the load address and dumps `text[group][line]`, `command` and `voice`), and its output must not be committed.
-10. SD tables: the mapping from table index to SD file is by counts only (MAIN_SD 25, CLUB_SD 32, ETC_SD 3, HOLI_SD 12 of 13 entries).
+10. SD tables: the file of each entry follows from the three sector tables (checked against the folder sizes); open are the meaning of the paired `W` files (entries repeat in pairs) and which ETC_SD file the sick set reads (sector 0x7D8A; entry 2 is a HYPOTHESIS).
 11. `scene_bg_show`, `set_tarao_rect` and `event_face_kuchi0` have no caller; `event_kuchi_ani_yes` and `event_face_kuchi1` have one table entry each.
-12. File name `scene_library.c` should be harmonised with the neighbouring units (`m-dates-a` covers 80079B10.c, which is the sound driver glue, not a scene file, despite the task text).
+12. The prefix `scene_` is new in the main naming (core lists `dialogue_`, `bustup_`, `message_window_` and others, not `scene_`); the other main units should not reuse it for a different meaning. The SD sector tables `D_800B67AC`, `D_800B6810`, `D_800B69E0` are proposed here but belong to the weekday and holiday code (800737A0.c, 80075320.c); if those units name them differently, theirs win.
+13. File name `scene_library.c` should be harmonised with the neighbouring units (`m-dates-a` covers 80079B10.c, which is the sound driver glue, not a scene file, despite the task text).
 
 ## Appendix A: portrait files by girl
 
@@ -371,116 +372,118 @@ Sector in hex in parentheses; casual spring, summer, autumn, winter; uniform sum
 
 ## Appendix B: function index
 
+All 111 symbols of the object by address (the alias `func_80084C98` of `sprite_brightness` is not listed). "kept" = the existing name stays; rows from other proposal tables show the unit that names them.
+
 | address | current name | proposed | role |
 |---|---|---|---|
-| 8007C030 | `SD_GetCDLevel` | kept | Measure the CD-audio output level: reads 0x200-byte SPU capture buffers at SPU RAM 0 and 0x400, takes peak or average of N sample pairs, optional... |
-| 8007C310 | `SD_DetectCDPeak` | kept | Peak mode of the CD level meter: scans N evenly spaced samples of the left and right capture buffers and keeps the largest absolute value, doubled. |
-| 8007C414 | `SD_CalcCDAve` | kept | Average mode of the CD level meter: mean absolute value of N evenly spaced samples of each capture buffer, doubled. |
-| 8007C51C | `getCDlevel` | kept | Return the mean of the left and right CD-audio level while metering is enabled (audio_state bit 0x400), else 0 |
-| 8007C560 | `addr_init_weekly_sd` | kept | Point the SD sprite palette, frame table, sequence table and texture-block pointers at entry n (mod 25) of the school-day command table |
-| 8007C5CC | `addr_init_holiday_sd` | kept | Same for the holiday command table (13 entries, n mod 13). |
-| 8007C638 | `addr_init_club_sd` | kept | Same for the club-activity table (32 entries, n mod 32). |
-| 8007C6A8 | `addr_init_else_sd` | kept | Same for the third table (3 entries, n mod 3) |
-| 8007C740 | `addr_init_bustup` | kept | Set the portrait sprite addresses for the current girl |
+| 8007C030 | `SD_GetCDLevel` | kept (O.BIN) | Measure the CD-audio output level: reads 0x200-byte SPU capture buffers at SPU RAM 0 and 0x400, takes peak or average of N sample pairs,... |
+| 8007C310 | `SD_DetectCDPeak` | kept (O.BIN) | Peak mode of the CD level meter: scans N evenly spaced samples of the left and right capture buffers and keeps the largest absolute... |
+| 8007C414 | `SD_CalcCDAve` | kept (O.BIN) | Average mode of the CD level meter: mean absolute value of N evenly spaced samples of each capture buffer, doubled. |
+| 8007C51C | `getCDlevel` | kept (O.BIN) | Return the mean of the left and right CD-audio level while metering is enabled (audio_state bit 0x400), else 0 |
+| 8007C560 | `addr_init_weekly_sd` | kept (O.BIN) | Point the SD sprite palette, frame table, sequence table and texture-block pointers at entry n (mod 25) of the school-day SD table (n =... |
+| 8007C5CC | `addr_init_holiday_sd` | kept (O.BIN) | Same for the holiday SD table (13 entries, n mod 13). |
+| 8007C638 | `addr_init_club_sd` | kept (O.BIN) | Same for the club-activity SD table (32 entries, n mod 32). |
+| 8007C6A8 | `addr_init_else_sd` | kept (O.BIN) | Same for the third table (3 entries, n mod 3) |
+| 8007C740 | `addr_init_bustup` | kept (O.BIN) | Set the portrait sprite addresses for the current girl |
 | 8007C784 | `func_8007C784` | `scene_wait_cd_read` | step: main_step_next once cd_read_sync_status bit 0 is set |
 | 8007C844 | `func_8007C844` | `scene_bg_show` | scene_bg_visible = 1, dec_bg_brightness = 0x80, main_step_next |
 | 8007C878 | `func_8007C878` | `scene_bg_hide` | scene_bg_visible = 0, dec_bg_brightness = 0, main_step_next |
 | 8007C8A4 | `func_8007C8A4` | `scene_bg_wipe_in` | step: calls scene_bg_wipe_in_step every frame and steps when it returns 1 |
-| 8007C8D8 | `func_8007C8D8` | `scene_bg_wipe_in_step` | one frame of the reveal wipe: kind = month % 7 chosen when step_timer == 0, brightness +8 per frame up to 0x80, black prim_line_gradient lines... |
-| 8007D384 | `set_tarao_bg` | kept | Draw the mosaic wipe: 32 columns by 20 rows of strips from the shown background buffer, each n lines tall, even columns anchored at the top of... |
-| 8007D680 | `set_tarao_sprt` | kept | Queue one textured strip sprite (x, y, width, height, u, v, ordering slot, rgb) in the primitive arena of the active draw buffer. |
-| 8007D788 | `set_tarao_rect` | kept | Queue one flat rectangle (x, y, w, h, ordering slot, rgb) in the primitive arena of the active draw buffer. |
-| 8007D878 | `normal_date_bg_out` | kept | Scene step: run the cover wipe each frame (scene_bg_wipe_out_step) and step on when it finishes. |
-| 8007D8AC | `func_8007D8AC` | `scene_bg_wipe_out_step` | one frame of the cover wipe called by normal_date_bg_out: same seven kinds drawn from the other end, brightness -8 per frame to 0, returns 1 at... |
-| 8007E390 | `normal_date_girl_in` | kept | Scene step: dispatch on step_timer to the portrait fade-in (init, then main), then draw the faded background layer. |
-| 8007E3F8 | `normal_date_girl_in_init` | kept | Portrait fade-in, first frame: zero the portrait brightness, the sprite tints and the fade amount, mark the portrait visible, switch the plain... |
-| 8007E468 | `normal_date_girl_in_main` | kept | Portrait fade-in, later frames: raise the fade amount by 8 per frame to 0x80 (16 frames) and copy it to the portrait tint |
-| 8007E530 | `normal_date_girl_suddenin` | kept | Scene step: show the portrait at full brightness at once. |
-| 8007E5A0 | `normal_date_girl_out` | kept | Scene step: dispatch on step_timer to the portrait fade-out (init, then main), then draw the faded background layer. |
-| 8007E608 | `normal_date_girl_out_init` | kept | Portrait fade-out, first frame: fade amount 0x80, plain background draw off. |
-| 8007E634 | `normal_date_girl_out_main` | kept | Portrait fade-out, later frames: lower the fade amount by 8 per frame (16 frames) and tint the portrait with it |
-| 8007E75C | `normal_date_girl_suddenout` | kept | Scene step: hide the portrait at once. |
-| 8007E81C | `normal_date_bg_fadein` | kept | Raise the background brightness by 4 per frame to 0x80 (about 32 frames), then step on |
-| 8007E884 | `normal_date_bggirl_fadein` | kept | Fade in background and portrait together: bg_fadein plus portrait actor and sprite tint following the brightness. |
-| 8007E934 | `normal_date_bg_fadeout` | kept | Lower the background brightness by 4 per frame to 0, then hide it and step on. |
-| 8007E99C | `normal_date_bggirl_fadeout` | kept | Fade out background and portrait together |
-| 8007EAAC | `normal_date_move_place` | kept | Scene step: change of location, dispatch on step_timer to init, then main. |
-| 8007EB0C | `normal_date_move_place_init` | kept | Move-place first frame: clear the text list, fade amount 0x80, plain background draw off. |
-| 8007EB5C | `normal_date_move_place_main` | kept | Move-place later frames: cross-fade from the old to the newly decoded background (fade amount -8 per frame, 16 frames), tint the portrait with it |
-| 8007EC68 | `place_init` | kept | Scene step: clear the text list and show scene_place_title in the message window title, then step on. |
-| 8007EC9C | `place_init2` | kept | Same as place_init with the second title buffer scene_place_title_2. |
-| 8007ECD0 | `change_dec_bg` | kept | Scene step: swap the shown buffer of background layer 1 so the freshly decoded background appears, then step on. |
-| 8007ECF8 | `dec_init` | kept | Scene step: check the MDEC header of the loaded background (magic 0x3800 and version bits) |
-| 8007ED84 | `bg_read_sub2` | kept | Background read helper: starts the read of the scene background |
-| 8007EDF8 | `check_k_scroll` | kept | Per-frame dialogue window scroll: when the next text row would fall below the third row (y >= 0x60) hold it, then move all earlier rows up 0x10... |
-| 8007EF04 | `wait_sub_sub` | kept | Scene step with a parameter: wait n frames (step_timer counts up), then step on |
-| 8007EF48 | `dialogue_speak_part` | kept | Speak one script line: copy the text, switch on the command byte (20 codes) to pick label, quote style, voice request and wait mode, draw the line... |
-| 80081128 | `func_80081128` | `dialogue_voice_skip_check` | called while a line waits for its voice to start: once dialogue_voice_wait_frames > 0x200 a circle or cross press (pad_pressed & 0x600060) sends... |
-| 80081190 | `dialogue_render` | kept | Split a script string into lines and queue them with name code expansion |
-| 80082764 | `func_80082764` | `dialogue_run` (core) |  |
-| 80082D58 | `make_three_select` | kept | Shuffle the three options of a choice line: split the text at q or space separators and rejoin it in the order dialogue_choice_order. |
-| 80082EB4 | `junban_init` | kept | Pick a random order of the three options from frame_count (first = frame_count % 3, the other two ordered by its parity) and store it in... |
-| 80082F70 | `normal_date_three_select` | kept | Scene step: three-option choice menu, dispatch on step_timer to init, then main. |
-| 80082FD0 | `normal_date_three_select_init` | kept | Register menu 1 with three 252x16 rows at x -0x80, y 0x30/0x40/0x50, cursor on row 0, scene_menu_active = 1. |
-| 80083078 | `normal_date_three_select_main` | kept | Run the menu |
-| 80083174 | `normal_date_two_select` | kept | Scene step: two-option choice menu, dispatch on step_timer to init, then main. |
-| 800831D4 | `normal_date_two_select_init` | kept | Register menu 1 with two 252x16 rows at x -0x80, y 0x30 and 0x40, cursor on row 0, scene_menu_active = 1. |
-| 80083268 | `normal_date_two_select_main` | kept | Run the menu |
+| 8007C8D8 | `func_8007C8D8` | `scene_bg_wipe_in_step` | one frame of the reveal wipe: kind = month % 7 chosen when step_timer == 0, brightness +8 per frame up to 0x80, black prim_line_gradient... |
+| 8007D384 | `set_tarao_bg` | kept (O.BIN) | Draw the mosaic wipe: 32 columns by 20 rows of strips from the shown background buffer, each n lines tall, even columns anchored at the... |
+| 8007D680 | `set_tarao_sprt` | kept (O.BIN) | Queue one textured strip sprite (x, y, width, height, u, v, ordering slot, rgb) in the primitive arena of the active draw buffer. |
+| 8007D788 | `set_tarao_rect` | kept (O.BIN) | Queue one flat rectangle (x, y, w, h, ordering slot, rgb) in the primitive arena of the active draw buffer. |
+| 8007D878 | `normal_date_bg_out` | kept (O.BIN) | Scene step: run the cover wipe each frame (scene_bg_wipe_out_step) and step on when it finishes. |
+| 8007D8AC | `func_8007D8AC` | `scene_bg_wipe_out_step` | one frame of the cover wipe called by normal_date_bg_out: same seven kinds drawn from the other end, brightness -8 per frame to 0,... |
+| 8007E390 | `normal_date_girl_in` | kept (O.BIN) | Scene step: dispatch on step_timer to the portrait fade-in (init, then main), then draw the faded background layer. |
+| 8007E3F8 | `normal_date_girl_in_init` | kept (O.BIN) | Portrait fade-in, first frame: zero the portrait brightness, the sprite tints and the fade amount, mark the portrait visible, switch the... |
+| 8007E468 | `normal_date_girl_in_main` | kept (O.BIN) | Portrait fade-in, later frames: raise the fade amount by 8 per frame to 0x80 (16 frames) and copy it to the portrait tint |
+| 8007E530 | `normal_date_girl_suddenin` | kept (O.BIN) | Scene step: show the portrait at full brightness at once. |
+| 8007E5A0 | `normal_date_girl_out` | kept (O.BIN) | Scene step: dispatch on step_timer to the portrait fade-out (init, then main), then draw the faded background layer. |
+| 8007E608 | `normal_date_girl_out_init` | kept (O.BIN) | Portrait fade-out, first frame: fade amount 0x80, plain background draw off. |
+| 8007E634 | `normal_date_girl_out_main` | kept (O.BIN) | Portrait fade-out, later frames: lower the fade amount by 8 per frame (16 frames) and tint the portrait with it |
+| 8007E75C | `normal_date_girl_suddenout` | kept (O.BIN) | Scene step: hide the portrait at once. |
+| 8007E81C | `normal_date_bg_fadein` | kept (O.BIN) | Raise the background brightness by 4 per frame to 0x80 (about 32 frames), then step on |
+| 8007E884 | `normal_date_bggirl_fadein` | kept (O.BIN) | Fade in background and portrait together: bg_fadein plus portrait actor and sprite tint following the brightness. |
+| 8007E934 | `normal_date_bg_fadeout` | kept (O.BIN) | Lower the background brightness by 4 per frame to 0, then hide it and step on. |
+| 8007E99C | `normal_date_bggirl_fadeout` | kept (O.BIN) | Fade out background and portrait together |
+| 8007EAAC | `normal_date_move_place` | kept (O.BIN) | Scene step: change of location, dispatch on step_timer to init, then main. |
+| 8007EB0C | `normal_date_move_place_init` | kept (O.BIN) | Move-place first frame: clear the text list, fade amount 0x80, plain background draw off. |
+| 8007EB5C | `normal_date_move_place_main` | kept (O.BIN) | Move-place later frames: cross-fade from the old to the newly decoded background (fade amount -8 per frame, 16 frames), tint the... |
+| 8007EC68 | `place_init` | kept (O.BIN) | Scene step: clear the text list and show scene_place_title in the message window title, then step on. |
+| 8007EC9C | `place_init2` | kept (O.BIN) | Same as place_init with the second title buffer scene_place_title_2. |
+| 8007ECD0 | `change_dec_bg` | kept (O.BIN) | Scene step: swap the shown buffer of background layer 1 so the freshly decoded background appears, then step on. |
+| 8007ECF8 | `dec_init` | kept (O.BIN) | Scene step: check the MDEC header of the loaded background (magic 0x3800 and version bits) |
+| 8007ED84 | `bg_read_sub2` | kept (O.BIN) | Background read helper: starts the read of the scene background |
+| 8007EDF8 | `check_k_scroll` | kept (O.BIN) | Per-frame dialogue window scroll: when the next text row would fall below the third row (y >= 0x60) hold it, then move all earlier rows... |
+| 8007EF04 | `wait_sub_sub` | kept (O.BIN) | Scene step with a parameter: wait n frames (step_timer counts up), then step on |
+| 8007EF48 | `dialogue_speak_part` | kept | Speak one script line: copy the text, switch on the command byte (20 codes) to pick label, quote style, voice request and wait mode,... |
+| 80081128 | `func_80081128` | `dialogue_voice_skip_check` | called while a line waits for its voice to start: once dialogue_voice_wait_frames > 0x200 a circle or cross press (pad_pressed &... |
+| 80081190 | `dialogue_render` | kept (O.BIN) | Split a script string into lines and queue them with name code expansion |
+| 80082764 | `func_80082764` | `dialogue_run` (core) | 64 uses: the talk runner every script section goes through (reads group/line/command tables, waits for text end and voice, handles 20... |
+| 80082D58 | `make_three_select` | kept (O.BIN) | Shuffle the three options of a choice line: split the text at q or space separators and rejoin it in the order dialogue_choice_order. |
+| 80082EB4 | `junban_init` | kept (O.BIN) | Pick a random order of the three options from frame_count (first = frame_count % 3, the other two ordered by its parity) and store it in... |
+| 80082F70 | `normal_date_three_select` | kept (O.BIN) | Scene step: three-option choice menu, dispatch on step_timer to init, then main. |
+| 80082FD0 | `normal_date_three_select_init` | kept (O.BIN) | Register menu 1 with three 252x16 rows at x -0x80, y 0x30/0x40/0x50, cursor on row 0, scene_menu_active = 1. |
+| 80083078 | `normal_date_three_select_main` | kept (O.BIN) | Run the menu |
+| 80083174 | `normal_date_two_select` | kept (O.BIN) | Scene step: two-option choice menu, dispatch on step_timer to init, then main. |
+| 800831D4 | `normal_date_two_select_init` | kept (O.BIN) | Register menu 1 with two 252x16 rows at x -0x80, y 0x30 and 0x40, cursor on row 0, scene_menu_active = 1. |
+| 80083268 | `normal_date_two_select_main` | kept (O.BIN) | Run the menu |
 | 80083338 | `func_80083338` | `bustup_expression_mood` | HYPOTHESIS: bustup_layout_set(get_g_zyotai_h(current_girl) & 0x7F) then main_step_next: face cells picked by the girl's mood rank |
 | 80083378 | `func_80083378` | `bustup_expression_0` | HYPOTHESIS: bustup_layout_set(0) then main_step_next (expression index 0 = mood rank 0, the best mood) |
 | 800833A0 | `func_800833A0` | `bustup_expression_1` | HYPOTHESIS: bustup_layout_set(1) then main_step_next |
 | 800833C8 | `func_800833C8` | `bustup_expression_2` | HYPOTHESIS: bustup_layout_set(2) then main_step_next |
 | 800833F0 | `func_800833F0` | `bustup_expression_3` | HYPOTHESIS: bustup_layout_set(3) then main_step_next |
 | 80083418 | `func_80083418` | `bustup_expression_4` | HYPOTHESIS: bustup_layout_set(4) then main_step_next (rank 4 = the worst mood) |
-| 80083440 | `func_80083440` | `bustup_layout_set` (core) |  |
-| 80083474 | `func_80083474` | `bustup_show_checked` (core) |  |
+| 80083440 | `func_80083440` | `bustup_layout_set` (core) | 178 uses: bustup_layout_set(girl) = func_80085CD4 (per-girl quad offsets) + func_800634FC |
+| 80083474 | `func_80083474` | `bustup_show_checked` (core) | 299 uses: re-verifies the loaded portrait (pointer words and checksum, retries the step 3 back on mismatch) then builds it with the... |
 | 80083628 | `func_80083628` | `bustup_show` | builds the portrait (bustup_build) from the file loaded at 0x80180000 without the integrity check |
-| 800836A0 | `func_800836A0` | `bustup_show_checked_hidden` | like bustup_show_checked but retries four steps back unless the five image pointers and the file checksum are right, then builds the portrait and... |
-| 80083808 | `func_80083808` | `bustup_wink_update` (core) |  |
-| 80083A10 | `func_80083A10` | `scene_frame_update` | per-frame helper every scene handler calls: dec_bg_draw(1) while scene_bg_visible, shows the pad cursor (actor 0) when scene_cursor_hide and... |
-| 80083AD4 | `hizuke_hide` | kept | Scene step: hide the calendar date HUD (actors 16-23), then step on. |
-| 80083AFC | `hizuke_appear` | kept | Scene step: show the calendar date HUD, then step on. |
-| 80083B24 | `read_bustup` | kept | Start the CD read of the girl's casual-clothes portrait for the current season (months 3-5, 6-8, 9-11, else winter) into 0x80180000, then step on. |
-| 80084150 | `read_bustup_uniform` | kept | Start the CD read of the girl's school-uniform portrait (months 6-9 summer uniform, else winter uniform), then step on. |
-| 80084524 | `read_bustup_swimsuit` | kept | Start the CD read of the girl's swimsuit portrait (girl 8 has one file per year), then step on. |
-| 80084658 | `bustup_return` | kept | Alias of read_bustup (the same code, reached through a second entry). |
-| 80084678 | `return_step` | kept | Restore the main mode, stage and step saved in saved_mode, saved_stage and saved_step by calling main_state_set, main_stage_set and main_step_set |
-| 800846C0 | `k_disp_inc2` | kept | Typewriter step with fast-forward: counts dialogue_text_delay down and reveals one glyph per call |
-| 80084738 | `yosi_trans` | kept | Scene step: restart sequence 0 of sound bank 0 (bgm_play(0, 0x200)), then step on |
-| 80084764 | `change_yoshio` | kept | Scene step: set current_girl to 13 (Yoshio) so portrait, name and voice code address him, then step on. |
-| 8008478C | `change_girl` | kept | Scene step: set current_girl back to date_girl (the girl of the scene), then step on. |
-| 800847B8 | `func_800847B8` | `dialogue_names_set` (core) |  |
-| 8008484C | `select_girl` | kept | Scene step: heroine picker with a back button, dispatch on step_timer to init(0), then main(0). |
-| 800848AC | `select_girl2` | kept | Same picker without the back button (menu of 11 items). |
-| 8008490C | `select_girl_init` | kept | Lay the heroine picker out: 11 names in a 4x3 grid (x -0x80 + 0x40 per column, y 0x30 + 0x10 per row, item width = characters * 14) for the girls... |
-| 80084B9C | `select_girl_main` | kept | Run the picker |
-| 80084C98 | `sprite_brightness` | kept | Set the red, green and blue tint of sprite quad idx to val. |
-| 80084CC8 | `day_plus` | kept | Scene step: advance the calendar by one day (calendar_advance_day), rebuild the date HUD keeping its visibility, clear trip_day_state, then step on. |
-| 80084D3C | `check_para_limit` | kept | Clamp girl tokimeki/affection (0..0x80), syoushin (0..0xFF) and the nine parameters (0..999) |
-| 80084E4C | `func_80084E4C` | `text_marker_hide` (core) |  |
+| 800836A0 | `func_800836A0` | `bustup_show_checked_hidden` | like bustup_show_checked but retries four steps back unless the five image pointers and the file checksum are right, then builds the... |
+| 80083808 | `func_80083808` | `bustup_wink_update` (core) | 45 uses: toggles portrait visibility bits and winks every 240 frames |
+| 80083A10 | `func_80083A10` | `scene_frame_update` | per-frame helper every scene handler calls: dec_bg_draw(1) while scene_bg_visible, shows the pad cursor (actor 0) when a direction... |
+| 80083AD4 | `hizuke_hide` | kept (O.BIN) | Scene step: hide the calendar date HUD (actors 16-23), then step on. |
+| 80083AFC | `hizuke_appear` | kept (O.BIN) | Scene step: show the calendar date HUD, then step on. |
+| 80083B24 | `read_bustup` | kept (O.BIN) | Start the CD read of the girl's casual-clothes portrait for the current season (months 3-5, 6-8, 9-11, else winter) into 0x80180000,... |
+| 80084150 | `read_bustup_uniform` | kept (O.BIN) | Start the CD read of the girl's school-uniform portrait (months 6-9 summer uniform, else winter uniform), then step on. |
+| 80084524 | `read_bustup_swimsuit` | kept (O.BIN) | Start the CD read of the girl's swimsuit portrait (girl 8 has one file per year), then step on. |
+| 80084658 | `bustup_return` | kept (O.BIN) | Alias of read_bustup (the same code, reached through a second entry). |
+| 80084678 | `return_step` | kept (O.BIN) | Restore the main mode, stage and step saved in saved_mode, saved_stage and saved_step by calling main_state_set, main_stage_set and... |
+| 800846C0 | `k_disp_inc2` | kept (O.BIN) | Typewriter step with fast-forward: counts dialogue_text_delay down and reveals one glyph per call |
+| 80084738 | `yosi_trans` | kept (O.BIN) | Scene step: restart sequence 0 of sound bank 0 (bgm_play(0, 0x200)), then step on |
+| 80084764 | `change_yoshio` | kept (O.BIN) | Scene step: set current_girl to 13 (Yoshio) so portrait, name and voice code address him, then step on. |
+| 8008478C | `change_girl` | kept (O.BIN) | Scene step: set current_girl back to date_girl (the girl of the scene), then step on. |
+| 800847B8 | `func_800847B8` | `dialogue_names_set` (core) | 246 uses: fills the name buffers for dialogue codes: family and given name from GameState, the player-addressing form (get_p_name), the... |
+| 8008484C | `select_girl` | kept (O.BIN) | Scene step: heroine picker with a back button, dispatch on step_timer to init(0), then main(0). |
+| 800848AC | `select_girl2` | kept (O.BIN) | Same picker without the back button (menu of 11 items). |
+| 8008490C | `select_girl_init` | kept (O.BIN) | Lay the heroine picker out: 11 names in a 4x3 grid (x -0x80 + 0x40 per column, y 0x30 + 0x10 per row, item width = characters * 14) for... |
+| 80084B9C | `select_girl_main` | kept (O.BIN) | Run the picker |
+| 80084C98 | `sprite_brightness` | kept (O.BIN) | Set the red, green and blue tint of sprite quad idx to val. |
+| 80084CC8 | `day_plus` | kept (O.BIN) | Scene step: advance the calendar by one day (calendar_advance_day), rebuild the date HUD keeping its visibility, clear trip_day_state,... |
+| 80084D3C | `check_para_limit` | kept (O.BIN) | Clamp girl tokimeki/affection (0..0x80), syoushin (0..0xFF) and the nine parameters (0..999) |
+| 80084E4C | `func_80084E4C` | `text_marker_hide` (core) | 113 uses: text_marker_set(0) |
 | 80084E6C | `func_80084E6C` | `scene_mouth_lock_clear` | HYPOTHESIS: scene_mouth_lock = 0 then main_step_next |
-| 80084E90 | `func_80084E90` | `event_still_show` (core) |  |
-| 800850D4 | `func_800850D4` | `event_anim_show` (core) |  |
+| 80084E90 | `func_80084E90` | `event_still_show` (core) | uploads six 0x40 x 0x80 tiles to VRAM and sets SpriteQuads 58-63 as a 3 x 2 grid (128 px cells) = one full-screen event still |
+| 800850D4 | `func_800850D4` | `event_anim_show` (core) | fills actors 96/97 as a full-screen animated picture from frame/sequence/tpage tables and a mode |
 | 80085234 | `func_80085234` | `event_still_layer_set` | shows (arg != 0) or hides the event still layer: actors 96 and 97 (draw_flags bit 7) and sprites 58-63 (hidden bit 31) |
 | 80085368 | `func_80085368` | `event_still_fade_in` | step_timer-driven fade-in of the event still: normal_date_bg_fadein (+4 per frame), shows the layer when the brightness is 4, sets... |
 | 800853FC | `func_800853FC` | `event_still_fade_out` | fade-out of the event still: normal_date_bg_fadeout (-4 per frame) |
-| 80085498 | `event_face0` | kept | Scene step: event picture face 0: sequence slot 2 on actor 96, slot 0 on actor 97. |
-| 800854C8 | `event_face1` | kept | Event face 1: slot 3 on actor 96, slot 1 on actor 97. |
-| 800854FC | `event_face2` | kept | Event face 2: slot 6 on actor 96, slot 4 on actor 97. |
-| 80085530 | `event_face3` | kept | Event face 3: slot 7 on actor 96, slot 5 on actor 97. |
-| 80085564 | `event_face_kuchi0` | kept | Event mouth 0: slot 2 on actor 96 only. |
-| 8008558C | `event_face_kuchi1` | kept | Event mouth 1: slot 3 on actor 96 only. |
-| 800855B4 | `event_kuchi_ani_no` | kept | Event mouth animation off: scene_event_mouth_anim = 0 and actor 96 anim_flags = 4. |
-| 800855E4 | `event_kuchi_ani_yes` | kept | Event mouth animation on: scene_event_mouth_anim = 1 and actor 96 anim_flags = 0. |
-| 80085614 | `ev_me_on` | kept | Event eyes on: scene_event_eyes_hold = 0 (periodic blink allowed) and actor 97 anim_flags = 5. |
-| 80085644 | `ev_me_on_continue` | kept | Event eyes on and held: scene_event_eyes_hold = 1 (no periodic blink) and actor 97 anim_flags = 5. |
-| 80085678 | `_sprite_set_box_shade_tarao` | kept | Queue a four-corner gradient box (x, y, w, h, ordering slot, two packed rgb colours) in the primitive arena. |
-| 8008585C | `func_8008585C` | `dialogue_clear` (core) |  |
-| 800858E8 | `don_init2` | kept | Scene step: start the screen shake (screen_shake_start), then step on. |
-| 80085910 | `don_wait` | kept | Scene step: wait 0x81 frames, clear the text list and step on. |
-| 80085958 | `normal_date_speak_1line` | kept | Scene step: wire the dialogue tables and run exactly one line of the script |
-| 800859E8 | `normal_date_speak_012` | kept | Scene step: run the dialogue with choice 0xFF, so a three-option line keeps the order 0, 1, 2. |
-| 80085A60 | `normal_date_speak` | kept | Scene step: wire the dialogue tables and run one frame of the dialogue runner with dialogue_choice as the reply index |
-| 80085ADC | `vram_bustup_clear` | kept | Scene step: reset actors 30 and 31 and free the five portrait texture slots 5-9, then step on. |
-| 80085B3C | `func_80085B3C` | `event_log_add` (core) |  |
-| 80085CD4 | `func_80085CD4` | `bustup_quad_offsets` (core) |  |
+| 80085498 | `event_face0` | kept (O.BIN) | Scene step: event picture face 0: sequence slot 2 on actor 96, slot 0 on actor 97. |
+| 800854C8 | `event_face1` | kept (O.BIN) | Event face 1: slot 3 on actor 96, slot 1 on actor 97. |
+| 800854FC | `event_face2` | kept (O.BIN) | Event face 2: slot 6 on actor 96, slot 4 on actor 97. |
+| 80085530 | `event_face3` | kept (O.BIN) | Event face 3: slot 7 on actor 96, slot 5 on actor 97. |
+| 80085564 | `event_face_kuchi0` | kept (O.BIN) | Event mouth 0: slot 2 on actor 96 only. |
+| 8008558C | `event_face_kuchi1` | kept (O.BIN) | Event mouth 1: slot 3 on actor 96 only. |
+| 800855B4 | `event_kuchi_ani_no` | kept (O.BIN) | Event mouth animation off: scene_event_mouth_anim = 0 and actor 96 anim_flags = 4. |
+| 800855E4 | `event_kuchi_ani_yes` | kept (O.BIN) | Event mouth animation on: scene_event_mouth_anim = 1 and actor 96 anim_flags = 0. |
+| 80085614 | `ev_me_on` | kept (O.BIN) | Event eyes on: scene_event_eyes_hold = 0 (periodic blink allowed) and actor 97 anim_flags = 5. |
+| 80085644 | `ev_me_on_continue` | kept (O.BIN) | Event eyes on and held: scene_event_eyes_hold = 1 (no periodic blink) and actor 97 anim_flags = 5. |
+| 80085678 | `_sprite_set_box_shade_tarao` | kept (O.BIN) | Queue a four-corner gradient box (x, y, w, h, ordering slot, two packed rgb colours) in the primitive arena. |
+| 8008585C | `func_8008585C` | `dialogue_clear` (core) | 89 uses: clears dialogue_work words 5..30, re-initialises and hides the cursor actor, empties the text list and blanks the window title |
+| 800858E8 | `don_init2` | kept (O.BIN) | Scene step: start the screen shake (screen_shake_start), then step on. |
+| 80085910 | `don_wait` | kept (O.BIN) | Scene step: wait 0x81 frames, clear the text list and step on. |
+| 80085958 | `normal_date_speak_1line` | kept (O.BIN) | Scene step: wire the dialogue tables and run exactly one line of the script |
+| 800859E8 | `normal_date_speak_012` | kept (O.BIN) | Scene step: run the dialogue with choice 0xFF, so a three-option line keeps the order 0, 1, 2. |
+| 80085A60 | `normal_date_speak` | kept (O.BIN) | Scene step: wire the dialogue tables and run one frame of the dialogue runner with dialogue_choice as the reply index |
+| 80085ADC | `vram_bustup_clear` | kept (O.BIN) | Scene step: reset actors 30 and 31 and free the five portrait texture slots 5-9, then step on. |
+| 80085B3C | `func_80085B3C` | `event_log_add` (core) | appends (girl, flag, scene, rank, year, month, day, weekday) to event_log |
+| 80085CD4 | `func_80085CD4` | `bustup_quad_offsets` (core) | HYPOTHESIS: sets fields +0x0C/+0x0E of SpriteQuads 0 and 1 per girl id (texture offsets of the two portrait quads) |
