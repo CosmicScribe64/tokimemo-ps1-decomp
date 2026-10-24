@@ -35,6 +35,17 @@ inverse/gcc/prototype preservation before apply and restores sources/ledger on f
 Versioned const ledger metadata supports check/replay and follows header/tag/member/function renames.
 An expression changed by a field/local rename requires renewed site evidence; it fails closed.
 
+Signed legacy literals (T-27070): a const request containing negative values uses whole typed AST
+expressions, including `-(1)` and `-((1L))`, rather than the positive numeric leaf. U/L suffix types
+are retained with casts. This path accepts direct integer operands whose magnitude fits INT_MAX,
+requires unchanged function-token provenance (apart from its validated generated defines), and
+rejects ambiguous values, unsupported numeric forms and preprocessing changes. Definitions are
+int-range enum members or literal defines; they do not change field/parameter types. The signed path
+proves inverse/gcc/prototype preservation, records versioned check/replay requests, and rolls back
+source/header/ledger writes on failed post-write validation. Positive-only legacy requests retain
+their existing behavior. For example, `NEGATIVE_SCALE -32` with a call-argument site replaces
+`sink(-0x20)` with `sink(NEGATIVE_SCALE)`, never `sink(-NEGATIVE_SCALE)`.
+
 Table rows (whitespace separated; a line that starts with `#` is a comment; the rest of a row is its
 note, a `#` inside it included):
   # kind scope            old            new               note
@@ -1974,8 +1985,8 @@ def site_matches(node, sites):
     return False
 
 
-def const_hits(ast, sites, ops):
-    """[(Constant node, value)] tied to a site: comparisons, assignments, switch cases, call arguments."""
+def const_hits(ast, sites, ops, whole=False):
+    """[(integer leaf or whole literal expression, value)] at comparisons, assignments, cases and call arguments."""
     from pycparser import c_ast
     hits = []
 
@@ -1985,14 +1996,14 @@ def const_hits(ast, sites, ops):
                 for a, b in ((n.left, n.right), (n.right, n.left)):
                     lv = literal_value(b)
                     if lv and site_matches(a, sites):
-                        hits.append((lv[1], lv[0]))
+                        hits.append((b if whole else lv[1], lv[0]))
             self.generic_visit(n)
 
         def visit_Assignment(self, n):
             if n.op == "=" or (n.op[:-1] in ops and n.op.endswith("=")):
                 lv = literal_value(n.rvalue)
                 if lv and site_matches(n.lvalue, sites):
-                    hits.append((lv[1], lv[0]))
+                    hits.append((n.rvalue if whole else lv[1], lv[0]))
             self.generic_visit(n)
 
         def visit_Switch(self, n):
@@ -2004,7 +2015,7 @@ def const_hits(ast, sites, ops):
                         if isinstance(c, c_ast.Case):
                             lv = literal_value(c.expr)
                             if lv:
-                                hits.append((lv[1], lv[0]))
+                                hits.append((c.expr if whole else lv[1], lv[0]))
                         cases(c)
                 cases(n.stmt)
             self.generic_visit(n)
@@ -2015,7 +2026,7 @@ def const_hits(ast, sites, ops):
                 if s[0] == "arg" and name == s[2] and n.args and s[3] < len(n.args.exprs):
                     lv = literal_value(n.args.exprs[s[3]])
                     if lv:
-                        hits.append((lv[1], lv[0]))
+                        hits.append((n.args.exprs[s[3]] if whole else lv[1], lv[0]))
             self.generic_visit(n)
     V().visit(ast)
     return hits
@@ -2369,14 +2380,220 @@ def apply_reuse(ctx, row, ledger, out):
     out.write("applied; ledger %s\n" % os.path.relpath(ledger_file, ctx.root))
 
 
-def const_plan(root, header, enum, defines, values, sites, note="", ledger=None, log=print, reuse=False):
+SIGNED_PREFIX = "signed-v1:"
+
+
+def signed_definitions(tree, header, enum, defines, values):
+    """Validate the exact generated declarations before signed-request check/replay."""
+    from pycparser import c_parser
+    text = blank_comments(tree.read(header) or "")
+    wanted = {name: int(value, 0) for name, value, _comment in values}
+    scratch = Scratch(tree)
+    try:
+        scratch.sync()
+        command = ["gcc", "-E", "-std=gnu89", "-DM2CTX", "-Iinclude"]
+        if defines:
+            command.append("-dM")
+        result = subprocess.run(command + [header], cwd=scratch.dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.returncode:
+            raise RenameError("signed definition preprocessing failed: %s" % header)
+        active = result.stdout.decode(ENC)
+    finally:
+        scratch.close()
+    if defines:
+        for name, value in wanted.items():
+            found = re.findall(r"^[ \t]*#[ \t]*define[ \t]+%s[ \t]+([^\n]+)" % re.escape(name), text, re.M)
+            if len(found) != 1 or found[0].strip() != next(v for n, v, _c in values if n == name):
+                raise RenameError("signed constant definition/value mismatch: %s" % name)
+            active_values = re.findall(r"^#define %s[ \t]+([^\n]+)" % re.escape(name), active, re.M)
+            if active_values != [found[0].strip()]:
+                raise RenameError("signed constant definition is inactive or altered: %s" % name)
+        return
+    bodies = list(re.finditer(r"\benum\s+%s\s*\{" % re.escape(enum), text))
+    if len(bodies) != 1:
+        raise RenameError("signed enum ownership is missing or ambiguous: %s" % enum)
+    match = bodies[0]
+    end = match_brace(text, match.end() - 1)
+    active_bodies = list(re.finditer(r"\benum\s+%s\s*\{" % re.escape(enum), active))
+    if len(active_bodies) != 1:
+        raise RenameError("signed enum definition is inactive or ambiguous: %s" % enum)
+    active_start = active_bodies[0].start()
+    active_end = match_brace(active, active_bodies[0].end() - 1)
+    if [t[0] for t in c_site_tokens(text[match.start():end])] != [t[0] for t in c_site_tokens(active[active_start:active_end])]:
+        raise RenameError("signed enum definition changed after preprocessing: %s" % enum)
+    ast = c_parser.CParser().parse(text[match.start():end] + ";")
+    body = ast.ext[0].type
+    actual = {}
+    for item in body.values.enumerators:
+        value = literal_value(item.value)
+        if not value or value[1].type != "int" or not small_integer(value[1].value):
+            raise RenameError("signed enum value/type unsupported: %s" % item.name)
+        actual[item.name] = value[0]
+    if any(actual.get(name) != value for name, value in wanted.items()):
+        raise RenameError("signed enum member value mismatch")
+
+
+def signed_hits(tree, source, pp, ast, sites, ops, names, defines):
+    """Whole-expression edits bound to one unchanged function token stream, never to a leaf's value alone."""
+    from pycparser import c_ast
+    edits, unresolved = [], []
+    by_value = {int(value, 0): name for name, value, _comment in names}
+    for function in (n for n in ast.ext if isinstance(n, c_ast.FuncDef)):
+        selected = []
+        for node, value in const_hits(function.body, sites, ops, whole=True):
+            if value in by_value:
+                selected.append((node, value))
+            else:
+                unresolved.append("%s:%d: %s has no name in the values file" % (node.coord.file, node.coord.line, value))
+        if not selected:
+            continue
+        name = function.decl.name
+        text = tree.read(source)
+        raw_spans, pp_spans = function_spans(text, name), function_spans(pp, name)
+        if len(raw_spans) != 1 or len(pp_spans) != 1 or os.path.normpath(function.decl.coord.file) != source:
+            raise RenameError("signed source function provenance is ambiguous: %s" % name)
+        start, stop, _brace = raw_spans[0]
+        line = text.count("\n", 0, start) + 1
+        if physical_lines(text, function.decl.coord.line) != [line]:
+            raise RenameError("signed source declaration provenance is ambiguous: %s" % name)
+        raw = c_site_tokens(text[start:stop])
+        expanded = []
+        constants = {n: v for n, v, _c in names} if defines else {}
+        for word, a, b in raw:
+            if word in constants:
+                expanded += [(w, a, b) for w, _s, _e in c_site_tokens(constants[word])]
+            else:
+                expanded.append((word, a, b))
+        pstart, pstop, _brace = pp_spans[0]
+        clean_pp = re.sub(r"^[ \t]*#[^\n]*", "", pp[pstart:pstop], flags=re.M)
+        if [t[0] for t in expanded] != [t[0] for t in c_site_tokens(clean_pp)]:
+            raise RenameError("signed function tokens changed after preprocessing: %s" % name)
+        numeric = []
+        for i, token in enumerate(expanded):
+            if token[0][0].isdigit():
+                if not small_integer(token[0]):
+                    raise RenameError("signed function contains unsupported numeric token: %s" % token[0])
+                numeric.append(i)
+        nodes = []
+
+        class Numbers(c_ast.NodeVisitor):
+            def visit_Constant(self, node):
+                if node.type in REUSE_TYPES:
+                    nodes.append(node)
+        Numbers().visit(function.body)
+        nodes.sort(key=lambda n: (n.coord.line, n.coord.column))
+        if [n.value for n in nodes] != [expanded[i][0] for i in numeric]:
+            raise RenameError("signed integer token provenance is ambiguous: %s" % name)
+        positions = {id(n): i for n, i in zip(nodes, numeric)}
+        stack, pairs = [], {}
+        for i, token in enumerate(expanded):
+            if token[0] == "(":
+                stack.append(i)
+            elif token[0] == ")":
+                if not stack:
+                    raise RenameError("signed expression parentheses are unbalanced")
+                pairs[stack.pop()] = i
+        for node, value in selected:
+            _value, leaf = literal_value(node)
+            lo = positions[id(leaf)]
+            hi = lo + 1
+            if isinstance(node, c_ast.UnaryOp):
+                # Consume parentheses around the operand, then the unary minus. Leave outer grouping
+                # alone: it may instead be the call's argument parentheses, e.g. sink(-1).
+                while lo > 0 and expanded[lo - 1][0] == "(" and pairs.get(lo - 1) == hi:
+                    lo -= 1
+                    hi += 1
+                if lo == 0 or expanded[lo - 1][0] != "-":
+                    raise RenameError("signed unary expression has no proved source minus")
+                lo -= 1
+            scalar = small_integer(leaf.value)
+            if not scalar or scalar[1] != leaf.type:
+                raise RenameError("signed literal type/range unsupported: %s" % leaf.value)
+            replacement = by_value[value]
+            if leaf.type != "int":
+                replacement = "((%s)%s)" % (leaf.type, replacement)
+            edits.append((source, start + expanded[lo][1], start + expanded[hi - 1][2], replacement))
+    return edits, unresolved
+
+
+def signed_const_plan(ctx, header, enum, defines, values, sites, note="", existing=False, verify=True):
+    """Prove the signed legacy-site extension, leaving the pending tree unchanged on failure."""
+    snap = ctx.tree.snapshot()
+    try:
+        numbers = [int(value, 0) for _name, value, _comment in values]
+        if len(set(numbers)) != len(numbers) or any(abs(n) > 0x7FFFFFFF for n in numbers):
+            raise RenameError("signed values need unambiguous int-range definitions")
+        if not have_gcc():
+            raise RenameError("signed replacement proofs require gcc")
+        tree, report, problems = const_plan(ctx.root, header, enum, defines, values, sites, note,
+                                          _signed=True, _tree=ctx.tree, _existing=existing)
+        ctx.tree = tree
+        ctx.problems += problems
+        if not ctx.problems and verify:
+            gcc_proof(ctx)
+            views_proof(ctx)
+        if ctx.problems:
+            raise RenameError("signed constant planning/proof failed")
+        ctx.report += report
+        ctx.report.append("signed const: %s proofs passed" % ("inverse/gcc/views" if verify else "inverse"))
+    except (RenameError, ValueError) as exc:
+        ctx.tree.restore(snap)
+        ctx.problems.append(str(exc))
+    return len(ctx.tree.changed())
+
+
+def signed_ledger_row(tree, header, enum, defines, values, sites, note):
+    hpath = header if header.startswith("include/") else "include/" + header
+    data = {"header": hpath, "enum": enum, "defines": defines, "values": values, "sites": sites, "note": note}
+    payload = base64.urlsafe_b64encode(json.dumps(data, separators=(",", ":")).encode("ascii")).decode("ascii")
+    return Row("const", tree.header_owner(hpath), enum or "defines", hpath, SIGNED_PREFIX + payload + " " + note, key="-")
+
+
+def signed_request(row, ch):
+    if row.kind != "const" or not row.note.startswith(SIGNED_PREFIX):
+        return None
+    try:
+        data = json.loads(base64.urlsafe_b64decode(row.note.split()[0][len(SIGNED_PREFIX):]).decode("ascii"))
+        if (set(data) != {"header", "enum", "defines", "values", "sites", "note"}
+                or not isinstance(data["header"], str) or not isinstance(data["defines"], bool)
+                or (data["enum"] is not None and not isinstance(data["enum"], str))
+                or not isinstance(data["note"], str) or not isinstance(data["values"], list)
+                or not isinstance(data["sites"], list) or not all(isinstance(s, str) for s in data["sites"])
+                or any(not isinstance(v, list) or len(v) != 3 or not all(isinstance(x, str) for x in v)
+                       for v in data["values"])):
+            raise ValueError("unexpected request keys")
+        for key, (names, rows) in ch.items():
+            if key[0] == "header" and data["header"][len("include/"):] in names:
+                data["header"] = "include/" + names[-1]
+            if key[0] == "type" and key[1] == row.scope and data["enum"] in names:
+                data["enum"] = names[-1]
+            if key[0] == "enumerator" and key[1] == row.scope:
+                for value in data["values"]:
+                    if value[0] in names:
+                        value[0] = names[-1]
+            if key[0] == "sym" and rows[0].kind == "func":
+                for i, site in enumerate(data["sites"]):
+                    parsed = parse_site(site)
+                    if parsed[0] == "arg" and parsed[1] == key[1] and parsed[2] in names:
+                        data["sites"][i] = "%s:%s(arg%d)" % (key[1], names[-1], parsed[3])
+        return data
+    except (ValueError, TypeError, KeyError, UnicodeError) as exc:
+        raise RenameError("invalid signed constant ledger metadata: %s" % row.where) from exc
+
+
+def const_plan(root, header, enum, defines, values, sites, note="", ledger=None, log=print, reuse=False,
+               _signed=False, _tree=None, _existing=False):
     """(tree, report lines, problems) for one const run (nothing written)."""
     if reuse:
         ctx = Context(root)
         const_reuse_plan(ctx, header, enum, values, sites)
         return ctx.tree, ctx.report, ctx.problems
+    if not _signed and any(int(v, 0) < 0 for _n, v, _c in values):
+        ctx = Context(root)
+        signed_const_plan(ctx, header, enum, defines, values, sites, note)
+        return ctx.tree, ctx.report, ctx.problems
     from pycparser import c_parser
-    tree = Tree(root)
+    tree = _tree if _tree is not None else Tree(root)
     problems, report = [], []
     hpath = header if header.startswith("include/") else "include/" + header
     if not tree.exists(hpath):
@@ -2389,9 +2606,9 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
     for f in files:
         taken |= ident_tokens(tree.read(f) or "", members=True)
     for name, _v, _c in values:
-        if name in taken:
+        if name in taken and not _existing:
             problems.append("%s is already an identifier in the closure of %s" % (name, hpath))
-    if enum and enum in taken:
+    if enum and enum in taken and not _existing:
         problems.append("%s is already an identifier in the closure of %s" % (enum, hpath))
     by_value = {}
     for name, v, _c in values:
@@ -2414,6 +2631,8 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
                                 % (s[1], s[2], n_types, s[2]))
     if problems:
         return tree, report, problems
+    if _existing:
+        signed_definitions(tree, hpath, enum, defines, values)
     words = {s[2] if s[0] in ("member", "arg") else s[1] for s in sites}
     cands = [u for u in users if any(w in (tree.read(u) or "") for w in words)]
     ops = CMP_OPS + (BIT_OPS if defines else ())
@@ -2429,6 +2648,12 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
                 ast = c_parser.CParser().parse(pp, u)
             except Exception as e:     # pycparser raises its own ParseError subclasses
                 problems.append("%s: pycparser: %s" % (u, str(e)[:120]))
+                continue
+            if _signed:
+                signed_edits, unknown = signed_hits(tree, u, pp, ast, sites, ops, values, defines)
+                unresolved += unknown
+                for path, start, end, replacement in signed_edits:
+                    edits.setdefault(path, set()).add((start, end, replacement))
                 continue
             for node, val in const_hits(ast, sites, ops):
                 c = node.coord
@@ -2462,16 +2687,31 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
     n = 0
     for path, es in edits.items():
         text = tree.read(path)
+        before, inverses, delta, last = text, [], 0, -1
+        if _signed:
+            for a, b, replacement in sorted(es):
+                if a < last:
+                    raise RenameError("signed constant sites overlap")
+                inverses.append((a + delta, a + delta + len(replacement), before[a:b]))
+                delta += len(replacement) - (b - a)
+                last = b
         for s, e, name in sorted(es, reverse=True):
             text = text[:s] + name + text[e:]
             n += 1
+        if _signed:
+            inverse = text
+            for a, b, original in reversed(inverses):
+                inverse = inverse[:a] + original + inverse[b:]
+            if inverse != before:
+                raise RenameError("signed constant inverse proof failed")
         tree.write(path, text)
     block = const_block(enum, defines, values, note)
     htext = tree.read(hpath)
     k = htext.rfind("#endif")
-    tree.write(hpath, (htext[:k] + block + "\n" + htext[k:]) if k >= 0 else (htext.rstrip("\n") + "\n\n" + block))
+    if not _existing:
+        tree.write(hpath, (htext[:k] + block + "\n" + htext[k:]) if k >= 0 else (htext.rstrip("\n") + "\n\n" + block))
     for s in sites:
-        if s[0] == "member" and s[1] != "*" and enum:
+        if s[0] == "member" and s[1] != "*" and enum and not _signed:
             d = find_type(tree, s[1])[0]
             if file_unit(tree, d[0]) != file_unit(tree, hpath):
                 report.append("%s.%s: no /* %s */ comment, the type is shared and the enum is %s's" % (
@@ -2906,6 +3146,14 @@ def check(root, out=sys.stdout):
                 for h in hits[:3]:
                     problems.append("%s: %s was renamed to %s (%s); run tools/rename.py replay" % (h, o, final, where))
     for row in rows:
+        signed = signed_request(row, ch)
+        if signed:
+            ctx = Context(root)
+            changed = signed_const_plan(ctx, signed["header"], signed["enum"], signed["defines"],
+                                        signed["values"], signed["sites"], signed["note"], existing=True, verify=False)
+            problems += ["%s: %s" % (row.where, p) for p in ctx.problems]
+            if changed and not ctx.problems:
+                problems.append("%s: signed constant sites are stale; run tools/rename.py replay" % row.where)
         request = reuse_request(row, ch)
         if request:
             ctx = Context(root)
@@ -3106,6 +3354,10 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
         if need:
             plan_fields(ctx, need, use_gcc=use_gcc)
     for row in sel:
+        signed = signed_request(row, ch)
+        if signed:
+            signed_const_plan(ctx, signed["header"], signed["enum"], signed["defines"], signed["values"],
+                              signed["sites"], signed["note"], existing=True)
         request = reuse_request(row, ch)
         if request:
             const_reuse_plan(ctx, request["header"], request["enum"], request["values"], request["sites"])
@@ -3248,6 +3500,19 @@ def main(argv=None):
                     return 1
                 if a.apply:
                     row = reuse_ledger_row(ctx.tree, a.header, a.reuse, values, a.site, a.note)
+                    apply_reuse(ctx, row, a.ledger or row.scope, sys.stdout)
+                return 0
+            if any(int(v, 0) < 0 for _n, v, _c in values):
+                ctx = Context(a.root)
+                signed_const_plan(ctx, a.header, a.enum, a.defines, values, a.site, a.note)
+                for line in ctx.report:
+                    print(line)
+                for problem in ctx.problems:
+                    print("PROBLEM: %s" % problem)
+                if ctx.problems:
+                    return 1
+                if a.apply:
+                    row = signed_ledger_row(ctx.tree, a.header, a.enum, a.defines, values, a.site, a.note)
                     apply_reuse(ctx, row, a.ledger or row.scope, sys.stdout)
                 return 0
             tree, report, problems = const_plan(a.root, a.header, a.enum, a.defines, values, a.site, a.note)

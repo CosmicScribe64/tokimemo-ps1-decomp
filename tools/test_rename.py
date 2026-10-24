@@ -1357,6 +1357,173 @@ class ExistingConstantSitesTest(Fixture):
         self.assertIn("== CLUB_BASEBALL", self.read(self.path))
 
 
+class SignedConstantTest(Fixture):
+    def setUp(self):
+        super().setUp()
+        self.path = "src/main/80041000.c"
+        self.sites = ["direction", "main:signed_sink(arg0)"]
+        self.values = R.parse_values("SIGNED_NEGATIVE_ONE -1\n", "values")
+        self.body = "\nvoid signed_sink(s32 value) { (void)value; }\n" \
+            "s32 signed_rule(void) {\n    s32 direction;\n    direction = -1;\n" \
+            "    if (direction == -(1)) signed_sink(-1);\n" \
+            "    signed_sink(-(1));\n    signed_sink(-((1L)));\n" \
+            "    signed_sink(-1U);\n    signed_sink(-((1UL)));\n    return -1;\n}\n"
+        self.before = self.read(self.path) + self.body
+        self.write(self.path, self.before)
+
+    def plan_signed(self, values=None, sites=None, defines=True, existing=False):
+        ctx = R.Context(self.root)
+        R.signed_const_plan(ctx, "include/common.h", None if defines else "SignedDirection", defines,
+                            self.values if values is None else values, self.sites if sites is None else sites,
+                            "T-27070", existing=existing)
+        return ctx
+
+    def test_whole_comparison_assignment_call_and_parenthesized_operands(self):
+        ctx = self.plan_signed()
+        self.assertEqual(ctx.problems, [])
+        text = ctx.tree.read(self.path)
+        self.assertIn("direction = SIGNED_NEGATIVE_ONE;", text)
+        self.assertIn("direction == SIGNED_NEGATIVE_ONE", text)
+        self.assertIn("signed_sink(SIGNED_NEGATIVE_ONE);", text)
+        self.assertIn("signed_sink(((long int)SIGNED_NEGATIVE_ONE));", text)
+        self.assertIn("signed_sink(((unsigned int)SIGNED_NEGATIVE_ONE));", text)
+        self.assertIn("signed_sink(((unsigned long int)SIGNED_NEGATIVE_ONE));", text)
+        self.assertNotIn("-SIGNED_NEGATIVE_ONE", text)
+        self.assertIn("return -1;", text)
+
+    def test_parentheses_of_call_and_outer_grouping_are_preserved(self):
+        self.write(self.path, self.before.replace("signed_sink(-1);", "signed_sink(((-((1)))));"))
+        ctx = self.plan_signed(sites=self.sites[1:])
+        self.assertEqual(ctx.problems, [])
+        self.assertIn("signed_sink(((SIGNED_NEGATIVE_ONE)));", ctx.tree.read(self.path))
+
+    def test_compiler_checks_value_and_suffix_type_of_replacement(self):
+        import subprocess
+        prefix = self.before[:self.before.index("s32 signed_rule(void)")]
+        for original in ("-1", "-(1)", "-((1L))", "-1U", "-((1UL))"):
+            self.write(self.path, prefix + "s32 signed_rule(void) {\n    signed_sink(%s);\n    return 0;\n}\n" % original)
+            ctx = self.plan_signed(sites=self.sites[1:])
+            self.assertEqual(ctx.problems, [])
+            import re
+            expression = re.search(r"^    signed_sink\((.*)\);$", ctx.tree.read(self.path), re.M).group(1)
+            source = "#define SIGNED_NEGATIVE_ONE -1\nint main(void) {\n" \
+                "if (sizeof(%s) != sizeof(%s)) return 1;\n" \
+                "if (((%s) < 0) != ((%s) < 0)) return 2;\n" \
+                "if ((%s) != (%s)) return 3;\nreturn 0;\n}\n" % (expression, original, expression, original, expression, original)
+            self.write("probe.c", source)
+            binary = os.path.join(self.root, "probe")
+            result = subprocess.run(["gcc", "-std=c89", os.path.join(self.root, "probe.c"), "-o", binary],
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(subprocess.run([binary]).returncode, 0)
+
+    def test_negative_hex_graph_scale_and_unselected_values(self):
+        self.values = R.parse_values("HUD_BIORHYTHM_GRAPH_SCALE -32", "values")
+        body = "\ns32 graph(void) { signed_sink(-0x20); signed_sink(-(0x20)); signed_sink(-((0x20L))); return 7; }\n"
+        self.write(self.path, self.read(self.path) + body)
+        ctx = self.plan_signed(sites=self.sites[1:])
+        self.assertEqual(ctx.problems, [])
+        text = ctx.tree.read(self.path)
+        self.assertEqual(text.count("signed_sink(HUD_BIORHYTHM_GRAPH_SCALE);"), 2)
+        self.assertIn("signed_sink(((long int)HUD_BIORHYTHM_GRAPH_SCALE));", text)
+        self.assertIn("signed_sink(-1);", text)
+        self.assertIn("return 7;", text)
+
+    def test_mixed_positive_and_negative_values_preserve_types(self):
+        self.write(self.path, self.before.replace("return -1;", "signed_sink(3U); return -1;"))
+        values = R.parse_values("SIGNED_NEGATIVE_ONE -1\nSIGNED_POSITIVE_THREE 3", "values")
+        ctx = self.plan_signed(values=values)
+        self.assertEqual(ctx.problems, [])
+        self.assertIn("signed_sink(((unsigned int)SIGNED_POSITIVE_THREE));", ctx.tree.read(self.path))
+
+    def test_preprocessing_or_inactive_raw_expression_fails_closed(self):
+        for replacement in (
+                "#define LIVE_MINUS -1\n#if 0\n    signed_sink(-1);\n#endif\n    signed_sink(LIVE_MINUS);",
+                "#define DROP(x)\n#define LIVE_MINUS -1\n    DROP(signed_sink(-1)); signed_sink(LIVE_MINUS);",):
+            source = self.before.replace("    signed_sink(-(1));", replacement)
+            self.write(self.path, source)
+            ctx = self.plan_signed(sites=self.sites[1:])
+            self.assertTrue(any("preprocessing" in p for p in ctx.problems), ctx.problems)
+            self.assertEqual(ctx.tree.changed(), [])
+            self.assertEqual(self.read(self.path), source)
+
+    def test_ambiguous_values_and_unsupported_ranges_fail_closed(self):
+        for values in ("SIGNED_NEGATIVE_ONE -1\nSIGNED_OTHER_NEGATIVE_ONE -1", "SIGNED_TOO_LOW -2147483648"):
+            ctx = self.plan_signed(values=R.parse_values(values, "values"))
+            self.assertTrue(ctx.problems)
+            self.assertEqual(ctx.tree.changed(), [])
+
+    def test_proof_failure_rolls_back_pending_source_and_definition(self):
+        def fail(ctx):
+            ctx.problems.append("synthetic signed proof failure")
+        with unittest.mock.patch.object(R, "gcc_proof", fail):
+            ctx = self.plan_signed()
+        self.assertTrue(ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+        self.assertEqual(self.read(self.path), self.before)
+
+    def test_apply_check_stale_restore_and_repeated_replay(self):
+        for defines in (True, False):
+            if not defines:
+                self.tearDown()
+                self.setUp()
+            ctx = self.plan_signed(defines=defines)
+            self.assertEqual(ctx.problems, [])
+            row = R.signed_ledger_row(ctx.tree, "include/common.h", None if defines else "SignedDirection", defines,
+                                      self.values, self.sites, "T-27070")
+            R.apply_reuse(ctx, row, "signed", io.StringIO())
+            after = self.read(self.path)
+            self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+            self.write(self.path, self.before)
+            self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+            self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
+            self.assertEqual(self.read(self.path), after)
+            self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
+
+    def test_post_write_failure_rolls_back_source_header_and_ledger(self):
+        header = self.read("include/common.h")
+        ctx = self.plan_signed()
+        row = R.signed_ledger_row(ctx.tree, "include/common.h", None, True, self.values, self.sites, "T-27070")
+        with unittest.mock.patch.object(R, "check", return_value=1):
+            with self.assertRaises(R.RenameError):
+                R.apply_reuse(ctx, row, "signed", io.StringIO())
+        self.assertEqual(self.read(self.path), self.before)
+        self.assertEqual(self.read("include/common.h"), header)
+        self.assertIsNone(self.read("config/renames/signed.txt"))
+
+    def test_enum_request_follows_function_tag_and_member_ledgers(self):
+        self.write("config/symbol_addrs.txt", self.read("config/symbol_addrs.txt") +
+                   "\nsigned_sink = 0x80041080; // type:func\n")
+        ctx = self.plan_signed(defines=False)
+        self.assertEqual(ctx.problems, [])
+        row = R.signed_ledger_row(ctx.tree, "include/common.h", "SignedDirection", False,
+                                  self.values, self.sites, "T-27070")
+        R.apply_reuse(ctx, row, "signed", io.StringIO())
+        self.ok("func main signed_sink semantic_sink\n", verify=True)
+        self.ok("type main SignedDirection SignedTestDirection\n", verify=True)
+        self.ok("enumerator main SIGNED_NEGATIVE_ONE SIGNED_OTHER_NEGATIVE_ONE\n", verify=True)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
+
+    def test_check_rejects_inactive_signed_definition(self):
+        ctx = self.plan_signed()
+        self.assertEqual(ctx.problems, [])
+        row = R.signed_ledger_row(ctx.tree, "include/common.h", None, True, self.values, self.sites, "T-27070")
+        R.apply_reuse(ctx, row, "signed", io.StringIO())
+        header = self.read("include/common.h")
+        self.write("include/common.h", header.replace("#define SIGNED_NEGATIVE_ONE -1",
+                   "#if 0\n#define SIGNED_NEGATIVE_ONE -1\n#endif"))
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+
+    def test_legacy_cli_automatically_routes_negative_values(self):
+        self.write("negative.values", "SIGNED_NEGATIVE_ONE -1\n")
+        argv = ["--root", self.root, "const", "--header", "include/common.h", "--defines", "--values",
+                os.path.join(self.root, "negative.values"), "--site", "main:signed_sink(arg0)", "--apply"]
+        with unittest.mock.patch("sys.stdout", io.StringIO()):
+            self.assertEqual(R.main(argv), 0)
+        self.assertIn("signed_sink(SIGNED_NEGATIVE_ONE)", self.read(self.path))
+
+
 class SymtabTest(Fixture):
     def test_scope_and_placement(self):
         t = symtab.SymbolTable(self.root)
