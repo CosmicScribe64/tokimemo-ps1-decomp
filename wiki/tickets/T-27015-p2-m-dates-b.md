@@ -14,7 +14,7 @@ Roadmap phase 2, unit `m-dates-b`: name the functions, globals, fields and const
 
 ## Acceptance criteria
 
-- [x] `config/renames/proposals/m-dates-b.tsv`: 255 rows (1 file, 20 func, 75 comment, 68 data, 27 field, 64 const); every O.BIN function name of the object (78) has a comment row (74 here, 4 in `core.tsv`); 25 rows are HYPOTHESIS.
+- [x] `config/renames/proposals/m-dates-b.tsv`: 258 rows (1 file, 20 func, 75 comment, 71 data, 27 field, 64 const); every O.BIN function name of the object (78) has a comment row (74 here, 4 in `core.tsv`); 25 rows are HYPOTHESIS.
 - [x] `wiki/spec/m-dates-b.md`: the step-table scene model, scene state, background and wipe rules with frame counts, portrait file and outfit rules (with the disc file name of every sector), dialogue engine (script tables, 20 speak codes, name codes, choice shuffle, voice wait and cancel), heroine picker, event still, calendar and limit helpers, SD sprite tables, CD level meter, port notes, 16 open questions.
 - [x] Names follow `core` and the hardware tables where they exist; disagreements are listed in the spec open questions, not as second names.
 - [x] No game text, asm, screenshots or game data committed; no edits under `src/`, `include/` or `config/symbol*` files.
@@ -22,7 +22,7 @@ Roadmap phase 2, unit `m-dates-b`: name the functions, globals, fields and const
 
 ## Notes
 
-- Evidence: the matched C and the overlay step tables, the SERIFU script data parsed from the disc (numbers only), and twelve short emulator runs (a patched scratch copy of `tools/emu` with a memory-write option; nothing in the repo changed). Run list in [[spec/m-dates-b]] section 15.
+- Evidence: the matched C and the overlay step tables, the SERIFU script data parsed from the disc (numbers only), and about twenty short emulator runs (a patched scratch copy of `tools/emu` with a memory-write option; nothing in the repo changed). Run list in [[spec/m-dates-b]] section 15.
 - Findings worth reviewing first: every event scene is a table of function pointers indexed by `step` and this object holds the shared steps; dialogue scripts are SERIFU disc files linked for a fixed RAM address with three parallel tables (text, command, voice) and 20 speak codes; wipe kind is `month % 7`; portrait files map to BUSTUP file names by sector (`0x4FE5 + 0x2D * k`); the three-way choice order is a function of `frame_count`; `check_para_limit` clamps are exact (emulator-checked).
 - Core corrections requested in the spec open questions: `bustup_quad_offsets` takes an expression index, not a girl id; `step_timer` is not advanced by the main loop; the core comments for `normal_date_girl_in/out` say slide, the code fades.
 
