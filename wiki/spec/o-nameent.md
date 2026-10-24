@@ -97,7 +97,7 @@ Step 0 (`file_select_scan`): `card_start`, then `card_scan_poll` until result 2 
 
 Branch A, system file present (steps 1-3):
 
-- Step 1 `file_select_system_file_read`: reads the system file (`card_system_read_poll` result 3; failure goes to stage 1, or after 0x201 frames or result 0xF0 to stage 1 with a reset). `system_bank_load` is tried; -1 means the file is broken: a message, a wait for confirm or cancel, a question whether to rebuild it; circle goes to stage 0xD0, cross deletes file 0 (up to four tries) and returns to stage 1. On success the first valid slot becomes `selected_slot`, the header text and info page are shown (page 1) and the step becomes 2.
+- Step 1 `file_select_system_file_read`: reads the system file (`card_system_read_poll` result 3; failure goes to stage 1, or after 0x201 frames or result 0xF0 to stage 1 with a reset). `system_bank_load` is tried; -1 means the file is broken: a message, a wait for confirm or cancel, a question whether to rebuild it; circle goes to stage 0xD0, cross deletes file 0 (up to four tries) and returns to stage 1. On success the previously selected slot is kept when it is valid, else the first valid one of slots 1-13 (slot 14 is not searched) becomes `selected_slot`; the header text and info page are shown (page 1) and the step becomes 2.
 - Step 2 `file_select_list_input`: pointer or cursor on slot boxes (`menu_check(0)`; the SELECT mode toggle bit is removed from the pad word). A circle or START press on a valid slot (status 1): when the slot is already the selected one, sound 0x501, `save_slot` = slot and step 3; otherwise the slot becomes the selected one and the header and cursor update. Empty and broken slots do nothing. The page widgets and function buttons run in the same step.
 - Step 3 `file_select_album_load`: substep 1 reads the album (`card_save_read_poll` 4); 2 `card_bank_validate`; 3 `game_bank_load` (GameState replaced, menu mode lock off), SE 0x501, `card_slot_summary_store`, `selected_slot = save_slot`; 4 writes the system file (`card_system_write_poll` 0x13) and goes to stage 3. A failed validation or load marks the slot 0xFF and goes to stage 0xF0; a timeout (0x201) or result 0xD0 goes to stage 0xFF; result 0xF0 resets the card and goes to stage 1.
 
@@ -137,7 +137,7 @@ Clear (0xE0-0xE6): 0xE0 explanation; 0xE1 choose an album with status non-zero (
 
 Header (every page): the slot number, the family name, the given name, the nickname and the club name (`club_name_table`) of the selected slot, taken from `system_data` when the system file is present, else from the album image (`AlbumSlotRecord`, club in the high nibble of a halfword). Next to it the save date (year, month, day as numbers, `file_select_number_draw`) and the clear count = the number of non-zero `girl_clear_count[0..12]`.
 
-Pages (page = `file_select_info_page` mod 3, negative values wrap; starts at 1; triangle, or circle on the region x -0x3F..0x1F, y 0xD..0x1B adds 1; pressing a function button sets it back to 1):
+Pages (each has its own title bar in the picture: clear count, parameters, girls' evaluation; emu: pages 0, 2 and 1 seen; page = `file_select_info_page` mod 3, negative values wrap; starts at 1; triangle, or circle on the region x -0x3F..0x1F, y 0xD..0x1B adds 1; pressing a function button sets it back to 1):
 
 | Page | Content |
 | ---: | --- |
@@ -362,7 +362,17 @@ Sound banks are loaded with `sound_bank_load_start`; the LBA words in the calls 
 
 Used only coarsely: sprite and primitive drawing (gouraud boxes, digit sprites, the iris wipe), background slots from decoded stills (`dec_bg_*`, MDEC), the actor pool, CD reads and XA clips, the STR movie, memory card calls (`card_*`), sound banks and BGM/SE commands, and the main text system (kanji strings and typewriter). A port replaces these with its own renderer, audio and save storage; the file screens' card state machine then reduces to the rules in 3.5 on a save directory.
 
-## 11. Open questions
+## 11. What a port needs from this unit
+
+1. A new-game function: inputs are the three name strings, the player's month, day and blood type, Shiori's month, day and blood type and a random source; output is the profile fields of section 4.6 plus the club, blood and start-score rules of section 4.7 and the cheat checks of section 4.8.
+2. Name input rules: three, three and five characters from four pages (kana, symbols, kanji by reading), presets and chord shortcuts, blank handling (4.2 to 4.4); birthday rules including the day clamp and the random fill (4.5).
+3. The file rules (3.5 to 3.9): 14 album slots plus a system file with per-girl clear counts and per-slot summaries; New keeps clear counts and starts at the prologue with the retained names; saves dated 1995-04-04 and 1998-03-01 start a new run with the old names as defaults; every other save resumes at the weekday command screen.
+4. The prologue as data: 43 lines with speaker, text, voice clip and the stage in which each is shown (5.1 and 5.2), two answers built from Shiori's entered data, the 61-frame hold between lines.
+5. The attract opening: the story pictures, narration clips and lyric lines (section 6), start and skip rules.
+
+Everything else (card polling, CD sector reads, VRAM and palette handling, actor tables) is hardware layer.
+
+## 12. Open questions
 
 1. Prefixes: the ADR lists only `name_entry_` and `prologue_` for this overlay; the proposal adds `file_select_` and `opening_`. The ADR row (and the audit's `name_ent_`) should be updated to match, or the 104 `file_select_*` names and 10 `opening_*` names renamed.
 2. The core table names the modes 0x11, 0x13, 0x14, 0x15 differently (section 1); the constants in `o-nameent.tsv` override them. The names `MODE_PROLOGUE` and `MODE_NAME_ENTRY` change value (0x11 to 0x15, 0x13 to 0x14), so the four rows must be applied together.
