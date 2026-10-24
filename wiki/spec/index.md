@@ -27,3 +27,4 @@ One line per unit. Specs state facts read from the matched code for the Godot po
 One line per unit. Each spec states what the unit does, its state and data with the proposed names, the rules as the code implements them, how it connects to the rest of the game, and open questions. The rename proposals are in `config/renames/proposals/<unit>.tsv`.
 
 - [[spec/o-tt]] - overlay TT, the TwinBee Time Attack mini game: stage, boss and ranking rules, state machine, data tables
+- [[spec/m-hud]] - main HUD unit: portrait face, parameter panel, date panel, message window and title banner, command icon bar, season and vacation helpers, calendar page with biorhythm graph, information magazine and date places, appointments, club list, save slot panel, command roll ([[tickets/T-27016-p2-m-hud]])

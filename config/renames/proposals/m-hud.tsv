@@ -1,0 +1,200 @@
+func	main	func_80062D0C	bustup_hide	never called; arg == 0 hides the portrait driver actors 30 and 31 and sprite quads 0-5, any other arg does nothing
+func	main	func_800634FC	bustup_idle_counter_wrap	called by bustup_layout_set and from GEKO/SHUGAKU after a portrait is set up; zeroes D_800B5A64 when it is 0xA5 or more; no other code reads or writes D_800B5A64
+func	main	func_80063520	bustup_expression_select	called by bustup_build with its last argument (0-5): arg / 2 picks texture page 7, 8 or 9 for the mouth and eye quads 0 and 1, odd arg adds 0x40 to their V
+func	main	func_80063668	bustup_face_update	per frame: voice_mode on -> mouth quad V = 16 * (thresholds of bustup_lipsync_thresholds[current_girl] below the CD audio level, max 3), changed only on even frames while open; voice off -> V = 16 * frame of actor 31; eye quad V = 32 * frame of actor 30; emu: not hit on the day screen
+func	main	func_8006509C	icon_bar_init	creates icon base plates (actors 64+i) and glyphs (80+i), icon_count forced to 15 in free layout, icon_enabled[i] = 1, positions from icon_layout_a/b or the saved free layout, then icon_layout_apply; emu: day-screen save state shows layout A in icon_positions
+func	main	func_800654D0	icon_layout_apply	n != 15 becomes 14 (stored back to icon_count); registers menu 0 with n boxes of 20 x 16 at (x - 10, y - 10) and moves the plate and glyph actors; actors 78 and 94 (icon 14) shown only when n == 15
+func	main	func_80065900	icon_card_anim_set	sets sequence 14 (reset frame when >= 4) of actor 93, the glyph of icon 13, when arg != 0, else sequence 13 (frame reset when >= 6); icon_bar_update picks the same pair from card_busy
+func	main	func_80065964	icon_move_allowed	free layout: 0 when icon idx moved by (dx, dy) leaves x -160..160 or its top edge leaves y -120..120 (the bottom edge repeats the top test) or a corner falls inside the 20 x 16 box of another icon, else 1
+func	main	func_80066104	message_window_title_set_hidden	calls message_window_set_title and then sets title_banner_timer to 0xB8 (banner starts retired; holding triangle recalls it); callers pass the title string in $a0 although the C prototype is (void)
+func	main	func_80066A2C	season_index	month 3-5 -> 0, 6-8 -> 1, 9-11 -> 2, 12/1/2 -> 3; picks the seasonal BGM, checker palette and background image; emu: runs every frame on the day screen
+func	main	func_80066A84	in_summer_months	1 for months 6-9, 0 otherwise; read by summer_phase and the holiday and TEL code
+func	main	func_80066ACC	summer_phase	in_summer_months, but -1 from May 25 and from September 24 on; the random encounter chooser in the queue builder tests == 1 and == 0, so -1 matches neither
+func	main	func_80066B40	vacation_for_date	(month, day) -> 1 for July 24 on and all August, 2 for December 25 on and January 1-7 (month 13 = January), 3 for March 24 on and April 1-3, else 0; TEL date planning offers pool and sea on 1 and skating rink and ski resort on 2
+func	main	func_800673B8	ui_vram_init	boot (boot_hud_init): uploads the 32 x 128 image at D_800B374C (month_data_table[1]) to VRAM (0x3E0, 0x180), clears 128 bytes of scratch_words and uploads them to (0x3E0, 0x1C0)
+func	main	func_80067438	season_bgm_load	sound_request(5), sound_request(0x71), then sound_bank_load_start with the three LBAs of season_index from season_bgm_lba_d/e/f; ending_start calls it
+func	main	func_800674B0	day_bgm_load	same prologue; vacation 1/2/3 loads three fixed break banks, vacation 0 the season banks; 1996-09-01 still uses the summer break bank; called by most scenes that return to the day screen
+func	main	func_80067610	bgm_load_finish_step	never called; when sound_bank_wait_ready returns 1 it calls bgm_play(0, 0) and main_stage_next
+func	main	func_8006764C	mascot_disp_switch	arg != 0 sets, 0 clears the visible bit of actors 27 and 28
+func	main	func_800676AC	mascot_set	choice 1-13 builds actor 27 (frame choice - 1, own image table) and 28 (frame 13); choice 0 or >= 14 hides both and resets the pendulum to anchor (120, -55), length 15, swing 8
+func	main	func_80067C28	sd_mouth_update	HYPOTHESIS: actor 96 is an SD sprite (core note on sd_anim_fast); voice_mode on: frame of actor 96 = number of lip-sync thresholds of the current girl below the CD audio level (0-3), changed on even frames only while open; same algorithm as bustup_face_update
+func	main	func_80067DD4	sd_actor_97_anim_start	HYPOTHESIS: SD sprite; sets bits 0 and 1 of actor 97 anim_flags when bit 0 is clear
+func	main	func_80067DFC	sd_actor_96_anim_start	HYPOTHESIS: SD sprite; same for actor 96
+func	main	func_80067E34	calendar_screen_init	header sprite (actor 96, frame 0x43 at (-16, -19), priority 4) then calendar_marks_build; TEL date-day pick and the command screen calendar check call it
+func	main	func_80067F04	calendar_marks_build	fills actors 0x61.. with marks: player birthday, met girls' birthdays, active appointments, third Sunday for sports-club members, per-day marker frames of both months (multi-day repeats), logged encounters of this month
+func	main	func_80068898	calendar_cell_x	x of a day cell: side * 0x88 + column * 16 - 0x78, column = (weekday of the 1st, Sunday = -1, + day index + 1) % 7; TEL uses it for the 16 x 16 pick boxes
+func	main	func_800688F0	calendar_cell_y	y of a day cell: row * 16 - 0x30, row = (first weekday + day index + 1) / 7
+func	main	func_80068938	month_calendar_load	(year, month, advance): uploads this and next month's 32 x 128 images from month_data_table[idx], idx = (year - 95) * 12 + month - 4, to VRAM (0x3A0, 0x100/0x180); with advance != 0 also moves month_calendar[1] to [0] and loads [1] from blob idx + 1
+func	main	func_80068BE4	biorhythm_graph_draw	draws a pulsing zero line and three 16-point curves (day_count - 8 .. day_count + 7) from biorhythm_value(.., -32) with prim_line_gradient; day_count is changed and restored
+func	main	func_80068EC0	calendar_view_update	per frame: biorhythm_graph_draw, cal_base_show, then pulses the scale of actors 0x61-0x9F (grow 64 frames, hold 64, shrink 64, hidden 64); command screen (mode 0x34) calendar check and TEL call it
+func	main	func_800696DC	save_slot_info_show	queues the text panel of one album slot (number, date, family and given name, nickname, club, count of non-zero per-girl flags) from SystemData, or from the slot image in the card block; arg1 != 0 shifts it to x -0x8C; k_sub_disp_start(6)
+func	main	func_8006A044	magazine_mark_read	sets quarter_flags: bit 14 unless month is 2, 5, 8 or 11 (then bit 13); bit (year - 95) * 4 + quarter (quarter = month 2-4 / 5-7 / 8-10 / 11-1); bit 15 in months 5-7; first month of the game sets 13 and 14
+func	main	func_8006A2CC	magazine_page_build	the holiday step that calls it titles the screen information magazine; builds the information magazine page of issue 0-12 from year and month, sets place_flags[] to 1 for the place that issue unlocks, queues its titles and text and the narration for the player name
+func	main	func_8006B014	appointment_count_for_girl	counts active appointment slots whose girl field equals arg; the scheduler skips girls that already have one
+func	main	func_8006B0C8	appointment_list_sort	packs active slots to the front, zeroes the rest, selection-sorts by month * 100 + day (month 1 counts as 13 while month is 12)
+func	main	func_8006B5BC	appointment_add	stores the word in the first inactive slot (index 8 if all eight are active: writes past the array) then appointment_list_sort
+func	main	func_8006B640	appointment_prompt_noop	empty function called once before the appointment place prompt in the holiday handler
+func	main	func_8006BDA8	command_roll_poor_result	(days ahead) 1 = poor result, 0 = normal: base = biorhythm_value of the command's wave at scale 16 + parameter / 16 (club: + club exp / 16; rest: 16) + 6, rand % (base + 4), reduced by stress, / 4 when all three wave probes are 0, poor when below 4; emu: break from holiday handler and from day_events_build_week
+func	main	func_8006C308	biorhythm_probe_unused	calls biorhythm_value(1, 1, 1, 2) and drops the result; never called
+func	main	func_8006C334	biorhythm_value	sine waves of 23, 28 and 33 days (rsin step 0xB2, 0x92, 0x7C per day) of birth offset + day_count for the selected flags; scale > 0 returns average strength * scale, scale < 0 returns the first selected wave * scale / 4096, scale == 0 returns 1 or -1 (no caller); emu: break shows scale 16 and 3
+func	main	func_8006C700	biorhythm_birth_offset	5475 - birthday_day_table[month] - day (April 1-3: 5506 - table[3] - day), from player_birthday; the phase of the three waves
+func	main	func_8006C760	corner_icon_set	actor 15 frame 0xAD at (-134, -92); arg != 0 makes it visible; used around STR movies and the NAME_ENT attract scene
+func	main	func_8006C934	text_marker_bob	moves actor 2 (continue marker) down one pixel every 4 frames from y 0x48 to 0x4F, then snaps back to 0x48
+func	main	func_8006C988	event_log_scan	counts event_log entries (year byte 0 ends the list, caps 0xFF, clears the year of the rest), returns the girl of the last entry in *last and the girl of the last entry whose scene is 0, 1, 2 or 0xF in *first (0xFF if none); used when loading a save
+func	main	func_8006CA9C	confirm_button_label	text of the confirm button: mouse -> right or left label by confirm_button, pad -> pad confirm label
+func	main	func_8006CAE0	cancel_button_label	text of the cancel button: mouse -> the other mouse label, pad -> pad cancel label
+comment	main	bustup_speech	Start the mouth animation of actor 31 when voice is off and it is not running	sets bits 0 and 4 of the actor flags when voice_mode == 0 and bit 0 is clear
+comment	main	bustup_wink	Start the blink animation of actor 30 unless it is running	sets bits 0 and 4 of the actor flags when bit 0 is clear
+comment	main	parameter_change	Add a 16.16 delta to parameter n, floor 0, cap 999	body: word at +0xFC + 4n, negative word set to 0, value capped at 0x3E7
+comment	main	parameter_disp_switch	Show (1) or hide the 28 parameter panel actors 32-59	loops i < 28 over actor draw_flags bit 7
+comment	main	parameter_show	Per frame: draw the panel background and run the digit flip animation	background only while actor 32 is visible; phase 1 shrinks, phase 2 grows back (8 or 4 frames by sd_anim_fast)
+comment	main	message_disp_switch	Show (1) or hide the message window actor	sets or clears bit 7 of actor 1 draw_flags
+comment	main	get_icon_can_use	Return 1 when command icon n is usable	icon_enabled[n] == 1
+comment	main	cal_base_show	Draw the backing panel of the calendar page	prim_box_gouraud(-0xA0, -0x57, 0x11B, 0x7D, slot 5)
+comment	main	appraisal_base_show	Draw a larger backing panel (unused)	prim_box_gouraud(-0xA0, -0x68, 0x11B, 0x8E, slot 5); no caller
+comment	main	magazine_base_show	Draw the backing panel of the information magazine	prim_box_gouraud(-0xA0, -0x78, 0x140, 0x9E, slot 5); holiday handler magazine steps
+comment	main	cal_sprite_disp_switch	Show (1) or hide the four calendar image quads	clears or sets bit 31 of sprite quads 0-3; unused
+comment	main	cal_sprite_init	Set up the four calendar quads: two month images and two month number plates	quads 2 and 3 are 0x7E square images at x -0x88 and 0, quads 0 and 1 are 0x18 x 0x10 plates
+comment	main	data_save_load_class_init	Set up the header sprite of the save and load screens	actor 96 frame 0x43 at (-16, -19), priority 3
+comment	main	club_list_menu	Show the club list: 11 clubs in columns of 5 plus cancel, clubs the player quit are not offered	menu 1 with 12 boxes, w = 0 when ClubRecord flag bit 0 is set, cursor on the first available club
+comment	main	appointment_find_today	1-based slot of the appointment on (month, day), 0 if none, -1 on protected dates	returns -1 on December 24, January 1 (month 13 counts as 1) and from March 1998 on
+data	main	D_800B5A60	mouth_frames_reversed	HYPOTHESIS: ENDING lip sync uses 3 - level while it is set; DATE sets it with event_face0; bustup_read_start clears it; 8007C030 swaps it with D_800CA360 around event stills
+data	main	D_800B5A64	bustup_idle_counter	only reader and writer is bustup_idle_counter_wrap
+data	main	D_800B5A68	bustup_lipsync_thresholds	u8[16][3] per current_girl: CD audio levels above which the mouth shows frame 1, 2, 3 (girl 0: 16, 40, 56)
+data	main	D_800B5A98	lipsync_peak_level	bustup_face_update keeps the largest level seen, pad_held square clears it; never read
+data	main	D_80125C80	cd_level_history	s16[4] ring written at frame_count & 3 with the CD audio level (main, NAME_ENT, ENDING)
+data	main	D_80125C10	icon_positions	s16[15][2] current screen position of each command icon; layout A in the day-screen emu state; free layout copy kept in scratch_words
+data	main	D_80125C90	icon_enabled	u8[15] 1 = icon usable, set by icon_can_use_set, read by get_icon_can_use and icon_bar_update
+data	main	D_800B5AE4	icon_layout_a	s16[15][2] positions of icon type A (also the default of the free layout)
+data	main	D_800B5AA4	icon_layout_b	s16[15][2] positions of icon type B
+data	main	D_800B5A9C	icon_selected_prev	last menu_cursor_0 seen by icon_bar_update
+data	main	D_800B5AA0	icon_pulse_timer	set to 0x20 when the selection changes, counts down; drives the pulse scale rsin((0x20 - t) << 6) + 0x1000
+data	main	D_800B5B24	title_banner_length	glyph pairs of the current banner title (strlen / 2)
+data	main	D_80125CA0	title_banner_timer	-0x40 start slide-in, 0-0x77 shown, 0x78-0xB7 slide-out, 0xB8 retired (recalled while triangle is held)
+data	main	D_800B5B28	season_palettes	u32[4][8]: one 16-colour palette row per season_index, loaded to the checker CLUT (0xA0, 0x1E1)
+data	main	D_800B5BA8	season_palette_blend	u32[8] blend buffer of the crossfade between two seasonal palettes
+data	main	D_800B5BC8	season_palette_fade	crossfade counter, runs only from 0xEF up (16 steps, one per 4 frames); only NAME_ENT writes it (0xFE)
+data	main	D_800B5BCC	checker_scroll_u	u8 u offset of the scrolling checker background, speed by player health state
+data	main	D_800B5BD0	checker_scroll_v	u8 v offset of the checker background
+data	main	D_800B5BD4	checker_ot_slot	ordering-table slot of the checker background sprites; scenes set 9, 10, 13 or 15
+data	main	D_800B5BD8	season_bgm_lba_f	s32[4]: CD sector passed as the f argument of sound_bank_load_start per season
+data	main	D_800B5BE8	season_bgm_lba_d	s32[4]: d argument (also the cache key) per season
+data	main	D_800B5BF8	season_bgm_lba_e	s32[4]: e argument per season
+data	main	D_80125C50	mascot_anchor_x	s16, initial 120; the swinging mascot hangs from this point and the pad (R1 held) moves it
+data	main	D_80125C52	mascot_anchor_y	s16, initial -55
+data	main	D_80125C54	mascot_length	u8, initial 15; while R2 is held down adds 2 (below 0xC4) and up subtracts 2 (from 3 up)
+data	main	D_80125C55	mascot_swing	u8 swing amplitude, initial 8; set to (length + 1) / 2 when pad 2 presses a button, decays one step every 64 frames
+data	main	D_800B5C10	calendar_marker_frames	u8[24] sprite frame per CalendarMarker value (0xFF = none; markers 2, 3, 10, 16, 21 share frame 0x65)
+data	main	D_800B5DFC	magazine_frame_a	u8[13] sprite frame per issue (0xFF none), drawn at the page origin
+data	main	D_800B5D0C	magazine_frame_b	u8[13] second sprite frame per issue
+data	main	D_800B5D1C	magazine_title	u8[13][17] title string per issue
+data	main	D_800B5C2C	magazine_subtitle	u8[13][17] second heading string per issue
+data	main	D_800B5EA4	magazine_lines	u8[13][3][36] three text lines per issue
+data	main	D_800B66A4	magazine_narration	u8 *[13] narration line per issue, shown with the player name
+data	main	D_800B3750	magazine_spot_marks	u8[13][3] three values 0-2 per issue, added to frame 0x90 next to the three month labels
+data	main	D_800B5E0C	magazine_notice_0_line1	first line of the two-line notice shown for issue 0 (an issue without a new place)
+data	main	D_800B5E25	magazine_notice_0_line2	second line for issue 0
+data	main	D_800B5E3E	magazine_notice_9_line1	first line of the notice for issues 9 and 10
+data	main	D_800B5E57	magazine_notice_9_line2	second line for issues 9 and 10
+data	main	D_800B5E70	magazine_notice_11_line1	first line of the notice for issues 11 and 12
+data	main	D_800B5E89	magazine_notice_11_line2	second line for issues 11 and 12
+data	main	D_800B3288	number_strings	u8 *[17] full-width number strings 0-16: [0..9] one digit, [10..16] two digits; indexed by month, year / 10 and day / 10
+data	main	D_800B32CC	month_label_strings	u8 ** that points at number_strings[1]: element m is the label for m + 1
+data	main	D_800B670A	birthday_day_table	u16[13] days from the first of month m to a reference date near April 5 (index 0 unused); used by biorhythm_birth_offset
+data	main	D_800B6708	cursor_style	u8: 0 or 0x9B-0xAC, frame index of the cursor actor; pad_pressed square steps it (0 -> 0x9B -> ... -> 0xAC -> 0)
+data	main	D_8011ECA4	cursor_moved_this_frame	cleared once per frame by the frame start code (emu: write watch, func_800422C8+0x100); cursor_update moves the pad cursor only while it is 0
+data	main	D_800B6724	label_pad_confirm	button name string of the pad confirm button
+data	main	D_800B6728	label_pad_cancel	button name string of the pad cancel button
+data	main	D_800B672C	label_mouse_right	button name string of the mouse right button
+data	main	D_800B6730	label_mouse_left	button name string of the mouse left button
+data	main	D_800C6220	hud_clut_digits	five 16-colour rows loaded to VRAM (0x120, 0x1E0): clut rows 0x1E0-0x1E4; rows 0 and 1 are reused as icon rows 0x1F2 and 0x1F3
+data	main	D_800C6200	hud_clut_icon_disabled	one palette row loaded to (0x120, 0x1F1) by icon_bar_init
+data	main	D_800C5FD4	mascot_image_table	image table of mascot actors 27 and 28
+data	main	D_800C6010	mascot_sequence_table	sequence table of the mascot actors
+data	main	D_800C5FCC	mascot_texture_blocks	texture block table of the mascot actors
+field	ScheduleClubFlags	b24	quit	byte +3 bit 0 of a ClubRecord: set when the player quits that club, cleared for clubs 0-10 by club_flag0_clear; club_list_menu hides such clubs and the holiday handler disables the club icon when all 11 are set
+field	FlagsF64	b0	spot_info_00	bit (year - 95) * 4 + quarter: issue 0 (months 2-4 of 1995) (no place); set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b1	spot_info_01	bit (year - 95) * 4 + quarter: issue 1 (months 5-7 of 1995) = place 1; set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b2	spot_info_02	bit (year - 95) * 4 + quarter: issue 2 (months 8-10 of 1995) = place 7; set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b3	spot_info_03	bit (year - 95) * 4 + quarter: issue 3 (months 11-1, 1995-96) = place 3; set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b4	spot_info_04	bit (year - 95) * 4 + quarter: issue 4 (months 2-4 of 1996) = place 13; set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b5	spot_info_05	bit (year - 95) * 4 + quarter: issue 5 (months 5-7 of 1996) = place 5; set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b6	spot_info_06	bit (year - 95) * 4 + quarter: issue 6 (months 8-10 of 1996) = place 10; set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b7	spot_info_07	bit (year - 95) * 4 + quarter: issue 7 (months 11-1, 1996-97) = place 6; set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b8	spot_info_08	bit (year - 95) * 4 + quarter: issue 8 (months 2-4 of 1997) = place 11; set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b9	spot_info_09	bit (year - 95) * 4 + quarter: issue 9 (months 5-7 of 1997) (no place); set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b10	spot_info_10	bit (year - 95) * 4 + quarter: issue 10 (months 8-10 of 1997) (no place); set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b11	spot_info_11	bit (year - 95) * 4 + quarter: issue 11 (months 11-1, 1997-98) (no place); set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
+field	FlagsF64	b13	spot_info_first_month	HYPOTHESIS: magazine_mark_read sets it in months 2, 5, 8 and 11 (and in April 1995); quarter_flags_rotate moves it to bit 14 at months 3, 6, 9, 12
+field	FlagsF64	b14	spot_info_later_month	HYPOTHESIS: set in every other month; TEL tests it for place availability in the second and third month of a quarter
+field	FlagsF64	b15	spot_info_summer	HYPOTHESIS: set when the magazine is opened in months 5-7; TEL tests it for place 9 in the first week of August
+type	main	(new)	ProgressState	new struct for GameState.progress_state (0x9C bytes): place_flags[21], command_counts[9], 2 unused bytes, profile_snapshot[0x7C]; header change to be checked byte by byte
+field	ProgressState	unk_00	place_flags	one byte per Place id (21): low 7 bits non-zero = date place available (TEL tests & 0x7F), 0x80 = pending announcement (TEL clears it to 1); emu: start-of-game state has places 0, 2, 4, 8, 9, 12, 15 set
+field	ProgressState	unk_15	command_counts	9 counters, one per command % 9, incremented per chosen command (read by ENDING to rank commands)
+field	ProgressState	unk_20	profile_snapshot	copy of GameState +0xC4..+0x13F (names, flags, birthday, nine parameters) taken by parameter_show_init; the panel compares the live values with it
+const	Season	0	SEASON_SPRING	season_index: months 3-5
+const	Season	1	SEASON_SUMMER	months 6-8
+const	Season	2	SEASON_AUTUMN	months 9-11
+const	Season	3	SEASON_WINTER	months 12, 1, 2
+const	SummerPhase	-1	SUMMER_PHASE_TRANSITION	summer_phase result from May 25 and from September 24 on
+const	SummerPhase	0	SUMMER_PHASE_OFF	summer_phase result outside June-September
+const	SummerPhase	1	SUMMER_PHASE_ON	summer_phase result for June 1 to September 23
+const	HudClutRow	0x43	HUD_CLUT_UP_SATURDAY	Actor clut_row of a raised parameter digit and of the Saturday sprite
+const	HudClutRow	0x44	HUD_CLUT_DOWN_SUNDAY	clut_row of a lowered parameter digit and of the weekday sprite on Sundays and national holidays (day kind 1 or 2)
+const	HudClutRow	0x51	HUD_CLUT_ICON_DISABLED	icon base plate of a disabled icon (VRAM row 0x1F1)
+const	HudClutRow	0x52	HUD_CLUT_ICON_HOVER	icon base plate under the pointer or cursor (row 0x1F2)
+const	HudClutRow	0x53	HUD_CLUT_ICON_NORMAL	usable icon plate (row 0x1F3)
+const	CalendarFrame	0x62	CAL_FRAME_DATE	mark of an active appointment and of a logged encounter of this month
+const	CalendarFrame	0x66	CAL_FRAME_EXAM	frame of markers 5 and 18; repeated for 6 days except in February
+const	CalendarFrame	0x67	CAL_FRAME_WEEK_EVENT	frame of marker 23 (not in CalendarMarker); repeated for 7 days
+const	CalendarFrame	0x6C	CAL_FRAME_SCHOOL_TRIP	frame of marker 11; repeated for 6 days
+const	CalendarFrame	0x6D	CAL_FRAME_GIRL_BIRTHDAY	birthday of a met girl whose birthday is known (CharFlags b6)
+const	CalendarFrame	0x6E	CAL_FRAME_PLAYER_BIRTHDAY	player_birthday day
+const	CalendarFrame	0x6F	CAL_FRAME_CLUB_EVENT	marker 8 days in August for club members (6 days) and the third Sunday of each month for clubs 6-10
+const	ActorSlot	0	ACTOR_CURSOR	pointer or finger sprite
+const	ActorSlot	1	ACTOR_MESSAGE_WINDOW	bottom text window frame
+const	ActorSlot	2	ACTOR_TEXT_MARKER	continue marker
+const	ActorSlot	3	ACTOR_TITLE_FIRST	title banner decoration, title_banner_length + 2 actors
+const	ActorSlot	15	ACTOR_CORNER_ICON	corner_icon_set
+const	ActorSlot	16	ACTOR_DATE_FIRST	label (16), year digits (17-18), month digits (19-20), day digits (21-22), weekday (23)
+const	ActorSlot	27	ACTOR_MASCOT	swinging mascot
+const	ActorSlot	28	ACTOR_MASCOT_ANCHOR	mascot hand at the anchor point
+const	ActorSlot	30	ACTOR_BUSTUP_EYES	invisible animation driver of the portrait eyes
+const	ActorSlot	31	ACTOR_BUSTUP_MOUTH	invisible animation driver of the portrait mouth
+const	ActorSlot	32	ACTOR_PARAM_FIRST	parameter panel digits 32-58 (three per parameter), label 59
+const	ActorSlot	64	ACTOR_ICON_BASE_FIRST	icon base plates 64-78
+const	ActorSlot	80	ACTOR_ICON_GLYPH_FIRST	icon glyphs 80-94
+const	ActorSlot	96	ACTOR_SCENE_96	first scene actor; screen header sprite or SD character A
+const	ActorSlot	97	ACTOR_CALENDAR_MARK_FIRST	calendar marks and magazine layers 0x61-0x80; also SD character B
+const	HudIcon	13	HUD_ICON_CARD	weekday command screen: starts the memory-card job (card_job); glyph animation switches while card_busy is set
+const	HudIcon	14	HUD_ICON_EXTRA	exists only in free layout (icon_count 15); the weekday handler routes it like icon 11
+const	MagazineIssue	0	MAGAZINE_SPRING_95	issue shown from months 2-4 of 1995 (displays months 3-5)
+const	MagazineIssue	1	MAGAZINE_SUMMER_95	months 5-7; unlocks place 1
+const	MagazineIssue	2	MAGAZINE_AUTUMN_95	months 8-10; unlocks place 7
+const	MagazineIssue	3	MAGAZINE_WINTER_95	months 11-1; unlocks place 3
+const	MagazineIssue	4	MAGAZINE_SPRING_96	unlocks place 13
+const	MagazineIssue	5	MAGAZINE_SUMMER_96	unlocks place 5
+const	MagazineIssue	6	MAGAZINE_AUTUMN_96	unlocks place 10
+const	MagazineIssue	7	MAGAZINE_WINTER_96	unlocks place 6
+const	MagazineIssue	8	MAGAZINE_SPRING_97	unlocks place 11
+const	MagazineIssue	9	MAGAZINE_SUMMER_97	no unlock in magazine_page_build
+const	MagazineIssue	10	MAGAZINE_AUTUMN_97	no unlock
+const	MagazineIssue	11	MAGAZINE_WINTER_97	no unlock
+const	MagazineIssue	12	MAGAZINE_SPRING_98	months 2-4 of 1998
+const	PlaceFlag	0x01	PLACE_FLAG_AVAILABLE	value stored by the unlock code; TEL tests the low 7 bits
+const	PlaceFlag	0x80	PLACE_FLAG_PENDING	HYPOTHESIS: the scheduler writes 0x80 in the first month after a quarter for the place of an issue whose bit is not set; TEL's phone scene tells it, sets the bit and stores 1
+const	BiorhythmStep	0xB2	BIORHYTHM_STEP_23	rsin angle step per day of the 23-day wave (4096 / 178)
+const	BiorhythmStep	0x92	BIORHYTHM_STEP_28	28-day wave
+const	BiorhythmStep	0x7C	BIORHYTHM_STEP_33	33-day wave
+const	BiorhythmLimit	0x199	BIORHYTHM_CRITICAL_BAND	|wave| below this counts as a critical day
+const	TitleBannerTime	-0x40	TITLE_BANNER_START	slide-in starts
+const	TitleBannerTime	0x78	TITLE_BANNER_HOLD_END	slide-out starts
+const	TitleBannerTime	0xB8	TITLE_BANNER_RETIRED	banner off screen
+const	IconCount	14	ICON_COUNT_FIXED	icons in layout types A and B
+const	IconCount	15	ICON_COUNT_FREE	icons in the free layout
+data	main	D_800E8BEE	slot_info_from_system_data	HYPOTHESIS: nonzero makes save_slot_info_show read the SystemData arrays (album slots) instead of the card block; NAME_ENT tests it in 20 places
+data	main	D_800B66E0	light_effect_param_a	per-layer argument (third) of the nine calls in light_effect_draw
+data	main	D_800B66F4	light_effect_param_b	per-layer argument (ninth) of the nine calls in light_effect_draw
+file	main	src/main/80062CD0.c	src/main/hud_panels.c	portrait face, parameter panel, date panel, message window, title banner, command icon bar, season helpers, checker background
+file	main	src/main/800674B0.c	src/main/hud_screens.c	day BGM, mascot, calendar page with biorhythm, information magazine, save slot panel, appointments, club list, cursor, command roll; could split into bgm, mascot, calendar, magazine, biorhythm files
+file	main	(new)	include/main/hud.h	declarations of the HUD module once include/main_api.h is split per module
