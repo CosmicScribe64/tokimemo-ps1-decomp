@@ -93,7 +93,8 @@ negative phase (averaged over the waves in use). The score is that term + the co
 practice / 16; rest: a fixed 16 instead) + 6; the roll is `rand() % (score + 4)`; it is multiplied by (8 - f) / 8 with
 f = stress / 32 (f = 4 from stress 97, so at most half); it is divided by 4 when all three waves are weak on that day
 (a wave is weak when its term at scale 3 is 0: a critical day, a positive phase under a third of the amplitude or a
-negative phase under two thirds). The day is poor when the result is below 4. So practice, higher parameters and low stress make poor days rarer.
+negative phase under two thirds). The day is poor when the result is below 4. So practice, higher parameters and
+low stress make poor days rarer.
 
 ## Mode 0x40: stages and steps
 
