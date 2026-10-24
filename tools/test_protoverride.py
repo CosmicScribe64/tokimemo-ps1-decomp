@@ -601,7 +601,7 @@ class CompileUnit(unittest.TestCase):
                 compiled.append(Path(args[2]).read_text())
                 obj.write_bytes(b"obj")
                 return ""
-            c = SimpleNamespace(src=tmp / "f.c")
+            c = SimpleNamespace(src=tmp / "f.c", name="TT/f")
             with mock.patch.object(proof, "command", side_effect=fake_command), \
                     mock.patch.object(trailing_pad, "pad_functions"), \
                     mock.patch.object(object_layout, "trim", side_effect=lambda data, extent: data), \

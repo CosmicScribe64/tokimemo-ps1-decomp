@@ -1749,3 +1749,6 @@ Section added to [[ido-52-evaluation]]; harness in `drafts/T-25608/ido41/`.
 ## [2026-10-23] ticket | T-25608 Done: main func_8006B0C8 matched; every game function is C
 
 The last function matched with a narrowed block-copy state rule in tools/ugen_pass.py; an IDO 4.1 check (user-approved download) confirmed the three swap copies' state and showed a better general rule, now [[tickets/T-26000-ugen-block-copy-41-rule]]. With this merge all 6,952 game functions are matched ([[tickets/T-25600-finish-gate]]).
+## [2026-10-24] ticket | T-26001 Done: stale tool tests fixed
+
+[[tickets/T-26001-stale-tool-tests]]: test_build_deps now copies tools/ugen_pass.py into its fake project and the protoverride compile_unit test gives its fake context a name; the full tool suite passes (1572 OK, 3 skipped).
