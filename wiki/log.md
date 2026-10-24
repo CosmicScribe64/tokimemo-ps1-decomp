@@ -7,30 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] build | T-25039 MAIN club carrier matched
-
-Moved the local club definition into its consuming else branch, before the existing empty halfword test, while comparing the raw shift beforehand. This closes both carriers without new late-zero arithmetic or ignored arguments. Default C matches all 860 linked bytes, MAIN SHA1 passes, and headers/global/prototype guards pass (zero new, 15 known). Root independently reviewed standards and scope with no findings. Recorded controls in drafts/T-25039/README.md and [[matching-notes]]; moved [[tickets/T-25039-main-club-carrier]] to In Review pending root integration.
-
-## [2026-10-22] build | MAIN club and KANGEI matches accepted
-
-Integrated cb6cc430b and c0249b80c. Root default-C literal860/180byte proofs, fresh27/27binary checksums, headers/globals and prototypes0new/15known pass. Independent standards/spec reviews no findings. T-25039/T-25041 move Done. Progress6839/6952functions,2112784/2276920bytes (92.8%);113functions/164136bytes remain. Six matches add8108bytes. User requested more agents: MAIN chat tasked to add two isolated Astra lanes T-25043 TACO8014AB50 and T-25044 parameter_up_down, keeping quadrant worker. T-25039 file now complete; its worker continues T-25045 ETC80146D4C. KANGEI worker continues T-25042. Root serializes integration.
-
-## [2026-10-22] ticket | T-25038 selects SHOUGATU E6E4
-
-Created [[tickets/T-25038-shougatu-selection-loop]] and its In Progress board card before experiments. The clean isolated tree fast-forwarded from d091557e4 to root integration77eae26cf, preserving prior work. Root reports E50C and GYOZI E0C Done with all27 hashes and860 literal bytes. Selected E6E4's preserved corrected187-edit body over EA98's284-edit corrected port; existing table-home fix and negative ledger are in drafts/T-24523/SHOUGATU/func_8013E6E4 and [[tickets/T-24523-seasonal-source-hypotheses]]. Same Astra worker continues sole ownership of src/ovl/SHOUGATU/8013E330.c through resolution; root retains integration ownership.
-
-## [2026-10-22] build | T-25038 selector access classes close resolved E6E4
-
-[[tickets/T-25038-shougatu-selection-loop]]: fresh canonical full-TU baseline187/187 has exact frame/tables and no saved56 residue. Integer debug return gives177; independent club6 byte read restores its reload; a byte-view status argument then removes the unwanted selector promotion and gives0/0,237/237 words. Literal/default-C proof and minimization remain pending. Private evidence in `build/t25038/`, concise ledger in `drafts/T-25038/README.md`. Coordinator's declaration audit found existing s32 D_80122D48 uses in main/DATE and an overlapping EVENT table view; shared-header ownership will be reconciled before promotion.
-
-## [2026-10-22] build | T-25038 default C verified and ready for integration
-
-Promoted SHOUGATU func_8013E6E4 with no fallback: private and production full-TU links match all 948 bytes, and an independent link of the actual Ninja object matches E6E4 plus preserved E50C472bytes. SHOUGATU SHA1 and headers/globals/prototype guards pass (0 new / 15 known). Removal controls document the integer debug return, two byte views, result narrowing and multiplication by one. Root approved the narrow debug guard, overlay forward prototype and existing T-11590 scalar-local exception; coordinator source review has no findings. Moved [[tickets/T-25038-shougatu-selection-loop]] and card to In Review pending root combined gate. Updated [[playbook]] and drafts/T-25038/README.md; raw evidence remains private.
-
-## [2026-10-22] build | SHOUGATU selection loop accepted
-
-Root reviewed ca9569534 source/header against standards/spec, no findings. Narrow debug-return guard leaves default declaration unchanged; existing scalar-local exception documented, overlay forward prototype consistent. Full520-step rebuild passes fresh27/27SHA. Default-C E6E4 literal948bytes and preserved E50C472bytes pass. Headers/globals/prototypes0new/15known pass. T-25038 moves Done. Docker progress6840/6952functions,2113732/2276920bytes (92.8%);112functions/163188bytes remain. Seven matches add9056bytes. Worker continues T-25046 EA98; TACO zero-diff candidate not yet counted. All seven lanes remain assigned.
-
 ## [2026-10-22] ticket | T-25043 TACO constant tail claimed
 
 Created [[tickets/T-25043-taco-constant-tail]] In Progress in isolated managed worktree. Read [[index]], [[status]], [[playbook]], coding standards and prior [[tickets/T-24502-taco-completion]] evidence before matching.
@@ -1500,6 +1476,7 @@ Fix pass on [[tickets/T-27022-p2-o-date]] after the Opus review (not approved, t
 
 ## [2026-10-24] ticket | T-27022 Done after review
 [[tickets/T-27022-p2-o-date]] passed review round 2 (approved, no findings): the `scene_effect_flags` writers in [[spec/o-date]] match the C, no new name contains the word `event`, and the five `narration` names carry HYPOTHESIS. Tables and wiki only, nothing under `src/`, `include/` or `config/symbol*` (checked against the merge base). Merged as p2a-o-date.
+
 ## [2026-10-24] ingest | Phase 2 o-bunkaken: names and port spec (T-27026)
 
 Unit BUNKAKEN (`src/ovl/BUNKAKEN/`, 18 files, 201 functions, main mode 0x71, the culture festival for players outside the six culture clubs): read the matched C, the overlay data tables, the disc script, background, portrait and sound files by sector, the core and scheduler spec tables, and probed behaviour in the emulator (title-menu save state, loader forced to mode 0x71, a local copy of the probe runner with `--poke` and `--sample`, kept in `build/scratch`, not committed). Wrote `config/renames/proposals/o-bunkaken.tsv` (457 rows: 201 func, 172 const, 40 data, 19 file, 15 field, 10 type; 2 start with HYPOTHESIS) and [[spec/o-bunkaken]], linked from [[spec/index]]; ticket [[tickets/T-27026-p2-o-bunkaken]] (In Review). Prefix `festival_visit_`.
