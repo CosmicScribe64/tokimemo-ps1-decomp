@@ -306,7 +306,7 @@ File 0 is the system file, files 1 to 14 are the save slots (the name builder ac
 | 0x200 | bank 0 (0xF00 bytes) |
 | 0x1100 | bank 1, an identical copy of bank 0 |
 
-The icon is the girl of the latest date-like log entry (scene 0, 1, 2 or 0xF; `event_log_scan`), or icon 0 when there is none or the value is 13 or more: 13 icons. The writer (`card_file_write`) opens for writing and creates the file when that fails (16 tries each), builds header and bank, copies bank 0 over bank 1 and writes the 0x2000 bytes (16 tries). `card_file_read` clears the block, opens, and reads 0x2000 bytes (16 tries). `card_file_exists` opens a file once for writing and closes it (8 tries for a save file, 16 for the system file). `card_file_create` makes a one-block file, `card_file_delete` removes it (3 tries); the save screens create then delete a file to test that it can be created.
+The icon is the girl of the latest date-like log entry (scene 0, 1, 2 or 0xF; `event_log_scan`), or icon 0 when there is none or the value is 13 or more: 13 icons. The writer (`card_file_write`) opens for writing and creates the file when that fails (16 tries each), builds header and bank, copies bank 0 over bank 1 and writes the 0x2000 bytes (16 tries). `card_file_read` clears the block, opens, and reads 0x2000 bytes (16 tries). `card_file_exists` opens a file once for writing and closes it (8 tries for a save file, 16 for the system file). `card_file_create` makes a one-block file, `card_file_delete` removes it (after a failed delete it retries while a counter stays below 3; the original reads that counter before setting it, so the number of tries is undefined); the save screens create then delete a file to test that it can be created.
 
 ### 6.4 Banks and validity
 
@@ -369,6 +369,7 @@ Everything a save contains is in the two tables above; the byte layout, the two 
 | `D_80125120`, `D_80125124` | `boot_gp`, `boot_prev_sp` | saved at start, never read |
 | `D_8011ECA8` | `timer_event` | vblank event handle |
 | `D_800E94A0`, `D_800FD4A0` | `gs_work_buffers`, `prim_arena_buffers` | per-buffer work areas set by `frame_begin` |
+| `D_800E8C74`, `D_800E8C84`, `D_800E8C88`, `D_800E90A0` | `ot_table_0_tags`, `ot_table_1`, `ot_table_1_tags`, `ot_tags_1` | alias labels inside `ot_table` and `ot_tags` that `gpu_init` writes |
 | `D_800B6D30` | `ovl_load_screen_mode` | loader backdrop |
 | `D_800B3CA0` | `pad_turbo` | turbo flag |
 | `D_800B3CA4` | `pad_reset_frames` | soft reset counter |
@@ -376,6 +377,7 @@ Everything a save contains is in the two tables above; the byte layout, the two 
 | `D_800E8BF0`, `D_800E8C30` | `pad_buffer_1`, `pad_buffer_2` | raw controller buffers |
 | `D_800B5A40` | `title_photo_offsets` | start x of the 13 photos |
 | `D_800B3938`, `D_800B4390`, `D_800B58B0`, `D_800B58E4` | `card_file_prefix`, `card_icon_palettes`, `card_icon_images`, `card_fd` | card file name, icons, descriptor |
+| `D_8011ECAC` to `D_8011ECC8` | `card_sw_event_*`, `card_hw_event_*` | the eight BIOS event handles (done, error, timeout, new card; software then hardware class) |
 | `D_80123122` to `D_80123320` | `card_header_*`, `card_banks` | alias labels inside `card_block` |
 | `D_800E7D13`, `D_800E7D15`, `D_800E7D16` | `system_data_plus3`, `save_slot_status_1`, `save_slot_status_2` | alias labels inside `system_data` |
 | `D_800E7D4F` | `extra_mode_flags` | TT flags byte |
@@ -401,7 +403,7 @@ What the port needs from this unit:
 - Input semantics of section 4 (`pad_held`, `pad_pressed`, `pad_released`, turbo, the 130-frame reset hold, the 18-step code); a mouse is optional and maps to circle and cross.
 - Save content of 6.5 and 6.6, with the slot summaries.
 
-Quirks of the original that a port should not copy: `vram_clear_blocks` with 0 or 0xFE ends with a clear of a rectangle that was never filled (stack leftovers); a bad overlay checksum repeats the read forever; the card check spins on the hardware event in step 0x20 until it fires; `restart_request`, the pause toggle (`pause_allowed`), `main_state_next`, `timer_seed_step`, `card_file_write_sync`, `card_system_file_probe` and `card_save_files_probe` are dead; `event_state_init` leaves `girl_last_date_spot_timer` and `girl_event_bits` untouched, so a soft reset keeps them while a full clear zeroes them.
+Quirks of the original that a port should not copy: `vram_clear_blocks` with 0 or 0xFE ends with a clear of a rectangle that was never filled (stack leftovers); a bad overlay checksum repeats the read forever; the card check spins on the hardware event in step 0x20 until it fires; `card_file_delete` starts its retry count from an uninitialised value; `restart_request`, the pause toggle (`pause_allowed`), `main_state_next`, `timer_seed_step`, `card_file_write_sync`, `card_system_file_probe` and `card_save_files_probe` are dead; `event_state_init` leaves `girl_last_date_spot_timer` and `girl_event_bits` untouched, so a soft reset keeps them while a full clear zeroes them.
 
 ## 10. Open questions
 

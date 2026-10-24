@@ -84,7 +84,7 @@ func	main	func_80054388	card_system_write_poll	steps 0 card_file_write(0), 1 car
 func	main	func_8005448C	card_save_read_poll	steps 0 card_file_read(save_slot), 1 card_status_wait, 2 result 4; result 0xD0 when the read cannot start
 func	main	func_80054590	card_save_write_poll	steps 0 card_file_write(save_slot), 1 card_status_wait, 2 result 0x14; result 0xD0 when the write cannot start
 func	main	func_80054694	card_file_create	builds the name, opens with create and one block, closes; 1 or -1
-func	main	func_80054704	card_file_delete	deletes the file, up to 3 tries; 1 or -1
+func	main	func_80054704	card_file_delete	deletes the file; after a failure it retries while a retry counter stays below 3, and the matched C reads that stack counter before it is set (its start value is undefined); 1 or -1
 func	main	func_8005478C	card_file_read	clears card_block, opens the file for reading (async, 16 tries), reads 0x2000 bytes (16 tries); 1 or -1
 func	main	func_80054884	card_file_write	opens the file for writing (creates it on failure), fills the 0x200 header (magic, icon flag 0x13, one block, title, and the palette and three icon frames of the girl in the latest date-like log entry: scene 0, 1, 2 or 0xF, else girl 0), the bank (system_bank_build for file 0, game_bank_build else), copies bank 0 into bank 1, writes 0x2000 bytes (16 tries); 1 or -1
 func	main	func_80054AF4	card_file_exists	opens the file once with write access and closes it: 1 when it opens within 16 tries (8 for save files); 0 else
@@ -114,6 +114,18 @@ data	main	D_800B3CFC	pad_code_entered	1 for 240 frames after the whole code was 
 data	main	D_800B3D00	pad_code_timer	u8: 0x10 after each match and counted down per frame (reaching 0 resets pad_code_index); while pad_code_entered is set it counts up from 0x10 and clears the flag when it wraps to 0
 data	main	D_800E8BF0	pad_buffer_1	raw controller buffer of port 1 given to InitPAD and InitMouse: status, id, two button bytes (mouse: two motion bytes after them)
 data	main	D_800E8C30	pad_buffer_2	raw controller buffer of port 2 (same layout)
+data	main	D_8011ECAC	card_sw_event_done	handle of the software card event for a finished operation (event spec 0x0004), opened by Sw_Start; Sw_Test result 1
+data	main	D_8011ECB0	card_sw_event_error	handle of the software card event for an error (spec 0x8000); Sw_Test result 2
+data	main	D_8011ECB4	card_sw_event_timeout	handle of the software card event for a timeout (spec 0x0100); Sw_Test result 4
+data	main	D_8011ECB8	card_sw_event_new_card	handle of the software card event for a new card (spec 0x2000); Sw_Test result 8
+data	main	D_8011ECBC	card_hw_event_done	handle of the hardware card event for a finished operation (spec 0x0004), opened by Hw_Start; Hw_Test result 0x81
+data	main	D_8011ECC0	card_hw_event_error	handle of the hardware card event for an error; Hw_Test result 0x82
+data	main	D_8011ECC4	card_hw_event_timeout	handle of the hardware card event for a timeout; Hw_Test result 0x84
+data	main	D_8011ECC8	card_hw_event_new_card	handle of the hardware card event for a new card; Hw_Test result 0x88
+data	main	D_800E8C74	ot_table_0_tags	alias label inside ot_table: the tag-array pointer of the first ordering-table header, set to ot_tags by gpu_init (the other header fields are 8 = table length)
+data	main	D_800E8C84	ot_table_1	alias label of the second GsOT header of ot_table (+0x14); gpu_init sets its length to 8
+data	main	D_800E8C88	ot_table_1_tags	alias label inside ot_table: the tag-array pointer of the second header, set to ot_tags_1 by gpu_init
+data	main	D_800E90A0	ot_tags_1	alias label inside ot_tags (+0x400): the tag array of draw buffer 1
 data	main	D_800B5A40	title_photo_offsets	s16[13]: -400, -500 ... -1600, the start x of the 13 title photos, copied to scene_work[1..13]
 data	main	D_800B3938	card_file_prefix	string: device name bu00: plus the product code of the original release (BISLPS-00065); card_file_name_build appends one hex digit
 data	main	D_800B4390	card_icon_palettes	13 palettes of 0x20 bytes (16 colours), one per save icon; copied to the card header at +0x60
