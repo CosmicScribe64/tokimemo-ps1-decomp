@@ -958,6 +958,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 - [ ] [[tickets/T-25113-w8-ETC-8013BEF0|T-25113 Wave 8 package w8-ETC-8013BEF0 (src/ovl/ETC/8013BEF0.c)]]
 - [ ] [[tickets/T-25700-distill-wins|T-25700 Distill the wave 8-11 wins into playbook recipes]]
+- [ ] [[tickets/T-26001-stale-tool-tests|T-26001 Fix the stale test_build_deps and test_protoverride fixtures]]
 
 
 %% kanban:settings
