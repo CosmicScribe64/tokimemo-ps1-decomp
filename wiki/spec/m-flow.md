@@ -227,6 +227,30 @@ Mode 0xD0 is not an overlay mode. `mode_tt_game` loads the TT file itself and ru
 
 `MODE_START` -> start movie -> mode 0 (boot data) -> `MODE_TITLE` (0x12). The title leads to NAME_ENT (mode 0x13: new game, load, copy and clear files, name and birthday entry) or OPTION (0x20), or idles into the opening movie (0x11, back to the title). A started or loaded game enters the weekly cycle at the weekday command screen, mode 0x34 stage 0xFF (the notice steps), from where the scheduler (mode 0x30), the day screen (0x31) and the day modes run as in [[spec/m-scheduler]] and [[spec/core]]; every scene overlay returns with the saved triple. The 18-step pad code at the title, the soft reset and `game_reset_to_title` are the only exits from that cycle besides the endings.
 
+### 3.9 Who requests which mode
+
+Literal `main_state_set(mode)` calls in `src/`, by requester (calls with a computed mode, such as the return through `saved_mode`, are not in the list). Together with the queue-type table of [[spec/core]] section 3.5 this is the whole transition graph.
+
+| requester | modes it requests |
+|---|---|
+| `mode_start`, the mode 1 handler, the TT loader (stage 6), `pad_poll` (pad 1 reset) | 0 (boot mode) |
+| `pad_poll` (pad 2 reset), ETC (3 sites) | 0x11 (opening) |
+| `game_reset_to_title`, boot mode, ETC (4 sites), NAME_ENT, OPTION, TACO (on leaving) | 0x12 (title) |
+| `mode_title` | 0x11, 0x13 (item 0), 0x20 (item 1), 0x21 and 0x22 (debug) |
+| NAME_ENT | 0x10 (error path), 0x12, 0x14 (11 sites), 0x15, 0x34 (game start or loaded game) |
+| OPTION | 0x12, 0x21, 0x22, 0x34; its debug page starts scenes by hand (0x50-0x5A, 0x5D, 0x5E, 0x63, 0x70-0x72, 0x90, 0x91, 0xD0) |
+| command screen and system menus (`8005A0B0.c`) | 0x14, 0x30 (next week), 0x31, 0x34, 0x3A (help), 0x52 and 0x53 (New Year prep) |
+| scheduler (`8006CB30.c`, the queue-type table) | 0x22, 0x31, 0x32, 0x34-0x39, 0x40-0x44, 0x46, 0x51, 0x54-0x5B, 0x5D, 0x5F, 0x61-0x63, 0x70-0x72, 0x74-0x76 |
+| school-day loop (`800737A0.c`) | 0x31 |
+| holiday loop (`80075320.c`) | 0x45, 0x50, 0x5D, 0x73 |
+| TEL | 0x31, 0x34, 0x46 |
+| OLH | 0x34 |
+| DATE | 0x50, 0x5C, 0x5E, 0x81, 0x82; DATE2: 0x50 |
+| GEKO | 0x52, 0x81; SHOUGATU: 0x56, 0x57; SHUGAKU: 0x81 |
+| BUNKASAI, BUNKAKEN | 0x80 (stage shows, 113 sites), 0xD0 (TT game exhibit, 10 sites); BUNKA_SD returns with 0x70 or 0x71 |
+| MASTER | 0x90 (shooter) |
+| ENDING | 0xC2; ETC: 0x91, 0xC3, 0xC4 |
+
 ## 4. Input
 
 `pad_update` runs inside `frame_render`. If `pad_device_detect` reports a change this frame, nothing else runs. Otherwise `mouse_to_pad` (mouse) or `pad_poll` (pad) runs, then: the turbo is cancelled by any pressed button except circle (mask `PAD_MASK_TURBO_CANCEL`), enabled while pad 2 holds triangle, circle, cross and square together, and pad 2 START flips `sd_anim_fast`.

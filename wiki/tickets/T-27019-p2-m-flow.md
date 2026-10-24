@@ -31,4 +31,4 @@ Files: `src/main/80041000.c`, `800420D0.c`, `80042540.c`, `80042A00.c`, `800789E
 
 ## Comments
 
-- 2026-10-24 (Sonnet 5.5): table (312 rows: 87 func, 36 data, 44 field, 1 type, 10 comment, 14 file, 120 const; 3 HYPOTHESIS rows) and spec written, In Review.
+- 2026-10-24 (Sonnet 5.5): table (324 rows: 87 func, 48 data, 44 field, 1 type, 10 comment, 14 file, 120 const; 3 HYPOTHESIS rows) and spec written, In Review.
