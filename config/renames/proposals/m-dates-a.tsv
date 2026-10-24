@@ -1,0 +1,203 @@
+# kind	scope	old	new	note
+file	main	src/main/80079B10.c	src/main/sound_driver.c	the whole object is the game sound driver (O.BIN prefix SD_): command queue, VAB bank slots, BGM sequences, sound-effect keys, CD-audio voice clips, CD level meter init. NOT date code (unit label m-dates-a is wrong; see spec)
+func	main	func_80079B10	snd_command_submit	pushes the low 16 bits of one command word onto the driver queue (tail call to func_8007B5EC); only caller func_80044750 (core: snd_command); O.BIN SD_Call_SD (med, size equal)
+func	main	func_80079B34	snd_command_pump	same name as core; drains the queue switching on id & 0xF00 (0 control, 2 BGM, 3 voice clip, 5-8 sound effects), then snd_xa_frame_update, snd_pending_update, snd_queue_clear; emu: runs once per frame from the main loop, TT calls it itself; O.BIN SD_Task (med)
+func	main	func_80079C70	snd_vab_transfer_schedule	takes the lowest slot i with request bit 0x01000000<<i while no running bit 0xF0000000 is set: moves it to running bit 0x10000000<<i, calls snd_vab_transfer(i), clears the running bit (one slot per call); emu: request bits 0x04000000/0x0C000000 then 0x48000000 at frame 1463 after command 0x12; O.BIN SD_HandleVBLVAB (low)
+func	main	func_80079D28	snd_vab_transfer	SsVabOpenHeadSticky(header RAM, slot, SPU address) then state bit 0x10000<<slot, SsVabTransBody(body RAM, slot) and SsVabTransCompleted wait; on a -1 result reports (slot<<8)|0x01010000 or 0x01020000 via func_80059B04; emu: state word gains 0x40000 then 0xC0000 for slots 2,3; O.BIN SD_TransVAB (low)
+func	main	func_80079E00	snd_bgm_bank_ready	returns 1 when neither request bit nor running bit of the BGM slot (bgm_slot) is set; the argument is never read (asm stores a0 and ignores it), so the callers passing slots 0..3 all test the BGM slot; O.BIN SD_ISVabAvailable (med)
+func	main	func_80079E4C	snd_xa_frame_update	per frame: state 0x400 (voice playing) -> snd_xa_check_end; request 0x200 (start issued) -> snd_xa_start_poll; O.BIN SD_XATask (med)
+func	main	func_80079E9C	snd_xa_check_end	when xa_position_get() >= xa_clip_end and no fade runs: snd_xa_fade_start(0xB4); otherwise SD_GetCDLevel(&D_80125E60) refreshes the level meter; O.BIN SD_CheckXASector (med)
+func	main	func_80079F00	snd_xa_start_poll	once cd_state_get() has bit 4 (XA playing): clear request 0x200; a queued next clip -> stop, promote, start it; else if not paused set state 0x400, clear 0x100000, xa_volume = xa_volume_full, SsSetMVol(0x7F,0x7F), SsSetSerialVol(0,xa_volume), serial mix on; O.BIN SD_IsXAReady (low)
+func	main	func_8007A008	snd_pending_update	if request_flags != 0: top byte -> snd_vab_transfer_schedule, low byte -> snd_bgm_update, second byte -> snd_xa_fade_update; O.BIN SD_HandleVBL (low)
+func	main	func_8007A080	snd_control_dispatch	class 0 commands by id & 0xF0: 0x10 bank transfer, 0x20 bank assignment, 0x70 stop (bit 1 BGM, 2 voices, 4 voice clip), 0xB0/0xC0/0xD0 fade (bit 1 BGM, 4 voice clip), 0xE0 pause, 0xF0 resume, anything else snd_cmd_system; emu: 0x7F, 0x12, 0x23/0x24/0x2E, 0x6, 0x71 seen; O.BIN SD_BranchCTRL (med)
+func	main	func_8007A254	snd_cmd_bank_transfer	ids 0x11 (slots 0,1), 0x12 (slots 2,3), 0x13-0x16 (one slot): snd_vab_body_addr_set, then per slot snd_vab_dispose + snd_vab_request_transfer; emu: command 0x12 at frame 1462 sets request bits 0x04000000 then 0x0C000000; O.BIN SD_VABTransfer (med)
+func	main	func_8007A354	snd_cmd_bank_assign	ids 0x21/0x24 set se_slot_a,se_slot_b = 0,3 / 3,0; 0x22/0x23 set bgm_slot,bgm_aux_slot = 1,2 / 2,1; 0x2F/0x2E pick sequence pack set 0/1 (RAM 0x8001C000 / 0x8002E800) and index it; emu dump after 0x23,0x24,0x2E: slots 2,1,3,0 and set 1; O.BIN SD_BufferUpdate (med)
+func	main	func_8007A43C	snd_cmd_system	ids 1 mono, 2 stereo (snd_output_mode_set), 3 snd_xa_forget, 4 snd_voices_kill, 5 set state 0x100000 (next fade goes through master volume), 6 snd_xa_reset; emu: 6 is sent by func_800462C8 before every CD data read; O.BIN SD_HandleSys (low)
+func	main	func_8007A4DC	snd_xa_fade_update	runs snd_xa_fade_tick while request bit 0x100 (voice fade) is set; O.BIN SD_HandleVBLXA (med)
+func	main	func_8007A50C	snd_xa_fade_tick	while state has 0x400 or 0x4000: xa_fade_acc += xa_fade_rate, on carry past 0xFF xa_volume -= xa_fade_step; <= 0 calls snd_xa_fade_finish, else SsSetSerialVol(0,xa_volume,xa_volume); O.BIN SD_HandleXAFadeOut (med)
+func	main	func_8007A5BC	snd_xa_fade_finish	snd_xa_control(0x74) stop; if not paused, promote the queued clip and start it when xa_clip_start != 0; O.BIN SD_FinishFadeOutXA (med)
+func	main	func_8007A618	snd_speaker_volume_set	HYPOTHESIS: the speaker index is the heroine index (h-cdio: 25 of 104 xa_clip_request_set calls pass the current girl) so this is a per-voice loudness correction; fact: xa_volume_full = 100, except speaker 6 -> 125, 7/9/11 -> 95, 10 -> 90, 12/13 -> 110, 15 -> 105; emu: speaker 15 gave 0x69 in the prologue; no O.BIN row
+func	main	func_8007A6AC	snd_cmd_xa	class 3: 0x300 starts a voice clip from the 4-word request of xa_clip_request_get (speaker, base sector, start word, end word), 0x1300 stop, 0x2300 pause, 0x4300 resume; start/end sectors = index*(0x20, or 8 for speaker 15)+channel+base -/+ 0x10; queues behind a playing clip with a fast fade; emu: 0x300 at frame 3836; O.BIN SD_XACall (low)
+func	main	func_8007A868	snd_xa_promote_next	queued clip becomes the current one: xa_clip_end = xa_next_end, xa_resume_pos = xa_clip_start = xa_next_start, filter bytes shift down (xa_params[4,6] = [5,7]), next fields and bytes 5,7 cleared, level meter outputs cleared, state 0x400/0x4000 and request 0x200/0x100 cleared; O.BIN SD_XAParamUpdate (med)
+func	main	func_8007A924	snd_xa_play	snd_cd_audio_init (mute, CD mode 0xC8), xa_params[0,1] = file,channel from bytes [6],[4], request 0x200, cd_command(0xD, start sector, xa_params); emu: break shows a0 = clip start 0x16E5C and the dumped state; O.BIN SD_PlayXA (med)
+func	main	func_8007A98C	snd_xa_control	selector 0x74 stop (mix off, cd_command 9, clear 0x400/0x4000/0x200/0x100), 0xE4 pause (remember position, state 0x4000, fast fade or direct CD stop while starting), 0xF4 resume (replay from xa_resume_pos or finish the chain); O.BIN SD_StopXA (low)
+func	main	func_8007AB24	snd_xa_fade_start	if no voice fade runs: xa_fade_acc = 0 and request bit 0x100; rate/step are always (re)written: (0x100,10) for 0xB4 and any other id, (0x100,1) for 0xC4, (0x80,1) for 0xD4, so a later command changes a running fade (unlike the BGM fade); O.BIN SD_FadeXA (low)
+func	main	func_8007ABE0	snd_bgm_update	per frame: request bit 2 and snd_bgm_bank_ready -> snd_bgm_start; while BGM plays with request bit 1 (fade): bgm_fade_acc += rate, on carry bgm_volume -= step; < 0 -> snd_bgm_fade_finish, else SsSeqSetVol (or SsSetMVol scaled by bgm_volume*0x7F/bgm_volume_full when state 0x100000 and no voice clip); O.BIN SD_HandleVBLSEQ (low)
+func	main	func_8007AD6C	snd_bgm_fade_finish	fade end: with state 0x100000 and no voice clip SsUtAllKeyOff and master volume 0; snd_bgm_control(0x71); starts bgm_seq_id (promoted from bgm_next_seq_id) when it is not -1; O.BIN SD_FinishFadeOutSEQ (low)
+func	main	func_8007ADD8	snd_cmd_bgm	class 2: 0x2NN play sequence NN (request bit 1 -> finish the fade now and chain; BGM playing -> store NN in bgm_next_seq_id and fast fade 0xB1; else start now), 0x12NN stop, 0x22NN pause, 0x42NN resume; emu: 0x200 after 0x23,0x24,0x2E; O.BIN SD_SEQCall (med)
+func	main	func_8007AEC0	snd_bgm_request_start	bgm_seq_id selected: start at once when the BGM slot has no transfer pending, else request bit 2 (snd_bgm_update waits); O.BIN SD_PlaySeq (med)
+func	main	func_8007AF0C	snd_bgm_start	except in TT and TACO modes and when bgm_slot is 2: snd_voices_kill; reverb depth from snd_seq_reverb_depth[set][seq] (0 in sound-test mode 0x21 when state 0x10000000); SsSeqOpen(address,bgm_slot) (-1 -> error 0x0104xxxx, snd_bgm_fade_finish); state 0x100, bgm_volume = VAB master volume - 0x19 (-0x18 more in mono), SsSeqSetVol, SsSeqPlay(seq,1,1); emu: state 0x00040110 at frame 1464; O.BIN SD_SeqGo (low)
+func	main	func_8007B144	snd_bgm_control	selector 0x71 stop (volume 0, SsSeqStop, SsSeqClose, bgm_seq_id = bgm_next_seq_id, next = -1, state 0x100/0x1000 and request 1 cleared), 0xE1 pause (SsSeqPause, state 0x1000), 0xF1 resume (SsSeqReplay, state 0x100); O.BIN SD_StopSeq (low)
+func	main	func_8007B2B4	snd_bgm_fade_start	whole body only if no BGM fade runs (a running fade ignores new fade ids): bgm_fade_acc = 0, request bit 1; (rate,step) = (0x100,10) 0xB1, (0xC0,1) 0xC1, (0x80,1) 0xD1; emu: 0xD1 re-sent every frame 4854-4911 without restarting; O.BIN SD_FadeSeq (low)
+func	main	func_8007B358	snd_cmd_se_a	class 5: key = (se_slot_a<<8)|((id&0xFF)>>4) program, note word ((id&0xF)*4+0x18)<<8; id bit 0x1000 stops (snd_se_stop) else snd_se_play; O.BIN SD_SECall (med)
+func	main	func_8007B3DC	snd_cmd_se_b	class 6: same as snd_cmd_se_a with se_slot_b as the bank; O.BIN SD_OtherSECall (med)
+func	main	func_8007B460	snd_cmd_se_bgm_bank	class 7: same as snd_cmd_se_a with bgm_slot (the bank of the running BGM) as the bank; O.BIN SD_SECallInSEQ (med)
+func	main	func_8007B4E4	snd_cmd_se_bgm_aux	class 8: same as snd_cmd_se_a with bgm_aux_slot as the bank; O.BIN SD_OtherSECallInSEQ (med)
+func	main	func_8007B568	snd_se_play	releases the same (bank, program, note) then clears state 0x100000, SsSetMVol(0x7F,0x7F) and keys it on at se_volume both channels (SpuVmSeKeyOn in the asm); O.BIN SD_PlaySE (low)
+func	main	func_8007B5CC	snd_se_stop	key off of the (bank, program, note) in its arguments (SpuVmSeKeyOff in the asm); O.BIN SD_StopSE (low)
+func	main	func_8007B5EC	snd_queue_push	appends a u16 to the 32-entry queue at D_80125CC2 and returns 0; returns -1 and drops the command when the count is already 0x20; O.BIN SD_AddEvt (med)
+func	main	func_8007B640	snd_queue_clear	count = 0; called at the end of snd_command_pump and in snd_init; O.BIN SD_FlashEvent (med)
+func	main	func_8007B64C	snd_queue_pop	returns the oldest queued command (0 when empty, so command 0 cannot be queued usefully) and shifts the rest down; O.BIN SD_GetNextEvent (med)
+func	main	func_8007B6E0	snd_xa_forget	command 3: snd_xa_control(0x74) stop, then clears xa_clip_start/end, next, resume position and filter bytes 4,5; no O.BIN row; callers NAME_ENT, func_80075320, func_8005A0B0
+func	main	func_8007B734	snd_xa_reset	command 6: serial mix off, clears state 0x400/0x4000 and request 0x200/0x100, all XA bookkeeping words, the level meter outputs and bytes 4,5; emu: sent before every CD data read; O.BIN SD_KillXA (low)
+func	main	func_8007B7E0	snd_voices_kill	unless TT mode with BGM playing: SpuVmFlush guard, SsUtAllKeyOff(0), reverb off, reverb mode 3, reverb on (silences every sound-effect voice); command 4 and 0x72/0x73/0x7F bit 2; O.BIN SD_KillSPU (low)
+func	main	func_8007B844	snd_init	boot and reset: SsInit, tick mode argument 1, 24 reserved voices, sequence table 1x1, reverb type 3 depth 0x3C, master volume 0x7F, stereo, snd_state_init, snd_vab_layout_init, snd_cd_audio_init, SD_InitCDLevelInfo, snd_queue_clear, SsStart2; callers func_800420D0, func_80042A00 (twice), func_80046500; O.BIN SD_Init (low)
+func	main	func_8007B8F8	snd_vab_layout_init	fills the fixed layout tables: header RAM 0x80010000/0x80012000/0x80016000/0x8001A000, SPU offsets 0x1010/0x11010/0x39010/0x61010, body sizes 0x10000/0x28000/0x28000/0x1A768 (sizes never read); O.BIN SD_SetVabAdrs (med)
+func	main	func_8007B99C	snd_vab_body_addr_set	body RAM address from func_800451D0 (load_dest_base_get): 0x11 slot0=v, slot1=v+0x10000; 0x12 slot2=v, slot3=v+0x28000; 0x13-0x16 the single slot=v; O.BIN SD_GetVabAdrs (med)
+func	main	func_8007BA54	snd_cd_audio_init	CD-audio setup: cd_mode_param[0] = 0xC8 (double speed, real time, XA filter), serial mix off and volume 0, cd_command(0xE, 0, mode param); O.BIN SD_InitCD (med)
+func	main	func_8007BAAC	snd_state_init	AudioState defaults: state_flags 0x10 (stereo), volumes xa 100, bgm 0x50, se 0x5A, ids -1, fade step/rate 0x80/0xFF, slots bgm_slot 1, bgm_aux_slot 2, se_slot_a 0, se_slot_b 3, seq_pack_set 0; emu dump after boot matches; O.BIN SD_InitStruct (low)
+func	main	func_8007BBE8	snd_seq_pack_index	indexes a sequence pack at arg0 into set arg1: 16 offsets (0 -> offset of entry 0) give snd_seq_addr[set][i] = pack+offset+0x10, and the byte at pack+0x40+i gives snd_seq_reverb_depth[set][i]; O.BIN SD_SetSeqAdrs (low)
+func	main	func_8007BCFC	snd_output_mode_set	arg 1 mono: SsSetMono, state 0x20, CD mix 0x4F on all four paths, attenuation 0x18; any other value stereo: SsSetStereo, state 0x10, mix 0x7F,0,0x7F,0, attenuation 0; bgm_volume_full = 0x50 - att and se volume 0x5A - att; O.BIN SD_ChnChange (low)
+func	main	func_8007BDE8	snd_shutdown	stop and close the sequence when BGM plays or is paused, SsUtAllKeyOff, SsVabClose for each open slot (highest first), SsEnd, SsQuit; callers func_80042A00, func_80046500 before snd_init; O.BIN SD_Reset (low)
+func	main	func_8007BE94	snd_vab_request_transfer	if the slot is the BGM slot and BGM plays: snd_bgm_fade_finish; then request bit 0x01000000<<slot; O.BIN SD_GetVAB (low)
+func	main	func_8007BF04	snd_vab_dispose	before reloading a slot: for the BGM slot stop and close the sequence (when BGM plays) and set bgm_seq_id,bgm_next_seq_id = -1; for se_slot_a SsUtAllKeyOff; then SsVabClose(slot); O.BIN SD_DisposeVAB (low)
+func	main	func_8007BFA8	snd_bgm_next_clear	bgm_next_seq_id = -1 (drops a sequence queued behind a fade); only caller DATE overlay 8014F0F0.c; no O.BIN row
+func	main	func_8007BFB8	snd_reverb_off_toggle	toggles state bit 0x10000000, which snd_bgm_start reads only in mode 0x21 (sound test) to force reverb depth 0; only caller OPTION 801389A0.c; no O.BIN row
+data	main	D_80125CC0	snd_queue_count	u16 entry count of the command queue; the entries are (&snd_queue_count)[1..32]
+data	main	D_80125CC2	snd_queue_entries	first of the 32 u16 queue entries (entry n is (&snd_queue_count)[n]); funcs snd_queue_push/pop
+data	main	D_80125D10	audio_state	same name as core (Work80125D10 -> AudioState, 0x50 bytes); the symbols D_80125D14..D_80125D5F below are aliases of its fields
+data	main	D_80125D14	audio_request_flags	ALIAS of audio_state field at +0x04 request_flags (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D18	audio_xa_clip_start	ALIAS of audio_state field at +0x08 xa_clip_start (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D1C	audio_xa_clip_end	ALIAS of audio_state field at +0x0C xa_clip_end (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D20	audio_xa_next_start	ALIAS of audio_state field at +0x10 xa_next_start (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D24	audio_xa_next_end	ALIAS of audio_state field at +0x14 xa_next_end (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D28	audio_xa_resume_pos	ALIAS of audio_state field at +0x18 xa_resume_pos (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D2C	audio_xa_volume	ALIAS of audio_state field at +0x1C xa_volume (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D38	audio_bgm_seq_handle	ALIAS of audio_state field at +0x28 bgm_seq_handle (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D3A	audio_bgm_seq_id	ALIAS of audio_state field at +0x2A bgm_seq_id (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D3C	audio_bgm_next_seq_id	ALIAS of audio_state field at +0x2C bgm_next_seq_id (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D44	audio_xa_fade_acc	ALIAS of audio_state field at +0x34 xa_fade_acc (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D46	audio_xa_fade_step	ALIAS of audio_state field at +0x36 xa_fade_step (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D48	audio_xa_fade_rate	ALIAS of audio_state field at +0x38 xa_fade_rate (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D4A	audio_seq_pack_set	ALIAS of audio_state field at +0x3A seq_pack_set (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D4C	audio_bgm_slot	ALIAS of audio_state field at +0x3C bgm_slot (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D4E	audio_bgm_aux_slot	ALIAS of audio_state field at +0x3E bgm_aux_slot (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D50	audio_se_slot_a	ALIAS of audio_state field at +0x40 se_slot_a (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D52	audio_se_slot_b	ALIAS of audio_state field at +0x42 se_slot_b (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D5C	audio_xa_chan_cur	ALIAS of audio_state field at +0x4C xa_params[4], channel byte of the current clip (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D5D	audio_xa_chan_next	ALIAS of audio_state field at +0x4D xa_params[5], top byte of the start word; also added to the sector arithmetic (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D5E	audio_xa_file_cur	ALIAS of audio_state field at +0x4E xa_params[6]; declared in main_api.h, never named in C (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D5F	audio_xa_file_next	ALIAS of audio_state field at +0x4F xa_params[7]; declared in main_api.h, never named in C (same address, separate symbol in the original); the apply step may rewrite uses to the field
+data	main	D_80125D60	snd_vab_header_addr	4 words: RAM address of each slot VAB header (0x80010000,0x80012000,0x80016000,0x8001A000 from snd_vab_layout_init); element 0 and symbol of the array
+data	main	D_80125D64	snd_vab_header_addr_1	ALIAS: element 1 of snd_vab_header_addr, declared as a separate symbol
+data	main	D_80125D68	snd_vab_header_addr_2	ALIAS: element 2 of snd_vab_header_addr
+data	main	D_80125D6C	snd_vab_header_addr_3	ALIAS: element 3 of snd_vab_header_addr
+data	main	D_80125D70	snd_vab_body_addr	4 words: RAM address of each slot VAB body, written by snd_vab_body_addr_set from the CD load base
+data	main	D_80125D80	snd_vab_spu_addr	4 words: SPU RAM start of each slot (0x1010, +0x10000, +0x28000, +0x28000) passed to SsVabOpenHeadSticky
+data	main	D_80125D84	snd_vab_spu_addr_1	ALIAS: element 1 of snd_vab_spu_addr
+data	main	D_80125D88	snd_vab_spu_addr_2	ALIAS: element 2 of snd_vab_spu_addr
+data	main	D_80125D8C	snd_vab_spu_addr_3	ALIAS: element 3 of snd_vab_spu_addr
+data	main	D_80125D90	snd_vab_body_size	4 words: body size per slot (0x10000,0x28000,0x28000,0x1A768); written by snd_vab_layout_init, never read
+data	main	D_80125D94	snd_vab_body_size_1	ALIAS: element 1 of snd_vab_body_size
+data	main	D_80125D98	snd_vab_body_size_2	ALIAS: element 2 of snd_vab_body_size
+data	main	D_80125D9C	snd_vab_body_size_3	ALIAS: element 3 of snd_vab_body_size
+data	main	D_80125DA0	snd_seq_addr	[2][16] words: RAM address of sequence i of pack set s, filled by snd_seq_pack_index; read by snd_bgm_start
+data	main	D_80125E20	snd_seq_reverb_depth	[2][16] s16: reverb depth per sequence copied from pack byte 0x40+i; read by snd_bgm_start
+data	main	D_80125E60	snd_cd_level	CdLevelMeter work area (left output at +0); fields below; read by getCDlevel and SD_GetCDLevel (src/main/8007C030.c)
+data	main	D_80125E62	snd_cd_level_right	ALIAS: right output, +2 of snd_cd_level
+data	main	D_80125E64	snd_cd_level_precision_bits	ALIAS: +4, output bits (8 from SD_InitCDLevelInfo)
+data	main	D_80125E66	snd_cd_level_sample_count	ALIAS: +6, samples per channel (0x20)
+data	main	D_80125E68	snd_cd_level_options	ALIAS: +8 options, method/shape selector (0x212 = average, no squaring)
+data	main	D_80125E70	snd_seq_table	byte buffer given to SsSetTableSize(table,1,1) as the libsnd sequence table
+type	main	CdLevelWork	CdLevelMeter	request/output block of SD_GetCDLevel at D_80125E60 (5 halfwords used); 8007C030.c (m-dates-b) shares it, reconcile there
+field	CdLevelWork	unk_00	left	left output level after scaling; 0..255 with precision 8
+field	CdLevelWork	unk_02	right	right output level
+field	CdLevelWork	unk_04	precision_bits	result is shifted right by 16 - this value (8 -> 0..255)
+field	CdLevelWork	unk_06	sample_count	samples read per channel from the SPU capture buffer (0x20)
+field	CdLevelWork	unk_08	options	low nibble method 1 peak / 2 average, 0xF0 == 0x20 squares, 0xF00 shaping 0x100/0x400/0x800
+field	Work80125D10	unk_00	state_flags	what is going on: bits in SndStateFlags (stereo 0x10, mono 0x20, BGM playing 0x100, voice clip playing 0x400, BGM paused 0x1000, clip paused 0x4000, VAB slot open 0x10000<<i, master-volume fade 0x100000, sound-test reverb off 0x10000000); emu: 0x00040110 while BGM plays with slot 2 open
+field	Work80125D10	unk_04	request_flags	pending work: SndRequestFlags (BGM fade 1, BGM start waits for bank 2, voice fade 0x100, voice start issued 0x200, VAB transfer wanted 0x01000000<<i, running 0x10000000<<i); also reached as D_80125D14
+field	Work80125D10	unk_08	xa_clip_start	start sector of the current/last voice clip, 0 = none; snd_xa_play starts here
+field	Work80125D10	unk_0C	xa_clip_end	end sector of the current clip; snd_xa_check_end fades when xa_position_get() >= it
+field	Work80125D10	unk_10	xa_next_start	start sector of a clip queued behind the current one, 0 = none
+field	Work80125D10	unk_14	xa_next_end	end sector of the queued clip
+field	Work80125D10	unk_18	xa_resume_pos	sector where a paused clip resumes; equals the clip start after a promote
+field	Work80125D10	unk_1C	xa_volume	current CD-audio volume (SsSetSerialVol both channels), lowered by fades
+field	Work80125D10	unk_1E	xa_volume_full	volume at clip start, set per speaker by snd_speaker_volume_set (100 default); emu: 0x69 for speaker 15
+field	Work80125D10	unk_20	bgm_volume	current sequence volume (lowered by fades)
+field	Work80125D10	unk_22	bgm_volume_full	volume at BGM start = VAB master volume - 0x19, minus 0x18 in mono; emu: 0x66 with master volume 0x7F
+field	Work80125D10	unk_24	se_volume	volume used for both channels of every sound-effect key on (0x5A, 0x42 in mono)
+field	Work80125D10	unk_26	se_volume_default	copy of se_volume set by snd_output_mode_set (0x5A - attenuation)
+field	Work80125D10	unk_28	bgm_seq_handle	libsnd sequence access number from SsSeqOpen (also D_80125D38)
+field	Work80125D10	unk_2A	bgm_seq_id	sequence number of the BGM to start or running, -1 none (also D_80125D3A)
+field	Work80125D10	unk_2C	bgm_next_seq_id	sequence number waiting behind the BGM fade, -1 none; cleared by snd_bgm_next_clear
+field	Work80125D10	unk_2E	bgm_fade_acc	BGM fade accumulator, 8.8 fixed point; a carry past 0xFF steps the volume
+field	Work80125D10	unk_30	bgm_fade_step	volume units taken off per carry (10 fast, 1 medium/slow); init 0x80
+field	Work80125D10	unk_32	bgm_fade_rate	accumulator added per frame (0x100 every frame, 0xC0, 0x80); init 0xFF
+field	Work80125D10	unk_34	xa_fade_acc	voice-clip fade accumulator, 8.8
+field	Work80125D10	unk_36	xa_fade_step	volume units per carry for the voice fade
+field	Work80125D10	unk_38	xa_fade_rate	accumulator added per frame for the voice fade
+field	Work80125D10	unk_3A	seq_pack_set	which sequence pack is current: 0 (RAM 0x8001C000) or 1 (0x8002E800); set by ids 0x2F/0x2E; emu: 1 after 0x2E
+field	Work80125D10	unk_3C	bgm_slot	VAB slot used by the BGM sequence and by class 7 effects; 1 or 2 (ids 0x22/0x23); emu: 2 after 0x23
+field	Work80125D10	unk_3E	bgm_aux_slot	VAB slot used by class 8 effects (2 or 1)
+field	Work80125D10	unk_40	se_slot_a	HYPOTHESIS: this slot holds the shared system-sound bank (h-graphics: files b,c are shared banks and slot 0 is the small one); fact: VAB slot for class 5 effects, 0 or 3 (ids 0x21/0x24)
+field	Work80125D10	unk_42	se_slot_b	VAB slot for class 6 effects (3 or 0)
+field	Work80125D10	unk_44	cd_mode_param	parameter bytes for cd_command(0xE, 0, ..): byte 0 = 0xC8 (double speed, real time, XA filter)
+field	Work80125D10	unk_48	xa_params	XA bookkeeping bytes: [0] filter file, [1] filter channel (passed to cd_command 0xD); [4] channel and [6] file of the current clip, [5],[7] of the queued clip; emu: [4]=6, [6]=0x11 at the prologue clip
+const	SndClass	0x000	SND_CLASS_CONTROL	id & 0xF00 == 0: control commands (queue, banks, stop, fade, pause); handled by snd_control_dispatch
+const	SndClass	0x200	SND_CLASS_BGM	id & 0xF00 == 0x200: BGM sequence number in the low byte
+const	SndClass	0x300	SND_CLASS_VOICE	id & 0xF00 == 0x300: voice clip from the pending xa_clip_request
+const	SndClass	0x500	SND_CLASS_SE_A	sound effect in the bank of se_slot_a
+const	SndClass	0x600	SND_CLASS_SE_B	sound effect in the bank of se_slot_b
+const	SndClass	0x700	SND_CLASS_SE_BGM_BANK	sound effect in the bank of bgm_slot
+const	SndClass	0x800	SND_CLASS_SE_BGM_AUX	sound effect in the bank of bgm_aux_slot
+const	SndModifier	0x1000	SND_MOD_STOP	added to a class 2, 3, 5-8 id: stop instead of start (0x1200 stops the BGM, 0x1508 releases effect 0x508)
+const	SndModifier	0x2000	SND_MOD_PAUSE	class 2 and 3 only (0x2200 pause BGM, 0x2300 pause voice)
+const	SndModifier	0x4000	SND_MOD_RESUME	class 2 and 3 only (0x4200, 0x4300)
+const	SndTarget	1	SND_TARGET_BGM	bit of the low nibble in the 0x70/0xB0/0xC0/0xD0/0xE0/0xF0 control families: the BGM sequence
+const	SndTarget	2	SND_TARGET_VOICES	bit 2: only the 0x70 family handles it (snd_voices_kill); 0xB2 and 0xC2 therefore do nothing
+const	SndTarget	4	SND_TARGET_XA	bit 4: the voice clip (CD audio)
+const	SndCommand	0x01	SND_CMD_OUTPUT_MONO	mono output (no sender in src; snd_init always selects stereo)
+const	SndCommand	0x02	SND_CMD_OUTPUT_STEREO	stereo output (no sender in src)
+const	SndCommand	0x03	SND_CMD_XA_FORGET	stop the voice clip and clear its bookkeeping (3 senders: NAME_ENT, holiday code, system menus)
+const	SndCommand	0x04	SND_CMD_VOICES_KILL	all sound-effect voices off and reverb reset (12 senders)
+const	SndCommand	0x05	SND_CMD_FADE_VIA_MASTER	next BGM fade goes through the master volume and ends muted; sent before a bank reload (10 senders)
+const	SndCommand	0x06	SND_CMD_XA_RESET	reset the voice-clip state; sent before every CD data read
+const	SndCommand	0x11	SND_CMD_BANKS_TRANSFER_01	upload the bodies of slots 0 and 1 from the CD load base
+const	SndCommand	0x12	SND_CMD_BANKS_TRANSFER_23	upload slots 2 and 3 (emu: frame 1462)
+const	SndCommand	0x13	SND_CMD_BANK_TRANSFER_SLOT0	upload slot 0 only
+const	SndCommand	0x14	SND_CMD_BANK_TRANSFER_SLOT1	upload slot 1 only
+const	SndCommand	0x15	SND_CMD_BANK_TRANSFER_SLOT2	upload slot 2 only
+const	SndCommand	0x16	SND_CMD_BANK_TRANSFER_SLOT3	upload slot 3 only
+const	SndCommand	0x21	SND_CMD_SE_SLOTS_SET0	se_slot_a = 0, se_slot_b = 3
+const	SndCommand	0x22	SND_CMD_BGM_SLOTS_SET0	bgm_slot = 1, bgm_aux_slot = 2
+const	SndCommand	0x23	SND_CMD_BGM_SLOTS_SET1	bgm_slot = 2, bgm_aux_slot = 1
+const	SndCommand	0x24	SND_CMD_SE_SLOTS_SET1	se_slot_a = 3, se_slot_b = 0
+const	SndCommand	0x2E	SND_CMD_SEQ_PACK_SET1	select and index the sequence pack at 0x8002E800
+const	SndCommand	0x2F	SND_CMD_SEQ_PACK_SET0	select and index the sequence pack at 0x8001C000
+const	SndCommand	0x71	SND_CMD_STOP_BGM	stop the BGM at once
+const	SndCommand	0x74	SND_CMD_STOP_XA	stop the voice clip at once (35 senders)
+const	SndCommand	0x7F	SND_CMD_STOP_ALL	stop BGM, silence sound-effect voices, stop the voice clip (21 senders)
+const	SndCommand	0xB1	SND_CMD_FADE_BGM_FAST	BGM fade-out, 10 volume units per frame
+const	SndCommand	0xB4	SND_CMD_FADE_XA_FAST	voice-clip fade-out, 10 units per frame; also used by dialogue code to cut a voice when the player presses cross/skip
+const	SndCommand	0xBF	SND_CMD_FADE_BOTH_FAST	both fast (64 senders)
+const	SndCommand	0xB2	SND_CMD_NOP_B2	HYPOTHESIS: meant to fade the sound-effect voices (bit value 2 is the voices target of the 0x70 family); fact: bit value 2 selects nothing in the fade family, so no effect (GEKO only)
+const	SndCommand	0xC1	SND_CMD_FADE_BGM_MEDIUM	BGM fade, 0.75 units per frame
+const	SndCommand	0xC2	SND_CMD_NOP_C2	no effect, like 0xB2 (TAIIKU only)
+const	SndCommand	0xC4	SND_CMD_FADE_XA_MEDIUM	voice fade, 1 unit per frame
+const	SndCommand	0xCF	SND_CMD_FADE_BOTH_MEDIUM	both medium
+const	SndCommand	0xD1	SND_CMD_FADE_BGM_SLOW	BGM fade, 0.5 units per frame (emu: title screen sends it every frame)
+const	SndCommand	0xD4	SND_CMD_FADE_XA_SLOW	voice fade, 0.5 units per frame (handled, no sender)
+const	SndCommand	0xDF	SND_CMD_FADE_BOTH_SLOW	both slow (handled, no sender)
+const	SndCommand	0xE1	SND_CMD_PAUSE_BGM	pause the sequence (TT only)
+const	SndCommand	0xE4	SND_CMD_PAUSE_XA	pause the voice clip (RPG_BAT, BUNKA_SD); in practice a fast fade that ends in a stop
+const	SndCommand	0xF1	SND_CMD_RESUME_BGM	resume the sequence (TT only)
+const	SndCommand	0xF4	SND_CMD_RESUME_XA	resume the voice clip; acts only when the pause hit during the start phase
+const	SndCommand	0x1200	SND_CMD_STOP_BGM_SEQ	class 2 with stop modifier: stop BGM (bgm_stop, sound test)
+const	SndCommand	0x300	SND_CMD_VOICE_PLAY	start the voice clip prepared by xa_clip_request_set (voice_play; 96 senders)
+const	SndStateFlags	0x10	SND_STATE_STEREO	output mode flag, set at init
+const	SndStateFlags	0x20	SND_STATE_MONO	output mode flag
+const	SndStateFlags	0x100	SND_STATE_BGM_PLAYING	a sequence is open and playing
+const	SndStateFlags	0x400	SND_STATE_XA_PLAYING	a voice clip is playing and its end is watched; getCDlevel reads the meter only then
+const	SndStateFlags	0x1000	SND_STATE_BGM_PAUSED	sequence paused
+const	SndStateFlags	0x4000	SND_STATE_XA_PAUSED	voice clip paused (also true while a pause fade runs)
+const	SndStateFlags	0x10000	SND_STATE_VAB_OPEN_0	VAB slot 0 open; slot i uses 0x10000<<i (0x20000, 0x40000, 0x80000)
+const	SndStateFlags	0x100000	SND_STATE_FADE_VIA_MASTER	BGM fades through SsSetMVol and ends muted; set by command 5, cleared when a BGM or sound effect starts
+const	SndStateFlags	0x10000000	SND_STATE_SOUND_TEST_REVERB_OFF	toggled by the OPTION sound test; snd_bgm_start then uses reverb depth 0 in mode 0x21
+const	SndRequestFlags	0x1	SND_REQ_BGM_FADE	a BGM fade-out is running (ticked by snd_bgm_update)
+const	SndRequestFlags	0x2	SND_REQ_BGM_START	BGM start is waiting for its bank
+const	SndRequestFlags	0x100	SND_REQ_XA_FADE	a voice-clip fade-out is running
+const	SndRequestFlags	0x200	SND_REQ_XA_STARTING	cd_command XA start issued, waiting for cd_state bit 4
+const	SndRequestFlags	0x01000000	SND_REQ_VAB_WANTED_0	transfer of slot 0 wanted; slot i uses 0x01000000<<i
+const	SndRequestFlags	0x10000000	SND_REQ_VAB_RUNNING_0	transfer of slot 0 running; slot i uses 0x10000000<<i
+comment	main	SD_InitCDLevelInfo	Reset the CD level meter work area: outputs 0, precision 8 bits, 32 samples per channel, mode 0x212 (average, no squaring)	D_80125E60..E68 stores in src/main/80079B10.c; O.BIN name kept
