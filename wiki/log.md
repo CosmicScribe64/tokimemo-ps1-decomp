@@ -7,46 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] lint | sndi checkpoint validation
-
-Docker wiki catalog reports794 tickets,444 sections and3,078 functions. Lint reports zero broken links, zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes; src/, include/ and tools/ have no changes. T-25027 remains In Progress; source-only checkpoint is prepared for root review.
-
-## [2026-10-22] ingest | Preserve reviewed sndi entry-control repair
-
-Root reviewed T-25027 source-only checkpoint624541ad3 against prior source/audit: second scan now tests stage[0] at entry and indexed byte at latch; target-timed reset alternate also preserved. Default production unchanged. Measured264built versus263target words/123printedlines is an improvement, not a match. Remaining known allocation/spill conflicts are explicit. MAIN worker idle pending T-25028 candidate screening; no automatic consultation or repeated sweep. Full matching goal stays active.
-
-## [2026-10-22] ticket | T-25028 read-only candidate prioritization
-
-Released src/main/8006CB30.c at T-25026 pin 1cce82f2e; created [[tickets/T-25028-read-only-candidate-triage]] and In Progress card. At most12 promising remaining functions, excluding reserved GEKO/OPTION and active src/main/8004F870.c; no builds/grids/source changes or agents. Root selects next implementation.
-
-## [2026-10-22] query | T-25028 twelve-function triage without another sweep
-
-Read-only Docker progress confirms119 remaining at main f688ec594; checked membership of12 reviewed functions. No new evidenced semantic/control/ABI/width defect qualified after newest source/ledger reconciliation. Historical matched entries and already repaired raw-draft errors excluded. Preserved concise table and a bounded strCallback upstream-expression question in drafts/T-25028/README.md and [[matching-notes]]. No compiles, source grids/root edits or agents. [[tickets/T-25028-read-only-candidate-triage]] moves to In Review; this is not an all119-blocked claim.
-
-## [2026-10-22] lint | T-25028 triage checkpoint
-
-Wiki lint zero broken links/status mismatches, only existing data/t0018-cases size warning. Diff check clean, production/header/tools/config unchanged; body pointers exist. [[tickets/T-25028-read-only-candidate-triage]] remains In Review.
-
-## [2026-10-22] decision | Trace callback temporary and broaden scoped triage
-
-Root reviewed and preserved T-25028 twelve-function audit; no new repair found in those12, no inference about all119. Assigned former MAIN worker T-25029, exclusive src/main/800563F0.c strCallback, to locate extra RECT-copy temporary with faithful phase evidence before source tests. Released8004F870. Same triage worker takes T-25030, up to12 different older high-byte overlay candidates, stop early on concrete unrepaired defect with donor/target evidence. Exclude contributorGEKO/OPTION, qualifiedTEL36724 and prior12. TwoSolmedium workers, no activeAstra; root integration remains serialized.
-
-## [2026-10-22] ticket | T-25030 overlay reconstruction qualification
-
-Created [[tickets/T-25030-overlay-candidate-triage]] and In Progress card before second read-only triage. At most12 different actual remaining overlay functions; stop on a concrete unrepaired semantic/control/ABI defect. No builds/source grids/root writes/agents; strCallback remains MAIN T-25029, TEL36724 and contributor GEKO/OPTION excluded.
-
-## [2026-10-22] query | T-25030 corrected overlay bodies supersede raw defects
-
-Reviewed12 different actual remaining overlay functions; current119 scope confirmed read-only. No strong new semantic/control/ABI repair qualified. Old raw field/dispatcher/callee/array/actor errors already repaired; preserved corrected-body pointers and ledgers in drafts/T-25030/README.md. Eight bounded target/source direct-call multisets agree after renames, without full semantics claim. No compiles/source variants/root changes/agents. [[tickets/T-25030-overlay-candidate-triage]] moves to In Review; other107 not individually audited.
-
-## [2026-10-22] lint | T-25030 checkpoint checks
-
-Wiki lint zero broken links/status mismatches with only existing data/t0018-cases size warning; diff check clean and production/header/tools/config unchanged. [[tickets/T-25030-overlay-candidate-triage]] remains In Review.
-
-## [2026-10-22] ingest | Preserve second scoped triage
-
-Root reviewed documentation-only T-25030 pin708f1c4f6 and preserved corrected starting-body pointers. Combined T-25028/T-25030 cover24 distinct remaining functions, not all119; no qualified new semantic repair. T-25029 callback trace remains live and is the current implementation lead; triage worker idle instead of repeating near-tail sweeps. Latest contributor check: no open PRs, issue65 unchanged. No coverage increase.
-
 ## [2026-10-22] decision | Consult newly measured callback backend state
 
 Live T-25029 reproduces160-word strCallback with75 register-only positions. Existing logging-only diagnostic identifies eval_mov reused stack slot0x10000 and two-dummy path, candidate last writer f_loadstore; normal/logged whole-TU bytes agree. Bypassing existing copy-state shim is neutral, as are address-offset/alignment controls. Exact earlier strCallback consult covered sentinel, not this measured last-writer path. Authorized one read-only Astra consultation on required predecessor/control-flow ordering while preserving reloads/stores/ABI/160words; Sol idles and tests only up to3 new trace-backed hypotheses. No backend-slot patch, input-specific rule or broad source grid authorized. This is a new phase diagnosis, not a match.
@@ -1680,6 +1640,7 @@ Fixed the blocking finding of [[tickets/T-27024-p2-o-tt]]: a bell in state 0x70 
 
 ## [2026-10-24] ticket | T-27024 Done
 [[tickets/T-27024-p2-o-tt]] passed the third review (approved, no findings): the bell hazard rule (state 0x70 falls, hurts a ship that is not invulnerable, a shot frees it) in [[spec/o-tt]] 6.4 and 6.9 and the boss 4 beam table rows in `config/renames/proposals/o-tt.tsv` match `src/ovl/TT/8013BD10.c`, `80142D40.c`, `80144D70.c` and the asm data. The branch changes no `src/`, `include/` or symbol files. Moves to Done.
+
 ## [2026-10-24] decision | Phase 2 conventions: user decisions, port-first scope, review round 2 fixes
 
 Third pass on [[tickets/T-27001-phase-2-conventions]] (still In Review): `docs/adr/0001-phase-2-naming.md`, `CODING_STANDARDS.md`, `GLOSSARY.md`, [[phase2]], [[tickets/T-27000-phase-2]], [[tickets/T-27003-pilot-obin-names-overlays]], [[tickets/T-27004-shared-core-names]]. User decisions of 2026-10-24: `tools/rename.py` is the only way to rename once it has merged (audit question 5, now the binding rule of section 4); old names stay in tickets, logs and old notes while current pages use the new names (audit question 2); the scope is port-first, "not 100%, just enough for the Godot port" (game logic in full, hardware layer at module level and entry points, locals and hex literals only where essential, SDK names optional, matching build exact). The Pending section is gone; the ADR has a Scope section; T-27000's criteria no longer ask for every symbol.
