@@ -119,7 +119,7 @@ data	main	D_800B6928	club_activity_deltas	s8[12][9]: parameter change per club f
 data	main	D_800B41A0	girl_affection_weight	u8[13] percent weight applied to affection by get_h_yuukou (girl 0 = 83)
 data	main	D_800B4100	girl_tokimeki_weight	u8[13] percent weight applied to tokimeki by get_h_tokimeki
 data	main	D_800B3778	phone_numbers	13 rows of 7 digits
-data	main	D_800B3748	month_data_table	pointer table of month blobs, index (year - 95) * 12 + month - 4 (36 months); each blob: 0x800-byte image, day count, first weekday, day kinds, markers; read by func_80068938
+data	main	D_800B3748	month_data_table	pointer table of month blobs, index (year - 95) * 12 + month - 4 (36 months); each blob: a 0x2000-byte calendar image, then words: day count, first weekday, n day kinds, n markers (only the low byte is kept); read by func_80068938
 data	main	D_800B5948	last_screen_mode	value returned by get_last_gamen_mode; selects the dec_bg draw variant
 data	main	D_800B593C	dec_bg_brightness	set by set_dec_bri; sprite tint of dec_bg_draw (0x80 neutral)
 data	main	D_800B5938	dec_bg_show	u8[4]: [0],[1] show flags of the two background slots, [1] of [2] is the active slot index
@@ -195,11 +195,11 @@ field	GameState	unk_F5F	current_girl	index of the girl record in use (1,219 uses
 field	GameState	unk_F60	text_lines_total	HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step func_8005215C
 field	GameState	unk_F61	text_first_line	HYPOTHESIS: index of the first visible dialogue line in the text list
 field	GameState	unk_F62	text_scroll_state	HYPOTHESIS: bit 7 = scrolling active, low bits = phase of the two-line scroll
-field	GameState	unk_F64	quarter_flags	FlagsF64 bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (func_800722C4); TEL also sets bits
+field	GameState	unk_F64	quarter_flags	HYPOTHESIS: FlagsF64 bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (func_800722C4); TEL also sets bits
 field	GameState	unk_F68	last_command	low nibble = the weekday command chosen on the schedule screen (icon index; 0-7 = row of command_deltas, 4 = club activity; 0xE while no choice stands); bits 4-7 = the last holiday command; the queue builder copies the low nibble into every school-day record; LastCommandBits
 field	GameState	unk_F6C	icon_mode	settings: 0 = TYPE-A, 1 = TYPE-B, 2 = free layout (strings of the settings screen)
 field	GameState	unk_F6D	icon_count	number of icon actors shown (0xF in free mode, 0xE otherwise)
-field	GameState	unk_F6E	anim_fast	HYPOTHESIS: toggled by a pad bit in func_80042A00; selects the shorter animation step in parameter_show and the week loops
+field	GameState	unk_F6E	anim_fast	toggled by pad 2 bit 27 (R1) in func_80042A00; nonzero shortens the parameter-panel pop animation from 8 to 4 frames (parameter_show); also tested by the week loops
 field	GameState	unk_F6F	cursor_speed	settings 1-5, default 3; step of the pad-driven cursor in func_8006BA40
 field	GameState	unk_F70	click_mode	mouse setting: 0 single click, 1 double click
 field	GameState	unk_F73	double_click_interval	mouse setting in frames: default 0x20, clamped 0x10..0x40
@@ -251,7 +251,7 @@ field	GameState	unk_1117	album_slot	index of the selected album/save slot (NameR
 field	GameState	unk_1118	save_slot	memory-card slot number used by func_80054884
 field	GameState	unk_1120	card_timer	frames since the card operation began; > 0x200 = timeout
 field	GameState	unk_1124	options_dirty	bit mask of changed option groups (0x80/0x40/0x20/0x10/8); nonzero makes NAME_ENT/ETC save the settings
-field	GameState	unk_1128	tpage_req	64 texture-page slot requests (0x7FFF free, 0x7FFE locked); search_tpage
+field	GameState	unk_1128	tpage_req	64 per-frame texture-page slot states: 0x7FFF free, 0x7FFE resident (copied from tpage_buf by search_tpage(0x7FFF)), else the resource id requested this frame; a miss takes a free slot and queues the upload
 field	GameState	unk_1228	tpage_buf	64 texture-page slot contents (resource ids; 0 reserved, -1 free); tpage_buf_clear
 field	GameState	unk_1328	palette_queue	32 PaletteLoad records queued by load_palette and flushed by palette_load_vram
 field	GameState	unk_1428	palette_queue_count	fill count of palette_queue
@@ -332,7 +332,7 @@ field	DisplayActor44	unk_26	x	integer x (screen coordinates, origin at the centr
 field	DisplayActor44	unk_28	y_frac	fraction of y
 field	DisplayActor44	unk_2A	y	integer y; cursor_y is actor 0's
 field	DisplayActor44	unk_2C	dx_frac	HYPOTHESIS: x step per frame
-field	DisplayActor44	unk_2E	dx	HYPOTHESIS: integer part of the x step
+field	DisplayActor44	unk_2E	dx	HYPOTHESIS: integer part of the x step; the parameter panel (parameter_show) also uses it as a 0/1/2 animation phase
 field	DisplayActor44	unk_30	dy_frac	HYPOTHESIS: y step per frame
 field	DisplayActor44	unk_32	dy	HYPOTHESIS: integer part of the y step
 field	DisplayActor44	unk_34	tpage_table	pointer to the tpage id table (default D_800C9730); bit 31 of its first word marks it usable

@@ -183,11 +183,11 @@ Old name, new name, use count (reads and writes in `src/`, EVENT and GYOZI exclu
 | 0xF61 | u8 | `unk_F61` | `text_first_line` | 30 | HYPOTHESIS: index of the first visible dialogue line in the text list |
 | 0xF62 | u8 | `unk_F62` | `text_scroll_state` | 22 | HYPOTHESIS: bit 7 = scrolling active, low bits = phase of the two-line scroll |
 | 0xF63 | s8 | `unk_F63` | - (kept) | 1 | unused or not proven (see open questions) |
-| 0xF64 | u8[4] | `unk_F64` | `quarter_flags` | 31 | FlagsF64 bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (func_800722C4); TEL... |
+| 0xF64 | u8[4] | `unk_F64` | `quarter_flags` | 31 | HYPOTHESIS: FlagsF64 bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13... |
 | 0xF68 | GsWord | `unk_F68` | `last_command` | 51 | low nibble = the weekday command chosen on the schedule screen (icon index; 0-7 = row of command_deltas, 4 = club activity;... |
 | 0xF6C | u8 | `unk_F6C` | `icon_mode` | 23 | settings: 0 = TYPE-A, 1 = TYPE-B, 2 = free layout (strings of the settings screen) |
 | 0xF6D | u8 | `unk_F6D` | `icon_count` | 18 | number of icon actors shown (0xF in free mode, 0xE otherwise) |
-| 0xF6E | u8 | `unk_F6E` | `anim_fast` | 10 | HYPOTHESIS: toggled by a pad bit in func_80042A00; selects the shorter animation step in parameter_show and the week loops |
+| 0xF6E | u8 | `unk_F6E` | `anim_fast` | 10 | toggled by pad 2 bit 27 (R1) in func_80042A00; nonzero shortens the parameter-panel pop animation from 8 to 4 frames... |
 | 0xF6F | u8 | `unk_F6F` | `cursor_speed` | 21 | settings 1-5, default 3; step of the pad-driven cursor in func_8006BA40 |
 | 0xF70 | u8 | `unk_F70` | `click_mode` | 10 | mouse setting: 0 single click, 1 double click |
 | 0xF71 | s8 | `unk_F71` | - (kept) | 1 | unused or not proven (see open questions) |
@@ -251,7 +251,7 @@ Old name, new name, use count (reads and writes in `src/`, EVENT and GYOZI exclu
 | 0x1120 | s32 | `unk_1120` | `card_timer` | 45 | frames since the card operation began; > 0x200 = timeout |
 | 0x1124 | u8 | `unk_1124` | `options_dirty` | 27 | bit mask of changed option groups (0x80/0x40/0x20/0x10/8); nonzero makes NAME_ENT/ETC save the settings |
 | 0x1125 | u8[3] | `unk_1125` | - (kept) | 0 | unused or not proven (see open questions) |
-| 0x1128 | s32[64] | `unk_1128` | `tpage_req` | 16 | 64 texture-page slot requests (0x7FFF free, 0x7FFE locked); search_tpage |
+| 0x1128 | s32[64] | `unk_1128` | `tpage_req` | 16 | 64 per-frame texture-page slot states: 0x7FFF free, 0x7FFE resident (copied from tpage_buf by search_tpage(0x7FFF)), else the... |
 | 0x1228 | s32[64] | `unk_1228` | `tpage_buf` | 210 | 64 texture-page slot contents (resource ids; 0 reserved, -1 free); tpage_buf_clear |
 | 0x1328 | GsRec1328[32] | `unk_1328` | `palette_queue` | 0 | 32 PaletteLoad records queued by load_palette and flushed by palette_load_vram |
 | 0x1428 | u8 | `unk_1428` | `palette_queue_count` | 1 | fill count of palette_queue |
@@ -283,7 +283,7 @@ From year 98, month 3 (day != 0) the queue reader stops dispatching and calls `m
 
 ### 3.2 Month tables
 
-`month_calendar[2]` holds this month and next month. Each record has `day_kind[0x20]` (`[0]` = days in the month, `[d]` = day kind) and `marker[0x20]` (`[0]` = weekday of the 1st, `[d]` = marker). At the end of a month the second record moves to the first and the new second record is loaded from `month_data_table` (`D_800B3748`, 36 month blobs indexed `(year - 95) * 12 + month - 4`; each blob is a 0x800-byte calendar image followed by the day count, the first weekday, the day kinds and the markers). The initial table (April and May 1995) is written by `func_800418B0`. The blobs live in memory loaded from disc, not in the executable: **the port must read them from the disc data**.
+`month_calendar[2]` holds this month and next month. Each record has `day_kind[0x20]` (`[0]` = days in the month, `[d]` = day kind) and `marker[0x20]` (`[0]` = weekday of the 1st, `[d]` = marker). At the end of a month the second record moves to the first and the new second record is loaded from `month_data_table` (`D_800B3748`, 36 month blobs indexed `(year - 95) * 12 + month - 4`; each blob is a 0x2000-byte calendar image followed by words: the day count, the first weekday, then n day kinds and n markers, of which only the low byte is kept). The initial table (April and May 1995) is written by `func_800418B0`. The blobs live in memory loaded from disc, not in the executable: **the port must read them from the disc data**.
 
 Day kinds: 0 school day, 1 Sunday, 2 national holiday, 3 break day (HYPOTHESIS: events of the summer and winter breaks are gated on kind 3). Markers (HYPOTHESIS for names that are not tied to an event): 2/6/10/14/16/20 push a day-notice record, 4 sports festival, 5 exam period, 8 club season, 11 school trip, 12 culture festival, 13 Christmas preparations, 15 New Year preparations, 17 Valentine's day, 18 career choice (year 98), 19 seasonal party.
 
@@ -656,7 +656,7 @@ NAME_ENT then collects the player's name, birthday and blood type and the birthd
 3. `MODE_NAME_ENT_3/4`, `MODE_ETC_C2..C4`, `MODE_TELEPHONE_PROFILE`, `MODE_CLUB_MASTER_*`: roles unsettled.
 4. Calendar marker values 2, 6, 10, 14, 16, 20 (notice records) and what the notice mode 0x39 shows.
 5. `progress_state` flag bytes (21): which HUD facts they record (first-time hints?).
-6. `unk_F6E` (`anim_fast`): which animation steps it shortens; the pad bit that toggles it (pad 2 bit 27).
+6. `unk_F6E` (`anim_fast`): which other animations it shortens besides the parameter panel.
 7. `unk_71F` (`daily_check_done`) and `unk_71D` (`events_today`): names are inferred from set/clear sites only.
 8. `scratch_words`/`unk_183C`/`unk_1A3C..`: the shared scratch areas; TACO and NAME_ENT hand pointers through the latter.
 9. `frame_hcount_limit`: needs a timing check in the emulator (the emulator image is not built in this tree).
