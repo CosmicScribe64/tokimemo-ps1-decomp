@@ -4,57 +4,57 @@
 #include "ovl/GEKO.h"
 #include "psx_types.h"
 
-void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6);
+void encounter_color_quad_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6);
 
 extern u32 talk_work;
 
 typedef struct {
     void (*f[23])();
 } FnTbl23; /* size 0x5C */
-extern FnTbl23 D_80147174;
+extern FnTbl23 encounter_yumi_scene_two_steps;
 
 typedef struct {
     void (*f[61])();
 } FnTbl61; /* size 0xF4 */
 
-void func_8013F360(void) {
-    D_80147050 = 0x801D21BC;
-    D_80147054 = 0x801D21C4;
-    D_80147058 = 0x801D2204;
-    D_8014705C = (*(s16 *)0x801D221C);
-    D_80147060 = 0x801B0000;
-    D_80147064 = 0x801B2000;
-    D_80147068 = 0x801B6000;
-    D_8014706C = 0x801BA000;
-    D_80147070 = 0x801BE000;
-    D_80147074 = 0x801C2000;
-    D_80147078 = 0x801C6000;
+void encounter_yumi_assets_bind_1(void) {
+    encounter_yumi_pack_1_animation_input_2 = 0x801D21BC;
+    encounter_yumi_pack_1_animation_input_0 = 0x801D21C4;
+    encounter_yumi_pack_1_animation_input_1 = 0x801D2204;
+    encounter_yumi_pack_1_animation_input_3 = (*(s16 *)0x801D221C);
+    encounter_yumi_pack_1_palette = 0x801B0000;
+    encounter_yumi_pack_1_still_image_0 = 0x801B2000;
+    encounter_yumi_pack_1_still_image_1 = 0x801B6000;
+    encounter_yumi_pack_1_still_image_2 = 0x801BA000;
+    encounter_yumi_pack_1_still_image_3 = 0x801BE000;
+    encounter_yumi_pack_1_still_image_4 = 0x801C2000;
+    encounter_yumi_pack_1_still_image_5 = 0x801C6000;
 }
 
-void func_8013F410(void) {
-    D_8014707C = 0x801D2600;
-    D_80147080 = 0x801D2608;
-    D_80147084 = 0x801D2674;
-    D_80147088 = (*(s16 *)0x801D268C);
-    D_8014708C = 0x801B0000;
-    D_80147090 = 0x801B2000;
-    D_80147094 = 0x801B6000;
-    D_80147098 = 0x801BA000;
-    D_8014709C = 0x801BE000;
-    D_801470A0 = 0x801C2000;
-    D_801470A4 = 0x801C6000;
+void encounter_yumi_assets_bind_2(void) {
+    encounter_yumi_pack_2_animation_input_2 = 0x801D2600;
+    encounter_yumi_pack_2_animation_input_0 = 0x801D2608;
+    encounter_yumi_pack_2_animation_input_1 = 0x801D2674;
+    encounter_yumi_pack_2_animation_input_3 = (*(s16 *)0x801D268C);
+    encounter_yumi_pack_2_palette = 0x801B0000;
+    encounter_yumi_pack_2_still_image_0 = 0x801B2000;
+    encounter_yumi_pack_2_still_image_1 = 0x801B6000;
+    encounter_yumi_pack_2_still_image_2 = 0x801BA000;
+    encounter_yumi_pack_2_still_image_3 = 0x801BE000;
+    encounter_yumi_pack_2_still_image_4 = 0x801C2000;
+    encounter_yumi_pack_2_still_image_5 = 0x801C6000;
 }
 
-void func_8013F4C0(void) {
+void encounter_yumi_scene_select_1(void) {
     switch (talk_work) {
     case 1:
-        func_8013F53C();
+        encounter_yumi_scene_one_dispatch();
         return;
     case 2:
-        func_8013F578();
+        encounter_yumi_scene_two_dispatch();
         return;
     case 7:
-        func_8013F5B4();
+        encounter_yumi_scene_seven_dispatch();
         return;
     default:
         game_mode_reset_to_title();
@@ -62,25 +62,25 @@ void func_8013F4C0(void) {
     }
 }
 
-void func_8013F53C(void) {
+void encounter_yumi_scene_one_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013F5F0();
+        encounter_yumi_scene_one_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013F578(void) {
+void encounter_yumi_scene_two_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013F6A4();
+        encounter_yumi_scene_two_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013F5B4(void) {
+void encounter_yumi_scene_seven_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013F850();
+        encounter_yumi_scene_seven_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
@@ -89,41 +89,41 @@ void func_8013F5B4(void) {
 typedef struct {
     void (*f[49])();
 } FnTbl49; /* size 0xC4 */
-extern FnTbl49 D_801470B0;
+extern FnTbl49 encounter_yumi_scene_one_steps;
 
-void func_8013F5F0(void) {
+void encounter_yumi_scene_one_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl49 tbl;
 
-    tbl = D_801470B0;
+    tbl = encounter_yumi_scene_one_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8013F66C(void) {
+void encounter_yumi_assets_load_1(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8DBD);
-    func_8013F360();
+    encounter_yumi_assets_bind_1();
     mode_step_next();
 }
 
-void func_8013F6A4(void) {
+void encounter_yumi_scene_two_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl23 tbl;
 
-    tbl = D_80147174;
+    tbl = encounter_yumi_scene_two_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8013F72C(void) {
+void encounter_yumi_scene_repeat_group_offset(void) {
     if ((u8) game_state.scene_flags[67] >= 2U) {
         D_800CA150 = (u16) D_800CA150 + 5;
     }
     mode_step_next();
 }
 
-void func_8013F770(void) {
-    func_800634FC(get_g_zyotai_h(GIRL_YUMI));
+void encounter_yumi_scene_repeat_skip(void) {
+    portrait_value_clear_if_high(get_g_zyotai_h(GIRL_YUMI));
     if ((u8) game_state.scene_flags[67] >= 2U) {
         mode_step_next();
         mode_step_next();
@@ -138,7 +138,7 @@ void func_8013F770(void) {
     mode_step_next();
 }
 
-void func_8013F800(void) {
+void encounter_yumi_girl_state_group_offset(void) {
     u8 s;
 
     s = get_g_zyotai_s(game_state.current_girl) & 0x7F;
@@ -148,24 +148,24 @@ void func_8013F800(void) {
     mode_step_next();
 }
 
-extern FnTbl61 D_801471D0;
+extern FnTbl61 encounter_yumi_scene_seven_steps;
 
-void func_8013F850(void) {
+void encounter_yumi_scene_seven_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl61 tbl;
 
-    tbl = D_801471D0;
+    tbl = encounter_yumi_scene_seven_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
-    if ((D_801470A8 != 0) && (game_state.mode_step >= 0x20U)) {
-        func_8013FD3C();
+    if ((encounter_yumi_white_flash_enabled != 0) && (game_state.mode_step >= 0x20U)) {
+        encounter_yumi_white_flash_draw();
     }
-    if ((D_801470AC != 0) && (game_state.mode_step >= 0x20U)) {
-        func_80140040();
+    if ((encounter_yumi_closing_actor_timer != 0) && (game_state.mode_step >= 0x20U)) {
+        encounter_yumi_closing_actors_update();
     }
 }
 
-void func_8013F92C(void) {
+void encounter_yumi_closing_bg_request(void) {
     s32 temp_v0;
 
     D_800B3D60 = 0;
@@ -181,7 +181,7 @@ void func_8013F92C(void) {
     mode_step_next();
 }
 
-s32 func_8013F9AC(void) {
+s32 encounter_yumi_closing_bg_decode(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
         mode_step_next();
@@ -192,13 +192,13 @@ s32 func_8013F9AC(void) {
     mode_step_next();
 }
 
-void func_8013FA38(void) {
+void encounter_yumi_closing_bg_show(void) {
     dec_bg_show_switch(0);
     mode_step_next();
 }
 
-void func_8013FA60(void) {
-    func_80138AF8();
+void encounter_yumi_closing_talk_chime(void) {
+    encounter_scene_talk();
     if ((u16)D_800CA154 == 2) {
         if (game_state.mode_step_timer.w++ == 0) {
             audio_command(0x603);
@@ -206,30 +206,30 @@ void func_8013FA60(void) {
     }
 }
 
-void func_8013FAB4(void) {
+void encounter_yumi_audio_command_1(void) {
     audio_command(0x200);
     mode_step_next();
 }
 
-void func_8013FADC(void) {
+void encounter_yumi_assets_load_2(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8EFE);
-    func_8013F410();
+    encounter_yumi_assets_bind_2();
     mode_step_next();
 }
 
-void func_8013FB14(void) {
+void encounter_yumi_audio_command_2(void) {
     audio_command(0x500);
     mode_step_next();
 }
 
-void func_8013FB3C(void) {
+void encounter_yumi_audio_load_1(void) {
     D_800B3D60 = 0;
     audio_bank_load_start(1, 0xC65F, 0xC659, 0xD9E1, 0xD993, 0xD98E);
     mode_step_next();
 }
 
-void func_8013FB88(void) {
-    func_80138AF8();
+void encounter_yumi_closing_talk_portrait_update(void) {
+    encounter_scene_talk();
     if (D_80122CE4 != 0) {
         D_80122CE4 = 0;
         D_80122CF0 = 0;
@@ -241,10 +241,10 @@ void func_8013FB88(void) {
     }
 }
 
-void func_8013FC00(void) {
+void encounter_yumi_portrait_restore(void) {
     s16 i;
 
-    func_800634FC(get_g_zyotai_h(GIRL_YUMI));
+    portrait_value_clear_if_high(get_g_zyotai_h(GIRL_YUMI));
     D_800B5BD4 = 0xF;
     for (i = 0; i < 0xA; i++) {
         ((Actor *)actor_pool)[i + 99].draw_flags &= ~0x80;
@@ -252,7 +252,7 @@ void func_8013FC00(void) {
     mode_step_next();
 }
 
-s16 func_8013FC80(void) {
+s16 encounter_yumi_zoom_flash_start(void) {
     if (game_state.mode_step_timer.w == 0) {
         D_801206DB |= 0x80;
         D_801206F4 = 0;
@@ -263,21 +263,21 @@ s16 func_8013FC80(void) {
     D_801206F4 += 0x80;
     if (D_801206F2 >= 0x1000) {
         D_801206DB &= 0xFF7F;
-        D_801470A8 = 1;
+        encounter_yumi_white_flash_enabled = 1;
         mode_step_next();
     }
     game_state.mode_step_timer.w += 1;
 }
 
-void func_8013FD3C(void) {
-    func_8013FD88(-0xA0, -0x78, 0x140, 0xA0, 0xFFFFFF, 0xA, 0);
+void encounter_yumi_white_flash_draw(void) {
+    encounter_color_quad_draw(-0xA0, -0x78, 0x140, 0xA0, 0xFFFFFF, 0xA, 0);
     dtd_on(9);
 }
 
 /* FAKE: the explicit "& 0xFF" masks and one source line per colour trio, as in the matched main sibling
  * _sprite_set_box_shade_tarao (T-17001; one colour instead of two): the masks leave the shifts in ugen
  * temporaries (t6, t7) and as1 schedules the stores by source line. The real source is unknown. T-24017 */
-void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6) {
+void encounter_color_quad_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6) {
     GameState *gs;
     POLY_G4 *p;
 
@@ -301,7 +301,7 @@ void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s
 }
 
 
-void func_8013FF64(void) {
+void encounter_yumi_closing_actors_init(void) {
     s16 i;
 
     D_800B5BD4 = 0xA;
@@ -313,23 +313,23 @@ void func_8013FF64(void) {
     for (i = 0x3A; i < 0x40; i++) {
         func_80084C98(i, 0x80);
     }
-    D_801470A8 = 0;
+    encounter_yumi_white_flash_enabled = 0;
     for (i = 0; i < 0xA; i++) {
         ((Actor *)actor_pool)[i + 99].draw_flags |= 0x80;
     }
-    D_801470AC = 1;
+    encounter_yumi_closing_actor_timer = 1;
     mode_step_next();
 }
 
 /* FAKE: byte-offset display-record view matches the EVENT sibling (fields add one register, T-20900);
  * `if (any == 0 && rand()) {}` (where EVENT sibling func_80108DD4 has a sound trigger inside the if)
  * keeps the post-call label that prevents as1 from hoisting $ra into the branch delay slot. T-24090 */
-void func_80140040(void) {
+void encounter_yumi_closing_actors_update(void) {
     s16 i;
     s32 any;
 
     for (i = 0; i < 0xA; i++) {
-        if (D_801470AC >= (u32)(i * 0x1E)) {
+        if (encounter_yumi_closing_actor_timer >= (u32)(i * 0x1E)) {
             *(s16 *)&actor_pool[i * 0x44 + 0x1A7A] = -1;
             *(s16 *)&actor_pool[i * 0x44 + 0x1A7E] = 1;
         }
@@ -349,10 +349,10 @@ void func_80140040(void) {
     } while (i < 0xA);
     if (any == 0 && rand()) {
     }
-    D_801470AC += 1;
+    encounter_yumi_closing_actor_timer += 1;
 }
 
-void func_8014016C(void) {
+void encounter_yumi_scene_init_1(void) {
     game_state.current_girl = GIRL_YUMI;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -367,17 +367,17 @@ void func_8014016C(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145FCC;
-    D_80146278 = D_80146108;
-    D_8014627C = D_80146244;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_67;
+    encounter_scene_command_table = encounter_scene_command_section_67;
+    encounter_scene_voice_table = encounter_scene_voice_section_67;
     strcpy(D_800CA19C, "廊下");
     if (talk_work == 1) {
         game_state.girls[0xA].tokimeki += 1;
@@ -390,15 +390,15 @@ void func_8014016C(void) {
     mode_step_next();
 }
 
-void func_801402F8(void) {
-    func_8013F360();
-    load_palette(D_80147060, 0x11, 1, 2, 0);
-    scene_still_show(D_80147064, D_80147068, D_8014706C, D_80147070, D_80147074, D_80147078);
-    scene_anim_show(D_80147054, D_80147058, D_80147050, D_8014705C);
+void encounter_yumi_still_show_1(void) {
+    encounter_yumi_assets_bind_1();
+    load_palette(encounter_yumi_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_yumi_pack_1_still_image_0, encounter_yumi_pack_1_still_image_1, encounter_yumi_pack_1_still_image_2, encounter_yumi_pack_1_still_image_3, encounter_yumi_pack_1_still_image_4, encounter_yumi_pack_1_still_image_5);
+    scene_anim_show(encounter_yumi_pack_1_animation_input_0, encounter_yumi_pack_1_animation_input_1, encounter_yumi_pack_1_animation_input_2, encounter_yumi_pack_1_animation_input_3);
     mode_step_next();
 }
 
-void func_801403A0(void) {
+void encounter_yumi_scene_init_2(void) {
     u8 state;
 
     game_state.current_girl = GIRL_YUMI;
@@ -415,17 +415,17 @@ void func_801403A0(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145FD0;
-    D_80146278 = D_8014610C;
-    D_8014627C = D_80146248;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_68;
+    encounter_scene_command_table = encounter_scene_command_section_68;
+    encounter_scene_voice_table = encounter_scene_voice_section_68;
     state = get_g_zyotai_s(GIRL_YUMI) & 0x7F;
     if ((u32)state < 2U) {
         game_state.girls[10].tokimeki += 1;
@@ -436,7 +436,7 @@ void func_801403A0(void) {
     mode_step_next();
 }
 
-void func_801404FC(void) {
+void encounter_yumi_scene_init_3(void) {
     s16 i;
 
     game_state.current_girl = GIRL_YUMI;
@@ -453,12 +453,12 @@ void func_801404FC(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     D_80122D38 = 1;
-    func_8006509C();
+    hud_icon_bar_init();
     for (i = 0; i < 0xF; i++) {
         icon_can_use_set(i, 0);
     }
@@ -466,13 +466,13 @@ void func_801404FC(void) {
     parameter_show_init();
     parameter_show_init();
     dec_bg_brightness = 0x80;
-    D_801470A8 = 0;
-    D_801470AC = 0;
+    encounter_yumi_white_flash_enabled = 0;
+    encounter_yumi_closing_actor_timer = 0;
     talk_names_set(game_state.current_girl);
-    func_80137990();
-    D_80146274 = D_80145FE4;
-    D_80146278 = D_80146120;
-    D_8014627C = D_8014625C;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_73;
+    encounter_scene_command_table = encounter_scene_command_section_73;
+    encounter_scene_voice_table = encounter_scene_voice_section_73;
     strcpy(D_800CA19C, "玄関");
     strcpy(D_800CA1DC, "自宅前");
     game_state.girls[game_state.current_girl].affection += 2;
@@ -481,7 +481,7 @@ void func_801404FC(void) {
     mode_step_next();
 }
 
-void func_801406CC(void) {
+void encounter_yumi_closing_still_show(void) {
     /* FAKE: unused 4-byte local places t0..t2 at the original stack offsets; real source unknown. T-24092 */
     s32 pad;
     s16 i;
@@ -489,16 +489,16 @@ void func_801406CC(void) {
     GekoShorts10 t1;
     GekoShorts10 t2;
 
-    t0 = D_801472C4;
-    t1 = D_801472D8;
-    t2 = D_801472EC;
-    func_8013F410();
-    load_palette(D_8014708C, 0x11, 1, 2, 0);
-    scene_still_show(D_80147090, D_80147094, D_80147098, D_8014709C, D_801470A0, D_801470A4);
+    t0 = encounter_yumi_closing_actor_initial_values;
+    t1 = encounter_yumi_closing_actor_x;
+    t2 = encounter_yumi_closing_actor_y;
+    encounter_yumi_assets_bind_2();
+    load_palette(encounter_yumi_pack_2_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_yumi_pack_2_still_image_0, encounter_yumi_pack_2_still_image_1, encounter_yumi_pack_2_still_image_2, encounter_yumi_pack_2_still_image_3, encounter_yumi_pack_2_still_image_4, encounter_yumi_pack_2_still_image_5);
     for (i = 0; i < 6; i++) {
         game_state.quad_layer[i + 0x3A] = 0xC;
     }
-    scene_anim_show(D_80147080, D_80147084, D_8014707C, D_80147088);
+    scene_anim_show(encounter_yumi_pack_2_animation_input_0, encounter_yumi_pack_2_animation_input_1, encounter_yumi_pack_2_animation_input_2, encounter_yumi_pack_2_animation_input_3);
     D_800CA360 = 1;
     ((Actor *)actor_pool_96)[1].unk_04 = 8;
     ((Actor *)actor_pool_96)->unk_04 = 8;
@@ -520,7 +520,7 @@ void func_801406CC(void) {
     mode_step_next();
 }
 
-void func_801409D8(void) {
+void encounter_yumi_bg_load_1(void) {
     bg_read_sub2(0x4045);
     mode_step_next();
 }

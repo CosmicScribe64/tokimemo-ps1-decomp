@@ -38,7 +38,7 @@ void func_8013A604(void) {
     s16 d[16];
 
     D_800B3C6C = 1;
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;
@@ -169,9 +169,9 @@ s32 func_8013AC30(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_80068938(game_state.year, game_state.month, 1);
+            calendar_month_load(game_state.year, game_state.month, 1);
             D_800B5BC8 = 0xEF;
-            func_800674B0();
+            hud_day_bgm_load();
             mode_step_next();
         }
         break;
@@ -242,7 +242,7 @@ void func_8013AD94(void) {
     s16 c[16];
     s16 d[16];
 
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;
@@ -397,7 +397,7 @@ void func_8013B410(void) {
     s16 c[16];
     s16 d[16];
 
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;
@@ -551,7 +551,7 @@ void func_8013BECC(void) {
     s16 c[16];
     s16 d[16];
 
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;
@@ -692,7 +692,7 @@ void func_8013C404(void) {
     s16 c[16];
     s16 d[16];
 
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;

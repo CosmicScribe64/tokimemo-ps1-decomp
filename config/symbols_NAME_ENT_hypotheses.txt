@@ -1,0 +1,29 @@
+// HYPOTHESES, not facts: names of the overlay NAME_ENT that claim a game meaning the code does not prove
+// (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
+file_select_mode_stage_album_broken = 0x80140430; // type:func
+file_select_mode_stage_memory_card_error = 0x80140574; // type:func
+file_select_loaded_greeting = 0x8014068C; // type:func
+opening_story_voice_meter_update = 0x8014472C; // type:func
+opening_story_actor97_random_animation = 0x80144908; // type:func
+prologue_petals_init = 0x801454CC; // type:func
+prologue_petals_update = 0x801455E4; // type:func
+prologue_board_load = 0x80145760; // type:func
+prologue_board_scroll = 0x80145848; // type:func
+prologue_mode_stage_board = 0x80145A74; // type:func
+prologue_names_crossfade = 0x80145AC4; // type:func
+prologue_mode_stage_names = 0x80145F74; // type:func
+prologue_lip_synchronization_yoshio = 0x801469D0; // type:func
+prologue_actor100_mouth_girl_a = 0x80146DC4; // type:func
+prologue_actor101_mouth_girl_b = 0x80146E88; // type:func
+prologue_lip_synchronization_line_11 = 0x801473AC; // type:func
+prologue_lip_synchronization_rei = 0x80147A80; // type:func
+prologue_rei_banner_run = 0x80147BEC; // type:func
+prologue_mode_stage_rei_banner = 0x80147F4C; // type:func
+prologue_lip_synchronization_rei_lines_13_and_14 = 0x80147F78; // type:func
+prologue_actor98_animation_start_rei = 0x801480E0; // type:func
+prologue_lip_synchronization_lines_15_and_16 = 0x801486F8; // type:func
+prologue_lip_synchronization_shiori = 0x80149144; // type:func
+prologue_actor98_animation_start_shiori = 0x801492B0; // type:func
+prologue_lip_synchronization_shiori_line_19 = 0x80149558; // type:func
+prologue_actor98_animation_start_shiori_line_19 = 0x801496C0; // type:func
+prologue_lip_synchronization_lines_20_to_31 = 0x80149B08; // type:func

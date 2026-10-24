@@ -5,62 +5,62 @@
 typedef struct {
     void (*f[32])();
 } FnTbl32; /* size 0x80 */
-extern FnTbl32 D_801476E4;
+extern FnTbl32 encounter_invite_steps;
 
-void func_80142760(void) {
-    D_80147630 = 0x80197558;
-    D_80147634 = 0x80197F60;
-    D_80147638 = 0x80198830;
-    D_8014763C = 0x801991A8;
-    D_80147640 = 0x80199C00;
-    D_80147644 = 0x8019A598;
-    D_80147648 = 0x8019B0D4;
-    D_8014764C = 0x8019BAEC;
-    D_80147650 = 0x8019C4FC;
-    D_80147654 = 0x8019CF64;
-    D_80147658 = 0x8019D970;
-    D_8014765C = 0x8019DF94;
-    D_80147660 = 0x8019E5E4;
-    D_80147664 = 0x80197624;
-    D_80147668 = 0x80198024;
-    D_8014766C = 0x801988FC;
-    D_80147670 = 0x8019926C;
-    D_80147674 = 0x80199CCC;
-    D_80147678 = 0x8019A664;
-    D_8014767C = 0x8019B1A0;
-    D_80147680 = 0x8019BBB8;
-    D_80147684 = 0x8019C5C8;
-    D_80147688 = 0x8019D030;
-    D_8014768C = 0x8019DA3C;
-    D_80147690 = 0x8019DFBC;
-    D_80147694 = 0x8019E6B0;
-    D_80147698 = 0x801979D0;
-    D_8014769C = 0x801983B0;
-    D_801476A0 = 0x80198CA8;
-    D_801476A4 = 0x801995F8;
-    D_801476A8 = 0x8019A078;
-    D_801476AC = 0x8019AA2C;
-    D_801476B0 = 0x8019B54C;
-    D_801476B4 = 0x8019BF64;
-    D_801476B8 = 0x8019C974;
-    D_801476BC = 0x8019D3DC;
-    D_801476C0 = 0x8019DE04;
-    D_801476C4 = 0x8019E05C;
-    D_801476C8 = 0x8019EA5C;
+void encounter_invite_scripts_bind(void) {
+    encounter_invite_text_section_0 = 0x80197558;
+    encounter_invite_text_section_1 = 0x80197F60;
+    encounter_invite_text_section_2 = 0x80198830;
+    encounter_invite_text_section_3 = 0x801991A8;
+    encounter_invite_text_section_4 = 0x80199C00;
+    encounter_invite_text_section_5 = 0x8019A598;
+    encounter_invite_text_section_6 = 0x8019B0D4;
+    encounter_invite_text_section_7 = 0x8019BAEC;
+    encounter_invite_text_section_8 = 0x8019C4FC;
+    encounter_invite_text_section_9 = 0x8019CF64;
+    encounter_invite_text_section_10 = 0x8019D970;
+    encounter_invite_text_section_11 = 0x8019DF94;
+    encounter_invite_text_section_12 = 0x8019E5E4;
+    encounter_invite_command_section_0 = 0x80197624;
+    encounter_invite_command_section_1 = 0x80198024;
+    encounter_invite_command_section_2 = 0x801988FC;
+    encounter_invite_command_section_3 = 0x8019926C;
+    encounter_invite_command_section_4 = 0x80199CCC;
+    encounter_invite_command_section_5 = 0x8019A664;
+    encounter_invite_command_section_6 = 0x8019B1A0;
+    encounter_invite_command_section_7 = 0x8019BBB8;
+    encounter_invite_command_section_8 = 0x8019C5C8;
+    encounter_invite_command_section_9 = 0x8019D030;
+    encounter_invite_command_section_10 = 0x8019DA3C;
+    encounter_invite_command_section_11 = 0x8019DFBC;
+    encounter_invite_command_section_12 = 0x8019E6B0;
+    encounter_invite_voice_section_0 = 0x801979D0;
+    encounter_invite_voice_section_1 = 0x801983B0;
+    encounter_invite_voice_section_2 = 0x80198CA8;
+    encounter_invite_voice_section_3 = 0x801995F8;
+    encounter_invite_voice_section_4 = 0x8019A078;
+    encounter_invite_voice_section_5 = 0x8019AA2C;
+    encounter_invite_voice_section_6 = 0x8019B54C;
+    encounter_invite_voice_section_7 = 0x8019BF64;
+    encounter_invite_voice_section_8 = 0x8019C974;
+    encounter_invite_voice_section_9 = 0x8019D3DC;
+    encounter_invite_voice_section_10 = 0x8019DE04;
+    encounter_invite_voice_section_11 = 0x8019E05C;
+    encounter_invite_voice_section_12 = 0x8019EA5C;
 }
 
-void func_801429D4(void) {
+void encounter_invite_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl32 tbl;
 
-    tbl = D_801476E4;
+    tbl = encounter_invite_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-s32 func_80142A5C(void) {
+s32 encounter_invite_finish(void) {
     if (game_state.substep == 0) {
-        func_800674B0();
+        hud_day_bgm_load();
         game_state.substep += 1;
     }
     if (game_state.substep == 1) {
@@ -78,7 +78,7 @@ s32 func_80142A5C(void) {
     return day_event_next(1);
 }
 
-void func_80142B20(void) {
+void encounter_invite_audio_load(void) {
     u8 *p = &game_state.day_events[game_state.day_event_index].girl;
 
     audio_bank_load_start(1, 0xBF98, 0xBF79, D_800B3688[*p], D_800B36C8[*p], D_800B3708[*p]);
@@ -88,7 +88,7 @@ void func_80142B20(void) {
     mode_step_next();
 }
 
-void func_80142BB8(void) {
+void encounter_invite_audio_wait(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -99,14 +99,14 @@ void func_80142BB8(void) {
     }
 }
 
-void func_80142C38(void) {
+void encounter_invite_audio_start(void) {
     audio_command(0x200);
     mode_step_next();
 }
 
-void func_80142C60(void) {
+void encounter_invite_scripts_load(void) {
     cd_read_sectors(0x10, 0x80197000, 0xAF23);
-    func_80142760();
+    encounter_invite_scripts_bind();
     mode_step_next();
 }
 
@@ -114,8 +114,8 @@ void func_80142C60(void) {
  * FAKE: T-11900, the empty tests `if (&game_state) {}` and `if (&flags[i]) {}` at the top of the first
  * loop body set the allocation priorities of the GameState base and of the flag pointer; the packed-appointment
  * compare reads D_800E71DF, which the original reloads with an absolute lui at that test.
- * T-25403: matched; drafts/T-25403/GEKO/func_80142C9C/NOTES.md (pass 2) explains the two FAKEs below. */
-void func_80142C9C(void) {
+ * T-25403: matched; drafts/T-25403/GEKO/encounter_invite_place_select_init/NOTES.md (pass 2) explains the two FAKEs below. */
+void encounter_invite_place_select_init(void) {
     s32 pad0;
     u8 day;
     u8 spill;
@@ -144,15 +144,15 @@ void func_80142C9C(void) {
     GekoBytes37 banned;
     GekoBytes21 ids;
 
-    weights = D_80147764;
-    monthDays = D_80147838;
-    tblA = D_80147850;
-    tblB = D_801478D4;
-    minYear = D_80147958;
-    minMonth = D_80147970;
-    names = D_80147988;
-    banned = D_80147BFC;
-    ids = D_80147C24;
+    weights = encounter_invite_girl_topic_weights;
+    monthDays = encounter_invite_month_days;
+    tblA = encounter_invite_movie_theater_availability;
+    tblB = encounter_invite_concert_hall_availability;
+    minYear = encounter_invite_place_minimum_year;
+    minMonth = encounter_invite_place_minimum_month;
+    names = encounter_invite_topic_names;
+    banned = encounter_invite_previous_place_exclusion;
+    ids = encounter_invite_place_to_topic;
     if (*(u8 *)&game_state.year == 0x60) {
         monthDays.day[1] = 0x1D;
     }
@@ -160,9 +160,9 @@ void func_80142C9C(void) {
     if ((u32) monthDays.day[*(u8 *)&game_state.month - 1] < (u32) ((*(u8 *)&game_state.day - *(u8 *)&game_state.weekday) + 6)) {
         spill = 1;
     }
-    year = func_80144198(0);
-    month = func_80144198(1);
-    day = func_80144198(2);
+    year = encounter_invite_sunday_component(0);
+    month = encounter_invite_sunday_component(1);
+    day = encounter_invite_sunday_component(2);
     *(u8 *)&game_state.current_girl = game_state.day_events[*(u8 *)&game_state.day_event_index].girl;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -275,16 +275,16 @@ void func_80142C9C(void) {
         }
     }
     q = &ids.v[sel];
-    D_801476E0 = *q;
+    encounter_invite_topic = *q;
     if ((month == 1) || (month == 3) || (month == 6) || (month == 0xB)) {
         /* FAKE: T-25403, comparing two variables keeps q first in the ucode, so uopt keeps
          * &ids.v[13] as its own constant (addiu t7,sp,0x41) instead of folding it into q. */
         p = &ids.v[13];
         if (q == p) {
-            D_801476E0 += 1;
+            encounter_invite_topic += 1;
         }
     }
-    func_80144270();
+    encounter_invite_progress_place_override();
     k_reset(1);
     *(s8 *)&game_state.tile_layer_enabled = 0;
     *(s32 *)&game_state.quads_enabled = 1;
@@ -296,131 +296,131 @@ void func_80142C9C(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    D_801476D8 = 0;
-    D_801476DC = 0;
+    encounter_invite_group = 0;
+    encounter_invite_line = 0;
     talk_names_set(*(u8 *)&game_state.current_girl);
-    func_80142760();
+    encounter_invite_scripts_bind();
     switch (*(u8 *)&game_state.current_girl) {
     case 0:
-        D_801476CC = D_80147634;
-        D_801476D0 = D_80147668;
-        D_801476D4 = D_8014769C;
+        encounter_invite_text_table = encounter_invite_text_section_1;
+        encounter_invite_command_table = encounter_invite_command_section_1;
+        encounter_invite_voice_table = encounter_invite_voice_section_1;
         break;
     case 1:
-        D_801476CC = D_80147644;
-        D_801476D0 = D_80147678;
-        D_801476D4 = D_801476AC;
+        encounter_invite_text_table = encounter_invite_text_section_5;
+        encounter_invite_command_table = encounter_invite_command_section_5;
+        encounter_invite_voice_table = encounter_invite_voice_section_5;
         break;
     case 2:
-        D_801476CC = D_80147638;
-        D_801476D0 = D_8014766C;
-        D_801476D4 = D_801476A0;
+        encounter_invite_text_table = encounter_invite_text_section_2;
+        encounter_invite_command_table = encounter_invite_command_section_2;
+        encounter_invite_voice_table = encounter_invite_voice_section_2;
         break;
     case 3:
-        D_801476CC = D_8014763C;
-        D_801476D0 = D_80147670;
-        D_801476D4 = D_801476A4;
+        encounter_invite_text_table = encounter_invite_text_section_3;
+        encounter_invite_command_table = encounter_invite_command_section_3;
+        encounter_invite_voice_table = encounter_invite_voice_section_3;
         break;
     case 4:
-        D_801476CC = D_80147658;
-        D_801476D0 = D_8014768C;
-        D_801476D4 = D_801476C0;
+        encounter_invite_text_table = encounter_invite_text_section_10;
+        encounter_invite_command_table = encounter_invite_command_section_10;
+        encounter_invite_voice_table = encounter_invite_voice_section_10;
         break;
     case 5:
-        D_801476CC = D_80147648;
-        D_801476D0 = D_8014767C;
-        D_801476D4 = D_801476B0;
+        encounter_invite_text_table = encounter_invite_text_section_6;
+        encounter_invite_command_table = encounter_invite_command_section_6;
+        encounter_invite_voice_table = encounter_invite_voice_section_6;
         break;
     case 6:
-        D_801476CC = D_80147650;
-        D_801476D0 = D_80147684;
-        D_801476D4 = D_801476B8;
+        encounter_invite_text_table = encounter_invite_text_section_8;
+        encounter_invite_command_table = encounter_invite_command_section_8;
+        encounter_invite_voice_table = encounter_invite_voice_section_8;
         if (((u8) get_g_zyotai_s(*(u8 *)&game_state.current_girl) & 0x7F) < 2) {
-            D_801476CC = D_8014764C;
-            D_801476D0 = D_80147680;
-            D_801476D4 = D_801476B4;
+            encounter_invite_text_table = encounter_invite_text_section_7;
+            encounter_invite_command_table = encounter_invite_command_section_7;
+            encounter_invite_voice_table = encounter_invite_voice_section_7;
         }
         break;
     case 7:
-        D_801476CC = D_80147640;
-        D_801476D0 = D_80147674;
-        D_801476D4 = D_801476A8;
+        encounter_invite_text_table = encounter_invite_text_section_4;
+        encounter_invite_command_table = encounter_invite_command_section_4;
+        encounter_invite_voice_table = encounter_invite_voice_section_4;
         break;
     case 8:
-        D_801476CC = D_80147630;
-        D_801476D0 = D_80147664;
-        D_801476D4 = D_80147698;
+        encounter_invite_text_table = encounter_invite_text_section_0;
+        encounter_invite_command_table = encounter_invite_command_section_0;
+        encounter_invite_voice_table = encounter_invite_voice_section_0;
         break;
     case 9:
-        D_801476CC = D_80147654;
-        D_801476D0 = D_80147688;
-        D_801476D4 = D_801476BC;
+        encounter_invite_text_table = encounter_invite_text_section_9;
+        encounter_invite_command_table = encounter_invite_command_section_9;
+        encounter_invite_voice_table = encounter_invite_voice_section_9;
         break;
     case 10:
-        D_801476CC = D_80147660;
-        D_801476D0 = D_80147694;
-        D_801476D4 = D_801476C8;
+        encounter_invite_text_table = encounter_invite_text_section_12;
+        encounter_invite_command_table = encounter_invite_command_section_12;
+        encounter_invite_voice_table = encounter_invite_voice_section_12;
         break;
     }
-    strcpy(D_800CA280, names.v[D_801476E0]);
+    strcpy(D_800CA280, names.v[encounter_invite_topic]);
     mode_step_next();
 }
 
-void func_80143AE4(void) {
+void encounter_invite_corridor_bg_load(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }
 
-void func_80143B0C(void) {
-    talk_tables = &D_801476D8;
-    D_800CA138 = &D_801476DC;
-    D_800CA13C = D_801476CC;
-    D_800CA140 = D_801476D0;
-    D_800CA144 = D_801476D4;
+void encounter_invite_talk(void) {
+    talk_tables = &encounter_invite_group;
+    D_800CA138 = &encounter_invite_line;
+    D_800CA13C = encounter_invite_text_table;
+    D_800CA140 = encounter_invite_command_table;
+    D_800CA144 = encounter_invite_voice_table;
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_80143B88(void) {
-    talk_tables = &D_801476D8;
-    D_800CA138 = &D_801476DC;
-    D_800CA13C = D_801476CC;
-    D_800CA140 = D_801476D0;
-    D_800CA144 = D_801476D4;
+void encounter_invite_choice_talk(void) {
+    talk_tables = &encounter_invite_group;
+    D_800CA138 = &encounter_invite_line;
+    D_800CA13C = encounter_invite_text_table;
+    D_800CA140 = encounter_invite_command_table;
+    D_800CA144 = encounter_invite_voice_table;
     talk_run(0xFF, 1, 0);
 }
 
-void func_80143C00(void) {
+void encounter_invite_first_choice_apply(void) {
     if (D_80122CDC != 0) {
-        D_801476D8 = 0x17;
+        encounter_invite_group = 0x17;
         game_state.girls[game_state.current_girl].syoushin += 0xF;
         mode_step_set(0x18);
     } else {
-        D_801476D8 += D_801476E0;
+        encounter_invite_group += encounter_invite_topic;
         mode_step_next();
     }
     check_para_limit();
 }
 
-void func_80143C94(void) {
-    D_801476D8 = 0x14;
+void encounter_invite_second_choice_group(void) {
+    encounter_invite_group = 0x14;
     mode_step_next();
 }
 
-void func_80143CBC(void) {
+void encounter_invite_second_choice_apply(void) {
     s16 i;
     u8 a;
     u8 b;
 
     if (D_80122CDC != 0) {
         if (game_state.current_girl == GIRL_YUINA) {
-            D_801476D8 = 0x18;
+            encounter_invite_group = 0x18;
         } else {
-            D_801476D8 = 0x17;
+            encounter_invite_group = 0x17;
         }
         game_state.girls[game_state.current_girl].syoushin += 0x14;
         mode_step_set(0x18);
     } else {
-        D_801476D8 = 0x15;
+        encounter_invite_group = 0x15;
         for (i = 0; i < 0xB; i++) {
             if (game_state.girls[i].flags.f.met && game_state.current_girl != i) {
                 a = game_state.girls[i].tokimeki / 20;
@@ -437,7 +437,7 @@ void func_80143CBC(void) {
     check_para_limit();
 }
 
-void func_80143EA4(void) {
+void encounter_invite_choice_exit(void) {
     if (D_80122CDC != 0) {
         if (game_state.current_girl == GIRL_YUINA || game_state.current_girl == GIRL_MIRA || game_state.current_girl == GIRL_MEGUMI || game_state.current_girl == GIRL_YUMI) {
             func_80083418();
@@ -450,33 +450,33 @@ void func_80143EA4(void) {
     mode_step_next();
 }
 
-void func_80143F48(void) {
+void encounter_invite_appointment_store(void) {
     u8 kind;
     GekoDateEntry entry;
     GekoBytes21 tbl;
     s32 pad; /* FAKE: unused local below tbl that sizes the frame to 0x50 while keeping entry at sp+0x48 and tbl at sp+0x30 (T-3330) */
 
-    tbl = D_80147C3C;
+    tbl = encounter_invite_topic_to_place;
     if (D_80122CDC != 0) {
-        D_801476CC = D_8014765C;
-        D_801476D0 = D_80147690;
-        D_801476D4 = D_801476C4;
-        D_801476D8 = game_state.girls[game_state.current_girl].syoushin / 20;
-        if (D_801476D8 >= 5) {
-            D_801476D8 = 4;
+        encounter_invite_text_table = encounter_invite_text_section_11;
+        encounter_invite_command_table = encounter_invite_command_section_11;
+        encounter_invite_voice_table = encounter_invite_voice_section_11;
+        encounter_invite_group = game_state.girls[game_state.current_girl].syoushin / 20;
+        if (encounter_invite_group >= 5) {
+            encounter_invite_group = 4;
         }
     } else {
-        entry.bits.place = tbl.v[D_801476E0];
-        entry.bits.year = func_80144198(0);
-        entry.bits.month = func_80144198(1);
-        entry.bits.day = func_80144198(2);
+        entry.bits.place = tbl.v[encounter_invite_topic];
+        entry.bits.year = encounter_invite_sunday_component(0);
+        entry.bits.month = encounter_invite_sunday_component(1);
+        entry.bits.day = encounter_invite_sunday_component(2);
         entry.bits.unk_21 = 6;
         entry.bits.unk_24 = 1;
         entry.bits.girl = game_state.current_girl;
         entry.bits.active = 1;
         entry.bits.unk_30 = 0;
-        func_8006B5BC(entry.word);
-        kind = tbl.v[D_801476E0];
+        hud_appointment_add(entry.word);
+        kind = tbl.v[encounter_invite_topic];
         if (kind == 0xE) {
             game_state.girl_scene_bits[game_state.current_girl] |= 1;
         }
@@ -490,7 +490,7 @@ void func_80143F48(void) {
     mode_step_next();
 }
 
-s32 func_80144198(s32 selector) {
+s32 encounter_invite_sunday_component(s32 selector) {
     s16 days_in_month;
     s32 date[3];
     GekoMonthDays days;
@@ -505,7 +505,7 @@ s32 func_80144198(s32 selector) {
     date[1] = 0;
     date[0] = year;
     if (selector) {}
-    days = D_80147C54;
+    days = encounter_invite_sunday_month_days;
     if (year == 0x60) {
         days.day[1] = 29;
     }
@@ -531,62 +531,62 @@ s32 func_80144198(s32 selector) {
     return date[2];
 }
 
-void func_80144270(void) {
+void encounter_invite_progress_place_override(void) {
     s32 pad; /* FAKE: unused local that moves the table to sp+0x2C and the frame to 0x48 (T-3330 rule, T-23005) */
     GekoBytes21 tbl;
 
-    tbl = D_80147C6C;
+    tbl = encounter_invite_progress_place_to_topic;
     if ((*(u8 *)&game_state.current_girl == 1) && (*(u8 *)&game_state.year == 0x60) && ((*(u8 *)&game_state.month == 0xC) || (*(u8 *)&game_state.month == 1) || ((*(u8 *)&game_state.month == 2) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.scene_flags[0xC] == 0)) {
-        D_801476E0 = tbl.v[0xE];
+        encounter_invite_topic = tbl.v[0xE];
         game_state.progress_state[0xE] = 1;
     }
     if ((*(u8 *)&game_state.current_girl == 3) && (*(u8 *)&game_state.year == 0x61) && ((*(u8 *)&game_state.month == 9) || (*(u8 *)&game_state.month == 0xA) || ((*(u8 *)&game_state.month == 0xB) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.scene_flags[0x18] == 0)) {
-        D_801476E0 = tbl.v[7];
+        encounter_invite_topic = tbl.v[7];
         game_state.progress_state[7] = 1;
     }
     if ((*(u8 *)&game_state.current_girl == 4) && ((*(u8 *)&game_state.month == 9) || ((*(u8 *)&game_state.month == 0xA) && (*(u8 *)&game_state.day < 0x15U))) && (*(u8 *)&game_state.year >= 0x60U) && (game_state.scene_flags[0x1E] == 0)) {
-        D_801476E0 = tbl.v[0xD];
+        encounter_invite_topic = tbl.v[0xD];
         game_state.progress_state[0xD] = 1;
     }
     if ((*(u8 *)&game_state.current_girl == 7) && ((*(u8 *)&game_state.month == 3) || (*(u8 *)&game_state.month == 4) || ((*(u8 *)&game_state.month == 5) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.scene_flags[0x2F] == 0)) {
-        D_801476E0 = tbl.v[2];
+        encounter_invite_topic = tbl.v[2];
         game_state.progress_state[2] = 1;
     }
     if (*(u8 *)&game_state.current_girl == 0xA) {
         if (*(u8 *)&game_state.year >= 0x60U) {
             if ((*(u8 *)&game_state.month == 0xA) && (*(u8 *)&game_state.day < 0x15U) && (game_state.scene_flags[0x47] == 0)) {
-                D_801476E0 = tbl.v[0xD];
+                encounter_invite_topic = tbl.v[0xD];
                 game_state.progress_state[0xD] = 1;
             }
         }
     }
     if (*(u8 *)&game_state.current_girl == 8) {
         if ((((*(u8 *)&game_state.year == 0x5F) && (*(u8 *)&game_state.month == 0xC)) || ((*(u8 *)&game_state.year == 0x60) && (*(u8 *)&game_state.month == 1)) || ((*(u8 *)&game_state.year == 0x60) && (*(u8 *)&game_state.month == 2) && (*(u8 *)&game_state.day < 0x15U))) && (game_state.girls[8].scene_counters[6] == 0)) {
-            D_801476E0 = tbl.v[3];
+            encounter_invite_topic = tbl.v[3];
             game_state.progress_state[3] = 1;
         }
         if ((*(u8 *)&game_state.year == 0x60) && (game_state.girls[8].scene_counters[9] == 0) && ((*(u8 *)&game_state.month == 6) || (*(u8 *)&game_state.month == 7))) {
-            D_801476E0 = tbl.v[5];
+            encounter_invite_topic = tbl.v[5];
             game_state.progress_state[5] = 1;
         }
         if ((*(u8 *)&game_state.year == 0x60) && (game_state.girls[8].scene_counters[0x12] == 0) && ((*(u8 *)&game_state.month == 9) || (*(u8 *)&game_state.month == 0xA) || ((*(u8 *)&game_state.month == 0xB) && (*(u8 *)&game_state.day < 0x15U)))) {
-            D_801476E0 = tbl.v[0xA];
+            encounter_invite_topic = tbl.v[0xA];
             game_state.progress_state[0xA] = 1;
         }
         if ((*(u8 *)&game_state.year == 0x61) && (game_state.girls[8].scene_counters[0x13] == 0) && ((*(u8 *)&game_state.month == 3) || (*(u8 *)&game_state.month == 4) || ((*(u8 *)&game_state.month == 5) && (*(u8 *)&game_state.day < 0x15U)))) {
-            D_801476E0 = tbl.v[0xB];
+            encounter_invite_topic = tbl.v[0xB];
             game_state.progress_state[0xB] = 1;
         }
         if ((*(u8 *)&game_state.year == 0x61) && (game_state.scene_flags[0x39] == 0) && ((*(u8 *)&game_state.month == 9) || (*(u8 *)&game_state.month == 0xA) || ((*(u8 *)&game_state.month == 0xB) && (*(u8 *)&game_state.day < 0x15U)))) {
-            D_801476E0 = tbl.v[0xF];
+            encounter_invite_topic = tbl.v[0xF];
             game_state.progress_state[0xF] = 1;
         }
         if ((*(u8 *)&game_state.year == 0x61) && ((*(u8 *)&game_state.month == 0xC) || (*(u8 *)&game_state.month == 1) || ((*(u8 *)&game_state.month == 2) && (*(u8 *)&game_state.day < 0xBU)))) {
-            D_801476E0 = tbl.v[0xC];
+            encounter_invite_topic = tbl.v[0xC];
             game_state.progress_state[0xC] = 1;
         }
-        if (((func_80144198(0) == 0x5F) && (func_80144198(1) == 0xC) && (func_80144198(2) == 0xA)) || ((func_80144198(0) == 0x60) && (func_80144198(1) == 0xC) && (func_80144198(2) == 8)) || ((func_80144198(0) == 0x61) && (func_80144198(1) == 0xC) && (func_80144198(2) == 7))) {
-            D_801476E0 = tbl.v[8];
+        if (((encounter_invite_sunday_component(0) == 0x5F) && (encounter_invite_sunday_component(1) == 0xC) && (encounter_invite_sunday_component(2) == 0xA)) || ((encounter_invite_sunday_component(0) == 0x60) && (encounter_invite_sunday_component(1) == 0xC) && (encounter_invite_sunday_component(2) == 8)) || ((encounter_invite_sunday_component(0) == 0x61) && (encounter_invite_sunday_component(1) == 0xC) && (encounter_invite_sunday_component(2) == 7))) {
+            encounter_invite_topic = tbl.v[8];
             game_state.progress_state[8] = 1;
         }
     }

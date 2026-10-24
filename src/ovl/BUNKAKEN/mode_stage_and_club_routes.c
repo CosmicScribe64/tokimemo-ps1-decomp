@@ -129,7 +129,7 @@ void func_801462A0(void) {
     switch (game_state.mode_step) {
     case 0:
         actor_clear_range(0);
-        cursor_show(0);
+        hud_cursor_show(0);
         func_80041168(0xFF);
         mode_step_next();
         return;
@@ -149,14 +149,14 @@ void func_801462A0(void) {
         return;
     case 5:
         if (cd_read_sync_status() & 1) {
-            func_80068938(game_state.year, game_state.month, 0);
+            calendar_month_load(game_state.year, game_state.month, 0);
             mode_step_next();
             return;
         }
         return;
     case 6:
-        cursor_actor_init(0);
-        cursor_show(0);
+        hud_cursor_actor_init(0);
+        hud_cursor_show(0);
         D_800B5BC8 = 0xFE;
         mode_stage_set((s32) (*(u8 *)&D_80122EB0));
         mode_step_set((s32) (*(u8 *)&D_80122EB4));
@@ -199,7 +199,7 @@ void func_801463E4(void) {
     case 4:
         if (game_state.input_device == INPUT_PAD) {
             actor_clear_range(0);
-            cursor_show(0);
+            hud_cursor_show(0);
             set_dec_bri(0);
             game_mode_set(GAME_MODE_TT_GAME);
         }

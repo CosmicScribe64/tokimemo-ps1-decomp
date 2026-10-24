@@ -351,7 +351,7 @@ void func_80137490(void) {
             D_8011ECD3 &= 0x7F;
         }
         if (D_8011ECD3 & 0x80) {
-            cursor_update();
+            hud_cursor_update();
         }
     }
     message_window_title_update();

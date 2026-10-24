@@ -23,7 +23,7 @@ void func_80142700(void) {
         k_reset(0);
         message_window_set_title((s32) "文化祭");
         message_window_title_show(0);
-        func_8006764C(0);
+        hud_mascot_display_switch(0);
         hizuke_init();
         icon_disp_switch(0);
         parameter_disp_switch(0);
@@ -83,7 +83,7 @@ void func_80142700(void) {
             g->mode_step = 0;
         } else if (g->mode_stage == 0) {
             audio_command(0xBF);
-            func_800674B0();
+            hud_day_bgm_load();
             mode_stage_next();
         } else if (audio_bank_load_poll() == 1) {
             func_80142BE8();

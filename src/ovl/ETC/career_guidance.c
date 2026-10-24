@@ -26,7 +26,7 @@ void func_8014ABD0(void) {
         func_8014C2A4();
         break;
     }
-    cursor_update();
+    hud_cursor_update();
     hizuke_show();
     message_window_show();
     message_window_title_update();
@@ -45,7 +45,7 @@ void func_8014ACB4(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     sprite_tables_clear();
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     hizuke_init();
     icon_disp_switch(0);
     parameter_disp_switch(0);
@@ -161,7 +161,7 @@ s32 func_8014B0D0(void) {
     s16 sp50[16];
     s32 var_s0;
 
-    func_80053418(sp70, sp50);
+    girl_scores(sp70, sp50);
     var_s2 = 0x3C;
     var_s7 = 0;
     for (var_s0 = 1, var_s1 = &sp70[1]; var_s0 != 11; var_s0++, var_s1++) {

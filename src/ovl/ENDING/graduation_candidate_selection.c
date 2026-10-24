@@ -35,7 +35,7 @@ void func_801330E4(void) {
     game_state.month = 3;
     game_state.day = 1;
     game_state.weekday = WEEKDAY_SUNDAY;
-    func_80053418(rank, points);
+    girl_scores(rank, points);
     game_state.current_girl = GIRL_YOSHIO;
     if (points[0] < 0x1F4 && game_state.girls[0xC].flags.b[3] >= 0x46 && game_state.scene_flags[0x4F] == 2) {
         game_state.current_girl = GIRL_REI;

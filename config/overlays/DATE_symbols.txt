@@ -1,1 +1,1 @@
-func_80132000 = 0x80132000; // type:func size:0x288
+date_choice_tables_init = 0x80132000; // type:func size:0x288

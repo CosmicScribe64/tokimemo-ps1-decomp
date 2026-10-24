@@ -438,9 +438,9 @@ void func_80138D40(void) {
     s16 var_s0;
 
     D_8013A2A8 = 0;
-    cursor_actor_init(0);
-    cursor_show(0);
-    func_8006509C();
+    hud_cursor_actor_init(0);
+    hud_cursor_show(0);
+    hud_icon_bar_init();
     var_s0 = 0;
     do {
         icon_can_use_set(var_s0, 0);
@@ -530,7 +530,7 @@ s32 func_80138F88(void) {
         D_80139AD0 = (KObj *) D_8013A170[0][0][11];
         D_80139AD4 = D_8013A170[0][1][11];
         D_80139AD8 = D_8013A170[0][2][11];
-        func_8006509C();
+        hud_icon_bar_init();
         for (i = 0; i < 15; i++) {
             icon_can_use_set(i, 0);
         }

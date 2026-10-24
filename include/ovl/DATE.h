@@ -3,7 +3,7 @@
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_portrait_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
-#define MAIN_API_OVERRIDE_normal_date_girl_in /* implicit int declaration: func_80132000 returns its result (void in main_api.h) */
+#define MAIN_API_OVERRIDE_normal_date_girl_in /* implicit int declaration: date_choice_tables_init returns its result (void in main_api.h) */
 
 #define MAIN_API_OVERRIDE_D_800CA158 /* matched as s16 (main_api.h: u8) */
 #define MAIN_API_OVERRIDE_func_8009B430 /* matched with 3 arguments: the original leaves $a3 unset (main_api.h: 4) */
@@ -16,21 +16,21 @@ void func_8009B430(s32 arg0, u8 *arg1, s32 arg2);
 typedef struct {
     void (*f[52])();
 } DateDispatch8015A288; /* size 0xD0 */
-extern DateDispatch8015A288 D_80160AA8;
+extern DateDispatch8015A288 date_scene_yumi_winter_steps;
 
 typedef struct {
     void (*f[42])();
 } DateDispatch80154004; /* size 0xA8 */
-extern DateDispatch80154004 D_8015F434;
+extern DateDispatch80154004 date_scene_mira_winter_steps;
 
 typedef struct {
     void (*f[48])();
 } DateDispatch80152980; /* size 0xC0 */
-extern DateDispatch80152980 D_8015EF34;
+extern DateDispatch80152980 date_scene_ayako_summer_steps;
 
-extern s16 D_8015D084;
-extern s16 D_8015D088;
-void func_80145AA0(void);
+extern s16 date_gift_group;
+extern s16 date_gift_line;
+void date_player_birthday_sections_init(void);
 extern s32 D_8015CF80;
 extern s32 D_8015CF84;
 extern s32 D_8015CF88;
@@ -38,47 +38,47 @@ extern s32 D_8015CF8C;
 extern s32 D_8015CF90;
 extern s32 D_8015CF94;
 extern s32 D_8015CF98;
-void func_80149310(void);
-extern u8 D_8015D094;
-extern s32 D_8015D06C;
-extern s32 D_8015D070;
-extern s32 D_8015D074;
-extern s32 D_8015D078;
-extern s32 D_8015D07C;
-extern s32 D_8015D080;
-extern s16 D_8015D08C;
-void func_80149D04(void);
-extern s16 D_8015CF34;
-extern s16 D_8015CF38;
-extern s32 D_8015CF1C;
-extern s32 D_8015CF20;
-extern s32 D_8015CF24;
-extern s32 D_8015E208;
-extern s32 D_8015E20C;
-extern s32 D_8015E210;
-extern s16 D_8015BF34;
-extern s16 D_8015BF38;
+void date_gift_sections_init(void);
+extern u8 date_gift_choice;
+extern s32 date_gift_text;
+extern s32 date_gift_command;
+extern s32 date_gift_voice;
+extern s32 date_gift_saved_text;
+extern s32 date_gift_saved_command;
+extern s32 date_gift_saved_voice;
+extern s16 date_gift_saved_group;
+void date_gift_name_set(void);
+extern s16 date_player_birthday_group;
+extern s16 date_player_birthday_line;
+extern s32 date_player_birthday_text;
+extern s32 date_player_birthday_command;
+extern s32 date_player_birthday_voice;
+extern s32 date_scene_text;
+extern s32 date_scene_command;
+extern s32 date_scene_voice;
+extern s16 date_park_parade_group;
+extern s16 date_park_parade_line;
 extern s32 D_8015BDE4;
 extern s32 D_8015BE50;
 extern s32 D_8015BEBC;
-extern s16 D_8015BF3C;
-extern s16 D_8015BF40;
+extern s16 date_meeting_group;
+extern s16 date_meeting_line;
 extern s32 D_8015BD94;
 extern s32 D_8015BDA4;
 extern s32 D_8015BDB4;
 s32 func_8013272C(void);
-s32 date_event_choose(void);
-void func_80146224(void);
+s32 date_scene_choose(void);
+void date_ride_dispatch(void);
 /* T-24051: callbacks used by the large DATE dispatcher. */
-void func_8013FD6C(void);
-void func_80140788(void);
-s32 func_801407D0(void);
-s32 func_80140D38(void);
-extern u8 D_8015BF48;
+void date_shrine_fireworks_update(void);
+void date_central_park_particles_hide(void);
+s32 date_central_park_particles_update(void);
+s32 date_parade_sign_palette_cycle(void);
+extern u8 date_girl_side;
 extern s32 D_8015EE20;
-extern s16 D_8015DE40;
-extern s16 D_8015DE44;
-extern s16 D_8015DE48;
+extern s16 date_virtual_ship_phase;
+extern s16 date_virtual_ship_subphase;
+extern s16 date_virtual_ship_step;
 extern s16 D_8015DE4C;
 extern s32 D_8015DE28;
 extern s32 D_8015DE2C;
@@ -97,13 +97,13 @@ extern s32 D_8015F990;
 extern s32 D_8015F994;
 extern s32 D_8015F998;
 extern s32 D_8015F99C;
-extern s32 D_8015BD90;
+extern s32 date_shared_section_text;
 extern s32 D_8015BD98;
 extern s32 D_8015BD9C;
-extern s32 D_8015BDA0;
+extern s32 date_shared_section_command;
 extern s32 D_8015BDA8;
 extern s32 D_8015BDAC;
-extern s32 D_8015BDB0;
+extern s32 date_shared_section_voice;
 extern s32 D_8015BDB8;
 extern s32 D_8015BDBC;
 extern s32 D_8015E2FC;
@@ -496,101 +496,101 @@ extern s32 D_80160880;
 extern s32 D_80160884;
 extern s32 D_80160888;
 extern s32 D_8016088C;
-void func_8014C5C8(void);
-void func_8014A4DC(void);
-void func_8014B194(void);
-void func_801323B8(void);
-void func_8014CFB0(void);
-void func_8014CC40(void);
-void func_80132458(void);
-void func_8014CCF0(void);
-void func_8014CE50(void);
-void func_8014CF00(void);
-void func_8014F0F0(void);
-void func_8014F1A0(void);
-void func_8014F250(void);
-void func_80150010(void);
-void func_80150130(void);
-void func_80151460(void);
-void func_80151510(void);
-void func_801515C0(void);
-void func_80151670(void);
-void func_80152684(); /* old-style definition with s16 parameters, called before it (T-17204) */
-void func_80152FC0(void);
-void func_80153070(void);
-void func_80153120(void);
-void func_801531D0(void);
-void func_80154260(void);
-void func_80154310(void);
-void func_801543C0(void);
-void func_801552B0(void);
-void func_80155360(void);
-void func_80155410(void);
-void func_801554C0(void);
-void func_80156600(void);
-void func_801566B0(void);
-void func_80156760(void);
-void func_80156810(void);
-void func_80157880(void);
-void func_80157930(void);
-void func_801579E0(void);
-void func_801586A0(void);
-void func_80158750(void);
-void func_80158800(void);
-void func_801588B0(void);
-void func_801594B0(void);
-void func_80159560(void);
-void func_80159610(void);
-void func_801596C0(void);
-void func_80140F40(void);
-void func_80132004(void);
-void func_80151720(void);
-void func_80132288(void);
-void func_8014F300(void);
+void date_scene_speak(void);
+void date_virtual_ship_load(void);
+void date_virtual_ship_next_phase(void);
+void date_central_park_particles_init(void);
+void date_scene_yuko_spring_data_init_2(void);
+void date_scene_yuko_spring_data_init(void);
+void date_parade_resources_init(void);
+void date_scene_yuko_summer_data_init(void);
+void date_scene_yuko_winter_data_init(void);
+void date_scene_yuko_december_data_init(void);
+void date_scene_shiori_autumn_data_init(void);
+void date_scene_shiori_spring_data_init(void);
+void date_scene_shiori_winter_data_init(void);
+void date_scene_yuina_spring_data_init(void);
+void date_scene_yuina_autumn_data_init(void);
+void date_scene_ayako_spring_data_init(void);
+void date_scene_ayako_summer_data_init(void);
+void date_scene_ayako_autumn_data_init(void);
+void date_scene_ayako_winter_data_init(void);
+void date_scene_ayako_spring_stripe_draw(); /* old-style definition with s16 parameters, called before it (T-17204) */
+void date_scene_mira_spring_data_init(void);
+void date_scene_mira_summer_data_init(void);
+void date_scene_mira_autumn_data_init(void);
+void date_scene_mira_winter_data_init(void);
+void date_scene_mio_spring_data_init(void);
+void date_scene_mio_summer_data_init(void);
+void date_scene_mio_autumn_data_init(void);
+void date_scene_yukari_spring_data_init(void);
+void date_scene_yukari_summer_data_init(void);
+void date_scene_yukari_autumn_data_init(void);
+void date_scene_yukari_winter_data_init(void);
+void date_scene_nozomi_spring_data_init(void);
+void date_scene_nozomi_summer_data_init(void);
+void date_scene_nozomi_autumn_data_init(void);
+void date_scene_nozomi_winter_data_init(void);
+void date_scene_megumi_spring_data_init(void);
+void date_scene_megumi_summer_data_init(void);
+void date_scene_megumi_autumn_data_init(void);
+void date_scene_saki_spring_data_init(void);
+void date_scene_saki_summer_data_init(void);
+void date_scene_saki_autumn_data_init(void);
+void date_scene_saki_winter_data_init(void);
+void date_scene_yumi_spring_data_init(void);
+void date_scene_yumi_summer_data_init(void);
+void date_scene_yumi_autumn_data_init(void);
+void date_scene_yumi_winter_data_init(void);
+void date_shared_sections_init(void);
+void date_choice_tables_init_body(void);
+void date_scene_ayako_spring_data_init_2(void);
+void date_fireworks_resources_init(void);
+void date_scene_shiori_summer_data_init(void);
 s32 portrait_layout_set(s32 arg0);
-void func_80145EC4(void);
-extern u8 D_8015B670;
+void date_player_birthday_pick_sections(void);
+extern u8 date_game_center_medals_open;
 extern u8 date_arrival;
-extern u8 D_8015BF4C;
-void func_8013934C(void);
-extern s8 D_8015B68C;
-extern u8 D_8015B684;
-extern u8 D_8015BF24;
-extern s16 D_8015BF28;
-extern u8 D_8015B664;
-extern u8 D_8015B668;
-extern u8 D_8015B66C;
-extern u8 D_8015B694;
+extern u8 date_player_waited;
+void date_art_museum_choice_face(void);
+extern s8 date_ride_index;
+extern u8 date_movie_index;
+extern u8 date_movie_group;
+extern s16 date_movie_line;
+extern u8 date_exhibit_artist_active;
+extern u8 date_exhibit_sculpture_active;
+extern u8 date_exhibit_painters_active;
+extern u8 date_first_sunday;
 extern s32 D_8015DEE8;
 extern s32 D_8015E024;
 extern s32 D_8015E160;
-extern u8 D_8015B674;
-extern u8 D_8015B678;
-extern u8 D_8015B69C;
-void func_8013BFF8(void);
-void func_8013C0A4(void);
-void func_8014A810(void);
-s32 func_8014A8FC(void);
-void func_8014AD70(void);
-extern u8 D_8015B658;
-s32 func_8013AE5C();
-void func_8014B1F0(void);
+extern u8 date_park_new_rides;
+extern u8 date_park_newest_rides;
+extern u8 date_ride_chosen;
+void date_load_ski_portrait(void);
+void date_load_shrine_portrait(void);
+void date_virtual_ship_setup(void);
+s32 date_virtual_ship_run(void);
+void date_virtual_ship_finish(void);
+extern u8 date_groups_per_variant;
+s32 date_arrival_greeting_speak();
+void date_scene_sections_init(void);
 extern s8 D_8015E204;
-void func_80136F2C(void);
-void func_80138934(void);
-void func_801449D4(void);
-void func_80144E20(void);
-void func_80145D14(void);
-void func_80149584(void);
+void date_choice_classes_derive(void);
+void date_amusement_park_ride_setup(void);
+void date_mode_stage_arrival(void);
+void date_mode_stage_place(void);
+void date_mode_stage_player_birthday(void);
+void date_mode_stage_girl_birthday(void);
 extern s32 D_8015DECC;
 extern s32 D_8015E008;
 extern s32 D_8015E144;
-void func_8014EF1C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, s32 arg11);
+void date_gradient_quad_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, s32 arg11);
 extern u32 D_8015B648;
 extern u32 D_8015B64C;
 extern u32 D_8015B650;
-void func_80150080(void);
-extern s32 D_8015BDC0;
+void date_scene_yuina_summer_data_init(void);
+extern s32 date_section_text;
 extern s32 D_8015BDC4;
 extern s32 D_8015BDC8;
 extern s32 D_8015BDCC;
@@ -616,7 +616,7 @@ extern s32 D_8015BE1C;
 extern s32 D_8015BE20;
 extern s32 D_8015BE24;
 extern s32 D_8015BE28;
-extern s32 D_8015BE2C;
+extern s32 date_section_command;
 extern s32 D_8015BE30;
 extern s32 D_8015BE34;
 extern s32 D_8015BE38;
@@ -642,7 +642,7 @@ extern s32 D_8015BE88;
 extern s32 D_8015BE8C;
 extern s32 D_8015BE90;
 extern s32 D_8015BE94;
-extern s32 D_8015BE98;
+extern s32 date_section_voice;
 extern s32 D_8015BE9C;
 extern s32 D_8015BEA0;
 extern s32 D_8015BEA4;
@@ -668,8 +668,8 @@ extern s32 D_8015BEF4;
 extern s32 D_8015BEF8;
 extern s32 D_8015BEFC;
 extern s32 D_8015BF00;
-s32 func_8014DB98(void);
-void func_8014E3E8(void);
+s32 date_scene_yuko_spring_picture_animate(void);
+void date_scene_yuko_autumn_beam_lights(void);
 extern s32 D_8015DE60;
 extern s32 D_8015DF9C;
 extern s32 D_8015E0D8;
@@ -726,19 +726,19 @@ extern s16 D_8015B624;
 extern s16 D_8015B628;
 extern s32 D_8015B62C;
 extern s32 D_8015B630;
-extern s16 D_8015BF1C; /* halfword stores in func_801324DC (T-11580) */
-extern s16 D_8015BF20;
-extern s16 D_8015BF04;
-extern u8 *D_8015B540;
-extern u8 *D_8015B544;
-extern s16 D_8015BF08;
-extern s16 D_8015BF14;
-extern s16 D_8015BF18;
-void func_8013C190(void);
+extern s16 date_opening_group; /* halfword stores in date_arrival_init (T-11580) */
+extern s16 date_opening_line;
+extern s16 date_arrival_group;
+extern u8 *date_class_table_shrine;
+extern u8 *date_face_table_shrine;
+extern s16 date_arrival_line;
+extern s16 date_closing_group;
+extern s16 date_closing_line;
+void date_choice_score(void);
 
-void func_80150C78();
+void date_scene_yuina_spring_radial_lines();
 
-extern u8 D_8015D090;
+extern u8 date_school_year;
 
 extern s32 D_8015DE50;
 extern s32 D_8015DE54;
@@ -1115,118 +1115,118 @@ extern s32 D_80160494;
 extern s16 D_8015E310;
 extern s16 D_8015E314;
 extern s8 D_8015F5D0;
-extern u8 D_8015B67C;
-extern s8 D_8015B680;
-void func_801324A8();
+extern u8 date_show_taken;
+extern s8 date_parade_offered;
+void date_ambush_sections_init();
 
-void func_8014FAE0(void);
-void func_8014FBA0(void);
-void func_8014FC80(void);
-void func_8014FE90(void);
-void func_8015A4A8(void);
-void func_8015A58C(void);
+void date_scene_shiori_autumn(void);
+void date_scene_shiori_spring(void);
+void date_scene_shiori_winter(void);
+void date_scene_shiori_summer(void);
+void date_scene_miharu_spring(void);
+void date_scene_miharu_summer(void);
 
 extern s8 D_8015EE24[];
-void func_80155174(void);
-s32 func_8013DDC4(void);
-extern u8 D_8015B690;
-void func_8013EF1C(void);
-void func_8014EBB8(void);
-void func_8015761C(void);
-void func_801592A0(void);
-void func_80155D80(void);
-s32 func_80155E40(void);
-void func_801560E0(void);
-void func_801563A8(void);
-void func_80156494(void);
-void func_80155530(void);
-void func_80158200(void);
-void func_80158338(void);
-void func_80158544(void);
-void func_801585F0(void);
-void func_80157B40(void);
-void func_80159EC4(void);
-void func_80159FAC(void);
-void func_8015A1C8(void);
-void func_8015A288(void);
-void func_80159770(void);
-void func_80153B38(void);
-void func_80154F44(void);
-void func_8015750C(void);
-void func_80152B08(void);
+void date_scene_mio_winter_narration_speak(void);
+s32 date_art_museum_mira_face(void);
+extern u8 date_shop_index;
+void date_shopping_street_bgm(void);
+void date_scene_yuko_winter(void);
+void date_scene_nozomi_winter(void);
+void date_scene_saki_autumn(void);
+void date_scene_yukari_spring(void);
+s32 date_scene_yukari_summer(void);
+void date_scene_yukari_summer_actors_update(void);
+void date_scene_yukari_autumn(void);
+void date_scene_yukari_winter(void);
+void date_scene_yukari_dispatch(void);
+void date_scene_megumi_spring(void);
+void date_scene_megumi_summer(void);
+void date_scene_megumi_autumn(void);
+void date_scene_megumi_winter(void);
+void date_scene_megumi_dispatch(void);
+void date_scene_yumi_spring(void);
+void date_scene_yumi_summer(void);
+void date_scene_yumi_autumn(void);
+void date_scene_yumi_winter(void);
+void date_scene_yumi_dispatch(void);
+void date_scene_mira_spring(void);
+void date_scene_mio_autumn(void);
+void date_scene_nozomi_autumn(void);
+void date_scene_ayako_autumn(void);
 extern u8 *D_8015B634;
 extern u8 *D_8015B638;
 extern u8 *D_8015B63C;
 extern s16 D_8015B640;
 extern u8 *D_8015B644;
-void func_80150BCC(void);
-void func_80150ED4(void);
-void func_8015114C(void);
-void func_8015116C(void);
-void func_801511B4(void);
-void func_80151360(void);
-void func_801502B0(void);
-void func_80151F84(void);
-void func_80152980(void);
-void func_80152BB4(void);
-void func_80151734(void);
-void func_80154C84(void);
-void func_80154E48(void);
-void func_80155004(void);
-void func_80154520(void);
-void func_8015703C(void);
-void func_801571D4(void);
-void func_801568C0(void);
-void func_8015908C(void);
-void func_801591BC(void);
-void func_80159354(void);
-void func_80158960(void);
-extern s8 D_8015B6A0;
-void func_8014DB08(void);
-void func_8014DCCC(void);
-void func_8014E2E8(void);
-void func_8014ECF0(void);
+void date_scene_yuina_spring(void);
+void date_scene_yuina_summer(void);
+void date_scene_yuina_summer_audio_command_1(void);
+void date_scene_yuina_summer_audio_command_2(void);
+void date_scene_yuina_autumn(void);
+void date_scene_yuina_winter(void);
+void date_scene_yuina_dispatch(void);
+void date_scene_ayako_spring(void);
+void date_scene_ayako_summer(void);
+void date_scene_ayako_winter(void);
+void date_scene_ayako_dispatch(void);
+void date_scene_mio_spring(void);
+void date_scene_mio_summer(void);
+void date_scene_mio_winter(void);
+void date_scene_mio_dispatch(void);
+void date_scene_nozomi_spring(void);
+void date_scene_nozomi_summer(void);
+void date_scene_nozomi_dispatch(void);
+void date_scene_saki_spring(void);
+void date_scene_saki_summer(void);
+void date_scene_saki_winter(void);
+void date_scene_saki_dispatch(void);
+extern s8 date_sign_palette_frame;
+void date_scene_yuko_spring(void);
+void date_scene_yuko_summer(void);
+void date_scene_yuko_autumn(void);
+void date_scene_yuko_december(void);
 
-void func_80153CEC(void);
-void func_80153E1C(void);
-void func_80154004(void);
-void func_80154118(void);
-extern u8 D_8015B688;
-extern u8 D_8015BF2C;
-extern s16 D_8015BF30;
-s32 func_8013BA80(void);
+void date_scene_mira_summer(void);
+void date_scene_mira_autumn(void);
+void date_scene_mira_winter(void);
+void date_scene_mira_special(void);
+extern u8 date_concert_index;
+extern u8 date_concert_group;
+extern s16 date_concert_line;
+s32 date_concert_hall_program_talk(void);
 
 typedef struct Tbl21 {
     /* 0x00 */ u16 v[21];
 } Tbl21; /* size 0x2A */
-extern Tbl21 D_8015B9B0;
+extern Tbl21 date_place_sequence_command;
 
 extern s16 D_8015DDD0[];
 extern s32 D_8015DE34[3];
 extern s32 D_8015DE38;
 extern s32 D_8015DE3C;
-void func_8014AD9C();
-void func_8014B1C4(void);
+void date_virtual_ship_draw_object();
+void date_virtual_ship_next_subphase(void);
 extern s16 D_8015E318;
-s32 func_8014E010(void);
+s32 date_scene_yuko_summer_sign_animate(void);
 
-extern s8 D_8015BF44;
+extern s8 date_girl_side_next;
 
 #endif /* OVL_DATE_H */
 
 #ifndef OVL_DATE_CALLBACK_T9610
 #define OVL_DATE_CALLBACK_T9610
-/* Complete local-copy dispatch table in func_80153CEC. */
+/* Complete local-copy dispatch table in date_scene_mira_summer. */
 typedef struct DateCallbacks39 {
     /* 0x00 */ void (*callback[39])();
 } DateCallbacks39; /* size 0x9C */
-extern DateCallbacks39 D_8015F2B4;
+extern DateCallbacks39 date_scene_mira_summer_steps;
 #endif
 
 #ifndef OVL_DATE_COUNTER_T9780
 #define OVL_DATE_COUNTER_T9780
-void func_80139AC8(void);
-s32 func_80149268(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void date_amusement_park_parade_prepare(void);
+s32 date_ferris_wheel_still_copy(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 #endif
 
 #ifndef OVL_DATE_TABLES_T10020
@@ -1241,40 +1241,40 @@ typedef struct DateChoices58 {
 typedef struct DateChoices60 {
     /* 0x00 */ DateChoice8 rows[12];
 } DateChoices60; /* size 0x60 */
-extern DateChoices58 D_8015B6A4;
-extern DateChoices60 D_8015B6FC;
+extern DateChoices58 date_movie_audio_pairs;
+extern DateChoices60 date_concert_audio_pairs;
 #endif
 
 #ifndef OVL_DATE_DISPATCH_T10020
 #define OVL_DATE_DISPATCH_T10020
-void func_8014A280(void);
-void func_8014A2AC(void);
-void func_8014A314(void);
-void func_8014A360(void);
+void date_virtual_ship_phase_load(void);
+void date_virtual_ship_phase_run(void);
+void date_virtual_ship_read_portrait(void);
+void date_virtual_ship_wait_read(void);
 #endif
 
 
 #ifndef OVL_DATE_T10040
 #define OVL_DATE_T10040
 /* Forward declarations for the original object, T-10040. */
-void func_801461B0(void);
-u16 func_801462B0(void);
-s32 func_8014718C(void);
-s32 func_80147958(void);
-s32 func_80148924(s16 a0);
-s32 func_801489D0(void);
-void func_801491E4(s32 arg0);
+void date_ferris_wheel_resources_init(void);
+u16 date_ride_scream_machine(void);
+s32 date_ride_ferris_wheel(void);
+s32 date_ride_roller_coaster(void);
+s32 date_ride_quad_shift(s16 a0);
+s32 date_ride_ghost_house(void);
+void date_ride_background_skip(s32 arg0);
 
 extern s16 D_8015CFA4[3];
 extern s16 D_8015CFAC[3];
 extern s16 D_8015CFB4[3];
 extern s16 D_8015CFBC[3];
-extern u16 D_8015CF9C;
+extern u16 date_ride_frame;
 extern s16 D_8015CFC4;
-void func_8014E108(void);
+void date_scene_yuko_summer_light_beams(void);
 #endif
 
-/* T-10630: signed UV oscillation step used by func_801462B0. */
+/* T-10630: signed UV oscillation step used by date_ride_scream_machine. */
 extern s16 D_8015CFA0;
 
 #ifndef DATE_SELECTION_TYPES_T10730
@@ -1303,12 +1303,12 @@ typedef struct DateMuseumChoices15 {
 
 #ifndef OVL_DATE_FLAG_T10730
 #define OVL_DATE_FLAG_T10730
-extern u8 D_8015B698;
+extern u8 date_stadium_game_day;
 #endif
 
 #ifndef OVL_DATE_COUNTS_T10730
 #define OVL_DATE_COUNTS_T10730
-/* Two signed-halfword local copies in func_8013A94C, from D_8015B75C/B774. */
+/* Two signed-halfword local copies in date_neighborhood_park_pick_greeting, from date_opening_count_a/B774. */
 typedef struct DateCounts22 {
     /* 0x00 */ s16 value[11];
 } DateCounts22; /* size 0x16 */
@@ -1327,7 +1327,7 @@ typedef struct DateSelectionView {
 
 #ifndef OVL_DATE_MOVIE_T10830_H
 #define OVL_DATE_MOVIE_T10830_H
-/* Overlay access view at dec_bg_lba_cache. func_80147958 resets the halfword
+/* Overlay access view at dec_bg_lba_cache. date_ride_roller_coaster resets the halfword
  * fields and bytes 0x18..0x1A. Main 80057390 owns the word-array view
  * and confirms the later fields. EVENT shares the first 0x1C-byte layout. */
 typedef struct DateMovieWork {
@@ -1351,7 +1351,7 @@ typedef struct DateMovieWork {
 } DateMovieWork; /* size 0x2C, minimum observed extent */
 
 /* First two words of the bitstream reached through D_80125C04.
- * func_80147958 validates word 0 with 0xFFFF0000 and word 1 with
+ * date_ride_roller_coaster validates word 0 with 0xFFFF0000 and word 1 with
  * 0xFF010000; later bytes have not been recovered here. */
 typedef struct DateMovieHeader8 {
     /* 0x00 */ u32 unk_00;
@@ -1362,9 +1362,9 @@ typedef struct DateMovieHeader8 {
 #ifndef OVL_DATE_PARTICLE_T10870_H
 #define OVL_DATE_PARTICLE_T10870_H
 /* Fixed-point horizontal positions, with signed high-halfword updates. */
-extern WordView D_8015BD40[20];
-/* func_8013F638 initializes ten falling-particle velocities. */
-extern WordView D_8015BCB4[10];
+extern WordView date_particle_targets[20];
+/* date_shrine_fireworks_setup initializes ten falling-particle velocities. */
+extern WordView date_firework_targets[10];
 extern s32 D_8015BD34;
 extern s16 D_8015BD38;
 extern u8 D_8015BD3C;
@@ -1372,27 +1372,27 @@ extern u8 D_8015BD3C;
 
 #ifndef OVL_DATE_RIDE_TABLES_T10870_H
 #define OVL_DATE_RIDE_TABLES_T10870_H
-/* func_80138934: girl rows contain six rides, two choices per ride,
+/* date_amusement_park_ride_setup: girl rows contain six rides, two choices per ride,
  * and three byte-valued results per choice (36 bytes per girl). */
-extern DateRideChoices36 *D_8015B5B0;
-extern DateRideChoices36 *D_8015B5B4;
+extern DateRideChoices36 *date_class_table_amusement_park;
+extern DateRideChoices36 *date_face_table_amusement_park;
 #endif
 
 #ifndef OVL_DATE_MUSEUM_TABLES_T10870_H
 #define OVL_DATE_MUSEUM_TABLES_T10870_H
-/* func_80134C64 reads three result bytes from each 15-byte girl row. */
-extern DateMuseumChoices15 *D_8015B520;
-extern DateMuseumChoices15 *D_8015B524;
+/* date_place_setup_art_museum reads three result bytes from each 15-byte girl row. */
+extern DateMuseumChoices15 *date_class_table_art_museum;
+extern DateMuseumChoices15 *date_face_table_art_museum;
 #endif
 
 #ifndef OVL_DATE_EVENT_CHOICE_T10870_H
 #define OVL_DATE_EVENT_CHOICE_T10870_H
-/* func_8013A94C copies eleven signed counts from each table. */
-extern DateCounts22 D_8015B75C;
-extern DateCounts22 D_8015B774;
-extern u8 D_8015B65C;
-extern u8 D_8015B660;
-/* Halfword access view at D_8015BF1C. The legacy declarations describe
+/* date_neighborhood_park_pick_greeting copies eleven signed counts from each table. */
+extern DateCounts22 date_opening_count_a;
+extern DateCounts22 date_opening_count_b;
+extern u8 date_birthday_near;
+extern u8 date_hint_roll;
+/* Halfword access view at date_opening_group. The legacy declarations describe
  * individual low bytes; this handler reads/stores signed halfwords. */
 typedef struct DateEventChoice6 {
     /* 0x00 */ s16 kind;
@@ -1403,65 +1403,65 @@ typedef struct DateEventChoice6 {
 
 #ifndef OVL_DATE_PARK_TABLES_T10900_H
 #define OVL_DATE_PARK_TABLES_T10900_H
-/* func_80133EA0: flat byte tables, nine bytes per girl (three choices for
+/* date_place_setup_central_park: flat byte tables, nine bytes per girl (three choices for
  * each of three park variants). Keeping the flat pointer view preserves
  * the original reloads between writes to the two result rows. */
-extern u8 *D_8015B5B8;
-extern u8 *D_8015B5BC;
-/* func_80137154: eighteen bytes per girl: three shops, two flag variants,
+extern u8 *date_class_table_central_park;
+extern u8 *date_face_table_central_park;
+/* date_shopping_street_enter_shop: eighteen bytes per girl: three shops, two flag variants,
  * three result bytes. A multidimensional view lets IDO elide target loads. */
-extern u8 *D_8015B580;
-extern u8 *D_8015B584;
+extern u8 *date_class_table_shopping_street;
+extern u8 *date_face_table_shopping_street;
 #endif
 
 #ifndef OVL_DATE_CONCERT_TABLES_T10900_H
 #define OVL_DATE_CONCERT_TABLES_T10900_H
-/* func_80136340: thirty-six bytes per girl, twelve chronological seasonal
+/* date_place_setup_concert_hall: thirty-six bytes per girl, twelve chronological seasonal
  * variants with three result bytes each. Use flat indexing to retain the
  * target's reloads while populating D_800CA22C and D_800CA21C. */
-extern u8 *D_8015B530;
-extern u8 *D_8015B534;
+extern u8 *date_class_table_concert_hall;
+extern u8 *date_face_table_concert_hall;
 #endif
 
 #ifndef OVL_DATE_CINEMA_TABLES_T10900_H
 #define OVL_DATE_CINEMA_TABLES_T10900_H
-/* func_80135E7C: thirty-three bytes per girl, eleven seasonal variants
+/* date_place_setup_movie_theater: thirty-three bytes per girl, eleven seasonal variants
  * with three result bytes each. The first year starts with summer. */
-extern u8 *D_8015B558;
-extern u8 *D_8015B55C;
+extern u8 *date_class_table_movie_theater;
+extern u8 *date_face_table_movie_theater;
 #endif
 
 #ifndef OVL_DATE_POOL_TABLES_T11580_H
 #define OVL_DATE_POOL_TABLES_T11580_H
-/* func_801366A4 (pool): six bytes per girl, two variants with three result bytes
+/* date_place_setup_pool (pool): six bytes per girl, two variants with three result bytes
  * each, read through flat byte pointers like the other DATE tables. */
-extern u8 *D_8015B560;
-extern u8 *D_8015B564;
-/* func_80136B70: the skating rink tables, same layout. */
-extern u8 *D_8015B588;
-extern u8 *D_8015B58C;
+extern u8 *date_class_table_pool;
+extern u8 *date_face_table_pool;
+/* date_place_setup_skating_rink: the skating rink tables, same layout. */
+extern u8 *date_class_table_skating_rink;
+extern u8 *date_face_table_skating_rink;
 /* The other place handlers read their two result rows the same way:
- * D_8015B528 (bowling), D_8015B550 (karaoke), D_8015B570 (beach),
- * D_8015B578 (botanical garden), D_8015B590 (ski slope), six bytes per
- * girl; D_8015B548 (game centre, used twice), twelve bytes per girl. */
-extern u8 *D_8015B528;
-extern u8 *D_8015B52C;
-extern u8 *D_8015B548;
-extern u8 *D_8015B54C;
-extern u8 *D_8015B550;
-extern u8 *D_8015B554;
-extern u8 *D_8015B570;
-extern u8 *D_8015B574;
-extern u8 *D_8015B578;
-extern u8 *D_8015B57C;
-extern u8 *D_8015B590;
-extern u8 *D_8015B594;
+ * date_class_table_bowling_alley (bowling), date_class_table_karaoke (karaoke), date_class_table_sea (beach),
+ * date_class_table_botanical_garden (botanical garden), date_class_table_ski_resort (ski slope), six bytes per
+ * girl; date_class_table_game_center (game centre, used twice), twelve bytes per girl. */
+extern u8 *date_class_table_bowling_alley;
+extern u8 *date_face_table_bowling_alley;
+extern u8 *date_class_table_game_center;
+extern u8 *date_face_table_game_center;
+extern u8 *date_class_table_karaoke;
+extern u8 *date_face_table_karaoke;
+extern u8 *date_class_table_sea;
+extern u8 *date_face_table_sea;
+extern u8 *date_class_table_botanical_garden;
+extern u8 *date_face_table_botanical_garden;
+extern u8 *date_class_table_ski_resort;
+extern u8 *date_face_table_ski_resort;
 #endif
 
 #ifndef DATE_MOVIE_SCENE_T10910A
 #define DATE_MOVIE_SCENE_T10910A
 /* T-10910A: data range 8015CF80..8015CFD0 belongs to 801461B0.
- * The seven buffer addresses are initialized by func_801461B0. Three-element
+ * The seven buffer addresses are initialized by date_ferris_wheel_resources_init. Three-element
  * signed coordinate/velocity rows have eight-byte storage strides, not six.
  * This view preserves the existing scalar declarations used by matched code. */
 typedef struct DateMovieScene50 {
@@ -1482,43 +1482,43 @@ typedef struct DateMovieScene50 {
     /* 0x46 */ u8 pad46[10];
 } DateMovieScene50; /* size 0x50 */
 #endif
-extern s16 D_8015BF0C;
-extern s16 D_8015BF10;
+extern s16 date_special_day_group;
+extern s16 date_special_day_line;
 #ifndef OVL_DATE_T11020_H
 #define OVL_DATE_T11020_H
-/* T-11020: 20-byte table copied to the stack (func_8013C190). */
+/* T-11020: 20-byte table copied to the stack (date_choice_score). */
 typedef struct DateTbl20 {
     /* 0x00 */ s32 w[5];
 } DateTbl20; /* size 0x14 */
-extern DateTbl20 D_8015B78C;
-void func_8013C410(s16 arg0, s32 *arg1, s32 *arg2);
+extern DateTbl20 date_syoushin_weight;
+void date_score_multipliers(s16 arg0, s32 *arg1, s32 *arg2);
 #endif
 #ifndef OVL_DATE_T11020_TABLES_H
 #define OVL_DATE_T11020_TABLES_H
-extern u8 *D_8015B5A0;
-extern u8 *D_8015B5A4;
-extern u8 *D_8015B5A8;
-extern u8 *D_8015B5AC;
-extern u8 *D_8015B538;
-extern u8 *D_8015B53C;
-extern u8 *D_8015B598;
-extern u8 *D_8015B59C;
+extern u8 *date_class_table_aquarium;
+extern u8 *date_face_table_aquarium;
+extern u8 *date_class_table_library;
+extern u8 *date_face_table_library;
+extern u8 *date_class_table_zoo;
+extern u8 *date_face_table_zoo;
+extern u8 *date_class_table_stadium;
+extern u8 *date_face_table_stadium;
 #endif
-extern u8 *D_8015B568;
-extern u8 *D_8015B56C;
+extern u8 *date_class_table_planetarium;
+extern u8 *date_face_table_planetarium;
 extern s16 D_800CA158;
 #ifndef OVL_DATE_T11030_H
 #define OVL_DATE_T11030_H
-void func_80138220(void);
-void func_801384D4(void);
+void date_movie_theater_load_poster(void);
+void date_concert_hall_load_program_background(void);
 
 #endif
 #ifndef OVL_DATE_T11140_H
 #define OVL_DATE_T11140_H
-void func_8013E7B0(void);
-void func_8013E980(void);
-void func_8013E9BC(void);
-void func_8014C7FC(void);
+void date_load_girl_script(void);
+void date_load_shared_script(void);
+void date_load_choice_tables(void);
+void date_scene_load_script(void);
 
 /* T-14501: section fillers called before their definitions. */
 void date_fill_sections_shiori(void);
@@ -1528,8 +1528,8 @@ void date_fill_sections_yuina(void);
 #endif
 
 /* T-12100: calls recovered in DATE startup state dispatch. */
-void func_8014AF88(void);
-void func_8014B080(void);
+void date_virtual_ship_vector_helper(void);
+void date_virtual_ship_matrix_helper(void);
 
 #ifndef OVL_DATE_STEP_TABLES_T17200
 #define OVL_DATE_STEP_TABLES_T17200
@@ -1640,74 +1640,74 @@ typedef struct {
 typedef struct {
     void (*f[104])();
 } FnTbl104; /* size 0x1A0 */
-extern FnTbl76 D_8015BF50;
-extern FnTbl18 D_8015C080;
-extern FnTbl35 D_8015C0C8;
-extern FnTbl48 D_8015C154;
-extern FnTbl32 D_8015C214;
-extern FnTbl35 D_8015C294;
-extern FnTbl34 D_8015C320;
-extern FnTbl36 D_8015C3A8;
-extern FnTbl37 D_8015C438;
-extern FnTbl50 D_8015C4CC;
-extern FnTbl39 D_8015C594;
-extern FnTbl32 D_8015C630;
-extern FnTbl34 D_8015C6B0;
-extern FnTbl104 D_8015C738;
-extern FnTbl29 D_8015C8D8;
-extern FnTbl45 D_8015C94C;
-extern FnTbl41 D_8015CA00;
-extern FnTbl35 D_8015CAA4;
-extern FnTbl76 D_8015CB30;
-extern FnTbl74 D_8015CC60;
-extern FnTbl31 D_8015CD88;
-extern FnTbl31 D_8015CE04;
-extern FnTbl15 D_8015CF3C;
-extern FnTbl28 D_8015D098;
-extern FnTbl42 D_8015E31C;
-extern FnTbl39 D_8015E3C4;
-extern FnTbl44 D_8015E460;
-extern FnTbl43 D_8015E530;
-extern FnTbl44 D_8015E5DC;
-extern FnTbl41 D_8015E730;
-extern FnTbl43 D_8015E7D4;
-extern FnTbl65 D_8015E880;
-extern FnTbl45 D_8015E984;
-extern FnTbl40 D_8015EAE8;
-extern FnTbl39 D_8015EB88;
-extern FnTbl40 D_8015EC24;
-extern FnTbl40 D_8015ECC4;
-extern FnTbl55 D_8015EE30;
-extern FnTbl42 D_8015EFF4;
-extern FnTbl47 D_8015F09C;
-extern FnTbl41 D_8015F210;
-extern FnTbl57 D_8015F350;
-extern FnTbl15 D_8015F4DC;
-extern FnTbl67 D_8015F5D4;
-extern FnTbl42 D_8015F6E0;
-extern FnTbl41 D_8015F788;
-extern FnTbl53 D_8015F82C;
-extern FnTbl38 D_8015F9D0;
-extern FnTbl45 D_8015FA68;
-extern FnTbl40 D_8015FB5C;
-extern FnTbl56 D_8015FBFC;
-extern FnTbl50 D_8015FD90;
-extern FnTbl61 D_8015FE58;
-extern FnTbl41 D_8015FF4C;
-extern FnTbl43 D_8015FFF0;
-extern FnTbl47 D_80160150;
-extern FnTbl63 D_8016020C;
-extern FnTbl42 D_80160308;
-extern FnTbl36 D_801603B0;
-extern FnTbl38 D_801604F0;
-extern FnTbl56 D_80160588;
-extern FnTbl43 D_80160668;
-extern FnTbl51 D_80160714;
-extern FnTbl44 D_80160890;
-extern FnTbl46 D_80160940;
-extern FnTbl44 D_801609F8;
-extern FnTbl20 D_80160B80;
-extern FnTbl20 D_80160BD0;
+extern FnTbl76 date_mode_stage_arrival_steps;
+extern FnTbl18 date_neighborhood_park_steps;
+extern FnTbl35 date_central_park_steps;
+extern FnTbl48 date_shopping_street_steps;
+extern FnTbl32 date_aquarium_steps;
+extern FnTbl35 date_zoo_steps;
+extern FnTbl34 date_botanical_garden_steps;
+extern FnTbl36 date_planetarium_steps;
+extern FnTbl37 date_art_museum_steps;
+extern FnTbl50 date_library_steps;
+extern FnTbl39 date_game_center_steps;
+extern FnTbl32 date_bowling_alley_steps;
+extern FnTbl34 date_karaoke_steps;
+extern FnTbl104 date_amusement_park_steps;
+extern FnTbl29 date_stadium_steps;
+extern FnTbl45 date_movie_theater_steps;
+extern FnTbl41 date_concert_hall_steps;
+extern FnTbl35 date_pool_steps;
+extern FnTbl76 date_sea_steps;
+extern FnTbl74 date_shrine_steps;
+extern FnTbl31 date_skating_rink_steps;
+extern FnTbl31 date_ski_resort_steps;
+extern FnTbl15 date_player_birthday_steps;
+extern FnTbl28 date_girl_birthday_steps;
+extern FnTbl42 date_scene_yuko_spring_steps;
+extern FnTbl39 date_scene_yuko_summer_steps;
+extern FnTbl44 date_scene_yuko_autumn_steps;
+extern FnTbl43 date_scene_yuko_winter_steps;
+extern FnTbl44 date_scene_yuko_december_steps;
+extern FnTbl41 date_scene_shiori_autumn_steps;
+extern FnTbl43 date_scene_shiori_spring_steps;
+extern FnTbl65 date_scene_shiori_winter_steps;
+extern FnTbl45 date_scene_shiori_summer_steps;
+extern FnTbl40 date_scene_yuina_spring_steps;
+extern FnTbl39 date_scene_yuina_summer_steps;
+extern FnTbl40 date_scene_yuina_autumn_steps;
+extern FnTbl40 date_scene_yuina_winter_steps;
+extern FnTbl55 date_scene_ayako_spring_steps;
+extern FnTbl42 date_scene_ayako_autumn_steps;
+extern FnTbl47 date_scene_ayako_winter_steps;
+extern FnTbl41 date_scene_mira_spring_steps;
+extern FnTbl57 date_scene_mira_autumn_steps;
+extern FnTbl15 date_scene_mira_special_steps;
+extern FnTbl67 date_scene_mio_spring_steps;
+extern FnTbl42 date_scene_mio_summer_steps;
+extern FnTbl41 date_scene_mio_autumn_steps;
+extern FnTbl53 date_scene_mio_winter_steps;
+extern FnTbl38 date_scene_yukari_spring_steps;
+extern FnTbl45 date_scene_yukari_summer_steps;
+extern FnTbl40 date_scene_yukari_autumn_steps;
+extern FnTbl56 date_scene_yukari_winter_steps;
+extern FnTbl50 date_scene_nozomi_spring_steps;
+extern FnTbl61 date_scene_nozomi_summer_steps;
+extern FnTbl41 date_scene_nozomi_autumn_steps;
+extern FnTbl43 date_scene_nozomi_winter_steps;
+extern FnTbl47 date_scene_megumi_spring_steps;
+extern FnTbl63 date_scene_megumi_summer_steps;
+extern FnTbl42 date_scene_megumi_autumn_steps;
+extern FnTbl36 date_scene_megumi_winter_steps;
+extern FnTbl38 date_scene_saki_spring_steps;
+extern FnTbl56 date_scene_saki_summer_steps;
+extern FnTbl43 date_scene_saki_autumn_steps;
+extern FnTbl51 date_scene_saki_winter_steps;
+extern FnTbl44 date_scene_yumi_spring_steps;
+extern FnTbl46 date_scene_yumi_summer_steps;
+extern FnTbl44 date_scene_yumi_autumn_steps;
+extern FnTbl20 date_scene_miharu_spring_steps;
+extern FnTbl20 date_scene_miharu_summer_steps;
 #endif
 
 #ifndef OVL_DATE_STACK_TABLES_T17200
@@ -1715,25 +1715,25 @@ extern FnTbl20 D_80160BD0;
 /* Constant tables that one handler copies to the stack whole (T-17200); element types from the loads. */
 typedef struct DateBytes11x21 {
     /* 0x00 */ u8 v[11][21];
-} DateBytes11x21; /* size 0xE7; func_8013C410 reads [game_state.unk_F5F][D_800CA2F8] */
-extern DateBytes11x21 D_8015B7A0;
+} DateBytes11x21; /* size 0xE7; date_score_multipliers reads [game_state.unk_F5F][D_800CA2F8] */
+extern DateBytes11x21 date_place_affinity;
 
 typedef struct DateWords21 {
     /* 0x00 */ s32 v[21];
-} DateWords21; /* size 0x54; func_8013EB8C reads [D_800CA2F8] */
-extern DateWords21 D_8015B888;
-extern DateWords21 D_8015B8DC;
-extern DateWords21 D_8015B930;
-extern Tbl21 D_8015B984; /* func_8013EB8C reads [D_800CA2F8] with lhu */
+} DateWords21; /* size 0x54; date_place_bgm_load_start reads [D_800CA2F8] */
+extern DateWords21 date_place_bank_third_argument;
+extern DateWords21 date_place_bank_first_data_argument;
+extern DateWords21 date_place_bank_second_data_argument;
+extern Tbl21 date_place_load_command; /* date_place_bgm_load_start reads [D_800CA2F8] with lhu */
 
 typedef struct DateWords2 {
     /* 0x00 */ s32 v[2];
-} DateWords2; /* size 0x08; func_80152060 copies it to the stack */
+} DateWords2; /* size 0x08; date_scene_ayako_spring_clip_play copies it to the stack */
 extern DateWords2 D_8015EF0C;
 
 typedef struct DateShorts8 {
     /* 0x00 */ s16 v[8];
-} DateShorts8; /* size 0x10; screen x or y lists of func_801556D8 and func_801560E0 */
+} DateShorts8; /* size 0x10; screen x or y lists of date_scene_yukari_summer_setup and date_scene_yukari_summer_actors_update */
 extern DateShorts8 D_8015F9B0;
 extern DateShorts8 D_8015F9C0;
 extern DateShorts8 D_8015FB1C;
@@ -1741,43 +1741,43 @@ extern DateShorts8 D_8015FB2C;
 
 typedef struct DatePairs8 {
     /* 0x00 */ s16 v[8][2];
-} DatePairs8; /* size 0x20; func_801560E0 reads v[i][1] */
+} DatePairs8; /* size 0x20; date_scene_yukari_summer_actors_update reads v[i][1] */
 extern DatePairs8 D_8015FB3C;
 
-/* func_801560E0 and func_801556D8: eight moving objects (display records 98..105). D_8015F9A0 holds their
+/* date_scene_yukari_summer_actors_update and date_scene_yukari_summer_setup: eight moving objects (display records 98..105). D_8015F9A0 holds their
  * state (0 idle, 1 armed, 2 moving), D_8015F9A8 the idle counters (T-17205). */
 extern u8 D_8015F9A0[8];
 extern u8 D_8015F9A8[8];
 
 typedef struct DatePlaceNames2D6 {
     /* 0x00 */ u8 unk_00[22][33];
-} DatePlaceNames2D6; /* size 0x2D6; func_8013EFA0 copies date_place_names to the stack */
+} DatePlaceNames2D6; /* size 0x2D6; date_meeting_place_check copies date_place_names to the stack */
 extern DatePlaceNames2D6 date_place_names;
 
 #endif
 
 #ifndef OVL_DATE_PROTOS_T17200
 #define OVL_DATE_PROTOS_T17200
-void func_80133DE8(void);
-void func_80133EA0(void);
-void func_8013426C(void);
-void func_801344C8(void);
-void func_801347B8(void);
-void func_801349A0(void);
-void func_80134C64(void);
-void func_8013518C(void);
-void func_801353F8(void);
-void func_80135620(void);
-void func_80135804(void);
-void func_80135A34(void);
-void func_80135B4C(void);
-void func_80135C14(void);
-void func_80135E7C(void);
-void func_80136340(void);
-void func_801366A4(void);
-void func_80136870(void);
-void func_80136A74(void);
-void func_80136B70(void);
-void func_80136D3C(void);
-void func_8015A170(void);
+void date_place_setup_neighborhood_park(void);
+void date_place_setup_central_park(void);
+void date_place_setup_aquarium(void);
+void date_place_setup_zoo(void);
+void date_place_setup_botanical_garden(void);
+void date_place_setup_planetarium(void);
+void date_place_setup_art_museum(void);
+void date_place_setup_library(void);
+void date_place_setup_game_center(void);
+void date_place_setup_bowling_alley(void);
+void date_place_setup_karaoke(void);
+void date_place_setup_amusement_park(void);
+void date_place_setup_shopping_street(void);
+void date_place_setup_stadium(void);
+void date_place_setup_movie_theater(void);
+void date_place_setup_concert_hall(void);
+void date_place_setup_pool(void);
+void date_place_setup_sea(void);
+void date_place_setup_shrine(void);
+void date_place_setup_skating_rink(void);
+void date_place_setup_ski_resort(void);
+void date_scene_yumi_summer_audio_command_1(void);
 #endif

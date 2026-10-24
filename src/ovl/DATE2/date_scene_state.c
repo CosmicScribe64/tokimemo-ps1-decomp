@@ -1487,7 +1487,7 @@ s32 func_80136860(void) {
     u8 count;
 
     if (game_state.substep == 0) {
-        func_800674B0();
+        hud_day_bgm_load();
         game_state.substep++;
     }
     if (game_state.substep == 1) {

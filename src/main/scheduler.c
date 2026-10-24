@@ -1,13 +1,13 @@
 /* scheduler.c: original object text 0x8006CB30-0x800737A0 in config/objects/main.txt; matched C implements weekly queue construction/dispatch, calendar advancement, encounter selection and health checks; original object boundary unchanged. Original object 0x8006CB30-0x800737A0 (config/objects/main.txt). */
-#define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, schedule_miharu_scene4_ready); main_api.h has s32 */
-#define MAIN_API_OVERRIDE_func_80066104 /* the original callers pass a string the callee ignores; main_api.h has (void) */
+#define MAIN_API_OVERRIDE_girl_scores /* this object calls it as void (no v0 result in the call block, schedule_miharu_scene4_ready); main_api.h has s32 */
+#define MAIN_API_OVERRIDE_message_window_set_title_hidden /* the original callers pass a string the callee ignores; main_api.h has (void) */
 #include "common.h"
 #include "game.h"
 #include "main/schedule.h"
 #include "main/day_event.h"
 
-void func_80066104();
-void func_80053418();
+void message_window_set_title_hidden();
+void girl_scores();
 
 void schedule_init(void) {
     if (game_state.mode_stage == 0) {
@@ -344,8 +344,8 @@ typedef struct RecoveryCounterBits {
     u32 pad1 : 24;
 } RecoveryCounterBits;
 
-/* FAKE: T-23003, u8 view of func_8006BDA8 (defined s32 in 800674B0.c, not in main_api.h): the second result is then copied into $a0 with or in the beqz delay slot, as in the original, instead of narrowed with andi */
-u8 func_8006BDA8();
+/* FAKE: T-23003, u8 view of hud_command_roll_poor_result (defined s32 in 800674B0.c, not in main_api.h): the second result is then copied into $a0 with or in the beqz delay slot, as in the original, instead of narrowed with andi */
+u8 hud_command_roll_poor_result();
 
 void day_event_queue_build_week(void) {
     GameState *gs;
@@ -462,7 +462,7 @@ void day_event_queue_build_week(void) {
                 gs->day_events[idx].type = DAY_EVENT_CLUB_CAMP;
                 gs->day_events[idx].girl = 4;
                 gs->day_events[idx].extra = sel;
-                gs->day_events[idx].scene = func_8006BDA8(wd);
+                gs->day_events[idx].scene = hud_command_roll_poor_result(wd);
                 idx++;
             }
             gs->day_events[idx].type = DAY_EVENT_HOLIDAY;
@@ -533,7 +533,7 @@ void day_event_queue_build_week(void) {
                 gs->day_events[idx++].type = DAY_EVENT_HOLIDAY;
             }
         } else if (game_state.year == 0x61 && (month + monthOff) == 0xD && day == 3) {
-            if (func_8005352C() == 1 && (gs->player_flags.h >> 12) != 6 && (*(u16 *)&gs->clubs[gs->player_flags.h >> 12].level & 0xF) >= 0xA) {
+            if (girl_player_sports_club_check() == 1 && (gs->player_flags.h >> 12) != 6 && (*(u16 *)&gs->clubs[gs->player_flags.h >> 12].level & 0xF) >= 0xA) {
                 gs->day_events[idx++].type = DAY_EVENT_CLUB_MASTER_B;
             } else {
                 if ((gs->player_flags.h >> 12) < 6 && gs->clubs[gs->player_flags.h >> 12].practice_points >= 0x17C) {
@@ -542,7 +542,7 @@ void day_event_queue_build_week(void) {
                     gs->day_events[idx].type = DAY_EVENT_SCHOOL_DAY;
                     gs->day_events[idx].girl = game_state.last_command.w & 0xF;
                     gs->day_events[idx].extra = sel;
-                    if (func_8006BDA8(wd) != 0) {
+                    if (hud_command_roll_poor_result(wd) != 0) {
                         nYes++;
                     } else {
                         nNo++;
@@ -561,7 +561,7 @@ void day_event_queue_build_week(void) {
                 gs->day_events[idx].type = DAY_EVENT_SCHOOL_DAY;
                 gs->day_events[idx].girl = game_state.last_command.w & 0xF;
                 gs->day_events[idx].extra = sel;
-                res = func_8006BDA8(wd);
+                res = hud_command_roll_poor_result(wd);
                 if (res != 0) {
                     nYes++;
                 } else {
@@ -705,7 +705,7 @@ s32 schedule_miharu_scene4_ready(void) {
     u8 rank[20];
     s16 points[16];
 
-    func_80053418(rank, points);
+    girl_scores(rank, points);
     count = 0;
     for (i = 0; i != 11; i++) {
         if (game_state.girls[i].flags.f.met && points[i] >= 0x1F5) {
@@ -941,7 +941,7 @@ s32 schedule_command_girl_select(u32 arg0) {
     selfScore = 0;
     secondScore = 0;
     secondGirl = 0;
-    func_80053418(rank, points);
+    girl_scores(rank, points);
     g = &game_state;
     switch (arg0 % 9U) {
     case 0:
@@ -1162,7 +1162,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
             case 0:
                 if ((rand() % 100) < 3) {
                     if (((WordView *)&g->frame_count)->w & 1) {
-                        if ((func_80066ACC() == 1) && (g->scene_flags[0] == 0) && ((u32) (get_g_zyotai_s(girl) & 0x7F) < 2U)) {
+                        if ((hud_summer_phase() == 1) && (g->scene_flags[0] == 0) && ((u32) (get_g_zyotai_s(girl) & 0x7F) < 2U)) {
                             g->scene_flags[0] = (u8) (g->scene_flags[0] + 1);
                             *arg0 = 0;
                             *arg1 = 1;
@@ -1180,7 +1180,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 1:
-                if (((rand() % 100) < 3) && (func_80066ACC() == 0)) {
+                if (((rand() % 100) < 3) && (hud_summer_phase() == 0)) {
                     if (g->scene_flags[8] == 0) {
                         g->scene_flags[8] += 1;
                         *arg0 = 1;
@@ -1191,7 +1191,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 2:
-                if (((rand() % 100) < 3) && (func_80066ACC() == 0)) {
+                if (((rand() % 100) < 3) && (hud_summer_phase() == 0)) {
                     if (g->scene_flags[14] == 0) {
                         g->scene_flags[14] += 1;
                         *arg0 = 2;
@@ -1202,7 +1202,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 3:
-                if (((rand() % 100) < 7) && (func_80066ACC() == 1)) {
+                if (((rand() % 100) < 7) && (hud_summer_phase() == 1)) {
                     if (g->scene_flags[21] == 0) {
                         g->scene_flags[21] += 1;
                         *arg0 = 3;
@@ -1213,7 +1213,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 4:
-                if (((rand() % 100) < 3) && (func_80066ACC() == 0)) {
+                if (((rand() % 100) < 3) && (hud_summer_phase() == 0)) {
                     g->scene_flags[27] += 1;
                     *arg0 = 4;
                     *arg1 = 1;
@@ -1221,7 +1221,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 5:
-                if (((rand() % 100) < 3) && (func_80066ACC() == 1) && (g->scene_flags[33] == 0)) {
+                if (((rand() % 100) < 3) && (hud_summer_phase() == 1) && (g->scene_flags[33] == 0)) {
                     g->scene_flags[33] += 1;
                     *arg0 = 5;
                     *arg1 = 1;
@@ -1238,7 +1238,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 6:
-                if (((rand() % 100) < 3) && (func_80066ACC() == 1)) {
+                if (((rand() % 100) < 3) && (hud_summer_phase() == 1)) {
                     if (g->scene_flags[40] == 0) {
                         g->scene_flags[40] += 1;
                         *arg0 = 6;
@@ -1249,7 +1249,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 7:
-                if (((rand() % 100) < 3) && (func_80066ACC() == 1)) {
+                if (((rand() % 100) < 3) && (hud_summer_phase() == 1)) {
                     if (g->scene_flags[46] == 0) {
                         g->scene_flags[46] += 1;
                         *arg0 = 7;
@@ -1260,7 +1260,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 8:
-                if (((rand() % 100) < 3) && (func_80066ACC() == 0)) {
+                if (((rand() % 100) < 3) && (hud_summer_phase() == 0)) {
                     if (g->scene_flags[54] == 0) {
                         g->scene_flags[54] += 1;
                         *arg0 = 8;
@@ -1271,7 +1271,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 9:
-                if (((rand() % 100) < 3) && (func_80066ACC() == 0) && (g->scene_flags[60] == 0)) {
+                if (((rand() % 100) < 3) && (hud_summer_phase() == 0) && (g->scene_flags[60] == 0)) {
                     g->scene_flags[60] = (u8) (g->scene_flags[60] + 1);
                     *arg0 = 9;
                     *arg1 = 1;
@@ -1286,7 +1286,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
                 }
                 break;
             case 10:
-                if (((rand() % 100) < 3) && (func_80066ACC() == 1) && (g->scene_flags[27] != 0) && (g->scene_flags[67] == 0)) {
+                if (((rand() % 100) < 3) && (hud_summer_phase() == 1) && (g->scene_flags[27] != 0) && (g->scene_flags[67] == 0)) {
                     g->scene_flags[67] += 1;
                     *arg0 = 0xA;
                     *arg1 = 1;
@@ -1306,7 +1306,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
             }
         }
     }
-    if (((u8) g->girls[12].flags.b[3] >= 0x15U) && (g->scene_flags[80] == 0) && (func_80066ACC() == 0)) {
+    if (((u8) g->girls[12].flags.b[3] >= 0x15U) && (g->scene_flags[80] == 0) && (hud_summer_phase() == 0)) {
         g->scene_flags[80] += 1;
         *arg0 = 0xC;
         *arg1 = 2;
@@ -1353,7 +1353,7 @@ s32 geko_judge(s8 *arg0) {
 
     *arg0 = 0;
     n = (u32)system_data.seed % 11;
-    func_80053418(sp7C, sp5C);
+    girl_scores(sp7C, sp5C);
     for (i = 0, idx = n; i != 11; i++, idx++) {
         n = idx % 11;
         if ((game_state.girls[n].flags.f.met != 0) && (game_state.girls[n].syoushin < 0x3C) && (get_g_zyotai_s(n) != 4) && (sp7C[n] >= 0x11) && ((rand() % 100) < 0x32)) {
@@ -1396,7 +1396,7 @@ s32 date_sasoi_judge(s8 *arg0) {
         return 0;
     }
     n = (u32)system_data.seed % 11;
-    func_80053418(sp7C, sp5C);
+    girl_scores(sp7C, sp5C);
     for (i = 0, idx = n; i != 11; i++, idx++) {
         n = idx % 11;
         if ((game_state.girls[n].flags.f.met != 0) && (game_state.girls[n].syoushin < 0x3C) && (get_g_zyotai_s(n) != 4) && (sp7C[n] >= 0x21) && ((rand() % 100) < 8)) {
@@ -1518,7 +1518,7 @@ void schedule_day_screen_step_dispatch(void) {
 }
 void schedule_ending_start(void) {
     if (game_state.substep == 0) {
-        func_80067438();
+        hud_season_bgm_load();
         game_state.substep++;
     } else if (audio_bank_load_poll() == 1) {
         audio_command(0x200);
@@ -1563,7 +1563,7 @@ s32 schedule_yuina_highest_points_check(void) {
     s32 best;
     s32 i;
 
-    func_80053418(buf, v);
+    girl_scores(buf, v);
     idx = 0;
     best = 0;
     if (v[0] < 0x1F4) {
@@ -1683,8 +1683,8 @@ void day_event_dispatch(void) {
         game_state.day_event_index++;
     }
     if (game_state.day_events[game_state.day_event_index].type == DAY_EVENT_DAY_END || game_state.day_events[game_state.day_event_index].type == DAY_EVENT_NONE) {
-        func_8006B0C8();
-        if (appointment_find_today((*(u8 *)&game_state.year), (*(u8 *)&game_state.month), (*(u8 *)&game_state.day)) > 0) {
+        hud_appointment_list_sort();
+        if (hud_appointment_find_today((*(u8 *)&game_state.year), (*(u8 *)&game_state.month), (*(u8 *)&game_state.day)) > 0) {
             if (get_g_zyotai_s(game_state.unk_54C_0.unk_25) == 4) {
                 game_state.unk_54C[0].b[3] &= 0xFFDF;
                 game_state.daily_check_done = 1;
@@ -1730,7 +1730,7 @@ void day_event_dispatch(void) {
             i = 0;
             do {
                 if (game_state.girls[i].flags.f.met && game_state.girls[i].flags.f.b12) {
-                    if (get_g_zyotai_s(i) != 4 && func_8006B014(i) == 0) {
+                    if (get_g_zyotai_s(i) != 4 && hud_appointment_count_for_girl(i) == 0) {
                         game_state.daily_check_done = 1;
                         game_mode_set(GAME_MODE_TELEPHONE);
                         mode_stage_set(6);
@@ -1745,7 +1745,7 @@ void day_event_dispatch(void) {
             i = 0;
             do {
                 if (game_state.girls[i].flags.f.met && game_state.girls[i].flags.f.b13) {
-                    if (get_g_zyotai_s(i) != 4 && func_8006B014(i) == 0) {
+                    if (get_g_zyotai_s(i) != 4 && hud_appointment_count_for_girl(i) == 0) {
                         game_state.daily_check_done = 1;
                         game_mode_set(GAME_MODE_TELEPHONE);
                         mode_stage_set(7);
@@ -2029,7 +2029,7 @@ void calendar_advance_day(void) {
     if ((game_state.weekday == WEEKDAY_SUNDAY) && (*(u16 *)&game_state.player_flags_upper & 1) && (game_state.day_events[0].type != DAY_EVENT_EXAM)) {
         *(s8 *)&game_state.player_flags_upper = (u8)game_state.player_flags_upper.h & 0xFFFE;
     }
-    func_8006B0C8();
+    hud_appointment_list_sort();
 }
 
 void day_event_today_clear(u8 arg0) {
@@ -2060,7 +2060,7 @@ void schedule_day_notice_mode_handler(void) {
         hud_mascot_update();
     }
     if (D_8011ECD3 & 0x80) {
-        cursor_update();
+        hud_cursor_update();
     }
     dec_bg_draw(get_last_gamen_mode());
     parameter_show();
@@ -2080,7 +2080,7 @@ void schedule_vacation_notice_step(void) {
     switch (g->mode_step) {
     case 0:
         text_system_reset();
-        func_80066104("ダミー");
+        message_window_set_title_hidden("ダミー");
         message_window_title_show(0);
         gnsx(&g->player_family_name);
         flag = g->vacation;
@@ -2102,7 +2102,7 @@ void schedule_vacation_notice_step(void) {
         } else {
             g->vacation = VACATION_NONE;
         }
-        func_800674B0();
+        hud_day_bgm_load();
         k_disp_start(3);
         mode_step_next();
         break;
@@ -2159,23 +2159,23 @@ s32 schedule_month_data_load_step(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_80068938(g->year, g->month, 1);
+            calendar_month_load(g->year, g->month, 1);
             if (g->month % 3 == 0) {
                 if (g->month == 9 && g->day == 1 && g->year == 0x60) {
                     mode_stage_next();
                 } else if (g->month == 9) {
                     text_system_reset();
-                    func_80066104("ダミー");
+                    message_window_set_title_hidden("ダミー");
                     message_window_title_show(0);
                     gnsx(&g->player_family_name);
                     sndisp("明日から新学期だ）", 0, 0x1F);
                     k_disp_start(3);
                     audio_command(0xC1);
-                    func_800674B0();
+                    hud_day_bgm_load();
                     mode_step_next();
                 } else {
                     audio_command(0xC1);
-                    func_800674B0();
+                    hud_day_bgm_load();
                     mode_step_next();
                 }
                 schedule_amusement_park_flag_reset();
@@ -2383,7 +2383,7 @@ s32 schedule_health_injury_start(void) {
     switch (*(u8 *)&game_state.substep) {
     case 0:
         text_system_reset();
-        func_80066104("怪我");
+        message_window_set_title_hidden("怪我");
         gnsx(&game_state.player_family_name[0]);
         sndi("怪我をしてしまった）", 0, 0x1F);
         game_state.player_flags.b[1] = (game_state.player_flags.b[1] & 0xFFF0) | 1;
@@ -2415,7 +2415,7 @@ s32 schedule_health_neurosis_start(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
-        func_80066104("ノイローゼ");
+        message_window_set_title_hidden("ノイローゼ");
         gnsx(&game_state.player_family_name[0]);
         sndi("ノイローゼになってしまった）", 0, 0x1F);
         game_state.player_flags.b[1] = (game_state.player_flags.b[1] & 0xFFF0) | 2;
@@ -2436,7 +2436,7 @@ s32 schedule_health_sick_start(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
-        func_80066104("病気");
+        message_window_set_title_hidden("病気");
         gnsx(&game_state.player_family_name[0]);
         audio_bank_start(0, 0x202);
         sndi("病気になってしまった）", 0, 0x1F);
@@ -2458,7 +2458,7 @@ s32 schedule_health_injury_recover(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
-        func_80066104("治癒");
+        message_window_set_title_hidden("治癒");
         game_state.player_flags_upper.b[0] = (game_state.player_flags_upper.b[0] & 0xFF1F) | 0x60;
         game_state.player_flags.b[1] &= 0xFFF0;
         gnsx(&game_state.player_family_name[0]);
@@ -2480,7 +2480,7 @@ s32 schedule_health_neurosis_recover(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
-        func_80066104("治癒");
+        message_window_set_title_hidden("治癒");
         game_state.player_flags_upper.b[0] = (game_state.player_flags_upper.b[0] & 0xFF1F) | 0x60;
         game_state.player_flags.b[1] &= 0xFFF0;
         gnsx(&game_state.player_family_name[0]);
@@ -2502,7 +2502,7 @@ s32 schedule_health_sick_recover(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
-        func_80066104("治癒");
+        message_window_set_title_hidden("治癒");
         game_state.player_flags_upper.b[0] = (game_state.player_flags_upper.b[0] & 0xFF1F) | 0x60;
         game_state.player_flags.b[1] &= 0xFFF0;
         gnsx(&game_state.player_family_name[0]);

@@ -4,7 +4,7 @@
 
 extern s32 D_80122D48;
 
-void func_8014B1F0(void) {
+void date_scene_sections_init(void) {
     D_8015DE50 = 0x80198304;
     D_8015DF8C = 0x80198340;
     D_8015DE54 = 0x801987BC;
@@ -244,47 +244,47 @@ void func_8014B1F0(void) {
     D_8015E200 = 0x8019B494;
 }
 
-void func_8014C08C(void) {
+void date_scene_mode_handler(void) {
     if ((game_state.mode_stage == 0) && (game_state.mode_step == 0)) {
         message_window_title_show(1);
     }
     portrait_wink_update();
     switch (D_80122CD4) {
     case 0:
-        date_shiori_dispatch();
+        date_scene_shiori_dispatch();
         break;
     case 1:
-        func_80154520();
+        date_scene_mio_dispatch();
         break;
     case 2:
-        func_801502B0();
+        date_scene_yuina_dispatch();
         break;
     case 3:
-        func_80151734();
+        date_scene_ayako_dispatch();
         break;
     case 4:
-        func_80158960();
+        date_scene_saki_dispatch();
         break;
     case 5:
-        func_80155530();
+        date_scene_yukari_dispatch();
         break;
     case 6:
-        func_801568C0();
+        date_scene_nozomi_dispatch();
         break;
     case 7:
-        func_80153280();
+        date_scene_mira_dispatch();
         break;
     case 8:
-        func_8014D000();
+        date_scene_yuko_dispatch();
         break;
     case 9:
-        func_80157B40();
+        date_scene_megumi_dispatch();
         break;
     case 10:
-        func_80159770();
+        date_scene_yumi_dispatch();
         break;
     case 11:
-        func_8015A3B0();
+        date_scene_miharu_dispatch();
         break;
     default:
         game_mode_reset_to_title();
@@ -300,7 +300,7 @@ void func_8014C08C(void) {
     draw_shake_update();
 }
 
-s32 func_8014C20C(void) {
+s32 date_scene_end(void) {
     GameState *g = &game_state;
     /* FAKE: constant-7 local keeps the original bne operand order (constant register first) for the D_80122CD4 compares; T-17206 */
     s32 seven = 7;
@@ -308,7 +308,7 @@ s32 func_8014C20C(void) {
     u32 cur;
 
     if (g->substep == 0) {
-        func_800674B0();
+        hud_day_bgm_load();
         g->substep++;
     }
     if (g->substep == 1) {
@@ -363,25 +363,25 @@ s32 func_8014C20C(void) {
     return day_event_next(1);
 }
 
-void func_8014C550(void) {
+void date_scene_speak_unshuffled(void) {
     talk_tables = &D_800CA150;
     D_800CA138 = &D_800CA154;
-    D_800CA13C = D_8015E208;
-    D_800CA140 = D_8015E20C;
-    D_800CA144 = D_8015E210;
+    D_800CA13C = date_scene_text;
+    D_800CA140 = date_scene_command;
+    D_800CA144 = date_scene_voice;
     talk_run(0xFF, 1, 0);
 }
 
-void func_8014C5C8(void) {
+void date_scene_speak(void) {
     talk_tables = &D_800CA150;
     D_800CA138 = &D_800CA154;
-    D_800CA13C = D_8015E208;
-    D_800CA140 = D_8015E20C;
-    D_800CA144 = D_8015E210;
+    D_800CA13C = date_scene_text;
+    D_800CA140 = date_scene_command;
+    D_800CA144 = date_scene_voice;
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_8014C644(void) {
+void date_scene_audio_bank_load_start_unused(void) {
     audio_bank_load_start(1, 0xC043, 0xC01D, D_800B3688[D_80122CD4], D_800B36C8[D_80122CD4], D_800B3708[D_80122CD4]);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -389,7 +389,7 @@ void func_8014C644(void) {
     mode_step_next();
 }
 
-void func_8014C6CC(void) {
+void date_scene_bank_wait_unused(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x200);
         mode_step_next();
@@ -401,7 +401,7 @@ void func_8014C6CC(void) {
     }
 }
 
-void func_8014C754(void) {
+void date_scene_bank_wait_plain_unused(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -412,12 +412,12 @@ void func_8014C754(void) {
     }
 }
 
-void func_8014C7D4(void) {
+void date_scene_sequence_start_unused(void) {
     audio_command(0x200);
     mode_step_next();
 }
 
-void func_8014C7FC(void) {
+void date_scene_load_script(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         cd_read_sectors(6U, 0x80198000, 0xAE25);
@@ -461,11 +461,11 @@ void func_8014C7FC(void) {
         game_mode_reset_to_title();
         break;
     }
-    func_8014B1F0();
+    date_scene_sections_init();
     mode_step_next();
 }
 
-void func_8014C9A8(void) {
+void date_scene_light_beams(void) {
     _sprite_set_light_effect1(0x120, -0xF8, 0xA0, 0x3C, -0xA0, 0x3C, 9, 0x808080, 0);
     _sprite_set_light_effect1(0x120, -0xF8, 0x40, 0x3C, 0, 0xB4, 9, 0xA0A0A0, 0);
     _sprite_set_light_effect1(0x120, -0xF8, 0x10, 0x3C, 0, 0xB4, 9, 0xA0A0A0, 0x40);

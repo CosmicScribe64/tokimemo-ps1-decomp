@@ -1,4 +1,4 @@
-/* battle_lifecycle_and_channels.c: src/ovl/RPG_BAT/8014E780.c:57: stage 0, exit, state clear, channel helpers and the state data; body 59: actor_clear_range(0); 60: cursor_actor_init(0);. Original object 0x8014E780-0x8014F790 (config/objects/RPG_BAT.txt). */
+/* battle_lifecycle_and_channels.c: src/ovl/RPG_BAT/8014E780.c:57: stage 0, exit, state clear, channel helpers and the state data; body 59: actor_clear_range(0); 60: hud_cursor_actor_init(0);. Original object 0x8014E780-0x8014F790 (config/objects/RPG_BAT.txt). */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
@@ -58,7 +58,7 @@ s32 D_8015EE8C = 0;
 void func_8014E780(void) {
     srand(game_state.timer_ticks);
     actor_clear_range(0);
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     text_system_reset();
     tpage_buf_clear();
     game_state.clear_color_r = 0;
@@ -108,8 +108,8 @@ void func_8014E8F4(void) {
     dec_bg_reset();
     text_system_reset();
     actor_clear_range(0);
-    cursor_actor_init(0);
-    cursor_show(0);
+    hud_cursor_actor_init(0);
+    hud_cursor_show(0);
     back_clear_switch(1);
     D_80122CE0 = D_8015EC14;
     game_state.current_girl = (s8) D_8015EC18;

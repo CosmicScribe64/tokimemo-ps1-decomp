@@ -1,8 +1,8 @@
 /* hud_screens.c: src/main/800674B0.c; T-27059: original object [0x800674B0,0x8006CB30); calendar/month view, magazine, save/load panel, appointment and club screens, command roll and shared HUD helpers; reuse prior reviewed m-hud name. Original object 0x800674B0-0x8006CB30 (config/objects/main.txt). */
 #define MAIN_API_OVERRIDE_prim_gradient_line /* Line draw calls narrow four coordinates at the call site. T-11060. */
 #define MAIN_API_OVERRIDE_D_8011F414    /* Stored as s16 in hud_mascot_update. T-11100. */
-#define MAIN_API_OVERRIDE_actor_pool    /* Indexed as Actor[] in func_8006A2CC. T-11100. */
-#define MAIN_API_OVERRIDE_strncat       /* func_800696DC calls strncat with 2 args for club name. T-11100. */
+#define MAIN_API_OVERRIDE_actor_pool    /* Indexed as Actor[] in hud_magazine_page_build. T-11100. */
+#define MAIN_API_OVERRIDE_strncat       /* hud_save_slot_info_show calls strncat with 2 args for club name. T-11100. */
 #include "common.h"
 #include "game.h"
 
@@ -12,7 +12,7 @@ u8 *strncat();
 extern Actor actor_pool[];
 
 
-void func_800674B0(void) {
+void hud_day_bgm_load(void) {
     u8 v;
     s32 i;
 
@@ -24,7 +24,7 @@ void func_800674B0(void) {
     }
     switch (v) {
     case 0:
-        i = func_80066A2C() & 3;
+        i = hud_season_index() & 3;
         audio_bank_load_start(0, 0xBF98, 0xBF79, D_800B5BE8[i], D_800B5BF8[i], D_800B5BD8[i]);
         break;
     case 1:
@@ -39,14 +39,14 @@ void func_800674B0(void) {
     }
 }
 
-void func_80067610(void) {
+void hud_bgm_load_finish_step(void) {
     if (audio_bank_load_poll() == 1) {
         audio_bank_start(0, 0);
         mode_stage_next();
     }
 }
 
-void func_8006764C(s32 arg0) {
+void hud_mascot_display_switch(s32 arg0) {
     /* D_8011F443 is element 1 (stride 0x44) of the table at D_8011F3FF; the array form keeps IDO from hoisting the second load */
     if (arg0) {
         D_8011F3FF[0] |= 0x80;
@@ -59,14 +59,14 @@ void func_8006764C(s32 arg0) {
 
 /* FAKE: the empty `if (arg0) {}` after the store gives the parameter a second use, so uopt leaves it in $a0 (without it
  * IDO copies it to $a1 at entry and hoists `li a0,27` into the bnez delay slot). The test emits no code. T-17002 */
-void func_800676AC(s32 arg0) {
+void hud_mascot_set(s32 arg0) {
     if (arg0 == 0 || arg0 >= 0xE) {
         D_80125C50 = 0x78;
         D_80125C52 = -0x37;
         D_80125C54 = 0xF;
         D_80125C55 = 8;
         hud_mascot_choice = 0;
-        func_8006764C(0);
+        hud_mascot_display_switch(0);
         return;
     }
     hud_mascot_choice = arg0;
@@ -108,10 +108,10 @@ void hud_mascot_update(void) {
     s32 r;
 
     if (hud_mascot_choice == 0 || hud_mascot_choice >= 0xE) {
-        func_800676AC(0);
+        hud_mascot_set(0);
         return;
     }
-    func_800676AC(hud_mascot_choice);
+    hud_mascot_set(hud_mascot_choice);
     if (hud_mascot_choice < 0xE) {
         if ((u32)game_state.pad_pressed >> 16) {
             D_80125C55 = (D_80125C54 + 1) / 2;
@@ -197,7 +197,7 @@ void hud_mascot_update(void) {
 
 /* FAKE: the second `max` loop is dead (max is never read) and the u8 view of the s8 field unk_03C gives the original lbu;
  * both are needed for the bytes, real source unknown. T-11690 */
-void func_80067C28(void) {
+void portrait_event_face_mouth_lipsync(void) {
     s32 max;
     s32 level;
     s32 n;
@@ -250,7 +250,7 @@ void func_80067C28(void) {
 }
 
 /* FAKE: promoted halfword and byte alias retain the final andi before flag storage. T-9550 */
-s32 func_80067DD4(void)
+s32 portrait_event_face_eyes_animation_start(void)
 {
   u8 *byte;
   s16 promoted;
@@ -266,7 +266,7 @@ s32 func_80067DD4(void)
 }
 
 /* FAKE: promoted halfword and byte alias retain the final andi before flag storage. T-9550 */
-s32 func_80067DFC(void)
+s32 portrait_event_face_mouth_animation_start(void)
 {
   u8 *byte;
   s16 promoted;
@@ -281,7 +281,7 @@ s32 func_80067DFC(void)
   }
 }
 
-void func_80067E34(void) {
+void calendar_screen_init(void) {
     actor_clear(0x60);
     D_80120651 = 4;
     D_80120652 = 0x40;
@@ -296,15 +296,15 @@ void func_80067E34(void) {
     D_80120668 = 0x43;
     D_80120676 = -0x10;
     D_8012067A = -0x13;
-    func_80067F04();
+    calendar_marks_build();
 }
 
 /* One mark of the two-month calendar: frame `frame` in the cell of day index `d` of column `side` (0 this month,
  * 1 next month), then the next record. The four statements expand on one source line, which as1 schedules as one
  * group (the frame store after the argument copy where the record address is a constant). T-25103 */
 #define CAL_MARK(frame, side, d) \
-    actor_pool[n + 0x61].unk_18 = (frame); actor_pool[n + 0x61].x = func_80068898((side), (d)); \
-    actor_pool[n + 0x61].y = func_800688F0((side), (d)); n++
+    actor_pool[n + 0x61].unk_18 = (frame); actor_pool[n + 0x61].x = calendar_cell_x((side), (d)); \
+    actor_pool[n + 0x61].y = calendar_cell_y((side), (d)); n++
 /* Frame of the schedule entry of day i + 1 in column `side`; every use reads it again (the original reloads it
  * after each call). T-25103 */
 #define DAY_KIND(side) D_800B5C10[game_state.month_calendar[side].marker[i + 1]]
@@ -315,7 +315,7 @@ void func_80067E34(void) {
  * FAKE: the first month test of each pair reads unk_03F through `gs` and the second through game_state. They are
  * separate expressions, so uopt does not share cvt(unk_03F) across the mark calls (519 rows to 16); the original
  * keeps gs in a stack slot for the loop bounds, but which tests used it is unknown. T-25103 */
-void func_80067F04(void) {
+void calendar_marks_build(void) {
     GameState *gs;
     s32 i;
     s32 n;
@@ -479,7 +479,7 @@ void func_80067F04(void) {
 #undef CAL_MARK
 #undef DAY_KIND
 
-s16 func_80068898(s32 arg0, s32 arg1) {
+s16 calendar_cell_x(s32 arg0, s32 arg1) {
     s32 v = game_state.month_calendar[0].marker[arg0 * 0x40];
 
     if (v == 6) {
@@ -488,7 +488,7 @@ s16 func_80068898(s32 arg0, s32 arg1) {
     return arg0 * 0x88 + ((v + arg1 + 1) % 7) * 16 - 0x78;
 }
 
-s16 func_800688F0(s32 arg0, s32 arg1) {
+s16 calendar_cell_y(s32 arg0, s32 arg1) {
     s32 v = game_state.month_calendar[0].marker[arg0 * 0x40];
 
     if (v == 6) {
@@ -499,7 +499,7 @@ s16 func_800688F0(s32 arg0, s32 arg1) {
 
 /* FAKE: the loop stores go through the pointer `gs` so uopt reloads month_data_table on every trip as the original does (named
  * stores to game_state keep it in a register); `q` is the +0x800 base of the length/start words. T-11100 */
-void func_80068938(u8 arg0, u8 arg1, s32 arg2) {
+void calendar_month_load(u8 arg0, u8 arg1, s32 arg2) {
     s32 idx;
     s32 n;
     s32 i;
@@ -527,7 +527,7 @@ void func_80068938(u8 arg0, u8 arg1, s32 arg2) {
     }
 }
 
-void func_80068BE4(void) {
+void hud_biorhythm_graph_draw(void) {
     /* FAKE: unused stack locals match original 0x158 frame size and slot offsets. T-11060 */
     u16 top_pad1;
     u16 top_pad2;
@@ -552,9 +552,9 @@ void func_80068BE4(void) {
     saved = game_state.day_count;
     game_state.day_count = saved - 8;
     for (i = 0; i != 0x10; i++) {
-        sp10C[i] = func_8006C334(1, 0, 0, -0x20);
-        spCC[i] = func_8006C334(0, 1, 0, -0x20);
-        sp8C[i] = func_8006C334(0, 0, 1, -0x20);
+        sp10C[i] = hud_biorhythm_value(1, 0, 0, -0x20);
+        spCC[i] = hud_biorhythm_value(0, 1, 0, -0x20);
+        sp8C[i] = hud_biorhythm_value(0, 0, 1, -0x20);
         game_state.day_count += 1;
         if (i != 0) {
             prim_gradient_line(i * 0x10 - 0x90, sp10C[i - 1] - 0xC, i * 0x10 - 0x80, sp10C[i] - 0xC, (((i + phase) & 0xF) * 4 + half) * 0x101, (((i + phase) & 0xF) * 4 + half) * 0x101, 0x81);
@@ -565,11 +565,11 @@ void func_80068BE4(void) {
     game_state.day_count = saved;
 }
 
-void func_80068EC0(void) {
+void calendar_view_update(void) {
     s32 i;
     s32 t;
 
-    func_80068BE4();
+    hud_biorhythm_graph_draw();
     dtd_on_tpage(0, 0, 1, 2, 0);
     cal_base_show();
     t = ((Actor *)actor_pool)[0x61].unk_08++;
@@ -724,7 +724,7 @@ void data_save_load_class_init(void) {
  * promotes it to $a3 and reloads it after every call as the original does (register cheat sheet, "narrow selector the
  * original reloads after every call"); the test emits no code. T-17002 */
 #define KEEP_UNK_1117() if ((s32)game_state.album_slot) { }
-void func_800696DC(s32 arg0, s32 arg1) {
+void hud_save_slot_info_show(s32 arg0, s32 arg1) {
     s32 i;
     s32 var_s0;
     s32 spEC;
@@ -857,7 +857,7 @@ void func_800696DC(s32 arg0, s32 arg1) {
 
 /* Implicit int in the original (K&R definition, no return): $v0 stays live at the exit, so the last
  * bit store of each case arm also goes through the promoted byte in $v0. T-25103. */
-s32 func_8006A044(arg0, arg1)
+s32 hud_magazine_mark_read(arg0, arg1)
 s32 arg0;
 s32 arg1;
 {
@@ -945,7 +945,7 @@ s32 arg1;
 
 /* FAKE: each record triple (unk_18/unk_26/unk_2A) after the loop is written on one line, as from a macro (none is known):
  * as1 schedules by source line and the grouping sets the store order in each branch. T-11690 */
-void func_8006A2CC(void) {
+void hud_magazine_page_build(void) {
     u8 eight; /* FAKE: a named 8 gives the original `beq a1,t0` in cases 8-10 (a literal gives `beq t0,a1`). T-11690 */
     s32 i;
     s32 n;
@@ -1183,7 +1183,7 @@ void func_8006A2CC(void) {
     sndisp(D_800B66A4[kind], 0, 0x1F);
 }
 
-s32 appointment_find_today(s32 arg0, s32 arg1, s32 arg2) {
+s32 hud_appointment_find_today(s32 arg0, s32 arg1, s32 arg2) {
     s32 i;
     s32 r;
 
@@ -1211,7 +1211,7 @@ s32 appointment_find_today(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 
-s32 func_8006B014(s32 arg0) {
+s32 hud_appointment_count_for_girl(s32 arg0) {
     s32 i;
     s32 n;
 
@@ -1228,7 +1228,7 @@ s32 func_8006B014(s32 arg0) {
  * (selection sort). While unk_03F is 12, month-1 entries count as month 13 during the sort, so they go last.
  * Every access goes through the GameState pointer g (T-25608: the original's loop preheaders). */
 #define SCHED_DATE(i) ((AppointmentDate *)&g->unk_54C[i])
-void func_8006B0C8(void) {
+void hud_appointment_list_sort(void) {
     s32 i;
     s32 j;
     s32 n;
@@ -1283,7 +1283,7 @@ void func_8006B0C8(void) {
 }
 #undef SCHED_DATE
 
-void func_8006B5BC(WordView arg0) {
+void hud_appointment_add(WordView arg0) {
     s32 i;
 
     i = 0;
@@ -1295,13 +1295,13 @@ void func_8006B5BC(WordView arg0) {
         } while (((AppointmentBits *)&game_state.unk_54C[i])->active && i != 8);
     }
     game_state.unk_54C[i] = arg0;
-    func_8006B0C8();
+    hud_appointment_list_sort();
 }
 
-void func_8006B640(void) {
+void hud_appointment_prompt_noop(void) {
 }
 
-void club_list_menu(void) {
+void hud_club_list_menu(void) {
     s32 pad[2]; /* FAKE: reproduces the original's 8-byte gap above `first`; real locals unknown. T-11690 */
     s32 first;
     s32 i;
@@ -1353,7 +1353,7 @@ void club_list_menu(void) {
     k_sub_disp_start(1);
 }
 
-void sprite_light_effect_draw(void) {
+void hud_sprite_light_effect_draw(void) {
     s32 i;
 
     _sprite_set_light_effect1(-0x120, -0xF8, D_800B66E0[0], 0x3C, 0xA0, 0x3C, 9, 0xA0A0A0, D_800B66F4[0]);
@@ -1365,7 +1365,7 @@ void sprite_light_effect_draw(void) {
     dtd_on_tpage(0, 0, 9, 1, 0);
 }
 
-void cursor_update(void) {
+void hud_cursor_update(void) {
     GameState *g = &game_state;
     u8 speed;
     s32 step;
@@ -1430,7 +1430,7 @@ void cursor_update(void) {
 
 /* FAKE: the empty `if ((s32)D_800B6708) {}` gives the byte a use in the dispatch block, so uopt promotes it and loads it
  * once into $v0 before the arg0 tests; without it each arm loads it. The test emits no code. T-17002 */
-void cursor_actor_init(s32 arg0) {
+void hud_cursor_actor_init(s32 arg0) {
     s16 sp2E;
     s16 sp2C;
 
@@ -1467,7 +1467,7 @@ void cursor_actor_init(s32 arg0) {
     actor_pool[0].y = sp2C;
 }
 
-void cursor_show(s32 arg0) {
+void hud_cursor_show(s32 arg0) {
     if (arg0 == 1) {
         D_8011ECD3 |= 0x80;
     } else {
@@ -1475,7 +1475,7 @@ void cursor_show(s32 arg0) {
     }
 }
 
-s32 func_8006BDA8(s32 arg0) {
+s32 hud_command_roll_poor_result(s32 arg0) {
     /* FAKE: unused stack word matches original 0x40 frame size and local offsets. T-11060 */
     s32 pad;
     s32 score;
@@ -1490,63 +1490,63 @@ s32 func_8006BDA8(s32 arg0) {
     score = 0;
     switch (game_state.last_command.w & 15) {
     case 0:
-        score = func_8006C334(0, 0, 1, 16) + game_state.param_liberal_arts.value / 16;
+        score = hud_biorhythm_value(0, 0, 1, 16) + game_state.param_liberal_arts.value / 16;
         break;
     case 1:
-        score = func_8006C334(0, 0, 1, 16) + game_state.param_science.value / 16;
+        score = hud_biorhythm_value(0, 0, 1, 16) + game_state.param_science.value / 16;
         break;
     case 2:
-        score = func_8006C334(0, 1, 0, 16) + game_state.param_art.value / 16;
+        score = hud_biorhythm_value(0, 1, 0, 16) + game_state.param_art.value / 16;
         break;
     case 3:
-        score = func_8006C334(1, 0, 0, 16) + game_state.param_athletics.value / 16;
+        score = hud_biorhythm_value(1, 0, 0, 16) + game_state.param_athletics.value / 16;
         break;
     case 4:
         switch ((u16)game_state.player_flags.h >> 12) {
         case 0:
-            score = func_8006C334(0, 0, 1, 16);
+            score = hud_biorhythm_value(0, 0, 1, 16);
             break;
         case 1:
-            score = func_8006C334(0, 1, 0, 16);
+            score = hud_biorhythm_value(0, 1, 0, 16);
             break;
         case 2:
-            score = func_8006C334(0, 0, 1, 16);
+            score = hud_biorhythm_value(0, 0, 1, 16);
             break;
         case 3:
-            score = func_8006C334(0, 0, 1, 16);
+            score = hud_biorhythm_value(0, 0, 1, 16);
             break;
         case 4:
-            score = func_8006C334(0, 1, 0, 16);
+            score = hud_biorhythm_value(0, 1, 0, 16);
             break;
         case 5:
-            score = func_8006C334(0, 1, 0, 16);
+            score = hud_biorhythm_value(0, 1, 0, 16);
             break;
         case 6:
-            score = func_8006C334(1, 0, 0, 16);
+            score = hud_biorhythm_value(1, 0, 0, 16);
             break;
         case 7:
-            score = func_8006C334(1, 0, 0, 16);
+            score = hud_biorhythm_value(1, 0, 0, 16);
             break;
         case 8:
-            score = func_8006C334(1, 0, 0, 16);
+            score = hud_biorhythm_value(1, 0, 0, 16);
             break;
         case 9:
-            score = func_8006C334(1, 0, 0, 16);
+            score = hud_biorhythm_value(1, 0, 0, 16);
             break;
         case 10:
-            score = func_8006C334(1, 0, 0, 16);
+            score = hud_biorhythm_value(1, 0, 0, 16);
             break;
         }
         score += (u16)game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points >> 4;
         break;
     case 5:
-        score = func_8006C334(0, 1, 0, 16) + game_state.param_trivia.value / 16;
+        score = hud_biorhythm_value(0, 1, 0, 16) + game_state.param_trivia.value / 16;
         break;
     case 6:
-        score = func_8006C334(0, 1, 0, 16) + game_state.param_looks.value / 16;
+        score = hud_biorhythm_value(0, 1, 0, 16) + game_state.param_looks.value / 16;
         break;
     case 7:
-        func_8006C334(1, 1, 1, 16);
+        hud_biorhythm_value(1, 1, 1, 16);
         score = 16;
         break;
     }
@@ -1559,13 +1559,13 @@ s32 func_8006BDA8(s32 arg0) {
     score = rand() % (score + 4);
     score = (8 - factor) * score / 8;
     failures = 0;
-    if (func_8006C334(1, 0, 0, 3) == 0) {
+    if (hud_biorhythm_value(1, 0, 0, 3) == 0) {
         failures++;
     }
-    if (func_8006C334(0, 1, 0, 3) == 0) {
+    if (hud_biorhythm_value(0, 1, 0, 3) == 0) {
         failures++;
     }
-    if (func_8006C334(0, 0, 1, 3) == 0) {
+    if (hud_biorhythm_value(0, 0, 1, 3) == 0) {
         failures++;
     }
     if (failures == 3) {
@@ -1578,11 +1578,11 @@ s32 func_8006BDA8(s32 arg0) {
     return 1;
 }
 
-void func_8006C308(void) {
-    func_8006C334(1, 1, 1, 2);
+void hud_biorhythm_probe_discard(void) {
+    hud_biorhythm_value(1, 1, 1, 2);
 }
 
-s32 func_8006C334(s32 a, s32 b, s32 c, s32 scale) {
+s32 hud_biorhythm_value(s32 a, s32 b, s32 c, s32 scale) {
     s32 magnitude;
     s32 offset;
     s32 day;
@@ -1593,7 +1593,7 @@ s32 func_8006C334(s32 a, s32 b, s32 c, s32 scale) {
     s32 count;
     s32 total;
 
-    wave_a = rsin((day = (offset = func_8006C700()) + (u16)game_state.day_count) * 0xB2);
+    wave_a = rsin((day = (offset = hud_biorhythm_birth_offset()) + (u16)game_state.day_count) * 0xB2);
     wave_b = rsin(day * 0x92);
     wave_c = rsin(day * 0x7C);
     bad = 0;
@@ -1659,7 +1659,7 @@ s32 func_8006C334(s32 a, s32 b, s32 c, s32 scale) {
     }
 }
 
-s32 func_8006C700(void) {
+s32 hud_biorhythm_birth_offset(void) {
     s32 result;
     result = -(s32)D_800B670A[game_state.player_birthday & 0xF] - (((u32)game_state.player_birthday << 23) >> 27) + 0x1563;
     if ((game_state.player_birthday & 0xF) == 4 && (((u32)game_state.player_birthday << 23) >> 27) < 4U) {
@@ -1668,7 +1668,7 @@ s32 func_8006C700(void) {
     return result;
 }
 
-void func_8006C760(s32 arg0) {
+void hud_corner_icon_set(s32 arg0) {
     actor_clear(0xF);
     D_8011F0CD = 0;
     D_8011F0CE = 0x40;
@@ -1691,7 +1691,7 @@ void func_8006C760(s32 arg0) {
     D_8011F0F6 = -0x5C;
 }
 
-void text_marker_set(s32 arg0) {
+void hud_text_marker_set(s32 arg0) {
     actor_clear(2);
     D_8011ED59 = 2;
     D_8011ED5A = 0x40;
@@ -1711,7 +1711,7 @@ void text_marker_set(s32 arg0) {
     }
 }
 
-s16 func_8006C934(void) {
+s16 hud_text_marker_bob(void) {
     if (D_8011ED82 < 0x4F) {
         if (!(game_state.frame_count & 3)) {
             D_8011ED82 += 1;
@@ -1726,7 +1726,7 @@ s16 func_8006C934(void) {
  * 0xF. Clears unk_04 of every record after the list and returns the count, at most 0xFF.
  * T-25103: the for loop orders the induction init before `i = 0`, and `n++` ahead of the join copy
  * keeps `cur = val` (s32, a plain move) at the join instead of a narrowing copy in each arm. */
-s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
+s32 hud_event_log_scan(u8 *first, u8 *last, s32 arg2) {
     GameState *g = &game_state;
     s32 i;
     s32 n;
@@ -1771,7 +1771,7 @@ s32 func_8006C988(u8 *first, u8 *last, s32 arg2) {
     return n;
 }
 
-u8 *func_8006CA9C(void) {
+u8 *hud_confirm_button_label(void) {
     if (game_state.input_device == INPUT_MOUSE) {
         if (game_state.confirm_button != 0) {
             return D_800B672C;
@@ -1781,7 +1781,7 @@ u8 *func_8006CA9C(void) {
     return D_800B6724;
 }
 
-u8 *func_8006CAE0(void) {
+u8 *hud_cancel_button_label(void) {
     if (game_state.input_device == INPUT_MOUSE) {
         if (game_state.confirm_button != 0) {
             return D_800B6730;

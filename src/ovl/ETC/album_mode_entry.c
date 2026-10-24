@@ -38,7 +38,7 @@ s32 func_8013FFAC(void) {
         game_state.clear_color_b = 0;
         actor_draw_enable(1);
         actor_clear_range(0);
-        cursor_show(0);
+        hud_cursor_show(0);
         sprite_tables_clear();
         text_system_reset();
         back_clear_switch(1);

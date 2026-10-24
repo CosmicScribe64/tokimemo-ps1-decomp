@@ -1,369 +1,369 @@
 /* birthday_and_shared_scene_flow.c: src/ovl/GEKO/80134D10.c:375,417,755,1347,1587; girl-birthday logic plus birthday/visit/scene script binders, shared girl-scene entry/talk/load/finish and effects. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals. Original object 0x80134D10-0x801393C0 (config/objects/GEKO.txt). */
 #define MAIN_API_OVERRIDE_portrait_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
-#define MAIN_API_OVERRIDE_strcpy /* matched with strcpy returning its destination: with the void prototype case 0 of the switch in func_80135DC0 takes v0 for the D_80144F14 value, not v1 (main_api.h: void). T-11900 */
+#define MAIN_API_OVERRIDE_strcpy /* matched with strcpy returning its destination: with the void prototype case 0 of the switch in encounter_girl_birthday_init takes v0 for the encounter_girl_birthday_text_section_1 value, not v1 (main_api.h: void). T-11900 */
 #include "common.h"
 #include "ovl/GEKO.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F10);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F14);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F18);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F1C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F20);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F24);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F28);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F2C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F30);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F34);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F38);
-s32 D_80144F3C = 0x801B9DA0;
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F40);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F44);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F48);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F4C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F50);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F54);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F58);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F5C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F60);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F64);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F68);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F6C);
-s32 D_80144F70 = 0x801B9EA8;
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F74);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F78);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F7C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F80);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F84);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F88);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F8C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F90);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F94);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F98);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144F9C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FA0);
-s32 D_80144FA4 = 0x801BA2C8;
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FA8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FAC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FB0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FB4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FB8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FBC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FC0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FC4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FC8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FCC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FD0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FD4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FD8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FDC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FE0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FE4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FE8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FEC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FF0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FF4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FF8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80144FFC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145000);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145004);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145008);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014500C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145010);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145014);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145018);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014501C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145020);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145024);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145028);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014502C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145030);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145034);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145038);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014503C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145040);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145044);
-s32 D_80145048 = 0;
-s32 D_8014504C = 0;
-s32 D_80145050 = 0;
-s32 D_80145054 = 0;
-s32 D_80145058 = 0;
-s32 D_8014505C = 0;
-s16 D_80145060 = 0;
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145064);
-s16 D_80145068 = 0;
-u8 D_8014506C = 0;
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145070);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145074);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145078);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014507C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145080);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145084);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145088);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014508C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145090);
-/* Scene table, indexed by game_state.mode_step in func_801351F8. Defined in C as the original did:
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_0);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_1);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_2);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_3);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_4);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_5);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_6);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_7);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_8);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_9);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_10);
+s32 encounter_girl_birthday_text_section_11 = 0x801B9DA0;
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_text_section_12);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_0);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_1);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_2);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_3);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_4);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_5);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_6);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_7);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_8);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_9);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_10);
+s32 encounter_girl_birthday_command_section_11 = 0x801B9EA8;
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_command_section_12);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_0);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_1);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_2);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_3);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_4);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_5);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_6);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_7);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_8);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_9);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_10);
+s32 encounter_girl_birthday_voice_section_11 = 0x801BA2C8;
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_voice_section_12);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_0);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_1);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_2);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_3);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_4);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_5);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_6);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_7);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_8);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_9);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_10);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_11);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_text_section_12);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_0);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_1);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_2);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_3);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_4);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_5);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_6);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_7);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_8);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_9);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_10);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_11);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_command_section_12);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_0);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_1);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_2);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_3);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_4);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_5);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_6);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_7);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_8);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_9);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_10);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_11);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_player_birthday_voice_section_12);
+s32 encounter_girl_birthday_text_table = 0;
+s32 encounter_girl_birthday_command_table = 0;
+s32 encounter_girl_birthday_voice_table = 0;
+s32 encounter_girl_birthday_saved_text_table = 0;
+s32 encounter_girl_birthday_saved_command_table = 0;
+s32 encounter_girl_birthday_saved_voice_table = 0;
+s16 encounter_girl_birthday_group = 0;
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_line);
+s16 encounter_girl_birthday_saved_group = 0;
+u8 encounter_girl_birthday_school_year = 0;
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_portrait_active);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_background_variant);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_phone_phase_counter);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_scene_frame);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_phone_prelude_timer);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_phone_ring_limit);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_holiday_context);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_zero_choice);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_club_context);
+/* Scene table, indexed by game_state.mode_step in encounter_girl_birthday_dispatch. Defined in C as the original did:
  * as1 treats every function named in this file's data as an address-taken label, so each
  * jump-table dispatch here gets an edge back to the function entries (T-25150). */
 typedef struct GekoFnTable73 { /* 0x00 */ void (*f[73])(); } GekoFnTable73; /* size 0x124 */
-GekoFnTable73 D_80145094 = { {
-    func_80135DC0, func_80135BC4, func_80135C48, func_80135CC8, func_8007C784,
-    func_80136694, mode_step_next, mode_step_next, mode_step_next, mode_step_next,
-    mode_step_next, func_801366DC, mode_step_next, func_80136BA8, normal_date_two_select,
-    func_801374A8, func_80136B2C, func_80137580, func_80136B2C, normal_date_three_select,
-    func_80137630, func_80136B2C, func_80136714, func_80136B2C, func_80136E7C,
-    func_801372D4, func_80136F20, func_80135A6C, func_80135D00, func_801367EC,
-    func_8007C784, dec_init, change_dec_bg, func_80136C20, func_8007C784,
-    portrait_show_checked, func_8007C8A4, place_init, func_80136FF8, func_80136B2C,
-    func_80137040, func_80136FB8, func_80136EE4, func_80136B2C, func_801370EC,
-    func_80137694, func_80136B2C, func_801358CC, normal_date_girl_out, func_80136B2C,
-    func_80137954, func_80135AC8, func_80135894, func_8007C784, func_80083338,
-    func_801355E8, func_80136B2C, normal_date_girl_out, func_80136B2C, normal_date_bg_out,
-    func_80135AC8, func_80136B2C, func_80136E7C, func_80137120, func_801355B8,
-    func_80136B2C, func_80135AC8, func_80135340, func_8007C784, func_801354E4,
-    func_80135570, func_80135598, game_mode_reset_to_title
+GekoFnTable73 encounter_girl_birthday_steps = { {
+    encounter_girl_birthday_init, encounter_girl_birthday_audio_load, encounter_girl_birthday_audio_wait, encounter_girl_birthday_scripts_load, func_8007C784,
+    encounter_girl_birthday_opening_skip, mode_step_next, mode_step_next, mode_step_next, mode_step_next,
+    mode_step_next, encounter_girl_birthday_context_skip, mode_step_next, encounter_girl_birthday_choice_talk, normal_date_two_select,
+    encounter_girl_birthday_first_choice_apply, encounter_girl_birthday_talk, encounter_girl_birthday_reply_script_push, encounter_girl_birthday_talk, normal_date_three_select,
+    encounter_girl_birthday_reply_script_pop, encounter_girl_birthday_talk, encounter_girl_birthday_appointment_check, encounter_girl_birthday_talk, encounter_girl_birthday_phone_gate_check,
+    encounter_girl_birthday_phone_talk, encounter_girl_birthday_girl_state_group_offset, encounter_girl_birthday_talk_with_audio_command, encounter_girl_birthday_scene_init, encounter_girl_birthday_location_select,
+    func_8007C784, dec_init, change_dec_bg, encounter_girl_birthday_portrait_read, func_8007C784,
+    portrait_show_checked, func_8007C8A4, place_init, encounter_girl_birthday_holiday_girl_in, encounter_girl_birthday_talk,
+    encounter_girl_birthday_reply_group_select, encounter_girl_birthday_school_girl_in, encounter_girl_birthday_school_talk, encounter_girl_birthday_talk, encounter_girl_birthday_choice_group_select,
+    encounter_girl_birthday_reply_apply, encounter_girl_birthday_talk, encounter_girl_birthday_player_birthday_check, normal_date_girl_out, encounter_girl_birthday_talk,
+    encounter_girl_birthday_background_out, encounter_girl_birthday_finish, encounter_girl_birthday_visit_scripts_load, func_8007C784, func_80083338,
+    encounter_girl_birthday_player_birthday_script_select, encounter_girl_birthday_talk, normal_date_girl_out, encounter_girl_birthday_talk, normal_date_bg_out,
+    encounter_girl_birthday_finish, encounter_girl_birthday_talk, encounter_girl_birthday_phone_gate_check, encounter_girl_birthday_phone_ring_wait, encounter_girl_birthday_phone_closing_group,
+    encounter_girl_birthday_talk, encounter_girl_birthday_finish, encounter_girl_birthday_bg_request, func_8007C784, encounter_girl_birthday_bg_decode,
+    encounter_girl_birthday_bg_show, encounter_girl_birthday_restart, game_mode_reset_to_title
 } };
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801451B8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801451E4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801451EC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801451F4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801451FC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EC0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EC4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EC8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145ECC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145ED0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145ED4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145ED8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EDC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EE0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EE4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EE8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EEC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EF0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EF4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EF8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145EFC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F00);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F04);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F08);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F0C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F10);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F14);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F18);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F1C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F20);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F24);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F28);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F2C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F30);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F34);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F38);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F3C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F40);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F44);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F48);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F4C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F50);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F54);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F58);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F5C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F60);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F64);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F68);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F6C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F70);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F74);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F78);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F7C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F80);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F84);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F88);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F8C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F90);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F94);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F98);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145F9C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FA0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FA4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FA8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FAC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FB0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FB4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FB8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FBC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FC0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FC4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FC8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FCC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FD0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FD4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FD8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FDC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FE0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FE4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FE8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FEC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FF0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FF4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FF8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80145FFC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146000);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146004);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146008);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014600C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146010);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146014);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146018);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014601C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146020);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146024);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146028);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014602C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146030);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146034);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146038);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014603C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146040);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146044);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146048);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014604C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146050);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146054);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146058);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014605C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146060);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146064);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146068);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014606C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146070);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146074);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146078);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014607C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146080);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146084);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146088);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014608C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146090);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146094);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146098);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014609C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460A0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460A4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460A8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460AC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460B0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460B4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460B8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460BC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460C0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460C4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460C8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460CC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460D0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460D4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460D8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460DC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460E0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460E4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460E8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460EC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460F0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460F4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460F8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801460FC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146100);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146104);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146108);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014610C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146110);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146114);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146118);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014611C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146120);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146124);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146128);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014612C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146130);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146134);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146138);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014613C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146140);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146144);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146148);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014614C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146150);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146154);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146158);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014615C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146160);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146164);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146168);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014616C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146170);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146174);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146178);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014617C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146180);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146184);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146188);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014618C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146190);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146194);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146198);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014619C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461A0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461A4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461A8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461AC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461B0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461B4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461B8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461BC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461C0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461C4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461C8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461CC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461D0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461D4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461D8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461DC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461E0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461E4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461E8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461EC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461F0);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461F4);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461F8);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_801461FC);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146200);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146204);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146208);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014620C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146210);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146214);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146218);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014621C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146220);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146224);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146228);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014622C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146230);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146234);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146238);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014623C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146240);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146244);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146248);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014624C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146250);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146254);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146258);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014625C);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146260);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146264);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_80146268);
-INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", D_8014626C);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_shiori_club_portraits);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_mio_club_portraits);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_yuina_club_portraits);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_ayako_club_portraits);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_reply_names);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_0);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_1);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_2);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_3);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_4);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_5);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_6);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_7);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_8);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_9);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_10);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_11);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_12);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_13);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_14);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_15);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_16);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_17);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_18);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_19);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_20);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_21);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_22);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_23);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_24);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_25);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_26);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_27);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_28);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_29);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_30);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_31);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_32);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_33);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_34);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_35);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_36);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_37);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_38);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_39);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_40);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_41);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_42);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_43);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_44);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_45);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_46);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_47);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_48);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_49);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_50);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_51);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_52);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_53);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_54);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_55);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_56);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_57);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_58);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_59);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_60);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_61);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_62);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_63);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_64);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_65);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_66);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_67);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_68);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_69);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_70);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_71);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_72);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_73);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_74);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_75);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_76);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_77);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_text_section_78);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_0);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_1);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_2);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_3);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_4);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_5);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_6);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_7);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_8);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_9);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_10);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_11);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_12);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_13);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_14);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_15);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_16);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_17);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_18);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_19);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_20);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_21);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_22);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_23);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_24);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_25);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_26);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_27);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_28);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_29);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_30);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_31);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_32);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_33);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_34);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_35);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_36);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_37);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_38);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_39);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_40);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_41);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_42);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_43);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_44);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_45);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_46);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_47);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_48);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_49);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_50);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_51);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_52);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_53);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_54);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_55);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_56);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_57);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_58);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_59);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_60);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_61);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_62);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_63);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_64);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_65);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_66);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_67);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_68);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_69);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_70);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_71);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_72);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_73);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_74);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_75);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_76);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_77);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_command_section_78);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_0);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_1);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_2);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_3);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_4);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_5);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_6);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_7);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_8);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_9);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_10);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_11);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_12);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_13);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_14);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_15);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_16);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_17);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_18);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_19);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_20);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_21);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_22);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_23);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_24);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_25);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_26);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_27);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_28);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_29);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_30);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_31);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_32);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_33);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_34);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_35);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_36);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_37);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_38);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_39);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_40);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_41);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_42);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_43);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_44);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_45);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_46);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_47);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_48);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_49);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_50);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_51);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_52);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_53);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_54);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_55);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_56);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_57);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_58);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_59);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_60);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_61);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_62);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_63);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_64);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_65);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_66);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_67);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_68);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_69);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_70);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_71);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_72);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_73);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_74);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_75);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_76);
+INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_scene_voice_section_77);
 
 void portrait_layout_set(s32 arg0);
 void *strcpy(void *dst, void *src);
@@ -371,101 +371,101 @@ void *strcpy(void *dst, void *src);
 typedef struct {
     u8 s[0xCC3];
 } DateTxt; /* size 0xCC3 */
-extern DateTxt D_801451FC;
+extern DateTxt encounter_girl_birthday_reply_names;
 
-void func_80134D10(void) {
-    D_80144F10 = 0x801B0478;
-    D_80144F14 = 0x801B13A4;
-    D_80144F18 = 0x801B2998;
-    D_80144F1C = 0x801B38C8;
-    D_80144F20 = 0x801B4258;
-    D_80144F24 = 0x801B4B98;
-    D_80144F28 = 0x801B5574;
-    D_80144F2C = 0x801B6560;
-    D_80144F30 = 0x801B7B74;
-    D_80144F34 = 0x801B8B18;
-    D_80144F38 = 0x801B93D0;
-    D_80144F3C = 0x801B9DA0;
-    D_80144F40 = 0x801BA780;
-    D_80144F44 = 0x801B0510;
-    D_80144F48 = 0x801B14E0;
-    D_80144F4C = 0x801B2AD0;
-    D_80144F50 = 0x801B3960;
-    D_80144F54 = 0x801B42F0;
-    D_80144F58 = 0x801B4C38;
-    D_80144F5C = 0x801B560C;
-    D_80144F60 = 0x801B66A0;
-    D_80144F64 = 0x801B7CB4;
-    D_80144F68 = 0x801B8BB0;
-    D_80144F6C = 0x801B9468;
-    D_80144F70 = 0x801B9EA8;
-    D_80144F74 = 0x801BA818;
-    D_80144F78 = 0x801B0888;
-    D_80144F7C = 0x801B1E14;
-    D_80144F80 = 0x801B33B0;
-    D_80144F84 = 0x801B3CF4;
-    D_80144F88 = 0x801B4684;
-    D_80144F8C = 0x801B4FEC;
-    D_80144F90 = 0x801B59F4;
-    D_80144F94 = 0x801B6FB8;
-    D_80144F98 = 0x801B85CC;
-    D_80144F9C = 0x801B8F28;
-    D_80144FA0 = 0x801B97E0;
-    D_80144FA4 = 0x801BA2C8;
-    D_80144FA8 = 0x801BAB90;
+void encounter_girl_birthday_scripts_bind(void) {
+    encounter_girl_birthday_text_section_0 = 0x801B0478;
+    encounter_girl_birthday_text_section_1 = 0x801B13A4;
+    encounter_girl_birthday_text_section_2 = 0x801B2998;
+    encounter_girl_birthday_text_section_3 = 0x801B38C8;
+    encounter_girl_birthday_text_section_4 = 0x801B4258;
+    encounter_girl_birthday_text_section_5 = 0x801B4B98;
+    encounter_girl_birthday_text_section_6 = 0x801B5574;
+    encounter_girl_birthday_text_section_7 = 0x801B6560;
+    encounter_girl_birthday_text_section_8 = 0x801B7B74;
+    encounter_girl_birthday_text_section_9 = 0x801B8B18;
+    encounter_girl_birthday_text_section_10 = 0x801B93D0;
+    encounter_girl_birthday_text_section_11 = 0x801B9DA0;
+    encounter_girl_birthday_text_section_12 = 0x801BA780;
+    encounter_girl_birthday_command_section_0 = 0x801B0510;
+    encounter_girl_birthday_command_section_1 = 0x801B14E0;
+    encounter_girl_birthday_command_section_2 = 0x801B2AD0;
+    encounter_girl_birthday_command_section_3 = 0x801B3960;
+    encounter_girl_birthday_command_section_4 = 0x801B42F0;
+    encounter_girl_birthday_command_section_5 = 0x801B4C38;
+    encounter_girl_birthday_command_section_6 = 0x801B560C;
+    encounter_girl_birthday_command_section_7 = 0x801B66A0;
+    encounter_girl_birthday_command_section_8 = 0x801B7CB4;
+    encounter_girl_birthday_command_section_9 = 0x801B8BB0;
+    encounter_girl_birthday_command_section_10 = 0x801B9468;
+    encounter_girl_birthday_command_section_11 = 0x801B9EA8;
+    encounter_girl_birthday_command_section_12 = 0x801BA818;
+    encounter_girl_birthday_voice_section_0 = 0x801B0888;
+    encounter_girl_birthday_voice_section_1 = 0x801B1E14;
+    encounter_girl_birthday_voice_section_2 = 0x801B33B0;
+    encounter_girl_birthday_voice_section_3 = 0x801B3CF4;
+    encounter_girl_birthday_voice_section_4 = 0x801B4684;
+    encounter_girl_birthday_voice_section_5 = 0x801B4FEC;
+    encounter_girl_birthday_voice_section_6 = 0x801B59F4;
+    encounter_girl_birthday_voice_section_7 = 0x801B6FB8;
+    encounter_girl_birthday_voice_section_8 = 0x801B85CC;
+    encounter_girl_birthday_voice_section_9 = 0x801B8F28;
+    encounter_girl_birthday_voice_section_10 = 0x801B97E0;
+    encounter_girl_birthday_voice_section_11 = 0x801BA2C8;
+    encounter_girl_birthday_voice_section_12 = 0x801BAB90;
 }
 
-void func_80134F84(void) {
-    D_80144FAC = 0x801B00DC;
-    D_80144FB0 = 0x801B02AC;
-    D_80144FB4 = 0x801B03C8;
-    D_80144FB8 = 0x801B04C4;
-    D_80144FBC = 0x801B0668;
-    D_80144FC0 = 0x801B0808;
-    D_80144FC4 = 0x801B09DC;
-    D_80144FC8 = 0x801B0BE8;
-    D_80144FCC = 0x801B0D8C;
-    D_80144FD0 = 0x801B0F5C;
-    D_80144FD4 = 0x801B1164;
-    D_80144FD8 = 0x801B12D8;
-    D_80144FDC = 0x801B1454;
-    D_80144FE0 = 0x801B00F4;
-    D_80144FE4 = 0x801B02C8;
-    D_80144FE8 = 0x801B03D0;
-    D_80144FEC = 0x801B04DC;
-    D_80144FF0 = 0x801B0680;
-    D_80144FF4 = 0x801B0820;
-    D_80144FF8 = 0x801B09F8;
-    D_80144FFC = 0x801B0C00;
-    D_80145000 = 0x801B0DA4;
-    D_80145004 = 0x801B0F78;
-    D_80145008 = 0x801B1180;
-    D_8014500C = 0x801B12E0;
-    D_80145010 = 0x801B1470;
-    D_80145014 = 0x801B01A8;
-    D_80145018 = 0x801B0398;
-    D_8014501C = 0x801B03F0;
-    D_80145020 = 0x801B0590;
-    D_80145024 = 0x801B0734;
-    D_80145028 = 0x801B08D4;
-    D_8014502C = 0x801B0AE4;
-    D_80145030 = 0x801B0CB4;
-    D_80145034 = 0x801B0E58;
-    D_80145038 = 0x801B1064;
-    D_8014503C = 0x801B126C;
-    D_80145040 = 0x801B1338;
-    D_80145044 = 0x801B155C;
+void encounter_player_birthday_scripts_bind(void) {
+    encounter_player_birthday_text_section_0 = 0x801B00DC;
+    encounter_player_birthday_text_section_1 = 0x801B02AC;
+    encounter_player_birthday_text_section_2 = 0x801B03C8;
+    encounter_player_birthday_text_section_3 = 0x801B04C4;
+    encounter_player_birthday_text_section_4 = 0x801B0668;
+    encounter_player_birthday_text_section_5 = 0x801B0808;
+    encounter_player_birthday_text_section_6 = 0x801B09DC;
+    encounter_player_birthday_text_section_7 = 0x801B0BE8;
+    encounter_player_birthday_text_section_8 = 0x801B0D8C;
+    encounter_player_birthday_text_section_9 = 0x801B0F5C;
+    encounter_player_birthday_text_section_10 = 0x801B1164;
+    encounter_player_birthday_text_section_11 = 0x801B12D8;
+    encounter_player_birthday_text_section_12 = 0x801B1454;
+    encounter_player_birthday_command_section_0 = 0x801B00F4;
+    encounter_player_birthday_command_section_1 = 0x801B02C8;
+    encounter_player_birthday_command_section_2 = 0x801B03D0;
+    encounter_player_birthday_command_section_3 = 0x801B04DC;
+    encounter_player_birthday_command_section_4 = 0x801B0680;
+    encounter_player_birthday_command_section_5 = 0x801B0820;
+    encounter_player_birthday_command_section_6 = 0x801B09F8;
+    encounter_player_birthday_command_section_7 = 0x801B0C00;
+    encounter_player_birthday_command_section_8 = 0x801B0DA4;
+    encounter_player_birthday_command_section_9 = 0x801B0F78;
+    encounter_player_birthday_command_section_10 = 0x801B1180;
+    encounter_player_birthday_command_section_11 = 0x801B12E0;
+    encounter_player_birthday_command_section_12 = 0x801B1470;
+    encounter_player_birthday_voice_section_0 = 0x801B01A8;
+    encounter_player_birthday_voice_section_1 = 0x801B0398;
+    encounter_player_birthday_voice_section_2 = 0x801B03F0;
+    encounter_player_birthday_voice_section_3 = 0x801B0590;
+    encounter_player_birthday_voice_section_4 = 0x801B0734;
+    encounter_player_birthday_voice_section_5 = 0x801B08D4;
+    encounter_player_birthday_voice_section_6 = 0x801B0AE4;
+    encounter_player_birthday_voice_section_7 = 0x801B0CB4;
+    encounter_player_birthday_voice_section_8 = 0x801B0E58;
+    encounter_player_birthday_voice_section_9 = 0x801B1064;
+    encounter_player_birthday_voice_section_10 = 0x801B126C;
+    encounter_player_birthday_voice_section_11 = 0x801B1338;
+    encounter_player_birthday_voice_section_12 = 0x801B155C;
 }
 
-void func_801351F8(void) {
+void encounter_girl_birthday_dispatch(void) {
 
     s32 idx;
     GekoFnTable73 table;
 
-    table = D_80145094;
+    table = encounter_girl_birthday_steps;
     idx = game_state.mode_step;
     table.f[idx](0x80);
-    if ((u8) D_8014507C != 0) {
+    if ((u8) encounter_girl_birthday_scene_frame != 0) {
         hud_screen_frame_draw(2);
         func_80083A10();
         return;
@@ -480,16 +480,16 @@ void func_801351F8(void) {
         D_8011ECD3 &= 0x7F;
     }
     if (D_8011ECD3 & 0x80) {
-        cursor_update();
+        hud_cursor_update();
     }
 }
 
 
-void func_80135340(void) {
+void encounter_girl_birthday_bg_request(void) {
     s32 var_v0;
 
     D_800B3D60 = 0;
-    if ((D_80145074 != 0) || (game_state.day_event_done_bits & 0x20)) {
+    if ((encounter_girl_birthday_background_variant != 0) || (game_state.day_event_done_bits & 0x20)) {
         if (((u8) game_state.month >= 3U) && ((u8) game_state.month < 6U)) {
             var_v0 = dec_bg_cd_read(0x3FE9, 0);
         } else if (((u8) game_state.month >= 6U) && ((u8) game_state.month < 9U)) {
@@ -519,7 +519,7 @@ void func_80135340(void) {
     mode_step_next();
 }
 
-s32 func_801354E4(void) {
+s32 encounter_girl_birthday_bg_decode(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
         mode_step_next();
@@ -530,93 +530,93 @@ s32 func_801354E4(void) {
     mode_step_next();
 }
 
-void func_80135570(void) {
+void encounter_girl_birthday_bg_show(void) {
     dec_bg_show_switch(0);
     mode_step_next();
 }
 
-void func_80135598(void) {
+void encounter_girl_birthday_restart(void) {
     mode_step_set(1);
 }
 
-void func_801355B8(void) {
-    D_80145060 = 0x23;
-    D_80145064 = 0;
+void encounter_girl_birthday_phone_closing_group(void) {
+    encounter_girl_birthday_group = 0x23;
+    encounter_girl_birthday_line = 0;
     mode_step_next();
 }
 
-void func_801355E8(void) {
+void encounter_girl_birthday_player_birthday_script_select(void) {
     game_state.day_event_done_bits |= 0x40;
     game_state.day_event_done_bits |= 0x04;
-    D_80145060 = 1;
-    D_80145064 = 0;
+    encounter_girl_birthday_group = 1;
+    encounter_girl_birthday_line = 0;
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        D_80145048 = D_80144FB0;
-        D_8014504C = D_80144FE4;
-        D_80145050 = D_80145018;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_1;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_1;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_1;
         break;
     case GIRL_MIO:
-        D_80145048 = D_80144FC4;
-        D_8014504C = D_80144FF8;
-        D_80145050 = D_8014502C;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_6;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_6;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_6;
         break;
     case GIRL_YUINA:
-        D_80145048 = D_80144FB8;
-        D_8014504C = D_80144FEC;
-        D_80145050 = D_80145020;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_3;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_3;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_3;
         break;
     case GIRL_AYAKO:
-        D_80145048 = D_80144FBC;
-        D_8014504C = D_80144FF0;
-        D_80145050 = D_80145024;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_4;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_4;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_4;
         break;
     case GIRL_SAKI:
-        D_80145048 = D_80144FD4;
-        D_8014504C = D_80145008;
-        D_80145050 = D_8014503C;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_10;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_10;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_10;
         break;
     case GIRL_YUKARI:
-        D_80145048 = D_80144FC8;
-        D_8014504C = D_80144FFC;
-        D_80145050 = D_80145030;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_7;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_7;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_7;
         break;
     case GIRL_NOZOMI:
-        D_80145048 = D_80144FCC;
-        D_8014504C = D_80145000;
-        D_80145050 = D_80145034;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_8;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_8;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_8;
         break;
     case GIRL_MIRA:
-        D_80145048 = D_80144FC0;
-        D_8014504C = D_80144FF4;
-        D_80145050 = D_80145028;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_5;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_5;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_5;
         break;
     case GIRL_YUKO:
-        D_80145048 = D_80144FAC;
-        D_8014504C = D_80144FE0;
-        D_80145050 = D_80145014;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_0;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_0;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_0;
         break;
     case GIRL_MEGUMI:
-        D_80145048 = D_80144FD0;
-        D_8014504C = D_80145004;
-        D_80145050 = D_80145038;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_9;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_9;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_9;
         break;
     case GIRL_YUMI:
-        D_80145048 = D_80144FDC;
-        D_8014504C = D_80145010;
-        D_80145050 = D_80145044;
+        encounter_girl_birthday_text_table = encounter_player_birthday_text_section_12;
+        encounter_girl_birthday_command_table = encounter_player_birthday_command_section_12;
+        encounter_girl_birthday_voice_table = encounter_player_birthday_voice_section_12;
         break;
     }
     mode_step_next();
 }
 
-void func_80135894(void) {
+void encounter_girl_birthday_visit_scripts_load(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80134F84();
+    encounter_player_birthday_scripts_bind();
     mode_step_next();
 }
 
-s32 func_801358CC(void) {
+s32 encounter_girl_birthday_player_birthday_check(void) {
     s16 i;
     s16 best;
     u32 cur;
@@ -659,16 +659,16 @@ s32 func_801358CC(void) {
     return mode_step_next();
 }
 
-s32 func_80135A6C(void) {
-    func_80136B2C();
+s32 encounter_girl_birthday_talk_with_audio_command(void) {
+    encounter_girl_birthday_talk();
     if (game_state.mode_step_timer.w++ == 1) {
-        if (D_80145064 == 4) {
+        if (encounter_girl_birthday_line == 4) {
             audio_command(0x60C);
         }
     }
 }
 
-s32 func_80135AC8(void) {
+s32 encounter_girl_birthday_finish(void) {
     u8 state;
 
     if (game_state.day_event_done_bits & 0x20) {
@@ -679,7 +679,7 @@ s32 func_80135AC8(void) {
     /* FAKE: read through a u8 view so the base and the result share $v0 (T-22010). */
     state = *(u8 *)&game_state.substep;
     if (state == 0) {
-        func_800674B0();
+        hud_day_bgm_load();
         state = game_state.substep + 1;
     }
     game_state.substep = state;
@@ -701,7 +701,7 @@ s32 func_80135AC8(void) {
     return day_event_next(1);
 }
 
-void func_80135BC4(void) {
+void encounter_girl_birthday_audio_load(void) {
     D_800B3D60 = 0;
     if (game_state.day_events[0].type == DAY_EVENT_EXAM) {
         audio_bank_start(0, 0x200);
@@ -713,7 +713,7 @@ void func_80135BC4(void) {
     mode_step_next();
 }
 
-void func_80135C48(void) {
+void encounter_girl_birthday_audio_wait(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -724,13 +724,13 @@ void func_80135C48(void) {
     }
 }
 
-void func_80135CC8(void) {
+void encounter_girl_birthday_scripts_load(void) {
     cd_read_sectors(0x16, 0x801B0000, 0xAF0D);
-    func_80134D10();
+    encounter_girl_birthday_scripts_bind();
     mode_step_next();
 }
 
-void func_80135D00(void) {
+void encounter_girl_birthday_scene_init(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -749,11 +749,11 @@ void func_80135D00(void) {
     addr_init_bustup();
     hizuke_init();
     message_window_init();
-    D_8014507C = 1;
+    encounter_girl_birthday_scene_frame = 1;
     mode_step_next();
 }
 
-s32 func_80135DC0(void) {
+s32 encounter_girl_birthday_init(void) {
     s32 pad1; /* FAKE: T-11900 frame slot: keeps i at sp+0x62 */
     s16 i;
     s32 pad[8]; /* FAKE: T-11900 frame slots: keep zyotai at sp+0x3F and rect at sp+0x34 */
@@ -763,20 +763,20 @@ s32 func_80135DC0(void) {
 
     gs->current_girl = gs->day_events[gs->day_event_index].girl;
     if ((gs->current_girl == GIRL_SHIORI && (gs->day_event_done_bits & 1)) || (gs->current_girl != GIRL_SHIORI && (gs->day_event_done_bits & 2))) {
-        func_80135AC8();
+        encounter_girl_birthday_finish();
         return 0;
     }
     if (!gs->girls[gs->current_girl].flags.f.b6 && gs->current_girl != GIRL_SHIORI) {
-        func_80135AC8();
+        encounter_girl_birthday_finish();
         return 0;
     }
-    D_80145074 = (gs->day_event_done_bits & 0x10) > 0;
+    encounter_girl_birthday_background_variant = (gs->day_event_done_bits & 0x10) > 0;
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
     back_clear_switch(1);
-    func_8006509C();
+    hud_icon_bar_init();
     parameter_show_init();
     parameter_show_init();
     for (i = 0; i < 15; i++) {
@@ -784,21 +784,21 @@ s32 func_80135DC0(void) {
     }
     hud_icon_bar_update(1);
     text_system_reset();
-    D_8014507C = 0;
-    D_80145090 = 0;
-    D_80145088 = 1;
+    encounter_girl_birthday_scene_frame = 0;
+    encounter_girl_birthday_club_context = 0;
+    encounter_girl_birthday_holiday_context = 1;
     /* The day tables at +0x44/+0x64 are indexed by day - 1 from +0x45/+0x65 (hence `- 1 + 1`).
      * FAKE: T-11900 the call reads the date through game_state, not gs: through gs uopt keeps
      * unk_03E/unk_03F in the argument registers for the whole function. */
     if (gs->month != 12 || gs->day != 24) {
-        if (gs->weekday != WEEKDAY_SUNDAY && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0xA && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0x10 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 1 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 2 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 3 && D_80145074 == 0) {
-            D_80145088 = 0;
-        } else if ((gs->last_command.b[0] >> 4) == 4 && (gs->player_flags.h >> 12) == (gs->girls[gs->current_girl].flags.b[2] >> 4) && (appointment_find_today(game_state.year, game_state.month, game_state.day) <= 0 || gs->current_girl != ((u32)(gs->unk_54C[0].w << 3) >> 28))) {
-            D_80145088 = 0;
-            D_80145090 = 1;
+        if (gs->weekday != WEEKDAY_SUNDAY && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0xA && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0x10 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 1 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 2 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 3 && encounter_girl_birthday_background_variant == 0) {
+            encounter_girl_birthday_holiday_context = 0;
+        } else if ((gs->last_command.b[0] >> 4) == 4 && (gs->player_flags.h >> 12) == (gs->girls[gs->current_girl].flags.b[2] >> 4) && (hud_appointment_find_today(game_state.year, game_state.month, game_state.day) <= 0 || gs->current_girl != ((u32)(gs->unk_54C[0].w << 3) >> 28))) {
+            encounter_girl_birthday_holiday_context = 0;
+            encounter_girl_birthday_club_context = 1;
         }
     }
-    D_8014508C = 0;
+    encounter_girl_birthday_zero_choice = 0;
     hizuke_init();
     message_window_init();
     tpage_buf_clear();
@@ -819,97 +819,97 @@ s32 func_80135DC0(void) {
     dec_bg_brightness = 0x80;
     D_800B5940 = 0;
     addr_init_bustup();
-    D_80145080 = 0;
-    D_80145084 = gs->frame_count % 3 + 2;
+    encounter_girl_birthday_phone_prelude_timer = 0;
+    encounter_girl_birthday_phone_ring_limit = gs->frame_count % 3 + 2;
     zyotai = get_g_zyotai_s(gs->current_girl) & 0x7F;
-    D_80145060 = 0;
-    D_80145064 = 0;
+    encounter_girl_birthday_group = 0;
+    encounter_girl_birthday_line = 0;
     talk_group = (zyotai >= 2) + (zyotai >= 3) + (zyotai >= 4) + 30;
     talk_line = 0;
     talk_names_set(gs->current_girl);
-    func_80134D10();
+    encounter_girl_birthday_scripts_bind();
     switch (gs->current_girl) {
     case GIRL_SHIORI:
         strcpy(D_800CA1DC, "自宅前");
-        D_80145048 = D_80144F14;
-        D_8014504C = D_80144F48;
-        D_80145050 = D_80144F7C;
-        talk_text_table = D_80144F14;
-        talk_command_table = D_80144F48;
-        talk_voice_table = D_80144F7C;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_1;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_1;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_1;
+        talk_text_table = encounter_girl_birthday_text_section_1;
+        talk_command_table = encounter_girl_birthday_command_section_1;
+        talk_voice_table = encounter_girl_birthday_voice_section_1;
         break;
     case GIRL_MIO:
-        D_80145048 = D_80144F24;
-        D_8014504C = D_80144F58;
-        D_80145050 = D_80144F8C;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_5;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_5;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_5;
         break;
     case GIRL_YUINA:
-        D_80145048 = D_80144F18;
-        D_8014504C = D_80144F4C;
-        D_80145050 = D_80144F80;
-        talk_text_table = D_80144F18;
-        talk_command_table = D_80144F4C;
-        talk_voice_table = D_80144F80;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_2;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_2;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_2;
+        talk_text_table = encounter_girl_birthday_text_section_2;
+        talk_command_table = encounter_girl_birthday_command_section_2;
+        talk_voice_table = encounter_girl_birthday_voice_section_2;
         break;
     case GIRL_AYAKO:
-        D_80145048 = D_80144F1C;
-        D_8014504C = D_80144F50;
-        D_80145050 = D_80144F84;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_3;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_3;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_3;
         break;
     case GIRL_SAKI:
-        D_80145048 = D_80144F38;
-        D_8014504C = D_80144F6C;
-        D_80145050 = D_80144FA0;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_10;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_10;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_10;
         break;
     case GIRL_YUKARI:
-        D_80145048 = D_80144F28;
-        D_8014504C = D_80144F5C;
-        D_80145050 = D_80144F90;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_6;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_6;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_6;
         break;
     case GIRL_NOZOMI:
-        D_80145048 = D_80144F30;
-        D_8014504C = D_80144F64;
-        D_80145050 = D_80144F98;
-        talk_text_table = D_80144F30;
-        talk_command_table = D_80144F64;
-        talk_voice_table = D_80144F98;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_8;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_8;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_8;
+        talk_text_table = encounter_girl_birthday_text_section_8;
+        talk_command_table = encounter_girl_birthday_command_section_8;
+        talk_voice_table = encounter_girl_birthday_voice_section_8;
         if (zyotai < 2) {
-            D_80145048 = D_80144F2C;
-            D_8014504C = D_80144F60;
-            D_80145050 = D_80144F94;
-            talk_text_table = D_80144F2C;
-            talk_command_table = D_80144F60;
-            talk_voice_table = D_80144F94;
+            encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_7;
+            encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_7;
+            encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_7;
+            talk_text_table = encounter_girl_birthday_text_section_7;
+            talk_command_table = encounter_girl_birthday_command_section_7;
+            talk_voice_table = encounter_girl_birthday_voice_section_7;
         }
         break;
     case GIRL_MIRA:
-        D_80145048 = D_80144F20;
-        D_8014504C = D_80144F54;
-        D_80145050 = D_80144F88;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_4;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_4;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_4;
         break;
     case GIRL_YUKO:
-        D_80145048 = D_80144F10;
-        D_8014504C = D_80144F44;
-        D_80145050 = D_80144F78;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_0;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_0;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_0;
         break;
     case GIRL_MEGUMI:
-        D_80145048 = D_80144F34;
-        D_8014504C = D_80144F68;
-        D_80145050 = D_80144F9C;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_9;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_9;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_9;
         break;
     case GIRL_YUMI:
-        D_80145048 = D_80144F40;
-        D_8014504C = D_80144F74;
-        D_80145050 = D_80144FA8;
+        encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_12;
+        encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_12;
+        encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_12;
         break;
     }
     if (gs->month >= 4) {
-        D_8014506C = gs->year - 0x5F;
+        encounter_girl_birthday_school_year = gs->year - 0x5F;
     } else {
-        D_8014506C = gs->year - 0x60;
+        encounter_girl_birthday_school_year = gs->year - 0x60;
     }
-    D_80145070 = 0;
-    D_80145078 = 0;
+    encounter_girl_birthday_portrait_active = 0;
+    encounter_girl_birthday_phone_phase_counter = 0;
     if ((gs->year == 0x5F && gs->month == 6 && gs->day == 3) || (gs->year == 0x60 && gs->month == 6 && gs->day == 1) || (gs->year == 0x61 && gs->month == 6 && gs->day == 7) || (gs->year == 0x5F && gs->month == 10 && gs->day == 14) || (gs->year == 0x60 && gs->month == 10 && gs->day == 12) || (gs->year == 0x61 && gs->month == 10 && gs->day == 11)) {
         rect.x = 0x140;
         rect.y = 0x1A0;
@@ -921,15 +921,15 @@ s32 func_80135DC0(void) {
         func_8009C7F8(&rect, 8, 0, 0);
     }
     mode_step_next();
-    if (D_80145074 != 0 || (gs->day_event_done_bits & 0x20)) {
+    if (encounter_girl_birthday_background_variant != 0 || (gs->day_event_done_bits & 0x20)) {
         mode_step_set(0x43);
     }
-    if (D_80145088 != 0) {
+    if (encounter_girl_birthday_holiday_context != 0) {
         mode_step_set(0x43);
     }
 }
 
-void func_80136694(void) {
+void encounter_girl_birthday_opening_skip(void) {
     mode_step_next();
     mode_step_next();
     mode_step_next();
@@ -938,19 +938,19 @@ void func_80136694(void) {
     mode_step_next();
 }
 
-void func_801366DC(void) {
-    if (D_80145088 == 1) {
+void encounter_girl_birthday_context_skip(void) {
+    if (encounter_girl_birthday_holiday_context == 1) {
         mode_step_next();
     }
     mode_step_next();
 }
 
-s32 func_80136714(void) {
-    if (D_80145088 == 0) {
+s32 encounter_girl_birthday_appointment_check(void) {
+    if (encounter_girl_birthday_holiday_context == 0) {
         game_state.mode_step += 5;
     } else {
-        D_80145060 = 0x13;
-        if ((appointment_find_today(game_state.year, game_state.month, game_state.day) > 0) && (game_state.current_girl == ((u32)(game_state.unk_54C[0].w << 3) >> 0x1C)) && (D_80122D4C == 0)) {
+        encounter_girl_birthday_group = 0x13;
+        if ((hud_appointment_find_today(game_state.year, game_state.month, game_state.day) > 0) && (game_state.current_girl == ((u32)(game_state.unk_54C[0].w << 3) >> 0x1C)) && (D_80122D4C == 0)) {
             mode_step_set(0x3D);
             return 0;
         }
@@ -958,17 +958,17 @@ s32 func_80136714(void) {
     mode_step_next();
 }
 
-void func_801367C4(void) {
+void encounter_girl_birthday_corridor_bg_load(void) {
     bg_read_sub2(0x4045);
     mode_step_next();
 }
 
-void func_801367EC(void) {
+void encounter_girl_birthday_location_select(void) {
     u32 club;
 
     audio_bank_start(1, 0x200);
-    if (D_80145088 == 0) {
-        if (D_80145090 == 0) {
+    if (encounter_girl_birthday_holiday_context == 0) {
+        if (encounter_girl_birthday_club_context == 0) {
             strcpy(D_800CA19C, "廊下");
             bg_read_sub2(0x4045);
             event_log_add(0xA, 0x25);
@@ -1022,7 +1022,7 @@ void func_801367EC(void) {
             }
             event_log_add(10, (game_state.player_flags.h >> 12) + 0x33);
         }
-    } else if ((D_80145074 != 0) || (game_state.day_event_done_bits & 0x20)) {
+    } else if ((encounter_girl_birthday_background_variant != 0) || (game_state.day_event_done_bits & 0x20)) {
         if (game_state.current_girl == GIRL_SHIORI) {
             strcpy(D_800CA19C, "自宅前");
             bg_read_sub2(0x4156);
@@ -1044,38 +1044,38 @@ void func_801367EC(void) {
     mode_step_next();
 }
 
-void func_80136B2C(void) {
-    talk_tables = &D_80145060;
-    D_800CA138 = &D_80145064;
-    D_800CA13C = D_80145048;
-    D_800CA140 = D_8014504C;
-    D_800CA144 = D_80145050;
+void encounter_girl_birthday_talk(void) {
+    talk_tables = &encounter_girl_birthday_group;
+    D_800CA138 = &encounter_girl_birthday_line;
+    D_800CA13C = encounter_girl_birthday_text_table;
+    D_800CA140 = encounter_girl_birthday_command_table;
+    D_800CA144 = encounter_girl_birthday_voice_table;
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_80136BA8(void) {
-    talk_tables = &D_80145060;
-    D_800CA138 = &D_80145064;
-    D_800CA13C = D_80145048;
-    D_800CA140 = D_8014504C;
-    D_800CA144 = D_80145050;
+void encounter_girl_birthday_choice_talk(void) {
+    talk_tables = &encounter_girl_birthday_group;
+    D_800CA138 = &encounter_girl_birthday_line;
+    D_800CA13C = encounter_girl_birthday_text_table;
+    D_800CA140 = encounter_girl_birthday_command_table;
+    D_800CA144 = encounter_girl_birthday_voice_table;
     talk_run(0xFF, 1, 0);
 }
 
-/* The bnez slot of the D_80145088 test takes the selector lui only because D_80145094 (above) names this
+/* The bnez slot of the encounter_girl_birthday_holiday_context test takes the selector lui only because encounter_girl_birthday_steps (above) names this
  * function: the switch dispatch then has an edge back to the entry, which makes the switch head light
  * enough for as1 to scan it (T-11900; T-25150 rule, history T-24203, T-24900). */
-void func_80136C20(void) {
+void encounter_girl_birthday_portrait_read(void) {
     u8 girl;
     GekoWords11 all;
     GekoWords2 first;
     GekoWords2 second;
     GekoWords2 third;
 
-    all = D_801451B8;
-    first = D_801451E4;
-    second = D_801451EC;
-    third = D_801451F4;
+    all = encounter_girl_birthday_shiori_club_portraits;
+    first = encounter_girl_birthday_mio_club_portraits;
+    second = encounter_girl_birthday_yuina_club_portraits;
+    third = encounter_girl_birthday_ayako_club_portraits;
     if (game_state.month < 6 || game_state.month >= 10) {
         all.v[0] = 0x544A;
         all.v[3] = 0x544A;
@@ -1084,9 +1084,9 @@ void func_80136C20(void) {
         second.v[1] = 0x522E;
         third.v[1] = 0x58AF;
     }
-    if (D_80145088 == 0) {
+    if (encounter_girl_birthday_holiday_context == 0) {
         girl = game_state.current_girl;
-        if (D_80145090 == 0) {
+        if (encounter_girl_birthday_club_context == 0) {
             read_bustup_uniform();
             return;
         }
@@ -1122,87 +1122,87 @@ void func_80136C20(void) {
     read_bustup();
 }
 
-void func_80136E7C(void) {
+void encounter_girl_birthday_phone_gate_check(void) {
     if (game_state.girls[game_state.current_girl].flags.f.b3) {
-        D_80145060 += 1;
+        encounter_girl_birthday_group += 1;
         mode_step_next();
     } else {
-        func_80137560();
+        encounter_girl_birthday_closing_jump();
     }
 }
 
-void func_80136EE4(void) {
-    if (D_80145088 == 0) {
-        func_80136B2C();
+void encounter_girl_birthday_school_talk(void) {
+    if (encounter_girl_birthday_holiday_context == 0) {
+        encounter_girl_birthday_talk();
         return;
     }
     mode_step_next();
 }
 
-void func_80136F20(void) {
+void encounter_girl_birthday_girl_state_group_offset(void) {
     s32 v;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     v = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
     if (v == 2) {
-        D_80145060 += 2;
+        encounter_girl_birthday_group += 2;
     } else if (v == 3) {
-        D_80145060 += 4;
+        encounter_girl_birthday_group += 4;
     } else if (v == 4) {
-        D_80145060 += 6;
+        encounter_girl_birthday_group += 6;
     }
     mode_step_next();
 }
 
-void func_80136FB8(void) {
-    if (D_80145088 == 1) {
+void encounter_girl_birthday_school_girl_in(void) {
+    if (encounter_girl_birthday_holiday_context == 1) {
         mode_step_next();
         return;
     }
     normal_date_girl_in();
 }
 
-void func_80136FF8(void) {
-    if (D_80145088 == 1) {
+void encounter_girl_birthday_holiday_girl_in(void) {
+    if (encounter_girl_birthday_holiday_context == 1) {
         normal_date_girl_in();
         return;
     }
-    D_80145060 = 4;
+    encounter_girl_birthday_group = 4;
     mode_step_next();
 }
 
-void func_80137040(void) {
+void encounter_girl_birthday_reply_group_select(void) {
     s32 v;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     v = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    if (D_80145088 == 1) {
-        D_80145060 = 6;
+    if (encounter_girl_birthday_holiday_context == 1) {
+        encounter_girl_birthday_group = 6;
     }
     if (v == 2) {
-        D_80145060 += 2;
+        encounter_girl_birthday_group += 2;
     } else if (v == 3) {
-        D_80145060 += 4;
+        encounter_girl_birthday_group += 4;
     } else if (v == 4) {
-        D_80145060 += 6;
+        encounter_girl_birthday_group += 6;
     }
     mode_step_next();
 }
 
-void func_801370EC(void) {
-    D_80145060 = (D_80122CDC * 2) + 0xD;
+void encounter_girl_birthday_choice_group_select(void) {
+    encounter_girl_birthday_group = (D_80122CDC * 2) + 0xD;
     mode_step_next();
 }
 
 /* K&R int return without final return statement: early returns load 0 into $v0, tail falls through. T-24090 */
-s32 func_80137120(void) {
-    if (D_80145078 == 0) {
-        if (D_80145080 < 0x5A) {
-            D_80145080 += 1;
-            if (D_80145080 == 1) {
+s32 encounter_girl_birthday_phone_ring_wait(void) {
+    if (encounter_girl_birthday_phone_phase_counter == 0) {
+        if (encounter_girl_birthday_phone_prelude_timer < 0x5A) {
+            encounter_girl_birthday_phone_prelude_timer += 1;
+            if (encounter_girl_birthday_phone_prelude_timer == 1) {
                 audio_command(0x60A);
             }
-            if (D_80145080 == 0x1E) {
+            if (encounter_girl_birthday_phone_prelude_timer == 0x1E) {
                 audio_command(0x604);
             }
             return 0;
@@ -1223,19 +1223,19 @@ s32 func_80137120(void) {
         }
         k_reset(1);
     }
-    D_80145078 += 1;
+    encounter_girl_birthday_phone_phase_counter += 1;
     mode_step_next();
 }
 
 /* K&R int return without final return statement: early returns load 0 into $v0, tail falls through. T-24090 */
-s32 func_801372D4(void) {
-    if (D_80145078 == 0) {
-        if (D_80145080 < 0x5A) {
-            D_80145080 += 1;
-            if (D_80145080 == 1) {
+s32 encounter_girl_birthday_phone_talk(void) {
+    if (encounter_girl_birthday_phone_phase_counter == 0) {
+        if (encounter_girl_birthday_phone_prelude_timer < 0x5A) {
+            encounter_girl_birthday_phone_prelude_timer += 1;
+            if (encounter_girl_birthday_phone_prelude_timer == 1) {
                 audio_command(0x60A);
             }
-            if (D_80145080 == 0x1E) {
+            if (encounter_girl_birthday_phone_prelude_timer == 0x1E) {
                 audio_command(0x604);
             }
             return 0;
@@ -1244,64 +1244,64 @@ s32 func_801372D4(void) {
             audio_command((((girl_phone_digits[game_state.current_girl][game_state.mode_step_timer.u >> 3] + 0x505) & 0xFF) | 0x600) & 0xFFFF);
         }
         game_state.mode_step_timer.u += 1;
-        if (!(game_state.mode_step_timer.u & 0x3F) && game_state.mode_step_timer.u < (u32)(D_80145084 << 6)) {
+        if (!(game_state.mode_step_timer.u & 0x3F) && game_state.mode_step_timer.u < (u32)(encounter_girl_birthday_phone_ring_limit << 6)) {
             k_reset(1);
             set_kanji_string(-0x80, 0x30, 0, "プルルルルル", 0);
             audio_command(0x608);
         }
         if ((game_state.pad_pressed & 0x400040) && game_state.mode_step_timer.u >= 0x40U) {
             audio_command(0x1508);
-        } else if (game_state.mode_step_timer.u < (u32)(D_80145084 << 6)) {
+        } else if (game_state.mode_step_timer.u < (u32)(encounter_girl_birthday_phone_ring_limit << 6)) {
             return 0;
         }
         k_reset(1);
         audio_command(0x60B);
     }
-    D_80145078 += 1;
+    encounter_girl_birthday_phone_phase_counter += 1;
     normal_date_speak();
 }
 
-void func_801374A8(void) {
+void encounter_girl_birthday_first_choice_apply(void) {
     if (D_80122CDC != 0) {
         game_state.girls[game_state.current_girl].affection -= 1;
         game_state.girls[game_state.current_girl].syoushin += 5;
         check_para_limit();
-        D_8014508C = 0;
-        func_80137560();
+        encounter_girl_birthday_zero_choice = 0;
+        encounter_girl_birthday_closing_jump();
         return;
     }
-    D_8014508C = 1;
-    D_80145060 += 1;
+    encounter_girl_birthday_zero_choice = 1;
+    encounter_girl_birthday_group += 1;
     mode_step_next();
 }
 
-void func_80137560(void) {
+void encounter_girl_birthday_closing_jump(void) {
     mode_step_set(0x31);
 }
 
-void func_80137580(void) {
-    D_80145068 = D_80145060;
-    D_80145054 = D_80145048;
-    D_80145058 = D_8014504C;
-    D_8014505C = D_80145050;
-    D_80145060 = game_state.current_girl * 3;
-    D_80145060 += D_8014506C;
-    D_80145048 = D_80144F3C;
-    D_8014504C = D_80144F70;
-    D_80145050 = D_80144FA4;
+void encounter_girl_birthday_reply_script_push(void) {
+    encounter_girl_birthday_saved_group = encounter_girl_birthday_group;
+    encounter_girl_birthday_saved_text_table = encounter_girl_birthday_text_table;
+    encounter_girl_birthday_saved_command_table = encounter_girl_birthday_command_table;
+    encounter_girl_birthday_saved_voice_table = encounter_girl_birthday_voice_table;
+    encounter_girl_birthday_group = game_state.current_girl * 3;
+    encounter_girl_birthday_group += encounter_girl_birthday_school_year;
+    encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_11;
+    encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_11;
+    encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_11;
     mode_step_next();
 }
 
-void func_80137630(void) {
-    D_80145060 = D_80145068;
-    D_80145048 = D_80145054;
-    D_8014504C = D_80145058;
-    D_80145050 = D_8014505C;
-    func_80137894();
+void encounter_girl_birthday_reply_script_pop(void) {
+    encounter_girl_birthday_group = encounter_girl_birthday_saved_group;
+    encounter_girl_birthday_text_table = encounter_girl_birthday_saved_text_table;
+    encounter_girl_birthday_command_table = encounter_girl_birthday_saved_command_table;
+    encounter_girl_birthday_voice_table = encounter_girl_birthday_saved_voice_table;
+    encounter_girl_birthday_reply_name_copy();
     mode_step_next();
 }
 
-void func_80137694(void) {
+void encounter_girl_birthday_reply_apply(void) {
     portrait_layout_set(D_80122CDC + 1);
     if (D_80122CDC == 0) {
         game_state.girls[game_state.current_girl].tokimeki += 3;
@@ -1319,9 +1319,9 @@ void func_80137694(void) {
     mode_step_next();
 }
 
-void func_80137844(void) {
-    if (D_80145088 == 1) {
-        D_80145070 = 1;
+void encounter_girl_birthday_holiday_portrait_show(void) {
+    if (encounter_girl_birthday_holiday_context == 1) {
+        encounter_girl_birthday_portrait_active = 1;
         func_8007C8A4();
         return;
     }
@@ -1329,307 +1329,307 @@ void func_80137844(void) {
     mode_step_next();
 }
 
-void func_80137894(void) {
+void encounter_girl_birthday_reply_name_copy(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     DateTxt tbl;
 
-    tbl = D_801451FC;
-    strcpy(D_800CA25C, &tbl.s[game_state.current_girl * 0x129 + D_8014506C * 0x63 + D_80122CDC * 0x21]);
+    tbl = encounter_girl_birthday_reply_names;
+    strcpy(D_800CA25C, &tbl.s[game_state.current_girl * 0x129 + encounter_girl_birthday_school_year * 0x63 + D_80122CDC * 0x21]);
 }
 
-void func_80137954(void) {
-    if (D_8014508C == 0) {
+void encounter_girl_birthday_background_out(void) {
+    if (encounter_girl_birthday_zero_choice == 0) {
         mode_step_next();
         return;
     }
     normal_date_bg_out();
 }
 
-void func_80137990(void) {
-    D_80145EC0 = 0x80198304;
-    D_80145FFC = 0x80198340;
-    D_80145EC4 = 0x801987BC;
-    D_80146000 = 0x801987E4;
-    D_80145EC8 = 0x80198B9C;
-    D_80146004 = 0x80198BBC;
-    D_80145ECC = 0x80198E94;
-    D_80146008 = 0x80198EB8;
-    D_80145ED0 = 0x801991B8;
-    D_8014600C = 0x801991E0;
-    D_80145ED4 = 0x80199608;
-    D_80146010 = 0x80199640;
-    D_80145ED8 = 0x80198390;
-    D_80146014 = 0x801983C0;
-    D_80145EDC = 0x801986F4;
-    D_80146018 = 0x8019870C;
-    D_80145EE0 = 0x80198A78;
-    D_8014601C = 0x80198AB4;
-    D_80145EE4 = 0x80198FFC;
-    D_80146020 = 0x80199028;
-    D_80145EE8 = 0x801994DC;
-    D_80146024 = 0x80199510;
-    D_80145EEC = 0x801998FC;
-    D_80146028 = 0x80199920;
-    D_80145EF0 = 0x80199D78;
-    D_8014602C = 0x80199DB8;
-    D_80145EF4 = 0x8019A584;
-    D_80146030 = 0x8019A5D8;
-    D_80145EF8 = 0x801982E8;
-    D_80146034 = 0x80198314;
-    D_80145EFC = 0x8019869C;
-    D_80146038 = 0x801986B8;
-    D_80145F00 = 0x801989DC;
-    D_8014603C = 0x801989FC;
-    D_80145F04 = 0x80198DD0;
-    D_80146040 = 0x80198DF0;
-    D_80145F08 = 0x8019915C;
-    D_80146044 = 0x80199180;
-    D_80145F0C = 0x80199604;
-    D_80146048 = 0x80199644;
-    D_80145F10 = 0x80199B18;
-    D_8014604C = 0x80199B38;
-    D_80145F14 = 0x8019894C;
-    D_80146050 = 0x801989C4;
-    D_80145F18 = 0x80199068;
-    D_80146054 = 0x80199098;
-    D_80145F1C = 0x801994E4;
-    D_80146058 = 0x80199524;
-    D_80145F20 = 0x801983D0;
-    D_8014605C = 0x801983FC;
-    D_80145F24 = 0x8019889C;
-    D_80146060 = 0x801988D4;
-    D_80145F28 = 0x80198D54;
-    D_80146064 = 0x80198D88;
-    D_80145F2C = 0x80199154;
-    D_80146068 = 0x80199178;
-    D_80145F30 = 0x801996D4;
-    D_8014606C = 0x80199714;
-    D_80145F34 = 0x80199D8C;
-    D_80146070 = 0x80199DF0;
-    D_80145F38 = 0x8019829C;
-    D_80146074 = 0x801982D0;
-    D_80145F3C = 0x801986D0;
-    D_80146078 = 0x80198704;
-    D_80145F40 = 0x80198A44;
-    D_8014607C = 0x80198A6C;
-    D_80145F44 = 0x80198FF4;
-    D_80146080 = 0x80199040;
-    D_80145F48 = 0x801995F8;
-    D_80146084 = 0x8019961C;
-    D_80145F4C = 0x80199958;
-    D_80146088 = 0x8019997C;
-    D_80145F50 = 0x80199D60;
-    D_8014608C = 0x80199DB4;
-    D_80145F54 = 0x80198308;
-    D_80146090 = 0x80198330;
-    D_80145F58 = 0x801987A8;
-    D_80146094 = 0x801987E4;
-    D_80145F5C = 0x80198C40;
-    D_80146098 = 0x80198C60;
-    D_80145F60 = 0x80198FA0;
-    D_8014609C = 0x80198FBC;
-    D_80145F64 = 0x80199424;
-    D_801460A0 = 0x80199464;
-    D_80145F68 = 0x801983B8;
-    D_801460A4 = 0x801983E0;
-    D_80145F6C = 0x8019881C;
-    D_801460A8 = 0x8019883C;
-    D_80145F70 = 0x80198C9C;
-    D_801460AC = 0x80198CBC;
-    D_80145F74 = 0x8019920C;
-    D_801460B0 = 0x80199240;
-    D_80145F78 = 0x801997C0;
-    D_801460B4 = 0x801997E0;
-    D_80145F7C = 0x80199DC0;
-    D_801460B8 = 0x80199E1C;
-    D_80145F80 = 0x8019A30C;
-    D_801460BC = 0x8019A344;
-    D_80145F84 = 0x80198374;
-    D_801460C0 = 0x801983A0;
-    D_80145F88 = 0x80198C3C;
-    D_801460C4 = 0x80198CAC;
-    D_80145F8C = 0x80199520;
-    D_801460C8 = 0x8019955C;
-    D_80145F90 = 0x80199CA4;
-    D_801460CC = 0x80199CF0;
-    D_80145F94 = 0x8019A4D8;
-    D_801460D0 = 0x8019A518;
-    D_80145F98 = 0x80198418;
-    D_801460D4 = 0x8019845C;
-    D_80145F9C = 0x801989A4;
-    D_801460D8 = 0x801989BC;
-    D_80145FA0 = 0x80198DBC;
-    D_801460DC = 0x80198DFC;
-    D_80145FA4 = 0x80199540;
-    D_801460E0 = 0x801995CC;
-    D_80145FA8 = 0x80199BD8;
-    D_801460E4 = 0x80199BF8;
-    D_80145FAC = 0x80199F04;
-    D_801460E8 = 0x80199F2C;
-    D_80145FB0 = 0x8019A37C;
-    D_801460EC = 0x8019A3B8;
-    D_80145FB4 = 0x801987E8;
-    D_801460F0 = 0x80198850;
-    D_80145FB8 = 0x8019932C;
-    D_801460F4 = 0x80199360;
-    D_80145FBC = 0x80199A80;
-    D_801460F8 = 0x80199ACC;
-    D_80145FC0 = 0x80199F68;
-    D_801460FC = 0x80199F90;
-    D_80145FC4 = 0x8019A474;
-    D_80146100 = 0x8019A4B8;
-    D_80145FC8 = 0x8019ABDC;
-    D_80146104 = 0x8019AC40;
-    D_80145FCC = 0x80198784;
-    D_80146108 = 0x801987F8;
-    D_80145FD0 = 0x80198FB4;
-    D_8014610C = 0x80198FE0;
-    D_80145FD4 = 0x80199418;
-    D_80146110 = 0x8019943C;
-    D_80145FD8 = 0x801998C8;
-    D_80146114 = 0x801998F4;
-    D_80145FDC = 0x80199EF4;
-    D_80146118 = 0x80199F24;
-    D_80145FE0 = 0x8019A58C;
-    D_8014611C = 0x8019A5C8;
-    D_80145FE4 = 0x8019AB0C;
-    D_80146120 = 0x8019AB4C;
-    D_80145FE8 = 0x80199B14;
-    D_80146124 = 0x80199B6C;
-    D_80145FEC = 0x80199F30;
-    D_80146128 = 0x80199F50;
-    D_80145FF0 = 0x8019A0E0;
-    D_8014612C = 0x8019A0F8;
-    D_80145FF4 = 0x8019A628;
-    D_80146130 = 0x8019A690;
-    D_80145FF8 = 0x8019AFF8;
-    D_80146134 = 0x8019B06C;
-    D_80146138 = 0x801985A4;
-    D_8014613C = 0x8019897C;
-    D_80146140 = 0x80198D34;
-    D_80146144 = 0x80198FFC;
-    D_80146148 = 0x80199340;
-    D_8014614C = 0x80199850;
-    D_80146150 = 0x8019861C;
-    D_80146154 = 0x801987A4;
-    D_80146158 = 0x80198CE0;
-    D_8014615C = 0x80199230;
-    D_80146160 = 0x801996CC;
-    D_80146164 = 0x80199AEC;
-    D_80146168 = 0x8019A020;
-    D_8014616C = 0x8019AA8C;
-    D_80146170 = 0x801984E8;
-    D_80146174 = 0x801987DC;
-    D_80146178 = 0x80198BAC;
-    D_8014617C = 0x80198F4C;
-    D_80146180 = 0x801992C4;
-    D_80146184 = 0x80199890;
-    D_80146188 = 0x80199CCC;
-    D_8014618C = 0x80198F14;
-    D_80146190 = 0x80199190;
-    D_80146194 = 0x801997F8;
-    D_80146198 = 0x8019863C;
-    D_8014619C = 0x80198A5C;
-    D_801461A0 = 0x80198F78;
-    D_801461A4 = 0x801992BC;
-    D_801461A8 = 0x80199A20;
-    D_801461AC = 0x8019A050;
-    D_801461B0 = 0x80198470;
-    D_801461B4 = 0x801988BC;
-    D_801461B8 = 0x80198B98;
-    D_801461BC = 0x80199388;
-    D_801461C0 = 0x80199804;
-    D_801461C4 = 0x80199A88;
-    D_801461C8 = 0x8019A044;
-    D_801461CC = 0x8019851C;
-    D_801461D0 = 0x801989A4;
-    D_801461D4 = 0x80198DBC;
-    D_801461D8 = 0x80199134;
-    D_801461DC = 0x80199678;
-    D_801461E0 = 0x801985E4;
-    D_801461E4 = 0x80198998;
-    D_801461E8 = 0x80198E50;
-    D_801461EC = 0x80199484;
-    D_801461F0 = 0x801999C8;
-    D_801461F4 = 0x8019A0AC;
-    D_801461F8 = 0x8019A500;
-    D_801461FC = 0x801985A8;
-    D_80146200 = 0x801991DC;
-    D_80146204 = 0x801997C0;
-    D_80146208 = 0x8019A0C0;
-    D_8014620C = 0x8019A840;
-    D_80146210 = 0x80198784;
-    D_80146214 = 0x80198B14;
-    D_80146218 = 0x8019902C;
-    D_8014621C = 0x80199A18;
-    D_80146220 = 0x80199D38;
-    D_80146224 = 0x8019A0E0;
-    D_80146228 = 0x8019A5CC;
-    D_8014622C = 0x80198E04;
-    D_80146230 = 0x80199664;
-    D_80146234 = 0x80199D90;
-    D_80146238 = 0x8019A10C;
-    D_8014623C = 0x8019A73C;
-    D_80146240 = 0x8019AFE8;
-    D_80146244 = 0x80198CF4;
-    D_80146248 = 0x801991E8;
-    D_8014624C = 0x801995D0;
-    D_80146250 = 0x80199B34;
-    D_80146254 = 0x8019A180;
-    D_80146258 = 0x8019A848;
-    D_8014625C = 0x8019ADD0;
-    D_80146260 = 0x80199DE4;
-    D_80146264 = 0x8019A05C;
-    D_80146268 = 0x8019A174;
-    D_8014626C = 0x8019AB34;
-    D_80146270 = 0x8019B494;
+void encounter_scene_scripts_bind(void) {
+    encounter_scene_text_section_0 = 0x80198304;
+    encounter_scene_command_section_0 = 0x80198340;
+    encounter_scene_text_section_1 = 0x801987BC;
+    encounter_scene_command_section_1 = 0x801987E4;
+    encounter_scene_text_section_2 = 0x80198B9C;
+    encounter_scene_command_section_2 = 0x80198BBC;
+    encounter_scene_text_section_3 = 0x80198E94;
+    encounter_scene_command_section_3 = 0x80198EB8;
+    encounter_scene_text_section_4 = 0x801991B8;
+    encounter_scene_command_section_4 = 0x801991E0;
+    encounter_scene_text_section_5 = 0x80199608;
+    encounter_scene_command_section_5 = 0x80199640;
+    encounter_scene_text_section_6 = 0x80198390;
+    encounter_scene_command_section_6 = 0x801983C0;
+    encounter_scene_text_section_7 = 0x801986F4;
+    encounter_scene_command_section_7 = 0x8019870C;
+    encounter_scene_text_section_8 = 0x80198A78;
+    encounter_scene_command_section_8 = 0x80198AB4;
+    encounter_scene_text_section_9 = 0x80198FFC;
+    encounter_scene_command_section_9 = 0x80199028;
+    encounter_scene_text_section_10 = 0x801994DC;
+    encounter_scene_command_section_10 = 0x80199510;
+    encounter_scene_text_section_11 = 0x801998FC;
+    encounter_scene_command_section_11 = 0x80199920;
+    encounter_scene_text_section_12 = 0x80199D78;
+    encounter_scene_command_section_12 = 0x80199DB8;
+    encounter_scene_text_section_13 = 0x8019A584;
+    encounter_scene_command_section_13 = 0x8019A5D8;
+    encounter_scene_text_section_14 = 0x801982E8;
+    encounter_scene_command_section_14 = 0x80198314;
+    encounter_scene_text_section_15 = 0x8019869C;
+    encounter_scene_command_section_15 = 0x801986B8;
+    encounter_scene_text_section_16 = 0x801989DC;
+    encounter_scene_command_section_16 = 0x801989FC;
+    encounter_scene_text_section_17 = 0x80198DD0;
+    encounter_scene_command_section_17 = 0x80198DF0;
+    encounter_scene_text_section_18 = 0x8019915C;
+    encounter_scene_command_section_18 = 0x80199180;
+    encounter_scene_text_section_19 = 0x80199604;
+    encounter_scene_command_section_19 = 0x80199644;
+    encounter_scene_text_section_20 = 0x80199B18;
+    encounter_scene_command_section_20 = 0x80199B38;
+    encounter_scene_text_section_21 = 0x8019894C;
+    encounter_scene_command_section_21 = 0x801989C4;
+    encounter_scene_text_section_22 = 0x80199068;
+    encounter_scene_command_section_22 = 0x80199098;
+    encounter_scene_text_section_23 = 0x801994E4;
+    encounter_scene_command_section_23 = 0x80199524;
+    encounter_scene_text_section_24 = 0x801983D0;
+    encounter_scene_command_section_24 = 0x801983FC;
+    encounter_scene_text_section_25 = 0x8019889C;
+    encounter_scene_command_section_25 = 0x801988D4;
+    encounter_scene_text_section_26 = 0x80198D54;
+    encounter_scene_command_section_26 = 0x80198D88;
+    encounter_scene_text_section_27 = 0x80199154;
+    encounter_scene_command_section_27 = 0x80199178;
+    encounter_scene_text_section_28 = 0x801996D4;
+    encounter_scene_command_section_28 = 0x80199714;
+    encounter_scene_text_section_29 = 0x80199D8C;
+    encounter_scene_command_section_29 = 0x80199DF0;
+    encounter_scene_text_section_30 = 0x8019829C;
+    encounter_scene_command_section_30 = 0x801982D0;
+    encounter_scene_text_section_31 = 0x801986D0;
+    encounter_scene_command_section_31 = 0x80198704;
+    encounter_scene_text_section_32 = 0x80198A44;
+    encounter_scene_command_section_32 = 0x80198A6C;
+    encounter_scene_text_section_33 = 0x80198FF4;
+    encounter_scene_command_section_33 = 0x80199040;
+    encounter_scene_text_section_34 = 0x801995F8;
+    encounter_scene_command_section_34 = 0x8019961C;
+    encounter_scene_text_section_35 = 0x80199958;
+    encounter_scene_command_section_35 = 0x8019997C;
+    encounter_scene_text_section_36 = 0x80199D60;
+    encounter_scene_command_section_36 = 0x80199DB4;
+    encounter_scene_text_section_37 = 0x80198308;
+    encounter_scene_command_section_37 = 0x80198330;
+    encounter_scene_text_section_38 = 0x801987A8;
+    encounter_scene_command_section_38 = 0x801987E4;
+    encounter_scene_text_section_39 = 0x80198C40;
+    encounter_scene_command_section_39 = 0x80198C60;
+    encounter_scene_text_section_40 = 0x80198FA0;
+    encounter_scene_command_section_40 = 0x80198FBC;
+    encounter_scene_text_section_41 = 0x80199424;
+    encounter_scene_command_section_41 = 0x80199464;
+    encounter_scene_text_section_42 = 0x801983B8;
+    encounter_scene_command_section_42 = 0x801983E0;
+    encounter_scene_text_section_43 = 0x8019881C;
+    encounter_scene_command_section_43 = 0x8019883C;
+    encounter_scene_text_section_44 = 0x80198C9C;
+    encounter_scene_command_section_44 = 0x80198CBC;
+    encounter_scene_text_section_45 = 0x8019920C;
+    encounter_scene_command_section_45 = 0x80199240;
+    encounter_scene_text_section_46 = 0x801997C0;
+    encounter_scene_command_section_46 = 0x801997E0;
+    encounter_scene_text_section_47 = 0x80199DC0;
+    encounter_scene_command_section_47 = 0x80199E1C;
+    encounter_scene_text_section_48 = 0x8019A30C;
+    encounter_scene_command_section_48 = 0x8019A344;
+    encounter_scene_text_section_49 = 0x80198374;
+    encounter_scene_command_section_49 = 0x801983A0;
+    encounter_scene_text_section_50 = 0x80198C3C;
+    encounter_scene_command_section_50 = 0x80198CAC;
+    encounter_scene_text_section_51 = 0x80199520;
+    encounter_scene_command_section_51 = 0x8019955C;
+    encounter_scene_text_section_52 = 0x80199CA4;
+    encounter_scene_command_section_52 = 0x80199CF0;
+    encounter_scene_text_section_53 = 0x8019A4D8;
+    encounter_scene_command_section_53 = 0x8019A518;
+    encounter_scene_text_section_54 = 0x80198418;
+    encounter_scene_command_section_54 = 0x8019845C;
+    encounter_scene_text_section_55 = 0x801989A4;
+    encounter_scene_command_section_55 = 0x801989BC;
+    encounter_scene_text_section_56 = 0x80198DBC;
+    encounter_scene_command_section_56 = 0x80198DFC;
+    encounter_scene_text_section_57 = 0x80199540;
+    encounter_scene_command_section_57 = 0x801995CC;
+    encounter_scene_text_section_58 = 0x80199BD8;
+    encounter_scene_command_section_58 = 0x80199BF8;
+    encounter_scene_text_section_59 = 0x80199F04;
+    encounter_scene_command_section_59 = 0x80199F2C;
+    encounter_scene_text_section_60 = 0x8019A37C;
+    encounter_scene_command_section_60 = 0x8019A3B8;
+    encounter_scene_text_section_61 = 0x801987E8;
+    encounter_scene_command_section_61 = 0x80198850;
+    encounter_scene_text_section_62 = 0x8019932C;
+    encounter_scene_command_section_62 = 0x80199360;
+    encounter_scene_text_section_63 = 0x80199A80;
+    encounter_scene_command_section_63 = 0x80199ACC;
+    encounter_scene_text_section_64 = 0x80199F68;
+    encounter_scene_command_section_64 = 0x80199F90;
+    encounter_scene_text_section_65 = 0x8019A474;
+    encounter_scene_command_section_65 = 0x8019A4B8;
+    encounter_scene_text_section_66 = 0x8019ABDC;
+    encounter_scene_command_section_66 = 0x8019AC40;
+    encounter_scene_text_section_67 = 0x80198784;
+    encounter_scene_command_section_67 = 0x801987F8;
+    encounter_scene_text_section_68 = 0x80198FB4;
+    encounter_scene_command_section_68 = 0x80198FE0;
+    encounter_scene_text_section_69 = 0x80199418;
+    encounter_scene_command_section_69 = 0x8019943C;
+    encounter_scene_text_section_70 = 0x801998C8;
+    encounter_scene_command_section_70 = 0x801998F4;
+    encounter_scene_text_section_71 = 0x80199EF4;
+    encounter_scene_command_section_71 = 0x80199F24;
+    encounter_scene_text_section_72 = 0x8019A58C;
+    encounter_scene_command_section_72 = 0x8019A5C8;
+    encounter_scene_text_section_73 = 0x8019AB0C;
+    encounter_scene_command_section_73 = 0x8019AB4C;
+    encounter_scene_text_section_74 = 0x80199B14;
+    encounter_scene_command_section_74 = 0x80199B6C;
+    encounter_scene_text_section_75 = 0x80199F30;
+    encounter_scene_command_section_75 = 0x80199F50;
+    encounter_scene_text_section_76 = 0x8019A0E0;
+    encounter_scene_command_section_76 = 0x8019A0F8;
+    encounter_scene_text_section_77 = 0x8019A628;
+    encounter_scene_command_section_77 = 0x8019A690;
+    encounter_scene_text_section_78 = 0x8019AFF8;
+    encounter_scene_command_section_78 = 0x8019B06C;
+    encounter_scene_voice_section_0 = 0x801985A4;
+    encounter_scene_voice_section_1 = 0x8019897C;
+    encounter_scene_voice_section_2 = 0x80198D34;
+    encounter_scene_voice_section_3 = 0x80198FFC;
+    encounter_scene_voice_section_4 = 0x80199340;
+    encounter_scene_voice_section_5 = 0x80199850;
+    encounter_scene_voice_section_6 = 0x8019861C;
+    encounter_scene_voice_section_7 = 0x801987A4;
+    encounter_scene_voice_section_8 = 0x80198CE0;
+    encounter_scene_voice_section_9 = 0x80199230;
+    encounter_scene_voice_section_10 = 0x801996CC;
+    encounter_scene_voice_section_11 = 0x80199AEC;
+    encounter_scene_voice_section_12 = 0x8019A020;
+    encounter_scene_voice_section_13 = 0x8019AA8C;
+    encounter_scene_voice_section_14 = 0x801984E8;
+    encounter_scene_voice_section_15 = 0x801987DC;
+    encounter_scene_voice_section_16 = 0x80198BAC;
+    encounter_scene_voice_section_17 = 0x80198F4C;
+    encounter_scene_voice_section_18 = 0x801992C4;
+    encounter_scene_voice_section_19 = 0x80199890;
+    encounter_scene_voice_section_20 = 0x80199CCC;
+    encounter_scene_voice_section_21 = 0x80198F14;
+    encounter_scene_voice_section_22 = 0x80199190;
+    encounter_scene_voice_section_23 = 0x801997F8;
+    encounter_scene_voice_section_24 = 0x8019863C;
+    encounter_scene_voice_section_25 = 0x80198A5C;
+    encounter_scene_voice_section_26 = 0x80198F78;
+    encounter_scene_voice_section_27 = 0x801992BC;
+    encounter_scene_voice_section_28 = 0x80199A20;
+    encounter_scene_voice_section_29 = 0x8019A050;
+    encounter_scene_voice_section_30 = 0x80198470;
+    encounter_scene_voice_section_31 = 0x801988BC;
+    encounter_scene_voice_section_32 = 0x80198B98;
+    encounter_scene_voice_section_33 = 0x80199388;
+    encounter_scene_voice_section_34 = 0x80199804;
+    encounter_scene_voice_section_35 = 0x80199A88;
+    encounter_scene_voice_section_36 = 0x8019A044;
+    encounter_scene_voice_section_37 = 0x8019851C;
+    encounter_scene_voice_section_38 = 0x801989A4;
+    encounter_scene_voice_section_39 = 0x80198DBC;
+    encounter_scene_voice_section_40 = 0x80199134;
+    encounter_scene_voice_section_41 = 0x80199678;
+    encounter_scene_voice_section_42 = 0x801985E4;
+    encounter_scene_voice_section_43 = 0x80198998;
+    encounter_scene_voice_section_44 = 0x80198E50;
+    encounter_scene_voice_section_45 = 0x80199484;
+    encounter_scene_voice_section_46 = 0x801999C8;
+    encounter_scene_voice_section_47 = 0x8019A0AC;
+    encounter_scene_voice_section_48 = 0x8019A500;
+    encounter_scene_voice_section_49 = 0x801985A8;
+    encounter_scene_voice_section_50 = 0x801991DC;
+    encounter_scene_voice_section_51 = 0x801997C0;
+    encounter_scene_voice_section_52 = 0x8019A0C0;
+    encounter_scene_voice_section_53 = 0x8019A840;
+    encounter_scene_voice_section_54 = 0x80198784;
+    encounter_scene_voice_section_55 = 0x80198B14;
+    encounter_scene_voice_section_56 = 0x8019902C;
+    encounter_scene_voice_section_57 = 0x80199A18;
+    encounter_scene_voice_section_58 = 0x80199D38;
+    encounter_scene_voice_section_59 = 0x8019A0E0;
+    encounter_scene_voice_section_60 = 0x8019A5CC;
+    encounter_scene_voice_section_61 = 0x80198E04;
+    encounter_scene_voice_section_62 = 0x80199664;
+    encounter_scene_voice_section_63 = 0x80199D90;
+    encounter_scene_voice_section_64 = 0x8019A10C;
+    encounter_scene_voice_section_65 = 0x8019A73C;
+    encounter_scene_voice_section_66 = 0x8019AFE8;
+    encounter_scene_voice_section_67 = 0x80198CF4;
+    encounter_scene_voice_section_68 = 0x801991E8;
+    encounter_scene_voice_section_69 = 0x801995D0;
+    encounter_scene_voice_section_70 = 0x80199B34;
+    encounter_scene_voice_section_71 = 0x8019A180;
+    encounter_scene_voice_section_72 = 0x8019A848;
+    encounter_scene_voice_section_73 = 0x8019ADD0;
+    encounter_scene_voice_section_74 = 0x80199DE4;
+    encounter_scene_voice_section_75 = 0x8019A05C;
+    encounter_scene_voice_section_76 = 0x8019A174;
+    encounter_scene_voice_section_77 = 0x8019AB34;
+    encounter_scene_voice_section_78 = 0x8019B494;
 }
 
-void func_8013882C(void) {
+void encounter_scene_mode_handler(void) {
 
     portrait_wink_update();
     switch (D_80122CD4) {
     case 0:
-        func_80139A8C();
+        encounter_shiori_scene_select_1();
         break;
     case 1:
-        func_8013D1A0();
+        encounter_mio_scene_select_1();
         break;
     case 2:
-        func_8013B030();
+        encounter_yuina_scene_select_1();
         break;
     case 3:
-        func_8013C570();
+        encounter_ayako_scene_select_1();
         break;
     case 4:
-        func_8013EEF0();
+        encounter_saki_scene_select_1();
         break;
     case 5:
-        func_8013D5B0();
+        encounter_yukari_scene_select_1();
         break;
     case 6:
-        func_8013DC30();
+        encounter_nozomi_scene_select_1();
         break;
     case 7:
-        func_8013CA30();
+        encounter_mira_scene_select_1();
         break;
     case 8:
-        func_80139470();
+        encounter_yuko_scene_select_1();
         break;
     case 9:
-        func_8013E040();
+        encounter_megumi_scene_select_1();
         break;
     case 10:
-        func_8013F4C0();
+        encounter_yumi_scene_select_1();
         break;
     case 11:
-        func_80140C50();
+        encounter_miharu_scene_select_1();
         break;
     case 12:
-        func_8013B9F0();
+        encounter_rei_scene_select_1();
         break;
     case 13:
-        func_80141BA0();
+        encounter_yoshio_entry();
         break;
     default:
         game_mode_reset_to_title();
@@ -1658,40 +1658,40 @@ void func_8013882C(void) {
             D_8011ECD3 &= 0x7F;
         }
         if (D_8011ECD3 & 0x80) {
-            cursor_update();
+            hud_cursor_update();
         }
     }
 }
 
 
-void func_80138A80(void) {
+void encounter_scene_choice_talk(void) {
     talk_tables = &D_800CA150;
     D_800CA138 = &D_800CA154;
-    D_800CA13C = D_80146274;
-    D_800CA140 = D_80146278;
-    D_800CA144 = D_8014627C;
+    D_800CA13C = encounter_scene_text_table;
+    D_800CA140 = encounter_scene_command_table;
+    D_800CA144 = encounter_scene_voice_table;
     talk_run(0xFF, 1, 0);
 }
 
-void func_80138AF8(void) {
+void encounter_scene_talk(void) {
     talk_tables = &D_800CA150;
     D_800CA138 = &D_800CA154;
-    D_800CA13C = D_80146274;
-    D_800CA140 = D_80146278;
-    D_800CA144 = D_8014627C;
+    D_800CA13C = encounter_scene_text_table;
+    D_800CA140 = encounter_scene_command_table;
+    D_800CA144 = encounter_scene_voice_table;
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_80138B74(void) {
+void encounter_scene_phone_talk(void) {
     talk_tables = &D_800CA150;
     D_800CA138 = &D_800CA154;
-    D_800CA13C = D_80146274;
-    D_800CA140 = D_80146278;
-    D_800CA144 = D_8014627C;
+    D_800CA13C = encounter_scene_text_table;
+    D_800CA140 = encounter_scene_command_table;
+    D_800CA144 = encounter_scene_voice_table;
     talk_run(D_80122CDC, 1, 2);
 }
 
-void func_80138BF0(void) {
+void encounter_scene_audio_load(void) {
     if (D_80122CD4 == 8 || (D_80122CD4 == 0xB && talk_work == 2)) {
         audio_bank_load_start(1, 0xC063, 0xC045, D_800B3688[D_80122CD4], D_800B36C8[D_80122CD4], D_800B3708[D_80122CD4]);
     } else {
@@ -1703,7 +1703,7 @@ void func_80138BF0(void) {
     mode_step_next();
 }
 
-void func_80138CDC(void) {
+void encounter_scene_audio_wait_start(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x200);
         mode_step_next();
@@ -1715,7 +1715,7 @@ void func_80138CDC(void) {
     }
 }
 
-void func_80138D64(void) {
+void encounter_scene_audio_wait(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -1726,19 +1726,19 @@ void func_80138D64(void) {
     }
 }
 
-void func_80138DE4(void) {
+void encounter_scene_audio_start(void) {
     audio_bank_start(1, 0x200);
     mode_step_next();
 }
 
-s32 func_80138E10(void) {
+s32 encounter_scene_finish(void) {
     u8 state;
 
     /* FAKE: read through a u8 view so the base and the result share $v0 (T-22010, T-24115). */
     state = *(u8 *)&game_state.substep;
     if (state == 0) {
         audio_command(0xB2);
-        func_800674B0();
+        hud_day_bgm_load();
         state = game_state.substep + 1;
     }
     game_state.substep = state;
@@ -1773,7 +1773,7 @@ s32 func_80138E10(void) {
     return day_event_next(1);
 }
 
-void func_80138F7C(void) {
+void encounter_scene_scripts_load(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         cd_read_sectors(6U, 0x80198000, 0xAE25);
@@ -1817,11 +1817,11 @@ void func_80138F7C(void) {
         game_mode_reset_to_title();
         break;
     }
-    func_80137990();
+    encounter_scene_scripts_bind();
     mode_step_next();
 }
 
-void func_80139128(void) {
+void encounter_scene_light_effect_init(void) {
     _sprite_set_light_effect1(0x120, -0xF8, 0xA0, 0x3C, -0xA0, 0x3C, 9, 0x808080, 0);
     _sprite_set_light_effect1(0x120, -0xF8, 0x40, 0x3C, 0, 0xB4, 9, 0xA0A0A0, 0);
     _sprite_set_light_effect1(0x120, -0xF8, 0x10, 0x3C, 0, 0xB4, 9, 0xA0A0A0, 0x40);

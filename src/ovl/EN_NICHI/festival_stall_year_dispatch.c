@@ -109,13 +109,13 @@ void func_8013216C(void) {
 void func_801321EC(void) {
     scene_screen_reset(1, 0);
     audio_command(0x7F);
-    cursor_actor_init(0);
-    cursor_show(0);
+    hud_cursor_actor_init(0);
+    hud_cursor_show(0);
     srand(game_state.timer_ticks);
     hizuke_disp_switch(0);
     message_window_title_show(0);
     message_disp_switch(0);
-    func_8006764C(0);
+    hud_mascot_display_switch(0);
     mode_step_next();
     D_80139B14 = game_state.cursor_speed;
     game_state.cursor_speed = 1;
@@ -124,7 +124,7 @@ void func_801321EC(void) {
 void func_80132278(void) {
     tpage_buf_clear();
     actor_clear_upper();
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     game_state.clear_color_r = 0;
     game_state.clear_color_g = 0;
     game_state.clear_color_b = 0;

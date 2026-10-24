@@ -295,7 +295,7 @@ void func_8014BB80(void) {
     gs = &game_state;
     sp34 = D_8015E720;
     if (D_8015EE50.unk_00 != 3 && !(game_state.menu_mode & 1)) {
-        cursor_update();
+        hud_cursor_update();
     }
     if (!(D_8015ED98 & 0x10000) && D_8015EE50.unk_00 != 4 && D_8015EE50.unk_00 != 5) {
         D_8015EE50.unk_00 = 6;

@@ -162,10 +162,10 @@ void game_state_init(s32 arg0) {
     /* Birthday fields share the existing word view. T-14200. */
     ((BirthdayBits *)&game_state.player_birthday)->month = 1;
     ((BirthdayBits *)&game_state.player_birthday)->day = 1;
-    cursor_actor_init(0);
-    cursor_show(0);
-    text_marker_set(1);
-    text_marker_set(0);
+    hud_cursor_actor_init(0);
+    hud_cursor_show(0);
+    hud_text_marker_set(1);
+    hud_text_marker_set(0);
     func_80041878();
     func_80054C4C();
     bzero(D_80122DD0, 0x100);

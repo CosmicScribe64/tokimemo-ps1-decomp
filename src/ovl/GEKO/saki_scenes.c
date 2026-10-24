@@ -5,54 +5,54 @@
 typedef struct {
     void (*f[35])();
 } FnTbl35; /* size 0x8C */
-extern FnTbl35 D_80146FBC;
+extern FnTbl35 encounter_saki_scene_one_steps;
 
-void func_8013EE40(void) {
-    D_80146F90 = 0x801CE124;
-    D_80146F94 = 0x801CE128;
-    D_80146F98 = 0x801CE148;
-    D_80146F9C = (*(s16 *)0x801CE15C);
-    D_80146FA0 = 0x801B0000;
-    D_80146FA4 = 0x801B2000;
-    D_80146FA8 = 0x801B6000;
-    D_80146FAC = 0x801BA000;
-    D_80146FB0 = 0x801BE000;
-    D_80146FB4 = 0x801C2000;
-    D_80146FB8 = 0x801C6000;
+void encounter_saki_assets_bind_1(void) {
+    encounter_saki_pack_1_animation_input_2 = 0x801CE124;
+    encounter_saki_pack_1_animation_input_0 = 0x801CE128;
+    encounter_saki_pack_1_animation_input_1 = 0x801CE148;
+    encounter_saki_pack_1_animation_input_3 = (*(s16 *)0x801CE15C);
+    encounter_saki_pack_1_palette = 0x801B0000;
+    encounter_saki_pack_1_still_image_0 = 0x801B2000;
+    encounter_saki_pack_1_still_image_1 = 0x801B6000;
+    encounter_saki_pack_1_still_image_2 = 0x801BA000;
+    encounter_saki_pack_1_still_image_3 = 0x801BE000;
+    encounter_saki_pack_1_still_image_4 = 0x801C2000;
+    encounter_saki_pack_1_still_image_5 = 0x801C6000;
 }
 
-void func_8013EEF0(void) {
+void encounter_saki_scene_select_1(void) {
     if (talk_work == 1) {
-        func_8013EF30();
+        encounter_saki_scene_one_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013EF30(void) {
+void encounter_saki_scene_one_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013EF6C();
+        encounter_saki_scene_one_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013EF6C(void) {
+void encounter_saki_scene_one_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl35 tbl;
 
-    tbl = D_80146FBC;
+    tbl = encounter_saki_scene_one_steps;
     idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
-void func_8013EFF4(void) {
+void encounter_saki_assets_load_1(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8C0E);
-    func_8013EE40();
+    encounter_saki_assets_bind_1();
     mode_step_next();
 }
 
-void func_8013F02C(void) {
+void encounter_saki_scene_group_select(void) {
     if (game_state.scene_flags[28] == 1 && game_state.scene_flags[27] == 1) {
         D_800CA150 = (u16) D_800CA150 + 4;
         D_800CA154 = 0;
@@ -63,7 +63,7 @@ void func_8013F02C(void) {
     mode_step_next();
 }
 
-void func_8013F0BC(void) {
+void encounter_saki_scene_init_1(void) {
     game_state.current_girl = GIRL_SAKI;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -78,17 +78,17 @@ void func_8013F0BC(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145FB4;
-    D_80146278 = D_801460F0;
-    D_8014627C = D_8014622C;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_61;
+    encounter_scene_command_table = encounter_scene_command_section_61;
+    encounter_scene_voice_table = encounter_scene_voice_section_61;
     strcpy(D_800CA19C, "廊下");
     if (game_state.scene_flags[27] >= 3U) {
         game_state.scene_flags[27] = 2;
@@ -103,21 +103,21 @@ void func_8013F0BC(void) {
     mode_step_next();
 }
 
-void func_8013F25C(void) {
-    func_8013EE40();
-    load_palette(D_80146FA0, 0x11, 1, 2, 0);
-    scene_still_show(D_80146FA4, D_80146FA8, D_80146FAC, D_80146FB0, D_80146FB4, D_80146FB8);
-    scene_anim_show(D_80146F94, D_80146F98, D_80146F90, D_80146F9C);
+void encounter_saki_still_show_1(void) {
+    encounter_saki_assets_bind_1();
+    load_palette(encounter_saki_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_saki_pack_1_still_image_0, encounter_saki_pack_1_still_image_1, encounter_saki_pack_1_still_image_2, encounter_saki_pack_1_still_image_3, encounter_saki_pack_1_still_image_4, encounter_saki_pack_1_still_image_5);
+    scene_anim_show(encounter_saki_pack_1_animation_input_0, encounter_saki_pack_1_animation_input_1, encounter_saki_pack_1_animation_input_2, encounter_saki_pack_1_animation_input_3);
     D_800CA360 = 1;
     mode_step_next();
 }
 
-void func_8013F30C(void) {
+void encounter_saki_bg_load_1(void) {
     bg_read_sub2(0x4045);
     mode_step_next();
 }
 
-void func_8013F334(void) {
+void encounter_saki_bg_load_2(void) {
     bg_read_sub2(0x46E0);
     mode_step_next();
 }

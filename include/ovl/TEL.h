@@ -208,7 +208,7 @@ void func_801380D8(void);
 
 #ifndef OVL_TEL_T10630_H
 #define OVL_TEL_T10630_H
-/* Four-byte calendar entry passed by value to func_8006B5BC. T-10630. */
+/* Four-byte calendar entry passed by value to hud_appointment_add. T-10630. */
 typedef union TelDateEntry {
     /* 0x00 */ WordView word;
     /* 0x00 */ struct {

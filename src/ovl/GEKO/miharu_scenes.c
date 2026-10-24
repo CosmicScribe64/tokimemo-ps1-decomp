@@ -5,27 +5,27 @@
 
 extern u32 talk_work;
 
-void func_80140A00(void) {
+void encounter_miharu_bg_load_1(void) {
     bg_read_sub2(0x4699);
     mode_step_next();
 }
 
-void func_80140A28(void) {
+void encounter_miharu_bg_load_2(void) {
     bg_read_sub2(0x4084);
     mode_step_next();
 }
 
-void func_80140A50(void) {
+void encounter_miharu_bg_load_3(void) {
     bg_read_sub2(0x4045);
     mode_step_next();
 }
 
-void func_80140A78(void) {
+void encounter_miharu_bg_load_4(void) {
     bg_read_sub2(0x4144);
     mode_step_next();
 }
 
-void func_80140AA0(void) {
+void encounter_miharu_bg_load_5(void) {
     D_80122D38 = 0;
     parameter_disp_switch(0);
     icon_disp_switch(0);
@@ -33,50 +33,50 @@ void func_80140AA0(void) {
     mode_step_next();
 }
 
-void func_80140AE0(void) {
+void encounter_miharu_bg_load_6(void) {
     bg_read_sub2(0x415E);
     mode_step_next();
 }
 
-void func_80140B08(void) {
+void encounter_miharu_bg_load_7(void) {
     bg_read_sub2(0x4743);
     mode_step_next();
 }
 
-void func_80140B30(void) {
-    D_80147300 = 0x801B0000;
-    D_80147304 = 0x801B2000;
-    D_80147308 = 0x801B6000;
-    D_8014730C = 0x801BA000;
-    D_80147310 = 0x801BE000;
-    D_80147314 = 0x801C2000;
-    D_80147318 = 0x801C6000;
+void encounter_miharu_assets_bind_1(void) {
+    encounter_miharu_pack_1_palette = 0x801B0000;
+    encounter_miharu_pack_1_still_image_0 = 0x801B2000;
+    encounter_miharu_pack_1_still_image_1 = 0x801B6000;
+    encounter_miharu_pack_1_still_image_2 = 0x801BA000;
+    encounter_miharu_pack_1_still_image_3 = 0x801BE000;
+    encounter_miharu_pack_1_still_image_4 = 0x801C2000;
+    encounter_miharu_pack_1_still_image_5 = 0x801C6000;
 }
 
-void func_80140BA0(void) {
-    D_8014731C = 0x801CE150;
-    D_80147320 = 0x801CE154;
-    D_80147324 = 0x801CE1A4;
-    D_80147328 = (*(s16 *)0x801CE1BC);
-    D_8014732C = 0x801B0000;
-    D_80147330 = 0x801B2000;
-    D_80147334 = 0x801B6000;
-    D_80147338 = 0x801BA000;
-    D_8014733C = 0x801BE000;
-    D_80147340 = 0x801C2000;
-    D_80147344 = 0x801C6000;
+void encounter_miharu_assets_bind_2(void) {
+    encounter_miharu_pack_2_animation_input_2 = 0x801CE150;
+    encounter_miharu_pack_2_animation_input_0 = 0x801CE154;
+    encounter_miharu_pack_2_animation_input_1 = 0x801CE1A4;
+    encounter_miharu_pack_2_animation_input_3 = (*(s16 *)0x801CE1BC);
+    encounter_miharu_pack_2_palette = 0x801B0000;
+    encounter_miharu_pack_2_still_image_0 = 0x801B2000;
+    encounter_miharu_pack_2_still_image_1 = 0x801B6000;
+    encounter_miharu_pack_2_still_image_2 = 0x801BA000;
+    encounter_miharu_pack_2_still_image_3 = 0x801BE000;
+    encounter_miharu_pack_2_still_image_4 = 0x801C2000;
+    encounter_miharu_pack_2_still_image_5 = 0x801C6000;
 }
 
-void func_80140C50(void) {
+void encounter_miharu_scene_select_1(void) {
     switch (talk_work) {
     case 1:
-        func_80140CCC();
+        encounter_miharu_scene_one_dispatch();
         return;
     case 2:
-        func_80140D08();
+        encounter_miharu_scene_two_dispatch();
         return;
     case 4:
-        func_80140D44();
+        encounter_miharu_scene_four_dispatch();
         return;
     default:
         game_mode_reset_to_title();
@@ -84,25 +84,25 @@ void func_80140C50(void) {
     }
 }
 
-void func_80140CCC(void) {
+void encounter_miharu_scene_one_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_80140D80();
+        encounter_miharu_scene_one_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_80140D08(void) {
+void encounter_miharu_scene_two_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_80140E40();
+        encounter_miharu_scene_two_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_80140D44(void) {
+void encounter_miharu_scene_four_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_80141760();
+        encounter_miharu_scene_four_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
@@ -111,18 +111,18 @@ void func_80140D44(void) {
 typedef struct {
     void (*f[27])();
 } FnTbl27; /* size 0x6C */
-extern FnTbl27 D_80147348;
+extern FnTbl27 encounter_miharu_scene_one_steps;
 
-void func_80140D80(void) {
+void encounter_miharu_scene_one_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl27 tbl;
 
-    tbl = D_80147348;
+    tbl = encounter_miharu_scene_one_steps;
     idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
-void func_80140DF4(void) {
+void encounter_miharu_audio_command_1(void) {
     set_kanji_string(-0x80, 0x30, 1, "ドン", 0);
     audio_command(0x24);
     audio_command(0x500);
@@ -132,19 +132,19 @@ void func_80140DF4(void) {
 typedef struct {
     void (*f[28])();
 } FnTbl28; /* size 0x70 */
-extern FnTbl28 D_801473B4;
+extern FnTbl28 encounter_miharu_scene_two_steps;
 
-void func_80140E40(void) {
+void encounter_miharu_scene_two_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl28 tbl;
 
-    tbl = D_801473B4;
+    tbl = encounter_miharu_scene_two_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-s32 func_80140EBC(void) {
-    func_80138AF8();
+s32 encounter_miharu_talk_audio_command(void) {
+    encounter_scene_talk();
     if ((u16) D_800CA154 == 3) {
         if (game_state.mode_step_timer.w++ == 1) {
             audio_command(0x501);
@@ -152,19 +152,19 @@ s32 func_80140EBC(void) {
     }
 }
 
-void func_80140F14(void) {
+void encounter_miharu_assets_load_1(void) {
     cd_read_sectors(0x35, 0x801B0000, 0x8F43);
     mode_step_next();
 }
 
-void func_80140F44(void) {
-    load_palette(D_80147300, 0x11, 1, 2, 0);
-    scene_still_show(D_80147304, D_80147308, D_8014730C, D_80147310, D_80147314, D_80147318);
+void encounter_miharu_still_show_1(void) {
+    load_palette(encounter_miharu_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_miharu_pack_1_still_image_0, encounter_miharu_pack_1_still_image_1, encounter_miharu_pack_1_still_image_2, encounter_miharu_pack_1_still_image_3, encounter_miharu_pack_1_still_image_4, encounter_miharu_pack_1_still_image_5);
     scene_anim_show(0, 0, 0, 0);
     mode_step_next();
 }
 
-void func_80140FD0(void) {
+void encounter_miharu_story_group_select(void) {
     u32 value;
     GameState *g;
 
@@ -179,12 +179,12 @@ void func_80140FD0(void) {
     mode_step_next();
 }
 
-void func_8014107C(void) {
+void encounter_miharu_title_hide(void) {
     message_window_title_show(0);
     mode_step_next();
 }
 
-void func_801410A4(void) {
+void encounter_miharu_scene_init_1(void) {
     game_state.current_girl = GIRL_MIHARU;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -199,7 +199,7 @@ void func_801410A4(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
@@ -207,15 +207,15 @@ void func_801410A4(void) {
     strcpy(name_code_family, game_state.player_family_name);
     strcpy(name_code_girl_short, "謎の女");
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145FE8;
-    D_80146278 = D_80146124;
-    D_8014627C = D_80146260;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_74;
+    encounter_scene_command_table = encounter_scene_command_section_74;
+    encounter_scene_voice_table = encounter_scene_voice_section_74;
     D_800CA368 = 0x4A;
     mode_step_next();
 }
 
-void func_801411DC(void) {
+void encounter_miharu_scene_init_2(void) {
     s16 i;
 
     game_state.current_girl = GIRL_MIHARU;
@@ -232,16 +232,16 @@ void func_801411DC(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     strcpy(name_code_family, game_state.player_family_name);
     talk_clear();
-    D_80146274 = D_80145FEC;
-    D_80146278 = D_80146128;
-    D_8014627C = D_80146264;
+    encounter_scene_text_table = encounter_scene_text_section_75;
+    encounter_scene_command_table = encounter_scene_command_section_75;
+    encounter_scene_voice_table = encounter_scene_voice_section_75;
     if (talk_work == 1) {
         game_state.param_stress.value -= 5;
         for (i = 0; i < 0xB; i++) {
@@ -255,7 +255,7 @@ void func_801411DC(void) {
     mode_step_next();
 }
 
-void func_80141374(void) {
+void encounter_miharu_scene_init_3(void) {
     s16 var_s0;
 
     game_state.current_girl = GIRL_MIHARU;
@@ -273,7 +273,7 @@ void func_80141374(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    func_8006509C();
+    hud_icon_bar_init();
     var_s0 = 0;
     do {
         icon_can_use_set(var_s0, 0);
@@ -288,42 +288,42 @@ void func_80141374(void) {
     strcpy(girl_name_buf, "館林さん");
     talk_clear();
     D_80122D38 = 1;
-    func_80137990();
-    D_80146274 = D_80145FF4;
-    D_80146278 = D_80146130;
-    D_8014627C = D_8014626C;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_77;
+    encounter_scene_command_table = encounter_scene_command_section_77;
+    encounter_scene_voice_table = encounter_scene_voice_section_77;
     strcpy(D_800CA19C, "きらめき中央公園");
     strcpy(D_800CA1DC, "並木道");
     mode_step_next();
 }
 
 
-void func_80141514(void) {
-    func_80140BA0();
-    load_palette(D_8014732C, 0x11, 1, 2, 0);
-    scene_still_show(D_80147330, D_80147334, D_80147338, D_8014733C, D_80147340, D_80147344);
-    scene_anim_show(D_80147320, D_80147324, D_8014731C, D_80147328);
+void encounter_miharu_still_show_2(void) {
+    encounter_miharu_assets_bind_2();
+    load_palette(encounter_miharu_pack_2_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_miharu_pack_2_still_image_0, encounter_miharu_pack_2_still_image_1, encounter_miharu_pack_2_still_image_2, encounter_miharu_pack_2_still_image_3, encounter_miharu_pack_2_still_image_4, encounter_miharu_pack_2_still_image_5);
+    scene_anim_show(encounter_miharu_pack_2_animation_input_0, encounter_miharu_pack_2_animation_input_1, encounter_miharu_pack_2_animation_input_2, encounter_miharu_pack_2_animation_input_3);
     ((Actor *)actor_pool_96)->unk_04 = ((Actor *)actor_pool_96)[1].unk_04 = 8;
     D_800CA368 = 0x4D;
     mode_step_next();
 }
 
-void func_801415D8(void) {
+void encounter_miharu_bg_load_8(void) {
     bg_read_sub2(0x4045);
     mode_step_next();
 }
 
-void func_80141600(void) {
+void encounter_miharu_bg_load_9(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }
 
-void func_80141628(void) {
+void encounter_miharu_bg_load_10(void) {
     bg_read_sub2(0x4708);
     mode_step_next();
 }
 
-void func_80141650(void) {
+void encounter_miharu_bg_load_11(void) {
     D_80122D38 = 0;
     parameter_disp_switch(0);
     icon_disp_switch(0);
@@ -331,17 +331,17 @@ void func_80141650(void) {
     mode_step_next();
 }
 
-void func_80141690(void) {
+void encounter_miharu_bg_load_12(void) {
     bg_read_sub2(0x430F);
     mode_step_next();
 }
 
-void func_801416B8(void) {
+void encounter_miharu_bg_load_13(void) {
     bg_read_sub2(0x47F7);
     mode_step_next();
 }
 
-void func_801416E0(void) {
+void encounter_miharu_closing_bg_request(void) {
     s32 temp_v0;
 
     D_800B3D60 = 0;
@@ -357,22 +357,22 @@ void func_801416E0(void) {
     mode_step_next();
 }
 
-void func_80141760(void) {
+void encounter_miharu_scene_four_step_dispatch(void) {
     u8 index;
     GekoCallbacks64 table;
 
-    table = D_80147424;
+    table = encounter_miharu_scene_four_steps;
     index = game_state.mode_step;
     table.callback[index](0x20);
     index = game_state.mode_step;
     if (index >= 36 && index < 43) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     } else if (index == 49) {
-        func_80139128();
+        encounter_scene_light_effect_init();
     }
 }
 
-void func_8014181C(void) {
+void encounter_miharu_closing_girl_in(void) {
     if (game_state.substep == 0) {
         k_reset(0);
         message_window_set_title(D_800CA1DC);
@@ -381,7 +381,7 @@ void func_8014181C(void) {
     normal_date_girl_in();
 }
 
-s32 func_80141870(void) {
+s32 encounter_miharu_closing_phone_talk(void) {
     /* FAKE: dead entry-block read puts D_800CA154 in cvt_pass _entry_locations so uopt promotes it to $a0 (T-24115) */
     if (D_800CA154) {}
     if (check_end_k() != 0 && D_800CA154 == 1) {
@@ -392,9 +392,9 @@ s32 func_80141870(void) {
         k_reset(1);
     }
     if (D_800CA154 == 0 || D_800CA154 == 8) {
-        func_80138B74();
+        encounter_scene_phone_talk();
     } else {
-        func_80138AF8();
+        encounter_scene_talk();
     }
     /* FAKE: signed .w in the first test and unsigned .u++ in the second stops uopt from CSE-merging the == 1 boolean while still CSE-ing the load (T-24115) */
     if (game_state.mode_step_timer.w == 1 && D_800CA154 == 1) {
@@ -405,19 +405,19 @@ s32 func_80141870(void) {
     }
 }
 
-void func_8014197C(void) {
+void encounter_miharu_audio_command_2(void) {
     audio_command(0x24);
     audio_command(0x500);
     mode_step_next();
 }
 
-void func_801419AC(void) {
+void encounter_miharu_assets_load_2(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8F78);
-    func_80140BA0();
+    encounter_miharu_assets_bind_2();
     mode_step_next();
 }
 
-void func_801419E4(void) {
+void encounter_miharu_audio_load_1(void) {
     audio_bank_load_start(1, 0xC043, 0xC01D, 0xCEFD, 0xCEB4, 0xCEB1);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -425,14 +425,14 @@ void func_801419E4(void) {
     mode_step_next();
 }
 
-void func_80141A44(void) {
-    func_80138AF8();
+void encounter_miharu_talk_group_next(void) {
+    encounter_scene_talk();
     D_800CA150 = (u16) D_800CA150 + 1;
     D_800CA154 = 0;
     mode_step_next();
 }
 
-void func_80141A84(void) {
+void encounter_miharu_text_clear(void) {
     k_reset(1);
     D_80122CE4 = 0;
     D_80122CF0 = 0;
@@ -440,7 +440,7 @@ void func_80141A84(void) {
     mode_step_next();
 }
 
-void func_80141AC0(void) {
+void encounter_miharu_portrait_read(void) {
     portrait_read_start(0x6C05);
     mode_step_next();
 }

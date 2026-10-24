@@ -321,7 +321,7 @@ void func_80132BA8(void) {
         text_system_reset();
         game_state.menu_cursor_0 = 0;
         game_state.menu_cursor_1 = 0;
-        cursor_actor_init(0);
+        hud_cursor_actor_init(0);
         game_state.screen_brightness = 0xFF;
         D_8013D300 = 0;
         D_800B3220 = 0;
@@ -782,10 +782,10 @@ void func_80133CB8(void) {
                 g->menu_cursor_1 = 2;
                 break;
             }
-            func_8006509C();
+            hud_icon_bar_init();
             /* FAKE: loop body on the for line, as in the matched func_80134210 (T-7020). T-24119 */
             for (i = 0; i < 16; i++) *(s16 *)&D_80125C10[i * 4] += 200;
-            func_800654D0((u8)g->icon_count);
+            hud_icon_layout_apply((u8)g->icon_count);
             mode_step_next();
         }
     }
@@ -818,19 +818,19 @@ void func_80133F50(void) {
         case 0:
             keep = (u8)g->icon_mode;
             g->icon_mode = ICON_MODE_TYPE_A;
-            func_8006509C();
+            hud_icon_bar_init();
             /* FAKE: loop body on the for line, as in the matched func_80134210 (T-7020). T-24117 */
             for (i = 0; i < 16; i++) *(s16 *)&D_80125C10[i * 4] += 200;
-            func_800654D0(g->icon_count = 0xE);
+            hud_icon_layout_apply(g->icon_count = 0xE);
             g->icon_mode = keep;
             break;
         case 1:
             keep = (u8)g->icon_mode;
             g->icon_mode = ICON_MODE_TYPE_B;
-            func_8006509C();
+            hud_icon_bar_init();
             /* FAKE: loop body on the for line, as in the matched func_80134210 (T-7020). T-24117 */
             for (i = 0; i < 16; i++) *(s16 *)&D_80125C10[i * 4] += 200;
-            func_800654D0(g->icon_count = 0xE);
+            hud_icon_layout_apply(g->icon_count = 0xE);
             g->icon_mode = keep;
             break;
         }
@@ -870,7 +870,7 @@ void func_80134210(void) {
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
     for (i = 0; i < 16; i++) *(s16 *)&D_80125C10[i * 4] -= 200;
     game_state.icon_count = 0xF;
-    func_8006509C();
+    hud_icon_bar_init();
     if ((u8)game_state.icon_mode % 3U != 2) {
         game_state.icon_count = 0xE;
     }
@@ -882,7 +882,7 @@ void func_801342A8(void) {
     s32 frame[16]; /* FAKE: observed unused 0x40-byte frame gap, T-24040. */
     Arrs4x8 rows;
 
-    func_8006509C();
+    hud_icon_bar_init();
     icon_disp_switch(0);
     mode = game_state.substep;
     if (mode == 0) {

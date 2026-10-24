@@ -26,7 +26,7 @@ void func_801321B0(void) {
         hizuke_init();
         parameter_disp_switch(0);
         icon_disp_switch(0);
-        func_8006764C(0);
+        hud_mascot_display_switch(0);
         mode_step_next();
         break;
     case 1:
@@ -202,9 +202,9 @@ void func_801326B4(void) {
     case 0:
         if (game_state.substep == 0) {
             set_dec_bri(0);
-            cursor_actor_init(0);
+            hud_cursor_actor_init(0);
             text_marker_hide();
-            cursor_show(0);
+            hud_cursor_show(0);
             hizuke_init();
             message_window_init();
             best = func_8008647C();

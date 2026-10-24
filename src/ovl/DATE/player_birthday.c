@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/DATE.h"
 
-void func_80145AA0(void) {
+void date_player_birthday_sections_init(void) {
     D_8015CE80 = 0x801B00DC;
     D_8015CE84 = 0x801B02AC;
     D_8015CE88 = 0x801B03C8;
@@ -44,25 +44,25 @@ void func_80145AA0(void) {
     D_8015CF18 = 0x801B155C;
 }
 
-void func_80145D14(void) {
+void date_mode_stage_player_birthday(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl15 tbl;
 
-    tbl = D_8015CF3C;
+    tbl = date_player_birthday_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if ((D_80122D44 & 1) && (dec_bg_brightness == 0x80)) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
 }
 
-void func_80145DB8(void) {
+void date_player_birthday_load_data(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80145AA0();
+    date_player_birthday_sections_init();
     mode_step_next();
 }
 
-void func_80145DF0(void) {
+void date_player_birthday_start(void) {
     u8 x;
 
     game_state.day_event_done_bits |= 8;
@@ -76,82 +76,82 @@ void func_80145DF0(void) {
     mode_step_next();
 }
 
-void func_80145E74(void) {
-    D_8015CF34 = 1;
-    D_8015CF38 = 0;
+void date_player_birthday_prepare(void) {
+    date_player_birthday_group = 1;
+    date_player_birthday_line = 0;
     talk_names_set(game_state.current_girl);
-    func_80145AA0();
-    func_80145EC4();
+    date_player_birthday_sections_init();
+    date_player_birthday_pick_sections();
     mode_step_next();
 }
 
-void func_80145EC4(void) {
+void date_player_birthday_pick_sections(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        D_8015CF1C = D_8015CE84;
-        D_8015CF20 = D_8015CEB8;
-        D_8015CF24 = D_8015CEEC;
+        date_player_birthday_text = D_8015CE84;
+        date_player_birthday_command = D_8015CEB8;
+        date_player_birthday_voice = D_8015CEEC;
         return;
     case GIRL_MIO:
-        D_8015CF1C = D_8015CE98;
-        D_8015CF20 = D_8015CECC;
-        D_8015CF24 = D_8015CF00;
+        date_player_birthday_text = D_8015CE98;
+        date_player_birthday_command = D_8015CECC;
+        date_player_birthday_voice = D_8015CF00;
         return;
     case GIRL_YUINA:
-        D_8015CF1C = D_8015CE8C;
-        D_8015CF20 = D_8015CEC0;
-        D_8015CF24 = D_8015CEF4;
+        date_player_birthday_text = D_8015CE8C;
+        date_player_birthday_command = D_8015CEC0;
+        date_player_birthday_voice = D_8015CEF4;
         return;
     case GIRL_AYAKO:
-        D_8015CF1C = D_8015CE90;
-        D_8015CF20 = D_8015CEC4;
-        D_8015CF24 = D_8015CEF8;
+        date_player_birthday_text = D_8015CE90;
+        date_player_birthday_command = D_8015CEC4;
+        date_player_birthday_voice = D_8015CEF8;
         return;
     case GIRL_SAKI:
-        D_8015CF1C = D_8015CEA8;
-        D_8015CF20 = D_8015CEDC;
-        D_8015CF24 = D_8015CF10;
+        date_player_birthday_text = D_8015CEA8;
+        date_player_birthday_command = D_8015CEDC;
+        date_player_birthday_voice = D_8015CF10;
         return;
     case GIRL_YUKARI:
-        D_8015CF1C = D_8015CE9C;
-        D_8015CF20 = D_8015CED0;
-        D_8015CF24 = D_8015CF04;
+        date_player_birthday_text = D_8015CE9C;
+        date_player_birthday_command = D_8015CED0;
+        date_player_birthday_voice = D_8015CF04;
         return;
     case GIRL_NOZOMI:
-        D_8015CF1C = D_8015CEA0;
-        D_8015CF20 = D_8015CED4;
-        D_8015CF24 = D_8015CF08;
+        date_player_birthday_text = D_8015CEA0;
+        date_player_birthday_command = D_8015CED4;
+        date_player_birthday_voice = D_8015CF08;
         return;
     case GIRL_MIRA:
-        D_8015CF1C = D_8015CE94;
-        D_8015CF20 = D_8015CEC8;
-        D_8015CF24 = D_8015CEFC;
+        date_player_birthday_text = D_8015CE94;
+        date_player_birthday_command = D_8015CEC8;
+        date_player_birthday_voice = D_8015CEFC;
         return;
     case GIRL_YUKO:
-        D_8015CF1C = D_8015CE80;
-        D_8015CF20 = D_8015CEB4;
-        D_8015CF24 = D_8015CEE8;
+        date_player_birthday_text = D_8015CE80;
+        date_player_birthday_command = D_8015CEB4;
+        date_player_birthday_voice = D_8015CEE8;
         return;
     case GIRL_MEGUMI:
-        D_8015CF1C = D_8015CEA4;
-        D_8015CF20 = D_8015CED8;
-        D_8015CF24 = D_8015CF0C;
+        date_player_birthday_text = D_8015CEA4;
+        date_player_birthday_command = D_8015CED8;
+        date_player_birthday_voice = D_8015CF0C;
         return;
     case GIRL_YUMI:
-        D_8015CF1C = D_8015CEB0;
-        D_8015CF20 = D_8015CEE4;
-        D_8015CF24 = D_8015CF18;
+        date_player_birthday_text = D_8015CEB0;
+        date_player_birthday_command = D_8015CEE4;
+        date_player_birthday_voice = D_8015CF18;
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_80146134(void) {
-    talk_tables = &D_8015CF34;
-    D_800CA138 = &D_8015CF38;
-    D_800CA13C = D_8015CF1C;
-    D_800CA140 = D_8015CF20;
-    D_800CA144 = D_8015CF24;
+void date_player_birthday_speak(void) {
+    talk_tables = &date_player_birthday_group;
+    D_800CA138 = &date_player_birthday_line;
+    D_800CA13C = date_player_birthday_text;
+    D_800CA140 = date_player_birthday_command;
+    D_800CA144 = date_player_birthday_voice;
     talk_run(D_80122CDC, 1, 0);
 }

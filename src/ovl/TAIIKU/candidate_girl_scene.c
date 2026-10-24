@@ -108,7 +108,7 @@ void func_80138AA8(void) {
         }
         game_state.tpage_buf[28] = 8;
         actor_clear_range(0);
-        cursor_show(0);
+        hud_cursor_show(0);
         for (i = 0; i < 2; i++) {
             D_80149DA4[i] = tpage.v[i];
         }

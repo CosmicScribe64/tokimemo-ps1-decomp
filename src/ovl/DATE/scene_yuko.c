@@ -67,11 +67,11 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", D_8015E30C);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", D_8015E310);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", D_8015E314);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", D_8015E318);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", D_8015E31C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", D_8015E3C4);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", D_8015E460);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", date_scene_yuko_spring_steps);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", date_scene_yuko_summer_steps);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", date_scene_yuko_autumn_steps);
 
-void func_8014CC40(void) {
+void date_scene_yuko_spring_data_init(void) {
     D_8015E220 = 0x801CE0F4;
     D_8015E224 = 0x801CE0F8;
     D_8015E228 = 0x801CE118;
@@ -85,7 +85,7 @@ void func_8014CC40(void) {
     D_8015E248 = 0x801C6000;
 }
 
-void func_8014CCF0(void) {
+void date_scene_yuko_summer_data_init(void) {
     D_8015E24C = 0x801D2184;
     D_8015E250 = 0x801D218C;
     D_8015E254 = 0x801D21B4;
@@ -99,7 +99,7 @@ void func_8014CCF0(void) {
     D_8015E274 = 0x801C6000;
 }
 
-void func_8014CDA0(void) {
+void date_scene_yuko_autumn_data_init(void) {
     D_8015E278 = 0x801CE080;
     D_8015E27C = 0x801CE084;
     D_8015E280 = 0x801CE094;
@@ -113,7 +113,7 @@ void func_8014CDA0(void) {
     D_8015E2A0 = 0x801C6000;
 }
 
-void func_8014CE50(void) {
+void date_scene_yuko_winter_data_init(void) {
     D_8015E2A4 = 0x801CE0C0;
     D_8015E2A8 = 0x801CE0C4;
     D_8015E2AC = 0x801CE0DC;
@@ -127,7 +127,7 @@ void func_8014CE50(void) {
     D_8015E2CC = 0x801C6000;
 }
 
-void func_8014CF00(void) {
+void date_scene_yuko_december_data_init(void) {
     D_8015E2D0 = 0x801D2240;
     D_8015E2D4 = 0x801D2248;
     D_8015E2D8 = 0x801D2298;
@@ -141,7 +141,7 @@ void func_8014CF00(void) {
     D_8015E2F8 = 0x801C6000;
 }
 
-void func_8014CFB0(void) {
+void date_scene_yuko_spring_data_init_2(void) {
     D_8015E2FC = 0x801D2074;
     D_8015E300 = 0x801D2078;
     D_8015E304 = 0x801D2088;
@@ -149,22 +149,22 @@ void func_8014CFB0(void) {
     D_8015E30C = 0x801D0000;
 }
 
-void func_8014D000(void) {
+void date_scene_yuko_dispatch(void) {
     switch (talk_work) {
     case 2:
-        func_8014DB08();
+        date_scene_yuko_spring();
         return;
     case 3:
-        func_8014DCCC();
+        date_scene_yuko_summer();
         return;
     case 4:
-        func_8014E2E8();
+        date_scene_yuko_autumn();
         return;
     case 5:
-        func_8014EBB8();
+        date_scene_yuko_winter();
         return;
     case 6:
-        func_8014ECF0();
+        date_scene_yuko_december();
         return;
     default:
         game_mode_reset_to_title();
@@ -172,19 +172,19 @@ void func_8014D000(void) {
     }
 }
 
-void func_8014D0A0(void) {
-    D_8015E208 = D_8015DE54;
-    D_8015E20C = D_8015DF90;
-    D_8015E210 = D_8015E0CC;
+void date_scene_yuko_spring_setup(void) {
+    date_scene_text = D_8015DE54;
+    date_scene_command = D_8015DF90;
+    date_scene_voice = D_8015E0CC;
     game_state.girls[8].affection += 3;
     game_state.girls[8].syoushin -= 0xA;
     check_para_limit();
-    func_8014CC40();
+    date_scene_yuko_spring_data_init();
     load_palette(D_8015E230, 0x11, 1, 2, 0);
     scene_still_show(D_8015E234, D_8015E238, D_8015E23C, D_8015E240, D_8015E244, D_8015E248);
     scene_anim_show(D_8015E224, D_8015E228, D_8015E220, (s32) D_8015E22C);
     D_800CA360 = 1;
-    func_8014CFB0();
+    date_scene_yuko_spring_data_init_2();
     load_palette(D_8015E30C, 0x12, 1, 2, 0);
     actor_clear(0x62);
     D_801206D9 = 0xC;
@@ -207,22 +207,22 @@ void func_8014D0A0(void) {
     mode_step_next();
 }
 
-void func_8014D298(void) {
+void date_scene_yuko_summer_setup(void) {
     ActorFixed *sprites;
     ActorFixed scene;
 
     strcpy(D_800CA1DC, "ナイトパレード");
     game_state.day_event_done_bits |= 7;
-    D_8015E208 = D_8015DE58;
-    D_8015E20C = D_8015DF94;
-    D_8015E210 = D_8015E0D0;
+    date_scene_text = D_8015DE58;
+    date_scene_command = D_8015DF94;
+    date_scene_voice = D_8015E0D0;
     game_state.girls[8].tokimeki += 3;
     game_state.girls[8].affection += 2;
     game_state.girls[8].syoushin -= 0x14;
     check_para_limit();
     game_state.tpage_buf[26] = -1;
     game_state.tpage_buf[58] = -1;
-    func_8014CCF0();
+    date_scene_yuko_summer_data_init();
     load_palette(D_8015E25C, 0x11, 1, 2, 0);
     load_palette(D_8015E25C, 0x12, 1, 2, 4);
     load_palette(D_8015E25C, 0x13, 1, 2, 0);
@@ -247,17 +247,17 @@ void func_8014D298(void) {
     mode_step_next();
 }
 
-void func_8014D57C(void) {
+void date_scene_yuko_autumn_setup(void) {
     D_8015E310 = 0;
     D_8015E314 = 3;
-    D_8015E208 = D_8015DE5C;
-    D_8015E20C = D_8015DF98;
-    D_8015E210 = D_8015E0D4;
+    date_scene_text = D_8015DE5C;
+    date_scene_command = D_8015DF98;
+    date_scene_voice = D_8015E0D4;
     game_state.girls[8].tokimeki += 1;
     game_state.girls[8].affection += 1;
     game_state.girls[8].syoushin -= 0x14;
     check_para_limit();
-    func_8014CDA0();
+    date_scene_yuko_autumn_data_init();
     load_palette(D_8015E288, 0x11, 1, 2, 0);
     scene_still_show(D_8015E28C, D_8015E290, D_8015E294, D_8015E298, D_8015E29C, D_8015E2A0);
     scene_anim_show(D_8015E27C, D_8015E280, D_8015E278, (s32) D_8015E284);
@@ -265,15 +265,15 @@ void func_8014D57C(void) {
     mode_step_next();
 }
 
-void func_8014D6B0(void) {
-    D_8015E208 = D_8015DE60;
-    D_8015E20C = D_8015DF9C;
-    D_8015E210 = D_8015E0D8;
+void date_scene_yuko_winter_setup(void) {
+    date_scene_text = D_8015DE60;
+    date_scene_command = D_8015DF9C;
+    date_scene_voice = D_8015E0D8;
     game_state.girls[8].tokimeki += 1;
     game_state.girls[8].affection += 1;
     game_state.girls[8].syoushin -= 0x14;
     check_para_limit();
-    func_8014CE50();
+    date_scene_yuko_winter_data_init();
     load_palette(D_8015E2B4, 0x11, 1, 2, 0);
     scene_still_show(D_8015E2B8, D_8015E2BC, D_8015E2C0, D_8015E2C4, D_8015E2C8, D_8015E2CC);
     scene_anim_show(D_8015E2A8, D_8015E2AC, D_8015E2A4, D_8015E2B0);
@@ -287,11 +287,11 @@ void func_8014D6B0(void) {
     mode_step_next();
 }
 
-void func_8014D818(void) {
-    D_8015E208 = D_8015DE64;
-    D_8015E20C = D_8015DFA0;
-    D_8015E210 = D_8015E0DC;
-    func_8014CF00();
+void date_scene_yuko_december_setup(void) {
+    date_scene_text = D_8015DE64;
+    date_scene_command = D_8015DFA0;
+    date_scene_voice = D_8015E0DC;
+    date_scene_yuko_december_data_init();
     load_palette(D_8015E2E0, 0x11, 1, 2, 0);
     scene_still_show(D_8015E2E4, D_8015E2E8, D_8015E2EC, D_8015E2F0, D_8015E2F4, D_8015E2F8);
     scene_anim_show(D_8015E2D4, D_8015E2D8, D_8015E2D0, D_8015E2DC);
@@ -308,70 +308,70 @@ void func_8014D818(void) {
     mode_step_next();
 }
 
-void func_8014D970(void) {
+void date_scene_yuko_spring_background_1(void) {
     bg_read_sub2(0x484E);
     mode_step_next();
 }
 
-void func_8014D998(void) {
+void date_scene_yuko_spring_background_2(void) {
     bg_read_sub2(0x44D6);
     mode_step_next();
 }
 
-void func_8014D9C0(void) {
+void date_scene_yuko_summer_audio_command_background_1(void) {
     audio_command(0x204);
     bg_read_sub2(0x480F);
     mode_step_next();
 }
 
-void func_8014D9F0(void) {
+void date_scene_yuko_summer_background_1(void) {
     bg_read_sub2(0x436B);
     mode_step_next();
 }
 
-void func_8014DA18(void) {
+void date_scene_yuko_autumn_background_1(void) {
     bg_read_sub2(0x483C);
     mode_step_next();
 }
 
-void func_8014DA40(void) {
+void date_scene_yuko_background_unused(void) {
     bg_read_sub2(0x4470);
     mode_step_next();
 }
 
-void func_8014DA68(void) {
+void date_scene_yuko_autumn_background_2(void) {
     bg_read_sub2(0x4466);
     mode_step_next();
 }
 
-void func_8014DA90(void) {
+void date_scene_yuko_winter_background_1(void) {
     bg_read_sub2(0x48A3);
     mode_step_next();
 }
 
-void func_8014DAB8(void) {
+void date_scene_yuko_winter_background_2(void) {
     bg_read_sub2(0x456C);
     mode_step_next();
 }
 
-void func_8014DAE0(void) {
+void date_scene_yuko_december_background_1(void) {
     bg_read_sub2(0x4880);
     mode_step_next();
 }
 
-void func_8014DB08(void) {
+void date_scene_yuko_spring(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
 
-    tbl = D_8015E31C;
+    tbl = date_scene_yuko_spring_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0) {
-        func_8014DB98();
+        date_scene_yuko_spring_picture_animate();
     }
 }
 
-s32 func_8014DB98(void) {
+s32 date_scene_yuko_spring_picture_animate(void) {
     D_801206DF = D_80120657;
     if (D_80120657 < 8) {
         D_801206DB &= 0x7F;
@@ -387,27 +387,27 @@ s32 func_8014DB98(void) {
     }
 }
 
-void func_8014DC5C(void) {
+void date_scene_yuko_spring_load_data(void) {
     cd_read_sectors(0xD, 0x801D0000, 0x90FC);
-    func_8014CFB0();
+    date_scene_yuko_spring_data_init_2();
     mode_step_next();
 }
 
-void func_8014DC94(void) {
+void date_scene_yuko_spring_load_data_2(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x7DD3);
-    func_8014CC40();
+    date_scene_yuko_spring_data_init();
     mode_step_next();
 }
 
 /* FAKE: the byte pointer stands for the 4-byte stack slot above tbl (T-3330) and keeps the selector
  * reads as pointer loads; the table entry is read three times (no function-pointer local), so it is
  * one CSE value and the selector range outranks the table address in uopt. T-10320, T-12100, T-17203 */
-void func_8014DCCC(void) {
+void date_scene_yuko_summer(void) {
     u8 *selector;
     FnTbl39 tbl;
 
     selector = &game_state.mode_step;
-    tbl = D_8015E3C4;
+    tbl = date_scene_yuko_summer_steps;
     if (place_init2 == tbl.f[*selector]) {
         D_80120653 |= 0x80;
     }
@@ -416,24 +416,24 @@ void func_8014DCCC(void) {
     }
     tbl.f[*selector](0x80);
     if (D_80122D04 != 0) {
-        func_8014E010();
+        date_scene_yuko_summer_sign_animate();
     }
     if (*selector == 0xE) {
-        func_8014E108();
+        date_scene_yuko_summer_light_beams();
     }
     if (*selector >= 0x19 && *selector < 0x24) {
-        func_80140D38();
+        date_parade_sign_palette_cycle();
     }
 }
 
-void func_8014DDD8(void) {
+void date_scene_yuko_summer_load_data(void) {
     cd_read_sectors(0x1D, 0x801B0000, 0xBD41);
-    func_80132458();
+    date_parade_resources_init();
     mode_step_next();
 }
 
-void func_8014DE10(void) {
-    func_80132458();
+void date_scene_yuko_summer_sign_setup(void) {
+    date_parade_resources_init();
     load_palette(D_8015B644, 0x11, 1, 3, 0);
     actor_clear(0x60);
     D_80120651 = 0xC;
@@ -451,17 +451,17 @@ void func_8014DE10(void) {
     D_80120676 = -0xA0;
     D_8012067A = -0x78;
     D_80120657 = 0x80;
-    D_8015B6A0 = 0;
+    date_sign_palette_frame = 0;
     mode_step_next();
 }
 
-void func_8014DF1C(void) {
+void date_scene_yuko_summer_load_data_2(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x7E10);
-    func_8014CCF0();
+    date_scene_yuko_summer_data_init();
     mode_step_next();
 }
 
-void func_8014DF54(void) {
+void date_scene_yuko_summer_still_fade_in(void) {
     func_80085368();
     ((Actor *)actor_pool_96)[2].draw_flags |= 0x80;
     ((Actor *)actor_pool_96)[3].draw_flags |= 0x80;
@@ -469,7 +469,7 @@ void func_8014DF54(void) {
     ((Actor *)actor_pool_96)[3].brightness = ((Actor *)actor_pool_96)->brightness;
 }
 
-void func_8014DFB0(void) {
+void date_scene_yuko_summer_still_fade_out(void) {
     func_800853FC();
     if (((Actor *)actor_pool_96)->brightness == 0) {
         ((Actor *)actor_pool_96)[2].draw_flags &= 0xFF7F;
@@ -479,7 +479,7 @@ void func_8014DFB0(void) {
     ((Actor *)actor_pool_96)[3].brightness = ((Actor *)actor_pool_96)->brightness;
 }
 
-s32 func_8014E010(void) {
+s32 date_scene_yuko_summer_sign_animate(void) {
     if (game_state.frame_count % 10 == 0) {
         if (game_state.mode_step >= 0xD) {
             D_8015E310 += 1;
@@ -499,30 +499,30 @@ s32 func_8014E010(void) {
     }
 }
 
-void func_8014E108(void) {
-    func_8014EF1C(-0x96, -0x78, -0x9B, -0x78, -0x50, 0x28, -0x69, 0x28, 0xFFFF00, 0xFFFF00, 9, 1);
-    func_8014EF1C(-0xA0, -0x78, -0xA5, -0x78, -0x64, 0x28, -0x73, 0x28, 0xFFFFFF, 0xFFFFFF, 9, 1);
-    func_8014EF1C(-0xA2, -0x78, -0xA7, -0x78, -0x6E, 0x28, -0x87, 0x28, 0xFFFF00, 0xFFFF00, 9, 1);
+void date_scene_yuko_summer_light_beams(void) {
+    date_gradient_quad_draw(-0x96, -0x78, -0x9B, -0x78, -0x50, 0x28, -0x69, 0x28, 0xFFFF00, 0xFFFF00, 9, 1);
+    date_gradient_quad_draw(-0xA0, -0x78, -0xA5, -0x78, -0x64, 0x28, -0x73, 0x28, 0xFFFFFF, 0xFFFFFF, 9, 1);
+    date_gradient_quad_draw(-0xA2, -0x78, -0xA7, -0x78, -0x6E, 0x28, -0x87, 0x28, 0xFFFF00, 0xFFFF00, 9, 1);
     dtd_on_tpage(0, 0, 9, 3, 0);
-    func_8014EF1C(-0x7D, -0x78, -0x82, -0x78, -0x28, 0x28, -0x32, 0x28, 0xFFFF00, 0xFFFF00, 0xD, 1);
-    func_8014EF1C(-0x84, -0x78, -0x89, -0x78, -0x3C, 0x28, -0x46, 0x28, 0xFFFFFF, 0xFFFFFF, 0xD, 1);
+    date_gradient_quad_draw(-0x7D, -0x78, -0x82, -0x78, -0x28, 0x28, -0x32, 0x28, 0xFFFF00, 0xFFFF00, 0xD, 1);
+    date_gradient_quad_draw(-0x84, -0x78, -0x89, -0x78, -0x3C, 0x28, -0x46, 0x28, 0xFFFFFF, 0xFFFFFF, 0xD, 1);
     dtd_on_tpage(0, 0, 0xD, 3, 0);
 }
 
-void func_8014E2E8(void) {
+void date_scene_yuko_autumn(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl44 tbl;
 
-    tbl = D_8015E460;
+    tbl = date_scene_yuko_autumn_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (game_state.mode_step == 0xD) {
-        func_8014E3E8();
+        date_scene_yuko_autumn_beam_lights();
     }
 }
 
 /* FAKE: the GameState pointer local moves the incremented counter to $v1 as in the original (T-9380, found with the permuter) */
-s32 func_8014E38C(void) {
+s32 date_scene_yuko_autumn_load_data(void) {
     GameState *g;
     u32 n;
 
@@ -532,11 +532,11 @@ s32 func_8014E38C(void) {
         return 0;
     }
     cd_read_sectors(0x3D, 0x801B0000, 0x7E55);
-    func_8014CDA0();
+    date_scene_yuko_autumn_data_init();
     mode_step_next();
 }
 
-void func_8014E3E8(void) {
+void date_scene_yuko_autumn_beam_lights(void) {
     s32 *pair;
     s32 colors[4][2] = {
         { 0xFF8080, 0xFF0000 },
@@ -559,79 +559,79 @@ void func_8014E3E8(void) {
     }
     if (((u32) game_state.frame_count % 36U) < 0xCU) {
         pair = colors[D_8015E314];
-        func_8014EF1C(0xA0, -0xA0, 0xB4, -0xA0, 0x6E, 0x28, 0x82, 0x28, pair[0], pair[1], 9, 1);
+        date_gradient_quad_draw(0xA0, -0xA0, 0xB4, -0xA0, 0x6E, 0x28, 0x82, 0x28, pair[0], pair[1], 9, 1);
         pair = colors[D_8015E314];
-        func_8014EF1C(0xA5, -0xA0, 0xC3, -0xA0, 0x64, 0x28, 0x46, 0x28, pair[0], pair[1], 9, 1);
+        date_gradient_quad_draw(0xA5, -0xA0, 0xC3, -0xA0, 0x64, 0x28, 0x46, 0x28, pair[0], pair[1], 9, 1);
         pair = colors[D_8015E314];
-        func_8014EF1C(0xAA, -0xA0, 0xB4, -0xA0, 0x41, 0x28, 0x32, 0x28, pair[0], pair[1], 9, 1);
+        date_gradient_quad_draw(0xAA, -0xA0, 0xB4, -0xA0, 0x41, 0x28, 0x32, 0x28, pair[0], pair[1], 9, 1);
         pair = colors[D_8015E314];
-        func_8014EF1C(0xA0, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x7D, 0x28, pair[0], pair[1], 9, 1);
+        date_gradient_quad_draw(0xA0, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x7D, 0x28, pair[0], pair[1], 9, 1);
     } else if (((u32) game_state.frame_count % 36U) < 0x18U) {
         pair = colors[D_8015E314];
-        func_8014EF1C(0x9B, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x82, 0x28, pair[0], pair[1], 9, 1);
+        date_gradient_quad_draw(0x9B, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x82, 0x28, pair[0], pair[1], 9, 1);
         pair = colors[D_8015E314];
-        func_8014EF1C(0x9B, -0xA0, 0xC3, -0x96, 0x5A, 0x28, 0x3C, 0x28, pair[0], pair[1], 9, 1);
+        date_gradient_quad_draw(0x9B, -0xA0, 0xC3, -0x96, 0x5A, 0x28, 0x3C, 0x28, pair[0], pair[1], 9, 1);
         pair = colors[D_8015E314];
-        func_8014EF1C(0xA5, -0xA0, 0xAF, -0xA0, 0x3C, 0x28, 0x2D, 0x28, pair[0], pair[1], 9, 1);
+        date_gradient_quad_draw(0xA5, -0xA0, 0xAF, -0xA0, 0x3C, 0x28, 0x2D, 0x28, pair[0], pair[1], 9, 1);
         pair = colors[D_8015E314];
-        func_8014EF1C(0x96, -0xA0, 0xA0, -0xA0, 0x64, 0x28, 0x73, 0x28, pair[0], pair[1], 9, 1);
+        date_gradient_quad_draw(0x96, -0xA0, 0xA0, -0xA0, 0x64, 0x28, 0x73, 0x28, pair[0], pair[1], 9, 1);
     }
     dtd_on_tpage(0, 0, 9, 3, 0);
     if (((u32) game_state.frame_count % 30U) < 0xAU) {
         pair = colors[D_8015E310];
-        func_8014EF1C(0x1E, -0xA0, 0x64, -0xA0, -0x140, 0x28, -0xFA, 0x28, pair[0], pair[1], 0xD, 1);
+        date_gradient_quad_draw(0x1E, -0xA0, 0x64, -0xA0, -0x140, 0x28, -0xFA, 0x28, pair[0], pair[1], 0xD, 1);
         pair = colors[D_8015E310];
-        func_8014EF1C(0xA, -0xA0, 0x19, -0xA0, -0xDC, 0x28, -0xBE, 0x28, pair[0], pair[1], 0xD, 1);
+        date_gradient_quad_draw(0xA, -0xA0, 0x19, -0xA0, -0xDC, 0x28, -0xBE, 0x28, pair[0], pair[1], 0xD, 1);
         pair = colors[D_8015E310];
-        func_8014EF1C(0, -0xA0, 0x14, -0xA0, -0xB4, 0x28, -0x82, 0x28, pair[0], pair[1], 0xD, 1);
+        date_gradient_quad_draw(0, -0xA0, 0x14, -0xA0, -0xB4, 0x28, -0x82, 0x28, pair[0], pair[1], 0xD, 1);
         pair = colors[D_8015E310];
-        func_8014EF1C(0x19, -0xA0, 0x28, -0xA0, -0x12C, 0x28, -0x118, 0x28, pair[0], pair[1], 0xD, 1);
+        date_gradient_quad_draw(0x19, -0xA0, 0x28, -0xA0, -0x12C, 0x28, -0x118, 0x28, pair[0], pair[1], 0xD, 1);
     } else if (((u32) game_state.frame_count % 30U) < 0x14U) {
         pair = colors[D_8015E310];
-        func_8014EF1C(0x14, -0xA0, 0x5A, -0xA0, -0x154, 0x28, -0x10E, 0x28, pair[0], pair[1], 0xD, 1);
+        date_gradient_quad_draw(0x14, -0xA0, 0x5A, -0xA0, -0x154, 0x28, -0x10E, 0x28, pair[0], pair[1], 0xD, 1);
         pair = colors[D_8015E310];
-        func_8014EF1C(0xA, -0xA0, 0x1E, -0xA0, -0xF0, 0x28, -0xD2, 0x28, pair[0], pair[1], 0xD, 1);
+        date_gradient_quad_draw(0xA, -0xA0, 0x1E, -0xA0, -0xF0, 0x28, -0xD2, 0x28, pair[0], pair[1], 0xD, 1);
         pair = colors[D_8015E310];
-        func_8014EF1C(0, -0xA0, 0xF, -0xA0, -0xC8, 0x28, -0x96, 0x28, pair[0], pair[1], 0xD, 1);
+        date_gradient_quad_draw(0, -0xA0, 0xF, -0xA0, -0xC8, 0x28, -0x96, 0x28, pair[0], pair[1], 0xD, 1);
         pair = colors[D_8015E310];
-        func_8014EF1C(0xF, -0xA0, 0x19, -0xA0, -0x136, 0x28, -0x122, 0x28, pair[0], pair[1], 0xD, 1);
+        date_gradient_quad_draw(0xF, -0xA0, 0x19, -0xA0, -0x136, 0x28, -0x122, 0x28, pair[0], pair[1], 0xD, 1);
     }
     dtd_on_tpage(0, 0, 0xD, 3, 0);
 }
 
-void func_8014EBB8(void) {
+void date_scene_yuko_winter(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl43 tbl;
 
-    tbl = D_8015E530;
+    tbl = date_scene_yuko_winter_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8014EC34(void) {
-    func_8014C5C8();
+void date_scene_yuko_winter_speak_with_face(void) {
+    date_scene_speak();
     if (((u16) D_800CA154 == 5) && (game_state.mode_step_timer.w == 1)) {
         portrait_layout_set(1);
     }
     game_state.mode_step_timer.w += 1;
 }
 
-void func_8014EC90(void) {
+void date_scene_yuko_winter_audio_command_1(void) {
     audio_command(0x503);
     mode_step_next();
 }
 
-void func_8014ECB8(void) {
+void date_scene_yuko_winter_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x7E92);
-    func_8014CE50();
+    date_scene_yuko_winter_data_init();
     mode_step_next();
 }
 
-void func_8014ECF0(void) {
+void date_scene_yuko_december(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl44 tbl;
 
-    tbl = D_8015E5DC;
+    tbl = date_scene_yuko_december_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0 && game_state.frame_count % 180 == 0) {
@@ -645,29 +645,29 @@ void func_8014ECF0(void) {
     }
 }
 
-void func_8014EE1C(void) {
+void date_scene_yuko_december_face_step(void) {
     event_face1();
     D_800B5A60 = 0;
 }
 
-void func_8014EE40(void) {
+void date_scene_yuko_december_audio_command_1(void) {
     audio_command(0x200);
     mode_step_next();
 }
 
-void func_8014EE68(void) {
+void date_scene_yuko_december_audio_command_2(void) {
     audio_command(0x201);
     mode_step_next();
 }
 
-void func_8014EE90(void) {
+void date_scene_yuko_december_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x7ECF);
-    func_8014CF00();
+    date_scene_yuko_december_data_init();
     mode_step_next();
 }
 
-void func_8014EEC8(void) {
-    func_8014C5C8();
+void date_scene_yuko_december_speak_with_face(void) {
+    date_scene_speak();
     if ((u16) D_800CA154 == 4) {
         D_800B5A60 = 1;
         event_face0();
@@ -678,7 +678,7 @@ void func_8014EEC8(void) {
 /* FAKE: the explicit "& 0xFF" masks leave the colour shifts in ugen temporaries (t6..t9), and each
  * colour trio shares one source line because as1 schedules stores by source line; the real source
  * is unknown (same trick as main _sprite_set_box_shade_tarao, T-16220). T-17203 */
-void func_8014EF1C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, s32 arg11) {
+void date_gradient_quad_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, s32 arg11) {
     s32 unused; /* FAKE: unused local, only its 4-byte frame slot above p is observed (KANGEI func_80136810; T-17203) */
     POLY_G4 *p;
 

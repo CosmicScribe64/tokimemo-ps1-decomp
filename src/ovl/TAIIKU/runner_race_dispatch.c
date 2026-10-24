@@ -108,7 +108,7 @@ void func_80133CFC(void) {
     case 0:
         scene_screen_reset(1, 1);
         actor_clear_range(0);
-        cursor_show(0);
+        hud_cursor_show(0);
         for (i = 0; i < 11; i++) {
             game_state.tpage_buf[i + 5] = 8;
         }

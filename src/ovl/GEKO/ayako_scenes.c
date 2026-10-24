@@ -2,31 +2,31 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
-void func_8013C4C0(void) {
-    D_801469F0 = 0x801CE120;
-    D_801469F4 = 0x801CE124;
-    D_801469F8 = 0x801CE144;
-    D_801469FC = (*(s16 *)0x801CE158);
-    D_80146A00 = 0x801B0000;
-    D_80146A04 = 0x801B2000;
-    D_80146A08 = 0x801B6000;
-    D_80146A0C = 0x801BA000;
-    D_80146A10 = 0x801BE000;
-    D_80146A14 = 0x801C2000;
-    D_80146A18 = 0x801C6000;
+void encounter_ayako_assets_bind_1(void) {
+    encounter_ayako_pack_1_animation_input_2 = 0x801CE120;
+    encounter_ayako_pack_1_animation_input_0 = 0x801CE124;
+    encounter_ayako_pack_1_animation_input_1 = 0x801CE144;
+    encounter_ayako_pack_1_animation_input_3 = (*(s16 *)0x801CE158);
+    encounter_ayako_pack_1_palette = 0x801B0000;
+    encounter_ayako_pack_1_still_image_0 = 0x801B2000;
+    encounter_ayako_pack_1_still_image_1 = 0x801B6000;
+    encounter_ayako_pack_1_still_image_2 = 0x801BA000;
+    encounter_ayako_pack_1_still_image_3 = 0x801BE000;
+    encounter_ayako_pack_1_still_image_4 = 0x801C2000;
+    encounter_ayako_pack_1_still_image_5 = 0x801C6000;
 }
 
-void func_8013C570(void) {
+void encounter_ayako_scene_select_1(void) {
     if (talk_work == 1) {
-        func_8013C5B0();
+        encounter_ayako_scene_one_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013C5B0(void) {
+void encounter_ayako_scene_one_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013C5EC();
+        encounter_ayako_scene_one_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
@@ -35,24 +35,24 @@ void func_8013C5B0(void) {
 typedef struct {
     void (*f[32])();
 } FnTbl32; /* size 0x80 */
-extern FnTbl32 D_80146A1C;
+extern FnTbl32 encounter_ayako_scene_one_steps;
 
-void func_8013C5EC(void) {
+void encounter_ayako_scene_one_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl32 tbl;
 
-    tbl = D_80146A1C;
+    tbl = encounter_ayako_scene_one_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8013C674(void) {
+void encounter_ayako_portrait_disable(void) {
     D_80122D10 = 2;
     D_80120652 = 0;
     mode_step_next();
 }
 
-void func_8013C6A4(void) {
+void encounter_ayako_speaker_update(void) {
     if ((u16) D_800CA154 == 0) {
         game_state.current_girl = GIRL_SOTOI;
     } else if ((u16) D_800CA154 == 1) {
@@ -60,16 +60,16 @@ void func_8013C6A4(void) {
     } else {
         game_state.current_girl = GIRL_AYAKO;
     }
-    func_80138AF8();
+    encounter_scene_talk();
 }
 
-void func_8013C704(void) {
+void encounter_ayako_assets_load_1(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x829A);
-    func_8013C4C0();
+    encounter_ayako_assets_bind_1();
     mode_step_next();
 }
 
-void func_8013C73C(void) {
+void encounter_ayako_scene_init_1(void) {
     game_state.current_girl = GIRL_AYAKO;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -84,17 +84,17 @@ void func_8013C73C(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145F20;
-    D_80146278 = D_8014605C;
-    D_8014627C = D_80146198;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_24;
+    encounter_scene_command_table = encounter_scene_command_section_24;
+    encounter_scene_voice_table = encounter_scene_voice_section_24;
     strcpy(D_800CA19C, "校舎裏");
     game_state.girls[3].affection += 2;
     check_para_limit();
@@ -102,21 +102,21 @@ void func_8013C73C(void) {
     mode_step_next();
 }
 
-void func_8013C87C(void) {
-    func_8013C4C0();
-    load_palette(D_80146A00, 0x11, 1, 2, 0);
-    scene_still_show(D_80146A04, D_80146A08, D_80146A0C, D_80146A10, D_80146A14, D_80146A18);
-    scene_anim_show(D_801469F4, D_801469F8, D_801469F0, D_801469FC);
+void encounter_ayako_still_show_1(void) {
+    encounter_ayako_assets_bind_1();
+    load_palette(encounter_ayako_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_ayako_pack_1_still_image_0, encounter_ayako_pack_1_still_image_1, encounter_ayako_pack_1_still_image_2, encounter_ayako_pack_1_still_image_3, encounter_ayako_pack_1_still_image_4, encounter_ayako_pack_1_still_image_5);
+    scene_anim_show(encounter_ayako_pack_1_animation_input_0, encounter_ayako_pack_1_animation_input_1, encounter_ayako_pack_1_animation_input_2, encounter_ayako_pack_1_animation_input_3);
     D_800CA360 = 1;
     mode_step_next();
 }
 
-void func_8013C92C(void) {
+void encounter_ayako_bg_load_1(void) {
     bg_read_sub2(0x407A);
     mode_step_next();
 }
 
-void func_8013C954(void) {
+void encounter_ayako_bg_load_2(void) {
     bg_read_sub2(0x46BC);
     mode_step_next();
 }

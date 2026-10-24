@@ -54,7 +54,7 @@ void func_80135630(void) {
     actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
-    cursor_show(0);
+    hud_cursor_show(0);
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
@@ -128,7 +128,7 @@ void func_80135960(void) {
 void func_80135994(void) {
     D_80122CE0 = 7;
     actor_clear_range(0);
-    cursor_show(0);
+    hud_cursor_show(0);
     game_state.saved_game_mode = game_state.game_mode;
     game_state.saved_mode_stage = game_state.mode_stage;
     game_state.saved_mode_step = 0x38;

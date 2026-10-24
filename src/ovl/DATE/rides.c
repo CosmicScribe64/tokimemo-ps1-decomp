@@ -10,7 +10,7 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/rides.data", D_8015CF8C);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/rides.data", D_8015CF90);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/rides.data", D_8015CF94);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/rides.data", D_8015CF98);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/rides.data", D_8015CF9C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/rides.data", date_ride_frame);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/rides.data", D_8015CFA0);
 s16 D_8015CFA4[3] = { 0, 0, 0 };
 s16 D_8015CFAC[3] = { 0, 0, 0 };
@@ -18,7 +18,7 @@ s16 D_8015CFB4[3] = { 0, 0, 0 };
 s16 D_8015CFBC[3] = { 0, 0, 0 };
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/rides.data", D_8015CFC4);
 
-void func_801461B0(void) {
+void date_ferris_wheel_resources_init(void) {
     D_8015CF80 = 0x801C6000;
     D_8015CF84 = 0x801AE000;
     D_8015CF88 = 0x801B2000;
@@ -28,30 +28,30 @@ void func_801461B0(void) {
     D_8015CF98 = 0x801C2000;
 }
 
-void func_80146224(void) {
+void date_ride_dispatch(void) {
     /* T-10040: this dispatcher reads the signed-declared byte with lbu. */
-    switch (*(u8 *)&D_8015B68C) {
+    switch (*(u8 *)&date_ride_index) {
     case 0:
-        func_80147958();
+        date_ride_roller_coaster();
         return;
     case 1:
-        func_801489D0();
+        date_ride_ghost_house();
         return;
     case 2:
-        func_8014718C();
+        date_ride_ferris_wheel();
         return;
     case 3:
-        func_801462B0();
+        date_ride_scream_machine();
         return;
     case 4:
-        func_8014A1E4();
+        date_virtual_ship_dispatch();
         /* fallthrough */
     default:
         return;
     }
 }
 
-u16 func_801462B0(void) {
+u16 date_ride_scream_machine(void) {
     GameState *g;
     s16 i;
     s16 v;
@@ -85,7 +85,7 @@ u16 func_801462B0(void) {
         hizuke_disp_switch(0);
         D_8015CFA0 = 2;
         game_state.substep = 0;
-        D_8015CF9C = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order (as in func_801348F0) T-24018 */
+        date_ride_frame = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order (as in func_801348F0) T-24018 */
             sprite_quads[i + 4].w = (i << 6) + 0x80;
             sprite_quads[i + 4].flags = 0x82000000;
             sprite_quads[i + 4].h = 0;
@@ -288,19 +288,19 @@ u16 func_801462B0(void) {
     case 18:
         audio_command(0x200);
         sp4C = g->mode_step_timer.u;
-        func_8013E7B0();
+        date_load_girl_script();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp4C + 1;
         break;
     case 20:
         sp4C = g->mode_step_timer.u;
-        func_8013E980();
+        date_load_shared_script();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp4C + 1;
         break;
     case 22:
         sp4C = g->mode_step_timer.u;
-        func_8013E9BC();
+        date_load_choice_tables();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp4C + 1;
         break;
@@ -395,21 +395,21 @@ u16 func_801462B0(void) {
             game_state.substep = 0;
         }
     }
-    timer = (D_8015CF9C + 1) & 0xFFFF;
-    D_8015CF9C = timer;
+    timer = (date_ride_frame + 1) & 0xFFFF;
+    date_ride_frame = timer;
     if (timer == 0x12C) {
         g->mode_step_timer.u += 1;
     }
 }
 
-s32 func_8014718C(void) {
+s32 date_ride_ferris_wheel(void) {
     /* FAKE: unused RECT reserves the observed frame words. T-17201. */
     RECT rect;
     GameState *g;
     u32 sp30;
     s16 var_v1;
     u8 x;
-    /* FAKE: second fade copy holds v1 in cases 6/7/9; dead stores in the tail block cvt_pass widening so uopt promotes D_8015CF9C to t0. T-24028, T-24089. */
+    /* FAKE: second fade copy holds v1 in cases 6/7/9; dead stores in the tail block cvt_pass widening so uopt promotes date_ride_frame to t0. T-24028, T-24089. */
     u32 y;
     DateMovieWork *movie;
 
@@ -431,7 +431,7 @@ s32 func_8014718C(void) {
         movie->unk_1A = 0;
         hizuke_disp_switch(0);
         /* FAKE: one source line keeps the as1 store order of the original. T-17201. */
-        D_8015CF9C = 0; for (var_v1 = 0; var_v1 < 2; var_v1++) {
+        date_ride_frame = 0; for (var_v1 = 0; var_v1 < 2; var_v1++) {
             sprite_quads[var_v1 + 10].w = (var_v1 << 6) + 0x80;
             sprite_quads[var_v1 + 10].flags = 0x82000000;
             sprite_quads[var_v1 + 10].h = 0xa0;
@@ -463,7 +463,7 @@ s32 func_8014718C(void) {
         return 0;
     case 2:
         cd_read_sectors(0x31, 0x801AE000, 0xBCD1);
-        func_801461B0();
+        date_ferris_wheel_resources_init();
         g->mode_step_timer.u += 1;
         return 0;
     case 3:
@@ -477,7 +477,7 @@ s32 func_8014718C(void) {
         return 0;
     case 4:
         load_palette(D_8015CF80, 0x11, 1, 0, 0);
-        func_80149268(D_8015CF84, D_8015CF88, D_8015CF8C, D_8015CF90, D_8015CF94, D_8015CF98);
+        date_ferris_wheel_still_copy(D_8015CF84, D_8015CF88, D_8015CF8C, D_8015CF90, D_8015CF94, D_8015CF98);
         g->mode_step_timer.u += 1;
         return 0;
     case 5:
@@ -537,7 +537,7 @@ s32 func_8014718C(void) {
     case 13:
         sp30 = g->mode_step_timer.u;
 
-        func_8013E7B0();
+        date_load_girl_script();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp30;
         g->mode_step_timer.u++;
@@ -545,7 +545,7 @@ s32 func_8014718C(void) {
     case 15:
         sp30 = g->mode_step_timer.u;
 
-        func_8013E980();
+        date_load_shared_script();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp30;
         g->mode_step_timer.u++;
@@ -553,7 +553,7 @@ s32 func_8014718C(void) {
     case 17:
         sp30 = g->mode_step_timer.u;
 
-        func_8013E9BC();
+        date_load_choice_tables();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp30;
         g->mode_step_timer.u++;
@@ -565,14 +565,14 @@ s32 func_8014718C(void) {
         hizuke_disp_switch(1);
         return 0;
     }
-    D_8015CF9C += (y = 1);
-    if (D_8015CF9C % (y = 19U) == 0x12) {
+    date_ride_frame += (y = 1);
+    if (date_ride_frame % (y = 19U) == 0x12) {
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
             sprite_quads[var_v1 + 10].y += 1;
         }
         sprite_quads[var_v1 + 10].h -= 1;
     }
-    if (D_8015CF9C % (y = 5U) == 4) {
+    if (date_ride_frame % (y = 5U) == 4) {
         for (var_v1 = 0; var_v1 < 6; var_v1++) {
             sprite_quads[var_v1 + 4].y += 1;
         }
@@ -584,14 +584,14 @@ s32 func_8014718C(void) {
             }
         }
     }
-    if (D_8015CF9C == (y = 0x12C)) {
+    if (date_ride_frame == (y = 0x12C)) {
         g->mode_step_timer.u += 1;
     }
 }
 
 /* FAKE: s32 with normal bare returns preserves the original v0 liveness;
  * only the decoder-error path returns zero. Real return type unknown. T-12100. */
-s32 func_80147958(void) {
+s32 date_ride_roller_coaster(void) {
     GameState *g;
     s32 current;
     s32 sp54;
@@ -621,7 +621,7 @@ s32 func_80147958(void) {
         movie->unk_0A = 0;
         movie->unk_1A = 0;
         hizuke_disp_switch(0);
-        D_8015CF9C = 0;
+        date_ride_frame = 0;
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
             sprite_quads[var_v1 + 4].w = (var_v1 << 6) + 0x80;
             sprite_quads[var_v1 + 4].flags = 0x82000000;
@@ -785,14 +785,14 @@ s32 func_80147958(void) {
         }
         break;
     case 23:
-        if (!(D_8015CF9C & 7)) {
-            func_80148924(4);
-                if (((u16) D_8015CF9C % 24U) == 0) {
+        if (!(date_ride_frame & 7)) {
+            date_ride_quad_shift(4);
+                if (((u16) date_ride_frame % 24U) == 0) {
                 audio_command(0x503);
                     }
         }
-        if (++D_8015CF9C == 0x140) {
-            D_8015CF9C = 0;
+        if (++date_ride_frame == 0x140) {
+            date_ride_frame = 0;
             game_state.mode_step_timer.u += 1;
         }
         break;
@@ -833,15 +833,15 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].unk_0F = 0xA0;
             sprite_quads[var_v1 + 6].y = -0x78;
         }
-        D_8015CF9C = 0;
+        date_ride_frame = 0;
         audio_command(0x500);
         g->mode_step_timer.u += 1;
         return;
     case 30:
     case 32:
     case 34:
-        func_80148924(8);
-        if (++D_8015CF9C == 0x14) {
+        date_ride_quad_shift(8);
+        if (++date_ride_frame == 0x14) {
             g->mode_step_timer.u += 1;
             return;
         }
@@ -863,7 +863,7 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].unk_0F = 0xA0;
             sprite_quads[var_v1 + 6].y = -0x78;
         }
-        D_8015CF9C = 0;
+        date_ride_frame = 0;
         g->mode_step_timer.u += 1;
         return;
     case 33:
@@ -883,7 +883,7 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].unk_0F = 0xA0;
             sprite_quads[var_v1 + 6].y = -0x78;
         }
-        D_8015CF9C = 0;
+        date_ride_frame = 0;
         g->mode_step_timer.u += 1;
         return;
     case 35:
@@ -903,12 +903,12 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].unk_0F = 0xA0;
             sprite_quads[var_v1 + 6].y = -0x78;
         }
-        D_8015CF9C = 0;
+        date_ride_frame = 0;
         g->mode_step_timer.u += 1;
         return;
     case 36:
-        func_80148924(8);
-        if ((u16) D_8015CF9C >= 8U) {
+        date_ride_quad_shift(8);
+        if ((u16) date_ride_frame >= 8U) {
             value = sprite_quads[4].tint_r;
         value -= 4;
         color = (value & 0xFF);
@@ -925,7 +925,7 @@ s32 func_80147958(void) {
             sprite_quads[4].tint_g = color;
         sprite_quads[4].tint_r = color;
         }
-        if (++D_8015CF9C == 0x14) {
+        if (++date_ride_frame == 0x14) {
             g->mode_step_timer.u += 1;
             return;
         }
@@ -947,11 +947,11 @@ s32 func_80147958(void) {
             sprite_quads[var_v1 + 6].unk_0F = 0xA0;
             sprite_quads[var_v1 + 6].y = -0x78;
         }
-        D_8015CF9C = 0;
+        date_ride_frame = 0;
         g->mode_step_timer.u += 1;
         return;
     case 38:
-        func_80148924(8);
+        date_ride_quad_shift(8);
         value = sprite_quads[4].tint_r;
         value -= 4;
         color = (value & 0xFF);
@@ -1019,7 +1019,7 @@ s32 func_80147958(void) {
     case 46:
         sp50 = g->mode_step_timer.u;
 
-        func_8013E7B0();
+        date_load_girl_script();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp50;
         g->mode_step_timer.u++;
@@ -1027,7 +1027,7 @@ s32 func_80147958(void) {
     case 48:
         sp50 = g->mode_step_timer.u;
 
-        func_8013E980();
+        date_load_shared_script();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp50;
         g->mode_step_timer.u++;
@@ -1035,7 +1035,7 @@ s32 func_80147958(void) {
     case 50:
         sp50 = g->mode_step_timer.u;
 
-        func_8013E9BC();
+        date_load_choice_tables();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp50;
         g->mode_step_timer.u++;
@@ -1050,7 +1050,7 @@ s32 func_80147958(void) {
     return;
 }
 
-s32 func_80148924(s16 a0) {
+s32 date_ride_quad_shift(s16 a0) {
     sprite_quads[4].y += a0;
     sprite_quads[5].y += a0;
     sprite_quads[4].h -= a0;
@@ -1061,7 +1061,7 @@ s32 func_80148924(s16 a0) {
     sprite_quads[7].unk_0F -= a0;
 }
 
-s32 func_801489D0(void) {
+s32 date_ride_ghost_house(void) {
     s16 *temp_a0;
     s16 *temp_v0;
     s16 temp_a1;
@@ -1078,9 +1078,9 @@ s32 func_801489D0(void) {
         D_80122D2C = 1;
         D_8015CFC4 = 0x64;
         srand((*(s32 *)&game_state.frame_count));
-        D_8015CF9C = 0;
+        date_ride_frame = 0;
         hizuke_disp_switch(0);
-        func_801491E4(0x43BA);
+        date_ride_background_skip(0x43BA);
         D_8015CFA4[0] = -0x50;
         D_8015CFA4[1] = 0;
         D_8015CFA4[2] = 0x64;
@@ -1183,7 +1183,7 @@ s32 func_801489D0(void) {
         if (D_8015CFC4 >= 0x65) {
             D_8015CFC4 = 0x64;
         }
-        if (D_8015CF9C++ == 0x12C) {
+        if (date_ride_frame++ == 0x12C) {
             game_state.mode_step_timer.u += 1;
             break;
         }
@@ -1211,7 +1211,7 @@ s32 func_801489D0(void) {
     }
 }
 
-void func_801491E4(s32 arg0) {
+void date_ride_background_skip(s32 arg0) {
     s32 temp_v0;
 
     D_800B3D60 = 0;
@@ -1228,7 +1228,7 @@ void func_801491E4(s32 arg0) {
 }
 
 /* FAKE: s32 fall-through keeps the record base in v0 (T-9780). */
-s32 func_80149268(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+s32 date_ferris_wheel_still_copy(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     SpriteQuad *record;
     s16 i;
 

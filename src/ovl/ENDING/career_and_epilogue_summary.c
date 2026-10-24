@@ -173,10 +173,10 @@ void func_80139D24(void) {
 
 void func_80139D54(void) {
     actor_clear_range(0);
-    cursor_show(0);
+    hud_cursor_show(0);
     sprite_tables_clear();
     text_system_reset();
-    func_8004E500(3);
+    text_glyph_pages_clear(3);
     D_80122CE4 = 0;
     D_80122CD4 = 0;
     mode_step_next();

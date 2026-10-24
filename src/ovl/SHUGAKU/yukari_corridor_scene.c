@@ -75,7 +75,7 @@ void func_80134824(void) {
     u8 unused; /* read uninitialised: the original passes the stack byte */
 
     get_g_zyotai_h(game_state.current_girl);
-    func_800634FC(unused);
+    portrait_value_clear_if_high(unused);
     actor_clear(0x60);
     actor_clear(0x61);
     actor_clear(0x62);

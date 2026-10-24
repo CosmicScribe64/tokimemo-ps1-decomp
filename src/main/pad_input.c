@@ -246,7 +246,7 @@ s32 func_800430C0(void) {
                 if (game_state.memory_card_busy != 0) {
                     memory_card_stop();
                 }
-                cursor_actor_init(0);
+                hud_cursor_actor_init(0);
                 return -1;
             }
         } else if ((game_state.pad_held & 0x090C0000) == 0x090C0000) {
@@ -274,7 +274,7 @@ s32 func_800430C0(void) {
                 if (game_state.memory_card_busy != 0) {
                     memory_card_stop();
                 }
-                cursor_actor_init(0);
+                hud_cursor_actor_init(0);
                 return -1;
             }
         } else {

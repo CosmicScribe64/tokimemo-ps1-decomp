@@ -1,6 +1,6 @@
 /* place_scenes.c: src/ovl/DATE/80132000.c:244: stage 0 and 1 handlers of all 21 places: place setups, arrival, choice scoring, special-scene chooser, date end. Original object 0x80132000-0x80141EE0 (config/objects/DATE.txt). */
 #define MAIN_API_OVERRIDE_D_80121808 /* byte store here (main_api.h: s32, EVENT) */
-#define MAIN_API_OVERRIDE_normal_date_speak /* int view: the original keeps $v0 busy after the call, func_8013E6A4 (T-17202; main_api.h: void) */
+#define MAIN_API_OVERRIDE_normal_date_speak /* int view: the original keeps $v0 busy after the call, date_shrine_closing_talk (T-17202; main_api.h: void) */
 #define MAIN_API_OVERRIDE_tpage_buf_clear /* matched with void() (main_api.h: void(void)) */
 #include "common.h"
 #include "ovl/DATE.h"
@@ -11,46 +11,46 @@ extern u8 D_80121808;
 extern s32 normal_date_speak();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B520);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B524);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B528);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B52C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B530);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B534);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B538);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B53C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B540);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B544);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B548);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B54C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B550);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B554);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B558);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B55C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B560);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B564);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B568);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B56C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B570);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B574);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B578);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B57C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B580);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B584);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B588);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B58C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B590);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B594);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B598);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B59C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5A0);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5A4);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5A8);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5AC);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5B0);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5B4);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5B8);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5BC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_art_museum);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_art_museum);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_bowling_alley);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_bowling_alley);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_concert_hall);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_concert_hall);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_zoo);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_zoo);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_shrine);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_shrine);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_game_center);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_game_center);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_karaoke);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_karaoke);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_movie_theater);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_movie_theater);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_pool);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_pool);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_planetarium);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_planetarium);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_sea);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_sea);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_botanical_garden);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_botanical_garden);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_shopping_street);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_shopping_street);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_skating_rink);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_skating_rink);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_ski_resort);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_ski_resort);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_stadium);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_stadium);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_aquarium);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_aquarium);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_library);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_library);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_amusement_park);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_amusement_park);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_class_table_central_park);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_face_table_central_park);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5C0);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5C4);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B5C8);
@@ -89,55 +89,55 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B648);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B64C);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B650);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_arrival);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B658);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B65C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B660);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B664);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B668);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B66C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B670);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B674);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B678);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B67C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B680);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B684);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B688);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B68C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B690);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B694);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B698);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B69C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B6A0);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B6A4);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B6FC);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B75C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B774);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B78C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B7A0);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B888);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B8DC);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B930);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B984);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015B9B0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_groups_per_variant);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_birthday_near);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_hint_roll);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_exhibit_artist_active);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_exhibit_sculpture_active);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_exhibit_painters_active);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_game_center_medals_open);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_park_new_rides);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_park_newest_rides);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_show_taken);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_parade_offered);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_movie_index);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_concert_index);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_ride_index);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_shop_index);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_first_sunday);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_stadium_game_day);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_ride_chosen);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_sign_palette_frame);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_movie_audio_pairs);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_concert_audio_pairs);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_opening_count_a);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_opening_count_b);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_syoushin_weight);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_place_affinity);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_place_bank_third_argument);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_place_bank_first_data_argument);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_place_bank_second_data_argument);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_place_load_command);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_place_sequence_command);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_place_names);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BCB4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_firework_targets);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BD34);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BD38);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BD3C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BD40);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BD90);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_particle_targets);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_shared_section_text);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BD94);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BD98);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BD9C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDA0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_shared_section_command);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDA4);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDA8);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDAC);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDB0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_shared_section_voice);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDB4);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDB8);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDBC);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDC0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_section_text);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDC4);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDC8);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BDCC);
@@ -164,7 +164,7 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE1C);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE20);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE24);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE28);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE2C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_section_command);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE30);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE34);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE38);
@@ -191,7 +191,7 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE88);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE8C);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE90);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE94);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE98);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_section_voice);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BE9C);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BEA0);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BEA4);
@@ -218,21 +218,21 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BEF4);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BEF8);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BEFC);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF00);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF04);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF08);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF0C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF10);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF14);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF18);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF1C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF20);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF24);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF28);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF2C);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF30);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF34);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF38);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF3C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_arrival_group);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_arrival_line);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_special_day_group);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_special_day_line);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_closing_group);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_closing_line);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_opening_group);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_opening_line);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_movie_group);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_movie_line);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_concert_group);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_concert_line);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_park_parade_group);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_park_parade_line);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", date_meeting_group);
 
 /*
  * Matching notes (T-2010):
@@ -242,50 +242,50 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/place_scenes.data", D_8015BF3C);
  *   extern would change the register allocation of the load.
  */
 
-void func_80132000(void) {
-    D_8015B520 = (DateMuseumChoices15 *)0x801A427C;
-    D_8015B524 = (DateMuseumChoices15 *)0x801A4D2C;
-    D_8015B528 = (u8 *)0x801A43EC;
-    D_8015B52C = (u8 *)0x801A4E9C;
-    D_8015B530 = (u8 *)0x801A47F0;
-    D_8015B534 = (u8 *)0x801A52A0;
-    D_8015B538 = (u8 *)0x801A4190;
-    D_8015B53C = (u8 *)0x801A4C40;
-    D_8015B540 = (u8 *)0x801A4A04;
-    D_8015B544 = (u8 *)0x801A54B4;
-    D_8015B548 = (u8 *)0x801A4368;
-    D_8015B54C = (u8 *)0x801A4E18;
-    D_8015B550 = (u8 *)0x801A4430;
-    D_8015B554 = (u8 *)0x801A4EE0;
-    D_8015B558 = (u8 *)0x801A4684;
-    D_8015B55C = (u8 *)0x801A5134;
-    D_8015B560 = (u8 *)0x801A497C;
-    D_8015B564 = (u8 *)0x801A542C;
-    D_8015B568 = (u8 *)0x801A4238;
-    D_8015B56C = (u8 *)0x801A4CE8;
-    D_8015B570 = (u8 *)0x801A49C0;
-    D_8015B574 = (u8 *)0x801A5470;
-    D_8015B578 = (u8 *)0x801A41F4;
-    D_8015B57C = (u8 *)0x801A4CA4;
-    D_8015B580 = (u8 *)0x801A4064;
-    D_8015B584 = (u8 *)0x801A4B14;
-    D_8015B588 = (u8 *)0x801A4A28;
-    D_8015B58C = (u8 *)0x801A54D8;
-    D_8015B590 = (u8 *)0x801A4A6C;
-    D_8015B594 = (u8 *)0x801A551C;
-    D_8015B598 = (u8 *)0x801A4600;
-    D_8015B59C = (u8 *)0x801A50B0;
-    D_8015B5A0 = (u8 *)0x801A412C;
-    D_8015B5A4 = (u8 *)0x801A4BDC;
-    D_8015B5A8 = (u8 *)0x801A4324;
-    D_8015B5AC = (u8 *)0x801A4DD4;
-    D_8015B5B0 = (DateRideChoices36 *)0x801A4474;
-    D_8015B5B4 = (DateRideChoices36 *)0x801A4F24;
-    D_8015B5B8 = (u8 *)0x801A4000;
-    D_8015B5BC = (u8 *)0x801A4AB0;
+void date_choice_tables_init(void) {
+    date_class_table_art_museum = (DateMuseumChoices15 *)0x801A427C;
+    date_face_table_art_museum = (DateMuseumChoices15 *)0x801A4D2C;
+    date_class_table_bowling_alley = (u8 *)0x801A43EC;
+    date_face_table_bowling_alley = (u8 *)0x801A4E9C;
+    date_class_table_concert_hall = (u8 *)0x801A47F0;
+    date_face_table_concert_hall = (u8 *)0x801A52A0;
+    date_class_table_zoo = (u8 *)0x801A4190;
+    date_face_table_zoo = (u8 *)0x801A4C40;
+    date_class_table_shrine = (u8 *)0x801A4A04;
+    date_face_table_shrine = (u8 *)0x801A54B4;
+    date_class_table_game_center = (u8 *)0x801A4368;
+    date_face_table_game_center = (u8 *)0x801A4E18;
+    date_class_table_karaoke = (u8 *)0x801A4430;
+    date_face_table_karaoke = (u8 *)0x801A4EE0;
+    date_class_table_movie_theater = (u8 *)0x801A4684;
+    date_face_table_movie_theater = (u8 *)0x801A5134;
+    date_class_table_pool = (u8 *)0x801A497C;
+    date_face_table_pool = (u8 *)0x801A542C;
+    date_class_table_planetarium = (u8 *)0x801A4238;
+    date_face_table_planetarium = (u8 *)0x801A4CE8;
+    date_class_table_sea = (u8 *)0x801A49C0;
+    date_face_table_sea = (u8 *)0x801A5470;
+    date_class_table_botanical_garden = (u8 *)0x801A41F4;
+    date_face_table_botanical_garden = (u8 *)0x801A4CA4;
+    date_class_table_shopping_street = (u8 *)0x801A4064;
+    date_face_table_shopping_street = (u8 *)0x801A4B14;
+    date_class_table_skating_rink = (u8 *)0x801A4A28;
+    date_face_table_skating_rink = (u8 *)0x801A54D8;
+    date_class_table_ski_resort = (u8 *)0x801A4A6C;
+    date_face_table_ski_resort = (u8 *)0x801A551C;
+    date_class_table_stadium = (u8 *)0x801A4600;
+    date_face_table_stadium = (u8 *)0x801A50B0;
+    date_class_table_aquarium = (u8 *)0x801A412C;
+    date_face_table_aquarium = (u8 *)0x801A4BDC;
+    date_class_table_library = (u8 *)0x801A4324;
+    date_face_table_library = (u8 *)0x801A4DD4;
+    date_class_table_amusement_park = (DateRideChoices36 *)0x801A4474;
+    date_face_table_amusement_park = (DateRideChoices36 *)0x801A4F24;
+    date_class_table_central_park = (u8 *)0x801A4000;
+    date_face_table_central_park = (u8 *)0x801A4AB0;
 }
 
-void func_80132288(void) {
+void date_fireworks_resources_init(void) {
     D_8015B5C0 = 0x801F2820;
     D_8015B5C4 = 0x801F2830;
     D_8015B5C8 = 0x801F28B4;
@@ -307,7 +307,7 @@ void func_80132288(void) {
     D_8015B608 = 0x801DE200;
 }
 
-void func_801323B8(void) {
+void date_central_park_particles_init(void) {
     D_8015B60C = 0x801F0638;
     D_8015B610 = 0x801F0C34;
     D_8015B614 = 0x801F063C;
@@ -320,7 +320,7 @@ void func_801323B8(void) {
     D_8015B630 = 0x801E2000;
 }
 
-void func_80132458(void) {
+void date_parade_resources_init(void) {
     D_8015B634 = (u8 *)0x801BE078;
     D_8015B638 = (u8 *)0x801BE084;
     D_8015B63C = (u8 *)0x801BE088;
@@ -328,56 +328,56 @@ void func_80132458(void) {
     D_8015B644 = (u8 *)0x801B0000;
 }
 
-void func_801324A8(void) {
+void date_ambush_sections_init(void) {
     D_8015B648 = 0x801B0090;
     D_8015B64C = 0x801B00A4;
     D_8015B650 = 0x801B0170;
 }
 
-void func_801324DC(void) {
+void date_arrival_init(void) {
     u8 t;
     u8 six;
 
     tpage_buf_clear();
     six = 6;
     if ((D_800CA2F8 == 0xB) && (D_800CA2FC == 2)) {
-        talk_group += D_8015B658;
+        talk_group += date_groups_per_variant;
     } else {
-        talk_group += D_800CA2FC * D_8015B658;
+        talk_group += D_800CA2FC * date_groups_per_variant;
     }
     talk_line = 0;
     t = get_g_zyotai_s(game_state.current_girl) & 0x7F;
     /* FAKE: T-17202, `date_arrival * 0` mentions the promoted global before `t`, so its load
      * (lui a0) is scheduled before the andi of the call result; the sum keeps the original order */
-    D_8015BF04 = date_arrival * 0 + ((t >= 2) + (t >= 3)) * ((date_arrival == 0) + 1) + date_arrival * six - (date_arrival == 2) * 3;
-    D_8015BF08 = 0;
+    date_arrival_group = date_arrival * 0 + ((t >= 2) + (t >= 3)) * ((date_arrival == 0) + 1) + date_arrival * six - (date_arrival == 2) * 3;
+    date_arrival_line = 0;
     *(s16 *)&D_800CA15C = 0;
-    D_8015BF18 = 0;
-    D_8015BF0C = 0;
-    D_8015BF10 = 0;
-    D_8015BF34 = 0;
-    D_8015BF38 = 0;
+    date_closing_line = 0;
+    date_special_day_group = 0;
+    date_special_day_line = 0;
+    date_park_parade_group = 0;
+    date_park_parade_line = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    D_8015BF28 = 0;
-    D_8015BF30 = 0;
-    D_8015BF1C = 0;
-    D_8015BF20 = 0;
-    D_8015B69C = 0;
+    date_movie_line = 0;
+    date_concert_line = 0;
+    date_opening_group = 0;
+    date_opening_line = 0;
+    date_ride_chosen = 0;
     D_80122D34 = 0;
     if ((game_state.weekday == six) && (game_state.day < 8)) {
-        D_8015B694 = 1;
+        date_first_sunday = 1;
     } else {
-        D_8015B694 = 0;
+        date_first_sunday = 0;
     }
     tpage_buf_clear(date_arrival);
     addr_init_bustup();
     D_800CA2AC = 0;
-    D_8015B67C = 0;
+    date_show_taken = 0;
     mode_step_next();
 }
 
-void date_event_trigger(s16 arg0, s16 arg1, u8 arg2) {
+void date_scene_trigger(s16 arg0, s16 arg1, u8 arg2) {
     talk_work = arg0;
     if (arg1 != 0) {
         game_state.scene_flags[arg2] = 1;
@@ -388,7 +388,7 @@ void date_event_trigger(s16 arg0, s16 arg1, u8 arg2) {
     game_mode_set(GAME_MODE_DATE_SCENE);
 }
 
-s32 date_event_choose(void) {
+s32 date_scene_choose(void) {
     GameState *g;
     /* FAKE: byte-local order preserves stack slots +0x33/+0x31. T-11060 */
     u8 rank;
@@ -407,195 +407,195 @@ s32 date_event_choose(void) {
     status = get_g_zyotai_h(g->current_girl);
     if (g->current_girl == GIRL_SHIORI) {
         if (((place = D_800CA2F8) == 1) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[3] == 0) && (g->mode_step == 0xD)) {
-            date_event_trigger(4, 1, 3);
+            date_scene_trigger(4, 1, 3);
             D_80122D44 |= 1;
             return 0;
         }
         if (((place = D_800CA2F8) == 0x10) && ((u8)g->year >= 0x60U) && ((u8)g->month >= 6U) && ((u8)g->month < 9U) && (rank < 3U) && (status < 2U) && (g->scene_flags[5] == 0)) {
             if ((g->girls[g->current_girl].scene_counters[0x1D] != 0) && (g->mode_stage == 1) && (g->mode_step == 0xA)) {
-                date_event_trigger(6, 1, 5);
+                date_scene_trigger(6, 1, 5);
                 return 0;
             }
         }
         if (((place = D_800CA2F8) == 0) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && ((rank < 2U) && ((status == 0) && ((g->scene_flags[2] == 0) && (g->mode_stage == 1) && (g->mode_step == 1))))) {
-            date_event_trigger(3, 1, 2);
+            date_scene_trigger(3, 1, 2);
             return 0;
         }
         if (((place = D_800CA2F8) == 0xC) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (rank == 0) && (status == 0) && (highFlag != 0) && (g->scene_flags[4] == 0) && (D_80122CDC == 2) && (g->mode_stage == 1) && (g->mode_step == 0x23)) {
-            date_event_trigger(5, 1, 4);
+            date_scene_trigger(5, 1, 4);
             return 0;
         }
     }
     if (g->current_girl == GIRL_MIO) {
-        if (((place = D_800CA2F8) == 0xC) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[9] == 0) && (D_80122CDC == 0) && ((D_8015B674 != 0) && ((g->mode_stage == 1) && (g->mode_step == 0x23)))) {
-            date_event_trigger(2, 0, 9);
+        if (((place = D_800CA2F8) == 0xC) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[9] == 0) && (D_80122CDC == 0) && ((date_park_new_rides != 0) && ((g->mode_stage == 1) && (g->mode_step == 0x23)))) {
+            date_scene_trigger(2, 0, 9);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x11) && ((u8)g->month >= 6U) && ((u8)g->month < 9U) && ((g->scene_flags[10] == 0) && ((g->mode_stage == 1) && (g->mode_step == 0xA)))) {
-            date_event_trigger(3, 1, 0xA);
+            date_scene_trigger(3, 1, 0xA);
             return 0;
         }
         if (((place = D_800CA2F8) == 8) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && ((g->scene_flags[11] == 0) || ((g->scene_flags[11] == 1) && !(g->frame_count & 1))) && (g->mode_stage == 1) && (g->mode_step == 0xB)) {
-            date_event_trigger(4, 1, 0xB);
+            date_scene_trigger(4, 1, 0xB);
             return 0;
         }
-        if (((place = D_800CA2F8) == 0xE) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[12] == 0) && (D_8015B684 == 6) && (g->mode_stage == 1) && (g->mode_step == 0x11)) {
-            date_event_trigger(5, 1, 0xC);
+        if (((place = D_800CA2F8) == 0xE) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[12] == 0) && (date_movie_index == 6) && (g->mode_stage == 1) && (g->mode_step == 0x11)) {
+            date_scene_trigger(5, 1, 0xC);
             return 0;
         }
     }
     if (g->current_girl == GIRL_YUINA) {
         if (((place = D_800CA2F8) == 4) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[15] == 0) && (((u8)g->year >= 0x60U) && (g->mode_stage == 1) && (g->mode_step == 8))) {
-            date_event_trigger(2, 1, 0xF);
+            date_scene_trigger(2, 1, 0xF);
             return 0;
         }
         if (((place = D_800CA2F8) == 0xA) && ((u8)g->month >= 6U) && ((u8)g->month < 9U) && (g->scene_flags[16] == 0) && ((g->year == 0x61) && ((g->mode_stage == 1) && (g->mode_step == 9)))) {
-            date_event_trigger(3, 1, 0x10);
+            date_scene_trigger(3, 1, 0x10);
             return 0;
         }
-        if (((place = D_800CA2F8) == 9) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && (g->scene_flags[17] == 0) && ((u8)g->year >= 0x60U) && (D_8015B670 != 0) && (D_80122CDC == 1) && (g->mode_stage == 1) && (g->mode_step == 0xC)) {
-            date_event_trigger(4, 1, 0x11);
+        if (((place = D_800CA2F8) == 9) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && (g->scene_flags[17] == 0) && ((u8)g->year >= 0x60U) && (date_game_center_medals_open != 0) && (D_80122CDC == 1) && (g->mode_stage == 1) && (g->mode_step == 0xC)) {
+            date_scene_trigger(4, 1, 0x11);
             return 0;
         }
-        if (((place = D_800CA2F8) == 2) && (g->month == 0xC) && ((flag = (u8)D_8015B690) == 2) && (g->mode_stage == 1) && (g->mode_step == 0xF)) {
-            date_event_trigger(5, 1, 0x12);
+        if (((place = D_800CA2F8) == 2) && (g->month == 0xC) && ((flag = (u8)date_shop_index) == 2) && (g->mode_stage == 1) && (g->mode_step == 0xF)) {
+            date_scene_trigger(5, 1, 0x12);
             return 0;
         }
     }
     if (g->current_girl == GIRL_AYAKO) {
         if (((place = D_800CA2F8) == 0xB) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[22] == 0) && ((g->year == 0x61) && ((g->mode_stage == 1) && (g->mode_step == 9)))) {
-            date_event_trigger(2, 1, 0x16);
+            date_scene_trigger(2, 1, 0x16);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x11) && ((u8)g->month >= 6U) && ((u8)g->month < 9U) && ((g->scene_flags[23] == 0) && ((g->mode_stage == 1) && (g->mode_step == 0xA)))) {
-            date_event_trigger(3, 1, 0x17);
+            date_scene_trigger(3, 1, 0x17);
             return 0;
         }
-        if (((place = D_800CA2F8) == 7) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && (g->scene_flags[24] == 0) && (((flag = (u8)D_8015B664) == 1) && ((g->mode_stage == 1) && (g->mode_step == 7)))) {
-            date_event_trigger(4, 1, 0x18);
+        if (((place = D_800CA2F8) == 7) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && (g->scene_flags[24] == 0) && (((flag = (u8)date_exhibit_artist_active) == 1) && ((g->mode_stage == 1) && (g->mode_step == 7)))) {
+            date_scene_trigger(4, 1, 0x18);
             return 0;
         }
         if (((place = D_800CA2F8) == 6) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (rank < 2U) && (status == 0) && (g->scene_flags[25] == 0) && ((g->year == 0x61) || (g->year == 0x62) || ((g->year == 0x60) && (g->month == 0xC))) && (g->mode_stage == 1) && (g->mode_step == 0xB)) {
-            date_event_trigger(5, 1, 0x19);
+            date_scene_trigger(5, 1, 0x19);
             return 0;
         }
     }
     if (g->current_girl == GIRL_SAKI) {
         if (((place = D_800CA2F8) == 1) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && ((((g->scene_flags[28] == 0) && (rank == 0) && (highFlag != 0)) && (status == 0)) && ((g->mode_stage == 1) && (g->mode_step == 0xD)))) {
-            date_event_trigger(2, 1, 0x1C);
+            date_scene_trigger(2, 1, 0x1C);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x10) && ((u8)g->month >= 6U) && ((u8)g->month < 9U) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->scene_flags[29] == 0) && (g->mode_stage == 1) && (g->mode_step == 0xA) && (g->girls[g->current_girl].scene_counters[0x1D] != 0)) {
-            date_event_trigger(3, 1, 0x1D);
+            date_scene_trigger(3, 1, 0x1D);
             return 0;
         }
-        if (((place = D_800CA2F8) == 0xD) && (D_8015B698 == 0) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && (g->scene_flags[30] == 0) && ((u8)((DateSelectionView *)&D_800CA2F8)->option < 2U) && (g->mode_stage == 1) && (g->mode_step == 8)) {
-            date_event_trigger(4, 1, 0x1E);
+        if (((place = D_800CA2F8) == 0xD) && (date_stadium_game_day == 0) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && (g->scene_flags[30] == 0) && ((u8)((DateSelectionView *)&D_800CA2F8)->option < 2U) && (g->mode_stage == 1) && (g->mode_step == 8)) {
+            date_scene_trigger(4, 1, 0x1E);
             return 0;
         }
         if (((place = D_800CA2F8) == 2) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[31] == 0) && (D_80122CDC == 1) && (g->mode_stage == 1) && (g->mode_step == 0xF)) {
-            date_event_trigger(5, 1, 0x1F);
+            date_scene_trigger(5, 1, 0x1F);
             return 0;
         }
     }
     if (g->current_girl == GIRL_YUKARI) {
         if (((place = D_800CA2F8) == 5) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[35] == 0) && ((g->year == 0x61) && ((g->mode_stage == 1) && (g->mode_step == 9)))) {
-            date_event_trigger(3, 1, 0x23);
+            date_scene_trigger(3, 1, 0x23);
             return 0;
         }
         if (((place = D_800CA2F8) == 3) && ((u8)g->month >= 6U) && ((u8)g->month < 9U) && (rank < 3U) && (status < 2U) && (g->scene_flags[36] == 0) && ((u8)g->year >= 0x61U) && (g->mode_stage == 1) && (g->mode_step == 9)) {
-            date_event_trigger(4, 1, 0x24);
+            date_scene_trigger(4, 1, 0x24);
             return 0;
         }
         if (((place = D_800CA2F8) == 1) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && ((((g->scene_flags[37] == 0) && (rank == 0) && (highFlag != 0)) && (status == 0)) && ((g->mode_stage == 1) && (g->mode_step == 0xD)))) {
-            date_event_trigger(5, 1, 0x25);
+            date_scene_trigger(5, 1, 0x25);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x14) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[38] == 0) && (g->mode_stage == 1) && (g->mode_step == 0)) {
-            date_event_trigger(6, 1, 0x26);
+            date_scene_trigger(6, 1, 0x26);
             return 0;
         }
     }
     if (g->current_girl == GIRL_NOZOMI) {
-        if (((place = D_800CA2F8) == 7) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[41] == 0) && ((D_8015B668 != 0) && ((g->mode_stage == 1) && (g->mode_step == 7)))) {
-            date_event_trigger(2, 1, 0x29);
+        if (((place = D_800CA2F8) == 7) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[41] == 0) && ((date_exhibit_sculpture_active != 0) && ((g->mode_stage == 1) && (g->mode_step == 7)))) {
+            date_scene_trigger(2, 1, 0x29);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x11) && ((u8)g->month >= 6U) && ((u8)g->month < 9U) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->scene_flags[42] == 0) && (g->param_athletics.value >= 0x96) && (g->mode_stage == 1) && (g->mode_step == 0xD)) {
-            date_event_trigger(3, 1, 0x2A);
+            date_scene_trigger(3, 1, 0x2A);
             return 0;
         }
         if (((place = D_800CA2F8) == 5) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && ((g->scene_flags[43] == 0) && ((g->mode_stage == 1) && (g->mode_step == 9)))) {
-            date_event_trigger(4, 1, 0x2B);
+            date_scene_trigger(4, 1, 0x2B);
             return 0;
         }
         if (((place = D_800CA2F8) == 0xA) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[44] == 0) && (g->mode_stage == 1) && (g->mode_step == 9)) {
-            date_event_trigger(5, 1, 0x2C);
+            date_scene_trigger(5, 1, 0x2C);
             return 0;
         }
     }
     if (g->current_girl == GIRL_MIRA) {
         if (((place = D_800CA2F8) == 2) && (D_80122CDC == 0) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && ((g->scene_flags[47] == 0) && ((g->mode_stage == 1) && (g->mode_step == 0xF)))) {
-            date_event_trigger(2, 1, 0x2F);
+            date_scene_trigger(2, 1, 0x2F);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x11) && ((u8)g->month >= 6U) && ((u8)g->month < 9U) && (g->mode_stage == 1) && (g->mode_step == 0xA)) {
-            date_event_trigger(3, 1, 0x30);
+            date_scene_trigger(3, 1, 0x30);
             return 0;
         }
         if (((place = D_800CA2F8) == 0xC) && (D_80122CDC == 1) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && ((((g->scene_flags[49] == 0) && (rank == 0) && (highFlag != 0)) && (status == 0)) && ((g->mode_stage == 1) && (g->mode_step == 0x23)))) {
-            date_event_trigger(4, 0, 0x31);
+            date_scene_trigger(4, 0, 0x31);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x14) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[50] == 0) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->mode_stage == 1) && (g->mode_step == 8)) {
-            date_event_trigger(5, 1, 0x32);
+            date_scene_trigger(5, 1, 0x32);
             return 0;
         }
         if ((g->scene_flags[51] == 0) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->mode_stage == 0) && (g->mode_step == 0x29)) {
-            date_event_trigger(6, 1, 0x33);
+            date_scene_trigger(6, 1, 0x33);
             g->unk_54C[0].b[3] &= 0xFFDF;
             return 0;
         }
     }
-    flag = (u8)D_8015B680;
+    flag = (u8)date_parade_offered;
     if (g->current_girl == GIRL_YUKO) {
-        if (((place = D_800CA2F8) == 9) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[55] == 0) && ((D_8015B670 == 0) || (D_80122CDC == 0)) && (g->mode_stage == 1) && (g->mode_step == 0xC)) {
-            date_event_trigger(2, 1, 0x37);
+        if (((place = D_800CA2F8) == 9) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[55] == 0) && ((date_game_center_medals_open == 0) || (D_80122CDC == 0)) && (g->mode_stage == 1) && (g->mode_step == 0xC)) {
+            date_scene_trigger(2, 1, 0x37);
             return 0;
         }
         if (((place = D_800CA2F8) == 0xC) && (flag == 1) && ((u8)g->month >= 6U) && (((u8)g->month < 9U) && (rank == 0) && (highFlag != 0) && ((status == 0) && ((g->scene_flags[56] == 0) && ((g->mode_stage == 1) && (g->mode_step == 0x3C)))))) {
-            date_event_trigger(3, 1, 0x38);
+            date_scene_trigger(3, 1, 0x38);
             return 0;
         }
-        if (((place = D_800CA2F8) == 0xF) && (D_8015B688 == 0xA) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && ((g->scene_flags[57] == 0) && ((g->mode_stage == 1) && (g->mode_step == 0x11)))) {
-            date_event_trigger(4, 1, 0x39);
+        if (((place = D_800CA2F8) == 0xF) && (date_concert_index == 0xA) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && ((g->scene_flags[57] == 0) && ((g->mode_stage == 1) && (g->mode_step == 0x11)))) {
+            date_scene_trigger(4, 1, 0x39);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x13) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[58] == 0) && (g->mode_stage == 1) && (g->mode_step == 8)) {
-            date_event_trigger(5, 1, 0x3A);
+            date_scene_trigger(5, 1, 0x3A);
             return 0;
         }
         if (((place = D_800CA2F8) == 8) && (((g->year == 0x5F) && (g->month == 0xC) && (g->day == 0xA)) || ((g->year == 0x60) && (g->month == 0xC) && (g->day == 8)) || ((g->year == 0x61) && (g->month == 0xC) && (g->day == 7))) && (rank < 3U) && (((PlayerFlagBits *)&g->player_flags)->b17 != 0) && (g->mode_stage == 1) && (g->mode_step == 0)) {
-            date_event_trigger(6, 1, 0x3B);
+            date_scene_trigger(6, 1, 0x3B);
             return 0;
         }
     }
     if (g->current_girl == GIRL_MEGUMI) {
-        if (((place = D_800CA2F8) == 0xC) && (D_8015B694 != 0) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[62] == 0) && (g->mode_stage == 1) && (g->mode_step == 0x1B)) {
-            date_event_trigger(3, 1, 0x3E);
+        if (((place = D_800CA2F8) == 0xC) && (date_first_sunday != 0) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[62] == 0) && (g->mode_stage == 1) && (g->mode_step == 0x1B)) {
+            date_scene_trigger(3, 1, 0x3E);
             return 0;
         }
         if (((place = D_800CA2F8) == 1) && ((u8)g->month >= 6U) && (((u8)g->month < 9U) && (rank == 0) && (highFlag != 0) && ((status == 0) && ((g->scene_flags[63] == 0) && ((g->mode_stage == 0) && (g->mode_step == 0x29)))))) {
             g->unk_54C[0].b[3] &= 0xFFDF;
-            date_event_trigger(4, 1, 0x3F);
+            date_scene_trigger(4, 1, 0x3F);
             return 0;
         }
         if (((place = D_800CA2F8) == 4) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && ((g->scene_flags[64] == 0) && (g->mode_stage == 1) && (g->mode_step == 8))) {
-            date_event_trigger(5, 1, 0x40);
+            date_scene_trigger(5, 1, 0x40);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x13) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[65] == 0) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->param_athletics.value >= 0x50) && (g->mode_stage == 1) && (g->mode_step == 8)) {
-            date_event_trigger(6, 1, 0x41);
+            date_scene_trigger(6, 1, 0x41);
             return 0;
         }
     }
@@ -603,19 +603,19 @@ s32 date_event_choose(void) {
     selection = ((DateSelectionView *)&D_800CA2F8)->option;
     if (g->current_girl == GIRL_YUMI) {
         if (((place = D_800CA2F8) == 0xC) && ((u8)g->month >= 3U) && ((u8)g->month < 6U) && (g->scene_flags[69] == 0) && (g->mode_stage == 1) && (g->mode_step == 0)) {
-            date_event_trigger(3, 1, 0x45);
+            date_scene_trigger(3, 1, 0x45);
             return 0;
         }
         if (((place = D_800CA2F8) == 1) && ((u8)g->month >= 6U) && (((u8)g->month < 9U) && (rank == 0) && (highFlag != 0) && ((status == 0) && ((g->scene_flags[70] == 0) && (g->mode_stage == 1) && (g->mode_step == 1))))) {
-            date_event_trigger(4, 1, 0x46);
+            date_scene_trigger(4, 1, 0x46);
             return 0;
         }
         if (((place = D_800CA2F8) == 0xD) && ((u8)g->month >= 9U) && ((u8)g->month < 0xCU) && (g->scene_flags[71] == 0) && (((u8)selection >= 2U) && (g->mode_stage == 1) && (g->mode_step == 8))) {
-            date_event_trigger(5, 1, 0x47);
+            date_scene_trigger(5, 1, 0x47);
             return 0;
         }
         if (((place = D_800CA2F8) == 0x14) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (rank == 0) && (highFlag != 0) && ((status == 0) && ((g->scene_flags[72] == 0) && (g->mode_stage == 1) && (g->mode_step == 0)))) {
-            date_event_trigger(6, 1, 0x48);
+            date_scene_trigger(6, 1, 0x48);
             return 0;
         }
     }
@@ -649,20 +649,20 @@ s32 date_event_choose(void) {
     mode_step_next();
 }
 
-void func_80133DB4(void) {
+void date_place_enter_check(void) {
     k_reset(0);
     message_window_set_title(D_800CA19C);
-    date_event_choose();
+    date_scene_choose();
 }
 
-void func_80133DE8(void) {
+void date_place_setup_neighborhood_park(void) {
     talk_text_table = D_8015BDDC;
     talk_command_table = D_8015BE48;
     talk_voice_table = D_8015BEB4;
     D_80122CF4 = 0;
     D_800CA2FC = 0;
     strcpy(D_800CA19C, "近所の公園");
-    D_8015B658 = 2;
+    date_groups_per_variant = 2;
     D_800CA22C[0] = 0;
     D_800CA22C[1] = 0;
     D_800CA22C[2] = 0;
@@ -672,7 +672,7 @@ void func_80133DE8(void) {
     mode_step_next();
 }
 
-void func_80133EA0(void) {
+void date_place_setup_central_park(void) {
     /* T-10900: the local state view preserves repeated byte reloads. */
     GameState *g;
     u8 sp2B;
@@ -687,7 +687,7 @@ void func_80133EA0(void) {
     D_80122CF4 = 0;
     strcpy(D_800CA19C, "きらめき中央公園");
     strcpy(D_800CA1DC, "並木道");
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     sp2B = get_g_zyotai_s(g->current_girl);
     temp_v0 = get_g_zyotai_h(g->current_girl);
     if (((g->month == 3) && ((u8) g->day >= 0xFU)) || (g->month == 4)) {
@@ -712,12 +712,12 @@ void func_80133EA0(void) {
     }
     temp_t9 = D_800CA2FC * 3;
     D_80122D08 = 1;
-    D_800CA22C[0] = (s16) *((g->current_girl * 9) + D_8015B5B8 + temp_t9);
-    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B5B8 + temp_t9) + (1));
-    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B5B8 + temp_t9) + (2));
-    D_800CA21C[0] = (s16) *((g->current_girl * 9) + D_8015B5BC + temp_t9);
-    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B5BC + temp_t9) + (1));
-    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B5BC + temp_t9) + (2));
+    D_800CA22C[0] = (s16) *((g->current_girl * 9) + date_class_table_central_park + temp_t9);
+    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_class_table_central_park + temp_t9) + (1));
+    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_class_table_central_park + temp_t9) + (2));
+    D_800CA21C[0] = (s16) *((g->current_girl * 9) + date_face_table_central_park + temp_t9);
+    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_face_table_central_park + temp_t9) + (1));
+    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_face_table_central_park + temp_t9) + (2));
     if (((u8) g->month >= 3U) && ((u8) g->month < 9U)) {
         bg_read_sub2(0x42EB);
     } else {
@@ -727,7 +727,7 @@ void func_80133EA0(void) {
     mode_step_next();
 }
 
-void func_8013426C(void) {
+void date_place_setup_aquarium(void) {
     GameState *g;
     s32 temp_t2;
 
@@ -737,7 +737,7 @@ void func_8013426C(void) {
     talk_command_table = D_8015BE74;
     talk_voice_table = D_8015BEE0;
     strcpy(D_800CA19C, "水族館");
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     if ((g->girls[g->current_girl].scene_counters[6] == 0) && (((u8) g->year >= 0x61U) || ((g->year == 0x60) && ((u8) g->month >= 3U)))) {
         D_800CA2FC = 2;
         strcpy(D_800CA1DC, "イルカショー");
@@ -752,18 +752,18 @@ void func_8013426C(void) {
         D_80122D08 = 5;
     }
     temp_t2 = D_800CA2FC * 3;
-    D_800CA22C[0] = (s16) *((g->current_girl * 9) + D_8015B5A0 + temp_t2);
-    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B5A0 + temp_t2) + (1));
-    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B5A0 + temp_t2) + (2));
-    D_800CA21C[0] = (s16) *((g->current_girl * 9) + D_8015B5A4 + temp_t2);
-    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B5A4 + temp_t2) + (1));
-    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B5A4 + temp_t2) + (2));
+    D_800CA22C[0] = (s16) *((g->current_girl * 9) + date_class_table_aquarium + temp_t2);
+    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_class_table_aquarium + temp_t2) + (1));
+    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_class_table_aquarium + temp_t2) + (2));
+    D_800CA21C[0] = (s16) *((g->current_girl * 9) + date_face_table_aquarium + temp_t2);
+    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_face_table_aquarium + temp_t2) + (1));
+    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_face_table_aquarium + temp_t2) + (2));
     bg_read_sub2(0x4591);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_801344C8(void) {
+void date_place_setup_zoo(void) {
     GameState *g;
     s32 temp_t9;
     u32 temp_hi;
@@ -774,7 +774,7 @@ void func_801344C8(void) {
     talk_command_table = D_8015BE38;
     talk_voice_table = D_8015BEA4;
     strcpy(D_800CA19C, "動物園");
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     if ((g->girls[g->current_girl].scene_counters[8] == 0) && (((u8) g->year >= 0x60U) || ((g->year == 0x5F) && ((u8) g->month >= 0xCU)))) {
         D_800CA2FC = 2;
         strcpy(D_800CA1DC, "園内");
@@ -801,20 +801,20 @@ void func_801344C8(void) {
         }
     }
     temp_t9 = D_800CA2FC * 3;
-    D_800CA22C[0] = (s16) *((g->current_girl * 9) + D_8015B538 + temp_t9);
-    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B538 + temp_t9) + (1));
-    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B538 + temp_t9) + (2));
-    D_800CA21C[0] = (s16) *((g->current_girl * 9) + D_8015B53C + temp_t9);
-    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B53C + temp_t9) + (1));
-    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + D_8015B53C + temp_t9) + (2));
+    D_800CA22C[0] = (s16) *((g->current_girl * 9) + date_class_table_zoo + temp_t9);
+    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_class_table_zoo + temp_t9) + (1));
+    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_class_table_zoo + temp_t9) + (2));
+    D_800CA21C[0] = (s16) *((g->current_girl * 9) + date_face_table_zoo + temp_t9);
+    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_face_table_zoo + temp_t9) + (1));
+    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 9) + date_face_table_zoo + temp_t9) + (2));
     bg_read_sub2(0x457D);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_801347B8(void) {
+void date_place_setup_botanical_garden(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
-       (same idiom as func_80139944). T-11580 */
+       (same idiom as date_amusement_park_ride_extra_tables). T-11580 */
     GameState *g = &game_state;
     s32 choice_offset;
 
@@ -823,9 +823,9 @@ void func_801347B8(void) {
     talk_voice_table = D_8015BECC;
     strcpy(D_800CA19C, "植物園");
     strcpy(D_800CA1DC, "園内");
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     if (game_state.current_girl == GIRL_MIRA) {
-        D_8015B658 = 5;
+        date_groups_per_variant = 5;
     }
     if (!(game_state.girls[game_state.current_girl].scene_counters[9] & 1)) {
         D_800CA2FC = 0;
@@ -834,18 +834,18 @@ void func_801347B8(void) {
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 9;
-    *D_800CA22C = (s16) *(g->current_girl * 6 + D_8015B578 + choice_offset);
-    D_800CA22C[1] = (s16) *(g->current_girl * 6 + D_8015B578 + choice_offset + 1);
-    D_800CA22C[2] = (s16) *(g->current_girl * 6 + D_8015B578 + choice_offset + 2);
-    *D_800CA21C = (s16) *(g->current_girl * 6 + D_8015B57C + choice_offset);
-    D_800CA21C[1] = (s16) *(g->current_girl * 6 + D_8015B57C + choice_offset + 1);
-    D_800CA21C[2] = (s16) *(g->current_girl * 6 + D_8015B57C + choice_offset + 2);
+    *D_800CA22C = (s16) *(g->current_girl * 6 + date_class_table_botanical_garden + choice_offset);
+    D_800CA22C[1] = (s16) *(g->current_girl * 6 + date_class_table_botanical_garden + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->current_girl * 6 + date_class_table_botanical_garden + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->current_girl * 6 + date_face_table_botanical_garden + choice_offset);
+    D_800CA21C[1] = (s16) *(g->current_girl * 6 + date_face_table_botanical_garden + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->current_girl * 6 + date_face_table_botanical_garden + choice_offset + 2);
     bg_read_sub2(0x45D3);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_801349A0(void) {
+void date_place_setup_planetarium(void) {
     GameState *g;
     s32 temp_v0;
 
@@ -855,7 +855,7 @@ void func_801349A0(void) {
     talk_command_table = D_8015BE58;
     talk_voice_table = D_8015BEC4;
     strcpy(D_800CA19C, "プラネタリウム");
-    D_8015B658 = 7;
+    date_groups_per_variant = 7;
     if (!(g->girls[g->current_girl].scene_counters[0xA] & 1)) {
         ((DateSelectionView *)&D_800CA2F8)->option = 0;
         strcpy(D_800CA1DC, "館内");
@@ -868,12 +868,12 @@ void func_801349A0(void) {
     }
     D_80122D08 = 0xA;
     temp_v0 = ((DateSelectionView *)&D_800CA2F8)->option * 3;
-    D_800CA22C[0] = (s16) *((g->current_girl * 6) + D_8015B568 + temp_v0);
-    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + D_8015B568 + temp_v0) + (1));
-    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + D_8015B568 + temp_v0) + (2));
-    D_800CA21C[0] = (s16) *((g->current_girl * 6) + D_8015B56C + temp_v0);
-    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + D_8015B56C + temp_v0) + (1));
-    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + D_8015B56C + temp_v0) + (2));
+    D_800CA22C[0] = (s16) *((g->current_girl * 6) + date_class_table_planetarium + temp_v0);
+    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + date_class_table_planetarium + temp_v0) + (1));
+    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + date_class_table_planetarium + temp_v0) + (2));
+    D_800CA21C[0] = (s16) *((g->current_girl * 6) + date_face_table_planetarium + temp_v0);
+    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + date_face_table_planetarium + temp_v0) + (1));
+    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + date_face_table_planetarium + temp_v0) + (2));
     if ((g->param_science.value < 0x78) && (((DateSelectionView *)&D_800CA2F8)->option != 0)) {
         switch (g->current_girl) {
         case GIRL_SHIORI:
@@ -912,23 +912,23 @@ void func_801349A0(void) {
 /* FAKE: the signed narrow constant preserves the shared multiply/compare
  * range and its a2 register. Literal 3 strength-reduces the multiply.
  * T-10870: two three-halfword chains preserve each result row's stores. */
-void func_80134C64(void) {
+void date_place_setup_art_museum(void) {
     s16 three = 3;
     s32 choice_offset;
     GameState *g;
 
     g = &game_state;
-    talk_text_table = D_8015BDC0;
-    talk_command_table = D_8015BE2C;
-    talk_voice_table = D_8015BE98;
+    talk_text_table = date_section_text;
+    talk_command_table = date_section_command;
+    talk_voice_table = date_section_voice;
     strcpy(D_800CA19C, "美術館");
-    D_8015B658 = three;
-    D_8015B66C = 0;
-    D_8015B668 = 0;
-    D_8015B664 = 0;
+    date_groups_per_variant = three;
+    date_exhibit_painters_active = 0;
+    date_exhibit_sculpture_active = 0;
+    date_exhibit_artist_active = 0;
     if ((g->year == 0x61) && ((u8) g->month >= 9U) && ((u8) g->month < 0xCU)) {
         ((DateSelectionView *)&D_800CA2F8)->option = 2;
-        D_8015B664 = 1;
+        date_exhibit_artist_active = 1;
         strcpy(D_800CA1DC, "ガーギー展");
         if ((g->girls[g->current_girl].scene_counters[12] != 0) && (g->current_girl != three)) {
             ((DateSelectionView *)&D_800CA2F8)->option = 5;
@@ -939,7 +939,7 @@ void func_80134C64(void) {
         }
     } else if ((g->year == 0x61) && ((u8) g->month >= 3U) && ((u8) g->month < 6U)) {
         ((DateSelectionView *)&D_800CA2F8)->option = three;
-        D_8015B668 = 1;
+        date_exhibit_sculpture_active = 1;
         strcpy(D_800CA1DC, "彫塑展");
         if (g->girls[g->current_girl].scene_counters[13] != 0) {
             ((DateSelectionView *)&D_800CA2F8)->option = 5;
@@ -950,7 +950,7 @@ void func_80134C64(void) {
         }
     } else if ((g->year == 0x5F) && ((u8) g->month >= 9U) && ((u8) g->month < 0xCU)) {
         ((DateSelectionView *)&D_800CA2F8)->option = 4;
-        D_8015B66C = 1;
+        date_exhibit_painters_active = 1;
         strcpy(D_800CA1DC, "有名画家展");
         if (g->girls[g->current_girl].scene_counters[14] != 0) {
             ((DateSelectionView *)&D_800CA2F8)->option = 5;
@@ -972,12 +972,12 @@ void func_80134C64(void) {
         }
     }
     choice_offset = ((DateSelectionView *)&D_800CA2F8)->option * three;
-    *D_800CA22C = (s16) *(g->current_girl * 0xF + (u8 *)D_8015B520 + choice_offset);
-    D_800CA22C[1] = (s16) *(g->current_girl * 0xF + (u8 *)D_8015B520 + choice_offset + 1);
-    D_800CA22C[2] = (s16) *(g->current_girl * 0xF + (u8 *)D_8015B520 + choice_offset + 2);
-    *D_800CA21C = (s16) *(g->current_girl * 0xF + (u8 *)D_8015B524 + choice_offset);
-    D_800CA21C[1] = (s16) *(g->current_girl * 0xF + (u8 *)D_8015B524 + choice_offset + 1);
-    D_800CA21C[2] = (s16) *(g->current_girl * 0xF + (u8 *)D_8015B524 + choice_offset + 2);
+    *D_800CA22C = (s16) *(g->current_girl * 0xF + (u8 *)date_class_table_art_museum + choice_offset);
+    D_800CA22C[1] = (s16) *(g->current_girl * 0xF + (u8 *)date_class_table_art_museum + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->current_girl * 0xF + (u8 *)date_class_table_art_museum + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->current_girl * 0xF + (u8 *)date_face_table_art_museum + choice_offset);
+    D_800CA21C[1] = (s16) *(g->current_girl * 0xF + (u8 *)date_face_table_art_museum + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->current_girl * 0xF + (u8 *)date_face_table_art_museum + choice_offset + 2);
     if (((DateSelectionView *)&D_800CA2F8)->option == 5) {
         switch (g->current_girl) {
         default:
@@ -993,7 +993,7 @@ void func_80134C64(void) {
             D_800CA22C[0] = D_800CA22C[1] = D_800CA22C[2] = 4;
             break;
         }
-        if ((g->current_girl == three) && (D_8015B664 != 0)) {
+        if ((g->current_girl == three) && (date_exhibit_artist_active != 0)) {
             D_800CA22C[0] = D_800CA22C[1] = D_800CA22C[2] = three;
         }
         if (g->current_girl == GIRL_YUMI) {
@@ -1008,7 +1008,7 @@ void func_80134C64(void) {
     mode_step_next();
 }
 
-void func_8013518C(void) {
+void date_place_setup_library(void) {
     GameState *g;
     s32 temp_t2;
 
@@ -1018,7 +1018,7 @@ void func_8013518C(void) {
     talk_command_table = D_8015BE78;
     talk_voice_table = D_8015BEE4;
     strcpy(D_800CA19C, "図書館");
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     if (!(g->girls[g->current_girl].scene_counters[0xF] & 1)) {
         D_800CA2FC = 0;
         strcpy(D_800CA1DC, "図書館内");
@@ -1037,20 +1037,20 @@ void func_8013518C(void) {
     }
     temp_t2 = D_800CA2FC * 3;
     D_80122D08 = 0xF;
-    D_800CA22C[0] = (s16) *((g->current_girl * 6) + D_8015B5A8 + temp_t2);
-    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + D_8015B5A8 + temp_t2) + (1));
-    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + D_8015B5A8 + temp_t2) + (2));
-    D_800CA21C[0] = (s16) *((g->current_girl * 6) + D_8015B5AC + temp_t2);
-    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + D_8015B5AC + temp_t2) + (1));
-    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + D_8015B5AC + temp_t2) + (2));
+    D_800CA22C[0] = (s16) *((g->current_girl * 6) + date_class_table_library + temp_t2);
+    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + date_class_table_library + temp_t2) + (1));
+    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + date_class_table_library + temp_t2) + (2));
+    D_800CA21C[0] = (s16) *((g->current_girl * 6) + date_face_table_library + temp_t2);
+    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + date_face_table_library + temp_t2) + (1));
+    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 6) + date_face_table_library + temp_t2) + (2));
     bg_read_sub2(0x4544);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_801353F8(void) {
+void date_place_setup_game_center(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
-       (same idiom as func_80139944). T-11580 */
+       (same idiom as date_amusement_park_ride_extra_tables). T-11580 */
     GameState *g = &game_state;
     s32 choice_offset;
 
@@ -1058,7 +1058,7 @@ void func_801353F8(void) {
     talk_command_table = D_8015BE40;
     talk_voice_table = D_8015BEAC;
     strcpy(D_800CA19C, "ゲームセンター");
-    D_8015B658 = 0;
+    date_groups_per_variant = 0;
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x10] & 1)) {
         D_800CA2FC = 0;
         strcpy(D_800CA1DC, "ビデオゲームコーナー");
@@ -1068,25 +1068,25 @@ void func_801353F8(void) {
     }
     D_80122D08 = 0x10;
     if ((game_state.year >= 0x61) || ((game_state.year >= 0x60) && (game_state.month >= 9))) {
-        D_8015B670 = 1;
+        date_game_center_medals_open = 1;
     } else {
-        D_8015B670 = 0;
+        date_game_center_medals_open = 0;
     }
     choice_offset = D_800CA2FC * 3;
-    *D_800CA22C = (s16) *(g->current_girl * 0xC + D_8015B548 + choice_offset);
-    D_800CA22C[1] = (s16) *(g->current_girl * 0xC + D_8015B548 + choice_offset + 1);
-    D_800CA22C[2] = (s16) *(g->current_girl * 0xC + D_8015B548 + choice_offset + 2);
-    *D_800CA21C = (s16) *(g->current_girl * 0xC + D_8015B54C + choice_offset);
-    D_800CA21C[1] = (s16) *(g->current_girl * 0xC + D_8015B54C + choice_offset + 1);
-    D_800CA21C[2] = (s16) *(g->current_girl * 0xC + D_8015B54C + choice_offset + 2);
+    *D_800CA22C = (s16) *(g->current_girl * 0xC + date_class_table_game_center + choice_offset);
+    D_800CA22C[1] = (s16) *(g->current_girl * 0xC + date_class_table_game_center + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->current_girl * 0xC + date_class_table_game_center + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->current_girl * 0xC + date_face_table_game_center + choice_offset);
+    D_800CA21C[1] = (s16) *(g->current_girl * 0xC + date_face_table_game_center + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->current_girl * 0xC + date_face_table_game_center + choice_offset + 2);
     bg_read_sub2(0x44D6);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_80135620(void) {
+void date_place_setup_bowling_alley(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
-       (same idiom as func_80139944). T-11580 */
+       (same idiom as date_amusement_park_ride_extra_tables). T-11580 */
     GameState *g = &game_state;
     s32 choice_offset;
 
@@ -1094,7 +1094,7 @@ void func_80135620(void) {
     talk_command_table = D_8015BE30;
     talk_voice_table = D_8015BE9C;
     strcpy(D_800CA19C, "ボーリング場");
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x12] & 1)) {
         D_800CA2FC = 0;
         strcpy(D_800CA1DC, "ボーリング場");
@@ -1104,20 +1104,20 @@ void func_80135620(void) {
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 0x12;
-    *D_800CA22C = (s16) *(g->current_girl * 6 + D_8015B528 + choice_offset);
-    D_800CA22C[1] = (s16) *(g->current_girl * 6 + D_8015B528 + choice_offset + 1);
-    D_800CA22C[2] = (s16) *(g->current_girl * 6 + D_8015B528 + choice_offset + 2);
-    *D_800CA21C = (s16) *(g->current_girl * 6 + D_8015B52C + choice_offset);
-    D_800CA21C[1] = (s16) *(g->current_girl * 6 + D_8015B52C + choice_offset + 1);
-    D_800CA21C[2] = (s16) *(g->current_girl * 6 + D_8015B52C + choice_offset + 2);
+    *D_800CA22C = (s16) *(g->current_girl * 6 + date_class_table_bowling_alley + choice_offset);
+    D_800CA22C[1] = (s16) *(g->current_girl * 6 + date_class_table_bowling_alley + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->current_girl * 6 + date_class_table_bowling_alley + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->current_girl * 6 + date_face_table_bowling_alley + choice_offset);
+    D_800CA21C[1] = (s16) *(g->current_girl * 6 + date_face_table_bowling_alley + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->current_girl * 6 + date_face_table_bowling_alley + choice_offset + 2);
     bg_read_sub2(0x4631);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_80135804(void) {
+void date_place_setup_karaoke(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
-       (same idiom as func_80139944). T-11580 */
+       (same idiom as date_amusement_park_ride_extra_tables). T-11580 */
     GameState *g = &game_state;
     s32 choice_offset;
 
@@ -1125,7 +1125,7 @@ void func_80135804(void) {
     talk_command_table = D_8015BE44;
     talk_voice_table = D_8015BEB0;
     strcpy(D_800CA19C, "カラオケ");
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     if ((game_state.girls[game_state.current_girl].scene_counters[0x13] % 3) == 0) {
         D_800CA2FC = 0;
         strcpy(D_800CA1DC, "ＢＯＸ内");
@@ -1135,12 +1135,12 @@ void func_80135804(void) {
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 0x13;
-    *D_800CA22C = (s16) *(g->current_girl * 6 + D_8015B550 + choice_offset);
-    D_800CA22C[1] = (s16) *(g->current_girl * 6 + D_8015B550 + choice_offset + 1);
-    D_800CA22C[2] = (s16) *(g->current_girl * 6 + D_8015B550 + choice_offset + 2);
-    *D_800CA21C = (s16) *(g->current_girl * 6 + D_8015B554 + choice_offset);
-    D_800CA21C[1] = (s16) *(g->current_girl * 6 + D_8015B554 + choice_offset + 1);
-    D_800CA21C[2] = (s16) *(g->current_girl * 6 + D_8015B554 + choice_offset + 2);
+    *D_800CA22C = (s16) *(g->current_girl * 6 + date_class_table_karaoke + choice_offset);
+    D_800CA22C[1] = (s16) *(g->current_girl * 6 + date_class_table_karaoke + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->current_girl * 6 + date_class_table_karaoke + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->current_girl * 6 + date_face_table_karaoke + choice_offset);
+    D_800CA21C[1] = (s16) *(g->current_girl * 6 + date_face_table_karaoke + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->current_girl * 6 + date_face_table_karaoke + choice_offset + 2);
     bg_read_sub2(0x4613);
     event_log_add(1, D_80122D08);
     if ((game_state.girls[game_state.current_girl].scene_counters[0x13] % 3) == 2) {
@@ -1149,43 +1149,43 @@ void func_80135804(void) {
     mode_step_next();
 }
 
-void func_80135A34(void) {
-    D_8015DE40 = 0;
-    D_8015DE44 = 0;
-    D_8015DE48 = 0;
+void date_place_setup_amusement_park(void) {
+    date_virtual_ship_phase = 0;
+    date_virtual_ship_subphase = 0;
+    date_virtual_ship_step = 0;
     D_8015DE4C = 0;
     talk_text_table = D_8015BE10;
     talk_command_table = D_8015BE7C;
     talk_voice_table = D_8015BEE8;
     if ((game_state.year == 0x62) || ((game_state.year == 0x61) && (game_state.month >= 3))) {
-        D_8015B674 = 1;
+        date_park_new_rides = 1;
     } else {
-        D_8015B674 = 0;
+        date_park_new_rides = 0;
     }
     if ((game_state.year == 0x62) || ((game_state.year == 0x61) && (game_state.month == 0xC))) {
-        D_8015B678 = 1;
+        date_park_newest_rides = 1;
     } else {
-        D_8015B678 = 0;
+        date_park_newest_rides = 0;
     }
-    D_8015B658 = 0;
+    date_groups_per_variant = 0;
     strcpy(D_800CA19C, "遊園地");
     bg_read_sub2(0x432B);
     event_log_add(1, 0x14);
     mode_step_next();
 }
 
-void func_80135B4C(void) {
+void date_place_setup_shopping_street(void) {
     talk_text_table = D_8015BDF8;
     talk_command_table = D_8015BE64;
     talk_voice_table = D_8015BED0;
-    D_8015B658 = 0;
+    date_groups_per_variant = 0;
     strcpy(D_800CA19C, "ショッピング街");
     bg_read_sub2(0x4520);
     event_log_add(1, 2);
     mode_step_next();
 }
 
-void func_80135BCC(void) {
+void date_move_place_with_audio_command(void) {
     if (game_state.substep == 0) {
         audio_command(0x202);
         game_state.substep += 1;
@@ -1193,7 +1193,7 @@ void func_80135BCC(void) {
     normal_date_move_place();
 }
 
-void func_80135C14(void) {
+void date_place_setup_stadium(void) {
     GameState *g;
     s32 temp_t3;
     u8 var_v0;
@@ -1205,13 +1205,13 @@ void func_80135C14(void) {
     talk_voice_table = D_8015BEDC;
     strcpy(D_800CA19C, "スタジアム");
     strcpy(D_800CA1DC, "スタジアム内");
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     if ((g->month == 1) || (g->month == 3) || (g->month == 6) || (g->month == 0xB)) {
         var_v0 = 1;
     } else {
         var_v0 = 0;
     }
-    D_8015B698 = var_v0;
+    date_stadium_game_day = var_v0;
     if (var_v0 != 0) {
         if (!(g->girls[g->current_girl].scene_counters[0x1C] & 1)) {
             D_800CA2FC = 2;
@@ -1228,18 +1228,18 @@ void func_80135C14(void) {
         D_80122D08 = 0x1B;
     }
     temp_t3 = D_800CA2FC * 3;
-    D_800CA22C[0] = (s16) *((g->current_girl * 0xC) + D_8015B598 + temp_t3);
-    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0xC) + D_8015B598 + temp_t3) + (1));
-    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0xC) + D_8015B598 + temp_t3) + (2));
-    D_800CA21C[0] = (s16) *((g->current_girl * 0xC) + D_8015B59C + temp_t3);
-    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0xC) + D_8015B59C + temp_t3) + (1));
-    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0xC) + D_8015B59C + temp_t3) + (2));
+    D_800CA22C[0] = (s16) *((g->current_girl * 0xC) + date_class_table_stadium + temp_t3);
+    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0xC) + date_class_table_stadium + temp_t3) + (1));
+    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0xC) + date_class_table_stadium + temp_t3) + (2));
+    D_800CA21C[0] = (s16) *((g->current_girl * 0xC) + date_face_table_stadium + temp_t3);
+    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0xC) + date_face_table_stadium + temp_t3) + (1));
+    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0xC) + date_face_table_stadium + temp_t3) + (2));
     bg_read_sub2(0x45F8);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_80135E7C(void) {
+void date_place_setup_movie_theater(void) {
     GameState *g;
     s32 temp_t3;
     u8 var_t1;
@@ -1249,61 +1249,61 @@ void func_80135E7C(void) {
     talk_text_table = D_8015BDE0;
     talk_command_table = D_8015BE4C;
     talk_voice_table = D_8015BEB8;
-    D_8015B658 = 0;
+    date_groups_per_variant = 0;
     if (g->year == 0x5F) {
         if (((u8) g->month >= 6U) && ((u8) g->month < 9U)) {
-            D_8015B684 = 0;
+            date_movie_index = 0;
         } else if (((u8) g->month >= 9U) && ((u8) g->month < 0xCU)) {
-            D_8015B684 = 1;
+            date_movie_index = 1;
         } else {
-            D_8015B684 = 2;
+            date_movie_index = 2;
         }
     } else if (g->year == 0x60) {
         if ((g->month != 0) && ((u8)g->month < 3U)) {
-            D_8015B684 = 2;
+            date_movie_index = 2;
         } else if (((u8) g->month >= 3U) && ((u8) g->month < 6U)) {
-            D_8015B684 = 3;
+            date_movie_index = 3;
         } else if (((u8) g->month >= 6U) && ((u8) g->month < 9U)) {
-            D_8015B684 = 4;
+            date_movie_index = 4;
         } else if (((u8) g->month >= 9U) && ((u8) g->month < 0xCU)) {
-            D_8015B684 = 5;
+            date_movie_index = 5;
         } else {
-            D_8015B684 = 6;
+            date_movie_index = 6;
         }
     } else {
         var_t1 = 0xA;
         if (g->year == 0x61) {
             if ((g->month != 0) && ((u8) g->month < 3U)) {
-                D_8015B684 = 6;
+                date_movie_index = 6;
             } else if (((u8) g->month >= 3U) && ((u8) g->month < 6U)) {
-                D_8015B684 = 7;
+                date_movie_index = 7;
             } else if (((u8) g->month >= 6U) && ((u8) g->month < 9U)) {
-                D_8015B684 = 8;
+                date_movie_index = 8;
             } else if (((u8) g->month >= 9U) && ((u8) g->month < 0xCU)) {
-                D_8015B684 = 9;
+                date_movie_index = 9;
             } else {
-                D_8015B684 = 0xA;
+                date_movie_index = 0xA;
             }
         } else {
-            D_8015B684 = var_t1;
+            date_movie_index = var_t1;
         }
     }
     D_80122D08 = 0x23;
     strcpy(D_800CA19C, "映画館");
     strcpy(D_800CA1DC, "館内");
-    temp_t3 = D_8015B684 * 3;
-    D_800CA22C[0] = (s16) *((g->current_girl * 0x21) + D_8015B558 + temp_t3);
-    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x21) + D_8015B558 + temp_t3) + (1));
-    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x21) + D_8015B558 + temp_t3) + (2));
-    D_800CA21C[0] = (s16) *((g->current_girl * 0x21) + D_8015B55C + temp_t3);
-    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x21) + D_8015B55C + temp_t3) + (1));
-    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x21) + D_8015B55C + temp_t3) + (2));
+    temp_t3 = date_movie_index * 3;
+    D_800CA22C[0] = (s16) *((g->current_girl * 0x21) + date_class_table_movie_theater + temp_t3);
+    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x21) + date_class_table_movie_theater + temp_t3) + (1));
+    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x21) + date_class_table_movie_theater + temp_t3) + (2));
+    D_800CA21C[0] = (s16) *((g->current_girl * 0x21) + date_face_table_movie_theater + temp_t3);
+    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x21) + date_face_table_movie_theater + temp_t3) + (1));
+    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x21) + date_face_table_movie_theater + temp_t3) + (2));
     bg_read_sub2(0x43F0);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_801361C0(void) {
+void date_scene_reveal_start(void) {
     if (game_state.substep == 0) {
         if (D_800CA2F8 == 0xE) {
             audio_command(0x500);
@@ -1313,10 +1313,10 @@ void func_801361C0(void) {
     func_8007C8A4();
 }
 
-void func_80136214(void) {
+void date_place_reload_steps(void) {
     switch (game_state.substep) {
     case 0:
-        func_8013E980();
+        date_load_shared_script();
         game_state.mode_step -= 1;
         game_state.substep = 1;
         break;
@@ -1328,12 +1328,12 @@ void func_80136214(void) {
         }
         break;
     case 2:
-        func_8013E7B0();
+        date_load_girl_script();
         game_state.mode_step -= 1;
         game_state.substep = 3;
         break;
     case 4:
-        func_8013E9BC();
+        date_load_choice_tables();
         game_state.mode_step -= 1;
         game_state.substep = 5;
         break;
@@ -1349,7 +1349,7 @@ void func_80136214(void) {
     }
 }
 
-void func_80136340(void) {
+void date_place_setup_concert_hall(void) {
     GameState *g;
     s32 temp_t4;
     u8 var_t2;
@@ -1359,72 +1359,72 @@ void func_80136340(void) {
     talk_text_table = D_8015BDC8;
     talk_command_table = D_8015BE34;
     talk_voice_table = D_8015BEA0;
-    D_8015B658 = 0;
+    date_groups_per_variant = 0;
     if (g->year == 0x5F) {
         if (((u8) g->month >= 4U) && ((u8) g->month < 6U)) {
-            D_8015B688 = 0;
+            date_concert_index = 0;
         } else if (((u8) g->month >= 6U) && ((u8) g->month < 9U)) {
-            D_8015B688 = 1;
+            date_concert_index = 1;
         } else if (((u8) g->month >= 9U) && ((u8) g->month < 0xCU)) {
-            D_8015B688 = 2;
+            date_concert_index = 2;
         } else {
-            D_8015B688 = 3;
+            date_concert_index = 3;
         }
     } else if (g->year == 0x60) {
         if ((g->month != 0) && ((u8)g->month < 3U)) {
-            D_8015B688 = 3;
+            date_concert_index = 3;
         } else if (((u8) g->month >= 3U) && ((u8) g->month < 6U)) {
-            D_8015B688 = 4;
+            date_concert_index = 4;
         } else if (((u8) g->month >= 6U) && ((u8) g->month < 9U)) {
-            D_8015B688 = 5;
+            date_concert_index = 5;
         } else if (((u8) g->month >= 9U) && ((u8) g->month < 0xCU)) {
-            D_8015B688 = 6;
+            date_concert_index = 6;
         } else {
-            D_8015B688 = 7;
+            date_concert_index = 7;
         }
     } else {
         var_t2 = 0xB;
         if (g->year == 0x61) {
             if ((g->month != 0) && ((u8) g->month < 3U)) {
-                D_8015B688 = 7;
+                date_concert_index = 7;
             } else if (((u8) g->month >= 3U) && ((u8) g->month < 6U)) {
-                D_8015B688 = 8;
+                date_concert_index = 8;
             } else if (((u8) g->month >= 6U) && ((u8) g->month < 9U)) {
-                D_8015B688 = 9;
+                date_concert_index = 9;
             } else if (((u8) g->month >= 9U) && ((u8) g->month < 0xCU)) {
-                D_8015B688 = 0xA;
+                date_concert_index = 0xA;
             } else {
-                D_8015B688 = 0xB;
+                date_concert_index = 0xB;
             }
         } else {
-            D_8015B688 = var_t2;
+            date_concert_index = var_t2;
         }
     }
     D_80122D08 = 0x24;
     strcpy(D_800CA19C, "コンサート会場");
     strcpy(D_800CA1DC, "会場内");
-    temp_t4 = D_8015B688 * 3;
-    D_800CA22C[0] = (s16) *((g->current_girl * 0x24) + D_8015B530 + temp_t4);
-    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x24) + D_8015B530 + temp_t4) + (1));
-    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x24) + D_8015B530 + temp_t4) + (2));
-    D_800CA21C[0] = (s16) *((g->current_girl * 0x24) + D_8015B534 + temp_t4);
-    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x24) + D_8015B534 + temp_t4) + (1));
-    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x24) + D_8015B534 + temp_t4) + (2));
+    temp_t4 = date_concert_index * 3;
+    D_800CA22C[0] = (s16) *((g->current_girl * 0x24) + date_class_table_concert_hall + temp_t4);
+    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x24) + date_class_table_concert_hall + temp_t4) + (1));
+    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x24) + date_class_table_concert_hall + temp_t4) + (2));
+    D_800CA21C[0] = (s16) *((g->current_girl * 0x24) + date_face_table_concert_hall + temp_t4);
+    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x24) + date_face_table_concert_hall + temp_t4) + (1));
+    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->current_girl * 0x24) + date_face_table_concert_hall + temp_t4) + (2));
     bg_read_sub2(0x4466);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_801366A4(void) {
+void date_place_setup_pool(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing g->unk_F5F * 6 across stores
-       (same idiom as func_80139944). T-11580 */
+       (same idiom as date_amusement_park_ride_extra_tables). T-11580 */
     GameState *g = &game_state;
     s32 choice_offset;
 
     talk_text_table = D_8015BDE8;
     talk_command_table = D_8015BE54;
     talk_voice_table = D_8015BEC0;
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     strcpy(D_800CA19C, "プール");
     strcpy(D_800CA1DC, "プール内");
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x1D] & 1)) {
@@ -1434,29 +1434,29 @@ void func_801366A4(void) {
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 0x1D;
-    *D_800CA22C = (s16) *(g->current_girl * 6 + D_8015B560 + choice_offset);
-    D_800CA22C[1] = (s16) *(g->current_girl * 6 + D_8015B560 + choice_offset + 1);
-    D_800CA22C[2] = (s16) *(g->current_girl * 6 + D_8015B560 + choice_offset + 2);
-    *D_800CA21C = (s16) *(g->current_girl * 6 + D_8015B564 + choice_offset);
-    D_800CA21C[1] = (s16) *(g->current_girl * 6 + D_8015B564 + choice_offset + 1);
-    D_800CA21C[2] = (s16) *(g->current_girl * 6 + D_8015B564 + choice_offset + 2);
+    *D_800CA22C = (s16) *(g->current_girl * 6 + date_class_table_pool + choice_offset);
+    D_800CA22C[1] = (s16) *(g->current_girl * 6 + date_class_table_pool + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->current_girl * 6 + date_class_table_pool + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->current_girl * 6 + date_face_table_pool + choice_offset);
+    D_800CA21C[1] = (s16) *(g->current_girl * 6 + date_face_table_pool + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->current_girl * 6 + date_face_table_pool + choice_offset + 2);
     bg_read_sub2(0x45BF);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_80136870(void) {
+void date_place_setup_sea(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
-       (same idiom as func_80139944). T-11580 */
+       (same idiom as date_amusement_park_ride_extra_tables). T-11580 */
     GameState *g = &game_state;
     s32 choice_offset;
 
     talk_text_table = D_8015BDF0;
     talk_command_table = D_8015BE5C;
     talk_voice_table = D_8015BEC8;
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     if (game_state.current_girl == GIRL_NOZOMI) {
-        D_8015B658 = 0;
+        date_groups_per_variant = 0;
     }
     strcpy(D_800CA19C, "海岸");
     strcpy(D_800CA1DC, "浜辺");
@@ -1470,25 +1470,25 @@ void func_80136870(void) {
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 0x1E;
-    *D_800CA22C = (s16) *(g->current_girl * 6 + D_8015B570 + choice_offset);
-    D_800CA22C[1] = (s16) *(g->current_girl * 6 + D_8015B570 + choice_offset + 1);
-    D_800CA22C[2] = (s16) *(g->current_girl * 6 + D_8015B570 + choice_offset + 2);
-    *D_800CA21C = (s16) *(g->current_girl * 6 + D_8015B574 + choice_offset);
-    D_800CA21C[1] = (s16) *(g->current_girl * 6 + D_8015B574 + choice_offset + 1);
-    D_800CA21C[2] = (s16) *(g->current_girl * 6 + D_8015B574 + choice_offset + 2);
+    *D_800CA22C = (s16) *(g->current_girl * 6 + date_class_table_sea + choice_offset);
+    D_800CA22C[1] = (s16) *(g->current_girl * 6 + date_class_table_sea + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->current_girl * 6 + date_class_table_sea + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->current_girl * 6 + date_face_table_sea + choice_offset);
+    D_800CA21C[1] = (s16) *(g->current_girl * 6 + date_face_table_sea + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->current_girl * 6 + date_face_table_sea + choice_offset + 2);
     bg_read_sub2(0x45A3);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_80136A74(void) {
+void date_place_setup_shrine(void) {
     game_state.day_event_done_bits |= 0x10;
     talk_text_table = D_8015BDD0;
     talk_command_table = D_8015BE3C;
     talk_voice_table = D_8015BEA8;
     strcpy(D_800CA19C, "縁日");
     strcpy(D_800CA1DC, "花火大会");
-    D_8015B658 = 5;
+    date_groups_per_variant = 5;
     *D_800CA21C = 0;
     D_800CA21E = (u8)(get_g_zyotai_s(game_state.current_girl) & 0x7F);
     *D_800CA234 = 0;
@@ -1501,16 +1501,16 @@ void func_80136A74(void) {
     mode_step_next();
 }
 
-void func_80136B70(void) {
+void date_place_setup_skating_rink(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing g->unk_F5F * 6 across stores
-       (same idiom as func_80139944). T-11580 */
+       (same idiom as date_amusement_park_ride_extra_tables). T-11580 */
     GameState *g = &game_state;
     s32 choice_offset;
 
     talk_text_table = D_8015BDFC;
     talk_command_table = D_8015BE68;
     talk_voice_table = D_8015BED4;
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     strcpy(D_800CA19C, "スケート場");
     strcpy(D_800CA1DC, "スケートリンク");
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x1F] & 1)) {
@@ -1520,20 +1520,20 @@ void func_80136B70(void) {
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 0x1F;
-    *D_800CA22C = (s16) *(g->current_girl * 6 + D_8015B588 + choice_offset);
-    D_800CA22C[1] = (s16) *(g->current_girl * 6 + D_8015B588 + choice_offset + 1);
-    D_800CA22C[2] = (s16) *(g->current_girl * 6 + D_8015B588 + choice_offset + 2);
-    *D_800CA21C = (s16) *(g->current_girl * 6 + D_8015B58C + choice_offset);
-    D_800CA21C[1] = (s16) *(g->current_girl * 6 + D_8015B58C + choice_offset + 1);
-    D_800CA21C[2] = (s16) *(g->current_girl * 6 + D_8015B58C + choice_offset + 2);
+    *D_800CA22C = (s16) *(g->current_girl * 6 + date_class_table_skating_rink + choice_offset);
+    D_800CA22C[1] = (s16) *(g->current_girl * 6 + date_class_table_skating_rink + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->current_girl * 6 + date_class_table_skating_rink + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->current_girl * 6 + date_face_table_skating_rink + choice_offset);
+    D_800CA21C[1] = (s16) *(g->current_girl * 6 + date_face_table_skating_rink + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->current_girl * 6 + date_face_table_skating_rink + choice_offset + 2);
     bg_read_sub2(0x456C);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_80136D3C(void) {
+void date_place_setup_ski_resort(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
-       (same idiom as func_80139944). T-11580 */
+       (same idiom as date_amusement_park_ride_extra_tables). T-11580 */
     GameState *g = &game_state;
     s32 choice_offset;
     u8 flags;
@@ -1541,7 +1541,7 @@ void func_80136D3C(void) {
     talk_text_table = D_8015BE00;
     talk_command_table = D_8015BE6C;
     talk_voice_table = D_8015BED8;
-    D_8015B658 = 3;
+    date_groups_per_variant = 3;
     strcpy(D_800CA19C, "スキー場");
     strcpy(D_800CA1DC, "ゲレンデ");
     flags = game_state.girls[game_state.current_girl].scene_counters[0x20];
@@ -1555,18 +1555,18 @@ void func_80136D3C(void) {
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 0x20;
-    *D_800CA22C = (s16) *(g->current_girl * 6 + D_8015B590 + choice_offset);
-    D_800CA22C[1] = (s16) *(g->current_girl * 6 + D_8015B590 + choice_offset + 1);
-    D_800CA22C[2] = (s16) *(g->current_girl * 6 + D_8015B590 + choice_offset + 2);
-    *D_800CA21C = (s16) *(g->current_girl * 6 + D_8015B594 + choice_offset);
-    D_800CA21C[1] = (s16) *(g->current_girl * 6 + D_8015B594 + choice_offset + 1);
-    D_800CA21C[2] = (s16) *(g->current_girl * 6 + D_8015B594 + choice_offset + 2);
+    *D_800CA22C = (s16) *(g->current_girl * 6 + date_class_table_ski_resort + choice_offset);
+    D_800CA22C[1] = (s16) *(g->current_girl * 6 + date_class_table_ski_resort + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->current_girl * 6 + date_class_table_ski_resort + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->current_girl * 6 + date_face_table_ski_resort + choice_offset);
+    D_800CA21C[1] = (s16) *(g->current_girl * 6 + date_face_table_ski_resort + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->current_girl * 6 + date_face_table_ski_resort + choice_offset + 2);
     bg_read_sub2(0x4558);
     event_log_add(1, D_80122D08);
     mode_step_next();
 }
 
-void func_80136F2C(void) {
+void date_choice_classes_derive(void) {
     s16 i;
 
     for (i = 0; i < 3; i++) {
@@ -1589,7 +1589,7 @@ void func_80136F2C(void) {
     mode_step_next();
 }
 
-void func_80136FF0(void) {
+void date_central_park_enter_spot(void) {
     if (D_800CA2FC == 0) {
         if ((game_state.month < 3) || (game_state.month >= 9)) {
             bg_read_sub2(0x4318);
@@ -1620,7 +1620,7 @@ void func_80136FF0(void) {
     mode_step_next();
 }
 
-void func_80137154(void) {
+void date_shopping_street_enter_shop(void) {
     GameState *g = &game_state;
     s32 choice_offset;
     u8 flags;
@@ -1629,7 +1629,7 @@ void func_80137154(void) {
     /* FAKE: dead loads before the first branch let cvt_pass strip the CVTs of D_800CA2FC and game_state.current_girl so uopt keeps them in $a0 and $v1, and (u32)(s32) casts on the == 5 checks preserve constant-first operand order (`bne $a1, $v1`). T-24099 */
     dummy = D_800CA2FC;
     dummy = game_state.current_girl;
-    D_8015B690 = D_80122CDC;
+    date_shop_index = D_80122CDC;
     if (D_80122CDC == 0) {
         strcpy(D_800CA1DC, "ブティック");
         if (!(game_state.girls[game_state.current_girl].scene_counters[2] & 1)) {
@@ -1651,12 +1651,12 @@ void func_80137154(void) {
         }
         D_80122D08 = 2;
         choice_offset = *(u8 *)&D_800CA2FC * 3;
-        *D_800CA22C = (s16) *(g->current_girl * 0x12 + D_8015B580 + choice_offset);
-        D_800CA22C[1] = (s16) *(g->current_girl * 0x12 + D_8015B580 + choice_offset + 1);
-        D_800CA22C[2] = (s16) *(g->current_girl * 0x12 + D_8015B580 + choice_offset + 2);
-        *D_800CA21C = (s16) *(g->current_girl * 0x12 + D_8015B584 + choice_offset);
-        D_800CA21C[1] = (s16) *(g->current_girl * 0x12 + D_8015B584 + choice_offset + 1);
-        D_800CA21C[2] = (s16) *(g->current_girl * 0x12 + D_8015B584 + choice_offset + 2);
+        *D_800CA22C = (s16) *(g->current_girl * 0x12 + date_class_table_shopping_street + choice_offset);
+        D_800CA22C[1] = (s16) *(g->current_girl * 0x12 + date_class_table_shopping_street + choice_offset + 1);
+        D_800CA22C[2] = (s16) *(g->current_girl * 0x12 + date_class_table_shopping_street + choice_offset + 2);
+        *D_800CA21C = (s16) *(g->current_girl * 0x12 + date_face_table_shopping_street + choice_offset);
+        D_800CA21C[1] = (s16) *(g->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 1);
+        D_800CA21C[2] = (s16) *(g->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 2);
         bg_read_sub2(0x4529);
     } else if (D_80122CDC == 1) {
         strcpy(D_800CA1DC, "ファンシーショップ");
@@ -1685,12 +1685,12 @@ void func_80137154(void) {
         }
         D_80122D08 = 3;
         choice_offset = *(u8 *)&D_800CA2FC * 3;
-        *D_800CA22C = (s16) *(g->current_girl * 0x12 + D_8015B580 + choice_offset + 6);
-        D_800CA22C[1] = (s16) *(g->current_girl * 0x12 + D_8015B580 + choice_offset + 7);
-        D_800CA22C[2] = (s16) *(g->current_girl * 0x12 + D_8015B580 + choice_offset + 8);
-        *D_800CA21C = (s16) *(g->current_girl * 0x12 + D_8015B584 + choice_offset + 6);
-        D_800CA21C[1] = (s16) *(g->current_girl * 0x12 + D_8015B584 + choice_offset + 7);
-        D_800CA21C[2] = (s16) *(g->current_girl * 0x12 + D_8015B584 + choice_offset + 8);
+        *D_800CA22C = (s16) *(g->current_girl * 0x12 + date_class_table_shopping_street + choice_offset + 6);
+        D_800CA22C[1] = (s16) *(g->current_girl * 0x12 + date_class_table_shopping_street + choice_offset + 7);
+        D_800CA22C[2] = (s16) *(g->current_girl * 0x12 + date_class_table_shopping_street + choice_offset + 8);
+        *D_800CA21C = (s16) *(g->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 6);
+        D_800CA21C[1] = (s16) *(g->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 7);
+        D_800CA21C[2] = (s16) *(g->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 8);
         bg_read_sub2(0x4532);
     } else {
         strcpy(D_800CA1DC, "ジャンク屋");
@@ -1700,7 +1700,7 @@ void func_80137154(void) {
         } else {
             D_800CA2FC = 1;
         }
-        /* FAKE: with D_800E71DF (`proof=func_80137154:94:56706346`, T-20820, T-24099) this emits the un-promoted lbu $t4 at 0x8013762C and matches byte-for-byte. */
+        /* FAKE: with D_800E71DF (`proof=date_shopping_street_enter_shop:94:56706346`, T-20820, T-24099) this emits the un-promoted lbu $t4 at 0x8013762C and matches byte-for-byte. */
         if ((D_800E71DF == GIRL_YUKARI) && (flags != 0)) {
             D_800CA2FC = 1;
         }
@@ -1723,22 +1723,22 @@ void func_80137154(void) {
         }
         D_80122D08 = 4;
         choice_offset = *(u8 *)&D_800CA2FC * 3;
-        *D_800CA22C = (s16) *(g->current_girl * 0x12 + D_8015B580 + choice_offset + 12);
-        D_800CA22C[1] = (s16) *(g->current_girl * 0x12 + D_8015B580 + choice_offset + 13);
-        D_800CA22C[2] = (s16) *(g->current_girl * 0x12 + D_8015B580 + choice_offset + 14);
-        *D_800CA21C = (s16) *(g->current_girl * 0x12 + D_8015B584 + choice_offset + 12);
-        D_800CA21C[1] = (s16) *(g->current_girl * 0x12 + D_8015B584 + choice_offset + 13);
-        D_800CA21C[2] = (s16) *(g->current_girl * 0x12 + D_8015B584 + choice_offset + 14);
+        *D_800CA22C = (s16) *(g->current_girl * 0x12 + date_class_table_shopping_street + choice_offset + 12);
+        D_800CA22C[1] = (s16) *(g->current_girl * 0x12 + date_class_table_shopping_street + choice_offset + 13);
+        D_800CA22C[2] = (s16) *(g->current_girl * 0x12 + date_class_table_shopping_street + choice_offset + 14);
+        *D_800CA21C = (s16) *(g->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 12);
+        D_800CA21C[1] = (s16) *(g->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 13);
+        D_800CA21C[2] = (s16) *(g->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 14);
         bg_read_sub2(0x453B);
     }
-    func_80136F2C();
+    date_choice_classes_derive();
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
     event_log_add(0, D_80122D08);
 }
 
-void func_801378BC(void) {
+void date_aquarium_enter_spot(void) {
     u8 i;
 
     i = game_state.event_log_count;
@@ -1751,7 +1751,7 @@ void func_801378BC(void) {
     mode_step_next();
 }
 
-void func_80137920(void) {
+void date_zoo_enter_spot(void) {
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
@@ -1760,7 +1760,7 @@ void func_80137920(void) {
     mode_step_next();
 }
 
-void func_80137984(void) {
+void date_botanical_garden_enter_spot(void) {
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
@@ -1769,7 +1769,7 @@ void func_80137984(void) {
     mode_step_next();
 }
 
-void func_801379E8(void) {
+void date_planetarium_enter_spot(void) {
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
@@ -1778,7 +1778,7 @@ void func_801379E8(void) {
     mode_step_next();
 }
 
-void func_80137A4C(void) {
+void date_art_museum_enter_spot(void) {
     u8 i;
 
     i = game_state.event_log_count;
@@ -1787,11 +1787,11 @@ void func_80137A4C(void) {
         game_state.event_log_count = i - 1;
     }
     event_log_add(0, D_80122D08);
-    if (D_8015B664 != 0) {
+    if (date_exhibit_artist_active != 0) {
         bg_read_sub2(0x4503);
-    } else if (D_8015B668 != 0) {
+    } else if (date_exhibit_sculpture_active != 0) {
         bg_read_sub2(0x450D);
-    } else if (D_8015B66C != 0) {
+    } else if (date_exhibit_painters_active != 0) {
         bg_read_sub2(0x4516);
     } else {
         bg_read_sub2(0x44FA);
@@ -1799,7 +1799,7 @@ void func_80137A4C(void) {
     mode_step_next();
 }
 
-void func_80137B14(void) {
+void date_library_enter_spot(void) {
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
@@ -1808,7 +1808,7 @@ void func_80137B14(void) {
     mode_step_next();
 }
 
-void func_80137B78(void) {
+void date_game_center_enter_spot(void) {
     u8 i;
 
     if (D_80122CDC == 0) {
@@ -1831,7 +1831,7 @@ void func_80137B78(void) {
     mode_step_next();
 }
 
-void func_80137C2C(void) {
+void date_bowling_alley_enter_spot(void) {
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
@@ -1840,7 +1840,7 @@ void func_80137C2C(void) {
     mode_step_next();
 }
 
-void func_80137C90(void) {
+void date_karaoke_enter_spot(void) {
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
@@ -1849,12 +1849,12 @@ void func_80137C90(void) {
     mode_step_next();
 }
 
-void func_80137CF4(void) {
+void date_amusement_park_load_background(void) {
     bg_read_sub2(0x4335);
     mode_step_next();
 }
 
-void func_80137D1C(void) {
+void date_amusement_park_enter_hero_show(void) {
     u8 v;
 
     audio_command(0x207);
@@ -1878,58 +1878,58 @@ void func_80137D1C(void) {
     mode_step_next();
 }
 
-s32 func_80137DF4(void) {
+s32 date_amusement_park_choose_ride(void) {
     /* No return statement: $v0 is live at the exit, so uopt keeps D_80122CDC in $v0 (T-17202). */
     s32 text;
 
     if (D_80122CDC == 0) {
-        if ((D_8015B678 != 0) || (D_8015B674 != 0)) {
+        if ((date_park_newest_rides != 0) || (date_park_new_rides != 0)) {
             text = 0x4359;
-            if (D_8015B69C == 0) {
-                D_8015B68C = 3;
+            if (date_ride_chosen == 0) {
+                date_ride_index = 3;
             }
         } else {
             text = 0x433E;
-            if (D_8015B69C == 0) {
-                D_8015B68C = 0;
+            if (date_ride_chosen == 0) {
+                date_ride_index = 0;
             }
         }
     } else if (D_80122CDC == 1) {
         talk_group += 5;
-        if (D_8015B678 != 0) {
+        if (date_park_newest_rides != 0) {
             text = 0x4362;
-            if (D_8015B69C == 0) {
-                D_8015B68C = 4;
+            if (date_ride_chosen == 0) {
+                date_ride_index = 4;
             }
         } else {
             text = 0x4347;
-            if (D_8015B69C == 0) {
-                D_8015B68C = 1;
+            if (date_ride_chosen == 0) {
+                date_ride_index = 1;
             }
         }
     } else {
         talk_group += 0xA;
         text = 0x4350;
-        if (D_8015B69C == 0) {
-            D_8015B68C = 2;
+        if (date_ride_chosen == 0) {
+            date_ride_index = 2;
         }
     }
-    D_8015B69C = 1;
+    date_ride_chosen = 1;
     bg_read_sub2(text);
-    func_80138934();
+    date_amusement_park_ride_setup();
     if ((game_state.event_log - 1)[game_state.event_log_count].scene == 1) {
         game_state.event_log_count -= 1;
     }
     event_log_add(0, D_80122D08);
-    func_80136F2C();
-    if ((game_state.current_girl == GIRL_YUKO) && ((u8)D_8015B68C == 3) && (game_state.girls[8].scene_counters[0x18] != 0)) {
+    date_choice_classes_derive();
+    if ((game_state.current_girl == GIRL_YUKO) && ((u8)date_ride_index == 3) && (game_state.girls[8].scene_counters[0x18] != 0)) {
         D_80122CDC = 1;
     } else {
         D_80122CDC = 0;
     }
 }
 
-void func_80137FAC(void) {
+void date_amusement_park_enter_night_parade(void) {
     strcpy(D_800CA1DC, "ナイトパレード");
     audio_command(0x204);
     bg_read_sub2(0x436B);
@@ -1944,16 +1944,16 @@ void func_80137FAC(void) {
     mode_step_next();
 }
 
-void func_8013808C(void) {
+void date_amusement_park_enter_main_area(void) {
     bg_read_sub2(0x432B);
-    if (D_8015B67C != 0) {
+    if (date_show_taken != 0) {
         audio_command(0x200);
     }
     strcpy(D_800CA1DC, "遊園地");
     mode_step_next();
 }
 
-void func_801380E4(void) {
+void date_stadium_enter_spot(void) {
     u8 i;
 
     if (D_800CA2FC < 2) {
@@ -1978,7 +1978,7 @@ void func_801380E4(void) {
     mode_step_next();
 }
 
-void func_801381B4(void) {
+void date_movie_theater_enter_spot(void) {
     u8 i;
 
     i = game_state.event_log_count;
@@ -1992,8 +1992,8 @@ void func_801381B4(void) {
     mode_step_next();
 }
 
-void func_80138220(void) {
-    switch (D_8015B684) {
+void date_movie_theater_load_poster(void) {
+    switch (date_movie_index) {
     case 0:
         bg_read_sub2(0x4402);
         break;
@@ -2031,21 +2031,21 @@ void func_80138220(void) {
     mode_step_next();
 }
 
-void func_80138314(void) {
+void date_movie_theater_start_film(void) {
     DateChoice8 *choice;
     DateChoices58 choices;
 
-    choices = D_8015B6A4;
+    choices = date_movie_audio_pairs;
     normal_date_bg_fadein();
     if (game_state.substep++ == 0) {
         audio_command(0xBF);
-        choice = &choices.rows[D_8015B684];
+        choice = &choices.rows[date_movie_index];
         cd_audio_request_set(choice->unk_00, choice->unk_04, 0xF);
         audio_command(0x300);
     }
 }
 
-void func_801383BC(void) {
+void date_movie_theater_narration_talk(void) {
     if (game_state.mode_step_timer.w++ == 0) {
         game_state.current_girl = GIRL_SOTOI;
     } else {
@@ -2054,20 +2054,20 @@ void func_801383BC(void) {
     normal_date_speak();
 }
 
-void func_80138418(void) {
+void date_movie_theater_fade_out(void) {
     s32 sp28[2]; /* FAKE: the original keeps a 4-byte local at sp+0x28; only the first word is written (T-6050) */
 
     sp28[0] = game_state.mode_step;
     normal_date_bg_fadeout();
 }
 
-void func_80138440(void) {
+void date_movie_theater_load_screen_background(void) {
     audio_command(0x500);
     bg_read_sub2(0x43F0);
     mode_step_next();
 }
 
-void func_80138470(void) {
+void date_concert_hall_enter_spot(void) {
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
@@ -2076,8 +2076,8 @@ void func_80138470(void) {
     mode_step_next();
 }
 
-void func_801384D4(void) {
-    switch (D_8015B688) {
+void date_concert_hall_load_program_background(void) {
+    switch (date_concert_index) {
     case 0:
         bg_read_sub2(0x44C4);
         break;
@@ -2118,21 +2118,21 @@ void func_801384D4(void) {
     mode_step_next();
 }
 
-void func_801385D8(void) {
+void date_concert_hall_start_program(void) {
     DateChoice8 *choice;
     DateChoices60 choices;
 
-    choices = D_8015B6FC;
+    choices = date_concert_audio_pairs;
     normal_date_bg_fadein();
     if (game_state.substep++ == 0) {
         audio_command(0xBF);
-        choice = &choices.rows[D_8015B688];
+        choice = &choices.rows[date_concert_index];
         cd_audio_request_set(choice->unk_00, choice->unk_04, 0xF);
         audio_command(0x300);
     }
 }
 
-s32 func_8013867C(void) {
+s32 date_concert_hall_wait_then_background(void) {
     s32 temp_v0;
 
     temp_v0 = game_state.mode_step_timer.w + 1;
@@ -2144,7 +2144,7 @@ s32 func_8013867C(void) {
     mode_step_next();
 }
 
-void func_801386C8(void) {
+void date_pool_enter_spot(void) {
     u8 i;
 
     bg_read_sub2(0x45C9);
@@ -2157,7 +2157,7 @@ void func_801386C8(void) {
     mode_step_next();
 }
 
-void func_8013872C(void) {
+void date_sea_enter_spot(void) {
     bg_read_sub2(0x45AC);
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
@@ -2166,12 +2166,12 @@ void func_8013872C(void) {
     mode_step_next();
 }
 
-void func_80138790(void) {
+void date_sea_load_background(void) {
     bg_read_sub2(0x45A3);
     mode_step_next();
 }
 
-void func_801387B8(void) {
+void date_sea_enter_deserted_island(void) {
     u8 i;
 
     strcpy(D_800CA1DC, "無人島");
@@ -2185,7 +2185,7 @@ void func_801387B8(void) {
     mode_step_next();
 }
 
-void func_8013882C(void) {
+void date_skating_rink_enter_spot(void) {
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
@@ -2194,7 +2194,7 @@ void func_8013882C(void) {
     mode_step_next();
 }
 
-void func_80138890(void) {
+void date_ski_resort_enter_spot(void) {
     if (game_state.event_log[game_state.event_log_count - 1].scene == 1) {
         game_state.event_log_count--;
     }
@@ -2203,14 +2203,14 @@ void func_80138890(void) {
     mode_step_next();
 }
 
-void func_801388F4(void) {
+void date_shrine_load_fireworks_data(void) {
     cd_read_sectors(0x86, 0x801B0000, 0xBC35);
     audio_command(0x200);
-    func_80132288();
+    date_fireworks_resources_init();
     mode_step_next();
 }
 
-void func_80138934(void) {
+void date_amusement_park_ride_setup(void) {
     GameState *g = &game_state;
     s32 temp_t0;
     s32 temp_t1;
@@ -2219,7 +2219,7 @@ void func_80138934(void) {
     s32 temp_t9;
 
     strcpy(D_800CA1DC, "遊園地");
-    if ((u8) D_8015B68C == 0) {
+    if ((u8) date_ride_index == 0) {
         strcpy(D_800CA19C, "ジェットコースター");
         if (!(g->girls[g->current_girl].scene_counters[21] & 1)) {
             D_800CA2FC = 0;
@@ -2227,16 +2227,16 @@ void func_80138934(void) {
             D_800CA2FC = 1;
         }
         temp_t1 = D_800CA2FC * 3;
-        *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t1);
-        D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t1 + 1);
-        D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t1 + 2);
-        *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t1);
-        D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t1 + 1);
-        D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t1 + 2);
+        *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t1);
+        D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t1 + 1);
+        D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t1 + 2);
+        *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t1);
+        D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t1 + 1);
+        D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t1 + 2);
         D_80122D08 = 0x15;
         return;
     }
-    if ((u8) D_8015B68C == 3) {
+    if ((u8) date_ride_index == 3) {
         strcpy(D_800CA19C, "絶叫マシーンビビール");
         if (!(g->girls[g->current_girl].scene_counters[24] & 1)) {
             D_800CA2FC = 0;
@@ -2245,15 +2245,15 @@ void func_80138934(void) {
         }
         temp_t0 = D_800CA2FC * 3;
         D_80122D08 = 0x18;
-        *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t0 + 18);
-        D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t0 + 19);
-        D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t0 + 20);
-        *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t0 + 18);
-        D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t0 + 19);
-        D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t0 + 20);
+        *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t0 + 18);
+        D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t0 + 19);
+        D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t0 + 20);
+        *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t0 + 18);
+        D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t0 + 19);
+        D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t0 + 20);
         return;
     }
-    if ((u8) D_8015B68C == 1) {
+    if ((u8) date_ride_index == 1) {
         strcpy(D_800CA19C, "ゴーストハウス");
         if (!(g->girls[g->current_girl].scene_counters[22] & 1)) {
             D_800CA2FC = 0;
@@ -2262,15 +2262,15 @@ void func_80138934(void) {
         }
         temp_t8 = D_800CA2FC * 3;
         D_80122D08 = 0x16;
-        *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t8 + 6);
-        D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t8 + 7);
-        D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t8 + 8);
-        *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t8 + 6);
-        D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t8 + 7);
-        D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t8 + 8);
+        *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t8 + 6);
+        D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t8 + 7);
+        D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t8 + 8);
+        *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t8 + 6);
+        D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t8 + 7);
+        D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t8 + 8);
         return;
     }
-    if ((u8) D_8015B68C == 4) {
+    if ((u8) date_ride_index == 4) {
         strcpy(D_800CA19C, "バーチャルシップ");
         if (!(g->girls[g->current_girl].scene_counters[25] & 1)) {
             D_800CA2FC = 0;
@@ -2279,12 +2279,12 @@ void func_80138934(void) {
         }
         temp_t1_2 = D_800CA2FC * 3;
         D_80122D08 = 0x19;
-        *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t1_2 + 24);
-        D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t1_2 + 25);
-        D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t1_2 + 26);
-        *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t1_2 + 24);
-        D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t1_2 + 25);
-        D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t1_2 + 26);
+        *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t1_2 + 24);
+        D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t1_2 + 25);
+        D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t1_2 + 26);
+        *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t1_2 + 24);
+        D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t1_2 + 25);
+        D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t1_2 + 26);
         return;
     }
     strcpy(D_800CA19C, "観覧車");
@@ -2295,16 +2295,16 @@ void func_80138934(void) {
     }
     temp_t9 = D_800CA2FC * 3;
     D_80122D08 = 0x17;
-    *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t9 + 12);
-    D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t9 + 13);
-    D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + temp_t9 + 14);
-    *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t9 + 12);
-    D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t9 + 13);
-    D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + temp_t9 + 14);
+    *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t9 + 12);
+    D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t9 + 13);
+    D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + temp_t9 + 14);
+    *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t9 + 12);
+    D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t9 + 13);
+    D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + temp_t9 + 14);
 }
 
-void func_80139000(void) {
-    if (D_8015B670 == 0) {
+void date_game_center_skip_medals(void) {
+    if (date_game_center_medals_open == 0) {
         talk_group += 1;
         mode_step_next();
         mode_step_next();
@@ -2313,7 +2313,7 @@ void func_80139000(void) {
     mode_step_next();
 }
 
-s32 func_80139054(void) {
+s32 date_shopping_street_skip_extra_talk(void) {
     if ((game_state.current_girl == GIRL_SHIORI) && (talk_group == 0xA) && (D_80122CDC == 0)) {
         mode_step_next();
         return 0;
@@ -2336,7 +2336,7 @@ s32 func_80139054(void) {
     mode_step_next();
 }
 
-void func_80139154(void) {
+void date_shopping_street_boutique_group_bonus(void) {
     u8 temp_v0;
 
     temp_v0 = get_g_zyotai_s(game_state.current_girl);
@@ -2352,7 +2352,7 @@ void func_80139154(void) {
     mode_step_next();
 }
 
-void func_80139210(void) {
+void date_shopping_street_group_adjust(void) {
     u32 t;
 
     t = (u8) get_g_zyotai_s(game_state.current_girl) & 0x7F;
@@ -2360,36 +2360,36 @@ void func_80139210(void) {
     mode_step_next();
 }
 
-void func_8013926C(void) {
+void date_shopping_street_empty_step(void) {
     mode_step_next();
 }
 
-void func_8013928C(void) {
+void date_planetarium_low_science_group_bonus(void) {
     if (game_state.param_science.value < 0x78) {
         talk_group += 2;
     }
     mode_step_next();
 }
 
-void func_801392D0(void) {
+void date_art_museum_seen_exhibit_score(void) {
     u32 t;
 
     t = (u8) get_g_zyotai_s(game_state.current_girl) & 0x7F;
     if (D_800CA2FC == 5) {
         talk_group = talk_group + (t >= 2U) + (t >= 3U);
-        func_8013C190();
+        date_choice_score();
         D_80122CDC = 0;
         return;
     }
     mode_step_next();
 }
 
-void func_8013934C(void) {
+void date_art_museum_choice_face(void) {
     portrait_layout_set(D_800CA21C[D_80122CDC]);
     mode_step_next();
 }
 
-void func_8013938C(void) {
+void date_art_museum_seen_exhibit_skip(void) {
     if (D_800CA2FC == 5) {
         mode_step_next();
         game_state.mode_step += 9;
@@ -2398,9 +2398,9 @@ void func_8013938C(void) {
     mode_step_next();
 }
 
-void func_801393DC(void) {
+void date_game_center_enter_medal_corner(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
-       (same idiom as func_80139944). T-11580 */
+       (same idiom as date_amusement_park_ride_extra_tables). T-11580 */
     GameState *g = &game_state;
     s32 choice_offset;
 
@@ -2414,12 +2414,12 @@ void func_801393DC(void) {
         }
         choice_offset = D_800CA2FC * 3;
         D_80122D08 = 0x11;
-        *D_800CA22C = (s16) *(g->current_girl * 0xC + D_8015B548 + choice_offset);
-        D_800CA22C[1] = (s16) *(g->current_girl * 0xC + D_8015B548 + choice_offset + 1);
-        D_800CA22C[2] = (s16) *(g->current_girl * 0xC + D_8015B548 + choice_offset + 2);
-        *D_800CA21C = (s16) *(g->current_girl * 0xC + D_8015B54C + choice_offset);
-        D_800CA21C[1] = (s16) *(g->current_girl * 0xC + D_8015B54C + choice_offset + 1);
-        D_800CA21C[2] = (s16) *(g->current_girl * 0xC + D_8015B54C + choice_offset + 2);
+        *D_800CA22C = (s16) *(g->current_girl * 0xC + date_class_table_game_center + choice_offset);
+        D_800CA22C[1] = (s16) *(g->current_girl * 0xC + date_class_table_game_center + choice_offset + 1);
+        D_800CA22C[2] = (s16) *(g->current_girl * 0xC + date_class_table_game_center + choice_offset + 2);
+        *D_800CA21C = (s16) *(g->current_girl * 0xC + date_face_table_game_center + choice_offset);
+        D_800CA21C[1] = (s16) *(g->current_girl * 0xC + date_face_table_game_center + choice_offset + 1);
+        D_800CA21C[2] = (s16) *(g->current_girl * 0xC + date_face_table_game_center + choice_offset + 2);
     }
     talk_group += D_800CA2FC * 2;
     /* FAKE: the byte view keeps uopt from CSEing the two D_800CA2FC reads, so ugen reuses
@@ -2430,10 +2430,10 @@ void func_801393DC(void) {
     mode_step_next();
 }
 
-void func_801395B4(void) {
+void date_amusement_park_skip_show(void) {
     u8 g;
 
-    if (D_8015B694 == 0) {
+    if (date_first_sunday == 0) {
         g = game_state.current_girl;
         talk_group = 9;
         if (g == 7) {
@@ -2448,7 +2448,7 @@ void func_801395B4(void) {
     mode_step_next();
 }
 
-s32 func_80139664(void) {
+s32 date_amusement_park_show_first_answer(void) {
     /* FAKE: unused byte local puts prev at 0x28(sp) as in the original. T-11580 */
     u8 pad;
     s32 prev;
@@ -2469,12 +2469,12 @@ s32 func_80139664(void) {
         return;
     }
     if ((game_state.current_girl == GIRL_SAKI) || (game_state.current_girl == GIRL_YUKO) || (game_state.current_girl == GIRL_YUKARI) || (game_state.current_girl == GIRL_YUMI)) {
-        D_8015B67C = 1;
+        date_show_taken = 1;
         game_state.mode_step += 6;
         return;
     }
     if ((game_state.current_girl == GIRL_MEGUMI) && (game_state.scene_flags[0x3E] == 0)) {
-        D_8015B67C = 1;
+        date_show_taken = 1;
         talk_group += 1;
         game_state.mode_step += 6;
         return;
@@ -2498,7 +2498,7 @@ s32 func_80139664(void) {
     mode_step_next();
 }
 
-s32 func_80139834(void) {
+s32 date_amusement_park_show_second_answer(void) {
     /* FAKE: 4 spare bytes reproduce prev's stack home at 0x2A(sp). T-11140 */
     s32 pad;
     s16 prev;
@@ -2531,12 +2531,12 @@ s32 func_80139834(void) {
         if (game_state.current_girl == GIRL_MIRA) {
             talk_group += 1;
         }
-        D_8015B67C = 1;
+        date_show_taken = 1;
     }
     mode_step_next();
 }
 
-void func_80139944(void) {
+void date_amusement_park_ride_extra_tables(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing g->unk_F5F * 0x24 across stores. T-11140 */
     GameState *g = &game_state;
     s32 choice_offset;
@@ -2544,29 +2544,29 @@ void func_80139944(void) {
     mode_step_next();
     game_state.mode_step += 0x16;
     choice_offset = D_800CA2FC * 3;
-    *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + choice_offset + 30);
-    D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + choice_offset + 31);
-    D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B0 + choice_offset + 32);
-    *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + choice_offset + 30);
-    D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + choice_offset + 31);
-    D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_8015B5B4 + choice_offset + 32);
-    func_80136F2C();
+    *D_800CA22C = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + choice_offset + 30);
+    D_800CA22C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + choice_offset + 31);
+    D_800CA22C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_class_table_amusement_park + choice_offset + 32);
+    *D_800CA21C = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + choice_offset + 30);
+    D_800CA21C[1] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + choice_offset + 31);
+    D_800CA21C[2] = (s16) *(g->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + choice_offset + 32);
+    date_choice_classes_derive();
 }
 
-void func_80139A64(void) {
-    if (D_8015B674 != 0) {
+void date_amusement_park_group_bonus(void) {
+    if (date_park_new_rides != 0) {
         talk_group += 0x10;
     }
-    if (D_8015B678 != 0) {
+    if (date_park_newest_rides != 0) {
         talk_group += 0x10;
     }
     mode_step_next();
 }
 
-void func_80139AC8(void) {
+void date_amusement_park_parade_prepare(void) {
     if (D_80122CDC == 1) {
         D_80122CDC = D_80122CEC;
-        D_8015B680 = 0;
+        date_parade_offered = 0;
         mode_step_next();
         game_state.mode_step += 0xC;
     } else {
@@ -2574,12 +2574,12 @@ void func_80139AC8(void) {
             game_state.day_event_done_bits |= 0x10;
             D_80122D34 = 1;
             if (game_state.girls[game_state.current_girl].scene_counters[26] != 0) {
-                D_8015BF34 += 1;
+                date_park_parade_group += 1;
             }
             cd_read_sectors(0x1DU, 0x801B0000, 0xBD41);
         }
         if (cd_read_sync_status() & 1) {
-            func_80132458();
+            date_parade_resources_init();
             load_palette((s32) D_8015B644, 0x11, 1, 3, 0);
             actor_clear(0x60);
             D_80120651 = 0xC;
@@ -2597,36 +2597,36 @@ void func_80139AC8(void) {
             D_80120676 = -0xA0;
             D_8012067A = -0x78;
             D_80120657 = 0x80;
-            D_8015B6A0 = 0;
+            date_sign_palette_frame = 0;
             mode_step_next();
         }
     }
 }
 
-void func_80139CB0(void) {
+void date_amusement_park_parade_visit_count(void) {
     if (game_state.girls[game_state.current_girl].scene_counters[0x1A] == 0) {
-        D_8015BF34 += 1;
+        date_park_parade_group += 1;
     }
     mode_step_next();
 }
 
-void func_80139D08(void) {
+void date_amusement_park_parade_mark_visit(void) {
     game_state.girls[game_state.current_girl].scene_counters[0x1A] += 1;
     mode_step_next();
     game_state.mode_step += 7;
 }
 
-void func_80139D60(void) {
+void date_amusement_park_group_by_variant(void) {
     talk_group += D_800CA2FC * 2;
     mode_step_next();
 }
 
-void func_80139D9C(void) {
+void date_amusement_park_title(void) {
     strcpy(D_800CA1DC, "遊園地内");
     mode_step_next();
 }
 
-void func_80139DD0(void) {
+void date_movie_theater_group_by_class(void) {
     switch (game_state.current_girl) {
     case GIRL_SAKI:
         if (*D_800CA22C == 3) {
@@ -2660,10 +2660,10 @@ void func_80139DD0(void) {
         }
         break;
     }
-    func_80136F2C();
+    date_choice_classes_derive();
 }
 
-void func_80139F3C(void) {
+void date_concert_hall_group_by_class(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
     case GIRL_MIO:
@@ -2698,10 +2698,10 @@ void func_80139F3C(void) {
         }
         break;
     }
-    func_80136F2C();
+    date_choice_classes_derive();
 }
 
-void func_8013A0C0(void) {
+void date_shrine_festival_branch(void) {
     if (game_state.year == 0x5F) {
         if ((game_state.current_girl == GIRL_YUINA) || (game_state.current_girl == GIRL_YUKARI) || (game_state.current_girl == GIRL_YUKO) ||
             (GIRL_YUMI == game_state.current_girl)) {
@@ -2730,30 +2730,30 @@ void func_8013A0C0(void) {
     check_para_limit();
 }
 
-void func_8013A234(void) {
+void date_shrine_jump_to_farewell(void) {
     mode_step_set(0x32);
 }
 
-void func_8013A254(void) {
+void date_shrine_choice_tables_by_girl(void) {
     s32 temp_t6;
     u8 *temp_v0;
     u8 *temp_v1;
 
     temp_t6 = game_state.current_girl * 3;
-    temp_v0 = temp_t6 + D_8015B540;
+    temp_v0 = temp_t6 + date_class_table_shrine;
     D_800CA22C[0] = temp_v0[0];
     D_800CA22C[1] = temp_v0[1];
     D_800CA22C[2] = temp_v0[2];
-    temp_v1 = temp_t6 + D_8015B544;
+    temp_v1 = temp_t6 + date_face_table_shrine;
     D_800CA21C[0] = temp_v1[0];
     D_800CA21C[1] = temp_v1[1];
     D_800CA21C[2] = temp_v1[2];
-    func_80136F2C();
+    date_choice_classes_derive();
 }
 
-void func_8013A2E0(void) {
+void date_shrine_start_festival_stalls(void) {
     actor_clear_range(0);
-    cursor_show(0);
+    hud_cursor_show(0);
     k_reset(0);
     game_state.saved_game_mode = game_state.game_mode;
     game_state.saved_mode_stage = game_state.mode_stage;
@@ -2762,7 +2762,7 @@ void func_8013A2E0(void) {
 }
 
 /* FAKE: `two`/`three` hold the compare constants; they give the original's constant registers and bne operand order (found with the permuter, T-9380) */
-void func_8013A344(void) {
+void date_shrine_result_face(void) {
     s32 two;
     s32 three;
 
@@ -2788,7 +2788,7 @@ void func_8013A344(void) {
     mode_step_next();
 }
 
-void func_8013A424(void) {
+void date_shrine_after_stalls_jump(void) {
     if (game_state.year == 0x5F) {
         mode_step_set(0xC);
         return;
@@ -2796,7 +2796,7 @@ void func_8013A424(void) {
     mode_step_set(0x17);
 }
 
-void func_8013A464(void) {
+void date_shrine_return_setup(void) {
     s32 pad; /* FAKE: unused slot above rect, the original frame has it (real source unknown). T-8070 */
     RECT rect;
     u8 sp2B;
@@ -2847,7 +2847,7 @@ void func_8013A464(void) {
     mode_step_next();
 }
 
-void func_8013A62C(void) {
+void date_shrine_stall_reward(void) {
     talk_group += D_80122E9C;
     switch (D_80122E9C) {
     case 0:
@@ -2880,12 +2880,12 @@ void func_8013A62C(void) {
     mode_step_next();
 }
 
-void func_8013A804(void) {
+void date_amusement_park_parade_offer(void) {
     D_80122CEC = D_80122CDC;
     if (game_state.month == 8) {
-        D_8015B680 = 1;
-        D_8015BF34 = 0;
-        D_8015BF38 = 0;
+        date_parade_offered = 1;
+        date_park_parade_group = 0;
+        date_park_parade_line = 0;
         portrait_layout_set(get_g_zyotai_h(game_state.current_girl));
         mode_step_next();
         return;
@@ -2894,7 +2894,7 @@ void func_8013A804(void) {
     game_state.mode_step += 0x10;
 }
 
-void func_8013A898(void) {
+void date_neighborhood_park_start(void) {
     u8 temp_v0;
 
     temp_v0 = get_g_zyotai_s(game_state.current_girl);
@@ -2907,7 +2907,7 @@ void func_8013A898(void) {
 }
 
 /* FAKE: 1-element array indexing on unk_03F/unk_03E produces uixa instead of direct isvar so uopt keeps the global live range split and register coloring in bb=5..18 matching the original; s16 pointer cast on counts_b[3] emits direct halfword load/store; zero-multiplied expressions keep uopt expression order in the birthday comparison blocks; single-line else-if preserves Uloc line deltas for as1 scheduling at row 26. T-24083 */
-void func_8013A94C(void) {
+void date_neighborhood_park_pick_greeting(void) {
     u32 month_diff;
     u8 status;
     DateCounts22 counts_a;
@@ -2915,28 +2915,28 @@ void func_8013A94C(void) {
     u8 first_clear;
     s32 heart;
 
-    counts_a = D_8015B75C;
-    counts_b = D_8015B774;
+    counts_a = date_opening_count_a;
+    counts_b = date_opening_count_b;
     if ((game_state.year == 0x61) && ((&game_state.month)[0] >= 6U)) {
         ((s16 *)&counts_b)[3] += 1;
     } else if (game_state.year == 0x62) { ((s16 *)&counts_b)[3] += 1; }
-    D_8015BF1C = D_80122CDC;
-    D_8015BF20 = (u32)game_state.frame_count % (u32)(((D_80122CDC == 0) * counts_a.value[game_state.current_girl]) + (counts_b.value[game_state.current_girl] * (D_80122CDC == 1)));
-    D_8015B65C = 0;
+    date_opening_group = D_80122CDC;
+    date_opening_line = (u32)game_state.frame_count % (u32)(((D_80122CDC == 0) * counts_a.value[game_state.current_girl]) + (counts_b.value[game_state.current_girl] * (D_80122CDC == 1)));
+    date_birthday_near = 0;
     first_clear = 0;
     if ((&game_state.month)[0] == game_state.girls[game_state.current_girl].birthday.date.month) {
         if (game_state.girls[game_state.current_girl].birthday.u * 0 + game_state.day < game_state.girls[game_state.current_girl].birthday.date.day) {
-            D_8015B65C = 1;
+            date_birthday_near = 1;
         }
     } else {
         month_diff = ((&game_state.month)[0] == 2U) * 0 + (game_state.girls[game_state.current_girl].birthday.date.month - (&game_state.month)[0]) + 12;
         if ((month_diff % 12) == 1) {
-            D_8015B65C = 1;
+            date_birthday_near = 1;
         }
     }
-    D_8015B660 = 0;
+    date_hint_roll = 0;
     if ((((game_state.year == 0x61) && ((&game_state.month)[0] >= 3U)) || (game_state.year == 0x62)) && (rand() % 2)) {
-        D_8015B660 = 1;
+        date_hint_roll = 1;
     }
     status = get_g_zyotai_s(game_state.current_girl) & 0x7F;
     heart = get_g_zyotai_h(game_state.current_girl);
@@ -2947,90 +2947,90 @@ void func_8013A94C(void) {
         }
     }
     if ((first_clear != 0) && (D_80122CDC == 0)) {
-        D_8015BF1C = 4;
-        D_8015BF20 = 0;
-    } else if ((D_8015B65C != 0) && (D_80122CDC == 0)) {
-        D_8015BF1C = 2;
-        D_8015BF20 = game_state.year - 0x5F;
+        date_opening_group = 4;
+        date_opening_line = 0;
+    } else if ((date_birthday_near != 0) && (D_80122CDC == 0)) {
+        date_opening_group = 2;
+        date_opening_line = game_state.year - 0x5F;
         if (((game_state.girls[game_state.current_girl].birthday.date.month == 1) && ((&game_state.month)[0] == 1)) ||
             ((game_state.girls[game_state.current_girl].birthday.date.month == 2) && (((&game_state.month)[0] == 1) || ((&game_state.month)[0] == 2))) ||
             ((game_state.girls[game_state.current_girl].birthday.date.month == 3) && (((&game_state.month)[0] == 1) || ((&game_state.month)[0] == 2) || ((&game_state.month)[0] == 3)))) {
-            D_8015BF20 = (&game_state.year)[0] - 0x60;
+            date_opening_line = (&game_state.year)[0] - 0x60;
         }
         if (game_state.current_girl == GIRL_NOZOMI) {
             if ((status < 2U) && ((heart & 0xFF) < 2U)) {
-                D_8015BF20 = 1;
+                date_opening_line = 1;
             } else {
-                D_8015BF20 = 0;
+                date_opening_line = 0;
             }
         }
-    } else if ((D_8015B660 != 0) && (D_80122CDC == 0)) {
-        D_8015BF1C = 3;
-        D_8015BF20 = 0;
+    } else if ((date_hint_roll != 0) && (D_80122CDC == 0)) {
+        date_opening_group = 3;
+        date_opening_line = 0;
     }
-    if ((game_state.current_girl == GIRL_YUKARI) && (D_8015BF1C == 0) && (D_8015BF20 == 3)) {
+    if ((game_state.current_girl == GIRL_YUKARI) && (date_opening_group == 0) && (date_opening_line == 3)) {
         game_state.girls[5].flags.f.b14 = 1;
     }
     mode_step_next();
 }
 
-s32 func_8013AE04(void) {
-    if ((date_arrival != 0) || (D_8015BF4C == 1)) {
+s32 date_arrival_late_gate(void) {
+    if ((date_arrival != 0) || (date_player_waited == 1)) {
         mode_step_next();
         mode_step_next();
         return 0;
     }
-    return func_8013AE5C();
+    return date_arrival_greeting_speak();
 }
 
-s32 func_8013AE5C(void) {
+s32 date_arrival_greeting_speak(void) {
     u8 x;
     u32 t;
 
-    talk_tables = (u8 *) &D_8015BF04;
-    D_800CA138 = (u8 *) &D_8015BF08;
+    talk_tables = (u8 *) &date_arrival_group;
+    D_800CA138 = (u8 *) &date_arrival_line;
     D_800CA13C = D_8015BE1C;
     D_800CA140 = D_8015BE88;
     D_800CA144 = D_8015BEF4;
     x = get_g_zyotai_s(game_state.current_girl);
     t = x & 0x7F;
     /* 2U: with two plain 2 IDO shares one constant register, the original does not (T-4020) */
-    if ((date_arrival == 2U) && (D_8015BF08 == 2) && (t >= 2U)) {
+    if ((date_arrival == 2U) && (date_arrival_line == 2) && (t >= 2U)) {
         portrait_layout_set(3);
     }
     return talk_run(D_80122CDC, 1, 0);
 }
 
-s32 func_8013AF1C(void) {
+s32 date_special_day_greeting(void) {
     /* FAKE: the fields are read through a local pointer; an indirect load is not a plain variable for uopt, which gives the
      * 0x3E/0x40 selector tests the original's registers (autotweak gstate, T-20830). T-21520 */
     GameState *g = &game_state;
 
     if (g->substep++ == 0) {
         if ((g->month == 3) && (g->day == 0x15) && (g->year != 0x60)) {
-            D_8015BF0C = 0;
+            date_special_day_group = 0;
         } else if ((g->month == 3) && (g->day == 0x14) && (g->year == 0x60)) {
-            D_8015BF0C = 0;
+            date_special_day_group = 0;
         } else if ((g->year == 0x5F) && (g->month == 7) && (g->day == 0x17)) {
-            D_8015BF0C = 1;
+            date_special_day_group = 1;
         } else if ((g->year == 0x60) && (g->month == 7) && (g->day == 0x1C)) {
-            D_8015BF0C = 1;
+            date_special_day_group = 1;
         } else if ((g->year == 0x61) && (g->month == 7) && (g->day == 0x1B)) {
-            D_8015BF0C = 1;
+            date_special_day_group = 1;
         } else if ((g->month == 9) && (g->day == 0x17) && (g->year != 0x60)) {
             if (g->frame_count & 1) {
-                D_8015BF0C = 2;
+                date_special_day_group = 2;
             } else {
-                D_8015BF0C = 3;
+                date_special_day_group = 3;
             }
         } else if ((g->month == 9) && (g->day == 0x16) && (g->year == 0x60)) {
             if (g->frame_count & 1) {
-                D_8015BF0C = 2;
+                date_special_day_group = 2;
             } else {
-                D_8015BF0C = 3;
+                date_special_day_group = 3;
             }
         } else if ((g->month == 0xC) && (g->day == 0x17)) {
-            D_8015BF0C = 4;
+            date_special_day_group = 4;
         } else {
             mode_step_next();
             return 0;
@@ -3039,15 +3039,15 @@ s32 func_8013AF1C(void) {
     if (g->substep >= 0xBU) {
         g->substep = 0xA;
     }
-    talk_tables = (u8 *) &D_8015BF0C;
-    D_800CA138 = (u8 *) &D_8015BF10;
+    talk_tables = (u8 *) &date_special_day_group;
+    D_800CA138 = (u8 *) &date_special_day_line;
     D_800CA13C = D_8015BE20;
     D_800CA140 = D_8015BE8C;
     D_800CA144 = D_8015BEF8;
     return talk_run(D_80122CDC, 1, 0);
 }
 
-void func_8013B174(void) {
+void date_choice_reaction_speak(void) {
     s16 sp2E;
 
     talk_tables = (u8 *) &sp2E;
@@ -3061,7 +3061,7 @@ void func_8013B174(void) {
     }
 }
 
-void func_8013B208(void) {
+void date_choice_special_reactions(void) {
     GameState *g;
     s16 sp2A;
     s16 sp28;
@@ -3111,7 +3111,7 @@ void func_8013B208(void) {
     }
 }
 
-void func_8013B488(void) {
+void date_farewell_speak(void) {
     GameState *g;
     s16 sel;
     u8 rank;
@@ -3136,8 +3136,8 @@ void func_8013B488(void) {
     if ((g->appointment_flag != 0) && (rank < 2U) && (g->current_girl == GIRL_NOZOMI)) {
         sel = 0x12;
     }
-    /* FAKE: u8 cast on D_8015B680 emits lbu, and *(s16 *)&D_800CA15C emits lh to match original load instructions. T-24079 */
-    if ((D_80122D08 >= 0) && (D_80122D08 == g->girl_last_date_spot[g->current_girl]) && (g->girl_last_date_spot_timer[g->current_girl] != 0) && (g->game_mode == 0x50) && ((u8)D_8015B680 == 0) && (g->appointment_flag == 0) && (D_800CA2F8 != 0) && (D_800CA2F8 != 0x12)) {
+    /* FAKE: u8 cast on date_parade_offered emits lbu, and *(s16 *)&D_800CA15C emits lh to match original load instructions. T-24079 */
+    if ((D_80122D08 >= 0) && (D_80122D08 == g->girl_last_date_spot[g->current_girl]) && (g->girl_last_date_spot_timer[g->current_girl] != 0) && (g->game_mode == 0x50) && ((u8)date_parade_offered == 0) && (g->appointment_flag == 0) && (D_800CA2F8 != 0) && (D_800CA2F8 != 0x12)) {
         sel = 0xB;
         if (g->substep == 1) {
             portrait_layout_set(3);
@@ -3162,26 +3162,26 @@ void func_8013B488(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-s32 func_8013B7B0(void) {
+s32 date_closing_speak(void) {
     u8 x;
     u32 t;
 
     x = get_g_zyotai_s(game_state.current_girl);
     if (game_state.substep++ == 0) {
         t = x & 0x7F;
-        D_8015BF14 = (t >= 2U) + (t >= 3U) + (t >= 4U);
+        date_closing_group = (t >= 2U) + (t >= 3U) + (t >= 4U);
     }
-    talk_tables = (u8 *) &D_8015BF14;
-    D_800CA138 = (u8 *) &D_8015BF18;
+    talk_tables = (u8 *) &date_closing_group;
+    D_800CA138 = (u8 *) &date_closing_line;
     D_800CA13C = D_8015BE28;
     D_800CA140 = D_8015BE94;
     D_800CA144 = D_8015BF00;
     return talk_run(D_80122CDC, 1, 0);
 }
 
-void func_8013B884(void) {
-    talk_tables = (u8 *) &D_8015BF1C;
-    D_800CA138 = (u8 *) &D_8015BF20;
+void date_neighborhood_park_greeting_speak(void) {
+    talk_tables = (u8 *) &date_opening_group;
+    D_800CA138 = (u8 *) &date_opening_line;
     D_800CA13C = D_8015BE24;
     D_800CA140 = D_8015BE90;
     D_800CA144 = D_8015BEFC;
@@ -3190,16 +3190,16 @@ void func_8013B884(void) {
     }
 }
 
-s32 func_8013B910(void) {
+s32 date_movie_theater_film_talk(void) {
     if (game_state.substep++ < 0x80) {
         return 0;
     }
     if (game_state.substep >= 0x97) {
         game_state.substep = 0x96;
     }
-    D_8015BF28 = D_8015B684;
-    talk_tables = &D_8015BF24;
-    D_800CA138 = &D_8015BF28;
+    date_movie_line = date_movie_index;
+    talk_tables = &date_movie_group;
+    D_800CA138 = &date_movie_line;
     D_800CA13C = D_8015BD9C;
     D_800CA140 = D_8015BDAC;
     D_800CA144 = D_8015BDBC;
@@ -3222,19 +3222,19 @@ s32 func_8013B910(void) {
     }
 }
 
-s32 func_8013BA80(void) {
+s32 date_concert_hall_program_talk(void) {
     if (game_state.substep++ < 0x80) {
         return 0;
     }
     if (game_state.substep >= 0x97) {
         game_state.substep = 0x96;
     }
-    D_8015BF30 = D_8015B688;
-    talk_tables = &D_8015BF2C;
-    D_800CA138 = &D_8015BF30;
-    D_800CA13C = D_8015BD90;
-    D_800CA140 = D_8015BDA0;
-    D_800CA144 = D_8015BDB0;
+    date_concert_line = date_concert_index;
+    talk_tables = &date_concert_group;
+    D_800CA138 = &date_concert_line;
+    D_800CA13C = date_shared_section_text;
+    D_800CA140 = date_shared_section_command;
+    D_800CA144 = date_shared_section_voice;
     if (talk_run(D_80122CDC, 0, 0) != 0) {
         audio_command(0xC4);
         audio_command(0x200);
@@ -3254,26 +3254,26 @@ s32 func_8013BA80(void) {
     }
 }
 
-void func_8013BBF0(void) {
-    talk_tables = &D_8015BF34;
-    D_800CA138 = &D_8015BF38;
+void date_amusement_park_talk_unshuffled(void) {
+    talk_tables = &date_park_parade_group;
+    D_800CA138 = &date_park_parade_line;
     D_800CA13C = D_8015BDE4;
     D_800CA140 = D_8015BE50;
     D_800CA144 = D_8015BEBC;
     talk_run(0xFF, 1, 0);
 }
 
-/* FAKE: non-void return type keeps $v0 live across the call in func_8013F214 so ugen allocates $v1 for game_state.mode_step. T-24079 */
-s32 func_8013BC68(void) {
-    talk_tables = &D_8015BF3C;
-    D_800CA138 = &D_8015BF40;
+/* FAKE: non-void return type keeps $v0 live across the call in date_meeting_place_resolve so ugen allocates $v1 for game_state.mode_step. T-24079 */
+s32 date_wrong_place_speak(void) {
+    talk_tables = &date_meeting_group;
+    D_800CA138 = &date_meeting_line;
     D_800CA13C = D_8015BD94;
     D_800CA140 = D_8015BDA4;
     D_800CA144 = D_8015BDB4;
     talk_run(0xFF, 1, 0);
 }
 
-void func_8013BCE0(void) {
+void date_stadium_talk_speak(void) {
     talk_tables = (u8 *) &talk_group;
     if ((game_state.current_girl == GIRL_SHIORI) && (((u32) game_state.player_flags.h >> 0xC) == 6) && (D_800CA2FC == 0) && (talk_line == 0)) {
         talk_line += 1;
@@ -3287,7 +3287,7 @@ void func_8013BCE0(void) {
     }
 }
 
-void func_8013BDB4(void) {
+void date_shopping_street_extra_face(void) {
     if (D_80122CDC == 2) {
         if ((game_state.current_girl == GIRL_YUINA) || (game_state.current_girl == GIRL_AYAKO)) {
             mode_step_next();
@@ -3312,11 +3312,11 @@ void func_8013BDB4(void) {
     mode_step_next();
 }
 
-void func_8013BE98(void) {
+void date_amusement_park_empty_step(void) {
     mode_step_next();
 }
 
-void func_8013BEB8(void) {
+void date_sea_nozomi_check(void) {
     s32 x;
 
     if (game_state.current_girl != GIRL_NOZOMI) {
@@ -3338,18 +3338,18 @@ void func_8013BEB8(void) {
     mode_step_next();
 }
 
-void func_8013BF94(void) {
+void date_load_special_portrait(void) {
     if (D_800CA2F8 == 0x12) {
-        func_8013C0A4();
+        date_load_shrine_portrait();
         mode_step_next();
     } else if (D_800CA2F8 == 0x14) {
-        func_8013BFF8();
+        date_load_ski_portrait();
         mode_step_next();
     }
     mode_step_next();
 }
 
-void func_8013BFF8(void) {
+void date_load_ski_portrait(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         portrait_read_start(0x5693);
@@ -3375,7 +3375,7 @@ void func_8013BFF8(void) {
     }
 }
 
-void func_8013C0A4(void) {
+void date_load_shrine_portrait(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         portrait_read_start(0x56ED);
@@ -3413,7 +3413,7 @@ void func_8013C0A4(void) {
     }
 }
 
-void func_8013C190(void) {
+void date_choice_score(void) {
     /* FAKE: unused locals pad frame to 0x48 with zatu/basho at sp+0x1C/sp+0x18 and tbl at sp+0x28, and byte-pointer indexing on the third call prevents uopt from CSEing D_800CA22C[D_80122CDC]. T-24099 */
     s32 pad_top;
     s32 zatu;
@@ -3421,27 +3421,27 @@ void func_8013C190(void) {
     s32 pad[2];
     DateTbl20 tbl;
 
-    tbl = D_8015B78C;
+    tbl = date_syoushin_weight;
     portrait_layout_set(D_800CA21C[D_80122CDC]);
-    func_8013C410(3 - D_800CA22C[D_80122CDC], &zatu, &basho);
+    date_score_multipliers(3 - D_800CA22C[D_80122CDC], &zatu, &basho);
     *(s32 *)&game_state.girls[game_state.current_girl].tokimeki_fraction += (((3 - D_800CA22C[D_80122CDC]) * zatu * basho) << 16) / 16;
     printf("zatu%d basho%d\n", zatu, basho);
-    func_8013C410(2 - D_800CA22C[D_80122CDC], &zatu, &basho);
+    date_score_multipliers(2 - D_800CA22C[D_80122CDC], &zatu, &basho);
     *(s32 *)&game_state.girls[game_state.current_girl].affection_fraction += (((2 - D_800CA22C[D_80122CDC]) * zatu * basho) << 16) / 16;
-    func_8013C410(2 - *(s16 *)((u8 *)D_800CA22C + (D_80122CDC << 1)), &zatu, &basho);
+    date_score_multipliers(2 - *(s16 *)((u8 *)D_800CA22C + (D_80122CDC << 1)), &zatu, &basho);
     *(s32 *)&game_state.girls[game_state.current_girl].syoushin_fraction += ((tbl.w[D_800CA22C[D_80122CDC]] * zatu * basho) << 16) / 16;
     check_para_limit();
     mode_step_next();
 }
 
-void func_8013C410(s16 arg0, s32 *arg1, s32 *arg2) {
+void date_score_multipliers(s16 arg0, s32 *arg1, s32 *arg2) {
     /* FAKE: 8 bytes of scalar locals before tbl place it at sp+0x18 in the 0x108 frame, goto loops keep the threshold-break branch layout, and empty row test forces $v0 load. T-24079 */
     s32 row;
     s16 i;
     u8 val;
     DateBytes11x21 tbl;
 
-    tbl = D_8015B7A0;
+    tbl = date_place_affinity;
     if (arg0 > 0) {
         i = 0;
 loop1:
@@ -3505,12 +3505,12 @@ loop2:
     *arg2 = 6;
 }
 
-void func_8013C624(void) {
+void date_pool_face_step(void) {
     portrait_layout_set(D_800CA21C[D_80122CDC]);
     mode_step_next();
 }
 
-void func_8013C664(void) {
+void date_choice_mood_face_step(void) {
     if (game_state.appointment_flag != 0) {
         portrait_layout_set(1);
     } else {
@@ -3519,12 +3519,12 @@ void func_8013C664(void) {
     mode_step_next();
 }
 
-void func_8013C6C0(void) {
+void date_sea_mood_face_step(void) {
     portrait_layout_set(D_800CA224[D_80122CDC]);
     mode_step_next();
 }
 
-void func_8013C700(void) {
+void date_amusement_park_yuina_reaction(void) {
     if (game_state.current_girl == GIRL_YUINA) {
         func_800833F0();
         game_state.girls[2].tokimeki -= 1;
@@ -3540,7 +3540,7 @@ void func_8013C700(void) {
     check_para_limit();
 }
 
-s32 func_8013C7D0(void) {
+s32 date_ambush_check(void) {
     GameState *g = &game_state;
     s32 any;
     s16 i;
@@ -3599,9 +3599,9 @@ s32 func_8013C7D0(void) {
     return mode_step_next();
 }
 
-void func_8013CADC(void) {
+void date_ambush_prepare_battle(void) {
     cd_read_sectors(1U, 0x801B0000, 0xAFCA);
-    func_801324A8();
+    date_ambush_sections_init();
     if ((D_800CA2F8 == 0) || (D_800CA2F8 == 1)) {
         talk_group = 0;
     } else {
@@ -3618,15 +3618,15 @@ void func_8013CADC(void) {
     mode_step_next();
 }
 
-void func_8013CBAC(void) {
+void date_ambush_start_battle(void) {
     actor_clear_range(0);
-    cursor_show(0);
+    hud_cursor_show(0);
     game_state.current_girl = game_state.date_girl;
     k_reset(0);
     game_mode_set(GAME_MODE_RPG_BATTLE);
 }
 
-void func_8013CBF4(void) {
+void date_ambush_after_battle(void) {
     s32 pad[2]; /* FAKE: unused slots above rect, the original frame has them (real source unknown). T-9210 */
     RECT rect;
     s16 i;
@@ -3677,10 +3677,10 @@ void func_8013CBF4(void) {
     mode_step_next();
 }
 
-s32 func_8013CDF8(void) {
+s32 date_end(void) {
     GameState *g = &game_state;
     if (g->substep == 0) {
-        func_800674B0();
+        hud_day_bgm_load();
         g->substep++;
     }
     if (g->substep == 1) {
@@ -3737,7 +3737,7 @@ s32 func_8013CDF8(void) {
     return day_event_next(1);
 }
 
-void func_8013D174(void) {
+void date_birthday_check(void) {
     s32 v;
 
     v = game_state.girls[game_state.date_girl].birthday.w;
@@ -3755,7 +3755,7 @@ void func_8013D174(void) {
     mode_step_next();
 }
 
-void func_8013D23C(void) {
+void date_central_park_summer_group_bonus(void) {
     u8 g;
     u8 m;
 
@@ -3771,7 +3771,7 @@ void func_8013D23C(void) {
     mode_step_next();
 }
 
-void func_8013D2C8(void) {
+void date_zoo_mio_tables(void) {
     u8 g;
     u8 m;
 
@@ -3796,13 +3796,13 @@ void func_8013D2C8(void) {
             D_800CA21C[1] = 3;
             D_800CA21C[2] = 3;
         }
-        func_80136F2C();
+        date_choice_classes_derive();
         return;
     }
     mode_step_next();
 }
 
-s32 func_8013D3B0(void) {
+s32 date_zoo_mio_skip(void) {
     if ((game_state.current_girl == GIRL_MIO) && (game_state.month >= 6) && (game_state.month < 9) && (D_80122CDC == 1)) {
         mode_step_next();
         return 0;
@@ -3813,51 +3813,51 @@ s32 func_8013D3B0(void) {
     mode_step_next();
 }
 
-void func_8013D438(void) {
+void date_zoo_skip_three(void) {
     mode_step_next();
     mode_step_next();
     mode_step_next();
 }
 
-s32 func_8013D468(void) {
+s32 date_amusement_park_ride_special_mio(void) {
     /* FAKE: narrow constant and pointer view retain original register and branch operand order. T-11140 */
     GameState *g = &game_state;
     u16 one;
 
     one = 1;
-    if ((game_state.current_girl == (u8)one) && (*(u8 *)&D_8015B68C == 3)) {
+    if ((game_state.current_girl == (u8)one) && (*(u8 *)&date_ride_index == 3)) {
         if ((game_state.scene_flags[9] == 0) && ((g->month < 3) || (game_state.month >= 6))) {
             talk_group += 1;
             D_800CA22C[0] = D_800CA22C[1] = D_800CA22C[2] = 3;
             D_800CA21C[0] = D_800CA21C[1] = D_800CA21C[2] = 3;
-            func_80136F2C();
+            date_choice_classes_derive();
             portrait_layout_set(3);
             return 0;
         }
         if (one == game_state.scene_flags[9]) {
             D_800CA22C[0] = D_800CA22C[1] = D_800CA22C[2] = 4;
             D_800CA21C[0] = D_800CA21C[1] = D_800CA21C[2] = 4;
-            func_80136F2C();
+            date_choice_classes_derive();
             portrait_layout_set(4);
             return 0;
         }
-    } else if ((game_state.current_girl == GIRL_YUKO) && (*(u8 *)&D_8015B68C == 2) &&
+    } else if ((game_state.current_girl == GIRL_YUKO) && (*(u8 *)&date_ride_index == 2) &&
                (game_state.girls[8].scene_counters[0x17] != 0)) {
         talk_group += 3;
-    } else if ((game_state.current_girl == GIRL_SAKI) && (*(u8 *)&D_8015B68C == 3) &&
+    } else if ((game_state.current_girl == GIRL_SAKI) && (*(u8 *)&date_ride_index == 3) &&
                (game_state.girls[4].scene_counters[0x18] != 0)) {
         talk_group += 3;
     }
     mode_step_next();
 }
 
-s32 func_8013D5FC(void) {
-    /* FAKE: pointer view prevents uopt from CSEing g->unk_F5F across the condition blocks, and *(u8 *)&D_8015B68C emits lbu on the s8 global. T-24099 */
+s32 date_amusement_park_ride_talk(void) {
+    /* FAKE: pointer view prevents uopt from CSEing g->unk_F5F across the condition blocks, and *(u8 *)&date_ride_index emits lbu on the s8 global. T-24099 */
     GameState *g;
 
     g = &game_state;
 
-    if ((g->current_girl == GIRL_MIRA) && (g->scene_flags[0x31] != 0) && (*(u8 *)&D_8015B68C == 1)) {
+    if ((g->current_girl == GIRL_MIRA) && (g->scene_flags[0x31] != 0) && (*(u8 *)&date_ride_index == 1)) {
         portrait_layout_set(4);
         D_800CA22C[0] = D_800CA22C[1] = D_800CA22C[2] = 4;
         D_800CA234[0] = D_800CA234[1] = D_800CA234[2] = 2;
@@ -3867,12 +3867,12 @@ s32 func_8013D5FC(void) {
         g->mode_step += 0xD;
         return 0;
     } else {
-        if ((g->current_girl == GIRL_YUKO) && (*(u8 *)&D_8015B68C == 3) && (g->girls[8].scene_counters[0x18] != 0)) {
+        if ((g->current_girl == GIRL_YUKO) && (*(u8 *)&date_ride_index == 3) && (g->girls[8].scene_counters[0x18] != 0)) {
             if (g->substep++ == 0) {
                 talk_line = 2;
             }
         }
-        if ((g->current_girl == GIRL_YUKO) && (*(u8 *)&D_8015B68C == 4) && (g->girls[8].scene_counters[0x19] != 0)) {
+        if ((g->current_girl == GIRL_YUKO) && (*(u8 *)&date_ride_index == 4) && (g->girls[8].scene_counters[0x19] != 0)) {
             if (g->substep++ == 0) {
                 talk_line = 2;
             }
@@ -3881,7 +3881,7 @@ s32 func_8013D5FC(void) {
             g->substep = 0xA;
         }
         normal_date_speak();
-        if ((g->current_girl == GIRL_YUKO) && (*(u8 *)&D_8015B68C == 3) && (g->girls[8].scene_counters[0x18] == 0) && (talk_line == 3)) {
+        if ((g->current_girl == GIRL_YUKO) && (*(u8 *)&date_ride_index == 3) && (g->girls[8].scene_counters[0x18] == 0) && (talk_line == 3)) {
             audio_command(0x74);
             k_reset(1);
             talk_group += 1;
@@ -3889,7 +3889,7 @@ s32 func_8013D5FC(void) {
             D_80122CE4 = 0;
             mode_step_next();
         }
-        if ((g->current_girl == GIRL_YUKO) && (*(u8 *)&D_8015B68C == 4) && (g->girls[8].scene_counters[0x19] == 0) && (talk_line == 3)) {
+        if ((g->current_girl == GIRL_YUKO) && (*(u8 *)&date_ride_index == 4) && (g->girls[8].scene_counters[0x19] == 0) && (talk_line == 3)) {
             audio_command(0x74);
             k_reset(1);
             talk_group += 1;
@@ -3900,14 +3900,14 @@ s32 func_8013D5FC(void) {
     }
 }
 
-void func_8013D8B0(void) {
+void date_amusement_park_ride_skip(void) {
     /* FAKE: narrow constant and casts retain the original branch operand order. T-11140
        The selector copy in the else chain puts the variable first in its compares (T-11580). */
     u16 one;
     u8 sel;
 
     one = 1;
-    if ((game_state.current_girl == (u8)one) && (*(u8 *)&D_8015B68C == 3)) {
+    if ((game_state.current_girl == (u8)one) && (*(u8 *)&date_ride_index == 3)) {
         if ((game_state.scene_flags[9] == 0) && ((game_state.month < 3) || (game_state.month >= 6))) {
             game_state.mode_step += 0xD;
         }
@@ -3915,7 +3915,7 @@ void func_8013D8B0(void) {
             game_state.mode_step += 0xD;
         }
     } else {
-        sel = *(u8 *)&D_8015B68C;
+        sel = *(u8 *)&date_ride_index;
         if ((game_state.current_girl == GIRL_SAKI) && (sel == 3) && (game_state.girls[4].scene_counters[0x18] != 0)) {
             game_state.mode_step += 7;
         } else if ((game_state.current_girl == GIRL_MIRA) && (sel == 1)) {
@@ -3927,7 +3927,7 @@ void func_8013D8B0(void) {
     mode_step_next();
 }
 
-void func_8013D9E8(void) {
+void date_amusement_park_yuina_second_answer(void) {
     if (game_state.current_girl == GIRL_YUINA) {
         portrait_layout_set(4);
         talk_group = 5;
@@ -3938,17 +3938,17 @@ void func_8013D9E8(void) {
         mode_step_set(0x5E);
         return;
     }
-    date_event_choose();
+    date_scene_choose();
 }
 
-void func_8013DA7C(void) {
+void date_festival_skip_five(void) {
     if ((game_state.current_girl == GIRL_YUINA) || (game_state.current_girl == GIRL_YUKO) || (game_state.current_girl == GIRL_YUKARI) || (GIRL_YUMI == game_state.current_girl)) {
         game_state.mode_step += 5;
     }
     mode_step_next();
 }
 
-void func_8013DAD8(void) {
+void date_amusement_park_yuina_talk(void) {
     if (talk_line == 1) {
         game_state.current_girl = GIRL_SOTOI;
     } else {
@@ -3962,11 +3962,11 @@ void func_8013DAD8(void) {
     D_80122D20 = 0;
 }
 
-void func_8013DB4C(void) {
+void date_amusement_park_jump_to_end(void) {
     mode_step_set(0x3B);
 }
 
-void func_8013DB6C(void) {
+void date_shopping_street_third_answer_branch(void) {
     /* FAKE: narrow constant retains the original branch operand order. T-11140 */
     u16 two;
     s32 prev;
@@ -3994,14 +3994,14 @@ void func_8013DB6C(void) {
     mode_step_next();
 }
 
-void func_8013DC5C(void) {
+void date_shopping_street_nozomi_group_bonus(void) {
     if ((game_state.current_girl == GIRL_NOZOMI) && (game_state.girls[6].scene_counters[4] != 0) && (D_80122CDC == 2)) {
         talk_group += 1;
     }
     mode_step_next();
 }
 
-void func_8013DCC0(void) {
+void date_sea_forced_worst_classes(void) {
     D_800CA224[0] = D_800CA224[1] = D_800CA224[2] = 3;
     D_800CA22C[0] = D_800CA22C[1] = D_800CA22C[2] = 4;
     D_800CA234[0] = D_800CA234[1] = D_800CA234[2] = 2;
@@ -4012,7 +4012,7 @@ void func_8013DCC0(void) {
     mode_step_next();
 }
 
-void func_8013DD50(void) {
+void date_botanical_garden_mira_skip(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_80122CDC == 0) && (D_800CA2FC == 0)) {
         mode_step_next();
         return;
@@ -4022,7 +4022,7 @@ void func_8013DD50(void) {
     mode_step_next();
 }
 
-s32 func_8013DDC4(void) {
+s32 date_art_museum_mira_face(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_80122CDC == 1) && ((D_800CA2FC == 2) || (D_800CA2FC == 0))) {
         func_80083418();
         return 0;
@@ -4034,7 +4034,7 @@ s32 func_8013DDC4(void) {
     mode_step_next();
 }
 
-void func_8013DE50(void) {
+void date_art_museum_variant_face(void) {
     if (D_800CA2FC == 0) {
         func_80083418();
         return;
@@ -4043,10 +4043,10 @@ void func_8013DE50(void) {
         func_80083418();
         return;
     }
-    func_8013934C();
+    date_art_museum_choice_face();
 }
 
-void func_8013DEA8(void) {
+void date_library_talk(void) {
     if (talk_line == 1) {
         game_state.current_girl = game_state.date_girl;
     }
@@ -4056,7 +4056,7 @@ void func_8013DEA8(void) {
     normal_date_speak();
 }
 
-void func_8013DEF8(void) {
+void date_library_extra_branch(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_800CA2FC == 0)) {
         talk_group += D_80122CDC;
         mode_step_next();
@@ -4073,11 +4073,11 @@ void func_8013DEF8(void) {
     mode_step_next();
 }
 
-void func_8013DFB4(void) {
+void date_library_empty_step(void) {
     mode_step_next();
 }
 
-void func_8013DFD4(void) {
+void date_game_center_mira_extra_talk(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_80122CDC == 0) && (D_800CA2FC == 1)) {
         normal_date_speak();
         return;
@@ -4085,7 +4085,7 @@ void func_8013DFD4(void) {
     mode_step_next();
 }
 
-void func_8013E038(void) {
+void date_game_center_mira_worst_face(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_80122CDC == 0) && (D_800CA2FC == 1)) {
         func_80083418();
         return;
@@ -4093,7 +4093,7 @@ void func_8013E038(void) {
     mode_step_next();
 }
 
-void func_8013E09C(void) {
+void date_game_center_mira_face_1(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_80122CDC == 0) && (D_800CA2FC == 1)) {
         func_800833A0();
         return;
@@ -4101,7 +4101,7 @@ void func_8013E09C(void) {
     mode_step_next();
 }
 
-void func_8013E100(void) {
+void date_karaoke_mira_extra_talk(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_80122CDC == 2) && (D_800CA2FC == 1)) {
         normal_date_speak();
         return;
@@ -4109,11 +4109,11 @@ void func_8013E100(void) {
     mode_step_next();
 }
 
-void func_8013E164(void) {
+void date_amusement_park_speak(void) {
     normal_date_speak();
 }
 
-void func_8013E184(void) {
+void date_library_yuko_skip(void) {
     if ((game_state.current_girl == GIRL_YUKO) && (game_state.girls[8].scene_counters[15] != 0)) {
         game_state.mode_step += 0x1E;
     } else if (game_state.current_girl == GIRL_YUKO) {
@@ -4122,7 +4122,7 @@ void func_8013E184(void) {
     mode_step_next();
 }
 
-void func_8013E1EC(void) {
+void date_sea_yukari_extra_talk(void) {
     if ((game_state.current_girl == GIRL_YUKARI) && (D_800CA2FC == 0) && (D_80122CDC == 2)) {
         normal_date_speak();
         return;
@@ -4134,7 +4134,7 @@ void func_8013E1EC(void) {
     mode_step_next();
 }
 
-void func_8013E288(void) {
+void date_sea_yukari_extra_talk_face(void) {
     if ((game_state.current_girl == GIRL_YUKARI) && (D_800CA2FC == 0) && (D_80122CDC == 2)) {
         if (game_state.mode_step_timer.w++ == 0) {
             portrait_layout_set(3);
@@ -4145,7 +4145,7 @@ void func_8013E288(void) {
     mode_step_next();
 }
 
-void func_8013E30C(void) {
+void date_shrine_megumi_extra_talk(void) {
     if ((game_state.current_girl == GIRL_MEGUMI) && (D_80122CDC == 2)) {
         normal_date_speak();
         return;
@@ -4153,7 +4153,7 @@ void func_8013E30C(void) {
     mode_step_next();
 }
 
-void func_8013E360(void) {
+void date_aquarium_yumi_extra_talk(void) {
     if ((GIRL_YUMI == game_state.current_girl) && (D_80122CDC == 1) && (D_800CA2FC == 2)) {
         normal_date_speak();
         return;
@@ -4161,7 +4161,7 @@ void func_8013E360(void) {
     mode_step_next();
 }
 
-void func_8013E3C4(void) {
+void date_planetarium_yumi_talks(void) {
     /* FAKE: this narrow constant and its first-test cast retain the
      * original branch operand order and saved-state stack home. T-10020. */
     u16 ten;
@@ -4193,7 +4193,7 @@ void func_8013E3C4(void) {
     mode_step_next();
 }
 
-void func_8013E4E8(void) {
+void date_art_museum_yumi_extra_talk(void) {
     if ((GIRL_YUMI == game_state.current_girl) && (D_80122CDC == 2) && (D_800CA2FC == 4)) {
         normal_date_speak();
         return;
@@ -4201,7 +4201,7 @@ void func_8013E4E8(void) {
     mode_step_next();
 }
 
-void func_8013E54C(void) {
+void date_bowling_alley_yumi_extra_talk_unused(void) {
     if ((GIRL_YUMI == game_state.current_girl) && (D_80122CDC == 0) && (D_800CA2FC == 0)) {
         normal_date_speak();
         return;
@@ -4209,7 +4209,7 @@ void func_8013E54C(void) {
     mode_step_next();
 }
 
-void func_8013E5B0(void) {
+void date_bowling_alley_yumi_extra_talk(void) {
     if ((GIRL_YUMI == game_state.current_girl) && (D_80122CDC == 1) && (D_800CA2FC == 1)) {
         normal_date_speak();
         return;
@@ -4217,11 +4217,11 @@ void func_8013E5B0(void) {
     mode_step_next();
 }
 
-void func_8013E614(void) {
+void date_amusement_park_yumi_ride_talk(void) {
     s32 cur;
     s32 prev;
 
-    if ((GIRL_YUMI == game_state.current_girl) && (D_80122CDC == 1) && ((u8) D_8015B68C == 2) && (D_800CA2FC == 1)) {
+    if ((GIRL_YUMI == game_state.current_girl) && (D_80122CDC == 1) && ((u8) date_ride_index == 2) && (D_800CA2FC == 1)) {
         prev = game_state.mode_step;
         normal_date_speak();
         cur = game_state.mode_step;
@@ -4233,7 +4233,7 @@ void func_8013E614(void) {
     }
 }
 
-void func_8013E6A4(void) {
+void date_shrine_closing_talk(void) {
     /* FAKE: unused word local above x puts x at 0x2B(sp) as in the original. T-17202 */
     s32 pad;
     u8 x;
@@ -4247,7 +4247,7 @@ void func_8013E6A4(void) {
     }
 }
 
-void func_8013E710(void) {
+void date_shrine_answer_face(void) {
     if (D_80122CDC == 0) {
         if (game_state.current_girl == GIRL_MIRA) {
             func_800833A0();
@@ -4259,7 +4259,7 @@ void func_8013E710(void) {
     mode_step_next();
 }
 
-void func_8013E770(void) {
+void date_shopping_street_megumi_face(void) {
     if (game_state.current_girl == GIRL_MEGUMI) {
         func_80083378();
         return;
@@ -4267,7 +4267,7 @@ void func_8013E770(void) {
     func_800833A0();
 }
 
-void func_8013E7B0(void) {
+void date_load_girl_script(void) {
     switch (game_state.date_girl) {
     case GIRL_SHIORI:
         date_fill_sections_shiori();
@@ -4317,19 +4317,19 @@ void func_8013E7B0(void) {
     mode_step_next();
 }
 
-void func_8013E980(void) {
+void date_load_shared_script(void) {
     cd_read_sectors(2, 0x80197000, 0xAF46);
-    func_80140F40();
+    date_shared_sections_init();
     mode_step_next();
 }
 
-void func_8013E9BC(void) {
+void date_load_choice_tables(void) {
     cd_read_sectors(3, 0x801A4000, 0xAFA9);
-    func_80132004();
+    date_choice_tables_init_body();
     mode_step_next();
 }
 
-s32 func_8013E9F8(void) {
+s32 date_sea_score_step(void) {
     /* FAKE: 4 spare bytes reproduce prev's stack home at 0x28(sp). T-11140 */
     s32 pad;
     u32 prev;
@@ -4344,7 +4344,7 @@ s32 func_8013E9F8(void) {
             normal_date_girl_in();
             if (prev != game_state.mode_step) {
                 game_state.mode_step -= 1;
-                func_8013C190();
+                date_choice_score();
             }
             return 0;
         case GIRL_YUKARI:
@@ -4352,7 +4352,7 @@ s32 func_8013E9F8(void) {
                 normal_date_girl_in();
                 if (prev != game_state.mode_step) {
                     game_state.mode_step -= 1;
-                    func_8013C190();
+                    date_choice_score();
                 }
                 return 0;
             }
@@ -4362,17 +4362,17 @@ s32 func_8013E9F8(void) {
                 normal_date_girl_in();
                 if (prev != game_state.mode_step) {
                     game_state.mode_step -= 1;
-                    func_8013C190();
+                    date_choice_score();
                 }
                 return 0;
             }
             break;
         }
     }
-    func_8013C190();
+    date_choice_score();
 }
 
-s32 func_8013EB1C(void) {
+s32 date_sea_variant_portrait_gate(void) {
     if (D_800CA2FC == 1) {
         switch (game_state.current_girl) {
         case GIRL_SHIORI:
@@ -4388,7 +4388,7 @@ s32 func_8013EB1C(void) {
     return normal_date_girl_in();
 }
 
-void func_8013EB8C(void) {
+void date_place_bgm_load_start(void) {
     /* FAKE: 4-byte stack padding reproduces the 0x138-byte frame and stack offsets of the copied tables. T-24083 */
     s32 unused;
     DateWords21 words_a;
@@ -4398,14 +4398,14 @@ void func_8013EB8C(void) {
     s32 arg2;
     Tbl21 next_ids;
 
-    words_a = D_8015B888;
-    words_b = D_8015B8DC;
-    words_c = D_8015B930;
+    words_a = date_place_bank_third_argument;
+    words_b = date_place_bank_first_data_argument;
+    words_c = date_place_bank_second_data_argument;
     /* FAKE: dead read of D_800CA2F8 before the first call creates its live unit in the entry block so uopt colors D_800CA2F8 across the branch chain. T-24083 */
     arg1 = D_800CA2F8;
     arg1 = 0xBF98;
     arg2 = 0xBF79;
-    next_ids = D_8015B984;
+    next_ids = date_place_load_command;
     audio_command(0xCF);
     D_800B3D60 = 0;
     if (D_800CA2F8 == 2) {
@@ -4450,12 +4450,12 @@ void func_8013EB8C(void) {
     mode_step_next();
 }
 
-void func_8013EE3C(void) {
+void date_place_bgm_load_wait(void) {
     /* FAKE: 4 spare bytes reproduce the original frame (0x60) and the table's offset 0x30; real locals unknown. T-9180 */
     s32 pad;
     Tbl21 tbl;
 
-    tbl = D_8015B9B0;
+    tbl = date_place_sequence_command;
     if (audio_bank_load_poll() == 1) {
         audio_command(tbl.v[D_800CA2F8]);
         mode_step_next();
@@ -4467,12 +4467,12 @@ void func_8013EE3C(void) {
     }
 }
 
-void func_8013EF1C(void) {
+void date_shopping_street_bgm(void) {
     if ((u8) game_state.mode_step >= 0x14U) {
         audio_command(0x203);
-    } else if (D_8015B690 == 0) {
+    } else if (date_shop_index == 0) {
         audio_command(0x200);
-    } else if (D_8015B690 == 1) {
+    } else if (date_shop_index == 1) {
         audio_command(0x201);
     } else {
         audio_command(0x202);
@@ -4480,7 +4480,7 @@ void func_8013EF1C(void) {
     mode_step_next();
 }
 
-s32 func_8013EFA0(void) {
+s32 date_meeting_place_check(void) {
     /* FAKE: unused word reserves top frame slot so DatePlaceNames2D6 tbl sits at sp+0x2C in a 0x308 frame, and dead entry read lets cvt_pass strip CVTs on unk_724..unk_727 (same as EVENT twin func_8011AC18, T-11110). T-24079 */
     s32 pad;
     DatePlaceNames2D6 tbl;
@@ -4491,7 +4491,7 @@ s32 func_8013EFA0(void) {
     /* FAKE: u8 view on the store and (u8) cast on the call result keep the original $v0/$a0 load and ugen t-register numbering. T-24079 */
     D_80122CD4 = *(u8 *)&game_state.current_girl;
     if (((u8)get_g_zyotai_s(game_state.current_girl) & 0x7F) == 4) {
-        D_8015BF3C = 8;
+        date_meeting_group = 8;
         game_state.mode_step += 0x24;
         return;
     }
@@ -4508,7 +4508,7 @@ s32 func_8013EFA0(void) {
         strcpy(D_800CA25C, tbl.unk_00[(s32)game_state.appointment_place_2]);
     }
     if (game_state.appointment_place_3 != 0xFF) {
-        D_8015BF3C = 3;
+        date_meeting_group = 3;
         if (game_state.appointment_place_3 == game_state.appointment_place_0) {
             strcpy(D_800CA280, tbl.unk_00[game_state.appointment_place_1]);
         } else {
@@ -4518,17 +4518,17 @@ s32 func_8013EFA0(void) {
     mode_step_next();
 }
 
-void func_8013F184(void) {
+void date_place_init_with_cost(void) {
     place_init();
     if ((D_800CA2F8 == 0xB) && (D_800CA2FC == 2)) {
-        talk_group += D_8015B658;
+        talk_group += date_groups_per_variant;
     } else {
-        talk_group += D_800CA2FC * D_8015B658;
+        talk_group += D_800CA2FC * date_groups_per_variant;
     }
     talk_line = 0;
 }
 
-void func_8013F214(void) {
+void date_meeting_place_resolve(void) {
     /* FAKE: unused locals pad frame to 0x38 with prev at sp+0x2C, and dead date_arrival read forces the second lbu on date_arrival after date_arrival = 2. T-24079 */
     u8 v;
     u8 sel;
@@ -4538,10 +4538,10 @@ void func_8013F214(void) {
     sel = date_arrival;
     if ((game_state.appointment_place_1 == game_state.appointment_place_0) && (D_80122CDC == 0)) {
         prev = game_state.mode_step;
-        func_8013BC68();
+        date_wrong_place_speak();
         if (prev != game_state.mode_step) {
-            D_8015BF4C = 1;
-            D_8015BF04 += 1;
+            date_player_waited = 1;
+            date_arrival_group += 1;
             game_state.mode_step += 0xC;
         }
         return;
@@ -4552,10 +4552,10 @@ void func_8013F214(void) {
         game_state.mode_step += 0x1E;
         return;
     }
-    D_8015BF3C += D_80122CDC;
+    date_meeting_group += D_80122CDC;
     date_arrival = 2;
     v = get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    D_8015BF04 = ((v >= 2) + (v >= 3)) * ((date_arrival == 0) + 1) + date_arrival * 6 - (date_arrival == 2) * 3;
+    date_arrival_group = ((v >= 2) + (v >= 3)) * ((date_arrival == 0) + 1) + date_arrival * 6 - (date_arrival == 2) * 3;
     if (D_80122CDC == 1) {
         if (game_state.appointment_place_2 == game_state.appointment_place_0) {
             D_800CA2F8 = game_state.appointment_place_1;
@@ -4578,11 +4578,11 @@ void func_8013F214(void) {
     mode_step_next();
 }
 
-void func_8013F400(void) {
+void date_wrong_place_outcome(void) {
     u8 *temp_v0;
 
     if (game_state.appointment_place_1 != D_800CA2F8) {
-        D_8015BF3C = 7;
+        date_meeting_group = 7;
         game_state.mode_step += 0x14;
         return;
     }
@@ -4592,7 +4592,7 @@ void func_8013F400(void) {
     check_para_limit();
 }
 
-void func_8013F494(void) {
+void date_meeting_place_select(void) {
     if (game_state.appointment_place_3 != 0xFF) {
         normal_date_three_select();
         return;
@@ -4600,26 +4600,26 @@ void func_8013F494(void) {
     normal_date_two_select();
 }
 
-void func_8013F4D4(void) {
+void date_empty_step(void) {
     mode_step_next();
 }
 
-void func_8013F4F4(void) {
+void date_portrait_address_init_step(void) {
     addr_init_bustup();
     mode_step_next();
 }
 
-void func_8013F51C(void) {
-    D_8015BF3C = 7;
+void date_meeting_set_not_here_group(void) {
+    date_meeting_group = 7;
     mode_step_next();
 }
 
-void func_8013F544(void) {
+void date_looks_check(void) {
     u8 g;
 
     g = game_state.current_girl;
     if ((game_state.param_looks.value < 0x1E) || ((game_state.param_looks.value < 0x23) && (g == 7))) {
-        D_8015BF04 = 0xC;
+        date_arrival_group = 0xC;
         game_state.mode_step += 0xF;
         game_state.girls[game_state.current_girl].tokimeki -= 1;
         game_state.girls[game_state.current_girl].affection -= 1;
@@ -4630,7 +4630,7 @@ void func_8013F544(void) {
     mode_step_next();
 }
 
-void func_8013F638(void) {
+void date_shrine_fireworks_setup(void) {
     s16 i;
     ActorFixed *p;
 
@@ -4652,7 +4652,7 @@ void func_8013F638(void) {
     D_80122D14 = 1;
     D_8015BD34 = 0;
     D_8015BD38 = 1;
-    func_80132288();
+    date_fireworks_resources_init();
     load_palette(D_800CA130, 15, 1, 2, 0);
     ((ActorFixed *)actor_pool)[31].unk_43 = 15;
     ((SpriteQuad *)sprite_quads)[0].unk_12 = 0x1EF;
@@ -4684,7 +4684,7 @@ void func_8013F638(void) {
         p[96].unk_05 = 0x80;
         p[96].unk_04 = 8;
         p[96].dx = (rand() % 0x8000) - 0x4000;
-        D_8015BCB4[i].w = ((u32)-(rand() % 9) << 16) - 0x280000;
+        date_firework_targets[i].w = ((u32)-(rand() % 9) << 16) - 0x280000;
     }
     ((ActorFixed *)actor_pool)[96].draw_flags |= 0x80;
     scene_still_show(D_8015B5DC, D_8015B5E0, D_8015B5E4, D_8015B5E8, D_8015B5EC, D_8015B5F0);
@@ -4699,19 +4699,19 @@ void func_8013F638(void) {
     mode_step_next();
 }
 
-void func_8013FA4C(void) {
+void date_shrine_wait_long(void) {
     wait_sub_sub(0x3E8);
 }
 
 /* FAKE: the first chain is dead (uopt drops its stores as overwritten); it moves the shared `li v0,0x80` above the second `lui $at` as in the original. Found with the permuter, T-9380 */
-void func_8013FA6C(void) {
+void date_shrine_light_up(void) {
     (&D_80121808)[0] = (&D_80121809)[0] = (&D_8012180A)[0] = (&D_801217E4)[0] = (&D_801217E5)[0] = (&D_801217E6)[0] = (&D_8011F513)[0] = 0x80;
     D_80122CF4 = 1;
     (&D_80121808)[0] = (&D_80121809)[0] = (&D_8012180A)[0] = (&D_801217E4)[0] = (&D_801217E5)[0] = (&D_801217E6)[0] = (&D_8011F513)[0] = 0x80;
     mode_step_next();
 }
 
-void func_8013FAD0(void) {
+void date_shrine_fireworks_fade(void) {
     s16 i;
 
     D_8015BD3C -= 4;
@@ -4728,7 +4728,7 @@ void func_8013FAD0(void) {
         D_80122D14 = 0;
     }
     if (((ActorFixed *)actor_pool)[31].unk_07 == 0) {
-        /* FAKE: dead indirect store to D_80122CF4 is overwritten below; uopt drops the store and schedules lui $a0, 0x8000 into the beqz delay slot (same as func_8013FA6C). T-24099 */
+        /* FAKE: dead indirect store to D_80122CF4 is overwritten below; uopt drops the store and schedules lui $a0, 0x8000 into the beqz delay slot (same as date_shrine_light_up). T-24099 */
         (&D_80122CF4)[0] = 0x80000000;
         D_80122D14 = 0;
         D_80122CF4 = 0;
@@ -4760,7 +4760,7 @@ void func_8013FAD0(void) {
     }
 }
 
-void func_8013FD6C(void) {
+void date_shrine_fireworks_update(void) {
     s16 i;
     s32 y_diff;
     u8 unused;
@@ -4778,7 +4778,7 @@ void func_8013FD6C(void) {
             ((ActorFixed *)actor_pool)[D_8015BD38 + 95].flags = 1;
             ((ActorFixed *)actor_pool)[D_8015BD38 + 95].y.h[1] = 0xA0;
             ((ActorFixed *)actor_pool)[D_8015BD38 + 95].dx = (rand() % 0x8000) - 0x4000;
-            D_8015BCB4[D_8015BD38 - 1].w = ((u32)-(rand() % 9) << 16) - 0x480000;
+            date_firework_targets[D_8015BD38 - 1].w = ((u32)-(rand() % 9) << 16) - 0x480000;
             ((ActorFixed *)actor_pool)[D_8015BD38 + 95].x.h[1] = (rand() % 256) - 0x80;
         }
     }
@@ -4790,9 +4790,9 @@ void func_8013FD6C(void) {
     }
     for (i = 0; i < D_8015BD38; i++) {
         if (((ActorFixed *)actor_pool)[i + 96].sequence_slot == 3) {
-            ((ActorFixed *)actor_pool)[i + 96].y.w += (D_8015BCB4[i].w - ((ActorFixed *)actor_pool)[i + 96].y.w) >> 5;
+            ((ActorFixed *)actor_pool)[i + 96].y.w += (date_firework_targets[i].w - ((ActorFixed *)actor_pool)[i + 96].y.w) >> 5;
             ((ActorFixed *)actor_pool)[i + 96].x.w += ((ActorFixed *)actor_pool)[i + 96].dx;
-            y_diff = ((ActorFixed *)actor_pool)[i + 96].y.h[1] - (s16)D_8015BCB4[i].h[1];
+            y_diff = ((ActorFixed *)actor_pool)[i + 96].y.h[1] - (s16)date_firework_targets[i].h[1];
             ((ActorFixed *)actor_pool)[i + 96].unk_07 = (y_diff / 2) + 0x40;
             if (y_diff < 10) {
                 ((ActorFixed *)actor_pool)[i + 96].sequence_slot = (((ActorFixed *)actor_pool)[i + 96].sequence_slot - (rand() % 2)) - 1;
@@ -4824,7 +4824,7 @@ void func_8013FD6C(void) {
                 ((ActorFixed *)actor_pool)[i + 96].flags = 1;
                 ((ActorFixed *)actor_pool)[i + 96].y.h[1] = 0xA0;
                 ((ActorFixed *)actor_pool)[i + 96].dx = (rand() % 0x8000) - 0x4000;
-                D_8015BCB4[i].w = ((u32)-(rand() % 9) << 16) - 0x280000;
+                date_firework_targets[i].w = ((u32)-(rand() % 9) << 16) - 0x280000;
                 ((ActorFixed *)actor_pool)[i + 96].x.h[1] = (rand() % 256) - 0x80;
                 if ((game_state.mode_step == 0x25) && ((u32)game_state.mode_step_timer.w >= 0x1F5U)) {
                     if (i == 0) {
@@ -4848,14 +4848,14 @@ void func_8013FD6C(void) {
     dtd_on(0xE);
 }
 
-void func_8014033C(void) {
+void date_central_park_load_particles(void) {
     cd_read_sectors(0x22, 0x801E0000, 0xBC13);
-    func_801323B8();
+    date_central_park_particles_init();
     mode_step_next();
 }
 
 /* FAKE: s16 `two` holds the hoisted constant 2 in $s6 with reversed bne/xor operand order, and local u8 prototype for load_palette emits andi a3, s6, 0xff. T-11290 */
-s32 func_80140374(void) {
+s32 date_central_park_particles_setup(void) {
     s32 drift;
     s16 size_variant;
     s16 i;
@@ -4902,7 +4902,7 @@ s32 func_80140374(void) {
         ((ActorFixed *) actor_pool)[i + 98].unk_1A = (s16) scale;
         ((ActorFixed *) actor_pool)[i + 98].unk_1C = (s16) scale;
         ((ActorFixed *) actor_pool)[i + 98].unk_07 = 0x80;
-        position = &D_8015BD40[i];
+        position = &date_particle_targets[i];
         ((ActorFixed *) actor_pool)[i + 98].x.h[1] = (s16) ((rand() % 300) - 0x96);
         position->w = (s32) ((ActorFixed *) actor_pool)[i + 98].x.w;
         random_span = rand();
@@ -4916,7 +4916,7 @@ s32 func_80140374(void) {
     mode_step_next();
 }
 
-void func_80140788(void) {
+void date_central_park_particles_hide(void) {
     s16 i;
 
     for (i = 0; i < 20; i++) {
@@ -4925,7 +4925,7 @@ void func_80140788(void) {
 }
 
 /* s32 with no return (K&R): the early returns set $v0 = 0; falling off the loop leaves $v0 untouched. */
-s32 func_801407D0(void) {
+s32 date_central_park_particles_update(void) {
     s16 i;
     s16 size_variant;
     s32 choice;
@@ -4942,7 +4942,7 @@ s32 func_801407D0(void) {
     for (i = 0; i < 20; i++) {
         ((ActorFixed *)actor_pool)[i + 98].unk_07 = dec_bg_brightness;
         ((ActorFixed *)actor_pool)[i + 98].draw_flags |= 0x80;
-        ((ActorFixed *)actor_pool)[i + 98].dx += (D_8015BD40[i].w - ((ActorFixed *)actor_pool)[i + 98].x.w) >> 8;
+        ((ActorFixed *)actor_pool)[i + 98].dx += (date_particle_targets[i].w - ((ActorFixed *)actor_pool)[i + 98].x.w) >> 8;
         ((ActorFixed *)actor_pool)[i + 98].x.w += ((ActorFixed *)actor_pool)[i + 98].dx;
         ((ActorFixed *)actor_pool)[i + 98].y.w += ((ActorFixed *)actor_pool)[i + 98].dy;
         if (((ActorFixed *)actor_pool)[i + 98].y.h[1] >= 0x29) {
@@ -4953,22 +4953,22 @@ s32 func_801407D0(void) {
             ((ActorFixed *)actor_pool)[i + 98].unk_1A = scale;
             ((ActorFixed *)actor_pool)[i + 98].unk_1C = scale;
             ((ActorFixed *)actor_pool)[i + 98].x.h[1] = (rand() % 300) - 0x96;
-            D_8015BD40[i].w = ((ActorFixed *)actor_pool)[i + 98].x.w;
+            date_particle_targets[i].w = ((ActorFixed *)actor_pool)[i + 98].x.w;
             random_span = rand();
             divisor = size_variant + 1;
             /* FAKE: s16 lvalue cast on WordView.h[1] emits lh with += operand order in ugen. T-24083 */
-            *(s16 *)&D_8015BD40[i].h[1] += ((((rand() % 2) * 2) - 1) * (random_span % 8) + 8) / divisor;
+            *(s16 *)&date_particle_targets[i].h[1] += ((((rand() % 2) * 2) - 1) * (random_span % 8) + 8) / divisor;
             ((ActorFixed *)actor_pool)[i + 98].dy = (((D_800CA2FC != 2) << 15) + 0x8000) / divisor;
         }
     }
 }
 
-s32 func_80140A7C(void) {
+s32 date_mira_late_skip(void) {
     u32 t;
 
     t = (u8) get_g_zyotai_s(game_state.date_girl) & 0x7F;
     if ((game_state.date_girl == GIRL_MIRA) && (t >= 3U) && (date_arrival == 2)) {
-        D_8015BF3C = 8;
+        date_meeting_group = 8;
         mode_step_set(0x34);
         D_800CA2F8 += 0x32;
         return 0;
@@ -4976,7 +4976,7 @@ s32 func_80140A7C(void) {
     mode_step_next();
 }
 
-void func_80140B08(void) {
+void date_invited_day_check(void) {
     /* FAKE: pointer view prevents uopt from CSEing unk_03E across || arms; u8 cast consumes $t8. T-11140 */
     GameState *g = &game_state;
     s32 x;
@@ -5000,7 +5000,7 @@ void func_80140B08(void) {
     mode_step_next();
 }
 
-s32 func_80140C6C(void) {
+s32 date_invited_day_talk(void) {
     u8 x;
     u32 t;
 
@@ -5016,21 +5016,21 @@ s32 func_80140C6C(void) {
 }
 
 /* FAKE: unsigned byte view and integer fallthrough retain palette-state address scheduling. T-9550 */
-s32 func_80140D38(void) {
+s32 date_parade_sign_palette_cycle(void) {
 
     if ((u32)game_state.frame_count % 7U == 0) {
-        (*(u8 *)&D_8015B6A0)++;
-        if (*(u8 *)&D_8015B6A0 >= 4U) D_8015B6A0 = 0;
-        load_palette((s32)D_8015B644, 0x11, 1, 3, *(u8 *)&D_8015B6A0);
+        (*(u8 *)&date_sign_palette_frame)++;
+        if (*(u8 *)&date_sign_palette_frame >= 4U) date_sign_palette_frame = 0;
+        load_palette((s32)D_8015B644, 0x11, 1, 3, *(u8 *)&date_sign_palette_frame);
     }
 }
 
-void func_80140DB4(void) {
+void date_girl_in_clear_appointment(void) {
     normal_date_girl_in();
     game_state.unk_54C[0].b[3] &= 0xFFDF;
 }
 
-void func_80140DE4(void) {
+void date_ambush_audio_bank_load_start(void) {
     audio_bank_load_start(0, 0xC043, 0xC01D, 0, 0, 0);
     if (audio_bank_load_poll() == 1) {
         audio_command(0xBF);
@@ -5039,7 +5039,7 @@ void func_80140DE4(void) {
     mode_step_next();
 }
 
-void func_80140E44(void) {
+void date_ambush_audio_bank_load_wait(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0xBF);
         mode_step_next();
@@ -5051,7 +5051,7 @@ void func_80140E44(void) {
     }
 }
 
-void func_80140ECC(void) {
+void date_ambush_bang(void) {
     k_reset(1);
     set_kanji_string(-0x80, 0x30, 1, "ドン", 0);
     audio_command(0x22);
@@ -5061,23 +5061,23 @@ void func_80140ECC(void) {
     mode_step_next();
 }
 
-void func_80140F40(void) {
-    D_8015BD90 = 0x801972E8;
+void date_shared_sections_init(void) {
+    date_shared_section_text = 0x801972E8;
     D_8015BD94 = 0x8019772C;
     D_8015BD98 = 0x80197B04;
     D_8015BD9C = 0x80197EA4;
-    D_8015BDA0 = 0x801972FC;
+    date_shared_section_command = 0x801972FC;
     D_8015BDA4 = 0x80197778;
     D_8015BDA8 = 0x80197B10;
     D_8015BDAC = 0x80197EB4;
-    D_8015BDB0 = 0x80197450;
+    date_shared_section_voice = 0x80197450;
     D_8015BDB4 = 0x80197994;
     D_8015BDB8 = 0x80197BD8;
     D_8015BDBC = 0x80197FEC;
 }
 
 void date_fill_sections_shiori(void) {
-    D_8015BDC0 = 0x801986D0;
+    date_section_text = 0x801986D0;
     D_8015BDC4 = 0x80198DCC;
     D_8015BDC8 = 0x801991F0;
     D_8015BDCC = 0x801996C0;
@@ -5104,7 +5104,7 @@ void date_fill_sections_shiori(void) {
     D_8015BE20 = 0x8019C4B4;
     D_8015BE24 = 0x8019C94C;
     D_8015BE28 = 0x8019DD58;
-    D_8015BE2C = 0x80198768;
+    date_section_command = 0x80198768;
     D_8015BE30 = 0x80198DFC;
     D_8015BE34 = 0x80199220;
     D_8015BE38 = 0x80199708;
@@ -5131,7 +5131,7 @@ void date_fill_sections_shiori(void) {
     D_8015BE8C = 0x8019C4DC;
     D_8015BE90 = 0x8019C978;
     D_8015BE94 = 0x8019DD78;
-    D_8015BE98 = 0x80198AFC;
+    date_section_voice = 0x80198AFC;
     D_8015BE9C = 0x80198F2C;
     D_8015BEA0 = 0x80199318;
     D_8015BEA4 = 0x801998D0;
@@ -5161,7 +5161,7 @@ void date_fill_sections_shiori(void) {
 }
 
 void date_fill_sections_mio(void) {
-    D_8015BDC0 = 0x801986C8;
+    date_section_text = 0x801986C8;
     D_8015BDC4 = 0x80198D8C;
     D_8015BDC8 = 0x801991A0;
     D_8015BDCC = 0x801997D0;
@@ -5187,7 +5187,7 @@ void date_fill_sections_mio(void) {
     D_8015BE20 = 0x8019CB24;
     D_8015BE24 = 0x8019D03C;
     D_8015BE28 = 0x8019E3F4;
-    D_8015BE2C = 0x80198760;
+    date_section_command = 0x80198760;
     D_8015BE30 = 0x80198DBC;
     D_8015BE34 = 0x801991D0;
     D_8015BE38 = 0x80199838;
@@ -5213,7 +5213,7 @@ void date_fill_sections_mio(void) {
     D_8015BE8C = 0x8019CB50;
     D_8015BE90 = 0x8019D068;
     D_8015BE94 = 0x8019E414;
-    D_8015BE98 = 0x80198AF4;
+    date_section_voice = 0x80198AF4;
     D_8015BE9C = 0x80198EEC;
     D_8015BEA0 = 0x801992C8;
     D_8015BEA4 = 0x80199AB8;
@@ -5242,7 +5242,7 @@ void date_fill_sections_mio(void) {
 }
 
 void date_fill_sections_yuina(void) {
-    D_8015BDC0 = 0x8019863C;
+    date_section_text = 0x8019863C;
     D_8015BDC4 = 0x80198CE0;
     D_8015BDC8 = 0x80199074;
     D_8015BDCC = 0x801994E0;
@@ -5268,7 +5268,7 @@ void date_fill_sections_yuina(void) {
     D_8015BE20 = 0x8019C008;
     D_8015BE24 = 0x8019C4D8;
     D_8015BE28 = 0x8019D584;
-    D_8015BE2C = 0x801986D4;
+    date_section_command = 0x801986D4;
     D_8015BE30 = 0x80198D10;
     D_8015BE34 = 0x801990A4;
     D_8015BE38 = 0x80199528;
@@ -5294,7 +5294,7 @@ void date_fill_sections_yuina(void) {
     D_8015BE8C = 0x8019C030;
     D_8015BE90 = 0x8019C504;
     D_8015BE94 = 0x8019D5A4;
-    D_8015BE98 = 0x80198A68;
+    date_section_voice = 0x80198A68;
     D_8015BE9C = 0x80198E40;
     D_8015BEA0 = 0x80199180;
     D_8015BEA4 = 0x801996F0;

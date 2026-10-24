@@ -32,7 +32,7 @@ void func_8013AAEC(void) {
 s32 func_8013ABAC(void) {
     if (game_state.substep == 0) {
         dec_bg_reset();
-        func_800674B0();
+        hud_day_bgm_load();
         game_state.substep += 1;
     }
     if (game_state.substep == 1) {

@@ -110,10 +110,10 @@ void func_801465F8(void) {
     message_window_show();
     hizuke_show();
     parameter_show();
-    cursor_update();
+    hud_cursor_update();
     hud_icon_bar_update(1);
     if (game_state.weekday == WEEKDAY_SATURDAY) {
-        func_8006764C(0);
+        hud_mascot_display_switch(0);
     } else {
         hud_mascot_update();
     }
@@ -159,14 +159,14 @@ void func_801467C4(void) {
     sprite_tables_clear();
     actor_clear_upper();
     tpage_buf_clear();
-    func_8006509C();
+    hud_icon_bar_init();
     icon_disp_switch(1);
     schedule_command_icons_lock_to_record();
     for (var_s0 = 0; var_s0 != 14; var_s0++) {
         icon_can_use_set(var_s0, 0);
     }
-    func_800654D0(*(u8 *)&game_state.icon_count);
-    cursor_show(1);
+    hud_icon_layout_apply(*(u8 *)&game_state.icon_count);
+    hud_cursor_show(1);
     hizuke_init();
     parameter_show_init();
     parameter_show_init();
@@ -261,12 +261,12 @@ s32 func_80146B40(void) {
 s32 func_80146BC4(void) {
     switch (game_state.substep) {
     case 0:
-        cd_read_sectors(9U, 0x801E0000, *(s32 *)&D_80150720[-(func_80066A84() * 4)]);
+        cd_read_sectors(9U, 0x801E0000, *(s32 *)&D_80150720[-(hud_in_summer_months() * 4)]);
         game_state.substep = 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            addr_init_else_sd(1 - func_80066A84());
+            addr_init_else_sd(1 - hud_in_summer_months());
             mode_step_next();
         }
         break;
@@ -306,11 +306,11 @@ s32 func_80146D4C(void) {
     switch (g->weekday) {
     case WEEKDAY_MONDAY:
         main = g->param_liberal_arts.value;
-        bio = func_8006C334(0, 0, 1, 0x10);
+        bio = hud_biorhythm_value(0, 0, 1, 0x10);
         break;
     case WEEKDAY_TUESDAY:
         main = g->param_science.value;
-        bio = func_8006C334(0, 0, 1, 0x10);
+        bio = hud_biorhythm_value(0, 0, 1, 0x10);
         break;
     case WEEKDAY_WEDNESDAY:
         main = g->param_science.value * 7 / 10;
@@ -318,12 +318,12 @@ s32 func_80146D4C(void) {
         if (sub >= 0x27) {
             sub = 0x26;
         }
-        bio = func_8006C334(0, 1, 1, 0x10);
+        bio = hud_biorhythm_value(0, 1, 1, 0x10);
         break;
     case WEEKDAY_THURSDAY:
         sub = g->param_liberal_arts.value * 3 / 10;
         main = g->param_trivia.value * 7 / 10;
-        bio = func_8006C334(0, 0, 1, 0x10);
+        bio = hud_biorhythm_value(0, 0, 1, 0x10);
         if (sub >= 0x27) {
             sub = 0x26;
         }
@@ -331,7 +331,7 @@ s32 func_80146D4C(void) {
     case WEEKDAY_FRIDAY:
         main = g->param_art.value * 8 / 10;
         sub = g->param_trivia.value * 2 / 10;
-        bio = func_8006C334(0, 1, 0, 0x10);
+        bio = hud_biorhythm_value(0, 1, 0, 0x10);
         if (sub >= 0x1A) {
             sub = 0x19;
         }
@@ -768,7 +768,7 @@ void func_80147D74(void) {
         }
         k_sub_reset_point_set();
         k_sub_disp_start(0);
-        cursor_show(0);
+        hud_cursor_show(0);
         mode_step_next();
     }
     func_80148E98();
@@ -777,7 +777,7 @@ void func_80147D74(void) {
 
 void func_80147F0C(void) {
     if (((game_state.pad_pressed & PAD_CIRCLE) && (u32)game_state.mode_step_timer.w >= 0x101) || (game_state.pad_pressed & PAD_CROSS)) {
-        cursor_show(1);
+        hud_cursor_show(1);
         mode_stage_next();
     }
     func_80148E98();

@@ -8,34 +8,34 @@ extern u32 talk_work;
 typedef struct {
     void (*f[38])();
 } FnTbl38; /* size 0x98 */
-extern FnTbl38 D_80146ACC;
+extern FnTbl38 encounter_mira_scene_one_steps;
 
 typedef struct {
     void (*f[22])();
 } FnTbl22; /* size 0x58 */
-extern FnTbl22 D_80146B64;
+extern FnTbl22 encounter_mira_scene_eight_steps;
 
-void func_8013C980(void) {
-    D_80146AA0 = 0x801CE218;
-    D_80146AA4 = 0x801CE21C;
-    D_80146AA8 = 0x801CE25C;
-    D_80146AAC = *(s16 *)0x801CE27C;
-    D_80146AB0 = 0x801B0000;
-    D_80146AB4 = 0x801B2000;
-    D_80146AB8 = 0x801B6000;
-    D_80146ABC = 0x801BA000;
-    D_80146AC0 = 0x801BE000;
-    D_80146AC4 = 0x801C2000;
-    D_80146AC8 = 0x801C6000;
+void encounter_mira_assets_bind_1(void) {
+    encounter_mira_pack_1_animation_input_2 = 0x801CE218;
+    encounter_mira_pack_1_animation_input_0 = 0x801CE21C;
+    encounter_mira_pack_1_animation_input_1 = 0x801CE25C;
+    encounter_mira_pack_1_animation_input_3 = *(s16 *)0x801CE27C;
+    encounter_mira_pack_1_palette = 0x801B0000;
+    encounter_mira_pack_1_still_image_0 = 0x801B2000;
+    encounter_mira_pack_1_still_image_1 = 0x801B6000;
+    encounter_mira_pack_1_still_image_2 = 0x801BA000;
+    encounter_mira_pack_1_still_image_3 = 0x801BE000;
+    encounter_mira_pack_1_still_image_4 = 0x801C2000;
+    encounter_mira_pack_1_still_image_5 = 0x801C6000;
 }
 
-void func_8013CA30(void) {
+void encounter_mira_scene_select_1(void) {
     switch (talk_work) {
     case 1:
-        func_8013CA94();
+        encounter_mira_scene_one_dispatch();
         return;
     case 8:
-        func_8013CC60();
+        encounter_mira_scene_eight_dispatch();
         return;
     default:
         game_mode_reset_to_title();
@@ -43,30 +43,30 @@ void func_8013CA30(void) {
     }
 }
 
-void func_8013CA94(void) {
+void encounter_mira_scene_one_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013CAD0();
+        encounter_mira_scene_one_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013CAD0(void) {
+void encounter_mira_scene_one_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl38 tbl;
 
-    tbl = D_80146ACC;
+    tbl = encounter_mira_scene_one_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8013CB58(void) {
+void encounter_mira_assets_load_1(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8440);
-    func_8013C980();
+    encounter_mira_assets_bind_1();
     mode_step_next();
 }
 
-void func_8013CB90(void) {
+void encounter_mira_speaker_one_select(void) {
     D_800B5A60 = 1;
     game_state.current_girl = GIRL_SOTOI;
     strcpy(name_code_girl_short, "男子１");
@@ -74,14 +74,14 @@ void func_8013CB90(void) {
     mode_step_next();
 }
 
-void func_8013CBE4(void) {
+void encounter_mira_speaker_two_select(void) {
     strcpy(name_code_girl_short, "男子２");
     D_80120666 = 5;
     mode_step_next();
 }
 
 /* FAKE: scalar byte store followed by member read preserves argument/constant scheduling. T-9550 */
-void func_8013CC20(void) {
+void encounter_mira_speaker_restore(void) {
     D_800B5A60 = 0;
     *(u8 *)&game_state.current_girl = 7;
     talk_names_set(game_state.current_girl);
@@ -89,24 +89,24 @@ void func_8013CC20(void) {
     mode_step_next();
 }
 
-void func_8013CC60(void) {
+void encounter_mira_scene_eight_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013CC9C();
+        encounter_mira_scene_eight_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013CC9C(void) {
+void encounter_mira_scene_eight_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl22 tbl;
 
-    tbl = D_80146B64;
+    tbl = encounter_mira_scene_eight_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8013CD18(void) {
+void encounter_mira_scene_init_1(void) {
     s16 i;
 
     game_state.current_girl = GIRL_MIRA;
@@ -129,17 +129,17 @@ void func_8013CD18(void) {
         game_state.tpage_buf[i + 53] = 1;
     }
     addr_init_bustup(i, &game_state);
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145F38;
-    D_80146278 = D_80146074;
-    D_8014627C = D_801461B0;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_30;
+    encounter_scene_command_table = encounter_scene_command_section_30;
+    encounter_scene_voice_table = encounter_scene_voice_section_30;
     strcpy(D_800CA19C, "廊下");
     game_state.girls[7].affection += 1;
     check_para_limit();
@@ -147,15 +147,15 @@ void func_8013CD18(void) {
     mode_step_next();
 }
 
-void func_8013CE98(void) {
-    func_8013C980();
-    load_palette(D_80146AB0, 0x11, 1, 2, 0);
-    scene_still_show(D_80146AB4, D_80146AB8, D_80146ABC, D_80146AC0, D_80146AC4, D_80146AC8);
-    scene_anim_show(D_80146AA4, D_80146AA8, D_80146AA0, D_80146AAC);
+void encounter_mira_still_show_1(void) {
+    encounter_mira_assets_bind_1();
+    load_palette(encounter_mira_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_mira_pack_1_still_image_0, encounter_mira_pack_1_still_image_1, encounter_mira_pack_1_still_image_2, encounter_mira_pack_1_still_image_3, encounter_mira_pack_1_still_image_4, encounter_mira_pack_1_still_image_5);
+    scene_anim_show(encounter_mira_pack_1_animation_input_0, encounter_mira_pack_1_animation_input_1, encounter_mira_pack_1_animation_input_2, encounter_mira_pack_1_animation_input_3);
     mode_step_next();
 }
 
-void func_8013CF40(void) {
+void encounter_mira_scene_init_2(void) {
     game_state.current_girl = GIRL_MIRA;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -170,33 +170,33 @@ void func_8013CF40(void) {
     D_800CA150 = 8;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145F50;
-    D_80146278 = D_8014608C;
-    D_8014627C = D_801461C8;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_36;
+    encounter_scene_command_table = encounter_scene_command_section_36;
+    encounter_scene_voice_table = encounter_scene_voice_section_36;
     strcpy(D_800CA19C, "廊下");
     D_800CA368 = 0x35;
     mode_step_next();
 }
 
-void func_8013D06C(void) {
+void encounter_mira_bg_load_1(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }
 
-void func_8013D094(void) {
+void encounter_mira_bg_load_2(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }
 
-void func_8013D0BC(void) {
+void encounter_mira_bg_load_3(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }

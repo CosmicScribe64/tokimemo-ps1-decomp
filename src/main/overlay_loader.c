@@ -98,7 +98,7 @@ void func_80078A94(void) {
         n += 1;
     }
     if (D_8011ECD3 & 0x80) {
-        cursor_update();
+        hud_cursor_update();
         n += 1;
     }
     if (game_state.ovl_target_game_mode == GAME_MODE_TELEPHONE_PROFILE) {
@@ -109,7 +109,7 @@ void func_80078A94(void) {
         switch (D_800B6D30) {
         case 0:
             if (D_80122D44 & 1) {
-                sprite_light_effect_draw();
+                hud_sprite_light_effect_draw();
             }
             if (D_80122D44 & 2) {
                 message_window_title_update();
@@ -593,7 +593,7 @@ void func_80079800(void) {
         }
         break;
     case 2:
-        func_8005C4CC(0);
+        settings_save_load_layout_stash(0);
         memory_card_stop();
         if (gs->memory_card_result == 1) {
             if (func_80054AF4(0) == 1) {
@@ -621,7 +621,7 @@ void func_80079800(void) {
         } else {
             gs->substep += 1;
         }
-        func_8005C4CC(1);
+        settings_save_load_layout_stash(1);
         break;
     case 5:
         memory_card_start();

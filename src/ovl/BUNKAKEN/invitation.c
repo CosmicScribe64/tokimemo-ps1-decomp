@@ -80,7 +80,7 @@ void func_8013B510(void) {
     case 8:
         if (D_80122CDC != 0) {
             portrait_layout_set(D_80155F3C[D_80122EBC]);
-            func_80063668();
+            portrait_face_update();
             if (D_80122EBC == 0xB) {
                 D_80122EA4 = 0;
             } else {
@@ -144,7 +144,7 @@ void func_8013B510(void) {
     case 22:
         if (D_80122CDC != 0) {
             portrait_layout_set(3);
-            func_80063668();
+            portrait_face_update();
         }
         mode_step_next();
         break;
@@ -235,7 +235,7 @@ void func_8013B510(void) {
             } else {
                 portrait_layout_set(3);
             }
-            func_80063668();
+            portrait_face_update();
         }
         mode_step_next();
         break;

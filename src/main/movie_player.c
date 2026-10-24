@@ -344,12 +344,12 @@ void func_8005715C(s32 arg0) {
         k_disp_start(i + 1);
     }
     if (p >= &D_800B5904[4] && p < &D_800B5904[9]) {
-        func_8006C760(0);
+        hud_corner_icon_set(0);
     } else {
-        func_8006C760(1);
+        hud_corner_icon_set(1);
     }
     if (p >= &D_800B5904[21]) {
-        func_8006C760(0);
+        hud_corner_icon_set(0);
         func_800570B8(0, 1);
         text_system_reset();
         return;

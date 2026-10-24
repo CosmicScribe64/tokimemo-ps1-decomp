@@ -42,7 +42,7 @@ void func_8013CCD0(void) {
     D_8012067A = -0x1B;
     D_801230D4 = set_kanji_string(-0x80, -0x62, 4, "女の子からの評価", 0);
     idx = 0x61;
-    func_80053418(rank, points);
+    girl_scores(rank, points);
     for (i = 0; i != 11; i++) {
         game_state.girls[0xF].scene_counters[i] = 0;
         if (game_state.girls[i].flags.f.met) {
@@ -365,10 +365,10 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         }
         for (i = 6; i < 10; i++) {
             if (i == 6) {
-                if (func_80066B40(arg2, arg3) == 1) {
+                if (hud_vacation_for_date(arg2, arg3) == 1) {
                     set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, place_name_table[16], 0);
                     avail[i] = 0x74;
-                } else if (func_80066B40(arg2, arg3) == 2) {
+                } else if (hud_vacation_for_date(arg2, arg3) == 2) {
                     set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, place_name_table[19], 0);
                     avail[i] = 0x74;
                 } else {
@@ -376,10 +376,10 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                 }
             }
             if (i == 7) {
-                if (func_80066B40(arg2, arg3) == 2) {
+                if (hud_vacation_for_date(arg2, arg3) == 2) {
                     set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, place_name_table[20], 0);
                     avail[i] = 0x74;
-                } else if (func_80066B40(arg2, arg3) == 1) {
+                } else if (hud_vacation_for_date(arg2, arg3) == 1) {
                     set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, place_name_table[17], 0);
                     avail[i] = 0x74;
                 } else {

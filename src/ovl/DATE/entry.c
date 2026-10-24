@@ -3,7 +3,7 @@
 #include "ovl/DATE.h"
 
 void date_fill_sections_ayako(void) {
-    D_8015BDC0 = 0x8019864C;
+    date_section_text = 0x8019864C;
     D_8015BDC4 = 0x80198CFC;
     D_8015BDC8 = 0x801990B4;
     D_8015BDCC = 0x8019954C;
@@ -29,7 +29,7 @@ void date_fill_sections_ayako(void) {
     D_8015BE20 = 0x8019C3B4;
     D_8015BE24 = 0x8019C878;
     D_8015BE28 = 0x8019DAE8;
-    D_8015BE2C = 0x801986E4;
+    date_section_command = 0x801986E4;
     D_8015BE30 = 0x80198D2C;
     D_8015BE34 = 0x801990E4;
     D_8015BE38 = 0x80199594;
@@ -55,7 +55,7 @@ void date_fill_sections_ayako(void) {
     D_8015BE8C = 0x8019C3DC;
     D_8015BE90 = 0x8019C8A4;
     D_8015BE94 = 0x8019DB08;
-    D_8015BE98 = 0x80198A78;
+    date_section_voice = 0x80198A78;
     D_8015BE9C = 0x80198E5C;
     D_8015BEA0 = 0x801991DC;
     D_8015BEA4 = 0x8019975C;
@@ -84,7 +84,7 @@ void date_fill_sections_ayako(void) {
 }
 
 void date_fill_sections_saki(void) {
-    D_8015BDC0 = 0x801986B4;
+    date_section_text = 0x801986B4;
     D_8015BDC4 = 0x80198D60;
     D_8015BDC8 = 0x80199124;
     D_8015BDCC = 0x801995D8;
@@ -111,7 +111,7 @@ void date_fill_sections_saki(void) {
     D_8015BE20 = 0x8019C374;
     D_8015BE24 = 0x8019C864;
     D_8015BE28 = 0x8019DA88;
-    D_8015BE2C = 0x8019874C;
+    date_section_command = 0x8019874C;
     D_8015BE30 = 0x80198D90;
     D_8015BE34 = 0x80199154;
     D_8015BE38 = 0x80199620;
@@ -138,7 +138,7 @@ void date_fill_sections_saki(void) {
     D_8015BE8C = 0x8019C39C;
     D_8015BE90 = 0x8019C890;
     D_8015BE94 = 0x8019DAA8;
-    D_8015BE98 = 0x80198AE0;
+    date_section_voice = 0x80198AE0;
     D_8015BE9C = 0x80198EC0;
     D_8015BEA0 = 0x8019924C;
     D_8015BEA4 = 0x801997E8;
@@ -168,7 +168,7 @@ void date_fill_sections_saki(void) {
 }
 
 void date_fill_sections_yukari(void) {
-    D_8015BDC0 = 0x80198658;
+    date_section_text = 0x80198658;
     D_8015BDC4 = 0x80198D1C;
     D_8015BDC8 = 0x801990D4;
     D_8015BDCC = 0x80199578;
@@ -195,7 +195,7 @@ void date_fill_sections_yukari(void) {
     D_8015BE20 = 0x8019C5CC;
     D_8015BE24 = 0x8019CAC8;
     D_8015BE28 = 0x8019DD74;
-    D_8015BE2C = 0x801986F0;
+    date_section_command = 0x801986F0;
     D_8015BE30 = 0x80198D4C;
     D_8015BE34 = 0x80199104;
     D_8015BE38 = 0x801995C0;
@@ -222,7 +222,7 @@ void date_fill_sections_yukari(void) {
     D_8015BE8C = 0x8019C5F4;
     D_8015BE90 = 0x8019CAF8;
     D_8015BE94 = 0x8019DD94;
-    D_8015BE98 = 0x80198A84;
+    date_section_voice = 0x80198A84;
     D_8015BE9C = 0x80198E7C;
     D_8015BEA0 = 0x801991FC;
     D_8015BEA4 = 0x80199788;
@@ -252,7 +252,7 @@ void date_fill_sections_yukari(void) {
 }
 
 void date_fill_sections_nozomi(void) {
-    D_8015BDC0 = 0x801984E4;
+    date_section_text = 0x801984E4;
     D_8015BDC4 = 0x80198B4C;
     D_8015BDC8 = 0x80198EAC;
     D_8015BDCC = 0x80199304;
@@ -279,7 +279,7 @@ void date_fill_sections_nozomi(void) {
     D_8015BE20 = 0x8019C08C;
     D_8015BE24 = 0x8019C508;
     D_8015BE28 = 0x8019D5CC;
-    D_8015BE2C = 0x8019857C;
+    date_section_command = 0x8019857C;
     D_8015BE30 = 0x80198B7C;
     D_8015BE34 = 0x80198EDC;
     D_8015BE38 = 0x8019934C;
@@ -306,7 +306,7 @@ void date_fill_sections_nozomi(void) {
     D_8015BE8C = 0x8019C0B4;
     D_8015BE90 = 0x8019C534;
     D_8015BE94 = 0x8019D5EC;
-    D_8015BE98 = 0x80198910;
+    date_section_voice = 0x80198910;
     D_8015BE9C = 0x80198CAC;
     D_8015BEA0 = 0x80198FD4;
     D_8015BEA4 = 0x80199514;
@@ -336,7 +336,7 @@ void date_fill_sections_nozomi(void) {
 }
 
 void date_fill_sections_mira(void) {
-    D_8015BDC0 = 0x801987B0;
+    date_section_text = 0x801987B0;
     D_8015BDC4 = 0x80198F70;
     D_8015BDC8 = 0x801992FC;
     D_8015BDCC = 0x80199794;
@@ -363,7 +363,7 @@ void date_fill_sections_mira(void) {
     D_8015BE20 = 0x8019CA7C;
     D_8015BE24 = 0x8019CF40;
     D_8015BE28 = 0x8019E180;
-    D_8015BE2C = 0x80198868;
+    date_section_command = 0x80198868;
     D_8015BE30 = 0x80198FA0;
     D_8015BE34 = 0x8019932C;
     D_8015BE38 = 0x801997DC;
@@ -390,7 +390,7 @@ void date_fill_sections_mira(void) {
     D_8015BE8C = 0x8019CAA4;
     D_8015BE90 = 0x8019CF6C;
     D_8015BE94 = 0x8019E1A0;
-    D_8015BE98 = 0x80198C7C;
+    date_section_voice = 0x80198C7C;
     D_8015BE9C = 0x801990D0;
     D_8015BEA0 = 0x80199424;
     D_8015BEA4 = 0x801999A4;
@@ -420,7 +420,7 @@ void date_fill_sections_mira(void) {
 }
 
 void date_fill_sections_yuko(void) {
-    D_8015BDC0 = 0x80198548;
+    date_section_text = 0x80198548;
     D_8015BDC4 = 0x80198BB0;
     D_8015BDC8 = 0x80198F58;
     D_8015BDCC = 0x8019939C;
@@ -447,7 +447,7 @@ void date_fill_sections_yuko(void) {
     D_8015BE20 = 0x8019BF1C;
     D_8015BE24 = 0x8019C418;
     D_8015BE28 = 0x8019D58C;
-    D_8015BE2C = 0x801985E0;
+    date_section_command = 0x801985E0;
     D_8015BE30 = 0x80198BE0;
     D_8015BE34 = 0x80198F88;
     D_8015BE38 = 0x801993E4;
@@ -474,7 +474,7 @@ void date_fill_sections_yuko(void) {
     D_8015BE8C = 0x8019BF44;
     D_8015BE90 = 0x8019C444;
     D_8015BE94 = 0x8019D5AC;
-    D_8015BE98 = 0x80198974;
+    date_section_voice = 0x80198974;
     D_8015BE9C = 0x80198D10;
     D_8015BEA0 = 0x80199080;
     D_8015BEA4 = 0x801995AC;
@@ -504,7 +504,7 @@ void date_fill_sections_yuko(void) {
 }
 
 void date_fill_sections_megumi(void) {
-    D_8015BDC0 = 0x8019867C;
+    date_section_text = 0x8019867C;
     D_8015BDC4 = 0x80198CF0;
     D_8015BDC8 = 0x8019909C;
     D_8015BDCC = 0x801994D8;
@@ -530,7 +530,7 @@ void date_fill_sections_megumi(void) {
     D_8015BE20 = 0x8019C49C;
     D_8015BE24 = 0x8019C8FC;
     D_8015BE28 = 0x8019DB48;
-    D_8015BE2C = 0x80198714;
+    date_section_command = 0x80198714;
     D_8015BE30 = 0x80198D20;
     D_8015BE34 = 0x801990CC;
     D_8015BE38 = 0x80199520;
@@ -556,7 +556,7 @@ void date_fill_sections_megumi(void) {
     D_8015BE8C = 0x8019C4C4;
     D_8015BE90 = 0x8019C928;
     D_8015BE94 = 0x8019DB68;
-    D_8015BE98 = 0x80198AA8;
+    date_section_voice = 0x80198AA8;
     D_8015BE9C = 0x80198E50;
     D_8015BEA0 = 0x801991C4;
     D_8015BEA4 = 0x801996E8;
@@ -585,7 +585,7 @@ void date_fill_sections_megumi(void) {
 }
 
 void date_fill_sections_yumi(void) {
-    D_8015BDC0 = 0x8019868C;
+    date_section_text = 0x8019868C;
     D_8015BDC4 = 0x80198D9C;
     D_8015BDC8 = 0x80199134;
     D_8015BDCC = 0x801995C8;
@@ -612,7 +612,7 @@ void date_fill_sections_yumi(void) {
     D_8015BE20 = 0x8019C0D8;
     D_8015BE24 = 0x8019C518;
     D_8015BE28 = 0x8019D834;
-    D_8015BE2C = 0x8019872C;
+    date_section_command = 0x8019872C;
     D_8015BE30 = 0x80198DD4;
     D_8015BE34 = 0x80199164;
     D_8015BE38 = 0x80199610;
@@ -639,7 +639,7 @@ void date_fill_sections_yumi(void) {
     D_8015BE8C = 0x8019C100;
     D_8015BE90 = 0x8019C544;
     D_8015BE94 = 0x8019D854;
-    D_8015BE98 = 0x80198AE0;
+    date_section_voice = 0x80198AE0;
     D_8015BE9C = 0x80198F24;
     D_8015BEA0 = 0x8019925C;
     D_8015BEA4 = 0x801997D8;
@@ -668,7 +668,7 @@ void date_fill_sections_yumi(void) {
     D_8015BF00 = 0x8019D928;
 }
 
-void func_80144720(void) {
+void date_init(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -693,9 +693,9 @@ void func_80144720(void) {
     if (!(game_state.frame_count & 3) && (game_state.date_girl != GIRL_YUINA)) {
         date_arrival = 0;
     }
-    D_8015BF4C = 0;
-    D_8015BF3C = 0;
-    D_8015BF40 = 0;
+    date_player_waited = 0;
+    date_meeting_group = 0;
+    date_meeting_line = 0;
     D_800CA364 = 0;
     game_state.current_girl = game_state.date_girl;
     talk_names_set(game_state.date_girl);
@@ -705,26 +705,26 @@ void func_80144720(void) {
     sprite_quads[0].flags |= 0x81000000;
     sprite_quads[1].flags |= 0x81000000;
     text_marker_hide();
-    D_8015BF44 = 1;
+    date_girl_side_next = 1;
     D_80122CE0 = 0;
     D_80122D4C = 0;
     mode_step_next();
 }
 
-void func_801448D4(void) {
+void date_mode_handler(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
     case 0:
-        func_801449D4();
+        date_mode_stage_arrival();
         break;
     case 1:
-        func_80144E20();
+        date_mode_stage_place();
         break;
     case 2:
-        func_80149584();
+        date_mode_stage_girl_birthday();
         break;
     case 3:
-        func_80145D14();
+        date_mode_stage_player_birthday();
         break;
     default:
         game_mode_reset_to_title();
@@ -742,75 +742,75 @@ void func_801448D4(void) {
     draw_shake_update();
 }
 
-void func_801449D4(void) {
+void date_mode_stage_arrival(void) {
     /* FAKE: register avoids g's home word; three pads retain table +0x2C. T-24113 */
     register GameState *g = &game_state;
     s32 pad0, pad1, pad2; /* FAKE: unused words give the frame of the original; real source unknown. T-24113 */
     u8 sel; /* FAKE: copy of D_800CA2F8 reproduces the hoisted lbu; real source unknown. T-24113 */
     FnTbl76 tbl;
 
-    tbl = D_8015BF50;
-    if (&func_80133DE8 == tbl.f[g->mode_step]) {
+    tbl = date_mode_stage_arrival_steps;
+    if (&date_place_setup_neighborhood_park == tbl.f[g->mode_step]) {
         switch (D_800CA2F8) {
         case 1:
-            tbl.f[g->mode_step] = func_80133EA0;
+            tbl.f[g->mode_step] = date_place_setup_central_park;
             break;
         case 2:
-            tbl.f[g->mode_step] = func_80135B4C;
+            tbl.f[g->mode_step] = date_place_setup_shopping_street;
             break;
         case 3:
-            tbl.f[g->mode_step] = func_8013426C;
+            tbl.f[g->mode_step] = date_place_setup_aquarium;
             break;
         case 4:
-            tbl.f[g->mode_step] = func_801344C8;
+            tbl.f[g->mode_step] = date_place_setup_zoo;
             break;
         case 5:
-            tbl.f[g->mode_step] = func_801347B8;
+            tbl.f[g->mode_step] = date_place_setup_botanical_garden;
             break;
         case 6:
-            tbl.f[g->mode_step] = func_801349A0;
+            tbl.f[g->mode_step] = date_place_setup_planetarium;
             break;
         case 7:
-            tbl.f[g->mode_step] = func_80134C64;
+            tbl.f[g->mode_step] = date_place_setup_art_museum;
             break;
         case 8:
-            tbl.f[g->mode_step] = func_8013518C;
+            tbl.f[g->mode_step] = date_place_setup_library;
             break;
         case 9:
-            tbl.f[g->mode_step] = func_801353F8;
+            tbl.f[g->mode_step] = date_place_setup_game_center;
             break;
         case 10:
-            tbl.f[g->mode_step] = func_80135620;
+            tbl.f[g->mode_step] = date_place_setup_bowling_alley;
             break;
         case 11:
-            tbl.f[g->mode_step] = func_80135804;
+            tbl.f[g->mode_step] = date_place_setup_karaoke;
             break;
         case 12:
-            tbl.f[g->mode_step] = func_80135A34;
+            tbl.f[g->mode_step] = date_place_setup_amusement_park;
             break;
         case 13:
-            tbl.f[g->mode_step] = func_80135C14;
+            tbl.f[g->mode_step] = date_place_setup_stadium;
             break;
         case 14:
-            tbl.f[g->mode_step] = func_80135E7C;
+            tbl.f[g->mode_step] = date_place_setup_movie_theater;
             break;
         case 15:
-            tbl.f[g->mode_step] = func_80136340;
+            tbl.f[g->mode_step] = date_place_setup_concert_hall;
             break;
         case 16:
-            tbl.f[g->mode_step] = func_801366A4;
+            tbl.f[g->mode_step] = date_place_setup_pool;
             break;
         case 17:
-            tbl.f[g->mode_step] = func_80136870;
+            tbl.f[g->mode_step] = date_place_setup_sea;
             break;
         case 18:
-            tbl.f[g->mode_step] = func_80136A74;
+            tbl.f[g->mode_step] = date_place_setup_shrine;
             break;
         case 19:
-            tbl.f[g->mode_step] = func_80136B70;
+            tbl.f[g->mode_step] = date_place_setup_skating_rink;
             break;
         case 20:
-            tbl.f[g->mode_step] = func_80136D3C;
+            tbl.f[g->mode_step] = date_place_setup_ski_resort;
             break;
         default:
             break;
@@ -820,21 +820,21 @@ void func_801449D4(void) {
     if (g->mode_step != 0) {
         if (((g->year == 0x5F) && (g->month == 7) && (g->day == 0x17)) || ((g->year == 0x60) && (g->month == 7) && (g->day == 0x1C)) || ((g->year == 0x61) && (g->month == 7) && (g->day == 0x1B))) {
             if (dec_bg_brightness == 0x80) {
-                sprite_light_effect_draw();
+                hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
             }
         } else if ((sel == 0x11) && (dec_bg_brightness == 0x80) && (g->mode_step != 0x14) && (g->mode_step != 0x15)) {
-            sprite_light_effect_draw();
+            hud_sprite_light_effect_draw();
             D_80122D44 = 1;
         } else {
             if ((sel == 0x10) && (dec_bg_brightness == 0x80) && (g->mode_step != 0x14) && (g->mode_step != 0x15)) {
-                sprite_light_effect_draw();
+                hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
             } else if ((g->mode_step == 0x14) && (game_state.appointment_place_0 == 0x11)) {
-                sprite_light_effect_draw();
+                hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
             } else if ((g->mode_step == 0x14) && (game_state.appointment_place_0 == 0x10)) {
-                sprite_light_effect_draw();
+                hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
             }
         }
@@ -848,7 +848,7 @@ void func_801449D4(void) {
 
 /* FAKE: selector byte uses neighboring s16 symbol D_800CA2E8 + 0x10
  * (0x800CA2F8) to preserve comparison ordering. Aggregate ownership unknown. */
-void func_80144E20(void) {
+void date_mode_stage_place(void) {
     GameState *g = &game_state; /* FAKE: its home word is the 4 bytes above the tables (frame 0xE38); real source unknown. T-24011 */
     FnTbl18 spDEC;
     FnTbl35 spD60;
@@ -876,27 +876,27 @@ void func_80144E20(void) {
      * this byte after base preserves all 21 table offsets and frame. T-24051 */
     u8 comparison;
 
-    spDEC = D_8015C080;
-    spD60 = D_8015C0C8;
-    spCA0 = D_8015C154;
-    spC20 = D_8015C214;
-    spB94 = D_8015C294;
-    spB0C = D_8015C320;
-    spA7C = D_8015C3A8;
-    sp9E8 = D_8015C438;
-    sp920 = D_8015C4CC;
-    sp884 = D_8015C594;
-    sp804 = D_8015C630;
-    sp77C = D_8015C6B0;
-    sp5DC = D_8015C738;
-    sp568 = D_8015C8D8;
-    sp4B4 = D_8015C94C;
-    sp410 = D_8015CA00;
-    sp384 = D_8015CAA4;
-    sp254 = D_8015CB30;
-    sp12C = D_8015CC60;
-    spB0 = D_8015CD88;
-    sp34 = D_8015CE04;
+    spDEC = date_neighborhood_park_steps;
+    spD60 = date_central_park_steps;
+    spCA0 = date_shopping_street_steps;
+    spC20 = date_aquarium_steps;
+    spB94 = date_zoo_steps;
+    spB0C = date_botanical_garden_steps;
+    spA7C = date_planetarium_steps;
+    sp9E8 = date_art_museum_steps;
+    sp920 = date_library_steps;
+    sp884 = date_game_center_steps;
+    sp804 = date_bowling_alley_steps;
+    sp77C = date_karaoke_steps;
+    sp5DC = date_amusement_park_steps;
+    sp568 = date_stadium_steps;
+    sp4B4 = date_movie_theater_steps;
+    sp410 = date_concert_hall_steps;
+    sp384 = date_pool_steps;
+    sp254 = date_sea_steps;
+    sp12C = date_shrine_steps;
+    spB0 = date_skating_rink_steps;
+    sp34 = date_ski_resort_steps;
     switch (((u8 *)&D_800CA2E8)[0x10]) {
     case 0:
         base = spDEC.f;
@@ -967,67 +967,67 @@ void func_80144E20(void) {
     }
     if (&normal_date_move_place == base[g->mode_step]) {
         if (g->substep == 0) {
-            D_8015BF48 = *(u8 *)&D_8015BF44;
+            date_girl_side = *(u8 *)&date_girl_side_next;
         }
         if ((((u8 *)&D_800CA2E8)[0x10] != (comparison = 1)) && (((u8 *)&D_800CA2E8)[0x10] != 4) && (((u8 *)&D_800CA2E8)[0x10] != 0xC)) {
-            if (((g->substep == 0) && (D_8015BF48 == (comparison = 1))) || ((g->substep == 0xE) && (D_8015BF48 == 0))) {
-                D_8015BF44 = 1 - D_8015BF48;
+            if (((g->substep == 0) && (date_girl_side == (comparison = 1))) || ((g->substep == 0xE) && (date_girl_side == 0))) {
+                date_girl_side_next = 1 - date_girl_side;
             }
         }
         g->substep += 1;
     }
-    if ((((g->year == 0x5F) && (g->month == 7) && (g->day == 0x17)) || ((g->year == 0x60) && (g->month == 7) && (g->day == 0x1C)) || ((g->year == 0x61) && (g->month == 7) && (g->day == 0x1B))) && (dec_bg_brightness == (comparison = 0x80)) && (*(u8 *)&D_8015BF44 != 0) && (func_80146224 != base[g->mode_step])) {
-    sprite_light_effect_draw();
+    if ((((g->year == 0x5F) && (g->month == 7) && (g->day == 0x17)) || ((g->year == 0x60) && (g->month == 7) && (g->day == 0x1C)) || ((g->year == 0x61) && (g->month == 7) && (g->day == 0x1B))) && (dec_bg_brightness == (comparison = 0x80)) && (*(u8 *)&date_girl_side_next != 0) && (date_ride_dispatch != base[g->mode_step])) {
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 1)) && (D_800CA2FC == 0) && (g->mode_step >= 0xC) && (g->mode_step < 0x15) && (g->month >= 3) && (g->month < 9) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == 0x14) && (g->mode_step >= 7) && (g->mode_step < 0x11) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step < 8) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step >= 9) && (g->mode_step < 0x1E) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step >= 0x1F) && (g->mode_step < 0x2C) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step >= 0x2D) && (g->mode_step < 0x31) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step >= 0x3E) && (g->mode_step < 0x49) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->mode_step < 8) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->mode_step >= 9) && (g->mode_step < 0x13) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->mode_step >= 0x14) && (g->mode_step < 0x22) && (dec_bg_brightness == (comparison = 0x80))) {
-    sprite_light_effect_draw();
+    hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     }
     base[g->mode_step](0x80);
     if ((((u8 *)&D_800CA2E8)[0x10] == 0xC) && (g->mode_step >= 0x45) && (g->mode_step < 0x5B) && (D_80122D34 != 0)) {
         D_80120653 |= 0x80;
-        func_80140D38();
+        date_parade_sign_palette_cycle();
     } else if ((((u8 *)&D_800CA2E8)[0x10] == 0xC) && (g->mode_step >= 0x5B)) {
         D_80120653 &= 0x7F;
     }
     if (D_80122D14 != 0) {
-        func_8013FD6C();
+        date_shrine_fireworks_update();
     }
     if ((((u8 *)&D_800CA2E8)[0x10] == 1) && (g->mode_step >= 0xC)) {
         if (g->mode_step < 0x15) {
-            func_801407D0();
+            date_central_park_particles_update();
         }
     }
     if (((u8 *)&D_800CA2E8)[0x10] == 1) {
         if (g->mode_step == 0x15) {
-            func_80140788();
+            date_central_park_particles_hide();
         }
     }
     if ((((u8 *)&D_800CA2E8)[0x10] == 0xB) && (g->mode_step < 9) && (D_800B3CFC == 1) && (D_800CA2FC != 2)) {

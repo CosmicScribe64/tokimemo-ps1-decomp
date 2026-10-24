@@ -42,7 +42,7 @@ s32 func_80133980(void) {
         sprite_tables_clear();
         func_80143E80();
         back_clear_switch(1);
-        cursor_show(0);
+        hud_cursor_show(0);
         text_system_reset();
         actor_clear_range(0);
         func_80143AF4();

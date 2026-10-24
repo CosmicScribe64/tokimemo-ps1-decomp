@@ -10,7 +10,7 @@ void func_8013B5B0(void) {
         func_8013BEA8();
     }
     if (game_state.mode_stage != 9 && !(game_state.menu_mode & 1)) {
-        cursor_update();
+        hud_cursor_update();
     }
     if (game_state.mode_stage >= 5 && game_state.mode_stage < 0xC) {
         prim_gradient_rect(-0xA0, 0x30, 8, 0x48, 2, 0, 1);
@@ -78,7 +78,7 @@ void func_8013B5B0(void) {
         mode_stage_next();
         break;
     case 13:
-        func_800674B0();
+        hud_day_bgm_load();
         mode_stage_next();
         break;
     case 14:
@@ -96,10 +96,10 @@ void func_8013B5B0(void) {
         break;
     }
     if (!(game_state.menu_mode & 1)) {
-        cursor_show(1);
+        hud_cursor_show(1);
         return;
     }
-    cursor_show(0);
+    hud_cursor_show(0);
 }
 
 s32 func_8013B910(void) {

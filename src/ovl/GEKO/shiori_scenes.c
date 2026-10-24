@@ -9,53 +9,53 @@ extern u32 talk_work;
 typedef struct {
     void (*f[55])();
 } FnTbl55; /* size 0xDC */
-extern FnTbl55 D_80146518;
+extern FnTbl55 encounter_shiori_scene_eight_steps;
 
 typedef struct {
     void (*f[39])();
 } FnTbl39; /* size 0x9C */
-extern FnTbl39 D_80146420;
+extern FnTbl39 encounter_shiori_scene_one_steps;
 
-void func_80139910(void) {
-    D_80146380 = 0x801D6394;
-    D_80146384 = 0x801D639C;
-    D_80146388 = 0x801D63BC;
-    D_8014638C = *(s16 *)0x801D63D0;
-    D_80146390 = 0x801B0000;
-    D_80146394 = 0x801D6000;
-    D_80146398 = 0x801B2000;
-    D_8014639C = 0x801B6000;
-    D_801463A0 = 0x801BA000;
-    D_801463A4 = 0x801BE000;
-    D_801463A8 = 0x801C2000;
-    D_801463AC = 0x801C6000;
+void encounter_shiori_assets_bind_1(void) {
+    encounter_shiori_pack_1_animation_input_2 = 0x801D6394;
+    encounter_shiori_pack_1_animation_input_0 = 0x801D639C;
+    encounter_shiori_pack_1_animation_input_1 = 0x801D63BC;
+    encounter_shiori_pack_1_animation_input_3 = *(s16 *)0x801D63D0;
+    encounter_shiori_pack_1_palette = 0x801B0000;
+    encounter_falling_quad_palette = 0x801D6000;
+    encounter_shiori_pack_1_still_image_0 = 0x801B2000;
+    encounter_shiori_pack_1_still_image_1 = 0x801B6000;
+    encounter_shiori_pack_1_still_image_2 = 0x801BA000;
+    encounter_shiori_pack_1_still_image_3 = 0x801BE000;
+    encounter_shiori_pack_1_still_image_4 = 0x801C2000;
+    encounter_shiori_pack_1_still_image_5 = 0x801C6000;
     D_801463B0 = 0x801D2000;
 }
 
-void func_801399DC(void) {
-    D_801463B4 = 0x801D22D0;
-    D_801463B8 = 0x801D22D8;
-    D_801463BC = 0x801D233C;
-    D_801463C0 = *(s16 *)0x801D2358;
-    D_801463C4 = 0x801B0000;
-    D_801463C8 = 0x801B2000;
-    D_801463CC = 0x801B6000;
-    D_801463D0 = 0x801BA000;
-    D_801463D4 = 0x801BE000;
-    D_801463D8 = 0x801C2000;
-    D_801463DC = 0x801C6000;
+void encounter_shiori_assets_bind_2(void) {
+    encounter_shiori_pack_2_animation_input_2 = 0x801D22D0;
+    encounter_shiori_pack_2_animation_input_0 = 0x801D22D8;
+    encounter_shiori_pack_2_animation_input_1 = 0x801D233C;
+    encounter_shiori_pack_2_animation_input_3 = *(s16 *)0x801D2358;
+    encounter_shiori_pack_2_palette = 0x801B0000;
+    encounter_shiori_pack_2_still_image_0 = 0x801B2000;
+    encounter_shiori_pack_2_still_image_1 = 0x801B6000;
+    encounter_shiori_pack_2_still_image_2 = 0x801BA000;
+    encounter_shiori_pack_2_still_image_3 = 0x801BE000;
+    encounter_shiori_pack_2_still_image_4 = 0x801C2000;
+    encounter_shiori_pack_2_still_image_5 = 0x801C6000;
 }
 
-void func_80139A8C(void) {
+void encounter_shiori_scene_select_1(void) {
     switch (talk_work) {
     case 1:
-        func_80139B08();
+        encounter_shiori_scene_one_dispatch();
         return;
     case 2:
-        func_8013A144();
+        encounter_shiori_scene_two_dispatch();
         return;
     case 8:
-        func_8013A230();
+        encounter_shiori_scene_eight_dispatch();
         return;
     default:
         game_mode_reset_to_title();
@@ -63,43 +63,43 @@ void func_80139A8C(void) {
     }
 }
 
-void func_80139B08(void) {
+void encounter_shiori_scene_one_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_80139B44();
+        encounter_shiori_scene_one_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_80139B44(void) {
+void encounter_shiori_scene_one_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl39 tbl;
 
-    tbl = D_80146420;
+    tbl = encounter_shiori_scene_one_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
-    func_80139E1C();
+    encounter_shiori_falling_quads_update();
 }
 
-void func_80139BC0(void) {
+void encounter_shiori_audio_command_1(void) {
     audio_command(0x505);
     audio_command(0x506);
     mode_step_next();
 }
 
-void func_80139BF0(void) {
+void encounter_shiori_extra_image_load(void) {
     LoadSquare(0x140, 0, 0x40, 0x80, D_801463B0);
     game_state.tpage_buf[5] = 1;
     mode_step_next();
 }
 
-void func_80139C38(void) {
+void encounter_shiori_assets_load_1(void) {
     cd_read_sectors(0x4D, 0x801B0000, 0x7F14);
-    func_80139910();
+    encounter_shiori_assets_bind_1();
     mode_step_next();
 }
 
-void func_80139C70(void) {
+void encounter_shiori_still_fade_out(void) {
     s16 i;
     u8 state;
     u8 colour;
@@ -121,7 +121,7 @@ void func_80139C70(void) {
     }
 }
 
-void func_80139D54(void) {
+void encounter_shiori_still_fade_in(void) {
     s16 i;
     u8 colour;
 
@@ -140,16 +140,16 @@ void func_80139D54(void) {
 }
 
 /* FAKE: s32 return type without a return statement keeps $v0 live so as1 fills the beqz delay slot from the target block. T-24081 */
-s32 func_80139E1C(void) {
+s32 encounter_shiori_falling_quads_update(void) {
     s16 i;
 
     for (i = 4; i < 0x13; i++) {
         sprite_quads[i].y += 0xA;
-        if (((rand() & 3) == 0 && sprite_quads[i].y >= 0x11 && D_801463E0[i - 4] == 0 && D_80146400[i - 4] == 0) ||
-            D_801463E0[i - 4] != 0 || D_80146400[i - 4] != 0) {
+        if (((rand() & 3) == 0 && sprite_quads[i].y >= 0x11 && encounter_falling_quad_phases[i - 4] == 0 && encounter_falling_quad_delays[i - 4] == 0) ||
+            encounter_falling_quad_phases[i - 4] != 0 || encounter_falling_quad_delays[i - 4] != 0) {
             sprite_quads[i].y -= 0xA;
-            if (D_801463E0[i - 4] == 0) {
-                if (D_80146400[i - 4] == 0) {
+            if (encounter_falling_quad_phases[i - 4] == 0) {
+                if (encounter_falling_quad_delays[i - 4] == 0) {
                     if (sprite_quads[i].x < -0x57) {
                         sprite_quads[i].y = rand() % 4 + 0x1C;
                     } else {
@@ -160,12 +160,12 @@ s32 func_80139E1C(void) {
                     *(s8 *)&sprite_quads[i].unk_0E = 8;
                     sprite_quads[i].w = 0x18;
                     *(s16 *)&sprite_quads[i].h = 8;
-                    D_80146400[i - 4] += 1;
+                    encounter_falling_quad_delays[i - 4] += 1;
                 } else {
-                    D_80146400[i - 4] = 0;
-                    D_801463E0[i - 4] += 1;
+                    encounter_falling_quad_delays[i - 4] = 0;
+                    encounter_falling_quad_phases[i - 4] += 1;
                 }
-            } else if (D_801463E0[i - 4] == 5) {
+            } else if (encounter_falling_quad_phases[i - 4] == 5) {
                 sprite_quads[i].unk_0E = 0;
                 sprite_quads[i].w = 8;
                 *(s16 *)&sprite_quads[i].h = 0x18;
@@ -174,26 +174,26 @@ s32 func_80139E1C(void) {
                     sprite_quads[i].x += 0x99;
                 }
                 sprite_quads[i].y = -0x5F;
-                D_801463E0[i - 4] = 0;
-                D_80146400[i - 4] = 0;
-            } else if (D_801463E0[i - 4] == 4) {
-                if (D_80146400[i - 4] == 0) {
+                encounter_falling_quad_phases[i - 4] = 0;
+                encounter_falling_quad_delays[i - 4] = 0;
+            } else if (encounter_falling_quad_phases[i - 4] == 4) {
+                if (encounter_falling_quad_delays[i - 4] == 0) {
                     sprite_quads[i].unk_0E -= 0x18;
-                    D_80146400[i - 4] += 1;
+                    encounter_falling_quad_delays[i - 4] += 1;
                 } else {
-                    D_80146400[i - 4] = 0;
-                    D_801463E0[i - 4] += 1;
+                    encounter_falling_quad_delays[i - 4] = 0;
+                    encounter_falling_quad_phases[i - 4] += 1;
                 }
             } else {
-                if (D_80146400[i - 4] == 0) {
+                if (encounter_falling_quad_delays[i - 4] == 0) {
                     sprite_quads[i].unk_0E += 0x18;
-                    D_80146400[i - 4] += 1;
+                    encounter_falling_quad_delays[i - 4] += 1;
                 } else {
-                    D_80146400[i - 4] = 0;
-                    D_801463E0[i - 4] += 1;
+                    encounter_falling_quad_delays[i - 4] = 0;
+                    encounter_falling_quad_phases[i - 4] += 1;
                 }
             }
-        } else if (sprite_quads[i].y >= 0x11 && D_801463E0[i - 4] == 0 && D_80146400[i - 4] == 0) {
+        } else if (sprite_quads[i].y >= 0x11 && encounter_falling_quad_phases[i - 4] == 0 && encounter_falling_quad_delays[i - 4] == 0) {
             sprite_quads[i].x = rand() % 167 - 0x9F;
             if (sprite_quads[i].x >= -0x57) {
                 sprite_quads[i].x += 0x99;
@@ -203,9 +203,9 @@ s32 func_80139E1C(void) {
     }
 }
 
-void func_8013A144(void) {
+void encounter_shiori_scene_two_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013A180();
+        encounter_shiori_scene_two_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
@@ -214,31 +214,31 @@ void func_8013A144(void) {
 typedef struct {
     void (*f[23])();
 } FnTbl23; /* size 0x5C */
-extern FnTbl23 D_801464BC;
+extern FnTbl23 encounter_shiori_scene_two_steps;
 
-void func_8013A180(void) {
+void encounter_shiori_scene_two_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl23 tbl;
 
-    tbl = D_801464BC;
+    tbl = encounter_shiori_scene_two_steps;
     idx = game_state.mode_step;
     tbl.f[idx]();
     if (game_state.mode_step >= 0xD) {
         if (game_state.mode_step < 0x14) {
-            sprite_light_effect_draw();
+            hud_sprite_light_effect_draw();
         }
     }
 }
 
-void func_8013A230(void) {
+void encounter_shiori_scene_eight_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013A2EC();
+        encounter_shiori_scene_eight_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013A26C(void) {
+void encounter_shiori_birthday_bg_request(void) {
     s32 temp_v0;
 
     D_800B3D60 = 0;
@@ -254,11 +254,11 @@ void func_8013A26C(void) {
     mode_step_next();
 }
 
-void func_8013A2EC(void) {
+void encounter_shiori_scene_eight_step_dispatch(void) {
     void (**p)();
     FnTbl55 tbl;
 
-    tbl = D_80146518;
+    tbl = encounter_shiori_scene_eight_steps;
     tbl.f[game_state.mode_step](0x80);
     p = &tbl.f[game_state.mode_step];
     if (tbl.f[game_state.mode_step] == func_80085368) {
@@ -270,10 +270,10 @@ void func_8013A2EC(void) {
         }
         D_801206DB &= 0xFF7F;
     }
-    func_8013A668();
+    encounter_shiori_birthday_portrait_update();
 }
 
-s32 func_8013A3C4(void) {
+s32 encounter_shiori_birthday_phone_talk(void) {
     u16 ca154;
 
     /* FAKE: u16 temp on the first D_800CA154 test keeps uopt from CSE-promoting D_800CA154 to $v0. T-24095 */
@@ -291,9 +291,9 @@ s32 func_8013A3C4(void) {
         k_reset(1);
     }
     if (D_800CA154 < 3U) {
-        func_80138B74();
+        encounter_scene_phone_talk();
     } else {
-        func_80138AF8();
+        encounter_scene_talk();
     }
     /* FAKE: u16 cast on D_800CA150 emits lhu instead of lh. T-24095 */
     if (game_state.mode_step_timer.u++ == 0 && D_800CA154 < 4U && (u16)D_800CA150 == 0) {
@@ -304,19 +304,19 @@ s32 func_8013A3C4(void) {
     }
 }
 
-void func_8013A564(void) {
+void encounter_shiori_assets_load_2(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x80BA);
-    func_801399DC();
+    encounter_shiori_assets_bind_2();
     mode_step_next();
 }
 
-void func_8013A59C(void) {
+void encounter_shiori_audio_load_1(void) {
     D_800B3D60 = 0;
     audio_bank_load_start(1, 0xC007, 0xBFF7, 0xCBA3, 0xCB53, 0xCB4E);
     mode_step_next();
 }
 
-s32 func_8013A5E8(void) {
+s32 encounter_shiori_audio_command_wait(void) {
     if (game_state.mode_step_timer.w == 0) {
         audio_command(0x500);
     }
@@ -325,12 +325,12 @@ s32 func_8013A5E8(void) {
     }
 }
 
-void func_8013A640(void) {
+void encounter_shiori_portrait_read(void) {
     portrait_read_start(0x57CE);
     mode_step_next();
 }
 
-void func_8013A668(void) {
+void encounter_shiori_birthday_portrait_update(void) {
     if ((u8) game_state.mode_step >= 0x23U) {
         D_801206DF = D_80120657;
     }
@@ -339,7 +339,7 @@ void func_8013A668(void) {
     }
 }
 
-void func_8013A6D0(void) {
+void encounter_shiori_scene_init_1(void) {
     game_state.current_girl = GIRL_SHIORI;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -359,10 +359,10 @@ void func_8013A6D0(void) {
     message_window_init();
     text_marker_hide();
     talk_names_set(game_state.current_girl);
-    func_80137990();
-    D_80146274 = D_80145ED8;
-    D_80146278 = D_80146014;
-    D_8014627C = D_80146150;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_6;
+    encounter_scene_command_table = encounter_scene_command_section_6;
+    encounter_scene_voice_table = encounter_scene_voice_section_6;
     strcpy(D_800CA19C, "教室");
     if (talk_work == 1) {
         game_state.girls[0].tokimeki += 1;
@@ -373,16 +373,16 @@ void func_8013A6D0(void) {
     mode_step_next();
 }
 
-void func_8013A820(void) {
+void encounter_shiori_still_show_1(void) {
     s16 i;
     SpriteQuad *p;
     u16 clut;
 
-    func_80139910();
-    load_palette(D_80146390, 0x11, 1, 2, 0);
-    scene_still_show(D_80146398, D_8014639C, D_801463A0, D_801463A4, D_801463A8, D_801463AC);
-    scene_anim_show(D_80146384, D_80146388, D_80146380, D_8014638C);
-    load_palette(D_80146394, 0x12, 1, 3, 0);
+    encounter_shiori_assets_bind_1();
+    load_palette(encounter_shiori_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_shiori_pack_1_still_image_0, encounter_shiori_pack_1_still_image_1, encounter_shiori_pack_1_still_image_2, encounter_shiori_pack_1_still_image_3, encounter_shiori_pack_1_still_image_4, encounter_shiori_pack_1_still_image_5);
+    scene_anim_show(encounter_shiori_pack_1_animation_input_0, encounter_shiori_pack_1_animation_input_1, encounter_shiori_pack_1_animation_input_2, encounter_shiori_pack_1_animation_input_3);
+    load_palette(encounter_falling_quad_palette, 0x12, 1, 3, 0);
     for (i = 4; i < 0x13; i++) {
         p = &sprite_quads[i];
         /* FAKE: u16 clut local before unk_04 call shifts the i * 2 CSE temporary to $v0. T-24081 */
@@ -407,13 +407,13 @@ void func_8013A820(void) {
         p->unk_1E = 0x1000;
         p->unk_20 = 0;
         game_state.quad_layer[i] = 0xC;
-        D_801463E0[i - 4] = 0;
-        D_80146400[i - 4] = 0;
+        encounter_falling_quad_phases[i - 4] = 0;
+        encounter_falling_quad_delays[i - 4] = 0;
     }
     mode_step_next();
 }
 
-void func_8013AA1C(void) {
+void encounter_shiori_scene_init_2(void) {
     game_state.current_girl = GIRL_SHIORI;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -433,10 +433,10 @@ void func_8013AA1C(void) {
     text_marker_hide();
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145EDC;
-    D_80146278 = D_80146018;
-    D_8014627C = D_80146154;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_7;
+    encounter_scene_command_table = encounter_scene_command_section_7;
+    encounter_scene_voice_table = encounter_scene_voice_section_7;
     strcpy(D_800CA19C, "自宅前");
     game_state.param_stress.value -= 1;
     check_para_limit();
@@ -444,10 +444,10 @@ void func_8013AA1C(void) {
     mode_step_next();
 }
 
-void func_8013AB4C(void) {
+void encounter_shiori_birthday_init(void) {
     s16 i;
 
-    func_8006509C();
+    hud_icon_bar_init();
     for (i = 0; i < 0xF; i++) {
         icon_can_use_set(i, 0);
     }
@@ -473,17 +473,17 @@ void func_8013AB4C(void) {
     D_800CA154 = 0;
     addr_init_bustup();
     talk_names_set(game_state.current_girl);
-    func_80137990();
-    D_80146274 = D_80145EF4;
-    D_80146278 = D_80146030;
-    D_8014627C = D_8014616C;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_13;
+    encounter_scene_command_table = encounter_scene_command_section_13;
+    encounter_scene_voice_table = encounter_scene_voice_section_13;
     game_state.girls[0].tokimeki += 2;
     game_state.girls[0].affection += 2;
     check_para_limit();
     mode_step_next();
 }
 
-void func_8013ACE0(void) {
+void encounter_shiori_birthday_scene_init(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -500,11 +500,11 @@ void func_8013ACE0(void) {
     mode_step_next();
 }
 
-void func_8013AD6C(void) {
-    func_801399DC();
-    load_palette(D_801463C4, 0x11, 1, 2, 0);
-    scene_still_show(D_801463C8, D_801463CC, D_801463D0, D_801463D4, D_801463D8, D_801463DC);
-    scene_anim_show(D_801463B8, D_801463BC, D_801463B4, D_801463C0);
+void encounter_shiori_still_show_2(void) {
+    encounter_shiori_assets_bind_2();
+    load_palette(encounter_shiori_pack_2_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_shiori_pack_2_still_image_0, encounter_shiori_pack_2_still_image_1, encounter_shiori_pack_2_still_image_2, encounter_shiori_pack_2_still_image_3, encounter_shiori_pack_2_still_image_4, encounter_shiori_pack_2_still_image_5);
+    scene_anim_show(encounter_shiori_pack_2_animation_input_0, encounter_shiori_pack_2_animation_input_1, encounter_shiori_pack_2_animation_input_2, encounter_shiori_pack_2_animation_input_3);
     ((Actor *)actor_pool_96)[1].unk_04 = 8;
     ((Actor *)actor_pool_96)->unk_04 = 8;
     ((Actor *)actor_pool_96)[2] = ((Actor *)actor_pool_96)[0];
@@ -512,33 +512,33 @@ void func_8013AD6C(void) {
     mode_step_next();
 }
 
-void func_8013AE7C(void) {
+void encounter_shiori_bg_load_1(void) {
     bg_read_sub2(0x4068);
     mode_step_next();
 }
 
-void func_8013AEA4(void) {
+void encounter_shiori_bg_load_2(void) {
     bg_read_sub2(0x46AA);
     mode_step_next();
 }
 
-void func_8013AECC(void) {
+void encounter_shiori_bg_load_3(void) {
     bg_read_sub2(0x414C);
     mode_step_next();
 }
 
-void func_8013AEF4(void) {
+void encounter_shiori_bg_load_4(void) {
     bg_read_sub2(0x4171);
     mode_step_next();
 }
 
-void func_8013AF1C(void) {
+void encounter_shiori_bg_load_5(void) {
     bg_read_sub2(0x473A);
     mode_step_next();
 }
 
-void func_8013AF44(void) {
-    func_800634FC(get_g_zyotai_h(GIRL_SHIORI));
+void encounter_shiori_bg_load_6(void) {
+    portrait_value_clear_if_high(get_g_zyotai_h(GIRL_SHIORI));
     bg_read_sub2(0x4156);
     mode_step_next();
 }

@@ -19,7 +19,7 @@ void game_mode_dispatch(void) {
         exit_function();
         break;
     case 0xFE:
-        func_8004F6B0();
+        menu_vram_view_mode_handler();
         break;
     case 0x30:
         schedule_init();
@@ -28,7 +28,7 @@ void game_mode_dispatch(void) {
         schedule_day_screen_handler();
         break;
     case 0x34:
-        schedule_command_screen_handler();
+        settings_command_screen_mode_handler();
         break;
     case 0x12:
         title_mode_handler();
@@ -43,10 +43,10 @@ void game_mode_dispatch(void) {
         uwasa_main();
         break;
     case 0x41:
-        func_80061688();
+        settings_new_year_prep_mode_handler();
         break;
     case 0x42:
-        func_80060DF8();
+        settings_christmas_prep_mode_handler();
         break;
     case 0x3:
         ((s32 (*)()) ovl_entry)();

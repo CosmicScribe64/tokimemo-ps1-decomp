@@ -178,7 +178,7 @@ void func_80132FF8(void) {
             ((Actor *)actor_pool)->draw_flags |= 0x80;
         }
         if (((Actor *)actor_pool)->draw_flags & 0x80) {
-            cursor_update();
+            hud_cursor_update();
         }
         hud_screen_frame_draw(1);
     } else {
@@ -191,7 +191,7 @@ void func_80132FF8(void) {
             ((Actor *)actor_pool)->draw_flags &= 0x7F;
         }
         if (((Actor *)actor_pool)->draw_flags & 0x80) {
-            cursor_update();
+            hud_cursor_update();
         }
     }
     draw_shake_update();
@@ -221,7 +221,7 @@ void func_801335F0(void) {
     game_state.day -= 1;
     hizuke_init();
     game_state.day += 1;
-    func_8006509C();
+    hud_icon_bar_init();
     for (var_s0 = 0; var_s0 < 15; var_s0++) {
         icon_can_use_set(var_s0, 0);
     }
@@ -281,7 +281,7 @@ s32 func_801338EC(void) {
     RECT rect;
 
     if (*(u8 *)&game_state.substep == 0) {
-        func_800674B0();
+        hud_day_bgm_load();
         *(u8 *)&game_state.substep += 1;
     }
     if (*(u8 *)&game_state.substep == 1) {

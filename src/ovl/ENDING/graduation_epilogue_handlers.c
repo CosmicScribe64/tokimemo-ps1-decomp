@@ -89,7 +89,7 @@ void func_8013B9F0(void) {
     actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
-    cursor_show(0);
+    hud_cursor_show(0);
     back_clear_switch(1);
     tpage_buf_clear_all();
     game_state.tpage_buf[28] = 1;

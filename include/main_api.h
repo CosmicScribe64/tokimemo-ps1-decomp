@@ -245,13 +245,13 @@ typedef struct GirlFlagBits {
     /* 0x00 */ u32 b15 : 1;
     /* 0x00 */ u32 encounter_done : 1; /* HYPOTHESIS: name: set by day_event_dispatch when it starts the forced encounter (mode 0x59) for a met girl with syoushin >= 0x4C; cleared again by girl_counters_clamp whenever her syoushin is below 0x32, so the encounter can fire again later */
     /* 0x00 */ u32 rumor_done : 1; /* HYPOTHESIS: name: set by day_event_dispatch for every met girl with syoushin >= 0x3D when it queues the rumor report (mode 0x44); cleared by girl_counters_clamp whenever her syoushin is below 0x32 */
-    /* 0x00 */ u32 b18 : 1;            /* T-20940: func_80077900 tests it (sll 13) and sets it (byte +2, ori 4) */
+    /* 0x00 */ u32 b18 : 1;            /* T-20940: holiday_activity_play tests it (sll 13) and sets it (byte +2, ori 4) */
     /* 0x00 */ u32 b19 : 1;
     u32 club : 4;
     u32 rest : 8;
 } GirlFlagBits; /* size 0x04 */
 
-/* Flag word at GameState +0xF64 (game_state.quarter_flags) as single bits. func_8006A044 sets them with
+/* Flag word at GameState +0xF64 (game_state.quarter_flags) as single bits. hud_magazine_mark_read sets them with
  * bit-field stores, which load the byte into another register than its lui (T-25103): bits 0-11 by
  * year (0x5F, 0x60, 0x61) and month group (2-4, 5-7, 8-10, 11-1), bit 13 in months 2, 5, 8 and 11,
  * bit 14 in the other months, bit 15 in months 5-7. */
@@ -303,7 +303,7 @@ typedef struct GirlRecord {
 
 /* 0x24-byte record of the table at sprite_quads (at least 12 records: ENDING walks 12; indexed with
  * stride 0x24, and code that reads entry i - 1 makes splat name D_801217AC). Record 0 is set field by
- * field in func_8005AD70; records 0-5 have a flag in bit 31 of unk_00. */
+ * field in settings_room_sick_icon_show; records 0-5 have a flag in bit 31 of unk_00. */
 typedef struct SpriteQuad {
     /* 0x00 */ s32 flags;
     /* 0x04 */ s16 x;
@@ -523,7 +523,7 @@ typedef struct GameState {
     /* 0xF61 */ u8 text_first_line; /* HYPOTHESIS: index of the first visible dialogue line in the text list */
     /* 0xF62 */ u8 text_scroll_state; /* HYPOTHESIS: bit 7 = scrolling active, low bits = phase of the two-line scroll */
     /* 0xF63 */ s8 unk_F63;
-    /* 0xF64 */ u8 quarter_flags[4]; /* HYPOTHESIS: QuarterFlagBits bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (schedule_quarter_flags_rotate); TEL also sets bits */
+    /* 0xF64 */ u8 quarter_flags[4]; /* HYPOTHESIS: QuarterFlagBits bit view: set by hud_magazine_mark_read by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (schedule_quarter_flags_rotate); TEL also sets bits */
     /* 0xF68 */ WordView last_command;
     /* 0xF6C */ u8 icon_mode; /* IconMode */
     /* 0xF6D */ u8 icon_count;
@@ -698,8 +698,8 @@ extern u8 **D_800B32CC;
  * D_800B3568, D_800B356C; TEL and OPTION index it by girl. */
 extern u8 *girl_full_name_table[16];
 extern u8 *girl_short_name_table[];
-extern u8 *D_800B3624;
-extern u8 *D_800B3630;
+extern u8 *girl_short_name_rei;
+extern u8 *girl_short_name_yumi_given;
 extern u8 D_800B3644[3];
 #ifndef MAIN_API_OVERRIDE_D_800B3688
 extern s32 D_800B3688[];
@@ -716,11 +716,11 @@ extern s32 D_800B372C;
 #ifndef MAIN_API_OVERRIDE_month_data_table
 extern s32 **month_data_table;
 #endif
-extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
+extern void *D_800B374C; /* image data passed to LoadSquare (hud_vram_init) */
 extern u8 D_800B3750[][3];
 /* T-20940: the 13 telephone numbers, seven digits each (0x5B bytes, D_800B37D4 follows after one pad
  * byte): holiday_tel_exit plays digit k of number game_state.current_girl (row 10 as D_800B37BE), and
- * func_80075C84 compares each row with the last seven keys in D_800B6990. */
+ * holiday_phone_dial_shortcut compares each row with the last seven keys in holiday_dial_keys. */
 extern u8 girl_phone_digits[13][7];
 extern s32 D_800B37D4[];
 extern u8 *club_name_table[];
@@ -753,8 +753,8 @@ extern u8 D_800B3D80;
 extern u8 D_800B3D84[];
 extern s8 D_800B3DB0;
 extern u8 text_list[];
-extern u8 D_800B3DC7[];  /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
-extern u8 D_800B3F58[];
+extern u8 text_list_active0[];  /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
+extern u8 text_list_last[];
 /* Text display state, defined in src/main/text_system.c (T-9150). */
 typedef struct TextState {
     /* 0x0 */ s16 count;   /* number of entries in text_list */
@@ -766,37 +766,37 @@ typedef struct TextState {
     /* 0xA */ u8 unk_6A;
     /* 0xB */ u8 pad_0B;
 } TextState; /* size 0xC */
-extern TextState text_list_count;
-/* Shift-JIS range table of load_string at font_range_table: first code of each range and the glyph number
- * of its first character (T-17020); 46 entries up to D_800B40E4. */
+extern TextState text_state;
+/* Shift-JIS range table of load_string at text_font_range_table: first code of each range and the glyph number
+ * of its first character (T-17020); 46 entries up to text_font_range_table_end. */
 typedef struct FontRange {
     /* 0x0 */ u16 first;
     /* 0x2 */ u16 glyph;
 } FontRange; /* size 0x4 */
-extern FontRange font_range_table[46];
+extern FontRange text_font_range_table[46];
 /* Font and cursor images that text_system_reset uploads with LoadSquare (T-17020). */
-extern u8 D_800B3F6C[0x40];
-extern u8 D_800B3FAC[0x20];
-extern u8 D_800B3FCC[0x20];
-extern u8 D_800B3FEC[0x20];
-extern u8 D_800B400C[0x20];
+extern u8 text_blank_strip[0x40];
+extern u8 text_palette_0[0x20];
+extern u8 text_palette_1[0x20];
+extern u8 text_shadow_palette_0[0x20];
+extern u8 text_shadow_palette_1[0x20];
 s32 load_string(); /* set_kanji_string passes three arguments, the definition takes one */
 void vload_font();
 /* Four signed menu row positions, read by x_taku_menu_set. */
-extern s16 D_800B40F0[4];
+extern s16 text_row_y[4];
 extern u8 girl_tokimeki_weight[13];
-extern u8 D_800B4110[13];
-extern u8 D_800B4120[13];
-extern s8 D_800B4130[13][8];
-extern u8 D_800B4198[7];
+extern u8 girl_bonus_param_mask[13];
+extern u8 girl_param_ladder_kind[13];
+extern s8 girl_param_bonus[13][8];
+extern u8 girl_param_ladder_base[7];
 extern u8 girl_affection_weight[];
-extern u8 D_800B41B0[20][20];
-extern u8 D_800B4341[]; /* table read by func_80052E60 */
-extern s8 D_800B4348[12];
-extern u8 D_800B4354[12];
-extern u8 D_800B4360[12];
-extern s8 D_800B436C[15];
-extern s8 D_800B437C[15];
+extern u8 girl_closeness_grid[20][20];
+extern u8 girl_shiori_param_minimum_tail[]; /* table read by girl_points_shiori */
+extern s8 girl_syoushin_weight[12];
+extern u8 girl_points_mask_strong[12];
+extern u8 girl_points_mask_normal[12];
+extern s8 girl_points_param_curve[15];
+extern s8 girl_points_stress_curve[15];
 extern u8 D_800B4390[];
 extern u8 *D_800B58B0;
 extern s32 D_800B58E4;
@@ -816,15 +816,15 @@ extern s32 D_800B594C;
 extern u8 D_800B5A68[][3];
 extern s32 D_800B5950[];
 extern s32 D_800B5960[];
-extern s16 D_800B59F0;
-extern s16 D_800B59F4;
+extern s16 settings_room_mascot_holiday_stamp;
+extern s16 settings_room_mascot_stamp;
 extern s16 D_800B5A40[13]; /* T-25119: 13 halfwords func_80061A3C copies into the words at D_801230D4 */
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
-extern s32 D_800B5A98; /* T-17011: counter of func_80063668 (CD level high-water mark) */
+extern s32 D_800B5A98; /* T-17011: counter of portrait_face_update (CD level high-water mark) */
 extern s8 D_800B5A9C; /* T-25108: last selection index seen by hud_icon_bar_update */
 extern u8 D_800B5AA0; /* T-25108: blink countdown of hud_icon_bar_update, 0x20 on a selection change */
-/* T-17000: two tables of (x, y) halfword pairs that func_8006509C copies pair by pair into the pair
+/* T-17000: two tables of (x, y) halfword pairs that hud_icon_bar_init copies pair by pair into the pair
  * table at D_80125C10 (`lh`/`sh` at +0 and +2, step 4); the copy of the second table from D_800B5AF0
  * (pair 3) runs to D_800B5B20, its end. 16 + 15 pairs fill 0x800B5AA4..0x800B5B20. */
 extern s16 D_800B5AA4[16][2];
@@ -862,29 +862,29 @@ extern u8 D_800B6724[];
 extern u8 D_800B6728[];
 extern u8 D_800B672C[];
 extern u8 D_800B6730[];
-/* T-20940: static data of 80075320.c. D_800B6990 is a ring of the last seven keys pressed on the holiday
- * menu (0, 1, 2 from the pad bits 0x20, 0x40, 0x10; cleared to 0xFF by func_800755B4 in a loop IDO unrolled)
- * and D_800B6998 its write position: func_80075C84 stores `keys[pos] = key; pos++`, wraps pos at 7 and reads
- * the ring from pos + 7 modulo 7. Two variables, both defined in 80075320.c (T-24303): func_800755B4 stores
+/* T-20940: static data of 80075320.c. holiday_dial_keys is a ring of the last seven keys pressed on the holiday
+ * menu (0, 1, 2 from the pad bits 0x20, 0x40, 0x10; cleared to 0xFF by holiday_open_init in a loop IDO unrolled)
+ * and holiday_dial_key_pos its write position: holiday_phone_dial_shortcut stores `keys[pos] = key; pos++`, wraps pos at 7 and reads
+ * the ring from pos + 7 modulo 7. Two variables, both defined in 80075320.c (T-24303): holiday_open_init stores
  * the position with its own lui $at and the three remainder keys with one shared lui $at, which as1 does only
  * for separate symbols of the same object. The original reloads pos after the store into keys[pos] in
- * func_80075C84. D_800B69BC is a 0x14-byte string in .data
- * (strcat argument of func_800767A4). D_800B69D0 and D_800B69D8 map GameState.day_events[].unk_01 (0..7) to a
- * background in func_80076FDC, one table per func_80066A84() result. */
-extern u8 D_800B6990[8];
-extern u8 D_800B6998;
-extern u8 D_800B69BC[0x14];
-extern u8 D_800B69D0[8];
-extern u8 D_800B69D8[8];
-extern s32 D_800B69E0[];
-/* T-17000: message table of func_80077E30, indexed by func_80077CA8() and passed to sndisp. */
-extern u8 *D_800B6CF8[];
+ * holiday_phone_dial_shortcut. appointment_choice_suffix is a 0x14-byte string in .data
+ * (strcat argument of appointment_place_menu_build). holiday_sd_set_summer and holiday_sd_set_other map GameState.day_events[].unk_01 (0..7) to a
+ * background in holiday_activity_pick_sd_set, one table per hud_in_summer_months() result. */
+extern u8 holiday_dial_keys[8];
+extern u8 holiday_dial_key_pos;
+extern u8 appointment_choice_suffix[0x14];
+extern u8 holiday_sd_set_summer[8];
+extern u8 holiday_sd_set_other[8];
+extern s32 holiday_sd_set_sectors[];
+/* T-17000: message table of holiday_magazine_show, indexed by holiday_magazine_hint_index() and passed to sndisp. */
+extern u8 *holiday_magazine_hints[];
 extern u8 D_800B6D30;
 extern u8 ovl_load_state;
 extern u8 ovl_load_sectors;
 extern s32 ovl_load_buf;
 extern s32 ovl_load_lba;
-extern u8 font_glyphs[];
+extern u8 text_font_glyphs[];
 /* T-20004: byte loads indexed by girl * 7 + (step >> 3). */
 extern u8 D_800C3370[];
 extern s8 D_800C51C4;
@@ -896,7 +896,7 @@ extern u8 D_800C5FD4[];
 extern u8 D_800C6010[];
 extern s16 D_800C6014;
 extern s32 D_800C6020;
-/* T-17000: word tables walked by func_80059EF0 (and func_8006509C) up to the next symbol: eight words
+/* T-17000: word tables walked by func_80059EF0 (and hud_icon_bar_init) up to the next symbol: eight words
  * ending at D_800C6220, 32 words ending at D_800C6340. */
 extern s32 D_800C6200[8];
 extern s32 D_800C62C0[32];
@@ -1848,7 +1848,7 @@ extern s32 D_80122EC8;
 extern s32 D_80122ECC;
 extern s32 D_801230D0;
 extern s32 D_801230E0[];
-extern s32 D_801230E4;
+extern s32 settings_click_speed_ticks;
 extern s32 D_801230F4;
 extern u32 ovl_entry;
 /* One bank of the memory-card save image: D_80123320[2] follows the 0x200-byte header at memory_card_block; header
@@ -1890,13 +1890,13 @@ extern s32 D_801255D8;
 extern u8 D_801255DC;
 extern s16 D_801255E0;
 extern s16 D_801255E2;
-extern u32 D_801255F0[];
-extern s16 D_80125BF0;
-extern s16 D_80125BF2;
-extern s32 D_80125BF4;
-extern s32 D_80125BF8;
-extern s32 D_80125BFC;
-extern s32 D_80125C00;
+extern u32 text_glyph_upload_ring[];
+extern s16 menu_vram_view_x;
+extern s16 menu_vram_view_y;
+extern s32 speaker_voice_source_a;
+extern s32 speaker_voice_source_b;
+extern s32 speaker_voice_index;
+extern s32 speaker_voice_state;
 extern s32 D_80125C04;
 extern s32 D_80125C08;
 extern s32 D_80125C0C;
@@ -2010,7 +2010,7 @@ extern u8 D_801277F0[];
 extern MATRIX D_80129C40; /* bss matrix copied whole by TACO (T-16560) */
 extern s32 D_80129F10;
 extern u8 D_80129F40[];
-extern s32 D_800B699C[];
+extern s32 holiday_activity_bg_sectors[];
 extern s8 D_80120E49;
 extern u16 D_800B670A[];
 extern u8 D_80089C84;
@@ -2019,8 +2019,8 @@ extern s16 D_800EB042;
 extern s16 D_800EB044;
 extern u8 D_80123324[];
 extern u8 D_800B0E72;
-extern u32 D_800B5970[16];
-extern u32 D_800B59B0[16];
+extern u32 settings_room_radio_clips[16];
+extern u32 settings_room_radio_clips_holiday[16];
 extern u32 D_800B0C4C;
 extern u8 D_800E94A0[];
 extern u8 D_800FD4A0[];
@@ -2045,7 +2045,7 @@ extern TaiikuBig D_80122840[];
 extern TaiikuBig D_80122B10[];
 extern u8 D_80122660[];
 extern s16 D_800CA330[];
-extern u32 D_800E3680[16];
+extern u32 menu_bar_style[16];
 extern s16 D_801217D4;
 extern u8 D_800EC1C8;
 extern u8 D_800EC1A4;
@@ -2124,7 +2124,7 @@ s32 func_80046590(s16 arg0, u8 arg1);
 void func_80046754(void *arg0, s32 arg1, s32 arg2);
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1);
 u8 *get_k_work(s32 arg0);
-void glyph_expand_1bpp();
+void text_glyph_expand();
 void draw2d3d(u8 arg0, u8 arg1);
 void back_clear_switch(s32 arg0);
 s32 load_palette();
@@ -2251,7 +2251,7 @@ void func_8004DEAC();
 void func_8004DEE4();
 void srn_init(s32, u32 *, s32);
 void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2);
-void func_8004E500(s32 arg0);
+void text_glyph_pages_clear(s32 arg0);
 void text_system_reset(void);
 #ifndef MAIN_API_OVERRIDE_set_kanji_string
 s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4);
@@ -2318,7 +2318,7 @@ u32 get_h_yuukou(s32 arg0);
 #endif
 s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2);
 void func_800530E0();
-s32 func_8005352C();
+s32 girl_player_sports_club_check();
 void func_80053650(s32 arg0, s32 arg1, s32 arg2);
 s32 func_800536AC();
 void card_ev_set(void);
@@ -2388,60 +2388,60 @@ void func_80059BC0(void);
 void func_80059BE8(void);
 s32 func_80059E00(void);
 void func_80059EF0(void);
-s32 func_8005A1A0(void);
-void func_8005A2A8(void);
-void func_8005A37C(void);
-void func_8005A3E8(void);
-void func_8005A560(void);
-void func_8005A668();
-void func_8005AB4C(void);
+s32 settings_command_screen_mode_stage_reload(void);
+void settings_command_screen_mode_stage_setup(void);
+void settings_command_screen_setup_reset(void);
+void settings_command_screen_setup_wait(void);
+void settings_command_screen_reload_calendar(void);
+void settings_command_screen_build();
+void settings_room_bg_load_start(void);
 void func_8005ABC0();
-void func_8005ABD0(void);
-void func_8005AC70(s32 arg0);
-void func_8005AD1C(void);
-void func_8005AD70(void);
-void func_8005AE60();
+void settings_room_bg_load_finish(void);
+void settings_command_screen_icons_reset(s32 arg0);
+void settings_room_sick_icon_load(void);
+void settings_room_sick_icon_show(void);
+void settings_command_screen_mode_stage_select();
 void func_8005AEFC();
-s32 func_8005AF28(void);
-s32 func_8005AFC8(void);
-s32 func_8005B040();
+s32 settings_room_click_window(void);
+s32 settings_room_click_help(void);
+s32 settings_room_click_radio();
 void func_8005B06C();
-s32 func_8005B0F4();
-s32 func_8005B1A8(void);
+s32 settings_room_click_radio_holiday();
+s32 settings_room_click_mascot_holiday(void);
 void func_8005B264();
 s8 func_8005B28C();
-s32 func_8005B2BC();
+s32 settings_room_click_mascot();
 s32 func_8005B32C();
 u32 func_8005B368();
-void func_8005B39C(void);
-s32 func_8005B43C();
-void func_8005B798(void);
-void func_8005B830(void);
-void func_8005B8A0(void);
-void func_8005B8E0(void);
-void func_8005B908();
+void settings_command_screen_select_frame(void);
+s32 settings_command_screen_icon_confirm();
+void settings_command_screen_mode_stage_calendar(void);
+void settings_command_screen_calendar_init(void);
+void settings_command_screen_calendar_wait(void);
+void settings_command_screen_calendar_exit(void);
+void settings_save_load_mode_stage_dispatch();
 void func_8005BD20();
-void func_8005C4CC(s32 arg0);
-void func_8005D174(void);
-s32 func_8005D448(void);
-s32 func_8005BE8C(void);
-void func_8005BCEC(void);
-void func_8005C5BC(void);
-void func_8005CF6C(void);
-void func_8005CA94(void);
+void settings_save_load_layout_stash(s32 arg0);
+void settings_save_load_load_prompt(void);
+s32 settings_save_load_load_select(void);
+s32 settings_save_load_card_check(void);
+void settings_save_load_menu_init(void);
+void settings_save_load_save_init(void);
+void settings_save_load_load_init(void);
+void settings_save_load_save_select(void);
 
-void func_8005C7C0(void);
-void func_8005C7FC(void);
+void settings_save_load_save_prompt(void);
+void settings_save_load_save_marks(void);
 extern u8 D_800B59F8[];
 extern u8 D_800B5A1C[];
-void func_8005F09C(void);
-s32 func_8005FDEC(void);
-s32 func_8005DEA0(s32 arg0);
-s32 func_8005E150(void);
-s32 system_settings_init(void);
-s32 func_800603C0(void);
-void func_8005D1B0();
-void func_8005D9B4();
+void settings_mouse_click_speed_menu(void);
+s32 settings_voice_mode_init(void);
+s32 settings_labels_draw(s32 arg0);
+s32 settings_text_speed_init(void);
+s32 settings_root_init(void);
+s32 settings_mascot_menu(void);
+void settings_save_load_load_marks();
+void settings_mode_stage_dispatch();
 s32 func_8005E0E0();
 u32 func_8005EBE0(s32 arg0); /* GYOZI calls only; the s32 parameter as in get_h_tokimeki, needed by func_8013907C (T-25120) */
 void join_club(void);
@@ -2449,14 +2449,14 @@ void join_club_init(void);
 s32 join_club_select(void);
 s32 join_club_message(void);
 void join_club_exit(void);
-s32 func_80060B24();
-void func_80060B78(void);
+s32 rumor_setup_mode_stage_dispatch();
+void rumor_wait_voice(void);
 void uwasa_exit0(void);
 s32 uwasa0();
 s32 pre_xmas_init(void);
-s32 func_80060EA0();
+s32 settings_new_year_card_sender_count();
 s32 pre_syogatu_init();
-s32 func_80061634();
+s32 settings_new_year_scene_mode_stage_dispatch();
 void func_80061710(void);
 void func_80061790(void);
 void func_800618B0();
@@ -2472,9 +2472,9 @@ void func_80062764(void);
 void func_800627DC(void);
 void portrait_read_start(); /* unprototyped: main callers pass no argument, overlays pass one */
 void portrait_build();
-void func_800634FC(); /* unprototyped: callers pass an argument, the definition ignores it */
-void func_80063520(u32 arg0);
-void func_80063668();
+void portrait_value_clear_if_high(); /* unprototyped: callers pass an argument, the definition ignores it */
+void portrait_expression_select(u32 arg0);
+void portrait_face_update();
 void bustup_wink(void);
 void parameter_disp_switch();
 void parameter_show_init(void);
@@ -2487,74 +2487,74 @@ void message_window_init(void);
 void message_window_show(void);
 void icon_disp_switch(s32 a);
 void icon_can_use_set(s32 idx, s32 on);
-void func_8006509C(void);
-void func_800654D0();  /* K&R: with an (s32) prototype OPTION.bin no longer matches (T-25108) */
-void func_80065900(u8 arg0);
+void hud_icon_bar_init(void);
+void hud_icon_layout_apply();  /* K&R: with an (s32) prototype OPTION.bin no longer matches (T-25108) */
+void hud_icon_memory_card_animation_set(u8 arg0);
 void hud_icon_bar_update(s32 a);
 void message_window_title_show(s32 arg0);
-#ifndef MAIN_API_OVERRIDE_func_80066104
-void func_80066104();  /* the matched definition takes no parameter; pre_xmas_init passes a string through $a0 */
+#ifndef MAIN_API_OVERRIDE_message_window_set_title_hidden
+void message_window_set_title_hidden();  /* the matched definition takes no parameter; pre_xmas_init passes a string through $a0 */
 #endif
 void message_window_set_title();  /* callers pass one pointer, or nothing */
 void message_window_title_update();
-s32 func_80066A2C(void);
-s32 func_80066A84(void);
+s32 hud_season_index(void);
+s32 hud_in_summer_months(void);
 void hud_screen_frame_draw(s32 a);
-void func_80067438(void);
-void func_800674B0(void);
-void func_8006764C(s32 arg0);
-void func_800676AC();
+void hud_season_bgm_load(void);
+void hud_day_bgm_load(void);
+void hud_mascot_display_switch(s32 arg0);
+void hud_mascot_set();
 void hud_mascot_update(void);
-void func_80067C28(void);
-s32 func_80067DD4(void);
-void func_80067E34(void);
-void func_80067F04(void);
-s16 func_80068898(s32 arg0, s32 arg1);
-s16 func_800688F0(s32 arg0, s32 arg1);
-void func_80068938(u8 arg0, u8 arg1, s32 arg2);
-void func_80068EC0();
+void portrait_event_face_mouth_lipsync(void);
+s32 portrait_event_face_eyes_animation_start(void);
+void calendar_screen_init(void);
+void calendar_marks_build(void);
+s16 calendar_cell_x(s32 arg0, s32 arg1);
+s16 calendar_cell_y(s32 arg0, s32 arg1);
+void calendar_month_load(u8 arg0, u8 arg1, s32 arg2);
+void calendar_view_update();
 void cal_base_show(void);
 void cal_sprite_init(void);
-void func_800696DC(s32, s32);
-s32 func_8006A044();
-void func_8006A2CC();
-void func_8006B0C8();
-void club_list_menu(void);
-void sprite_light_effect_draw(void);
-void cursor_update(void);
-void cursor_actor_init(s32 arg0);
-void cursor_show(s32 arg0);
-s32 func_8006C334(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 func_8006C700(void);
-void text_marker_set(s32 arg0);
-u8 *func_8006CA9C(void);
-u8 *func_8006CAE0(void);
-void func_800755B4(void);
-void func_80075A64(void);
-void func_80075AF8(void); /* T-20940: called by func_800755B4 before its definition */
+void hud_save_slot_info_show(s32, s32);
+s32 hud_magazine_mark_read();
+void hud_magazine_page_build();
+void hud_appointment_list_sort();
+void hud_club_list_menu(void);
+void hud_sprite_light_effect_draw(void);
+void hud_cursor_update(void);
+void hud_cursor_actor_init(s32 arg0);
+void hud_cursor_show(s32 arg0);
+s32 hud_biorhythm_value(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+s32 hud_biorhythm_birth_offset(void);
+void hud_text_marker_set(s32 arg0);
+u8 *hud_confirm_button_label(void);
+u8 *hud_cancel_button_label(void);
+void holiday_open_init(void);
+void holiday_open_wait_bg(void);
+void holiday_icons_set_available(void); /* T-20940: called by holiday_open_init before its definition */
 void func_80075BFC();
-void func_80075C24(void);
-s32 func_80075C84();
-s32 func_80075FA0();
-s32 func_80076000();
-void func_800767A4(void);
+void holiday_menu_frame(void);
+s32 holiday_phone_dial_shortcut();
+s32 holiday_activity_bg_sector();
+s32 holiday_menu_click();
+void appointment_place_menu_build(void);
 void func_80076450();
-void func_80076630(void);
-s32 func_80076B48(void);
-s32 func_80076C7C(void);
+void appointment_start(void);
+s32 appointment_place_choose(void);
+s32 appointment_place_confirm(void);
 void appointment_launch(void);
-void func_8007739C(void);
-void func_80077694(void);
-void func_80077900(void);
-void func_80075468(void);
-void func_80075BE8(void);
-void func_80076EC0(void);
-void func_80076F48(void);
-void func_80077BE0(void);
+void holiday_activity_load(void);
+void holiday_activity_sd_setup(void);
+void holiday_activity_play(void);
+void holiday_mode_stage_open(void);
+void holiday_mode_stage_menu(void);
+void holiday_mode_stage_appointment(void);
+void holiday_mode_stage_activity(void);
+void holiday_mode_stage_magazine(void);
 s32 holiday_club(void);
-void func_8007894C(void);
-void func_80077C50(void);
-void func_80077E30(void);
+void holiday_mode_stage_club_join(void);
+void holiday_magazine_init(void);
+void holiday_magazine_show(void);
 void magazine_exit(void);
 void holiday_tel(void);
 void holiday_tel_init(void);
@@ -2925,9 +2925,9 @@ void func_800BCE10();
 #endif
 s32 func_800BDC20();
 void func_801040F0(void);
-s32 func_80067DFC(void);
-#ifndef MAIN_API_OVERRIDE_func_80053418
-s32 func_80053418();
+s32 portrait_event_face_mouth_animation_start(void);
+#ifndef MAIN_API_OVERRIDE_girl_scores
+s32 girl_scores();
 #endif
 s32 func_800463E8(void);
 #ifndef MAIN_API_OVERRIDE_prim_gradient_line
@@ -2941,7 +2941,7 @@ void func_8004AFB8();
 #endif
 void func_800651F8();
 void func_80065234();
-void func_8006B5BC(WordView arg0);
+void hud_appointment_add(WordView arg0);
 /* SD_GetCDLevel request/output prefix, verified from halfword accesses. T-10870. */
 typedef struct CdLevelWork {
     /* 0x00 */ u16 unk_00; /* left output */
@@ -3021,8 +3021,8 @@ extern s32 D_800B3D10[4]; /* four timestamps, draw_frame and func_8004443C (T-25
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern u8 D_800B3634;
-extern u8 D_800B3638;
+extern u8 girl_name_suffix_familiar;
+extern u8 girl_name_suffix_polite;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
@@ -3056,43 +3056,43 @@ extern s16 D_80120BB8;
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_8005C414(void);
-void func_8005D56C(void);
-s32 func_8005D804(void);
-void func_8005D31C(void);
-void func_8005C968(void);
-s32 func_8005BAE0(void);
-s32 func_8005BC38(void);
-s32 func_8005BB84(void);
+void settings_save_load_menu(void);
+void settings_save_load_load_read(void);
+s32 settings_save_load_load_finish(void);
+void settings_save_load_load_info_read(void);
+void settings_save_load_save_info_read(void);
+s32 settings_save_load_data_broken(void);
+s32 settings_save_load_card_full(void);
+s32 settings_save_load_card_unreadable(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_8005E018(void);
-void func_8005E2C0(void);
-void func_8005E40C(void);
-void func_8005E454(void);
-void func_8005E5C8(void);
-void func_8005E7A4(void);
-void func_8005E7F0(void);
-void func_8005E924(void);
-void func_8005E9EC(void);
-void func_8005EA38(void);
-void func_8005EB74(void);
-void func_8005EC78(void);
-void func_8005ECB8(void);
-void func_8005EE00(void);
-void func_8005EF04(void);
-void func_8005EF44(void);
-void func_8005F22C(void);
-void func_8005F26C(void);
-void func_8005F478(void);
-void func_8005FA20(void);
-void func_8005F6E4(void);
-void func_8005FDA0(void);
-void func_8005FF68(void);
-void func_80060104(void);
-void func_80060178(void);
-void func_80060504(void);
-void func_80060150(void);
+void settings_root_menu(void);
+void settings_text_speed_menu(void);
+void settings_text_speed_done(void);
+void settings_icon_mode_init(void);
+void settings_icon_mode_menu(void);
+void settings_icon_mode_done(void);
+void settings_mouse_init(void);
+void settings_mouse_menu(void);
+void settings_mouse_done(void);
+void settings_mouse_confirm_init(void);
+void settings_mouse_confirm_menu(void);
+void settings_mouse_confirm_done(void);
+void settings_mouse_click_init(void);
+void settings_mouse_click_menu(void);
+void settings_mouse_click_done(void);
+void settings_mouse_click_speed_init(void);
+void settings_mouse_click_speed_done(void);
+void settings_menu_mode_init(void);
+void settings_menu_mode_menu(void);
+void settings_cursor_speed_menu(void);
+void settings_menu_mode_done(void);
+void settings_cursor_speed_done(void);
+void settings_voice_mode_menu(void);
+void settings_voice_mode_done(void);
+void settings_mascot_init(void);
+void settings_mascot_done(void);
+void settings_exit(void);
 
 /* T-14200: canonical declaration of the existing MAIN definition. */
 void func_80041840(void);

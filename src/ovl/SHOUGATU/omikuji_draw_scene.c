@@ -353,7 +353,7 @@ s32 func_801350F8(void) {
         }
         if (check_end_k()) {
             D_8011ED5B |= 0x80;
-            func_8006C934();
+            hud_text_marker_bob();
         } else {
             D_8011ED5B &= 0x7F;
         }

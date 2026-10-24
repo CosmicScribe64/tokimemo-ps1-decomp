@@ -2,10 +2,10 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
-void func_80134C90(void) {
+void encounter_girl_birthday_mode_handler(void) {
     portrait_wink_update();
     if (game_state.mode_stage == 0) {
-        func_801351F8();
+        encounter_girl_birthday_dispatch();
     } else {
         game_mode_reset_to_title();
     }

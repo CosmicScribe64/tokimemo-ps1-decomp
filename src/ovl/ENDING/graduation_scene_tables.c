@@ -621,7 +621,7 @@ void func_80135ECC(void) {
     k_speed_set(0x10);
     text_system_reset();
     k_reset(1);
-    func_8004E500(3);
+    text_glyph_pages_clear(3);
     D_8013CA38 = 0;
     mode_step_next();
 }

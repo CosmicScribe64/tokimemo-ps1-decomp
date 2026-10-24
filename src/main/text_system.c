@@ -5,18 +5,18 @@
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/data/main/text_system.data", text_list);
-INCLUDE_RODATA("asm/data/main/text_system.data", D_800B3F58);
-TextState text_list_count = { 0, 0, 0, 0, 0, 0, 0 };
-INCLUDE_RODATA("asm/data/main/text_system.data", D_800B3F6C);
-INCLUDE_RODATA("asm/data/main/text_system.data", D_800B3FAC);
-INCLUDE_RODATA("asm/data/main/text_system.data", D_800B3FCC);
-INCLUDE_RODATA("asm/data/main/text_system.data", D_800B3FEC);
-INCLUDE_RODATA("asm/data/main/text_system.data", D_800B400C);
-INCLUDE_RODATA("asm/data/main/text_system.data", font_range_table);
+INCLUDE_RODATA("asm/data/main/text_system.data", text_list_last);
+TextState text_state = { 0, 0, 0, 0, 0, 0, 0 };
+INCLUDE_RODATA("asm/data/main/text_system.data", text_blank_strip);
+INCLUDE_RODATA("asm/data/main/text_system.data", text_palette_0);
+INCLUDE_RODATA("asm/data/main/text_system.data", text_palette_1);
+INCLUDE_RODATA("asm/data/main/text_system.data", text_shadow_palette_0);
+INCLUDE_RODATA("asm/data/main/text_system.data", text_shadow_palette_1);
+INCLUDE_RODATA("asm/data/main/text_system.data", text_font_range_table);
 INCLUDE_RODATA("asm/data/main/text_system.data", D_800B4030);
-INCLUDE_RODATA("asm/data/main/text_system.data", D_800B40E4);
+INCLUDE_RODATA("asm/data/main/text_system.data", text_font_range_table_end);
 
-void func_8004E500(s32 arg0) {
+void text_glyph_pages_clear(s32 arg0) {
     s32 i;
     RECT r;
 
@@ -34,13 +34,13 @@ void text_system_reset(void) {
     s32 i;
     RECT r;
 
-    LoadSquare(0x100, 0x1F8, 2, 8, D_800B3FAC);
-    LoadSquare(0x120, 0x1F8, 2, 8, D_800B3FCC);
-    LoadSquare(0x110, 0x1F8, 2, 8, D_800B3FEC);
-    LoadSquare(0x130, 0x1F8, 2, 8, D_800B400C);
-    LoadSquare(0x320, 0x1FF, 0x20, 1, D_800B3F6C);
-    LoadSquare(0x360, 0x1FF, 0x20, 1, D_800B3F6C);
-    func_8004E500(2);
+    LoadSquare(0x100, 0x1F8, 2, 8, text_palette_0);
+    LoadSquare(0x120, 0x1F8, 2, 8, text_palette_1);
+    LoadSquare(0x110, 0x1F8, 2, 8, text_shadow_palette_0);
+    LoadSquare(0x130, 0x1F8, 2, 8, text_shadow_palette_1);
+    LoadSquare(0x320, 0x1FF, 0x20, 1, text_blank_strip);
+    LoadSquare(0x360, 0x1FF, 0x20, 1, text_blank_strip);
+    text_glyph_pages_clear(2);
     r.x = 0x102;
     r.y = 0x1F8;
     r.w = 2;
@@ -54,79 +54,79 @@ void text_system_reset(void) {
         ((TextEntry *)text_list)[i].extra = 0;
         ((TextEntry *)text_list)[i].active = 0;
     }
-    text_list_count.total = 0;
-    text_list_count.count = 0;
-    text_list_count.pos = 0;
-    text_list_count.mark = 0;
+    text_state.total = 0;
+    text_state.count = 0;
+    text_state.pos = 0;
+    text_state.mark = 0;
     /* FAKE: T-17020. The two compares read the byte through a TextState pointer view. With a direct
      * read the build loads it after the four zero stores and puts the li in t6 (tools/cvt_pass.py
      * keeps the widening CVT because the first read comes after a call). The pointer view gives the
      * original's order: lbu before the stores, li in v0. */
-    if (((TextState *)&text_list_count)->unk_6A != 0xE && ((TextState *)&text_list_count)->unk_6A != 0x10) {
-        text_list_count.unk_6A = 0xE;
+    if (((TextState *)&text_state)->unk_6A != 0xE && ((TextState *)&text_state)->unk_6A != 0x10) {
+        text_state.unk_6A = 0xE;
     }
 }
 
 void text_set_advance(u8 arg0) {
     if (arg0 == 0x10) {
-        text_list_count.unk_6A = 0x10;
+        text_state.unk_6A = 0x10;
     } else {
-        text_list_count.unk_6A = 0xE;
+        text_state.unk_6A = 0xE;
     }
 }
 
-void func_8004E780(void) {
+void text_unused_stub(void) {
 }
 
 /* Queue one string (x, y, attribute, text, extra) in the 52-entry text list for drawing */
 s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
-    if (text_list_count.count >= 0x34) {
+    if (text_state.count >= 0x34) {
         return -1;
     }
     if (str == 0) {
-        ((TextEntry *)text_list)[text_list_count.count].active = 0;
+        ((TextEntry *)text_list)[text_state.count].active = 0;
     } else if (str[0] == 0 || str[1] == 0) {
-        ((TextEntry *)text_list)[text_list_count.count].active = 0;
+        ((TextEntry *)text_list)[text_state.count].active = 0;
     } else {
-        ((TextEntry *)text_list)[text_list_count.count].y = y;
-        ((TextEntry *)text_list)[text_list_count.count].attribute = col;
-        ((TextEntry *)text_list)[text_list_count.count].x = x;
-        ((TextEntry *)text_list)[text_list_count.count].glyph_count = load_string(str, y, col);
-        ((TextEntry *)text_list)[text_list_count.count].extra = arg4;
-        ((TextEntry *)text_list)[text_list_count.count].active = 1;
+        ((TextEntry *)text_list)[text_state.count].y = y;
+        ((TextEntry *)text_list)[text_state.count].attribute = col;
+        ((TextEntry *)text_list)[text_state.count].x = x;
+        ((TextEntry *)text_list)[text_state.count].glyph_count = load_string(str, y, col);
+        ((TextEntry *)text_list)[text_state.count].extra = arg4;
+        ((TextEntry *)text_list)[text_state.count].active = 1;
     }
-    return ++text_list_count.count;
+    return ++text_state.count;
 }
 
 /* Start the typewriter at entry n (skips the glyphs of earlier entries) */
 void k_disp_start(s32 arg0) {
     s32 i;
 
-    text_list_count.pos = 0;
+    text_state.pos = 0;
     for (i = 0; i < arg0; i++) {
-        text_list_count.pos += text_list[i * 8 + 5];
+        text_state.pos += text_list[i * 8 + 5];
     }
 }
 
 /* Show or hide a text list entry */
 void k_disp_switch(s32 arg0, s32 arg1) {
     if (arg1 > 0) {
-        D_800B3DC7[arg0 * 8] = 1;
+        text_list_active0[arg0 * 8] = 1;
     } else {
-        D_800B3DC7[arg0 * 8] = 0;
+        text_list_active0[arg0 * 8] = 0;
     }
 }
 
 /* Return the text list entry n */
 u8 *get_k_work(s32 arg0) {
     if (arg0 >= 0x35) {
-        return D_800B3F58;
+        return text_list_last;
     }
     return text_list + arg0 * 8;
 }
 
 s16 *get_ksys(void) {
-    return (u8 *)&text_list_count;
+    return (u8 *)&text_state;
 }
 
 void set_k_work(s32 arg0, TextEntry arg1) {
@@ -149,24 +149,24 @@ void k_reset(s32 arg0) {
     for (i = 0; i < arg0; i++) {
         sum += text_list[i * 8 + 5];
     }
-    text_list_count.count = arg0;
-    text_list_count.total = sum;
-    text_list_count.pos = sum;
+    text_state.count = arg0;
+    text_state.total = sum;
+    text_state.pos = sum;
 }
 
 /* Remember the current text list length as the mark */
 void k_sub_reset_point_set(void) {
-    text_list_count.mark = text_list_count.count;
+    text_state.mark = text_state.count;
 }
 
 /* Cut the text list back to the saved mark */
 void k_sub_reset(void) {
-    k_reset(text_list_count.mark);
+    k_reset(text_state.mark);
 }
 
 /* Start the typewriter at mark + n */
 void k_sub_disp_start(s32 arg0) {
-    k_disp_start(text_list_count.mark + arg0);
+    k_disp_start(text_state.mark + arg0);
 }
 
 s16 k_disp_goto_line_end(void) {
@@ -176,8 +176,8 @@ s16 k_disp_goto_line_end(void) {
     sum = 0;
     for (i = 0; i < 0x34; i++) {
         sum += text_list[i * 8 + 5];
-        if (sum >= text_list_count.pos) {
-            text_list_count.pos = sum;
+        if (sum >= text_state.pos) {
+            text_state.pos = sum;
             return sum;
         }
     }
@@ -185,26 +185,26 @@ s16 k_disp_goto_line_end(void) {
 }
 
 void k_speed_set(u8 arg0) {
-    text_list_count.speed = arg0;
+    text_state.speed = arg0;
     if ((u32)arg0 >= 0x81) {
-        text_list_count.speed = 0x7F;
+        text_state.speed = 0x7F;
     }
 }
 
 u8 get_k_speed(void) {
-    return text_list_count.speed;
+    return text_state.speed;
 }
 
 /* Reveal one more glyph every speed + 1 frames; returns 1 when everything is shown */
 s32 k_disp_inc(void) {
-    if (game_state.frame_count % (text_list_count.speed + 1) == 0) {
-        if (text_list_count.pos < text_list_count.total) {
-            text_list_count.pos += 1;
+    if (game_state.frame_count % (text_state.speed + 1) == 0) {
+        if (text_state.pos < text_state.total) {
+            text_state.pos += 1;
             return 0;
         }
         return 1;
     }
-    if (text_list_count.pos == text_list_count.total) {
+    if (text_state.pos == text_state.total) {
         return 1;
     }
     return 0;
@@ -213,14 +213,14 @@ s32 k_disp_inc(void) {
 /* The operand order sets the load order of the two globals (T-0017). */
 /* Return nonzero when the typewriter has shown the whole text */
 s32 check_end_k(void) {
-    if (text_list_count.pos == text_list_count.total) {
+    if (text_state.pos == text_state.total) {
         return 1;
     }
     return 0;
 }
 
 u8 check_set_k(void) {
-    return *(u8 *)&text_list_count;
+    return *(u8 *)&text_state;
 }
 
 u8 get_now_k(void) {
@@ -228,9 +228,9 @@ u8 get_now_k(void) {
     s32 sum;
 
     sum = 0;
-    for (i = 0; i < text_list_count.pos; i++) {
+    for (i = 0; i < text_state.pos; i++) {
         sum += text_list[i * 8 + 5];
-        if (sum >= text_list_count.pos) {
+        if (sum >= text_state.pos) {
             return i;
         }
     }
@@ -251,7 +251,7 @@ void disp_string(void) {
         ot = 1;
     }
     flag = 1;
-    for (i = 0, k = 0; i < text_list_count.total && i < text_list_count.pos; i++, k++) {
+    for (i = 0, k = 0; i < text_state.total && i < text_state.pos; i++, k++) {
         if (k >= ((TextEntry *)text_list)[j].glyph_count) {
             k = 0;
             j++;
@@ -271,7 +271,7 @@ void disp_string(void) {
             p->r0 = game_state.screen_brightness;
             p->g0 = game_state.screen_brightness;
             p->b0 = game_state.screen_brightness;
-            p->x0 = ((TextEntry *)text_list)[j].x + game_state.screen_center_x[draw_buffer] + k * text_list_count.unk_6A;
+            p->x0 = ((TextEntry *)text_list)[j].x + game_state.screen_center_x[draw_buffer] + k * text_state.unk_6A;
             p->y0 = ((TextEntry *)text_list)[j].y + game_state.screen_center_y[draw_buffer];
             /* FAKE: T-24141, same-line UV/Y stores reproduce original as1 instruction scheduling. */
             p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
@@ -285,7 +285,7 @@ void disp_string(void) {
             p->r0 = 0;
             p->g0 = 0;
             p->b0 = 0;
-            p->x0 = ((TextEntry *)text_list)[j].x + game_state.screen_center_x[draw_buffer] + k * text_list_count.unk_6A + 1;
+            p->x0 = ((TextEntry *)text_list)[j].x + game_state.screen_center_x[draw_buffer] + k * text_state.unk_6A + 1;
             /* FAKE: T-24141, same-line Y/UV stores reproduce original as1 instruction scheduling. */
             p->y0 = ((TextEntry *)text_list)[j].y + game_state.screen_center_y[draw_buffer] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
             p->clut = func_8009ED74((((TextEntry *)text_list)[j].attribute & 8) * 4 + 0x110, (((TextEntry *)text_list)[j].attribute & 7) + 0x1F8);
@@ -332,23 +332,23 @@ u8 *str;
     u8 lo;
     s32 start;
 
-    start = text_list_count.total;
+    start = text_state.total;
     while (1) {
         q = str++;
         hi = *q;
         p = str++;
         if (hi == 0 || (lo = *p) == 0) {
-            return text_list_count.total - start;
+            return text_state.total - start;
         }
         c = lo + (hi << 8);
-        if (c < font_range_table[0].first) {
+        if (c < text_font_range_table[0].first) {
             printf("<kanji.c>error(No-sjis)");
-            return text_list_count.total - start;
+            return text_state.total - start;
         }
         for (i = 1; i < 46; i++) {
-            if (c < font_range_table[i].first) {
-                vload_font((c - font_range_table[i - 1].first) + font_range_table[i - 1].glyph,
-                           c - font_range_table[i - 1].first);
+            if (c < text_font_range_table[i].first) {
+                vload_font((c - text_font_range_table[i - 1].first) + text_font_range_table[i - 1].glyph,
+                           c - text_font_range_table[i - 1].first);
                 break;
             }
         }
@@ -358,32 +358,32 @@ u8 *str;
 void vload_font(arg0)
 s32 arg0;
 {
-    glyph_expand_1bpp(arg0, D_801255F0 + (text_list_count.total & 0xF) * 0x18);
-    if (text_list_count.total < 0x80) {
-        text_list_count.total = text_list_count.total;
-        LoadSquare((text_list_count.total & 7) * 4 + 0x320, (text_list_count.total & 0x78) * 2 + 0x100, 4, 0xC,
-                   D_801255F0 + (text_list_count.total & 0xF) * 0x18);
-    } else if (text_list_count.total < 0x100) {
-        text_list_count.total = text_list_count.total;
-        LoadSquare((text_list_count.total & 7) * 4 + 0x360, (text_list_count.total & 0x78) * 2 + 0x100, 4, 0xC,
-                   D_801255F0 + (text_list_count.total & 0xF) * 0x18);
+    text_glyph_expand(arg0, text_glyph_upload_ring + (text_state.total & 0xF) * 0x18);
+    if (text_state.total < 0x80) {
+        text_state.total = text_state.total;
+        LoadSquare((text_state.total & 7) * 4 + 0x320, (text_state.total & 0x78) * 2 + 0x100, 4, 0xC,
+                   text_glyph_upload_ring + (text_state.total & 0xF) * 0x18);
+    } else if (text_state.total < 0x100) {
+        text_state.total = text_state.total;
+        LoadSquare((text_state.total & 7) * 4 + 0x360, (text_state.total & 0x78) * 2 + 0x100, 4, 0xC,
+                   text_glyph_upload_ring + (text_state.total & 0xF) * 0x18);
     } else {
-        text_list_count.total = text_list_count.total;
-        LoadSquare((text_list_count.total & 7) * 4 + 0x3A0, (text_list_count.total & 0x78) * 2 + 0x100, 4, 0xC,
-                   D_801255F0 + (text_list_count.total & 0xF) * 0x18);
+        text_state.total = text_state.total;
+        LoadSquare((text_state.total & 7) * 4 + 0x3A0, (text_state.total & 0x78) * 2 + 0x100, 4, 0xC,
+                   text_glyph_upload_ring + (text_state.total & 0xF) * 0x18);
     }
     func_8009C674(0);
-    text_list_count.total += 1;
+    text_state.total += 1;
 }
 
-void glyph_expand_1bpp(s32 arg0, s32 *arg1) {
+void text_glyph_expand(s32 arg0, s32 *arg1) {
     s32 i;
     s32 j;
     u8 buf[144];
     u8 *p;
     u8 *q;
 
-    p = &font_glyphs[arg0 * 18];
+    p = &text_font_glyphs[arg0 * 18];
     for (i = 0; i < 18; i++) {
         buf[i * 8 + 0] = (p[i] & 0x80) >> 7;
         buf[i * 8 + 1] = (p[i] & 0x40) >> 6;

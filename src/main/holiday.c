@@ -1,81 +1,81 @@
 /* holiday.c: src/main/80075320.c; T-27059: original object [0x80075320,0x800789E0); mode 0x46 holiday menu, activities, phone, magazine, appointment and club flows; reuse reviewed m-holiday name. Original object 0x80075320-0x800789E0 (config/objects/main.txt). */
-#define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, func_800754C0); main_api.h has s32 */
+#define MAIN_API_OVERRIDE_girl_scores /* this object calls it as void (no v0 result in the call block, holiday_shared_birthday_scene_due); main_api.h has s32 */
 #include "common.h"
 #include "game.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-u8 D_800B6990[8] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0 };
-u8 D_800B6998 = 0;
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B699C);
-u8 D_800B69BC[0x14] = { "で、待ち合わせ』" };
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B69D0);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B69D8);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B69E0);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6A14);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6A58);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6A8C);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6AD8);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6B10);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6B4C);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6B8C);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6BCC);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6C00);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6C28);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6C50);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6C80);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6CB8);
+u8 holiday_dial_keys[8] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0 };
+u8 holiday_dial_key_pos = 0;
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_activity_bg_sectors);
+u8 appointment_choice_suffix[0x14] = { "で、待ち合わせ』" };
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_sd_set_summer);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_sd_set_other);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_sd_set_sectors);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_biorhythm_legend);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_biorhythm_crossing);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_biorhythm_distance);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_phone);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_stereo_radio);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_mascot_unlock);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_mascot_controls);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_manual);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_second_pad_shortcut);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_cursor_shape);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_menu_mode);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_sd_speed);
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hint_after_clear);
 INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6CE0);
-INCLUDE_RODATA("asm/data/main/holiday.data", D_800B6CF8);
-/* pointer-only label D_800B6A14 may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6A58 may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6A8C may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6AD8 may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6B10 may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6B4C may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6B8C may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6BCC may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6C00 may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6C28 may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6C50 may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6C80 may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6CB8 may be inside D_800B69E0; replace its include too. */
-/* pointer-only label D_800B6CE0 may be inside D_800B69E0; replace its include too. */
+INCLUDE_RODATA("asm/data/main/holiday.data", holiday_magazine_hints);
+/* pointer-only label holiday_magazine_hint_biorhythm_legend may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_biorhythm_crossing may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_biorhythm_distance may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_phone may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_stereo_radio may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_mascot_unlock may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_mascot_controls may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_manual may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_second_pad_shortcut may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_cursor_shape may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_menu_mode may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_sd_speed may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label holiday_magazine_hint_after_clear may be inside holiday_sd_set_sectors; replace its include too. */
+/* pointer-only label D_800B6CE0 may be inside holiday_sd_set_sectors; replace its include too. */
 
-void func_80053418();
+void girl_scores();
 
 void holiday_mode_handler(void) {
     /* FAKE: byte view of the u8 field avoids the redundant selector copy (move v0,v1), as in TEL
      * (T-10630). T-17000 */
     switch (*(u8 *)&game_state.mode_stage) {
     case 0x0:
-        func_80075468();
+        holiday_mode_stage_open();
         break;
     case 0x1:
-        func_80075BE8();
+        holiday_mode_stage_menu();
         break;
     case 0x5:
-        func_80076F48();
+        holiday_mode_stage_activity();
         break;
     case 0x6:
         holiday_club();
         break;
     case 0x7:
-        func_8007894C();
+        holiday_mode_stage_club_join();
         break;
     case 0x10:
         holiday_tel();
         break;
     case 0x20:
-        func_80077BE0();
+        holiday_mode_stage_magazine();
         break;
     case 0x30:
-        func_8005B798();
+        settings_command_screen_mode_stage_calendar();
         break;
     case 0x40:
-        func_8005D9B4();
+        settings_mode_stage_dispatch();
         break;
     case 0xFE:
-        func_80076EC0();
+        holiday_mode_stage_appointment();
         break;
     }
     if (((Actor *)actor_pool)[27].draw_flags & 0x80) {
@@ -85,32 +85,32 @@ void holiday_mode_handler(void) {
     dec_bg_draw(0);
     hizuke_show();
     parameter_show();
-    cursor_update();
+    hud_cursor_update();
     hud_screen_frame_draw(1);
 }
 
-void func_80075468(void) {
+void holiday_mode_stage_open(void) {
     switch (game_state.mode_step) {
     case 0:
     default:
-        func_800755B4();
+        holiday_open_init();
         break;
     case 1:
-        func_80075A64();
+        holiday_open_wait_bg();
         break;
     }
     message_window_title_update();
     hud_icon_bar_update(0);
 }
 
-/* FAKE: T-24108, dead entry read of unk_03F satisfies cvt_pass's entry condition and keeps m's stack slot (placing rank/points at sp+0x4C/0x2C) so unk_03F is promoted to $v0 across the month tests and copied to $a1 in the appointment_find_today delay slot. */
-s32 func_800754C0(void) {
+/* FAKE: T-24108, dead entry read of unk_03F satisfies cvt_pass's entry condition and keeps m's stack slot (placing rank/points at sp+0x4C/0x2C) so unk_03F is promoted to $v0 across the month tests and copied to $a1 in the hud_appointment_find_today delay slot. */
+s32 holiday_shared_birthday_scene_due(void) {
     s32 m;
     u8 rank[16];
     s16 points[16];
 
     m = game_state.month;
-    func_80053418(rank, points);
+    girl_scores(rank, points);
     if (((game_state.player_birthday & 0xF) != (game_state.girls[0].birthday.w & 0xF)) ||
         (((u32)(game_state.player_birthday << 0x17) >> 0x1B) != ((u32)(game_state.girls[0].birthday.w << 0x17) >> 0x1B))) {
         return 0;
@@ -118,7 +118,7 @@ s32 func_800754C0(void) {
     if ((game_state.month != 3) && ((game_state.month != 4) || ((u8)game_state.day >= 4U))) {
         return 0;
     }
-    if (appointment_find_today(game_state.year, game_state.month, game_state.day) > 0) {
+    if (hud_appointment_find_today(game_state.year, game_state.month, game_state.day) > 0) {
         return 0;
     }
     if (birth_day_check(0xF) != 1) {
@@ -130,7 +130,7 @@ s32 func_800754C0(void) {
     return 0;
 }
 
-void func_800755B4(void) {
+void holiday_open_init(void) {
     s32 i;
     s32 r;
     s32 n;
@@ -139,10 +139,10 @@ void func_800755B4(void) {
 
     /* FAKE: T-20940, the clear on one source line (as1 schedules a line as a unit) gives the original's order
      * of the unrolled stores. */
-    D_800B6998 = 0;
-    for (i = 0; i < 7; i++) { D_800B6990[i] = 0xFF; }
+    holiday_dial_key_pos = 0;
+    for (i = 0; i < 7; i++) { holiday_dial_keys[i] = 0xFF; }
     hizuke_init();
-    if (func_800754C0() != 0) {
+    if (holiday_shared_birthday_scene_due() != 0) {
         D_80122CD4 = 0;
         talk_work = 8;
         parameter_show_init();
@@ -154,18 +154,18 @@ void func_800755B4(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    func_80066104("休日コマンド画面");
+    message_window_set_title_hidden("休日コマンド画面");
     k_disp_start(1);
     game_state.icon_count = 0xE;
-    func_8006509C();
-    func_800654D0((s32) (u8) game_state.icon_count);
-    func_80075AF8();
+    hud_icon_bar_init();
+    hud_icon_layout_apply((s32) (u8) game_state.icon_count);
+    holiday_icons_set_available();
     gnsx(game_state.player_family_name);
     if (game_state.player_flags_upper.h & 1) {
         game_state.icon_count = 0xE;
-        func_8006509C();
-        func_800654D0((s32) (u8) game_state.icon_count);
-        func_8005AC70(1);
+        hud_icon_bar_init();
+        hud_icon_layout_apply((s32) (u8) game_state.icon_count);
+        settings_command_screen_icons_reset(1);
         icon_can_use_set(0xD, 0);
         icon_can_use_set(0, 1);
         icon_can_use_set(1, 1);
@@ -173,16 +173,16 @@ void func_800755B4(void) {
         sndisp("一週間強制補習を しなければならない）", 0, 0x1F);
     } else if ((game_state.player_flags.b[1] & 0xF) == 3) {
         game_state.icon_count = 0xE;
-        func_8006509C();
-        func_800654D0((s32) (u8) game_state.icon_count);
-        func_8005AC70(1);
+        hud_icon_bar_init();
+        hud_icon_layout_apply((s32) (u8) game_state.icon_count);
+        settings_command_screen_icons_reset(1);
         icon_can_use_set(0xD, 0);
         icon_can_use_set(7, 1);
         game_state.menu_cursor_0 = 7;
         sndisp("病気で身体が動かない）", 0, 0x1F);
     } else {
         n = 0;
-        if (appointment_find_today((s32) game_state.year, (s32) game_state.month, (s32) game_state.day) > 0) {
+        if (hud_appointment_find_today((s32) game_state.year, (s32) game_state.month, (s32) game_state.day) > 0) {
             strcpy(buf, "今日は、");
             get_g_name(name, (s32) ((u32) (game_state.unk_54C[0].w * 8) >> 0x1C));
             strcat(buf, name);
@@ -191,7 +191,7 @@ void func_800755B4(void) {
             game_state.menu_cursor_0 = 9;
             n = 1;
         }
-        if ((func_8005352C() == 1) && (((u32) (game_state.day + 6) / 7U) == 3) && (game_state.weekday == WEEKDAY_SUNDAY)) {
+        if ((girl_player_sports_club_check() == 1) && (((u32) (game_state.day + 6) / 7U) == 3) && (game_state.weekday == WEEKDAY_SUNDAY)) {
             if (((u8) game_state.month % 3U) == 0) {
                 if (n != 0) {
                     strcpy(buf, "（");
@@ -221,11 +221,11 @@ void func_800755B4(void) {
     }
     k_disp_start(5);
     actor_clear_upper();
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     parameter_show_init();
     parameter_show_init();
     message_window_init();
-    r = dec_bg_cd_read(D_800B5960[func_80066A2C()], 0);
+    r = dec_bg_cd_read(D_800B5960[hud_season_index()], 0);
     if (r != -1) {
         if ((r == 0) || (r == 1)) {
             set_dec_bri(0x80U);
@@ -237,12 +237,12 @@ void func_800755B4(void) {
     }
 }
 
-void func_80075A64(void) {
+void holiday_open_wait_bg(void) {
     if (cd_read_sync_status() & 1) {
         dec_bg_show_set(0, dec_bg_decode_to_vram(0));
         if (D_800B594C == -1) {
             dec_bg_reset();
-            dec_bg_cd_read(D_800B5960[func_80066A2C()], 0);
+            dec_bg_cd_read(D_800B5960[hud_season_index()], 0);
         } else {
             set_dec_bri(0x80);
             mode_stage_next();
@@ -250,11 +250,11 @@ void func_80075A64(void) {
     }
 }
 
-void func_80075AF8(void) {
+void holiday_icons_set_available(void) {
     s32 i;
     s32 n;
 
-    if (appointment_find_today(game_state.year, game_state.month, game_state.day) <= 0) {
+    if (hud_appointment_find_today(game_state.year, game_state.month, game_state.day) <= 0) {
         icon_can_use_set(9, 0);
     }
     icon_can_use_set(0xD, 0);
@@ -277,23 +277,23 @@ void func_80075AF8(void) {
     }
 }
 
-void func_80075BE8(void) {
+void holiday_mode_stage_menu(void) {
     if (game_state.mode_step == 0) {
-        func_80075C24();
+        holiday_menu_frame();
     }
     message_window_title_update();
     hud_icon_bar_update(0);
 }
 
-void func_80075C24(void) {
+void holiday_menu_frame(void) {
     k_disp_inc();
-    cursor_update();
-    if (func_80076000() == 0 && func_80075C84() == 0 && func_8005B0F4() == 0) {
-        func_8005B1A8();
+    hud_cursor_update();
+    if (holiday_menu_click() == 0 && holiday_phone_dial_shortcut() == 0 && settings_room_click_radio_holiday() == 0) {
+        settings_room_click_mascot_holiday();
     }
 }
 
-s32 func_80075C84(void) {
+s32 holiday_phone_dial_shortcut(void) {
     s32 i;
     s32 j;
     u32 k;
@@ -306,29 +306,29 @@ s32 func_80075C84(void) {
         if (game_state.pad_pressed) {}
         switch (game_state.pad_pressed & 0x70) {
         case 0x20:
-            D_800B6990[D_800B6998] = 0;
-            D_800B6998++;
+            holiday_dial_keys[holiday_dial_key_pos] = 0;
+            holiday_dial_key_pos++;
             audio_command(0x505);
             break;
         case 0x40:
-            D_800B6990[D_800B6998] = 1;
-            D_800B6998++;
+            holiday_dial_keys[holiday_dial_key_pos] = 1;
+            holiday_dial_key_pos++;
             audio_command(0x506);
             break;
         case 0x10:
-            D_800B6990[D_800B6998] = 2;
-            D_800B6998++;
+            holiday_dial_keys[holiday_dial_key_pos] = 2;
+            holiday_dial_key_pos++;
             audio_command(0x507);
             break;
         }
-        if (D_800B6998 >= 7) {
-            D_800B6998 = 0;
+        if (holiday_dial_key_pos >= 7) {
+            holiday_dial_key_pos = 0;
         }
         if (game_state.pad_pressed & 0x70) {
             for (i = 0; i < 13; i++) {
-                k = D_800B6998 + 7;
+                k = holiday_dial_key_pos + 7;
                 for (j = 0; j < 7; k++, j++) {
-                    if (D_800B6990[k % 7] != girl_phone_digits[i][j]) {
+                    if (holiday_dial_keys[k % 7] != girl_phone_digits[i][j]) {
                         break;
                     }
                     if ((j == 6) && ((u32)(game_state.girls[i].flags.w << 28) >> 31)) {
@@ -365,7 +365,7 @@ s32 func_80075C84(void) {
                  * position load inside the outer loop during optimization.
                  * The branch and store disappear from the emitted code. */
                 if ((u32)i < 0) {
-                    D_800B6998 = 0;
+                    holiday_dial_key_pos = 0;
                 }
             }
         }
@@ -373,19 +373,19 @@ s32 func_80075C84(void) {
     return 0;
 }
 
-s32 func_80075FA0(void) {
+s32 holiday_activity_bg_sector(void) {
     u8 x;
     u16 h;
 
     x = game_state.day_event_index;
     if (game_state.day_events[x].girl != 4) {
-        return D_800B699C[game_state.day_events[x].girl];
+        return holiday_activity_bg_sectors[game_state.day_events[x].girl];
     }
     h = game_state.player_flags.h;
     return D_800B6780[h >> 0xC];
 }
 
-s32 func_80076000(void) {
+s32 holiday_menu_click(void) {
     s32 pad[4]; /* FAKE: preserves the 0x40 frame and handled at sp+0x2C. T-24501 */
     s32 handled;
     s32 girl;
@@ -414,13 +414,13 @@ s32 func_80076000(void) {
                     if (((u16) game_state.player_flags.h >> 0xC) == 0xB) {
                         ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
                         game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
-                        game_state.day_events[game_state.day_event_index].scene = func_8006BDA8(1);
+                        game_state.day_events[game_state.day_event_index].scene = hud_command_roll_poor_result(1);
                         mode_stage_set(7);
                     } else {
                         game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
-                        game_state.day_events[game_state.day_event_index].scene = func_8006BDA8(1);
+                        game_state.day_events[game_state.day_event_index].scene = hud_command_roll_poor_result(1);
                         ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
-                        girl = func_80053564((s32) ((u16) game_state.player_flags.h >> 0xC));
+                        girl = girl_find_by_club((s32) ((u16) game_state.player_flags.h >> 0xC));
                         /* Shift back extracts flag bit 2 and preserves ugen temporary numbering. T-24501 */
                         if ((girl != -1) && (((s32)(game_state.girls[girl].flags.u << 29) >> 31) != 0)) {
                             game_state.girls[girl].affection += 1;
@@ -428,13 +428,13 @@ s32 func_80076000(void) {
                         mode_stage_set(6);
                     }
                 } else {
-                    other_girl = func_80053564((s32) ((u16) game_state.player_flags.h >> 0xC));
+                    other_girl = girl_find_by_club((s32) ((u16) game_state.player_flags.h >> 0xC));
                     /* Keep the shift-back extraction here for the same temporary sequence. T-24501 */
                     if ((other_girl != -1) && (((s32)(game_state.girls[other_girl].flags.u << 29) >> 31) != 0)) {
                         game_state.girls[other_girl].affection += 1;
                     }
                     game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
-                    game_state.day_events[game_state.day_event_index].scene = func_8006BDA8(1);
+                    game_state.day_events[game_state.day_event_index].scene = hud_command_roll_poor_result(1);
                     ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
                     mode_stage_set(5);
                 }
@@ -451,12 +451,12 @@ s32 func_80076000(void) {
                 ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
                 audio_command(0x500);
                 game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
-                game_state.day_events[game_state.day_event_index].scene = func_8006BDA8(1);
+                game_state.day_events[game_state.day_event_index].scene = hud_command_roll_poor_result(1);
                 mode_stage_set(5);
             }
             break;
         case 9:
-            if ((get_icon_can_use((s32) *(s8 *)&game_state.menu_cursor_0) != 0) && (appointment_find_today((s32) game_state.year, (s32) game_state.month, (s32) game_state.day) > 0)) {
+            if ((get_icon_can_use((s32) *(s8 *)&game_state.menu_cursor_0) != 0) && (hud_appointment_find_today((s32) game_state.year, (s32) game_state.month, (s32) game_state.day) > 0)) {
                 ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
                 audio_command(0x500);
                 mode_stage_set(0xFE);
@@ -489,7 +489,7 @@ s32 func_80076000(void) {
 }
 
 
-s32 func_800764AC(u32 *arg0) {
+s32 appointment_place_candidates(u32 *arg0) {
     /* FAKE: T-10910, T-24135, padA places cnt at sp+0x2C within the 0xB0 frame, and if (1) around cnt[...]++ reproduces the original branch/delay-slot layout. */
     s32 padA[1];
     s32 cnt[32];
@@ -550,7 +550,7 @@ s32 func_800764AC(u32 *arg0) {
     }
 }
 
-void func_80076630(void) {
+void appointment_start(void) {
     /* FAKE: T-24135, 4-byte stack slot above buf[32] places buf at sp+0x2C as in the original. */
     s32 pad[1];
     u32 buf[32];
@@ -559,8 +559,8 @@ void func_80076630(void) {
     game_state.appointment_place_1 = 0xFF;
     game_state.appointment_place_2 = 0xFF;
     game_state.appointment_place_3 = 0xFF;
-    func_8006B640();
-    if (func_800764AC(buf) >= 2) {
+    hud_appointment_prompt_noop();
+    if (appointment_place_candidates(buf) >= 2) {
         k_reset(1);
         k_sub_reset_point_set();
         gnsx(game_state.player_family_name);
@@ -586,7 +586,7 @@ void func_80076630(void) {
 /* T-24501: 932-byte literal match. The split stack padding preserves the
  * original 0x198 frame: selected IDs at 0x188/0x18C/0x190, candidate IDs at
  * 0x108, and string buffers at 0x3C/0x7C/0xBC. */
-void func_800767A4(void) {
+void appointment_place_menu_build(void) {
     s32 top_gap; /* FAKE: reserve the original top stack word. T-24501. */
     s32 third;
     s32 second;
@@ -602,7 +602,7 @@ void func_800767A4(void) {
     for (i = 0; i < 64; i++) {
         text1[i] = text2[i] = text3[i] = 0;
     }
-    if (func_800764AC(choices) >= 3) {
+    if (appointment_place_candidates(choices) >= 3) {
         var_v1_2 = rand() % 3;
         if (var_v1_2 < 0) {
             var_v1_2 = 0;
@@ -614,13 +614,13 @@ void func_800767A4(void) {
         x_taku_menu_set(1, 3);
         strcpy(text1, "『");
         strcat(text1, place_name_table[first]);
-        strcat(text1, &D_800B69BC);
+        strcat(text1, &appointment_choice_suffix);
         strcpy(text2, "『");
         strcat(text2, place_name_table[second]);
-        strcat(text2, &D_800B69BC);
+        strcat(text2, &appointment_choice_suffix);
         strcpy(text3, "『");
         strcat(text3, place_name_table[third]);
-        strcat(text3, &D_800B69BC);
+        strcat(text3, &appointment_choice_suffix);
         x_taku_string_set((s32) text1, (s32) text2, (s32) text3, 3);
     } else {
         var_v1_2 = rand() & 1;
@@ -634,10 +634,10 @@ void func_800767A4(void) {
         x_taku_menu_set(1, 2);
         strcpy(text1, "『");
         strcat(text1, place_name_table[first]);
-        strcat(text1, &D_800B69BC);
+        strcat(text1, &appointment_choice_suffix);
         strcpy(text2, "『");
         strcat(text2, place_name_table[second]);
-        strcat(text2, &D_800B69BC);
+        strcat(text2, &appointment_choice_suffix);
         x_taku_string_set((s32) text1, (s32) text2, 0, 2);
     }
     game_state.appointment_place_1 = (u8) first;
@@ -645,7 +645,7 @@ void func_800767A4(void) {
     game_state.appointment_place_3 = (u8) third;
 }
 
-s32 func_80076B48(void) {
+s32 appointment_place_choose(void) {
     GameState *g;
     g = &game_state;
     switch (g->substep) {                           /* switch 1; irregular */
@@ -654,7 +654,7 @@ s32 func_80076B48(void) {
         break;
     case 1:                                         /* switch 1 */
         k_sub_reset();
-        func_800767A4();
+        appointment_place_menu_build();
         g->substep += 1;
         k_sub_disp_start(3);
         break;
@@ -684,7 +684,7 @@ s32 func_80076B48(void) {
 
 /* Implicit int in the original (no return value): the switch selector then stays live in $v0 (or v0,v1,zero in the
  * delay slot of the first beqz). T-17006 */
-s32 func_80076C7C(void) {
+s32 appointment_place_confirm(void) {
     s32 pad; /* FAKE: T-17006, unused local that reproduces the original stack layout (a 4-byte slot above sp4C; the
               * buffers are otherwise 4 bytes too high); its real use is unknown. */
     u8 sp4C[0x100];
@@ -741,16 +741,16 @@ void appointment_launch(void) {
     game_mode_set(GAME_MODE_DATE);
 }
 
-void func_80076EC0(void) {
+void holiday_mode_stage_appointment(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80076630();
+        appointment_start();
         break;
     case 1:
-        func_80076B48();
+        appointment_place_choose();
         break;
     case 2:
-        func_80076C7C();
+        appointment_place_confirm();
         break;
     case 3:
         appointment_launch();
@@ -759,17 +759,17 @@ void func_80076EC0(void) {
     message_window_title_update();
 }
 
-void func_80076F48(void) {
+void holiday_mode_stage_activity(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_8007739C();
+        holiday_activity_load();
         break;
     case 1:
-        func_80077694();
+        holiday_activity_sd_setup();
         break;
     case 2:
-        func_80077900();
+        holiday_activity_play();
         break;
     }
     parameter_show();
@@ -777,24 +777,24 @@ void func_80076F48(void) {
     hud_icon_bar_update(1);
 }
 
-void func_80076FDC(void) {
+void holiday_activity_pick_sd_set(void) {
     s32 activity;
     s32 col;
 
     D_801230D0 = 0xFF;
-    if (func_80066A84() == 1) {
+    if (hud_in_summer_months() == 1) {
         activity = game_state.day_events[game_state.day_event_index].girl;
         if (activity == 4) {
             D_801230D0 = 0xFF;
         } else {
-            D_801230D0 = D_800B69D0[activity];
+            D_801230D0 = holiday_sd_set_summer[activity];
         }
     } else {
         activity = game_state.day_events[game_state.day_event_index].girl;
         if (activity == 4) {
             D_801230D0 = 0xFF;
         } else {
-            D_801230D0 = D_800B69D8[activity];
+            D_801230D0 = holiday_sd_set_other[activity];
         }
     }
     if (D_801230D0 == 0xFF) {
@@ -802,7 +802,7 @@ void func_80076FDC(void) {
         if (col != 0) {
             col = 1;
         }
-        if (func_80066A84() == 1) {
+        if (hud_in_summer_months() == 1) {
             switch (game_state.player_flags.h >> 12) {
             case 0:
                 D_801230D0 = D_800B6890[0][col];
@@ -878,18 +878,18 @@ void func_80076FDC(void) {
     }
 }
 
-s32 func_80077330(void) {
+s32 holiday_activity_bg_read(void) {
     s32 r;
 
     if ((game_state.player_flags.b[1] & 0xF) == 3) {
-        r = dec_bg_cd_read(D_800B5960[func_80066A2C()], 0);
+        r = dec_bg_cd_read(D_800B5960[hud_season_index()], 0);
     } else {
-        r = dec_bg_cd_read(func_80075FA0(), 0);
+        r = dec_bg_cd_read(holiday_activity_bg_sector(), 0);
     }
     return r;
 }
 
-void func_8007739C(void) {
+void holiday_activity_load(void) {
     GameState *gs = &game_state;
     s32 i;
     s32 r;
@@ -911,7 +911,7 @@ void func_8007739C(void) {
                 gs->clubs[((PlayerFlagBits *)&gs->player_flags)->club].practice_points += 6;
             }
         }
-        r = func_80077330();
+        r = holiday_activity_bg_read();
         if (r != -1) {
             if ((r == 0) || (r == 1)) {
                 dec_bg_show_set(0, r);
@@ -925,18 +925,18 @@ void func_8007739C(void) {
             dec_bg_show_set(0, dec_bg_decode_to_vram(0));
             if (D_800B594C == -1) {
                 dec_bg_reset();
-                func_80077330();
+                holiday_activity_bg_read();
             } else {
                 gs->substep = 2;
             }
         }
     } else if (gs->substep == 2) {
-        func_80076FDC();
+        holiday_activity_pick_sd_set();
         if (((gs->player_flags.b[1] & 0xF) == 3) && !(gs->player_flags_upper.h & 1)) {
             cd_read_sectors(9, 0x801E0000, 0x7D8A);
             gs->substep = 3;
         } else if (gs->day_events[gs->day_event_index].girl != 4) {
-            cd_read_sectors(0x29, 0x801E0000, D_800B69E0[D_801230D0]);
+            cd_read_sectors(0x29, 0x801E0000, holiday_sd_set_sectors[D_801230D0]);
             gs->substep = 3;
         } else {
             cd_read_sectors(0x29, 0x801E0000, D_800B6810[D_801230D0]);
@@ -949,7 +949,7 @@ void func_8007739C(void) {
     }
 }
 
-void func_80077694(void) {
+void holiday_activity_sd_setup(void) {
     /* FAKE: T-20940, unused local declared first, as the sibling school_day_sd_actors_init declares its record pointer; IDO gives
      * every local a slot, so temp spills at sp+0x30 as in the original (sp+0x34 without it). */
     DayEvent *rec;
@@ -1009,7 +1009,7 @@ void func_80077694(void) {
 
 /* The original passes club to game_mode_set as a second argument (the definition takes one; main_api.h keeps
  * the `()` declaration): club lives in a1 from its second read on. */
-void func_80077900(void) {
+void holiday_activity_play(void) {
     GameState *gs = &game_state;
     u8 b;
     s32 girl;
@@ -1036,7 +1036,7 @@ void func_80077900(void) {
     actor_clear(0x61);
     if ((gs->weekday == WEEKDAY_SUNDAY) && (gs->day_events[gs->day_event_index].girl == 4)
         && ((club = gs->player_flags.h >> 12) != 11) && (gs->clubs[club].practice_points == 6)) {
-        girl = func_80053564(club);
+        girl = girl_find_by_club(club);
         gs->date_girl = girl;
         if ((girl != -1) && (gs->day_count < 0x2DA)) {
             club = gs->player_flags.h >> 12;
@@ -1071,13 +1071,13 @@ void func_80077900(void) {
     day_event_next(0);
 }
 
-void func_80077BE0(void) {
+void holiday_mode_stage_magazine(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80077C50();
+        holiday_magazine_init();
         break;
     case 1:
-        func_80077E30();
+        holiday_magazine_show();
         break;
     case 2:
         magazine_exit();
@@ -1086,18 +1086,18 @@ void func_80077BE0(void) {
     message_window_title_update();
 }
 
-void func_80077C50(void) {
-    func_8006A044(0, 0);
+void holiday_magazine_init(void) {
+    hud_magazine_mark_read(0, 0);
     text_system_reset();
     message_window_set_title("情報誌");
-    func_8006A2CC();
+    hud_magazine_page_build();
     icon_disp_switch(0);
     hizuke_disp_switch(0);
     mode_step_next();
 }
 
 /* FAKE: T-24108, omitting default return keeps the selector copy in the first beq delay slot; the always-true >= 0 check in case 0x62 promotes unk_03F to $v0 across the branch and is folded away by uopt. */
-u8 func_80077CA8(void) {
+u8 holiday_magazine_hint_index(void) {
     switch (game_state.year) {
     case 0x5F:
         if (game_state.month < 5U) {
@@ -1152,7 +1152,7 @@ u8 func_80077CA8(void) {
     }
 }
 
-void func_80077E30(void) {
+void holiday_magazine_show(void) {
     magazine_base_show();
     /* FAKE: byte view of the u8 field avoids the redundant selector copy (move v0,v1), as in TEL
      * (T-10630) on the same field. T-17000 */
@@ -1171,7 +1171,7 @@ void func_80077E30(void) {
         k_sub_reset();
         k_sub_disp_start(0);
         gnsx(game_state.player_family_name);
-        sndisp(D_800B6CF8[func_80077CA8()], 0, 0x1F);
+        sndisp(holiday_magazine_hints[holiday_magazine_hint_index()], 0, 0x1F);
         game_state.substep += 1;
         return;
     case 3:
@@ -1347,7 +1347,7 @@ void holiday_club_init(void) {
     mode_step_next();
 }
 
-void func_8007866C(void) {
+void holiday_club_select(void) {
     u8 buf[72];
     GameState *gs;
 
@@ -1382,7 +1382,7 @@ void func_8007866C(void) {
 
 void holiday_club_exit(void) {
     actor_clear_upper();
-    if (func_8005352C() == 1 && (u32)(game_state.day + 6) / 7 == 3 && game_state.month % 3U == 0 && game_state.weekday == WEEKDAY_SUNDAY) {
+    if (girl_player_sports_club_check() == 1 && (u32)(game_state.day + 6) / 7 == 3 && game_state.month % 3U == 0 && game_state.weekday == WEEKDAY_SUNDAY) {
         game_mode_set(GAME_MODE_PRACTICE_MATCH);
         return;
     }
@@ -1402,7 +1402,7 @@ s32 holiday_club(void) {
         holiday_club_init();
         break;
     case 1:
-        func_8007866C();
+        holiday_club_select();
         break;
     case 2:
         holiday_club_exit();
@@ -1419,7 +1419,7 @@ void holiday_club_join_exit(void) {
     mode_stage_set(5);
 }
 
-void func_8007894C(void) {
+void holiday_mode_stage_club_join(void) {
     switch (game_state.mode_step) {
     case 0:
         join_club_init();

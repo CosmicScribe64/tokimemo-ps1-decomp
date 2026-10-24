@@ -304,7 +304,7 @@ void func_80147214(void) {
             game_state.girls[0].syoushin += 0xA;
             break;
         }
-        func_80063668();
+        portrait_face_update();
         mode_step_next();
         break;
     case 0x1D:
@@ -437,7 +437,7 @@ void func_80147214(void) {
             game_state.girls[0].syoushin += 0xA;
             break;
         }
-        func_80063668();
+        portrait_face_update();
         mode_step_next();
         break;
     case 0x37:

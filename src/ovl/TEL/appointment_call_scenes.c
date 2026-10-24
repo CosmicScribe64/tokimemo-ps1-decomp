@@ -45,7 +45,7 @@ void func_801397D0(void) {
     message_window_show();
     parameter_show();
     hud_icon_bar_update(0);
-    cursor_update();
+    hud_cursor_update();
     message_window_title_update();
     dec_bg_draw(0);
     hud_screen_frame_draw(0);
@@ -65,7 +65,7 @@ void func_80139920(void) {
             printf("canceled %d \n", i);
         }
     }
-    func_8006B0C8();
+    hud_appointment_list_sort();
 }
 
 s32 func_801399CC(void) {
@@ -553,7 +553,7 @@ s32 func_8013AA30(void) {
         parameter_show_init();
         message_window_init();
         hizuke_init();
-        func_8006509C();
+        hud_icon_bar_init();
         icon_disp_switch(1);
         schedule_command_icons_lock_to_record();
         icon_can_use_set(0, 0);
@@ -562,7 +562,7 @@ s32 func_8013AA30(void) {
         k_sub_reset_point_set();
         k_sub_disp_start(1);
         actor_clear_upper();
-        temp_v0 = dec_bg_cd_read(D_800B5950[func_80066A2C()], 0);
+        temp_v0 = dec_bg_cd_read(D_800B5950[hud_season_index()], 0);
         if (temp_v0 != -1) {
             if ((temp_v0 == 0) || (temp_v0 == 1)) {
                 dec_bg_show_set(0, temp_v0);
@@ -606,7 +606,7 @@ s32 func_8013AC0C(void) {
         message_window_init();
         hizuke_init();
         actor_clear_upper();
-        func_8006509C();
+        hud_icon_bar_init();
         icon_disp_switch(1);
         schedule_command_icons_lock_to_record();
         icon_can_use_set(0, 0);
@@ -614,7 +614,7 @@ s32 func_8013AC0C(void) {
         parameter_disp_switch(1);
         k_sub_reset_point_set();
         k_sub_disp_start(1);
-        temp_v0 = dec_bg_cd_read(D_800B5950[func_80066A2C()], 0);
+        temp_v0 = dec_bg_cd_read(D_800B5950[hud_season_index()], 0);
         if (temp_v0 != -1) {
             if ((temp_v0 == 0) || (temp_v0 == 1)) {
                 dec_bg_show_set(0, temp_v0);

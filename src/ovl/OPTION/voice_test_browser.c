@@ -275,7 +275,7 @@ s32 func_80139198(void) {
     game_state.menu_cursor_0 = 0;
     game_state.menu_cursor_1 = 0;
     game_state.menu_mode = MENU_MODE_MOUSE_LIKE;
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     ((Actor *)actor_pool)[0].draw_flags |= 1;
     D_8013D3B0 = 0;
     D_8013D3B4 = 0;

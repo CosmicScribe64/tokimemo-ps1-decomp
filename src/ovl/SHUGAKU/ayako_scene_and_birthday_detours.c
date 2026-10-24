@@ -22,9 +22,9 @@ void func_80133E10(void) {
 
     table = D_8013C008;
     if (game_state.mode_step < 8) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     } else if (game_state.mode_step >= 0x1D && game_state.mode_step < 0x23) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
     index = game_state.mode_step;
     table.f[index](0x80);

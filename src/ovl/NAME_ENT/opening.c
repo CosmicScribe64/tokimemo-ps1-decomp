@@ -1,6 +1,6 @@
 /* opening.c: src/ovl/NAME_ENT/80142A80.c:53,277,695; attract picture-sequence callbacks, voice/palette presentation and opening movie flow. Original object 0x80142A80-0x80144AD0 (config/objects/NAME_ENT.txt). */
-#define MAIN_API_OVERRIDE_func_8004AC18 /* original called it undeclared (implicit int): its $v0 result keeps v0 busy after the calls in func_80143580, T-25604 */
-#define MAIN_API_OVERRIDE_D_8012070C /* func_8014472C: pointer view of the record field (main_api.h: s32), T-22007 */
+#define MAIN_API_OVERRIDE_func_8004AC18 /* original called it undeclared (implicit int): its $v0 result keeps v0 busy after the calls in opening_story_scene, T-25604 */
+#define MAIN_API_OVERRIDE_D_8012070C /* opening_story_voice_meter_update: pointer view of the record field (main_api.h: s32), T-22007 */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 
@@ -8,50 +8,50 @@ extern s32 *D_8012070C;
 extern s32 func_8004AC18();
 
 /* The 21 song-line strings are placed from their rodata pieces (rodata_pieces.py), not copied into the source. T-22007 */
-extern u8 D_8014C4F0[];
-extern u8 D_8014C4FC[];
-extern u8 D_8014C510[];
-extern u8 D_8014C534[];
-extern u8 D_8014C554[];
-extern u8 D_8014C578[];
-extern u8 D_8014C5A4[];
-extern u8 D_8014C5B8[];
-extern u8 D_8014C5D8[];
-extern u8 D_8014C5F0[];
-extern u8 D_8014C60C[];
-extern u8 D_8014C62C[];
-extern u8 D_8014C63C[];
-extern u8 D_8014C65C[];
-extern u8 D_8014C668[];
-extern u8 D_8014C684[];
-extern u8 D_8014C6A0[];
-extern u8 D_8014C6B0[];
-extern u8 D_8014C6D0[];
-extern u8 D_8014C6E0[];
-extern u8 D_8014C6F4[];
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C4F0);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C4FC);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C510);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C534);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C554);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C578);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C5A4);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C5B8);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C5D8);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C5F0);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C60C);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C62C);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C63C);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C65C);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C668);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C684);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C6A0);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C6B0);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C6D0);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C6E0);
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", D_8014C6F4);
+extern u8 opening_lyric_text_00[];
+extern u8 opening_lyric_text_01[];
+extern u8 opening_lyric_text_02[];
+extern u8 opening_lyric_text_03[];
+extern u8 opening_lyric_text_04[];
+extern u8 opening_lyric_text_05[];
+extern u8 opening_lyric_text_06[];
+extern u8 opening_lyric_text_07[];
+extern u8 opening_lyric_text_08[];
+extern u8 opening_lyric_text_09[];
+extern u8 opening_lyric_text_10[];
+extern u8 opening_lyric_text_11[];
+extern u8 opening_lyric_text_12[];
+extern u8 opening_lyric_text_13[];
+extern u8 opening_lyric_text_14[];
+extern u8 opening_lyric_text_15[];
+extern u8 opening_lyric_text_16[];
+extern u8 opening_lyric_text_17[];
+extern u8 opening_lyric_text_18[];
+extern u8 opening_lyric_text_19[];
+extern u8 opening_lyric_text_20[];
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_00);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_01);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_02);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_03);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_04);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_05);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_06);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_07);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_08);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_09);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_10);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_11);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_12);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_13);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_14);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_15);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_16);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_17);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_18);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_19);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_text_20);
 
-void func_80142A80(void) {
+void opening_movie(void) {
     s32 pad; /* FAKE: unused; its stack home gives the original 72-byte frame. T-22007 */
     u8 sp43;
     s32 sp3C;
@@ -61,33 +61,33 @@ void func_80142A80(void) {
     sp43 = func_8004ADD4();
     func_8004ADAC(0);
     func_80048DD0(0);
-    func_8006C760(1);
-    cursor_show(0);
+    hud_corner_icon_set(1);
+    hud_cursor_show(0);
     back_clear_switch(1);
     text_system_reset();
     sp3C = get_k_speed();
     k_speed_set(3U);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C4F0, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C4FC, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C510, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C534, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C554, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C578, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C5A4, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C5B8, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C5D8, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C5F0, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C60C, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C62C, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C63C, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C65C, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C668, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C684, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C6A0, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C6B0, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C6D0, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C6E0, 0);
-    set_kanji_string(-0x88, 0x5C, 8, (s32) D_8014C6F4, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_00, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_01, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_02, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_03, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_04, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_05, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_06, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_07, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_08, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_09, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_10, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_11, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_12, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_13, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_14, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_15, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_16, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_17, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_18, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_19, 0);
+    set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_20, 0);
     k_disp_start(0);
     set_movie_offset(0x18, 0x10);
     func_80056BA8(0, 0x33B, 0x820);
@@ -104,15 +104,15 @@ void func_80142A80(void) {
     game_mode_set(GAME_MODE_TITLE);
     func_8004ADAC((s32) sp43);
     k_speed_set((u8) sp3C);
-    func_8006C760(0);
-    cursor_actor_init(0);
-    cursor_show(0);
+    hud_corner_icon_set(0);
+    hud_cursor_actor_init(0);
+    hud_cursor_show(0);
     D_800B3CF8 = 0;
     D_800B3CFC = 0;
     D_800B3D00 = 0;
 }
 
-void func_80142E24(void) {
+void opening_story_load(void) {
     s32 row;
     s32 addresses[8];
     u8 step;
@@ -130,7 +130,7 @@ void func_80142E24(void) {
         game_state.screen_brightness = 0x80;
         draw2d3d(1, 0);
         actor_draw_enable(1);
-        cursor_show(0);
+        hud_cursor_show(0);
         func_80048DD0(0);
         actor_clear_upper();
         sprite_tables_clear();
@@ -250,8 +250,8 @@ void func_80142E24(void) {
     }
 }
 
-void func_80143498(void) {
-    if ((cd_audio_state() & 2) && D_8014D170 == 0) {
+void opening_story_second_narration(void) {
+    if ((cd_audio_state() & 2) && opening_second_narration_started == 0) {
         cd_audio_request_set(0x06000CBB, 0x12000E0C, 0xF);
         audio_command(0x300);
         text_system_reset();
@@ -262,20 +262,20 @@ void func_80143498(void) {
         k_disp_switch(0, 0);
         k_disp_switch(1, 0);
         k_disp_switch(2, 0);
-        D_8014D170 = 1;
+        opening_second_narration_started = 1;
     }
 }
 
 /* Same-file functions defined below. */
-void func_80144654(void);
-void func_8014472C(void);
-void func_80144908(void);
+void opening_story_text_toggle(void);
+void opening_story_voice_meter_update(void);
+void opening_story_actor97_random_animation(void);
 
 /* Introduction scene state machine. T-25604: case 9 hides the three records with one chain
  * (sprite_quads[2] is read back, so uopt keeps it in a2 and the selector gets t0), func_8004AC18 is
  * called undeclared (its $v0 result keeps v0 busy after each call), and every tile fill counts with
  * i. */
-void func_80143580(void) {
+void opening_story_scene(void) {
     s32 pad0; /* FAKE: unused; with pad1 its stack home gives the original 0x90 frame. T-25604 */
     s32 tiles[8];
     s32 pad1; /* FAKE: unused, see pad0. T-25604 */
@@ -295,7 +295,7 @@ void func_80143580(void) {
         if ((((BgLayer *)&bg_layers)[0].unk_10 = ((BgLayer *)&bg_layers)[0].unk_11 = ((BgLayer *)&bg_layers)[0].unk_12++) >= 0x81U) {
             ((BgLayer *)&bg_layers)[0].unk_00 = 0x01000000;
             game_state.substep++;
-            D_8014D170 = 0;
+            opening_second_narration_started = 0;
         }
         break;
     case 1:
@@ -330,7 +330,7 @@ void func_80143580(void) {
         }
         break;
     case 4:
-        func_80143498();
+        opening_story_second_narration();
         if ((((BgLayer *)&bg_layers)[1].unk_10 = ((BgLayer *)&bg_layers)[1].unk_11 = ((BgLayer *)&bg_layers)[1].unk_12--) != 0) {
             if ((((BgLayer *)&bg_layers)[0].unk_10 = ((BgLayer *)&bg_layers)[0].unk_11 = ((BgLayer *)&bg_layers)[0].unk_12++) >= 0x81U) {
                 ((BgLayer *)&bg_layers)[1].unk_00 = 0x80000000;
@@ -522,8 +522,8 @@ void func_80143580(void) {
         }
         break;
     case 15:
-        func_8014472C();
-        func_80144908();
+        opening_story_voice_meter_update();
+        opening_story_actor97_random_animation();
         if (game_state.pad_pressed & 0xFFFF) {
             game_state.substep++;
         } else if ((u32) game_state.mode_step_timer.u >= 0x101U) {
@@ -605,10 +605,10 @@ void func_80143580(void) {
         }
         break;
     }
-    func_80144654();
+    opening_story_text_toggle();
 }
 
-void func_80144654(void) {
+void opening_story_text_toggle(void) {
     if (game_state.pad_held & PAD_TRIANGLE) {
         k_disp_switch(0, 1);
         k_disp_switch(1, 1);
@@ -624,7 +624,7 @@ void func_80144654(void) {
     k_disp_switch(3, 0);
 }
 
-void func_8014472C(void) {
+void opening_story_voice_meter_update(void) {
     s32 level;
     s32 avg;
 
@@ -667,7 +667,7 @@ void func_8014472C(void) {
     }
 }
 
-void func_80144908(void) {
+void opening_story_actor97_random_animation(void) {
     if (!(D_80120696 & 1) && ((rand() & 0x7F) == 0x7F)) {
         D_80120695 = 4;
         D_80120696 = 3;
@@ -684,7 +684,7 @@ void func_80144908(void) {
     }
 }
 
-void func_801449DC(void) {
+void opening_story_end(void) {
     func_8004AC18(0xFF);
     cd_command_reset();
     func_80041168(0);
@@ -695,17 +695,17 @@ void func_801449DC(void) {
     mode_stage_next();
 }
 
-void func_80144A34(void) {
+void opening_story_mode_stage(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80142E24();
+        opening_story_load();
         break;
     case 1:
-        func_80143580();
+        opening_story_scene();
         break;
     case 2:
-        func_801449DC();
+        opening_story_end();
         break;
     }
     if (game_state.pad_pressed & 0x860) {

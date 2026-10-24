@@ -108,7 +108,7 @@ void func_80061A3C(void) {
         back_clear_switch(1);
         actor_draw_enable(1);
         *(s32 *)&game_state.menu_hit[3] = 0x9F;
-        cursor_show(0);
+        hud_cursor_show(0);
         game_state.clear_color_g = 0;
         game_state.clear_color_r = 0;
         game_state.screen_brightness = 0;
@@ -224,8 +224,8 @@ void func_80061FC4(void) {
     if (((u32)game_state.mode_step_timer.w >> 1 >= 0xFFU) || (game_state.pad_pressed & 0x860)) {
         bg_layers = 0x80000000;
         func_80059048();
-        cursor_actor_init(0);
-        cursor_show(0);
+        hud_cursor_actor_init(0);
+        hud_cursor_show(0);
         back_clear_switch(1);
         /* Chain written as element stores: one li for all three (T-9210). */
         (&game_state.clear_color_r)[0] = (&game_state.clear_color_g)[0] = (&game_state.clear_color_b)[0] = 0xFF;
@@ -291,8 +291,8 @@ void func_80062210(void) {
     (&game_state.clear_color_r)[0] = (&game_state.clear_color_g)[0] = (&game_state.clear_color_b)[0] = 0xFF;
     sprite_tables_clear();
     (&game_state.screen_brightness)[0] = 0x80;
-    cursor_actor_init(0);
-    cursor_show(1);
+    hud_cursor_actor_init(0);
+    hud_cursor_show(1);
     func_800623E4();
     for (i = 0, j = 0; i < 3; i++, j += 2) {
         actor_clear(i + 0x60);
@@ -356,14 +356,14 @@ void func_800623E4(void) {
 void func_80062524(void) {
     func_800623E4();
     if (game_state.pad_pressed & 0x820) {
-        cursor_show(0);
+        hud_cursor_show(0);
         mode_step_next();
         audio_command(0x501);
     }
     if ((u32)game_state.mode_step_timer.w >= 0x259U || (game_state.pad_pressed & PAD_SELECT)) {
         actor_clear_range(0);
         audio_command(0x7F);
-        cursor_show(0);
+        hud_cursor_show(0);
         game_mode_set(GAME_MODE_OPENING);
     }
 }
@@ -422,8 +422,8 @@ void func_80062764(void) {
     func_8004AC18(game_state.mode_step_timer.w * 2);
     if ((u32)game_state.mode_step_timer.w >= 0x80U) {
         func_80048DD0(0);
-        cursor_actor_init(0);
-        cursor_show(0);
+        hud_cursor_actor_init(0);
+        hud_cursor_show(0);
         sprite_tables_clear();
         mode_step_next();
     }
@@ -463,7 +463,7 @@ void title_mode_handler(void) {
     if (D_800B3CFC != 0) {
         if (func_80045288() == 1) {
             if (game_state.mode_stage >= 2) {
-                cursor_show(0);
+                hud_cursor_show(0);
                 audio_command(0x7F);
                 game_mode_set(GAME_MODE_OPENING);
                 mode_stage_set(1);

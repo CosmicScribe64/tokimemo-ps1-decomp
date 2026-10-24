@@ -5,7 +5,7 @@
 
 extern u32 talk_work;
 
-void func_80154260(void) {
+void date_scene_mio_spring_data_init(void) {
     D_8015F520 = 0x801D2240;
     D_8015F524 = 0x801D2248;
     D_8015F528 = 0x801D2288;
@@ -19,7 +19,7 @@ void func_80154260(void) {
     D_8015F548 = 0x801C6000;
 }
 
-void func_80154310(void) {
+void date_scene_mio_summer_data_init(void) {
     D_8015F54C = 0x801D21E0;
     D_8015F550 = 0x801D21E8;
     D_8015F554 = 0x801D2228;
@@ -33,7 +33,7 @@ void func_80154310(void) {
     D_8015F574 = 0x801C6000;
 }
 
-void func_801543C0(void) {
+void date_scene_mio_autumn_data_init(void) {
     D_8015F578 = 0x801CE078;
     D_8015F57C = 0x801CE07C;
     D_8015F580 = 0x801CE08C;
@@ -47,7 +47,7 @@ void func_801543C0(void) {
     D_8015F5A0 = 0x801C6000;
 }
 
-void func_80154470(void) {
+void date_scene_mio_winter_data_init(void) {
     D_8015F5A4 = 0x801CE148;
     D_8015F5A8 = 0x801CE14C;
     D_8015F5AC = 0x801CE170;
@@ -61,19 +61,19 @@ void func_80154470(void) {
     D_8015F5CC = 0x801C6000;
 }
 
-void func_80154520(void) {
+void date_scene_mio_dispatch(void) {
     switch (talk_work) {
     case 2:
-        func_80154C84();
+        date_scene_mio_spring();
         return;
     case 3:
-        func_80154E48();
+        date_scene_mio_summer();
         return;
     case 4:
-        func_80154F44();
+        date_scene_mio_autumn();
         return;
     case 5:
-        func_80155004();
+        date_scene_mio_winter();
         return;
     default:
         game_mode_reset_to_title();
@@ -81,16 +81,16 @@ void func_80154520(void) {
     }
 }
 
-void func_801545B4(void) {
-    D_8015B68C = 3;
-    D_8015E208 = D_8015DEE8;
-    D_8015E20C = D_8015E024;
-    D_8015E210 = D_8015E160;
+void date_scene_mio_spring_ride_select(void) {
+    date_ride_index = 3;
+    date_scene_text = D_8015DEE8;
+    date_scene_command = D_8015E024;
+    date_scene_voice = D_8015E160;
     mode_step_next();
 }
 
-void func_8015460C(void) {
-    func_80154260();
+void date_scene_mio_spring_still_setup(void) {
+    date_scene_mio_spring_data_init();
     load_palette(D_8015F530, 0x11, 1, 2, 0);
     scene_still_show(D_8015F534, D_8015F538, D_8015F53C, D_8015F540, D_8015F544, D_8015F548);
     scene_anim_show(D_8015F524, D_8015F528, D_8015F520, D_8015F52C);
@@ -98,11 +98,11 @@ void func_8015460C(void) {
     mode_step_next();
 }
 
-void func_801546BC(void) {
-    D_8015E208 = D_8015DEEC;
-    D_8015E20C = D_8015E028;
-    D_8015E210 = D_8015E164;
-    func_80154310();
+void date_scene_mio_summer_setup(void) {
+    date_scene_text = D_8015DEEC;
+    date_scene_command = D_8015E028;
+    date_scene_voice = D_8015E164;
+    date_scene_mio_summer_data_init();
     load_palette(D_8015F55C, 0x11, 1, 2, 0);
     scene_still_show(D_8015F560, D_8015F564, D_8015F568, D_8015F56C, D_8015F570, D_8015F574);
     scene_anim_show(D_8015F550, D_8015F554, D_8015F54C, (s32) D_8015F558);
@@ -125,11 +125,11 @@ void func_801546BC(void) {
     mode_step_next();
 }
 
-void func_8015485C(void) {
-    D_8015E208 = D_8015DEF0;
-    D_8015E20C = D_8015E02C;
-    D_8015E210 = D_8015E168;
-    func_801543C0();
+void date_scene_mio_autumn_setup(void) {
+    date_scene_text = D_8015DEF0;
+    date_scene_command = D_8015E02C;
+    date_scene_voice = D_8015E168;
+    date_scene_mio_autumn_data_init();
     load_palette(D_8015F588, 0x11, 1, 2, 0);
     scene_still_show(D_8015F58C, D_8015F590, D_8015F594, D_8015F598, D_8015F59C, D_8015F5A0);
     scene_anim_show(D_8015F57C, D_8015F580, D_8015F578, D_8015F584);
@@ -142,10 +142,10 @@ void func_8015485C(void) {
     mode_step_next();
 }
 
-void func_80154990(void) {
-    D_8015E208 = D_8015DEF4;
-    D_8015E20C = D_8015E030;
-    D_8015E210 = D_8015E16C;
+void date_scene_mio_winter_setup(void) {
+    date_scene_text = D_8015DEF4;
+    date_scene_command = D_8015E030;
+    date_scene_voice = D_8015E16C;
     load_palette(D_8015F5B4, 0x11, 1, 2, 0);
     load_palette(D_8015F5B4, 0x12, 1, 2, 1);
     scene_still_show(D_8015F5B8, D_8015F5BC, D_8015F5C0, D_8015F5C4, D_8015F5C8, D_8015F5CC);
@@ -158,78 +158,78 @@ void func_80154990(void) {
     mode_step_next();
 }
 
-void func_80154AC4(void) {
+void date_scene_mio_spring_background_1(void) {
     bg_read_sub2(0x4359);
     mode_step_next();
 }
 
-void func_80154AEC(void) {
+void date_scene_mio_spring_background_2(void) {
     bg_read_sub2(0x4809);
     mode_step_next();
 }
 
-void func_80154B14(void) {
+void date_scene_mio_spring_background_3(void) {
     bg_read_sub2(0x432B);
     mode_step_next();
 }
 
-void func_80154B3C(void) {
+void date_scene_mio_summer_background_1(void) {
     bg_read_sub2(0x48BD);
     mode_step_next();
 }
 
-void func_80154B64(void) {
+void date_scene_mio_summer_background_2(void) {
     bg_read_sub2(0x45A3);
     mode_step_next();
 }
 
-void func_80154B8C(void) {
+void date_scene_mio_background_unused(void) {
     bg_read_sub2(0x454E);
     mode_step_next();
 }
 
-void func_80154BB4(void) {
+void date_scene_mio_autumn_background_1(void) {
     bg_read_sub2(0x4876);
     mode_step_next();
 }
 
-void func_80154BDC(void) {
+void date_scene_mio_autumn_background_2(void) {
     bg_read_sub2(0x4544);
     mode_step_next();
 }
 
-void func_80154C04(void) {
+void date_scene_mio_winter_background_1(void) {
     bg_read_sub2(0x4833);
     mode_step_next();
 }
 
-void func_80154C2C(void) {
+void date_scene_mio_winter_background_2(void) {
     bg_read_sub2(0x43F9);
     mode_step_next();
 }
 
-void func_80154C54(void) {
+void date_scene_mio_winter_audio_command_background_1(void) {
     audio_command(0x500);
     bg_read_sub2(0x43F0);
     mode_step_next();
 }
 
-void func_80154C84(void) {
+void date_scene_mio_spring(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl67 tbl;
 
-    tbl = D_8015F5D4;
+    tbl = date_scene_mio_spring_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_80154D00(void) {
+void date_scene_mio_spring_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8664);
-    func_80154260();
+    date_scene_mio_spring_data_init();
     mode_step_next();
 }
 
-void func_80154D38(void) {
+void date_scene_mio_spring_answer_branch(void) {
     if (D_80122CDC == 1) {
         portrait_layout_set(2);
         mode_step_set(0x2E);
@@ -249,53 +249,53 @@ void func_80154D38(void) {
     mode_step_next();
 }
 
-void func_80154E14(void) {
+void date_scene_mio_spring_scream_machine_title(void) {
     strcpy(D_800CA1DC, "絶叫マシーンビビール");
     mode_step_next();
 }
 
-void func_80154E48(void) {
+void date_scene_mio_summer(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
 
-    tbl = D_8015F6E0;
+    tbl = date_scene_mio_summer_steps;
     if (game_state.mode_step >= 0xF && game_state.mode_step < 0x12) {
-        func_8014C9A8();
+        date_scene_light_beams();
     }
     if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_80154F0C(void) {
+void date_scene_mio_summer_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x86A9);
-    func_80154310();
+    date_scene_mio_summer_data_init();
     mode_step_next();
 }
 
-void func_80154F44(void) {
+void date_scene_mio_autumn(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl41 tbl;
 
-    tbl = D_8015F788;
+    tbl = date_scene_mio_autumn_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_80154FCC(void) {
+void date_scene_mio_autumn_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x86EE);
-    func_801543C0();
+    date_scene_mio_autumn_data_init();
     mode_step_next();
 }
 
-void func_80155004(void) {
+void date_scene_mio_winter(void) {
     s32 idx; /* declared before tbl with i: two words above tbl (T-3330) */
     s16 i;
     FnTbl53 tbl;
 
-    tbl = D_8015F82C;
+    tbl = date_scene_mio_winter_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (game_state.mode_step == 0xE) {
@@ -320,16 +320,16 @@ void func_80155004(void) {
     }
 }
 
-void func_80155174(void) {
+void date_scene_mio_winter_narration_speak(void) {
     if (game_state.mode_step_timer.w++ == 0) {
         game_state.current_girl = GIRL_SOTOI;
     } else {
         game_state.current_girl = game_state.date_girl;
     }
-    func_8014C5C8();
+    date_scene_speak();
 }
 
-s32 func_801551D0(void) {
+s32 date_scene_mio_winter_load_data(void) {
     GameState *g;
     u32 state;
 
@@ -339,11 +339,11 @@ s32 func_801551D0(void) {
         return 0;
     }
     cd_read_sectors(0x3D, 0x801B0000, 0x872B);
-    func_80154470();
+    date_scene_mio_winter_data_init();
     mode_step_next();
 }
 
-void func_8015522C(void) {
+void date_scene_mio_winter_answer_effect(void) {
     if (D_80122CDC != 0) {
         D_800CA150 = (u16) D_800CA150 + 1;
     } else {
@@ -352,6 +352,6 @@ void func_8015522C(void) {
     mode_step_next();
 }
 
-void func_80155284(void) {
-    func_80146224();
+void date_scene_mio_spring_ride(void) {
+    date_ride_dispatch();
 }

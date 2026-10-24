@@ -543,7 +543,7 @@ void func_80144D38(void) {
     D_80122D30 = 1;
     k_disp_start(7);
     menu_set(0, 6, a, b, c, d);
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
 }
 
 void func_80144E9C(void) {
@@ -552,8 +552,8 @@ void func_80144E9C(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_cursor_update(0);
     menu_bar_show(0);
-    cursor_show(0);
-    cursor_update();
+    hud_cursor_show(0);
+    hud_cursor_update();
     i = 0;
     if (game_state.pad_pressed & PAD_CIRCLE) {
         for (i = 0; i < 6; i++) {

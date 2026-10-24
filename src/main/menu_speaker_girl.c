@@ -3,11 +3,11 @@
 #include "game.h"
 
 /* Menu palette colors, data island 0x800E3680..0x800E36BF. */
-u32 D_800E3680[16] = {0};
+u32 menu_bar_style[16] = {0};
 
 /* .data range 0x800B40F0..0x800B438F of this object (T-25005: its own section, tools/data_split.py).
  * The template of sndisp's pos[] is D_800B40F8, so the rest of the range follows sndisp. */
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B40F0);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", text_row_y);
 
 /* Accessed menu-selection view at GameState +0x1090. */
 typedef struct MenuSelection {
@@ -173,7 +173,7 @@ void menu_cursor_update(s32 menu) {
     }
     switch (g->menu_mode & 3) {
     case 0:
-        cursor_update();
+        hud_cursor_update();
         for (i = 0; i < ((MenuSelection *)&g->menu_count_0)->count[menu]; i++) {
             if (((MenuItem (*)[2])g->menu_items)[i][menu].hover != 0) {
                 ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
@@ -269,7 +269,7 @@ void menu_cursor_update(s32 menu) {
             cursor_x = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
             cursor_y = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
         } else {
-            cursor_update();
+            hud_cursor_update();
             for (i = 0; i < ((MenuSelection *)&g->menu_count_0)->count[menu]; i++) {
                 if (((MenuItem (*)[2])g->menu_items)[i][menu].hover != 0) {
                     ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
@@ -297,10 +297,10 @@ void menu_cursor_update(s32 menu) {
             ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
         }
         if (((MenuSelection *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection *)&g->menu_count_0)->count[menu]) {
-            ((MenuSelection *)&g->menu_count_0)->current[menu] = func_80050324(menu, 1);
+            ((MenuSelection *)&g->menu_count_0)->current[menu] = menu_cursor_to_edge(menu, 1);
         }
         if (((MenuSelection *)&g->menu_count_0)->current[menu] < 0) {
-            ((MenuSelection *)&g->menu_count_0)->current[menu] = func_80050324(menu, 0);
+            ((MenuSelection *)&g->menu_count_0)->current[menu] = menu_cursor_to_edge(menu, 0);
         }
         cursor_x = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
         cursor_y = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
@@ -321,7 +321,7 @@ void menu_cursor_update(s32 menu) {
 }
 
 
-s32 func_80050324(s32 menu, s32 reverse) {
+s32 menu_cursor_to_edge(s32 menu, s32 reverse) {
     GameState *g;
     s32 i;
     /* The menu entries are interleaved: one record for each of two menus. */
@@ -437,12 +437,12 @@ s32 get_near_menu(s32 mode, s32 dir, s32 menu) {
 
 void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg0 >= 0x10) {
-        D_800E3680[0] = 0x832F7FAF;
-        D_800E3680[1] = 0x822F7F2F;
+        menu_bar_style[0] = 0x832F7FAF;
+        menu_bar_style[1] = 0x822F7F2F;
         return;
     }
     /* FAKE: redundant nibble mask preserves the original temporary numbering. T-24501 */
-    D_800E3680[arg0] = ((arg2 & 0xF) << 0x18) + arg1 + ((arg3 & 0xF) << 0x1C);
+    menu_bar_style[arg0] = ((arg2 & 0xF) << 0x18) + arg1 + ((arg3 & 0xF) << 0x1C);
 }
 
 /* Draw the highlight bar of the hovered menu item */
@@ -453,12 +453,12 @@ void menu_bar_show(menu)
     s32 page;
     s32 flag;
     s8 item;
-    page = (D_800E3680[menu] >> 24) & 15;
-    mode = (D_800E3680[menu] >> 28) & 7;
-    flag = (D_800E3680[menu] >> 31) << 7;
+    page = (menu_bar_style[menu] >> 24) & 15;
+    mode = (menu_bar_style[menu] >> 28) & 7;
+    flag = (menu_bar_style[menu] >> 31) << 7;
     item = ((MenuSelection *)&game_state.menu_count_0)->current[menu];
     if (item >= 0 && (u32)item < ((MenuSelection *)&game_state.menu_count_0)->count[menu]) {
-        prim_gradient_rect(((MenuItem (*)[2])game_state.menu_items)[item][menu].x, ((MenuItem (*)[2])game_state.menu_items)[item][menu].y, ((MenuItem (*)[2])game_state.menu_items)[item][menu].w, ((MenuItem (*)[2])game_state.menu_items)[item][menu].h, page, D_800E3680[menu] & 0xFFFFFF, flag | mode);
+        prim_gradient_rect(((MenuItem (*)[2])game_state.menu_items)[item][menu].x, ((MenuItem (*)[2])game_state.menu_items)[item][menu].y, ((MenuItem (*)[2])game_state.menu_items)[item][menu].w, ((MenuItem (*)[2])game_state.menu_items)[item][menu].h, page, menu_bar_style[menu] & 0xFFFFFF, flag | mode);
         dtd_on_tpage(0, 0, page, 0, 1);
     }
 }
@@ -477,10 +477,10 @@ void x_taku_menu_set(s32 menu, s32 count)
         height[i] = 16;
     }
     if (count == 3) {
-        menu_set(menu, 3, x, D_800B40F0, width, height);
+        menu_set(menu, 3, x, text_row_y, width, height);
         return;
     }
-    menu_set(menu, 2, x, D_800B40F0, width, height);
+    menu_set(menu, 2, x, text_row_y, width, height);
 }
 
 void x_taku_string_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -546,18 +546,18 @@ void sndisp(u8 *str, s32 y, s32 col) {
 
 /* rest of the 0x800B40F0 range, after the template of sndisp */
 INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_tokimeki_weight);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B4110);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B4120);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B4130);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B4198);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_bonus_param_mask);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_param_ladder_kind);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_param_bonus);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_param_ladder_base);
 INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B419C);
 INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_affection_weight);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B41B0);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B4348);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B4354);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B4360);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B436C);
-INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", D_800B437C);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_closeness_grid);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_syoushin_weight);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_points_mask_strong);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_points_mask_normal);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_points_param_curve);
+INCLUDE_RODATA("asm/data/main/menu_speaker_girl.data", girl_points_stress_curve);
 
 /* Queue a narration string with the speaker name codes expanded */
 void sndi(u8 *str, s32 y, s32 col) {
@@ -671,10 +671,10 @@ s32 get_g_name(u8 *arg0, s32 arg1) {
     if (arg1 == 0) {
         strcpy(arg0, "詩織");
     } else if (arg1 == 0xA) {
-        strcpy(arg0, D_800B3630);
+        strcpy(arg0, girl_short_name_yumi_given);
         strcat(arg0, "ちゃん");
     } else if (arg1 == 0xC) {
-        strcpy(arg0, D_800B3624);
+        strcpy(arg0, girl_short_name_rei);
     } else {
         strcpy(arg0, girl_short_name_table[arg1 & 0xF]);
         strcat(arg0, "さん");
@@ -693,25 +693,25 @@ void get_p_name(u8 *arg0, u32 arg1) {
             return;
         }
         strcpy(arg0, &game_state.player_given_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     case 1:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
             strcpy(arg0, &game_state.player_family_name[0]);
-            strcat(arg0, &D_800B3634);
+            strcat(arg0, &girl_name_suffix_familiar);
             return;
         }
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3638);
+        strcat(arg0, &girl_name_suffix_polite);
         return;
     case 2:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
             strcpy(arg0, &game_state.player_given_name[0]);
-            strcat(arg0, &D_800B3634);
+            strcat(arg0, &girl_name_suffix_familiar);
             return;
         }
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     case 3:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
@@ -719,35 +719,35 @@ void get_p_name(u8 *arg0, u32 arg1) {
             return;
         }
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     case 4:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
             strcpy(arg0, &game_state.player_given_name[0]);
-            strcat(arg0, &D_800B3634);
+            strcat(arg0, &girl_name_suffix_familiar);
             return;
         }
         if ((get_g_zyotai_s((s32) arg1) & 0x7F) == 4) {
             strcpy(arg0, &game_state.player_family_name[0]);
-            strcat(arg0, &D_800B3634);
+            strcat(arg0, &girl_name_suffix_familiar);
             return;
         }
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     case 5:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
             strcpy(arg0, &game_state.player_given_name[0]);
-            strcat(arg0, &D_800B3638);
+            strcat(arg0, &girl_name_suffix_polite);
             return;
         }
         if ((get_g_zyotai_s((s32) arg1) & 0x7F) == 4) {
             strcpy(arg0, &game_state.player_family_name[0]);
-            strcat(arg0, &D_800B3638);
+            strcat(arg0, &girl_name_suffix_polite);
             return;
         }
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3638);
+        strcat(arg0, &girl_name_suffix_polite);
         return;
     case 6:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
@@ -755,16 +755,16 @@ void get_p_name(u8 *arg0, u32 arg1) {
             return;
         }
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     case 7:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
             strcpy(arg0, &game_state.player_given_name[0]);
-            strcat(arg0, &D_800B3634);
+            strcat(arg0, &girl_name_suffix_familiar);
             return;
         }
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     case 8:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
@@ -772,36 +772,36 @@ void get_p_name(u8 *arg0, u32 arg1) {
             return;
         }
         strcpy(arg0, &game_state.player_given_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     case 9:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
             strcpy(arg0, &game_state.player_family_name[0]);
-            strcat(arg0, &D_800B3634);
+            strcat(arg0, &girl_name_suffix_familiar);
             return;
         }
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3638);
+        strcat(arg0, &girl_name_suffix_polite);
         return;
     case 10:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
             strcpy(arg0, &game_state.player_given_name[0]);
-            strcat(arg0, &D_800B3638);
+            strcat(arg0, &girl_name_suffix_polite);
             return;
         }
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3638);
+        strcat(arg0, &girl_name_suffix_polite);
         return;
     case 13:
         strcpy(arg0, &game_state.player_given_name[0]);
         return;
     case 11:
         strcpy(arg0, &game_state.player_given_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     case 12:
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     case 15:
         strcpy(arg0, &game_state.player_family_name[0]);
@@ -809,7 +809,7 @@ void get_p_name(u8 *arg0, u32 arg1) {
         return;
     default:
         strcpy(arg0, &game_state.player_family_name[0]);
-        strcat(arg0, &D_800B3634);
+        strcat(arg0, &girl_name_suffix_familiar);
         return;
     }
 }
@@ -943,14 +943,14 @@ void xa_wait(void) {
     }
     if (r == 1) {
         if (D_8011ED5B & 0x80) {
-            func_8006C934();
+            hud_text_marker_bob();
         } else {
-            text_marker_set(1);
+            hud_text_marker_set(1);
         }
     }
     if (game_state.pad_pressed & 0x60) {
         if (r == 1) {
-            text_marker_set(0);
+            hud_text_marker_set(0);
             game_state.substep += 1;
             game_state.text_scroll_state = 0;
             return;
@@ -989,14 +989,14 @@ void talk_voice_play(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
             }
         }
     }
-    D_80125BF4 = arg0;
-    D_80125BF8 = arg1;
-    D_80125BFC = arg2;
+    speaker_voice_source_a = arg0;
+    speaker_voice_source_b = arg1;
+    speaker_voice_index = arg2;
     if (selector == 15) {
-        D_80125C00 = 2;
+        speaker_voice_state = 2;
         return;
     }
-    D_80125C00 = 0;
+    speaker_voice_state = 0;
 }
 
 void talk_text_step(void) {
@@ -1048,7 +1048,7 @@ void talk_text_step(void) {
     } else {
         /* FAKE: the s8 mode field is read through a u8 address view: lbu, and uopt keeps the byte as one promoted global
          * reloaded after each call; `(u8)game_state.voice_mode` adds conversion ranges that cache it. T-25101 */
-        if (((*(u8 *)&game_state.voice_mode) == 1 && D_80125C00 != 0) || ((*(u8 *)&game_state.voice_mode) == 2 && D_80125C00 != 0)) {
+        if (((*(u8 *)&game_state.voice_mode) == 1 && speaker_voice_state != 0) || ((*(u8 *)&game_state.voice_mode) == 2 && speaker_voice_state != 0)) {
             r = k_disp_inc();
         }
         if ((*(u8 *)&game_state.voice_mode) == 0) {
@@ -1056,43 +1056,43 @@ void talk_text_step(void) {
         }
         get_now_k();
     }
-    if (D_80125C00 == 0 && (cd_audio_state() & 4)) {
-        D_80125C00 = 1;
+    if (speaker_voice_state == 0 && (cd_audio_state() & 4)) {
+        speaker_voice_state = 1;
     }
     k = (s32 *)func_80046284();
-    if (D_80125C00 == 1) {
+    if (speaker_voice_state == 1) {
         if (cd_audio_state() & 2) {
-            if (D_80125BFC != -1) {
-                if (((s32 *)D_80125BF4)[D_80125BFC * 2] != ((s32 *)D_80125BF8)[D_80125BFC * 2] && ((s32 *)D_80125BF4)[D_80125BFC * 2] == k[2]) {
-                    cd_audio_request_set(((s32 *)D_80125BF8)[D_80125BFC * 2], ((s32 *)D_80125BF8)[D_80125BFC * 2 + 1], game_state.current_girl);
+            if (speaker_voice_index != -1) {
+                if (((s32 *)speaker_voice_source_a)[speaker_voice_index * 2] != ((s32 *)speaker_voice_source_b)[speaker_voice_index * 2] && ((s32 *)speaker_voice_source_a)[speaker_voice_index * 2] == k[2]) {
+                    cd_audio_request_set(((s32 *)speaker_voice_source_b)[speaker_voice_index * 2], ((s32 *)speaker_voice_source_b)[speaker_voice_index * 2 + 1], game_state.current_girl);
                     audio_command(0x300);
-                    D_80125C00 = 0;
+                    speaker_voice_state = 0;
                 } else {
-                    D_80125C00 = 2;
+                    speaker_voice_state = 2;
                 }
             } else {
-                D_80125C00 = 2;
+                speaker_voice_state = 2;
             }
         }
     }
-    if (r == 1 && D_80125C00 == 2) {
+    if (r == 1 && speaker_voice_state == 2) {
         if (D_8011ED5B & 0x80) {
-            func_8006C934();
+            hud_text_marker_bob();
         } else {
-            text_marker_set(1);
+            hud_text_marker_set(1);
         }
     }
     if (r == 1 && (*(u8 *)&game_state.voice_mode) == 0) {
         if (D_8011ED5B & 0x80) {
-            func_8006C934();
+            hud_text_marker_bob();
         } else {
-            text_marker_set(1);
+            hud_text_marker_set(1);
         }
     }
     if (game_state.pad_pressed & PAD_CROSS) {
         if (r == 1) {
             if ((*(u8 *)&game_state.voice_mode) == 2) {
-                D_80125C00 = 2;
+                speaker_voice_state = 2;
                 audio_command(0x74);
                 cd_audio_command(9, 0, 0);
             }
@@ -1104,22 +1104,22 @@ void talk_text_step(void) {
     if (game_state.pad_pressed & 0x60) {
         if (r == 1) {
             if ((*(u8 *)&game_state.voice_mode) == 1) {
-                if (D_80125C00 == 2) {
-                    text_marker_set(0);
+                if (speaker_voice_state == 2) {
+                    hud_text_marker_set(0);
                     game_state.substep += 1;
                 }
                 game_state.text_scroll_state = 0;
                 return;
             }
             if ((*(u8 *)&game_state.voice_mode) == 2) {
-                if (D_80125C00 == 2) {
-                    text_marker_set(0);
+                if (speaker_voice_state == 2) {
+                    hud_text_marker_set(0);
                     game_state.substep += 1;
                 }
                 game_state.text_scroll_state = 0;
                 return;
             }
-            text_marker_set(0);
+            hud_text_marker_set(0);
             game_state.substep += 1;
             game_state.text_scroll_state = 0;
             return;
@@ -1128,9 +1128,9 @@ void talk_text_step(void) {
     }
 }
 
-/* Love level of girl arg0: base value from her record, plus one bonus from D_800B4130 for each
- * parameter that her mask in D_800B4110 selects, by the threshold ladder of her kind (D_800B4120).
- * FAKE: the u32 level locals lv0..lv6 (copies of D_800B4198) give the frame and the colour order of
+/* Love level of girl arg0: base value from her record, plus one bonus from girl_param_bonus for each
+ * parameter that her mask in girl_bonus_param_mask selects, by the threshold ladder of her kind (girl_param_ladder_kind).
+ * FAKE: the u32 level locals lv0..lv6 (copies of girl_param_ladder_base) give the frame and the colour order of
  * the thresholds, and reading the parameters through the gs pointer gives the bonus row s1 and the
  * parameter value s2; the original source of both is unknown. T-25101 */
 /* Weighted tokimeki for girl % 13 with extra terms from the player parameters */
@@ -1155,7 +1155,7 @@ u32 get_h_tokimeki(s32 arg0) {
     girl = arg0 % 13;
     sum = gs->girls[girl].tokimeki * girl_tokimeki_weight[girl];
     sum /= 100;
-    mask = D_800B4110[girl];
+    mask = girl_bonus_param_mask[girl];
     for (i = 1; i < 8; i++) {
         if (mask & (1 << i)) {
             use[i] = 1;
@@ -1163,19 +1163,19 @@ u32 get_h_tokimeki(s32 arg0) {
             use[i] = 0;
         }
     }
-    kind = D_800B4120[girl];
-    lv0 = D_800B4198[0];
-    lv1 = D_800B4198[1];
-    lv2 = D_800B4198[2];
-    lv3 = D_800B4198[3];
-    lv4 = D_800B4198[4];
-    lv5 = D_800B4198[5];
-    lv6 = D_800B4198[6];
+    kind = girl_param_ladder_kind[girl];
+    lv0 = girl_param_ladder_base[0];
+    lv1 = girl_param_ladder_base[1];
+    lv2 = girl_param_ladder_base[2];
+    lv3 = girl_param_ladder_base[3];
+    lv4 = girl_param_ladder_base[4];
+    lv5 = girl_param_ladder_base[5];
+    lv6 = girl_param_ladder_base[6];
     for (i = 1; i < 7; i++) {
         if (use[i]) {
             switch (kind) {
             case 1:
-                bonus = D_800B4130[girl];
+                bonus = girl_param_bonus[girl];
                 if ((&gs->param_condition)[i].value > lv0 + 50) {
                     sum += bonus[0];
                 } else if ((&gs->param_condition)[i].value > lv1 + 35) {
@@ -1195,7 +1195,7 @@ u32 get_h_tokimeki(s32 arg0) {
                 }
                 break;
             case 2:
-                bonus = D_800B4130[girl];
+                bonus = girl_param_bonus[girl];
                 if ((&gs->param_condition)[i].value > lv0) {
                     sum += bonus[0];
                 } else if ((&gs->param_condition)[i].value > lv1) {
@@ -1215,7 +1215,7 @@ u32 get_h_tokimeki(s32 arg0) {
                 }
                 break;
             case 3:
-                bonus = D_800B4130[girl];
+                bonus = girl_param_bonus[girl];
                 if ((&gs->param_condition)[i].value > lv0 + 50) {
                     sum += bonus[0];
                 } else if ((&gs->param_condition)[i].value > lv1 + 50) {
@@ -1235,7 +1235,7 @@ u32 get_h_tokimeki(s32 arg0) {
                 }
                 break;
             case 4:
-                bonus = D_800B4130[girl];
+                bonus = girl_param_bonus[girl];
                 if ((&gs->param_condition)[i].value > lv0 + 10) {
                     sum += bonus[0];
                 } else if ((&gs->param_condition)[i].value > lv1 + 10) {
@@ -1255,7 +1255,7 @@ u32 get_h_tokimeki(s32 arg0) {
                 }
                 break;
             case 5:
-                bonus = D_800B4130[girl];
+                bonus = girl_param_bonus[girl];
                 if ((&gs->param_condition)[i].value > lv0 + 20) {
                     sum += bonus[0];
                 } else if ((&gs->param_condition)[i].value > lv1 + 20) {
@@ -1275,7 +1275,7 @@ u32 get_h_tokimeki(s32 arg0) {
                 }
                 break;
             case 6:
-                bonus = D_800B4130[girl];
+                bonus = girl_param_bonus[girl];
                 if ((&gs->param_condition)[i].value > lv0) {
                     sum += bonus[0];
                 } else if ((&gs->param_condition)[i].value > lv1) {
@@ -1370,7 +1370,7 @@ s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2) {
     return 0;
 }
 
-s32 func_80052E60(u8 *arg0, s16 *arg1) {
+s32 girl_points_shiori(u8 *arg0, s16 *arg1) {
     s32 i;
     s32 sum;
     u8 *p;
@@ -1382,7 +1382,7 @@ s32 func_80052E60(u8 *arg0, s16 *arg1) {
         return 0;
     }
     i = 1;
-    p = D_800B4341;
+    p = girl_shiori_param_minimum_tail;
     do {
         if ((u32) (&game_state.param_condition)[i].value < p[-1]) {
             return 0;
@@ -1402,7 +1402,7 @@ s32 func_80052E60(u8 *arg0, s16 *arg1) {
     *arg1 = 0x311;
 }
 
-s32 func_80052F68(u8 *arg0, s16 *arg1) {
+s32 girl_points_others(u8 *arg0, s16 *arg1) {
     GameState *g = &game_state;
     s32 i;
     /* FAKE: T-25307, j, k and x are never used; their three stack homes give the original's
@@ -1417,16 +1417,16 @@ s32 func_80052F68(u8 *arg0, s16 *arg1) {
 
     for (m = 1; m < 11; m++) {
         val[m] = arg0[m] * 4;
-        val[m] += g->girls[m].syoushin * D_800B4348[m];
+        val[m] += g->girls[m].syoushin * girl_syoushin_weight[m];
     }
     sum = g->param_stress.value;
     if (sum >= 141) {
         sum = 140;
     }
-    val[2] += D_800B437C[sum / 10];
+    val[2] += girl_points_stress_curve[sum / 10];
     for (i = 1; i < 11; i++) {
         for (m = 0; m < 7; m++) {
-            if ((D_800B4354[i] >> (7 - m)) & 1) {
+            if ((girl_points_mask_strong[i] >> (7 - m)) & 1) {
                 v = (&g->param_condition)[7 - m].value;
                 /* m never reaches 7; the original has this test and the divide by 20 too */
                 if (m == 7) {
@@ -1437,10 +1437,10 @@ s32 func_80052F68(u8 *arg0, s16 *arg1) {
                 if (v >= 15) {
                     v = 14;
                 }
-                val[i] += D_800B436C[v];
-                val[i] += D_800B436C[v] / 2;
+                val[i] += girl_points_param_curve[v];
+                val[i] += girl_points_param_curve[v] / 2;
             }
-            if ((D_800B4360[i] >> (7 - m)) & 1) {
+            if ((girl_points_mask_normal[i] >> (7 - m)) & 1) {
                 v = (&g->param_condition)[7 - m].value;
                 if (m == 7) {
                     v /= 20;
@@ -1450,7 +1450,7 @@ s32 func_80052F68(u8 *arg0, s16 *arg1) {
                 if (v >= 15) {
                     v = 14;
                 }
-                val[i] += D_800B436C[v];
+                val[i] += girl_points_param_curve[v];
             }
         }
     }
@@ -1470,7 +1470,7 @@ s32 func_80052F68(u8 *arg0, s16 *arg1) {
     }
 }
 
-s32 func_80053418(u8 *arg0, s16 *arg1) {
+s32 girl_scores(u8 *arg0, s16 *arg1) {
     s32 i;
     u8 love[16];
     u8 friendship[16];
@@ -1487,13 +1487,13 @@ s32 func_80053418(u8 *arg0, s16 *arg1) {
         if (love[i] >= 20U) {
             love[i] = 19;
         }
-        arg0[i] = D_800B41B0[love[i]][friendship[i]];
+        arg0[i] = girl_closeness_grid[love[i]][friendship[i]];
     }
-    func_80052E60(arg0, arg1);
-    return func_80052F68(arg0, arg1);
+    girl_points_shiori(arg0, arg1);
+    return girl_points_others(arg0, arg1);
 }
 
-s32 func_8005352C(void) {
+s32 girl_player_sports_club_check(void) {
     u16 x;
 
     x = game_state.player_flags.h;
@@ -1503,7 +1503,7 @@ s32 func_8005352C(void) {
     return 0;
 }
 
-s32 func_80053564(s32 arg0) {
+s32 girl_find_by_club(s32 arg0) {
     s32 i;
 
     for (i = 0; i < 11; i++) {

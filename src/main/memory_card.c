@@ -563,7 +563,7 @@ s32 func_80054884(s32 arg0) {
         strncat(D_80123124, "・システム", 0xC);
     }
     bzero(D_80123164, 0x1C);
-    func_8006C988(&sp47, &sp46, arg0);
+    hud_event_log_scan(&sp47, &sp46, arg0);
     /* FAKE: T-24214, the no-op mask on the u8 takes one ugen temporary, so
      * the later temporaries (t2..t9) land on the original's registers. */
     idx = sp47 & 0xFF;
@@ -977,7 +977,7 @@ s32 func_80055AFC(s32 arg0) {
     for (i = 0; i < 256; i++) {
         g->event_log[i] = ((GameSaveImage *)&memory_card_block[0x200])[arg0].unk_61C[i];
     }
-    g->event_log_count = func_8006C988(&g->current_girl, &g->date_girl, 1);
+    g->event_log_count = hud_event_log_scan(&g->current_girl, &g->date_girl, 1);
     g->icon_mode = ((GameSaveImage *)&memory_card_block[arg0 * 0xF00 + 0x200])->unk_E1C;
     g->icon_count = ((GameSaveImage *)&memory_card_block[arg0 * 0xF00 + 0x200])->unk_E1D;
     g->menu_mode = ((GameSaveImage *)&memory_card_block[arg0 * 0xF00 + 0x200])->unk_E1E;

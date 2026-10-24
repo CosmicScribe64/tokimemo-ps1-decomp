@@ -392,7 +392,7 @@ void func_80159698(void) {
         case 0:
         case 1:
             portrait_layout_set(0U);
-            func_80063668();
+            portrait_face_update();
             talk_group = 7;
             break;
         case 2:
@@ -915,7 +915,7 @@ void func_8015A5DC(void) {
     case 10:
         if (girl_state_rank(9) != 4) {
             portrait_layout_set(0U);
-            func_80063668();
+            portrait_face_update();
         }
         mode_step_next();
         break;
@@ -1154,7 +1154,7 @@ void func_8015AB58(void) {
         case 0:
         case 1:
             portrait_layout_set(0U);
-            func_80063668();
+            portrait_face_update();
             talk_group = 7;
             break;
         case 2:

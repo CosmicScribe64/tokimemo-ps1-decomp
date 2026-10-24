@@ -420,7 +420,7 @@ void func_80135004(void) {
                 func_8009C8E0(&rect, (void *)0x80180000);
                 func_8009C674(0);
                 portrait_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, (u8)get_g_zyotai_h(game_state.current_girl) & 0x7F);
-                func_80063668();
+                portrait_face_update();
             }
         }
     }

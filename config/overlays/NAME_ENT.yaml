@@ -45,6 +45,7 @@ options:
     - config/symbols_NAME_ENT.txt
     - config/labels/NAME_ENT.txt
     - config/symbol_addrs_hypotheses.txt
+    - config/symbols_NAME_ENT_hypotheses.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/NAME_ENT_undefined_funcs_auto.txt

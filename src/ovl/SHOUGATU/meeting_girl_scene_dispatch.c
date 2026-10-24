@@ -126,7 +126,7 @@ s32 func_8013737C(void) {
     pad = game_state.month;
     if (game_state.substep == 0) {
         audio_command(0xCF);
-        func_800674B0();
+        hud_day_bgm_load();
         game_state.substep += 1;
     }
     if (game_state.substep == 1) {
@@ -211,7 +211,7 @@ void func_80137664(void) {
 
 void func_801377CC(void) {
     audio_command(0xCF);
-    func_800674B0();
+    hud_day_bgm_load();
     if (audio_bank_load_poll() == 1) {
         mode_stage_next();
     }

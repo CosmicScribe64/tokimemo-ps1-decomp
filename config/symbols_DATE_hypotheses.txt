@@ -1,0 +1,19 @@
+// HYPOTHESES, not facts: names of the overlay DATE that claim a game meaning the code does not prove
+// (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
+date_parade_resources_init = 0x80132458; // type:func
+date_movie_theater_narration_talk = 0x801383BC; // type:func
+date_invited_day_check = 0x80140B08; // type:func
+date_invited_day_talk = 0x80140C6C; // type:func
+date_parade_sign_palette_cycle = 0x80140D38; // type:func
+date_scene_yuko_summer_sign_setup = 0x8014DE10; // type:func
+date_scene_yuko_summer_sign_animate = 0x8014E010; // type:func
+date_scene_yuko_autumn_beam_lights = 0x8014E3E8; // type:func
+date_scene_mio_winter_narration_speak = 0x80155174; // type:func
+date_scene_yukari_summer_actors_update = 0x801560E0; // type:func
+date_scene_megumi_spring_speak_narration = 0x801582B8; // type:func
+date_scene_saki_winter_speak_narration = 0x801593F0; // type:func
+date_scene_saki_winter_narration_step = 0x80159450; // type:func
+date_hint_roll = 0x8015B660;
+date_sign_palette_frame = 0x8015B6A0;
+date_girl_side_next = 0x8015BF44;
+date_girl_side = 0x8015BF48;

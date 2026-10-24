@@ -2,10 +2,10 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
-void func_80134040(void) {
+void encounter_player_birthday_mode_handler(void) {
     portrait_wink_update();
     if (game_state.mode_stage == 0) {
-        func_801341A0();
+        encounter_player_birthday_dispatch();
     } else {
         game_mode_reset_to_title();
     }
@@ -31,7 +31,7 @@ void func_80134040(void) {
             D_8011ECD3 &= 0x7F;
         }
         if (D_8011ECD3 & 0x80) {
-            cursor_update();
+            hud_cursor_update();
         }
     }
 }
@@ -39,18 +39,18 @@ void func_80134040(void) {
 typedef struct {
     void (*f[29])();
 } FnTbl29; /* size 0x74 */
-extern FnTbl29 D_80144E94;
+extern FnTbl29 encounter_player_birthday_steps;
 
-void func_801341A0(void) {
+void encounter_player_birthday_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl29 tbl;
 
-    tbl = D_80144E94;
+    tbl = encounter_player_birthday_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-s32 func_80134228(void) {
+s32 encounter_player_birthday_finish(void) {
     u8 state;
 
     if (game_state.day_event_done_bits & 0x40) {
@@ -61,7 +61,7 @@ s32 func_80134228(void) {
     /* FAKE: read through a u8 view so the base and the result share $v0 (T-24035). */
     state = *(u8 *)&game_state.substep;
     if (state == 0) {
-        func_800674B0();
+        hud_day_bgm_load();
         state = game_state.substep + 1;
     }
     game_state.substep = state;
@@ -82,7 +82,7 @@ s32 func_80134228(void) {
     return day_event_next(1);
 }
 
-s32 func_8013431C(void) {
+s32 encounter_player_birthday_audio_load(void) {
     if (game_state.month_calendar[0].marker[game_state.day] == 5) {
         if (game_state.mode_step_timer.w++ == 0) {
             audio_command(0xBF);
@@ -98,7 +98,7 @@ s32 func_8013431C(void) {
     mode_step_next();
 }
 
-void func_801343DC(void) {
+void encounter_player_birthday_audio_wait(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -109,15 +109,15 @@ void func_801343DC(void) {
     }
 }
 
-void func_8013445C(void) {
+void encounter_player_birthday_audio_start(void) {
     k_reset(1);
     audio_command(0x200);
     mode_step_next();
 }
 
-void func_8013448C(void) {
+void encounter_player_birthday_scripts_load_with_chime(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80134F84();
+    encounter_player_birthday_scripts_bind();
     if (!(game_state.day_event_done_bits & 8)) {
         audio_command(0x603);
         set_kanji_string(-0x28, 0x40, 2, "ピンポーン", 0);
@@ -125,18 +125,18 @@ void func_8013448C(void) {
     mode_step_next();
 }
 
-void func_80134500(void) {
+void encounter_player_birthday_scripts_load(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80134F84();
+    encounter_player_birthday_scripts_bind();
     mode_step_next();
 }
 
-s32 func_80134538(void) {
+s32 encounter_player_birthday_init(void) {
     s16 i;
     u8 saved;
 
     if (*(u8 *)&game_state.day_event_done_bits & 4) {
-        func_80134228();
+        encounter_player_birthday_finish();
         return 0;
     }
     *(u8 *)&game_state.day_event_done_bits |= 4;
@@ -161,7 +161,7 @@ s32 func_80134538(void) {
     addr_init_bustup();
     hizuke_init();
     message_window_init();
-    func_8006509C();
+    hud_icon_bar_init();
     for (i = 0; i < 0xF; i++) {
         icon_can_use_set(i, 0);
     }
@@ -169,12 +169,12 @@ s32 func_80134538(void) {
     parameter_show_init();
     parameter_show_init();
     text_marker_hide();
-    D_80144E8C = 0;
-    D_80144E90 = 0;
+    encounter_player_birthday_group = 0;
+    encounter_player_birthday_line = 0;
     mode_step_next();
 }
 
-void func_801346A0(void) {
+void encounter_player_birthday_closing_init(void) {
     s32 pad; /* FAKE: unused slot above sp2B, the original frame has it (real source unknown). T-8070 */
     u8 sp2B;
 
@@ -203,12 +203,12 @@ void func_801346A0(void) {
     mode_step_next();
 }
 
-void func_8013478C(void) {
-    talk_tables = &D_80144E8C;
-    D_800CA138 = &D_80144E90;
-    D_800CA13C = D_80144E80;
-    D_800CA140 = D_80144E84;
-    D_800CA144 = D_80144E88;
+void encounter_player_birthday_talk(void) {
+    talk_tables = &encounter_player_birthday_group;
+    D_800CA138 = &encounter_player_birthday_line;
+    D_800CA13C = encounter_player_birthday_text_table;
+    D_800CA140 = encounter_player_birthday_command_table;
+    D_800CA144 = encounter_player_birthday_voice_table;
     talk_run(D_80122CDC, 1, 0);
 }
 
@@ -217,7 +217,7 @@ void func_8013478C(void) {
  * test keeps the s16 conversion in the latch, and the call-result mask spends
  * the deleted narrowing temporary needed by the following ugen registers.
  * cur and newState keep the record base from being hoisted out of the loop. */
-s32 func_80134808(void) {
+s32 encounter_player_birthday_girl_select(void) {
     s16 i;
     s32 next;
     s16 best;
@@ -259,76 +259,76 @@ s32 func_80134808(void) {
     }
     game_state.current_girl = girl;
     talk_names_set(girl);
-    func_80134F84();
-    func_80134A14();
+    encounter_player_birthday_scripts_bind();
+    encounter_player_birthday_girl_script_select();
     return mode_step_next();
 }
 
-void func_801349B8(void) {
-    func_80134F84();
+void encounter_player_birthday_default_script_select(void) {
+    encounter_player_birthday_scripts_bind();
     talk_names_set(0);
-    D_80144E80 = D_80144FD8;
-    D_80144E84 = D_8014500C;
-    D_80144E88 = D_80145040;
+    encounter_player_birthday_text_table = encounter_player_birthday_text_section_11;
+    encounter_player_birthday_command_table = encounter_player_birthday_command_section_11;
+    encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_11;
     mode_step_next();
 }
 
-void func_80134A14(void) {
+void encounter_player_birthday_girl_script_select(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        D_80144E80 = D_80144FB0;
-        D_80144E84 = D_80144FE4;
-        D_80144E88 = D_80145018;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_1;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_1;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_1;
         return;
     case GIRL_MIO:
-        D_80144E80 = D_80144FC4;
-        D_80144E84 = D_80144FF8;
-        D_80144E88 = D_8014502C;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_6;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_6;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_6;
         return;
     case GIRL_YUINA:
-        D_80144E80 = D_80144FB8;
-        D_80144E84 = D_80144FEC;
-        D_80144E88 = D_80145020;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_3;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_3;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_3;
         return;
     case GIRL_AYAKO:
-        D_80144E80 = D_80144FBC;
-        D_80144E84 = D_80144FF0;
-        D_80144E88 = D_80145024;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_4;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_4;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_4;
         return;
     case GIRL_SAKI:
-        D_80144E80 = D_80144FD4;
-        D_80144E84 = D_80145008;
-        D_80144E88 = D_8014503C;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_10;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_10;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_10;
         return;
     case GIRL_YUKARI:
-        D_80144E80 = D_80144FC8;
-        D_80144E84 = D_80144FFC;
-        D_80144E88 = D_80145030;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_7;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_7;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_7;
         return;
     case GIRL_NOZOMI:
-        D_80144E80 = D_80144FCC;
-        D_80144E84 = D_80145000;
-        D_80144E88 = D_80145034;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_8;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_8;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_8;
         return;
     case GIRL_MIRA:
-        D_80144E80 = D_80144FC0;
-        D_80144E84 = D_80144FF4;
-        D_80144E88 = D_80145028;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_5;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_5;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_5;
         return;
     case GIRL_YUKO:
-        D_80144E80 = D_80144FAC;
-        D_80144E84 = D_80144FE0;
-        D_80144E88 = D_80145014;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_0;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_0;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_0;
         return;
     case GIRL_MEGUMI:
-        D_80144E80 = D_80144FD0;
-        D_80144E84 = D_80145004;
-        D_80144E88 = D_80145038;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_9;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_9;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_9;
         return;
     case GIRL_YUMI:
-        D_80144E80 = D_80144FDC;
-        D_80144E84 = D_80145010;
-        D_80144E88 = D_80145044;
+        encounter_player_birthday_text_table = encounter_player_birthday_text_section_12;
+        encounter_player_birthday_command_table = encounter_player_birthday_command_section_12;
+        encounter_player_birthday_voice_table = encounter_player_birthday_voice_section_12;
         /* fallthrough */
     default:
         return;

@@ -494,7 +494,7 @@ s32 func_80144540(void) {
         actor_draw_enable(1);
         sprite_tables_clear();
         *(s32 *) &game_state.menu_hit[3] = 0x9F;
-        cursor_actor_init(0);
+        hud_cursor_actor_init(0);
         back_clear_switch(1);
         text_system_reset();
         set_kanji_string(-0x90, -0x40, 0xF, "今回のプレイをセーブしますか？", 0);
@@ -618,7 +618,7 @@ s32 func_80144A38(void) {
     }
 }
 
-/* Port of the main clone func_8005C5BC (T-17300); only the state codes differ. */
+/* Port of the main clone settings_save_load_save_init (T-17300); only the state codes differ. */
 void func_80144AC0(void) {
     s32 i;
     s32 d;
@@ -629,7 +629,7 @@ void func_80144AC0(void) {
     s16 h[16];
 
     text_system_reset();
-    func_80066104("データセーブ");
+    message_window_set_title_hidden("データセーブ");
     d = 5;
     for (i = 0; i < 14; i++) {
         x[i] = (i / d) * 32 - 124;
@@ -651,16 +651,16 @@ void func_80144AC0(void) {
         game_state.menu_cursor_1 = D_800E7D36 - 1;
         game_state.save_slot = (s8) D_800E7D36;
         mode_step_set(2);
-        func_800696DC(0, 0);
-        func_8005C7C0();
+        hud_save_slot_info_show(0, 0);
+        settings_save_load_save_prompt();
     } else if (i == 0xF) {
-        func_8005C7C0();
+        settings_save_load_save_prompt();
         mode_step_set(2);
     } else {
         game_state.save_slot = i;
         mode_step_set(0xC0);
     }
-    func_8005C7FC();
+    settings_save_load_save_marks();
 }
 
 void func_80144CC4(void) {
@@ -681,15 +681,15 @@ void func_80144CC4(void) {
     case 2:
         if (func_80055A38(0) == 1) {
             mode_step_set(2);
-            func_800696DC(0, 0);
-            func_8005C7C0();
+            hud_save_slot_info_show(0, 0);
+            settings_save_load_save_prompt();
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
             mode_step_set(0xFF);
         }
         break;
     }
-    func_8005C7FC();
+    settings_save_load_save_marks();
 }
 void func_80144DF0(void) {
     s32 pad[3]; /* FAKE: T-24209, oversized local puts slot at sp+0x28 */
@@ -722,8 +722,8 @@ void func_80144DF0(void) {
                      * unk_1118 promoted, so both arms store v0 before their calls */
                     ((u8 *)&game_state)[0x1118] = slot;
                     D_800E7D36 = game_state.save_slot;
-                    func_800696DC(0, 0);
-                    func_8005C7C0();
+                    hud_save_slot_info_show(0, 0);
+                    settings_save_load_save_prompt();
                     game_state.menu_cursor_1 = D_800E7D36 - 1;
                 } else {
                     mode_step_set(0xC0);
@@ -734,7 +734,7 @@ void func_80144DF0(void) {
         mode_stage_set(2);
     }
     k_disp_inc();
-    func_8005C7FC();
+    settings_save_load_save_marks();
 }
 
 void func_80144F74(void) {
@@ -785,7 +785,7 @@ void func_80144F74(void) {
         }
         break;
     }
-    func_8005C7FC();
+    settings_save_load_save_marks();
 }
 
 s32 func_801451D4(void) {

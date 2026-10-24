@@ -184,7 +184,7 @@ void func_80133494(void) {
         func_8004ADE4();
         dec_bg_reset();
         set_dec_bri(0);
-        cursor_actor_init(0);
+        hud_cursor_actor_init(0);
         text_marker_hide();
         hizuke_init();
         message_window_init();
@@ -204,7 +204,7 @@ void func_80133494(void) {
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
-            func_80068938(game_state.year, game_state.month, 0);
+            calendar_month_load(game_state.year, game_state.month, 0);
             mode_step_next();
         }
         Default_Disp();
@@ -217,8 +217,8 @@ void func_80133494(void) {
         game_mode_reset_to_title();
         break;
     }
-    func_8006764C(0);
-    cursor_show(0);
+    hud_mascot_display_switch(0);
+    hud_cursor_show(0);
     icon_disp_switch(0);
     parameter_disp_switch(0);
 }

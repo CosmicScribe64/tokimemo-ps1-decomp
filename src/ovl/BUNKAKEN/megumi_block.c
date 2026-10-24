@@ -673,7 +673,7 @@ void func_80151EC0(void) {
             }
             func_80152618();
             portrait_layout_set(0U);
-            func_80063668();
+            portrait_face_update();
         }
         break;
     case 5:

@@ -5,7 +5,7 @@
 
 extern u32 talk_work;
 
-void func_8014F0F0(void) {
+void date_scene_shiori_autumn_data_init(void) {
     D_8015E690 = 0x801D21D4;
     D_8015E694 = 0x801D21DC;
     D_8015E698 = 0x801D21FC;
@@ -19,7 +19,7 @@ void func_8014F0F0(void) {
     D_8015E6B8 = 0x801C6000;
 }
 
-void func_8014F1A0(void) {
+void date_scene_shiori_spring_data_init(void) {
     D_8015E6BC = 0x801D21E0;
     D_8015E6C0 = 0x801D21E8;
     D_8015E6C4 = 0x801D2228;
@@ -33,7 +33,7 @@ void func_8014F1A0(void) {
     D_8015E6E4 = 0x801C6000;
 }
 
-void func_8014F250(void) {
+void date_scene_shiori_winter_data_init(void) {
     D_8015E6E8 = 0x801D2320;
     D_8015E6EC = 0x801D2328;
     D_8015E6F0 = 0x801D2368;
@@ -47,7 +47,7 @@ void func_8014F250(void) {
     D_8015E710 = 0x801C6000;
 }
 
-void func_8014F300(void) {
+void date_scene_shiori_summer_data_init(void) {
     D_8015E714 = 0x801B0000;
     D_8015E718 = 0x801B2000;
     D_8015E71C = 0x801B6000;
@@ -57,19 +57,19 @@ void func_8014F300(void) {
     D_8015E72C = 0x801C6000;
 }
 
-void date_shiori_dispatch(void) {
+void date_scene_shiori_dispatch(void) {
     switch (talk_work) {
     case 3:
-        func_8014FAE0();
+        date_scene_shiori_autumn();
         return;
     case 4:
-        func_8014FBA0();
+        date_scene_shiori_spring();
         return;
     case 5:
-        func_8014FC80();
+        date_scene_shiori_winter();
         return;
     case 6:
-        func_8014FE90();
+        date_scene_shiori_summer();
         return;
     default:
         game_mode_reset_to_title();
@@ -77,10 +77,10 @@ void date_shiori_dispatch(void) {
     }
 }
 
-void func_8014F404(void) {
-    D_8015E208 = D_8015DE70;
-    D_8015E20C = D_8015DFAC;
-    D_8015E210 = D_8015E0E8;
+void date_scene_shiori_autumn_setup(void) {
+    date_scene_text = D_8015DE70;
+    date_scene_command = D_8015DFAC;
+    date_scene_voice = D_8015E0E8;
     load_palette(D_8015E6A0, 0x11, 1, 2, 0);
     scene_still_show(D_8015E6A4, D_8015E6A8, D_8015E6AC, D_8015E6B0, D_8015E6B4, D_8015E6B8);
     scene_anim_show(D_8015E694, D_8015E698, D_8015E690, D_8015E69C);
@@ -90,10 +90,10 @@ void func_8014F404(void) {
     mode_step_next();
 }
 
-void func_8014F500(void) {
-    D_8015E208 = D_8015DE74;
-    D_8015E20C = D_8015DFB0;
-    D_8015E210 = D_8015E0EC;
+void date_scene_shiori_spring_setup(void) {
+    date_scene_text = D_8015DE74;
+    date_scene_command = D_8015DFB0;
+    date_scene_voice = D_8015E0EC;
     load_palette(D_8015E6CC, 0x11, 1, 2, 0);
     scene_still_show(D_8015E6D0, D_8015E6D4, D_8015E6D8, D_8015E6DC, D_8015E6E0, D_8015E6E4);
     scene_anim_show(D_8015E6C0, D_8015E6C4, D_8015E6BC, D_8015E6C8);
@@ -104,11 +104,11 @@ void func_8014F500(void) {
     mode_step_next();
 }
 
-void func_8014F610(void) {
-    D_8015B68C = 2;
-    D_8015E208 = D_8015DE78;
-    D_8015E20C = D_8015DFB4;
-    D_8015E210 = D_8015E0F0;
+void date_scene_shiori_winter_setup(void) {
+    date_ride_index = 2;
+    date_scene_text = D_8015DE78;
+    date_scene_command = D_8015DFB4;
+    date_scene_voice = D_8015E0F0;
     game_state.girls[0].tokimeki += 1;
     game_state.girls[0].affection += 1;
     game_state.girls[0].syoushin -= 0x14;
@@ -129,8 +129,8 @@ void func_8014F610(void) {
     mode_step_next();
 }
 
-void func_8014F744(void) {
-    func_8014F250();
+void date_scene_shiori_winter_still_setup(void) {
+    date_scene_shiori_winter_data_init();
     load_palette(D_8015E6F8, 0x11, 1, 2, 0);
     scene_still_show(D_8015E6FC, D_8015E700, D_8015E704, D_8015E708, D_8015E70C, D_8015E710);
     scene_anim_show(D_8015E6EC, D_8015E6F0, D_8015E6E8, D_8015E6F4);
@@ -138,10 +138,10 @@ void func_8014F744(void) {
     mode_step_next();
 }
 
-void func_8014F7F4(void) {
-    D_8015E208 = D_8015DE7C;
-    D_8015E20C = D_8015DFB8;
-    D_8015E210 = D_8015E0F4;
+void date_scene_shiori_summer_setup(void) {
+    date_scene_text = D_8015DE7C;
+    date_scene_command = D_8015DFB8;
+    date_scene_voice = D_8015E0F4;
     load_palette(D_8015E714, 0x11, 1, 2, 0);
     scene_still_show(D_8015E718, D_8015E71C, D_8015E720, D_8015E724, D_8015E728, D_8015E72C);
     scene_anim_show(0, 0, 0, 0);
@@ -152,47 +152,47 @@ void func_8014F7F4(void) {
     mode_step_next();
 }
 
-void func_8014F8F0(void) {
+void date_scene_shiori_autumn_background_1(void) {
     bg_read_sub2(0x47BA);
     mode_step_next();
 }
 
-void func_8014F918(void) {
+void date_scene_shiori_spring_background_1(void) {
     bg_read_sub2(0x47CD);
     mode_step_next();
 }
 
-void func_8014F940(void) {
+void date_scene_shiori_spring_background_2(void) {
     bg_read_sub2(0x42EB);
     mode_step_next();
 }
 
-void func_8014F968(void) {
+void date_scene_shiori_winter_background_1(void) {
     bg_read_sub2(0x4350);
     mode_step_next();
 }
 
-void func_8014F990(void) {
+void date_scene_shiori_winter_background_2(void) {
     bg_read_sub2(0x4800);
     mode_step_next();
 }
 
-void func_8014F9B8(void) {
+void date_scene_shiori_winter_background_3(void) {
     bg_read_sub2(0x432B);
     mode_step_next();
 }
 
-void func_8014F9E0(void) {
+void date_scene_shiori_summer_background_1(void) {
     bg_read_sub2(0x48EA);
     mode_step_next();
 }
 
-void func_8014FA08(void) {
+void date_scene_shiori_summer_background_2(void) {
     bg_read_sub2(0x45BF);
     mode_step_next();
 }
 
-void func_8014FA30(void) {
+void date_scene_reset_choices(void) {
     D_80122CDC = 0;
     D_800CA21C[0] = 1;
     D_800CA21C[1] = 1;
@@ -209,56 +209,56 @@ void func_8014FA30(void) {
     mode_step_next();
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8014B1F0();
+    date_scene_sections_init();
 }
 
-void func_8014FAE0(void) {
+void date_scene_shiori_autumn(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl41 tbl;
 
-    tbl = D_8015E730;
+    tbl = date_scene_shiori_autumn_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8014FB68(void) {
+void date_scene_shiori_autumn_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x7F61);
-    func_8014F0F0();
+    date_scene_shiori_autumn_data_init();
     mode_step_next();
 }
 
-void func_8014FBA0(void) {
+void date_scene_shiori_spring(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
     FnTbl43 tbl;
 
-    tbl = D_8015E7D4;
+    tbl = date_scene_shiori_spring_steps;
     if (game_state.mode_step < 0xAU && dec_bg_brightness == 0x80) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
     tbl.f[game_state.mode_step]();
 }
 
-void func_8014FC48(void) {
+void date_scene_shiori_spring_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x7FA6);
-    func_8014F1A0();
+    date_scene_shiori_spring_data_init();
     mode_step_next();
 }
 
-void func_8014FC80(void) {
+void date_scene_shiori_winter(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl65 tbl;
 
-    tbl = D_8015E880;
+    tbl = date_scene_shiori_winter_steps;
     idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
-void func_8014FD08(void) {
+void date_scene_shiori_winter_audio_command_1(void) {
     audio_command(0x200);
     mode_step_next();
 }
 
-s32 func_8014FD30(void) {
+s32 date_scene_shiori_winter_shake_and_wait(void) {
     if (game_state.mode_step_timer.w == 0) {
         func_8007BFA8();
         audio_command(0xB1);
@@ -270,11 +270,11 @@ s32 func_8014FD30(void) {
     }
 }
 
-s32 func_8014FDA0(void) {
+s32 date_scene_shiori_winter_speak_with_effect(void) {
     s32 unused; /* FAKE: extra local moves the spill slot of sel to sp+0x28; real source unknown. T-4090 */
     s32 sel;
 
-    func_8014C5C8();
+    date_scene_speak();
     if ((u16) D_800CA154 == 2) {
         sel = game_state.mode_step_timer.w;
         event_face1();
@@ -287,35 +287,35 @@ s32 func_8014FDA0(void) {
     }
 }
 
-void func_8014FE24(void) {
+void date_scene_shiori_winter_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x7FEB);
-    func_8014F250();
+    date_scene_shiori_winter_data_init();
     mode_step_next();
 }
 
-void func_8014FE5C(void) {
+void date_scene_shiori_winter_ferris_wheel_title(void) {
     strcpy(D_800CA1DC, "観覧車");
     mode_step_next();
 }
 
-void func_8014FE90(void) {
+void date_scene_shiori_summer(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl45 tbl;
 
-    tbl = D_8015E984;
+    tbl = date_scene_shiori_summer_steps;
     if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8014FF2C(void) {
+void date_scene_shiori_summer_audio_command_1(void) {
     audio_command(0x502);
     mode_step_next();
 }
 
-void func_8014FF54(void) {
+void date_scene_shiori_summer_speak_with_face(void) {
     if ((u16) D_800CA154 == 5) {
         portrait_layout_set(1);
     } else if ((u16) D_800CA154 == 9) {
@@ -323,11 +323,11 @@ void func_8014FF54(void) {
     } else if ((u16) D_800CA154 == 0xB) {
         portrait_layout_set(get_g_zyotai_h(game_state.current_girl));
     }
-    func_8014C5C8();
+    date_scene_speak();
 }
 
-void func_8014FFD0(void) {
+void date_scene_shiori_summer_load_data(void) {
     cd_read_sectors(0x35, 0x801B0000, 0x8030);
-    func_8014F300();
+    date_scene_shiori_summer_data_init();
     mode_step_next();
 }

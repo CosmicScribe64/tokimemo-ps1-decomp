@@ -947,7 +947,7 @@ void func_8013ED8C(void) {
 
 void func_8013EDF8(void) {
     if (D_8014F990 == 1) {
-        func_80063668();
+        portrait_face_update();
     }
 }
 

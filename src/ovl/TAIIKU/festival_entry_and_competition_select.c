@@ -29,7 +29,7 @@ void func_80141280(void) {
         k_reset(0);
         message_window_set_title("\221\314\210\347\215\325");
         message_window_title_show(0);
-        func_8006764C(0);
+        hud_mascot_display_switch(0);
         hizuke_init();
         icon_disp_switch(0);
         parameter_disp_switch(0);
@@ -195,7 +195,7 @@ void func_80141280(void) {
         break;
     case 17:
         audio_command(0xBF);
-        func_800674B0();
+        hud_day_bgm_load();
         Default_Disp();
         D_80122EC8 += 1;
         break;
@@ -237,16 +237,16 @@ void func_80141964(void) {
     w[0] = w[1] = w[2] = 0xFC;
     h[0] = h[1] = h[2] = 0x10;
     menu_set(0, 3, x, y, w, h);
-    cursor_actor_init(0);
-    cursor_show(1);
+    hud_cursor_actor_init(0);
+    hud_cursor_show(1);
 }
 
 s32 func_801419F8(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_cursor_update(0);
     menu_bar_show(0);
-    cursor_show(1);
-    cursor_update();
+    hud_cursor_show(1);
+    hud_cursor_update();
     if (game_state.pad_pressed & PAD_CIRCLE) {
         if (check_end_k() != 0) {
             if (game_state.menu_items[0].hover != 0) {

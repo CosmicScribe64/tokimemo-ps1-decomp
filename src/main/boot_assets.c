@@ -117,12 +117,12 @@ void func_80059EF0(void) {
     parameter_show_init();
     parameter_show_init();
     parameter_disp_switch(0);
-    func_8006509C();
+    hud_icon_bar_init();
     icon_disp_switch(0);
     message_window_init();
     message_disp_switch(0);
-    func_800673B8();
-    func_8006764C(0);
+    hud_vram_init();
+    hud_mascot_display_switch(0);
     message_window_title_show(0);
 }
 

@@ -124,7 +124,7 @@ s32 func_80134D8C(void) {
     func_801343B0();
     if ((game_state.mode_step_timer.w++ == 1) && (D_800CA2E8 == 2)) {
         D_80122D0C = 0;
-        func_80067DD4();
+        portrait_event_face_eyes_animation_start();
     }
 }
 

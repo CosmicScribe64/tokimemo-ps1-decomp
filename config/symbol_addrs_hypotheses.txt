@@ -1,10 +1,14 @@
 // HYPOTHESES, not facts: names of main-exe symbols (every yaml loads this file) that claim a game meaning the code does not prove
 // (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
+settings_room_click_window = 0x8005AF28; // type:func
+settings_room_click_radio = 0x8005B040; // type:func
+settings_room_click_radio_holiday = 0x8005B0F4; // type:func
 hud_icon_bar_update = 0x80065B0C; // type:func
 hud_screen_frame_draw = 0x80066C08; // type:func
 hud_mascot_update = 0x80067870; // type:func
-sprite_light_effect_draw = 0x8006B900; // type:func
-text_marker_set = 0x8006C848; // type:func
 girl_flag4_may_clear = 0x80071280; // type:func
 portrait_quad_offsets = 0x80085CD4; // type:func
+girl_closeness_grid = 0x800B41B0;
+settings_room_radio_clips = 0x800B5970;
+settings_room_radio_clips_holiday = 0x800B59B0;
 hud_mascot_choice = 0x800B5C08;

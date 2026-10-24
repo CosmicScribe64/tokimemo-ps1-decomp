@@ -74,7 +74,7 @@ s32 func_80133F98(void) {
         tpage_buf_clear();
         sprite_tables_clear();
         actor_clear_range(0);
-        cursor_show(0);
+        hud_cursor_show(0);
         text_system_reset();
         talk_clear();
         game_state.screen_brightness = 0x80;
@@ -100,7 +100,7 @@ s32 func_8013408C(void) {
         tpage_buf_clear();
         sprite_tables_clear();
         actor_clear_range(0);
-        cursor_show(0);
+        hud_cursor_show(0);
         text_system_reset();
         k_reset(1);
         return 0;

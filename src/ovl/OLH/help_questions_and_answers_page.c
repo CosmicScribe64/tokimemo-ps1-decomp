@@ -35,7 +35,7 @@ void func_80132000(void) {
         func_80135AC0();
         break;
     }
-    cursor_update();
+    hud_cursor_update();
     if (game_state.pad_pressed & PAD_START) {
         game_mode_set(GAME_MODE_COMMAND_SCREEN);
     }

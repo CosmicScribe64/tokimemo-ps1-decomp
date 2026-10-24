@@ -2025,7 +2025,7 @@ u8 arg2;
         }
         if ((check_end_k() != 0) && ((dialogue->unk_20 == 0) || (dialogue->unk_20 == 0xA) || ((dialogue->unk_20 == 1) && (cd_audio_state() != 4)) || ((*(u8 *)&game_state.voice_mode) == 0))) {
             D_8011ED5B |= 0x80;
-            func_8006C934();
+            hud_text_marker_bob();
         } else {
             D_8011ED5B &= 0x7F;
         }
@@ -2052,7 +2052,7 @@ u8 arg2;
                 if ((dialogue->unk_24 != 0) && (dialogue->unk_4C == 0) && (dialogue->unk_50 == 0)) {
                     bustup_speech();
                 } else if ((dialogue->unk_34 != 0) && (dialogue->unk_40 == 0) && (dialogue->unk_4C == 0)) {
-                    func_80067DFC();
+                    portrait_event_face_mouth_animation_start();
                 }
             }
         }
@@ -2248,7 +2248,7 @@ void func_80083418(void) {
 
 void portrait_layout_set(u8 arg0) {
     portrait_quad_offsets(arg0);
-    func_800634FC(arg0);
+    portrait_value_clear_if_high(arg0);
 }
 
 s32 portrait_show_checked(void) {
@@ -2317,7 +2317,7 @@ s32 portrait_wink_update(void) {
         actor_pool[0x7FB] |= 0x80;
         sprite_quads[0].flags &= 0x7FFFFFFF;
         sprite_quads[1].flags &= 0x7FFFFFFF;
-        func_80063668();
+        portrait_face_update();
         if (D_80122D20 != 0) {
             sprite_quads[0].unk_0F = 0;
         }
@@ -2331,13 +2331,13 @@ s32 portrait_wink_update(void) {
         sprite_quads[1].flags |= 0x80000000;
         if (D_80122D10 == 1) {
             if (game_state.frame_count % 240 == 0) {
-                func_80067DFC();
+                portrait_event_face_mouth_animation_start();
             }
         } else if (D_80122D10 == 0) {
-            func_80067C28();
+            portrait_event_face_mouth_lipsync();
         }
         if (game_state.frame_count % 240 == 0 && D_80122D0C == 0) {
-            func_80067DD4();
+            portrait_event_face_eyes_animation_start();
         }
     } else {
         actor_pool[0x83F] &= ~0x80;
@@ -2361,7 +2361,7 @@ void func_80083A10(void) {
         actor_pool[3] |= 0x80;
     }
     if (actor_pool[3] & 0x80) {
-        cursor_update();
+        hud_cursor_update();
     }
 }
 
@@ -2861,7 +2861,7 @@ void check_para_limit(void) {
 }
 
 void text_marker_hide(void) {
-    text_marker_set(0);
+    hud_text_marker_set(0);
 }
 
 void func_80084E6C(void) {
@@ -3127,12 +3127,12 @@ void talk_clear(void) {
         i++;
     }
     D_800CA2AC = 0;
-    cursor_actor_init(0);
+    hud_cursor_actor_init(0);
     D_8011ECD3 &= 0xFF7F;
     k_reset(0);
     message_window_set_title((s32) "　");
     message_window_title_show(0);
-    func_8006764C(0);
+    hud_mascot_display_switch(0);
 }
 
 void don_init2(void) {

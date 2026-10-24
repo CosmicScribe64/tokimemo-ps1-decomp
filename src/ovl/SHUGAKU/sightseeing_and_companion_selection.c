@@ -33,7 +33,7 @@ void func_80138B20(void) {
     if (D_800CA2CC == 1) {
         state = game_state.mode_step;
         if (state >= 0x1FU && state < 0x25U) {
-            sprite_light_effect_draw();
+            hud_sprite_light_effect_draw();
         }
     }
     state = game_state.mode_step;

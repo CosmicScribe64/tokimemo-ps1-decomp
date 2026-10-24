@@ -1,8 +1,8 @@
 // Main-exe-only symbol facts that are not names (T-0500). Read by config/SLPM_86.053.yaml only.
 // Function sizes where splat cut one function into several: the case blocks of a switch that
 // follow its `jr $ra` were taken as functions of their own (jump-table targets, `jlabel`).
-func_80066A2C = 0x80066A2C; // type:func size:0x58
-func_80066A84 = 0x80066A84; // type:func size:0x48
+hud_season_index = 0x80066A2C; // type:func size:0x58
+hud_in_summer_months = 0x80066A84; // type:func size:0x48
 // T-9140 u8 view of D_800E7D11 plus 2, the 4-byte record table that func_80056284 clears.
 D_800E7D13 = 0x800E7D13;
 // T-20940: the name table (u8 *[16], main_api.h). telephone_class_init (C) indexes it as D_800B3538[i - 1];
@@ -10,9 +10,9 @@ D_800E7D13 = 0x800E7D13;
 girl_full_name_table = 0x800B3538;
 // T-25307: s8/u8[12] tables of func_80052F68 (main_api.h), indexed 1..10. No instruction names the bases
 // (the loops start at entry 1); the original's relocations are splat's D_800B4349, D_800B4355 and D_800B4361.
-D_800B4348 = 0x800B4348;
-D_800B4354 = 0x800B4354;
-D_800B4360 = 0x800B4360;
+girl_syoushin_weight = 0x800B4348;
+girl_points_mask_strong = 0x800B4354;
+girl_points_mask_normal = 0x800B4360;
 // Main bss names inside EVENT's file range 0x800F6000-0x80126000 (T-27002): EVENT loads
 // config/symbol_addrs.txt, so these would label EVENT's own data. Overlays link them through
 // build/main_names.ld (tools/syms_to_ld.py).
@@ -24,8 +24,16 @@ actor_pool_96 = 0x80120650;
 sprite_quads = 0x801217D0;
 bg_layers = 0x801220D0;
 talk_work = 0x80122CD0;
+settings_click_speed_ticks = 0x801230E4;
 ovl_entry = 0x80123110;
 memory_card_block = 0x80123120;
 cd_read_status = 0x8012512A;
 cd_command_ring = 0x80125130;
+text_glyph_upload_ring = 0x801255F0;
+menu_vram_view_x = 0x80125BF0;
+menu_vram_view_y = 0x80125BF2;
+speaker_voice_source_a = 0x80125BF4;
+speaker_voice_source_b = 0x80125BF8;
+speaker_voice_index = 0x80125BFC;
+speaker_voice_state = 0x80125C00;
 audio_state = 0x80125D10;

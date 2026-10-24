@@ -5,7 +5,7 @@
 
 extern u32 talk_work;
 
-void func_80150010(void) {
+void date_scene_yuina_spring_data_init(void) {
     D_8015EA40 = 0x801B0000;
     D_8015EA44 = 0x801B2000;
     D_8015EA48 = 0x801B6000;
@@ -15,7 +15,7 @@ void func_80150010(void) {
     D_8015EA58 = 0x801C6000;
 }
 
-void func_80150080(void) {
+void date_scene_yuina_summer_data_init(void) {
     D_8015EA5C = (u8 *)0x801CE1A4;
     D_8015EA60 = (u8 *)0x801CE1A8;
     D_8015EA64 = (u8 *)0x801CE1E0;
@@ -29,7 +29,7 @@ void func_80150080(void) {
     D_8015EA84 = (u8 *)0x801C6000;
 }
 
-void func_80150130(void) {
+void date_scene_yuina_autumn_data_init(void) {
     D_8015EA88 = (u8 *)0x801D2370;
     D_8015EA8C = (u8 *)0x801D2374;
     D_8015EA90 = (u8 *)0x801D23A4;
@@ -45,7 +45,7 @@ void func_80150130(void) {
     D_8015EAB8 = (u8 *)0x801CE000;
 }
 
-void func_80150200(void) {
+void date_scene_yuina_winter_data_init(void) {
     D_8015EABC = (u8 *)0x801D2174;
     D_8015EAC0 = (u8 *)0x801D217C;
     D_8015EAC4 = (u8 *)0x801D21A8;
@@ -59,19 +59,19 @@ void func_80150200(void) {
     D_8015EAE4 = (u8 *)0x801C6000;
 }
 
-void func_801502B0(void) {
+void date_scene_yuina_dispatch(void) {
     switch (talk_work) {
     case 2:
-        func_80150BCC();
+        date_scene_yuina_spring();
         return;
     case 3:
-        func_80150ED4();
+        date_scene_yuina_summer();
         return;
     case 4:
-        func_801511B4();
+        date_scene_yuina_autumn();
         return;
     case 5:
-        func_80151360();
+        date_scene_yuina_winter();
         return;
     default:
         game_mode_reset_to_title();
@@ -79,11 +79,11 @@ void func_801502B0(void) {
     }
 }
 
-void func_80150344(void) {
-    D_8015E208 = D_8015DE8C;
-    D_8015E20C = D_8015DFC8;
-    D_8015E210 = D_8015E104;
-    func_80150010();
+void date_scene_yuina_spring_setup(void) {
+    date_scene_text = D_8015DE8C;
+    date_scene_command = D_8015DFC8;
+    date_scene_voice = D_8015E104;
+    date_scene_yuina_spring_data_init();
     k_reset(0);
     message_window_set_title("園内");
     k_reset(1);
@@ -98,14 +98,14 @@ void func_80150344(void) {
 }
 
 /* Copies display record 96 (actor_pool_96) over record 98 (D_801206D8). */
-void func_80150460(void) {
-    D_8015E208 = D_8015DE90;
-    D_8015E20C = D_8015DFCC;
-    D_8015E210 = D_8015E108;
+void date_scene_yuina_summer_setup(void) {
+    date_scene_text = D_8015DE90;
+    date_scene_command = D_8015DFCC;
+    date_scene_voice = D_8015E108;
     game_state.girls[2].tokimeki += 2;
     game_state.girls[2].syoushin -= 0xA;
     check_para_limit();
-    func_80150080();
+    date_scene_yuina_summer_data_init();
     load_palette((s32) D_8015EA6C, 0x11, 1, 2, 0);
     scene_still_show((s32) D_8015EA70, (s32) D_8015EA74, (s32) D_8015EA78, (s32) D_8015EA7C, (s32) D_8015EA80, (s32) D_8015EA84);
     scene_anim_show((s32) D_8015EA60, (s32) D_8015EA64, (s32) D_8015EA5C, (s32) D_8015EA68);
@@ -114,11 +114,11 @@ void func_80150460(void) {
     mode_step_next();
 }
 
-void func_801505B4(void) {
-    D_8015E208 = D_8015DE94;
-    D_8015E20C = D_8015DFD0;
-    D_8015E210 = D_8015E10C;
-    func_80150130();
+void date_scene_yuina_autumn_setup(void) {
+    date_scene_text = D_8015DE94;
+    date_scene_command = D_8015DFD0;
+    date_scene_voice = D_8015E10C;
+    date_scene_yuina_autumn_data_init();
     load_palette((s32) D_8015EA98, 0x11, 1, 2, 0);
     scene_still_show((s32) D_8015EAA0, (s32) D_8015EAA4, (s32) D_8015EAA8, (s32) D_8015EAAC, (s32) D_8015EAB0, (s32) D_8015EAB4);
     scene_anim_show((s32) D_8015EA8C, (s32) D_8015EA90, (s32) D_8015EA88, (s32) D_8015EA94);
@@ -168,11 +168,11 @@ void func_801505B4(void) {
     mode_step_next();
 }
 
-void func_80150890(void) {
-    D_8015E208 = D_8015DE98;
-    D_8015E20C = D_8015DFD4;
-    D_8015E210 = D_8015E110;
-    func_80150200();
+void date_scene_yuina_winter_setup(void) {
+    date_scene_text = D_8015DE98;
+    date_scene_command = D_8015DFD4;
+    date_scene_voice = D_8015E110;
+    date_scene_yuina_winter_data_init();
     load_palette((s32) D_8015EACC, 0x11, 1, 2, 0);
     scene_still_show((s32) D_8015EAD0, (s32) D_8015EAD4, (s32) D_8015EAD8, (s32) D_8015EADC, (s32) D_8015EAE0, (s32) D_8015EAE4);
     scene_anim_show((s32) D_8015EAC0, (s32) D_8015EAC4, (s32) D_8015EABC, (s32) D_8015EAC8);
@@ -202,56 +202,56 @@ void func_80150890(void) {
     mode_step_next();
 }
 
-void func_80150A84(void) {
+void date_scene_yuina_spring_background_1(void) {
     bg_read_sub2(0x4587);
     mode_step_next();
 }
 
-void func_80150AAC(void) {
+void date_scene_yuina_spring_background_2(void) {
     bg_read_sub2(0x457D);
     mode_step_next();
 }
 
-void func_80150AD4(void) {
+void date_scene_yuina_summer_background_1(void) {
     bg_read_sub2(0x4925);
     mode_step_next();
 }
 
-void func_80150AFC(void) {
+void date_scene_yuina_summer_background_2(void) {
     bg_read_sub2(0x4631);
     mode_step_next();
 }
 
-void func_80150B24(void) {
+void date_scene_yuina_autumn_background_1(void) {
     bg_read_sub2(0x4845);
     mode_step_next();
 }
 
-void func_80150B4C(void) {
+void date_scene_yuina_autumn_background_2(void) {
     bg_read_sub2(0x44D6);
     mode_step_next();
 }
 
-void func_80150B74(void) {
+void date_scene_yuina_winter_background_1(void) {
     bg_read_sub2(0x453B);
     mode_step_next();
 }
 
-void func_80150B9C(void) {
+void date_scene_yuina_winter_audio_command_background_1(void) {
     audio_command(0x203);
     bg_read_sub2(0x4520);
     mode_step_next();
 }
 
-void func_80150BCC(void) {
+void date_scene_yuina_spring(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
 
-    tbl = D_8015EAE8;
+    tbl = date_scene_yuina_spring_steps;
     idx = game_state.mode_step;
     tbl.f[idx]();
     if (D_80122D04 != 0) {
-        func_80150C78();
+        date_scene_yuina_spring_radial_lines();
         D_800B5BD4 = 9;
         return;
     }
@@ -260,7 +260,7 @@ void func_80150BCC(void) {
 
 /* Sixteen grey lines through prim_gradient_line. All nine s-registers are taken, so uopt keeps col1 in
  * memory: its stack home (0x64) and the frame size follow the declaration order. */
-void func_80150C78(void) {
+void date_scene_yuina_spring_radial_lines(void) {
     s32 col0;
     s16 i;
     s32 col1;
@@ -284,42 +284,42 @@ void func_80150C78(void) {
     }
 }
 
-void func_80150E9C(void) {
+void date_scene_yuina_spring_load_data(void) {
     cd_read_sectors(0x35, 0x801B0000, 0x8144);
-    func_80150010();
+    date_scene_yuina_spring_data_init();
     mode_step_next();
 }
 
-void func_80150ED4(void) {
+void date_scene_yuina_summer(void) {
     GameState *g = &game_state; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl39 tbl;
 
-    tbl = D_8015EB88;
+    tbl = date_scene_yuina_summer_steps;
     if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
          (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
          (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
         dec_bg_brightness == 0x80 && D_80122D04 == 0 && g->mode_step >= 0x1A) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
 
     tbl.f[g->mode_step](0x80);
     if (g->mode_step >= 0xD && g->mode_step < 0x10) {
         if (g->frame_count % 180 == 0) {
-            func_8015114C();
+            date_scene_yuina_summer_audio_command_1();
         }
         if (g->frame_count % 180 == 0x5A) {
-            func_8015116C();
+            date_scene_yuina_summer_audio_command_2();
         }
     }
 }
 
-void func_80151064(void) {
+void date_scene_yuina_summer_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8179);
-    func_80150080();
+    date_scene_yuina_summer_data_init();
     mode_step_next();
 }
 
-void func_8015109C(void) {
+void date_scene_yuina_summer_still_fade_out(void) {
     func_800853FC();
     D_801206DF = dec_bg_brightness;
     if ((u8) dec_bg_brightness < 8U) {
@@ -327,7 +327,7 @@ void func_8015109C(void) {
     }
 }
 
-void func_801510E8(void) {
+void date_scene_yuina_summer_sprite_show(void) {
     ((Actor *)actor_pool)[98].brightness = 0x80;
     ((Actor *)actor_pool)[98].draw_flags |= 0x80;
     ((Actor *)actor_pool)[98].unk_08 = 0;
@@ -337,26 +337,26 @@ void func_801510E8(void) {
     mode_step_next();
 }
 
-void func_8015114C(void) {
+void date_scene_yuina_summer_audio_command_1(void) {
     audio_command(0x500);
 }
 
-void func_8015116C(void) {
+void date_scene_yuina_summer_audio_command_2(void) {
     audio_command(0x503);
 }
 
-void func_8015118C(void) {
+void date_scene_yuina_summer_audio_command_3(void) {
     audio_command(0x504);
     mode_step_next();
 }
 
 /* D_80121FD4 is record 57 of the SpriteQuad table and D_801206D8 record 98 of the actor_pool display
  * records; the chain assignment keeps the loaded byte in one register for all four stores. */
-void func_801511B4(void) {
+void date_scene_yuina_autumn(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
 
-    tbl = D_8015EC24;
+    tbl = date_scene_yuina_autumn_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0) {
@@ -374,22 +374,22 @@ void func_801511B4(void) {
     sprite_quads[57].flags |= 0x80000000;
 }
 
-void func_80151300(void) {
+void date_scene_yuina_autumn_audio_command_1(void) {
     audio_command(0x502);
     mode_step_next();
 }
 
-void func_80151328(void) {
+void date_scene_yuina_autumn_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x81B6);
-    func_80150130();
+    date_scene_yuina_autumn_data_init();
     mode_step_next();
 }
 
-void func_80151360(void) {
+void date_scene_yuina_winter(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
 
-    tbl = D_8015ECC4;
+    tbl = date_scene_yuina_winter_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0) {
@@ -400,8 +400,8 @@ void func_80151360(void) {
     D_801206DB &= 0xFF7F;
 }
 
-void func_80151424(void) {
+void date_scene_yuina_winter_load_data(void) {
     cd_read_sectors(0x45U, 0x801B0000, 0x81FB);
-    func_80150200();
+    date_scene_yuina_winter_data_init();
     mode_step_next();
 }

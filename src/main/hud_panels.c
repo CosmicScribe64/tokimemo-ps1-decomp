@@ -13,7 +13,7 @@ void portrait_read_start(s32 arg0) {
     D_800B5A60 = 0;
 }
 
-void func_80062D0C(s32 arg0) {
+void portrait_hide(s32 arg0) {
     if (arg0 == 0) {
         ((Actor *)actor_pool)[31].draw_flags &= 0x7F;
         ((Actor *)actor_pool)[30].draw_flags &= 0x7F;
@@ -210,17 +210,17 @@ void portrait_build(s32 arg0, s32 *arg1, u8 **arg2, u8 *arg3, s32 arg4) {
         sprite_quads[5].y = (((Actor *)actor_pool)[31].y + y1) - origin_y;
         game_state.quad_layer[5] = 0x8B;
     }
-    func_80063520(arg4);
-    func_800634FC(arg4);
+    portrait_expression_select(arg4);
+    portrait_value_clear_if_high(arg4);
 }
 
-void func_800634FC(void) {
+void portrait_value_clear_if_high(void) {
     if ((u32)D_800B5A64 >= 0xA5) {
         D_800B5A64 = 0;
     }
 }
 
-void func_80063520(u32 arg0) {
+void portrait_expression_select(u32 arg0) {
     switch (arg0) {
     case 0:
         sprite_quads[1].unk_0C = 7;
@@ -255,9 +255,9 @@ void func_80063520(u32 arg0) {
     }
 }
 
-/* FAKE: the u8 view of the s8 field unk_03C gives the original lbu (as in func_80067C28), and the three locals declared
+/* FAKE: the u8 view of the s8 field unk_03C gives the original lbu (as in portrait_event_face_mouth_lipsync), and the three locals declared
  * before `saved` put three unused slots above its spill slot (frame size 0x38, as TACO func_801438F0). T-17011 */
-void func_80063668(void) {
+void portrait_face_update(void) {
     s32 max;
     s32 level;
     s32 n;
@@ -786,7 +786,7 @@ s32 get_icon_can_use(s32 arg0) {
     return 0;
 }
 
-void func_8006509C(void) {
+void hud_icon_bar_init(void) {
     GameState *g = &game_state;
     s32 i;
     s32 n;
@@ -863,13 +863,13 @@ void func_8006509C(void) {
         }
         break;
     }
-    func_800654D0(g->icon_count);
+    hud_icon_layout_apply(g->icon_count);
     LoadSquare(0x120, 0x1F1, 0x10, 1, &D_800C6200);
     LoadSquare(0x120, 0x1F2, 0x10, 1, &D_800C6220);
     LoadSquare(0x120, 0x1F3, 0x10, 1, &D_800C6220[0x20]);
 }
 
-void func_800654D0(s32 n) {
+void hud_icon_layout_apply(s32 n) {
     s32 pad; /* FAKE: preserves original stack homes and frame size. T-24501 */
     s32 i;
     s16 x[16];
@@ -912,7 +912,7 @@ void func_800654D0(s32 n) {
     }
 }
 
-void func_80065900(u8 arg0) {
+void hud_icon_memory_card_animation_set(u8 arg0) {
     /* D_8012059A[1] is D_8012059C; the array form keeps IDO from hoisting the load above the first store */
     if (arg0) {
         D_8012059A[0] = 0xE;
@@ -933,7 +933,7 @@ void func_80065900(u8 arg0) {
  * 4-trip loop: IDO unrolls that loop, keeps the eight corner values in registers (one pair per test,
  * so the outer loop runs out of caller-saved registers and spills the shared subexpressions to
  * sp+0x20..0x28) and leaves the 15-trip loop rolled. T-25108. */
-s32 func_80065964(s32 idx, s32 dx, s32 dy) {
+s32 hud_icon_move_allowed(s32 idx, s32 dx, s32 dy) {
     s32 cx[4];
     s32 cy[4];
     s16 *p;
@@ -979,10 +979,10 @@ s32 func_80065964(s32 idx, s32 dx, s32 dy) {
 
 /* Cursor step of the 15-icon menu: every third frame of the pad repeat (`unk_F6C % 3 == 2`) moves the
  * selected icon's position in D_80125C10 and the cursor record by the pad direction (`unk_F6F` pixels), unless
- * func_80065964 rejects the move, then clamps the icon to x -0x8A..0x80, y -0x5C..0x5C. Without pad input
+ * hud_icon_move_allowed rejects the move, then clamps the icon to x -0x8A..0x80, y -0x5C..0x5C. Without pad input
  * it runs the menu cursor check instead. A selection change restarts the 0x20-frame blink of
  * D_800B5AA0, which scales the selected icons with rsin while `a` is 0; the loop sets the display modes of
- * the icon records 64 + i and 80 + i, and the tail sets the page counter limits as func_80065900 does.
+ * the icon records 64 + i and 80 + i, and the tail sets the page counter limits as hud_icon_memory_card_animation_set does.
  * The selection index is read through `g`: the stores to D_80125C10 then reload the index expression (the
  * original recomputes the address for the y store), and uopt keeps the index in $s3, re-read after each call. */
 void hud_icon_bar_update(s32 a) {
@@ -1016,7 +1016,7 @@ void hud_icon_bar_update(s32 a) {
                 dy = g->cursor_speed;
                 break;
             }
-            if (func_80065964(g->menu_cursor_0, dx, dy) == 0) {
+            if (hud_icon_move_allowed(g->menu_cursor_0, dx, dy) == 0) {
                 dx = 0;
                 dy = 0;
             }
@@ -1025,7 +1025,7 @@ void hud_icon_bar_update(s32 a) {
             /* record 0 fields, not cursor_x/cursor_y: as1 keeps the y load behind the x store */
             ((Actor *)actor_pool)[0].x += dx;
             ((Actor *)actor_pool)[0].y += dy;
-            func_800654D0(g->icon_count);
+            hud_icon_layout_apply(g->icon_count);
             if (((s16 (*)[2])D_80125C10)[g->menu_cursor_0][0] > 0x80) {
                 ((s16 (*)[2])D_80125C10)[g->menu_cursor_0][0] = 0x80;
             }
@@ -1129,7 +1129,7 @@ void message_window_title_show(s32 show) {
     }
 }
 
-void func_80066104(void) {
+void message_window_set_title_hidden(void) {
     message_window_set_title();
     D_80125CA0 = 0xB8;
 }
@@ -1240,7 +1240,7 @@ void message_window_title_update(void) {
 }
 
 
-s32 func_80066A2C(void) {
+s32 hud_season_index(void) {
     switch (game_state.month) {
     case 3:
     case 4:
@@ -1262,7 +1262,7 @@ s32 func_80066A2C(void) {
     }
 }
 
-s32 func_80066A84(void) {
+s32 hud_in_summer_months(void) {
     switch (game_state.month) {
     case 1:
     case 2:
@@ -1282,10 +1282,10 @@ s32 func_80066A84(void) {
     }
 }
 
-s32 func_80066ACC(void) {
+s32 hud_summer_phase(void) {
     s32 ret;
 
-    ret = func_80066A84();
+    ret = hud_in_summer_months();
     if (game_state.month == 9) {
         if (game_state.day >= 0x18U) {
             ret = -1;
@@ -1302,7 +1302,7 @@ s32 func_80066ACC(void) {
     return ret;
 }
 
-s32 func_80066B40(s32 arg0, s32 arg1) {
+s32 hud_vacation_for_date(s32 arg0, s32 arg1) {
     if (arg0 == 8) {
         return 1;
     }
@@ -1345,7 +1345,7 @@ void hud_screen_frame_draw(s32 a) {
     s32 next_weight;
 
     u8 enabled[10][8];
-    current = func_80066A2C();
+    current = hud_season_index();
     switch (game_state.player_flags.b[1] & 15) {
     case 1:
         if ((game_state.frame_count & 3) == 3) D_800B5BD0--;
@@ -1460,7 +1460,7 @@ void hud_screen_frame_draw(s32 a) {
     }
 }
 
-void func_800673B8(void) {
+void hud_vram_init(void) {
     s32 i;
     s32 j;
 
@@ -1472,11 +1472,11 @@ void func_800673B8(void) {
     LoadSquare(0x3E0, 0x1C0, 4, 0x10, game_state.scratch_words);
 }
 
-void func_80067438(void) {
+void hud_season_bgm_load(void) {
     s32 v;
 
     audio_command(5);
     audio_command(0x71);
-    v = func_80066A2C() & 3;
+    v = hud_season_index() & 3;
     audio_bank_load_start(0, 0xBF98, 0xBF79, D_800B5BE8[v], D_800B5BF8[v], D_800B5BD8[v]);
 }

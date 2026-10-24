@@ -19,6 +19,13 @@ o-date, o-nameent and o-geko executable-table preparation and source-backed port
 - [x] Independent review of prepared executable batches before application.
 - [x] No conflicting source/shared-file edits; primary chat applies/commits and maintains shared wiki.
 
+### Supplementary semantic continuation
+
+- [ ] Full function/declaration and essential-literal census reconciled for all three units.
+- [ ] New owned identifier packets and exact literal-site inventories prepared; prior apply rows unchanged.
+- [ ] Exact supplementary packets pass independent Standards and Spec reviews and required dry plans.
+- [ ] Primary applies/proves the supplements and resolves the recorded shared-owner/tooling residue.
+
 ## Comments
 
 2026-10-24: User explicitly authorized fan-out across multiple chats. Shared-checkout worker edits are limited to assigned tables/specs and this ticket; root serializes applications, builds, indexes, board and log.
@@ -143,3 +150,40 @@ under 99, while main memory-card code copies the 16-byte system counter array. N
 those counts through the already-applied `SystemData`/`AlbumSlotRecord` types. These findings are
 filed in [[spec/o-date]] and [[spec/o-nameent]] as shared-owner reconciliation; no main field or
 symbol row is applied or added to the owned identifier packets.
+
+Follow-up serialization evidence corrects the original NAME_ENT proposal: `AlbumSlotRecord.flags`
+is the reader view of `GameSaveImage.unk_488`, sourced from `GameState.girl_cleared` by main
+memory-card save/load loops (`src/main/memory_card.c:834,950`). The album offset is 0x200 + 0x488 =
+0x688. It is not a copy of the persistent `SystemData.flags` array. The separate 14-byte reader
+and 16-byte serialized declarations remain unchanged; [[spec/o-nameent]] records the exact
+shared-owner requests and supersedes the old proposal's provenance claim.
+
+GEKO continuation resolved the birthday candidate sentinel at source level: `func_80134808`
+calls `get_g_zyotai_s(255)` before skipping the sentinel, but the two main score helpers reduce
+the argument modulo 13, so this call reads Yuko's index 8 rather than going out of bounds. The
+later sentinel guard still skips the candidate; no fallback choice is inferred. [[spec/o-geko]]
+records the shared-helper trace and removes this issue from the unproved bounds questions.
+
+NAME_ENT source inspection identified a possible negative-literal constant bug: `literal_value`
+returns the signed value but the inner positive Constant node (`tools/rename.py:1934-1944`),
+while the edit replaces only that node's token. Mapping -1 to an enum member valued -1 may leave
+the original unary minus and invert the result. Negative-valued families are held as tooling
+residue pending a synthetic fixture; their semantic sites remain inventoried. No tool patch or
+constant application is made in this lane.
+
+Synthetic proof now confirms the negative-literal defect. Actual `const_plan` on an isolated
+fixture changes `x = -1` to `x = -NEGATIVE_TEST_NONE` and the comparison likewise, while declaring
+the enum member as -1; the result is +1 and the tool reports zero problems. Proof is
+`.claude/orchestrator/state/T-27051-essential/nameent/negative-literal-proof.json` and its generated
+source. Negative-valued constant families must remain tooling-blocked until the primary repairs
+the unary-node replacement and proves it. This lane changes no tool or game source.
+
+Independent interim reviews found two Standards naming issues (American `Program` spelling and
+new unapproved syoushin stem derivatives) and two Spec preparation gaps (DATE comment text selected
+as literal operands; GEKO/DATE known gameplay sites left without semantic symbols). All findings
+are accepted for correction. The constant inventories are not frozen handoffs while these gaps
+remain. Retained-declaration rechecks also recovered 15 DATE and 17 NAME_ENT essential roles;
+their separate full plans pass without changing the earlier packet membership. The corrected
+DATE base targets require a fresh exact plan; unchanged packets reuse their matching proofs.
+
+2026-10-24 root applied-symbol milestone: main-ui247rows andscene-symbols2389rows (2636total) nowlive. Bothfullplan/apply/ledgerchecks pass3922totalledgerrows. IndependentStandards/Spec actual-source reviews confirm scopedidentifier/guard-only changes, originalbodies/literals/types/widths/K&Rviews preserved, all437ABIviews exactunder scopednamemapping. CleanDocker27/27and6952functions/2276920bytes, independentrehash27/27. NoO.BINnameschanged. Fullunitessential/type/literal/headerworkremains separatelytracked; thissource milestone is notPhase2complete.

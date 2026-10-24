@@ -5,7 +5,7 @@
 
 extern u32 talk_work;
 
-void func_801586A0(void) {
+void date_scene_saki_spring_data_init(void) {
     D_80160440 = 0x801CE124;
     D_80160444 = 0x801CE128;
     D_80160448 = 0x801CE148;
@@ -19,7 +19,7 @@ void func_801586A0(void) {
     D_80160468 = 0x801C6000;
 }
 
-void func_80158750(void) {
+void date_scene_saki_summer_data_init(void) {
     D_8016046C = 0x801D2240;
     D_80160470 = 0x801D2248;
     D_80160474 = 0x801D2288;
@@ -33,7 +33,7 @@ void func_80158750(void) {
     D_80160494 = 0x801C6000;
 }
 
-void func_80158800(void) {
+void date_scene_saki_autumn_data_init(void) {
     D_80160498 = 0x801CE0F4;
     D_8016049C = 0x801CE0F8;
     D_801604A0 = 0x801CE118;
@@ -47,7 +47,7 @@ void func_80158800(void) {
     D_801604C0 = 0x801C6000;
 }
 
-void func_801588B0(void) {
+void date_scene_saki_winter_data_init(void) {
     D_801604C4 = 0x801CE1A0;
     D_801604C8 = 0x801CE1A4;
     D_801604CC = 0x801CE1D4;
@@ -61,19 +61,19 @@ void func_801588B0(void) {
     D_801604EC = 0x801C6000;
 }
 
-void func_80158960(void) {
+void date_scene_saki_dispatch(void) {
     switch (talk_work) {
     case 2:
-        func_8015908C();
+        date_scene_saki_spring();
         return;
     case 3:
-        func_801591BC();
+        date_scene_saki_summer();
         return;
     case 4:
-        func_801592A0();
+        date_scene_saki_autumn();
         return;
     case 5:
-        func_80159354();
+        date_scene_saki_winter();
         return;
     default:
         game_mode_reset_to_title();
@@ -81,11 +81,11 @@ void func_80158960(void) {
     }
 }
 
-void func_801589F4(void) {
-    D_8015E208 = D_8015DF48;
-    D_8015E20C = D_8015E084;
-    D_8015E210 = D_8015E1C0;
-    func_801586A0();
+void date_scene_saki_spring_setup(void) {
+    date_scene_text = D_8015DF48;
+    date_scene_command = D_8015E084;
+    date_scene_voice = D_8015E1C0;
+    date_scene_saki_spring_data_init();
     load_palette(D_80160450, 0x11, 1, 2, 0);
     scene_still_show(D_80160454, D_80160458, D_8016045C, D_80160460, D_80160464, D_80160468);
     scene_anim_show(D_80160444, D_80160448, D_80160440, (s32) D_8016044C);
@@ -97,11 +97,11 @@ void func_801589F4(void) {
     mode_step_next();
 }
 
-void func_80158B1C(void) {
-    D_8015E208 = D_8015DF4C;
-    D_8015E20C = D_8015E088;
-    D_8015E210 = D_8015E1C4;
-    func_80158750();
+void date_scene_saki_summer_setup(void) {
+    date_scene_text = D_8015DF4C;
+    date_scene_command = D_8015E088;
+    date_scene_voice = D_8015E1C4;
+    date_scene_saki_summer_data_init();
     load_palette(D_8016047C, 0x11, 1, 2, 0);
     scene_still_show(D_80160480, D_80160484, D_80160488, D_8016048C, D_80160490, D_80160494);
     scene_anim_show(D_80160470, D_80160474, D_8016046C, (s32) D_80160478);
@@ -120,11 +120,11 @@ void func_80158B1C(void) {
     mode_step_next();
 }
 
-void func_80158C8C(void) {
-    D_8015E208 = D_8015DF50;
-    D_8015E20C = D_8015E08C;
-    D_8015E210 = D_8015E1C8;
-    func_80158800();
+void date_scene_saki_autumn_setup(void) {
+    date_scene_text = D_8015DF50;
+    date_scene_command = D_8015E08C;
+    date_scene_voice = D_8015E1C8;
+    date_scene_saki_autumn_data_init();
     load_palette(D_801604A8, 0x11, 1, 2, 0);
     scene_still_show(D_801604AC, D_801604B0, D_801604B4, D_801604B8, D_801604BC, D_801604C0);
     scene_anim_show(D_8016049C, D_801604A0, D_80160498, (s32) D_801604A4);
@@ -135,11 +135,11 @@ void func_80158C8C(void) {
     mode_step_next();
 }
 
-void func_80158D98(void) {
-    D_8015E208 = D_8015DF54;
-    D_8015E20C = D_8015E090;
-    D_8015E210 = D_8015E1CC;
-    func_801588B0();
+void date_scene_saki_winter_setup(void) {
+    date_scene_text = D_8015DF54;
+    date_scene_command = D_8015E090;
+    date_scene_voice = D_8015E1CC;
+    date_scene_saki_winter_data_init();
     load_palette(D_801604D4, 0x11, 1, 2, 0);
     scene_still_show(D_801604D8, D_801604DC, D_801604E0, D_801604E4, D_801604E8, D_801604EC);
     scene_anim_show(D_801604C8, D_801604CC, D_801604C4, (s32) D_801604D0);
@@ -163,65 +163,65 @@ void func_80158D98(void) {
     mode_step_next();
 }
 
-void func_80158F44(void) {
+void date_scene_saki_spring_background_1(void) {
     bg_read_sub2(0x47D6);
     mode_step_next();
 }
 
-void func_80158F6C(void) {
+void date_scene_saki_spring_background_2(void) {
     bg_read_sub2(0x42EB);
     mode_step_next();
 }
 
-void func_80158F94(void) {
+void date_scene_saki_summer_background_1(void) {
     bg_read_sub2(0x48E0);
     mode_step_next();
 }
 
-void func_80158FBC(void) {
+void date_scene_saki_summer_background_2(void) {
     bg_read_sub2(0x45BF);
     mode_step_next();
 }
 
-void func_80158FE4(void) {
+void date_scene_saki_autumn_background_1(void) {
     bg_read_sub2(0x490A);
     mode_step_next();
 }
 
-void func_8015900C(void) {
+void date_scene_saki_autumn_background_2(void) {
     bg_read_sub2(0x45F8);
     mode_step_next();
 }
 
-void func_80159034(void) {
+void date_scene_saki_winter_background_1(void) {
     bg_read_sub2(0x4868);
     mode_step_next();
 }
 
-void func_8015905C(void) {
+void date_scene_saki_winter_audio_command_background_1(void) {
     audio_command(0x203);
     bg_read_sub2(0x4520);
     mode_step_next();
 }
 
-void func_8015908C(void) {
+void date_scene_saki_spring(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
     FnTbl38 tbl;
 
-    tbl = D_801604F0;
+    tbl = date_scene_saki_spring_steps;
     if (game_state.mode_step < 8U && dec_bg_brightness == 0x80) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
     tbl.f[game_state.mode_step](0x80);
 }
 
-void func_8015913C(void) {
+void date_scene_saki_spring_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8C4B);
-    func_801586A0();
+    date_scene_saki_spring_data_init();
     mode_step_next();
 }
 
-void func_80159174(void) {
+void date_scene_saki_spring_flag_group(void) {
     if (game_state.scene_flags[27] != 0) {
         D_800CA150 = (u16) D_800CA150 + 1;
         D_800CA154 = 0;
@@ -229,70 +229,70 @@ void func_80159174(void) {
     mode_step_next();
 }
 
-void func_801591BC(void) {
+void date_scene_saki_summer(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
     FnTbl56 tbl;
 
-    tbl = D_80160588;
+    tbl = date_scene_saki_summer_steps;
     if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
     tbl.f[game_state.mode_step](0x80);
 }
 
-void func_80159268(void) {
+void date_scene_saki_summer_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8C88);
-    func_80158750();
+    date_scene_saki_summer_data_init();
     mode_step_next();
 }
 
-void func_801592A0(void) {
+void date_scene_saki_autumn(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl43 tbl;
 
-    tbl = D_80160668;
+    tbl = date_scene_saki_autumn_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8015931C(void) {
+void date_scene_saki_autumn_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8CCD);
-    func_80158800();
+    date_scene_saki_autumn_data_init();
     mode_step_next();
 }
 
-void func_80159354(void) {
+void date_scene_saki_winter(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl51 tbl;
 
-    tbl = D_80160714;
+    tbl = date_scene_saki_winter_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_801593C8(void) {
+void date_scene_saki_winter_speak_as_saki(void) {
     game_state.current_girl = GIRL_SAKI;
-    func_8014C5C8();
+    date_scene_speak();
 }
 
-void func_801593F0(void) {
+void date_scene_saki_winter_speak_narration(void) {
     game_state.current_girl = GIRL_SOTOI;
-    func_8014C5C8();
+    date_scene_speak();
 }
 
-void func_80159418(void) {
+void date_scene_saki_winter_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8D0A);
-    func_801588B0();
+    date_scene_saki_winter_data_init();
     mode_step_next();
 }
 
-void func_80159450(void) {
+void date_scene_saki_winter_narration_step(void) {
     game_state.current_girl = GIRL_SOTOI;
     D_80120666 = 4;
     mode_step_next();
 }
 
-void func_80159484(void) {
+void date_scene_saki_winter_back_to_saki(void) {
     game_state.current_girl = GIRL_SAKI;
     mode_step_next();
 }

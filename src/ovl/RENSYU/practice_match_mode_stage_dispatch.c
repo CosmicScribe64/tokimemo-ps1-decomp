@@ -44,7 +44,7 @@ void func_801320E0(void) {
         talk_clear();
         message_window_init();
         icon_disp_switch(0);
-        func_8006764C(0);
+        hud_mascot_display_switch(0);
         parameter_disp_switch(0);
         hizuke_init();
         k_reset(0);
@@ -798,7 +798,7 @@ void func_80133CB8(void) {
     switch (game_state.mode_step) {
     case 0:
         audio_command(0xBF);
-        func_800674B0();
+        hud_day_bgm_load();
         mode_step_next();
         break;
     case 1:

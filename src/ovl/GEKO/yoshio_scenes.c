@@ -2,27 +2,27 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
-void func_80141AF0(void) {
-    D_80147530 = 0x801CE130;
-    D_80147534 = 0x801CE134;
-    D_80147538 = 0x801CE15C;
-    D_8014753C = (*(s16 *)0x801CE170);
-    D_80147540 = 0x801B0000;
-    D_80147544 = 0x801B2000;
-    D_80147548 = 0x801B6000;
-    D_8014754C = 0x801BA000;
-    D_80147550 = 0x801BE000;
-    D_80147554 = 0x801C2000;
-    D_80147558 = 0x801C6000;
+void encounter_yoshio_assets_bind_1(void) {
+    encounter_yoshio_pack_1_animation_input_2 = 0x801CE130;
+    encounter_yoshio_pack_1_animation_input_0 = 0x801CE134;
+    encounter_yoshio_pack_1_animation_input_1 = 0x801CE15C;
+    encounter_yoshio_pack_1_animation_input_3 = (*(s16 *)0x801CE170);
+    encounter_yoshio_pack_1_palette = 0x801B0000;
+    encounter_yoshio_pack_1_still_image_0 = 0x801B2000;
+    encounter_yoshio_pack_1_still_image_1 = 0x801B6000;
+    encounter_yoshio_pack_1_still_image_2 = 0x801BA000;
+    encounter_yoshio_pack_1_still_image_3 = 0x801BE000;
+    encounter_yoshio_pack_1_still_image_4 = 0x801C2000;
+    encounter_yoshio_pack_1_still_image_5 = 0x801C6000;
 }
 
-void func_80141BA0(void) {
-    func_80141BC0();
+void encounter_yoshio_entry(void) {
+    encounter_yoshio_scene_all_dispatch();
 }
 
-void func_80141BC0(void) {
+void encounter_yoshio_scene_all_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_80141BFC();
+        encounter_yoshio_scene_all_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
@@ -31,29 +31,29 @@ void func_80141BC0(void) {
 typedef struct {
     void (*f[43])();
 } FnTbl43; /* size 0xAC */
-extern FnTbl43 D_80147560;
+extern FnTbl43 encounter_yoshio_scene_all_steps;
 
-void func_80141BFC(void) {
+void encounter_yoshio_scene_all_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl43 tbl;
 
-    tbl = D_80147560;
+    tbl = encounter_yoshio_scene_all_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (D_8014755C != 0) {
-        func_80063668();
+        portrait_face_update();
     }
 }
 
-void func_80141C94(void) {
+void encounter_yoshio_assets_load_1(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8FB5);
-    func_80141AF0();
+    encounter_yoshio_assets_bind_1();
     mode_step_next();
 }
 
-void func_80141CCC(void) {
+void encounter_yoshio_talk_portrait_update(void) {
     D_800B5A60 = 0;
-    func_80138AF8();
+    encounter_scene_talk();
     D_80122CF4 = 0;
     /* records of 0x44 / 0x24 bytes: indexing from the first symbol keeps IDO from hoisting the loads above the stores (T-4070) */
     (&D_8011F4CB)[0x44] |= 0x80;
@@ -65,7 +65,7 @@ void func_80141CCC(void) {
     }
 }
 
-void func_80141D74(void) {
+void encounter_yoshio_girl_result_store(void) {
     game_state.scene_flags[82] = game_state.date_girl;
     game_state.current_girl = game_state.date_girl;
     talk_names_set(game_state.date_girl);
@@ -73,7 +73,7 @@ void func_80141D74(void) {
     mode_step_next();
 }
 
-void func_80141DDC(void) {
+void encounter_yoshio_portrait_shift(void) {
     (&D_8011F4EE)[0x22] += 0x40;
     D_8011F4EE += 0x40;
     D_801217D4 += 0x40;
@@ -81,8 +81,8 @@ void func_80141DDC(void) {
     mode_step_next();
 }
 
-void func_80141E48(void) {
-    func_80138AF8();
+void encounter_yoshio_speaker_update(void) {
+    encounter_scene_talk();
     if ((u16)D_800CA154 == 2) {
         D_800B5A60 = 0;
         D_80122CF4 = 0;
@@ -95,7 +95,7 @@ void func_80141E48(void) {
             bustup_wink();
         }
     } else {
-        func_800634FC(0);
+        portrait_value_clear_if_high(0);
         D_80122CF4 = 1;
         (&D_8011F4CB)[0x44] |= 0x80;
         D_8011F4CB |= 0x80;
@@ -104,22 +104,22 @@ void func_80141E48(void) {
         D_80120652 = 0;
         D_80120668 = 0;
         if ((u32)game_state.frame_count % 240U == 0x78) {
-            func_80067DD4();
+            portrait_event_face_eyes_animation_start();
         }
     }
 }
 
-void func_80141FB8(void) {
+void encounter_yoshio_girl_group_offset(void) {
     D_800CA150 = (u16) D_800CA150 + game_state.current_girl;
     mode_step_next();
 }
 
-void func_80141FF0(void) {
+void encounter_yoshio_closing_group(void) {
     D_800CA150 = 0xC;
     mode_step_next();
 }
 
-s32 func_80142018(void) {
+s32 encounter_yoshio_portrait_fade_out(void) {
     s32 mask;
     u8 value;
 
@@ -140,7 +140,7 @@ s32 func_80142018(void) {
     }
 }
 
-void func_801420E4(void) {
+void encounter_yoshio_ranked_girl_init(void) {
     /* FAKE: preserve the original 0x480 frame; the unused region
      * above the ranking arrays has no recovered source type. T-24605. */
     u8 frame_pad[0x420];
@@ -150,8 +150,8 @@ void func_801420E4(void) {
     GekoShorts6 girls;
 
     g = &game_state;
-    scores = D_8014760C;
-    girls = D_80147618;
+    scores = encounter_yoshio_rank_scores_init;
+    girls = encounter_yoshio_rank_girls_init;
     game_state.date_girl = GIRL_MIO;
     /* FAKE: break the equal-priority tie between girls[2] and girls[5],
      * preserving their t3/t4 allocation without emitted code. T-24605. */
@@ -227,17 +227,17 @@ void func_801420E4(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145FF8;
-    D_80146278 = D_80146134;
-    D_8014627C = D_80146270;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_78;
+    encounter_scene_command_table = encounter_scene_command_section_78;
+    encounter_scene_voice_table = encounter_scene_voice_section_78;
     strcpy(D_800CA19C, "教室");
     D_8014755C = 0;
     D_800CA368 = 0xFF;
@@ -245,21 +245,21 @@ void func_801420E4(void) {
     game_state.scene_flags[0x52] = game_state.scene_flags[0x52] + 1;
 }
 
-void func_801425CC(void) {
+void encounter_yoshio_still_show_1(void) {
     message_window_title_show(0);
-    func_80141AF0();
-    load_palette(D_80147540, 0x11, 1, 2, 0);
-    scene_still_show(D_80147544, D_80147548, D_8014754C, D_80147550, D_80147554, D_80147558);
-    scene_anim_show(D_80147534, D_80147538, D_80147530, D_8014753C);
+    encounter_yoshio_assets_bind_1();
+    load_palette(encounter_yoshio_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_yoshio_pack_1_still_image_0, encounter_yoshio_pack_1_still_image_1, encounter_yoshio_pack_1_still_image_2, encounter_yoshio_pack_1_still_image_3, encounter_yoshio_pack_1_still_image_4, encounter_yoshio_pack_1_still_image_5);
+    scene_anim_show(encounter_yoshio_pack_1_animation_input_0, encounter_yoshio_pack_1_animation_input_1, encounter_yoshio_pack_1_animation_input_2, encounter_yoshio_pack_1_animation_input_3);
     mode_step_next();
 }
 
-void func_8014267C(void) {
+void encounter_yoshio_bg_load_1(void) {
     bg_read_sub2(0x4055);
     mode_step_next();
 }
 
-void func_801426A4(void) {
+void encounter_yoshio_bg_load_2(void) {
     bg_read_sub2(0x4690);
     mode_step_next();
 }

@@ -38,7 +38,7 @@ loop_1:
         if (D_800B3220 != 0) {
             func_80059A20();
             if ((game_state.pad_held & 0xC0000) == 0xC0000) {
-                func_8004F6B0();
+                menu_vram_view_mode_handler();
             }
             if (game_state.pad_pressed & 0xA0000) {
                 func_8004AD60(1);

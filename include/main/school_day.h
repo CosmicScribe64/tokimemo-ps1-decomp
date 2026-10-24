@@ -7,7 +7,7 @@ extern s32 D_800B6760[];
 extern s32 D_800B6780[];
 extern s32 D_800B67AC[];
 extern s32 D_800B6810[];
-/* T-17000: parameter tables of func_80076FDC, school_day_sd_set_select and parameter_up_down. func_80076FDC
+/* T-17000: parameter tables of holiday_activity_pick_sd_set, school_day_sd_set_select and parameter_up_down. holiday_activity_pick_sd_set
  * reads byte [row][col] of two 12-row, two-byte tables in an 11-case switch (`lbu %lo(D_800B6892)` after
  * `addu` of the column); school_day_sd_set_select starts the next table at D_800B68C0. parameter_up_down walks
  * signed nine-byte rows (`lb`, row index * 9): eight rows at school_day_command_deltas end where club_activity_deltas starts. */

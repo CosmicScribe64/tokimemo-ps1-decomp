@@ -5,61 +5,61 @@
 
 extern u32 talk_work;
 
-void func_8015A190(void) {
+void date_scene_yumi_summer_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8E3F);
-    func_80159560();
+    date_scene_yumi_summer_data_init();
     mode_step_next();
 }
 
-void func_8015A1C8(void) {
+void date_scene_yumi_autumn(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl44 tbl;
 
-    tbl = D_801609F8;
+    tbl = date_scene_yumi_autumn_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8015A250(void) {
+void date_scene_yumi_autumn_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8E7C);
-    func_80159610();
+    date_scene_yumi_autumn_data_init();
     mode_step_next();
 }
 
-void func_8015A288(void) {
+void date_scene_yumi_winter(void) {
     s32 idx;
     DateDispatch8015A288 tbl;
-    tbl = D_80160AA8;
+    tbl = date_scene_yumi_winter_steps;
     if ((game_state.mode_step >= 0x1D) && (game_state.mode_step < 0x26)) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
     idx = game_state.mode_step;
     tbl.f[idx](0x3C);
 }
 
-void func_8015A328(void) {
+void date_scene_yumi_winter_audio_command_1(void) {
     audio_command(0x501);
     mode_step_next();
 }
 
-void func_8015A350(void) {
+void date_scene_yumi_winter_audio_command_2(void) {
     audio_command(0x500);
     mode_step_next();
 }
 
-void func_8015A378(void) {
+void date_scene_yumi_winter_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8EB9);
-    func_801596C0();
+    date_scene_yumi_winter_data_init();
     mode_step_next();
 }
 
-void func_8015A3B0(void) {
+void date_scene_miharu_dispatch(void) {
     switch (talk_work) {
     case 3:
-        func_8015A4A8();
+        date_scene_miharu_spring();
         return;
     case 5:
-        func_8015A58C();
+        date_scene_miharu_summer();
         return;
     default:
         game_mode_reset_to_title();
@@ -67,50 +67,50 @@ void func_8015A3B0(void) {
     }
 }
 
-void func_8015A414(void) {
+void date_scene_miharu_start(void) {
     message_window_title_show(1);
     game_state.current_girl = GIRL_MIHARU;
     strcpy(name_code_girl_short, "謎の女");
     event_log_add(0xB, D_80122D08);
-    D_8015E208 = D_8015DF80;
-    D_8015E20C = D_8015E0BC;
-    D_8015E210 = D_8015E1F8;
+    date_scene_text = D_8015DF80;
+    date_scene_command = D_8015E0BC;
+    date_scene_voice = D_8015E1F8;
     D_800CA150 = 0;
     D_800CA154 = 0;
     mode_step_next();
 }
 
-void func_8015A4A8(void) {
+void date_scene_miharu_spring(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
-    tbl = D_80160B80;
+    tbl = date_scene_miharu_spring_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8015A530(void) {
+void date_scene_miharu_restore_girl(void) {
     game_state.current_girl = game_state.date_girl;
     talk_names_set(game_state.date_girl);
     mode_step_next();
 }
 
-void func_8015A564(void) {
+void date_scene_miharu_spring_read_portrait(void) {
     portrait_read_start(0x6BAB);
     mode_step_next();
 }
 
-void func_8015A58C(void) {
+void date_scene_miharu_summer(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
-    tbl = D_80160BD0;
-    sprite_light_effect_draw();
+    tbl = date_scene_miharu_summer_steps;
+    hud_sprite_light_effect_draw();
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8015A610(void) {
+void date_scene_miharu_summer_read_portrait(void) {
     portrait_read_start(0x6BD8);
     mode_step_next();
 }

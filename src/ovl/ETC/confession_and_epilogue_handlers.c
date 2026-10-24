@@ -33,7 +33,7 @@ void func_80132098(void) {
     parameter_show();
     hizuke_show();
     hud_screen_frame_draw(0);
-    cursor_update();
+    hud_cursor_update();
     message_window_title_update();
 }
 void func_80132148(void) {

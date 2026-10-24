@@ -70,7 +70,7 @@ void func_80132398(void) {
 
 s32 func_801323F8(void) {
     if (game_state.substep == 0) {
-        func_800674B0();
+        hud_day_bgm_load();
         game_state.substep += 1;
     }
     if (game_state.substep == 1) {

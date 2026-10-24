@@ -343,13 +343,13 @@ typedef struct ClubFlagBits {
     /* 0x00 */ u32 b24 : 1;
     /* 0x00 */ u32 unk_25 : 2;
     /* 0x00 */ u32 unk_27 : 2;
-    /* 0x00 */ u32 b29 : 1;            /* T-20940: func_80077900 tests it (sll 2; bltz) */
+    /* 0x00 */ u32 b29 : 1;            /* T-20940: holiday_activity_play tests it (sll 2; bltz) */
     /* 0x00 */ u32 b30 : 1;
     /* 0x00 */ u32 unk_31 : 1;
 } ClubFlagBits; /* size 0x04 */
 
 /* T-10880: date and activity views of the eight GameState.unk_54C entries.
- * func_8006B0C8 sorts by month * 100 + day; January becomes month 13
+ * hud_appointment_list_sort sorts by month * 100 + day; January becomes month 13
  * temporarily when the current month is December. */
 typedef struct AppointmentDate {
     /* 0x00 */ u16 unk_00 : 12;

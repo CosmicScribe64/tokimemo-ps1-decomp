@@ -2,35 +2,35 @@
 #include "common.h"
 #include "game.h"
 
-void func_8004F6B0(void) {
+void menu_vram_view_mode_handler(void) {
     s32 pad;
 
     game_state.pad_pressed = 0x80000;
-    D_80125BF0 = 0;
-    D_80125BF2 = 0;
+    menu_vram_view_x = 0;
+    menu_vram_view_y = 0;
     pad = game_state.pad_held;
     while (1) {
         if (pad & 0x10000000) {
-            D_80125BF2 -= 0x10;
+            menu_vram_view_y -= 0x10;
         }
         if (pad & 0x40000000) {
-            D_80125BF2 += 0x10;
+            menu_vram_view_y += 0x10;
         }
         if (pad & 0x20000000) {
-            D_80125BF0 += 0x10;
+            menu_vram_view_x += 0x10;
         }
         if (pad & 0x80000000) {
-            D_80125BF0 -= 0x10;
+            menu_vram_view_x -= 0x10;
         }
-        if (D_80125BF0 < 0) {
-            D_80125BF0 = 0;
+        if (menu_vram_view_x < 0) {
+            menu_vram_view_x = 0;
         }
-        if (D_80125BF2 < 0) {
-            D_80125BF2 = 0;
+        if (menu_vram_view_y < 0) {
+            menu_vram_view_y = 0;
         }
         func_80042A00();
         func_80098380();
-        func_80098490(D_80125BF0, D_80125BF2, D_80125BF0, D_80125BF2);
+        func_80098490(menu_vram_view_x, menu_vram_view_y, menu_vram_view_x, menu_vram_view_y);
         func_800422C8();
         func_8009C674(0);
         func_800AD950(0);

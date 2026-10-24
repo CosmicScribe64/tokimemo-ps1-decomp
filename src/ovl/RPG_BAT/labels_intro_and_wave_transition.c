@@ -86,7 +86,7 @@ void func_801528DC(void) {
         text_system_reset();
         game_state.screen_brightness = 0x80;
         actor_clear_range(0);
-        cursor_actor_init(0);
+        hud_cursor_actor_init(0);
         back_clear_switch(1);
         mode_stage_next();
     }

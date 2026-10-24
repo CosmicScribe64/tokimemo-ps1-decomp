@@ -8,29 +8,29 @@ extern u32 talk_work;
 typedef struct {
     void (*f[41])();
 } FnTbl41; /* size 0xA4 */
-extern FnTbl41 D_801466D8;
+extern FnTbl41 encounter_yuina_scene_seven_steps;
 
-void func_8013AF80(void) {
+void encounter_yuina_assets_bind_1(void) {
     D_80146600 = 0x801D212C;
     D_80146604 = 0x801D2130;
     D_80146608 = 0x801D2150;
     D_8014660C = (*(s16 *)0x801D216C);
-    D_80146610 = 0x801B0000;
-    D_80146614 = 0x801B2000;
-    D_80146618 = 0x801B6000;
-    D_8014661C = 0x801BA000;
-    D_80146620 = 0x801BE000;
-    D_80146624 = 0x801C2000;
-    D_80146628 = 0x801C6000;
+    encounter_yuina_pack_1_palette = 0x801B0000;
+    encounter_yuina_pack_1_still_image_0 = 0x801B2000;
+    encounter_yuina_pack_1_still_image_1 = 0x801B6000;
+    encounter_yuina_pack_1_still_image_2 = 0x801BA000;
+    encounter_yuina_pack_1_still_image_3 = 0x801BE000;
+    encounter_yuina_pack_1_still_image_4 = 0x801C2000;
+    encounter_yuina_pack_1_still_image_5 = 0x801C6000;
 }
 
-void func_8013B030(void) {
+void encounter_yuina_scene_select_1(void) {
     switch (talk_work) {
     case 1:
-        func_8013B094();
+        encounter_yuina_scene_one_dispatch();
         return;
     case 7:
-        func_8013B0D0();
+        encounter_yuina_scene_seven_dispatch();
         return;
     default:
         game_mode_reset_to_title();
@@ -38,28 +38,28 @@ void func_8013B030(void) {
     }
 }
 
-void func_8013B094(void) {
+void encounter_yuina_scene_one_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013B10C();
+        encounter_yuina_scene_one_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013B0D0(void) {
+void encounter_yuina_scene_seven_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013B2C8();
+        encounter_yuina_scene_seven_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-s32 func_8013B10C(void) {
+s32 encounter_yuina_scene_one_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     s32 level;
     GekoFnTbl42 tbl;
 
-    tbl = D_80146630;
+    tbl = encounter_yuina_scene_one_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0) {
@@ -67,10 +67,10 @@ s32 func_8013B10C(void) {
         ((Actor *)actor_pool_96)[3].brightness = dec_bg_brightness;
         ((Actor *)actor_pool_96)[3].draw_flags |= 0x80;
         if ((u8)game_state.voice_mode != VOICE_OFF) {
-            if (!D_8014662C) {
+            if (!encounter_yuina_voice_trigger_latched) {
                 D_8012071E = 3;
             }
-            if (D_80120734 == 6 && !D_8014662C) {
+            if (D_80120734 == 6 && !encounter_yuina_voice_trigger_latched) {
                 D_8012071E = 0;
             }
             if (cd_audio_state() & 4) {
@@ -79,47 +79,47 @@ s32 func_8013B10C(void) {
                 level = 0;
             }
             if (level != 0) {
-                if (!D_8014662C) {
+                if (!encounter_yuina_voice_trigger_latched) {
                     D_8012071E = 3;
-                    D_8014662C = 1;
+                    encounter_yuina_voice_trigger_latched = 1;
                 }
             }
-        } else if (!D_8014662C) {
+        } else if (!encounter_yuina_voice_trigger_latched) {
             D_8012071E = 3;
             D_80120734 = 1;
-            D_8014662C = 1;
+            encounter_yuina_voice_trigger_latched = 1;
         }
     } else {
         D_8012071F &= 0xFF7F;
     }
 }
 
-void func_8013B290(void) {
+void encounter_yuina_assets_load_1(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x80FF);
-    func_8013AF80();
+    encounter_yuina_assets_bind_1();
     mode_step_next();
 }
 
-void func_8013B2C8(void) {
+void encounter_yuina_scene_seven_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl41 tbl;
 
-    tbl = D_801466D8;
+    tbl = encounter_yuina_scene_seven_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8013B350(void) {
+void encounter_yuina_rpg_enter(void) {
     D_80122CE0 = 6;
     actor_clear_range(0);
-    cursor_show(0);
+    hud_cursor_show(0);
     game_state.saved_game_mode = game_state.game_mode;
     game_state.saved_mode_stage = game_state.mode_stage;
     game_state.saved_mode_step = game_state.mode_step + 1;
     game_mode_set(GAME_MODE_RPG_BATTLE);
 }
 
-void func_8013B3C0(void) {
+void encounter_yuina_rpg_return_init(void) {
     s32 pad; /* FAKE: unused scalar reproduces RECT home at +0x2C; original local unknown. T-9770 */
     RECT r;
 
@@ -127,7 +127,7 @@ void func_8013B3C0(void) {
     actor_draw_enable(1);
     sprite_tables_clear();
     actor_clear_range(0);
-    cursor_show(0);
+    hud_cursor_show(0);
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
@@ -143,7 +143,7 @@ void func_8013B3C0(void) {
     func_8009C7F8(&r, 8, 0, 0);
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    /* FAKE: scalar byte store then member read preserves argument scheduling; sibling func_8013CC20 uses the same idiom. T-9770 */
+    /* FAKE: scalar byte store then member read preserves argument scheduling; sibling encounter_mira_speaker_restore uses the same idiom. T-9770 */
     *(u8 *)&game_state.current_girl = 2;
     talk_names_set(game_state.current_girl);
     addr_init_bustup();
@@ -152,14 +152,14 @@ void func_8013B3C0(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    func_80137990();
-    D_80146274 = D_80145F10;
-    D_80146278 = D_8014604C;
-    D_8014627C = D_80146188;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_20;
+    encounter_scene_command_table = encounter_scene_command_section_20;
+    encounter_scene_voice_table = encounter_scene_voice_section_20;
     mode_step_next();
 }
 
-void func_8013B510(void) {
+void encounter_yuina_scene_init_1(void) {
     game_state.current_girl = GIRL_YUINA;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -173,18 +173,18 @@ void func_8013B510(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145EF8;
-    D_80146278 = D_80146034;
-    D_8014627C = D_80146170;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_14;
+    encounter_scene_command_table = encounter_scene_command_section_14;
+    encounter_scene_voice_table = encounter_scene_voice_section_14;
     strcpy(D_800CA19C, "屋上");
-    D_8014662C = 0;
+    encounter_yuina_voice_trigger_latched = 0;
     game_state.girls[2].tokimeki += 1;
     game_state.girls[2].affection += 2;
     check_para_limit();
@@ -192,10 +192,10 @@ void func_8013B510(void) {
     mode_step_next();
 }
 
-void func_8013B65C(void) {
-    func_8013AF80();
-    load_palette(D_80146610, 0x11, 1, 2, 0);
-    scene_still_show(D_80146614, D_80146618, D_8014661C, D_80146620, D_80146624, D_80146628);
+void encounter_yuina_still_show_1(void) {
+    encounter_yuina_assets_bind_1();
+    load_palette(encounter_yuina_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_yuina_pack_1_still_image_0, encounter_yuina_pack_1_still_image_1, encounter_yuina_pack_1_still_image_2, encounter_yuina_pack_1_still_image_3, encounter_yuina_pack_1_still_image_4, encounter_yuina_pack_1_still_image_5);
     scene_anim_show(0, 0, 0, 0);
     actor_clear(0x63);
     D_8012071D = 0xA;
@@ -220,7 +220,7 @@ void func_8013B65C(void) {
     mode_step_next();
 }
 
-void func_8013B7D0(void) {
+void encounter_yuina_final_scene_init(void) {
     game_state.year = 0x62;
     game_state.month = 2;
     game_state.day = 0x1C;
@@ -236,22 +236,22 @@ void func_8013B7D0(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145F10;
-    D_80146278 = D_8014604C;
-    D_8014627C = D_80146188;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_20;
+    encounter_scene_command_table = encounter_scene_command_section_20;
+    encounter_scene_voice_table = encounter_scene_voice_section_20;
     strcpy(D_800CA19C, "近所の公園");
     D_800CA368 = 0x14;
     mode_step_next();
 }
 
-void func_8013B908(void) {
+void encounter_yuina_bg_load_1(void) {
     bg_read_sub2(0x412C);
     mode_step_next();
 }

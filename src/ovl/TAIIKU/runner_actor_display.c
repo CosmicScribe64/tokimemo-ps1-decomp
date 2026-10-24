@@ -112,7 +112,7 @@ void func_80145370(void) {
             D_8014A528[i] = c.v[i];
         }
         actor_clear_range(0);
-        cursor_show(0);
+        hud_cursor_show(0);
         mode_step_next();
         break;
     case 1:

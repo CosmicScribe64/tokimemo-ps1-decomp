@@ -49,7 +49,7 @@ void func_80136018(void) {
 void func_80136094(void) {
     s16 i;
 
-    func_8006509C();
+    hud_icon_bar_init();
     for (i = 0; i < 0xF; i++) {
         icon_can_use_set(i, 0);
     }

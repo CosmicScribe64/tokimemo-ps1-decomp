@@ -127,7 +127,7 @@ s32 Fade_In_Main(void) {
 
 void Yubi(s32 idx) {
     u8 *p;
-    cursor_update();
+    hud_cursor_update();
     p = actor_pool + idx * 0x44;
     *(s16 *)(p + 0x26) = cursor_x;
     *(s16 *)(p + 0x2A) = cursor_y;

@@ -1,13 +1,13 @@
 /* file_select.c: src/ovl/NAME_ENT/80139740.c:85,1045,1753,3195; mode0x13 album/system-file selection, read/write/copy/new/clear flow, retained profiles and summary presentation. Original object 0x80139740-0x80142A80 (config/objects/NAME_ENT.txt). */
 #define MAIN_API_OVERRIDE_prim_gradient_rect /* Original calls pass promoted integer coordinates. T-10880. */
-#define MAIN_API_OVERRIDE_memory_card_start /* The original reads $v0 after the call in func_8013D2AC. T-22023. */
+#define MAIN_API_OVERRIDE_memory_card_start /* The original reads $v0 after the call in file_select_album_only_read. T-22023. */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 
 void prim_gradient_rect();
 s32 memory_card_start();
 
-s32 func_80139740(u32 arg0, s32 arg1, s32 arg2) {
+s32 file_select_number_draw(u32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
     s32 n;
     u32 x;
@@ -23,7 +23,7 @@ s32 func_80139740(u32 arg0, s32 arg1, s32 arg2) {
         p[6] = 0x80;
         *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + arg1 - n;
         *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + arg2;
-        e = D_8014D0F4[x % 10];
+        e = file_select_digit_uv[x % 10];
         p[0xC] = e[0];
         p[0xD] = e[1];
         *(s16 *)(p + 0xE) = func_8009ED74(0, 0x1F0);
@@ -37,13 +37,13 @@ s32 func_80139740(u32 arg0, s32 arg1, s32 arg2) {
 }
 
 /* T-25057: record display flags and animated tile coordinates. */
-void func_801398EC(void) {
+void file_select_girl_icons_visibility_update(void) {
     s32 tmp;
     s32 i;
     u32 tile[1]; /* FAKE: T-25057, memory local orders remainder before frame allocation. */
 
     i = 0;
-    tmp = D_8014D0D4 % 3;
+    tmp = file_select_information_page % 3;
     for (; i < 13; i++) {
         if ((u32)sprite_quads[i].flags < 0) {} /* FAKE: T-25057, erased test orders record induction. */
         tile[0] = game_state.frame_count; /* FAKE: T-25057, dead initialization orders frame before index; removed by uopt. */
@@ -61,7 +61,7 @@ void func_801398EC(void) {
     }
 }
 
-void func_80139AD8(s32 arg0, s32 arg1, s32 arg2) {
+void file_select_girl_icon_set(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
 
     p = (u8 *)sprite_quads + arg0 * 36;
@@ -83,35 +83,35 @@ void func_80139AD8(s32 arg0, s32 arg1, s32 arg2) {
     game_state.quad_layer[arg0] = 2;
 }
 
-void func_80139BA0(void) {
+void file_select_information_page_input(void) {
     if (game_state.pad_pressed & PAD_TRIANGLE) {
-        D_8014D0D4 += 1;
+        file_select_information_page += 1;
         return;
     }
     if ((game_state.pad_pressed & PAD_CIRCLE) && (cursor_x < 0x20) && (cursor_x >= -0x3F) && (cursor_y < 0x1C) && (cursor_y >= 0xD)) {
-        D_8014D0D4 += 1;
+        file_select_information_page += 1;
     }
 }
 
-void func_80139C24(void) {
-    if (D_8014D0D4 < 0) {
-        D_8014D0D4 += 3;
+void file_select_information_page_draw(void) {
+    if (file_select_information_page < 0) {
+        file_select_information_page += 3;
     }
-    switch (D_8014D0D4 % 3) {
+    switch (file_select_information_page % 3) {
     case 0:
-        func_80139F30();
+        file_select_page_clear_counts_draw();
         break;
     case 1:
-        func_8013ACA4();
+        file_select_page_parameters_draw();
         break;
     case 2:
-        func_8013A9C8();
+        file_select_page_girl_stars_draw();
         break;
     }
-    func_80139BA0();
+    file_select_information_page_input();
 }
 
-void func_80139CB4(void) {
+void file_select_slot_header_draw(void) {
     u8 sp30[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
 
     if (D_800E8BEE != 0) {
@@ -133,68 +133,68 @@ void func_80139CB4(void) {
     set_kanji_string(0x20, -0x2B, 0xF, (s32) club_name_table[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].club >> 0xC], 0);
 }
 
-void func_80139F30(void) {
+void file_select_page_clear_counts_draw(void) {
     s32 i;
     SystemData *w = &system_data;
     GameState *g = &game_state;
 
     if (D_800E8BEE != 0) {
         if (w->flags[0] != 0) {
-            func_80139740(w->flags[0], -4, 0x1E);
+            file_select_number_draw(w->flags[0], -4, 0x1E);
         }
         if (w->flags[1] != 0) {
-            func_80139740(w->flags[1], -4, 0x2E);
+            file_select_number_draw(w->flags[1], -4, 0x2E);
         }
         if (w->flags[2] != 0) {
-            func_80139740(w->flags[2], -4, 0x3E);
+            file_select_number_draw(w->flags[2], -4, 0x3E);
         }
         if (w->flags[3] != 0) {
-            func_80139740(w->flags[3], -4, 0x4E);
+            file_select_number_draw(w->flags[3], -4, 0x4E);
         }
         if (w->flags[4] != 0) {
-            func_80139740(w->flags[4], 0x3C, 0x1E);
+            file_select_number_draw(w->flags[4], 0x3C, 0x1E);
         }
         if (w->flags[5] != 0) {
-            func_80139740(w->flags[5], 0x3C, 0x2E);
+            file_select_number_draw(w->flags[5], 0x3C, 0x2E);
         }
         if (w->flags[6] != 0) {
-            func_80139740(w->flags[6], 0x3C, 0x3E);
+            file_select_number_draw(w->flags[6], 0x3C, 0x3E);
         }
         if (w->flags[7] != 0) {
-            func_80139740(w->flags[7], 0x3C, 0x4E);
+            file_select_number_draw(w->flags[7], 0x3C, 0x4E);
         }
         if (w->flags[12] != 0) {
-            func_80139740(w->flags[12], 0x88, 0xE);
+            file_select_number_draw(w->flags[12], 0x88, 0xE);
         }
         if (w->flags[8] != 0) {
-            func_80139740(w->flags[8], 0x88, 0x1E);
+            file_select_number_draw(w->flags[8], 0x88, 0x1E);
         }
         if (w->flags[9] != 0) {
-            func_80139740(w->flags[9], 0x88, 0x2E);
+            file_select_number_draw(w->flags[9], 0x88, 0x2E);
         }
         if (w->flags[10] != 0) {
-            func_80139740(w->flags[10], 0x88, 0x3E);
+            file_select_number_draw(w->flags[10], 0x88, 0x3E);
         }
         if (w->flags[11] != 0) {
-            func_80139740(w->flags[11], 0x88, 0x4E);
+            file_select_number_draw(w->flags[11], 0x88, 0x4E);
         }
         for (i = 0; i < 4; i++) {
             if (w->flags[i] != 0) {
-                func_80139AD8(i, -0x23, (i % 4) * 0x10 + 0x1D);
+                file_select_girl_icon_set(i, -0x23, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 4; i < 8; i++) {
             if (w->flags[i] != 0) {
-                func_80139AD8(i, 0x1E, (i % 4) * 0x10 + 0x1D);
+                file_select_girl_icon_set(i, 0x1E, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 8; i < 12; i++) {
             if (w->flags[i] != 0) {
-                func_80139AD8(i, 0x69, (i % 4) * 0x10 + 0x1D);
+                file_select_girl_icon_set(i, 0x69, (i % 4) * 0x10 + 0x1D);
             }
         }
         if (w->flags[12] != 0) {
-            func_80139AD8(12, 0x69, 0xD);
+            file_select_girl_icon_set(12, 0x69, 0xD);
         }
         for (i = 0; i < 8; i++) {
             if (w->flags[i] == 0) {
@@ -220,61 +220,61 @@ void func_80139F30(void) {
         }
     } else {
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[0] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[0], -4, 0x1E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[0], -4, 0x1E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[1] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[1], -4, 0x2E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[1], -4, 0x2E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[2] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[2], -4, 0x3E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[2], -4, 0x3E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[3] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[3], -4, 0x4E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[3], -4, 0x4E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[4] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[4], 0x3C, 0x1E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[4], 0x3C, 0x1E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[5] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[5], 0x3C, 0x2E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[5], 0x3C, 0x2E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[6] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[6], 0x3C, 0x3E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[6], 0x3C, 0x3E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[7] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[7], 0x3C, 0x4E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[7], 0x3C, 0x4E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12], 0x88, 0xE);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12], 0x88, 0xE);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[8] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[8], 0x88, 0x1E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[8], 0x88, 0x1E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[9] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[9], 0x88, 0x2E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[9], 0x88, 0x2E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[10] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[10], 0x88, 0x3E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[10], 0x88, 0x3E);
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[11] != 0) {
-            func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[11], 0x88, 0x4E);
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[11], 0x88, 0x4E);
         }
         for (i = 0; i < 4; i++) {
             if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
-                func_80139AD8(i, -0x23, (i % 4) * 0x10 + 0x1D);
+                file_select_girl_icon_set(i, -0x23, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 4; i < 8; i++) {
             if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
-                func_80139AD8(i, 0x1E, (i % 4) * 0x10 + 0x1D);
+                file_select_girl_icon_set(i, 0x1E, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 8; i < 12; i++) {
             if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
-                func_80139AD8(i, 0x69, (i % 4) * 0x10 + 0x1D);
+                file_select_girl_icon_set(i, 0x69, (i % 4) * 0x10 + 0x1D);
             }
         }
         if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12] != 0) {
-            func_80139AD8(12, 0x69, 0xD);
+            file_select_girl_icon_set(12, 0x69, 0xD);
         }
         for (i = 0; i < 8; i++) {
             if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] == 0) {
@@ -301,7 +301,7 @@ void func_80139F30(void) {
     }
 }
 
-void func_8013A9C8(void) {
+void file_select_page_girl_stars_draw(void) {
     s32 i;
     SystemData *w = &system_data;
     GameState *g = &game_state;
@@ -370,31 +370,31 @@ void func_8013A9C8(void) {
     ((Actor *)actor_pool)[136].unk_01 = 4;
 }
 
-void func_8013ACA4(void) {
+void file_select_page_parameters_draw(void) {
     if (D_800E8BEE != 0) {
-        func_80139740(system_data.metrics[0][D_800E7D36].unk_02, 16, 30);
-        func_80139740(system_data.metrics[1][D_800E7D36].unk_02, 16, 46);
-        func_80139740(system_data.metrics[2][D_800E7D36].unk_02, 16, 62);
-        func_80139740(system_data.metrics[3][D_800E7D36].unk_02, 16, 78);
-        func_80139740(system_data.metrics[4][D_800E7D36].unk_02, 128, 14);
-        func_80139740(system_data.metrics[5][D_800E7D36].unk_02, 128, 30);
-        func_80139740(system_data.metrics[6][D_800E7D36].unk_02, 128, 46);
-        func_80139740(system_data.metrics[7][D_800E7D36].unk_02, 128, 62);
-        func_80139740(system_data.metrics[8][D_800E7D36].unk_02, 128, 78);
+        file_select_number_draw(system_data.metrics[0][D_800E7D36].unk_02, 16, 30);
+        file_select_number_draw(system_data.metrics[1][D_800E7D36].unk_02, 16, 46);
+        file_select_number_draw(system_data.metrics[2][D_800E7D36].unk_02, 16, 62);
+        file_select_number_draw(system_data.metrics[3][D_800E7D36].unk_02, 16, 78);
+        file_select_number_draw(system_data.metrics[4][D_800E7D36].unk_02, 128, 14);
+        file_select_number_draw(system_data.metrics[5][D_800E7D36].unk_02, 128, 30);
+        file_select_number_draw(system_data.metrics[6][D_800E7D36].unk_02, 128, 46);
+        file_select_number_draw(system_data.metrics[7][D_800E7D36].unk_02, 128, 62);
+        file_select_number_draw(system_data.metrics[8][D_800E7D36].unk_02, 128, 78);
         return;
     }
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[0].unk_02, 16, 30);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[1].unk_02, 16, 46);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[2].unk_02, 16, 62);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[3].unk_02, 16, 78);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[4].unk_02, 128, 14);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[5].unk_02, 128, 30);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[6].unk_02, 128, 46);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[7].unk_02, 128, 62);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[8].unk_02, 128, 78);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[0].unk_02, 16, 30);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[1].unk_02, 16, 46);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[2].unk_02, 16, 62);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[3].unk_02, 16, 78);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[4].unk_02, 128, 14);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[5].unk_02, 128, 30);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[6].unk_02, 128, 46);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[7].unk_02, 128, 62);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[8].unk_02, 128, 78);
 }
 
-s32 func_8013AF78(s32 arg0) {
+s32 file_select_page_indicator_update(s32 arg0) {
     s32 a;
     s32 b;
     s32 sel[3];
@@ -428,7 +428,7 @@ s32 func_8013AF78(s32 arg0) {
     ret0:
         return 0;
     }
-    sel[D_8014D0D4 % 3] = 1;
+    sel[file_select_information_page % 3] = 1;
     D_80120BE7 = a;
     if (sel[0] != 0) {
         a = (u8)(a | 0x80);
@@ -449,7 +449,7 @@ s32 func_8013AF78(s32 arg0) {
     }
 }
 
-s32 func_8013B0A0(void) {
+s32 file_select_button_highlight_update(void) {
     s32 a;
     s32 b;
     s32 c;
@@ -493,7 +493,7 @@ s32 func_8013B0A0(void) {
     }
 }
 
-void func_8013B1D8(void) {
+void file_select_slot_summary_draw(void) {
     /* FAKE: unused words preserve the 0x40 stack frame (T-24112) */
     s32 pad[3];
     s32 i;
@@ -522,10 +522,10 @@ void func_8013B1D8(void) {
             D_80120C92 = idx / 7 * 0x1F - 0x82;
             D_80120C96 = idx % 7 * 0x10 - 0xB;
         }
-        func_80139740(w->year[w->selected_slot], 0x30, -0x60);
-        func_80139740(w->month[w->selected_slot], 0x50, -0x60);
-        func_80139740(w->day[w->selected_slot], 0x70, -0x60);
-        func_80139740(count, 0x5A, -0x1D);
+        file_select_number_draw(w->year[w->selected_slot], 0x30, -0x60);
+        file_select_number_draw(w->month[w->selected_slot], 0x50, -0x60);
+        file_select_number_draw(w->day[w->selected_slot], 0x70, -0x60);
+        file_select_number_draw(count, 0x5A, -0x1D);
         return;
     }
     count = 0;
@@ -547,13 +547,13 @@ void func_8013B1D8(void) {
         D_80120C92 = idx / 7 * 0x1F - 0x82;
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].year, 0x30, -0x60);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].month, 0x50, -0x60);
-    func_80139740(((AlbumSlotRecord *)memory_card_block)[g->album_slot].day, 0x70, -0x60);
-    func_80139740(count, 0x5A, -0x1D);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].year, 0x30, -0x60);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].month, 0x50, -0x60);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].day, 0x70, -0x60);
+    file_select_number_draw(count, 0x5A, -0x1D);
 }
 
-void func_8013B51C(s32 arg0) {
+void file_select_cursor_to_slot(s32 arg0) {
     s16 x;
     s16 y;
 
@@ -566,85 +566,85 @@ void func_8013B51C(s32 arg0) {
     ((Actor *)actor_pool)[119].y = y;
 }
 
-void func_8013B59C(void) {
+void file_select_slot_information_show(void) {
     text_system_reset();
-    func_80139CB4();
+    file_select_slot_header_draw();
     k_sub_reset_point_set();
     k_sub_disp_start(0);
-    D_8014D0D4 = 1;
-    func_8013B51C(game_state.save_slot - 1);
+    file_select_information_page = 1;
+    file_select_cursor_to_slot(game_state.save_slot - 1);
 }
 
-void func_8013B5F0(void) {
-    if ((game_state.mode_stage != 0 || game_state.mode_step != 0) && D_8014D0E0 < 0x4001) {
-        D_8014D0E0 = (D_8014D0E0 * 16 + 0x70) / 15;
-        D_8014D0E4 += D_8014D0EC;
-        D_8014D0E8 += D_8014D0F0;
-        if (D_8014D0E4 >= 0xA1) {
-            D_8014D0EC = -(rand() & 0xF);
+void file_select_background_iris_update(void) {
+    if ((game_state.mode_stage != 0 || game_state.mode_step != 0) && file_select_iris_radius < 0x4001) {
+        file_select_iris_radius = (file_select_iris_radius * 16 + 0x70) / 15;
+        file_select_iris_x += file_select_iris_x_speed;
+        file_select_iris_y += file_select_iris_y_speed;
+        if (file_select_iris_x >= 0xA1) {
+            file_select_iris_x_speed = -(rand() & 0xF);
         }
-        if (D_8014D0E8 >= 0x79) {
-            D_8014D0F0 = -(rand() & 0xF);
+        if (file_select_iris_y >= 0x79) {
+            file_select_iris_y_speed = -(rand() & 0xF);
         }
-        if (D_8014D0E4 < -0xA0) {
-            D_8014D0EC = rand() & 0xF;
+        if (file_select_iris_x < -0xA0) {
+            file_select_iris_x_speed = rand() & 0xF;
         }
-        if (D_8014D0E8 < -0x78) {
-            D_8014D0F0 = rand() & 0xF;
+        if (file_select_iris_y < -0x78) {
+            file_select_iris_y_speed = rand() & 0xF;
         }
     }
-    func_80046AC8(0x1A, 0, 0x1F7, D_8014D0E0, D_8014D0E4, D_8014D0E8, 0x01DF7FCF, 2);
+    func_80046AC8(0x1A, 0, 0x1F7, file_select_iris_radius, file_select_iris_x, file_select_iris_y, 0x01DF7FCF, 2);
 }
 
-void func_8013B77C(void) {
-    if (D_8014D0AC != 0) {
+void file_select_settings_restore(void) {
+    if (file_select_saved_options_mask != 0) {
         printf("option  kidou back ");
-        if (D_8014D0AC & 0x80) {
-            k_speed_set(D_8014D0B0);
+        if (file_select_saved_options_mask & 0x80) {
+            k_speed_set(file_select_saved_text_speed);
         }
-        printf("kanji_speed%d \n", D_8014D0B0);
-        if (D_8014D0B4 >= 3) {
-            game_state.icon_mode = D_8014D0B4 % 3;
+        printf("kanji_speed%d \n", file_select_saved_text_speed);
+        if (file_select_saved_icon_mode >= 3) {
+            game_state.icon_mode = file_select_saved_icon_mode % 3;
         }
-        printf("icon_mode %d \n", D_8014D0B4);
-        if (D_8014D0B8 >= 4) {
-            game_state.menu_mode = D_8014D0B8 & 3;
+        printf("icon_mode %d \n", file_select_saved_icon_mode);
+        if (file_select_saved_menu_mode >= 4) {
+            game_state.menu_mode = file_select_saved_menu_mode & 3;
         }
-        printf("menu_mode %d \n", D_8014D0B8);
-        if (D_8014D0AC & 8) {
-            game_state.cursor_speed = D_8014D0BC;
+        printf("menu_mode %d \n", file_select_saved_menu_mode);
+        if (file_select_saved_options_mask & 8) {
+            game_state.cursor_speed = file_select_saved_cursor_speed;
         }
-        printf("cursor_speed %d \n", D_8014D0BC);
-        if (D_8014D0C0 >= 3) {
-            game_state.voice_mode = D_8014D0C0 % 3;
+        printf("cursor_speed %d \n", file_select_saved_cursor_speed);
+        if (file_select_saved_voice_mode >= 3) {
+            game_state.voice_mode = file_select_saved_voice_mode % 3;
         }
-        printf("sound_mode %d \n", D_8014D0C0);
-        if (D_8014D0AC & 0x40) {
-            game_state.click_mode = D_8014D0C4;
+        printf("sound_mode %d \n", file_select_saved_voice_mode);
+        if (file_select_saved_options_mask & 0x40) {
+            game_state.click_mode = file_select_saved_click_mode;
         }
-        printf("click_mode %d \n", D_8014D0C4);
-        if (D_8014D0AC & 0x20) {
-            game_state.double_click_interval = D_8014D0C8;
+        printf("click_mode %d \n", file_select_saved_click_mode);
+        if (file_select_saved_options_mask & 0x20) {
+            game_state.double_click_interval = file_select_saved_double_click_interval;
         }
-        printf("click_speed %d \n", D_8014D0C8);
-        if (D_8014D0AC & 0x10) {
-            game_state.confirm_button = D_8014D0CC;
+        printf("click_speed %d \n", file_select_saved_double_click_interval);
+        if (file_select_saved_options_mask & 0x10) {
+            game_state.confirm_button = file_select_saved_confirm_button;
         }
-        printf("mouse_ok %d \n", D_8014D0CC);
+        printf("mouse_ok %d \n", file_select_saved_confirm_button);
         if (*(u8 *)&game_state.icon_mode == 2) {
             game_state.icon_count = 0xF;
         } else {
             game_state.icon_count = 0xE;
         }
-        func_8006509C();
+        hud_icon_bar_init();
         icon_disp_switch(0);
     }
-    D_8014D0A8 = 0;
-    func_8013BB1C();
-    func_8013B994();
+    file_select_menu_mode_lock = 0;
+    file_select_empty_callback();
+    file_select_icon_layout_validate();
 }
 
-void func_8013B994(void) {
+void file_select_icon_layout_validate(void) {
     s32 i;
     /* FAKE: unused words preserve the 0x48 stack frame and place err/zero/saved spills at sp+0x34/0x30/0x2C. T-24106 */
     s32 pad[3];
@@ -680,21 +680,21 @@ void func_8013B994(void) {
         if (err != 0) {
             saved = *(u8 *)&game_state.icon_mode;
             *(u8 *)&game_state.icon_mode = 0;
-            func_8006509C();
+            hud_icon_bar_init();
             icon_disp_switch(0);
             *(u8 *)&game_state.icon_mode = saved;
         }
     }
 }
 
-void func_8013BB10(void) {
-    D_8014D0A8 = 0;
+void file_select_menu_mode_unlock(void) {
+    file_select_menu_mode_lock = 0;
 }
 
-void func_8013BB1C(void) {
+void file_select_empty_callback(void) {
 }
 
-void func_8013BB24(void) {
+void file_select_init_settings(void) {
     u8 speed;
 
     switch (game_state.substep) {
@@ -707,35 +707,35 @@ void func_8013BB24(void) {
         actor_clear_upper();
         if (game_state.options_dirty != 0) {
             printf("option setting!");
-            D_8014D0AC = game_state.options_dirty;
+            file_select_saved_options_mask = game_state.options_dirty;
             speed = get_k_speed();
-            /* FAKE: single-line store+call schedules sb D_8014D0B0 before jal printf. T-11570 */
-            D_8014D0B0 = speed; printf("kanji_speed%d \n", speed);
-            /* FAKE: pointer views avoid cvt_pass widening on D_8014D0B4..D_8014D0CC so uopt CSEs the stores and schedules lui $a0 before lui $at. T-24106 */
-            D_8014D0B4 = game_state.icon_mode;
-            printf("icon_mode %d \n", *(u8 *)&D_8014D0B4);
-            D_8014D0B8 = game_state.menu_mode;
-            printf("menu_mode %d \n", *(u8 *)&D_8014D0B8);
-            D_8014D0BC = game_state.cursor_speed;
-            printf("cursor_speed %d \n", *(u8 *)&D_8014D0BC);
-            D_8014D0C0 = game_state.voice_mode;
-            printf("sound_mode %d \n", *(u8 *)&D_8014D0C0);
-            D_8014D0C4 = game_state.click_mode;
-            printf("click_mode %d \n", *(u8 *)&D_8014D0C4);
-            D_8014D0C8 = game_state.double_click_interval;
-            printf("click_speed %d \n", *(u8 *)&D_8014D0C8);
-            D_8014D0CC = game_state.confirm_button;
-            printf("mouse_ok %d \n", *(u8 *)&D_8014D0CC);
+            /* FAKE: single-line store+call schedules sb file_select_saved_text_speed before jal printf. T-11570 */
+            file_select_saved_text_speed = speed; printf("kanji_speed%d \n", speed);
+            /* FAKE: pointer views avoid cvt_pass widening on file_select_saved_icon_mode..file_select_saved_confirm_button so uopt CSEs the stores and schedules lui $a0 before lui $at. T-24106 */
+            file_select_saved_icon_mode = game_state.icon_mode;
+            printf("icon_mode %d \n", *(u8 *)&file_select_saved_icon_mode);
+            file_select_saved_menu_mode = game_state.menu_mode;
+            printf("menu_mode %d \n", *(u8 *)&file_select_saved_menu_mode);
+            file_select_saved_cursor_speed = game_state.cursor_speed;
+            printf("cursor_speed %d \n", *(u8 *)&file_select_saved_cursor_speed);
+            file_select_saved_voice_mode = game_state.voice_mode;
+            printf("sound_mode %d \n", *(u8 *)&file_select_saved_voice_mode);
+            file_select_saved_click_mode = game_state.click_mode;
+            printf("click_mode %d \n", *(u8 *)&file_select_saved_click_mode);
+            file_select_saved_double_click_interval = game_state.double_click_interval;
+            printf("click_speed %d \n", *(u8 *)&file_select_saved_double_click_interval);
+            file_select_saved_confirm_button = game_state.confirm_button;
+            printf("mouse_ok %d \n", *(u8 *)&file_select_saved_confirm_button);
         } else {
-            D_8014D0AC = 0;
+            file_select_saved_options_mask = 0;
         }
         game_state.options_dirty = 0;
-        D_8014D0A8 = 1;
-        D_8014D0A4 = 0;
+        file_select_menu_mode_lock = 1;
+        name_entry_retained_state = 0;
         srand(system_data.seed);
         k_speed_set(1);
         back_clear_switch(1);
-        func_8006764C(0);
+        hud_mascot_display_switch(0);
         tpage_buf_clear();
         game_state.tile_layer_enabled = 0;
         message_window_title_show(0);
@@ -743,13 +743,13 @@ void func_8013BB24(void) {
         text_set_advance(0xE);
         game_state.screen_brightness = 0;
         D_801230D0 = 0xFF;
-        cursor_actor_init(0);
-        cursor_show(0);
-        D_8014D0E0 = 1;
-        D_8014D0E4 = -0x50;
-        D_8014D0E8 = -0x50;
-        D_8014D0EC = 8;
-        D_8014D0F0 = 8;
+        hud_cursor_actor_init(0);
+        hud_cursor_show(0);
+        file_select_iris_radius = 1;
+        file_select_iris_x = -0x50;
+        file_select_iris_y = -0x50;
+        file_select_iris_x_speed = 8;
+        file_select_iris_y_speed = 8;
         make_color_bar16(game_state.scratch_words, 0xDF7FCF, 0xDF7FCF, 0x10, 0);
         load_palette(game_state.scratch_words, 0x17, 1, 1, 0);
         func_80046754(0x80180000, 0x1A, 0);
@@ -764,7 +764,7 @@ void func_8013BB24(void) {
     }
 }
 
-void func_8013BE18(void) {
+void file_select_init_assets(void) {
     /* FAKE: the fields are read through a GameState pointer declared before the rect. Written as direct game_state reads the
      * rect sat at sp+0x38, the original has it at sp+0x34 with the same frame (T-11570); found by autotweak gstate, T-20830. T-21520 */
     GameState *g = &game_state;
@@ -804,7 +804,7 @@ void func_8013BE18(void) {
     }
 }
 
-void func_8013BF74(void) {
+void file_select_init_menus(void) {
     s32 i;
     s32 column, row;
     s16 x[16], y[16], width[16], height[16];
@@ -836,10 +836,10 @@ void func_8013BF74(void) {
     menu_set(1, 4, x2, y2, width2, height2);
     game_state.menu_cursor_0 = 0;
     game_state.menu_cursor_1 = -1;
-    D_8014D0D0 = 0;
-    D_8014D0D4 = 1;
-    D_8014D0D8 = 0;
-    D_8014D0DC = 0;
+    file_select_unused_word_0 = 0;
+    file_select_information_page = 1;
+    file_select_unused_word_1 = 0;
+    file_select_unused_word_2 = 0;
     record = (Actor *)actor_pool_96;
     for (i = 0; i < 45; i++) {
         record[i].unk_18 = i;
@@ -900,38 +900,38 @@ void func_8013BF74(void) {
     mode_stage_next();
 }
 
-void func_8013C4A8(void) {
+void file_select_mode_stage_init(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013BB24();
+        file_select_init_settings();
         return;
     case 1:
-        func_8013BE18();
+        file_select_init_assets();
         return;
     case 2:
-        func_8013BF74();
+        file_select_init_menus();
         return;
     }
 }
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014B7B4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_memory_card_check_text_1);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014B7C8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_memory_card_check_text_2);
 
-void func_8013C510(void) {
+void file_select_memory_card_check_begin(void) {
     func_80056284();
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014B7B4, 0);
-    set_kanji_string(-0x40, 0x30, 0xF, D_8014B7C8, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_memory_card_check_text_1, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, file_select_memory_card_check_text_2, 0);
     k_disp_start(2);
     mode_step_next();
 }
 
-void func_8013C580(void) {
+void file_select_memory_card_check_poll(void) {
     u8 sel;
     GameState *g; /* FAKE: g and the u8 copy of the selector only move it to $v1 (T-11120, permuter) */
 
     if (func_80053F04() != 0) {
-        cursor_show(1);
+        hud_cursor_show(1);
         memory_card_stop();
         g = &game_state;
         sel = g->memory_card_result;
@@ -946,104 +946,104 @@ void func_8013C580(void) {
             mode_step_next();
         }
     } else if ((u32)game_state.memory_card_timer >= 0x201U) {
-        cursor_show(1);
+        hud_cursor_show(1);
         memory_card_stop();
         printf("NO COMUNICATION!");
         mode_step_next();
     }
 }
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014B824);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_no_memory_card_text_1);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014B838);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_no_memory_card_text_2);
 
-void func_8013C664(void) {
+void file_select_no_memory_card_message(void) {
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014B824, 0);
-    set_kanji_string(-0x40, 0x30, 0xF, D_8014B838, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_no_memory_card_text_1, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, file_select_no_memory_card_text_2, 0);
     k_disp_start(2);
     mode_step_next();
 }
 
-void func_8013C6CC(void) {
+void file_select_no_memory_card_wait(void) {
     if (game_state.pad_pressed & 0x860) {
         mode_step_next();
     }
 }
 
-void func_8013C6FC(void) {
+void file_select_play_without_memory_card_prompt(void) {
     text_system_reset();
     set_kanji_string(-0x40, 0x20, 0xF, "新たにゲームを始めますか？", 0);
     set_kanji_string(-0x40, 0x30, 0xF, D_800B3C70, 0);
-    set_kanji_string(0x14, 0x30, 1, func_8006CA9C(), 0);
+    set_kanji_string(0x14, 0x30, 1, hud_confirm_button_label(), 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_800B3C88, 0);
-    set_kanji_string(0x14, 0x40, 2, func_8006CAE0(), 0);
+    set_kanji_string(0x14, 0x40, 2, hud_cancel_button_label(), 0);
     k_disp_start(5);
     mode_step_next();
 }
 
-void func_8013C7C0(void) {
+void file_select_play_without_memory_card_answer(void) {
     if (game_state.pad_pressed & PAD_START) {
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
     } else if (game_state.pad_pressed & PAD_CROSS) {
         mode_step_next();
     }
 }
 
-void func_8013C834(void) {
+void file_select_insert_memory_card_message(void) {
     text_system_reset();
     set_kanji_string(-0x40, 0x20, 0xF, "メモリーカードを", 0);
     set_kanji_string(-0x40, 0x30, 1, "差し込み口１", 0);
     set_kanji_string(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
     set_kanji_string(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
-    set_kanji_string(-0x40, 0x40, 1, func_8006CA9C(), 0);
+    set_kanji_string(-0x40, 0x40, 1, hud_confirm_button_label(), 0);
     memory_card_stop();
     k_disp_start(5);
     mode_step_next();
 }
 
-void func_8013C8FC(void) {
+void file_select_insert_memory_card_wait(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         func_80056284();
         mode_step_set(0);
     }
 }
 
-void func_8013C934(void) {
+void file_select_mode_stage_memory_card_check(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013C510();
+        file_select_memory_card_check_begin();
         break;
     case 1:
-        func_8013C580();
+        file_select_memory_card_check_poll();
         break;
     case 2:
-        func_8013C664();
+        file_select_no_memory_card_message();
         break;
     case 3:
-        func_8013C6CC();
+        file_select_no_memory_card_wait();
         break;
     case 4:
-        func_8013C6FC();
+        file_select_play_without_memory_card_prompt();
         break;
     case 5:
-        func_8013C7C0();
+        file_select_play_without_memory_card_answer();
         break;
     case 6:
-        func_8013C834();
+        file_select_insert_memory_card_message();
         break;
     case 7:
-        func_8013C8FC();
+        file_select_insert_memory_card_wait();
         break;
     }
 }
 
 /* Falls through without a return statement. */
-s32 func_8013C9F0(void) {
+s32 file_select_scan(void) {
     s32 pad[3]; /* FAKE: unused words above count, the original frame has them (T-9020, T-11120) */
     s32 count;
     s32 i;
@@ -1084,7 +1084,7 @@ s32 func_8013C9F0(void) {
     }
 }
 
-void func_8013CB44(void) {
+void file_select_system_file_read(void) {
     /* FAKE: unused words preserve the 0x40 stack frame. T-22023 */
     s32 pad[2];
     s32 slot;
@@ -1111,7 +1111,7 @@ void func_8013CB44(void) {
             g->substep++;
         } else {
             text_system_reset();
-            func_8013BB10();
+            file_select_menu_mode_unlock();
             slot = 0xFF;
             if (system_data.slot_status[system_data.selected_slot] == 1) {
                 slot = system_data.selected_slot - 1;
@@ -1125,12 +1125,12 @@ void func_8013CB44(void) {
                 }
             }
             if (slot != 0xFF) {
-                func_8013B51C(slot);
+                file_select_cursor_to_slot(slot);
             }
-            func_80139CB4();
+            file_select_slot_header_draw();
             k_sub_reset_point_set();
             k_sub_disp_start(0);
-            D_8014D0D4 = 1;
+            file_select_information_page = 1;
             mode_step_next();
         }
         break;
@@ -1152,9 +1152,9 @@ void func_8013CB44(void) {
         set_kanji_string(-0x40, 0x20, 0xF, (s32) "システムファイルを", 0);
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "作り直しますか？", 0);
         set_kanji_string(-0x40, 0x40, 0xF, (s32) D_800B3C70, 0);
-        set_kanji_string(0x14, 0x40, 1, (s32) func_8006CA9C(), 0);
+        set_kanji_string(0x14, 0x40, 1, (s32) hud_confirm_button_label(), 0);
         set_kanji_string(-0x40, 0x50, 0xF, (s32) D_800B3C88, 0);
-        set_kanji_string(0x14, 0x50, 2, (s32) func_8006CAE0(), 0);
+        set_kanji_string(0x14, 0x50, 2, (s32) hud_cancel_button_label(), 0);
         k_disp_start(6);
         g->substep++;
         break;
@@ -1176,7 +1176,7 @@ void func_8013CB44(void) {
     }
 }
 
-void func_8013CEC8(void) {
+void file_select_list_input(void) {
     s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
     s32 n;
     GameState *g = &game_state;
@@ -1198,19 +1198,19 @@ void func_8013CEC8(void) {
         } else {
             D_800E7D36 = g->menu_cursor_0 + 1;
             text_system_reset();
-            func_80139CB4();
+            file_select_slot_header_draw();
             k_sub_reset_point_set();
             k_sub_disp_start(0);
-            func_8013B51C(n);
+            file_select_cursor_to_slot(n);
         }
     }
-    func_8013AF78(1);
-    func_8013B1D8();
-    func_80139C24();
-    func_80142880();
+    file_select_page_indicator_update(1);
+    file_select_slot_summary_draw();
+    file_select_information_page_draw();
+    file_select_buttons_input();
 }
 
-void func_8013D054(void) {
+void file_select_album_load(void) {
     u8 state;
 
     switch (game_state.substep) {
@@ -1240,7 +1240,7 @@ void func_8013D054(void) {
         break;
     case 3:
         if (func_80055AFC(0) == 1) {
-            func_8013BB10();
+            file_select_menu_mode_unlock();
             printf("SYS0 DATA OK!");
             memory_card_stop();
             audio_command(0x501);
@@ -1266,10 +1266,10 @@ void func_8013D054(void) {
         }
         break;
     }
-    func_8013B1D8();
+    file_select_slot_summary_draw();
 }
 
-void func_8013D2AC(void) {
+void file_select_album_only_read(void) {
     s32 pad[2]; /* FAKE: unused words above the buffer, the original frame has them. T-22023 */
     u8 text[256];
     s32 i;
@@ -1307,7 +1307,7 @@ void func_8013D2AC(void) {
         break;
     case 2:
         if (func_80055A38(0) == 1) {
-            func_8013B59C();
+            file_select_slot_information_show();
             mode_step_next();
         } else {
             text_system_reset();
@@ -1323,7 +1323,7 @@ void func_8013D2AC(void) {
     }
 }
 
-void func_8013D4CC(void) {
+void file_select_album_only_list_input(void) {
     s32 idx;
     GameState *g = &game_state;
 
@@ -1344,13 +1344,13 @@ void func_8013D4CC(void) {
             g->save_slot = g->menu_cursor_0 + 1;
         }
     }
-    func_8013AF78(1);
-    func_8013B1D8();
-    func_80139C24();
-    func_80142880();
+    file_select_page_indicator_update(1);
+    file_select_slot_summary_draw();
+    file_select_information_page_draw();
+    file_select_buttons_input();
 }
 
-void func_8013D62C(void) {
+void file_select_album_only_loading_message(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
     u8 buf[0x100];
 
@@ -1364,7 +1364,7 @@ void func_8013D62C(void) {
 }
 
 /* Original implicit-int dispatch falls through without a return statement. */
-s32 func_8013D6C0(void) {
+s32 file_select_album_only_read_chosen(void) {
     switch (game_state.substep) {
     case 0:
         memory_card_start();
@@ -1383,7 +1383,7 @@ s32 func_8013D6C0(void) {
         break;
     case 2:
         if (func_80055A38(0) == 1) {
-            func_8013B59C();
+            file_select_slot_information_show();
             mode_step_set(0x21);
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
@@ -1393,38 +1393,38 @@ s32 func_8013D6C0(void) {
     }
 }
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014B998);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_debug_load_valid_text);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014B9A4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_debug_load_failed_text);
 
-void func_8013D7F4(void) {
+void file_select_album_only_load(void) {
     if (func_80055AFC(0) == 1) {
-        func_8013BB10();
-        printf(D_8014B998);
+        file_select_menu_mode_unlock();
+        printf(file_select_debug_load_valid_text);
         memory_card_stop();
         audio_command(0x501);
         mode_stage_set(3);
     } else {
-        printf(D_8014B9A4);
+        printf(file_select_debug_load_failed_text);
         func_80056284();
         mode_stage_set(1);
     }
-    func_8013B1D8();
+    file_select_slot_summary_draw();
 }
 
-void func_8013D874(void) {
+void file_select_no_data_prompt(void) {
     text_system_reset();
     set_kanji_string(-0x40, 0x20, 0xF, "このゲームのデータがありません", 0);
     set_kanji_string(-0x40, 0x30, 0xF, "新たにアルバムを作成し、", 0);
     set_kanji_string(-0x40, 0x40, 0xF, "ゲームをプレイしますか？", 0);
     set_kanji_string(-0x40, 0x50, 0xF, "　　はい…　　いいえ…　", 0);
-    set_kanji_string(6, 0x50, 1, func_8006CA9C(), 0);
-    set_kanji_string(0x5A, 0x50, 2, func_8006CAE0(), 0);
+    set_kanji_string(6, 0x50, 1, hud_confirm_button_label(), 0);
+    set_kanji_string(0x5A, 0x50, 2, hud_cancel_button_label(), 0);
     k_disp_start(6);
     mode_step_next();
 }
 
-void func_8013D954(void) {
+void file_select_no_data_answer(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         mode_step_set(0x44);
     } else if (game_state.pad_pressed & PAD_CROSS) {
@@ -1432,41 +1432,41 @@ void func_8013D954(void) {
     }
 }
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BA28);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_play_unsaved_text_1);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BA44);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_play_unsaved_text_2);
 
-void func_8013D9A0(void) {
+void file_select_no_data_decline_message(void) {
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014BA28, 0);
-    set_kanji_string(-0x40, 0x30, 0xF, D_8014BA44, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_play_unsaved_text_1, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, file_select_play_unsaved_text_2, 0);
     k_disp_start(2);
     mode_step_next();
 }
 
-void func_8013DA08(void) {
+void file_select_no_data_decline_wait(void) {
     if (game_state.pad_pressed & 0x820) {
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
     }
 }
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BA60);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_create_slot_text_1);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BA78);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_create_slot_text_2);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BA88);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_create_slot_text_3);
 
-void func_8013DA40(void) {
+void file_select_create_slot_message(void) {
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014BA60, 0);
-    set_kanji_string(-0x40, 0x30, 0xF, D_8014BA78, 0);
-    set_kanji_string(-0x40, 0x40, 0xF, D_8014BA88, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_create_slot_text_1, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, file_select_create_slot_text_2, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, file_select_create_slot_text_3, 0);
     k_disp_start(3);
     mode_step_next();
 }
 
-void func_8013DAC4(void) {
+void file_select_create_slot_choose(void) {
     s32 idx;
     GameState *g = &game_state;
 
@@ -1485,39 +1485,39 @@ void func_8013DAC4(void) {
     }
 }
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BAA4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_system_file_text_1);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BAC4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_system_file_text_2);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BAE0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_system_file_text_3);
 
-void func_8013DBD0(void) {
+void file_select_create_system_file_message(void) {
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014BAA4, 0);
-    set_kanji_string(-0x40, 0x30, 0xF, D_8014BAC4, 0);
-    set_kanji_string(-0x40, 0x40, 0xF, D_8014BAE0, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_system_file_text_1, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, file_select_system_file_text_2, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, file_select_system_file_text_3, 0);
     k_disp_start(3);
     mode_step_next();
 }
 
-void func_8013DC54(void) {
+void file_select_create_system_file_wait(void) {
     if (game_state.pad_pressed & 0x860) {
         mode_step_next();
     }
 }
 
-void func_8013DC84(void) {
+void file_select_create_system_file_prompt(void) {
     text_system_reset();
     set_kanji_string(-0x40, 0x20, 0xF, "システムファイルを作成しますか", 0);
     set_kanji_string(-0x40, 0x30, 0xF, D_800B3C70, 0);
-    set_kanji_string(0x14, 0x30, 1, func_8006CA9C(), 0);
+    set_kanji_string(0x14, 0x30, 1, hud_confirm_button_label(), 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_800B3C88, 0);
-    set_kanji_string(0x14, 0x40, 2, func_8006CAE0(), 0);
+    set_kanji_string(0x14, 0x40, 2, hud_cancel_button_label(), 0);
     k_disp_start(5);
     mode_step_next();
 }
 
-void func_8013DD48(void) {
+void file_select_create_system_file_answer(void) {
     if (game_state.pad_pressed & 0x820) {
         mode_step_set(0x4C);
     } else if (game_state.pad_pressed & PAD_CROSS) {
@@ -1525,7 +1525,7 @@ void func_8013DD48(void) {
     }
 }
 
-s32 func_8013DD94(void) {
+s32 file_select_create_album_only(void) {
     u8 sp38[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
     u8 temp_v0;
 
@@ -1564,14 +1564,14 @@ s32 func_8013DD94(void) {
         break;
     case 3:
         memory_card_stop();
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
 
 
-void func_8013DF88(void) {
+void file_select_create_album_and_system_file(void) {
     /* FAKE: unused words, the original frame has them. T-22023 */
     s32 pad[2];
     s32 i;
@@ -1650,47 +1650,47 @@ void func_8013DF88(void) {
         break;
     case 7:
         memory_card_stop();
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BB8C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_new_text_1);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BBA8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_new_text_2);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BBC0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_new_text_3);
 
-void func_8013E30C(void) {
+void file_select_new_message(void) {
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014BB8C, 0);
-    set_kanji_string(-0x40, 0x30, 0xF, D_8014BBA8, 0);
-    set_kanji_string(-0x40, 0x40, 0xF, D_8014BBC0, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_new_text_1, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, file_select_new_text_2, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, file_select_new_text_3, 0);
     k_disp_start(3);
     mode_step_next();
 }
 
-void func_8013E390(void) {
+void file_select_new_wait(void) {
     if (game_state.pad_pressed & 0x860) {
         mode_step_next();
     }
-    func_80142880();
+    file_select_buttons_input();
 }
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BBD4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_new_choose_text_1);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BBEC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_new_choose_text_2);
 
-void func_8013E3C8(void) {
+void file_select_new_choose_message(void) {
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014BBD4, 0);
-    set_kanji_string(-0x40, 0x30, 0xF, D_8014BBEC, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_new_choose_text_1, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, file_select_new_choose_text_2, 0);
     k_disp_start(2);
     mode_step_next();
 }
 
-void func_8013E430(void) {
+void file_select_new_choose_slot(void) {
     s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
     s32 n;
     GameState *g = &game_state;
@@ -1716,10 +1716,10 @@ void func_8013E430(void) {
             mode_step_set(0xA9);
         }
     }
-    func_80142880();
+    file_select_buttons_input();
 }
 
-void func_8013E59C(void) {
+void file_select_new_redo_prompt(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
     u8 buf[0x100];
 
@@ -1729,14 +1729,14 @@ void func_8013E59C(void) {
     set_kanji_string(-0x40, 0x20, 0xF, buf, 0);
     set_kanji_string(-0x40, 0x30, 0xF, "やりなおします。", 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_800B3C70, 0);
-    set_kanji_string(0x14, 0x40, 1, func_8006CA9C(), 0);
+    set_kanji_string(0x14, 0x40, 1, hud_confirm_button_label(), 0);
     set_kanji_string(-0x40, 0x50, 0xF, D_800B3C88, 0);
-    set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
+    set_kanji_string(0x14, 0x50, 2, hud_cancel_button_label(), 0);
     k_disp_start(6);
     mode_step_next();
 }
 
-void func_8013E6A8(void) {
+void file_select_new_redo_answer(void) {
     if (game_state.pad_pressed & PAD_CROSS) {
         audio_command(0x501);
         mode_step_set(0);
@@ -1751,20 +1751,20 @@ void func_8013E6A8(void) {
 
 /* Packed date word: day in bits 0-3, month in bits 4-8, week in bits 9-10. */
 
-void func_8013E71C(void) {
-    memcpy(D_8014D070, &game_state.player_family_name, 8);
-    memcpy(D_8014D078, &game_state.player_given_name, 8);
-    memcpy(D_8014D080, &game_state.player_nickname, 0xC);
-    D_8014D08C = ((BirthdayBits *)&game_state.player_birthday)->month - 1;
-    D_8014D090 = ((BirthdayBits *)&game_state.player_birthday)->day - 1;
-    D_8014D094 = (((BirthdayBits *)&game_state.player_birthday)->blood_type + 3) & 3;
-    D_8014D098 = ((BirthdayBits *)&game_state.girls[0].birthday.w)->month - 1;
-    D_8014D09C = ((BirthdayBits *)&game_state.girls[0].birthday.w)->day - 1;
-    D_8014D0A0 = (((BirthdayBits *)&game_state.girls[0].birthday.w)->blood_type + 3) & 3;
-    D_8014D0A4 = 1;
+void file_select_profile_retain(void) {
+    memcpy(name_entry_retained_family_name, &game_state.player_family_name, 8);
+    memcpy(name_entry_retained_given_name, &game_state.player_given_name, 8);
+    memcpy(name_entry_retained_nickname, &game_state.player_nickname, 0xC);
+    name_entry_retained_player_month = ((BirthdayBits *)&game_state.player_birthday)->month - 1;
+    name_entry_retained_player_day = ((BirthdayBits *)&game_state.player_birthday)->day - 1;
+    name_entry_retained_player_blood = (((BirthdayBits *)&game_state.player_birthday)->blood_type + 3) & 3;
+    name_entry_retained_shiori_month = ((BirthdayBits *)&game_state.girls[0].birthday.w)->month - 1;
+    name_entry_retained_shiori_day = ((BirthdayBits *)&game_state.girls[0].birthday.w)->day - 1;
+    name_entry_retained_shiori_blood = (((BirthdayBits *)&game_state.girls[0].birthday.w)->blood_type + 3) & 3;
+    name_entry_retained_state = 1;
 }
 
-void func_8013E80C(void) {
+void file_select_new_redo_load(void) {
     switch (game_state.substep) {
     case 0:
         memory_card_start();
@@ -1794,8 +1794,8 @@ void func_8013E80C(void) {
         break;
     case 3:
         if (func_80055AFC(0) == 1) {
-            func_8013E71C();
-            func_8013BB10();
+            file_select_profile_retain();
+            file_select_menu_mode_unlock();
             game_state.substep += 1;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
@@ -1806,13 +1806,13 @@ void func_8013E80C(void) {
         printf("%d file replay", game_state.save_slot);
         func_80041878();
         func_80042058();
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
 
-void func_8013E9FC(void) {
+void file_select_new_redo_load_no_system(void) {
     switch (game_state.substep) {
     case 0:
         memory_card_start();
@@ -1842,8 +1842,8 @@ void func_8013E9FC(void) {
         break;
     case 3:
         if (func_80055AFC(0) == 1) {
-            func_8013E71C();
-            func_8013BB10();
+            file_select_profile_retain();
+            file_select_menu_mode_unlock();
             game_state.substep += 1;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
@@ -1854,13 +1854,13 @@ void func_8013E9FC(void) {
         printf("%d file replay", game_state.save_slot);
         func_80041878();
         func_80042058();
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
 
-void func_8013EBEC(void) {
+void file_select_new_create_with_system(void) {
     u8 state;
     s32 result;
     u8 text[256];
@@ -1918,13 +1918,13 @@ void func_8013EBEC(void) {
         }
         break;
     case 6:
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
 
-void func_8013EE7C(void) {
+void file_select_new_create_album_only(void) {
     u8 state;
     s32 result;
     u8 text[256];
@@ -1965,28 +1965,28 @@ void func_8013EE7C(void) {
         }
         break;
     case 4:
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
     }
 }
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BCB4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_copy_text_1);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BCCC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_copy_text_2);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BCE0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_copy_text_3);
 
-void func_8013F058(void) {
+void file_select_copy_message(void) {
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014BCB4, 0);
-    set_kanji_string(-0x40, 0x30, 0xF, D_8014BCCC, 0);
-    set_kanji_string(-0x40, 0x40, 0xF, D_8014BCE0, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_copy_text_1, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, file_select_copy_text_2, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, file_select_copy_text_3, 0);
     k_disp_start(3);
     mode_step_next();
 }
 
-void func_8013F0DC(void) {
+void file_select_copy_source_choose(void) {
     s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
     s32 idx;
     GameState *g = &game_state;
@@ -2005,7 +2005,7 @@ void func_8013F0DC(void) {
         mode_step_next();
         g->save_slot = idx + 1;
     }
-    func_80142880();
+    file_select_buttons_input();
 }
 
 /* Falls through without a return statement. */
@@ -2021,7 +2021,7 @@ void func_8013F0DC(void) {
 /* Falls through without a return statement. */
 /* Falls through without a return statement. */
 /* The u8 mode copy and the s32 state give the original 0x138 frame (text at sp+0x30). T-11080 */
-s32 func_8013F208(void) {
+s32 file_select_copy_source_load(void) {
     s32 state;
     u8 mode;
     u8 text[0x100];
@@ -2046,7 +2046,7 @@ s32 func_8013F208(void) {
         break;
     case 2:
         if (func_80055A38(0) == 1) {
-            func_8013B59C();
+            file_select_slot_information_show();
             game_state.substep++;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
@@ -2055,8 +2055,8 @@ s32 func_8013F208(void) {
         break;
     case 3:
         if (func_80055AFC(0) == 1) {
-            func_8013BB10();
-            D_8014D0A8 = 1;
+            file_select_menu_mode_unlock();
+            file_select_menu_mode_lock = 1;
             printf("COPY LOAD SUM !\n");
             game_state.substep++;
         } else {
@@ -2078,11 +2078,11 @@ s32 func_8013F208(void) {
 }
 
 
-void func_8013F454(void) {
+void file_select_copy_destination_choose(void) {
     s32 idx;
     GameState *g = &game_state;
 
-    func_80142880();
+    file_select_buttons_input();
     menu_check(0, cursor_x, cursor_y);
     g->pad_pressed &= ~0x100;
     menu_cursor_update(0);
@@ -2107,7 +2107,7 @@ void func_8013F454(void) {
     }
 }
 
-void func_8013F5B0(void) {
+void file_select_copy_overwrite_prompt(void) {
     u8 buf[0x108]; /* FAKE: 8 bytes more than the neighbours give the original frame (0x140). T-9170 */
 
     text_system_reset();
@@ -2116,14 +2116,14 @@ void func_8013F5B0(void) {
     set_kanji_string(-0x40, 0x20, 0xF, buf, 0);
     set_kanji_string(-0x40, 0x30, 0xF, "上書きしてもいいですか？", 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_800B3C70, 0);
-    set_kanji_string(0x14, 0x40, 1, func_8006CA9C(), 0);
+    set_kanji_string(0x14, 0x40, 1, hud_confirm_button_label(), 0);
     set_kanji_string(-0x40, 0x50, 0xF, D_800B3C88, 0);
-    set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
+    set_kanji_string(0x14, 0x50, 2, hud_cancel_button_label(), 0);
     k_disp_start(6);
     mode_step_next();
 }
 
-void func_8013F6BC(void) {
+void file_select_copy_overwrite_answer(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         audio_command(0x501);
         mode_step_next();
@@ -2133,7 +2133,7 @@ void func_8013F6BC(void) {
     }
 }
 
-void func_8013F71C(void) {
+void file_select_copy_route(void) {
     if (D_800E8BEE) {
         mode_step_set(0xC7);
     } else {
@@ -2141,7 +2141,7 @@ void func_8013F71C(void) {
     }
 }
 
-s32 func_8013F758(void) {
+s32 file_select_copy_write_with_system(void) {
     u8 sp38[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
 
     switch (game_state.substep) {
@@ -2190,7 +2190,7 @@ s32 func_8013F758(void) {
 }
 
 
-s32 func_8013F984(void) {
+s32 file_select_copy_write_album_only(void) {
     u8 sp38[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
 
     switch (game_state.substep) {
@@ -2224,22 +2224,22 @@ s32 func_8013F984(void) {
 }
 
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BDE8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_clear_text_1);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BE00);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_clear_text_2);
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BE10);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_clear_text_3);
 
-void func_8013FB08(void) {
+void file_select_clear_message(void) {
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014BDE8, 0);
-    set_kanji_string(-0x40, 0x30, 0xF, D_8014BE00, 0);
-    set_kanji_string(-0x40, 0x40, 0xF, D_8014BE10, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_clear_text_1, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, file_select_clear_text_2, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, file_select_clear_text_3, 0);
     k_disp_start(3);
     mode_step_next();
 }
 
-void func_8013FB8C(void) {
+void file_select_clear_choose_slot(void) {
     s32 idx;
     GameState *g = &game_state;
 
@@ -2257,10 +2257,10 @@ void func_8013FB8C(void) {
         audio_command(0x501);
         g->save_slot = g->menu_cursor_0 + 1;
     }
-    func_80142880();
+    file_select_buttons_input();
 }
 
-void func_8013FCBC(void) {
+void file_select_clear_prompt(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
     u8 buf[0x100];
 
@@ -2270,14 +2270,14 @@ void func_8013FCBC(void) {
     set_kanji_string(-0x40, 0x20, 0xF, buf, 0);
     set_kanji_string(-0x40, 0x30, 0xF, "本当に消去していいですか？", 0);
     set_kanji_string(-0x40, 0x40, 0xF, D_800B3C70, 0);
-    set_kanji_string(0x14, 0x40, 1, func_8006CA9C(), 0);
+    set_kanji_string(0x14, 0x40, 1, hud_confirm_button_label(), 0);
     set_kanji_string(-0x40, 0x50, 0xF, D_800B3C88, 0);
-    set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
+    set_kanji_string(0x14, 0x50, 2, hud_cancel_button_label(), 0);
     k_disp_start(6);
     mode_step_next();
 }
 
-void func_8013FDC8(void) {
+void file_select_clear_answer(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         audio_command(0x501);
         if (D_800E8BEE) {
@@ -2290,7 +2290,7 @@ void func_8013FDC8(void) {
     }
 }
 
-void func_8013FE40(void) {
+void file_select_clear_delete_with_system(void) {
     switch (game_state.substep) {
     case 0:
         if (func_80054704((s32) game_state.save_slot) == 1) {
@@ -2323,7 +2323,7 @@ void func_8013FE40(void) {
     }
 }
 
-void func_8013FF98(void) {
+void file_select_clear_delete_album_only(void) {
     if (game_state.substep == 0) {
         if (func_80054704(game_state.save_slot) == 1) {
             printf("DELETE OK");
@@ -2338,165 +2338,165 @@ void func_8013FF98(void) {
     }
 }
 
-void func_80140024(void) {
+void file_select_clear_done(void) {
     mode_step_set(0);
 }
 
-void func_80140044(void) {
+void file_select_mode_stage_list(void) {
     u8 state;
     game_state.mode_step_timer.w += 1;
     state = game_state.mode_step;
     switch (state) {
     case 0x0:
-        func_8013C9F0();
+        file_select_scan();
         return;
     case 0x1:
-        func_8013CB44();
+        file_select_system_file_read();
         return;
     case 0x2:
-        func_8013CEC8();
+        file_select_list_input();
         return;
     case 0x3:
-        func_8013D054();
+        file_select_album_load();
         return;
     case 0x20:
-        func_8013D2AC();
+        file_select_album_only_read();
         return;
     case 0x21:
-        func_8013D4CC();
+        file_select_album_only_list_input();
         return;
     case 0x22:
-        func_8013D62C();
+        file_select_album_only_loading_message();
         return;
     case 0x23:
-        func_8013D6C0();
+        file_select_album_only_read_chosen();
         return;
     case 0x24:
-        func_8013D7F4();
+        file_select_album_only_load();
         return;
     case 0x40:
-        func_8013D874();
+        file_select_no_data_prompt();
         return;
     case 0x41:
-        func_8013D954();
+        file_select_no_data_answer();
         return;
     case 0x42:
-        func_8013D9A0();
+        file_select_no_data_decline_message();
         return;
     case 0x43:
-        func_8013DA08();
+        file_select_no_data_decline_wait();
         return;
     case 0x44:
-        func_8013DA40();
+        file_select_create_slot_message();
         return;
     case 0x45:
-        func_8013DAC4();
+        file_select_create_slot_choose();
         return;
     case 0x46:
-        func_8013DBD0();
+        file_select_create_system_file_message();
         return;
     case 0x47:
-        func_8013DC54();
+        file_select_create_system_file_wait();
         return;
     case 0x48:
-        func_8013DC84();
+        file_select_create_system_file_prompt();
         return;
     case 0x49:
-        func_8013DD48();
+        file_select_create_system_file_answer();
         return;
     case 0x4A:
-        func_8013DD94();
+        file_select_create_album_only();
         return;
     case 0x4C:
-        func_8013DF88();
+        file_select_create_album_and_system_file();
         return;
     case 0xA0:
-        func_8013E30C();
+        file_select_new_message();
         return;
     case 0xA1:
-        func_8013E390();
+        file_select_new_wait();
         return;
     case 0xA2:
-        func_8013E3C8();
+        file_select_new_choose_message();
         return;
     case 0xA3:
-        func_8013E430();
+        file_select_new_choose_slot();
         return;
     case 0xA4:
-        func_8013E59C();
+        file_select_new_redo_prompt();
         return;
     case 0xA5:
-        func_8013E6A8();
+        file_select_new_redo_answer();
         return;
     case 0xA6:
-        func_8013E80C();
+        file_select_new_redo_load();
         return;
     case 0xA7:
-        func_8013E9FC();
+        file_select_new_redo_load_no_system();
         return;
     case 0xA8:
-        func_8013EBEC();
+        file_select_new_create_with_system();
         return;
     case 0xA9:
-        func_8013EE7C();
+        file_select_new_create_album_only();
         return;
     case 0xC0:
-        func_8013F058();
+        file_select_copy_message();
         return;
     case 0xC1:
-        func_8013F0DC();
+        file_select_copy_source_choose();
         return;
     case 0xC2:
-        func_8013F208();
+        file_select_copy_source_load();
         return;
     case 0xC3:
-        func_8013F454();
+        file_select_copy_destination_choose();
         return;
     case 0xC4:
-        func_8013F5B0();
+        file_select_copy_overwrite_prompt();
         return;
     case 0xC5:
-        func_8013F6BC();
+        file_select_copy_overwrite_answer();
         return;
     case 0xC6:
-        func_8013F71C();
+        file_select_copy_route();
         return;
     case 0xC7:
-        func_8013F758();
+        file_select_copy_write_with_system();
         return;
     case 0xC8:
-        func_8013F984();
+        file_select_copy_write_album_only();
         return;
     case 0xE0:
-        func_8013FB08();
+        file_select_clear_message();
         return;
     case 0xE1:
-        func_8013FB8C();
+        file_select_clear_choose_slot();
         return;
     case 0xE2:
-        func_8013FCBC();
+        file_select_clear_prompt();
         return;
     case 0xE3:
-        func_8013FDC8();
+        file_select_clear_answer();
         return;
     case 0xE4:
-        func_8013FE40();
+        file_select_clear_delete_with_system();
         return;
     case 0xE5:
-        func_8013FF98();
+        file_select_clear_delete_album_only();
         return;
     case 0xE6:
-        func_80140024();
+        file_select_clear_done();
         return;
     default:
-        func_8013B77C();
+        file_select_settings_restore();
         game_mode_set(GAME_MODE_START);
         return;
     }
 }
 
 /* Falls through without a return statement. */
-s32 func_80140430(void) {
+s32 file_select_mode_stage_album_broken(void) {
     u32 i;
 
     switch (game_state.substep) {
@@ -2531,7 +2531,7 @@ s32 func_80140430(void) {
 }
 
 /* Falls through without a return statement. */
-s32 func_80140574(void) {
+s32 file_select_mode_stage_memory_card_error(void) {
     u32 i;
 
     switch (game_state.substep) {
@@ -2560,7 +2560,7 @@ s32 func_80140574(void) {
     }
 }
 
-void func_8014068C(void) {
+void file_select_loaded_greeting(void) {
     /* FAKE: unused words preserve the 0x38 stack frame (T-24112) */
     s32 pad[3];
     u8 i;
@@ -2575,9 +2575,9 @@ void func_8014068C(void) {
         dec_bg_reset();
         dec_bg_show_switch(2);
         func_80057640(0xF0);
-        cursor_show(0);
+        hud_cursor_show(0);
         sprite_tables_clear();
-        game_state.event_log_count = func_8006C988(&girl, &unk, 1);
+        game_state.event_log_count = hud_event_log_scan(&girl, &unk, 1);
         i = girl;
         printf("girl %x \n", girl);
         printf("i %x \n", i);
@@ -2670,13 +2670,13 @@ void func_8014068C(void) {
         }
         break;
     }
-    func_80140B20();
+    file_select_fade_step();
     dec_bg_draw(2);
     D_8011ECA4 = 1;
 }
 
 /* FAKE: s32 with no return value; the void form keeps the six fade stores in $t6 where the original copies the value to $v0 (T-22023) */
-s32 func_80140B20(void) {
+s32 file_select_fade_step(void) {
     /* FAKE: unk_03A is already u8; the (u8 *) view only moves the global to $a0 like the original (T-11570) */
     if (*(u8 *)&game_state.screen_brightness >= 3) {
         *(u8 *)&game_state.screen_brightness -= 2;
@@ -2688,24 +2688,24 @@ s32 func_80140B20(void) {
     }
 }
 
-void func_80140BA4(void) {
+void file_select_loaded_leave(void) {
     if (game_state.substep++ >= 0x41U) {
-        func_8013B77C();
+        file_select_settings_restore();
         set_dec_bri(0);
         if (game_state.year == 0x62 && game_state.month == 3 && game_state.day == 1) {
-            func_8013E71C();
+            file_select_profile_retain();
             func_80041878();
             func_80041F48();
             game_state.event_log_count = 0;
             game_mode_set(GAME_MODE_NAME_ENTRY);
         } else if (game_state.year == 0x5F && game_state.month == 4 && game_state.day == 4) {
-            func_8013E71C();
+            file_select_profile_retain();
             func_80041878();
             func_80041F48();
             game_state.event_log_count = 0;
             game_mode_set(GAME_MODE_NAME_ENTRY);
         } else {
-            func_800674B0();
+            hud_day_bgm_load();
             game_mode_set(GAME_MODE_COMMAND_SCREEN);
             mode_stage_set(0xFF);
         }
@@ -2713,28 +2713,28 @@ void func_80140BA4(void) {
     D_8011ECA4 = 1;
 }
 
-s32 func_80140CCC(void) {
+s32 file_select_mode_stage_loaded(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8014068C();
+        file_select_loaded_greeting();
         break;
     case 1:
-        func_80140BA4();
+        file_select_loaded_leave();
         break;
     }
 }
 
-INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", D_8014BEB0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_no_space_text);
 
-void func_80140D20(void) {
+void file_select_no_space_message(void) {
     text_system_reset();
-    set_kanji_string(-0x40, 0x20, 0xF, D_8014BEB0, 0);
+    set_kanji_string(-0x40, 0x20, 0xF, file_select_no_space_text, 0);
     k_disp_start(2);
     mode_step_next();
 }
 
 /* FAKE: biased byte cursor, alternate end expression and statement layout preserve addressing and scheduling, T-9580. */
-void func_80140D6C(void)
+void file_select_no_space_check(void)
 {
   u8 *p;
   u8 *new_var;
@@ -2765,7 +2765,7 @@ void func_80140D6C(void)
   }
 }
 
-void func_80140E18(void) {
+void file_select_no_space_hint(void) {
     text_system_reset();
     set_kanji_string(-0x40, 0x20, 0xF, "別のメモリーカードを差し込み口", 0);
     set_kanji_string(-0x40, 0x30, 0xF, "１にセットするか、他のゲームの", 0);
@@ -2774,31 +2774,31 @@ void func_80140E18(void) {
     mode_step_next();
 }
 
-void func_80140E9C(void) {
+void file_select_no_space_hint_wait(void) {
     if (game_state.pad_pressed & 0x860) {
         mode_stage_set(1);
         mode_step_set(6);
     }
 }
 
-void func_80140ED4(void) {
+void file_select_mode_stage_no_space(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80140D20();
+        file_select_no_space_message();
         return;
     case 1:
-        func_80140D6C();
+        file_select_no_space_check();
         return;
     case 2:
-        func_80140E18();
+        file_select_no_space_hint();
         return;
     case 3:
-        func_80140E9C();
+        file_select_no_space_hint_wait();
         return;
     }
 }
 
-void func_80140F54(void) {
+void file_select_system_file_route(void) {
     if (D_800E8BEE) {
         mode_step_set(1);
     } else {
@@ -2806,7 +2806,7 @@ void func_80140F54(void) {
     }
 }
 
-void func_80140F90(void) {
+void file_select_system_file_rebuild(void) {
     s32 i;
     u8 state;
     SystemData *w = &system_data;
@@ -2818,17 +2818,17 @@ void func_80140F90(void) {
         set_kanji_string(-0x40, 0x20, 0xF, (s32) "システムファイルを作り直して", 0);
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "いいですか？", 0);
         set_kanji_string(-0x40, 0x40, 0xF, (s32) D_800B3C70, 0);
-        set_kanji_string(0x14, 0x40, 1, func_8006CA9C(), 0);
+        set_kanji_string(0x14, 0x40, 1, hud_confirm_button_label(), 0);
         set_kanji_string(-0x40, 0x50, 0xF, (s32) D_800B3C88, 0);
-        set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
+        set_kanji_string(0x14, 0x50, 2, hud_cancel_button_label(), 0);
         k_disp_start(6);
-        for (i = 0; i < 16; i++) D_8014D158[i] = 0;
+        for (i = 0; i < 16; i++) file_select_rebuild_old_counts[i] = 0;
         game_state.substep++;
         break;
     case 1:
         if (game_state.pad_pressed & PAD_CIRCLE) {
             for (i = 0; i < 16; i++) {
-                D_8014D158[i] = w->flags[i];
+                file_select_rebuild_old_counts[i] = w->flags[i];
             }
             game_state.substep++;
         } else if (game_state.pad_pressed & PAD_CROSS) {
@@ -2866,19 +2866,19 @@ void func_80140F90(void) {
         text_system_reset();
         set_kanji_string(-0x40, 0x20, 0xF, (s32) "しばらくお待ち下さい。", 0);
         k_disp_start(1);
-        for (i = 0; i < 16; i++) D_8014D060[i] = 0;
+        for (i = 0; i < 16; i++) file_select_rebuild_counts[i] = 0;
         game_state.save_slot = 1;
         game_state.substep++;
         break;
     case 7:
         if (game_state.save_slot >= 15) {
             for (i = 0; i < 16; i++) {
-                if (D_8014D158[i] < D_8014D060[i]) {
-                    w->flags[i] = D_8014D060[i];
+                if (file_select_rebuild_old_counts[i] < file_select_rebuild_counts[i]) {
+                    w->flags[i] = file_select_rebuild_counts[i];
                 } else {
-                    w->flags[i] = D_8014D158[i];
+                    w->flags[i] = file_select_rebuild_old_counts[i];
                 }
-                if (D_8014D060[i] != 0 && D_8014D060[i] != D_8014D158[i]) {
+                if (file_select_rebuild_counts[i] != 0 && file_select_rebuild_counts[i] != file_select_rebuild_old_counts[i]) {
                     w->flags[i] = 1;
                 }
             }
@@ -2888,12 +2888,12 @@ void func_80140F90(void) {
                 game_state.save_slot++;
                 if (game_state.save_slot >= 15) {
                     for (i = 0; i < 16; i++) {
-                        if (D_8014D158[i] < D_8014D060[i]) {
-                            w->flags[i] = D_8014D060[i];
+                        if (file_select_rebuild_old_counts[i] < file_select_rebuild_counts[i]) {
+                            w->flags[i] = file_select_rebuild_counts[i];
                         } else {
-                            w->flags[i] = D_8014D158[i];
+                            w->flags[i] = file_select_rebuild_old_counts[i];
                         }
-                        if (D_8014D060[i] != 0 && D_8014D060[i] != D_8014D158[i]) {
+                        if (file_select_rebuild_counts[i] != 0 && file_select_rebuild_counts[i] != file_select_rebuild_old_counts[i]) {
                             w->flags[i] = 1;
                         }
                     }
@@ -2936,7 +2936,7 @@ void func_80140F90(void) {
             game_state.substep = 7;
             for (i = 0; i < 16; i++) {
                 if (g->girl_cleared[i] != 0) {
-                    D_8014D060[i]++;
+                    file_select_rebuild_counts[i]++;
                 }
             }
         } else {
@@ -2967,7 +2967,7 @@ void func_80140F90(void) {
 }
 
 /* Original implicit-int state machine falls through without a return statement. */
-s32 func_80141820(void) {
+s32 file_select_system_file_create(void) {
     s32 i;
     u8 state;
     SystemData *w = &system_data;
@@ -2979,9 +2979,9 @@ s32 func_80141820(void) {
         set_kanji_string(-0x40, 0x20, 0xF, (s32) "システムファイルを作成して", 0);
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "いいですか？", 0);
         set_kanji_string(-0x40, 0x40, 0xF, (s32) D_800B3C70, 0);
-        set_kanji_string(0x14, 0x40, 1, func_8006CA9C(), 0);
+        set_kanji_string(0x14, 0x40, 1, hud_confirm_button_label(), 0);
         set_kanji_string(-0x40, 0x50, 0xF, (s32) D_800B3C88, 0);
-        set_kanji_string(0x14, 0x50, 2, func_8006CAE0(), 0);
+        set_kanji_string(0x14, 0x50, 2, hud_cancel_button_label(), 0);
         k_disp_start(6);
         game_state.substep++;
         break;
@@ -3023,7 +3023,7 @@ s32 func_80141820(void) {
         text_system_reset();
         set_kanji_string(-0x40, 0x20, 0xF, (s32) "しばらくお待ち下さい。", 0);
         k_disp_start(1);
-        for (i = 0; i < 16; i++) D_8014D060[i] = 0;
+        for (i = 0; i < 16; i++) file_select_rebuild_counts[i] = 0;
         game_state.save_slot = 1;
         game_state.substep++;
         break;
@@ -3039,14 +3039,14 @@ s32 func_80141820(void) {
         if (game_state.save_slot >= 15) {
             game_state.substep = 32;
             for (i = 0; i < 16; i++) {
-                w->flags[i] = D_8014D060[i];
+                w->flags[i] = file_select_rebuild_counts[i];
             }
         } else {
             while (w->slot_status[g->save_slot] == 0) {
                 game_state.save_slot++;
                 if (game_state.save_slot >= 15) {
                     for (i = 0; i < 16; i++) {
-                        w->flags[i] = D_8014D060[i];
+                        w->flags[i] = file_select_rebuild_counts[i];
                     }
                     game_state.substep = 32;
                     break;
@@ -3087,7 +3087,7 @@ s32 func_80141820(void) {
             game_state.substep = 8;
             for (i = 0; i < 16; i++) {
                 if (g->girl_cleared[i] != 0) {
-                    D_8014D060[i]++;
+                    file_select_rebuild_counts[i]++;
                 }
             }
         } else {
@@ -3117,23 +3117,23 @@ s32 func_80141820(void) {
     }
 }
 
-s32 func_80141FA4(void) {
+s32 file_select_mode_stage_system_file(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80140F54();
+        file_select_system_file_route();
         break;
     case 1:
-        func_80140F90();
+        file_select_system_file_rebuild();
         break;
     case 2:
-        func_80141820();
+        file_select_system_file_create();
         break;
     }
     game_state.menu_mode = MENU_MODE_MOUSE_LIKE;
 }
 
-s32 func_80142028(void) {
+s32 file_select_format_prompt(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
@@ -3151,9 +3151,9 @@ s32 func_80142028(void) {
         text_system_reset();
         set_kanji_string(-0x40, 0x20, 0xF, "初期化していいですか？", 0);
         set_kanji_string(-0x40, 0x30, 0xF, D_800B3C70, 0);
-        set_kanji_string(0x14, 0x30, 1, func_8006CA9C(), 0);
+        set_kanji_string(0x14, 0x30, 1, hud_confirm_button_label(), 0);
         set_kanji_string(-0x40, 0x40, 0xF, D_800B3C88, 0);
-        set_kanji_string(0x14, 0x40, 2, func_8006CAE0(), 0);
+        set_kanji_string(0x14, 0x40, 2, hud_cancel_button_label(), 0);
         k_disp_start(5);
         game_state.substep++;
         break;
@@ -3174,7 +3174,7 @@ s32 func_80142028(void) {
         set_kanji_string(-0x40, 0x30, 1, "差し込み口１", 0);
         set_kanji_string(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
         set_kanji_string(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
-        set_kanji_string(-0x40, 0x40, 1, func_8006CA9C(), 0);
+        set_kanji_string(-0x40, 0x40, 1, hud_confirm_button_label(), 0);
         k_disp_start(5);
         game_state.substep++;
         break;
@@ -3186,14 +3186,14 @@ s32 func_80142028(void) {
     }
 }
 
-void func_801422F0(void) {
+void file_select_mode_stage_unformatted(void) {
     if (game_state.mode_step == 0) {
-        func_80142028();
+        file_select_format_prompt();
     }
 }
 
 /* Records 128..140, then 141..151 (flag byte +3). The shared counter keeps the first loop rolled; the second (11 trips) is unrolled by four. T-11080 */
-void func_8014231C(void) {
+void file_select_mode_handler(void) {
     s32 i;
 
     for (i = 0; i < 13; i++) {
@@ -3202,50 +3202,50 @@ void func_8014231C(void) {
     for (i = 0; i < 11; i++) {
         ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
     }
-    func_8013AF78(0);
+    file_select_page_indicator_update(0);
     game_state.mode_stage_timer += 1;
     switch (game_state.mode_stage) {
     case 0x0:
-        func_8013C4A8();
+        file_select_mode_stage_init();
         break;
     case 0x1:
-        func_8013C934();
+        file_select_mode_stage_memory_card_check();
         break;
     case 0x2:
-        func_80140044();
+        file_select_mode_stage_list();
         break;
     case 0x3:
-        func_80140CCC();
+        file_select_mode_stage_loaded();
         break;
     case 0x4:
-        func_80140ED4();
+        file_select_mode_stage_no_space();
         break;
     case 0xC0:
-        func_801422F0();
+        file_select_mode_stage_unformatted();
         break;
     case 0xD0:
-        func_80141FA4();
+        file_select_mode_stage_system_file();
         break;
     case 0xF0:
-        func_80140430();
+        file_select_mode_stage_album_broken();
         break;
     case 0xFF:
-        func_80140574();
+        file_select_mode_stage_memory_card_error();
         break;
     }
-    func_8013B5F0();
-    func_801398EC();
+    file_select_background_iris_update();
+    file_select_girl_icons_visibility_update();
     k_disp_inc();
-    cursor_update();
-    func_8013B0A0();
-    func_801425C0();
-    func_80142560();
-    if (D_8014D0A8 != 0) {
+    hud_cursor_update();
+    file_select_button_highlight_update();
+    file_select_slot_status_overlay_draw();
+    file_select_flash_update();
+    if (file_select_menu_mode_lock != 0) {
         game_state.menu_mode = MENU_MODE_MOUSE_LIKE;
     }
 }
 
-void func_80142560(void) {
+void file_select_flash_update(void) {
     if ((game_state.mode_stage | game_state.mode_step) != 0) {
         D_801230D0 -= 1;
     }
@@ -3254,7 +3254,7 @@ void func_80142560(void) {
     }
 }
 
-s32 func_801425C0(void) {
+s32 file_select_slot_status_overlay_draw(void) {
     s32 temp_t3;
     s32 temp_t7;
     s32 var_s0;
@@ -3295,7 +3295,7 @@ s32 func_801425C0(void) {
     }
 }
 
-void func_80142880(void) {
+void file_select_buttons_input(void) {
     s8 *sel; /* FAKE: the switch reads the selector through a pointer so the later read stays a separate range; permuter idiom, T-11120 */
 
     menu_check(1, cursor_x, cursor_y);
@@ -3304,17 +3304,17 @@ void func_80142880(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         switch (*sel) {
         case 0:
-            func_80142A3C();
+            file_select_slot_markers_hide();
             mode_step_set(0xC0);
             printf("0");
             break;
         case 1:
-            func_80142A3C();
+            file_select_slot_markers_hide();
             mode_step_set(0xA0);
             printf("1");
             break;
         case 2:
-            func_80142A3C();
+            file_select_slot_markers_hide();
             mode_step_set(0xE0);
             printf("2");
             break;
@@ -3325,15 +3325,15 @@ void func_80142880(void) {
         }
         sprite_quads_clear(0, 0x40);
         if (game_state.menu_cursor_1 >= 0) {
-            D_8014D0D4 = 1;
+            file_select_information_page = 1;
         }
     }
-    if (func_801429BC() != 0) {
+    if (file_select_system_button_click() != 0) {
         sprite_quads_clear(0, 0x40);
     }
 }
 
-s32 func_801429BC(void) {
+s32 file_select_system_button_click(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         if (cursor_x < -0x50 && cursor_x >= -0x8F) {
             if (cursor_y < -0x18 && cursor_y >= -0x27) {
@@ -3346,7 +3346,7 @@ s32 func_801429BC(void) {
     return 0;
 }
 
-void func_80142A3C(void) {
+void file_select_slot_markers_hide(void) {
     s32 i;
 
     /* FAKE: loop body on the for line; as1 schedules by source line and then fills the delay slot like the original. T-9170 */

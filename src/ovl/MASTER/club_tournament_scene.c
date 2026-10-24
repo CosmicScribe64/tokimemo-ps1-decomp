@@ -1459,7 +1459,7 @@ void func_80137044(void) {
         case 0:
             if (talk_group == 0x2A) {
                 portrait_layout_set(1U);
-                func_80063668();
+                portrait_face_update();
                 mode_step_set(3);
             } else {
                 talk_group = 0x21;
@@ -1486,7 +1486,7 @@ void func_80137044(void) {
                 portrait_layout_set(5U);
                 sprite_quads[0].unk_0C = 7;
                 sprite_quads[0].unk_0E = 0x70;
-                func_80063668();
+                portrait_face_update();
                 mode_step_set(3);
             } else {
                 talk_group = 0x21;
@@ -1500,7 +1500,7 @@ void func_80137044(void) {
         case 6:
             if (talk_group == 0x4C) {
                 portrait_layout_set(0U);
-                func_80063668();
+                portrait_face_update();
                 mode_step_set(3);
             } else {
                 talk_group = 0x21;
@@ -1510,7 +1510,7 @@ void func_80137044(void) {
         case 7:
             if (talk_group == 0x52) {
                 portrait_layout_set(0U);
-                func_80063668();
+                portrait_face_update();
                 mode_step_set(3);
             } else {
                 talk_group = 0x21;
@@ -1671,7 +1671,7 @@ void func_801375E8(void) {
         case 5:
             if (talk_group == 0x47) {
                 portrait_layout_set(2U);
-                func_80063668();
+                portrait_face_update();
                 mode_step_set(3);
             } else {
                 talk_group = 0x24;
@@ -1741,7 +1741,7 @@ void func_801375E8(void) {
 void func_80137B5C(void) {
     if (game_state.mode_step == 0) {
         audio_command(0xBF);
-        func_800674B0();
+        hud_day_bgm_load();
         mode_step_next();
     } else if (audio_bank_load_poll() == 1) {
         actor_clear(0x60);

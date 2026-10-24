@@ -81,7 +81,7 @@ s32 func_80140A90(void) {
         normal_date_move_place();
         break;
     case 3:
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         if (cd_read_sync_status() & 1) {
             k_reset(0);
             message_window_set_title((s32) "グラウンド");
@@ -92,12 +92,12 @@ s32 func_80140A90(void) {
         }
         break;
     case 4:
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         cd_read_sectors(1U, 0x801E8000, 0xB7BE);
         mode_step_next();
         break;
     case 5:
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         if (cd_read_sync_status() & 1) {
             text_marker_hide();
             talk_names_set(1U);
@@ -115,15 +115,15 @@ s32 func_80140A90(void) {
     case 12:
     case 14:
         normal_date_speak();
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         break;
     case 7:
         normal_date_girl_in();
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         break;
     case 9:
         normal_date_two_select();
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         break;
     case 10:
         /* FAKE: scalar view keeps uopt from promoting D_80122CDC into $v0; the original selector
@@ -136,21 +136,21 @@ s32 func_80140A90(void) {
             mode_step_set(0xB);
             break;
         }
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         break;
     case 11:
         game_state.girls[1].affection -= 1;
         game_state.girls[1].tokimeki -= 1;
         game_state.girls[1].syoushin += 0xA;
         portrait_layout_set(3U);
-        func_80063668();
+        portrait_face_update();
         talk_group = 0xA;
         talk_line = 0;
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         mode_step_next();
         break;
     case 13:
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         normal_date_girl_out();
         break;
     case 15:
@@ -161,10 +161,10 @@ s32 func_80140A90(void) {
         break;
     case 17:
         normal_date_speak();
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         break;
     case 18:
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
         dec_bg_cd_read(0x407A, 1);
         mode_step_next();
         break;

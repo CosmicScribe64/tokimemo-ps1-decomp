@@ -2,53 +2,53 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
-void func_80132000(void) {
-    D_80144BA0 = 0x80197BFC;
-    D_80144BA4 = 0x801996B8;
-    D_80144BA8 = 0x8019B050;
-    D_80144BAC = 0x8019C9A8;
-    D_80144BB0 = 0x8019E3F0;
-    D_80144BB4 = 0x8019FF58;
-    D_80144BB8 = 0x801A18FC;
-    D_80144BBC = 0x801A3030;
-    D_80144BC0 = 0x801A48F4;
-    D_80144BC4 = 0x801A63EC;
-    D_80144BC8 = 0x801A7324;
-    D_80144BCC = 0x801A7F90;
-    D_80144BD0 = 0x80197D80;
-    D_80144BD4 = 0x80199838;
-    D_80144BD8 = 0x8019B1C8;
-    D_80144BDC = 0x8019CB2C;
-    D_80144BE0 = 0x8019E584;
-    D_80144BE4 = 0x801A00D8;
-    D_80144BE8 = 0x801A1A60;
-    D_80144BEC = 0x801A31AC;
-    D_80144BF0 = 0x801A4A74;
-    D_80144BF4 = 0x801A657C;
-    D_80144BF8 = 0x801A7354;
-    D_80144BFC = 0x801A8108;
-    D_80144C00 = 0x80198980;
-    D_80144C04 = 0x8019A3C8;
-    D_80144C08 = 0x8019BD20;
-    D_80144C0C = 0x8019D6BC;
-    D_80144C10 = 0x8019F1C4;
-    D_80144C14 = 0x801A0C84;
-    D_80144C18 = 0x801A24F4;
-    D_80144C1C = 0x801A3D04;
-    D_80144C20 = 0x801A5674;
-    D_80144C24 = 0x801A7134;
-    D_80144C28 = 0x801A7414;
-    D_80144C2C = 0x801A8C28;
+void encounter_walk_home_scripts_bind(void) {
+    encounter_walk_home_text_section_0 = 0x80197BFC;
+    encounter_walk_home_text_section_1 = 0x801996B8;
+    encounter_walk_home_text_section_2 = 0x8019B050;
+    encounter_walk_home_text_section_3 = 0x8019C9A8;
+    encounter_walk_home_text_section_4 = 0x8019E3F0;
+    encounter_walk_home_text_section_5 = 0x8019FF58;
+    encounter_walk_home_text_section_6 = 0x801A18FC;
+    encounter_walk_home_text_section_7 = 0x801A3030;
+    encounter_walk_home_text_section_8 = 0x801A48F4;
+    encounter_walk_home_text_section_9 = 0x801A63EC;
+    encounter_walk_home_text_section_10 = 0x801A7324;
+    encounter_walk_home_text_section_11 = 0x801A7F90;
+    encounter_walk_home_command_section_0 = 0x80197D80;
+    encounter_walk_home_command_section_1 = 0x80199838;
+    encounter_walk_home_command_section_2 = 0x8019B1C8;
+    encounter_walk_home_command_section_3 = 0x8019CB2C;
+    encounter_walk_home_command_section_4 = 0x8019E584;
+    encounter_walk_home_command_section_5 = 0x801A00D8;
+    encounter_walk_home_command_section_6 = 0x801A1A60;
+    encounter_walk_home_command_section_7 = 0x801A31AC;
+    encounter_walk_home_command_section_8 = 0x801A4A74;
+    encounter_walk_home_command_section_9 = 0x801A657C;
+    encounter_walk_home_command_section_10 = 0x801A7354;
+    encounter_walk_home_command_section_11 = 0x801A8108;
+    encounter_walk_home_voice_section_0 = 0x80198980;
+    encounter_walk_home_voice_section_1 = 0x8019A3C8;
+    encounter_walk_home_voice_section_2 = 0x8019BD20;
+    encounter_walk_home_voice_section_3 = 0x8019D6BC;
+    encounter_walk_home_voice_section_4 = 0x8019F1C4;
+    encounter_walk_home_voice_section_5 = 0x801A0C84;
+    encounter_walk_home_voice_section_6 = 0x801A24F4;
+    encounter_walk_home_voice_section_7 = 0x801A3D04;
+    encounter_walk_home_voice_section_8 = 0x801A5674;
+    encounter_walk_home_voice_section_9 = 0x801A7134;
+    encounter_walk_home_voice_section_10 = 0x801A7414;
+    encounter_walk_home_voice_section_11 = 0x801A8C28;
 }
 
-void func_80132244(void) {
+void encounter_walk_home_mode_handler(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
     case 0:
-        func_801323E0();
+        encounter_walk_home_approach_dispatch();
         break;
     case 1:
-        func_801338F0();
+        encounter_walk_home_followup_dispatch();
         break;
     default:
         game_mode_reset_to_title();
@@ -63,20 +63,20 @@ void func_80132244(void) {
     func_80083A10();
 }
 
-s32 func_801322E8(void) {
-    talk_tables = &D_80144C3C;
-    D_800CA138 = &D_80144C40;
-    D_800CA13C = D_80144C30;
-    D_800CA140 = D_80144C34;
-    D_800CA144 = D_80144C38;
+s32 encounter_walk_home_talk(void) {
+    talk_tables = &encounter_walk_home_group;
+    D_800CA138 = &encounter_walk_home_line;
+    D_800CA13C = encounter_walk_home_text_table;
+    D_800CA140 = encounter_walk_home_command_table;
+    D_800CA144 = encounter_walk_home_voice_table;
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_80132364(void) {
-    talk_tables = (u8 *) &D_80144C3C;
-    D_800CA138 = &D_80144C40;
-    D_800CA13C = D_80144C30;
-    D_800CA140 = D_80144C34;
-    D_800CA144 = D_80144C38;
+void encounter_walk_home_choice_talk(void) {
+    talk_tables = (u8 *) &encounter_walk_home_group;
+    D_800CA138 = &encounter_walk_home_line;
+    D_800CA13C = encounter_walk_home_text_table;
+    D_800CA140 = encounter_walk_home_command_table;
+    D_800CA144 = encounter_walk_home_voice_table;
     talk_run(0xFF, 1, 0);
 }

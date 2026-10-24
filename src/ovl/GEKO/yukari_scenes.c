@@ -8,39 +8,39 @@ extern u32 talk_work;
 typedef struct {
     void (*f[32])();
 } FnTbl32; /* size 0x80 */
-extern FnTbl32 D_80146CBC;
+extern FnTbl32 encounter_yukari_scene_one_steps;
 
-void func_8013D4B0(void) {
+void encounter_yukari_bg_load_1(void) {
     bg_read_sub2(0x46E7);
     mode_step_next();
 }
 
-void func_8013D4D8(void) {
+void encounter_yukari_bg_load_2(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }
 
-void func_8013D500(void) {
-    D_80146C90 = 0x801CE0F4;
-    D_80146C94 = 0x801CE0F8;
-    D_80146C98 = 0x801CE118;
-    D_80146C9C = (*(s16 *)0x801CE12C);
-    D_80146CA0 = 0x801B0000;
-    D_80146CA4 = 0x801B2000;
-    D_80146CA8 = 0x801B6000;
-    D_80146CAC = 0x801BA000;
-    D_80146CB0 = 0x801BE000;
-    D_80146CB4 = 0x801C2000;
-    D_80146CB8 = 0x801C6000;
+void encounter_yukari_assets_bind_1(void) {
+    encounter_yukari_pack_1_animation_input_2 = 0x801CE0F4;
+    encounter_yukari_pack_1_animation_input_0 = 0x801CE0F8;
+    encounter_yukari_pack_1_animation_input_1 = 0x801CE118;
+    encounter_yukari_pack_1_animation_input_3 = (*(s16 *)0x801CE12C);
+    encounter_yukari_pack_1_palette = 0x801B0000;
+    encounter_yukari_pack_1_still_image_0 = 0x801B2000;
+    encounter_yukari_pack_1_still_image_1 = 0x801B6000;
+    encounter_yukari_pack_1_still_image_2 = 0x801BA000;
+    encounter_yukari_pack_1_still_image_3 = 0x801BE000;
+    encounter_yukari_pack_1_still_image_4 = 0x801C2000;
+    encounter_yukari_pack_1_still_image_5 = 0x801C6000;
 }
 
-void func_8013D5B0(void) {
+void encounter_yukari_scene_select_1(void) {
     switch (talk_work) {
     case 1:
-        func_8013D614();
+        encounter_yukari_scene_one_dispatch();
         return;
     case 2:
-        func_8013D650();
+        encounter_yukari_scene_two_dispatch();
         return;
     default:
         game_mode_reset_to_title();
@@ -48,52 +48,52 @@ void func_8013D5B0(void) {
     }
 }
 
-void func_8013D614(void) {
+void encounter_yukari_scene_one_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013D68C();
+        encounter_yukari_scene_one_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013D650(void) {
+void encounter_yukari_scene_two_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013D74C();
+        encounter_yukari_scene_two_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013D68C(void) {
+void encounter_yukari_scene_one_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl32 tbl;
 
-    tbl = D_80146CBC;
+    tbl = encounter_yukari_scene_one_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8013D714(void) {
+void encounter_yukari_assets_load_1(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x87D9);
-    func_8013D500();
+    encounter_yukari_assets_bind_1();
     mode_step_next();
 }
 
 typedef struct {
     void (*f[23])();
 } FnTbl23; /* size 0x5C */
-extern FnTbl23 D_80146D3C;
+extern FnTbl23 encounter_yukari_scene_two_steps;
 
-void func_8013D74C(void) {
+void encounter_yukari_scene_two_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl23 tbl;
 
-    tbl = D_80146D3C;
+    tbl = encounter_yukari_scene_two_steps;
     idx = game_state.mode_step;
     tbl.f[idx]();
 }
 
-void func_8013D7D4(void) {
+void encounter_yukari_scene_init_1(void) {
     game_state.current_girl = GIRL_YUKARI;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -105,17 +105,17 @@ void func_8013D7D4(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145F68;
-    D_80146278 = D_801460A4;
-    D_8014627C = D_801461E0;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_42;
+    encounter_scene_command_table = encounter_scene_command_section_42;
+    encounter_scene_voice_table = encounter_scene_voice_section_42;
     strcpy(D_800CA19C, "廊下");
     if (talk_work == 1) {
         game_state.girls[5].affection += 1;
@@ -126,15 +126,15 @@ void func_8013D7D4(void) {
     mode_step_next();
 }
 
-void func_8013D91C(void) {
-    func_8013D500();
-    load_palette(D_80146CA0, 0x11, 1, 2, 0);
-    scene_still_show(D_80146CA4, D_80146CA8, D_80146CAC, D_80146CB0, D_80146CB4, D_80146CB8);
-    scene_anim_show(D_80146C94, D_80146C98, D_80146C90, D_80146C9C);
+void encounter_yukari_still_show_1(void) {
+    encounter_yukari_assets_bind_1();
+    load_palette(encounter_yukari_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_yukari_pack_1_still_image_0, encounter_yukari_pack_1_still_image_1, encounter_yukari_pack_1_still_image_2, encounter_yukari_pack_1_still_image_3, encounter_yukari_pack_1_still_image_4, encounter_yukari_pack_1_still_image_5);
+    scene_anim_show(encounter_yukari_pack_1_animation_input_0, encounter_yukari_pack_1_animation_input_1, encounter_yukari_pack_1_animation_input_2, encounter_yukari_pack_1_animation_input_3);
     mode_step_next();
 }
 
-void func_8013D9C4(void) {
+void encounter_yukari_scene_init_2(void) {
     game_state.current_girl = GIRL_YUKARI;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -149,17 +149,17 @@ void func_8013D9C4(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145F6C;
-    D_80146278 = D_801460A8;
-    D_8014627C = D_801461E4;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_43;
+    encounter_scene_command_table = encounter_scene_command_section_43;
+    encounter_scene_voice_table = encounter_scene_voice_section_43;
     strcpy(D_800CA19C, "廊下");
     game_state.girls[5].tokimeki += 1;
     check_para_limit();
@@ -167,17 +167,17 @@ void func_8013D9C4(void) {
     mode_step_next();
 }
 
-void func_8013DB04(void) {
+void encounter_yukari_bg_load_3(void) {
     bg_read_sub2(0x4045);
     mode_step_next();
 }
 
-void func_8013DB2C(void) {
+void encounter_yukari_bg_load_4(void) {
     bg_read_sub2(0x46CD);
     mode_step_next();
 }
 
-void func_8013DB54(void) {
+void encounter_yukari_bg_load_5(void) {
     bg_read_sub2(0x4045);
     mode_step_next();
 }

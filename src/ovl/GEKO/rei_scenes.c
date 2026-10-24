@@ -6,45 +6,45 @@
 typedef struct {
     void (*f[50])();
 } FnTbl50; /* size 0xC8 */
-extern FnTbl50 D_80146920;
+extern FnTbl50 encounter_rei_scene_three_steps;
 
 typedef struct {
     void (*f[39])();
 } FnTbl39; /* size 0x9C */
-extern FnTbl39 D_80146884;
+extern FnTbl39 encounter_rei_scene_two_steps;
 
 extern u32 talk_work;
 
-void func_8013B930(void) {
+void encounter_rei_bg_load_1(void) {
     bg_read_sub2(0x46A3);
     mode_step_next();
 }
 
-void func_8013B958(void) {
+void encounter_rei_bg_load_2(void) {
     bg_read_sub2(0x42D8);
     mode_step_next();
 }
 
-void func_8013B980(void) {
-    D_80146780 = 0x801B0000;
-    D_80146784 = 0x801B2000;
-    D_80146788 = 0x801B6000;
-    D_8014678C = 0x801BA000;
-    D_80146790 = 0x801BE000;
-    D_80146794 = 0x801C2000;
-    D_80146798 = 0x801C6000;
+void encounter_rei_assets_bind_1(void) {
+    encounter_rei_pack_1_palette = 0x801B0000;
+    encounter_rei_pack_1_still_image_0 = 0x801B2000;
+    encounter_rei_pack_1_still_image_1 = 0x801B6000;
+    encounter_rei_pack_1_still_image_2 = 0x801BA000;
+    encounter_rei_pack_1_still_image_3 = 0x801BE000;
+    encounter_rei_pack_1_still_image_4 = 0x801C2000;
+    encounter_rei_pack_1_still_image_5 = 0x801C6000;
 }
 
-void func_8013B9F0(void) {
+void encounter_rei_scene_select_1(void) {
     switch (talk_work) {
     case 1:
-        func_8013BA6C();
+        encounter_rei_scene_one_dispatch();
         return;
     case 2:
-        func_8013BAA8();
+        encounter_rei_scene_two_dispatch();
         return;
     case 3:
-        func_8013BAE4();
+        encounter_rei_scene_three_dispatch();
         return;
     default:
         game_mode_reset_to_title();
@@ -52,36 +52,36 @@ void func_8013B9F0(void) {
     }
 }
 
-void func_8013BA6C(void) {
+void encounter_rei_scene_one_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013BBE0();
+        encounter_rei_scene_one_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013BAA8(void) {
+void encounter_rei_scene_two_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013BD04();
+        encounter_rei_scene_two_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013BAE4(void) {
+void encounter_rei_scene_three_dispatch(void) {
     if (game_state.mode_stage == 0) {
-        func_8013BE58();
+        encounter_rei_scene_three_step_dispatch();
         return;
     }
     game_mode_reset_to_title();
 }
 
-void func_8013BB20(void) {
+void encounter_rei_audio_start(void) {
     audio_bank_start(0, 0x200);
     mode_step_next();
 }
 
-s32 func_8013BB4C(void) {
+s32 encounter_rei_scene_audio_load(void) {
     audio_command(0xCF);
     if ((u32)game_state.mode_step_timer.w++ < 0x40U) {
         return 0;
@@ -97,20 +97,20 @@ s32 func_8013BB4C(void) {
 typedef struct {
     void (*f[58])();
 } FnTbl58; /* size 0xE8 */
-extern FnTbl58 D_8014679C;
+extern FnTbl58 encounter_rei_scene_one_steps;
 
-void func_8013BBE0(void) {
+void encounter_rei_scene_one_step_dispatch(void) {
     s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
     FnTbl58 tbl;
 
-    tbl = D_8014679C;
+    tbl = encounter_rei_scene_one_steps;
     if (game_state.mode_step == 0x1B) {
         audio_command(0xCF);
     }
     tbl.f[game_state.mode_step](0x80);
 }
 
-void func_8013BC74(void) {
+void encounter_rei_portrait_show(void) {
     s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
     s32 prev;
 
@@ -123,7 +123,7 @@ void func_8013BC74(void) {
     }
 }
 
-void func_8013BCBC(void) {
+void encounter_rei_background_fade_in(void) {
     s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
     s32 prev;
 
@@ -136,50 +136,50 @@ void func_8013BCBC(void) {
     }
 }
 
-void func_8013BD04(void) {
+void encounter_rei_scene_two_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl39 tbl;
 
-    tbl = D_80146884;
+    tbl = encounter_rei_scene_two_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8013BD78(void) {
+void encounter_rei_cd_audio_request(void) {
     cd_audio_request_set(0, 0, 0xC);
     audio_command(0x300);
     mode_step_next();
 }
 
-s32 func_8013BDB0(void) {
+s32 encounter_rei_text_hold(void) {
     if ((u32)game_state.mode_step_timer.w++ >= 0x11U) {
         k_reset(1);
         mode_step_next();
     }
 }
 
-void func_8013BDF8(void) {
+void encounter_rei_audio_command_1(void) {
     audio_command(0x500);
     mode_step_next();
 }
 
-void func_8013BE20(void) {
+void encounter_rei_assets_load_1(void) {
     cd_read_sectors(0x35, 0x801B0000, 0x8265);
-    func_8013B980();
+    encounter_rei_assets_bind_1();
     mode_step_next();
 }
 
-void func_8013BE58(void) {
+void encounter_rei_scene_three_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl50 tbl;
 
-    tbl = D_80146920;
+    tbl = encounter_rei_scene_three_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-s32 func_8013BEE0(void) {
-    func_80138AF8();
+s32 encounter_rei_scene_three_talk(void) {
+    encounter_scene_talk();
     if ((u16) D_800CA154 == 9 && check_end_k() != 0) {
         if (*(u8 *) &game_state.voice_mode == 0 || (*(u8 *) &game_state.voice_mode != 0 && func_80046094() == 9)) {
             D_80122CE4 = 0;
@@ -194,20 +194,20 @@ s32 func_8013BEE0(void) {
     }
 }
 
-void func_8013BFA4(void) {
+void encounter_rei_audio_command_2(void) {
     audio_command(0x24);
     audio_command(0x503);
     mode_step_next();
 }
 
-void func_8013BFD4(void) {
+void encounter_rei_choice_group_offset(void) {
     if (D_80122CDC != 0) {
         D_800CA150 = (u16) D_800CA150 + 5;
     }
     mode_step_next();
 }
 
-void func_8013C014(void) {
+void encounter_rei_choice_outcome_apply(void) {
     mode_step_next();
     if (D_80122CDC != 0) {
         game_state.mode_step += 0x14;
@@ -217,11 +217,11 @@ void func_8013C014(void) {
     game_state.scene_flags[0x4F] = 2;
 }
 
-void func_8013C070(void) {
+void encounter_rei_scene_step_next(void) {
     mode_step_next();
 }
 
-void func_8013C090(void) {
+void encounter_rei_scene_init_1(void) {
     /* Chain over two GameState bytes, written as element stores: IDO then keeps the one
      * li v0,12 for both, as the original (T-9210). */
     (&game_state.current_girl)[0] = (&game_state.date_girl)[0] = 0xC;
@@ -238,17 +238,17 @@ void func_8013C090(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145F14;
-    D_80146278 = D_80146050;
-    D_8014627C = D_8014618C;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_21;
+    encounter_scene_command_table = encounter_scene_command_section_21;
+    encounter_scene_voice_table = encounter_scene_voice_section_21;
     strcpy(D_800CA19C, "廊下");
     strcpy(D_800CA1DC, "廃工場前");
     if (talk_work == 1) {
@@ -259,8 +259,8 @@ void func_8013C090(void) {
     mode_step_next();
 }
 
-void func_8013C200(void) {
-    /* Same chain as func_8013C090 (T-9210). */
+void encounter_rei_scene_init_2(void) {
+    /* Same chain as encounter_rei_scene_init_1 (T-9210). */
     (&game_state.current_girl)[0] = (&game_state.date_girl)[0] = 0xC;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -275,54 +275,54 @@ void func_8013C200(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_80137990();
+    encounter_scene_scripts_bind();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     dec_bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
-    func_80137990();
-    D_80146274 = D_80145F18;
-    D_80146278 = D_80146054;
-    D_8014627C = D_80146190;
+    encounter_scene_scripts_bind();
+    encounter_scene_text_table = encounter_scene_text_section_22;
+    encounter_scene_command_table = encounter_scene_command_section_22;
+    encounter_scene_voice_table = encounter_scene_voice_section_22;
     strcpy(D_800CA19C, "廊下");
     D_800CA368 = 0x50;
     mode_step_next();
 }
 
-void func_8013C330(void) {
-    func_8013B980();
-    load_palette(D_80146780, 0x11, 1, 2, 0);
-    scene_still_show(D_80146784, D_80146788, D_8014678C, D_80146790, D_80146794, D_80146798);
+void encounter_rei_still_show_1(void) {
+    encounter_rei_assets_bind_1();
+    load_palette(encounter_rei_pack_1_palette, 0x11, 1, 2, 0);
+    scene_still_show(encounter_rei_pack_1_still_image_0, encounter_rei_pack_1_still_image_1, encounter_rei_pack_1_still_image_2, encounter_rei_pack_1_still_image_3, encounter_rei_pack_1_still_image_4, encounter_rei_pack_1_still_image_5);
     scene_anim_show(0, 0, 0, 0);
     mode_step_next();
 }
 
-void func_8013C3C4(void) {
-    D_80146274 = D_80145F1C;
-    D_80146278 = D_80146058;
-    D_8014627C = D_80146194;
+void encounter_rei_scene_three_script_select(void) {
+    encounter_scene_text_table = encounter_scene_text_section_23;
+    encounter_scene_command_table = encounter_scene_command_section_23;
+    encounter_scene_voice_table = encounter_scene_voice_section_23;
     D_800CA368 = 0x51;
     mode_step_next();
 }
 
-void func_8013C41C(void) {
+void encounter_rei_bg_load_3(void) {
     bg_read_sub2(0x4045);
     mode_step_next();
 }
 
-void func_8013C444(void) {
+void encounter_rei_bg_load_4(void) {
     bg_read_sub2(0x4943);
     mode_step_next();
 }
 
-void func_8013C46C(void) {
+void encounter_rei_bg_load_5(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }
 
-void func_8013C494(void) {
+void encounter_rei_bg_load_6(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }

@@ -5,7 +5,7 @@
 
 extern u32 talk_work;
 
-void func_80157880(void) {
+void date_scene_megumi_spring_data_init(void) {
     D_801600A0 = 0x801CE090;
     D_801600A4 = 0x801CE094;
     D_801600A8 = 0x801CE0AC;
@@ -19,7 +19,7 @@ void func_80157880(void) {
     D_801600C8 = 0x801C6000;
 }
 
-void func_80157930(void) {
+void date_scene_megumi_summer_data_init(void) {
     D_801600CC = 0x801D2240;
     D_801600D0 = 0x801D2248;
     D_801600D4 = 0x801D2288;
@@ -33,7 +33,7 @@ void func_80157930(void) {
     D_801600F4 = 0x801C6000;
 }
 
-void func_801579E0(void) {
+void date_scene_megumi_autumn_data_init(void) {
     D_801600F8 = 0x801CE078;
     D_801600FC = 0x801CE07C;
     D_80160100 = 0x801CE08C;
@@ -47,7 +47,7 @@ void func_801579E0(void) {
     D_80160120 = 0x801C6000;
 }
 
-void func_80157A90(void) {
+void date_scene_megumi_winter_data_init(void) {
     D_80160124 = 0x801CE0F4;
     D_80160128 = 0x801CE0F8;
     D_8016012C = 0x801CE118;
@@ -61,19 +61,19 @@ void func_80157A90(void) {
     D_8016014C = 0x801C6000;
 }
 
-void func_80157B40(void) {
+void date_scene_megumi_dispatch(void) {
     switch (talk_work) {
     case 3:
-        func_80158200();
+        date_scene_megumi_spring();
         return;
     case 4:
-        func_80158338();
+        date_scene_megumi_summer();
         return;
     case 5:
-        func_80158544();
+        date_scene_megumi_autumn();
         return;
     case 6:
-        func_801585F0();
+        date_scene_megumi_winter();
         return;
     default:
         game_mode_reset_to_title();
@@ -81,16 +81,16 @@ void func_80157B40(void) {
     }
 }
 
-void func_80157BD4(void) {
-    D_8015E208 = D_8015DF30;
-    D_8015E20C = D_8015E06C;
-    D_8015E210 = D_8015E1A8;
+void date_scene_megumi_spring_setup(void) {
+    date_scene_text = D_8015DF30;
+    date_scene_command = D_8015E06C;
+    date_scene_voice = D_8015E1A8;
     strcpy(D_800CA19C, "遊園地");
     game_state.girls[9].tokimeki += 1;
     game_state.girls[9].affection += 1;
     game_state.girls[9].syoushin -= 0x14;
     check_para_limit();
-    func_80157880();
+    date_scene_megumi_spring_data_init();
     D_80122D20 = 1;
     game_state.current_girl = GIRL_SOTOI;
     load_palette(D_801600B0, 0x11, 1, 2, 0);
@@ -106,15 +106,15 @@ void func_80157BD4(void) {
     mode_step_next();
 }
 
-void func_80157D68(void) {
-    D_8015E208 = D_8015DF34;
-    D_8015E20C = D_8015E070;
-    D_8015E210 = D_8015E1AC;
+void date_scene_megumi_summer_setup(void) {
+    date_scene_text = D_8015DF34;
+    date_scene_command = D_8015E070;
+    date_scene_voice = D_8015E1AC;
     game_state.girls[9].tokimeki += 2;
     game_state.girls[9].affection += 1;
     game_state.girls[9].syoushin -= 0x14;
     check_para_limit();
-    func_80157930();
+    date_scene_megumi_summer_data_init();
     load_palette(D_801600DC, 0x11, 1, 2, 0);
     scene_still_show(D_801600E0, D_801600E4, D_801600E8, D_801600EC, D_801600F0, D_801600F4);
     scene_anim_show(D_801600D0, D_801600D4, D_801600CC, (s32) D_801600D8);
@@ -122,15 +122,15 @@ void func_80157D68(void) {
     mode_step_next();
 }
 
-void func_80157E88(void) {
-    D_8015E208 = D_8015DF38;
-    D_8015E20C = D_8015E074;
-    D_8015E210 = D_8015E1B0;
+void date_scene_megumi_autumn_setup(void) {
+    date_scene_text = D_8015DF38;
+    date_scene_command = D_8015E074;
+    date_scene_voice = D_8015E1B0;
     game_state.girls[9].tokimeki += 1;
     game_state.girls[9].affection += 1;
     game_state.girls[9].syoushin -= 0x14;
     check_para_limit();
-    func_801579E0();
+    date_scene_megumi_autumn_data_init();
     load_palette(D_80160108, 0x11, 1, 2, 0);
     scene_still_show(D_8016010C, D_80160110, D_80160114, D_80160118, D_8016011C, D_80160120);
     scene_anim_show(D_801600FC, D_80160100, D_801600F8, (s32) D_80160104);
@@ -143,153 +143,153 @@ void func_80157E88(void) {
     mode_step_next();
 }
 
-void func_80157FE4(void) {
-    D_8015E208 = D_8015DF3C;
-    D_8015E20C = D_8015E078;
-    D_8015E210 = D_8015E1B4;
+void date_scene_megumi_winter_setup(void) {
+    date_scene_text = D_8015DF3C;
+    date_scene_command = D_8015E078;
+    date_scene_voice = D_8015E1B4;
     game_state.girls[9].tokimeki += 3;
     game_state.girls[9].affection += 2;
     game_state.girls[9].syoushin -= 0x14;
     check_para_limit();
-    func_80157A90();
+    date_scene_megumi_winter_data_init();
     load_palette(D_80160134, 0x11, 1, 2, 0);
     scene_still_show(D_80160138, D_8016013C, D_80160140, D_80160144, D_80160148, D_8016014C);
     scene_anim_show(D_80160128, D_8016012C, D_80160124, D_80160130);
     mode_step_next();
 }
 
-void func_801580FC(void) {
+void date_scene_megumi_spring_background_current(void) {
     game_state.current_girl = GIRL_MEGUMI;
     bg_read_sub2(0x4818);
     mode_step_next();
 }
 
-void func_80158130(void) {
+void date_scene_megumi_spring_audio_command_background_1(void) {
     audio_command(0x200);
     bg_read_sub2(0x432B);
     mode_step_next();
 }
 
-void func_80158160(void) {
+void date_scene_megumi_summer_background_1(void) {
     bg_read_sub2(0x47F1);
     mode_step_next();
 }
 
-void func_80158188(void) {
+void date_scene_megumi_autumn_background_1(void) {
     bg_read_sub2(0x48AC);
     mode_step_next();
 }
 
-void func_801581B0(void) {
+void date_scene_megumi_autumn_background_2(void) {
     bg_read_sub2(0x457D);
     mode_step_next();
 }
 
-void func_801581D8(void) {
+void date_scene_megumi_winter_background_1(void) {
     bg_read_sub2(0x456C);
     mode_step_next();
 }
 
-void func_80158200(void) {
+void date_scene_megumi_spring(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl47 tbl;
 
-    tbl = D_80160150;
+    tbl = date_scene_megumi_spring_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_80158288(void) {
+void date_scene_megumi_spring_speak_unhidden(void) {
     game_state.current_girl = GIRL_MEGUMI;
     D_80122D20 = 0;
-    func_8014C5C8();
+    date_scene_speak();
 }
 
-void func_801582B8(void) {
+void date_scene_megumi_spring_speak_narration(void) {
     if ((u16) D_800CA154 >= 4U) {
         game_state.current_girl = GIRL_SOTOI;
         D_80122D10 = 2;
     }
-    func_8014C5C8();
+    date_scene_speak();
 }
 
-void func_80158300(void) {
+void date_scene_megumi_spring_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8ACD);
-    func_80157880();
+    date_scene_megumi_spring_data_init();
     mode_step_next();
 }
 
-void func_80158338(void) {
+void date_scene_megumi_summer(void) {
     GameState *g = &game_state; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl63 tbl;
 
-    tbl = D_8016020C;
+    tbl = date_scene_megumi_summer_steps;
     if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
          (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
          (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
         dec_bg_brightness == 0x80 && D_80122D04 == 0) {
-        sprite_light_effect_draw();
+        hud_sprite_light_effect_draw();
     }
     tbl.f[g->mode_step](0x80);
 }
 
-void func_80158444(void) {
+void date_scene_megumi_summer_load_data(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8B0A);
-    func_80157930();
+    date_scene_megumi_summer_data_init();
     mode_step_next();
 }
 
-void func_8015847C(void) {
+void date_scene_megumi_summer_audio_command_1(void) {
     audio_command(0x501);
     mode_step_next();
 }
 
-void func_801584A4(void) {
+void date_scene_megumi_summer_audio_command_2(void) {
     audio_command(0x503);
     mode_step_next();
 }
 
-void func_801584CC(void) {
+void date_scene_megumi_summer_audio_command_3(void) {
     audio_command(0x504);
     mode_step_next();
 }
 
-void func_801584F4(void) {
+void date_scene_megumi_summer_audio_command_4(void) {
     audio_command(0x505);
     mode_step_next();
 }
 
-void func_8015851C(void) {
+void date_scene_megumi_summer_audio_command_5(void) {
     audio_command(0x506);
     mode_step_next();
 }
 
-void func_80158544(void) {
+void date_scene_megumi_autumn(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
 
-    tbl = D_80160308;
+    tbl = date_scene_megumi_autumn_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_801585B8(void) {
+void date_scene_megumi_autumn_load_data(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8B4F);
-    func_801579E0();
+    date_scene_megumi_autumn_data_init();
     mode_step_next();
 }
 
-void func_801585F0(void) {
+void date_scene_megumi_winter(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl36 tbl;
 
-    tbl = D_801603B0;
+    tbl = date_scene_megumi_winter_steps;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_80158664(void) {
+void date_scene_megumi_winter_load_data(void) {
     cd_read_sectors(0x3DU, 0x801B0000, 0x8B8C);
-    func_80157A90();
+    date_scene_megumi_winter_data_init();
     mode_step_next();
 }

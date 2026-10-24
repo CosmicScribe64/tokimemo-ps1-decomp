@@ -90,7 +90,7 @@ s32 school_day_background_read(void) {
     s32 ret;
 
     if ((game_state.player_flags.b[1] & 0xF) == 3 && !(*(u16 *)&game_state.player_flags_upper.b[0] & 1) && (game_state.last_command.w & 0xF) == 7) {
-        ret = dec_bg_cd_read(D_800B5950[func_80066A2C()], 0);
+        ret = dec_bg_cd_read(D_800B5950[hud_season_index()], 0);
     } else {
         ret = dec_bg_cd_read(get_weekly_bg_sector(), 0);
     }
@@ -114,18 +114,18 @@ u8 school_day_screen_init(void) {
             tpage_buf_clear();
             sprite_tables_clear();
             hizuke_init();
-            func_8006509C();
+            hud_icon_bar_init();
             icon_disp_switch(1);
             schedule_command_icons_lock_to_record();
             parameter_show_init();
-            cursor_actor_init(0);
+            hud_cursor_actor_init(0);
             parameter_disp_switch(1);
             message_window_init();
-            func_8005AD1C();
+            settings_room_sick_icon_load();
             if (game_state.player_flags_upper.h & 1) {
                 sprite_quads->flags = 0x80000000;
             } else {
-                func_8005AD70();
+                settings_room_sick_icon_show();
             }
             text_system_reset();
             message_window_title_show(0);
@@ -182,7 +182,7 @@ void school_day_sd_set_select(void) {
      * record address takes v0 and its byte value takes a0. No emitted test. */
     if (temp_a0) {}
     sp28 = var_v1;
-    if (func_80066A84() == 1) {
+    if (hud_in_summer_months() == 1) {
         switch (game_state.day_events[game_state.day_event_index].girl) {
         case 0:
             D_801230D0 = (s32) D_800B68C0[0 + var_v1];
@@ -239,7 +239,7 @@ void school_day_sd_set_select(void) {
     }
     if (D_801230D0 == 0xFF) {
         sp28 = var_v1;
-        if (func_80066A84() == 1) {
+        if (hud_in_summer_months() == 1) {
             temp_t6 = (u16) game_state.player_flags.h >> 0xC;
             switch (temp_t6) {
             case 0:
@@ -535,11 +535,11 @@ s32 school_day_vacation_background_read(void) {
     s32 ret;
 
     if ((game_state.day_events[0].type == DAY_EVENT_CLUB_MASTER_A) || (game_state.day_events[0].type == DAY_EVENT_CLUB_CAMP)) {
-        ret = dec_bg_cd_read(func_80075FA0(), 0);
+        ret = dec_bg_cd_read(holiday_activity_bg_sector(), 0);
     } else if (((game_state.player_flags.b[1] & 0xF) == 3) && ((game_state.last_command.w & 0xF) == 7)) {
-        ret = dec_bg_cd_read(D_800B5960[func_80066A2C()], 0);
+        ret = dec_bg_cd_read(D_800B5960[hud_season_index()], 0);
     } else {
-        ret = dec_bg_cd_read(func_80075FA0(), 0);
+        ret = dec_bg_cd_read(holiday_activity_bg_sector(), 0);
     }
     return ret;
 }
@@ -557,7 +557,7 @@ u8 school_day_vacation_screen_init(void) {
         back_clear_switch(1);
         tpage_buf_clear();
         hizuke_init();
-        func_8006509C();
+        hud_icon_bar_init();
         icon_disp_switch(1);
         schedule_command_icons_lock_to_record();
         parameter_show_init();
@@ -592,12 +592,12 @@ u8 school_day_vacation_screen_init(void) {
 
 u8 school_day_vacation_sd_load(void) {
     if (game_state.substep == 0) {
-        func_80076FDC();
+        holiday_activity_pick_sd_set();
         if ((game_state.player_flags.b[1] & 0xF) == 3 && !(*(u16 *)&game_state.player_flags_upper.b[0] & 1) && (game_state.last_command.w & 0xF) == 7) {
             cd_read_sectors(9, 0x801E0000, 0x7D8A);
             game_state.substep = 1;
         } else if (game_state.day_events[game_state.day_event_index].girl != 4) {
-            cd_read_sectors(0x29, 0x801E0000, D_800B69E0[D_801230D0]);
+            cd_read_sectors(0x29, 0x801E0000, holiday_sd_set_sectors[D_801230D0]);
             game_state.substep = 1;
         } else {
             cd_read_sectors(0x29, 0x801E0000, D_800B6810[D_801230D0]);

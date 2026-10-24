@@ -20,7 +20,7 @@ void func_801492C0(void) {
         func_8014AB88();
         break;
     }
-    cursor_update();
+    hud_cursor_update();
     hizuke_show();
     message_window_show();
     message_window_title_update();

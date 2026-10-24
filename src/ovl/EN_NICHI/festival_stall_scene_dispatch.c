@@ -52,7 +52,7 @@ void func_80136B74(void) {
     switch (game_state.mode_step) {
     case 0:
         scene_screen_reset(1, 0);
-        cursor_show(0);
+        hud_cursor_show(0);
         hizuke_disp_switch(0);
         message_disp_switch(0);
         srand(game_state.timer_ticks);
@@ -224,7 +224,7 @@ void func_8013735C(void) {
 
     switch (game_state.mode_step) {
     case 0:
-        cursor_update();
+        hud_cursor_update();
         ((Actor *)actor_pool)[103].x = ((Actor *)actor_pool)[0].x;
         ((Actor *)actor_pool)[103].y = ((Actor *)actor_pool)[0].y;
         if ((game_state.pad_pressed & PAD_CIRCLE) && D_80139C30 != 0) {

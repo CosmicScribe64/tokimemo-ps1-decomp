@@ -97,7 +97,7 @@ void func_80142AF0(void) {
             if (func_80054AF4(0) == 1) {
                 gs->substep += 1;
                 memory_card_start();
-                func_8005C4CC(0);
+                settings_save_load_layout_stash(0);
             } else {
                 gs->substep = 0xFF;
             }
@@ -116,10 +116,10 @@ void func_80142AF0(void) {
         break;
     case 3:
         if (func_800552DC(0) == -1) {
-            func_8005C4CC(1);
+            settings_save_load_layout_stash(1);
             gs->substep = 0xFF;
         } else {
-            func_8005C4CC(1);
+            settings_save_load_layout_stash(1);
             gs->substep += 1;
         }
         break;
@@ -164,8 +164,8 @@ void func_80142DE0(void) {
         game_mode_set(game_state.saved_game_mode);
         mode_stage_set(game_state.saved_mode_stage);
         mode_step_set(game_state.saved_mode_step);
-        cursor_actor_init(0);
-        text_marker_set(0);
+        hud_cursor_actor_init(0);
+        hud_text_marker_set(0);
         message_window_init();
         hizuke_init();
         message_disp_switch(1);
@@ -197,7 +197,7 @@ u8 func_80142F34(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_80068938(game_state.year, game_state.month, 0);
+            calendar_month_load(game_state.year, game_state.month, 0);
             game_state.substep += 1;
         }
         break;
@@ -211,7 +211,7 @@ u8 func_80142FE8(void) {
     switch (game_state.substep) {
     case 0:
         audio_bank_state_reset();
-        func_800674B0();
+        hud_day_bgm_load();
         game_state.substep += 1;
         break;
     case 1:
