@@ -13,6 +13,8 @@ extern s32 D_800B6810[];
  * signed nine-byte rows (`lb`, row index * 9): eight rows at school_day_command_deltas end where club_activity_deltas starts. */
 extern u8 D_800B6890[12][2];
 extern u8 D_800B68A8[12][2];
+/* T-25049: event-selector byte regions. Indexed lbu uses offsets
+ * 0,2,4,6,9,11 plus the selection column; offset13 is a scalar byte. */
 extern u8 D_800B68C0[16];
 extern u8 D_800B68D0[16];
 extern s8 school_day_command_deltas[8][9];

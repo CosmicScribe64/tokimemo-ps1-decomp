@@ -862,8 +862,6 @@ extern u8 D_800B6724[];
 extern u8 D_800B6728[];
 extern u8 D_800B672C[];
 extern u8 D_800B6730[];
-/* T-25049: event-selector byte regions. Indexed lbu uses offsets
- * 0,2,4,6,9,11 plus the selection column; offset13 is a scalar byte. */
 /* T-20940: static data of 80075320.c. D_800B6990 is a ring of the last seven keys pressed on the holiday
  * menu (0, 1, 2 from the pad bits 0x20, 0x40, 0x10; cleared to 0xFF by func_800755B4 in a loop IDO unrolled)
  * and D_800B6998 its write position: func_80075C84 stores `keys[pos] = key; pos++`, wraps pos at 7 and reads
@@ -2531,7 +2529,6 @@ s32 func_8006C700(void);
 void text_marker_set(s32 arg0);
 u8 *func_8006CA9C(void);
 u8 *func_8006CAE0(void);
-/* T-14501: _schedule_init callees defined later in 8006CB30.c. */
 void func_800755B4(void);
 void func_80075A64(void);
 void func_80075AF8(void); /* T-20940: called by func_800755B4 before its definition */

@@ -3,6 +3,8 @@
 #define MAIN_API_OVERRIDE_func_80066104 /* the original callers pass a string the callee ignores; main_api.h has (void) */
 #include "common.h"
 #include "game.h"
+#include "main/schedule.h"
+#include "main/day_event.h"
 
 void func_80066104();
 void func_80053418();

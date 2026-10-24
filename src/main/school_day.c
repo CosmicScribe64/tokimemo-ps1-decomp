@@ -1,6 +1,9 @@
 /* school_day.c: original object text 0x800737A0-0x80075320 in config/objects/main.txt; matched C implements week_day, parameter_up_down, vacation setup and week-end exit; original object boundary unchanged. Original object 0x800737A0-0x80075320 (config/objects/main.txt). */
 #include "common.h"
 #include "game.h"
+#include "main/school_day.h"
+#include "main/schedule.h"
+#include "main/day_event.h"
 
 void week_day_main(void);
 void week_day_exit(void);

@@ -10,6 +10,7 @@ extern s32 schedule_command_rank_bar_trivia;
 extern s32 schedule_command_rank_bar_shiori_athletics;
 extern s32 schedule_command_rank_bar_science_looks;
 void _schedule_init(void);
+/* T-14501: _schedule_init callees defined later in scheduler.c. */
 void schedule_step_prepare(void);
 void schdeule_girls_param(void);
 void schedule_step_advance_day(void);
