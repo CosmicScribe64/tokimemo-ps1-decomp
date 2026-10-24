@@ -7,30 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] build | T-25020 verified four-row guard handed to review
-
-Updated full-unit NON_MATCHING C verifies four changed positions (eight +/- lines), only case-0x49/0x66 load/lui swaps. Default linked-byte MATCH verifies the assembly fallback only (1516 bytes); affected BUNKA_SD SHA1 and header/global/prototype guards pass. Lint has zero broken links/status mismatches and one pre-existing large page. [[tickets/T-25020-bunka-sd-trace-closure]] and board moved to In Review, with bb 41/43/45 and head bb 42/44 mapped for the next bounded consultation. No C match counted.
-
-## [2026-10-22] ticket | Typed reconstruction main func_8005215C
-
-Created [[tickets/T-25021-main-5215c-reconstruction]] in the isolated T-25019 worktree. Recovered candidate uses invalid void-pointer selectors; current xa_wait supplies shared-prefix buffer widths. Read T-12050 wide-compare negatives and inspected original k_disp_inc call sites before changing call views.
-
-## [2026-10-22] query | Typed state-machine reconstruction checkpoint
-
-[[tickets/T-25021-main-5215c-reconstruction]]: recovered func_8005215C compiles after evidence-based buffer and callee repairs. Docker full-TU final source315target/313built words, aligned138 and printed138, frame64 and observed homes exact. Preserved wide arithmetic. Earlier baseline frame96/printed325. Source-only checkpoints saved under drafts/T-25021/main/func_8005215C/; production restored. Earliest structural read-boundary gap documented in [[matching-notes]] for the requested multi-chat attack plan. Ticket/board moved to In Review; no match or coverage claim.
-
-## [2026-10-22] decision | Dispatch three file-disjoint completion chats
-
-Preserved reviewed T-25020 guarded source and T-25021 draft checkpoints on main883760224. Reused three idle chats for T-25022 MAIN read-boundary repair, T-25023 BUNKA four-row scheduler closure and T-25024 TEL largest-function qualification. Exact source ownership and chat IDs recorded in [[tickets/T-25017-completion-plan]]. Sol6.1medium, one worker per chat, isolated trees, no worker main pushes; root verifies integration. No new match claimed.
-
-## [2026-10-22] build | Preserved checkpoint and dispatch verification
-
-Root Docker affected BUNKA_SD build passes header check and executable SHA1 after checkpoint integration. Wiki lint reports zero broken links, zero status mismatches and the pre-existing large data/t0018-cases page. All three assigned chats confirmed active with current in-progress turns; MAIN has isolated883760224 worktree and starts the reload test. No full-scope C-match claim.
-
-## [2026-10-22] decision | Bounded Astra escalation for BUNKA scheduler blocker
-
-Live T-25023 Sol worker reports no untested causal source lever after checking the four-position residue and negative ledger. Authorized one read-only Astra consultation within that chat, limited to bb43/45 local load order versus bb42/44 filler selection, at most three trace-backed hypotheses; Sol idles during consultation and tests only justified new ideas afterward. T-25022 worker reports first real global reload repair reduces138 to127 printed diff lines and recovers one instruction; second read boundary under test, no match claim. TEL chat remains active. Overall scope unchanged.
-
 ## [2026-10-22] decision | Rotate exhausted scheduler lane to a concrete trace question
 
 Live T-25023 consultation found no supported source lever to separate local year-load ordering from global filler selection. Preserve packet and four-row guard; assigned same Sol chat T-25025 GYOZI func_80140E0C reaching-zero-definition trace investigation, explicitly excluding prior zero-local/promotion grids. Claim transfer recorded in [[tickets/T-25017-completion-plan]]. TEL whole-unit target1645/candidate1643 baseline aligned costs1038/970 confirm substantial reconstruction remains; MAIN preserves semantic reload repairs alongside lower-score partial candidates. No match claimed.
@@ -1727,6 +1703,7 @@ Fixed the two blocking findings. [[tickets/T-27028-p2-o-taco]]: `func_801335A0` 
 
 ## [2026-10-24] ticket | T-27028 Done
 [[tickets/T-27028-p2-o-taco]] passed the standards and spec review in round 2 (approved, no blocking findings; round-1 sound ids and pad enum verified against the C) and moves to Done. The table `config/renames/proposals/o-taco.tsv` (913 rows) and [[spec/o-taco]] are merged as p2a-o-taco; the six conflicting `core.tsv` pad values are for the core owner (spec section 14).
+
 ## [2026-10-24] ingest | h-graphics phase-2 table and port spec
 Unit h-graphics (`src/main/80043510.c`, `80047550.c`, `800490C0.c`, `80049FF0.c`, `8004AD60.c`, `8004C3F0.c`, `80085E30.c`): read the matched C and its callers, checked behaviour with `tools/emu/run.sh trace` and `watch` from a NAME_ENT save state, wrote `config/renames/proposals/h-graphics.tsv` (274 rows, 25 HYPOTHESIS) and [[spec/h-graphics]], linked from [[spec/index]]; ticket [[tickets/T-27020-p2-h-graphics]] In Review. No src/, include/ or symbol-file changes.
 Findings: `Rec24` has the libgs GsSPRITE layout; the work-area allocator spaces primitives at 4x their size; the texture-block cache never evicts; `func_80043510` is the per-frame renderer (always called with 1) from the main loop `func_80042134`; the second half of `80043510.c` and five helpers in `80085E30.c` are not graphics (sound-bank loader, girl pick, overlay check).
