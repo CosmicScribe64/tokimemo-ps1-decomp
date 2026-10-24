@@ -1016,7 +1016,7 @@ def srcscan_unit(tree, path):
 GCC = ["gcc", "-fsyntax-only", "-std=gnu89", "-w", "-fdiagnostics-column-unit=byte",
        "-fno-diagnostics-show-caret", "-fmax-errors=0", "-Iinclude"]
 DIAG_RE = re.compile(r"^(.+?):(\d+):(\d+): (error|note): (.*)$")
-NO_MEMBER_RE = re.compile(r"^'(?:struct |union )?(\w+)'(?: \{aka '(?:struct |union )?(\w+)'\})? has no member named "
+NO_MEMBER_RE = re.compile(r"^'(?:struct |union )?(\w+|<anonymous>)'(?: \{aka '(?:struct |union )?(\w+|<anonymous>)'\})? has no member named "
                           r"'(\w+)'(?:; did you mean '\w+'\?)?$")
 
 
@@ -1251,9 +1251,26 @@ def plan_fields(ctx, rows, use_gcc=True):
             assert text[pos:pos + len(row.old)] == row.old
             tree.write(path, text[:pos] + row.new + text[pos + len(row.old):])
         by_name = {}
+        anonymous_candidates = {}
         for row, _p, types, _h in batch:
             for t in types:
                 by_name[(t, row.old)] = row
+            if _h is not None:
+                # GCC reports nested anonymous aggregates without their named
+                # enclosing type. Preserve the owner only if this member name
+                # selects exactly one row in the batch.
+                whole = blank_comments(tree.read(_p) or "")
+                anon_defs = [d for d in type_defs(whole)[0] if d[0] is None]
+                if any(d[2] <= _h < d[3] for d in anon_defs):
+                    anonymous_candidates.setdefault(row.old, []).append(row)
+        for old, candidates in anonymous_candidates.items():
+            baseline_anonymous_error = any(
+                NO_MEMBER_RE.match(d[3])
+                and NO_MEMBER_RE.match(d[3]).group(1) == "<anonymous>"
+                and NO_MEMBER_RE.match(d[3]).group(3) == old
+                for d in base)
+            if len(candidates) == 1 and not baseline_anonymous_error:
+                by_name[("<anonymous>", old)] = candidates[0]
         located = {id(r): 0 for r, _p, _t, _h in batch}
         for _round in range(40):
             if not scratch:
@@ -1533,6 +1550,24 @@ def file_scope_names(tree, path):
     """Identifiers declared at file scope in a C file and its header closure: macros, typedefs, enum
     constants, globals and functions (tokens at brace depth 0 outside parentheses), tags."""
     out = set()
+    # K&R parameter declarations sit between a function declarator's closing
+    # ')' and its body.  They are at brace depth zero, but are not file-scope
+    # names. Mask only those token positions so a genuine global of the same
+    # spelling still blocks a local rename.
+    source = tree.read(path) or ""
+    clean_source = blank_comments(source)
+    skipped = []
+    candidates = re.finditer(r"^[A-Za-z_][\w \t*]*[ \t*](\w+)[ \t]*\(", clean_source, re.M)
+    for candidate in candidates:
+        for start, _end, body in function_spans(clean_source, candidate.group(1)):
+            if start == candidate.start():
+                close = clean_source.find(")", candidate.end())
+                if close >= 0 and clean_source[close + 1:body].strip():
+                    skipped.append((close + 1, body))
+
+    def is_skipped(pos):
+        return any(a <= pos < b for a, b in skipped)
+
     for f in [path] + sorted(tree.closure(path)):
         text = blank_comments(tree.read(f) or "")
         out.update(re.findall(r"^[ \t]*#[ \t]*define[ \t]+(\w+)", text, re.M))
@@ -1551,7 +1586,7 @@ def file_scope_names(tree, path):
                 paren = max(0, paren - 1)
             elif t.lstrip().startswith("#"):
                 continue
-            elif depth == 0 and paren == 0:
+            elif depth == 0 and paren == 0 and not (f == path and is_skipped(m.start())):
                 out.add(t)
     return out - C_KEYWORDS
 

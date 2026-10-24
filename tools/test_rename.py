@@ -422,6 +422,36 @@ class SymbolRenameTest(Fixture):
 
 @unittest.skipUnless(HAVE_GCC, "needs the native gcc of the Docker image")
 class OracleTest(Fixture):
+    def test_nested_anonymous_member_ownership(self):
+        self.write("include/game.h", self.read("include/game.h") +
+                   "\ntypedef struct Outer { union { struct { int score; } s; } set; } Outer;\n")
+        self.write("src/main/80041000.c", self.read("src/main/80041000.c") +
+                   "\nvoid anon_load(Outer *p) { p->set.s.score = 0; }\n")
+        out = self.ok("field main:Outer score ranking_score T-1\n", verify=True)
+        self.assertIn("p->set.s.ranking_score = 0;", self.read("src/main/80041000.c"))
+        self.assertIn("1 uses located by gcc", out)
+
+    def test_ambiguous_anonymous_member_owners_fail_closed(self):
+        self.write("include/game.h", self.read("include/game.h") +
+                   "\ntypedef struct OuterA { union { struct { int score; } s; } set; } OuterA;\n"
+                   "typedef struct OuterB { union { struct { int score; } s; } set; } OuterB;\n")
+        self.write("src/main/80041000.c", self.read("src/main/80041000.c") +
+                   "\nvoid anon_load(OuterA *a, OuterB *b) { a->set.s.score = 0; b->set.s.score = 0; }\n")
+        out = self.refused("field main:OuterA score ranking_score T-1\n"
+                           "field main:OuterB score metric_score T-1\n", "field oracle:")
+        self.assertIn("a->set.s.score", self.read("src/main/80041000.c"))
+        self.assertIn("b->set.s.score", self.read("src/main/80041000.c"))
+
+    def test_preexisting_anonymous_missing_member_blocks_fallback(self):
+        self.write("include/game.h", self.read("include/game.h") +
+                   "\ntypedef struct Outer { union { struct { int score; } s; } set; } Outer;\n"
+                   "typedef struct Other { union { struct { int unrelated; } s; } set; } Other;\n")
+        self.write("src/main/80041000.c", self.read("src/main/80041000.c") +
+                   "\nvoid anon_load(Outer *a, Other *b) { a->set.s.score = 0; b->set.s.score = 0; }\n")
+        out = self.refused("field main:Outer score ranking_score T-1\n", "field oracle:")
+        self.assertIn("a->set.s.score", self.read("src/main/80041000.c"))
+        self.assertIn("b->set.s.score", self.read("src/main/80041000.c"))
+
     def test_field_uses_found_by_gcc(self):
         out = self.ok("field GameState unk_00 mode HYPOTHESIS: the game mode\n", verify=True)
         self.assertIn("2 uses located by gcc", out)
@@ -530,6 +560,17 @@ class TypeLocalTest(Fixture):
     def test_local_scope_follows_function_rename(self):
         self.ok("func main func_80041000 game_boot\nlocal main:func_80041000 index mode_value\n")
         self.assertIn("s32 mode_value;", self.read("src/main/80041000.c"))
+
+    def test_kr_parameter_names_are_not_file_scope_names(self):
+        p = "src/main/80041100.c"
+        self.write(p, self.read(p) + "\nvoid kr_probe(object_index)\n    s32 object_index;\n{ (void)object_index; }\n")
+        self.ok("local main:func_80041000 index object_index T-1\n")
+        self.assertIn("s32 object_index;", self.read("src/main/80041000.c"))
+
+    def test_real_global_still_blocks_local_name(self):
+        p = "src/main/80041000.c"
+        self.write(p, "s32 object_index;\n" + self.read(p))
+        self.refused("local main:func_80041000 index object_index T-1\n", "file-scope name")
 
     def test_type_private_to_one_overlay(self):
         # AAA and EVT each define their own FnTbl; renaming AAA's leaves EVT's (and its views) alone
