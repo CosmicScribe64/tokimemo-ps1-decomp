@@ -1739,3 +1739,6 @@ Fixed the two blocking findings. [[tickets/T-27028-p2-o-taco]]: `func_801335A0` 
 ## [2026-10-24] build | T-27002 review round 2 fixes
 
 [[tickets/T-27002-rename-tool]] stays In Review after the second review's two blocking findings and two small ones were fixed in `tools/rename.py`: replay walks a member chain from the name the struct holds (B1), replay moves objects, island lines and C files that a stale branch left under an old folder or file name and fixes their yaml lines, asm paths and config keys (B2, also chains of three names for file, folder and header rows), the symbol-line dedupe keeps the attributes of the dropped lines (N4), and a table note keeps its `#` (N5). Tests in `tools/test_rename.py`; trial 4 on a scratch copy (two symbols, a member and a file of RENSYU) built 27 of 27, and the replay onto an old-name copy gave the same tree ([[rename-tool]]).
+
+## [2026-10-24] ticket | T-27002 Done
+[[tickets/T-27002-rename-tool]] passed the standards and spec review in round 3 (approved, no blocking findings; full tool suite 1,637 tests OK) and moves to Done. Three non-blocking follow-ups are in the ticket comments: member uses in uncalled header macros, a double space after a deduped symbol line, and the `T-27000-phase-2` links that come from w2-good. Merging as w19-rename through merge3.sh.

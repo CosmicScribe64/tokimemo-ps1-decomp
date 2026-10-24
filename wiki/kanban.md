@@ -85,7 +85,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-27002-rename-tool|T-27002 Build the phase 2 rename tool (tools/rename.py)]]
 - [ ] [[tickets/T-25057-name-ent-pass-investigation|T-25057 Reconstruct NAME_ENT record selector allocation]]
 - [ ] [[tickets/T-25051-taco-quad-store|T-25051 Match TACO wipe quad store schedule]]
 - [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
@@ -154,6 +153,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-27002-rename-tool|T-27002 Build the phase 2 rename tool (tools/rename.py)]]
 - [ ] [[tickets/T-26002-fake-sweep-41-rule|T-26002 Sweep the FAKEs that steered the old block-copy detector]]
 - [ ] [[tickets/T-25312-w10-TACO-801447D0|T-25312 Wave 10 second pass on src/ovl/TACO/801447D0.c]]
 - [ ] [[tickets/T-25313-w10-main-80043510|T-25313 Wave 10 second pass on src/main/80043510.c]]

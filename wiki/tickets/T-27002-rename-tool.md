@@ -1,7 +1,7 @@
 ---
 id: T-27002
 title: Build the phase 2 rename tool (tools/rename.py)
-status: In Review
+status: Done
 assignee: opus (w19-rename)
 created: 2026-10-24
 updated: 2026-10-24
@@ -97,3 +97,15 @@ What landed (branch `w19-rename`):
   value is listed). N5 a table note keeps its `#`, like a ledger note. Replay prints its notes.
   Tests: 12 new in `tools/test_rename.py` (one per finding plus the chain, both-exist and
   no-op cases); full tool suite OK (1,637 tests). Trial 4: [[rename-tool]].
+- 2026-10-24 review round 3 (approved, no blocking findings): B1, B2, N4 and N5 hold, and the branch
+  renames nothing in `src/` or `include/`. The full suite
+  `tools/docker.sh python3 -m unittest discover -s tools -p 'test_*.py'` passes (1,637 tests, OK,
+  3 skipped, none of them in `tools/test_rename.py`), and a separate run of `tools/test_rename.py`
+  passes. Non-blocking, left as follow-ups: (1) a member use inside an uncalled macro body in a
+  header (for example `#define GS_MODE2(g) ((g).modeA)` that no C file invokes) is neither patched
+  by the gcc oracle nor counted in the "member uses named X remain" note, because that count scans
+  only the C files that use the type (the doc already says gcc cannot see code it does not compile);
+  (2) when the symbol-line dedupe adds attributes to a kept line that already ends in `;` plus a
+  space, the result has a double space (`text_merge = 0x80041180;  // size:0x10 type:func`), which
+  splat parses fine; (3) `wiki.py lint` reports 3 broken links to `tickets/T-27000-phase-2` in
+  pages that come from w2-good (spec/index, spec/o-taco, T-27028), not in this branch's changes.
