@@ -8,9 +8,9 @@ sources: ["src/ovl/EVENT/", "include/ovl/EVENT.h", "config/renames/proposals/o-e
 
 # Overlay EVENT: port spec (a dead development copy of the girl-scene and date-place code)
 
-Phase 2 analysis of `src/ovl/EVENT` ([[tickets/T-27023-p2-o-event]], phase [[tickets/T-27000-phase-2]]). Rename tables: `config/renames/proposals/o-event.tsv` (1126 rows, passes `rename.py plan` with no problem), `o-event-devmain.tsv` (121 stale-address aliases) and `o-event-deferred.tsv` (6 rows whose C declaration sits in `include/main_api.h`). Facts only, in my own words; no game text, assets or asm are quoted. "HYPOTHESIS" marks a reading of game meaning the code does not prove. The shared names come from `config/renames/proposals/core.tsv` (GameState fields, `GirlId`, `Place`, `MainMode`).
+Phase 2 analysis of `src/ovl/EVENT` ([[tickets/T-27023-p2-o-event]], phase [[tickets/T-27000-phase-2]]). Rename tables: `config/renames/proposals/o-event.tsv` (1136 rows; the dry run `rename.py plan` takes no file, dir or const rows, so the 1099 rows left after setting aside the 19 file, 1 dir and 17 const rows are the ones that pass it with no problem), `o-event-devmain.tsv` (121 stale-address aliases) and `o-event-deferred.tsv` (6 rows whose C declaration sits in `include/main_api.h`). Facts only, in my own words; no game text, assets or asm are quoted. "HYPOTHESIS" marks a reading of game meaning the code does not prove. The shared names come from `config/renames/proposals/core.tsv` (GameState fields, `GirlId`, `Place`, `MainMode`).
 
-**Verdict for the port: do not port EVENT.** The overlay can never run: it was linked against a different build of the main program than the one on the disc. The live versions of everything in it are DATE (mode 0x50 place dates, mode 0x5E girl scenes), GEKO and DATE2 (the ride movies). This spec exists for three reasons: it proves the claim, it is the only place where the girl-scene and place-date machinery of that era is laid out in one piece (a cross-check for the DATE, GEKO and DATE2 specs), and it documents the dev-to-shipped address map that explains the odd calls and variables in the matched C.
+**Verdict for the port: do not port EVENT.** The overlay can never run: it was linked against a different build of the main program than the one on the disc. The live versions of everything in it are DATE (mode 0x50 place dates, mode 0x5E girl scenes), GEKO and DATE2 (the ride movies). The rules it describes are EVENT's own, an earlier state of the game: where the shipped DATE differs, DATE is the game and section 7.0 lists the differences found. This spec exists for three reasons: it proves the claim, it is the only place where the girl-scene and place-date machinery of that era is laid out in one piece (a cross-check for the DATE, GEKO and DATE2 specs), and it documents the dev-to-shipped address map that explains the odd calls and variables in the matched C.
 
 ## 1. What it is and why it is dead
 
@@ -26,7 +26,7 @@ Evidence that it is a stale development build, in order of strength:
 | Main variables sit elsewhere | 175 distinct main-side data addresses are used; 51 lie in the shipped rodata (0x800AF340-0x800B3220). The step byte is `D_800B1AF6`, which is rodata in the shipped exe. |
 | The address map is consistent | Aligning EVENT's near-clones in DATE and GEKO call by call gives a stable map dev address to shipped function (section 9): `func_80011DFC` is `main_step_next` in 338 of 363 aligned sites, `func_80015D28` is `cd_read_sectors` in 166 of 166, `func_8004C250` is `check_para_limit` in 87 of 87. The dev GameState has the same fields at other offsets. |
 | Script sizes are almost the same | The per-girl script loader reads 3-7 sectors per girl; the shipped `SERIFU/EVENT_xx.BIN` files have the same sector count for 10 of the 12 files (Saki's and Mira's files grew by one sector). The date script loader matches 10 of 11 `SERIFU/DATE_xx.BIN` sizes (Yuko's grew by one). So the code belongs to the same game at an earlier state. |
-| Twin code | 675 of the 804 C functions have a sibling of opcode-shape ratio 0.90 or more in another overlay (634 in DATE, 97 in GEKO as best match). Many scene steps and nearly all shared date steps have clones in DATE; the table lengths and the order of steps differ, so the dev build is an earlier state of the same machine. |
+| Twin code | 675 of the 804 C functions have a matched sibling of opcode-shape ratio 0.90 or more in some other unit (counted with the sibling index of `tools/siblings.py` over every matched function outside EVENT; the throwaway script is not committed). The closest sibling is in DATE for 559 of them, in GEKO for 87, in GYOZI for 9, in DATE2 for 5 and in other overlays for 15; counted with overlap, 600 functions have a sibling at 0.90 or more in DATE and 467 in GEKO (generic step functions also have siblings in many overlays). Only the 146 twins that the table notes cite (`twin DATE:func_... rX`) can be checked from the committed files. Many scene steps and nearly all shared date steps have clones in DATE; the table lengths and the order of steps differ, so the dev build is an earlier state of the same machine. |
 
 Core already treats EVENT and GYOZI as never loaded and linked against another main layout (`wiki/spec/core.md`, the `LegacyGirlRecord` row). This unit adds the proof above. The loader question of [[tickets/T-0200-event-gyozi-loader-and-address]] is answered for EVENT: there is none, and 0x800F6000 is the address the dev build linked it for (the only address where its jump targets land on function starts).
 
@@ -39,7 +39,8 @@ Core already treats EVENT and GYOZI as never loaded and linked against another m
 - The six rows of `o-event-deferred.tsv` are EVENT-range data names whose only C declaration is an `extern` in `include/main_api.h`; the gcc proof of the tool fails until that header line is renamed too.
 - Names that claim game meaning without proof are marked HYPOTHESIS in the note column (for example the variant names `SPOT_VARIANT_*`). The two dev mode numbers are facts of the code: mode 0x50 and 0x60.
 - No O.BIN-named function is defined in this unit, so there are no `comment` rows. Section 9 lists the O.BIN-named shipped functions that the stale addresses stand for.
-- Girl-record vocabulary follows core's `GirlRecord`: `tokimeki` (+2), `affection` (+6); the field at +0xA is called `counter` in this table because core's name `syoushin` is itself a HYPOTHESIS.
+- Names that core already has are used as core has them, for the private EVENT views too: `tokimeki` (+2), `affection` (+6), `syoushin` (+0xA, a developer term that core keeps; its game meaning is a HYPOTHESIS there), `event_counters` (+0x14), `girl_last_date_spot`, `saved_mode`, `saved_stage`, `saved_step`, `appt_place_0` (a HYPOTHESIS in core), `appointment_flag`, `pad_pressed`, `screen_center_x/y`, `current_girl`. The outcome id `D_800EECE4` that EVENT writes is core's date spot id (`D_80122D08` in DATE); the ids are one lower here from id 5 on at least (7.0). Two names are open between units, not invented here: `GameState.unk_014/018` is `screen_center_x/y` in core and `draw_origin_x/y` in h-graphics and h-cdio, and the `Rec24` members differ between core and h-graphics; section 11 lists both.
+- Fields that keep `unk_`: 18 members of five EVENT-private views, all hardware layer or movie scratch, listed in section 11 (question 8). Every member that carries game logic has a name.
 
 ## 3. Memory model
 
@@ -137,73 +138,73 @@ The date script loader `spot_date_script_load_step` reads `DATE_xx.BIN` (0x13-0x
 
 ### 6.3 Scene catalogue
 
-Steps is the table length, Talk the number of dialogue steps (the talk steps and the dev `speak` steps), BG the own background loads, "Ending stats" the girl-record deltas that the scene applies (t tokimeki, a affection, c counter; the counter is core's HYPOTHESIS `syoushin`, so a negative counter is a reward), Labels the place or speaker labels the scene sets (my English glosses), Extras the per-frame effect functions. Scenes with no delta set (rows with a dash) carry their changes in shared steps or none.
+Steps is the table length, Talk the number of dialogue steps (the talk steps and the dev `speak` steps), BG the own background loads, "Ending stats" the girl-record deltas that the scene applies (t tokimeki, a affection, s syoushin, core's name for the +0xA field, whose game meaning is a HYPOTHESIS there; the scenes subtract from it after good outcomes, so a negative s is a reward), Labels the place or speaker labels the scene sets (my English glosses), Extras the per-frame effect functions. Scenes with no delta set (rows with a dash) carry their changes in shared steps or none.
 
 | Girl | Scene | Steps | Talk | BG | Ending stats | Labels | Extras |
 | --- | ---: | ---: | ---: | ---: | --- | --- | --- |
 | shiori | 1 | 39 | 4 | 2 | +1t +2a | school gate | sprites_update |
 | shiori | 2 | 22 | 3 | 1 | - | home front | - |
-| shiori | 3 | 45 | 9 | 1 | +2t -28c | - | - |
-| shiori | 4 | 44 | 7 | 2 | +3t +2a -20c | - | - |
-| shiori | 5 | 58 | 8 | 4 | +1t +1a -20c | Ferris wheel | - |
-| shiori | 6 | 45 | 5 | 2 | +1t +2a -20c | - | - |
+| shiori | 3 | 45 | 9 | 1 | +2t -28s | - | - |
+| shiori | 4 | 44 | 7 | 2 | +3t +2a -20s | - | - |
+| shiori | 5 | 58 | 8 | 4 | +1t +1a -20s | Ferris wheel | - |
+| shiori | 6 | 45 | 5 | 2 | +1t +2a -20s | - | - |
 | shiori | 8 | 47 | 7 | 3 | - | Shiori's room, home front | face_update |
 | mio | 1 | 39 | 4 | 2 | +1t +2a | corridor | - |
-| mio | 2 | 67 | 10 | 4 | -2t -1a +20c | scream ride | - |
-| mio | 3 | 39 | 6 | 2 | +1t +2a -20c | - | bars_overlay_draw |
-| mio | 4 | 46 | 6 | 3 | +2t +2a -20c | - | - |
-| mio | 5 | 53 | 9 | 3 | +3t +2a -20c | - | - |
+| mio | 2 | 67 | 10 | 4 | -2t -1a +20s | scream ride | - |
+| mio | 3 | 39 | 6 | 2 | +1t +2a -20s | - | bars_overlay_draw |
+| mio | 4 | 46 | 6 | 3 | +2t +2a -20s | - | - |
+| mio | 5 | 53 | 9 | 3 | +3t +2a -20s | - | - |
 | yuina | 1 | 42 | 5 | 2 | +1t +2a | rooftop | - |
-| yuina | 2 | 41 | 5 | 2 | +3t +2a -20c | - | - |
-| yuina | 3 | 39 | 5 | 2 | +2t -10c | - | se_a, se_b |
-| yuina | 4 | 39 | 6 | 2 | - | - | - |
-| yuina | 5 | 38 | 6 | 2 | +3t +2a -20c | - | - |
+| yuina | 2 | 41 | 5 | 2 | +3t +2a -20s | - | - |
+| yuina | 3 | 39 | 5 | 2 | +2t -10s | - | se_a, se_b |
+| yuina | 4 | 39 | 6 | 2 | +2a -10s | - | - |
+| yuina | 5 | 38 | 6 | 2 | +3t +2a -20s | - | - |
 | ayako | 1 | 32 | 4 | 2 | +2a | behind the school | - |
-| ayako | 2 | 49 | 9 | 2 | +2t +1a -20c | - | sprites_update |
-| ayako | 3 | 48 | 7 | 2 | -1t -1a +20c | - | - |
-| ayako | 4 | 42 | 7 | 2 | +2t +1a -20c | - | - |
-| ayako | 5 | 45 | 7 | 2 | +2t +2a -20c +3t +1a -20c | - | - |
+| ayako | 2 | 49 | 9 | 2 | +2t +1a -20s | - | sprites_update |
+| ayako | 3 | 48 | 7 | 2 | -1t -1a +20s | - | - |
+| ayako | 4 | 42 | 7 | 2 | +2t +1a -20s | - | - |
+| ayako | 5 | 45 | 7 | 2 | +2t +2a -20s +3t +1a -20s | - | - |
 | saki | 1 | 35 | 4 | 2 | +1t +1a | corridor | - |
-| saki | 2 | 37 | 5 | 2 | +2t +1a -20c +3t +2a -20c | - | - |
-| saki | 3 | 55 | 11 | 2 | +3t +2a -20c | - | - |
-| saki | 4 | 40 | 6 | 2 | +2a -20c | - | - |
-| saki | 5 | 51 | 10 | 2 | +1t +1a -20c | - | - |
+| saki | 2 | 37 | 5 | 2 | +2t +1a -20s +3t +2a -20s | - | - |
+| saki | 3 | 55 | 11 | 2 | +3t +2a -20s | - | - |
+| saki | 4 | 40 | 6 | 2 | +2a -20s | - | - |
+| saki | 5 | 51 | 10 | 2 | +1t +1a -20s | - | - |
 | yukari | 1 | 32 | 3 | 2 | - | corridor | - |
 | yukari | 2 | 19 | 3 | 1 | +1t | corridor | - |
-| yukari | 3 | 38 | 5 | 2 | +2t +1a -10c | - | - |
-| yukari | 4 | 44 | 8 | 2 | +2t +1a -20c | - | sprites_update |
-| yukari | 5 | 40 | 6 | 2 | +3t +2a -20c | - | - |
-| yukari | 6 | 56 | 11 | 3 | +1t +1a -20c | - | - |
+| yukari | 3 | 38 | 5 | 2 | +2t +1a -10s | - | - |
+| yukari | 4 | 44 | 8 | 2 | +2t +1a -20s | - | sprites_update |
+| yukari | 5 | 40 | 6 | 2 | +3t +2a -20s | - | - |
+| yukari | 6 | 56 | 11 | 3 | +1t +1a -20s | - | - |
 | nozomi | 1 | 29 | 3 | 1 | +1t +2a | corridor | - |
-| nozomi | 2 | 50 | 7 | 2 | +1t +1a -20c | - | - |
-| nozomi | 3 | 55 | 8 | 2 | +3t +2a -20c | - | - |
-| nozomi | 4 | 41 | 6 | 2 | +2t +2a -10c | - | - |
-| nozomi | 5 | 40 | 5 | 2 | +3t +2a +1t +3a -20c | - | - |
+| nozomi | 2 | 50 | 7 | 2 | +1t +1a -20s | - | - |
+| nozomi | 3 | 55 | 8 | 2 | +3t +2a -20s | - | - |
+| nozomi | 4 | 41 | 6 | 2 | +2t +2a -10s | - | - |
+| nozomi | 5 | 40 | 5 | 2 | +3t +2a +1t +3a -20s | - | - |
 | mira | 1 | 38 | 6 | 2 | - | corridor, boy 1, boy 2 | - |
 | mira | 2 | 40 | 5 | 2 | - | - | - |
-| mira | 3 | 38 | 4 | 2 | +1t +1a -20c | - | - |
-| mira | 4 | 51 | 9 | 2 | -1a +10c | amusement park | - |
-| mira | 5 | 42 | 5 | 2 | +3t +2a -20c | - | - |
+| mira | 3 | 38 | 4 | 2 | +1t +1a -20s | - | - |
+| mira | 4 | 51 | 9 | 2 | -1a +10s | amusement park | - |
+| mira | 5 | 42 | 5 | 2 | +3t +2a -20s | - | - |
 | mira | 6 | 15 | 4 | 0 | +3t +2a | - | - |
 | mira | 8 | 21 | 2 | 1 | - | corridor | - |
 | yuko | 1 | 52 | 6 | 4 | +1a | teacher, corridor, staff room | - |
-| yuko | 2 | 41 | 6 | 2 | +3a -10c | - | face_update |
-| yuko | 3 | 35 | 4 | 2 | +3t +2a -20c | - | palette_cycle, gradient_sprites_draw, gradient_quad_draw |
-| yuko | 4 | 47 | 7 | 3 | +1t +1a -20c | - | gradient_sprites_draw |
-| yuko | 5 | 42 | 6 | 2 | +1t +1a -20c | - | - |
-| yuko | 6 | 42 | 7 | 1 | +1t +1a -20c | - | - |
+| yuko | 2 | 41 | 6 | 2 | +3a -10s | - | face_update |
+| yuko | 3 | 35 | 4 | 2 | +3t +2a -20s | - | palette_cycle, gradient_sprites_draw, gradient_quad_draw |
+| yuko | 4 | 47 | 7 | 3 | +1t +1a -20s | - | gradient_sprites_draw |
+| yuko | 5 | 42 | 6 | 2 | +1t +1a -20s | - | - |
+| yuko | 6 | 42 | 7 | 1 | +1t +1a -20s | - | - |
 | megumi | 1 | 45 | 5 | 2 | +1t +1a | corridor | sprites_update |
 | megumi | 2 | 20 | 2 | 1 | - | - | - |
-| megumi | 3 | 47 | 9 | 2 | +1t +1a -20c | amusement park | - |
-| megumi | 4 | 63 | 19 | 1 | +2t +1a -20c | - | - |
-| megumi | 5 | 36 | 5 | 2 | +1t +1a -20c | - | - |
-| megumi | 6 | 36 | 6 | 1 | +3t +2a -20c | - | - |
+| megumi | 3 | 47 | 9 | 2 | +1t +1a -20s | amusement park | - |
+| megumi | 4 | 63 | 19 | 1 | +2t +1a -20s | - | - |
+| megumi | 5 | 36 | 5 | 2 | +1t +1a -20s | - | - |
+| megumi | 6 | 36 | 6 | 1 | +3t +2a -20s | - | - |
 | yumi | 1 | 47 | 7 | 3 | +1t +2a | corridor | - |
 | yumi | 2 | 21 | 2 | 1 | +1t +2a | - | - |
-| yumi | 3 | 41 | 5 | 2 | +1t +1a -10c | - | - |
-| yumi | 4 | 44 | 6 | 3 | +3t +2a -20c | pond | se_play |
-| yumi | 5 | 44 | 7 | 2 | +2a -10c | - | - |
-| yumi | 6 | 52 | 8 | 3 | +2t +1a -20c | - | - |
+| yumi | 3 | 41 | 5 | 2 | +1t +1a -10s | - | - |
+| yumi | 4 | 44 | 6 | 3 | +3t +2a -20s | pond | se_play |
+| yumi | 5 | 44 | 7 | 2 | +2a -10s | - | - |
+| yumi | 6 | 52 | 8 | 3 | +2t +1a -20s | - | - |
 | yumi | 7 | 55 | 6 | 3 | - | entrance, home front | flash_draw, gradient_quad_draw, sprites_update |
 | miharu | 1 | 22 | 3 | 1 | - | mystery woman, corridor | - |
 | miharu | 2 | 25 | 3 | 2 | - | mystery woman, corridor | - |
@@ -215,7 +216,7 @@ Steps is the table length, Talk the number of dialogue steps (the talk steps and
 | rei | 3 | 41 | 6 | 1 | - | corridor | - |
 | yoshio | 1 | 42 | 3 | 2 | - | classroom | - |
 
-Reading the table: scene 1 of every girl is a short school or home meeting (corridor, rooftop, behind the school, classroom, school gate, staff room) with two or three stat points; scenes 2-6 are the date events that `spot_date_event_choose` (7.4) starts, one per season for most girls (the scene number follows the season for most girls but not for all: Shiori's spring event is scene 4), each with a fixed reward set (typically +1..+5 tokimeki, +1..+5 affection, -10..-40 counter); scenes 7 and 8 and a second scene 6 are extras for a few girls. Three scenes carry only a negative set (Mio's 2, Ayako's 3, Mira's 4): their steps apply `-t -a +c` instead (HYPOTHESIS: these are the unlucky events of those girls; the code shows the signs only).
+Reading the table: scene 1 of every girl is a short school or home meeting (corridor, rooftop, behind the school, classroom, school gate, staff room) with two or three stat points; scenes 2-6 are the date events that `spot_date_event_choose` (7.4) starts, one per season for most girls (the scene number follows the season for most girls but not for all: Shiori's spring event is scene 4), each with a fixed reward set (typically +1..+5 tokimeki, +1..+5 affection, -10..-40 syoushin); scenes 7 and 8 and a second scene 6 are extras for a few girls. Three scenes carry only a negative set (Mio's 2, Ayako's 3, Mira's 4): their steps apply `-t -a +s` instead (HYPOTHESIS: these are the unlucky events of those girls; the code shows the signs only).
 
 ### 6.4 Effects
 
@@ -223,75 +224,96 @@ Reading the table: scene 1 of every girl is a short school or home meeting (corr
 
 ## 7. Place dates
 
+### 7.0 Rule status: EVENT versus the shipped DATE
+
+The rules in 7.4-7.7 are what EVENT's code does. EVENT is an earlier state of the game, and the shipped DATE (`src/ovl/DATE/80132000.c`) differs in several of them. Where the two differ, DATE is the game and the port takes its numbers. Differences found by reading each EVENT function next to its DATE twin:
+
+| Rule | EVENT (this build) | DATE (shipped, authoritative) |
+| --- | --- | --- |
+| Outcome factor a (`spot_outcome_factors`, DATE `func_8013C410`) | trivia value against 100, 75, 50, 25: a = 5 to 1 for an argument above 0, 3 to 7 otherwise; 0 or 8 when the value is 0 | the same |
+| Outcome factor b | argument above 0: 5 minus the table value (5, 4, 3, 2, 1 for the values 0-4); otherwise the value plus 3 (3 to 7) | argument above 0: value 0 gives 5, 1-2 give 4, 3 gives 3, 4 and above give 2; otherwise value 0 gives 3, 1-2 give 4, 3 gives 5, 4 and above give 6 |
+| Third outcome term (`spot_outcome_apply_step`, DATE `func_8013C190`) | the term table (-10, -8, -6, 8, 10) times a and b, added to affection (+4) | the same table (words), added to the syoushin word (+8) |
+| Counting a date (`spot_scene_close_step`, DATE `func_8013CDF8`) | counts every outcome id of 0 or more unless the mode is 0x60 | only ids above 0, with `D_800CA364` zero, and only while the first appointment slot's active bit is clear |
+| Last date spot | stored for every id of 0 or more (7 as 6, 5 as 4, 0xB-0xD as 0xA) | stored only inside the looks test, only for ids above 0, with the timer set to 12 (8 as 7, 6 as 5) |
+| Looks test (>= 0x23, or >= 0x1E for every girl but Mira) | a pass subtracts 0x28 from syoushin; the two tokimeki bonuses (place 0x12: +1, May 4-5 with the record flag: +2) come only on a fail | the bonuses come on a pass (the Mira exception tests the date girl); 0x28 is subtracted only on a pass with `D_80122CE0` zero and the newest appointment place equal to the date place, and that case also sets the record flag on May 3-4 |
+| Place memory | the date place goes to `appt_place_0` | the same, and `date_place_history` is shifted |
+| Repeat reaction (`spot_result_talk_step`, DATE `func_8013B488`) | the same spot as last time in a date gives group 0xB and -1 tokimeki, -2 affection, +5 syoushin | also needs the last-spot timer nonzero, the appointment flag clear and a place other than 0 and 0x12 |
+| Athletics test of the place 0x11 summer event (`spot_date_event_choose`) | >= 0x64 | >= 0x96 (the other four athletics tests are equal) |
+| Outcome (spot) ids | one lower than DATE from id 5 on at least: the close step remaps 5 and 7, the hero show is 0x13 and the rides 0x14-0x18 | the close step remaps 6 and 8, the hero show is 0x14 and the rides 0x15-0x19 |
+| Ride choice | stores the ride on every pass | `D_8015B69C` latches the ride after the first pass |
+| Park bonus for Yuina (`func_80119A60`, DATE `func_8013D9E8`) | applied to girls[0] (a wrong index) | girls[2] |
+
+Rules compared and found equal: the low-looks penalty (`spot_low_looks_penalty_step`, DATE `func_8013F544`), the ride-to-choice mapping of 7.7, the thresholds of the pool, skating and ski athletics checks (`func_8013B208`). The table lists what was compared for this spec (outcome scoring, close step, repeat reaction, low-looks penalty, ride choice and setup, the athletics tests); the other rules were not compared one by one, and DATE stays the reference for all of them.
+
 ### 7.1 Stage 0: the arrival table (61 steps)
 
 | Step | Function | What it does |
 | --- | --- | --- |
-| 0 | `spot_place_init_step` | step 0 of the arrival table: resets graphics layers and flags, copies the appointment place (D_800B0F2C) to D_801243B0 and the dat |
-| 1 | `spot_place_bank_load_step` | starts the sound bank load for the place: two fixed dev-disc sectors chosen by place group (places 1/3, 9/10, 12, 16/17, 19/20, 2, |
-| 2 | `spot_place_bgm_start_step` | when the bank load has finished (poll dev func_8001496C returns 1) starts the place BGM snd_command(spot_place_bgm_ids[place]) and |
-| 3 | `spot_common_script_load_step` | reads 2 sectors from dev-disc sector 0xA0E0 to 0x80197000 (the common part of the date script area) and fills the common pointer t |
+| 0 | `spot_place_init_step` | step 0 of the arrival table: resets graphics layers and flags, copies the appointment place (D_800B0F2C) to spot_place and the date girl (D_800B0F30) to D_800EECB4 and the current girl, sets arrival mode spot_arrival_mode (1, or 0 when frame_count & 3 == 0 and the girl is not Yuina), clears the outcome cells, shows the portrait |
+| 1 | `spot_place_bank_load_step` | starts the sound bank load for the place: two fixed dev-disc sectors chosen by place group (places 1/3, 9/10, 12, 16/17, 19/20, 2, 7, 8 each have their own pair) and three per-place halfword arguments (spot_place_bank_arg_d/e/f); then step_next |
+| 2 | `spot_place_bgm_start_step` | when the bank load has finished (poll dev func_8001496C returns 1) starts the place BGM snd_command(spot_place_bgm_ids[place]) and steps |
+| 3 | `spot_common_script_load_step` | reads 2 sectors from dev-disc sector 0xA0E0 to 0x80197000 (the common part of the date script area) and fills the common pointer table with spot_fill_sections_common, then step_next |
 | 4 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
-| 5 | `spot_date_script_load_step` | date girl script loader: switch on the date girl D_800B0F30 (0-9, default 10): fills the section table with spot_fill_sections_<gi |
+| 5 | `spot_date_script_load_step` | date girl script loader: switch on the date girl D_800B0F30 (0-9, default 10): fills the section table with spot_fill_sections_<girl> and reads her script file (0x13-0x18 sectors) to 0x80198000; clone of DATE func_8013E7B0 |
 | 6 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
-| 7 | `spot_place_tables_load_step` | reads 3 sectors from dev-disc sector 0xA143 to 0x801A4000 (per-place result byte tables) and stores their addresses with spot_plac |
+| 7 | `spot_place_tables_load_step` | reads 3 sectors from dev-disc sector 0xA143 to 0x801A4000 (per-place result byte tables) and stores their addresses with spot_place_result_ptrs_init, then step_next |
 | 8 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
 | 9 | `spot_place_neighborhood_park_arrival` | placeholder: replaced for the frame by the arrival step of the current place (place 0 keeps this one: label, background read, dialogue source cells) |
 | 10 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
 | 11 | `spot_devmain_dec_init` | dec_init (shipped twin) |
 | 12 | `spot_devmain_change_dec_bg` | change_dec_bg (shipped twin) |
-| 13 | `spot_place_intro_step` | arrival step 13: computes the dialogue group offset D_80124344 from mood tier and arrival mode, clears the outcome cells and flags |
+| 13 | `spot_place_intro_step` | arrival step 13: computes the dialogue group offset spot_dialogue_group_offset from mood tier and arrival mode, clears the outcome cells and flags (D_80125328 = 1 on the first Sunday of the month: weekday 6 and day < 8), shows the portrait |
 | 14 | `func_80045BEC` | dev-main step, not identified |
 | 15 | `spot_devmain_place_init` | place_init (shipped twin) |
-| 16 | `spot_meeting_names_step` | sets the two speaker labels from the place name table: the place of D_800B0F2D (or of D_800B0F2E when it equals the appointment pl |
-| 17 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arri |
-| 18 | `spot_meeting_choice_menu_step` | choice menu of the place proposal: normal_date_three_select when a third place D_800B0F2F exists (not 0xFF), else normal_date_two_ |
-| 19 | `spot_meeting_decide_step` | place decision after the girl proposes places: when the first two appointment places agree and the choice is 0 it flags D_801243B4 |
-| 20 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arri |
+| 16 | `spot_meeting_names_step` | HYPOTHESIS: sets the two speaker labels from the place name table: the place of D_800B0F2D (or of D_800B0F2E when it equals the appointment place D_800B0F2C), and, when D_800B0F2F is not 0xFF, a third label; skips 0x11 steps when the two newest appointment places are equal and the arrival mode is 1, or when D_800B0F2E is 0xFF |
+| 17 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arrival table |
+| 18 | `spot_meeting_choice_menu_step` | HYPOTHESIS: choice menu of the place proposal: normal_date_three_select when a third place D_800B0F2F exists (not 0xFF), else normal_date_two_select |
+| 19 | `spot_meeting_decide_step` | HYPOTHESIS: place decision after the girl proposes places: when the first two appointment places agree and the choice is 0 it flags D_801243B4, adds 1 to the dialogue group offset and skips 0xD steps; when they differ and the choice is 0 it skips 0x1E steps |
+| 20 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arrival table |
 | 21 | `spot_devmain_normal_date_bg_fadeout` | normal_date_bg_fadeout (shipped twin) |
 | 22 | `spot_place_neighborhood_park_arrival` | placeholder: replaced for the frame by the arrival step of the current place (place 0 keeps this one: label, background read, dialogue source cells) |
 | 23 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
 | 24 | `spot_devmain_dec_init` | dec_init (shipped twin) |
 | 25 | `spot_devmain_change_dec_bg` | change_dec_bg (shipped twin) |
-| 26 | `spot_place_bank_load_step` | starts the sound bank load for the place: two fixed dev-disc sectors chosen by place group (places 1/3, 9/10, 12, 16/17, 19/20, 2, |
-| 27 | `spot_place_bgm_start_step` | when the bank load has finished (poll dev func_8001496C returns 1) starts the place BGM snd_command(spot_place_bgm_ids[place]) and |
+| 26 | `spot_place_bank_load_step` | starts the sound bank load for the place: two fixed dev-disc sectors chosen by place group (places 1/3, 9/10, 12, 16/17, 19/20, 2, 7, 8 each have their own pair) and three per-place halfword arguments (spot_place_bank_arg_d/e/f); then step_next |
+| 27 | `spot_place_bgm_start_step` | when the bank load has finished (poll dev func_8001496C returns 1) starts the place BGM snd_command(spot_place_bgm_ids[place]) and steps |
 | 28 | `spot_devmain_normal_date_bg_fadein` | normal_date_bg_fadein (shipped twin) |
 | 29 | `spot_devmain_place_init` | place_init (shipped twin) |
-| 30 | `spot_meeting_place_check_step` | if the first appointment place D_800B0F2D differs from the current place D_801243B0 sets the dialogue cell D_80124384 to 7 and ski |
-| 31 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arri |
-| 32 | `spot_mira_mood_jump_step` | if the girl is Mira (7), her mood rank is at least 3 and the arrival mode is 2 jumps to step 0x39 and moves the place D_801243B0 o |
+| 30 | `spot_meeting_place_check_step` | HYPOTHESIS: if the first appointment place D_800B0F2D differs from the current place spot_place sets the dialogue cell D_80124384 to 7 and skips 0x14 steps; otherwise steps twice, adds 8 to the girl's syoushin (+0xA field) and applies check_para_limit |
+| 31 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arrival table |
+| 32 | `spot_mira_mood_jump_step` | HYPOTHESIS: if the girl is Mira (7), her mood rank is at least 3 and the arrival mode is 2 jumps to step 0x39 and moves the place spot_place on by one; otherwise step_next |
 | 33 | `spot_portrait_read_pair_step` | portrait reads of the current girl in two substeps (spot_portrait_read_a then spot_portrait_read_b) |
 | 34 | `spot_devmain_read_bustup` | read_bustup (shipped twin) |
 | 35 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
 | 36 | `spot_bustup_addr_init_step` | addr_init_bustup (dev func_80045B14): sets the portrait sprite addresses of the current girl, then step_next |
 | 37 | `func_8004AB74` | dev-main step, not identified |
-| 38 | `spot_reaction_rows_build_step` | for the three reaction cells: row A = result cell (0 becomes 1, 4 becomes 3, 3 when the current place equals the girl favourite by |
-| 39 | `spot_arrival_wait_step` | when the arrival mode is 0 and D_801243B4 is 0 calls the dev wait helper (dev func_80046B88 with 0x80) and stays; otherwise step_n |
-| 40 | `spot_low_looks_penalty_step` | if the looks value (dev +0x106) is below 0x1E (below 0x23 for Mira) sets the dialogue group offset to 0xC, skips 0xF steps and low |
-| 41 | `spot_date_event_choose` | chooses a special girl event during a date: by girl (0-11), place D_801243B0, month window (spring 3-5, summer 6-8, autumn 9-11, w |
+| 38 | `spot_reaction_rows_build_step` | for the three reaction cells: row A = result cell (0 becomes 1, 4 becomes 3, 3 when the current place equals the girl favourite byte D_800B0F35[g]), row B = cell - 1 clamped (-1 to 0, 3 to 2); step_next; DATE twin func_80136F2C r0.79 |
+| 39 | `spot_arrival_wait_step` | HYPOTHESIS: when the arrival mode is 0 and D_801243B4 is 0 calls the dev wait helper (dev func_80046B88 with 0x80) and stays; otherwise step_next |
+| 40 | `spot_low_looks_penalty_step` | if the looks value (dev +0x106) is below 0x1E (below 0x23 for Mira) sets the dialogue group offset to 0xC, skips 0xF steps and lowers the girl record: -1 tokimeki, -1 affection, +5 syoushin, then check_para_limit; otherwise step_next; identical in the DATE twin func_8013F544 |
+| 41 | `spot_date_event_choose` | chooses a special girl event during a date: by girl (0-11), place spot_place, month window (spring 3-5, summer 6-8, autumn 9-11, winter 12-2), mood rank, flags and step position it sets the scene number D_800EECB0 (2-6), marks the event-seen flag girls_event_flags[idx] and enters dev mode 0x60 (girl scene mode) |
 | 42 | `spot_arrival_talk_gate_step` | when the arrival mode is not 0 or D_801243B4 is 1 steps twice and returns 0, otherwise runs spot_arrival_talk_step |
 | 43 | `spot_devmain_wait_sub_sub` | wait_sub_sub (shipped twin) |
 | 44 | `spot_devmain_normal_date_girl_in` | normal_date_girl_in (shipped twin) |
-| 45 | `spot_arrival_talk_step` | talk step with the cells D_80124344 (group) and D_80124348 and the tables D_8012425C/C8/334; when arrival mode is 2, D_80124348 is |
-| 46 | `spot_all_places_equal_step` | if the four newest appointment places D_800B0F31..34 are all equal and the year is at least 0x60 calls spot_place_empty_step, else |
-| 47 | `spot_special_day_talk_step` | on the first frame chooses the greeting kind D_8012434C from the calendar day: March 21 kind 0, July 24 (1995) / 28 (1996) / 27 (1 |
+| 45 | `spot_arrival_talk_step` | talk step with the cells spot_dialogue_group_offset (group) and D_80124348 and the tables D_8012425C/C8/334; when arrival mode is 2, D_80124348 is 2 and the mood rank is at least 2 it sets the portrait layout 3 first |
+| 46 | `spot_all_places_equal_step` | HYPOTHESIS: if the four newest appointment places D_800B0F31..34 are all equal and the year is at least 0x60 calls spot_place_empty_step, else step_next |
+| 47 | `spot_special_day_talk_step` | HYPOTHESIS: on the first frame chooses the greeting kind D_8012434C from the calendar day: March 21 kind 0, July 24 (1995) / 28 (1996) / 27 (1997) kind 1, September 23 kind 2 or 3 by frame_count parity, December 23 kind 4; any other day steps and returns 0; then talk with the cells D_8012434C/50 and tables D_80124260/CC/38 |
 | 48 | `spot_devmain_stage_next` | main_stage_next (shipped twin) |
-| 49 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arri |
+| 49 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arrival table |
 | 50 | `spot_cell_seven_step` | stores 7 in the dialogue cell D_80124384, then step_next |
 | 51 | `spot_devmain_wait_sub_sub` | wait_sub_sub (shipped twin) |
-| 52 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arri |
+| 52 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arrival table |
 | 53 | `spot_devmain_return_step` | return_step (shipped twin) |
-| 54 | `spot_scene_close_step` | last real step of date scenes: counts the outcome (girls[g].visit_counts[D_800EECE4]++ on the first frame of the step, step_timer  |
-| 55 | `spot_arrival_talk_step` | talk step with the cells D_80124344 (group) and D_80124348 and the tables D_8012425C/C8/334; when arrival mode is 2, D_80124348 is |
+| 54 | `spot_scene_close_step` | last real step of date scenes: counts the date, stores the girl's last date spot, applies the looks-based changes and returns to the caller (7.6) |
+| 55 | `spot_arrival_talk_step` | talk step with the cells spot_dialogue_group_offset (group) and D_80124348 and the tables D_8012425C/C8/334; when arrival mode is 2, D_80124348 is 2 and the mood rank is at least 2 it sets the portrait layout 3 first |
 | 56 | `spot_devmain_normal_date_girl_out` | normal_date_girl_out (shipped twin) |
-| 57 | `spot_arrival_talk_step` | talk step with the cells D_80124344 (group) and D_80124348 and the tables D_8012425C/C8/334; when arrival mode is 2, D_80124348 is |
+| 57 | `spot_arrival_talk_step` | talk step with the cells spot_dialogue_group_offset (group) and D_80124348 and the tables D_8012425C/C8/334; when arrival mode is 2, D_80124348 is 2 and the mood rank is at least 2 it sets the portrait layout 3 first |
 | 58 | `spot_devmain_return_step` | return_step (shipped twin) |
-| 59 | `spot_scene_close_step` | last real step of date scenes: counts the outcome (girls[g].visit_counts[D_800EECE4]++ on the first frame of the step, step_timer  |
+| 59 | `spot_scene_close_step` | last real step of date scenes: counts the date, stores the girl's last date spot, applies the looks-based changes and returns to the caller (7.6) |
 | 60 | `spot_devmain_bad_state` | game_reset_to_title (shipped twin) |
 
 ### 7.2 Arrival steps per place
 
-`spot_place_<place>_arrival` (0x74-0x504 bytes each) does for its place: sets the dialogue source cells `D_8009473C/40/44` (dev) to the place's tables, sets the place label, picks the variant `spot_place_variant` (0 normal, 1 alternate, 2 special) from flags, season and girl, writes the outcome id `D_800EECE4` (index into the girl's visit counters), and loads the per-girl result rows `D_8012438C/94/9C/A4` from the per-place byte tables (stride 9, 15, 18 or 36 bytes per girl, three bytes per variant). Then it starts the background read. Example variants read from the code: Kirameki Central Park gives the special variant between March 26 and April 10 (blossoms) under flag and girl conditions, otherwise the path variant, or the pond variant when the girl's flag bit is set and it is not summer; the aquarium gives the special variant (dolphin show) from year 0x61 on, or in year 0x60 from March, when the girl's flag byte is clear.
+`spot_place_<place>_arrival` (0x74-0x504 bytes each) does for its place: sets the dialogue source cells `D_8009473C/40/44` (dev) to the place's tables, sets the place label, picks the variant `spot_place_variant` (0 normal, 1 alternate, 2 special) from flags, season and girl, writes the outcome id `D_800EECE4` (index into the girl's event counters), and loads the per-girl result rows `D_8012438C/94/9C/A4` from the per-place byte tables (stride 9, 15, 18 or 36 bytes per girl, three bytes per variant). Then it starts the background read. The "flag" tests that pick a variant are bit 0 or zero tests of the girl's event counters (`girls[g].event_counters[k]`, the counters that `spot_scene_close_step` increments with the outcome id, 7.6): a variant that depends on bit 0 alternates with every second visit of that attraction with the girl. Example variants read from the code: Kirameki Central Park gives the special variant (blossoms, outcome id -1, never counted) between March 26 and April 10 under event-flag and girl conditions; otherwise the pond variant when `event_counters[0]` is odd, or in June to August when event flag 0x42 is clear and a mood condition holds, else the path variant (both outcome id 0). The aquarium gives the special variant (dolphin show, outcome id 5) from year 0x61 on, or in year 0x60 from March, while `event_counters[5]` is zero; otherwise variant 0 or 1 by the parity of `event_counters[4]`.
 
 ### 7.3 Stage 1: place tables
 
@@ -336,26 +358,37 @@ The chooser is a step of the place tables, at fixed positions: place 0, 1, 3, 5,
 | Nozomi (6) | art museum: 2 | sea: 3 | botanical garden: 4 | bowling alley: 5 |
 | Mira (7) | shopping street: 2 | sea: 3 | amusement park: 4 | ski resort: 5 and 6 |
 
-The other girls follow the same four-season pattern with exceptions (extra windows for Yuko, Megumi and Yumi); I did not tabulate them because the live table is `date_event_choose` in DATE (ratio 0.68 to this function), which may differ in places. The port must take the DATE table. Scene 1 (the school meeting) is never chosen here; its caller would be the dev main's day-event reader (HYPOTHESIS).
+The other girls follow the same four-season pattern with exceptions (extra windows for Yuko, Megumi and Yumi); I did not tabulate them because the live table is `date_event_choose` in DATE (ratio 0.68 to this function), which may differ in places. The port must take the DATE table: it is not the same as this one (for example, the athletics condition of the place 0x11 summer event is >= 0x96 there and >= 0x64 here). Scene 1 (the school meeting) is never chosen here; its caller would be the dev main's day-event reader (HYPOTHESIS).
 
 ### 7.5 Outcome scoring (`spot_outcome_apply_step`, `spot_outcome_factors`)
 
-Each place step ends in a result: the three reaction cells `D_8012439C[choice]` are small integers 0-4 loaded from the per-place byte tables; the choice is `D_800EECBC` (0-2). `spot_outcome_factors(c, &a, &b)` computes the two multipliers:
+This is EVENT's implementation; 7.0 lists where DATE differs (factor b, and the destination of the third term). Each place step ends in a result: the three reaction cells `D_8012439C[choice]` are small integers 0-4 loaded from the per-place byte tables; the choice is `D_800EECBC` (0-2). `spot_outcome_factors(n, &a, &b)` computes two multipliers for an argument n (the callers pass 3 - c or 2 - c, with c the reaction cell):
 
-- `a` from the player's trivia value `v` (dev `D_800B0962`; HYPOTHESIS: the field is the trivia parameter, by the +0x10 shift of the dev parameter block against the shipped one): for `c > 0`, `a = 5 - i` for the first `i` in 0..4 with `v >= 100 - 25 * i` (so 5, 4, 3, 2, 1) and `a = 0` when `v == 0`; for `c <= 0`, `a = i + 3` for the same test (3 to 7) and `a = 8` when `v == 0`.
-- `b = 5 - affinity[girl][place]` for `c > 0`, and `affinity[girl][place] + 3` otherwise. The affinity table is an 11 x 21 byte table (heroine times place, values 0-4; `spot_place_affinity`, shape only; the values are in the binary).
+- `a` from the player's trivia value `v` (dev `D_800B0962`, the value halfword of the shipped `param_trivia` record by the +0x10 shift of the dev parameter block; the DATE twin reads `param_trivia` with the same thresholds): i is the first index in 0..4 with `v >= 100 - 25 * i`. For n > 0, a = 5 - i (5, 4, 3, 2, 1) and a = 0 when v == 0; for n <= 0, a = i + 3 (3 to 7) and a = 8 when v == 0.
+- `b` from the 11 x 21 byte table `spot_place_affinity[girl][place]` (values 0-4; shape only, the values are in the binary; a lower value is the better match for the girl). This build gives b = 5 - value for n > 0 and value + 3 otherwise. The shipped rule is not linear (7.0).
 
-`spot_outcome_apply_step` then, with `c = D_8012439C[choice]`, sets the portrait layout from `D_8012438C[choice]` and adds to the 16.16 fields of the girl record: field +0 (tokimeki) `((3 - c) * a * b << 16) / 16`, with `a, b = spot_outcome_factors(3 - c)`; field +4 (affection) `((2 - c) * a * b << 16) / 16` and `(spot_outcome_terms[c] * a * b << 16) / 16`, with `a, b = spot_outcome_factors(2 - c)`. `x << 16 / 16` is x/16 whole points in 16.16, so a lower reaction value is better and a value above 2 turns the first term negative. It then runs `check_para_limit` and steps. The faces for the result come from `spot_face_from_row_step`, and `spot_reaction_rows_build_step` turns the three raw cells into tier cells: row A (0 becomes 1, 4 becomes 3, and 3 when the place is the girl's favourite place byte), row B (cell minus 1, clamped to 0-2).
+`spot_outcome_apply_step` then, with c = `D_8012439C[choice]`, sets the portrait layout from `D_8012438C[choice]` and adds to the 16.16 words of the girl record (adding x/16 whole points is `(x << 16) / 16`):
+
+- tokimeki (+0): `(3 - c) * a * b` with (a, b) = factors(3 - c);
+- affection (+4): `(2 - c) * a * b` with (a, b) = factors(2 - c);
+- a third term `spot_outcome_terms[c] * a * b` with the same (a, b) as the affection term, where `spot_outcome_terms` = (-10, -8, -6, 8, 10). EVENT adds it to affection; the shipped step adds it to the syoushin word (+8).
+
+In the shipped step a lower reaction value is better: the tokimeki factor (3 - c) turns negative above c = 3, the affection factor (2 - c) above c = 2, and the third term lowers syoushin for c = 0-2 and raises it for c = 3-4. The step then runs `check_para_limit` and steps. The faces for the result come from `spot_face_from_row_step`, and `spot_reaction_rows_build_step` turns the three raw cells into tier cells: row A (0 becomes 1, 4 becomes 3, and 3 when the place is the girl's favourite place byte), row B (cell minus 1, clamped to 0-2).
 
 ### 7.6 Closing a date (`spot_scene_close_step`, `spot_birthday_check_step`)
 
-- The birthday check (a step of every girl and place table, 65 tables): if today is the girl's birthday (month and day of `girls[g].birthday`) the machine goes to dev mode 0x50 stage 2 (a birthday scene), if today is the player's birthday to stage 3, otherwise it steps on.
-- The close step (68 table slots): on the first frame of the step, when the mode is not 0x60, it increments `girls[g].visit_counts[outcome id]`; it stores the outcome as the girl's last outcome (outcome 7 is recorded as 6, 5 as 4 and 0xB-0xD as 0xA); then, if the looks value is at least 0x23 (at least 0x1E for every girl but Mira) it subtracts 0x28 from the girl's counter, otherwise it adds +1 tokimeki at place 0x12 (the shrine, the festival) and +2 tokimeki on May 4 and 5 when a record flag is set; `check_para_limit`; the place is stored in a state byte (dev +0x6CC, the last place) and two dev-main calls whose roles I could not identify (`func_80014CA8(0, 0)` and `func_8003E638(1)`) end the step; presumably they return to the caller's mode (HYPOTHESIS).
-- `spot_low_looks_penalty_step` applies the opposite rule before the talk: a looks value below 0x1E (0x23 for Mira) gives -1 tokimeki, -1 affection and +5 counter and a dialogue group offset of 0xC.
+- The birthday check: if today is the girl's birthday (month and day of `girls[g].birthday`) the machine goes to dev mode 0x50 stage 2 (a birthday scene), if today is the player's birthday to stage 3, otherwise it steps on. It is a step of every girl and place table (65 tables).
+- The close step as EVENT implements it (68 table slots; the shipped step differs, see the next item and 7.0). On the first frame of the step it increments `girls[g].event_counters[outcome id]` when the id is 0 or more and the mode is not 0x60, and stores the id as `girl_last_date_spot[g]` (7 as 6, 5 as 4, 0xB-0xD as 0xA). Then, if the looks value is at least 0x23 (at least 0x1E for every girl but Mira), it subtracts 0x28 from the girl's syoushin; otherwise it adds +1 tokimeki at place 0x12 (the shrine, the festival) and +2 tokimeki on May 4 and 5 when a record flag is set. After `check_para_limit` it stores the date place in `appt_place_0`, and two dev-main calls whose roles I could not identify (`func_80014CA8(0, 0)` and `func_8003E638(1)`) end the step. HYPOTHESIS: `func_8003E638(1)` is the dev `day_event_next(1)` with which the shipped close step ends, and `func_80014CA8(0, 0)` stands where it clears `D_80122D44` and sends sound command 0xCF.
+- The shipped close step (DATE `func_8013CDF8`, the one to port). While the first appointment slot's active bit is clear it counts the date spot (ids above 0 with `D_800CA364` zero). Inside the looks test it stores `girl_last_date_spot[g]` (ids above 0; 8 as 7, 6 as 5) and sets the girl's timer to 12. In a second looks test, which uses the date girl for the Mira exception, it adds +1 tokimeki at place 0x12 and +2 on May 4-5 with the record flag; there, when `D_80122CE0` is zero and the newest appointment place equals the date place, it also subtracts 0x28 from syoushin and sets the record flag on May 3-4. It then runs `check_para_limit`, stores the place in `appt_place_0`, shifts `date_place_history`, clears `D_80122D44`, sends sound command 0xCF and calls `day_event_next(1)`.
+- `spot_low_looks_penalty_step` applies the opposite rule before the talk: a looks value below 0x1E (0x23 for Mira) gives -1 tokimeki, -1 affection and +5 syoushin and a dialogue group offset of 0xC, then skips 0xF steps. DATE `func_8013F544` is identical.
 
 ### 7.7 The amusement park rides
 
-At the park the choice (0, 1, 2) selects a ride (`spot_amusement_ride_choose_step`): choice 0 gives the scream ride (ride 3) when `D_80125308` or `D_80125304` is set, otherwise the roller coaster (ride 0); choice 1 gives the virtual ship (4) when `D_80125308` is set, otherwise the ghost house (1); choice 2 gives the Ferris wheel (2). Choice 1 adds 5 to the dialogue group and choice 2 adds 0xA. `spot_ride_setup` writes the ride label, the outcome id (0x14 coaster, 0x15 ghost house, 0x16 Ferris wheel, 0x17 scream ride, 0x18 virtual ship), the variant from the girl's ride-seen bit and the two result rows from the ride tables (0x24 bytes per girl). The ride movie runs through `spot_ride_movie_run` (file `ride_movies.c`): roller coaster `spot_ride_coaster_movie` (a 51-case state machine on the step timer), ghost house `spot_ride_ghost_house_movie`, Ferris wheel `spot_ride_ferris_wheel_movie`, scream ride and virtual ship share `spot_ride_scream_virtual_movie`. The DATE2 overlay holds the live movies (EVENT's Ferris wheel movie and DATE2 `func_801348F0` are siblings, T-24028).
+At the park the choice (0, 1, 2) selects a ride (`spot_amusement_ride_choose_step`): choice 0 gives the scream ride (ride 3) when `D_80125308` or `D_80125304` is set, otherwise the roller coaster (ride 0); choice 1 gives the virtual ship (4) when `D_80125308` is set, otherwise the ghost house (1); choice 2 gives the Ferris wheel (2). Choice 1 adds 5 to the dialogue group and choice 2 adds 0xA. The mapping is the same in DATE, which stores the ride only on the first pass (a latch, 7.0). `spot_ride_setup` writes the ride label, the outcome id (0x14 roller coaster, 0x15 ghost house, 0x16 Ferris wheel, 0x17 scream ride, 0x18 virtual ship; DATE ids are one higher), the variant, and the two result rows from the ride tables (0x24 bytes per girl, three per variant).
+
+The variant is bit 0 of the girl's event counter of the ride (`event_counters[0x14 + ride]`, the counter that `spot_scene_close_step` increments with the outcome id), so it alternates between 0 and 1 on every second ride taken with that girl. The hero show (`spot_place_amusement_park_bg_load_labeled_21`) does the same with counter 0x13. The DATE twins read bit 0 of counters 0x15-0x19 and 0x14 (`func_80138934`, `func_80137D1C`). HYPOTHESIS: the game meaning of the two variants. An earlier reading, a "ride-seen bit", is not supported: the code tests the parity of a counter that grows with every ride, not a seen flag.
+
+The ride movie runs through `spot_ride_movie_run` (file `ride_movies.c`): roller coaster `spot_ride_coaster_movie` (a 51-case state machine on the step timer), ghost house `spot_ride_ghost_house_movie`, Ferris wheel `spot_ride_ferris_wheel_movie`, scream ride and virtual ship share `spot_ride_scream_virtual_movie`. The DATE2 overlay holds the live movies (EVENT's Ferris wheel movie and DATE2 `func_801348F0` are siblings, T-24028).
 
 ## 8. Data tables
 
@@ -434,7 +467,27 @@ Data twins:
 | D_8009471C | `spot_devmain_dialogue_tables` | dialogue_tables (D_800CA134) |
 | D_80094730 | `spot_devmain_dialogue_group` | dialogue_group (D_800CA148) |
 
-The dev GameState (`D_800B0860`) is the shipped `GameState` with other offsets. Offsets of the fields that EVENT uses, dev to shipped (all from aligned references): month +0x36 to +0x3F, year +0x35 to +0x3E, day +0x37 to +0x40, weekday +0x38 to +0x41, parameter values +0xF6.. to +0x106.. (+0x10), girls +0x1A4 to +0x1BC (+0x18), event flags +0x5CA to +0x56C, current girl +0xEE6 to +0xF5F, frame count +0x1284 to +0x10F8, step timer +0x1290 to +0x1104, mode +0x1294 to +0x1108, stage +0x1295 to +0x1109, step +0x1296 to +0x110A, substep +0x1299 to +0x110D. The girl record in the dev build is 0x34 bytes (shipped `GirlRecord` is 0x38); the s16 fields at +0..+0xA, the flag word at +0xC and the birthday word at +0x10 coincide with core's layout; +0x14 holds 0x20 visit counters (core: 0x24 event counters). The shipped lists name the dev types `LegacyGirlRecord`.
+The dev GameState (`D_800B0860`) is the shipped `GameState` with other offsets. Offsets of the fields that EVENT uses, dev to shipped (all from aligned references): month +0x36 to +0x3F, year +0x35 to +0x3E, day +0x37 to +0x40, weekday +0x38 to +0x41, parameter values +0xF6.. to +0x106.. (+0x10), girls +0x1A4 to +0x1BC (+0x18), event flags +0x5CA to +0x56C, current girl +0xEE6 to +0xF5F, frame count +0x1284 to +0x10F8, step timer +0x1290 to +0x1104, mode +0x1294 to +0x1108, stage +0x1295 to +0x1109, step +0x1296 to +0x110A, substep +0x1299 to +0x110D. The girl record in the dev build is 0x34 bytes (shipped `GirlRecord` is 0x38); the s16 fields at +0..+0xA, the flag word at +0xC and the birthday word at +0x10 coincide with core's layout; +0x14 holds 0x20 event counters (core: 0x24 event counters). The shipped lists name the dev types `LegacyGirlRecord`.
+
+EVENT's own view fields (the private `EventStateView` family, proposed names `SpotDevState` and `SpotDevStateGirls`) with the dev offset, the shipped field they stand for (core names, shipped offset) and the evidence:
+
+| Dev offset | EVENT field | Shipped field | Evidence |
+| --- | --- | --- | --- |
+| +0x014, +0x018 | `screen_center_x/y` | `screen_center_x/y` (+0x14, +0x18) | same offsets; core's name (h-graphics and h-cdio: `draw_origin_x/y`, section 11) |
+| +0x0E4 | `player_flags` (HYPOTHESIS) | `player_flags` (+0xF4) | +0x10 shift of the parameter block; the Yuko winter event tests bit 1 here and bit 17 in DATE |
+| +0x0FE | `athletics` | `param_athletics` value (+0x10E) | +0x10 shift; DATE reads it with the same thresholds in five conditions, one threshold differs |
+| +0x102 (D_800B0962) | trivia value | `param_trivia` value (+0x112) | +0x10 shift; DATE `func_8013C410` |
+| +0x106 | `looks` | `param_looks` value (+0x116) | +0x10 shift; DATE `func_8013CDF8`, `func_8013F544` |
+| +0x1A4 | `girls` | `girls` (+0x1BC) | aligned references |
+| +0x5CA | `event_flags` | `event_flags` (+0x56C) | aligned references |
+| +0x6C8, +0x6C9, +0x6CA | `saved_mode`, `saved_stage`, `saved_step` | +0x720, +0x721, +0x722 | the Miharu event triggers store the resume point (0x50, 0, 0xC) before dev mode 0x60 as DATE stores (0x50, 0, step + 1) before mode 0x5E |
+| +0x6CC | `appt_place_0` (HYPOTHESIS) | `appt_place_0` (+0x724) | D_800B0F2C is copied to `spot_place` by the place init, and the close step writes the date place back |
+| +0x6D5 | `girl_last_date_spot` | `girl_last_date_spot` (+0x72C) | read by the repeat reaction and written by the close step, as in DATE; 12 of 16 bytes used |
+| +0x6E5 | `appointment_flag` | `appointment_flag` (+0x75C) | tested in the same place as in DATE `func_8013B488` |
+| +0xEE6 | `current_girl` | `current_girl` (+0xF5F) | 152 aligned references |
+| +0xF0C | `pad_pressed` | `pad_pressed` (+0xF88) | the mask 0x400040 is tested the same way in DATE, DATE2 and GEKO |
+| +0x1284, +0x1290, +0x1294 | `frame_count`, `step_timer`, `mode` | +0x10F8, +0x1104, +0x1108 | aligned references |
+| +0x1295, +0x1296, +0x1299 | `stage`, `step`, `substep` | +0x1109, +0x110A, +0x110D | aligned references |
 
 Mode numbers differ too: dev 0x50 (date) equals `MODE_DATE`, dev 0x60 (girl scene) is `MODE_DATE_SCENE` 0x5E.
 
@@ -443,7 +496,7 @@ Mode numbers differ too: dev 0x50 (date) equals `MODE_DATE`, dev 0x60 (girl scen
 - DATE (mode 0x50 and 0x5E) is the live successor of everything in section 7 and of scenes 3-6 of section 6; DATE's place tables are the same machine with the shipped primitives. `date_event_trigger` / `date_event_choose` (DATE) correspond to `spot_date_event_choose`. DATE's `date_fill_sections_<girl>` (names from the English patch notes) are the shipped twins of the `spot_fill_sections_<girl>` fillers.
 - GEKO holds the girl encounters and one-shot events that probably correspond to scenes 1, 2 and 8 of the girl sets (HYPOTHESIS, from the sibling counts); `func_80138F7C` is the twin of `spot_script_load_step`.
 - DATE2 holds the amusement-park rides (the ride movies of section 7.7).
-- DATE's entry handler has four stages where this build's place entry has two: the birthday scenes (stages 2 and 3, reached by `spot_birthday_check_step`) are missing here and fall into the bad-state handler, another sign that the dev build predates the live one. The stale addresses in this unit never need to be ported. The numbers that matter for the port are the formulas of 7.4-7.7 and the structure of 5 and 6, to be confirmed against DATE.
+- DATE's entry handler has four stages where this build's place entry has two: the birthday scenes (stages 2 and 3, reached by `spot_birthday_check_step`) are missing here and fall into the bad-state handler, another sign that the dev build predates the live one. The stale addresses in this unit never need to be ported. For the rules take DATE's numbers: section 7.0 lists the differences found, and 7.4-7.7 describe EVENT's own versions. The structure of sections 5 and 6 is the same machine in DATE with the shipped primitives.
 
 ## 11. Open questions
 
@@ -452,5 +505,8 @@ Mode numbers differ too: dev 0x50 (date) equals `MODE_DATE`, dev 0x60 (girl scen
 3. The dev-main aliases (121 rows) cannot be applied by `rename.py` as overlay rows. Either an EVENT-only symbol file is introduced, or the aliases stay as documentation (this spec).
 4. Dev-disc ids (background ids, scene pack sectors, LBAs) are build-specific and are not reproduced in the table of data; they appear as note text only.
 5. The dev main code that sets the girl `D_800EECB4` and the scene `D_800EECB0` for scene 1, 2 and 8 and starts mode 0x60 is not in this unit; only `spot_date_event_choose` does it for the date events (scenes 2-6).
-6. The variant semantics (`spot_place_variant` 0/1/2 and the outcome ids) are readings; DATE's twin cells (`D_800CA2FC`, `date_arrival`) will confirm them.
-7. The EVENT code reaches the girl records mostly through the shared main type `Rec34` (core: `LegacyGirlRecord`), for example `D_800B0A04[g].unk_06`; the rows `SpotLegacyGirlRecord.*` rename only EVENT's own view (the plan counts 54 to 124 member uses per field left in other types). The same member names (`tokimeki_frac`, `tokimeki`, `affection_frac`, `affection`, `counter_frac`, `counter`, `flags`, `birthday`, `visit_counts`) belong on `LegacyGirlRecord` in core's table; EVENT and GYOZI are its only users, so this changes no live code.
+6. Only the parity rule of the ride and hero show variants is proven (7.7). The meaning of the variants 0/1/2 of the places and of the outcome ids is a reading; DATE's twin cells (`D_800CA2FC`, `date_arrival`) will confirm it.
+7. The EVENT code reaches the girl records mostly through the shared main type `Rec34` (core: `LegacyGirlRecord`), for example `D_800B0A04[g].unk_06`; the rows `SpotLegacyGirlRecord.*` rename only EVENT's own view (the plan counts 54 to 124 member uses per field left in other types). The same member names (`tokimeki_frac`, `tokimeki`, `affection_frac`, `affection`, `syoushin_frac`, `syoushin`, `flags`, `birthday`, `event_counters`), which are core's `GirlRecord` names, belong on `LegacyGirlRecord` in core's table; EVENT and GYOZI are its only users, so this changes no live code.
+8. Members kept `unk_` on purpose (18, all hardware layer or movie scratch, module-level scope): `SpotRideMovieWork` (8 control halfwords and bytes of the ride movies: `unk_00`, `02`, `04`, `06`, `0A`, `18`, `19`, `1A`), `SpotSpriteQuad` (7 signed views of sprite quad members: `unk_00`, `04`, `06`, `08`, `0A`, `0C`, `0E`), `SpotDevEffectView` (`unk_1031`, six bytes that the particle code sets to 0xB or 0xC, and `unk_13A8`, a 58-word effect table) and `SpotDevState.unk_1037` (the byte after those six; the DATE twin of the Yuina scene 4 stats step writes `quad_layer[57]` where EVENT writes it, so HYPOTHESIS: the seven bytes are sprite-quad layer bytes 51-57 of a dev table based at +0xFFE). Every other member of the EVENT views has a name (10 were added in the fix pass: `player_flags`, `athletics`, `saved_mode`, `saved_stage`, `saved_step`, `appointment_flag`, `pad_pressed`, `girls` of the fixed view, `step_timer` and `step` of the transition view).
+9. Cross-unit names to settle at the merge: `GameState.unk_014/018` (core `screen_center_x/y`, h-graphics and h-cdio `draw_origin_x/y`; EVENT follows core for now and the value includes the screen shake, which favours `draw_origin`), and the `Rec24` members (core `flags`, `w`, `h`, `tint_r`, `anchor_x` against h-graphics `attribute`, `width`, `height`, `pivot_x`; EVENT's signed view keeps `unk_` until then).
+10. 25 step functions keep position-only names (`spot_<owner>_step_NN`, `spot_<owner>_face_step_NN`): each does one small step-specific thing (a sound trigger, an effect setup, a portrait layout), so a role name would only restate the table position. Their table notes now say what each one does.
