@@ -135,7 +135,7 @@ func	BUNKASAI	func_801417DC	culture_yumi_visit_open_sketching	stage 160; CLUB_AR
 func	BUNKASAI	func_80141F70	culture_yumi_visit_oil_painting_exhibit	stage 161; CLUB_ART, every year except 96 (oil painting exhibit); background 0x410F; girl script read: 19 sectors from sector 0x4B5E
 func	BUNKASAI	func_80142298	culture_yumi_visit_concert	stage 162; CLUB_BRASS_BAND, every year (banner: concert); background 0x40F4; girl script read: 19 sectors from sector 0x4B5E; plays the stage show (mode 0x80) with variant 2
 func	BUNKASAI	func_80142694	culture_yumi_visit_script_start	sets name codes for the girl, selects her script set, resets the line and loads the three table pointers, then main_step_next
-func	BUNKASAI	func_801511E0	culture_shiori_member_entry	stage 1 entry of the shiori member block (she is in the player's club): sets girl 0 acquainted bit (b2), visitor girl 0, then maps club and year to a sub-stage; sub-stages by exhibit: literature_exhibit 2, speech_contest 3, drama_play 4, experiment_show 5, computer_fortune 6, computer_game 8, computer_experiment_show 9, portrait_drawing 10, open_sketching 11, oil_painting_exhibit 12, concert 13; fortune stage 7
+func	BUNKASAI	func_801511E0	culture_shiori_member_entry	stage 1 entry of the shiori member block (she is in the player's club): sets bit b2 of the girl 0 flags (m-scheduler names it acquainted, a HYPOTHESIS there), visitor girl 0, then maps club and year to a sub-stage; sub-stages by exhibit: literature_exhibit 2, speech_contest 3, drama_play 4, experiment_show 5, computer_fortune 6, computer_game 8, computer_experiment_show 9, portrait_drawing 10, open_sketching 11, oil_painting_exhibit 12, concert 13; fortune stage 7
 func	BUNKASAI	func_80151364	culture_shiori_member_literature_exhibit	stage 2; CLUB_LITERATURE, years 95 and 96 (banner: poem collection in 95, anthology in 96); background 0x40EA; girl script read: 24 sectors from sector 0x49D0
 func	BUNKASAI	func_801516B0	culture_shiori_member_speech_contest	stage 3; CLUB_LITERATURE, year 97 (banner: speech contest); background 0x40F4; girl script read: 24 sectors from sector 0x49D0; plays the stage show (mode 0x80) with variant 2
 func	BUNKASAI	func_80151A10	culture_shiori_member_drama_play	stage 4; CLUB_DRAMA, every year (banner: drama club performance); background 0x40F4; girl script read: 24 sectors from sector 0x49D0; plays the stage show (mode 0x80), variant left as set before
@@ -148,18 +148,18 @@ func	BUNKASAI	func_80153530	culture_shiori_member_open_sketching	stage 11; CLUB_
 func	BUNKASAI	func_801537BC	culture_shiori_member_oil_painting_exhibit	stage 12; CLUB_ART, year 97 (banner: oil painting exhibit); background 0x410F; girl script read: 24 sectors from sector 0x49D0
 func	BUNKASAI	func_80153A98	culture_shiori_member_concert	stage 13; CLUB_BRASS_BAND, every year (banner: concert); background 0x40F4; girl script read: 24 sectors from sector 0x49D0; plays the stage show (mode 0x80) with variant 3
 func	BUNKASAI	func_80153FA4	culture_shiori_member_script_start	sets name codes for the girl, selects her script set, resets the line and loads the three table pointers, then main_step_next
-func	BUNKASAI	func_801354B0	culture_mio_member_entry	stage 42 entry of the mio member block (she is in the player's club): sets girl 1 acquainted bit (b2), visitor girl 1, then maps club and year to a sub-stage; sub-stages by exhibit: literature_exhibit 43, speech_contest 44, drama_play 45
+func	BUNKASAI	func_801354B0	culture_mio_member_entry	stage 42 entry of the mio member block (she is in the player's club): sets bit b2 of the girl 1 flags (m-scheduler HYPOTHESIS name acquainted), visitor girl 1, then maps club and year to a sub-stage; sub-stages by exhibit: literature_exhibit 43, speech_contest 44, drama_play 45
 func	BUNKASAI	func_80135554	culture_mio_member_literature_exhibit	stage 43; CLUB_LITERATURE, years 95 and 96 (banner: poem collection in 95, anthology in 96); background 0x40EA; girl script read: 11 sectors from sector 0x4AA9
 func	BUNKASAI	func_80135914	culture_mio_member_speech_contest	stage 44; CLUB_LITERATURE, year 97 (banner: speech contest); background 0x40F4; girl script read: 11 sectors from sector 0x4AA9; plays the stage show (mode 0x80) with variant 3
 func	BUNKASAI	func_80135C4C	culture_mio_member_drama_play	stage 45; CLUB_DRAMA, every year (banner: drama club performance); background 0x40F4; girl script read: 11 sectors from sector 0x4AA9; plays the stage show (mode 0x80), variant left as set before
 func	BUNKASAI	func_80136230	culture_mio_member_script_start	sets name codes for the girl, selects her script set, resets the line and loads the three table pointers, then main_step_next
-func	BUNKASAI	func_8013B190	culture_yuina_member_entry	stage 59 entry of the yuina member block (she is in the player's club): sets girl 2 acquainted bit (b2), visitor girl 2, then maps club and year to a sub-stage; sub-stages by exhibit: experiment_show 60, computer_fortune 61, computer_game 63, computer_experiment_show 64; fortune stage 62
+func	BUNKASAI	func_8013B190	culture_yuina_member_entry	stage 59 entry of the yuina member block (she is in the player's club): sets bit b2 of the girl 2 flags (m-scheduler HYPOTHESIS name acquainted), visitor girl 2, then maps club and year to a sub-stage; sub-stages by exhibit: experiment_show 60, computer_fortune 61, computer_game 63, computer_experiment_show 64; fortune stage 62
 func	BUNKASAI	func_8013B25C	culture_yuina_member_experiment_show	stage 60; CLUB_SCIENCE (banner: experiment show); background 0x40FC; girl script read: 10 sectors from sector 0x4A2C; plays the stage show (mode 0x80) with variant 3
 func	BUNKASAI	func_8013B688	culture_yuina_member_computer_fortune	stage 61; CLUB_COMPUTER, year 95 (banner: computer fortune telling); hands over to the shared fortune stage; background 0x4105; girl script read: 10 sectors from sector 0x4A2C
 func	BUNKASAI	func_8013BB94	culture_yuina_member_computer_game	stage 63; CLUB_COMPUTER, year 96 (banner: game); launches the TT game exhibit; background 0x4105; girl script read: 10 sectors from sector 0x4A2C; starts the TT game through stage 164; resumes through stage 163 afterwards
 func	BUNKASAI	func_8013C0AC	culture_yuina_member_computer_experiment_show	stage 64; CLUB_COMPUTER, year 97 (banner: experiment show); background 0x4105; girl script read: 10 sectors from sector 0x4A2C; plays the stage show (mode 0x80) with variant 3
 func	BUNKASAI	func_8013C3C4	culture_yuina_member_script_start	sets name codes for the girl, selects her script set, resets the line and loads the three table pointers, then main_step_next
-func	BUNKASAI	func_80146030	culture_ayako_member_entry	stage 80 entry of the ayako member block (she is in the player's club): sets girl 3 acquainted bit (b2), visitor girl 3, then maps club and year to a sub-stage; sub-stages by exhibit: portrait_drawing 81, open_sketching 82, oil_painting_exhibit 83, concert 84
+func	BUNKASAI	func_80146030	culture_ayako_member_entry	stage 80 entry of the ayako member block (she is in the player's club): sets bit b2 of the girl 3 flags (m-scheduler HYPOTHESIS name acquainted), visitor girl 3, then maps club and year to a sub-stage; sub-stages by exhibit: portrait_drawing 81, open_sketching 82, oil_painting_exhibit 83, concert 84
 func	BUNKASAI	func_80146100	culture_ayako_member_portrait_drawing	stage 81; CLUB_ART, year 95 (banner: portrait drawing); background 0x410F; girl script read: 12 sectors from sector 0x4AFC
 func	BUNKASAI	func_801464A8	culture_ayako_member_open_sketching	stage 82; CLUB_ART, year 96 (banner: public sketching session); background 0x4118; girl script read: 12 sectors from sector 0x4AFC
 func	BUNKASAI	func_801466FC	culture_ayako_member_oil_painting_exhibit	stage 83; CLUB_ART, year 97 (banner: oil painting exhibit); background 0x410F; girl script read: 12 sectors from sector 0x4AFC
@@ -205,11 +205,11 @@ func	BUNKASAI	func_80151064	culture_stage_game_launch	stage 164: narrator line, 
 func	BUNKASAI	func_8015AF90	culture_fortune_scene	shared stage 7/21/36/52/62/71/91/103/115/127/139: the computer fortune telling sub-scene; returns to culture_return_stage and culture_return_step
 func	BUNKASAI	func_8015B828	culture_fortune_lookup	looks up the fortune result from the blood types of the target girl and the player; 3 when the target is Yuina and she is in the computer club and the player is not
 func	BUNKASAI	func_8013FA20	culture_ayako_visit_unused_stage	stage 78: empty body, no stage sets 78, kept as a table slot
-func	BUNKASAI	func_8013FA28	culture_ayako_visit_followup	stage 79: Ayako follow-up talk after the speech contest or drama scene (stages 67 and 68 jump here with main_stage_set(0x4F)); groups by her rank, her syoushin bits 0-1, acquainted bit b2 and her club; sets festival_call_95/96 (b12/b13) when the player is in the literature club and her rank is not 4
+func	BUNKASAI	func_8013FA28	culture_ayako_visit_followup	stage 79: Ayako follow-up talk after the speech contest or drama scene (stages 67 and 68 jump here with main_stage_set(0x4F)); groups by her rank, her syoushin bits 0-1, flag bit b2 (m-scheduler HYPOTHESIS name acquainted) and her club; sets flag bit b12 in year 95 or b13 in year 96 (m-scheduler HYPOTHESIS names festival_call_95/96) when the player is in the literature club and her rank is not 4
 data	BUNKASAI	D_801604F0	culture_script_text_table	pointer to the text table of the current script set; written by the 22 script setters, copied into dialogue_text_table
 data	BUNKASAI	D_801604F4	culture_script_command_table	pointer to the command table of the current script set; copied into dialogue_command_table
 data	BUNKASAI	D_801604F8	culture_script_voice_table	pointer to the voice table of the current script set; copied into dialogue_voice_table
-data	BUNKASAI	D_80160520	culture_unused_girl_bytes	11 bytes copied to the stack by culture_festival_entry and never read (dead copy kept for the match)
+data	BUNKASAI	D_80160520	culture_unused_bytes	the 11 bytes 0,1,1,2,1,2,1,0,2,1,0 are copied to the stack by culture_festival_entry and the copy is never read; no meaning is claimed (a dead copy kept for the match), which is why the name says only unused bytes
 data	BUNKASAI	D_8016052C	culture_club_param_index	per club 0..5: index into the parameter block (1 liberal arts for clubs 0,1; 2 science for 2,3; 3 art for 4,5) read by culture_result_apply
 data	BUNKASAI	D_80160534	culture_tokimeki_gain_95	13 girls x 6 clubs bytes (0..3) for year 95: half of it is added to the girl's tokimeki by culture_result_apply; the visitor gets the value minus 1 more
 data	BUNKASAI	D_80160584	culture_tokimeki_gain_96	same table for year 96 (rows 11 and 12 are zero)
@@ -261,27 +261,11 @@ data	BUNKASAI	D_80160AE0	culture_fortune_girl_names	12 text pointers shown on th
 data	BUNKASAI	D_80160B10	culture_fortune_girl_blood_labels	11 text pointers: blood type label of heroines 0..10 shown on the fortune screen (entry 0 is an empty string; girl 0 uses culture_blood_type_labels)
 data	BUNKASAI	D_80160B3C	culture_blood_type_labels	4 text pointers: blood type label by blood type id 0..3 (order of the labels O, A, B, AB)
 data	BUNKASAI	D_80160B4C	culture_fortune_timer	byte frame counter of the fortune screen steps
-data	BUNKASAI	D_80160B50	culture_fortune_compat_table	4x4 words [girl blood type][player blood type] = fortune result 0..2: 2 for equal types, 0 for the pairs 0-1 and 2-3, else 1
+data	BUNKASAI	D_80160B50	culture_fortune_blood_table	4x4 words [girl blood type][player blood type] = fortune result 0..2: 2 for equal types, 0 for the pairs 0-1 and 2-3, else 1
 data	BUNKASAI	D_8015D774	culture_backstage_title	rodata string: the backstage banner title shown by culture_backstage_title_show
-data	main	D_80122E98	culture_default_disp_off	scene flag: nonzero skips Default_Disp at the end of culture_festival_entry; set to 1 while a stage reinitialises the screen after the TT game
-data	main	D_80122EA8	culture_fortune_result	fortune result 0..3 stored by culture_fortune_scene and added to the dialogue group by the computer fortune stages; shared with BUNKAKEN
-data	main	D_80122EAC	culture_show_variant	variant passed to the stage show overlay BUNKA_SD (mode 0x80): which cast and show data it uses; BUNKASAI writes 0, 2, 3 or 6; shared with BUNKAKEN and BUNKA_SD
-data	main	D_80122EB0	culture_return_stage	stage to return to after a sub-scene (stage show, fortune, TT game); read by BUNKA_SD stage 0x10 and by culture_fortune_scene
-data	main	D_80122EB4	culture_return_step	step to return to (usually step + 1 of the calling step)
-data	main	D_80122EB8	culture_exhibit_club	club id 0..5 (CLUB_*) of the player: the exhibit of this festival, set by culture_stage_intro; first word of CultureFestivalDispatch
-data	main	D_80122EBC	culture_visitor_girl	heroine id of the current scene (visitor or club mate), 0xFF = none; second word of CultureFestivalDispatch
-data	main	D_80122EC0	culture_phase	phase of culture_festival_entry (CulturePhase)
-data	main	D_800E7D4E	tt_stages_cleared	result of the last TT run: stages cleared 0..4, read by the festival game scenes to choose the reaction line (o-tt spec: run.stage)
-data	main	D_800E7D4F	tt_mode_flags	flag byte (Flags7D4F / ExtraModeFlags): bit 0 TT listed in the extras, bit 1 direct mode, bits 2-4 direct stage
-func	main	func_80041168	vram_slots_clear	ClearImage of 64x128 VRAM blocks: slot s at x = (s & 15) * 64, y from bits 4 and 5; 0xFF clears the whole area and every slot, 0xFE four slot ranges, 0 a set of slots; used here by stage 163 (BUNKASAI) after the TT game; 11 call sites in main, NAME_ENT, RPG_BAT, TACO, BUNKASAI, BUNKAKEN
-field	BunkaDispatch8	unk_00	club	club id 0..5 of the exhibit (culture_stage_intro writes D_80122EB8)
-field	BunkaDispatch8	unk_04	girl	current scene heroine id (block entries store it)
 field	BunkasaiTable40	unk_00	result	fortune result [girl blood type][player blood type]
 field	BunkasaiNameTable	s	names	option texts [year-95][choice][33]
-field	FnTbl165	f	stage_fn	stage function pointer
-field	Flags7D4F	b0	tt_unlocked	set when the TT game has been started once and by the festival game exhibit; the OPTION extras menu lists TT while it is set (o-tt spec)
-field	Flags7D4F	b1	direct_mode	TT skips its title and plays a recorded stage; set by the festival game exhibit (o-tt spec)
-field	Flags7D4F	unk_2_4	direct_stage	stage 0..4 of the direct mode, 0 for the launcher path, 1..4 for the fixed shows of girls 5, 6, 10 and 8
+field	FnTbl165	f	stage_function	stage function pointer
 type	BUNKASAI	BunkasaiNameTable	CultureChoiceNames	3 x 3 x 33-byte option texts
 type	BUNKASAI	BunkasaiTexts12	CultureFortuneGirlNames	12 text pointers
 type	BUNKASAI	BunkasaiTexts11	CultureFortuneBloodLabels	11 text pointers
@@ -290,7 +274,7 @@ type	BUNKASAI	BunkasaiGirlBytes	CultureUnusedBytes	11-byte dead copy
 type	BUNKASAI	BunkasaiColumns	CultureClubParamIndex	6 bytes, parameter index per club
 type	BUNKASAI	BunkasaiGirlColumns	CultureTokimekiGains	13 x 6 byte table
 type	BUNKASAI	BunkasaiGirlList	CultureGirlList	11-word list of heroine indices
-type	BUNKASAI	BunkasaiTable40	CultureCompatTable	4 x 4 word fortune table
+type	BUNKASAI	BunkasaiTable40	CultureFortuneBloodTable	4 x 4 word fortune table
 type	BUNKASAI	FnTbl165	CultureStageTable	165 stage function pointers (declared in 80150930.c)
 file	BUNKASAI	src/ovl/BUNKASAI/80132000.c	src/ovl/culture_festival/script_sets.c	22 script set setters (three table pointers each)
 file	BUNKASAI	src/ovl/BUNKASAI/80132480.c	src/ovl/culture_festival/yuina_visit.c	Yuina visit block, stages 46-58
@@ -313,16 +297,16 @@ file	BUNKASAI	src/ovl/BUNKASAI/80154018.c	src/ovl/culture_festival/mio_visit.c	M
 file	BUNKASAI	src/ovl/BUNKASAI/80158EB0.c	src/ovl/culture_festival/megumi_visit.c	Megumi visit block, stages 145-153
 file	BUNKASAI	src/ovl/BUNKASAI/8015AF90.c	src/ovl/culture_festival/fortune_telling.c	shared computer fortune stage and its result lookup
 file	BUNKASAI	include/ovl/BUNKASAI.h	include/ovl/culture_festival.h	overlay header
-const	CulturePhase	0	CULTURE_PHASE_INIT	D_80122EC0 value; init: sound bank, icon bar and parameter panel hidden, no visitor
-const	CulturePhase	1	CULTURE_PHASE_FADE_RESET	D_80122EC0 value; brightness 0
-const	CulturePhase	2	CULTURE_PHASE_GATE_LOAD	D_80122EC0 value; wait for the sound bank, read the gate background
-const	CulturePhase	3	CULTURE_PHASE_GATE_SHOW	D_80122EC0 value; wait for the read, show it, read the intro script (5 sectors at 0x49BA)
-const	CulturePhase	4	CULTURE_PHASE_GATE_FADE_IN	D_80122EC0 value; fade the gate background in until the step moves
-const	CulturePhase	5	CULTURE_PHASE_INTRO_SETUP	D_80122EC0 value; select the intro script set, reset dialogue
-const	CulturePhase	6	CULTURE_PHASE_INTRO_TALK	D_80122EC0 value; festival intro dialogue
-const	CulturePhase	7	CULTURE_PHASE_STAGES	D_80122EC0 value; stage table dispatch (culture_stage_dispatch)
-const	CulturePhase	8	CULTURE_PHASE_FINISH	D_80122EC0 value; finish: birthday check, result, event log, back to the day queue
-const	CulturePhase	9	CULTURE_PHASE_BIRTHDAY	D_80122EC0 value; girl 0 birthday scene (culture_birthday_scene)
+const	CulturePhase	0	CULTURE_PHASE_INIT	culture_phase value; init: sound bank, icon bar and parameter panel hidden, no visitor
+const	CulturePhase	1	CULTURE_PHASE_FADE_RESET	culture_phase value; brightness 0
+const	CulturePhase	2	CULTURE_PHASE_BACKGROUND_LOAD	culture_phase value; wait for the sound bank, then read the festival background (sector 0x4029); which picture it is has not been looked at (no emulator capture of phases 2 to 4), so the name says only what the code does
+const	CulturePhase	3	CULTURE_PHASE_BACKGROUND_SHOW	culture_phase value; wait for the read, show it, read the intro script (5 sectors at 0x49BA)
+const	CulturePhase	4	CULTURE_PHASE_BACKGROUND_FADE_IN	culture_phase value; fade the background in until the step moves (the intro dialogue then runs over it)
+const	CulturePhase	5	CULTURE_PHASE_INTRO_SETUP	culture_phase value; select the intro script set, reset dialogue
+const	CulturePhase	6	CULTURE_PHASE_INTRO_TALK	culture_phase value; festival intro dialogue
+const	CulturePhase	7	CULTURE_PHASE_STAGES	culture_phase value; stage table dispatch (culture_stage_dispatch)
+const	CulturePhase	8	CULTURE_PHASE_FINISH	culture_phase value; finish: birthday check, result, event log, back to the day queue
+const	CulturePhase	9	CULTURE_PHASE_BIRTHDAY	culture_phase value; girl 0 birthday scene (culture_birthday_scene)
 const	CultureStage	0	CULTURE_STAGE_INTRO	GameState.stage in mode 0x70; culture_stage_intro
 const	CultureStage	1	CULTURE_STAGE_SHIORI_MEMBER	GameState.stage in mode 0x70; block entry: Shiori is in the player's club
 const	CultureStage	7	CULTURE_STAGE_FORTUNE_SHIORI_MEMBER	GameState.stage in mode 0x70; shared fortune stage after the Shiori member computer fortune

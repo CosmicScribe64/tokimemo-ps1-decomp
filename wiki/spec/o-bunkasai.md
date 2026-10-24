@@ -8,7 +8,7 @@ sources: ["src/ovl/BUNKASAI/", "include/ovl/BUNKASAI.h", "config/renames/proposa
 
 # Overlay BUNKASAI: the culture festival, club-exhibit variant (port spec)
 
-Phase 2 spec for the Godot port ([[tickets/T-27025-p2-o-bunkasai]], parent [[tickets/T-27000-phase-2]]). Everything below is read from the matched C of `src/ovl/BUNKASAI/` (207 functions, 20 files) and checked in the emulator where noted. "HYPOTHESIS" marks a reading of game meaning that the code does not prove. New names are in `config/renames/proposals/o-bunkasai.tsv` (360 rows). The overlay prefix is `culture_` (functions, globals, constants `CULTURE_`, types `Culture`): `docs/adr/0001-phase-2-naming.md` maps BUNKASAI to the folder `culture_festival` and the prefix `culture_`; the Module words table of `GLOSSARY.md` already lists it. Names of the main exe, `GameState` fields, girl ids and clubs are the ones of the core table (`GIRL_*`, `CLUB_*`, `girls[i].affection`, `dialogue_group`, ...). No game text is quoted: exhibits are described in plain words.
+Phase 2 spec for the Godot port ([[tickets/T-27025-p2-o-bunkasai]], parent [[tickets/T-27000-phase-2]]). Everything below is read from the matched C of `src/ovl/BUNKASAI/` (207 functions, 20 files) and checked in the emulator where noted. "HYPOTHESIS" marks a reading of game meaning that the code does not prove. New names are in `config/renames/proposals/o-bunkasai.tsv` (344 rows). The main symbols that this unit uses but does not rename (the scene variables at `D_80122E98..D_80122EC0`, the TT bytes `D_800E7D4E/F`, `func_80041168` and the fields of `CultureFestivalDispatch` and `ExtraModeFlags`) are not rows of this table: each has exactly one row in a table that was merged first (BUNKAKEN and m-flow, section 3.1), and this spec uses those names. The overlay prefix is `culture_` (functions, globals, constants `CULTURE_`, types `Culture`): `docs/adr/0001-phase-2-naming.md` maps BUNKASAI to the folder `culture_festival` and the prefix `culture_`; the Module words table of `GLOSSARY.md` already lists it. Names of the main exe, `GameState` fields, girl ids and clubs are the ones of the core table (`GIRL_*`, `CLUB_*`, `girls[i].affection`, `dialogue_group`, ...). No game text is quoted: exhibits are described in plain words.
 
 ## 1. What it is
 
@@ -16,7 +16,7 @@ BUNKASAI plays the school culture festival for a player who belongs to one of th
 
 Who gets this overlay, and who gets BUNKAKEN: the queue record of type `DAY_EVENT_CULTURE_FESTIVAL` (0x24) is turned into mode 0x70 (`MODE_CULTURE_FESTIVAL_A`, this overlay) when the player's club id is below 6 (`CLUB_LITERATURE` .. `CLUB_BRASS_BAND`), and into mode 0x71 (BUNKAKEN) for every other club id, see [[spec/m-scheduler]] and [[spec/core]]. So the nibble the knowledge notes asked about is the player's club: this overlay is the club-member festival; BUNKAKEN is the festival of a player whose club has no exhibit (the glossary calls it the tour; HYPOTHESIS that it tours the culture clubs).
 
-Unit size: 207 functions in 20 C files; the data starts at 0x801603xx (the largest part is strings, which have no rows). The overlay is the usual 0x30000-byte slot at 0x80132000 (sector 0x916A, `overlays`), entry `culture_festival_entry` at 0x80142700. Of the 207 functions, 17 are framework and rule functions (sections 4, 5.1, 5.2, 7, 8), 22 set script pointers, 18 start a girl's script, 15 are block entries that map club and year to a stage, and 135 are scripted scene functions of one pattern (sections 5 and 6).
+Unit size: 207 functions in 20 C files; the data starts at 0x801603xx (the largest part is strings, which have no rows). The overlay is the usual 0x30000-byte slot at 0x80132000 (sector 0x916A, `overlays`), entry `culture_festival_entry` at 0x80142700. Of the 207 functions, 17 are framework and rule functions (sections 4, 5.1, 5.2, 7, 8), 22 set script pointers, 18 start a girl's script, 15 are block entries that map club and year to a stage, and 135 are scene functions: 133 of one pattern (sections 5 and 6), the empty stage-78 stub and the Ayako follow-up (7.1).
 
 The overlay depends on three other overlays: BUNKA_SD (mode 0x80, the stage shows with SD sprites, section 7.2), TT (mode 0xD0, the TwinBee game exhibit, section 7.4) and the shared main-exe scene helpers (`normal_date_*`, `dialogue_run`, `dec_bg_*`, `bustup_*`).
 
@@ -33,20 +33,22 @@ How the checks were made (for later probes): start from the title-menu save stat
 
 ### 3.1 Scene variables (main bss, shared with BUNKAKEN and BUNKA_SD)
 
+These are main symbols. This unit does not rename them: the BUNKAKEN table (`config/renames/proposals/o-bunkaken.tsv`, [[spec/o-bunkaken]]) holds the one row of each scene variable and of `D_800E7D4E`, with the names below; the m-flow table holds `D_800E7D4F` (`extra_mode_flags`) and `func_80041168` (`vram_clear_blocks`). The fields `club`, `girl`, `tt_unlocked`, `direct_mode` and `stage_select` are named in the BUNKAKEN table too (`stage_select` and `direct_mode` are the same bits as in o-tt's `TtConfigBits`). The festival words sit inside the object `overlay_scratch` (`D_80122DD0`, 0x100 bytes), so naming them needs a struct view or a split of that object; that is the merge step's decision (BUNKAKEN spec, open questions).
+
 | Address | New name | Meaning |
 |---|---|---|
 | `D_80122EC0` | `culture_phase` | phase of the entry switch (section 4), `CulturePhase` |
-| `D_80122EB8` | `culture_exhibit_club` | player's club id 0..5, set by `culture_stage_intro`; the first word of `CultureFestivalDispatch` (core type, fields renamed `club` and `girl` here) |
+| `D_80122EB8` | `culture_exhibit_club` | player's club id 0..5, set by `culture_stage_intro`; the first word of `CultureFestivalDispatch` (core type, HYPOTHESIS name there; its fields are `club` and `girl`) |
 | `D_80122EBC` | `culture_visitor_girl` | heroine id 0..10 of the running scene, 0xFF = none (set to 0xFF in phase 0); second word of the dispatch pair. For the Shiori member block it is 0, for a club mate her own id, for a visitor the random pick |
 | `D_80122EAC` | `culture_show_variant` | cast variant handed to BUNKA_SD; BUNKASAI writes 0, 2, 3 or 6 (section 7.2) |
 | `D_80122EB0`, `D_80122EB4` | `culture_return_stage`, `culture_return_step` | return point after a sub-scene (byte values) |
 | `D_80122EA8` | `culture_fortune_result` | fortune result 0..3, added to the dialogue group (section 7.3) |
-| `D_80122E98` | `culture_default_disp_off` | nonzero skips `Default_Disp()` at the end of the entry; set to 1 around the stage-163 jump |
+| `D_80122E98` | `culture_display_skip` | nonzero skips `Default_Disp()` at the end of the entry; set to 1 around the stage-163 jump |
 | `D_800E7D4E` | `tt_stages_cleared` | result of the last TT run (stages cleared, 0..4), read by the game scenes |
-| `D_800E7D4F` | `tt_mode_flags` | `Flags7D4F` byte: bit 0 `tt_unlocked`, bit 1 `direct_mode`, bits 2-4 `direct_stage` |
-| `D_80122EA4` | (not renamed) | set to 0xFF in phase 0, never read here; BUNKAKEN compares it with girl ids. Left for the BUNKAKEN unit |
+| `D_800E7D4F` | `extra_mode_flags` | `ExtraModeFlags` byte (core type, HYPOTHESIS name; m-flow names the byte): bit 0 `tt_unlocked`, bit 1 `direct_mode`, bits 2-4 `stage_select`. The code only shows that the game exhibit scenes set bit 0 (13 sites) and that the TT loader sets it on every TT start; that it means "unlocked" is the o-tt spec's reading of the OPTION extras row (HYPOTHESIS) |
+| `D_80122EA4` | `culture_refused_girl` (BUNKAKEN table) | set to 0xFF in phase 0, never read in this overlay; BUNKAKEN uses it as the girl the player turned down |
 
-Main fields used: `GameState.year` (95, 96, 97), `month`, `day`, `player_flags` bits 12-15 (club), `player_birthday`, `girls[i]` (`tokimeki`, `affection`, `syoushin`, `flags` with `met` bit 1, `acquainted` bit 2 (HYPOTHESIS name of m-scheduler), `festival_call_95/96` bits 12 and 13 (m-scheduler names), `club` bits 20-23, `birthday`), `clubs[c].exp` (u16), `param_liberal_arts`/`param_science`/`param_art` (`value` half), `daily_event_bits`, `event_log`, `saved_mode/stage/step`, `input_device`, `dialogue_group/line/*_table/choice`, `girl_menu_enabled`.
+Main fields used: `GameState.year` (95, 96, 97), `month`, `day`, `player_flags` bits 12-15 (club), `player_birthday`, `girls[i]` (`tokimeki`, `affection`, `syoushin`, `flags` with `met` bit 1, `acquainted` bit 2 and `festival_call_95/96` bits 12 and 13 (all three are HYPOTHESIS names of m-scheduler), `club` bits 20-23, `birthday`), `clubs[c].exp` (u16), `param_liberal_arts`/`param_science`/`param_art` (`value` half), `daily_event_bits`, `event_log`, `saved_mode/stage/step`, `input_device`, `dialogue_group/line/*_table/choice`, `girl_menu_enabled`.
 
 ### 3.2 Overlay data (the tables the logic reads)
 
@@ -57,22 +59,22 @@ Main fields used: `GameState.year` (95, 96, 97), `month`, `day`, `player_flags` 
 | `culture_tokimeki_gain_95/96/97` | 0x80160534/584/5D4 | 13 girls x 6 clubs bytes, section 8.1 |
 | `culture_club_param_index` | 0x8016052C | club 0..5 -> parameter block index 1, 1, 2, 2, 3, 3 |
 | `culture_choice_names` | 0x801606DC | 3 years x 3 options x 33 bytes of option text (birthday scene) |
-| `culture_fortune_compat_table` | 0x80160B50 | 4 x 4 words, section 7.3 |
+| `culture_fortune_blood_table` | 0x80160B50 | 4 x 4 words indexed by the two blood types (type `CultureFortuneBloodTable`), section 7.3 |
 | `culture_fortune_girl_names`, `culture_fortune_girl_blood_labels`, `culture_blood_type_labels` | 0x80160AE0 / B10 / B3C | 12, 11 and 4 text pointers for the fortune screen |
 | `culture_birthday_*_table_00..12` | 0x80160640..0x801606D8 | 13 text, 13 command and 13 voice pointers of the extra file the birthday scene reads to 0x801B0000; only index 1 is used |
-| `culture_unused_girl_bytes`, `culture_visitor_list_init`, `culture_backstage_title` | 0x80160520, 0x80160AA4, 0x8015D774 | dead 11-byte copy; template of the visitor list; the backstage banner string |
+| `culture_unused_bytes`, `culture_visitor_list_init`, `culture_backstage_title` | 0x80160520, 0x80160AA4, 0x8015D774 | 11 bytes (0,1,1,2,1,2,1,0,2,1,0) copied to the stack and never read, no meaning claimed; template of the visitor list; the backstage banner string |
 
 ## 4. Phase machine (`culture_festival_entry`)
 
-Every frame: `bustup_wink_update()`, then a switch on `culture_phase`, then `Default_Disp()` unless `culture_default_disp_off` is set. Constants `CULTURE_PHASE_*`.
+Every frame: `bustup_wink_update()`, then a switch on `culture_phase`, then `Default_Disp()` unless `culture_display_skip` is set. Constants `CULTURE_PHASE_*`.
 
 | Phase | Name | What it does |
 |---|---|---|
 | 0 | `INIT` | sound command 0xBF, sound bank 1 start, scene reset, `girl_menu_enabled[i]` = the met bit of girls 0..10, background and text reset, message window initialised, banner title = festival name, icon bar, parameter panel and mascot hidden, date panel initialised (it stays visible), `culture_visitor_girl` = 0xFF, `culture_phase` += 1 |
 | 1 | `FADE_RESET` | brightness 0, next |
-| 2 | `GATE_LOAD` | when the bank wait is done (`snd_bank_load_poll() == 1`): sound command 0x200, read the festival background (sector 0x4029), next |
-| 3 | `GATE_SHOW` | when the read is done: show the background in layer 1, read the intro script (5 sectors at 0x49BA to 0x801E8000), banner on, next |
-| 4 | `GATE_FADE_IN` | `normal_date_bg_fadein`; `culture_phase_next_on_step` leaves when the fade moved the step |
+| 2 | `BACKGROUND_LOAD` | when the bank wait is done (`snd_bank_load_poll() == 1`): sound command 0x200, read the festival background (sector 0x4029), next. Which picture it is was not looked at (the emulator checks cover no screenshot of phases 2 to 4), so the name says only what the code does |
+| 3 | `BACKGROUND_SHOW` | when the read is done: show the background in layer 1, read the intro script (5 sectors at 0x49BA to 0x801E8000), banner on, next |
+| 4 | `BACKGROUND_FADE_IN` | `normal_date_bg_fadein`; `culture_phase_next_on_step` leaves when the fade moved the step |
 | 5 | `INTRO_SETUP` | when the read is done: text marker hidden, speaker names for girl 0, script set `culture_script_set_intro`, `dialogue_group` 0, line 0, tables stored, next |
 | 6 | `INTRO_TALK` | `normal_date_speak` (the festival intro lines), leaves like phase 4 |
 | 7 | `STAGES` | `culture_stage_dispatch`: calls the stage function of `GameState.stage` (section 5) |
@@ -159,7 +161,7 @@ Emulator check of this table: 78 runs from the title-menu state (all 18 club and
 
 Megumi and Yumi have no 1995 scenes (their gain-table rows are zero for 95 and the entries test only `year == 96`, sending every other year to the later scene). HYPOTHESIS: they are not met before 1996.
 
-## 6. The visit scene pattern (135 scene functions)
+## 6. The visit scene pattern (133 scene functions)
 
 Every visit or member scene is one function with 15 to 30 steps. The steps are the same few operations in a fixed order (step numbers vary by 1 or 2 between exhibits):
 
@@ -224,17 +226,17 @@ Five exhibits call `main_state_set(0x80)` after storing `culture_return_stage/st
 
 One shared function, entered from the year-95 computer club scenes of the same block by `main_stage_next` with the return point saved (the caller's stage and step + 1). Steps: 0 read one sector (0x4B80) of script; 1 set the fortune script set; a branch picks the target girl: in this overlay the target is always `culture_visitor_girl` (the branch with `select_girl2` is dead here: it needs `culture_visitor_girl` = 0xFF or a non-computer player club, and the fortune is only reached from the computer club; BUNKAKEN uses the same code); 5 speak; 6..19 draw a fake computer printout with typed strings (a header line, the girl's short name and her name in kanji from `culture_fortune_girl_names`, her blood type label from `culture_fortune_girl_blood_labels` or, for girl 0, `culture_blood_type_labels`, then the player's name and blood type) with sound command 0x50A before each of the two blocks and 0x15-frame waits (`culture_fortune_timer`); 20 confirm wait (a face button, after the typewriter finished); 21 speak; 22 sound command 0x508; 23 wait 0x3D frames, then result = `culture_fortune_lookup()`, `dialogue_group = result + 3`, `culture_fortune_result = result`, sound command 0x50C; 24 speak; 25 return to the saved stage and step.
 
-`culture_fortune_lookup`: blood type ids are the 2-bit value of `BirthdayBits.blood_type` of `girls[target].birthday` and `player_birthday`; the table is read as `compat[girl blood][player blood]`: 2 for equal types, 0 for the pairs (0, 1) and (2, 3), 1 for every other pair; id order O, A, B, AB follows the label tables. Special case: when the target is girl 2 (Yuina), Yuina is in the computer club and the player's club is not 3, the result is 3. The caller adds `culture_fortune_result` to its reaction group. Emulator check (three blood-type pairs): result 2 (group 5), 0 (group 3) and 1 (group 4) as predicted.
+`culture_fortune_lookup`: blood type ids are the 2-bit value of `BirthdayBits.blood_type` of `girls[target].birthday` and `player_birthday`; the table `culture_fortune_blood_table` is read as `[girl blood][player blood]`: 2 for equal types, 0 for the pairs (0, 1) and (2, 3), 1 for every other pair; id order O, A, B, AB follows the label tables. Special case: when the target is girl 2 (Yuina), Yuina is in the computer club and the player's club is not 3, the result is 3. The caller adds `culture_fortune_result` to its reaction group. Emulator check (three blood-type pairs): result 2 (group 5), 0 (group 3) and 1 (group 4) as predicted.
 
 ### 7.4 The game exhibit: TT (computer club, 1996)
 
-Thirteen scene functions are "computer game" scenes (one per block that has the 1996 computer exhibit: stages 8, 22, 37, 53, 63, 72, 92, 104, 116, 128, 140, 150, 159). In 4 of them (Yukari 104, Nozomi 116, Yuko 140, Yumi 159) the scene first starts TT directly: `tt_mode_flags` bit 1 (direct mode) set and a stage in bits 2-4 (Yukari 1, Nozomi 2, Yumi 3, Yuko 4), `saved_mode/stage/step` = current mode, stage, step + 1, `main_state_set(0xD0)`; TT plays that stage from its recorded input. After TT the overlay reloads at the saved step, which jumps (`culture_default_disp_off` = 1, return point stored) to stage 163 (`culture_stage_game_resume`): it clears the actors and the texture-page slots (`vram_slots_clear(0xFF)`, a main helper this table names: it clears the 64 VRAM blocks of 64 x 128 pixels), reloads the boot data and the HUD textures (`boot_data_load_step`, `boot_hud_textures_step`), the debug font, 0x95 sectors at 0x9B94 to 0x801A0000 and the month calendar images, re-creates the cursor, sets `season_palette_fade` to 0xFE, and jumps back with `main_stage_set(return stage)` and `main_step_set(return step)`. Every one of the 13 scenes also has the second launch: bit 1 set with stage field 0, saved point, `main_stage_set(164)` -> `culture_stage_game_launch`: a narrator line (the title "voice from above" and a blank speaker label on slot 8), then step 4 starts `main_state_set(0xD0)` only while `GameState.input_device` is 1 (pad); with the mouse (0) the step does not advance (HYPOTHESIS: the line asks the player to use a controller). After TT the scene reloads the same way and plays a reaction group chosen by rank and by `tt_stages_cleared`: the group is increased by 1 when the stages-cleared byte is below a threshold (Shiori member and visit 2, Ayako 2, Saki 2, Mira 2, Nozomi 2, Yumi 3, Yuko 4; Yukari, Mio, Yuina and Megumi do not test it). The scene ends by setting `tt_mode_flags` bit 0 (`tt_unlocked`), which makes the OPTION extras menu list the TT game ([[spec/o-tt]]). Emulator check (computer club, 1996, only girl 0 met, pad input, 30000 frames): stage 22 step 15 stores the saved point (mode 0x70, stage 0x16, step 0x10) and sets stage 164 (`tt_mode_flags` = 2: direct mode); the narrator stage runs its dialogue; TT (mode 0xD0) starts with `tt_mode_flags` = 3 (bit 0 set by the TT loader), runs the demo for about 1,800 frames and leaves through the loader; mode 0x70 comes back at stage 0x16 step 0x10, which jumps to stage 163 with return point (0x16, 0x11); the scene continues, `tt_stages_cleared` is still 0 and the reaction group is the base group plus 1, and phase 8 follows.
+Thirteen scene functions are "computer game" scenes (one per block that has the 1996 computer exhibit: stages 8, 22, 37, 53, 63, 72, 92, 104, 116, 128, 140, 150, 159). In 4 of them (Yukari 104, Nozomi 116, Yuko 140, Yumi 159) the scene first starts TT directly: `extra_mode_flags` bit 1 (`direct_mode`) set and a stage in bits 2-4 (`stage_select`) (Yukari 1, Nozomi 2, Yumi 3, Yuko 4), `saved_mode/stage/step` = current mode, stage, step + 1, `main_state_set(0xD0)`; TT plays that stage from its recorded input. After TT the overlay reloads at the saved step, which jumps (`culture_display_skip` = 1, return point stored) to stage 163 (`culture_stage_game_resume`): it clears the actors and the texture-page slots (`vram_clear_blocks(0xFF)`, the main helper named in the m-flow table: it clears all 64 VRAM blocks of 64 x 128 pixels), reloads the boot data and the HUD textures (`boot_data_load_step`, `boot_hud_textures_step`), the debug font, 0x95 sectors at 0x9B94 to 0x801A0000 and the month calendar images, re-creates the cursor, sets `season_palette_fade` to 0xFE, and jumps back with `main_stage_set(return stage)` and `main_step_set(return step)`. Every one of the 13 scenes also has the second launch: bit 1 set with stage field 0, saved point, `main_stage_set(164)` -> `culture_stage_game_launch`: a narrator line (the title "voice from above" and a blank speaker label on slot 8), then step 4 starts `main_state_set(0xD0)` only while `GameState.input_device` is 1 (pad); with the mouse (0) the step does not advance (HYPOTHESIS: the line asks the player to use a controller). After TT the scene reloads the same way and plays a reaction group chosen by rank and by `tt_stages_cleared`: the group is increased by 1 when the stages-cleared byte is below a threshold (Shiori member and visit 2, Ayako 2, Saki 2, Mira 2, Nozomi 2, Yumi 3, Yuko 4; Yukari, Mio, Yuina and Megumi do not test it). The scene ends by setting bit 0 of `extra_mode_flags` (`tt_unlocked` in the BUNKAKEN table); the o-tt spec reads that bit as what makes the OPTION extras menu list the TT game, a HYPOTHESIS that this overlay neither proves nor needs ([[spec/o-tt]]). Emulator check (computer club, 1996, only girl 0 met, pad input, 30000 frames): stage 22 step 15 stores the saved point (mode 0x70, stage 0x16, step 0x10) and sets stage 164 (`extra_mode_flags` = 2: direct mode); the narrator stage runs its dialogue; TT (mode 0xD0) starts with `extra_mode_flags` = 3 (bit 0 set by the TT loader), runs the demo for about 1,800 frames and leaves through the loader; mode 0x70 comes back at stage 0x16 step 0x10, which jumps to stage 163 with return point (0x16, 0x11); the scene continues, `tt_stages_cleared` is still 0 and the reaction group is the base group plus 1, and phase 8 follows.
 
 Steps of the two launcher stages:
 
 | Stage | Steps |
 |---|---|
-| 163 `culture_stage_game_resume` | 0 clear actors 0.., hide the cursor, `vram_slots_clear(0xFF)`; 1 `boot_data_load_step`; 2 `boot_hud_textures_step`; 3 `debug_font_load`; 4 read 0x95 sectors from 0x9B94 to 0x801A0000; 5 when done `month_calendar_load(year, month, 0)`; 6 `cursor_actor_init(0)`, cursor hidden, `season_palette_fade` = 0xFE, then `main_stage_set(culture_return_stage)` and `main_step_set(culture_return_step)`; any other step: `game_reset_to_title()` |
+| 163 `culture_stage_game_resume` | 0 clear actors 0.., hide the cursor, `vram_clear_blocks(0xFF)`; 1 `boot_data_load_step`; 2 `boot_hud_textures_step`; 3 `debug_font_load`; 4 read 0x95 sectors from 0x9B94 to 0x801A0000; 5 when done `month_calendar_load(year, month, 0)`; 6 `cursor_actor_init(0)`, cursor hidden, `season_palette_fade` = 0xFE, then `main_stage_set(culture_return_stage)` and `main_step_set(culture_return_step)`; any other step: `game_reset_to_title()` |
 | 164 `culture_stage_game_launch` | 0 read the narrator script (1 sector from 0x4B7F); 1 when done: text reset, banner "narrator", `culture_script_set_narrator`, `current_girl` 8, names for girl 8 with a blank short name, group 0, line 0, tables; 2 speak; 3 `normal_date_bg_fadeout`; 4 when `input_device` is 1: actors cleared, cursor hidden, brightness 0, `main_state_set(0xD0)` |
 
 ### 7.5 Girl 0's birthday scene (phase 9, `culture_birthday_scene`)
@@ -296,7 +298,7 @@ Emulator check: the literature scene sets bit 12 of girl 0 at its end (club 0, y
 
 - `girls[g].flags` bit 2 (`acquainted`, m-scheduler's HYPOTHESIS name) is set by the entry of a member block (girls 0, 1, 2, 3).
 - Bit 12 (`festival_call_95`) in year 95 and bit 13 (`festival_call_96`) otherwise are set at the end of the literature exhibit scene of each visit block (and of the Ayako follow-up) when the girl's rank is not 4: girls 0, 2..9 and, in year 96 only, girl 10. Girl 1's scene and the member blocks do not set them. The scheduler turns them into the phone calls of the festival Sundays ([[spec/m-scheduler]]).
-- `tt_mode_flags` bit 0 at the end of every game exhibit; `daily_event_bits` bit 0 and bit 2 in the birthday scene.
+- `extra_mode_flags` bit 0 at the end of every game exhibit; `daily_event_bits` bit 0 and bit 2 in the birthday scene.
 - `culture_visitor_girl`, `culture_exhibit_club`, `culture_show_variant`, `culture_return_*` as in section 3.1.
 
 ## 9. Data tables
@@ -321,25 +323,25 @@ Each `culture_script_set_*` writes three RAM addresses (text, command and voice 
 | 9 megumi | 0x64D0 | 10 @ 0x4B33 | |
 | 10 yumi | 0x6935 (and 0x6C5F, girl 13 Yoshio, in stage 160) | 19 @ 0x4B5E | |
 
-Other disc reads: gate background 0x4029, intro script 5 @ 0x49BA, birthday script 3 @ 0x49B7, birthday extra file 3 @ 0xAF43 (to 0x801B0000), narrator script 1 @ 0x4B7F, fortune script 1 @ 0x4B80, stage 163 reload 0x95 @ 0x9B94 (to 0x801A0000).
+Other disc reads: festival background 0x4029 (phase 2), intro script 5 @ 0x49BA, birthday script 3 @ 0x49B7, birthday extra file 3 @ 0xAF43 (to 0x801B0000), narrator script 1 @ 0x4B7F, fortune script 1 @ 0x4B80, stage 163 reload 0x95 @ 0x9B94 (to 0x801A0000).
 
 ## 10. Connections
 
 - Scheduler: [[spec/m-scheduler]] queues type 0x24 on the day with calendar marker 12 (the call dates in its spec suggest October) and clears the girl bit 0 and `overlay_scratch` first; it also sets the festival-call phone stages from the flags of 8.4.
 - Main scene helpers used by every scene: `normal_date_speak`, `normal_date_girl_in/out`, `normal_date_bg_fadein/out`, `normal_date_bggirl_fadein/out`, the two- and three-way selects, `dec_bg_cd_read`, `dec_bg_show_set`, `bustup_*` ([[spec/m-dates-b]]); `girl_state_rank`, `get_g_zyotai_h`, `event_log_add` fields ([[spec/core]]).
 - BUNKA_SD (stage shows), TT ([[spec/o-tt]], game exhibit and `tt_stages_cleared`), BUNKAKEN (the same variables and, by sibling code, the same fortune stage logic).
-- OPTION: lists the TT game after bit 0 of `tt_mode_flags` is set.
+- OPTION: its extras menu tests bit 0 of `extra_mode_flags` for the TT row (o-tt spec; HYPOTHESIS that this is an unlock).
 - Sound ([[spec/m-dates-a]] for the command classes): phase 0 and every re-entry after a sub-scene send command 0xBF (fade both channels), start sound bank 1 with the id list 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200 and, when the bank is ready, command 0x200 (BGM sequence 0 of the pack). The fortune hand-over sends 0x202 (BGM sequence 2); the fortune printout sends the sound effects 0x50A (twice), 0x508 and 0x50C; the birthday scene starts with 0xCF (fade both, the second fade variant). The festival has no other sound code; the stage show and the TT game bring their own.
 
 ## 11. Open questions
 
-1. `D_80122EA4` (left unnamed), `culture_show_variant` and the other shared scene variables need BUNKA_SD's and BUNKAKEN's units to confirm names (shared bss); BUNKAKEN writes 0..4; the value 6 of the Ayako member concert falls into BUNKA_SD's default branch (the cast of variant 4).
+1. `culture_show_variant` and the other shared scene variables take the names of the merged BUNKAKEN table; BUNKA_SD's unit still has to confirm them. BUNKAKEN writes 0..4; the value 6 of the Ayako member concert falls into BUNKA_SD's default branch (the cast of variant 4).
 2. Why Megumi's and Yumi's entries only test year 96 (HYPOTHESIS: not met in 1995); how `girls[0].birthday` is set (the scene tests its month and day against today; NAME_ENT sets her club from it).
 3. The festival date itself: the scheduler places it by calendar marker 12; the days are in `month_data_table` (not decoded here).
 4. Whether the mouse-only softlock at stage 164 step 4 is intended (the code only advances for the pad).
 5. The `syoushin & 3` test in the Mio, Yuina and Ayako visit scenes (43 sites): `syoushin` is a counter that grows by 5 per week and is clamped elsewhere, so the low two bits behave like a pseudo-random or incidental flag; whether the designers meant a story flag is not known.
 6. The meaning of the dialogue group numbers: they index script sections of the girl files; the stage C is the only place that maps rank, year and club to them.
-7. Name proposals for main-bss variables used by three overlays (section 3.1) must be reconciled with BUNKAKEN and BUNKA_SD.
+7. Reconciled with BUNKAKEN and m-flow (names of section 3.1 are theirs). Left for the merge step: `D_80122EC0` is an `s32` in `main_api.h`, and the two overlays give its values different constants (`CULTURE_PHASE_*` here, `TOUR_PHASE_*` in BUNKAKEN), which works without a shared type; the `overlay_scratch` struct view of the note under 3.1.
 
 ## 12. Function index
 
@@ -367,15 +369,15 @@ The old addresses of the framework and rule functions (the stage functions follo
 
 ## 13. Notes for the port
 
-- The 135 scene functions are copies of one template with per-girl parameters (portrait file, script file and sector count, the group numbers per rank, the TT thresholds). A data-driven scene runner (one step list, one parameter record per girl and exhibit) reproduces them; the exceptions are the Mio science scenes (three stages by year), Ayako's follow-up (stage 79), Yumi's two-speaker sketching scene (stage 160), and the game scenes that launch TT.
+- The 133 pattern scene functions are copies of one template with per-girl parameters (portrait file, script file and sector count, the group numbers per rank, the TT thresholds). A data-driven scene runner (one step list, one parameter record per girl and exhibit) reproduces them; the exceptions are the Mio science scenes (three stages by year), Ayako's follow-up (stage 79), Yumi's two-speaker sketching scene (stage 160), and the game scenes that launch TT.
 - The overlay reload is a hardware-era workaround: a port keeps `culture_phase`, the stage, the step, the return point and the visitor in one scene state and needs no reload or "stage 163" re-initialisation.
-- State changes that matter for the rest of the game: the result formula (8.1) at the end of the day, the birthday scene rewards (7.5), the festival-call flags (8.4), the event log entry (8.2), `acquainted` of the member girl, and `tt_unlocked`. Everything else is presentation.
+- State changes that matter for the rest of the game: the result formula (8.1) at the end of the day, the birthday scene rewards (7.5), the festival-call flags (8.4), the event log entry (8.2), bit 2 of the member girl's flags (m-scheduler's HYPOTHESIS name `acquainted`) and bit 0 of `extra_mode_flags`. Everything else is presentation.
 - Random choice: only the visitor pick (5.2); any generator works. The visitor list contains the met heroines 0..10 with equal weight.
-- Data to extract from the disc for the scenes: 22 script sets (the files at the sectors of section 9.2 and the groups the code names), the portrait files, the six exhibit backgrounds and the gate background.
+- Data to extract from the disc for the scenes: 22 script sets (the files at the sectors of section 9.2 and the groups the code names), the portrait files, the six exhibit backgrounds and the festival background of phase 2 (sector 0x4029).
 
 ## 14. Glossary rows this unit needs
 
-`GLOSSARY.md` has the culture festival (`culture_festival`, prefix `culture_`) and the heroine, club and parameter terms. These words appear in the proposed names and are not yet rows (plain-English stems from the banner titles and from the code; to be added with the first rename that uses them):
+`GLOSSARY.md` has the culture festival (`culture_festival`, prefix `culture_`) and the heroine, club and parameter terms. These words appear in the proposed names. The rows below are in `GLOSSARY.md` (section Events and scenes) since the review round 1 fixes of T-27025, so they are in place before the first rename that uses them. The unit adds no abbreviation: the names spell out `function` and `blood`, and the others it uses (`init`, `param`) are on the Abbreviations table. The stems are plain English from the banner titles and from the code:
 
 | Term | Meaning | Stem | Source |
 |---|---|---|---|
