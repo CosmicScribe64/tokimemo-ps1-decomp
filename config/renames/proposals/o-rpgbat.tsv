@@ -1,8 +1,8 @@
 # kind	scope	old	new	note
-func	RPG_BAT	func_8013B5B0	rpg_battle_entry	main mode 0x81 entry (overlay table); per-frame switch on stage byte unk_1109
+func	RPG_BAT	func_8013B5B0	rpg_battle_entry	main mode 0x81 entry (overlay table); per-frame switch on the stage byte (GameState.stage)
 func	RPG_BAT	func_8013B910	rpg_battle_stage_fight	stage 9 body: runs player, enemy, girl, popups each frame
 func	RPG_BAT	func_8013BBF8	rpg_battle_code_entry_update	matches pad words against two 10-button tables D_8015E550/E578
-func	RPG_BAT	func_8013BEA8	rpg_battle_pause_update	START (pad bit 0x800) toggles pause; state D_8015EC20 0 run, 1 paused, 3 code entry
+func	RPG_BAT	func_8013BEA8	rpg_battle_pause_update	PAD_START (core PadBits 0x0800, the pause toggle; tested in GameState.pad_pressed with a 2-frame debounce) toggles pause; state D_8015EC20 0 run, 1 paused, 3 code entry; the code-sequence tables use the same PsyQ layout
 func	RPG_BAT	func_8013C1CC	rpg_battle_check_enemy_defeated	sets D_8015EE1C=1 when the enemy HP in use hit 0 and all actors idle
 func	RPG_BAT	func_8013C2A0	rpg_battle_start_victory_sequence	D_8015EE1C==1: calls victory script by encounter
 func	RPG_BAT	func_8013C32C	rpg_battle_background_wave	sine-driven background strips; drawn only when the wave flag is set and the encounter is the delinquent trio (flag 0x100000)
@@ -17,7 +17,7 @@ func	RPG_BAT	func_8013D3E4	rpg_battle_apply_damage_single	applies D_8015EBB0 to 
 func	RPG_BAT	func_8013D418	rpg_battle_move_approach	common first half of a special move: player dashes in and strikes pose
 func	RPG_BAT	func_8013D59C	rpg_battle_move_return	common last half: pose, wait, player slides back
 func	RPG_BAT	func_8013D780	rpg_battle_stage_start_shout	stage 7 helper: plays the fight-start voice and waits for it
-func	RPG_BAT	func_8013D834	rpg_battle_stage_load_assets_1	stage 1 CD load state machine (substep unk_110D)
+func	RPG_BAT	func_8013D834	rpg_battle_stage_load_assets_1	stage 1 CD load state machine (substep GameState.substep)
 func	RPG_BAT	func_8013DC60	rpg_battle_stage_load_assets_2	stage 2 CD load state machine (club move / girl sprite sets)
 func	RPG_BAT	func_8013E4D0	rpg_battle_effect_records_reset_unused	no caller; resets effect records 136..159 and 125/126
 func	RPG_BAT	func_8013E54C	rpg_battle_effects_select_asset_set	points 12 effect records at asset set 3/4/5/0xFF
@@ -37,7 +37,7 @@ func	RPG_BAT	func_8013EFD0	rpg_battle_set_target_pos_alt	same table, slots 3 and
 func	RPG_BAT	func_8013F0F4	rpg_battle_se_play_latched_6xx	plays command 0x600|a once per latch counter D_8015ED3C[c]
 func	RPG_BAT	func_8013F15C	rpg_battle_se_play_latched_5xx	plays command 0x500|a once per latch counter
 func	RPG_BAT	func_8013F1C4	rpg_battle_voice_play_once	start a voice line (two packed positions), once per slot D_8015ED64[0][c]
-func	RPG_BAT	func_8013F220	rpg_battle_voice_reset	clears the 3x4 voice-started flags
+func	RPG_BAT	func_8013F220	rpg_battle_voice_reset	clears the whole 3x4 block D_8015ED64..ED93, including the dialog step and waiting flag at its end (dialog rewinds to step 0)
 func	RPG_BAT	func_8013F250	rpg_battle_voice_wait	waits for voice end or 60 frames then lets the message end; advances D_8015ED8C[0]
 func	RPG_BAT	func_8013F350	rpg_battle_voice_wait_alt_unused	no caller; variant that swaps message duration
 func	RPG_BAT	func_8013F3F0	rpg_battle_effects_shift	adds dx,dy to the effect records (screen shake)
@@ -98,13 +98,13 @@ func	RPG_BAT	func_801368B0	rpg_battle_club_move_literature	club 0 special move; 
 func	RPG_BAT	func_80136A9C	rpg_battle_literature_step_7	move phase called from step 7
 func	RPG_BAT	func_80136BD8	rpg_battle_literature_step_8	move phase called from step 8 (shakes effect records via rpg_battle_effects_shift)
 func	RPG_BAT	func_80136CCC	rpg_battle_literature_step_9	move phase called from step 9
-func	RPG_BAT	func_801505B8	rpg_battle_club_move_drama	club 1 special move; steps 0..5, girl assist 6..18, wrap-up 0x64.., Himoo case 0xC8..0xD1
+func	RPG_BAT	func_801505B8	rpg_battle_club_move_drama	club 1 special move; steps 0..5, girl assist 6..18, wrap-up 0x64.., robot-encounter case 0xC8..0xD1 (Yuina lines)
 func	RPG_BAT	func_80151108	rpg_battle_drama_step_3	three beats, each showing one of three different random lines from the 41-line table
 func	RPG_BAT	func_80150F84	rpg_battle_drama_pick_lines	picks 3 different random lines out of the 41-entry table D_8015EEF0
 func	RPG_BAT	func_80151380	rpg_battle_drama_overlay_fade	writes a fade level into the three overlay records placed over the enemies
 func	RPG_BAT	func_801513C8	rpg_battle_drama_overlay_spawn	shows 3 (trio) or 1 (boss) overlay records at the enemy positions
 func	RPG_BAT	func_801515F0	rpg_battle_drama_overlay_hide	hides the overlay records
-func	RPG_BAT	func_801504E0	rpg_battle_dialog_himoo_scolds_manzai	Himoo line during the drama move in the robot encounter (case 0xCD)
+func	RPG_BAT	func_801504E0	rpg_battle_dialog_yuina_stop_nonsense	Yuina tells the hero to stop talking nonsense, during the drama move in the robot encounter (case 0xCD)
 func	RPG_BAT	func_801421E0	rpg_battle_club_move_science	club 2 special move (a robot appears and attacks 3 times)
 func	RPG_BAT	func_80142544	rpg_battle_science_step_7	move phase called from step 7
 func	RPG_BAT	func_801426B0	rpg_battle_science_step_10	move phase called from step 10
@@ -147,7 +147,7 @@ func	RPG_BAT	func_80132EE0	rpg_battle_basketball_step_5	dash phase, third
 func	RPG_BAT	func_80132348	rpg_battle_basketball_step_6	ball flight arc to the target rect, impact sparks
 func	RPG_BAT	func_801328C4	rpg_battle_basketball_spark_burst	moves the 8 spark records outward on the 8 directions of D_8015E4F0
 func	RPG_BAT	func_80132A94	rpg_battle_basketball_spark_start	places the 8 sparks at the impact point and starts them
-func	RPG_BAT	func_80132B34	rpg_battle_basketball_set_target_rect	per-target rectangle D_8015EC58 for the dunk
+func	RPG_BAT	func_80132B34	rpg_battle_basketball_set_target_rect	per-target dunk rectangle in rpg_battle_move_params: words 2..5 target position and a second pair (HYPOTHESIS: size); a use of the shared words, not the girl run
 func	RPG_BAT	func_801498C0	rpg_battle_club_move_no_club	club 11 (no club) special move; steps 3..6
 func	RPG_BAT	func_8014A3DC	rpg_battle_no_club_step_3	move phase called from step 3
 func	RPG_BAT	func_8014A16C	rpg_battle_no_club_step_4	move phase called from step 4
@@ -177,7 +177,7 @@ func	RPG_BAT	func_801454F0	rpg_battle_move_assist_megumi	girl 9 assist
 func	RPG_BAT	func_801496F0	rpg_battle_move_assist_yumi	girl 10 assist
 func	RPG_BAT	func_801516E4	rpg_battle_girl_run_in	girl actor runs from her spot to the target rect (steps 0..2)
 func	RPG_BAT	func_80151984	rpg_battle_girl_run_out	girl actor runs back and resumes idle (D_8015EDB8 timer)
-func	RPG_BAT	func_80150DE0	rpg_battle_girl_run_set_rect	fills D_8015EC58 start/end rect and per-girl offsets
+func	RPG_BAT	func_80150DE0	rpg_battle_girl_run_set_rect	fills rpg_battle_move_params for the girl run: home (0x118, 0x88), a per-girl effect offset in words 4 and 5, and the target derived from it (0x118 - w4, 0x60 - w5)
 func	RPG_BAT	func_80150B90	rpg_battle_girl_fx_a	girl effect record 0x32 sequence 0..3 (counter D_8015EC74)
 func	RPG_BAT	func_80150CD8	rpg_battle_girl_fx_b	girl effect record 0x32 sequence (waits D_801213B0)
 func	RPG_BAT	func_801439E0	rpg_battle_girl_update	girl idle timer; picks her action; dispatches by girl id and runs it
@@ -265,11 +265,11 @@ func	RPG_BAT	func_80137C44	rpg_battle_dialog_angel_voice_2	voice grants a new po
 func	RPG_BAT	func_80137E74	rpg_battle_dialog_bancho_shock	boss line of surprise
 func	RPG_BAT	func_80137F50	rpg_battle_dialog_bancho_true_power	boss line before round 2
 func	RPG_BAT	func_80139510	rpg_battle_victory_delinquents	finale script after the trio fell; then the boss scene if launch code 5, else main_stage_next
-func	RPG_BAT	func_80139E88	rpg_battle_loot_text_delinquents	2 or 3 loot lines, weights 4:3:2:1 over 4 names
+func	RPG_BAT	func_80139E88	rpg_battle_loot_text_delinquents	2 draws (3 with probability 1/5) of rand(10) with replacement, weights 4:3:2:1 over 4 names; repeats collapse, so 1 to 3 distinct loot lines
 func	RPG_BAT	func_8013A034	rpg_battle_bancho_asset_load	CD read of the boss sprites at 0x801B1000 and record setup
 func	RPG_BAT	func_8013A2F4	rpg_battle_bancho_flash	flickers record palette values for 181 frames, then ends the step
 func	RPG_BAT	func_8013A464	rpg_battle_bancho_flash_set	writes two byte values D_80121353/D_80121317
-func	RPG_BAT	func_8013F4F0	rpg_battle_dialog_himoo_calls_robot	Himoo line when the robot appears
+func	RPG_BAT	func_8013F4F0	rpg_battle_dialog_yuina_calls_robot	Yuina line when the robot appears
 func	RPG_BAT	func_8013F5C8	rpg_battle_dialog_robot_attack_1	attack banner and voice
 func	RPG_BAT	func_8013F694	rpg_battle_dialog_robot_attack_2	attack banner and voice
 func	RPG_BAT	func_8013F760	rpg_battle_dialog_robot_attack_3	attack banner and voice
@@ -308,15 +308,15 @@ func	RPG_BAT	func_80157158	rpg_battle_enemy_alien_attack_2	alien action 2: multi
 func	RPG_BAT	func_80157640	rpg_battle_enemy_alien_retreat	alien action 3: aliens flee; result code 1; main_stage_next
 func	RPG_BAT	func_80156CC0	rpg_battle_enemy_alien_chatter	alien action 4: alien speech line
 func	RPG_BAT	func_8015785C	rpg_battle_alien_scene_flicker	random on/off of four background records (1/100 per frame)
-func	RPG_BAT	func_8014F790	rpg_battle_dialog_himoo_after_aliens	Himoo line after the aliens left
+func	RPG_BAT	func_8014F790	rpg_battle_dialog_yuina_after_aliens	Yuina line after the aliens left
 func	RPG_BAT	func_8014F88C	rpg_battle_girl_survival_timer	girl action 0x10001000: frame counter D_8015EE00.unk_00; after about 180 s starts the rescue
-func	RPG_BAT	func_8014FDBC	rpg_battle_girl_rescue_sequence	girl action 0x10001001: Himoo's rescue, aliens destroyed, result code 0
+func	RPG_BAT	func_8014FDBC	rpg_battle_girl_rescue_sequence	girl action 0x10001001: Yuina's rescue, aliens destroyed, result code 0
 func	RPG_BAT	func_80150120	rpg_battle_alien_departure	alien speech and a three-colour wipe
 func	RPG_BAT	func_801525B0	rpg_battle_stage_labels_init	stage 4: creates name labels (player, girl, enemy, guest) per encounter
 func	RPG_BAT	func_801528DC	rpg_battle_stage_fade_out	stage 11: fades records to black then main_stage_next
 func	RPG_BAT	func_801529B4	rpg_battle_stage_intro_slide_in	stage 6 (non-alien): attack announcement and slide-in of actors
-func	RPG_BAT	func_80152F30	rpg_battle_stage_intro_aliens	stage 6 (aliens): wipe, Himoo line, slide-in
-func	RPG_BAT	func_801535E4	rpg_battle_dialog_himoo_hold_out	Himoo asks the player to hold out
+func	RPG_BAT	func_80152F30	rpg_battle_stage_intro_aliens	stage 6 (aliens): wipe, Yuina line, slide-in
+func	RPG_BAT	func_801535E4	rpg_battle_dialog_yuina_hold_out	Yuina asks the player to hold out
 func	RPG_BAT	func_80153784	rpg_battle_stage_wave_transition	stage 5: screen ripple transition (VRAM copy, wave parameters)
 func	RPG_BAT	func_80153A60	rpg_battle_wave_fade_step	per-frame brightness step of the wave transition
 func	RPG_BAT	func_80153B08	rpg_battle_wave_strips_a	draws the wave strips (step 5)
@@ -330,45 +330,35 @@ func	RPG_BAT	func_8014D380	rpg_battle_stage_asset_addresses	stage 3: RAM address
 data	RPG_BAT	D_8015E4F0	rpg_battle_spark_dirs	8 (dx,dy) pairs at 45 degree steps; read by rpg_battle_basketball_spark_burst
 data	RPG_BAT	D_8015E530	rpg_battle_loot_names_delinquents	4 string pointers; copied by rpg_battle_loot_text_delinquents
 data	RPG_BAT	D_8015E540	rpg_battle_loot_flags_init	4 zero words copied onto the stack as pick flags
-data	RPG_BAT	D_8015E550	rpg_battle_code_sequence_a	pad words up,up,down,down,left,right,left,right,cross,circle; compared in rpg_battle_code_entry_update
-data	RPG_BAT	D_8015E578	rpg_battle_code_sequence_b	pad words down,down,up,up,right,left,right,left,circle,cross
+data	RPG_BAT	D_8015E550	rpg_battle_code_sequence_a	ten pad words (core PadBits): PAD_UP, PAD_UP, PAD_DOWN, PAD_DOWN, PAD_LEFT, PAD_RIGHT, PAD_LEFT, PAD_RIGHT, PAD_CROSS, PAD_CIRCLE; compared in rpg_battle_code_entry_update
+data	RPG_BAT	D_8015E578	rpg_battle_code_sequence_b	ten pad words (core PadBits): PAD_DOWN, PAD_DOWN, PAD_UP, PAD_UP, PAD_RIGHT, PAD_LEFT, PAD_RIGHT, PAD_LEFT, PAD_CIRCLE, PAD_CROSS
 data	RPG_BAT	D_8015E5A0	rpg_battle_popup_bounce_table	16 rows of 12 s16 digit offsets; row = popup frame / 2
 data	RPG_BAT	D_8015E720	rpg_battle_menu_item_positions	six (x,y) s16 pairs passed to menu_set
 data	RPG_BAT	D_8015E740	rpg_battle_message_lines	pointer to the line-pointer array of the open message
 data	RPG_BAT	D_8015E744	rpg_battle_message_line_frames	frames each line stays; also the value tested by skip logic
 data	RPG_BAT	D_8015E748	rpg_battle_message_line_count	number of lines in the open message
-data	RPG_BAT	D_8015E74C	rpg_battle_text_player_0	40-byte text buffer, player-side line 0
+data	RPG_BAT	D_8015E74C	rpg_battle_text_player_0	player-side line buffers: 5 buffers of 0x28 bytes at E74C..E7EC, table rpg_battle_text_player_ptrs; only buffers 0..2 have code references and a name (3 and 4 are reached through the table), this row is buffer 0
 data	RPG_BAT	D_8015E774	rpg_battle_text_player_1	player-side line 1
 data	RPG_BAT	D_8015E79C	rpg_battle_text_player_2	player-side line 2
-data	RPG_BAT	D_8015E7C4	rpg_battle_text_player_3	player-side line 3
-data	RPG_BAT	D_8015E7EC	rpg_battle_text_player_4	player-side line 4
 data	RPG_BAT	D_8015E814	rpg_battle_text_player_ptrs	5 pointers to the player-side buffers
-data	RPG_BAT	D_8015E828	rpg_battle_text_enemy_0	enemy-side line 0
+data	RPG_BAT	D_8015E828	rpg_battle_text_enemy_0	enemy-side line buffers: 5 buffers of 0x28 bytes at E828..E8C8, table rpg_battle_text_enemy_ptrs; buffers 0..3 are named, 4 is reached through the table; this row is buffer 0
 data	RPG_BAT	D_8015E850	rpg_battle_text_enemy_1	enemy-side line 1
 data	RPG_BAT	D_8015E878	rpg_battle_text_enemy_2	enemy-side line 2
 data	RPG_BAT	D_8015E8A0	rpg_battle_text_enemy_3	enemy-side line 3
-data	RPG_BAT	D_8015E8C8	rpg_battle_text_enemy_4	enemy-side line 4
 data	RPG_BAT	D_8015E8F0	rpg_battle_text_enemy_ptrs	5 pointers to the enemy-side buffers
-data	RPG_BAT	D_8015E904	rpg_battle_text_girl_0	girl-side line 0
+data	RPG_BAT	D_8015E904	rpg_battle_text_girl_0	girl-side line buffers: 5 buffers of 0x28 bytes at E904..E9A4, table rpg_battle_text_girl_ptrs; buffers 0 and 1 are named, 2..4 are reached through the table; this row is buffer 0
 data	RPG_BAT	D_8015E92C	rpg_battle_text_girl_1	girl-side line 1
-data	RPG_BAT	D_8015E954	rpg_battle_text_girl_2	girl-side line 2
-data	RPG_BAT	D_8015E97C	rpg_battle_text_girl_3	girl-side line 3
-data	RPG_BAT	D_8015E9A4	rpg_battle_text_girl_4	girl-side line 4
 data	RPG_BAT	D_8015E9CC	rpg_battle_text_girl_ptrs	5 pointers to the girl-side buffers
-data	RPG_BAT	D_8015E9E0	rpg_battle_text_result_0	result/announcement line 0
+data	RPG_BAT	D_8015E9E0	rpg_battle_text_result_0	result line buffers: 10 buffers of 0x28 bytes at E9E0..EB48, table rpg_battle_text_result_ptrs; buffers 0..5 are named, 6..9 are reached through the table; this row is buffer 0
 data	RPG_BAT	D_8015EA08	rpg_battle_text_result_1	result line 1
 data	RPG_BAT	D_8015EA30	rpg_battle_text_result_2	result line 2
 data	RPG_BAT	D_8015EA58	rpg_battle_text_result_3	result line 3
 data	RPG_BAT	D_8015EA80	rpg_battle_text_result_4	result line 4
 data	RPG_BAT	D_8015EAA8	rpg_battle_text_result_5	result line 5
-data	RPG_BAT	D_8015EAD0	rpg_battle_text_result_6	result line 6
-data	RPG_BAT	D_8015EAF8	rpg_battle_text_result_7	result line 7
-data	RPG_BAT	D_8015EB20	rpg_battle_text_result_8	result line 8
-data	RPG_BAT	D_8015EB48	rpg_battle_text_result_9	result line 9
 data	RPG_BAT	D_8015EB70	rpg_battle_text_result_ptrs	10 pointers to the result buffers
 data	RPG_BAT	D_8015EB98	rpg_battle_encounter	flag word of the running encounter (RPG_ENC_*); set from D_80122CE0 in rpg_battle_stage_init
-data	RPG_BAT	D_8015EB9C	rpg_battle_girl_id	partner id from GameState unk_F5F; 13 and 14 remapped in rpg_battle_init_player_state
-data	RPG_BAT	D_8015EBA0	rpg_battle_player_club	club index 0..11 of the player, 0xFF none; from the club flag words unk_66C
+data	RPG_BAT	D_8015EB9C	rpg_battle_girl_id	partner id from GameState.current_girl; 13 and 14 remapped in rpg_battle_init_player_state
+data	RPG_BAT	D_8015EBA0	rpg_battle_player_club	club index 0..11 of the player, 0xFF none; from the club flag bytes of GameState.clubs
 data	RPG_BAT	D_8015EBA4	rpg_battle_club_move_available	1 when a club move exists for this encounter
 data	RPG_BAT	D_8015EBA8	rpg_battle_special_ready	1 when the special command may be chosen (gauge at least 100)
 data	RPG_BAT	D_8015EBAC	rpg_battle_enemy_slot	slot of the current action: attacker or target 0..2, 3 boss, 4 robot, 5 aliens, 16..18 trip enemy
@@ -388,7 +378,7 @@ data	RPG_BAT	D_8015EBE0	rpg_battle_enemy_miss_weight	extra weight of the miss/ch
 data	RPG_BAT	D_8015EBE4	rpg_battle_voice_wait_frames	frame counter of rpg_battle_voice_wait
 data	RPG_BAT	D_8015EBEC	rpg_battle_code_entry	RpgCodeEntry: pad word, previous word, positions in the two sequences
 data	RPG_BAT	D_8015EBFC	rpg_battle_state	RpgBattleState: enemy weights, girl weights, result, gauge, counters
-data	RPG_BAT	D_8015EC14	rpg_battle_result_code	returned to the caller in D_80122CE0: 0 when the player prevailed, 1 when the player was knocked out
+data	RPG_BAT	D_8015EC14	rpg_battle_result_code	returned to the caller in D_80122CE0 (RPG_RESULT_*); 0 on every path that ends with the player standing and in the aliens rescue; 1 on the delinquent and boss defeat paths and when the aliens flee because the player was held at 1 HP
 data	RPG_BAT	D_8015EC18	rpg_battle_saved_girl	girl id saved at stage 0 and restored at exit
 data	RPG_BAT	D_8015EC1C	rpg_battle_boss_event	set when launch code is 5 (boss scene follows)
 data	RPG_BAT	D_8015EC20	rpg_battle_pause_state	0 run, 1 paused, 3 code entry
@@ -397,19 +387,19 @@ data	RPG_BAT	D_8015EC28	rpg_battle_target_x	target x for the current action
 data	RPG_BAT	D_8015EC2C	rpg_battle_target_y	target y for the current action
 data	RPG_BAT	D_8015EC30	rpg_battle_special_gauge	special gauge 0..170; attack +30..44, guard +20..34, special -100
 data	RPG_BAT	D_8015EC34	rpg_battle_escalation_counter	0 at battle start; +1 or +2 per enemy attack chosen; read only by the no-club special, which writes its tier index 0..5 back for the move animation and sound, and the move clears it to 0 in its last step
-data	RPG_BAT	D_8015EC38	rpg_battle_wave_phase	phase accumulator of the background/transition wave
-data	RPG_BAT	D_8015EC3C	rpg_battle_wave_amplitude	amplitude of the wave
-data	RPG_BAT	D_8015EC40	rpg_battle_wave_phase_scale	half-cycle divisor of the wave phase
-data	RPG_BAT	D_8015EC44	rpg_battle_wave_wavelength	rows per wave cycle
-data	RPG_BAT	D_8015EC48	rpg_battle_wave_speed	phase step per frame
-data	RPG_BAT	D_8015EC4C	rpg_battle_wave_enabled	1 enables the background wave (set when the delinquent fight starts)
-data	RPG_BAT	D_8015EC50	rpg_battle_motion	RpgMotion20 scratch: dx, dy and a rectangle of six words
-data	RPG_BAT	D_8015EC58	rpg_battle_girl_run	RpgGirlRun: girl home, target and effect offsets
-data	RPG_BAT	D_8015EC74	rpg_battle_scratch	50-word scratch array (to D_8015ED38), cleared when an action ends
-data	RPG_BAT	D_8015ED38	rpg_battle_voice_playing_seen	set when the voice status reads 4 (playing); a later status 2 then skips the message wait
+data	RPG_BAT	D_8015EC38	rpg_battle_bg_word_0	shared background words 0..5 (EC38..EC4C): (1) wave: phase accumulator (the stage 9 wave of the delinquent encounter, wraps at twice word 2; the stage 5 ripple); (2) aliens scene: x of the background record group (records 0x2E, 0x2F and, at fixed offsets, 0x2A..0x2D; set in rpg_battle_stage_intro_aliens, used by rpg_battle_alien_scene_flicker)
+data	RPG_BAT	D_8015EC3C	rpg_battle_bg_word_1	wave: amplitude (the stage 5 ripple counts it down to end the stage); aliens scene: y of the same record group (starts at -0x1E in rpg_battle_stage_intro_aliens, whose step 9 sets it from a frame counter; in rpg_battle_alien_departure it is 0x18 minus a counter)
+data	RPG_BAT	D_8015EC40	rpg_battle_bg_word_2	wave: half-cycle divisor of the phase; alien scene (rpg_battle_alien_scene_flicker): on/off flag of background record 0x2A (cleared when its visibility bit is off, set again when switched on, 1/100 chance per frame)
+data	RPG_BAT	D_8015EC44	rpg_battle_bg_word_3	wave: rows per cycle; alien scene: on/off flag of background record 0x2B
+data	RPG_BAT	D_8015EC48	rpg_battle_bg_word_4	wave: phase step per frame; alien scene: on/off flag of background record 0x2C
+data	RPG_BAT	D_8015EC4C	rpg_battle_bg_word_5	wave: 1 enables the stage 9 wave, which also needs the delinquent encounter flag; written 1 only by step 31 of rpg_battle_victory_delinquents (the boss part of the finale script); aliens scene: on/off flag of background record 0x2D, cleared in rpg_battle_stage_intro_aliens
+data	RPG_BAT	D_8015EC50	rpg_battle_motion	RpgMotion20 scratch: dx, dy and the six-word block rpg_battle_move_params (D_8015EC58) as its rect member
+data	RPG_BAT	D_8015EC58	rpg_battle_move_params	RpgRec18 (six s32 words, 0x18 bytes; the same words are RpgMotion20.rect at D_8015EC50+8); the meaning of the words differs per use, so no field names: girl run (rpg_battle_girl_run_set_rect, rpg_battle_move_assist_megumi): w0/w1 home x,y (0x118, 0x88), w2/w3 target x,y (0x118 - w4, 0x60 - w5), w4/w5 per-girl effect offset x,y; basketball move (rpg_battle_basketball_set_target_rect): w2/w3 dunk target x,y, w4/w5 a second pair per target (0x73/0x57 for the first; HYPOTHESIS: its size), w0/w1 derived points (target x + 0x30, target y - 0xB0); art move (rpg_battle_art_step_6/7): w1, w3, w4 are two offsets and a radius, set per target
+data	RPG_BAT	D_8015EC74	rpg_battle_scratch	50-word scratch array (to D_8015ED38), cleared when an action ends; its last words overlap the stage 5 ripple second parameter set D_8015ED28..ED38
+data	RPG_BAT	D_8015ED38	rpg_battle_voice_playing_seen	set when the voice status reads 4 (playing); a later status 2 then skips the message wait; also the speed word (set to 1) of the stage 5 ripple second parameter set D_8015ED28..ED38 and the last word of rpg_battle_scratch
 data	RPG_BAT	D_8015ED3C	rpg_battle_se_latch	10 countdowns that make a sound command play once
-data	RPG_BAT	D_8015ED64	rpg_battle_voice_started	3x4 flags: voice line already started in this dialog
-data	RPG_BAT	D_8015ED8C	rpg_battle_dialog_step	[0] step of the current voiced dialog, [1] waiting flag
+data	RPG_BAT	D_8015ED64	rpg_battle_voice_started	3x4 s32 view of 12 words ED64..ED93; slot index c in rpg_battle_voice_play_once is 0..9 (row 0 only); the last two words are D_8015ED8C (dialog step) and D_8015ED90 (waiting flag), so rpg_battle_voice_reset also zeroes the dialog step and flag, which is how a finished dialog returns to step 0
+data	RPG_BAT	D_8015ED8C	rpg_battle_dialog_step	[0] step of the current voiced dialog, [1] (D_8015ED90) waiting flag; both are also elements 10 and 11 of rpg_battle_voice_started and cleared by rpg_battle_voice_reset
 data	RPG_BAT	D_8015ED94	rpg_battle_player_hp	current HP of the player
 data	RPG_BAT	D_8015ED98	rpg_battle_player_action	player action code (RPG_PLAYER_*) plus command request bits
 data	RPG_BAT	D_8015ED9C	rpg_battle_player_ready_timer	counts up to the ready delay, then the command menu opens
@@ -508,16 +498,9 @@ field	RpgPadSeq	unk_00	pad_now	pad word read this frame
 field	RpgPadSeq	unk_04	pad_last	pad word of the previous change
 field	RpgPadSeq	unk_08	pos_b	progress in sequence b
 field	RpgPadSeq	unk_0C	pos_a	progress in sequence a
-field	RpgRec18	unk_00	home_x	girl's resting x (0x118)
-field	RpgRec18	unk_04	home_y	girl's resting y (0x88)
-field	RpgRec18	unk_08	target_x	x she runs to
-field	RpgRec18	unk_0C	target_y	y she runs to
-field	RpgRec18	unk_10	fx_dx	effect record offset x
-field	RpgRec18	unk_14	fx_dy	effect record offset y
 type	RPG_BAT	RpgStat	RpgBattleState	0x3C battle counters block (weights, result, gauge)
 type	RPG_BAT	RpgGauge	RpgDelinquentGauges	3 HP values and 3 charmed flags
 type	RPG_BAT	RpgPadSeq	RpgCodeEntry	button-sequence matcher state
-type	RPG_BAT	RpgRec18	RpgGirlRun	girl run rectangle and offsets
 type	RPG_BAT	RpgDirTable	RpgSparkDirs	8 (dx,dy) pairs
 type	RPG_BAT	RpgStrTbl4	RpgLootNames4	4 string pointers
 type	RPG_BAT	RpgWordTbl4	RpgPickFlags4	4 pick flags
@@ -529,7 +512,7 @@ const	RpgEncounter	0x40000	RPG_ENC_BEAR	launch code 3; bear enemy, hunter rescue
 const	RpgEncounter	0x100000	RPG_ENC_DELINQUENTS	launch code 4 and 5; three delinquents
 const	RpgEncounter	0x200000	RPG_ENC_BANCHO_1	enemy action high half only: boss round 1
 const	RpgEncounter	0x400000	RPG_ENC_BANCHO_2	enemy action high half only: boss round 2
-const	RpgEncounter	0x8000000	RPG_ENC_HIMOO_ROBOT	launch code 6
+const	RpgEncounter	0x8000000	RPG_ENC_ROBOT	launch code 6; the robot of girl 2 (yuina)
 const	RpgEncounter	0x80000000	RPG_ENC_ALIENS	launch code 7 and default
 const	RpgEncounter	0xF0000	RPG_ENC_TRIP_MASK	any of the three trip encounters
 const	RpgEncounter	0x600000	RPG_ENC_BANCHO_MASK	either boss round
@@ -537,12 +520,12 @@ const	RpgEncounter	0x800F0000	RPG_ENC_NO_SPECIAL_MASK	encounters without a club 
 const	RpgLaunch	1	RPG_LAUNCH_SNAKE	D_80122CE0 set by SHUGAKU
 const	RpgLaunch	2	RPG_LAUNCH_DEER	set by SHUGAKU
 const	RpgLaunch	3	RPG_LAUNCH_BEAR	set by SHUGAKU
-const	RpgLaunch	4	RPG_LAUNCH_DELINQUENTS_REPEAT_PLACE	set by DATE (func_8013C7D0) when the two latest entries of the place history unk_728 equal the chosen place, the place is not 0, the year byte unk_03E is at least 0x60 and flag b20 is clear; also sets flag b19
-const	RpgLaunch	5	RPG_LAUNCH_DELINQUENT_BOSS_EVENT	set by DATE (func_8013C7D0) in month byte unk_03F == 9 with year byte unk_03E == 0x61 when flag b20 is clear and (a club slot 0..10 has flag unk_25 == 3, or flag b19 is set, or no slot 0..10 has club points: then slot 11 gets flag 3); continues to the boss
-const	RpgLaunch	6	RPG_LAUNCH_HIMOO_ROBOT	set by GEKO
+const	RpgLaunch	4	RPG_LAUNCH_DELINQUENTS_REPEAT_PLACE	set by DATE (func_8013C7D0) when the two latest entries of GameState.date_place_history equal the chosen place, the place is not 0, GameState.year is at least 0x60 and flag b20 is clear; also sets flag b19
+const	RpgLaunch	5	RPG_LAUNCH_DELINQUENT_BOSS_EVENT	set by DATE (func_8013C7D0) in GameState.month == 9 with GameState.year == 0x61 when flag b20 is clear and (a club slot 0..10 has club flag byte == 3, or flag b19 is set, or no slot 0..10 has club points: then slot 11 gets flag 3); continues to the boss
+const	RpgLaunch	6	RPG_LAUNCH_ROBOT	set by GEKO
 const	RpgLaunch	7	RPG_LAUNCH_ALIENS	set by SHUGAKU; also the default
 const	RpgStage	0	RPG_STAGE_INIT	rpg_battle_stage_init
-const	RpgStage	1	RPG_STAGE_LOAD_1	CD load
+const	RpgStage	1	RPG_STAGE_LOAD_1	CD sound-data requests (main snd_bank_load_start)
 const	RpgStage	2	RPG_STAGE_LOAD_2	CD load
 const	RpgStage	3	RPG_STAGE_ASSETS	asset addresses and palettes
 const	RpgStage	4	RPG_STAGE_SETUP	sprites, HUD, labels
@@ -553,8 +536,8 @@ const	RpgStage	8	RPG_STAGE_START_MUSIC	music call for the aliens encounter then 
 const	RpgStage	9	RPG_STAGE_FIGHT	battle loop
 const	RpgStage	10	RPG_STAGE_END_SOUND	sound command 0xC1, main_stage_next
 const	RpgStage	11	RPG_STAGE_FADE_OUT	fade to black
-const	RpgStage	12	RPG_STAGE_STOP_AUDIO	stop CD audio, main_stage_next
-const	RpgStage	13	RPG_STAGE_SCREEN_RESTORE	main-exe helper func_800674B0
+const	RpgStage	12	RPG_STAGE_RESET_AUDIO	clears the sound-bank load state (main snd_bank_state_reset) and the CD command ring (main cd_cmd_reset), then main_stage_next
+const	RpgStage	13	RPG_STAGE_BANK_RELOAD	main func_800674B0: queues sound commands 5 and 0x71 and starts the dating sim sound-bank load (set chosen by GameState.vacation, one fixed date overrides it); main_stage_next
 const	RpgStage	14	RPG_STAGE_WAIT_AUDIO	waits for the sound-bank poll (main snd_bank_load_poll) to report done; after 0x400 frames it stops audio and goes back to stage 13 (retry)
 const	RpgStage	15	RPG_STAGE_EXIT	rpg_battle_exit
 const	RpgPlayerAction	1	RPG_PLAYER_ATTACK	basic attack in D_8015ED98 low bits
@@ -592,7 +575,7 @@ const	RpgActor	0x3D	RPG_ACTOR_ENEMY_C	third delinquent
 const	RpgActor	0x33	RPG_ACTOR_MOVE_AUX	second sprite of the special move (effect or prop)
 const	RpgActor	0x34	RPG_ACTOR_MOVE_HERO	the hero's sprite during a special move (replaces actor 0x30 while it runs)
 const	RpgActor	0x32	RPG_ACTOR_GIRL_FX	girl effect actor
-const	RpgMenuItem	0	RPG_MENU_ATTACK	GameState unk_1093 choice
+const	RpgMenuItem	0	RPG_MENU_ATTACK	GameState.menu_cursor_0 choice
 const	RpgMenuItem	1	RPG_MENU_GUARD	choice 1
 const	RpgMenuItem	2	RPG_MENU_SPECIAL	choice 2
 const	RpgBgm	0x200	RPG_BGM_BATTLE	HYPOTHESIS: music call argument; role from call context (start of fight)
@@ -600,8 +583,8 @@ const	RpgBgm	0x201	RPG_BGM_BOSS_ARRIVAL	HYPOTHESIS: music call argument; played 
 const	RpgBgm	0x202	RPG_BGM_VICTORY	HYPOTHESIS: music call argument; used on the victory text
 const	RpgBgm	0x204	RPG_BGM_BOSS_FIGHT	HYPOTHESIS: music call argument; set when boss round 1 starts
 const	RpgBgm	0x203	RPG_BGM_DEFEAT	HYPOTHESIS: music call argument; used when the player is knocked out
-const	RpgResult	0	RPG_RESULT_PREVAILED	written back to D_80122CE0
-const	RpgResult	1	RPG_RESULT_KNOCKED_OUT	written back to D_80122CE0
+const	RpgResult	0	RPG_RESULT_GOOD	the caller takes its better branch: DATE adds to the girl field (tokimeki), SHUGAKU tests == 0 for its trip reward; set on every path that ends with the player standing
+const	RpgResult	1	RPG_RESULT_BAD	caller takes the other branch: DATE raises stress by 5, SHUGAKU its alternative; set on the delinquent and boss defeat paths and when the aliens flee (rpg_battle_enemy_alien_retreat: the player is held at 1 HP, nobody is knocked out); GEKO ignores the value
 const	RpgPartner	14	RPG_PARTNER_NONE	HYPOTHESIS: the scene stores id 14 in rpg_battle_girl_id to mean 'no partner' (no HP shown, no actions); the shared GirlId table (core) names id 14 GIRL_SOTOI, the butler, who has no role in the scene, so the id is reused as a sentinel
 comment	main	message_disp_switch	O.BIN name kept: shows or hides the main message window (hidden during the battle)	O.BIN developer name kept; one-liner from how RPG_BAT uses it
 file	RPG_BAT	src/ovl/RPG_BAT/80132000.c	src/ovl/rpg_battle/move_assist_yuko.c	girl 8 assist in club moves
@@ -626,7 +609,7 @@ file	RPG_BAT	src/ovl/RPG_BAT/8013CC90.c	src/ovl/rpg_battle/player_command.c	play
 file	RPG_BAT	src/ovl/RPG_BAT/8013D780.c	src/ovl/rpg_battle/stage_load.c	stages 1, 2, 7
 file	RPG_BAT	src/ovl/RPG_BAT/8013E300.c	src/ovl/rpg_battle/move_assist_mio.c	girl 1 assist
 file	RPG_BAT	src/ovl/RPG_BAT/8013E4D0.c	src/ovl/rpg_battle/actor_helpers.c	actor, sound, voice, rand and damage helpers
-file	RPG_BAT	src/ovl/RPG_BAT/8013F4F0.c	src/ovl/rpg_battle/enemy_robot.c	Himoo robot encounter
+file	RPG_BAT	src/ovl/RPG_BAT/8013F4F0.c	src/ovl/rpg_battle/enemy_robot.c	robot encounter (girl 2's robot)
 file	RPG_BAT	src/ovl/RPG_BAT/80141060.c	src/ovl/rpg_battle/stage_sprites_setup.c	stage 4 sprite and HUD setup
 file	RPG_BAT	src/ovl/RPG_BAT/80141C30.c	src/ovl/rpg_battle/move_assist_nozomi.c	girl 6 assist
 file	RPG_BAT	src/ovl/RPG_BAT/80142000.c	src/ovl/rpg_battle/girl_action_shiori.c	girl 0 action
