@@ -1752,3 +1752,7 @@ The last function matched with a narrowed block-copy state rule in tools/ugen_pa
 ## [2026-10-24] ticket | T-26001 Done: stale tool tests fixed
 
 [[tickets/T-26001-stale-tool-tests]]: test_build_deps now copies tools/ugen_pass.py into its fake project and the protoverride compile_unit test gives its fake context a name; the full tool suite passes (1572 OK, 3 skipped).
+
+## [2026-10-24] decision | Phase 1 complete: 6,952/6,952 game functions
+
+Every game function is C and every binary rebuilds byte for byte ([[status]]). Closed the wave 10/11, stubborn-function and finish-gate tickets (T-25300, T-25400, T-25500, T-25600 and their per-file tickets); T-26000 (IDO 4.1 block-copy rule) is in progress. ROADMAP.md marks phase 1 done and phase 2 (readable code) in progress; README.md says every game function is C.

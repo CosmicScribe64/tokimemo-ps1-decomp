@@ -1,10 +1,10 @@
 ---
 id: T-25600
 title: Finish gate - loop the last functions until 100%
-status: In Progress
+status: Done
 assignee: orchestrator
 created: 2026-10-23
-updated: 2026-10-23
+updated: 2026-10-24
 links: [[[tickets/T-25500-stubborn-functions]], [[tickets/T-25400-wave-11-until-matched]], [[tickets/T-25300-wave-10-second-pass]], [[status]], [[playbook]]]
 ---
 
@@ -33,3 +33,4 @@ Local picker `.claude/orchestrator/bin/gate_next.py` (fewest rounds, largest fir
 - [[tickets/T-25609-gate-main-func_8007132C|T-25609]] main:func_8007132C (1074 words, `src/main/8006CB30.c`)
 
 ## Comments
+- 2026-10-24 (orchestrator): phase 1 complete: 6,952/6,952 game functions, 2,276,920/2,276,920 bytes. The gate and its fresh-start runs matched main func_800476C0, NAME_ENT func_80143580 and main func_8006B0C8 (with the T-25608 ugen_pass rule; the IDO 4.1 rule follow-up is T-26000).

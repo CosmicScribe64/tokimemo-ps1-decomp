@@ -1,10 +1,10 @@
 ---
 id: T-25300
 title: Wave 10 - second pass on every function left after waves 8 and 9
-status: In Progress
+status: Done
 assignee: orchestrator
 created: 2026-10-23
-updated: 2026-10-23
+updated: 2026-10-24
 links: [[[tickets/T-25100-wave-8-finish]], [[tickets/T-25200-wave-9-neighbor]], [[status]], [[playbook]]]
 ---
 
@@ -43,3 +43,4 @@ GEKO stays with diman8 (issue #65). Files start as soon as no wave 8 or wave 9 w
 - [[tickets/T-25320-w10-main-800674B0|T-25320]] `src/main/800674B0.c`: func_80067870, func_8006B0C8 (first pass T-25103)
 
 ## Comments
+- 2026-10-24 (orchestrator): wave 10 finished (run wf_e8f9963e-531): second passes matched strCallback, mod_trans_vram, func_8004A1A0, NAME_ENT func_8013AF78, RPG_BAT func_80154DD8, BUNKA_SD func_80134D94, func_80052F68, ENDING func_80134270, func_80055AFC, ETC func_8013FFAC and main func_8007132C; the rest went to wave 11, the stubborn-function attack and the finish gate. Phase 1 complete.

@@ -1,10 +1,10 @@
 ---
 id: T-26000
 title: Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py
-status: Backlog
+status: In Progress
 assignee:
 created: 2026-10-23
-updated: 2026-10-23
+updated: 2026-10-24
 links: [[[tickets/T-25608-gate-main-func_8006B0C8]], [[ido-52-evaluation]], [[toolchain]]]
 ---
 
@@ -23,3 +23,4 @@ Replace the block-copy state rule in `tools/ugen_pass.py` with the one IDO 4.1's
 Prototype: `drafts/T-25608/ido41/ugen_pass_41rule.py` (on the w16-ido41 branch, merged as notes).
 
 ## Comments
+- 2026-10-24 (orchestrator): an Opus agent is on it (workflow wf_3d2d513f-e21, worktree w17-ugen41): implement the 4.1 rule, 30 synthetic tests, re-match strCallback and func_8005938C, two reviews, merge.

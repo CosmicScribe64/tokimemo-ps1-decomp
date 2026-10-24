@@ -1,10 +1,10 @@
 ---
 id: T-25400
 title: Wave 11 - repeated passes until every game function matches
-status: In Progress
+status: Done
 assignee: orchestrator
 created: 2026-10-23
-updated: 2026-10-23
+updated: 2026-10-24
 links: [[[tickets/T-25300-wave-10-second-pass]], [[status]], [[playbook]]]
 ---
 
@@ -35,3 +35,4 @@ Job picker: local `.claude/orchestrator/bin/w11_next.py` (GEKO first, then fewes
 - [[tickets/T-25412-w11-TAIIKU-80133C80|T-25412]] `src/ovl/TAIIKU/80133C80.c`: func_80137784
 
 ## Comments
+- 2026-10-24 (orchestrator): wave 11 stopped when the finish gate took over; it matched GEKO func_80133024, func_80142C9C (pass 2) and main func_80067870 (closer). Phase 1 complete.

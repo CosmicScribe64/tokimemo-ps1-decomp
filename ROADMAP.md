@@ -3,11 +3,12 @@
 The goal is a playable, readable, English-translated version of *Tokimeki Memorial: Forever with You* that does not
 depend on the original code. It comes in five phases, in order. Later phases depend on earlier ones, and none has a date.
 
-## 1. Byte-matching decompilation (in progress)
+## 1. Byte-matching decompilation (done)
 
-Write C for every function so that the rebuilt executable and overlays are identical to the originals.
+Write C for every function so that the rebuilt executable and overlays are identical to the originals. It was finished on
+2026-10-24. All 6,952 game functions are C, and every binary rebuilds byte for byte.
 
-## 2. Readable decompilation (not started)
+## 2. Readable decompilation (in progress)
 
 Matching C is often awkward. This phase renames symbols, replaces magic numbers with constants, names and shares
 types, and splits tangled functions where the match allows it. Some of this happens as functions are decompiled,

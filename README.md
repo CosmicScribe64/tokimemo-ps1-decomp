@@ -6,8 +6,8 @@
 
 This project is a matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`), and an eventual English-translated Godot port of the game.
 
-The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) already rebuild identically. Functions not yet written
-in C are pulled in as assembly, so the build matches at every stage; the badges above show how much is C so far. See
+The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild identically, and every game function is now
+written in C. Much of that C still uses placeholder names and needs cleaning up, which is the next phase. See
 [ROADMAP.md](ROADMAP.md) for where this project is going.
 
 **This repository contains no game data.** You need your own copy of the disc. The build reads the executables from
