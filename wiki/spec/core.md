@@ -10,7 +10,7 @@ Unit `core` of phase 2 ([[tickets/T-27010-p2-core]], parent [[tickets/T-27000-ph
 
 Scope (user decision of 2026-10-24): enough for the Godot port. Game logic, state and flow are described fully; the PS1 hardware layer (GPU, VRAM, sound driver, CD/XA, memory card, MDEC, movie) is named at module level with its entry points, section 9.
 
-Table size: 737 rows (89 `func`, 39 `data`, 234 `field`, 75 `type`, 238 `const`, 60 `comment`, 2 `file`); 74 rows carry HYPOTHESIS.
+Table size: 738 rows (90 `func`, 39 `data`, 234 `field`, 75 `type`, 238 `const`, 60 `comment`, 2 `file`); 74 rows carry HYPOTHESIS.
 
 How to read the table file: `kind scope old new note`. Apply `field` rows with the scope written as the type name *before* the `type` rows rename it (`Rec38`, `GsRec69C`, ...). `const` rows give `old` = literal, `new` = constant, `scope` = enum or mask group. `comment` rows carry an English one-liner for an O.BIN or patch name that stays.
 
@@ -73,7 +73,7 @@ Reset matrix (what each setter clears, besides writing its own value):
 | 0x30 | `MODE_SCHEDULE` | main `schedule_init` | builds the queue for the coming week |
 | 0x31 | `MODE_DAY_SCREEN` | main | shows the day, then `day_event_dispatch` |
 | 0x32 | `MODE_WEEK_END` | main | weekly health check (section 5.2) |
-| 0x34 | `MODE_DAY_END` | main `func_8005A0B0` | default branch of the queue reader |
+| 0x34 | `MODE_COMMAND_SCREEN` | main `func_8005A0B0` | weekday command screen: the player picks the next week's command; reached when the queue reader hits the end marker 0xFF; stage 5 is club joining |
 | 0x35-0x37 | `MODE_EXAM`, `MODE_CAREER_GUIDANCE`, `MODE_CAREER_CHOICE` | ETC | final exams and rank list; career talks; job or college choice |
 | 0x38, 0x39 | `MODE_MONTH_START`, `MODE_DAY_NOTICE` | main | queue types 0xFE and 0xFD |
 | 0x3A | `MODE_HELP` | OLH | on-line help |
@@ -295,7 +295,7 @@ Day kinds: 0 school day, 1 Sunday, 2 national holiday, 3 break day (HYPOTHESIS: 
 
 The player picks a command for the coming week on the schedule screen: `last_command` low nibble is the weekday command (an icon index; commands 0-7 have a row in `command_deltas`, command 4 is club activity, 0xE means none chosen yet), bits 4-7 hold the last holiday command. `parameter_up_down(command, flag, half)` applies a command: for each of parameters 0-7 the delta comes from row `command` of `command_deltas` (signed bytes, 9 per row; the club command uses `club_activity_deltas[club]`): a positive delta is multiplied by `0x1000 * (4 if flag else 1) / (2 if half else 1) / div_a / div_b`, a non-positive delta is `delta << 12`; stress (index 8) gets the same, plus one whole point when `half` is set. `div_a` is 2 when the player is sick (health 3), `div_b` is 2 for injured or neurotic (health 1 or 2) except for trivia, looks and guts (indices 5-7). `parameter_change(i, delta)` adds the 16.16 delta to parameter i, floors it at 0 and caps the value at 999. (HYPOTHESIS: command 7 is rest; it selects a sick-bed picture when the player is sick.)
 
-`day_events_build_week` (`func_8006D7EC`, run from `schedule_init`) fills `day_events` for the next seven days. Order of its work, as coded:
+The command screen (mode 0x34) ends in `MODE_SCHEDULE` (`schedule_init`), which runs five steps once per queue build: 0 preparation (`func_8006CD14`), 1 `day_events_build_week`, 2 `schedule_girls_gakko` (resolve encounter placeholders), 3 `schdeule_girls_param` (the weekly girl decay of section 5.3), 4 `func_80070ECC` (`calendar_advance_day`, stop CD audio when it plays, mode 0x31). `day_events_build_week` (`func_8006D7EC`) fills `day_events` from tomorrow until Sunday. Order of its work, as coded:
 
 1. Increment the command counter `progress_state[0x15 + command % 9]`, count down girl 11's `event_counters[0]`, count met girls 1-9, decrement the 3-bit `recovery_days`, clear the queue (`day_events_clear`: type 0xFF everywhere, index 0).
 2. If the next day is the first of a month, put `DAY_EVENT_MONTH_START` first.
@@ -309,7 +309,7 @@ The exact random thresholds are in the matched C (`func_8006D7EC`); they are not
 
 ### 3.5 The queue reader
 
-`day_event_dispatch` (`func_8007132C`, run by the day screen, stage 0 step 0) first applies fixed rules (from 1998-03 on it hands over to the ending, section 3.1; two fixed late-February specials; a forced encounter (mode 0x59) with a met girl whose syoushin is at least 0x4C and whose bit 16 is still clear (the bit is set so it happens once); skipping birthday records whose `birthday_done_bits` bit is set; appointment prompt: if the first appointment is today it opens the telephone mode with stage 2 when the girl's state rank is 4, 0 when the place history changed, 1 otherwise), then switches on `day_events[day_event_index].type`:
+`day_event_dispatch` (`func_8007132C`, run by the day screen, stage 0 step 0) first applies fixed rules (from 1998-03 on it hands over to the ending, section 3.1; two fixed late-February specials; a forced encounter (mode 0x59) with a met girl whose syoushin is at least 0x4C and whose bit 16 is still clear (the bit is set so it happens once); skipping birthday records whose `birthday_done_bits` bit is set; appointment prompt: if the first appointment is today it opens the telephone mode with stage 2 when the girl's state rank is 4, 0 when the place history changed, 1 otherwise), then switches on `day_events[day_event_index].type`. Type 0xFA is skipped. Type 0xFB (end of a day) never reaches the switch: the reader checks for telephone calls (mode 0x43 with a stage code 3-9 chosen by date and girl state), for a rumour report (mode 0x44 when a met girl has `syoushin` of 0x3D or more and her flag bit 17 is clear), then does `day_event_index++` and `calendar_advance_day()` and continues with the next record. The type 0xFF at the end of the queue also runs the Sunday telephone checks before it goes to the command screen.
 
 | type | mode | note |
 |---|---|---|
@@ -329,7 +329,7 @@ The exact random thresholds are in the matched C (`func_8006D7EC`); they are not
 | 0x47 | 0x61 | sick visit |
 | 0x48 | 0x5B | meeting; sets the girl's affection to 0x32 and syoushin to 0 first |
 | 0x49 | 0x58 | amusement park |
-| 0xFB, 0xFF, other | 0x34 | day end |
+| 0xFF, unknown | 0x34 | end of the week's queue: command screen |
 | 0xFC, 0xFD, 0xFE | 0x32, 0x39, 0x38 | week end, notice, month start |
 
 `day_event_next` advances the index and returns to mode 0x31. Encounter placeholders are resolved when the week is built by `schedule_girls_gakko`: for each 0x44, if the next record is a birthday or sick visit, or the player is ill (health 3), it becomes a skip (0xFA); otherwise a special event (0x45) is chosen by `special_event_select`, else an invitation (0x46, at most one per week) by `date_sasoi_judge`, else the placeholder is kept for `geko_judge` to fill the girl, else skipped.
@@ -377,7 +377,7 @@ Nine records `param_*` in `PARAM_*` order: condition, liberal arts, science, art
 
 ### 5.3 Daily changes and caps
 
-`check_para_limit` caps girls 0-10: tokimeki and affection at 0..0x80 (the word is zeroed when negative), syoushin at 0..0xFF. `yuukou_down`: for every met girl, affection -1 (floor 0) when `day / 7 == 0` (days 1-6), and for girl 0 also when `day / 7 == 2` (days 14-20). `syoushin_up`: for every met girl with weighted affection < 10, syoushin +5. Both run daily in term only. Effects of syoushin: >= 0x3C blocks encounters and phone calls; >= 0x4C produces a forced meeting that resets it (HYPOTHESIS: resentment counter, name kept from the developer's function).
+`check_para_limit` caps girls 0-10: tokimeki and affection at 0..0x80 (the word is zeroed when negative), syoushin at 0..0xFF. `yuukou_down`: for every met girl, affection -1 (floor 0) when `day / 7 == 0` (days 1-6), and for girl 0 also when `day / 7 == 2` (days 14-20). `syoushin_up`: for every met girl with weighted affection < 10, syoushin +5. Both run once per queue build (weekly, mode 0x30 step 3) and only while `vacation` is 0. Effects of syoushin: >= 0x3C blocks encounters and phone calls; >= 0x4C allows a one-time forced encounter (flag bit 16 marks it done). HYPOTHESIS: resentment counter; the name is kept from the developer's function.
 
 ### 5.4 Per-girl arrays
 

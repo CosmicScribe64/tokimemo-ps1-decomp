@@ -83,6 +83,7 @@ func	main	func_800722C4	quarter_flags_rotate	at months 3, 6, 9, 12: quarter_flag
 func	main	func_8007259C	daily_flags_clear	clears birthday_done_bits and events_today
 func	main	func_8006CF38	day_events_clear	fills day_events with type 0xFF and resets day_event_index
 func	main	func_8006CF80	girl_met_today_clear	clears bit 0 of the flag word of girls 0-10
+func	main	func_8005A0B0	mode_command_screen	mode 0x34 handler: stage switch for the weekday command screen (stage 0 setup, 1 selection, 5 club joining, 0xFF the setup steps with the exam/trip/remedial-week notices)
 func	main	func_80070F14	mode_day_screen	mode 0x31 handler: day screen with the HUD show calls
 func	main	func_8005A06C	mode_boot	mode 0x00 handler: stage 0 runs func_80059B40, else main_state_set(0x12)
 func	main	func_80062840	mode_title	mode 0x12 handler: four title stages; when idle (D_800B3CFC) after stage 2 it starts mode 0x11
@@ -263,7 +264,7 @@ field	Rec38	unk_02	tokimeki	get_h_tokimeki reads it; capped 0..0x80 by check_par
 field	Rec38	unk_04	affection_frac	fraction half of the word at +4
 field	Rec38	unk_06	affection	get_h_yuukou reads it; capped 0..0x80; yuukou_down decays it; init 0x32 for meeting events
 field	Rec38	unk_08	syoushin_frac	fraction half of the word at +8
-field	Rec38	unk_0A	syoushin	HYPOTHESIS: resentment counter; developer term kept (syoushin_up): +5 per day while weighted affection < 10; capped 0xFF; >= 0x3C blocks encounters and phone calls, >= 0x4C forces an encounter
+field	Rec38	unk_0A	syoushin	HYPOTHESIS: resentment counter; developer term kept (syoushin_up): +5 per weekly queue build while weighted affection < 10; capped 0xFF; >= 0x3C blocks encounters and phone calls, >= 0x4C forces an encounter
 field	Rec38	unk_0C	flags	Rec38Flags / GirlFlags union
 field	Rec38	unk_10	birthday	GsDateBits word: month, day, blood type; compared by birth_day_check_days
 field	Rec38	unk_14	event_counters	HYPOTHESIS: 0x24 per-girl progress bytes indexed by event number (DATE, GEKO, TEL read them; [0] of girl 11 is decremented daily)
@@ -569,11 +570,11 @@ const	DayEventType	0x49	DAY_EVENT_AMUSEMENT_PARK	-> mode 0x58 (DATE2)
 const	DayEventType	0x4A	DAY_EVENT_CAREER_CHOICE	-> mode 0x37 (ETC)
 const	DayEventType	0x80	DAY_EVENT_APPOINTMENT	written by appointment_launch (unk_01 girl, unk_02 place); mode 0x50 reads it
 const	DayEventType	0xFA	DAY_EVENT_SKIP	index skipped by the queue reader
-const	DayEventType	0xFB	DAY_EVENT_DAY_END	falls through to mode 0x34; one per day except Sunday
+const	DayEventType	0xFB	DAY_EVENT_DAY_END	handled inside the reader (phone-call and rumour checks, index + 1, calendar_advance_day); one per day except Sunday
 const	DayEventType	0xFC	DAY_EVENT_WEEK_END	-> mode 0x32 (weekly check: injury, neurosis, illness, recovery); after Saturday
 const	DayEventType	0xFD	DAY_EVENT_DAY_NOTICE	HYPOTHESIS: announcement screen; -> mode 0x39
 const	DayEventType	0xFE	DAY_EVENT_MONTH_START	-> mode 0x38 (placed first when the queue crosses a month end)
-const	DayEventType	0xFF	DAY_EVENT_NONE	cleared slot; also falls through to mode 0x34
+const	DayEventType	0xFF	DAY_EVENT_NONE	cleared slot = end of the queue; the reader leaves for mode 0x34 (command screen)
 const	MainMode	0x00	MODE_BOOT	func_8005A06C; stage 0 runs the boot sequence, then mode 0x12
 const	MainMode	0x01	MODE_BOOT_WAIT	HYPOTHESIS: waits for boot_hold == 0 then mode 0
 const	MainMode	0x02	MODE_OVERLAY_LOAD	overlay loader state machine (func_80078A0C); resumes overlay_target_mode
@@ -587,10 +588,10 @@ const	MainMode	0x15	MODE_NAME_ENT_4	NAME_ENT 0x8014AF28; role not settled
 const	MainMode	0x20	MODE_OPTION	OPTION 0x801335E8
 const	MainMode	0x21	MODE_OPTION_2	OPTION 0x801389A0
 const	MainMode	0x22	MODE_OPTION_3	OPTION 0x8013C780; also entered by day_event_next when D_800B3C6C is set
-const	MainMode	0x30	MODE_SCHEDULE	schedule_init: builds the day-event queue for the coming week
+const	MainMode	0x30	MODE_SCHEDULE	schedule_init: builds the day-event queue for the coming week (entered after the command screen)
 const	MainMode	0x31	MODE_DAY_SCREEN	func_80070F14: day screen, then the queue reader dispatches the next event
 const	MainMode	0x32	MODE_WEEK_END	func_80072BC0: HUD init, then the weekly health check steps (injury, neurosis, illness, recoveries)
-const	MainMode	0x34	MODE_DAY_END	func_8005A0B0: stage/step machine reached from the default branch of the queue reader
+const	MainMode	0x34	MODE_COMMAND_SCREEN	func_8005A0B0: weekday command screen where the player picks the next week's command (stage 5 = club joining); entered when the queue reader reaches the end marker 0xFF
 const	MainMode	0x35	MODE_EXAM	ETC 0x801465F8: final exams and rank list
 const	MainMode	0x36	MODE_CAREER_GUIDANCE	ETC 0x8014ABD0
 const	MainMode	0x37	MODE_CAREER_CHOICE	ETC 0x801492C0: job or college choice
@@ -731,8 +732,8 @@ comment	main	get_h_tokimeki	Weighted tokimeki for girl % 13 with extra terms fro
 comment	main	birth_day_check_days	Return 1 when the girl's (or, for 0xF, the player's) birthday is the given month and day	body
 comment	main	main_state_set	Switch to a mode and reset stage, step, timers, substep	body
 comment	main	dialogue_render	Split a script string into lines and queue them with name code expansion	wiki/ref-english-patch.md
-comment	main	yuukou_down	Daily affection decay for met girls (term start rule)	body
-comment	main	syoushin_up	Add 5 to the syoushin counter of met girls whose weighted affection is below 10	body
+comment	main	yuukou_down	Once per queue build (weekly): lower affection by 1 (floor 0) for every met girl when the day of month is 1-6, and for girl 0 also on days 14-20	body
+comment	main	syoushin_up	Once per queue build (weekly): add 5 to the syoushin counter of met girls whose weighted affection is below 10	body
 comment	main	schedule_girls_gakko	Resolve girl-encounter placeholders in the day-event queue into special events, invitations, encounters or skips	body
 file	core	include/game.h	include/game_types.h	shared record and view types; hub header included by every unit; new enums go into the new include/game_enums.h
 file	core	-	include/game_enums.h	new header for the const rows of this table (enums and PAD_/MOUSE_ masks)
