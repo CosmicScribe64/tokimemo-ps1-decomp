@@ -1,6 +1,6 @@
 file	main	src/main/800451D0.c	src/main/cd_queue.c	CD command ring, sector reads, checksum, XA clip request
 file	main	src/main/80046500.c	src/main/reset_iris_wipe.c	game reset to title, digit/BCD helpers, iris-wipe transition
-file	main	src/main/80056300.c	src/main/exit_to_shell.c	exit_function: shut down and reload PSX.EXE
+file	main	src/main/80056300.c	src/main/reload_exe.c	exit_function: shut down CD, SPU, timers and callbacks, then reload the executable named PSX.EXE (boot file name of the Rev and Shokai discs; the Best disc names it SLPM_86.053); mode 0xFF, no src setter
 file	main	src/main/800563F0.c	src/main/movie_player.c	STR movie playback and timed text
 file	main	src/main/80057390.c	src/main/dec_bg.c	MDEC-decoded background layers
 file	main	src/main/80058D20.c	src/main/model_3d.c	3D view/light/coordinate init, model slots, display width, model update
@@ -13,19 +13,19 @@ func	main	func_800451EC	cd_read_sync_poll	sets cd_read_status=0x80 and stores Cd
 func	main	func_80045224	cd_sync_poll	CdSync(1): result 2 sets status bit 1, result 5 sets queue phase -1; no caller in src (unused)
 func	main	func_80045288	cd_queue_idle	1 when head==tail and phase==-1; title (80062840) and TACO wait on it
 func	main	func_800452C4	cd_queue_reset	zeroes ring indices, state bytes and read flags, status=2, phase=-1; main loop start, overlays
-func	main	func_80045318	cd_queue_push	stores command/lba/16 param bytes at tail of the 48-entry ring; returns -1 when full, 1 otherwise
+func	main	func_80045318	cd_queue_push	stores command/lba/16 param bytes at tail of the 48-entry ring; returns -1 when full and 1 after a normal push; the push into slot 47 wraps tail to 0 and falls off the end without a return statement (undefined result); outside cd_command only GEKO calls it (pause), ignoring the result
 func	main	func_80045414	cd_command	public entry: ids 0,2,3,6,9,10,13,14,21 expand into 1-3 ring entries; emu: ids 14,9,10,6 at boot
 func	main	func_800455C4	cd_queue_update	per-frame ring state machine issuing libcd calls; called by the main loop 2341 times in 3600 emu frames
-func	main	func_80046094	cd_last_command	command byte of ring entry head-1 (the one started last)
+func	main	func_80046094	cd_last_command	command byte of the ring entry before head: the last entry the ring moved past (fire-and-forget entries when issued, pause/seek/read/XA read when finished); 12 overlay sites test == 9 as "the stream was stopped by a pause" (SHOUGATU, DATE, SHUGAKU, GEKO, DATE2, ENDING), ENDING also pairs it with cd_state_get()&4; inside the module == 0x1B (XA read) selects the re-queue path
 func	main	func_800460DC	cd_read_count_get	returns D_801255B5, incremented once per finished read; 80043510 and TT compare it
 func	main	func_800460EC	cd_state_get	returns D_801255B4; overlays test &2 (done) and &4 (XA playing)
-func	main	func_800460FC	cd_position_lba	CdControlB(GetlocL) with up to 16 retries, BCD->int check min<75 sec<60 frame<75, CdPosToInt; 0 when invalid
+func	main	func_800460FC	cd_position_lba	CdControlB(GetlocL) with up to 16 tries (after the 16th failure, if the ring entry before head is the XA read 0x1B, it is re-queued: phase -1, head-1); BCD->int check min<75 sec<60 frame<75, CdPosToInt; 0 when invalid
 func	main	func_80046274	xa_position_get	returns D_801255B0, the sector refreshed by cd_queue_update while D_801255B4==4
 func	main	func_80046284	xa_clip_request_get	returns pointer to D_800B3D70; 80079B10 (func_8007A6AC) reads the four words
-func	main	func_80046290	xa_clip_request_set	stores speaker (arg2&15), D_800B3648[speaker], start and end clip words; emu: NAME_ENT frames 3836, 4653, 6754 with speaker 0xF
+func	main	func_80046290	xa_clip_request_set	stores speaker (arg2&15), D_800B3648[speaker], start and end clip words; speaker evidence: 104 call lines, 25 pass GameState.unk_F5F (core: current_girl), ETC 80140F50.c:334 and 8005A0B0.c:469 a local named girl, NAME_ENT i % 13, other clips 0xE or 0xF; emu: NAME_ENT frames 3836, 4653, 6754 with speaker 0xF
 func	main	func_800462BC	cd_read_param_pack	writes dest address into a word and the sector count into its top byte (the layout cd_queue_update decodes)
 func	main	func_800462C8	cd_read_sectors_unchecked	like cd_read_sectors but clears D_800B3D60, so no end-of-file marker test; used by dec_bg_cd_read, boot DUM.TMD read
-func	main	func_800463E8	cd_busy_marker_draw	draws two yellow lines at (0x9E,0x5A) when D_8011ED17&0x80 and frame counter bit 2; called only while the ring is busy (363 emu hits)
+func	main	func_800463E8	cd_busy_marker_draw	draws two yellow lines at (0x9E,0x5A) when D_8011ED17&0x80 (message window flag, set by message_disp_switch(1)) and frame counter bit 2; called only while the ring is busy (363 emu hits)
 func	main	func_80046478	cd_error_recover	CdControlB(Setmode 0x84), then 512 VSync(0); called when CdSync reports a disk error during an XA read
 func	main	func_80046500	game_reset_to_title	reloads the game state, main_state_set(0x12) (title sequence, handler func_80062840), clears tpage, bg, CD ring; default arm of a mode/stage switch at 471 of 517 references in src
 func	main	func_80046590	decimal_digit	(value, position): position 1 = ones; returns 0 for position >= 6; used by hizuke_init, parameter_show_init (HUD numbers)
@@ -37,7 +37,7 @@ func	main	func_800570B8	movie_caption_bar_draw	HYPOTHESIS: caption band; three f
 func	main	func_8005715C	movie_captions_update	HYPOTHESIS: caption/lyric timing: walks the 22-entry mark table D_800B5904 against (frame-start)/6 and drives k_disp_switch/k_disp_start; only reached when D_800B5900&1==0, emu: 0 hits in the first 292 frames of the NAME_ENT movie
 func	main	func_8005751C	dec_bg_decode	MDEC-decodes the data at 0x80162000 into the hidden buffer of a layer (func_800536AC rect), returns the buffer index
 func	main	func_80057640	dec_bg_capture_screen	MoveImage of the displayed frame (320 x arg0 lines) into the hidden layer-1 buffer, then shows it; callers 80061044, 80078C48, NAME_ENT
-func	main	func_80057710	dec_bg_wipe_step	per call: brightness D_800B593C -= 8, D_800B5944 (dec_bg_wipe_count) +1, draws 15 bands of 1..32 diagonal black lines; callers 80078A94, pre_syogatu_init1
+func	main	func_80057710	dec_bg_wipe_step	per call: brightness D_800B593C -= 8 (0 on underflow), D_800B5944 (dec_bg_wipe_count) +1, draws 15 bands of 2*count diagonal black lines each (count incremented first, so 2..32); callers 80078A94, pre_syogatu_init1
 func	main	func_800578F4	dec_bg_draw	draws layer a (0: 88 lines, 1: 160 lines, 2: 240 lines) as a 192-wide and a 128-wide SPRT at brightness D_800B593C; records D_800B5948
 func	main	func_80057D1C	dec_bg_fade_set	stores D_800B5940, the amount 0..0x80 read by dec_bg_fade_draw and dec_bg_crossfade_draw; NAME_ENT sets 0x80 then lowers it by 3 per frame to below 0x11, then raises it by 4
 func	main	func_80057D28	dec_bg_fade_draw	4 sprites, all from the SHOWN buffer of layer arg0 (1: 160 lines, else 88 lines; no layer 2 case): 2 semi-transparent with colour 0x80-amount at ordering slot 10, 2 opaque with colour amount at slot 13; each pair is a 192-wide and a 128-wide piece; HYPOTHESIS: fades one picture in or out; callers normal_date_girl_in/out
@@ -45,14 +45,14 @@ func	main	func_80058398	dec_bg_crossfade_draw	6 sprites: 2 semi-transparent from
 func	main	func_80058F9C	model_link_tmd_object	(tmd, slot, object index): maps the TMD, links object n into model slot; count word above 16 is replaced by 15 (16 passes unchanged); 1 on success, -1 when n >= count; TACO func_801321A0
 func	main	func_80059048	model_slots_clear	sets word 0 of each of the 16 object records at D_80122640 to 0x80000000 (hidden); title, TACO, ETC
 func	main	func_8005907C	display_reinit	libgs display reset sequence: sets D_8011ECA0 from the active buffer, InitGeom; used after a width change
-func	main	func_800590CC	display_set_256_or_320	width 0x100 when arg0!=0 else 0x140, height 0xF0, centre x 0x80/0xA0, then GsInitGraph-like call and back_clear_switch; ETC
-func	main	func_800591D8	display_set_512_or_320	clears both 256-wide halves of VRAM, then switches to width 0x200 or 0x140 only if different; TACO
+func	main	func_800590CC	display_set_256_or_320	width 0x100 when arg0!=0 else 0x140, height 0xF0, centre x 0x80/0xA0, then GsInitGraph-like call and back_clear_switch; ETC (80143240.c)
+func	main	func_800591D8	display_set_512_or_320	clears both 256-wide halves of VRAM, then switches to width 0x200 or 0x140 only if different; TACO (arg 1 for the shooter, 0 to leave) and main (soft reset, 80042A00.c:227,255, arg 0)
 func	main	func_80059308	vram_clear_frame_buffers	clears two 256x480 VRAM rects at x=0 and x=0x100 via func_8009C7F8
-func	main	func_8005938C	models_update_draw	for display records i = word at GameState+0x109C, i += 2 up to 0xA0 (stride 2 x 0x44) with active and flags&0x80: rot*scale matrix, position += velocity if flags&0x10, GsGetLws, sort into OT; emu: 2026 calls from func_80043510
+func	main	func_8005938C	models_update_draw	for display records i = word at GameState+0x109C, i += 2 up to 0xA0 (stride 2 x 0x44) with active and flags&0x80: rot*scale matrix, position += velocity if flags&0x10, GsGetLws, sort into OT; called by func_80043510 only while GameState.unk_1113 (core: draw_3d_enabled) is non-zero, right after the same block sorts the 16 model_objects; emu: 2026 calls in 3600 frames
 func	main	func_80059688	model_record_init	sets active=1, flags 0, rotation 0, scale 0x1000, position/velocity 0 and byte 0x85=1 for one record; TACO func_80143AF4
 func	main	func_80059860	mouse_read	updates the cursor (mouse_update) and fills x, y, buttons (~raw&0xC, or -0x100 when no mouse); no caller in src
 func	main	func_80059938	mouse_update	when the port buffer has status 0 and type 0x12: adds dx/dy to the position and clamps to the range rectangle
-func	main	func_80059A20	debug_state_numbers_draw	prints mode, stage, step, substep (unk_110D), four counters (unk_1104, unk_1100, unk_10FC, unk_10F4), a byte at D_800E7D34 and the stack pointer as numbers; main loop calls it only if D_800B3220!=0 (0 emu hits)
+func	main	func_80059A20	debug_state_numbers_draw	prints mode, stage, step, substep (unk_110D), four counters (unk_1104, unk_1100, unk_10FC, unk_10F4), a byte at D_800E7D34 and the stack pointer as numbers; main loop (800420D0.c) calls it only while D_800B3220 (h-graphics: debug_hud_enabled) is non-zero, a flag the OPTION overlay sets (80132000.c:371, from the option flag 0xF test; pad combination at :532) and 800789E0.c clears; 0 emu hits
 func	main	func_80059B04	snd_load_error_report	HYPOTHESIS: sound bank load failure; printf of the code, then flag D_800B3D54[D_800B3D24]=1; 80079B10 callers pass (slot<<8)|0x0101xxxx after -1 from func_8008C1B0/func_8008C620/func_800900A0
 func	main	func_80059B40	boot_mode_step	dispatch on step unk_110A: 0 boot_data_load_step, 1 boot_hud_textures_step, 2 func_8004ADE4, else func_80042808 (stage+1)
 func	main	func_80059BC0	boot_hud_textures_step	boot_hud_textures_load then next step
@@ -84,10 +84,10 @@ data	main	D_800B58F4	movie_end_frame	end frame argument of movie_play
 data	main	D_800B58F8	movie_offset_x	set_movie_offset arg0; added to the VRAM rect x
 data	main	D_800B58FC	movie_offset_y	set_movie_offset arg1; added to the VRAM rect y
 data	main	D_800B5900	movie_flags	bit 0 = 24-bit mode (480-wide decode); initial value 1, no write found in src
-data	main	D_800B5904	movie_caption_marks	22 bytes, thresholds scaled by 0x50/0xF in movie_captions_update
+data	main	D_800B5904	movie_caption_marks	HYPOTHESIS (name follows movie_captions_update): 22 threshold bytes, scaled by 0x50/0xF and compared with the elapsed frame count
 data	main	D_80125C58	movie_ctx	pointer, fixed at 0x80180000 by movie_play (type StrCtx)
 data	main	D_800B5920	dec_bg_lba_cache	4 words: [0..1] layer 0, [2..3] layer 1, one per VRAM buffer
-data	main	D_800B5938	dec_bg_shown	4 bytes: shown VRAM buffer (0/1) per layer, [2] unused
+data	main	D_800B5938	dec_bg_shown	4 bytes: shown VRAM buffer (0/1) per layer; [2] is read by dec_bg_draw for layer 2 and cleared by dec_bg_reset; [3] unused
 data	main	D_800B593C	dec_bg_brightness	0x80 normal, set_dec_bri, wipe step lowers it
 data	main	D_800B5940	dec_bg_fade_amount	amount 0..0x80 for dec_bg_fade_draw and dec_bg_crossfade_draw (0x80 = picture at full brightness)
 data	main	D_800B5944	dec_bg_wipe_count	call counter of dec_bg_wipe_step, reset by dec_bg_capture_screen
@@ -126,8 +126,9 @@ field	StrCtx	endflag	end_flag	set when the stream header frame count reaches the
 field	MouseOut	unk_0	x	position / sensitivity x
 field	MouseOut	unk_4	y	position / sensitivity y
 field	MouseOut	unk_8	buttons	~raw buttons & 0xC, or -0x100 when no mouse is plugged
-field	GsCoordinate2	unk0	flag	libgs flg word; models_update_draw clears it after writing a new matrix into the record (HYPOTHESIS: libgs then recomputes the world matrix)
-field	GsCoordinate2	unk20	translate_z	offset 0x20 = coord.t[2]; initCoordinate stores -0xFA0
+field	TaiikuBig	unk0	flag	libgs flg word (first word of the GsCOORDINATE2 layout); initCoordinate sets it to 0 after the libgs coordinate init
+field	TaiikuBig	unk20	translate_z	offset 0x20 = coord.t[2]; initCoordinate stores -0xFA0
+field	ModelRec88	unk_14	coord_flag	same libgs flg word as TaiikuBig.flag (the GsCOORDINATE2 layout starts at +0x14, its matrix at +0x18); models_update_draw clears it after writing a new matrix into the record (HYPOTHESIS: libgs then recomputes the world matrix)
 field	GameState	unk_000	screen_width	stored 0x100, 0x140, 0x200 by display_set_*; passed as first argument to the libgs init call; core proposes video_width
 field	GameState	unk_002	screen_height	always 0xF0; second argument of the init call; core proposes video_height
 field	GameState	unk_004	screen_interlace	HYPOTHESIS: interlace mode; stored 0 and passed third to the libgs init call, which matches GsInitGraph(w,h,intmode,..); core proposes video_interlace
@@ -148,18 +149,18 @@ const	CdState	4	CD_STATE_XA_PLAYING	set when ReadS reports the reading status bi
 const	CdReadStatus	1	CD_READ_DONE	bit 0 of cd_read_status; cd_read_sync_status()&1 in every loader
 const	CdQueuePhase	-1	CD_PHASE_START	command at head not yet issued
 const	CdQueuePhase	1	CD_PHASE_WAIT	command issued, waiting
-const	DecBgLayer	0	DEC_BG_STRIP_88	88-line layer, VRAM (0x2C0,0xA0) or (0x140,0x1A0), 320 wide
-const	DecBgLayer	1	DEC_BG_PANEL_160	160-line layer, VRAM (0x2C0,0) or (0x140,0x100), 320 wide
-const	DecBgLayer	2	DEC_BG_FULL_240	draw-only value of dec_bg_draw: 240 lines read from buffer 0
+const	DecBgLayer	0	DEC_BG_LAYER_88	88-line layer, VRAM (0x2C0,0xA0) or (0x140,0x1A0), 320 wide
+const	DecBgLayer	1	DEC_BG_LAYER_160	160-line layer, VRAM (0x2C0,0) or (0x140,0x100), 320 wide
+const	DecBgLayer	2	DEC_BG_LAYER_240	draw-only value of dec_bg_draw: 240 lines read from buffer 0
 const	MovieFlags	1	MOVIE_FLAG_24BIT	bit 0 of D_800B5900
 const	ModelFlags	0x80	MODEL_FLAG_VISIBLE	tested in models_update_draw
 const	ModelFlags	0x10	MODEL_FLAG_MOVING	position += velocity each update
 const	MouseType	0x12	PAD_TYPE_MOUSE	terminal type byte tested by mouse_update
 const	MouseButton	0x4	MOUSE_BUTTON_RIGHT	HYPOTHESIS: bit order (4 right, 8 left) is from the PS1 mouse protocol, not shown by the code; mouse_read masks ~byte3 & 0xC
 const	MouseButton	0x8	MOUSE_BUTTON_LEFT	HYPOTHESIS: as above; func_80042CB0 (80042A00.c) maps 8 to bit 0x20 and 4 to bit 0x40 unless unk_F75 swaps them
-comment	main	cd_read_sync_status	Returns cd_read_status; bit 0 set means the last read has finished.	O.BIN name kept; comment states behaviour read from the code
-comment	main	cd_read_sectors	Queues a checked read of N sectors from an LBA into RAM; done when cd_read_sync_status bit 0 is set.	O.BIN name kept; comment states behaviour read from the code
-comment	main	file_checksum_ok	True when the 16-bit sum of all bytes of a loaded file except the last 4 equals the big-endian u16 stored at its end.	O.BIN name kept; comment states behaviour read from the code
+comment	main	cd_read_sync_status	Returns cd_read_status; bit 0 set means the last read has finished.	name from the English-patch notes (config/symbol_addrs.txt); comment states behaviour read from the code
+comment	main	cd_read_sectors	Queues a checked read of N sectors from an LBA into RAM; done when cd_read_sync_status bit 0 is set.	name from the English-patch notes (config/symbol_addrs.txt); comment states behaviour read from the code
+comment	main	file_checksum_ok	True when the 16-bit sum of all bytes of a loaded file except the last 4 equals the big-endian u16 stored at its end.	name from the English-patch notes (config/symbol_addrs.txt); comment states behaviour read from the code
 comment	main	exit_function	Shuts down CD, SPU, timers and callbacks and reloads PSX.EXE from the disc (mode 0xFF).	O.BIN name kept; comment states behaviour read from the code
 comment	main	set_movie_offset	Sets the x and y shift applied to the movie picture in VRAM.	O.BIN name kept; comment states behaviour read from the code
 comment	main	strInit	Resets the MDEC, installs the decode callback, sets up the CD stream ring and starts the stream (PsyQ movie sample).	O.BIN name kept; comment states behaviour read from the code
