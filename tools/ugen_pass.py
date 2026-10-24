@@ -14,6 +14,17 @@ loops or branches (`Ufjp`/`Utjp`), and switches to forward (`F`) only when the
 procedure has executed an indirect store (`Uistr`/`Uistv`) either immediately
 before the copy or inside a preceding counted loop whose branch emits a signed
 immediate `<` comparison (`zblt` with positive immediate, `for (i = 0; i < N; i++)`).
+Once such a branch follows an indirect store, every later copy of the procedure is
+`F`. The branch counts only when no other `Ufjp`/`Utjp` lies between the store and
+it (T-25608): a store inside an earlier loop on a variable bound, followed by the
+next loop's `n >= 1` guard, leaves the copies after it in `B`.
+Known limits of this rule (T-25608, IDO 4.1 check in wiki/ido-52-evaluation.md): on
+30 synthetic cases (tools/ido_eval_cases/ugen_copy_state/) IDO 4.1's ugen, which
+reproduces the original's copy states, disagrees with this rule in 8 shapes, none of
+them in matched code. What fits all 30 is simpler: an indirect store sets `F`, a
+conditional branch that compares two registers sets `B`, nothing else changes the
+state. Adopting that rule needs two FAKE-steered matches re-steered first (main
+`strCallback`, `func_8005938C`); see the follow-up ticket T-26000.
 Details and census: wiki/matching-notes.md, wiki/toolchain.md.
 
 In stock IDO 5.3 `ugen`, `f_jump` (`Ufjp`/`Utjp`) happens to leave `0` (`< 0x7ff8`)
@@ -270,7 +281,7 @@ def rewrite_ucode(insns):
         if not any(insns[k].opc == OP["mov"] for k in range(start, end)):
             continue
         proc_block = insns[start].words[1]
-        seen_uist = False
+        uist_armed = False  # an indirect store with no fjp/tjp after it yet
         uist_rill_loop = False
         last_state_op = "ent"
 
@@ -278,13 +289,14 @@ def rewrite_ucode(insns):
             ins = insns[k]
             opc = ins.opc
             if opc in (OP["istr"], OP["istv"]):
-                seen_uist = True
+                uist_armed = True
                 last_state_op = "uist"
             elif opc == OP["str"] and ins.mtype != MT_R:
                 last_state_op = "ustr"
             elif opc in (OP["fjp"], OP["tjp"]):
-                if seen_uist and _is_signed_blt_pos_imm_jump(insns, start, k):
+                if uist_armed and _is_signed_blt_pos_imm_jump(insns, start, k):
                     uist_rill_loop = True
+                uist_armed = False
                 last_state_op = "jump"
             elif opc == OP["mov"]:
                 want_f = uist_rill_loop or (last_state_op == "uist")

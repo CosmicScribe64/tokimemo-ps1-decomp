@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-18
+updated: 2026-10-23
 sources: ["wiki/original-compiler.md", "tools/docker.sh", "tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "tools/sdk_aspsx_pass.py", "tools/test_sdk_aspsx_pass.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py"]
 ---
 
@@ -84,6 +84,11 @@ T-20710 (no build step): IDO 4.1's ugen also has the original's block-copy state
 Since T-7000 the pass starts with a widening step: the build runs IDO in K&R mode, whose front end writes no `CVT J<-L` after a load of an unsigned narrow variable; the step inserts it after every such load of a global (memory type S, 1 or 2 bytes) unless the value goes straight into a store, a conversion, an array index, `++`/`--`, a truth test, an operand swap or a narrow parameter (a switch temporary does get it). That is where IDO's ANSI front end writes it (checked on all 440 C files: 1711 loads, 28 differ, all with an explicit unsigned operand in the C). Locals and parameters keep IDO's K&R form, as in the original. Tests: class `Widen` and `test_compare_after_a_call_keeps_widened_value` in `tools/test_cvt_pass.py`.
 
 The rules are uniform (no per-function control; the C decides, as with the original: `switch (D)` on an unsigned global gives `$v1`, `u8 mode = D; switch (mode)` gives `$v0`). The one case they cannot see is unit-private data (a variable only one overlay or file uses), which the original did not promote; such functions switch on a local copy marked `FAKE` (16 in the matched set, T-5010). Unknown ucode or an operand the pass cannot move aborts the build (`cvt_pass.py: ...`). Tests: `tools/docker.sh python3 tools/test_cvt_pass.py` (synthetic ucode records, plus snippets compiled by the real IDO). The ucode record layout comes from the ido-decomp sources (`src/ucode.h`, `src/libu/uini.c` of n64decomp/ido); no SGI code is used or committed. Rejected alternatives and the uopt option and patch experiments are in [[matching-notes]].
+
+## Block-copy state pass (T-24092; lock rule refined by T-25608)
+`tools/ugen_pass.py` wraps IDO's `ugen` for every IDO compile and puts a zero-register sentinel before each `Umov`, so the copy is compiled in state B (two scratch registers spent before the end or transfer register) or F (one). Rule: B at entry, after a direct store or a `Ufjp`/`Utjp`; F right after an indirect store (`Uistr`/`Uistv`); and F for the rest of the procedure once a signed positive-immediate `<` jump (`zblt`, e.g. `for (i = 0; i < N; i++)`, a loop guard `n >= 1`) follows an indirect store with no other `Ufjp`/`Utjp` between them. Root cause and the 5.3 difference: [[tickets/T-24092-ugen-block-copy-state-pass]].
+
+T-25608 added the "no other jump between" condition. Census of the full build (2026-10-23): 565 procedures with a `Umov`, 14 where the lock changes a state. In 11 the store is directly followed by a loop's back branch (`U Rb`), in 3 only stores, calls or parameter moves lie between (main `func_80054FC0`, TEL `8013CCD0.c`, one more); none has a jump between. main `func_8006B0C8` was the one exception: the month loop's stores, then that loop's own back branch, then the sort loop's `n >= 1` guard. The old rule locked F there; the original has B for all three swap copies, and with B the C matches. The new rule changes no other procedure (27/27 checksums). A stricter rule (the store must be the last state op before the jump) broke main `func_80054FC0`, whose T-25105 FAKE test follows direct stores.
 
 ## Jump tables and asm-processor (T-1340)
 asm-processor's `.rodata`/`.late_rodata` support is what lets `INCLUDE_ASM` functions and compiler-emitted jump tables share one object (it makes the compiler emit dummy data in the right order and replaces it by the asm bytes). `tools/rodata_pieces.py` writes those sections into the function files; see [[build-system]].

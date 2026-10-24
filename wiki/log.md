@@ -1754,3 +1754,6 @@ copies (injection test), which both rules predict. 4.1's own rule (F after an in
 register-register compare branch) fits all 30 cases. As a ucode pass it changes three procedures in the corpus:
 `func_8006B0C8` matches, and main `strCallback` and `func_8005938C` fail because of their FAKE steering loops.
 Section added to [[ido-52-evaluation]]; harness in `drafts/T-25608/ido41/`.
+## [2026-10-23] ticket | T-25608 Done: main func_8006B0C8 matched; every game function is C
+
+The last function matched with a narrowed block-copy state rule in tools/ugen_pass.py; an IDO 4.1 check (user-approved download) confirmed the three swap copies' state and showed a better general rule, now [[tickets/T-26000-ugen-block-copy-41-rule]]. With this merge all 6,952 game functions are matched ([[tickets/T-25600-finish-gate]]).
