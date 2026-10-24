@@ -10,7 +10,7 @@ Unit `core` of phase 2 ([[tickets/T-27010-p2-core]], parent [[tickets/T-27000-ph
 
 Scope (user decision of 2026-10-24): enough for the Godot port. Game logic, state and flow are described fully; the PS1 hardware layer (GPU, VRAM, sound driver, CD/XA, memory card, MDEC, movie) is named at module level with its entry points, section 9.
 
-Table size: 738 rows (90 `func`, 39 `data`, 234 `field`, 75 `type`, 238 `const`, 60 `comment`, 2 `file`); 74 rows carry HYPOTHESIS.
+Table size: 742 rows (92 `func`, 39 `data`, 236 `field`, 75 `type`, 238 `const`, 60 `comment`, 2 `file`); 85 rows carry HYPOTHESIS. Reviewed once (4 blocking findings, fixed 2026-10-24); the cross-unit name list is in section 17.
 
 How to read the table file: `kind scope old new note`. Apply `field` rows with the scope written as the type name *before* the `type` rows rename it (`Rec38`, `GsRec69C`, ...). `const` rows give `old` = literal, `new` = constant, `scope` = enum or mask group. `comment` rows carry an English one-liner for an O.BIN or patch name that stays.
 
@@ -84,12 +84,12 @@ Reset matrix (what each setter clears, besides writing its own value):
 | 0x46 | `MODE_HOLIDAY` | main | holiday command screen, telephone, club joining, appointments |
 | 0x50 | `MODE_DATE` | DATE | an appointment starts here; 0x5E hosts the girl-specific scenes |
 | 0x51 | `MODE_SCHOOL_TRIP` | SHUGAKU | |
-| 0x52, 0x53, 0x55 | `MODE_SHOUGATU_A/B/C` | SHOUGATU | New Year and party flows; 0x5B `MODE_MEETING` is also in SHOUGATU |
+| 0x52, 0x53, 0x55 | `MODE_NEW_YEAR_A`, `_B`, `MODE_SEASONAL_PARTY` | SHOUGATU | New Year and party flows (HYPOTHESIS names: the English form of the overlay prefix); 0x5B `MODE_MEETING` (HYPOTHESIS name: SHOUGATU hosts generic scenes there) is also in SHOUGATU |
 | 0x54 | `MODE_VALENTINE` | VALEN | |
 | 0x56, 0x57 | `MODE_PLAYER_BIRTHDAY`, `MODE_GIRL_BIRTHDAY` | GEKO | |
 | 0x58, 0x5C | `MODE_AMUSEMENT_PARK`, `_2` | DATE2 | |
 | 0x59, 0x5A, 0x5D | `MODE_GIRL_ENCOUNTER`, `MODE_GIRL_INVITATION`, `MODE_SPECIAL_EVENT` | GEKO | |
-| 0x5F, 0x60 | `MODE_CLUB_CAMP`, `_2` | KANGEI | |
+| 0x5F, 0x60 | `MODE_CLUB_CAMP`, `_2` | KANGEI | HYPOTHESIS names: the overlay is rated low confidence; queue type 0x42 comes six in a row in the club season |
 | 0x61, 0x62 | `MODE_SICK_VISIT`, `_2` | OMIMAI | |
 | 0x63 | `MODE_ENDING` | ENDING | |
 | 0x70, 0x71 | `MODE_CULTURE_FESTIVAL_A/B` | BUNKASAI / BUNKAKEN | chosen by the player's club: id < 6 gets A |
@@ -107,7 +107,7 @@ EVENT and GYOZI are never loaded (no loader builds their sectors); they were lin
 
 ### 2.3 GameState map (all 161 top-level members by offset)
 
-Old name, new name, use count (reads and writes in `src/`, EVENT and GYOZI excluded), evidence. `kept` means no proven role: unused or unknown bytes. Sub-record fields are in the table file.
+Old name, new name, use count (direct `D_800E6280.` reads and writes in `src/`, EVENT and GYOZI excluded; accesses through a `GameState *` such as `g->` are not counted, so the counts undercount fields that overlays reach through a pointer: `current_girl` is named on about 1,650 lines in all), evidence. `kept` means no proven role: unused or unknown bytes. Sub-record fields are in the table file.
 
 | offset | type | old | name | uses | note |
 |---|---|---|---|---|---|
@@ -171,8 +171,8 @@ Old name, new name, use count (reads and writes in `src/`, EVENT and GYOZI exclu
 | 0x726 | u8 | `unk_726` | `appt_place_2` | 12 | see appt_place_0 |
 | 0x727 | u8 | `unk_727` | `appt_place_3` | 13 | see appt_place_0 |
 | 0x728 | u8[4] | `unk_728` | `date_place_history` | 1 | HYPOTHESIS: 4 places of the latest dates; DATE compares [0]==[1]==chosen place to detect a repeated place (sets player_flags... |
-| 0x72C | u8[0x10] | `unk_72C` | `girl_last_event` | 5 | HYPOTHESIS: one byte per girl (loops of 11); cleared when it equals 0x23/0x24 (func_8006CB30); GEKO uses it as a ban-list index |
-| 0x73C | u8[0x10] | `unk_73C` | `girl_cooldown` | 2 | HYPOTHESIS: one byte per girl, decremented daily while nonzero |
+| 0x72C | u8[0x10] | `unk_72C` | `girl_last_date_spot` | 5 | date spot id (`D_80122D08`, the value that also indexes `event_counters`; not the `Place` enum) of the last date with each girl (loops of 11); GEKO uses it as a ban-list index; rule in section 5.4 |
+| 0x73C | u8[0x10] | `unk_73C` | `girl_last_date_spot_timer` | 2 | weeks left in which that spot counts as a repeat: set to 12 by DATE, lowered once per queue build (weekly) by `last_date_spot_timer_dec` |
 | 0x74C | u8[0x10] | `unk_74C` | `girl_event_bits` | 7 | HYPOTHESIS: one byte per girl; GEKO tests/sets bits 1, 2, 4 for scenes 0xE, 0xF, 7 |
 | 0x75C | u8 | `unk_75C` | `appointment_flag` | 4 | copy of appointment_slots[0] bit 24, stored by appointment_launch |
 | 0x75D | u8 | `unk_75D` | `date_girl` | 90 | girl of the current date or event (copied from current_girl at launch); read by DATE, KANGEI, SHUGAKU, DATE2 |
@@ -187,7 +187,7 @@ Old name, new name, use count (reads and writes in `src/`, EVENT and GYOZI exclu
 | 0xF68 | GsWord | `unk_F68` | `last_command` | 51 | low nibble = the weekday command chosen on the schedule screen (icon index; 0-7 = row of command_deltas, 4 = club activity;... |
 | 0xF6C | u8 | `unk_F6C` | `icon_mode` | 23 | settings: 0 = TYPE-A, 1 = TYPE-B, 2 = free layout (strings of the settings screen) |
 | 0xF6D | u8 | `unk_F6D` | `icon_count` | 18 | number of icon actors shown (0xF in free mode, 0xE otherwise) |
-| 0xF6E | u8 | `unk_F6E` | `anim_fast` | 10 | toggled by pad 2 bit 27 (R1) in func_80042A00; nonzero shortens the parameter-panel pop animation from 8 to 4 frames... |
+| 0xF6E | u8 | `unk_F6E` | `sd_anim_fast` | 10 | toggled by pad 2 START (bit 27) in func_80042A00; the in-game hint calls it the SD character animation speed switch; nonzero sets `unk_06` to 0x82 on actors 96 and 97 of the week and holiday screens (HYPOTHESIS: the SD characters) and shortens the parameter-panel pop animation from 8 to 4 frames; saved with the game |
 | 0xF6F | u8 | `unk_F6F` | `cursor_speed` | 21 | settings 1-5, default 3; step of the pad-driven cursor in func_8006BA40 |
 | 0xF70 | u8 | `unk_F70` | `click_mode` | 10 | mouse setting: 0 single click, 1 double click |
 | 0xF71 | s8 | `unk_F71` | - (kept) | 1 | unused or not proven (see open questions) |
@@ -283,7 +283,7 @@ From year 98, month 3 (day != 0) the queue reader stops dispatching and calls `m
 
 ### 3.2 Month tables
 
-`month_calendar[2]` holds this month and next month. Each record has `day_kind[0x20]` (`[0]` = days in the month, `[d]` = day kind) and `marker[0x20]` (`[0]` = weekday of the 1st, `[d]` = marker). At the end of a month the second record moves to the first and the new second record is loaded from `month_data_table` (`D_800B3748`, 36 month blobs indexed `(year - 95) * 12 + month - 4`; each blob is a 0x2000-byte calendar image followed by words: the day count, the first weekday, then n day kinds and n markers, of which only the low byte is kept). The initial table (April and May 1995) is written by `func_800418B0`. The blobs live in memory loaded from disc, not in the executable: **the port must read them from the disc data**.
+`month_calendar[2]` holds this month and next month. Each record has `day_kind[0x20]` (`[0]` = days in the month, `[d]` = day kind) and `marker[0x20]` (`[0]` = weekday of the 1st, `[d]` = marker). At the end of a month the second record moves to the first and the new second record is loaded from `month_data_table` (`D_800B3748`, 36 month blobs indexed `(year - 95) * 12 + month - 4`; each blob is a 0x2000-byte calendar image followed by words: the day count, the first weekday, then n day kinds and n markers, of which only the low byte is kept). The initial table (April and May 1995) is written by `func_800418B0`. The blobs live in memory loaded from disc, not in the executable: **the port must read them from the disc data**. Mode 0x38 (`MODE_MONTH_START`) loads them at every month start: step 0 reads 0x95 sectors from LBA 0x9B94 to 0x801A0000, step 1 calls `func_80068938(year, month, 1)`, and the mode shows its screen only when the month is divisible by 3 (the new-term message in September, except on 1 September 1996, where it just continues). `func_80068938` loads blobs `idx` and `idx + 1` only while `idx < 35`.
 
 Day kinds: 0 school day, 1 Sunday, 2 national holiday, 3 break day (HYPOTHESIS: events of the summer and winter breaks are gated on kind 3). Markers (HYPOTHESIS for names that are not tied to an event): 2/6/10/14/16/20 push a day-notice record, 4 sports festival, 5 exam period, 8 club season, 11 school trip, 12 culture festival, 13 Christmas preparations, 15 New Year preparations, 17 Valentine's day, 18 career choice (year 98), 19 seasonal party.
 
@@ -293,14 +293,14 @@ Day kinds: 0 school day, 1 Sunday, 2 national holiday, 3 break day (HYPOTHESIS: 
 
 ### 3.4 Commands and the weekly queue builder
 
-The player picks a command for the coming week on the schedule screen: `last_command` low nibble is the weekday command (an icon index; commands 0-7 have a row in `command_deltas`, command 4 is club activity, 0xE means none chosen yet), bits 4-7 hold the last holiday command. `parameter_up_down(command, flag, half)` applies a command: for each of parameters 0-7 the delta comes from row `command` of `command_deltas` (signed bytes, 9 per row; the club command uses `club_activity_deltas[club]`): a positive delta is multiplied by `0x1000 * (4 if flag else 1) / (2 if half else 1) / div_a / div_b`, a non-positive delta is `delta << 12`; stress (index 8) gets the same, plus one whole point when `half` is set. `div_a` is 2 when the player is sick (health 3), `div_b` is 2 for injured or neurotic (health 1 or 2) except for trivia, looks and guts (indices 5-7). `parameter_change(i, delta)` adds the 16.16 delta to parameter i, floors it at 0 and caps the value at 999. (HYPOTHESIS: command 7 is rest; it selects a sick-bed picture when the player is sick.)
+The player picks a command for the coming week on the schedule screen: `last_command` low nibble is the weekday command (an icon index; commands 0-7 have a row in `command_deltas`, command 4 is club activity, 0xE means none chosen yet), bits 4-7 hold the last holiday command. `parameter_up_down(command, flag, half)` applies a command: for each of parameters 0-7 the delta comes from row `command` of `command_deltas` (signed bytes, 9 per row; the club command uses `club_activity_deltas[club]`): a positive delta is multiplied by `0x1000 * (4 if flag else 1) / (2 if half else 1) / div_a / div_b`, a delta of zero or less is `delta << 12` and is never scaled; stress (index 8) mirrors this: a negative delta (relief) gets the scale factor, a delta of zero or more is `delta << 12`, and one whole point is added to stress when `half` is set. `div_a` is 2 when the player is sick (health 3); `div_b` is 2 for injured or neurotic (health 1 or 2), except when the command id (the first argument, not the parameter index) is 5, 6 or 7. `parameter_change(i, delta)` adds the 16.16 delta to parameter i, floors it at 0 and caps the value at 999. (HYPOTHESIS: command 7 is rest; it selects a sick-bed picture when the player is sick.)
 
 The command screen (mode 0x34) ends in `MODE_SCHEDULE` (`schedule_init`), which runs five steps once per queue build: 0 preparation (`func_8006CD14`), 1 `day_events_build_week`, 2 `schedule_girls_gakko` (resolve encounter placeholders), 3 `schdeule_girls_param` (the weekly girl decay of section 5.3), 4 `func_80070ECC` (`calendar_advance_day`, stop CD audio when it plays, mode 0x31). `day_events_build_week` (`func_8006D7EC`) fills `day_events` from tomorrow until Sunday. Order of its work, as coded:
 
 1. Increment the command counter `progress_state[0x15 + command % 9]`, count down girl 11's `event_counters[0]`, count met girls 1-9, decrement the 3-bit `recovery_days`, clear the queue (`day_events_clear`: type 0xFF everywhere, index 0).
 2. If the next day is the first of a month, put `DAY_EVENT_MONTH_START` first.
 3. Marker 11 at tomorrow: a school-trip record followed by a holiday record, and the builder returns (the trip week replaces the rest of the queue).
-4. Marker 8 while the command is club activity and the player has a club: six tournament records (0x25) when the player is in club 6 and the club level nibble is at least 8, otherwise six club-camp records (0x42) with `unk_01 = 4`; either way the builder returns after a holiday record.
+4. Marker 8 while the command is club activity and the player has a club: six tournament records (0x25) when the player is in club 6 and the club level nibble is at least 8, otherwise six records of type 0x42 (`DAY_EVENT_CLUB_CAMP`, HYPOTHESIS name) with `unk_01 = 4`; either way the builder returns after a holiday record.
 5. For each remaining day until Sunday: notice records for the notice markers; marker-driven festival records (sports 0x20, culture 0x24, Christmas prep 0x28, New Year prep 0x2C, Valentine 0x31, seasonal party 0x30); year-specific markers (year 96: meeting with girl 10, year 97: career guidance, year 98: career choice 0x4A); holidays and Sundays become holiday records (0x10) unless the late-game special event fires; the year-97 January 3 award checks produce 0x26 or 0x27; exam markers and exam weeks produce 0x40; ordinary school days produce a school-day record (type 0, girl field = command, scene field = result of the command check `func_8006BDA8`, extra = girl selection from `func_8006F524`).
 6. On ordinary school days with no special event: random sick visits (0x47; girl 12 on weekdays, on Saturdays girl 9 or the selected girl), the summer amusement-park event (0x49) on a break Wednesday in August with probability 20%, the meeting selectors (`func_8006EB64`, `func_8006EEC4`, `func_8006F218`) producing 0x48 records before `day_count` 726 (0x2D6), and up to two random encounter placeholders per week (0x44; each school day with probability 1/4).
 7. For each day: girl birthdays (0x32) for met girls with a set bit-6 flag, the player's birthday (0x33) unless ill, a week-end record (0xFC) after Saturday and a day-end record (0xFB) every day except Sunday.
@@ -309,7 +309,9 @@ The exact random thresholds are in the matched C (`func_8006D7EC`); they are not
 
 ### 3.5 The queue reader
 
-`day_event_dispatch` (`func_8007132C`, run by the day screen, stage 0 step 0) first applies fixed rules (from 1998-03 on it hands over to the ending, section 3.1; two fixed late-February specials; a forced encounter (mode 0x59) with a met girl whose syoushin is at least 0x4C and whose bit 16 is still clear (the bit is set so it happens once); skipping birthday records whose `birthday_done_bits` bit is set; appointment prompt: if the first appointment is today it opens the telephone mode with stage 2 when the girl's state rank is 4, 0 when the place history changed, 1 otherwise), then switches on `day_events[day_event_index].type`. Type 0xFA is skipped. Type 0xFB (end of a day) never reaches the switch: the reader checks for telephone calls (mode 0x43 with a stage code 3-9 chosen by date and girl state), for a rumour report (mode 0x44 when a met girl has `syoushin` of 0x3D or more and her flag bit 17 is clear), then does `day_event_index++` and `calendar_advance_day()` and continues with the next record. The type 0xFF at the end of the queue also runs the Sunday telephone checks before it goes to the command screen.
+`day_event_dispatch` (`func_8007132C`, run by the day screen, stage 0 step 0) first applies fixed rules (from 1998-03 on it hands over to the ending, section 3.1; two fixed late-February specials; a forced encounter (mode 0x59) with a met girl whose syoushin is at least 0x4C and whose bit 16 is still clear (the reader sets bit 16 when it starts the encounter, and `girl_counters_clamp` clears it again while her syoushin is below 0x32, see below); skipping birthday records whose `birthday_done_bits` bit is set; appointment prompt: if the first appointment is today it opens the telephone mode with stage 2 when the girl's state rank is 4, 0 when the place history changed, 1 otherwise), then switches on `day_events[day_event_index].type`. Type 0xFA is skipped. Type 0xFB (end of a day) never reaches the switch: the reader checks for telephone calls (mode 0x43 with a stage code 3-9 chosen by date and girl state), for a rumour report (mode 0x44 when a met girl has `syoushin` of 0x3D or more and her flag bit 17 is clear; the reader sets bit 17 for every such girl in the pass, and `girl_counters_clamp` clears it while syoushin is below 0x32), then does `day_event_index++` and `calendar_advance_day()` and continues with the next record. The type 0xFF at the end of the queue also runs the Sunday telephone checks before it goes to the command screen.
+
+Every pass of the reader starts with two housekeeping calls. `func_80071280` (`girl_flag4_may_clear`) clears flag bit 4 of girls 0-10 on May 6 (HYPOTHESIS: a once-a-year May flag; DATE sets it on a May 3-4 date and a date on May 4-5 gives a girl that has it 2 extra tokimeki). `func_80071038` (`girl_counters_clamp`) clamps tokimeki, affection and syoushin of girls 0-10 to 0..0x80 and clears flag bits 16 and 17 whenever the girl's syoushin is below 0x32. So the forced encounter and the rumour are not one-time events: both re-arm each time a girl's syoushin falls below 0x32 and later climbs again, and the effective syoushin cap seen by the rules is 0x80, not the 0xFF of `check_para_limit`.
 
 | type | mode | note |
 |---|---|---|
@@ -322,12 +324,12 @@ The exact random thresholds are in the matched C (`func_8006D7EC`); they are not
 | 0x30, 0x31 | 0x55, 0x54 | seasonal party, Valentine |
 | 0x32, 0x33 | 0x57, 0x56 | girl birthday, player birthday |
 | 0x40, 0x43, 0x4A | 0x35, 0x36, 0x37 | ETC |
-| 0x41, 0x42 | 0x51, 0x5F | school trip, club camp |
+| 0x41, 0x42 | 0x51, 0x5F | school trip, club camp (HYPOTHESIS name) |
 | 0x44 | 0x59 | encounter; skipped when the player is sick, right after a Christmas-preparation or sick-visit record, or when the girl is not met |
 | 0x45 | 0x5D | special event; scene globals `dialogue_work` word 0 = scene, word 1 = girl |
 | 0x46 | 0x5A | invitation; skipped when an appointment is active |
 | 0x47 | 0x61 | sick visit |
-| 0x48 | 0x5B | meeting; sets the girl's affection to 0x32 and syoushin to 0 first |
+| 0x48 | 0x5B | meeting (HYPOTHESIS name; mode 0x5B is a generic scene host in SHOUGATU); sets the girl's affection to 0x32 and syoushin to 0 first |
 | 0x49 | 0x58 | amusement park |
 | 0xFF, unknown | 0x34 | end of the week's queue: command screen |
 | 0xFC, 0xFD, 0xFE | 0x32, 0x39, 0x38 | week end, notice, month start |
@@ -358,7 +360,7 @@ Nine records `param_*` in `PARAM_*` order: condition, liberal arts, science, art
 
 ### 4.4 Settings kept in GameState
 
-`voice_mode`, `icon_mode`, `icon_count`, `menu_mode`, `cursor_speed`, `click_mode`, `double_click_interval`, `confirm_button`, `anim_fast`, plus the free icon layout in `scratch_words`. They are saved with the game and mirrored by NAME_ENT/OPTION; `options_dirty` marks which groups changed.
+`voice_mode`, `icon_mode`, `icon_count`, `menu_mode`, `cursor_speed`, `click_mode`, `double_click_interval`, `confirm_button`, `sd_anim_fast`, plus the free icon layout in `scratch_words`. They are saved with the game and mirrored by NAME_ENT/OPTION; `options_dirty` marks which groups changed.
 
 ## 5. Girls
 
@@ -366,7 +368,7 @@ Nine records `param_*` in `PARAM_*` order: condition, liberal arts, science, art
 
 `girls[16]`, index = `GIRL_*` (0 Shiori, 1 Mio, 2 Yuina, 3 Ayako, 4 Saki, 5 Yukari, 6 Nozomi, 7 Mira, 8 Yuko, 9 Megumi, 10 Yumi, 11 Miharu, 12 Rei, 13 Yoshio, 14 Sotoi). The 11 heroines 0-10 are walked by most loops; scoring uses `girl % 13`. Fields: `tokimeki`, `affection`, `syoushin` (16.16 words, value at +2/+6/+0xA), `flags` (`GirlFlags`), `birthday` (month, day, blood type), `event_counters[0x24]`.
 
-`flags` bits (named): `met` bit 1 (set at start for girls 0 and 12), `club` bits 20-23 (club id, 11 = none; new-game setup in NAME_ENT: girl 0 gets `(day * 3 + month) % 11` from her birthday; girls 1-4 each have two possible clubs (literature or drama, science or computer, art or brass band, baseball or soccer) and take the one that differs from girl 0's club when girl 0 is in one of the two, else a random one; girl 5 tennis, girl 6 swimming, girl 10 basketball, the others none), `story_stage` bits 9-11 (HYPOTHESIS). Bit 0 is cleared daily for girls 0-10 (`girl_met_today_clear`). Other bits (2, 3, 6, 12-14, 16-19) are tested by events; the bit 2 pairs with `met` in club-related checks (HYPOTHESIS: introduced).
+`flags` bits (named): `met` bit 1 (set at start for girls 0 and 12), `club` bits 20-23 (club id, 11 = none; new-game setup in NAME_ENT: girl 0 gets `(day * 3 + month) % 11` from her birthday; girls 1-4 each have two possible clubs (literature or drama, science or computer, art or brass band, baseball or soccer) and take the one that differs from girl 0's club when girl 0 is in one of the two, else a random one; girl 5 tennis, girl 6 swimming, girl 10 basketball, girls 7-9 explicitly none; girls 11-14 keep the none value 11 that `func_80041C2C` gives all 16 records, because the club setup only writes girls 0-10), `story_stage` bits 9-11 (HYPOTHESIS). Bit 0 is cleared daily for girls 0-10 (`girl_met_today_clear`). Other bits (2, 3, 6, 12-14, 16-19) are tested by events; the bit 2 pairs with `met` in club-related checks (HYPOTHESIS: introduced).
 
 ### 5.2 Scores and state ranks
 
@@ -377,17 +379,19 @@ Nine records `param_*` in `PARAM_*` order: condition, liberal arts, science, art
 
 ### 5.3 Daily changes and caps
 
-`check_para_limit` caps girls 0-10: tokimeki and affection at 0..0x80 (the word is zeroed when negative), syoushin at 0..0xFF. `yuukou_down`: for every met girl, affection -1 (floor 0) when `day / 7 == 0` (days 1-6), and for girl 0 also when `day / 7 == 2` (days 14-20). `syoushin_up`: for every met girl with weighted affection < 10, syoushin +5. Both run once per queue build (weekly, mode 0x30 step 3) and only while `vacation` is 0. Effects of syoushin: >= 0x3C blocks encounters and phone calls; >= 0x4C allows a one-time forced encounter (flag bit 16 marks it done). HYPOTHESIS: resentment counter; the name is kept from the developer's function.
+`check_para_limit` caps girls 0-10: tokimeki and affection at 0..0x80 (the word is zeroed when negative), syoushin at 0..0xFF; the queue reader's `girl_counters_clamp` (`func_80071038`) then clamps all three to 0..0x80, so 0x80 is the working cap of syoushin. `yuukou_down`: for every met girl, affection -1 (floor 0) when `day / 7 == 0` (days 1-6), and for girl 0 also when `day / 7 == 2` (days 14-20). `syoushin_up`: for every met girl with weighted affection < 10, syoushin +5. Both run once per queue build (weekly, mode 0x30 step 3) and only while `vacation` is 0. Effects of syoushin: >= 0x3C blocks encounters and phone calls; >= 0x4C allows a forced encounter (flag bit 16 is set when it fires and cleared again once syoushin is below 0x32); >= 0x3D at a day end queues a rumour report (flag bit 17, same re-arm). HYPOTHESIS: resentment counter; the name is kept from the developer's function.
 
 ### 5.4 Per-girl arrays
 
-`girl_last_event[16]`, `girl_cooldown[16]` (decremented daily), `girl_event_bits[16]`, `girl_cleared[16]` (HYPOTHESIS), `date_place_history[4]`, `event_flags[0xFC]` (one-shot event ids), `clubs[12]` (exp, level, flags per club).
+`girl_last_date_spot[16]`, `girl_last_date_spot_timer[16]` (decremented once per weekly queue build), `girl_event_bits[16]`, `girl_cleared[16]` (HYPOTHESIS), `date_place_history[4]`, `event_flags[0xFC]` (one-shot event ids), `clubs[12]` (exp, level, flags per club).
+
+**Last date spot.** After a date, DATE stores the spot id `D_80122D08` in `girl_last_date_spot[girl]` and sets `girl_last_date_spot_timer[girl]` to 12. It does so only when the looks parameter is at least 35 (at least 30 for every girl except 7), and spots 8 and 6, the special variants of two places, are stored as 7 and 5. `last_date_spot_timer_dec` (called by `schedule_init` step 0) lowers every girl's timer by 1 once per queue build, that is once a week. When the player picks the same spot with a girl whose timer is nonzero (date mode, not an appointment date, place index neither 0 nor 0x12), the date shows the girl's repeat reaction and, at its first substep, her tokimeki drops by 1, her affection by 2 and her syoushin rises by 5. Spot ids 0x23 and 0x24 are forgotten by `func_8006D038`, which `calendar_advance_day` runs every day in months 3, 6, 9 and 12 (it also clears `girl_event_bits`). Value 0 means no spot.
 
 ## 6. Input, menus and text
 
-Input is polled in `frame_render`: `input_device` is 0 for a mouse, 1 for a pad, 0xFF when nothing is attached. The pad word layout is the PsyQ one (`PadBits`); `pad_pressed = ~pad_prev & pad_held` and `pad_released = pad_prev & ~pad_held`; pad 2 is the upper 16 bits. In mouse mode `mouse_x/mouse_y` and `mouse_buttons` are filled and the pointer is actor 0. Holding the four face buttons of pad 2 together enables a turbo that injects a confirm press every other frame (any other button cancels it). The settings screens (all in main `8005A0B0.c`) change `menu_mode`, `icon_mode`, `voice_mode`, `cursor_speed`, `click_mode`, `double_click_interval` and `confirm_button` as listed in section 4.4.
+Input is polled in `frame_render`: `input_device` is 0 for a mouse, 1 for a pad, 0xFF when nothing is attached. The pad word layout is the PsyQ one (`PadBits`); `pad_pressed = ~pad_prev & pad_held` and `pad_released = pad_prev & ~pad_held`; pad 2 is the upper 16 bits. The low byte of a pad word is L2, R2, L1, R1, triangle, circle, cross, square; the second byte is SELECT, L3, R3, START, up, right, down, left (the game never uses L3 and R3). START on either pad toggles `paused` while `pause_allowed` is 1, and START on pad 2 also toggles `sd_anim_fast`. Holding SELECT, START, L1 and R1 together on pad 1 for 0x81 frames runs a reset sequence back to mode 0 (on pad 2, to mode 0x11), except in modes 0x20, 0x90 and 0xD0. In mouse mode `mouse_x/mouse_y` and `mouse_buttons` are filled and the pointer is actor 0. Holding the four face buttons of pad 2 together enables a turbo that injects a confirm press every other frame (any other button cancels it). The settings screens (all in main `8005A0B0.c`) change `menu_mode`, `icon_mode`, `voice_mode`, `cursor_speed`, `click_mode`, `double_click_interval` and `confirm_button` as listed in section 4.4.
 
-Menus: two menus (0 and 1) of up to 16 items. `menu_set(menu, count, x[], y[], w[], h[])` stores the rectangles in `menu_items` (an item with zero area is disabled). `menu_check(menu, x, y)` hit-tests the pointer (or follows the pad cursor, depending on `menu_mode` bits 0-1; L2 cycles the mode) and fills `menu_hit[menu]` and `menu_items[i][menu].hover`. `menu_cursor_update(menu)` moves the pad cursor (up/left previous, down/right next, wrapping, skipping disabled items). A screen reads `menu_cursor_1` or `menu_hit[1]` after a confirm press.
+Menus: two menus (0 and 1) of up to 16 items. `menu_set(menu, count, x[], y[], w[], h[])` stores the rectangles in `menu_items` (an item with zero area is disabled). `menu_check(menu, x, y)` hit-tests the pointer (or follows the pad cursor, depending on `menu_mode` bits 0-1; SELECT adds 1 to the mode) and fills `menu_hit[menu]` and `menu_items[i][menu].hover`. `menu_cursor_update(menu)` moves the pad cursor (up/left previous, down/right next, wrapping, skipping disabled items). A screen reads `menu_cursor_1` or `menu_hit[1]` after a confirm press.
 
 Text: `set_kanji_string(x, y, attr, string, extra)` appends a `TextEntry` to the 52-entry `text_list`; `k_*` functions run the typewriter (one glyph every `speed + 1` frames, `k_disp_inc`), `k_reset/k_sub_reset` cut the list, `check_end_k` reports the end. Strings are Shift-JIS pairs; code `0x20` ends a line, control letters expand name codes (section 7). Dialogue: `dialogue_run` reads the script tables through `dialogue_tables` (group, line, text, command and voice tables) and the 20 speak codes.
 
@@ -397,7 +401,7 @@ Text: `set_kanji_string(x, y, attr, string, extra)` appends a `TextEntry` to the
 
 ## 8. Persistent state (what the save keeps)
 
-`GameSaveImage` (0xF00 bytes per bank) is filled by `func_8005557C` from: `vacation`, the four calendar bytes, `day_count`, `month_calendar[2]`, the 0x7C-byte profile block (names, flags, birthday, parameters and the first 0x20 bytes of `progress_state`), `girls[16]`, `girl_cleared`, `appointments[8]`, the 12 club words, `event_flags`, `date_place_history`, `girl_last_event`, `girl_cooldown`, `girl_event_bits`, `event_log[256]`, and the settings bytes (`icon_mode`, `icon_count`, `menu_mode`, `anim_fast`, `voice_mode`, `last_command`, `cursor_speed`, `click_mode`, `double_click_interval`, `confirm_button`, `quarter_flags`). A checksum (byte sum of the data) heads each bank. Not saved: `day_events` and its index (rebuilt by `schedule_init`), the return triple, `current_girl`, the appointment place list, everything in the graphics and sound layers. `SystemData` (album slots, per-girl persistent flags, TACO settings) goes to the separate system file.
+`GameSaveImage` (0xF00 bytes per bank) is filled by `func_8005557C` from: `vacation`, the four calendar bytes, `day_count`, `month_calendar[2]`, the 0x7C-byte profile block (names, flags, birthday, parameters and the first 0x20 bytes of `progress_state`), `girls[16]`, `girl_cleared`, `appointments[8]`, the 12 club words, `event_flags`, `date_place_history`, `girl_last_event`, `girl_cooldown`, `girl_event_bits`, `event_log[256]`, and the settings bytes (`icon_mode`, `icon_count`, `menu_mode`, `sd_anim_fast`, `voice_mode`, `last_command`, `cursor_speed`, `click_mode`, `double_click_interval`, `confirm_button`, `quarter_flags`). A checksum (byte sum of the data) heads each bank. Not saved: `day_events` and its index (rebuilt by `schedule_init`), the return triple, `current_girl`, the appointment place list, everything in the graphics and sound layers. `SystemData` (album slots, per-girl persistent flags, TACO settings) goes to the separate system file.
 
 ## 9. Hardware layer: modules and entry points
 
@@ -573,7 +577,7 @@ Counts are call sites plus declarations in `src/` and `include/`, without EVENT 
 | 52 | 800438F0 | 123 | `back_clear_switch` (kept) | Turn the per-frame screen clear on or off |
 | 53 | 80052060 | 122 | `voice_play` (was `func_80052060`) | 133 uses: if voice_mode != 0 and the mode nibble is not 15, sets the CD audio request and sends sound command 0x300 |
 | 54 | 8005215C | 121 | `dialogue_text_step` (was `func_8005215C`) | 121 uses: per-frame step of dialogue text: typewriter, line scroll (text_scroll_state) and voice-aware speed by voice_mode |
-| 55 | 80084D3C | 121 | `check_para_limit` (kept) | Clamp girl tokimeki/affection (0..0x80), syoushin (0..0xFF) and the nine parameters (0..999) |
+| 55 | 80084D3C | 121 | `check_para_limit` (kept) | Clamp girl tokimeki/affection (0..0x80), syoushin (0..0xFF) and the nine parameters (0..999); the queue reader later clamps the girl counters to 0x80 (`girl_counters_clamp`) |
 | 56 | 800573AC | 119 | `dec_bg_reset` (kept) | Clear the background cache, show flags and brightness (0x80) |
 | 57 | 80041584 | 114 | `sprite_tables_clear` (was `func_80041584`) | 114 uses: clears SpriteQuads 0-63 and BgLayers 0-1 |
 | 58 | 80084E4C | 113 | `text_marker_hide` (was `func_80084E4C`) | 113 uses: text_marker_set(0) |
@@ -656,12 +660,19 @@ NAME_ENT then collects the player's name, birthday and blood type and the birthd
 3. `MODE_NAME_ENT_3/4`, `MODE_ETC_C2..C4`, `MODE_TELEPHONE_PROFILE`, `MODE_CLUB_MASTER_*`: roles unsettled.
 4. Calendar marker values 2, 6, 10, 14, 16, 20 (notice records) and what the notice mode 0x39 shows.
 5. `progress_state` flag bytes (21): which HUD facts they record (first-time hints?).
-6. `unk_F6E` (`anim_fast`): which other animations it shortens besides the parameter panel.
+6. `unk_F6E` (`sd_anim_fast`): the in-game hint names it the SD character animation speed switch (pad 2 START); the animations it changes besides actors 96 and 97 and the parameter panel are not checked.
 7. `unk_71F` (`daily_check_done`) and `unk_71D` (`events_today`): names are inferred from set/clear sites only.
 8. `scratch_words`/`unk_183C`/`unk_1A3C..`: the shared scratch areas; TACO and NAME_ENT hand pointers through the latter.
 9. `frame_hcount_limit`: needs a timing check in the emulator (the emulator image is not built in this tree).
-10. Where the 36 month blobs sit on disc and whether their markers cover all 36 months (the loader `func_80068938`).
+10. Mostly answered, see section 3.2: the first `month_data_table` entry points at the 0x801A0000 read address and 0x95 sectors hold 36 blobs of about 0x2100 bytes, so the blobs come from that one read (the other table entries were not decoded). Still open: whether every blob's marker table is complete.
 11. `D_800B3220` (debug flag), `D_800B3C6C` (switches the in-game option mode), `D_80122D48` (rank override of `event_log_add`) have no names yet.
 12. Types shared with the dead EVENT overlay (`Rec34` family): EVENT was linked against an older main layout; rename them only as `LegacyGirl*` and do not use them for the port.
 13. `unk_1095[0xD]` overlaps an `s32` (`actor_draw_last`, written as `*(s32 *)&unk_1095[3]`, 0x9F or 0xA0 in most scenes). The field rename gives `menu_hit`; splitting it into `menu_hit[3]` + `s32 actor_draw_last` + padding needs a header change that the apply step must check byte by byte.
 14. `include/main_api.h` (3,227 lines) keeps its name; splitting it per main module (and moving the enums into `include/game_enums.h`) is a later step. `include/game.h` is proposed to become `include/game_types.h`.
+15. File names: only the two headers have `file` rows. The `src/main/*.c` module files that hold the top-100 functions get no English name here; another unit (module level, or the hardware units for the CD, sound and GPU files) must own them, otherwise file rows are added later.
+
+## 17. Reconciliation with the hardware units
+
+The hardware units (`h-cdio`, `h-graphics`) own the entry points of the CD/XA layer, the sound driver and the GPU, sprite and background code. This spec names many of those addresses too, because the frame loop, the state map and the top-100 list use them, and the three proposal tables give 96 rows a different new name ([[data/p2-core-name-conflicts]], generated 2026-10-24). Rule: for every address, field or type in that list the hardware table wins, except the two rows marked `core` there (`girl_state_rank`, the score code, and `mode_boot`, the mode machine). The `core` names in this spec's prose stay as working names so that the text reads on its own; the apply step takes the hardware name and the prose is updated afterwards.
+
+Sound prefix: the three tables disagree (`snd_` in `core`, `sound_` and `bgm_` in `h-graphics`). Proposed single choice: `snd_`, because the developer's own symbols are `Snd_*` and `_snd_*` and `core` already uses it for the hardware entry points it names. The hardware units follow or argue otherwise; the orchestrator decides once, before the apply step.
