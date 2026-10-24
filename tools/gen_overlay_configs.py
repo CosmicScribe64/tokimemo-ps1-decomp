@@ -18,6 +18,8 @@ import os
 import struct
 import sys
 
+import symtab  # tools/symtab.py: the symbol_addrs_path list of a yaml (T-27002)
+
 DIR = "disc/files/CDROM/EXEDIR"
 SIZE = 0x30000
 DEFAULT_BASE = 0x80132000
@@ -107,6 +109,20 @@ def keep_subsegments(new, old):
     return "".join(nl[:nk + 1] + ol[ok + 1:oe] + nl[ne:])
 
 
+def keep_symbol_files(new, old):
+    """`new` with the symbol_addrs_path list of `old` (files added later, such as
+    config/symbols_<NAME>.txt or the hypotheses files of tools/rename.py, T-27002), plus the
+    generated entries `old` lacks."""
+    lines = new.splitlines(True)
+    k = next(i for i, l in enumerate(lines) if l.strip() == "symbol_addrs_path:")
+    e = k + 1
+    while e < len(lines) and (lines[e].startswith("    - ") or lines[e].startswith("    #")):
+        e += 1
+    files = symtab.yaml_symbol_files(old)
+    files += [f for f in symtab.yaml_symbol_files(new) if f not in files]
+    return "".join(lines[:k + 1] + ["    - %s\n" % f for f in files] + lines[e:])
+
+
 def main():
     rows = []
     for path in sorted(glob.glob(DIR + "/*.EXN")):
@@ -126,13 +142,15 @@ def main():
         extra = ""
         if name in EXTRA_SYMS:
             extra = "\n    - config/overlays/%s_symbols.txt" % name
-            with open("config/overlays/%s_symbols.txt" % name, "w") as g:
-                g.write(EXTRA_SYMS[name])
+            if not os.path.exists("config/overlays/%s_symbols.txt" % name):   # renames edit it (T-27002)
+                with open("config/overlays/%s_symbols.txt" % name, "w") as g:
+                    g.write(EXTRA_SYMS[name])
         if os.path.exists("config/labels/%s.txt" % name):     # tools/split_objects.py (T-0500)
             extra += "\n    - config/labels/%s.txt" % name
         new = TEMPLATE.format(name=name, base=base, text=text, extra=extra, size=SIZE, dir=DIR, sha1=sha1)
         if os.path.exists(ypath):
-            new = keep_subsegments(new, open(ypath).read())
+            old = open(ypath).read()
+            new = keep_symbol_files(keep_subsegments(new, old), old)
         with open(ypath, "w") as f:
             f.write(new)
         with open("config/overlays/%s.sha1" % name, "w") as f:

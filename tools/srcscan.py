@@ -8,6 +8,8 @@ config/overlays/<NAME>.yaml per overlay; c_files()). A subsegment name N maps to
   main exe: src/N.c (N = main/<address>), asm/{nonmatchings,matchings}/N, build/src/N.o
   overlay:  src/ovl/N.c (N = <NAME> or <NAME>/<address>, one file per original object, T-0500),
             asm/ovl/<NAME>/{nonmatchings,matchings}/N, build/ovl/<NAME>/src/ovl/N.o
+Readable names (T-27002, tools/rename.py): N may be main/<stem> or <folder>/<stem>; the folder of an
+overlay may differ from its name (src/ovl/<folder>/), object_name() and unit_dir() give the names.
 A dot-prefixed `.rodata` subsegment with the same name is the file's rodata island (T-1340).
 """
 import os
@@ -126,6 +128,25 @@ def unit_c_files(unit, root="."):
     return out
 
 
+def object_name(unit, text_start, root="."):
+    """The splat `c` subsegment name of the object that starts at text_start: the yaml's name when
+    the unit has one there (renamed files keep their name, T-27002), else the address name in the
+    unit's source directory (main/80041000, DATE/80132000)."""
+    for cf in unit_c_files(unit, root):
+        if cf.start == text_start:
+            return cf.name
+    return "%s/%08X" % (unit_dir(unit, root), text_start)
+
+
+def unit_dir(unit, root="."):
+    """Directory part of a unit's `c` subsegment names: `main`, or the overlay's folder under src/ovl
+    (the overlay name unless its files moved to a readable folder name, T-27002)."""
+    if unit == "main":
+        return "main"
+    dirs = {cf.name.rsplit("/", 1)[0] for cf in unit_c_files(unit, root) if "/" in cf.name}
+    return dirs.pop() if len(dirs) == 1 else unit
+
+
 def c_files(root=".", units=None):
     """CFile list of the main exe and all overlays (or only `units`)."""
     out = []
@@ -146,5 +167,88 @@ def asm_dirs_of_source(src):
         return ["asm/%s/%s" % (k, "/".join(rel)) for k in ("matchings", "nonmatchings")]
     if len(rel) >= 2 and rel[0] == "ovl":
         name = "/".join(rel[1:])
-        return ["asm/ovl/%s/%s/%s" % (rel[1], k, name) for k in ("matchings", "nonmatchings")]
+        unit = rel[1] if rel[1] in _overlay_set(_root_of(parts)) else \
+            _dir_units(_root_of(parts)).get(rel[1], rel[1])
+        return ["asm/ovl/%s/%s/%s" % (unit, k, name) for k in ("matchings", "nonmatchings")]
     return []
+
+
+def unit_of_source(src):
+    """'main' or the overlay name of a C source path (any layout, readable folders too), else None."""
+    parts = Path(os.path.normpath(str(src))).with_suffix("").parts
+    if "src" not in parts:
+        return None
+    rel = parts[len(parts) - 1 - parts[::-1].index("src") + 1:]
+    if len(rel) >= 2 and rel[0] == "main":
+        return "main"
+    if len(rel) >= 2 and rel[0] == "ovl":
+        root = _root_of(parts)
+        return rel[1] if rel[1] in _overlay_set(root) else _dir_units(root).get(rel[1], rel[1])
+    return None
+
+
+_HEADER_UNITS = {}
+
+
+def header_units(root="."):
+    """{header path under include/: overlay} for the headers under include/ovl/ that the C files of
+    exactly one overlay include directly (its own header, include/ovl/<NAME>.h or a readable name
+    after tools/rename.py, T-27002). Headers several units include are not listed."""
+    if root not in _HEADER_UNITS:
+        users = {}
+        try:
+            for u in overlay_names(root):
+                for cf in unit_c_files(u, root):
+                    if not cf.src.exists():
+                        continue
+                    for inc in re.findall(r'^[ \t]*#[ \t]*include[ \t]*"([^"]+)"', cf.src.read_text(errors="replace"), re.M):
+                        users.setdefault(inc, set()).add(u)
+        except (OSError, ImportError):
+            pass
+        _HEADER_UNITS[root] = {h: next(iter(us)) for h, us in users.items() if len(us) == 1 and h.startswith("ovl/")}
+    return _HEADER_UNITS[root]
+
+
+def unit_header(unit, root="."):
+    """The root header of a unit relative to include/: game.h for main, include/ovl/<NAME>.h when it
+    exists, else the header only that overlay's C files include (renamed, T-27002)."""
+    if unit == "main":
+        return "game.h"
+    if (Path(root) / "include/ovl" / (unit + ".h")).exists():
+        return "ovl/%s.h" % unit
+    own = sorted(h for h, u in header_units(root).items() if u == unit)
+    return own[0] if own else "ovl/%s.h" % unit
+
+
+def _root_of(parts):
+    """The repo root of a path split into parts (the folder above its last `src`), or '.'."""
+    k = len(parts) - 1 - parts[::-1].index("src")
+    return os.path.join(*parts[:k]) if k else "."
+
+
+_DIR_UNITS = {}
+_OVERLAYS = {}
+
+
+def _overlay_set(root):
+    if root not in _OVERLAYS:
+        try:
+            _OVERLAYS[root] = set(overlay_names(root))
+        except OSError:
+            _OVERLAYS[root] = set()
+    return _OVERLAYS[root]
+
+
+def _dir_units(root):
+    """{src/ovl folder: overlay name} for overlays whose folder is not their name (T-27002)."""
+    if root not in _DIR_UNITS:
+        out = {}
+        try:
+            for u in overlay_names(root):
+                d = unit_dir(u, root)
+                if d != u:
+                    out[d] = u
+        except (OSError, ImportError):
+            pass
+        _DIR_UNITS[root] = out
+    return _DIR_UNITS[root]

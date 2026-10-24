@@ -1,0 +1,4 @@
+# kind scope        old            new                  note
+func   RENSYU       func_80132000  rensyu_set_pointers  T-27002 trial 4 #1: stores three constant addresses
+data   RENSYU       D_801342B0     rensyu_pointer_a     T-27002 trial 4
+field  RensyuWords13 v             words                T-27002 trial 4: 13 words

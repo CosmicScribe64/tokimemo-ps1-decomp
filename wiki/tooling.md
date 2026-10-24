@@ -1,6 +1,6 @@
 ---
 type: reference
-updated: 2026-10-20
+updated: 2026-10-24
 ---
 
 # Tooling
@@ -26,4 +26,5 @@ Every project tool under `tools/`, with the ticket that added or changed it. Mov
 - `tools/twin_sweep.py` (T-16500): whole-tree plan of every exact, near and lenient copy of matched C onto an unmatched twin (dry run by default); `--apply --files` writes only the given C files, each copy verified by the unit sha1, and replaces stale NON_MATCHING drafts; tests `tools/test_twin_sweep.py`; [[decompile-workflow]].
 - `tools/queue.py` (T-1320, T-3340): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags; calibration in [[matching-notes]]
 - `tools/queue.py` (T-1320, T-3340, T-5010): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags (entry rule in `tools/entry_rule.py`, tests `tools/test_entry_rule.py`); calibration in [[matching-notes]]
+- `tools/rename.py` and `tools/symtab.py` (T-27002): the phase 2 rename tool, driven by a table of `kind scope old new note` rows (func, data, field, type, local, param, file, dir, header) and a `const` subcommand for enums and `#define`s; `plan` (dry run with every collision check), `apply` (edits, proofs, ledger `config/renames/`), `check` (ninja `build/renames.ok`), `replay` (branches and merges), `lookup`, `export`; members are found by a gcc `-fsyntax-only` oracle; `symtab.py` resolves (unit, name) to an address over the symbol files of every yaml and runs the symbol-file checks of `check_symbols.py`. Prerequisite fixes in `split_objects.py`, `data_island.py`, `orphan_rodata.py` (keep yaml names), `gen_overlay_configs.py` (keeps symbol files), `migrate_globals.py` (named bases), `srcscan.py`/`sync_protos.py` (readable folders and headers), `configure.py` (`main_names.ld` inputs, symbol checks over every yaml); tests `tools/test_rename.py`; [[rename-tool]].
 - `tools/emu/` (T-20500): headless PCSX-Redux with OpenBIOS in its own image (`tools/emu/Dockerfile`); `tools/emu/run.sh boot|break|watch|trace|report|gdb` runs `tools/emu/emu.py` (job runner `tools/emu/emu.lua`): breakpoints on main-exe and overlay code, memory watches, arguments and call stack, pad input, screenshots, save states; outputs in `build/emu/`; tests `tools/emu/test_emu.py`; [[emulator]]

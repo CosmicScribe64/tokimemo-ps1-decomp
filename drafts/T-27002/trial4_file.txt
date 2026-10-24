@@ -1,0 +1,2 @@
+# kind scope   old       new          note
+file   RENSYU  80132040  rensyu_main  T-27002 trial 4: the practice menu

@@ -16,7 +16,7 @@ tool moves old entries out verbatim, so the active pages stay small and nothing 
                 exit status 1 when it finds a broken link or a status mismatch
 
 Usage: python3 tools/wiki.py [--root REPO] rotate-log|rotate-notes|catalog|lint [options]
-No game data is read: only wiki/ and config/symbol_addrs*.txt (function names).
+No game data is read: only wiki/ and config/symbol_addrs*.txt, config/symbols_*.txt (function names).
 """
 import argparse
 import datetime
@@ -157,7 +157,8 @@ def tnum(t):
 
 def function_names(root):
     names = set()
-    for f in glob.glob(os.path.join(root, "config", "symbol_addrs*.txt")):
+    for f in (glob.glob(os.path.join(root, "config", "symbol_addrs*.txt"))
+              + glob.glob(os.path.join(root, "config", "symbols_*.txt"))):     # overlay names (T-27002)
         for ln in read(f).split("\n"):
             m = re.match(r"\s*([A-Za-z_][A-Za-z0-9_]*)\s*=.*type:func", ln)
             if m and len(m.group(1)) > 3:

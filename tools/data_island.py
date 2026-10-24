@@ -40,6 +40,7 @@ import yaml
 import data_pieces as dp
 import object_boundaries as ob
 import split_objects as so
+import srcscan
 
 BLOCK_HEAD = ("/* .data of this object (T-9010, tools/data_island.py): one line per variable in\n"
               " * address order; replace a line by the variable's C definition. */\n")
@@ -49,18 +50,25 @@ class IslandError(Exception):
     pass
 
 
-def c_path(unit, addr):
-    return "src/main/%08X.c" % addr if unit == "main" else "src/ovl/%s/%08X.c" % (unit, addr)
+def c_path(unit, addr, root="."):
+    """The C file of the object at addr: src/<yaml name>.c (readable once renamed, T-27002)."""
+    name = island_name(unit, addr, root)
+    return "src/%s.c" % name if unit == "main" else "src/ovl/%s.c" % name
 
 
-def island_name(unit, addr):
-    return "main/%08X" % addr if unit == "main" else "%s/%08X" % (unit, addr)
+def island_name(unit, addr, root="."):
+    """The `c` subsegment name of the object at addr (srcscan.object_name: the yaml's name, else the
+    address name)."""
+    if not os.path.exists(os.path.join(root, so.yaml_path(unit))):
+        return "main/%08X" % addr if unit == "main" else "%s/%08X" % (unit, addr)
+    return srcscan.object_name(unit, addr, root)
 
 
-def piece_dir(unit, addr):
+def piece_dir(unit, addr, root="."):
+    name = island_name(unit, addr, root)
     if unit == "main":
-        return "asm/data/main/%08X.data" % addr
-    return "asm/ovl/%s/data/%s/%08X.data" % (unit, unit, addr)
+        return "asm/data/%s.data" % name
+    return "asm/ovl/%s/data/%s.data" % (unit, name)
 
 
 def split_starts(items, start, code_refs):
@@ -156,12 +164,12 @@ def plan(root, arg):
     items = ob.load_data_items(units[unit], root, r.start, r.end)
     if not items or items[0][0] != r.start:
         raise IslandError("%s/%08X: no symbol at the data start %08X (run ninja first)" % (unit, addr, r.start))
-    cpath = c_path(unit, addr)
+    cpath = c_path(unit, addr, root)
     ctext = so.read_text(os.path.join(root, cpath))
-    pdir = piece_dir(unit, addr)
+    pdir = piece_dir(unit, addr, root)
     ypath = so.yaml_path(unit)
     ytext = so.read_text(os.path.join(root, ypath))
-    own = [i for i in dp.islands(yaml.safe_load(ytext)) if i.name == island_name(unit, addr)]
+    own = [i for i in dp.islands(yaml.safe_load(ytext)) if i.name == island_name(unit, addr, root)]
     if any(i.start <= r.start - delta_of(unit, ytext) < i.end for i in own) or (
             not own and '"%s"' % pdir in ctext):
         raise IslandError("%s already has the data island" % cpath)
@@ -170,7 +178,7 @@ def plan(root, arg):
     starts, interior = split_starts(items, r.start, code_refs)
     lines = ['INCLUDE_RODATA("%s", %s);' % (pdir, n) for _a, n in starts]
     return [(cpath, insert_block(ctext, lines, interior)),
-            (ypath, split_yaml(ytext, unit, r.start, r.end, island_name(unit, addr), bool(own)))], \
+            (ypath, split_yaml(ytext, unit, r.start, r.end, island_name(unit, addr, root), bool(own)))], \
         r, len(lines), interior
 
 

@@ -61,6 +61,9 @@ import re
 import sys
 from collections import defaultdict
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import srcscan  # noqa: E402  (readable overlay folders, T-27002)
+
 INSN_RE = re.compile(r'^\s*/\*\s*[0-9A-F]+\s+([0-9A-F]+)\s+[0-9A-F]+\s*\*/\s+(\S+)\s*(.*?)\s*$')
 LABEL_RE = re.compile(r'^\s*(?:jlabel\s+)?\.L\w+:?\s*$|^\s*jlabel\s')
 DLABEL_RE = re.compile(r'^\s*(?:dlabel|glabel)\s+(\w+)')
@@ -822,7 +825,8 @@ def fake_sites(root, proposals):
     out = []
     for path in sorted(glob.glob(os.path.join(root, "src/**/*.c"), recursive=True)):
         rel = os.path.relpath(path, root)
-        unit = rel.split(os.sep)[2] if rel.startswith("src" + os.sep + "ovl") else "main"
+        unit = (srcscan.unit_of_source(path) or rel.split(os.sep)[2]) \
+            if rel.startswith("src" + os.sep + "ovl") else "main"   # readable folders (T-27002)
         with open(path, errors="replace") as f:
             lines = f.read().splitlines()
         for ln, line in enumerate(lines):

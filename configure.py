@@ -22,6 +22,7 @@ import yaml
 sys.path.insert(0, "tools")
 import prepare_disc  # noqa: E402  (tools/prepare_disc.py: finds the user's game image)
 import srcscan  # noqa: E402  (tools/srcscan.py: the C files of every unit, from the yaml files)
+import symtab  # noqa: E402  (tools/symtab.py: the symbol files of every unit, T-27002)
 
 EXE = "SLPM_86.053"
 DISC_STAMP = "build/disc.stamp"  # tools/prepare_disc.py: disc/files is unpacked from game/ (T-3300)
@@ -29,6 +30,8 @@ INCLUDE_FILES = "build/include-files.txt"  # membership changes can alter includ
 HEADERS_OK = "build/headers.ok"  # tools/check_headers.py passed (T-1200)
 SYMBOLS_OK = "build/symbols.ok"  # no overlay symbols in shared main config (T-9400)
 GLOBALS_OK = "build/globals.ok"  # tools/migrate_globals.py --check passed (T-5100)
+RENAMES_OK = "build/renames.ok"  # tools/rename.py check passed: no renamed name came back (T-27002)
+LEDGER_DIR = "config/renames"    # rename ledger of tools/rename.py
 HEADER_FILES = sorted(glob.glob("include/**/*.h", recursive=True))
 
 # splat output layout (config/SLPM_86.053.yaml): C sources and asm objects.
@@ -176,9 +179,9 @@ def overlay_targets(n, overlays):
            description="SHA1 CHECK $in")
     # main-exe names (O.BIN, SDK, aggregate bases of T-5000) that overlays use by name; see tools/syms_to_ld.py
     n.rule("symsld", command="python3 tools/syms_to_ld.py $out $in", description="SYMS $out")
-    n.build("build/main_names.ld", "symsld",
-            ["config/symbol_addrs_obin.txt", "config/symbol_addrs_sdk.txt",
-             "config/symbol_addrs_types.txt"],
+    # inputs: the main yaml's symbol files that the overlay yamls do not load, and the aggregate bases
+    # (symtab.SymbolTable.main_link_files, T-27002)
+    n.build("build/main_names.ld", "symsld", symtab.SymbolTable().main_link_files(),
             implicit=["tools/syms_to_ld.py"])
     oks = []
     for name, _base, _text in overlays:
@@ -233,8 +236,10 @@ def main():
     if previous != contents:
         with open(INCLUDE_FILES, "w") as f:
             f.write(contents)
+    # config/ and the ledger folder too: a new ledger or per-overlay symbol file changes the inputs (T-27002)
     directories = sorted(glob.glob("include/**/", recursive=True)
-                         + glob.glob("src/**/", recursive=True))
+                         + glob.glob("src/**/", recursive=True)
+                         + ["config/"] + ([LEDGER_DIR + "/"] if os.path.isdir(LEDGER_DIR) else []))
     n = ninja_syntax.Writer(open("build.ninja", "w"))
     n.variable("ninja_required_version", "1.10")
     n.rule("configure", command="python3 configure.py", generator=True, restat=True,
@@ -260,9 +265,13 @@ def main():
                     "config/%s.yaml && python3 tools/data_pieces.py config/%s.yaml && touch $out")
            % (EXE, EXE, EXE),
            description="splat split")
-    n.rule("symbols", command="python3 tools/check_symbols.py && touch $out",
-           description="CHECK SYMBOLS")
-    n.build(SYMBOLS_OK, "symbols", implicit=["tools/check_symbols.py", "config/symbol_addrs.txt"])
+    # every symbol file of every yaml (T-27002); restat: a symbol file edit that keeps the check
+    # passing leaves the stamp alone, so it does not rebuild every C object
+    n.rule("symbols", command="python3 tools/check_symbols.py --stamp $out",
+           description="CHECK SYMBOLS", restat=True)
+    table = symtab.SymbolTable()
+    n.build(SYMBOLS_OK, "symbols", implicit=["tools/check_symbols.py", "tools/symtab.py", "config/overlays.txt"]
+            + sorted({u.yaml for u in table.units.values()} | set(table.lines)))
     n.build("symbols", "phony", SYMBOLS_OK)
     n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")
@@ -279,6 +288,15 @@ def main():
             + HEADER_FILES + sorted(glob.glob("src/**/*.c", recursive=True)),
             order_only=["build/split.stamp"] + ["build/ovl/%s.stamp" % o[0] for o in read_overlays()])
     n.build("globals", "phony", GLOBALS_OK)
+    # renamed names stay renamed (T-27002): tools/rename.py check over src/, include/, config/
+    n.rule("renames", command="python3 tools/rename.py check && touch $out", description="CHECK RENAMES")
+    n.build(RENAMES_OK, "renames",
+            implicit=["tools/rename.py", "tools/symtab.py"] + sorted(glob.glob(LEDGER_DIR + "/*.txt"))
+            + sorted({u.yaml for u in table.units.values()} | set(table.lines))
+            + [p for p in ("config/proto_known.txt", "config/migrate_globals.txt", "config/toolchains.txt")
+               if os.path.exists(p)]
+            + HEADER_FILES + sorted(glob.glob("src/**/*.c", recursive=True)))
+    n.build("renames", "phony", RENAMES_OK)
     n.rule("as", command="python3 tools/asm.py $in $out", description="AS $in")
     n.rule("cc",
            command="python3 tools/cc.py $in $out $toolchain && python3 tools/object_layout.py $in $out",
@@ -322,7 +340,7 @@ def main():
     n.rule("progress", command="python3 tools/progress.py", description="PROGRESS", pool="console")
     n.build("progress", "progress")
     oks = overlay_targets(n, read_overlays())
-    n.default(["build/%s.ok" % EXE] + oks + [GLOBALS_OK, SYMBOLS_OK])
+    n.default(["build/%s.ok" % EXE] + oks + [GLOBALS_OK, SYMBOLS_OK, RENAMES_OK])
     n.close()
 
     units = [{

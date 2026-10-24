@@ -1,12 +1,12 @@
 ---
 type: concept
-updated: 2026-10-09
+updated: 2026-10-24
 sources: ["tools/game_boundaries.py", "tools/object_boundaries.py", "config/objects/", "config/SLPM_86.053.yaml", "src/main/", "tools/cc.py"]
 ---
 
 # Source files of the game code
 
-The game code (834 functions, 0x80041000-0x80086810) was one C file before [[tickets/T-0012-game-file-boundaries-and-shift-jis]]. It is now split into 28 files `src/main/<start address>.c`, one `c` subsegment each in `config/SLPM_86.053.yaml`; `configure.py` reads that list, so adding a boundary needs only a yaml line and moving the functions. Each file is a union of one or more original translation units: boundaries are only placed where the evidence is clear, so a file may still hold several originals ("fewer, larger files"). Names are neutral (address) because no file names are known; rename a file only through the yaml and `git mv`.
+The game code (834 functions, 0x80041000-0x80086810) was one C file before [[tickets/T-0012-game-file-boundaries-and-shift-jis]]. It is now split into 28 files `src/main/<start address>.c`, one `c` subsegment each in `config/SLPM_86.053.yaml`; `configure.py` reads that list, so adding a boundary needs only a yaml line and moving the functions. Each file is a union of one or more original translation units: boundaries are only placed where the evidence is clear, so a file may still hold several originals ("fewer, larger files"). Names are neutral (address) because no file names are known; rename a file only with `tools/rename.py` (`file` and `dir` rows, [[rename-tool]]), which renames the yaml subsegment, moves the file and keeps the original address range in the file's first comment.
 
 Re-run the evidence: `tools/docker.sh python3 tools/game_boundaries.py` (needs `asm/`; `--yaml` prints the segment list).
 

@@ -1,0 +1,2 @@
+dir RENSYU RENSYU club_practice T-27002 trial: folder
+file include ovl/RENSYU.h ovl/club_practice.h T-27002 trial: header

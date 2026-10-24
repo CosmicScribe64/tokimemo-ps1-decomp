@@ -177,10 +177,13 @@ class Model:
             return int(m.group(1), 16)
         return self.symmap.get(name)
 
-    @staticmethod
-    def owner(header):
+    def owner(self, header):
+        """The overlay whose own header this is: ovl/<NAME>.h, or a header only that overlay's C files
+        include (readable header names, tools/rename.py, T-27002); None for shared headers."""
         m = re.match(r"^ovl/(\w+)\.h$", header)
-        return m.group(1) if m else None
+        if m and (not self.bases or m.group(1) in self.bases):
+            return m.group(1)
+        return srcscan.header_units(self.root).get(header) or (m.group(1) if m else None)
 
     def in_main_range(self, name):
         a = self.addr(name)
@@ -1150,9 +1153,8 @@ def ninja_target(model, f):
     """The ninja target that proves the code behind override file `f` still matches."""
     if f in model.headers:
         return "build/ovl/%s.ok" % model.owner(f)
-    rel = os.path.relpath(f, model.root).replace(os.sep, "/")
-    m = re.match(r"src/ovl/(\w+)/", rel)
-    return "build/ovl/%s.ok" % m.group(1) if m else "build/SLPM_86.053.ok"
+    unit = srcscan.unit_of_source(f)
+    return "build/ovl/%s.ok" % unit if unit and unit != "main" else "build/SLPM_86.053.ok"
 
 
 def prune(model, run=None, log=print):
@@ -1262,7 +1264,7 @@ def asm_result_users(root):
 
 def unit_types(model, unit):
     """{symbol: effective type} a C file of `unit` sees from its root header."""
-    root = "game.h" if unit == "main" else "ovl/%s.h" % unit
+    root = srcscan.unit_header(unit, model.root)
     if root not in model.headers:
         return {}
     seen = defaultdict(list)
@@ -1439,8 +1441,8 @@ def add_implicit_overrides(model, changes, log=print):
     for unit, name, kind, ta, tb, cls in changes:
         if cls != "risky" or ta is not None or not tb or not is_func(tb):
             continue
-        m = re.match(r"src/ovl/(\w+)/", unit)
-        todo[("ovl/%s.h" % m.group(1)) if m else unit].add(name)
+        u = srcscan.unit_of_source(os.path.join(model.root, unit)) if unit.startswith("src/ovl/") else None
+        todo[srcscan.unit_header(u, model.root) if u else unit].add(name)
     for f, names in sorted(todo.items()):
         in_header = f in model.headers
         path = model.headers[f] if in_header else os.path.join(model.root, f)
