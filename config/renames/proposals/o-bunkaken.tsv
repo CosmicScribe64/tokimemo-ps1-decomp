@@ -212,7 +212,7 @@ data	main	D_80122EC0	festival_phase	REQUEST (shared with BUNKASAI): overlay_scra
 data	main	D_800E7D4E	tt_stages_cleared	REQUEST (shared with TT, BUNKASAI): TT result byte (stages cleared, 0-4) read by the festival game exhibit to pick a reaction line (below 2, 3 or 4 by block)
 data	BUNKAKEN	D_80155E90	festival_visit_script_text	pointer to the text table of the loaded script file; written by the script setters, read by festival_visit_script_tables_apply and the stage begin helpers
 data	BUNKAKEN	D_80155E94	festival_visit_script_commands	pointer to the command byte table (one speak code per line, 0xFF ends a group)
-data	BUNKAKEN	D_80155E98	festival_visit_script_voices	pointer to the voice clip pair table; 12 bytes zero-padded to 0x80155EA0
+data	BUNKAKEN	D_80155E98	festival_visit_script_voices	pointer to the voice clip pair table (followed by one zero pad word)
 data	BUNKAKEN	D_80155EA0	festival_visit_bustup_lba	s32[12] disc sector of each companion portrait file BUSTUP/*02.BIN (girl id 0-10, id 11 repeats Shiori 0x544A)
 data	BUNKAKEN	D_80155ED0	festival_visit_invite_script_setter	void (*)(void)[12] script setter per companion id: invitation file of that girl
 data	BUNKAKEN	D_80155F00	festival_visit_invite_script_sectors	u8[12] sector counts of the invitation files (3,2,2,2,1,1,1,2,2,1,1,1)
@@ -434,7 +434,7 @@ const	FestivalVisitCommonGroup	0x52	FV_COMMON_GROUP_WRAPUP	group 0x52: closing l
 const	FestivalVisitInvite	0x32	FV_INVITE_TOKIMEKI_MIN	weighted tokimeki a girl needs to invite the player (get_h_tokimeki)
 const	FestivalVisitInvite	0x50	FV_INVITE_AFFECTION_MIN	weighted affection a girl needs to invite the player (get_h_yuukou)
 const	FestivalVisitGain	2	FV_VISIT_AFFECTION_GAIN	affection gained by the companion when a visit ends
-const	FestivalVisitPenalty	0xA	FV_REFUSED_PENALTY	affection lost and syoushin gained by the refused girl; the stage-1 picker lines and the birthday options use 0xA and 0xF the same way
+const	FestivalVisitPenalty	0xA	FV_REFUSED_PENALTY	affection lost and syoushin gained by the refused girl at the end of a visit
 const	FestivalVisitLog	0x14	FV_LOG_SCENE	scene id 0x14 of the event log: a festival visit; flag 3-0x18 = 4*club+3 (the girl is at her own club) or 4*club+4 (visit together), 0x19 and 0x1A the birthday scenes
 const	FestivalVisitParamGate	0x78	FV_PARAM_GATE	parameter value (120) that picks the first of two adjacent lines in a few exhibits (literature: liberal arts; art and brass: art)
 file	BUNKAKEN	src/ovl/BUNKAKEN/80132000.c	src/ovl/festival_visit/script_setters_shiori_yukari_blocks.c	28 script table setters, Shiori-companion block (stages 18-31), Yukari block (72-84)
