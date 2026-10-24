@@ -1716,3 +1716,8 @@ Second review of [[tickets/T-27020-p2-h-graphics]] (three blocking findings, sev
 
 ## [2026-10-24] ticket | T-27020 Done
 [[tickets/T-27020-p2-h-graphics]] passed the third review (approved, no findings): the texture-block cache section and the `prim_box_gouraud` mode table in [[spec/h-graphics]] and `config/renames/proposals/h-graphics.tsv` match `src/main/80047550.c` and `src/main/800490C0.c`. The branch changes no `src/`, `include/` or symbol files. Moves to Done.
+## [2026-10-24] ticket | T-27028 review round 3 fixes for the TACO table and spec
+Fixed both blocking findings of the round 3 review of [[tickets/T-27028-p2-o-taco]]: the boss start damage percents are 36, 51 and 63 (integer division of `shooter_boss_damage_percent`, thresholds tested on the integer) and the left/right names now use the sign of x (world +x is screen left). Non-blocking items done in `config/renames/proposals/o-taco.tsv` (912 rows) and [[spec/o-taco]]: stale pad conflict notes, comment row columns, `sound_bank` names that follow core, separate particle view type, `TcActor.unk7A` named `counter`, score digit claim, behaviour-label note, table header, no symbols file row. Not touched by design: `wiki/index.md` (needs a line for [[spec/index]]), `wiki/kanban.md`, and the umbrella ticket link that has no file yet.
+
+## [2026-10-24] ticket | T-27028 Done after review round 4
+[[tickets/T-27028-p2-o-taco]] passed the round 4 review at f73c1b522 (approved, no findings; boss start percents 36, 51 and 63 and the pos_x/neg_x names verified against the C and the `.data.s` bytes). Follow-up commit to the earlier merge; tables and wiki only, nothing under `src/`, `include/` or `config/symbol*`. Merged again as p2a-o-taco.

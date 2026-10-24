@@ -14,7 +14,7 @@ Roadmap phase 2 (readable code), port-first scope, for the unit `src/ovl/TACO`: 
 
 ## Acceptance criteria
 
-- [x] `config/renames/proposals/o-taco.tsv`: one row per rename (kind scope old new note); all 406 functions of the overlay named; 179 data labels; 70 field, 24 type, 40 file, 185 const rows; 9 comment rows for O.BIN-named functions the overlay calls (913 rows in all); 14 rows marked HYPOTHESIS.
+- [x] `config/renames/proposals/o-taco.tsv`: one row per rename (kind scope old new note); all 406 functions of the overlay named; 179 data labels; 70 field, 24 type, 39 file, 185 const rows; 9 comment rows for O.BIN-named functions the overlay calls (912 rows in all, after the round 3 fixes); 14 rows marked HYPOTHESIS; the file starts with the same header comment as `core.tsv`.
 - [x] `wiki/spec/o-taco.md`: stage machine, state and data with the new names, rules (formulas, thresholds, transitions), connections, open questions; linked from `wiki/spec/index.md`.
 - [x] No game text, assets, asm or screenshots committed; no edits under `src/`, `include/` or `config/symbol*` files.
 - [x] Code review against `CODING_STANDARDS.md` (docs-only change) and merge of the table by the phase 2 merge step.
@@ -44,3 +44,20 @@ Roadmap phase 2 (readable code), port-first scope, for the unit `src/ovl/TACO`: 
 - Scope: the diff touches only the table, the spec, the spec index, this ticket and the log. No `src/`, `include/` or `config/symbol*` edits, no game text or assets.
 - Evidence sample (about 25 rows, 9 spec claims) confirmed against the C or data.
 - Open for the core owner: six `core.tsv` pad values conflict (spec section 14).
+
+### Review round 3 fixes (2026-10-24)
+
+Blocking, both fixed and checked against the C and the `.data.s` bytes:
+- Boss start percent: `shooter_boss_damage_percent` is `100 - (num * 100) / den` in integer arithmetic. With the part tables (D_8015FA68, D_8015FCC0, D_8015FEAC) the start values are 36, 51 and 63 (current-HP sums 1875 of 2895, 2465 of 4975, 2805 of 7395), not 35, 50 and 62. The thresholds 80, 85 and 85 are tested on the integer, so they are reached once the real percent exceeds 79, 84 and 84 (current HP sum at most 607, 795 and 1183). The spec also no longer says the value rises with every lost bar: a refill puts the current bar back to full.
+- Left and right: the names now say the sign of x, because world +x is screen left. `shooter_spawn_formation_right/left` became `shooter_spawn_formation_pos_x/neg_x`; `SHOOTER_BOSS1_MODE_SWAY_RIGHT/LEFT` became `SHOOTER_BOSS1_MODE_SWAY_POS_X_FIRST/NEG_X_FIRST` (mode 0 adds +0x96 to the object x first, mode 4 the negated path); `shooter_script_side` (and the note "side opposite the player") became `shooter_circler_pairing`, which picks one of two diagonal pairings from the player's position.
+
+Non-blocking, done: PadBits rows are now plain duplicates of core's (stale CONFLICT notes gone, core's six values were fixed in its own round); comment rows use core's column convention; `stream` names became `sound_bank` names that follow core (`snd_bank_load_start`, `cd_audio_request_set`); `Tc14` and `TacoParticle14` keep separate names (`ShooterParticle`, `ShooterParticleView`) and the settings overlap has a recorded merge decision (Shooter prefix); the enemy names are labelled as behaviour labels in the spec; `TcActor.unk7A` is `counter` instead of `age`; the score-digit claim is limited to frames that reach the score tick; the table has a header comment; the symbols file row is gone (the overlay name stays TACO).
+
+Left for the merge step (outside this unit's files): the line in `wiki/index.md` pointing to `wiki/spec/index.md`, the umbrella ticket `T-27000-phase-2` that the spec links, and the two core renames named in spec section 14.
+
+### Review round 4 (2026-10-24): approved
+
+- Read at f73c1b522. No findings. Both round 3 blockers are resolved, and no clear errors in the rows or spec lines the fix touched. The branch was already merged at cf5ba40b9, so f73c1b522 is a follow-up commit that the merge step merges again.
+- Boss start percent: the formula is stated as integer arithmetic, `100 - (num*100)/den`, matching `func_80147B24` in `src/ovl/TACO/80146D60.c`. The part tables decoded from the `.data.s` bytes give current-HP sums 1875/2895, 2465/4975 and 2805/7395, so the start values are 36, 51 and 63 (real-valued 35.2, 50.5, 62.1). The thresholds 80, 85 and 85 are tested on the integer (801480B0.c:78, 80148FE0.c:99, 80149F90.c:77); the derived current-HP limits of at most 607, 795 and 1183 are correct. The claim that the value rises with every lost bar is gone, which the refill code supports.
+- Left and right names: the four renamed items agree with the C and the table's axis rule (world +x is screen left, +y is down). `shooter_spawn_formation_pos_x` (x +0x3E8) is called from phases 0 and 6, `shooter_spawn_formation_neg_x` (x -0x3E8) from phases 1 and 7.
+- Scope: the diff against w2-good touches only `config/renames/proposals/o-taco.tsv`, `wiki/spec/o-taco.md`, this ticket and `wiki/log.md`. No `src/`, `include/` or `config/symbol*` edits.
