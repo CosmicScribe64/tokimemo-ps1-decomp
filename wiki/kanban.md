@@ -962,6 +962,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-25700-distill-wins|T-25700 Distill the wave 8-11 wins into playbook recipes]]
 - [ ] [[tickets/T-26001-stale-tool-tests|T-26001 Fix the stale test_build_deps and test_protoverride fixtures]]
 - [ ] [[tickets/T-27028-p2-o-taco|T-27028 Phase 2 naming and port spec for overlay TACO (shooter mini game)]]
+- [ ] [[tickets/T-27020-p2-h-graphics|T-27020 Phase 2 naming proposals and port spec for the main graphics layer (h-graphics)]]
 
 
 %% kanban:settings
