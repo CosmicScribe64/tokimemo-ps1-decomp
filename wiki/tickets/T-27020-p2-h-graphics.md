@@ -1,7 +1,7 @@
 ---
 id: T-27020
 title: Phase 2 naming proposals and port spec for the main graphics layer (h-graphics)
-status: In Review
+status: Done
 assignee: claude
 created: 2026-10-24
 updated: 2026-10-24
@@ -17,7 +17,7 @@ Roadmap phase 2 (readable code), unit `h-graphics`: name the modules, entry poin
 - [x] `config/renames/proposals/h-graphics.tsv` has one row per rename (kinds func, data, field, type, file, const) and a comment row for each O.BIN-named function; no src/, include/ or symbol-file edits.
 - [x] `wiki/spec/h-graphics.md` covers frame flow, actor pool, texture-block cache, VRAM queues, primitives, screen layers, palette tools, debug HUD and open questions; linked from `wiki/spec/index.md`.
 - [x] Uncertain game-meaning claims are marked `HYPOTHESIS:` in the note column.
-- [ ] Review of the table and spec by the phase-2 reviewer (this ticket is In Review).
+- [x] Review of the table and spec by the phase-2 reviewer (approved after three review rounds).
 
 ## Notes
 
@@ -57,3 +57,12 @@ Second review: not approved, three blocking findings. Fixed, each checked agains
 Non-blocking findings taken: `make_color_bar16` direction (entry 1 is near `end`, the last entry near `start`), cell size (`texture_flags` bit 3) and pixel depth (`sprite_attribute` bits 24-25) are separate settings, record 160 is one past the pool when `unk_1098` is 0xA0, the core comparison and the stale h-cdio note, HYPOTHESIS marks added to `sound_request`, `sound_bank_state_reset`, `sound_bank_wait_latch`, `sound_bank_wait_done` and `load_csr_ab` (the glossary seed disagrees on `csr_*`) and removed from `ACTOR_DRAW_FIRST_PARTS` (the behaviour is certain), `actor_pair_swap_sequences` and `actor_reset_range` notes, call-site counts recomputed with one method.
 
 One figure differs from the review: record 160 is at 0x80121750 (0x8011ECD0 + 160 * 0x44), the start of the screen-layer records, not at `sprite_table[0]` (0x801217D0, 0x80 bytes later).
+
+### Review approved (2026-10-24)
+
+Third review: approved, no findings. All three blocking findings from round 2 are fixed, and no new clear errors turned up in the lines the fix touched. Each claim was checked against the C in the worktree:
+
+- Texture-block cache: the spec section matches `search_tpage`, `search_tpage8` and `search_tpage_multi` in `src/main/80047550.c`. A step-3 claim writes only `unk_1128` (`tpage_frame_map`); the next `search_tpage(0x7FFF)` frees every slot whose `unk_1228` (`tpage_resident`) word is -1, so a used block is queued for upload again each frame. The writer list is complete: `load_tpage_buf_lock`, `search_load_tpage_buf_lock`, `bg_slot_setup`, `_sys_default_tpage_set`, overlay and `8007C030.c` stores (marks 1, 8, 0x80000100+n, -1), and the `80059B40.c` subtraction on slots 27-31 and 59-63. The `unk_1128`, `unk_1228` and `search_tpage*` rows agree with the ticket notes.
+- `prim_box_gouraud`: the spec table and the TSV row match `func_80049A40` in `src/main/800490C0.c`. Mode 0 and 7 or more use multipliers 10, 8, 6, 4 for v0..v3 stored in a byte, so a channel above 25 overflows at v0; mode 2 puts the 80% on v3; mode 3 multiplies by 8 and reads green for blue; mode 4 is black on top; mode 5 is colour left to black right.
+- Scope: the branch changes only `config/renames/proposals/h-graphics.tsv` and wiki files; nothing under `src/`, `include/` or `config/symbol*`.
+- The old "never evicts" text survives only in the earlier `ingest` log entry (the log is append-only); the round 2 `ticket` entry corrects it.
