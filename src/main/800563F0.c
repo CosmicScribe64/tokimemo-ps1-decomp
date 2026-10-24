@@ -72,25 +72,23 @@ void strSetDefDecEnv(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 
 void strCallback(void) {
     RECT rect;
-    s32 odd;
 
-    /* FAKE: T-25303: never-true arm that ugen drops (as1 deletes the dead byte load). Its
-     * indirect store and signed loop test put the RECT copy below in the block-copy state of
-     * the original (one scratch register before the second copy word; see tools/ugen_pass.py).
-     * Without it every later temporary is one ring slot high (75 rows). */
+    /* FAKE: T-26000: never-true arm that ugen drops (as1 deletes the dead byte load). Its
+     * indirect store puts the RECT copy below in block-copy state F (tools/ugen_pass.py), as in
+     * the original (one scratch register before the second copy word; 75 rows without it).
+     * IDO 4.1's ugen gives this body F without the arm, because it also sets F at a branch on a
+     * value (`D_800B5900 & 1`); the pass does not model that. */
     if ((u32)D_800B0896 < 0) {
         do {
             *(u8 *)0 = 0;
         } while ((s32)D_800B0896 < 1);
     }
-    odd = D_800B5900 & 1;
-    if (odd != 0 && D_80125C5C != 0) {
+    if ((D_800B5900 & 1) && D_80125C5C != 0) {
         func_80088210();
-        odd = D_800B5900 & 1;
         D_80125C5C = 0;
     }
     rect = D_80125C58->dec.slice;
-    if (odd != 0) {
+    if (D_800B5900 & 1) {
         rect.x += (D_800B58F8 * 3 + 2) / 3;
         rect.y += (D_800B58FC * 3 + 2) / 3;
     } else {
