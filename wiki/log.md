@@ -7,14 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ticket | T-25016 phase 2 results and resolution plan by common issue
-
-## [2026-10-22] ticket | T-25016 gate-lever experiments: flattening and volatile both negative with named causes
-
-## [2026-10-22] ticket | T-25016 trace note: global filler active in func_80139290 (37 moves)
-
-## [2026-10-22] ticket | T-25016 phase 2 closeout: bulk pool fully classified (79 scored, 43 named blockers), queue regenerated, in-tree pool contamination corrected
-
 ## [2026-10-22] ticket | T-25016 queue verification: top bulk candidates funcdiff-verified (best 210 resolved lines); packet scores flatter by ~10x; Tier 1 re-labelled a reconstruction backlog
 
 ## [2026-10-22] ticket | T-25013, T-25014, T-25015 marked Done (merged in PR #66); T-25016 to In Review with its PR; status page next-step rewritten for the post-lever state
@@ -1746,6 +1738,7 @@ Every game function is C and every binary rebuilds byte for byte ([[status]]). C
 ## [2026-10-24] build | T-20500 emulator probe merged
 
 [[emulator]]: PCSX-Redux (pinned 8288e927 plus upstream fix 3a24bbcc) with OpenBIOS (MIT) in Docker; the game boots headless to the title menu. tools/emu/run.sh drives breakpoints on main and overlay code, memory watches, call stacks, traces, scripted input, screenshots and save states for phase 2 naming. Ticket stays In Progress for its GameState naming pilot.
+
 ## [2026-10-24] query | T-25900 phase 2 naming audit
 
 drafts/T-25900/audit.md: naming state per unit (6,649 of 6,952 functions and 16,629 data labels still placeholders, 437 address-named files), how renames flow today and their gaps (the merge-time rename table matches no files since the per-object split), the design of tools/rename.py, naming conventions and the phase 2 work order.
