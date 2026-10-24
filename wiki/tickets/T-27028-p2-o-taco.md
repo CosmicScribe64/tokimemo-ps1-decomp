@@ -1,7 +1,7 @@
 ---
 id: T-27028
 title: Phase 2 naming and port spec for overlay TACO (shooter mini game)
-status: In Review
+status: Done
 assignee: p2a-o-taco (Sonnet)
 created: 2026-10-24
 updated: 2026-10-24
@@ -17,7 +17,7 @@ Roadmap phase 2 (readable code), port-first scope, for the unit `src/ovl/TACO`: 
 - [x] `config/renames/proposals/o-taco.tsv`: one row per rename (kind scope old new note); all 406 functions of the overlay named; 179 data labels; 70 field, 24 type, 40 file, 185 const rows; 9 comment rows for O.BIN-named functions the overlay calls (913 rows in all); 14 rows marked HYPOTHESIS.
 - [x] `wiki/spec/o-taco.md`: stage machine, state and data with the new names, rules (formulas, thresholds, transitions), connections, open questions; linked from `wiki/spec/index.md`.
 - [x] No game text, assets, asm or screenshots committed; no edits under `src/`, `include/` or `config/symbol*` files.
-- [ ] Code review against `CODING_STANDARDS.md` (docs-only change) and merge of the table by the phase 2 merge step.
+- [x] Code review against `CODING_STANDARDS.md` (docs-only change) and merge of the table by the phase 2 merge step.
 
 ## Notes
 
@@ -36,3 +36,11 @@ Roadmap phase 2 (readable code), port-first scope, for the unit `src/ovl/TACO`: 
 - Sound ids: a scene call passes an even first argument, so `func_801335A0` plays 0x600 + the low byte, not 0x500 +. All notes and the spec now cite the played id (boss 1 defeat 0x608, boss 2 defeat 0x604, title 0x604 to 0x607, opening, boss cadences); bank 6 constants 0x604 to 0x608 and the bank 5 item sounds 0x511, 0x512, 0x514, 0x516 added.
 - Pad enum renamed to `PadBits` (core's name); the six conflicting core values are marked in the notes and listed in spec section 14 for the core owner.
 - `TcActor.unk7A` notes now say it is the HP bar count on a boss part; type notes flag the `Tc14` alias and the settings types that overlap core; seven comment rows that duplicate core were dropped.
+
+### Review round 2 (2026-10-24): approved
+
+- No blocking findings. Both round-1 blockers are fixed and were checked against the C: scene sound ids (`func_801335A0` ORs the low byte into 0x600 for an even first argument; cooldown only for first argument 1, id below 10 and `D_8015EDB0` nonzero; played ids confirmed for title frames 0x40/0x80/0xA0/0xC0, boss 1 defeat and fight end, boss 2 defeat and its 0x600 cadence) and the pad enum (pad word is `(~byte2 << 8) | ~byte3`, `src/main/80042A00.c` lines 147-171, so L2=1, R2=2, L1=4, R1=8, SELECT=0x100, START=0x800; the TACO values are right, `core.tsv` is wrong).
+- Table checks: 913 rows, all with 5 tab-separated fields, no duplicate keys, no invalid identifiers, case conventions hold, no clashes with `src/`, `include/`, `config/*.txt` or the other phase 2 tables except the `PAD_*` rows; all 38 source files have a file row; exactly 14 rows carry HYPOTHESIS.
+- Scope: the diff touches only the table, the spec, the spec index, this ticket and the log. No `src/`, `include/` or `config/symbol*` edits, no game text or assets.
+- Evidence sample (about 25 rows, 9 spec claims) confirmed against the C or data.
+- Open for the core owner: six `core.tsv` pad values conflict (spec section 14).
