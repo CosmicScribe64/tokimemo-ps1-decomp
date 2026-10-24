@@ -630,6 +630,45 @@ class EnumRenameTest(Fixture):
 
 
 class FileRenameTest(Fixture):
+    def test_path_scan_skips_irrelevant_files_and_preserves_path_rules(self):
+        unrelated = "/* NO_OLD_PATH_SENTINEL */\ns32 unrelated_path_value;\n"
+        self.write("src/main/irrelevant.c", unrelated)
+        selected = "src/main/80041000.c"
+        self.write(selected, self.read(selected) +
+                   '\n/* See src/ovl/AAA/80132100.c and AAA/80132100. */\n'
+                   'char *asm_path = "asm/ovl/AAA/nonmatchings/AAA/80132100";\n'
+                   'char *plain_path = "src/ovl/AAA/80132100.c";\n'
+                   'char *longer_path = "asm/ovl/AAA/nonmatchings/AAA/80132100_extra";\n'
+                   'char *case_path = "asm/ovl/aaa/nonmatchings/aaa/80132100";\n')
+        original_tokens, original_rewrite = R.tokens, R.path_rewrite
+        candidates = []
+
+        def checked_tokens(text):
+            self.assertNotIn("NO_OLD_PATH_SENTINEL", text)
+            return original_tokens(text)
+
+        def checked_rewrite(tree, files, *args, **kwargs):
+            candidates.append(list(files))
+            return original_rewrite(tree, files, *args, **kwargs)
+
+        ctx = R.Context(self.root)
+        row = R.Row("file", "AAA", "80132100", "aaa_tables", "T-27069", "test")
+        with unittest.mock.patch.object(R, "tokens", checked_tokens), \
+                unittest.mock.patch.object(R, "path_rewrite", checked_rewrite):
+            R.plan_file(ctx, row)
+        self.assertEqual(ctx.problems, [])
+        self.assertEqual(len(candidates), 2)
+        self.assertEqual(candidates[0], candidates[1])
+        self.assertNotIn("src/main/irrelevant.c", candidates[0])
+        self.assertEqual(ctx.tree.read("src/main/irrelevant.c"), unrelated)
+        text = ctx.tree.read(selected)
+        self.assertIn("src/ovl/AAA/aaa_tables.c and AAA/aaa_tables.", text)
+        self.assertIn('"asm/ovl/AAA/nonmatchings/AAA/aaa_tables"', text)
+        self.assertIn('"src/ovl/AAA/80132100.c"', text)
+        self.assertIn('"asm/ovl/AAA/nonmatchings/AAA/80132100_extra"', text)
+        self.assertIn('"asm/ovl/aaa/nonmatchings/aaa/80132100"', text)
+        self.assertIn("AAA/aaa_tables", ctx.tree.read("src/ovl/AAA/aaa_tables.c"))
+
     def test_file(self):
         out = self.ok("file AAA 80132100 aaa_tables T-1 the tables of AAA\n")
         y = self.read("config/overlays/AAA.yaml")

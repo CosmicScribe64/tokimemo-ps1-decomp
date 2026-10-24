@@ -1632,3 +1632,11 @@ Added src/main/README.md after independent narrow Sol review resolved the shared
 ## [2026-10-24] lint | Review main README prose and final filename proof
 
 Committed5902c2c38 for all34logical main C filenames. Required deslop prose check found two curly-quote leads, removed with the living-map introduction clarification; two primitive/Primitives leads are accurate GPU terminology and retained. The grouped map and object evidence passed independent Sol review.
+
+## [2026-10-24] ticket | Remove repeated irrelevant path tokenization
+
+[[tickets/T-27069-file-path-scan-filter]] tracks a measured integration bottleneck: plan_file invokes path_rewrite over all code twice per move, lexing even files lacking its required literal old path. Full403liveplan remains read-only. A narrow literal-candidate filter and regressions are being prepared separately from game-code changes; no proof is waived.
+
+## [2026-10-24] build | Integrate independently reviewed file-path filter
+
+[[tickets/T-27069-file-path-scan-filter]] isolated approvedperformancehunks from the separateconstantfeature; unchanged79-test suitepasses in4.346s. Bothpathregexes requireliteraloldpath, so skippingfileswithoutthatliteral preservesallactualmatches; comments/asmstrings/boundaries covered. [[tickets/T-27068-existing-constant-sites]] remains open after independentSpec review caught disabled-preprocessor/raw-vs-AST provenance mismatch; it is not integrated. Fulloptimized403filenameplan is rerunning; no proof waived.

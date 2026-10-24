@@ -1728,11 +1728,12 @@ def plan_file(ctx, row):
         tree.write(y, "".join(out))
     if move:
         tree.move(osrc, nsrc)
+    path_files = [f for f in all_code_files(tree) if oname in (tree.read(f) or "")]
     asm_rx = re.compile(r"(?<=/)%s(?=[./\"])" % re.escape(oname))
-    n_str = path_rewrite(tree, all_code_files(tree), asm_rx, nname, comments=False,
+    n_str = path_rewrite(tree, path_files, asm_rx, nname, comments=False,
                          prefix_ok=lambda s: s.startswith('"asm/'))
     word = re.compile(r"(?<![\w/])((?:src/(?:ovl/)?)?)%s(?![\w])" % re.escape(oname))
-    n_com = path_rewrite(tree, all_code_files(tree), word, lambda m: m.group(1) + nname, strings=False)
+    n_com = path_rewrite(tree, path_files, word, lambda m: m.group(1) + nname, strings=False)
     n_cfg = 0
     for p in config_text_files(tree):
         n_cfg += config_line_rewrite(tree, p, word, lambda m: m.group(1) + nname)

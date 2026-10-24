@@ -63,6 +63,7 @@ kanban-plugin: board
 
 ## In Progress
 
+
 - [ ] [[tickets/T-27068-existing-constant-sites|T-27068 Reuse proven constants at precise literal sites]]
 
 - [ ] [[tickets/T-27067-core-scheduler-essential-completion|T-27067 Complete shared core scheduler and school-day semantic residue]]
@@ -153,6 +154,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-27000-phase-2|T-27000 Phase 2: human-readable codebase]]
 
 ## In Review
+
+- [ ] [[tickets/T-27069-file-path-scan-filter|T-27069 Skip irrelevant files in file-rename path scans]]
 
 
 
