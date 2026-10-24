@@ -2504,6 +2504,10 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
             plan_fields(ctx, need, use_gcc=use_gcc)
     for line in ctx.report:
         out.write(line + "\n")
+    for n in ctx.notes[:40]:
+        out.write("  note: %s\n" % n)
+    if len(ctx.notes) > 40:
+        out.write("  note: ... %d more\n" % (len(ctx.notes) - 40))
     for p in ctx.problems:
         out.write("PROBLEM: %s\n" % p)
     if ctx.problems:

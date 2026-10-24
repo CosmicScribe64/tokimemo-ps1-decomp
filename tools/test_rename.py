@@ -655,6 +655,7 @@ class LedgerTest(Fixture):
         self.write("config/symbol_addrs_main.txt", main + "func_80041180 = 0x80041180; // size:0x99\n")
         out = io.StringIO()
         self.assertEqual(R.replay(self.root, out=out, use_gcc=False), 0, out.getvalue())
+        self.assertIn("has size:0x10, the dropped duplicate line has size:0x99", out.getvalue())
         self.assertEqual([l for l in self.read("config/symbol_addrs_main.txt").splitlines() if "text_merge" in l],
                          ["text_merge = 0x80041180; // type:func size:0x10 align:4"])
 
