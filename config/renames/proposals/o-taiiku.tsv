@@ -1,0 +1,40 @@
+# kind	scope	old	new	note
+func	TAIIKU	func_80132000	sports_folk_dance_entry	game_state.mode_step dispatch initializes folk dance, chooses two encountered girls, loads the dance scene, advances talk beats and exits; Japanese scene label is present in C but omitted from this English name
+func	TAIIKU	func_80132BD0	sports_dance_actors_init	initializes 23 actor slots from four coordinate/frame tables and installs shared animation tables; src/ovl/TAIIKU/80132BD0.c
+func	TAIIKU	func_80132E20	sports_dance_actors_position	positions 23 actors across candidate horizontal offsets, chooses nearest-to-center position, toggles draw flags based on bounds; called with (0,1) and mode-state offset with three candidates
+func	TAIIKU	func_801330FC	sports_dance_background_upload	sets RECT x=0x140,y=0,w=0x20,h=0x70 and transfers background texture data using loaded address globals; src/ovl/TAIIKU/80132BD0.c
+func	TAIIKU	func_801339C4	sports_dance_actor_move	reads game_state.pad_held & 0xF000; cardinal directions move actor fixed-point x/y by 0x20000/0x24000 and diagonals by 0x1E000/0x22000 in the corresponding directions; src/ovl/TAIIKU/80132BD0.c
+func	TAIIKU	func_80138AA8	sports_scene_asset_load_setup	copies two tpage IDs, 18 tpage-table entries and five RGB/palette entries; reads two CD sectors and on readiness installs tpages/palette before advancing mode_stage; src/ovl/TAIIKU/80138950.c
+func	TAIIKU	func_80138DF8	sports_girl_event_choose_scene	loads 18 selectable actor tpages and five associated palette resources; case 2 tests pad_pressed & 0xF0 and rectangle-hit-tests eleven visible girl actors, stores selected index D_80149940, then prepares selected girl event audio/background; exact event title is not established
+func	TAIIKU	func_80139FE4	sports_girl_event_flagged_actors_scroll	collects the eleven girl indices whose flags bit 1 is set; moves those actors left by 1 pixel/frame, or 4 while PAD_L1 is held, wraps actors crossing x < -0xC0 behind the previous eligible actor at +0x78 (minimum x 0xA0); exact flag meaning unproven
+func	TAIIKU	func_8013A314	sports_girl_event_actors_init	clears upper actors and initializes 16 actor records from x, y and frame tables; source body in 80138950.c
+func	TAIIKU	func_80145640	sports_controller_c_resource_load	loads twelve texture page buffer IDs into D_8014A4F8; T-16553 records the table contract
+func	TAIIKU	func_8014666C	sports_controller_c_ticks_advance	increments controller counters and each of four slots’ animation/count fields; body explicitly increments fields +0x0C/+0x04 etc in 801452D0.c
+func	TAIIKU	func_80147A6C	sports_controller_c_slot_position_step	when slot mode is zero, its cooldown is at least 6, and player-controller gating allows it, positive/negative unk_08 advances/decrements unk_02 and resets cooldown unk_16
+func	TAIIKU	func_80147F58	sports_controller_c_slot_animation_collision_check	checks three bounded animation-ID tables and compares actor X against thresholds; invokes the left/right slot-movement helpers on threshold crossings
+func	TAIIKU	func_80148194	sports_controller_c_slot_move_left	sets slot mode 1, countdown 0, offsets actor by +0x74,+0x32 and adjusts slot offsets to +0x6A,+0x32; player index also emits audio command 0x503
+func	TAIIKU	func_801482BC	sports_controller_c_slot_move_finish	when slot mode is nonzero and countdown reaches 0x65, clears associated controller motion fields and returns slot offsets/velocity/countdown to defaults
+# O.BIN comments: preserve linker names; translate the side effects at their C definitions when present.
+type	TAIIKU	TaiRunnerA	SportsRunnerA	0x24 game-A record; header documents display actor index, animation frame, start-sequence state, speed at +0x10 and 16.16 track position at +0x20
+type	TAIIKU	TaiRunnersA	SportsRunnersA	object holds one player record plus three CPU records; struct contract documented at definition in include/ovl/TAIIKU.h
+type	TAIIKU	TaiRunnerB	SportsRunnerB	0x24 game-B record; header documents speed +0x08 and 16.16 position +0x14
+type	TAIIKU	TaiikuController	SportsController	game-C player/CPU control record of size 0x1C; prefix follows overlay map, roles/player-versus-CPU documented at definition
+type	TAIIKU	TaiikuSlot1C	SportsRunnerDisplaySlot	four game-C runner sprite slots at D_8014A454; definition comment documents one slot per runner
+type	TAIIKU	TaiikuBall	SportsBallState	0x20 game-B block; base-address and fixed-point coordinate accesses documented in TAIIKU.h; exact member meanings remain unknown
+type	TAIIKU	TaiikuPair	SportsPairValue	two halfword fields; D_801499B2 aliases first pair's second halfword as a flag; distinct semantic use not proven
+type	TAIIKU	TaiRandomTable	SportsRandomTable	eleven rows by ten signed halfwords copied as one block in func_80135D24; structural evidence at type definition
+field	TAIIKU	TaiRunnerA.unk_02	display_actor_index	definition comment states indexes actor_pool record 46 + runner number
+field	TAIIKU	TaiRunnerA.unk_03	animation_frame	definition comment identifies as animation frame
+field	TAIIKU	TaiRunnerA.unk_05	start_sequence_state	definition comment identifies start-sequence state
+field	TAIIKU	TaiRunnerA.unk_10	speed	definition comment identifies speed
+field	TAIIKU	TaiRunnerA.unk_20	track_position	definition comment identifies 16.16 position
+field	TAIIKU	TaiRunnerB.unk_00	animation_frame	definition comment identifies animation frame
+field	TAIIKU	TaiRunnerB.unk_08	speed	definition comment identifies speed
+field	TAIIKU	TaiRunnerB.unk_14	track_position	definition comment identifies 16.16 position
+data	TAIIKU	D_80149208	sports_runner_a_runners	player + cpu[3] aggregate, size 0x90; accessed by loops and runner-number helper; current type TaiRunnersA
+data	TAIIKU	D_8014A13C	sports_controller_c_runners	four 0x24 TaiRunnerB records; declared and indexed in game-C object
+data	TAIIKU	D_8014A3E4	sports_controller_c_player_controller	separate controller record; source note and calls distinguish it from D_8014A400
+data	TAIIKU	D_8014A400	sports_controller_c_cpu_controllers	three controller records indexed by runner minus one in func_801482BC; family page records separate allocation
+data	TAIIKU	D_8014A454	sports_runner_display_slots	four 0x1C sprite slots; definition and typed loops in 801452D0.c
+data	TAIIKU	D_8014A4F8	sports_controller_c_texture_page_buffer_ids	twelve texture-page buffer IDs loaded in func_80145640 (TAIIKU.h)
+data	TAIIKU	D_8014A528	sports_controller_c_texture_page_buffer_ids_alt	nine table entries; header identifies as buffer IDs, relationship to first table unclear

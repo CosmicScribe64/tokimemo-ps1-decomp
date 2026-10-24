@@ -26,3 +26,5 @@ Model assignment follows the user request: Luna by default, Sol 6.1 for harder a
 ## Comments
 
 2026-10-24: Claimed for the first continuation batch.
+
+2026-10-24 checkpoint: Luna retained 38 evidence-backed proposal rows after removing unsupported caller-only guesses: 15 functions, eight types, eight fields and seven data labels. Removed an out-of-unit comment request for main k_disp_start. Spec records concrete inspected rules and a 213-definition/19-file census. Runner completion/results and broad remaining function/data coverage stay open. No source renames; independent review remains pending; In Progress.
