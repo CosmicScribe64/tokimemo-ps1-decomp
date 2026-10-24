@@ -1,0 +1,779 @@
+file	ETC	src/ovl/ETC/80132000.c	src/ovl/etc/unused_scene_stubs.c	25 developer stubs (confession judge, confession scene, epilogue) that no entry reaches
+file	ETC	src/ovl/ETC/80132880.c	src/ovl/etc/album_animations.c	album VRAM blur and fade quads, event background loader, 72 animation table setters and 70+2 show functions with their dispatcher (propose splitting into album_effects.c and album_animations.c)
+file	ETC	src/ovl/ETC/8013B1F0.c	src/ovl/etc/album_portrait_select.c	portrait resource choice for an event record and its table readers
+file	ETC	src/ovl/ETC/8013BEF0.c	src/ovl/etc/album_playback.c	album stages 1 and 2: event pages, transitions, voice, finale, record loader and helpers
+file	ETC	src/ovl/ETC/8013F980.c	src/ovl/etc/album_model.c	album 3D model setup, matrix, number sprites
+file	ETC	src/ovl/ETC/8013FF80.c	src/ovl/etc/album_entry.c	mode 0x91 entry, stage 0 loader, secret view mode
+file	ETC	src/ovl/ETC/80140F50.c	src/ovl/etc/album_save.c	album save flow (stage 0xFF), shared card prompt helpers, mode 0xC2 entry (propose moving staff_roll_entry and the picture helpers to staff_roll.c)
+file	ETC	src/ovl/ETC/80142B80.c	src/ovl/etc/staff_roll_load.c	staff roll asset loader
+file	ETC	src/ovl/ETC/80143240.c	src/ovl/etc/staff_roll_clear_save.c	staff roll stages, the clear save flow (mode 0xC4) and the last photo (mode 0xC3) (propose splitting into staff_roll.c, clear_save.c and last_photo.c)
+file	ETC	src/ovl/ETC/80146400.c	src/ovl/etc/exam.c	final exam week: day flow, scoring, ranking and results
+file	ETC	src/ovl/ETC/801492C0.c	src/ovl/etc/career_choice.c	job or university entrance exam (mode 0x37)
+file	ETC	src/ovl/ETC/8014ABD0.c	src/ovl/etc/career_guidance.c	career guidance talk with the teacher (mode 0x36)
+file	ETC	src/ovl/ETC/8014C2D0.c	src/ovl/etc/unused_skip_week.c	two unreferenced week skippers
+file	ETC	include/ovl/ETC.h	include/ovl/etc.h	overlay header
+field	EtcWork40	unk_10	subject_grade	s32[6]: grade 0-4 of exam days 0-4; slot 5 counts the red marks (grade 0 days)
+field	EtcWork40	unk_28	subject_score	s32[6]: day score 0-100 of exam days 0-4; slot 5 is the running total
+field	EtcStateFlagsView	records	queue_back2	GsRec69C view that starts two records before day_events, so records[day_event_index] is the type two records back (the previous school day)
+field	EtcConfig8	unk_00	girl	girl id of the logged event (event_log entry unk_00)
+field	EtcConfig8	unk_01	scene	scene id inside the category (core calls this byte flag: the second argument of event_log_add)
+field	EtcConfig8	unk_02	category	event category 0-21 (core calls this byte scene: the first argument of event_log_add); 2 = animated event
+field	EtcConfig8	unk_03	mood	girl state rank at logging time (0 best); the album uses it modulo 6 as the portrait mood
+field	EtcConfig8	unk_04	year	calendar year (95-98); 0 marks an empty entry
+field	EtcConfig8	unk_05	month	calendar month
+field	EtcConfig8	unk_06	day	calendar day
+field	EtcConfig8	unk_07	weekday	calendar weekday
+field	ScheduleClubFlags	unk_25	award_count	HYPOTHESIS: 2-bit counter; the only writers in the matched code are MASTER (+1 on club 6, 3 gives its final scene), the queue builder (+1 on club 11 when the player has no club) and DATE (club 11 set to 3); ETC and ENDING need 3
+field	ScheduleClubFlags	b30	mastered	HYPOTHESIS: set by MASTER when the player's club secret technique is mastered; ETC needs it with award_count 3 to offer the club dream
+field	ScheduleFlags	b17	exam_poor_result	set by the exam results (3+ red marks or lower half); no reader found in the matched code
+field	GsF6Bits	b0	remedial_week	same bit as PlayerFlagBits.remedial_week
+field	GsF6Bits	b1	exam_poor_result	same bit as PlayerFlagBits.exam_poor_result
+field	GsBits0F6	f0	remedial_week	duplicate of PlayerFlagsHiBits.b0 in 80146400.c
+field	GsBits0F6	f1	exam_poor_result	duplicate of PlayerFlagsHiBits.b1 in 80146400.c
+type	ETC	EtcWork40	ExamWork	view of main's scratch area scene_work (0x801230D0) as the exam keeps its scores
+type	ETC	EtcStateFlagsView	ExamQueueView	GameState view for the queue read two records back
+type	ETC	EtcConfig8	AlbumLogEntry	same 8-byte layout as EventLogEntry (merge candidate), seen through system_data +0x58 and event_log
+type	ETC	EtcSVec	AlbumRotation	local SVECTOR copy in album_model.c (merge candidate with SVECTOR)
+type	ETC	EtcPolyF4	PolyF4View	local POLY_F4 layout copy in album_playback.c (merge candidate with POLY_F4)
+type	ETC	GsBits0F6	ExamPlayerFlagBits	local bit view of player_flags_hi byte 0 (merge candidate with PlayerFlagsHiBits)
+func	ETC	func_80132000	etc_stub_wait_stage_next	stub scenes only: main_stage_next when pad_pressed has bit 0x40 or (frame_count and 0x2FF) is 0x2FF
+func	ETC	func_80132048	etc_stub_wait_mode_set	same wait, then main_state_set(arg) instead of the next stage
+func	ETC	func_80132098	confession_judge_stub_entry	never reached (no caller, no table entry): 4-stage stub, each stage only sets a window title; last stage goes to mode 0x63
+func	ETC	func_80132148	confession_judge_stub_stage_judge	stage 0 step switch 0 init, 1 wait
+func	ETC	func_80132198	confession_judge_stub_judge_init	clears actors 0x60-0x9F, resets text, sets title, hizuke_init, k_disp_start
+func	ETC	func_80132204	confession_judge_stub_stage_butler	stage 1 step switch
+func	ETC	func_80132254	confession_judge_stub_butler_init	window title only
+func	ETC	func_80132290	confession_judge_stub_stage_message	stage 2 step switch
+func	ETC	func_801322E0	confession_judge_stub_message_init	stops BGM, sets a CD clip request, sound 0x300, window title
+func	ETC	func_80132344	confession_judge_stub_stage_letter	stage 3 step switch; the wait ends with main_state_set(0x63)
+func	ETC	func_80132394	confession_judge_stub_letter_init	window title only
+func	ETC	func_801323D0	confession_scene_stub_entry	never reached: 4-stage stub (data load, silhouette, bust-up scroll, scene), last wait ends with main_state_set(0xC1), a mode with no handler
+func	ETC	func_80132460	confession_scene_stub_stage_data_load	stage 0 step switch
+func	ETC	func_801324B0	confession_scene_stub_data_load_init	loads a sound bank, then clears actors and sets the title
+func	ETC	func_80132558	confession_scene_stub_stage_silhouette	stage 1 step switch
+func	ETC	func_801325A8	confession_scene_stub_silhouette_init	window title only
+func	ETC	func_801325E4	confession_scene_stub_stage_bustup_scroll	stage 2 step switch
+func	ETC	func_80132634	confession_scene_stub_bustup_scroll_init	window title only
+func	ETC	func_80132670	confession_scene_stub_stage_scene	stage 3 step switch
+func	ETC	func_801326C0	confession_scene_stub_scene_init	window title only
+func	ETC	func_801326FC	epilogue_stub_entry	never reached: 2-stage stub (init, epilogue), last wait ends with main_state_set(0xC2)
+func	ETC	func_8013275C	epilogue_stub_stage_prepare	stage 0 step switch
+func	ETC	func_801327AC	epilogue_stub_prepare_init	sound 0x200, window title
+func	ETC	func_801327F0	epilogue_stub_stage_show	stage 1 step switch
+func	ETC	func_80132840	epilogue_stub_show_init	window title only
+func	ETC	func_80132880	album_rgb555_split	splits a 15-bit colour into masked r, g, b channels
+func	ETC	func_801328A4	album_vram_blur	blurs the 274x160 VRAM area at (343,275): each pixel mixes arg0 percent of itself with arg1 percent of the mean of its four neighbours
+func	ETC	func_80132C3C	album_fade_quads_draw	four semi-transparent textured quads shaded by the counter album_fade_shade (step 2, wraps at 0x81 and bumps substep)
+func	ETC	func_80132FB0	album_event_background_load	starts the CD read of the background for an event record (category, scene, girl, season); a few special backgrounds are swapped by year or season; sets album_event_has_background
+func	ETC	func_801332F0	album_anim_36_tables_set	writes the pointers of the animation pack for category 2 scene 0x36 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801333A0	album_anim_37_tables_set	writes the pointers of the animation pack for category 2 scene 0x37 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133450	album_anim_38_tables_set	writes the pointers of the animation pack for category 2 scene 0x38 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133500	album_anim_39_tables_set	writes the pointers of the animation pack for category 2 scene 0x39 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801335B0	album_anim_3a_tables_set	writes the pointers of the animation pack for category 2 scene 0x3A into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133660	album_anim_3b_tables_set	writes the pointers of the animation pack for category 2 scene 0x3B into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133710	album_anim_00_tables_set	writes the pointers of the animation pack for category 2 scene 0x00 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801337DC	album_anim_02_tables_set	writes the pointers of the animation pack for category 2 scene 0x02 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013388C	album_anim_03_tables_set	writes the pointers of the animation pack for category 2 scene 0x03 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013393C	album_anim_04_tables_set	writes the pointers of the animation pack for category 2 scene 0x04 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801339EC	album_anim_05_tables_set	writes the pointers of the animation pack for category 2 scene 0x05 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133A5C	album_anim_06_tables_set	writes the pointers of the animation pack for category 2 scene 0x06 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133B2C	album_anim_07_tables_set	writes the pointers of the animation pack for category 2 scene 0x07 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133BDC	album_anim_0e_tables_set	writes the pointers of the animation pack for category 2 scene 0x0E into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133C8C	album_anim_0f_tables_set	writes the pointers of the animation pack for category 2 scene 0x0F into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133CFC	album_anim_10_tables_set	writes the pointers of the animation pack for category 2 scene 0x10 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133DAC	album_anim_11_tables_set	writes the pointers of the animation pack for category 2 scene 0x11 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133E7C	album_anim_12_tables_set	writes the pointers of the animation pack for category 2 scene 0x12 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133F2C	album_anim_13_tables_set	writes the pointers of the animation pack for category 2 scene 0x13 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133F7C	album_anim_50_tables_set	writes the pointers of the animation pack for category 2 scene 0x50 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80133FEC	album_anim_15_tables_set	writes the pointers of the animation pack for category 2 scene 0x15 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013409C	album_anim_16_tables_set	writes the pointers of the animation pack for category 2 scene 0x16 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013414C	album_anim_17_tables_set	writes the pointers of the animation pack for category 2 scene 0x17 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801341FC	album_anim_18_tables_set	writes the pointers of the animation pack for category 2 scene 0x18 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801342AC	album_anim_19_tables_set	writes the pointers of the animation pack for category 2 scene 0x19 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013435C	album_anim_1a_tables_set	writes the pointers of the animation pack for category 2 scene 0x1A into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013440C	album_anim_2e_tables_set	writes the pointers of the animation pack for category 2 scene 0x2E into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801344BC	album_anim_2f_tables_set	writes the pointers of the animation pack for category 2 scene 0x2F into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013456C	album_anim_30_tables_set	writes the pointers of the animation pack for category 2 scene 0x30 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013461C	album_anim_31_tables_set	writes the pointers of the animation pack for category 2 scene 0x31 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801346CC	album_anim_32_tables_set	writes the pointers of the animation pack for category 2 scene 0x32 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013477C	album_anim_34_tables_set	writes the pointers of the animation pack for category 2 scene 0x34 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_8013484C	album_special_anim_46_tables_set	writes the pointers of the animation pack for category 8 scene 0x46 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80134960	album_anim_08_tables_set	writes the pointers of the animation pack for category 2 scene 0x08 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80134A10	album_anim_09_tables_set	writes the pointers of the animation pack for category 2 scene 0x09 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80134AC0	album_anim_0a_tables_set	writes the pointers of the animation pack for category 2 scene 0x0A into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80134B70	album_anim_0b_tables_set	writes the pointers of the animation pack for category 2 scene 0x0B into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80134C20	album_anim_0c_tables_set	writes the pointers of the animation pack for category 2 scene 0x0C into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers) (shared with album_anim_0d_show)
+func	ETC	func_80134CD0	album_special_anim_0e_tables_set	writes the pointers of the animation pack for category 8 scene 0x0E into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80134DF0	album_anim_21_tables_set	writes the pointers of the animation pack for category 2 scene 0x21 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80134EA0	album_anim_23_tables_set	writes the pointers of the animation pack for category 2 scene 0x23 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80134F50	album_anim_24_tables_set	writes the pointers of the animation pack for category 2 scene 0x24 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135000	album_anim_25_tables_set	writes the pointers of the animation pack for category 2 scene 0x25 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801350B0	album_anim_26_tables_set	writes the pointers of the animation pack for category 2 scene 0x26 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135120	album_anim_27_tables_set	writes the pointers of the animation pack for category 2 scene 0x27 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801351D0	album_anim_28_tables_set	writes the pointers of the animation pack for category 2 scene 0x28 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135280	album_anim_29_tables_set	writes the pointers of the animation pack for category 2 scene 0x29 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135330	album_anim_2a_tables_set	writes the pointers of the animation pack for category 2 scene 0x2A into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801353E0	album_anim_2b_tables_set	writes the pointers of the animation pack for category 2 scene 0x2B into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135490	album_anim_2c_tables_set	writes the pointers of the animation pack for category 2 scene 0x2C into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers) (shared with album_anim_2d_show)
+func	ETC	func_80135540	album_anim_3c_tables_set	writes the pointers of the animation pack for category 2 scene 0x3C into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135610	album_anim_3e_tables_set	writes the pointers of the animation pack for category 2 scene 0x3E into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801356C0	album_anim_3f_tables_set	writes the pointers of the animation pack for category 2 scene 0x3F into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135770	album_anim_40_tables_set	writes the pointers of the animation pack for category 2 scene 0x40 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135820	album_anim_41_tables_set	writes the pointers of the animation pack for category 2 scene 0x41 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801358D0	album_anim_42_tables_set	writes the pointers of the animation pack for category 2 scene 0x42 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135980	album_anim_1b_tables_set	writes the pointers of the animation pack for category 2 scene 0x1B into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135A30	album_anim_1c_tables_set	writes the pointers of the animation pack for category 2 scene 0x1C into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135AE0	album_anim_1d_tables_set	writes the pointers of the animation pack for category 2 scene 0x1D into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135B90	album_anim_1e_tables_set	writes the pointers of the animation pack for category 2 scene 0x1E into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135C40	album_anim_1f_tables_set	writes the pointers of the animation pack for category 2 scene 0x1F into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135CF0	album_anim_20_tables_set	writes the pointers of the animation pack for category 2 scene 0x20 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135DA0	album_anim_43_tables_set	writes the pointers of the animation pack for category 2 scene 0x43 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135E50	album_anim_45_tables_set	writes the pointers of the animation pack for category 2 scene 0x45 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135F00	album_anim_46_tables_set	writes the pointers of the animation pack for category 2 scene 0x46 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80135FB0	album_anim_47_tables_set	writes the pointers of the animation pack for category 2 scene 0x47 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80136060	album_anim_48_tables_set	writes the pointers of the animation pack for category 2 scene 0x48 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_80136110	album_anim_49_tables_set	writes the pointers of the animation pack for category 2 scene 0x49 into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801361C0	album_anim_unused_a_tables_set	no caller: writes a pointer block for an animation pack that no scene uses
+func	ETC	func_80136230	album_anim_4d_tables_set	writes the pointers of the animation pack for category 2 scene 0x4D into its label block (tpage table, frame table, sequence table, frame count, palette, six image buffers)
+func	ETC	func_801362E0	album_anim_unused_b_tables_set	no caller: writes a pointer block for an animation pack that no scene uses
+func	ETC	func_80136394	album_anim_unused_c_tables_set	no caller: writes a pointer block for an animation pack that no scene uses
+func	ETC	func_80136448	album_anim_show_dispatch	when the record category is 2, switches on the scene id (70 cases) to the per-scene show function
+func	ETC	func_80136948	album_anim_images_setup	passes six buffer pointers to bg_slot_setup for the animation images (0x1F1, x -0xA0, y -0x65)
+func	ETC	func_801369D4	album_anim_00_show	category 2 scene 0x00: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80136AC8	album_anim_02_show	category 2 scene 0x02: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80136BBC	album_anim_03_show	category 2 scene 0x03: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80136CB0	album_anim_04_show	category 2 scene 0x04: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80136DA4	album_anim_05_show	category 2 scene 0x05: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80136E30	album_anim_06_show	category 2 scene 0x06: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80136F4C	album_anim_07_show	category 2 scene 0x07: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137068	album_anim_08_show	category 2 scene 0x08: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013715C	album_anim_09_show	category 2 scene 0x09: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137250	album_anim_0a_show	category 2 scene 0x0A: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137344	album_anim_0b_show	category 2 scene 0x0B: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137438	album_anim_0c_show	category 2 scene 0x0C: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013752C	album_anim_0d_show	category 2 scene 0x0D: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137620	album_anim_0e_show	category 2 scene 0x0E: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_801376AC	album_anim_0f_show	category 2 scene 0x0F: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137738	album_anim_10_show	category 2 scene 0x10: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013782C	album_anim_11_show	category 2 scene 0x11: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137920	album_anim_12_show	category 2 scene 0x12: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137A14	album_anim_13_show	category 2 scene 0x13: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137B88	album_anim_15_show	category 2 scene 0x15: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137C7C	album_anim_16_show	category 2 scene 0x16: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137DC4	album_anim_17_show	category 2 scene 0x17: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137EC4	album_anim_18_show	category 2 scene 0x18: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80137FB8	album_anim_19_show	category 2 scene 0x19: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_801380AC	album_anim_1a_show	category 2 scene 0x1A: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138268	album_anim_1b_show	category 2 scene 0x1B: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013835C	album_anim_1c_show	category 2 scene 0x1C: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138450	album_anim_1d_show	category 2 scene 0x1D: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138544	album_anim_1e_show	category 2 scene 0x1E: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138638	album_anim_1f_show	category 2 scene 0x1F: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013872C	album_anim_20_show	category 2 scene 0x20: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138974	album_anim_21_show	category 2 scene 0x21: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138A68	album_anim_23_show	category 2 scene 0x23: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138B5C	album_anim_24_show	category 2 scene 0x24: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138C78	album_anim_25_show	category 2 scene 0x25: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138D6C	album_anim_26_show	category 2 scene 0x26: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138DF8	album_anim_27_show	category 2 scene 0x27: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80138F14	album_anim_28_show	category 2 scene 0x28: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80139008	album_anim_29_show	category 2 scene 0x29: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_801390FC	album_anim_2a_show	category 2 scene 0x2A: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_801391F0	album_anim_2b_show	category 2 scene 0x2B: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_801392E4	album_anim_2c_show	category 2 scene 0x2C: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_801393D8	album_anim_2d_show	category 2 scene 0x2D: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_801394F4	album_anim_2e_show	category 2 scene 0x2E: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_801395E8	album_anim_2f_show	category 2 scene 0x2F: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80139748	album_anim_30_show	category 2 scene 0x30: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013983C	album_anim_31_show	category 2 scene 0x31: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80139930	album_anim_32_show	category 2 scene 0x32: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80139A24	album_anim_34_show	category 2 scene 0x34: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80139B40	album_anim_36_show	category 2 scene 0x36: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80139C34	album_anim_37_show	category 2 scene 0x37: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80139D28	album_anim_38_show	category 2 scene 0x38: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80139E1C	album_anim_39_show	category 2 scene 0x39: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_80139F10	album_anim_3a_show	category 2 scene 0x3A: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A004	album_anim_3b_show	category 2 scene 0x3B: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A120	album_anim_3c_show	category 2 scene 0x3C: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A214	album_anim_3e_show	category 2 scene 0x3E: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A308	album_anim_3f_show	category 2 scene 0x3F: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A3FC	album_anim_40_show	category 2 scene 0x40: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A4F0	album_anim_41_show	category 2 scene 0x41: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A5E4	album_anim_42_show	category 2 scene 0x42: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A700	album_anim_43_show	category 2 scene 0x43: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A7F4	album_anim_45_show	category 2 scene 0x45: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A8E8	album_anim_46_show	category 2 scene 0x46: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013A9DC	album_anim_47_show	category 2 scene 0x47: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013AAD0	album_anim_48_show	category 2 scene 0x48: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013ABC4	album_anim_49_show	category 2 scene 0x49: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013ACB8	album_anim_4b_show	category 2 scene 0x4B: sets the animation tables (none), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013AD3C	album_anim_4d_show	category 2 scene 0x4D: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013AE58	album_anim_50_show	category 2 scene 0x50: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013AEE4	album_special_anim_0e_show	category 8 scene 0x0E: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013B078	album_special_anim_46_show	category 8 scene 0x46: sets the animation tables (by its tables_set function), loads the palette, binds six image buffers and starts the actors with event_anim_show
+func	ETC	func_8013B1F0	album_event_picture_select	given category, scene, girl and season picks the portrait resource of an event record (clears album_event_is_portrait first; categories that only play animations start nothing)
+func	ETC	func_8013B98C	album_portrait_start_a	table album_portrait_lba_a by girl; one entry swaps by year (0x5F, 0x60, 0x61)
+func	ETC	func_8013BA3C	album_portrait_start_b	table album_portrait_lba_b by girl
+func	ETC	func_8013BA80	album_portrait_start_c	table album_portrait_lba_c by girl
+func	ETC	func_8013BAC4	album_portrait_start_d	table album_portrait_lba_d by girl
+func	ETC	func_8013BB08	album_portrait_start_e	2-D table album_portrait_lba_e by girl and ordinal
+func	ETC	func_8013BB64	album_portrait_start_f	table album_portrait_lba_f by girl
+func	ETC	func_8013BBA8	album_portrait_start_g	table album_portrait_lba_g by girl
+func	ETC	func_8013BBEC	album_portrait_start_h	table album_portrait_lba_h by girl
+func	ETC	func_8013BC30	album_portrait_start_i	table album_portrait_lba_i by girl
+func	ETC	func_8013BC74	album_portrait_start_j	table album_portrait_lba_j by girl
+func	ETC	func_8013BCB8	album_portrait_start_k	table album_portrait_lba_k by girl
+func	ETC	func_8013BCFC	album_portrait_start_l	table album_portrait_lba_l by girl
+func	ETC	func_8013BD40	album_portrait_start_school_wear	girl table by month: months 6-9 use album_portrait_lba_summer_wear, other months album_portrait_lba_winter_wear
+func	ETC	func_8013BDEC	album_portrait_start_seasonal	four 15-entry tables by season (spring, summer, autumn, winter) indexed by girl
+func	ETC	func_8013BEF0	album_portrait_tables_init	sets the portrait tpage, frame and sequence table pointers into the loaded portrait pack (0x8019DCFC..)
+func	ETC	func_8013BF34	album_stage_playback	stage 1 step switch: 0 loads the first event of a page, 1-4 bring photos 1-4 into the cells of the 2x2 page (top-left, top-right, bottom-left, bottom-right), 5 voice clip, 6 end check (to stage 2 when no events remain), 7 UI reload, then the next page (step 0)
+func	ETC	func_8013BFFC	album_playback_page_start	stage 1 step 0 (5 substeps): skips to the first valid event of the page, requests its resources, shows it and draws the date counters
+func	ETC	func_8013C330	album_playback_photo	steps 1-3 (arg0 = loader mode 2-4, arg1 = cell 0-2): the photo of the loaded event is shown big, waits for circle only in secret modes 2 and 3 (modes 0 and 1 run on by themselves after the voice state), then zooms into its cell for 0x28 frames while the loader fetches the next event
+func	ETC	func_8013C700	album_playback_photo_last	step 4: like album_playback_photo with loader mode 5 and cell 3 (bottom-right); ends by resetting the model angle to 0x800
+func	ETC	func_8013C8EC	album_playback_voice	step 5: picks a random voice clip of the girl (not the previous one, a few excluded per girl), starts it and waits for it to finish; skipped for girls 0xB and 0xC
+func	ETC	func_8013CC74	album_playback_end_check	step 6: main_stage_next (to the finale) when the current record has no date or the event index is 0xFF, else main_step_next
+func	ETC	func_8013CCE4	album_playback_ui_restore	step 7: reloads the UI picture set (0x69 sectors from LBA 0xB389) if a special animation replaced it, waits for confirm, rebuilds the picture strips, spins the model up to angle 0xC00, then main_step_set(0)
+func	ETC	func_8013CF2C	album_stage_finale	stage 2: girl-specific closing voice sequence, then fade to white over 0x12D frames, resets album state and jumps to stage 0xFF
+func	ETC	func_8013D264	album_vram_copy_to_backbuffer	copies the 320x240 area of the current buffer to (0x140,0x100)
+func	ETC	func_8013D2C0	album_vram_copy_other_buffer	copies the other buffer's area to the current one
+func	ETC	func_8013D32C	album_background_quads_draw	two textured quads covering the screen from the saved background
+func	ETC	func_8013D570	album_photo_zoom_draw	two quads of the current photo; arg0 (0-0x50) shrinks and moves them from the big view into cell arg1 (0 top-left, 1 top-right, 2 bottom-left, 3 bottom-right)
+func	ETC	func_8013DEA0	album_picture_sprites_draw	two sprites (192x160 and 128x160) of the event picture
+func	ETC	func_8013E094	album_portrait_part_positions_set	sets the y offsets of the portrait parts in the sprite quad table from the portrait frame data
+func	ETC	func_8013E1DC	album_fade_white_draw	full-screen additive quad whose brightness is the argument (0-255)
+func	ETC	func_8013E364	album_date_counters_draw	draws year, month and day digits with their backing boxes (four layouts by digit counts)
+func	ETC	func_8013E524	album_counter_backing_draw	black backing quad (x arg0, width arg1) behind the date digits
+func	ETC	func_8013E6AC	album_event_record_load	loads the current event record into the album_event_* variables, from event_log (live) or from the system-file copy; derives the season from the month
+func	ETC	func_8013E89C	album_event_advance	state machine -1/0/1/2: loads the record, requests resources, waits for the CD, picks the next event index
+func	ETC	func_8013EAC0	album_event_find_valid	advances the event index until a record has a date; 0 if the end is reached
+func	ETC	func_8013EB90	album_event_resources_request	portrait selection plus CD read of animation packs (counts and LBAs from the pack tables)
+func	ETC	func_8013ECDC	album_event_resources_show	resets texture slots, then shows the portrait or runs the animation dispatch
+func	ETC	func_8013ED38	album_bustup_tables_init	sets the portrait file pointers for bustup_build (0x80180084..)
+func	ETC	func_8013ED8C	album_portrait_show	clears quads, builds the portrait with the girl's mood, sets part positions
+func	ETC	func_8013EDF8	album_portrait_face_update	bustup_face_update while a portrait is on screen
+func	ETC	func_8013EE28	album_event_hide_current	hides the current portrait or animation
+func	ETC	func_8013EE7C	album_anim_hide	clears the animation flag and the animation actors
+func	ETC	func_8013EEAC	album_portrait_hide	hides the portrait actors and quads
+func	ETC	func_8013EEFC	album_event_skip_other_girls	used in secret modes 0 and 2: moves the event index forward past records of other girls than current_girl
+func	ETC	func_8013F054	album_special_girl_voice	for girls 0xC and 0xB picks a voice clip from the category and scene of the previous matching record
+func	ETC	func_8013F320	album_voice_play	three-substep voice player: start clip arg0 of the girl's clip table, wait for play, wait for end
+func	ETC	func_8013F3F8	album_event_is_special_portrait	1 for category 0x15 scenes 6-10 of six girls with mood 5
+func	ETC	func_8013F498	album_special_portrait_setup	builds the special portrait actor and picks a pose index by girl and month
+func	ETC	func_8013F77C	album_debug_fill_miharu	never called: fills girl_cleared with 1 (girl 11 with 5), sets current_girl to 11 and writes five event records for girl 11
+func	ETC	func_8013F980	album_model_init	loads the model table from the CD buffer at 0x801FA800, links 16 objects and sets the start position and angle
+func	ETC	func_8013FA7C	album_model_matrix_update	builds the model matrix from rotation angle album_model_angle, scale 1.0 and the position
+func	ETC	func_8013FC08	album_clear_buffer_area	moves a blank 320x240 area into the current draw buffer
+func	ETC	func_8013FC64	album_number_sprite_draw	draws a signed number as 8x8 digit sprites (value, x, y, palette index)
+func	ETC	func_8013FF80	album_stage_load	stage 0: runs album_load_step on step 0
+func	ETC	func_8013FFAC	album_load_step	stage 0 step 0 (substeps 0-14): clears state, loads banks, reads the model and picture packs, builds the portrait strips, plays the intro voice, fades in, waits for confirm, then rotates the model and goes to stage 1
+func	ETC	func_801407F0	album_entry	ETC entry for mode 0x91 (emu: an ALBUM title card, then pages of four dated photos); stage switch 0 load, 1 playback, 2 finale, 0xFF album save; then message title update and the start-button skip
+func	ETC	func_801408F0	album_tpage_slots_reset	resets texture slots 0-57 to 0 (and -1 for the palette slots)
+func	ETC	func_80140AE4	album_secret_mode_update	HYPOTHESIS: keeps album_secret_mode (0-3): bit 0 set by pad 2 select or start held in the intro when all 13 girls are cleared (show every girl's records), bit 1 set by the secret-code latch (wait for circle per photo); also calls three checks whose results are unused
+func	ETC	func_80140BC4	album_cleared_level	2 if all 13 girls cleared at least twice, 1 if at least once, 0 else (only when options_dirty is 0); result unused by the caller
+func	ETC	func_80140DC8	album_event_flag_count_check	1 if 30 or more of event_flags[0..82] are set; result unused by the caller
+func	ETC	func_80140E80	album_all_met_check	1 when 13 are met (met bit of girls 0-12 plus girl 11's story stage); result unused by the caller
+func	ETC	func_80140F50	etc_card_confirm_label	returns the confirm button label for the prompts: pad gives the circle label, mouse gives right or left by confirm_button
+func	ETC	func_80140F94	etc_card_cancel_label	returns the cancel button label: pad gives the cross label, mouse gives the opposite side
+func	ETC	func_80140FD8	album_stage_save	stage 0xFF step switch: 0 begin, 1 background, 2 ask, 3 answer, 4 card check, 5 load system file, 6 write, 0xA0 unformatted card, 0xF0 no system file, 0xFD broken system file, 0xFE card full, 0xFF no card; then the fade panel
+func	ETC	func_80141154	album_save_step_card_unformatted	step 0xA0: card is not formatted, asks to format it; yes goes to step 4 (or 2 when the format call fails), no asks for another card
+func	ETC	func_801413FC	album_save_step_begin	step 0: when options_dirty is nonzero leaves to the title (mode 0x12); else clears text, sets brightness 0 and main_step_next
+func	ETC	func_80141468	album_save_step_background	step 1: reads a 9-sector background (LBA 0xA1A2), copies it into VRAM at (0x2C0,0x20), fades the brightness in over 0x80 frames
+func	ETC	func_801415A4	album_save_step_ask	step 2: asks whether to save the album mode data to the system file; yes/no labels from the card helpers; waits 0x41 frames
+func	ETC	func_80141700	album_save_step_answer	step 3: confirm goes on, cancel stops the sound bank and goes to mode 0xC4
+func	ETC	func_8014175C	album_save_step_card_check	step 4: starts a card check, branches on card_result (1 ok, 0xF1 unformatted, 0xFF none, timeout 0x200 frames), loads the directory, goes to 0xF0 when the system file is missing
+func	ETC	func_80141980	album_save_step_system_file_load	step 5: loads the system file from the card; a read failure goes to step 0xFD
+func	ETC	func_80141ABC	album_event_log_pack	clears the 0x800-byte album area of system_data and copies in the event_log records of current_girl that have a date; stores the count and the saved flag
+func	ETC	func_80141BE8	album_save_step_write	step 6: packs the event log, writes the system file, plays the girl's closing voice clip (second table when the girl's ending counter is odd), fades out, mode 0xC4 with current_girl + 0x10
+func	ETC	func_80141E10	album_save_step_no_system_file	step 0xF0: tells that there is no system file, offers to create it; create runs the file creation, writes it, then back to step 5
+func	ETC	func_801421AC	album_save_step_no_card	step 0xFF: tells that no card was recognised, offers to save anyway; yes goes to step 4, no stops the sound and goes to mode 0xC4
+func	ETC	func_80142390	album_save_step_card_full	step 0xFE: no free blocks, same prompt and exits as step 0xFF
+func	ETC	func_80142574	album_save_step_system_file_broken	step 0xFD: system file broken, asks to rebuild it; then recreate, write and back to step 5
+func	ETC	func_801428EC	album_save_fade_panel_draw	draws the fading text panel (gradient rect with the brightness counter as colour)
+func	ETC	func_80142974	staff_roll_entry	ETC entry for mode 0xC2 (emu: scrolling staff names in two columns over the heroine portraits); stage 0 load, 1 run; while CD audio plays, pad 2 bit 0x200000 jumps to mode 0xC4 and 0x400000 to mode 0x91, both to mode 0x11 when options_dirty is nonzero
+func	ETC	func_80142A4C	staff_roll_pictures_init	initialises two 128x128 picture quads at x -0x60 and 0x20 for the picture variant
+func	ETC	func_80142AE8	staff_roll_pictures_fade	fades the two picture quads in (staff_roll_fade_dir 1) or out (-1)
+func	ETC	func_80142B80	staff_roll_load_step	stage 0 step 0 (22 substeps): picks the variant (3D variant when exactly one of: all 13 girls cleared, triangle held), reads the credit art sets (13-sector files, 15 loads) and palettes, then main_step_next
+func	ETC	func_80143240	etc_all_girls_cleared	1 when each of girls 0-12 has a nonzero ending counter in girl_cleared or in system_data.flags; used by the staff roll, the last photo and the album secret mode
+func	ETC	func_80143334	staff_roll_start_variant	stage 0 step 1: 3D variant (models, 2D off) or picture variant (music, pictures, step 0xFF); then main_stage_next
+func	ETC	func_801433E4	staff_roll_model_matrix_update	builds the model matrix from rotation, scale 1.0 and the position variables
+func	ETC	func_8014354C	staff_roll_models_init	loads the model table at 0x801F9004, links 16 objects, resets position (-0x60,0x20,-0x300) and rotation
+func	ETC	func_80143644	staff_roll_stage_load	stage 0 step switch 0 load, 1 start variant; then picture fade update
+func	ETC	func_8014369C	staff_roll_music_start	stage 1 step 0: stops BGM, requests the CD clip, sound 0x300, main_step_next
+func	ETC	func_801436E4	staff_roll_girl_textures_load	binds the three texture slots 5-7 of the girl's model from the loaded art
+func	ETC	func_80143758	staff_roll_credit_lines_init	sets up the 7 scrolling credit-line actors from the credit table
+func	ETC	func_8014387C	staff_roll_credit_line_reset	re-initialises one credit-line actor with the next table entry
+func	ETC	func_80143968	staff_roll_credit_lines_update	moves the 7 lines up one pixel per frame and recycles the ones that left; stops after 0x11D entries
+func	ETC	func_80143A88	staff_roll_models_step	stage 1 step 1 (3D variant): 701-frame segments, one girl model per segment in staff_roll_girl_order, model path by sine/cosine, pad-driven debug controls, ends after 0x259 frames when the CD clip is done
+func	ETC	func_80143F24	staff_roll_models_leave	stage 1 step 2: fades the pictures, moves the model away, then mode 0x12 (title) when current_girl is 13 or more, else mode 0xC3
+func	ETC	func_80143FE0	staff_roll_stage_run	stage 1 step switch 0 music, 1 models, 2 leave, 0xFF pictures; then the model matrix update
+func	ETC	func_8014407C	staff_roll_pictures_place	places three picture quads with random y offsets (fixed positions for one girl value 0xE)
+func	ETC	func_801441DC	staff_roll_picture_brightness_set	sets the tint of picture quad arg0 to arg1 clamped to 0-0x80
+func	ETC	func_80144224	staff_roll_pictures_step	stage 1 step 0xFF (picture variant): 701-frame segments, picture quads fade in and out, ends after 0x259 frames when the CD clip is done
+func	ETC	func_80144540	clear_save_ask_init	stage 0 step 2: asks whether to save this play (emu: question with yes on circle and no on cross); waits 0x80 frames
+func	ETC	func_801446E4	clear_save_ask_answer	stage 0 step 3: confirm shows the checking text, starts a card check and goes to stage 1; cancel goes to stage 2 (finish)
+func	ETC	func_80144768	clear_save_finish	stage 2: counts the brightness down by 8 per frame, then mode 0x11
+func	ETC	func_801447B0	clear_save_card_check_step	stage 1 step 0: card check and directory load; ok goes on, unformatted goes to step 0xA0, none/timeout to 0xFF
+func	ETC	func_80144A38	clear_save_stage_prepare	stage 0 step switch 0 boot data, 1 HUD textures, 2 ask, 3 answer
+func	ETC	func_80144AC0	clear_save_slot_menu_init	stage 1 step 1: slot menu with 14 slots (clone of the main save screen), first used slot or a chosen one
+func	ETC	func_80144CC4	clear_save_new_slot_step	stage 1 step 0xC0: creates the file for a new slot, then back to the slot menu
+func	ETC	func_80144DF0	clear_save_slot_select	stage 1 step 2: menu over the slots; circle on an empty slot tests that a file can be created, on the shown slot starts the write, on another slot selects it
+func	ETC	func_80144F74	clear_save_write_step	stage 1 step 3: adds 1 (cap 99) to the ending counter of current_girl in game state and system data, writes the save slot, then the system file when the slot directory lives in system data, then stage 2
+func	ETC	func_801451D4	clear_save_no_card_step	stage 1 step 0xFF: tells that no card was recognised, waits for a button and retries the card check
+func	ETC	func_80145318	clear_save_card_full_step	stage 1 step 0xF0: no space on the card, offers another card and returns to the check
+func	ETC	func_801455B0	clear_save_card_unformatted_step	stage 1 step 0xA0: card not formatted, asks to format it; also creates the file and returns to the check
+func	ETC	func_80145960	clear_save_stage_run	stage 1 step switch 0 card check, 1 slot menu, 2 slot select, 3 write, 0xA0 unformatted, 0xC0 new slot, 0xF0 card full, 0xFF no card
+func	ETC	func_80145A40	clear_save_frame_draw	draws the screen frame once stage_timer is nonzero
+func	ETC	func_80145A6C	clear_save_entry	ETC entry for mode 0xC4; stage_timer + 1; stage switch 0 prepare, 1 run, 2 finish; then frame and fade panels
+func	ETC	func_80145AF8	clear_save_fade_panels_draw	draws the two fading panels (not during stage 0 steps 0-1)
+func	ETC	func_80145C00	last_photo_load_step	stage 0 step 0: picks the photo (per-girl, or the all-clear photo if the player holds start or this clear completes the 13-girl set on 1998-03-01), reads it, bg_slot_setup, music request
+func	ETC	func_80145F74	last_photo_stage_load	stage 0 step switch (step 0 only)
+func	ETC	func_80145FA0	last_photo_fade_in_step	stage 1 step 0: fade in by 0xFF - step_timer
+func	ETC	func_80145FF0	last_photo_music_step	stage 1 step 1: waits for the first clip to start and end, then requests the next clip and sound 0x300
+func	ETC	func_801460C4	last_photo_stage_show	stage 1: fade, ends on a confirm/cancel/start press or after 0x709 frames (main_stage_next)
+func	ETC	func_8014618C	last_photo_leave_choose	stage 2 step 0: clears actors and sprites, then step 3 when options_dirty is nonzero, step 1 when a confirm button was held, else step 2
+func	ETC	func_80146214	last_photo_leave_to_clear_save	mode 0xC4
+func	ETC	func_80146254	last_photo_leave_to_album	mode 0x91
+func	ETC	func_80146294	last_photo_leave_to_title	current_girl + 0x10, mode 0x12
+func	ETC	func_801462E8	last_photo_stage_leave	stage 2 step switch 0 choose, 1 clear save, 2 album, 3 title
+func	ETC	func_8014636C	last_photo_entry	ETC entry for mode 0xC3 (emu: a tilted snapshot of the girl with a copyright caption); stage_timer + 1; stage switch 0 load, 1 show, 2 leave; any other stage resets to the title
+func	ETC	func_80146400	exam_correction_bonus	developer label 'correction' (printed by the function): returns the table value for the exam round (year and month) when rand and 7 plus the value minus 8 is above 0, else 0; chance (value-1)/8 for 1-9, always for 9 or more
+func	ETC	func_801464D4	exam_event_log_bonus	HYPOTHESIS: category 0 scene 0xF is the library date spot, so this finds a study-type date this month (DATE sets spot 0xF in its library branch); behaviour: scans event_log for a record dated this year and month; mode 8 and a category-2 scene 0x3B record gives 9, mode 0xB with category 0xB scene 0xF gives 1, a category-0 scene-0xF record gives 1 for mode 0xF (any girl) or for the record's own girl
+func	ETC	func_801465F8	exam_entry	ETC entry for mode 0x35 (main_state_set table in func_80079070); stage switch 0 setup, 1 exam day, 2 end, then per-frame HUD calls and the digit sprites of the score panel
+func	ETC	func_80146714	exam_stage_day	stage 1: switch on weekday 0-5; the steps of one exam day (Monday to Friday subjects, Saturday results)
+func	ETC	func_801467C4	exam_setup_init_screen	stage 0 step 0: clears actors, hides icons, shows the window title, starts loading the exam sound bank pair on the first exam day (weekday 0 or the record two back is not an exam)
+func	ETC	func_801468FC	exam_setup_background_start	stage 0 step 1: waits for the sound bank (first day only) and starts BGM 0x205 (later days: only if none plays), starts the CD read of the classroom background (resource 0x3FA4) or shows it from the cache
+func	ETC	func_80146A38	exam_setup_background_wait	stage 0 step 2: waits for the background read, decodes it into VRAM, brightens, next step
+func	ETC	func_80146AC0	exam_setup_scores_reset	stage 0 step 3: on Monday zeroes the six grade slots and six score slots of exam_work (slot 5 of both is the red-mark count and the running total), then main_stage_next
+func	ETC	func_80146B40	exam_stage_setup	stage 0: step switch 0 init, 1 background start, 2 background wait, 3 scores reset
+func	ETC	func_80146BC4	exam_day_sd_pack_load	step 0 of every exam day: reads the 9-sector SD pack for the season (summer months 6-9 take pack 0, others pack 1) to 0x801E0000 and binds it with addr_init_else_sd
+func	ETC	func_80146C68	exam_player_face_set	sets actor 96 as the player's small face sprite; arg 1 = bad result frame set, 0 = good
+func	ETC	func_80146D4C	exam_score_day	computes the day's score and grade (formula in the spec), updates exam_work score, total and red-mark count, returns the grade 0-4; emu: weekday 1 July 1995 with science 40 printed main 40, bio 6, ret 38, correction 14 and day score 40
+func	ETC	func_8014716C	exam_day_start_language	step 1 of Monday: narration naming the subject, computes the score, sets the face (grade below 2 = bad), next step
+func	ETC	func_801471F4	exam_day_start_math	step 1 of Tuesday: same for the second subject
+func	ETC	func_8014727C	exam_day_start_science	step 1 of Wednesday: same for the third subject
+func	ETC	func_80147304	exam_day_start_social_studies	step 1 of Thursday: same for the fourth subject
+func	ETC	func_8014738C	exam_day_start_art	step 1 of Friday: same for the fifth subject
+func	ETC	func_80147414	exam_day_wait_anim	step 2: waits for the face animation (flag at actor 96), plays SE 0x601 or 0x602 by the face and moves on after 0x11 more frames
+func	ETC	func_801474FC	exam_day_comment	step 3: one narration line chosen by the day's grade (five lines, hopeless to perfect), waits for the text
+func	ETC	func_80147630	exam_day_end	step 4: main_stage_next
+func	ETC	func_80147650	exam_day_step_language	Monday step switch 0 sd pack, 1 start, 2 wait, 3 comment, 4 end
+func	ETC	func_801476DC	exam_day_step_math	Tuesday step switch (same shape)
+func	ETC	func_80147768	exam_day_step_science	Wednesday step switch (same shape)
+func	ETC	func_801477F4	exam_day_step_social_studies	Thursday step switch (same shape)
+func	ETC	func_80147880	exam_day_step_art	Friday step switch (same shape)
+func	ETC	func_8014790C	exam_results_show	Saturday step 0 (substeps 0-2): narration, reads the results art (13 sectors from LBA 0x9CA8), after 0x101 frames builds the 14 ranking rows from exam_ranking_order and calls exam_ranking_build
+func	ETC	func_80147D74	exam_results_react	Saturday step 1: draws the ranking, then picks the reaction by the number of failed subjects, the player's rank and position; sets remedial_week and marker 0x17 for tomorrow on 3+ red marks
+func	ETC	func_80147F0C	exam_results_wait	Saturday step 2: waits for circle after 0x101 frames or cross, then cursor shown and main_stage_next
+func	ETC	func_80147F7C	exam_results_step	Saturday step switch 0 show, 1 react, 2 wait
+func	ETC	func_80147FFC	exam_end_init	stage 2 step 0: panel init, clears upper actors, next step
+func	ETC	func_8014803C	exam_end_leave	stage 2 step 1: on Saturday switches back to the main sound bank (snd_bank_start 0, 0), then day_event_next(0)
+func	ETC	func_80148078	exam_stage_end	stage 2 step switch plus the parameter panel update
+func	ETC	func_801480D0	exam_ranking_build	builds the 14 rank values for the ranking: noise per girl, event_log bonuses, ties broken, sorted order, rank numbers by a cosine map (func_800A0140 is cosine: emu value 457 gave angle 1871, cos -3946, rank 8), then tokimeki gains for girls the player beat
+func	ETC	func_80148BC8	exam_ranking_numbers_draw	draws score and class-rank digits for each visible row; sets exam_player_in_lower_half
+func	ETC	func_80148E98	exam_panel_draw_big	draws the large results panel box (gradient rect plus dtd_on 5)
+func	ETC	func_80148EE8	exam_panel_draw_header	draws the small header box (gradient rect plus dtd_on 4)
+func	ETC	func_80148F34	exam_digit_palette_upload	uploads the 16-colour digit palette to VRAM (0x100,0x1F0)
+func	ETC	func_80148F7C	exam_number_draw	draws a number right to left as 8x12 digit sprites (three style rows); style 0-2, flag 1 picks the style by size and shifts the x position
+func	ETC	func_801492C0	career_choice_entry	ETC entry for mode 0x37; stage switch 0 prompt, 1 university exam, 2 job exam, 3 club dream, 4 leave
+func	ETC	func_80149394	career_choice_init_screen	stage 0 step 0: draw switches, window title, resets question counter, correct counter, tier and picks a random threshold start 0-11
+func	ETC	func_80149468	career_choice_mastered_club	first club 0-10 whose record has award count 3 or more and the mastered bit; -1 if none
+func	ETC	func_801495CC	career_choice_prompt	stage 0 step 1: exam-day line (university or job wording by the career wish), then a menu of 2 or 3 choices (planned exam, the other exam, club dream if a mastered club exists)
+func	ETC	func_8014979C	career_choice_menu	stage 0 step 2: menu 0; circle picks stage 1 or 2 (planned or switched) or stage 3
+func	ETC	func_8014988C	career_choice_panel_update	updates the parameter panel while the panel flag in the sprite state is set
+func	ETC	func_801498BC	career_choice_stage_prompt	stage 0 step switch 0 init, 1 prompt, 2 menu
+func	ETC	func_80149928	career_choice_university_tier_prompt	stage 1 step 0: sets career wish to university, asks which university tier, 3-choice menu
+func	ETC	func_80149A08	career_choice_tier_menu	menu over the three tiers, stores the tier 0-2 and goes to the next step
+func	ETC	func_80149AC4	career_choice_tier_confirm	step 2: player line for the chosen tier, then a line about the exam venue
+func	ETC	func_80149BC0	career_choice_exam_room_load	step 3: line, reads the exam-room background (resource 0x463B) or shows it from the cache, hides the parameter panel
+func	ETC	func_80149D3C	career_choice_exam_sound_load	step 4: loads the sound bank pair and starts BGM 0x205
+func	ETC	func_80149DD8	career_choice_exam_sd_load	step 5: reads the SD pack (9 sectors at LBA 0x7D81), binds it, sets up the face actor
+func	ETC	func_80149E68	career_choice_exam_face_init	builds actor 96 as the face sprite at (-0x50,-0x40)
+func	ETC	func_80149F48	career_choice_exam_question	one question: score from the parameter of the question's subject plus club bonus, health halving, tier bonus, compared with the threshold row; counts correct answers
+func	ETC	func_8014A180	career_choice_exam_question_wait	waits 0x3D frames, plays SE 0x501 (right) or 0x502 (wrong); loops until 10 questions
+func	ETC	func_8014A258	career_choice_exam_run	step 6 substeps: 0 question, 1 wait, 2 next
+func	ETC	func_8014A2C4	career_choice_exam_grade	maps the correct count to a grade 0-5 (10, 8-9, 7, 5-6, 3-4, 0-2)
+func	ETC	func_8014A32C	career_choice_interview_ok	1 when trivia plus looks exceeds 256
+func	ETC	func_8014A360	career_choice_result_code_set	writes the career result byte (player_flags_hi byte 1) from wish, tier and grade; emu: liberal arts, science, art 120 and trivia, looks 70 at tier 0 printed result 1
+func	ETC	func_8014A534	career_choice_result_talk	step 7: reaction line and BGM by grade, announcement-day line, sets the result code, goes to stage 4
+func	ETC	func_8014A6D4	career_choice_stage_university	stage 1 step switch 0-7 (tier prompt, tier menu, confirm, room, sound, sd, exam, result)
+func	ETC	func_8014A7A4	career_choice_job_tier_prompt	stage 2 step 0: sets career wish to job, asks which company tier, 3-choice menu
+func	ETC	func_8014A8A8	career_choice_job_tier_confirm	stage 2 step 2: player line for the chosen company tier, venue line
+func	ETC	func_8014A9A4	career_choice_stage_job	stage 2 step switch (same shape as the university stage with job wording)
+func	ETC	func_8014AA74	career_choice_club_dream	stage 3 step 0: line for the first mastered club's dream; result byte 0x40 if its exp is 0x19B or more, else 0xC0
+func	ETC	func_8014AB5C	career_choice_stage_club_dream	stage 3 step switch (step 0 only)
+func	ETC	func_8014AB88	career_choice_leave	stage 4: clears upper actors, debug print of the result byte, day_event_next(1)
+func	ETC	func_8014ABD0	career_guidance_entry	ETC entry for mode 0x36; stage switch 0 setup, 1 teacher talk, 2 choice, 3 ask about others, 4 university answer, 5 job answer, 6 leave; then cursor, date and window updates
+func	ETC	func_8014ACB4	career_guidance_init_screen	stage 0 step 0: draw switches, clears, window init, hides icons and parameter panel, starts reading the staff-room background (resource 0x4055)
+func	ETC	func_8014AD94	career_guidance_background_wait	stage 0 step 1: waits for the CD read and decodes the background
+func	ETC	func_8014ADDC	career_guidance_title_show	stage 0 step 2: sets the window title, shows the window and main_stage_next
+func	ETC	func_8014AE20	career_guidance_stage_setup	stage 0 step switch 0 init, 1 wait, 2 title
+func	ETC	func_8014AE8C	career_guidance_intro_line	stage 1 step 0: one narration line (start of the third school year) in three substeps
+func	ETC	func_8014AF28	career_guidance_assess_params	counts parameters 1-7 with value 101 or more (returns that count) and fills four deficit counters
+func	ETC	func_8014B0D0	career_guidance_closest_girl	from girl_scores closeness picks the met girl 1-10 with the highest closeness above 60; 0 if none
+func	ETC	func_8014B1B4	career_guidance_self_assessment	stage 1 step 1: three-way branch by assess count (all 7 high, none high, mixed), then deficit remarks, mention of the closest girl, closing remark
+func	ETC	func_8014B750	career_guidance_stage_talk	stage 1 step switch 0 intro, 1 self assessment
+func	ETC	func_8014B7A4	career_guidance_question	stage 2 step 0: teacher asks, player thinks, then a 3-choice menu (university, job, look at others)
+func	ETC	func_8014B8CC	career_guidance_choice_menu	stage 2 step 1: menu 0 over the 3 choices; circle jumps to stage 4, 5 or 3
+func	ETC	func_8014B978	career_guidance_stage_choice	stage 2 step switch 0 question, 1 menu
+func	ETC	func_8014B9CC	career_guidance_ask_others_prompt	stage 3 step 0: line, then girl menu for whose plan to look up
+func	ETC	func_8014BA8C	career_guidance_ask_others_select	stage 3 step 1: menu_check on the girl menu; circle shows career_guidance_girl_plan_line[cursor], next step
+func	ETC	func_8014BB34	career_guidance_ask_others_return	stage 3 step 2: waits for the text, then back to stage 2
+func	ETC	func_8014BB94	career_guidance_stage_ask_others	stage 3 step switch 0 prompt, 1 select, 2 return
+func	ETC	func_8014BC00	career_guidance_university_talk	stage 4 step 1: sets the career wish to university (player_flags_hi byte 1 = 0), wish line, teacher verdict chosen by career_guidance_university_verdict with matching voice clip, reaction line, then stage 6
+func	ETC	func_8014BDE0	career_guidance_university_verdict	0-3 from liberal arts, science and art values of 121 or more (count and excess sum), 0 best
+func	ETC	func_8014BE98	career_guidance_job_verdict	0-3 from the university verdict (6 - 2 x verdict) plus one each for trivia and looks of 61 or more
+func	ETC	func_8014BF2C	career_guidance_teacher_background	steps 0 of stages 4 and 5: reads the teacher background (resource 0x408D) or shows it from the cache
+func	ETC	func_8014C018	career_guidance_stage_university	stage 4 step switch 0 background, 1 talk
+func	ETC	func_8014C06C	career_guidance_job_talk	stage 5 step 1: sets the career wish to job (byte = 1), wish line, verdict via career_guidance_job_verdict, reaction, then stage 6
+func	ETC	func_8014C250	career_guidance_stage_job	stage 5 step switch 0 background, 1 talk
+func	ETC	func_8014C2A4	career_guidance_leave	stage 6: day_event_next(1)
+func	ETC	func_8014C2D0	etc_unused_skip_week_a	no caller: advances the calendar six days then day_event_next(1)
+func	ETC	func_8014C320	etc_unused_skip_week_b	no caller, identical to etc_unused_skip_week_a
+data	ETC	D_8014EB78	album_anim_00_ptrs	block of pointers for the pack of category 2 scene 0x00: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EBAC	album_anim_02_ptrs	block of pointers for the pack of category 2 scene 0x02: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EBD8	album_anim_03_ptrs	block of pointers for the pack of category 2 scene 0x03: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EC04	album_anim_04_ptrs	block of pointers for the pack of category 2 scene 0x04: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EC30	album_anim_05_ptrs	block of pointers for the pack of category 2 scene 0x05: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EC4C	album_anim_06_ptrs	block of pointers for the pack of category 2 scene 0x06: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EC80	album_anim_07_ptrs	block of pointers for the pack of category 2 scene 0x07: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F008	album_anim_08_ptrs	block of pointers for the pack of category 2 scene 0x08: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F034	album_anim_09_ptrs	block of pointers for the pack of category 2 scene 0x09: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F060	album_anim_0a_ptrs	block of pointers for the pack of category 2 scene 0x0A: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F08C	album_anim_0b_ptrs	block of pointers for the pack of category 2 scene 0x0B: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F0B8	album_anim_0c_ptrs	block of pointers for the pack of category 2 scene 0x0C: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014ECAC	album_anim_0e_ptrs	block of pointers for the pack of category 2 scene 0x0E: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014ECD8	album_anim_0f_ptrs	block of pointers for the pack of category 2 scene 0x0F: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014ECF4	album_anim_10_ptrs	block of pointers for the pack of category 2 scene 0x10: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014ED20	album_anim_11_ptrs	block of pointers for the pack of category 2 scene 0x11: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014ED54	album_anim_12_ptrs	block of pointers for the pack of category 2 scene 0x12: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014ED80	album_anim_13_ptrs	block of pointers for the pack of category 2 scene 0x13: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EDB0	album_anim_15_ptrs	block of pointers for the pack of category 2 scene 0x15: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EDDC	album_anim_16_ptrs	block of pointers for the pack of category 2 scene 0x16: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EE08	album_anim_17_ptrs	block of pointers for the pack of category 2 scene 0x17: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EE34	album_anim_18_ptrs	block of pointers for the pack of category 2 scene 0x18: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EE60	album_anim_19_ptrs	block of pointers for the pack of category 2 scene 0x19: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EE8C	album_anim_1a_ptrs	block of pointers for the pack of category 2 scene 0x1A: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F408	album_anim_1b_ptrs	block of pointers for the pack of category 2 scene 0x1B: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F434	album_anim_1c_ptrs	block of pointers for the pack of category 2 scene 0x1C: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F460	album_anim_1d_ptrs	block of pointers for the pack of category 2 scene 0x1D: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F48C	album_anim_1e_ptrs	block of pointers for the pack of category 2 scene 0x1E: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F4B8	album_anim_1f_ptrs	block of pointers for the pack of category 2 scene 0x1F: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F4E4	album_anim_20_ptrs	block of pointers for the pack of category 2 scene 0x20: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F12C	album_anim_21_ptrs	block of pointers for the pack of category 2 scene 0x21: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F158	album_anim_23_ptrs	block of pointers for the pack of category 2 scene 0x23: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F184	album_anim_24_ptrs	block of pointers for the pack of category 2 scene 0x24: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F1B0	album_anim_25_ptrs	block of pointers for the pack of category 2 scene 0x25: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F1DC	album_anim_26_ptrs	block of pointers for the pack of category 2 scene 0x26: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F1F8	album_anim_27_ptrs	block of pointers for the pack of category 2 scene 0x27: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F224	album_anim_28_ptrs	block of pointers for the pack of category 2 scene 0x28: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F250	album_anim_29_ptrs	block of pointers for the pack of category 2 scene 0x29: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F27C	album_anim_2a_ptrs	block of pointers for the pack of category 2 scene 0x2A: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F2A8	album_anim_2b_ptrs	block of pointers for the pack of category 2 scene 0x2B: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F2D4	album_anim_2c_ptrs	block of pointers for the pack of category 2 scene 0x2C: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EEB8	album_anim_2e_ptrs	block of pointers for the pack of category 2 scene 0x2E: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EEE4	album_anim_2f_ptrs	block of pointers for the pack of category 2 scene 0x2F: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EF10	album_anim_30_ptrs	block of pointers for the pack of category 2 scene 0x30: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EF3C	album_anim_31_ptrs	block of pointers for the pack of category 2 scene 0x31: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EF68	album_anim_32_ptrs	block of pointers for the pack of category 2 scene 0x32: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EF94	album_anim_34_ptrs	block of pointers for the pack of category 2 scene 0x34: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EA70	album_anim_36_ptrs	block of pointers for the pack of category 2 scene 0x36: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EA9C	album_anim_37_ptrs	block of pointers for the pack of category 2 scene 0x37: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EAC8	album_anim_38_ptrs	block of pointers for the pack of category 2 scene 0x38: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EAF4	album_anim_39_ptrs	block of pointers for the pack of category 2 scene 0x39: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EB20	album_anim_3a_ptrs	block of pointers for the pack of category 2 scene 0x3A: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EB4C	album_anim_3b_ptrs	block of pointers for the pack of category 2 scene 0x3B: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F300	album_anim_3c_ptrs	block of pointers for the pack of category 2 scene 0x3C: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F32C	album_anim_3e_ptrs	block of pointers for the pack of category 2 scene 0x3E: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F358	album_anim_3f_ptrs	block of pointers for the pack of category 2 scene 0x3F: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F384	album_anim_40_ptrs	block of pointers for the pack of category 2 scene 0x40: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F3B0	album_anim_41_ptrs	block of pointers for the pack of category 2 scene 0x41: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F3DC	album_anim_42_ptrs	block of pointers for the pack of category 2 scene 0x42: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F510	album_anim_43_ptrs	block of pointers for the pack of category 2 scene 0x43: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F53C	album_anim_45_ptrs	block of pointers for the pack of category 2 scene 0x45: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F568	album_anim_46_ptrs	block of pointers for the pack of category 2 scene 0x46: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F594	album_anim_47_ptrs	block of pointers for the pack of category 2 scene 0x47: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F5C0	album_anim_48_ptrs	block of pointers for the pack of category 2 scene 0x48: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F5EC	album_anim_49_ptrs	block of pointers for the pack of category 2 scene 0x49: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F634	album_anim_4d_ptrs	block of pointers for the pack of category 2 scene 0x4D: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014ED94	album_anim_50_ptrs	block of pointers for the pack of category 2 scene 0x50: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F0E4	album_special_anim_0e_ptrs	block of pointers for the pack of category 8 scene 0x0E: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014EFC0	album_special_anim_46_ptrs	block of pointers for the pack of category 8 scene 0x46: tpage table, frame table, sequence table, s16 frame count, palette, six image buffers
+data	ETC	D_8014F618	album_anim_unused_a_ptrs	pointer block of an unused animation pack
+data	ETC	D_8014F660	album_anim_unused_b_ptrs	pointer block of an unused animation pack
+data	ETC	D_8014F68C	album_anim_unused_c_ptrs	pointer block of an unused animation pack
+data	ETC	D_80150630	exam_row_x	s16[14] x position of each ranking row, row 0 is the best
+data	ETC	D_8015064C	exam_row_y	s16[14] y position of each ranking row
+data	ETC	D_80150668	exam_ranking_value	s16[14] exam value per person: 0-12 the girls (person 10 is shown with name entry 13), 13 the player; capped at 500, ties broken by decrementing
+data	ETC	D_8015067C	exam_value_friend	person 10 is drawn with the name of table entry 13, the friend (emu: his name appears in the results list); alias of exam_ranking_value[10] read by constant index
+data	ETC	D_8015067E	exam_value_miharu	alias of exam_ranking_value[11] read by constant index
+data	ETC	D_80150682	exam_value_player	alias of exam_ranking_value[13] read by constant index
+data	ETC	D_80150684	exam_ranking_order	s32[14] person id at each position, best first (selection sort of the values)
+data	ETC	D_801506BC	exam_ranking_rank	s32[14] displayed rank number per person from a cosine map of the value (emu: value 457 gives 8, 399 gives 40); 1 is best; HYPOTHESIS: a class rank among about 400 students
+data	ETC	D_801506E4	exam_rank_friend	alias of exam_ranking_rank[10], the friend's displayed rank
+data	ETC	D_801506E8	exam_rank_miharu	alias of exam_ranking_rank[11]
+data	ETC	D_801506F0	exam_rank_player	alias of exam_ranking_rank[13]: the player's displayed rank number
+data	ETC	D_801506F4	exam_player_in_lower_half	1 when the player's position in the ranking is 7 or more, set while the numbers are drawn
+data	ETC	D_801506F8	exam_correction_table	s32[8] correction value by exam round (year and month): 14, 12, 10, 8, 6, 4, 2, 0
+data	ETC	D_80150720	etc_sd_pack_lba_other	u32[2] LBAs of 9-sector SD packs (disc dir ETC_SD): 0x7D81 for the exam in months other than 6-9 and for the entrance exam (set 1), then 0x7D8A (set 2, not read by ETC); the exam reads the word before it, 0x7D78 (set 0, months 6-9), as index -1
+data	ETC	D_80150728	exam_base_score	u8[13] base value per girl; the exam value is (base + noise) x 5 + noise
+data	ETC	D_80150738	exam_score_spread	u8[13] noise bound per girl (rand mod spread, random sign, drawn twice)
+data	ETC	D_80150748	exam_digit_u	u8[10] u offset of digit n in the score digit sheet (8 pixels apart)
+data	ETC	D_80150754	exam_digit_palette	16-colour palette uploaded for the score digits
+data	ETC	D_801508BC	career_club_dream_name	ptr[12] by club: the dream career text of each club (12th is the no-club entry)
+data	ETC	D_80150A9C	career_choice_university_tier_line	ptr[3]: player's line for the chosen university tier
+data	ETC	D_80150B08	career_choice_job_tier_line	ptr[3]: player's line for the chosen company tier
+data	ETC	D_80150CCC	career_club_dream_line	ptr[12] by club: player's line when choosing the club dream
+data	ETC	D_80150E60	career_choice_result_line	ptr[6] reaction line by entrance exam grade 0-5
+data	ETC	D_80150E78	career_choice_announce_line	text fragment: the pass announcement date (March 1)
+data	ETC	D_80150E94	career_choice_question_no	entrance exam question counter 0-10
+data	ETC	D_80150E98	career_choice_tier	chosen tier 0-2 (first, second, third class)
+data	ETC	D_80150E9C	career_choice_correct_count	number of questions answered right
+data	ETC	D_80150EA0	career_choice_threshold_start	random start 0-11 into career_choice_threshold
+data	ETC	D_80150EA4	career_choice_threshold	s32[12] question difficulty: 66, 66, 114, 82, 98, 82, 66, 98, 98, 82, 114, 114
+data	ETC	D_80151358	career_guidance_girl_plan_line	ptr[16] indexed by the girl menu cursor: 0-9 girls 0-9, 10 and 13 the friend's line, 11 and 12 the rival's line, 14 girl 10's own line, 15 girl 11's line; the 12-item menu reaches entries 0-11 only
+data	ETC	D_801514A4	career_guidance_university_line	ptr[4]: teacher verdict lines for the university wish
+data	ETC	D_801514B4	career_guidance_university_voice_a	first word table of the voice clips for the university verdict lines
+data	ETC	D_801514D4	career_guidance_university_voice_b	second word table of the same clips
+data	ETC	D_801515E4	career_guidance_job_line	ptr[4]: teacher verdict lines for the job wish
+data	ETC	D_801515F4	career_guidance_job_voice_a	first word table of the voice clips for the job verdict lines
+data	ETC	D_80151614	career_guidance_job_voice_b	second word table of the same clips
+data	ETC	D_80151664	career_guidance_reaction_line	ptr[4]: the player's short reaction to the verdict
+data	ETC	D_8015186C	career_guidance_academic_deficit	count (0-3) of liberal arts, science and art values below 101
+data	ETC	D_80151870	career_guidance_body_mind_deficit	athletics below 101 adds 1, guts below 101 adds 2
+data	ETC	D_80151874	career_guidance_trivia_deficit	1 when trivia is below 101
+data	ETC	D_80151878	career_guidance_looks_deficit	1 when looks is below 101
+data	ETC	D_801500F0	etc_card_yes_text	yes label with the confirm button slot
+data	ETC	D_80150108	etc_button_label_circle	circle button label
+data	ETC	D_8015010C	etc_card_no_text	no label with the cancel button slot
+data	ETC	D_80150124	etc_button_label_cross	cross button label
+data	ETC	D_80150128	etc_button_label_right	right mouse button label
+data	ETC	D_8015012C	etc_button_label_left	left mouse button label
+data	ETC	D_8014DB80	album_fade_shade	shade counter of the fade quads, step 2, wraps at 0x81
+data	ETC	D_8014DB90	album_intro_clip	s32[13][2] per girl: the pair passed to xa_clip_request_set for the intro voice
+data	ETC	D_8014DBF8	album_finale_clip	s32[13][2] per girl: the pair for the closing voice
+data	ETC	D_8014E070	album_voice_clips	s32 *[13] per girl: table of voice clip pairs
+data	ETC	D_8014E0A4	album_voice_clip_count	u8[13] clips per girl: 21, 10, 9, 11, 14, 11, 8, 8, 8, 8, 10, 4, 8
+data	ETC	D_8014E0C0	album_event_has_background	1 when album_event_background_load started a read
+data	ETC	D_8014EA18	album_background_lba_table	s32 *[22] by event category: pointer to the array of background LBAs indexed by scene
+data	ETC	D_8014F6C0	album_anim_lba	s32[90] LBA of the animation pack by scene
+data	ETC	D_8014F828	album_anim_sectors	s32[90] sector count of the animation pack by scene
+data	ETC	D_8014F990	album_event_is_portrait	1 when the current event is shown as a portrait file, 0 when as an animation
+data	ETC	D_8014F994	album_portrait_lba_spring	s32[15] portrait LBA per girl, spring set
+data	ETC	D_8014F9D0	album_portrait_lba_summer	s32[15] portrait LBA per girl, summer set
+data	ETC	D_8014FA0C	album_portrait_lba_autumn	s32[15] portrait LBA per girl, autumn set
+data	ETC	D_8014FA48	album_portrait_lba_winter	s32[15] portrait LBA per girl, winter set
+data	ETC	D_8014FA84	album_portrait_lba_summer_wear	s32[15] portrait LBA per girl for months 6-9 (school wear)
+data	ETC	D_8014FAC0	album_portrait_lba_winter_wear	s32[15] portrait LBA per girl for the other months
+data	ETC	D_8014FAFC	album_portrait_lba_a	s32[15] portrait LBA by girl, table a (girls 12-14 are -1)
+data	ETC	D_8014FB1C	album_portrait_lba_a_girl8	element 8 of table a; album_portrait_start_a swaps it for a year-dependent LBA (years 95, 96, 97 and later)
+data	ETC	D_8014FB38	album_portrait_lba_b	s32[15] portrait LBA table b
+data	ETC	D_8014FB74	album_portrait_lba_c	s32[15] portrait LBA table c
+data	ETC	D_8014FBB0	album_portrait_lba_l	s32[15] portrait LBA table l
+data	ETC	D_8014FBEC	album_portrait_lba_j	s32[15] portrait LBA table j
+data	ETC	D_8014FC28	album_portrait_lba_k	s32[15] portrait LBA table k
+data	ETC	D_8014FC64	album_portrait_lba_i	s32[15] portrait LBA table i
+data	ETC	D_8014FCA0	album_portrait_lba_d	s32[15] portrait LBA table d
+data	ETC	D_8014FCDC	album_portrait_lba_f	s32[15] portrait LBA table f
+data	ETC	D_8014FD18	album_portrait_lba_g	s32[15] portrait LBA table g
+data	ETC	D_8014FD54	album_portrait_lba_h	s32[15] portrait LBA table h
+data	ETC	D_8014FD90	album_portrait_lba_e	s32[][11] portrait LBA table e indexed by girl and ordinal
+data	ETC	D_80150030	album_portrait_tpage_table	pointer into the portrait pack, fills actor.tpage_table
+data	ETC	D_80150034	album_portrait_frame_table	pointer into the portrait pack, fills actor.frame_table
+data	ETC	D_80150038	album_portrait_sequence_table	pointer into the portrait pack, fills actor.sequence_table
+data	ETC	D_8015003C	album_portrait_frame_count	s16 from the portrait pack header
+data	ETC	D_80150040	album_event_category	category of the current event (event_log record unk_02)
+data	ETC	D_80150044	album_event_scene	scene id of the current event (record unk_01)
+data	ETC	D_80150048	album_event_mood	the record's rank modulo 6, selects the portrait mood
+data	ETC	D_8015004C	album_event_girl	girl of the current event
+data	ETC	D_80150050	album_event_season	0 spring (months 3-5), 1 summer (6-8), 2 autumn (9-11), 3 winter (12, 1, 2)
+data	ETC	D_80150054	album_event_year	year of the current event
+data	ETC	D_80150058	album_event_month	month of the current event
+data	ETC	D_8015005C	album_event_day	day of the current event
+data	ETC	D_80150060	album_event_weekday	weekday of the current event
+data	ETC	D_80150064	album_event_index	index of the current record in the event list, 0-0xFF
+data	ETC	D_80150068	album_ui_reload_request	nonzero when the next event is a special animation and the UI picture set must be reloaded
+data	ETC	D_8015006C	album_voice_state	substate of album_voice_play: 0 start, 1 wait play, 2 wait end, 3 done
+data	ETC	D_80150070	album_load_state	state of album_event_advance: -1 end of list, 0 idle, 1 reading, 2 wait, 3 shown
+data	ETC	D_80150078	album_last_voice_clip	clip used last time, never picked twice in a row
+data	ETC	D_8015007C	album_anim_active	1 while an animation event is shown
+data	ETC	D_80150080	album_prev_event_index	index shown before the current one
+data	ETC	D_80150084	album_bustup_tpage_table	portrait file pointer passed to bustup_build
+data	ETC	D_80150088	album_bustup_frame_table	portrait frame table pointer
+data	ETC	D_8015008C	album_bustup_sequence_table	portrait sequence table pointer
+data	ETC	D_80150090	album_bustup_frame_count	s16 from the portrait file
+data	ETC	D_80150094	album_bustup_palette	portrait palette pointer
+data	ETC	D_801500A0	album_digit_uv	u8[20] (u, v) of digits 0-9 in the number sprite sheet
+data	ETC	D_801500B4	album_minus_u	u of the minus sign
+data	ETC	D_801500B5	album_minus_v	v of the minus sign
+data	ETC	D_801500C0	album_voice_clip	index of the clip picked
+data	ETC	D_801500C4	album_voice_clip_table	pointer to the girl's clip pair table
+data	ETC	D_801500C8	album_model_x	model translation x
+data	ETC	D_801500CC	album_model_y	model translation y
+data	ETC	D_801500D0	album_model_z	model translation z
+data	ETC	D_801500D4	album_model_angle	model y rotation, 0x800 to 0xC00 during the show
+data	ETC	D_801500D8	album_secret_mode	HYPOTHESIS: 0-3 view mode: bit 0 = records of all girls are shown (needs all 13 cleared), bit 1 = a photo waits for circle (modes 0 and 1 advance by themselves)
+data	ETC	D_801500DC	album_phase	0 until the intro clip has ended, 1 after it (the secret-code latch is read only in phase 1)
+data	ETC	D_801500E0	album_skip_requested	1 after the start button skip
+data	ETC	D_80150130	staff_roll_model_x	model x
+data	ETC	D_80150134	staff_roll_model_y	model y
+data	ETC	D_80150138	staff_roll_model_z	model z (distance), grows more negative until the exit test
+data	ETC	D_8015013C	staff_roll_model_rotation	SVECTOR rotation of the model
+data	ETC	D_80150144	staff_roll_line_index	next entry of the credit table
+data	ETC	D_80150148	staff_roll_girl_slot	segment counter: index into staff_roll_girl_order
+data	ETC	D_8015014C	staff_roll_variant	1 = 3D model parade variant, 0 = picture variant
+data	ETC	D_80150150	staff_roll_girl_order	s32[14] girl order of the 3D variant: 0, 10, 13, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11
+data	ETC	D_8015018C	staff_roll_fade_dir	+1 fade the pictures in, -1 fade out, 0 none
+data	ETC	D_80150190	staff_roll_palette	CLUT data of the picture quads
+data	ETC	D_80150390	last_photo_lba	s32[13] LBA of the 33-sector photo of each girl
+data	ETC	D_801503C4	last_photo_all_clear_lba	LBA of the 49-sector photo shown when all 13 girls are cleared
+data	ETC	D_801503C8	staff_roll_credit_table	285 (frame index, x) byte pairs of the scrolling credit lines
+data	ETC	D_8014E0C4	album_background_lba_cat_00	s32[] background LBAs of event category 0x00 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E16C	album_background_lba_cat_01	s32[] background LBAs of event category 0x01 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E214	album_background_lba_cat_02	s32[] background LBAs of event category 0x02 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E364	album_background_lba_cat_03	s32[] background LBAs of event category 0x03 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E380	album_background_lba_cat_04	s32[] background LBAs of event category 0x04 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E38C	album_background_lba_cat_05	s32[] background LBAs of event category 0x05 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E3A8	album_background_lba_cat_06	s32[] background LBAs of event category 0x06 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E3C4	album_background_lba_cat_07	s32[] background LBAs of event category 0x07 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E3CC	album_background_lba_cat_08	s32[] background LBAs of event category 0x08 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E600	album_background_lba_cat_09	s32[] background LBAs of event category 0x09 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E608	album_background_lba_cat_0a	s32[] background LBAs of event category 0x0A indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E708	album_background_lba_cat_0b	s32[] background LBAs of event category 0x0B indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E7B0	album_background_lba_cat_0c	s32[] background LBAs of event category 0x0C indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E7B8	album_background_lba_cat_0d	s32[] background LBAs of event category 0x0D indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E8A0	album_background_lba_cat_0e	s32[] background LBAs of event category 0x0E indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E8DC	album_background_lba_cat_0f	s32[] background LBAs of event category 0x0F indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E8E4	album_background_lba_cat_10	s32[] background LBAs of event category 0x10 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E914	album_background_lba_cat_11	s32[] background LBAs of event category 0x11 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E91C	album_background_lba_cat_12	s32[] background LBAs of event category 0x12 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E948	album_background_lba_cat_13	s32[] background LBAs of event category 0x13 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E950	album_background_lba_cat_14	s32[] background LBAs of event category 0x14 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014E9E0	album_background_lba_cat_15	s32[] background LBAs of event category 0x15 indexed by scene (-1 = none); listed in album_background_lba_table
+data	ETC	D_8014DC60	album_voice_clips_girl_00	voice clip pairs (two words each) of girl 0; the count is album_voice_clip_count[0]
+data	ETC	D_8014DD08	album_voice_clips_girl_01	voice clip pairs (two words each) of girl 1; the count is album_voice_clip_count[1]
+data	ETC	D_8014DD58	album_voice_clips_girl_02	voice clip pairs (two words each) of girl 2; the count is album_voice_clip_count[2]
+data	ETC	D_8014DDA0	album_voice_clips_girl_03	voice clip pairs (two words each) of girl 3; the count is album_voice_clip_count[3]
+data	ETC	D_8014DDF8	album_voice_clips_girl_04	voice clip pairs (two words each) of girl 4; the count is album_voice_clip_count[4]
+data	ETC	D_8014DE68	album_voice_clips_girl_05	voice clip pairs (two words each) of girl 5; the count is album_voice_clip_count[5]
+data	ETC	D_8014DEC0	album_voice_clips_girl_06	voice clip pairs (two words each) of girl 6; the count is album_voice_clip_count[6]
+data	ETC	D_8014DF00	album_voice_clips_girl_07	voice clip pairs (two words each) of girl 7; the count is album_voice_clip_count[7]
+data	ETC	D_8014DF40	album_voice_clips_girl_08	voice clip pairs (two words each) of girl 8; the count is album_voice_clip_count[8]
+data	ETC	D_8014DF80	album_voice_clips_girl_09	voice clip pairs (two words each) of girl 9; the count is album_voice_clip_count[9]
+data	ETC	D_8014DFC0	album_voice_clips_girl_0a	voice clip pairs (two words each) of girl 10; the count is album_voice_clip_count[10]
+data	ETC	D_8014E010	album_voice_clips_girl_0b	voice clip pairs (two words each) of girl 11; the count is album_voice_clip_count[11]
+data	ETC	D_8014E030	album_voice_clips_girl_0c	voice clip pairs (two words each) of girl 12; the count is album_voice_clip_count[12]
+const	MainMode	0xC2	MODE_STAFF_ROLL	replaces the core placeholder MODE_ETC_C2: credit roll after the ending (disc dir STAFF2 holds its per-girl art, 13 sectors each)
+const	MainMode	0xC3	MODE_LAST_PHOTO	replaces MODE_ETC_C3: the per-girl last photo (disc dir LASTPHOT, 33 sectors per girl, 49 for the all-clear photo)
+const	MainMode	0xC4	MODE_CLEAR_SAVE	replaces MODE_ETC_C4: asks to save the finished play to the memory card, counts the clear
+const	ExamStage	0	EXAM_STAGE_SETUP	stage 0 of mode 0x35
+const	ExamStage	1	EXAM_STAGE_DAY	stage 1: one exam day by weekday
+const	ExamStage	2	EXAM_STAGE_END	stage 2: leave to the next queued event
+const	ExamSubject	0	EXAM_SUBJECT_LANGUAGE	weekday 0 (Monday): liberal arts based
+const	ExamSubject	1	EXAM_SUBJECT_MATH	weekday 1: science based
+const	ExamSubject	2	EXAM_SUBJECT_SCIENCE	weekday 2: 7/10 science plus 3/10 trivia
+const	ExamSubject	3	EXAM_SUBJECT_SOCIAL_STUDIES	weekday 3: 7/10 trivia plus 3/10 liberal arts
+const	ExamSubject	4	EXAM_SUBJECT_ART	weekday 4: 8/10 art plus 2/10 trivia
+const	ExamSubject	5	EXAM_RESULTS_DAY	weekday 5 (Saturday): no subject, the ranking is announced
+const	ExamGrade	0	EXAM_GRADE_HOPELESS	day score below 40; counts as a red mark
+const	ExamGrade	1	EXAM_GRADE_WEAK	day score 40-59
+const	ExamGrade	2	EXAM_GRADE_FAIR	day score 60-79
+const	ExamGrade	3	EXAM_GRADE_GOOD	day score 80-94
+const	ExamGrade	4	EXAM_GRADE_PERFECT	day score 95-100
+const	ExamGradeLimit	0x28	EXAM_GRADE_WEAK_FROM	day score from which the grade is 1 (below it: 0, a red mark)
+const	ExamGradeLimit	0x3C	EXAM_GRADE_FAIR_FROM	day score from which the grade is 2
+const	ExamGradeLimit	0x50	EXAM_GRADE_GOOD_FROM	day score from which the grade is 3
+const	ExamGradeLimit	0x5F	EXAM_GRADE_PERFECT_FROM	day score from which the grade is 4
+const	ExamRule	128	EXAM_RAW_SCORE_SCALE	raw scores below this are scaled by 100/128, higher ones become 100 minus rand and 3
+const	ExamRule	3	EXAM_REMEDIAL_RED_MARKS	red marks (grade 0 days) that cause the forced remedial week
+const	ExamRule	0x17	EXAM_REMEDIAL_MARKER	calendar marker written for tomorrow when the remedial week starts
+const	ExamRule	0xC8	EXAM_BEAT_FLAG_BASE	event_flags index of girl 0's 'player beat her' flag; girl n uses 0xC8 + n
+const	ExamRule	11	EXAM_BEAT_TOKIMEKI_FIRST	tokimeki gain the first time the player beats a girl
+const	ExamRule	2	EXAM_BEAT_TOKIMEKI_REPEAT	gain for later exams (and for all girls when the player is rank 1)
+const	ExamRule	466	EXAM_TOP_VALUE	a best value at or above this is forced to rank number 1
+const	ExamRule	13	EXAM_PLAYER_SLOT	person index of the player in the ranking arrays
+const	ExamRule	14	EXAM_RANKING_ROWS	rows in the ranking (13 persons plus the player)
+const	CareerGuidanceStage	0	CAREER_GUIDANCE_STAGE_SETUP	stage 0 of mode 0x36
+const	CareerGuidanceStage	1	CAREER_GUIDANCE_STAGE_TALK	self assessment monologue
+const	CareerGuidanceStage	2	CAREER_GUIDANCE_STAGE_CHOICE	three-choice menu
+const	CareerGuidanceStage	3	CAREER_GUIDANCE_STAGE_ASK_OTHERS	look up a girl's plan
+const	CareerGuidanceStage	4	CAREER_GUIDANCE_STAGE_UNIVERSITY	university wish and the teacher's verdict
+const	CareerGuidanceStage	5	CAREER_GUIDANCE_STAGE_JOB	job wish and the teacher's verdict
+const	CareerGuidanceStage	6	CAREER_GUIDANCE_STAGE_LEAVE	day_event_next
+const	CareerGuidanceRule	101	CAREER_PARAM_HIGH	a parameter at or above this counts as high in the self assessment
+const	CareerGuidanceRule	121	CAREER_VERDICT_HIGH	liberal arts, science and art at or above this count for the teacher's verdict
+const	CareerGuidanceRule	60	CAREER_CLOSE_GIRL_MIN	girl closeness must exceed this for the closing remark
+const	CareerWish	0	CAREER_WISH_UNIVERSITY	player_flags_hi byte 1 after career guidance: wants to go to university
+const	CareerWish	1	CAREER_WISH_JOB	player_flags_hi byte 1 after career guidance: wants a job
+const	CareerChoiceStage	0	CAREER_CHOICE_STAGE_PROMPT	stage 0 of mode 0x37
+const	CareerChoiceStage	1	CAREER_CHOICE_STAGE_UNIVERSITY	university entrance exam
+const	CareerChoiceStage	2	CAREER_CHOICE_STAGE_JOB	company entrance exam
+const	CareerChoiceStage	3	CAREER_CHOICE_STAGE_CLUB_DREAM	club dream path
+const	CareerChoiceStage	4	CAREER_CHOICE_STAGE_LEAVE	day_event_next
+const	CareerTier	0	CAREER_TIER_FIRST	first-class university or company
+const	CareerTier	1	CAREER_TIER_SECOND	second-class (question score +0x26)
+const	CareerTier	2	CAREER_TIER_THIRD	third-class (question score +0x36)
+const	CareerEntranceGrade	0	CAREER_ENTRANCE_PERFECT	10 right
+const	CareerEntranceGrade	1	CAREER_ENTRANCE_GOOD	8-9 right (passes)
+const	CareerEntranceGrade	2	CAREER_ENTRANCE_BORDERLINE	7 right (passes a company only with trivia plus looks above 256; fails a university)
+const	CareerEntranceGrade	3	CAREER_ENTRANCE_WEAK	5-6 right
+const	CareerEntranceGrade	4	CAREER_ENTRANCE_BAD	3-4 right
+const	CareerEntranceGrade	5	CAREER_ENTRANCE_FAIL	0-2 right
+const	CareerRule	10	CAREER_ENTRANCE_QUESTIONS	questions in the entrance exam
+const	CareerRule	20	CAREER_CLUB_BONUS_CAP	cap of club exp / 16 added to a question score
+const	CareerRule	0x26	CAREER_TIER2_BONUS	question bonus for the second tier
+const	CareerRule	0x36	CAREER_TIER3_BONUS	question bonus for the third tier
+const	CareerRule	0x19B	CAREER_CLUB_DREAM_MIN_EXP	club exp needed for the club dream to succeed
+const	CareerRule	0x100	CAREER_INTERVIEW_SUM	trivia plus looks must exceed this for a borderline company pass
+const	CareerResult	0x01	CAREER_RESULT_UNIVERSITY_FIRST	accepted at a first-class university (bits 0-5 are the accepted target)
+const	CareerResult	0x02	CAREER_RESULT_UNIVERSITY_SECOND	second-class university
+const	CareerResult	0x04	CAREER_RESULT_UNIVERSITY_THIRD	third-class university
+const	CareerResult	0x08	CAREER_RESULT_COMPANY_FIRST	first-class company
+const	CareerResult	0x10	CAREER_RESULT_COMPANY_SECOND	second-class company
+const	CareerResult	0x20	CAREER_RESULT_COMPANY_THIRD	third-class company
+const	CareerResult	0x40	CAREER_RESULT_CLUB_DREAM	club dream path chosen
+const	CareerResult	0x80	CAREER_RESULT_FAILED	OR-ed in when the exam failed (the target bit stays set)
+const	AlbumStage	0	ALBUM_STAGE_LOAD	stage 0 of mode 0x91
+const	AlbumStage	1	ALBUM_STAGE_PLAYBACK	event pages
+const	AlbumStage	2	ALBUM_STAGE_FINALE	closing voice and fade
+const	AlbumStage	0xFF	ALBUM_STAGE_SAVE	album save to the system file
+const	AlbumSaveStep	0	ALBUM_SAVE_BEGIN	album save step 0
+const	AlbumSaveStep	1	ALBUM_SAVE_BACKGROUND	step 1
+const	AlbumSaveStep	2	ALBUM_SAVE_ASK	step 2
+const	AlbumSaveStep	3	ALBUM_SAVE_ANSWER	step 3
+const	AlbumSaveStep	4	ALBUM_SAVE_CARD_CHECK	step 4
+const	AlbumSaveStep	5	ALBUM_SAVE_SYSTEM_FILE_LOAD	step 5
+const	AlbumSaveStep	6	ALBUM_SAVE_WRITE	step 6
+const	AlbumSaveStep	0xA0	ALBUM_SAVE_CARD_UNFORMATTED	error step
+const	AlbumSaveStep	0xF0	ALBUM_SAVE_NO_SYSTEM_FILE	error step
+const	AlbumSaveStep	0xFD	ALBUM_SAVE_SYSTEM_FILE_BROKEN	error step
+const	AlbumSaveStep	0xFE	ALBUM_SAVE_CARD_FULL	error step
+const	AlbumSaveStep	0xFF	ALBUM_SAVE_NO_CARD	error step
+const	AlbumSeason	0	ALBUM_SEASON_SPRING	months 3-5
+const	AlbumSeason	1	ALBUM_SEASON_SUMMER	months 6-8
+const	AlbumSeason	2	ALBUM_SEASON_AUTUMN	months 9-11
+const	AlbumSeason	3	ALBUM_SEASON_WINTER	months 12, 1, 2
+const	AlbumRule	2	ALBUM_CATEGORY_ANIMATED	event category whose scene id selects an animation pack
+const	AlbumRule	8	ALBUM_CATEGORY_SPECIAL_ANIMATED	event category with two special animation scenes (0xE and 0x46)
+const	AlbumRule	13	ALBUM_GIRL_COUNT	girls 0-12 counted for the all-cleared test
+const	StaffRollStage	0	STAFF_ROLL_STAGE_LOAD	stage 0 of mode 0xC2
+const	StaffRollStage	1	STAFF_ROLL_STAGE_RUN	stage 1
+const	StaffRollRule	701	STAFF_ROLL_SEGMENT_FRAMES	frames per girl segment
+const	StaffRollRule	0x11D	STAFF_ROLL_CREDIT_ENTRIES	entries of the credit table
+const	LastPhotoStage	0	LAST_PHOTO_STAGE_LOAD	stage 0 of mode 0xC3
+const	LastPhotoStage	1	LAST_PHOTO_STAGE_SHOW	stage 1
+const	LastPhotoStage	2	LAST_PHOTO_STAGE_LEAVE	stage 2
+const	ClearSaveStage	0	CLEAR_SAVE_STAGE_PREPARE	stage 0 of mode 0xC4
+const	ClearSaveStage	1	CLEAR_SAVE_STAGE_RUN	stage 1: card flow
+const	ClearSaveStage	2	CLEAR_SAVE_STAGE_FINISH	stage 2
+const	ClearSaveStep	0	CLEAR_SAVE_CARD_CHECK	stage 1 step 0
+const	ClearSaveStep	1	CLEAR_SAVE_SLOT_MENU_INIT	step 1
+const	ClearSaveStep	2	CLEAR_SAVE_SLOT_SELECT	step 2
+const	ClearSaveStep	3	CLEAR_SAVE_WRITE	step 3
+const	ClearSaveStep	0xA0	CLEAR_SAVE_CARD_UNFORMATTED	error step
+const	ClearSaveStep	0xC0	CLEAR_SAVE_NEW_SLOT	creates the file of a new slot
+const	ClearSaveStep	0xF0	CLEAR_SAVE_CARD_FULL	error step
+const	ClearSaveStep	0xFF	CLEAR_SAVE_NO_CARD	error step
+const	ClearSaveRule	99	CLEAR_COUNT_MAX	cap of the per-girl ending counter
+const	PlayerFlag	bit 17	PLAYER_FLAG_EXAM_POOR_RESULT	set by the exam results when the exam ended badly (3+ red marks or the player in the lower half of the ranking), cleared at every results frame
+const	PlayerFlag	bit 16	PLAYER_FLAG_REMEDIAL_WEEK	replaces core PLAYER_FLAG_16 (m-scheduler's remedial_week confirmed by ETC): set by exam_results_react after 3 red marks; shown by the command screen as the forced remedial week and cleared on the following Sunday
