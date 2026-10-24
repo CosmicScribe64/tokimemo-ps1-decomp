@@ -9,7 +9,7 @@ sources: ["src/main/8006CB30.c", "config/renames/proposals/m-scheduler.tsv", "co
 
 Roadmap phase 2, unit `m-scheduler` ([[tickets/T-27011-p2-m-scheduler]], parent [[tickets/T-27000-phase-2]]). This is game logic: the weekly cycle that decides what happens on each day of the game. It covers all 56 functions of `src/main/8006CB30.c` (the object 0x8006CB30-0x800737A0). Facts come from the matched C, its callers and callees, and short emulator probes (title-menu save state, `GameState` bytes poked, the probe run to a known step, memory dumped). Anything not proven by code or a probe is marked HYPOTHESIS. Proposed names are in `config/renames/proposals/m-scheduler.tsv` (116 rows); names of the shared core (`GameState` fields, `DayEventType`, `MainMode`, `GIRL_*`, `CLUB_*`, `PARAM_*`) are the ones in the core table, and where this page says `day_events`, `girls[i].affection` and so on it means those proposals.
 
-Suggested file name: `src/main/scheduler.c`. O.BIN names kept with an English comment row: `schedule_init`, `_schedule_init`, `last_date_spot_timer_dec`, `restore_bgm`, `geko_judge`, `date_sasoi_judge`, `schedule_girls_gakko`, `yuukou_down`, `syoushin_up`, `schdeule_girls_param` (the typo is the developers'; kept), plus `special_event_select` (confirmed name, `config/symbol_addrs.txt`). Prefix choice: main code has no unit prefix, so the module stems are `schedule_` (the weekly steps, O.BIN style), `day_events_` (the queue), `meeting_`, `command_`, `health_`, `month_start_`, `vacation_`.
+Suggested file name: `src/main/scheduler.c`; the object has no header of its own (its prototypes are in `include/main_api.h`, which core keeps under that name), so no header rows are proposed. O.BIN names kept with an English comment row: `schedule_init`, `_schedule_init`, `last_date_spot_timer_dec`, `restore_bgm`, `geko_judge`, `date_sasoi_judge`, `schedule_girls_gakko`, `yuukou_down`, `syoushin_up`, `schdeule_girls_param` (the typo is the developers'; kept), plus `special_event_select` (confirmed name, `config/symbol_addrs.txt`). Prefix choice: main code has no unit prefix, so the module stems are `schedule_` (the weekly steps, O.BIN style), `day_events_` (the queue), `meeting_`, `command_`, `health_`, `month_start_`, `vacation_`.
 
 ## 1. What the system does
 
@@ -19,7 +19,7 @@ The game advances in weeks. The player picks a weekday command on the command sc
 2. `MODE_DAY_SCREEN` (0x31, `mode_day_screen`, stage 0 step 0 is `day_event_dispatch`): reads `day_events[day_event_index]`, applies fixed-date rules and phone/appointment checks, and starts the mode for the record. Every scene ends through `day_event_next`, which moves the index on and returns to 0x31. At a day-end record (0xFB) the reader advances the calendar itself.
 3. When the queue shows 0xFF (end of the week) the reader goes to the command screen (0x34) and the cycle repeats.
 
-Modes owned here: 0x30 (schedule), 0x31 stage 0 (queue reader; the HUD and stage 1 belong to the day screen), 0x32 (`mode_week_end`: weekly health check, queue type 0xFC), 0x38 (`mode_month_start`, type 0xFE), 0x39 (`mode_day_notice`, type 0xFD).
+Modes owned here: 0x30 (schedule), 0x31 (day screen; its only stage, 0, is the queue reader, and the HUD draw set runs every frame), 0x32 (`mode_week_end`: weekly health check, queue type 0xFC), 0x38 (`mode_month_start`, type 0xFE), 0x39 (`mode_day_notice`, type 0xFD).
 
 The builder always starts from tomorrow. The queue of a week ends with the Sunday holiday record, which has no day-end record, so the calendar still shows that Sunday when the reader reaches the end marker and the command screen opens; the next build therefore starts on Monday and covers Monday to Sunday. The first week of the game starts on Tuesday 1995-04-04 and is shorter. Probe (mode 0x30 poked from the title-menu state, command 0): the queue was `00 00 00 0f | fb | 00 00 00 0f | fb | 00 00 01 0f | fb | 00 00 01 0f | fc | fb | 10 | ff...` = Wednesday to Saturday school days, the week-end record 0xFC after Saturday, then Sunday as a holiday record (0x10, no 0xFB for Sunday). A second probe on Sunday 1995-04-23 with command 3 gave five school days (Monday to Friday), then 0x10 for Saturday (national holiday of April 29 in the month table), `fc fb`, `10`.
 
@@ -69,7 +69,7 @@ The builder always starts from tomorrow. The queue of a week ends with the Sunda
 | 80073198, 800732F8, 800733D8 | `health_injury_start`, `health_neurosis_start`, `health_illness_start` | start a condition |
 | 800734C4, 800735B8, 800736AC | `health_injury_recover`, `health_neurosis_recover`, `health_illness_recover` | end a condition |
 
-Core already names 14 of the 56 (the rows marked core); this table does not repeat them in the TSV.
+Core already names 12 of the 56 (the rows marked core); this table does not repeat them in the TSV.
 
 ## 3. State read and written
 
@@ -201,7 +201,7 @@ Run for a placeholder slot. `counts[g]` = sum of `girls[g].event_counters[1..20]
 
 | girl | roll | season (`uniform season`: 1 = months 6-9, 0 = other, -1 = changeover weeks May 25+ and Sep 24+ never match) | one-shot flag | result (girl, scene) |
 |---|---|---|---|---|
-| 0 | 3% | frame parity odd: season 1 and `get_g_zyotai_s < 2`; even: none | flag 0 (odd) or 1 (even) | (0,1) or (0,2) |
+| 0 | 3% | frame parity odd: season 1 and `get_g_zyotai_s & 0x7F` below 2; even: none | flag 0 (odd) or 1 (even) | (0,1) or (0,2) |
 | 1 | 3% | 0 | 8 | (1,1) |
 | 2 | 3% | 0 | 14 | (2,1) |
 | 3 | 7% | 1 | 21 | (3,1) |

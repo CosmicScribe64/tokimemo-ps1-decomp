@@ -15,7 +15,7 @@ Roadmap phase 2 (readable code), unit `m-scheduler`: name every function, owned 
 ## Acceptance criteria
 
 - [x] `config/renames/proposals/m-scheduler.tsv` has one row per rename (kinds func, data, field, const, file, comment); no src/, include/ or symbol-file edits.
-- [x] Core names (`p2a-core`) are used and not duplicated: the 14 functions core already names in this file get no row.
+- [x] Core names (`p2a-core`) are used and not duplicated: the 12 functions core already names in this file get no row.
 - [x] Uncertain game-meaning claims are marked `HYPOTHESIS:` first in the note column.
 - [x] O.BIN-named functions kept, each with an English comment row.
 - [x] `wiki/spec/m-scheduler.md` covers state, schedule steps, queue builder, encounter and meeting rules, special events, queue reader, notices, month start, calendar, health check and open questions; linked from `wiki/spec/index.md`.
