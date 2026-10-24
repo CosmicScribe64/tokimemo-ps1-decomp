@@ -1,0 +1,752 @@
+# kind	scope	old	new	note
+func	main	func_8004284C	main_step_next	step += 1, step_timer and substep cleared (4,121 uses, the top function); FAKE z-store idiom keeps the match
+func	main	func_80042908	main_stage_set	stage = arg; step, stage_timer, step_timer, stage_scratch, substep cleared
+func	main	func_80042940	main_step_set	step = arg; step_timer and substep cleared
+func	main	func_80042808	main_stage_next	stage += 1; step, stage_timer, step_timer, stage_scratch, substep cleared
+func	main	func_80042798	main_state_next	mode += 1 and the full mode reset, then main_state_request_overlay
+func	main	func_80042960	main_state_request_overlay	if the new mode is an overlay mode (the 0x11..0xC4 case list) it stores the mode in overlay_target_mode and switches to loader mode 2
+func	main	func_80042540	main_state_dispatch	switch on mode: resident handlers for 0x00-0x46, 0xD0, 0xFE/0xFF; every overlay mode calls the entry in D_80123110 after a debug text; wiki/obin.md matches it to O.BIN game_main (unapplied class low)
+func	main	func_80041000	gpu_init	graphics bring-up: 320x240 display, two draw/display environments with ordering tables (D_800E8C70), GTE init, active buffer
+func	main	func_80042134	main_loop	boot loop: init, then per frame: dispatch (or paused handler), frame_count++, input and sound pump, render; restart_request re-initialises
+func	main	func_80046500	game_reset_to_title	default branch of mode switches (514 uses): resets loader, game state, sprites, sound, dec_bg and tpage tables, then main_state_set(0x12) (title)
+func	main	func_800412E0	game_state_init	reset GameState (bzero when arg != 0), set defaults (video 320x240, mode 0x10, names placeholder, birthday 1/1) and call the module initialisers
+func	main	func_80044750	snd_command	1,180 uses: queue one sound-driver command (func_80079B10 -> func_8007B5EC); id low byte = effect or sequence, bits 8-11 = class dispatched by func_80079B34 (0 effects, 2 start a sequence after a bank load, 3 voice; classes 5-8 not decoded)
+func	main	func_80079B34	snd_command_pump	per-frame consumer of the sound command queue (class switch at r & 0xF00), then updates the three audio helpers
+func	main	func_8008667C	girl_state_rank	1,106 uses: get_g_zyotai_s(girl) & 0x7F, the 0-4 mood rank scenes switch on (0 best)
+func	main	func_80062CD0	bustup_read_start	384 uses: starts the CD read of a girl portrait file (0x2D sectors to 0x80180000) and clears the portrait state
+func	main	func_800866A0	bustup_read_step	step function: substep 0 starts bustup_read_start; later waits for the CD, checks the five image pointers and the file checksum, then main_step_next
+func	main	func_80083474	bustup_show_checked	299 uses: re-verifies the loaded portrait (pointer words and checksum, retries the step 3 back on mismatch) then builds it with the girl's mood via func_80062DBC
+func	main	func_80062DBC	bustup_build	loads the portrait palette and five image parts into tpage slots 5-9 and fills actor 31 with the frame and sequence tables
+func	main	func_80083440	bustup_layout_set	178 uses: bustup_layout_set(girl) = func_80085CD4 (per-girl quad offsets) + func_800634FC
+func	main	func_80085CD4	bustup_quad_offsets	HYPOTHESIS: sets fields +0x0C/+0x0E of SpriteQuads 0 and 1 per girl id (texture offsets of the two portrait quads)
+func	main	func_800847B8	dialogue_names_set	246 uses: fills the name buffers for dialogue codes: family and given name from GameState, the player-addressing form (get_p_name), the girl's short name and full name (get_g_name)
+func	main	func_80084E90	event_still_show	uploads six 0x40 x 0x80 tiles to VRAM and sets SpriteQuads 58-63 as a 3 x 2 grid (128 px cells) = one full-screen event still; callers KANGEI, SHOUGATU
+func	main	func_800850D4	event_anim_show	fills actors 96/97 as a full-screen animated picture from frame/sequence/tpage tables and a mode; arg0 == 0 clears them (DATE event scenes)
+func	main	func_80085B3C	event_log_add	appends (girl, flag, scene, rank, year, month, day, weekday) to event_log; rank is get_g_zyotai_h(girl), not girl_state_rank, or D_80122D48 - 1 when that override is 1-6 (cleared after use), forced to 0 for girl 12; count capped at 0xFE
+func	main	func_8005751C	dec_bg_decode_to_vram	386 uses: reinitialises the MDEC buffers and decodes the loaded background into the VRAM band of slot arg0
+func	main	func_8004E58C	text_system_reset	257 uses: reloads six small text/cursor blocks to VRAM, calls func_8004E500(2) and clears the 52 text list entries
+func	main	func_8006612C	message_window_set_title	131 uses: queues the title string at the window's top-left and builds the title decoration actors 3.. (one per two bytes + 2); the slide-in counter starts at -0x40
+func	main	func_80065F34	message_window_title_show	60 uses: shows or hides the title actors and the matching text-list entry
+func	main	func_80066334	message_window_title_update	64 uses: per-frame slide-in of the title actors
+func	main	func_80065B0C	icon_bar_update	HYPOTHESIS: per-frame update of the command icon bar; in free icon mode (icon_mode % 3 == 2) the held select button lets the d-pad move the icons by cursor_speed (called by every day handler)
+func	main	func_80067870	mascot_update	HYPOTHESIS: per-frame update of the mascot sprite chosen in the settings (mascot_choice 1..13; 0 or 14+ hides it); called by every day handler
+func	main	func_80044890	snd_bank_load_start	138 uses: bank 0/1 sound data load: skips files already loaded (cache of LBAs), otherwise queues up to four CD reads (header, body, sequence) to the staging areas
+func	main	func_80044E8C	snd_bank_load_poll	176 uses: waits for the queued sound-bank reads, then issues the sound commands 0x21/0x22/0x2F (bank 0) or 0x23/0x24/0x2E (bank 1) and returns 1
+func	main	func_8004500C	snd_bank_start	89 uses: checks the bank header (0x40) then queues commands 0x21/0x22/0x2F and starts sequence arg1 (0x200 | id)
+func	main	func_8004482C	snd_bank_state_reset	66 uses: clears the bank load state variables
+func	main	func_800460EC	cd_audio_state	174 uses: D_801255B4, the CD audio state byte (bit 2 / value 4 = playing) tested before waiting for voice
+func	main	func_800460DC	cd_done_count	D_801255B5: running count of finished CD commands (mod 256) polled by the sound-bank loader
+func	main	func_80046274	cd_audio_ticks	D_801255B0: elapsed CD audio counter; BUNKA_SD compares a snapshot with it
+func	main	func_80046290	cd_audio_request_set	107 uses: fills the 4-word CD audio request (index, table word, address, length) from a pair table and a mode nibble
+func	main	func_800462C8	cd_read_sectors_nowait	76 uses: same as cd_read_sectors but D_800B3D60 = 0 (caller polls cd_read_sync_status); queues command 6
+func	main	func_800452C4	cd_cmd_reset	64 uses: clears the CD command ring, status and counters
+func	main	func_80045318	cd_cmd_push	push (command, argument, optional 16-byte data) on the 48-entry ring; -1 when full
+func	main	func_80045414	cd_audio_command	maps an operation id (0, 2, 3, 6, 9, 10, 13, 14, 21, 27) to one or more ring commands; operation 6 is the data read behind cd_read_sectors
+func	main	func_800455C4	cd_cmd_pump	per-frame consumer of the CD command ring (called from main_loop)
+func	main	func_80048F64	actor_clear	164 uses: resets display actor i (0-159) to defaults: hidden, frame table = sprite_frame_table, scale 0x1000, brightness 0x80
+func	main	func_80048EB8	actor_clear_range	108 uses: clears actors 0..n-1 (all 160 when n is 0 or > 160) and keeps the cursor position words
+func	main	func_80048E78	actor_clear_upper	80 uses: clears actors 96..159
+func	main	func_80048DAC	actors_draw_enable	89 uses: actors_draw_enabled = (arg != 0)
+func	main	func_800476C0	actors_draw	draws every visible actor of the pool: frame from the frame/sequence tables, parts as sprite quads, x/y from the 16.16 position, brightness; skips hidden actors
+func	main	func_80047560	screen_shake_update	per-frame sine shake of screen_center_x/y while a shake counter runs
+func	main	func_80041584	sprite_tables_clear	114 uses: clears SpriteQuads 0-63 and BgLayers 0-1
+func	main	func_800415B4	sprite_quads_clear	clears SpriteQuad records start..end-1 (flag 0x80000000 = hidden) and their layer bytes
+func	main	func_8004164C	bg_layers_clear	clears BgLayer records start..end-1 and sets their order byte to 0x80
+func	main	func_80043510	frame_render	per-frame draw pass: shake, actors, tile layer, sprite quads, text (disp_string), BG layers, 3D objects, VRAM queues, vsync wait, clear and present
+func	main	func_8004AE28	debug_number_show	63 uses: shows a number at (x, y) only while the debug flag D_800B3220 is set
+func	main	func_80049A40	prim_gradient_rect	101 uses: queues a four-colour gradient rectangle (POLY_G4) from the primitive arena; flag bit 7 = semi-transparent
+func	main	func_80049FF0	prim_gradient_line	73 uses: queues a two-colour line (LINE_G2) from the primitive arena
+func	main	func_800578F4	dec_bg_draw	77 uses: draws the decoded background(s) as sprites with dec_bg brightness; arg = the last screen mode
+func	main	func_80066C08	screen_frame_draw	HYPOTHESIS: 74 uses; draws a 10 x 8 grid of 32 px sprites with interpolated colour pairs (the screen frame); the scroll pattern follows the health state (0 normal, 1-3 slower, 4 jitter, 5 swirl)
+func	main	func_8006B900	light_effect_draw	HYPOTHESIS: 56 uses; draws nine layered light-effect sprites with texture-page draws; called by DATE scenes and the loader screen
+func	main	func_8004FC10	menu_cursor_update	80 uses: moves the menu cursor by pad (up/left previous, down/right next, skips disabled items, wraps), or follows the mouse in mode 0
+func	main	func_8008585C	dialogue_clear	89 uses: clears dialogue_work words 5..30, re-initialises and hides the cursor actor, empties the text list and blanks the window title
+func	main	func_80082764	dialogue_run	64 uses: the talk runner every script section goes through (reads group/line/command tables, waits for text end and voice, handles 20 speak codes)
+func	main	func_80052060	voice_play	133 uses: if voice_mode != 0 and the mode nibble is not 15, sets the CD audio request and sends sound command 0x300
+func	main	func_8005215C	dialogue_text_step	121 uses: per-frame step of dialogue text: typewriter, line scroll (text_scroll_state) and voice-aware speed by voice_mode
+func	main	func_80052000	text_wait_confirm	51 uses: typewriter step; on confirm/cancel jumps to the line end and, when finished, substep += 1
+func	main	func_80053CE0	card_start	85 uses: card_busy = 1; clears card step, result, retry count and timer
+func	main	func_80053D10	card_stop	124 uses: card_busy = 0 and card_timer = 0
+func	main	func_8006BC28	cursor_actor_init	initialises actor 0 as the cursor (finger) sprite at its saved position
+func	main	func_8006BD6C	cursor_show	57 uses: sets or clears the visible bit of actor 0
+func	main	func_8006BA40	cursor_update	46 uses: pad/mouse cursor movement each frame: cursor_speed steps, double speed while a button is held
+func	main	func_8006C848	text_marker_set	HYPOTHESIS: actor 2 (the continue marker at 0x74,0x48) shown when arg == 1, hidden otherwise
+func	main	func_80084E4C	text_marker_hide	113 uses: text_marker_set(0)
+func	main	func_80072B5C	day_event_next	51 uses: next queued event: day_event_index += 1, back to mode 0x31 (or mode 0x22 when D_800B3C6C is set); arg 1 first runs func_8004500C
+func	main	func_80085E30	scene_screen_reset	50 uses: resets draw switches, clear colour, brightness, text system and tpage tables for a new scene screen
+func	main	func_80083808	bustup_wink_update	45 uses: toggles portrait visibility bits and winks every 240 frames
+func	main	func_8007132C	day_event_dispatch	queue reader (run by the day screen, mode 0x31 stage 0 step 0): skips already-played birthday records, injects forced meetings, appointment prompts and the fixed-date endings, then switches on day_events[index].type to start the matching mode (wiki/ref-english-patch.md: day handler)
+func	main	func_8006D7EC	day_events_build_week	builds day_events for the next 7 days from month_calendar markers, the chosen command, birthdays, special events and random encounters; ends with main_step_next
+func	main	func_80070FD0	ending_start	step 1 of the day screen: loads the ending sound bank (func_80067438), then sound command 0x200 and main_state_set(0x63)
+func	main	func_80072338	calendar_advance_day	weekday + 1 (wraps 7), day + 1, month roll by month length (February 29 days in year 96), year + 1 after December, day_count++
+func	main	func_800722C4	quarter_flags_rotate	at months 3, 6, 9, 12: quarter_flags bit 14 takes bit 13, bit 13 cleared
+func	main	func_8007259C	daily_flags_clear	clears daily_event_bits and events_today
+func	main	func_8006CF38	day_events_clear	fills day_events with type 0xFF and resets day_event_index
+func	main	func_8006CF80	girl_flags_bit0_clear	clears bit 0 of the flag word of girls 0-10; the queue reader calls it for the record types 0xFD, 0x20, 0x24, 0x28, 0x2C, 0x40, 0x41 and 0x43 right before their scene starts (not once per day); the only setter found is GEKO func_80133C50 for the current girl; the meaning of the bit is unknown (HYPOTHESIS: a scene-played mark for the current stretch)
+func	main	func_8005A0B0	mode_command_screen	mode 0x34 handler: stage switch for the weekday command screen (stage 0 setup, 1 selection, 5 club joining, 0xFF the setup steps with the exam/trip/remedial-week notices)
+func	main	func_80070F14	mode_day_screen	mode 0x31 handler: day screen with the HUD show calls
+func	main	func_8005A06C	mode_boot	mode 0x00 handler: stage 0 runs func_80059B40, else main_state_set(0x12)
+func	main	func_80062840	mode_title	mode 0x12 handler: four title stages; when idle (D_800B3CFC) after stage 2 it starts mode 0x11
+func	main	func_80075320	mode_holiday	mode 0x46 handler: stage switch for the holiday command screen, telephone, club join and appointment entry
+func	main	func_80078A0C	mode_overlay_loader	mode 0x02 handler
+func	main	func_80071038	girl_counters_clamp	first thing in every day_event_dispatch pass for girls 0-10: tokimeki, affection and syoushin clamped to 0..0x80; flag bits 16 and 17 (encounter_done, rumor_done) cleared while syoushin is below 0x32
+func	main	func_80071280	girl_flag4_may_clear	HYPOTHESIS: on month 5 day 6 clears flag bit 4 of girls 0-10; DATE sets bit 4 on a May 3-4 date and adds 2 tokimeki to a May 4-5 date for a girl that has it
+data	main	D_800E6280	game_state	the GameState object (12,306 uses in 295 files); see wiki/game-state.md
+data	main	D_800E7D10	system_data	SystemData object right after GameState; bzero(..., 0xEE0) at boot
+data	main	D_8011ECD0	actor_pool	160 Actor records of 0x44 bytes (3,212 uses); actors_draw walks 0..actor_draw_last
+data	main	D_80120650	actor_pool_96	label of actor_pool[96] (upper group used by scene overlays, 1,130 uses)
+data	main	D_8011ECA0	draw_buffer	0/1 index of the active draw buffer, read from func_80098370 each frame (681 uses)
+data	main	D_801217D0	sprite_quads	SpriteQuad table, 0x40 entries cleared by sprite_tables_clear
+data	main	D_801220D0	bg_layers	2 BgLayer records
+data	main	D_80123120	card_block	memory-card block image: 0x200 header then 0xF00-byte slot banks
+data	main	D_80125D10	audio_state	AudioState work area of the sound driver and CD audio
+data	main	D_80125130	cd_cmd_ring	48-entry CdCommand ring of the CD layer (head D_80125128, tail D_80125129)
+data	main	D_800B3D70	cd_audio_request	4-word CD audio request written by cd_audio_request_set
+data	main	D_80123110	overlay_entry	entry pointer of the loaded overlay; MODE_CALL_ENTRY and every overlay mode call it
+data	main	D_800CA134	dialogue_tables	DialogueTables (group, line, text, command, voice pointers) wired by normal_date_speak
+data	main	D_800CA148	dialogue_group	script section index read through dialogue_tables.group (3,494 uses, mostly BUNKASAI/BUNKAKEN scratch)
+data	main	D_800CA14C	dialogue_line	line index
+data	main	D_800CA160	dialogue_text_table	text table pointer storage wired into dialogue_tables.text
+data	main	D_800CA164	dialogue_command_table	command table pointer storage
+data	main	D_800CA168	dialogue_voice_table	voice table pointer storage
+data	main	D_80122CD0	dialogue_work	DialogueWork; word 0 = scene id, word 1 = girl id of the running event
+data	main	D_800CA16C	name_buf_family	dialogue name code buffer filled from player_family_name
+data	main	D_800CA174	name_buf_given	buffer filled from player_given_name
+data	main	D_800CA17C	name_buf_player_form	how the current girl addresses the player (get_p_name result)
+data	main	D_800CA188	name_buf_girl_short	short name of the girl in dialogue_names_set
+data	main	D_800B3538	girl_full_name_table	u8 *[16] full names; entries 0-14 = GIRL_* order
+data	main	D_800B331C	parameter_name_table	u8 *[9] in PARAM_* order; NO SPLAT LABEL at this address yet (it lies inside the range of D_800B3310): the apply step must add a symbol_addrs entry for it before renaming
+data	main	D_800B342C	place_name_table	u8 *[21] in PLACE_* order; likewise no label of its own
+data	main	D_800B68E0	command_deltas	s8[8][9]: parameter change per weekday command 0-7 (command 4 uses the club row instead), parameter_up_down
+data	main	D_800B6928	club_activity_deltas	s8[12][9]: parameter change per club for the club plan
+data	main	D_800B41A0	girl_affection_weight	u8[13] percent weight applied to affection by get_h_yuukou (girl 0 = 83)
+data	main	D_800B4100	girl_tokimeki_weight	u8[13] percent weight applied to tokimeki by get_h_tokimeki
+data	main	D_800B3778	phone_numbers	13 rows of 7 digits
+data	main	D_800B3748	month_data_table	pointer table of month blobs, index (year - 95) * 12 + month - 4 (36 months); each blob: a 0x2000-byte calendar image, then words: day count, first weekday, n day kinds, n markers (only the low byte is kept); read by func_80068938
+data	main	D_800B5948	last_screen_mode	value returned by get_last_gamen_mode; selects the dec_bg draw variant
+data	main	D_800B593C	dec_bg_brightness	set by set_dec_bri; sprite tint of dec_bg_draw (0x80 neutral)
+data	main	D_800B5938	dec_bg_show	u8[4]: [0],[1] show flags of the two background slots, [1] of [2] is the active slot index
+data	main	D_800B5920	dec_bg_lba_cache	LBAs of the last backgrounds read per slot (skips repeated reads)
+data	main	D_800B5C08	mascot_choice	HYPOTHESIS: mascot menu result (14 items = 13 girls + none); 0 or >= 14 hides the mascot; saved in the free-icon block (unk_163C[34])
+data	main	D_8011ECF6	cursor_x	alias label inside actor_pool[0] (x); mouse/pad pointer x
+data	main	D_8011ECFA	cursor_y	alias label inside actor_pool[0] (y)
+field	GameState	unk_000	video_width	passed with unk_002/unk_004 to the display-mode call in func_8004F6B0; 0x140 at init, 0x100/0x200 set in func_80058D20 (3D init)
+field	GameState	unk_002	video_height	0xF0 at init and in func_80058D20; passed to the display-mode call
+field	GameState	unk_004	video_interlace	HYPOTHESIS: third argument of the display-mode call, 0 everywhere it is set
+field	GameState	unk_014	screen_center_x	index = draw buffer (D_8011ECA0); 0xA0 = 160 at init, shaken by func_80047560; sprite and primitive x are written as screen_center_x[buf] + x
+field	GameState	unk_018	screen_center_y	index = draw buffer; 0x168 for buffer 0 and 0x78 for buffer 1 at init (VRAM y of the buffer centre), shaken by func_80047560
+field	GameState	unk_01C	prim_arena	SetWorkBase/GetWorkBase: per draw buffer a bump allocator for GPU primitives (base, limit 0x10C00, used)
+field	GameState	unk_034	sound_active	main loop calls func_80079B34 (sound command pump) only while it is nonzero; 1 at init
+field	GameState	unk_035	card_busy	set by func_80053CE0, cleared by func_80053D10; gates the memory-card step machine func_80053F04
+field	GameState	unk_036	clear_color_r	passed with unk_037/unk_038 as r,g,b to the draw-environment clear call (func_8009824C) when back_clear is on; 0xFF = white on the title
+field	GameState	unk_037	clear_color_g	see clear_color_r
+field	GameState	unk_038	clear_color_b	see clear_color_r
+field	GameState	unk_039	back_clear	set by back_clear_switch(arg): clear the draw buffer with clear_color each frame
+field	GameState	unk_03A	screen_brightness	func_8004901C returns it; 0x80 = neutral (func_8004902C sets it); func_80049044 steps it by brightness_step per frame, clamped to a byte
+field	GameState	unk_03B	brightness_step	s8 fade speed per frame added to screen_brightness by func_80049044 (func_800490B4 sets it)
+field	GameState	unk_03C	voice_mode	OPTION/main settings: 0 always off, 1 always on, 2 on but cancelled by the cross button; dialogue and voice code test it
+field	GameState	unk_03D	vacation	0 school term, 1 summer break, 2 winter break, 3 spring break; set by func_800726F0 on the day before a break; selects the break music/background set (func_800674B0)
+field	GameState	unk_03E	year	calendar year modulo 100, rolled over in January by calendar_advance_day (func_80072338): 95 = April-December 1995, 96 and 97 full years, 98 = January-March 1998 (the ending starts in March); starts at 0x5F; compared 0x5F/0x60/0x61/0x62 in the event builders
+field	GameState	unk_03F	month	1-12; starts at 4; December rolls to month 1 and year + 1 in func_80072338
+field	GameState	unk_040	day	day of month 1-31; starts at 4
+field	GameState	unk_041	weekday	0 = Monday .. 6 = Sunday; starts at 1 (Tuesday 1995-04-04); calendar sprite frame is 0x52 + weekday
+field	GameState	unk_042	day_count	u16 days elapsed since the start; ++ in the day advance; compared 0x2D6/0x2DA (730) and /365 for the years
+field	GameState	unk_044	month_calendar	two MonthCalendar records: this month and next month (day kinds and event markers per day)
+field	GameState	unk_0C4	player_full_name	family + given name concatenated by NAME_ENT (func_80138C1C); initial text is a placeholder; saved in the 0x7C-byte profile block
+field	GameState	unk_0D4	player_family_name	8-byte buffer, up to 3 characters; copied to the {p} name buffer by func_800847B8; shown by gnsx
+field	GameState	unk_0DC	player_given_name	8-byte buffer, up to 3 characters; {m} buffer
+field	GameState	unk_0E4	player_nickname	16-byte buffer, up to 5 characters; used by get_p_name for the nickname form
+field	GameState	unk_0F4	player_flags	word view PlayerFlagBits (ScheduleFlags): bits 8-11 health state, 12-15 club, 16-20 flags, 21-23 recovery counter; OPTION debug page edits unk_08 and unk_12
+field	GameState	unk_0F6	player_flags_hi	upper halfword of player_flags: byte 0 = bits 16-23, byte 1 = career bits written by ETC and read by ENDING
+field	GameState	unk_0F8	player_birthday	GsDateBits word: month bits 0-3, day bits 4-8, blood type bits 9-10; initial 1/1; compared by birth_day_check(0xF)
+field	GameState	unk_0FC	param_condition	parameter 0 = condition; record {frac,value}; value capped 0..999 by check_para_limit
+field	GameState	unk_100	param_liberal_arts	parameter 1; order = table at 0x800B32D0 (condition, liberal arts, science, art, athletics, trivia, looks, guts, stress)
+field	GameState	unk_104	param_science	parameter 2
+field	GameState	unk_108	param_art	parameter 3
+field	GameState	unk_10C	param_athletics	parameter 4
+field	GameState	unk_110	param_trivia	parameter 5
+field	GameState	unk_114	param_looks	parameter 6
+field	GameState	unk_118	param_guts	parameter 7
+field	GameState	unk_11C	param_stress	parameter 8
+field	GameState	unk_120	progress_state	HYPOTHESIS: 0x9C bytes = 21 one-shot flag bytes (+0..0x14, set by HUD code), 9 command counters (+0x15, ++ per chosen command), and the 0x7C-byte profile snapshot at +0x20 that parameter_show_init compares with the live values to colour changes
+field	GameState	unk_1BC	girls	16 GirlRecords indexed by girl id (GIRL_*); 0-10 heroines, 11 Miharu, 12 Rei, 13/14 unused here
+field	GameState	unk_53C	girl_cleared	HYPOTHESIS: per-girl flag; the mascot menu lists girl i when this or the saved SystemData.flags[i] is set; ETC graduation counts them
+field	GameState	u54C	appointment_slots	8 appointment words (date promises), union AppointmentSlots; macros unk_54C -> appointments, unk_54C_0 -> next_appointment
+field	GameState	unk_56C	event_flags	one-shot event and progress bytes indexed by event number (set by DATE/GEKO/SHOUGATU/main); saved as a 0x100-byte block
+field	GameState	unk_66C	clubs	12 ClubRecords indexed by club id (CLUB_*), including CLUB_NONE
+field	GameState	unk_69C	day_events	32 DayEvent records: the queue of events for the coming days, built by the weekly queue builder (func_8006D7EC)
+field	GameState	unk_71C	day_event_index	read position in day_events; advanced by day_event_next
+field	GameState	unk_71D	events_today	HYPOTHESIS: ++ each time a girl encounter record (types 0x44/0x46/0x47) is run; cleared by func_8007259C each day
+field	GameState	unk_71E	daily_event_bits	per-day done byte, cleared by func_8007259C at the calendar advance of the queue reader and at the start of week_day_init (func_80073AD8); bits 1, 2 and 4 are the birthday bits the queue reader (day_event_dispatch) tests: bit 1 skips a type 0x32 record with sub-id 0 (Shiori's), bit 2 a type 0x32 record with a non-zero sub-id, bit 4 a type 0x33 record; HYPOTHESIS: bits 8, 0x10, 0x20, 0x40 and 0x80 are other done-today marks (set by DATE, DATE2, GEKO, SHUGAKU, SHOUGATU, VALEN and MASTER, tested by GEKO), meaning unknown; VALEN, KANGEI, OMIMAI, SHOUGATU, DATE2, MASTER and BUNKASAI set bit 4 (and DATE, MASTER, BUNKASAI, SHOUGATU bit 1) too, so these bits may mean a wider special-day-handled mark (HYPOTHESIS)
+field	GameState	unk_71F	daily_check_done	HYPOTHESIS: set to 1 before the telephone/appointment prompt (mode 0x43) and by the day-start code; cleared when a new queue is built
+field	GameState	unk_720	saved_mode	saved main mode to resume after a sub-scene (set from mode, restored with main_state_set)
+field	GameState	unk_721	saved_stage	saved stage, restored with main_stage_set
+field	GameState	unk_722	saved_step	saved step (often step + 1), restored with main_step_set; the stem is saved_ so it does not read like the developer function return_step
+field	GameState	unk_724	appt_place_0	HYPOTHESIS: recent appointment places; unk_725 is the newest (appointment_launch shifts the others), compared with unk_724 to detect a changed plan
+field	GameState	unk_725	appt_place_1	see appt_place_0
+field	GameState	unk_726	appt_place_2	see appt_place_0
+field	GameState	unk_727	appt_place_3	see appt_place_0
+field	GameState	unk_728	date_place_history	HYPOTHESIS: 4 places of the latest dates; DATE compares [0]==[1]==chosen place to detect a repeated place (sets player_flags bit 19)
+field	GameState	unk_72C	girl_last_date_spot	date spot of the last date with each girl (loops of 11): the DATE spot id D_80122D08, the same value that indexes the girl event_counters, not the Place enum; DATE stores it after a date when param_looks is at least 35 (30 for every girl except 7) and an in-range spot, with spot 8 stored as 7 and spot 6 as 5; picking the same spot again while girl_last_date_spot_timer is nonzero costs tokimeki 1, affection 2 and syoushin +5; values 0x23 and 0x24 are cleared by func_8006D038 (run daily by calendar_advance_day in months 3, 6, 9, 12); GEKO uses it as a ban-list index; saved with the game
+field	GameState	unk_73C	girl_last_date_spot_timer	weeks left in which girl_last_date_spot counts as a repeat: DATE sets 12 (0xC) whenever it stores a spot; last_date_spot_timer_dec (O.BIN name, called from schedule_init step 0) decrements every girl once per queue build, i.e. weekly, not daily; saved with the game
+field	GameState	unk_74C	girl_event_bits	HYPOTHESIS: one byte per girl; GEKO tests/sets bits 1, 2, 4 for scenes 0xE, 0xF, 7
+field	GameState	unk_75C	appointment_flag	copy of appointment_slots[0] bit 24, stored by appointment_launch
+field	GameState	unk_75D	date_girl	girl of the current date or event (copied from current_girl at launch); read by DATE, KANGEI, SHUGAKU, DATE2
+field	GameState	unk_75E	event_log	256 EventLogEntry records (girl, scene, rank, date) appended by event_log_add
+field	GameState	unk_F5E	event_log_count	number of valid entries in event_log, capped at 0xFE
+field	GameState	unk_F5F	current_girl	index of the girl record in use (1,219 uses); set by select_girl/change_girl and by the event launchers
+field	GameState	unk_F60	text_lines_total	HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step func_8005215C
+field	GameState	unk_F61	text_first_line	HYPOTHESIS: index of the first visible dialogue line in the text list
+field	GameState	unk_F62	text_scroll_state	HYPOTHESIS: bit 7 = scrolling active, low bits = phase of the two-line scroll
+field	GameState	unk_F64	quarter_flags	HYPOTHESIS: FlagsF64 bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (func_800722C4); TEL also sets bits
+field	GameState	unk_F68	last_command	low nibble = the weekday command chosen on the schedule screen (icon index; 0-7 = row of command_deltas, 4 = club activity; 0xE while no choice stands); bits 4-7 = the last holiday command; the queue builder copies the low nibble into every school-day record; LastCommandBits
+field	GameState	unk_F6C	icon_mode	settings: 0 = TYPE-A, 1 = TYPE-B, 2 = free layout (strings of the settings screen)
+field	GameState	unk_F6D	icon_count	number of icon actors shown (0xF in free mode, 0xE otherwise)
+field	GameState	unk_F6E	sd_anim_fast	toggled by pad 2 START (bit 27 of the pad word) in func_80042A00; an in-game hint names it the SD character animation speed switch: nonzero sets unk_06 to 0x82 on actors 96 and 97 of the week and holiday screens (HYPOTHESIS: the SD characters) and shortens the parameter-panel pop animation from 8 to 4 frames (parameter_show); saved with the game (save image byte 0xE1F)
+field	GameState	unk_F6F	cursor_speed	settings 1-5, default 3; step of the pad-driven cursor in func_8006BA40
+field	GameState	unk_F70	click_mode	mouse setting: 0 single click, 1 double click
+field	GameState	unk_F73	double_click_interval	mouse setting in frames: default 0x20, clamped 0x10..0x40
+field	GameState	unk_F74	input_device	0 = mouse, 1 = pad, 0xFF = none (from the controller id byte in func_80042AC8)
+field	GameState	unk_F75	confirm_button	mouse setting: 1 = right button confirms, 0 = left button
+field	GameState	unk_F77	mouse_buttons	mouse button bits (4 = right, 8 = left) tested with confirm_button
+field	GameState	unk_F7A	mouse_x	s16, cleared when the device changes
+field	GameState	unk_F7C	mouse_y	s16
+field	GameState	unk_F80	pad_held	buttons held (pad 1 low half, pad 2 high half, PsyQ bit layout; mouse buttons are folded in)
+field	GameState	unk_F84	pad_prev	previous frame's pad_held
+field	GameState	unk_F88	pad_pressed	~pad_prev & pad_held: buttons newly pressed this frame (355 uses)
+field	GameState	unk_F8C	pad_released	pad_prev & ~pad_held
+field	GameState	unk_F90	menu_items	16 x 2 MenuItem rects (menu 0 and 1) set by menu_set, tested by menu_check
+field	GameState	unk_1090	menu_count_0	item count of menu 0 (MenuSelection view at +0x1090)
+field	GameState	unk_1091	menu_count_1	item count of menu 1
+field	GameState	unk_1092	menu_mode	settings: 0 mouse-like, 1 menu A, 2 mouse-like + A (L1 held switches to the pad cursor), 3 menu B (directional cursor); stored value, not the screen item number (low 2 bits)
+field	GameState	unk_1093	menu_cursor_0	pad cursor item of menu 0 (-1 none)
+field	GameState	unk_1094	menu_cursor_1	pad cursor item of menu 1; settings screens switch on it after confirm
+field	GameState	unk_1095	menu_hit	menu_hit[menu] = item under the pointer/cursor (-1 none); bytes [3..6] double as the s32 actor_draw_last
+field	GameState	unk_10A2	tile_layer_enabled	func_80043510 calls srn_set(0) while nonzero; cleared by func_80085E30
+field	GameState	unk_10A5	quad_layer	0x43 bytes, one per SpriteQuad: bit 7 picks the primitive variant, low bits (v-1) the ordering-table depth
+field	GameState	unk_10E8	quads_enabled	func_80043510 draws the SpriteQuad table and BG layers while nonzero; set to 1 by scene setup
+field	GameState	unk_10EC	bg_layer_order	4 bytes, one per BgLayer slot; 0x80 = hidden, else ordering depth + 1
+field	GameState	unk_10F0	frame_hcount_limit	HYPOTHESIS: 0x106 scanline count; the frame waits for vsync only while the elapsed count is below it
+field	GameState	unk_10F4	timer_ticks	++ in the root-counter event callback (func_800423D4); used as the srand seed and for movie timing
+field	GameState	unk_10F8	frame_count	++ once per main-loop iteration; used for blinking, random jitter and periodic checks (% 240)
+field	GameState	unk_10FC	mode_timer	++ at the end of every main_state_dispatch call (not in paused frames), reset by every mode change
+field	GameState	unk_1100	stage_timer	reset by mode and stage changes; overlays count frames in it
+field	GameState	unk_1104	step_timer	frames in the current step; reset by every step, stage and mode change (582 uses)
+field	GameState	unk_1108	mode	main state; MainMode; set by main_state_set; dispatched by main_state_dispatch
+field	GameState	unk_1109	stage	stage inside the mode; main_stage_set / main_stage_next
+field	GameState	unk_110A	step	step inside the stage; main_step_set / main_step_next (1,152 uses)
+field	GameState	unk_110B	mode_scratch	s8, cleared on mode change; BUNKA_SD uses it as a brightness value
+field	GameState	unk_110C	stage_scratch	s8, cleared on mode and stage change; ETC/BUNKA_SD counters
+field	GameState	unk_110D	substep	cleared by step changes; the fourth level of the machine (1,535 uses; TEL, NAME_ENT, ETC, OLH switch on it)
+field	GameState	unk_110E	overlay_target_mode	mode that asked for an overlay; main_state_request_overlay stores it and runs mode 2 (loader); the loader returns to it
+field	GameState	unk_110F	restart_request	main loop leaves the frame loop and re-initialises when nonzero
+field	GameState	unk_1110	paused	frame handler runs func_80043504 instead of the mode dispatcher while 1
+field	GameState	unk_1111	pause_allowed	pad polling toggles paused on a pad bit only while 1
+field	GameState	unk_1112	actors_draw_enabled	func_80043510 calls actors_draw while it is 1 (set by actors_draw_enable)
+field	GameState	unk_1113	draw_3d_enabled	draw2d3d second argument; func_80043510 runs the GTE object pass while nonzero
+field	GameState	unk_1114	draw_2d_enabled	draw2d3d first argument; gates the sprite-quad pass
+field	GameState	unk_1115	card_result	memory-card event result (0x81..0x88 events, 0xF0/0xFF final codes)
+field	GameState	unk_111A	boot_hold	HYPOTHESIS: mode 1 waits until it is 0 and then starts mode 0
+field	GameState	unk_111B	card_job	1 while an asynchronous memory-card save/load started from the menu is pending; the poller ends it on result 0x13 (done) or timeout (card_timer > 0x200 / result 0xF0)
+field	GameState	unk_111C	card_step	step of the memory-card state machine (func_80053F04)
+field	GameState	unk_111D	card_retry_count	failed attempts; 3 or more aborts
+field	GameState	unk_1117	album_slot	index of the selected album/save slot (NameRecordF00 index)
+field	GameState	unk_1118	save_slot	memory-card slot number used by func_80054884
+field	GameState	unk_1120	card_timer	frames since the card operation began; > 0x200 = timeout
+field	GameState	unk_1124	options_dirty	bit mask of changed option groups (0x80/0x40/0x20/0x10/8); nonzero makes NAME_ENT/ETC save the settings
+field	GameState	unk_1128	tpage_req	64 per-frame texture-page slot states: 0x7FFF free, 0x7FFE resident (copied from tpage_buf by search_tpage(0x7FFF)), else the resource id requested this frame; a miss takes a free slot and queues the upload
+field	GameState	unk_1228	tpage_buf	64 texture-page slot contents (resource ids; 0 reserved, -1 free); tpage_buf_clear
+field	GameState	unk_1328	palette_queue	32 PaletteLoad records queued by load_palette and flushed by palette_load_vram
+field	GameState	unk_1428	palette_queue_count	fill count of palette_queue
+field	GameState	unk_1429	csr_queue_count	fill count of csr_queue
+field	GameState	unk_142C	csr_queue	33 CsrLoad records queued by load_csr_ab/load_csr_tp and flushed by csr_load_vram
+field	GameState	unk_163C	scratch_words	HYPOTHESIS: 128-word scratch used by TACO and the VRAM loaders; its first 0x50 bytes also hold the saved free-icon layout (main 8005A0B0)
+field	GameState	unk_183C	scratch_buffer	HYPOTHESIS: 0x200-byte overlay scratch; NAME_ENT stages a 128-word palette in it before load_palette (a copy of scratch_words or the col2sepia output), TACO keeps 25 (x, y) word pairs of a drawing effect in it
+field	GameState	unk_1A3C	overlay_tpage_table	HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into DisplayActor44.tpage_table of its actors
+field	GameState	unk_1A4C	overlay_frame_table	HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into DisplayActor44.frame_table of its actors
+field	GameState	unk_1A5C	overlay_sequence_table	HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into DisplayActor44.sequence_table of its actors
+field	GameState	unk_1A6C	overlay_palette_a	HYPOTHESIS: pointer to a palette block that TEL, NAME_ENT and TACO pass to load_palette; TACO also copies 128 words from it into scratch_words
+field	GameState	unk_1A7C	overlay_image_buffer	HYPOTHESIS: base address of six 0x4000-byte image blocks (NAME_ENT)
+field	GameState	unk_1A84	overlay_palette_b	HYPOTHESIS: pointer to a second palette block that NAME_ENT passes to func_80043914 (slot 0x18)
+field	Rec38	unk_00	tokimeki_frac	fraction half of the 16.16 word at +0; check_para_limit clears the word when the integer half is negative
+field	Rec38	unk_02	tokimeki	get_h_tokimeki reads it; capped 0..0x80 by check_para_limit
+field	Rec38	unk_04	affection_frac	fraction half of the word at +4
+field	Rec38	unk_06	affection	get_h_yuukou reads it; capped 0..0x80; yuukou_down decays it; init 0x32 for meeting events
+field	Rec38	unk_08	syoushin_frac	fraction half of the word at +8
+field	Rec38	unk_0A	syoushin	HYPOTHESIS: resentment counter; developer term kept (syoushin_up): +5 per weekly queue build while weighted affection < 10; check_para_limit allows 0..0xFF but girl_counters_clamp (run at the top of every queue-reader pass) clamps it to 0..0x80, so 0x80 is the working cap; >= 0x3C blocks encounters and phone calls; >= 0x4C forces an encounter (flag b16, re-armed once syoushin is below 0x32); >= 0x3D at day end queues a rumor report (flag b17, same re-arm)
+field	Rec38	unk_0C	flags	Rec38Flags / GirlFlags union
+field	Rec38	unk_10	birthday	GsDateBits word: month, day, blood type; compared by birth_day_check_days
+field	Rec38	unk_14	event_counters	HYPOTHESIS: 0x24 per-girl progress bytes indexed by event number (DATE, GEKO, TEL read them; [0] of girl 11 is decremented once per weekly queue build by day_events_build_week)
+field	CharFlags	b1	met	set for girls 0 and 12 at start and by the first-meeting events; tested by every list of known girls (146 uses)
+field	CharFlags	f20	club	club id (CLUB_*) of the girl: set by NAME_ENT from the player's profile, 11 = none
+field	CharFlags	f9	story_stage	HYPOTHESIS: 3-bit per-girl story counter (+1 by SHOUGATU events, compared to 3/4 in main and ENDING)
+field	CharFlags	b16	encounter_done	HYPOTHESIS name: set by day_event_dispatch when it starts the forced encounter (mode 0x59) for a met girl with syoushin >= 0x4C; cleared again by girl_counters_clamp whenever her syoushin is below 0x32, so the encounter can fire again later
+field	CharFlags	b17	rumor_done	HYPOTHESIS name: set by day_event_dispatch for every met girl with syoushin >= 0x3D when it queues the rumor report (mode 0x44); cleared by girl_counters_clamp whenever her syoushin is below 0x32
+field	GsRec0FC	unk_00	frac	fraction half of the 16.16 parameter
+field	GsRec0FC	unk_02	value	parameter value 0..999 (0x3E7 cap)
+field	GsRec66C	unk_00	exp	HYPOTHESIS: club practice points (KANGEI +2, thresholds 0x64/0xC8/0x164, ETC >> 4, 0x19B)
+field	GsRec66C	unk_02	level	HYPOTHESIS: low nibble read through a u16 view is a team level; RENSYU adds 5, MASTER compares 8/10
+field	GsRec69C	unk_00	type	DayEventType
+field	GsRec69C	unk_01	girl	girl id (command id for school-day records)
+field	GsRec69C	unk_02	scene	scene id (command check result for school-day records)
+field	GsRec69C	unk_03	extra	chosen girl for school-day records (func_8006F524 result)
+field	GsRec75E	unk_00	girl	current_girl when the entry was logged
+field	GsRec75E	unk_01	flag	second argument of event_log_add
+field	GsRec75E	unk_02	scene	first argument of event_log_add
+field	GsRec75E	unk_03	rank	get_g_zyotai_h(girl) at that time, 0 (best) to 4; this is not the get_g_zyotai_s value that girl_state_rank returns, the two have different thresholds; D_80122D48 - 1 replaces it when the override is 1-6; 0 for girl 12
+field	GsRec75E	unk_04	year	calendar year
+field	GsRec75E	unk_05	month	calendar month
+field	GsRec75E	unk_06	day	calendar day
+field	GsRec75E	unk_07	weekday	calendar weekday
+field	GsRecF90	unk_00	x	menu_set stores the x array
+field	GsRecF90	unk_02	y	y array
+field	GsRecF90	unk_04	w	width; 0 with h = 0 disables the item
+field	GsRecF90	unk_05	h	height
+field	GsRecF90	unk_06	hover	set by menu_check_1/2 for the item under the pointer or cursor (10 for the pad cursor)
+field	GsRecF90	unk_07	disabled	1 when w * h == 0
+field	GsRec044	unk_00	day_kind	[0] = days in the month, [d] = DayKind of day d
+field	GsRec044	unk_20	marker	[0] = weekday of the 1st, [d] = CalendarMarker of day d
+field	GsRec01C	unk_00	size	set to 0x10C00 by SetWorkBase
+field	GsRec01C	unk_04	used	bump offset (GetWorkBase adds the size rounded up to 4; the address is base + used * 4)
+field	GsRec01C	unk_08	base	arena base address
+field	GsRec1328	unk_00	source	palette data pointer
+field	GsRec142C	unk_00	source	image data pointer
+field	GsRec142C	unk_04	slot	tpage slot (arg & 0x1F)
+field	GsDateBits	unk_09	blood_type	2-bit blood type; NAME_ENT's NameProfileFlags view of the same bits calls it blood_type
+field	ScheduleFlags	unk_08	health	HealthState
+field	ScheduleFlags	unk_12	club	player's club id (CLUB_*)
+field	ScheduleFlags	unk_21	recovery_days	3-bit counter set to 3 after a recovery; decremented through +0xF6 (grace period)
+field	ScheduleEntryFlags	unk_00	place	place id + 1 (0 = none)
+field	ScheduleEntryFlags	b24	flag	copied to appointment_flag
+field	ScheduleEntryFlags	unk_25	girl	girl id of the appointment
+field	DialogueWork	unk_00	scene	scene id of the running event (D_80122CD0)
+field	DialogueWork	unk_04	girl	girl id of the running event (D_80122CD4)
+field	Work800E7D10	unk_000	seed	word stepped by 0x377 per timer tick; NAME_ENT seeds srand with it; also indexes girl lists (% 11)
+field	Entry8	unk_00	x	text list entry x
+field	Entry8	unk_02	y	y
+field	Entry8	unk_04	attr	attribute/colour
+field	Entry8	unk_05	glyph_count	glyphs of the string (summed by k_reset/k_disp_start)
+field	Entry8	unk_06	extra	extra argument of set_kanji_string
+field	Entry8	unk_07	active	1 when the entry holds a string
+field	DisplayActor44	unk_02	flags	bit 7 hidden, bit 6 draw by direct frame index instead of the sequence table
+field	DisplayActor44	unk_03	draw_flags	bit 7 visible, bit 6 blink with unk_06, bit 3 limit to 4 parts, bit 0 mirror
+field	DisplayActor44	unk_06	blink_period	with draw_flags bit 6: drawn only when frame_count % (period + 1) != 0
+field	DisplayActor44	unk_07	brightness	0x80 = neutral (actor_clear); BUNKA_SD writes fade values
+field	DisplayActor44	unk_0C	frame_table	table of SpriteFrame pointers (default sprite_frame_table)
+field	DisplayActor44	unk_10	sequence_table	table of frame sequences (default D_800C9A14)
+field	DisplayActor44	unk_16	sequence_slot	index into sequence_table
+field	DisplayActor44	unk_18	frame	frame index (direct) or step inside the sequence
+field	DisplayActor44	unk_1A	scale_x	HYPOTHESIS: 0x1000 = 1.0 (actor_clear default)
+field	DisplayActor44	unk_1C	scale_y	HYPOTHESIS: 0x1000 = 1.0
+field	DisplayActor44	unk_20	rotation	copied as a word by actors_draw
+field	DisplayActor44	unk_24	x_frac	fraction of the 16.16 x position
+field	DisplayActor44	unk_26	x	integer x (screen coordinates, origin at the centre); cursor_x is actor 0's
+field	DisplayActor44	unk_28	y_frac	fraction of y
+field	DisplayActor44	unk_2A	y	integer y; cursor_y is actor 0's
+field	DisplayActor44	unk_2C	dx_frac	HYPOTHESIS: x step per frame
+field	DisplayActor44	unk_2E	dx	HYPOTHESIS: integer part of the x step; the parameter panel (parameter_show) also uses it as a 0/1/2 animation phase
+field	DisplayActor44	unk_30	dy_frac	HYPOTHESIS: y step per frame
+field	DisplayActor44	unk_32	dy	HYPOTHESIS: integer part of the y step
+field	DisplayActor44	unk_34	tpage_table	pointer to the tpage id table (default D_800C9730); bit 31 of its first word marks it usable
+field	DisplayActor44	unk_38	quad_flags	copied to SpriteQuad.flags (bit 31 hidden, bit 30 semi-transparent)
+field	DisplayFixActor44	unk_24	x	Fix32 16.16 x
+field	DisplayFixActor44	unk_28	y	Fix32 16.16 y
+field	DisplayFixActor44	unk_2C	dx	step word
+field	DisplayFixActor44	unk_30	dy	step word
+field	DisplayFixActor44	unk_0C	frame_table	see Actor
+field	DisplayFixActor44	unk_10	sequence_table	see Actor
+field	DisplayFixActor44	unk_16	sequence_slot	see Actor
+field	DisplayFixActor44	unk_18	frame	see Actor
+field	DisplayFixActor44	unk_34	tpage_table	see Actor
+field	DisplayFixActor44	unk_38	quad_flags	see Actor
+field	DisplayFixActor44	unk_02	flags	see Actor
+field	DisplayFixActor44	unk_03	draw_flags	see Actor
+field	Rec24	unk_00	flags	bit 31 hidden, bit 30 semi-transparent
+field	Rec24	unk_04	x	screen position before the screen_center offset
+field	Rec24	unk_06	y	screen position
+field	Rec24	unk_08	w	width
+field	Rec24	unk_0A	h	height
+field	Rec24	unk_14	tint_r	sprite_brightness writes the same value to +0x14..+0x16
+field	Rec24	unk_15	tint_g	see tint_r
+field	Rec24	unk_16	tint_b	see tint_r
+field	Rec24	unk_18	anchor_x	subtracted from x
+field	Rec24	unk_1A	anchor_y	subtracted from y
+field	GameState	unk_54C	appointments	MACRO ALIAS, not a struct member (#define unk_54C u54C.a in include/main_api.h): rename the macro; macro for u54C.a (GsWord[8]); every use becomes appointments[i]
+field	GameState	unk_54C_0	next_appointment	MACRO ALIAS, not a struct member (#define unk_54C_0 u54C.e0 in include/main_api.h): rename the macro; macro for u54C.e0 (bit view of entry 0, the earliest appointment)
+type	main	WordBytes4	WordBytes	word/bytes union view of D_801255D0 (CD state); size suffix dropped
+type	main	DialogueVoice8	DialogueVoiceRef	leaf of the dialogue voice table (two words per line)
+type	main	DialogueBytes16	DialogueSelectors	16 byte selectors copied to the dialogue handler's stack
+type	main	Rec34Flags	LegacyGirlFlags	flag word of the 0x34-byte girl record that the dead EVENT overlay was linked against
+type	main	Rec34	LegacyGirlRecord	EVENT overlay's older GirlRecord layout (D_800B0A04 in its linked main layout; same s16 fields at +0..+0xA); EVENT is never loaded
+type	main	GsDateBits	BirthdayBits	month bits 0-3, day bits 4-8, blood type bits 9-10 (player word and GirlRecord.birthday)
+type	main	GsWord	WordView	word/halves/bytes/date union used for pad words, flag words and packed fields
+type	main	GsEntry54C	AppointmentEntry	bit view of one appointment word (place, month, day, flag, girl, active)
+type	main	GsSlot54C	AppointmentSlots	8 appointment words plus the first-entry bit view; macros unk_54C/unk_54C_0 read through it
+type	main	GsHalf	HalfView	halfword/bytes union (player_flags halves)
+type	main	NameMetric4	AlbumParam	one saved parameter value of an album slot (metrics[9][16] of SystemData): s16 value at +2
+type	main	WorkSetBits	TacoSettingsBits	HYPOTHESIS: settings bits at SystemData +0x40 (saved flag, mode, selectors); read by TACO
+type	main	Work800E7D10	SystemData	0xEE0-byte area after GameState: random word, album slot table, per-girl persistent flags, TACO settings, names and parameters of 16 album slots, club bytes; saved in the system file
+type	main	CharFlags	GirlFlagBits	bit-field view of GirlRecord.flags (met, club, story stage, event bits)
+type	main	FlagsF64	QuarterFlagBits	bit-field view of GameState.quarter_flags
+type	main	Rec38Flags	GirlFlags	union of GirlRecord.flags views (word, halves, bytes, GirlFlagBits)
+type	main	Rec38	GirlRecord	0x38-byte per-girl record in GameState.girls[16]: tokimeki, affection, syoushin counters, flags, birthday, event counters
+type	main	Rec24	SpriteQuad	0x24-byte textured quad drawn by sprite_set_gpu_poly_ft4: position, size, uv, tint, flags (bit 31 hidden, bit 30 semi-transparent); table D_801217D0
+type	main	Work80125D10	AudioState	0x50-byte work area used by the sound driver (80079B10) and the CD audio code; unk_44/unk_48 are CD command buffers
+type	main	GsRec01C	PrimArena	per draw buffer: size 0x10C00, used offset, base address (SetWorkBase/GetWorkBase)
+type	main	GsRec044	MonthCalendar	day_kind[0x20] ([0] = days in month) and marker[0x20] ([0] = weekday of the 1st) of one month
+type	main	GsRec0FC	ParamValue	one player parameter: 16.16 fixed point, frac at +0, value at +2
+type	main	GsRec66C	ClubRecord	per club: u16 exp at +0, level byte at +2, flag byte at +3 (ClubFlagBits view of the word)
+type	main	GsRec69C	DayEvent	queue record: type, girl, scene, flags
+type	main	GsRec75E	EventLogEntry	girl, flag, scene, rank (get_g_zyotai_h), year, month, day, weekday
+type	main	GsRecF90	MenuItem	menu item rectangle x, y, w, h, hover flag, disabled flag
+type	main	GsRec1328	PaletteLoad	queued palette upload: source pointer and 4 parameter bytes
+type	main	GsRec142C	CsrLoad	queued image upload: source pointer, tpage slot, rect (x, y, w, h)
+type	main	KWork	TextState	text list state: entry count, total glyphs, mark, speed, shown glyph position
+type	main	Flags7D4F	ExtraModeFlags	HYPOTHESIS: byte D_800E7D4F (TT unlock bit, festival return mode bits) in SystemData
+type	main	SpriteCell8	BgCell	PsyQ GsCELL layout
+type	main	SpriteMap10	BgMap	PsyQ GsMAP layout
+type	main	SpriteIndex80	BgMapIndex	cell index array of one BG slot
+type	main	Ring18	CdCommand	entry of the 48-slot CD command ring: command, argument, 16 data bytes
+type	main	StrDecEnv30	StrDecEnv	PsyQ movie sample DECENV; size suffix dropped
+type	main	SaveSettings20	SaveConfigBlock	HYPOTHESIS: 0x14-byte settings record copied by the save routines; protection flag in the last byte
+type	main	SaveSettings24	SaveTacoSettings	HYPOTHESIS: 0x18-byte copy of SystemData +0x40.. (settings bits, three names, three words)
+type	main	SaveMetricWord	SaveAlbumParam	word/AlbumParam union of the system-file image
+type	main	SaveImageView	SystemSaveImage	0xF00 byte image of SystemData as written to the memory card
+type	main	SaveWorkView	SystemDataSaveView	0x58-byte view of the SystemData prefix with the two settings records
+type	main	GsBlockC4	ProfileBlock	GameState +0xC4..+0x140: names, flags, birthday and the nine parameters as saved (0x7C bytes)
+type	main	GsBlock56C	EventFlagBlock	GameState +0x56C..+0x66C as saved (event_flags, 0x100 bytes)
+type	main	SaveGameView	GameSaveImage	0xF00 byte memory-card image of one game save; comments name the GameState source of each field
+type	main	Entry8	TextEntry	8-byte entry of text_list: x, y, attribute, glyph count, extra, visible
+type	main	FileReq	CardFileRequest	stack request of the memory-card file functions: 32-byte name and retry counter
+type	main	MenuIconBits	LastCommandBits	weekday command (bits 0-3) and holiday command (bits 4-7) nibbles of GameState.last_command
+type	main	DisplayActor44	Actor	0x44-byte display actor in actor_pool[160]: sprite frame tables, 16.16 position, scale, rotation, brightness; size suffix dropped
+type	main	DisplayFixActor44	ActorFixed	Actor with +0x24/+0x28 as 16.16 words (units that move actors in fixed point)
+type	main	DisplayImagePart0E	SpritePart	one part of a sprite frame: uv, size, offset, flags
+type	main	DisplayImage78	SpriteFrame	sprite frame: part count, origin and up to 8 SpriteParts
+type	main	DisplayColorPair4	ColorPair555	two packed 5:5:5 colours interpolated by screen_frame_draw
+type	main	BunkaDispatch8	CultureFestivalDispatch	HYPOTHESIS: the word pair D_80122EB8 shared by BUNKASAI and BUNKAKEN
+type	main	SpriteSlot24	BgLayer	0x24-byte PsyQ GsBG-style layer at D_801220D0 (2 slots)
+type	main	GsByteNibbles	NibbleView	low/high nibble byte view
+type	main	ScheduleFlags	PlayerFlagBits	bit view of GameState.player_flags (health, club, flags, recovery counter)
+type	main	ScheduleClubFlags	ClubFlagBits	bit view of a ClubRecord word
+type	main	ScheduleEntryDate	AppointmentDate	month and day halves of an appointment word
+type	main	ScheduleEntryFlags	AppointmentBits	bit view of an appointment word (same layout as AppointmentEntry)
+type	main	NameRecordF00	AlbumSlotRecord	0xF00-byte album slot record read by NAME_ENT and main
+type	main	ScheduleGirlFlags	GirlFlagBitsSched	extra bit view of GirlRecord.flags used by the schedule builder
+type	main	CallPair8	AudioRequestPair	two words passed to cd_audio_request_set (NAME_ENT table rows)
+type	main	SrnRec28	SrnLayer	0x28-byte record of the srn_* tile-layer routines (D_80121750)
+type	main	ModRec14	ModTileSet	0x14-byte tile-set record of the mod_* routines (D_801217A0)
+type	main	StateClearBytes100	GameStateClearBlock	byte view used to clear GameState +0x56C..+0x66C (event_flags and clubs) in one block
+type	main	DrawEnv60	DrawEnvCopy	stack copy of the PsyQ DRAWENV
+type	main	DispEnv14	DispEnvCopy	stack copy of the PsyQ DISPENV
+type	main	SprEnt	SpriteQuadView	second view of SpriteQuad (+0x0A is s16 here, u16 in SpriteQuad); merge candidate once the match allows
+type	main	GsF6Bits	PlayerFlagsHiBits	bit view of the byte at GameState +0xF6 (player_flags_hi byte 0)
+type	main	F6Bits	RecoveryCounterBits	bit view of the same byte with the 3-bit recovery counter in bits 5-7
+type	main	CdRingView	CdRingState	head, tail, status and phase bytes D_80125128..D_8012512B of the CD command ring
+type	main	Pix2In	PixelPairIn	two 5:5:5 pixels read by the colour-bar conversion func_8004B590
+type	main	Pix2Out	PixelPairOut	two 5:5:5 pixels written by func_8004B590
+type	main	ModelRec88	ModelRecord	0x88-byte model record of the 3D init code; size suffix dropped
+type	main	MouseOut	MouseSample	three-word mouse state returned by func_80059860
+type	main	MenuSelection5	MenuSelection	count[2], mode and cursor[2] bytes at GameState +0x1090; the view the menu code casts to
+const	GirlId	0	GIRL_SHIORI	name table 0x800B3480 entry 0; init flag met=1; GirlRecord index 0
+const	GirlId	1	GIRL_MIO	name table entry 1
+const	GirlId	2	GIRL_YUINA	name table entry 2
+const	GirlId	3	GIRL_AYAKO	name table entry 3
+const	GirlId	4	GIRL_SAKI	name table entry 4
+const	GirlId	5	GIRL_YUKARI	name table entry 5
+const	GirlId	6	GIRL_NOZOMI	name table entry 6
+const	GirlId	7	GIRL_MIRA	name table entry 7
+const	GirlId	8	GIRL_YUKO	name table entry 8
+const	GirlId	9	GIRL_MEGUMI	name table entry 9 (given name of the Mikihara entry)
+const	GirlId	10	GIRL_YUMI	name table entry 10
+const	GirlId	11	GIRL_MIHARU	name table entry 11
+const	GirlId	12	GIRL_REI	name table entry 12 (the rival); init flag met=1
+const	GirlId	13	GIRL_YOSHIO	name table entry 13 (friend, information giver); change_yoshio
+const	GirlId	14	GIRL_SOTOI	name table entry 14 (butler)
+const	GirlId	15	GIRL_PLAYER	birth_day_check_days(0xF) reads the player's own birthday word; the name tables hold a spare given name at index 15
+const	Parameter	0	PARAM_CONDITION	table 0x800B32D0 entry 0, GameState.param_condition
+const	Parameter	1	PARAM_LIBERAL_ARTS	entry 1
+const	Parameter	2	PARAM_SCIENCE	entry 2
+const	Parameter	3	PARAM_ART	entry 3
+const	Parameter	4	PARAM_ATHLETICS	entry 4
+const	Parameter	5	PARAM_TRIVIA	entry 5
+const	Parameter	6	PARAM_LOOKS	entry 6
+const	Parameter	7	PARAM_GUTS	entry 7
+const	Parameter	8	PARAM_STRESS	entry 8
+const	Month	1	MONTH_JANUARY	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	2	MONTH_FEBRUARY	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	3	MONTH_MARCH	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	4	MONTH_APRIL	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	5	MONTH_MAY	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	6	MONTH_JUNE	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	7	MONTH_JULY	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	8	MONTH_AUGUST	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	9	MONTH_SEPTEMBER	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	10	MONTH_OCTOBER	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	11	MONTH_NOVEMBER	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	12	MONTH_DECEMBER	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Weekday	0	WEEKDAY_MONDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	1	WEEKDAY_TUESDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	2	WEEKDAY_WEDNESDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	3	WEEKDAY_THURSDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	4	WEEKDAY_FRIDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	5	WEEKDAY_SATURDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	6	WEEKDAY_SUNDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Club	0	CLUB_LITERATURE	club_name_table entry 0
+const	Club	1	CLUB_DRAMA	entry 1
+const	Club	2	CLUB_SCIENCE	entry 2
+const	Club	3	CLUB_COMPUTER	entry 3 (the table says 'denno', cyber)
+const	Club	4	CLUB_ART	entry 4
+const	Club	5	CLUB_BRASS_BAND	entry 5; NAME_ENT assigns Ayako 4 or 5
+const	Club	6	CLUB_BASEBALL	entry 6; Saki 6 or 7
+const	Club	7	CLUB_SOCCER	entry 7
+const	Club	8	CLUB_TENNIS	entry 8; Yukari
+const	Club	9	CLUB_SWIMMING	entry 9; Nozomi
+const	Club	10	CLUB_BASKETBALL	entry 10; Yumi
+const	Club	11	CLUB_NONE	entry 11; initial GirlRecord club for Mira, Yuko, Megumi, Miharu; player club 11 = no club
+const	Place	0	PLACE_NEIGHBORHOOD_PARK	date place table 0x800B3340 entry 0; appointment words store place + 1
+const	Place	1	PLACE_KIRAMEKI_CENTRAL_PARK	date place table 0x800B3340 entry 1; appointment words store place + 1
+const	Place	2	PLACE_SHOPPING_STREET	date place table 0x800B3340 entry 2; appointment words store place + 1
+const	Place	3	PLACE_AQUARIUM	date place table 0x800B3340 entry 3; appointment words store place + 1
+const	Place	4	PLACE_ZOO	date place table 0x800B3340 entry 4; appointment words store place + 1
+const	Place	5	PLACE_BOTANICAL_GARDEN	date place table 0x800B3340 entry 5; appointment words store place + 1
+const	Place	6	PLACE_PLANETARIUM	date place table 0x800B3340 entry 6; appointment words store place + 1
+const	Place	7	PLACE_ART_MUSEUM	date place table 0x800B3340 entry 7; appointment words store place + 1
+const	Place	8	PLACE_LIBRARY	date place table 0x800B3340 entry 8; appointment words store place + 1
+const	Place	9	PLACE_GAME_CENTER	date place table 0x800B3340 entry 9; appointment words store place + 1
+const	Place	10	PLACE_BOWLING_ALLEY	date place table 0x800B3340 entry 10; appointment words store place + 1
+const	Place	11	PLACE_KARAOKE	date place table 0x800B3340 entry 11; appointment words store place + 1
+const	Place	12	PLACE_AMUSEMENT_PARK	date place table 0x800B3340 entry 12; appointment words store place + 1
+const	Place	13	PLACE_STADIUM	date place table 0x800B3340 entry 13; appointment words store place + 1
+const	Place	14	PLACE_MOVIE_THEATER	date place table 0x800B3340 entry 14; appointment words store place + 1
+const	Place	15	PLACE_CONCERT_HALL	date place table 0x800B3340 entry 15; appointment words store place + 1
+const	Place	16	PLACE_POOL	date place table 0x800B3340 entry 16; appointment words store place + 1
+const	Place	17	PLACE_SEA	date place table 0x800B3340 entry 17; appointment words store place + 1
+const	Place	18	PLACE_SHRINE	date place table 0x800B3340 entry 18; appointment words store place + 1
+const	Place	19	PLACE_SKATING_RINK	date place table 0x800B3340 entry 19; appointment words store place + 1
+const	Place	20	PLACE_SKI_RESORT	date place table 0x800B3340 entry 20; appointment words store place + 1
+const	HealthState	0	HEALTH_OK	player_flags bits 8-11 clear
+const	HealthState	1	HEALTH_INJURED	set by func_80073198 (injury message), cleared by func_800734C4
+const	HealthState	2	HEALTH_NEUROSIS	set by func_800732F8 (neurosis message)
+const	HealthState	3	HEALTH_SICK	set by func_800733D8 (illness message); halves parameter gains; triggers sick visits (event 0x47)
+const	Vacation	0	VACATION_NONE	school term
+const	Vacation	1	VACATION_SUMMER	func_800726F0: month 7 announcement that the break starts tomorrow
+const	Vacation	2	VACATION_WINTER	month 12 announcement
+const	Vacation	3	VACATION_SPRING	month 3 announcement
+const	DayKind	0	DAY_KIND_SCHOOL_DAY	month_calendar.day_kind; 0 and 3 both produce school-day command screens
+const	DayKind	1	DAY_KIND_SUNDAY	initial table: Sundays are 1
+const	DayKind	2	DAY_KIND_HOLIDAY	initial table: national holidays (April 29, May 3-5) are 2
+const	DayKind	3	DAY_KIND_VACATION_DAY	HYPOTHESIS: break weekday; vacation-only random events are gated on kind 3 with vacation 1 or 2
+const	CalendarMarker	0	MARKER_NONE	month_calendar.marker[day]
+const	CalendarMarker	1	MARKER_START_DAY	HYPOTHESIS: set once on the first day (1995-04-04); no calendar mark (frame table D_800B5C10 has no entry for 0 and 1)
+const	CalendarMarker	2	MARKER_NOTICE_A	HYPOTHESIS: pushes a day-notice record (0xFD); in year 96 also the Yumi meeting, in year 97 career guidance
+const	CalendarMarker	4	MARKER_SPORTS_FESTIVAL	pushes DAY_EVENT_SPORTS_FESTIVAL
+const	CalendarMarker	5	MARKER_EXAM	exam period: school days become DAY_EVENT_EXAM
+const	CalendarMarker	6	MARKER_NOTICE_B	HYPOTHESIS: day-notice record
+const	CalendarMarker	8	MARKER_CLUB_SEASON	HYPOTHESIS: next 6 days become club tournament (0x25) or club camp (0x42) records
+const	CalendarMarker	10	MARKER_NOTICE_C	HYPOTHESIS: day-notice record
+const	CalendarMarker	11	MARKER_SCHOOL_TRIP	pushes DAY_EVENT_SCHOOL_TRIP and a holiday week
+const	CalendarMarker	12	MARKER_CULTURE_FESTIVAL	pushes DAY_EVENT_CULTURE_FESTIVAL
+const	CalendarMarker	13	MARKER_CHRISTMAS_PREP	pushes DAY_EVENT_CHRISTMAS_PREP
+const	CalendarMarker	14	MARKER_NOTICE_D	HYPOTHESIS: day-notice record
+const	CalendarMarker	15	MARKER_NEW_YEAR_PREP	pushes DAY_EVENT_NEW_YEAR_PREP
+const	CalendarMarker	16	MARKER_NOTICE_E	HYPOTHESIS: day-notice record
+const	CalendarMarker	17	MARKER_VALENTINE	pushes DAY_EVENT_VALENTINE
+const	CalendarMarker	18	MARKER_CAREER_CHOICE	year 98 only: DAY_EVENT_CAREER_CHOICE
+const	CalendarMarker	19	MARKER_SEASONAL_PARTY	pushes DAY_EVENT_SEASONAL_PARTY
+const	CalendarMarker	20	MARKER_NOTICE_F	HYPOTHESIS: day-notice record
+const	DayEventType	0x00	DAY_EVENT_SCHOOL_DAY	-> mode 0x40; unk_01 = weekday command, unk_02 = command check result, unk_03 = chosen girl
+const	DayEventType	0x10	DAY_EVENT_HOLIDAY	-> mode 0x46
+const	DayEventType	0x20	DAY_EVENT_SPORTS_FESTIVAL	-> mode 0x72 (TAIIKU)
+const	DayEventType	0x24	DAY_EVENT_CULTURE_FESTIVAL	-> mode 0x70 when the player's club id < 6, else 0x71
+const	DayEventType	0x25	DAY_EVENT_CLUB_MASTER_A	HYPOTHESIS: club tournament/award scene -> mode 0x74 (MASTER)
+const	DayEventType	0x26	DAY_EVENT_CLUB_MASTER_B	HYPOTHESIS: -> mode 0x75
+const	DayEventType	0x27	DAY_EVENT_CLUB_MASTER_C	HYPOTHESIS: -> mode 0x76
+const	DayEventType	0x28	DAY_EVENT_CHRISTMAS_PREP	-> mode 0x42 (pre_xmas)
+const	DayEventType	0x2C	DAY_EVENT_NEW_YEAR_PREP	-> mode 0x41 (pre_syogatu)
+const	DayEventType	0x30	DAY_EVENT_SEASONAL_PARTY	HYPOTHESIS name (English form of the overlay prefix; the overlay SHOUGATU is the New Year one and the calendar marker 19 is the seasonal party): -> mode 0x55
+const	DayEventType	0x31	DAY_EVENT_VALENTINE	-> mode 0x54 (VALEN)
+const	DayEventType	0x32	DAY_EVENT_GIRL_BIRTHDAY	-> mode 0x57 (GEKO); built from birth_day_check_days for a met girl
+const	DayEventType	0x33	DAY_EVENT_PLAYER_BIRTHDAY	-> mode 0x56 (GEKO); built from the player's birthday
+const	DayEventType	0x40	DAY_EVENT_EXAM	-> mode 0x35 (ETC)
+const	DayEventType	0x41	DAY_EVENT_SCHOOL_TRIP	-> mode 0x51 (SHUGAKU)
+const	DayEventType	0x42	DAY_EVENT_CLUB_CAMP	HYPOTHESIS name (the KANGEI overlay is rated low confidence): -> mode 0x5F (KANGEI); six in a row for a club member in the club season
+const	DayEventType	0x43	DAY_EVENT_CAREER_GUIDANCE	-> mode 0x36 (ETC)
+const	DayEventType	0x44	DAY_EVENT_GIRL_ENCOUNTER	HYPOTHESIS name (the overlay prefix GEKO stays untranslated until understood): placeholder resolved by schedule_girls_gakko into 0x45, 0x46, an encounter (-> mode 0x59, GEKO) or skipped
+const	DayEventType	0x45	DAY_EVENT_SPECIAL_EVENT	unk_01 girl, unk_02 scene -> mode 0x5D
+const	DayEventType	0x46	DAY_EVENT_GIRL_INVITATION	-> mode 0x5A (date_sasoi_judge: a girl invites the player)
+const	DayEventType	0x47	DAY_EVENT_SICK_VISIT	-> mode 0x61 (OMIMAI); unk_01 = visiting girl
+const	DayEventType	0x48	DAY_EVENT_MEETING	HYPOTHESIS name: unk_01 girl, unk_02 scene; sets affection 0x32 and counter 0 -> mode 0x5B (SHOUGATU 0x80137144 hosts generic scenes: it switches on a scene variable, so "meeting" is not proven)
+const	DayEventType	0x49	DAY_EVENT_AMUSEMENT_PARK	-> mode 0x58 (DATE2)
+const	DayEventType	0x4A	DAY_EVENT_CAREER_CHOICE	-> mode 0x37 (ETC)
+const	DayEventType	0x80	DAY_EVENT_APPOINTMENT	written by appointment_launch (unk_01 girl, unk_02 place); mode 0x50 reads it
+const	DayEventType	0xFA	DAY_EVENT_SKIP	index skipped by the queue reader
+const	DayEventType	0xFB	DAY_EVENT_DAY_END	handled inside the reader (phone-call and rumor checks, index + 1, calendar_advance_day); one per day except Sunday
+const	DayEventType	0xFC	DAY_EVENT_WEEK_END	-> mode 0x32 (weekly check: injury, neurosis, illness, recovery); after Saturday
+const	DayEventType	0xFD	DAY_EVENT_DAY_NOTICE	HYPOTHESIS: announcement screen; -> mode 0x39
+const	DayEventType	0xFE	DAY_EVENT_MONTH_START	-> mode 0x38 (placed first when the queue crosses a month end)
+const	DayEventType	0xFF	DAY_EVENT_NONE	cleared slot = end of the queue; the reader leaves for mode 0x34 (command screen)
+const	MainMode	0x00	MODE_BOOT	func_8005A06C; stage 0 runs the boot sequence, then mode 0x12
+const	MainMode	0x01	MODE_BOOT_WAIT	HYPOTHESIS: waits for boot_hold == 0 then mode 0
+const	MainMode	0x02	MODE_OVERLAY_LOAD	overlay loader state machine (func_80078A0C); resumes overlay_target_mode
+const	MainMode	0x03	MODE_CALL_ENTRY	calls the entry pointer D_80123110 without a loader message
+const	MainMode	0x10	MODE_START	initial mode set by game_state_init; func_80062C28 prepares the screen and switches to 0
+const	MainMode	0x11	MODE_PROLOGUE	NAME_ENT entry 0x80144AD0 (voiced prologue lines); also started by the title idle timeout
+const	MainMode	0x12	MODE_TITLE	func_80062840: four title stages; main_state_set(0x12) from game_reset_to_title
+const	MainMode	0x13	MODE_NAME_ENTRY	NAME_ENT 0x8014231C: new game, name and birthday entry
+const	MainMode	0x14	MODE_NAME_ENT_3	NAME_ENT 0x8013209C; role not settled (NAME_ENT analyst to rename)
+const	MainMode	0x15	MODE_NAME_ENT_4	NAME_ENT 0x8014AF28; role not settled
+const	MainMode	0x20	MODE_OPTION	OPTION 0x801335E8
+const	MainMode	0x21	MODE_OPTION_2	OPTION 0x801389A0
+const	MainMode	0x22	MODE_OPTION_3	OPTION 0x8013C780; also entered by day_event_next when D_800B3C6C is set
+const	MainMode	0x30	MODE_SCHEDULE	schedule_init: builds the day-event queue for the coming week (entered after the command screen)
+const	MainMode	0x31	MODE_DAY_SCREEN	func_80070F14: day screen, then the queue reader dispatches the next event
+const	MainMode	0x32	MODE_WEEK_END	func_80072BC0: HUD init, then the weekly health check steps (injury, neurosis, illness, recoveries)
+const	MainMode	0x34	MODE_COMMAND_SCREEN	func_8005A0B0: weekday command screen where the player picks the next week's command (stage 5 = club joining); entered when the queue reader reaches the end marker 0xFF
+const	MainMode	0x35	MODE_EXAM	ETC 0x801465F8: final exams and rank list
+const	MainMode	0x36	MODE_CAREER_GUIDANCE	ETC 0x8014ABD0
+const	MainMode	0x37	MODE_CAREER_CHOICE	ETC 0x801492C0: job or college choice
+const	MainMode	0x38	MODE_MONTH_START	func_800728A4 (queue type 0xFE)
+const	MainMode	0x39	MODE_DAY_NOTICE	func_800725B0 (queue type 0xFD)
+const	MainMode	0x3A	MODE_HELP	OLH on-line help
+const	MainMode	0x40	MODE_SCHOOL_DAY	week_day: school-day command screen
+const	MainMode	0x41	MODE_NEW_YEAR_PREP	func_80061688 (pre_syogatu)
+const	MainMode	0x42	MODE_CHRISTMAS_PREP	func_80060DF8 (pre_xmas)
+const	MainMode	0x43	MODE_TELEPHONE	TEL 0x801397D0
+const	MainMode	0x44	MODE_RUMOR	uwasa_main (rumor report)
+const	MainMode	0x45	MODE_TELEPHONE_PROFILE	HYPOTHESIS: TEL 0x80132000 (profile/phone book page); the loader draws the calendar under it
+const	MainMode	0x46	MODE_HOLIDAY	func_80075320: holiday command screen, telephone, club join, appointment entry
+const	MainMode	0x50	MODE_DATE	DATE 0x801448D4 (appointment launched)
+const	MainMode	0x51	MODE_SCHOOL_TRIP	SHUGAKU 0x80137490
+const	MainMode	0x52	MODE_NEW_YEAR_A	HYPOTHESIS name (English form of the SHOUGATU overlay prefix): SHOUGATU 0x8013D180 stage dispatcher
+const	MainMode	0x53	MODE_NEW_YEAR_B	HYPOTHESIS name (English form of the SHOUGATU overlay prefix): SHOUGATU 0x801322D4
+const	MainMode	0x54	MODE_VALENTINE	VALEN 0x80132274
+const	MainMode	0x55	MODE_SEASONAL_PARTY	HYPOTHESIS name (queue type 0x30 is the seasonal party): SHOUGATU 0x8013B484
+const	MainMode	0x56	MODE_PLAYER_BIRTHDAY	GEKO 0x80134040 (queue type 0x33)
+const	MainMode	0x57	MODE_GIRL_BIRTHDAY	GEKO 0x80134C90 (queue type 0x32)
+const	MainMode	0x58	MODE_AMUSEMENT_PARK	DATE2 0x80132214 (queue type 0x49)
+const	MainMode	0x59	MODE_GIRL_ENCOUNTER	HYPOTHESIS name (reading of the forced-encounter use; the overlay prefix GEKO stays untranslated): GEKO 0x80132244 (queue type 0x44)
+const	MainMode	0x5A	MODE_GIRL_INVITATION	GEKO 0x801426D0 (queue type 0x46)
+const	MainMode	0x5B	MODE_MEETING	HYPOTHESIS name: SHOUGATU 0x80137144 (queue type 0x48), a generic scene host that switches on D_80144E10
+const	MainMode	0x5C	MODE_AMUSEMENT_PARK_2	DATE2 0x80137F64; started by DATE
+const	MainMode	0x5D	MODE_SPECIAL_EVENT	GEKO 0x8013882C (queue type 0x45)
+const	MainMode	0x5E	MODE_DATE_SCENE	DATE 0x8014C08C: girl-specific scenes
+const	MainMode	0x5F	MODE_CLUB_CAMP	HYPOTHESIS name: KANGEI 0x80132FF8 (queue type 0x42)
+const	MainMode	0x60	MODE_CLUB_CAMP_2	HYPOTHESIS name: KANGEI 0x80132000
+const	MainMode	0x61	MODE_SICK_VISIT	OMIMAI 0x80133120 (queue type 0x47)
+const	MainMode	0x62	MODE_SICK_VISIT_2	OMIMAI 0x80132000
+const	MainMode	0x63	MODE_ENDING	ENDING 0x80132334
+const	MainMode	0x70	MODE_CULTURE_FESTIVAL_A	BUNKASAI 0x80142700 (queue type 0x24, club id < 6)
+const	MainMode	0x71	MODE_CULTURE_FESTIVAL_B	BUNKAKEN 0x80144F70 (queue type 0x24, club id >= 6)
+const	MainMode	0x72	MODE_SPORTS_FESTIVAL	TAIIKU 0x80141280
+const	MainMode	0x73	MODE_PRACTICE_MATCH	RENSYU 0x80132040
+const	MainMode	0x74	MODE_CLUB_MASTER_A	MASTER 0x80132140 (queue type 0x25)
+const	MainMode	0x75	MODE_CLUB_MASTER_B	MASTER 0x80133A2C (0x26)
+const	MainMode	0x76	MODE_CLUB_MASTER_C	MASTER 0x80139150 (0x27)
+const	MainMode	0x80	MODE_CULTURE_STAGE	BUNKA_SD 0x80137890
+const	MainMode	0x81	MODE_RPG_BATTLE	RPG_BAT 0x8013B5B0
+const	MainMode	0x82	MODE_FESTIVAL_STALLS	HYPOTHESIS name (the overlay prefix EN_NICHI stays untranslated until the scenes are read): EN_NICHI 0x80132000
+const	MainMode	0x90	MODE_SHOOTER	TACO (loader default)
+const	MainMode	0x91	MODE_ALBUM	ETC 0x801407F0
+const	MainMode	0xC2	MODE_ETC_C2	ETC 0x80142974; set by ENDING
+const	MainMode	0xC3	MODE_ETC_C3	ETC 0x8014636C
+const	MainMode	0xC4	MODE_ETC_C4	ETC 0x80145A6C
+const	MainMode	0xD0	MODE_TT_GAME	TT hidden mini game; own loader func_8007959C
+const	MainMode	0xFE	MODE_DEBUG_VRAM_VIEW	func_8004F6B0: d-pad scrolls the display start until a pad-2 button; developer tool
+const	MainMode	0xFF	MODE_EXIT	exit_function
+const	InputDevice	0	INPUT_MOUSE	controller id byte high nibble 1
+const	InputDevice	1	INPUT_PAD	other id
+const	InputDevice	0xFF	INPUT_NONE	nothing connected
+const	VoiceMode	0	VOICE_OFF	settings string 'always off'
+const	VoiceMode	1	VOICE_ON	'always on'
+const	VoiceMode	2	VOICE_CANCELABLE	'cut with the cross button'
+const	MenuMode	0	MENU_MODE_MOUSE_LIKE	stored value 0; settings screen item 1
+const	MenuMode	1	MENU_MODE_A	stored value 1; settings screen item 2, pad cursor stepping through the items
+const	MenuMode	2	MENU_MODE_MOUSE_PLUS_A	stored value 2; settings screen item 4, mouse pointer plus pad cursor while L1 is held (menu_check)
+const	MenuMode	3	MENU_MODE_B	stored value 3; settings screen item 3, directional pad cursor (get_near_menu in func_8004FC10)
+const	IconMode	0	ICON_MODE_TYPE_A	settings string
+const	IconMode	1	ICON_MODE_TYPE_B	settings string
+const	IconMode	2	ICON_MODE_FREE	settings string
+const	PadBits	0x0001	PAD_L2	PsyQ pad word as built by func_80043010 (~byte2 << 8 | ~byte3): low byte = L2, R2, L1, R1, triangle, circle, cross, square; second byte = SELECT, L3, R3, START, up, right, down, left; pad 2 is the same word shifted by 16; bits 0x0200 and 0x0400 are not used by the game (the any-button mask 0xF9DF leaves them out)
+const	PadBits	0x0002	PAD_R2	PsyQ layout
+const	PadBits	0x0004	PAD_L1	PsyQ layout; SELECT + START + L1 + R1 held for 0x81 frames on pad 1 runs the reset sequence to mode 0 (pad 2: to mode 0x11), except in modes 0x20, 0x90 and 0xD0
+const	PadBits	0x0008	PAD_R1	PsyQ layout
+const	PadBits	0x0010	PAD_TRIANGLE	PsyQ layout
+const	PadBits	0x0020	PAD_CIRCLE	confirm: settings screens act on pad_pressed & 0x20
+const	PadBits	0x0040	PAD_CROSS	cancel/back: pad_pressed & 0x40 leaves a settings screen
+const	PadBits	0x0080	PAD_SQUARE	PsyQ layout
+const	PadBits	0x0100	PAD_SELECT	pad_pressed & 0x100 steps menu_mode in menu_check; an in-game hint names SELECT as the menu mode switch
+const	PadBits	0x0800	PAD_START	pause toggle on either pad (while pause_allowed is 1); pad 2 START (bit 27 of the pad word) toggles sd_anim_fast; advance mask 0x860 = START | cross | circle
+const	PadBits	0x1000	PAD_UP	menu cursor: up and left move to the previous item
+const	PadBits	0x2000	PAD_RIGHT	next item
+const	PadBits	0x4000	PAD_DOWN	next item
+const	PadBits	0x8000	PAD_LEFT	previous item
+const	MouseButtons	4	MOUSE_RIGHT	GameState.mouse_buttons tested with confirm_button == 1
+const	MouseButtons	8	MOUSE_LEFT	tested with confirm_button == 0
+const	PlayerFlag	bit 16	PLAYER_FLAG_16	ScheduleFlags.b16; OPTION debug page lists b16..b20
+const	PlayerFlag	bit 18	PLAYER_FLAG_AMUSEMENT_PARK_DONE	HYPOTHESIS: set when queue type 0x49 is scheduled (August Wednesday)
+const	PlayerFlag	bit 19	PLAYER_FLAG_PLACE_REPEAT	HYPOTHESIS: DATE sets it when the same place is chosen repeatedly
+comment	main	normal_date_speak	Wire the dialogue table pointers and run the talk runner for the current scene girl	body: stores the five table pointers then dialogue_run(D_80122CDC, 1, 0)
+comment	main	set_kanji_string	Queue one string (x, y, attribute, text, extra) in the 52-entry text list for drawing	wiki/ref-english-patch.md and the 8-byte TextEntry layout
+comment	main	cd_read_sync_status	Return the CD read status byte (bit 0 = read finished)	returns cd_read_status
+comment	main	cd_read_sectors	Read n sectors to a buffer from an LBA through the CD command ring and wait	queues command 6, D_800B3D60 = 1
+comment	main	dec_bg_cd_read	Start reading a compressed background file unless one of the two cached LBAs of the slot already holds it; returns 0/1 for a cache hit slot, -1 for a read started	body compares D_800B5920
+comment	main	dec_bg_show_set	Show or hide background slot n	D_800B5938[n] = flag & 1
+comment	main	dec_bg_reset	Clear the background cache, show flags and brightness (0x80)	body
+comment	main	set_dec_bri	Set the brightness tint of the decoded backgrounds	D_800B593C = value
+comment	main	get_last_gamen_mode	Return the last screen mode (selects the background draw variant)	returns D_800B5948
+comment	main	normal_date_bg_fadeout	Fade the scene background out	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_bg_fadein	Fade the scene background in	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_bggirl_fadeout	Fade background and portrait out together	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_bggirl_fadein	Fade background and portrait in together	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_girl_in	Slide the girl's portrait in	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_girl_out	Slide the girl's portrait out	HYPOTHESIS: from the developer name and call sites
+comment	main	bg_read_sub2	Background read helper: starts the read of the scene background	callers in scene setup
+comment	main	addr_init_bustup	Set the portrait sprite addresses for the current girl	HYPOTHESIS: from the developer name and call sites
+comment	main	k_sub_reset	Cut the text list back to the saved mark	k_reset(text_list_count.mark)
+comment	main	k_sub_reset_point_set	Remember the current text list length as the mark	mark = count
+comment	main	k_sub_disp_start	Start the typewriter at mark + n	k_disp_start(mark + n)
+comment	main	k_reset	Cut the text list to n entries and recompute the glyph totals	body
+comment	main	k_disp_start	Start the typewriter at entry n (skips the glyphs of earlier entries)	body
+comment	main	k_disp_switch	Show or hide a text list entry	HYPOTHESIS: from the developer name and call sites
+comment	main	k_disp_inc	Reveal one more glyph every speed + 1 frames; returns 1 when everything is shown	wiki/ref-english-patch.md
+comment	main	check_end_k	Return nonzero when the typewriter has shown the whole text	HYPOTHESIS: from the developer name and call sites
+comment	main	get_k_work	Return the text list entry n	used with TextEntry in menus and scroll code
+comment	main	gnsx	Draw a name string centred by its length (2, 4 or 6 bytes)	body switch on strlen
+comment	main	sndisp	Wrap and queue a narration string at row y with colour col	body
+comment	main	sndi	Queue a narration string with the speaker name codes expanded	body
+comment	main	xa_wait	Typewriter plus voice wait step used by dialogue lines	HYPOTHESIS: same structure as dialogue_text_step
+comment	main	load_palette	Queue a palette (CLUT) upload for the next VRAM flush	body fills palette_queue
+comment	main	load_tpage_buf_lock	Store a resource id in a tpage slot and queue its image upload	body
+comment	main	tpage_buf_clear	Reset the 64 tpage slots (reserved and free marks) and set the default system pages	body
+comment	main	draw2d3d	Switch the 2D sprite pass (arg 1) and the 3D pass (arg 2) on or off	stores draw_2d_enabled and draw_3d_enabled
+comment	main	back_clear_switch	Turn the per-frame screen clear on or off	stores back_clear
+comment	main	dtd_on_tpage	Draw a sprite from a texture page slot	HYPOTHESIS: from the developer name only
+comment	main	goto_tpage	Select a texture page slot	HYPOTHESIS: from the developer name only
+comment	main	LoadSquare	Upload a rectangle of memory to VRAM (x, y, w, h, data)	wiki/ref-english-patch.md
+comment	main	menu_set	Register a menu: item count and rectangles for menu 0 or 1	body fills menu_items
+comment	main	menu_check	Hit-test the pointer or move the cursor of a menu by menu_mode; returns the hit index	body
+comment	main	menu_bar_show	Draw the highlight bar of the hovered menu item	HYPOTHESIS: from the developer name and call sites
+comment	main	hizuke_init	Create the calendar date actors (month, day, weekday) for the HUD	body
+comment	main	hizuke_show	Per-frame update of the calendar date HUD	HYPOTHESIS: from the developer name and call sites
+comment	main	hizuke_disp_switch	Show or hide the calendar date HUD	HYPOTHESIS: from the developer name and call sites
+comment	main	message_window_init	Create the message window actor	body
+comment	main	message_window_show	Per-frame update of the message window	HYPOTHESIS: from the developer name and call sites
+comment	main	icon_can_use_set	Enable or disable one of the 14 command icons	callers in the queue reader loop over 14 icons
+comment	main	icon_disp_switch	Show or hide the command icons	HYPOTHESIS: from the developer name and call sites
+comment	main	parameter_show_init	Create the digit actors of the parameter panel and snapshot the profile	body
+comment	main	check_para_limit	Clamp girl tokimeki/affection (0..0x80), syoushin (0..0xFF) and the nine parameters (0..999); the queue reader then clamps all three girl counters to 0x80 (girl_counters_clamp)	body
+comment	main	get_g_zyotai_s	Girl state rank 0-4 for scenes (4 worst); bit 7 set when affection is high	body
+comment	main	get_g_zyotai_h	Girl state rank 0-4 from weighted affection and tokimeki (4 if affection < 10, 3 if < 50, 2 if tokimeki < 50, 1 if < 80, else 0)	body
+comment	main	get_h_yuukou	Affection * weight / 100 clamped 0..100 for girl % 13	body
+comment	main	get_h_tokimeki	Weighted tokimeki for girl % 13 with extra terms from the player parameters	body (first lines read)
+comment	main	birth_day_check_days	Return 1 when the girl's (or, for 0xF, the player's) birthday is the given month and day	body
+comment	main	main_state_set	Switch to a mode and reset stage, step, timers, substep	body
+comment	main	dialogue_render	Split a script string into lines and queue them with name code expansion	wiki/ref-english-patch.md
+comment	main	yuukou_down	Once per queue build (weekly): lower affection by 1 (floor 0) for every met girl when the day of month is 1-6, and for girl 0 also on days 14-20	body
+comment	main	syoushin_up	Once per queue build (weekly): add 5 to the syoushin counter of met girls whose weighted affection is below 10	body
+comment	main	schedule_girls_gakko	Resolve girl-encounter placeholders in the day-event queue into special events, invitations, encounters or skips	body
+comment	main	return_step	Restore the main mode, stage and step saved in saved_mode, saved_stage and saved_step by calling main_state_set, main_stage_set and main_step_set	body (src/main/8007C030.c); the fields use the saved_ stem so the name stays unambiguous
+comment	core	include/main_api.h	One declaration of every main-exe symbol (functions, globals, shared structs); keeps its name, splitting it per main module and moving the enums into game_enums.h is a later step	spec section 16 item 14; the header comment (T-3340)
+file	core	include/game.h	include/game_types.h	shared record and view types; hub header included by every unit; new enums go into the new include/game_enums.h
+file	core	-	include/game_enums.h	new header for the const rows of this table (enums and PAD_/MOUSE_ masks)

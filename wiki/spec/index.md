@@ -11,3 +11,6 @@ One line per unit: what the spec covers. Specs are written for the Godot port ([
 One line per unit. Specs are facts for the Godot port, in our own words; names are proposals in `config/renames/proposals/`.
 
 - [[spec/h-graphics]] - main graphics layer: frame render, actor pool, texture-block cache, VRAM queues, primitives, screen layers, palette tools, debug HUD ([[tickets/T-27020-p2-h-graphics]])
+One line per unit. A spec states what a system does, its state with the proposed names, its rules and its links to the rest of the game, in the words of this project; no game text. Parent: [[tickets/T-27000-phase-2]].
+
+- [[spec/core]] - shared core: GameState map, mode/stage/step machine, calendar and day-event queue, player and girl state, shared record types, first enums, the 100 most used main functions (T-27010).
