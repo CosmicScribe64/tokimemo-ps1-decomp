@@ -646,12 +646,12 @@ void func_801350A8(void) {
         if ((flags = D_800E6280.unk_71E) & 1) {
             func_8004284C();
         } else {
-            func_8007EAAC();
+            normal_date_move_place();
         }
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            func_8007C740();
+            addr_init_bustup();
             func_80083474();
             cd_read_sectors(3U, 0x801B0000, 0xAF43);
         }
@@ -724,22 +724,22 @@ void func_801350A8(void) {
         }
         break;
     case 6:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 7:
-        func_8007E390();
+        normal_date_girl_in();
         break;
     case 8:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 9:
-        func_8007E5A0();
+        normal_date_girl_out();
         if (D_800E6280.unk_110A == 0xA) {
             func_80044750(0xC1);
         }
         break;
     case 10:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 11:
         if (((flags = D_800E6280.unk_71E) & 1) || ((flags = D_800E6280.unk_71E) & 4)) {
@@ -757,12 +757,12 @@ void func_801350A8(void) {
         }
         break;
     case 13:
-        func_8007EAAC();
+        normal_date_move_place();
         break;
     case 14:
         if (cd_read_sync_status() & 1) {
             func_80138F10();
-            func_80043914(D_8013C730, 0x10, 1, 1, 0);
+            load_palette(D_8013C730, 0x10, 1, 1, 0);
             cd_read_sectors(2U, 0x801E8000, 0xA9BA);
             func_8004284C();
         }
@@ -803,7 +803,7 @@ void func_801350A8(void) {
         }
         break;
     case 18:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 19:
         func_80042940(0xB);
@@ -812,7 +812,7 @@ void func_801350A8(void) {
         func_80046500();
         break;
     }
-    func_80086424();
+    Default_Disp();
 }
 
 void func_801358C8(void) {
@@ -833,14 +833,14 @@ void func_801358C8(void) {
         }
         break;
     case 2:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 3:
         D_800CA148 = 5;
         func_8004284C();
         break;
     case 4:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 5:
         func_80042808();
@@ -849,7 +849,7 @@ void func_801358C8(void) {
         func_80046500();
         break;
     }
-    func_80086424();
+    Default_Disp();
 }
 
 void func_801359F0(void) {
@@ -916,7 +916,7 @@ void func_801359F0(void) {
         func_80046500();
         break;
     }
-    func_80086424();
+    Default_Disp();
 }
 
 /* FAKE: the byte views of D_8013C584 keep each read in v1, and `idx` declared above the table puts
@@ -1377,7 +1377,7 @@ void func_80136E24(void) {
         func_80046500();
         break;
     }
-    func_80086424();
+    Default_Disp();
 }
 
 /* FAKE: scalar byte views preserve the target live ranges, and

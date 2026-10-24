@@ -109,12 +109,12 @@ void func_8013CD18(void) {
     s16 i;
 
     D_800E6280.unk_F5F = 7;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8006612C("");
     D_8011ED9F = 0;
@@ -127,10 +127,10 @@ void func_8013CD18(void) {
         D_800E6280.unk_1228[i + 21] = 1;
         D_800E6280.unk_1228[i + 53] = 1;
     }
-    func_8007C740(i, &D_800E6280);
+    addr_init_bustup(i, &D_800E6280);
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);
@@ -141,14 +141,14 @@ void func_8013CD18(void) {
     D_8014627C = D_801461B0;
     func_800AE0F0(D_800CA19C, "廊下");
     D_800E6280.unk_1BC[7].unk_06 += 1;
-    func_80084D3C();
+    check_para_limit();
     D_800CA368 = 0x2E;
     func_8004284C();
 }
 
 void func_8013CE98(void) {
     func_8013C980();
-    func_80043914(D_80146AB0, 0x11, 1, 2, 0);
+    load_palette(D_80146AB0, 0x11, 1, 2, 0);
     func_80084E90(D_80146AB4, D_80146AB8, D_80146ABC, D_80146AC0, D_80146AC4, D_80146AC8);
     func_800850D4(D_80146AA4, D_80146AA8, D_80146AA0, D_80146AAC);
     func_8004284C();
@@ -156,22 +156,22 @@ void func_8013CE98(void) {
 
 void func_8013CF40(void) {
     D_800E6280.unk_F5F = 7;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8006612C("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 8;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);

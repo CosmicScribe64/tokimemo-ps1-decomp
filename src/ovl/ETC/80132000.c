@@ -28,9 +28,9 @@ void func_80132098(void) {
         func_80132344();
         break;
     }
-    func_80064F48();
-    func_800646CC();
-    func_80064DEC();
+    message_window_show();
+    parameter_show();
+    hizuke_show();
     func_80066C08(0);
     func_8006BA40();
     func_80066334();
@@ -53,7 +53,7 @@ void func_80132198(void) {
     }
     func_8004E58C();
     func_8006612C("告白判定");
-    func_800649D4();
+    hizuke_init();
     k_disp_start(1);
     func_8004284C();
 }

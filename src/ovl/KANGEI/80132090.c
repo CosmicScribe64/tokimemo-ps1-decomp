@@ -106,7 +106,7 @@ void func_80132354(void) {
     u32 v;
     s32 lo;
 
-    v = func_80051B48(D_800E6280.unk_F5F);
+    v = get_g_zyotai_h(D_800E6280.unk_F5F);
     lo = v & 0xFF;
     if (v >= 3U) {
         func_80083440(3);
@@ -234,47 +234,47 @@ void func_801327DC(void) {
     switch (D_800E6280.unk_0F4.h >> 12) {
     case 0:
         func_800AE0F0(D_800CA19C, "文芸部");
-        func_8007ED84(0x40BC);
+        bg_read_sub2(0x40BC);
         break;
     case 1:
         func_800AE0F0(D_800CA19C, "演劇部");
-        func_8007ED84(0x40B2);
+        bg_read_sub2(0x40B2);
         break;
     case 2:
         func_800AE0F0(D_800CA19C, "科学部");
-        func_8007ED84(0x40C6);
+        bg_read_sub2(0x40C6);
         break;
     case 3:
         func_800AE0F0(D_800CA19C, "電脳部");
-        func_8007ED84(0x40D0);
+        bg_read_sub2(0x40D0);
         break;
     case 4:
         func_800AE0F0(D_800CA19C, "美術部");
-        func_8007ED84(0x40D9);
+        bg_read_sub2(0x40D9);
         break;
     case 5:
         func_800AE0F0(D_800CA19C, "吹奏楽部");
-        func_8007ED84(0x40E2);
+        bg_read_sub2(0x40E2);
         break;
     case 6:
         func_800AE0F0(D_800CA19C, "野球部");
-        func_8007ED84(0x4097);
+        bg_read_sub2(0x4097);
         break;
     case 7:
         func_800AE0F0(D_800CA19C, "サッカー部");
-        func_8007ED84(0x4097);
+        bg_read_sub2(0x4097);
         break;
     case 8:
         func_800AE0F0(D_800CA19C, "テニス部");
-        func_8007ED84(0x4097);
+        bg_read_sub2(0x4097);
         break;
     case 9:
         func_800AE0F0(D_800CA19C, "水泳部");
-        func_8007ED84(0x40A0);
+        bg_read_sub2(0x40A0);
         break;
     default:
         func_800AE0F0(D_800CA19C, "バスケ部");
-        func_8007ED84(0x40A9);
+        bg_read_sub2(0x40A9);
         break;
     }
     D_800CA14C = 0;

@@ -4,6 +4,7 @@
 #define MAIN_API_OVERRIDE_func_80084C98 /* promoted s32 index view avoids call-site narrowing; existing callee performs the s16 conversion, T-9540 */
 #define MAIN_API_OVERRIDE_D_80122CD0 /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
 #define MAIN_API_OVERRIDE_select_girl_init /* K&R byte parameter is narrowed in the callee. T-10900. */
+#define MAIN_API_OVERRIDE_get_now_k /* implicit declaration, as matched (main_api.h: u8(void)) */
 #include "common.h"
 #include "game.h"
 #include "psx_types.h"

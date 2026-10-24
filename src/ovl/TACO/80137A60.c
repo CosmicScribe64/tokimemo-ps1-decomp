@@ -47,12 +47,12 @@ s32 func_80137BD8(void) {
     case 0:
         func_800450F4(0, 0x201);
         func_80059048();
-        func_800573AC();
+        dec_bg_reset();
         cd_read_sectors(9U, 0x80162000, 0xB380);
-        func_8004E9F4(0);
+        k_reset(0);
         D_8015EDEC = 0;
         func_80048DAC(1);
-        func_800438DC(1, 0);
+        draw2d3d(1, 0);
         func_80137B14(1);
         D_800E6280.unk_110D += 1;
         break;

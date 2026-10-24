@@ -61,12 +61,12 @@ void func_80132274(void) {
         func_80046500();
         break;
     }
-    func_8007EDF8();
-    func_800846C0();
+    check_k_scroll();
+    k_disp_inc2();
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
-    func_80064DEC();
+    hizuke_show();
     func_80083A10();
 }
 

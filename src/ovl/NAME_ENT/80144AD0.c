@@ -1,11 +1,9 @@
-#define MAIN_API_OVERRIDE_func_80050DFC /* T-10860: profile clear loops use the legacy integer call view. */
+#define MAIN_API_OVERRIDE_gnsx /* T-10860: profile clear loops use the legacy integer call view. */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 
 /* Canonical gnsx stays void; this historical call view reserves the return range. */
-s32 func_80050DFC();
-/* get_now_k (8004E500.c) returns u8; prologue_line_run needs that view (same as xa_wait, T-17018). T-24106 */
-u8 get_now_k(void);
+s32 gnsx();
 
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
@@ -306,7 +304,7 @@ void func_80145454(void) {
         func_80145378();
         break;
     }
-    func_80064DEC();
+    hizuke_show();
     func_800578F4(1);
 }
 
@@ -362,21 +360,21 @@ void func_80145760(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         D_800B3DB0 = 1;
-        func_80064DEC();
+        hizuke_show();
         cd_read_sectors(9, 0x80162000, 0x4954);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
             func_80048F64(0x60);
-            func_8006492C(0);
+            hizuke_disp_switch(0);
             func_801454CC();
             func_800536AC(0x140, 0, 0x280, 0xA0);
-            func_8004D320(5, 0xE, 0xF);
+            move_255_line(5, 0xE, 0xF);
             D_8014D184 = 0;
             func_8004284C();
         } else {
-            func_80064DEC();
+            hizuke_show();
         }
         break;
     }
@@ -455,6 +453,8 @@ void func_80145A74(void) {
 }
 void func_80145AC4(void) {
     GameState *g;
+    /* The calls below were matched without a prototype (main_api.h: void(u8)); the other functions of this file use it. */
+    extern void set_dec_bri();
 
     g = &D_800E6280;
     switch (g->unk_110D) {
@@ -499,14 +499,14 @@ void func_80145AC4(void) {
         }
         D_8014D184 = 0x80;
         func_80057D1C(0x80);
-        func_80057390(D_8014D184 & 0xFF);
+        set_dec_bri(D_8014D184 & 0xFF);
         cd_read_sectors(0x31U, 0x801A4000, 0xAB18);
         g->unk_110D += 1;
         return;
     case 5:
         if (D_8014D184 >= 3) {
             D_8014D184 -= 1;
-            func_80057390(D_8014D184 & 0xFF);
+            set_dec_bri(D_8014D184 & 0xFF);
         } else {
             g->unk_110D += 1;
         }
@@ -1250,7 +1250,7 @@ void func_801478E0(void) {
         D_800E6280.unk_163C[i] = 0x7FFF7FFF;
     }
     D_800E6280.unk_163C[0] = 0x7FFF0000;
-    func_80043914((s32)&D_800E6280.unk_163C[0], 0xE, 1, 2, 0);
+    load_palette((s32)&D_800E6280.unk_163C[0], 0xE, 1, 2, 0);
 }
 
 void func_80147950(void) {
@@ -1264,7 +1264,7 @@ void func_80147950(void) {
     }
     func_80049A40(-0xA0, -0x78, 0xA0, 0xA0, 0xB, var_v0, 0x81);
     func_80049A40(0, -0x78, 0xA0, 0xA0, 0xB, var_v0, 0x81);
-    func_800494BC(0, 0, 0xB, 1, 1);
+    dtd_on_tpage(0, 0, 0xB, 1, 1);
 }
 
 /* The original call sites use an integer-returning K&R fallthrough signature. */
@@ -2300,7 +2300,7 @@ void func_80149E3C(void) {
         break;
     case 12:
         k_sub_reset();
-        func_80050DFC(&g->unk_0D4[0]);
+        gnsx(&g->unk_0D4[0]);
         /* FAKE: same-line body fixes unrolled store scheduling. T-10860. */
         for (i = 0; i < 128; i++) { text[i] = 0; }
         func_800AE0F0(text, D_800B3288[((NameProfileFlags *)&g->unk_1BC[0].unk_10)->month]);
@@ -2330,7 +2330,7 @@ void func_80149E3C(void) {
         break;
     case 16:
         k_sub_reset();
-        func_80050DFC(&g->unk_0D4[0]);
+        gnsx(&g->unk_0D4[0]);
         /* FAKE: same-line body fixes unrolled store scheduling. T-10860. */
         for (i = 0; i < 128; i++) { text[i] = 0; }
         func_800AE0F0(text, D_8014D1A0[((NameProfileFlags *)&g->unk_1BC[0].unk_10)->blood_type]);
@@ -2536,15 +2536,15 @@ void func_8014A848(void) {
         prologue_line_run();
         break;
     case 2:
-        func_8005742C(0x4973, 1);
+        dec_bg_cd_read(0x4973, 1);
         D_800E6280.unk_110D += 1;
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
-            func_80057418(1, func_8005751C(1));
+            dec_bg_show_set(1, func_8005751C(1));
             if (D_800B594C == -1) {
-                func_800573AC();
-                func_8005742C(0x4973, 1);
+                dec_bg_reset();
+                dec_bg_cd_read(0x4973, 1);
             } else {
                 cd_read_sectors(0x41, 0x80180000, 0xAC50);
                 func_80042808();

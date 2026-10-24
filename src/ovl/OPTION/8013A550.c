@@ -44,19 +44,19 @@ void func_8013A604(void) {
         c[i] = 0x10;
         d[i] = 0xC;
     }
-    func_8004F870(0, 0x10, a, b, c, d);
+    menu_set(0, 0x10, a, b, c, d);
     (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = (&D_800E6280.unk_036)[2] = 0x80;
     func_8004ADAC(4);
     func_800AE0F0(D_800E6280.unk_0D4, "おぷ");
     func_800AE0F0(D_800E6280.unk_0DC, "ション");
     func_800AE0F0(D_800E6280.unk_0E4, "起動");
     func_8004E58C();
-    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー１", 0);
-    func_8004E788(-0x80, 0, 0xF, (s32)"月日関連", 0);
-    func_8004E788(0x20, -0x18, 0xF, (s32)D_800E6280.unk_0D4, 0);
-    func_8004E788(0x20, -0xC, 0xF, (s32)D_800E6280.unk_0DC, 0);
-    func_8004E788(0x20, 0, 0xF, (s32)D_800E6280.unk_0E4, 0);
-    func_8004E884(5);
+    set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニュー１", 0);
+    set_kanji_string(-0x80, 0, 0xF, (s32)"月日関連", 0);
+    set_kanji_string(0x20, -0x18, 0xF, (s32)D_800E6280.unk_0D4, 0);
+    set_kanji_string(0x20, -0xC, 0xF, (s32)D_800E6280.unk_0DC, 0);
+    set_kanji_string(0x20, 0, 0xF, (s32)D_800E6280.unk_0E4, 0);
+    k_disp_start(5);
     func_8004284C();
 }
 
@@ -248,14 +248,14 @@ void func_8013AD94(void) {
         c[i] = 0x10;
         d[i] = 0xC;
     }
-    func_8004F870(0, 0x10, a, b, c, d);
+    menu_set(0, 0x10, a, b, c, d);
     func_8004E58C();
-    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー２", 0);
-    func_8004E788(-0x80, 0, 0xF, (s32)"プレイヤーデータ", 0);
-    func_8004E788(0x60, -0x18, 0xF, (s32)D_800E6280.unk_0D4, 0);
-    func_8004E788(0x60, -0xC, 0xF, (s32)D_800E6280.unk_0DC, 0);
-    func_8004E788(0x60, 0, 0xF, (s32)D_800E6280.unk_0E4, 0);
-    func_8004E884(5);
+    set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニュー２", 0);
+    set_kanji_string(-0x80, 0, 0xF, (s32)"プレイヤーデータ", 0);
+    set_kanji_string(0x60, -0x18, 0xF, (s32)D_800E6280.unk_0D4, 0);
+    set_kanji_string(0x60, -0xC, 0xF, (s32)D_800E6280.unk_0DC, 0);
+    set_kanji_string(0x60, 0, 0xF, (s32)D_800E6280.unk_0E4, 0);
+    k_disp_start(5);
     func_8004284C();
 }
 
@@ -403,12 +403,12 @@ void func_8013B410(void) {
         c[i] = 0x10;
         d[i] = 0xC;
     }
-    func_8004F870(0, 0x10, a, b, c, d);
+    menu_set(0, 0x10, a, b, c, d);
     func_8004E58C();
-    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー３", 0);
-    func_8004E788(-0x80, 0, 0xF, (s32)"女の子データ", 0);
-    func_8004E788(0x40, -0x18, 0xF, (&D_800B3538)[D_8013E740 & 0xF], 0);
-    func_8004E884(3);
+    set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニュー３", 0);
+    set_kanji_string(-0x80, 0, 0xF, (s32)"女の子データ", 0);
+    set_kanji_string(0x40, -0x18, 0xF, (&D_800B3538)[D_8013E740 & 0xF], 0);
+    k_disp_start(3);
     func_8004284C();
 }
 
@@ -557,11 +557,11 @@ void func_8013BECC(void) {
         c[i] = 0x10;
         d[i] = 0xC;
     }
-    func_8004F870(0, 0x10, a, b, c, d);
+    menu_set(0, 0x10, a, b, c, d);
     func_8004E58C();
-    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー４", 0);
-    func_8004E788(-0x80, 0, 0xF, (s32)"その他データ", 0);
-    func_8004E884(2);
+    set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニュー４", 0);
+    set_kanji_string(-0x80, 0, 0xF, (s32)"その他データ", 0);
+    k_disp_start(2);
     func_8004284C();
     D_800E6280.unk_71C = 0;
 }
@@ -698,11 +698,11 @@ void func_8013C404(void) {
         c[i] = 0x10;
         d[i] = 0xC;
     }
-    func_8004F870(0, 0x10, a, b, c, d);
+    menu_set(0, 0x10, a, b, c, d);
     func_8004E58C();
-    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニューＦ", 0);
-    func_8004E788(-0x80, 0, 0xF, (s32)"目標ステップ", 0);
-    func_8004E884(5);
+    set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニューＦ", 0);
+    set_kanji_string(-0x80, 0, 0xF, (s32)"目標ステップ", 0);
+    k_disp_start(5);
     func_8004284C();
 }
 
@@ -711,7 +711,7 @@ void func_8013C52C(void) {
 
     menu_check(0, D_8011ECF6, D_8011ECFA);
     func_8004FC10(0);
-    func_80050B54(0);
+    menu_bar_show(0);
     for (i = 0; i < 16; i++) {
         func_8004B338(D_8013E844[i], -0x20, i * 0xC - 0x60);
     }

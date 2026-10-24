@@ -96,7 +96,7 @@ void func_801517C8(void) {
     D_800E6280.unk_1BC[3].unk_02 += 2;
     D_800E6280.unk_1BC[3].unk_06 += 1;
     D_800E6280.unk_1BC[3].unk_0A -= 0x14;
-    func_80084D3C();
+    check_para_limit();
     D_800E7D34 |= 1;
     func_8004284C();
 }
@@ -125,7 +125,7 @@ void func_80151A20(void) {
     D_8015E20C = D_8015DFF4;
     D_8015E210 = D_8015E130;
     func_80151510();
-    func_80043914(D_8015EDAC, 0x11, 1, 2, 0);
+    load_palette(D_8015EDAC, 0x11, 1, 2, 0);
     func_80084E90(D_8015EDB0, D_8015EDB4, D_8015EDB8, D_8015EDBC, D_8015EDC0, D_8015EDC4);
     func_800850D4(D_8015EDA0, D_8015EDA4, D_8015ED9C, (s32) D_8015EDA8);
     D_800CA360 = 1;
@@ -150,7 +150,7 @@ void func_80151A20(void) {
     D_800E6280.unk_1BC[3].unk_02 -= 1;
     D_800E6280.unk_1BC[3].unk_06 -= 1;
     D_800E6280.unk_1BC[3].unk_0A += 0x14;
-    func_80084D3C();
+    check_para_limit();
     D_800CA224[0] = 3;
     D_800CA224[1] = 3;
     D_800CA224[2] = 3;
@@ -165,13 +165,13 @@ void func_80151C54(void) {
     D_8015E20C = D_8015DFF8;
     D_8015E210 = D_8015E134;
     func_801515C0();
-    func_80043914(D_8015EDD8, 0x11, 1, 2, 0);
+    load_palette(D_8015EDD8, 0x11, 1, 2, 0);
     func_80084E90(D_8015EDDC, D_8015EDE0, D_8015EDE4, D_8015EDE8, D_8015EDEC, D_8015EDF0);
     func_800850D4(D_8015EDCC, D_8015EDD0, D_8015EDC8, (s32) D_8015EDD4);
     D_800E6280.unk_1BC[3].unk_02 += 2;
     D_800E6280.unk_1BC[3].unk_06 += 1;
     D_800E6280.unk_1BC[3].unk_0A -= 0x14;
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
@@ -491,13 +491,13 @@ void func_80152CE0(void) {
         D_800E6280.unk_1BC[3].unk_02 += 2;
         D_800E6280.unk_1BC[3].unk_06 += 2;
         D_800E6280.unk_1BC[3].unk_0A -= 0x14;
-        func_80084D3C();
+        check_para_limit();
         func_8004284C();
     } else {
         D_800E6280.unk_1BC[3].unk_02 += 3;
         D_800E6280.unk_1BC[3].unk_06 += 1;
         D_800E6280.unk_1BC[3].unk_0A -= 0x14;
-        func_80084D3C();
+        check_para_limit();
     }
     func_8004284C();
 }
@@ -524,7 +524,7 @@ s32 func_80152E34(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1
     POLY_G3 *poly;
 
     g = &D_800E6280;
-    poly = func_800490F0(0x1C, D_8011ECA0);
+    poly = GetWorkBase(0x1C, D_8011ECA0);
     func_8009F004(poly);
     SetSemiTrans(poly, trans);
     /* setRGBn-style comma lines with masks: separate statements give other registers (T-20600). */
@@ -537,5 +537,5 @@ s32 func_80152E34(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1
     poly->y1 = g->unk_018[D_8011ECA0] + y1;
     poly->x2 = g->unk_014[D_8011ECA0] + x2;
     poly->y2 = g->unk_018[D_8011ECA0] + y2;
-    func_8009EED0(&D_800E8CA0[(D_8011ECA0 << 10) + z * 4], poly);
+    AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + z * 4], poly);
 }

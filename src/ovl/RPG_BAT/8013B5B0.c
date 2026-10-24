@@ -117,11 +117,11 @@ s32 func_8013B910(void) {
         }
         if (D_8015EDC4 != 0x08000002 && (D_8015EDC4 & 0x08000000) && D_8015EE1C != 1) {
             if (D_8015EE50.unk_00 == 2 || D_8015EE50.unk_00 == 3) {
-                func_8004E93C(D_8015EE40, 1);
-                func_8004E93C(D_8015EDE8, 0);
+                k_disp_switch(D_8015EE40, 1);
+                k_disp_switch(D_8015EDE8, 0);
             } else {
-                func_8004E93C(D_8015EE40, 0);
-                func_8004E93C(D_8015EDE8, 1);
+                k_disp_switch(D_8015EE40, 0);
+                k_disp_switch(D_8015EDE8, 1);
             }
         }
         if (!(D_8015ED98 & 0xFF0111FF)) {

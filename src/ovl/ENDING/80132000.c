@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_get_now_k /* implicit declaration, as matched (main_api.h: u8(void)) */
 #include "common.h"
 #include "ovl/ENDING.h"
 #include "game.h"

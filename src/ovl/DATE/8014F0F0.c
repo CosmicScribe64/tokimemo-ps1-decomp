@@ -80,12 +80,12 @@ void func_8014F404(void) {
     D_8015E208 = D_8015DE70;
     D_8015E20C = D_8015DFAC;
     D_8015E210 = D_8015E0E8;
-    func_80043914(D_8015E6A0, 0x11, 1, 2, 0);
+    load_palette(D_8015E6A0, 0x11, 1, 2, 0);
     func_80084E90(D_8015E6A4, D_8015E6A8, D_8015E6AC, D_8015E6B0, D_8015E6B4, D_8015E6B8);
     func_800850D4(D_8015E694, D_8015E698, D_8015E690, D_8015E69C);
     D_800E6280.unk_1BC[0].unk_02 += 2;
     D_800E6280.unk_1BC[0].unk_0A -= 0x1C;
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
@@ -276,7 +276,7 @@ s32 func_8014FDA0(void) {
     func_8014C5C8();
     if ((u16) D_800CA154 == 2) {
         sel = D_800E6280.unk_1104.w;
-        func_800854C8();
+        event_face1();
         D_800E6280.unk_110A -= 1;
         D_800E6280.unk_1104.w = sel + 1;
         if (sel == 1) {

@@ -103,19 +103,19 @@ void func_8013E19C(void) {
     u8 pad; /* FAKE: unused byte between a and b, real source unknown (frame layout) */
     u8 b;
 
-    a = func_80051A68(7);
-    r = func_80051B48(7);
+    a = get_g_zyotai_s(7);
+    r = get_g_zyotai_h(7);
     b = 0xFF;
     if (((Bit1Flag *)&D_800E6280.unk_1BC[7].unk_0C.w)->f && D_800E6280.unk_56C[52] == 0 && a == 0x80 && r == 0) {
         b = 7;
     }
-    a = func_80051A68(0);
-    r = func_80051B48(0);
+    a = get_g_zyotai_s(0);
+    r = get_g_zyotai_h(0);
     if (D_800E6280.unk_56C[6] == 0 && a == 0x80 && r == 0 && (b == 0xFF || (b == 7 && D_800E6280.unk_1BC[0].unk_0A < D_800E6280.unk_1BC[7].unk_0A))) {
         b = 0;
     }
-    a = func_80051A68(9);
-    r = func_80051B48(9);
+    a = get_g_zyotai_s(9);
+    r = get_g_zyotai_h(9);
     if (((Bit1Flag *)&D_800E6280.unk_1BC[9].unk_0C.w)->f && D_800E6280.unk_56C[66] == 0 && a == 0x80 && r == 0 &&
         (b == 0xFF || (b == 7 && D_800E6280.unk_1BC[9].unk_0A < D_800E6280.unk_1BC[7].unk_0A) || (b == 0 && D_800E6280.unk_1BC[9].unk_0A < D_800E6280.unk_1BC[0].unk_0A))) {
         b = 9;

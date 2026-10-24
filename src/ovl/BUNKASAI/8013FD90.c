@@ -212,7 +212,7 @@ void func_801401E8(void) {
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;
     case 10:
-        func_8007E884();
+        normal_date_bggirl_fadein();
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
@@ -347,7 +347,7 @@ void func_80140558(void) {
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;
     case 10:
-        func_8007E884();
+        normal_date_bggirl_fadein();
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
@@ -535,7 +535,7 @@ void func_80140958(void) {
         if (func_8008667C(0xA) == 4) {
             normal_date_bg_fadein();
         } else {
-            func_8007E884();
+            normal_date_bggirl_fadein();
         }
         break;
     case 15:
@@ -768,7 +768,7 @@ void func_80140F4C(void) {
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;
     case 22:
-        func_8007E884();
+        normal_date_bggirl_fadein();
         break;
     case 23:
         if (cd_read_sync_status() & 1) {
@@ -853,7 +853,7 @@ void func_80140F4C(void) {
         if (func_8008667C(0xA) == 4) {
             normal_date_bg_fadein();
         } else {
-            func_8007E884();
+            normal_date_bggirl_fadein();
         }
         break;
     case 34:
@@ -1378,7 +1378,7 @@ void func_80142298(void) {
         cd_read_sectors(0x13U, 0x801E8000, 0x4B5E);
         break;
     case 10:
-        func_8007E884();
+        normal_date_bggirl_fadein();
         break;
     case 11:
         if (cd_read_sync_status() & 1) {

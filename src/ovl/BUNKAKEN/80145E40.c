@@ -174,9 +174,9 @@ void func_801463E4(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_8004E9F4(0);
+            k_reset(0);
             func_8006612C((s32) "天の声");
-            func_8004E884(1);
+            k_disp_start(1);
             func_80132514();
             D_800E6280.unk_F5F = 8;
             func_800847B8(8U);
@@ -190,16 +190,16 @@ void func_801463E4(void) {
         }
         break;
     case 2:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 3:
-        func_8007E934();
+        normal_date_bg_fadeout();
         break;
     case 4:
         if (D_800E6280.unk_F74 == 1) {
             func_80048EB8(0);
             func_8006BD6C(0);
-            func_80057390(0);
+            set_dec_bri(0);
             main_state_set(0xD0);
         }
         break;

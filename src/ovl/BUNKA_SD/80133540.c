@@ -43,7 +43,7 @@ void func_801336AC(void) {
 
 void func_8013376C(void) {
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
     switch (D_800E6280.unk_110A) {
     case 0:
@@ -112,7 +112,7 @@ void func_8013376C(void) {
     case 37:
         func_80044750(0xC1);
         func_80044750(0x500);
-        func_8004E9F4(1);
+        k_reset(1);
         func_8004284C();
         break;
     case 38:
@@ -224,7 +224,7 @@ s32 func_80133D54(void) {
                 D_8013C6DC = 0;
                 D_8013C6E0 = 0;
                 D_8013C6D4 = 1;
-                func_8004E9F4(1);
+                k_reset(1);
                 func_8004284C();
                 return 1;
             }

@@ -10,12 +10,12 @@ void func_80133030(void) {
     func_80083808();
     idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
-    func_8007EDF8();
-    func_800846C0();
+    check_k_scroll();
+    k_disp_inc2();
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
-    func_80064DEC();
+    hizuke_show();
     func_80083A10();
 }
 

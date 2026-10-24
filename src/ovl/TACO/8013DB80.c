@@ -142,7 +142,7 @@ s32 func_8013DEE4(s32 arg0) {
             } else if (dist <= 0) {
                 return -1;
             }
-            poly = func_800490F0(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, D_8011ECA0);
             func_8009F040(poly);
             switch (mode) {
             case 5:
@@ -210,7 +210,7 @@ s32 func_8013DEE4(s32 arg0) {
             poly->y2 = ((s16 *)pt)[7];
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
-            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
         }
     }
 }
@@ -362,7 +362,7 @@ void func_8013E778(s32 arg0) {
             } else if (dist <= 0) {
                 dist = 1;
             }
-            poly = func_800490F0(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, D_8011ECA0);
             func_8009F040(poly);
             SetSemiTrans(poly, 1);
             poly->r0 = 0x80;
@@ -381,7 +381,7 @@ void func_8013E778(s32 arg0) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
         }
     }
 }

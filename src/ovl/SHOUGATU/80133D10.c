@@ -106,6 +106,6 @@ void func_80134094(void) {
     } else {
         D_800E6280.unk_1BC[5].unk_02 += 1;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }

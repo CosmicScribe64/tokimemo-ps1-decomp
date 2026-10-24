@@ -568,7 +568,7 @@ void func_80140ADC(Tc14 *arg0, s32 arg1) {
             } else if (dist <= 0) {
                 return;
             }
-            poly = func_800490F0(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, D_8011ECA0);
             func_8009F040(poly);
             SetSemiTrans(poly, 0);
             poly->r0 = 0x80;
@@ -588,7 +588,7 @@ void func_80140ADC(Tc14 *arg0, s32 arg1) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
         }
     }
 }

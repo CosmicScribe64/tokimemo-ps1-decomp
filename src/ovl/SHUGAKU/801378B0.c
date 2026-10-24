@@ -36,10 +36,10 @@ void func_8013799C(void) {
         func_801386C4();
         if (D_800E6280.unk_110D == 0) {
             if (D_800CA2DC == 2) {
-                func_8004E788(-0x48, 0x30, 0, "くぅー、", 0);
-                func_8004E788(-0x48, 0x40, 0, "体の調子が、最悪だぜ。", 0);
-                func_8004E788(-0x48, 0x50, 0, "でも、修学旅行だから", 0);
-                func_8004E788(-0x48, 0x60, 0, "集合場所に行かなきゃ。", 0);
+                set_kanji_string(-0x48, 0x30, 0, "くぅー、", 0);
+                set_kanji_string(-0x48, 0x40, 0, "体の調子が、最悪だぜ。", 0);
+                set_kanji_string(-0x48, 0x50, 0, "でも、修学旅行だから", 0);
+                set_kanji_string(-0x48, 0x60, 0, "集合場所に行かなきゃ。", 0);
                 D_800E6280.unk_110D = 1;
             }
         }
@@ -168,7 +168,7 @@ void func_80137F04(void) {
 
 s32 func_80137F90(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
-        func_800573AC();
+        dec_bg_reset();
         func_8004284C();
         D_800E6280.unk_110A -= 3;
         return 0;
@@ -183,33 +183,33 @@ void func_8013801C(void) {
 }
 
 void func_80138044(void) {
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8008585C();
     func_800AE0F0(D_800CA19C, "修学旅行");
-    func_8004E9F4(1);
+    k_reset(1);
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     switch (D_800CA2CC) {
     case 0:
-        func_8007ED84(0x421C);
+        bg_read_sub2(0x421C);
         break;
     case 1:
-        func_8007ED84(0x420A);
+        bg_read_sub2(0x420A);
         break;
     default:
-        func_8007ED84(0x4213);
+        bg_read_sub2(0x4213);
         break;
     }
     func_8004284C();
@@ -301,13 +301,13 @@ void func_80138400(void) {
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
-        func_80043914(D_8013C880, 0x11, 0, 0, 1);
+        load_palette(D_8013C880, 0x11, 0, 0, 1);
         break;
     case 1:
-        func_80043914(D_8013C880, 0x11, 0, 0, 0);
+        load_palette(D_8013C880, 0x11, 0, 0, 0);
         break;
     default:
-        func_80043914(D_8013C880, 0x11, 0, 0, 2);
+        load_palette(D_8013C880, 0x11, 0, 0, 2);
         break;
     }
     func_80048F64(0x60);
@@ -337,7 +337,7 @@ void func_80138400(void) {
 
 s16 func_801385A8(void) {
     if (D_80120676 < -0x1DF) {
-        func_8004E9F4(1);
+        k_reset(1);
         func_80048F64(0x60);
         func_8004284C();
     }

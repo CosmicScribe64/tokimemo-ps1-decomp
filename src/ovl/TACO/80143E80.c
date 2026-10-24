@@ -107,7 +107,7 @@ void func_80144094(void) {
             q = (s16 *)&sxy[j][i];
             if (q[20] >= 0 && q[2] < 0x201) {
                 if (q[1] >= D_800E6280.unk_018[k] - 0x200 && D_800E6280.unk_018[k] + 0x400 >= q[3]) {
-                    poly = func_800490F0(0x28, k);
+                    poly = GetWorkBase(0x28, k);
                     func_8009F040(poly);
                     poly->r0 = 0x80;
                     poly->g0 = 0x80;
@@ -134,7 +134,7 @@ void func_80144094(void) {
                     poly->y2 = q[19];
                     poly->x3 = q[20];
                     poly->y3 = q[21];
-                    func_8009EED0(D_800E8CA0 + ((D_8011ECA0 << 10) + 0x3F8), poly);
+                    AddPrim(D_800E8CA0 + ((D_8011ECA0 << 10) + 0x3F8), poly);
                     k = D_8011ECA0;
                 }
             }
@@ -174,7 +174,7 @@ void func_80144430(void) {
     for (o = 0; o < 1; o++) {
         for (j = 0; j < 4; j++) {
             q = (s16 *)&pt[j * 2 + o];
-            poly = func_800490F0(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, D_8011ECA0);
             func_8009F040(poly);
             poly->r0 = 0x80;
             poly->g0 = 0x80;
@@ -198,7 +198,7 @@ void func_80144430(void) {
             poly->y2 = q[5];
             poly->x3 = q[6];
             poly->y3 = q[7];
-            func_8009EED0(D_800E8CA0 + (D_8011ECA0 << 10) + 0x3F4, poly);
+            AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 0x3F4, poly);
         }
     }
 }

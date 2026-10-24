@@ -29,12 +29,12 @@ void func_8013B760(void) {
     tbl.f[idx](0x80);
     if (D_800E6280.unk_1109 == 7) {
         if (D_800E6280.unk_110A < 0x10) {
-            func_8007EDF8();
-            func_800846C0();
+            check_k_scroll();
+            k_disp_inc2();
             func_80066C08(2);
-            func_80064F48();
+            message_window_show();
             func_80066334();
-            func_80064DEC();
+            hizuke_show();
             func_80083A10();
         }
     }
@@ -84,13 +84,13 @@ s32 func_8013B91C(void) {
 }
 
 void func_8013B9F0(void) {
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
     func_8006BD6C(0);
-    func_800438F0(1);
-    func_800482FC();
+    back_clear_switch(1);
+    tpage_buf_clear_all();
     D_800E6280.unk_1228[28] = 1;
     D_800E6280.unk_1228[29] = 1;
     D_800E6280.unk_1228[30] = 1;
@@ -102,8 +102,8 @@ void func_8013B9F0(void) {
     D_800B593C = 0;
     D_800B5940 = 0;
     func_8013B6A0();
-    func_80043914(D_8013CBB0.unk_10[1], 0x11, 1, 2, 0);
-    func_80043914(D_8013CBB0.unk_10[0], 0x12, 1, 2, 0);
+    load_palette(D_8013CBB0.unk_10[1], 0x11, 1, 2, 0);
+    load_palette(D_8013CBB0.unk_10[0], 0x12, 1, 2, 0);
     func_80084E90(D_8013CBB0.unk_10[2], D_8013CBB0.unk_10[3], D_8013CBB0.unk_10[4], D_8013CBB0.unk_10[5], D_8013CBB0.unk_10[6], D_8013CBB0.unk_10[7]);
     func_800850D4(D_8013CBB0.unk_04, D_8013CBB0.unk_08, D_8013CBB0.unk_00, D_8013CBB0.unk_0C);
     D_801217D0[61].unk_0A = D_801217D0[62].unk_0A = D_801217D0[63].unk_0A = 0x70;
@@ -128,8 +128,8 @@ void func_8013BB9C(void) {
         func_80046290(v.w[0], v.w[1], 0xF);
     }
     func_80044750(0x300);
-    r = func_8004E788(-0x50, 0x50, 0, "『女々しい野郎どもの詩』", 0);
-    func_8004E884(r);
+    r = set_kanji_string(-0x50, 0x50, 0, "『女々しい野郎どもの詩』", 0);
+    k_disp_start(r);
     D_8013CBE0 = 0;
     func_8004284C();
 }
@@ -147,16 +147,16 @@ void func_8013BC58(void) {
         }
     }
     if (D_8013CBE0 == 0x3E8) {
-        func_8004E9F4(1, sel, &tbl);
+        k_reset(1, sel, &tbl);
     }
     if (sel != 0xFF) {
         if (D_8013CBE0 == tbl.h[sel]) {
-            func_8004E9F4(1, sel, &tbl);
+            k_reset(1, sel, &tbl);
             func_8013BDD8(sel);
         }
     }
     if (D_8013CBE0 == 0x1536) {
-        func_8004E9F4(1);
+        k_reset(1);
     }
     if (func_800460EC() & 4) {
         D_8013CBE0 += 1;

@@ -303,9 +303,9 @@ void func_8014BB80(void) {
     case 0:
         func_8013E7C0(0x25, 0x31, 5, 1);
         if (D_8015EBA8 == 1) {
-            func_8004F870(0, 3, sp34.v, &sp34.v[3], &sp34.v[6], &sp34.v[9]);
+            menu_set(0, 3, sp34.v, &sp34.v[3], &sp34.v[6], &sp34.v[9]);
         } else {
-            func_8004F870(0, 2, sp34.v, &sp34.v[3], &sp34.v[6], &sp34.v[9]);
+            menu_set(0, 2, sp34.v, &sp34.v[3], &sp34.v[6], &sp34.v[9]);
         }
         func_8014EB58(1);
     default:

@@ -118,7 +118,7 @@ void func_8013F494(void) {
     func_8013F190();
     i = 0;
     do {
-        func_80043914(D_80146140, (i + 0x10) & 0xFF, 1, 2, i);
+        load_palette(D_80146140, (i + 0x10) & 0xFF, 1, 2, i);
         i++;
     } while (i < 9);
     func_80048F64(0x60);
@@ -141,7 +141,7 @@ void func_8013F494(void) {
     ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 0;
     ((DisplayActor44 *)D_8011ECD0)[97] = ((DisplayActor44 *)D_8011ECD0)[96];
     func_8013F1E0();
-    func_80043914((u8 *) D_80146154, 0x1F, 1, 2, 0);
+    load_palette((u8 *) D_80146154, 0x1F, 1, 2, 0);
     ((DisplayActor44 *)D_8011ECD0)[98] = ((DisplayActor44 *)D_8011ECD0)[96];
     ((DisplayActor44 *)D_8011ECD0)[98].unk_01 = 0xB;
     ((DisplayActor44 *)D_8011ECD0)[98].unk_04 = 8;
@@ -202,7 +202,7 @@ void func_8013FA80(void) {
     b[0] = b[1] = b[2] = b[3] = -0x40;
     c[0] = c[1] = c[2] = c[3] = 0x40;
     d[0] = d[1] = d[2] = d[3] = 0x40;
-    func_8004F870(0, 4, a, b, c, d);
+    menu_set(0, 4, a, b, c, d);
     D_80122D30 = 1;
     func_8004284C();
 }
@@ -416,7 +416,7 @@ s32 func_80140314(void) {
         colors.v[sel.v[(D_800E6280.unk_03E - 0x5F) * 12 + D_80146168[D_80146158]]][0],
         colors.v[sel.v[(D_800E6280.unk_03E - 0x5F) * 12 + D_80146168[D_80146158]]][1],
         9, 0);
-    func_8004955C(0xB);
+    dtd_on(0xB);
 }
 
 /* Fall-through int return follows the matched DATE builder (T-24026). */
@@ -425,7 +425,7 @@ s32 func_80140510(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1
     POLY_G3 *poly;
 
     g = &D_800E6280;
-    poly = func_800490F0(0x1C, D_8011ECA0);
+    poly = GetWorkBase(0x1C, D_8011ECA0);
     func_8009F004(poly);
     SetSemiTrans(poly, trans);
     /* FAKE: explicit colour masks and comma lines retain the matched sibling register schedule (T-20600, T-24026). */
@@ -438,7 +438,7 @@ s32 func_80140510(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1
     poly->y1 = g->unk_018[D_8011ECA0] + y1;
     poly->x2 = g->unk_014[D_8011ECA0] + x2;
     poly->y2 = g->unk_018[D_8011ECA0] + y2;
-    func_8009EED0(&D_800E8CA0[(D_8011ECA0 << 10) + z * 4], poly);
+    AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + z * 4], poly);
 }
 
 void func_80140698(void) {
@@ -548,7 +548,7 @@ s32 func_80140AD8(void) {
 
 void func_80140BD8(void) {
     func_80065F34(0);
-    func_8004E9F4(1);
+    k_reset(1);
     func_80140780();
     load_palette(D_80146240, 0x11, 1, 2, 0);
     func_80048F64(0x60);

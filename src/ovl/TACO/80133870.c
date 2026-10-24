@@ -34,13 +34,13 @@ s32 func_80133980(void) {
     case 0:
         func_80044750(0x24);
         D_8015EDEC = 0x400;
-        func_800438DC(1, 0);
+        draw2d3d(1, 0);
         D_800E6280.unk_036 = 0;
         D_800E6280.unk_037 = 0;
         D_800E6280.unk_038 = 0;
         func_80041584();
         func_80143E80();
-        func_800438F0(1);
+        back_clear_switch(1);
         func_8006BD6C(0);
         func_8004E58C();
         func_80048EB8(0);
@@ -153,14 +153,14 @@ void func_80133C08(void) {
         }
         break;
     case 12:
-        func_8004435C(0x380U, 0x100U, 0x20U, 0x80U, 0x80180000);
-        func_8004435C(0x3A0U, 0x100U, 0x20U, 0x80U, 0x80182000);
-        func_8004435C(0x380U, 0x180U, 0x20U, 0x80U, 0x80184000);
-        func_8004435C(0x3A0U, 0x180U, 0x20U, 0x80U, 0x80186000);
+        LoadSquare(0x380U, 0x100U, 0x20U, 0x80U, 0x80180000);
+        LoadSquare(0x3A0U, 0x100U, 0x20U, 0x80U, 0x80182000);
+        LoadSquare(0x380U, 0x180U, 0x20U, 0x80U, 0x80184000);
+        LoadSquare(0x3A0U, 0x180U, 0x20U, 0x80U, 0x80186000);
         var_s0 = 0;
         do {
             temp_a1 = var_s0 & 0xFF;
-            func_80043914(0x80188000, temp_a1, 1, 3, temp_a1);
+            load_palette(0x80188000, temp_a1, 1, 3, temp_a1);
             var_s0 += 1;
         } while (var_s0 != 0xF);
         func_8004284C();
@@ -298,8 +298,8 @@ s32 func_801342CC(void) {
 }
 
 void func_80134450(void) {
-    func_8004435C(0x100, 0x1E0, 0x100, 0x18, 0x801B8000);
-    func_8004435C(0, 0x1F0, 0x100, 0x10, 0x801C0000);
+    LoadSquare(0x100, 0x1E0, 0x100, 0x18, 0x801B8000);
+    LoadSquare(0, 0x1F0, 0x100, 0x10, 0x801C0000);
     func_80143730(0x801C8000, 8);
     func_80143730(0x801C8000, 0xA);
     func_80143730(0x801C8000, 0xC);
@@ -317,12 +317,12 @@ s32 func_80134500(void) {
         D_800E6280.unk_10A2 = 0;
         D_800E6280.unk_03A = 0x80;
         D_800E6280.unk_036 = 0;
-        func_800438DC(1, 1);
-        func_80058D20();
+        draw2d3d(1, 1);
+        initView();
         func_8014394C();
-        func_80058EB0();
+        initCoordinate();
         func_801345D4();
-        func_80058F0C(0x8018A000);
+        initModelingData_init(0x8018A000);
         func_8013474C();
         func_801347F4((s32 *)0x801AC000);
         D_800E6280.unk_110D += 1;

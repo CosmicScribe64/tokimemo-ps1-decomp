@@ -211,7 +211,7 @@ void func_801328D4(void) {
         if (func_8008667C(2) == 4) {
             normal_date_bg_fadein();
         } else {
-            func_8007E884();
+            normal_date_bggirl_fadein();
         }
         break;
     case 11:
@@ -422,7 +422,7 @@ void func_80132DB4(void) {
         }
         break;
     case 12:
-        func_8007E884();
+        normal_date_bggirl_fadein();
         break;
     case 13:
         func_8004284C();
@@ -729,7 +729,7 @@ void func_801333CC(void) {
         if (func_8008667C(2) == 4) {
             normal_date_bg_fadein();
         } else {
-            func_8007E884();
+            normal_date_bggirl_fadein();
         }
         break;
     case 19:
@@ -1089,7 +1089,7 @@ void func_80133E18(void) {
         if (func_8008667C(2) == 4) {
             normal_date_bg_fadein();
         } else {
-            func_8007E884();
+            normal_date_bggirl_fadein();
         }
         break;
     case 23:
@@ -1235,7 +1235,7 @@ void func_801343B4(void) {
         if (func_8008667C(2) == 4) {
             normal_date_bg_fadein();
         } else {
-            func_8007E884();
+            normal_date_bggirl_fadein();
         }
         break;
     case 15:
@@ -1709,7 +1709,7 @@ void func_801350A8(void) {
         if (func_8008667C(2) == 4) {
             normal_date_girl_in();
         } else {
-            func_8007E884();
+            normal_date_bggirl_fadein();
         }
         break;
     case 14:

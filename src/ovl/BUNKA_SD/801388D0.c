@@ -17,9 +17,9 @@ s32 func_801388D0(void) {
             D_800E6280.unk_110D += 1;
         }
     } else {
-        func_80048390();
+        tpage_buf_clear();
         func_80048E78();
-        func_8006492C(1);
+        hizuke_disp_switch(1);
         func_80042908(0x10);
         func_80044750(0x200);
     }
@@ -58,7 +58,7 @@ void func_80138ADC(void) {
 
 void func_80138B3C(void) {
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
     switch (D_800E6280.unk_110A) {
     case 0:
@@ -78,7 +78,7 @@ void func_80138B3C(void) {
         func_80138CAC();
         return;
     case 5:
-        func_8004E9F4(1);
+        k_reset(1);
         func_8004284C();
         return;
     case 6:

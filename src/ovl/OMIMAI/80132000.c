@@ -13,10 +13,10 @@ void func_80132000(void) {
         func_80046500();
         break;
     }
-    func_8007EDF8();
-    func_800846C0();
-    func_80064F48();
+    check_k_scroll();
+    k_disp_inc2();
+    message_window_show();
     func_80066334();
-    func_80064DEC();
+    hizuke_show();
     func_80083A10();
 }

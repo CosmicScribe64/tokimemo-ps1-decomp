@@ -89,7 +89,7 @@ void func_801322EC(void) {
 
 void func_80132428(void) {
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
     switch (D_800E6280.unk_110A) {
     case 0:
@@ -139,7 +139,7 @@ void func_80132428(void) {
         func_801327E4();
         break;
     case 13:
-        func_8004E9F4(1);
+        k_reset(1);
         func_8004284C();
         break;
     case 14:
@@ -548,35 +548,35 @@ void func_80132FF0(void) {
             func_800AE0F0(sp38, D_800E6280.unk_0D4);
             strcat(sp38, "　");
             strcat(sp38, D_800E6280.unk_0DC);
-            func_8004E788((s16) (0x60 - (sp34 * 7)), 0x40, 0, (s32) sp38, 0);
+            set_kanji_string((s16) (0x60 - (sp34 * 7)), 0x40, 0, (s32) sp38, 0);
             break;
         case 1:
             if (!(D_800E6280.unk_F80 & 0x20)) {
                 func_80046290(0x0B00001B, 0x05000020, 0xE);
                 func_80044750(0x300);
             }
-            func_8004E788(0x36, 0x40, 0, (s32) "弁　論者", 0);
+            set_kanji_string(0x36, 0x40, 0, (s32) "弁　論者", 0);
             break;
         case 2:
             if (!(D_800E6280.unk_F80 & 0x20)) {
                 func_80046290(0x1D00005B, 0x0B000061, 0);
                 func_80044750(0x300);
             }
-            func_8004E788(0x28, 0x40, 0, (s32) "藤崎　詩織", 0);
+            set_kanji_string(0x28, 0x40, 0, (s32) "藤崎　詩織", 0);
             break;
         case 3:
-            func_8004E788(0x28, 0x40, 0, (s32) "如月　未緒", 0);
+            set_kanji_string(0x28, 0x40, 0, (s32) "如月　未緒", 0);
             break;
         case 4:
         default:
-            func_8004E788(0x44, 0x40, 0, (s32) "女生徒", 0);
+            set_kanji_string(0x44, 0x40, 0, (s32) "女生徒", 0);
             break;
         }
-    } else if ((func_800460EC() == 2) && (func_8004ECB4() != 0)) {
+    } else if ((func_800460EC() == 2) && (check_end_k() != 0)) {
         func_8004284C();
     }
-    func_8007EDF8();
-    func_8004EC24();
+    check_k_scroll();
+    k_disp_inc();
 }
 
 
@@ -586,30 +586,30 @@ void func_80133204(void) {
     s32 *voice;
 
     if (D_800E6280.unk_1104.u == 1) {
-        func_8004E9F4(1);
+        k_reset(1);
         switch (D_80122EAC) {
         case 0:
-            func_8004E788((s16) (-0x68 - (func_800AE0E0(D_800E6280.unk_0D4) * 4)), 0x30, 0, (s32) D_800E6280.unk_0D4, 0);
+            set_kanji_string((s16) (-0x68 - (func_800AE0E0(D_800E6280.unk_0D4) * 4)), 0x30, 0, (s32) D_800E6280.unk_0D4, 0);
             break;
         case 1:
-            func_8004E788(-0x80, 0x30, 0, (s32) "弁論者", 0);
+            set_kanji_string(-0x80, 0x30, 0, (s32) "弁論者", 0);
             break;
         case 2:
-            func_8004E788(-0x78, 0x30, 0, (s32) "藤崎", 0);
+            set_kanji_string(-0x78, 0x30, 0, (s32) "藤崎", 0);
             break;
         case 3:
-            func_8004E788(-0x78, 0x30, 0, (s32) "如月", 0);
+            set_kanji_string(-0x78, 0x30, 0, (s32) "如月", 0);
             break;
         case 4:
         default:
-            func_8004E788(-0x80, 0x30, 0, (s32) "女生徒", 0);
+            set_kanji_string(-0x80, 0x30, 0, (s32) "女生徒", 0);
             break;
         }
-        func_8004E788(-0x56, 0x30, 0, (s32) "「", 0);
+        set_kanji_string(-0x56, 0x30, 0, (s32) "「", 0);
         index = D_8013B7EC;
         if (index < 0x64) {
             do {
-                func_8004E788(-0x48, (s16) (((index - D_8013B7EC) * 0x10) + 0x30), 0, ((u8 **)D_8013B7F0)[index] + 1, 0);
+                set_kanji_string(-0x48, (s16) (((index - D_8013B7EC) * 0x10) + 0x30), 0, ((u8 **)D_8013B7F0)[index] + 1, 0);
                 command = *((u8 **)D_8013B7F0)[index];
                 if (command == 0x67) {
                     if (!(D_800E6280.unk_F80 & 0x20) && (D_80122EAC != 0)) {
@@ -636,13 +636,13 @@ void func_80133204(void) {
             } while (index < 0x64);
         }
     }
-    if ((func_800460EC() == 2) && (func_8004ECB4() != 0)) {
+    if ((func_800460EC() == 2) && (check_end_k() != 0)) {
         if (D_800E6280.unk_110D == 0xFF) {
-            func_8004E9F4(1);
+            k_reset(1);
             func_8004284C();
         }
         D_800E6280.unk_1104.u = 0;
     }
-    func_8007EDF8();
-    func_8004EC24();
+    check_k_scroll();
+    k_disp_inc();
 }

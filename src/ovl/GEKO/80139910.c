@@ -340,12 +340,12 @@ void func_8013A668(void) {
 
 void func_8013A6D0(void) {
     D_800E6280.unk_F5F = 0;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8006612C("");
     D_8011ED9F = 0;
@@ -353,9 +353,9 @@ void func_8013A6D0(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     func_8008585C();
-    func_8007C740();
-    func_800649D4();
-    func_80064E84();
+    addr_init_bustup();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     func_800847B8(D_800E6280.unk_F5F);
     func_80137990();
@@ -366,7 +366,7 @@ void func_8013A6D0(void) {
     if (D_80122CD0 == 1) {
         D_800E6280.unk_1BC[0].unk_02 += 1;
         D_800E6280.unk_1BC[0].unk_06 += 2;
-        func_80084D3C();
+        check_para_limit();
     }
     D_800CA368 = 0;
     func_8004284C();
@@ -378,10 +378,10 @@ void func_8013A820(void) {
     u16 clut;
 
     func_80139910();
-    func_80043914(D_80146390, 0x11, 1, 2, 0);
+    load_palette(D_80146390, 0x11, 1, 2, 0);
     func_80084E90(D_80146398, D_8014639C, D_801463A0, D_801463A4, D_801463A8, D_801463AC);
     func_800850D4(D_80146384, D_80146388, D_80146380, D_8014638C);
-    func_80043914(D_80146394, 0x12, 1, 3, 0);
+    load_palette(D_80146394, 0x12, 1, 3, 0);
     for (i = 4; i < 0x13; i++) {
         p = &D_801217D0[i];
         /* FAKE: u16 clut local before unk_04 call shifts the i * 2 CSE temporary to $v0. T-24081 */
@@ -414,21 +414,21 @@ void func_8013A820(void) {
 
 void func_8013AA1C(void) {
     D_800E6280.unk_F5F = 0;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8006612C("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
-    func_800649D4();
-    func_80064E84();
+    addr_init_bustup();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     func_800847B8(D_800E6280.unk_F5F);
     func_8008585C();
@@ -438,7 +438,7 @@ void func_8013AA1C(void) {
     D_8014627C = D_80146154;
     func_800AE0F0(D_800CA19C, "自宅前");
     D_800E6280.unk_11C.unk_02 -= 1;
-    func_80084D3C();
+    check_para_limit();
     D_800CA368 = 1;
     func_8004284C();
 }
@@ -501,7 +501,7 @@ void func_8013ACE0(void) {
 
 void func_8013AD6C(void) {
     func_801399DC();
-    func_80043914(D_801463C4, 0x11, 1, 2, 0);
+    load_palette(D_801463C4, 0x11, 1, 2, 0);
     func_80084E90(D_801463C8, D_801463CC, D_801463D0, D_801463D4, D_801463D8, D_801463DC);
     func_800850D4(D_801463B8, D_801463BC, D_801463B4, D_801463C0);
     ((DisplayActor44 *)D_80120650)[1].unk_04 = 8;

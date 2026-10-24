@@ -174,7 +174,7 @@ void func_80135B54(void) {
 }
 
 void func_80135C18(void) {
-    func_8007E390();
+    normal_date_girl_in();
     if ((D_800E6280.unk_F5F == 0xA) || (D_800E6280.unk_F5F == 3)) {
         ((DisplayActor44 *)D_8011ECD0)[96].unk_03 |= 0x80;
         ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = ((DisplayActor44 *)D_8011ECD0)[31].unk_07;

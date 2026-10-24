@@ -322,14 +322,14 @@ void func_8014280C(void) {
 void func_80142D90(void) {
     switch (D_800E6280.unk_110A) {
     case 0:
-        if (func_80086370() != 0) {
-            func_80085ED0();
+        if (Fade_In_Main() != 0) {
+            Vblnk_Timer_Init();
             func_8004284C();
         }
         func_80133438();
         break;
     case 1:
-        if (func_80085EEC() >= 0x5B) {
+        if (Vblnk_Timer() >= 0x5B) {
             func_80044750(0x502);
             if ((u8) D_8014A110 != 0) {
                 D_80120778 = 0x39;
@@ -351,14 +351,14 @@ void func_80142D90(void) {
         func_8014430C();
         if (func_80144464() != 0) {
             func_80044750(0x504);
-            func_800862D0();
+            Fade_Out_Init();
             func_8004284C();
         }
         break;
     case 3:
         Scroll((s32) ((s16) D_8014A1CE / 4) % 640, 0xF, 0, 0x70, 0x280);
         Scroll((s32) ((s16) D_8014A1CE / 2) % 128, 0xF, 0x70, 0x80, 0x80);
-        if (func_800862F0() != 0) {
+        if (Fade_Out_Main() != 0) {
             func_80144E54();
             func_80133258();
             func_80042808();
@@ -377,11 +377,11 @@ void func_80142FB8(void) {
     Scroll(0, 0xF, 0, 0xF0, 0x280);
     switch (D_800E6280.unk_110A) {
     case 0:
-        func_80086350();
+        Fade_In_Init();
         func_8004284C();
         break;
     case 1:
-        if (func_80086370() != 0) {
+        if (Fade_In_Main() != 0) {
             if (D_8014A120[0] == 1 || D_8014A120[1] == 1) {
                 func_80044750(0x205);
             } else {

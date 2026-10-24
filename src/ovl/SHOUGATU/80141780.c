@@ -84,7 +84,7 @@ void func_80141AE8(void) {
     u8 flag;
 
     flag = 1;
-    r = func_8004ECF0();
+    r = get_now_k();
     if (r >= 2U) {
         D_800E6280.unk_1104.w += 1;
     }
@@ -117,7 +117,7 @@ void func_80141C0C(void) {
 }
 
 void func_80141C44(void) {
-    func_8004435C(0x280, 0, 0x40, 0x80, D_801464E0);
+    LoadSquare(0x280, 0, 0x40, 0x80, D_801464E0);
     D_800E6280.unk_1228[10] = 1;
     D_80120666 = 2;
     D_801206AA = 0;
@@ -318,12 +318,12 @@ void func_80142784(void) {
     D_800CA150 = (u16)D_800CA150 + 2;
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
 void func_80142844(void) {
-    func_8004435C(0x280, 0, 0x40, 0x80, D_801464E0);
+    LoadSquare(0x280, 0, 0x40, 0x80, D_801464E0);
     D_800E6280.unk_1228[10] = 1;
     func_8004284C();
 }
@@ -510,7 +510,7 @@ void func_801432C4(void) {
     func_8004284C();
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
-    func_80084D3C();
+    check_para_limit();
     func_800AE0F0(D_800CA19C, "近所の公園");
 }
 
@@ -538,7 +538,7 @@ void func_801434E0(void) {
 }
 
 void func_80143508(void) {
-    func_8007ED84(0x47C3);
+    bg_read_sub2(0x47C3);
     func_80085B3C(2, 0x42);
     func_8004284C();
 }

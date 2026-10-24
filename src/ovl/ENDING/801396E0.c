@@ -1,7 +1,10 @@
+#define MAIN_API_OVERRIDE_get_now_k /* matched with s32() (main_api.h: u8(void)) */
 #include "common.h"
 #include "ovl/ENDING.h"
 #include "game.h"
 #include "psx_types.h"
+
+s32 get_now_k();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/801396E0.data", D_8013CAC0);
@@ -672,10 +675,10 @@ s32 func_8013B510(void) {
     if (D_800E6280.unk_10F8 & 3) {
         return 0;
     }
-    max = func_8004ECF0() & 0xFF;
+    max = get_now_k() & 0xFF;
     count = 0;
     do {
-        entry = (Entry8 *)func_8004E970(count);
+        entry = (Entry8 *)get_k_work(count);
         entry->unk_02--;
         y = entry->unk_02;
         count++;
@@ -696,7 +699,7 @@ s32 func_8013B5E4(void) {
     if ((u32)D_800E6280.unk_1104.w++ < 0x80U) {
         return 0;
     }
-    func_8004E884(D_80122CD0);
+    k_disp_start(D_80122CD0);
     D_80122CD4 = 1;
     func_8004284C();
 }

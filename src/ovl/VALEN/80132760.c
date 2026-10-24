@@ -309,7 +309,7 @@ void func_80133088(void) {
         D_80122D48 = 1;
         func_80085B3C(6, 3);
     }
-    func_8007ED84(id);
+    bg_read_sub2(id);
     if (get_h_tokimeki(state->unk_F5F) >= 0x46U) {
         func_80083440(0);
     } else {
@@ -349,7 +349,7 @@ void func_80133568(void) {
 void func_801335C0(void) {
     func_800AE0F0(D_800CA1DC, "校舎裏");
     func_800AE0F0(D_800CA19C, "　");
-    func_8007ED84(0x407A);
+    bg_read_sub2(0x407A);
     func_8004284C();
 }
 

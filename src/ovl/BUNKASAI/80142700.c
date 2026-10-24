@@ -303,7 +303,7 @@ void func_801433C0(void) {
     game->unk_75E[game->unk_F5E].unk_00 = D_80122EBC;
     game->unk_75E[game->unk_F5E].unk_02 = 20;
     game->unk_75E[game->unk_F5E].unk_01 = sp2B;
-    game->unk_75E[game->unk_F5E].unk_03 = func_80051B48(D_80122EBC);
+    game->unk_75E[game->unk_F5E].unk_03 = get_g_zyotai_h(D_80122EBC);
     game->unk_75E[game->unk_F5E].unk_04 = game->unk_03E;
     game->unk_75E[game->unk_F5E].unk_05 = game->unk_03F;
     game->unk_75E[game->unk_F5E].unk_06 = game->unk_040;

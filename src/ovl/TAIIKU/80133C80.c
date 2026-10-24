@@ -370,9 +370,9 @@ void func_801346FC(void) {
             ((DisplayActor44 *)D_8011ECD0)[105].unk_02 = 0x40;
             ((DisplayActor44 *)D_8011ECD0)[105].unk_03 = 0xA4;
             ((DisplayActor44 *)D_8011ECD0)[105].unk_18 = sprites.v[D_801491EC];
-            func_8004E788((s16) (((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x40), 0x40, 0, first_text.value[D_801491EC], 0);
-            func_8004E788((s16) (((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x48), 0x50, 0, second_text.value[D_801491EC], 0);
-            func_8004E884(2);
+            set_kanji_string((s16) (((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x40), 0x40, 0, first_text.value[D_801491EC], 0);
+            set_kanji_string((s16) (((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x48), 0x50, 0, second_text.value[D_801491EC], 0);
+            k_disp_start(2);
             text_x = ((DisplayActor44 *)D_8011ECD0)[96].unk_26 + 0x30;
             ((DisplayActor44 *)D_8011ECD0)[105].unk_26 = text_x + 0x50;
             ((DisplayActor44 *)D_8011ECD0)[104].unk_26 = text_x;
@@ -1298,7 +1298,7 @@ void func_80137544(void) {
     s32 one; /* FAKE: names the constant 1 so that it is the first operand of the three compares (bne v0,t8). */
 
     one = 1;
-    func_800863D4(0x6A);
+    Yubi(0x6A);
     if (D_800B3CFC != 0 && D_80122E94 == 0xFF) {
         if (one == D_80122EA0) {
             func_80044750(0x60E);

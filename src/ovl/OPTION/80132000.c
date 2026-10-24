@@ -17,7 +17,7 @@ void func_80132000(void) {
                 if (D_80120676) {}
                 if (D_8012067A) {}
                 func_80049A40(D_80120676 + 0x18, D_8012067A + 0x10, 0x7C, 0xBC, 0xA, 0x10907, 0x83);
-                func_800494BC(0, 0, 0xA, 0, 0);
+                dtd_on_tpage(0, 0, 0xA, 0, 0);
             }
         }
     }
@@ -67,7 +67,7 @@ void func_801320C0(void) {
                 func_80049A40(8, -0x68, 0x40, 0x90, 8, 0x10907, 0x80);
                 break;
             }
-            func_800494BC(0, 0, 8, 0, 0);
+            dtd_on_tpage(0, 0, 8, 0, 0);
         }
     }
 }
@@ -90,7 +90,7 @@ void func_80132384(void) {
     do {
         n = i + 1;
         if ((n ^ 0) != D_800E6280.unk_1109) { /* FAKE: '^ 0' swaps the beq operand order to the original's; real source unknown. T-24140 */
-            p = func_8004E970(i);
+            p = get_k_work(i);
             if (p[0] < -0x78) {
                 p[0] += 0xC;
             } else {
@@ -99,7 +99,7 @@ void func_80132384(void) {
         } else {
             /* FAKE: 20-byte array stride (Uixa 20) and i++ prevent uopt from hoisting 20 into $s5 or strength-reducing i * 20; real source unknown. T-24140 */
             y = (s32)(*(u8 (*)[8][20])0)[i] - 0x58;
-            p = func_8004E970(i++);
+            p = get_k_work(i++);
             if (p[1] < y) {
                 p[1] += 0xC;
                 D_801206BE += 0xC;
@@ -128,12 +128,12 @@ void func_801324E8(void) {
     do {
         n = i + 1;
         if ((n ^ 0) != D_800E6280.unk_1109) { /* FAKE: '^ 0' swaps the beq operand order to the original's; real source unknown. T-4070 */
-            p = func_8004E970(i);
+            p = get_k_work(i);
             if (p[0] >= -0xF7) {
                 p[0] -= 8;
             }
         } else {
-            p = func_8004E970(i);
+            p = get_k_work(i);
             if (p[1] >= -0x57) {
                 p[1] -= 8;
                 D_801206BE -= 8;
@@ -205,7 +205,7 @@ void func_801326BC(void) {
                 D_8013D304 += 1;
                 D_8013D308 = 0;
             }
-            func_80043914(D_800E6280.unk_163C, 0x1A, 1, 1, 0);
+            load_palette(D_800E6280.unk_163C, 0x1A, 1, 1, 0);
         } else {
             /* FAKE: T-11900 empty `else return`: the promoted D_8013D308 is then stored back on
              * both arms after the compare instead of right after the increment. */
@@ -306,16 +306,16 @@ void func_80132BA8(void) {
     switch (*(u8 *)&D_800E6280.unk_110D) {
     case 0:
         D_800E6280.unk_1124 = 1;
-        func_800438DC(1, 0);
+        draw2d3d(1, 0);
         func_80048DAC(1);
         func_80041584();
         func_80048E78();
         *(s32 *)&D_800E6280.unk_1095[3] = 0xA0;
-        func_800438F0(1);
+        back_clear_switch(1);
         D_800E6280.unk_037 = 0;
         D_800E6280.unk_036 = 0;
         D_800E6280.unk_038 = 0;
-        func_80048390();
+        tpage_buf_clear();
         D_800E6280.unk_10A2 = 0;
         func_8004E58C();
         D_800E6280.unk_1093 = 0;
@@ -327,15 +327,15 @@ void func_80132BA8(void) {
         D_801230D0 = 0;
         text_set_advance(0xE);
         func_801325A0(&rows);
-        func_8004F870(0, 8, rows.a, rows.b, rows.c, rows.d);
-        func_8004E788(rows.a[0], rows.b[0], 0, "文字表示速度", 0);
-        func_8004E788(rows.a[1], rows.b[1], 0, "アイコンモード", 0);
-        func_8004E788(rows.a[2], rows.b[2], 0, "マウス設定", 0);
-        func_8004E788(rows.a[3], rows.b[3], 0, "メニューモード", 0);
-        func_8004E788(rows.a[4], rows.b[4], 0, "カーソル速度", 0);
-        func_8004E788(rows.a[5], rows.b[5], 0, "音声モード", 0);
-        func_8004E788(rows.a[6], rows.b[6], 0, "おまけ", 0);
-        func_8004E788(rows.a[7], rows.b[7], 0, "オプション終了", 0);
+        menu_set(0, 8, rows.a, rows.b, rows.c, rows.d);
+        set_kanji_string(rows.a[0], rows.b[0], 0, "文字表示速度", 0);
+        set_kanji_string(rows.a[1], rows.b[1], 0, "アイコンモード", 0);
+        set_kanji_string(rows.a[2], rows.b[2], 0, "マウス設定", 0);
+        set_kanji_string(rows.a[3], rows.b[3], 0, "メニューモード", 0);
+        set_kanji_string(rows.a[4], rows.b[4], 0, "カーソル速度", 0);
+        set_kanji_string(rows.a[5], rows.b[5], 0, "音声モード", 0);
+        set_kanji_string(rows.a[6], rows.b[6], 0, "おまけ", 0);
+        set_kanji_string(rows.a[7], rows.b[7], 0, "オプション終了", 0);
         k_sub_reset_point_set();
         k_sub_disp_start(0);
         ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0;
@@ -429,11 +429,11 @@ void func_80133010(void) {
             ((DisplayActor44 *)D_8011ECD0)[i].unk_07 = 0x80;
         }
         for (i = 0; i < 4; i++) {
-            func_80043914(0x801C34F0, (u8)(i + 0x10), 1, 1, i);
+            load_palette(0x801C34F0, (u8)(i + 0x10), 1, 1, i);
         }
-        func_80043914(0x801B0000, 0x1F, 1, 1, 0);
+        load_palette(0x801B0000, 0x1F, 1, 1, 0);
         for (i = 0; i != 4; i++) {
-            func_80043914(0x801CBEF0, (u8)(i + 0x1A), 1, 1, i);
+            load_palette(0x801CBEF0, (u8)(i + 0x1A), 1, 1, i);
         }
         load_tpage_buf_lock(5, 0x801C7CF0, 1);
         func_801328C0();
@@ -656,7 +656,7 @@ s32 func_8013394C(void) {
 
     /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
     ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
-    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     /* FAKE: pointer view for unk_1094 makes uopt CSE the ILOD into $a2 while keeping move $v0, $a2 in the first switch branch delay slot. T-24082 */
@@ -995,7 +995,7 @@ void func_80134804(void) {
 
     /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
     ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
-    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -1073,7 +1073,7 @@ void func_80134B6C(void) {
         c[i] = 0x6C;
         d[i] = 0x10;
     }
-    func_8004F870(1, 2, a, b, c, d);
+    menu_set(1, 2, a, b, c, d);
     func_8004284C();
     func_801320C0();
 }
@@ -1083,7 +1083,7 @@ void func_80134C00(void) {
     s32 j;
     s32 sel;
 
-    func_8004F984(1, D_8011ECF6, D_8011ECFA);
+    menu_check(1, D_8011ECF6, D_8011ECFA);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -1129,7 +1129,7 @@ void func_80134D38(void) {
         c[i] = 0x6C;
         d[i] = 0x10;
     }
-    func_8004F870(1, 3, a, b, c, d);
+    menu_set(1, 3, a, b, c, d);
     func_801320C0();
     func_80042940(1);
 }
@@ -1148,7 +1148,7 @@ void func_80134DD0(void) {
         c[i] = 0x6C;
         d[i] = 0x10;
     }
-    func_8004F870(1, 2, a, b, c, d);
+    menu_set(1, 2, a, b, c, d);
     func_8004284C();
     func_801320C0();
 }
@@ -1158,7 +1158,7 @@ void func_80134E64(void) {
     s32 j;
     s32 sel;
 
-    func_8004F984(1, D_8011ECF6, D_8011ECFA);
+    menu_check(1, D_8011ECF6, D_8011ECFA);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -1204,7 +1204,7 @@ void func_80134F9C(void) {
         c[i] = 0x6C;
         d[i] = 0x10;
     }
-    func_8004F870(1, 3, a, b, c, d);
+    menu_set(1, 3, a, b, c, d);
     func_801320C0();
     func_80042940(1);
 }
@@ -1223,7 +1223,7 @@ void func_80135034(void) {
         c[i] = 0x6C;
         d[i] = 0x10;
     }
-    func_8004F870(1, 2, a, b, c, d);
+    menu_set(1, 2, a, b, c, d);
     /* record 20 of the 0x44-byte table at D_80120650: one base symbol keeps the load behind the stores (T-4070) */
     ((DisplayActor44 *)D_80120650)[20].unk_18 = 0x79;
     ((DisplayActor44 *)D_80120650)[20].unk_26 = 0x40;
@@ -1240,7 +1240,7 @@ void func_80135110(void) {
     s32 j;
     s32 sel;
 
-    func_8004F984(1, D_8011ECF6, D_8011ECFA);
+    menu_check(1, D_8011ECF6, D_8011ECFA);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -1316,7 +1316,7 @@ void func_8013539C(void) {
         c[i] = 0x6C;
         d[i] = 0x10;
     }
-    func_8004F870(1, 3, a, b, c, d);
+    menu_set(1, 3, a, b, c, d);
     func_801320C0();
     D_80120BA3 &= 0xFF7F;
     D_80120BE3 = 0;
@@ -1525,7 +1525,7 @@ void func_80135C0C(void) {
     }
     func_80132384();
     D_801208FB = 0;
-    func_8004EAAC();
+    k_sub_reset();
 }
 
 void func_80135DE0(void) {
@@ -1576,7 +1576,7 @@ s32 func_80135E48(void) {
             ((DisplayActor44 *)D_80120650)[i + 11].unk_2A = b[i];
             ((DisplayActor44 *)D_80120650)[i + 11].unk_03 |= 0x80;
         }
-        func_8004F870(1, 5, a, b, c, d);
+        menu_set(1, 5, a, b, c, d);
         switch ((u8)g->unk_F6F % 10) {
         case 1:
         default:
@@ -1612,7 +1612,7 @@ s32 func_801361FC(void) {
 
     /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
     ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
-    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -1769,7 +1769,7 @@ void func_801368FC(void) {
 
     /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
     ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
-    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -1917,7 +1917,7 @@ void func_80137040(void) {
 
     /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
     ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0x80;
-    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     sel = D_800E6280.unk_1094;
@@ -2164,7 +2164,7 @@ s32 func_801378DC(void) {
                     c[i] = 0;
                 }
             }
-            func_8004F870(1, 14, a, b, c, d);
+            menu_set(1, 14, a, b, c, d);
         }
     }
     if (D_800E6280.unk_110D == 0) {
@@ -2180,9 +2180,9 @@ s32 func_801378DC(void) {
             D_800E6280.unk_110D = 2;
         }
     } else {
-        func_8004E93C(6, 0);
-        func_8004E788(-0x80, -0x58, 0, (s32)"フリートーク", 0);
-        func_8004EAD4(1);
+        k_disp_switch(6, 0);
+        set_kanji_string(-0x80, -0x58, 0, (s32)"フリートーク", 0);
+        k_sub_disp_start(1);
         func_8004284C();
     }
     ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0;
@@ -2210,7 +2210,7 @@ void func_80137C1C(void) {
     ((DisplayActor44 *)D_8011ECD0)[159].unk_03 = 0x80;
     ((DisplayActor44 *)D_8011ECD0)[159].unk_1A = 0x1000;
     ((DisplayActor44 *)D_8011ECD0)[159].unk_1C = 0x1000;
-    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     for (i = 0, j = 0; i < 14; i++, j += 2) {
         if (i == g->unk_1094) {
@@ -2280,8 +2280,8 @@ void func_80137FA0(void) {
     s32 i;
 
     func_80044750(0x74);
-    func_8004EAAC();
-    func_8004E93C(6, 1);
+    k_sub_reset();
+    k_disp_switch(6, 1);
     D_801206D8[0x1037] &= ~0x80;
     D_801206D8[0x377] &= ~0x80;
     D_801206D8[0x3BB] &= ~0x80;
@@ -2326,7 +2326,7 @@ s32 func_80138080(void) {
                     c[i] = 0;
                 }
             }
-            func_8004F870(1, 14, a, b, c, d);
+            menu_set(1, 14, a, b, c, d);
         }
     }
     if (D_800E6280.unk_110D == 0) {
@@ -2342,9 +2342,9 @@ s32 func_80138080(void) {
             D_800E6280.unk_110D = 2;
         }
     } else {
-        func_8004E93C(6, 0);
-        func_8004E788(-0x80, -0x58, 0, (s32)"エンディング", 0);
-        func_8004EAD4(1);
+        k_disp_switch(6, 0);
+        set_kanji_string(-0x80, -0x58, 0, (s32)"エンディング", 0);
+        k_sub_disp_start(1);
         func_8004284C();
     }
     ((DisplayActor44 *)D_8011ECD0)[106].unk_03 = 0;
@@ -2371,7 +2371,7 @@ void func_801383C4(void) {
     ((DisplayActor44 *)D_8011ECD0)[159].unk_03 = 0x80;
     ((DisplayActor44 *)D_8011ECD0)[159].unk_1A = 0x1000;
     ((DisplayActor44 *)D_8011ECD0)[159].unk_1C = 0x1000;
-    func_8004F984(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
+    menu_check(1, ((DisplayActor44 *)D_8011ECD0)->unk_26, ((DisplayActor44 *)D_8011ECD0)->unk_2A);
     func_8004FC10(1);
     func_801320C0();
     for (i = 0, j = 0; i < 14; i++, j += 2) {
@@ -2412,8 +2412,8 @@ void func_801383C4(void) {
 void func_801385F0(void) {
     s32 i;
 
-    func_8004E93C(6, 1);
-    func_8004EAAC();
+    k_disp_switch(6, 1);
+    k_sub_reset();
     D_801206D8[0x1037] &= ~0x80;
     D_801206D8[0x377] &= ~0x80;
     D_801206D8[0x3BB] &= ~0x80;

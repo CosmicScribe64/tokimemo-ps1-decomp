@@ -427,7 +427,7 @@ void func_80151380(s32 arg0) {
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801513C8(void) {
-    func_80043914(D_8015EEE4, 0x1B, 1, 3, 7);
+    load_palette(D_8015EEE4, 0x1B, 1, 3, 7);
     switch (D_8015EDC4 & 0xFFFF0000) {
     case 0x100000:
         func_8013E97C(0x35, 0x78, 0x68);

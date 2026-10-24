@@ -129,7 +129,7 @@ void func_801413FC(void) {
         return;
     }
     func_8004E58C();
-    func_80057390(0);
+    set_dec_bri(0);
     D_800E6280.unk_03A = 0;
     func_8004284C();
 }
@@ -167,15 +167,15 @@ s32 func_80141468(void) {
 void func_801415A4(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EA98();
-        func_8004E788(-0x78, 0x30, 0, "今回のアルバムモードのデータを", 0);
-        func_8004E788(-0x78, 0x3E, 0, "　ときめきメモリアル・システムファイル", 0);
-        func_8004E788(-0x78, 0x4C, 0, "にセーブしますか。", 0);
-        func_8004E788(-0x88, 0x5A, 0, D_801500F0, 0);
-        func_8004E788(-0x34, 0x5A, 1, func_80140F50(), 0);
-        func_8004E788(8, 0x5A, 0, D_8015010C, 0);
-        func_8004E788(0x5C, 0x5A, 2, func_80140F94(), 0);
-        func_8004EAD4(7);
+        k_sub_reset_point_set();
+        set_kanji_string(-0x78, 0x30, 0, "今回のアルバムモードのデータを", 0);
+        set_kanji_string(-0x78, 0x3E, 0, "　ときめきメモリアル・システムファイル", 0);
+        set_kanji_string(-0x78, 0x4C, 0, "にセーブしますか。", 0);
+        set_kanji_string(-0x88, 0x5A, 0, D_801500F0, 0);
+        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
+        set_kanji_string(8, 0x5A, 0, D_8015010C, 0);
+        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        k_sub_disp_start(7);
         func_800AE0B0("データセーブメッセージ");
         D_800E6280.unk_110D += 1;
         break;
@@ -201,9 +201,9 @@ void func_80141700(void) {
 void func_8014175C(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x78, 0x30, 0, (s32) "メモリーカードをチェックしています。", 0);
-        func_8004EAD4(1);
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, (s32) "メモリーカードをチェックしています。", 0);
+        k_sub_disp_start(1);
         D_800E6280.unk_110D += 1;
         func_80053CE0();
         break;
@@ -254,9 +254,9 @@ void func_8014175C(void) {
 void func_80141980(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x78, 0x30, 0, "ただいま、セーブ中です。", 0);
-        func_8004EAD4(2);
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, "ただいま、セーブ中です。", 0);
+        k_sub_disp_start(2);
         D_800E6280.unk_110D += 1;
         func_80053CE0();
         break;

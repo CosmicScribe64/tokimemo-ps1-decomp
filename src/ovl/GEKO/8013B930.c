@@ -118,7 +118,7 @@ void func_8013BC74(void) {
     cur = D_800E6280.unk_110A;
     if (prev != cur) {
         D_800E6280.unk_110A = cur - 1;
-        func_8007EC68();
+        place_init();
     }
 }
 
@@ -127,11 +127,11 @@ void func_8013BCBC(void) {
     s32 prev;
 
     prev = D_800E6280.unk_110A;
-    func_8007E81C();
+    normal_date_bg_fadein();
     cur = D_800E6280.unk_110A;
     if (prev != cur) {
         D_800E6280.unk_110A = cur - 1;
-        func_8007EC9C();
+        place_init2();
     }
 }
 
@@ -152,7 +152,7 @@ void func_8013BD78(void) {
 
 s32 func_8013BDB0(void) {
     if ((u32)D_800E6280.unk_1104.w++ >= 0x11U) {
-        func_8004E9F4(1);
+        k_reset(1);
         func_8004284C();
     }
 }
@@ -224,22 +224,22 @@ void func_8013C090(void) {
     /* Chain over two GameState bytes, written as element stores: IDO then keeps the one
      * li v0,12 for both, as the original (T-9210). */
     (&D_800E6280.unk_F5F)[0] = (&D_800E6280.unk_75D)[0] = 0xC;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8006612C("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);
@@ -253,7 +253,7 @@ void func_8013C090(void) {
     if (D_80122CD0 == 1) {
         D_800E6280.unk_11C.unk_02 += 5;
     }
-    func_80084D3C();
+    check_para_limit();
     D_800CA368 = 0x4F;
     func_8004284C();
 }
@@ -261,22 +261,22 @@ void func_8013C090(void) {
 void func_8013C200(void) {
     /* Same chain as func_8013C090 (T-9210). */
     (&D_800E6280.unk_F5F)[0] = (&D_800E6280.unk_75D)[0] = 0xC;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8006612C("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);
@@ -322,6 +322,6 @@ void func_8013C46C(void) {
 }
 
 void func_8013C494(void) {
-    func_8007ED84(0x403B);
+    bg_read_sub2(0x403B);
     func_8004284C();
 }

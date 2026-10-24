@@ -119,7 +119,7 @@ void func_8013448C(void) {
     func_80134F84();
     if (!(D_800E6280.unk_71E & 8)) {
         func_80044750(0x603);
-        func_8004E788(-0x28, 0x40, 2, "ピンポーン", 0);
+        set_kanji_string(-0x28, 0x40, 2, "ピンポーン", 0);
     }
     func_8004284C();
 }
@@ -139,15 +139,15 @@ s32 func_80134538(void) {
         return 0;
     }
     *(u8 *)&D_800E6280.unk_71E |= 4;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_800AE0F0(D_800CA19C, "玄関");
-    func_8004E9F4(1);
+    k_reset(1);
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     saved = D_80122D40;
@@ -157,16 +157,16 @@ s32 func_80134538(void) {
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
-    func_8007C740();
-    func_800649D4();
-    func_80064E84();
+    addr_init_bustup();
+    hizuke_init();
+    message_window_init();
     func_8006509C();
     for (i = 0; i < 0xF; i++) {
-        func_80065048(i, 0);
+        icon_can_use_set(i, 0);
     }
     func_80065B0C(1);
-    func_800639D8();
-    func_800639D8();
+    parameter_show_init();
+    parameter_show_init();
     func_80084E4C();
     D_80144E8C = 0;
     D_80144E90 = 0;
@@ -177,27 +177,27 @@ void func_801346A0(void) {
     s32 pad; /* FAKE: unused slot above sp2B, the original frame has it (real source unknown). T-8070 */
     u8 sp2B;
 
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     sp2B = D_80122D40;
     func_8008585C();
     D_80122D40 = sp2B;
     func_800AE0F0(D_800CA19C, "玄関");
-    func_8004E9F4(1);
+    k_reset(1);
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
-    func_8007ED84(0x4144);
+    bg_read_sub2(0x4144);
     func_80085B3C(0xD, 0x25);
     func_8004284C();
 }

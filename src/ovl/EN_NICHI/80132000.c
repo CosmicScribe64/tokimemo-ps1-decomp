@@ -121,13 +121,13 @@ void func_801321EC(void) {
 }
 
 void func_80132278(void) {
-    func_80048390();
+    tpage_buf_clear();
     func_80048E78();
     func_8006BC28(0);
     D_800E6280.unk_036 = 0;
     D_800E6280.unk_037 = 0;
     D_800E6280.unk_038 = 0;
-    func_800438F0(1);
+    back_clear_switch(1);
     D_800E6280.unk_F6F = (s8) D_80139B14;
     main_state_set((s32) D_800E6280.unk_720);
     func_80042908((s32) D_800E6280.unk_721);
@@ -1577,10 +1577,10 @@ void func_80135FBC(s32 arg0, s32 arg1) {
         v2 -= 0x80;
         v3 -= 0x80;
     }
-    poly = func_800490F0(0x28, D_8011ECA0);
+    poly = GetWorkBase(0x28, D_8011ECA0);
     func_8009F040(poly);
-    func_8009EFB0(poly, 0);
-    func_8009EF84(poly, 1);
+    SetShadeTex(poly, 0);
+    SetSemiTrans(poly, 1);
     poly->r0 = D_8013921C;
     poly->g0 = D_8013921C;
     poly->b0 = D_8013921C;
@@ -1601,7 +1601,7 @@ void func_80135FBC(s32 arg0, s32 arg1) {
     poly->v1 = v1;
     poly->v0 = v0;
     poly->u0 = u0;
-    func_8009EED0(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, poly);
+    AddPrim(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, poly);
 }
 
 s32 func_801362A4(void) {
@@ -1726,9 +1726,9 @@ void func_80136700(void) {
     s32 pad; /* FAKE: unused word above poly, puts poly at sp+0x30 as in the original (T-3330 slot rule) */
     POLY_F4 *poly;
 
-    poly = func_800490F0(0x18, D_8011ECA0);
+    poly = GetWorkBase(0x18, D_8011ECA0);
     func_8009F02C(poly);
-    func_8009EF84(poly, 1);
+    SetSemiTrans(poly, 1);
     poly->r0 = D_80139B20;
     poly->g0 = D_80139B20;
     poly->b0 = D_80139B20;
@@ -1740,8 +1740,8 @@ void func_80136700(void) {
     poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x30;
     poly->x3 = D_800E6280.unk_014[D_8011ECA0] + 0x58;
     poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x30;
-    func_8009EED0(D_8011ECA0 * 0x400 + 8 + D_800E8CA0, poly);
-    func_800494BC(0, 0, 2, 2, 0);
+    AddPrim(D_8011ECA0 * 0x400 + 8 + D_800E8CA0, poly);
+    dtd_on_tpage(0, 0, 2, 2, 0);
     if (D_80139B20 == 0) {
         D_801215FF = 0x80;
     }

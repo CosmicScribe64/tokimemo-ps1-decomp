@@ -75,7 +75,7 @@ void func_8013614C(void) {
     } else if (D_80139DF4[(u8) D_80139DF0] == 1) {
         D_800E6280.unk_11C.unk_02 += 0xA;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
@@ -156,7 +156,7 @@ void func_80136520(void) {
         }
     }
     if (D_80139DF4[(u8)D_80139DF0] == 1) {
-        func_8007E81C();
+        normal_date_bg_fadein();
         return;
     }
     func_80085368();
@@ -164,7 +164,7 @@ void func_80136520(void) {
 
 void func_801365C4(void) {
     if (D_80139DF4[(u8)D_80139DF0] != 0) {
-        func_8007E934();
+        normal_date_bg_fadeout();
         return;
     }
     if (D_80139E0C != 0) {
@@ -204,7 +204,7 @@ void func_80136630(void) {
             D_80139E04 = 0;
             D_80139E08 = 0;
             D_80139E00 = 0;
-            func_8004E9F4(1);
+            k_reset(1);
             func_80041584();
             func_8004284C();
         }
@@ -217,9 +217,9 @@ void func_80136810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 
     s32 unused; /* FAKE: unused local, only its 4-byte frame slot above p is observed (T-6030) */
     u8 *p;
 
-    p = func_800490F0(0x10, D_8011ECA0);
+    p = GetWorkBase(0x10, D_8011ECA0);
     func_8009F0F4(p);
-    func_8009EF84(p, arg8);
+    SetSemiTrans(p, arg8);
     p[4] = arg4;
     p[5] = arg5;
     p[6] = arg6;
@@ -227,7 +227,7 @@ void func_80136810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 
     *(s16 *) (p + 0xA) = D_800E6280.unk_018[D_8011ECA0] + arg1;
     *(s16 *) (p + 0xC) = arg2;
     *(s16 *) (p + 0xE) = arg3;
-    func_8009EED0(&D_800E8CA0[(D_8011ECA0 << 0xA) + (arg7 * 4)], p);
+    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + (arg7 * 4)], p);
 }
 
 void func_80136900(void) {
@@ -300,25 +300,25 @@ void func_80136BB8(void) {
 
 void func_80136BF4(void) {
     if (D_80139DF4[(u8)D_80139DF0] == 2) {
-        func_8007ED84(0x42B3);
+        bg_read_sub2(0x42B3);
     } else if (D_80139DF4[(u8)D_80139DF0] == 1) {
-        func_8007ED84(0x477D);
+        bg_read_sub2(0x477D);
     } else {
         switch (D_80139DF8) {
         case 0:
-            func_8007ED84(0x4787);
+            bg_read_sub2(0x4787);
             break;
         case 1:
-            func_8007ED84(0x478E);
+            bg_read_sub2(0x478E);
             break;
         case 2:
-            func_8007ED84(0x4797);
+            bg_read_sub2(0x4797);
             break;
         case 3:
-            func_8007ED84(0x47A9);
+            bg_read_sub2(0x47A9);
             break;
         default:
-            func_8007ED84(0x47B2);
+            bg_read_sub2(0x47B2);
             break;
         }
     }

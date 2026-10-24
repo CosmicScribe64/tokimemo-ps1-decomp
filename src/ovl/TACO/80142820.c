@@ -153,22 +153,22 @@ typedef struct {
 
 void func_80142DE0(void) {
     func_8004E58C();
-    func_800573AC();
-    func_800438DC(1, 0);
+    dec_bg_reset();
+    draw2d3d(1, 0);
     func_80048DAC(1);
     *(s32 *) &D_800E6280.unk_1095[3] = 0x9F;
     if (((TcBits *) &D_800E7D50)->flag == 1) {
         func_80048EB8(0);
-        func_80048390();
+        tpage_buf_clear();
         main_state_set(D_800E6280.unk_720);
         func_80042908(D_800E6280.unk_721);
         func_80042940(D_800E6280.unk_722);
         func_8006BC28(0);
         func_8006C848(0);
-        func_80064E84();
-        func_800649D4();
-        func_80064E48(1);
-        func_8006492C(1);
+        message_window_init();
+        hizuke_init();
+        message_disp_switch(1);
+        hizuke_disp_switch(1);
         return;
     }
     main_state_set(0x12);

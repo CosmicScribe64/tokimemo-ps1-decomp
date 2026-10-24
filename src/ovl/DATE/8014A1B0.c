@@ -94,13 +94,13 @@ s32 func_8014A39C(void) {
         D_8015DE40 -= 2;
         return 0;
     }
-    r = func_80051B48(D_800E6280.unk_F5F);
+    r = get_g_zyotai_h(D_800E6280.unk_F5F);
     var_v1 = r & 0x7F;
     if (D_800E6280.unk_F5F >= 0xCU) {
         var_v1 = 0;
     }
     func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
-    func_8006492C(1);
+    hizuke_disp_switch(1);
     func_8004284C();
 }
 
@@ -127,13 +127,13 @@ void func_8014A4DC(void) {
     case 2:
         func_80044750(0xCF);
         func_80044750(0x202);
-        func_80048390();
-        func_800438F0(1);
+        tpage_buf_clear();
+        back_clear_switch(1);
         func_80048DAC(1);
         D_800E6280.unk_037 = 0;
         D_800E6280.unk_036 = 0;
         D_800E6280.unk_038 = 0;
-        func_8006492C(0);
+        hizuke_disp_switch(0);
         func_800462C8(2U, 0x801F8000, 0xB471);
         D_8015DE48 += 1;
         return;
@@ -146,11 +146,11 @@ void func_8014A4DC(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            func_800438DC(1, 1);
-            func_80058D20();
+            draw2d3d(1, 1);
+            initView();
             func_8014B080();
-            func_80058EB0();
-            func_80058F0C((s32 *)0x801F8000);
+            initCoordinate();
+            initModelingData_init((s32 *)0x801F8000);
             func_8014AF88();
             func_800462C8(0x21U, 0x80180000, 0xB57F);
             D_8015DE48 += 1;
@@ -166,18 +166,18 @@ void func_8014A4DC(void) {
         break;
     case 6:
         if (cd_read_sync_status() & 1) {
-            func_80043914(0x80190800, 0x10, 1, 2, 0);
+            load_palette(0x80190800, 0x10, 1, 2, 0);
             var_s0 = 0;
             var_s1 = (u8 *)0x80180000;
             do {
-                func_80048514(var_s0 + 5, var_s1, 1);
+                load_tpage_buf_lock(var_s0 + 5, var_s1, 1);
                 var_s0 += 1;
                 var_s1 += 0x4000;
             } while (var_s0 < 2);
             var_s1 = (u8 *)0x80188000;
             var_s0 = 0;
             do {
-                func_80048514(var_s0 + 0x25, var_s1, 1);
+                load_tpage_buf_lock(var_s0 + 0x25, var_s1, 1);
                 var_s0 += 1;
                 var_s1 += 0x4000;
             } while (var_s0 != 2);
@@ -188,8 +188,8 @@ void func_8014A4DC(void) {
         break;
     case 7:
         if (cd_read_sync_status() & 1) {
-            func_80043914(0x80180000, 0x11, 1, 2, 0);
-            func_80043A00(0x80180200, 7, 1, 0, 0, 0x80, 0x80);
+            load_palette(0x80180000, 0x11, 1, 2, 0);
+            load_csr_tp(0x80180200, 7, 1, 0, 0, 0x80, 0x80);
             func_8014B194();
         }
         break;

@@ -67,10 +67,10 @@ s32 func_80133F98(void) {
     D_800E6280.unk_1104.w += 1;
     if ((u32)D_800E6280.unk_1104.w < 2U) {
         func_80132000();
-        func_800438DC(1, 0);
+        draw2d3d(1, 0);
         func_80048DAC(1);
-        func_800438F0(1);
-        func_80048390();
+        back_clear_switch(1);
+        tpage_buf_clear();
         func_80041584();
         func_80048EB8(0);
         func_8006BD6C(0);
@@ -93,15 +93,15 @@ s32 func_80133F98(void) {
 s32 func_8013408C(void) {
     D_800E6280.unk_1104.w += 1;
     if ((u32)D_800E6280.unk_1104.w < 2U) {
-        func_800438DC(1, 0);
+        draw2d3d(1, 0);
         func_80048DAC(1);
-        func_800438F0(1);
-        func_80048390();
+        back_clear_switch(1);
+        tpage_buf_clear();
         func_80041584();
         func_80048EB8(0);
         func_8006BD6C(0);
         func_8004E58C();
-        func_8004E9F4(1);
+        k_reset(1);
         return 0;
     }
     if ((u32)D_800E6280.unk_1104.w < 0xBU) {
@@ -145,14 +145,14 @@ s32 func_80134270(void) {
 
     func_8009C5E0(1);
     func_80133C10();
-    func_80043914(D_8013C5A0[0], 0x10, 1, 2, 0);
-    func_80043914(D_8013C5A0[0], 0x11, 1, 2, 1);
-    func_8004435C(0x140, 0x80, 0x40, 0x80, D_8013C5A0[1]);
-    func_8004435C(0x180, 0x80, 0x40, 0x80, D_8013C5A0[2]);
-    func_8004435C(0x1C0, 0x80, 0x40, 0x80, D_8013C5A0[3]);
-    func_8004435C(0x200, 0x80, 0x40, 0x80, D_8013C5A0[4]);
-    func_8004435C(0x240, 0x80, 0x40, 0x80, D_8013C5A0[5]);
-    func_8004435C(0x280, 0x80, 0x40, 0x80, D_8013C5A0[6]);
+    load_palette(D_8013C5A0[0], 0x10, 1, 2, 0);
+    load_palette(D_8013C5A0[0], 0x11, 1, 2, 1);
+    LoadSquare(0x140, 0x80, 0x40, 0x80, D_8013C5A0[1]);
+    LoadSquare(0x180, 0x80, 0x40, 0x80, D_8013C5A0[2]);
+    LoadSquare(0x1C0, 0x80, 0x40, 0x80, D_8013C5A0[3]);
+    LoadSquare(0x200, 0x80, 0x40, 0x80, D_8013C5A0[4]);
+    LoadSquare(0x240, 0x80, 0x40, 0x80, D_8013C5A0[5]);
+    LoadSquare(0x280, 0x80, 0x40, 0x80, D_8013C5A0[6]);
     D_800E6280.unk_1228[37] = 1;
     D_800E6280.unk_1228[38] = 1;
     D_800E6280.unk_1228[39] = 1;

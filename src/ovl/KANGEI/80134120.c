@@ -81,24 +81,24 @@ void func_80134374(void) {
     s16 i;
     u32 v;
 
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
-    func_800438F0(1);
+    back_clear_switch(1);
     func_80048EB8(0);
-    func_80064E84();
-    func_800649D4();
-    func_80048390();
+    message_window_init();
+    hizuke_init();
+    tpage_buf_clear();
     func_8004E58C();
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     D_800B593C = 0;
     func_8008585C();
-    func_80063930(0);
-    func_80064FA4(0);
+    parameter_disp_switch(0);
+    icon_disp_switch(0);
     D_80139ADC = 0;
     D_80139AE0 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80084E4C();
     D_800E6280.unk_F5F = 0xFF;
     v = D_800E6280.unk_0F4.h >> 12;
@@ -170,7 +170,7 @@ void func_80134724(void) {
     s16 v;
     s16 c2;
 
-    s = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    s = get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
     if (s < 2U) {
         s = 0;
     } else if (s == 2) {
@@ -296,47 +296,47 @@ void func_80134BC4(void) {
     switch (selection) {
     case 0:
         func_800AE0F0(D_800CA19C, "図書室");
-        func_8007ED84(0x40BC);
+        bg_read_sub2(0x40BC);
         break;
     case 1:
         func_800AE0F0(D_800CA19C, "演劇部");
-        func_8007ED84(0x40B2);
+        bg_read_sub2(0x40B2);
         break;
     case 2:
         func_800AE0F0(D_800CA19C, "実験室");
-        func_8007ED84(0x40C6);
+        bg_read_sub2(0x40C6);
         break;
     case 3:
         func_800AE0F0(D_800CA19C, "電脳部室");
-        func_8007ED84(0x40D0);
+        bg_read_sub2(0x40D0);
         break;
     case 4:
         func_800AE0F0(D_800CA19C, "美術室");
-        func_8007ED84(0x40D9);
+        bg_read_sub2(0x40D9);
         break;
     case 5:
         func_800AE0F0(D_800CA19C, "音楽室");
-        func_8007ED84(0x40E2);
+        bg_read_sub2(0x40E2);
         break;
     case 6:
         func_800AE0F0(D_800CA19C, "グランド");
-        func_8007ED84(0x4296);
+        bg_read_sub2(0x4296);
         break;
     case 7:
         func_800AE0F0(D_800CA19C, "グランド");
-        func_8007ED84(0x4296);
+        bg_read_sub2(0x4296);
         break;
     case 8:
         func_800AE0F0(D_800CA19C, "グランド");
-        func_8007ED84(0x4296);
+        bg_read_sub2(0x4296);
         break;
     case 9:
         func_800AE0F0(D_800CA19C, "プール");
-        func_8007ED84(0x40A0);
+        bg_read_sub2(0x40A0);
         break;
     default:
         func_800AE0F0(D_800CA19C, "体育館");
-        func_8007ED84(0x40A9);
+        bg_read_sub2(0x40A9);
         break;
     }
     func_80085B3C(0xE, (s32) ((u16) D_800E6280.unk_0F4.h >> 0xC));
@@ -371,24 +371,24 @@ void func_80134EA8(void) {
 }
 
 void func_80134F00(void) {
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
-    func_800438F0(1);
+    back_clear_switch(1);
     func_80048EB8(0);
-    func_80064E84();
-    func_800649D4();
-    func_80048390();
+    message_window_init();
+    hizuke_init();
+    tpage_buf_clear();
     func_8004E58C();
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     D_800B593C = 0;
     func_8008585C();
-    func_80063930(0);
-    func_80064FA4(0);
+    parameter_disp_switch(0);
+    icon_disp_switch(0);
     D_80139ADC = 0;
     D_80139AE0 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80084E4C();
     func_800847B8(D_800E6280.unk_75D);
     func_80132E74();
@@ -478,10 +478,10 @@ void func_80135250(void) {
 
 void func_801352A4(void) {
     if ((u8)D_800E6280.unk_F5F < 4U) {
-        func_8007ED84(0x42A9);
+        bg_read_sub2(0x42A9);
         func_800AE0F0(D_800CA19C, "ロビー");
     } else {
-        func_8007ED84(0x4296);
+        bg_read_sub2(0x4296);
         func_800AE0F0(D_800CA19C, "グランド");
     }
     func_8004284C();

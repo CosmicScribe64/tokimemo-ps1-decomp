@@ -71,14 +71,14 @@ void func_8013E11C(void) {
 }
 
 void func_8013E1A0(void) {
-    if (func_80052C88(9) >= 0x50U) {
+    if (get_h_yuukou(9) >= 0x50U) {
         D_800E6280.unk_1BC[9].unk_02 += 1;
         D_800E6280.unk_1BC[9].unk_06 += 2;
     } else {
         D_800E6280.unk_1BC[9].unk_0C.f.b14 = 1;
         D_800E6280.unk_1BC[9].unk_06 += 1;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 
@@ -87,9 +87,9 @@ void func_8013E22C(void) {
     Rec24 *p;
 
     D_800E6280.unk_1228[5] = 1;
-    func_8004435C(0x140, 0, 0x40, 0x80, D_801463B0);
+    LoadSquare(0x140, 0, 0x40, 0x80, D_801463B0);
     func_8013DF70();
-    func_80043914(D_80146394, 0x12, 1, 3, 0);
+    load_palette(D_80146394, 0x12, 1, 3, 0);
     for (i = 4; i < 0xE; i++) {
         p = &D_801217D0[i];
         p->unk_00 = 0xC1000000;
@@ -125,7 +125,7 @@ void func_8013E410(void) {
 
 void func_8013E448(void) {
     func_8013DF70();
-    func_80043914(D_80146E60, 0x11, 1, 2, 0);
+    load_palette(D_80146E60, 0x11, 1, 2, 0);
     func_80084E90(D_80146E64, D_80146E68, D_80146E6C, D_80146E70, D_80146E74, D_80146E78);
     func_800850D4(D_80146E54, D_80146E58, D_80146E50, D_80146E5C);
     func_8004284C();
@@ -215,22 +215,22 @@ void func_8013E760(void) {
 
 void func_8013E828(void) {
     D_800E6280.unk_F5F = 9;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_8006612C("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);
@@ -306,22 +306,22 @@ void func_8013E950(void) {
 
 void func_8013ECA8(void) {
     D_800E6280.unk_F5F = 9;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     func_800AE0F0(D_800CA19C, "廊下");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80137990();
-    func_800649D4();
-    func_80064E84();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);
@@ -345,6 +345,6 @@ void func_8013EDEC(void) {
 }
 
 void func_8013EE14(void) {
-    func_8007ED84(0x403B);
+    bg_read_sub2(0x403B);
     func_8004284C();
 }

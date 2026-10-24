@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_search_tpage_multi /* matched as u16: the original compares the raw result and keeps the narrowed copy (main_api.h: s32) */
 #include "common.h"
 #include "game.h"
 #include "psx_types.h"

@@ -105,7 +105,7 @@ void func_80138B4C(s32 arg0) {
         b[i] = i * 10 - 0x64;
         c[i] = 0x40;
         d[i] = 0xA;
-        func_8004F870(1, 0x10, a, b, c, d);
+        menu_set(1, 0x10, a, b, c, d);
     }
 }
 
@@ -283,7 +283,7 @@ s32 func_80139198(void) {
     D_801220E0 = 0;
     /* FAKE: argument evaluation delays the flag clear until after row-address
      * setup, preserving the original store schedule. T-24002 */
-    func_8004F870(0, 7, (D_800E6280.unk_03A = 0, D_8013D364), D_8013D372, D_8013D380, D_8013D38E);
+    menu_set(0, 7, (D_800E6280.unk_03A = 0, D_8013D364), D_8013D372, D_8013D380, D_8013D38E);
     menu_bar_color(0, 0x5F7F3F, 9, 8);
     menu_bar_color(1, 0x7F7F7F, 2, 1);
     for (i = 0, p = (DisplayActor44 *)D_8011ECD0; i < 13; i++, p++) {
@@ -401,7 +401,7 @@ void func_80139878(void) {
     D_801220D6 = 0;
     if (t >= 0x80) {
         *(u8 *)&D_800E6280.unk_03A = 0x80;
-        func_8004E884(7);
+        k_disp_start(7);
         func_8004284C();
     }
 }

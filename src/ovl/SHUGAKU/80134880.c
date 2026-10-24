@@ -129,7 +129,7 @@ s32 func_80134D8C(void) {
 
 s32 func_80134DE8(void) {
     if (D_800E6280.unk_110D == 0) {
-        func_8004E9F4(0);
+        k_reset(0);
         func_8006612C("ホテル・廊下");
         D_800E6280.unk_110D += 1;
     }
@@ -165,7 +165,7 @@ void func_80134F18(void) {
     D_8013C000 = D_8013C700;
     D_8013C004 = D_8013C83C;
     func_80134880();
-    func_80043914(D_8013C1A0, 0x11, 1, 2, 0);
+    load_palette(D_8013C1A0, 0x11, 1, 2, 0);
     func_80084E90(D_8013C1A4, D_8013C1A8, D_8013C1AC, D_8013C1B0, D_8013C1B4, D_8013C1B8);
     func_800850D4(D_8013C194, D_8013C198, D_8013C190, D_8013C19C);
     D_80120698 = 8;
@@ -200,7 +200,7 @@ void func_801350F4(void) {
     D_800E6280.unk_56C[0x20] = 1;
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 5;
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
-    func_80084D3C();
+    check_para_limit();
 }
 
 void func_801351CC(void) {
@@ -237,7 +237,7 @@ void func_801352B0(void) {
     }
     D_800E6280.unk_1104.w = count + 1;
     if (D_801206FE >= -0xBF) {
-        if (!(D_800E6280.unk_1104.w & 1) && (func_8004ECB4() != 0)
+        if (!(D_800E6280.unk_1104.w & 1) && (check_end_k() != 0)
             && ((*(u8 *)&D_800E6280.unk_03C == 0) || (func_80046094() == 9))) {
             D_801206FE--;
         }

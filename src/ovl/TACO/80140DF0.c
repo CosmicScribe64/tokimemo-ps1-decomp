@@ -228,7 +228,7 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
             } else if (dist <= 0) {
                 dist = 1;
             }
-            poly = func_800490F0(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, D_8011ECA0);
             func_8009F040(poly);
             SetSemiTrans(poly, 1);
             poly->r0 = 0x80;
@@ -247,7 +247,7 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
         }
     }
 }
@@ -290,12 +290,12 @@ void func_801416E8(Tc14 *arg0, s32 arg1) {
         }
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        /* The early return (not a nested if) gives the original's separate load of D_8011ECA0 for the func_800490F0 call. T-22005 */
+        /* The early return (not a nested if) gives the original's separate load of D_8011ECA0 for the GetWorkBase call. T-22005 */
         if (((s16 *)pt)[3] < D_800E6280.unk_018[D_8011ECA0] - 0x200 || D_800E6280.unk_018[D_8011ECA0] + 0x200 < ((s16 *)pt)[7]) {
             return;
         }
         side = rec->unk12;
-        poly = func_800490F0(0x28, D_8011ECA0);
+        poly = GetWorkBase(0x28, D_8011ECA0);
         func_8009F040(poly);
         SetSemiTrans(poly, 1);
         poly->r0 = 0x80;
@@ -322,7 +322,7 @@ void func_801416E8(Tc14 *arg0, s32 arg1) {
         poly->y2 = ((s16 *)pt)[5];
         poly->x3 = ((s16 *)pt)[6];
         poly->y3 = ((s16 *)pt)[7];
-        func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+        AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
     }
 }
 
@@ -371,7 +371,7 @@ void func_80141B18(Tc14 *arg0, s32 arg1) {
         func_800AB170(&v, &pt[j * 4 + 2], &depth, &flag);
         j++;
     } while (&pt[j * 4 + 2] < &v.vz);
-    poly = func_800490F0(0x24, D_8011ECA0);
+    poly = GetWorkBase(0x24, D_8011ECA0);
     func_8009F054(poly);
     SetSemiTrans(poly, 1);
     poly->g0 = 0x10;

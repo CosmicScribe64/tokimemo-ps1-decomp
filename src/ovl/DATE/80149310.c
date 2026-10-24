@@ -224,7 +224,7 @@ void func_80149AC0(void) {
     u32 v;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    v = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    v = (u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
     if (v < 2U) {
         D_8015D084 += 2;
     } else if (v == 2) {
@@ -338,6 +338,6 @@ void func_80149FF8(void) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 1;
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 0xA;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }

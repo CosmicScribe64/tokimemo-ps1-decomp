@@ -30,7 +30,7 @@ void func_8014488C(void) {
     (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = 8;
     D_800E6280.unk_038 = 0x10;
     draw2d3d(1, 1);
-    func_80058D20();
+    initView();
     func_80146E3C();
     func_80146D60(-0xFA0);
     func_801471D0(0x8019C800);

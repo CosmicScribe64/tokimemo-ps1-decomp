@@ -9,12 +9,12 @@ void func_80133540(void) {
     tbl = D_8013C3E4;
     func_80083808();
     tbl.f[D_800E6280.unk_110A](0x80);
-    func_8007EDF8();
-    func_800846C0();
+    check_k_scroll();
+    k_disp_inc2();
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
-    func_80064DEC();
+    hizuke_show();
     func_80083A10();
 }
 
@@ -153,12 +153,12 @@ void func_80133AD0(void) {
     tbl = D_8013C490;
     func_80083808();
     tbl.f[D_800E6280.unk_110A](0x80);
-    func_8007EDF8();
-    func_800846C0();
+    check_k_scroll();
+    k_disp_inc2();
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
-    func_80064DEC();
+    hizuke_show();
     func_80083A10();
 }
 

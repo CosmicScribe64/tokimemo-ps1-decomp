@@ -121,7 +121,7 @@ s32 func_8013D528(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
             } else if (dist >= 6) {
                 dist -= 4;
             }
-            poly = func_800490F0(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, D_8011ECA0);
             func_8009F040(poly);
             SetSemiTrans(poly, 1);
             poly->r0 = 0x80;
@@ -140,7 +140,7 @@ s32 func_8013D528(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
         }
     }
 }
@@ -183,7 +183,7 @@ s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
             } else if (dist <= 0) {
                 dist = 1;
             }
-            poly = func_800490F0(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, D_8011ECA0);
             func_8009F040(poly);
             SetSemiTrans(poly, 1);
             poly->r0 = 0x80;
@@ -201,7 +201,7 @@ s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
         }
     }
 }

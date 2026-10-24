@@ -42,17 +42,17 @@ void func_80133C4C(void) {
     s16 c[8];
     s16 d[8];
 
-    func_8004EAAC();
-    func_8004E788(-0x50, -0x40, 0xF, (s32)"バイオリズム", 0);
+    k_sub_reset();
+    set_kanji_string(-0x50, -0x40, 0xF, (s32)"バイオリズム", 0);
     for (i = 0; i < 8; i++) {
         a[i] = -0x60;
         b[i] = i * 0x10 - 0x32;
         c[i] = 0xE8;
         d[i] = 0x10;
-        r = func_8004E788(a[i], b[i], 0xF, (&D_8013B740)[i], 0);
+        r = set_kanji_string(a[i], b[i], 0xF, (&D_8013B740)[i], 0);
     }
-    func_8004F870(0, 8, a, b, c, d);
-    func_8004E884(r);
+    menu_set(0, 8, a, b, c, d);
+    k_disp_start(r);
     func_8004284C();
 }
 
@@ -98,11 +98,11 @@ void func_80133D74(void) {
 s32 func_80133EA4(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013B740, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　画面の中央が現在の位置です。", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "左が過去一週間、右がこの先一週間のあな", 0);
-        func_8004E788(-0x88, -0x10, 0xF, "たのバイオリズムです。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013B740, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　画面の中央が現在の位置です。", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "左が過去一週間、右がこの先一週間のあな", 0);
+        set_kanji_string(-0x88, -0x10, 0xF, "たのバイオリズムです。", 0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -117,10 +117,10 @@ s32 func_80133EA4(void) {
 s32 func_80133F90(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013B744, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　画面中央の黒い線と交差する日が、コマ", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "ンドが特に失敗しやすい日になります。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013B744, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　画面中央の黒い線と交差する日が、コマ", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "ンドが特に失敗しやすい日になります。", 0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -135,13 +135,13 @@ s32 func_80133F90(void) {
 s32 func_80134060(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013B748, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　黒い線からの距離が大きいとコマンドが", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "成功しやすくなります。", 0);
-        func_8004E788(-0x88, -0x10, 0xF, "　同じ距離ならば、黒い線の上側にある場", 0);
-        func_8004E788(-0x88, 0, 0xF, "合のほうが、コマンドが成功しやすくなり", 0);
-        func_8004E788(-0x88, 0x10, 0xF, "ます。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013B748, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　黒い線からの距離が大きいとコマンドが", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "成功しやすくなります。", 0);
+        set_kanji_string(-0x88, -0x10, 0xF, "　同じ距離ならば、黒い線の上側にある場", 0);
+        set_kanji_string(-0x88, 0, 0xF, "合のほうが、コマンドが成功しやすくなり", 0);
+        set_kanji_string(-0x88, 0x10, 0xF, "ます。", 0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -156,10 +156,10 @@ s32 func_80134060(void) {
 s32 func_80134184(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013B74C, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　赤は主に、身体を使うコマンドに影響し", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "ます。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013B74C, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　赤は主に、身体を使うコマンドに影響し", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "ます。", 0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -174,10 +174,10 @@ s32 func_80134184(void) {
 s32 func_80134254(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013B750, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　青は、主に感性を必要とするコマンドに", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "影響します。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013B750, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　青は、主に感性を必要とするコマンドに", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "影響します。", 0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -192,10 +192,10 @@ s32 func_80134254(void) {
 s32 func_80134324(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013B754, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　緑は、主に頭脳を必要とするコマンドに", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "影響します。", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013B754, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　緑は、主に頭脳を必要とするコマンドに", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "影響します。", 0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -210,12 +210,12 @@ s32 func_80134324(void) {
 s32 func_801343F4(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_8004EAAC();
-        func_8004E788(-0x88, -0x40, 1, D_8013B758, 0);
-        func_8004E788(-0x88, -0x30, 0xF, "　ゲームをクリアするのに、特に必要はあ", 0);
-        func_8004E788(-0x88, -0x20, 0xF, "りません。", 0);
-        func_8004E788(-0x88, -0x10, 0xF, "　究極のパラメータを狙う場合以外必要な", 0);
-        func_8004E788(-0x88, 0, 0xF, "いかも…？", 0);
+        k_sub_reset();
+        set_kanji_string(-0x88, -0x40, 1, D_8013B758, 0);
+        set_kanji_string(-0x88, -0x30, 0xF, "　ゲームをクリアするのに、特に必要はあ", 0);
+        set_kanji_string(-0x88, -0x20, 0xF, "りません。", 0);
+        set_kanji_string(-0x88, -0x10, 0xF, "　究極のパラメータを狙う場合以外必要な", 0);
+        set_kanji_string(-0x88, 0, 0xF, "いかも…？", 0);
         D_800E6280.unk_110D += 1;
         break;
     case 1:

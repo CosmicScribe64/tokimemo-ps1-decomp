@@ -86,7 +86,7 @@ void func_801528DC(void) {
         D_800E6280.unk_03A = 0x80;
         func_80048EB8(0);
         func_8006BC28(0);
-        func_800438F0(1);
+        back_clear_switch(1);
         func_80042808();
     }
 }
@@ -303,7 +303,7 @@ void func_80152F30(void) {
         break;
     case 5:
         func_80049A40(-0x5C - (D_800E6280.unk_1104.u >> 1), -0x78, (D_800E6280.unk_1104.u >> 1) * 2, 0xA8, 3, color.word, 0x81);
-        func_800494BC(0, 0, 3, 1, 0);
+        dtd_on_tpage(0, 0, 3, 1, 0);
         D_800E6280.unk_1104.u += 1;
         if (D_800E6280.unk_1104.u >= 0x41U) {
             func_8004284C();
@@ -311,7 +311,7 @@ void func_80152F30(void) {
         break;
     case 6:
         func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
-        func_800494BC(0, 0, 3, 1, 0);
+        dtd_on_tpage(0, 0, 3, 1, 0);
         func_8013E97C(0x3B, 0x48, D_800E6280.unk_1104.u - 0x80);
         func_8013E810(0x3B, 8, 1, 1);
         D_800E6280.unk_1104.u += 1;
@@ -323,14 +323,14 @@ void func_80152F30(void) {
     case 7:
         func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
         D_800E6280.unk_1104.u += 1;
-        func_800494BC(0, 0, 3, 1, 0);
+        dtd_on_tpage(0, 0, 3, 1, 0);
         if (D_800E6280.unk_1104.u >= 0x79U) {
             func_8004284C();
         }
         break;
     case 8:
         func_80049A40(D_800E6280.unk_1104.u - 0x7C, -0x78, 0x40 - (D_800E6280.unk_1104.u * 2), 0xA8, 3, color.word, 0x81);
-        func_800494BC(0, 0, 3, 1, 0);
+        dtd_on_tpage(0, 0, 3, 1, 0);
         D_800E6280.unk_1104.u += 1;
         if (D_800E6280.unk_1104.u >= 0x21U) {
             func_8004284C();

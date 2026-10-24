@@ -151,7 +151,7 @@ void func_80138264(void) {
 
 void func_8013828C(void) {
     D_800E6280.unk_71E |= 4;
-    func_80083440(func_80051B48(D_800E6280.unk_F5F));
+    func_80083440(get_g_zyotai_h(D_800E6280.unk_F5F));
     D_80139AD0 = (KObj *) D_8013A170[0][0][1];
     D_80139AD4 = D_8013A170[0][1][1];
     D_80139AD8 = D_8013A170[0][2][1];
@@ -198,7 +198,7 @@ void func_80138470(void) {
     if (D_80122CDC != 0) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 1;
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 5;
-        func_80084D3C();
+        check_para_limit();
         D_80139AC0 = 1;
         D_800E6280.unk_110A += 0x38;
         return;
@@ -471,16 +471,16 @@ void func_80138E64(void) {
     s32 pad; /* FAKE: unused local above s, puts s at sp+0x2B as in the original; real source unknown (T-3330 layout) */
     u8 s;
 
-    s = func_80051A68(0) & 0x7F;
+    s = get_g_zyotai_s(0) & 0x7F;
     if (((u32)D_800E6280.unk_0F4.h >> 0xC) == ((u32)D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4)) {
-        func_8007ED84(0x42A9);
+        bg_read_sub2(0x42A9);
         if (s < 2U && D_80122CDC < 2) {
             func_80085B3C(0xA, 0x30);
         } else {
             func_80085B3C(0xA, 0x2D);
         }
     } else {
-        func_8007ED84(0x428D);
+        bg_read_sub2(0x428D);
         if (s < 2U && D_80122CDC < 2) {
             func_80085B3C(0xA, 0x31);
         } else {
@@ -531,35 +531,35 @@ s32 func_80138F88(void) {
         D_80139AD8 = D_8013A170[0][2][11];
         func_8006509C();
         for (i = 0; i < 15; i++) {
-            func_80065048(i, 0);
+            icon_can_use_set(i, 0);
         }
         func_80065B0C(1);
-        func_800639D8();
-        func_800639D8();
+        parameter_show_init();
+        parameter_show_init();
         func_800847B8(0);
         D_80139AC0 = 1;
         D_800E6280.unk_110A += 0x1E;
         return 0;
     }
     D_800E6280.unk_F5F = best_i;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
-    func_800438F0(1);
+    back_clear_switch(1);
     func_80048EB8(0);
-    func_80064E84();
-    func_800649D4();
-    func_80048390();
+    message_window_init();
+    hizuke_init();
+    tpage_buf_clear();
     func_8004E58C();
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     D_800B593C = 0;
     func_8008585C();
-    func_80063930(0);
-    func_80064FA4(0);
+    parameter_disp_switch(0);
+    icon_disp_switch(0);
     D_80139ADC = 0;
     D_80139AE0 = 0;
-    func_8007C740();
+    addr_init_bustup();
     func_80084E4C();
     func_800847B8(D_800E6280.unk_F5F);
     func_80132E74();

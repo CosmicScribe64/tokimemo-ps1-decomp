@@ -138,17 +138,17 @@ void func_80134EBC(void) {
     D_8015EDE8 = 0;
     D_800E6280.unk_038 = 0;
     func_80059048();
-    func_800438DC(1, 1);
+    draw2d3d(1, 1);
     func_80048DAC(1);
-    func_8004E9F4(0);
-    func_800443F0(0, 0x1EF, 0x100, 1, &D_800E6280.unk_163C[0]);
+    k_reset(0);
+    StoreSquare(0, 0x1EF, 0x100, 1, &D_800E6280.unk_163C[0]);
     for (i = 56; i < 72; i++) {
         D_800E6280.unk_163C[i] = 0;
     }
     for (i = 0; i < 0x80; i++) {
         D_800E6280.unk_163C[128 + i] = 0;
     }
-    func_80043914(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
+    load_palette(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
     func_80134FB8();
     func_80134930();
     func_8004284C();
@@ -209,7 +209,7 @@ s32 func_8013515C(void) {
             }
         }
     }
-    func_80043914(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
+    load_palette(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
     return n;
 }
 

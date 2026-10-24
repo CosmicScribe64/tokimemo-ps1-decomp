@@ -181,24 +181,24 @@ void func_80133494(void) {
         break;
     case 3:
         func_8004ADE4();
-        func_800573AC();
-        func_80057390(0);
+        dec_bg_reset();
+        set_dec_bri(0);
         func_8006BC28(0);
         func_80084E4C();
-        func_800649D4();
-        func_80064E84();
+        hizuke_init();
+        message_window_init();
         func_800847B8(0U);
         func_8004E58C();
-        func_8004E9F4(0);
+        k_reset(0);
         func_8006612C((s32) "　");
         func_80065F34(0);
         D_800E6280.unk_03A = 0x80;
-        func_80086424();
+        Default_Disp();
         func_8004284C();
         break;
     case 4:
         cd_read_sectors(0x95U, 0x801A0000, 0x9B94);
-        func_80086424();
+        Default_Disp();
         func_8004284C();
         break;
     case 5:
@@ -206,10 +206,10 @@ void func_80133494(void) {
             func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 0);
             func_8004284C();
         }
-        func_80086424();
+        Default_Disp();
         break;
     case 6:
-        func_80086424();
+        Default_Disp();
         func_80042808();
         break;
     default:
@@ -218,8 +218,8 @@ void func_80133494(void) {
     }
     func_8006764C(0);
     func_8006BD6C(0);
-    func_80064FA4(0);
-    func_80063930(0);
+    icon_disp_switch(0);
+    parameter_disp_switch(0);
 }
 
 void func_80133644(void) {
@@ -241,12 +241,12 @@ void func_80133644(void) {
         break;
     case 2:
         D_800E6280.unk_F5F = 0;
-        func_8007C740();
+        addr_init_bustup();
         func_80083474();
         func_80083440(1U);
         break;
     case 3:
-        func_8007E390();
+        normal_date_girl_in();
         break;
     case 4:
         func_800847B8(0U);
@@ -263,14 +263,14 @@ void func_80133644(void) {
         }
         break;
     case 5:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 6:
         D_800CA148 = 4;
         func_8004284C();
         break;
     case 7:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 8:
         if (D_800E6280.unk_F74 == 1) {
@@ -278,7 +278,7 @@ void func_80133644(void) {
         }
         break;
     case 9:
-        func_80085A60();
+        normal_date_speak();
         break;
     case 10:
         if (D_800E6280.unk_F88 != 0) {
@@ -290,7 +290,7 @@ void func_80133644(void) {
         func_80046500();
         break;
     }
-    func_80086424();
+    Default_Disp();
 }
 
 void func_8013384C(arg0, arg1)

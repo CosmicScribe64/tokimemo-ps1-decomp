@@ -124,12 +124,12 @@ void func_80136DEC(void) {
     gs = &D_800E6280;
     switch (gs->unk_110A) {
     case 0:
-        func_80048514(5, ((s32 *)D_801391E4)[7], 1);
+        load_tpage_buf_lock(5, ((s32 *)D_801391E4)[7], 1);
         for (i = 0; i < 7; i++) {
-            func_800485BC(((s32 *)D_801391E4)[i], 1);
+            search_load_tpage_buf_lock(((s32 *)D_801391E4)[i], 1);
         }
         for (i = 8; i < 10; i++) {
-            func_800485BC(((s32 *)D_801391E4)[i], 1);
+            search_load_tpage_buf_lock(((s32 *)D_801391E4)[i], 1);
         }
         func_8004284C();
         return;
@@ -452,10 +452,10 @@ void func_80137E2C(void) {
     u16 w;
     s32 a;
 
-    p = func_800490F0(0x24, D_8011ECA0);
+    p = GetWorkBase(0x24, D_8011ECA0);
     func_8009F054(p);
-    func_8009EF84(p, 1);
-    func_8009EFB0(p, 0);
+    SetSemiTrans(p, 1);
+    SetShadeTex(p, 0);
     w = D_80139C58;
     do {
     } while (0);
@@ -480,7 +480,7 @@ void func_80137E2C(void) {
     *(s16 *)(p + 0x1A) = D_800E6280.unk_018[D_8011ECA0] + 0x60;
     *(s16 *)(p + 0x20) = D_800E6280.unk_014[D_8011ECA0] + w + 0x20;
     *(s16 *)(p + 0x22) = D_800E6280.unk_018[D_8011ECA0] + 0x60;
-    func_8009EED0((D_8011ECA0 << 10) + 0xC + D_800E8CA0, p, w);
+    AddPrim((D_8011ECA0 << 10) + 0xC + D_800E8CA0, p, w);
 }
 
 /* FAKE: local reuse and the callback comma expression retain the table slots

@@ -143,7 +143,7 @@ s32 func_8013E90C(s32 i) {
 }
 
 void func_8013E934(s32 arg0, s32 arg1, s32 arg2) {
-    func_8004E788(arg0 - 0xA0, arg1 - 0x78, 0, arg2, 0);
+    set_kanji_string(arg0 - 0xA0, arg1 - 0x78, 0, arg2, 0);
 }
 
 void func_8013E97C(s32 i, s32 x, s32 y) {

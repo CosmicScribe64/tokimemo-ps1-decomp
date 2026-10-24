@@ -483,9 +483,9 @@ void func_8013AD64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         g = g * D_8015F4F0 / 128;
         b = b * D_8015F4F0 / 128;
     }
-    p = func_800490F0(0xC, D_8011ECA0);
+    p = GetWorkBase(0xC, D_8011ECA0);
     func_8009F0B8(p);
-    func_8009EF84(p, 0);
+    SetSemiTrans(p, 0);
     p[4] = r;
     p[5] = g;
     p[6] = b;
@@ -498,10 +498,10 @@ void func_8013AD64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     *(s16 *)(p + 8) = x;
     *(s16 *)(p + 0xA) = y;
     if (arg3 < 2) {
-        func_8009EED0((D_8011ECA0 << 10) + 0x3F8 + D_800E8CA0, p);
+        AddPrim((D_8011ECA0 << 10) + 0x3F8 + D_800E8CA0, p);
         return;
     }
-    func_8009EED0((D_8011ECA0 << 10) + 0x40 + D_800E8CA0, p);
+    AddPrim((D_8011ECA0 << 10) + 0x40 + D_800E8CA0, p);
 }
 
 void func_8013AFDC(void) {

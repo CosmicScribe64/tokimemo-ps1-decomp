@@ -142,9 +142,9 @@ void func_80133610(void) {
 
 void func_80133698(void) {
     if (D_80143B14 == 0) {
-        func_8007ED84(0x4167);
+        bg_read_sub2(0x4167);
         func_800AE0F0(D_800CA19C, "正月");
-        func_8004E9F4(0);
+        k_reset(0);
         func_8006612C(D_800CA19C);
     } else {
         D_800E6280.unk_110A += 3;
@@ -205,7 +205,7 @@ void func_80133874(void) {
 
 void func_801338DC(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    if (((u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F) != 4) {
+    if (((u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F) != 4) {
         D_80143B00 += 1;
         func_8004284C();
         func_8004284C();
@@ -235,7 +235,7 @@ void func_801339DC(void) {
     s32 temp_t6;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    temp_t6 = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    temp_t6 = (u8)get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
     switch (temp_t6) {
     case 0:
         break;
@@ -268,7 +268,7 @@ void func_80133A88(void) {
     } else {
         D_800E6280.unk_1BC[0].unk_02 += 1;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 

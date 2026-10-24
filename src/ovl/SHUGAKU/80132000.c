@@ -311,7 +311,7 @@ void func_80132C64(void) {
     if (D_80122CDC != 0) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 1;
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 5;
-        func_80084D3C();
+        check_para_limit();
         D_800E6280.unk_110A += 0x1B;
         return;
     }
@@ -322,7 +322,7 @@ void func_80132C64(void) {
 void func_80132D14(void) {
     u32 t;
 
-    t = func_80051A68(D_800E6280.unk_F5F);
+    t = get_g_zyotai_s(D_800E6280.unk_F5F);
     t = t & 0x7F;
     t = t & 0x7F; /* FAKE: the repeated mask reproduces the original's extra move; real source unknown. T-4070 */
     if (t >= 2U) {
@@ -415,7 +415,7 @@ void func_801330E8(void) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 1;
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 0xA;
     }
-    func_80084D3C();
+    check_para_limit();
     func_8004284C();
 }
 

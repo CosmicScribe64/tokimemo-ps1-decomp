@@ -1,5 +1,6 @@
 #define MAIN_API_OVERRIDE_cd_read_sectors /* arg1 is a RAM address: matched as u32 (main_api.h: s32), T-16552 */
 #define MAIN_API_OVERRIDE_func_80085E30 /* called as an implicit int function (definition: void), T-16552 */
+#define MAIN_API_OVERRIDE_Rot_2D /* implicit declaration, as matched (main_api.h: void(s32,s32*,s32*,s32*,s32*)) */
 #include "common.h"
 #include "ovl/TAIIKU.h"
 #include "psx_types.h"
@@ -198,15 +199,15 @@ void func_80138DF8(void) {
                 D_80149DF4[i] = i + 0x80000200;
             }
             cd_read_sectors(3, 0x801F8000, 0xBE2A);
-            func_80086350();
+            Fade_In_Init();
             func_80044750(0x200);
             func_8004284C();
         }
         break;
     case 1:
-        if (func_80086370() != 0) {
+        if (Fade_In_Main() != 0) {
             if (cd_read_sync_status() & 1) {
-                func_800438DC(1, 1);
+                draw2d3d(1, 1);
                 func_8014045C();
                 func_801404DC();
                 func_8014064C();
@@ -221,7 +222,7 @@ void func_80138DF8(void) {
     case 2:
         Scroll(0, 0xF, 0, 0xF0, 0x280);
         func_80139FE4();
-        func_800863D4(0x6B);
+        Yubi(0x6B);
         if (D_800E6280.unk_F88 & 0xF0) {
             for (i = 0; i < 11; i++) {
                 if (((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 <= ((DisplayActor44 *)D_8011ECD0)[107].unk_26 + 8 &&
@@ -263,14 +264,14 @@ void func_80138DF8(void) {
             func_8013A314();
             D_80122EA0 = 0;
             func_80044890(0, 0xBF98, 0xBF79, tblA.value[D_80149940], tblB.value[D_80149940], 0xD6B7);
-            func_80086350();
+            Fade_In_Init();
             func_8004284C();
         }
         break;
     case 6:
         func_800867CC();
-        if (func_80086370() != 0) {
-            func_80085ED0();
+        if (Fade_In_Main() != 0) {
+            Vblnk_Timer_Init();
             func_80042808();
         }
         func_8013DDB8();
@@ -315,7 +316,7 @@ void func_80139330(void) {
         func_8013DDB8();
         func_8013D788();
         func_8013D2B4();
-        func_80085ED0();
+        Vblnk_Timer_Init();
         func_8004284C();
         return;
     case 4:
@@ -385,24 +386,24 @@ void func_80139610(void) {
         break;
     case 1:
         func_801400D8();
-        func_80086350();
+        Fade_In_Init();
         func_80133258();
         func_8004284C();
         break;
     case 2:
-        if (func_80086370() != 0) {
+        if (Fade_In_Main() != 0) {
             if (D_801499D4[0] == 0 || D_801499D4[1] == 0) {
                 func_80044750(0x205);
             } else {
                 func_80044750(0x206);
             }
-            func_80085ED0();
+            Vblnk_Timer_Init();
             func_8004284C();
         }
         Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
     case 3:
-        if (func_80085EEC() >= 0x5B) {
+        if (Vblnk_Timer() >= 0x5B) {
             for (i = 0; i < 4; i++) {
                 if (D_801499D4[i] == 0) {
                     func_8013384C(D_80149940, (u8) i);
@@ -411,7 +412,7 @@ void func_80139610(void) {
             func_80140338();
             func_8014038C();
             D_801499D8 = 0;
-            func_80085ED0();
+            Vblnk_Timer_Init();
             func_8004284C();
         }
         Scroll(0, 0xF, 0, 0xF0, 0xC0);
@@ -419,14 +420,14 @@ void func_80139610(void) {
     case 4:
         D_801499D8++;
         func_80140414();
-        if (func_80085EEC() >= 0xB5) {
-            func_80085ED0();
+        if (Vblnk_Timer() >= 0xB5) {
+            Vblnk_Timer_Init();
             func_8004284C();
         }
         Scroll(0, 0xF, 0, 0xF0, 0xC0);
         break;
     case 5:
-        if (func_80085EEC() >= 0xF1) {
+        if (Vblnk_Timer() >= 0xF1) {
             Fade_Out_Init();
             func_8004284C();
         }
@@ -721,7 +722,7 @@ void func_8013A6FC(void) {
 
     switch (D_80149944) {
     case 0:
-        func_800863D4(0x60);
+        Yubi(0x60);
         break;
     case 1:
         func_80133928(0x60);
@@ -1511,7 +1512,7 @@ void func_8013C4E4(s32 arg0) {
         }
         sp40 = 0;
         sp3C = arg0;
-        func_80086204(var_a0, &sp40, &sp3C, &sp38, &sp34);
+        Rot_2D(var_a0, &sp40, &sp3C, &sp38, &sp34);
         D_801499A0.unk_08 = sp38;
         D_801499A0.unk_0C = sp34;
         return;
@@ -2023,10 +2024,10 @@ void func_8013D9B4(void) {
     dx = D_800E6280.unk_014[D_8011ECA0];
     dy = D_800E6280.unk_018[D_8011ECA0];
     for (i = 0; i < 80; i++) {
-        p = func_800490F0(0x28, D_8011ECA0);
+        p = GetWorkBase(0x28, D_8011ECA0);
         func_8009F040(p);
-        func_8009EF84(p, 0);
-        func_8009EFB0(p, 0);
+        SetSemiTrans(p, 0);
+        SetShadeTex(p, 0);
         row = i >> 2;
         switch (row) {
         case 0:
@@ -2092,7 +2093,7 @@ void func_8013D9B4(void) {
         p->y3 = D_80149A84[i] + dy;
         p->tpage = func_8009ECB0(1, 0, 0x300, 0);
         p->clut = func_8009ED74(0, 0x1F0);
-        func_8009EED0(&D_800E8CA0[D_8011ECA0 * 0x400 + 0x3EC], p);
+        AddPrim(&D_800E8CA0[D_8011ECA0 * 0x400 + 0x3EC], p);
     }
 }
 
@@ -2254,17 +2255,17 @@ void func_8013E1FC(void) {
             }
         }
     }
-    /* Rotated strips. func_80086204 is Rot_2D called without a prototype (implicit int), as in
+    /* Rotated strips. Rot_2D is Rot_2D called without a prototype (implicit int), as in
      * func_8013E894 below: with the void Rot_2D the registers of the loops differ (T-25102). */
     for (angle = 0; angle < 64; angle++) {
         input_x = -320;
         input_y = 0;
-        func_80086204(angle * 16, &input_x, &input_y, &x[0], &y[0]);
-        func_80086204((angle + 1) * 16, &input_x, &input_y, &x[1], &y[1]);
+        Rot_2D(angle * 16, &input_x, &input_y, &x[0], &y[0]);
+        Rot_2D((angle + 1) * 16, &input_x, &input_y, &x[1], &y[1]);
         input_x = -240;
         input_y = 0;
-        func_80086204(angle * 16, &input_x, &input_y, &x[2], &y[2]);
-        func_80086204((angle + 1) * 16, &input_x, &input_y, &x[3], &y[3]);
+        Rot_2D(angle * 16, &input_x, &input_y, &x[2], &y[2]);
+        Rot_2D((angle + 1) * 16, &input_x, &input_y, &x[3], &y[3]);
         camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
         camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
         for (i = 0; i < 4; i++) {
@@ -2334,17 +2335,17 @@ void func_8013E894(void) {
 
     angle = 0;
     do {
-        /* func_80086204 is Rot_2D called without a prototype (implicit int, as in func_8013C4E4's
+        /* Rot_2D is Rot_2D called without a prototype (implicit int, as in func_8013C4E4's
          * caller above): the int result makes uopt treat $v0 as written by the call, which keeps
          * the x pointer of the loops below out of $v0 (T-25102). */
         input_x = -320;
         input_y = 0;
-        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle, &input_x, &input_y, &x[0], &y[0]);
-        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle + 16, &input_x, &input_y, &x[1], &y[1]);
+        Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle + angle, &input_x, &input_y, &x[0], &y[0]);
+        Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle + angle + 16, &input_x, &input_y, &x[1], &y[1]);
         input_x = -240;
         input_y = 0;
-        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle, &input_x, &input_y, &x[2], &y[2]);
-        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle + 16, &input_x, &input_y, &x[3], &y[3]);
+        Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle + angle, &input_x, &input_y, &x[2], &y[2]);
+        Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle + angle + 16, &input_x, &input_y, &x[3], &y[3]);
         camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
         camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
         for (i = 0; i < 4; i++) {
@@ -2428,8 +2429,8 @@ void func_8013EC60(void) {
         for (i = 0; i < 4; i++) {
             input_x = x[i];
             input_y = y[i];
-            /* func_80086204 is Rot_2D called without a prototype (implicit int), as in func_8013E894. */
-            func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle, &input_x, &input_y, &x[i], &y[i]);
+            /* Rot_2D is Rot_2D called without a prototype (implicit int), as in func_8013E894. */
+            Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle, &input_x, &input_y, &x[i], &y[i]);
         }
         camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
         camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
@@ -2486,12 +2487,12 @@ void func_8013EC60(void) {
     for (angle = 0; angle < 64; angle++) {
         input_x = 0;
         input_y = -320;
-        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16, &input_x, &input_y, &x[0], &y[0]);
-        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16 + 16, &input_x, &input_y, &x[1], &y[1]);
+        Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16, &input_x, &input_y, &x[0], &y[0]);
+        Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16 + 16, &input_x, &input_y, &x[1], &y[1]);
         input_x = 0;
         input_y = -240;
-        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16, &input_x, &input_y, &x[2], &y[2]);
-        func_80086204(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16 + 16, &input_x, &input_y, &x[3], &y[3]);
+        Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16, &input_x, &input_y, &x[2], &y[2]);
+        Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle + angle * 16 + 16, &input_x, &input_y, &x[3], &y[3]);
         camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
         camera_y = ((TaiikuCamera0C *)D_80122DD0)->y;
         for (i = 0; i < 4; i++) {

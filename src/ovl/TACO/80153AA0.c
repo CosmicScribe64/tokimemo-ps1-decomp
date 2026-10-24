@@ -7,10 +7,10 @@ void func_80153AA0(s32 arg0, s32 arg1, s32 arg2) {
     s32 p;
 
     func_80153B38(buf, &x, arg2, arg0);
-    p = func_800490F0(0xC, D_8011ECA0);
+    p = GetWorkBase(0xC, D_8011ECA0);
     func_8009D294(p, 0, 1, func_8009ECB0(1, arg1, 0, 0), 0);
-    func_8009EED0(D_8011ECA0 * 0x400 + 0x10 + D_800E8CA0, p);
-    func_80049450(4);
+    AddPrim(D_8011ECA0 * 0x400 + 0x10 + D_800E8CA0, p);
+    safe_env(4);
 }
 
 /* FAKE: integer return type with fallthrough preserves the original loop/result view.
@@ -106,10 +106,10 @@ void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3) {
     poly->r0 = arg1;
     poly->g0 = arg2;
     poly->b0 = arg3;
-    func_8009EED0(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, poly);
-    sprite = func_800490F0(0xC, D_8011ECA0);
+    AddPrim(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, poly);
+    sprite = GetWorkBase(0xC, D_8011ECA0);
     func_8009D294(sprite, 0, 0, func_8009ECB0(1, arg0, 0, 0), 0);
-    func_8009EED0(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, sprite);
+    AddPrim(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, sprite);
     safe_env(5);
 }
 

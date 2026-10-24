@@ -38,12 +38,12 @@ void func_8013A600(void) {
 }
 
 void func_8013A688(void) {
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
     func_80048EB8(0);
-    func_800438F0(1);
-    func_80048390();
+    back_clear_switch(1);
+    tpage_buf_clear();
     func_8004E58C();
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
@@ -52,9 +52,9 @@ void func_8013A688(void) {
     D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
-    func_8007C740();
-    func_800649D4();
-    func_80064E84();
+    addr_init_bustup();
+    hizuke_init();
+    message_window_init();
     func_80084E4C();
     *(u8 *)&D_800E6280.unk_F5F = 6;
     func_800847B8(*(u8 *)&D_800E6280.unk_F5F);

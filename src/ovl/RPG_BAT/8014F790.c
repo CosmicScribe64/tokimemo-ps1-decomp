@@ -341,7 +341,7 @@ void func_80150120(void) {
         break;
     case 5:
         func_80049A40(-0x5C - ((RpgTransition0C *)&D_8015EE08)->unk_08, -0x78, ((RpgTransition0C *)&D_8015EE08)->unk_08 * 2, 0xA8, 3, shade, 0x81);
-        func_800494BC(0, 0, 3, 1, 0);
+        dtd_on_tpage(0, 0, 3, 1, 0);
         count = ((RpgTransition0C *)&D_8015EE08)->unk_08 += 2;
         if (count >= 0x21) {
             func_8014F258();
@@ -349,19 +349,19 @@ void func_80150120(void) {
         break;
     case 6:
         func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, shade, 0x81);
-        func_800494BC(0, 0, 3, 1, 0);
+        dtd_on_tpage(0, 0, 3, 1, 0);
         func_8013F15C(0x511, 0, 6);
         func_8013E97C(0x3B, 0x48, 0x68 - ((RpgTransition0C *)&D_8015EE08)->unk_08);
         func_8013E810(0x3B, 8, 1, 1);
         count = ((RpgTransition0C *)&D_8015EE08)->unk_08 += 2;
         if (count >= 0xE9) {
-            func_8004E93C(D_8015EDE8, 0);
+            k_disp_switch(D_8015EDE8, 0);
             func_8014F258();
         }
         break;
     case 7:
         func_80049A40(((RpgTransition0C *)&D_8015EE08)->unk_08 - 0x7C, -0x78, 0x40 - (((RpgTransition0C *)&D_8015EE08)->unk_08 * 2), 0xA8, 3, shade, 0x81);
-        func_800494BC(0, 0, 3, 1, 0);
+        dtd_on_tpage(0, 0, 3, 1, 0);
         count = ((RpgTransition0C *)&D_8015EE08)->unk_08 += 2;
         if (count >= 0x21) {
             func_8014F230();

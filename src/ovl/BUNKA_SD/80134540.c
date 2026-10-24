@@ -45,7 +45,7 @@ void func_801345BC(void) {
 
 void func_801346D4(void) {
     func_80066C08(2);
-    func_80064F48();
+    message_window_show();
     func_80066334();
     switch (D_800E6280.unk_110A) {
     case 0:
@@ -65,7 +65,7 @@ void func_801346D4(void) {
         return;
     case 5:
         func_80044750(0xC1);
-        func_8004E9F4(1);
+        k_reset(1);
         func_8004284C();
         return;
     case 6:
@@ -313,7 +313,7 @@ s32 func_80134D94(void) {
     }
     if (g->unk_1104.u == 0x606 || g->unk_1104.u == 0x609 || g->unk_1104.u == 0x60C) {
         func_80049A40(-0xA0, -0x78, 0x140, 0xA0, 2, 0xFFFFFF, 0x81);
-        func_800494BC(0, 0, 2, 0, 0);
+        dtd_on_tpage(0, 0, 2, 0, 0);
     }
     if (g->unk_1104.u == 0x606) {
         D_801206F0 = 0x48;
@@ -325,7 +325,7 @@ s32 func_80134D94(void) {
         col += col << 8;
         func_80049A40(-0x130, -0x78, 0x140, 0xA0, 2, col, 0x86);
         func_80049A40(0x10, -0x78, 0x140, 0xA0, 2, col, 0x85);
-        func_800494BC(0, 0, 2, 1, 0);
+        dtd_on_tpage(0, 0, 2, 1, 0);
     }
     if (g->unk_1104.u == 0x67E) {
         D_80120657 = 0x80;

@@ -8,9 +8,6 @@ u32 D_800E3680[16] = {0};
  * The template of sndisp's pos[] is D_800B40F8, so the rest of the range follows sndisp. */
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B40F0);
 
-/* get_now_k (8004E500.c) returns u8; xa_wait needs that view, the other callers keep the implicit int one. T-17018 */
-u8 get_now_k(void);
-
 /* Accessed menu-selection view at GameState +0x1090. */
 typedef struct MenuSelection5 {
     /* 0x00 */ u8 count[2];

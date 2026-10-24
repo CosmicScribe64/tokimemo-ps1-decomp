@@ -103,13 +103,13 @@ void func_8014E780(void) {
 }
 
 void func_8014E8F4(void) {
-    func_80048390();
-    func_800573AC();
+    tpage_buf_clear();
+    dec_bg_reset();
     func_8004E58C();
     func_80048EB8(0);
     func_8006BC28(0);
     func_8006BD6C(0);
-    func_800438F0(1);
+    back_clear_switch(1);
     D_80122CE0 = D_8015EC14;
     D_800E6280.unk_F5F = (s8) D_8015EC18;
     main_state_set((s32) D_800E6280.unk_720);

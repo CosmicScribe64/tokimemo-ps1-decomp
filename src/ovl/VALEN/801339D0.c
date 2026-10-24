@@ -20,7 +20,7 @@ void func_80133A4C(void) {
         return;
     }
     func_800AE0F0(D_800CA1DC, "自宅前");
-    func_8007EC9C();
+    place_init2();
 }
 
 s32 func_80133AA8(void) {

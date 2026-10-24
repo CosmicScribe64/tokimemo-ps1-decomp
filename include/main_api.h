@@ -2142,14 +2142,10 @@ s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1);
 u8 *get_k_work(s32 arg0);
 void glyph_expand_1bpp();
 void draw2d3d(u8 arg0, u8 arg1);
-void func_800438DC();
 void back_clear_switch(s32 arg0);
-void func_800438F0();
-s32 func_80043914();
 s32 load_palette();
 s32 load_csr_tp();
 void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4);
-void func_8004435C(u16 arg0, u16 arg1, u16 arg2, u16 arg3, s32 arg4);
 #ifndef MAIN_API_OVERRIDE_func_80044750
 s32 func_80044750(s32 arg0);
 #endif
@@ -2193,9 +2189,12 @@ void func_80046B88();
 void func_80047550(void);
 void func_80047560();
 void tpage_buf_clear_all(void);
-void func_80048390();
-s32 func_800486A4();
+#ifndef MAIN_API_OVERRIDE_search_tpage_multi
+s32 search_tpage_multi(s32 arg0, u8 arg1);
+#endif
+#ifndef MAIN_API_OVERRIDE_tpage_buf_clear
 void tpage_buf_clear(void);
+#endif
 void _sys_default_tpage_set(void);
 void load_tpage_buf_lock();
 void func_80048DAC(s32 arg0);
@@ -2205,12 +2204,9 @@ void func_80048EB8(s32 arg0);
 void func_80048F64(s32 arg0);
 u8 func_8004901C(void);
 s32 GetWorkBase(s32 arg0, s32 arg1);
-void *func_800490F0();
 void safe_env(s32 arg0);
 void dtd_on_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void func_800494BC();
 void dtd_on(s32 arg0);
-void func_8004955C();
 void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 #ifndef MAIN_API_OVERRIDE_func_80049A40
 void func_80049A40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
@@ -2273,36 +2269,31 @@ void srn_init(s32, u32 *, s32);
 void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2);
 void func_8004E500(s32 arg0);
 void func_8004E58C(void);
-s32 func_8004E788(s16 x, s16 y, s32 c, s32 d, s32 e); /* returns a value: SHUGAKU 80138A60 passes it on */
 #ifndef MAIN_API_OVERRIDE_set_kanji_string
 s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4);
 #endif
-void func_8004E884();
 void k_disp_start(s32 arg0);
 void k_disp_switch(s32 arg0, s32 arg1);
-void func_8004E9F4();
 void k_reset(s32 arg0);
-void func_8004EA98();
 void k_sub_reset_point_set(void);
-#ifndef MAIN_API_OVERRIDE_func_8004EAAC
-void func_8004EAAC();
-#endif
+#ifndef MAIN_API_OVERRIDE_k_sub_reset
 void k_sub_reset(void);
-void func_8004EAD4();
+#endif
 void k_sub_disp_start(s32 arg0);
 s16 k_disp_goto_line_end(void);
 void k_speed_set(u8 arg0);
 u8 get_k_speed(void);
 s32 k_disp_inc(void);
 s32 check_end_k(void);
-s32 func_8004ECB4();
-s32 func_8004ECF0();
+#ifndef MAIN_API_OVERRIDE_get_now_k
+u8 get_now_k(void);
+#endif
 void func_8004EDE0();
 void func_8004EDF4();
 void func_8004EE18();
 void func_8004F860();
-#ifndef MAIN_API_OVERRIDE_func_8004F870
-void func_8004F870();
+#ifndef MAIN_API_OVERRIDE_menu_set
+s32 menu_set();
 #endif
 s32 menu_check();
 s32 menu_check_1();
@@ -2310,35 +2301,27 @@ s32 menu_check_2();
 void func_8004FC10();
 void func_800504CC();
 s32 func_80050AB8();
-void func_80050B54();
 void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void menu_bar_show();
-void func_80050C24(s32 arg0, s32 arg1);
 void x_taku_menu_set(s32 arg0, s32 arg1);
 void func_80050D60();
-void func_80050D78();
 void x_taku_string_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-#ifndef MAIN_API_OVERRIDE_func_80050DFC
-void func_80050DFC(u8 *arg0);
-#endif
+#ifndef MAIN_API_OVERRIDE_gnsx
 void gnsx(u8 *arg0);
-void func_80050E8C(u8 *arg0, s32 arg1, s32 arg2);
+#endif
 void sndisp();
-void func_80051010();
 void sndi(u8 *arg0, s32 arg1, s32 arg2);
 #ifndef MAIN_API_OVERRIDE_set_c_girl
 void set_c_girl(u8 arg0);
 #endif
 s32 get_g_name(u8 *arg0, s32 arg1);
-void func_80051508(u8 *arg0, s32 arg1);
 void get_p_name();
-s32 func_80051A68();
+#ifndef MAIN_API_OVERRIDE_get_g_zyotai_s
 s32 get_g_zyotai_s(s32 arg0);
-u32 func_80051B48();
+#endif
 #ifndef MAIN_API_OVERRIDE_get_g_zyotai_h
 s32 get_g_zyotai_h(s32 arg0);
 #endif
-void func_80051DBC();
 void xa_wait(void);
 void func_80051DD8();
 void func_80052000();
@@ -2389,28 +2372,22 @@ void strCallback(void);
 void strKickCD(s32 arg0);
 s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2);
 void func_8005715C(s32 arg0); /* defined after its caller func_80056BA8 */
-void func_80057390();
 #ifndef MAIN_API_OVERRIDE_set_dec_bri
 void set_dec_bri(u8 arg0);
 #endif
 s32 get_last_gamen_mode(void);
 void dec_bg_reset(void);
-void func_800573AC();
 void dec_bg_show_switch(s32 arg0);
 void dec_bg_show_set(s32 arg0, s32 arg1);
-void func_80057418(s32, s32);
 s32 dec_bg_cd_read(s32 arg0, s32 arg1);
-s32 func_8005742C(s32 arg0, s32 arg1);
 s32 func_8005751C();
 void func_80057640();
 s32 func_80057710(void);
 void func_800578F4(s32 a);
 void func_80057D28(s32);
 void func_80058398();
-void func_80058D20();
 void initView(void);
-void func_80058EB0();
-void func_80058F0C(s32 *arg0);
+void initCoordinate();
 void initModelingData_init(s32 *arg0);
 s32 func_80058F9C(u32 *arg0, s32 arg1, u32 arg2);
 void func_80059048();
@@ -2515,23 +2492,15 @@ void func_800634FC(); /* unprototyped: callers pass an argument, the definition 
 void func_80063520(u32 arg0);
 void func_80063668();
 void bustup_wink(void);
-void func_80063930(s32);
 void parameter_disp_switch();
 void parameter_show_init(void);
 void parameter_show(void);
-void func_8006492C(s32 arg0);
 void hizuke_disp_switch(s32 arg0);
-void func_800649D4();
 void hizuke_init(void);
-void func_80064DEC();
 void hizuke_show(void);
-void func_80064E48();
 void message_disp_switch(s32 arg0);
-void func_80064E84();
 void message_window_init(void);
-void func_80064F48();
 void message_window_show(void);
-void func_80064FA4(s32);
 void icon_disp_switch(s32 a);
 void icon_can_use_set(s32 idx, s32 on);
 void func_8006509C(void);
@@ -2561,7 +2530,6 @@ s16 func_800688F0(s32 arg0, s32 arg1);
 void func_80068938(u8 arg0, u8 arg1, s32 arg2);
 void func_80068EC0();
 void cal_base_show(void);
-void func_80069128();
 void cal_sprite_init(void);
 void func_800696DC(s32, s32);
 s32 func_8006A044();
@@ -2722,14 +2690,12 @@ void func_8007BFA8();
 void func_8007BFB8(void);
 void SD_InitCDLevelInfo(void);
 void SD_GetCDLevel();
-void func_8007C6A8(s32 arg0);
+void addr_init_else_sd(s32 arg0);
 void addr_init_bustup(void);
-void func_8007C740();
 void func_8007C784(void);
 void func_8007C8A4(void);
 s32 func_8007C8D8();
 s32 func_8007D8AC();
-s32 func_8007E390(void);
 #ifndef MAIN_API_OVERRIDE_normal_date_girl_in
 void normal_date_girl_in();
 #endif
@@ -2741,7 +2707,6 @@ void normal_date_girl_out(void);
 void normal_date_girl_out_init(void);
 s32 normal_date_girl_out_main(void);
 s32 normal_date_bg_fadein(void);
-void func_8007E934();
 #ifndef MAIN_API_OVERRIDE_normal_date_bg_fadeout
 void normal_date_bg_fadeout(void);
 #endif
@@ -2754,9 +2719,7 @@ void place_init(void);
 void change_dec_bg(void);
 s32 dec_init(void);
 void bg_read_sub2(s32 arg0);
-void func_8007ED84();
 void check_k_scroll();
-void func_8007EDF8();
 void wait_sub_sub(s16 arg0);
 void func_80081128(void);
 #ifndef MAIN_API_OVERRIDE_dialogue_render
@@ -2783,11 +2746,9 @@ void func_80083338(void);
 s32 func_80083474(void);
 s32 func_80083808();
 void func_80083A10();
-#ifndef MAIN_API_OVERRIDE_func_80083B24
-void func_80083B24();
-#endif
+#ifndef MAIN_API_OVERRIDE_read_bustup
 void read_bustup();
-void func_800846C0();
+#endif
 void k_disp_inc2();
 #ifndef MAIN_API_OVERRIDE_func_800847B8
 void func_800847B8(u8 arg0);
@@ -2801,7 +2762,6 @@ void func_80084C98();
 #endif
 void sprite_brightness(s16 idx, u8 val);
 void check_para_limit(void);
-void func_80084D3C();
 void func_80084E4C(void);
 s32 func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 s32 func_800850D4();
@@ -2817,27 +2777,27 @@ void func_800853FC(void);
 #endif
 void event_face0(void);
 void event_face1(void);
-void func_800854C8();
 void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5, u32 arg6);
-void func_80085678();
 void func_8008585C();
 void don_wait(void);
 void normal_date_speak_1line();
-#ifndef MAIN_API_OVERRIDE_func_80085A60
-void func_80085A60();
-#endif
+#ifndef MAIN_API_OVERRIDE_normal_date_speak
 void normal_date_speak(void);
+#endif
 s32 func_80085B3C();
 void func_80085CD4(u8 a);
 #ifndef MAIN_API_OVERRIDE_func_80085E30
 void func_80085E30(s32 arg0, s32 arg1);
 #endif
+#ifndef MAIN_API_OVERRIDE_Vblnk_Timer_Init
 void Vblnk_Timer_Init(void);
+#endif
 s32 Vblnk_Timer(void);
 void Scroll(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4);
+#ifndef MAIN_API_OVERRIDE_Rot_2D
 void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4);
+#endif
 void Default_Disp(void);
-void func_80086424();
 s32 func_8008647C(void);
 s32 func_8008667C(s32 a);
 void func_800867CC(void);
@@ -2953,9 +2913,7 @@ void func_8009D294(s32 a, s32 b, s32 c, s32 d, s32 e);
 s32 func_8009ECB0(s32 a, s32 b, s32 c, s32 d);
 s32 func_8009ED74();
 void AddPrim(void *ot, s32 prim);
-void func_8009EED0();
 void SetSemiTrans();
-void func_8009EF84();
 void SetShadeTex();
 void func_8009F02C();
 void func_8009F054();
@@ -3128,7 +3086,6 @@ extern s32 D_800B3D10[4]; /* four timestamps, func_80043510 and func_8004443C (T
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-s32 func_8007E81C();
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
