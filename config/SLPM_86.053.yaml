@@ -99,8 +99,8 @@ segments:
       - { start: 0x20F10, type: c, name: main/80061710 }
       - { start: 0x224D0, type: c, name: main/80062CD0 }
       - { start: 0x26CB0, type: c, name: main/800674B0 }
-      - { start: 0x2C330, type: c, name: main/8006CB30 }
-      - { start: 0x32FA0, type: c, name: main/800737A0 }
+      - { start: 0x2C330, type: c, name: main/scheduler }
+      - { start: 0x32FA0, type: c, name: main/school_day }
       - { start: 0x34B20, type: c, name: main/80075320 }
       - { start: 0x381E0, type: c, name: main/800789E0 }
       - { start: 0x39310, type: c, name: main/80079B10 }
@@ -191,8 +191,8 @@ segments:
       - [0x6F610, .rodata, main/8005A0B0]
       - [0x70700, .rodata, main/80062CD0]
       - [0x70790, .rodata, main/800674B0]
-      - [0x70940, .rodata, main/8006CB30]
-      - [0x70CF0, .rodata, main/800737A0]
+      - [0x70940, .rodata, main/scheduler]
+      - [0x70CF0, .rodata, main/school_day]
       - [0x70D90, .rodata, main/80075320]
       - [0x71120, .rodata, main/800789E0]
       - [0x71630, .rodata, main/80079B10]

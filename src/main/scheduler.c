@@ -1,3 +1,4 @@
+/* scheduler.c: original object text 0x8006CB30-0x800737A0 in config/objects/main.txt; matched C implements weekly queue construction/dispatch, calendar advancement, encounter selection and health checks; original object boundary unchanged. Original object 0x8006CB30-0x800737A0 (config/objects/main.txt). */
 #define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, schedule_miharu_scene4_ready); main_api.h has s32 */
 #define MAIN_API_OVERRIDE_func_80066104 /* the original callers pass a string the callee ignores; main_api.h has (void) */
 #include "common.h"

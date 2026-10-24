@@ -1,0 +1,4 @@
+# Rename ledger (tools/rename.py, T-27002): kind scope old new key note, appended by `rename.py apply`.
+# Do not edit by hand; `rename.py replay` applies it to any tree, `rename.py check` keeps old names out.
+file main 8006CB30 scheduler 0x8006CB30 T-27044: original object text 0x8006CB30-0x800737A0 in config/objects/main.txt; matched C implements weekly queue construction/dispatch, calendar advancement, encounter selection and health checks; original object boundary unchanged
+file main 800737A0 school_day 0x800737A0 T-27044: original object text 0x800737A0-0x80075320 in config/objects/main.txt; matched C implements week_day, parameter_up_down, vacation setup and week-end exit; original object boundary unchanged
