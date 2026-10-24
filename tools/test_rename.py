@@ -488,6 +488,12 @@ class TypeLocalTest(Fixture):
         self.refused("type main GameStatus s32\n", "PascalCase")
         self.refused("type main GameStatus GirlRecord\n", "used before in the ledger")
 
+    def test_type_hypothesis_mark_passes_the_round_trip(self):
+        out = self.ok("type main Rec38 GirlRecord HYPOTHESIS: a record per girl\n")
+        self.assertNotIn("PROBLEM", out)
+        game = self.read("include/game.h")
+        self.assertIn("s16 unk_00; /* HYPOTHESIS: a record per girl */\n} GirlRecord;", game)
+
     def test_local_and_param(self):
         self.ok("local main:func_80041000 index mode_value T-1\n")
         main = self.read("src/main/80041000.c")

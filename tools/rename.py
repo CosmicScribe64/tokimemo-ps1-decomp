@@ -1333,10 +1333,15 @@ def mark_hypothesis(tree, path, name, note, at=None):
         at = m.start()
     eol = text.find("\n", at)
     eol = len(text) if eol < 0 else eol
-    body = re.sub(r"^HYPOTHESIS:?\s*", "", note, flags=re.I).strip() or "name inferred, not proven"
     if "HYPOTHESIS" in text[at:eol]:
         return
-    tree.write(path, text[:eol] + " /* HYPOTHESIS: %s */" % body.replace("*/", "* /") + text[eol:])
+    tree.write(path, text[:eol] + hypothesis_comment(note) + text[eol:])
+
+
+def hypothesis_comment(note):
+    """The comment mark_hypothesis appends for a HYPOTHESIS note."""
+    body = re.sub(r"^HYPOTHESIS:?\s*", "", note, flags=re.I).strip() or "name inferred, not proven"
+    return " /* HYPOTHESIS: %s */" % body.replace("*/", "* /")
 
 
 # ======================================================================================= types
@@ -2211,6 +2216,8 @@ def round_trip(ctx, row, before):
         if re.search(r"(?<![A-Za-z0-9])%s(?![\w])" % re.escape(row.new), old):
             ctx.note(row, "%s: mentions %s already; round trip not checked" % (p, row.new))
             continue
+        if row.hypothesis and row.kind == "type":
+            text = text.replace(hypothesis_comment(row.note), "", 1)     # the mark plan_type put at the definition
         inv, _a, _b = rewrite_text(text, row.new, row.old, members=True)
         if inv != old:
             ctx.problem(row, "%s: the inverse rename does not give the old text back (not a pure substitution)" % p)
