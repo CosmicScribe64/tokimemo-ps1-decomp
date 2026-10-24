@@ -39,7 +39,7 @@ the conveyor is idle or between runs, or on Codex/Gemini capacity.
 - [x] Emulator spike: game boots headless in Docker with the open BIOS; memory watch and breakpoints work
 - Moved 2026-10-24: the GameState naming pilot (rename table and enums, 27/27) is now part of
   [[tickets/T-27004-shared-core-names]], which waits for the rename tool (T-27002).
-- [ ] Decision on scope for the full pass
+- [x] Decision on scope for the full pass (port-first, recorded in `docs/adr/0001-phase-2-naming.md`; T-27001 Done)
 
 ## Comments
 
