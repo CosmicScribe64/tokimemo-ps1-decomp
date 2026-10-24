@@ -7,38 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ticket | Root takes remaining MAIN event selector
-
-Created [[tickets/T-25049-main-event-table-recovery]] before reconstruction. Root owns func_80073CB0 in src/main/800737A0.c after parameter match integration; T-25048 owns separate80075320.c. Recover existing draft and table evidence while seven Astra workers continue. Contributor check: no open PRs; issue65 unchanged.
-
-## [2026-10-22] build | Event selector typed baseline recovered
-
-[[tickets/T-25049-main-event-table-recovery]] now has a Docker compiling322-word whole-TU candidate with148 aligned differences. Corrected C0/D0 byte table views and second fallback's wrong GameState field from assembly evidence. Saved source and replay under drafts/T-25049; no promotion or header changes. Diagnostic cost did not change for the field correction, underscoring need for semantic review and literal proof. Remaining differences begin with allocation and selector promotion.
-
-## [2026-10-22] build | Event selector zero-difference candidate
-
-[[tickets/T-25049-main-event-table-recovery]] now322/322words,cost0 after removing artificial shared-store branches, inlining selector tests and retaining byte liveness in a marked empty test. Source/header promotion is local pending full binary gate and independent coordinator review. Cleanup controls retain only the necessary saved selection local, annotated FAKE. Replays updated to replace the function after production promotion.
-
-## [2026-10-22] build | MAIN event selector accepted
-
-[[tickets/T-25049-main-event-table-recovery]] moves Done after independent coordinator standards/spec review and root literal1288byte proof. Full520-step Docker rebuild passes27/27 hashes, headers/globals and prototypes0new/15known. All saved controls reproduced after promotion. src/main/800737A0.c is fully matched. [[status]] now6843/6952functions,2118124/2276920bytes93.0%;109functions/158796bytes remain. Ten matches add13448bytes this effort; seven Astra lanes continue.
-
-## [2026-10-22] ticket | T-25048 adjacent MAIN table selector
-
-Claimed [[tickets/T-25048-main-80076fdc]] and src/main/80075320.c exclusively. The same-file 80073CB0 requires missing shared table declarations; chose 80076FDC with existing canonical tables under the frozen-header constraint. Read current and historical source/ledger before controls.
-
-## [2026-10-22] build | T-25048 global background carrier
-
-The two-local reconstruction in [[tickets/T-25048-main-80076fdc]] matches the complete instruction stream except the column save/reload stack home. Using the existing global as the carrier fixes the historical constant-store order and all switch-arm colors together. Local-background controls are preserved privately; final stack placement and necessity of the empty use are being checked.
-
-## [2026-10-22] build | T-25048 plain C reaches zero diagnostic differences
-
-[[tickets/T-25048-main-80076fdc]] declaration order restores the exact column home. Removing the artificial empty use keeps zero resolved differences. The final candidate is plain C with two real locals and direct global/table accesses. Literal linking is required to verify both jump tables before promotion.
-
-## [2026-10-22] build | T-25048 default C matches852 bytes
-
-[[tickets/T-25048-main-80076fdc]] passes default-C literal852-byte proof and MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26, including both jump tables. Header/global guards pass; prototype check reports0 new/15 known. No artificial empty test remains. Exact field/table addresses and source-only controls are preserved in drafts/T-25048; updated [[matching-notes]].
-
 ## [2026-10-22] ticket | T-25048 In Review with validated evidence
 
 Moved [[tickets/T-25048-main-80076fdc]] and [[kanban]] card to In Review after parent independent standards/spec review passed without findings. Source pin f3c5c1759. Docker replay confirms current0, reversed locals4, empty use0, local background252, reused background264 diagnostic lines. Wiki lint finds zero broken links/status mismatches and two existing size warnings; evidence prose checker has zero hits. Root owns full27 integration.
