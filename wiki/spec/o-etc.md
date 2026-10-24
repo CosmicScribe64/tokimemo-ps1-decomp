@@ -8,7 +8,7 @@ sources: ["src/ovl/ETC/", "include/ovl/ETC.h", "config/renames/proposals/o-etc.t
 
 Phase 2 analysis of `src/ovl/ETC` ([[tickets/T-27029-p2-o-etc]], phase [[tickets/T-27000-phase-2]]). Rename table: `config/renames/proposals/o-etc.tsv` (779 rows: 394 func, 233 data, 114 const, 18 field, 14 file, 6 type; 5 start with HYPOTHESIS; the 651 func, data, field and type rows pass `tools/rename.py plan`, file and const rows go through their own subcommands). Sources: the matched C of all 13 files, `include/ovl/ETC.h`, the callers in `src/main`, `src/ovl/ENDING` and `src/ovl/OPTION`, the data tables of the overlay, the core, scheduler and sysmenu specs, and the emulator. Facts are as the matched C implements them; a claim of game meaning that the code does not prove is marked HYPOTHESIS. Scope (user decision 2026-10-24): game logic fully, hardware layer (GPU primitives, VRAM copies, CD reads, sound driver, 3D matrices) only at module level.
 
-Emulator use: `tools/emu` with a local wrapper (build/emu/poke_run.py, not committed) that pokes the overlay target mode, calendar bytes, parameters and event log into the title-menu save state, so each ETC mode could be started directly. Checked this way: exam day score arithmetic (printed values), the results ranking (printed values and the screen), staff roll, last photo, save prompt, album pages, entrance exam result byte, remedial week flag and calendar marker. Screenshots stayed in `build/emu/` (ignored); nothing from them is quoted here.
+Emulator use: `tools/emu` with a local wrapper (build/emu/poke_run.py, not committed) that pokes the overlay target mode, calendar bytes, parameters and event log into the title-menu save state, so each ETC mode could be started directly. Checked this way: exam day score arithmetic (printed values), the results ranking (printed values and the screen), staff roll (both variants), last photo and the all-clear photo, save prompt, album pages, entrance exam result byte (pass, fail and job cases), remedial week flag and calendar marker. Screenshots stayed in `build/emu/` (ignored); nothing from them is quoted here.
 
 ## 1. What the overlay is
 
@@ -253,6 +253,28 @@ Per record `album_event_record_load` fills `album_event_*` and the season (`albu
 - a portrait file (`album_event_is_portrait` = 1): `album_portrait_start_*` read an LBA from a per-girl table (seasonal tables, school-wear tables by month, ordinal tables) and start the portrait read; the portrait is built with the record's mood (`bustup_build`);
 - an animation (category 2, or category 8 scenes 0xE and 0x46): `album_anim_<scene>_show` binds the six image buffers of the pack that was read from `album_anim_lba[scene]` / `album_anim_sectors[scene]` and starts it with `event_anim_show`; 72 packs, one `album_anim_<scene>_tables_set` function each writes the pointer block (`album_anim_<scene>_ptrs`: tpage table, frame table, sequence table, frame count, palette, six image buffers) into its label block;
 - the background (`album_event_background_load`): a CD read of the picture behind the girl from `album_background_lba_table[category][scene]`, with a few swaps by year and season.
+
+Where the records come from (`event_log_add(category, scene)` callers, by overlay): the album groups them by `category`, so the table below tells which scene produces which pictures.
+
+| category | logged by (scene ids) |
+|---|---|
+| 0, 1 | DATE: the date spot id (`D_80122D08`) and a few fixed ids |
+| 2 | animated events: SHUGAKU (0x13, 0x1A, 0x20, 0x27), TAIIKU (0xD, 0x2D), SHOUGATU (6, 0x34, 0x42), DATE and GEKO with a variable scene |
+| 3 | SHUGAKU trip scenes |
+| 4, 5, 7 | SHOUGATU (4: 0 and 1; 5: 0-5; 7: 0) |
+| 6 | VALEN (0-5) |
+| 8 | SHOUGATU (girl x 10 + n) |
+| 9 | GEKO (0) |
+| 0xA | DATE (spot id), GEKO (0x25-0x28, 0x2F), KANGEI (0x2D, 0x30, 0x31, 0x3E), SHOUGATU (0x2E, 0x32), SHUGAKU (0x29-0x2C) |
+| 0xB | DATE (spot id) |
+| 0xC | DATE2 (0) |
+| 0xD | DATE (spot id), GEKO (0x25), KANGEI (0x2A), OMIMAI (0x25), SHOUGATU (0x2C, 0x2D), SHUGAKU (0x26-0x29) |
+| 0xE | KANGEI (0xB, 0xC, 0xD and one variable scene) |
+| 0xF | OMIMAI (0) |
+| 0x10 | KANGEI (the player's club id) |
+| 0x12 | RENSYU |
+| 0x14 | BUNKAKEN (0x19, 0x1A), BUNKASAI (0x1B-0x22) |
+| 0x15 | MASTER (6) |
 
 ### 7.2 State machine
 
