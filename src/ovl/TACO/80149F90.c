@@ -2,10 +2,10 @@
 #include "ovl/TACO.h"
 
 void func_80149F90(void) {
-    if (((u32) D_800E6280.stage_timer < 0x60U) && (D_800E6280.frame_count & 0x10)) {
+    if (((u32) game_state.stage_timer < 0x60U) && (game_state.frame_count & 0x10)) {
         func_801432F0("3ST BOSS", -0x30, 0, 2);
     }
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_8014A070();
         break;
@@ -49,37 +49,37 @@ void func_8014A070(void) {
         for (i = 0x10; i != 0x3F; i++) {
             func_80143B34(i);
         }
-        func_8004284C();
+        main_step_next();
     }
 }
 
 void func_8014A1D4(void) {
     func_8014F210();
     func_8015185C();
-    if (((u32)D_800E6280.step_timer.w % 180U) == 0) {
+    if (((u32)game_state.step_timer.w % 180U) == 0) {
         func_801335A0(0, 0x500);
     }
-    D_800E6280.step_timer.w += 1;
+    game_state.step_timer.w += 1;
 }
 
 void func_8014A234(void) {
     s32 i;
 
     for (i = 0; i < 0xB; i++) {
-        func_8014A480(D_8015FE94[i], i, D_8015FEC4, D_8015FEA0, D_8015FEAC, D_800E6280.step_timer.w);
+        func_8014A480(D_8015FE94[i], i, D_8015FEC4, D_8015FEA0, D_8015FEAC, game_state.step_timer.w);
     }
     func_8014A8E0();
     func_8014F2A0();
-    if (D_800E6280.step_timer.w % 180U == 0) {
+    if (game_state.step_timer.w % 180U == 0) {
         func_801335A0(0, 0x500);
     }
     func_8015185C();
     if (func_80147B24(0xB, D_8015FEAC) >= 0x55 && D_8015EDB4[16].unk84[1] == 0 && D_8015EDB4[19].unk84[1] == 0 && D_8015EDB4[20].unk84[1] == 0) {
         D_8015EDCC += 1;
-        D_800E6280.step_timer.w = 0;
-        func_8004284C();
+        game_state.step_timer.w = 0;
+        main_step_next();
     }
-    D_800E6280.step_timer.w += 1;
+    game_state.step_timer.w += 1;
 }
 
 void func_8014A390(void) {
@@ -1394,7 +1394,7 @@ void func_8014F210(void) {
     func_80146F74(0, 0, 1, 0, 0, 0, 0, 0x32, 0x1F4);
     if (abs(D_8012749C - D_8015EDB4->unk76) < 0x64) {
         func_8014A79C();
-        func_8004284C();
+        main_step_next();
     }
 }
 
@@ -1446,19 +1446,19 @@ void func_8014F2A0(void) {
 }
 
 void func_8014F5F0(void) {
-    if (D_800E6280.step_timer.u < 0x64U) {
+    if (game_state.step_timer.u < 0x64U) {
         func_8014FBD4(1);
         func_80151264(5U);
         func_8015443C(0x801A7000, 0xA, 0x100, 0x1EF);
-    } else if (D_800E6280.step_timer.u >= 0x64U && D_800E6280.step_timer.u < 0x1F4U) {
+    } else if (game_state.step_timer.u >= 0x64U && game_state.step_timer.u < 0x1F4U) {
         func_80151264(5U);
-        func_8014FBD4((D_800E6280.step_timer.u - 0x3C) / 40U);
-    } else if (D_800E6280.step_timer.u >= 0x226U) {
-        if (D_800E6280.clear_color_r < 0xFFU) {
+        func_8014FBD4((game_state.step_timer.u - 0x3C) / 40U);
+    } else if (game_state.step_timer.u >= 0x226U) {
+        if (game_state.clear_color_r < 0xFFU) {
             /* FAKE: repeated masked sum makes a uopt CSE range in $v0 while keeping the ugen temporary slot (T-22006, T-24120). */
-            D_800E6280.clear_color_g = (D_800E6280.clear_color_b + 1) & 0xFF;
-            D_800E6280.clear_color_r = D_800E6280.clear_color_b = (D_800E6280.clear_color_b + 1) & 0xFF;
-            func_801517AC(D_800E6280.step_timer.u - 0x226);
+            game_state.clear_color_g = (game_state.clear_color_b + 1) & 0xFF;
+            game_state.clear_color_r = game_state.clear_color_b = (game_state.clear_color_b + 1) & 0xFF;
+            func_801517AC(game_state.step_timer.u - 0x226);
         } else {
             D_80122760 = 0x64;
             D_80122764 = 0x32;
@@ -1481,21 +1481,21 @@ void func_8014F5F0(void) {
             D_8012278D = 0x80;
             D_8012278E = 0x90;
             func_8009AD70(2, &D_80122780);
-            D_800E6280.step_timer.u = 0;
-            func_8004284C();
+            game_state.step_timer.u = 0;
+            main_step_next();
         }
     }
-    if (D_800E6280.step_timer.u == 0x258) {
+    if (game_state.step_timer.u == 0x258) {
         func_801335A0(0, 0x502);
     }
-    D_800E6280.step_timer.u += 1;
+    game_state.step_timer.u += 1;
 }
 
 /* FAKE: s32 return view keeps v0 live at the exit, so uopt keeps the masked chain value (andi $v0,$t9,0xFF); callers ignore the result. T-24136 */
 s32 func_8014F820(void) {
     s32 i;
 
-    if (D_800E6280.step_timer.u == 1) {
+    if (game_state.step_timer.u == 1) {
         for (i = 0; i < 0x21; i++) {
             D_8015EDB4[i + 27].unk78 = (rand() % 8) + 5;
         }
@@ -1503,19 +1503,19 @@ s32 func_8014F820(void) {
     for (i = 0; i < 0x21; i++) {
         D_80127480[i + 1].unk1C += D_8015EDB4[i + 27].unk78;
     }
-    if (D_800E6280.clear_color_r != 0) {
+    if (game_state.clear_color_r != 0) {
         /* FAKE: element chain over the selector bytes stores 037, 036, then the raw decrement to 038 in $t9 (T-24213). */
-        (&D_800E6280.clear_color_r)[0] = (&D_800E6280.clear_color_r)[1] = --(&D_800E6280.clear_color_r)[2];
+        (&game_state.clear_color_r)[0] = (&game_state.clear_color_r)[1] = --(&game_state.clear_color_r)[2];
     }
-    if (D_800E6280.step_timer.u < 0x191U) {
+    if (game_state.step_timer.u < 0x191U) {
         func_80147E80(0x11);
     }
-    if (D_800E6280.step_timer.u >= 0x258U) {
+    if (game_state.step_timer.u >= 0x258U) {
         D_8015EDCC += 1;
-        func_80042908(0x2D);
+        main_stage_set(0x2D);
         return;
     }
-    D_800E6280.step_timer.u += 1;
+    game_state.step_timer.u += 1;
 }
 
 void func_8014F9B0(void) {
@@ -1554,8 +1554,8 @@ void func_8014F9B0(void) {
             D_8015EDB4[20].unk84[2] = 0;
         }
     } else {
-        D_800E6280.step_timer.u = 0;
-        func_8004284C();
+        game_state.step_timer.u = 0;
+        main_step_next();
     }
 }
 
@@ -2037,8 +2037,8 @@ void func_801517AC(s32 arg0) {
     } else {
         color = 0xFFFFFF;
     }
-    func_80049A40(-0x100, -0x78, 0x100, 0xF0, 1, color, 0x81);
-    func_80049A40(0, -0x78, 0x100, 0xF0, 1, color, 0x81);
+    prim_gradient_rect(-0x100, -0x78, 0x100, 0xF0, 1, color, 0x81);
+    prim_gradient_rect(0, -0x78, 0x100, 0xF0, 1, color, 0x81);
     dtd_on_tpage(0, 0, 1, 1, 1);
 }
 

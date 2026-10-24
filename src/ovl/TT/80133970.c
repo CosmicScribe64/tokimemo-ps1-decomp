@@ -1,33 +1,33 @@
-#define MAIN_API_OVERRIDE_func_80044750 /* unprototyped call preserves u16 argument conversion */
+#define MAIN_API_OVERRIDE_snd_command /* unprototyped call preserves u16 argument conversion */
 #include "common.h"
 #include "ovl/TT.h"
 
-s32 func_80044750();
+s32 snd_command();
 
 void func_80133970(void) {
     s32 i;
     s32 j;
 
-    func_80044750(0x7F);
+    snd_command(0x7F);
     func_800451E0(0x80162000);
-    func_80044750(0x11);
-    func_80044750(0x22);
-    func_80044750(0x21);
-    func_80044750(0x2F);
+    snd_command(0x11);
+    snd_command(0x22);
+    snd_command(0x21);
+    snd_command(0x2F);
     i = 0;
     do {
-        func_80079B34();
+        snd_command_pump();
         func_800AD950(0);
     } while (i++ < 0x10000 && func_80044F94(0) == 0);
-    func_80044750(0x7F);
+    snd_command(0x7F);
     func_800451E0(0x8019A000);
-    func_80044750(0x12);
-    func_80044750(0x23);
-    func_80044750(0x24);
-    func_80044750(0x2E);
+    snd_command(0x12);
+    snd_command(0x23);
+    snd_command(0x24);
+    snd_command(0x2E);
     j = 0;
     do {
-        func_80079B34();
+        snd_command_pump();
         func_800AD950(0);
     } while (j++ < 0x10000 && func_80044F94(1) == 0);
 }
@@ -35,12 +35,12 @@ void func_80133970(void) {
 void func_80133A60(void) {
     s32 i;
 
-    func_80079B34();
+    snd_command_pump();
     func_800451E0(0x8019A000);
-    func_80044750(0x12);
+    snd_command(0x12);
     i = 0;
     do {
-        func_80079B34();
+        snd_command_pump();
         func_800AD950(0);
     } while (i++ < 0x10000 && func_80044F94(1) == 0);
 }
@@ -54,7 +54,7 @@ u16 arg0;
     index = arg0 & 0x1F;
     index |= (arg0 & 0x100) >> 3;
     if (data->unk_56[index] == 0) {
-        func_80044750(arg0);
+        snd_command(arg0);
         data->unk_56[index] = 1;
     }
 }

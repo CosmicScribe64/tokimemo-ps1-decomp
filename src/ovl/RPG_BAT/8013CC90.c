@@ -58,15 +58,15 @@ void func_8013CC90(void) {
         sel = D_8015ED98 & 0x1FF;
         break;
     }
-    if ((sel == 0) && !(D_8015EDC4 & 0xFF) && !(D_8015EDF0 & 0xFF) && !(D_8015EE1C & 0xFF) && (!(D_800E6280.pad_held & PAD_L1) || !(D_800E6280.pad_held & PAD_R1) || !(D_8015EB98 & 0xF0000))) {
+    if ((sel == 0) && !(D_8015EDC4 & 0xFF) && !(D_8015EDF0 & 0xFF) && !(D_8015EE1C & 0xFF) && (!(game_state.pad_held & PAD_L1) || !(game_state.pad_held & PAD_R1) || !(D_8015EB98 & 0xF0000))) {
         func_8013D030();
         sel = D_8015ED98 & 0x1FF;
     }
     if (sel == 0) {
         if (!(D_8015EDC4 & 0xFF) && !(D_8015EE1C & 0xFF)) {
             if (D_8015EB98 & 0xF0000) {
-                if ((D_800E6280.pad_held & PAD_L1) && (D_800E6280.pad_held & PAD_R1)) {
-                    if (((Actor *)D_8011ECD0)[144].sequence_slot != 2) {
+                if ((game_state.pad_held & PAD_L1) && (game_state.pad_held & PAD_R1)) {
+                    if (((Actor *)actor_pool)[144].sequence_slot != 2) {
                         func_8013E7C0(0x30, 2, 1, 1);
                     }
                 } else {

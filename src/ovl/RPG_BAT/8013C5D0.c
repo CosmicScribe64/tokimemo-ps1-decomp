@@ -26,11 +26,11 @@ void func_8013C5D0(void) {
             D_8015EE48 = 1;
             func_8014EBA8();
         }
-        if (func_800460EC() == 4) {
+        if (cd_audio_state() == 4) {
             D_8015ED38 = 1;
         }
         if (D_8015ED38 == 1) {
-            if (func_800460EC() == 2) {
+            if (cd_audio_state() == 2) {
                 D_8015EE48 = 1;
                 D_8015ED38 = 0;
                 func_8014EBA8();
@@ -55,11 +55,11 @@ void func_8013C5D0(void) {
             func_8013E810(0x1D, 0, 1, 1);
             func_8014EBA8();
         }
-        if (func_800460EC() == 4) {
+        if (cd_audio_state() == 4) {
             D_8015ED38 = 1;
         }
         if (D_8015ED38 == 1) {
-            if (func_800460EC() == 2) {
+            if (cd_audio_state() == 2) {
                 D_8015EE48 = 1;
                 D_8015EE4C = D_8015E744 + 1;
                 func_8013E810(0x1D, 0, 1, 1);

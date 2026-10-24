@@ -16,19 +16,19 @@ void func_801393C0(void) {
 }
 
 void func_80139470(void) {
-    if (D_80122CD0 == 1) {
+    if (dialogue_work == 1) {
         func_801394B0();
         return;
     }
-    func_80046500();
+    game_reset_to_title();
 }
 
 void func_801394B0(void) {
-    if (D_800E6280.stage == 0) {
+    if (game_state.stage == 0) {
         func_801394EC();
         return;
     }
-    func_80046500();
+    game_reset_to_title();
 }
 
 typedef struct {
@@ -41,41 +41,41 @@ void func_801394EC(void) {
     FnTbl53 tbl;
 
     tbl = D_801462AC;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
     D_80120652 = 1;
 }
 
 void func_8013957C(void) {
     normal_date_move_place();
-    if (D_800E6280.substep++ == 0) {
-        func_80044750(0x501);
+    if (game_state.substep++ == 0) {
+        snd_command(0x501);
     }
 }
 
 void func_801395C0(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x7D96);
     func_801393C0();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801395F8(void) {
     func_800634FC(get_g_zyotai_h(GIRL_YUKO));
-    func_80044750(0x501);
-    func_800847B8(D_800E6280.current_girl);
-    func_8004284C();
+    snd_command(0x501);
+    dialogue_names_set(game_state.current_girl);
+    main_step_next();
 }
 
 void func_80139640(void) {
-    D_800E6280.current_girl = GIRL_YUKO;
+    game_state.current_girl = GIRL_YUKO;
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
-    func_8006612C("");
+    text_system_reset();
+    message_window_set_title("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
@@ -84,49 +84,49 @@ void func_80139640(void) {
     func_80137990();
     hizuke_init();
     message_window_init();
-    func_80084E4C();
-    D_800B593C = 0;
-    func_800847B8(D_800E6280.current_girl);
-    strcpy(D_800CA188, "先生");
-    func_8008585C();
+    text_marker_hide();
+    dec_bg_brightness = 0;
+    dialogue_names_set(game_state.current_girl);
+    strcpy(name_buf_girl_short, "先生");
+    dialogue_clear();
     func_80137990();
     D_80146274 = D_80145EC0;
     D_80146278 = D_80145FFC;
     D_8014627C = D_80146138;
     strcpy(D_800CA19C, "廊下");
     strcpy(D_800CA1DC, "職員室");
-    D_800E6280.girls[8].affection += 1;
+    game_state.girls[8].affection += 1;
     check_para_limit();
     D_800CA368 = 0x36;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801397A8(void) {
     func_801393C0();
     load_palette(D_80146290, 0x11, 1, 2, 0);
-    func_80084E90((s32) D_80146294, (s32) D_80146298, (s32) D_8014629C, (s32) D_801462A0, (s32) D_801462A4, (s32) D_801462A8);
-    func_800850D4((s32) D_80146284, (s32) D_80146288, (s32) D_80146280, (s32) D_8014628C);
+    event_still_show((s32) D_80146294, (s32) D_80146298, (s32) D_8014629C, (s32) D_801462A0, (s32) D_801462A4, (s32) D_801462A8);
+    event_anim_show((s32) D_80146284, (s32) D_80146288, (s32) D_80146280, (s32) D_8014628C);
     D_80120666 = 4;
     D_80122D10 = 1;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80139864(void) {
     bg_read_sub2(0x4045);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013988C(void) {
     bg_read_sub2(0x408D);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801398B4(void) {
     bg_read_sub2(0x46D6);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801398DC(void) {
     bg_read_sub2(0x4045);
-    func_8004284C();
+    main_step_next();
 }

@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_80136B40(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80136C00();
         return;
@@ -11,7 +11,7 @@ void func_80136B40(void) {
         return;
     case 2:
         D_8015F400 = 0;
-        func_8004284C();
+        main_step_next();
         return;
     case 3:
         func_80136D78();
@@ -36,27 +36,27 @@ void func_80136B40(void) {
 void func_80136C00(void) {
     func_8013AFDC();
     func_800450F4(0, 0x202);
-    D_800E6280.clear_color_r = 0;
-    D_800E6280.clear_color_g = 0;
-    D_800E6280.clear_color_b = 0;
+    game_state.clear_color_r = 0;
+    game_state.clear_color_g = 0;
+    game_state.clear_color_b = 0;
     back_clear_switch(1);
     D_8015EDB0 = 0;
     func_80059048();
-    func_8004284C();
+    main_step_next();
 }
 
 s32 func_80136C60(void) {
     func_8013A790(1, 0);
-    D_8015F4F0 = 0x80 - D_800E6280.substep * 3;
-    D_800E6280.substep++;
-    if (D_800E6280.substep * 3 > 0x80) {
-        func_8004284C();
+    D_8015F4F0 = 0x80 - game_state.substep * 3;
+    game_state.substep++;
+    if (game_state.substep * 3 > 0x80) {
+        main_step_next();
     }
 }
 
 void func_80136CD8(void) {
-    func_80044750(0xC1);
-    func_80042908(2);
+    snd_command(0xC1);
+    main_stage_set(2);
 }
 
 void func_80136D00(void) {
@@ -67,12 +67,12 @@ void func_80136D00(void) {
     D_8015F4F4 += 4;
     if (D_8015F4F4 > 0x100) {
         D_8015F4F0 = 0x80;
-        func_8004284C();
+        main_step_next();
     }
 }
 
 void func_80136D78(void) {
-    if (D_800E6280.pad_held & PAD_CROSS) {
+    if (game_state.pad_held & PAD_CROSS) {
         D_8015F400 += 0x78;
     } else {
         D_8015F400 += 0x3C;
@@ -80,7 +80,7 @@ void func_80136D78(void) {
     func_8013A790(1, 0);
     func_80136FBC(D_8015F400, 3);
     if (D_8015F400 > 0x1000) {
-        func_8004284C();
+        main_step_next();
     }
 }
 
@@ -90,7 +90,7 @@ void func_80136E08(void) {
     func_80136FBC(D_8015F400, 0);
     if (D_8015F400 >= 0x9001) {
         D_8015F400 = 0;
-        func_8004284C();
+        main_step_next();
     }
 }
 
@@ -108,11 +108,11 @@ void func_80136E70(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 void func_80136F4C(void) {
     func_8013A790(1, 0);
     func_80136FBC(0x1000, 3);
-    if (D_800E6280.pad_held & PAD_CROSS) {
-        func_8004284C();
+    if (game_state.pad_held & PAD_CROSS) {
+        main_step_next();
     }
-    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
-        func_8004284C();
+    if (game_state.pad_pressed & PAD_CIRCLE) {
+        main_step_next();
     }
 }
 

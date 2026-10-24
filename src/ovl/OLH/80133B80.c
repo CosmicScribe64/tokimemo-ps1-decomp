@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80133B80(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0x0:
         func_80133C4C();
         break;
@@ -53,87 +53,87 @@ void func_80133C4C(void) {
     }
     menu_set(0, 8, a, b, c, d);
     k_disp_start(r);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133D74(void) {
-    menu_check(0, D_8011ECF6, D_8011ECFA);
+    menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
-    func_8004FC10(0);
-    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
-        if (D_800E6280.menu_cursor_0 != -1) {
-            func_80044750(0x501);
-            switch (*(u8 *)&D_800E6280.menu_cursor_0) {
+    menu_cursor_update(0);
+    if (game_state.pad_pressed & PAD_CIRCLE) {
+        if (game_state.menu_cursor_0 != -1) {
+            snd_command(0x501);
+            switch (*(u8 *)&game_state.menu_cursor_0) {
             case 0:
-                func_80042940(0x10);
+                main_step_set(0x10);
                 break;
             case 1:
-                func_80042940(0x20);
+                main_step_set(0x20);
                 break;
             case 2:
-                func_80042940(0x30);
+                main_step_set(0x30);
                 break;
             case 3:
-                func_80042940(0x40);
+                main_step_set(0x40);
                 break;
             case 4:
-                func_80042940(0x50);
+                main_step_set(0x50);
                 break;
             case 5:
-                func_80042940(0x60);
+                main_step_set(0x60);
                 break;
             case 6:
-                func_80042940(0x70);
+                main_step_set(0x70);
                 break;
             case 7:
-                func_80042908(0);
+                main_stage_set(0);
                 break;
             }
         }
-    } else if (D_800E6280.pad_pressed & PAD_CROSS) {
-        func_80042908(0);
+    } else if (game_state.pad_pressed & PAD_CROSS) {
+        main_stage_set(0);
     }
 }
 
 s32 func_80133EA4(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013B740, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　画面の中央が現在の位置です。", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "左が過去一週間、右がこの先一週間のあな", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "たのバイオリズムです。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }
 
 s32 func_80133F90(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013B744, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　画面中央の黒い線と交差する日が、コマ", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "ンドが特に失敗しやすい日になります。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }
 
 s32 func_80134060(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013B748, 0);
@@ -142,73 +142,73 @@ s32 func_80134060(void) {
         set_kanji_string(-0x88, -0x10, 0xF, "　同じ距離ならば、黒い線の上側にある場", 0);
         set_kanji_string(-0x88, 0, 0xF, "合のほうが、コマンドが成功しやすくなり", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "ます。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }
 
 s32 func_80134184(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013B74C, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　赤は主に、身体を使うコマンドに影響し", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "ます。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }
 
 s32 func_80134254(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013B750, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　青は、主に感性を必要とするコマンドに", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "影響します。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }
 
 s32 func_80134324(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013B754, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　緑は、主に頭脳を必要とするコマンドに", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "影響します。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }
 
 s32 func_801343F4(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013B758, 0);
@@ -216,13 +216,13 @@ s32 func_801343F4(void) {
         set_kanji_string(-0x88, -0x20, 0xF, "りません。", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "　究極のパラメータを狙う場合以外必要な", 0);
         set_kanji_string(-0x88, 0, 0xF, "いかも…？", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }

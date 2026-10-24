@@ -2,7 +2,7 @@
 #define OVL_ENDING_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_dialogue_render /* T-18300: func_8013A2E8 stores the result in D_80122CD0 (main_api.h: void), as main k_disp_start does */
+#define MAIN_API_OVERRIDE_dialogue_render /* T-18300: func_8013A2E8 stores the result in dialogue_work (main_api.h: void), as main k_disp_start does */
 
 #include "common.h"
 #include "libgpu.h"
@@ -98,7 +98,7 @@ extern EdShorts14 D_8013CA7C; /* func_80135F4C: y positions of the 14 sprites */
  * address order) and the readers. All are .data with the same initial values the initialisers write. */
 
 /* Message scripts: one row per message table, one entry per scene; a scene's three entries are copied
- * together into D_800CA160/164/168 (main) or into D_8013C34C. Entries are message block addresses
+ * together into dialogue_text_table/164/168 (main) or into D_8013C34C. Entries are message block addresses
  * (D_8013CAC0[0][12] is read as a block whose first word is a message pointer table, func_8013A2E8). */
 extern s32 D_8013C280[3][17]; /* size 0xCC */
 extern s32 D_8013CAC0[3][15]; /* size 0xB4 */
@@ -112,7 +112,7 @@ typedef struct EdScriptSet {
 extern EdScriptSet D_8013C34C;
 
 /* Scene image records: three TIM addresses and a halfword read from the TIM data (the order of
- * func_80137160's and func_800850D4's arguments: +0x04, +0x08, +0x00, +0x0C go to the display record's
+ * func_80137160's and event_anim_show's arguments: +0x04, +0x08, +0x00, +0x0C go to the display record's
  * unk_0C, unk_10, unk_34 and unk_14), then the addresses of the scene's texture pages. */
 typedef struct EdScene30 {
     /* 0x00 */ s32 unk_00;
@@ -151,7 +151,7 @@ extern EdPortraitTbl D_8013C4C0;
 extern s32 D_8013C5A0[7]; /* texture page addresses of func_80134270 (func_80133C10) */
 
 /* Callback tables (T-20930, collected from the matched files): a step function copies the table to the
- * stack whole and calls entry D_800E6280.unk_110A (or unk_1109) with 0x80 (T-3330). */
+ * stack whole and calls entry game_state.unk_110A (or unk_1109) with 0x80 (T-3330). */
 typedef struct EdFnTbl6 { void (*f[6])(); } EdFnTbl6; /* size 0x18 */
 typedef struct EdFnTbl9 { void (*f[9])(); } EdFnTbl9; /* size 0x24 */
 typedef struct EdFnTbl13 { void (*f[13])(); } EdFnTbl13; /* size 0x34 */
@@ -192,7 +192,7 @@ typedef struct EdWords4 {
 typedef struct EdShorts13 {
     s16 h[13];
 } EdShorts13; /* size 0x1A */
-extern EdWords4 D_8013CD90; /* func_8013BB9C: two pairs of func_80046290 arguments */
+extern EdWords4 D_8013CD90; /* func_8013BB9C: two pairs of cd_audio_request_set arguments */
 extern EdShorts13 D_8013CDA0; /* func_8013BC58: thresholds compared with D_8013CBE0 */
 #endif /* OVL_ENDING_H */
 

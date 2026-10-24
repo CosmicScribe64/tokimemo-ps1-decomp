@@ -3,23 +3,23 @@
 
 
 s32 func_8013A550(s32 arg0, s32 arg1, s32 arg2) {
-    if (D_800E6280.pad_pressed & PAD_SQUARE) {
+    if (game_state.pad_pressed & PAD_SQUARE) {
         arg0 += 1;
         if (arg1 < arg0) {
             arg0 = arg2;
         }
-    } else if ((D_800E6280.pad_held & PAD_SQUARE) && (D_800E6280.pad_held & 5)) {
+    } else if ((game_state.pad_held & PAD_SQUARE) && (game_state.pad_held & 5)) {
         arg0 += 1;
         if (arg1 < arg0) {
             arg0 = arg2;
         }
     }
-    if (D_800E6280.pad_pressed & PAD_TRIANGLE) {
+    if (game_state.pad_pressed & PAD_TRIANGLE) {
         arg0 -= 1;
         if (arg0 < arg2) {
             arg0 = arg1;
         }
-    } else if ((D_800E6280.pad_held & PAD_TRIANGLE) && (D_800E6280.pad_held & 5)) {
+    } else if ((game_state.pad_held & PAD_TRIANGLE) && (game_state.pad_held & 5)) {
         arg0 -= 1;
         if (arg0 < arg2) {
             arg0 = arg1;
@@ -37,7 +37,7 @@ void func_8013A604(void) {
     s16 d[16];
 
     D_800B3C6C = 1;
-    func_8006BC28(0);
+    cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;
@@ -45,25 +45,25 @@ void func_8013A604(void) {
         d[i] = 0xC;
     }
     menu_set(0, 0x10, a, b, c, d);
-    (&D_800E6280.clear_color_r)[0] = (&D_800E6280.clear_color_r)[1] = (&D_800E6280.clear_color_r)[2] = 0x80;
+    (&game_state.clear_color_r)[0] = (&game_state.clear_color_r)[1] = (&game_state.clear_color_r)[2] = 0x80;
     func_8004ADAC(4);
-    strcpy(D_800E6280.player_family_name, "おぷ");
-    strcpy(D_800E6280.player_given_name, "ション");
-    strcpy(D_800E6280.player_nickname, "起動");
-    func_8004E58C();
+    strcpy(game_state.player_family_name, "おぷ");
+    strcpy(game_state.player_given_name, "ション");
+    strcpy(game_state.player_nickname, "起動");
+    text_system_reset();
     set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニュー１", 0);
     set_kanji_string(-0x80, 0, 0xF, (s32)"月日関連", 0);
-    set_kanji_string(0x20, -0x18, 0xF, (s32)D_800E6280.player_family_name, 0);
-    set_kanji_string(0x20, -0xC, 0xF, (s32)D_800E6280.player_given_name, 0);
-    set_kanji_string(0x20, 0, 0xF, (s32)D_800E6280.player_nickname, 0);
+    set_kanji_string(0x20, -0x18, 0xF, (s32)game_state.player_family_name, 0);
+    set_kanji_string(0x20, -0xC, 0xF, (s32)game_state.player_given_name, 0);
+    set_kanji_string(0x20, 0, 0xF, (s32)game_state.player_nickname, 0);
     k_disp_start(5);
-    func_8004284C();
+    main_step_next();
 }
 
 /* FAKE: integer return type with fallthrough keeps v0 live across the calendar flag
  * branch, preserving its nop delay slot. No meaningful return. T-24606. */
 s32 func_8013A7EC(void) {
-    GameState *game = &D_800E6280;
+    GameState *game = &game_state;
     /* FAKE: share the label pointer/month and drawing row/loop bound
      * words to preserve the original saved-register lifetimes. T-24606. */
     s32 label_or_month;
@@ -72,9 +72,9 @@ s32 func_8013A7EC(void) {
 
     /* FAKE: discarded entry read enables the conversion pass to preserve
      * the unsigned weekday global across display and comparison. T-24606. */
-    label_or_month = D_800E6280.weekday;
-    menu_check(0, D_8011ECF6, D_8011ECFA);
-    func_8004FC10(0);
+    label_or_month = game_state.weekday;
+    menu_check(0, cursor_x, cursor_y);
+    menu_cursor_update(0);
     menu_bar_show(0);
     label_or_month = (s32)D_8013E744;
     row_or_limit = -0x60;
@@ -83,19 +83,19 @@ s32 func_8013A7EC(void) {
         row_or_limit += 0xC;
         label_or_month += 4;
     } while (row_or_limit < 0x60);
-    func_8004AE28((s32) game->year, 0x20, -0x60);
-    func_8004AE28((s32) game->month, 0x20, -0x54);
-    func_8004AE28((s32) game->day, 0x20, -0x48);
-    func_8004AE28((s32) D_800E6280.weekday, 0x20, -0x3C);
-    func_8004AE28((s32) game->vacation, 0x20, -0x30);
-    func_8004AE28((s32) game->day_count, 0x20, -0x24);
-    func_8004AE28(game->player_birthday & 0xF, 0x20, 0xC);
-    func_8004AE28((s32) ((u32) (game->player_birthday << 0x17) >> 0x1B), 0x20, 0x18);
-    func_8004AE28((s32) ((u32) (game->player_birthday << 0x15) >> 0x1E), 0x20, 0x24);
-    func_8004AE28((s32) ((u16) game->player_flags.h >> 0xC), 0x20, 0x30);
-    func_8004AE28(game->girls[0].birthday.w & 0xF, 0x20, 0x3C);
-    func_8004AE28((s32) ((u32) (game->girls[0].birthday.w << 0x17) >> 0x1B), 0x20, 0x48);
-    func_8004AE28((s32) ((u32) (game->girls[0].birthday.w << 0x15) >> 0x1E), 0x20, 0x54);
+    debug_number_show((s32) game->year, 0x20, -0x60);
+    debug_number_show((s32) game->month, 0x20, -0x54);
+    debug_number_show((s32) game->day, 0x20, -0x48);
+    debug_number_show((s32) game_state.weekday, 0x20, -0x3C);
+    debug_number_show((s32) game->vacation, 0x20, -0x30);
+    debug_number_show((s32) game->day_count, 0x20, -0x24);
+    debug_number_show(game->player_birthday & 0xF, 0x20, 0xC);
+    debug_number_show((s32) ((u32) (game->player_birthday << 0x17) >> 0x1B), 0x20, 0x18);
+    debug_number_show((s32) ((u32) (game->player_birthday << 0x15) >> 0x1E), 0x20, 0x24);
+    debug_number_show((s32) ((u16) game->player_flags.h >> 0xC), 0x20, 0x30);
+    debug_number_show(game->girls[0].birthday.w & 0xF, 0x20, 0x3C);
+    debug_number_show((s32) ((u32) (game->girls[0].birthday.w << 0x17) >> 0x1B), 0x20, 0x48);
+    debug_number_show((s32) ((u32) (game->girls[0].birthday.w << 0x15) >> 0x1E), 0x20, 0x54);
     if (game->pad_held & 0x90) {
         /* FAKE: the unsigned byte bitfield keeps the selector in a ugen
          * temporary instead of a promoted local in v0. T-24606. */
@@ -107,23 +107,23 @@ s32 func_8013A7EC(void) {
             if (game->pad_pressed & 0x90) {
                 label_or_month = game->month;
                 day = 0;
-                if (D_800E6280.weekday != WEEKDAY_SUNDAY) {
-                    day = D_800E6280.weekday;
-                    if ((s32) D_800E6280.weekday < WEEKDAY_SUNDAY) {
+                if (game_state.weekday != WEEKDAY_SUNDAY) {
+                    day = game_state.weekday;
+                    if ((s32) game_state.weekday < WEEKDAY_SUNDAY) {
                         do {
-                            func_80072338();
+                            calendar_advance_day();
                             day++;
                         } while (day < 6);
                     }
                 } else {
                     row_or_limit = 7;
                     do {
-                        func_80072338();
+                        calendar_advance_day();
                         day += 1;
                     } while (day != row_or_limit);
                 }
                 if (label_or_month != game->month) {
-                    func_80042940(0xFE);
+                    main_step_set(0xFE);
                 }
             }
             break;
@@ -155,37 +155,37 @@ s32 func_8013A7EC(void) {
     }
     if (game->pad_pressed & PAD_START) {
         func_80041878();
-        func_80042940(0);
+        main_step_set(0);
     }
 }
 
 /* No return value on purpose: the original is an implicit-int function (the `or v0,v1,zero` in the first delay slot). T-6070 */
 s32 func_8013AC30(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         cd_read_sectors(0x95U, 0x801A0000, 0x9B94);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_80068938(D_800E6280.year, D_800E6280.month, 1);
+            func_80068938(game_state.year, game_state.month, 1);
             D_800B5BC8 = 0xEF;
             func_800674B0();
-            func_8004284C();
+            main_step_next();
         }
         break;
     }
 }
 
 void func_8013ACD4(void) {
-    if (func_80044E8C() == 1) {
-        func_8004500C(0, 0);
-        func_80042940(1);
+    if (snd_bank_load_poll() == 1) {
+        snd_bank_start(0, 0);
+        main_step_set(1);
     }
 }
 
 s32 func_8013AD10(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_8013A604();
         break;
@@ -241,7 +241,7 @@ void func_8013AD94(void) {
     s16 c[16];
     s16 d[16];
 
-    func_8006BC28(0);
+    cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;
@@ -249,23 +249,23 @@ void func_8013AD94(void) {
         d[i] = 0xC;
     }
     menu_set(0, 0x10, a, b, c, d);
-    func_8004E58C();
+    text_system_reset();
     set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニュー２", 0);
     set_kanji_string(-0x80, 0, 0xF, (s32)"プレイヤーデータ", 0);
-    set_kanji_string(0x60, -0x18, 0xF, (s32)D_800E6280.player_family_name, 0);
-    set_kanji_string(0x60, -0xC, 0xF, (s32)D_800E6280.player_given_name, 0);
-    set_kanji_string(0x60, 0, 0xF, (s32)D_800E6280.player_nickname, 0);
+    set_kanji_string(0x60, -0x18, 0xF, (s32)game_state.player_family_name, 0);
+    set_kanji_string(0x60, -0xC, 0xF, (s32)game_state.player_given_name, 0);
+    set_kanji_string(0x60, 0, 0xF, (s32)game_state.player_nickname, 0);
     k_disp_start(5);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013AF10(void) {
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     s32 *var_s1;
     s32 var_s0;
 
-    menu_check(0, D_8011ECF6, D_8011ECFA);
-    func_8004FC10(0);
+    menu_check(0, cursor_x, cursor_y);
+    menu_cursor_update(0);
     menu_bar_show(0);
     var_s1 = D_8013E784;
     var_s0 = -0x60;
@@ -274,22 +274,22 @@ void func_8013AF10(void) {
         var_s0 += 0xC;
         var_s1++;
     } while (var_s0 != 0x60);
-    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->health, 0x20, -0x60);
-    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->club, 0x20, -0x54);
-    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b16, 0x20, -0x48);
-    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b17, 0x20, -0x3C);
-    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b18, 0x20, -0x30);
-    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b19, 0x20, -0x24);
-    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b20, 0x20, -0x18);
-    func_8004AE28((s32) g->param_condition.value, 0x20, -0xC);
-    func_8004AE28((s32) g->param_liberal_arts.value, 0x20, 0);
-    func_8004AE28((s32) g->param_science.value, 0x20, 0xC);
-    func_8004AE28((s32) g->param_art.value, 0x20, 0x18);
-    func_8004AE28((s32) g->param_athletics.value, 0x20, 0x24);
-    func_8004AE28((s32) g->param_trivia.value, 0x20, 0x30);
-    func_8004AE28((s32) g->param_looks.value, 0x20, 0x3C);
-    func_8004AE28((s32) g->param_guts.value, 0x20, 0x48);
-    func_8004AE28((s32) g->param_stress.value, 0x20, 0x54);
+    debug_number_show(((PlayerFlagBits *)&g->player_flags)->health, 0x20, -0x60);
+    debug_number_show(((PlayerFlagBits *)&g->player_flags)->club, 0x20, -0x54);
+    debug_number_show(((PlayerFlagBits *)&g->player_flags)->b16, 0x20, -0x48);
+    debug_number_show(((PlayerFlagBits *)&g->player_flags)->b17, 0x20, -0x3C);
+    debug_number_show(((PlayerFlagBits *)&g->player_flags)->b18, 0x20, -0x30);
+    debug_number_show(((PlayerFlagBits *)&g->player_flags)->b19, 0x20, -0x24);
+    debug_number_show(((PlayerFlagBits *)&g->player_flags)->b20, 0x20, -0x18);
+    debug_number_show((s32) g->param_condition.value, 0x20, -0xC);
+    debug_number_show((s32) g->param_liberal_arts.value, 0x20, 0);
+    debug_number_show((s32) g->param_science.value, 0x20, 0xC);
+    debug_number_show((s32) g->param_art.value, 0x20, 0x18);
+    debug_number_show((s32) g->param_athletics.value, 0x20, 0x24);
+    debug_number_show((s32) g->param_trivia.value, 0x20, 0x30);
+    debug_number_show((s32) g->param_looks.value, 0x20, 0x3C);
+    debug_number_show((s32) g->param_guts.value, 0x20, 0x48);
+    debug_number_show((s32) g->param_stress.value, 0x20, 0x54);
     if (g->pad_held & 0x90) {
         switch (g->menu_cursor_0) {
         case 0:
@@ -346,7 +346,7 @@ void func_8013AF10(void) {
 
 
 s32 func_8013B3BC(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_8013AD94();
         break;
@@ -396,7 +396,7 @@ void func_8013B410(void) {
     s16 c[16];
     s16 d[16];
 
-    func_8006BC28(0);
+    cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;
@@ -404,12 +404,12 @@ void func_8013B410(void) {
         d[i] = 0xC;
     }
     menu_set(0, 0x10, a, b, c, d);
-    func_8004E58C();
+    text_system_reset();
     set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニュー３", 0);
     set_kanji_string(-0x80, 0, 0xF, (s32)"女の子データ", 0);
-    set_kanji_string(0x40, -0x18, 0xF, (&D_800B3538)[D_8013E740 & 0xF], 0);
+    set_kanji_string(0x40, -0x18, 0xF, (&girl_full_name_table)[D_8013E740 & 0xF], 0);
     k_disp_start(3);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013B568(void) {
@@ -417,8 +417,8 @@ void func_8013B568(void) {
     s32 var_s0;
     u8 *var_v1;
 
-    menu_check(0, D_8011ECF6, D_8011ECFA);
-    func_8004FC10(0);
+    menu_check(0, cursor_x, cursor_y);
+    menu_cursor_update(0);
     menu_bar_show(0);
     var_s1 = D_8013E7C4;
     var_s0 = -0x60;
@@ -427,72 +427,72 @@ void func_8013B568(void) {
         var_s0 += 0xC;
         var_s1++;
     } while (var_s0 != 0x60);
-    func_8004AE28((s32) D_8013E740, 0x20, -0x60);
-    func_8004AE28((s32) D_800E6280.girls[D_8013E740].tokimeki, 0x20, -0x54);
-    func_8004AE28((s32) D_800E6280.girls[D_8013E740].affection, 0x20, -0x48);
-    func_8004AE28((s32) D_800E6280.girls[D_8013E740].syoushin, 0x20, -0x3C);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b0, 0x20, -0x30);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b1, 0x20, -0x24);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b2, 0x20, -0x18);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b3, 0x20, -0xC);
-    func_8004AE28((s32) ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->f24, 0x20, 0);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b6, 0x20, 0xC);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b7, 0x20, 0x18);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b8, 0x20, 0x24);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->f9, 0x20, 0x30);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->f20, 0x20, 0x3C);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b12, 0x20, 0x48);
-    func_8004AE28(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b13, 0x20, 0x54);
-    if (D_800E6280.pad_held & 0x90) {
-        switch (D_800E6280.menu_cursor_0) {
+    debug_number_show((s32) D_8013E740, 0x20, -0x60);
+    debug_number_show((s32) game_state.girls[D_8013E740].tokimeki, 0x20, -0x54);
+    debug_number_show((s32) game_state.girls[D_8013E740].affection, 0x20, -0x48);
+    debug_number_show((s32) game_state.girls[D_8013E740].syoushin, 0x20, -0x3C);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b0, 0x20, -0x30);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b1, 0x20, -0x24);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b2, 0x20, -0x18);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b3, 0x20, -0xC);
+    debug_number_show((s32) ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->f24, 0x20, 0);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b6, 0x20, 0xC);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b7, 0x20, 0x18);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b8, 0x20, 0x24);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->f9, 0x20, 0x30);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->f20, 0x20, 0x3C);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b12, 0x20, 0x48);
+    debug_number_show(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b13, 0x20, 0x54);
+    if (game_state.pad_held & 0x90) {
+        switch (game_state.menu_cursor_0) {
         case 0:
             D_8013E740 = func_8013A550((s32) D_8013E740, 0xB, 0);
-            func_80042940(0);
+            main_step_set(0);
             break;
         case 1:
-            D_800E6280.girls[D_8013E740].tokimeki = func_8013A550((s32) D_800E6280.girls[D_8013E740].tokimeki, 0x7F, 0);
+            game_state.girls[D_8013E740].tokimeki = func_8013A550((s32) game_state.girls[D_8013E740].tokimeki, 0x7F, 0);
             break;
         case 2:
-            D_800E6280.girls[D_8013E740].affection = func_8013A550((s32) D_800E6280.girls[D_8013E740].affection, 0x7F, 0);
+            game_state.girls[D_8013E740].affection = func_8013A550((s32) game_state.girls[D_8013E740].affection, 0x7F, 0);
             break;
         case 3:
-            D_800E6280.girls[D_8013E740].syoushin = func_8013A550((s32) D_800E6280.girls[D_8013E740].syoushin, 0x7F, 0);
+            game_state.girls[D_8013E740].syoushin = func_8013A550((s32) game_state.girls[D_8013E740].syoushin, 0x7F, 0);
             break;
         case 4:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b0 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b0, 1, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b0 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b0, 1, 0);
             break;
         case 5:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b1 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b1, 1, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b1 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b1, 1, 0);
             break;
         case 6:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b2 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b2, 1, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b2 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b2, 1, 0);
             break;
         case 7:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b3 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b3, 1, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b3 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b3, 1, 0);
             break;
         case 8:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->f24 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->f24, 999, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->f24 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->f24, 999, 0);
             break;
         case 9:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b6 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b6, 1, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b6 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b6, 1, 0);
             break;
         case 10:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b7 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b7, 1, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b7 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b7, 1, 0);
             break;
         case 11:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b8 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b8, 1, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b8 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b8, 1, 0);
             break;
         case 12:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->f9 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->f9, 7, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->f9 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->f9, 7, 0);
             break;
         case 13:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->f20 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->f20, 11, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->f20 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->f20, 11, 0);
             break;
         case 14:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b12 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b12, 1, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b12 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b12, 1, 0);
             break;
         case 15:
-            ((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b13 = func_8013A550(((OptionCharBits *)&D_800E6280.girls[D_8013E740].flags)->b13, 1, 0);
+            ((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b13 = func_8013A550(((OptionCharBits *)&game_state.girls[D_8013E740].flags)->b13, 1, 0);
             break;
         }
     }
@@ -500,7 +500,7 @@ void func_8013B568(void) {
 
 
 s32 func_8013BE78(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_8013B410();
         break;
@@ -550,7 +550,7 @@ void func_8013BECC(void) {
     s16 c[16];
     s16 d[16];
 
-    func_8006BC28(0);
+    cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;
@@ -558,21 +558,21 @@ void func_8013BECC(void) {
         d[i] = 0xC;
     }
     menu_set(0, 0x10, a, b, c, d);
-    func_8004E58C();
+    text_system_reset();
     set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニュー４", 0);
     set_kanji_string(-0x80, 0, 0xF, (s32)"その他データ", 0);
     k_disp_start(2);
-    func_8004284C();
-    D_800E6280.day_event_index = 0;
+    main_step_next();
+    game_state.day_event_index = 0;
 }
 
 void func_8013BFF8(void) {
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     s32 *var_s1;
     s32 var_s0;
 
-    menu_check(0, D_8011ECF6, D_8011ECFA);
-    func_8004FC10(0);
+    menu_check(0, cursor_x, cursor_y);
+    menu_cursor_update(0);
     menu_bar_show(0);
     var_s1 = D_8013E804;
     var_s0 = -0x60;
@@ -581,19 +581,19 @@ void func_8013BFF8(void) {
         var_s0 += 0xC;
         var_s1++;
     } while (var_s0 != 0x60);
-    func_8004AE28((s32) g->day_events[0].girl, 0x20, -0x60);
-    func_8004AE28((s32) g->day_events[0].scene, 0x20, -0x54);
-    func_8004AE28(((AppointmentBits *)&g->unk_54C[0])->flag, 0x20, -0x30);
-    func_8004AE28(((AppointmentBits *)&g->unk_54C[0])->girl, 0x20, -0x24);
-    func_8004AE28(((AppointmentBits *)&g->unk_54C[0])->place, 0x20, -0x18);
-    func_8004AE28((s32) g->appt_place_0, 0x20, 0);
-    func_8004AE28((s32) g->appt_place_1, 0x20, 0xC);
-    func_8004AE28((s32) g->appt_place_2, 0x20, 0x18);
-    func_8004AE28((s32) g->appt_place_3, 0x20, 0x24);
-    func_8004AE28((s32) g->current_girl, 0x20, 0x30);
-    func_8004AE28((s32) g->date_girl, 0x20, 0x3C);
-    func_8004AE28(D_80122CD4, 0x20, 0x48);
-    func_8004AE28(D_80122CD0, 0x20, 0x54);
+    debug_number_show((s32) g->day_events[0].girl, 0x20, -0x60);
+    debug_number_show((s32) g->day_events[0].scene, 0x20, -0x54);
+    debug_number_show(((AppointmentBits *)&g->unk_54C[0])->flag, 0x20, -0x30);
+    debug_number_show(((AppointmentBits *)&g->unk_54C[0])->girl, 0x20, -0x24);
+    debug_number_show(((AppointmentBits *)&g->unk_54C[0])->place, 0x20, -0x18);
+    debug_number_show((s32) g->appt_place_0, 0x20, 0);
+    debug_number_show((s32) g->appt_place_1, 0x20, 0xC);
+    debug_number_show((s32) g->appt_place_2, 0x20, 0x18);
+    debug_number_show((s32) g->appt_place_3, 0x20, 0x24);
+    debug_number_show((s32) g->current_girl, 0x20, 0x30);
+    debug_number_show((s32) g->date_girl, 0x20, 0x3C);
+    debug_number_show(D_80122CD4, 0x20, 0x48);
+    debug_number_show(dialogue_work, 0x20, 0x54);
     if (g->pad_held & 0x90) {
         switch (g->menu_cursor_0) {
         case 0:
@@ -633,7 +633,7 @@ void func_8013BFF8(void) {
             D_80122CD4 = func_8013A550(D_80122CD4, 0xC, 0);
             break;
         case 15:
-            D_80122CD0 = func_8013A550(D_80122CD0, 8, 1);
+            dialogue_work = func_8013A550(dialogue_work, 8, 1);
             break;
         }
     }
@@ -641,7 +641,7 @@ void func_8013BFF8(void) {
 
 
 s32 func_8013C3B0(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_8013BECC();
         break;
@@ -691,7 +691,7 @@ void func_8013C404(void) {
     s16 c[16];
     s16 d[16];
 
-    func_8006BC28(0);
+    cursor_actor_init(0);
     for (i = 0; i < 16; i++) {
         a[i] = 0x20;
         b[i] = i * 0xC - 0x60;
@@ -699,25 +699,25 @@ void func_8013C404(void) {
         d[i] = 0xC;
     }
     menu_set(0, 0x10, a, b, c, d);
-    func_8004E58C();
+    text_system_reset();
     set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニューＦ", 0);
     set_kanji_string(-0x80, 0, 0xF, (s32)"目標ステップ", 0);
     k_disp_start(5);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013C52C(void) {
     s32 i;
 
-    menu_check(0, D_8011ECF6, D_8011ECFA);
-    func_8004FC10(0);
+    menu_check(0, cursor_x, cursor_y);
+    menu_cursor_update(0);
     menu_bar_show(0);
     for (i = 0; i < 16; i++) {
         func_8004B338(D_8013E844[i], -0x20, i * 0xC - 0x60);
     }
     bzero(D_80122DD0, 0x100);
-    if (D_800E6280.pad_pressed & 0x90) {
-        switch (D_800E6280.menu_cursor_0) {
+    if (game_state.pad_pressed & 0x90) {
+        switch (game_state.menu_cursor_0) {
         case 0:
             D_800B3C6C = 0;
             main_state_set(MODE_COMMAND_SCREEN);
@@ -727,7 +727,7 @@ void func_8013C52C(void) {
             main_state_set(MODE_DATE);
             break;
         case 2:
-            func_8004E58C();
+            text_system_reset();
             func_80048DD0(0);
             main_state_set(MODE_SPECIAL_EVENT);
             break;
@@ -745,7 +745,7 @@ void func_8013C52C(void) {
             break;
         case 7:
             main_state_set(MODE_CULTURE_FESTIVAL_B);
-            if (D_800E6280.player_flags.h >> 0xC < 6) {
+            if (game_state.player_flags.h >> 0xC < 6) {
                 main_state_set(MODE_CULTURE_FESTIVAL_A);
             }
             break;
@@ -778,7 +778,7 @@ void func_8013C52C(void) {
 }
 
 s32 func_8013C72C(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_8013C404();
         break;
@@ -789,7 +789,7 @@ s32 func_8013C72C(void) {
 }
 
 void func_8013C780(void) {
-    switch (D_800E6280.stage) {
+    switch (game_state.stage) {
     case 0:
         func_8013AD10();
         break;
@@ -807,13 +807,13 @@ void func_8013C780(void) {
         func_8013C72C();
         break;
     }
-    if (D_800E6280.stage != 0xFF && (D_800E6280.pad_pressed & PAD_CIRCLE)) {
-        func_80042808();
+    if (game_state.stage != 0xFF && (game_state.pad_pressed & PAD_CIRCLE)) {
+        main_stage_next();
     }
-    if (D_800E6280.stage != 0 && (D_800E6280.pad_pressed & PAD_CROSS)) {
-        func_80042908((D_800E6280.stage - 1) & 0xFF);
+    if (game_state.stage != 0 && (game_state.pad_pressed & PAD_CROSS)) {
+        main_stage_set((game_state.stage - 1) & 0xFF);
     }
-    func_80066C08(1);
+    screen_frame_draw(1);
 }
 
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CFA8);

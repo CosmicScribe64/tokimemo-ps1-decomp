@@ -997,7 +997,7 @@ void func_80142C14(void);
 void func_80145520(void);
 extern s32 D_8012E694;
 /* T-17600: 0x24-byte records indexed with stride 0x24 (func_80144018, func_80144B70): the field widths of
- * main's SpriteQuad table D_801217D0, 0xB270 above it as the display records D_80129F40 are above D_8011ECD0. */
+ * main's SpriteQuad table sprite_quads, 0xB270 above it as the display records D_80129F40 are above actor_pool. */
 extern SpriteQuad D_8012CA40[];
 /* T-17600: one entry per falling dumpling (func_80144018, func_801444CC, func_80144B70, func_80145084). The
  * dumpling count D_80148EAC stops at 50 and the arrays end where the next begins; the record index i of

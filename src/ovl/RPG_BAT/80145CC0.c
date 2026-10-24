@@ -57,7 +57,7 @@ void func_80145CC0(void) {
         func_8014F080(0x96);
         break;
     case 9:
-        strcpy(D_8015E828, D_800E6280.player_family_name);
+        strcpy(D_8015E828, game_state.player_family_name);
         strcat(D_8015E828, "「だめだ！　やられてしまう！");
         func_8014B738((s32) D_8015E8F0, 1, 0x78);
         func_8014EF3C();
@@ -81,7 +81,7 @@ void func_80145CC0(void) {
         func_8014F178(1);
         break;
     case 15:
-        strcpy(D_8015E828, D_800E6280.player_family_name);
+        strcpy(D_8015E828, game_state.player_family_name);
         strcat(D_8015E828, "「なっ、なんだ！");
         func_8014B738((s32) D_8015E8F0, 1, 0x5A);
         func_8014EF3C();
@@ -199,7 +199,7 @@ void func_80145CC0(void) {
         func_8014F080(0x3C);
         break;
     case 31:
-        func_8004500C(1, 0x202);
+        snd_bank_start(1, 0x202);
         func_8014EF3C();
         break;
     case 32:
@@ -214,7 +214,7 @@ void func_80145CC0(void) {
         func_8014F178(0);
         break;
     case 34:
-        func_80042808();
+        main_stage_next();
         break;
     default:
         func_8014EF8C();
@@ -235,12 +235,12 @@ s32 func_80146578(void) {
     switch (D_8015EDDC) {
     case 0:
         for (timer = 0; timer < 12; timer++) {
-            ((Actor *)D_8011ECD0)[timer + 148].frame_table = (u8 *)D_8015EEA8;
-            ((Actor *)D_8011ECD0)[timer + 148].sequence_table = (u8 *)D_8015EEC0;
-            ((Actor *)D_8011ECD0)[timer + 148].tpage_table = (u8 *)D_8015EE90;
-            ((Actor *)D_8011ECD0)[timer + 148].quad_flags = 0x41000000;
-            ((Actor *)D_8011ECD0)[timer + 148].brightness = 0x80;
-            ((Actor *)D_8011ECD0)[timer + 148].unk_43 = 0x13;
+            ((Actor *)actor_pool)[timer + 148].frame_table = (u8 *)D_8015EEA8;
+            ((Actor *)actor_pool)[timer + 148].sequence_table = (u8 *)D_8015EEC0;
+            ((Actor *)actor_pool)[timer + 148].tpage_table = (u8 *)D_8015EE90;
+            ((Actor *)actor_pool)[timer + 148].quad_flags = 0x41000000;
+            ((Actor *)actor_pool)[timer + 148].brightness = 0x80;
+            ((Actor *)actor_pool)[timer + 148].unk_43 = 0x13;
             func_8013E97C(timer + 0x34, 0, 0);
             func_8013E7C0(timer + 0x34, timer + 5, 1, 1);
         }

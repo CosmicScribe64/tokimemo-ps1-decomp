@@ -3,25 +3,25 @@
 
 void func_80142700(void) {
     s32 i;
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     BunkasaiGirlBytes sp3C;
 
     sp3C = D_80160520;
-    func_80083808();
+    bustup_wink_update();
     switch (D_80122EC0) {
     case 0:
-        func_80044750(0xBF);
-        func_80044890(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
-        func_80085E30(1, 0);
-        func_8008585C();
+        snd_command(0xBF);
+        snd_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
+        scene_screen_reset(1, 0);
+        dialogue_clear();
         for (i = 0; i < 11; i++) {
             D_800CA2B0[i] = g->girls[i].flags.f.met;
         }
         dec_bg_reset();
         message_window_init();
         k_reset(0);
-        func_8006612C((s32) "文化祭");
-        func_80065F34(0);
+        message_window_set_title((s32) "文化祭");
+        message_window_title_show(0);
         func_8006764C(0);
         hizuke_init();
         icon_disp_switch(0);
@@ -37,17 +37,17 @@ void func_80142700(void) {
         D_80122EC0 += 1;
         break;
     case 2:
-        if (func_80044E8C() == 1) {
-            func_80044750(0x200);
+        if (snd_bank_load_poll() == 1) {
+            snd_command(0x200);
             dec_bg_cd_read(0x4029, 1);
             D_80122EC0 += 1;
         }
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
-            dec_bg_show_set(1, func_8005751C(1));
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
-            func_80065F34(1);
+            message_window_title_show(1);
             D_80122EC0 += 1;
         }
         break;
@@ -57,14 +57,14 @@ void func_80142700(void) {
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
-            func_80084E4C();
-            func_800847B8(0U);
+            text_marker_hide();
+            dialogue_names_set(0U);
             func_801323A8();
-            D_800CA148 = 0;
-            D_800CA14C = 0;
-            D_800CA160 = (s32) D_801604F0;
-            D_800CA164 = (s32) D_801604F4;
-            D_800CA168 = (s32) D_801604F8;
+            dialogue_group = 0;
+            dialogue_line = 0;
+            dialogue_text_table = (s32) D_801604F0;
+            dialogue_command_table = (s32) D_801604F4;
+            dialogue_voice_table = (s32) D_801604F8;
             D_80122EC0 += 1;
         }
         break;
@@ -81,26 +81,26 @@ void func_80142700(void) {
             g->stage = 0;
             g->step = 0;
         } else if (g->stage == 0) {
-            func_80044750(0xBF);
+            snd_command(0xBF);
             func_800674B0();
-            func_80042808();
-        } else if (func_80044E8C() == 1) {
+            main_stage_next();
+        } else if (snd_bank_load_poll() == 1) {
             func_80142BE8();
             func_801433C0();
             for (i = 0; i < 64; i++) {
                 ((s32 *)D_80122DD0)[i] = 0;
             }
-            func_8008585C();
+            dialogue_clear();
             dec_bg_reset();
             set_dec_bri(0);
-            func_80072B5C(1);
+            day_event_next(1);
         }
         break;
     case 9:
         func_80147214();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
     if (D_80122E98 == 0) {
@@ -109,22 +109,22 @@ void func_80142700(void) {
 }
 
 void func_80142B98(void) {
-    if (D_800E6280.step != 0) {
-        D_800E6280.step = 0;
+    if (game_state.step != 0) {
+        game_state.step = 0;
         D_80122EC0 += 1;
     }
 }
 
 void func_80142BC8(void) {
-    D_800E6280.stage = 0;
-    D_800E6280.step = 0;
+    game_state.stage = 0;
+    game_state.step = 0;
     D_80122EC0 = 8;
 }
 
 /* FAKE: s32 return type reserves $v0 in uopt so bonus gets $a3; pad1/pad2 place amount at sp+0x11C; (&g->unk_0FC) indexes across the 4-entry Sub_0FC block. T-24094 */
 s32 func_80142BE8(void) {
     s32 i;
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     u8 pad1;
     u8 pad2;
     u8 val;
@@ -181,52 +181,52 @@ void func_801431D4(void) {
     k_reset(0);
     switch (D_80122EB8) {
     case 0:
-        switch (D_800E6280.year) {
+        switch (game_state.year) {
         case 0x5F:
-            func_8006612C((s32) "詩集展示");
+            message_window_set_title((s32) "詩集展示");
             break;
         case 0x60:
-            func_8006612C((s32) "文集展示");
+            message_window_set_title((s32) "文集展示");
             break;
         case 0x61:
-            func_8006612C((s32) "弁論大会");
+            message_window_set_title((s32) "弁論大会");
             break;
         }
         break;
     case 1:
-        func_8006612C((s32) "演劇部公演");
+        message_window_set_title((s32) "演劇部公演");
         break;
     case 2:
-        func_8006612C((s32) "実験ショー");
+        message_window_set_title((s32) "実験ショー");
         break;
     case 3:
-        switch (D_800E6280.year) {
+        switch (game_state.year) {
         case 0x5F:
-            func_8006612C((s32) "パソコン占い");
+            message_window_set_title((s32) "パソコン占い");
             break;
         case 0x60:
-            func_8006612C((s32) "ゲーム");
+            message_window_set_title((s32) "ゲーム");
             break;
         case 0x61:
-            func_8006612C((s32) "実験ショー");
+            message_window_set_title((s32) "実験ショー");
             break;
         }
         break;
     case 4:
-        switch (D_800E6280.year) {
+        switch (game_state.year) {
         case 0x5F:
-            func_8006612C((s32) "似顔絵");
+            message_window_set_title((s32) "似顔絵");
             break;
         case 0x60:
-            func_8006612C((s32) "公開デッサン");
+            message_window_set_title((s32) "公開デッサン");
             break;
         case 0x61:
-            func_8006612C((s32) "油絵展示");
+            message_window_set_title((s32) "油絵展示");
             break;
         }
         break;
     case 5:
-        func_8006612C((s32) "演奏会");
+        message_window_set_title((s32) "演奏会");
         break;
     }
     k_disp_start(1);
@@ -236,7 +236,7 @@ INCLUDE_RODATA("asm/ovl/BUNKASAI/data/BUNKASAI/80142700.rodata", D_8015D774);
 
 void func_8014338C(void) {
     k_reset(0);
-    func_8006612C(&D_8015D774);
+    message_window_set_title(&D_8015D774);
     k_disp_start(1);
 }
 
@@ -244,7 +244,7 @@ void func_801433C0(void) {
     /* FAKE: 4-byte stack pad places sp2B at sp+0x2B instead of sp+0x2F. T-24094 */
     s32 pad;
     u8 sp2B;
-    GameState *game = &D_800E6280;
+    GameState *game = &game_state;
 
     switch (game->player_flags.h >> 12) {
     case 0:
@@ -284,7 +284,7 @@ void func_801433C0(void) {
             ((((u8) game->girls[3].flags.b[2] >> 4) == 4) && (game->girls[3].flags.f.met == 1))) {
             sp2B = 18;
         } else {
-            if ((D_80122EBC == 10) && (func_8008667C(10) == 4)) {
+            if ((D_80122EBC == 10) && (girl_state_rank(10) == 4)) {
                 sp2B = 17;
                 return;
             }

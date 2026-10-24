@@ -7,7 +7,7 @@ func_80066A84 = 0x80066A84; // type:func size:0x48
 D_800E7D13 = 0x800E7D13;
 // T-20940: the name table (u8 *[16], main_api.h). telephone_class_init (C) indexes it as D_800B3538[i - 1];
 // the original's relocation was splat's D_800B3534 = D_800B3538 - 4.
-D_800B3538 = 0x800B3538;
+girl_full_name_table = 0x800B3538;
 // T-25307: s8/u8[12] tables of func_80052F68 (main_api.h), indexed 1..10. No instruction names the bases
 // (the loops start at entry 1); the original's relocations are splat's D_800B4349, D_800B4355 and D_800B4361.
 D_800B4348 = 0x800B4348;
@@ -16,4 +16,16 @@ D_800B4360 = 0x800B4360;
 // Main bss names inside EVENT's file range 0x800F6000-0x80126000 (T-27002): EVENT loads
 // config/symbol_addrs.txt, so these would label EVENT's own data. Overlays link them through
 // build/main_names.ld (tools/syms_to_ld.py).
+draw_buffer = 0x8011ECA0;
+actor_pool = 0x8011ECD0;
+cursor_x = 0x8011ECF6;
+cursor_y = 0x8011ECFA;
+actor_pool_96 = 0x80120650;
+sprite_quads = 0x801217D0;
+bg_layers = 0x801220D0;
+dialogue_work = 0x80122CD0;
+overlay_entry = 0x80123110;
+card_block = 0x80123120;
 cd_read_status = 0x8012512A;
+cd_cmd_ring = 0x80125130;
+audio_state = 0x80125D10;

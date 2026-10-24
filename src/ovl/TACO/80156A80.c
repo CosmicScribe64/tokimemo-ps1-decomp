@@ -157,7 +157,7 @@ void func_80156A80(void) {
     case 13:
         if (func_8015CE64() == 0) {
             func_8015ABF0();
-            func_8004284C();
+            main_step_next();
         }
         break;
     }

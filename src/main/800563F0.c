@@ -226,7 +226,7 @@ s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
     func_800869C8(0);
     func_800869A4(0);
     func_8009C210(1);
-    if (D_8011ECA0 == 0) {
+    if (draw_buffer == 0) {
         func_8009AC20();
         func_800422C8();
     }
@@ -261,18 +261,18 @@ s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
     }
     func_8009CCF4(&disp);
     func_8009CC04(&draw);
-    start = D_800E6280.timer_ticks;
+    start = game_state.timer_ticks;
     for (;;) {
         func_800868BC(D_80125C58->dec.vlcbuf[D_80125C58->dec.vlcid], (D_800B5900 & 1) + 2);
         func_80086944(D_80125C58->dec.imgbuf, D_80125C58->dec.slice.w * D_80125C58->dec.slice.h / 2);
         strNextVlc(&D_80125C58->dec);
         if (!(D_800B5900 & 1)) {
             func_800422C8();
-            func_8005715C((D_800E6280.timer_ticks - start) / 6);
-            func_800476C0();
+            func_8005715C((game_state.timer_ticks - start) / 6);
+            actors_draw();
             disp_string();
             func_8009AC20();
-            func_8009AD00((u8 *)&D_800E8C70 + D_8011ECA0 * 0x14);
+            func_8009AD00((u8 *)&D_800E8C70 + draw_buffer * 0x14);
         }
         strSync(&D_80125C58->dec, 0);
         func_800AD950(0);
@@ -293,13 +293,13 @@ s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
         if (!(D_800B58F0 < arg1 - 3 && frames < arg1 - 0xF)) {
             break;
         }
-        D_800E6280.frame_count += 1;
+        game_state.frame_count += 1;
         frames++;
         if (D_80125C58->endflag == 1) {
             break;
         }
         func_80042A00();
-        if (D_800E6280.pad_pressed & 0x860) {
+        if (game_state.pad_pressed & 0x860) {
             break;
         }
     }
@@ -319,9 +319,9 @@ void func_800570B8(s32 arg0, u8 arg1) {
     s32 t;
 
     t = arg1;
-    func_80049A40(-0x90, 0x5B, 0x90, 0xE, 4, arg0, t);
-    func_80049A40(0, 0x5B, 0x90, 0xE, 4, arg0, t);
-    func_80049A40(-0x90, 0x69, 0x100, 0x10, 1, 0, 1);
+    prim_gradient_rect(-0x90, 0x5B, 0x90, 0xE, 4, arg0, t);
+    prim_gradient_rect(0, 0x5B, 0x90, 0xE, 4, arg0, t);
+    prim_gradient_rect(-0x90, 0x69, 0x100, 0x10, 1, 0, 1);
 }
 
 void func_8005715C(s32 arg0) {
@@ -350,7 +350,7 @@ void func_8005715C(s32 arg0) {
     if (p >= &D_800B5904[21]) {
         func_8006C760(0);
         func_800570B8(0, 1);
-        func_8004E58C();
+        text_system_reset();
         return;
     }
     if (D_800B58F8 != 0) {

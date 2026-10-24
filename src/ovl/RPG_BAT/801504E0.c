@@ -61,7 +61,7 @@ void func_801505B8(void) {
         func_8013D350();
         if (D_8015EDC4 & 0x100000) {
             for (i = 0; i < 3; i++) {
-                ((Actor *)D_8011ECD0)[149 + i].draw_flags &= ~1;
+                ((Actor *)actor_pool)[149 + i].draw_flags &= ~1;
             }
         }
         func_8014EBA8();
@@ -126,24 +126,24 @@ void func_801505B8(void) {
         func_8013E810(0x38, 1, 1, 1);
         func_8013E97C(0x32, 0x140, 0x60);
         func_8013E810(0x32, 6, 5, 1);
-        ((Actor *)D_8011ECD0)[152].draw_flags |= 1;
-        ((Actor *)D_8011ECD0)[152].unk_01 = 4;
-        ((Actor *)D_8011ECD0)[146].unk_01 = 4;
+        ((Actor *)actor_pool)[152].draw_flags |= 1;
+        ((Actor *)actor_pool)[152].unk_01 = 4;
+        ((Actor *)actor_pool)[146].unk_01 = 4;
         func_8014EBA8();
         break;
     case 0xCF:
-        ((Actor *)D_8011ECD0)[152].x -= 0x10;
-        ((Actor *)D_8011ECD0)[146].x -= 0x10;
+        ((Actor *)actor_pool)[152].x -= 0x10;
+        ((Actor *)actor_pool)[146].x -= 0x10;
         D_8015EDB0.unk_04 += 1;
         if (D_8015EDB0.unk_04 == 2) {
             func_8013F0F4(0x513, 0, 5);
             func_8013E7C0(0x34, 0xC, 1, 1);
             func_8013E7C0(0x33, 8, 1, 1);
-            ((Actor *)D_8011ECD0)[146].unk_18 = 2;
+            ((Actor *)actor_pool)[146].unk_18 = 2;
         }
         if (D_8015EDB0.unk_04 == 0xA) {
-            ((Actor *)D_8011ECD0)[152].unk_01 = 6;
-            ((Actor *)D_8011ECD0)[146].unk_01 = 6;
+            ((Actor *)actor_pool)[152].unk_01 = 6;
+            ((Actor *)actor_pool)[146].unk_01 = 6;
         }
         if (D_8015EDB0.unk_04 >= 0x16) {
             func_8014EBA8();
@@ -347,7 +347,7 @@ void func_80151108(void) {
         func_8014EBD0();
         return;
     case 1:
-        if (D_800E6280.pad_pressed & PAD_CROSS) {
+        if (game_state.pad_pressed & PAD_CROSS) {
             func_8014EBD0();
             return;
         }
@@ -368,7 +368,7 @@ void func_80151108(void) {
         func_8014EBD0();
         return;
     case 5:
-        if (D_800E6280.pad_pressed & PAD_CROSS) {
+        if (game_state.pad_pressed & PAD_CROSS) {
             func_8014EBD0();
             return;
         }
@@ -389,7 +389,7 @@ void func_80151108(void) {
         func_8014EBD0();
         return;
     case 9:
-        if (D_800E6280.pad_pressed & PAD_CROSS) {
+        if (game_state.pad_pressed & PAD_CROSS) {
             func_8014EBD0();
             return;
         }

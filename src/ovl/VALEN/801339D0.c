@@ -10,13 +10,13 @@ void func_801339D0(void) {
     FnTbl10 tbl;
 
     tbl = D_80134630;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 void func_80133A4C(void) {
     if (strcmp(D_800CA1DC, "自宅前") == 0) {
-        func_8004284C();
+        main_step_next();
         return;
     }
     strcpy(D_800CA1DC, "自宅前");
@@ -24,28 +24,28 @@ void func_80133A4C(void) {
 }
 
 s32 func_80133AA8(void) {
-    if (D_800E6280.substep == 0) {
+    if (game_state.substep == 0) {
         func_800674B0();
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
     }
-    if (D_800E6280.substep == 1) {
-        if (D_800E6280.step_timer.u++ >= 0x400U) {
-            func_800452C4();
-            func_8004482C();
-            D_800E6280.substep = 0;
+    if (game_state.substep == 1) {
+        if (game_state.step_timer.u++ >= 0x400U) {
+            cd_cmd_reset();
+            snd_bank_state_reset();
+            game_state.substep = 0;
         }
-        if (func_80044E8C() == 1) {
-            D_800E6280.substep += 1;
+        if (snd_bank_load_poll() == 1) {
+            game_state.substep += 1;
         } else {
             return 0;
         }
     }
-    return func_80072B5C(1);
+    return day_event_next(1);
 }
 
 void func_80133B6C(void) {
     if (D_80134544 != 0) {
-        D_800E6280.girls[9].flags.f.met = 1;
+        game_state.girls[9].flags.f.met = 1;
     }
     if (D_8013453C >= 7) {
         D_80134498 = 0;
@@ -61,10 +61,10 @@ void func_80133B6C(void) {
     D_8013448C = D_801343F4;
     D_80134490 = D_80134428;
     D_80134494 = D_8013445C;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133C44(void) {
     bg_read_sub2(0x414C);
-    func_8004284C();
+    main_step_next();
 }

@@ -3,7 +3,7 @@
 
 /* No return value on purpose: implicit-int function, see func_80137BD8. T-6070 */
 s32 func_80137A60(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80137BD8();
         break;
@@ -17,22 +17,22 @@ s32 func_80137A60(void) {
         func_80137F54();
         break;
     }
-    if (D_800E6280.pad_pressed & PAD_CROSS) {
-        func_80044750(0x74);
-        func_80044750(0xB1);
-        func_80042908(2);
+    if (game_state.pad_pressed & PAD_CROSS) {
+        snd_command(0x74);
+        snd_command(0xB1);
+        main_stage_set(2);
     }
 }
 
 void func_80137B14(s32 arg0) {
-    func_80048F64(1);
+    actor_clear(1);
     D_8011ED15 = 8;
     D_8011ED4C = 0;
     D_8011ED16 = 0x40;
     D_8011ED17 = 0x84;
-    D_8011ED20 = D_800E6280.overlay_frame_table;
-    D_8011ED24 = D_800E6280.overlay_sequence_table;
-    D_8011ED48 = D_800E6280.overlay_tpage_table;
+    D_8011ED20 = game_state.overlay_frame_table;
+    D_8011ED24 = game_state.overlay_sequence_table;
+    D_8011ED48 = game_state.overlay_tpage_table;
     D_8011ED18 = 8;
     D_8011ED19 = 0x81;
     D_8011ED57 = 0xF;
@@ -43,7 +43,7 @@ void func_80137B14(s32 arg0) {
 
 /* No return value on purpose: the original is an implicit-int function (the `or v0,v1,zero` in the first delay slot). T-6070 */
 s32 func_80137BD8(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         func_800450F4(0, 0x201);
         func_80059048();
@@ -51,16 +51,16 @@ s32 func_80137BD8(void) {
         cd_read_sectors(9U, 0x80162000, 0xB380);
         k_reset(0);
         D_8015EDEC = 0;
-        func_80048DAC(1);
+        actors_draw_enable(1);
         draw2d3d(1, 0);
         func_80137B14(1);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
             func_800536AC(0x2C0, 0, 0x140, 0xF0);
             func_80135944();
-            func_8004284C();
+            main_step_next();
         }
         break;
     }
@@ -72,21 +72,21 @@ void func_80137CBC(s32 arg0) {
 
     i = arg0; /* FAKE: copy of the argument reproduces the original's `move t6,a0`; real source unknown. T-6070 */
     p = &D_8015F440[i * 2];
-    func_80046290(p[0], p[1], 8);
-    func_80044750(0x300);
+    cd_audio_request_set(p[0], p[1], 8);
+    snd_command(0x300);
 }
 
 void func_80137D00(void) {
     u16 *p;
 
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         if (D_8015EDEC < 3) {
             func_80137CBC(D_8015EDEC);
             D_8015EDEC += 1;
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         } else {
-            func_8004284C();
+            main_step_next();
             /* FAKE: absolute-address load; uopt then colours the pointer $v1 with `lui t9; lw v1,lo(t9)` as the original does (reading D_801FAA84 gives `lw t9,0(t9)`); real source unknown. T-19002 */
             p = *(u16 **)0x801FAA84;
             p[5] = 0x28;
@@ -99,51 +99,51 @@ void func_80137D00(void) {
         }
         break;
     case 1:
-        if (func_800460EC() & 4) {
-            D_800E6280.substep += 1;
+        if (cd_audio_state() & 4) {
+            game_state.substep += 1;
         }
         break;
     case 2:
-        if (func_800460EC() & 2) {
-            D_800E6280.substep = 0;
+        if (cd_audio_state() & 2) {
+            game_state.substep = 0;
         }
         break;
     }
-    func_800578F4(2);
-    if (D_800E6280.frame_count & 1) {
+    dec_bg_draw(2);
+    if (game_state.frame_count & 1) {
         D_8011ED3E -= 1;
     }
 }
 
 void func_80137E48(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         if (D_8015EDEC < 8) {
             func_80137CBC(D_8015EDEC);
             D_8015EDEC += 1;
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         } else {
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 1:
-        if (func_800460EC() & 4) {
-            D_800E6280.substep += 1;
+        if (cd_audio_state() & 4) {
+            game_state.substep += 1;
         }
         break;
     case 2:
-        if (func_800460EC() & 2) {
-            D_800E6280.substep = 0;
+        if (cd_audio_state() & 2) {
+            game_state.substep = 0;
         }
         break;
     }
-    func_800578F4(2);
-    if ((D_800E6280.frame_count & 3) == 3) {
+    dec_bg_draw(2);
+    if ((game_state.frame_count & 3) == 3) {
         D_8011ED3E -= 1;
     }
 }
 void func_80137F54(void) {
     func_80137CBC(8);
-    func_80044750(0xB1);
-    func_80042908(2);
+    snd_command(0xB1);
+    main_stage_set(2);
 }

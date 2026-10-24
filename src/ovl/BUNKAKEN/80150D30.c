@@ -4,49 +4,49 @@
 void func_80150D30(void) {
     switch (D_80122EB8) {
     case 0:
-        switch (D_800E6280.year) {
+        switch (game_state.year) {
         case 0x60:
-            func_80042908(0x7B);
+            main_stage_set(0x7B);
             return;
         case 0x61:
-            func_80042908(0x7C);
+            main_stage_set(0x7C);
             return;
         default:
-            func_80046500();
+            game_reset_to_title();
             return;
         }
         break;
     case 1:
-        func_80042908(0x7D);
+        main_stage_set(0x7D);
         return;
     case 2:
-        func_80042908(0x7E);
+        main_stage_set(0x7E);
         return;
     case 3:
-        switch (D_800E6280.year) {
+        switch (game_state.year) {
         case 0x60:
-            func_80042908(0x7F);
+            main_stage_set(0x7F);
             return;
         case 0x61:
-            func_80042908(0x7E);
+            main_stage_set(0x7E);
             return;
         }
         break;
     case 4:
-        switch (D_800E6280.year) {
+        switch (game_state.year) {
         case 0x60:
-            func_80042908(0x80);
+            main_stage_set(0x80);
             return;
         case 0x61:
-            func_80042908(0x81);
+            main_stage_set(0x81);
             return;
         }
         break;
     case 5:
-        func_80042908(0x82);
+        main_stage_set(0x82);
         return;
     default:
-        func_80046500();
+        game_reset_to_title();
         return;
     }
 }
@@ -55,10 +55,10 @@ void func_80150E88(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         dec_bg_cd_read(0x40EA, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
         normal_date_bggirl_fadeout();
@@ -66,9 +66,9 @@ void func_80150E88(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80145844();
-            dec_bg_show_set(1, func_8005751C(1));
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B3E);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 3:
@@ -76,17 +76,17 @@ void func_80150E88(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = func_8008667C(9);
+            temp_v0 = girl_state_rank(9);
             switch (temp_v0) {
             case 0:
             case 1:
-                D_800CA148 = 2;
+                dialogue_group = 2;
                 break;
             case 2:
-                D_800CA148 = 3;
+                dialogue_group = 3;
                 break;
             case 3:
-                D_800CA148 = 4;
+                dialogue_group = 4;
                 break;
             }
             func_80152618();
@@ -96,24 +96,24 @@ void func_80150E88(void) {
         normal_date_speak();
         break;
     case 6:
-        D_800CA148 = 1;
+        dialogue_group = 1;
         normal_date_bggirl_fadeout();
         break;
     case 7:
         normal_date_speak();
         break;
     case 8:
-        temp_v0_2 = func_8008667C(9);
+        temp_v0_2 = girl_state_rank(9);
         switch (temp_v0_2) {
         case 0:
         case 1:
-            D_800CA148 = 5;
+            dialogue_group = 5;
             break;
         case 2:
-            D_800CA148 = 7;
+            dialogue_group = 7;
             break;
         case 3:
-            D_800CA148 = 9;
+            dialogue_group = 9;
             break;
         }
         normal_date_bggirl_fadein();
@@ -131,8 +131,8 @@ void func_80150E88(void) {
         normal_date_speak();
         break;
     case 13:
-        D_800CA148 = 0;
-        func_8004284C();
+        dialogue_group = 0;
+        main_step_next();
         break;
     case 14:
         normal_date_bggirl_fadeout();
@@ -144,7 +144,7 @@ void func_80150E88(void) {
         func_80145530();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
@@ -153,10 +153,10 @@ void func_80151104(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         dec_bg_cd_read(0x467C, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
         normal_date_bggirl_fadeout();
@@ -164,9 +164,9 @@ void func_80151104(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80145844();
-            dec_bg_show_set(1, func_8005751C(1));
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B3E);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 3:
@@ -174,17 +174,17 @@ void func_80151104(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = func_8008667C(9);
+            temp_v0 = girl_state_rank(9);
             switch (temp_v0) {
             case 0:
             case 1:
-                D_800CA148 = 0xB;
+                dialogue_group = 0xB;
                 break;
             case 2:
-                D_800CA148 = 0xC;
+                dialogue_group = 0xC;
                 break;
             case 3:
-                D_800CA148 = 0xD;
+                dialogue_group = 0xD;
                 break;
             }
             func_80152618();
@@ -198,19 +198,19 @@ void func_80151104(void) {
         break;
     case 7:
         D_80122EAC = 1;
-        D_80122EB0 = (s32) D_800E6280.stage;
-        D_80122EB4 = D_800E6280.step + 1;
+        D_80122EB0 = (s32) game_state.stage;
+        D_80122EB4 = game_state.step + 1;
         main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
-        func_800866A0(0x64D0);
+        bustup_read_step(0x64D0);
         break;
     case 9:
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = GIRL_MEGUMI;
-        func_80083474();
+        game_state.current_girl = GIRL_MEGUMI;
+        bustup_show_checked();
         cd_read_sectors(9U, 0x801E8000, 0x4B3E);
         break;
     case 10:
@@ -218,17 +218,17 @@ void func_80151104(void) {
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = func_8008667C(9);
+            temp_v0_2 = girl_state_rank(9);
             switch (temp_v0_2) {
             case 0:
             case 1:
-                D_800CA148 = 0xE;
+                dialogue_group = 0xE;
                 break;
             case 2:
-                D_800CA148 = 0xF;
+                dialogue_group = 0xF;
                 break;
             case 3:
-                D_800CA148 = 0x10;
+                dialogue_group = 0x10;
                 break;
             }
             func_80152618();
@@ -241,8 +241,8 @@ void func_80151104(void) {
         normal_date_bggirl_fadeout();
         break;
     case 14:
-        D_800CA148 = 0;
-        func_8004284C();
+        dialogue_group = 0;
+        main_step_next();
         break;
     case 15:
         normal_date_speak();
@@ -251,7 +251,7 @@ void func_80151104(void) {
         func_80145530();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
@@ -260,10 +260,10 @@ void func_801513E8(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         dec_bg_cd_read(0x467C, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
         normal_date_bggirl_fadeout();
@@ -271,9 +271,9 @@ void func_801513E8(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80145844();
-            dec_bg_show_set(1, func_8005751C(1));
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B3E);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 3:
@@ -281,17 +281,17 @@ void func_801513E8(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = func_8008667C(9);
+            temp_v0 = girl_state_rank(9);
             switch (temp_v0) {
             case 0:
             case 1:
-                D_800CA148 = 0x11;
+                dialogue_group = 0x11;
                 break;
             case 2:
-                D_800CA148 = 0x12;
+                dialogue_group = 0x12;
                 break;
             case 3:
-                D_800CA148 = 0x13;
+                dialogue_group = 0x13;
                 break;
             }
             func_80152618();
@@ -304,28 +304,28 @@ void func_801513E8(void) {
         normal_date_bggirl_fadeout();
         break;
     case 7:
-        D_80122EB0 = (s32) D_800E6280.stage;
-        D_80122EB4 = D_800E6280.step + 1;
+        D_80122EB0 = (s32) game_state.stage;
+        D_80122EB4 = game_state.step + 1;
         main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
         dec_bg_reset();
         set_dec_bri(0);
         dec_bg_cd_read(0x467C, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 9:
         if (cd_read_sync_status() & 1) {
-            func_800866A0(0x64D0);
+            bustup_read_step(0x64D0);
         }
         break;
     case 10:
-        dec_bg_show_set(1, func_8005751C(1));
+        dec_bg_show_set(1, dec_bg_decode_to_vram(1));
         func_80145844();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
-        D_800E6280.current_girl = GIRL_MEGUMI;
-        func_80083474();
+        game_state.current_girl = GIRL_MEGUMI;
+        bustup_show_checked();
         cd_read_sectors(9U, 0x801E8000, 0x4B3E);
         break;
     case 11:
@@ -333,21 +333,21 @@ void func_801513E8(void) {
         break;
     case 12:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = func_8008667C(9);
+            temp_v0_2 = girl_state_rank(9);
             switch (temp_v0_2) {
             case 0:
             case 1:
-                D_800CA148 = 0x14;
+                dialogue_group = 0x14;
                 break;
             case 2:
-                D_800CA148 = 0x15;
+                dialogue_group = 0x15;
                 break;
             case 3:
-                D_800CA148 = 0x16;
+                dialogue_group = 0x16;
                 break;
             }
-            if (D_800E6280.year == 0x61) {
-                D_800CA148 += 3;
+            if (game_state.year == 0x61) {
+                dialogue_group += 3;
             }
             func_80152618();
         }
@@ -359,8 +359,8 @@ void func_801513E8(void) {
         normal_date_bggirl_fadeout();
         break;
     case 15:
-        D_800CA148 = 0;
-        func_8004284C();
+        dialogue_group = 0;
+        main_step_next();
         break;
     case 16:
         normal_date_speak();
@@ -369,7 +369,7 @@ void func_801513E8(void) {
         func_80145530();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
@@ -378,14 +378,14 @@ void func_80151738(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         if (D_80122EB8 == 2) {
             dec_bg_cd_read(0x40FC, 1);
         } else {
             dec_bg_cd_read(0x4105, 1);
         }
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
         normal_date_bggirl_fadeout();
@@ -393,9 +393,9 @@ void func_80151738(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80145844();
-            dec_bg_show_set(1, func_8005751C(1));
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B3E);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 3:
@@ -403,21 +403,21 @@ void func_80151738(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = func_8008667C(9);
+            temp_v0 = girl_state_rank(9);
             switch (temp_v0) {
             case 0:
             case 1:
-                D_800CA148 = 0x1A;
+                dialogue_group = 0x1A;
                 break;
             case 2:
-                D_800CA148 = 0x1B;
+                dialogue_group = 0x1B;
                 break;
             case 3:
-                D_800CA148 = 0x1C;
+                dialogue_group = 0x1C;
                 break;
             }
             if (D_80122EB8 == 3) {
-                D_800CA148 += 9;
+                dialogue_group += 9;
             }
             func_80152618();
         }
@@ -430,17 +430,17 @@ void func_80151738(void) {
         break;
     case 7:
         D_80122EAC = 1;
-        D_80122EB0 = (s32) D_800E6280.stage;
-        D_80122EB4 = D_800E6280.step + 1;
+        D_80122EB0 = (s32) game_state.stage;
+        D_80122EB4 = game_state.step + 1;
         main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
-        func_800866A0(0x64D0);
+        bustup_read_step(0x64D0);
         break;
     case 9:
         addr_init_bustup();
-        D_800E6280.current_girl = GIRL_MEGUMI;
-        func_80083474();
+        game_state.current_girl = GIRL_MEGUMI;
+        bustup_show_checked();
         cd_read_sectors(9U, 0x801E8000, 0x4B3E);
         break;
     case 10:
@@ -448,21 +448,21 @@ void func_80151738(void) {
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = func_8008667C(9);
+            temp_v0_2 = girl_state_rank(9);
             switch (temp_v0_2) {
             case 0:
             case 1:
-                D_800CA148 = 0x1D;
+                dialogue_group = 0x1D;
                 break;
             case 2:
-                D_800CA148 = 0x1E;
+                dialogue_group = 0x1E;
                 break;
             case 3:
-                D_800CA148 = 0x1F;
+                dialogue_group = 0x1F;
                 break;
             }
-            if (D_800E6280.year == 0x61) {
-                D_800CA148 += 3;
+            if (game_state.year == 0x61) {
+                dialogue_group += 3;
             }
             func_80152618();
         }
@@ -474,8 +474,8 @@ void func_80151738(void) {
         normal_date_bggirl_fadeout();
         break;
     case 14:
-        D_800CA148 = 0;
-        func_8004284C();
+        dialogue_group = 0;
+        main_step_next();
         break;
     case 15:
         normal_date_speak();
@@ -484,19 +484,19 @@ void func_80151738(void) {
         func_80145530();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
 
 void func_80151A78(void) {
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     s32 temp_v0;
     s32 temp_v0_2;
     switch (g->step) {
     case 0:
         dec_bg_cd_read(0x4105, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
         normal_date_bggirl_fadeout();
@@ -504,9 +504,9 @@ void func_80151A78(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80145844();
-            dec_bg_show_set(1, func_8005751C(1));
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B3E);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 3:
@@ -514,17 +514,17 @@ void func_80151A78(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = func_8008667C(9);
+            temp_v0 = girl_state_rank(9);
             switch (temp_v0) {
             case 0:
             case 1:
-                D_800CA148 = 0x26;
+                dialogue_group = 0x26;
                 break;
             case 2:
-                D_800CA148 = 0x27;
+                dialogue_group = 0x27;
                 break;
             case 3:
-                D_800CA148 = 0x28;
+                dialogue_group = 0x28;
                 break;
             }
             func_80152618();
@@ -542,50 +542,50 @@ void func_80151A78(void) {
         g->saved_mode = g->mode;
         g->saved_stage = g->stage;
         g->saved_step = g->step + 1;
-        func_80042908(0x8D);
+        main_stage_set(0x8D);
         break;
     case 8:
         D_80122E98 = 1;
         D_80122EB0 = (s32) g->stage;
         D_80122EB4 = g->step + 1;
-        func_80042908(0x8C);
+        main_stage_set(0x8C);
         break;
     case 9:
-        func_80044750(0xBF);
-        func_80044890(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
-        func_80085E30(1, 0);
+        snd_command(0xBF);
+        snd_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
+        scene_screen_reset(1, 0);
         func_80145844();
         D_80125CA0 = 0xC0;
         message_window_init();
-        func_80084E4C();
-        func_800847B8(9U);
+        text_marker_hide();
+        dialogue_names_set(9U);
         D_80122E98 = 0;
-        func_8004284C();
+        main_step_next();
         break;
     case 10:
-        if (func_80044E8C() == 1) {
-            func_80044750(0x200);
+        if (snd_bank_load_poll() == 1) {
+            snd_command(0x200);
             dec_bg_reset();
             set_dec_bri(0);
             dec_bg_cd_read(0x4105, 1);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            dec_bg_show_set(1, func_8005751C(1));
-            func_8004284C();
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
+            main_step_next();
         }
         break;
     case 12:
-        func_800866A0(0x64D0);
+        bustup_read_step(0x64D0);
         break;
     case 13:
         addr_init_bustup();
         g->current_girl = GIRL_MEGUMI;
-        func_80083474();
-        if (func_8008667C(9) < 2) {
-            func_80083440(0U);
+        bustup_show_checked();
+        if (girl_state_rank(9) < 2) {
+            bustup_layout_set(0U);
         }
         cd_read_sectors(9U, 0x801E8000, 0x4B3E);
         break;
@@ -594,17 +594,17 @@ void func_80151A78(void) {
         break;
     case 15:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = func_8008667C(9);
+            temp_v0_2 = girl_state_rank(9);
             switch (temp_v0_2) {
             case 0:
             case 1:
-                D_800CA148 = 0x29;
+                dialogue_group = 0x29;
                 break;
             case 2:
-                D_800CA148 = 0x2A;
+                dialogue_group = 0x2A;
                 break;
             case 3:
-                D_800CA148 = 0x2B;
+                dialogue_group = 0x2B;
                 break;
             }
             func_80152618();
@@ -617,8 +617,8 @@ void func_80151A78(void) {
         normal_date_bggirl_fadeout();
         break;
     case 18:
-        D_800CA148 = 0;
-        func_8004284C();
+        dialogue_group = 0;
+        main_step_next();
         break;
     case 19:
         normal_date_speak();
@@ -628,7 +628,7 @@ void func_80151A78(void) {
         func_80145530();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
@@ -636,10 +636,10 @@ void func_80151A78(void) {
 void func_80151EC0(void) {
     s32 temp_v0;
 
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         dec_bg_cd_read(0x4118, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
         normal_date_bggirl_fadeout();
@@ -647,9 +647,9 @@ void func_80151EC0(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80145844();
-            dec_bg_show_set(1, func_8005751C(1));
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B3E);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 3:
@@ -657,21 +657,21 @@ void func_80151EC0(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = func_8008667C(9);
+            temp_v0 = girl_state_rank(9);
             switch (temp_v0) {
             case 0:
             case 1:
-                D_800CA148 = 0x2C;
+                dialogue_group = 0x2C;
                 break;
             case 2:
-                D_800CA148 = 0x2E;
+                dialogue_group = 0x2E;
                 break;
             case 3:
-                D_800CA148 = 0x2C;
+                dialogue_group = 0x2C;
                 break;
             }
             func_80152618();
-            func_80083440(0U);
+            bustup_layout_set(0U);
             func_80063668();
         }
         break;
@@ -682,8 +682,8 @@ void func_80151EC0(void) {
         normal_date_girl_out();
         break;
     case 7:
-        D_800E6280.current_girl = GIRL_SOTOI;
-        func_8004284C();
+        game_state.current_girl = GIRL_SOTOI;
+        main_step_next();
         break;
     case 8:
         normal_date_speak();
@@ -692,8 +692,8 @@ void func_80151EC0(void) {
         normal_date_bg_fadeout();
         break;
     case 10:
-        D_800CA148 = 0;
-        func_8004284C();
+        dialogue_group = 0;
+        main_step_next();
         break;
     case 11:
         normal_date_speak();
@@ -702,7 +702,7 @@ void func_80151EC0(void) {
         func_80145530();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
@@ -711,10 +711,10 @@ void func_801520B4(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         dec_bg_cd_read(0x410F, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
         normal_date_bggirl_fadeout();
@@ -722,9 +722,9 @@ void func_801520B4(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80145844();
-            dec_bg_show_set(1, func_8005751C(1));
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B3E);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 3:
@@ -732,17 +732,17 @@ void func_801520B4(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = func_8008667C(9);
+            temp_v0 = girl_state_rank(9);
             switch (temp_v0) {
             case 0:
             case 1:
-                D_800CA148 = 0x30;
+                dialogue_group = 0x30;
                 break;
             case 2:
-                D_800CA148 = 0x31;
+                dialogue_group = 0x31;
                 break;
             case 3:
-                D_800CA148 = 0x32;
+                dialogue_group = 0x32;
                 break;
             }
             func_80152618();
@@ -752,24 +752,24 @@ void func_801520B4(void) {
         normal_date_speak();
         break;
     case 6:
-        D_800CA148 = 1;
+        dialogue_group = 1;
         normal_date_bggirl_fadeout();
         break;
     case 7:
         normal_date_speak();
         break;
     case 8:
-        temp_v0_2 = func_8008667C(9);
+        temp_v0_2 = girl_state_rank(9);
         switch (temp_v0_2) {
         case 0:
         case 1:
-            D_800CA148 = 0x33;
+            dialogue_group = 0x33;
             break;
         case 2:
-            D_800CA148 = 0x34;
+            dialogue_group = 0x34;
             break;
         case 3:
-            D_800CA148 = 0x35;
+            dialogue_group = 0x35;
             break;
         }
         normal_date_bggirl_fadein();
@@ -781,8 +781,8 @@ void func_801520B4(void) {
         normal_date_bggirl_fadeout();
         break;
     case 11:
-        D_800CA148 = 0;
-        func_8004284C();
+        dialogue_group = 0;
+        main_step_next();
         break;
     case 12:
         normal_date_speak();
@@ -791,7 +791,7 @@ void func_801520B4(void) {
         func_80145530();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
@@ -800,10 +800,10 @@ void func_80152300(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         dec_bg_cd_read(0x467C, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
         normal_date_bggirl_fadeout();
@@ -811,9 +811,9 @@ void func_80152300(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             func_80145844();
-            dec_bg_show_set(1, func_8005751C(1));
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B3E);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 3:
@@ -821,17 +821,17 @@ void func_80152300(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = func_8008667C(9);
+            temp_v0 = girl_state_rank(9);
             switch (temp_v0) {
             case 0:
             case 1:
-                D_800CA148 = 0x36;
+                dialogue_group = 0x36;
                 break;
             case 2:
-                D_800CA148 = 0x37;
+                dialogue_group = 0x37;
                 break;
             case 3:
-                D_800CA148 = 0x38;
+                dialogue_group = 0x38;
                 break;
             }
             func_80152618();
@@ -845,20 +845,20 @@ void func_80152300(void) {
         break;
     case 7:
         D_80122EAC = 0;
-        D_80122EB0 = (s32) D_800E6280.stage;
-        D_80122EB4 = D_800E6280.step + 1;
+        D_80122EB0 = (s32) game_state.stage;
+        D_80122EB4 = game_state.step + 1;
         main_state_set(MODE_CULTURE_STAGE);
         break;
     case 8:
-        func_800866A0(0x64D0);
+        bustup_read_step(0x64D0);
         break;
     case 9:
         if (cd_read_sync_status() & 1) {
             func_80145844();
             D_80125CA0 = 0xC0;
             addr_init_bustup();
-            D_800E6280.current_girl = GIRL_MEGUMI;
-            func_80083474();
+            game_state.current_girl = GIRL_MEGUMI;
+            bustup_show_checked();
             cd_read_sectors(9U, 0x801E8000, 0x4B3E);
         }
         break;
@@ -867,21 +867,21 @@ void func_80152300(void) {
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = func_8008667C(9);
+            temp_v0_2 = girl_state_rank(9);
             switch (temp_v0_2) {
             case 0:
             case 1:
-                D_800CA148 = 0x39;
+                dialogue_group = 0x39;
                 break;
             case 2:
-                D_800CA148 = 0x3A;
+                dialogue_group = 0x3A;
                 break;
             case 3:
-                D_800CA148 = 0x3B;
+                dialogue_group = 0x3B;
                 break;
             }
-            if (D_800E6280.year == 0x61) {
-                D_800CA148 += 3;
+            if (game_state.year == 0x61) {
+                dialogue_group += 3;
             }
             func_80152618();
         }
@@ -893,8 +893,8 @@ void func_80152300(void) {
         normal_date_bggirl_fadeout();
         break;
     case 14:
-        D_800CA148 = 0;
-        func_8004284C();
+        dialogue_group = 0;
+        main_step_next();
         break;
     case 15:
         normal_date_speak();
@@ -903,17 +903,17 @@ void func_80152300(void) {
         func_80145530();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
 
 void func_80152618(void) {
-    func_800847B8(9);
+    dialogue_names_set(9);
     func_80132444();
-    D_800CA14C = 0;
-    D_800CA160 = D_80155E90;
-    D_800CA164 = D_80155E94;
-    D_800CA168 = D_80155E98;
-    func_8004284C();
+    dialogue_line = 0;
+    dialogue_text_table = D_80155E90;
+    dialogue_command_table = D_80155E94;
+    dialogue_voice_table = D_80155E98;
+    main_step_next();
 }

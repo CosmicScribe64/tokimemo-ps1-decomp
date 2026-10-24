@@ -329,7 +329,7 @@ void func_80147E80(s32 arg0) {
             *(s16 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3656)) = (s16) ((rand() & 0xFFF) - 0x1770);
             *(s8 *)((unsigned char *)(&D_8015EDB4->unk0[var_s1]) + (3539)) = 0;
         }
-        if ((D_800E6280.frame_count & 3) == 3) {
+        if ((game_state.frame_count & 3) == 3) {
             var_s0 = (s32) &D_8015EDB4->unk0[var_s1];
             *(u8 *)((unsigned char *)var_s0 + (3539)) = (u8) (*(u8 *)((unsigned char *)var_s0 + (3539)) + 1);
         }

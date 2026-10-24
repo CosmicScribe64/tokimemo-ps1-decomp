@@ -2,11 +2,11 @@
 #include "ovl/TACO.h"
 
 void func_80138450(void) {
-    if ((u32)D_800E6280.stage_timer < 0x60 && (D_800E6280.frame_count & 0x10)) {
+    if ((u32)game_state.stage_timer < 0x60 && (game_state.frame_count & 0x10)) {
         func_801432F0((s32)"2ND STAGE", -0x40, 0, 2);
     }
-    D_800E6280.step_timer.w += 1;
-    switch (D_800E6280.step) {
+    game_state.step_timer.w += 1;
+    switch (game_state.step) {
     case 0:
         func_80138520();
         break;
@@ -24,18 +24,18 @@ void func_80138450(void) {
 
 void func_80138520(void) {
     func_800450F4(0, 0x203);
-    func_80044750(0x24);
+    snd_command(0x24);
     func_8014394C();
     func_80132220();
     func_801334BC();
-    D_800E6280.clear_color_r = 0x78;
-    D_800E6280.clear_color_g = 0xA8;
-    D_800E6280.clear_color_b = 0xF0;
+    game_state.clear_color_r = 0x78;
+    game_state.clear_color_g = 0xA8;
+    game_state.clear_color_b = 0xF0;
     D_8015EDB0 = 3;
     D_8015EDBC = 0x24;
     D_8015EDC0 = 0;
     func_8015ABF0();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801385B4(void) {
@@ -56,6 +56,6 @@ void func_80138634(void) {
         func_8015ABF0();
         D_8015EDBC = 0x28;
         func_800450F4(1, 0x201);
-        func_80042908(0x16);
+        main_stage_set(0x16);
     }
 }

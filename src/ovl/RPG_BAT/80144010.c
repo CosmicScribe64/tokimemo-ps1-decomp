@@ -11,10 +11,10 @@ void func_80144010(void) {
     sum = 0;
     D_8015EBA0 = 0xFF;
     for (i = 0; i < 12; i++) {
-        if (((ClubFlagBits *)&D_800E6280.clubs[i])->unk_25 == 3) {
+        if (((ClubFlagBits *)&game_state.clubs[i])->unk_25 == 3) {
             D_8015EBA0 = i;
         }
-        sum += D_800E6280.clubs[i].exp;
+        sum += game_state.clubs[i].exp;
     }
     if (D_8015EBA0 == 0xB) {
         if (sum == 0) {
@@ -58,10 +58,10 @@ void func_80144010(void) {
         D_8015ED9C = 0;
         D_8015ED98 = 0x1000;
     }
-    if (D_800E6280.param_condition.value == 0) {
+    if (game_state.param_condition.value == 0) {
         v = 0xA;
     } else {
-        v = D_800E6280.param_condition.value * 0xA;
+        v = game_state.param_condition.value * 0xA;
     }
     D_8015EDA0 = v;
     D_8015ED94 = v;

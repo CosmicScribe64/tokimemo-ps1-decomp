@@ -21,13 +21,13 @@ void func_8013A1CC(void) {
     FnTbl26 tbl;
 
     tbl = D_801455E0;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx]();
 }
 
 void func_8013A254(void) {
-    func_80044750(0x502);
-    func_8004284C();
+    snd_command(0x502);
+    main_step_next();
 }
 
 void func_8013A27C(void) {
@@ -35,64 +35,64 @@ void func_8013A27C(void) {
     FnTbl19 tbl;
 
     tbl = D_80145648;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx]();
 }
 
 void func_8013A2F8(void) {
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
-    D_800E6280.tile_layer_enabled = 0;
-    D_800E6280.quads_enabled = 1;
-    func_8008585C();
-    D_800E6280.screen_brightness = 0x80;
-    D_800B593C = 0;
+    text_system_reset();
+    game_state.tile_layer_enabled = 0;
+    game_state.quads_enabled = 1;
+    dialogue_clear();
+    game_state.screen_brightness = 0x80;
+    dec_bg_brightness = 0;
     D_800B5940 = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
-    func_80084E4C();
-    ((ShougatuFlag4 *) (&D_800E6280.girls[5].flags.b[0]))->set = 1;
+    text_marker_hide();
+    ((ShougatuFlag4 *) (&game_state.girls[5].flags.b[0]))->set = 1;
     /* FAKE: the dead triple test preserves the original argument/store scheduling.
      * IDO removes all of its reads and tests. T-9720. */
     if ((!D_80122EBC) && (!D_80122EBC) && (!D_80122EBC)) {}
-    func_800847B8(*((u8 *) (&D_800E6280.current_girl)) = 5);
+    dialogue_names_set(*((u8 *) (&game_state.current_girl)) = 5);
     func_80136F90();
     D_80144DFC = D_80144DA4;
     D_80144E00 = D_80144DC8;
     D_80144E04 = D_80144DEC;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013A3FC(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "グランド");
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013A440(void) {
     D_80144E08 = 5;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "グランド");
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013A488(void) {
     bg_read_sub2(0x4097);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013A4B0(void) {
-    if (D_800E6280.current_girl == GIRL_YUKARI) {
-        func_80062CD0(0x5FE4);
+    if (game_state.current_girl == GIRL_YUKARI) {
+        bustup_read_start(0x5FE4);
     } else {
-        func_80062CD0(0x552B);
+        bustup_read_start(0x552B);
     }
-    func_8004284C();
+    main_step_next();
 }

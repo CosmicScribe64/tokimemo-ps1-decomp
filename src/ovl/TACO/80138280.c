@@ -2,10 +2,10 @@
 #include "ovl/TACO.h"
 
 void func_80138280(void) {
-    if ((u32) D_800E6280.stage_timer < 0x60 && (D_800E6280.frame_count & 0x10)) {
+    if ((u32) game_state.stage_timer < 0x60 && (game_state.frame_count & 0x10)) {
         func_801432F0("1ST STAGE", -0x40, 0, 2);
     }
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80138348();
         break;
@@ -27,7 +27,7 @@ void func_80138348(void) {
     D_8015EDC0 = 0;
     D_8015EDB0 = 0x80;
     func_8015ABF0();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013838C(void) {
@@ -47,6 +47,6 @@ void func_8013840C(void) {
     if (D_8015EDBC == 0) {
         D_8015EDBC = 0x18;
         func_800450F4(1, 0x200);
-        func_80042908(0xC);
+        main_stage_set(0xC);
     }
 }

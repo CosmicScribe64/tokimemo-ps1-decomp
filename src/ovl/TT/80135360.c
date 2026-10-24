@@ -535,14 +535,14 @@ void func_801365C4(s32 arg0) {
     case 0x0:
         func_80142570(arg0, t);
         if (*(u16 *)(c + 4) == 0) {
-            func_80044750(0xB1);
+            snd_command(0xB1);
             func_800451E0(0x8019A000);
-            func_80044750(0x12);
-            func_80044750(0x23);
-            func_80044750(0x2E);
-            func_80044750(0x21);
-            func_80044750(4);
-            func_80044750(0x200);
+            snd_command(0x12);
+            snd_command(0x23);
+            snd_command(0x2E);
+            snd_command(0x21);
+            snd_command(4);
+            snd_command(0x200);
         }
         func_80135870();
         *(s16 *)(s + 4) = 0x20;
@@ -580,7 +580,7 @@ void func_801365C4(s32 arg0) {
         }
         break;
     case 0x80:
-        func_80044750(0xC1);
+        snd_command(0xC1);
         t[0x52] = 1;
         func_80135FA8();
         break;

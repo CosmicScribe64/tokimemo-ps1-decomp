@@ -42,12 +42,12 @@ void func_8013A0DC(void) {
     switch (*(u16 *)(s + 4)) {
     case 0:
         if (s[0x22] != 0 && g[0x52] == 0xFF) {
-            func_80044750(0xB1);
+            snd_command(0xB1);
         } else {
-            func_80044750(0x22);
-            func_80044750(0x2F);
-            func_80044750(4);
-            func_80044750(0x203);
+            snd_command(0x22);
+            snd_command(0x2F);
+            snd_command(4);
+            snd_command(0x203);
             c[0xF] = 1;
         }
         s[0x11] = 0;

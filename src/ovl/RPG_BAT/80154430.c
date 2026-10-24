@@ -84,12 +84,12 @@ void func_8015461C(void) {
     case 2:
         func_8013EA30(128);
         for (i = 0; i < 6; i++) {
-            ((Actor *)D_8011ECD0)[i + 136].draw_flags ^= 128;
+            ((Actor *)actor_pool)[i + 136].draw_flags ^= 128;
         }
         if ((D_8015EDC4 & 0x100000) && D_8015EBB0 == 1000) {
             D_8015EBC0 = 0;
         } else {
-            ((Actor *)D_8011ECD0)[D_8015EC70 + 96].draw_flags ^= 128;
+            ((Actor *)actor_pool)[D_8015EC70 + 96].draw_flags ^= 128;
             func_8013D3E4();
         }
         func_8014EBA8();
@@ -128,22 +128,22 @@ s32 func_80154760(void) {
             D_8015EC70 = 0x3D;
             break;
         }
-        ((Actor *)D_8011ECD0)[D_8015EC70 + 96].draw_flags ^= 0x80;
+        ((Actor *)actor_pool)[D_8015EC70 + 96].draw_flags ^= 0x80;
         /* FAKE: unsigned 1 stays separate from the hoisted signed constant (T-17106, T-24027). */
         load_palette(D_8015EEE4, 0x18, 1U, 3, 0xA);
         load_palette(D_8015EEE8, 0x19, 1, 3, 1);
         load_palette(D_8015EEE8, 0x1A, 1, 3, 0);
-        ((Actor *)D_8011ECD0)[136].unk_43 = 0x18;
-        ((Actor *)D_8011ECD0)[139].unk_43 = 0x18;
-        ((Actor *)D_8011ECD0)[137].unk_43 = 0x19;
-        ((Actor *)D_8011ECD0)[140].unk_43 = 0x19;
-        ((Actor *)D_8011ECD0)[138].unk_43 = 0x1A;
-        ((Actor *)D_8011ECD0)[141].unk_43 = 0x1A;
+        ((Actor *)actor_pool)[136].unk_43 = 0x18;
+        ((Actor *)actor_pool)[139].unk_43 = 0x18;
+        ((Actor *)actor_pool)[137].unk_43 = 0x19;
+        ((Actor *)actor_pool)[140].unk_43 = 0x19;
+        ((Actor *)actor_pool)[138].unk_43 = 0x1A;
+        ((Actor *)actor_pool)[141].unk_43 = 0x1A;
         for (i = 0; i < 3; i++) {
-            ((Actor *)D_8011ECD0)[136 + i].quad_flags = 0x51000000;
-            ((Actor *)D_8011ECD0)[139 + i].quad_flags = 0x41000000;
-            ((Actor *)D_8011ECD0)[136 + i].brightness = 0x80;
-            ((Actor *)D_8011ECD0)[139 + i].brightness = 0xFF;
+            ((Actor *)actor_pool)[136 + i].quad_flags = 0x51000000;
+            ((Actor *)actor_pool)[139 + i].quad_flags = 0x41000000;
+            ((Actor *)actor_pool)[136 + i].brightness = 0x80;
+            ((Actor *)actor_pool)[139 + i].brightness = 0xFF;
             func_8013E97C(i + 0x28, D_8015EC28, D_8015EC2C);
             func_8013E97C(i + 0x2B, D_8015EC28, D_8015EC2C);
             switch (D_8015EDC4 & 0xFFFF0000) {
@@ -167,9 +167,9 @@ s32 func_80154760(void) {
             }
         }
         if (D_8015ED14 == 1) {
-            ((Actor *)D_8011ECD0)[136].draw_flags |= 1;
+            ((Actor *)actor_pool)[136].draw_flags |= 1;
             for (i = 1; i < 6; i++) {
-                ((Actor *)D_8011ECD0)[i + 136].draw_flags |= 1;
+                ((Actor *)actor_pool)[i + 136].draw_flags |= 1;
             }
         }
         func_8013F0F4(0x50B, 1, 0);
@@ -393,7 +393,7 @@ void func_80155868(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     arg1 -= 0x1F;
     arg2 -= 0x1F;
     arg4 -= 0x1F; arg5 -= 0x1F; /* one line: as1 then stores arg5 before arg4 like the original */
-    p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
+    p = (POLY_G4 *)GetWorkBase(0x24, draw_buffer);
     func_8009F054(p);
     SetSemiTrans(p, 1);
     p->r0 = ((arg6 >> 16) & 0xFF); p->g0 = ((arg6 >> 8) & 0xFF); p->b0 = (arg6 & 0xFF);
@@ -403,13 +403,13 @@ void func_80155868(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     /* FAKE: each (unused - unused) adds one variable reference and no code. uopt ends a block after 20 references and
      * the original has its boundary after y1 (arg3 is reloaded for x2, arg0 for x0); without them it falls after y2 and
      * arg3 is reloaded early into $a3. T-17106 */
-    p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + arg0 + (unused - unused);
-    p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (unused - unused);
-    p->x1 = D_800E6280.screen_center_x[D_8011ECA0] + arg0 + (unused - unused);
-    p->y1 = D_800E6280.screen_center_y[D_8011ECA0] + arg2 + (unused - unused);
-    p->x2 = D_800E6280.screen_center_x[D_8011ECA0] + arg3;
-    p->y2 = D_800E6280.screen_center_y[D_8011ECA0] + arg4;
-    p->x3 = D_800E6280.screen_center_x[D_8011ECA0] + arg3;
-    p->y3 = D_800E6280.screen_center_y[D_8011ECA0] + arg5;
-    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + (arg8 * 4)], (s32)p);
+    p->x0 = game_state.screen_center_x[draw_buffer] + arg0 + (unused - unused);
+    p->y0 = game_state.screen_center_y[draw_buffer] + arg1 + (unused - unused);
+    p->x1 = game_state.screen_center_x[draw_buffer] + arg0 + (unused - unused);
+    p->y1 = game_state.screen_center_y[draw_buffer] + arg2 + (unused - unused);
+    p->x2 = game_state.screen_center_x[draw_buffer] + arg3;
+    p->y2 = game_state.screen_center_y[draw_buffer] + arg4;
+    p->x3 = game_state.screen_center_x[draw_buffer] + arg3;
+    p->y3 = game_state.screen_center_y[draw_buffer] + arg5;
+    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + (arg8 * 4)], (s32)p);
 }

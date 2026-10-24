@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 s32 func_80137590(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_8013760C();
         break;
@@ -10,7 +10,7 @@ s32 func_80137590(void) {
         func_8013788C();
         break;
     }
-    if (D_800E6280.frame_count & 0x10) {
+    if (game_state.frame_count & 0x10) {
         func_801432F0("DEMO PLAY", -0x40, 0, 2);
     }
 }
@@ -21,7 +21,7 @@ s32 func_8013760C(void) {
     s32 i;
     s32 end;
 
-    switch (*(u8 *)&D_800E6280.substep) {
+    switch (*(u8 *)&game_state.substep) {
     case 0:
         func_8013AFDC();
         D_8015F4F0 = 0x80;
@@ -31,9 +31,9 @@ s32 func_8013760C(void) {
         D_8015EDEC = 0x4650;
         func_80134884();
         D_8015EDBC = 0x10;
-        D_800E6280.clear_color_r = 0;
-        D_800E6280.clear_color_g = 0;
-        D_800E6280.clear_color_b = 0;
+        game_state.clear_color_r = 0;
+        game_state.clear_color_g = 0;
+        game_state.clear_color_b = 0;
         func_800591D8(1);
         k_reset(0);
         back_clear_switch(1);
@@ -54,7 +54,7 @@ s32 func_8013760C(void) {
         func_80132220();
         func_801334BC();
         D_8011ED17 &= 0x7F;
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
         if (D_8015EDBC == 0) {
@@ -62,7 +62,7 @@ s32 func_8013760C(void) {
             D_8015EDB0 = 0x80;
             D_8015EDB4[0].unk84[1] = 0xFF;
             D_8015EDB4[8].unk84[1] = 0xFF;
-            switch (D_800E6280.frame_count & 3) {
+            switch (game_state.frame_count & 3) {
             case 0:
                 D_8015EDB4[0].unk72 = 0;
                 break;
@@ -73,7 +73,7 @@ s32 func_8013760C(void) {
             load_csr_tp(0x80162000, 0xE, 1, 0, 0, 0x100, 0x100);
             load_csr_tp(0x80172000, 0xC, 1, 0, 0, 0x100, 0x100);
             load_csr_tp(0x80182000, 0xA, 1, 0, 0, 0x80, 0x80);
-            func_8004284C();
+            main_step_next();
         }
         break;
     default:
@@ -85,51 +85,51 @@ void func_8013788C(void) {
     u32 t;
 
     func_80154960();
-    if (D_800E6280.pad_pressed != 0) {
+    if (game_state.pad_pressed != 0) {
         func_80143AF4();
         func_801347A8();
         func_80059048();
         func_8015ABF0();
         func_800591D8(0);
-        func_80042908(2);
+        main_stage_set(2);
     } else {
-        D_800E6280.pad_pressed |= PAD_CIRCLE;
-        t = D_800E6280.stage_timer & 0x1FF;
-        D_800E6280.pad_held |= PAD_CIRCLE;
+        game_state.pad_pressed |= PAD_CIRCLE;
+        t = game_state.stage_timer & 0x1FF;
+        game_state.pad_held |= PAD_CIRCLE;
         if (t >= 0x79 && t < 0x8C) {
-            D_800E6280.pad_held |= PAD_RIGHT;
+            game_state.pad_held |= PAD_RIGHT;
         }
         if (t >= 0xAB && t < 0xBE) {
-            D_800E6280.pad_held |= PAD_DOWN;
+            game_state.pad_held |= PAD_DOWN;
         }
         if (t >= 0xDD && t < 0xF0) {
-            D_800E6280.pad_held |= PAD_LEFT;
+            game_state.pad_held |= PAD_LEFT;
         }
         if (t >= 0x10F && t < 0x122) {
-            D_800E6280.pad_held |= PAD_UP;
+            game_state.pad_held |= PAD_UP;
         }
         if (t >= 0x191 && t < 0x1B8) {
-            D_800E6280.pad_held |= 0x3000;
+            game_state.pad_held |= 0x3000;
         }
         if (t >= 0x1CD && t < 0x1E0) {
-            D_800E6280.pad_held |= 0xC000;
+            game_state.pad_held |= 0xC000;
         }
         if (t >= 0x191 && t < 0x1B8) {
-            D_800E6280.pad_held |= 0x6000;
+            game_state.pad_held |= 0x6000;
         }
         if (t >= 0x1CD && t < 0x1E0) {
-            D_800E6280.pad_held |= 0x9000;
+            game_state.pad_held |= 0x9000;
         }
         func_8013A790(1, 1);
         func_8013F250();
         func_80132FE8();
     }
-    if ((u32) D_800E6280.stage_timer >= 0x709U) {
+    if ((u32) game_state.stage_timer >= 0x709U) {
         func_80143AF4();
         func_801347A8();
         func_80059048();
         func_8015ABF0();
         func_800591D8(0);
-        func_80042908(2);
+        main_stage_set(2);
     }
 }

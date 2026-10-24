@@ -8,7 +8,7 @@
 # and IDO compiles a constant-offset member exactly like a separate symbol otherwise. So no unit
 # has a separate view. A keep line is accepted only for an object whose original asm has such a
 # hoisted pair on that symbol (migrate_globals.py --check runs the audit on it).
-aggregate D_800E6280 GameState include/main_api.h
+aggregate game_state GameState include/main_api.h
 
 # Keep lines backed by a byte-match necessity proof (T-20820, wiki/keep-lines.md; applied in T-21520). Each proves, for one
 # function of a file, that the frame counter 0x800E7384 must be a separate symbol for its final `+= 1`: the function is plain C

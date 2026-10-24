@@ -3,73 +3,73 @@
 #include "psx_types.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-s32 D_800B5920[4] = { 0, 0, 0, 0 };
+s32 dec_bg_lba_cache[4] = { 0, 0, 0, 0 };
 s32 D_800B5930 = 0;
 s32 D_800B5934 = 0;
-u8 D_800B5938[4] = { 0 };
-u8 D_800B593C = 0;
+u8 dec_bg_show[4] = { 0 };
+u8 dec_bg_brightness = 0;
 u8 D_800B5940 = 0;
 s32 D_800B5944 = 0;
-s32 D_800B5948 = 0;
+s32 last_screen_mode = 0;
 s32 D_800B594C = 0;
 
 void set_dec_bri(u8 arg0) {
-    D_800B593C = arg0;
+    dec_bg_brightness = arg0;
 }
 
 s32 get_last_gamen_mode(void) {
-    return D_800B5948;
+    return last_screen_mode;
 }
 
 void dec_bg_reset(void) {
-    D_800B5920[3] = 0;
-    D_800B5920[1] = 0;
-    D_800B5920[2] = 0;
-    D_800B5920[0] = 0;
-    D_800B5938[1] = 0;
-    D_800B5938[0] = 0;
-    D_800B593C = 0x80;
-    D_800B5948 = -1;
+    dec_bg_lba_cache[3] = 0;
+    dec_bg_lba_cache[1] = 0;
+    dec_bg_lba_cache[2] = 0;
+    dec_bg_lba_cache[0] = 0;
+    dec_bg_show[1] = 0;
+    dec_bg_show[0] = 0;
+    dec_bg_brightness = 0x80;
+    last_screen_mode = -1;
     D_800B5934 = 0;
-    D_800B5938[2] = 0;
+    dec_bg_show[2] = 0;
 }
 
 void dec_bg_show_switch(s32 arg0) {
-    D_800B5938[arg0] = 1 - D_800B5938[arg0];
+    dec_bg_show[arg0] = 1 - dec_bg_show[arg0];
 }
 
 void dec_bg_show_set(s32 arg0, s32 arg1) {
-    D_800B5938[arg0] = arg1 & 1;
+    dec_bg_show[arg0] = arg1 & 1;
 }
 
 s32 dec_bg_cd_read(s32 arg0, s32 arg1) {
     if (arg1 == 1) {
-        if (arg0 == D_800B5920[2]) {
+        if (arg0 == dec_bg_lba_cache[2]) {
             return 0;
         }
-        if (arg0 == D_800B5920[3]) {
+        if (arg0 == dec_bg_lba_cache[3]) {
             return 1;
         }
-        func_800462C8(0xA, 0x80162000, arg0);
-        *(s32 *)((u8 *)&D_800B5920[3] + -(D_800B5939 * 4)) = arg0;
+        cd_read_sectors_nowait(0xA, 0x80162000, arg0);
+        *(s32 *)((u8 *)&dec_bg_lba_cache[3] + -(D_800B5939 * 4)) = arg0;
         return -1;
     }
-    if (arg0 == D_800B5920[0]) {
+    if (arg0 == dec_bg_lba_cache[0]) {
         return 0;
     }
-    if (arg0 == D_800B5920[1]) {
+    if (arg0 == dec_bg_lba_cache[1]) {
         return 1;
     }
-    func_800462C8(0xA, 0x80162000, arg0);
-    *(s32 *)((u8 *)&D_800B5920[1] + -(D_800B5938[0] * 4)) = arg0;
+    cd_read_sectors_nowait(0xA, 0x80162000, arg0);
+    *(s32 *)((u8 *)&dec_bg_lba_cache[1] + -(dec_bg_show[0] * 4)) = arg0;
     return -1;
 }
 
-s32 func_8005751C(s32 arg0) {
+s32 dec_bg_decode_to_vram(s32 arg0) {
     D_800B594C = 0;
     func_80053650(0x80167000, 0x80162000, 0x80162000);
     if (arg0 == 0) {
-        switch (1 - D_800B5938[arg0]) {
+        switch (1 - dec_bg_show[arg0]) {
         case 0:
             D_800B594C = func_800536AC(0x2C0, 0xA0, 0x140, 0x58);
             return 0;
@@ -78,7 +78,7 @@ s32 func_8005751C(s32 arg0) {
             return 1;
         }
     } else if (arg0 == 1) {
-        switch (1 - D_800B5938[arg0]) {
+        switch (1 - dec_bg_show[arg0]) {
         case 0:
             D_800B594C = func_800536AC(0x2C0, 0, 0x140, 0xA0);
             return 0;
@@ -94,11 +94,11 @@ void func_80057640(s32 arg0) {
     RECT rect;
 
     rect.x = 0;
-    rect.y = D_8011ECA0 * 0xF0;
+    rect.y = draw_buffer * 0xF0;
     rect.w = 0x140;
     rect.h = arg0;
     v = 1 - (s32)D_800B5939;
-    (&D_800B5920[2])[v] = 0;
+    (&dec_bg_lba_cache[2])[v] = 0;
     switch (v) {
     case 0:
         func_8009C93C(&rect, 0x2C0, 0);
@@ -124,9 +124,9 @@ s32 func_80057710(void) {
     s32 edge;
     s32 point;
 
-    D_800B593C -= 8;
-    if (D_800B593C >= 0x81U) {
-        D_800B593C = 0;
+    dec_bg_brightness -= 8;
+    if (dec_bg_brightness >= 0x81U) {
+        dec_bg_brightness = 0;
     }
     D_800B5944++;
     doubled = D_800B5944 * 2;
@@ -142,7 +142,7 @@ s32 func_80057710(void) {
             edge = offset + 0x1F;
             while (x < width) {
                 point = edge - x;
-                func_80049FF0((s16)(point - 0xA0), -0x78,
+                prim_gradient_line((s16)(point - 0xA0), -0x78,
                              -0xA0, (s16)(point - 0x78), 0, 0, 0xD);
                 x++;
             }
@@ -150,7 +150,7 @@ s32 func_80057710(void) {
             edge = offset + 0x1F;
             while (x < width) {
                 point = edge - x;
-                func_80049FF0((s16)(point - 0xA0), -0x78,
+                prim_gradient_line((s16)(point - 0xA0), -0x78,
                              (s16)(point - 0x140), 0x28, 0, 0, 0xD);
                 x++;
             }
@@ -158,7 +158,7 @@ s32 func_80057710(void) {
             edge = offset + 0x1F;
             while (x < width) {
                 point = edge - x;
-                func_80049FF0(0xA0, (s16)(point - 0x1B8),
+                prim_gradient_line(0xA0, (s16)(point - 0x1B8),
                              (s16)(point - 0x140), 0x28, 0, 0, 0xD);
                 x++;
             }
@@ -167,74 +167,74 @@ s32 func_80057710(void) {
     } while (band < 0xF);
 }
 
-void func_800578F4(s32 a) {
+void dec_bg_draw(s32 a) {
     u8 *mode_flags;
     SPRT *sprite;
     u8 *flags;
 
     if (a != -1) {
-        D_800B5948 = a;
-        sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+        last_screen_mode = a;
+        sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
         func_8009F0A4(sprite);
         SetSemiTrans(sprite, 0);
         SetShadeTex(sprite, 0);
-        sprite->r0 = (u8) D_800B593C;
-        sprite->g0 = (u8) D_800B593C;
-        sprite->b0 = (u8) D_800B593C;
+        sprite->r0 = (u8) dec_bg_brightness;
+        sprite->g0 = (u8) dec_bg_brightness;
+        sprite->b0 = (u8) dec_bg_brightness;
         if (a == 1) {
-            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0);
-            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+            sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0);
+            sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
             sprite->v0 = 0;
             sprite->u0 = 0;
             setWH(sprite, 0xC0, 0xA0);
         } else if (a == 2) {
-            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0);
-            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+            sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0);
+            sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
             sprite->v0 = 0;
             sprite->u0 = 0;
             setWH(sprite, 0xC0, 0xF0);
         } else {
-            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0);
-            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+            sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0);
+            sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
             sprite->v0 = 0xA0;
             sprite->u0 = 0;
             setWH(sprite, 0xC0, 0x58);
         }
-        AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
-        flags = &D_800B5938[a];
+        AddPrim((draw_buffer << 0xA) + 0x34 + D_800E8CA0, sprite);
+        flags = &dec_bg_show[a];
         mode_flags = flags;
         if (*flags != 0) {
             goto_tpage(0x140, 0x100, 0xD, 0, 2);
         } else {
             goto_tpage(0x2C0, 0, 0xD, 0, 2);
         }
-        sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+        sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
         func_8009F0A4(sprite);
         SetSemiTrans(sprite, 0);
         SetShadeTex(sprite, 0);
-        sprite->r0 = (u8) D_800B593C;
-        sprite->g0 = (u8) D_800B593C;
-        sprite->b0 = (u8) D_800B593C;
+        sprite->r0 = (u8) dec_bg_brightness;
+        sprite->g0 = (u8) dec_bg_brightness;
+        sprite->b0 = (u8) dec_bg_brightness;
         if (a == 1) {
-            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20);
-            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+            sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20);
+            sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
             sprite->v0 = 0;
             sprite->u0 = 0;
             setWH(sprite, 0x80, 0xA0);
         } else if (a == 2) {
-            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20);
-            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+            sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20);
+            sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
             sprite->v0 = 0;
             sprite->u0 = 0;
             setWH(sprite, 0x80, 0xF0);
         } else {
-            sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20);
-            sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+            sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20);
+            sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
             sprite->v0 = 0xA0;
             sprite->u0 = 0;
             setWH(sprite, 0x80, 0x58);
         }
-        AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+        AddPrim((draw_buffer << 0xA) + 0x34 + D_800E8CA0, sprite);
         if (*mode_flags != 0) {
             goto_tpage(0x200, 0x100, 0xD, 0, 2);
             return;
@@ -254,7 +254,7 @@ void func_80057D28(s32 arg0) {
     SPRT *sprite;
     u8 *flags;
 
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 1);
     SetShadeTex(sprite, 0);
@@ -262,23 +262,23 @@ void func_80057D28(s32 arg0) {
     sprite->g0 = (0x80 - D_800B5940);
     sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x28 + D_800E8CA0, sprite);
-    flags = &D_800B5938[arg0];
+    AddPrim((draw_buffer << 0xA) + 0x28 + D_800E8CA0, sprite);
+    flags = &dec_bg_show[arg0];
     mode_flags = flags;
     if (*flags != 0) {
         goto_tpage(0x140, 0x100, 0xA, 1, 2);
     } else {
         goto_tpage(0x2C0, 0, 0xA, 1, 2);
     }
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 1);
     SetShadeTex(sprite, 0);
@@ -286,21 +286,21 @@ void func_80057D28(s32 arg0) {
     sprite->g0 = (0x80 - D_800B5940);
     sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x28 + D_800E8CA0, sprite);
+    AddPrim((draw_buffer << 0xA) + 0x28 + D_800E8CA0, sprite);
     if (*mode_flags != 0) {
         goto_tpage(0x200, 0x100, 0xA, 1, 2);
     } else {
         goto_tpage(0x380, 0, 0xA, 1, 2);
     }
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 0);
     SetShadeTex(sprite, 0);
@@ -308,21 +308,21 @@ void func_80057D28(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+    AddPrim((draw_buffer << 0xA) + 0x34 + D_800E8CA0, sprite);
     if (*mode_flags != 0) {
         goto_tpage(0x140, 0x100, 0xD, 0, 2);
     } else {
         goto_tpage(0x2C0, 0, 0xD, 0, 2);
     }
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 0);
     SetShadeTex(sprite, 0);
@@ -330,15 +330,15 @@ void func_80057D28(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+    AddPrim((draw_buffer << 0xA) + 0x34 + D_800E8CA0, sprite);
     if (*mode_flags != 0) {
         goto_tpage(0x200, 0x100, 0xD, 0, 2);
         return;
@@ -353,7 +353,7 @@ void func_80058398(s32 arg0) {
     SPRT *sprite;
     u8 *flags;
 
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 1);
     SetShadeTex(sprite, 0);
@@ -361,23 +361,23 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (0x80 - D_800B5940);
     sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x28 + D_800E8CA0, sprite);
-    flags = &D_800B5938[arg0];
+    AddPrim((draw_buffer << 0xA) + 0x28 + D_800E8CA0, sprite);
+    flags = &dec_bg_show[arg0];
     mode_flags = flags;
     if (*flags == 0) {
         goto_tpage(0x140, 0x100, 0xA, 1, 2);
     } else {
         goto_tpage(0x2C0, 0, 0xA, 1, 2);
     }
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 1);
     SetShadeTex(sprite, 0);
@@ -385,21 +385,21 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (0x80 - D_800B5940);
     sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x28 + D_800E8CA0, sprite);
+    AddPrim((draw_buffer << 0xA) + 0x28 + D_800E8CA0, sprite);
     if (*mode_flags == 0) {
         goto_tpage(0x200, 0x100, 0xA, 1, 2);
     } else {
         goto_tpage(0x380, 0, 0xA, 1, 2);
     }
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 0);
     SetShadeTex(sprite, 0);
@@ -407,21 +407,21 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x30 + D_800E8CA0, sprite);
+    AddPrim((draw_buffer << 0xA) + 0x30 + D_800E8CA0, sprite);
     if (*mode_flags != 0) {
         goto_tpage(0x140, 0x100, 0xC, 0, 2);
     } else {
         goto_tpage(0x2C0, 0, 0xC, 0, 2);
     }
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 0);
     SetShadeTex(sprite, 0);
@@ -429,21 +429,21 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x30 + D_800E8CA0, sprite);
+    AddPrim((draw_buffer << 0xA) + 0x30 + D_800E8CA0, sprite);
     if (*mode_flags != 0) {
         goto_tpage(0x200, 0x100, 0xC, 0, 2);
     } else {
         goto_tpage(0x380, 0, 0xC, 0, 2);
     }
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 0);
     SetShadeTex(sprite, 0);
@@ -451,21 +451,21 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0xC0, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0xC0, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+    AddPrim((draw_buffer << 0xA) + 0x34 + D_800E8CA0, sprite);
     if (*mode_flags == 0) {
         goto_tpage(0x140, 0x100, 0xD, 0, 2);
     } else {
         goto_tpage(0x2C0, 0, 0xD, 0, 2);
     }
-    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 0);
     SetShadeTex(sprite, 0);
@@ -473,15 +473,15 @@ void func_80058398(s32 arg0) {
     sprite->g0 = (u8) D_800B5940;
     sprite->b0 = (u8) D_800B5940;
     if (arg0 == 1) {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x78);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
         setWH(sprite, 0x80, 0xA0);
     } else {
-        sprite->x0 = (s16) (D_800E6280.screen_center_x[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] - 0x30);
+        sprite->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20), sprite->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x30);
         sprite->u0 = 0, sprite->v0 = 0xA0;
         setWH(sprite, 0x80, 0x58);
     }
-    AddPrim((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, sprite);
+    AddPrim((draw_buffer << 0xA) + 0x34 + D_800E8CA0, sprite);
     if (*mode_flags == 0) {
         goto_tpage(0x200, 0x100, 0xD, 0, 2);
         return;

@@ -1301,7 +1301,7 @@ extern s16 D_8015064C[14];
 /* Per-girl base score and spread of the exam ranking (func_801480D0). */
 extern u8 D_80150728[13];
 extern u8 D_80150738[13];
-/* Two words per girl passed to func_80046290 (func_8013CF2C, func_8013FFAC). */
+/* Two words per girl passed to cd_audio_request_set (func_8013CF2C, func_8013FFAC). */
 extern s32 D_8014DB90[13][2];
 extern s32 D_8014DBF8[26];
 /* Per-girl pointers to word pairs of the same shape (func_8013FFAC). */

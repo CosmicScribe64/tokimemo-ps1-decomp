@@ -2,15 +2,15 @@
 #include "ovl/GEKO.h"
 
 void func_80134C90(void) {
-    func_80083808();
-    if (D_800E6280.stage == 0) {
+    bustup_wink_update();
+    if (game_state.stage == 0) {
         func_801351F8();
     } else {
-        func_80046500();
+        game_reset_to_title();
     }
     check_k_scroll();
     k_disp_inc2();
     message_window_show();
-    func_80066334();
+    message_window_title_update();
     hizuke_show();
 }

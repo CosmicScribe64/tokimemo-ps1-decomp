@@ -100,7 +100,7 @@ void func_80155E80(void) {
 
 /* s32 without a return: func_80155CC0 calls this function earlier as an implicit int, a void definition does not build. */
 /* FAKE: the twelve words at D_8015EBAC + 4 * (i + 50) are reached through the first symbol (the loop pointer starts at D_8015EBBC); the
- * real work-block aggregate is unknown. The records are D_8011ECD0 elements i + 96, the rolled loops start at i = 4. T-17116 */
+ * real work-block aggregate is unknown. The records are actor_pool elements i + 96, the rolled loops start at i = 4. T-17116 */
 s32 func_80156064(void) {
     s32 i;
     s32 x;
@@ -112,21 +112,21 @@ s32 func_80156064(void) {
     case 0:
         for (i = 4; i < 16; i++) {
             (&D_8015EBAC)[i + 50] = 0;
-            ((Actor *)D_8011ECD0)[i + 96].unk_01 = 5;
+            ((Actor *)actor_pool)[i + 96].unk_01 = 5;
         }
         func_8014EBD0();
         break;
     case 1:
-        ((Actor *)D_8011ECD0)[147].y -= 2;
+        ((Actor *)actor_pool)[147].y -= 2;
         v = (D_8015EDB0.unk_04 << 6) + 0x1000;
-        ((Actor *)D_8011ECD0)[147].scale_x = v;
-        ((Actor *)D_8011ECD0)[147].scale_y = v;
+        ((Actor *)actor_pool)[147].scale_x = v;
+        ((Actor *)actor_pool)[147].scale_y = v;
         D_8015EDB0.unk_04 += 1;
         for (i = 4; i < 16; i++) {
             if ((&D_8015EBAC)[i + 50] == 0 && func_8013E9A8(0x2D) == 0) {
                 (&D_8015EBAC)[i + 50] = 1;
-                x = ((Actor *)D_8011ECD0)[147].x + func_8013E9A8(0x80) - 0x40;
-                y = ((Actor *)D_8011ECD0)[147].y - func_8013E9A8(0x28);
+                x = ((Actor *)actor_pool)[147].x + func_8013E9A8(0x80) - 0x40;
+                y = ((Actor *)actor_pool)[147].y - func_8013E9A8(0x28);
                 func_8013E97C(i, x + 0xA0, y + 0x78);
                 func_8013E810(i, func_8013E9A8(2) + 8, 1, 1);
             }
@@ -158,19 +158,19 @@ s32 func_80156064(void) {
                     }
                 }
             }
-            ((Actor *)D_8011ECD0)[i + 96].y += 1;
+            ((Actor *)actor_pool)[i + 96].y += 1;
             v = (D_8015EDB0.unk_04 << 6) + 0x1000;
-            ((Actor *)D_8011ECD0)[i + 96].scale_x = v;
-            ((Actor *)D_8011ECD0)[i + 96].scale_y = v;
+            ((Actor *)actor_pool)[i + 96].scale_x = v;
+            ((Actor *)actor_pool)[i + 96].scale_y = v;
         }
-        if (((Actor *)D_8011ECD0)[147].y < -0xC0) {
+        if (((Actor *)actor_pool)[147].y < -0xC0) {
             func_8013E810(0x33, 0xFF, 1, 0);
             for (i = 4; i < 16; i++) {
-                ((Actor *)D_8011ECD0)[i + 96].scale_x = 0x1000;
-                ((Actor *)D_8011ECD0)[i + 96].scale_y = 0x1000;
+                ((Actor *)actor_pool)[i + 96].scale_x = 0x1000;
+                ((Actor *)actor_pool)[i + 96].scale_y = 0x1000;
             }
-            ((Actor *)D_8011ECD0)[147].scale_x = 0x1000;
-            ((Actor *)D_8011ECD0)[147].scale_y = 0x1000;
+            ((Actor *)actor_pool)[147].scale_x = 0x1000;
+            ((Actor *)actor_pool)[147].scale_y = 0x1000;
             func_8014EBA8();
         }
         break;

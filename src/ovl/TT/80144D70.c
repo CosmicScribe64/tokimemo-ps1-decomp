@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-/* T-11840: matched. r is the selector of both switches and holds the func_800460DC result; with pool assigned again in case 0xA0 this raises r above pool in the uopt order, so the selectors take v1 and pool a3. The head order (scene, g, ctl, pool, stream, buttons, list) sets the ugen temporary order. */
+/* T-11840: matched. r is the selector of both switches and holds the cd_done_count result; with pool assigned again in case 0xA0 this raises r above pool in the uopt order, so the selectors take v1 and pool a3. The head order (scene, g, ctl, pool, stream, buttons, list) sets the ugen temporary order. */
 void func_80144D70(void) {
     u8 *scene;
     TtCore30 *g;
@@ -23,15 +23,15 @@ void func_80144D70(void) {
     r = g->unk_02;
     switch (r) {
     case 0x0:
-        func_80044750(0x22);
-        func_80044750(0x2F);
+        snd_command(0x22);
+        snd_command(0x2F);
         func_8014AF3C();
         func_80132F4C();
         func_80133B70();
         g->unk_11 = 0;
         if (ctl[0xB] < 3) {
-            func_80044750(4);
-            func_80044750(0x202);
+            snd_command(4);
+            snd_command(0x202);
             r = ctl[0xB];
             switch (r) {
             case 0:
@@ -57,8 +57,8 @@ void func_80144D70(void) {
             func_8014304C(0x801C2000, 0xBF9C, 0x1A680);
             pool->x = -0x38;
         } else {
-            func_80044750(4);
-            func_80044750(0x200);
+            snd_command(4);
+            snd_command(0x200);
             pool->x = -0x20;
         }
         pool->y = 0x74;
@@ -148,7 +148,7 @@ void func_80144D70(void) {
         break;
     case 0xA0:
         if (D_80158A6C[0xB] < 3) {
-            r = func_800460DC();
+            r = cd_done_count();
             if ((s32)((r - func_801430C4() + 0x100) & 0xFF) < 5) {
                 break;
             }

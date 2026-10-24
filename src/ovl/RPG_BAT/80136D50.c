@@ -139,7 +139,7 @@ void func_80137204(void) {
     s32 var_s1;
     u8 *var_s0;
 
-    var_s0 = D_8011ECD0;
+    var_s0 = actor_pool;
     var_s1 = 0;
     do {
         *(s16 *)(var_s0 + 0x1ABA) = (s16) (*(s16 *)(var_s0 + 0x1ABA) + 1);

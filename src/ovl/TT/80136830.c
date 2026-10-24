@@ -168,27 +168,27 @@ void func_80136C64(void) {
             case 2:
             case 3:
             case 4:
-                t = func_800460DC();
+                t = cd_done_count();
                 if (((t - func_801430C4() + 0x100) & 0xFF) < 5) {
                     return;
                 }
                 func_80133970();
-                func_80044750(0x21);
-                func_80044750(0x22);
-                func_80044750(0x2F);
-                func_80044750(4);
-                func_80044750(0x201);
+                snd_command(0x21);
+                snd_command(0x22);
+                snd_command(0x2F);
+                snd_command(4);
+                snd_command(0x201);
                 break;
             default:
-                func_80044750(0xB1);
+                snd_command(0xB1);
                 break;
             }
         } else {
-            func_80044750(0x21);
-            func_80044750(0x22);
-            func_80044750(0x2F);
-            func_80044750(4);
-            func_80044750(0x201);
+            snd_command(0x21);
+            snd_command(0x22);
+            snd_command(0x2F);
+            snd_command(4);
+            snd_command(0x201);
         }
         bzero(c, 0x20);
         bzero((u8 *)p, 0x20);
@@ -277,11 +277,11 @@ void func_80136C64(void) {
         break;
     case 1:
         func_80133A60();
-        func_80044750(0x21);
-        func_80044750(0x22);
-        func_80044750(0x2F);
-        func_80044750(4);
-        func_80044750(0x201);
+        snd_command(0x21);
+        snd_command(0x22);
+        snd_command(0x2F);
+        snd_command(4);
+        snd_command(0x201);
         func_8014A7E0();
         func_80146BE0();
         func_80148DB0();

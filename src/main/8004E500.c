@@ -29,7 +29,7 @@ void func_8004E500(s32 arg0) {
     func_8009C674(0);
 }
 
-void func_8004E58C(void) {
+void text_system_reset(void) {
     s32 i;
     RECT r;
 
@@ -187,7 +187,7 @@ u8 get_k_speed(void) {
 }
 
 s32 k_disp_inc(void) {
-    if (D_800E6280.frame_count % (text_list_count.speed + 1) == 0) {
+    if (game_state.frame_count % (text_list_count.speed + 1) == 0) {
         if (text_list_count.pos < text_list_count.total) {
             text_list_count.pos += 1;
             return 0;
@@ -253,32 +253,32 @@ void disp_string(void) {
                     ot = 1;
                 }
             }
-            p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+            p = (SPRT_8 *)GetWorkBase(0x10, draw_buffer);
             func_8009F090(p);
             SetSemiTrans(p, 0);
             SetShadeTex(p, 0);
-            p->r0 = D_800E6280.screen_brightness;
-            p->g0 = D_800E6280.screen_brightness;
-            p->b0 = D_800E6280.screen_brightness;
-            p->x0 = ((TextEntry *)text_list)[j].x + D_800E6280.screen_center_x[D_8011ECA0] + k * text_list_count.unk_6A;
-            p->y0 = ((TextEntry *)text_list)[j].y + D_800E6280.screen_center_y[D_8011ECA0];
+            p->r0 = game_state.screen_brightness;
+            p->g0 = game_state.screen_brightness;
+            p->b0 = game_state.screen_brightness;
+            p->x0 = ((TextEntry *)text_list)[j].x + game_state.screen_center_x[draw_buffer] + k * text_list_count.unk_6A;
+            p->y0 = ((TextEntry *)text_list)[j].y + game_state.screen_center_y[draw_buffer];
             /* FAKE: T-24141, same-line UV/Y stores reproduce original as1 instruction scheduling. */
             p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
             p->clut = func_8009ED74((((TextEntry *)text_list)[j].attr & 8) * 4 + 0x100, (((TextEntry *)text_list)[j].attr & 7) + 0x1F8);
-            AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ot * 4], p);
+            AddPrim(&D_800E8CA0[(draw_buffer << 10) + ot * 4], p);
 
-            p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+            p = (SPRT_8 *)GetWorkBase(0x10, draw_buffer);
             func_8009F090(p);
             SetSemiTrans(p, 0);
             SetShadeTex(p, 0);
             p->r0 = 0;
             p->g0 = 0;
             p->b0 = 0;
-            p->x0 = ((TextEntry *)text_list)[j].x + D_800E6280.screen_center_x[D_8011ECA0] + k * text_list_count.unk_6A + 1;
+            p->x0 = ((TextEntry *)text_list)[j].x + game_state.screen_center_x[draw_buffer] + k * text_list_count.unk_6A + 1;
             /* FAKE: T-24141, same-line Y/UV stores reproduce original as1 instruction scheduling. */
-            p->y0 = ((TextEntry *)text_list)[j].y + D_800E6280.screen_center_y[D_8011ECA0] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
+            p->y0 = ((TextEntry *)text_list)[j].y + game_state.screen_center_y[draw_buffer] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
             p->clut = func_8009ED74((((TextEntry *)text_list)[j].attr & 8) * 4 + 0x110, (((TextEntry *)text_list)[j].attr & 7) + 0x1F8);
-            AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ot * 4], p);
+            AddPrim(&D_800E8CA0[(draw_buffer << 10) + ot * 4], p);
 
             if (i == 0x7F) {
                 goto_tpage(0x300, 0x100, ot, 0, 0);

@@ -3,25 +3,25 @@
 
 void func_80042A00(void) {
     if (func_80042AC8() == 0) {
-        if (D_800E6280.input_device == INPUT_MOUSE) {
+        if (game_state.input_device == INPUT_MOUSE) {
             func_80042CB0();
-        } else if (D_800E6280.input_device != INPUT_NONE) {
+        } else if (game_state.input_device != INPUT_NONE) {
             func_800430C0();
         }
-        if (D_800B3CA0 != 0 && (D_800E6280.pad_pressed & 0xF9DF)) {
+        if (D_800B3CA0 != 0 && (game_state.pad_pressed & 0xF9DF)) {
             D_800B3CA0 = 0;
         }
-        if ((D_800E6280.pad_held & 0xF00000) == 0xF00000) {
+        if ((game_state.pad_held & 0xF00000) == 0xF00000) {
             D_800B3CA0 = 1;
         }
-        if (D_800E6280.pad_pressed & 0x08000000) {
-            D_800E6280.sd_anim_fast = 1 - (u8)D_800E6280.sd_anim_fast;
+        if (game_state.pad_pressed & 0x08000000) {
+            game_state.sd_anim_fast = 1 - (u8)game_state.sd_anim_fast;
         }
     }
 }
 
 s32 func_80042AC8(void) {
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     u8 old;
 
     old = g->input_device;
@@ -67,19 +67,19 @@ void func_80042C30(void) {
 }
 
 void func_80042C74(void) {
-    D_8011ECF6 = 0;
-    D_8011ECFA = 0;
-    D_800E6280.mouse_x = 0;
-    D_800E6280.mouse_y = 0;
-    D_800E6280.pad_held = 0;
-    D_800E6280.pad_prev = 0;
-    D_800E6280.pad_pressed = 0;
+    cursor_x = 0;
+    cursor_y = 0;
+    game_state.mouse_x = 0;
+    game_state.mouse_y = 0;
+    game_state.pad_held = 0;
+    game_state.pad_prev = 0;
+    game_state.pad_pressed = 0;
 }
 
 /* Mouse/pad polling and the double-click state machine. Fields go through `g`; the F6F reads use the
  * global (it keeps the pad bytes loaded first, T-24301). */
 void func_80042CB0(void) {
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     s32 dx;
     s32 dy;
     s16 qx;
@@ -89,8 +89,8 @@ void func_80042CB0(void) {
 
     dx = *(s8 *)&D_800E8BF0[4];
     dy = *(s8 *)&D_800E8BF0[5];
-    qx = (s32)(dx * D_800E6280.cursor_speed) / 3;
-    qy = (s32)(dy * D_800E6280.cursor_speed) / 3;
+    qx = (s32)(dx * game_state.cursor_speed) / 3;
+    qy = (s32)(dy * game_state.cursor_speed) / 3;
     /* FAKE: T-24301, dead stores; without them uopt colours the clamps differently (134 rows) */
     dx = 0;
     dy = 0;
@@ -108,8 +108,8 @@ void func_80042CB0(void) {
     if (g->mouse_y >= 0x65) {
         g->mouse_y = 0x64;
     }
-    D_8011ECF6 = g->mouse_x;
-    D_8011ECFA = g->mouse_y;
+    cursor_x = g->mouse_x;
+    cursor_y = g->mouse_y;
     g->unk_F76 = ~D_800E8BF0[3];
     g->pad_prev = g->pad_held;
     g->mouse_buttons = g->unk_F76 & ~g->unk_F78;
@@ -162,8 +162,8 @@ s32 func_80043010(void) {
     s32 b3;
     s32 a0;
 
-    if (D_800E6280.input_device != INPUT_NONE) {
-        if (D_800E6280.input_device != INPUT_MOUSE) {
+    if (game_state.input_device != INPUT_NONE) {
+        if (game_state.input_device != INPUT_MOUSE) {
             b0 = ~D_800E8BF0[3];
             b1 = ~D_800E8BF0[2];
             b2 = ~D_800E8C30[3];
@@ -185,95 +185,95 @@ s32 func_80043010(void) {
 s32 func_800430C0(void) {
     s32 raw;
 
-    D_800E6280.pad_prev = D_800E6280.pad_held;
+    game_state.pad_prev = game_state.pad_held;
     raw = func_80043010();
     if ((raw & 0xFFFF0000) == 0xFFFF0000) {
-        D_800E6280.pad_held = raw & 0xFFFF;
-        if (D_800E6280.pad_held == 0xFFFF) {
-            D_800E6280.pad_held = 0;
+        game_state.pad_held = raw & 0xFFFF;
+        if (game_state.pad_held == 0xFFFF) {
+            game_state.pad_held = 0;
         }
     } else {
-        D_800E6280.pad_held = raw;
+        game_state.pad_held = raw;
         if ((raw & 0xFFFF) == 0xFFFF) {
             if ((raw & 0xFFFF0000) == 0xFFFF0000) {
-                D_800E6280.pad_held = 0;
+                game_state.pad_held = 0;
             } else {
-                D_800E6280.pad_held = raw & 0xFFFF0000;
+                game_state.pad_held = raw & 0xFFFF0000;
             }
         }
     }
-    D_800E6280.pad_pressed = ~D_800E6280.pad_prev & D_800E6280.pad_held;
+    game_state.pad_pressed = ~game_state.pad_prev & game_state.pad_held;
     /* FAKE: the (u32) cast keeps ugen's operand order (prev, ~pad) of the original; real source unknown. T-17009 */
-    D_800E6280.pad_released = D_800E6280.pad_prev & (u32)~D_800E6280.pad_held;
-    if (D_800B3CA0 != 0 && (D_800E6280.frame_count & 1)) {
-        D_800E6280.pad_pressed |= PAD_CIRCLE;
+    game_state.pad_released = game_state.pad_prev & (u32)~game_state.pad_held;
+    if (D_800B3CA0 != 0 && (game_state.frame_count & 1)) {
+        game_state.pad_pressed |= PAD_CIRCLE;
     }
-    if (D_800E6280.pause_allowed == 1) {
-        if (D_800E6280.pad_pressed & 0x08000800) {
-            if (D_800E6280.paused == 0) {
-                D_800E6280.paused = 1;
-                D_800E6280.actors_draw_enabled = 0;
+    if (game_state.pause_allowed == 1) {
+        if (game_state.pad_pressed & 0x08000800) {
+            if (game_state.paused == 0) {
+                game_state.paused = 1;
+                game_state.actors_draw_enabled = 0;
             } else {
-                D_800E6280.actors_draw_enabled = 1;
-                D_800E6280.paused = 0;
+                game_state.actors_draw_enabled = 1;
+                game_state.paused = 0;
             }
         }
     }
-    if (D_800E6280.mode != 0xD0 && D_800E6280.mode != 0x20 && D_800E6280.mode != 0x90 && D_800E6280.input_device == INPUT_PAD) {
-        if ((D_800E6280.pad_held & 0x90C) == 0x90C) {
+    if (game_state.mode != 0xD0 && game_state.mode != 0x20 && game_state.mode != 0x90 && game_state.input_device == INPUT_PAD) {
+        if ((game_state.pad_held & 0x90C) == 0x90C) {
             if (D_800B3CA4++ >= 0x81) {
                 D_800B3CA4 = 0;
                 func_800789E0();
                 func_800591D8(0);
-                func_800412E0(0);
+                game_state_init(0);
                 main_state_set(MODE_BOOT);
-                func_80041584();
+                sprite_tables_clear();
                 func_80048DD0(0);
                 back_clear_switch(1);
                 dec_bg_reset();
-                func_8004482C();
+                snd_bank_state_reset();
                 tpage_buf_clear();
-                func_80044750(0x7F);
+                snd_command(0x7F);
                 func_800424FC();
                 func_8007BDE8();
                 func_8007B844();
                 func_80042488();
-                func_800452C4();
+                cd_cmd_reset();
                 func_80041878();
                 func_80042058();
                 func_80041F48();
-                if (D_800E6280.card_busy != 0) {
-                    func_80053D10();
+                if (game_state.card_busy != 0) {
+                    card_stop();
                 }
-                func_8006BC28(0);
+                cursor_actor_init(0);
                 return -1;
             }
-        } else if ((D_800E6280.pad_held & 0x090C0000) == 0x090C0000) {
+        } else if ((game_state.pad_held & 0x090C0000) == 0x090C0000) {
             if (D_800B3CA4++ >= 0x81) {
                 D_800B3CA4 = 0;
                 func_800789E0();
                 func_800591D8(0);
-                func_800412E0(0);
+                game_state_init(0);
                 main_state_set(MODE_PROLOGUE);
-                func_80041584();
+                sprite_tables_clear();
                 func_80048DD0(0);
                 back_clear_switch(1);
                 dec_bg_reset();
-                func_8004482C();
+                snd_bank_state_reset();
                 tpage_buf_clear();
-                func_80044750(0x7F);
+                snd_command(0x7F);
                 func_800424FC();
                 func_8007BDE8();
                 func_8007B844();
                 func_80042488();
-                func_800452C4();
+                cd_cmd_reset();
                 func_80041878();
                 func_80042058();
                 func_80041F48();
-                if (D_800E6280.card_busy != 0) {
-                    func_80053D10();
+                if (game_state.card_busy != 0) {
+                    card_stop();
                 }
-                func_8006BC28(0);
+                cursor_actor_init(0);
                 return -1;
             }
         } else {
@@ -291,7 +291,7 @@ void func_80043448(void) {
             D_800B3CF8 = 0;
         }
     } else {
-        if (D_800E6280.pad_held == D_800B3CA8[D_800B3CF8]) {
+        if (game_state.pad_held == D_800B3CA8[D_800B3CF8]) {
             if (++D_800B3CF8 >= 0x12U) {
                 D_800B3CFC = 1;
             }

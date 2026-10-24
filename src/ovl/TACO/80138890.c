@@ -2,8 +2,8 @@
 #include "ovl/TACO.h"
 
 s32 func_80138890(void) {
-    D_800E6280.stage_timer += 1;
-    switch (D_800E6280.step) {
+    game_state.stage_timer += 1;
+    switch (game_state.step) {
     case 0:
         func_80138B2C();
         break;
@@ -14,10 +14,10 @@ s32 func_80138890(void) {
         func_80139118();
         break;
     }
-    if (D_800E6280.step < 2) {
+    if (game_state.step < 2) {
         /* u32 view of unk_1100: the compare and the subtraction then share one load, as in the original */
-        if (*(u32 *)&D_800E6280.stage_timer < 0x32U) {
-            return func_8013B460(0x64 - *(u32 *)&D_800E6280.stage_timer);
+        if (*(u32 *)&game_state.stage_timer < 0x32U) {
+            return func_8013B460(0x64 - *(u32 *)&game_state.stage_timer);
         }
         return func_8013B460(0x32);
     }
@@ -29,7 +29,7 @@ s32 func_80138964(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         D_8015F4A4 = arg0;
         D_8015F4A8 = 0;
     } else {
-        if ((D_8015F4A8 < D_8015F4A4) && !(D_800E6280.frame_count & 1)) {
+        if ((D_8015F4A8 < D_8015F4A4) && !(game_state.frame_count & 1)) {
             if (D_8015F4A8 < (D_8015F4A4 % 10)) {
                 D_8015F4A8 += 1;
             } else if (D_8015F4A8 < (D_8015F4A4 % 100)) {
@@ -63,12 +63,12 @@ s32 arg0;
     s32 var_v1;
     u8 temp_v0;
 
-    D_800E6280.clear_color_g = 0;
-    D_800E6280.clear_color_r = 0;
+    game_state.clear_color_g = 0;
+    game_state.clear_color_r = 0;
     /* FAKE: T-25152, byte view of the stage: the indirect load stops copy propagation, so arg0 stays a variable instead of the promoted global */
     arg0 = *(u8 *)&D_8015EDCC;
     D_8015F490[0] = D_8015EDF0 += arg0 * 0xF4240;
-    D_800E6280.clear_color_b = 0;
+    game_state.clear_color_b = 0;
     var_a1 = 0;
     if (arg0 >= 3U) {
         temp_v0 = D_8015EDB4->unk84[1];
@@ -101,15 +101,15 @@ s32 arg0;
         arg0 = 0x98967F + *(u8 *)&D_8015EDCC * 0;
         D_8015F490[4] = arg0;
     }
-    func_80044750(0x24);
+    snd_command(0x24);
     func_80059048();
     func_80143AF4();
-    func_8004284C();
+    main_step_next();
 }
 
 /* No return value on purpose: implicit-int function (v0 of the last call falls through). T-16564 */
 s32 func_80138D08(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 8:
     case 9:
     default:
@@ -129,7 +129,7 @@ s32 func_80138D08(void) {
         break;
     }
     func_801432F0("SCORE", -0xE4, -0x48, 6);
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 10:
     default:
         func_801430D0(D_8015F490[4], -0x40, 0x58, 0);
@@ -151,60 +151,60 @@ s32 func_80138D08(void) {
         break;
     }
     /* FAKE: u8 view of the selector keeps it a plain ugen temporary for the third switch; with the field it is promoted to a register (the 0xA test and the stores below). T-16564 */
-    switch (*(u8 *)&D_800E6280.substep) {
+    switch (*(u8 *)&game_state.substep) {
     case 0:
         func_80138964(D_8015F490[0], -0x40, -0x38, 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
         if (func_80138964(D_8015F490[0], -0x40, -0x38, 1) == D_8015F490[0]) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 2:
         func_80138964(D_8015F490[3], -0x40, -0x18, 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 3:
         if (func_80138964(D_8015F490[3], -0x40, -0x18, 1) == D_8015F490[3]) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 4:
         func_80138964(D_8015F490[2], -0x40, 8, 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 5:
         if (func_80138964(D_8015F490[2], -0x40, 8, 1) == D_8015F490[2]) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 6:
         func_80138964(D_8015F490[1], -0x40, 0x28, 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 7:
         if (func_80138964(D_8015F490[1], -0x40, 0x28, 1) == D_8015F490[1]) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 8:
         func_80138964(D_8015F490[4], -0x40, 0x58, 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 9:
         if (func_80138964(D_8015F490[4], -0x40, 0x58, 1) == D_8015F490[4]) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     }
-    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
-        if ((u8) D_800E6280.substep < 0xAU) {
-            D_800E6280.substep = 0xA;
+    if (game_state.pad_pressed & PAD_CIRCLE) {
+        if ((u8) game_state.substep < 0xAU) {
+            game_state.substep = 0xA;
         } else {
             D_8015EDF0 = D_8015F490[4];
             func_80059308();
-            func_8004284C();
+            main_step_next();
         }
     }
 }
@@ -212,8 +212,8 @@ s32 func_80138D08(void) {
 void func_80139118(void) {
     func_800591D8(0);
     if (D_8015EE00 < D_8015EDF0) {
-        func_80042908(9);
+        main_stage_set(9);
         return;
     }
-    func_80042908(5);
+    main_stage_set(5);
 }

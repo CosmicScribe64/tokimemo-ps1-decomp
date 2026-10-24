@@ -30,7 +30,7 @@ s32 menu_set(menu, count, x, y, w, h)
     s16 *pw;
     s16 *ph;
 
-    g = &D_800E6280;
+    g = &game_state;
     for (i = 0; i < 16; i++) {
         ((MenuItem (*)[2])g->menu_items)[i][menu].disabled = 0;
         ((MenuItem (*)[2])g->menu_items)[i][menu].h = 0;
@@ -72,22 +72,22 @@ s32 menu_check(arg0, arg1, arg2)
     if (arg0 >= 2) {
         return -1;
     }
-    x = D_800E6280.menu_mode;
+    x = game_state.menu_mode;
     if ((x & 3) == 0) {
         return menu_check_1(arg0, arg1, arg2);
     }
     if ((x & 3) == 1) {
         menu_check_2(arg0, arg1, arg2);
-        return (&D_800E6280.menu_cursor_0)[arg0];
+        return (&game_state.menu_cursor_0)[arg0];
     }
     if ((x & 3) == 3) {
         menu_check_2(arg0, arg1, arg2);
-        return (&D_800E6280.menu_cursor_0)[arg0];
+        return (&game_state.menu_cursor_0)[arg0];
     }
-    if (D_800E6280.pad_pressed & PAD_L1) {
+    if (game_state.pad_pressed & PAD_L1) {
         return menu_check_1(arg0, arg1, arg2);
     }
-    if (D_800E6280.pad_held & PAD_L1) {
+    if (game_state.pad_held & PAD_L1) {
         return menu_check_2(arg0, arg1, arg2);
     }
     return menu_check_1(arg0, arg1, arg2);
@@ -103,7 +103,7 @@ s32 menu_check_1(arg0, arg1, arg2)
     s32 sel;
     u32 i;
 
-    g = &D_800E6280;
+    g = &game_state;
     cnt = 0;
     sel = -1;
     for (i = 0; i < ((MenuSelection *)&g->menu_count_0)->count[arg0]; i++) {
@@ -134,7 +134,7 @@ s32 menu_check_2(arg0, arg1, arg2)
     s32 sel;
     u32 i;
 
-    g = &D_800E6280;
+    g = &game_state;
     sel = -1;
     g->menu_hit[arg0] = -1;
     i = 0;
@@ -154,13 +154,13 @@ s32 menu_check_2(arg0, arg1, arg2)
     }
 }
 
-void func_8004FC10(s32 menu) {
+void menu_cursor_update(s32 menu) {
     GameState *g;
     s32 dir;
     s32 n;
     s32 i;
 
-    g = &D_800E6280;
+    g = &game_state;
     dir = 0;
     n = 16;
     if (g->pad_pressed & PAD_SELECT) {
@@ -170,7 +170,7 @@ void func_8004FC10(s32 menu) {
     }
     switch (g->menu_mode & 3) {
     case 0:
-        func_8006BA40();
+        cursor_update();
         for (i = 0; i < ((MenuSelection *)&g->menu_count_0)->count[menu]; i++) {
             if (((MenuItem (*)[2])g->menu_items)[i][menu].hover != 0) {
                 ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
@@ -219,8 +219,8 @@ void func_8004FC10(s32 menu) {
                 ((MenuSelection *)&g->menu_count_0)->current[menu] = ((MenuSelection *)&g->menu_count_0)->count[menu] - 1;
             }
         }
-        D_8011ECF6 = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
-        D_8011ECFA = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
+        cursor_x = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
+        cursor_y = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
         break;
     case 2:
         if (g->pad_held & PAD_L1) {
@@ -263,10 +263,10 @@ void func_8004FC10(s32 menu) {
                     }
                 }
             }
-            D_8011ECF6 = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
-            D_8011ECFA = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
+            cursor_x = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
+            cursor_y = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
         } else {
-            func_8006BA40();
+            cursor_update();
             for (i = 0; i < ((MenuSelection *)&g->menu_count_0)->count[menu]; i++) {
                 if (((MenuItem (*)[2])g->menu_items)[i][menu].hover != 0) {
                     ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
@@ -299,21 +299,21 @@ void func_8004FC10(s32 menu) {
         if (((MenuSelection *)&g->menu_count_0)->current[menu] < 0) {
             ((MenuSelection *)&g->menu_count_0)->current[menu] = func_80050324(menu, 0);
         }
-        D_8011ECF6 = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
-        D_8011ECFA = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
+        cursor_x = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
+        cursor_y = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
         break;
     }
-    if (D_8011ECF6 > 140) {
-        D_8011ECF6 = 140;
+    if (cursor_x > 140) {
+        cursor_x = 140;
     }
-    if (D_8011ECF6 < -150) {
-        D_8011ECF6 = -150;
+    if (cursor_x < -150) {
+        cursor_x = -150;
     }
-    if (D_8011ECFA < -100) {
-        D_8011ECFA = -100;
+    if (cursor_y < -100) {
+        cursor_y = -100;
     }
-    if (D_8011ECFA > 100) {
-        D_8011ECFA = 100;
+    if (cursor_y > 100) {
+        cursor_y = 100;
     }
 }
 
@@ -322,7 +322,7 @@ s32 func_80050324(s32 menu, s32 reverse) {
     GameState *g;
     s32 i;
     /* The menu entries are interleaved: one record for each of two menus. */
-    g = &D_800E6280;
+    g = &game_state;
     if (reverse != 0) {
         for (i = ((MenuSelection *)&g->menu_count_0)->count[menu] - 1; i >= 0; i--) {
             if (((MenuItem (*)[2])g->menu_items)[i][menu].w && ((MenuItem (*)[2])g->menu_items)[i][menu].h) {
@@ -349,7 +349,7 @@ s32 get_near_menu(s32 mode, s32 dir, s32 menu) {
     s16 diff[16];
     s32 i;
 
-    g = &D_800E6280;
+    g = &game_state;
     n = 16;
     best_d = 320;
     if (((MenuSelection *)&g->menu_count_0)->count[menu] < 16) {
@@ -452,9 +452,9 @@ void menu_bar_show(menu)
     page = (D_800E3680[menu] >> 24) & 15;
     mode = (D_800E3680[menu] >> 28) & 7;
     flag = (D_800E3680[menu] >> 31) << 7;
-    item = ((MenuSelection *)&D_800E6280.menu_count_0)->current[menu];
-    if (item >= 0 && (u32)item < ((MenuSelection *)&D_800E6280.menu_count_0)->count[menu]) {
-        func_80049A40(((MenuItem (*)[2])D_800E6280.menu_items)[item][menu].x, ((MenuItem (*)[2])D_800E6280.menu_items)[item][menu].y, ((MenuItem (*)[2])D_800E6280.menu_items)[item][menu].w, ((MenuItem (*)[2])D_800E6280.menu_items)[item][menu].h, page, D_800E3680[menu] & 0xFFFFFF, flag | mode);
+    item = ((MenuSelection *)&game_state.menu_count_0)->current[menu];
+    if (item >= 0 && (u32)item < ((MenuSelection *)&game_state.menu_count_0)->count[menu]) {
+        prim_gradient_rect(((MenuItem (*)[2])game_state.menu_items)[item][menu].x, ((MenuItem (*)[2])game_state.menu_items)[item][menu].y, ((MenuItem (*)[2])game_state.menu_items)[item][menu].w, ((MenuItem (*)[2])game_state.menu_items)[item][menu].h, page, D_800E3680[menu] & 0xFFFFFF, flag | mode);
         dtd_on_tpage(0, 0, page, 0, 1);
     }
 }
@@ -529,23 +529,23 @@ void sndisp(u8 *str, s32 y, s32 col) {
             q = -1;
         }
     }
-    D_800E6280.text_first_line = check_set_k();
+    game_state.text_first_line = check_set_k();
     sndi(buf, y, col);
     for (i = 0; i < n; i++) {
         sndi(&buf[pos[i]] + 1, y + 1 + i, col);
     }
-    D_800E6280.text_lines_total = check_set_k();
-    D_800E6280.text_scroll_state = 0x80;
+    game_state.text_lines_total = check_set_k();
+    game_state.text_scroll_state = 0x80;
 }
 
 /* rest of the 0x800B40F0 range, after the template of sndisp */
-INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4100);
+INCLUDE_RODATA("asm/data/main/8004F870.data", girl_tokimeki_weight);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4110);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4120);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4130);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4198);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B419C);
-INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B41A0);
+INCLUDE_RODATA("asm/data/main/8004F870.data", girl_affection_weight);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B41B0);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4348);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4354);
@@ -567,7 +567,7 @@ void sndi(u8 *str, s32 y, s32 col) {
     s32 found;
 
     strncpy(original, str, 64);
-    D_800E6280.text_scroll_state = 0;
+    game_state.text_scroll_state = 0;
     found = 0;
     if ((col & 15) == 15) {
         for (i = 0, s = original; s[i] != 0; i++) {
@@ -592,7 +592,7 @@ void sndi(u8 *str, s32 y, s32 col) {
                 *p = 0;
                 found = 1;
                 strcpy(result, stage);
-                get_g_name(name, D_800E6280.current_girl);
+                get_g_name(name, game_state.current_girl);
                 strcat(result, name);
                 strcat(result, p + 1);
                 break;
@@ -608,7 +608,7 @@ void sndi(u8 *str, s32 y, s32 col) {
                 *p = 0;
                 found = 1;
                 strcpy(result, original);
-                get_p_name(name, D_800E6280.current_girl);
+                get_p_name(name, game_state.current_girl);
                 strcat(result, name);
                 strcat(result, p + 1);
                 break;
@@ -657,7 +657,7 @@ void sndi(u8 *str, s32 y, s32 col) {
 }
 
 void set_c_girl(u8 arg0) {
-    D_800E6280.current_girl = arg0;
+    game_state.current_girl = arg0;
 }
 
 s32 get_g_name(u8 *arg0, s32 arg1) {
@@ -682,126 +682,126 @@ void get_p_name(u8 *arg0, u32 arg1) {
     switch (arg1) {
     case 0:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_nickname[0]);
+            strcpy(arg0, &game_state.player_nickname[0]);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_given_name[0]);
+        strcpy(arg0, &game_state.player_given_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     case 1:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_family_name[0]);
+            strcpy(arg0, &game_state.player_family_name[0]);
             strcat(arg0, &D_800B3634);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3638);
         return;
     case 2:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_given_name[0]);
+            strcpy(arg0, &game_state.player_given_name[0]);
             strcat(arg0, &D_800B3634);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     case 3:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_nickname[0]);
+            strcpy(arg0, &game_state.player_nickname[0]);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     case 4:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_given_name[0]);
+            strcpy(arg0, &game_state.player_given_name[0]);
             strcat(arg0, &D_800B3634);
             return;
         }
         if ((get_g_zyotai_s((s32) arg1) & 0x7F) == 4) {
-            strcpy(arg0, &D_800E6280.player_family_name[0]);
+            strcpy(arg0, &game_state.player_family_name[0]);
             strcat(arg0, &D_800B3634);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     case 5:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_given_name[0]);
+            strcpy(arg0, &game_state.player_given_name[0]);
             strcat(arg0, &D_800B3638);
             return;
         }
         if ((get_g_zyotai_s((s32) arg1) & 0x7F) == 4) {
-            strcpy(arg0, &D_800E6280.player_family_name[0]);
+            strcpy(arg0, &game_state.player_family_name[0]);
             strcat(arg0, &D_800B3638);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3638);
         return;
     case 6:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_nickname[0]);
+            strcpy(arg0, &game_state.player_nickname[0]);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     case 7:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_given_name[0]);
+            strcpy(arg0, &game_state.player_given_name[0]);
             strcat(arg0, &D_800B3634);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     case 8:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_nickname[0]);
+            strcpy(arg0, &game_state.player_nickname[0]);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_given_name[0]);
+        strcpy(arg0, &game_state.player_given_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     case 9:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_family_name[0]);
+            strcpy(arg0, &game_state.player_family_name[0]);
             strcat(arg0, &D_800B3634);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3638);
         return;
     case 10:
         if (get_g_zyotai_s((s32) arg1) & 0x80) {
-            strcpy(arg0, &D_800E6280.player_given_name[0]);
+            strcpy(arg0, &game_state.player_given_name[0]);
             strcat(arg0, &D_800B3638);
             return;
         }
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3638);
         return;
     case 13:
-        strcpy(arg0, &D_800E6280.player_given_name[0]);
+        strcpy(arg0, &game_state.player_given_name[0]);
         return;
     case 11:
-        strcpy(arg0, &D_800E6280.player_given_name[0]);
+        strcpy(arg0, &game_state.player_given_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     case 12:
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     case 15:
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
-        strncat(arg0, &D_800E6280.player_given_name[0], 6);
+        strcpy(arg0, &game_state.player_family_name[0]);
+        strncat(arg0, &game_state.player_given_name[0], 6);
         return;
     default:
-        strcpy(arg0, &D_800E6280.player_family_name[0]);
+        strcpy(arg0, &game_state.player_family_name[0]);
         strcat(arg0, &D_800B3634);
         return;
     }
@@ -865,7 +865,7 @@ void menu_girl_taku_set(s32 menu, s32 *arg1)
         } else {
             g = i;
         }
-        p = &D_800E6280.girls[g];
+        p = &game_state.girls[g];
         if (p->flags.f.met) {
             *arg1 = set_kanji_string((i / 3) * 64 - 0x80, (i % 3) * 16 + 0x32, 0, girl_short_name_table[g], 0);
         }
@@ -894,36 +894,36 @@ void xa_wait(void) {
 
     r = 0;
     now = get_now_k();
-    if (D_800E6280.text_scroll_state & 0x80) {
-        ph = D_800E6280.text_scroll_state & 0x7F;
-        if (D_800E6280.text_first_line + 2 >= (u32)now) {
+    if (game_state.text_scroll_state & 0x80) {
+        ph = game_state.text_scroll_state & 0x7F;
+        if (game_state.text_first_line + 2 >= (u32)now) {
             r = k_disp_inc();
             now = get_now_k();
-            t = D_800E6280.text_first_line;
+            t = game_state.text_first_line;
             if (now == t + 3) {
-                if (D_800E6280.text_lines_total >= t + 3) {
+                if (game_state.text_lines_total >= t + 3) {
                     k_disp_switch(now, 0);
                 }
             }
         } else if (ph == 0) {
-            k_disp_switch(D_800E6280.text_first_line, 0);
-            a = get_k_work(D_800E6280.text_first_line + 1);
-            b = get_k_work(D_800E6280.text_first_line + 2);
+            k_disp_switch(game_state.text_first_line, 0);
+            a = get_k_work(game_state.text_first_line + 1);
+            b = get_k_work(game_state.text_first_line + 2);
             *(s16 *)(a + 2) -= 2;
             *(s16 *)(b + 2) -= 2;
-            D_800E6280.text_scroll_state += 1;
+            game_state.text_scroll_state += 1;
         } else if (ph != 0) {
             /* FAKE: redundant test; the second use makes ph a uopt variable in $v0 as in the original (a plain else gives a $t9 temporary). T-17018 */
-            a = get_k_work(D_800E6280.text_first_line + 1);
-            b = get_k_work(D_800E6280.text_first_line + 2);
+            a = get_k_work(game_state.text_first_line + 1);
+            b = get_k_work(game_state.text_first_line + 2);
             *(s16 *)(a + 2) -= 2;
             *(s16 *)(b + 2) -= 2;
             if (*(s16 *)(a + 2) < 0x33) {
                 *(s16 *)(a + 2) = 0x32;
                 *(s16 *)(b + 2) = 0x42;
-                D_800E6280.text_scroll_state -= 1;
-                D_800E6280.text_first_line += 1;
-                k_disp_switch(D_800E6280.text_first_line + 2, 1);
+                game_state.text_scroll_state -= 1;
+                game_state.text_first_line += 1;
+                k_disp_switch(game_state.text_first_line + 2, 1);
             }
         }
     } else {
@@ -934,47 +934,47 @@ void xa_wait(void) {
         if (D_8011ED5B & 0x80) {
             func_8006C934();
         } else {
-            func_8006C848(1);
+            text_marker_set(1);
         }
     }
-    if (D_800E6280.pad_pressed & 0x60) {
+    if (game_state.pad_pressed & 0x60) {
         if (r == 1) {
-            func_8006C848(0);
-            D_800E6280.substep += 1;
-            D_800E6280.text_scroll_state = 0;
+            text_marker_set(0);
+            game_state.substep += 1;
+            game_state.text_scroll_state = 0;
             return;
         }
         k_disp_goto_line_end();
     }
 }
 
-void func_80052000(void) {
+void text_wait_confirm(void) {
     k_disp_inc();
-    if (D_800E6280.pad_pressed & 0x860) {
+    if (game_state.pad_pressed & 0x860) {
         k_disp_goto_line_end();
         if (check_end_k() != 0) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
     }
 }
 
-void func_80052060(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void voice_play(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 selector;
 
     if (arg2 == -1) {
         selector = arg3 & 15;
         if (selector != 15) {
-            if ((u8)D_800E6280.voice_mode != VOICE_OFF) {
-                func_80046290(arg0, arg1, arg3);
-                func_80044750(0x300);
+            if ((u8)game_state.voice_mode != VOICE_OFF) {
+                cd_audio_request_set(arg0, arg1, arg3);
+                snd_command(0x300);
             }
         }
     } else {
         selector = arg3 & 15;
         if (selector != 15) {
-            if ((u8)D_800E6280.voice_mode != VOICE_OFF) {
-                func_80046290(((s32 *)arg0)[arg2 * 2], ((s32 *)arg0)[arg2 * 2 + 1], arg3);
-                func_80044750(0x300);
+            if ((u8)game_state.voice_mode != VOICE_OFF) {
+                cd_audio_request_set(((s32 *)arg0)[arg2 * 2], ((s32 *)arg0)[arg2 * 2 + 1], arg3);
+                snd_command(0x300);
             }
         }
     }
@@ -988,7 +988,7 @@ void func_80052060(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_80125C00 = 0;
 }
 
-void func_8005215C(void) {
+void dialogue_text_step(void) {
     /* FAKE: two unused home words above the spills; the original frame is 8 bytes larger, as in xa_wait. T-25101 */
     s32 pad[2];
     s32 r;
@@ -1001,60 +1001,60 @@ void func_8005215C(void) {
 
     r = 0;
     now = get_now_k();
-    if (D_800E6280.text_scroll_state & 0x80) {
-        ph = D_800E6280.text_scroll_state & 0x7F;
-        if (D_800E6280.text_first_line + 2 >= (u32)now) {
+    if (game_state.text_scroll_state & 0x80) {
+        ph = game_state.text_scroll_state & 0x7F;
+        if (game_state.text_first_line + 2 >= (u32)now) {
             r = k_disp_inc();
             now = get_now_k();
-            t = D_800E6280.text_first_line;
+            t = game_state.text_first_line;
             if (now == t + 3) {
-                if (D_800E6280.text_lines_total >= t + 3) {
+                if (game_state.text_lines_total >= t + 3) {
                     k_disp_switch(now, 0);
                 }
             }
         } else if (ph == 0) {
             /* FAKE: `+ 0` keeps this argument off the F61 range, which then has no a0 preference and takes v1 (F62 a0) as in the original; the plain argument gives a2. T-25101 */
-            k_disp_switch(D_800E6280.text_first_line + 0, 0);
-            a = get_k_work(D_800E6280.text_first_line + 1);
-            b = get_k_work(D_800E6280.text_first_line + 2);
+            k_disp_switch(game_state.text_first_line + 0, 0);
+            a = get_k_work(game_state.text_first_line + 1);
+            b = get_k_work(game_state.text_first_line + 2);
             *(s16 *)(a + 2) -= 2;
             *(s16 *)(b + 2) -= 2;
-            D_800E6280.text_scroll_state += 1;
+            game_state.text_scroll_state += 1;
         } else if (ph != 0) {
             /* FAKE: redundant test, as in xa_wait; the second use keeps ph in $v0. T-25101 */
-            a = get_k_work(D_800E6280.text_first_line + 1);
-            b = get_k_work(D_800E6280.text_first_line + 2);
+            a = get_k_work(game_state.text_first_line + 1);
+            b = get_k_work(game_state.text_first_line + 2);
             *(s16 *)(a + 2) -= 2;
             *(s16 *)(b + 2) -= 2;
             if (*(s16 *)(a + 2) < 0x33) {
                 *(s16 *)(a + 2) = 0x32;
                 *(s16 *)(b + 2) = 0x42;
-                D_800E6280.text_scroll_state -= 1;
-                D_800E6280.text_first_line += 1;
-                k_disp_switch(D_800E6280.text_first_line + 2, 1);
+                game_state.text_scroll_state -= 1;
+                game_state.text_first_line += 1;
+                k_disp_switch(game_state.text_first_line + 2, 1);
             }
         }
     } else {
         /* FAKE: the s8 mode field is read through a u8 address view: lbu, and uopt keeps the byte as one promoted global
-         * reloaded after each call; `(u8)D_800E6280.voice_mode` adds conversion ranges that cache it. T-25101 */
-        if (((*(u8 *)&D_800E6280.voice_mode) == 1 && D_80125C00 != 0) || ((*(u8 *)&D_800E6280.voice_mode) == 2 && D_80125C00 != 0)) {
+         * reloaded after each call; `(u8)game_state.voice_mode` adds conversion ranges that cache it. T-25101 */
+        if (((*(u8 *)&game_state.voice_mode) == 1 && D_80125C00 != 0) || ((*(u8 *)&game_state.voice_mode) == 2 && D_80125C00 != 0)) {
             r = k_disp_inc();
         }
-        if ((*(u8 *)&D_800E6280.voice_mode) == 0) {
+        if ((*(u8 *)&game_state.voice_mode) == 0) {
             r = k_disp_inc();
         }
         get_now_k();
     }
-    if (D_80125C00 == 0 && (func_800460EC() & 4)) {
+    if (D_80125C00 == 0 && (cd_audio_state() & 4)) {
         D_80125C00 = 1;
     }
     k = (s32 *)func_80046284();
     if (D_80125C00 == 1) {
-        if (func_800460EC() & 2) {
+        if (cd_audio_state() & 2) {
             if (D_80125BFC != -1) {
                 if (((s32 *)D_80125BF4)[D_80125BFC * 2] != ((s32 *)D_80125BF8)[D_80125BFC * 2] && ((s32 *)D_80125BF4)[D_80125BFC * 2] == k[2]) {
-                    func_80046290(((s32 *)D_80125BF8)[D_80125BFC * 2], ((s32 *)D_80125BF8)[D_80125BFC * 2 + 1], D_800E6280.current_girl);
-                    func_80044750(0x300);
+                    cd_audio_request_set(((s32 *)D_80125BF8)[D_80125BFC * 2], ((s32 *)D_80125BF8)[D_80125BFC * 2 + 1], game_state.current_girl);
+                    snd_command(0x300);
                     D_80125C00 = 0;
                 } else {
                     D_80125C00 = 2;
@@ -1068,49 +1068,49 @@ void func_8005215C(void) {
         if (D_8011ED5B & 0x80) {
             func_8006C934();
         } else {
-            func_8006C848(1);
+            text_marker_set(1);
         }
     }
-    if (r == 1 && (*(u8 *)&D_800E6280.voice_mode) == 0) {
+    if (r == 1 && (*(u8 *)&game_state.voice_mode) == 0) {
         if (D_8011ED5B & 0x80) {
             func_8006C934();
         } else {
-            func_8006C848(1);
+            text_marker_set(1);
         }
     }
-    if (D_800E6280.pad_pressed & PAD_CROSS) {
+    if (game_state.pad_pressed & PAD_CROSS) {
         if (r == 1) {
-            if ((*(u8 *)&D_800E6280.voice_mode) == 2) {
+            if ((*(u8 *)&game_state.voice_mode) == 2) {
                 D_80125C00 = 2;
-                func_80044750(0x74);
-                func_80045414(9, 0, 0);
+                snd_command(0x74);
+                cd_audio_command(9, 0, 0);
             }
-            D_800E6280.text_scroll_state = 0;
+            game_state.text_scroll_state = 0;
         } else {
             k_disp_goto_line_end();
         }
     }
-    if (D_800E6280.pad_pressed & 0x60) {
+    if (game_state.pad_pressed & 0x60) {
         if (r == 1) {
-            if ((*(u8 *)&D_800E6280.voice_mode) == 1) {
+            if ((*(u8 *)&game_state.voice_mode) == 1) {
                 if (D_80125C00 == 2) {
-                    func_8006C848(0);
-                    D_800E6280.substep += 1;
+                    text_marker_set(0);
+                    game_state.substep += 1;
                 }
-                D_800E6280.text_scroll_state = 0;
+                game_state.text_scroll_state = 0;
                 return;
             }
-            if ((*(u8 *)&D_800E6280.voice_mode) == 2) {
+            if ((*(u8 *)&game_state.voice_mode) == 2) {
                 if (D_80125C00 == 2) {
-                    func_8006C848(0);
-                    D_800E6280.substep += 1;
+                    text_marker_set(0);
+                    game_state.substep += 1;
                 }
-                D_800E6280.text_scroll_state = 0;
+                game_state.text_scroll_state = 0;
                 return;
             }
-            func_8006C848(0);
-            D_800E6280.substep += 1;
-            D_800E6280.text_scroll_state = 0;
+            text_marker_set(0);
+            game_state.substep += 1;
+            game_state.text_scroll_state = 0;
             return;
         }
         k_disp_goto_line_end();
@@ -1139,9 +1139,9 @@ u32 get_h_tokimeki(s32 arg0) {
     s8 *bonus;
     GameState *gs;
 
-    gs = &D_800E6280;
+    gs = &game_state;
     girl = arg0 % 13;
-    sum = gs->girls[girl].tokimeki * D_800B4100[girl];
+    sum = gs->girls[girl].tokimeki * girl_tokimeki_weight[girl];
     sum /= 100;
     mask = D_800B4110[girl];
     for (i = 1; i < 8; i++) {
@@ -1299,7 +1299,7 @@ u32 get_h_yuukou(s32 arg0) {
     s32 v;
 
     t = arg0 % 13;
-    v = D_800E6280.girls[t].affection * D_800B41A0[t];
+    v = game_state.girls[t].affection * girl_affection_weight[t];
     v /= 100;
     if (v >= 0x65) {
         return 0x64;
@@ -1327,7 +1327,7 @@ void get_h_yuukou_table(u8 *arg0) {
 }
 
 void birth_day_check(s32 arg0) {
-    birth_day_check_days(arg0, D_800E6280.month, D_800E6280.day);
+    birth_day_check_days(arg0, game_state.month, game_state.day);
 }
 
 s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2) {
@@ -1339,14 +1339,14 @@ s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2) {
     }
     t = arg0 & 0xF;
     if (t == 0xF) {
-        v = D_800E6280.player_birthday;
+        v = game_state.player_birthday;
         if (arg1 == (v & 0xF)) {
             if (arg2 == (u32)(v << 23) >> 27) {
                 return 1;
             }
         }
     } else {
-        v = D_800E6280.girls[t].birthday.w;
+        v = game_state.girls[t].birthday.w;
         if (arg1 == (v & 0xF)) {
             if (arg2 == (u32)(v << 23) >> 27) {
                 return 1;
@@ -1364,13 +1364,13 @@ s32 func_80052E60(u8 *arg0, s16 *arg1) {
     if (*arg0 < 0x55U) {
         return 0;
     }
-    if (D_800E6280.player_flags.b[1] & 0xF) {
+    if (game_state.player_flags.b[1] & 0xF) {
         return 0;
     }
     i = 1;
     p = D_800B4341;
     do {
-        if ((u32) (&D_800E6280.param_condition)[i].value < p[-1]) {
+        if ((u32) (&game_state.param_condition)[i].value < p[-1]) {
             return 0;
         }
         i++;
@@ -1378,18 +1378,18 @@ s32 func_80052E60(u8 *arg0, s16 *arg1) {
     } while (i < 8);
     sum = 0;
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-    for (i = 1; i < 36; i++) sum += D_800E6280.girls[0].event_counters[i];
+    for (i = 1; i < 36; i++) sum += game_state.girls[0].event_counters[i];
     if (sum < 8) {
         return 0;
     }
-    if (D_800E6280.girls[0].syoushin >= 0x33) {
+    if (game_state.girls[0].syoushin >= 0x33) {
         return 0;
     }
     *arg1 = 0x311;
 }
 
 s32 func_80052F68(u8 *arg0, s16 *arg1) {
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     s32 i;
     /* FAKE: T-25307, j, k and x are never used; their three stack homes give the original's
      * frame (0x80, val at sp+0x48). The original's real locals are unknown. */
@@ -1482,7 +1482,7 @@ s32 func_80053418(u8 *arg0, s16 *arg1) {
 s32 func_8005352C(void) {
     u16 x;
 
-    x = D_800E6280.player_flags.h;
+    x = game_state.player_flags.h;
     if (((x >> 0xC) >= 6) && ((x >> 0xC) < 0xB)) {
         return 1;
     }
@@ -1493,7 +1493,7 @@ s32 func_80053564(s32 arg0) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
-        if (arg0 == (u32)D_800E6280.girls[i].flags.b[2] >> 4) {
+        if (arg0 == (u32)game_state.girls[i].flags.b[2] >> 4) {
             return i;
         }
     }

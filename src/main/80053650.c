@@ -82,20 +82,20 @@ void Hw_Start(void) {
 }
 
 u8 Sw_Test(void) {
-    D_800E6280.card_result = 0;
+    game_state.card_result = 0;
     if (TestEvent(D_8011ECAC) != 0) {
-        D_800E6280.card_result = 1;
+        game_state.card_result = 1;
     } else if (TestEvent(D_8011ECB0) != 0) {
-        D_800E6280.card_result = 2;
+        game_state.card_result = 2;
     } else if (TestEvent(D_8011ECB4) != 0) {
-        D_800E6280.card_result = 4;
+        game_state.card_result = 4;
     } else if (TestEvent(D_8011ECB8) != 0) {
-        D_800E6280.card_result = 8;
+        game_state.card_result = 8;
     }
-    if (D_800E6280.card_result != 0) {
+    if (game_state.card_result != 0) {
         Sw_Clear();
     }
-    return D_800E6280.card_result;
+    return game_state.card_result;
 }
 
 void Sw_Clear(void) {
@@ -106,20 +106,20 @@ void Sw_Clear(void) {
 }
 
 u8 Hw_Test(void) {
-    D_800E6280.card_result = 0;
+    game_state.card_result = 0;
     do {
         if (TestEvent(D_8011ECBC) != 0) {
-            D_800E6280.card_result = 0x81;
+            game_state.card_result = 0x81;
         } else if (TestEvent(D_8011ECC0) != 0) {
-            D_800E6280.card_result = 0x82;
+            game_state.card_result = 0x82;
         } else if (TestEvent(D_8011ECC4) != 0) {
-            D_800E6280.card_result = 0x84;
+            game_state.card_result = 0x84;
         } else if (TestEvent(D_8011ECC8) != 0) {
-            D_800E6280.card_result = 0x88;
+            game_state.card_result = 0x88;
         }
-    } while (D_800E6280.card_result == 0);
+    } while (game_state.card_result == 0);
     Hw_Clear();
-    return D_800E6280.card_result;
+    return game_state.card_result;
 }
 
 void Hw_Clear(void) {
@@ -139,26 +139,26 @@ void Hw_Stop(void) {
 }
 
 void func_80053CAC(u8 arg0) {
-    D_800E6280.card_result = 0;
-    D_800E6280.card_step = arg0;
+    game_state.card_result = 0;
+    game_state.card_step = arg0;
 }
 
 void func_80053CC0(void) {
-    D_800E6280.card_result = 0;
-    D_800E6280.card_step += 1;
+    game_state.card_result = 0;
+    game_state.card_step += 1;
 }
 
-void func_80053CE0(void) {
-    D_800E6280.card_busy = 1;
-    D_800E6280.card_step = 0;
-    D_800E6280.card_result = 0;
-    D_800E6280.card_retry_count = 0;
-    D_800E6280.card_timer = 0;
+void card_start(void) {
+    game_state.card_busy = 1;
+    game_state.card_step = 0;
+    game_state.card_result = 0;
+    game_state.card_retry_count = 0;
+    game_state.card_timer = 0;
 }
 
-void func_80053D10(void) {
-    D_800E6280.card_busy = 0;
-    D_800E6280.card_timer = 0;
+void card_stop(void) {
+    game_state.card_busy = 0;
+    game_state.card_timer = 0;
 }
 
 void func_80053D24(u8 arg0) {
@@ -170,11 +170,11 @@ void func_80053D24(u8 arg0) {
         func_80053CAC(arg0);
         return;
     case 4:
-        D_800E6280.card_retry_count += 1;
+        game_state.card_retry_count += 1;
         func_80053CAC(0);
-        if ((u32)D_800E6280.card_retry_count >= 3) {
-            D_800E6280.card_busy = 0;
-            D_800E6280.card_result = 0xFF;
+        if ((u32)game_state.card_retry_count >= 3) {
+            game_state.card_busy = 0;
+            game_state.card_result = 0xFF;
             return;
         }
     case 0:
@@ -206,12 +206,12 @@ s32 func_80053DDC(void) {
         close(D_800B58E4);
         break;
     case 0x11:
-        D_800E6280.card_retry_count += 1;
+        game_state.card_retry_count += 1;
         func_80053CAC(0);
         close(D_800B58E4);
         break;
     case 0x21:
-        D_800E6280.card_retry_count += 1;
+        game_state.card_retry_count += 1;
         func_80053CAC(0);
         close(D_800B58E4);
         break;
@@ -220,13 +220,13 @@ s32 func_80053DDC(void) {
 }
 
 s32 func_80053F04(void) {
-    D_800E6280.card_timer += 1;
-    if (D_800E6280.card_busy != 0) {
+    game_state.card_timer += 1;
+    if (game_state.card_busy != 0) {
         /* FAKE: byte view of the u8 field avoids the redundant selector copy (move v0,v1), as in
          * TEL (T-10630). T-17000 */
-        switch (*(u8 *)&D_800E6280.card_step) {
+        switch (*(u8 *)&game_state.card_step) {
         case 0x0:
-            D_800E6280.card_result = 0;
+            game_state.card_result = 0;
             Sw_Clear();
             if (_card_info(0) == 1) {
                 func_80053CC0();
@@ -244,8 +244,8 @@ s32 func_80053F04(void) {
             func_80053D24(0x40);
             break;
         case 0x4:
-            D_800E6280.card_busy = 0;
-            D_800E6280.card_result = 1;
+            game_state.card_busy = 0;
+            game_state.card_result = 1;
             break;
         case 0x20:
             func_800AD950(0);
@@ -254,7 +254,7 @@ s32 func_80053F04(void) {
                 func_80053CAC(0);
             } else {
                 Hw_Test();
-                switch (D_800E6280.card_result) {
+                switch (game_state.card_result) {
                 default:
                 case 0x0:
                 case 0x81:
@@ -275,16 +275,16 @@ s32 func_80053F04(void) {
             func_80053D24(0x40);
             break;
         case 0x32:
-            D_800E6280.card_busy = 0;
-            D_800E6280.card_result = 1;
+            game_state.card_busy = 0;
+            game_state.card_result = 1;
             break;
         case 0x40:
-            D_800E6280.card_busy = 0;
-            D_800E6280.card_result = 0xF1;
+            game_state.card_busy = 0;
+            game_state.card_result = 0xF1;
             break;
         }
     }
-    return (s32) D_800E6280.card_result;
+    return (s32) game_state.card_result;
 }
 
 s32 func_80054108(void) {
@@ -295,7 +295,7 @@ s32 func_80054108(void) {
 }
 
 s32 func_80054140(void) {
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
 
     g->card_timer += 1;
     if (g->card_busy != 0) {
@@ -329,17 +329,17 @@ s32 func_80054140(void) {
 }
 
 u8 func_80054284(void) {
-    D_800E6280.card_timer += 1;
-    if (D_800E6280.card_busy != 0) {
-        switch (D_800E6280.card_step) {
+    game_state.card_timer += 1;
+    if (game_state.card_busy != 0) {
+        switch (game_state.card_step) {
         case 0:
             Sw_Clear();
-            D_800E6280.save_slot = 0;
+            game_state.save_slot = 0;
             if (func_8005478C(0) == 1) {
                 func_80053CC0();
             } else {
-                D_800E6280.card_result = 0xD0;
-                D_800E6280.card_busy = 0;
+                game_state.card_result = 0xD0;
+                game_state.card_busy = 0;
             }
             break;
         case 1:
@@ -348,30 +348,30 @@ u8 func_80054284(void) {
             }
             break;
         case 2:
-            D_800E6280.card_result = 3;
-            D_800E6280.card_busy = 0;
+            game_state.card_result = 3;
+            game_state.card_busy = 0;
             break;
         case 16:
-            D_800E6280.card_busy = 0;
-            D_800E6280.card_result = 0xF0;
+            game_state.card_busy = 0;
+            game_state.card_result = 0xF0;
             break;
         }
     }
-    return D_800E6280.card_result;
+    return game_state.card_result;
 }
 
 s32 func_80054388(void) {
-    D_800E6280.card_timer += 1;
-    if (D_800E6280.card_busy != 0) {
-        switch (D_800E6280.card_step) {
+    game_state.card_timer += 1;
+    if (game_state.card_busy != 0) {
+        switch (game_state.card_step) {
         case 0:
             Sw_Clear();
-            D_800E6280.save_slot = 0;
+            game_state.save_slot = 0;
             if (func_80054884(0) == 1) {
                 func_80053CC0();
             } else {
-                D_800E6280.card_result = 0xD0;
-                D_800E6280.card_busy = 0;
+                game_state.card_result = 0xD0;
+                game_state.card_busy = 0;
             }
             break;
         case 1:
@@ -380,29 +380,29 @@ s32 func_80054388(void) {
             }
             break;
         case 2:
-            D_800E6280.card_result = 0x13;
-            D_800E6280.card_busy = 0;
+            game_state.card_result = 0x13;
+            game_state.card_busy = 0;
             break;
         case 16:
-            D_800E6280.card_busy = 0;
-            D_800E6280.card_result = 0xF0;
+            game_state.card_busy = 0;
+            game_state.card_result = 0xF0;
             break;
         }
     }
-    return (s32) D_800E6280.card_result;
+    return (s32) game_state.card_result;
 }
 
 u8 func_8005448C(void) {
-    D_800E6280.card_timer += 1;
-    if (D_800E6280.card_busy != 0) {
-        switch (D_800E6280.card_step) {
+    game_state.card_timer += 1;
+    if (game_state.card_busy != 0) {
+        switch (game_state.card_step) {
         case 0:
             Sw_Clear();
-            if (func_8005478C(D_800E6280.save_slot) == 1) {
+            if (func_8005478C(game_state.save_slot) == 1) {
                 func_80053CC0();
             } else {
-                D_800E6280.card_result = 0xD0;
-                D_800E6280.card_busy = 0;
+                game_state.card_result = 0xD0;
+                game_state.card_busy = 0;
             }
             break;
         case 1:
@@ -411,29 +411,29 @@ u8 func_8005448C(void) {
             }
             break;
         case 2:
-            D_800E6280.card_result = 4;
-            D_800E6280.card_busy = 0;
+            game_state.card_result = 4;
+            game_state.card_busy = 0;
             break;
         case 16:
-            D_800E6280.card_busy = 0;
-            D_800E6280.card_result = 0xF0;
+            game_state.card_busy = 0;
+            game_state.card_result = 0xF0;
             break;
         }
     }
-    return D_800E6280.card_result;
+    return game_state.card_result;
 }
 
 u8 func_80054590(void) {
-    D_800E6280.card_timer += 1;
-    if (D_800E6280.card_busy != 0) {
-        switch (D_800E6280.card_step) {
+    game_state.card_timer += 1;
+    if (game_state.card_busy != 0) {
+        switch (game_state.card_step) {
         case 0:
             Sw_Clear();
-            if (func_80054884(D_800E6280.save_slot) == 1) {
+            if (func_80054884(game_state.save_slot) == 1) {
                 func_80053CC0();
             } else {
-                D_800E6280.card_result = 0xD0;
-                D_800E6280.card_busy = 0;
+                game_state.card_result = 0xD0;
+                game_state.card_busy = 0;
             }
             break;
         case 1:
@@ -442,16 +442,16 @@ u8 func_80054590(void) {
             }
             break;
         case 2:
-            D_800E6280.card_result = 0x14;
-            D_800E6280.card_busy = 0;
+            game_state.card_result = 0x14;
+            game_state.card_busy = 0;
             break;
         case 16:
-            D_800E6280.card_busy = 0;
-            D_800E6280.card_result = 0xF0;
+            game_state.card_busy = 0;
+            game_state.card_result = 0xF0;
             break;
         }
     }
-    return D_800E6280.card_result;
+    return game_state.card_result;
 }
 
 s32 func_80054694(s32 arg0) {
@@ -512,13 +512,13 @@ s32 func_8005478C(s32 arg0) {
         } while ((D_800B58E4 = open(name, 0x8001)) == -1);
         retry = 0;
     }
-    if (read(D_800B58E4, D_80123120, 0x2000) == -1) {
+    if (read(D_800B58E4, card_block, 0x2000) == -1) {
         do {
             retry++;
             if (retry >= 16) {
                 return -1;
             }
-        } while (read(D_800B58E4, D_80123120, 0x2000) == -1);
+        } while (read(D_800B58E4, card_block, 0x2000) == -1);
     }
     return 1;
 }
@@ -551,7 +551,7 @@ s32 func_80054884(s32 arg0) {
         } while ((D_800B58E4 = open(name, 0x8002)) == -1);
         retry = 0;
     }
-    strncpy(D_80123120, "SC", 2);
+    strncpy(card_block, "SC", 2);
     D_80123122 = 0x13;
     D_80123123 = 1;
     bzero(D_80123124, 0x40);
@@ -577,7 +577,7 @@ s32 func_80054884(s32 arg0) {
         func_80054FC0(0);
     }
     D_80123320[1] = D_80123320[0];
-    while (write(D_800B58E4, D_80123120, 0x2000) == -1) {
+    while (write(D_800B58E4, card_block, 0x2000) == -1) {
         retry++;
         if (retry >= 16) {
             return -1;
@@ -641,7 +641,7 @@ s32 func_80054BE4(void) {
 }
 
 void func_80054C4C(void) {
-    bzero(D_80123120, 0x2000);
+    bzero(card_block, 0x2000);
 }
 
 s32 func_80054C74(s32 arg0) {
@@ -655,7 +655,7 @@ s32 func_80054C74(s32 arg0) {
     if ((D_800B58E4 = open(name, 2)) == -1) {
         return -1;
     }
-    strncpy(D_80123120, "SC", 2);
+    strncpy(card_block, "SC", 2);
     D_80123122 = 0x13;
     D_80123123 = 1;
     bzero(D_80123124, 0x40);
@@ -675,7 +675,7 @@ s32 func_80054C74(s32 arg0) {
     }
     D_80123320[1] = D_80123320[0];
     i = 0;
-    p = D_80123120;
+    p = card_block;
     /* FAKE: a one-pass loop; the u32 counter makes the bound a second 0x2000 register next to the write
        size, as in the original. The real loop shape is unknown. T-17007 */
     for (; i < 0x2000; i += 0x2000) {
@@ -689,8 +689,8 @@ s32 func_80054C74(s32 arg0) {
 }
 
 void func_80054E6C(void) {
-    SystemData *w = &D_800E7D10;
-    GameState *g = &D_800E6280;
+    SystemData *w = &system_data;
+    GameState *g = &game_state;
     s32 pad[14]; /* FAKE: T-25105, 56 unused bytes of the original 0x80 frame; the real locals are unknown */
     s32 i;
     s32 slot;
@@ -719,48 +719,48 @@ s32 func_80054FC0(s32 arg0) {
     u32 offset;
 
     bank = (SystemSaveImage *)D_80123320;
-    D_800E7D10.slot_status[D_800E7D10.selected_slot] = 1;
-    memcpy(bank->slot_status, D_800E7D10.slot_status, 16);
-    memcpy(bank->flags, D_800E7D10.flags, 16);
-    bank->unk_24[0] = D_800E7D10.unk_024[0];
-    bank->unk_24[1] = D_800E7D10.unk_024[1];
-    if (D_800E7D10.selected_slot != 0) {
-        bank->selected_slot = D_800E7D10.selected_slot % 15U;
+    system_data.slot_status[system_data.selected_slot] = 1;
+    memcpy(bank->slot_status, system_data.slot_status, 16);
+    memcpy(bank->flags, system_data.flags, 16);
+    bank->unk_24[0] = system_data.unk_024[0];
+    bank->unk_24[1] = system_data.unk_024[1];
+    if (system_data.selected_slot != 0) {
+        bank->selected_slot = system_data.selected_slot % 15U;
     }
-    bank->config0 = ((SystemDataSaveView *)&D_800E7D10)->config0;
-    bank->config1 = ((SystemDataSaveView *)&D_800E7D10)->config1;
-    bank->unk_54[0] = D_800E7D10.unk_027[0];
-    bank->unk_54[1] = D_800E7D10.unk_027[1];
-    memcpy(bank->records, D_800E7D10.unk_058, 0x800);
-    memcpy(bank->year, D_800E7D10.year, 16);
-    memcpy(bank->month, D_800E7D10.month, 16);
-    memcpy(bank->day, D_800E7D10.day, 16);
-    memcpy(bank->family_name, D_800E7D10.family_name, 0x80);
-    memcpy(bank->given_name, D_800E7D10.given_name, 0x80);
-    memcpy(bank->nickname, D_800E7D10.nickname, 0x100);
-    memcpy(bank->club, D_800E7D10.club, 16);
-    memcpy(bank->metrics, D_800E7D10.metrics, 0x240);
-    memcpy(bank->unk_CD8, D_800E7D10.unk_CC8, 0x100);
-    if (D_800E6280.options_dirty == 0) {
-        if (D_800E7D10.selected_slot != 0) {
-            memcpy(D_800E7D10.unk_DC8, D_80125C10, 0x40);
-            memcpy(&D_800E7D10.unk_DC8[0xF0], &D_80125C50, 4);
-            D_800E7D10.unk_DC8[0xF4] = D_800B5C08;
-            D_800E7D10.unk_DC8[0xF5] = D_80125C54;
-            D_800E7D10.unk_DC8[0xF6] = D_80125C55;
-            memcpy(bank->unk_DD8, D_800E7D10.unk_DC8, 0x100);
+    bank->config0 = ((SystemDataSaveView *)&system_data)->config0;
+    bank->config1 = ((SystemDataSaveView *)&system_data)->config1;
+    bank->unk_54[0] = system_data.unk_027[0];
+    bank->unk_54[1] = system_data.unk_027[1];
+    memcpy(bank->records, system_data.unk_058, 0x800);
+    memcpy(bank->year, system_data.year, 16);
+    memcpy(bank->month, system_data.month, 16);
+    memcpy(bank->day, system_data.day, 16);
+    memcpy(bank->family_name, system_data.family_name, 0x80);
+    memcpy(bank->given_name, system_data.given_name, 0x80);
+    memcpy(bank->nickname, system_data.nickname, 0x100);
+    memcpy(bank->club, system_data.club, 16);
+    memcpy(bank->metrics, system_data.metrics, 0x240);
+    memcpy(bank->unk_CD8, system_data.unk_CC8, 0x100);
+    if (game_state.options_dirty == 0) {
+        if (system_data.selected_slot != 0) {
+            memcpy(system_data.unk_DC8, D_80125C10, 0x40);
+            memcpy(&system_data.unk_DC8[0xF0], &D_80125C50, 4);
+            system_data.unk_DC8[0xF4] = mascot_choice;
+            system_data.unk_DC8[0xF5] = D_80125C54;
+            system_data.unk_DC8[0xF6] = D_80125C55;
+            memcpy(bank->unk_DD8, system_data.unk_DC8, 0x100);
         }
     }
     /* byte sum of the selected bank's data, from the card block base.
-       FAKE: T-25105, the checksum store below names D_80123120 in its address: as1 moves `lw ra`
+       FAKE: T-25105, the checksum store below names card_block in its address: as1 moves `lw ra`
        above a store only when the address names a global, as the original's epilogue shows (a store
        through a pointer local stays before it). The real source form is unknown. */
-    p = &D_80123120[arg0 * 0xF00 + 0x204];
+    p = &card_block[arg0 * 0xF00 + 0x204];
     sum = 0;
     for (offset = 4; offset < 0xF00; offset++) {
         sum += *p++;
     }
-    ((SaveBank *)&D_80123120[arg0 * 0xF00 + 0x200])->checksum = sum;
+    ((SaveBank *)&card_block[arg0 * 0xF00 + 0x200])->checksum = sum;
 }
 
 s32 func_800552DC(s32 arg0) {
@@ -772,41 +772,41 @@ s32 func_800552DC(s32 arg0) {
     /* FAKE: T-24501, integer address arithmetic keeps the bank offset grouped
      * before adding the image base; pointer arithmetic reassociates +0x200 and
      * changes temporary numbering throughout both aggregate copies. */
-    bank = (SystemSaveImage *)((D_800E6280.album_slot * 0xF00 + 0x200) + (u32)D_80123120);
-    memcpy(D_800E7D10.flags, bank->flags, 16);
-    D_800E7D10.unk_024[0] |= bank->unk_24[0];
-    D_800E7D10.unk_024[1] = bank->unk_24[1];
-    D_800E7D10.selected_slot = bank->selected_slot;
-    if ((((SystemDataSaveView *)&D_800E7D10)->config0.flags.b[3] & 1) == 0) {
-        ((SystemDataSaveView *)&D_800E7D10)->config0 = bank->config0;
+    bank = (SystemSaveImage *)((game_state.album_slot * 0xF00 + 0x200) + (u32)card_block);
+    memcpy(system_data.flags, bank->flags, 16);
+    system_data.unk_024[0] |= bank->unk_24[0];
+    system_data.unk_024[1] = bank->unk_24[1];
+    system_data.selected_slot = bank->selected_slot;
+    if ((((SystemDataSaveView *)&system_data)->config0.flags.b[3] & 1) == 0) {
+        ((SystemDataSaveView *)&system_data)->config0 = bank->config0;
     }
-    if (D_800E7D10.bits.flag == 0) {
-        ((SystemDataSaveView *)&D_800E7D10)->config1 = bank->config1;
+    if (system_data.bits.flag == 0) {
+        ((SystemDataSaveView *)&system_data)->config1 = bank->config1;
     }
-    D_800E7D10.unk_027[0] = bank->unk_54[0];
-    D_800E7D10.unk_027[1] = bank->unk_54[1];
-    memcpy(D_800E7D10.unk_058, bank->records, 0x800);
-    memcpy(D_800E7D10.year, bank->year, 16);
-    memcpy(D_800E7D10.month, bank->month, 16);
-    memcpy(D_800E7D10.day, bank->day, 16);
-    memcpy(D_800E7D10.family_name, bank->family_name, 0x80);
-    memcpy(D_800E7D10.given_name, bank->given_name, 0x80);
-    memcpy(D_800E7D10.nickname, bank->nickname, 0x100);
-    memcpy(D_800E7D10.club, bank->club, 16);
-    memcpy(D_800E7D10.metrics, bank->metrics, 0x240);
-    memcpy(D_800E7D10.unk_CC8, bank->unk_CD8, 0x100);
-    memcpy(D_800E7D10.unk_DC8, bank->unk_DD8, 0x100);
-    memcpy(D_80125C10, D_800E7D10.unk_DC8, 0x40);
-    memcpy(&D_80125C50, &D_800E7D10.unk_DC8[0xF0], 4);
-    D_800B5C08 = D_800E7D10.unk_DC8[0xF4];
-    D_80125C54 = D_800E7D10.unk_DC8[0xF5];
-    D_80125C55 = D_800E7D10.unk_DC8[0xF6];
+    system_data.unk_027[0] = bank->unk_54[0];
+    system_data.unk_027[1] = bank->unk_54[1];
+    memcpy(system_data.unk_058, bank->records, 0x800);
+    memcpy(system_data.year, bank->year, 16);
+    memcpy(system_data.month, bank->month, 16);
+    memcpy(system_data.day, bank->day, 16);
+    memcpy(system_data.family_name, bank->family_name, 0x80);
+    memcpy(system_data.given_name, bank->given_name, 0x80);
+    memcpy(system_data.nickname, bank->nickname, 0x100);
+    memcpy(system_data.club, bank->club, 16);
+    memcpy(system_data.metrics, bank->metrics, 0x240);
+    memcpy(system_data.unk_CC8, bank->unk_CD8, 0x100);
+    memcpy(system_data.unk_DC8, bank->unk_DD8, 0x100);
+    memcpy(D_80125C10, system_data.unk_DC8, 0x40);
+    memcpy(&D_80125C50, &system_data.unk_DC8[0xF0], 4);
+    mascot_choice = system_data.unk_DC8[0xF4];
+    D_80125C54 = system_data.unk_DC8[0xF5];
+    D_80125C55 = system_data.unk_DC8[0xF6];
 }
 
 /* Writes a game save into bank arg0 of the card image (GameSaveImage), then stores the bank's byte sum.
    FAKE: T-25105, the straight-line stores reach the bank through the byte offset
-   `&D_80123120[arg0 * 0xF00 + 0x200]` and the loops as an element of the bank array
-   `((GameSaveImage *)&D_80123120[0x200])[arg0]`. uopt keeps the two spellings as two values: the
+   `&card_block[arg0 * 0xF00 + 0x200]` and the loops as an element of the bank array
+   `((GameSaveImage *)&card_block[0x200])[arg0]`. uopt keeps the two spellings as two values: the
    original's two base registers (a2 for the stores, a3 recomputed before the first loop, both
    spilled around get_k_speed). One spelling for both gives one base register. The real source
    form is unknown. */
@@ -816,64 +816,64 @@ s32 func_8005557C(s32 arg0) {
     s32 sum;
     u32 i; /* one counter for every loop: only the last loop (the byte sum) is unrolled */
 
-    g = &D_800E6280;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004 = g->vacation;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 = g->year;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 = g->month;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007 = g->day;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008 = g->weekday;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A = g->day_count;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[0] = g->month_calendar[0];
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[1] = g->month_calendar[1];
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C = *(ProfileBlock *)g->player_full_name;
+    g = &game_state;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_004 = g->vacation;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_005 = g->year;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_006 = g->month;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_007 = g->day;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_008 = g->weekday;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_00A = g->day_count;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_00C[0] = g->month_calendar[0];
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_00C[1] = g->month_calendar[1];
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_08C = *(ProfileBlock *)g->player_full_name;
     for (i = 0; i < 16; i++) {
-        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_108[i] = g->girls[i];
+        ((GameSaveImage *)&card_block[0x200])[arg0].unk_108[i] = g->girls[i];
     }
     for (i = 0; i < 16; i++) {
-        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_488[i] = g->girl_cleared[i];
+        ((GameSaveImage *)&card_block[0x200])[arg0].unk_488[i] = g->girl_cleared[i];
     }
     for (i = 0; i < 8; i++) {
-        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_498[i] = g->unk_54C[i];
+        ((GameSaveImage *)&card_block[0x200])[arg0].unk_498[i] = g->unk_54C[i];
     }
     for (i = 0; i < 12; i++) {
-        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_4B8[i] = ((WordView *)g->clubs)[i];
+        ((GameSaveImage *)&card_block[0x200])[arg0].unk_4B8[i] = ((WordView *)g->clubs)[i];
     }
     g->unk_668[3] = get_k_speed();
     g->unk_668[2] = D_800B6708;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8 = *(EventFlagBlock *)g->event_flags;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_4E8 = *(EventFlagBlock *)g->event_flags;
     for (i = 0; i < 4; i++) {
-        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5E8[i] = g->date_place_history[i];
+        ((GameSaveImage *)&card_block[0x200])[arg0].unk_5E8[i] = g->date_place_history[i];
     }
     for (i = 0; i < 16; i++) {
-        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5EC[i] = g->girl_last_date_spot[i];
+        ((GameSaveImage *)&card_block[0x200])[arg0].unk_5EC[i] = g->girl_last_date_spot[i];
     }
     for (i = 0; i < 16; i++) {
-        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5FC[i] = g->girl_last_date_spot_timer[i];
+        ((GameSaveImage *)&card_block[0x200])[arg0].unk_5FC[i] = g->girl_last_date_spot_timer[i];
     }
     for (i = 0; i < 16; i++) {
-        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_60C[i] = g->girl_event_bits[i];
+        ((GameSaveImage *)&card_block[0x200])[arg0].unk_60C[i] = g->girl_event_bits[i];
     }
     for (i = 0; i < 256; i++) {
-        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_61C[i] = g->event_log[i];
+        ((GameSaveImage *)&card_block[0x200])[arg0].unk_61C[i] = g->event_log[i];
     }
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C = g->icon_mode;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D = g->icon_count;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E = g->menu_mode;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F = g->sd_anim_fast;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20 = g->voice_mode;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24 = g->last_command;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28 = g->cursor_speed;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29 = g->click_mode;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A = g->double_click_interval;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B = g->confirm_button;
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C = *(WordView *)g->quarter_flags;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E1C = g->icon_mode;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E1D = g->icon_count;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E1E = g->menu_mode;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E1F = g->sd_anim_fast;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E20 = g->voice_mode;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E24 = g->last_command;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E28 = g->cursor_speed;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E29 = g->click_mode;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E2A = g->double_click_interval;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E2B = g->confirm_button;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E2C = *(WordView *)g->quarter_flags;
     /* byte sum of the bank's data; the checksum store is a FAKE address form as in func_80054FC0 (T-25105) */
-    p = &D_80123120[arg0 * 0xF00 + 0x204];
+    p = &card_block[arg0 * 0xF00 + 0x204];
     sum = 0;
     for (i = 4; i < 0xF00; i++) {
         sum += *p++;
     }
-    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->checksum = sum;
+    ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->checksum = sum;
 }
 
 /* FAKE: T-10850, T-17007: the dead initial assignments set the induction-register numbering, and
@@ -889,7 +889,7 @@ s32 func_80055A38(s32 arg0) {
     u8 *q;
     u8 *r;
 
-    n = 0; b = 0; p = D_80123320[0].data; r = D_80123120; q = D_80123320[0].data;
+    n = 0; b = 0; p = D_80123320[0].data; r = card_block; q = D_80123320[0].data;
     for (; b < 2; b++) {
         n = 0;
         p = q;
@@ -901,7 +901,7 @@ s32 func_80055A38(s32 arg0) {
             sum += *p++;
         }
         if (sum == *(s32 *)(r + 0x200) && n != 0) {
-            D_800E6280.album_slot = b;
+            game_state.album_slot = b;
             return 1;
         }
         r += 0xF00;
@@ -910,10 +910,10 @@ s32 func_80055A38(s32 arg0) {
     return -1;
 }
 
-/* The load half of func_8005557C: copies bank D_800E6280.album_slot & 1 back into GameState, field by field
+/* The load half of func_8005557C: copies bank game_state.album_slot & 1 back into GameState, field by field
    in the same order (T-25310). The bank address has the writer's two spellings (FAKE: T-25310, the same
    address forms as func_8005557C, see its comment).
-   The slot byte is read through g, set before the func_80055A38 call: a plain D_800E6280.album_slot read
+   The slot byte is read through g, set before the func_80055A38 call: a plain game_state.album_slot read
    lets IDO fold arg0 into the bank base, which then splits into two live ranges. */
 s32 func_80055AFC(s32 arg0) {
     GameState *g;
@@ -921,73 +921,73 @@ s32 func_80055AFC(s32 arg0) {
     u32 i;
     s32 pad[2]; /* FAKE: T-25310, two unknown frame words (frame 0x48, spill homes 0x2C/0x30) */
 
-    g = &D_800E6280;
+    g = &game_state;
     if (func_80055A38(0) == -1) {
         return -1;
     }
     arg0 = g->album_slot & 1;
-    if (((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 == 0) {
+    if (((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_005 == 0) {
         return -1;
     }
-    if (((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 == 0) {
+    if (((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_006 == 0) {
         return -1;
     }
-    g->vacation = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004;
-    g->year = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005;
-    g->month = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006;
-    g->day = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007;
-    g->weekday = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008;
-    g->day_count = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A;
+    g->vacation = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_004;
+    g->year = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_005;
+    g->month = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_006;
+    g->day = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_007;
+    g->weekday = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_008;
+    g->day_count = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_00A;
     for (i = 0; i < 2; i++) {
-        g->month_calendar[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_00C[i];
+        g->month_calendar[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_00C[i];
     }
-    *(ProfileBlock *)g->player_full_name = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C;
+    *(ProfileBlock *)g->player_full_name = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_08C;
     for (i = 0; i < 16; i++) {
-        g->girls[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_108[i];
+        g->girls[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_108[i];
     }
     for (i = 0; i < 16; i++) {
-        g->girl_cleared[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_488[i];
+        g->girl_cleared[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_488[i];
     }
     for (i = 0; i < 8; i++) {
-        g->unk_54C[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_498[i];
+        g->unk_54C[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_498[i];
     }
     for (i = 0; i < 12; i++) {
-        ((WordView *)g->clubs)[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_4B8[i];
+        ((WordView *)g->clubs)[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_4B8[i];
     }
-    *(EventFlagBlock *)g->event_flags = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8;
+    *(EventFlagBlock *)g->event_flags = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_4E8;
     k_speed_set(g->unk_668[3]);
     D_800B6708 = g->unk_668[2];
     for (i = 0; i < 4; i++) {
-        g->date_place_history[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5E8[i];
+        g->date_place_history[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_5E8[i];
     }
     for (i = 0; i < 16; i++) {
-        g->girl_last_date_spot[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5EC[i];
+        g->girl_last_date_spot[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_5EC[i];
     }
     for (i = 0; i < 16; i++) {
-        g->girl_last_date_spot_timer[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5FC[i];
+        g->girl_last_date_spot_timer[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_5FC[i];
     }
     for (i = 0; i < 16; i++) {
-        g->girl_event_bits[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_60C[i];
+        g->girl_event_bits[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_60C[i];
     }
     /* FAKE: T-25310, the result is stored and never read; the original reads bzero's v0 after the call,
        which keeps v0 out of the unrolled loop's start values (end pointer in v0, the counter range in t4,
        the bank bases in t5 and ra). Its real use is unknown. */
     p = bzero(g->event_log, 0x800);
     for (i = 0; i < 256; i++) {
-        g->event_log[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_61C[i];
+        g->event_log[i] = ((GameSaveImage *)&card_block[0x200])[arg0].unk_61C[i];
     }
     g->event_log_count = func_8006C988(&g->current_girl, &g->date_girl, 1);
-    g->icon_mode = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C;
-    g->icon_count = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D;
-    g->menu_mode = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E;
-    g->sd_anim_fast = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F;
-    g->voice_mode = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20;
-    g->last_command = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24;
-    g->cursor_speed = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28;
-    g->click_mode = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29;
-    g->double_click_interval = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A;
-    g->confirm_button = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B;
-    *(WordView *)g->quarter_flags = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C;
+    g->icon_mode = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E1C;
+    g->icon_count = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E1D;
+    g->menu_mode = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E1E;
+    g->sd_anim_fast = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E1F;
+    g->voice_mode = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E20;
+    g->last_command = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E24;
+    g->cursor_speed = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E28;
+    g->click_mode = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E29;
+    g->double_click_interval = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E2A;
+    g->confirm_button = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E2B;
+    *(WordView *)g->quarter_flags = ((GameSaveImage *)&card_block[arg0 * 0xF00 + 0x200])->unk_E2C;
     return 1;
 }
 
@@ -1058,7 +1058,7 @@ s32 func_80056070(u8 *buf, s32 arg1) {
 void func_80056284(void) {
     s32 i;
 
-    func_80053D10();
+    card_stop();
     func_80054C4C();
     D_800E7D14[0] = 0;
     D_800E7D15[0] = 0;
@@ -1069,6 +1069,6 @@ void func_80056284(void) {
         D_800E7D13[i * 4 + 7] = 0;
         D_800E7D13[i * 4 + 4] = 0;
     }
-    func_80053CE0();
+    card_start();
     D_800E8BEE = 0;
 }

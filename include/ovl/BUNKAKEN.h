@@ -26,7 +26,7 @@ void func_80132444(void);
 void func_801324AC(void);
 void func_801324E0(void);
 /* T-18500: three 13-word tables of text addresses (in the loaded scene data at 0x801B0000), filled by
- * func_80148ED0; func_8014A0E0 copies row k of each table into D_800CA160/164/168. */
+ * func_80148ED0; func_8014A0E0 copies row k of each table into dialogue_text_table/164/168. */
 extern s32 D_801562A0[3][13];
 
 /* func_80152F4C copies a 4-by-4 word grid and indexes two two-bit fields. */
@@ -112,11 +112,11 @@ void func_8013CEC0(void);
 #define OVL_BUNKAKEN_T18500_H
 /* T-18500: per-heroine tables of the date loaders func_8013B510 and func_80143DD0, indexed by
  * D_80122EBC (12 heroines). */
-extern s32 D_80155EA0[12];           /* argument of func_800866A0 */
+extern s32 D_80155EA0[12];           /* argument of bustup_read_step */
 extern void (*D_80155ED0[12])(void); /* called once the scene data is loaded */
 extern u8 D_80155F00[12];            /* first argument of cd_read_sectors */
 extern s32 D_80155F0C[12];           /* sector of cd_read_sectors */
-extern u8 D_80155F3C[20];            /* argument of func_80083440; the last 8 bytes are zero */
+extern u8 D_80155F3C[20];            /* argument of bustup_layout_set; the last 8 bytes are zero */
 
 /* T-18500: 11-byte table copied to the stack by func_80144F70 (lw, lw, lwl/lwr), indexed by D_80122EC0. */
 typedef struct BunkakenBytes11 {

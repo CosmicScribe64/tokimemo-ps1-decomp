@@ -7,14 +7,14 @@ void func_80133030(void) {
     EdFnTbl16 tbl;
 
     tbl = D_8013C370;
-    func_80083808();
-    idx = D_800E6280.step;
+    bustup_wink_update();
+    idx = game_state.step;
     tbl.f[idx](0x80);
     check_k_scroll();
     k_disp_inc2();
-    func_80066C08(2);
+    screen_frame_draw(2);
     message_window_show();
-    func_80066334();
+    message_window_title_update();
     hizuke_show();
     func_80083A10();
 }
@@ -30,96 +30,96 @@ void func_801330E4(void) {
     EdShorts18 chance;
 
     chance = D_8013C3B0;
-    D_800E6280.year = 0x62;
-    D_800E6280.month = 3;
-    D_800E6280.day = 1;
-    D_800E6280.weekday = WEEKDAY_SUNDAY;
+    game_state.year = 0x62;
+    game_state.month = 3;
+    game_state.day = 1;
+    game_state.weekday = WEEKDAY_SUNDAY;
     func_80053418(rank, points);
-    D_800E6280.current_girl = GIRL_YOSHIO;
-    if (points[0] < 0x1F4 && D_800E6280.girls[0xC].flags.b[3] >= 0x46 && D_800E6280.event_flags[0x4F] == 2) {
-        D_800E6280.current_girl = GIRL_REI;
+    game_state.current_girl = GIRL_YOSHIO;
+    if (points[0] < 0x1F4 && game_state.girls[0xC].flags.b[3] >= 0x46 && game_state.event_flags[0x4F] == 2) {
+        game_state.current_girl = GIRL_REI;
     } else {
         best = 0x1F3;
         for (i = 0; i < 0xB; i++) {
             p = &points[i];
-            if (D_800E6280.girls[i].flags.f.met && best < *p) {
-                D_800E6280.current_girl = i;
+            if (game_state.girls[i].flags.f.met && best < *p) {
+                game_state.current_girl = i;
                 best = *p;
             }
         }
     }
-    if (D_800E6280.current_girl == GIRL_YOSHIO) {
+    if (game_state.current_girl == GIRL_YOSHIO) {
         /* FAKE: T-25145, a second read of the flag word: IDO 5.3 then keeps the word in a register
          * (a0), as the original compiler did for its one read (wiki/original-compiler.md rule 3),
          * so ugen shifts it into v0 and copies the f9 temporary back after the sum */
-        if (D_800E6280.girls[0xB].flags.u) {
+        if (game_state.girls[0xB].flags.u) {
         }
-        level = D_800E6280.girls[0xB].flags.f.story_stage;
-        level += (D_800E6280.event_flags[0x4C] > 0) * 2;
-        level += (D_800E6280.event_flags[0x4E] > 0) * 2;
+        level = game_state.girls[0xB].flags.f.story_stage;
+        level += (game_state.event_flags[0x4C] > 0) * 2;
+        level += (game_state.event_flags[0x4E] > 0) * 2;
         if (level >= 0x12) {
             level = 0x11;
         }
-        if (D_800E6280.girls[0xB].flags.f.story_stage != 0 && D_800E6280.event_flags[0x4D] == 0) {
+        if (game_state.girls[0xB].flags.f.story_stage != 0 && game_state.event_flags[0x4D] == 0) {
             if (rand() % 256 < chance.v[level]) {
-                D_800E6280.current_girl = GIRL_MIHARU;
+                game_state.current_girl = GIRL_MIHARU;
             }
         }
     }
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
+    text_system_reset();
     strcpy(D_800CA19C, "廊下");
     strcpy(D_800CA1DC, "教室");
-    D_800E6280.tile_layer_enabled = 0;
-    D_800E6280.quads_enabled = 1;
-    func_8008585C();
-    D_800E6280.screen_brightness = 0x80;
-    D_800B593C = 0;
+    game_state.tile_layer_enabled = 0;
+    game_state.quads_enabled = 1;
+    dialogue_clear();
+    game_state.screen_brightness = 0x80;
+    dec_bg_brightness = 0;
     D_800B5940 = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
-    func_80084E4C();
-    D_800CA148 = 0;
-    D_800CA14C = 0;
-    func_800847B8(D_800E6280.current_girl);
+    text_marker_hide();
+    dialogue_group = 0;
+    dialogue_line = 0;
+    dialogue_names_set(game_state.current_girl);
     func_80132000();
-    D_800CA160 = D_8013C280[0][3];
-    D_800CA164 = D_8013C280[1][3];
-    D_800CA168 = D_8013C280[2][3];
-    func_8004284C();
+    dialogue_text_table = D_8013C280[0][3];
+    dialogue_command_table = D_8013C280[1][3];
+    dialogue_voice_table = D_8013C280[2][3];
+    main_step_next();
 }
 
 void func_80133400(void) {
     bg_read_sub2(0x4045);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133428(void) {
     cd_read_sectors(0x11, 0x801F0000, 0xAE07);
     func_80132000();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133460(void) {
-    if (((u8) D_800E6280.current_girl >= GIRL_YOSHIO) && ((u32) ((u32) (D_800E6280.girls[14].flags.w << 0x14) >> 0x1D) < 3U)) {
-        func_80042908(7);
+    if (((u8) game_state.current_girl >= GIRL_YOSHIO) && ((u32) ((u32) (game_state.girls[14].flags.w << 0x14) >> 0x1D) < 3U)) {
+        main_stage_set(7);
         D_800E7D34 |= 8;
         return;
     }
-    func_8004284C();
+    main_step_next();
     D_800E7D34 |= 4;
 }
 
 void func_801334E4(void) {
-    if ((((u32)(D_800E6280.girls[1].flags.w << 0x1E) >> 0x1F)) && (get_h_tokimeki(GIRL_MIO) >= 0x46U)) {
+    if ((((u32)(game_state.girls[1].flags.w << 0x1E) >> 0x1F)) && (get_h_tokimeki(GIRL_MIO) >= 0x46U)) {
         normal_date_speak();
         return;
     }
-    func_8004284C();
+    main_step_next();
 }

@@ -64,14 +64,14 @@ u16 func_801462B0(void) {
     u32 color;
     u32 timer;
 
-    g = &D_800E6280;
-    movie = (DateMovieWork *)D_800B5920;
+    g = &game_state;
+    movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
     switch (g->step_timer.u) {
     case 0:
         D_80122D2C = 1;
-        srand(D_800E6280.frame_count);
-        func_80044750(0x206);
+        srand(game_state.frame_count);
+        snd_command(0x206);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
         movie->unk_04 = 0;
@@ -83,48 +83,48 @@ u16 func_801462B0(void) {
         movie->unk_1A = 0;
         hizuke_disp_switch(0);
         D_8015CFA0 = 2;
-        D_800E6280.substep = 0;
+        game_state.substep = 0;
         D_8015CF9C = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order (as in func_801348F0) T-24018 */
-            D_801217D0[i + 4].w = (i << 6) + 0x80;
-            D_801217D0[i + 4].flags = 0x82000000;
-            D_801217D0[i + 4].h = 0;
-            D_801217D0[i + 4].unk_0E = 0;
-            D_801217D0[i + 4].unk_0F = 0xA0;
-            D_801217D0[i + 4].unk_10 = 0;
-            D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
-            D_801217D0[i + 4].unk_12 = 0x1E0;
-            D_801217D0[i + 4].tint_r = 0;
-            D_801217D0[i + 4].tint_g = 0;
-            D_801217D0[i + 4].tint_b = 0;
-            D_801217D0[i + 4].anchor_x = 0;
-            D_801217D0[i + 4].anchor_y = 0;
-            D_801217D0[i + 4].unk_1C = 0x1000;
-            D_801217D0[i + 4].unk_1E = 0x1000;
-            D_801217D0[i + 4].unk_20 = 0;
-            D_801217D0[i + 4].x = (i << 7) - 0xA0;
-            D_801217D0[i + 4].y = -0x78;
-            D_800E6280.quad_layer[i + 4] = 0xB;
+            sprite_quads[i + 4].w = (i << 6) + 0x80;
+            sprite_quads[i + 4].flags = 0x82000000;
+            sprite_quads[i + 4].h = 0;
+            sprite_quads[i + 4].unk_0E = 0;
+            sprite_quads[i + 4].unk_0F = 0xA0;
+            sprite_quads[i + 4].unk_10 = 0;
+            sprite_quads[i + 4].unk_0C = (i * 2) + 0x15;
+            sprite_quads[i + 4].unk_12 = 0x1E0;
+            sprite_quads[i + 4].tint_r = 0;
+            sprite_quads[i + 4].tint_g = 0;
+            sprite_quads[i + 4].tint_b = 0;
+            sprite_quads[i + 4].anchor_x = 0;
+            sprite_quads[i + 4].anchor_y = 0;
+            sprite_quads[i + 4].unk_1C = 0x1000;
+            sprite_quads[i + 4].unk_1E = 0x1000;
+            sprite_quads[i + 4].unk_20 = 0;
+            sprite_quads[i + 4].x = (i << 7) - 0xA0;
+            sprite_quads[i + 4].y = -0x78;
+            game_state.quad_layer[i + 4] = 0xB;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].w = (i << 6) + 0x80;
-            D_801217D0[i + 6].flags = 0x82000000;
-            D_801217D0[i + 6].h = 0xA0;
-            D_801217D0[i + 6].unk_0E = 0;
-            D_801217D0[i + 6].unk_0F = 0;
-            D_801217D0[i + 6].unk_10 = 0;
-            D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
-            D_801217D0[i + 6].unk_12 = 0x1E0;
-            D_801217D0[i + 6].tint_r = 0;
-            D_801217D0[i + 6].tint_g = 0;
-            D_801217D0[i + 6].tint_b = 0;
-            D_801217D0[i + 6].anchor_x = 0;
-            D_801217D0[i + 6].anchor_y = 0;
-            D_801217D0[i + 6].unk_1C = 0x1000;
-            D_801217D0[i + 6].unk_1E = 0x1000;
-            D_801217D0[i + 6].unk_20 = 0;
-            D_801217D0[i + 6].x = (i << 7) - 0xA0;
-            D_801217D0[i + 6].y = -0x78;
-            D_800E6280.quad_layer[i + 6] = 0xB;
+            sprite_quads[i + 6].w = (i << 6) + 0x80;
+            sprite_quads[i + 6].flags = 0x82000000;
+            sprite_quads[i + 6].h = 0xA0;
+            sprite_quads[i + 6].unk_0E = 0;
+            sprite_quads[i + 6].unk_0F = 0;
+            sprite_quads[i + 6].unk_10 = 0;
+            sprite_quads[i + 6].unk_0C = (i * 2) + 0xA;
+            sprite_quads[i + 6].unk_12 = 0x1E0;
+            sprite_quads[i + 6].tint_r = 0;
+            sprite_quads[i + 6].tint_g = 0;
+            sprite_quads[i + 6].tint_b = 0;
+            sprite_quads[i + 6].anchor_x = 0;
+            sprite_quads[i + 6].anchor_y = 0;
+            sprite_quads[i + 6].unk_1C = 0x1000;
+            sprite_quads[i + 6].unk_1E = 0x1000;
+            sprite_quads[i + 6].unk_20 = 0;
+            sprite_quads[i + 6].x = (i << 7) - 0xA0;
+            sprite_quads[i + 6].y = -0x78;
+            game_state.quad_layer[i + 6] = 0xB;
         }
         dec_bg_cd_read(0x43CB, 1);
         g->step_timer.u += 1;
@@ -187,27 +187,27 @@ u16 func_801462B0(void) {
         break;
     case 8:
         for (i = 0; i < 4; i++) {
-            D_801217D0[i + 4].flags = 0x02000000;
+            sprite_quads[i + 4].flags = 0x02000000;
         }
         g->step_timer.u += 1;
-        func_80044750(0x500);
+        snd_command(0x500);
         break;
     case 9:
-        value = D_801217D0[4].tint_r;
+        value = sprite_quads[4].tint_r;
         value += 2;
         color = (value & 0xFF);
-        D_801217D0[7].tint_b = color;
-        D_801217D0[7].tint_g = color;
-        D_801217D0[7].tint_r = color;
-        D_801217D0[6].tint_b = color;
-        D_801217D0[6].tint_g = color;
-        D_801217D0[6].tint_r = color;
-        D_801217D0[5].tint_b = color;
-        D_801217D0[5].tint_g = color;
-        D_801217D0[5].tint_r = color;
-        D_801217D0[4].tint_b = color;
-        D_801217D0[4].tint_g = color;
-        D_801217D0[4].tint_r = color;
+        sprite_quads[7].tint_b = color;
+        sprite_quads[7].tint_g = color;
+        sprite_quads[7].tint_r = color;
+        sprite_quads[6].tint_b = color;
+        sprite_quads[6].tint_g = color;
+        sprite_quads[6].tint_r = color;
+        sprite_quads[5].tint_b = color;
+        sprite_quads[5].tint_g = color;
+        sprite_quads[5].tint_r = color;
+        sprite_quads[4].tint_b = color;
+        sprite_quads[4].tint_g = color;
+        sprite_quads[4].tint_r = color;
         if (value == 0x80) {
             g->step_timer.u += 1;
         }
@@ -215,35 +215,35 @@ u16 func_801462B0(void) {
     case 10:
         break;
     case 11:
-        value = D_801217D0[4].tint_r;
+        value = sprite_quads[4].tint_r;
         value -= 2;
         color = (value & 0xFF);
-        D_801217D0[7].tint_b = color;
-        D_801217D0[7].tint_g = color;
-        D_801217D0[7].tint_r = color;
-        D_801217D0[6].tint_b = color;
-        D_801217D0[6].tint_g = color;
-        D_801217D0[6].tint_r = color;
-        D_801217D0[5].tint_b = color;
-        D_801217D0[5].tint_g = color;
-        D_801217D0[5].tint_r = color;
-        D_801217D0[4].tint_b = color;
-        D_801217D0[4].tint_g = color;
-        D_801217D0[4].tint_r = color;
+        sprite_quads[7].tint_b = color;
+        sprite_quads[7].tint_g = color;
+        sprite_quads[7].tint_r = color;
+        sprite_quads[6].tint_b = color;
+        sprite_quads[6].tint_g = color;
+        sprite_quads[6].tint_r = color;
+        sprite_quads[5].tint_b = color;
+        sprite_quads[5].tint_g = color;
+        sprite_quads[5].tint_r = color;
+        sprite_quads[4].tint_b = color;
+        sprite_quads[4].tint_g = color;
+        sprite_quads[4].tint_r = color;
         if (value == 0) {
             for (i = 0; i < 4; i++) {
-                D_801217D0[i + 4].flags = 0x82000000;
+                sprite_quads[i + 4].flags = 0x82000000;
             }
             g->step_timer.u += 1;
         }
         break;
     case 12:
-        sp50 = D_800E6280.step;
+        sp50 = game_state.step;
         sp4C = g->step_timer.u;
         read_bustup();
         /* FAKE: one source line preserves as1 callback load scheduling. T-24089. */
-        g->step_timer.u = sp4C; if (sp50 != D_800E6280.step) {
-            D_800E6280.step--;
+        g->step_timer.u = sp4C; if (sp50 != game_state.step) {
+            game_state.step--;
             g->step_timer.u += 1;
         }
         break;
@@ -258,18 +258,18 @@ u16 func_801462B0(void) {
         break;
     case 14:
         sp4C = g->step_timer.u;
-        sp50 = D_800E6280.step;
-        func_80083474();
-        if (D_800E6280.step != sp50 + 1) {
-            D_800E6280.step = sp50;
+        sp50 = game_state.step;
+        bustup_show_checked();
+        if (game_state.step != sp50 + 1) {
+            game_state.step = sp50;
             g->step_timer.u = 12;
             break;
         }
-        D_800E6280.step--;
+        game_state.step--;
         g->step_timer.u = sp4C + 1;
         break;
     case 15:
-        func_800462C8(0xA, 0x80162000, 0x4359);
+        cd_read_sectors_nowait(0xA, 0x80162000, 0x4359);
         g->step_timer.u += 1;
         break;
     case 17:
@@ -280,39 +280,39 @@ u16 func_801462B0(void) {
             g->step_timer.u -= 2;
             return 0;
         }
-        func_8005751C(1);
+        dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
         g->step_timer.u += 1;
         break;
     case 18:
-        func_80044750(0x200);
+        snd_command(0x200);
         sp4C = g->step_timer.u;
         func_8013E7B0();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp4C + 1;
         break;
     case 20:
         sp4C = g->step_timer.u;
         func_8013E980();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp4C + 1;
         break;
     case 22:
         sp4C = g->step_timer.u;
         func_8013E9BC();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp4C + 1;
         break;
     default:
         hizuke_disp_switch(1);
         D_80122D2C = 0;
-        func_8004284C();
+        main_step_next();
         break;
     }
     if (g->step_timer.u < 9 || g->step_timer.u >= 12) {
         return 0;
     }
-    p = D_801217D0;
+    p = sprite_quads;
     v = p[4].unk_0E;
     v += D_8015CFA0;
     if (v < 0) {
@@ -352,46 +352,46 @@ u16 func_801462B0(void) {
     }
     p[4].unk_0F = x;
     if ((x == 0 && (g->substep == 1 || g->substep == 3)) || (p[6].unk_0F == 0 && (g->substep == 0 || g->substep == 2))) {
-        switch (D_800E6280.substep) { /* FAKE: g-> in the test, the symbol here; one access path keeps the byte in $v0 and drops the reload T-24018 */
+        switch (game_state.substep) { /* FAKE: g-> in the test, the symbol here; one access path keeps the byte in $v0 and drops the reload T-24018 */
         case 0:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 4].h = 0;
-                D_801217D0[i + 4].unk_0F = 0xA0;
-                D_801217D0[i + 4].y = -0x78;
-                D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
+                sprite_quads[i + 4].h = 0;
+                sprite_quads[i + 4].unk_0F = 0xA0;
+                sprite_quads[i + 4].y = -0x78;
+                sprite_quads[i + 4].unk_0C = (i * 2) + 0x15;
             }
             LoadSquare(0x140, 0x100, 0x180, 0xA0, 0x80183000);
             break;
         case 1:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 6].h = 0;
-                D_801217D0[i + 6].unk_0F = 0xA0;
-                D_801217D0[i + 6].y = -0x78;
-                D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
+                sprite_quads[i + 6].h = 0;
+                sprite_quads[i + 6].unk_0F = 0xA0;
+                sprite_quads[i + 6].y = -0x78;
+                sprite_quads[i + 6].unk_0C = (i * 2) + 0xA;
             }
             LoadSquare(0x280, 0, 0x180, 0xA0, 0x801A1000);
             break;
         case 2:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 4].h = 0;
-                D_801217D0[i + 4].unk_0F = 0xA0;
-                D_801217D0[i + 4].y = -0x78;
-                D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
+                sprite_quads[i + 4].h = 0;
+                sprite_quads[i + 4].unk_0F = 0xA0;
+                sprite_quads[i + 4].y = -0x78;
+                sprite_quads[i + 4].unk_0C = (i * 2) + 0x15;
             }
             LoadSquare(0x140, 0x100, 0x180, 0xA0, 0x801BF000);
             break;
         case 3:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 6].h = 0;
-                D_801217D0[i + 6].unk_0F = 0xA0;
-                D_801217D0[i + 6].y = -0x78;
-                D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
+                sprite_quads[i + 6].h = 0;
+                sprite_quads[i + 6].unk_0F = 0xA0;
+                sprite_quads[i + 6].y = -0x78;
+                sprite_quads[i + 6].unk_0C = (i * 2) + 0xA;
             }
             LoadSquare(0x280, 0, 0x180, 0xA0, 0x801DD000);
             break;
         }
-        if (++D_800E6280.substep >= 4) {
-            D_800E6280.substep = 0;
+        if (++game_state.substep >= 4) {
+            game_state.substep = 0;
         }
     }
     timer = (D_8015CF9C + 1) & 0xFFFF;
@@ -412,12 +412,12 @@ s32 func_8014718C(void) {
     u32 y;
     DateMovieWork *movie;
 
-    g = &D_800E6280;
-    movie = (DateMovieWork *)D_800B5920;
+    g = &game_state;
+    movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
     switch (g->step_timer.u) {
     case 0:
-        func_80044750(0x201);
+        snd_command(0x201);
         D_80122D2C = 1;
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -431,25 +431,25 @@ s32 func_8014718C(void) {
         hizuke_disp_switch(0);
         /* FAKE: one source line keeps the as1 store order of the original. T-17201. */
         D_8015CF9C = 0; for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 10].w = (var_v1 << 6) + 0x80;
-            D_801217D0[var_v1 + 10].flags = 0x82000000;
-            D_801217D0[var_v1 + 10].h = 0xa0;
-            D_801217D0[var_v1 + 10].unk_0E = 0;
-            D_801217D0[var_v1 + 10].unk_0F = 0;
-            D_801217D0[var_v1 + 10].unk_10 = 0;
-            D_801217D0[var_v1 + 10].unk_0C = (var_v1 * 2) + 0x15;
-            D_801217D0[var_v1 + 10].unk_12 = 0x1E0;
-            D_801217D0[var_v1 + 10].tint_r = 0;
-            D_801217D0[var_v1 + 10].tint_g = 0;
-            D_801217D0[var_v1 + 10].tint_b = 0;
-            D_801217D0[var_v1 + 10].anchor_x = 0;
-            D_801217D0[var_v1 + 10].anchor_y = 0;
-            D_801217D0[var_v1 + 10].unk_1C = 0x1000;
-            D_801217D0[var_v1 + 10].unk_1E = 0x1000;
-            D_801217D0[var_v1 + 10].unk_20 = 0;
-            D_801217D0[var_v1 + 10].x = (var_v1 << 7) - 0xA0;
-            D_801217D0[var_v1 + 10].y = -0x96;
-            D_800E6280.quad_layer[var_v1 + 10] = 0xC;
+            sprite_quads[var_v1 + 10].w = (var_v1 << 6) + 0x80;
+            sprite_quads[var_v1 + 10].flags = 0x82000000;
+            sprite_quads[var_v1 + 10].h = 0xa0;
+            sprite_quads[var_v1 + 10].unk_0E = 0;
+            sprite_quads[var_v1 + 10].unk_0F = 0;
+            sprite_quads[var_v1 + 10].unk_10 = 0;
+            sprite_quads[var_v1 + 10].unk_0C = (var_v1 * 2) + 0x15;
+            sprite_quads[var_v1 + 10].unk_12 = 0x1E0;
+            sprite_quads[var_v1 + 10].tint_r = 0;
+            sprite_quads[var_v1 + 10].tint_g = 0;
+            sprite_quads[var_v1 + 10].tint_b = 0;
+            sprite_quads[var_v1 + 10].anchor_x = 0;
+            sprite_quads[var_v1 + 10].anchor_y = 0;
+            sprite_quads[var_v1 + 10].unk_1C = 0x1000;
+            sprite_quads[var_v1 + 10].unk_1E = 0x1000;
+            sprite_quads[var_v1 + 10].unk_20 = 0;
+            sprite_quads[var_v1 + 10].x = (var_v1 << 7) - 0xA0;
+            sprite_quads[var_v1 + 10].y = -0x96;
+            game_state.quad_layer[var_v1 + 10] = 0xC;
         }
         dec_bg_cd_read(0x43C2, 1);
         g->step_timer.u += 1;
@@ -481,44 +481,44 @@ s32 func_8014718C(void) {
         return 0;
     case 5:
         for (var_v1 = 0; var_v1 < 8; var_v1++) {
-            D_801217D0[var_v1 + 4].flags &= 0x7FFFFFFF;
+            sprite_quads[var_v1 + 4].flags &= 0x7FFFFFFF;
         }
         g->step_timer.u += 1;
         return 0;
     case 6:
-        x = (D_801217D0[4].tint_r += 1); y = D_801217D0[4].tint_g = x; D_801217D0[4].tint_b = y; /* FAKE: one source line preserves store order. T-24028. */
+        x = (sprite_quads[4].tint_r += 1); y = sprite_quads[4].tint_g = x; sprite_quads[4].tint_b = y; /* FAKE: one source line preserves store order. T-24028. */
         for (var_v1 = 1; var_v1 < 8; var_v1++) {
-            D_801217D0[var_v1 + 4].tint_r = D_801217D0[var_v1 + 4].tint_g = D_801217D0[var_v1 + 4].tint_b = D_801217D0[4].tint_r;
+            sprite_quads[var_v1 + 4].tint_r = sprite_quads[var_v1 + 4].tint_g = sprite_quads[var_v1 + 4].tint_b = sprite_quads[4].tint_r;
         }
-        if (D_801217D0[4].tint_r == 0x40) {
+        if (sprite_quads[4].tint_r == 0x40) {
             g->step_timer.u += 1;
         }
         return 0;
     case 7:
-        x = (D_801217D0[4].tint_r += 1); y = D_801217D0[4].tint_g = x; D_801217D0[4].tint_b = y; /* FAKE: one source line preserves store order. T-24028. */
+        x = (sprite_quads[4].tint_r += 1); y = sprite_quads[4].tint_g = x; sprite_quads[4].tint_b = y; /* FAKE: one source line preserves store order. T-24028. */
         for (var_v1 = 1; var_v1 < 8; var_v1++) {
-            D_801217D0[var_v1 + 4].tint_r = D_801217D0[var_v1 + 4].tint_g = D_801217D0[var_v1 + 4].tint_b = D_801217D0[4].tint_r;
+            sprite_quads[var_v1 + 4].tint_r = sprite_quads[var_v1 + 4].tint_g = sprite_quads[var_v1 + 4].tint_b = sprite_quads[4].tint_r;
         }
-        if (D_801217D0[4].tint_r == 0x80) {
+        if (sprite_quads[4].tint_r == 0x80) {
             g->step_timer.u += 1;
         }
         break;
     case 8:
         break;
     case 9:
-        x = (D_801217D0[4].tint_r -= 2); y = D_801217D0[4].tint_g = x; D_801217D0[4].tint_b = y; /* FAKE: one source line preserves store order. T-24028. */
+        x = (sprite_quads[4].tint_r -= 2); y = sprite_quads[4].tint_g = x; sprite_quads[4].tint_b = y; /* FAKE: one source line preserves store order. T-24028. */
         for (var_v1 = 1; var_v1 < 8; var_v1++) {
-            D_801217D0[var_v1 + 4].tint_r = D_801217D0[var_v1 + 4].tint_g = D_801217D0[var_v1 + 4].tint_b = D_801217D0[4].tint_r;
+            sprite_quads[var_v1 + 4].tint_r = sprite_quads[var_v1 + 4].tint_g = sprite_quads[var_v1 + 4].tint_b = sprite_quads[4].tint_r;
         }
-        if (D_801217D0[4].tint_r == 0) {
+        if (sprite_quads[4].tint_r == 0) {
             for (var_v1 = 0; var_v1 < 8; var_v1++) {
-                D_801217D0[var_v1 + 4].flags |= 0x80000000;
+                sprite_quads[var_v1 + 4].flags |= 0x80000000;
             }
             g->step_timer.u += 1;
         }
         break;
     case 10:
-        func_800462C8(0xA, 0x80162000, 0x4350);
+        cd_read_sectors_nowait(0xA, 0x80162000, 0x4350);
         g->step_timer.u += 1;
         return 0;
     case 12:
@@ -529,7 +529,7 @@ s32 func_8014718C(void) {
             g->step_timer.u -= 2;
             return 0;
         }
-        func_8005751C(1);
+        dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
         g->step_timer.u += 1;
         return 0;
@@ -537,7 +537,7 @@ s32 func_8014718C(void) {
         sp30 = g->step_timer.u;
 
         func_8013E7B0();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp30;
         g->step_timer.u++;
         return 0;
@@ -545,7 +545,7 @@ s32 func_8014718C(void) {
         sp30 = g->step_timer.u;
 
         func_8013E980();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp30;
         g->step_timer.u++;
         return 0;
@@ -553,33 +553,33 @@ s32 func_8014718C(void) {
         sp30 = g->step_timer.u;
 
         func_8013E9BC();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp30;
         g->step_timer.u++;
         return 0;
     default:
-        func_8004284C();
+        main_step_next();
         D_80122D2C = 0;
-        func_80044750(0x200);
+        snd_command(0x200);
         hizuke_disp_switch(1);
         return 0;
     }
     D_8015CF9C += (y = 1);
     if (D_8015CF9C % (y = 19U) == 0x12) {
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 10].y += 1;
+            sprite_quads[var_v1 + 10].y += 1;
         }
-        D_801217D0[var_v1 + 10].h -= 1;
+        sprite_quads[var_v1 + 10].h -= 1;
     }
     if (D_8015CF9C % (y = 5U) == 4) {
         for (var_v1 = 0; var_v1 < 6; var_v1++) {
-            D_801217D0[var_v1 + 4].y += 1;
+            sprite_quads[var_v1 + 4].y += 1;
         }
         for (var_v1 = 3; var_v1 < 6; var_v1++) {
-            if (D_801217D0[var_v1 + 4].h != 0) {
-                D_801217D0[var_v1 + 4].h -= 1;
+            if (sprite_quads[var_v1 + 4].h != 0) {
+                sprite_quads[var_v1 + 4].h -= 1;
             } else {
-                D_801217D0[var_v1 + 1].h -= 1;
+                sprite_quads[var_v1 + 1].h -= 1;
             }
         }
     }
@@ -603,12 +603,12 @@ s32 func_80147958(void) {
     u32 color;
     s16 var_v1;
 
-    g = &D_800E6280;
-    movie = (DateMovieWork *)D_800B5920;
+    g = &game_state;
+    movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
     switch (g->step_timer.u) {
     case 0:
-        func_80044750(0x7F);
+        snd_command(0x7F);
         D_80122D2C = 1;
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -622,46 +622,46 @@ s32 func_80147958(void) {
         hizuke_disp_switch(0);
         D_8015CF9C = 0;
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 4].w = (var_v1 << 6) + 0x80;
-            D_801217D0[var_v1 + 4].flags = 0x82000000;
-            D_801217D0[var_v1 + 4].h = 0xa0;
-            D_801217D0[var_v1 + 4].unk_0E = 0;
-            D_801217D0[var_v1 + 4].unk_0F = 0x0;
-            D_801217D0[var_v1 + 4].unk_10 = 0;
-            D_801217D0[var_v1 + 4].unk_0C = (var_v1 * 2) + 0x15;
-            D_801217D0[var_v1 + 4].unk_12 = 0x1E0;
-            D_801217D0[var_v1 + 4].tint_r = 0;
-            D_801217D0[var_v1 + 4].tint_g = 0;
-            D_801217D0[var_v1 + 4].tint_b = 0;
-            D_801217D0[var_v1 + 4].anchor_x = 0;
-            D_801217D0[var_v1 + 4].anchor_y = 0;
-            D_801217D0[var_v1 + 4].unk_1C = 0x1000;
-            D_801217D0[var_v1 + 4].unk_1E = 0x1000;
-            D_801217D0[var_v1 + 4].unk_20 = 0;
-            D_801217D0[var_v1 + 4].x = (var_v1 << 7) - 0xA0;
-            D_801217D0[var_v1 + 4].y = -0x78;
-            D_800E6280.quad_layer[var_v1 + 4] = 0xb;
+            sprite_quads[var_v1 + 4].w = (var_v1 << 6) + 0x80;
+            sprite_quads[var_v1 + 4].flags = 0x82000000;
+            sprite_quads[var_v1 + 4].h = 0xa0;
+            sprite_quads[var_v1 + 4].unk_0E = 0;
+            sprite_quads[var_v1 + 4].unk_0F = 0x0;
+            sprite_quads[var_v1 + 4].unk_10 = 0;
+            sprite_quads[var_v1 + 4].unk_0C = (var_v1 * 2) + 0x15;
+            sprite_quads[var_v1 + 4].unk_12 = 0x1E0;
+            sprite_quads[var_v1 + 4].tint_r = 0;
+            sprite_quads[var_v1 + 4].tint_g = 0;
+            sprite_quads[var_v1 + 4].tint_b = 0;
+            sprite_quads[var_v1 + 4].anchor_x = 0;
+            sprite_quads[var_v1 + 4].anchor_y = 0;
+            sprite_quads[var_v1 + 4].unk_1C = 0x1000;
+            sprite_quads[var_v1 + 4].unk_1E = 0x1000;
+            sprite_quads[var_v1 + 4].unk_20 = 0;
+            sprite_quads[var_v1 + 4].x = (var_v1 << 7) - 0xA0;
+            sprite_quads[var_v1 + 4].y = -0x78;
+            game_state.quad_layer[var_v1 + 4] = 0xb;
         }
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 6].w = (var_v1 << 6) + 0x80;
-            D_801217D0[var_v1 + 6].flags = 0x82000000;
-            D_801217D0[var_v1 + 6].h = 0x0;
-            D_801217D0[var_v1 + 6].unk_0E = 0;
-            D_801217D0[var_v1 + 6].unk_0F = 0xa0;
-            D_801217D0[var_v1 + 6].unk_10 = 0;
-            D_801217D0[var_v1 + 6].unk_0C = (var_v1 * 2) + 0xa;
-            D_801217D0[var_v1 + 6].unk_12 = 0x1E0;
-            D_801217D0[var_v1 + 6].tint_r = 0;
-            D_801217D0[var_v1 + 6].tint_g = 0;
-            D_801217D0[var_v1 + 6].tint_b = 0;
-            D_801217D0[var_v1 + 6].anchor_x = 0;
-            D_801217D0[var_v1 + 6].anchor_y = 0;
-            D_801217D0[var_v1 + 6].unk_1C = 0x1000;
-            D_801217D0[var_v1 + 6].unk_1E = 0x1000;
-            D_801217D0[var_v1 + 6].unk_20 = 0;
-            D_801217D0[var_v1 + 6].x = (var_v1 << 7) - 0xA0;
-            D_801217D0[var_v1 + 6].y = -0x78;
-            D_800E6280.quad_layer[var_v1 + 6] = 0xb;
+            sprite_quads[var_v1 + 6].w = (var_v1 << 6) + 0x80;
+            sprite_quads[var_v1 + 6].flags = 0x82000000;
+            sprite_quads[var_v1 + 6].h = 0x0;
+            sprite_quads[var_v1 + 6].unk_0E = 0;
+            sprite_quads[var_v1 + 6].unk_0F = 0xa0;
+            sprite_quads[var_v1 + 6].unk_10 = 0;
+            sprite_quads[var_v1 + 6].unk_0C = (var_v1 * 2) + 0xa;
+            sprite_quads[var_v1 + 6].unk_12 = 0x1E0;
+            sprite_quads[var_v1 + 6].tint_r = 0;
+            sprite_quads[var_v1 + 6].tint_g = 0;
+            sprite_quads[var_v1 + 6].tint_b = 0;
+            sprite_quads[var_v1 + 6].anchor_x = 0;
+            sprite_quads[var_v1 + 6].anchor_y = 0;
+            sprite_quads[var_v1 + 6].unk_1C = 0x1000;
+            sprite_quads[var_v1 + 6].unk_1E = 0x1000;
+            sprite_quads[var_v1 + 6].unk_20 = 0;
+            sprite_quads[var_v1 + 6].x = (var_v1 << 7) - 0xA0;
+            sprite_quads[var_v1 + 6].y = -0x78;
+            game_state.quad_layer[var_v1 + 6] = 0xb;
         }
         dec_bg_cd_read(0x43B1, 1);
         g->step_timer.u += 1;
@@ -757,26 +757,26 @@ s32 func_80147958(void) {
         return;
     case 21:
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
-            D_801217D0[var_v1 + 4].flags = (s32) (D_801217D0[var_v1 + 4].flags & 0x7FFFFFFF);
+            sprite_quads[var_v1 + 4].flags = (s32) (sprite_quads[var_v1 + 4].flags & 0x7FFFFFFF);
         }
         g->step_timer.u++;
         return;
     case 22:
-        value = D_801217D0[4].tint_r;
+        value = sprite_quads[4].tint_r;
         value += 2;
         color = (value & 0xFF);
-        D_801217D0[7].tint_b = color;
-        D_801217D0[7].tint_g = color;
-        D_801217D0[7].tint_r = color;
-        D_801217D0[6].tint_b = color;
-        D_801217D0[6].tint_g = color;
-        D_801217D0[6].tint_r = color;
-        D_801217D0[5].tint_b = color;
-        D_801217D0[5].tint_g = color;
-        D_801217D0[5].tint_r = color;
-        D_801217D0[4].tint_b = color;
-        D_801217D0[4].tint_g = color;
-        D_801217D0[4].tint_r = color;
+        sprite_quads[7].tint_b = color;
+        sprite_quads[7].tint_g = color;
+        sprite_quads[7].tint_r = color;
+        sprite_quads[6].tint_b = color;
+        sprite_quads[6].tint_g = color;
+        sprite_quads[6].tint_r = color;
+        sprite_quads[5].tint_b = color;
+        sprite_quads[5].tint_g = color;
+        sprite_quads[5].tint_r = color;
+        sprite_quads[4].tint_b = color;
+        sprite_quads[4].tint_g = color;
+        sprite_quads[4].tint_r = color;
 
         if (value == 0x80) {
             g->step_timer.u++;
@@ -787,12 +787,12 @@ s32 func_80147958(void) {
         if (!(D_8015CF9C & 7)) {
             func_80148924(4);
                 if (((u16) D_8015CF9C % 24U) == 0) {
-                func_80044750(0x503);
+                snd_command(0x503);
                     }
         }
         if (++D_8015CF9C == 0x140) {
             D_8015CF9C = 0;
-            D_800E6280.step_timer.u += 1;
+            game_state.step_timer.u += 1;
         }
         break;
     case 24:
@@ -801,7 +801,7 @@ s32 func_80147958(void) {
     case 25:
         back_clear_switch(0);
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
-            D_801217D0[var_v1 + 4].flags = (s32) (D_801217D0[var_v1 + 4].flags | 0x80000000);
+            sprite_quads[var_v1 + 4].flags = (s32) (sprite_quads[var_v1 + 4].flags | 0x80000000);
         }
         g->step_timer.u += 1;
         return;
@@ -821,19 +821,19 @@ s32 func_80147958(void) {
         return;
     case 29:
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 4].flags = 0x02000000;
-            D_801217D0[var_v1 + 4].h = 0xA0;
-            D_801217D0[var_v1 + 4].unk_0F = 0;
-            D_801217D0[var_v1 + 4].y = -0x78;
+            sprite_quads[var_v1 + 4].flags = 0x02000000;
+            sprite_quads[var_v1 + 4].h = 0xA0;
+            sprite_quads[var_v1 + 4].unk_0F = 0;
+            sprite_quads[var_v1 + 4].y = -0x78;
         }
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 6].flags = 0x02000000;
-            D_801217D0[var_v1 + 6].h = 0;
-            D_801217D0[var_v1 + 6].unk_0F = 0xA0;
-            D_801217D0[var_v1 + 6].y = -0x78;
+            sprite_quads[var_v1 + 6].flags = 0x02000000;
+            sprite_quads[var_v1 + 6].h = 0;
+            sprite_quads[var_v1 + 6].unk_0F = 0xA0;
+            sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
-        func_80044750(0x500);
+        snd_command(0x500);
         g->step_timer.u += 1;
         return;
     case 30:
@@ -853,14 +853,14 @@ s32 func_80147958(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x801CE000);
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 4].h = 0xA0;
-            D_801217D0[var_v1 + 4].unk_0F = 0;
-            D_801217D0[var_v1 + 4].y = -0x78;
+            sprite_quads[var_v1 + 4].h = 0xA0;
+            sprite_quads[var_v1 + 4].unk_0F = 0;
+            sprite_quads[var_v1 + 4].y = -0x78;
         }
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 6].h = 0;
-            D_801217D0[var_v1 + 6].unk_0F = 0xA0;
-            D_801217D0[var_v1 + 6].y = -0x78;
+            sprite_quads[var_v1 + 6].h = 0;
+            sprite_quads[var_v1 + 6].unk_0F = 0xA0;
+            sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
         g->step_timer.u += 1;
@@ -873,14 +873,14 @@ s32 func_80147958(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x801B5000);
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 4].h = 0xA0;
-            D_801217D0[var_v1 + 4].unk_0F = 0;
-            D_801217D0[var_v1 + 4].y = -0x78;
+            sprite_quads[var_v1 + 4].h = 0xA0;
+            sprite_quads[var_v1 + 4].unk_0F = 0;
+            sprite_quads[var_v1 + 4].y = -0x78;
         }
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 6].h = 0;
-            D_801217D0[var_v1 + 6].unk_0F = 0xA0;
-            D_801217D0[var_v1 + 6].y = -0x78;
+            sprite_quads[var_v1 + 6].h = 0;
+            sprite_quads[var_v1 + 6].unk_0F = 0xA0;
+            sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
         g->step_timer.u += 1;
@@ -893,14 +893,14 @@ s32 func_80147958(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x8019C000);
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 4].h = 0xA0;
-            D_801217D0[var_v1 + 4].unk_0F = 0;
-            D_801217D0[var_v1 + 4].y = -0x78;
+            sprite_quads[var_v1 + 4].h = 0xA0;
+            sprite_quads[var_v1 + 4].unk_0F = 0;
+            sprite_quads[var_v1 + 4].y = -0x78;
         }
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 6].h = 0;
-            D_801217D0[var_v1 + 6].unk_0F = 0xA0;
-            D_801217D0[var_v1 + 6].y = -0x78;
+            sprite_quads[var_v1 + 6].h = 0;
+            sprite_quads[var_v1 + 6].unk_0F = 0xA0;
+            sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
         g->step_timer.u += 1;
@@ -908,21 +908,21 @@ s32 func_80147958(void) {
     case 36:
         func_80148924(8);
         if ((u16) D_8015CF9C >= 8U) {
-            value = D_801217D0[4].tint_r;
+            value = sprite_quads[4].tint_r;
         value -= 4;
         color = (value & 0xFF);
-            D_801217D0[7].tint_b = color;
-            D_801217D0[7].tint_g = color;
-            D_801217D0[7].tint_r = color;
-            D_801217D0[6].tint_b = color;
-            D_801217D0[6].tint_g = color;
-            D_801217D0[6].tint_r = color;
-            D_801217D0[5].tint_b = color;
-            D_801217D0[5].tint_g = color;
-            D_801217D0[5].tint_r = color;
-            D_801217D0[4].tint_b = color;
-            D_801217D0[4].tint_g = color;
-        D_801217D0[4].tint_r = color;
+            sprite_quads[7].tint_b = color;
+            sprite_quads[7].tint_g = color;
+            sprite_quads[7].tint_r = color;
+            sprite_quads[6].tint_b = color;
+            sprite_quads[6].tint_g = color;
+            sprite_quads[6].tint_r = color;
+            sprite_quads[5].tint_b = color;
+            sprite_quads[5].tint_g = color;
+            sprite_quads[5].tint_r = color;
+            sprite_quads[4].tint_b = color;
+            sprite_quads[4].tint_g = color;
+        sprite_quads[4].tint_r = color;
         }
         if (++D_8015CF9C == 0x14) {
             g->step_timer.u += 1;
@@ -937,35 +937,35 @@ s32 func_80147958(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x80183000);
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 4].h = 0xA0;
-            D_801217D0[var_v1 + 4].unk_0F = 0;
-            D_801217D0[var_v1 + 4].y = -0x78;
+            sprite_quads[var_v1 + 4].h = 0xA0;
+            sprite_quads[var_v1 + 4].unk_0F = 0;
+            sprite_quads[var_v1 + 4].y = -0x78;
         }
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
-            D_801217D0[var_v1 + 6].h = 0;
-            D_801217D0[var_v1 + 6].unk_0F = 0xA0;
-            D_801217D0[var_v1 + 6].y = -0x78;
+            sprite_quads[var_v1 + 6].h = 0;
+            sprite_quads[var_v1 + 6].unk_0F = 0xA0;
+            sprite_quads[var_v1 + 6].y = -0x78;
         }
         D_8015CF9C = 0;
         g->step_timer.u += 1;
         return;
     case 38:
         func_80148924(8);
-        value = D_801217D0[4].tint_r;
+        value = sprite_quads[4].tint_r;
         value -= 4;
         color = (value & 0xFF);
-        D_801217D0[7].tint_b = color;
-        D_801217D0[7].tint_g = color;
-        D_801217D0[7].tint_r = color;
-        D_801217D0[6].tint_b = color;
-        D_801217D0[6].tint_g = color;
-        D_801217D0[6].tint_r = color;
-        D_801217D0[5].tint_b = color;
-        D_801217D0[5].tint_g = color;
-        D_801217D0[5].tint_r = color;
-        D_801217D0[4].tint_b = color;
-        D_801217D0[4].tint_g = color;
-        D_801217D0[4].tint_r = color;
+        sprite_quads[7].tint_b = color;
+        sprite_quads[7].tint_g = color;
+        sprite_quads[7].tint_r = color;
+        sprite_quads[6].tint_b = color;
+        sprite_quads[6].tint_g = color;
+        sprite_quads[6].tint_r = color;
+        sprite_quads[5].tint_b = color;
+        sprite_quads[5].tint_g = color;
+        sprite_quads[5].tint_r = color;
+        sprite_quads[4].tint_b = color;
+        sprite_quads[4].tint_g = color;
+        sprite_quads[4].tint_r = color;
 
         if (value < 4U) {
             g->step_timer.u += 1;
@@ -974,33 +974,33 @@ s32 func_80147958(void) {
         break;
     case 39:
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
-            D_801217D0[var_v1 + 4].flags = (s32) (D_801217D0[var_v1 + 4].flags | 0x80000000);
+            sprite_quads[var_v1 + 4].flags = (s32) (sprite_quads[var_v1 + 4].flags | 0x80000000);
         }
         g->step_timer.u++;
         return;
     case 40:
         sp50 = g->step_timer.u;
 
-        sp54 = (s32) D_800E6280.step;
+        sp54 = (s32) game_state.step;
         /* FAKE: one source line preserves as1 callback load scheduling. T-12100. */
-        read_bustup(D_800E6280.step); g->step_timer.u = sp50; if (sp54 != D_800E6280.step) { D_800E6280.step -= 1; g->step_timer.u++; } break;
+        read_bustup(game_state.step); g->step_timer.u = sp50; if (sp54 != game_state.step) { game_state.step -= 1; g->step_timer.u++; } break;
     case 42:
-        sp54 = D_800E6280.step;
+        sp54 = game_state.step;
         sp50 = g->step_timer.u;
 
-        func_80083474();
+        bustup_show_checked();
         current = sp54 + 1;
-        if (D_800E6280.step != current) {
-            D_800E6280.step = sp54;
+        if (game_state.step != current) {
+            game_state.step = sp54;
             g->step_timer.u = 0x28;
             return;
         }
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp50;
         g->step_timer.u++;
         return;
     case 43:
-        func_800462C8(0xAU, 0x80162000, 0x433E);
+        cd_read_sectors_nowait(0xAU, 0x80162000, 0x433E);
         g->step_timer.u += 1;
         return;
     case 45:
@@ -1011,7 +1011,7 @@ s32 func_80147958(void) {
             g->step_timer.u -= 2;
             return 0;
         }
-        func_8005751C(1);
+        dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
         g->step_timer.u += 1;
         return;
@@ -1019,7 +1019,7 @@ s32 func_80147958(void) {
         sp50 = g->step_timer.u;
 
         func_8013E7B0();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp50;
         g->step_timer.u++;
         return;
@@ -1027,7 +1027,7 @@ s32 func_80147958(void) {
         sp50 = g->step_timer.u;
 
         func_8013E980();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp50;
         g->step_timer.u++;
         return;
@@ -1035,14 +1035,14 @@ s32 func_80147958(void) {
         sp50 = g->step_timer.u;
 
         func_8013E9BC();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp50;
         g->step_timer.u++;
         return;
     default:
-        func_8004284C();
+        main_step_next();
         D_80122D2C = 0;
-        func_80044750(0x200);
+        snd_command(0x200);
         hizuke_disp_switch(1);
         break;
     }
@@ -1050,14 +1050,14 @@ s32 func_80147958(void) {
 }
 
 s32 func_80148924(s16 a0) {
-    D_801217D0[4].y += a0;
-    D_801217D0[5].y += a0;
-    D_801217D0[4].h -= a0;
-    D_801217D0[5].h -= a0;
-    D_801217D0[6].h += a0;
-    D_801217D0[7].h += a0;
-    D_801217D0[6].unk_0F -= a0;
-    D_801217D0[7].unk_0F -= a0;
+    sprite_quads[4].y += a0;
+    sprite_quads[5].y += a0;
+    sprite_quads[4].h -= a0;
+    sprite_quads[5].h -= a0;
+    sprite_quads[6].h += a0;
+    sprite_quads[7].h += a0;
+    sprite_quads[6].unk_0F -= a0;
+    sprite_quads[7].unk_0F -= a0;
 }
 
 s32 func_801489D0(void) {
@@ -1072,11 +1072,11 @@ s32 func_801489D0(void) {
     u8 temp_s0;
     u8 temp_s0_2;
 
-    switch (D_800E6280.step_timer.u) {
+    switch (game_state.step_timer.u) {
     case 0:
         D_80122D2C = 1;
         D_8015CFC4 = 0x64;
-        srand((*(s32 *)&D_800E6280.frame_count));
+        srand((*(s32 *)&game_state.frame_count));
         D_8015CF9C = 0;
         hizuke_disp_switch(0);
         func_801491E4(0x43BA);
@@ -1086,7 +1086,7 @@ s32 func_801489D0(void) {
         D_8015CFAC[0] = -0x28;
         D_8015CFAC[1] = 0;
         D_8015CFAC[2] = -0x3C;
-        D_800E6280.step_timer.u += 1;
+        game_state.step_timer.u += 1;
         D_8015CFB4[0] = (rand() % 3) - 1;
         D_8015CFB4[1] = (rand() % 3) - 1;
         D_8015CFB4[2] = (rand() % 3) - 1;
@@ -1096,41 +1096,41 @@ s32 func_801489D0(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.step_timer.u += 1;
+            game_state.step_timer.u += 1;
             break;
         }
         break;
     case 2:
         if (((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000) || ((((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
-            ((RECT *)D_800B5920)[0].w = 0;
-            ((RECT *)D_800B5920)[0].h = 0;
-            D_800E6280.step_timer.u -= 2;
+            ((RECT *)dec_bg_lba_cache)[0].w = 0;
+            ((RECT *)dec_bg_lba_cache)[0].h = 0;
+            game_state.step_timer.u -= 2;
             return 0;
         }
-        func_8005751C(1);
+        dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        func_80044750(0x203);
-        D_800E6280.step_timer.u += 1;
+        snd_command(0x203);
+        game_state.step_timer.u += 1;
         break;
     case 3:
-        temp_s0 = D_800E6280.step;
-        temp_s1 = D_800E6280.step_timer.u;
+        temp_s0 = game_state.step;
+        temp_s1 = game_state.step_timer.u;
         normal_date_bg_fadein();
-        D_800E6280.step_timer.u = temp_s1;
-        if (temp_s0 != D_800E6280.step) {
-            D_800E6280.step_timer.u = temp_s1 + 1;
+        game_state.step_timer.u = temp_s1;
+        if (temp_s0 != game_state.step) {
+            game_state.step_timer.u = temp_s1 + 1;
         }
-        D_800E6280.step = temp_s0;
+        game_state.step = temp_s0;
         break;
     case 4:
         var_s3 = 0;
         do {
-            if (((u32) (*(s32 *)&D_800E6280.frame_count) % 30U) == (rand() % 30)) {
+            if (((u32) (*(s32 *)&game_state.frame_count) % 30U) == (rand() % 30)) {
                 (D_8015CFB4)[var_s3] = (rand() % 3) - 1;
             }
 
-            if (((u32) (*(s32 *)&D_800E6280.frame_count) % 30U) == (rand() % 30)) {
+            if (((u32) (*(s32 *)&game_state.frame_count) % 30U) == (rand() % 30)) {
                 (D_8015CFBC)[var_s3] = (rand() % 3) - 1;
             }
 
@@ -1164,48 +1164,48 @@ s32 func_801489D0(void) {
         func_8004A814((s32) D_8015CFA4[0], (s32) D_8015CFAC[0], 0xA, 2, 2, 0x808080, 3, 1);
         func_8004A814((s32) D_8015CFA4[1], (s32) D_8015CFAC[1], 0xA, 2, 2, 0x804040, 3, 1);
         func_8004A814((s32) D_8015CFA4[2], (s32) D_8015CFAC[2], 0xA, 2, 2, 0x800000, 3, 1);
-        if (((u32) (*(s32 *)&D_800E6280.frame_count) % 50U) == 0) {
+        if (((u32) (*(s32 *)&game_state.frame_count) % 50U) == 0) {
             if (!(rand() & 3)) {
-                func_80044750(0x504);
+                snd_command(0x504);
             } else if ((rand() % 4) == 1) {
-                func_80044750(0x505);
+                snd_command(0x505);
             } else if ((rand() % 4) == 2) {
-                func_80044750(0x506);
+                snd_command(0x506);
             } else {
-                func_80044750(0x507);
+                snd_command(0x507);
                 D_8015CFC4 = 0;
             }
         }
         if (D_8015CFC4++ == 0x14) {
-            func_80044750(0x507);
+            snd_command(0x507);
         }
         if (D_8015CFC4 >= 0x65) {
             D_8015CFC4 = 0x64;
         }
         if (D_8015CF9C++ == 0x12C) {
-            D_800E6280.step_timer.u += 1;
+            game_state.step_timer.u += 1;
             break;
         }
         break;
     case 5:
-        temp_s0_2 = D_800E6280.step;
-        temp_s1_3 = D_800E6280.step_timer.u;
+        temp_s0_2 = game_state.step;
+        temp_s1_3 = game_state.step_timer.u;
         normal_date_bg_fadeout();
-        D_800E6280.step_timer.u = temp_s1_3;
-        if (temp_s0_2 != D_800E6280.step) {
-            D_800E6280.step_timer.u = temp_s1_3 + 1;
+        game_state.step_timer.u = temp_s1_3;
+        if (temp_s0_2 != game_state.step) {
+            game_state.step_timer.u = temp_s1_3 + 1;
         }
-        D_800E6280.step = temp_s0_2;
+        game_state.step = temp_s0_2;
         break;
     case 6:
         dec_bg_show_switch(1);
-        D_800E6280.step_timer.u += 1;
+        game_state.step_timer.u += 1;
         break;
     default:
-        func_80044750(0x200);
+        snd_command(0x200);
         D_80122D2C = 0;
         hizuke_disp_switch(1);
-        func_8004284C();
+        main_step_next();
         break;
     }
 }
@@ -1217,12 +1217,12 @@ void func_801491E4(s32 arg0) {
     temp_v0 = dec_bg_cd_read(arg0, 1);
     if (temp_v0 == D_800B5939) {
         printf("same\n");
-        D_800E6280.step_timer.w += 3;
+        game_state.step_timer.w += 3;
         return;
     }
     if (temp_v0 == (1 - D_800B5939)) {
         printf("another\n");
-        D_800E6280.step_timer.w += 2;
+        game_state.step_timer.w += 2;
     }
 }
 
@@ -1231,12 +1231,12 @@ s32 func_80149268(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     SpriteQuad *record;
     s16 i;
 
-    func_80084E90(arg0, arg1, arg2, arg3, arg4, arg5);
+    event_still_show(arg0, arg1, arg2, arg3, arg4, arg5);
     /* FAKE: shared setup/loop line preserves instruction scheduling (T-9780). */
     i = 0; do {
-        record = &D_801217D0[i];
+        record = &sprite_quads[i];
         record[4] = record[58];
-        D_800E6280.quad_layer[i + 4] = D_800E6280.quad_layer[i + 58];
+        game_state.quad_layer[i + 4] = game_state.quad_layer[i + 58];
         i++;
     } while (i < 6);
 }

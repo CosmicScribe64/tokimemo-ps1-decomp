@@ -669,50 +669,50 @@ void date_fill_sections_yumi(void) {
 
 void func_80144720(void) {
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8008585C();
-    D_800E6280.screen_brightness = 0x80;
-    D_800B593C = 0;
+    dialogue_clear();
+    game_state.screen_brightness = 0x80;
+    dec_bg_brightness = 0;
     D_800B5940 = 0;
-    D_800E6280.tile_layer_enabled = 0;
-    D_800E6280.quads_enabled = 1;
-    D_800E6280.daily_event_bits |= 8;
-    func_8004E58C();
+    game_state.tile_layer_enabled = 0;
+    game_state.quads_enabled = 1;
+    game_state.daily_event_bits |= 8;
+    text_system_reset();
     k_reset(1);
     hizuke_init();
     message_window_init();
-    D_800CA2F8 = D_800E6280.appt_place_0;
-    *(u32 *)&D_80122CD4 = D_800E6280.date_girl;
-    D_800CA148 = 0;
+    D_800CA2F8 = game_state.appt_place_0;
+    *(u32 *)&D_80122CD4 = game_state.date_girl;
+    dialogue_group = 0;
     date_arrival = 1;
-    if (!(D_800E6280.frame_count & 3) && (D_800E6280.date_girl != GIRL_YUINA)) {
+    if (!(game_state.frame_count & 3) && (game_state.date_girl != GIRL_YUINA)) {
         date_arrival = 0;
     }
     D_8015BF4C = 0;
     D_8015BF3C = 0;
     D_8015BF40 = 0;
     D_800CA364 = 0;
-    D_800E6280.current_girl = D_800E6280.date_girl;
-    func_800847B8(D_800E6280.date_girl);
-    ((Actor *)D_8011ECD0)[31].brightness = 0;
-    (*(s32 *)(D_8011ECD0 + 0x874)) |= 0x81000000;
-    (*(s32 *)(D_8011ECD0 + 0x830)) |= 0x81000000;
-    D_801217D0[0].flags |= 0x81000000;
-    D_801217D0[1].flags |= 0x81000000;
-    func_80084E4C();
+    game_state.current_girl = game_state.date_girl;
+    dialogue_names_set(game_state.date_girl);
+    ((Actor *)actor_pool)[31].brightness = 0;
+    (*(s32 *)(actor_pool + 0x874)) |= 0x81000000;
+    (*(s32 *)(actor_pool + 0x830)) |= 0x81000000;
+    sprite_quads[0].flags |= 0x81000000;
+    sprite_quads[1].flags |= 0x81000000;
+    text_marker_hide();
     D_8015BF44 = 1;
     D_80122CE0 = 0;
     D_80122D4C = 0;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801448D4(void) {
-    func_80083808();
-    switch (D_800E6280.stage) {
+    bustup_wink_update();
+    switch (game_state.stage) {
     case 0:
         func_801449D4();
         break;
@@ -726,24 +726,24 @@ void func_801448D4(void) {
         func_80145D14();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
     check_k_scroll();
     k_disp_inc2();
-    if ((D_800E6280.stage != 0) || (D_800E6280.step != 0x45)) {
-        func_80066C08(2);
+    if ((game_state.stage != 0) || (game_state.step != 0x45)) {
+        screen_frame_draw(2);
     }
     message_window_show();
-    func_80066334();
+    message_window_title_update();
     hizuke_show();
     func_80083A10();
-    func_80047560();
+    screen_shake_update();
 }
 
 void func_801449D4(void) {
     /* FAKE: register avoids g's home word; three pads retain table +0x2C. T-24113 */
-    register GameState *g = &D_800E6280;
+    register GameState *g = &game_state;
     s32 pad0, pad1, pad2; /* FAKE: unused words give the frame of the original; real source unknown. T-24113 */
     u8 sel; /* FAKE: copy of D_800CA2F8 reproduces the hoisted lbu; real source unknown. T-24113 */
     FnTbl76 tbl;
@@ -818,22 +818,22 @@ void func_801449D4(void) {
     sel = D_800CA2F8;
     if (g->step != 0) {
         if (((g->year == 0x5F) && (g->month == 7) && (g->day == 0x17)) || ((g->year == 0x60) && (g->month == 7) && (g->day == 0x1C)) || ((g->year == 0x61) && (g->month == 7) && (g->day == 0x1B))) {
-            if (D_800B593C == 0x80) {
-                func_8006B900();
+            if (dec_bg_brightness == 0x80) {
+                light_effect_draw();
                 D_80122D44 = 1;
             }
-        } else if ((sel == 0x11) && (D_800B593C == 0x80) && (g->step != 0x14) && (g->step != 0x15)) {
-            func_8006B900();
+        } else if ((sel == 0x11) && (dec_bg_brightness == 0x80) && (g->step != 0x14) && (g->step != 0x15)) {
+            light_effect_draw();
             D_80122D44 = 1;
         } else {
-            if ((sel == 0x10) && (D_800B593C == 0x80) && (g->step != 0x14) && (g->step != 0x15)) {
-                func_8006B900();
+            if ((sel == 0x10) && (dec_bg_brightness == 0x80) && (g->step != 0x14) && (g->step != 0x15)) {
+                light_effect_draw();
                 D_80122D44 = 1;
-            } else if ((g->step == 0x14) && (D_800E6280.appt_place_0 == 0x11)) {
-                func_8006B900();
+            } else if ((g->step == 0x14) && (game_state.appt_place_0 == 0x11)) {
+                light_effect_draw();
                 D_80122D44 = 1;
-            } else if ((g->step == 0x14) && (D_800E6280.appt_place_0 == 0x10)) {
-                func_8006B900();
+            } else if ((g->step == 0x14) && (game_state.appt_place_0 == 0x10)) {
+                light_effect_draw();
                 D_80122D44 = 1;
             }
         }
@@ -841,14 +841,14 @@ void func_801449D4(void) {
     tbl.f[g->step](0x80);
     if ((D_800CA2F8 == 0xB) && (g->step >= 0x2CU) && (g->step < 0x30U) && (D_800B3CFC == 1) && (D_800CA2FC != 2)) {
         D_800CA2FC = 2;
-        func_80044750(0x601);
+        snd_command(0x601);
     }
 }
 
 /* FAKE: selector byte uses neighboring s16 symbol D_800CA2E8 + 0x10
  * (0x800CA2F8) to preserve comparison ordering. Aggregate ownership unknown. */
 void func_80144E20(void) {
-    GameState *g = &D_800E6280; /* FAKE: its home word is the 4 bytes above the tables (frame 0xE38); real source unknown. T-24011 */
+    GameState *g = &game_state; /* FAKE: its home word is the 4 bytes above the tables (frame 0xE38); real source unknown. T-24011 */
     FnTbl18 spDEC;
     FnTbl35 spD60;
     FnTbl48 spCA0;
@@ -975,38 +975,38 @@ void func_80144E20(void) {
         }
         g->substep += 1;
     }
-    if ((((g->year == 0x5F) && (g->month == 7) && (g->day == 0x17)) || ((g->year == 0x60) && (g->month == 7) && (g->day == 0x1C)) || ((g->year == 0x61) && (g->month == 7) && (g->day == 0x1B))) && (D_800B593C == (comparison = 0x80)) && (*(u8 *)&D_8015BF44 != 0) && (func_80146224 != base[g->step])) {
-    func_8006B900();
+    if ((((g->year == 0x5F) && (g->month == 7) && (g->day == 0x17)) || ((g->year == 0x60) && (g->month == 7) && (g->day == 0x1C)) || ((g->year == 0x61) && (g->month == 7) && (g->day == 0x1B))) && (dec_bg_brightness == (comparison = 0x80)) && (*(u8 *)&D_8015BF44 != 0) && (func_80146224 != base[g->step])) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 1)) && (D_800CA2FC == 0) && (g->step >= 0xC) && (g->step < 0x15) && (g->month >= 3) && (g->month < 9) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 1)) && (D_800CA2FC == 0) && (g->step >= 0xC) && (g->step < 0x15) && (g->month >= 3) && (g->month < 9) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == 0x14) && (g->step >= 7) && (g->step < 0x11) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == 0x14) && (g->step >= 7) && (g->step < 0x11) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step < 8) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step < 8) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step >= 9) && (g->step < 0x1E) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step >= 9) && (g->step < 0x1E) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step >= 0x1F) && (g->step < 0x2C) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step >= 0x1F) && (g->step < 0x2C) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step >= 0x2D) && (g->step < 0x31) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step >= 0x2D) && (g->step < 0x31) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step >= 0x3E) && (g->step < 0x49) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->step >= 0x3E) && (g->step < 0x49) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->step < 8) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->step < 8) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->step >= 9) && (g->step < 0x13) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->step >= 9) && (g->step < 0x13) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->step >= 0x14) && (g->step < 0x22) && (D_800B593C == (comparison = 0x80))) {
-    func_8006B900();
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->step >= 0x14) && (g->step < 0x22) && (dec_bg_brightness == (comparison = 0x80))) {
+    light_effect_draw();
     D_80122D44 = 1;
     }
     base[g->step](0x80);
@@ -1031,6 +1031,6 @@ void func_80144E20(void) {
     }
     if ((((u8 *)&D_800CA2E8)[0x10] == 0xB) && (g->step < 9) && (D_800B3CFC == 1) && (D_800CA2FC != 2)) {
         D_800CA2FC = 2;
-        func_80044750(0x601);
+        snd_command(0x601);
     }
 }

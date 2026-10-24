@@ -25,7 +25,7 @@ void func_8013AD50(void) {
                 if (D_8015EDA4 == 0) {
                     D_8015EDA4 = 1;
                 }
-                strcpy(D_8015E74C, D_800E6280.player_family_name);
+                strcpy(D_8015E74C, game_state.player_family_name);
                 strcat(D_8015E74C, "の体力が５％回復した");
                 func_8014B738(&D_8015E814, 1, 0x3C);
                 func_8014EBA8();
@@ -71,13 +71,13 @@ void func_8013AF1C(void) {
     default:
         return;
     case 2:
-        strcpy(D_8015E74C, D_800E6280.player_family_name);
+        strcpy(D_8015E74C, game_state.player_family_name);
         strcat(D_8015E74C, "の攻撃");
         if (D_8015EBB0 == 0) {
             strcpy(D_8015E774, D_8015E74C);
             strcat(D_8015E774, "は失敗した");
         } else {
-            func_8014D11C(D_8015E774, D_800E6280.player_family_name, "は", D_8015EBB0, "のダメージを与えた");
+            func_8014D11C(D_8015E774, game_state.player_family_name, "は", D_8015EBB0, "のダメージを与えた");
         }
         func_8014B738(&D_8015E814, 2, 0x3C);
         D_8015EE48 = 3;

@@ -16,19 +16,19 @@ void func_8013DB80(void) {
 }
 
 void func_8013DC30(void) {
-    if (D_80122CD0 == 1) {
+    if (dialogue_work == 1) {
         func_8013DC70();
         return;
     }
-    func_80046500();
+    game_reset_to_title();
 }
 
 void func_8013DC70(void) {
-    if (D_800E6280.stage == 0) {
+    if (game_state.stage == 0) {
         func_8013DCAC();
         return;
     }
-    func_80046500();
+    game_reset_to_title();
 }
 
 typedef struct {
@@ -41,57 +41,57 @@ void func_8013DCAC(void) {
     FnTbl33 tbl;
 
     tbl = D_80146DCC;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx]();
 }
 
 void func_8013DD20(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8947);
     func_8013DB80();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013DD58(void) {
-    D_800E6280.current_girl = GIRL_NOZOMI;
+    game_state.current_girl = GIRL_NOZOMI;
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
+    text_system_reset();
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
     func_80137990();
     hizuke_init();
     message_window_init();
-    func_80084E4C();
-    D_800B593C = 0;
-    func_800847B8(D_800E6280.current_girl);
-    func_8008585C();
+    text_marker_hide();
+    dec_bg_brightness = 0;
+    dialogue_names_set(game_state.current_girl);
+    dialogue_clear();
     func_80137990();
     D_80146274 = D_80145F84;
     D_80146278 = D_801460C0;
     D_8014627C = D_801461FC;
     strcpy(D_800CA19C, "廊下");
-    D_800E6280.girls[6].tokimeki += 1;
-    D_800E6280.girls[6].affection += 2;
+    game_state.girls[6].tokimeki += 1;
+    game_state.girls[6].affection += 2;
     check_para_limit();
     D_800CA368 = 0x28;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013DE90(void) {
     func_8013DB80();
     load_palette(D_80146DB0, 0x11, 1, 2, 0);
-    func_80084E90(D_80146DB4, D_80146DB8, D_80146DBC, D_80146DC0, D_80146DC4, D_80146DC8);
-    func_800850D4(D_80146DA4, D_80146DA8, D_80146DA0, D_80146DAC);
+    event_still_show(D_80146DB4, D_80146DB8, D_80146DBC, D_80146DC0, D_80146DC4, D_80146DC8);
+    event_anim_show(D_80146DA4, D_80146DA8, D_80146DA0, D_80146DAC);
     D_800CA360 = 1;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013DF40(void) {
     bg_read_sub2(0x403B);
-    func_8004284C();
+    main_step_next();
 }

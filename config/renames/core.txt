@@ -332,3 +332,134 @@ const main IconMode include/game_enums.h - T-27004 core.tsv IconMode
 const main defines include/game_enums.h - T-27004 core.tsv PadBits
 const main defines include/game_enums.h - T-27004 core.tsv MouseButtons
 const main defines include/game_enums.h - T-27004 core.tsv PlayerFlag
+func main func_8004284C main_step_next 0x8004284C step += 1, step_timer and substep cleared (4,121 uses, the top function); FAKE z-store idiom keeps the match
+func main func_80042908 main_stage_set 0x80042908 stage = arg; step, stage_timer, step_timer, stage_scratch, substep cleared
+func main func_80042940 main_step_set 0x80042940 step = arg; step_timer and substep cleared
+func main func_80042808 main_stage_next 0x80042808 stage += 1; step, stage_timer, step_timer, stage_scratch, substep cleared
+func main func_80042798 main_state_next 0x80042798 mode += 1 and the full mode reset, then main_state_request_overlay
+func main func_80042960 main_state_request_overlay 0x80042960 if the new mode is an overlay mode (the 0x11..0xC4 case list) it stores the mode in overlay_target_mode and switches to loader mode 2
+func main func_80042540 main_state_dispatch 0x80042540 switch on mode: resident handlers for 0x00-0x46, 0xD0, 0xFE/0xFF; every overlay mode calls the entry in D_80123110 after a debug text; wiki/obin.md matches it to O.BIN game_main (unapplied class low)
+func main func_80041000 gpu_init 0x80041000 graphics bring-up: 320x240 display, two draw/display environments with ordering tables (D_800E8C70), GTE init, active buffer
+func main func_80042134 main_loop 0x80042134 boot loop: init, then per frame: dispatch (or paused handler), frame_count++, input and sound pump, render; restart_request re-initialises
+func main func_80046500 game_reset_to_title 0x80046500 default branch of mode switches (514 uses): resets loader, game state, sprites, sound, dec_bg and tpage tables, then main_state_set(0x12) (title)
+func main func_800412E0 game_state_init 0x800412E0 reset GameState (bzero when arg != 0), set defaults (video 320x240, mode 0x10, names placeholder, birthday 1/1) and call the module initialisers
+func main func_80044750 snd_command 0x80044750 1,180 uses: queue one sound-driver command (func_80079B10 -> func_8007B5EC); id low byte = effect or sequence, bits 8-11 = class dispatched by func_80079B34 (0 effects, 2 start a sequence after a bank load, 3 voice; classes 5-8 not decoded)
+func main func_80079B34 snd_command_pump 0x80079B34 per-frame consumer of the sound command queue (class switch at r & 0xF00), then updates the three audio helpers
+func main func_8008667C girl_state_rank 0x8008667C 1,106 uses: get_g_zyotai_s(girl) & 0x7F, the 0-4 mood rank scenes switch on (0 best)
+func main func_80062CD0 bustup_read_start 0x80062CD0 384 uses: starts the CD read of a girl portrait file (0x2D sectors to 0x80180000) and clears the portrait state
+func main func_800866A0 bustup_read_step 0x800866A0 step function: substep 0 starts bustup_read_start; later waits for the CD, checks the five image pointers and the file checksum, then main_step_next
+func main func_80083474 bustup_show_checked 0x80083474 299 uses: re-verifies the loaded portrait (pointer words and checksum, retries the step 3 back on mismatch) then builds it with the girl's mood via func_80062DBC
+func main func_80062DBC bustup_build 0x80062DBC loads the portrait palette and five image parts into tpage slots 5-9 and fills actor 31 with the frame and sequence tables
+func main func_80083440 bustup_layout_set 0x80083440 178 uses: bustup_layout_set(girl) = func_80085CD4 (per-girl quad offsets) + func_800634FC
+func main func_80085CD4 bustup_quad_offsets 0x80085CD4 HYPOTHESIS: sets fields +0x0C/+0x0E of SpriteQuads 0 and 1 per girl id (texture offsets of the two portrait quads)
+func main func_800847B8 dialogue_names_set 0x800847B8 246 uses: fills the name buffers for dialogue codes: family and given name from GameState, the player-addressing form (get_p_name), the girl's short name and full name (get_g_name)
+func main func_80084E90 event_still_show 0x80084E90 uploads six 0x40 x 0x80 tiles to VRAM and sets SpriteQuads 58-63 as a 3 x 2 grid (128 px cells) = one full-screen event still; callers KANGEI, SHOUGATU
+func main func_800850D4 event_anim_show 0x800850D4 fills actors 96/97 as a full-screen animated picture from frame/sequence/tpage tables and a mode; arg0 == 0 clears them (DATE event scenes)
+func main func_80085B3C event_log_add 0x80085B3C appends (girl, flag, scene, rank, year, month, day, weekday) to event_log; rank is get_g_zyotai_h(girl), not girl_state_rank, or D_80122D48 - 1 when that override is 1-6 (cleared after use), forced to 0 for girl 12; count capped at 0xFE
+func main func_8005751C dec_bg_decode_to_vram 0x8005751C 386 uses: reinitialises the MDEC buffers and decodes the loaded background into the VRAM band of slot arg0
+func main func_8004E58C text_system_reset 0x8004E58C 257 uses: reloads six small text/cursor blocks to VRAM, calls func_8004E500(2) and clears the 52 text list entries
+func main func_8006612C message_window_set_title 0x8006612C 131 uses: queues the title string at the window's top-left and builds the title decoration actors 3.. (one per two bytes + 2); the slide-in counter starts at -0x40
+func main func_80065F34 message_window_title_show 0x80065F34 60 uses: shows or hides the title actors and the matching text-list entry
+func main func_80066334 message_window_title_update 0x80066334 64 uses: per-frame slide-in of the title actors
+func main func_80065B0C icon_bar_update 0x80065B0C HYPOTHESIS: per-frame update of the command icon bar; in free icon mode (icon_mode % 3 == 2) the held select button lets the d-pad move the icons by cursor_speed (called by every day handler)
+func main func_80067870 mascot_update 0x80067870 HYPOTHESIS: per-frame update of the mascot sprite chosen in the settings (mascot_choice 1..13; 0 or 14+ hides it); called by every day handler
+func main func_80044890 snd_bank_load_start 0x80044890 138 uses: bank 0/1 sound data load: skips files already loaded (cache of LBAs), otherwise queues up to four CD reads (header, body, sequence) to the staging areas
+func main func_80044E8C snd_bank_load_poll 0x80044E8C 176 uses: waits for the queued sound-bank reads, then issues the sound commands 0x21/0x22/0x2F (bank 0) or 0x23/0x24/0x2E (bank 1) and returns 1
+func main func_8004500C snd_bank_start 0x8004500C 89 uses: checks the bank header (0x40) then queues commands 0x21/0x22/0x2F and starts sequence arg1 (0x200 | id)
+func main func_8004482C snd_bank_state_reset 0x8004482C 66 uses: clears the bank load state variables
+func main func_800460EC cd_audio_state 0x800460EC 174 uses: D_801255B4, the CD audio state byte (bit 2 / value 4 = playing) tested before waiting for voice
+func main func_800460DC cd_done_count 0x800460DC D_801255B5: running count of finished CD commands (mod 256) polled by the sound-bank loader
+func main func_80046274 cd_audio_ticks 0x80046274 D_801255B0: elapsed CD audio counter; BUNKA_SD compares a snapshot with it
+func main func_80046290 cd_audio_request_set 0x80046290 107 uses: fills the 4-word CD audio request (index, table word, address, length) from a pair table and a mode nibble
+func main func_800462C8 cd_read_sectors_nowait 0x800462C8 76 uses: same as cd_read_sectors but D_800B3D60 = 0 (caller polls cd_read_sync_status); queues command 6
+func main func_800452C4 cd_cmd_reset 0x800452C4 64 uses: clears the CD command ring, status and counters
+func main func_80045318 cd_cmd_push 0x80045318 push (command, argument, optional 16-byte data) on the 48-entry ring; -1 when full
+func main func_80045414 cd_audio_command 0x80045414 maps an operation id (0, 2, 3, 6, 9, 10, 13, 14, 21, 27) to one or more ring commands; operation 6 is the data read behind cd_read_sectors
+func main func_800455C4 cd_cmd_pump 0x800455C4 per-frame consumer of the CD command ring (called from main_loop)
+func main func_80048F64 actor_clear 0x80048F64 164 uses: resets display actor i (0-159) to defaults: hidden, frame table = sprite_frame_table, scale 0x1000, brightness 0x80
+func main func_80048EB8 actor_clear_range 0x80048EB8 108 uses: clears actors 0..n-1 (all 160 when n is 0 or > 160) and keeps the cursor position words
+func main func_80048E78 actor_clear_upper 0x80048E78 80 uses: clears actors 96..159
+func main func_80048DAC actors_draw_enable 0x80048DAC 89 uses: actors_draw_enabled = (arg != 0)
+func main func_800476C0 actors_draw 0x800476C0 draws every visible actor of the pool: frame from the frame/sequence tables, parts as sprite quads, x/y from the 16.16 position, brightness; skips hidden actors
+func main func_80047560 screen_shake_update 0x80047560 per-frame sine shake of screen_center_x/y while a shake counter runs
+func main func_80041584 sprite_tables_clear 0x80041584 114 uses: clears SpriteQuads 0-63 and BgLayers 0-1
+func main func_800415B4 sprite_quads_clear 0x800415B4 clears SpriteQuad records start..end-1 (flag 0x80000000 = hidden) and their layer bytes
+func main func_8004164C bg_layers_clear 0x8004164C clears BgLayer records start..end-1 and sets their order byte to 0x80
+func main func_80043510 frame_render 0x80043510 per-frame draw pass: shake, actors, tile layer, sprite quads, text (disp_string), BG layers, 3D objects, VRAM queues, vsync wait, clear and present
+func main func_8004AE28 debug_number_show 0x8004AE28 63 uses: shows a number at (x, y) only while the debug flag D_800B3220 is set
+func main func_80049A40 prim_gradient_rect 0x80049A40 101 uses: queues a four-colour gradient rectangle (POLY_G4) from the primitive arena; flag bit 7 = semi-transparent
+func main func_80049FF0 prim_gradient_line 0x80049FF0 73 uses: queues a two-colour line (LINE_G2) from the primitive arena
+func main func_800578F4 dec_bg_draw 0x800578F4 77 uses: draws the decoded background(s) as sprites with dec_bg brightness; arg = the last screen mode
+func main func_80066C08 screen_frame_draw 0x80066C08 HYPOTHESIS: 74 uses; draws a 10 x 8 grid of 32 px sprites with interpolated colour pairs (the screen frame); the scroll pattern follows the health state (0 normal, 1-3 slower, 4 jitter, 5 swirl)
+func main func_8006B900 light_effect_draw 0x8006B900 HYPOTHESIS: 56 uses; draws nine layered light-effect sprites with texture-page draws; called by DATE scenes and the loader screen
+func main func_8004FC10 menu_cursor_update 0x8004FC10 80 uses: moves the menu cursor by pad (up/left previous, down/right next, skips disabled items, wraps), or follows the mouse in mode 0
+func main func_8008585C dialogue_clear 0x8008585C 89 uses: clears dialogue_work words 5..30, re-initialises and hides the cursor actor, empties the text list and blanks the window title
+func main func_80082764 dialogue_run 0x80082764 64 uses: the talk runner every script section goes through (reads group/line/command tables, waits for text end and voice, handles 20 speak codes)
+func main func_80052060 voice_play 0x80052060 133 uses: if voice_mode != 0 and the mode nibble is not 15, sets the CD audio request and sends sound command 0x300
+func main func_8005215C dialogue_text_step 0x8005215C 121 uses: per-frame step of dialogue text: typewriter, line scroll (text_scroll_state) and voice-aware speed by voice_mode
+func main func_80052000 text_wait_confirm 0x80052000 51 uses: typewriter step; on confirm/cancel jumps to the line end and, when finished, substep += 1
+func main func_80053CE0 card_start 0x80053CE0 85 uses: card_busy = 1; clears card step, result, retry count and timer
+func main func_80053D10 card_stop 0x80053D10 124 uses: card_busy = 0 and card_timer = 0
+func main func_8006BC28 cursor_actor_init 0x8006BC28 initialises actor 0 as the cursor (finger) sprite at its saved position
+func main func_8006BD6C cursor_show 0x8006BD6C 57 uses: sets or clears the visible bit of actor 0
+func main func_8006BA40 cursor_update 0x8006BA40 46 uses: pad/mouse cursor movement each frame: cursor_speed steps, double speed while a button is held
+func main func_8006C848 text_marker_set 0x8006C848 HYPOTHESIS: actor 2 (the continue marker at 0x74,0x48) shown when arg == 1, hidden otherwise
+func main func_80084E4C text_marker_hide 0x80084E4C 113 uses: text_marker_set(0)
+func main func_80072B5C day_event_next 0x80072B5C 51 uses: next queued event: day_event_index += 1, back to mode 0x31 (or mode 0x22 when D_800B3C6C is set); arg 1 first runs func_8004500C
+func main func_80085E30 scene_screen_reset 0x80085E30 50 uses: resets draw switches, clear colour, brightness, text system and tpage tables for a new scene screen
+func main func_80083808 bustup_wink_update 0x80083808 45 uses: toggles portrait visibility bits and winks every 240 frames
+func main func_8007132C day_event_dispatch 0x8007132C queue reader (run by the day screen, mode 0x31 stage 0 step 0): skips already-played birthday records, injects forced meetings, appointment prompts and the fixed-date endings, then switches on day_events[index].type to start the matching mode (wiki/ref-english-patch.md: day handler)
+func main func_8006D7EC day_events_build_week 0x8006D7EC builds day_events for the next 7 days from month_calendar markers, the chosen command, birthdays, special events and random encounters; ends with main_step_next
+func main func_80070FD0 ending_start 0x80070FD0 step 1 of the day screen: loads the ending sound bank (func_80067438), then sound command 0x200 and main_state_set(0x63)
+func main func_80072338 calendar_advance_day 0x80072338 weekday + 1 (wraps 7), day + 1, month roll by month length (February 29 days in year 96), year + 1 after December, day_count++
+func main func_800722C4 quarter_flags_rotate 0x800722C4 at months 3, 6, 9, 12: quarter_flags bit 14 takes bit 13, bit 13 cleared
+func main func_8007259C daily_flags_clear 0x8007259C clears daily_event_bits and events_today
+func main func_8006CF38 day_events_clear 0x8006CF38 fills day_events with type 0xFF and resets day_event_index
+func main func_8006CF80 girl_flags_bit0_clear 0x8006CF80 clears bit 0 of the flag word of girls 0-10; the queue reader calls it for the record types 0xFD, 0x20, 0x24, 0x28, 0x2C, 0x40, 0x41 and 0x43 right before their scene starts (not once per day); the only setter found is GEKO func_80133C50 for the current girl; the meaning of the bit is unknown (HYPOTHESIS: a scene-played mark for the current stretch)
+func main func_8005A0B0 mode_command_screen 0x8005A0B0 mode 0x34 handler: stage switch for the weekday command screen (stage 0 setup, 1 selection, 5 club joining, 0xFF the setup steps with the exam/trip/remedial-week notices)
+func main func_80070F14 mode_day_screen 0x80070F14 mode 0x31 handler: day screen with the HUD show calls
+func main func_8005A06C mode_boot 0x8005A06C mode 0x00 handler: stage 0 runs func_80059B40, else main_state_set(0x12)
+func main func_80062840 mode_title 0x80062840 mode 0x12 handler: four title stages; when idle (D_800B3CFC) after stage 2 it starts mode 0x11
+func main func_80075320 mode_holiday 0x80075320 mode 0x46 handler: stage switch for the holiday command screen, telephone, club join and appointment entry
+func main func_80078A0C mode_overlay_loader 0x80078A0C mode 0x02 handler
+func main func_80071038 girl_counters_clamp 0x80071038 first thing in every day_event_dispatch pass for girls 0-10: tokimeki, affection and syoushin clamped to 0..0x80; flag bits 16 and 17 (encounter_done, rumor_done) cleared while syoushin is below 0x32
+func main func_80071280 girl_flag4_may_clear 0x80071280 HYPOTHESIS: on month 5 day 6 clears flag bit 4 of girls 0-10; DATE sets bit 4 on a May 3-4 date and adds 2 tokimeki to a May 4-5 date for a girl that has it
+data main D_800E6280 game_state 0x800E6280 the GameState object (12,306 uses in 295 files); see wiki/game-state.md
+data main D_800E7D10 system_data 0x800E7D10 SystemData object right after GameState; bzero(..., 0xEE0) at boot
+data main D_8011ECD0 actor_pool 0x8011ECD0 160 Actor records of 0x44 bytes (3,212 uses); actors_draw walks 0..actor_draw_last
+data main D_80120650 actor_pool_96 0x80120650 label of actor_pool[96] (upper group used by scene overlays, 1,130 uses)
+data main D_8011ECA0 draw_buffer 0x8011ECA0 0/1 index of the active draw buffer, read from func_80098370 each frame (681 uses)
+data main D_801217D0 sprite_quads 0x801217D0 SpriteQuad table, 0x40 entries cleared by sprite_tables_clear
+data main D_801220D0 bg_layers 0x801220D0 2 BgLayer records
+data main D_80123120 card_block 0x80123120 memory-card block image: 0x200 header then 0xF00-byte slot banks
+data main D_80125D10 audio_state 0x80125D10 AudioState work area of the sound driver and CD audio
+data main D_80125130 cd_cmd_ring 0x80125130 48-entry CdCommand ring of the CD layer (head D_80125128, tail D_80125129)
+data main D_800B3D70 cd_audio_request 0x800B3D70 4-word CD audio request written by cd_audio_request_set
+data main D_80123110 overlay_entry 0x80123110 entry pointer of the loaded overlay; MODE_CALL_ENTRY and every overlay mode call it
+data main D_800CA134 dialogue_tables 0x800CA134 DialogueTables (group, line, text, command, voice pointers) wired by normal_date_speak
+data main D_800CA148 dialogue_group 0x800CA148 script section index read through dialogue_tables.group (3,494 uses, mostly BUNKASAI/BUNKAKEN scratch)
+data main D_800CA14C dialogue_line 0x800CA14C line index
+data main D_800CA160 dialogue_text_table 0x800CA160 text table pointer storage wired into dialogue_tables.text
+data main D_800CA164 dialogue_command_table 0x800CA164 command table pointer storage
+data main D_800CA168 dialogue_voice_table 0x800CA168 voice table pointer storage
+data main D_80122CD0 dialogue_work 0x80122CD0 DialogueWork; word 0 = scene id, word 1 = girl id of the running event
+data main D_800CA16C name_buf_family 0x800CA16C dialogue name code buffer filled from player_family_name
+data main D_800CA174 name_buf_given 0x800CA174 buffer filled from player_given_name
+data main D_800CA17C name_buf_player_form 0x800CA17C how the current girl addresses the player (get_p_name result)
+data main D_800CA188 name_buf_girl_short 0x800CA188 short name of the girl in dialogue_names_set
+data main D_800B3538 girl_full_name_table 0x800B3538 u8 *[16] full names; entries 0-14 = GIRL_* order
+data main D_800B331C parameter_name_table 0x800B331C u8 *[9] in PARAM_* order; NO SPLAT LABEL at this address yet (it lies inside the range of D_800B3310): the apply step must add a symbol_addrs entry for it before renaming
+data main D_800B342C place_name_table 0x800B342C u8 *[21] in PLACE_* order; likewise no label of its own
+data main D_800B68E0 command_deltas 0x800B68E0 s8[8][9]: parameter change per weekday command 0-7 (command 4 uses the club row instead), parameter_up_down
+data main D_800B6928 club_activity_deltas 0x800B6928 s8[12][9]: parameter change per club for the club plan
+data main D_800B41A0 girl_affection_weight 0x800B41A0 u8[13] percent weight applied to affection by get_h_yuukou (girl 0 = 83)
+data main D_800B4100 girl_tokimeki_weight 0x800B4100 u8[13] percent weight applied to tokimeki by get_h_tokimeki
+data main D_800B3778 phone_numbers 0x800B3778 13 rows of 7 digits
+data main D_800B3748 month_data_table 0x800B3748 pointer table of month blobs, index (year - 95) * 12 + month - 4 (36 months); each blob: a 0x2000-byte calendar image, then words: day count, first weekday, n day kinds, n markers (only the low byte is kept); read by func_80068938
+data main D_800B5948 last_screen_mode 0x800B5948 value returned by get_last_gamen_mode; selects the dec_bg draw variant
+data main D_800B593C dec_bg_brightness 0x800B593C set by set_dec_bri; sprite tint of dec_bg_draw (0x80 neutral)
+data main D_800B5938 dec_bg_show 0x800B5938 u8[4]: [0],[1] show flags of the two background slots, [1] of [2] is the active slot index
+data main D_800B5920 dec_bg_lba_cache 0x800B5920 LBAs of the last backgrounds read per slot (skips repeated reads)
+data main D_800B5C08 mascot_choice 0x800B5C08 HYPOTHESIS: mascot menu result (14 items = 13 girls + none); 0 or >= 14 hides the mascot; saved in the free-icon block (unk_163C[34])
+data main D_8011ECF6 cursor_x 0x8011ECF6 alias label inside actor_pool[0] (x); mouse/pad pointer x
+data main D_8011ECFA cursor_y 0x8011ECFA alias label inside actor_pool[0] (y)

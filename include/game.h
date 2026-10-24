@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-/* T-10890: parameter/name display view of the D_8011ECD0 record pool. */
+/* T-10890: parameter/name display view of the actor_pool record pool. */
 
 #include "common.h"
 #include "libgpu.h"
@@ -146,7 +146,7 @@ typedef struct LastCommandBits {
 
 #ifndef GAME_DISPLAY_ACTOR44_T10890
 #define GAME_DISPLAY_ACTOR44_T10890
-/* One record of the 0x44-byte display-record pools (T-20900): main D_8011ECD0 (160 records, D_80120650 is
+/* One record of the 0x44-byte display-record pools (T-20900): main actor_pool (160 records, actor_pool_96 is
  * record 96), EVENT D_800E9620 and GYOZI D_80129F40 (the same pool at the addresses those two overlays were
  * linked against). Field widths are the union of every unit's accesses: the original asm has lbu/sb only at
  * the byte fields (no lb through the pool symbols), lh/sh at the halfwords and lw/sw at +0x0C, +0x10, +0x34
@@ -223,7 +223,7 @@ typedef struct ActorFixed {
     /* 0x1A */ s16 unk_1A;
     /* 0x1C */ s16 unk_1C;
     /* 0x1E */ s16 unk_1E;
-    /* 0x20 */ s32 unk_20; /* rotate, copied as one word by func_800476C0 (lw 0x20, T-25606) */
+    /* 0x20 */ s32 unk_20; /* rotate, copied as one word by actors_draw (lw 0x20, T-25606) */
     /* 0x24 */ Fix32 x;
     /* 0x28 */ Fix32 y;
     /* 0x2C */ s32 dx;
@@ -238,7 +238,7 @@ typedef struct ActorFixed {
     /* 0x43 */ u8 unk_43;
 } ActorFixed; /* size 0x44 */
 
-/* T-10890: image metadata consumed by func_80062DBC; eight observed parts. */
+/* T-10890: image metadata consumed by bustup_build; eight observed parts. */
 typedef struct SpritePart {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
@@ -283,7 +283,7 @@ typedef struct CultureFestivalDispatch {
 
 #ifndef GAME_SPRITE_SLOT24_T9740
 #define GAME_SPRITE_SLOT24_T9740
-/* T-9740: 0x24-byte records at D_801220D0, cleared by func_8004164C. */
+/* T-9740: 0x24-byte records at bg_layers, cleared by bg_layers_clear. */
 typedef struct BgLayer {
     /* 0x00 */ u32 unk_00;
     /* 0x04 */ s16 unk_04;
@@ -316,7 +316,7 @@ typedef struct NibbleView {
 
 #ifndef TOKIMEMO_SCHEDULE_FLAGS_H
 #define TOKIMEMO_SCHEDULE_FLAGS_H
-/* T-10880: word view at GameState +0xF4 in func_8006D7EC.
+/* T-10880: word view at GameState +0xF4 in day_events_build_week.
  * Bit 18 is tested with lw/sll 13/srl 31 and stored through byte +0xF6.
  * Bits 21..23 are a three-bit counter read and decremented through +0xF6.
  * T-20900: also DATE's DateFlag17 and DateFlags0F4 and OPTION's OptionPlayerBits (unk_08, unk_12: its f8,
@@ -408,7 +408,7 @@ typedef struct GirlFlagBitsSched {
 #ifndef GAME_T10880_CALL_PAIRS
 #define GAME_T10880_CALL_PAIRS
 /* D_800B3B9C is indexed in 0x10-byte rows containing two call pairs.
- * NAME_ENT func_8014068C passes these words to func_80046290. */
+ * NAME_ENT func_8014068C passes these words to cd_audio_request_set. */
 typedef struct AudioRequestPair {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;

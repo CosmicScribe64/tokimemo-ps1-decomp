@@ -4,13 +4,13 @@
 /* Byte views of both selectors: the original reads them with lbu (unk_111A is
  * s8 in GameState), and a plain unk_1108 switch keeps a copy in v1 (the
  * switch-selector idiom of T-10860). */
-void func_80042540(void) {
-    switch (*(u8 *)&D_800E6280.mode) {
+void main_state_dispatch(void) {
+    switch (*(u8 *)&game_state.mode) {
     case 0x0:
-        func_8005A06C();
+        mode_boot();
         break;
     case 0x1:
-        if (*(u8 *)&D_800E6280.boot_hold == 0) {
+        if (*(u8 *)&game_state.boot_hold == 0) {
             main_state_set(MODE_BOOT);
         }
         break;
@@ -24,19 +24,19 @@ void func_80042540(void) {
         schedule_init();
         break;
     case 0x31:
-        func_80070F14();
+        mode_day_screen();
         break;
     case 0x34:
-        func_8005A0B0();
+        mode_command_screen();
         break;
     case 0x12:
-        func_80062840();
+        mode_title();
         break;
     case 0x40:
         week_day();
         break;
     case 0x46:
-        func_80075320();
+        mode_holiday();
         break;
     case 0x44:
         uwasa_main();
@@ -48,7 +48,7 @@ void func_80042540(void) {
         func_80060DF8();
         break;
     case 0x3:
-        ((s32 (*)()) D_80123110)();
+        ((s32 (*)()) overlay_entry)();
         break;
     case 0x10:
         func_80062C28();
@@ -63,7 +63,7 @@ void func_80042540(void) {
         func_80072BC0();
         break;
     case 0x2:
-        func_80078A0C();
+        mode_overlay_loader();
         break;
     case 0xD0:
         func_8007959C();
@@ -117,79 +117,79 @@ void func_80042540(void) {
     case 0xC3:
     case 0xC4:
         func_8004B338((s32)"LOAD FUNC EXEC", 0x14, 0x2C);
-        ((s32 (*)()) D_80123110)();
+        ((s32 (*)()) overlay_entry)();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
-    D_800E6280.mode_timer += 1;
+    game_state.mode_timer += 1;
 }
 
-void func_80042798(void) {
-    D_800E6280.mode += 1;
-    D_800E6280.stage = 0;
-    D_800E6280.step = 0;
-    D_800E6280.mode_timer = 0;
-    D_800E6280.stage_timer = 0;
-    D_800E6280.step_timer.w = 0;
-    D_800E6280.mode_scratch = 0;
-    D_800E6280.stage_scratch = 0;
-    D_800E6280.substep = 0;
-    func_80042960();
-}
-
-/* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
- * store and as1 puts that store in the jr delay slot, as the original does; no
- * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
- * return. T-11610 */
-s32 func_80042808(void) {
-    s32 *p;
-    s32 z;
-
-    D_800E6280.stage += 1;
-    D_800E6280.step = 0;
-    D_800E6280.stage_timer = 0;
-    D_800E6280.step_timer.w = 0;
-    D_800E6280.stage_scratch = 0;
-    z = 0;
-    p = &z;
-    D_800E6280.substep = *p;
+void main_state_next(void) {
+    game_state.mode += 1;
+    game_state.stage = 0;
+    game_state.step = 0;
+    game_state.mode_timer = 0;
+    game_state.stage_timer = 0;
+    game_state.step_timer.w = 0;
+    game_state.mode_scratch = 0;
+    game_state.stage_scratch = 0;
+    game_state.substep = 0;
+    main_state_request_overlay();
 }
 
 /* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
  * store and as1 puts that store in the jr delay slot, as the original does; no
  * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
  * return. T-11610 */
-s32 func_8004284C(void) {
+s32 main_stage_next(void) {
     s32 *p;
     s32 z;
 
-    D_800E6280.step += 1;
-    D_800E6280.step_timer.w = 0;
+    game_state.stage += 1;
+    game_state.step = 0;
+    game_state.stage_timer = 0;
+    game_state.step_timer.w = 0;
+    game_state.stage_scratch = 0;
     z = 0;
     p = &z;
-    D_800E6280.substep = *p;
+    game_state.substep = *p;
+}
+
+/* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
+ * store and as1 puts that store in the jr delay slot, as the original does; no
+ * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
+ * return. T-11610 */
+s32 main_step_next(void) {
+    s32 *p;
+    s32 z;
+
+    game_state.step += 1;
+    game_state.step_timer.w = 0;
+    z = 0;
+    p = &z;
+    game_state.substep = *p;
 }
 
 void main_state_set(s32 arg0) {
     u32 t;
 
-    D_800E6280.mode = arg0;
-    D_800E6280.stage = 0;
-    D_800E6280.step = 0;
-    D_800E6280.mode_timer = 0;
-    D_800E6280.stage_timer = 0;
-    D_800E6280.step_timer.w = 0;
-    D_800E6280.mode_scratch = 0;
-    D_800E6280.stage_scratch = 0;
-    D_800E6280.substep = 0;
-    func_80042960();
-    t = D_800E6280.overlay_target_mode;
+    game_state.mode = arg0;
+    game_state.stage = 0;
+    game_state.step = 0;
+    game_state.mode_timer = 0;
+    game_state.stage_timer = 0;
+    game_state.step_timer.w = 0;
+    game_state.mode_scratch = 0;
+    game_state.stage_scratch = 0;
+    game_state.substep = 0;
+    main_state_request_overlay();
+    t = game_state.overlay_target_mode;
     D_800CA2AC = 0;
     if (t != 0x5E) {
         if (t != 0x50) {
-            func_80065F34(0);
+            message_window_title_show(0);
         }
     }
 }
@@ -198,37 +198,37 @@ void main_state_set(s32 arg0) {
  * store and as1 puts that store in the jr delay slot, as the original does; no
  * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
  * return. T-11610 */
-s32 func_80042908(s32 arg0) {
+s32 main_stage_set(s32 arg0) {
     s32 *p;
     s32 z;
 
-    D_800E6280.stage = arg0;
-    D_800E6280.step = 0;
-    D_800E6280.stage_timer = 0;
-    D_800E6280.step_timer.w = 0;
-    D_800E6280.stage_scratch = 0;
+    game_state.stage = arg0;
+    game_state.step = 0;
+    game_state.stage_timer = 0;
+    game_state.step_timer.w = 0;
+    game_state.stage_scratch = 0;
     z = 0;
     p = &z;
-    D_800E6280.substep = *p;
+    game_state.substep = *p;
 }
 
 /* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
  * store and as1 puts that store in the jr delay slot, as the original does; no
  * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
  * return. T-11610 */
-s32 func_80042940(s32 arg0) {
+s32 main_step_set(s32 arg0) {
     s32 *p;
     s32 z;
 
-    D_800E6280.step = arg0;
-    D_800E6280.step_timer.w = 0;
+    game_state.step = arg0;
+    game_state.step_timer.w = 0;
     z = 0;
     p = &z;
-    D_800E6280.substep = *p;
+    game_state.substep = *p;
 }
 
-s32 func_80042960(void) {
-    switch (*(u8 *)&D_800E6280.mode) {
+s32 main_state_request_overlay(void) {
+    switch (*(u8 *)&game_state.mode) {
     case 0x11:
     case 0x13:
     case 0x14:
@@ -277,8 +277,8 @@ s32 func_80042960(void) {
     case 0xC2:
     case 0xC3:
     case 0xC4:
-        D_800E6280.overlay_target_mode = D_800E6280.mode;
-        D_800E6280.mode = 2;
+        game_state.overlay_target_mode = game_state.mode;
+        game_state.mode = 2;
         return;
     }
 }

@@ -121,11 +121,11 @@ void func_8005907C(void) {
     func_8009B560(0, 0, 0, 0xF0);
     func_80098530();
     InitGeom();
-    D_8011ECA0 = func_80098370();
+    draw_buffer = func_80098370();
 }
 
 /* FAKE: the call arguments re-read the three halfwords just stored through a `u16 *` view of
- * D_800E6280; uopt then passes the stored registers (a0/a1) instead of folding the constants,
+ * game_state; uopt then passes the stored registers (a0/a1) instead of folding the constants,
  * which plain field reads do (18 lines). The else arm stores unk_000/unk_002 before unk_014 so
  * their `li` lead the arm and as1 hoists them above the branch, as in the original. T-24206 */
 void func_800590CC(s32 arg0) {
@@ -134,21 +134,21 @@ void func_800590CC(s32 arg0) {
     func_800AD950(0);
     func_8009C5E0(0);
     if (arg0 != 0) {
-        D_800E6280.screen_center_x[0] = 0x80;
-        D_800E6280.screen_center_x[1] = 0x80;
-        D_800E6280.video_width = 0x100;
-        D_800E6280.video_height = 0xF0;
-        D_800E6280.video_interlace = 0;
-        func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
+        game_state.screen_center_x[0] = 0x80;
+        game_state.screen_center_x[1] = 0x80;
+        game_state.video_width = 0x100;
+        game_state.video_height = 0xF0;
+        game_state.video_interlace = 0;
+        func_80097F58(((u16 *)&game_state)[0], ((u16 *)&game_state)[1], ((u16 *)&game_state)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
     } else {
-        D_800E6280.video_width = 0x140;
-        D_800E6280.video_height = 0xF0;
-        D_800E6280.screen_center_x[0] = 0xA0;
-        D_800E6280.screen_center_x[1] = 0xA0;
-        D_800E6280.video_interlace = 0;
-        func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
+        game_state.video_width = 0x140;
+        game_state.video_height = 0xF0;
+        game_state.screen_center_x[0] = 0xA0;
+        game_state.screen_center_x[1] = 0xA0;
+        game_state.video_interlace = 0;
+        func_80097F58(((u16 *)&game_state)[0], ((u16 *)&game_state)[1], ((u16 *)&game_state)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
     }
@@ -156,7 +156,7 @@ void func_800590CC(s32 arg0) {
     func_8009C5E0(1);
 }
 
-/* FAKE: the call re-reads the stored halfwords through a `u16 *` view of D_800E6280 so uopt
+/* FAKE: the call re-reads the stored halfwords through a `u16 *` view of game_state so uopt
  * forwards the stored registers into a0-a2; each arm writes unk_002 (and the else arm unk_000)
  * before the unk_014 stores so as1 hoists their li into the branch delay slots, as in
  * func_800590CC (T-24206). T-24210 */
@@ -165,22 +165,22 @@ void func_800591D8(s32 arg0) {
     func_8009C674(0);
     func_8009C210(1);
     func_8009C5E0(0);
-    if ((arg0 != 0) && (D_800E6280.video_width != 0x200)) {
-        D_800E6280.video_height = 0xF0;
-        D_800E6280.screen_center_x[0] = 0x100;
-        D_800E6280.screen_center_x[1] = 0x100;
-        D_800E6280.video_width = 0x200;
-        D_800E6280.video_interlace = 0;
-        func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
+    if ((arg0 != 0) && (game_state.video_width != 0x200)) {
+        game_state.video_height = 0xF0;
+        game_state.screen_center_x[0] = 0x100;
+        game_state.screen_center_x[1] = 0x100;
+        game_state.video_width = 0x200;
+        game_state.video_interlace = 0;
+        func_80097F58(((u16 *)&game_state)[0], ((u16 *)&game_state)[1], ((u16 *)&game_state)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
-    } else if ((arg0 == 0) && (D_800E6280.video_width != 0x140)) {
-        D_800E6280.video_width = 0x140;
-        D_800E6280.video_height = 0xF0;
-        D_800E6280.screen_center_x[0] = 0xA0;
-        D_800E6280.screen_center_x[1] = 0xA0;
-        D_800E6280.video_interlace = 0;
-        func_80097F58(((u16 *)&D_800E6280)[0], ((u16 *)&D_800E6280)[1], ((u16 *)&D_800E6280)[2], 0, 0);
+    } else if ((arg0 == 0) && (game_state.video_width != 0x140)) {
+        game_state.video_width = 0x140;
+        game_state.video_height = 0xF0;
+        game_state.screen_center_x[0] = 0xA0;
+        game_state.screen_center_x[1] = 0xA0;
+        game_state.video_interlace = 0;
+        func_80097F58(((u16 *)&game_state)[0], ((u16 *)&game_state)[1], ((u16 *)&game_state)[2], 0, 0);
         func_8005907C();
         back_clear_switch(1);
     }
@@ -203,7 +203,7 @@ void func_80059308(void) {
     func_8009C674(0);
 }
 
-/* Model record of D_8011ECD0 walked two display slots (0x88 bytes) at a time. T-17017 */
+/* Model record of actor_pool walked two display slots (0x88 bytes) at a time. T-17017 */
 typedef struct ModelRecord {
     /* 0x00 */ u8 active;
     /* 0x01 */ u8 flags;
@@ -221,7 +221,7 @@ typedef struct ModelRecord {
     /* 0x84 */ u8 pad_84[4];
 } ModelRecord; /* size 0x88 */
 
-/* 20-byte ordering-table header (GsOT-like) of the D_800E8C70 pair, indexed by D_8011ECA0. T-17017 */
+/* 20-byte ordering-table header (GsOT-like) of the D_800E8C70 pair, indexed by draw_buffer. T-17017 */
 typedef struct OtRec20 { s32 w[5]; } OtRec20;
 
 /* The index loop (i += 2 over 0x44-byte slots) is strength-reduced to the 0x88 pointer walk of the
@@ -245,8 +245,8 @@ void func_8005938C(void) {
     if ((u32)D_800B0896 < 0) {
         *(u8 *)0 = 0;
     }
-    for (i = *(s32 *)&D_800E6280.menu_hit[7]; i < 0xA0; i += 2) {
-        r = (ModelRecord *)(D_8011ECD0 + i * 0x44);
+    for (i = *(s32 *)&game_state.menu_hit[7]; i < 0xA0; i += 2) {
+        r = (ModelRecord *)(actor_pool + i * 0x44);
         if (r->active && (r->flags & 0x80)) {
             p = &rot;
             p->vz = r->rot.vz;
@@ -286,7 +286,7 @@ void func_8005938C(void) {
             func_80099F04(&lw);
             func_8009A200(r->handle, &ls);
             func_80099ED8(&ls);
-            func_8009A4D0(r->obj, &((OtRec20 *)&D_800E8C70)[D_8011ECA0], 6, 0x1F800000);
+            func_8009A4D0(r->obj, &((OtRec20 *)&D_800E8C70)[draw_buffer], 6, 0x1F800000);
         }
     }
 }
@@ -294,7 +294,7 @@ void func_8005938C(void) {
 void func_80059688(s32 arg0) {
     u8 *p;
 
-    p = D_8011ECD0 + arg0 * 0x44;
+    p = actor_pool + arg0 * 0x44;
     p[0] = 1;
     p[1] = 0;
     p[2] = 0;

@@ -222,7 +222,7 @@ extern s32 D_8014A3E0;
 extern s32 D_8014A3DC;
 void func_80146C20(void);
 extern u8 D_8014A3D8[]; /* next free slot gets i + 2 for runner i (func_80147210) */
-/* Four s16 values added to the D_8011ECD0 records (func_8014038C copies them to a local). */
+/* Four s16 values added to the actor_pool records (func_8014038C copies them to a local). */
 typedef struct TkS16x4 {
     /* 0x0 */ s16 v[4];
 } TkS16x4; /* size 0x8 */
@@ -514,7 +514,7 @@ extern Taiiku3s32 D_80149990;
 typedef struct TaiRunnerA {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02; /* index of the runner's display record (D_8011ECD0 record 46 + n) */
+    /* 0x02 */ u8 unk_02; /* index of the runner's display record (actor_pool record 46 + n) */
     /* 0x03 */ u8 unk_03; /* animation frame */
     /* 0x04 */ u8 unk_04;
     /* 0x05 */ u8 unk_05; /* state of the start sequence */
@@ -732,7 +732,7 @@ void func_8013F35C(void);
 
 #ifndef OVL_TAIIKU_RUNNERS_T11640
 #define OVL_TAIIKU_RUNNERS_T11640
-/* T-11640: TAIIKU's view of the D_8011ECD0 display records (Actor layout). The bytes at
+/* T-11640: TAIIKU's view of the actor_pool display records (Actor layout). The bytes at
  * 0x01 and 0x06 are signed here: func_801400D8 stores them with constants that the original keeps
  * apart from the unsigned switch constants of its later loops, which a u8 field merges. T-20900: with the
  * shared u8 record func_80138DF8, func_80139610 and func_801400D8 do not match, so this view stays; its other

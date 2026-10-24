@@ -1,9 +1,9 @@
 #define RPG_BAT_OVERRIDE_func_8013F15C /* implicit int view: the call's $v0 moves D_8015EDE0 of func_80157158 to $v1 (T-17102) */
-#define MAIN_API_OVERRIDE_func_80049A40 /* the original passes the coordinates as promoted words (T-17102) */
+#define MAIN_API_OVERRIDE_prim_gradient_rect /* the original passes the coordinates as promoted words (T-17102) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-void func_80049A40();
+void prim_gradient_rect();
 s32 func_8013F15C();
 
 void func_80156CC0(void) {
@@ -59,7 +59,7 @@ void func_80156D78(void) {
         sp38 = D_8015EDE0;
         func_8013E7C0(0x3B, 0, 1, 1);
         D_80121311 = 6;
-        func_80049A40(-0x26, -0x1A, sp38, 2, 5, 0xBFBF00, 0x81);
+        prim_gradient_rect(-0x26, -0x1A, sp38, 2, 5, 0xBFBF00, 0x81);
         dtd_on_tpage(0, 0, 5, 1, 0);
         D_8015EDE0 += 2;
         if (D_8015EDE0 < 0x72) {
@@ -87,7 +87,7 @@ void func_80156D78(void) {
         if (D_8015EBB0 >= D_8015ED94) {
             D_8015EBB0 = D_8015ED94 - 1;
         }
-        func_8014D11C((s32) D_8015E828, (s32) D_800E6280.player_family_name, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
+        func_8014D11C((s32) D_8015E828, (s32) game_state.player_family_name, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
         func_8013E810(0x28, 0xFF, 1, 0);
         func_8014EF3C();
@@ -155,7 +155,7 @@ void func_80157158(void) {
         break;
     case 0x4:
         func_8013E97C(0x28, 0, 0);
-        ((Actor *)D_8011ECD0)[136].quad_flags = 0x51000000;
+        ((Actor *)actor_pool)[136].quad_flags = 0x51000000;
         func_8013E7C0(0x28, 3, 5, 1);
         func_8014EF3C();
         break;
@@ -175,11 +175,11 @@ void func_80157158(void) {
         D_8015EDD8 = 0x50;
         break;
     case 0x50:
-        if (!(((Actor *)D_8011ECD0)[137].flags & 1)) {
+        if (!(((Actor *)actor_pool)[137].flags & 1)) {
             func_8013F15C(0x508, 1, 0);
             D_8015EC74 -= 1;
             if (D_8015EC74 == 0) {
-                ((Actor *)D_8011ECD0)[136].quad_flags = 0x41000000;
+                ((Actor *)actor_pool)[136].quad_flags = 0x41000000;
                 func_8013E810(0x28, 0xFF, 1, 0);
                 func_8013E810(0x29, 0xFF, 1, 0);
                 func_8014EF3C();
@@ -195,7 +195,7 @@ void func_80157158(void) {
         if (D_8015EBB0 >= D_8015ED94) {
             D_8015EBB0 = D_8015ED94 - 1;
         }
-        func_8014D11C((s32) D_8015E828, (s32) D_800E6280.player_family_name, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
+        func_8014D11C((s32) D_8015E828, (s32) game_state.player_family_name, (s32) "は", D_8015EBB0, (s32) "のダメージを受けた");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
         func_8014EF3C();
         break;
@@ -252,7 +252,7 @@ void func_80157640(void) {
         func_8014F080(0x1E);
         break;
     case 3:
-        strcpy(D_8015E828, D_800E6280.player_family_name);
+        strcpy(D_8015E828, game_state.player_family_name);
         strcat(D_8015E828, "達は逃げ出した。");
         func_8014B738(D_8015E8F0, 1, 0x5A);
         func_8014EF3C();
@@ -261,14 +261,14 @@ void func_80157640(void) {
         func_8014F178(0);
         break;
     case 5:
-        ((Actor *)D_8011ECD0)[125].draw_flags = 0x81;
+        ((Actor *)actor_pool)[125].draw_flags = 0x81;
         func_8013E7C0(0x30, 2, 1, 1);
         func_8013F15C(0x503, 1, 0);
         func_8014EF3C();
         break;
     case 6:
-        ((Actor *)D_8011ECD0)[125].x += 4;
-        ((Actor *)D_8011ECD0)[144].x += 4;
+        ((Actor *)actor_pool)[125].x += 4;
+        ((Actor *)actor_pool)[144].x += 4;
         D_8015EDE0 += 1;
         if (D_8015EDE0 >= 0x21) {
             func_8014EF3C();
@@ -279,7 +279,7 @@ void func_80157640(void) {
         break;
     case 8:
         D_8015EBFC.unk_18 = 1;
-        func_80042808();
+        main_stage_next();
         break;
     }
 }

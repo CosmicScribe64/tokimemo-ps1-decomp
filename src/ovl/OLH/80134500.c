@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80134500(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0x0:
         func_801345CC();
         break;
@@ -53,68 +53,68 @@ void func_801345CC(void) {
     }
     menu_set(0, 8, a, b, c, d);
     k_disp_start(r);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801346F4(void) {
-    menu_check(0, D_8011ECF6, D_8011ECFA);
+    menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
-    func_8004FC10(0);
-    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
-        if (D_800E6280.menu_cursor_0 != -1) {
-            func_80044750(0x501);
-            switch (*(u8 *)&D_800E6280.menu_cursor_0) {
+    menu_cursor_update(0);
+    if (game_state.pad_pressed & PAD_CIRCLE) {
+        if (game_state.menu_cursor_0 != -1) {
+            snd_command(0x501);
+            switch (*(u8 *)&game_state.menu_cursor_0) {
             case 0:
-                func_80042940(0x10);
+                main_step_set(0x10);
                 break;
             case 1:
-                func_80042940(0x20);
+                main_step_set(0x20);
                 break;
             case 2:
-                func_80042940(0x30);
+                main_step_set(0x30);
                 break;
             case 3:
-                func_80042940(0x40);
+                main_step_set(0x40);
                 break;
             case 4:
-                func_80042940(0x50);
+                main_step_set(0x50);
                 break;
             case 5:
-                func_80042940(0x60);
+                main_step_set(0x60);
                 break;
             case 6:
-                func_80042940(0x70);
+                main_step_set(0x70);
                 break;
             case 7:
-                func_80042908(0);
+                main_stage_set(0);
                 break;
             }
         }
-    } else if (D_800E6280.pad_pressed & PAD_CROSS) {
-        func_80042908(0);
+    } else if (game_state.pad_pressed & PAD_CROSS) {
+        main_stage_set(0);
     }
 }
 
 s32 func_80134824(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF60, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　明るくアニメーションしているアイコン", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "が、現在選択できるアイコンです。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }
 
 s32 func_801348F4(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF64, 0);
@@ -122,19 +122,19 @@ s32 func_801348F4(void) {
         set_kanji_string(-0x88, -0x20, 0xF, "ルを実行するときに使います。", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "　アイコンモード・フリーのときは、通常", 0);
         set_kanji_string(-0x88, 0, 0xF, "時でも画面表示されます。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }
 
 s32 func_801349FC(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF68, 0);
@@ -144,76 +144,76 @@ s32 func_801349FC(void) {
         set_kanji_string(-0x88, 0, 0xF, "好きな場所に移動することが出来ます。", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "　アイコンの位置は、システムファイルを", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "作成した場合のみセーブされます。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }
 
 s32 func_80134B3C(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF6C, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　システムを選択し、カーソルの移動速度", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "を遅くしてから、アイコンを移動してくだ", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "さい。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }
 
 s32 func_80134C28(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF70, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　マウスでは、アイコンを動かせません。", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "コントローラにつなぎ替えて、アイコンを", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "移動してから、御遊び下さい。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         break;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         break;
     }
 }
 
 s32 func_80134D14(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF74, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　システムを選択し、アイコンモードを", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "　　ＴＹＰＥ‐ＡまたはＴＹＰＥ‐Ｂ", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "にしてください。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }
 
 s32 func_80134E00(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013BF78, 0);
@@ -223,13 +223,13 @@ s32 func_80134E00(void) {
         set_kanji_string(-0x88, 0, 0xF, "アイコンモードを変更してから、ゲームを", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "始めてください。", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "（オプションでの設定が優先されます）", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }

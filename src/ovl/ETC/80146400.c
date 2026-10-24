@@ -10,7 +10,7 @@ s32 func_80146400(void)
     s32 a;
     s32 r;
     s32 d;
-    switch (D_800E6280.year)
+    switch (game_state.year)
     {
         case 0x5F:
             x = 0;
@@ -30,11 +30,11 @@ s32 func_80146400(void)
 
     }
 
-    if (D_800E6280.month != 2)
+    if (game_state.month != 2)
     {
-        if (D_800E6280.month != 7)
+        if (game_state.month != 7)
         {
-            if (D_800E6280.month == 0xC)
+            if (game_state.month == 0xC)
             {
                 x += 1;
             }
@@ -62,7 +62,7 @@ s32 func_801464D4(s32 mode) {
     u32 i;
     GameState *g;
 
-    g = &D_800E6280;
+    g = &game_state;
     for (i = 0; i < 256; i++) {
         if (g->event_log[i].year == 0) {
             break;
@@ -94,7 +94,7 @@ void func_801465F8(void) {
     s32 *p;
     s32 y;
 
-    switch (D_800E6280.stage) {
+    switch (game_state.stage) {
     case 0:
         func_80146B40();
         break;
@@ -105,18 +105,18 @@ void func_801465F8(void) {
         func_80148078();
         break;
     }
-    func_80066C08(1);
+    screen_frame_draw(1);
     message_window_show();
     hizuke_show();
     parameter_show();
-    func_8006BA40();
-    func_80065B0C(1);
-    if (D_800E6280.weekday == WEEKDAY_SATURDAY) {
+    cursor_update();
+    icon_bar_update(1);
+    if (game_state.weekday == WEEKDAY_SATURDAY) {
         func_8006764C(0);
     } else {
-        func_80067870();
+        mascot_update();
     }
-    func_800578F4(0);
+    dec_bg_draw(0);
     p = &D_801230D0;
     for (y = 0x28; y != 0x58; y += 8) {
         func_8004B19C(p[10], 0x40, y);
@@ -125,8 +125,8 @@ void func_801465F8(void) {
     }
 }
 void func_80146714(void) {
-    D_800E6280.step_timer.w += 1;
-    switch (D_800E6280.weekday) {
+    game_state.step_timer.w += 1;
+    switch (game_state.weekday) {
     case WEEKDAY_MONDAY:
         func_80147650();
         return;
@@ -153,10 +153,10 @@ void func_80146714(void) {
 void func_801467C4(void) {
     s32 var_s0;
 
-    func_8004E58C();
-    func_8006612C((s32) "期末テスト");
-    func_80041584();
-    func_80048E78();
+    text_system_reset();
+    message_window_set_title((s32) "期末テスト");
+    sprite_tables_clear();
+    actor_clear_upper();
     tpage_buf_clear();
     func_8006509C();
     icon_disp_switch(1);
@@ -164,66 +164,66 @@ void func_801467C4(void) {
     for (var_s0 = 0; var_s0 != 14; var_s0++) {
         icon_can_use_set(var_s0, 0);
     }
-    func_800654D0(*(u8 *)&D_800E6280.icon_count);
-    func_8006BD6C(1);
+    func_800654D0(*(u8 *)&game_state.icon_count);
+    cursor_show(1);
     hizuke_init();
     parameter_show_init();
     parameter_show_init();
-    if (D_800E6280.weekday == WEEKDAY_MONDAY) {
-        func_80044890(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
-    } else if (((EtcStateFlagsView *)&D_800E6280)->records[D_800E6280.day_event_index].type != DAY_EVENT_EXAM) {
-        func_80044890(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
+    if (game_state.weekday == WEEKDAY_MONDAY) {
+        snd_bank_load_start(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
+    } else if (((EtcStateFlagsView *)&game_state)->records[game_state.day_event_index].type != DAY_EVENT_EXAM) {
+        snd_bank_load_start(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801468FC(void) {
     s32 r2;
     s32 r;
 
-    if (D_800E6280.weekday == WEEKDAY_MONDAY || *(u8 *) &D_800E6280.clubs[10 + D_800E6280.day_event_index] != 0x40) {
-        if (func_80044E8C() == 1) {
-            func_8004500C(1, 0x205);
+    if (game_state.weekday == WEEKDAY_MONDAY || *(u8 *) &game_state.clubs[10 + game_state.day_event_index] != 0x40) {
+        if (snd_bank_load_poll() == 1) {
+            snd_bank_start(1, 0x205);
             r = dec_bg_cd_read(0x3FA4, 0);
             set_dec_bri(0);
             if (r != -1) {
                 if (r == 0 || r == 1) {
                     dec_bg_show_set(0, r);
                     set_dec_bri(0x80);
-                    func_80042940(3);
+                    main_step_set(3);
                 }
             } else {
-                func_8004284C();
+                main_step_next();
             }
         }
     } else {
         if (func_8004481C() == 0) {
-            func_8004500C(1, 0x205);
+            snd_bank_start(1, 0x205);
         }
         r2 = dec_bg_cd_read(0x3FA4, 0);
         if (r2 != -1) {
             if (r2 == 0 || r2 == 1) {
                 dec_bg_show_set(0, r2);
-                func_800578F4(0);
+                dec_bg_draw(0);
                 set_dec_bri(0x80);
-                func_80042940(3);
+                main_step_set(3);
             }
         } else {
-            func_8004284C();
+            main_step_next();
         }
     }
 }
 
 void func_80146A38(void) {
     if (cd_read_sync_status() & 1) {
-        dec_bg_show_set(0, func_8005751C(0));
+        dec_bg_show_set(0, dec_bg_decode_to_vram(0));
         if (D_800B594C == -1) {
             dec_bg_reset();
             dec_bg_cd_read(0x3FA4, 0);
         } else {
             set_dec_bri(0x80);
-            func_8004284C();
-            func_800578F4(0);
+            main_step_next();
+            dec_bg_draw(0);
         }
     }
 }
@@ -231,17 +231,17 @@ void func_80146A38(void) {
 void func_80146AC0(void) {
     s32 i;
 
-    if (D_800E6280.weekday == WEEKDAY_MONDAY) {
+    if (game_state.weekday == WEEKDAY_MONDAY) {
         for (i = 0; i < 6; i++) {
             ((EtcWork40 *)&D_801230D0)->unk_10[i] = 0;
             ((EtcWork40 *)&D_801230D0)->unk_28[i] = 0;
         }
     }
-    func_80042808();
+    main_stage_next();
 }
 
 s32 func_80146B40(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_801467C4();
         break;
@@ -258,36 +258,36 @@ s32 func_80146B40(void) {
 }
 
 s32 func_80146BC4(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         cd_read_sectors(9U, 0x801E0000, *(s32 *)&D_80150720[-(func_80066A84() * 4)]);
-        D_800E6280.substep = 1;
+        game_state.substep = 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
             addr_init_else_sd(1 - func_80066A84());
-            func_8004284C();
+            main_step_next();
         }
         break;
     }
 }
 
 void func_80146C68(s32 arg0) {
-    func_80048F64(0x60);
+    actor_clear(0x60);
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
-    ((Actor *)D_80120650)->unk_01 = 1;
-    ((Actor *)D_80120650)->flags = 4;
-    ((Actor *)D_80120650)->quad_flags = 0x01000000;
-    ((Actor *)D_80120650)->draw_flags = 0x84;
-    *(u8 **)&D_80120650[0xC] = D_80125CA8;
-    *(u8 **)&D_80120650[0x10] = D_80125CAC;
-    *(u8 **)&D_80120650[0x34] = D_80125CB0;
-    ((Actor *)D_80120650)->unk_05 = 2;
-    ((Actor *)D_80120650)->blink_period = 1;
-    ((Actor *)D_80120650)->unk_43 = 0x10;
-    ((Actor *)D_80120650)->sequence_slot = arg0;
-    ((Actor *)D_80120650)->x = -0x50;
-    ((Actor *)D_80120650)->y = -0x40;
+    ((Actor *)actor_pool_96)->unk_01 = 1;
+    ((Actor *)actor_pool_96)->flags = 4;
+    ((Actor *)actor_pool_96)->quad_flags = 0x01000000;
+    ((Actor *)actor_pool_96)->draw_flags = 0x84;
+    *(u8 **)&actor_pool_96[0xC] = D_80125CA8;
+    *(u8 **)&actor_pool_96[0x10] = D_80125CAC;
+    *(u8 **)&actor_pool_96[0x34] = D_80125CB0;
+    ((Actor *)actor_pool_96)->unk_05 = 2;
+    ((Actor *)actor_pool_96)->blink_period = 1;
+    ((Actor *)actor_pool_96)->unk_43 = 0x10;
+    ((Actor *)actor_pool_96)->sequence_slot = arg0;
+    ((Actor *)actor_pool_96)->x = -0x50;
+    ((Actor *)actor_pool_96)->y = -0x40;
 }
 
 s32 func_80146D4C(void) {
@@ -298,7 +298,7 @@ s32 func_80146D4C(void) {
     s32 main;
     s32 sub;
     s32 bio;
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
 
     main = 0;
     sub = 0;
@@ -336,7 +336,7 @@ s32 func_80146D4C(void) {
         }
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
     ret = main + sub + bio - 8;
@@ -388,9 +388,9 @@ s32 func_80146D4C(void) {
 }
 
 void func_8014716C(void) {
-    func_8004E58C();
-    func_8006612C("期末試験");
-    gnsx(D_800E6280.player_family_name);
+    text_system_reset();
+    message_window_set_title("期末試験");
+    gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第一日目の試験科目は 語学だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -398,13 +398,13 @@ void func_8014716C(void) {
     } else {
         func_80146C68(0);
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801471F4(void) {
-    func_8004E58C();
-    func_8006612C("期末試験");
-    gnsx(D_800E6280.player_family_name);
+    text_system_reset();
+    message_window_set_title("期末試験");
+    gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第二日目の試験科目は 数学だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -412,13 +412,13 @@ void func_801471F4(void) {
     } else {
         func_80146C68(0);
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8014727C(void) {
-    func_8004E58C();
-    func_8006612C("期末試験");
-    gnsx(D_800E6280.player_family_name);
+    text_system_reset();
+    message_window_set_title("期末試験");
+    gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第三日目の試験科目は 理科だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -426,13 +426,13 @@ void func_8014727C(void) {
     } else {
         func_80146C68(0);
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80147304(void) {
-    func_8004E58C();
-    func_8006612C("期末試験");
-    gnsx(D_800E6280.player_family_name);
+    text_system_reset();
+    message_window_set_title("期末試験");
+    gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第四日目の試験科目は 社会だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -440,13 +440,13 @@ void func_80147304(void) {
     } else {
         func_80146C68(0);
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8014738C(void) {
-    func_8004E58C();
-    func_8006612C("期末試験");
-    gnsx(D_800E6280.player_family_name);
+    text_system_reset();
+    message_window_set_title("期末試験");
+    gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第五日目の試験科目は 美術だ。）", 0, 0x1F);
     if (func_80146D4C() < 2) {
@@ -454,12 +454,12 @@ void func_8014738C(void) {
     } else {
         func_80146C68(0);
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80147414(void) {
     s16 *mode; /* pointer local: the switch reads the flag through it, as the permuter-found form that matches (T-6050) */
-    if (D_800E6280.step_timer.w == 0x20) {
+    if (game_state.step_timer.w == 0x20) {
         D_80120652 |= 1;
     }
     if (!(D_80120652 & 1) && (D_80120668 != 0)) {
@@ -467,25 +467,25 @@ void func_80147414(void) {
             mode = &D_80120666;
             switch ((*mode) & 1) {
             case 0:
-                func_80044750(0x601);
+                snd_command(0x601);
                 break;
             case 1:
-                func_80044750(0x602);
+                snd_command(0x602);
                 break;
             }
         }
         if (D_80120658++ >= 0x11) {
-            func_8004284C();
+            main_step_next();
         }
     }
     k_disp_inc();
 }
 
 void func_801474FC(void) {
-    if (D_800E6280.substep == 0) {
+    if (game_state.substep == 0) {
         k_reset(1);
-        gnsx(D_800E6280.player_family_name);
-        switch (D_801230E0[D_800E6280.weekday]) {
+        gnsx(game_state.player_family_name);
+        switch (D_801230E0[game_state.weekday]) {
         case 0:
             sndisp("もうだめだー。）", 0, 0x1F);
             break;
@@ -502,21 +502,21 @@ void func_801474FC(void) {
             sndisp("バッチリだ。）", 0, 0x1F);
             break;
         }
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
     } else {
         k_disp_inc();
         if (check_end_k() != 0) {
-            func_8004284C();
+            main_step_next();
         }
     }
 }
 
 void func_80147630(void) {
-    func_80042808();
+    main_stage_next();
 }
 
 void func_80147650(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80146BC4();
         return;
@@ -538,7 +538,7 @@ void func_80147650(void) {
 }
 
 void func_801476DC(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80146BC4();
         return;
@@ -560,7 +560,7 @@ void func_801476DC(void) {
 }
 
 void func_80147768(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80146BC4();
         return;
@@ -582,7 +582,7 @@ void func_80147768(void) {
 }
 
 void func_801477F4(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80146BC4();
         return;
@@ -604,7 +604,7 @@ void func_801477F4(void) {
 }
 
 void func_80147880(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80146BC4();
         return;
@@ -640,45 +640,45 @@ s32 func_8014790C(void) {
     s16 y;
     s32 v;
 
-    switch (*(u8 *)&D_800E6280.substep) {
+    switch (*(u8 *)&game_state.substep) {
     case 0:
-        func_8004E58C();
-        func_8006612C("結果発表 ");
-        gnsx(D_800E6280.player_family_name);
+        text_system_reset();
+        message_window_set_title("結果発表 ");
+        gnsx(game_state.player_family_name);
         sndisp("今日は、試験結果の 発表の日だ。）", 0, 0x1F);
         k_sub_reset_point_set();
         k_sub_disp_start(0);
-        func_8004500C(1, 0x202);
+        snd_bank_start(1, 0x202);
         hizuke_init();
-        func_80048E78();
-        D_800E6280.substep += 1;
+        actor_clear_upper();
+        game_state.substep += 1;
         cd_read_sectors(0xD, 0x801E0000, 0x9CA8);
         break;
     case 1:
-        if ((u32) D_800E6280.step_timer.w >= 0x101) {
-            D_800E6280.substep += 1;
+        if ((u32) game_state.step_timer.w >= 0x101) {
+            game_state.substep += 1;
         }
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_8004E58C();
+            text_system_reset();
             icon_disp_switch(0);
             parameter_disp_switch(0);
             hizuke_disp_switch(0);
-            func_80048F64(0x60);
-            ((Actor *)D_8011ECD0)[96].unk_01 = 4;
-            ((Actor *)D_8011ECD0)[96].flags = 0x40;
-            ((Actor *)D_8011ECD0)[96].quad_flags = 0;
-            ((Actor *)D_8011ECD0)[96].draw_flags = 0xA4;
-            ((Actor *)D_8011ECD0)[96].frame_table = (u8 *) 0x801E64A0;
-            ((Actor *)D_8011ECD0)[96].sequence_table = (u8 *) 0x801E6520;
-            ((Actor *)D_8011ECD0)[96].tpage_table = (u8 *) 0x801E6494;
-            ((Actor *)D_8011ECD0)[96].unk_18 = 0;
-            ((Actor *)D_8011ECD0)[96].unk_05 = 1;
-            ((Actor *)D_8011ECD0)[96].unk_04 = 8;
-            ((Actor *)D_8011ECD0)[96].x = 0;
-            ((Actor *)D_8011ECD0)[96].y = -0x28;
-            ((Actor *)D_8011ECD0)[96].brightness = 0x80;
+            actor_clear(0x60);
+            ((Actor *)actor_pool)[96].unk_01 = 4;
+            ((Actor *)actor_pool)[96].flags = 0x40;
+            ((Actor *)actor_pool)[96].quad_flags = 0;
+            ((Actor *)actor_pool)[96].draw_flags = 0xA4;
+            ((Actor *)actor_pool)[96].frame_table = (u8 *) 0x801E64A0;
+            ((Actor *)actor_pool)[96].sequence_table = (u8 *) 0x801E6520;
+            ((Actor *)actor_pool)[96].tpage_table = (u8 *) 0x801E6494;
+            ((Actor *)actor_pool)[96].unk_18 = 0;
+            ((Actor *)actor_pool)[96].unk_05 = 1;
+            ((Actor *)actor_pool)[96].unk_04 = 8;
+            ((Actor *)actor_pool)[96].x = 0;
+            ((Actor *)actor_pool)[96].y = -0x28;
+            ((Actor *)actor_pool)[96].brightness = 0x80;
             func_80148E98();
             func_80148EE8();
             func_801480D0();
@@ -686,7 +686,7 @@ s32 func_8014790C(void) {
              * uopt, keeping the walked base separate from the indexed base.
              * Keep i's initialization and the following do on one line for
              * the original address schedule. */
-            do { r = D_8011ECD0; } while ((u32)D_800E6280.weekday < 0); i = 0; do {
+            do { r = actor_pool; } while ((u32)game_state.weekday < 0); i = 0; do {
                 x = D_80150630[i];
                 y = D_8015064C[i];
                 v = D_80150684[i];
@@ -704,25 +704,25 @@ s32 func_8014790C(void) {
                 ((Actor *)r)[0x61].x = x;
                 ((Actor *)r)[0x61].y = y;
                 if (v == 0xD) {
-                    strncpy((char *) buf, (char *) D_800E6280.player_family_name, 8);
-                    strncat((char *) buf, (char *) D_800E6280.player_given_name, 8);
+                    strncpy((char *) buf, (char *) game_state.player_family_name, 8);
+                    strncat((char *) buf, (char *) game_state.player_given_name, 8);
                     set_kanji_string(D_80150630[i] + 0x18, D_8015064C[i], 3, buf, 0);
-                    printf("%s\n", D_800E6280.player_full_name);
+                    printf("%s\n", game_state.player_full_name);
                 } else if (v == 0xA) {
-                    set_kanji_string(x + 0x18, y, 3, D_800B3538[13], 0);
+                    set_kanji_string(x + 0x18, y, 3, girl_full_name_table[13], 0);
                 } else if (v == 0xB) {
-                    if (D_800E6280.girls[11].flags.f.story_stage != 0) {
-                        set_kanji_string(x + 0x18, y, 3, D_800B3538[11], 0);
+                    if (game_state.girls[11].flags.f.story_stage != 0) {
+                        set_kanji_string(x + 0x18, y, 3, girl_full_name_table[11], 0);
                     } else {
                         /* FAKE: T-25054, this late-folded zero prevents uopt
                          * from distributing 0x61 into the field displacement.
                          * The same identity is used in the final else arm. */
-                        ((Actor *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
+                        ((Actor *) actor_pool)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
                     }
-                } else if (D_800E6280.girls[v].flags.f.met) {
-                    set_kanji_string(x + 0x18, y, 3, D_800B3538[v], 0);
+                } else if (game_state.girls[v].flags.f.met) {
+                    set_kanji_string(x + 0x18, y, 3, girl_full_name_table[v], 0);
                 } else {
-                    ((Actor *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
+                    ((Actor *) actor_pool)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
                 }
                 r += 0x44;
                 i += 1;
@@ -730,7 +730,7 @@ s32 func_8014790C(void) {
             k_sub_reset_point_set();
             k_sub_disp_start(0);
             func_80148F34();
-            func_8004284C();
+            main_step_next();
         }
         break;
     }
@@ -745,39 +745,39 @@ typedef struct {
 
 void func_80147D74(void) {
     func_80148BC8();
-    D_800E6280.player_flags_hi.b[0] &= 0xFFFD;
-    if (D_800E6280.step_timer.u >= 0x79U) {
-        gnsx(D_800E6280.player_family_name);
+    game_state.player_flags_hi.b[0] &= 0xFFFD;
+    if (game_state.step_timer.u >= 0x79U) {
+        gnsx(game_state.player_family_name);
         if (D_801230F4 >= 3) {
             sndisp("３科目以上赤点だった。 明日から、一週間補習だぁ。 勉強しかできないー！）", 0, 0x1F);
-            func_8004500C(1, 0x203);
-            ((GsBits0F6 *)&D_800E6280.player_flags_hi.b[0])->f0 = 1;
-            D_800E6280.month_calendar[0].marker[D_800E6280.day + 1] = 0x17;
-            ((GsBits0F6 *)&D_800E6280.player_flags_hi.b[0])->f1 = 1;
+            snd_bank_start(1, 0x203);
+            ((GsBits0F6 *)&game_state.player_flags_hi.b[0])->f0 = 1;
+            game_state.month_calendar[0].marker[game_state.day + 1] = 0x17;
+            ((GsBits0F6 *)&game_state.player_flags_hi.b[0])->f1 = 1;
         } else if (D_801506F0 < 2) {
             sndisp("やったー、一番だ！ これで試験の帝王だな。）", 0, 0x1F);
-            func_8004500C(1, 0x204);
+            snd_bank_start(1, 0x204);
         } else if (D_801506F4 != 0) {
             sndisp("今回の試験は終了した。）", 0, 0x1F);
-            ((GsBits0F6 *)&D_800E6280.player_flags_hi.b[0])->f1 = 1;
-            func_8004500C(1, 0x200);
+            ((GsBits0F6 *)&game_state.player_flags_hi.b[0])->f1 = 1;
+            snd_bank_start(1, 0x200);
         } else {
             sndisp("今回の試験は終了した。）", 0, 0x1F);
-            func_8004500C(1, 0x201);
+            snd_bank_start(1, 0x201);
         }
         k_sub_reset_point_set();
         k_sub_disp_start(0);
-        func_8006BD6C(0);
-        func_8004284C();
+        cursor_show(0);
+        main_step_next();
     }
     func_80148E98();
     func_80148EE8();
 }
 
 void func_80147F0C(void) {
-    if (((D_800E6280.pad_pressed & PAD_CIRCLE) && (u32)D_800E6280.step_timer.w >= 0x101) || (D_800E6280.pad_pressed & PAD_CROSS)) {
-        func_8006BD6C(1);
-        func_80042808();
+    if (((game_state.pad_pressed & PAD_CIRCLE) && (u32)game_state.step_timer.w >= 0x101) || (game_state.pad_pressed & PAD_CROSS)) {
+        cursor_show(1);
+        main_stage_next();
     }
     func_80148E98();
     func_80148EE8();
@@ -785,8 +785,8 @@ void func_80147F0C(void) {
 }
 
 s32 func_80147F7C(void) {
-    D_800E6280.step_timer.w += 1;
-    switch (D_800E6280.step) {
+    game_state.step_timer.w += 1;
+    switch (game_state.step) {
     case 0:
         func_8014790C();
         break;
@@ -802,20 +802,20 @@ s32 func_80147F7C(void) {
 void func_80147FFC(void) {
     parameter_show_init();
     parameter_show_init();
-    func_80048E78();
-    func_8004E58C();
-    func_8004284C();
+    actor_clear_upper();
+    text_system_reset();
+    main_step_next();
 }
 
 void func_8014803C(void) {
-    if (D_800E6280.weekday == WEEKDAY_SATURDAY) {
-        func_8004500C(0, 0);
+    if (game_state.weekday == WEEKDAY_SATURDAY) {
+        snd_bank_start(0, 0);
     }
-    func_80072B5C(0);
+    day_event_next(0);
 }
 
 void func_80148078(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80147FFC();
         break;
@@ -844,7 +844,7 @@ void func_801480D0(void) {
     s32 values[14];
     s32 pad;
 
-    srand(D_800E6280.frame_count);
+    srand(game_state.frame_count);
     for (i = 0; i < 13; i++) {
         first_random = rand();
         noise = (first_random % (s32)D_80150738[i]) * (((rand() & 1) * 2) - 1);
@@ -973,17 +973,17 @@ void func_801480D0(void) {
     }
     for (i = 0; i < 11; i++) {
         if (D_80150668[i] < D_80150668[13]) {
-            if (D_800E6280.event_flags[0xC8 + i] == 0) {
-                D_800E6280.girls[i].tokimeki += 11;
-                D_800E6280.event_flags[0xC8 + i] = 1;
+            if (game_state.event_flags[0xC8 + i] == 0) {
+                game_state.girls[i].tokimeki += 11;
+                game_state.event_flags[0xC8 + i] = 1;
             } else {
-                D_800E6280.girls[i].tokimeki += 2;
+                game_state.girls[i].tokimeki += 2;
             }
         }
     }
     if (D_801506BC[13] == 1) {
         for (i = 0; i < 11; i++) {
-            D_800E6280.girls[i].tokimeki += 2;
+            game_state.girls[i].tokimeki += 2;
         }
     }
 }
@@ -1014,14 +1014,14 @@ s32 func_80148BC8() {
             func_80148F7C(0, *x + 0x8E, *y, 0, 0);
             func_80148F7C(D_801506E4, *x + 4, *y, 0, 1);
         } else if (D_80150684[i] == 0xB) {
-            if (D_800E6280.girls[11].flags.f.story_stage != 0) {
+            if (game_state.girls[11].flags.f.story_stage != 0) {
                 x = &D_80150630[i];
                 y = &D_8015064C[i];
                 func_80148F7C(D_8015067E, *x + 0x86, *y, 1, 0);
                 func_80148F7C(0, *x + 0x8E, *y, 0, 0);
                 func_80148F7C(D_801506E8, *x + 4, *y, 0, 1);
             }
-        } else if (D_800E6280.girls[D_80150684[i]].flags.f.met) {
+        } else if (game_state.girls[D_80150684[i]].flags.f.met) {
             x = &D_80150630[i];
             y = &D_8015064C[i];
             func_80148F7C(D_80150668[D_80150684[i]], *x + 0x86, *y, 1, 0);
@@ -1032,12 +1032,12 @@ s32 func_80148BC8() {
 }
 
 void func_80148E98(void) {
-    func_80049A40(-0xA0, -0x68, 0x140, 0x8E, 5, 0xE0E0E0, 2);
+    prim_gradient_rect(-0xA0, -0x68, 0x140, 0x8E, 5, 0xE0E0E0, 2);
     dtd_on(5);
 }
 
 void func_80148EE8(void) {
-    func_80049A40(-0x41, -0x70, 0x84, 0x12, 4, 0x30E00, 0);
+    prim_gradient_rect(-0x41, -0x70, 0x84, 0x12, 4, 0x30E00, 0);
     dtd_on(4);
 }
 
@@ -1071,7 +1071,7 @@ void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     var_s1 = arg0;
     if (var_s1 >= 0) {
         do {
-            temp_v0 = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+            temp_v0 = (SPRT *)GetWorkBase(0x14, draw_buffer);
             func_8009F0A4(temp_v0);
             SetSemiTrans(temp_v0, 0);
             temp_v0->r0 = 0x80;
@@ -1079,24 +1079,24 @@ void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
             temp_v0->b0 = 0x80;
             switch (arg3) {
             case 0:
-                temp_v0->x0 = ((D_800E6280.screen_center_x[D_8011ECA0] + arg1) - (var_s4 * 8)) - (arg4 * 2);
-                temp_v0->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
+                temp_v0->x0 = ((game_state.screen_center_x[draw_buffer] + arg1) - (var_s4 * 8)) - (arg4 * 2);
+                temp_v0->y0 = game_state.screen_center_y[draw_buffer] + arg2;
                 temp_v0->w = 8;
                 temp_v0->h = 0xC;
                 temp_v0->u0 = D_80150748[var_s1 % 10U];
                 temp_v0->v0 = 0;
                 break;
             case 1:
-                temp_v0->x0 = ((D_800E6280.screen_center_x[D_8011ECA0] + arg1) - (var_s4 * 8)) + (arg4 * 4);
-                temp_v0->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
+                temp_v0->x0 = ((game_state.screen_center_x[draw_buffer] + arg1) - (var_s4 * 8)) + (arg4 * 4);
+                temp_v0->y0 = game_state.screen_center_y[draw_buffer] + arg2;
                 temp_v0->w = 8;
                 temp_v0->h = 0xC;
                 temp_v0->u0 = D_80150748[var_s1 % 10U];
                 temp_v0->v0 = 0x10;
                 break;
             case 2:
-                temp_v0->x0 = ((D_800E6280.screen_center_x[D_8011ECA0] + arg1) - (var_s4 * 6)) + (arg4 * 4);
-                temp_v0->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
+                temp_v0->x0 = ((game_state.screen_center_x[draw_buffer] + arg1) - (var_s4 * 6)) + (arg4 * 4);
+                temp_v0->y0 = game_state.screen_center_y[draw_buffer] + arg2;
                 temp_v0->w = 6;
                 temp_v0->h = 0xC;
                 temp_v0->u0 = D_80150748[var_s1 % 10U];
@@ -1104,7 +1104,7 @@ void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
                 break;
             }
             temp_v0->clut = func_8009ED74(0x100, arg4 + 0x1F0);
-            AddPrim(D_8011ECA0 * 0x400 + 4 + D_800E8CA0, temp_v0);
+            AddPrim(draw_buffer * 0x400 + 4 + D_800E8CA0, temp_v0);
             if (var_s1 < 0xAU) {
                 dtd_on_tpage(0x140, 0, 1, 0, 0);
                 return;

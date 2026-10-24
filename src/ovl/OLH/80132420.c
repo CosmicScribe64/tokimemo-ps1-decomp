@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80132420(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0x0:
         func_801324EC();
         break;
@@ -53,50 +53,50 @@ void func_801324EC(void) {
     }
     menu_set(0, 8, a, b, c, d);
     k_disp_start(r);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80132614(void) {
-    menu_check(0, D_8011ECF6, D_8011ECFA);
+    menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
-    func_8004FC10(0);
-    if (D_800E6280.pad_pressed & PAD_CIRCLE) {
-        if (D_800E6280.menu_cursor_0 != -1) {
-            func_80044750(0x501);
-            switch (*(u8 *)&D_800E6280.menu_cursor_0) {
+    menu_cursor_update(0);
+    if (game_state.pad_pressed & PAD_CIRCLE) {
+        if (game_state.menu_cursor_0 != -1) {
+            snd_command(0x501);
+            switch (*(u8 *)&game_state.menu_cursor_0) {
             case 0:
-                func_80042940(0x10);
+                main_step_set(0x10);
                 break;
             case 1:
-                func_80042940(0x20);
+                main_step_set(0x20);
                 break;
             case 2:
-                func_80042940(0x30);
+                main_step_set(0x30);
                 break;
             case 3:
-                func_80042940(0x40);
+                main_step_set(0x40);
                 break;
             case 4:
-                func_80042940(0x50);
+                main_step_set(0x50);
                 break;
             case 5:
-                func_80042940(0x60);
+                main_step_set(0x60);
                 break;
             case 6:
-                func_80042940(0x70);
+                main_step_set(0x70);
                 break;
             case 7:
-                func_80042908(0);
+                main_stage_set(0);
                 break;
             }
         }
-    } else if (D_800E6280.pad_pressed & PAD_CROSS) {
-        func_80042908(0);
+    } else if (game_state.pad_pressed & PAD_CROSS) {
+        main_stage_set(0);
     }
 }
 
 s32 func_80132744(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013A700, 0);
@@ -106,37 +106,37 @@ s32 func_80132744(void) {
         set_kanji_string(-0x88, 0, 0xF, "　また、アイコンの位置を自由に移動でき", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "るフリーモードもあります。", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "お好みのアイコンの配置でお楽しみ下さい。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }
 
 s32 func_80132884(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013A704, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　マウスライク…カーソルが、方向キーの", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "上下左右に反応して動きます。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }
 
 s32 func_80132954(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013A708, 0);
@@ -149,38 +149,38 @@ s32 func_80132954(void) {
         set_kanji_string(-0x88, 0x30, 0xF, "→『休養』→『電話』→『デート』→", 0);
         set_kanji_string(-0x88, 0x40, 0xF, "『情報』→『システム』→『カレンダー』", 0);
         set_kanji_string(-0x88, 0x50, 0xF, "→『セーブ／ロード』→『強制』の順です。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }
 
 s32 func_80132AE8(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013A70C, 0);
         set_kanji_string(-0x88, -0x30, 0xF, "　メニューＢ…メニュー選択時に方向キー", 0);
         set_kanji_string(-0x88, -0x20, 0xF, "を押すと、その方向のメニューアイテムに", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "カーソルが移動します。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }
 
 s32 func_80132BD4(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013A710, 0);
@@ -188,19 +188,19 @@ s32 func_80132BD4(void) {
         set_kanji_string(-0x88, -0x20, 0xF, "ウスライクと同じ動作をします。", 0);
         set_kanji_string(-0x88, -0x10, 0xF, "Ｌ１ボタンを押している間は、メニューＡ", 0);
         set_kanji_string(-0x88, 0, 0xF, "と同じ動作をします。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }
 
 s32 func_80132CDC(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013A714, 0);
@@ -212,19 +212,19 @@ s32 func_80132CDC(void) {
         set_kanji_string(-0x88, 0x20, 0xF, "　『メニューＢ』→", 0);
         set_kanji_string(-0x88, 0x30, 0xF, "　『マウスライク』", 0);
         set_kanji_string(-0x88, 0x40, 0xF, "の順で変更できます。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }
 
 s32 func_80132E54(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         k_sub_reset();
         set_kanji_string(-0x88, -0x40, 1, D_8013A718, 0);
@@ -234,13 +234,13 @@ s32 func_80132E54(void) {
         set_kanji_string(-0x88, 0, 0xF, "位置が変更できます。", 0);
         set_kanji_string(-0x88, 0x10, 0xF, "　Ｒ２ボタンを押しながら方向キー操作で", 0);
         set_kanji_string(-0x88, 0x20, 0xF, "紐の長さの変更ができます。", 0);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
-        func_80052000();
+        text_wait_confirm();
         return;
     case 2:
-        func_80042940(0);
+        main_step_set(0);
         return;
     }
 }

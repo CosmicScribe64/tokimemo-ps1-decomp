@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_801447D0(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_8014488C();
         break;
@@ -19,23 +19,23 @@ void func_801447D0(void) {
         func_80144998();
         break;
     }
-    if (D_800E6280.step != 5) {
-        if (D_800E6280.pad_pressed & 0x860) {
-            func_80042940(4);
+    if (game_state.step != 5) {
+        if (game_state.pad_pressed & 0x860) {
+            main_step_set(4);
         }
     }
 }
 
 void func_8014488C(void) {
-    (&D_800E6280.clear_color_r)[0] = (&D_800E6280.clear_color_r)[1] = 8;
-    D_800E6280.clear_color_b = 0x10;
+    (&game_state.clear_color_r)[0] = (&game_state.clear_color_r)[1] = 8;
+    game_state.clear_color_b = 0x10;
     draw2d3d(1, 1);
     initView();
     func_80146E3C();
     func_80146D60(-0xFA0);
     func_801471D0(0x8019C800);
-    func_80144CC0((u8 *)D_800E6280.scratch_words);
-    func_80144CC0(D_800E6280.scratch_buffer);
+    func_80144CC0((u8 *)game_state.scratch_words);
+    func_80144CC0(game_state.scratch_buffer);
     func_8009C674(0);
     func_80144D90(7);
     func_80147488(1, D_8015F82C[0], 0);
@@ -48,14 +48,14 @@ void func_8014488C(void) {
     D_80128880[2].x = -0x5A;
     D_80128880[2].z = 0;
     D_80128880[2].y = -0x5A;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80144998(void) {
     D_80127090.unk0 = 0x80000000;
     D_801270A0.unk0 = 0x80000000;
     draw2d3d(1, 0);
-    func_80042908(2);
+    main_stage_set(2);
 }
 
 void func_801449D8(s32 *arg0, s32 arg1, s32 arg2) {
@@ -68,14 +68,14 @@ void func_801449D8(s32 *arg0, s32 arg1, s32 arg2) {
     s32 fade;
 
     for (i = 0; i != 25; i++) {
-        pkt[i] = (POLY_F4 *)GetWorkBase(0x18, D_8011ECA0);
+        pkt[i] = (POLY_F4 *)GetWorkBase(0x18, draw_buffer);
         func_8009F02C(pkt[i]);
         SetSemiTrans(pkt[i], 1);
         SetShadeTex(pkt[i], 0);
         arg0[i * 2] += arg1;
         arg0[i * 2 + 1] += arg2;
         x = arg0[i * 2];
-        y = arg0[i * 2 + 1] + D_800E6280.screen_center_y[D_8011ECA0];
+        y = arg0[i * 2 + 1] + game_state.screen_center_y[draw_buffer];
         if ((x < 0) || (x >= 0x141)) {
             if (arg1 > 0) {
                 arg0[i * 2] = 0;
@@ -109,12 +109,12 @@ void func_801449D8(s32 *arg0, s32 arg1, s32 arg2) {
             pkt[i]->b0 = 0xFF;
         }
         if ((rand() % 3) > 0) {
-            AddPrim((D_8011ECA0 << 10) + 0x190 + D_800E8CA0, (s32)pkt[i]);
+            AddPrim((draw_buffer << 10) + 0x190 + D_800E8CA0, (s32)pkt[i]);
         }
     }
-    fade = GetWorkBase(0xC, D_8011ECA0);
+    fade = GetWorkBase(0xC, draw_buffer);
     func_8009D294(fade, 0, 0, func_8009ECB0(1, 1, 0, 0), 0);
-    AddPrim((D_8011ECA0 << 10) + D_800E8CA0, fade);
+    AddPrim((draw_buffer << 10) + D_800E8CA0, fade);
     safe_env(0);
 }
 
@@ -171,7 +171,7 @@ void func_80144E3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5, s3
 
     /* FAKE: grouping preserves the original loop bound and initialization scheduling. T-24502 */
     p = polys; i = 0; do {
-        *p = (POLY_G4 *)GetWorkBase(sizeof(POLY_G4), D_8011ECA0);
+        *p = (POLY_G4 *)GetWorkBase(sizeof(POLY_G4), draw_buffer);
         func_8009F054((s32) *p);
         SetSemiTrans(*p, 1);
         SetShadeTex(*p, 1);
@@ -228,13 +228,13 @@ void func_80144E3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5, s3
         switch (i) {
         case 0:
             (*p)->x0 = (s16) arg0;
-            (*p)->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1);
+            (*p)->y0 = (s16) (game_state.screen_center_y[draw_buffer] + arg1);
             (*p)->x1 = (arg0 + 0x140);
-            (*p)->y1 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1);
+            (*p)->y1 = (s16) (game_state.screen_center_y[draw_buffer] + arg1);
             (*p)->x2 = (s16) arg0;
-            (*p)->y2 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3));
+            (*p)->y2 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3));
             (*p)->x3 = (arg0 + 0x140);
-            (*p)->y3 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3));
+            (*p)->y3 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3));
             (*p)->r0 = (u8) r0;
             (*p)->g0 = g0;
             (*p)->b0 = (u8) b0;
@@ -250,13 +250,13 @@ void func_80144E3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5, s3
             break;
         case 1:
             (*p)->x0 = (s16) arg0;
-            (*p)->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->y0 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
             (*p)->x1 = (arg0 + 0x140);
-            (*p)->y1 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->y1 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
             (*p)->x2 = (s16) arg0;
-            (*p)->y2 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
+            (*p)->y2 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
             (*p)->x3 = (arg0 + 0x140);
-            (*p)->y3 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
+            (*p)->y3 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
             (*p)->r0 = r2;
             (*p)->g0 = g2;
             (*p)->b0 = b2;
@@ -272,13 +272,13 @@ void func_80144E3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5, s3
             break;
         case 2:
             (*p)->x0 = (s16) arg0;
-            (*p)->y0 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3));
+            (*p)->y0 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3));
             (*p)->x1 = (arg0 + 0x140);
-            (*p)->y1 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3));
+            (*p)->y1 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3));
             (*p)->x2 = (s16) arg0;
-            (*p)->y2 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->y2 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
             (*p)->x3 = (arg0 + 0x140);
-            (*p)->y3 = (s16) (D_800E6280.screen_center_y[D_8011ECA0] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->y3 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
             (*p)->r0 = r2;
             (*p)->g0 = g2;
             (*p)->b0 = b2;
@@ -301,12 +301,12 @@ void func_80144E3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5, s3
     }
     /* FAKE: grouping keeps the saved offset/base initialization before the pointer loop. T-24502 */
     i = arg3 * 4; p = polys; end = polys + 3; do {
-        AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + i, *p);
+        AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + i, *p);
         p += 1;
     } while (p != end);
-    p = (POLY_G4 **)GetWorkBase(0xC, D_8011ECA0);
+    p = (POLY_G4 **)GetWorkBase(0xC, draw_buffer);
     func_8009D294((s32) p, 0, 0, func_8009ECB0(1, 1, 0, 0), 0);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + i, (s32) p);
+    AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + i, (s32) p);
     safe_env(arg3);
 }
 
@@ -404,13 +404,13 @@ s32 func_80145DC4(void) {
 
     D_8012274C = 0;
     D_80122750 = D_80127480[1].unk1C;
-    t = D_800E6280.step_timer.w;
+    t = game_state.step_timer.w;
     D_80122754 = -0x7D0;
     func_80099540(&D_80122740);
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
-        func_801449D8(D_800E6280.scratch_words, 0, 0xA);
-        func_801449D8((s32 *)D_800E6280.scratch_buffer, 0, 8);
+        func_801449D8(game_state.scratch_words, 0, 0xA);
+        func_801449D8((s32 *)game_state.scratch_buffer, 0, 8);
         if (t < 0x1E) {
             for (i = 0; i != 2; i++) {
                 func_80147488(i + 1, D_8015F82C[i], 1);
@@ -444,8 +444,8 @@ s32 func_80145DC4(void) {
                 func_80147488(i + 1, D_8015F82C[i], 8);
             }
         } else if (t == 0x168) {
-            D_800E6280.step_timer.w = 0;
-            D_800E6280.substep += 1;
+            game_state.step_timer.w = 0;
+            game_state.substep += 1;
         }
         if (t == 0x1E) {
             func_801335A0(0, 0x505);
@@ -462,17 +462,17 @@ s32 func_80145DC4(void) {
             D_80127080[1].unk0 = 0x80000000;
             D_80127080[2].unk0 = 0x80000000;
         } else if (t >= 0x3C) {
-            func_8004284C();
+            main_step_next();
         }
         break;
     }
-    D_800E6280.step_timer.w += 1;
+    game_state.step_timer.w += 1;
 }
 
 s32 func_8014616C(void) {
     s32 t;
 
-    t = D_800E6280.step_timer.w;
+    t = game_state.step_timer.w;
     if (t == 1) {
         func_80144DF8(1);
         func_80147488(1, D_8015F82C[0], 9);
@@ -564,12 +564,12 @@ s32 func_8014616C(void) {
         func_801335A0(0, 0x505);
     }
     if (t < 0x244) {
-        func_801449D8(D_800E6280.scratch_words, -0xA, 0);
-        func_801449D8((s32 *)D_800E6280.scratch_buffer, -8, 0);
+        func_801449D8(game_state.scratch_words, -0xA, 0);
+        func_801449D8((s32 *)game_state.scratch_buffer, -8, 0);
     }
     if (t == 0x280) {
         D_80127090.unk0 = 0x80000000;
-        func_8004284C();
+        main_step_next();
     }
     /* FAKE: the frame counter is read through its own symbol for the final `+= 1`. The original reads it twice, as two uopt
      * variables (the compare chain, then the increment); through GameState both reads join one web and the function is 165
@@ -581,7 +581,7 @@ s32 func_80146754(void) {
     s32 t;
     s32 x;
 
-    t = D_800E6280.step_timer.w;
+    t = game_state.step_timer.w;
     if (t == 1) {
         func_80144DF8(2);
         func_80147488(2, D_8015F82C[1], 9);
@@ -660,18 +660,18 @@ s32 func_80146754(void) {
         func_801335A0(0, 0x505);
     }
     if (t < 0x12C) {
-        func_801449D8(D_800E6280.scratch_words, -5, -0xA);
-        func_801449D8((s32 *)D_800E6280.scratch_buffer, -5, -8);
+        func_801449D8(game_state.scratch_words, -5, -0xA);
+        func_801449D8((s32 *)game_state.scratch_buffer, -5, -8);
     } else if ((t >= 0x12C) && (t < 0x190)) {
         x = (t - 0x12C) / 10 - 5;
-        func_801449D8(D_800E6280.scratch_words, x, -0xA);
-        func_801449D8((s32 *)D_800E6280.scratch_buffer, x, -8);
+        func_801449D8(game_state.scratch_words, x, -0xA);
+        func_801449D8((s32 *)game_state.scratch_buffer, x, -8);
     } else if (t >= 0x190) {
-        func_801449D8(D_800E6280.scratch_words, 5, -0xA);
-        func_801449D8((s32 *)D_800E6280.scratch_buffer, 5, -8);
+        func_801449D8(game_state.scratch_words, 5, -0xA);
+        func_801449D8((s32 *)game_state.scratch_buffer, 5, -8);
     }
     if (t == 0x226) {
-        func_80042940(4);
+        main_step_set(4);
     }
     /* FAKE: the frame counter is read through its own symbol for the final `+= 1`. The original reads it twice, as two uopt
      * variables (the compare chain, then the increment); through GameState both reads join one web and the function is 156

@@ -34,7 +34,7 @@ void func_801391F4(void) {
     FnTbl62 tbl;
 
     tbl = D_801452B8;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
     if (D_80144E08 == 0) {
         if (D_80144E0C == 3) {
@@ -45,26 +45,26 @@ void func_801391F4(void) {
 
 void func_801392A4(void) {
     k_reset(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801392CC(void) {
     cd_read_sectors(0x71, 0x801B0000, 0x85B6);
     func_801390C0();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80139304(void) {
-    func_80044750(0x24);
-    func_80044750(0x501);
-    func_8004284C();
+    snd_command(0x24);
+    snd_command(0x501);
+    main_step_next();
 }
 
 s32 func_80139334(void) {
     s32 x;
 
     if (D_80144E0C == 2) {
-        D_800E6280.current_girl = GIRL_MIRA;
+        game_state.current_girl = GIRL_MIRA;
     }
     /* FAKE: capturing implicit-int return of func_80137AB4 and referencing x after the branches reserves $v0 and colors D_80144E0C to $a0 and 2 to $v1. T-24130 */
     x = func_80137AB4();
@@ -80,16 +80,16 @@ s32 func_80139334(void) {
     }
     if (x) {}
     if (D_80144E0C == 2 && check_end_k() != 0 &&
-        (*(u8 *)&D_800E6280.voice_mode == 0 || (*(u8 *)&D_800E6280.voice_mode != 0 && func_80046094() == 9))) {
+        (*(u8 *)&game_state.voice_mode == 0 || (*(u8 *)&game_state.voice_mode != 0 && func_80046094() == 9))) {
         k_reset(1);
         D_80122CE4 = 0;
         D_80122CF0 = 0;
         D_8011ED5B &= 0xFF7F;
         D_800CA2AC = 0;
-        D_800E6280.step_timer.w = 0;
-    } else if (D_800E6280.step_timer.u++ >= 0x1AU) {
+        game_state.step_timer.w = 0;
+    } else if (game_state.step_timer.u++ >= 0x1AU) {
         if (D_80144E0C == 3 && check_end_k() != 0 &&
-            (*(u8 *)&D_800E6280.voice_mode == 0 || (*(u8 *)&D_800E6280.voice_mode != 0 && func_80046094() == 9))) {
+            (*(u8 *)&game_state.voice_mode == 0 || (*(u8 *)&game_state.voice_mode != 0 && func_80046094() == 9))) {
             D_80122D20 = 1;
             D_80144E08 += 1;
             D_80122CE4 = 0;
@@ -97,65 +97,65 @@ s32 func_80139334(void) {
             D_8011ED5B &= 0xFF7F;
             D_800CA2AC = 0;
             D_80144E0C = 0;
-            func_8004284C();
+            main_step_next();
         }
     }
 }
 
 void func_80139514(void) {
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
-    D_800E6280.tile_layer_enabled = 0;
-    D_800E6280.quads_enabled = 1;
-    func_8008585C();
-    D_800E6280.screen_brightness = 0x80;
-    D_800B593C = 0;
+    text_system_reset();
+    game_state.tile_layer_enabled = 0;
+    game_state.quads_enabled = 1;
+    dialogue_clear();
+    game_state.screen_brightness = 0x80;
+    dec_bg_brightness = 0;
     D_800B5940 = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
-    func_80084E4C();
-    *(u8 *)&D_800E6280.date_girl = *(u8 *)&D_800E6280.current_girl = 7;
-    func_800847B8(*(u8 *)&D_800E6280.current_girl);
+    text_marker_hide();
+    *(u8 *)&game_state.date_girl = *(u8 *)&game_state.current_girl = 7;
+    dialogue_names_set(*(u8 *)&game_state.current_girl);
     func_80136F90();
     D_80144DFC = D_80144D9C;
     D_80144E00 = D_80144DC0;
     D_80144E04 = D_80144DE4;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013960C(void) {
     func_801390C0();
-    if (((u8)D_800E6280.month >= 6U) && ((u8)D_800E6280.month < 0xAU)) {
+    if (((u8)game_state.month >= 6U) && ((u8)game_state.month < 0xAU)) {
         load_palette((s32)D_80145280, 0x11, 1, 2, 0);
-        func_80084E90((s32)D_80145288, (s32)D_8014528C, (s32)D_80145290, (s32)D_80145294, (s32)D_80145298, (s32)D_8014529C);
+        event_still_show((s32)D_80145288, (s32)D_8014528C, (s32)D_80145290, (s32)D_80145294, (s32)D_80145298, (s32)D_8014529C);
     } else {
         load_palette((s32)D_80145284, 0x11, 1, 2, 0);
-        func_80084E90((s32)D_801452A0, (s32)D_801452A4, (s32)D_801452A8, (s32)D_801452AC, (s32)D_801452B0, (s32)D_801452B4);
+        event_still_show((s32)D_801452A0, (s32)D_801452A4, (s32)D_801452A8, (s32)D_801452AC, (s32)D_801452B0, (s32)D_801452B4);
     }
-    func_800850D4((s32)D_80145274, (s32)D_80145278, (s32)D_80145270, (s32)D_8014527C);
+    event_anim_show((s32)D_80145274, (s32)D_80145278, (s32)D_80145270, (s32)D_8014527C);
     D_800CA360 = 1;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80139734(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "廊下");
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80139778(void) {
     bg_read_sub2(0x4045);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801397A0(void) {
     bg_read_sub2(0x46F0);
-    func_8004284C();
+    main_step_next();
 }

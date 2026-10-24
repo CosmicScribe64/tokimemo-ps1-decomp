@@ -6,7 +6,7 @@ void func_80133D10(void) {
     FnTbl23 tbl;
 
     tbl = D_80143CC0;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
@@ -23,12 +23,12 @@ void func_80133D98(void) {
     if (D_80143B18 == 0) {
         var_v0 = var_v0;
         D_80143B00 = var_v0;
-        if (D_800E6280.current_girl == GIRL_YUKARI) {
+        if (game_state.current_girl == GIRL_YUKARI) {
             var_v0 = 2 + var_v0;
             D_80143B00 = var_v0;
         }
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133E30(void) {
@@ -36,7 +36,7 @@ void func_80133E30(void) {
         func_801323D4();
         return;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133E6C(void) {
@@ -48,46 +48,46 @@ void func_80133E6C(void) {
 }
 
 void func_80133EA8(void) {
-    if ((D_80143B20 == 0) && (((u32) D_800E6280.frame_count % 3U) == 0)) {
+    if ((D_80143B20 == 0) && (((u32) game_state.frame_count % 3U) == 0)) {
         if (D_80143B24 != 0) {
-            func_80085B3C(5, 3);
+            event_log_add(5, 3);
         } else {
-            func_80085B3C(5, 0);
+            event_log_add(5, 0);
         }
     }
     bg_read_sub2(0x41ED);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133F24(void) {
-    if ((D_800E6280.current_girl != GIRL_YUKARI) || (D_80143B20 != 0) || (D_80143B18 == 0)) {
-        func_80042808();
+    if ((game_state.current_girl != GIRL_YUKARI) || (D_80143B20 != 0) || (D_80143B18 == 0)) {
+        main_stage_next();
         return;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133F88(void) {
     if (D_80143B20 != 0) {
-        D_800E6280.step += 4;
+        game_state.step += 4;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133FC8(void) {
     if (D_80143B18 == 0) {
-        func_8004284C();
+        main_step_next();
         return;
     }
     func_801323D4();
 }
 
 void func_80134004(void) {
-    if ((D_800E6280.current_girl == GIRL_YUKARI) && (D_80143B18 == 0)) {
+    if ((game_state.current_girl == GIRL_YUKARI) && (D_80143B18 == 0)) {
         func_801323D4();
         return;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80134058(void) {
@@ -95,17 +95,17 @@ void func_80134058(void) {
         func_801323D4();
         return;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80134094(void) {
     if (D_80122CDC != 0) {
-        D_800E6280.girls[5].affection -= 1;
-        D_800E6280.girls[5].tokimeki -= 1;
-        D_800E6280.girls[5].syoushin += 0xA;
+        game_state.girls[5].affection -= 1;
+        game_state.girls[5].tokimeki -= 1;
+        game_state.girls[5].syoushin += 0xA;
     } else {
-        D_800E6280.girls[5].tokimeki += 1;
+        game_state.girls[5].tokimeki += 1;
     }
     check_para_limit();
-    func_8004284C();
+    main_step_next();
 }

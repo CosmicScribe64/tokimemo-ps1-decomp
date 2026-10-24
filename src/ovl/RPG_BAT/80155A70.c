@@ -27,7 +27,7 @@ s32 func_80155A70(void) {
             func_8014F230();
             break;
         case 3:
-            if (func_800460EC() == 2) {
+            if (cd_audio_state() == 2) {
                 D_8015EE4C = D_8015E744 + 1;
                 func_8014F230();
             }

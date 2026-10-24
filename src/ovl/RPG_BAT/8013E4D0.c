@@ -5,7 +5,7 @@ void func_8013E4D0(void) {
     s32 i;
     Actor *p;
 
-    p = (Actor *)D_8011ECD0;
+    p = (Actor *)actor_pool;
     for (i = 40; i < 64; i++) {
         p[96 + i].unk_01 = 5;
         p[96 + i].quad_flags = 0x41000000;
@@ -32,39 +32,39 @@ s32 func_8013E54C(s32 arg0) {
     switch (arg0) {
     case 3:
         for (i = 4; i < 16; i++) {
-            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEB4;
-            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EECC;
-            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE9C;
-            ((Actor *)D_8011ECD0)[i + 96].unk_01 = 5;
-            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x1D;
+            *(s32 *)&actor_pool[0x198C + i * 0x44] = D_8015EEB4;
+            *(s32 *)&actor_pool[0x1990 + i * 0x44] = D_8015EECC;
+            *(s32 *)&actor_pool[0x19B4 + i * 0x44] = D_8015EE9C;
+            ((Actor *)actor_pool)[i + 96].unk_01 = 5;
+            ((Actor *)actor_pool)[i + 96].unk_43 = 0x1D;
         }
         break;
     case 4:
         for (i = 4; i < 16; i++) {
-            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEA8;
-            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EEC0;
-            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE90;
-            ((Actor *)D_8011ECD0)[i + 96].unk_01 = 5;
-            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x12;
+            *(s32 *)&actor_pool[0x198C + i * 0x44] = D_8015EEA8;
+            *(s32 *)&actor_pool[0x1990 + i * 0x44] = D_8015EEC0;
+            *(s32 *)&actor_pool[0x19B4 + i * 0x44] = D_8015EE90;
+            ((Actor *)actor_pool)[i + 96].unk_01 = 5;
+            ((Actor *)actor_pool)[i + 96].unk_43 = 0x12;
         }
         break;
     case 5:
         for (i = 4; i < 16; i++) {
-            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEB8;
-            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EED0;
-            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EEA0;
-            ((Actor *)D_8011ECD0)[i + 96].unk_01 = 5;
-            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x1C;
+            *(s32 *)&actor_pool[0x198C + i * 0x44] = D_8015EEB8;
+            *(s32 *)&actor_pool[0x1990 + i * 0x44] = D_8015EED0;
+            *(s32 *)&actor_pool[0x19B4 + i * 0x44] = D_8015EEA0;
+            ((Actor *)actor_pool)[i + 96].unk_01 = 5;
+            ((Actor *)actor_pool)[i + 96].unk_43 = 0x1C;
         }
         break;
     case 0xFF:
         for (i = 4; i < 16; i++) {
-            *(s32 *)&D_8011ECD0[0x198C + i * 0x44] = D_8015EEA4;
-            *(s32 *)&D_8011ECD0[0x1990 + i * 0x44] = D_8015EEBC;
-            *(s32 *)&D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE8C;
-            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0;
-            ((Actor *)D_8011ECD0)[i + 96].unk_01 = 3;
-            ((Actor *)D_8011ECD0)[i + 96].draw_flags = 0;
+            *(s32 *)&actor_pool[0x198C + i * 0x44] = D_8015EEA4;
+            *(s32 *)&actor_pool[0x1990 + i * 0x44] = D_8015EEBC;
+            *(s32 *)&actor_pool[0x19B4 + i * 0x44] = D_8015EE8C;
+            ((Actor *)actor_pool)[i + 96].unk_43 = 0;
+            ((Actor *)actor_pool)[i + 96].unk_01 = 3;
+            ((Actor *)actor_pool)[i + 96].draw_flags = 0;
         }
         break;
     }
@@ -73,7 +73,7 @@ s32 func_8013E54C(s32 arg0) {
 void func_8013E7C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     u8 *temp_v0;
 
-    temp_v0 = D_8011ECD0 + arg0 * 0x44;
+    temp_v0 = actor_pool + arg0 * 0x44;
     *(s16 *)(temp_v0 + 0x1988) = 0;
     *(u8 *)(temp_v0 + 0x1982) = arg2;
     if (arg3 == 1) {
@@ -90,7 +90,7 @@ void func_8013E7C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 void func_8013E810(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     u8 *temp_v0;
 
-    temp_v0 = D_8011ECD0 + arg0 * 0x44;
+    temp_v0 = actor_pool + arg0 * 0x44;
     *(s16 *)(temp_v0 + 0x1988) = 0;
     *(u8 *)(temp_v0 + 0x1982) = arg2;
     if (arg3 == 1) {
@@ -107,7 +107,7 @@ void func_8013E810(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 void func_8013E864(s32 arg0, s32 arg1, s32 arg2) {
     u8 *temp_v0;
 
-    temp_v0 = D_8011ECD0 + arg0 * 0x44;
+    temp_v0 = actor_pool + arg0 * 0x44;
     *(s16 *)(temp_v0 + 0x8) = 0;
     *(u8 *)(temp_v0 + 0x2) = 1;
     if (arg2 == 1) {
@@ -124,7 +124,7 @@ void func_8013E864(s32 arg0, s32 arg1, s32 arg2) {
 void func_8013E8B8(s32 arg0, s32 arg1, s32 arg2) {
     u8 *temp_v0;
 
-    temp_v0 = D_8011ECD0 + arg0 * 0x44;
+    temp_v0 = actor_pool + arg0 * 0x44;
     *(s16 *)(temp_v0 + 0x1108) = 0;
     *(u8 *)(temp_v0 + 0x1102) = 1;
     if (arg2 == 1) {
@@ -147,7 +147,7 @@ void func_8013E934(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void func_8013E97C(s32 i, s32 x, s32 y) {
-    u8 *p = D_8011ECD0 + i * 0x44;
+    u8 *p = actor_pool + i * 0x44;
     *(s16 *)(p + 0x19A6) = x - 0xA0;
     *(s16 *)(p + 0x19AA) = y - 0x78;
 }
@@ -169,14 +169,14 @@ void func_8013EA30(s32 arg0) {
     s32 i;
 
     for (i = 0; i < 96; i++) {
-        ((Actor *)D_8011ECD0)[i + 64].brightness = arg0;
+        ((Actor *)actor_pool)[i + 64].brightness = arg0;
     }
 }
 
 void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     switch (arg1) {
     case 0:
-        ((Actor *)D_8011ECD0)[155].draw_flags &= 0xFFFE;
+        ((Actor *)actor_pool)[155].draw_flags &= 0xFFFE;
         RPG_GAUGE->flag[0] = 0;
         RPG_GAUGE->cur[0] -= arg2;
         if (RPG_GAUGE->cur[0] < 0) {
@@ -189,7 +189,7 @@ void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         func_8014BFE4(arg0, 0x74, 0x77, arg2, arg3);
         return;
     case 1:
-        ((Actor *)D_8011ECD0)[156].draw_flags &= 0xFFFE;
+        ((Actor *)actor_pool)[156].draw_flags &= 0xFFFE;
         RPG_GAUGE->flag[1] = 0;
         RPG_GAUGE->cur[1] -= arg2;
         if (RPG_GAUGE->cur[1] < 0) {
@@ -202,7 +202,7 @@ void func_8013EA60(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         func_8014BFE4(arg0, 0x3B, 0x67, arg2, arg3);
         return;
     case 2:
-        ((Actor *)D_8011ECD0)[157].draw_flags &= 0xFFFE;
+        ((Actor *)actor_pool)[157].draw_flags &= 0xFFFE;
         RPG_GAUGE->flag[2] = 0;
         RPG_GAUGE->cur[2] -= arg2;
         if (RPG_GAUGE->cur[2] < 0) {
@@ -388,7 +388,7 @@ void func_8013F0F4(s32 a, s32 b, s32 c) {
         b = -1;
     }
     if (D_8015ED3C[c] == 0) {
-        func_80044750((u16)((a & 0xFF) | 0x600));
+        snd_command((u16)((a & 0xFF) | 0x600));
         D_8015ED3C[c] = b;
     }
     D_8015ED3C[c] -= 1;
@@ -399,7 +399,7 @@ void func_8013F15C(s32 a, s32 b, s32 c) {
         b = -1;
     }
     if (D_8015ED3C[c] == 0) {
-        func_80044750((u16)((a & 0xFF) | 0x500));
+        snd_command((u16)((a & 0xFF) | 0x500));
         D_8015ED3C[c] = b;
     }
     D_8015ED3C[c] -= 1;
@@ -410,9 +410,9 @@ void func_8013F1C4(s32 a, s32 b, s32 c) {
 
     p = &D_8015ED64[0][c];
     if (*p == 0) {
-        D_800E6280.current_girl = GIRL_SOTOI;
-        func_80046290(a, b, 0xE);
-        func_80044750(0x300);
+        game_state.current_girl = GIRL_SOTOI;
+        cd_audio_request_set(a, b, 0xE);
+        snd_command(0x300);
         *p = 1;
     }
 }
@@ -431,9 +431,9 @@ void func_8013F220(void) {
 void func_8013F250(s32 arg0) {
     if (D_8015ED8C[1] == 0) {
         D_8015EBE4 += 1;
-        if (func_800460EC() == 4 || D_8015EBE4 >= 0x3D) {
+        if (cd_audio_state() == 4 || D_8015EBE4 >= 0x3D) {
             if (D_8015EBE4 >= 0x3D) {
-                func_80044750(0x74);
+                snd_command(0x74);
             }
             D_8015EE44.unk_04 = 4;
             D_8015ED8C[1] = 1;
@@ -483,15 +483,15 @@ void func_8013F3F0(s32 arg0, s32 arg1) {
     s32 i;
     Actor *p;
 
-    p = (Actor *)D_8011ECD0;
+    p = (Actor *)actor_pool;
     for (i = 40; i < 64; i++) {
         p[96 + i].x += arg0;
         p[96 + i].y += arg1;
     }
-    ((Actor *)D_8011ECD0)[125].x += arg0;
-    ((Actor *)D_8011ECD0)[126].x += arg0;
-    ((Actor *)D_8011ECD0)[127].x += arg0;
-    ((Actor *)D_8011ECD0)[125].y += arg1;
-    ((Actor *)D_8011ECD0)[126].y += arg1;
-    ((Actor *)D_8011ECD0)[127].y += arg1;
+    ((Actor *)actor_pool)[125].x += arg0;
+    ((Actor *)actor_pool)[126].x += arg0;
+    ((Actor *)actor_pool)[127].x += arg0;
+    ((Actor *)actor_pool)[125].y += arg1;
+    ((Actor *)actor_pool)[126].y += arg1;
+    ((Actor *)actor_pool)[127].y += arg1;
 }

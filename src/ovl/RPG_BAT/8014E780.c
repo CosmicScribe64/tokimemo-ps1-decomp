@@ -55,25 +55,25 @@ s32 D_8015EE88 = 2;
 s32 D_8015EE8C = 0;
 
 void func_8014E780(void) {
-    srand(D_800E6280.timer_ticks);
-    func_80048EB8(0);
-    func_8006BC28(0);
-    func_8004E58C();
+    srand(game_state.timer_ticks);
+    actor_clear_range(0);
+    cursor_actor_init(0);
+    text_system_reset();
     tpage_buf_clear();
-    D_800E6280.clear_color_r = 0;
-    (*(s8 *)&D_800E6280.clear_color_b) = 0;
-    (*(s8 *)&D_800E6280.clear_color_g) = 0;
+    game_state.clear_color_r = 0;
+    (*(s8 *)&game_state.clear_color_b) = 0;
+    (*(s8 *)&game_state.clear_color_g) = 0;
     back_clear_switch(1);
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
+    actors_draw_enable(1);
+    sprite_tables_clear();
     hizuke_disp_switch(0);
-    func_80065F34(0);
+    message_window_title_show(0);
     message_disp_switch(0);
-    func_80044750(0x7F);
+    snd_command(0x7F);
     func_8014E994();
-    D_8015EC18 = (s32) D_800E6280.current_girl;
-    D_8015EB9C = (s32) D_800E6280.current_girl;
+    D_8015EC18 = (s32) game_state.current_girl;
+    D_8015EB9C = (s32) game_state.current_girl;
     switch (D_80122CE0) {
     case 1:
         D_8015EB98 = 0x10000;
@@ -99,22 +99,22 @@ void func_8014E780(void) {
         D_8015EB98 = 0x80000000;
         break;
     }
-    func_80042808();
+    main_stage_next();
 }
 
 void func_8014E8F4(void) {
     tpage_buf_clear();
     dec_bg_reset();
-    func_8004E58C();
-    func_80048EB8(0);
-    func_8006BC28(0);
-    func_8006BD6C(0);
+    text_system_reset();
+    actor_clear_range(0);
+    cursor_actor_init(0);
+    cursor_show(0);
     back_clear_switch(1);
     D_80122CE0 = D_8015EC14;
-    D_800E6280.current_girl = (s8) D_8015EC18;
-    main_state_set((s32) D_800E6280.saved_mode);
-    func_80042908((s32) D_800E6280.saved_stage);
-    func_80042940((s32) D_800E6280.saved_step);
+    game_state.current_girl = (s8) D_8015EC18;
+    main_state_set((s32) game_state.saved_mode);
+    main_stage_set((s32) game_state.saved_stage);
+    main_step_set((s32) game_state.saved_step);
 }
 
 /* FAKE: the three clear loops share one counter (it keeps the first two rolled
@@ -252,9 +252,9 @@ void func_8014EBEC(void) {
         func_8013E7C0(i, 0xFF, 1, 0);
         i++;
     } while (i < 0x38);
-    for (i = 40; i < 64; i++) ((Actor *)D_8011ECD0)[i + 96].unk_01 = 5;
+    for (i = 40; i < 64; i++) ((Actor *)actor_pool)[i + 96].unk_01 = 5;
     if (D_8015EB98 != 0x80000000) {
-        ((Actor *)D_8011ECD0)[125].unk_01 = 5;
+        ((Actor *)actor_pool)[125].unk_01 = 5;
     }
 }
 
@@ -357,9 +357,9 @@ void func_8014EF8C(void) {
     for (i = 0; i < 12; i++) {
         (&D_8015ED64[0][0])[i] = 0;
     }
-    for (i = 40; i < 64; i++) ((Actor *)D_8011ECD0)[i + 96].unk_01 = 5;
+    for (i = 40; i < 64; i++) ((Actor *)actor_pool)[i + 96].unk_01 = 5;
     if (D_8015EB98 != 0x80000000) {
-        ((Actor *)D_8011ECD0)[125].unk_01 = 5;
+        ((Actor *)actor_pool)[125].unk_01 = 5;
     }
 }
 
@@ -452,9 +452,9 @@ void func_8014F278(void) {
     for (i = 0; i < 12; i++) {
         (&D_8015ED64[0][0])[i] = 0;
     }
-    for (i = 40; i < 64; i++) ((Actor *)D_8011ECD0)[i + 96].unk_01 = 5;
+    for (i = 40; i < 64; i++) ((Actor *)actor_pool)[i + 96].unk_01 = 5;
     if (D_8015EB98 != 0x80000000) {
-        ((Actor *)D_8011ECD0)[125].unk_01 = 5;
+        ((Actor *)actor_pool)[125].unk_01 = 5;
     }
 }
 

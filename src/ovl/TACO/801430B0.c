@@ -24,11 +24,11 @@ s32 arg3;
         n = arg0;
         sign = 1;
     }
-    if (sign != -1 || !(D_800E6280.frame_count & 4)) {
+    if (sign != -1 || !(game_state.frame_count & 4)) {
         xoff = 0;
         if (n >= 0) {
             do {
-                sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+                sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
                 func_8009F0A4(sprite);
                 sprite->w = 0xC;
                 sprite->h = 0x10;
@@ -36,13 +36,13 @@ s32 arg3;
                 sprite->r0 = 0x80;
                 sprite->g0 = 0x80;
                 sprite->b0 = 0x80;
-                sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] + arg1 - xoff;
-                sprite->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
+                sprite->x0 = game_state.screen_center_x[draw_buffer] + arg1 - xoff;
+                sprite->y0 = game_state.screen_center_y[draw_buffer] + arg2;
                 uv = &D_8015F5A0[n % 10 * 2];
                 sprite->u0 = uv[0] + 0x80;
                 sprite->v0 = uv[1];
                 sprite->clut = func_8009ED74(arg3 * 0x10, 0x1EF);
-                AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+                AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
                 if (n < 10) {
                     break;
                 }
@@ -70,15 +70,15 @@ s32 arg3;
     x = arg1;
     if (*s != 0) {
         do {
-            sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+            sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
             func_8009F0A4(sprite);
             SetSemiTrans(sprite, 0);
             sprite->r0 = 0x80;
             sprite->g0 = 0x80;
             sprite->b0 = 0x80;
-            sprite->x0 = D_800E6280.screen_center_x[D_8011ECA0] + x;
+            sprite->x0 = game_state.screen_center_x[draw_buffer] + x;
             x += 0xC;
-            sprite->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
+            sprite->y0 = game_state.screen_center_y[draw_buffer] + arg2;
             if (*s >= 0x30 && *s < 0x3A) {
                 idx = *s - 0x30;
                 sprite->u0 = D_8015F5A0[idx * 2] + 0x80;
@@ -105,7 +105,7 @@ s32 arg3;
             /* FAKE: w and h on one source line give the original's store order (h first) and the register for 0xC. T-16562 */
             sprite->w = 0xC; sprite->h = 0x10;
             sprite->clut = func_8009ED74(arg3 << 4, 0x1EF);
-            AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+            AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
         } while (*++s != 0);
     }
     dtd_on_tpage(0x340, 0x180, 1, 0, 0);
@@ -115,32 +115,32 @@ void func_80143574(s32 arg0, s32 arg1, s32 arg2) {
     s32 pad; /* FAKE: unused local declared first puts p at sp+0x28 as in the original; real source unknown. T-6070 */
     u8 *p;
 
-    p = GetWorkBase(0xC, D_8011ECA0);
+    p = GetWorkBase(0xC, draw_buffer);
     func_8009F0B8(p);
     SetSemiTrans(p, 0);
     /* FAKE: p[4] and p[5] on one source line give the original's store order 5, 4, 6 (line-based scheduling). T-6070 */
     p[4] = (arg2 >> 16) & 0xFF; p[5] = (arg2 >> 8) & 0xFF;
     p[6] = arg2 & 0xFF;
-    *(s16 *)(p + 8) = D_800E6280.screen_center_x[D_8011ECA0] + arg0;
-    *(s16 *)(p + 0xA) = D_800E6280.screen_center_y[D_8011ECA0] + arg1;
-    AddPrim((D_8011ECA0 << 10) + 0x3C + D_800E8CA0, p);
+    *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + arg0;
+    *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + arg1;
+    AddPrim((draw_buffer << 10) + 0x3C + D_800E8CA0, p);
 }
 
 void func_80143644(void) {
-    D_800E6280.menu_mode = MENU_MODE_A;
-    if (D_800E6280.pad_pressed & PAD_UP) {
-        if (D_800E6280.menu_cursor_0 != 0) {
-            D_800E6280.menu_cursor_0 -= 1;
+    game_state.menu_mode = MENU_MODE_A;
+    if (game_state.pad_pressed & PAD_UP) {
+        if (game_state.menu_cursor_0 != 0) {
+            game_state.menu_cursor_0 -= 1;
         } else {
-            D_800E6280.menu_cursor_0 = D_800E6280.menu_count_0 - 1;
+            game_state.menu_cursor_0 = game_state.menu_count_0 - 1;
         }
     }
-    if (D_800E6280.pad_pressed & PAD_DOWN) {
-        if ((u32)D_800E6280.menu_cursor_0 < (u32)(D_800E6280.menu_count_0 - 1)) {
-            D_800E6280.menu_cursor_0 += 1;
+    if (game_state.pad_pressed & PAD_DOWN) {
+        if ((u32)game_state.menu_cursor_0 < (u32)(game_state.menu_count_0 - 1)) {
+            game_state.menu_cursor_0 += 1;
             return;
         }
-        D_800E6280.menu_cursor_0 = 0;
+        game_state.menu_cursor_0 = 0;
     }
 }
 
@@ -149,7 +149,7 @@ void func_801436D4(void) {
     RECT rect;
 
     rect.x = 0;
-    rect.y = D_8011ECA0 * 0xF0;
+    rect.y = draw_buffer * 0xF0;
     rect.w = 0x200;
     rect.h = 0xF0;
     func_8009C93C(&rect, 0x200, 0);
@@ -249,54 +249,54 @@ void func_80143B58(void) {
     case 0: /* empty case of its own: the jump table starts at 0 and its entry 0 is not the default */
         break;
     case 0x10:
-        func_800462C8(0x20, 0x80162000, 0xB69B);
-        func_800462C8(0x20, 0x80172000, 0xB6BB);
-        func_800462C8(8, 0x80182000, 0xB47E);
+        cd_read_sectors_nowait(0x20, 0x80162000, 0xB69B);
+        cd_read_sectors_nowait(0x20, 0x80172000, 0xB6BB);
+        cd_read_sectors_nowait(8, 0x80182000, 0xB47E);
         D_8015EDBC += 1;
         break;
     case 0x14:
-        func_80044890(0, 0xBF43, 0xBF26, 0xD310, 0xD2C2, 0xD29D);
+        snd_bank_load_start(0, 0xBF43, 0xBF26, 0xD310, 0xD2C2, 0xD29D);
         D_8015EDBC += 1;
         break;
     case 0x18:
-        func_800462C8(0x12, 0x8018D000, 0xB438);
+        cd_read_sectors_nowait(0x12, 0x8018D000, 0xB438);
         cd_read_sectors(0xC, 0x801E0000, 0xB44A);
-        func_800462C8(0x20, 0x80162000, 0xB418);
+        cd_read_sectors_nowait(0x20, 0x80162000, 0xB418);
         D_8015EDBC += 1;
         break;
     case 0x20:
-        func_800462C8(0x20, 0x80162000, 0xB647);
-        func_800462C8(0x20, 0x80172000, 0xB5A0);
+        cd_read_sectors_nowait(0x20, 0x80162000, 0xB647);
+        cd_read_sectors_nowait(0x20, 0x80172000, 0xB5A0);
         D_8015EDBC += 1;
         break;
     case 0x24:
-        func_80044890(0, 0xBF61, 0xBF45, 0xD310, 0xD2C2, 0xD29D);
+        snd_bank_load_start(0, 0xBF61, 0xBF45, 0xD310, 0xD2C2, 0xD29D);
         D_8015EDBC += 1;
         break;
     case 0x28:
-        func_800462C8(7, 0x80196000, 0xB45B);
+        cd_read_sectors_nowait(7, 0x80196000, 0xB45B);
         cd_read_sectors(5, 0x801E0000, 0xB462);
-        func_800462C8(0x20, 0x80162000, 0xB535);
+        cd_read_sectors_nowait(0x20, 0x80162000, 0xB535);
         D_8015EDBC += 1;
         break;
     case 0x30:
-        func_800462C8(0x20, 0x80162000, 0xB67B);
-        func_800462C8(0x20, 0x80172000, 0xB5C1);
+        cd_read_sectors_nowait(0x20, 0x80162000, 0xB67B);
+        cd_read_sectors_nowait(0x20, 0x80172000, 0xB5C1);
         D_8015EDBC += 1;
         break;
     case 0x34:
-        func_80044890(0, 0xBF77, 0xBF63, 0xD310, 0xD2C2, 0xD29D);
+        snd_bank_load_start(0, 0xBF77, 0xBF63, 0xD310, 0xD2C2, 0xD29D);
         D_8015EDBC += 1;
         break;
     case 0x38:
-        func_800462C8(0xA, 0x801A7000, 0xB515);
+        cd_read_sectors_nowait(0xA, 0x801A7000, 0xB515);
         cd_read_sectors(0x15, 0x801E0000, 0xB51F);
-        func_800462C8(0x20, 0x80162000, 0xB5FC);
-        func_800462C8(0x20, 0x80172000, 0xB61D);
+        cd_read_sectors_nowait(0x20, 0x80162000, 0xB5FC);
+        cd_read_sectors_nowait(0x20, 0x80172000, 0xB61D);
         D_8015EDBC += 1;
         break;
     case 0x44:
-        func_80044890(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
+        snd_bank_load_start(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
         D_8015EDBC += 1;
         break;
     default:

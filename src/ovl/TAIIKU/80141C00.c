@@ -2,12 +2,12 @@
 #include "ovl/TAIIKU.h"
 
 void func_80141C00(void) {
-    if ((func_8008667C(6) < 2) && (((u32) (D_800E6280.girls[6].flags.w << 0x1E) >> 0x1F) == 1) && (D_800E6280.event_flags[45] == 0)) {
-        D_800E6280.event_flags[45] = 1;
-        func_80042808();
+    if ((girl_state_rank(6) < 2) && (((u32) (game_state.girls[6].flags.w << 0x1E) >> 0x1F) == 1) && (game_state.event_flags[45] == 0)) {
+        game_state.event_flags[45] = 1;
+        main_stage_next();
     } else {
-        D_800E6280.stage = 0;
-        D_800E6280.step = 0;
+        game_state.stage = 0;
+        game_state.step = 0;
         D_80122ECC = 1;
     }
     Default_Disp();
@@ -19,72 +19,72 @@ void func_80141C88(void) {
     temp_v0 = func_80141CDC();
     if (temp_v0 != 0) {
         if (temp_v0 == 1) {
-            D_800E6280.stage = 0;
-            D_800E6280.step = 0;
+            game_state.stage = 0;
+            game_state.step = 0;
             D_80122ECC = 1;
             return;
         }
-        func_80046500();
+        game_reset_to_title();
     }
 }
 
 s32 func_80141CDC(void) {
     s32 i;
 
-    func_80083808();
-    switch (D_800E6280.step) {
+    bustup_wink_update();
+    switch (game_state.step) {
     case 0:
-        func_80044890(0, 0xBF98, 0xBF79, 0xD712, 0xD6C3, 0xD6B7);
+        snd_bank_load_start(0, 0xBF98, 0xBF79, 0xD712, 0xD6C3, 0xD6B7);
         D_8014A0C0 = 0;
-        func_8008585C();
-        func_8004E58C();
+        dialogue_clear();
+        text_system_reset();
         tpage_buf_clear();
         dec_bg_reset();
-        func_80048E78();
+        actor_clear_upper();
         k_reset(0);
-        func_8006612C((s32) "中庭");
-        func_80065F34(0);
+        message_window_set_title((s32) "中庭");
+        message_window_title_show(0);
         message_window_init();
-        D_800B593C = 0;
-        func_8004284C();
+        dec_bg_brightness = 0;
+        main_step_next();
         break;
     case 1:
-        if (func_80044E8C() == 1) {
+        if (snd_bank_load_poll() == 1) {
             dec_bg_cd_read(0x4071, 1);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            dec_bg_show_set(1, func_8005751C(1));
-            func_80062CD0(0x6476);
-            func_8004284C();
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
+            bustup_read_start(0x6476);
+            main_step_next();
         }
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            D_800E6280.current_girl = GIRL_NOZOMI;
-            func_80083474();
+            game_state.current_girl = GIRL_NOZOMI;
+            bustup_show_checked();
             cd_read_sectors(1U, 0x801E8000, 0xB7BF);
         }
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            func_80084E4C();
-            func_800847B8(6U);
+            text_marker_hide();
+            dialogue_names_set(6U);
             func_80142140();
-            D_800CA148 = 0;
-            D_800CA14C = 0;
-            D_800CA160 = D_8014A0D0;
-            D_800CA164 = D_8014A0D4;
-            D_800CA168 = D_8014A0D8;
-            func_8004284C();
+            dialogue_group = 0;
+            dialogue_line = 0;
+            dialogue_text_table = D_8014A0D0;
+            dialogue_command_table = D_8014A0D4;
+            dialogue_voice_table = D_8014A0D8;
+            main_step_next();
         }
         break;
     case 5:
         if (check_end_k() != 0) {
-            func_80065F34(1);
+            message_window_title_show(1);
         }
         /* fallthrough */
     case 7:
@@ -96,21 +96,21 @@ s32 func_80141CDC(void) {
         break;
     case 6:
         normal_date_bg_fadein();
-        if (D_800E6280.step == 7) {
-            func_8004500C(0, 0x202);
+        if (game_state.step == 7) {
+            snd_bank_start(0, 0x202);
         }
         break;
     case 8:
-        func_80044750(0x60A);
+        snd_command(0x60A);
         func_80047550();
-        func_8004284C();
+        main_step_next();
         break;
     case 11:
         normal_date_girl_in();
         break;
     case 13:
         cd_read_sectors(0x3DU, 0x80197000, 0xBB5A);
-        func_8004284C();
+        main_step_next();
         break;
     case 14:
         normal_date_bggirl_fadeout();
@@ -119,39 +119,39 @@ s32 func_80141CDC(void) {
         if (cd_read_sync_status() & 1) {
             func_80145210();
             load_palette(D_8014A3A0, 0x11, 1, 2, 0);
-            func_80084E90(D_8014A3A4, D_8014A3A8, D_8014A3AC, D_8014A3B0, D_8014A3B4, D_8014A3B8);
-            func_800850D4(D_8014A394, D_8014A398, D_8014A390, (s32) D_8014A39C);
+            event_still_show(D_8014A3A4, D_8014A3A8, D_8014A3AC, D_8014A3B0, D_8014A3B4, D_8014A3B8);
+            event_anim_show(D_8014A394, D_8014A398, D_8014A390, (s32) D_8014A39C);
             for (i = 0; i < 2; i++) {
-                ((Actor *)D_8011ECD0)[96 + i].unk_04 |= 8;
+                ((Actor *)actor_pool)[96 + i].unk_04 |= 8;
             }
             dec_bg_cd_read(0x4728, 1);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 16:
         if (cd_read_sync_status() & 1) {
-            dec_bg_show_set(1, func_8005751C(1));
-            func_8004284C();
+            dec_bg_show_set(1, dec_bg_decode_to_vram(1));
+            main_step_next();
         }
         break;
     case 17:
         func_80085368();
         break;
     case 19:
-        func_80044750(0xD1);
-        func_8004284C();
+        snd_command(0xD1);
+        main_step_next();
         break;
     case 20:
         func_800853FC();
         break;
     case 21:
         D_8014A0C0 = 1;
-        func_80085B3C(2, 0x2D);
-        D_800E6280.girls[6].affection += 2;
-        D_800E6280.girls[6].tokimeki += 1;
+        event_log_add(2, 0x2D);
+        game_state.girls[6].affection += 2;
+        game_state.girls[6].tokimeki += 1;
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
     Default_Disp();

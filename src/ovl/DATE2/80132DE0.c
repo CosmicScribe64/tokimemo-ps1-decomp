@@ -37,15 +37,15 @@ void func_80132DE0(void) {
     FnTbl58 tbl;
 
     tbl = D_8013A4C8;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 void func_80132E5C(void) {
-    memcpy((void *)(0x80180000 + D_800E6280.step_timer.w * 0x1400), 0x801C0000 + D_800E6280.step_timer.w * 0x1400, 0x1400);
-    D_800E6280.step_timer.w += 1;
-    if (D_800E6280.step_timer.w == 0x12) {
-        func_8004284C();
+    memcpy((void *)(0x80180000 + game_state.step_timer.w * 0x1400), 0x801C0000 + game_state.step_timer.w * 0x1400, 0x1400);
+    game_state.step_timer.w += 1;
+    if (game_state.step_timer.w == 0x12) {
+        main_step_next();
     }
 }
 
@@ -53,14 +53,14 @@ void func_80132EC8(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    temp_v0 = D_800E6280.step_timer.w * 0x1400;
+    temp_v0 = game_state.step_timer.w * 0x1400;
     memcpy(temp_v0 + 0x80180000, temp_v0 + 0x801A0000, 0x1400);
-    temp_v0_2 = D_800E6280.step_timer.w + 1;
-    D_800E6280.step_timer.w = temp_v0_2;
+    temp_v0_2 = game_state.step_timer.w + 1;
+    game_state.step_timer.w = temp_v0_2;
     if (temp_v0_2 == 0x12) {
-        D_800E6280.current_girl = GIRL_SHIORI;
-        get_p_name(D_800CA17C, 0);
-        func_8004284C();
+        game_state.current_girl = GIRL_SHIORI;
+        get_p_name(name_buf_player_form, 0);
+        main_step_next();
     }
 }
 
@@ -73,32 +73,32 @@ void func_80132F48(void) {
     rect.w = 0x180;
     rect.h = 0x80;
     func_8009C8E0(&rect, (void *)0x80180000);
-    D_800E6280.current_girl = D_800E6280.date_girl;
-    func_800847B8(D_800E6280.date_girl);
+    game_state.current_girl = game_state.date_girl;
+    dialogue_names_set(game_state.date_girl);
     func_80133258();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80132FB0(void) {
-    memcpy((void *)(0x801C0000 + D_800E6280.step_timer.w * 0x1400), 0x80180000 + D_800E6280.step_timer.w * 0x1400, 0x1400);
-    D_800E6280.step_timer.w += 1;
-    if (D_800E6280.step_timer.w == 0x12) {
-        func_80083474();
+    memcpy((void *)(0x801C0000 + game_state.step_timer.w * 0x1400), 0x80180000 + game_state.step_timer.w * 0x1400, 0x1400);
+    game_state.step_timer.w += 1;
+    if (game_state.step_timer.w == 0x12) {
+        bustup_show_checked();
     }
 }
 
 void func_8013301C(void) {
-    memcpy((void *)(0x801A0000 + D_800E6280.step_timer.w * 0x1400), 0x80180000 + D_800E6280.step_timer.w * 0x1400, 0x1400);
-    D_800E6280.step_timer.w += 1;
-    if (D_800E6280.step_timer.w == 0x12) {
-        func_80083474();
+    memcpy((void *)(0x801A0000 + game_state.step_timer.w * 0x1400), 0x80180000 + game_state.step_timer.w * 0x1400, 0x1400);
+    game_state.step_timer.w += 1;
+    if (game_state.step_timer.w == 0x12) {
+        bustup_show_checked();
     }
 }
 
 void func_80133088(void) {
     RECT rect;
 
-    func_80083474();
+    bustup_show_checked();
     rect.x = 0x140;
     rect.y = 0x80;
     rect.w = 0x180;
@@ -115,8 +115,8 @@ void func_801330D4(void) {
 
     best = 100; /* set before the loops: the original holds 100 in a2 from the entry */
     D_8013A4C0 = 0;
-    D_800E6280.current_girl = GIRL_MIO;
-    g = &D_800E6280;
+    game_state.current_girl = GIRL_MIO;
+    g = &game_state;
     for (i = 1; i < 10; i++) {
         sums[i] = 0;
         for (j = 1; j < 0x25; j++) {
@@ -131,18 +131,18 @@ void func_801330D4(void) {
             best = sums[i];
         }
     }
-    func_800847B8(D_800E6280.date_girl = D_800E6280.current_girl);
-    D_800E6280.current_girl = GIRL_SHIORI;
-    func_80085B3C(0xC, 0);
-    D_800E6280.current_girl = D_800E6280.date_girl;
-    func_80085B3C(0xC, 0);
+    dialogue_names_set(game_state.date_girl = game_state.current_girl);
+    game_state.current_girl = GIRL_SHIORI;
+    event_log_add(0xC, 0);
+    game_state.current_girl = game_state.date_girl;
+    event_log_add(0xC, 0);
     func_80133258();
     func_801338F8();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133258(void) {
-    switch (D_800E6280.current_girl) {
+    switch (game_state.current_girl) {
     case GIRL_SHIORI:
         D_8013A410 = D_8013A384;
         D_8013A414 = D_8013A3B0;
@@ -207,7 +207,7 @@ void func_80133494(void) {
         strcpy(D_800CA1DC, "観覧車");
         break;
     case 1:
-        if ((u8) D_800E6280.year >= 0x61U) {
+        if ((u8) game_state.year >= 0x61U) {
             bg_read_sub2(0x4359);
             strcpy(D_800CA1DC, "絶叫マシーンビビール");
         } else {
@@ -220,62 +220,62 @@ void func_80133494(void) {
         strcpy(D_800CA1DC, "ゴーストハウス");
         break;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013357C(void) {
-    func_80062CD0(0x6C8C);
-    func_8004284C();
+    bustup_read_start(0x6C8C);
+    main_step_next();
 }
 
 void func_801335A4(void) {
-    D_800E6280.current_girl = GIRL_SHIORI;
-    get_p_name(&D_800CA17C, 0);
-    func_80062CD0(0x55DF);
-    func_8004284C();
+    game_state.current_girl = GIRL_SHIORI;
+    get_p_name(&name_buf_player_form, 0);
+    bustup_read_start(0x55DF);
+    main_step_next();
 }
 
 void func_801335E4(void) {
-    D_800E6280.current_girl = D_800E6280.date_girl;
-    func_800847B8(D_800E6280.date_girl);
+    game_state.current_girl = game_state.date_girl;
+    dialogue_names_set(game_state.date_girl);
     func_80133258();
     read_bustup();
 }
 
 void func_80133620(void) {
-    D_800E6280.current_girl = D_800E6280.date_girl;
+    game_state.current_girl = game_state.date_girl;
     func_80133258();
-    func_800847B8(D_800E6280.current_girl);
-    switch (D_800E6280.current_girl) {
+    dialogue_names_set(game_state.current_girl);
+    switch (game_state.current_girl) {
     case GIRL_MIO:
-        func_80062CD0(0x5DC8);
+        bustup_read_start(0x5DC8);
         break;
     case GIRL_YUINA:
-        func_80062CD0(0x52B5);
+        bustup_read_start(0x52B5);
         break;
     case GIRL_AYAKO:
-        func_80062CD0(0x5936);
+        bustup_read_start(0x5936);
         break;
     case GIRL_SAKI:
-        func_80062CD0(0x6746);
+        bustup_read_start(0x6746);
         break;
     case GIRL_YUKARI:
-        func_80062CD0(0x603E);
+        bustup_read_start(0x603E);
         break;
     case GIRL_NOZOMI:
-        func_80062CD0(0x62B4);
+        bustup_read_start(0x62B4);
         break;
     case GIRL_MIRA:
-        func_80062CD0(0x5B7F);
+        bustup_read_start(0x5B7F);
         break;
     case GIRL_YUKO:
-        func_80062CD0(0x506C);
+        bustup_read_start(0x506C);
         break;
     case GIRL_MEGUMI:
-        func_80062CD0(0x652A);
+        bustup_read_start(0x652A);
         break;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133720(void) {
@@ -297,7 +297,7 @@ void func_80133784(void) {
         D_8013A438 = 1;
         break;
     case 1:
-        if ((u8) D_800E6280.year >= 0x61U) {
+        if ((u8) game_state.year >= 0x61U) {
             D_8013A430 = 5;
             D_8013A438 = 5;
             D_8013A428 += 2;
@@ -309,26 +309,26 @@ void func_80133784(void) {
     case 2:
         D_8013A430 = 7;
         D_8013A438 = 7;
-        if ((u8) D_800E6280.year < 0x61U) {
+        if ((u8) game_state.year < 0x61U) {
             D_8013A428 += 2;
         }
         break;
     }
     func_801338F8();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133884(void) {
     if (D_8013A4C0 == 2) {
-        func_80042808();
+        main_stage_next();
         return;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801338C4(void) {
     D_8013A4C0 += 1;
-    func_80042940(0x1B);
+    main_step_set(0x1B);
 }
 
 /* FAKE: s32 fall-through keeps the original counter/result register. T-10010. */
@@ -345,7 +345,7 @@ s32 func_801338F8(void) {
     if (first_state == 4) {
         D_8013A430 += 0xA;
     }
-    previous_state = get_g_zyotai_s(D_800E6280.date_girl) & 0x7F;
+    previous_state = get_g_zyotai_s(game_state.date_girl) & 0x7F;
     if (previous_state >= 2U) {
         D_8013A438 += 0xA;
     }
@@ -375,7 +375,7 @@ void func_80133A6C(void) {
         func_801348F0();
         return;
     case 1:
-        if ((u8) D_800E6280.year >= 0x61U) {
+        if ((u8) game_state.year >= 0x61U) {
             func_80133AF0();
             return;
         }
@@ -402,14 +402,14 @@ s32 func_80133AF0(void) {
     u32 color;
     u32 timer;
 
-    g = &D_800E6280;
-    movie = (DateMovieWork *)D_800B5920;
+    g = &game_state;
+    movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
     switch (g->step_timer.u) {
     case 0:
         D_80122D2C = 1;
-        srand(D_800E6280.frame_count);
-        func_80044750(0x206);
+        srand(game_state.frame_count);
+        snd_command(0x206);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
         movie->unk_04 = 0;
@@ -421,48 +421,48 @@ s32 func_80133AF0(void) {
         movie->unk_1A = 0;
         hizuke_disp_switch(0);
         D_8013A5D0 = 2;
-        D_800E6280.substep = 0;
+        game_state.substep = 0;
         D_8013A5CC = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order (as in func_801348F0) T-11880 */
-            D_801217D0[i + 4].w = (i << 6) + 0x80;
-            D_801217D0[i + 4].flags = 0x82000000;
-            D_801217D0[i + 4].h = 0;
-            D_801217D0[i + 4].unk_0E = 0;
-            D_801217D0[i + 4].unk_0F = 0xA0;
-            D_801217D0[i + 4].unk_10 = 0;
-            D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
-            D_801217D0[i + 4].unk_12 = 0x1E0;
-            D_801217D0[i + 4].tint_r = 0;
-            D_801217D0[i + 4].tint_g = 0;
-            D_801217D0[i + 4].tint_b = 0;
-            D_801217D0[i + 4].anchor_x = 0;
-            D_801217D0[i + 4].anchor_y = 0;
-            D_801217D0[i + 4].unk_1C = 0x1000;
-            D_801217D0[i + 4].unk_1E = 0x1000;
-            D_801217D0[i + 4].unk_20 = 0;
-            D_801217D0[i + 4].x = (i << 7) - 0xA0;
-            D_801217D0[i + 4].y = -0x78;
-            D_800E6280.quad_layer[i + 4] = 0xB;
+            sprite_quads[i + 4].w = (i << 6) + 0x80;
+            sprite_quads[i + 4].flags = 0x82000000;
+            sprite_quads[i + 4].h = 0;
+            sprite_quads[i + 4].unk_0E = 0;
+            sprite_quads[i + 4].unk_0F = 0xA0;
+            sprite_quads[i + 4].unk_10 = 0;
+            sprite_quads[i + 4].unk_0C = (i * 2) + 0x15;
+            sprite_quads[i + 4].unk_12 = 0x1E0;
+            sprite_quads[i + 4].tint_r = 0;
+            sprite_quads[i + 4].tint_g = 0;
+            sprite_quads[i + 4].tint_b = 0;
+            sprite_quads[i + 4].anchor_x = 0;
+            sprite_quads[i + 4].anchor_y = 0;
+            sprite_quads[i + 4].unk_1C = 0x1000;
+            sprite_quads[i + 4].unk_1E = 0x1000;
+            sprite_quads[i + 4].unk_20 = 0;
+            sprite_quads[i + 4].x = (i << 7) - 0xA0;
+            sprite_quads[i + 4].y = -0x78;
+            game_state.quad_layer[i + 4] = 0xB;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].w = (i << 6) + 0x80;
-            D_801217D0[i + 6].flags = 0x82000000;
-            D_801217D0[i + 6].h = 0xA0;
-            D_801217D0[i + 6].unk_0E = 0;
-            D_801217D0[i + 6].unk_0F = 0;
-            D_801217D0[i + 6].unk_10 = 0;
-            D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
-            D_801217D0[i + 6].unk_12 = 0x1E0;
-            D_801217D0[i + 6].tint_r = 0;
-            D_801217D0[i + 6].tint_g = 0;
-            D_801217D0[i + 6].tint_b = 0;
-            D_801217D0[i + 6].anchor_x = 0;
-            D_801217D0[i + 6].anchor_y = 0;
-            D_801217D0[i + 6].unk_1C = 0x1000;
-            D_801217D0[i + 6].unk_1E = 0x1000;
-            D_801217D0[i + 6].unk_20 = 0;
-            D_801217D0[i + 6].x = (i << 7) - 0xA0;
-            D_801217D0[i + 6].y = -0x78;
-            D_800E6280.quad_layer[i + 6] = 0xB;
+            sprite_quads[i + 6].w = (i << 6) + 0x80;
+            sprite_quads[i + 6].flags = 0x82000000;
+            sprite_quads[i + 6].h = 0xA0;
+            sprite_quads[i + 6].unk_0E = 0;
+            sprite_quads[i + 6].unk_0F = 0;
+            sprite_quads[i + 6].unk_10 = 0;
+            sprite_quads[i + 6].unk_0C = (i * 2) + 0xA;
+            sprite_quads[i + 6].unk_12 = 0x1E0;
+            sprite_quads[i + 6].tint_r = 0;
+            sprite_quads[i + 6].tint_g = 0;
+            sprite_quads[i + 6].tint_b = 0;
+            sprite_quads[i + 6].anchor_x = 0;
+            sprite_quads[i + 6].anchor_y = 0;
+            sprite_quads[i + 6].unk_1C = 0x1000;
+            sprite_quads[i + 6].unk_1E = 0x1000;
+            sprite_quads[i + 6].unk_20 = 0;
+            sprite_quads[i + 6].x = (i << 7) - 0xA0;
+            sprite_quads[i + 6].y = -0x78;
+            game_state.quad_layer[i + 6] = 0xB;
         }
         dec_bg_cd_read(0x43CB, 1);
         g->step_timer.u += 1;
@@ -525,27 +525,27 @@ s32 func_80133AF0(void) {
         break;
     case 8:
         for (i = 0; i < 4; i++) {
-            D_801217D0[i + 4].flags = 0x02000000;
+            sprite_quads[i + 4].flags = 0x02000000;
         }
         g->step_timer.u += 1;
-        func_80044750(0x500);
+        snd_command(0x500);
         break;
     case 9:
-        value = D_801217D0[4].tint_r;
+        value = sprite_quads[4].tint_r;
         value += 2;
         color = (value & 0xFF);
-        D_801217D0[7].tint_b = color;
-        D_801217D0[7].tint_g = color;
-        D_801217D0[7].tint_r = color;
-        D_801217D0[6].tint_b = color;
-        D_801217D0[6].tint_g = color;
-        D_801217D0[6].tint_r = color;
-        D_801217D0[5].tint_b = color;
-        D_801217D0[5].tint_g = color;
-        D_801217D0[5].tint_r = color;
-        D_801217D0[4].tint_b = color;
-        D_801217D0[4].tint_g = color;
-        D_801217D0[4].tint_r = color;
+        sprite_quads[7].tint_b = color;
+        sprite_quads[7].tint_g = color;
+        sprite_quads[7].tint_r = color;
+        sprite_quads[6].tint_b = color;
+        sprite_quads[6].tint_g = color;
+        sprite_quads[6].tint_r = color;
+        sprite_quads[5].tint_b = color;
+        sprite_quads[5].tint_g = color;
+        sprite_quads[5].tint_r = color;
+        sprite_quads[4].tint_b = color;
+        sprite_quads[4].tint_g = color;
+        sprite_quads[4].tint_r = color;
         if (value == 0x80) {
             g->step_timer.u += 1;
         }
@@ -553,35 +553,35 @@ s32 func_80133AF0(void) {
     case 10:
         break;
     case 11:
-        value = D_801217D0[4].tint_r;
+        value = sprite_quads[4].tint_r;
         value -= 2;
         color = (value & 0xFF);
-        D_801217D0[7].tint_b = color;
-        D_801217D0[7].tint_g = color;
-        D_801217D0[7].tint_r = color;
-        D_801217D0[6].tint_b = color;
-        D_801217D0[6].tint_g = color;
-        D_801217D0[6].tint_r = color;
-        D_801217D0[5].tint_b = color;
-        D_801217D0[5].tint_g = color;
-        D_801217D0[5].tint_r = color;
-        D_801217D0[4].tint_b = color;
-        D_801217D0[4].tint_g = color;
-        D_801217D0[4].tint_r = color;
+        sprite_quads[7].tint_b = color;
+        sprite_quads[7].tint_g = color;
+        sprite_quads[7].tint_r = color;
+        sprite_quads[6].tint_b = color;
+        sprite_quads[6].tint_g = color;
+        sprite_quads[6].tint_r = color;
+        sprite_quads[5].tint_b = color;
+        sprite_quads[5].tint_g = color;
+        sprite_quads[5].tint_r = color;
+        sprite_quads[4].tint_b = color;
+        sprite_quads[4].tint_g = color;
+        sprite_quads[4].tint_r = color;
         if (value == 0) {
             for (i = 0; i < 4; i++) {
-                D_801217D0[i + 4].flags = 0x82000000;
+                sprite_quads[i + 4].flags = 0x82000000;
             }
             g->step_timer.u += 1;
         }
         break;
     case 12:
-        sp50 = D_800E6280.step;
+        sp50 = game_state.step;
         sp4C = g->step_timer.u;
         read_bustup();
         g->step_timer.u = sp4C;
-        if (sp50 != D_800E6280.step) {
-            D_800E6280.step--;
+        if (sp50 != game_state.step) {
+            game_state.step--;
             g->step_timer.u += 1;
         }
         break;
@@ -596,12 +596,12 @@ s32 func_80133AF0(void) {
         break;
     case 14:
         sp4C = g->step_timer.u;
-        func_80083474();
-        D_800E6280.step -= 1;
+        bustup_show_checked();
+        game_state.step -= 1;
         g->step_timer.u = sp4C + 1;
         break;
     case 15:
-        func_800462C8(0xA, 0x80162000, 0x4359);
+        cd_read_sectors_nowait(0xA, 0x80162000, 0x4359);
         g->step_timer.u += 1;
         break;
     case 17:
@@ -612,27 +612,27 @@ s32 func_80133AF0(void) {
             g->step_timer.u -= 2;
             return 0;
         }
-        func_8005751C(1);
+        dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
         g->step_timer.u += 1;
         break;
     case 18:
-        func_80044750(0x200);
+        snd_command(0x200);
         sp4C = g->step_timer.u;
         func_80132BB0();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp4C + 1;
         break;
     default:
         hizuke_disp_switch(1);
         D_80122D2C = 0;
-        func_8004284C();
+        main_step_next();
         break;
     }
     if (g->step_timer.u < 9 || g->step_timer.u >= 12) {
         return 0;
     }
-    p = D_801217D0;
+    p = sprite_quads;
     v = p[4].unk_0E;
     v += D_8013A5D0;
     if (v < 0) {
@@ -672,46 +672,46 @@ s32 func_80133AF0(void) {
     }
     p[4].unk_0F = x;
     if ((x == 0 && (g->substep == 1 || g->substep == 3)) || (p[6].unk_0F == 0 && (g->substep == 0 || g->substep == 2))) {
-        switch (D_800E6280.substep) { /* FAKE: g-> in the test, the symbol here; one access path keeps the byte in $v0 and drops the reload T-11880 */
+        switch (game_state.substep) { /* FAKE: g-> in the test, the symbol here; one access path keeps the byte in $v0 and drops the reload T-11880 */
         case 0:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 4].h = 0;
-                D_801217D0[i + 4].unk_0F = 0xA0;
-                D_801217D0[i + 4].y = -0x78;
-                D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
+                sprite_quads[i + 4].h = 0;
+                sprite_quads[i + 4].unk_0F = 0xA0;
+                sprite_quads[i + 4].y = -0x78;
+                sprite_quads[i + 4].unk_0C = (i * 2) + 0x15;
             }
             LoadSquare(0x140, 0x100, 0x180, 0xA0, 0x80183000);
             break;
         case 1:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 6].h = 0;
-                D_801217D0[i + 6].unk_0F = 0xA0;
-                D_801217D0[i + 6].y = -0x78;
-                D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
+                sprite_quads[i + 6].h = 0;
+                sprite_quads[i + 6].unk_0F = 0xA0;
+                sprite_quads[i + 6].y = -0x78;
+                sprite_quads[i + 6].unk_0C = (i * 2) + 0xA;
             }
             LoadSquare(0x280, 0, 0x180, 0xA0, 0x801A1000);
             break;
         case 2:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 4].h = 0;
-                D_801217D0[i + 4].unk_0F = 0xA0;
-                D_801217D0[i + 4].y = -0x78;
-                D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
+                sprite_quads[i + 4].h = 0;
+                sprite_quads[i + 4].unk_0F = 0xA0;
+                sprite_quads[i + 4].y = -0x78;
+                sprite_quads[i + 4].unk_0C = (i * 2) + 0x15;
             }
             LoadSquare(0x140, 0x100, 0x180, 0xA0, 0x801BF000);
             break;
         case 3:
             for (i = 0; i < 2; i++) {
-                D_801217D0[i + 6].h = 0;
-                D_801217D0[i + 6].unk_0F = 0xA0;
-                D_801217D0[i + 6].y = -0x78;
-                D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
+                sprite_quads[i + 6].h = 0;
+                sprite_quads[i + 6].unk_0F = 0xA0;
+                sprite_quads[i + 6].y = -0x78;
+                sprite_quads[i + 6].unk_0C = (i * 2) + 0xA;
             }
             LoadSquare(0x280, 0, 0x180, 0xA0, 0x801DD000);
             break;
         }
-        if (++D_800E6280.substep >= 4) {
-            D_800E6280.substep = 0;
+        if (++game_state.substep >= 4) {
+            game_state.substep = 0;
         }
     }
     timer = (D_8013A5CC + 1) & 0xFFFF;
@@ -732,13 +732,13 @@ s32 func_801348F0(void) {
     u32 y; /* FAKE: second copy of the fade step; it holds $v1 so the stored value lands in $a1 T-11880 */
     DateMovieWork *movie;
 
-    g = &D_800E6280;
-    movie = (DateMovieWork *)D_800B5920;
+    g = &game_state;
+    movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
     switch (g->step_timer.u) {
     case 0:
         D_80122D2C = 1;
-        func_80044750(0x201);
+        snd_command(0x201);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
         movie->unk_04 = 0;
@@ -750,25 +750,25 @@ s32 func_801348F0(void) {
         movie->unk_1A = 0;
         hizuke_disp_switch(0);
         D_8013A5CC = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order T-11880 */
-            D_801217D0[i + 10].w = (i << 6) + 0x80;
-            D_801217D0[i + 10].flags = 0x82000000;
-            D_801217D0[i + 10].h = 0xA0;
-            D_801217D0[i + 10].unk_0E = 0;
-            D_801217D0[i + 10].unk_0F = 0;
-            D_801217D0[i + 10].unk_10 = 0;
-            D_801217D0[i + 10].unk_0C = (i * 2) + 0x15;
-            D_801217D0[i + 10].unk_12 = 0x1E0;
-            D_801217D0[i + 10].tint_r = 0;
-            D_801217D0[i + 10].tint_g = 0;
-            D_801217D0[i + 10].tint_b = 0;
-            D_801217D0[i + 10].anchor_x = 0;
-            D_801217D0[i + 10].anchor_y = 0;
-            D_801217D0[i + 10].unk_1C = 0x1000;
-            D_801217D0[i + 10].unk_1E = 0x1000;
-            D_801217D0[i + 10].unk_20 = 0;
-            D_801217D0[i + 10].x = (i << 7) - 0xA0;
-            D_801217D0[i + 10].y = -0x96;
-            D_800E6280.quad_layer[i + 10] = 0xC;
+            sprite_quads[i + 10].w = (i << 6) + 0x80;
+            sprite_quads[i + 10].flags = 0x82000000;
+            sprite_quads[i + 10].h = 0xA0;
+            sprite_quads[i + 10].unk_0E = 0;
+            sprite_quads[i + 10].unk_0F = 0;
+            sprite_quads[i + 10].unk_10 = 0;
+            sprite_quads[i + 10].unk_0C = (i * 2) + 0x15;
+            sprite_quads[i + 10].unk_12 = 0x1E0;
+            sprite_quads[i + 10].tint_r = 0;
+            sprite_quads[i + 10].tint_g = 0;
+            sprite_quads[i + 10].tint_b = 0;
+            sprite_quads[i + 10].anchor_x = 0;
+            sprite_quads[i + 10].anchor_y = 0;
+            sprite_quads[i + 10].unk_1C = 0x1000;
+            sprite_quads[i + 10].unk_1E = 0x1000;
+            sprite_quads[i + 10].unk_20 = 0;
+            sprite_quads[i + 10].x = (i << 7) - 0xA0;
+            sprite_quads[i + 10].y = -0x96;
+            game_state.quad_layer[i + 10] = 0xC;
         }
         func_801365DC(0x43C2);
         g->step_timer.u += 1;
@@ -802,64 +802,64 @@ s32 func_801348F0(void) {
         return 0;
     case 4:
         load_palette(D_8013A5B0, 0x11, 1, 0, 0);
-        func_80084E90(D_8013A5B4, D_8013A5B8, D_8013A5BC, D_8013A5C0, D_8013A5C4, D_8013A5C8);
+        event_still_show(D_8013A5B4, D_8013A5B8, D_8013A5BC, D_8013A5C0, D_8013A5C4, D_8013A5C8);
         g->step_timer.u += 1;
         return 0;
     case 5:
         for (i = 10; i < 12; i++) {
-            D_801217D0[i].flags &= 0x7FFFFFFF;
+            sprite_quads[i].flags &= 0x7FFFFFFF;
         }
         for (i = 58; i < 64; i++) {
-            D_801217D0[i].flags &= 0x7FFFFFFF;
+            sprite_quads[i].flags &= 0x7FFFFFFF;
         }
         g->step_timer.u += 1;
         return 0;
     case 6:
-        x = (D_801217D0[58].tint_r += 4); y = D_801217D0[58].tint_g = x; D_801217D0[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
+        x = (sprite_quads[58].tint_r += 4); y = sprite_quads[58].tint_g = x; sprite_quads[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
         for (i = 10; i < 12; i++) {
-            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
+            sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = sprite_quads[58].tint_r;
         }
         for (i = 59; i < 64; i++) {
-            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
+            sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = sprite_quads[58].tint_r;
         }
-        if (D_801217D0[58].tint_r == 0x40) {
+        if (sprite_quads[58].tint_r == 0x40) {
             g->step_timer.u += 1;
         }
         return 0;
     case 7:
-        x = (D_801217D0[58].tint_r += 4); y = D_801217D0[58].tint_g = x; D_801217D0[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
+        x = (sprite_quads[58].tint_r += 4); y = sprite_quads[58].tint_g = x; sprite_quads[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
         for (i = 10; i < 12; i++) {
-            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
+            sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = sprite_quads[58].tint_r;
         }
         for (i = 59; i < 64; i++) {
-            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
+            sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = sprite_quads[58].tint_r;
         }
-        if (D_801217D0[58].tint_r == 0x80) {
+        if (sprite_quads[58].tint_r == 0x80) {
             g->step_timer.u += 1;
         }
         break;
     case 8:
         break;
     case 9:
-        x = (D_801217D0[58].tint_r -= 4); y = D_801217D0[58].tint_g = x; D_801217D0[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
+        x = (sprite_quads[58].tint_r -= 4); y = sprite_quads[58].tint_g = x; sprite_quads[58].tint_b = y; /* FAKE: see y; one line keeps the store order T-11880 */
         for (i = 10; i < 12; i++) {
-            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
+            sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = sprite_quads[58].tint_r;
         }
         for (i = 59; i < 64; i++) {
-            D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_801217D0[58].tint_r;
+            sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = sprite_quads[58].tint_r;
         }
-        if (D_801217D0[58].tint_r == 0) {
+        if (sprite_quads[58].tint_r == 0) {
             for (i = 10; i < 12; i++) {
-                D_801217D0[i].flags |= 0x80000000;
+                sprite_quads[i].flags |= 0x80000000;
             }
             for (i = 58; i < 64; i++) {
-                D_801217D0[i].flags |= 0x80000000;
+                sprite_quads[i].flags |= 0x80000000;
             }
             g->step_timer.u += 1;
         }
         break;
     case 10:
-        func_800462C8(0xA, 0x80162000, 0x4350);
+        cd_read_sectors_nowait(0xA, 0x80162000, 0x4350);
         g->step_timer.u += 1;
         return 0;
     case 12:
@@ -870,21 +870,21 @@ s32 func_801348F0(void) {
             g->step_timer.u -= 2;
             return 0;
         }
-        func_8005751C(1);
+        dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
         g->step_timer.u += 1;
         return 0;
     case 13:
         sp30 = g->step_timer.u;
         func_80132BB0();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp30;
         g->step_timer.u++;
         return 0;
     default:
-        func_8004284C();
+        main_step_next();
         D_80122D2C = 0;
-        func_80044750(0x200);
+        snd_command(0x200);
         hizuke_disp_switch(1);
         return 0;
     }
@@ -907,12 +907,12 @@ s32 func_801350A4(void) {
     u8 value;
     u32 color;
 
-    g = &D_800E6280;
-    movie = (DateMovieWork *)D_800B5920;
+    g = &game_state;
+    movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
     switch (g->step_timer.u) {
     case 0:
-        func_80044750(0xCF);
+        snd_command(0xCF);
         D_80122D2C = 1;
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -926,46 +926,46 @@ s32 func_801350A4(void) {
         hizuke_disp_switch(0);
         D_8013A5CC = 0;
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].w = (i << 6) + 0x80;
-            D_801217D0[i + 4].flags = 0x82000000;
-            D_801217D0[i + 4].h = 0xA0;
-            D_801217D0[i + 4].unk_0E = 0;
-            D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].unk_10 = 0;
-            D_801217D0[i + 4].unk_0C = (i * 2) + 0x15;
-            D_801217D0[i + 4].unk_12 = 0x1E0;
-            D_801217D0[i + 4].tint_r = 0;
-            D_801217D0[i + 4].tint_g = 0;
-            D_801217D0[i + 4].tint_b = 0;
-            D_801217D0[i + 4].anchor_x = 0;
-            D_801217D0[i + 4].anchor_y = 0;
-            D_801217D0[i + 4].unk_1C = 0x1000;
-            D_801217D0[i + 4].unk_1E = 0x1000;
-            D_801217D0[i + 4].unk_20 = 0;
-            D_801217D0[i + 4].x = (i << 7) - 0xA0;
-            D_801217D0[i + 4].y = -0x78;
-            D_800E6280.quad_layer[i + 4] = 0xB;
+            sprite_quads[i + 4].w = (i << 6) + 0x80;
+            sprite_quads[i + 4].flags = 0x82000000;
+            sprite_quads[i + 4].h = 0xA0;
+            sprite_quads[i + 4].unk_0E = 0;
+            sprite_quads[i + 4].unk_0F = 0;
+            sprite_quads[i + 4].unk_10 = 0;
+            sprite_quads[i + 4].unk_0C = (i * 2) + 0x15;
+            sprite_quads[i + 4].unk_12 = 0x1E0;
+            sprite_quads[i + 4].tint_r = 0;
+            sprite_quads[i + 4].tint_g = 0;
+            sprite_quads[i + 4].tint_b = 0;
+            sprite_quads[i + 4].anchor_x = 0;
+            sprite_quads[i + 4].anchor_y = 0;
+            sprite_quads[i + 4].unk_1C = 0x1000;
+            sprite_quads[i + 4].unk_1E = 0x1000;
+            sprite_quads[i + 4].unk_20 = 0;
+            sprite_quads[i + 4].x = (i << 7) - 0xA0;
+            sprite_quads[i + 4].y = -0x78;
+            game_state.quad_layer[i + 4] = 0xB;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].w = (i << 6) + 0x80;
-            D_801217D0[i + 6].flags = 0x82000000;
-            D_801217D0[i + 6].h = 0;
-            D_801217D0[i + 6].unk_0E = 0;
-            D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].unk_10 = 0;
-            D_801217D0[i + 6].unk_0C = (i * 2) + 0xA;
-            D_801217D0[i + 6].unk_12 = 0x1E0;
-            D_801217D0[i + 6].tint_r = 0;
-            D_801217D0[i + 6].tint_g = 0;
-            D_801217D0[i + 6].tint_b = 0;
-            D_801217D0[i + 6].anchor_x = 0;
-            D_801217D0[i + 6].anchor_y = 0;
-            D_801217D0[i + 6].unk_1C = 0x1000;
-            D_801217D0[i + 6].unk_1E = 0x1000;
-            D_801217D0[i + 6].unk_20 = 0;
-            D_801217D0[i + 6].x = (i << 7) - 0xA0;
-            D_801217D0[i + 6].y = -0x78;
-            D_800E6280.quad_layer[i + 6] = 0xB;
+            sprite_quads[i + 6].w = (i << 6) + 0x80;
+            sprite_quads[i + 6].flags = 0x82000000;
+            sprite_quads[i + 6].h = 0;
+            sprite_quads[i + 6].unk_0E = 0;
+            sprite_quads[i + 6].unk_0F = 0xA0;
+            sprite_quads[i + 6].unk_10 = 0;
+            sprite_quads[i + 6].unk_0C = (i * 2) + 0xA;
+            sprite_quads[i + 6].unk_12 = 0x1E0;
+            sprite_quads[i + 6].tint_r = 0;
+            sprite_quads[i + 6].tint_g = 0;
+            sprite_quads[i + 6].tint_b = 0;
+            sprite_quads[i + 6].anchor_x = 0;
+            sprite_quads[i + 6].anchor_y = 0;
+            sprite_quads[i + 6].unk_1C = 0x1000;
+            sprite_quads[i + 6].unk_1E = 0x1000;
+            sprite_quads[i + 6].unk_20 = 0;
+            sprite_quads[i + 6].x = (i << 7) - 0xA0;
+            sprite_quads[i + 6].y = -0x78;
+            game_state.quad_layer[i + 6] = 0xB;
         }
         dec_bg_cd_read(0x43B1, 1);
         g->step_timer.u += 1;
@@ -1050,7 +1050,7 @@ s32 func_801350A4(void) {
         return;
     case 18:
         for (i = 0; i < 4; i++) {
-            D_801217D0[i + 4].flags = (s32) (D_801217D0[i + 4].flags & 0x7FFFFFFF);
+            sprite_quads[i + 4].flags = (s32) (sprite_quads[i + 4].flags & 0x7FFFFFFF);
         }
         g->step_timer.u++;
         return;
@@ -1059,19 +1059,19 @@ s32 func_801350A4(void) {
             func_80084C98(i, 0x80);
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].flags = 0x02000000;
-            D_801217D0[i + 4].h = 0xA0;
-            D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].y = -0x78;
+            sprite_quads[i + 4].flags = 0x02000000;
+            sprite_quads[i + 4].h = 0xA0;
+            sprite_quads[i + 4].unk_0F = 0;
+            sprite_quads[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].flags = 0x02000000;
-            D_801217D0[i + 6].h = 0;
-            D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].y = -0x78;
+            sprite_quads[i + 6].flags = 0x02000000;
+            sprite_quads[i + 6].h = 0;
+            sprite_quads[i + 6].unk_0F = 0xA0;
+            sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
-        func_80044750(0x500);
+        snd_command(0x500);
         g->step_timer.u += 1;
         return;
     case 20:
@@ -1091,14 +1091,14 @@ s32 func_801350A4(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x801CE000);
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].h = 0xA0;
-            D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].y = -0x78;
+            sprite_quads[i + 4].h = 0xA0;
+            sprite_quads[i + 4].unk_0F = 0;
+            sprite_quads[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].h = 0;
-            D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].y = -0x78;
+            sprite_quads[i + 6].h = 0;
+            sprite_quads[i + 6].unk_0F = 0xA0;
+            sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
         g->step_timer.u += 1;
@@ -1111,14 +1111,14 @@ s32 func_801350A4(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x801B5000);
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].h = 0xA0;
-            D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].y = -0x78;
+            sprite_quads[i + 4].h = 0xA0;
+            sprite_quads[i + 4].unk_0F = 0;
+            sprite_quads[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].h = 0;
-            D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].y = -0x78;
+            sprite_quads[i + 6].h = 0;
+            sprite_quads[i + 6].unk_0F = 0xA0;
+            sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
         g->step_timer.u += 1;
@@ -1131,14 +1131,14 @@ s32 func_801350A4(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x8019C000);
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].h = 0xA0;
-            D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].y = -0x78;
+            sprite_quads[i + 4].h = 0xA0;
+            sprite_quads[i + 4].unk_0F = 0;
+            sprite_quads[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].h = 0;
-            D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].y = -0x78;
+            sprite_quads[i + 6].h = 0;
+            sprite_quads[i + 6].unk_0F = 0xA0;
+            sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
         g->step_timer.u += 1;
@@ -1146,21 +1146,21 @@ s32 func_801350A4(void) {
     case 26:
         func_80135DA4(8);
         if ((u16) D_8013A5CC >= 8U) {
-            value = D_801217D0[4].tint_r;
+            value = sprite_quads[4].tint_r;
             value -= 4;
             color = (value & 0xFF);
-            D_801217D0[7].tint_b = color;
-            D_801217D0[7].tint_g = color;
-            D_801217D0[7].tint_r = color;
-            D_801217D0[6].tint_b = color;
-            D_801217D0[6].tint_g = color;
-            D_801217D0[6].tint_r = color;
-            D_801217D0[5].tint_b = color;
-            D_801217D0[5].tint_g = color;
-            D_801217D0[5].tint_r = color;
-            D_801217D0[4].tint_b = color;
-            D_801217D0[4].tint_g = color;
-            D_801217D0[4].tint_r = color;
+            sprite_quads[7].tint_b = color;
+            sprite_quads[7].tint_g = color;
+            sprite_quads[7].tint_r = color;
+            sprite_quads[6].tint_b = color;
+            sprite_quads[6].tint_g = color;
+            sprite_quads[6].tint_r = color;
+            sprite_quads[5].tint_b = color;
+            sprite_quads[5].tint_g = color;
+            sprite_quads[5].tint_r = color;
+            sprite_quads[4].tint_b = color;
+            sprite_quads[4].tint_g = color;
+            sprite_quads[4].tint_r = color;
         }
         if (++D_8013A5CC == 0x14) {
             g->step_timer.u += 1;
@@ -1175,35 +1175,35 @@ s32 func_801350A4(void) {
         func_8009C93C(&rect, 0x140, 0x100);
         LoadSquare(0x280U, 0U, 0x140U, 0xA0U, 0x80183000);
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 4].h = 0xA0;
-            D_801217D0[i + 4].unk_0F = 0;
-            D_801217D0[i + 4].y = -0x78;
+            sprite_quads[i + 4].h = 0xA0;
+            sprite_quads[i + 4].unk_0F = 0;
+            sprite_quads[i + 4].y = -0x78;
         }
         for (i = 0; i < 2; i++) {
-            D_801217D0[i + 6].h = 0;
-            D_801217D0[i + 6].unk_0F = 0xA0;
-            D_801217D0[i + 6].y = -0x78;
+            sprite_quads[i + 6].h = 0;
+            sprite_quads[i + 6].unk_0F = 0xA0;
+            sprite_quads[i + 6].y = -0x78;
         }
         D_8013A5CC = 0;
         g->step_timer.u += 1;
         return;
     case 28:
         func_80135DA4(8);
-        value = D_801217D0[4].tint_r;
+        value = sprite_quads[4].tint_r;
         value -= 4;
         color = (value & 0xFF);
-        D_801217D0[7].tint_b = color;
-        D_801217D0[7].tint_g = color;
-        D_801217D0[7].tint_r = color;
-        D_801217D0[6].tint_b = color;
-        D_801217D0[6].tint_g = color;
-        D_801217D0[6].tint_r = color;
-        D_801217D0[5].tint_b = color;
-        D_801217D0[5].tint_g = color;
-        D_801217D0[5].tint_r = color;
-        D_801217D0[4].tint_b = color;
-        D_801217D0[4].tint_g = color;
-        D_801217D0[4].tint_r = color;
+        sprite_quads[7].tint_b = color;
+        sprite_quads[7].tint_g = color;
+        sprite_quads[7].tint_r = color;
+        sprite_quads[6].tint_b = color;
+        sprite_quads[6].tint_g = color;
+        sprite_quads[6].tint_r = color;
+        sprite_quads[5].tint_b = color;
+        sprite_quads[5].tint_g = color;
+        sprite_quads[5].tint_r = color;
+        sprite_quads[4].tint_b = color;
+        sprite_quads[4].tint_g = color;
+        sprite_quads[4].tint_r = color;
         if (value < 4U) {
             g->step_timer.u += 1;
             return;
@@ -1211,30 +1211,30 @@ s32 func_801350A4(void) {
         break;
     case 29:
         for (i = 0; i < 4; i++) {
-            D_801217D0[i + 4].flags = (s32) (D_801217D0[i + 4].flags | 0x80000000);
+            sprite_quads[i + 4].flags = (s32) (sprite_quads[i + 4].flags | 0x80000000);
         }
         g->step_timer.u++;
         return;
     case 30:
         sp50 = g->step_timer.u;
 
-        sp54 = D_800E6280.step;
+        sp54 = game_state.step;
         read_bustup();
-        g->step_timer.u = sp50; if (sp54 != D_800E6280.step) { /* FAKE: one source line keeps the as1 load order T-11880 */
-            D_800E6280.step -= 1;
+        g->step_timer.u = sp50; if (sp54 != game_state.step) { /* FAKE: one source line keeps the as1 load order T-11880 */
+            game_state.step -= 1;
             g->step_timer.u++;
         }
         break;
     case 32:
         sp50 = g->step_timer.u;
 
-        func_80083474();
-        D_800E6280.step -= 1;
+        bustup_show_checked();
+        game_state.step -= 1;
         g->step_timer.u = sp50;
         g->step_timer.u++;
         return;
     case 33:
-        func_800462C8(0xAU, 0x80162000, 0x433E);
+        cd_read_sectors_nowait(0xAU, 0x80162000, 0x433E);
         g->step_timer.u += 1;
         return;
     case 35:
@@ -1245,7 +1245,7 @@ s32 func_801350A4(void) {
             g->step_timer.u -= 2;
             return 0;
         }
-        func_8005751C(1);
+        dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
         g->step_timer.u += 1;
         return;
@@ -1253,14 +1253,14 @@ s32 func_801350A4(void) {
         sp50 = g->step_timer.u;
 
         func_80132BB0();
-        D_800E6280.step -= 1;
+        game_state.step -= 1;
         g->step_timer.u = sp50;
         g->step_timer.u++;
         return;
     default:
-        func_8004284C();
+        main_step_next();
         D_80122D2C = 0;
-        func_80044750(0x200);
+        snd_command(0x200);
         hizuke_disp_switch(1);
         break;
     }
@@ -1268,14 +1268,14 @@ s32 func_801350A4(void) {
 }
 
 s32 func_80135DA4(s16 arg0) {
-    D_801217D0[4].y += arg0;
-    D_801217D0[5].y += arg0;
-    D_801217D0[4].h -= arg0;
-    D_801217D0[5].h -= arg0;
-    D_801217D0[6].h += arg0;
-    D_801217D0[7].h += arg0;
-    D_801217D0[6].unk_0F -= arg0;
-    D_801217D0[7].unk_0F -= arg0;
+    sprite_quads[4].y += arg0;
+    sprite_quads[5].y += arg0;
+    sprite_quads[4].h -= arg0;
+    sprite_quads[5].h -= arg0;
+    sprite_quads[6].h += arg0;
+    sprite_quads[7].h += arg0;
+    sprite_quads[6].unk_0F -= arg0;
+    sprite_quads[7].unk_0F -= arg0;
 }
 
 /* Returns int like the DATE twin func_801489D0: only the header-error path of case 2 sets a
@@ -1292,10 +1292,10 @@ s32 func_80135E50(void) {
     u8 temp_s0;
     u8 temp_s0_2;
 
-    switch (D_800E6280.step_timer.u) {
+    switch (game_state.step_timer.u) {
     case 0:
         D_80122D2C = 1;
-        srand((*(s32 *)&D_800E6280.frame_count));
+        srand((*(s32 *)&game_state.frame_count));
         D_8013A5CC = 0;
         hizuke_disp_switch(0);
         func_801365DC(0x43BA);
@@ -1305,7 +1305,7 @@ s32 func_80135E50(void) {
         D_8013A5DC[0] = -0x28;
         D_8013A5DC[1] = 0;
         D_8013A5DC[2] = -0x3C;
-        D_800E6280.step_timer.u += 1;
+        game_state.step_timer.u += 1;
         D_8013A5E4[0] = (rand() % 3) - 1;
         D_8013A5E4[1] = (rand() % 3) - 1;
         D_8013A5E4[2] = (rand() % 3) - 1;
@@ -1315,41 +1315,41 @@ s32 func_80135E50(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.step_timer.u += 1;
+            game_state.step_timer.u += 1;
             break;
         }
         break;
     case 2:
         if (((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000) || ((((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
-            ((RECT *)D_800B5920)[0].w = 0;
-            ((RECT *)D_800B5920)[0].h = 0;
-            D_800E6280.step_timer.u -= 2;
+            ((RECT *)dec_bg_lba_cache)[0].w = 0;
+            ((RECT *)dec_bg_lba_cache)[0].h = 0;
+            game_state.step_timer.u -= 2;
             return 0;
         }
-        func_8005751C(1);
+        dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        func_80044750(0x203);
-        D_800E6280.step_timer.u += 1;
+        snd_command(0x203);
+        game_state.step_timer.u += 1;
         break;
     case 3:
-        temp_s0 = D_800E6280.step;
-        temp_s1 = D_800E6280.step_timer.u;
+        temp_s0 = game_state.step;
+        temp_s1 = game_state.step_timer.u;
         normal_date_bg_fadein();
-        D_800E6280.step_timer.u = temp_s1;
-        if (temp_s0 != D_800E6280.step) {
-            D_800E6280.step_timer.u = temp_s1 + 1;
+        game_state.step_timer.u = temp_s1;
+        if (temp_s0 != game_state.step) {
+            game_state.step_timer.u = temp_s1 + 1;
         }
-        D_800E6280.step = temp_s0;
+        game_state.step = temp_s0;
         break;
     case 4:
         var_s3 = 0;
         do {
-            if (((u32) (*(s32 *)&D_800E6280.frame_count) % 30U) == (rand() % 30)) {
+            if (((u32) (*(s32 *)&game_state.frame_count) % 30U) == (rand() % 30)) {
                 (D_8013A5E4)[var_s3] = (rand() % 3) - 1;
             }
 
-            if (((u32) (*(s32 *)&D_800E6280.frame_count) % 30U) == (rand() % 30)) {
+            if (((u32) (*(s32 *)&game_state.frame_count) % 30U) == (rand() % 30)) {
                 (D_8013A5EC)[var_s3] = (rand() % 3) - 1;
             }
 
@@ -1389,29 +1389,29 @@ s32 func_80135E50(void) {
         if (var_s3) {
         }
         if (D_8013A5CC++ == 0x96) {
-            D_800E6280.step_timer.u += 1;
+            game_state.step_timer.u += 1;
             break;
         }
         break;
     case 5:
-        temp_s0_2 = D_800E6280.step;
-        temp_s1_3 = D_800E6280.step_timer.u;
+        temp_s0_2 = game_state.step;
+        temp_s1_3 = game_state.step_timer.u;
         normal_date_bg_fadeout();
-        D_800E6280.step_timer.u = temp_s1_3;
-        if (temp_s0_2 != D_800E6280.step) {
-            D_800E6280.step_timer.u = temp_s1_3 + 1;
+        game_state.step_timer.u = temp_s1_3;
+        if (temp_s0_2 != game_state.step) {
+            game_state.step_timer.u = temp_s1_3 + 1;
         }
-        D_800E6280.step = temp_s0_2;
+        game_state.step = temp_s0_2;
         break;
     case 6:
         dec_bg_show_switch(1);
-        D_800E6280.step_timer.u += 1;
+        game_state.step_timer.u += 1;
         break;
     default:
-        func_80044750(0x200);
+        snd_command(0x200);
         D_80122D2C = 0;
         hizuke_disp_switch(1);
-        func_8004284C();
+        main_step_next();
         break;
     }
 }
@@ -1423,12 +1423,12 @@ void func_801365DC(s32 arg0) {
     v = dec_bg_cd_read(arg0, 1);
     if (v == D_800B5939) {
         printf("same\n");
-        D_800E6280.step_timer.w += 3;
+        game_state.step_timer.w += 3;
         return;
     }
     if (v == 1 - D_800B5939) {
         printf("another\n");
-        D_800E6280.step_timer.w += 2;
+        game_state.step_timer.w += 2;
     }
 }
 
@@ -1437,7 +1437,7 @@ void func_80136660(void) {
     FnTbl44 tbl;
 
     tbl = D_8013A600;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
@@ -1445,58 +1445,58 @@ s32 func_801366E8(void) {
     s32 v;
 
     v = get_g_zyotai_s(GIRL_SHIORI);
-    if ((D_800E6280.player_birthday & 0xF) == D_800E6280.month && ((u32)(D_800E6280.player_birthday << 0x17) >> 0x1B) == D_800E6280.day) {
+    if ((game_state.player_birthday & 0xF) == game_state.month && ((u32)(game_state.player_birthday << 0x17) >> 0x1B) == game_state.day) {
         if (((u8)v & 0x7F) < 2U) {
-            D_800E6280.daily_event_bits |= 4;
-            D_800E6280.saved_step = D_800E6280.step + 1;
-            func_80042908(4);
+            game_state.daily_event_bits |= 4;
+            game_state.saved_step = game_state.step + 1;
+            main_stage_set(4);
             return 0;
         }
-        D_800E6280.daily_event_bits |= 8;
+        game_state.daily_event_bits |= 8;
     }
-    func_8004284C();
+    main_step_next();
 }
 
-/* The selected girl and the D_800E6280 flag bytes are read through a state
+/* The selected girl and the game_state flag bytes are read through a state
  * pointer: uopt then keeps unk_F5F and unk_71E in registers (a1, v0), which
  * gives the `lui a1; lbu a0,lo(a1)` argument loads. T-11880 */
 s32 func_80136794(void) {
     GameState *g;
     s32 v;
 
-    g = &D_800E6280;
-    v = get_g_zyotai_s(D_800E6280.current_girl); /* FAKE: direct symbol here but g-> below; the mix decides which loads uopt keeps in registers T-11880 */
+    g = &game_state;
+    v = get_g_zyotai_s(game_state.current_girl); /* FAKE: direct symbol here but g-> below; the mix decides which loads uopt keeps in registers T-11880 */
     if ((g->player_birthday & 0xF) == g->month && ((u32)(g->player_birthday << 0x17) >> 0x1B) == g->day) {
         if (((u8)v & 0x7F) < 2U) {
             g->daily_event_bits &= ~8;
             g->daily_event_bits |= 4;
             g->saved_step = g->step + 1;
             g->current_girl = g->date_girl;
-            func_800847B8(g->current_girl);
-            func_80042908(4);
+            dialogue_names_set(g->current_girl);
+            main_stage_set(4);
             return 0;
         }
         g->daily_event_bits |= 8;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 s32 func_80136860(void) {
     u8 x;
     u8 count;
 
-    if (D_800E6280.substep == 0) {
+    if (game_state.substep == 0) {
         func_800674B0();
-        D_800E6280.substep++;
+        game_state.substep++;
     }
-    if (D_800E6280.substep == 1) {
-        if (D_800E6280.step_timer.w++ >= 0x400U) {
-            func_800452C4();
-            func_8004482C();
-            D_800E6280.substep = 0;
+    if (game_state.substep == 1) {
+        if (game_state.step_timer.w++ >= 0x400U) {
+            cd_cmd_reset();
+            snd_bank_state_reset();
+            game_state.substep = 0;
         }
-        if (func_80044E8C() == 1) {
-            D_800E6280.substep++;
+        if (snd_bank_load_poll() == 1) {
+            game_state.substep++;
         } else {
             return 0;
         }
@@ -1504,20 +1504,20 @@ s32 func_80136860(void) {
     x = D_8013A4C4;
     count = ((x & 1) > 0) + ((x & 2) > 0) + ((x & 4) > 0);
     if (count == 0) {
-        D_800E6280.girls[0].affection += 0xC;
-        D_800E6280.girls[D_800E6280.date_girl].syoushin += 7;
+        game_state.girls[0].affection += 0xC;
+        game_state.girls[game_state.date_girl].syoushin += 7;
     } else if (count == 1) {
-        D_800E6280.girls[0].affection += 3;
-        D_800E6280.girls[D_800E6280.date_girl].syoushin += 2;
+        game_state.girls[0].affection += 3;
+        game_state.girls[game_state.date_girl].syoushin += 2;
     } else if (count == 2) {
-        D_800E6280.girls[D_800E6280.date_girl].affection += 3;
-        D_800E6280.girls[0].syoushin += 2;
+        game_state.girls[game_state.date_girl].affection += 3;
+        game_state.girls[0].syoushin += 2;
     } else {
-        D_800E6280.girls[D_800E6280.date_girl].affection += 0xC;
-        D_800E6280.girls[0].syoushin += 7;
+        game_state.girls[game_state.date_girl].affection += 0xC;
+        game_state.girls[0].syoushin += 7;
     }
     check_para_limit();
-    func_80072B5C(1);
+    day_event_next(1);
 }
 
 void func_80136A90(void) {
@@ -1527,47 +1527,47 @@ void func_80136A90(void) {
     if (((u8) get_g_zyotai_s(GIRL_SHIORI) & 0x7F) == 4 && (rand() % 2)) {
         D_8013A430 += 1;
     }
-    if (((u8) get_g_zyotai_s(D_800E6280.date_girl) & 0x7F) == 4 && (rand() % 2) && (D_800E6280.date_girl != GIRL_NOZOMI)) {
+    if (((u8) get_g_zyotai_s(game_state.date_girl) & 0x7F) == 4 && (rand() % 2) && (game_state.date_girl != GIRL_NOZOMI)) {
         D_8013A438 += 1;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80136B7C(void) {
     bg_read_sub2(0x432B);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80136BA4(void) {
-    if (D_800E6280.girls[0].affection < 0xA) {
+    if (game_state.girls[0].affection < 0xA) {
         D_8013A428 += 2;
-        D_800E6280.current_girl = GIRL_SHIORI;
-    } else if (get_h_yuukou(D_800E6280.current_girl) < 0xA) {
+        game_state.current_girl = GIRL_SHIORI;
+    } else if (get_h_yuukou(game_state.current_girl) < 0xA) {
         D_8013A428 += 2;
-    } else if (D_800E6280.girls[0].syoushin >= 0x33) {
-        D_800E6280.current_girl = GIRL_SHIORI;
-    } else if (D_800E6280.girls[D_800E6280.current_girl].syoushin < 0x33) {
-        if (D_800E6280.girls[0].tokimeki >= 0x32) {
+    } else if (game_state.girls[0].syoushin >= 0x33) {
+        game_state.current_girl = GIRL_SHIORI;
+    } else if (game_state.girls[game_state.current_girl].syoushin < 0x33) {
+        if (game_state.girls[0].tokimeki >= 0x32) {
             D_8013A428 += 1;
-            D_800E6280.current_girl = GIRL_SHIORI;
-        } else if (get_h_tokimeki(D_800E6280.current_girl) >= 0x32) {
+            game_state.current_girl = GIRL_SHIORI;
+        } else if (get_h_tokimeki(game_state.current_girl) >= 0x32) {
             D_8013A428 += 1;
         } else {
             D_8013A428 += 4;
-            func_8004284C();
-            func_8004284C();
+            main_step_next();
+            main_step_next();
         }
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80136CEC(void) {
     D_8013A428 = 0x17;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80136D14(void) {
-    func_800847B8((u8) *(s8 *)&D_800E6280.current_girl);
+    dialogue_names_set((u8) *(s8 *)&game_state.current_girl);
     D_8013A428 = 0x15;
-    func_8004284C();
+    main_step_next();
 }

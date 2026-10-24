@@ -47,6 +47,7 @@ options:
     # main-exe-only function sizes (T-0500)
     - config/symbol_addrs_main.txt
     - config/labels/main.txt
+    - config/symbol_addrs_hypotheses.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/undefined_funcs_auto.txt

@@ -19,45 +19,45 @@ s32 func_8013DDD0(void) {
     ShoCallbacks23 table;
 
     table = D_80145FE8;
-    index = D_800E6280.step;
+    index = game_state.step;
     table.f[index](0x80);
-    ((Actor *)D_80120650)->brightness = D_800B593C;
-    if (((Actor *)D_80120650)->unk_18 == 0 && ((Actor *)D_80120650)->unk_08 == 0) {
-        ((Actor *)D_80120650)->sequence_slot++;
-        if (((Actor *)D_80120650)->sequence_slot >= 3) {
-            ((Actor *)D_80120650)->sequence_slot = 0;
+    ((Actor *)actor_pool_96)->brightness = dec_bg_brightness;
+    if (((Actor *)actor_pool_96)->unk_18 == 0 && ((Actor *)actor_pool_96)->unk_08 == 0) {
+        ((Actor *)actor_pool_96)->sequence_slot++;
+        if (((Actor *)actor_pool_96)->sequence_slot >= 3) {
+            ((Actor *)actor_pool_96)->sequence_slot = 0;
         }
     }
 }
 
 void func_8013DEBC(void) {
-    func_80044750(0x204);
-    func_8004284C();
+    snd_command(0x204);
+    main_step_next();
 }
 
 void func_8013DEE4(void) {
     D_80120653 |= 0x80;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013DF14(void) {
     /* FAKE: pointer alias for increment/compare paired with direct global store in the if-body so uopt shares $v0 for lw/lbu/sb at +0x468/+0x469 without forwarding the byte into the clamp store. T-24088 */
     GameState *state;
 
-    state = &D_800E6280;
-    func_80085B3C(4, 0);
+    state = &game_state;
+    event_log_add(4, 0);
     state->girls[12].flags.f.story_stage += 1;
     if (state->girls[12].flags.f.story_stage >= 4) {
-        D_800E6280.girls[12].flags.f.story_stage = 3;
+        game_state.girls[12].flags.f.story_stage = 3;
     }
-    strcpy(D_800CA188, "伊集院");
+    strcpy(name_buf_girl_short, "伊集院");
     strcpy(girl_name_buf, "伊集院");
     strcpy(D_800CA1DC, "パーティー会場");
     D_80145F2C = 9;
-    func_8004284C();
+    main_step_next();
     func_8013DD90();
     load_palette(D_80145FE0, 0x11, 1, 3, 0);
-    func_80048F64(0x60);
+    actor_clear(0x60);
     D_80120651 = 0xC;
     D_80120652 = 1;
     D_80120688 = 0x41000000;
@@ -78,23 +78,23 @@ void func_8013DF14(void) {
 
 void func_8013E0C8(void) {
     bg_read_sub2(0x41D4);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013E0F0(void) {
-    D_80145F2C += D_800E6280.girls[12].flags.f.story_stage * 3 - 3;
-    func_8004284C();
+    D_80145F2C += game_state.girls[12].flags.f.story_stage * 3 - 3;
+    main_step_next();
 }
 
 void func_8013E13C(void) {
-    func_80062CD0(0x5855);
-    func_8004284C();
+    bustup_read_start(0x5855);
+    main_step_next();
 }
 
 void func_8013E164(void) {
     cd_read_sectors(0xD, 0x801A0000, 0xBD9F);
     func_8013DD90();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013E19C(void) {
@@ -106,20 +106,20 @@ void func_8013E19C(void) {
     a = get_g_zyotai_s(GIRL_MIRA);
     r = get_g_zyotai_h(GIRL_MIRA);
     b = 0xFF;
-    if (((Bit1Flag *)&D_800E6280.girls[7].flags.w)->f && D_800E6280.event_flags[52] == 0 && a == 0x80 && r == 0) {
+    if (((Bit1Flag *)&game_state.girls[7].flags.w)->f && game_state.event_flags[52] == 0 && a == 0x80 && r == 0) {
         b = 7;
     }
     a = get_g_zyotai_s(GIRL_SHIORI);
     r = get_g_zyotai_h(GIRL_SHIORI);
-    if (D_800E6280.event_flags[6] == 0 && a == 0x80 && r == 0 && (b == 0xFF || (b == 7 && D_800E6280.girls[0].syoushin < D_800E6280.girls[7].syoushin))) {
+    if (game_state.event_flags[6] == 0 && a == 0x80 && r == 0 && (b == 0xFF || (b == 7 && game_state.girls[0].syoushin < game_state.girls[7].syoushin))) {
         b = 0;
     }
     a = get_g_zyotai_s(GIRL_MEGUMI);
     r = get_g_zyotai_h(GIRL_MEGUMI);
-    if (((Bit1Flag *)&D_800E6280.girls[9].flags.w)->f && D_800E6280.event_flags[66] == 0 && a == 0x80 && r == 0 &&
-        (b == 0xFF || (b == 7 && D_800E6280.girls[9].syoushin < D_800E6280.girls[7].syoushin) || (b == 0 && D_800E6280.girls[9].syoushin < D_800E6280.girls[0].syoushin))) {
+    if (((Bit1Flag *)&game_state.girls[9].flags.w)->f && game_state.event_flags[66] == 0 && a == 0x80 && r == 0 &&
+        (b == 0xFF || (b == 7 && game_state.girls[9].syoushin < game_state.girls[7].syoushin) || (b == 0 && game_state.girls[9].syoushin < game_state.girls[0].syoushin))) {
         b = 9;
     }
     D_80145FE4 = b;
-    func_8004284C();
+    main_step_next();
 }

@@ -57,31 +57,31 @@ s32 func_8013240C() {
 
     p = D_8015EDB4;
     step = 0x20;
-    if ((D_800E6280.pad_held & 0xA000) && (D_800E6280.pad_held & 0x5000)) {
+    if ((game_state.pad_held & 0xA000) && (game_state.pad_held & 0x5000)) {
         step = 0x2D;
     }
-    if (D_800E6280.pad_held & PAD_LEFT) {
+    if (game_state.pad_held & PAD_LEFT) {
         if (D_8015EDB4->unk74 > 0x800) {
             p->unk74 = p->unk74 + step * (0x1000 - p->unk74) / 2048;
         } else {
             p->unk74 = p->unk74 + step;
         }
     }
-    if (D_800E6280.pad_held & PAD_RIGHT) {
+    if (game_state.pad_held & PAD_RIGHT) {
         if (p->unk74 < -0x800) {
             p->unk74 = p->unk74 + step * (-0x1000 - p->unk74) / 2048;
         } else {
             p->unk74 = p->unk74 - step;
         }
     }
-    if (D_800E6280.pad_held & PAD_UP) {
+    if (game_state.pad_held & PAD_UP) {
         if (p->unk76 < -0x700) {
             p->unk76 = p->unk76 + step * (-0x800 - p->unk76) / 256;
         } else {
             p->unk76 = p->unk76 - step;
         }
     }
-    if (D_800E6280.pad_held & PAD_DOWN) {
+    if (game_state.pad_held & PAD_DOWN) {
         if (p->unk76 > 0x80) {
             p->unk76 = p->unk76 + step * (0x180 - p->unk76) / 256;
         } else {
@@ -115,12 +115,12 @@ s32 func_8013240C() {
         break;
     }
     if (p->unk3 == 0) {
-        if (D_800E6280.pad_pressed & m1) {
+        if (game_state.pad_pressed & m1) {
             D_8015EDB4[8].unk2 += 1;
             p->unk2 = 0x81;
             p->unk3 = 0x7F;
         }
-        if (D_800E6280.pad_pressed & m2) {
+        if (game_state.pad_pressed & m2) {
             D_8015EDB4[8].unk2 += 1;
             p->unk2 = 0x82;
             p->unk3 = 0x7F;
@@ -193,9 +193,9 @@ void func_801328B0(void) {
     dist = func_80140638(&idx);
     flags = 0;
     if (dist != 0) {
-        if (!(D_800E6280.frame_count & 7)) {
+        if (!(game_state.frame_count & 7)) {
             flags = 0x20;
-        } else if (!(D_800E6280.frame_count & 0xF)) {
+        } else if (!(game_state.frame_count & 0xF)) {
             flags = 0x20;
         }
     }
@@ -325,7 +325,7 @@ void func_80132FE8(void) {
     s32 pad3;
     s32 flags;
     TcActor *actor;
-    /* FAKE: btn copies D_800E6280.pad_pressed in both arms (the first arm reads it after the flag tests) and all six mask tests use it; it stays live in $v0 across the D_8015EDE4 tests so those take $a0 as in the original. Matches, real source unknown. T-19025 */
+    /* FAKE: btn copies game_state.pad_pressed in both arms (the first arm reads it after the flag tests) and all six mask tests use it; it stays live in $v0 across the D_8015EDE4 tests so those take $a0 as in the original. Matches, real source unknown. T-19025 */
     s32 btn;
 
     actor = D_8015EDB4;
@@ -337,18 +337,18 @@ void func_80132FE8(void) {
         func_80140DF0();
         flags = 0;
         if (D_8015EDD8 != 0) {
-            if ((D_800E6280.pad_held & PAD_CIRCLE) && (D_8015EDE0 % 3 == 0) && !(D_800E6280.frame_count & 3)) {
+            if ((game_state.pad_held & PAD_CIRCLE) && (D_8015EDE0 % 3 == 0) && !(game_state.frame_count & 3)) {
                 flags = 0x20;
             }
-            if ((D_800E6280.pad_held & PAD_CROSS) && (D_8015EDE0 % 3 == 1) && !(D_800E6280.frame_count & 3)) {
+            if ((game_state.pad_held & PAD_CROSS) && (D_8015EDE0 % 3 == 1) && !(game_state.frame_count & 3)) {
                 flags |= 0x20;
             }
-            if ((D_800E6280.pad_held & PAD_SQUARE) && (D_8015EDE0 % 3 == 2) && !(D_800E6280.frame_count & 3)) {
+            if ((game_state.pad_held & PAD_SQUARE) && (D_8015EDE0 % 3 == 2) && !(game_state.frame_count & 3)) {
                 flags |= 0x20;
             }
-            btn = D_800E6280.pad_pressed;
+            btn = game_state.pad_pressed;
         } else {
-            btn = D_800E6280.pad_pressed;
+            btn = game_state.pad_pressed;
             if (btn) {} /* FAKE: empty test of btn; without it the three btn masks that uopt inserts at the end of the first arm come out as 0x20, 0x80, 0x40, the original has 0x80, 0x40, 0x20. T-19025 */
             if ((btn & 0x20) && (D_8015EDE0 % 3 == 0)) {
                 flags = 0x20;
@@ -396,13 +396,13 @@ void func_80133374(void) {
         D_8015EDEC -= 1;
     }
     if (D_8015EDEC == 0) {
-        func_80042908(0x2D);
+        main_stage_set(0x2D);
     }
-    if (D_800E6280.pad_pressed & PAD_START) {
-        func_80042908(0x2D);
+    if (game_state.pad_pressed & PAD_START) {
+        main_stage_set(0x2D);
     }
     if (D_8015EDB4->unk84[1] == 0) {
-        func_80042908(0x2D);
+        main_stage_set(0x2D);
     }
 }
 

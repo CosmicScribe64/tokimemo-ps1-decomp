@@ -3,8 +3,8 @@
 
 /* s32 with no return (the caller uses it as implicit int): v0 is live at the exit, so as1 cannot fill the delay slot of the branch before the last call with lui v0 and takes the move a1,zero instead. T-16562 */
 s32 func_80133870(void) {
-    D_800E6280.step_timer.u += 1;
-    switch (D_800E6280.step) {
+    game_state.step_timer.u += 1;
+    switch (game_state.step) {
     case 0:
         func_80133980();
         break;
@@ -21,79 +21,79 @@ s32 func_80133870(void) {
         func_80134500();
         break;
     }
-    if (D_800E6280.step_timer.u & 0x10) {
+    if (game_state.step_timer.u & 0x10) {
         func_801432F0((s32) "NOW LOADING DATA ", -0x60, 0, 1);
     }
-    if ((D_800E6280.step_timer.u != 0) && ((u32) D_800E6280.step_timer.u < 0x400U)) {
+    if ((game_state.step_timer.u != 0) && ((u32) game_state.step_timer.u < 0x400U)) {
         func_801430D0(D_8015EDEC--, 0, 0x32, 6);
     }
 }
 
 s32 func_80133980(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
-        func_80044750(0x24);
+        snd_command(0x24);
         D_8015EDEC = 0x400;
         draw2d3d(1, 0);
-        D_800E6280.clear_color_r = 0;
-        D_800E6280.clear_color_g = 0;
-        D_800E6280.clear_color_b = 0;
-        func_80041584();
+        game_state.clear_color_r = 0;
+        game_state.clear_color_g = 0;
+        game_state.clear_color_b = 0;
+        sprite_tables_clear();
         func_80143E80();
         back_clear_switch(1);
-        func_8006BD6C(0);
-        func_8004E58C();
-        func_80048EB8(0);
+        cursor_show(0);
+        text_system_reset();
+        actor_clear_range(0);
         func_80143AF4();
         D_8015EDB8 = 0;
         cd_read_sectors(0x21, 0x80180000, 0xB4F3);
         cd_read_sectors(1, 0x801FA800, 0xB514);
         func_80041168(0xFF);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 1:
     case 2:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
             return;
         }
         return;
     case 3:
-        D_800E6280.overlay_palette_a = 0x8018A000;
-        D_800E6280.overlay_frame_table = 0x801FAA7C;
-        D_800E6280.overlay_sequence_table = 0x801FAA88;
-        D_800E6280.overlay_tpage_table = 0x801FAA68;
+        game_state.overlay_palette_a = 0x8018A000;
+        game_state.overlay_frame_table = 0x801FAA7C;
+        game_state.overlay_sequence_table = 0x801FAA88;
+        game_state.overlay_tpage_table = 0x801FAA68;
         func_801342CC();
-        func_8004284C();
+        main_step_next();
         break;
     }
 }
 
 void func_80133AF4(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
-        func_80044890(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
-        D_800E6280.substep += 1;
+        snd_bank_load_start(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
+        game_state.substep += 1;
         return;
     case 1:
         if (func_80044C98() == 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
             return;
         }
     default:
         return;
     case 2:
-        func_80044890(1, 0xC54B, 0xC519, 0xC7BB, 0xC777, 0xC766);
-        D_800E6280.substep += 1;
+        snd_bank_load_start(1, 0xC54B, 0xC519, 0xC7BB, 0xC777, 0xC766);
+        game_state.substep += 1;
         return;
     case 3:
         if (func_80044C98() == 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
             return;
         }
         break;
     case 4:
-        func_8004284C();
+        main_step_next();
         break;
     }
 }
@@ -102,37 +102,37 @@ void func_80133C08(void) {
     s32 temp_a1;
     s32 var_s0;
 
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
-        func_800462C8(5U, 0x801B8000, 0xB473);
-        func_800462C8(3U, 0x801C0000, 0xB4BC);
-        func_800462C8(0x21U, 0x801C8000, 0xB57F);
-        D_800E6280.substep += 1;
+        cd_read_sectors_nowait(5U, 0x801B8000, 0xB473);
+        cd_read_sectors_nowait(3U, 0x801C0000, 0xB4BC);
+        cd_read_sectors_nowait(0x21U, 0x801C8000, 0xB57F);
+        game_state.substep += 1;
         return;
     case 1:
     case 2:
     case 3:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
             return;
         }
     default:
         return;
     case 4:
         func_80134450();
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 5:
-        func_800462C8(0x20U, 0x80180000, 0xB489);
-        func_800462C8(0x20U, 0x80190000, 0xB4D3);
-        func_800462C8(8U, 0x80170000, 0xB47E);
-        D_800E6280.substep += 1;
+        cd_read_sectors_nowait(0x20U, 0x80180000, 0xB489);
+        cd_read_sectors_nowait(0x20U, 0x80190000, 0xB4D3);
+        cd_read_sectors_nowait(8U, 0x80170000, 0xB47E);
+        game_state.substep += 1;
         return;
     case 6:
     case 7:
     case 8:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
             return;
         }
         break;
@@ -140,15 +140,15 @@ void func_80133C08(void) {
         func_80143730(0x80180000, 0x18);
         func_80143730(0x80190000, 0x1A);
         func_80143730(0x80170000, 0xA);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         return;
     case 10:
-        func_800462C8(0x14U, 0x80180000, 0xB4BF);
-        D_800E6280.substep += 1;
+        cd_read_sectors_nowait(0x14U, 0x80180000, 0xB4BF);
+        game_state.substep += 1;
         return;
     case 11:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
             return;
         }
         break;
@@ -163,7 +163,7 @@ void func_80133C08(void) {
             load_palette(0x80188000, temp_a1, 1, 3, temp_a1);
             var_s0 += 1;
         } while (var_s0 != 0xF);
-        func_8004284C();
+        main_step_next();
         break;
     }
 }
@@ -172,102 +172,102 @@ void func_80133C08(void) {
  * (+0x1098/+0x109C); two consecutive increments in case 0 match the folded
  * addiu v0,t7,2 reload sequence. T-24129. */
 s32 func_80133E98(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
-        func_800462C8(1, 0x8018A000, 0xB3F2);
-        func_800462C8(5, 0x8018A800, 0xB413);
-        func_800462C8(0x12, 0x8018D000, 0xB438);
-        D_800E6280.substep += 1;
-        D_800E6280.substep += 1;
+        cd_read_sectors_nowait(1, 0x8018A000, 0xB3F2);
+        cd_read_sectors_nowait(5, 0x8018A800, 0xB413);
+        cd_read_sectors_nowait(0x12, 0x8018D000, 0xB438);
+        game_state.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
     case 2:
     case 3:
     case 4:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 5:
-        func_800462C8(7, 0x80196000, 0xB45B);
-        D_800E6280.substep += 1;
-        func_800462C8(3, 0x80199800, 0xB478);
-        func_800462C8(2, 0x8019B000, 0xB47B);
-        D_800E6280.substep += 1;
+        cd_read_sectors_nowait(7, 0x80196000, 0xB45B);
+        game_state.substep += 1;
+        cd_read_sectors_nowait(3, 0x80199800, 0xB478);
+        cd_read_sectors_nowait(2, 0x8019B000, 0xB47B);
+        game_state.substep += 1;
         break;
     case 6:
     case 7:
     case 8:
     case 9:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 10:
-        func_800462C8(1, 0x8019C000, 0xB486);
-        func_800462C8(2, 0x8019C800, 0xB487);
-        func_800462C8(4, 0x8019D800, 0xB4A9);
-        func_800462C8(6, 0x8019F800, 0xB4AD);
-        D_800E6280.substep += 1;
+        cd_read_sectors_nowait(1, 0x8019C000, 0xB486);
+        cd_read_sectors_nowait(2, 0x8019C800, 0xB487);
+        cd_read_sectors_nowait(4, 0x8019D800, 0xB4A9);
+        cd_read_sectors_nowait(6, 0x8019F800, 0xB4AD);
+        game_state.substep += 1;
         break;
     case 11:
     case 12:
     case 13:
     case 14:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 15:
-        func_800462C8(2, 0x801A2800, 0xB4B3);
-        func_800462C8(4, 0x801A3800, 0xB4B5);
-        func_800462C8(3, 0x801A5800, 0xB4B9);
-        func_800462C8(0xA, 0x801A7000, 0xB515);
-        D_800E6280.substep += 1;
+        cd_read_sectors_nowait(2, 0x801A2800, 0xB4B3);
+        cd_read_sectors_nowait(4, 0x801A3800, 0xB4B5);
+        cd_read_sectors_nowait(3, 0x801A5800, 0xB4B9);
+        cd_read_sectors_nowait(0xA, 0x801A7000, 0xB515);
+        game_state.substep += 1;
         break;
     case 16:
     case 17:
     case 18:
     case 19:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 20:
-        func_800462C8(1, 0x801AC000, 0xB534);
-        func_800462C8(3, 0x801AC800, 0xB668);
-        func_800462C8(3, 0x801AE000, 0xB66B);
-        func_800462C8(3, 0x801AF800, 0xB66E);
-        D_800E6280.substep += 1;
+        cd_read_sectors_nowait(1, 0x801AC000, 0xB534);
+        cd_read_sectors_nowait(3, 0x801AC800, 0xB668);
+        cd_read_sectors_nowait(3, 0x801AE000, 0xB66B);
+        cd_read_sectors_nowait(3, 0x801AF800, 0xB66E);
+        game_state.substep += 1;
         break;
     case 21:
     case 22:
     case 23:
     case 24:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 25:
-        func_800462C8(2, 0x801B1000, 0xB671);
-        func_800462C8(3, 0x801B2000, 0xB673);
-        func_800462C8(3, 0x801B3800, 0xB676);
-        func_800462C8(2, 0x801B5000, 0xB679);
-        D_800E6280.substep += 1;
+        cd_read_sectors_nowait(2, 0x801B1000, 0xB671);
+        cd_read_sectors_nowait(3, 0x801B2000, 0xB673);
+        cd_read_sectors_nowait(3, 0x801B3800, 0xB676);
+        cd_read_sectors_nowait(2, 0x801B5000, 0xB679);
+        game_state.substep += 1;
         break;
     case 26:
     case 27:
     case 28:
     case 29:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 30:
         D_8015EDB4 = (TcActor *) D_8011ED58;
-        *(s32 *)&D_800E6280.menu_hit[3] = 1;
-        *(s32 *)&D_800E6280.menu_hit[7] = 2;
-        func_8004284C();
+        *(s32 *)&game_state.menu_hit[3] = 1;
+        *(s32 *)&game_state.menu_hit[7] = 2;
+        main_step_next();
         break;
     }
 }
@@ -310,13 +310,13 @@ void func_80134450(void) {
 }
 
 s32 func_80134500(void) {
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
-        D_800E6280.clear_color_g = 0;
-        D_800E6280.clear_color_b = 0;
-        D_800E6280.tile_layer_enabled = 0;
-        D_800E6280.screen_brightness = 0x80;
-        D_800E6280.clear_color_r = 0;
+        game_state.clear_color_g = 0;
+        game_state.clear_color_b = 0;
+        game_state.tile_layer_enabled = 0;
+        game_state.screen_brightness = 0x80;
+        game_state.clear_color_r = 0;
         draw2d3d(1, 1);
         initView();
         func_8014394C();
@@ -325,17 +325,17 @@ s32 func_80134500(void) {
         initModelingData_init(0x8018A000);
         func_8013474C();
         func_801347F4((s32 *)0x801AC000);
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
         break;
     case 1:
-        func_80042908(1);
+        main_stage_set(1);
         break;
     }
 }
 
-/* File-local view of the settings block at D_800E7D10 (0x800E7D50 = +0x40), T-16562.
+/* File-local view of the settings block at system_data (0x800E7D50 = +0x40), T-16562.
    The flag test reads the word at +0x40 through this view too: uopt then sees the byte
-   read-modify-write of the else path overlap a word access and keeps &D_800E7D10 in $v0
+   read-modify-write of the else path overlap a word access and keeps &system_data in $v0
    (with D_800E7D50 in the test it makes the byte a plain global with lui/%lo addresses). */
 typedef struct TcSetW {
     u32 pad0 : 2;
@@ -377,7 +377,7 @@ typedef struct TcSave {
 void func_801345D4(void) {
     TcSave *save;
 
-    save = (TcSave *)&D_800E7D10;
+    save = (TcSave *)&system_data;
     if (save->set.word & 1) {
         D_8015EDF8 = save->set.s.unk4C;
         D_8015EDFC = save->set.s.unk50;

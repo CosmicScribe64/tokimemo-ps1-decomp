@@ -2,7 +2,7 @@
 #define OVL_KANGEI_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */
+#define MAIN_API_OVERRIDE_bustup_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
 #define MAIN_API_OVERRIDE_D_800B3688 /* matched as s32 (main_api.h: s32[]) */
 #define MAIN_API_OVERRIDE_D_800B36C8 /* matched as s32 (main_api.h: s32[]) */
 #define MAIN_API_OVERRIDE_D_800B3708 /* matched as s32 (main_api.h: s32[]) */
@@ -89,7 +89,7 @@ extern s32 D_801398EC;
 extern s32 D_801398F0;
 extern s32 D_801398F4;
 void func_80139540(void);
-void func_80083440(s32 arg0); /* overlay view; main_only.h has the u8 view */
+void bustup_layout_set(s32 arg0); /* overlay view; main_only.h has the u8 view */
 extern s32 D_80139DCC;
 extern s32 D_80139DD0;
 extern s32 D_80139DD4;
@@ -197,7 +197,7 @@ void func_80136D58(void);
 void func_80138078(void);
 void func_80136810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7, s32 arg8);
 /* T-18400: club name tables that func_8013769C copies to the stack whole and passes
- * name[D_800E6280.unk_0F4.h >> 12] to strcpy (as EVENT's EventTableE7, T-9940). */
+ * name[game_state.unk_0F4.h >> 12] to strcpy (as EVENT's EventTableE7, T-9940). */
 typedef struct KangeiNames20 {
     /* 0x00 */ u8 name[11][20];
 } KangeiNames20; /* size 0xDC */

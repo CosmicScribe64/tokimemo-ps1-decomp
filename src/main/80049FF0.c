@@ -2,7 +2,7 @@
 #include "game.h"
 #include "psx_types.h"
 
-s32 func_80049FF0(x0, y0, x1, y1, c0, c1, flags)
+s32 prim_gradient_line(x0, y0, x1, y1, c0, c1, flags)
 s16 x0;
 s16 y0;
 s16 x1;
@@ -14,8 +14,8 @@ u8 flags;
     GameState *g;
     LINE_G2 *line;
 
-    g = &D_800E6280;
-    line = (LINE_G2 *)GetWorkBase(0x14, D_8011ECA0);
+    g = &game_state;
+    line = (LINE_G2 *)GetWorkBase(0x14, draw_buffer);
     func_8009F11C(line);
     if (flags & 0x80) {
         SetSemiTrans(line, 1);
@@ -25,15 +25,15 @@ u8 flags;
     /* FAKE: explicit colour masks and comma grouping preserve renderer scheduling (T-20600, T-24041). */
     line->r0 = (c0 >> 16) & 0xFF, line->g0 = (c0 >> 8) & 0xFF, line->b0 = c0 & 0xFF;
     line->r1 = (c1 >> 16) & 0xFF, line->g1 = (c1 >> 8) & 0xFF, line->b1 = c1 & 0xFF;
-    line->x0 = g->screen_center_x[D_8011ECA0] + x0;
-    line->y0 = g->screen_center_y[D_8011ECA0] + y0;
-    line->x1 = g->screen_center_x[D_8011ECA0] + x1;
-    line->y1 = g->screen_center_y[D_8011ECA0] + y1;
-    AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ((flags & 0x7F) * 4)], line);
+    line->x0 = g->screen_center_x[draw_buffer] + x0;
+    line->y0 = g->screen_center_y[draw_buffer] + y0;
+    line->x1 = g->screen_center_x[draw_buffer] + x1;
+    line->y1 = g->screen_center_y[draw_buffer] + y1;
+    AddPrim(&D_800E8CA0[(draw_buffer << 10) + ((flags & 0x7F) * 4)], line);
 }
 
 void func_8004A14C(s32 arg0, RECT rect, s32 arg3) {
-    func_80049A40(rect.x, rect.y, rect.w, rect.h, 1, arg3, 1);
+    prim_gradient_rect(rect.x, rect.y, rect.w, rect.h, 1, arg3, 1);
 }
 
 void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x, s32 y, s32 flag, s32 tp) {
@@ -43,8 +43,8 @@ void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x,
     s32 col;
 
     cellh = 0x78;
-    /* main_api.h declares D_801220D0 as the first word of slot 0; the slots are BgLayer records. */
-    bg = &((BgLayer *)&D_801220D0)[slot];
+    /* main_api.h declares bg_layers as the first word of slot 0; the slots are BgLayer records. */
+    bg = &((BgLayer *)&bg_layers)[slot];
     bg->unk_00 = 0x1000000;
     bg->unk_04 = x;
     bg->unk_06 = y;
@@ -90,7 +90,7 @@ void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x,
             }
         }
     }
-    D_800E6280.bg_layer_order[slot] = flag;
+    game_state.bg_layer_order[slot] = flag;
 }
 
 void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
@@ -108,25 +108,25 @@ void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
         arg4 = 8;
     }
     for (x = arg0 - arg2; x < arg0 + arg2; x += arg3) {
-        g = &D_800E6280;
+        g = &game_state;
         y = arg1 - arg2;
         if (y < arg1 + arg2) {
             do {
                 if ((arg0 - x) * (arg0 - x) + (arg1 - y) * (arg1 - y) < arg2 * arg2) {
-                    poly = (POLY_GT4 *)GetWorkBase(sizeof(POLY_GT4), D_8011ECA0);
+                    poly = (POLY_GT4 *)GetWorkBase(sizeof(POLY_GT4), draw_buffer);
                     func_8009F068(poly);
                     SetSemiTrans(poly, 0);
                     /* FAKE: T-25122, hand expansions of the PsyQ macros setXYWH, setUVWH(poly, 0xC0, 0x50, 0x10, 0x10)
                      * and setRGB0..setRGB3, one comma statement per macro as they expand. One statement per field
                      * gives other saved-register colours, constant registers and store order (142 diff lines). */
-                    poly->x0 = g->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2,
-                        poly->y0 = g->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2,
-                        poly->x1 = g->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2 + (s16)arg3,
-                        poly->y1 = g->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2,
-                        poly->x2 = g->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2,
-                        poly->y2 = g->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2 + (s16)arg4,
-                        poly->x3 = g->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2 + (s16)arg3,
-                        poly->y3 = g->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2 + (s16)arg4;
+                    poly->x0 = g->screen_center_x[draw_buffer] + (s16)x - arg3 / 2,
+                        poly->y0 = g->screen_center_y[draw_buffer] + (s16)y - arg4 / 2,
+                        poly->x1 = g->screen_center_x[draw_buffer] + (s16)x - arg3 / 2 + (s16)arg3,
+                        poly->y1 = g->screen_center_y[draw_buffer] + (s16)y - arg4 / 2,
+                        poly->x2 = g->screen_center_x[draw_buffer] + (s16)x - arg3 / 2,
+                        poly->y2 = g->screen_center_y[draw_buffer] + (s16)y - arg4 / 2 + (s16)arg4,
+                        poly->x3 = g->screen_center_x[draw_buffer] + (s16)x - arg3 / 2 + (s16)arg3,
+                        poly->y3 = g->screen_center_y[draw_buffer] + (s16)y - arg4 / 2 + (s16)arg4;
                     poly->u0 = 0xC0, poly->v0 = 0x50,
                         poly->u1 = 0xC0 + 0x10, poly->v1 = 0x50,
                         poly->u2 = 0xC0, poly->v2 = 0x50 + 0x10,
@@ -136,9 +136,9 @@ void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
                     poly->r2 = 0x80, poly->g2 = 0x80, poly->b2 = 0x80;
                     poly->r3 = 0x80, poly->g3 = 0x80, poly->b3 = 0x80;
                     poly->tpage = func_8009ECB0(0, 0, 0x3C0, 0x100);
-                    poly->clut = func_8009ED74(g->screen_center_x[D_8011ECA0] + (s16)x + (rand() & 8),
-                                               (s16)y + g->screen_center_y[D_8011ECA0] + (rand() & 8));
-                    AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + arg5 * 4], poly);
+                    poly->clut = func_8009ED74(g->screen_center_x[draw_buffer] + (s16)x + (rand() & 8),
+                                               (s16)y + g->screen_center_y[draw_buffer] + (rand() & 8));
+                    AddPrim(&D_800E8CA0[(draw_buffer << 10) + arg5 * 4], poly);
                 }
                 y += arg4;
             } while (y < arg1 + arg2);
@@ -176,15 +176,15 @@ void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
         if (y < arg1 + arg2) {
             do {
                 if ((arg0 - x) * (arg0 - x) + (arg1 - y) * (arg1 - y) < arg2 * arg2) {
-                    tile = (TILE *)GetWorkBase(sizeof(TILE), D_8011ECA0);
+                    tile = (TILE *)GetWorkBase(sizeof(TILE), draw_buffer);
                     func_8009F0F4(tile);
                     SetSemiTrans(tile, 1);
-                    state = &D_800E6280;
-                    tile->x0 = state->screen_center_x[D_8011ECA0] + (s16)x - arg3 / 2;
+                    state = &game_state;
+                    tile->x0 = state->screen_center_x[draw_buffer] + (s16)x - arg3 / 2;
                     /* FAKE: T-24501, narrow only the stored 16-bit coordinate.
                      * The full-width y loop/distance values are unchanged. The
                      * erased conversion preserves original temporary allocation. */
-                    tile->y0 = state->screen_center_y[D_8011ECA0] + (s16)y - arg4 / 2;
+                    tile->y0 = state->screen_center_y[draw_buffer] + (s16)y - arg4 / 2;
                     /* The target uses the x step for both dimensions. */
                     setWH(tile, arg3, arg3);
                     abs_x = abs(arg0 - x);
@@ -208,7 +208,7 @@ void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
                     tile->r0 = r;
                     tile->g0 = g;
                     tile->b0 = b;
-                    AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + arg7 * 4], tile);
+                    AddPrim(&D_800E8CA0[(draw_buffer << 10) + arg7 * 4], tile);
                 }
                 y += arg4;
             } while (y < arg1 + arg2);
@@ -227,13 +227,13 @@ void func_8004AC18(s32 arg0) {
     } else {
         color = 0xFFFFFF;
     }
-    func_80049A40(-0xA0, -0x78, 0xA0, 0xF0, 1, color, 0x81);
-    func_80049A40(0, -0x78, 0xA0, 0xF0, 1, color, 0x81);
+    prim_gradient_rect(-0xA0, -0x78, 0xA0, 0xF0, 1, color, 0x81);
+    prim_gradient_rect(0, -0x78, 0xA0, 0xF0, 1, color, 0x81);
     dtd_on_tpage(0, 0, 1, 1, 1);
 }
 
 void func_8004ACC8(s32 arg0) {
-    func_80049A40(-0x100, -0x78, 0x100, 0xF0, 1, arg0, 0x81);
-    func_80049A40(0, -0x78, 0x100, 0xF0, 1, arg0, 0x81);
+    prim_gradient_rect(-0x100, -0x78, 0x100, 0xF0, 1, arg0, 0x81);
+    prim_gradient_rect(0, -0x78, 0x100, 0xF0, 1, arg0, 0x81);
     dtd_on_tpage(0, 0, 1, 1, 1);
 }

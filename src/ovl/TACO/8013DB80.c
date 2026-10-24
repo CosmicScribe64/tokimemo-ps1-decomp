@@ -134,15 +134,15 @@ s32 func_8013DEE4(s32 arg0) {
         }
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= D_800E6280.screen_center_y[D_8011ECA0] - 0x200
-            && D_800E6280.screen_center_y[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200
+            && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             dist = (D_80122754 - v.vz) / 127;
             if (dist >= 0x100) {
                 dist = 0xFF;
             } else if (dist <= 0) {
                 return -1;
             }
-            poly = GetWorkBase(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, draw_buffer);
             func_8009F040(poly);
             switch (mode) {
             case 5:
@@ -210,7 +210,7 @@ s32 func_8013DEE4(s32 arg0) {
             poly->y2 = ((s16 *)pt)[7];
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
-            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
         }
     }
 }
@@ -354,15 +354,15 @@ void func_8013E778(s32 arg0) {
         rot += 0x80;
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= D_800E6280.screen_center_y[D_8011ECA0] - 0x200
-            && D_800E6280.screen_center_y[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200
+            && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             dist = (D_80122754 - v.vz) / 127;
             if (dist >= 0x100) {
                 dist = 0xFF;
             } else if (dist <= 0) {
                 dist = 1;
             }
-            poly = GetWorkBase(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, draw_buffer);
             func_8009F040(poly);
             SetSemiTrans(poly, 1);
             poly->r0 = 0x80;
@@ -381,7 +381,7 @@ void func_8013E778(s32 arg0) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
         }
     }
 }
@@ -429,14 +429,14 @@ void func_8013EAA4(s32 arg0) {
         }
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= D_800E6280.screen_center_y[D_8011ECA0] - 0x200 && D_800E6280.screen_center_y[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200 && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             dist = (D_80122754 - pos.z) / 127;
             if (dist >= 0x100) {
                 dist = 0xFF;
             } else if (dist <= 0) {
                 dist = 1;
             }
-            poly = GetWorkBase(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, draw_buffer);
             func_8009F040(poly);
             SetSemiTrans(poly, 0);
             poly->r0 = 0x80;
@@ -466,7 +466,7 @@ void func_8013EAA4(s32 arg0) {
             poly->y2 = ((s16 *)pt)[7];
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
-            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
             height = (rsin(particle->unk12 * 0x10) << 7) / 4096;
             /* FAKE: half is a constant local that only steers uopt (real source unknown). It is propagated
              * into its uses (its slot stays), so the third grid's o * 0x100 becomes a later item than
@@ -481,7 +481,7 @@ void func_8013EAA4(s32 arg0) {
                     func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
                 }
             }
-            poly = GetWorkBase(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, draw_buffer);
             func_8009F040(poly);
             SetSemiTrans(poly, 1);
             poly->r0 = 0x80;
@@ -499,7 +499,7 @@ void func_8013EAA4(s32 arg0) {
             poly->y2 = ((s16 *)pt)[7];
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
-            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
             size = (func_800A0140(particle->unk12 * 0x10) << 7) / 4096;
             v.vz = pos.z;
             for (o = 0; o < 2; o++) {
@@ -509,7 +509,7 @@ void func_8013EAA4(s32 arg0) {
                     func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
                 }
             }
-            poly = GetWorkBase(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, draw_buffer);
             func_8009F040(poly);
             SetSemiTrans(poly, 1);
             poly->r0 = 0x80;
@@ -526,7 +526,7 @@ void func_8013EAA4(s32 arg0) {
             poly->y2 = ((s16 *)pt)[7];
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
-            AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
         }
     }
 }

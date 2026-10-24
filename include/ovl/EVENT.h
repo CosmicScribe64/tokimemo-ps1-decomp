@@ -10,7 +10,6 @@
 #define MAIN_API_OVERRIDE_D_80120678 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_801206B8 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_801206BC /* EVENT overlay data at this address, s32 (main_api.h: s16) */
-#define MAIN_API_OVERRIDE_D_80120650 /* EVENT overlay data at this address, s32 (main_api.h: u8[]) */
 #define MAIN_API_OVERRIDE_D_80120658 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_8012066C /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120698 /* EVENT overlay data at this address, s32 (main_api.h: u8) */
@@ -1536,7 +1535,7 @@ typedef struct EventStateView {
     /* 0x1297 */ u8 pad_1297;
 } EventStateView; /* minimum size 0x1298 */
 
-/* Unsigned counter view at D_800B1AF0 (func_800FEAE8, matching DATE D_800E6280.unk_1104.u). */
+/* Unsigned counter view at D_800B1AF0 (func_800FEAE8, matching DATE game_state.unk_1104.u). */
 typedef struct EventFrameCounter {
     /* 0x00 */ u32 u;
 } EventFrameCounter; /* size 0x04 */

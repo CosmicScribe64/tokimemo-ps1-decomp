@@ -38,7 +38,7 @@ s16 func_80143160(void) {
     }
     switch (D_800F53A0.unk_F2F) {
     case 0:
-        func_80052060();
+        voice_play();
         break;
     case 1:
         func_80143314();
@@ -68,7 +68,7 @@ s16 func_80143160(void) {
         func_801439F0();
         break;
     case 10:
-        func_80052060();
+        voice_play();
         break;
     }
     *(s8 *)(&D_8012B8C2 + 5) = *(u8 *)&D_801317EB;

@@ -50,8 +50,8 @@ void func_80132000(void) {
 }
 
 void func_801322D4(void) {
-    func_80083808();
-    switch (D_800E6280.stage) {
+    bustup_wink_update();
+    switch (game_state.stage) {
     case 0:
         func_80132550();
         break;
@@ -74,41 +74,41 @@ void func_801322D4(void) {
         func_80136078();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
     check_k_scroll();
     k_disp_inc2();
-    func_80066C08(2);
+    screen_frame_draw(2);
     message_window_show();
-    func_80066334();
+    message_window_title_update();
     hizuke_show();
     func_80083A10();
 }
 
 s32 func_801323D4(void) {
-    D_800CA134 = &D_80143B00;
+    dialogue_tables = &D_80143B00;
     D_800CA138 = &D_80143B04;
     D_800CA13C = D_80143AF4;
     D_800CA140 = D_80143AF8;
     D_800CA144 = D_80143AFC;
-    func_80082764(D_80122CDC, 1, 0);
+    dialogue_run(D_80122CDC, 1, 0);
 }
 
 void func_80132450(void) {
-    D_800CA134 = &D_80143B00;
+    dialogue_tables = &D_80143B00;
     D_800CA138 = &D_80143B04;
     D_800CA13C = D_80143AF4;
     D_800CA140 = D_80143AF8;
     D_800CA144 = D_80143AFC;
-    func_80082764(0xFF, 1, 0);
+    dialogue_run(0xFF, 1, 0);
 }
 
 void func_801324C8(void) {
-    D_800CA134 = (u8 *) &D_80143B00;
+    dialogue_tables = (u8 *) &D_80143B00;
     D_800CA138 = (u8 *) &D_80143B04;
     D_800CA13C = D_80143AF4;
     D_800CA140 = D_80143AF8;
     D_800CA144 = D_80143AFC;
-    func_80082764(D_80122CDC, 1, 2);
+    dialogue_run(D_80122CDC, 1, 2);
 }

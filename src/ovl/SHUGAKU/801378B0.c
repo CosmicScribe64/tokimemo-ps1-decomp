@@ -13,110 +13,110 @@ void func_801378F0(void) {
     ShFnTbl41 tbl;
 
     tbl = D_8013C884;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 void func_80137978(void) {
     D_800CA2DC = 0;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013799C(void) {
     s32 pad; /* FAKE: unused local above buf, puts buf at sp+0x30 as in the original; real source unknown. T-4010 */
     u8 buf[3] = "　";
 
-    if (D_800E6280.player_flags.b[1] & 0xF) {
-        if (D_800E6280.substep == 0) {
+    if (game_state.player_flags.b[1] & 0xF) {
+        if (game_state.substep == 0) {
             D_800CA2DC = 2;
             (**(u8 ***)(D_800CA2D0 + 8))[0] = buf[0];
             (**(u8 ***)(D_800CA2D0 + 8))[1] = buf[1];
             (**(u8 ***)(D_800CA2D0 + 8))[2] = buf[2];
         }
         func_801386C4();
-        if (D_800E6280.substep == 0) {
+        if (game_state.substep == 0) {
             if (D_800CA2DC == 2) {
                 set_kanji_string(-0x48, 0x30, 0, "くぅー、", 0);
                 set_kanji_string(-0x48, 0x40, 0, "体の調子が、最悪だぜ。", 0);
                 set_kanji_string(-0x48, 0x50, 0, "でも、修学旅行だから", 0);
                 set_kanji_string(-0x48, 0x60, 0, "集合場所に行かなきゃ。", 0);
-                D_800E6280.substep = 1;
+                game_state.substep = 1;
             }
         }
     } else {
-        func_8004284C();
+        main_step_next();
     }
 }
 
 void func_80137AF8(void) {
     func_801386C4();
-    if ((D_800CA2E0 == 2) && (D_800E6280.step_timer.w == 1)) {
+    if ((D_800CA2E0 == 2) && (game_state.step_timer.w == 1)) {
         D_80122CFC = 0x3C;
     }
-    D_800E6280.step_timer.w += 1;
+    game_state.step_timer.w += 1;
 }
 
 void func_80137B54(void) {
     D_800B3D60 = 0;
-    func_80044890(1, 0xC512, 0xC4E7, 0xD557, 0xD508, 0xD4F1);
-    if (func_80044E8C() == 1) {
-        func_8004284C();
+    snd_bank_load_start(1, 0xC512, 0xC4E7, 0xD557, 0xD508, 0xD4F1);
+    if (snd_bank_load_poll() == 1) {
+        main_step_next();
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80137BBC(void) {
-    if (func_80044E8C() == 1) {
-        func_8004284C();
+    if (snd_bank_load_poll() == 1) {
+        main_step_next();
     }
-    if ((u32) D_800E6280.step_timer.w++ >= 0x400U) {
-        func_800452C4();
-        func_8004482C();
-        func_80042940((D_800E6280.step - 1) & 0xFF);
+    if ((u32) game_state.step_timer.w++ >= 0x400U) {
+        cd_cmd_reset();
+        snd_bank_state_reset();
+        main_step_set((game_state.step - 1) & 0xFF);
     }
 }
 
 void func_80137C3C(void) {
-    func_80044750(0x23);
-    func_80044750(0x24);
-    func_80044750(0x2E);
+    snd_command(0x23);
+    snd_command(0x24);
+    snd_command(0x2E);
     switch (D_800CA2CC) {
     case 0:
-        func_80044750(0x200);
+        snd_command(0x200);
         break;
     case 1:
-        func_80044750(0x201);
+        snd_command(0x201);
         break;
     default:
-        func_80044750(0x202);
+        snd_command(0x202);
         break;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80137CC0(void) {
     cd_read_sectors(0x2D, 0x80197000, 0xAF7C);
     func_80136380();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80137CFC(void) {
     s16 i;
 
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
-    func_8008585C();
+    text_system_reset();
+    dialogue_clear();
     strcpy(D_800CA19C, "修学旅行");
     k_reset(1);
-    D_800E6280.tile_layer_enabled = 0;
-    D_800E6280.quads_enabled = 1;
-    D_800E6280.screen_brightness = 0x80;
-    D_800B593C = 0x80;
+    game_state.tile_layer_enabled = 0;
+    game_state.quads_enabled = 1;
+    game_state.screen_brightness = 0x80;
+    dec_bg_brightness = 0x80;
     D_800B5940 = 0;
     hizuke_init();
     message_window_init();
@@ -124,17 +124,17 @@ void func_80137CFC(void) {
     for (i = 0; i < 0xF; i++) {
         icon_can_use_set(i, 0);
     }
-    func_80065B0C(1);
+    icon_bar_update(1);
     parameter_show_init();
     parameter_show_init();
-    D_800B593C = 0x80;
+    dec_bg_brightness = 0x80;
     D_800CA2DC = 0;
     D_800CA2E0 = 0;
     addr_init_bustup();
     hizuke_init();
-    func_80084E4C();
-    func_800847B8(0);
-    strcpy(D_800CA188, D_800E6280.player_family_name);
+    text_marker_hide();
+    dialogue_names_set(0);
+    strcpy(name_buf_girl_short, game_state.player_family_name);
     func_80136380();
     D_800CA2D0 = D_8013C44C;
     D_800CA2D4 = D_8013C480;
@@ -142,11 +142,11 @@ void func_80137CFC(void) {
     D_80122CE0 = 0xFF;
     D_800CA2EC = 0;
     for (i = 0; i < 0xA; i++) {
-        D_800CA2B0[i] = D_800E6280.girls[i].flags.f.met >= 1;
+        D_800CA2B0[i] = game_state.girls[i].flags.f.met >= 1;
     }
     D_800CA2B0[10] = 0;
     D_800CA2F0 = 0;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80137F04(void) {
@@ -155,52 +155,52 @@ void func_80137F04(void) {
     D_80122CE0 = 0xFF;
     D_800B3D60 = 0;
     temp_v0 = dec_bg_cd_read(0x3FAD, 0);
-    if (temp_v0 == *D_800B5938) {
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
-    } else if (temp_v0 == (1 - *D_800B5938)) {
-        func_8004284C();
-        func_8004284C();
+    if (temp_v0 == *dec_bg_show) {
+        main_step_next();
+        main_step_next();
+        main_step_next();
+    } else if (temp_v0 == (1 - *dec_bg_show)) {
+        main_step_next();
+        main_step_next();
     }
-    func_8004284C();
+    main_step_next();
 }
 
 s32 func_80137F90(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
-        func_8004284C();
-        D_800E6280.step -= 3;
+        main_step_next();
+        game_state.step -= 3;
         return 0;
     }
-    func_8005751C(0);
-    func_8004284C();
+    dec_bg_decode_to_vram(0);
+    main_step_next();
 }
 
 void func_8013801C(void) {
     dec_bg_show_switch(0);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80138044(void) {
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
-    func_8008585C();
+    text_system_reset();
+    dialogue_clear();
     strcpy(D_800CA19C, "修学旅行");
     k_reset(1);
-    D_800E6280.tile_layer_enabled = 0;
-    D_800E6280.quads_enabled = 1;
-    D_800E6280.screen_brightness = 0x80;
-    D_800B593C = 0;
+    game_state.tile_layer_enabled = 0;
+    game_state.quads_enabled = 1;
+    game_state.screen_brightness = 0x80;
+    dec_bg_brightness = 0;
     D_800B5940 = 0;
     hizuke_init();
     message_window_init();
-    func_80084E4C();
+    text_marker_hide();
     switch (D_800CA2CC) {
     case 0:
         bg_read_sub2(0x421C);
@@ -212,7 +212,7 @@ void func_80138044(void) {
         bg_read_sub2(0x4213);
         break;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80138154(void) {
@@ -229,7 +229,7 @@ void func_80138154(void) {
         bg_read_sub2(0x4241);
         break;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801381BC(void) {
@@ -248,7 +248,7 @@ void func_801381BC(void) {
         strcpy(D_800CA1DC, "北海道");
         break;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80138290(void) {
@@ -265,17 +265,17 @@ void func_80138290(void) {
         strcpy(D_800CA23C, "北海道");
         break;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80138320(void) {
-    switch (D_800E6280.step_timer.u) {
+    switch (game_state.step_timer.u) {
     case 0:
         func_801383C8();
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.step_timer.w += 1;
+            game_state.step_timer.w += 1;
         }
         break;
     case 2:
@@ -285,14 +285,14 @@ void func_80138320(void) {
         func_801385A8();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
 
 void func_801383C8(void) {
     cd_read_sectors(0xD, 0x801D0000, 0xBB98);
-    D_800E6280.step_timer.w += 1;
+    game_state.step_timer.w += 1;
 }
 
 void func_80138400(void) {
@@ -310,7 +310,7 @@ void func_80138400(void) {
         load_palette(D_8013C880, 0x11, 0, 0, 2);
         break;
     }
-    func_80048F64(0x60);
+    actor_clear(0x60);
     D_80120651 = 0xA;
     D_80120652 = 1;
     D_80120688 = 0x01000000;
@@ -331,44 +331,44 @@ void func_80138400(void) {
     D_80120657 = 0x80;
     D_80120655 = 1;
     D_80120654 = 0;
-    func_80044750(0x501);
-    D_800E6280.step_timer.w += 1;
+    snd_command(0x501);
+    game_state.step_timer.w += 1;
 }
 
 s16 func_801385A8(void) {
     if (D_80120676 < -0x1DF) {
         k_reset(1);
-        func_80048F64(0x60);
-        func_8004284C();
+        actor_clear(0x60);
+        main_step_next();
     }
     D_80120676 -= 3;
-    if (D_800E6280.pad_held & 0x600060) {
+    if (game_state.pad_held & 0x600060) {
         D_80120676 -= 3;
         D_80120658 += 1;
     }
 }
 
 void func_8013864C(void) {
-    D_800CA134 = &D_800CA2DC;
+    dialogue_tables = &D_800CA2DC;
     D_800CA138 = &D_800CA2E0;
     D_800CA13C = D_800CA2D0;
     D_800CA140 = D_800CA2D4;
     D_800CA144 = D_800CA2D8;
-    func_80082764(0xFF, 1, 0);
+    dialogue_run(0xFF, 1, 0);
 }
 
 void func_801386C4(void) {
-    D_800CA134 = &D_800CA2DC;
+    dialogue_tables = &D_800CA2DC;
     D_800CA138 = &D_800CA2E0;
     D_800CA13C = D_800CA2D0;
     D_800CA140 = D_800CA2D4;
     D_800CA144 = D_800CA2D8;
-    func_80082764(D_80122CDC, 1, 0);
+    dialogue_run(D_80122CDC, 1, 0);
 }
 
 void func_80138740(void) {
-    /* FAKE: `g = &D_800E6280` breaks uopt's global-load tie so unk_03F gets $a0 and unk_1BC[0].unk_10.w gets $v1; dead entry read `s = D_800CA2CC` puts D_800CA2CC in cvt_pass entry locations (T-24114). */
-    GameState *g = &D_800E6280;
+    /* FAKE: `g = &game_state` breaks uopt's global-load tie so unk_03F gets $a0 and unk_1BC[0].unk_10.w gets $v1; dead entry read `s = D_800CA2CC` puts D_800CA2CC in cvt_pass entry locations (T-24114). */
+    GameState *g = &game_state;
     s32 s;
 
     s = D_800CA2CC;
@@ -378,34 +378,34 @@ void func_80138740(void) {
         g->saved_step = 0;
         g->date_girl = g->current_girl;
         g->current_girl = GIRL_SHIORI;
-        func_80042908(6);
+        main_stage_set(6);
         return;
     }
     if ((g->month == (g->player_birthday & 0xF)) && (g->day == ((u32) (g->player_birthday << 0x17) >> 0x1B))) {
         g->saved_stage = g->stage + 1;
         g->saved_step = 0;
         g->date_girl = g->current_girl;
-        func_80042908(7);
+        main_stage_set(7);
         return;
     }
     if ((g->stage == 4) && (g->current_girl == GIRL_YUINA) && (D_800CA2CC == 2)) {
         g->saved_stage = g->stage + 1;
         g->saved_step = 0;
-        func_80042908(8);
+        main_stage_set(8);
         return;
     }
     if ((g->stage == 2) && (g->current_girl == GIRL_YUKARI) && ((u8) (s & 0x7F) < 2)) {
         g->saved_stage = g->stage + 1;
         g->saved_step = 0;
-        func_80042908(0xB);
+        main_stage_set(0xB);
         return;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801388D8(void) {
-    /* FAKE: `g = &D_800E6280` breaks uopt's global-load tie so unk_03F gets $a0 and unk_1BC[0].unk_10.w gets $v1 (T-24114). */
-    GameState *g = &D_800E6280;
+    /* FAKE: `g = &game_state` breaks uopt's global-load tie so unk_03F gets $a0 and unk_1BC[0].unk_10.w gets $v1 (T-24114). */
+    GameState *g = &game_state;
     s32 s;
 
     s = get_g_zyotai_s(g->current_girl);
@@ -419,7 +419,7 @@ void func_801388D8(void) {
         }
         g->date_girl = g->current_girl;
         g->current_girl = GIRL_SHIORI;
-        func_80042908(6);
+        main_stage_set(6);
         return;
     }
     if ((g->month == (g->player_birthday & 0xF)) && (g->day == ((u32) (g->player_birthday << 0x17) >> 0x1B))) {
@@ -432,8 +432,8 @@ void func_801388D8(void) {
         }
         g->date_girl = g->current_girl;
         g->current_girl = g->current_girl;
-        func_80042908(7);
+        main_stage_set(7);
         return;
     }
-    func_8004284C();
+    main_step_next();
 }

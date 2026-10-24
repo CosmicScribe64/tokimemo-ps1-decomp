@@ -3,7 +3,7 @@
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_D_801206DA /* matched as u8 (main_api.h: s8) */
-#define MAIN_API_OVERRIDE_func_800847B8 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
+#define MAIN_API_OVERRIDE_dialogue_names_set /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
 #define MAIN_API_OVERRIDE_func_80046094 /* matched with s32(): the result is compared unmasked (main_api.h: u8(void)) */
 
 #include "common.h"
@@ -776,7 +776,7 @@ typedef struct GekoNames12 {
 } GekoNames12; /* size 0xF0 */
 extern GekoNames12 D_80144D8C;
 
-/* Picture ids passed to func_80062CD0 (func_80136C20). */
+/* Picture ids passed to bustup_read_start (func_80136C20). */
 typedef struct GekoWords11 {
     /* 0x00 */ s32 v[11];
 } GekoWords11; /* size 0x2C */
@@ -854,7 +854,7 @@ typedef union GekoDateEntry {
     } bits;
 } GekoDateEntry; /* size 0x04 */
 
-/* Per-record halfwords of the SpriteQuad records 4..13 (D_801217D0); the code indexes them with i - 4, so the
+/* Per-record halfwords of the SpriteQuad records 4..13 (sprite_quads); the code indexes them with i - 4, so the
  * relocations name D_801463D8 and D_801463F8 (func_8013E22C, func_80139E1C, func_8013E950). */
 extern s16 D_801463E0[12];
 extern s16 D_80146400[16];

@@ -49,9 +49,9 @@ void func_80142DEC(s32 arg0, s32 arg1, s32 arg2) {
 
 void func_8014304C(s32 arg0, s32 arg1, s32 arg2) {
     D_80156784 = D_80156780;
-    D_80156780 = func_800460DC();
-    func_80045414(9, 0, 0);
-    func_800462C8((arg2 + 0x7FF) / 2048, arg0, arg1);
+    D_80156780 = cd_done_count();
+    cd_audio_command(9, 0, 0);
+    cd_read_sectors_nowait((arg2 + 0x7FF) / 2048, arg0, arg1);
 }
 
 u8 func_801430C4(void) {

@@ -51,7 +51,7 @@ void func_801568A4(void) {
         if (D_8015EE0C >= 0x12D) {
             func_8014F230();
         }
-        if (func_800460EC() == 2) {
+        if (cd_audio_state() == 2) {
             func_8014F230();
         }
         break;
@@ -82,7 +82,7 @@ void func_801568A4(void) {
         func_8014F230();
         break;
     case 9:
-        if (D_800E6280.pad_pressed & PAD_CROSS) {
+        if (game_state.pad_pressed & PAD_CROSS) {
             func_8013E7C0(0x1D, 7, 5, 1);
             if (D_8015EE48 == 3) {
                 D_8015EE48 = 1;

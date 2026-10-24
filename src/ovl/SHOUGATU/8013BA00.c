@@ -6,48 +6,48 @@ void func_8013BA00(void) {
     FnTbl19 tbl;
 
     tbl = D_80145A80;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 s32 func_8013BA7C(void) {
     s16 i;
 
-    if (D_800E6280.substep == 0) {
+    if (game_state.substep == 0) {
         func_800674B0();
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
     }
-    if (D_800E6280.substep == 1) {
-        if (D_800E6280.step_timer.u++ >= 0x400U) {
-            func_800452C4();
-            func_8004482C();
-            D_800E6280.substep = 0;
+    if (game_state.substep == 1) {
+        if (game_state.step_timer.u++ >= 0x400U) {
+            cd_cmd_reset();
+            snd_bank_state_reset();
+            game_state.substep = 0;
         }
-        if (func_80044E8C() == 1) {
-            D_800E6280.substep += 1;
+        if (snd_bank_load_poll() == 1) {
+            game_state.substep += 1;
         } else {
             return 0;
         }
     }
     for (i = 0; i < 11; i++) {
-        if (((ShouByteFlags *)&D_800E6280.girls[i].flags.b[1])->b0 != 0) {
-            ((ShouByteFlags *)&D_800E6280.girls[i].flags.b[1])->b0 = 0;
-            if (i != (s32)D_800E6280.current_girl) {
-                D_800E6280.girls[i].affection = D_800E6280.girls[i].affection + 1;
-                /* FAKE: uopt CSE priority boost so &D_800E6280 + i * 0x38 gets $v0 (i in $v1)
-                 * and &D_800E6280 gets $a1 (0x38 in $a2), matching pre-unification GameState layout. T-24125. */
-                if (D_800E6280.girls[i].affection) {
+        if (((ShouByteFlags *)&game_state.girls[i].flags.b[1])->b0 != 0) {
+            ((ShouByteFlags *)&game_state.girls[i].flags.b[1])->b0 = 0;
+            if (i != (s32)game_state.current_girl) {
+                game_state.girls[i].affection = game_state.girls[i].affection + 1;
+                /* FAKE: uopt CSE priority boost so &game_state + i * 0x38 gets $v0 (i in $v1)
+                 * and &game_state gets $a1 (0x38 in $a2), matching pre-unification GameState layout. T-24125. */
+                if (game_state.girls[i].affection) {
                 }
-                if (D_800E6280.girls[0].affection) {
+                if (game_state.girls[0].affection) {
                 }
             }
         }
     }
-    D_800E6280.girls[D_800E6280.current_girl].tokimeki += 8;
-    D_800E6280.girls[D_800E6280.current_girl].affection += 8;
-    D_800E6280.girls[D_800E6280.current_girl].syoushin -= 10;
+    game_state.girls[game_state.current_girl].tokimeki += 8;
+    game_state.girls[game_state.current_girl].affection += 8;
+    game_state.girls[game_state.current_girl].syoushin -= 10;
     check_para_limit();
-    func_80072B5C(1);
+    day_event_next(1);
 }
 
 void func_8013BC2C(void) {
@@ -59,22 +59,22 @@ void func_8013BC2C(void) {
     D_80145A08 = 0;
     D_80145A0C = 0;
     for (i = 0; i < 0xB; i++) {
-        D_800CA2B0[i] = (D_800E6280.girls[i].flags.b[1] & 1) >= 1;
+        D_800CA2B0[i] = (game_state.girls[i].flags.b[1] & 1) >= 1;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013BCE0(void) {
-    D_800E6280.current_girl = (u8) D_80122CDC;
-    func_80085B3C(7, 0);
-    func_800847B8(D_800E6280.current_girl);
-    func_8004284C();
+    game_state.current_girl = (u8) D_80122CDC;
+    event_log_add(7, 0);
+    dialogue_names_set(game_state.current_girl);
+    main_step_next();
 }
 
 void func_8013BD2C(void) {
     u8 s;
 
-    s = get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
+    s = get_g_zyotai_s(game_state.current_girl) & 0x7F;
     if (s >= 2U) {
         D_80145A08 += 2;
     }
@@ -84,16 +84,16 @@ void func_8013BD2C(void) {
     if (s == 4) {
         D_80145A08 += 2;
     }
-    if (D_800E6280.current_girl == GIRL_MEGUMI && s < 2U) {
-        func_80083440(0);
+    if (game_state.current_girl == GIRL_MEGUMI && s < 2U) {
+        bustup_layout_set(0);
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013BDE0(void) {
 
     D_80145A08 = 0;
-    switch (D_800E6280.current_girl) {
+    switch (game_state.current_girl) {
     case GIRL_SHIORI:
         D_801459FC = D_80145964;
         D_80145A00 = D_80145998;
@@ -150,5 +150,5 @@ void func_8013BDE0(void) {
         D_80145A04 = D_801459F8;
         break;
     }
-    func_8004284C();
+    main_step_next();
 }

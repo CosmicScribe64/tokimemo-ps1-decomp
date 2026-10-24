@@ -14,9 +14,9 @@ typedef struct {
 extern TacoLightBlock D_80122760;
 
 void func_80134930(void) {
-    D_800E6280.clear_color_g = 0;
-    D_800E6280.clear_color_r = 0;
-    D_800E6280.clear_color_b = 0;
+    game_state.clear_color_g = 0;
+    game_state.clear_color_r = 0;
+    game_state.clear_color_b = 0;
     draw2d3d(1, 1);
     initView();
     func_80146D60(-0xFA0);
@@ -53,7 +53,7 @@ s32 func_80134A18(void) {
             func_8009AD70(2, (s32) &D_80122780);
         }
         if (frame < 0xF) {
-            D_800E6280.clear_color_b += 1;
+            game_state.clear_color_b += 1;
         }
     } else if (frame >= 0x20 && frame < 0x54) {
         for (i = 0; i < 2; i++) {
@@ -92,8 +92,8 @@ s32 func_80134A18(void) {
 
 
 void func_80134D8C(void) {
-    D_800E6280.step_timer.w += 1;
-    switch (D_800E6280.step) {
+    game_state.step_timer.w += 1;
+    switch (game_state.step) {
     case 0:
         func_80134EBC();
         break;
@@ -115,16 +115,16 @@ void func_80134D8C(void) {
     }
     func_80134A18();
     func_8013506C();
-    if (D_800E6280.stage_timer == 0xA0) {
+    if (game_state.stage_timer == 0xA0) {
         func_801335A0(0, 0x504);
     }
-    if (D_800E6280.stage_timer == 0x40) {
+    if (game_state.stage_timer == 0x40) {
         func_801335A0(0, 0x505);
     }
-    if (D_800E6280.stage_timer == 0x80) {
+    if (game_state.stage_timer == 0x80) {
         func_801335A0(0, 0x506);
     }
-    if (D_800E6280.stage_timer == 0xC0) {
+    if (game_state.stage_timer == 0xC0) {
         func_801335A0(0, 0x507);
     }
 }
@@ -133,36 +133,36 @@ void func_80134EBC(void) {
     s32 i;
 
     D_8015EDB0 = 0;
-    D_800E6280.clear_color_g = 0;
-    D_800E6280.clear_color_r = 0;
+    game_state.clear_color_g = 0;
+    game_state.clear_color_r = 0;
     D_8015EDE8 = 0;
-    D_800E6280.clear_color_b = 0;
+    game_state.clear_color_b = 0;
     func_80059048();
     draw2d3d(1, 1);
-    func_80048DAC(1);
+    actors_draw_enable(1);
     k_reset(0);
-    StoreSquare(0, 0x1EF, 0x100, 1, &D_800E6280.scratch_words[0]);
+    StoreSquare(0, 0x1EF, 0x100, 1, &game_state.scratch_words[0]);
     for (i = 56; i < 72; i++) {
-        D_800E6280.scratch_words[i] = 0;
+        game_state.scratch_words[i] = 0;
     }
     for (i = 0; i < 0x80; i++) {
-        D_800E6280.scratch_words[128 + i] = 0;
+        game_state.scratch_words[128 + i] = 0;
     }
-    load_palette(&D_800E6280.scratch_words[0], 0x1F, 1, 1, 0);
+    load_palette(&game_state.scratch_words[0], 0x1F, 1, 1, 0);
     func_80134FB8();
     func_80134930();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80134FB8(void) {
-    func_80048F64(1);
+    actor_clear(1);
     D_8011ED15 = 8;
     D_8011ED4C = 0;
     D_8011ED16 = 0x40;
     D_8011ED17 = 0x84;
-    D_8011ED20 = D_800E6280.overlay_frame_table;
-    D_8011ED24 = D_800E6280.overlay_sequence_table;
-    D_8011ED48 = D_800E6280.overlay_tpage_table;
+    D_8011ED20 = game_state.overlay_frame_table;
+    D_8011ED24 = game_state.overlay_sequence_table;
+    D_8011ED48 = game_state.overlay_tpage_table;
     D_8011ED18 = 8;
     D_8011ED19 = 0x81;
     D_8011ED57 = 0xF;
@@ -178,18 +178,18 @@ void func_8013506C(void) {
     u32 y;
 
     for (i = 0; i < 0x80; i++) {
-        if (D_800E6280.scratch_words[128 + i] == 0) {
+        if (game_state.scratch_words[128 + i] == 0) {
             x = rand() % 320;
             y = rand() % 240;
-            D_800E6280.scratch_words[128 + i] = (x << 16) + y;
+            game_state.scratch_words[128 + i] = (x << 16) + y;
             break;
         }
     }
     for (i = 0; i < 0x80; i++) {
-        if (D_800E6280.scratch_words[128 + i] != 0) {
-            x = (u32)D_800E6280.scratch_words[128 + i] >> 16;
-            y = D_800E6280.scratch_words[128 + i] & 0xFFFF;
-            func_80143574(x - 0xA0, y - 0x78, (x * y + D_800E6280.frame_count) & 0xFFFFFF);
+        if (game_state.scratch_words[128 + i] != 0) {
+            x = (u32)game_state.scratch_words[128 + i] >> 16;
+            y = game_state.scratch_words[128 + i] & 0xFFFF;
+            func_80143574(x - 0xA0, y - 0x78, (x * y + game_state.frame_count) & 0xFFFFFF);
         }
     }
 }
@@ -201,59 +201,59 @@ s32 func_8013515C(void) {
 
     n = 0;
     for (i = 56; i < 72; i++) {
-        if (D_800E6280.scratch_words[i] == 0) {
+        if (game_state.scratch_words[i] == 0) {
             if ((rand() & 0xFF) < 0x7F && n == 0) {
-                D_800E6280.scratch_words[i] = ((s32 *)D_800E6280.overlay_palette_a)[i];
+                game_state.scratch_words[i] = ((s32 *)game_state.overlay_palette_a)[i];
             } else {
                 n++;
             }
         }
     }
-    load_palette(&D_800E6280.scratch_words[0], 0x1F, 1, 1, 0);
+    load_palette(&game_state.scratch_words[0], 0x1F, 1, 1, 0);
     return n;
 }
 
 void func_80135220(void) {
-    if ((u32)D_800E6280.step_timer.w >= 0xD1U) {
-        func_8004284C();
-    } else if (D_800E6280.pad_pressed & 0x860) {
-        func_80042940(5);
+    if ((u32)game_state.step_timer.w >= 0xD1U) {
+        main_step_next();
+    } else if (game_state.pad_pressed & 0x860) {
+        main_step_set(5);
     }
 }
 
 void func_80135278(void) {
     if (func_8013515C() == 0) {
-        func_8004284C();
-    } else if (D_800E6280.pad_pressed & 0x860) {
-        func_80042940(5);
+        main_step_next();
+    } else if (game_state.pad_pressed & 0x860) {
+        main_step_set(5);
     }
 }
 
 void func_801352CC(void) {
-    if ((u32)D_800E6280.step_timer.w < 0xFFU) {
-        if (D_800E6280.pad_pressed != 0) {
-            func_80042940(5);
+    if ((u32)game_state.step_timer.w < 0xFFU) {
+        if (game_state.pad_pressed != 0) {
+            main_step_set(5);
             return;
         }
-        func_8004AC18(0xFF - D_800E6280.step_timer.w);
+        func_8004AC18(0xFF - game_state.step_timer.w);
         return;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80135330(void) {
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80135350(void) {
     func_80059048();
-    load_palette(D_800E6280.overlay_palette_a, 0x1F, 1, 1, 0);
-    func_80042908(3);
+    load_palette(game_state.overlay_palette_a, 0x1F, 1, 1, 0);
+    main_stage_set(3);
 }
 
 void func_80135394(void) {
-    D_800E6280.step_timer.w += 1;
-    switch (D_800E6280.step) {
+    game_state.step_timer.w += 1;
+    switch (game_state.step) {
     case 0:
         func_80135418();
         break;
@@ -273,18 +273,18 @@ void func_80135418(void) {
     func_80134FB8();
     D_8011ED1B = 0x40;
     D_8011ED3E = -0x78;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013546C(void) {
-    if (D_800E6280.pad_pressed & 0x5100) {
-        if (D_800E6280.pad_pressed & PAD_UP) {
+    if (game_state.pad_pressed & 0x5100) {
+        if (game_state.pad_pressed & PAD_UP) {
             D_8015EDE8 -= 1;
         }
-        if (D_800E6280.pad_pressed & PAD_DOWN) {
+        if (game_state.pad_pressed & PAD_DOWN) {
             D_8015EDE8 += 1;
         }
-        if (D_800E6280.pad_pressed & PAD_SELECT) {
+        if (game_state.pad_pressed & PAD_SELECT) {
             D_8015EDE8 += 1;
         }
         if (D_8015EDE8 < 0) {
@@ -295,13 +295,13 @@ void func_8013546C(void) {
         }
         func_801335A0(0, 0x500);
     }
-    if (D_800E6280.pad_pressed & 0x820) {
+    if (game_state.pad_pressed & 0x820) {
         func_801335A0(0, 0x501);
-        func_8004284C();
+        main_step_next();
     }
     func_8013555C();
-    if ((u32) D_800E6280.stage_timer >= 0x385U) {
-        func_80042908(6);
+    if ((u32) game_state.stage_timer >= 0x385U) {
+        main_stage_set(6);
     }
 }
 
@@ -328,29 +328,29 @@ s32 func_8013555C(void) {
 
 /* The switch reads D_8015EDE8 as an unsigned byte, as func_8013555C does. T-16560 */
 s32 func_80135638(void) {
-    if ((u32) D_800E6280.step_timer.u >= 0x41U) {
+    if ((u32) game_state.step_timer.u >= 0x41U) {
         switch (*(u8 *)&D_8015EDE8) {
         case 0:
-            func_80042908(0xA);
+            main_stage_set(0xA);
             break;
         case 1:
-            func_80042908(4);
+            main_stage_set(4);
             break;
         case 2:
-            func_80042908(5);
+            main_stage_set(5);
             break;
         case 3:
-            func_80042908(7);
+            main_stage_set(7);
             break;
         case 4:
-            func_80042908(0x2E);
+            main_stage_set(0x2E);
             break;
         }
     }
-    if (D_800E6280.stage != 3) {
-        func_80048DAC(0);
+    if (game_state.stage != 3) {
+        actors_draw_enable(0);
     }
-    if (D_800E6280.step_timer.u & 4) {
+    if (game_state.step_timer.u & 4) {
         func_8013555C();
     }
 }

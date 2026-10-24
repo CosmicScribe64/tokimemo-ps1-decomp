@@ -1,22 +1,22 @@
-#define MAIN_API_OVERRIDE_func_800452C4 /* implicit int view: the call's $v0 result moves the promoted state byte unk_1109 to $v1 in func_8013B5B0 (T-20600) */
+#define MAIN_API_OVERRIDE_cd_cmd_reset /* implicit int view: the call's $v0 result moves the promoted state byte unk_1109 to $v1 in func_8013B5B0 (T-20600) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-s32 func_800452C4();
+s32 cd_cmd_reset();
 
 void func_8013B5B0(void) {
-    if (D_800E6280.stage >= 6 && D_800E6280.stage < 0xA) {
+    if (game_state.stage >= 6 && game_state.stage < 0xA) {
         func_8013BEA8();
     }
-    if (D_800E6280.stage != 9 && !(D_800E6280.menu_mode & 1)) {
-        func_8006BA40();
+    if (game_state.stage != 9 && !(game_state.menu_mode & 1)) {
+        cursor_update();
     }
-    if (D_800E6280.stage >= 5 && D_800E6280.stage < 0xC) {
-        func_80049A40(-0xA0, 0x30, 8, 0x48, 2, 0, 1);
-        func_80049A40(-0xA0, 0x70, 0x140, 8, 2, 0, 1);
-        func_80049A40(0x98, 0x30, 8, 0x48, 2, 0, 1);
+    if (game_state.stage >= 5 && game_state.stage < 0xC) {
+        prim_gradient_rect(-0xA0, 0x30, 8, 0x48, 2, 0, 1);
+        prim_gradient_rect(-0xA0, 0x70, 0x140, 8, 2, 0, 1);
+        prim_gradient_rect(0x98, 0x30, 8, 0x48, 2, 0, 1);
     }
-    switch (D_800E6280.stage) {
+    switch (game_state.stage) {
     case 0:
         func_8014E780();
         func_80144010();
@@ -36,7 +36,7 @@ void func_8013B5B0(void) {
         func_80141A64();
         func_801525B0();
         func_8014B294();
-        func_80042808();
+        main_stage_next();
         break;
     case 5:
         func_80153784();
@@ -56,37 +56,37 @@ void func_8013B5B0(void) {
         break;
     case 8:
         if (D_8015EB98 == 0x80000000) {
-            func_8004500C(1, 0x200);
+            snd_bank_start(1, 0x200);
         }
-        func_80042808();
+        main_stage_next();
         break;
     case 9:
         func_8013B910();
         break;
     case 10:
-        func_80044750(0xC1);
-        func_80042808();
+        snd_command(0xC1);
+        main_stage_next();
         break;
     case 11:
         func_8013C32C();
         func_801528DC();
         break;
     case 12:
-        func_8004482C();
-        func_800452C4();
-        func_80042808();
+        snd_bank_state_reset();
+        cd_cmd_reset();
+        main_stage_next();
         break;
     case 13:
         func_800674B0();
-        func_80042808();
+        main_stage_next();
         break;
     case 14:
-        if ((u32)++D_800E6280.stage_timer > 0x400U) {
-            func_8004482C();
-            func_800452C4();
-            D_800E6280.stage = 0xD;
-        } else if (func_80044E8C() == 1) {
-            func_80042808();
+        if ((u32)++game_state.stage_timer > 0x400U) {
+            snd_bank_state_reset();
+            cd_cmd_reset();
+            game_state.stage = 0xD;
+        } else if (snd_bank_load_poll() == 1) {
+            main_stage_next();
         }
         break;
     case 15:
@@ -94,11 +94,11 @@ void func_8013B5B0(void) {
         func_8014E8F4();
         break;
     }
-    if (!(D_800E6280.menu_mode & 1)) {
-        func_8006BD6C(1);
+    if (!(game_state.menu_mode & 1)) {
+        cursor_show(1);
         return;
     }
-    func_8006BD6C(0);
+    cursor_show(0);
 }
 
 s32 func_8013B910(void) {
@@ -109,8 +109,8 @@ s32 func_8013B910(void) {
         func_8014B79C();
         return 0;
     } else {
-        if ((D_800E6280.pad_pressed & PAD_CROSS) && D_8015EC24 == 0) {
-            func_80044750(0x74);
+        if ((game_state.pad_pressed & PAD_CROSS) && D_8015EC24 == 0) {
+            snd_command(0x74);
             if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
                 D_8015EE44.unk_08 = D_8015E744 + 1;
             }
@@ -260,10 +260,10 @@ void func_8013BEA8(void) {
             }
         }
     }
-    if ((D_800E6280.pad_pressed & PAD_START) && D_8015EC24 == 0) {
+    if ((game_state.pad_pressed & PAD_START) && D_8015EC24 == 0) {
         if (!(D_8015EDC4 & 0xFF) && !(D_8015ED98 & 0xFF) && !(D_8015EDF0 & 0xFF) && !(D_8015EE1C & 0xFF) &&
-            D_8015EB9C == 9 && D_8015EC20 == 0 && D_800E6280.stage == 9) {
-            func_80044750(0x74);
+            D_8015EB9C == 9 && D_8015EC20 == 0 && game_state.stage == 9) {
+            snd_command(0x74);
             if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
                 D_8015EE44.unk_08 = D_8015E744 - 5;
             }
@@ -280,7 +280,7 @@ void func_8013BEA8(void) {
             func_8013E7C0(0x1C, 0x33, 1, 0);
             D_8015EC24 = 2;
         } else {
-            func_80044750(0x74);
+            snd_command(0x74);
             if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
                 D_8015EE44.unk_08 = D_8015E744 - 5;
             }

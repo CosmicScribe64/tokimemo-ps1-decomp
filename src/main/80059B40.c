@@ -7,7 +7,7 @@ extern s32 D_800C9730[11];
 extern s32 D_800C5FCC[2];
 
 void func_80059B40(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80059E00();
         return;
@@ -16,17 +16,17 @@ void func_80059B40(void) {
         return;
     case 2:
         func_8004ADE4();
-        func_8004284C();
+        main_step_next();
         return;
     default:
-        func_80042808();
+        main_stage_next();
         return;
     }
 }
 
 void func_80059BC0(void) {
     func_80059BE8();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80059BE8(void) {
@@ -60,31 +60,31 @@ void func_80059BE8(void) {
         D_800C5FCC[i] -= k;
     }
     for (i = 0x1B; i < 0x20; i++) {
-        D_800E6280.tpage_buf[i] += 0xFFF80000;
+        game_state.tpage_buf[i] += 0xFFF80000;
     }
     /* do-while with a pre-increment test: IDO peels the first of these five trips and unrolls the rest as the original does; a `for` here also unrolls the loop above. T-17008 */
     i = 0x3B;
     do {
-        D_800E6280.tpage_buf[i] += 0xFFF80000;
+        game_state.tpage_buf[i] += 0xFFF80000;
     } while (++i < 0x40);
 }
 
 /* FAKE: u8 views give the original's global access (LOD): `andi`/`or v0` copy of the increment; the s32 return keeps that copy live (T-5010) */
 s32 func_80059E00(void) {
-    if (*(u8 *)&D_800E6280.substep == 0) {
+    if (*(u8 *)&game_state.substep == 0) {
         printf("LDVI");
         back_clear_switch(1);
         func_80041168(0xFF);
         cd_read_sectors(0x35, 0x80180000, 0x9D85);
-        *(u8 *)&D_800E6280.substep += 1;
-    } else if (*(u8 *)&D_800E6280.substep == 1) {
+        *(u8 *)&game_state.substep += 1;
+    } else if (*(u8 *)&game_state.substep == 1) {
         if (cd_read_sync_status() & 1) {
             func_80059EF0();
-            func_800462C8(8, 0x801F0000, 0x9C97);
-            *(u8 *)&D_800E6280.substep += 1;
+            cd_read_sectors_nowait(8, 0x801F0000, 0x9C97);
+            *(u8 *)&game_state.substep += 1;
         }
-    } else if (*(u8 *)&D_800E6280.substep == 2 && (cd_read_sync_status() & 1)) {
-        func_8004284C();
+    } else if (*(u8 *)&game_state.substep == 2 && (cd_read_sync_status() & 1)) {
+        main_step_next();
     }
 }
 
@@ -122,11 +122,11 @@ void func_80059EF0(void) {
     message_disp_switch(0);
     func_800673B8();
     func_8006764C(0);
-    func_80065F34(0);
+    message_window_title_show(0);
 }
 
-void func_8005A06C(void) {
-    if (D_800E6280.stage == 0) {
+void mode_boot(void) {
+    if (game_state.stage == 0) {
         func_80059B40();
         return;
     }

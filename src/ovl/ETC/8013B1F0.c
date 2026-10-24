@@ -66,7 +66,7 @@ void func_8013B1F0(u32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     case 4:
         if ((arg1 == 1) && (arg2 == 9)) {
             D_8014F990 = 1;
-            func_80062CD0(0x6638);
+            bustup_read_start(0x6638);
             return;
         }
         func_8013BCFC(arg2);
@@ -104,14 +104,14 @@ void func_8013B1F0(u32 arg0, s32 arg1, s32 arg2, s32 arg3) {
             return;
         case 0x3C:
             D_8014F990 = 1;
-            func_80062CD0(0x6449);
+            bustup_read_start(0x6449);
             return;
         case 0x3D:
             func_8013BB08(6, 9);
             return;
         case 0x5A:
             D_8014F990 = 1;
-            func_80062CD0(0x6638);
+            bustup_read_start(0x6638);
             return;
         case 0xE:
         case 0x46:
@@ -171,7 +171,7 @@ void func_8013B1F0(u32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     case 11:
         if ((arg1 == 0x1E) || (arg1 == 0x1D) || (arg1 == 0x28)) {
             D_8014F990 = 1;
-            func_80062CD0(0x6BD8);
+            bustup_read_start(0x6BD8);
             return;
         }
         func_8013BDEC(arg2, arg3);
@@ -312,7 +312,7 @@ void func_8013B1F0(u32 arg0, s32 arg1, s32 arg2, s32 arg3) {
             return;
         case 12:
             D_8014F990 = 1;
-            func_80062CD0(0x5D6E);
+            bustup_read_start(0x5D6E);
             return;
         default:
             func_8013BDEC(arg2, arg3);
@@ -333,18 +333,18 @@ void func_8013B98C(s32 arg0) {
         if (p == &D_8014FB1C) {
             switch (D_80150054) {
             case 0x5F:
-                func_80062CD0(0x50F3);
+                bustup_read_start(0x50F3);
                 break;
             case 0x60:
-                func_80062CD0(0x5120);
+                bustup_read_start(0x5120);
                 break;
             default:
             case 0x61:
-                func_80062CD0(0x514D);
+                bustup_read_start(0x514D);
                 break;
             }
         } else {
-            func_80062CD0(v);
+            bustup_read_start(v);
         }
     }
 }
@@ -354,7 +354,7 @@ void func_8013BA3C(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -363,7 +363,7 @@ void func_8013BA80(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -372,7 +372,7 @@ void func_8013BAC4(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -381,7 +381,7 @@ void func_8013BB08(s32 arg0, s32 arg1) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -390,7 +390,7 @@ void func_8013BB64(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -399,7 +399,7 @@ void func_8013BBA8(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -408,7 +408,7 @@ void func_8013BBEC(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -417,7 +417,7 @@ void func_8013BC30(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -426,7 +426,7 @@ void func_8013BC74(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -435,7 +435,7 @@ void func_8013BCB8(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -444,7 +444,7 @@ void func_8013BCFC(s32 arg0) {
 
     if (t != -1) {
         D_8014F990 = 1;
-        func_80062CD0(t);
+        bustup_read_start(t);
     }
 }
 
@@ -459,7 +459,7 @@ void func_8013BD40(s32 arg0, s32 arg1) {
         v = D_8014FA84[arg0];
         if (v != -1) {
             D_8014F990 = 1;
-            func_80062CD0(v, arg0);
+            bustup_read_start(v, arg0);
         }
         break;
     case 1:
@@ -473,7 +473,7 @@ void func_8013BD40(s32 arg0, s32 arg1) {
         v = D_8014FAC0[arg0];
         if (v != -1) {
             D_8014F990 = 1;
-            func_80062CD0(v, arg0);
+            bustup_read_start(v, arg0);
         }
         break;
     }
@@ -487,28 +487,28 @@ void func_8013BDEC(s32 arg0, s32 arg1) {
         t = D_8014F994[arg0];
         if (t != -1) {
             D_8014F990 = 1;
-            func_80062CD0(t);
+            bustup_read_start(t);
         }
         break;
     case 1:
         t = D_8014F9D0[arg0];
         if (t != -1) {
             D_8014F990 = 1;
-            func_80062CD0(t);
+            bustup_read_start(t);
         }
         break;
     case 2:
         t = D_8014FA0C[arg0];
         if (t != -1) {
             D_8014F990 = 1;
-            func_80062CD0(t);
+            bustup_read_start(t);
         }
         break;
     case 3:
         t = D_8014FA48[arg0];
         if (t != -1) {
             D_8014F990 = 1;
-            func_80062CD0(t);
+            bustup_read_start(t);
         }
         break;
     }

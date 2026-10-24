@@ -2,14 +2,14 @@
 #define OVL_DATE2_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_D_800B5938 /* matched as u8 (main_api.h: u8[]) */
+#define MAIN_API_OVERRIDE_dec_bg_show /* matched as u8 (main_api.h: u8[]) */
 
 #include "common.h"
 #include "libgpu.h"
 #include "main_api.h"
 #include "game.h"
 
-extern u8 D_800B5938;
+extern u8 dec_bg_show;
 void func_80138048(void);
 
 extern u16 D_8013B5D0;
@@ -259,7 +259,7 @@ extern Date2Labels4x21 D_8013B634;
 /* T-11880: func_801348F0 (the DATE movie view, same guard and layout as include/ovl/DATE.h). */
 #ifndef OVL_DATE_MOVIE_T10830_H
 #define OVL_DATE_MOVIE_T10830_H
-/* Overlay access view at D_800B5920 (see include/ovl/DATE.h). */
+/* Overlay access view at dec_bg_lba_cache (see include/ovl/DATE.h). */
 typedef struct DateMovieWork {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;

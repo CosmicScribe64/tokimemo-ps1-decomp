@@ -2,7 +2,7 @@
 #define OVL_TT_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_func_800462C8 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
+#define MAIN_API_OVERRIDE_cd_read_sectors_nowait /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
 #define MAIN_API_OVERRIDE_func_800AD950 /* implicit int declaration: a void prototype changes the register allocation of func_80133A60 */
 
 #include "common.h"
@@ -780,7 +780,7 @@ extern TtCollision6 D_80155D44;
 
 #ifndef OVL_TT_T11860_G4
 #define OVL_TT_T11860_G4
-/* Settings word at D_800E7D10 + 0x3C (D_800E7D4C), read by func_8013E498 through a pointer to D_800E7D10.
+/* Settings word at system_data + 0x3C (D_800E7D4C), read by func_8013E498 through a pointer to system_data.
  * b0 and b8/b9 are written back by func_8013E850 from the TT state bytes 0x45, 0x43 and 0x49. T-11860 */
 typedef struct TtCfgBits {
     u32 b0 : 8;

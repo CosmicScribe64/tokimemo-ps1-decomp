@@ -46,7 +46,7 @@ void func_8014A1E4(void) {
         func_8014A39C();
         return;
     default:
-        func_80046500();
+        game_reset_to_title();
         return;
     }
 }
@@ -72,9 +72,9 @@ void func_8014A2AC(void) {
 }
 
 void func_8014A314(void) {
-    func_80044750(0x200);
+    snd_command(0x200);
     read_bustup();
-    D_800E6280.step -= 1;
+    game_state.step -= 1;
     D_8015DE40 += 1;
 }
 
@@ -94,14 +94,14 @@ s32 func_8014A39C(void) {
         D_8015DE40 -= 2;
         return 0;
     }
-    r = get_g_zyotai_h(D_800E6280.current_girl);
+    r = get_g_zyotai_h(game_state.current_girl);
     var_v1 = r & 0x7F;
-    if (D_800E6280.current_girl >= GIRL_REI) {
+    if (game_state.current_girl >= GIRL_REI) {
         var_v1 = 0;
     }
-    func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
+    bustup_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
     hizuke_disp_switch(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8014A4DC(void) {
@@ -114,7 +114,7 @@ void func_8014A4DC(void) {
         D_8015DE34[0] = D_8015DE28;
         D_8015DE34[1] = D_8015DE2C;
         D_8015DE34[2] = D_8015DE30;
-        func_800462C8(1U, 0x80195000, 0xBD9E);
+        cd_read_sectors_nowait(1U, 0x80195000, 0xBD9E);
         D_8015DE48 += 1;
         return;
     case 1:
@@ -125,21 +125,21 @@ void func_8014A4DC(void) {
     default:
         return;
     case 2:
-        func_80044750(0xCF);
-        func_80044750(0x202);
+        snd_command(0xCF);
+        snd_command(0x202);
         tpage_buf_clear();
         back_clear_switch(1);
-        func_80048DAC(1);
-        D_800E6280.clear_color_g = 0;
-        D_800E6280.clear_color_r = 0;
-        D_800E6280.clear_color_b = 0;
+        actors_draw_enable(1);
+        game_state.clear_color_g = 0;
+        game_state.clear_color_r = 0;
+        game_state.clear_color_b = 0;
         hizuke_disp_switch(0);
-        func_800462C8(2U, 0x801F8000, 0xB471);
+        cd_read_sectors_nowait(2U, 0x801F8000, 0xB471);
         D_8015DE48 += 1;
         return;
     case 3:
         if (cd_read_sync_status() & 1) {
-            func_800462C8(1U, 0x801F9000, 0xB470);
+            cd_read_sectors_nowait(1U, 0x801F9000, 0xB470);
             D_8015DE48 += 1;
             return;
         }
@@ -152,14 +152,14 @@ void func_8014A4DC(void) {
             initCoordinate();
             initModelingData_init((s32 *)0x801F8000);
             func_8014AF88();
-            func_800462C8(0x21U, 0x80180000, 0xB57F);
+            cd_read_sectors_nowait(0x21U, 0x80180000, 0xB57F);
             D_8015DE48 += 1;
             return;
         }
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
-            func_800462C8(1U, 0x80190800, 0xB456);
+            cd_read_sectors_nowait(1U, 0x80190800, 0xB456);
             D_8015DE48 += 1;
             return;
         }
@@ -181,7 +181,7 @@ void func_8014A4DC(void) {
                 var_s0 += 1;
                 var_s1 += 0x4000;
             } while (var_s0 != 2);
-            func_800462C8(9U, 0x80180000, 0xB467);
+            cd_read_sectors_nowait(9U, 0x80180000, 0xB467);
             D_8015DE48 += 1;
             return;
         }
@@ -226,8 +226,8 @@ s32 func_8014A8FC(void) {
     s32 j;
 
     message_window_show();
-    func_80066C08(2);
-    func_80066334();
+    screen_frame_draw(2);
+    message_window_title_update();
     frame = D_8015DE4C;
     if (frame < 0x20) {
         if (D_80122760.r0 < 0xC0U) {
@@ -241,7 +241,7 @@ s32 func_8014A8FC(void) {
             func_8009AD70(2, &D_80122780);
         }
         if (frame < 0xF) {
-            D_800E6280.clear_color_b += 1;
+            game_state.clear_color_b += 1;
         }
     } else if (frame >= 0x20 && frame < 0x54) {
         for (i = 0; i != 2; i++) {
@@ -283,7 +283,7 @@ s32 func_8014A8FC(void) {
             func_8009AD70(2, &D_80122780);
         }
         if (frame < 0x11D) {
-            D_800E6280.clear_color_b -= 1;
+            game_state.clear_color_b -= 1;
         }
         /* FAKE: the byte view makes this second read of D_8012276C a reload; with the plain global uopt promotes it into $v0 and the first test is no longer a $t2 load. T-17208 */
         if (*(u8 *)&D_8012276C == 0) {

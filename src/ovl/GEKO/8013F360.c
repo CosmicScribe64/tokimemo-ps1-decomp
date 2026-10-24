@@ -1,11 +1,11 @@
-#define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32 (main_api.h: s32), T-6030 */
+#define MAIN_API_OVERRIDE_dialogue_work /* switched as u32 (main_api.h: s32), T-6030 */
 #include "common.h"
 #include "ovl/GEKO.h"
 #include "psx_types.h"
 
 void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6);
 
-extern u32 D_80122CD0;
+extern u32 dialogue_work;
 
 typedef struct {
     void (*f[23])();
@@ -45,7 +45,7 @@ void func_8013F410(void) {
 }
 
 void func_8013F4C0(void) {
-    switch (D_80122CD0) {
+    switch (dialogue_work) {
     case 1:
         func_8013F53C();
         return;
@@ -56,33 +56,33 @@ void func_8013F4C0(void) {
         func_8013F5B4();
         return;
     default:
-        func_80046500();
+        game_reset_to_title();
         return;
     }
 }
 
 void func_8013F53C(void) {
-    if (D_800E6280.stage == 0) {
+    if (game_state.stage == 0) {
         func_8013F5F0();
         return;
     }
-    func_80046500();
+    game_reset_to_title();
 }
 
 void func_8013F578(void) {
-    if (D_800E6280.stage == 0) {
+    if (game_state.stage == 0) {
         func_8013F6A4();
         return;
     }
-    func_80046500();
+    game_reset_to_title();
 }
 
 void func_8013F5B4(void) {
-    if (D_800E6280.stage == 0) {
+    if (game_state.stage == 0) {
         func_8013F850();
         return;
     }
-    func_80046500();
+    game_reset_to_title();
 }
 
 typedef struct {
@@ -95,14 +95,14 @@ void func_8013F5F0(void) {
     FnTbl49 tbl;
 
     tbl = D_801470B0;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 void func_8013F66C(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8DBD);
     func_8013F360();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013F6A4(void) {
@@ -110,41 +110,41 @@ void func_8013F6A4(void) {
     FnTbl23 tbl;
 
     tbl = D_80147174;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 void func_8013F72C(void) {
-    if ((u8) D_800E6280.event_flags[67] >= 2U) {
+    if ((u8) game_state.event_flags[67] >= 2U) {
         D_800CA150 = (u16) D_800CA150 + 5;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013F770(void) {
     func_800634FC(get_g_zyotai_h(GIRL_YUMI));
-    if ((u8) D_800E6280.event_flags[67] >= 2U) {
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
+    if ((u8) game_state.event_flags[67] >= 2U) {
+        main_step_next();
+        main_step_next();
+        main_step_next();
+        main_step_next();
+        main_step_next();
+        main_step_next();
+        main_step_next();
+        main_step_next();
+        main_step_next();
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013F800(void) {
     u8 s;
 
-    s = get_g_zyotai_s(D_800E6280.current_girl) & 0x7F;
+    s = get_g_zyotai_s(game_state.current_girl) & 0x7F;
     if (s >= 2U) {
         D_800CA150 = (u16)D_800CA150 + 2;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 extern FnTbl61 D_801471D0;
@@ -154,12 +154,12 @@ void func_8013F850(void) {
     FnTbl61 tbl;
 
     tbl = D_801471D0;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
-    if ((D_801470A8 != 0) && (D_800E6280.step >= 0x20U)) {
+    if ((D_801470A8 != 0) && (game_state.step >= 0x20U)) {
         func_8013FD3C();
     }
-    if ((D_801470AC != 0) && (D_800E6280.step >= 0x20U)) {
+    if ((D_801470AC != 0) && (game_state.step >= 0x20U)) {
         func_80140040();
     }
 }
@@ -169,62 +169,62 @@ void func_8013F92C(void) {
 
     D_800B3D60 = 0;
     temp_v0 = dec_bg_cd_read(0x3FCE, 0);
-    if (temp_v0 == *D_800B5938) {
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
-    } else if (temp_v0 == (1 - *D_800B5938)) {
-        func_8004284C();
-        func_8004284C();
+    if (temp_v0 == *dec_bg_show) {
+        main_step_next();
+        main_step_next();
+        main_step_next();
+    } else if (temp_v0 == (1 - *dec_bg_show)) {
+        main_step_next();
+        main_step_next();
     }
-    func_8004284C();
+    main_step_next();
 }
 
 s32 func_8013F9AC(void) {
     if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
-        func_8004284C();
-        D_800E6280.step -= 3;
+        main_step_next();
+        game_state.step -= 3;
         return 0;
     }
-    func_8005751C(0);
-    func_8004284C();
+    dec_bg_decode_to_vram(0);
+    main_step_next();
 }
 
 void func_8013FA38(void) {
     dec_bg_show_switch(0);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013FA60(void) {
     func_80138AF8();
     if ((u16)D_800CA154 == 2) {
-        if (D_800E6280.step_timer.w++ == 0) {
-            func_80044750(0x603);
+        if (game_state.step_timer.w++ == 0) {
+            snd_command(0x603);
         }
     }
 }
 
 void func_8013FAB4(void) {
-    func_80044750(0x200);
-    func_8004284C();
+    snd_command(0x200);
+    main_step_next();
 }
 
 void func_8013FADC(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8EFE);
     func_8013F410();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013FB14(void) {
-    func_80044750(0x500);
-    func_8004284C();
+    snd_command(0x500);
+    main_step_next();
 }
 
 void func_8013FB3C(void) {
     D_800B3D60 = 0;
-    func_80044890(1, 0xC65F, 0xC659, 0xD9E1, 0xD993, 0xD98E);
-    func_8004284C();
+    snd_bank_load_start(1, 0xC65F, 0xC659, 0xD9E1, 0xD993, 0xD98E);
+    main_step_next();
 }
 
 void func_8013FB88(void) {
@@ -236,7 +236,7 @@ void func_8013FB88(void) {
         D_800CA2AC = 0;
         D_800CA150 = (u16) D_800CA150 + 1;
         D_800CA154 = 0;
-        func_8004284C();
+        main_step_next();
     }
 }
 
@@ -246,26 +246,26 @@ void func_8013FC00(void) {
     func_800634FC(get_g_zyotai_h(GIRL_YUMI));
     D_800B5BD4 = 0xF;
     for (i = 0; i < 0xA; i++) {
-        ((Actor *)D_8011ECD0)[i + 99].draw_flags &= ~0x80;
+        ((Actor *)actor_pool)[i + 99].draw_flags &= ~0x80;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 s16 func_8013FC80(void) {
-    if (D_800E6280.step_timer.w == 0) {
+    if (game_state.step_timer.w == 0) {
         D_801206DB |= 0x80;
         D_801206F4 = 0;
         D_801206F2 = 0;
-        func_80044750(0x501);
+        snd_command(0x501);
     }
     D_801206F2 += 0x80;
     D_801206F4 += 0x80;
     if (D_801206F2 >= 0x1000) {
         D_801206DB &= 0xFF7F;
         D_801470A8 = 1;
-        func_8004284C();
+        main_step_next();
     }
-    D_800E6280.step_timer.w += 1;
+    game_state.step_timer.w += 1;
 }
 
 void func_8013FD3C(void) {
@@ -280,23 +280,23 @@ void func_8013FD88(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s
     GameState *gs;
     POLY_G4 *p;
 
-    p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
+    p = (POLY_G4 *)GetWorkBase(0x24, draw_buffer);
     func_8009F054(p);
     SetSemiTrans(p, arg6);
-    gs = &D_800E6280;
+    gs = &game_state;
     p->r0 = (arg4 >> 16) & 0xFF; p->g0 = (arg4 >> 8) & 0xFF; p->b0 = arg4 & 0xFF;
     p->r1 = (arg4 >> 16) & 0xFF; p->g1 = (arg4 >> 8) & 0xFF; p->b1 = arg4 & 0xFF;
     p->r2 = (arg4 >> 16) & 0xFF; p->g2 = (arg4 >> 8) & 0xFF; p->b2 = arg4 & 0xFF;
     p->r3 = (arg4 >> 16) & 0xFF; p->g3 = (arg4 >> 8) & 0xFF; p->b3 = arg4 & 0xFF;
-    p->x0 = gs->screen_center_x[D_8011ECA0] + arg0;
-    p->y0 = gs->screen_center_y[D_8011ECA0] + arg1;
-    p->x1 = gs->screen_center_x[D_8011ECA0] + arg0 + arg2;
-    p->y1 = gs->screen_center_y[D_8011ECA0] + arg1;
-    p->x2 = gs->screen_center_x[D_8011ECA0] + arg0;
-    p->y2 = gs->screen_center_y[D_8011ECA0] + arg1 + arg3;
-    p->x3 = gs->screen_center_x[D_8011ECA0] + arg0 + arg2;
-    p->y3 = gs->screen_center_y[D_8011ECA0] + arg1 + arg3;
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg5 * 4, (s32)p);
+    p->x0 = gs->screen_center_x[draw_buffer] + arg0;
+    p->y0 = gs->screen_center_y[draw_buffer] + arg1;
+    p->x1 = gs->screen_center_x[draw_buffer] + arg0 + arg2;
+    p->y1 = gs->screen_center_y[draw_buffer] + arg1;
+    p->x2 = gs->screen_center_x[draw_buffer] + arg0;
+    p->y2 = gs->screen_center_y[draw_buffer] + arg1 + arg3;
+    p->x3 = gs->screen_center_x[draw_buffer] + arg0 + arg2;
+    p->y3 = gs->screen_center_y[draw_buffer] + arg1 + arg3;
+    AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg5 * 4, (s32)p);
 }
 
 
@@ -304,7 +304,7 @@ void func_8013FF64(void) {
     s16 i;
 
     D_800B5BD4 = 0xA;
-    func_80065F34(0);
+    message_window_title_show(0);
     func_80085234(1);
     D_80122D04 = 1;
     D_80120657 = 0x80;
@@ -314,10 +314,10 @@ void func_8013FF64(void) {
     }
     D_801470A8 = 0;
     for (i = 0; i < 0xA; i++) {
-        ((Actor *)D_8011ECD0)[i + 99].draw_flags |= 0x80;
+        ((Actor *)actor_pool)[i + 99].draw_flags |= 0x80;
     }
     D_801470AC = 1;
-    func_8004284C();
+    main_step_next();
 }
 
 /* FAKE: byte-offset display-record view matches the EVENT sibling (fields add one register, T-20900);
@@ -329,19 +329,19 @@ void func_80140040(void) {
 
     for (i = 0; i < 0xA; i++) {
         if (D_801470AC >= (u32)(i * 0x1E)) {
-            *(s16 *)&D_8011ECD0[i * 0x44 + 0x1A7A] = -1;
-            *(s16 *)&D_8011ECD0[i * 0x44 + 0x1A7E] = 1;
+            *(s16 *)&actor_pool[i * 0x44 + 0x1A7A] = -1;
+            *(s16 *)&actor_pool[i * 0x44 + 0x1A7E] = 1;
         }
-        *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A70] += *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A78];
-        *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A74] += *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A7C];
-        if (*(s16 *)&D_8011ECD0[i * 0x44 + 0x1A76] > 0xA0) {
-            D_8011ECD0[i * 0x44 + 0x1A4F] &= ~0x80;
+        *(s32 *)&actor_pool[i * 0x44 + 0x1A70] += *(s32 *)&actor_pool[i * 0x44 + 0x1A78];
+        *(s32 *)&actor_pool[i * 0x44 + 0x1A74] += *(s32 *)&actor_pool[i * 0x44 + 0x1A7C];
+        if (*(s16 *)&actor_pool[i * 0x44 + 0x1A76] > 0xA0) {
+            actor_pool[i * 0x44 + 0x1A4F] &= ~0x80;
         }
     }
     any = 0;
     i = 0;
     do {
-        if (D_8011ECD0[i * 0x44 + 0x1A4F] & 0x80) {
+        if (actor_pool[i * 0x44 + 0x1A4F] & 0x80) {
             any = 1;
         }
         i++;
@@ -352,15 +352,15 @@ void func_80140040(void) {
 }
 
 void func_8014016C(void) {
-    D_800E6280.current_girl = GIRL_YUMI;
+    game_state.current_girl = GIRL_YUMI;
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
-    func_8006612C("");
+    text_system_reset();
+    message_window_set_title("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
@@ -369,45 +369,45 @@ void func_8014016C(void) {
     func_80137990();
     hizuke_init();
     message_window_init();
-    func_80084E4C();
-    D_800B593C = 0;
-    func_800847B8(D_800E6280.current_girl);
-    func_8008585C();
+    text_marker_hide();
+    dec_bg_brightness = 0;
+    dialogue_names_set(game_state.current_girl);
+    dialogue_clear();
     func_80137990();
     D_80146274 = D_80145FCC;
     D_80146278 = D_80146108;
     D_8014627C = D_80146244;
     strcpy(D_800CA19C, "廊下");
-    if (D_80122CD0 == 1) {
-        D_800E6280.girls[0xA].tokimeki += 1;
-        D_800E6280.girls[0xA].affection += 2;
-        D_800E6280.param_condition.value -= 5;
-        D_800E6280.param_guts.value += 5;
+    if (dialogue_work == 1) {
+        game_state.girls[0xA].tokimeki += 1;
+        game_state.girls[0xA].affection += 2;
+        game_state.param_condition.value -= 5;
+        game_state.param_guts.value += 5;
         check_para_limit();
     }
     D_800CA368 = 0x43;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801402F8(void) {
     func_8013F360();
     load_palette(D_80147060, 0x11, 1, 2, 0);
-    func_80084E90(D_80147064, D_80147068, D_8014706C, D_80147070, D_80147074, D_80147078);
-    func_800850D4(D_80147054, D_80147058, D_80147050, D_8014705C);
-    func_8004284C();
+    event_still_show(D_80147064, D_80147068, D_8014706C, D_80147070, D_80147074, D_80147078);
+    event_anim_show(D_80147054, D_80147058, D_80147050, D_8014705C);
+    main_step_next();
 }
 
 void func_801403A0(void) {
     u8 state;
 
-    D_800E6280.current_girl = GIRL_YUMI;
+    game_state.current_girl = GIRL_YUMI;
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
+    text_system_reset();
     strcpy(D_800CA19C, "廊下");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
@@ -417,36 +417,36 @@ void func_801403A0(void) {
     func_80137990();
     hizuke_init();
     message_window_init();
-    func_80084E4C();
-    D_800B593C = 0;
-    func_800847B8(D_800E6280.current_girl);
-    func_8008585C();
+    text_marker_hide();
+    dec_bg_brightness = 0;
+    dialogue_names_set(game_state.current_girl);
+    dialogue_clear();
     func_80137990();
     D_80146274 = D_80145FD0;
     D_80146278 = D_8014610C;
     D_8014627C = D_80146248;
     state = get_g_zyotai_s(GIRL_YUMI) & 0x7F;
     if ((u32)state < 2U) {
-        D_800E6280.girls[10].tokimeki += 1;
+        game_state.girls[10].tokimeki += 1;
     }
-    D_800E6280.girls[10].affection += 2;
+    game_state.girls[10].affection += 2;
     check_para_limit();
     D_800CA368 = 0x44;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801404FC(void) {
     s16 i;
 
-    D_800E6280.current_girl = GIRL_YUMI;
+    game_state.current_girl = GIRL_YUMI;
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
-    func_8006612C("");
+    text_system_reset();
+    message_window_set_title("");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
@@ -455,29 +455,29 @@ void func_801404FC(void) {
     func_80137990();
     hizuke_init();
     message_window_init();
-    func_80084E4C();
+    text_marker_hide();
     D_80122D38 = 1;
     func_8006509C();
     for (i = 0; i < 0xF; i++) {
         icon_can_use_set(i, 0);
     }
-    func_80065B0C(1);
+    icon_bar_update(1);
     parameter_show_init();
     parameter_show_init();
-    D_800B593C = 0x80;
+    dec_bg_brightness = 0x80;
     D_801470A8 = 0;
     D_801470AC = 0;
-    func_800847B8(D_800E6280.current_girl);
+    dialogue_names_set(game_state.current_girl);
     func_80137990();
     D_80146274 = D_80145FE4;
     D_80146278 = D_80146120;
     D_8014627C = D_8014625C;
     strcpy(D_800CA19C, "玄関");
     strcpy(D_800CA1DC, "自宅前");
-    D_800E6280.girls[D_800E6280.current_girl].affection += 2;
+    game_state.girls[game_state.current_girl].affection += 2;
     check_para_limit();
     D_800CA368 = 0x49;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801406CC(void) {
@@ -493,33 +493,33 @@ void func_801406CC(void) {
     t2 = D_801472EC;
     func_8013F410();
     load_palette(D_8014708C, 0x11, 1, 2, 0);
-    func_80084E90(D_80147090, D_80147094, D_80147098, D_8014709C, D_801470A0, D_801470A4);
+    event_still_show(D_80147090, D_80147094, D_80147098, D_8014709C, D_801470A0, D_801470A4);
     for (i = 0; i < 6; i++) {
-        D_800E6280.quad_layer[i + 0x3A] = 0xC;
+        game_state.quad_layer[i + 0x3A] = 0xC;
     }
-    func_800850D4(D_80147080, D_80147084, D_8014707C, D_80147088);
+    event_anim_show(D_80147080, D_80147084, D_8014707C, D_80147088);
     D_800CA360 = 1;
-    ((Actor *)D_80120650)[1].unk_04 = 8;
-    ((Actor *)D_80120650)->unk_04 = 8;
-    ((Actor *)D_80120650)[1].unk_01 = 0xC;
-    ((Actor *)D_80120650)->unk_01 = 0xC;
-    ((Actor *)D_80120650)[2] = ((Actor *)D_80120650)[0];
-    ((Actor *)D_80120650)[2].unk_01 = 0xB;
-    ((Actor *)D_80120650)[2].flags = 0x40;
-    ((Actor *)D_80120650)[2].unk_18 = 0x14;
-    ((Actor *)D_80120650)[2].x = -6;
-    ((Actor *)D_80120650)[2].y = -0x30;
-    ((Actor *)D_80120650)[2].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].unk_04 = 8;
+    ((Actor *)actor_pool_96)->unk_04 = 8;
+    ((Actor *)actor_pool_96)[1].unk_01 = 0xC;
+    ((Actor *)actor_pool_96)->unk_01 = 0xC;
+    ((Actor *)actor_pool_96)[2] = ((Actor *)actor_pool_96)[0];
+    ((Actor *)actor_pool_96)[2].unk_01 = 0xB;
+    ((Actor *)actor_pool_96)[2].flags = 0x40;
+    ((Actor *)actor_pool_96)[2].unk_18 = 0x14;
+    ((Actor *)actor_pool_96)[2].x = -6;
+    ((Actor *)actor_pool_96)[2].y = -0x30;
+    ((Actor *)actor_pool_96)[2].brightness = 0x80;
     for (i = 0; i < 0xA; i++) {
-        ((Actor *)D_8011ECD0)[i + 99] = ((Actor *)D_80120650)[2];
-        ((Actor *)D_8011ECD0)[i + 99].unk_18 = t0.v[i];
-        ((Actor *)D_8011ECD0)[i + 99].x = t1.v[i] - 0xA0;
-        ((Actor *)D_8011ECD0)[i + 99].y = t2.v[i] - 0x78;
+        ((Actor *)actor_pool)[i + 99] = ((Actor *)actor_pool_96)[2];
+        ((Actor *)actor_pool)[i + 99].unk_18 = t0.v[i];
+        ((Actor *)actor_pool)[i + 99].x = t1.v[i] - 0xA0;
+        ((Actor *)actor_pool)[i + 99].y = t2.v[i] - 0x78;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801409D8(void) {
     bg_read_sub2(0x4045);
-    func_8004284C();
+    main_step_next();
 }

@@ -371,7 +371,7 @@ typedef struct DR_STP {
 
 #include "libgte.h"
 
-/* Two-colour line DMA packet; offsets from func_80049FF0 (T-24041). */
+/* Two-colour line DMA packet; offsets from prim_gradient_line (T-24041). */
 typedef struct LINE_G2 {
     /* 0x00 */ u32 tag;
     /* 0x04 */ u8 r0;

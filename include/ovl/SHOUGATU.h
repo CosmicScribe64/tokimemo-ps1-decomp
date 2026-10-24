@@ -783,7 +783,7 @@ void func_80141678(void);
 #ifndef OVL_SHOUGATU_STEP_TABLES_T17500
 #define OVL_SHOUGATU_STEP_TABLES_T17500
 /* Step tables (T-3330, T-17500): one handler per scene step copies its table to the stack whole and
- * calls tbl.f[D_800E6280.unk_110A]. The typedefs and externs were local to each .c file before. */
+ * calls tbl.f[game_state.unk_110A]. The typedefs and externs were local to each .c file before. */
 typedef struct {
     void (*f[10])();
 } FnTbl10; /* size 0x28 */

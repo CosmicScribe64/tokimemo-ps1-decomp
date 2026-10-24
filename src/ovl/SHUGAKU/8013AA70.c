@@ -6,7 +6,7 @@ void func_8013AA70(void) {
     ShFnTbl25 tbl;
 
     tbl = D_8013CC20;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
@@ -25,34 +25,34 @@ void func_8013AAEC(void) {
         break;
     }
     D_800CA2DC += D_800CA2F4 * (1 - D_800CA2EC);
-    func_8004284C();
+    main_step_next();
 }
 
 s32 func_8013ABAC(void) {
-    if (D_800E6280.substep == 0) {
+    if (game_state.substep == 0) {
         dec_bg_reset();
         func_800674B0();
-        D_800E6280.substep += 1;
+        game_state.substep += 1;
     }
-    if (D_800E6280.substep == 1) {
-        if ((u32)D_800E6280.step_timer.w++ >= 0x400U) {
-            func_800452C4();
-            func_8004482C();
-            D_800E6280.substep = 0;
+    if (game_state.substep == 1) {
+        if ((u32)game_state.step_timer.w++ >= 0x400U) {
+            cd_cmd_reset();
+            snd_bank_state_reset();
+            game_state.substep = 0;
         }
-        if (func_80044E8C() == 1) {
-            D_800E6280.substep += 1;
+        if (snd_bank_load_poll() == 1) {
+            game_state.substep += 1;
         } else {
             return 0;
         }
     }
-    func_80072338();
+    calendar_advance_day();
     if (D_800CA2EC != 0) {
-        D_800E6280.girls[10].affection += 1;
+        game_state.girls[10].affection += 1;
     } else {
-        D_800E6280.girls[D_800E6280.current_girl].tokimeki += 1;
-        D_800E6280.girls[D_800E6280.current_girl].affection += 1;
+        game_state.girls[game_state.current_girl].tokimeki += 1;
+        game_state.girls[game_state.current_girl].affection += 1;
     }
     check_para_limit();
-    return func_80072B5C(1);
+    return day_event_next(1);
 }

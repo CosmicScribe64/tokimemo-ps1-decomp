@@ -53,7 +53,7 @@ void func_8014DF60(void) {
         func_8014E28C();
         return;
     case 11:
-        if (func_800460EC() == 2) {
+        if (cd_audio_state() == 2) {
             func_8013E7C0(0x1D, 0, 1, 1);
         }
         func_8014F448(1);
@@ -90,7 +90,7 @@ void func_8014E1A4(void) {
         D_8015EBD4 = 1;
         break;
     }
-    ((Actor *)D_8011ECD0)[D_8015EBAC + 155].draw_flags |= 1;
+    ((Actor *)actor_pool)[D_8015EBAC + 155].draw_flags |= 1;
     func_8013E7C0(0x1D, 6, 1, 1);
     func_8014F230();
 }

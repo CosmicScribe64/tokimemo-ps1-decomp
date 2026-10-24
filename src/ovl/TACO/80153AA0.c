@@ -7,9 +7,9 @@ void func_80153AA0(s32 arg0, s32 arg1, s32 arg2) {
     s32 p;
 
     func_80153B38(buf, &x, arg2, arg0);
-    p = GetWorkBase(0xC, D_8011ECA0);
+    p = GetWorkBase(0xC, draw_buffer);
     func_8009D294(p, 0, 1, func_8009ECB0(1, arg1, 0, 0), 0);
-    AddPrim(D_8011ECA0 * 0x400 + 0x10 + D_800E8CA0, p);
+    AddPrim(draw_buffer * 0x400 + 0x10 + D_800E8CA0, p);
     safe_env(4);
 }
 
@@ -50,11 +50,11 @@ s32 r;
     if (cr | cg | cb) {}
     p = buf;
     for (i = 0; i != 40; i++) {
-        *p = (POLY_G3 *)GetWorkBase(sizeof(POLY_G3), D_8011ECA0);
+        *p = (POLY_G3 *)GetWorkBase(sizeof(POLY_G3), draw_buffer);
         func_8009F004(*p);
         SetSemiTrans(*p, 1);
         SetShadeTex(*p, 1);
-        if (D_8011ECA0 == 0) {
+        if (draw_buffer == 0) {
             (*p)->x0 = v[i + 1].vx;
             (*p)->y0 = v[i + 1].vy + 0xF0;
             (*p)->x1 = v[0].vx;
@@ -62,7 +62,7 @@ s32 r;
             (*p)->x2 = v[i + 2].vx;
             (*p)->y2 = v[i + 2].vy + 0xF0;
         }
-        if (D_8011ECA0 == 1) {
+        if (draw_buffer == 1) {
             (*p)->x0 = v[i + 1].vx;
             (*p)->y0 = v[i + 1].vy;
             (*p)->x1 = v[0].vx;
@@ -82,7 +82,7 @@ s32 r;
         (*p)->r2 = dr;
         (*p)->g2 = dg;
         (*p)->b2 = db;
-        AddPrim(D_8011ECA0 * 0x400 + 0x10 + D_800E8CA0, (s32)*p);
+        AddPrim(draw_buffer * 0x400 + 0x10 + D_800E8CA0, (s32)*p);
         p++;
     }
 }
@@ -91,25 +91,25 @@ void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3) {
     POLY_F4 *poly;
     s32 sprite;
 
-    poly = GetWorkBase(0x18, D_8011ECA0);
+    poly = GetWorkBase(0x18, draw_buffer);
     func_8009F02C(poly);
     SetSemiTrans(poly, 1);
     SetShadeTex(poly, 1);
     poly->x0 = 0;
-    poly->y0 = D_800E6280.screen_center_y[D_8011ECA0] - 0x78;
+    poly->y0 = game_state.screen_center_y[draw_buffer] - 0x78;
     poly->x1 = 0x200;
-    poly->y1 = D_800E6280.screen_center_y[D_8011ECA0] - 0x78;
+    poly->y1 = game_state.screen_center_y[draw_buffer] - 0x78;
     poly->x2 = 0;
-    poly->y2 = D_800E6280.screen_center_y[D_8011ECA0] + 0x78;
+    poly->y2 = game_state.screen_center_y[draw_buffer] + 0x78;
     poly->x3 = 0x200;
-    poly->y3 = D_800E6280.screen_center_y[D_8011ECA0] + 0x78;
+    poly->y3 = game_state.screen_center_y[draw_buffer] + 0x78;
     poly->r0 = arg1;
     poly->g0 = arg2;
     poly->b0 = arg3;
-    AddPrim(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, poly);
-    sprite = GetWorkBase(0xC, D_8011ECA0);
+    AddPrim(draw_buffer * 0x400 + 0x14 + D_800E8CA0, poly);
+    sprite = GetWorkBase(0xC, draw_buffer);
     func_8009D294(sprite, 0, 0, func_8009ECB0(1, arg0, 0, 0), 0);
-    AddPrim(D_8011ECA0 * 0x400 + 0x14 + D_800E8CA0, sprite);
+    AddPrim(draw_buffer * 0x400 + 0x14 + D_800E8CA0, sprite);
     safe_env(5);
 }
 

@@ -32,7 +32,7 @@ void func_8004ADE4(void) {
 
 /* FAKE: func_8004AE54 takes four arguments and the original leaves a0-a2 untouched; passing the
  * (unused) incoming a0-a2 through reproduces that, real source unknown. T-0800 */
-void func_8004AE28(s32 a0, s32 a1, s32 a2) {
+void debug_number_show(s32 a0, s32 a1, s32 a2) {
     if (D_800B3220 != 0) {
         func_8004AE54(a0, a1, a2, 0xF);
     }
@@ -56,18 +56,18 @@ void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
             tpx = (a3 & 8) * 4 + 0x100;
             tpy = (a3 & 7) + 0x1F8;
             do {
-                p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+                p = (SPRT_8 *)GetWorkBase(0x10, draw_buffer);
                 func_8009F07C(p);
                 SetSemiTrans(p, 0);
                 p->r0 = 0x80;
                 p->g0 = 0x80;
                 p->b0 = 0x80;
-                p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + a1 - n * 5;
-                p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + a2;
+                p->x0 = game_state.screen_center_x[draw_buffer] + a1 - n * 5;
+                p->y0 = game_state.screen_center_y[draw_buffer] + a2;
                 p->u0 = D_800B3D84[(v % 10) * 2];
                 p->v0 = D_800B3D84[(v % 10) * 2 + 1];
                 p->clut = func_8009ED74(tpx, tpy);
-                AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 4, p);
+                AddPrim(D_800E8CA0 + (draw_buffer << 10) + 4, p);
                 if (v < 10) {
                     n++;
                     break;
@@ -79,18 +79,18 @@ void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
         if (a0 < 0) {
             tpx = (a3 & 8) * 4 + 0x100;
             tpy = (a3 & 7) + 0x1F8;
-            p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+            p = (SPRT_8 *)GetWorkBase(0x10, draw_buffer);
             func_8009F07C(p);
             SetSemiTrans(p, 0);
             p->r0 = 0x80;
             p->g0 = 0x80;
             p->b0 = 0x80;
-            p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + a1 - n * 5;
-            p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + a2;
+            p->x0 = game_state.screen_center_x[draw_buffer] + a1 - n * 5;
+            p->y0 = game_state.screen_center_y[draw_buffer] + a2;
             p->u0 = D_800B3D84[0x12] + 8;
             p->v0 = D_800B3D84[0x13];
             p->clut = func_8009ED74(tpx, tpy);
-            AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 4, p);
+            AddPrim(D_800E8CA0 + (draw_buffer << 10) + 4, p);
         }
         dtd_on_tpage(0x2C0, 0x100, 1, 0, 0);
     }
@@ -106,19 +106,19 @@ void func_8004B19C(s32 arg0, s32 arg1, s32 arg2) {
     if (D_800B3D80 >= 4 && D_800B3220 != 0) {
         x = arg0;
         for (;;) {
-            p = (u8 *)GetWorkBase(0x10, D_8011ECA0);
+            p = (u8 *)GetWorkBase(0x10, draw_buffer);
             func_8009F07C(p);
             SetSemiTrans(p, 0);
             p[4] = 0x80;
             p[5] = 0x80;
             p[6] = 0x80;
-            *(s16 *)(p + 8) = D_800E6280.screen_center_x[D_8011ECA0] + arg1 - n * 6;
+            *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + arg1 - n * 6;
             e = D_800B3D84 + (x & 0xF) * 2;
-            *(s16 *)(p + 0xA) = D_800E6280.screen_center_y[D_8011ECA0] + arg2;
+            *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + arg2;
             p[0xC] = e[0];
             p[0xD] = e[1];
             *(s16 *)(p + 0xE) = func_8009ED74(0x100, 0x1FF);
-            AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 4, p);
+            AddPrim(D_800E8CA0 + (draw_buffer << 10) + 4, p);
             if (x < 0x10) {
                 dtd_on_tpage(0x2C0, 0x100, 1, 0, 0);
                 break;
@@ -157,14 +157,14 @@ s32 func_8004B358(s32 a0, s32 a1, s32 a2, s32 a3) {
         flag = *ptr & 0x20;
         tpx = (a3 & 8) * 2 + 0x100;
         tpy = (a3 & 7) + 0x1F8;
-        p = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+        p = (SPRT *)GetWorkBase(0x14, draw_buffer);
         func_8009F0A4(p);
         SetSemiTrans(p, 0);
         p->r0 = 0x80;
         p->g0 = 0x80;
         p->b0 = 0x80;
-        p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + x;
-        p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + a2;
+        p->x0 = game_state.screen_center_x[draw_buffer] + x;
+        p->y0 = game_state.screen_center_y[draw_buffer] + a2;
         if (flag != 0) {
             x += 6;
         } else {
@@ -183,7 +183,7 @@ s32 func_8004B358(s32 a0, s32 a1, s32 a2, s32 a3) {
             setWH(p, 8, 8);
         }
         p->clut = func_8009ED74(tpx, tpy);
-        AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 4, p);
+        AddPrim(D_800E8CA0 + (draw_buffer << 10) + 4, p);
         ptr++;
     }
     dtd_on_tpage(0x2C0, 0x100, 1, 0, 0);

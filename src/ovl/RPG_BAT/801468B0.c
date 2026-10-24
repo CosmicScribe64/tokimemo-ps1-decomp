@@ -104,16 +104,16 @@ void func_80146C30(void) {
         strcpy(D_8015E828, "　　　　　　スタンピート　　　　　　");
         func_8013E97C(0x38, 0, 0);
         func_8013E97C(0x39, 0, 0);
-        ((Actor *)D_8011ECD0)[155].unk_01 = 4;
-        ((Actor *)D_8011ECD0)[152].unk_01 = 4;
-        ((Actor *)D_8011ECD0)[153].unk_01 = 4;
+        ((Actor *)actor_pool)[155].unk_01 = 4;
+        ((Actor *)actor_pool)[152].unk_01 = 4;
+        ((Actor *)actor_pool)[153].unk_01 = 4;
         func_8013E7C0(0x38, 3, 5, 1);
         func_8013E7C0(0x39, 1, 5, 1);
         func_8013F15C(0x508, 1, 2);
         func_8014EF3C();
         break;
     case 1:
-        if (!(((Actor *)D_8011ECD0)[152].flags & 1)) {
+        if (!(((Actor *)actor_pool)[152].flags & 1)) {
             func_8013E7C0(0x38, 0xFF, 1, 0);
         }
         func_8014F080(0x32);
@@ -162,7 +162,7 @@ void func_80146C30(void) {
         func_8014F080(0xA);
         break;
     case 9:
-        strcpy(D_8015E828, D_800E6280.player_family_name);
+        strcpy(D_8015E828, game_state.player_family_name);
         strcat(D_8015E828, "「だめだ！　体が動かない！");
         func_8014B738((s32) D_8015E8F0, 1, 0x78);
         func_8014EF3C();
@@ -174,7 +174,7 @@ void func_80146C30(void) {
         func_801468B0();
         break;
     case 12:
-        strcpy(D_8015E828, D_800E6280.player_family_name);
+        strcpy(D_8015E828, game_state.player_family_name);
         strcat(D_8015E828, "「？！");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
         func_8014EF3C();
@@ -237,7 +237,7 @@ void func_80146C30(void) {
         func_8014F0F8(0x28);
         break;
     case 22:
-        ((Actor *)D_8011ECD0)[155].unk_01 = 6;
+        ((Actor *)actor_pool)[155].unk_01 = 6;
         func_8013E7C0(0x28, 2, 1, 1);
         D_8015ECEC = func_8013E9A8(0x400);
         D_8015ECF0 = func_8013E9A8(0x400) + 0x400;
@@ -267,14 +267,14 @@ void func_80146C30(void) {
             func_8013F15C(0x507, 1, 4);
             func_8014EF3C();
         }
-        if ((func_800460EC() == 2) && (D_8015EDE0 >= 0x221)) {
+        if ((cd_audio_state() == 2) && (D_8015EDE0 >= 0x221)) {
             func_8013E7C0(0x28, 0, 1, 1);
             func_8013F15C(0x507, 1, 4);
             func_8014EF3C();
         }
         break;
     case 24:
-        ((Actor *)D_8011ECD0)[155].draw_flags = 0x81;
+        ((Actor *)actor_pool)[155].draw_flags = 0x81;
         D_8015EDE0 += 6;
         func_8013E97C(0x3B, -D_8015EDE0, 0);
         if (D_8015EDE0 >= 0x89) {
@@ -324,7 +324,7 @@ void func_80146C30(void) {
         func_8014F080(0x3C);
         break;
     case 32:
-        func_8004500C(1, 0x202);
+        snd_bank_start(1, 0x202);
         func_8014EF3C();
         break;
     case 33:
@@ -339,7 +339,7 @@ void func_80146C30(void) {
         func_8014F178(0);
         break;
     case 35:
-        func_80042808();
+        main_stage_next();
         break;
     default:
         func_8014EF8C();

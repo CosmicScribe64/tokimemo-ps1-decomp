@@ -64,21 +64,21 @@ void func_80154960(void) {
         func_8015A900();
         break;
     case 4:
-        poly = GetWorkBase(0x18, D_8011ECA0);
+        poly = GetWorkBase(0x18, draw_buffer);
         func_8009F02C(poly);
         SetSemiTrans(poly, 1);
         poly->r0 = D_801604C0;
         poly->g0 = D_801604C0;
         poly->b0 = D_801604C0;
-        poly->x0 = D_800E6280.screen_center_x[D_8011ECA0] - 0x100;
-        poly->y0 = D_800E6280.screen_center_y[D_8011ECA0] - 0x78;
-        poly->x1 = D_800E6280.screen_center_x[D_8011ECA0] + 0x100;
-        poly->y1 = D_800E6280.screen_center_y[D_8011ECA0] - 0x78;
-        poly->x2 = D_800E6280.screen_center_x[D_8011ECA0] - 0x100;
-        poly->y2 = D_800E6280.screen_center_y[D_8011ECA0] + 0x78;
-        poly->x3 = D_800E6280.screen_center_x[D_8011ECA0] + 0x100;
-        poly->y3 = D_800E6280.screen_center_y[D_8011ECA0] + 0x78;
-        AddPrim((D_8011ECA0 << 0xA) + D_800E8CA0, poly);
+        poly->x0 = game_state.screen_center_x[draw_buffer] - 0x100;
+        poly->y0 = game_state.screen_center_y[draw_buffer] - 0x78;
+        poly->x1 = game_state.screen_center_x[draw_buffer] + 0x100;
+        poly->y1 = game_state.screen_center_y[draw_buffer] - 0x78;
+        poly->x2 = game_state.screen_center_x[draw_buffer] - 0x100;
+        poly->y2 = game_state.screen_center_y[draw_buffer] + 0x78;
+        poly->x3 = game_state.screen_center_x[draw_buffer] + 0x100;
+        poly->y3 = game_state.screen_center_y[draw_buffer] + 0x78;
+        AddPrim((draw_buffer << 0xA) + D_800E8CA0, poly);
         dtd_on_tpage(0, 0, 0, 1, 0);
         D_801604C0 += 2;
         if (D_801604C0 >= 0x80) {
@@ -86,26 +86,26 @@ void func_80154960(void) {
         }
         break;
     case 5:
-        poly = GetWorkBase(0x18, D_8011ECA0);
+        poly = GetWorkBase(0x18, draw_buffer);
         func_8009F02C(poly);
         SetSemiTrans(poly, 1);
         poly->r0 = 0x80 - D_801604C0;
         poly->g0 = 0x80 - D_801604C0;
         poly->b0 = 0x80 - D_801604C0;
-        poly->x0 = D_800E6280.screen_center_x[D_8011ECA0] - 0x100;
-        poly->y0 = D_800E6280.screen_center_y[D_8011ECA0] - 0x78;
-        poly->x1 = D_800E6280.screen_center_x[D_8011ECA0] + 0x100;
-        poly->y1 = D_800E6280.screen_center_y[D_8011ECA0] - 0x78;
-        poly->x2 = D_800E6280.screen_center_x[D_8011ECA0] - 0x100;
-        poly->y2 = D_800E6280.screen_center_y[D_8011ECA0] + 0x78;
-        poly->x3 = D_800E6280.screen_center_x[D_8011ECA0] + 0x100;
-        poly->y3 = D_800E6280.screen_center_y[D_8011ECA0] + 0x78;
-        AddPrim((D_8011ECA0 << 0xA) + D_800E8CA0, poly);
+        poly->x0 = game_state.screen_center_x[draw_buffer] - 0x100;
+        poly->y0 = game_state.screen_center_y[draw_buffer] - 0x78;
+        poly->x1 = game_state.screen_center_x[draw_buffer] + 0x100;
+        poly->y1 = game_state.screen_center_y[draw_buffer] - 0x78;
+        poly->x2 = game_state.screen_center_x[draw_buffer] - 0x100;
+        poly->y2 = game_state.screen_center_y[draw_buffer] + 0x78;
+        poly->x3 = game_state.screen_center_x[draw_buffer] + 0x100;
+        poly->y3 = game_state.screen_center_y[draw_buffer] + 0x78;
+        AddPrim((draw_buffer << 0xA) + D_800E8CA0, poly);
         dtd_on_tpage(0, 0, 0, 1, 0);
         D_801604C0 += 3;
         if (D_801604C0 >= 0x80) {
             func_8015ABF0();
-            func_8004284C();
+            main_step_next();
         }
         break;
     }

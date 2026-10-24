@@ -50,7 +50,7 @@ void func_8013E498(void) {
 
     p = D_80158A60;
     r = D_80158A64;
-    q = (u8 *)&D_800E7D10;
+    q = (u8 *)&system_data;
     p[85] = 0;
     if (((TtCfgBits *)(q + 0x3C))->b25) {
         p[83] = 0;

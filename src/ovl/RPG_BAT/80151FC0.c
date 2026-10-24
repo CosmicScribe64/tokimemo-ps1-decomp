@@ -43,7 +43,7 @@ void func_80152080(void) {
             strcpy(D_8015E828, "　　　　クラッシュ・クロー　　　　");
             break;
         }
-        func_8014D11C(D_8015E850, D_800E6280.player_family_name, "は", D_8015EBB0, "のダメージを受けた");
+        func_8014D11C(D_8015E850, game_state.player_family_name, "は", D_8015EBB0, "のダメージを受けた");
         func_8014B738(D_8015E8F0, 2, 0x3C);
         func_8014EF3C();
     default:
@@ -52,9 +52,9 @@ void func_80152080(void) {
         D_8015EE48 = 3;
         D_8015EDE0 += 1;
         if ((D_8015EDE0 % 3) == 0) {
-            ((Actor *)D_8011ECD0)[155].unk_40 = 0xFF;
+            ((Actor *)actor_pool)[155].unk_40 = 0xFF;
         } else {
-            ((Actor *)D_8011ECD0)[155].unk_40 = 0;
+            ((Actor *)actor_pool)[155].unk_40 = 0;
         }
         if (D_8015EDE0 >= 0x10) {
             func_8014EF3C();

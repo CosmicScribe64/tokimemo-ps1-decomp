@@ -20,21 +20,21 @@ void func_80134560(void) {
     ShFnTbl38 tbl;
 
     tbl = D_8013C0EC;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 void func_801345E8(void) {
-    func_80044750(0x24);
-    func_80044750(0x206);
-    func_80044750(0x504);
-    func_8004284C();
+    snd_command(0x24);
+    snd_command(0x206);
+    snd_command(0x504);
+    main_step_next();
 }
 
 void func_80134620(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8902);
     func_801344B0();
-    func_8004284C();
+    main_step_next();
 }
 
 /* FAKE: `* 0 + 8` folds to `li v1, 8` after uopt copy propagation, promoting D_80120698 to $v1 across the block (T-24104, cf. T-22021). */
@@ -45,38 +45,38 @@ void func_80134658(void) {
     D_8013C004 = D_8013C7F4;
     func_801344B0();
     load_palette(D_8013C0D0, 0x11, 1, 2, 0);
-    func_80084E90(D_8013C0D4, D_8013C0D8, D_8013C0DC, D_8013C0E0, D_8013C0E4, D_8013C0E8);
-    func_800850D4(D_8013C0C4, D_8013C0C8, D_8013C0C0, D_8013C0CC);
+    event_still_show(D_8013C0D4, D_8013C0D8, D_8013C0DC, D_8013C0E0, D_8013C0E4, D_8013C0E8);
+    event_anim_show(D_8013C0C4, D_8013C0C8, D_8013C0C0, D_8013C0CC);
     D_80120698 = D_80120698 * 0 + 8;
     D_80120654 = D_80120698;
     D_800CA2E4 = 0;
     D_800CA2E8 = 0;
-    D_800E6280.girls[D_800E6280.current_girl].tokimeki += 1;
-    D_800E6280.girls[D_800E6280.current_girl].affection += 2;
+    game_state.girls[game_state.current_girl].tokimeki += 1;
+    game_state.girls[game_state.current_girl].affection += 2;
     check_para_limit();
     strcpy(D_800CA19C, "ホテル・廊下");
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801347C8(void) {
     bg_read_sub2(0x4285);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801347F0(void) {
     bg_read_sub2(0x4774);
-    func_80085B3C(2, 0x27);
-    func_8004284C();
+    event_log_add(2, 0x27);
+    main_step_next();
 }
 
 void func_80134824(void) {
     s32 pad; /* FAKE: unused local above `unused`, puts it at sp+0x2B as in the original; real source unknown. T-4010 */
     u8 unused; /* read uninitialised: the original passes the stack byte */
 
-    get_g_zyotai_h(D_800E6280.current_girl);
+    get_g_zyotai_h(game_state.current_girl);
     func_800634FC(unused);
-    func_80048F64(0x60);
-    func_80048F64(0x61);
-    func_80048F64(0x62);
-    func_8004284C();
+    actor_clear(0x60);
+    actor_clear(0x61);
+    actor_clear(0x62);
+    main_step_next();
 }

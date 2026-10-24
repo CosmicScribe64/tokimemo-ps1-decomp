@@ -53,7 +53,7 @@ void func_8013E0A4(void) {
         func_8013E5B0();
         break;
     default:
-        func_80052060();
+        voice_play();
         break;
     }
     func_8008A148();

@@ -4,7 +4,7 @@
 #include "common.h"
 #include "psx_types.h"
 #include "main_api.h"
-#include "game.h" /* Actor view of D_8011ECD0 (T-18200) */
+#include "game.h" /* Actor view of actor_pool (T-18200) */
 
 typedef struct EnObj {
     /* 0x00 */ s32 unk_00;

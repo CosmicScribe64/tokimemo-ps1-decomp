@@ -91,11 +91,11 @@ s32 func_80132C3C(void) {
     POLY_FT4 *p2;
     POLY_FT4 *p3;
 
-    y = (-D_8011ECA0 * 0xF0) + 0xF0;
-    p0 = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
-    p1 = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
-    p2 = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
-    p3 = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    y = (-draw_buffer * 0xF0) + 0xF0;
+    p0 = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
+    p1 = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
+    p2 = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
+    p3 = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(p0);
     func_8009F040(p1);
     func_8009F040(p2);
@@ -143,14 +143,14 @@ s32 func_80132C3C(void) {
         p1->code = 0x20;
     }
     p3->u0 = 0x20, p3->v0 = 0x13, p3->u1 = 0xA8, p3->v1 = 0x13, p3->u2 = 0x20, p3->v2 = 0xB3, p3->u3 = 0xA8, p3->v3 = 0xB3;
-    AddPrim((D_8011ECA0 << 0xA) + 0x14 + D_800E8CA0, p0);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 0x14, p1);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 4, p2);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 0xA) + 4, p3);
+    AddPrim((draw_buffer << 0xA) + 0x14 + D_800E8CA0, p0);
+    AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + 0x14, p1);
+    AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + 4, p2);
+    AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + 4, p3);
     next = D_8014DB80 + 2;
     D_8014DB80 = next;
     if (next >= 0x81) {
-        D_800E6280.substep++;
+        game_state.substep++;
         next = 0;
         D_8014DB80 = 0;
     }
@@ -1483,600 +1483,600 @@ void func_801369D4(void) {
     func_80133710();
     load_palette(D_8014EB88, 0x11, 1, 2, 0);
     func_80136948(D_8014EB90, D_8014EB94, D_8014EB98, D_8014EB9C, D_8014EBA0, D_8014EBA4);
-    func_800850D4(D_8014EB7C, D_8014EB80, D_8014EB78, D_8014EB84);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EB7C, D_8014EB80, D_8014EB78, D_8014EB84);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80136AC8(void) {
     func_801337DC();
     load_palette(D_8014EBBC, 0x11, 1, 2, 0);
     func_80136948(D_8014EBC0, D_8014EBC4, D_8014EBC8, D_8014EBCC, D_8014EBD0, D_8014EBD4);
-    func_800850D4(D_8014EBB0, D_8014EBB4, D_8014EBAC, D_8014EBB8);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EBB0, D_8014EBB4, D_8014EBAC, D_8014EBB8);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80136BBC(void) {
     func_8013388C();
     load_palette(D_8014EBE8, 0x11, 1, 2, 0);
     func_80136948(D_8014EBEC, D_8014EBF0, D_8014EBF4, D_8014EBF8, D_8014EBFC, D_8014EC00);
-    func_800850D4(D_8014EBDC, D_8014EBE0, D_8014EBD8, D_8014EBE4);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EBDC, D_8014EBE0, D_8014EBD8, D_8014EBE4);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80136CB0(void) {
     func_8013393C();
     load_palette(D_8014EC14, 0x11, 1, 2, 0);
     func_80136948(D_8014EC18, D_8014EC1C, D_8014EC20, D_8014EC24, D_8014EC28, D_8014EC2C);
-    func_800850D4(D_8014EC08, D_8014EC0C, D_8014EC04, D_8014EC10);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EC08, D_8014EC0C, D_8014EC04, D_8014EC10);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80136DA4(void) {
     func_801339EC();
     load_palette(D_8014EC30, 0x11, 1, 2, 0);
     func_80136948(D_8014EC34, D_8014EC38, D_8014EC3C, D_8014EC40, D_8014EC44, D_8014EC48);
-    func_800850D4(0, 0, 0, 0);
+    event_anim_show(0, 0, 0, 0);
 }
 
 void func_80136E30(void) {
     func_80133A5C();
     load_palette(D_8014EC5C, 0x11, 1, 2, 0);
     func_80136948(D_8014EC64, D_8014EC68, D_8014EC6C, D_8014EC70, D_8014EC74, D_8014EC78);
-    func_800850D4(D_8014EC50, D_8014EC54, D_8014EC4C, D_8014EC58);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
+    event_anim_show(D_8014EC50, D_8014EC54, D_8014EC4C, D_8014EC58);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
 }
 
 void func_80136F4C(void) {
     func_80133B2C();
     load_palette(D_8014EC90, 0x11, 1, 2, 0);
     func_80136948(D_8014EC94, D_8014EC98, D_8014EC9C, D_8014ECA0, D_8014ECA4, D_8014ECA8);
-    func_800850D4(D_8014EC84, D_8014EC88, D_8014EC80, D_8014EC8C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
+    event_anim_show(D_8014EC84, D_8014EC88, D_8014EC80, D_8014EC8C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
 }
 
 void func_80137068(void) {
     func_80134960();
     load_palette(D_8014F018, 0x11, 1, 2, 0);
     func_80136948(D_8014F01C, D_8014F020, D_8014F024, D_8014F028, D_8014F02C, D_8014F030);
-    func_800850D4(D_8014F00C, D_8014F010, D_8014F008, D_8014F014);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F00C, D_8014F010, D_8014F008, D_8014F014);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013715C(void) {
     func_80134A10();
     load_palette(D_8014F044, 0x11, 1, 2, 0);
     func_80136948(D_8014F048, D_8014F04C, D_8014F050, D_8014F054, D_8014F058, D_8014F05C);
-    func_800850D4(D_8014F038, D_8014F03C, D_8014F034, D_8014F040);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F038, D_8014F03C, D_8014F034, D_8014F040);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80137250(void) {
     func_80134AC0();
     load_palette(D_8014F070, 0x11, 1, 2, 0);
     func_80136948(D_8014F074, D_8014F078, D_8014F07C, D_8014F080, D_8014F084, D_8014F088);
-    func_800850D4(D_8014F064, D_8014F068, D_8014F060, D_8014F06C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F064, D_8014F068, D_8014F060, D_8014F06C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80137344(void) {
     func_80134B70();
     load_palette(D_8014F09C, 0x11, 1, 2, 0);
     func_80136948(D_8014F0A0, D_8014F0A4, D_8014F0A8, D_8014F0AC, D_8014F0B0, D_8014F0B4);
-    func_800850D4(D_8014F090, D_8014F094, D_8014F08C, D_8014F098);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F090, D_8014F094, D_8014F08C, D_8014F098);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80137438(void) {
     func_80134C20();
     load_palette(D_8014F0C8, 0x11, 1, 2, 0);
     func_80136948(D_8014F0CC, D_8014F0D0, D_8014F0D4, D_8014F0D8, D_8014F0DC, D_8014F0E0);
-    func_800850D4(D_8014F0BC, D_8014F0C0, D_8014F0B8, D_8014F0C4);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F0BC, D_8014F0C0, D_8014F0B8, D_8014F0C4);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013752C(void) {
     func_80134C20();
     load_palette(D_8014F0C8, 0x11, 1, 2, 0);
     func_80136948(D_8014F0CC, D_8014F0D0, D_8014F0D4, D_8014F0D8, D_8014F0DC, D_8014F0E0);
-    func_800850D4(D_8014F0BC, D_8014F0C0, D_8014F0B8, D_8014F0C4);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F0BC, D_8014F0C0, D_8014F0B8, D_8014F0C4);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80137620(void) {
     func_80133BDC();
     load_palette(D_8014ECBC, 0x11, 1, 2, 0);
     func_80136948(D_8014ECC0, D_8014ECC4, D_8014ECC8, D_8014ECCC, D_8014ECD0, D_8014ECD4);
-    func_800850D4(0, 0, 0, 0);
+    event_anim_show(0, 0, 0, 0);
 }
 
 void func_801376AC(void) {
     func_80133C8C();
     load_palette(D_8014ECD8, 0x11, 1, 2, 0);
     func_80136948(D_8014ECDC, D_8014ECE0, D_8014ECE4, D_8014ECE8, D_8014ECEC, D_8014ECF0);
-    func_800850D4(0, 0, 0, 0);
+    event_anim_show(0, 0, 0, 0);
 }
 
 void func_80137738(void) {
     func_80133CFC();
     load_palette(D_8014ED04, 0x11, 1, 2, 0);
     func_80136948(D_8014ED08, D_8014ED0C, D_8014ED10, D_8014ED14, D_8014ED18, D_8014ED1C);
-    func_800850D4(D_8014ECF8, D_8014ECFC, D_8014ECF4, D_8014ED00);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014ECF8, D_8014ECFC, D_8014ECF4, D_8014ED00);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013782C(void) {
     func_80133DAC();
     load_palette(D_8014ED30, 0x11, 1, 2, 0);
     func_80136948(D_8014ED38, D_8014ED3C, D_8014ED40, D_8014ED44, D_8014ED48, D_8014ED4C);
-    func_800850D4(D_8014ED24, D_8014ED28, D_8014ED20, D_8014ED2C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014ED24, D_8014ED28, D_8014ED20, D_8014ED2C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80137920(void) {
     func_80133E7C();
     load_palette(D_8014ED64, 0x11, 1, 2, 0);
     func_80136948(D_8014ED68, D_8014ED6C, D_8014ED70, D_8014ED74, D_8014ED78, D_8014ED7C);
-    func_800850D4(D_8014ED58, D_8014ED5C, D_8014ED54, D_8014ED60);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014ED58, D_8014ED5C, D_8014ED54, D_8014ED60);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 
 void func_80137A14(void) {
     func_80133F2C();
     load_palette(D_8014ED90, 0x11, 1, 2, 0);
-    func_800850D4(D_8014ED84, D_8014ED88, D_8014ED80, D_8014ED8C);
-    ((Actor *)D_80120650)[1].unk_04 = 8;
-    ((Actor *)D_80120650)->unk_04 = 8;
-    ((Actor *)D_80120650)[1].unk_01 = 0xB;
-    ((Actor *)D_80120650)->unk_01 = 0xB;
-    ((Actor *)D_80120650)[2] = ((Actor *)D_80120650)[0];
-    ((Actor *)D_80120650)[2].flags = 0x40;
-    ((Actor *)D_80120650)[2].unk_18 = 0x14;
-    ((Actor *)D_80120650)[2].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[2].brightness = 0x80;
-    ((Actor *)D_80120650)[2].y = -0x65;
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014ED84, D_8014ED88, D_8014ED80, D_8014ED8C);
+    ((Actor *)actor_pool_96)[1].unk_04 = 8;
+    ((Actor *)actor_pool_96)->unk_04 = 8;
+    ((Actor *)actor_pool_96)[1].unk_01 = 0xB;
+    ((Actor *)actor_pool_96)->unk_01 = 0xB;
+    ((Actor *)actor_pool_96)[2] = ((Actor *)actor_pool_96)[0];
+    ((Actor *)actor_pool_96)[2].flags = 0x40;
+    ((Actor *)actor_pool_96)[2].unk_18 = 0x14;
+    ((Actor *)actor_pool_96)[2].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[2].brightness = 0x80;
+    ((Actor *)actor_pool_96)[2].y = -0x65;
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80137B88(void) {
     func_80133FEC();
     load_palette(D_8014EDC0, 0x11, 1, 2, 0);
     func_80136948(D_8014EDC4, D_8014EDC8, D_8014EDCC, D_8014EDD0, D_8014EDD4, D_8014EDD8);
-    func_800850D4(D_8014EDB4, D_8014EDB8, D_8014EDB0, D_8014EDBC);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EDB4, D_8014EDB8, D_8014EDB0, D_8014EDBC);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80137C7C(void) {
     func_8013409C();
     load_palette(D_8014EDEC, 0x11, 1, 2, 0);
     func_80136948(D_8014EDF0, D_8014EDF4, D_8014EDF8, D_8014EDFC, D_8014EE00, D_8014EE04);
-    func_800850D4(D_8014EDE0, D_8014EDE4, D_8014EDDC, D_8014EDE8);
-    ((Actor *)D_80120650)[1] = ((Actor *)D_80120650)[0];
-    ((Actor *)D_80120650)[1].sequence_slot = 3;
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EDE0, D_8014EDE4, D_8014EDDC, D_8014EDE8);
+    ((Actor *)actor_pool_96)[1] = ((Actor *)actor_pool_96)[0];
+    ((Actor *)actor_pool_96)[1].sequence_slot = 3;
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80137DC4(void) {
     func_8013414C();
     load_palette(D_8014EE18, 0x11, 1, 2, 0);
     func_80136948(D_8014EE1C, D_8014EE20, D_8014EE24, D_8014EE28, D_8014EE2C, D_8014EE30);
-    func_800850D4(D_8014EE0C, D_8014EE10, D_8014EE08, D_8014EE14);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].sequence_slot = 4;
+    event_anim_show(D_8014EE0C, D_8014EE10, D_8014EE08, D_8014EE14);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].sequence_slot = 4;
 }
 
 void func_80137EC4(void) {
     func_801341FC();
     load_palette(D_8014EE44, 0x11, 1, 2, 0);
     func_80136948(D_8014EE48, D_8014EE4C, D_8014EE50, D_8014EE54, D_8014EE58, D_8014EE5C);
-    func_800850D4(D_8014EE38, D_8014EE3C, D_8014EE34, D_8014EE40);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EE38, D_8014EE3C, D_8014EE34, D_8014EE40);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80137FB8(void) {
     func_801342AC();
     load_palette(D_8014EE70, 0x11, 1, 2, 0);
     func_80136948(D_8014EE74, D_8014EE78, D_8014EE7C, D_8014EE80, D_8014EE84, D_8014EE88);
-    func_800850D4(D_8014EE64, D_8014EE68, D_8014EE60, D_8014EE6C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EE64, D_8014EE68, D_8014EE60, D_8014EE6C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_801380AC(void) {
     func_8013435C();
     load_palette(D_8014EE9C, 0x11, 1, 2, 0);
     func_80136948(D_8014EEA0, D_8014EEA4, D_8014EEA8, D_8014EEAC, D_8014EEB0, D_8014EEB4);
-    func_800850D4(D_8014EE90, D_8014EE94, D_8014EE8C, D_8014EE98);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)->sequence_slot = 4;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
-    ((Actor *)D_80120650)[2] = ((Actor *)D_80120650)[0];
-    ((Actor *)D_80120650)[2].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[2].brightness = 0x80;
-    ((Actor *)D_80120650)[2].y = -0x65;
-    ((Actor *)D_80120650)[2].unk_04 |= 8;
-    ((Actor *)D_80120650)[2].sequence_slot = 4;
+    event_anim_show(D_8014EE90, D_8014EE94, D_8014EE8C, D_8014EE98);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)->sequence_slot = 4;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
+    ((Actor *)actor_pool_96)[2] = ((Actor *)actor_pool_96)[0];
+    ((Actor *)actor_pool_96)[2].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[2].brightness = 0x80;
+    ((Actor *)actor_pool_96)[2].y = -0x65;
+    ((Actor *)actor_pool_96)[2].unk_04 |= 8;
+    ((Actor *)actor_pool_96)[2].sequence_slot = 4;
 }
 
 void func_80138268(void) {
     func_80135980();
     load_palette(D_8014F418, 0x11, 1, 2, 0);
     func_80136948(D_8014F41C, D_8014F420, D_8014F424, D_8014F428, D_8014F42C, D_8014F430);
-    func_800850D4(D_8014F40C, D_8014F410, D_8014F408, D_8014F414);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F40C, D_8014F410, D_8014F408, D_8014F414);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013835C(void) {
     func_80135A30();
     load_palette(D_8014F444, 0x11, 1, 2, 0);
     func_80136948(D_8014F448, D_8014F44C, D_8014F450, D_8014F454, D_8014F458, D_8014F45C);
-    func_800850D4(D_8014F438, D_8014F43C, D_8014F434, D_8014F440);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F438, D_8014F43C, D_8014F434, D_8014F440);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80138450(void) {
     func_80135AE0();
     load_palette(D_8014F470, 0x11, 1, 2, 0);
     func_80136948(D_8014F474, D_8014F478, D_8014F47C, D_8014F480, D_8014F484, D_8014F488);
-    func_800850D4(D_8014F464, D_8014F468, D_8014F460, D_8014F46C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F464, D_8014F468, D_8014F460, D_8014F46C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80138544(void) {
     func_80135B90();
     load_palette(D_8014F49C, 0x11, 1, 2, 0);
     func_80136948(D_8014F4A0, D_8014F4A4, D_8014F4A8, D_8014F4AC, D_8014F4B0, D_8014F4B4);
-    func_800850D4(D_8014F490, D_8014F494, D_8014F48C, D_8014F498);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F490, D_8014F494, D_8014F48C, D_8014F498);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80138638(void) {
     func_80135C40();
     load_palette(D_8014F4C8, 0x11, 1, 2, 0);
     func_80136948(D_8014F4CC, D_8014F4D0, D_8014F4D4, D_8014F4D8, D_8014F4DC, D_8014F4E0);
-    func_800850D4(D_8014F4BC, D_8014F4C0, D_8014F4B8, D_8014F4C4);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F4BC, D_8014F4C0, D_8014F4B8, D_8014F4C4);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013872C(void) {
     func_80135CF0();
-    D_800E6280.tpage_buf[21] = -1;
-    D_800E6280.tpage_buf[22] = -1;
-    D_800E6280.tpage_buf[23] = -1;
-    D_800E6280.tpage_buf[24] = -1;
-    D_800E6280.tpage_buf[25] = -1;
-    D_800E6280.tpage_buf[53] = -1;
-    D_800E6280.tpage_buf[54] = -1;
-    D_800E6280.tpage_buf[55] = -1;
-    D_800E6280.tpage_buf[56] = -1;
-    D_800E6280.tpage_buf[57] = -1;
+    game_state.tpage_buf[21] = -1;
+    game_state.tpage_buf[22] = -1;
+    game_state.tpage_buf[23] = -1;
+    game_state.tpage_buf[24] = -1;
+    game_state.tpage_buf[25] = -1;
+    game_state.tpage_buf[53] = -1;
+    game_state.tpage_buf[54] = -1;
+    game_state.tpage_buf[55] = -1;
+    game_state.tpage_buf[56] = -1;
+    game_state.tpage_buf[57] = -1;
     load_palette(D_8014F4F4, 0x11, 1, 2, 0);
     func_80136948(D_8014F4F8, D_8014F4FC, D_8014F500, D_8014F504, D_8014F508, D_8014F50C);
-    func_800850D4(D_8014F4E8, D_8014F4EC, D_8014F4E4, D_8014F4F0);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
-    ((Actor *)D_80120650)[2] = ((Actor *)D_80120650)[0];
-    ((Actor *)D_80120650)[2].flags = 0x40;
-    ((Actor *)D_80120650)[2].unk_18 = 0x28;
-    ((Actor *)D_80120650)[2].unk_01 -= 1;
-    ((Actor *)D_80120650)[2].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[2].brightness = 0x80;
-    ((Actor *)D_80120650)[2].y = -0x65;
-    ((Actor *)D_80120650)[2].unk_04 |= 8;
+    event_anim_show(D_8014F4E8, D_8014F4EC, D_8014F4E4, D_8014F4F0);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
+    ((Actor *)actor_pool_96)[2] = ((Actor *)actor_pool_96)[0];
+    ((Actor *)actor_pool_96)[2].flags = 0x40;
+    ((Actor *)actor_pool_96)[2].unk_18 = 0x28;
+    ((Actor *)actor_pool_96)[2].unk_01 -= 1;
+    ((Actor *)actor_pool_96)[2].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[2].brightness = 0x80;
+    ((Actor *)actor_pool_96)[2].y = -0x65;
+    ((Actor *)actor_pool_96)[2].unk_04 |= 8;
 }
 
 void func_80138974(void) {
     func_80134DF0();
     load_palette(D_8014F13C, 0x11, 1, 2, 0);
     func_80136948(D_8014F140, D_8014F144, D_8014F148, D_8014F14C, D_8014F150, D_8014F154);
-    func_800850D4(D_8014F130, D_8014F134, D_8014F12C, D_8014F138);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F130, D_8014F134, D_8014F12C, D_8014F138);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80138A68(void) {
     func_80134EA0();
     load_palette(D_8014F168, 0x11, 1, 2, 0);
     func_80136948(D_8014F16C, D_8014F170, D_8014F174, D_8014F178, D_8014F17C, D_8014F180);
-    func_800850D4(D_8014F15C, D_8014F160, D_8014F158, D_8014F164);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F15C, D_8014F160, D_8014F158, D_8014F164);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80138B5C(void) {
     func_80134F50();
     load_palette(D_8014F194, 0x11, 1, 2, 0);
     func_80136948(D_8014F198, D_8014F19C, D_8014F1A0, D_8014F1A4, D_8014F1A8, D_8014F1AC);
-    func_800850D4(D_8014F188, D_8014F18C, D_8014F184, D_8014F190);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
+    event_anim_show(D_8014F188, D_8014F18C, D_8014F184, D_8014F190);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
 }
 
 void func_80138C78(void) {
     func_80135000();
     load_palette(D_8014F1C0, 0x11, 1, 2, 0);
     func_80136948(D_8014F1C4, D_8014F1C8, D_8014F1CC, D_8014F1D0, D_8014F1D4, D_8014F1D8);
-    func_800850D4(D_8014F1B4, D_8014F1B8, D_8014F1B0, D_8014F1BC);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F1B4, D_8014F1B8, D_8014F1B0, D_8014F1BC);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80138D6C(void) {
     func_801350B0();
     load_palette(D_8014F1DC, 0x11, 1, 2, 0);
     func_80136948(D_8014F1E0, D_8014F1E4, D_8014F1E8, D_8014F1EC, D_8014F1F0, D_8014F1F4);
-    func_800850D4(0, 0, 0, 0);
+    event_anim_show(0, 0, 0, 0);
 }
 
 void func_80138DF8(void) {
     func_80135120();
     load_palette(D_8014F208, 0x11, 1, 2, 0);
     func_80136948(D_8014F20C, D_8014F210, D_8014F214, D_8014F218, D_8014F21C, D_8014F220);
-    func_800850D4(D_8014F1FC, D_8014F200, D_8014F1F8, D_8014F204);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
+    event_anim_show(D_8014F1FC, D_8014F200, D_8014F1F8, D_8014F204);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
 }
 
 void func_80138F14(void) {
     func_801351D0();
     load_palette(D_8014F234, 0x11, 1, 2, 0);
     func_80136948(D_8014F238, D_8014F23C, D_8014F240, D_8014F244, D_8014F248, D_8014F24C);
-    func_800850D4(D_8014F228, D_8014F22C, D_8014F224, D_8014F230);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F228, D_8014F22C, D_8014F224, D_8014F230);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80139008(void) {
     func_80135280();
     load_palette(D_8014F260, 0x11, 1, 2, 0);
     func_80136948(D_8014F264, D_8014F268, D_8014F26C, D_8014F270, D_8014F274, D_8014F278);
-    func_800850D4(D_8014F254, D_8014F258, D_8014F250, D_8014F25C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F254, D_8014F258, D_8014F250, D_8014F25C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_801390FC(void) {
     func_80135330();
     load_palette(D_8014F28C, 0x11, 1, 2, 0);
     func_80136948(D_8014F290, D_8014F294, D_8014F298, D_8014F29C, D_8014F2A0, D_8014F2A4);
-    func_800850D4(D_8014F280, D_8014F284, D_8014F27C, D_8014F288);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F280, D_8014F284, D_8014F27C, D_8014F288);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_801391F0(void) {
     func_801353E0();
     load_palette(D_8014F2B8, 0x11, 1, 2, 0);
     func_80136948(D_8014F2BC, D_8014F2C0, D_8014F2C4, D_8014F2C8, D_8014F2CC, D_8014F2D0);
-    func_800850D4(D_8014F2AC, D_8014F2B0, D_8014F2A8, D_8014F2B4);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F2AC, D_8014F2B0, D_8014F2A8, D_8014F2B4);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_801392E4(void) {
     func_80135490();
     load_palette(D_8014F2E4, 0x11, 1, 2, 0);
     func_80136948(D_8014F2E8, D_8014F2EC, D_8014F2F0, D_8014F2F4, D_8014F2F8, D_8014F2FC);
-    func_800850D4(D_8014F2D8, D_8014F2DC, D_8014F2D4, D_8014F2E0);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F2D8, D_8014F2DC, D_8014F2D4, D_8014F2E0);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_801393D8(void) {
     func_80135490();
     load_palette(D_8014F2E4, 0x11, 1, 2, 0);
     func_80136948(D_8014F2E8, D_8014F2EC, D_8014F2F0, D_8014F2F4, D_8014F2F8, D_8014F2FC);
-    func_800850D4(D_8014F2D8, D_8014F2DC, D_8014F2D4, D_8014F2E0);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
+    event_anim_show(D_8014F2D8, D_8014F2DC, D_8014F2D4, D_8014F2E0);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
 }
 
 void func_801394F4(void) {
     func_8013440C();
     load_palette(D_8014EEC8, 0x11, 1, 2, 0);
     func_80136948(D_8014EECC, D_8014EED0, D_8014EED4, D_8014EED8, D_8014EEDC, D_8014EEE0);
-    func_800850D4(D_8014EEBC, D_8014EEC0, D_8014EEB8, D_8014EEC4);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EEBC, D_8014EEC0, D_8014EEB8, D_8014EEC4);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_801395E8(void) {
@@ -2089,333 +2089,333 @@ void func_801395E8(void) {
         load_palette(D_8014EEF4, 0x11, 1, 2, 2);
     }
     func_80136948(D_8014EEF8, D_8014EEFC, D_8014EF00, D_8014EF04, D_8014EF08, D_8014EF0C);
-    func_800850D4(D_8014EEE8, D_8014EEEC, D_8014EEE4, D_8014EEF0);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EEE8, D_8014EEEC, D_8014EEE4, D_8014EEF0);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80139748(void) {
     func_8013456C();
     load_palette(D_8014EF20, 0x11, 1, 2, 0);
     func_80136948(D_8014EF24, D_8014EF28, D_8014EF2C, D_8014EF30, D_8014EF34, D_8014EF38);
-    func_800850D4(D_8014EF14, D_8014EF18, D_8014EF10, D_8014EF1C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EF14, D_8014EF18, D_8014EF10, D_8014EF1C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013983C(void) {
     func_8013461C();
     load_palette(D_8014EF4C, 0x11, 1, 2, 0);
     func_80136948(D_8014EF50, D_8014EF54, D_8014EF58, D_8014EF5C, D_8014EF60, D_8014EF64);
-    func_800850D4(D_8014EF40, D_8014EF44, D_8014EF3C, D_8014EF48);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EF40, D_8014EF44, D_8014EF3C, D_8014EF48);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80139930(void) {
     func_801346CC();
     load_palette(D_8014EF78, 0x11, 1, 2, 0);
     func_80136948(D_8014EF7C, D_8014EF80, D_8014EF84, D_8014EF88, D_8014EF8C, D_8014EF90);
-    func_800850D4(D_8014EF6C, D_8014EF70, D_8014EF68, D_8014EF74);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EF6C, D_8014EF70, D_8014EF68, D_8014EF74);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80139A24(void) {
     func_8013477C();
     load_palette(D_8014EFA4, 0x11, 1, 2, 0);
     func_80136948(D_8014EFA8, D_8014EFAC, D_8014EFB0, D_8014EFB4, D_8014EFB8, D_8014EFBC);
-    func_800850D4(D_8014EF98, D_8014EF9C, D_8014EF94, D_8014EFA0);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
+    event_anim_show(D_8014EF98, D_8014EF9C, D_8014EF94, D_8014EFA0);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
 }
 
 void func_80139B40(void) {
     func_801332F0();
     load_palette(D_8014EA80, 0x11, 1, 2, 0);
     func_80136948(D_8014EA84, D_8014EA88, D_8014EA8C, D_8014EA90, D_8014EA94, D_8014EA98);
-    func_800850D4(D_8014EA74, D_8014EA78, D_8014EA70, D_8014EA7C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EA74, D_8014EA78, D_8014EA70, D_8014EA7C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80139C34(void) {
     func_801333A0();
     load_palette(D_8014EAAC, 0x11, 1, 2, 0);
     func_80136948(D_8014EAB0, D_8014EAB4, D_8014EAB8, D_8014EABC, D_8014EAC0, D_8014EAC4);
-    func_800850D4(D_8014EAA0, D_8014EAA4, D_8014EA9C, D_8014EAA8);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EAA0, D_8014EAA4, D_8014EA9C, D_8014EAA8);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80139D28(void) {
     func_80133450();
     load_palette(D_8014EAD8, 0x11, 1, 2, 0);
     func_80136948(D_8014EADC, D_8014EAE0, D_8014EAE4, D_8014EAE8, D_8014EAEC, D_8014EAF0);
-    func_800850D4(D_8014EACC, D_8014EAD0, D_8014EAC8, D_8014EAD4);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EACC, D_8014EAD0, D_8014EAC8, D_8014EAD4);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80139E1C(void) {
     func_80133500();
     load_palette(D_8014EB04, 0x11, 1, 2, 0);
     func_80136948(D_8014EB08, D_8014EB0C, D_8014EB10, D_8014EB14, D_8014EB18, D_8014EB1C);
-    func_800850D4(D_8014EAF8, D_8014EAFC, D_8014EAF4, D_8014EB00);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EAF8, D_8014EAFC, D_8014EAF4, D_8014EB00);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_80139F10(void) {
     func_801335B0();
     load_palette(D_8014EB30, 0x11, 1, 2, 0);
     func_80136948(D_8014EB34, D_8014EB38, D_8014EB3C, D_8014EB40, D_8014EB44, D_8014EB48);
-    func_800850D4(D_8014EB24, D_8014EB28, D_8014EB20, D_8014EB2C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EB24, D_8014EB28, D_8014EB20, D_8014EB2C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013A004(void) {
     func_80133660();
     load_palette(D_8014EB5C, 0x11, 1, 2, 0);
     func_80136948(D_8014EB60, D_8014EB64, D_8014EB68, D_8014EB6C, D_8014EB70, D_8014EB74);
-    func_800850D4(D_8014EB50, D_8014EB54, D_8014EB4C, D_8014EB58);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
+    event_anim_show(D_8014EB50, D_8014EB54, D_8014EB4C, D_8014EB58);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
 }
 
 void func_8013A120(void) {
     func_80135540();
     load_palette(D_8014F310, 0x11, 1, 2, 0);
     func_80136948(D_8014F314, D_8014F318, D_8014F31C, D_8014F320, D_8014F324, D_8014F328);
-    func_800850D4(D_8014F304, D_8014F308, D_8014F300, D_8014F30C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F304, D_8014F308, D_8014F300, D_8014F30C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013A214(void) {
     func_80135610();
     load_palette(D_8014F33C, 0x11, 1, 2, 0);
     func_80136948(D_8014F340, D_8014F344, D_8014F348, D_8014F34C, D_8014F350, D_8014F354);
-    func_800850D4(D_8014F330, D_8014F334, D_8014F32C, D_8014F338);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F330, D_8014F334, D_8014F32C, D_8014F338);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013A308(void) {
     func_801356C0();
     load_palette(D_8014F368, 0x11, 1, 2, 0);
     func_80136948(D_8014F36C, D_8014F370, D_8014F374, D_8014F378, D_8014F37C, D_8014F380);
-    func_800850D4(D_8014F35C, D_8014F360, D_8014F358, D_8014F364);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F35C, D_8014F360, D_8014F358, D_8014F364);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013A3FC(void) {
     func_80135770();
     load_palette(D_8014F394, 0x11, 1, 2, 0);
     func_80136948(D_8014F398, D_8014F39C, D_8014F3A0, D_8014F3A4, D_8014F3A8, D_8014F3AC);
-    func_800850D4(D_8014F388, D_8014F38C, D_8014F384, D_8014F390);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F388, D_8014F38C, D_8014F384, D_8014F390);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013A4F0(void) {
     func_80135820();
     load_palette(D_8014F3C0, 0x11, 1, 2, 0);
     func_80136948(D_8014F3C4, D_8014F3C8, D_8014F3CC, D_8014F3D0, D_8014F3D4, D_8014F3D8);
-    func_800850D4(D_8014F3B4, D_8014F3B8, D_8014F3B0, D_8014F3BC);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F3B4, D_8014F3B8, D_8014F3B0, D_8014F3BC);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013A5E4(void) {
     func_801358D0();
     load_palette(D_8014F3EC, 0x11, 1, 2, 0);
     func_80136948(D_8014F3F0, D_8014F3F4, D_8014F3F8, D_8014F3FC, D_8014F400, D_8014F404);
-    func_800850D4(D_8014F3E0, D_8014F3E4, D_8014F3DC, D_8014F3E8);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
+    event_anim_show(D_8014F3E0, D_8014F3E4, D_8014F3DC, D_8014F3E8);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
 }
 
 void func_8013A700(void) {
     func_80135DA0();
     load_palette(D_8014F520, 0x11, 1, 2, 0);
     func_80136948(D_8014F524, D_8014F528, D_8014F52C, D_8014F530, D_8014F534, D_8014F538);
-    func_800850D4(D_8014F514, D_8014F518, D_8014F510, D_8014F51C);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F514, D_8014F518, D_8014F510, D_8014F51C);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013A7F4(void) {
     func_80135E50();
     load_palette(D_8014F54C, 0x11, 1, 2, 0);
     func_80136948(D_8014F550, D_8014F554, D_8014F558, D_8014F55C, D_8014F560, D_8014F564);
-    func_800850D4(D_8014F540, D_8014F544, D_8014F53C, D_8014F548);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F540, D_8014F544, D_8014F53C, D_8014F548);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013A8E8(void) {
     func_80135F00();
     load_palette(D_8014F578, 0x11, 1, 2, 0);
     func_80136948(D_8014F57C, D_8014F580, D_8014F584, D_8014F588, D_8014F58C, D_8014F590);
-    func_800850D4(D_8014F56C, D_8014F570, D_8014F568, D_8014F574);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F56C, D_8014F570, D_8014F568, D_8014F574);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013A9DC(void) {
     func_80135FB0();
     load_palette(D_8014F5A4, 0x11, 1, 2, 0);
     func_80136948(D_8014F5A8, D_8014F5AC, D_8014F5B0, D_8014F5B4, D_8014F5B8, D_8014F5BC);
-    func_800850D4(D_8014F598, D_8014F59C, D_8014F594, D_8014F5A0);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F598, D_8014F59C, D_8014F594, D_8014F5A0);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013AAD0(void) {
     func_80136060();
     load_palette(D_8014F5D0, 0x11, 1, 2, 0);
     func_80136948(D_8014F5D4, D_8014F5D8, D_8014F5DC, D_8014F5E0, D_8014F5E4, D_8014F5E8);
-    func_800850D4(D_8014F5C4, D_8014F5C8, D_8014F5C0, D_8014F5CC);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F5C4, D_8014F5C8, D_8014F5C0, D_8014F5CC);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013ABC4(void) {
     func_80136110();
     load_palette(D_8014F5FC, 0x11, 1, 2, 0);
     func_80136948(D_8014F600, D_8014F604, D_8014F608, D_8014F60C, D_8014F610, D_8014F614);
-    func_800850D4(D_8014F5F0, D_8014F5F4, D_8014F5EC, D_8014F5F8);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014F5F0, D_8014F5F4, D_8014F5EC, D_8014F5F8);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013ACB8(void) {
     load_palette(D_8014F618, 0x11, 1, 2, 0);
     func_80136948(D_8014F61C, D_8014F620, D_8014F624, D_8014F628, D_8014F62C, D_8014F630);
-    func_800850D4(0, 0, 0, 0);
+    event_anim_show(0, 0, 0, 0);
 }
 
 void func_8013AD3C(void) {
     func_80136230();
     load_palette(D_8014F644, 0x11, 1, 2, 0);
     func_80136948(D_8014F648, D_8014F64C, D_8014F650, D_8014F654, D_8014F658, D_8014F65C);
-    func_800850D4(D_8014F638, D_8014F63C, D_8014F634, D_8014F640);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)->unk_04 |= 8;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
-    ((Actor *)D_80120650)[1].unk_04 |= 8;
+    event_anim_show(D_8014F638, D_8014F63C, D_8014F634, D_8014F640);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)->unk_04 |= 8;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
+    ((Actor *)actor_pool_96)[1].unk_04 |= 8;
 }
 
 void func_8013AE58(void) {
     func_80133F7C();
     load_palette(D_8014ED94, 0x11, 1, 2, 0);
     func_80136948(D_8014ED98, D_8014ED9C, D_8014EDA0, D_8014EDA4, D_8014EDA8, D_8014EDAC);
-    func_800850D4(0, 0, 0, 0);
+    event_anim_show(0, 0, 0, 0);
 }
 
 void func_8013AEE4(void) {
@@ -2423,18 +2423,18 @@ void func_8013AEE4(void) {
     if (D_80150058 >= 6 && D_80150058 < 0xA) {
         load_palette(D_8014F0F4, 0x11, 1, 2, 0);
         func_80136948(D_8014F0FC, D_8014F100, D_8014F104, D_8014F108, D_8014F10C, D_8014F110);
-        func_800850D4(D_8014F0E8, D_8014F0EC, D_8014F0E4, D_8014F0F0);
+        event_anim_show(D_8014F0E8, D_8014F0EC, D_8014F0E4, D_8014F0F0);
     } else {
         load_palette(D_8014F0F8, 0x11, 1, 2, 0);
         func_80136948(D_8014F114, D_8014F118, D_8014F11C, D_8014F120, D_8014F124, D_8014F128);
-        func_800850D4(D_8014F0E8, D_8014F0EC, D_8014F0E4, D_8014F0F0);
+        event_anim_show(D_8014F0E8, D_8014F0EC, D_8014F0E4, D_8014F0F0);
     }
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }
 
 void func_8013B078(void) {
@@ -2446,11 +2446,11 @@ void func_8013B078(void) {
         load_palette(D_8014EFD4, 0x11, 1, 2, 0);
         func_80136948(D_8014EFF0, D_8014EFF4, D_8014EFF8, D_8014EFFC, D_8014F000, D_8014F004);
     }
-    func_800850D4(D_8014EFC4, D_8014EFC8, D_8014EFC0, D_8014EFCC);
-    ((Actor *)D_80120650)->draw_flags |= 0x80;
-    ((Actor *)D_80120650)->brightness = 0x80;
-    ((Actor *)D_80120650)->y = -0x65;
-    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
-    ((Actor *)D_80120650)[1].brightness = 0x80;
-    ((Actor *)D_80120650)[1].y = -0x65;
+    event_anim_show(D_8014EFC4, D_8014EFC8, D_8014EFC0, D_8014EFCC);
+    ((Actor *)actor_pool_96)->draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)->brightness = 0x80;
+    ((Actor *)actor_pool_96)->y = -0x65;
+    ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
+    ((Actor *)actor_pool_96)[1].brightness = 0x80;
+    ((Actor *)actor_pool_96)[1].y = -0x65;
 }

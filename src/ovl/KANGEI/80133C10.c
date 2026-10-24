@@ -11,25 +11,25 @@ void func_80133C10(void) {
     FnTbl15 tbl;
 
     tbl = D_80139AE8;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 void func_80133C84(void) {
-    D_800E6280.current_girl = D_800E6280.date_girl;
-    func_80042808();
+    game_state.current_girl = game_state.date_girl;
+    main_stage_next();
 }
 
 void func_80133CB0(void) {
     cd_read_sectors(0x3B, 0x80197000, 0xAE60);
     func_80132E74();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133CEC(void) {
     cd_read_sectors(0x2D, 0x801B4400, 0xAE9B);
     func_80132E40();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133D28(void) {
@@ -37,72 +37,72 @@ void func_80133D28(void) {
     u32 v;
 
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
+    actors_draw_enable(1);
+    sprite_tables_clear();
     back_clear_switch(1);
-    func_80048EB8(0);
+    actor_clear_range(0);
     message_window_init();
     hizuke_init();
     tpage_buf_clear();
-    func_8004E58C();
-    D_800E6280.tile_layer_enabled = 0;
-    D_800E6280.quads_enabled = 1;
-    D_800B593C = 0;
-    func_8008585C();
+    text_system_reset();
+    game_state.tile_layer_enabled = 0;
+    game_state.quads_enabled = 1;
+    dec_bg_brightness = 0;
+    dialogue_clear();
     parameter_disp_switch(0);
     icon_disp_switch(0);
     D_80139ADC = 0;
     D_80139AE0 = 0;
     addr_init_bustup();
-    func_80084E4C();
-    D_800E6280.current_girl = 0xFF;
-    v = D_800E6280.player_flags.h >> 12;
+    text_marker_hide();
+    game_state.current_girl = 0xFF;
+    v = game_state.player_flags.h >> 12;
     for (i = 0; i < 0xB; i++) {
-        if (v == (D_800E6280.girls[i].flags.b[2] >> 4)) {
-            D_800E6280.current_girl = i;
+        if (v == (game_state.girls[i].flags.b[2] >> 4)) {
+            game_state.current_girl = i;
             break;
         }
     }
-    if (v == 0xA && D_800E6280.girls[0].tokimeki + D_800E6280.girls[0].affection < D_800E6280.girls[10].tokimeki + D_800E6280.girls[10].affection && D_800E6280.year >= 0x60) {
-        D_800E6280.current_girl = GIRL_YUMI;
+    if (v == 0xA && game_state.girls[0].tokimeki + game_state.girls[0].affection < game_state.girls[10].tokimeki + game_state.girls[10].affection && game_state.year >= 0x60) {
+        game_state.current_girl = GIRL_YUMI;
     }
-    D_800E6280.date_girl = D_800E6280.current_girl;
-    func_800847B8(D_800E6280.current_girl);
+    game_state.date_girl = game_state.current_girl;
+    dialogue_names_set(game_state.current_girl);
     func_80132E74();
     D_80139AD0 = (KObj *)D_80139A5C[0][6];
     D_80139AD4 = D_80139A5C[1][6];
     D_80139AD8 = D_80139A5C[2][6];
     D_80139AE4 = 0;
     D_80139AC0 = 0;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133EF8(void) {
-    D_800CA134 = (u8 *)&D_80139ADC;
+    dialogue_tables = (u8 *)&D_80139ADC;
     D_800CA138 = (u8 *)&D_80139AE0;
     D_800CA13C = (s32)D_80139AD0;
     D_800CA140 = D_80139AD4;
     D_800CA144 = D_80139AD8;
-    func_80082764(0xFF, 1, *(u8 *)&D_80139AE4);
+    dialogue_run(0xFF, 1, *(u8 *)&D_80139AE4);
 }
 
 void func_80133F74(void) {
-    D_800CA134 = (u8 *)&D_80139ADC;
+    dialogue_tables = (u8 *)&D_80139ADC;
     D_800CA138 = (u8 *)&D_80139AE0;
     D_800CA13C = (s32)D_80139AD0;
     D_800CA140 = D_80139AD4;
     D_800CA144 = D_80139AD8;
-    func_80082764(D_80122CDC, 1, *(u8 *)&D_80139AE4);
+    dialogue_run(D_80122CDC, 1, *(u8 *)&D_80139AE4);
 }
 
 void func_80133FF4(void) {
-    D_800CA134 = (u8 *)&D_80139ADC;
+    dialogue_tables = (u8 *)&D_80139ADC;
     D_800CA138 = (u8 *)&D_80139AE0;
     D_800CA13C = (s32)D_80139AD0;
     D_800CA140 = D_80139AD4;
     D_800CA144 = D_80139AD8;
-    if (func_80082764(0xFF, 1, *(u8 *)&D_80139AE4) == 1) {
-        func_8004284C();
+    if (dialogue_run(0xFF, 1, *(u8 *)&D_80139AE4) == 1) {
+        main_step_next();
     }
 }
 
@@ -119,6 +119,6 @@ void func_80134084(void) {
     rect.y = 0;
     func_8009C7F8(&rect, 8, 0, 0);
     bg_read_sub2(0x428D);
-    func_8004284C();
+    main_step_next();
     strcpy(D_800CA19C, "合宿所");
 }

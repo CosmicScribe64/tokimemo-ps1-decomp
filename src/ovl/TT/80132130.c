@@ -325,10 +325,10 @@ void func_80132CCC(void) {
     buttons = (TtButtons06 *)(scene + 0x10);
     switch (state->unk_02) {
     case 0:
-        func_80044750(0x22);
-        func_80044750(0x2F);
-        func_80044750(4);
-        func_80044750(0x204);
+        snd_command(0x22);
+        snd_command(0x2F);
+        snd_command(4);
+        snd_command(0x204);
         func_8014CBD0();
         func_80148210();
         func_80143570();
@@ -374,7 +374,7 @@ void func_80132CCC(void) {
         }
         break;
     case 0x80:
-        func_80044750(0xB1);
+        snd_command(0xB1);
         func_80132C24();
         break;
     }

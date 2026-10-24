@@ -22,9 +22,9 @@ s32 b;
         v = b & 0xFF;
     }
     if (a & 1) {
-        func_80044750((v | 0x500) & 0xFFFF);
+        snd_command((v | 0x500) & 0xFFFF);
     } else {
-        func_80044750((v | 0x600) & 0xFFFF);
+        snd_command((v | 0x600) & 0xFFFF);
     }
 }
 
@@ -51,18 +51,18 @@ void func_80133738(void) {
     s32 idx;
 
     idx = 3;
-    if ((D_800E6280.stage & 1) && (D_800E6280.step == 1)) {
-        if ((D_8015EDBC == 0) && (D_800E6280.pad_pressed & PAD_TRIANGLE) && (D_800E6280.frame_count & 0xFF)) {
+    if ((game_state.stage & 1) && (game_state.step == 1)) {
+        if ((D_8015EDBC == 0) && (game_state.pad_pressed & PAD_TRIANGLE) && (game_state.frame_count & 0xFF)) {
             if (func_80045288() == 1) {
-                if (func_800460EC() & 2) {
+                if (cd_audio_state() & 2) {
                     if (D_8015EDB4[8].unk78 < D_8015EDB4->unk78) {
                         idx = (rand() & 1) + 2;
-                    } else if (D_800E6280.timer_ticks & 1) {
+                    } else if (game_state.timer_ticks & 1) {
                         idx = rand() % 6;
                     }
                     p = &D_8015E238[idx * 2];
-                    func_80046290(p[0], p[1], 8);
-                    func_80044750(0x300);
+                    cd_audio_request_set(p[0], p[1], 8);
+                    snd_command(0x300);
                 }
             }
         }

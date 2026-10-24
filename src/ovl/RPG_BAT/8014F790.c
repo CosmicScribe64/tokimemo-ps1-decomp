@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_func_80049A40 /* T-9740: original caller passes full-width coordinates without a prototype. */
+#define MAIN_API_OVERRIDE_prim_gradient_rect /* T-9740: original caller passes full-width coordinates without a prototype. */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-void func_80049A40();
+void prim_gradient_rect();
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_8014F790(void) {
@@ -33,11 +33,11 @@ void func_8014F88C(void) {
     s32 var_a0;
 
     D_8015EE00.unk_00 += 1;
-    ((Actor *)D_8011ECD0)[125].unk_01 = 3;
-    ((Actor *)D_8011ECD0)[126].unk_01 = 3;
-    if ((D_8015EE00.unk_04 >= 2) && (D_8015EE00.unk_04 < 0x15) && (((Actor *)D_8011ECD0)[125].unk_08 == 1)) {
+    ((Actor *)actor_pool)[125].unk_01 = 3;
+    ((Actor *)actor_pool)[126].unk_01 = 3;
+    if ((D_8015EE00.unk_04 >= 2) && (D_8015EE00.unk_04 < 0x15) && (((Actor *)actor_pool)[125].unk_08 == 1)) {
         /* u16 view of the s16 unk_18: the original loads it with lhu and range-checks with sltiu */
-        switch (*(u16 *)&((Actor *)D_8011ECD0)[125].unk_18) {
+        switch (*(u16 *)&((Actor *)actor_pool)[125].unk_18) {
         case 0:
         case 2:
             if (func_8013E9A8(3) == 0) {
@@ -238,7 +238,7 @@ void func_8014FDBC(void) {
         strcpy(D_8015E9E0, "宇宙人は去っていった。");
         func_8014B738(D_8015EB70, 1, 0x3C);
         func_8013E7C0(0x30, 9, 1, 1);
-        func_8004500C(1, 0x202);
+        snd_bank_start(1, 0x202);
         func_8014F230();
         return;
     case 16:
@@ -267,7 +267,7 @@ void func_8014FDBC(void) {
         return;
     case 23:
         D_8015EC14 = 0;
-        func_80042808();
+        main_stage_next();
         /* fallthrough */
     default:
         return;
@@ -340,7 +340,7 @@ void func_80150120(void) {
         }
         break;
     case 5:
-        func_80049A40(-0x5C - ((RpgTransition0C *)&D_8015EE08)->unk_08, -0x78, ((RpgTransition0C *)&D_8015EE08)->unk_08 * 2, 0xA8, 3, shade, 0x81);
+        prim_gradient_rect(-0x5C - ((RpgTransition0C *)&D_8015EE08)->unk_08, -0x78, ((RpgTransition0C *)&D_8015EE08)->unk_08 * 2, 0xA8, 3, shade, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
         count = ((RpgTransition0C *)&D_8015EE08)->unk_08 += 2;
         if (count >= 0x21) {
@@ -348,7 +348,7 @@ void func_80150120(void) {
         }
         break;
     case 6:
-        func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, shade, 0x81);
+        prim_gradient_rect(-0x7C, -0x78, 0x40, 0xA8, 3, shade, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
         func_8013F15C(0x511, 0, 6);
         func_8013E97C(0x3B, 0x48, 0x68 - ((RpgTransition0C *)&D_8015EE08)->unk_08);
@@ -360,7 +360,7 @@ void func_80150120(void) {
         }
         break;
     case 7:
-        func_80049A40(((RpgTransition0C *)&D_8015EE08)->unk_08 - 0x7C, -0x78, 0x40 - (((RpgTransition0C *)&D_8015EE08)->unk_08 * 2), 0xA8, 3, shade, 0x81);
+        prim_gradient_rect(((RpgTransition0C *)&D_8015EE08)->unk_08 - 0x7C, -0x78, 0x40 - (((RpgTransition0C *)&D_8015EE08)->unk_08 * 2), 0xA8, 3, shade, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
         count = ((RpgTransition0C *)&D_8015EE08)->unk_08 += 2;
         if (count >= 0x21) {

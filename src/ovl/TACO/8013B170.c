@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_8013B170(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_8013B2A0();
         break;
@@ -13,8 +13,8 @@ void func_8013B170(void) {
         func_8013B3C4();
         break;
     }
-    if (D_800E6280.step != 0) {
-        if (D_800E6280.frame_count & 0x10) {
+    if (game_state.step != 0) {
+        if (game_state.frame_count & 0x10) {
             if ((u8) D_8015EDCC >= 3U) {
                 func_801432F0((s32) "MISSION COMPLETE", -0x40, 0, 2);
             } else if (D_8015EDEC == 0) {
@@ -47,24 +47,24 @@ void func_8013B2A0(void) {
         /* FAKE: element chain through the first symbol shares one li between the last two stores and
          * keeps a separate lui per store (struct-field chains and separate statements load three
          * constants); GameState fields unk_036..unk_038. T-19030 */
-        (&D_800E6280.clear_color_r)[0] = (&D_800E6280.clear_color_r)[1] = (&D_800E6280.clear_color_r)[2] = 0x10;
+        (&game_state.clear_color_r)[0] = (&game_state.clear_color_r)[1] = (&game_state.clear_color_r)[2] = 0x10;
         D_8015EDB0 = 0;
         D_8015EDBC = 0x44;
         func_800450F4(0, 0x202);
-        func_8004284C();
+        main_step_next();
     }
 }
 
 void func_8013B398(void) {
-    if (D_800E6280.pad_pressed != 0) {
-        func_8004284C();
+    if (game_state.pad_pressed != 0) {
+        main_step_next();
     }
 }
 
 void func_8013B3C4(void) {
     if (D_8015EDBC == 0) {
         if (func_80044C98() == 1) {
-            func_80042908(8);
+            main_stage_set(8);
         }
     }
 }
@@ -74,7 +74,7 @@ void func_8013B404(void) {
     RECT rect;
 
     rect.x = 0;
-    rect.y = D_8011ECA0 * 0xF0;
+    rect.y = draw_buffer * 0xF0;
     rect.w = 0x200;
     rect.h = 0xF0;
     func_8009C93C(&rect, 0x200, 0);
@@ -87,11 +87,11 @@ void func_8013B404(void) {
  * pair gives the y3 statement that line and restores the numbering; the real source layout is unknown
  * (drafts/T-25137/TACO/func_8013B460/NOTES.md). */
 s32 func_8013B460(s32 arg0) {
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     s32 pad; /* FAKE: unused word gives the frame home slot of the original; real source unknown. T-19030 */
     POLY_FT4 *p;
 
-    p = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    p = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(p);
     SetSemiTrans(p, 0);
     SetShadeTex(p, 0);
@@ -99,20 +99,20 @@ s32 func_8013B460(s32 arg0) {
     p->r0 = 0x80;
     p->g0 = 0x80;
     p->b0 = 0x80;
-    p->x0 = g->screen_center_x[D_8011ECA0] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) - 0x100;
-    p->y0 = g->screen_center_y[D_8011ECA0] + ((0x64 - arg0) << 6) / 100 - 0x78;
-    p->x1 = g->screen_center_x[D_8011ECA0] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100 - 0x100;
-    p->y1 = g->screen_center_y[D_8011ECA0] + ((0x64 - arg0) << 6) / 100 - 0x78;
-    p->x2 = g->screen_center_x[D_8011ECA0] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) - 0x100;
-    p->y2 = g->screen_center_y[D_8011ECA0] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
-    p->x3 = g->screen_center_x[D_8011ECA0] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100 - 0x100;
+    p->x0 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) - 0x100;
+    p->y0 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
+    p->x1 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100 - 0x100;
+    p->y1 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
+    p->x2 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) - 0x100;
+    p->y2 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
+    p->x3 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100 - 0x100;
 #line 115
-    p->y3 = g->screen_center_y[D_8011ECA0] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
+    p->y3 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
 #line 112
     /* one comma statement, the shape of the libgpu setUV4 macro: gives the original's store order and constant registers. T-24200 */
     p->u0 = 0, p->v0 = 0, p->u1 = 0xFF, p->v1 = 0, p->u2 = 0, p->v2 = 0xF0, p->u3 = 0xFF, p->v3 = 0xF0;
-    AddPrim((D_8011ECA0 << 0xA) + 0x3FC + D_800E8CA0, p);
-    p = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    AddPrim((draw_buffer << 0xA) + 0x3FC + D_800E8CA0, p);
+    p = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(p);
     SetSemiTrans(p, 0);
     SetShadeTex(p, 0);
@@ -120,16 +120,16 @@ s32 func_8013B460(s32 arg0) {
     p->r0 = 0x80;
     p->g0 = 0x80;
     p->b0 = 0x80;
-    p->x0 = g->screen_center_x[D_8011ECA0] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100);
-    p->y0 = g->screen_center_y[D_8011ECA0] + ((0x64 - arg0) << 6) / 100 - 0x78;
-    p->x1 = g->screen_center_x[D_8011ECA0] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100;
-    p->y1 = g->screen_center_y[D_8011ECA0] + ((0x64 - arg0) << 6) / 100 - 0x78;
-    p->x2 = g->screen_center_x[D_8011ECA0] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100);
-    p->y2 = g->screen_center_y[D_8011ECA0] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
-    p->x3 = g->screen_center_x[D_8011ECA0] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100;
+    p->x0 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100);
+    p->y0 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
+    p->x1 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100;
+    p->y1 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
+    p->x2 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100);
+    p->y2 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
+    p->x3 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100;
 #line 135
-    p->y3 = g->screen_center_y[D_8011ECA0] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
+    p->y3 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
 #line 133
     p->u0 = 0, p->v0 = 0, p->u1 = 0xFF, p->v1 = 0, p->u2 = 0, p->v2 = 0xF0, p->u3 = 0xFF, p->v3 = 0xF0;
-    AddPrim((D_8011ECA0 << 0xA) + 0x3FC + D_800E8CA0, p);
+    AddPrim((draw_buffer << 0xA) + 0x3FC + D_800E8CA0, p);
 }

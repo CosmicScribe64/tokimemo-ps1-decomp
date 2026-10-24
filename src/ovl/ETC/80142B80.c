@@ -8,22 +8,22 @@ void func_80142B80(void) {
     s32 pad[3];
     s32 i;
 
-    switch (D_800E6280.substep) {
+    switch (game_state.substep) {
     case 0:
         D_80150148 = 0;
-        D_800E6280.screen_brightness = 0x80;
-        func_80044750(0xD1);
-        D_800E6280.clear_color_g = 0;
-        D_800E6280.clear_color_r = 0;
+        game_state.screen_brightness = 0x80;
+        snd_command(0xD1);
+        game_state.clear_color_g = 0;
+        game_state.clear_color_r = 0;
         D_8015018C = 0;
-        D_800E6280.clear_color_b = 0;
+        game_state.clear_color_b = 0;
         draw2d3d(1, 0);
-        func_80041584();
-        func_80048EB8(0);
+        sprite_tables_clear();
+        actor_clear_range(0);
         back_clear_switch(1);
         tpage_buf_clear();
-        if (D_800E6280.current_girl >= GIRL_YOSHIO) {
-            if (D_800E6280.options_dirty != 0) {
+        if (game_state.current_girl >= GIRL_YOSHIO) {
+            if (game_state.options_dirty != 0) {
                 main_state_set(MODE_TITLE);
                 return;
             }
@@ -31,35 +31,35 @@ void func_80142B80(void) {
             return;
         }
         D_8015014C = 0;
-        if (D_800E6280.pad_held & PAD_TRIANGLE) {
+        if (game_state.pad_held & PAD_TRIANGLE) {
             D_8015014C = 1;
         }
         if (func_80143240() != 0) {
             D_8015014C = 1;
         }
-        if ((func_80143240() > 0) && (D_800E6280.pad_held & PAD_TRIANGLE)) {
+        if ((func_80143240() > 0) && (game_state.pad_held & PAD_TRIANGLE)) {
             D_8015014C = 0;
         }
         D_80150188 = 0;
         cd_read_sectors(0x11, 0x80180000, 0xA0BB);
-        D_800E6280.substep = 1;
+        game_state.substep = 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
             D_8015018C = 1;
             load_tpage_buf_lock(0x15, 0x80180000, 1);
             load_tpage_buf_lock(0x16, 0x80184000, 1);
-            func_8004B590(0x80188000, D_800E6280.scratch_words);
-            load_palette(D_800E6280.scratch_words, 0x1F, 1, 1, 0);
+            func_8004B590(0x80188000, game_state.scratch_words);
+            load_palette(game_state.scratch_words, 0x1F, 1, 1, 0);
             func_80142A4C();
             cd_read_sectors(1, 0x801F9000, 0xBE1D);
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
             cd_read_sectors(0x52, 0x801D0000, 0xA069);
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 3:
@@ -77,7 +77,7 @@ void func_80142B80(void) {
             } else {
                 cd_read_sectors(1, 0x80180000, 0xB2CC);
             }
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 4:
@@ -104,7 +104,7 @@ void func_80142B80(void) {
                 cd_read_sectors(0xD, 0x801D0000, 0xB31B);
                 cd_read_sectors(0xD, 0x801C8000, 0xB342);
             }
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 10:
@@ -122,7 +122,7 @@ void func_80142B80(void) {
                 cd_read_sectors(0xD, 0x801A8000, 0xB2BF);
                 cd_read_sectors(0xD, 0x801A0000, 0xB335);
             }
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 16:
@@ -139,15 +139,15 @@ void func_80142B80(void) {
                 cd_read_sectors(0xD, 0x80188000, 0xB2E7);
                 cd_read_sectors(0xD, 0x80180000, 0xB369);
             }
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     case 21:
-        func_8004284C();
+        main_step_next();
         break;
     default:
         if (cd_read_sync_status() & 1) {
-            D_800E6280.substep += 1;
+            game_state.substep += 1;
         }
         break;
     }

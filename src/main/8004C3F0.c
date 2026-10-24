@@ -15,7 +15,7 @@
  * schedules by source line, and this ucode order gives the original's store order and decides which
  * common subexpression gets v0 or v1. One statement per field misses 57 rows. */
 void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7, s32 arg8) {
-    GameState *g = &D_800E6280;
+    GameState *g = &game_state;
     POLY_FT4 *poly;
     s32 divisor;
     s32 pageWidth;
@@ -34,7 +34,7 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
     }
 
     /* left page */
-    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    poly = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(poly);
     if (arg2 != 0) {
         SetSemiTrans(poly, 1);
@@ -47,16 +47,16 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
         poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
         poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
-    poly->x0 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x1 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x2 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x1 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x2 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
+    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4], poly);
 
     /* 1-pixel column after the left page */
-    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    poly = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(poly);
     if (arg2 != 0) {
         SetSemiTrans(poly, 1);
@@ -69,16 +69,16 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = arg4 / 256 * 4 + 4, poly->v1 = 0,
         poly->u2 = arg4 / 256 * 4 + 3, poly->v2 = arg3->h,
         poly->u3 = arg4 / 256 * 4 + 4, poly->v3 = arg3->h;
-    poly->x0 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x1 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 1, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x2 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[D_8011ECA0] - (arg4 & 0xFF) + arg3->x + 0x100, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x1 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 1, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x2 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[draw_buffer] - (arg4 & 0xFF) + arg3->x + 0x100, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, 0x3C0, 0);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4 - 4], poly);
+    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4 - 4], poly);
 
     /* middle page */
-    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    poly = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(poly);
     if (arg2 != 0) {
         SetSemiTrans(poly, 1);
@@ -91,16 +91,16 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
         poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
         poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
-    poly->x0 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x1 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x2 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x1 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x2 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor + pageWidth, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
+    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4], poly);
 
     /* 1-pixel column after the middle page */
-    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    poly = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(poly);
     if (arg2 != 0) {
         SetSemiTrans(poly, 1);
@@ -113,16 +113,16 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = arg4 / 256 * 4 + 8, poly->v1 = 0,
         poly->u2 = arg4 / 256 * 4 + 7, poly->v2 = arg3->h,
         poly->u3 = arg4 / 256 * 4 + 8, poly->v3 = arg3->h;
-    poly->x0 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x1 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x101, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x2 = g->screen_center_x[D_8011ECA0] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[D_8011ECA0] - (arg4 & 0xFF) + arg3->x + 0x200, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x1 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x101, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x2 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[draw_buffer] - (arg4 & 0xFF) + arg3->x + 0x200, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, 0x3C0, 0);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
+    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4], poly);
 
     /* right page */
-    poly = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    poly = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(poly);
     if (arg2 != 0) {
         SetSemiTrans(poly, 1);
@@ -135,13 +135,13 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
         poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
         poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
-    poly->x0 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y0 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x1 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y1 = g->screen_center_y[D_8011ECA0] + arg3->y,
-        poly->x2 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y2 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[D_8011ECA0] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y3 = g->screen_center_y[D_8011ECA0] + arg3->y + arg3->h;
+    poly->x0 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x1 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
+        poly->x2 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor + pageWidth * 2, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(D_8011ECA0 << 0xA) + arg8 * 4], poly);
+    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4], poly);
 }
 
 /* Matching notes (T-17015): the count and order of the 15 declared locals set the frame size and the
@@ -413,13 +413,13 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
             uv = (*data & 0xFF0000) >> 16;
             page = (*data & 0xFF000000) >> 24;
             clut = (*data & 0xFF00) >> 8;
-            s = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
+            s = (SPRT_8 *)GetWorkBase(0x10, draw_buffer);
             func_8009F07C(s);
             SetSemiTrans(s, 0);
             xpos = x + 0xA0 + col * 8;
             s->x0 = xpos;
             ypos = row * 8 + y + 0x168;
-            s->y0 = ypos - D_8011ECA0 * 0xF0;
+            s->y0 = ypos - draw_buffer * 0xF0;
             /* FAKE: T-25006, one line so as1 keeps the u0/v0 order */
             s->u0 = (uv & 0xF) * 8; s->v0 = ((uv & 0xF0) >> 4) * 8;
             s->b0 = bright;
@@ -433,14 +433,14 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
                 last = tpage;
             }
             s->clut = func_8009ED74(cx + clut * 16, cy);
-            AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + pri * 4 + 4, s);
+            AddPrim(D_800E8CA0 + (draw_buffer << 10) + pri * 4 + 4, s);
         }
     }
     goto_tpage((last & 0xF) << 6, (last & 0x10) << 4, pri + 1, 0, 0);
 }
 
 /* Matching notes (T-25104): sp is the sprite handed to func_80098B80 (GsSortSprite); the u16 priority
- * of its prototype, declared here because func_80043510 calls it without one, converts pri at each
+ * of its prototype, declared here because frame_render calls it without one, converts pri at each
  * call. Each tile field is masked and shifted in one statement:
  * the split form (mask, then shift) gives uv and clut more uses, and clut then outranks the x position
  * and col for the saved registers. The y position is written row * w + y with a signed row. */
@@ -517,7 +517,7 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
                     }
                     sp.unk_10 = cx + clut * 16;
                     sp.unk_12 = cy;
-                    func_80098B80(&sp, (u8 *)&D_800E8C70 + D_8011ECA0 * 0x14, pri);
+                    func_80098B80(&sp, (u8 *)&D_800E8C70 + draw_buffer * 0x14, pri);
                     col++;
                     data++;
                     cols = p->unk_0C;

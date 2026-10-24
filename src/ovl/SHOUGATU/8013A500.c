@@ -14,18 +14,18 @@ void func_8013A53C(void) {
     FnTbl27 tbl;
 
     tbl = D_801456A0;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 void func_8013A5B0(void) {
-    func_80044750(0x502);
-    func_8004284C();
+    snd_command(0x502);
+    main_step_next();
 }
 
 void func_8013A5D8(void) {
-    func_80044750(0x503);
-    func_8004284C();
+    snd_command(0x503);
+    main_step_next();
 }
 
 void func_8013A600(void) {
@@ -33,81 +33,81 @@ void func_8013A600(void) {
     FnTbl20 tbl;
 
     tbl = D_8014570C;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx]();
 }
 
 void func_8013A688(void) {
     draw2d3d(1, 0);
-    func_80048DAC(1);
-    func_80041584();
-    func_80048EB8(0);
+    actors_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
     back_clear_switch(1);
     tpage_buf_clear();
-    func_8004E58C();
-    D_800E6280.tile_layer_enabled = 0;
-    D_800E6280.quads_enabled = 1;
-    func_8008585C();
+    text_system_reset();
+    game_state.tile_layer_enabled = 0;
+    game_state.quads_enabled = 1;
+    dialogue_clear();
     D_80122CE8 = 0;
-    D_800E6280.screen_brightness = 0x80;
-    D_800B593C = 0;
+    game_state.screen_brightness = 0x80;
+    dec_bg_brightness = 0;
     D_800B5940 = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
-    func_80084E4C();
-    *(u8 *)&D_800E6280.current_girl = 6;
-    func_800847B8(*(u8 *)&D_800E6280.current_girl);
+    text_marker_hide();
+    *(u8 *)&game_state.current_girl = 6;
+    dialogue_names_set(*(u8 *)&game_state.current_girl);
     func_80136F90();
     D_80144DFC = D_80144DA8;
     D_80144E00 = D_80144DCC;
     D_80144E04 = D_80144DF0;
-    D_800E6280.girls[D_800E6280.current_girl].flags.f.b2 = 1;
-    func_8004284C();
+    game_state.girls[game_state.current_girl].flags.f.b2 = 1;
+    main_step_next();
 }
 
 void func_8013A7B0(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "近所の公園");
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013A7F4(void) {
     D_80144E08 = 6;
     D_80144E0C = 0;
     strcpy(D_800CA19C, "プール");
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013A83C(void) {
     bg_read_sub2(0x42D8);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013A864(void) {
     bg_read_sub2(0x40A0);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013A88C(void) {
-    func_80062CD0(0x6449);
-    func_8004284C();
+    bustup_read_start(0x6449);
+    main_step_next();
 }
 
 void func_8013A8B4(void) {
-    func_80062CD0(0x625A);
-    func_8004284C();
+    bustup_read_start(0x625A);
+    main_step_next();
 }
 
 void func_8013A8DC(void) {
-    if (((u32) D_800E6280.player_flags.h >> 0xC) == 9) {
+    if (((u32) game_state.player_flags.h >> 0xC) == 9) {
         D_80144E08 = 5;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013A91C(void) {
     D_80144E08 = 3;
-    func_8004284C();
+    main_step_next();
 }

@@ -71,7 +71,7 @@ void func_8013FC08(void) {
     RECT rect;
 
     rect.x = 0;
-    rect.y = D_8011ECA0 * 0xF0;
+    rect.y = draw_buffer * 0xF0;
     rect.w = 0x140;
     rect.h = 0xF0;
     func_8009C93C(&rect, 0x280, 0);
@@ -97,7 +97,7 @@ void func_8013FC64(s32 a, s32 b, s32 c, s32 d) {
     if (v >= 0) {
         tpx = d * 16;
         do {
-            p = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+            p = (SPRT *)GetWorkBase(0x14, draw_buffer);
             func_8009F0A4(p);
             p->w = 8;
             p->h = 8;
@@ -105,12 +105,12 @@ void func_8013FC64(s32 a, s32 b, s32 c, s32 d) {
             p->r0 = 0x80;
             p->g0 = 0x80;
             p->b0 = 0x80;
-            p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + b - n * 8;
-            p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + c;
+            p->x0 = game_state.screen_center_x[draw_buffer] + b - n * 8;
+            p->y0 = game_state.screen_center_y[draw_buffer] + c;
             p->u0 = D_801500A0[(v % 10) * 2];
             p->v0 = D_801500A0[(v % 10) * 2 + 1];
             p->clut = func_8009ED74(tpx, 0x1FD);
-            AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, p);
+            AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, p);
             if (v < 10) {
                 break;
             }
@@ -122,7 +122,7 @@ void func_8013FC64(s32 a, s32 b, s32 c, s32 d) {
         tpx = d * 16;
         n++;
         xoff = n * 8;
-        p = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+        p = (SPRT *)GetWorkBase(0x14, draw_buffer);
         func_8009F0A4(p);
         p->w = 8;
         p->h = 8;
@@ -130,12 +130,12 @@ void func_8013FC64(s32 a, s32 b, s32 c, s32 d) {
         p->r0 = 0x80;
         p->g0 = 0x80;
         p->b0 = 0x80;
-        p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + b - xoff;
-        p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + c;
+        p->x0 = game_state.screen_center_x[draw_buffer] + b - xoff;
+        p->y0 = game_state.screen_center_y[draw_buffer] + c;
         p->u0 = D_801500B4;
         p->v0 = D_801500B5;
         p->clut = func_8009ED74(tpx, 0x1FD);
-        AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, p);
+        AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, p);
     }
     dtd_on_tpage(0x3C0, 0, 1, 0, 1);
 }

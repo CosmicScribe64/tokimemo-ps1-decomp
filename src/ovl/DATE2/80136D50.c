@@ -53,80 +53,80 @@ void func_80136FC4(void) {
     FnTbl8 tbl;
 
     tbl = D_8013A74C;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
 void func_80137064(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
     func_80136D50();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_8013709C(void) {
-    D_800CA148 = 1;
-    D_800CA14C = 0;
-    func_800847B8(D_800E6280.current_girl);
+    dialogue_group = 1;
+    dialogue_line = 0;
+    dialogue_names_set(game_state.current_girl);
     func_801370E4();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801370E4(void) {
-    switch (D_800E6280.current_girl) {
+    switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        D_800CA160 = D_8013A6B4;
-        D_800CA164 = D_8013A6E8;
-        D_800CA168 = D_8013A71C;
+        dialogue_text_table = D_8013A6B4;
+        dialogue_command_table = D_8013A6E8;
+        dialogue_voice_table = D_8013A71C;
         return;
     case GIRL_MIO:
-        D_800CA160 = D_8013A6C8;
-        D_800CA164 = D_8013A6FC;
-        D_800CA168 = D_8013A730;
+        dialogue_text_table = D_8013A6C8;
+        dialogue_command_table = D_8013A6FC;
+        dialogue_voice_table = D_8013A730;
         return;
     case GIRL_YUINA:
-        D_800CA160 = D_8013A6BC;
-        D_800CA164 = D_8013A6F0;
-        D_800CA168 = D_8013A724;
+        dialogue_text_table = D_8013A6BC;
+        dialogue_command_table = D_8013A6F0;
+        dialogue_voice_table = D_8013A724;
         return;
     case GIRL_AYAKO:
-        D_800CA160 = D_8013A6C0;
-        D_800CA164 = D_8013A6F4;
-        D_800CA168 = D_8013A728;
+        dialogue_text_table = D_8013A6C0;
+        dialogue_command_table = D_8013A6F4;
+        dialogue_voice_table = D_8013A728;
         return;
     case GIRL_SAKI:
-        D_800CA160 = D_8013A6D8;
-        D_800CA164 = D_8013A70C;
-        D_800CA168 = D_8013A740;
+        dialogue_text_table = D_8013A6D8;
+        dialogue_command_table = D_8013A70C;
+        dialogue_voice_table = D_8013A740;
         return;
     case GIRL_YUKARI:
-        D_800CA160 = D_8013A6CC;
-        D_800CA164 = D_8013A700;
-        D_800CA168 = D_8013A734;
+        dialogue_text_table = D_8013A6CC;
+        dialogue_command_table = D_8013A700;
+        dialogue_voice_table = D_8013A734;
         return;
     case GIRL_NOZOMI:
-        D_800CA160 = D_8013A6D0;
-        D_800CA164 = D_8013A704;
-        D_800CA168 = D_8013A738;
+        dialogue_text_table = D_8013A6D0;
+        dialogue_command_table = D_8013A704;
+        dialogue_voice_table = D_8013A738;
         return;
     case GIRL_MIRA:
-        D_800CA160 = D_8013A6C4;
-        D_800CA164 = D_8013A6F8;
-        D_800CA168 = D_8013A72C;
+        dialogue_text_table = D_8013A6C4;
+        dialogue_command_table = D_8013A6F8;
+        dialogue_voice_table = D_8013A72C;
         return;
     case GIRL_YUKO:
-        D_800CA160 = D_8013A6B0;
-        D_800CA164 = D_8013A6E4;
-        D_800CA168 = D_8013A718;
+        dialogue_text_table = D_8013A6B0;
+        dialogue_command_table = D_8013A6E4;
+        dialogue_voice_table = D_8013A718;
         return;
     case GIRL_MEGUMI:
-        D_800CA160 = D_8013A6D4;
-        D_800CA164 = D_8013A708;
-        D_800CA168 = D_8013A73C;
+        dialogue_text_table = D_8013A6D4;
+        dialogue_command_table = D_8013A708;
+        dialogue_voice_table = D_8013A73C;
         return;
     case GIRL_YUMI:
-        D_800CA160 = D_8013A6E0;
-        D_800CA164 = D_8013A714;
-        D_800CA168 = D_8013A748;
+        dialogue_text_table = D_8013A6E0;
+        dialogue_command_table = D_8013A714;
+        dialogue_voice_table = D_8013A748;
         /* fallthrough */
     default:
         return;

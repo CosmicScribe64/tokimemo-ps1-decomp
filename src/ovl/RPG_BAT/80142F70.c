@@ -127,5 +127,5 @@ void func_80142F70(void) {
     case 14:
         break;
     }
-    func_80042808();
+    main_stage_next();
 }

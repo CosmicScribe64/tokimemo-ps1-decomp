@@ -2,8 +2,8 @@
 #include "ovl/TACO.h"
 
 void func_80137F90(void) {
-    D_800E6280.step_timer.w += 1;
-    switch (D_800E6280.step) {
+    game_state.step_timer.w += 1;
+    switch (game_state.step) {
     case 0:
         func_8013801C();
         break;
@@ -28,9 +28,9 @@ void func_8013801C(void) {
     D_8015EDEC = 0x4650;
     func_80134884();
     D_8015EDBC = 0x10;
-    D_800E6280.clear_color_r = 0;
-    D_800E6280.clear_color_g = 0;
-    D_800E6280.clear_color_b = 0;
+    game_state.clear_color_r = 0;
+    game_state.clear_color_g = 0;
+    game_state.clear_color_b = 0;
     func_801335A0(0, 0x503);
     func_800591D8(1);
     k_reset(0);
@@ -50,7 +50,7 @@ void func_8013801C(void) {
     func_801322AC();
     func_80132220();
     func_801334BC();
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80138160(void) {
@@ -60,7 +60,7 @@ void func_80138160(void) {
         load_csr_tp(0x80162000, 0xE, 1, 0, 0, 0x100, 0x100);
         load_csr_tp(0x80172000, 0xC, 1, 0, 0, 0x100, 0x100);
         load_csr_tp(0x80182000, 0xA, 1, 0, 0, 0x80, 0x80);
-        func_8004284C();
+        main_step_next();
     }
 }
 
@@ -69,5 +69,5 @@ s32 func_8013822C(void) {
     D_8015EDF0 = 0;
     D_8015EDB4->unk84[1] = 0xFF;
     D_8015EDB4[8].unk84[1] = 0xFF;
-    func_80042908(0xB);
+    main_stage_set(0xB);
 }

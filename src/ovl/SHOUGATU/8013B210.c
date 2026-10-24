@@ -44,8 +44,8 @@ void func_8013B210(void) {
 }
 
 void func_8013B484(void) {
-    func_80083808();
-    switch (D_800E6280.stage) {
+    bustup_wink_update();
+    switch (game_state.stage) {
     case 0:
         func_8013B5B0();
         break;
@@ -53,23 +53,23 @@ void func_8013B484(void) {
         func_8013BA00();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
     check_k_scroll();
     k_disp_inc2();
-    func_80066C08(2);
+    screen_frame_draw(2);
     message_window_show();
-    func_80066334();
+    message_window_title_update();
     hizuke_show();
     func_80083A10();
 }
 
 void func_8013B528(void) {
-    D_800CA134 = (u8 *) &D_80145A08;
+    dialogue_tables = (u8 *) &D_80145A08;
     D_800CA138 = (u8 *) &D_80145A0C;
     D_800CA13C = D_801459FC;
     D_800CA140 = D_80145A00;
     D_800CA144 = D_80145A04;
-    func_80082764(D_80122CDC, 1, 0);
+    dialogue_run(D_80122CDC, 1, 0);
 }

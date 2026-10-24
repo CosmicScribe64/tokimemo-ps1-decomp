@@ -103,7 +103,7 @@ void func_80133108(void) {
         }
         break;
     case 6:
-        strcpy(D_8015E828, D_800E6280.player_family_name);
+        strcpy(D_8015E828, game_state.player_family_name);
         strcat(D_8015E828, "「だめだ！　喰われてしまう！");
         strcpy(D_8015E850, "くそったれめー！");
         func_8014B738((s32) D_8015E8F0, 2, 0x78);
@@ -146,11 +146,11 @@ void func_80133108(void) {
         break;
     case 9:
         for (i = 0; i < 32; i++) {
-            ((Actor *)D_8011ECD0)[i + 64].frame_table = (u8 *) D_8015EEAC;
-            ((Actor *)D_8011ECD0)[i + 64].sequence_table = (u8 *) D_8015EEC4;
-            ((Actor *)D_8011ECD0)[i + 64].tpage_table = (u8 *) D_8015EE94;
-            ((Actor *)D_8011ECD0)[i + 64].quad_flags = 0x41000000;
-            ((Actor *)D_8011ECD0)[i + 64].unk_43 = 0x18;
+            ((Actor *)actor_pool)[i + 64].frame_table = (u8 *) D_8015EEAC;
+            ((Actor *)actor_pool)[i + 64].sequence_table = (u8 *) D_8015EEC4;
+            ((Actor *)actor_pool)[i + 64].tpage_table = (u8 *) D_8015EE94;
+            ((Actor *)actor_pool)[i + 64].quad_flags = 0x41000000;
+            ((Actor *)actor_pool)[i + 64].unk_43 = 0x18;
         }
         func_8014EF3C();
         break;
@@ -299,7 +299,7 @@ void func_80133108(void) {
         func_8014F080(0x3C);
         break;
     case 26:
-        func_8004500C(1, 0x202);
+        snd_bank_start(1, 0x202);
         func_8014EF3C();
         break;
     case 27:
@@ -314,7 +314,7 @@ void func_80133108(void) {
         func_8014F178(0);
         break;
     case 29:
-        func_80042808();
+        main_stage_next();
         break;
     default:
         func_8014EF8C();

@@ -233,7 +233,7 @@ extern s32 D_8014CCB4; /* Word selection and old-value snapshot. T-9770 */
 #ifndef OVL_NAME_ENT_T10010_INPUT_GLOBALS
 #define OVL_NAME_ENT_T10010_INPUT_GLOBALS
 extern u8 D_8014CD04[]; /* Name-entry character buffer. T-10010. */
-extern s32 D_8014CC40; /* Word arguments to func_80046290. */
+extern s32 D_8014CC40; /* Word arguments to cd_audio_request_set. */
 extern s32 D_8014CC44;
 extern s32 D_8014CC48;
 extern s32 D_8014CC4C;
@@ -352,7 +352,7 @@ void func_80138F00(void);
 
 #ifndef OVL_NAME_ENT_T11010_H
 #define OVL_NAME_ENT_T11010_H
-extern s32 D_8014CC60; /* Word arguments to func_80046290. */
+extern s32 D_8014CC60; /* Word arguments to cd_audio_request_set. */
 extern s32 D_8014CC64;
 #endif
 
@@ -385,7 +385,7 @@ extern u8 D_8014CD10[];
 
 #ifndef OVL_NAME_ENT_T11010_D_H
 #define OVL_NAME_ENT_T11010_D_H
-extern s32 D_8014CC38; /* Word arguments to func_80046290. */
+extern s32 D_8014CC38; /* Word arguments to cd_audio_request_set. */
 extern s32 D_8014CC3C;
 #endif
 
@@ -405,7 +405,7 @@ s32 func_801429BC(void);
 #ifndef OVL_NAME_ENT_T17900_TABLES
 #define OVL_NAME_ENT_T17900_TABLES
 /* T-17900: sixteen flag counters, cleared and counted four at a time (end address D_8014D070) and
- * copied into SystemData.flags (D_800E7D10) by func_80140F90 and func_80141820. */
+ * copied into SystemData.flags (system_data) by func_80140F90 and func_80141820. */
 extern u8 D_8014D060[16];
 /* T-17900: second sixteen-byte flag table of func_80140F90 (walked four at a time up to D_8014D168). */
 extern u8 D_8014D158[16];

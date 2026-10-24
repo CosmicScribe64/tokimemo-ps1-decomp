@@ -2,19 +2,19 @@
 #include "ovl/ETC.h"
 
 void func_80132000(void) {
-    if ((D_800E6280.pad_pressed & PAD_CROSS) || ((D_800E6280.frame_count & 0x2FF) == 0x2FF)) {
-        func_80042808();
+    if ((game_state.pad_pressed & PAD_CROSS) || ((game_state.frame_count & 0x2FF) == 0x2FF)) {
+        main_stage_next();
     }
 }
 
 void func_80132048(u8 arg0) {
-    if ((D_800E6280.pad_pressed & PAD_CROSS) || (D_800E6280.frame_count & 0x2FF) == 0x2FF) {
+    if ((game_state.pad_pressed & PAD_CROSS) || (game_state.frame_count & 0x2FF) == 0x2FF) {
         main_state_set(arg0);
     }
 }
 
 void func_80132098(void) {
-    switch (D_800E6280.stage) {
+    switch (game_state.stage) {
     case 0:
         func_80132148();
         break;
@@ -31,12 +31,12 @@ void func_80132098(void) {
     message_window_show();
     parameter_show();
     hizuke_show();
-    func_80066C08(0);
-    func_8006BA40();
-    func_80066334();
+    screen_frame_draw(0);
+    cursor_update();
+    message_window_title_update();
 }
 void func_80132148(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80132198();
         break;
@@ -49,17 +49,17 @@ void func_80132198(void) {
     s32 i;
 
     for (i = 0x60; i < 0xA0; i++) {
-        func_80048F64(i);
+        actor_clear(i);
     }
-    func_8004E58C();
-    func_8006612C("告白判定");
+    text_system_reset();
+    message_window_set_title("告白判定");
     hizuke_init();
     k_disp_start(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80132204(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80132254();
         break;
@@ -69,14 +69,14 @@ void func_80132204(void) {
     }
 }
 void func_80132254(void) {
-    func_8004E58C();
-    func_8006612C("外井告白シーン");
+    text_system_reset();
+    message_window_set_title("外井告白シーン");
     k_disp_start(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80132290(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_801322E0();
         break;
@@ -87,16 +87,16 @@ void func_80132290(void) {
 }
 void func_801322E0(void) {
     func_80044774(0);
-    func_80046290(0x3000656, 0xB000E0C, 0xF);
-    func_80044750(0x300);
-    func_8004E58C();
-    func_8006612C("女々しい野郎どもへ");
+    cd_audio_request_set(0x3000656, 0xB000E0C, 0xF);
+    snd_command(0x300);
+    text_system_reset();
+    message_window_set_title("女々しい野郎どもへ");
     k_disp_start(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80132344(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80132394();
         break;
@@ -106,14 +106,14 @@ void func_80132344(void) {
     }
 }
 void func_80132394(void) {
-    func_8004E58C();
-    func_8006612C("机の中に手紙が");
+    text_system_reset();
+    message_window_set_title("机の中に手紙が");
     k_disp_start(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801323D0(void) {
-    switch (D_800E6280.stage) {
+    switch (game_state.stage) {
     case 0:
         func_80132460();
         break;
@@ -127,11 +127,11 @@ void func_801323D0(void) {
         func_80132670();
         break;
     }
-    func_80066C08(0);
-    func_80066334();
+    screen_frame_draw(0);
+    message_window_title_update();
 }
 void func_80132460(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_801324B0();
         break;
@@ -141,21 +141,21 @@ void func_80132460(void) {
     }
 }
 void func_801324B0(void) {
-    if (D_800E6280.substep == 0) {
-        func_80044890(0, 0, 0, 0xCE6D, 0xCE33, 0xCE1E);
-        D_800E6280.substep += 1;
-    } else if (func_80044E8C() == 1) {
-        func_80044750(0x201);
-        func_80048EB8(0);
-        func_8004E58C();
-        func_8006612C("告白シーンデータリード");
+    if (game_state.substep == 0) {
+        snd_bank_load_start(0, 0, 0, 0xCE6D, 0xCE33, 0xCE1E);
+        game_state.substep += 1;
+    } else if (snd_bank_load_poll() == 1) {
+        snd_command(0x201);
+        actor_clear_range(0);
+        text_system_reset();
+        message_window_set_title("告白シーンデータリード");
         k_disp_start(1);
-        func_8004284C();
+        main_step_next();
     }
 }
 
 void func_80132558(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_801325A8();
         break;
@@ -165,14 +165,14 @@ void func_80132558(void) {
     }
 }
 void func_801325A8(void) {
-    func_8004E58C();
-    func_8006612C("シルエット画面");
+    text_system_reset();
+    message_window_set_title("シルエット画面");
     k_disp_start(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801325E4(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80132634();
         break;
@@ -182,14 +182,14 @@ void func_801325E4(void) {
     }
 }
 void func_80132634(void) {
-    func_8004E58C();
-    func_8006612C("バストアップスクロール");
+    text_system_reset();
+    message_window_set_title("バストアップスクロール");
     k_disp_start(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80132670(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_801326C0();
         break;
@@ -199,14 +199,14 @@ void func_80132670(void) {
     }
 }
 void func_801326C0(void) {
-    func_8004E58C();
-    func_8006612C("告白シーン");
+    text_system_reset();
+    message_window_set_title("告白シーン");
     k_disp_start(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801326FC(void) {
-    switch (D_800E6280.stage) {
+    switch (game_state.stage) {
     case 0:
         func_8013275C();
         break;
@@ -214,11 +214,11 @@ void func_801326FC(void) {
         func_801327F0();
         break;
     }
-    func_80066334();
-    func_80066C08(0);
+    message_window_title_update();
+    screen_frame_draw(0);
 }
 void func_8013275C(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_801327AC();
         break;
@@ -228,15 +228,15 @@ void func_8013275C(void) {
     }
 }
 void func_801327AC(void) {
-    func_80044750(0x200);
-    func_8004E58C();
-    func_8006612C("エピローグ用初期化");
+    snd_command(0x200);
+    text_system_reset();
+    message_window_set_title("エピローグ用初期化");
     k_disp_start(1);
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801327F0(void) {
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         func_80132840();
         break;
@@ -246,8 +246,8 @@ void func_801327F0(void) {
     }
 }
 void func_80132840(void) {
-    func_8004E58C();
-    func_8006612C("エピローグ");
+    text_system_reset();
+    message_window_set_title("エピローグ");
     k_disp_start(1);
-    func_8004284C();
+    main_step_next();
 }

@@ -58,7 +58,7 @@ void func_80132000(void) {
 }
 
 void func_80132334(void) {
-    switch (D_800E6280.stage) {
+    switch (game_state.stage) {
     case 0:
         func_80133030();
         return;
@@ -140,10 +140,10 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         k_speed_set(8);
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
-                func_80046290(voices[page][step][0], voices[page][step][1], D_800E6280.current_girl);
-                func_80044750(0x300);
+                cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
+                snd_command(0x300);
             }
-            if (!(func_800460EC() & 4) && D_80122CE4 == 0) {
+            if (!(cd_audio_state() & 4) && D_80122CE4 == 0) {
                 D_800CA2A8 = 1;
                 return 0;
             }
@@ -159,10 +159,10 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         k_speed_set(8);
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
-                func_80046290(voices[page][step][0], voices[page][step][1], D_800E6280.current_girl);
-                func_80044750(0x300);
+                cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
+                snd_command(0x300);
             }
-            if (!(func_800460EC() & 4) && D_80122CE4 == 0) {
+            if (!(cd_audio_state() & 4) && D_80122CE4 == 0) {
                 D_800CA2A8 = 1;
                 return 0;
             }
@@ -182,10 +182,10 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         k_speed_set(8);
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
-                func_80046290(voices[page][step][0], voices[page][step][1], D_800E6280.current_girl);
-                func_80044750(0x300);
+                cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
+                snd_command(0x300);
             }
-            if (!(func_800460EC() & 4) && D_80122CE4 == 0) {
+            if (!(cd_audio_state() & 4) && D_80122CE4 == 0) {
                 D_800CA2A8 = 1;
                 return 0;
             }
@@ -204,10 +204,10 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         k_speed_set(8);
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
-                func_80046290(voices[page][step][0], voices[page][step][1], D_800E6280.current_girl);
-                func_80044750(0x300);
+                cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
+                snd_command(0x300);
             }
-            if (!(func_800460EC() & 4) && D_80122CE4 == 0) {
+            if (!(cd_audio_state() & 4) && D_80122CE4 == 0) {
                 D_800CA2A8 = 1;
                 return 0;
             }
@@ -218,22 +218,22 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         D_80122CE4 = 1;
         break;
     case 0xFF:
-        func_8004284C();
+        main_step_next();
         break;
     default:
-        func_80046500();
+        game_reset_to_title();
         break;
     }
 }
 
-/* Steps the scene dialogue: D_800CA134/138 point at the page and step halfwords (D_8013C358, D_8013C35C),
+/* Steps the scene dialogue: dialogue_tables/138 point at the page and step halfwords (D_8013C358, D_8013C35C),
  * D_800CA13C/140/144 hold the text, kind and voice tables of the scene (func_80132D98). Returns 1 when a
  * message has finished. T-20930 */
 s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2) {
     if (D_80122D00 != 0) {
         if (check_end_k() != 0) {
             if (D_80122CF0 == 0 || (D_80122CF0 == 1 && func_80046094() == 9)) {
-                if ((u32)++D_800E6280.step_timer.w >= 0x3C) {
+                if ((u32)++game_state.step_timer.w >= 0x3C) {
                     D_80122D00 = 0;
                     k_reset(1);
                     return 1;
@@ -241,14 +241,14 @@ s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2) {
             }
         }
     } else if (D_80122D18 != 0) {
-        if (check_end_k() != 0 || (check_end_k() == 0 && D_800E6280.pad_held == 0)) {
+        if (check_end_k() != 0 || (check_end_k() == 0 && game_state.pad_held == 0)) {
             if (D_80122CF0 == 0 || (D_80122CF0 == 1 && func_80046094() == 9)) {
                 D_80122D18 = 0;
                 return 1;
             }
         }
     } else if (D_80122CE4 != 0) {
-        if (check_end_k() != 0 || (check_end_k() == 0 && D_800E6280.pad_held == 0)) {
+        if (check_end_k() != 0 || (check_end_k() == 0 && game_state.pad_held == 0)) {
             if (D_80122CF0 == 0 || (D_80122CF0 == 1 && func_80046094() == 9)) {
                 D_80122CE4 = 0;
                 k_reset(1);
@@ -256,12 +256,12 @@ s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2) {
             }
         }
     } else {
-        D_800E6280.step_timer.w = 0;
-        func_80132420(((u8 ***)D_800CA13C)[*(s16 *)D_800CA134][*(s16 *)D_800CA138], ((u8 **)D_800CA140)[*(s16 *)D_800CA134][*(s16 *)D_800CA138], (u8)arg0, D_800CA144, *(s16 *)D_800CA134, *(s16 *)D_800CA138, (u8)arg2);
+        game_state.step_timer.w = 0;
+        func_80132420(((u8 ***)D_800CA13C)[*(s16 *)dialogue_tables][*(s16 *)D_800CA138], ((u8 **)D_800CA140)[*(s16 *)dialogue_tables][*(s16 *)D_800CA138], (u8)arg0, D_800CA144, *(s16 *)dialogue_tables, *(s16 *)D_800CA138, (u8)arg2);
         if (D_8013C364 == 0) {
             if ((u8)arg1 != 0 && D_800CA2A8 == 0) {
-                if (((u8 **)D_800CA140)[*(s16 *)D_800CA134][*(s16 *)D_800CA138] == 0xFF) {
-                    *(s16 *)D_800CA134 += 1;
+                if (((u8 **)D_800CA140)[*(s16 *)dialogue_tables][*(s16 *)D_800CA138] == 0xFF) {
+                    *(s16 *)dialogue_tables += 1;
                     *(s16 *)D_800CA138 = 0;
                 } else {
                     *(s16 *)D_800CA138 += 1;
@@ -273,7 +273,7 @@ s32 func_80132B04(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void func_80132D98(void) {
-    D_800CA134 = (u8 *)&D_8013C358;
+    dialogue_tables = (u8 *)&D_8013C358;
     D_800CA138 = (u8 *)&D_8013C35C;
     D_800CA13C = D_8013C34C.unk_00;
     D_800CA140 = D_8013C34C.unk_04;
@@ -282,27 +282,27 @@ void func_80132D98(void) {
 }
 
 void func_80132E10(void) {
-    func_80044890(1, 0xBF98, 0xBF79, 0xCE6D, 0xCE33, 0xCE1E);
-    if (func_80044E8C() == 1) {
-        func_8004284C();
+    snd_bank_load_start(1, 0xBF98, 0xBF79, 0xCE6D, 0xCE33, 0xCE1E);
+    if (snd_bank_load_poll() == 1) {
+        main_step_next();
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80132E70(void) {
-    if (func_80044E8C() == 1) {
-        func_8004284C();
+    if (snd_bank_load_poll() == 1) {
+        main_step_next();
     }
-    if ((u32) D_800E6280.step_timer.w++ >= 0x400U) {
-        func_800452C4();
-        func_8004482C();
-        func_80042940((D_800E6280.step - 1) & 0xFF);
+    if ((u32) game_state.step_timer.w++ >= 0x400U) {
+        cd_cmd_reset();
+        snd_bank_state_reset();
+        main_step_set((game_state.step - 1) & 0xFF);
     }
 }
 
 void func_80132EF0(void) {
-    func_80044750(0x200);
-    func_8004284C();
+    snd_command(0x200);
+    main_step_next();
 }
 
 /* Port of main check_k_scroll (src/main/8007C030.c), with ENDING's own limits. The unsigned

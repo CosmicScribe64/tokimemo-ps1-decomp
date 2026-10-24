@@ -1,16 +1,16 @@
-#define MAIN_API_OVERRIDE_func_80049A40 /* unprototyped view: keeps 16-bit widening off the negative x/y arguments in func_80152F30 (T-24124) */
+#define MAIN_API_OVERRIDE_prim_gradient_rect /* unprototyped view: keeps 16-bit widening off the negative x/y arguments in func_80152F30 (T-24124) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 #include "psx_types.h"
 
-void func_80049A40();
+void prim_gradient_rect();
 
 void func_801525B0(void) {
     s32 sp28; /* FAKE (T-17100): dead copy of the column; without it the 0x28 spill of var_a3 and the frame change */
     s32 var_a3;
 
-    D_800E6280.screen_brightness = 0;
-    D_8015EDBC = func_8013E934(0xB1, 0xB3, (s32) D_800E6280.player_family_name) - 1;
+    game_state.screen_brightness = 0;
+    D_8015EDBC = func_8013E934(0xB1, 0xB3, (s32) game_state.player_family_name) - 1;
     if (D_8015EB9C != 0xE) {
         sp28 = 0xD3;
         var_a3 = 0xD3;
@@ -66,36 +66,36 @@ void func_801528DC(void) {
     s32 i;
     u8 *p;
 
-    p = (u8 *)&D_800E6280.stage_scratch;
-    if (D_800E6280.stage_timer == 0) {
-        D_800E6280.stage_timer += 1;
+    p = (u8 *)&game_state.stage_scratch;
+    if (game_state.stage_timer == 0) {
+        game_state.stage_timer += 1;
         *p = 0x80;
     }
     i = 0;
     do {
-        ((Actor *)D_8011ECD0)[i + 64].brightness = *p;
-        D_800E6280.screen_brightness = *p;
+        ((Actor *)actor_pool)[i + 64].brightness = *p;
+        game_state.screen_brightness = *p;
         if (D_8015EB98 == 0x20000 && *p >= 0x61) {
             D_80120E93 = 0x60;
         }
         i++;
-    } while (D_80120650 != &D_8011ECD0[i * 0x44]);
+    } while (actor_pool_96 != &actor_pool[i * 0x44]);
     *p -= 2;
     if (*p == 0) {
-        func_8004E58C();
-        D_800E6280.screen_brightness = 0x80;
-        func_80048EB8(0);
-        func_8006BC28(0);
+        text_system_reset();
+        game_state.screen_brightness = 0x80;
+        actor_clear_range(0);
+        cursor_actor_init(0);
         back_clear_switch(1);
-        func_80042808();
+        main_stage_next();
     }
 }
 
 void func_801529B4(void) {
     func_8014B79C();
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
-        func_8004500C(1, 0x200);
+        snd_bank_start(1, 0x200);
         switch (D_8015EB98) {
         case 0x10000:
             strcpy(D_8015E9E0, "ハブ・ロードが襲ってきた！");
@@ -178,41 +178,41 @@ void func_801529B4(void) {
         if (D_8015EB98 == 0x08000000) {
             func_8013E97C(0x3B, -0x58, 0x70);
         }
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
-        func_8013E97C(0x30, 0x160 - D_800E6280.step_timer.u, 0x58);
-        func_8013E97C(0x1D, 0x168 - D_800E6280.step_timer.u, 0x88);
-        func_8013E97C(0x3B, (D_800E6280.step_timer.u * 2) - 0x58, 0x60);
+        func_8013E97C(0x30, 0x160 - game_state.step_timer.u, 0x58);
+        func_8013E97C(0x1D, 0x168 - game_state.step_timer.u, 0x88);
+        func_8013E97C(0x3B, (game_state.step_timer.u * 2) - 0x58, 0x60);
         if (D_8015EB98 == 0x100000) {
-            func_8013E97C(0x3B, (D_800E6280.step_timer.u * 2) - 0x28, 0x68);
-            func_8013E97C(0x3C, (D_800E6280.step_timer.u * 2) - 0x60, 0x58);
-            func_8013E97C(0x3D, (D_800E6280.step_timer.u * 2) - 0x68, 0x88);
+            func_8013E97C(0x3B, (game_state.step_timer.u * 2) - 0x28, 0x68);
+            func_8013E97C(0x3C, (game_state.step_timer.u * 2) - 0x60, 0x58);
+            func_8013E97C(0x3D, (game_state.step_timer.u * 2) - 0x68, 0x88);
         }
         if (D_8015EB98 == 0x08000000) {
-            func_8013E97C(0x3B, (D_800E6280.step_timer.u * 2) - 0x58, 0x70);
+            func_8013E97C(0x3B, (game_state.step_timer.u * 2) - 0x58, 0x70);
         }
-        D_800E6280.step_timer.u += 4;
-        if (D_800E6280.step_timer.u >= 0x51) {
+        game_state.step_timer.u += 4;
+        if (game_state.step_timer.u >= 0x51) {
             func_8013E97C(0x30, 0, 0);
             func_8013E7C0(0x30, 0, 1, 1);
             func_8013E97C(0x1D, 0, 0);
             if (D_8015EB9C != 0xE) {
                 func_8013E7C0(0x1D, 0, 1, 1);
             }
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 2:
-        D_800E6280.step_timer.u += 1;
-        if (D_800E6280.step_timer.u >= 0x3D) {
-            func_80042808();
+        game_state.step_timer.u += 1;
+        if (game_state.step_timer.u >= 0x3D) {
+            main_stage_next();
         }
         break;
     }
 }
 
-/* FAKE: x and y are unused locals that place color at sp+0x3C in the 0x48 frame; *(u8 *)&D_800E6280.step bypasses cvt_pass.py
+/* FAKE: x and y are unused locals that place color at sp+0x3C in the 0x48 frame; *(u8 *)&game_state.step bypasses cvt_pass.py
  * widening so the four loads of unk_110A stay in ugen temporaries ($t7..$t9); in case 3, the *(s32 *)& reads of D_8015EC38/3C/40/44/4C
  * keep D_8015EC38 and D_8015EC3C promoted to $a1/$a2 across the function and allocate $v0, $v1, $a3 to D_8015EC44, D_8015EC40,
  * D_8015EC4C so uopt flushes the six stores in the original order. T-24124 */
@@ -250,20 +250,20 @@ void func_80152F30(void) {
         break;
     }
     func_8014B79C();
-    switch (*(u8 *)&D_800E6280.step) {
+    switch (*(u8 *)&game_state.step) {
     case 0:
-        D_800E6280.current_girl = GIRL_SOTOI;
-        func_80046290(0x1C0000A8, 0x0F0000B7, 0xE);
-        func_80044750(0x300);
-        func_8004284C();
+        game_state.current_girl = GIRL_SOTOI;
+        cd_audio_request_set(0x1C0000A8, 0x0F0000B7, 0xE);
+        snd_command(0x300);
+        main_step_next();
         break;
     case 1:
-        func_80044750(0xE4);
-        func_8004284C();
+        snd_command(0xE4);
+        main_step_next();
         break;
     case 2:
-        if (func_800460EC() & 4) {
-            func_8004284C();
+        if (cd_audio_state() & 4) {
+            main_step_next();
         }
         break;
     case 3:
@@ -284,64 +284,64 @@ void func_80152F30(void) {
         func_8013E810(0x2F, 2, 1, 1);
         func_8013E97C(0x2E, D_8015EC38, D_8015EC3C);
         func_8013E810(0x2E, 6, 1, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 4:
-        func_8013E97C(0x30, 0x160 - D_800E6280.step_timer.u, 0x58);
-        func_8013E97C(0x1D, 0x168 - D_800E6280.step_timer.u, 0x88);
-        D_800E6280.step_timer.u += 4;
-        if (D_800E6280.step_timer.u >= 0x51U) {
+        func_8013E97C(0x30, 0x160 - game_state.step_timer.u, 0x58);
+        func_8013E97C(0x1D, 0x168 - game_state.step_timer.u, 0x88);
+        game_state.step_timer.u += 4;
+        if (game_state.step_timer.u >= 0x51U) {
             func_8013E97C(0x30, 0, 0);
             func_8013E7C0(0x30, 0, 1, 1);
             func_8013E97C(0x1D, 0, 0);
             func_8013E7C0(0x1D, 0x18, 1, 1);
             func_8013E97C(0x38, 0, 0);
             func_8013E7C0(0x38, 9, 1, 1);
-            ((Actor *)D_8011ECD0)[152].unk_01 = 2;
-            func_8004284C();
+            ((Actor *)actor_pool)[152].unk_01 = 2;
+            main_step_next();
         }
         break;
     case 5:
-        func_80049A40(-0x5C - (D_800E6280.step_timer.u >> 1), -0x78, (D_800E6280.step_timer.u >> 1) * 2, 0xA8, 3, color.word, 0x81);
+        prim_gradient_rect(-0x5C - (game_state.step_timer.u >> 1), -0x78, (game_state.step_timer.u >> 1) * 2, 0xA8, 3, color.word, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
-        D_800E6280.step_timer.u += 1;
-        if (D_800E6280.step_timer.u >= 0x41U) {
-            func_8004284C();
+        game_state.step_timer.u += 1;
+        if (game_state.step_timer.u >= 0x41U) {
+            main_step_next();
         }
         break;
     case 6:
-        func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
+        prim_gradient_rect(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
-        func_8013E97C(0x3B, 0x48, D_800E6280.step_timer.u - 0x80);
+        func_8013E97C(0x3B, 0x48, game_state.step_timer.u - 0x80);
         func_8013E810(0x3B, 8, 1, 1);
-        D_800E6280.step_timer.u += 1;
-        if (D_800E6280.step_timer.u >= 0xE9U) {
+        game_state.step_timer.u += 1;
+        if (game_state.step_timer.u >= 0xE9U) {
             k_disp_switch(D_8015EDE8, 1);
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 7:
-        func_80049A40(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
-        D_800E6280.step_timer.u += 1;
+        prim_gradient_rect(-0x7C, -0x78, 0x40, 0xA8, 3, color.word, 0x81);
+        game_state.step_timer.u += 1;
         dtd_on_tpage(0, 0, 3, 1, 0);
-        if (D_800E6280.step_timer.u >= 0x79U) {
-            func_8004284C();
+        if (game_state.step_timer.u >= 0x79U) {
+            main_step_next();
         }
         break;
     case 8:
-        func_80049A40(D_800E6280.step_timer.u - 0x7C, -0x78, 0x40 - (D_800E6280.step_timer.u * 2), 0xA8, 3, color.word, 0x81);
+        prim_gradient_rect(game_state.step_timer.u - 0x7C, -0x78, 0x40 - (game_state.step_timer.u * 2), 0xA8, 3, color.word, 0x81);
         dtd_on_tpage(0, 0, 3, 1, 0);
-        D_800E6280.step_timer.u += 1;
-        if (D_800E6280.step_timer.u >= 0x21U) {
-            func_8004284C();
+        game_state.step_timer.u += 1;
+        if (game_state.step_timer.u >= 0x21U) {
+            main_step_next();
         }
         break;
     case 9:
         D_8015EC38 = 0x40;
-        D_8015EC3C = D_800E6280.step_timer.u - 0x40;
-        D_800E6280.step_timer.u += 1;
-        if (D_800E6280.step_timer.u >= 0x59U) {
-            func_8004284C();
+        D_8015EC3C = game_state.step_timer.u - 0x40;
+        game_state.step_timer.u += 1;
+        if (game_state.step_timer.u >= 0x59U) {
+            main_step_next();
         }
         break;
     case 10:
@@ -350,38 +350,38 @@ void func_80152F30(void) {
         func_8013E7C0(0x38, 0xFF, 1, 0);
         func_8013E97C(0x3B, 0, 0);
         func_8013E7C0(0x3B, 0, 1, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 11:
         if (D_8015EE48 == 0) {
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 12:
         func_8013E97C(0x1E, 0, 0);
         func_8013E7C0(0x1E, 0, 5, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 13:
         func_801535E4();
         break;
     case 14:
         D_8015EDF0 = 0x10001000;
-        func_80042808();
+        main_stage_next();
         break;
     }
-    if (*(u8 *)&D_800E6280.step >= 9) {
+    if (*(u8 *)&game_state.step >= 9) {
         func_8015785C();
     }
-    if ((*(u8 *)&D_800E6280.step >= 5) && (*(u8 *)&D_800E6280.step < 8)) {
+    if ((*(u8 *)&game_state.step >= 5) && (*(u8 *)&game_state.step < 8)) {
         func_8013F15C(0x505, 0x6E, 7);
     }
 }
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801535E4(void) {
-    if (D_800E6280.pad_pressed & PAD_CROSS) {
-        func_80044750(0x74);
+    if (game_state.pad_pressed & PAD_CROSS) {
+        snd_command(0x74);
         if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
             D_8015EE44.unk_08 = D_8015E744 + 1;
         }
@@ -411,7 +411,7 @@ s32 func_801535E4(void) {
     case 5:
         func_8013E7C0(0x1D, 0x18, 1, 1);
         func_8013F220();
-        func_8004284C();
+        main_step_next();
         return;
     }
 }
@@ -425,7 +425,7 @@ s32 func_80153784(void) {
     s32 i;
 
     /* FAKE: x/y and w/h of each RECT share a source line; as1 then stores y, x, h, w as the original does. T-17112 */
-    switch (D_800E6280.step) {
+    switch (game_state.step) {
     case 0:
         r0.x = 0x240; r0.y = 0x100;
         r0.w = 0x40; r0.h = 0x28;
@@ -450,7 +450,7 @@ s32 func_80153784(void) {
         D_8015EC3C = 0x80;
         /* FAKE: D_8015ED28 through the D_8015EC38 symbol as in case 1; under its own name uopt moves this store above the D_8015EC38 store. T-17112 */
         (&D_8015EC38)[60] = 0;
-        func_8004284C();
+        main_step_next();
         break;
     case 1:
         /* FAKE: D_8015EC40 and D_8015ED28..D_8015ED38 (+0x08, +0xF0..+0x100) are reached through the D_8015EC38 symbol; the original
@@ -471,7 +471,7 @@ s32 func_80153784(void) {
         D_8015ED2C += 1;
         D_8015EC3C -= 1;
         if (D_8015EC3C == 0) {
-            func_8004284C();
+            main_step_next();
         }
         break;
     case 2:
@@ -479,13 +479,13 @@ s32 func_80153784(void) {
         r2.w = 1; r2.h = 0x28;
         func_8009C93C(&r2, 0x220, 0x100);
         func_8013E7C0(0x1F, 0, 1, 1);
-        func_8004284C();
+        main_step_next();
         break;
     case 3:
         D_8015EC74 = 0;
         /* FAKE: the 48 words from D_8015EC7C through the first symbol, with D_8015EC78 on the loop's line to keep its store behind the loop setup. T-17112 */
         D_8015EC78 = 0; for (i = 0; i < 48; i++) (&D_8015EC7C)[i] = 0;
-        func_80042808();
+        main_stage_next();
         break;
     }
 }
@@ -498,15 +498,15 @@ void func_80153A60(void) {
     i = 0;
     p = &D_8015EC74;
     do {
-        ((Actor *)D_8011ECD0)[i + 64].brightness = *p;
-        *(s8 *)&D_800E6280.unk_3A = *p;
+        ((Actor *)actor_pool)[i + 64].brightness = *p;
+        *(s8 *)&game_state.unk_3A = *p;
         if (D_8015EB98 == 0x20000 && (dead = *p) >= 0x61) {
             D_80120E93 = 0x60;
         }
         if (0) { /* FAKE: empty dead branch steers the allocation. T-10910 */
         }
         i++;
-    } while (D_80120650 != &D_8011ECD0[i * 0x44]);
+    } while (actor_pool_96 != &actor_pool[i * 0x44]);
     func_8013E7C0(0x1F, 0, 1, 0);
     D_8015EC74 += 2;
     if (*p > 0x80) {
@@ -618,7 +618,7 @@ void func_80154220(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     POLY_FT4 *p;
     s32 y;
 
-    p = (POLY_FT4 *)GetWorkBase(0x28, D_8011ECA0);
+    p = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(p);
     SetShadeTex(p, 0);
     if (arg3 != 0) {
@@ -635,7 +635,7 @@ void func_80154220(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
         p->clut = func_8009ED74(0, 0x1F5);
     }
     p->tpage = func_8009ECB0(1, arg3 + 4, (arg4 << 6) + 0x140, 0x100);
-    y = -D_8011ECA0 * 0xF0 + 0xF0;
+    y = -draw_buffer * 0xF0 + 0xF0;
     p->x0 = arg0[0];
     p->y0 = arg0[1] + y;
     p->x1 = arg0[2] + 1;
@@ -652,5 +652,5 @@ void func_80154220(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     p->v2 = arg1[5] + 1;
     p->u3 = arg1[6] + 1;
     p->v3 = arg1[7] + 1;
-    AddPrim((D_8011ECA0 << 0xA) + 0x20 + D_800E8CA0, (s32)p);
+    AddPrim((draw_buffer << 0xA) + 0x20 + D_800E8CA0, (s32)p);
 }

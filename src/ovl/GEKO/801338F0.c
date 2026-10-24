@@ -14,7 +14,7 @@ void func_801338F0(void) {
     FnTbl19 tbl;
 
     tbl = D_80144D40;
-    idx = D_800E6280.step;
+    idx = game_state.step;
     tbl.f[idx](0x80);
 }
 
@@ -26,7 +26,7 @@ void func_8013396C(void) {
         func_801322E8();
         return;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_801339AC(void) {
@@ -35,26 +35,26 @@ void func_801339AC(void) {
 
     cur = D_80144C50;
     if (cur == 0x64) {
-        func_8004284C();
-        func_8004284C();
-        func_8004284C();
-    } else if (D_800E6280.current_girl == GIRL_SAKI) {
+        main_step_next();
+        main_step_next();
+        main_step_next();
+    } else if (game_state.current_girl == GIRL_SAKI) {
         if (D_80144C3C == 0x26) {
-            raw = D_800E6280.player_flags.h;
-            if (((raw >> 0xC) == 6) && ((D_800E6280.girls[4].flags.b[2] >> 4) == 6)) {
+            raw = game_state.player_flags.h;
+            if (((raw >> 0xC) == 6) && ((game_state.girls[4].flags.b[2] >> 4) == 6)) {
                 D_80144C3C = 0x28;
-            } else if (((raw >> 0xC) == 7) && ((D_800E6280.girls[4].flags.b[2] >> 4) == 7)) {
+            } else if (((raw >> 0xC) == 7) && ((game_state.girls[4].flags.b[2] >> 4) == 7)) {
                 D_80144C3C = 0x29;
             } else {
                 D_80144C3C = 0x2A;
             }
         } else {
-            func_8004284C();
+            main_step_next();
         }
     } else {
-        func_8004284C();
+        main_step_next();
     }
-    func_8004284C();
+    main_step_next();
 }
 
 s32 func_80133AA0() {
@@ -62,19 +62,19 @@ s32 func_80133AA0() {
     u32 c50;
     u8 state;
 
-    state = get_g_zyotai_h(D_800E6280.current_girl);
+    state = get_g_zyotai_h(game_state.current_girl);
     func_801322E8();
-    if (*(s16 *)&D_80144C40 == 2 && D_800E6280.current_girl == GIRL_YUKO && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
-        func_80083440(3U);
+    if (*(s16 *)&D_80144C40 == 2 && game_state.current_girl == GIRL_YUKO && (c50 = D_80144C50) == 1U && (game_state.step_timer.u++ | 0) == 1U) {
+        bustup_layout_set(3U);
     }
-    if (*(s16 *)&D_80144C40 == 4 && D_800E6280.current_girl == GIRL_YUKO && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
-        func_80083440(state);
+    if (*(s16 *)&D_80144C40 == 4 && game_state.current_girl == GIRL_YUKO && (c50 = D_80144C50) == 1U && (game_state.step_timer.u++ | 0) == 1U) {
+        bustup_layout_set(state);
     }
-    if ((*(s16 *)&D_80144C40 == 1 || *(s16 *)&D_80144C40 == 5) && D_800E6280.current_girl == GIRL_YUMI && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
-        func_80083440(2U);
+    if ((*(s16 *)&D_80144C40 == 1 || *(s16 *)&D_80144C40 == 5) && game_state.current_girl == GIRL_YUMI && (c50 = D_80144C50) == 1U && (game_state.step_timer.u++ | 0) == 1U) {
+        bustup_layout_set(2U);
     }
-    if (*(s16 *)&D_80144C40 == 3 && D_800E6280.current_girl == GIRL_YUMI && (c50 = D_80144C50) == 1U && (D_800E6280.step_timer.u++ | 0) == 1U) {
-        func_80083440(3U);
+    if (*(s16 *)&D_80144C40 == 3 && game_state.current_girl == GIRL_YUMI && (c50 = D_80144C50) == 1U && (game_state.step_timer.u++ | 0) == 1U) {
+        bustup_layout_set(3U);
     }
 }
 
@@ -85,22 +85,22 @@ void func_80133C50(void) {
     u32 temp;
 
     names = D_80144D8C;
-    strcpy(&D_800CA280, names.name[D_800E6280.player_flags.h >> 12]);
-    D_800E6280.girls[D_800E6280.current_girl].flags.f.b0 = 1;
+    strcpy(&D_800CA280, names.name[game_state.player_flags.h >> 12]);
+    game_state.girls[game_state.current_girl].flags.f.b0 = 1;
     if (D_80144C50 == 10) {
-        D_800E6280.girls[D_800E6280.current_girl].flags.f.b6 = 1;
+        game_state.girls[game_state.current_girl].flags.f.b6 = 1;
     }
     D_80144C3C = 0x16;
-    v = get_g_zyotai_s(D_800E6280.current_girl);
+    v = get_g_zyotai_s(game_state.current_girl);
     /* FAKE: T-25002 reading D_80144C50 through the word local g keeps bne t8,a0 operand order */
     if ((g = D_80144C50) == 2U) {
-        g = D_800E6280.current_girl;
+        g = game_state.current_girl;
         D_80144C50 = 0;
         if (g == 0) {
             /* FAKE: T-11910 the volatile club view keeps this read before the record load (uopt otherwise sinks it to
              * the first compare), giving the original ugen order; also used in the 1/2/3 branch. */
-            v = D_800E6280.player_flags.vh >> 12;
-            temp = D_800E6280.girls[g].flags.b[2] >> 4;
+            v = game_state.player_flags.vh >> 12;
+            temp = game_state.girls[g].flags.b[2] >> 4;
             g = temp;
             if (v == g && (u32)v < 6) {
                 func_80132A4C(2);
@@ -112,8 +112,8 @@ void func_80133C50(void) {
                 func_80132A4C(5);
             }
         } else if (g == 1 || g * 1 == 2 || g == 3 /* FAKE: T-25002 g * 1 puts the shared constant 2 first in the beq */) {
-            v = D_800E6280.player_flags.vh >> 12;
-            g = D_800E6280.girls[D_800E6280.current_girl].flags.b[2] >> 4;
+            v = game_state.player_flags.vh >> 12;
+            g = game_state.girls[game_state.current_girl].flags.b[2] >> 4;
             if (v == g) {
                 func_80132A4C(2);
             } else if (v != g && (u32)v < 6) {
@@ -122,7 +122,7 @@ void func_80133C50(void) {
                 func_80132A4C(5);
             }
         } else if (g == 4 || g == 5 || g == 10) {
-            if ((D_800E6280.player_flags.h >> 12) < 6) {
+            if ((game_state.player_flags.h >> 12) < 6) {
                 func_80132A4C(3);
             } else if ((u8)(v & 0x7F) < 2) {
                 func_80132A4C(4);
@@ -130,14 +130,14 @@ void func_80133C50(void) {
                 func_80132A4C(5);
             }
         } else if (g == 6 || g == 7 || g == 8 || g == 9) {
-            if ((D_800E6280.player_flags.h >> 12) < 6) {
+            if ((game_state.player_flags.h >> 12) < 6) {
                 func_80132A4C(2);
             } else {
                 func_80132A4C(3);
             }
         }
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133F94(void) {
@@ -148,15 +148,15 @@ void func_80133F94(void) {
     if (cur == 0x64) {
         D_80144C3C = 0x28;
     }
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80133FE8(void) {
     D_80144C3C = 0x27;
-    func_8004284C();
+    main_step_next();
 }
 
 void func_80134010(void) {
     bg_read_sub2(0x42D8);
-    func_8004284C();
+    main_step_next();
 }

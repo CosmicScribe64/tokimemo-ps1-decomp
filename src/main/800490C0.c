@@ -3,16 +3,16 @@
 #include "psx_types.h"
 
 void SetWorkBase(s32 arg0, s32 arg1) {
-    D_800E6280.prim_arena[arg1].base = arg0;
-    D_800E6280.prim_arena[arg1].size = 0x10C00;
-    D_800E6280.prim_arena[arg1].used = 0;
+    game_state.prim_arena[arg1].base = arg0;
+    game_state.prim_arena[arg1].size = 0x10C00;
+    game_state.prim_arena[arg1].used = 0;
 }
 
 s32 GetWorkBase(s32 arg0, s32 arg1) {
     s32 ret;
 
-    ret = D_800E6280.prim_arena[arg1].base + (D_800E6280.prim_arena[arg1].used * 4);
-    D_800E6280.prim_arena[arg1].used += ((arg0 + 3) / 4) * 4;
+    ret = game_state.prim_arena[arg1].base + (game_state.prim_arena[arg1].used * 4);
+    game_state.prim_arena[arg1].used += ((arg0 + 3) / 4) * 4;
     return ret;
 }
 
@@ -31,14 +31,14 @@ void sprite_set_gpu_poly_ft4(SpriteQuad *arg0, s32 arg1, s32 arg2) {
         p[4] = arg0->tint_r;
         p[5] = arg0->tint_g;
         p[6] = arg0->tint_b;
-        *(s16 *)(p + 8) = D_800E6280.screen_center_x[arg2] + arg0->x - arg0->anchor_x;
-        *(s16 *)(p + 0xA) = D_800E6280.screen_center_y[arg2] + arg0->y - arg0->anchor_y;
-        *(s16 *)(p + 0x10) = D_800E6280.screen_center_x[arg2] + arg0->x - arg0->anchor_x + (u16)arg0->w;
-        *(s16 *)(p + 0x12) = D_800E6280.screen_center_y[arg2] + arg0->y - arg0->anchor_y;
-        *(s16 *)(p + 0x18) = D_800E6280.screen_center_x[arg2] + arg0->x - arg0->anchor_x;
-        *(s16 *)(p + 0x1A) = D_800E6280.screen_center_y[arg2] + arg0->y - arg0->anchor_y + arg0->h;
-        *(s16 *)(p + 0x20) = D_800E6280.screen_center_x[arg2] + arg0->x - arg0->anchor_x + (u16)arg0->w;
-        *(s16 *)(p + 0x22) = D_800E6280.screen_center_y[arg2] + arg0->y - arg0->anchor_y + arg0->h;
+        *(s16 *)(p + 8) = game_state.screen_center_x[arg2] + arg0->x - arg0->anchor_x;
+        *(s16 *)(p + 0xA) = game_state.screen_center_y[arg2] + arg0->y - arg0->anchor_y;
+        *(s16 *)(p + 0x10) = game_state.screen_center_x[arg2] + arg0->x - arg0->anchor_x + (u16)arg0->w;
+        *(s16 *)(p + 0x12) = game_state.screen_center_y[arg2] + arg0->y - arg0->anchor_y;
+        *(s16 *)(p + 0x18) = game_state.screen_center_x[arg2] + arg0->x - arg0->anchor_x;
+        *(s16 *)(p + 0x1A) = game_state.screen_center_y[arg2] + arg0->y - arg0->anchor_y + arg0->h;
+        *(s16 *)(p + 0x20) = game_state.screen_center_x[arg2] + arg0->x - arg0->anchor_x + (u16)arg0->w;
+        *(s16 *)(p + 0x22) = game_state.screen_center_y[arg2] + arg0->y - arg0->anchor_y + arg0->h;
         p[0xC] = arg0->unk_0E;
         p[0xD] = arg0->unk_0F;
         p[0x14] = arg0->unk_0E + (u16)arg0->w;
@@ -58,37 +58,37 @@ void goto_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     u16 tpage;
 
     tpage = func_8009ECB0(arg4, arg3, arg0, arg1);
-    work = GetWorkBase(0xC, D_8011ECA0);
+    work = GetWorkBase(0xC, draw_buffer);
     func_8009D294(work, 0, 0, tpage, 0);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg2 * 4, work);
+    AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg2 * 4, work);
     safe_env(arg2);
 }
 
 void safe_env(s32 arg0) {
     u8 *p;
 
-    p = (u8 *)GetWorkBase(0xC, D_8011ECA0);
+    p = (u8 *)GetWorkBase(0xC, draw_buffer);
     func_8009F0B8(p);
     *(s16 *)(p + 8) = 0;
     *(s16 *)(p + 0xA) = 0;
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg0 * 4, (s32)p);
+    AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg0 * 4, (s32)p);
 }
 
 void dtd_on_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 work;
 
-    work = GetWorkBase(0xC, D_8011ECA0);
+    work = GetWorkBase(0xC, draw_buffer);
     func_8009D294(work, 0, 1, func_8009ECB0(arg4, arg3, arg0, arg1), 0);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg2 * 4, work);
+    AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg2 * 4, work);
     safe_env(arg2);
 }
 
 void dtd_on(s32 arg0) {
     s32 work;
 
-    work = GetWorkBase(0xC, D_8011ECA0);
+    work = GetWorkBase(0xC, draw_buffer);
     func_8009D294(work, 0, 1, 0, 0);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg0 * 4, work);
+    AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg0 * 4, work);
     safe_env(arg0);
 }
 
@@ -107,12 +107,12 @@ void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
     s32 b;
     s32 s;
 
-    r = ((rsin(D_800E6280.frame_count * 0xFF0) << 5) / 4096) + (((u32)arg7 >> 16) & 0xFF);
-    g = ((rsin(D_800E6280.frame_count * 0xFF0) << 5) / 4096) + (((u32)arg7 >> 8) & 0xFF);
-    b = ((rsin(D_800E6280.frame_count * 0xFF0) << 5) / 4096) + (arg7 & 0xFF);
+    r = ((rsin(game_state.frame_count * 0xFF0) << 5) / 4096) + (((u32)arg7 >> 16) & 0xFF);
+    g = ((rsin(game_state.frame_count * 0xFF0) << 5) / 4096) + (((u32)arg7 >> 8) & 0xFF);
+    b = ((rsin(game_state.frame_count * 0xFF0) << 5) / 4096) + (arg7 & 0xFF);
     /* FAKE: T-25115, signed sum; with the u32 field uopt evaluates the frame counter before arg8. */
-    s = abs(rsin(((s32)D_800E6280.frame_count + arg8) * 0xFF0));
-    p = (POLY_G3 *)GetWorkBase(0x1C, D_8011ECA0);
+    s = abs(rsin(((s32)game_state.frame_count + arg8) * 0xFF0));
+    p = (POLY_G3 *)GetWorkBase(0x1C, draw_buffer);
     func_8009F004(p);
     SetSemiTrans(p, 1);
     p->r0 = r * 3 / 5;
@@ -123,22 +123,22 @@ void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
     p->r1 = r * 0 / 5, p->g1 = g * 0 / 5, p->b1 = b * 0 / 5;
     p->r2 = r * 0 / 5, p->g2 = g * 0 / 5, p->b2 = b * 0 / 5;
     if (arg4 == 0) {
-        p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + arg0;
-        p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg1;
+        p->x0 = game_state.screen_center_x[draw_buffer] + arg0;
+        p->y0 = game_state.screen_center_y[draw_buffer] + arg1;
         w = s * 8 / 4096;
-        p->x1 = D_800E6280.screen_center_x[D_8011ECA0] + arg2 - w;
-        p->y1 = D_800E6280.screen_center_y[D_8011ECA0] + arg3;
-        p->x2 = D_800E6280.screen_center_x[D_8011ECA0] + arg2 + w;
-        p->y2 = D_800E6280.screen_center_y[D_8011ECA0] + arg3;
+        p->x1 = game_state.screen_center_x[draw_buffer] + arg2 - w;
+        p->y1 = game_state.screen_center_y[draw_buffer] + arg3;
+        p->x2 = game_state.screen_center_x[draw_buffer] + arg2 + w;
+        p->y2 = game_state.screen_center_y[draw_buffer] + arg3;
     } else {
-        p->x0 = D_800E6280.screen_center_x[D_8011ECA0] + arg0;
-        p->y0 = D_800E6280.screen_center_y[D_8011ECA0] + arg1;
-        p->x1 = D_800E6280.screen_center_x[D_8011ECA0] + arg2;
-        p->y1 = D_800E6280.screen_center_y[D_8011ECA0] + arg3;
-        p->x2 = D_800E6280.screen_center_x[D_8011ECA0] + arg4;
-        p->y2 = D_800E6280.screen_center_y[D_8011ECA0] + arg5;
+        p->x0 = game_state.screen_center_x[draw_buffer] + arg0;
+        p->y0 = game_state.screen_center_y[draw_buffer] + arg1;
+        p->x1 = game_state.screen_center_x[draw_buffer] + arg2;
+        p->y1 = game_state.screen_center_y[draw_buffer] + arg3;
+        p->x2 = game_state.screen_center_x[draw_buffer] + arg4;
+        p->y2 = game_state.screen_center_y[draw_buffer] + arg5;
     }
-    AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + arg6 * 4], (s32)p);
+    AddPrim(&D_800E8CA0[(draw_buffer << 10) + arg6 * 4], (s32)p);
 }
 
 /* Gouraud box (POLY_G4) at arg0/arg1, size arg2 x arg3, in OT slot arg4. arg5 is the 0xRRGGBB colour; bit 7 of
@@ -150,16 +150,16 @@ void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
  * written as channel * 0 (as the black edge of _sprite_set_light_effect1): with these reads cases 6, 5 and 4 also
  * pass the limit, and the three extra blocks raise the cost of a first saved register above that of the stack
  * saves around the calls, so p stays in a2 as in the original. */
-void func_80049A40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+void prim_gradient_rect(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
     GameState *gs;
     POLY_G4 *p;
     s32 r;
     s32 g;
     s32 b;
 
-    /* FAKE: T-25115, gs alias of D_800E6280 assigned before the calls: it ends a uopt block before y2. */
-    gs = &D_800E6280;
-    p = (POLY_G4 *)GetWorkBase(0x24, D_8011ECA0);
+    /* FAKE: T-25115, gs alias of game_state assigned before the calls: it ends a uopt block before y2. */
+    gs = &game_state;
+    p = (POLY_G4 *)GetWorkBase(0x24, draw_buffer);
     func_8009F054(p);
     if (arg6 & 0x80) {
         SetSemiTrans(p, 1);
@@ -218,13 +218,13 @@ void func_80049A40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
         p->r0 = r * 10, p->g0 = g * 10, p->b0 = b * 10;
         break;
     }
-    p->x0 = gs->screen_center_x[D_8011ECA0] + arg0;
-    p->y0 = gs->screen_center_y[D_8011ECA0] + arg1;
-    p->x1 = gs->screen_center_x[D_8011ECA0] + arg0 + arg2;
-    p->y1 = gs->screen_center_y[D_8011ECA0] + arg1;
-    p->x2 = gs->screen_center_x[D_8011ECA0] + arg0;
-    p->y2 = gs->screen_center_y[D_8011ECA0] + arg1 + arg3;
-    p->x3 = gs->screen_center_x[D_8011ECA0] + arg0 + arg2;
-    p->y3 = gs->screen_center_y[D_8011ECA0] + arg1 + arg3;
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg4 * 4, (s32)p);
+    p->x0 = gs->screen_center_x[draw_buffer] + arg0;
+    p->y0 = gs->screen_center_y[draw_buffer] + arg1;
+    p->x1 = gs->screen_center_x[draw_buffer] + arg0 + arg2;
+    p->y1 = gs->screen_center_y[draw_buffer] + arg1;
+    p->x2 = gs->screen_center_x[draw_buffer] + arg0;
+    p->y2 = gs->screen_center_y[draw_buffer] + arg1 + arg3;
+    p->x3 = gs->screen_center_x[draw_buffer] + arg0 + arg2;
+    p->y3 = gs->screen_center_y[draw_buffer] + arg1 + arg3;
+    AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg4 * 4, (s32)p);
 }

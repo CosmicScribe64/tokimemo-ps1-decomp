@@ -2,7 +2,7 @@
 #define OVL_DATE_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */
+#define MAIN_API_OVERRIDE_bustup_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
 #define MAIN_API_OVERRIDE_normal_date_girl_in /* implicit int declaration: func_80132000 returns its result (void in main_api.h) */
 
 #define MAIN_API_OVERRIDE_D_800CA158 /* matched as s16 (main_api.h: u8) */
@@ -547,7 +547,7 @@ void func_80132004(void);
 void func_80151720(void);
 void func_80132288(void);
 void func_8014F300(void);
-s32 func_80083440(s32 arg0);
+s32 bustup_layout_set(s32 arg0);
 void func_80145EC4(void);
 extern u8 D_8015B670;
 extern u8 date_arrival;
@@ -1327,7 +1327,7 @@ typedef struct DateSelectionView {
 
 #ifndef OVL_DATE_MOVIE_T10830_H
 #define OVL_DATE_MOVIE_T10830_H
-/* Overlay access view at D_800B5920. func_80147958 resets the halfword
+/* Overlay access view at dec_bg_lba_cache. func_80147958 resets the halfword
  * fields and bytes 0x18..0x1A. Main 80057390 owns the word-array view
  * and confirms the later fields. EVENT shares the first 0x1C-byte layout. */
 typedef struct DateMovieWork {
@@ -1534,7 +1534,7 @@ void func_8014B080(void);
 #ifndef OVL_DATE_STEP_TABLES_T17200
 #define OVL_DATE_STEP_TABLES_T17200
 /* Step tables (T-3330, T-17200): one handler per scene step; each handler copies its table to the
- * stack whole and calls tbl.f[D_800E6280.unk_110A]. The types were local to each .c file before. */
+ * stack whole and calls tbl.f[game_state.unk_110A]. The types were local to each .c file before. */
 typedef struct {
     void (*f[15])();
 } FnTbl15; /* size 0x3C */
@@ -1715,7 +1715,7 @@ extern FnTbl20 D_80160BD0;
 /* Constant tables that one handler copies to the stack whole (T-17200); element types from the loads. */
 typedef struct DateBytes11x21 {
     /* 0x00 */ u8 v[11][21];
-} DateBytes11x21; /* size 0xE7; func_8013C410 reads [D_800E6280.unk_F5F][D_800CA2F8] */
+} DateBytes11x21; /* size 0xE7; func_8013C410 reads [game_state.unk_F5F][D_800CA2F8] */
 extern DateBytes11x21 D_8015B7A0;
 
 typedef struct DateWords21 {

@@ -44,7 +44,7 @@ typedef struct DialogueSelectors {
     /* 0x00 */ u8 value[16];
 } DialogueSelectors; /* size 0x10 */
 
-/* T-10730: minimum dialogue work range at D_80122CD0. Reset clears words
+/* T-10730: minimum dialogue work range at dialogue_work. Reset clears words
  * 5..30; retain existing scalar/array declarations as views in older users. */
 typedef struct DialogueWork {
     /* 0x00 */ s32 scene;
@@ -80,7 +80,7 @@ typedef struct DialogueWork {
     /* 0x78 */ s32 unk_78;
 } DialogueWork; /* minimum size 0x7C */
 
-/* T-10730: pointer slots at D_800CA134..D_800CA144. The cursor pointers
+/* T-10730: pointer slots at dialogue_tables..D_800CA144. The cursor pointers
  * address signed halfwords; legacy scalar declarations remain valid views. */
 typedef struct DialogueTables {
     /* 0x00 */ s16 *group;
@@ -173,7 +173,7 @@ typedef struct AlbumParam {
     /* 0x02 */ s16 unk_02;
 } AlbumParam; /* size 0x04 */
 
-/* T-19009: the settings bits at D_800E7D10 +0x40 (TACO): the saved flag, the mode and a selector in byte 0, two
+/* T-19009: the settings bits at system_data +0x40 (TACO): the saved flag, the mode and a selector in byte 0, two
  * more selectors in byte 1. */
 typedef struct TacoSettingsBits {
     u8 flag : 1;
@@ -185,7 +185,7 @@ typedef struct TacoSettingsBits {
     u8 hi : 4; /* HYPOTHESIS: settings bits at SystemData +0x40 (saved flag, mode, selectors); read by TACO */
 } TacoSettingsBits; /* size 0x02 */
 
-/* The 0xEE0-byte work area at 0x800E7D10 (main clears it with bzero(&D_800E7D10, 0xEE0); +0 is the word main
+/* The 0xEE0-byte work area at 0x800E7D10 (main clears it with bzero(&system_data, 0xEE0); +0 is the word main
  * steps by 0x377 and NAME_ENT seeds srand with). One struct for main's FlagsWork24 (T-9540, T-12030), the album
  * view NameMetricWork of main and NAME_ENT (T-10880) and TACO's settings TcSetAll (T-19009), T-20900. TACO's
  * loader still reads +0x40 through its own word/byte union (TcSave), ETC the 8-byte records from +0x58 through
@@ -246,7 +246,7 @@ typedef struct GirlFlagBits {
     u32 rest : 8;
 } GirlFlagBits; /* size 0x04 */
 
-/* Flag word at GameState +0xF64 (D_800E6280.quarter_flags) as single bits. func_8006A044 sets them with
+/* Flag word at GameState +0xF64 (game_state.quarter_flags) as single bits. func_8006A044 sets them with
  * bit-field stores, which load the byte into another register than its lui (T-25103): bits 0-11 by
  * year (0x5F, 0x60, 0x61) and month group (2-4, 5-7, 8-10, 11-1), bit 13 in months 2, 5, 8 and 11,
  * bit 14 in the other months, bit 15 in months 5-7. */
@@ -296,7 +296,7 @@ typedef struct GirlRecord {
     /* 0x14 */ u8 event_counters[0x24]; /* HYPOTHESIS: 0x24 per-girl progress bytes indexed by event number (DATE, GEKO, TEL read them; [0] of girl 11 is decremented once per weekly queue build by day_events_build_week) */
 } GirlRecord; /* size 0x38 */
 
-/* 0x24-byte record of the table at D_801217D0 (at least 12 records: ENDING walks 12; indexed with
+/* 0x24-byte record of the table at sprite_quads (at least 12 records: ENDING walks 12; indexed with
  * stride 0x24, and code that reads entry i - 1 makes splat name D_801217AC). Record 0 is set field by
  * field in func_8005AD70; records 0-5 have a flag in bit 31 of unk_00. */
 typedef struct SpriteQuad {
@@ -321,9 +321,9 @@ typedef struct SpriteQuad {
     /* 0x20 */ s32 unk_20;
 } SpriteQuad; /* size 0x24 */
 
-/* Work area at D_80125D10 (0x50 bytes; main 80079B10 and 8007C030 only). The original keeps its
+/* Work area at audio_state (0x50 bytes; main 80079B10 and 8007C030 only). The original keeps its
  * stores and loads in source order, as for one object (wiki/data-types.md); unk_44 and unk_48 are
- * message buffers passed to func_80045414. */
+ * message buffers passed to cd_audio_command. */
 typedef struct AudioState {
     /* 0x00 */ u32 unk_00;
     /* 0x04 */ s32 unk_04;
@@ -362,10 +362,10 @@ typedef struct AudioState {
  * (search_tpage: +0x1128/+0x1228, OPTION: +0x163C..+0x17BC, ETC: +0x75E), which a compiler can only
  * do when they are one symbol. Layout, evidence and confidence: wiki/game-state.md. O.BIN names the
  * object of this size and position `sys` (hypothesis, not applied). Fields are named by offset;
- * C code reaches them only through D_800E6280 (tools/migrate_globals.py rewrites the old D_ names
+ * C code reaches them only through game_state (tools/migrate_globals.py rewrites the old D_ names
  * and ninja rejects them). Records are named by their offset in GameState. */
 
-/* Two records at +0x1C, one per D_8011ECA0 (SetWorkBase stores a work address and two words). */
+/* Two records at +0x1C, one per draw_buffer (SetWorkBase stores a work address and two words). */
 typedef struct PrimArena {
     /* 0x00 */ s32 size;
     /* 0x04 */ s32 used;
@@ -450,9 +450,9 @@ typedef struct GameState {
     /* 0x002 */ u16 video_height;
     /* 0x004 */ u16 video_interlace; /* HYPOTHESIS: third argument of the display-mode call, 0 everywhere it is set */
     /* 0x006 */ u8 unk_006[0xE];
-    /* 0x014 */ s16 screen_center_x[2];        /* indexed by D_8011ECA0 */
-    /* 0x018 */ s16 screen_center_y[2];        /* indexed by D_8011ECA0 */
-    /* 0x01C */ PrimArena prim_arena[2];  /* indexed by D_8011ECA0 (SetWorkBase) */
+    /* 0x014 */ s16 screen_center_x[2];        /* indexed by draw_buffer */
+    /* 0x018 */ s16 screen_center_y[2];        /* indexed by draw_buffer */
+    /* 0x01C */ PrimArena prim_arena[2];  /* indexed by draw_buffer (SetWorkBase) */
     /* 0x034 */ u8 sound_active;
     /* 0x035 */ u8 card_busy;
     /* 0x036 */ u8 clear_color_r;
@@ -494,7 +494,7 @@ typedef struct GameState {
     /* 0x66C */ ClubRecord clubs[12];
     /* 0x69C */ DayEvent day_events[32];
     /* 0x71C */ u8 day_event_index;
-    /* 0x71D */ u8 events_today; /* HYPOTHESIS: ++ each time a girl encounter record (types 0x44/0x46/0x47) is run; cleared by func_8007259C each day */
+    /* 0x71D */ u8 events_today; /* HYPOTHESIS: ++ each time a girl encounter record (types 0x44/0x46/0x47) is run; cleared by daily_flags_clear each day */
     /* 0x71E */ u8 daily_event_bits;
     /* 0x71F */ u8 daily_check_done; /* HYPOTHESIS: set to 1 before the telephone/appointment prompt (mode 0x43) and by the day-start code; cleared when a new queue is built */
     /* 0x720 */ u8 saved_mode; /* MainMode */
@@ -514,11 +514,11 @@ typedef struct GameState {
     /* 0x75E */ EventLogEntry event_log[256];
     /* 0xF5E */ u8 event_log_count;
     /* 0xF5F */ u8 current_girl;            /* index of the current girl's GirlRecord record */ /* GirlId */
-    /* 0xF60 */ u8 text_lines_total; /* HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step func_8005215C */
+    /* 0xF60 */ u8 text_lines_total; /* HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step dialogue_text_step */
     /* 0xF61 */ u8 text_first_line; /* HYPOTHESIS: index of the first visible dialogue line in the text list */
     /* 0xF62 */ u8 text_scroll_state; /* HYPOTHESIS: bit 7 = scrolling active, low bits = phase of the two-line scroll */
     /* 0xF63 */ s8 unk_F63;
-    /* 0xF64 */ u8 quarter_flags[4]; /* HYPOTHESIS: QuarterFlagBits bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (func_800722C4); TEL also sets bits */
+    /* 0xF64 */ u8 quarter_flags[4]; /* HYPOTHESIS: QuarterFlagBits bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (quarter_flags_rotate); TEL also sets bits */
     /* 0xF68 */ WordView last_command;
     /* 0xF6C */ u8 icon_mode; /* IconMode */
     /* 0xF6D */ u8 icon_count;
@@ -551,7 +551,7 @@ typedef struct GameState {
     /* 0x10A2 */ s8 tile_layer_enabled;
     /* 0x10A3 */ u8 unk_10A3;
     /* 0x10A4 */ u8 unk_10A4;
-    /* 0x10A5 */ u8 quad_layer[0x43];    /* one byte per entry of the SpriteQuad table at D_801217D0 */
+    /* 0x10A5 */ u8 quad_layer[0x43];    /* one byte per entry of the SpriteQuad table at sprite_quads */
     /* 0x10E8 */ s32 quads_enabled;
     /* 0x10EC */ u8 bg_layer_order[4];
     /* 0x10F0 */ s32 frame_hcount_limit; /* HYPOTHESIS: 0x106 scanline count; the frame waits for vsync only while the elapsed count is below it */
@@ -691,7 +691,7 @@ extern u8 **D_800B32CC;
 /* T-20940: name table, 16 string pointers up to D_800B3578 (12 girls, then four more). telephone_class_init
  * reads entry i - 1 for menu row i (splat's D_800B3534 is that -4 relocation) and entries 12 and 13 as
  * D_800B3568, D_800B356C; TEL and OPTION index it by girl. */
-extern u8 *D_800B3538[16];
+extern u8 *girl_full_name_table[16];
 extern u8 *girl_short_name_table[];
 extern u8 *D_800B3624;
 extern u8 *D_800B3630;
@@ -708,15 +708,15 @@ extern s32 D_800B36EC;
 extern s32 D_800B3708[];
 #endif
 extern s32 D_800B372C;
-#ifndef MAIN_API_OVERRIDE_D_800B3748
-extern s32 **D_800B3748;
+#ifndef MAIN_API_OVERRIDE_month_data_table
+extern s32 **month_data_table;
 #endif
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
 extern u8 D_800B3750[][3];
 /* T-20940: the 13 telephone numbers, seven digits each (0x5B bytes, D_800B37D4 follows after one pad
- * byte): holiday_tel_exit plays digit k of number D_800E6280.current_girl (row 10 as D_800B37BE), and
+ * byte): holiday_tel_exit plays digit k of number game_state.current_girl (row 10 as D_800B37BE), and
  * func_80075C84 compares each row with the last seven keys in D_800B6990. */
-extern u8 D_800B3778[13][7];
+extern u8 phone_numbers[13][7];
 extern s32 D_800B37D4[];
 extern u8 *club_name_table[];
 extern u8 D_800B3938[];
@@ -742,7 +742,7 @@ extern u8 D_800B3D54[];
 extern u8 D_800B3D60;
 extern s32 D_800B3D68;
 extern s32 D_800B3D6C;
-extern s32 D_800B3D70[4]; /* defined in src/main/800451D0.c (T-9010) */
+extern s32 cd_audio_request[4]; /* defined in src/main/800451D0.c (T-9010) */
 extern s32 D_800B3648[16];
 extern u8 D_800B3D80;
 extern u8 D_800B3D84[];
@@ -769,7 +769,7 @@ typedef struct FontRange {
     /* 0x2 */ u16 glyph;
 } FontRange; /* size 0x4 */
 extern FontRange font_range_table[46];
-/* Font and cursor images that func_8004E58C uploads with LoadSquare (T-17020). */
+/* Font and cursor images that text_system_reset uploads with LoadSquare (T-17020). */
 extern u8 D_800B3F6C[0x40];
 extern u8 D_800B3FAC[0x20];
 extern u8 D_800B3FCC[0x20];
@@ -779,12 +779,12 @@ s32 load_string(); /* set_kanji_string passes three arguments, the definition ta
 void vload_font();
 /* Four signed menu row positions, read by x_taku_menu_set. */
 extern s16 D_800B40F0[4];
-extern u8 D_800B4100[13];
+extern u8 girl_tokimeki_weight[13];
 extern u8 D_800B4110[13];
 extern u8 D_800B4120[13];
 extern s8 D_800B4130[13][8];
 extern u8 D_800B4198[7];
-extern u8 D_800B41A0[];
+extern u8 girl_affection_weight[];
 extern u8 D_800B41B0[20][20];
 extern u8 D_800B4341[]; /* table read by func_80052E60 */
 extern s8 D_800B4348[12];
@@ -798,15 +798,15 @@ extern s32 D_800B58E4;
 extern s32 D_800B58F8;
 extern s32 D_800B58FC;
 extern s32 D_800B5900;
-extern s32 D_800B5920[4];
-#ifndef MAIN_API_OVERRIDE_D_800B5938
-extern u8 D_800B5938[];  /* flags; D_800B593C and D_800B5940 are also declared as scalars */
+extern s32 dec_bg_lba_cache[4];
+#ifndef MAIN_API_OVERRIDE_dec_bg_show
+extern u8 dec_bg_show[];  /* flags; dec_bg_brightness and D_800B5940 are also declared as scalars */
 #endif
 extern u8 D_800B5939;
-extern u8 D_800B593C;
+extern u8 dec_bg_brightness;
 extern u8 D_800B5940;
 extern s32 D_800B5944;
-extern s32 D_800B5948;
+extern s32 last_screen_mode;
 extern s32 D_800B594C;
 extern u8 D_800B5A68[][3];
 extern s32 D_800B5950[];
@@ -817,8 +817,8 @@ extern s16 D_800B5A40[13]; /* T-25119: 13 halfwords func_80061A3C copies into th
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
 extern s32 D_800B5A98; /* T-17011: counter of func_80063668 (CD level high-water mark) */
-extern s8 D_800B5A9C; /* T-25108: last selection index seen by func_80065B0C */
-extern u8 D_800B5AA0; /* T-25108: blink countdown of func_80065B0C, 0x20 on a selection change */
+extern s8 D_800B5A9C; /* T-25108: last selection index seen by icon_bar_update */
+extern u8 D_800B5AA0; /* T-25108: blink countdown of icon_bar_update, 0x20 on a selection change */
 /* T-17000: two tables of (x, y) halfword pairs that func_8006509C copies pair by pair into the pair
  * table at D_80125C10 (`lh`/`sh` at +0 and +2, step 4); the copy of the second table from D_800B5AF0
  * (pair 3) runs to D_800B5B20, its end. 16 + 15 pairs fill 0x800B5AA4..0x800B5B20. */
@@ -834,7 +834,7 @@ extern s8 D_800B5BD4;
 extern s32 D_800B5BD8[];
 extern s32 D_800B5BE8[];
 extern s32 D_800B5BF8[];
-extern s16 D_800B5C08;
+extern s16 mascot_choice;
 extern u8 D_800B5C10[];
 extern u8 D_800B5C2C[][17];
 extern u8 D_800B5D0C[];
@@ -870,15 +870,15 @@ extern s32 D_800B6810[];
 /* T-17000: parameter tables of func_80076FDC, func_80073CB0 and parameter_up_down. func_80076FDC
  * reads byte [row][col] of two 12-row, two-byte tables in an 11-case switch (`lbu %lo(D_800B6892)` after
  * `addu` of the column); func_80073CB0 starts the next table at D_800B68C0. parameter_up_down walks
- * signed nine-byte rows (`lb`, row index * 9): eight rows at D_800B68E0 end where D_800B6928 starts. */
+ * signed nine-byte rows (`lb`, row index * 9): eight rows at command_deltas end where club_activity_deltas starts. */
 extern u8 D_800B6890[12][2];
 extern u8 D_800B68A8[12][2];
 /* T-25049: event-selector byte regions. Indexed lbu uses offsets
  * 0,2,4,6,9,11 plus the selection column; offset13 is a scalar byte. */
 extern u8 D_800B68C0[16];
 extern u8 D_800B68D0[16];
-extern s8 D_800B68E0[8][9];
-extern s8 D_800B6928[][9];
+extern s8 command_deltas[8][9];
+extern s8 club_activity_deltas[][9];
 /* T-20940: static data of 80075320.c. D_800B6990 is a ring of the last seven keys pressed on the holiday
  * menu (0, 1, 2 from the pad bits 0x20, 0x40, 0x10; cleared to 0xFF by func_800755B4 in a loop IDO unrolled)
  * and D_800B6998 its write position: func_80075C84 stores `keys[pos] = key; pos++`, wraps pos at 7 and reads
@@ -941,26 +941,26 @@ extern s32 D_800CA120;
 extern s32 D_800CA124;
 extern s32 D_800CA128;
 extern s32 D_800CA130;
-extern u8 *D_800CA134;
+extern u8 *dialogue_tables;
 extern u8 *D_800CA138;
 extern s32 D_800CA13C;
 extern s32 D_800CA140;
 extern s32 D_800CA144;
-extern s16 D_800CA148;  /* also address-taken by the date code */
-extern s16 D_800CA14C;
+extern s16 dialogue_group;  /* also address-taken by the date code */
+extern s16 dialogue_line;
 extern s16 D_800CA150;
 extern u16 D_800CA154;
 #ifndef MAIN_API_OVERRIDE_D_800CA158
 extern u8 D_800CA158;
 #endif
 extern u8 D_800CA15C;
-extern s32 D_800CA160;
-extern s32 D_800CA164;
-extern s32 D_800CA168;
-extern u8 D_800CA16C[];
-extern u8 D_800CA174[];
-extern u8 D_800CA17C[];
-extern u8 D_800CA188[];
+extern s32 dialogue_text_table;
+extern s32 dialogue_command_table;
+extern s32 dialogue_voice_table;
+extern u8 name_buf_family[];
+extern u8 name_buf_given[];
+extern u8 name_buf_player_form[];
+extern u8 name_buf_girl_short[];
 extern u8 girl_name_buf[];
 extern u8 D_800CA19C[];
 extern u8 D_800CA1DC[];
@@ -1037,11 +1037,11 @@ extern u16 D_800E36E8;
 extern u16 D_800E36EA;
 extern s32 D_800E36F0;
 extern s32 D_800E36F4;
-extern GameState D_800E6280;
+extern GameState game_state;
 extern u8 D_800E71DF; /* selected girl, GameState.current_girl: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820, T-24099, T-25501) */
 extern s32 D_800E7384; /* frame counter, GameState.step_timer.w: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820) */
-#ifndef MAIN_API_OVERRIDE_D_800E7D10
-extern SystemData D_800E7D10;
+#ifndef MAIN_API_OVERRIDE_system_data
+extern SystemData system_data;
 #endif
 extern u8 D_800E7D11[];
 extern u8 D_800E7D13[];
@@ -1223,7 +1223,7 @@ extern s32 D_800F65C0;
 extern s32 D_800F6600;
 extern s32 D_800F6680;
 extern u8 D_800F7710[];
-extern s32 D_8011ECA0;
+extern s32 draw_buffer;
 extern s8 D_8011ECA4;
 extern s32 D_8011ECA8;
 extern s32 D_8011ECAC;
@@ -1234,15 +1234,15 @@ extern s32 D_8011ECBC;
 extern s32 D_8011ECC0;
 extern s32 D_8011ECC4;
 extern s32 D_8011ECC8;
-#ifndef MAIN_API_OVERRIDE_D_8011ECD0
-extern u8 D_8011ECD0[]; /* 0x44-byte records; DATE uses entries 96..99 (T-10730). */
+#ifndef MAIN_API_OVERRIDE_actor_pool
+extern u8 actor_pool[]; /* 0x44-byte records; DATE uses entries 96..99 (T-10730). */
 #endif
 extern u8 D_8011ECD3;
 extern s16 D_8011ECE8;
 extern s32 D_8011ECF4;
-extern s16 D_8011ECF6;
+extern s16 cursor_x;
 extern s32 D_8011ECF8;
-extern s16 D_8011ECFA;
+extern s16 cursor_y;
 extern u8 D_8011ED15;
 extern u8 D_8011ED16;
 extern u8 D_8011ED17;
@@ -1352,8 +1352,8 @@ extern s16 D_8012059A[];
 extern s16 D_801205AE;
 extern s16 D_801205F2;
 extern s16 D_80120636;
-#ifndef MAIN_API_OVERRIDE_D_80120650
-extern u8 D_80120650[];
+#ifndef MAIN_API_OVERRIDE_actor_pool_96
+extern u8 actor_pool_96[];
 #endif
 extern u8 D_80120651;
 extern u8 D_80120652;
@@ -1422,7 +1422,7 @@ extern s32 D_801206C8;
 extern s32 D_801206CC;
 extern u8 D_801206D7;
 /* OPTION walks byte 3 of 0x44-byte records from here (the loop base register is this address,
- * not one of D_8011ECD0; T-7020). */
+ * not one of actor_pool; T-7020). */
 #ifndef MAIN_API_OVERRIDE_D_801206D8
 extern u8 D_801206D8[];
 #endif
@@ -1677,7 +1677,7 @@ extern s16 D_80121726;
 extern s16 D_80121728;
 extern u8 D_80121750[];
 extern u8 D_801217A0[];
-extern SpriteQuad D_801217D0[]; /* at least 12 records */
+extern SpriteQuad sprite_quads[]; /* at least 12 records */
 extern s16 D_801217D6;
 extern u8 D_801217E4;
 extern u8 D_801217E5;
@@ -1689,17 +1689,17 @@ extern s32 D_80121808;
 #endif
 extern u8 D_80121809;
 extern u8 D_8012180A;
-extern s32 D_80121818; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s32 D_80121818; /* EVENT data at this address; for the other units it is a field of sprite_quads[] */
 extern s16 D_8012181E;
-extern s32 D_8012183C; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s32 D_8012183C; /* EVENT data at this address; for the other units it is a field of sprite_quads[] */
 extern s16 D_80121842;
-extern s32 D_80121860; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
-extern s16 D_80121864; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s32 D_80121860; /* EVENT data at this address; for the other units it is a field of sprite_quads[] */
+extern s16 D_80121864; /* EVENT data at this address; for the other units it is a field of sprite_quads[] */
 extern s16 D_80121866;
 #ifndef MAIN_API_OVERRIDE_D_80121874
 extern u8 D_80121874;
 #endif
-extern s32 D_80121884; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s32 D_80121884; /* EVENT data at this address; for the other units it is a field of sprite_quads[] */
 extern s16 D_8012188A;
 extern s32 D_80121FD4;
 extern s16 D_80121FD8;
@@ -1719,7 +1719,7 @@ extern s16 D_80121FEE;
 extern s16 D_80121FF0;
 extern s16 D_80121FF2;
 extern s32 D_80121FF4;
-extern u32 D_801220D0;
+extern u32 bg_layers;
 extern s16 D_801220D4;
 extern s16 D_801220D6;
 extern u8 D_801220E0;
@@ -1735,7 +1735,7 @@ extern u8 D_80122104;
 extern u8 D_80122105;
 extern u8 D_80122106;
 /* T-25010 (moved from include/ovl/OPTION.h): the cell maps, cells and cell indexes of the two BG slots,
- * BgLayer (game.h, GsBG layout) at D_801220D0 + n * 0x24, whose +0x14 points at map n. Main
+ * BgLayer (game.h, GsBG layout) at bg_layers + n * 0x24, whose +0x14 points at map n. Main
  * func_8004A1A0 sets up slot n through these three tables; OPTION func_801328C0 fills slot 0 itself (T-20910). */
 typedef struct BgCell {
     /* 0x00 */ u8 u;
@@ -1815,8 +1815,8 @@ extern u8 D_8012278C;
 extern u8 D_8012278D;
 extern u8 D_8012278E;
 extern u8 D_801227A4[];
-#ifndef MAIN_API_OVERRIDE_D_80122CD0
-extern s32 D_80122CD0;
+#ifndef MAIN_API_OVERRIDE_dialogue_work
+extern s32 dialogue_work;
 #endif
 extern s32 D_80122CD4;
 extern s32 D_80122CDC;
@@ -1867,14 +1867,14 @@ extern s32 D_801230D0;
 extern s32 D_801230E0[];
 extern s32 D_801230E4;
 extern s32 D_801230F4;
-extern u32 D_80123110;
-/* One bank of the memory-card save image: D_80123320[2] follows the 0x200-byte header at D_80123120; header
+extern u32 overlay_entry;
+/* One bank of the memory-card save image: D_80123320[2] follows the 0x200-byte header at card_block; header
  * and banks together are one 0x2000-byte card block. T-17007 */
 typedef struct SaveBank {
     /* 0x000 */ s32 checksum;      /* byte sum of data (func_80055A38) */
     /* 0x004 */ u8 data[0xEFC];
 } SaveBank; /* size 0xF00 */
-extern u8 D_80123120[];
+extern u8 card_block[];
 extern u8 D_80123122;
 extern u8 D_80123123;
 extern u8 D_80123124[];
@@ -1888,15 +1888,15 @@ extern u8 D_80125128;
 extern u8 D_80125129;
 extern u8 cd_read_status;
 extern s8 D_8012512B;
-/* 0x18-byte entry of the 48-entry ring at D_80125130 (read index D_80125128, write index
- * D_80125129; filled by func_80045318). data[15] is cleared on every write and set to 0xFF when
+/* 0x18-byte entry of the 48-entry ring at cd_cmd_ring (read index D_80125128, write index
+ * D_80125129; filled by cd_cmd_push). data[15] is cleared on every write and set to 0xFF when
  * the caller passes 1 instead of a data pointer. */
 typedef struct CdCommand {
     /* 0x00 */ u8 cmd;
     /* 0x04 */ s32 arg;
     /* 0x08 */ u8 data[16];
 } CdCommand; /* size 0x18 */
-extern CdCommand D_80125130[];
+extern CdCommand cd_cmd_ring[];
 extern s32 D_801255B0;
 extern u8 D_801255B4;
 extern u8 D_801255B5;
@@ -1972,7 +1972,7 @@ extern s32 D_80125CAC;
 extern s32 D_80125CB0;
 extern u16 D_80125CC0;
 extern u16 D_80125CC2;
-extern AudioState D_80125D10;
+extern AudioState audio_state;
 extern s32 D_80125D14;
 extern s32 D_80125D18;
 extern s32 D_80125D1C;
@@ -2049,7 +2049,7 @@ extern s32 D_80122EB0;
 extern s32 D_80122EB4;
 extern u8 D_8011EDE0[];
 extern u8 D_8011EEF0[];
-extern u8 *D_800B342C[];
+extern u8 *place_name_table[];
 extern u8 *D_800B3610;
 extern u8 *D_800B361C;
 extern u8 *D_800B3628;
@@ -2101,28 +2101,28 @@ void func_8003C2C0();
 void func_800410AC(void);
 void func_8004111C(void);
 void func_80041168(s32 arg0);
-void func_800412E0(s32 arg0);
-void func_80041584(void);
-void func_800415B4(s32 arg0, s32 arg1);
-void func_8004164C(s32 arg0, s32 arg1);
+void game_state_init(s32 arg0);
+void sprite_tables_clear(void);
+void sprite_quads_clear(s32 arg0, s32 arg1);
+void bg_layers_clear(s32 arg0, s32 arg1);
 void func_80041878(void);
 void func_800418B0(void);
 void func_800419FC(void);
 void func_80041C2C(void);
 void func_80041F48(void);
 void func_80042058(void);
-void func_80042134();
+void main_loop();
 void func_800422C8(void);
 void func_80042418(void);
 void func_80042458(void);
 void func_80042488(void);
 void func_800424FC(void);
-s32 func_80042808(void);
-s32 func_8004284C(void);
+s32 main_stage_next(void);
+s32 main_step_next(void);
 void main_state_set();
-s32 func_80042908(s32 arg0);
-s32 func_80042940(s32 arg0);
-s32 func_80042960(void);
+s32 main_stage_set(s32 arg0);
+s32 main_step_set(s32 arg0);
+s32 main_state_request_overlay(void);
 void func_80042A00(void);
 void csr_load_vram(s32 arg0);
 void palette_load_vram(s32 arg0);
@@ -2147,23 +2147,23 @@ void back_clear_switch(s32 arg0);
 s32 load_palette();
 s32 load_csr_tp();
 void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4);
-#ifndef MAIN_API_OVERRIDE_func_80044750
-s32 func_80044750(s32 arg0);
+#ifndef MAIN_API_OVERRIDE_snd_command
+s32 snd_command(s32 arg0);
 #endif
 s32 func_80044774(s32 arg0);
 u8 func_8004480C(void);
-void func_8004482C(void);
-void func_80044890(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
+void snd_bank_state_reset(void);
+void snd_bank_load_start(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 s32 func_80044C98(void);
-s32 func_80044E8C(void);
-s32 func_8004500C();
+s32 snd_bank_load_poll(void);
+s32 snd_bank_start();
 s32 func_800450F4(s32 arg0, s32 arg1);
 s32 func_800451D0();
-#ifndef MAIN_API_OVERRIDE_func_800452C4
-void func_800452C4(void);
+#ifndef MAIN_API_OVERRIDE_cd_cmd_reset
+void cd_cmd_reset(void);
 #endif
-#ifndef MAIN_API_OVERRIDE_func_80045414
-void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
+#ifndef MAIN_API_OVERRIDE_cd_audio_command
+void cd_audio_command(s32 arg0, s32 arg1, u8 *arg2);
 #endif
 void func_80045B14(void);
 s32 func_80045FF4(void);
@@ -2171,24 +2171,24 @@ s32 func_80045FF4(void);
 u8 func_80046094(void);
 #endif
 u8 cd_read_sync_status(void);
-u8 func_800460DC(void);
-u8 func_800460EC(void);
-s32 func_80046274(void);
-void func_80046290(s32, s32, s32);
+u8 cd_done_count(void);
+u8 cd_audio_state(void);
+s32 cd_audio_ticks(void);
+void cd_audio_request_set(s32, s32, s32);
 void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
-#ifndef MAIN_API_OVERRIDE_func_800462C8
-void func_800462C8(u8 arg0, s32 arg1, s32 arg2);
+#ifndef MAIN_API_OVERRIDE_cd_read_sectors_nowait
+void cd_read_sectors_nowait(u8 arg0, s32 arg1, s32 arg2);
 #endif
 #ifndef MAIN_API_OVERRIDE_cd_read_sectors
 void cd_read_sectors(u8 arg0, s32 arg1, s32 arg2);
 #endif
 s32 file_checksum_ok();
-s32 func_80046500(void);
+s32 game_reset_to_title(void);
 void func_800469F4();
 void func_80046A7C();
 void func_80046B88();
 void func_80047550(void);
-void func_80047560();
+void screen_shake_update();
 void tpage_buf_clear_all(void);
 #ifndef MAIN_API_OVERRIDE_search_tpage_multi
 s32 search_tpage_multi(s32 arg0, u8 arg1);
@@ -2198,19 +2198,19 @@ void tpage_buf_clear(void);
 #endif
 void _sys_default_tpage_set(void);
 void load_tpage_buf_lock();
-void func_80048DAC(s32 arg0);
+void actors_draw_enable(s32 arg0);
 void func_80048DD0(s32 arg0);
-void func_80048E78(void);
-void func_80048EB8(s32 arg0);
-void func_80048F64(s32 arg0);
+void actor_clear_upper(void);
+void actor_clear_range(s32 arg0);
+void actor_clear(s32 arg0);
 u8 func_8004901C(void);
 s32 GetWorkBase(s32 arg0, s32 arg1);
 void safe_env(s32 arg0);
 void dtd_on_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void dtd_on(s32 arg0);
 void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
-#ifndef MAIN_API_OVERRIDE_func_80049A40
-void func_80049A40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+#ifndef MAIN_API_OVERRIDE_prim_gradient_rect
+void prim_gradient_rect(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 #endif
 s32 func_80049B20();
 #ifndef MAIN_API_OVERRIDE_func_8004A1A0
@@ -2232,7 +2232,7 @@ void func_8004AC18(s32 arg0);
 void func_8004ACA8();
 void func_8004ACC8(s32 arg0);
 void func_8004ADE4(void);
-void func_8004AE28(s32 a0, s32 a1, s32 a2);
+void debug_number_show(s32 a0, s32 a1, s32 a2);
 void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3);
 void func_8004AEB0();
 void func_8004B19C(s32 a, s32 b, s32 c);
@@ -2269,7 +2269,7 @@ void func_8004DEE4();
 void srn_init(s32, u32 *, s32);
 void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2);
 void func_8004E500(s32 arg0);
-void func_8004E58C(void);
+void text_system_reset(void);
 #ifndef MAIN_API_OVERRIDE_set_kanji_string
 s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4);
 #endif
@@ -2299,7 +2299,7 @@ s32 menu_set();
 s32 menu_check();
 s32 menu_check_1();
 s32 menu_check_2();
-void func_8004FC10();
+void menu_cursor_update();
 void func_800504CC();
 s32 func_80050AB8();
 void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -2325,8 +2325,8 @@ s32 get_g_zyotai_h(s32 arg0);
 #endif
 void xa_wait(void);
 void func_80051DD8();
-void func_80052000();
-void func_80052060();
+void text_wait_confirm();
+void voice_play();
 #ifndef MAIN_API_OVERRIDE_get_h_tokimeki
 u32 get_h_tokimeki(s32 arg0);
 #endif
@@ -2345,11 +2345,11 @@ u8 Sw_Test(void);
 void Sw_Clear(void);
 void Hw_Clear(void);
 void func_80053CC0(void);
-#ifndef MAIN_API_OVERRIDE_func_80053CE0
-void func_80053CE0(void);
+#ifndef MAIN_API_OVERRIDE_card_start
+void card_start(void);
 #endif
-#ifndef MAIN_API_OVERRIDE_func_80053D10
-void func_80053D10(void);
+#ifndef MAIN_API_OVERRIDE_card_stop
+void card_stop(void);
 #endif
 s32 func_80053F04(void);
 s32 func_80054140(void);
@@ -2381,10 +2381,10 @@ void dec_bg_reset(void);
 void dec_bg_show_switch(s32 arg0);
 void dec_bg_show_set(s32 arg0, s32 arg1);
 s32 dec_bg_cd_read(s32 arg0, s32 arg1);
-s32 func_8005751C();
+s32 dec_bg_decode_to_vram();
 void func_80057640();
 s32 func_80057710(void);
-void func_800578F4(s32 a);
+void dec_bg_draw(s32 a);
 void func_80057D28(s32);
 void func_80058398();
 void initView(void);
@@ -2487,8 +2487,8 @@ void func_800625C0(void);
 void func_800626B0(void);
 void func_80062764(void);
 void func_800627DC(void);
-void func_80062CD0(); /* unprototyped: main callers pass no argument, overlays pass one */
-void func_80062DBC();
+void bustup_read_start(); /* unprototyped: main callers pass no argument, overlays pass one */
+void bustup_build();
 void func_800634FC(); /* unprototyped: callers pass an argument, the definition ignores it */
 void func_80063520(u32 arg0);
 void func_80063668();
@@ -2507,21 +2507,21 @@ void icon_can_use_set(s32 idx, s32 on);
 void func_8006509C(void);
 void func_800654D0();  /* K&R: with an (s32) prototype OPTION.bin no longer matches (T-25108) */
 void func_80065900(u8 arg0);
-void func_80065B0C(s32 a);
-void func_80065F34(s32 arg0);
+void icon_bar_update(s32 a);
+void message_window_title_show(s32 arg0);
 #ifndef MAIN_API_OVERRIDE_func_80066104
 void func_80066104();  /* the matched definition takes no parameter; pre_xmas_init passes a string through $a0 */
 #endif
-void func_8006612C();  /* callers pass one pointer, or nothing */
-void func_80066334();
+void message_window_set_title();  /* callers pass one pointer, or nothing */
+void message_window_title_update();
 s32 func_80066A2C(void);
 s32 func_80066A84(void);
-void func_80066C08(s32 a);
+void screen_frame_draw(s32 a);
 void func_80067438(void);
 void func_800674B0(void);
 void func_8006764C(s32 arg0);
 void func_800676AC();
-void func_80067870(void);
+void mascot_update(void);
 void func_80067C28(void);
 s32 func_80067DD4(void);
 void func_80067E34(void);
@@ -2537,13 +2537,13 @@ s32 func_8006A044();
 void func_8006A2CC();
 void func_8006B0C8();
 void club_list_menu(void);
-void func_8006B900(void);
-void func_8006BA40(void);
-void func_8006BC28(s32 arg0);
-void func_8006BD6C(s32 arg0);
+void light_effect_draw(void);
+void cursor_update(void);
+void cursor_actor_init(s32 arg0);
+void cursor_show(s32 arg0);
 s32 func_8006C334(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_8006C700(void);
-void func_8006C848(s32 arg0);
+void text_marker_set(s32 arg0);
 u8 *func_8006CA9C(void);
 u8 *func_8006CAE0(void);
 void _schedule_init(void);
@@ -2557,23 +2557,23 @@ s32 func_8006CDD4(void);
 void func_8006D038(void);
 void func_8006D138(void);
 s32 func_8006D6E0();
-void func_8006D7EC(void);
+void day_events_build_week(void);
 s32 func_8006EB64(u8 *arg0, u8 *arg1);
 s32 func_8006EEC4(u8 *arg0, u8 *arg1);
 void schedule_girls_gakko(void);
 void yuukou_down(void);
 void syoushin_up(void);
 void func_80070F80(void);
-void func_80070FD0(void);
-void func_8007132C(void);
-void func_80072338(void);
-void func_8007259C(u8 arg0);
+void ending_start(void);
+void day_event_dispatch(void);
+void calendar_advance_day(void);
+void daily_flags_clear(u8 arg0);
 void func_800726F0(void);
 void func_80072734();
 s32 func_80072944(void);
 s32 func_80072998(void);
 void func_80072B20(void);
-s32 func_80072B5C(s32 arg0);
+s32 day_event_next(s32 arg0);
 void func_80072C68(void);
 void func_80072CA0(void);
 void func_80072FE8();
@@ -2728,7 +2728,7 @@ void func_80081128(void);
 s32 dialogue_render();
 #endif
 void func_80081D30();
-s32 func_80082764();
+s32 dialogue_run();
 s32 make_three_select();
 void normal_date_three_select(void);
 s32 normal_date_three_select_init(void);
@@ -2740,19 +2740,19 @@ void func_80083378(void);
 void func_800833A0(void);
 void func_800833F0(void);
 void func_80083418(void);
-#ifndef MAIN_API_OVERRIDE_func_80083440
-void func_80083440(u8 arg0);
+#ifndef MAIN_API_OVERRIDE_bustup_layout_set
+void bustup_layout_set(u8 arg0);
 #endif
 void func_80083338(void);
-s32 func_80083474(void);
-s32 func_80083808();
+s32 bustup_show_checked(void);
+s32 bustup_wink_update();
 void func_80083A10();
 #ifndef MAIN_API_OVERRIDE_read_bustup
 void read_bustup();
 #endif
 void k_disp_inc2();
-#ifndef MAIN_API_OVERRIDE_func_800847B8
-void func_800847B8(u8 arg0);
+#ifndef MAIN_API_OVERRIDE_dialogue_names_set
+void dialogue_names_set(u8 arg0);
 #endif
 #ifndef MAIN_API_OVERRIDE_select_girl_init
 void select_girl_init(s32 arg0);
@@ -2763,9 +2763,9 @@ void func_80084C98();
 #endif
 void sprite_brightness(s16 idx, u8 val);
 void check_para_limit(void);
-void func_80084E4C(void);
-s32 func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
-s32 func_800850D4();
+void text_marker_hide(void);
+s32 event_still_show(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+s32 event_anim_show();
 void func_80085234();
 #ifndef MAIN_API_OVERRIDE_func_80085368
 void func_80085368(void);
@@ -2779,16 +2779,16 @@ void func_800853FC(void);
 void event_face0(void);
 void event_face1(void);
 void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5, u32 arg6);
-void func_8008585C();
+void dialogue_clear();
 void don_wait(void);
 void normal_date_speak_1line();
 #ifndef MAIN_API_OVERRIDE_normal_date_speak
 void normal_date_speak(void);
 #endif
-s32 func_80085B3C();
-void func_80085CD4(u8 a);
-#ifndef MAIN_API_OVERRIDE_func_80085E30
-void func_80085E30(s32 arg0, s32 arg1);
+s32 event_log_add();
+void bustup_quad_offsets(u8 a);
+#ifndef MAIN_API_OVERRIDE_scene_screen_reset
+void scene_screen_reset(s32 arg0, s32 arg1);
 #endif
 #ifndef MAIN_API_OVERRIDE_Vblnk_Timer_Init
 void Vblnk_Timer_Init(void);
@@ -2800,7 +2800,7 @@ void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 #endif
 void Default_Disp(void);
 s32 func_8008647C(void);
-s32 func_8008667C(s32 a);
+s32 girl_state_rank(s32 a);
 void func_800867CC(void);
 void DecDCTReset(s32 mode);
 void func_800869A4(s32 a);
@@ -2994,8 +2994,8 @@ s32 func_80067DFC(void);
 s32 func_80053418();
 #endif
 s32 func_800463E8(void);
-#ifndef MAIN_API_OVERRIDE_func_80049FF0
-s32 func_80049FF0();
+#ifndef MAIN_API_OVERRIDE_prim_gradient_line
+s32 prim_gradient_line();
 #endif
 void place_init2(void);
 void normal_date_bg_out(void);
@@ -3065,7 +3065,7 @@ extern s32 D_800B3D34;
 extern s32 D_800B3D38;
 extern s32 D_800B3D3C;
 extern u8 D_800B3D20;
-extern s32 D_800B3D10[4]; /* four timestamps, func_80043510 and func_8004443C (T-25003) */
+extern s32 D_800B3D10[4]; /* four timestamps, frame_render and func_8004443C (T-25003) */
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 

@@ -100,13 +100,13 @@ void func_80144094(void) {
         ang -= 0x1000;
     }
     /* FAKE: * 0 occurrences adjust uopt priority of k ($a1) and loop constant 12 ($s6); T-24136 */
-    k = D_8011ECA0 + (k * 0);
+    k = draw_buffer + (k * 0);
     for (i = 0; i < 8; i++) {
         k += (i == 12) * 0;
         for (j = 0; j < 12; j++) {
             q = (s16 *)&sxy[j][i];
             if (q[20] >= 0 && q[2] < 0x201) {
-                if (q[1] >= D_800E6280.screen_center_y[k] - 0x200 && D_800E6280.screen_center_y[k] + 0x400 >= q[3]) {
+                if (q[1] >= game_state.screen_center_y[k] - 0x200 && game_state.screen_center_y[k] + 0x400 >= q[3]) {
                     poly = GetWorkBase(0x28, k);
                     func_8009F040(poly);
                     poly->r0 = 0x80;
@@ -134,8 +134,8 @@ void func_80144094(void) {
                     poly->y2 = q[19];
                     poly->x3 = q[20];
                     poly->y3 = q[21];
-                    AddPrim(D_800E8CA0 + ((D_8011ECA0 << 10) + 0x3F8), poly);
-                    k = D_8011ECA0;
+                    AddPrim(D_800E8CA0 + ((draw_buffer << 10) + 0x3F8), poly);
+                    k = draw_buffer;
                 }
             }
         }
@@ -174,7 +174,7 @@ void func_80144430(void) {
     for (o = 0; o < 1; o++) {
         for (j = 0; j < 4; j++) {
             q = (s16 *)&pt[j * 2 + o];
-            poly = GetWorkBase(0x28, D_8011ECA0);
+            poly = GetWorkBase(0x28, draw_buffer);
             func_8009F040(poly);
             poly->r0 = 0x80;
             poly->g0 = 0x80;
@@ -198,7 +198,7 @@ void func_80144430(void) {
             poly->y2 = q[5];
             poly->x3 = q[6];
             poly->y3 = q[7];
-            AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + 0x3F4, poly);
+            AddPrim(D_800E8CA0 + (draw_buffer << 10) + 0x3F4, poly);
         }
     }
 }
@@ -214,14 +214,14 @@ void func_801446D8(void) {
     u32 sp50[8];
     Tc10 *var_s0;
 
-    if (D_800E6280.draw_3d_enabled != 0) {
+    if (game_state.draw_3d_enabled != 0) {
         func_80099540(&D_80122740);
         var_s0 = D_80127080; do {
             func_80099B10(var_s0->unk4[0], &sp50, &sp70);
             func_80099F04(&sp50);
             func_8009A200(var_s0->unk4[0], &sp70);
             func_80099ED8(&sp70);
-            func_8009A4D0((s32) var_s0, (s32) ((u8 *)&D_800E8C70 + (D_8011ECA0 * 0x14)), 6, 0x1F800000);
+            func_8009A4D0((s32) var_s0, (s32) ((u8 *)&D_800E8C70 + (draw_buffer * 0x14)), 6, 0x1F800000);
             var_s0++;
         } while (var_s0 != (Tc10 *)D_80127480);
     }
