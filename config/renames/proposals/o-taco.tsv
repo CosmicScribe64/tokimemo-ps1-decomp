@@ -9,7 +9,7 @@ func	TACO	func_80133374	shooter_check_battle_end	timer countdown while stages cl
 func	TACO	func_80133410	shooter_clear_beam_flags	clears flag 0x20 on the 16 shot records of the player (0) or wingman (1)
 func	TACO	func_801334BC	shooter_clear_player_shots	zeroes flags of player and wingman shot tables, secondary tables and bomb shots; resets bomb counters
 func	TACO	func_8013356C	shooter_clear_enemy_bullets	zeroes flags of the 16 enemy bullet records
-func	TACO	func_801335A0	shooter_play_se	plays SE (id | 0x500 when arg0 odd, else | 0x600); in a stage (background flags set) ids < 10 get a random cooldown
+func	TACO	func_801335A0	shooter_play_se	plays sound id | 0x500 when arg0 is odd (battle, always 1), else | 0x600 (scenes, always 0), so a source id with an even arg0 is not the played id; cooldown only when arg0 == 1, id < 10 and the background flags are set
 func	TACO	func_80133694	shooter_tick_se_cooldowns	decrements the ten SE cooldown bytes
 func	TACO	func_80133738	shooter_play_triangle_voice	HYPOTHESIS: plays one of 6 voice clips (func_80046290 is the main voice request, third argument 8); triangle press on odd stages in step 1, clip chosen at random or by ship depth
 func	TACO	func_80133870	shooter_stage_load	stage 0: step dispatch, blinking loading text, loading countdown display
@@ -27,7 +27,7 @@ func	TACO	func_801347F4	shooter_link_model_handles	GsLinkObject4 for 64 handles 
 func	TACO	func_80134884	shooter_clear_particle_tables	zeroes the nine 16-record tables (0x140 bytes each)
 func	TACO	func_80134930	shooter_title_setup	stage 2 init: two title models at fixed positions
 func	TACO	func_80134A18	shooter_title_animate	frame-driven pose script (0x20, 0x54, 0x68, 0x72, 0x7C, 0x9A, 0xAE, 0xEA frame limits) for the two title models, light ramp
-func	TACO	func_80134D8C	shooter_stage_title	stage 2: six steps, star dots, SE at frames 0x40/0x80/0xA0/0xC0
+func	TACO	func_80134D8C	shooter_stage_title	stage 2: six steps, star dots, scene sounds at stage frames 0x40 (0x605), 0x80 (0x606), 0xA0 (0x604) and 0xC0 (0x607)
 func	TACO	func_80134EBC	shooter_title_step_init	step 0: clears flags, star table and text layer; stage helper calls
 func	TACO	func_80134FB8	shooter_setup_text_layer	sets the main text-object fields (D_8011ED15..) used for stage texts
 func	TACO	func_8013506C	shooter_draw_title_stars	adds one random star dot per frame until 128 exist (320x240 grid) and draws all with a colour that changes every frame (twinkle)
@@ -39,7 +39,7 @@ func	TACO	func_80135330	shooter_title_step_advance	step 4: advance only
 func	TACO	func_80135350	shooter_title_step_finish	step 5: reload palette, go to stage 3
 func	TACO	func_80135394	shooter_stage_menu	stage 3: main menu, 3 steps; stars
 func	TACO	func_80135418	shooter_menu_step_init	step 0
-func	TACO	func_8013546C	shooter_menu_step_select	step 1: up/down/select cycle 5 items; circle or START confirms; idle for 901 frames goes to stage 6
+func	TACO	func_8013546C	shooter_menu_step_select	step 1: up/down/select cycle 5 items; circle or START confirms; idle for 901 frames goes to stage 6; scene sounds 0x600 (move) and 0x601 (confirm)
 func	TACO	func_8013555C	shooter_menu_draw_item	draws the label of the current item
 func	TACO	func_80135638	shooter_menu_step_confirm	step 2: after 65 frames: item 0 stage 10, 1 stage 4, 2 stage 5, 3 stage 7, 4 stage 46
 func	TACO	func_80135720	shooter_settings_reset_state	zeroes D_8015F3F0..F3FC
@@ -56,11 +56,11 @@ func	TACO	func_801361E8	shooter_settings_anim_roll	cross-fade for the roll setti
 func	TACO	func_80136438	shooter_settings_anim_shot	cross-fade for the shot button
 func	TACO	func_80136688	shooter_settings_anim_bomb	cross-fade for the bomb button
 func	TACO	func_801368D8	shooter_settings_cycle_value	right or circle: value+1 modulo count; left: value-1
-func	TACO	func_80136988	shooter_settings_input	up/down moves the cursor (wraps over 5 rows); left/right/circle change; cross or START leaves
+func	TACO	func_80136988	shooter_settings_input	up/down moves the cursor (wraps over 5 rows); left/right/circle change; cross or START leaves; scene sounds 0x600 (cursor), 0x601 (value change), 0x602 (leave)
 func	TACO	func_80136B40	shooter_stage_scores	stage 5: eight steps (init, stars in, reset, zoom in, show, zoom out, stars out, exit to stage 2)
 func	TACO	func_80136C00	shooter_scores_step_init	step 0: star field init, background off
 func	TACO	func_80136C60	shooter_scores_step_stars_out	step 6: star brightness ramps down over 43 frames
-func	TACO	func_80136CD8	shooter_scores_step_exit	step 7: SE 0xC1, stage 2
+func	TACO	func_80136CD8	shooter_scores_step_exit	step 7: main sound command 0xC1 (direct call to func_80044750, not an SE id), stage 2
 func	TACO	func_80136D00	shooter_scores_step_stars_in	step 1: brightness ramps up in 64 steps of 4
 func	TACO	func_80136D78	shooter_scores_step_zoom_in	step 3: ranking scale grows by 60 per frame (120 while cross is held) up to 0x1000
 func	TACO	func_80136E08	shooter_scores_step_zoom_out	step 5: ranking scale grows by 500 per frame to 0x9001, fading out
@@ -80,7 +80,7 @@ func	TACO	func_80137D00	shooter_help_step_page1	step 1: plays voice lines 0-2 on
 func	TACO	func_80137E48	shooter_help_step_page2	step 2: plays voice lines 3-7 the same way
 func	TACO	func_80137F54	shooter_help_step_exit	step 3: last voice line, back to stage 2
 func	TACO	func_80137F90	shooter_stage_game_start	stage 10: three steps; draws the HUD while loading
-func	TACO	func_8013801C	shooter_game_start_step_init	step 0: clears score, timer (0x4650 frames), links 79 actors, resets ships and tables
+func	TACO	func_8013801C	shooter_game_start_step_init	step 0: clears score, timer (0x4650 frames), links 79 actors, resets ships and tables, plays scene sound 0x603
 func	TACO	func_80138160	shooter_game_start_step_wait	step 1: waits for the load request to finish, loads page banks
 func	TACO	func_8013822C	shooter_game_start_step_begin	step 2: timer 0x4650, HP 0xFF, to stage 11
 func	TACO	func_80138280	shooter_stage_stage1	stage 11: three steps; label shown for 96 frames
@@ -211,9 +211,9 @@ func	TACO	func_80144DF8	shooter_reset_model_slot	zeroes coordinate and rotation 
 func	TACO	func_80144E3C	shooter_draw_sky_gradient	three gradient bands, three colour sets by arg5
 func	TACO	func_8014559C	shooter_draw_sky_gradient_phase	picks a colour set by frame ranges (0x1F, 0x23, 0x61)
 func	TACO	func_80145650	shooter_rotate_gradient_quads	rotates the band quads about the first corner by arg1 degrees
-func	TACO	func_80145DC4	shooter_opening_step_fly_in	step 1: pose keys 1-8 of both models, sky gradient
-func	TACO	func_8014616C	shooter_opening_step_first_close_up	step 2: keys 9-0x16 of model 1 with banded reveals, SE 0x505-0x507
-func	TACO	func_80146754	shooter_opening_step_second_close_up	step 3: keys 9-0x16 of model 2
+func	TACO	func_80145DC4	shooter_opening_step_fly_in	step 1: pose keys 1-8 of both models, sky gradient; scene sounds 0x605, 0x607, 0x606 at step frames 30, 170 and 300
+func	TACO	func_8014616C	shooter_opening_step_first_close_up	step 2: keys 9-0x16 of model 1 with banded reveals, scene sounds 0x605 to 0x607 at fixed frames
+func	TACO	func_80146754	shooter_opening_step_second_close_up	step 3: keys 9-0x16 of model 2; scene sounds 0x607, 0x605, 0x606, 0x605 at step frames 100, 230, 300 and 400
 func	TACO	func_80146D60	shooter_init_object_hierarchy	chains 63 coordinate objects under object 0 at depth arg0, clears rotations
 func	TACO	func_80146E3C	shooter_set_dark_lights	three directional lights (grey tones) with ambient 0
 func	TACO	func_80146F74	shooter_move_model	moves and rotates object arg0 by deltas; optional tween toward the player
@@ -231,8 +231,8 @@ func	TACO	func_80147E80	shooter_boss_death_explosions	each frame for each of 8 p
 func	TACO	func_801480B0	shooter_stage_boss1	stage 12: four steps (init, entrance, fight, defeat), label for 96 frames
 func	TACO	func_80148184	shooter_boss1_step_init	step 0: waits for the load request, loads model block 0x8018D000, 30 coordinate objects, parts
 func	TACO	func_80148308	shooter_boss1_step_entrance	step 1: entrance pose script for 1150 frames (func_8014AB50), then parts reset
-func	TACO	func_801483B0	shooter_boss1_step_fight	step 2: updates 11 parts, damage lights, AI; ends at 80 percent damage and clears hidden flags
-func	TACO	func_801484E4	shooter_boss1_step_defeat	step 3: explosions to frame 120, flashes, stage 21 at frame 240
+func	TACO	func_801483B0	shooter_boss1_step_fight	step 2: updates 11 parts, damage lights, AI; at 80 percent damage plays scene sound 0x605, counts a stage cleared and clears hidden flags
+func	TACO	func_801484E4	shooter_boss1_step_defeat	step 3: explosions to frame 120 (scene sound 0x608 at frames 0 and 60; the source passes 0x508), flashes, stage 21 at frame 240
 func	TACO	func_8014866C	shooter_boss1_set_lights	boss lighting set (bright)
 func	TACO	func_801487A4	shooter_boss1_update_part	places part actor from its joint (rotated offset plus table), refills HP bars, blinks hidden
 func	TACO	func_80148B58	shooter_boss1_reset_parts	releases slots 16-62, re-attaches 11 parts, clears controller actors 16-25
@@ -241,23 +241,23 @@ func	TACO	func_80148FE0	shooter_stage_boss2	stage 22: four steps (init, entrance
 func	TACO	func_801490B4	shooter_boss2_step_init	step 0: waits for the load request, model block 0x80196000, 35 joints, three seven-segment chains
 func	TACO	func_8014927C	shooter_boss2_step_entrance	step 1: chains animate for 300 frames
 func	TACO	func_801493D4	shooter_boss2_step_fight	step 2: 12 parts, AI; ends at 85 percent damage once parts 16 and 17 have no HP
-func	TACO	func_80149538	shooter_boss2_step_defeat	step 3: white flashes from frame 180, SE 0x504 at 199, fade to frame 440, then stage 31
+func	TACO	func_80149538	shooter_boss2_step_defeat	step 3: white flashes from frame 180, scene sound 0x604 (bank 6; the source passes 0x504) at frame 199, fade to frame 440, then stage 31
 func	TACO	func_801497EC	shooter_boss2_update_part	places the part actor from its joint, refills HP bars, recolours the model on part death
 func	TACO	func_80149B7C	shooter_boss2_reset_parts	releases slots 16-62, re-attaches 12 parts, clears controllers
 func	TACO	func_80149D1C	shooter_boss2_update_damage_lights	red lights flash for 3 steps when the damage percent rises
 func	TACO	func_80149F90	shooter_stage_boss3	stage 32: five steps (init, descend, fight, defeat, collapse)
 func	TACO	func_8014A070	shooter_boss3_step_init	step 0: model block 0x801A7000, 33 joints, pose
-func	TACO	func_8014A1D4	shooter_boss3_step_descend	step 1: descends until its y reaches the target, SE every 180 frames
+func	TACO	func_8014A1D4	shooter_boss3_step_descend	step 1: descends until its y reaches the target, scene sound 0x600 every 180 frames
 func	TACO	func_8014A234	shooter_boss3_step_fight	step 2: 11 parts, AI; ends at 85 percent damage with parts 16, 19, 20 dead
 func	TACO	func_8014A390	shooter_boss3_step_defeat	step 3: explosion script, white fade, stage clear count +1 at the end
 func	TACO	func_8014A42C	shooter_boss3_step_collapse	step 4: parts fall, clear count +1, stage 45
 func	TACO	func_8014A480	shooter_boss3_update_part	like shooter_boss1_update_part for boss 3, hides parts that die
 func	TACO	func_8014A79C	shooter_boss3_reset_parts	re-attaches 11 parts, clears controllers
 func	TACO	func_8014A8E0	shooter_boss3_update_damage_lights	red light flash on damage rise
-func	TACO	func_8014AB50	shooter_boss1_entrance_script	timeline by frame to 1150: keyframes 0-0x10, transformations at frames 500 and 649, another at 950
+func	TACO	func_8014AB50	shooter_boss1_entrance_script	timeline by frame to 1150: keyframes 0-0x10, transformations at frames 500 and 649, another at 950; scene sound 0x600 at frames 10 and 199
 func	TACO	func_8014B2A4	shooter_boss1_update_ai	runs the attack mode; arms the first morph at frame 601 when form flag is 1
-func	TACO	func_8014B374	shooter_boss1_morph_to_form2	plays the pose keys 1-0x1D, SE 0x501, holds key 0x1D
-func	TACO	func_8014B4B4	shooter_boss1_morph_to_form1	plays the pose keys backwards, SE 0x501
+func	TACO	func_8014B374	shooter_boss1_morph_to_form2	plays the pose keys 1-0x1D, scene sound 0x601 at key 1, holds key 0x1D
+func	TACO	func_8014B4B4	shooter_boss1_morph_to_form1	plays the pose keys backwards, scene sound 0x601 at key 0x1D
 func	TACO	func_8014B5F0	shooter_boss1_update_group_pair	advances the animation of a group pair (actor 18: objects 9-11, actor 19: objects 0xD-0xF) with a 50-key cycle; slower keys 12-21
 func	TACO	func_8014B790	shooter_boss1_update_group_pair_short	8-key cycle for actor 20 group; stops itself and re-poses
 func	TACO	func_8014B8B4	shooter_boss1_pose_group_pair	sets three object poses by key range (0-3, 4-7, 12-21, 24-27, 32-41, 46-49); during keys 20-29 group actors 18-25 are contact-only
@@ -270,7 +270,7 @@ func	TACO	func_8014C0D4	shooter_boss1_pose_group_d_form1	pose key 1 for 26 objec
 func	TACO	func_8014C1DC	shooter_boss1_pose_group_d_form2	pose key 2 for 26 objects
 func	TACO	func_8014C2E4	shooter_boss1_rest_group_d	rest rotations for 26 objects
 func	TACO	func_8014C3B4	shooter_boss1_update_group_e	actor 24 animation, 42 keys
-func	TACO	func_8014C578	shooter_boss1_pose_group_e	pose keys for group E objects
+func	TACO	func_8014C578	shooter_boss1_pose_group_e	pose keys for group E objects; scene sound 0x602 at key 1 and 0x603 at key 16
 func	TACO	func_8014C8DC	shooter_boss1_rest_group_e	rest rotations
 func	TACO	func_8014C978	shooter_boss1_update_group_f	actor 25 animation, 74 keys
 func	TACO	func_8014CB24	shooter_boss1_pose_group_f	pose keys for group F objects
@@ -295,7 +295,7 @@ func	TACO	func_8014EF14	shooter_boss1_form2_group_f_motion	motion and group F st
 func	TACO	func_8014F044	shooter_boss1_pick_attack_mode	weighted random mode: form 1 <20 mode 0, 20-39 mode 4, 40-54 mode 1 (7 if groups dead), 55-69 mode 2, 70-89 mode 3, 90+ mode 7; form 2 <40 mode 2, <70 mode 5, <95 mode 6, else mode 8
 func	TACO	func_8014F210	shooter_boss3_descend_motion	step 1 helper: sway, descent, light; ends when y is within 100 of the target
 func	TACO	func_8014F2A0	shooter_boss3_update_ai	chooses group attacks (1 in 200 per frame while damage below 75 percent) and runs them
-func	TACO	func_8014F5F0	shooter_boss3_defeat_motion	step 3 helper: explosion script over 600 frames, white fade, lights
+func	TACO	func_8014F5F0	shooter_boss3_defeat_motion	step 3 helper: explosion script over 600 frames, white fade, lights; scene sound 0x602 at frame 600
 func	TACO	func_8014F820	shooter_boss3_collapse_motion	step 4 helper: parts fall by random speed 5-12, explosions until frame 400, ends at frame 600
 func	TACO	func_8014F9B0	shooter_boss3_update_damage_stage	damage thresholds 32 and 48 percent switch the idle pose speed and flicker the model colours
 func	TACO	func_8014FBD4	shooter_boss3_pose_idle	idle pose keys of the body objects, 48 keys
@@ -311,14 +311,14 @@ func	TACO	func_8015131C	shooter_boss3_sway_motion	motion pieces of the sway, als
 func	TACO	func_8015163C	shooter_boss3_set_part_visibility	attribute 0x40000000 or 0x80000000 by frame parity of arg1
 func	TACO	func_80151678	shooter_boss3_set_lights	boss 3 lighting
 func	TACO	func_801517AC	shooter_fade_white	full-screen flash with grey level arg0 (0-255)
-func	TACO	func_8015185C	shooter_boss3_fire_pattern	shots from joint 0x19 depending on which controller parts are alive (used by boss 3)
+func	TACO	func_8015185C	shooter_boss3_fire_pattern	shots from joint 0x19 depending on which controller parts are alive (used by boss 3); scene sound 0x601 with the shot when the controller part's counter is a multiple of 10
 func	TACO	func_80151C30	shooter_boss2_update_ai	runs the part groups; fires from joint 0x1C when parts 16-18 have no HP
-func	TACO	func_80151D1C	shooter_boss2_update_barrage	actor 16 cycle of 30 steps: shots from joints 0x16 and 0x17 every third step, SE every 10
-func	TACO	func_80151F94	shooter_boss2_update_arm_attack_a	one chain: pose keys, shots from its base joint at keys 30-32, SE 0x501, then picks the next attack
+func	TACO	func_80151D1C	shooter_boss2_update_barrage	actor 16 cycle of 30 steps: shots from joints 0x16 and 0x17 every third step, scene sound 0x602 every 10 steps
+func	TACO	func_80151F94	shooter_boss2_update_arm_attack_a	one chain: pose keys, shots from its base joint at keys 30-32, scene sound 0x601 at key 30, then picks the next attack
 func	TACO	func_80152110	shooter_boss2_pose_arm_a	pose keys 1 and 2 for the seven segments
 func	TACO	func_801521EC	shooter_boss2_rest_arm	rest rotations of a chain (seven segments, stride 3)
 func	TACO	func_801522B0	shooter_boss2_update_arm_attack_c	chain attack with pose keys 3-5 over 45 steps
-func	TACO	func_801523D0	shooter_boss2_pose_arm_c	pose keys 3, 4, 5 for the segments
+func	TACO	func_801523D0	shooter_boss2_pose_arm_c	pose keys 3, 4, 5 for the segments; scene sound 0x601 at key 0x1D
 func	TACO	func_8015266C	shooter_boss2_update_core	actor 17 cycle of 20 steps
 func	TACO	func_80152764	shooter_boss2_pose_core	pose keys for object 0x23
 func	TACO	func_80152808	shooter_boss2_update_tail	actor 21 cycle of 70 steps for objects 0x1D-0x20
@@ -599,11 +599,11 @@ field	TcActor	unk72	weapon	primary weapon: -1 vulcan, 0 wide shot, 1 beam
 field	TcActor	unk74	x	world x; positive is screen left (pad left increases it)
 field	TcActor	unk76	y	world y; positive is down
 field	TcActor	unk78	z	world z; the player is near 0x800, enemies come from -0x8000
-field	TcActor	unk7A	age	frames since spawn (0x7FFF marks a fresh spawn); player: hit timer
+field	TcActor	unk7A	age	frames since spawn (0x7FFF marks a fresh spawn); player: hit timer; boss part: number of HP bars (set when the part is attached; shooter_boss_damage_percent multiplies each part's table HP by it and unk82 counts bars used against it)
 field	TcActor	unk7C	arg_x	player: bomb slot 1; enemy: spawn argument x (path centre, speed, phase)
 field	TcActor	unk7E	arg_y	player: bomb slot 2; enemy: spawn argument y
 field	TcActor	unk80	arg_z	player: bomb slot 3; enemy: spawn argument z
-field	TcActor	unk82	aux	player: secondary weapon (0 homing, 1 spread, -1 start); boss part: bars used; enemy: key or pose index
+field	TcActor	unk82	aux	player: secondary weapon (0 homing, 1 spread, -1 start); boss part: bars used (compared against unk7A, the bar count); enemy: key or pose index
 field	TcActor	unk84	stats	u8[4]: radius (units of 16), HP, kind (enemy type or class), hit flags (bit0 hittable, high nibble drop code)
 field	Tc14	unk0	x	world position
 field	Tc14	unk2	y	world position
@@ -657,8 +657,8 @@ type	TACO	TcPos	ShooterPos	four s16 (x, y, z, w); position, velocity or spawn ar
 type	TACO	Tc10	ShooterModelHandle	GsDOBJ2 object handle (attribute word, links)
 type	TACO	TcObj50	ShooterCoord	GsCOORDINATE2 coordinate object (0x50 bytes)
 type	TACO	TcActor	ShooterActor	0x88-byte actor: ship, wingman, enemy or boss part; 79 records
-type	TACO	Tc14	ShooterParticle	0x14-byte world-space record: shot, bullet, item, spark, explosion
-type	TACO	TacoParticle14	ShooterParticle	second view of the same record (two ShooterPos plus four bytes); merge with Tc14 when the header is rewritten
+type	TACO	Tc14	ShooterParticle	0x14-byte world-space record: shot, bullet, item, spark, explosion; TacoParticle14 below is renamed to the same name, so the header defines ShooterParticle once
+type	TACO	TacoParticle14	ShooterParticle	alias: second view of the same record (two ShooterPos plus four bytes), renamed to the same new name as Tc14; apply as a rename only, do not define the type twice
 type	TACO	TacoRnd	ShooterStar	star of the 100-star field (angle, radius)
 type	TACO	TacoCam	ShooterBackgroundScroll	scroll state of the floor grid
 type	TACO	TcTex4	ShooterTexCoords4	four texture coordinate bytes
@@ -671,8 +671,8 @@ type	TACO	TcDamage9	ShooterShotDamage	damage per shot kind, 9 bytes
 type	TACO	TcPair8	ShooterPosePtrs	pair of words: translation and rotation base pointers
 type	TACO	TcPair2	ShooterPoseFlags	pair of bytes: fixed flags of a pose pair
 type	TACO	TacoLightBlock	ShooterLightBlock	three libgs light entries of 16 bytes
-type	TACO	TcSave	ShooterSettingsBlock	union view of the settings block at D_800E7D10+0x40 (flag word, scores, names)
-type	TACO	TcSetW	ShooterSettingsWordView	bit-field view: mode and selector
+type	TACO	TcSave	ShooterSettingsBlock	union view of the settings block at D_800E7D10+0x40 (flag word, scores, names); same memory as core.tsv SaveTacoSettings (main scope, a guess in core.tsv): reconcile to one name and one prefix when the tables are merged
+type	TACO	TcSetW	ShooterSettingsWordView	bit-field view: mode and selector; overlaps core.tsv TacoSettingsBits (main scope, a guess in core.tsv): reconcile when the tables are merged
 type	TACO	TcSetH	ShooterSettingsHalfView	bit-field view of the halfword with the shot selector
 type	TACO	TcSetB	ShooterSettingsByteView	byte view with the bomb selector
 type	TACO	TcSetF	ShooterSettingsFlagView	bit-field view with the saved flag
@@ -750,20 +750,20 @@ const	ShooterShotButton	2	SHOOTER_SHOT_SQUARE	mask 0x80
 const	ShooterBombButton	0	SHOOTER_BOMB_CROSS	D_8015EDE4: pad mask 0x40
 const	ShooterBombButton	1	SHOOTER_BOMB_SQUARE	mask 0x80
 const	ShooterBombButton	2	SHOOTER_BOMB_CIRCLE	mask 0x20
-const	PadButton	0x0001	PAD_L2	pad word bit (shared with main; proposed here from TACO use)
-const	PadButton	0x0002	PAD_R2	pad word bit
-const	PadButton	0x0004	PAD_L1	pad word bit
-const	PadButton	0x0008	PAD_R1	pad word bit
-const	PadButton	0x0010	PAD_TRIANGLE	pad word bit
-const	PadButton	0x0020	PAD_CIRCLE	pad word bit
-const	PadButton	0x0040	PAD_CROSS	pad word bit
-const	PadButton	0x0080	PAD_SQUARE	pad word bit
-const	PadButton	0x0100	PAD_SELECT	pad word bit
-const	PadButton	0x0800	PAD_START	pad word bit
-const	PadButton	0x1000	PAD_UP	pad word bit
-const	PadButton	0x2000	PAD_RIGHT	pad word bit
-const	PadButton	0x4000	PAD_DOWN	pad word bit
-const	PadButton	0x8000	PAD_LEFT	pad word bit
+const	PadBits	0x0001	PAD_L2	CONFLICT with core.tsv: core has PAD_L2 = 0x0100, which is wrong; 0x0001 is right (main builds the pad word as (~byte2 << 8) | ~byte3 (src/main/80042A00.c), so the shoulder and face buttons are the low byte and select, start and the d-pad the high byte; TACO also reads 0x5 and 0xA as the roll masks and 0x800 as START (ends the run)). Core owner to correct before the tables are merged
+const	PadBits	0x0002	PAD_R2	CONFLICT with core.tsv: core has PAD_R2 = 0x0200, which is wrong; 0x0002 is right (main builds the pad word as (~byte2 << 8) | ~byte3 (src/main/80042A00.c), so the shoulder and face buttons are the low byte and select, start and the d-pad the high byte; TACO also reads 0x5 and 0xA as the roll masks and 0x800 as START (ends the run)). Core owner to correct before the tables are merged
+const	PadBits	0x0004	PAD_L1	CONFLICT with core.tsv: core has PAD_L1 = 0x0400, which is wrong; 0x0004 is right (main builds the pad word as (~byte2 << 8) | ~byte3 (src/main/80042A00.c), so the shoulder and face buttons are the low byte and select, start and the d-pad the high byte; TACO also reads 0x5 and 0xA as the roll masks and 0x800 as START (ends the run)). Core owner to correct before the tables are merged
+const	PadBits	0x0008	PAD_R1	CONFLICT with core.tsv: core has PAD_R1 = 0x0800, which is wrong; 0x0008 is right (main builds the pad word as (~byte2 << 8) | ~byte3 (src/main/80042A00.c), so the shoulder and face buttons are the low byte and select, start and the d-pad the high byte; TACO also reads 0x5 and 0xA as the roll masks and 0x800 as START (ends the run)). Core owner to correct before the tables are merged
+const	PadBits	0x0010	PAD_TRIANGLE	same value as the core.tsv row of the same name (duplicate; keep one when the tables are merged)
+const	PadBits	0x0020	PAD_CIRCLE	same value as the core.tsv row of the same name (duplicate; keep one when the tables are merged)
+const	PadBits	0x0040	PAD_CROSS	same value as the core.tsv row of the same name (duplicate; keep one when the tables are merged)
+const	PadBits	0x0080	PAD_SQUARE	same value as the core.tsv row of the same name (duplicate; keep one when the tables are merged)
+const	PadBits	0x0100	PAD_SELECT	CONFLICT with core.tsv: core has PAD_SELECT = 0x0001, which is wrong; 0x0100 is right (main builds the pad word as (~byte2 << 8) | ~byte3 (src/main/80042A00.c), so the shoulder and face buttons are the low byte and select, start and the d-pad the high byte; TACO also reads 0x5 and 0xA as the roll masks and 0x800 as START (ends the run)). Core owner to correct before the tables are merged
+const	PadBits	0x0800	PAD_START	CONFLICT with core.tsv: core has PAD_START = 0x0008 and PAD_R1 = 0x0800 and reads the mask 0x860 as circle | cross | R1; 0x0800 is START, so 0x860 is circle | cross | START (the main exe pause toggle tests 0x08000800, TACO ends the run on 0x800; main builds the pad word as (~byte2 << 8) | ~byte3 (src/main/80042A00.c), so the shoulder and face buttons are the low byte and select, start and the d-pad the high byte; TACO also reads 0x5 and 0xA as the roll masks and 0x800 as START (ends the run)). Core owner to correct before the tables are merged
+const	PadBits	0x1000	PAD_UP	same value as the core.tsv row of the same name (duplicate; keep one when the tables are merged)
+const	PadBits	0x2000	PAD_RIGHT	same value as the core.tsv row of the same name (duplicate; keep one when the tables are merged)
+const	PadBits	0x4000	PAD_DOWN	same value as the core.tsv row of the same name (duplicate; keep one when the tables are merged)
+const	PadBits	0x8000	PAD_LEFT	same value as the core.tsv row of the same name (duplicate; keep one when the tables are merged)
 const	ShooterActorFlag	0x80	SHOOTER_ACTOR_ACTIVE	flag byte: shootable and visible
 const	ShooterActorFlag	0x40	SHOOTER_ACTOR_CONTACT_ONLY	flag byte: damages the ship on contact but cannot be shot
 const	ShooterActorFlag	0x10	SHOOTER_ACTOR_DYING	flag byte set with 0x80 while exploding
@@ -858,7 +858,7 @@ const	ShooterLoadRequest	0x30	SHOOTER_LOAD_STAGE3	assets of stage 3, requested w
 const	ShooterLoadRequest	0x34	SHOOTER_LOAD_STREAM_STAGE3	HYPOTHESIS: music stream of stage 3
 const	ShooterLoadRequest	0x38	SHOOTER_LOAD_BOSS3	assets of boss 3
 const	ShooterLoadRequest	0x44	SHOOTER_LOAD_STREAM_RESULT	HYPOTHESIS: music stream for the end and result screens
-const	ShooterSe	0x500	SHOOTER_SE_FIRE_VULCAN	bank 5 id (func_801335A0 with an odd first argument); also the weapon-reset sound
+const	ShooterSe	0x500	SHOOTER_SE_FIRE_VULCAN	bank 5 id as played (func_801335A0 with an odd first argument, always 1); also the vulcan weapon pickup sound
 const	ShooterSe	0x501	SHOOTER_SE_FIRE_BEAM	bank 5
 const	ShooterSe	0x502	SHOOTER_SE_FIRE_WIDE	bank 5
 const	ShooterSe	0x503	SHOOTER_SE_FIRE_SECONDARY	bank 5
@@ -869,10 +869,19 @@ const	ShooterSe	0x507	SHOOTER_SE_ENEMY_HIT	bank 5
 const	ShooterSe	0x508	SHOOTER_SE_ENEMY_DESTROYED	bank 5
 const	ShooterSe	0x509	SHOOTER_SE_PICKUP	bank 5 (bomb or bonus pickup)
 const	ShooterSe	0x510	SHOOTER_SE_PICKUP_HEAL	bank 5
-const	ShooterSe	0x600	SHOOTER_SE_MENU_MOVE	bank 6 id (func_801335A0 with an even first argument)
-const	ShooterSe	0x601	SHOOTER_SE_MENU_CONFIRM	bank 6
-const	ShooterSe	0x602	SHOOTER_SE_MENU_CANCEL	bank 6
-const	ShooterSe	0x603	SHOOTER_SE_GAME_START	bank 6
+const	ShooterSe	0x511	SHOOTER_SE_SELECT_HOMING	bank 5; secondary weapon set to homing by an item
+const	ShooterSe	0x512	SHOOTER_SE_SELECT_BEAM	bank 5; primary weapon set to the beam by an item
+const	ShooterSe	0x514	SHOOTER_SE_SELECT_WIDE	bank 5; primary weapon set to the wide shot by an item
+const	ShooterSe	0x516	SHOOTER_SE_SELECT_SPREAD	bank 5; secondary weapon set to spread by an item
+const	ShooterSe	0x600	SHOOTER_SE_MENU_MOVE	bank 6 id as played (func_801335A0 with an even first argument, always 0); cursor move in the main menu and settings, also a boss cue (boss 1 entrance frames 10 and 199, boss 2 every 240 frames at 1 in 3, boss 3 every 180 frames)
+const	ShooterSe	0x601	SHOOTER_SE_MENU_CONFIRM	bank 6; menu confirm and settings value change, also the boss 1 morph, boss 2 arm attack and boss 3 fire pattern cues
+const	ShooterSe	0x602	SHOOTER_SE_MENU_CANCEL	bank 6; leave settings, also the boss 2 barrage (every 10 steps), boss 3 defeat (frame 600) and boss 1 part group E cues
+const	ShooterSe	0x603	SHOOTER_SE_GAME_START	bank 6; game start, also the boss 1 part group E key 16 cue
+const	ShooterSe	0x604	SHOOTER_SE_SCENE_CUE_4	bank 6; title frame 0xA0 and boss 2 defeat frame 199 (not menu only)
+const	ShooterSe	0x605	SHOOTER_SE_SCENE_CUE_5	bank 6; title frame 0x40, opening script cues and the end of boss 1's fight
+const	ShooterSe	0x606	SHOOTER_SE_SCENE_CUE_6	bank 6; title frame 0x80 and opening script cues
+const	ShooterSe	0x607	SHOOTER_SE_SCENE_CUE_7	bank 6; title frame 0xC0 and opening script cues
+const	ShooterSe	0x608	SHOOTER_SE_SCENE_CUE_8	bank 6; boss 1 defeat explosions at defeat frames 0 and 60
 const	ShooterBoss1Mode	0	SHOOTER_BOSS1_MODE_SWAY_RIGHT	attack mode in actor 16 kind
 const	ShooterBoss1Mode	1	SHOOTER_BOSS1_MODE_GROUP_PAIR	form 1
 const	ShooterBoss1Mode	2	SHOOTER_BOSS1_MODE_SCATTER	both forms
@@ -893,19 +902,12 @@ const	ShooterDamage	4	SHOOTER_BULLET_DAMAGE	HP lost to an enemy bullet
 const	ShooterDamage	12	SHOOTER_CONTACT_DAMAGE	HP lost to an enemy body
 const	ShooterDamage	16	SHOOTER_ITEM_HEAL_AMOUNT	HP of the heal item
 const	ShooterTuning	1000	SHOOTER_ITEM_SCORE	points per collected item
-comment	main	draw2d3d	draw2d3d	switches the 2D and 3D layers on or off with two flags; the overlay calls it with (1,1) at scene start and (0,0) on exit
-comment	main	back_clear_switch	back_clear_switch	turns the per-frame background clear on (1) or off (0)
-comment	main	load_palette	load_palette	uploads a palette from RAM into the VRAM CLUT area (source, index, mode arguments)
 comment	main	load_csr_tp	load_csr_tp	uploads a texture page block from RAM for the UI layer (source, page index, size arguments)
-comment	main	dtd_on_tpage	dtd_on_tpage	adds the draw-mode packet for texture page (x, y) to an ordering-table layer
 comment	main	GetWorkBase	GetWorkBase	reserves a block of GPU packet memory in the current frame buffer and returns its address
 comment	main	AddPrim	AddPrim	links a packet into the ordering table at the given slot
 comment	main	SetSemiTrans	SetSemiTrans	sets or clears the semi-transparency bit of a packet
 comment	main	SetShadeTex	SetShadeTex	sets or clears the flag that disables shading for a textured packet
 comment	main	safe_env	safe_env	adds the draw-environment packet of an ordering-table layer
-comment	main	LoadSquare	LoadSquare	copies a RAM block into a VRAM rectangle (x, y, width, height, source)
-comment	main	k_reset	k_reset	resets the text window system
 comment	main	tpage_buf_clear_all	tpage_buf_clear_all	clears all texture page buffers
-comment	main	load_tpage_buf_lock	load_tpage_buf_lock	uploads a texture page buffer from RAM and locks it
 comment	main	initView	initView	initialises the GTE projection and view
 comment	main	initModelingData_init	initModelingData_init	maps a TMD model block at the given address for the graphics library

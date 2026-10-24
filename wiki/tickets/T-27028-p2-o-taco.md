@@ -14,7 +14,7 @@ Roadmap phase 2 (readable code), port-first scope, for the unit `src/ovl/TACO`: 
 
 ## Acceptance criteria
 
-- [x] `config/renames/proposals/o-taco.tsv`: one row per rename (kind scope old new note); all 406 functions of the overlay named; 179 data labels; 70 field, 24 type, 40 file, 176 const rows; 16 comment rows for O.BIN-named functions the overlay calls; 14 rows marked HYPOTHESIS.
+- [x] `config/renames/proposals/o-taco.tsv`: one row per rename (kind scope old new note); all 406 functions of the overlay named; 179 data labels; 70 field, 24 type, 40 file, 185 const rows; 9 comment rows for O.BIN-named functions the overlay calls (913 rows in all); 14 rows marked HYPOTHESIS.
 - [x] `wiki/spec/o-taco.md`: stage machine, state and data with the new names, rules (formulas, thresholds, transitions), connections, open questions; linked from `wiki/spec/index.md`.
 - [x] No game text, assets, asm or screenshots committed; no edits under `src/`, `include/` or `config/symbol*` files.
 - [ ] Code review against `CODING_STANDARDS.md` (docs-only change) and merge of the table by the phase 2 merge step.
@@ -30,3 +30,9 @@ Roadmap phase 2 (readable code), port-first scope, for the unit `src/ovl/TACO`: 
 - Dead code (no caller in the overlay): shooter_palette_reset, shooter_explode_dead_enemies, shooter_nop, shooter_menu_cursor_move, shooter_snapshot_screen_copy, shooter_load_texture_page_32, shooter_upload_rect_256, shooter_boss2_sway_motion_alt, shooter_set_model_clut_and_page, shooter_spawn_patroller (so enemy type 11 never spawns), shooter_count_free_coordinates.
 
 ## Comments
+
+### Review round 1 fixes (2026-10-24)
+
+- Sound ids: a scene call passes an even first argument, so `func_801335A0` plays 0x600 + the low byte, not 0x500 +. All notes and the spec now cite the played id (boss 1 defeat 0x608, boss 2 defeat 0x604, title 0x604 to 0x607, opening, boss cadences); bank 6 constants 0x604 to 0x608 and the bank 5 item sounds 0x511, 0x512, 0x514, 0x516 added.
+- Pad enum renamed to `PadBits` (core's name); the six conflicting core values are marked in the notes and listed in spec section 14 for the core owner.
+- `TcActor.unk7A` notes now say it is the HP bar count on a boss part; type notes flag the `Tc14` alias and the settings types that overlap core; seven comment rows that duplicate core were dropped.
