@@ -273,6 +273,7 @@ data	main	D_80122EBC	culture_visitor_girl	heroine id of the current scene (visit
 data	main	D_80122EC0	culture_phase	phase of culture_festival_entry (CulturePhase)
 data	main	D_800E7D4E	tt_stages_cleared	result of the last TT run: stages cleared 0..4, read by the festival game scenes to choose the reaction line (o-tt spec: run.stage)
 data	main	D_800E7D4F	tt_mode_flags	flag byte (Flags7D4F / ExtraModeFlags): bit 0 TT listed in the extras, bit 1 direct mode, bits 2-4 direct stage
+func	main	func_80041168	vram_slots_clear	ClearImage of 64x128 VRAM blocks: slot s at x = (s & 15) * 64, y from bits 4 and 5; 0xFF clears the whole area and every slot, 0xFE four slot ranges, 0 a set of slots; used here by stage 163 (BUNKASAI) after the TT game; 11 call sites in main, NAME_ENT, RPG_BAT, TACO, BUNKASAI, BUNKAKEN
 field	BunkaDispatch8	unk_00	club	club id 0..5 of the exhibit (culture_stage_intro writes D_80122EB8)
 field	BunkaDispatch8	unk_04	girl	current scene heroine id (block entries store it)
 field	BunkasaiTable40	unk_00	result	fortune result [girl blood type][player blood type]
