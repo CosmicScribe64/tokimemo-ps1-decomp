@@ -1,7 +1,7 @@
 ---
 id: T-20500
 title: Emulator-assisted naming and constants pass (phase 2 head start)
-status: Backlog
+status: In Progress
 assignee:
 created: 2026-10-16
 updated: 2026-10-24
