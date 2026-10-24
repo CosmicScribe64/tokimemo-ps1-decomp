@@ -986,6 +986,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-27023-p2-o-event|T-27023 Phase 2 analysis of overlay EVENT (dead development copy of the girl-scene and date-place code)]]
 - [ ] [[tickets/T-27029-p2-o-etc|T-27029 Phase 2 analysis of overlay ETC (exams, career talks, ending tail, album)]]
 - [ ] [[tickets/T-27030-p2-o-nameent|T-27030 Phase 2 naming and port spec for overlay NAME_ENT (file screens, name entry, prologue, opening)]]
+- [ ] [[tickets/T-27025-p2-o-bunkasai|T-27025 Phase 2 naming and port spec for overlay BUNKASAI (culture festival, club-member variant)]]
 
 
 %% kanban:settings
