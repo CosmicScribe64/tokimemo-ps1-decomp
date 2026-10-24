@@ -43,7 +43,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
 - [ ] [[tickets/T-26003-ugen-value-branch-dropped-arm|T-26003 Model IDO 4.1's value-branch F and dropped-arm stores in tools/ugen_pass.py]]
-- [ ] [[tickets/T-27004-shared-core-names|T-27004 Shared core: GameState fields, core types, first enums, top 100 functions]]
 
 ## Ready
 
@@ -155,6 +154,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-27004-shared-core-names|T-27004 Shared core: GameState fields, core types, first enums, top 100 functions]]
 - [ ] [[tickets/T-27003-pilot-obin-names-overlays|T-27003 Pilot: O.BIN names into the overlays (alias debt)]]
 - [ ] [[tickets/T-27002-rename-tool|T-27002 Build the phase 2 rename tool (tools/rename.py)]]
 - [ ] [[tickets/T-26002-fake-sweep-41-rule|T-26002 Sweep the FAKEs that steered the old block-copy detector]]

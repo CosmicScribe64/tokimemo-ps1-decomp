@@ -1,7 +1,7 @@
 ---
 id: T-27004
 title: "Shared core: GameState fields, core types, first enums, top 100 functions"
-status: In Review
+status: Done
 assignee: sonnet (p2-core-apply)
 created: 2026-10-24
 updated: 2026-10-24
@@ -151,3 +151,16 @@ uses). Conventions: `docs/adr/0001-phase-2-naming.md`; stems: `GLOSSARY.md`.
     lines), and the tables, value files and small logs are committed; the ADR and CODING_STANDARDS example now reads
     `/* GirlId */`, the comment the tool writes. `wiki/kanban.md` still lists T-27004 under Backlog; the orchestrator syncs the
     board (this worktree does not edit it).
+- 2026-10-24 review round 2 (standards and spec, at the `p2-core-apply` tip `44aaa8114`): approved, no blocking findings. The
+  round 1 fixes hold: the applied names follow the ADR main map and the glossary stems, the map rows went in with the commit
+  that first uses a prefix, and the ledger, build and checks are as reported above. Moves to Done. Two non-blocking
+  follow-ups, not done here:
+  - The `MainMode` enum tag and its `MODE_*` enumerators still conflict with the glossary (stem `game_mode`; bare `mode` is a
+    trap word; `main_` is not a listed prefix). `rename.py` has no row kind for an enum tag or an enumerator, so only a hand
+    rename was possible (ADR decision 5). It is disclosed above and in [[rename-tool]], but no follow-up ticket exists and
+    [[phase2]] "Names to re-check" does not mention it. Wanted: a tool-support ticket (row kinds for an enum tag and an
+    enumerator), one rename batch, and a line in [[phase2]].
+  - Six non-O.BIN names use the O.BIN stem `dec_bg_`: `dec_bg_decode_to_vram`, `dec_bg_draw`, `dec_bg_show`,
+    `dec_bg_brightness`, `dec_bg_lba_cache`, `dec_bg_last_screen_mode`. The ADR main map row is `bg_`, with `dec_bg_` for
+    O.BIN names, and the glossary stem for dec_bg is `bg`; the fix applied the rule "only O.BIN names keep the stem" to
+    `bustup` but not to this. Rename them to `bg_*` in the same follow-up batch, or record the choice in the ADR.
