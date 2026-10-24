@@ -7,38 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ticket | T-25044 ready for integration review
-
-Moved [[tickets/T-25044-parameter-up-down]] and its [[kanban]] card to In Review. Coordinator semantic review found no issue; its stale comment finding is resolved. Independent full27 integration remains with root.
-
-## [2026-10-22] lint | T-25044 evidence replay validated
-
-Docker source-only replay confirms zero diagnostic lines for current C, eight for four home substitutions, four for the padded frame pair, and 245 after removing the raw-byte lifetime use. Wiki lint reports zero broken links and zero status mismatches, with existing size warnings for [[data/t0018-cases]] and [[log]]. Root independent standards/spec review passed without findings. Source pin: 62429d6d9.
-
-## [2026-10-22] build | MAIN parameter match accepted
-
-Integrated e6da7a621. Root independently reviewed final source against standards/spec, no findings; default-C parameter_up_down matches1228 literal bytes and fresh27/27 binary checksums pass. Headers/globals and prototypes0new/15known pass. [[tickets/T-25044-parameter-up-down]] moves Done. [[status]] now6842/6952functions,2116836/2276920bytes (93.0%);110functions/160084bytes remain. Nine matches add12160bytes. Worker continues under T-25048, reserved with coordinator; TACO T-25047 now owns801511C0. Other five Astra lanes remain active.
-
-## [2026-10-22] ticket | T-25040 MAIN flag dispatcher
-
-Continued authorized Astra work with [[tickets/T-25040-main-flag-dispatch]], choosing `func_8006D138` from the two assigned same-file targets. Latest ledger is 219 candidate / 218 target instructions with a known flag snapshot/base lifetime issue; the alternate dispatcher remains outside scope. T-25036's committed match is preserved.
-
-## [2026-10-22] build | T-25040 reproduces flag-dispatch structure
-
-Whole-TU replay recovers a 219/218-word shape; bit-field snapshot restores target temporary numbering. A new late-zero pointer identity preserves relative flag loads but splits pointer ranges and adds instructions. [[tickets/T-25040-main-flag-dispatch]] records the distinction; production stays assembly while allocator evidence guides the next change.
-
-## [2026-10-22] build | T-25040 exact dispatcher shape and allocator cause
-
-[[tickets/T-25040-main-flag-dispatch]] recovered 218/218 words in the isolated whole-TU harness. The empty unsigned entry switch activates the existing copy boundary; allocator tracing identifies constrained year/base ranges preceding the unconstrained flags snapshot. Late-zero store indices fix the register cycle but introduce alias reloads; absolute spellings and volatile-store controls do not close it. Production source remains assembly. Replays are in `drafts/T-25040/probe.py`.
-
-## [2026-10-22] build | T-25040 three-instruction checkpoint
-
-[[tickets/T-25040-main-flag-dispatch]] isolates the register cycle to a single unprofitable constant range at the leaf constraint threshold. A defined late-zero identity in the empty year98 check restores all target registers; the default whole-TU candidate matches215 of218 words, with only the first b7 load address and adjacent scheduling residue remaining. `drafts/T-25040/` preserves the source and causal controls; no production promotion or coverage claim.
-
-## [2026-10-22] build | Root verifies MAIN dispatcher checkpoint
-
-Independently replayed [[tickets/T-25040-main-flag-dispatch]] candidate on current main:218/218 words, only rows72–74 differ. Saved checkpoint1da87a36b plus causal evidence; no coverage increase. All target register allocation outside the byte-load address sequence now agrees. Worker continues while root preserves the result.
-
 ## [2026-10-22] ticket | Root takes remaining MAIN event selector
 
 Created [[tickets/T-25049-main-event-table-recovery]] before reconstruction. Root owns func_80073CB0 in src/main/800737A0.c after parameter match integration; T-25048 owns separate80075320.c. Recover existing draft and table evidence while seven Astra workers continue. Contributor check: no open PRs; issue65 unchanged.
@@ -1440,6 +1408,7 @@ Findings: ETC holds seven entries, final exams (0x35), career guidance (0x36), c
 
 ## [2026-10-24] ticket | T-27030 Done
 Review round 2 of [[tickets/T-27030-p2-o-nameent]] approved with no findings: the `file_select_scan` slot range (`slot_status[1..14]`, album 14 counts) and the spec 3.9 icon layout reset condition now match `src/ovl/NAME_ENT/80139740.c`; `config/renames/proposals/o-nameent.tsv` has 639 rows of 5 columns, file counts 62/104/9/80 by address (257 functions with the two kept `prologue_line_*`). The branch changes nothing under `src/`, `include/` or `config/symbol*`. Ticket moved to Done and merged by the phase 2 merge step.
+
 ## [2026-10-24] ingest | Phase 2 o-bunkasai: names and port spec (T-27025)
 Unit `o-bunkasai` ([[tickets/T-27025-p2-o-bunkasai]], In Review): read the matched C of the BUNKASAI overlay (207 functions, 20 files in `src/ovl/BUNKASAI/`), its callers in the main exe and in BUNKA_SD, the TT spec and the core, scheduler and scene-library specs. Wrote [[spec/o-bunkasai]] and `config/renames/proposals/o-bunkasai.tsv` (prefix `culture_`). Findings: the overlay is the club-member festival (mode 0x70 for player club ids below 6; BUNKAKEN is the rest); it is one phase machine (10 phases) plus a 165-entry stage table of 15 blocks (visit blocks per heroine, four club-mate blocks, a shared fortune stage, a TT game launcher and its re-initialisation stage); the festival result adds a club-derived bonus plus half a 13x6 gain-table value to every girl's tokimeki and 2 affection to the visitor; the computer-club 1996 exhibit launches the TT game in demo mode and unlocks it; girl 0's birthday scene hangs on the end of the festival. The overlay is reloaded after every sub-scene, which is why its scene variables sit in main bss. Emulator probes (memory pokes into the title-menu state) confirmed the phase and stage order, the result formula, the fortune table and the birthday path. The table has 360 rows (208 func, 67 data, 8 field, 10 type, 21 file, 46 const; the `rename.py plan` dry run passes for func, data, field and type rows); 78 emulator runs reproduced the stage tables. Names go through `tools/rename.py` later; this pass wrote tables and wiki pages only.
 
