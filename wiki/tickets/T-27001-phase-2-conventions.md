@@ -1,7 +1,7 @@
 ---
 id: T-27001
 title: "Phase 2 naming conventions: ADR, standards, glossary, plan"
-status: In Review
+status: Done
 assignee: w19-conventions
 created: 2026-10-24
 updated: 2026-10-24
@@ -76,3 +76,10 @@ so that naming agents and reviewers work from one checkable rule set. Inputs: th
   definition; the SDK-side ones (no C definition) are optional and sit in `symbol_addrs_obin.txt`. `girl_`
   belongs to the 8004F6B0/8004F870 module only, `sound_` is no main prefix, `appointment_` and `club_` stay with
   their owners. File names get the HYPOTHESIS rule. `spot_` replaces `spots_`; the pass count is 24.
+- 2026-10-24 (w19-conventions): code review passed (approved, no blocking findings; round 3 against
+  `CODING_STANDARDS.md` and the ticket criteria). `tools/wiki.py lint`: 0 broken links; the 4 status mismatches
+  (T-27000, T-27001, T-27003, T-27004 without a card) are cleared by the kanban sync at merge. Non-blocking notes:
+  `pad_` meets the prefix rule through the `stems` column of the `pad` trap row, not through a Module words row
+  (a row would remove the doubt for later reviewers); the 7 O.BIN stems in the main map (`game_main`, `srn_`,
+  `mod_`, `k_disp_`, `set_kanji_`, `dec_bg_`, `normal_date_`) are exempt because O.BIN names keep their own
+  stems, so "all 78 prefixes" holds (85 map entries minus these 7). Moved to Done.
