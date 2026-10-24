@@ -966,6 +966,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-27010-p2-core|T-27010 Phase 2 naming and port spec for the shared core]]
 - [ ] [[tickets/T-27021-p2-h-cdio|T-27021 Phase 2 naming and spec for h-cdio (CD, movies, MDEC backgrounds, 3D, mouse)]]
 - [ ] [[tickets/T-27027-p2-o-rpgbat|T-27027 Phase 2 naming and port spec for overlay RPG_BAT (RPG battle scene)]]
+- [ ] [[tickets/T-27024-p2-o-tt|T-27024 Phase 2 analysis of overlay TT (TwinBee Time Attack)]]
 
 
 %% kanban:settings
