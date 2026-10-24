@@ -7,34 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] lint | T-25033 reviewed match checkpoint
-
-Coordinator source review of [[tickets/T-25033-shougatu-canonical-call]] found no issues. Independent default-preprocessed full-TU proof explicitly excludes the E50C assembly fallback and confirms 118 words / 472 literal bytes. Wiki lint reports zero broken links/status mismatches and the existing data/t0018-cases size warning; git diff check passes. Ticket remains In Review for the coordinator's combined integration gate.
-
-## [2026-10-22] ticket | T-25035 GYOZI late-folded zero carrier
-
-Created [[tickets/T-25035-gyozi-late-folded-zero]] in an isolated checkout from 242c0c3a3. Read existing T-24907/T-25025 evidence and claimed only src/ovl/GYOZI/80140C90.c. New lead is the concurrent SHOUGATU late-folded carrier; old zero-local grids remain exhausted.
-
-## [2026-10-22] build | T-25035 donor transfer preserves entry zero
-
-Docker full-TU controls for [[tickets/T-25035-gyozi-late-folded-zero]] transfer the new SHOUGATU late-folded unsigned comparison: target and candidate now both have 97 words with exact zero initialization/store/first call, versus the old 97/96. Remaining aligned cost 4 is the second-call reload base and its schedule. Focused coalescing controls are negative; inspecting compiler allocation next. No production edits or coverage.
-
-## [2026-10-22] build | T-25035 GYOZI literal C match
-
-Transferred the improved T-25033 early-global-assignment form into GYOZI func_80140E0C. A marked late-folded multiply-by-zero expression preserves the entry a1 carrier; the early store lets allocation retain the later a1 reload base. Default C links to all 388 target bytes and GYOZI SHA1 passes. Headers/global/prototype guards pass after missing reference splits were generated. Removed the assembly fallback, documented controls in drafts/T-25035/README.md and [[matching-notes]], and moved [[tickets/T-25035-gyozi-late-folded-zero]] to In Review for root review/integration.
-
-## [2026-10-22] query | T-25035 independent source review
-
-Root reviewed the GYOZI change against standards and scope with no findings: defined zero expression, disjoint early-store move, marked FAKEs and no build exceptions. [[tickets/T-25035-gyozi-late-folded-zero]] stays In Review until the combined integration gate.
-
-## [2026-10-22] build | Two late-zero family matches verified on main
-
-Root combined T-25033/T-25035, reviewed source against standards/spec with no findings, and refreshed every binary checksum:27/27 pass. Default-C literal linked proofs pass SHOUGATU472bytes and GYOZI388bytes; neither function has an assembly fallback. Headers/globals pass, prototypes0new/15known. Docker progress6835/6952functions,2105536/2276920bytes (92.5%);117functions/171384bytes remain. Moved both reviewed tickets/cards to Done, updated [[status]] and regenerated catalog. Research workers continue MAIN counter/quadrant and BUNKA scheduling. No experimental follow-up counted.
-
-## [2026-10-22] decision | Continue successful workers on new functions
-
-After verified T-25033/T-25035 integration, reassigned their Astra capacity without duplicating active work. SHOUGATU chat reserves T-25038 for the next remaining function in8013E330.c, selecting E6E4 or EA98 by existing candidate evidence. Former GYOZI worker reserves T-25039 MAIN func_8005B43C in8005A0B0.c, releasing GYOZI. Both sustain implementation through literal proof; MAIN quadrant/counter and BUNKA scheduler workers continue. Root owns integration.
-
 ## [2026-10-22] ticket | T-25036 MAIN counter late-fold investigation
 
 Created [[tickets/T-25036-main-counter-late-fold]] in an isolated worktree at 242c0c3a3. Reused [[tickets/T-25026-main-d7ec-near-candidate]] phase evidence and prior negatives; next test is a late-folded zero producer that preserves the original increment dependency without extra instructions.
@@ -1574,6 +1546,7 @@ Findings: the date place question is a memory test (`appt_place_0..3` = chosen, 
 
 ## [2026-10-24] ticket | T-27013 Done
 [[tickets/T-27013-p2-m-holiday]] passed review (approved; four non-blocking findings recorded in the ticket Comments: `get_g_zyotai_s` instead of the nonexistent `girl_state`, the duplicate `HOLIDAY_GAIN_MULTIPLIER` / `PARAM_HOLIDAY_FACTOR`, the header note on the `file` row, and open question 1 contradicting `core.tsv` on 0-based place values). The branch changes only `config/renames/proposals/m-holiday.tsv`, [[spec/m-holiday]], [[spec/index]] and wiki pages; nothing under `src/`, `include/` or the symbol files. Merged as p2a-m-holiday.
+
 ## [2026-10-24] ingest | m-menutext phase-2 table and port spec
 Unit m-menutext (`src/main/8004E500.c`, `src/main/8004F6B0.c`, `src/main/8004F870.c`, 61 functions): read the matched C, its callers and callees, the core and scheduler tables, and probed behaviour on the emulator (title-menu save state, GameState bytes poked, a copy of the probe runner with a `--poke` option kept in `build/scratch`): text entries, a dialogue block and its six-line scroll, menu navigation on the settings screen in menu modes 1 and 3, voice gating, the name builders for all 16 girl ids through TEL lines loaded by the overlay loader, and the girl score pipeline checked against a Python model. Wrote `config/renames/proposals/m-menutext.tsv` (150 rows: 10 func, 53 data, 3 field, 5 file, 56 const, 23 comment) and [[spec/m-menutext]], linked from [[spec/index]]; ticket [[tickets/T-27018-p2-m-menutext]] In Review.
 Findings: a text screen is a 52-entry list whose glyph slots are consecutive, so the mark/reset helpers rewind the glyph allocator; a dialogue block is a run of entries with a three-row window that scrolls from the fourth line; the player form in dialogue name codes always comes from the current girl; the two girl rank functions differ by design; girls 13 and 14 score as 0 and 1; the closeness grid and points formulas of `girl_scores` match the original for 11 girls in two poked scenarios; the spare name slot 15 is girl 10's given name. Disagreements with core are listed in the spec (section 16), not as second table rows.
