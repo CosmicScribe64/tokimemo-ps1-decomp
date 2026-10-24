@@ -7,18 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] decision | Astra owns sustained quadrant matching
-
-Human requests Astra hands-on and no stopping before resolution. [[tickets/T-25034-main-quadrant-extent]] transfers sole source writer to Astra; Sol coordinates without duplicate experiments. Prior time/probe caps superseded. Corrected source improves to674target/671built words,367aligned/389printed with frameB0 and full-word extent tests. Saved source and ledger before handoff; matching continues through remaining CFG/lifetime/frame differences. No production match or coverage claim yet.
-
-## [2026-10-22] build | Quadrant target frame recovered
-
-Astra re-audited the newest367-cost source in [[tickets/T-25034-main-quadrant-extent]]: direct-low-channel already emits target0xA8 frame and incoming argument homesB8/BC/C0/C4. Earlier handoff incorrectly carried forward0xB0 from its predecessor. Corrected ticket without changing old log history. Remaining local homes/color-expression webs continue under sole Astra ownership.
-
-## [2026-10-22] decision | User-directed quadrant wrap-up
-
-User requested wrap-up, commit and push, superseding sustained matching for [[tickets/T-25034-main-quadrant-extent]]. Astra stopped all experiments. Archived conservative361/381 and forward-join360/380 candidates, full-word extent correction, target0xA8 frame, findings and Docker replay under drafts/T-25034. Target674words includes12bytes trailing padding after2684byte active body; candidates671/670paddedwords remain12/16bytes short. No adjacent function, production change, match or coverage credit. Root owns main integration.
-
 ## [2026-10-22] lint | Quadrant wrap-up replay verification
 
 Docker replay independently reproduced conservative674/671words,361aligned/381printed and forward-join674/670words,360/380 for [[tickets/T-25034-main-quadrant-extent]]. Docker catalog797tickets; lint zero broken links and zero status mismatches, with one existing large-page warning for [[data/t0018-cases]]. git diff --check passes. src/, include/ and tools/ unchanged. Source-only checkpoint remains unfinished research; all worker experiments stopped at user request.
@@ -1601,6 +1589,7 @@ Fixed the three blocking review findings of [[tickets/T-27016-p2-m-hud]]. `seaso
 
 ## [2026-10-24] ticket | T-27016 Done
 [[tickets/T-27016-p2-m-hud]] passed the second review (approved, no findings): the `season_palette_fade` writers (0xEF at a season change and in OPTION, 0xFE in `src/main/8005A0B0.c`, BUNKASAI, BUNKAKEN and NAME_ENT) and its consumer in `screen_frame_draw`, the separate `ui_vram_image` pointer (`D_800B374C`) and the `event_mouth_lipsync`, `event_mouth_anim_start` and `event_eyes_anim_start` names in `config/renames/proposals/m-hud.tsv` and [[spec/m-hud]] match the C and the exe. The branch changes no `src/`, `include/` or symbol files. Moves to Done; merging the table into the rename tool input stays open on the ticket.
+
 ## [2026-10-24] ingest | T-27012 phase 2 naming proposals and port spec for the school-day command loop (m-weekday)
 Unit m-weekday (`src/main/800737A0.c`, 19 functions): read the matched C, its callers (`main_state_dispatch`, the queue reader, the holiday module, KANGEI) and the SD, background and parameter tables, and checked behaviour in the emulator (a new game from the title menu to 1995-04-05, then the 1995-07-24 vacation day; a scratch copy of the emulator wrapper with a memory-poke option, kept in `build/`, wrote queue records and player flags into loaded states). Wrote `config/renames/proposals/m-weekday.tsv` (71 rows: 10 func, 19 data, 32 const, 1 file, 9 comment; 1 starts with HYPOTHESIS) and [[spec/m-weekday]]; ticket [[tickets/T-27012-p2-m-weekday]] is In Review. No `src/`, `include/` or symbol-file edits.
 Findings: `week_day` (mode 0x40) is a fixed pipeline per school day (screen setup and background read, SD pack read and checksum, SD actors, animation plays once, then the command is applied once and the result held 14 frames); `parameter_up_down` scales only beneficial changes (gains and stress relief) and a poor day adds one point of stress, checked against memory dumps; the poor flag and the companion girl are fixed when the week's queue is built, the companion is a figure inside the SD pack; vacation days use stage 10 and holiday packs; `D_800B6928` has 11 club rows, the twelfth is padding; `func_800737A0` is the last stage of mode 0x32.
