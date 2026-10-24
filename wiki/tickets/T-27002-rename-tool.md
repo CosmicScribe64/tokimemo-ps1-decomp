@@ -84,3 +84,16 @@ What landed (branch `w19-rename`):
   `obin_renames.txt` into the ledger (after the pilot); the CODING_STANDARDS section 4 amendment
   (user approval); `check` for old member names at use sites (today IDO reports them); main renames
   inside EVENT's range against EVENT-own names.
+- 2026-10-24 review round 2 (two blocking findings, two non-blocking), fixed in `tools/rename.py`:
+  B1 replay walks a member chain from the name the struct holds (the oldest, a middle one or the
+  last): that row renames the declaration, the rows of the other names only follow the gcc
+  reports (`uses_only`), and a struct that declares two names of the chain stops the replay. B2
+  replay moves what a stale branch left under an old name: objects, island lines and C files under an
+  old folder (`dir`), island lines and a C file under an old file name (`file`), and an `#include` of
+  an old header name; yaml lines, `INCLUDE_*` paths and config keys follow, and `check` reports the
+  same leftovers. When the old and the new path both hold a file, replay stops and names both. Chains
+  of three names now work for file, folder and header rows too (they ran the newest earlier name
+  first). N4 the symbol-line dedupe keeps the splat attributes of the lines it drops (a conflicting
+  value is listed). N5 a table note keeps its `#`, like a ledger note. Replay prints its notes.
+  Tests: 12 new in `tools/test_rename.py` (one per finding plus the chain, both-exist and
+  no-op cases); full tool suite OK (1,637 tests). Trial 4: [[rename-tool]].

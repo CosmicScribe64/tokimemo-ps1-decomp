@@ -27,6 +27,9 @@ module docstring (`tools/docker.sh python3 tools/rename.py --help` lists the sub
    param   main:func_80046500 arg0           sector
    ```
 
+   A line that starts with `#` is a comment. In a row, everything after the new name is the note, and a
+   `#` inside it stays (tables and the ledger read rows the same way).
+
 2. Dry run: `tools/docker.sh python3 tools/rename.py plan TABLE`. It prints, per row, the address,
    the counts of changed tokens, comments and config keys, every mention it leaves alone (strings,
    comments outside the row's scope), and `PROBLEM:` lines. Exit 1 on any problem; fix the table.
@@ -134,11 +137,23 @@ as they are (an enum variable would change the code); a member of a type of the 
   back in `src/`, `include/` or `config/`, the ledger has no branching chain or cycle, the symbol
   files are consistent. A failure names the ledger line and says to run replay.
 - `rename.py replay [LEDGER...]`: every earlier name of every chain that is still present in the
-  chain's scope (the search `check` makes) becomes the last name (members by the gcc oracle, only
-  when an old member name occurs). Symbols run first, then types, locals and parameters (a local
-  row finds its function under any name of the function's chain), members, and file, folder and
-  header rows last. A renamed tree is a no-op. Run it after `git merge` of a branch that predates renames, and in the integration merge
-  script after conflict resolution and before the build.
+  chain's scope (the search `check` makes) becomes the last name. A chain is walked from whatever
+  name the tree has. In a member chain the struct holds one name, or the last one already. The row of
+  that name renames the declaration, and the gcc oracle patches the uses of every earlier name. A
+  struct that declares two names of the chain stops the replay. Symbols run first, then types, locals
+  and parameters (a local row finds its function under any name of the function's chain), members,
+  and file, folder and header rows last (the newest earlier name of a chain first).
+- Replay also moves what a stale branch left under an old file or folder name. An object, an island
+  line (`.rodata`, `.data`) or a C file under the old folder (`dir`) or the old file name (`file`)
+  goes to the new path, and its yaml lines, `INCLUDE_ASM`/`INCLUDE_RODATA` paths and config keys
+  follow. An `#include` of an old header name becomes the new one. When the old and the new path both
+  hold a file, replay stops and names both paths, because it cannot tell which is newer. Merge them
+  by hand. `check` reports the same leftovers.
+- Repeats of a symbol line (one name, one address) become one line. It keeps the splat attributes
+  (`type:func size:0x10`) of all of them. A different value of the same attribute stays as the first
+  line has it, and replay lists it.
+- A renamed tree is a no-op. Run replay after `git merge` of a branch that predates renames, and in
+  the integration merge script after conflict resolution and before the build.
 - `rename.py lookup NAME [--unit U]` prints the chain and the current name of an old name (tickets
   and logs keep old names); `rename.py export` writes `kind scope key old current` lines for the
   wiki catalog.
@@ -157,3 +172,10 @@ Three clean builds on the scratch branch `w19-rename-trial` (not merged; tables 
 3. Scale: `D_800E6280` to `game_state` (12,247 tokens in 295 files, the aggregate line of
    `config/migrate_globals.txt`, the `symbol_addrs_types.txt` line) and `GameState.unk_F5F` (1,759
    uses located by gcc in 437 C files). Plan and apply took under 40 seconds.
+
+Trial 4 (review round 2, a scratch copy from `git archive HEAD`, tables `drafts/T-27002/trial4_*.txt`):
+two symbols (`func_80132000`, `D_801342B0`), one member (`RensyuWords13.v`, 6 uses found by gcc) and the
+file `80132040` of RENSYU renamed; clean build 27 of 27 sha1 OK, 6,952 of 6,952 functions, `nice -n 19`
+with 2 jobs. Then the ledger was replayed on a second copy that still had the old names and a
+branch comment naming them: 4 rows, 6 files changed, and the tree equals the renamed one (the comment
+carries the new names).

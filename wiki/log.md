@@ -1735,3 +1735,7 @@ Fixed the two blocking findings. [[tickets/T-27028-p2-o-taco]]: `func_801335A0` 
 
 ## [2026-10-24] ticket | T-27028 Done
 [[tickets/T-27028-p2-o-taco]] passed the standards and spec review in round 2 (approved, no blocking findings; round-1 sound ids and pad enum verified against the C) and moves to Done. The table `config/renames/proposals/o-taco.tsv` (913 rows) and [[spec/o-taco]] are merged as p2a-o-taco; the six conflicting `core.tsv` pad values are for the core owner (spec section 14).
+
+## [2026-10-24] build | T-27002 review round 2 fixes
+
+[[tickets/T-27002-rename-tool]] stays In Review after the second review's two blocking findings and two small ones were fixed in `tools/rename.py`: replay walks a member chain from the name the struct holds (B1), replay moves objects, island lines and C files that a stale branch left under an old folder or file name and fixes their yaml lines, asm paths and config keys (B2, also chains of three names for file, folder and header rows), the symbol-line dedupe keeps the attributes of the dropped lines (N4), and a table note keeps its `#` (N5). Tests in `tools/test_rename.py`; trial 4 on a scratch copy (two symbols, a member and a file of RENSYU) built 27 of 27, and the replay onto an old-name copy gave the same tree ([[rename-tool]]).
