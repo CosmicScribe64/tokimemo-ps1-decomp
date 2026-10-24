@@ -278,7 +278,7 @@ Emulator (GEKO girl-0 scene): `event_still_fade_in` ran 32 frames from frame 237
 
 **`change_girl` / `change_yoshio`**: `current_girl = date_girl` / `current_girl = 13`. Scenes that include Yoshio's lines switch to him (`change_yoshio`), then back (`change_girl`).
 
-**`event_log_add(scene, flag)`** (`func_80085B3C`, core): record at `event_log[event_log_count]`: girl = `current_girl`, scene, flag, rank, year, month, day, weekday. Rank = `get_g_zyotai_h(current_girl)` (raw 0-4, not masked) unless `rank_override` is 1-6, in which case `rank_override - 1`; the override is cleared on every call; girl 12 always gets rank 0. The count is incremented and clamped to 0xFE, so a full log keeps its first 254 entries and keeps overwriting slot 254 with the newest.
+**`event_log_add(category, scene)`** (`func_80085B3C`, core): record at `event_log[event_log_count]`: girl = `current_girl`, scene, category, rank, year, month, day, weekday. Rank = `get_g_zyotai_h(current_girl)` (raw 0-4, not masked) unless `rank_override` is 1-6, in which case `rank_override - 1`; the override is cleared on every call; girl 12 always gets rank 0. The count is incremented and clamped to 0xFE, so a full log keeps its first 254 entries and keeps overwriting slot 254 with the newest.
 
 ## 11. SD sprites and the CD level meter
 
@@ -504,5 +504,5 @@ All 111 symbols of the object by address (the alias `func_80084C98` of `sprite_b
 | 800859E8 | `normal_date_speak_012` | kept (O.BIN) | Scene step: run the dialogue with choice 0xFF, so a three-option line keeps the order 0, 1, 2. |
 | 80085A60 | `normal_date_speak` | kept (O.BIN) | Scene step: wire the dialogue tables and run one frame of the dialogue runner with dialogue_choice as the reply index |
 | 80085ADC | `vram_bustup_clear` | kept (O.BIN) | Scene step: reset actors 30 and 31 and free the five portrait texture slots 5-9, then step on. |
-| 80085B3C | `func_80085B3C` | `event_log_add` (core) | appends (girl, flag, scene, rank, year, month, day, weekday) to event_log |
+| 80085B3C | `func_80085B3C` | `event_log_add` (core) | appends (girl, scene, category, rank, year, month, day, weekday) to event_log |
 | 80085CD4 | `func_80085CD4` | `bustup_quad_offsets` (core) | HYPOTHESIS: sets fields +0x0C/+0x0E of SpriteQuads 0 and 1 per girl id (texture offsets of the two portrait quads) |
