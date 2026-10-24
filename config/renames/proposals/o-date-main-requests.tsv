@@ -1,0 +1,24 @@
+# kind	scope	old	new	note
+# Main-symbol renames that the DATE overlay (T-27022) names. An overlay table may not rename main symbols (wiki/phase2.md, wiki/rename-tool.md),
+# so these rows are requests: the merge step applies them with the main tables, or the main owner refuses them.
+# Not requested: D_80122D44 (m-flow names it scene_effect_flags; bit 0 = light effect, bit 1 = title banner on)
+# and D_80122D08 (DialogueWork.unk_38, m-dates-b names it date_spot).
+# Words inside DialogueWork (base D_80122CD0; dialogue_clear clears words 5..30) are marked in the note.
+data	main	D_800CA2F8	date_place	u8 place id of the running date (0-20, Place enum); copied from appt_place_0 by date_init, replaced by the true place after the meeting-place question
+data	main	D_800CA2FC	date_spot_variant	variant of the place visit (DatePlaceView.option; the art museum calls it the option 0-5): usually 0/1 by the parity of the girl's visit counter for the spot, higher values for seasonal or special sub-spots
+data	main	D_800CA22C	date_choice_class	s16[3]: response class of each of the 3 answers (0 best .. 4 worst); read from the place's class table
+data	main	D_800CA21C	date_choice_face	s16[3]: face index the girl shows for each of the 3 answers
+data	main	D_800CA224	date_choice_mood_face	s16[3]: face index after the answer, derived from the class (0 -> 1, 4 -> 3)
+data	main	D_800CA234	date_choice_tier	s16[3]: class - 1 clamped to 0..2; offsets the farewell group inside a mood tier
+data	main	D_800CA150	date_scene_group	group cursor of the running scene (mode 0x5E)
+data	main	D_800CA154	date_scene_line	line cursor of the running scene
+data	main	D_800CA158	date_farewell_group_base	3 x mood tier (0, 3, 6, 9) used by the farewell talk
+data	main	D_800CA15C	date_farewell_line	line cursor of the farewell talk
+data	main	D_800CA364	date_special_scene_active	1 while a special date scene (mode 0x5E) replaces the date; suppresses the visit counter
+data	main	D_800CA368	date_special_scene_flag_index	event_flags index of the running special scene; stored in the event log
+data	main	D_80122D14	date_fireworks_active	1 while the shrine fireworks effect runs (word 17 of DialogueWork, +0x44; dialogue_clear clears it; a field row unk_44 is an alternative)
+data	main	D_80122D34	date_parade_sign_visible	HYPOTHESIS: 1 while the night-parade sign is shown (set by date_amusement_park_parade_prepare, read by date_stage_place) (word 25 of DialogueWork, +0x64; dialogue_clear clears it; a field row unk_64 is an alternative)
+data	main	D_80122D4C	date_ambush_talk_active	1 while the ambush talk sections are in use (just behind the minimum size 0x7C of DialogueWork, +0x7C)
+field	DialogueWork	unk_10	launch_code	launch code of RPG_BAT stored by the caller (4 gang ambush and 5 boss ambush from DATE, the other values from other overlays, see spec/o-rpgbat) and, after the battle, its result (0 won); DATE tests it in date_end. Word 4 of DialogueWork, not cleared by dialogue_clear. RPG_BAT (o-rpgbat) uses the same word under its D_ name
+data	main	D_80122CE0	dialogue_launch_code	alias label of DialogueWork.launch_code
+data	main	D_80122E9C	festival_stall_result	HYPOTHESIS: result 0-4 of the festival stall game (EN_NICHI, stall meaning of the overlay name unproven), written by EN_NICHI, read by the shrine steps of DATE

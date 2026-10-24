@@ -1,18 +1,20 @@
 ---
 type: spec
 updated: 2026-10-24
-sources: ["src/ovl/DATE", "include/ovl/DATE.h", "config/renames/proposals/o-date.tsv", "wiki/spec/core.md", "wiki/spec/m-dates-b.md", "wiki/spec/o-rpgbat.md", "wiki/families/date-family-results.md", "wiki/emulator.md"]
+unit: DATE
+ticket: T-27022
+sources: ["src/ovl/DATE", "include/ovl/DATE.h", "config/renames/proposals/o-date.tsv", "config/renames/proposals/o-date-main-requests.tsv", "wiki/spec/core.md", "wiki/spec/m-dates-b.md", "wiki/spec/o-rpgbat.md", "wiki/families/date-family-results.md", "wiki/emulator.md"]
 ---
 
 # Overlay DATE: dates (port spec)
 
 Phase 2 spec for [[tickets/T-27022-p2-o-date]] ([[tickets/T-27000-phase-2]]). It describes what the DATE overlay (668 functions, `src/ovl/DATE`, load address 0x80132000) does, as the matched C implements it, with the names proposed in `config/renames/proposals/o-date.tsv`. Old names are given in backticks where a reader needs the link to the current code. Facts only, in this project's words, no game text. A claim of game meaning that the code does not prove is marked HYPOTHESIS. Scope (user decision of 2026-10-24): game logic, state, flow and data tables are described fully; the PS1 hardware layer (GPU primitives, sprites, VRAM, sound driver, CD/XA streaming, MDEC) only at module level (section 12).
 
-Prefix: `date_` (the established prefix of the overlay: `date_event_trigger`, `date_fill_sections_<girl>`, `date_place_names`). Girls are named by given name as in `core` (`GIRL_*`), places by the `core` `Place` enum in snake case. Folder proposal: `src/ovl/date/` (table rows of kind `file`). The core names are used for the shared state (`current_girl`, `date_girl`, `girls[]`, `event_counters`, `event_flags`, `appt_place_*`, `day_event_next`, ...). Where this unit sees a different role in a core field, section 14 says so.
+Prefix: `date_` (the established prefix of the overlay: the patch names `date_fill_sections_<girl>` and `date_place_names`; the two patch names with the trap word `event`, `date_event_trigger` and `date_event_choose`, become `date_scene_trigger` and `date_scene_choose` because GLOSSARY Traps maps a scripted scene with a girl to `scene`). Girls are named by given name as in `core` (`GIRL_*`), places by the `core` `Place` enum in snake case. Folder proposal: `src/ovl/date/` (table rows of kind `file`). The core names are used for the shared state (`current_girl`, `date_girl`, `girls[]`, `event_counters`, `event_flags`, `appt_place_*`, `day_event_next`, ...). Where this unit sees a different role in a core field, section 14 says so.
 
-How facts were obtained: the matched C, the step-table data in the asm, the proposals of `core` and `m-dates-b` (the main scene library: `normal_date_*`, `dialogue_run`, `bustup_*`), and about twenty short emulator runs (section 13) from a boot-to-title save state with memory writes that enter mode 0x50 with chosen girl, place, calendar and parameter values. The runs confirm the stage and step order, the meeting-place question, the score formula, the end-of-date bookkeeping, both birthday stages and one special event trigger.
+How facts were obtained: the matched C, the step-table data in the asm, the proposals of `core` and `m-dates-b` (the main scene library: `normal_date_*`, `dialogue_run`, `bustup_*`), and about twenty short emulator runs (section 13) from a boot-to-title save state with memory writes that enter mode 0x50 with chosen girl, place, calendar and parameter values. The runs confirm the stage and step order, the meeting-place question, the score formula, the end-of-date bookkeeping, both birthday stages and one special scene trigger.
 
-Table size: 1,120 rows (655 `func`, 210 `data`, 4 `field`, 60 `type`, 20 `file`, 158 `const`, 13 `comment`), 18 of them marked HYPOTHESIS; 13 functions keep their names (11 `date_fill_sections_<girl>`, `date_event_trigger`, `date_event_choose`), `date_shiori_dispatch` is renamed to `date_event_shiori_dispatch` for symmetry with the other eleven girls.
+Table size: 1,103 rows in `o-date.tsv` (658 `func`, 192 `data`, 4 `field`, 60 `type`, 20 `file`, 158 `const`, 11 `comment`), 23 of them marked HYPOTHESIS; 11 functions keep their names (the `date_fill_sections_<girl>` patch names, with `comment` rows); `date_event_trigger` and `date_event_choose` are renamed (`date_scene_trigger`, `date_scene_choose`), `date_shiori_dispatch` to `date_scene_shiori_dispatch` for symmetry with the other eleven girls, and the alias label `func_80132004` inside `date_choice_tables_init` (the address `date_load_choice_tables` calls) has its own row. The 18 main-exe variables that DATE names are not rows of this table: an overlay table may not rename main symbols, so they are in `config/renames/proposals/o-date-main-requests.tsv` (18 rows, 2 marked HYPOTHESIS; section 3 lists them).
 
 ## 1. What the overlay is
 
@@ -21,12 +23,12 @@ DATE is the overlay of the dating system. It hosts two main-exe modes:
 | mode | name (core) | entry | what it is |
 |---|---|---|---|
 | 0x50 | `MODE_DATE` | `date_entry` (`func_801448D4`) | a date at a place chosen by the player: meeting, conversation with one answer, reaction, farewell, optional birthday scenes |
-| 0x5E | `MODE_DATE_SCENE` | `date_event_entry` (`func_8014C08C`) | one of 48 scripted special date events (46 of the girls 0-10 at a place and season, and two intrusions of Miharu); replaces the rest of a date |
+| 0x5E | `MODE_DATE_SCENE` | `date_scene_entry` (`func_8014C08C`) | one of 48 scripted special date scenes (46 of the girls 0-10 at a place and season, and two intrusions of Miharu); replaces the rest of a date |
 
 Both are started and finished by main code, not by DATE itself:
 
 - A date starts from `appointment_launch` (main, `src/main/80075320.c`): it copies the first appointment slot into the queue record `DAY_EVENT_APPOINTMENT` (0x80: girl, place), stores the girl in `date_girl` and `current_girl`, the "appointment flag" in `appointment_flag` (`unk_75C`) and calls `main_state_set(0x50)`. The debug menu of OPTION also enters 0x50 and 0x5E (items 1 and 14).
-- A date ends with `day_event_next(1)` in `date_end` / `date_event_end`: the queue reader goes on with the next event of the day (mode 0x31, or 0x22 while the debug flag is set).
+- A date ends with `day_event_next(1)` in `date_end` / `date_scene_end`: the queue reader goes on with the next day event (mode 0x31, or 0x22 while the debug flag is set).
 - Other overlays are launched from inside a date and return into it: RPG_BAT (mode 0x81, the street-gang ambush, section 4.6), EN_NICHI (mode 0x82, the festival stalls at the shrine, section 7) and DATE2 (mode 0x5C, the karaoke box, section 5.9). The caller state is saved in `saved_mode`, `saved_stage`, `saved_step` and restored by main.
 
 The overlay is script-driven: the lines of every conversation are not in the overlay. A conversation is a "section" of a script file on disc (text, command and voice tables, run by the main dialogue engine `dialogue_run`, see `spec/m-dates-b` (unit m-dates-b, merged separately)); DATE decides which group and line to play, which face to show, and what the answer is worth. The tables that give the worth of the three answers (response classes) are also disc data (the choice file, section 10).
@@ -39,7 +41,7 @@ Flow in one picture:
 appointment_launch -> mode 0x50
   stage 0  load music/scripts/choices -> place setup -> [meeting-place question] -> portrait in, greetings -> ambush check
            (girl refuses, wrong place, bad looks: short branch -> date_end)
-  stage 1  talk -> (special event? mode 0x5E) -> walk to the spot -> conversation -> ANSWER -> score -> reaction
+  stage 1  talk -> (special scene? mode 0x5E) -> walk to the spot -> conversation -> ANSWER -> score -> reaction
            -> back -> farewell -> [girl's birthday -> stage 2] [player's birthday -> stage 3] -> closing -> date_end
   stage 2  gift menu -> reward -> reply -> [player's birthday -> stage 3] -> closing -> date_end
   stage 3  greeting -> closing -> date_end
@@ -56,33 +58,35 @@ date_end -> day_event_next(1)
 | 2 | `DATE_STAGE_GIRL_BIRTHDAY` | `date_stage_girl_birthday` | 28 | gift choice on the girl's birthday | `date_end` (or stage 3 on the player's birthday too) |
 | 3 | `DATE_STAGE_PLAYER_BIRTHDAY` | `date_stage_player_birthday` | 15 | the girl's greeting on the player's birthday | `date_end` |
 
-Every stage handler copies its step table (an array of function pointers) to the stack and calls `table[step](0x80)` once per frame. A step function does its work and calls `main_step_next` when it is done (the `0x80` argument is only read by `wait_sub_sub`). Several steps jump by `main_step_set` or `step += n`; the jumps are listed with the steps. `step_timer` is advanced by the step functions that need it, not by the loop (`spec/m-dates-b`). `date_stage_arrival` and `date_stage_place` add the hooks described in sections 4 and 5; both also draw a "light effect" layer (`light_effect_draw`, HYPOTHESIS: glare or sparkle) while `date_light_effect_flags` bit 0 is set. The bit is set at places with sun or water (central park variant 0 in months 3-8, the pool, the sea, the ski resort, each only for some step ranges) and on the three summer Sundays 1995-07-23, 1996-07-28 and 1997-07-27 (HYPOTHESIS: the summer festival day; the same dates select group 1 of the special-day greeting).
+Every stage handler copies its step table (an array of function pointers) to the stack and calls `table[step](0x80)` once per frame. A step function does its work and calls `main_step_next` when it is done (the `0x80` argument is only read by `wait_sub_sub`). Several steps jump by `main_step_set` or `step += n`; the jumps are listed with the steps. `step_timer` is advanced by the step functions that need it, not by the loop (`spec/m-dates-b`). `date_stage_arrival` and `date_stage_place` add the hooks described in sections 4 and 5; both also draw a "light effect" layer (`light_effect_draw`, HYPOTHESIS: glare or sparkle) while bit 0 of `scene_effect_flags` (main word `D_80122D44`, named by `m-flow`: bit 0 light effect on, bit 1 title banner on) is set. Bit 0 is set at places with sun or water (central park variant 0 in months 3-8, the pool, the sea, the ski resort, each only for some step ranges) and on the three summer Sundays 1995-07-23, 1996-07-28 and 1997-07-27 (HYPOTHESIS: the summer festival day; the same dates select group 1 of the special-day greeting).
 
-Mode 0x5E (`date_event_entry`): while stage 0 step 0 shows the title, runs `bustup_wink_update`, switches on `dialogue_work.girl` (`D_80122CD4`, the girl id 0-11; other values reset to title) to the girl's dispatcher `date_event_<girl>_dispatch`, which switches on `dialogue_work.scene` (`D_80122CD0`, 2-6) to the handler of one season (`date_event_<girl>_<season>`), a step-table runner like the stage handlers. Section 9.
+Mode 0x5E (`date_scene_entry`): while stage 0 step 0 shows the title, runs `bustup_wink_update`, switches on `dialogue_work.girl` (`D_80122CD4`, the girl id 0-11; other values reset to title) to the girl's dispatcher `date_scene_<girl>_dispatch`, which switches on `dialogue_work.scene` (`D_80122CD0`, 2-6) to the handler of one season (`date_scene_<girl>_<season>`), a step-table runner like the stage handlers. Section 9.
 
 ## 3. State
 
-New names; GameState fields keep the `core` names.
+New names; GameState fields keep the `core` names. Rows marked (R) are main-exe variables that DATE names. An overlay table may not rename main symbols, so they are not rows of `o-date.tsv`: they are requests in `config/renames/proposals/o-date-main-requests.tsv` for the merge step and the main owner. Two main words that DATE uses are already named elsewhere and have no request: `date_spot` (`D_80122D08`, `DialogueWork.unk_38`, `m-dates-b`) and `scene_effect_flags` (`D_80122D44`, `m-flow`).
 
 | name | old | meaning |
 |---|---|---|
-| `date_place` | `D_800CA2F8` (u8) | place id 0-20 (`Place`): copied from `appt_place_0` by `date_init`; changed by the meeting-place question |
-| `date_spot_variant` | `D_800CA2FC` (`DatePlaceView.option`) | variant of this visit (0, 1, ... 5; the art museum calls it the option), set by the place setup (section 5.3) |
+| `date_place` (R) | `D_800CA2F8` (u8) | place id 0-20 (`Place`): copied from `appt_place_0` by `date_init`; changed by the meeting-place question |
+| `date_spot_variant` (R) | `D_800CA2FC` (`DatePlaceView.option`) | variant of this visit (0, 1, ... 5; the art museum calls it the option), set by the place setup (section 5.3) |
 | `date_spot` | `D_80122D08` (`dialogue_work` +0x38, `m-dates-b`) | spot id (`DateSpot`) = index of `GirlRecord.event_counters`; stored as `girl_last_date_spot` |
 | `date_arrival` | `date_arrival` | 0 girl late, 1 on time, 2 player late (section 4.2) |
 | `dialogue_group`, `dialogue_line` | `D_800CA148/14C` (core) | live group and line cursor of the place conversation; advanced by `dialogue_run` when a group ends |
 | `date_groups_per_variant` | `D_8015B658` | group stride per variant (section 5.3) |
-| `date_choice_class[3]` | `D_800CA22C` | response class (0 best .. 4 worst) of the three answers |
-| `date_choice_face[3]` | `D_800CA21C` | face the girl shows for each answer: the argument of `bustup_layout_set`, an expression index 0 (best mood) .. 4 (worst), see `spec/m-dates-b` |
-| `date_choice_mood_face[3]` | `D_800CA224` | face after the answer: class clamped to 1..3 (0 -> 1, 4 -> 3) |
-| `date_choice_tier[3]` | `D_800CA234` | class - 1 clamped to 0..2; offsets the farewell line inside a mood tier |
+| `date_choice_class[3]` (R) | `D_800CA22C` | response class (0 best .. 4 worst) of the three answers |
+| `date_choice_face[3]` (R) | `D_800CA21C` | face the girl shows for each answer: the argument of `bustup_layout_set`, an expression index 0 (best mood) .. 4 (worst), see `spec/m-dates-b` |
+| `date_choice_mood_face[3]` (R) | `D_800CA224` | face after the answer: class clamped to 1..3 (0 -> 1, 4 -> 3) |
+| `date_choice_tier[3]` (R) | `D_800CA234` | class - 1 clamped to 0..2; offsets the farewell line inside a mood tier |
 | `dialogue_choice` | `D_80122CDC` (core/`m-dates-b`) | original index (0-2) of the picked answer |
-| `date_special_event_active` / `_flag` | `D_800CA364` / `D_800CA368` | a special event replaced the date / the `event_flags` index it set |
-| `dialogue_work.scene`, `dialogue_work.girl` | `D_80122CD0/CD4` (core) | which special event runs (mode 0x5E): scene 2-6 and girl 0-11 |
-| `rpg_launch_code` | `D_80122CE0` | RPG_BAT launch code (4, 5) and, after the battle, its result (0 won) |
-| `date_light_effect_flags` | `D_80122D44` | bit 0 draw the light effect (section 2), bit 1 a special event runs |
+| `date_special_scene_active` / `date_special_scene_flag_index` (R) | `D_800CA364` / `D_800CA368` | a special scene replaced the date / the `event_flags` index it set |
+| `dialogue_work.scene`, `dialogue_work.girl` | `D_80122CD0/CD4` (core) | which special scene runs (mode 0x5E): scene 2-6 and girl 0-11 |
+| `dialogue_work.launch_code` (R, field `DialogueWork.unk_10`, alias label `dialogue_launch_code`) | `D_80122CE0` | RPG_BAT launch code (4 gang ambush, 5 boss ambush, set by DATE) and, after the battle, its result (0 won); `o-rpgbat` uses the same word under its `D_` name. It is word 4 of the dialogue work, which `dialogue_clear` (words 5-30) leaves alone |
+| `scene_effect_flags` (`m-flow`) | `D_80122D44` | bit 0 the light effect is drawn (section 2), bit 1 the title banner is on (what the loader screen draws, `m-flow`). DATE sets bit 1 in `date_scene_trigger`, in Miharu's two intrusions (spring: bit 1; summer, at the sea: bits 0 and 1) and, with the whole word set to 2, in `date_scene_choose` just before it hands the karaoke place over to DATE2 (mode 0x5C); it also sets bit 0 for the sun and water places (section 2). `date_end` and `date_scene_end` clear the word. GEKO writes it too. Bit 1 does not mean that a special scene runs: `date_special_scene_active` does |
 
-Girl and player state read or written (core names): `girls[g].tokimeki`, `.affection`, `.syoushin` (16.16 words; DATE changes only the integer part), `.flags` (bits `met`, 4 = Golden Week flag, 5 = reached the best mood, 6 = birthday known, 12/13 = invitation flags, 14 = event flag, `story_stage` bits 9-11), `.event_counters[spot]`, `.birthday`; `girl_state_rank(g)` (0 best .. 4 worst) and `get_g_zyotai_h` (the "h" rank); `param_trivia`, `param_looks`, `param_athletics`, `param_science`, `param_condition`, `param_stress`; `event_flags[]`, `girl_last_date_spot[]`, `girl_last_date_spot_timer[]`, `date_place_history[4]`, `event_log`, `appointment_slots[0]` (active bit), `player_flags` (bits 17, 19, 20 and the club nibble), `daily_event_bits`, calendar bytes, `frame_count`.
+The other requested main variables, which the notes of `o-date.tsv` mention (`date_fireworks_active`, `date_parade_sign_visible`, `date_ambush_talk_active`, `date_scene_group`, `date_scene_line`, `date_farewell_group_base`, `date_farewell_line`, `festival_stall_result`) are in the same request table; `date_fireworks_active` (+0x44) and `date_parade_sign_visible` (+0x64) lie inside `DialogueWork`, so the main owner may prefer field rows for them.
+
+Girl and player state read or written (core names): `girls[g].tokimeki`, `.affection`, `.syoushin` (16.16 words; DATE changes only the integer part), `.flags` (bits `met`, 4 = Golden Week flag, 5 = reached the best mood, 6 = birthday known, 12/13 = invitation flags, 14 = a per-girl flag used by the Mio and Yukari winter scenes, `story_stage` bits 9-11), `.event_counters[spot]`, `.birthday`; `girl_state_rank(g)` (0 best .. 4 worst) and `get_g_zyotai_h` (the "h" rank); `param_trivia`, `param_looks`, `param_athletics`, `param_science`, `param_condition`, `param_stress`; `event_flags[]`, `girl_last_date_spot[]`, `girl_last_date_spot_timer[]`, `date_place_history[4]`, `event_log`, `appointment_slots[0]` (active bit), `player_flags` (bits 17, 19, 20 and the club nibble), `daily_event_bits`, calendar bytes, `frame_count`.
 
 ## 4. Stage 0: meeting at the place
 
@@ -109,7 +113,7 @@ The table (the setup function in step 9 and step 0x16 is replaced at run time by
 | 0x0C | `change_dec_bg` | show it |
 | 0x0D | `date_arrival_init` | arrival init: counters, greeting group |
 | 0x0E | `date_scene_reveal_start` | reveal wipe |
-| 0x0F | `date_place_enter_check` | title and special-event check |
+| 0x0F | `date_place_enter_check` | title and special-scene check |
 | 0x10 | `date_meeting_place_check` | meeting-place check: right place or alone jumps to 0x21, mood 4 jumps to 0x34, else builds the question |
 | 0x11 | `date_wrong_place_speak` | speak the question |
 | 0x12 | `date_meeting_place_select` | two- or three-way answer |
@@ -127,15 +131,15 @@ The table (the setup function in step 9 and step 0x16 is replaced at run time by
 | 0x1E | `date_wrong_place_outcome` | outcome of the correction: not the appointment place -> 0x32, else syoushin +8 |
 | 0x1F | `date_wrong_place_speak` | speak the meeting talk |
 | 0x20 | `date_mira_late_skip` | Mira special skip |
-| 0x21 | `date_load_festival_portrait` | special portrait for shrine and ski |
+| 0x21 | `date_load_special_portrait` | special portrait for shrine and ski |
 | 0x22 | `read_bustup` | start the girl's portrait read |
 | 0x23 | `scene_wait_cd_read` | wait |
-| 0x24 | `date_portrait_addr_init_step` | portrait sprite addresses |
+| 0x24 | `date_portrait_address_init_step` | portrait sprite addresses |
 | 0x25 | `bustup_show_checked_hidden` | build the portrait (checked) |
 | 0x26 | `date_choice_classes_derive` | derive classes |
-| 0x27 | `date_noop_step_a` | no-op |
+| 0x27 | `date_empty_step` | no-op |
 | 0x28 | `date_looks_check` | looks check (below 30, Mira 35: bad greeting, -1/-1/+5, jump to 0x37) |
-| 0x29 | `date_event_choose` | special-event check |
+| 0x29 | `date_scene_choose` | special-scene check |
 | 0x2A | `date_arrival_late_gate` | late-arrival wait talk (only date_arrival 0) |
 | 0x2B | `wait_sub_sub` | wait |
 | 0x2C | `date_girl_in_clear_appointment` | portrait in; clear appointment active bit |
@@ -144,7 +148,7 @@ The table (the setup function in step 9 and step 0x16 is replaced at run time by
 | 0x2F | `date_special_day_greeting` | special-day greeting |
 | 0x30 | `main_stage_next` | next stage (stage 1) |
 | 0x31 | `date_wrong_place_speak` | speak: she is not here |
-| 0x32 | `date_meeting_set_group_7` | meeting group 7 |
+| 0x32 | `date_meeting_set_not_here_group` | meeting group 7 |
 | 0x33 | `wait_sub_sub` | wait |
 | 0x34 | `date_wrong_place_speak` | speak |
 | 0x35 | `normal_date_bg_out` | cover wipe |
@@ -194,7 +198,7 @@ Emulator: appointment place 3 (aquarium), chosen place 5 with one decoy 5: step 
 
 ### 4.3 Arrival greeting
 
-`date_arrival_init` (step 0xD) clears the per-date state (about twenty variables), adds `date_spot_variant` x `date_groups_per_variant` to `dialogue_group` (the karaoke box, place 11 variant 2, adds the stride once), clears the greeting, opening, film, concert and event selectors and the park flags, and computes the greeting group:
+`date_arrival_init` (step 0xD) clears the per-date state (about twenty variables), adds `date_spot_variant` x `date_groups_per_variant` to `dialogue_group` (the karaoke box, place 11 variant 2, adds the stride once), clears the greeting, opening, film, concert and scene selectors and the park flags, and computes the greeting group:
 
 ```
 tier  = (rank >= 2) + (rank >= 3)            rank = girl_state_rank(current_girl)
@@ -209,11 +213,11 @@ so girl late -> 0, 2, 4; on time -> 6, 7, 8; player late -> 9, 10, 11 (`DateGree
 
 ### 4.4 Special event check at arrival
 
-Step 0x29 runs `date_event_choose`; two girls have events that start here instead of in stage 1 (Mira's special scene and Megumi's summer scene, section 9.2), and Miharu's spring and summer intrusions start at step 0xF.
+Step 0x29 runs `date_scene_choose`; two girls have scenes that start here instead of in stage 1 (Mira's special scene and Megumi's summer scene, section 9.2), and Miharu's spring and summer intrusions start at step 0xF.
 
-### 4.5 `date_event_trigger` and `date_event_choose`
+### 4.5 `date_scene_trigger` and `date_scene_choose`
 
-`date_event_trigger(scene, record_flag, event_index)`: stores `dialogue_work.scene`, sets `event_flags[event_index] = 1` when `record_flag` is nonzero, stores `date_special_event_flag`, sets `date_special_event_active` and the second bit of `date_light_effect_flags`, and calls `main_state_set(0x5E)`. `date_event_choose` is a chain of conditions evaluated every time it is called by a step; the table of section 9.2 lists them all.
+`date_scene_trigger(scene, record_flag, event_index)`: stores `dialogue_work.scene`, sets `event_flags[event_index] = 1` when `record_flag` is nonzero, stores `date_special_scene_flag_index`, sets `date_special_scene_active` and bit 1 of `scene_effect_flags` (title banner on), and calls `main_state_set(0x5E)`. `date_scene_choose` is a chain of conditions evaluated every time it is called by a step; the table of section 9.2 lists them all.
 
 ### 4.6 The street-gang ambush
 
@@ -221,7 +225,7 @@ Step 0x29 runs `date_event_choose`; two girls have events that start here instea
 
 - kind 4 (first ambush): `date_place_history[0] == date_place == date_place_history[1]` (the third date in a row at the same place), the place is not 0, `year >= 0x60`, `player_flags` bit 20 clear; sets `event_flags[0x55]` = 1, `player_flags` bit 19, clears the history;
 - kind 5 (boss ambush): `year == 0x61` and `month == 9`, bit 20 clear, and (some club record 0-10 has club flag field 3, or bit 19 is set, or no club record 0-10 has points, in which case record 11 gets flag 3); sets `event_flags[0x55]` = 2, bit 20, clears the history;
-- both set `rpg_launch_code`, `daily_event_bits &= 8`, save mode 0x50, the stage and the resume step 0x3E, and jump to step 0x40: `date_ambush_prepare_battle` loads the ambush talk data (1 sector at LBA 0xAFCA to 0x801B0000), steps 0x41-0x45 load the battle bank, shake the screen and speak (`current_girl` = 14 with the short-name buffer set to a gang label), step 0x4A starts RPG_BAT (mode 0x81). The battle returns to step 0x3E (`date_ambush_after_battle`): `rpg_launch_code` 0 (won): tokimeki +2 for the date girl, or in the boss case +3 for every met girl with `GirlFlags` bit 1 and +2 for the date girl; otherwise the player's stress +5; the screen is rebuilt and step 0x3F runs `date_end`. See [[spec/o-rpgbat]] for the battle.
+- both set `dialogue_work.launch_code`, `daily_event_bits &= 8`, save mode 0x50, the stage and the resume step 0x3E, and jump to step 0x40: `date_ambush_prepare_battle` loads the ambush talk data (1 sector at LBA 0xAFCA to 0x801B0000), steps 0x41-0x45 load the battle bank, shake the screen and speak (`current_girl` = 14 with the short-name buffer set to a gang label), step 0x4A starts RPG_BAT (mode 0x81). The battle returns to step 0x3E (`date_ambush_after_battle`): `dialogue_work.launch_code` 0 (won): tokimeki +2 for the date girl, or in the boss case +3 for every met girl with `GirlFlags` bit 1 and +2 for the date girl; otherwise the player's stress +5; the screen is rebuilt and step 0x3F runs `date_end`. See [[spec/o-rpgbat]] for the battle.
 
 ## 5. Stage 1: the date at a place
 
@@ -232,12 +236,12 @@ Each of the 21 places has its own step table (18-104 steps) chosen by `date_stag
 | step | handler | role |
 |---:|---|---|
 | 0x00 | `bustup_expression_mood` | face from the girl's mood |
-| 0x01 | `date_event_choose` | special event check |
+| 0x01 | `date_scene_choose` | special scene check |
 | 0x02 | `normal_date_speak` | the girl's talk on arrival at the place (group `dialogue_group`, section of the place) |
 | 0x03 | `normal_date_girl_out` | portrait out |
 | 0x04 | `date_<place>_enter_spot` | logs the spot in the event log (removing a duplicate entry) and starts the background read |
 | 0x05-0x08 | wait, decode, `normal_date_move_place`, `place_init2` | cross-fade to the spot, sub-title |
-| 0x09 | `date_event_choose` | special event check |
+| 0x09 | `date_scene_choose` | special scene check |
 | 0x0A | `normal_date_girl_in` | portrait in |
 | 0x0B | `normal_date_speak` | the conversation that ends with a question |
 | 0x0C | `normal_date_three_select` | the player picks one of three answers (or two) |
@@ -261,7 +265,7 @@ Spot ids are `DateSpot`; "classes" are the tables of the choice file (rows per g
 | id | place | spots (log ids) | variant rule | groups/variant | notes |
 |---:|---|---|---|---:|---|
 | 0 | neighborhood_park | 0x21 | single | 2 | two-way answer; the opening talk is chosen by `date_neighborhood_park_pick_greeting` (section 5.8); tokimeki +1, affection +1 at once |
-| 1 | central_park | 1 (0x25 path, 0x26 pond, 0x27 blossom path) | 0 path on even visits, 1 pond on odd ones; 2 blossom path from March 15 to April 30 unless Shiori's or Saki's spring event is due (then 0); a due Yumi summer event forces the pond; the falling-particle layer runs on variant 2 and on variant 0 in autumn | 3 | classes 9 bytes per girl |
+| 1 | central_park | 1 (0x25 path, 0x26 pond, 0x27 blossom path) | 0 path on even visits, 1 pond on odd ones; 2 blossom path from March 15 to April 30 unless Shiori's or Saki's spring scene is due (then 0); a due Yumi summer scene forces the pond; the falling-particle layer runs on variant 2 and on variant 0 in autumn | 3 | classes 9 bytes per girl |
 | 2 | shopping_street | 2 boutique, 3 fancy shop, 4 junk shop | the shop is the player's first answer (menu at step 2); variant = parity of the shop's counter | 0; the shop sets a base group (boutique from 0, fancy shop 4-10, junk shop 8-14 by girl) plus 2 per variant (6 for Shiori and Mira in the boutique) | classes 18 bytes per girl (3 shops x 2 variants x 3); music 0x200-0x202 by shop |
 | 3 | aquarium | 5, 6 | 0/1 by parity of counter[5]; 2 = dolphin show once, from March 1996 | 3 | |
 | 4 | zoo | 7, 8 | 0/1 by parity of counter[7]; special variant 2 once from December 1995; Mira cycles 3 variants by counter % 3 | 3 | Mio has fixed summer groups |
@@ -320,13 +324,13 @@ Worked example (checked in the emulator): girl 0, aquarium (affinity row value 1
 About 70 small handlers inside the place tables change the group, the face, or add a line for one girl at one place and variant ("extra talk", "extra face" in the names). They are not generated by a rule; the port should take them from the functions. The checks with numeric conditions:
 
 - `param_looks` threshold 30 (35 for Mira) at arrival (section 4.3) and again at the end (5.10);
-- pool and skating rink: if `param_athletics` < 40 (0x28) the first answer is forced to class 3 (POOR), face 3, with special reaction line 5 (pool: variant 1 and Shiori, Mio, Ayako, Saki, Yukari, Yuko, Megumi; skating: variant 0 and Shiori, Mio, Ayako, Nozomi, Mira); ski resort: athletics < 100, variant 0, Shiori, Saki, Nozomi, Mira, Yuko, Yumi, line 6;
+- pool, skating rink and ski resort (`date_choice_special_reactions`; the sea has no such check): the first answer is forced to class 3 (POOR) with face 3 and a special reaction line when `param_athletics` is below a threshold. Pool (place 16): athletics < 40 (0x28), variant 1, Shiori, Mio, Ayako, Saki, Yukari, Yuko or Megumi, reaction line 5. Skating rink (place 19): athletics < 40, variant 0, Shiori, Mio, Ayako, Nozomi or Mira, line 6. Ski resort (place 20): athletics < 100, variant 0, Shiori, Saki, Nozomi, Mira, Yuko or Yumi, line 6;
 - sea, Nozomi: athletics >= 150 goes to the deserted island route (step 0x2D), otherwise her answers 0 and 2 are class 2 with face 3;
 - planetarium: science < 120 (0x78): for option 1 the first classes become 4 or 3 by girl, and the group gets +2;
 - game center, medal corner: opens from September 1996;
 - art museum: option 5 (exhibition already seen) scores at once and skips nine steps;
 - Mira, Shiori, Yuko and others have extra lines in the library, zoo, game center and karaoke by variant and answer;
-- several steps (movie theater, shrine, amusement park, Saki and Mio events) set `current_girl` to 14 for a line and then back to the date girl: HYPOTHESIS: id 14 is a narration speaker; `scene_mouth_lock` is set at the same time so the portrait's mouth does not move.
+- several steps (movie theater, shrine, amusement park, Saki and Mio scenes) set `current_girl` to 14 for a line and then back to the date girl (the library branch of Yumi, the planetarium talk of Yumi, the Yuina talk in the amusement park, the movie theater, the ambush talk of section 4.6, and the Mio winter, Megumi spring (its setup and one speak step) and Saki winter scenes). HYPOTHESIS: id 14 is a narration speaker. What the code shows: `core` names id 14 `GIRL_SOTOI` (name-table entry 14), the mouth lock is set for these lines (so the portrait's mouth does not move), and the gang ambush (section 4.6) uses the same id with a gang label in the short-name buffer, so 14 is at least a generic extra speaker. All table names that say `narration` carry the HYPOTHESIS mark.
 
 ### 5.7 Farewell, invitation day and closing
 
@@ -342,7 +346,7 @@ The park's flow is short: `date_neighborhood_park_start` sets the group from the
 
 ### 5.9 Movie theater, concert hall, karaoke
 
-Film index (`date_movie_index`): 1995: Jun-Aug 0, Sep-Nov 1, else 2; 1996: Jan-Feb 2, Mar-May 3, Jun-Aug 4, Sep-Nov 5, Dec 6; 1997: Jan-Feb 6, Mar-May 7, Jun-Aug 8, Sep-Nov 9, Dec 10; later 10. Concert programme (`date_concert_index`): 1995: Apr-May 0, Jun-Aug 1, Sep-Nov 2, else 3; 1996: Jan-Feb 3, Mar-May 4, Jun-Aug 5, Sep-Nov 6, Dec 7; 1997: Jan-Feb 7, Mar-May 8, Jun-Aug 9, Sep-Nov 10, Dec 11; later 11. Each index selects a poster/stage background, an audio clip (tables `date_movie_audio_pairs` and `date_concert_audio_pairs`: 11 and 12 pairs of request words) and the group of the reaction section (`DATE_SHARED_FILM_REACTION`, `DATE_SHARED_CONCERT_REACTION`); the reaction plays 128 frames after the clip starts. Karaoke variant 2 (every third visit: counter % 3 == 2; also forced when the main flag `D_800B3CFC` is 1) calls `main_state_set(0x5C)` (DATE2, the karaoke box) from `date_event_choose` at step 9.
+Film index (`date_movie_index`): 1995: Jun-Aug 0, Sep-Nov 1, else 2; 1996: Jan-Feb 2, Mar-May 3, Jun-Aug 4, Sep-Nov 5, Dec 6; 1997: Jan-Feb 6, Mar-May 7, Jun-Aug 8, Sep-Nov 9, Dec 10; later 10. Concert programme (`date_concert_index`): 1995: Apr-May 0, Jun-Aug 1, Sep-Nov 2, else 3; 1996: Jan-Feb 3, Mar-May 4, Jun-Aug 5, Sep-Nov 6, Dec 7; 1997: Jan-Feb 7, Mar-May 8, Jun-Aug 9, Sep-Nov 10, Dec 11; later 11. Each index selects a poster/stage background, an audio clip (tables `date_movie_audio_pairs` and `date_concert_audio_pairs`: 11 and 12 pairs of request words) and the group of the reaction section (`DATE_SHARED_FILM_REACTION`, `DATE_SHARED_CONCERT_REACTION`); the reaction plays 128 frames after the clip starts. Karaoke variant 2 (every third visit: counter % 3 == 2; also forced when the main flag `D_800B3CFC` is 1) calls `main_state_set(0x5C)` (DATE2, the karaoke box; section 14 on the `core` mode name) from `date_scene_choose` at step 9.
 
 ### 5.10 `date_end`
 
@@ -350,10 +354,10 @@ Film index (`date_movie_index`): 1995: Jun-Aug 0, Sep-Nov 1, else 2; 1996: Jan-F
 
 1. loads the main data (`func_800674B0`) and waits for the sound bank (retry after 0x400 frames);
 2. only if the appointment slot's active bit is clear (it was cleared when the girl appeared, section 4.3; a refused or failed meeting leaves it set and skips the whole block):
-   - if `date_spot > 0` and `date_special_event_active` is 0: `event_counters[date_spot] += 1`;
+   - if `date_spot > 0` and `date_special_scene_active` is 0: `event_counters[date_spot] += 1`;
    - if `param_looks >= 35`, or `>= 30` and the girl is not Mira: `girl_last_date_spot[g] = date_spot` (spot 8 is stored as 7, spot 6 as 5) and `girl_last_date_spot_timer[g] = 12`;
-   - under the same looks test: place 18 (shrine) gives tokimeki +1; on May 4-5 with the girl's flag 4 set tokimeki +2; if `rpg_launch_code` is 0 and `appt_place_1` equals the place: syoushin -40, and on May 3-4 flag 4 is set (the Golden Week mark: a date on May 3 or 4 earns +2 for a date on May 4 or 5);
-3. `check_para_limit`; `appt_place_0 = date_place`; shifts `date_place_history` (3 <- 2 <- 1 <- 0 <- place); clears `date_light_effect_flags`; sound command 0xCF; `day_event_next(1)`.
+   - under the same looks test: place 18 (shrine) gives tokimeki +1; on May 4-5 with the girl's flag 4 set tokimeki +2; if `dialogue_work.launch_code` is 0 and `appt_place_1` equals the place: syoushin -40, and on May 3-4 flag 4 is set (the Golden Week mark: a date on May 3 or 4 earns +2 for a date on May 4 or 5);
+3. `check_para_limit`; `appt_place_0 = date_place`; shifts `date_place_history` (3 <- 2 <- 1 <- 0 <- place); clears `scene_effect_flags`; sound command 0xCF; `day_event_next(1)`.
 
 Emulator: after the aquarium run, counter[5] = 1, `girl_last_date_spot[0]` = 5, its timer 12, `date_place_history[0]` = 3.
 
@@ -361,12 +365,12 @@ Emulator: after the aquarium run, counter[5] = 1, `girl_last_date_spot[0]` = 5, 
 
 Place 12 has 104 steps and two answer menus. `date_place_setup_amusement_park` sets `date_park_new_rides` (from March 1997) and `date_park_newest_rides` (from December 1997) and logs spot 0x14.
 
-1. Hero show (first Sunday of a month only): steps 0x0B-0x1D. The girl proposes the show with a yes/no question (step 0x0C) and asks again (0x11). Answer "no" at either question sets the ride-choice group by girl (9; Mira 10; Megumi 8; Saki, Yuko, Yukari, Yumi 7) and jumps to step 0x1F; "yes" continues into the show (`date_amusement_park_enter_hero_show`, spot 0x14, music 0x207) and sets `date_show_taken` for some girls. On any other day `date_amusement_park_skip_show` (step 0x0A) sets that group and jumps directly to step 0x1E. Megumi's spring event starts at step 0x1B inside the show path.
+1. Hero show (first Sunday of a month only): steps 0x0B-0x1D. The girl proposes the show with a yes/no question (step 0x0C) and asks again (0x11). Answer "no" at either question sets the ride-choice group by girl (9; Mira 10; Megumi 8; Saki, Yuko, Yukari, Yumi 7) and jumps to step 0x1F; "yes" continues into the show (`date_amusement_park_enter_hero_show`, spot 0x14, music 0x207) and sets `date_show_taken` for some girls. On any other day `date_amusement_park_skip_show` (step 0x0A) sets that group and jumps directly to step 0x1E. Megumi's spring scene starts at step 0x1B inside the show path.
 2. Ride choice (menu at step 0x22, not scored): the first answer is the roller coaster (the scream machine from March 1997), the second the ghost house (the virtual ship from December 1997), the third the Ferris wheel; `date_amusement_park_choose_ride` (step 0x25) adds 0, 5 or 10 to the dialogue group, sets `date_ride_index` (`DateRide`), the ride's title and spot (0x15-0x19) and its class rows (offset 0, 6, 12, 18, 24 in the 36-byte girl row; a sixth offset 30 serves the extra row of `date_amusement_park_ride_extra_tables`).
 3. The ride (step 0x30, `date_ride_dispatch`): the ride function runs its animation and reloads the portrait (steps 0x30/0x31 alternate; emulator: roller coaster, about 790 frames); the roller coaster, ghost house, Ferris wheel, scream machine and the 3D virtual ship are separate functions (`date_ride_*`, `date_virtual_ship_*`).
-4. After the ride: a talk (group += 2 x variant), the second menu (step 0x36) with the ride's class row, `date_choice_score`, the reaction; in August the girl then offers the night parade (`date_amusement_park_parade_offer`, step 0x3B): accept goes to the parade scenes (spot 0x1A, music 0x204, neon sign with palette cycling), decline restores the saved choice and jumps +0x10 (emulator: outside August the jump went to 0x4C); then the farewell tail at the main area (steps 0x4D-0x5C) and `date_end`.
+4. After the ride: a talk (group += 2 x variant), the second menu (step 0x36) with the ride's class row, `date_choice_score`, the reaction; in August the girl then offers the night parade (`date_amusement_park_parade_offer`, step 0x3B): accept goes to the parade scenes (spot 0x1A, music 0x204, neon sign with palette cycling), decline restores the saved choice and jumps +0x10 (emulator: outside August the jump went to 0x4C); then the farewell tail at the main area (steps 0x4D-0x5C) and `date_end`. The night-parade talk (script section 9, `DATE_SECTION_AMUSEMENT_PARK_PARADE`, group and line cursors `date_park_parade_group` and `date_park_parade_line`) is spoken at steps 0x3D, 0x48 and 0x4A; the parade steps advance its group (+1 at step 0x3F when the girl has visited spot 0x1A before, +1 at step 0x49 when she has not). The text of the section was not read, so "talk about the parade" is the reading of those step positions.
 
-Girls have ride-specific groups and special classes (Mio on the scream machine, Mira in the ghost house, Yuko on the Ferris wheel, Saki on the scream machine); three special events run a ride function from their own tables: Shiori's winter event (Ferris wheel), Mio's spring event (scream machine) and Mira's autumn event (ghost house).
+Girls have ride-specific groups and special classes (Mio on the scream machine, Mira in the ghost house, Yuko on the Ferris wheel, Saki on the scream machine); three special scenes run a ride function from their own tables: Shiori's winter scene (Ferris wheel), Mio's spring scene (scream machine) and Mira's autumn scene (ghost house).
 
 ## 7. The shrine festival
 
@@ -398,13 +402,13 @@ Stage 3, the player's birthday: `date_player_birthday_start`: a girl in rank 2 o
 
 ### 9.1 Structure
 
-`date_event_choose` (every call in a place table at steps 1, 9 and some others, and at stage 0 steps 0x29 / 0xF) starts a special event when its conditions hold (9.2). The event replaces the rest of the date: `date_event_trigger` sets mode 0x5E; the girl's dispatcher runs the season handler, whose table (17-67 steps) does: reset choices (`date_event_reset_choices`), load data (`..._load_data`), the scene setup (`..._setup`: points `date_event_text/command/voice` at the scene's sections, applies the fixed reward, sets the event still, palettes and face/mouth animation), load the girl's event script (`date_event_load_script`, LBA 0xAE21-0xAE5A), play it with `date_event_speak` (one group per step, `date_event_group`/`_line`), change backgrounds (`bg_read_sub2` steps), show the event stills with fades, and finish with the shared date tail (`date_load_girl_script`, `place_init`, portrait in, farewell talk, closing talk) and `date_event_end`. Only five scenes contain an answer menu: Mio spring and winter, Ayako winter, Mira spring and autumn. Each scene table also holds its own sound, background and visual-effect helpers; the port can treat them as presentation.
+`date_scene_choose` (every call in a place table at steps 1, 9 and some others, and at stage 0 steps 0x29 / 0xF) starts a special scene when its conditions hold (9.2). The scene replaces the rest of the date: `date_scene_trigger` sets mode 0x5E; the girl's dispatcher runs the season handler, whose table (17-67 steps) does: reset choices (`date_scene_reset_choices`), load data (`..._load_data`), the scene setup (`..._setup`: points `date_scene_text/command/voice` at the scene's sections, applies the fixed reward, sets the event still (main's `event_still` term), palettes and face/mouth animation), load the girl's scene script (`date_scene_load_script`, LBA 0xAE21-0xAE5A), play it with `date_scene_speak` (one group per step, `date_scene_group`/`date_scene_line`, main variables, requests), change backgrounds (`bg_read_sub2` steps), show the event stills with fades, and finish with the shared date tail (`date_load_girl_script`, `place_init`, portrait in, farewell talk, closing talk) and `date_scene_end`. Only five scenes contain an answer menu: Mio spring and winter, Ayako winter, Mira spring and autumn. Each scene table also holds its own sound, background and visual-effect helpers; the port can treat them as presentation.
 
-`date_event_end` is `date_end` without the visit counter: it loads the main data, stores the last date spot (same looks test as 5.10, spot 8 -> 7, 6 -> 5), logs the scene (`event_log_add(2, date_special_event_flag)` after dropping the previous entry when its flag byte is 0 or 1; not for Mira's special scene and not for Miharu's; Mira's spring event sets the log rank override to its palette index + 1), syoushin -40, the Golden Week bonus and flag, `check_para_limit`, `appt_place_0 = date_place`, shifts the history, clears `date_light_effect_flags` and `day_event_next(1)`.
+`date_scene_end` is `date_end` without the visit counter: it loads the main data, stores the last date spot (same looks test as 5.10, spot 8 -> 7, 6 -> 5), logs the scene (`event_log_add(2, date_special_scene_flag_index)` after dropping the previous entry when its flag byte is 0 or 1; not for Mira's special scene and not for Miharu's; Mira's spring scene sets the log rank override to its palette index + 1), syoushin -40, the Golden Week bonus and flag, `check_para_limit`, `appt_place_0 = date_place`, shifts the history, clears `scene_effect_flags` and `day_event_next(1)`.
 
 ### 9.2 Trigger table
 
-Years are the year byte (0x5F = 1995, 0x60 = 1996, 0x61 = 1997). Season = months 3-5 spring, 6-8 summer, 9-11 autumn, 12/1/2 winter. "State" means `girl_state_rank == 0` with the affection bit (>= 80) and `get_g_zyotai_h == 0` (best mood); "good" is rank < 2 and h-rank 0; "fair" is rank < 3 and h-rank < 2. "Step" is the stage 1 step of the place table at which `date_event_choose` runs. The flag index is the `event_flags` index; "sets" means the trigger records it, "scene" means the scene sets it itself.
+Years are the year byte (0x5F = 1995, 0x60 = 1996, 0x61 = 1997). Season = months 3-5 spring, 6-8 summer, 9-11 autumn, 12/1/2 winter. "State" means `girl_state_rank == 0` with the affection bit (>= 80) and `get_g_zyotai_h == 0` (best mood); "good" is rank < 2 and h-rank 0; "fair" is rank < 3 and h-rank < 2. "Step" is the stage 1 step of the place table at which `date_scene_choose` runs. The flag index is the `event_flags` index; "sets" means the trigger records it, "scene" means the scene sets it itself.
 
 | girl | season (scene) | place | extra conditions | step | flag |
 |---|---|---|---|---:|---:|
@@ -467,7 +471,7 @@ Integer points added by the scene setup (the standard end adds syoushin -40 on t
 | shiori | spring | +3 | +2 | -20 | |
 | shiori | winter | +1 | +1 | -20 | |
 | shiori | summer | +1 | +2 | -20 | |
-| mio | spring | 0 | 0 | 0 | answer 0: tokimeki -2, affection -1, syoushin +20 and event flag 9; answer 1: face 2 |
+| mio | spring | 0 | 0 | 0 | answer 0: tokimeki -2, affection -1, syoushin +20 and `event_flags[9]` set; answer 1: face 2 |
 | mio | summer | +1 | +2 | -20 | |
 | mio | autumn | +2 | +2 | -20 | |
 | mio | winter | +3 | +2 | -20 | the answer sets Mio's flag 14 or raises the group |
@@ -476,7 +480,7 @@ Integer points added by the scene setup (the standard end adds syoushin -40 on t
 | yuina | autumn | 0 | +2 | -10 | |
 | yuina | winter | +3 | +2 | -20 | |
 | ayako | spring | +2 | +1 | -20 | |
-| ayako | summer | -1 | -1 | +20 | penalty event |
+| ayako | summer | -1 | -1 | +20 | penalty scene |
 | ayako | autumn | +2 | +1 | -20 | |
 | ayako | winter | answer: +3 / +1 or +2 / +2 | | -20 | answer 0: +3, +1; answer 1: +2, +2 |
 | saki | spring | +3 | +2 | -20 | also `param_condition` +10 |
@@ -493,7 +497,7 @@ Integer points added by the scene setup (the standard end adds syoushin -40 on t
 | nozomi | winter | rank < 2: +3 / else +1 | rank < 2: +2 / else +3 | -20 | |
 | mira | spring | 0 | 0 | 0 | the three-way answer is scored with `date_choice_score` with classes 0, 4, 2 for the original answers 0, 1, 2 |
 | mira | summer | +1 | +1 | -20 | |
-| mira | autumn | 0 | 0 | 0 | answer 0: affection -1, syoushin +10, event flag 49; other answers none |
+| mira | autumn | 0 | 0 | 0 | answer 0: affection -1, syoushin +10, `event_flags[49]` set; other answers none |
 | mira | winter | +3 | +2 | -20 | |
 | mira | special | +3 | +2 | 0 | |
 | yuko | spring | 0 | +3 | -10 | |
@@ -512,7 +516,7 @@ Integer points added by the scene setup (the standard end adds syoushin -40 on t
 
 ## 10. Data and disc files
 
-Overlay data (names in the table): the step tables (72 `*_steps` rows), the 27-section pointer arrays `date_section_text/command/voice` filled by `date_fill_sections_<girl>` (indices `DateSection`: 0-21 one per place in the order art museum, bowling alley, concert hall, zoo, shrine, game center, karaoke, neighborhood park, movie theater, amusement park invitation, pool, planetarium, sea, botanical garden, shopping street, skating rink, ski resort, stadium, aquarium, library, amusement park, central park; then 22 farewell, 23 arrival greeting, 24 special-day greeting, 25 neighborhood park opening, 26 closing; Mio and Yuina lack some sections), the 4 shared sections, the 40 choice-table pointers, `date_syoushin_weight`, `date_place_affinity` (11 x 21 bytes), `date_place_names` (21 x 33-byte records), `date_gift_names` (99 x 33), the two audio pair tables and the sound bank tables of section 4.1 (`date_place_bank_arg_*`, 21 entries each).
+Overlay data (names in the table): the step tables (72 `*_steps` rows), the 27-section pointer arrays `date_section_text/command/voice` filled by `date_fill_sections_<girl>` (indices `DateSection`: 0-21 one per place in the order art museum, bowling alley, concert hall, zoo, shrine, game center, karaoke, neighborhood park, movie theater, amusement park night parade, pool, planetarium, sea, botanical garden, shopping street, skating rink, ski resort, stadium, aquarium, library, amusement park, central park; then 22 farewell, 23 arrival greeting, 24 special-day greeting, 25 neighborhood park opening, 26 closing; Mio and Yuina lack some sections), the 4 shared sections, the 40 choice-table pointers, `date_syoushin_weight`, `date_place_affinity` (11 x 21 bytes), `date_place_names` (21 x 33-byte records), `date_gift_names` (99 x 33), the two audio pair tables and the sound bank tables of section 4.1 (`date_place_bank_third_argument`, `date_place_bank_first_data_argument`, `date_place_bank_second_data_argument`; `date_place_load_command` and `date_place_sequence_command` hold the sound commands; 21 entries each).
 
 Disc reads (sector counts and LBAs as in the code; the files are game data and are not reproduced here):
 
@@ -521,7 +525,7 @@ Disc reads (sector counts and LBAs as in the code; the files are game data and a
 | shared date script | 2 | 0xAF46 | 0x80197000 | `date_load_shared_script` |
 | girl date script | 0x14-0x18 by girl | 0xAD15-0xADF1 | 0x80198000 | `date_load_girl_script` |
 | choice file (classes, faces) | 3 | 0xAFA9 | 0x801A4000 | `date_load_choice_tables` |
-| girl event script | 3-7 by girl | 0xAE21-0xAE5A | 0x80198000 | `date_event_load_script` |
+| girl scene script | 3-7 by girl | 0xAE21-0xAE5A | 0x80198000 | `date_scene_load_script` |
 | gift script | 0x16 | 0xAF0D | 0x801B0000 | `date_gift_load_data` |
 | player-birthday script | 3 | 0xAF43 | 0x801B0000 | `date_player_birthday_load_data` |
 | ambush talk | 1 | 0xAFCA | 0x801B0000 | `date_ambush_prepare_battle` |
@@ -562,46 +566,82 @@ A port needs the script text, command and voice tables of these files (extractio
 
 ## 11. Names and files
 
-Function families: place setups `date_place_setup_<place>` (21), spot entries `date_<place>_enter_spot`, answer scoring (`date_choice_score`, `date_score_multipliers`), shared tail (`date_farewell_speak`, `date_closing_speak`, `date_birthday_check`, `date_end`), birthday stages (`date_gift_*`, `date_player_birthday_*`), rides (`date_ride_*`, `date_virtual_ship_*`), and the event families `date_event_<girl>_<season>[_setup|_data_init|_load_data|_background_<k>|_sound_<k>|...]` (305 generated names). The table has the full list with notes. Proposed files (rows of kind `file`): `place_scenes.c`, `entry.c`, `rides.c`, `virtual_ship.c`, `girl_birthday.c`, `player_birthday.c`, `event_common.c`, `event_<girl>.c`; header `include/ovl/date.h`.
+Function families: place setups `date_place_setup_<place>` (21), spot entries `date_<place>_enter_spot`, answer scoring (`date_choice_score`, `date_score_multipliers`), shared tail (`date_farewell_speak`, `date_closing_speak`, `date_birthday_check`, `date_end`), birthday stages (`date_gift_*`, `date_player_birthday_*`), rides (`date_ride_*`, `date_virtual_ship_*`), and the scene families `date_scene_<girl>_<season>[_setup|_data_init|_load_data|_background_<k>|_sound_<k>|...]` (385 functions and 48 step-table labels). The table has the full list with notes. Proposed files (rows of kind `file`): `place_scenes.c`, `entry.c`, `rides.c`, `virtual_ship.c`, `girl_birthday.c`, `player_birthday.c`, `scene_common.c`, `scene_<girl>.c`; header `include/ovl/date.h`.
 
 ## 12. Hardware layer coverage
 
-Named only at module level: falling-particle layer (`date_central_park_particles_*`), fireworks (`date_shrine_fireworks_*`, `date_firework_targets`), neon sign palette cycling (`date_parade_sign_palette_cycle`), light beams and stripe effects of the events (`date_event_light_beams`, `date_event_*_effect*`, `date_gradient_quad_draw`, `date_gradient_triangle_draw`), the ride animations (`date_ride_*`, `date_virtual_ship_*`, three GTE helper functions at 0x8015A640-0x8015A980 in libgte files that are SDK code and keep their names), background and sound loads (`bg_read_sub2`, bank loads in `date_place_music_load_*`).
+Named only at module level: falling-particle layer (`date_central_park_particles_*`), fireworks (`date_shrine_fireworks_*`, `date_firework_targets`), neon sign palette cycling (`date_parade_sign_palette_cycle`), light beams and stripe effects of the scenes (`date_scene_light_beams`, `date_scene_*_effect*`, `date_gradient_quad_draw`, `date_gradient_triangle_draw`), the ride animations (`date_ride_*`, `date_virtual_ship_*`, three GTE helper functions at 0x8015A640-0x8015A980 in libgte files that are SDK code and keep their names), background and sound loads (`bg_read_sub2`, bank loads in `date_place_music_load_*`).
 
 ## 13. Verification log (emulator, 2026-10-24)
 
-All runs: boot-to-title save state, memory writes at frame 3 (mode 2, overlay_target_mode 0x50, stage and step 0, `date_girl`, `current_girl`, `appt_place_0/1`, decoys, `param_trivia`, `param_looks`, calendar), pad CIRCLE pressed every 40 frames; a scratch copy of `tools/emu` with a `--poke` option (not in the repo). Nothing from the runs (states, screenshots) is committed.
+All runs start from a boot-to-title save state (the title menu) and write memory at frame 3 so that the loader enters mode 0x50 at once with chosen values; the pad presses CIRCLE for 4 frames every 40 frames from frame 300 (every 30 in the amusement park run). The write option (`--poke FRAME:ADDRESS:HEXBYTES`, bytes in memory order) exists only in a scratch copy of `tools/emu`, which is not in the repo; the addresses and values below are everything needed to repeat a run with any emulator that can write memory at a frame. Nothing from the runs (states, screenshots) is committed.
+
+Writes at frame 3 in every run (`GameState` is at 0x800E6280; names from `core`):
+
+| address | field | value |
+|---|---|---|
+| 0x800E7388 | mode (`GameState` +0x1108) | 2 (the loader) |
+| 0x800E738E | overlay target mode (+0x110E) | 0x50 |
+| 0x800E7389, 0x800E738A | stage, step (+0x1109, +0x110A) | 0, 0 |
+| 0x800E69DD, 0x800E71DF | `date_girl`, `current_girl` | girl id (0 unless noted) |
+| 0x800E69A4..0x800E69A7 | `appt_place_0..3` | place, place, 0xFF, 0xFF unless noted |
+| 0x800E6392 | `param_trivia` value (s16) | 60 (bytes 3C 00) |
+| 0x800E6396 | `param_looks` value (s16) | 60 (bytes 3C 00) |
+
+Calendar writes (every run except 1-3): year byte 0x800E62BE = 0x5F (1995), month 0x800E62BF = 4, day 0x800E62C0 = 4; run 5 does not write the day.
+
+Writes that differ by run (numbers as in the list below):
+
+| run | extra or different writes |
+|---|---|
+| 1, 2, 8, 15 | place 3 (aquarium) |
+| 3 | `appt_place_0` = 5, `appt_place_1` = 3, `appt_place_2` = 5, no calendar write; the answer-0 run presses only CIRCLE, the answer-1 run adds a DOWN press (3 frames) at frame 392 |
+| 4 | looks 10 (bytes 0A 00) |
+| 5, 11 | place 1 (central park) |
+| 6 | girl's birthday word at 0x800E644C = 0x44 (April 4, `girls[0].birthday`) |
+| 7 | player's birthday word at 0x800E6378 = 0x44 |
+| 9 | `girl_last_date_spot[0]` (0x800E69AC) = 5 and its timer (0x800E69BC) = 12 |
+| 10 | year byte 0x60 and `date_place_history[0]`, `[1]` (0x800E69A8, 0x800E69A9) = 3 |
+| 12 | place 0xC (amusement park) |
+| 13 | place 2 (shopping street) |
+| 14 | `frame_count` (0x800E7378) written at frame 58 with 2 or 3 (item 14 has the result) |
+| 16 | place 0 (neighborhood park) |
+| 18 | `date_girl` and `current_girl` = 1 (Mio), place 0xC, year byte 0x61 (1997), month 4 |
 
 1. Aquarium, girl 0, on time, right place: step timeline 0..0x10, 0x21..0x30, stage 1 steps 0..0x1E, `date_end` at frame 1910 (section 4.1 and 5.1). Place setup of place 3 ran as the replacement of step 9.
 2. Same run, break at `date_choice_score` and at the next step: tokimeki 0 -> 1.5, affection 50 -> 50.75, syoushin 0 -> 0 (clamped) for class 1, trivia 60, affinity value 1 (section 5.5).
 3. Wrong place (chosen 5, true 3, decoy 5): question, answer 0 -> step 0x31 and `date_end`; answer 1 (pad down) -> steps 0x14.., place setup of place 3, reloads, `date_arrival` 2, stage 1 (section 4.2).
 4. Looks 10: step 0x28 -> 0x37 ... `date_end` (section 4.3).
-5. Central park, April: `date_event_trigger(4, 1, 3)` called from `date_event_choose` at stage 1 step 0xD, mode 0x5E, `date_event_shiori_spring` ran (section 9).
+5. Central park, April: `date_scene_trigger(4, 1, 3)` called from `date_scene_choose` at stage 1 step 0xD, mode 0x5E, `date_scene_shiori_spring` ran (section 9).
 6. Girl's birthday poked to today: `date_birthday_check` -> stage 2, `date_gift_apply_reward` reached with answer 0.
 7. Player's birthday poked to today: stage 3 started.
 8. After the aquarium run: `event_counters[5]` = 1, `girl_last_date_spot[0]` = 5, timer 12, history[0] = 3 (section 5.10).
 9. Repeat spot (aquarium with `girl_last_date_spot[0]` = 5 and timer 12 poked): on the first frame of the farewell step tokimeki 1.5 -> 0.5, affection 50.75 -> 48.75, syoushin 0 -> 5 (section 5.7).
 10. Third date in a row (history 3, 3, year 1996): `date_ambush_check` jumped step 0x2E -> 0x40, steps 0x41..0x4A ran and RPG_BAT (mode 0x81) loaded at frame 1137 (section 4.6).
-11. Shiori spring event end to end (central park, April): tokimeki 0 -> 3, affection 50 -> 52, syoushin 0 (-20 and -40 clamped); `date_event_end` ran at frame 4058 and the queue reader took over at frame 4191 (section 9).
+11. Shiori spring scene end to end (central park, April): tokimeki 0 -> 3, affection 50 -> 52, syoushin 0 (-20 and -40 clamped); `date_scene_end` ran at frame 4058 and the queue reader took over at frame 4191 (section 9).
 12. Amusement park (girl 0, first answers, not a first Sunday): steps 0, 1, ..., 0x0A -> 0x1E (show skipped), ride menu 0x22, 0x25 ride choice (roller coaster), 0x30 ride, 0x36 menu, 0x37 score, 0x3A reaction, 0x3B -> 0x4C (no August parade), 0x4D..0x5C, end (section 6).
 13. Shopping street (girl 0, first answers): step 1 speaks the shop question, step 2 is the unshuffled shop menu, step 8 `date_shopping_street_enter_shop`, step 0x18 is the scored menu, `date_choice_score` at 0x19, end through the shared tail (section 5.4).
 
-14. Girl-late arrival: with `frame_count` poked so that `(frame_count & 3) == 0` at `date_init`, `date_arrival` was 0 and stage 0 ran step 0x2A (the waiting talk), a 128-frame wait at 0x2B and the portrait at 0x2C before the greeting (section 4.3); with the low bits 3 it was 1.
+14. Girl-late arrival: after the `frame_count` write of 2 `date_arrival` was 0 (so the low bits were 0 when `date_init` ran) and stage 0 ran step 0x2A (the waiting talk), a 128-frame wait at 0x2B and the portrait at 0x2C before the greeting (section 4.3); after the write of 3 it was 1.
 15. Dialogue cursor: a write watch on `dialogue_group` in the aquarium run showed 0 (reset), then +1 after each finished group at steps 2, 0xB and 0xE (section 5.3).
 16. Neighborhood park (girl 0): at the opening step tokimeki 0 -> 1 and affection 50 -> 51, opening group 0 with a random line (2) for the first answer (section 5.8).
 17. Disc check (reading the image, nothing kept): the choice file at LBA 0xAFA9 (3 sectors) holds only the values 0-4 in the class area (0x000-0xAB0) and in the face area (0xAB0-0x1560) and is zero after 0x1560, as the layout of section 10.1 says; the gift table has six empty 33-byte records (section 8).
-18. Mio spring event (girl 1, amusement park, April 1997, first ride choice): `date_event_trigger(2, 0, 9)` was called from `date_event_choose` at the ride-choice step with `dialogue_choice` 0, as the trigger table says (section 9.2).
+18. Mio spring scene (girl 1, amusement park, April 1997, first ride choice): `date_scene_trigger(2, 0, 9)` was called from `date_scene_choose` at the ride-choice step with `dialogue_choice` 0, as the trigger table says (section 9.2).
 
-Not run: the three-way menu shuffle (main), the other rides, the hero show and the night parade, the shrine festival and fireworks, the ambush battle itself, Miharu's intrusions, and every special event except the Shiori spring one (item 11); the Mio spring one (item 18) was only run up to its trigger.
+Not run: the three-way menu shuffle (main), the other rides, the hero show and the night parade, the shrine festival and fireworks, the ambush battle itself, Miharu's intrusions, and every special scene except the Shiori spring one (item 11); the Mio spring one (item 18) was only run up to its trigger.
 
 ## 14. Notes for the port and disagreements with `core`
 
 - Model the date as four stages with explicit step lists per place; the 21 per-place tables share one template (5.1), so a data-driven engine with per-place steps (enter spot, extra talks, special steps) is enough. The 70 girl/place handlers of section 5.6 are conditions on (girl, answer, variant) that add a line, a face or a group offset.
 - The scoring needs five inputs: the response class of the answer (disc table, section 10), `param_trivia`, `date_place_affinity[girl][place]` (overlay table), the girl's mood rank and the calendar. Keep the 16.16 representation of the three girl counters.
-- Randomness: arrival late (1/4 by frame count), the park opening line, the September 22/23 greeting parity, the hint roll (50%), and the replay of Mio's autumn library event when its flag is already set (even frame count). A port may use any RNG with the same probabilities.
+- Randomness: arrival late (1/4 by frame count), the park opening line, the September 22/23 greeting parity, the hint roll (50%), and the replay of Mio's autumn library scene when its flag is already set (even frame count). A port may use any RNG with the same probabilities.
 - `core` names `unk_724..unk_727` `appt_place_0..3` ("recent appointment places"). DATE reads them as: `unk_724` the place the player chose, `unk_725` the true appointment place (`appointment_launch` stores the slot's place there), `unk_726/727` the places of the player's other pending appointments or 0xFF; `unk_728[4]` is the place history. Suggest `chosen_place`, `appointment_place`, `other_place_a/b`. No row was written for these fields because they are `core` names.
-- `core` calls mode 0x5E `MODE_DATE_SCENE` ("girl-specific scenes"); it hosts 48 special date events (46 of the girls 0-10 and two of Miharu). The name stays; the note could say "special date events".
+- `core` calls mode 0x5E `MODE_DATE_SCENE` ("girl-specific scenes"); it hosts 48 special date scenes (46 of the girls 0-10 and two of Miharu). The name stays; the note could say "special date scenes".
 - `PLACE_SHRINE` (core): the scene at place 18 is a festival with stalls and fireworks; the name stays, the place name table says shrine.
+- Mode 0x5C: `core` names 0x58 and 0x5C `MODE_AMUSEMENT_PARK` and `MODE_AMUSEMENT_PARK_2` (both DATE2), and GLOSSARY.md and the ADR describe DATE2 as the amusement park date with rides and karaoke. DATE starts mode 0x5C only from the karaoke place (place 11 variant 2, `date_scene_choose` at step 9), while its own amusement park place (12) with the rides runs inside DATE (section 6). So the `_2` name does not tell a reader that 0x5C is the karaoke box of a date. The review of this spec found ride and karaoke text in the DATE2 overlay's strings, which fits both names; that was not re-read here and no rename is proposed. Which mode launches 0x58 was not traced.
+- `core` names GirlId 14 `GIRL_SOTOI` (name-table entry 14, "butler"). DATE sets `current_girl` to 14 for single lines (section 5.6); the narration reading is a HYPOTHESIS and the table names with `narration` carry the mark.
+- `D_80122D44`: an earlier draft of the DATE table named it `date_light_effect_flags` with bit 1 "special scene running". The code does not show that (the loader screen gates the title banner on bit 1 and GEKO writes the word too; DATE sets bit 1 for the karaoke hand-off and Miharu's intrusions as well). `m-flow` (open question 11) and this spec now agree on `scene_effect_flags`.
+- Main variables: the 18 requests of `o-date-main-requests.tsv` are `DialogueWork` words (+0x10, +0x44, +0x64, +0x7C) and plain globals in `D_800CA134..D_800CA368`; the main owner decides prefix and form (`date_` is the overlay prefix, these live in the main exe).
 
 ## 15. Open questions
 
@@ -609,6 +649,9 @@ Not run: the three-way menu shuffle (main), the other rides, the hero show and t
 2. Stage 0 steps 0x37-0x3D are reached from the looks check (confirmed by the emulator); 0x3E-0x3F are the ambush return point. No other jump into them was found.
 3. The meaning of the `girl_side` toggle (`D_8015BF44/48`) at place changes (HYPOTHESIS name).
 4. `D_800B3CFC` (a flag shared with DATE2, EN_NICHI and ETC) makes the karaoke place go to the DATE2 box; its writers outside DATE were not traced.
-5. `D_800E7D34 |= 1` in Ayako's spring event (album or gallery flags?) and the flags `GirlFlags` bits 12/13/14 are only seen at the DATE sites.
-6. The 48 events were not each run; their reward rows come from the matched C. Nozomi winter and Ayako winter apply two reward variants by rank or answer.
+5. `D_800E7D34 |= 1` in Ayako's spring scene (album or gallery flags?) and the flags `GirlFlags` bits 12/13/14 are only seen at the DATE sites.
+6. The 48 scenes were not each run; their reward rows come from the matched C. Nozomi winter and Ayako winter apply two reward variants by rank or answer.
 7. The three libgte clones at 0x8015A640-0x8015A980 are SDK code (not named here).
+8. Speaker 14 (section 5.6): narration voice, a hidden extra speaker, or something else; the text of the lines was not read.
+9. The night-parade talk (script section 9, section 6): only the step positions and cursors were read; whether the talk is the girl's invitation, the parade itself, or both is not known.
+10. Names that rest on the calendar only: `DATE_SPECIAL_DAY_EQUINOX_*` (March 20/21, September 22/23) carry HYPOTHESIS; the three late-July Sundays are named by the weekday and month only (`DATE_SPECIAL_DAY_SUMMER_SUNDAY`), the festival-day reading of section 2 is a guess.
