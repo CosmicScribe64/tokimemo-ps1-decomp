@@ -976,6 +976,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-27011-p2-m-scheduler|T-27011 Phase 2 naming proposals and port spec for the main scheduler (m-scheduler)]]
 - [ ] [[tickets/T-27016-p2-m-hud|T-27016 Phase 2 naming and spec for m-hud (HUD, calendar page, parameter panel, magazine, save panel)]]
 - [ ] [[tickets/T-27012-p2-m-weekday|T-27012 Phase 2 naming proposals and port spec for the school-day command loop (m-weekday)]]
+- [ ] [[tickets/T-27015-p2-m-dates-b|T-27015 Phase 2 naming and port spec for the main scene library (8007C030.c)]]
 
 
 %% kanban:settings
