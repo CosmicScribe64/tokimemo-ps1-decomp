@@ -137,7 +137,7 @@ The date script loader `spot_date_script_load_step` reads `DATE_xx.BIN` (0x13-0x
 
 ### 6.3 Scene catalogue
 
-Steps is the table length, Talk the number of talk-type steps, BG the own background loads, "Ending stats" the girl-record deltas that the scene applies (t tokimeki, a affection, c counter; the counter is core's HYPOTHESIS `syoushin`, so a negative counter is a reward), Labels the place or speaker labels the scene sets (my English glosses), Extras the per-frame effect functions. Scenes with no delta set (rows with a dash) carry their changes in shared steps or none.
+Steps is the table length, Talk the number of dialogue steps (the talk steps and the dev `speak` steps), BG the own background loads, "Ending stats" the girl-record deltas that the scene applies (t tokimeki, a affection, c counter; the counter is core's HYPOTHESIS `syoushin`, so a negative counter is a reward), Labels the place or speaker labels the scene sets (my English glosses), Extras the per-frame effect functions. Scenes with no delta set (rows with a dash) carry their changes in shared steps or none.
 
 | Girl | Scene | Steps | Talk | BG | Ending stats | Labels | Extras |
 | --- | ---: | ---: | ---: | ---: | --- | --- | --- |
@@ -201,7 +201,7 @@ Steps is the table length, Talk the number of talk-type steps, BG the own backgr
 | yumi | 1 | 47 | 7 | 3 | +1t +2a | corridor | - |
 | yumi | 2 | 21 | 2 | 1 | +1t +2a | - | - |
 | yumi | 3 | 41 | 5 | 2 | +1t +1a -10c | - | - |
-| yumi | 4 | 44 | 6 | 3 | +3t +2a -20c | pond | - |
+| yumi | 4 | 44 | 6 | 3 | +3t +2a -20c | pond | se_play |
 | yumi | 5 | 44 | 7 | 2 | +2a -10c | - | - |
 | yumi | 6 | 52 | 8 | 3 | +2t +1a -20c | - | - |
 | yumi | 7 | 55 | 6 | 3 | - | entrance, home front | flash_draw, gradient_quad_draw, sprites_update |
@@ -219,7 +219,7 @@ Reading the table: scene 1 of every girl is a short school or home meeting (corr
 
 ### 6.4 Effects
 
-11 scenes run extra per-frame code (the Extras column): Yuko 2 (face update: a 13-frame palette cycle and a flag toggle), Yuko 3 and 4 (gradient quads and sprite batches, a 10-frame palette ping-pong), Shiori 1 (15 sprite records 4-18 falling and respawning at random), Shiori 8 (face update), Ayako 2, Yukari 4 and Megumi 1 (random sprite drifts), Yumi 7 (a flash quad and ten delayed sprites) and Yuina 3 (two sound-effect triggers); the shared bar overlay `spot_bars_overlay_draw` is called by the Ayako, Mio and Miharu scenes. Gradient quads and triangles are drawn through `spot_gradient_quad_draw` and `spot_gradient_tri_draw`; the screen wipe is `spot_wipe_gradient_draw`. The hardware layer (primitives, ordering table) is described at module level only.
+12 scenes run extra per-frame code (the Extras column): Yuko 2 (face update: a 13-frame palette cycle and a flag toggle), Yuko 3 and 4 (gradient quads and sprite batches, a 10-frame palette ping-pong), Shiori 1 (15 sprite records 4-18 falling and respawning at random), Shiori 8 (face update), Ayako 2, Yukari 4 and Megumi 1 (random sprite drifts), Yumi 7 (a flash quad and ten delayed sprites), Yuina 3 (two sound-effect triggers) and Yumi 4 (one); the shared bar overlay `spot_bars_overlay_draw` is called by the Ayako, Mio and Miharu scenes. Gradient quads and triangles are drawn through `spot_gradient_quad_draw` and `spot_gradient_tri_draw`; the screen wipe is `spot_wipe_gradient_draw`. The hardware layer (primitives, ordering table) is described at module level only.
 
 ## 7. Place dates
 
