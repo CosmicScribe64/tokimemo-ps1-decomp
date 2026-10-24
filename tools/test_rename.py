@@ -529,6 +529,63 @@ class TypeLocalTest(Fixture):
         self.assertIn("} FnTbl;\nextern FnTbl D_800F6200;", self.read("include/ovl/EVT.h"))
 
 
+class EnumRenameTest(Fixture):
+    def setUp(self):
+        super().setUp()
+        self.write("include/common.h", self.read("include/common.h").replace(
+            "#endif", "enum MainMode { MODE_BOOT = 0, MODE_RUN = MODE_BOOT + 1 };\n"
+            "typedef enum MainMode ModeAlias;\n#endif"))
+        for path in ("src/main/80041000.c", "src/ovl/AAA/80132100.c"):
+            self.write(path, self.read(path) + "\ns32 mode_value(void) { return MODE_RUN; }\n")
+
+    def test_tag_and_enumerator_with_proofs(self):
+        self.ok("type main MainMode GameMode\n"
+                "enumerator main MODE_RUN GAME_MODE_RUN\n", verify=True)
+        h = self.read("include/common.h")
+        self.assertIn("enum GameMode { MODE_BOOT = 0, GAME_MODE_RUN = MODE_BOOT + 1 };", h)
+        self.assertIn("typedef enum GameMode ModeAlias;", h)
+        for path in ("src/main/80041000.c", "src/ovl/AAA/80132100.c"):
+            self.assertIn("return GAME_MODE_RUN;", self.read(path))
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+
+    def test_initializer_references_are_not_definitions(self):
+        self.ok("enumerator main MODE_BOOT GAME_MODE_BOOT\n", verify=True)
+        self.assertIn("MODE_RUN = GAME_MODE_BOOT + 1", self.read("include/common.h"))
+
+    def test_constant_in_anonymous_enum_and_string_unchanged(self):
+        self.write("include/common.h", self.read("include/common.h") +
+                   '\nenum{ANON_MODE = sizeof("a,b"), OTHER_MODE = ANON_MODE + 1};\n')
+        self.write("src/main/80041000.c", self.read("src/main/80041000.c") +
+                   '\nchar *mode_label = "ANON_MODE";\n')
+        self.ok("enumerator main ANON_MODE GAME_MODE_ANONYMOUS\n", verify=True)
+        self.assertIn("OTHER_MODE = GAME_MODE_ANONYMOUS + 1", self.read("include/common.h"))
+        self.assertIn('"ANON_MODE"', self.read("src/main/80041000.c"))
+
+    def test_enumerator_collision_case_and_not_a_member(self):
+        self.refused("enumerator main MODE_BOOT MODE_RUN\n", "already an identifier")
+        self.refused("enumerator main MODE_BOOT game_mode_boot\n", "not UPPER_SNAKE")
+        self.refused("enumerator main s32 GAME_MODE_BOOT\n", "0 definitions")
+
+    def test_private_overlay_scope(self):
+        for unit in ("AAA", "EVT"):
+            path = "include/ovl/%s.h" % unit
+            self.write(path, self.read(path) + "\nenum PrivateMode { PRIVATE_WAIT = 0 };\n")
+        self.ok("enumerator AAA PRIVATE_WAIT AAA_MODE_WAIT\n", verify=True)
+        self.assertIn("AAA_MODE_WAIT", self.read("include/ovl/AAA.h"))
+        self.assertIn("PRIVATE_WAIT", self.read("include/ovl/EVT.h"))
+
+    def test_hypothesis_check_and_replay(self):
+        self.ok("enumerator main MODE_RUN GAME_MODE_RUN HYPOTHESIS: inferred role\n")
+        self.assertIn("/* HYPOTHESIS: inferred role */", self.read("include/common.h"))
+        path = "src/main/80041000.c"
+        self.write(path, self.read(path).replace("GAME_MODE_RUN", "MODE_RUN"))
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.replay(self.root, out=io.StringIO(), use_gcc=True), 0)
+        self.assertIn("return GAME_MODE_RUN;", self.read(path))
+        self.assertEqual(R.replay(self.root, out=io.StringIO(), use_gcc=True), 0)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+
+
 class FileRenameTest(Fixture):
     def test_file(self):
         out = self.ok("file AAA 80132100 aaa_tables T-1 the tables of AAA\n")

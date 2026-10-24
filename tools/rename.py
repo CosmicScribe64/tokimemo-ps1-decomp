@@ -31,8 +31,12 @@ note, a `#` inside it included):
   file   TAIIKU           80133C80       runner_race       T-26300 the runner race event
   dir    TAIIKU           TAIIKU         sports_festival   folder src/ovl/TAIIKU -> src/ovl/sports_festival
   file   include          ovl/TAIIKU.h   ovl/sports_festival.h
-scope: the link unit (`main` or an overlay name) for func, data, type, file and dir; the type name for
+scope: the link unit (`main` or an overlay name) for func, data, type, enumerator, file and dir; the type name for
 field; `UNIT:function` for local and param; `include` for a header (paths relative to include/).
+`type` also renames enum tags/typedefs; `enumerator` renames an existing enum member (UPPER_SNAKE).
+For example: `type main MainMode GameMode`, then `enumerator main MODE_BOOT GAME_MODE_BOOT`.
+These rows keep all values and fixed-width field types unchanged. `const` remains the literal-to-name
+subcommand for introducing new constants, not a rename of an existing enum member.
 A note that starts with HYPOTHESIS marks a claim of game meaning that the code does not prove: a
 function or global then goes into a HYPOTHESES symbol file, a field or type gets a
 `/* HYPOTHESIS: ... */` comment at its definition. Tables with file or dir rows hold nothing else,
@@ -108,8 +112,8 @@ import symtab  # noqa: E402
 
 ENC = "latin-1"           # byte-transparent: files are read and written byte for byte
 LEDGER_DIR = "config/renames"
-KINDS = ("func", "data", "field", "type", "local", "param", "file", "dir", "const")
-IDENT_KINDS = ("func", "data", "type", "local", "param")
+KINDS = ("func", "data", "field", "type", "enumerator", "local", "param", "file", "dir", "const")
+IDENT_KINDS = ("func", "data", "type", "enumerator", "local", "param")
 EXE_TEXT_OFF = 0x80041000 - 0x800
 # symbol files whose names are carried as they are (name_problem: no style check, T-27003)
 CARRIED_FILES = ("config/symbol_addrs_obin.txt", "config/symbol_addrs_sdk.txt")
@@ -545,6 +549,8 @@ def name_problem(row, new=None, carried=False):
         return "%s is not snake_case (lower case, digits and _)" % new
     if row.kind == "type" and not PASCAL_RE.match(new):
         return "%s is not PascalCase" % new
+    if row.kind == "enumerator" and not UPPER_RE.match(new):
+        return "%s is not UPPER_SNAKE" % new
     if row.new == row.old:
         return "old and new are the same"
     return None
@@ -1069,12 +1075,12 @@ def match_brace(text, i):
     raise RenameError("unbalanced braces")
 
 
-TYPEDEF_FWD_RE = re.compile(r"\btypedef\s+(struct|union)\s+(\w+)\s+(\w+)\s*;")
-AGG_RE = re.compile(r"\b(struct|union)\s+(\w+\s*)?\{")
+TYPEDEF_FWD_RE = re.compile(r"\btypedef\s+(struct|union|enum)\s+(\w+)\s+(\w+)\s*;")
+AGG_RE = re.compile(r"\b(struct|union|enum)\s+(\w+\s*)?\{")
 
 
 def type_defs(text):
-    """[(tag, typedef name, body start, body end, end of the definition)] of struct/union bodies."""
+    """[(tag, typedef name, body start, body end, definition end)] of struct/union/enum bodies."""
     clean = blank_comments(text)
     out = []
     for m in AGG_RE.finditer(clean):
@@ -1105,6 +1111,44 @@ def find_type(tree, spec):
             if td == name or tag == name or (name in fwd and tag == fwd[name]):
                 if unit is None or file_unit(tree, p) == unit:
                     found.append((p, tag, td or (name if name in fwd else None), b, e, end))
+    return found
+
+
+def find_enumerator(tree, name):
+    """Find enum-member declarations, excluding identifiers used by their initializers.
+
+    Return the definition tuple used by plan_type; its body range points at the member name,
+    so hypothesis comments attach to that enumerator's line rather than the enum's last line.
+    """
+    found = []
+    for path in tree.index()["headers"] + sorted(tree.index()["sources"]):
+        text = tree.read(path) or ""
+        if name not in text:
+            continue
+        clean = blank_comments(text)
+        clean = re.sub(r"^[ \t]*#[^\n]*", lambda m: " " * len(m.group()), clean, flags=re.M)
+        for m in re.finditer(r"\benum\s*(?:\w+\s*)?\{", clean):
+            end = match_brace(clean, m.end() - 1) - 1
+            i, depth, first = m.end(), 0, True
+            while i < end:
+                if first:
+                    member = re.match(r"\s*([A-Za-z_]\w*)", clean[i:end])
+                    if not member:
+                        break
+                    if member.group(1) == name:
+                        start = i + member.start(1)
+                        stop = i + member.end(1)
+                        found.append((path, None, None, start, stop, stop))
+                    i += member.end()
+                    first = False
+                    continue
+                if clean[i] in "([":
+                    depth += 1
+                elif clean[i] in ")]":
+                    depth -= 1
+                elif clean[i] == "," and depth == 0:
+                    first = True
+                i += 1
     return found
 
 
@@ -1347,16 +1391,16 @@ def hypothesis_comment(note):
 
 # ======================================================================================= types
 
-def plan_type(ctx, row):
+def plan_type(ctx, row, finder=find_type):
     tree = ctx.tree
     if row.scope not in tree.unit_names:
         return ctx.problem(row, "unknown unit %s" % row.scope)
-    defs = [d for d in find_type(tree, row.old) if file_unit(tree, d[0]) in (row.scope, "main")]
+    defs = [d for d in finder(tree, row.old) if file_unit(tree, d[0]) in (row.scope, "main")]
     if row.scope != "main":
         own = [d for d in defs if file_unit(tree, d[0]) == row.scope]
         defs = own or defs
     if len(defs) != 1:
-        if ctx.merge and not defs and find_type(tree, row.new):
+        if ctx.merge and not defs and finder(tree, row.new):
             defs = []
         else:
             return ctx.problem(row, "%s has %d definitions visible to %s" % (row.old, len(defs), row.scope))
@@ -1403,7 +1447,7 @@ def plan_type(ctx, row):
             out.append(line)
         tree.write(p, "".join(out))
     if row.hypothesis and path:
-        defs2 = [d for d in find_type(tree, row.new) if d[0] == path]
+        defs2 = [d for d in finder(tree, row.new) if d[0] == path]
         if defs2:
             mark_hypothesis(tree, defs2[0][0], row.new, row.note, at=defs2[0][4] - 1)
     row.key = "-"
@@ -2109,6 +2153,8 @@ def run_rows(ctx, rows, use_gcc=True):
             plan_symbol(ctx, row)
         elif row.kind == "type":
             plan_type(ctx, row)
+        elif row.kind == "enumerator":
+            plan_type(ctx, row, finder=find_enumerator)
         elif row.kind in ("local", "param"):
             plan_local(ctx, row)
         elif row.kind == "file":
@@ -2217,7 +2263,7 @@ def round_trip(ctx, row, before):
         if re.search(r"(?<![A-Za-z0-9])%s(?![\w])" % re.escape(row.new), old):
             ctx.note(row, "%s: mentions %s already; round trip not checked" % (p, row.new))
             continue
-        if row.hypothesis and row.kind == "type":
+        if row.hypothesis and row.kind in ("type", "enumerator"):
             text = text.replace(hypothesis_comment(row.note), "", 1)     # the mark plan_type put at the definition
         inv, _a, _b = rewrite_text(text, row.new, row.old, members=True)
         if inv != old:
@@ -2239,7 +2285,7 @@ def name_map(ctx, path=None):
     """{old: new} of the identifier rows that apply to `path` (symbol rows only inside their scope)."""
     out = {}
     for r in ctx.done:
-        if r.kind in ("func", "data", "type", "field"):
+        if r.kind in ("func", "data", "type", "enumerator", "field"):
             files = getattr(r, "files", None)
             if path is None or files is None or path in files:
                 out[r.old] = r.new
@@ -2514,10 +2560,14 @@ def old_name_hits(tree, ch, key, o, files, idx, table):
         if o in table.names_at(unit, addr):
             hits.append("the symbol files")
         hits += config_key_hits(tree, o, set(scope_units_for(tree, unit, addr)), unit)
-    elif kind == "type":
+    elif kind in ("type", "enumerator"):
         unit = key[1]
         scope = set(files) if unit == "main" else set(tree.unit_sources(unit) + tree.private_headers(unit))
         hits = sorted(idx.get(o, set()) & scope)
+        if kind == "enumerator":
+            # name_index also indexes override-guard suffixes. GAME_MODE_RUN is one token,
+            # not a surviving reference to MODE_RUN when this is an enumerator chain.
+            hits = [f for f in hits if o in ident_tokens(tree.read(f) or "", members=True)]
     elif kind == "field":
         tname = current_type_name_rows(ch, key[1])
         for d in find_type(tree, tname):
@@ -2625,7 +2675,7 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
             row = Row(r0.kind, r0.scope, o, final, r0.note, r0.where, r0.key)
             # symbols, types, locals: the old name still in the chain's scope (as check sees it); fields are
             # picked below, file, folder and header rows always run (they no-op on a renamed tree)
-            if key[0] in ("sym", "type", "local"):
+            if key[0] in ("sym", "type", "enumerator", "local"):
                 present = bool(old_name_hits(tree, ch, key, o, files, idx, table))
             else:
                 present = True
@@ -2634,7 +2684,7 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
     fields = [r for r in todo if r.kind == "field"]
     # symbols before the locals and params of their functions (a local row found through a later function
     # rename needs the function renamed first), types before fields, file and folder moves last
-    order = {"func": 0, "data": 0, "type": 1, "local": 2, "param": 2}
+    order = {"func": 0, "data": 0, "type": 1, "enumerator": 1, "local": 2, "param": 2}
     others = sorted((r for r in todo if r.kind != "field"), key=lambda r: order.get(r.kind, 3))
     run_rows(ctx, others, use_gcc=use_gcc)
     if fields:

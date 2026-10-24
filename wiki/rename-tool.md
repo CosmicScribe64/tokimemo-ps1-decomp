@@ -44,6 +44,14 @@ module docstring (`tools/docker.sh python3 tools/rename.py --help` lists the sub
 
 ## Scope, keys and names
 
+T-27042 adds existing enum names to the checked rename loop: `type main MainMode GameMode` renames
+the tag (and typedef uses when present); `enumerator main MODE_BOOT GAME_MODE_BOOT` renames a member
+without changing its value. Enumerator names must be UPPER_SNAKE. Scope, header-closure collision
+checks, inverse/error/prototype proofs, hypotheses, ledger/check/replay work as for other identifiers.
+Initializer references are uses, not additional definitions. String contents stay unchanged. New
+literal-to-name constants still use the separate `rename.py const` command. Tooling validation is
+tracked in [[tickets/T-27042-enum-rename-support]]; no game enum names are applied by that ticket.
+
 - Rows are keyed by (unit, address). `scope` is `main` or an overlay name; a placeholder carries its
   address, a named symbol is looked up in the unit's symbol files (`tools/symtab.py`).
 - An overlay row renames only the overlay's own symbols. A main symbol is renamed in every unit,
