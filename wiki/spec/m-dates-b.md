@@ -171,7 +171,7 @@ Which of the three functions a scene calls is fixed by its table or its C: the u
 
 **Per-frame driver** (`bustup_wink_update`, `func_80083808`): while `scene_girl_visible` it shows actors 31 and 30 and the face sprites, runs the portrait animation (`func_80063668`) and winks every 240 frames (`frame_count % 240 == 0`, `bustup_wink`); `scene_mouth_lock` zeroes the v offset of sprite 0. While only `scene_event_still_visible` is set it hides the portrait and animates the event picture: mouth every 240 frames when `scene_event_mouth_anim` is 1 (or a static mouth when 0), eyes blink every 240 frames unless `scene_event_eyes_hold`. Otherwise it hides everything.
 
-**Speaking mouth.** Voiced lines drive the mouth from the loudness of the CD audio (`getCDlevel`, section 11). While `voice_mode == 0` (no voices) `dialogue_run` animates the mouth instead from the typewriter: for girl lines (codes 1, 2, 5, 0xA, 0xB, 0xC, 0xD) while text is still being typed and `text_delay == 0`, it calls `bustup_speech` (portrait visible, `text_silent` 0, `mouth_lock` 0) or `func_80067DFC` (event still visible, `event_mouth_anim` 0, `text_silent` 0). The port can map both to "mouth moves while text types or audio is loud".
+**Speaking mouth.** Voiced lines drive the mouth from the loudness of the CD audio (`getCDlevel`, section 11). While `voice_mode == 0` (no voices) `dialogue_run` animates the mouth instead from the typewriter: for girl lines (codes 1, 2, 5, 0xA, 0xB, 0xC, 0xD) while text is still being typed and `text_delay == 0`, it calls `bustup_speech` (portrait visible, `text_silent` 0, `mouth_lock` 0) or `func_80067DFC` (event still visible, `event_mouth_anim` 0, `text_silent` 0). Emulator (GEKO girl-0 scene, frames 700-1000): with `voice_mode` poked to 0 `bustup_speech` ran 35 times and `getCDlevel` never; with the default 2 `getCDlevel` ran 214 times and `bustup_speech` never. The port can map both to "mouth moves while text types or audio is loud".
 
 ## 7. Dialogue engine
 
@@ -329,6 +329,7 @@ All runs started from a boot-to-title save state with memory writes that set the
 7. School-day command screen (mode 0x40): `addr_init_weekly_sd`, section 11.
 8. BUNKAKEN with the command byte of group 1 line 1 poked from 8 to 3: the shuffle of section 7.5.
 9. Voice cancel: in the GEKO scene a cross press 50 frames after `snd_command(0x300)` (frame 780) sent `snd_command(0xB4)` in the same frame (830) and the line ended on its own 12 frames later (next line requested at frame 842).
+10. Lip-sync source: the same scene with `voice_mode` 0 and 2 (section 6).
 
 Not run: the three-way menu itself (`normal_date_three_select`, `junban_init` rule only), a cover wipe of another kind than the month's (the kind follows the same month % 7), `select_girl2`, `bustup_show_checked_hidden`, the `check_k_scroll` scroll path (no run reached a fourth text row), the holiday, club and else SD loaders.
 
