@@ -72,40 +72,40 @@ segments:
     subsegments:
       # game code, one C file per original object (T-0012, wiki/source-files.md), named by
       # start address. tools/game_boundaries.py --yaml prints this list.
-      - { start: 0x800, type: c, name: main/80041000 }
-      - { start: 0x18D0, type: c, name: main/800420D0 }
-      - { start: 0x1D40, type: c, name: main/80042540 }
-      - { start: 0x2200, type: c, name: main/80042A00 }
-      - { start: 0x2D10, type: c, name: main/80043510 }
-      - { start: 0x49D0, type: c, name: main/800451D0 }
-      - { start: 0x5D00, type: c, name: main/80046500 }
-      - { start: 0x6D50, type: c, name: main/80047550 }
-      - { start: 0x88C0, type: c, name: main/800490C0 }
-      - { start: 0x97F0, type: c, name: main/80049FF0 }
-      - { start: 0xA560, type: c, name: main/8004AD60 }
-      - { start: 0xBBF0, type: c, name: main/8004C3F0 }
-      - { start: 0xDD00, type: c, name: main/8004E500 }
-      - { start: 0xEEB0, type: c, name: main/8004F6B0 }
-      - { start: 0xF070, type: c, name: main/8004F870 }
-      - { start: 0x12E50, type: c, name: main/80053650 }
-      - { start: 0x15B00, type: c, name: main/80056300 }
-      - { start: 0x15BF0, type: c, name: main/800563F0 }
-      - { start: 0x16B90, type: c, name: main/80057390 }
-      - { start: 0x18520, type: c, name: main/80058D20 }
-      - { start: 0x18F10, type: c, name: main/80059710 }
-      - { start: 0x19220, type: c, name: main/80059A20 }
-      - { start: 0x19340, type: c, name: main/80059B40 }
-      - { start: 0x198B0, type: c, name: main/8005A0B0 }
-      - { start: 0x20F10, type: c, name: main/80061710 }
-      - { start: 0x224D0, type: c, name: main/80062CD0 }
-      - { start: 0x26CB0, type: c, name: main/800674B0 }
+      - { start: 0x800, type: c, name: main/game_init }
+      - { start: 0x18D0, type: c, name: main/main_loop }
+      - { start: 0x1D40, type: c, name: main/game_mode }
+      - { start: 0x2200, type: c, name: main/pad_input }
+      - { start: 0x2D10, type: c, name: main/frame_render_audio }
+      - { start: 0x49D0, type: c, name: main/cd_queue }
+      - { start: 0x5D00, type: c, name: main/reset_iris_wipe }
+      - { start: 0x6D50, type: c, name: main/actor_sprites }
+      - { start: 0x88C0, type: c, name: main/gpu_primitives }
+      - { start: 0x97F0, type: c, name: main/gpu_effects }
+      - { start: 0xA560, type: c, name: main/debug_hud_palette }
+      - { start: 0xBBF0, type: c, name: main/screen_layers }
+      - { start: 0xDD00, type: c, name: main/text_system }
+      - { start: 0xEEB0, type: c, name: main/vram_viewer }
+      - { start: 0xF070, type: c, name: main/menu_speaker_girl }
+      - { start: 0x12E50, type: c, name: main/memory_card }
+      - { start: 0x15B00, type: c, name: main/reload_executable }
+      - { start: 0x15BF0, type: c, name: main/movie_player }
+      - { start: 0x16B90, type: c, name: main/background_images }
+      - { start: 0x18520, type: c, name: main/model_3d }
+      - { start: 0x18F10, type: c, name: main/mouse }
+      - { start: 0x19220, type: c, name: main/debug_display }
+      - { start: 0x19340, type: c, name: main/boot_assets }
+      - { start: 0x198B0, type: c, name: main/home_screens }
+      - { start: 0x20F10, type: c, name: main/title_screen }
+      - { start: 0x224D0, type: c, name: main/hud_panels }
+      - { start: 0x26CB0, type: c, name: main/hud_screens }
       - { start: 0x2C330, type: c, name: main/scheduler }
       - { start: 0x32FA0, type: c, name: main/school_day }
-      - { start: 0x34B20, type: c, name: main/80075320 }
-      - { start: 0x381E0, type: c, name: main/800789E0 }
-      - { start: 0x39310, type: c, name: main/80079B10 }
-      - { start: 0x3B830, type: c, name: main/8007C030 }
-      - { start: 0x45630, type: c, name: main/80085E30 }
+      - { start: 0x34B20, type: c, name: main/holiday }
+      - { start: 0x381E0, type: c, name: main/overlay_loader }
+      - { start: 0x39310, type: c, name: main/sound_driver }
+      - { start: 0x3B830, type: c, name: main/scene_library }
+      - { start: 0x45630, type: c, name: main/scene_display }
       # PsyQ SDK libs, asm only (T-0010). Order is link order. Object-level
       # splits where signature evidence exists, see wiki/psyq-sdk.md.
       - [0x46010, asm, libpress_main]   # vram 0x80086810
@@ -173,46 +173,46 @@ segments:
       - [0x6E7B0, asm, libapi_3]   # vram 0x800AEFB0
       - [0x6E830, asm, libapi_counter]   # vram 0x800AF030
       - [0x6E9A0, asm, libapi_4]   # vram 0x800AF1A0
-      - [0x6EB40, .rodata, main/80041000]
-      - [0x6EB70, .rodata, main/800420D0]
-      - [0x6EB90, .rodata, main/80042540]
-      - [0x6EFF0, .rodata, main/80043510]
-      - [0x6F010, .rodata, main/800451D0]
-      - [0x6F160, .rodata, main/80047550]
-      - [0x6F2C0, .rodata, main/800490C0]
-      - [0x6F2E0, .rodata, main/80049FF0]
-      - [0x6F300, .rodata, main/8004C3F0]
-      - [0x6F350, .rodata, main/8004E500]
-      - [0x6F370, .rodata, main/8004F870]
-      - [0x6F3F0, .rodata, main/80053650]
-      - [0x6F5E0, .rodata, main/80056300]
-      - [0x6F5F0, .rodata, main/80059A20]
-      - [0x6F600, .rodata, main/80059B40]
-      - [0x6F610, .rodata, main/8005A0B0]
-      - [0x70700, .rodata, main/80062CD0]
-      - [0x70790, .rodata, main/800674B0]
+      - [0x6EB40, .rodata, main/game_init]
+      - [0x6EB70, .rodata, main/main_loop]
+      - [0x6EB90, .rodata, main/game_mode]
+      - [0x6EFF0, .rodata, main/frame_render_audio]
+      - [0x6F010, .rodata, main/cd_queue]
+      - [0x6F160, .rodata, main/actor_sprites]
+      - [0x6F2C0, .rodata, main/gpu_primitives]
+      - [0x6F2E0, .rodata, main/gpu_effects]
+      - [0x6F300, .rodata, main/screen_layers]
+      - [0x6F350, .rodata, main/text_system]
+      - [0x6F370, .rodata, main/menu_speaker_girl]
+      - [0x6F3F0, .rodata, main/memory_card]
+      - [0x6F5E0, .rodata, main/reload_executable]
+      - [0x6F5F0, .rodata, main/debug_display]
+      - [0x6F600, .rodata, main/boot_assets]
+      - [0x6F610, .rodata, main/home_screens]
+      - [0x70700, .rodata, main/hud_panels]
+      - [0x70790, .rodata, main/hud_screens]
       - [0x70940, .rodata, main/scheduler]
       - [0x70CF0, .rodata, main/school_day]
-      - [0x70D90, .rodata, main/80075320]
-      - [0x71120, .rodata, main/800789E0]
-      - [0x71630, .rodata, main/80079B10]
-      - [0x71800, .rodata, main/8007C030]
+      - [0x70D90, .rodata, main/holiday]
+      - [0x71120, .rodata, main/overlay_loader]
+      - [0x71630, .rodata, main/sound_driver]
+      - [0x71800, .rodata, main/scene_library]
       - [0x71BB0, rodata, rodata_800B23B0]
       - [0x72A20, data, data]
-      - [0x73510, .data, main/80043510]
-      - [0x73560, .data, main/800451D0]
+      - [0x73510, .data, main/frame_render_audio]
+      - [0x73560, .data, main/cd_queue]
       - [0x73580, data, data_800B3D80]
-      - [0x735C0, .data, main/8004E500]
-      - { start: 0x738F0, type: .data, name: main/8004F870, dir: island_800B40F0, linker_section: .data_800B40F0 }
+      - [0x735C0, .data, main/text_system]
+      - { start: 0x738F0, type: .data, name: main/menu_speaker_girl, dir: island_800B40F0, linker_section: .data_800B40F0 }
       - [0x73B90, data, data_800B4390]
-      - [0x75120, .data, main/80057390]
+      - [0x75120, .data, main/background_images]
       - [0x75150, data, data_800B5950]
-      - [0x76190, .data, main/80075320]
+      - [0x76190, .data, main/holiday]
       - [0x76530, data, data_800B6D30]
-      - [0x89760, .data, main/8007C030]
+      - [0x89760, .data, main/scene_library]
       - [0x89B80, data, data_800CA380]
-      - [0xA2E80, .data, main/8004F870]
-      - [0xA2EC0, .data, main/80059710]
+      - [0xA2E80, .data, main/menu_speaker_girl]
+      - [0xA2EC0, .data, main/mouse]
       - [0xA2EF0, data, data_800E36F0]
       - { start: 0xA3000, type: bss, name: bss, vram: 0x800E3800 }
   - [0xA3000]

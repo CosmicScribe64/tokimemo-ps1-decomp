@@ -1,0 +1,714 @@
+/* frame_render_audio.c: src/main/80043510.c; Original object 0x80043510-0x800451D0: draw_frame/draw2d3d render 2D/3D and present frames; same object queues palette/texture uploads and loads/polls/starts sound banks from CD. Original object 0x80043510-0x800451D0 (config/objects/main.txt). */
+#include "common.h"
+#include "game.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D10);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D14);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D18);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D1C);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D20);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D24);
+u8 D_800B3D28 = 0;
+u8 D_800B3D2C = 0;
+s32 D_800B3D30 = 0;
+s32 D_800B3D34 = 0;
+s32 D_800B3D38 = 0;
+s32 D_800B3D3C = 0;
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D40);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D44);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D48);
+u8 D_800B3D4C = 0;
+u8 D_800B3D50 = 0;
+u8 D_800B3D54[12] = { 0 };
+
+void draw_frame(s32 arg0) {
+    u32 *obj;
+    SpriteQuad *rec;
+    /* FAKE: T-25003, two spare words keep the original frame (0xA8) and the work areas at sp+0x50/0x70;
+     * the TACO twin func_801446D8 has the same kind of spare words. */
+    u32 sp70[12];
+    u32 sp50[8];
+    s32 i;
+    u8 v;
+    GameState *g = &game_state;
+
+    D_800B3D10[1] = func_80098650();
+    func_80049044();
+    if (g->actor_draw_enabled == 1) {
+        actor_draw_all();
+    }
+    if ((u8)g->tile_layer_enabled != 0) {
+        srn_set(0);
+    }
+    if (g->draw_2d_enabled != 0 && g->quads_enabled != 0) {
+        rec = sprite_quads;
+        for (i = 0; i < 0x40; i++) {
+            v = g->quad_layer[i];
+            if (v & 0x80) {
+                func_80098680(rec, (u8 *)&D_800E8C70 + draw_buffer * 0x14, (u8)(v - 1) & 0x7F);
+            } else {
+                func_80098B80(rec, (u8 *)&D_800E8C70 + draw_buffer * 0x14, (u8)(v - 1) & 0x7F);
+            }
+            rec++;
+        }
+        disp_string();
+        if (g->quads_enabled != 0) {
+            for (i = 0; i < 2; i++) {
+                v = g->bg_layer_order[i];
+                if (v < 0x80) {
+                    func_80098D00((u8 *)&bg_layers + i * 0x24, (u8 *)&D_800E8C70 + draw_buffer * 0x14, (u16)(v - 1));
+                }
+            }
+        }
+    }
+    if (g->draw_3d_enabled != 0) {
+        func_80099540(&D_80122740);
+        obj = D_80122640; do {
+            func_80099B10(obj[1], &sp50, &sp70);
+            func_80099F04(&sp50);
+            func_8009A200(obj[1], &sp70);
+            func_80099ED8(&sp70);
+            func_8009A4D0((s32)obj, (s32)((u8 *)&D_800E8C70 + (draw_buffer * 0x14)), 6, 0x1F800000);
+            obj += 4;
+        } while (obj != (u32 *)&D_80122740);
+        func_8005938C();
+    }
+    if (arg0 != 0) {
+        D_800B3D10[2] = func_80098650();
+        csr_load_vram(0);
+        palette_load_vram(0);
+        if (g->game_mode != 0x90 || g->mode_stage < 10 || g->mode_stage == 12) {
+            func_8009C674(0);
+        }
+        D_800B3D10[3] = func_80098650();
+        if (g->game_mode == 0x90 && g->mode_stage >= 10) {
+            func_800AD950(2);
+            func_8009C210(1);
+        } else if (func_80098650() < g->frame_scanline_limit) {
+            func_800AD950(0);
+        }
+        D_800B3D10[0] = func_80098650();
+        func_80042A00();
+    }
+    func_8009C210(1);
+    func_8009ABF0();
+    func_8009AC20();
+    if (g->back_clear != 0) {
+        func_8009824C(g->clear_color_r, g->clear_color_g, g->clear_color_b, (u8 *)&D_800E8C70 + draw_buffer * 0x14);
+    }
+    func_8009AD00((u8 *)&D_800E8C70 + draw_buffer * 0x14);
+}
+
+/* Switch the 2D sprite pass (arg 1) and the 3D pass (arg 2) on or off */
+void draw2d3d(u8 arg0, u8 arg1) {
+    game_state.draw_2d_enabled = arg0;
+    game_state.draw_3d_enabled = arg1;
+}
+
+/* Turn the per-frame screen clear on or off */
+void back_clear_switch(s32 arg0) {
+    if (arg0 != 0) {
+        game_state.back_clear = 1;
+    } else {
+        game_state.back_clear = 0;
+    }
+}
+
+/* Read queue counters directly and write records through g to preserve the
+ * original register allocation. K&R parameters keep narrow home slots. T-9930. */
+/* Queue a palette (CLUT) upload for the next VRAM flush */
+s32 load_palette(arg0, arg1, arg2, arg3, arg4)
+s32 arg0;
+u8 arg1;
+u8 arg2;
+u8 arg3;
+u8 arg4;
+{
+    u32 index;
+    GameState *g;
+
+    g = &game_state;
+    index = game_state.palette_queue_count;
+    if (index < 32) {
+        g->palette_queue[index].source = arg0;
+        g->palette_queue[index].unk_04 = arg1;
+        g->palette_queue[index].unk_05 = arg2;
+        g->palette_queue[index].unk_06 = arg3;
+        g->palette_queue[index].unk_07 = arg4;
+        g->palette_queue_count++;
+        return 1;
+    }
+    return 0;
+}
+
+s32 load_csr_ab(arg0, arg1, arg2, arg3, arg4, arg5)
+s32 arg0;
+u8 arg1;
+u16 arg2;
+u16 arg3;
+u16 arg4;
+u16 arg5;
+{
+    u32 index;
+    GameState *g;
+
+    g = &game_state;
+    index = game_state.csr_queue_count;
+    if (index < 32) {
+        g->csr_queue[index].source = arg0;
+        g->csr_queue[index].slot = arg1;
+        g->csr_queue[index].unk_05 = 0;
+        g->csr_queue[index].unk_06 = 0;
+        g->csr_queue[index].unk_07 = 0;
+        g->csr_queue[index].unk_08 = arg2;
+        g->csr_queue[index].unk_0A = arg3;
+        g->csr_queue[index].unk_0C = arg4;
+        g->csr_queue[index].unk_0E = arg5;
+        g->csr_queue_count++;
+        return 1;
+    }
+    return 0;
+}
+
+s32 load_csr_tp(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+s32 arg0;
+u8 arg1;
+u8 arg2;
+u16 arg3;
+u16 arg4;
+u16 arg5;
+u16 arg6;
+{
+    u32 index;
+    GameState *g;
+
+    g = &game_state;
+    index = game_state.csr_queue_count;
+    if (index < 32) {
+        g->csr_queue[index].source = arg0;
+        g->csr_queue[index].slot = arg1;
+        g->csr_queue[index].unk_05 = arg2;
+        g->csr_queue[index].unk_06 = 0;
+        g->csr_queue[index].unk_07 = 0;
+        g->csr_queue[index].unk_08 = arg3;
+        g->csr_queue[index].unk_0A = arg4;
+        g->csr_queue[index].unk_0C = arg5;
+        g->csr_queue[index].unk_0E = arg6;
+        g->csr_queue_count++;
+        return 1;
+    }
+    return 0;
+}
+
+void csr_load_vram(s32 arg0) {
+    GameState *base;
+    s32 var_s1;
+    s32 temp_v0;
+    u16 x;
+    u16 y;
+    u16 w;
+
+    base = &game_state;
+    var_s1 = 0;
+    if (base->csr_queue_count != 0) {
+        do {
+            if ((temp_v0 = base->csr_queue[var_s1].slot) == 0) {
+                LoadSquare(base->csr_queue[var_s1].unk_08, base->csr_queue[var_s1].unk_0A, base->csr_queue[var_s1].unk_0C, base->csr_queue[var_s1].unk_0E, (void *) base->csr_queue[var_s1].source);
+            } else {
+                /* FAKE: self-assignment gives the shift subtree greater expression depth so cfe evaluates it before the array-indexed load. T-24135 */
+                x = base->csr_queue[var_s1].unk_08 + (((temp_v0 = temp_v0) & 0xF) << 6);
+                y = base->csr_queue[var_s1].unk_0A + (((temp_v0 = temp_v0) & 0x10) * 0x10);
+                w = (u16) base->csr_queue[var_s1].unk_0C >> base->csr_queue[var_s1].unk_05;
+                LoadSquare(x, y, w, base->csr_queue[var_s1].unk_0E, (void *) base->csr_queue[var_s1].source);
+            }
+            var_s1 += 1;
+        } while (var_s1 < (u8) base->csr_queue_count);
+    }
+    base->csr_queue_count = 0U;
+}
+
+/* Uploads the queued palettes base->unk_1328[0..unk_1428-1] to VRAM and empties the queue.
+ * unk_04 below 32: a 256-colour row at (0, 0x1E0 + unk_04), whose STP bits unk_06 first
+ * clears or sets on non-black colours (by word pairs); otherwise a 32-colour row at x 0x100
+ * or 0x120. The colours start unk_07 * 128 words into unk_00. */
+void palette_load_vram(s32 arg0) {
+    GameState *base;
+    u16 x;
+    u16 y;
+    u16 width;
+    u32 index;
+    s32 first;
+    s32 j;
+    /* FAKE: T-25134, a second loop counter and a height local (j and the constant 1 would do);
+     * their two stack words give the original frame (0x78) and the homes of base..index. */
+    s32 k;
+    u16 height;
+
+    base = &game_state;
+    index = 0;
+    if (base->palette_queue_count != 0) {
+        do {
+            y = (base->palette_queue[index].unk_04 & 31) + 0x1E0;
+            first = base->palette_queue[index].unk_07 << 7;
+            if (base->palette_queue[index].unk_04 < 32) {
+                width = 0x100;
+                x = 0;
+                switch (base->palette_queue[index].unk_06) {
+                case 0:
+                    for (j = first; j < first + 128; j++) {
+                        if (base->palette_queue[index].source[j] & 0x80000000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
+                        }
+                        if (base->palette_queue[index].source[j] & 0x8000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
+                        }
+                    }
+                    break;
+                /* Empty on purpose; without the default label the function is 6 words shorter (T-25134). */
+                case 1:
+                default:
+                    break;
+                case 2:
+                    for (j = first; j < first + 120; j++) {
+                        if (base->palette_queue[index].source[j] & 0x80000000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
+                        }
+                        if (base->palette_queue[index].source[j] & 0x8000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
+                        }
+                    }
+                    for (k = first + 120; k < first + 128; k++) {
+                        if (base->palette_queue[index].source[k] & 0x7FFF0000) {
+                            base->palette_queue[index].source[k] |= 0x80000000;
+                        }
+                        if (base->palette_queue[index].source[k] & 0x7FFF) {
+                            base->palette_queue[index].source[k] |= 0x8000;
+                        }
+                    }
+                    break;
+                case 3:
+                    for (j = first; j < first + 128; j++) {
+                        if (base->palette_queue[index].source[j] & 0x7FFF0000) {
+                            base->palette_queue[index].source[j] |= 0x80000000;
+                        }
+                        if (base->palette_queue[index].source[j] & 0x7FFF) {
+                            base->palette_queue[index].source[j] |= 0x8000;
+                        }
+                    }
+                    break;
+                case 4:
+                    for (j = first; j < first + 112; j++) {
+                        if (base->palette_queue[index].source[j] & 0x80000000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
+                        }
+                        if (base->palette_queue[index].source[j] & 0x8000) {
+                            base->palette_queue[index].source[j] &= 0x7FFF7FFF;
+                        }
+                    }
+                    for (k = first + 112; k < first + 128; k++) {
+                        if (base->palette_queue[index].source[k] & 0x7FFF0000) {
+                            base->palette_queue[index].source[k] |= 0x80000000;
+                        }
+                        if (base->palette_queue[index].source[k] & 0x7FFF) {
+                            base->palette_queue[index].source[k] |= 0x8000;
+                        }
+                    }
+                    break;
+                }
+            } else {
+                width = 0x20;
+                if (base->palette_queue[index].unk_04 < 0x40) {
+                    x = 0x100;
+                } else {
+                    x = 0x120;
+                }
+            }
+            height = 1;
+            LoadSquare(x, y, width, height, base->palette_queue[index].source + first);
+            index++;
+        } while (index < base->palette_queue_count);
+    }
+    base->palette_queue_count = 0;
+}
+
+/* Upload a rectangle of memory to VRAM (x, y, w, h, data) */
+void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
+    RECT rect;
+
+    rect.x = arg0;
+    rect.y = arg1;
+    rect.w = arg2;
+    rect.h = arg3;
+    func_8009C884(&rect, arg4);
+}
+
+void MoveSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4, u16 arg5) {
+    RECT rect;
+
+    rect.x = arg0;
+    rect.y = arg1;
+    rect.w = arg2;
+    rect.h = arg3;
+    func_8009C93C(&rect, arg4, arg5);
+}
+
+void StoreSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
+    RECT rect;
+
+    rect.x = arg0;
+    rect.y = arg1;
+    rect.w = arg2;
+    rect.h = arg3;
+    func_8009C8E0(&rect, arg4);
+}
+
+void func_80044434(void) {
+}
+
+void func_8004443C(void) {
+    /* FAKE: T-25003, the two unused words give the original stack layout (colors at sp+0x64, rect at
+     * sp+0x58, frame 0x78); without them the colors and rect move and 17 rows differ. */
+    s32 pad0;
+    s32 colors[4];
+    s32 i;
+    RECT rect;
+    s32 pad1;
+
+    colors[0] = D_800B3D10[0] / 264;
+    colors[1] = D_800B3D10[1] / 264;
+    colors[2] = D_800B3D10[2] / 264;
+    colors[3] = D_800B3D10[3] / 264;
+    for (i = 0; i < 4; i++) {
+        if (colors[i] >= 3) {
+            colors[i] = 0x800000;
+        } else if (colors[i] >= 2) {
+            colors[i] = 0x808000;
+        } else if (colors[i] > 0) {
+            colors[i] = 0x8000;
+        } else {
+            colors[i] = 0x80;
+        }
+    }
+    rect.w = 4;
+    for (i = 0; i < 4; i++) {
+        rect.x = 0x8C + i * 4;
+        rect.h = D_800B3D10[i] * 16 / 264;
+        rect.y = 0x4C - rect.h;
+        func_8004A14C(i + 6, rect, colors[i]);
+    }
+    rect.x = 0x88;
+    rect.h = 16;
+    rect.y = 0x3C;
+    func_8004A14C(i + 6, rect, 0x808080);
+}
+
+void func_80044700(s32 arg0, s32 arg1, s32 arg2) {
+    RECT rect;
+    s32 x;
+
+    x = arg1;
+    rect.x = x << 4;
+    rect.y = arg0 + 0x1E0;
+    rect.w = 0x10;
+    rect.h = 1;
+    func_8009C93C(&rect, 0x100, arg2 + 0x1E0);
+}
+
+s32 audio_command(s32 arg0) {
+    func_80079B10(arg0 & 0xFFFF);
+    return 1;
+}
+
+
+s32 func_80044774(s32 arg0) {
+    s32 *p;
+
+    if (arg0 != 0) {
+        p = (s32 *)0x8002E800;
+    } else {
+        p = (s32 *)0x8001C000;
+    }
+    if ((*p & 0xFFFF) != 0x40) {
+        return -1;
+    }
+    if (arg0 != 0) {
+        audio_bank_start(D_800B3D44, D_800B3D48, arg0);
+    } else {
+        audio_command(0x1200);
+    }
+    D_800B3D40 = arg0;
+    return arg0 & 0xFF;
+}
+
+u8 func_8004480C(void) {
+    return D_800B3D40;
+}
+
+u8 func_8004481C(void) {
+    return D_800B3D44;
+}
+
+
+void audio_bank_state_reset(void) {
+    D_800B3D54[0] = 0;
+    D_800B3D54[1] = 0;
+    D_800B3D44 = 0xFF;
+    D_800B3D30 = 0;
+    D_800B3D34 = 0;
+    D_800B3D38 = 0;
+    D_800B3D3C = 0;
+    D_800B3D28 = 0;
+    D_800B3D2C = 0;
+    D_800B3D4C = 0;
+    D_800B3D50 = 0;
+    D_800B3D48 = 0;
+}
+
+void audio_bank_load_start(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f) {
+    D_800B3D44 = 0xFF;
+    D_800B3D28 = 0;
+    D_800B3D2C = 0;
+    D_800B3D24 = (u8) a;
+    D_800B3D4C = 0;
+    D_800B3D50 = 1;
+    D_800B3D20 = cd_done_count();
+    if (a == 0) {
+        func_800451E0(0x801B8000);
+        if (D_800B3D30 == b) {
+            D_800B3D20 -= 2;
+            D_800B3D28 = 1;
+        } else {
+            if (b != 0) {
+                cd_read_sectors_nowait(3U, 0x80010000, b);
+                D_800B3D30 = b;
+            } else {
+                D_800B3D20 -= 1;
+                D_800B3D28 = 1;
+            }
+            if (c != 0) {
+                cd_read_sectors_nowait(0x20U, 0x801B8000, c);
+            } else {
+                D_800B3D20 -= 1;
+                D_800B3D28 = 1;
+            }
+        }
+        if (D_800B3D34 == d) {
+            D_800B3D20 -= 3;
+            D_800B3D2C = 1;
+            return;
+        }
+        if (f != 0) {
+            cd_read_sectors_nowait(0x25U, 0x8001C000, f);
+            D_800B3D34 = d;
+        } else {
+            D_800B3D20 -= 1;
+            D_800B3D2C = 1;
+        }
+        if (e != 0) {
+            cd_read_sectors_nowait(0x50U, 0x801C8000, e);
+        } else {
+            D_800B3D20 -= 1;
+            D_800B3D2C = 1;
+        }
+        if (d != 0) {
+            cd_read_sectors_nowait(6U, 0x80012000, d);
+            D_800B3D34 = d;
+            return;
+        }
+        D_800B3D20 -= 1;
+        D_800B3D2C = 1;
+        return;
+    }
+    func_800451E0(0x801B8000);
+    if (D_800B3D38 == b) {
+        D_800B3D20 -= 2;
+        D_800B3D28 = 1;
+    } else {
+        if (b != 0) {
+            cd_read_sectors_nowait(3U, 0x8001A000, b);
+            D_800B3D38 = b;
+        } else {
+            D_800B3D20 -= 1;
+            D_800B3D28 = 1;
+        }
+        if (c != 0) {
+            cd_read_sectors_nowait(0x35U, 0x801E0000, c);
+        } else {
+            D_800B3D20 -= 1;
+            D_800B3D28 = 1;
+        }
+    }
+    if (D_800B3D3C == d) {
+        D_800B3D20 -= 3;
+        D_800B3D2C = 1;
+        return;
+    }
+    if (f != 0) {
+        cd_read_sectors_nowait(0x25U, 0x8002E800, f);
+        D_800B3D3C = d;
+    } else {
+        D_800B3D20 -= 1;
+        D_800B3D2C = 1;
+    }
+    if (e != 0) {
+        cd_read_sectors_nowait(0x50U, 0x801B8000, e);
+    } else {
+        D_800B3D20 -= 1;
+        D_800B3D2C = 1;
+    }
+    if (d != 0) {
+        cd_read_sectors_nowait(6U, 0x80016000, d);
+        D_800B3D3C = d;
+        return;
+    }
+    D_800B3D20 -= 1;
+    D_800B3D2C = 1;
+}
+
+s32 func_80044C98(void) {
+    if ((u32) (((cd_done_count() - D_800B3D20) + 0x100) & 0xFF) >= 5U) {
+        if (D_800B3D4C == 0) {
+            func_80044D54();
+            D_800B3D4C++;
+        } else {
+            /* The counter is incremented as the value of the compare: this keeps load and
+             * increment in one register range ($v1), as in the original (T-17019). */
+            if ((++D_800B3D4C > 0xC0U) || (func_80044F94((s32) D_800B3D24) != 0)) {
+                D_800B3D54[D_800B3D24] = 0;
+                return 1;
+            }
+        }
+    }
+    return -1;
+}
+
+s32 func_80044D54(void) {
+    if (D_800B3D24 == 0) {
+        if (D_800B3D28 == 0 && D_800B3D2C == 0) {
+            func_800451E0(0x801B8000);
+            audio_command(0x11);
+            return 1;
+        }
+        if (D_800B3D28 == 0) {
+            func_800451E0(0x801B8000);
+            audio_command(0x13);
+            return 1;
+        }
+        if (D_800B3D2C == 0) {
+            func_800451E0(0x801C8000);
+            audio_command(0x14);
+            return 1;
+        }
+        return 0;
+    }
+    if (D_800B3D28 == 0 && D_800B3D2C == 0) {
+        func_800451E0(0x801B8000);
+        audio_command(0x12);
+        return 1;
+    }
+    if (D_800B3D28 == 0) {
+        func_800451E0(0x801E0000);
+        audio_command(0x16);
+        return 1;
+    }
+    if (D_800B3D2C == 0) {
+        func_800451E0(0x801B8000);
+        audio_command(0x15);
+        return 1;
+    }
+    return 0;
+}
+
+s32 audio_bank_load_poll(void) {
+    if ((u32) (((cd_done_count() - D_800B3D20) + 0x100) & 0xFF) >= 5U) {
+        if (D_800B3D4C == 0) {
+            func_80044D54();
+            D_800B3D4C++;
+        } else {
+            /* The counter is incremented as the value of the compare: this keeps load and
+             * increment in one register range ($v1), as in the original (T-17019). */
+            if ((++D_800B3D4C > 0xC0U) || (func_80044F94((s32) D_800B3D24) != 0)) {
+                if (D_800B3D24 == 0) {
+                    audio_command(0x22);
+                    audio_command(0x21);
+                    audio_command(0x2F);
+                } else {
+                    audio_command(0x23);
+                    audio_command(0x24);
+                    audio_command(0x2E);
+                }
+                D_800B3D54[D_800B3D24] = 0;
+                return 1;
+            }
+        }
+    }
+    return -1;
+}
+
+s32 func_80044F94(s32 arg0) {
+    if (arg0 == 0) {
+        if (func_80079E00(0) != 0 && func_80079E00(1) != 0) {
+            return 1;
+        }
+        return 0;
+    }
+    if (func_80079E00(2) != 0 && func_80079E00(3) != 0) {
+        return 1;
+    }
+    return 0;
+}
+
+s32 audio_bank_start(s32 arg0, s32 arg1) {
+    s32 *var_v0_2;
+
+    if (arg0 != 0) {
+        var_v0_2 = (s32 *)0x8002E800;
+    } else {
+        var_v0_2 = (s32 *)0x8001C000;
+    }
+    if ((*var_v0_2 & 0xFFFF) != 0x40) {
+        return -1;
+    }
+    if (arg0 == 0) {
+        audio_command(0x22);
+        audio_command(0x21);
+        audio_command(0x2F);
+        audio_command((arg1 | 0x200) & 0xFFFF);
+    } else {
+        audio_command(0x23);
+        audio_command(0x24);
+        audio_command(0x2E);
+        audio_command((arg1 | 0x200) & 0xFFFF);
+    }
+    D_800B3D44 = (u8) arg0;
+    D_800B3D48 = (u8) arg1;
+    D_800B3D40 = 1;
+    /* no return here: the original returns the v0 of the last audio_command call (implicit int) */
+}
+
+s32 func_800450F4(s32 arg0, s32 arg1) {
+    s32 *var_v0;
+
+    if (arg0 != 0) {
+        var_v0 = (s32 *)0x8002E800;
+    } else {
+        var_v0 = (s32 *)0x8001C000;
+    }
+    if ((*var_v0 & 0xFFFF) != 0x40) {
+        return -1;
+    }
+    if (arg0 == 0) {
+        audio_command(0x22);
+        audio_command(0x2F);
+        audio_command((arg1 | 0x200) & 0xFFFF);
+    } else {
+        audio_command(0x23);
+        audio_command(0x2E);
+        audio_command((arg1 | 0x200) & 0xFFFF);
+    }
+    D_800B3D44 = (u8) arg0;
+    D_800B3D48 = (u8) arg1;
+    D_800B3D40 = 1;
+    /* no return here: the original returns the v0 of the last audio_command call (implicit int) */
+}

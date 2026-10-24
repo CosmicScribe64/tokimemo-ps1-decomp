@@ -310,7 +310,7 @@ extern u8 *D_8014D958[43];
 s32 func_8014977C(void);
 #endif
 
-/* The album buffer is also read by main/800674B0.c. T-10880. */
+/* The album buffer is also read by main/hud_screens.c. T-10880. */
 #include "game.h"
 
 #ifndef OVL_NAME_ENT_T10880_FUNCTIONS

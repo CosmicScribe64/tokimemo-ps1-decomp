@@ -15,352 +15,297 @@
   ],
   "units": [
     {
-      "name": "src/main/80041000",
-      "target_path": "expected/build/src/main/80041000.o",
-      "base_path": "build/src/main/80041000.o",
+      "name": "src/main/actor_sprites",
+      "target_path": "expected/build/src/main/actor_sprites.o",
+      "base_path": "build/src/main/actor_sprites.o",
       "metadata": {
-        "source_path": "src/main/80041000.c",
+        "source_path": "src/main/actor_sprites.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/800420D0",
-      "target_path": "expected/build/src/main/800420D0.o",
-      "base_path": "build/src/main/800420D0.o",
+      "name": "src/main/background_images",
+      "target_path": "expected/build/src/main/background_images.o",
+      "base_path": "build/src/main/background_images.o",
       "metadata": {
-        "source_path": "src/main/800420D0.c",
+        "source_path": "src/main/background_images.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80042540",
-      "target_path": "expected/build/src/main/80042540.o",
-      "base_path": "build/src/main/80042540.o",
+      "name": "src/main/boot_assets",
+      "target_path": "expected/build/src/main/boot_assets.o",
+      "base_path": "build/src/main/boot_assets.o",
       "metadata": {
-        "source_path": "src/main/80042540.c",
+        "source_path": "src/main/boot_assets.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80042A00",
-      "target_path": "expected/build/src/main/80042A00.o",
-      "base_path": "build/src/main/80042A00.o",
+      "name": "src/main/cd_queue",
+      "target_path": "expected/build/src/main/cd_queue.o",
+      "base_path": "build/src/main/cd_queue.o",
       "metadata": {
-        "source_path": "src/main/80042A00.c",
+        "source_path": "src/main/cd_queue.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80043510",
-      "target_path": "expected/build/src/main/80043510.o",
-      "base_path": "build/src/main/80043510.o",
+      "name": "src/main/debug_display",
+      "target_path": "expected/build/src/main/debug_display.o",
+      "base_path": "build/src/main/debug_display.o",
       "metadata": {
-        "source_path": "src/main/80043510.c",
+        "source_path": "src/main/debug_display.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/800451D0",
-      "target_path": "expected/build/src/main/800451D0.o",
-      "base_path": "build/src/main/800451D0.o",
+      "name": "src/main/debug_hud_palette",
+      "target_path": "expected/build/src/main/debug_hud_palette.o",
+      "base_path": "build/src/main/debug_hud_palette.o",
       "metadata": {
-        "source_path": "src/main/800451D0.c",
+        "source_path": "src/main/debug_hud_palette.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80046500",
-      "target_path": "expected/build/src/main/80046500.o",
-      "base_path": "build/src/main/80046500.o",
+      "name": "src/main/frame_render_audio",
+      "target_path": "expected/build/src/main/frame_render_audio.o",
+      "base_path": "build/src/main/frame_render_audio.o",
       "metadata": {
-        "source_path": "src/main/80046500.c",
+        "source_path": "src/main/frame_render_audio.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80047550",
-      "target_path": "expected/build/src/main/80047550.o",
-      "base_path": "build/src/main/80047550.o",
+      "name": "src/main/game_init",
+      "target_path": "expected/build/src/main/game_init.o",
+      "base_path": "build/src/main/game_init.o",
       "metadata": {
-        "source_path": "src/main/80047550.c",
+        "source_path": "src/main/game_init.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/800490C0",
-      "target_path": "expected/build/src/main/800490C0.o",
-      "base_path": "build/src/main/800490C0.o",
+      "name": "src/main/game_mode",
+      "target_path": "expected/build/src/main/game_mode.o",
+      "base_path": "build/src/main/game_mode.o",
       "metadata": {
-        "source_path": "src/main/800490C0.c",
+        "source_path": "src/main/game_mode.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80049FF0",
-      "target_path": "expected/build/src/main/80049FF0.o",
-      "base_path": "build/src/main/80049FF0.o",
+      "name": "src/main/gpu_effects",
+      "target_path": "expected/build/src/main/gpu_effects.o",
+      "base_path": "build/src/main/gpu_effects.o",
       "metadata": {
-        "source_path": "src/main/80049FF0.c",
+        "source_path": "src/main/gpu_effects.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/8004AD60",
-      "target_path": "expected/build/src/main/8004AD60.o",
-      "base_path": "build/src/main/8004AD60.o",
+      "name": "src/main/gpu_primitives",
+      "target_path": "expected/build/src/main/gpu_primitives.o",
+      "base_path": "build/src/main/gpu_primitives.o",
       "metadata": {
-        "source_path": "src/main/8004AD60.c",
+        "source_path": "src/main/gpu_primitives.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/8004C3F0",
-      "target_path": "expected/build/src/main/8004C3F0.o",
-      "base_path": "build/src/main/8004C3F0.o",
+      "name": "src/main/holiday",
+      "target_path": "expected/build/src/main/holiday.o",
+      "base_path": "build/src/main/holiday.o",
       "metadata": {
-        "source_path": "src/main/8004C3F0.c",
+        "source_path": "src/main/holiday.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/8004E500",
-      "target_path": "expected/build/src/main/8004E500.o",
-      "base_path": "build/src/main/8004E500.o",
+      "name": "src/main/home_screens",
+      "target_path": "expected/build/src/main/home_screens.o",
+      "base_path": "build/src/main/home_screens.o",
       "metadata": {
-        "source_path": "src/main/8004E500.c",
+        "source_path": "src/main/home_screens.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/8004F6B0",
-      "target_path": "expected/build/src/main/8004F6B0.o",
-      "base_path": "build/src/main/8004F6B0.o",
+      "name": "src/main/hud_panels",
+      "target_path": "expected/build/src/main/hud_panels.o",
+      "base_path": "build/src/main/hud_panels.o",
       "metadata": {
-        "source_path": "src/main/8004F6B0.c",
+        "source_path": "src/main/hud_panels.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/8004F870",
-      "target_path": "expected/build/src/main/8004F870.o",
-      "base_path": "build/src/main/8004F870.o",
+      "name": "src/main/hud_screens",
+      "target_path": "expected/build/src/main/hud_screens.o",
+      "base_path": "build/src/main/hud_screens.o",
       "metadata": {
-        "source_path": "src/main/8004F870.c",
+        "source_path": "src/main/hud_screens.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80053650",
-      "target_path": "expected/build/src/main/80053650.o",
-      "base_path": "build/src/main/80053650.o",
+      "name": "src/main/main_loop",
+      "target_path": "expected/build/src/main/main_loop.o",
+      "base_path": "build/src/main/main_loop.o",
       "metadata": {
-        "source_path": "src/main/80053650.c",
+        "source_path": "src/main/main_loop.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80056300",
-      "target_path": "expected/build/src/main/80056300.o",
-      "base_path": "build/src/main/80056300.o",
+      "name": "src/main/memory_card",
+      "target_path": "expected/build/src/main/memory_card.o",
+      "base_path": "build/src/main/memory_card.o",
       "metadata": {
-        "source_path": "src/main/80056300.c",
+        "source_path": "src/main/memory_card.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/800563F0",
-      "target_path": "expected/build/src/main/800563F0.o",
-      "base_path": "build/src/main/800563F0.o",
+      "name": "src/main/menu_speaker_girl",
+      "target_path": "expected/build/src/main/menu_speaker_girl.o",
+      "base_path": "build/src/main/menu_speaker_girl.o",
       "metadata": {
-        "source_path": "src/main/800563F0.c",
+        "source_path": "src/main/menu_speaker_girl.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80057390",
-      "target_path": "expected/build/src/main/80057390.o",
-      "base_path": "build/src/main/80057390.o",
+      "name": "src/main/model_3d",
+      "target_path": "expected/build/src/main/model_3d.o",
+      "base_path": "build/src/main/model_3d.o",
       "metadata": {
-        "source_path": "src/main/80057390.c",
+        "source_path": "src/main/model_3d.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80058D20",
-      "target_path": "expected/build/src/main/80058D20.o",
-      "base_path": "build/src/main/80058D20.o",
+      "name": "src/main/mouse",
+      "target_path": "expected/build/src/main/mouse.o",
+      "base_path": "build/src/main/mouse.o",
       "metadata": {
-        "source_path": "src/main/80058D20.c",
+        "source_path": "src/main/mouse.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80059710",
-      "target_path": "expected/build/src/main/80059710.o",
-      "base_path": "build/src/main/80059710.o",
+      "name": "src/main/movie_player",
+      "target_path": "expected/build/src/main/movie_player.o",
+      "base_path": "build/src/main/movie_player.o",
       "metadata": {
-        "source_path": "src/main/80059710.c",
+        "source_path": "src/main/movie_player.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80059A20",
-      "target_path": "expected/build/src/main/80059A20.o",
-      "base_path": "build/src/main/80059A20.o",
+      "name": "src/main/overlay_loader",
+      "target_path": "expected/build/src/main/overlay_loader.o",
+      "base_path": "build/src/main/overlay_loader.o",
       "metadata": {
-        "source_path": "src/main/80059A20.c",
+        "source_path": "src/main/overlay_loader.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80059B40",
-      "target_path": "expected/build/src/main/80059B40.o",
-      "base_path": "build/src/main/80059B40.o",
+      "name": "src/main/pad_input",
+      "target_path": "expected/build/src/main/pad_input.o",
+      "base_path": "build/src/main/pad_input.o",
       "metadata": {
-        "source_path": "src/main/80059B40.c",
+        "source_path": "src/main/pad_input.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/8005A0B0",
-      "target_path": "expected/build/src/main/8005A0B0.o",
-      "base_path": "build/src/main/8005A0B0.o",
+      "name": "src/main/reload_executable",
+      "target_path": "expected/build/src/main/reload_executable.o",
+      "base_path": "build/src/main/reload_executable.o",
       "metadata": {
-        "source_path": "src/main/8005A0B0.c",
+        "source_path": "src/main/reload_executable.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80061710",
-      "target_path": "expected/build/src/main/80061710.o",
-      "base_path": "build/src/main/80061710.o",
+      "name": "src/main/reset_iris_wipe",
+      "target_path": "expected/build/src/main/reset_iris_wipe.o",
+      "base_path": "build/src/main/reset_iris_wipe.o",
       "metadata": {
-        "source_path": "src/main/80061710.c",
+        "source_path": "src/main/reset_iris_wipe.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/80062CD0",
-      "target_path": "expected/build/src/main/80062CD0.o",
-      "base_path": "build/src/main/80062CD0.o",
+      "name": "src/main/scene_display",
+      "target_path": "expected/build/src/main/scene_display.o",
+      "base_path": "build/src/main/scene_display.o",
       "metadata": {
-        "source_path": "src/main/80062CD0.c",
+        "source_path": "src/main/scene_display.c",
         "progress_categories": [
           "main"
         ]
       }
     },
     {
-      "name": "src/main/800674B0",
-      "target_path": "expected/build/src/main/800674B0.o",
-      "base_path": "build/src/main/800674B0.o",
+      "name": "src/main/scene_library",
+      "target_path": "expected/build/src/main/scene_library.o",
+      "base_path": "build/src/main/scene_library.o",
       "metadata": {
-        "source_path": "src/main/800674B0.c",
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "src/main/80075320",
-      "target_path": "expected/build/src/main/80075320.o",
-      "base_path": "build/src/main/80075320.o",
-      "metadata": {
-        "source_path": "src/main/80075320.c",
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "src/main/800789E0",
-      "target_path": "expected/build/src/main/800789E0.o",
-      "base_path": "build/src/main/800789E0.o",
-      "metadata": {
-        "source_path": "src/main/800789E0.c",
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "src/main/80079B10",
-      "target_path": "expected/build/src/main/80079B10.o",
-      "base_path": "build/src/main/80079B10.o",
-      "metadata": {
-        "source_path": "src/main/80079B10.c",
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "src/main/8007C030",
-      "target_path": "expected/build/src/main/8007C030.o",
-      "base_path": "build/src/main/8007C030.o",
-      "metadata": {
-        "source_path": "src/main/8007C030.c",
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "src/main/80085E30",
-      "target_path": "expected/build/src/main/80085E30.o",
-      "base_path": "build/src/main/80085E30.o",
-      "metadata": {
-        "source_path": "src/main/80085E30.c",
+        "source_path": "src/main/scene_library.c",
         "progress_categories": [
           "main"
         ]
@@ -383,6 +328,61 @@
       "base_path": "build/src/main/school_day.o",
       "metadata": {
         "source_path": "src/main/school_day.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "src/main/screen_layers",
+      "target_path": "expected/build/src/main/screen_layers.o",
+      "base_path": "build/src/main/screen_layers.o",
+      "metadata": {
+        "source_path": "src/main/screen_layers.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "src/main/sound_driver",
+      "target_path": "expected/build/src/main/sound_driver.o",
+      "base_path": "build/src/main/sound_driver.o",
+      "metadata": {
+        "source_path": "src/main/sound_driver.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "src/main/text_system",
+      "target_path": "expected/build/src/main/text_system.o",
+      "base_path": "build/src/main/text_system.o",
+      "metadata": {
+        "source_path": "src/main/text_system.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "src/main/title_screen",
+      "target_path": "expected/build/src/main/title_screen.o",
+      "base_path": "build/src/main/title_screen.o",
+      "metadata": {
+        "source_path": "src/main/title_screen.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "src/main/vram_viewer",
+      "target_path": "expected/build/src/main/vram_viewer.o",
+      "base_path": "build/src/main/vram_viewer.o",
+      "metadata": {
+        "source_path": "src/main/vram_viewer.c",
         "progress_categories": [
           "main"
         ]

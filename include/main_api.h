@@ -747,7 +747,7 @@ extern u8 D_800B3D54[];
 extern u8 D_800B3D60;
 extern s32 D_800B3D68;
 extern s32 D_800B3D6C;
-extern s32 cd_audio_request[4]; /* defined in src/main/800451D0.c (T-9010) */
+extern s32 cd_audio_request[4]; /* defined in src/main/cd_queue.c (T-9010) */
 extern s32 D_800B3648[16];
 extern u8 D_800B3D80;
 extern u8 D_800B3D84[];
@@ -755,7 +755,7 @@ extern s8 D_800B3DB0;
 extern u8 text_list[];
 extern u8 D_800B3DC7[];  /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
 extern u8 D_800B3F58[];
-/* Text display state, defined in src/main/8004E500.c (T-9150). */
+/* Text display state, defined in src/main/text_system.c (T-9150). */
 typedef struct TextState {
     /* 0x0 */ s16 count;   /* number of entries in text_list */
     /* 0x2 */ s16 total;
@@ -2956,7 +2956,7 @@ void set_tarao_bg(s32 arg0);
 void SD_DetectCDPeak(u16 *l, u16 *r, u16 pos, u16 n);
 void SD_CalcCDAve(s16 *left, s16 *right, u16 start, u16 count);
 
-/* T-10860: generated from src/main/8007C030.c by sync_protos.py. */
+/* T-10860: generated from src/main/scene_library.c by sync_protos.py. */
 s16 getCDlevel(void);
 #ifndef MAIN_API_OVERRIDE_strncat
 u8 *strncat(u8 *dst, u8 *src, s32 count);

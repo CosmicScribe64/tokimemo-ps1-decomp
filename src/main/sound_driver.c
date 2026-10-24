@@ -1,0 +1,1055 @@
+/* sound_driver.c: src/main/80079B10.c; T-27059: original object [0x80079B10,0x8007C030); per-frame audio command queue, bank transfer/loading, BGM, sound effects, XA voice and CD-level meter; actual body is sound driver, not date sequences. Original object 0x80079B10-0x8007C030 (config/objects/main.txt). */
+#define MAIN_API_OVERRIDE_func_8008BFB0 /* original narrows both volume arguments; T-12902 */
+/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this file was matched with. */
+
+#include "common.h"
+#include "game.h"
+
+void func_8007A254(u16 arg0);
+void func_8007A354(u16 arg0);
+void func_8007A43C(u8 arg0);
+void func_8008BFB0(s32, s16, s16);
+
+void func_80079B10(u16 arg0) {
+    func_8007B5EC(arg0);
+}
+
+void audio_command_pump(void) {
+    u16 r;
+
+    r = func_8007B64C();
+    if (r != 0) {
+        do {
+            switch (r & 0xF00) {
+            case 0x0:
+                func_8007A080(r);
+                break;
+            case 0x200:
+                func_8007ADD8(r);
+                break;
+            case 0x300:
+                func_8007A6AC(r);
+                break;
+            case 0x500:
+                func_8007B358(r);
+                break;
+            case 0x600:
+                func_8007B3DC(r);
+                break;
+            case 0x700:
+                func_8007B460(r);
+                break;
+            case 0x800:
+                func_8007B4E4(r);
+                break;
+            }
+            r = func_8007B64C();
+        } while (r != 0);
+    }
+    func_80079E4C();
+    func_8007A008();
+    func_8007B640();
+}
+
+void func_80079C70(void) {
+    void func_80079D28(s16 arg0);
+    s32 sp2C;
+    s32 i;
+    s32 mask;
+    s32 flags;
+
+    flags = audio_state.unk_04 & 0xFF000000;
+    for (i = 0; i < 4; i++) {
+        mask = (0x01000000 << i) & 0x0F000000;
+        /* FAKE: signed ~0x0FFFFFFF in the loop condition vs unsigned 0xF0000000U in the body keeps the two 0xF0000000 masks in separate uopt constant entries so 0x0F000000 takes $a2, 0xF0000000 takes $a3, and the body mask uses $at. T-24123 */
+        if ((flags & mask) && !(flags & ~0x0FFFFFFF)) {
+            sp2C = (0x10000000 << i) & 0xF0000000U;
+            audio_state.unk_04 &= ~mask;
+            audio_state.unk_04 |= sp2C;
+            func_80079D28(i);
+            audio_state.unk_04 &= ~sp2C;
+            return;
+        }
+    }
+}
+
+void func_80079D28(s16 arg0) {
+    s32 off;
+    s32 pad; /* FAKE: unused local; the original frame has 8 more bytes of locals (spill of off at sp+0x2C); real source unknown. T-4090 */
+
+    off = arg0 * 4;
+    if (func_8008C1B0(*(s32 *)((u8 *) D_80125D60 + off), arg0, *(s32 *)((u8 *) D_80125D80 + off)) == -1) {
+        func_80059B04(((arg0 << 8) & 0xFF00) | 0x01010000, arg0);
+        return;
+    }
+    audio_state.unk_00 |= 0x10000 << arg0;
+    if (func_8008C620(*(s32 *)((u8 *) D_80125D70 + off), arg0) == -1) {
+        func_80059B04(((arg0 << 8) & 0xFF00) | 0x01020000, arg0);
+        return;
+    }
+    SsVabTransCompleted(1, arg0);
+}
+
+s32 func_80079E00(s32 arg0) {
+    if ((audio_state.unk_04 & (0x10000000 << (u16)audio_state.unk_3C)) == 0) {
+        if ((audio_state.unk_04 & (0x1000000 << (u16)audio_state.unk_3C)) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void func_80079E4C(void) {
+    if (audio_state.unk_00 & 0x400) {
+        func_80079E9C();
+    }
+    if (audio_state.unk_04 & 0x200) {
+        func_80079F00();
+    }
+}
+
+void func_80079E9C(void) {
+    if (cd_audio_ticks() >= (u32)audio_state.unk_0C) {
+        if (!(audio_state.unk_04 & 0x100)) {
+            func_8007AB24(0xB4);
+        }
+    } else {
+        SD_GetCDLevel(&D_80125E60);
+    }
+}
+
+void func_80079F00(void) {
+    if (cd_audio_state() & 4) {
+        audio_state.unk_04 &= ~0x200;
+        if (audio_state.unk_10 != 0) {
+            func_8007A98C(0x74);
+            func_8007A868();
+            if (!(audio_state.unk_00 & 0x4000)) {
+                func_8007A924(audio_state.unk_08);
+            }
+        } else if (!(audio_state.unk_00 & 0x4000)) {
+            /* Snapshot volume before flags to preserve load scheduling. T-12902 */
+            audio_state.unk_1C = audio_state.unk_1E;
+            audio_state.unk_00 = (audio_state.unk_00 | 0x400) & 0xFFEFFFFF;
+            func_8008B750(0x7F, 0x7F);
+            func_8008BFB0(0, audio_state.unk_1C, audio_state.unk_1C);
+            func_8008BEE0(0, 0, 1);
+        }
+    }
+}
+
+void func_8007A008(void) {
+    s32 v;
+
+    v = audio_state.unk_04;
+    if (v != 0) {
+        if ((u32) v >> 24) {
+            func_80079C70();
+            v = audio_state.unk_04;
+        }
+        if (v & 0xFF) {
+            func_8007ABE0();
+            v = audio_state.unk_04;
+        }
+        if (v & 0xFF00) {
+            func_8007A4DC();
+        }
+    }
+}
+
+void func_8007A080(arg0)
+u16 arg0;
+{
+    void func_8007B2B4(u16 arg0);
+
+    switch (arg0 & 0xF0) {
+    case 0x10:
+        func_8007A254(arg0);
+        break;
+    case 0x20:
+        func_8007A354(arg0);
+        break;
+    case 0x70:
+        if (arg0 & 1) {
+            func_8007B144(0x71);
+        }
+        if (arg0 & 2) {
+            func_8007B7E0();
+        }
+        if (arg0 & 4) {
+            func_8007A98C(0x74);
+            func_8007A868();
+        }
+        break;
+    case 0xE0:
+        if (arg0 & 1) {
+            func_8007B144(0xE1);
+        }
+        if (arg0 & 4) {
+            func_8007A98C(0xE4);
+            func_8007A868();
+        }
+        break;
+    case 0xF0:
+        if (arg0 & 1) {
+            func_8007B144(0xF1);
+        }
+        if (arg0 & 4) {
+            func_8007A98C(0xF4);
+            func_8007A868();
+        }
+        break;
+    case 0xB0:
+    case 0xC0:
+    case 0xD0:
+        if (arg0 & 1) {
+            func_8007B2B4(arg0 & 0xFFF1);
+        }
+        if (arg0 & 4) {
+            func_8007AB24(arg0 & 0xFFF4);
+        }
+        break;
+    default:
+        func_8007A43C(arg0 & 0xFF);
+        break;
+    }
+}
+
+void func_8007A254(u16 arg0) {
+    arg0 = arg0 & 0xFF;
+    func_8007B99C(arg0);
+    switch (arg0) {
+    case 17:
+        func_8007BF04(0);
+        func_8007BE94(0);
+        func_8007BF04(1);
+        func_8007BE94(1);
+        return;
+    case 18:
+        func_8007BF04(2);
+        func_8007BE94(2);
+        func_8007BF04(3);
+        func_8007BE94(3);
+        return;
+    case 19:
+        func_8007BF04(0);
+        func_8007BE94(0);
+        return;
+    case 20:
+        func_8007BF04(1);
+        func_8007BE94(1);
+        return;
+    case 21:
+        func_8007BF04(2);
+        func_8007BE94(2);
+        return;
+    case 22:
+        func_8007BF04(3);
+        func_8007BE94(3);
+        return;
+    default:
+        return;
+    }
+}
+
+void func_8007A354(u16 arg0) {
+    arg0 = arg0 & 0xFF;
+    switch (arg0) {
+    case 33:
+        D_80125D50 = 0;
+        D_80125D52 = 3;
+        return;
+    case 34:
+        D_80125D4C = 1;
+        D_80125D4E = 2;
+        return;
+    case 35:
+        D_80125D4C = 2;
+        D_80125D4E = 1;
+        return;
+    case 36:
+        D_80125D50 = 3;
+        D_80125D52 = 0;
+        return;
+    case 47:
+        D_80125D4A = 0;
+        func_8007BBE8(0x8001C000, 0);
+        return;
+    case 46:
+        D_80125D4A = 1;
+        func_8007BBE8(0x8002E800, 1);
+        return;
+    default:
+        return;
+    }
+}
+
+void func_8007A43C(u8 arg0) {
+    arg0 &= 0xFF;
+    switch (arg0) {
+    case 1:
+    case 2:
+        func_8007BCFC(arg0);
+        break;
+    case 3:
+        func_8007B6E0(arg0);
+        break;
+    case 6:
+        func_8007B734(arg0);
+        break;
+    case 4:
+        func_8007B7E0(arg0);
+        break;
+    case 5:
+        audio_state.unk_00 |= 0x100000;
+        break;
+    }
+}
+
+void func_8007A4DC(void) {
+    if (audio_state.unk_04 & 0x100) {
+        func_8007A50C();
+    }
+}
+
+void func_8007A50C(void) {
+    if (audio_state.unk_00 & 0x4400) {
+        D_80125D44 += D_80125D48;
+        /* FAKE: the flag test reads D_80125D44 through an s16 view (a plain u16 test changes the uopt range order: sum in $v1, temporaries one register off); real source unknown. T-17012 */
+        if (((*(s16 *)&D_80125D44) & 0xFF00) != 0) {
+            D_80125D44 &= 0xFF;
+            D_80125D2C -= D_80125D46;
+            if (D_80125D2C <= 0) {
+                func_8007A5BC();
+                return;
+            }
+            func_8008BFB0(0, D_80125D2C, D_80125D2C);
+        }
+    }
+}
+
+void func_8007A5BC(void) {
+    func_8007A98C(0x74);
+    if ((audio_state.unk_00 & 0x4000) == 0) {
+        func_8007A868();
+        if (audio_state.unk_08 != 0) {
+            func_8007A924(audio_state.unk_08);
+        }
+    }
+}
+
+void func_8007A618(u32 arg0) {
+    audio_state.unk_1E = 0x64;
+    switch (arg0) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+        break;
+    case 6:
+        audio_state.unk_1E = 0x7D;
+        break;
+    case 7:
+        audio_state.unk_1E = 0x5F;
+        break;
+    case 9:
+    case 11:
+        audio_state.unk_1E = 0x5F;
+        break;
+    case 10:
+        audio_state.unk_1E = 0x5A;
+        break;
+    case 12:
+    case 13:
+        audio_state.unk_1E = 0x6E;
+        break;
+    case 15:
+        audio_state.unk_1E = 0x69;
+        break;
+    }
+}
+
+void func_8007A6AC(arg0)
+u16 arg0;
+{
+    /* FAKE: unused 4-byte local reproduces the original 0x30 stack frame size; real source unknown. T-24118 */
+    s32 pad;
+    u32 temp_a0;
+    s32 temp_v1;
+    s32 *temp_v0_2;
+
+    switch (arg0 & 0xF000) {
+    case 0x0:
+        temp_v0_2 = (s32 *)func_80046284();
+        temp_a0 = temp_v0_2[0];
+        temp_v1 = temp_v0_2[1];
+        audio_state.unk_10 = temp_v0_2[2];
+        audio_state.unk_14 = temp_v0_2[3];
+        /* FAKE: u32 view of the s32 sector fields emits lbu at +0 instead of sra 24 and lw/and for the 24-bit mask; real field type/union unknown. T-24118 */
+        audio_state.unk_48[5] = (*(u32 *)&audio_state.unk_10 >> 24) & 0xFF;
+        audio_state.unk_48[7] = (*(u32 *)&audio_state.unk_14 >> 24) & 0xFF;
+        *(u32 *)&audio_state.unk_10 &= 0xFFFFFF;
+        *(u32 *)&audio_state.unk_14 &= 0xFFFFFF;
+        func_8007A618(temp_a0);
+        if (temp_a0 == 0xF) {
+            temp_a0 = 8;
+        } else {
+            temp_a0 = 0x20;
+        }
+        audio_state.unk_10 = (audio_state.unk_10 * temp_a0) + D_80125D5D + temp_v1 - 0x10;
+        audio_state.unk_14 = (audio_state.unk_14 * temp_a0) + D_80125D5D + temp_v1 + 0x10;
+        if (audio_state.unk_00 & 0x400) {
+            func_8007AB24(0xB4);
+        } else if (!(audio_state.unk_04 & 0x200) && !(audio_state.unk_00 & 0x4000)) {
+            func_8007A868();
+            func_8007A924(audio_state.unk_08);
+        }
+        break;
+    case 0x1000:
+        func_8007A98C(0x74);
+        func_8007A868();
+        break;
+    case 0x2000:
+        func_8007A98C(0xE4);
+        break;
+    case 0x4000:
+        func_8007A98C(0xF4);
+        break;
+    }
+}
+
+void func_8007A868(void) {
+    s32 t;
+    D_80125E60 = 0;
+    D_80125E62 = 0;
+    t = audio_state.unk_10;
+    audio_state.unk_0C = audio_state.unk_14;
+    audio_state.unk_48[4] = audio_state.unk_48[5];
+    audio_state.unk_48[6] = audio_state.unk_48[7];
+    audio_state.unk_10 = 0;
+    audio_state.unk_14 = 0;
+    audio_state.unk_48[5] = 0;
+    audio_state.unk_48[7] = 0;
+    audio_state.unk_18 = t;
+    audio_state.unk_00 &= ~0x400;
+    audio_state.unk_00 &= ~0x4000;
+    audio_state.unk_04 &= ~0x200;
+    audio_state.unk_04 &= ~0x100;
+    /* Keep this store after the masks to preserve early flag loads. T-12901 */
+    audio_state.unk_08 = t;
+}
+
+void func_8007A924(s32 arg0) {
+    func_8007BA54();
+    audio_state.unk_48[0] = audio_state.unk_48[6];
+    audio_state.unk_48[1] = audio_state.unk_48[4];
+    audio_state.unk_04 |= 0x200;
+    cd_audio_command(0xD, arg0, audio_state.unk_48);
+}
+
+/* FAKE: the constant branch and empty tests in cases 0xE4/0xF4 keep the selector in $v0 across the flag loads so audio_state.unk_00 takes $v1 and D_80125D14 takes $a0. T-24118 */
+void func_8007A98C(arg0)
+u16 arg0;
+{
+    s32 temp_v0;
+
+    if (1) {
+        temp_v0 = arg0 & 0xFF;
+    }
+    switch (temp_v0) {
+    case 0x74:
+        func_8008BEE0(0, 0, 0);
+        cd_audio_command(9, 0, 0);
+        audio_state.unk_00 &= ~0x400;
+        audio_state.unk_00 &= ~0x4000;
+        D_80125D14 &= ~0x200;
+        D_80125D14 &= ~0x100;
+        break;
+    case 0xE4:
+        if (D_80125D14 & 0x200) {
+            if (temp_v0) {
+            }
+            audio_state.unk_00 |= 0x4000;
+            cd_audio_command(9, 0, 0);
+        } else if (audio_state.unk_00 & 0x400) {
+            audio_state.unk_18 = cd_audio_ticks();
+            if ((u32) audio_state.unk_08 >= (u32) audio_state.unk_18) {
+                audio_state.unk_18 = audio_state.unk_08;
+            }
+            audio_state.unk_00 = (audio_state.unk_00 & ~0x400) | 0x4000;
+            func_8007AB24(0xB4);
+        }
+        break;
+    case 0xF4:
+        if (audio_state.unk_00 & 0x4000) {
+            audio_state.unk_00 &= ~0x4000;
+            if (audio_state.unk_10 != 0) {
+                func_8007A5BC();
+            } else {
+                func_8007A924(audio_state.unk_18);
+            }
+        } else if (temp_v0) {
+        }
+        break;
+    }
+}
+
+void func_8007AB24(u16 arg0) {
+    if (!(audio_state.unk_04 & 0x100)) {
+        audio_state.unk_34 = 0;
+        audio_state.unk_04 |= 0x100;
+    }
+    switch (arg0 & 0xFF) {
+    default:
+        audio_state.unk_38 = 0x100;
+        audio_state.unk_36 = 0xA;
+        return;
+    case 0xB4:
+        audio_state.unk_38 = 0x100;
+        audio_state.unk_36 = 0xA;
+        return;
+    case 0xC4:
+        audio_state.unk_38 = 0x100;
+        audio_state.unk_36 = 1;
+        return;
+    case 0xD4:
+        audio_state.unk_38 = 0x80;
+        audio_state.unk_36 = 1;
+        return;
+    }
+}
+
+void func_8007ABE0(void) {
+    s16 var_a0;
+
+    if ((D_80125D14 & 2) && (func_80079E00((s16)D_80125D4C) != 0)) {
+        func_8007AF0C();
+    }
+    if ((audio_state.unk_00 & 0x100) && (D_80125D14 & 1)) {
+        /* FAKE: u16 views of unk_2E/unk_30/unk_32 emit lhu as in the original while keeping SoundState's s16 fields for sibling functions. T-24118 */
+        *(u16 *)&audio_state.unk_2E += *(u16 *)&audio_state.unk_32;
+        if ((audio_state.unk_2E & 0xFF00) != 0) {
+            *(u16 *)&audio_state.unk_2E &= 0xFF;
+            audio_state.unk_20 -= *(u16 *)&audio_state.unk_30;
+            if (audio_state.unk_20 < 0) {
+                func_8007AD6C();
+                return;
+            }
+            if ((audio_state.unk_00 & 0x100000) && !(audio_state.unk_00 & 0x400)) {
+                if (audio_state.unk_22 == 0) {
+                    var_a0 = 0;
+                } else {
+                    var_a0 = (audio_state.unk_20 * 0x7F) / audio_state.unk_22;
+                }
+                /* FAKE: explicit 16-bit sign-extension reproduces the second sll 16 / sra 16 for $a1 when calling unprototyped func_8008B750. T-24118 */
+                func_8008B750(var_a0, (var_a0 << 16) >> 16);
+                return;
+            }
+            /* FAKE: explicit 16-bit sign-extension reproduces the second lh / sll 16 / sra 16 for $a2 when calling unprototyped func_8008C720. T-24118 */
+            func_8008C720(D_80125D38, audio_state.unk_20, (audio_state.unk_20 << 16) >> 16);
+        }
+    }
+}
+
+void func_8007AD6C(void) {
+    if ((audio_state.unk_00 & 0x100000) && !(audio_state.unk_00 & 0x400)) {
+        func_8008FD68(0);
+        func_8008B750(0, 0);
+    }
+    func_8007B144(0x71);
+    if (audio_state.unk_2A != -1) {
+        func_8007AEC0();
+    }
+}
+
+void func_8007ADD8(s32 arg0) {
+    s32 a;
+
+    a = arg0 & 0xFFFF;
+    switch (a & 0xF000) {
+    case 0x0:
+        if (audio_state.unk_04 & 1) {
+            audio_state.unk_2C = a & 0xFF;
+            func_8007AD6C();
+            return;
+        }
+        if (audio_state.unk_00 & 0x100) {
+            audio_state.unk_2C = a & 0xFF;
+            func_8007B2B4(0xB1, a);
+            return;
+        }
+        audio_state.unk_2A = a & 0xFF;
+        audio_state.unk_2C = -1;
+        func_8007AEC0();
+        return;
+    case 0x1000:
+        func_8007B144(0x71, a);
+        return;
+    case 0x2000:
+        func_8007B144(0xE1, a);
+        return;
+    case 0x4000:
+        func_8007B144(0xF1, a);
+        return;
+    }
+}
+
+void func_8007AEC0(void) {
+    if (func_80079E00(audio_state.unk_3C) == 0) {
+        audio_state.unk_04 |= 2;
+    } else {
+        func_8007AF0C();
+    }
+}
+
+void func_8007AF0C(void) {
+    s16 func_800900A0();
+    s32 func_8008C720(s16, s16, s16);
+    u8 sp2C[0x24];
+
+    if ((func_80079524() == 0) && (func_80079554() == 0) && (D_80125D4C != 2)) {
+        func_8007B7E0();
+    }
+    if (audio_state.unk_00 & 0x10000000) {
+        if (func_80079578() != 0) {
+            func_8008FF5C(0, 0);
+        }
+    } else {
+        /* FAKE: explicit 16-bit sign-extension reproduces sll 16 / sra 16 for $a1 when calling unprototyped func_8008FF5C. T-24123 */
+        func_8008FF5C(D_80125E20[(u16)D_80125D4A][D_80125D3A], (D_80125E20[(u16)D_80125D4A][D_80125D3A] << 16) >> 16);
+    }
+    D_80125D38 = func_800900A0(D_80125DA0[(u16)D_80125D4A][D_80125D3A], (s16)D_80125D4C);
+    if (D_80125D38 == -1) {
+        func_80059B04(((D_80125D4C << 8) & 0xFF00) | 0x01040000 | ((u16)D_80125D4A & 0xFF));
+        func_8007AD6C();
+        return;
+    }
+    audio_state.unk_20 = audio_state.unk_22;
+    audio_state.unk_00 |= 0x100;
+    audio_state.unk_00 &= ~0x1000;
+    audio_state.unk_04 &= ~2;
+    audio_state.unk_04 &= ~1;
+    audio_state.unk_00 &= ~0x100000;
+    audio_state.unk_04 &= ~2;
+    func_80090270(audio_state.unk_3C, sp2C);
+    audio_state.unk_20 = sp2C[0x18] - 0x19;
+    if (audio_state.unk_00 & 0x20) {
+        audio_state.unk_20 -= 0x18;
+    }
+    audio_state.unk_22 = audio_state.unk_20;
+    func_8008B750(0x7F, 0x7F);
+    func_8008C720(D_80125D38, audio_state.unk_20, audio_state.unk_20);
+    func_80090350(D_80125D38, 1, 1);
+}
+
+/* FAKE: the constant branch retains the selector in v0 as in func_8007B2B4. T-10020, T-24111 */
+void func_8007B144(arg0)
+u16 arg0;
+{
+    s32 temp_v0;
+
+    if (1) {
+        temp_v0 = arg0 & 0xFF;
+    }
+    switch (temp_v0) {
+    case 0x71:
+        if ((audio_state.unk_00 & 0x100) || (audio_state.unk_00 & 0x1000)) {
+            func_8008C720(D_80125D38, 0, 0);
+            func_80090580(D_80125D38);
+            func_800907E0(D_80125D38);
+        }
+        D_80125D3A = D_80125D3C;
+        D_80125D3C = -1;
+        audio_state.unk_00 = audio_state.unk_00 & ~0x100 & ~0x1000;
+        D_80125D14 &= ~1;
+        break;
+    case 0xE1:
+        if (audio_state.unk_00 & 0x100) {
+            func_80090AB0(D_80125D38);
+            audio_state.unk_00 = (audio_state.unk_00 & ~0x100) | 0x1000;
+        }
+        break;
+    case 0xF1:
+        if (audio_state.unk_00 & 0x1000) {
+            SsSeqReplay(D_80125D38);
+            audio_state.unk_00 = (audio_state.unk_00 & ~0x1000) | 0x100;
+        }
+        break;
+    }
+}
+
+/* FAKE: the constant branch retains the selector in v0. Keeping it on the
+ * flag-store line also preserves the ORI scheduling. T-10020. */
+void func_8007B2B4(arg0)
+u16 arg0;
+{
+    s32 temp_v0;
+    if (!(audio_state.unk_04 & 1))
+    {
+        audio_state.unk_2E = 0;
+        audio_state.unk_04 |= 1; if (1)
+        {
+            temp_v0 = arg0 & 0xFF;
+        }
+        switch (temp_v0)
+        {
+        case 0xB1:
+            audio_state.unk_32 = 0x100;
+            audio_state.unk_30 = 0xA;
+            return;
+
+        case 0xC1:
+            audio_state.unk_32 = 0xC0;
+            audio_state.unk_30 = 1;
+            return;
+
+        case 0xD1:
+            audio_state.unk_32 = 0x80;
+            audio_state.unk_30 = 1;
+            break;
+        }
+    }
+}
+
+void func_8007B358(u16 arg0) {
+    s32 a;
+
+    /* FAKE: shift split in two keeps the lhu result out of the lui register; permuter result, real source unknown. T-8010 */
+    a = (((D_80125D50 << 2) << 6) & 0xFF00) | (((arg0 & 0xFF) >> 4) & 0xFF);
+    if (arg0 & 0x1000) {
+        func_8007B5CC(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+        return;
+    }
+    func_8007B568(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+}
+
+void func_8007B3DC(u16 arg0) {
+    s32 a;
+
+    /* FAKE: shift split in two keeps the lhu result out of the lui register; permuter result, real source unknown. T-8010 */
+    a = (((D_80125D52 << 2) << 6) & 0xFF00) | (((arg0 & 0xFF) >> 4) & 0xFF);
+    if (arg0 & 0x1000) {
+        func_8007B5CC(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+        return;
+    }
+    func_8007B568(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+}
+
+void func_8007B460(u16 arg0) {
+    s32 a;
+
+    /* FAKE: shift split in two keeps the lhu result out of the lui register; permuter result, real source unknown. T-8010 */
+    a = (((D_80125D4C << 2) << 6) & 0xFF00) | (((arg0 & 0xFF) >> 4) & 0xFF);
+    if (arg0 & 0x1000) {
+        func_8007B5CC(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+        return;
+    }
+    func_8007B568(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+}
+
+void func_8007B4E4(u16 arg0) {
+    s32 a;
+
+    /* FAKE: shift split in two keeps the lhu result out of the lui register; permuter result, real source unknown. T-8010 */
+    a = (((D_80125D4E << 2) << 6) & 0xFF00) | (((arg0 & 0xFF) >> 4) & 0xFF);
+    if (arg0 & 0x1000) {
+        func_8007B5CC(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+        return;
+    }
+    func_8007B568(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+}
+
+void func_8007B568(s32 arg0, s32 arg1) {
+    func_80090D20();
+    audio_state.unk_00 &= 0xFFEFFFFF;
+    func_8008B750(0x7F, 0x7F);
+    func_80090D60(arg0, arg1, audio_state.unk_24, audio_state.unk_24);
+}
+
+void func_8007B5CC(void) {
+    func_80090D20();
+}
+
+s32 func_8007B5EC(u16 a) {
+    if (D_80125CC0 >= 0x20) {
+        return -1;
+    }
+    D_80125CC0++;
+    (&D_80125CC0)[D_80125CC0] = a;
+    return 0;
+}
+
+void func_8007B640(void) {
+    D_80125CC0 = 0;
+}
+
+u16 func_8007B64C(void) {
+    u16 i;
+    u16 ret;
+
+    if (D_80125CC0 > 0x20) {
+        D_80125CC0 = 0x20;
+    }
+    if (D_80125CC0 == 0) {
+        ret = 0;
+    } else {
+        ret = D_80125CC2;
+        /* FAKE: (&D_80125CC0)[i] indexes the queue through the scalar count symbol while keeping D_80125CC2 as a separate scalar relocation. T-24127 */
+        for (i = 1; i < D_80125CC0; i++) {
+            (&D_80125CC0)[i] = (&D_80125CC0)[i + 1];
+        }
+        D_80125CC0--;
+    }
+    return ret;
+}
+
+void func_8007B6E0(void) {
+    func_8007A98C(0x74);
+    audio_state.unk_08 = 0;
+    audio_state.unk_0C = 0;
+    audio_state.unk_10 = 0;
+    audio_state.unk_14 = 0;
+    audio_state.unk_18 = 0;
+    audio_state.unk_48[4] = 0;
+    audio_state.unk_48[5] = 0;
+}
+
+void func_8007B734(void) {
+    func_8008BEE0(0, 0, 0);
+    audio_state.unk_00 &= ~0x400;
+    audio_state.unk_00 &= ~0x4000;
+    D_80125D14 &= ~0x200;
+    D_80125D14 &= ~0x100;
+    D_80125E60 = 0;
+    D_80125E62 = 0;
+    D_80125D18 = 0;
+    D_80125D1C = 0;
+    D_80125D20 = 0;
+    D_80125D24 = 0;
+    D_80125D28 = 0;
+    D_80125D5C = 0;
+    D_80125D5D = 0;
+}
+
+void func_8007B7E0(void) {
+    if (func_80079524() == 0 || !(audio_state.unk_00 & 0x100)) {
+        func_80090DB0();
+        func_8008FD68(0);
+        func_8008FED0();
+        func_800949B0(3);
+        func_8008FEB0();
+    }
+}
+
+void func_8007B844(void) {
+    func_8008B8C4();
+    func_8008BAA4(1);
+    func_80090DF0(0x18);
+    func_8008B904(D_80125E70, 1, 1);
+    func_80090E30(1);
+    func_8008FEF0(3);
+    func_800949B0(3);
+    func_8008FEB0();
+    func_8008FF5C(0x3C, 0x3C);
+    func_8008B750(0x7F, 0x7F);
+    func_8007BCFC(2);
+    func_8007BAAC();
+    func_8007B8F8();
+    func_8007BA54();
+    SD_InitCDLevelInfo();
+    func_8007B640();
+    func_8008BE34();
+}
+
+void func_8007B8F8(void) {
+    D_80125D60[0] = 0x80010000;
+    D_80125D64 = 0x80012000;
+    D_80125D68 = 0x80016000;
+    D_80125D6C = 0x8001A000;
+    D_80125D80[0] = 0x1010;
+    D_80125D84 = D_80125D80[0] + 0x10000;
+    D_80125D88 = D_80125D84 + 0x28000;
+    D_80125D8C = D_80125D88 + 0x28000;
+    D_80125D90 = 0x10000;
+    D_80125D94 = 0x28000;
+    D_80125D98 = 0x28000;
+    D_80125D9C = 0x1A768;
+}
+
+void func_8007B99C(u16 arg0) {
+    s32 v;
+
+    v = func_800451D0();
+    switch (arg0) {
+    case 17:
+        D_80125D70[0] = v;
+        D_80125D70[1] = v + 0x10000;
+        break;
+    case 18:
+        D_80125D70[2] = v;
+        D_80125D70[3] = v + 0x28000;
+        break;
+    case 19:
+        D_80125D70[0] = v;
+        break;
+    case 20:
+        D_80125D70[1] = v;
+        break;
+    case 21:
+        D_80125D70[2] = v;
+        break;
+    case 22:
+        D_80125D70[3] = v;
+        break;
+    }
+}
+
+void func_8007BA54(void) {
+    audio_state.unk_44[0] = 0xC8;
+    func_8008BEE0(0, 0, 0);
+    func_8008BFB0(0, 0, 0);
+    cd_audio_command(0xE, 0, audio_state.unk_44);
+}
+
+void func_8007BAAC(void) {
+    audio_state.unk_04 = 0;
+    audio_state.unk_00 = 0x10;
+    audio_state.unk_08 = 0;
+    audio_state.unk_0C = 0;
+    audio_state.unk_10 = 0;
+    audio_state.unk_14 = 0;
+    audio_state.unk_18 = 0;
+    audio_state.unk_1C = 0x64;
+    audio_state.unk_1E = 0x64;
+    audio_state.unk_20 = 0x50;
+    audio_state.unk_22 = 0x50;
+    audio_state.unk_24 = 0x5A;
+    audio_state.unk_26 = 0x5A;
+    audio_state.unk_28 = 0;
+    audio_state.unk_2A = -1;
+    audio_state.unk_2C = -1;
+    audio_state.unk_2E = 0;
+    audio_state.unk_30 = 0x80;
+    audio_state.unk_32 = 0xFF;
+    audio_state.unk_34 = 0;
+    audio_state.unk_36 = 0x80;
+    audio_state.unk_38 = 0xFF;
+    audio_state.unk_40 = 0;
+    audio_state.unk_3C = 1;
+    audio_state.unk_3E = 2;
+    audio_state.unk_42 = 3;
+    audio_state.unk_3A = 0;
+    audio_state.unk_48[4] = 0;
+    audio_state.unk_48[5] = 0;
+    audio_state.unk_48[6] = 0;
+    audio_state.unk_48[7] = 0;
+}
+
+s32 func_8007BBE8(u8 *arg0, u16 arg1) {
+    s32 i;
+    s32 off;
+
+    for (i = 0; i < 0x10; i++) {
+        /* FAKE: (u32)arg0 converts i * 4 from signed to unsigned before adding arg0, keeping i * 4 as the 4x-unrolled induction variable without folding arg0 into it. T-24127 */
+        off = *(s32 *)(i * 4 + (u32)arg0);
+        if (off == 0) {
+            off = *(s32 *)arg0;
+        }
+        D_80125DA0[arg1][i] = (s32)(arg0 + off + 0x10);
+        D_80125E20[arg1][i] = arg0[i + 0x40];
+    }
+}
+
+void func_8007BCFC(s32 arg0) {
+    u8 volume[4];
+    u8 attenuation;
+
+    /* FAKE: paired assignments share source lines to reproduce independent
+     * byte-store scheduling; original spelling unknown. T-24062 */
+    if ((arg0 & 0xFFFF) == 1) {
+        func_80090E40();
+        audio_state.unk_00 &= ~0x10;
+        audio_state.unk_00 |= 0x20;
+        volume[2] = 0x4F; volume[0] = 0x4F;
+        volume[3] = 0x4F; volume[1] = 0x4F;
+        attenuation = 0x18;
+    } else {
+        func_80090E50();
+        audio_state.unk_00 &= ~0x20;
+        audio_state.unk_00 |= 0x10;
+        volume[2] = 0x7F; volume[0] = 0x7F;
+        volume[3] = 0;
+        volume[1] = 0;
+        attenuation = 0;
+    }
+    func_80087DC8(volume);
+    audio_state.unk_22 = 0x50 - attenuation;
+    audio_state.unk_20 = audio_state.unk_22;
+    /* FAKE: unsigned halfword view preserves the target conversion and
+     * temporary numbering; the canonical member stays signed. T-24062 */
+    *(u16 *)&audio_state.unk_26 = 0x5A - attenuation;
+    audio_state.unk_24 = *(u16 *)&audio_state.unk_26;
+}
+
+void func_8007BDE8(void) {
+    s16 var_s0;
+
+    if (audio_state.unk_00 & 0x1100) {
+        func_80090580(D_80125D38);
+        func_800907E0(D_80125D38);
+    }
+    func_8008FD68(0);
+    var_s0 = 3;
+    do {
+        if ((0x10000 << var_s0) & audio_state.unk_00) {
+            func_80090E60(var_s0);
+        }
+        var_s0 -= 1;
+    } while (var_s0 >= 0);
+    func_8008BE54();
+    func_8008BEBC();
+}
+
+void func_8007BE94(s16 arg0) {
+    /* FAKE: `^ 0` turns the left operand into an expression, which makes uopt swap the operands of the compare (decomp-permuter, score 0); real source unknown. T-4090 */
+    if ((arg0 ^ 0) == (u16) audio_state.unk_3C && (audio_state.unk_00 & 0x100)) {
+        func_8007AD6C();
+    }
+    audio_state.unk_04 |= 0x01000000 << arg0;
+}
+
+void func_8007BF04(s16 arg0) {
+    if (arg0 == D_80125D4C) {
+        if (audio_state.unk_00 & 0x100) {
+            func_80090580(D_80125D38);
+            func_800907E0(D_80125D38);
+        }
+        D_80125D3A = -1;
+        D_80125D3C = -1;
+    } else if (arg0 == D_80125D50) {
+        func_8008FD68(0);
+    }
+    func_80090E60(arg0);
+}
+
+void func_8007BFA8(void) {
+    audio_state.unk_2C = -1;
+}
+
+void func_8007BFB8(void) {
+    if (audio_state.unk_00 & 0x10000000) {
+        audio_state.unk_00 &= 0xEFFFFFFF;
+        return;
+    }
+    audio_state.unk_00 |= 0x10000000;
+}
+
+void SD_InitCDLevelInfo(void) {
+    D_80125E60 = 0;
+    D_80125E62 = 0;
+    D_80125E64 = 8;
+    D_80125E66 = 0x20;
+    D_80125E68 = 0x212;
+}

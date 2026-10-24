@@ -305,7 +305,7 @@ void func_80132EF0(void) {
     mode_step_next();
 }
 
-/* Port of main check_k_scroll (src/main/8007C030.c), with ENDING's own limits. The unsigned
+/* Port of main check_k_scroll (src/main/scene_library.c), with ENDING's own limits. The unsigned
  * compare keeps the operand order of the bne (as in check_k_scroll). */
 /* FAKE: sp40 keeps the unused result of the second get_k_work call; without it the frame is 8
  * bytes smaller and both spill homes move. Real source unknown. T-18300 */
