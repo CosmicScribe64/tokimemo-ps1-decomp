@@ -261,8 +261,10 @@ test the debug switch `D_800B3C6C` (which would go to mode 0x22).
 
 ## `parameter_up_down(command, holiday, poor)`
 
-Arguments in the C: `arg0` the command id (0-7; the records of holiday days carry ids that fit the same table), `arg1`
-nonzero for a holiday command (called with 1 by the holiday module), `arg2` nonzero for a poor day. Stored values:
+Arguments in the C: `command` is the command id (0-7; holiday records use ids in the same table).
+`holiday_factor` receives a flag (1 from the holiday module), then becomes 4 for nonzero input or 1 for zero.
+`result_divisor` receives the poor-day flag, then becomes 2 for nonzero input or 1 for zero; the normalized
+value also supplies the extra stress term. Stored values:
 nine parameters (core `param_*`, order condition, liberal arts, science, art, athletics, trivia, looks, guts, stress)
 are 16.16 numbers; the table values are in sixteenths of a point (`PARAM_DELTA_UNIT` 0x1000 = 1/16).
 
