@@ -7,34 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ingest | Preserve active quadrant lowering evidence
-
-Root preserved587f8d5c1, documentation only: faithful capture excludes as1, required-store source control removes the extra color copy but worsens global allocation. No compiler patch or coverage claim. T-25034 continues. T-25038 SHOUGATU E6E4 reports zero resolved differences under literal verification; root authorized a narrow existing-pattern declaration override with all default declarations unchanged for other translation units. No experimental result counted.
-
-## [2026-10-22] ticket | T-25041 KANGEI scheduling follow-up
-
-Claimed [[tickets/T-25041-kangei-preload-schedule]] after pinning BUNKA_SD. Read T-24202/T-24901/T-25018 history; KANGEI's local readiness gap requires distinct dependency evidence. Sole source ownership is src/ovl/KANGEI/80137B90.c; no source experiments yet.
-
-## [2026-10-22] build | T-25041 KANGEI source scheduling breakthrough
-
-[[tickets/T-25041-kangei-preload-schedule]] captures a new empty stored-field test that changes uopt from direct str to promoted value plus later rstr. The final sum now precedes store-address lui despite unchanged besttime values. Removing the redundant signed conversion of the byte year restores t6 and gives45-word cost0. Literal proof follows; earlier readiness-only reasoning is corrected in the new ticket, with old logs preserved.
-
-## [2026-10-22] build | T-25041 KANGEI literal C match
-
-[[tickets/T-25041-kangei-preload-schedule]] promotes func_8013852C with separate guarded/default-C private links proving180 bytes. All8 current KANGEI C units rebuilt; normal overlay link/hash commands pass SHA1. Header/global/prototype guards pass with0 new disagreements. Root final-source review has no findings. Ticket and board move to In Review for root full27 integration; no compiler or header changes.
-
-## [2026-10-22] lint | T-25041 reviewed integration pin
-
-Wiki lint reports0 broken links and0 status mismatches; existing large data/log pages remain. The draft README prose checker reports no hits; git diff --check passes. [[tickets/T-25041-kangei-preload-schedule]] is ready for root integration with its source and complete experiment ledger.
-
-## [2026-10-22] ticket | T-25039 MAIN club carrier
-
-Created [[tickets/T-25039-main-club-carrier]] after GYOZI integration. Reused isolated checkout, fast-forwarded to 77eae26cf with prior private evidence retained; claimed only src/main/8005A0B0.c. Read T-25004/T-25008 controls and allocation history. Reproduce the baseline before testing distinct lifetime/phase mechanisms.
-
-## [2026-10-22] build | T-25039 club precolor boundary
-
-Docker full-TU baseline for [[tickets/T-25039-main-club-carrier]] is 215/215 words, three changed positions. Captured allocation confirms distinct shift-expression v1 and local a0 ranges; later coalescing produces the wrong a0. Repeated shift expression with a late-folded zero preserves the target v1 and argument move, leaving the halfword a0-versus-a1 carrier. Corrected actual function size to 860 bytes; no match or production edit yet.
-
 ## [2026-10-22] build | T-25039 MAIN club carrier matched
 
 Moved the local club definition into its consuming else branch, before the existing empty halfword test, while comparing the raw shift beforehand. This closes both carriers without new late-zero arithmetic or ignored arguments. Default C matches all 860 linked bytes, MAIN SHA1 passes, and headers/global/prototype guards pass (zero new, 15 known). Root independently reviewed standards and scope with no findings. Recorded controls in drafts/T-25039/README.md and [[matching-notes]]; moved [[tickets/T-25039-main-club-carrier]] to In Review pending root integration.
@@ -1518,6 +1490,7 @@ Finished [[spec/m-flow]] and `config/renames/proposals/m-flow.tsv` (324 rows: 87
 
 ## [2026-10-24] ticket | T-27019 Done
 Review round 2 of [[tickets/T-27019-p2-m-flow]] approved with no findings: the seven HYPOTHESIS marks added in `0cdb9358c` (five overlay-folder `OvlLba` constants, `CARD_RESULT_IO_ERROR`, `extra_mode_flags`) are in `config/renames/proposals/m-flow.tsv` (324 rows of 5 columns, 10 marked HYPOTHESIS) and in [[spec/m-flow]] (3.4, TT stage 0, 6.1, 7), and the reworded `card_file_exists` open counts, `pad_code_update` window and title idle clock match the C. The branch changes only the table and wiki files (nothing under `src/`, `include/` or `config/symbol*`). Ticket set to Done; branch p2a-m-flow goes to the merge into w2-good. Merging the table into the rename tool input stays open on the ticket.
+
 ## [2026-10-24] ingest | T-27022 phase 2 naming proposals and port spec for overlay DATE (dates)
 Unit o-date (`src/ovl/DATE`, 668 functions, 19 files): read the matched C, the 72 step tables of the overlay data and the callers in main, grouped the 300 mechanical step functions by pattern and checked behaviour in about twenty short emulator runs from a boot-to-title state (a scratch copy of the emulator wrapper with a memory-poke option, kept in `build/`, wrote mode, girl, place, calendar and parameter values). Wrote `config/renames/proposals/o-date.tsv` (1,120 rows, 18 with a HYPOTHESIS mark) and [[spec/o-date]] under [[tickets/T-27022-p2-o-date]] (In Review). No `src/`, `include/` or symbol-file edits.
 Findings: mode 0x50 has four stages (arrival, place, girl birthday gifts, player birthday); the 21 places share one step template and the answer is scored `n x trivia tier x place affinity / 16` per counter (checked in the emulator); a meeting-place question arises when the chosen place differs from the true appointment place; `date_end` counts the visit, stores the last date spot (looks >= 35, or >= 30 except Mira), applies the Golden Week and festival bonuses and the -40 syoushin; a third date in a row at one place from 1996 starts the street-gang ambush; mode 0x5E hosts 48 special date events (11 girls x 4-5 seasons, plus two Miharu intrusions) with a trigger table and fixed rewards.
