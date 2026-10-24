@@ -155,6 +155,8 @@ Stage numbers per block (column: exhibit; `-` = the block has no such stage; sha
 
 The member blocks exist only for the clubs the girl can be in (Mio: literature and drama; Yuina: science and computer; Ayako: art and brass band). A club-mate block is entered only from stage 0. The names in the table are `culture_<girl>_<visit|member>_<exhibit>`, where the exhibit words are `literature_exhibit`, `speech_contest`, `drama_play`, `experiment_show`, `computer_fortune`, `computer_game`, `computer_experiment_show`, `portrait_drawing`, `open_sketching`, `oil_painting_exhibit`, `concert`.
 
+Emulator check of this table: 78 runs from the title-menu state (all 18 club and year pairs for the Shiori visit block, and six pairs - literature 95 and 97, computer 96 and 97, art 96, brass band 95 - for each of girls 1 to 10 as the only met heroine) reached exactly the stages above, including the shared and by-year cases; the visitor pick went to the entry of the one met girl each time.
+
 Megumi and Yumi have no 1995 scenes (their gain-table rows are zero for 95 and the entries test only `year == 96`, sending every other year to the later scene). HYPOTHESIS: they are not met before 1996.
 
 ## 6. The visit scene pattern (135 scene functions)
