@@ -179,6 +179,12 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | taiiku-sai | the sports festival | `sports_festival` | T | strings, disc (`TAIIKU/`), sound (`UNDOKAI`) |
 | folk dance | the folk dance at the sports festival | `folk_dance` | T | disc (`TAIIKU/F_DANCE`) |
 | bunka-sai | the culture festival | `culture_festival` | T | strings, sound (`SCLFEST`) |
+| exhibit | what the player's club presents at the culture festival: one per club and year (literature exhibit, speech contest, drama play, experiment show, computer fortune telling, computer game, portrait drawing, open sketching, oil painting exhibit, concert) | `exhibit`, and the names in brackets as snake_case | T | banner titles (strings), BUNKASAI code |
+| club mate | a girl whose club field equals the player's club; the BUNKASAI member blocks play a scene with her | `member` | T | code (BUNKASAI stage 0 and the member block entries) |
+| visitor | a met girl picked at random who joins the exhibit scene in BUNKASAI | `visitor` | T | code (`culture_visitor_pick`) |
+| fortune telling | the computer club's 1995 exhibit, a printout that compares two blood types; not the omikuji (the shrine slip) | `fortune` | T | banner title, BUNKASAI and BUNKAKEN code |
+| backstage | the banner title shown after a stage show | `backstage` | T | BUNKASAI string |
+| tokimeki gain | the per-girl, per-club, per-year table whose bytes are added to a girl's tokimeki at the end of the festival | `tokimeki_gain` | T | BUNKASAI code (T-27025) |
 | shuugaku ryokou | the school trip | `school_trip` | T | strings, sound (`SYUGAKU`) |
 | shougatsu | New Year | `new_year` | T | strings, O.BIN (`pre_syogatu*`) |
 | hatsumode | the first shrine visit of the year | `hatsumode` | K | strings |
