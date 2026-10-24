@@ -1524,3 +1524,6 @@ Review round 2 of [[tickets/T-27019-p2-m-flow]] approved with no findings: the s
 
 ## [2026-10-24] ticket | o-nameent review round 1 fixes (T-27030)
 [[tickets/T-27030-p2-o-nameent]]: fixed the `file_select_scan` slot range (`slot_status[1..14]`, album 14 counts), the icon layout reset condition, the file counts (62 and 82), the GLOSSARY and ADR rows (`uv`, `file_select`, `opening`, `prologue`), `ui`/`dx`/`dy` names, MainMode merge notes, the cheat string addresses, and marked 15 scene-content names HYPOTHESIS (35 rows start with HYPOTHESIS in `config/renames/proposals/o-nameent.tsv`, 639 rows). `tools/rename.py plan` over func, data, type and field rows: 0 problems. See [[spec/o-nameent]].
+
+## [2026-10-24] ticket | T-27030 Done
+Review round 2 of [[tickets/T-27030-p2-o-nameent]] approved with no findings: the `file_select_scan` slot range (`slot_status[1..14]`, album 14 counts) and the spec 3.9 icon layout reset condition now match `src/ovl/NAME_ENT/80139740.c`; `config/renames/proposals/o-nameent.tsv` has 639 rows of 5 columns, file counts 62/104/9/80 by address (257 functions with the two kept `prologue_line_*`). The branch changes nothing under `src/`, `include/` or `config/symbol*`. Ticket moved to Done and merged by the phase 2 merge step.
