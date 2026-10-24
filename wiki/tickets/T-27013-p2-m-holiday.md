@@ -1,7 +1,7 @@
 ---
 id: T-27013
 title: Phase 2 naming and port spec for the holiday screen, appointments and telephone
-status: In Review
+status: Done
 assignee: Sonnet analyst (p2a-m-holiday)
 created: 2026-10-24
 updated: 2026-10-24
@@ -19,7 +19,7 @@ Roadmap phase 2 (readable code), port-first scope, for unit `m-holiday` = `src/m
 - [x] `wiki/spec/m-holiday.md`: stages, state with the new names, rules (icon availability, the activity, the club flows, the appointment place question, the telephone), data tables, connections, hardware layer at module level, quirks, open questions; linked from `wiki/spec/index.md`.
 - [x] Emulator evidence for the main flows (see Notes).
 - [x] No game text, assets, asm or screenshots committed; no edits under `src/`, `include/` or `config/symbol*` files.
-- [ ] Code review against `CODING_STANDARDS.md` (docs-only change) and merge of the table by the phase 2 merge step.
+- [x] Code review against `CODING_STANDARDS.md` (docs-only change) and merge of the table by the phase 2 merge step.
 
 ## Notes
 
@@ -30,3 +30,5 @@ Roadmap phase 2 (readable code), port-first scope, for unit `m-holiday` = `src/m
 - Open questions are in section 15 of [[spec/m-holiday]].
 
 ## Comments
+
+2026-10-24, review: approved. The branch changes only `config/renames/proposals/m-holiday.tsv`, [[spec/m-holiday]], [[spec/index]], this ticket and the log; nothing under `src/`, `include/` or `config/symbol*`, so no `CODING_STANDARDS.md` code checklist item applies. The reviewer checked the table and spec against `src/main/80075320.c`, `800737A0.c` (`parameter_up_down`, matches spec section 5.5) and the TEL writer. Four non-blocking findings, left for the phase 2 merge step and a later lint pass: (1) the `holiday_birthday_event_due` note and spec sections 4.2 (item 4) and 10 write `girl_state(0) & 0x80`, but the C calls `get_g_zyotai_s(0) & 0x80` (O.BIN name; core's `girl_state_rank` is a different function that masks off bit 7); the bit-7 meaning is right. (2) `HolidayRules 4 HOLIDAY_GAIN_MULTIPLIER` duplicates `ParamScale 4 PARAM_HOLIDAY_FACTOR` in `m-weekday.tsv`, and the multiplier lives inside `parameter_up_down`, so this object has no use site. (3) The `file` row only proposes `src/main/holiday.c`; the unit's declarations sit in the shared `include/main_api.h` (T-20940 block), so say that no header is owned. (4) Open question 1 (appointment-word place values are 0-based) is a correct catch that contradicts merged `core.tsv`; the TEL writer stores the raw 0-based menu index. Moved to Done and merged as `p2a-m-holiday`.
