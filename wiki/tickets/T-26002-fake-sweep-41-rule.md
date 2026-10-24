@@ -1,7 +1,7 @@
 ---
 id: T-26002
 title: Sweep the FAKEs that steered the old block-copy detector
-status: In Progress
+status: Done
 assignee: w20-fake-sweep (Sonnet)
 created: 2026-10-24
 updated: 2026-10-24
@@ -52,4 +52,10 @@ Comments updated (reason and T-26002): GYOZI and SHOUGATU repeated copy lines; t
 
 Open: when the pass models F at a branch on a value (T-26000 follow-up, needs the 4.1 measurements of `func_8006B0C8`'s 4-byte copy), the four never-true arms can go; this sweep does not change that.
 
-Proof: clean rebuild (`rm -rf build && configure.py && ninja -j2`) 27/27 sha1 OK with the comment edits; `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK, `python3 -m unittest discover -s tools -p 'test_*.py'`: 1580 tests OK (3 skipped). Review (CODING_STANDARDS section 7: every kept FAKE has its marker, ticket and reason) still to do before Done.
+Proof: clean rebuild (`rm -rf build && configure.py && ninja -j2`) 27/27 sha1 OK with the comment edits; `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK, `python3 -m unittest discover -s tools -p 'test_*.py'`: 1580 tests OK (3 skipped). Review: see below.
+
+### 2026-10-24, review: approved
+
+Standards and spec review (CODING_STANDARDS section 7) approved with no blocking findings. The source diff is comment-only in 5 files; no FAKE was removed, so no new trick replaces one, and every kept FAKE comment has its marker, ticket and reason. `funcdiff --resolve --version default` gives MATCH for all six changed functions (main `strCallback` and `func_8005938C`, GYOZI `func_8014494C`, SHOUGATU `func_8014265C`, MASTER `func_801344E0` and `func_801363F4`). The corrected GYOZI and SHOUGATU comments are right: the original holds two separate block-copy loops, so one repeated copy line produces them and does not steer the state.
+
+Non-blocking findings, both resolved at merge: the kanban card was missing (added under Done), and the bare `copy_dropped_arm_store` in the `strCallback` and `func_8005938C` comments now carries its path `tools/ido_eval_cases/ugen_copy_state/copy_dropped_arm_store.c`.

@@ -152,6 +152,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-26002-fake-sweep-41-rule|T-26002 Sweep the FAKEs that steered the old block-copy detector]]
 - [ ] [[tickets/T-25312-w10-TACO-801447D0|T-25312 Wave 10 second pass on src/ovl/TACO/801447D0.c]]
 - [ ] [[tickets/T-25313-w10-main-80043510|T-25313 Wave 10 second pass on src/main/80043510.c]]
 - [ ] [[tickets/T-25315-w10-SHOUGATU-80134890|T-25315 Wave 10 second pass on src/ovl/SHOUGATU/80134890.c]]
