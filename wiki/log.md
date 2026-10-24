@@ -1741,3 +1741,9 @@ Case `copy_store_then_ne0_left_if` (indirect store first) showed that IDO 4.1 ke
 ## [2026-10-24] ticket | T-26000 Done
 [[tickets/T-26000-ugen-block-copy-41-rule]] passed the standards and spec reviews (approved, four non-blocking follow-ups noted in the ticket) and moves to Done.
 Merged as w17-ugen41; follow-up still to file: the 4.1 census of F at a value branch, `func_8006B0C8`'s 4-byte copy, stored compares, `Uxjp`, `Uijp`.
+
+## [2026-10-24] ticket | T-26002 FAKE sweep under the 4.1 block-copy rule (In Progress)
+[[tickets/T-26002-fake-sweep-41-rule]] created on branch w20-fake-sweep (base w2-good) to remove the FAKEs that only steered the old block-copy detector.
+
+## [2026-10-24] build | T-26002: no FAKE removable, comments of the kept ones corrected
+Census of the full build (566 procedures with a `Umov`, throwaway logging shim, scripts in `drafts/T-26002/`): the copy state depends on a FAKE in exactly four procedures, MASTER `func_801344E0`, `func_801363F4`, main `strCallback`, `func_8005938C`. Of the 58 candidate hits, 50 are other mechanisms (35 in functions without a block copy); the 8 related ones were removed and rebuilt one by one and all stay: the four never-true arms, the repeated copy line of GYOZI `func_8014494C` and SHOUGATU `func_8014265C` (the original has two identical loops, both B), and the frame pads of GEKO `func_801406CC` and EVENT `func_80109404`. Comments of the arms and the repeated lines rewritten (comment-only edits to `src/main/800563F0.c`, `src/main/80058D20.c`, `src/ovl/MASTER/80133680.c`, `src/ovl/GYOZI/80143AD0.c`, `src/ovl/SHOUGATU/80141780.c`). Notes in [[matching-notes]] "T-26002".
