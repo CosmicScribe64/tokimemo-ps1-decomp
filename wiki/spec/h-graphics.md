@@ -42,20 +42,23 @@ Steps of `render_frame`, in order:
    `screen_brightness_step` (brightness += signed rate, clamped 0..255).
 2. If `actor_draw_enabled == 1`: `actor_pool_draw`.
 3. If `screen_layer_enabled != 0`: `srn_set(0)` draws screen layer 0.
-4. If `draw_2d_enabled` and `sprite_table_enabled`: for each of the 64 entries of `sprite_table` call GsSortSprite
+4. If `draw_2d_enabled` and `display_pass_enabled` (set to 1 at boot and by many scene setups, never cleared in C, so
+   always on in practice): for each of the 64 entries of `sprite_table` call GsSortSprite
    (priority byte bit 7 set) or GsSortFastSprite (clear) at OT slot `(byte - 1) & 0x7F`; then `disp_string` (kanji
    text, see the text unit); then BG slots 0 and 1 whose `bg_slot_priority` is below 0x80, at slot `value - 1`.
-5. If `draw_3d_enabled`: the 3D pass (view setup at `D_80122740`, four model objects at `model_objects`, each
-   transformed and sorted, scratchpad as work area). Scenes that call `draw2d3d(1, 1)`: ETC, TACO and the title menu
+5. If `draw_3d_enabled`: the 3D pass (view setup at `D_80122740`, then the 16 model object records of 16 bytes at
+   `model_objects`, `D_80122640` to `D_80122740`, each transformed and sorted, scratchpad as work area; scenes hide a
+   record by setting its first word to 0x80000000). Scenes that call `draw2d3d(1, 1)`: ETC, TACO and the title menu
    (`80061710.c`); all other scenes use `draw2d3d(1, 0)` (2D only) or `draw2d3d(0, 0)` (nothing drawn).
 6. If `present` (always): stamp [2]; flush the VRAM upload queue and the palette queue (`csr_load_vram`,
-   `palette_load_vram`); wait for the GPU (`DrawSync(0)`) except in TACO (mode 0x90) stages 10 and up other than 12;
-   stamp [3]; frame limiter (below); stamp [0]; poll the pads (`func_80042A00`).
+   `palette_load_vram`); wait for the GPU (`DrawSync(0)`) except in TACO (mode 0x90) stages 10 and up other than 12
+   (stage 12 does wait for the GPU and still takes the 2-vblank limiter below); stamp [3]; frame limiter (below); stamp [0]; poll the pads (`func_80042A00`).
 7. `func_8009C210(1)` (HYPOTHESIS: PsyQ ResetGraph(1), cancel unfinished drawing; the boot code calls it with 0), reset the
    hcount counter, swap/prepare the display buffers, optionally clear the background (`back_clear_enabled`: colour
    `back_clear_r/g/b`), and draw the ordering table.
 
-Frame limiter: in TACO stages 10 and up (not 12) the frame waits 2 vblanks (30 fps); otherwise it waits for the next
+Frame limiter: in every TACO stage from 10 up (12 included) the frame waits 2 vblanks (30 fps; the call `func_8009C210(1)`
+of step 7 is also made right after this wait); otherwise it waits for the next
 vblank only when the hcount is still below `frame_min_hcount` (0x106 = 262 lines, one NTSC frame). A frame that is
 late is not delayed further. For the port: fixed 60 fps tick, 30 fps in those TACO stages.
 
@@ -65,18 +68,21 @@ by whole frames used (0 blue, 1 green, 2 yellow, 3+ red). Debug only.
 `draw2d3d(draw_2d, draw_3d)` and `actor_draw_enable(on)` set the pass flags; scenes call them in their setup.
 `back_clear_switch(on)` sets `back_clear_enabled`. `scene_gfx_init(clear, full)` (51 overlay uses) is the standard
 scene reset: 2D only, actor drawing on, actor records 96..159 reset, back clear = `clear`, clear colour black,
-brightness 0x80, text system reset, screen layer off, texture-block cache cleared (all slots if `full`, else keeping
+brightness 0x80, the sprite table cleared (64 entries hidden, priority bytes 0) and both BG slots hidden, the text list
+(52 entries) cleared and the text palette rows reloaded, screen layer off, texture-block cache cleared (all slots if `full`, else keeping
 the default system blocks).
 
 ## Screen geometry and draw origin
 
 Screen 320x240 for normal scenes; `screen_flash_color_wide` covers 512. Every hand-built primitive adds
 `draw_origin_x[buf]` and `draw_origin_y[buf]`: x origin 160 (+ shake) for both buffers, y origin 360 (+ shake) for
-buffer 0 and 120 for buffer 1. The two frame buffers sit one above the other in VRAM (y 0 and 240), so callers draw
+buffer 0 and 120 for buffer 1. The two frame buffers sit one above the other in VRAM (buffer 1 at y 0, buffer 0 at y 240), so callers draw
 with the screen centre at (0,0): x -160..159, y -120..119. The libgs sorters (GsSprite, GsBg) take their offset from the
-libgs draw environment, not from these fields (HYPOTHESIS: same centre; set outside this unit), so the shake moves
-only the hand-built primitives (`prim_*`, `fx_*`, debug text, tile sprites, strips) unless the begin-frame code also
-reads `D_801255E0/E2` (nothing in C does).
+libgs draw environment, not from these fields (HYPOTHESIS: same centre; set outside this unit). So the shake moves only
+what reads `draw_origin_*`: the `prim_*` and `fx_*` primitives, the debug text, and the `srn_tpage_show` and `Scroll` strips.
+The tile sprites of `mod_set_gpu` (and so of `srn_set` layers) do not shake: they hard-code the centre (x + 0xA0,
+y + 0x168 - buffer * 0xF0) and never read the fields. `D_801255E0/E2` hold the shifted centre (x + 0xA0, y + 0x78) and
+nothing in C reads them, so the libgs-sorted sprites shake only if the begin-frame code reads them (unconfirmed).
 
 Screen shake: `screen_shake_start` sets `screen_shake_counter = 4`. Each `screen_shake_update` (called from
 `Default_Disp` and about a dozen scenes) computes `q = rsin(T * 4) / 4 / (counter + 0x100)` with
@@ -119,9 +125,9 @@ Part to sprite (the `GsSprite` handed to the sorter, parts drawn from the last t
 - Texture: the part's texture id selects a 128x128 block: id >> 6 (16-pixel cells, 4-bit) or id >> 8 (8-pixel
   cells, 8-bit when `texture_flags` bit 3) indexes `texture_blocks`; `search_tpage`/`search_tpage8` returns the VRAM
   slot; u,v come from the low bits of the id (cell column, row), page from the slot.
-- Palette: row = `0x1E0 + (palette_info bits 8..11)` (+0x10 when `palette_mode` bit 7); column x = 16 * the top bits
-  of the low byte of `palette_info`, 4 bits for `palette_mode & 0x7F` = 1, 3 bits for 2, 2 bits for 4, 1 bit for 8,
-  else 0. If `clut_row` is nonzero it overrides the row to `0x1E0 + (clut_row & 0x1F)`, and `clut_row & 0x60` of 0x20 or
+- Palette: row = `0x1E0 + (palette_info bits 8..11)` (+0x10 when `palette_mode` bit 7); column x = `((palette_info & mask) >> 4)
+  * 16` with mask 0xF0, 0xE0, 0xC0, 0x80 for `palette_mode & 0x7F` = 1, 2, 4, 8 (the top 4, 3, 2, 1 bits of the low byte,
+  in steps of 16, 32, 64, 128 pixels), else 0. If `clut_row` is nonzero it overrides the row to `0x1E0 + (clut_row & 0x1F)`, and `clut_row & 0x60` of 0x20 or
   0x40 sets the column to 0x100 or 0x120 (other values keep the `palette_mode` rule, which needs bit 7 here).
 - Colour: if `ACTOR_DRAW_SCREEN_BRIGHTNESS` the three channels equal `screen_brightness`; else if any of
   `tint_r/g/b` is nonzero those; else `brightness` in all three.
@@ -132,7 +138,8 @@ After drawing, unless `ACTOR_ANIM_DIRECT`, if `ACTOR_ANIM_RUN` is set the animat
 when bit 7 of `anim_speed` is set, else +1 every `anim_speed` frames (`frame_count % anim_speed == 0`, speed 0 = frozen);
 when `anim_timer >= duration` of the current step: step + 1 (ping-pong forward), step - 1 (backward phase, stops at
 frame 0), or step + 1; timer reset. At the end of the sequence (`frame_index >= count`): `END_REWIND` rewinds and stops,
-`END_BACK` steps back one frame and clears its bit, `END_HIDE` rewinds, stops and clears ACTIVE, ping-pong switches
+`END_BACK` steps back to the last frame and clears both its own bit and `RUN` (the animation plays once and holds the last
+frame), `END_HIDE` rewinds, stops and clears ACTIVE, ping-pong switches
 to the backward phase (back up 1 frame, or 3 with `ACTOR_DRAW_FIRST_PARTS`), otherwise loops to 0.
 Finally, if `ACTOR_DRAW_MOVE`: x += velocity_x, y += velocity_y (16.16).
 
@@ -197,7 +204,7 @@ Primitive builders (all add `draw_origin` to the coordinates and insert at an OT
 | `prim_line_gradient(x0,y0,x1,y1,rgb0,rgb1,flags)` | two-colour line; flags bit 7 semi-transparent, low bits slot |
 | `_sprite_set_light_effect1` | pulsing triangle: colour + `rsin(frame_count * 0xFF0) * 32 / 4096`, apex colour 3/5, base black; base width from `abs(rsin((frame_count + phase) * 0xFF0)) * 8 / 4096` |
 | `fx_glow_disc(cx,cy,r,stepx,stepy,rgb,blend,slot)` | square tiles on a grid inside a circle, colour * `(2r - |dx| - |dy|) / r` clamped 255, then a draw-mode primitive with blend `blend & 3` and dithering |
-| `fx_disc_tiles(cx,cy,r,w,h,slot)` | HYPOTHESIS: same disc layout, textured 16x16 cells from VRAM page (0x3C0,0x100), clut jittered by `rand() & 8`; only the New Year scene |
+| `fx_disc_tiles(cx,cy,r,w,h,slot)` | HYPOTHESIS: same disc layout, quads of w x h pixels (each at least 8, arguments masked with 0x7F) that sample a 16x16 texture cell at (0xC0,0x50) of VRAM page (0x3C0,0x100), clut position jittered by `rand() & 8`; only the New Year scene |
 | `goto_tpage`, `dtd_on_tpage`, `dtd_on`, `safe_env` | draw-mode primitives: texture page (x, y, depth, blend), dithering on, reset draw offset |
 | `bg_slot_setup(tex, slot, _, w, h, clut, x, y, prio, tp)` | fills a `GsBg` of w x h blocks of 128x120 pixels at (x,y), cells point to blocks locked in slots `tp + col + row*32`; `bg_slot_priority[slot] = prio` |
 
@@ -228,8 +235,8 @@ SHUGAKU; the port can compute the same colours directly.
 
 Enabled by `debug_hud_enabled` (a hidden options flag) and shown when `debug_hud_level >= 4`: `debug_print_int`,
 `debug_print_hex`, `debug_print_string` draw digits and 5-bit glyph codes as 8x8 sprites from a debug font at VRAM
-(0x2C0, 0x1E0) loaded by `debug_font_load`. `game_main` steps `debug_hud_level` (8 down to 0, wrapping) while a pad
-combo is held and the flag is set. The port can drop it.
+(0x2C0, 0x1E0) loaded by `debug_font_load`. the main loop (`func_80042134`) steps `debug_hud_level` (8 down to 0, wrapping)
+while a pad combo is held and the flag is set. The port can drop it.
 
 ## Sound-bank loader (second half of `frame_render.c`; owned by the sound unit)
 
@@ -241,13 +248,19 @@ music: `sound_bank_load_start(set, b, c, d, e, f)` queues the CD reads (HYPOTHES
 then send the bank transfer ids and return 1 when the transfer flags clear or after 0xC0 polls;
 `bgm_play(set, seq)` checks the loaded pack header (low half 0x40) and sends setup ids then `seq | 0x200`;
 `bgm_stop`, `bgm_is_playing`, `bgm_current_set` expose the state. All of this is HYPOTHESIS-level naming; confirm
-with the sound unit.
+with the sound unit. The loader's internal globals are left unnamed in the table (the sound unit names them): `D_800B3D20`
+CD completion mark, `D_800B3D24` set of the load in progress, `D_800B3D28/2C` skipped flags of the two file groups,
+`D_800B3D30..3C` cached file ids per set, `D_800B3D4C` poll count, `D_800B3D50/54` active and pending flags. Only the music
+state read by other code (`D_800B3D40/44/48`) is named.
 
 ## Non-graphics helpers in `scene_display.c`
 
-`pick_top_girl()` (MASTER, RENSYU, TAIIKU): among girls 0..10 whose record flag `b1` is set, pick the highest
-`get_h_tokimeki + get_h_yuukou`; ties go to the lower `girl_state_code` (`get_g_zyotai_s & 0x7F`), then the smaller sum of
-record fields +2 and +6. HYPOTHESIS: the flag marks girls the player knows. `overlay_load_verify_step` (step counter
+`pick_top_girl()` (MASTER, RENSYU, TAIIKU): score of a girl = `get_h_tokimeki + get_h_yuukou`. The best starts as girl 0
+(her record flag is not tested). The girls 0..10 whose record flag `b1` is set are listed, and every listed girl except the
+first one (girl 0 when she is flagged) is compared with the current best, in index order: she replaces the best when her
+score is higher and the best's `girl_state_code` (`get_g_zyotai_s & 0x7F`) is not below hers, or when the scores are equal,
+the best's state code is not below hers and the sum of her record fields +2 and +6 is the larger one. A higher scorer with
+a larger state code than the best is passed over. HYPOTHESIS: the flag marks girls the player knows. `overlay_load_verify_step` (step counter
 `unk_110D`: start a CD sync, then verify the four entry words and `file_checksum_ok(0x2D)`, restart on failure)
 belongs to the CD/overlay unit. `actor_pair_swap_sequences` has no caller.
 
@@ -259,10 +272,21 @@ belongs to the CD/overlay unit. `actor_pair_swap_sequences` has no caller.
 - Types shared with other units: `GsSprite` (Rec24: the `sprite_table` and the output of every sprite builder),
   `DisplayActor` (every scene fills it), `GameState` fields above.
 
+## Cross-unit names
+
+Two items overlap with the h-cdio table (`config/renames/proposals/h-cdio.tsv`); the merge needs one name for each:
+
+- `GameState` `unk_014/unk_018`: this table uses `draw_origin_x/y`. The values are verified here (`func_80047560` sets 0xA0 for
+  x, 0x168 for y of buffer 0 and 0x78 for buffer 1; flash boxes span -0xA0..0xA0, so game coordinates are centre-relative),
+  while h-cdio calls them `screen_center_x/y` and marks y as not seen. Take the `draw_origin_*` names and the values from here.
+- `D_80122640` `model_objects`: both tables use the name; both now say 16 records of 16 bytes.
+
 ## Open questions
 
 - Is `func_80098B80` GsSortFastSprite (size 0x178) or GsSortSprite as the matching notes say? The sizes and the
-  uses here (`render_frame` priority bit, `mod_set` setting scale 0x1000) support func_80098680 = full sorter.
+  uses here (`render_frame` priority bit, rotation set only in `actor_pool_draw` and never in `mod_set`) support
+  func_80098680 = GsSortSprite. The table follows that reading; the comment at `src/main/8004C3F0.c:441` says the
+  opposite and must be corrected when the names are applied.
 - What the two disc effects show in the New Year and date scenes (names are shape names only).
 - Meaning of `ACTOR_DRAW_FIRST_PARTS` (bit 3 of `draw_flags`) in game terms.
 - Field `unk_1098` (last actor index to draw; shares an array with the menu bytes) needs a name in the GameState pass.
