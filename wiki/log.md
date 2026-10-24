@@ -7,34 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ingest | Preserve corrected SHOUGATU guard while Astra continues
-
-Root reviewed pin7a9ed5a81 and ancestor T-25031 evidence against CODING_STANDARDS: marked caller views, corrected random field, canonical helper, intact NON_MATCHING fallback. Merged append-only board/log conflicts preserving both histories. Docker rebuilt SHOUGATU and verified its checksum plus headers; wiki lint reports zero broken links/status mismatches, with size warnings for log and data/t0018-cases. This verifies fallback safety, not a C match. Both Astra chats confirmed active; updated [[plan-remaining]] to supersede historical time limits and ownership. Contributor watcher shows no PR changes and issue65 remains the existing GEKO/OPTION claim. Coverage unchanged; T-25033 remains In Progress.
-
-## [2026-10-22] ticket | Read-only MAIN qualification
-
-Created [[tickets/T-25032-main-candidate-audit]] In Progress; release800563F0.c editing. Read latest main b6d7754bd and prior T-25028/30 tables before selecting from current membership. Bound12MAIN functions/15minutes, no builds/source sweeps/subagents/Astra. Preserve37bf807db separately; root handles integration.
-
-## [2026-10-22] query | MAIN remaining extent-width candidate
-
-[[tickets/T-25032-main-candidate-audit]] stops early after five focused remaining candidates and two raw-prefix provenance checks. Latest main44a495b88 confirms membership. Newest tracked func_80046AC8 still narrows tile extent to s16 before positive test; target branches on full word and narrows only at TILE store. Known T-24501 suspect now confirmed as still-unrepaired source/control gap, not a new archive discovery. Current callers and exact one-type baseline experiment recorded in drafts/T-25032/README.md; reuse any existing private corrected variant first. No builds, source experiments, workers/Astra, production/root edits or coverage change.
-
-## [2026-10-22] lint | MAIN read-only audit checkpoint
-
-Metadata-only Docker catalog/lint pass:796 tickets,444 sections,3,078 functions; zero broken links, zero status mismatches, one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes and src/, include/, tools/ unchanged. No compiler/build/source trial occurred. Candidate qualification is ready for root review; no match or coverage credit.
-
-## [2026-10-22] ingest | Preserve MAIN extent-width evidence
-
-Root reviewed and integrated T-25032 pin62948769f, documenting the full-word branch versus s16 draft narrowing in func_80046AC8. Documentation only; implementation continues independently under T-25034 with Astra. No match credited. Preserved both log histories and regenerated the wiki catalog to include the integrated tickets.
-
-## [2026-10-22] ticket | Full-width quadrant extent implementation
-
-Created [[tickets/T-25034-main-quadrant-extent]] In Progress after pinning [[tickets/T-25032-main-candidate-audit]] at62948769f. Exclusive source src/main/80046500.c; first repair retains full-word tile branch values and narrows only at TILE store. Preserve baseline and semantic checkpoint even if score regresses. One worker, bounded investigation, root owns integration; no shared-header/build changes.
-
-## [2026-10-22] build | Quadrant full-word extent correction
-
-[[tickets/T-25034-main-quadrant-extent]] reproduces674target/680built words,738aligned/796printed. Single extent-width repair improves to671words,613/649 and matches all four signed full-word branch widths, narrowing only to TILE fields. Continued source/lifetime reconstruction: shared primitive role reduces frameB8->B0; mask/callback lifetimes and target UV-tail sharing remain under investigation. No promotion or coverage claim; sustained matching continues.
-
 ## [2026-10-22] decision | Astra owns sustained quadrant matching
 
 Human requests Astra hands-on and no stopping before resolution. [[tickets/T-25034-main-quadrant-extent]] transfers sole source writer to Astra; Sol coordinates without duplicate experiments. Prior time/probe caps superseded. Corrected source improves to674target/671built words,367aligned/389printed with frameB0 and full-word extent tests. Saved source and ledger before handoff; matching continues through remaining CFG/lifetime/frame differences. No production match or coverage claim yet.
@@ -1620,6 +1592,7 @@ Reviewer round 2 on [[tickets/T-27011-p2-m-scheduler]] approved the five round-1
 
 ## [2026-10-24] ticket | T-27011 Done
 Review round 3 of [[tickets/T-27011-p2-m-scheduler]] approved with no findings: the TEL pending-entry fix (last pending entry) matches `src/ovl/TEL/80132000.c` lines 404-424, the table keeps 115 rows of 5 columns, and the branch changes only `config/renames/proposals/m-scheduler.tsv` and wiki files (nothing under `src/`, `include/` or `config/symbol*`). Ticket set to Done; branch p2a-m-scheduler merged into w2-good. Table: `config/renames/proposals/m-scheduler.tsv`, spec: [[spec/m-scheduler]].
+
 ## [2026-10-24] ingest | Phase 2 analysis of the main HUD unit (T-27016)
 Read `src/main/80062CD0.c` and `src/main/800674B0.c` (81 functions: portrait face, parameter and date panels, message window and title banner, command icon bar, season and vacation helpers, day music, check-pattern background, calendar page with marks and biorhythm graph, information magazine, appointments, club list, save slot panel, mascot, cursor services) with their callers; wrote [[spec/m-hud]] and `config/renames/proposals/m-hud.tsv` (200 rows, 9 marked HYPOTHESIS) under [[tickets/T-27016-p2-m-hud]] (In Review). Main findings: the three 23, 28 and 33 day sine waves behind the command roll (`command_roll_poor_result`, `biorhythm_value`); the 21 flag bytes of `GameState.unk_120` are the date place flags (quarterly magazine, the friend's phone call, GEKO events); free icon layout rules; calendar mark rules and cell geometry; season, summer and vacation tables; lip-sync thresholds per girl. Emulator checks from a weekday-run save state (layout screenshot, 145-frame trace, `break` on the roll, write watch on the cursor guard byte, dumps); the calendar check page was seen on screen, the TEL date-day pick page was not. Names follow `config/renames/proposals/core.tsv` and the hardware tables; nothing under `src/`, `include/` or `config/symbol*` changed.
 
