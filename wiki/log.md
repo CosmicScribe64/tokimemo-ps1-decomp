@@ -1741,3 +1741,7 @@ Case `copy_store_then_ne0_left_if` (indirect store first) showed that IDO 4.1 ke
 ## [2026-10-24] ticket | T-26000 Done
 [[tickets/T-26000-ugen-block-copy-41-rule]] passed the standards and spec reviews (approved, four non-blocking follow-ups noted in the ticket) and moves to Done.
 Merged as w17-ugen41; follow-up still to file: the 4.1 census of F at a value branch, `func_8006B0C8`'s 4-byte copy, stored compares, `Uxjp`, `Uijp`.
+
+## [2026-10-24] ingest | h-graphics phase-2 table and port spec
+Unit h-graphics (`src/main/80043510.c`, `80047550.c`, `800490C0.c`, `80049FF0.c`, `8004AD60.c`, `8004C3F0.c`, `80085E30.c`): read the matched C and its callers, checked behaviour with `tools/emu/run.sh trace` and `watch` from a NAME_ENT save state, wrote `config/renames/proposals/h-graphics.tsv` (274 rows, 25 HYPOTHESIS) and [[spec/h-graphics]], linked from [[spec/index]]; ticket [[tickets/T-27020-p2-h-graphics]] In Review. No src/, include/ or symbol-file changes.
+Findings: `Rec24` has the libgs GsSPRITE layout; the work-area allocator spaces primitives at 4x their size; the texture-block cache never evicts; `func_80043510` is the per-frame renderer (always called with 1) from the main loop `func_80042134`; the second half of `80043510.c` and five helpers in `80085E30.c` are not graphics (sound-bank loader, girl pick, overlay check).

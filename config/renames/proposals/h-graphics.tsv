@@ -1,0 +1,274 @@
+file	main	src/main/80043510.c	src/main/frame_render.c	holds render_frame, the VRAM upload queues, frame-time bars and (second half) the sound-bank loader; the loader could later move to sound_bank_load.c
+file	main	src/main/80047550.c	src/main/actor_sprites.c	screen shake, actor sprite renderer, texture-block cache, actor reset, screen brightness
+file	main	src/main/800490C0.c	src/main/gpu_prims.c	primitive work-area allocator, POLY_FT4 sprite, draw-mode prims, light triangle, gradient box
+file	main	src/main/80049FF0.c	src/main/gpu_effects.c	gradient line, filled rect, BG slot setup, disc effects, screen flash
+file	main	src/main/8004AD60.c	src/main/debug_hud_palette.c	debug number/text overlay (first half) and palette helpers (grey, colour bars, sepia); could split into debug_hud.c and palette_effects.c
+file	main	src/main/8004C3F0.c	src/main/screen_layers.c	screen layers (srn_*), tile sets (mod_*), glyph/tile fetch (get_fnt)
+file	main	src/main/80085E30.c	src/main/scene_display.c	scene graphics init, vblank timer, scroll strip, fades, finger cursor, default display step; also 5 non-graphics helpers (girl pick, overlay check)
+func	main	func_80043510	render_frame	only caller is the main loop func_80042134, argument always 1; emu: runs once per frame (119 of 119 frames); builds 2D/3D draw lists, flushes VRAM queues, waits GPU/vblank, draws OT
+func	main	func_8004443C	frame_time_bars_draw	draws 4 bars from D_800B3D10 hcount stamps (height = stamp*16/264); no caller in C
+func	main	func_80044700	palette_row_copy	MoveImage of a 16-colour row at y 0x1E0+row to x 0x100; no caller in C
+func	main	func_80044750	sound_request	forwards id to func_80079B10 (sound command queue), returns 1; 1182 uses
+func	main	func_80044774	bgm_stop	HYPOTHESIS: with arg 0 sends sound id 0x1200 and clears the playing flag D_800B3D40 once the pack at 0x8001C000 is loaded (header word 0x40); every caller passes 0; a non-zero arg replays the stored sequence via bgm_play
+func	main	func_8004480C	bgm_is_playing	HYPOTHESIS: returns D_800B3D40, set to 1 by bgm_play and cleared by bgm_stop; callers test == 0 before starting music
+func	main	func_8004481C	bgm_current_set	HYPOTHESIS: returns D_800B3D44 (bank set 0/1 of the last bgm_play, 0xFF = none)
+func	main	func_8004482C	sound_bank_state_reset	clears the loader flags and cached file ids D_800B3D28..D_800B3D54
+func	main	func_80044890	sound_bank_load_start	HYPOTHESIS: starts CD loads for one of two sound bank sets (a); b,c = shared bank files, d,e,f = per-scene bank files; skips files already cached in D_800B3D30..3C
+func	main	func_80044C98	sound_bank_load_poll	HYPOTHESIS: returns -1 until the CD completion counter has advanced 5 past the mark, then runs transfer_start once, then returns 1 when the transfers are done or after 0xC0 polls (TACO polls it)
+func	main	func_80044D54	sound_bank_transfer_start	HYPOTHESIS: sends sound ids 0x11-0x16 (bank transfer commands) chosen by which files were loaded
+func	main	func_80044E8C	sound_bank_wait_ready	HYPOTHESIS: poll like load_poll that also sends setup ids 0x21/0x22/0x2F or 0x23/0x24/0x2E on completion; 176 uses, every scene start
+func	main	func_80044F94	sound_bank_transfer_done	HYPOTHESIS: true when func_80079E00 reports both transfer bits of the set clear
+func	main	func_8004500C	bgm_play	HYPOTHESIS: checks the pack at 0x8001C000/0x8002E800, sends setup ids then (seq|0x200), stores set/seq and playing=1; main calls (0,0)
+func	main	func_800450F4	bgm_play_short	HYPOTHESIS: like bgm_play without the 0x21/0x24 setup id; TACO only
+func	main	func_80047550	screen_shake_start	sets counter D_801255DC=4; func_80047560 then runs a damped sine
+func	main	func_80047560	screen_shake_update	each frame: sin(triangular sum*4)/4/(counter+0x100) added to draw origin; counter +=4, ends above 0x80; resets origin to 160,120 when 0
+func	main	func_800476C0	actor_pool_draw	walks actors 0..unk_1098: draws parts as GsSprite via GsSortSprite, advances animation timers, applies velocity; emu: runs once per frame
+func	main	func_80048CF8	tpage_buf_print	printf dump of the 64 resident-block words when unk_F80 bit 1 is set (debug)
+func	main	func_80048DAC	actor_draw_enable	sets unk_1112 (checked by render_frame before actor_pool_draw); 89 uses, scene setup
+func	main	func_80048DD0	actors_deactivate	prints a debug line and zeroes the draw-flags byte (+3) of the first count actors, or all 160 when count is 0
+func	main	func_80048E78	actor_reset_scene_range	actor_reset for records 0x60..0x9F (the scene-owned half of the pool)
+func	main	func_80048EB8	actor_reset_range	actor_reset for records 1..n-1 (n=0 or >0xA0: all), keeping actor 0 x, y and frame
+func	main	func_80048F64	actor_reset	writes default values (scale 0x1000, brightness 0x80, speed 1, default image/sequence/texture tables) into one actor record
+func	main	func_8004901C	screen_brightness_get	returns GameState unk_03A (0x80 normal), used as the grey modulation of screen layers, tile sprites and flagged actors
+func	main	func_8004902C	screen_brightness_reset	sets unk_03A=0x80 and rate unk_03B=0
+func	main	func_80049044	screen_brightness_step	adds the signed rate unk_03B to unk_03A, clamped 0..255; emu: called once per render_frame
+func	main	func_800490B4	screen_brightness_set_rate	stores the signed per-frame brightness change in unk_03B
+func	main	func_80049A40	prim_box_gouraud	POLY_G4 box at x,y size w,h; arg5 RGB, arg6 bit 7 = semi-transparent, low bits pick the vertex shading (7 variants)
+func	main	func_80049FF0	prim_line_gradient	LINE_G2 from (x0,y0) to (x1,y1) with two RGB colours; flags bit 7 semi-transparent, low bits OT slot
+func	main	func_8004A14C	prim_fill_rect	func_80049A40 with flat colour (mode 1) for a RECT; first argument unused; used by frame_time_bars_draw
+func	main	func_8004A1A0	bg_slot_setup	builds a GsBG slot (w x h blocks of 128x120 px) from block source addresses and locks them in the texture-block cache; 25 uses ETC, NAME_ENT, main
+func	main	func_8004A414	fx_disc_tiles	HYPOTHESIS: fills a disc with textured 8-px tiles from VRAM (0x3C0,0x100) with random clut jitter; only SHOUGATU steps 0x13-0x1B
+func	main	func_8004A814	fx_glow_disc	disc of semi-transparent TILE squares whose colour falls off with Manhattan distance (soft glow); DATE and DATE2 draw three
+func	main	func_8004AC18	screen_flash_gray	two additive (blend 1) full-screen boxes of grey level*0x010101, clamp 0xFFFFFF; brightens the screen; 22 uses
+func	main	func_8004ACC8	screen_flash_color_wide	same flash with an RGB colour over a 512-wide screen; TACO and main
+func	main	func_8004AD60	debug_hud_level_step	arg 0 sets level 0, else level-1 wrapping to 8 (clamp 8); called from game_main when the pad combo is held
+func	main	func_8004ADAC	debug_hud_level_set	sets D_800B3D80, clamped to 8
+func	main	func_8004ADD4	debug_hud_level_get	returns D_800B3D80
+func	main	func_8004ADE4	debug_font_load	LoadImage of a 64x32 font block to VRAM (0x2C0,0x1E0) when the debug flag D_800B3220 is set
+func	main	func_8004AE28	debug_print_int	debug_print_int_color with colour 0xF; 63 uses, mostly OPTION
+func	main	func_8004AE54	debug_print_int_color	draws a decimal number (and sign) as 8x8 SPRTs right to left from x, only when level >= 4 and D_800B3220
+func	main	func_8004B19C	debug_print_hex	draws a hexadecimal number as 8x8 SPRTs, 6 px pitch, same gating
+func	main	func_8004B338	debug_print_string	debug_print_string_color with colour 0xF
+func	main	func_8004B358	debug_print_string_color	draws a 0-terminated string of 5-bit glyph codes (bit 5 = narrow 6x12 glyph)
+func	main	func_8004B590	palette_to_gray	128 words (256 colours): luminance (30,59,11)/100 per colour, minimum 1 for non-black
+func	main	func_8004E44C	mod_init	fills tile-set record idx (ModRec14) from a file header: bank table, tile words, pixel format, cols, rows, tile size
+func	main	func_80085E30	scene_gfx_init	resets 2D mode, actor draw, actors 96-159, back clear flag, colour 0, brightness 0x80, text system, clears texture-block cache; 51 uses in overlays
+func	main	func_8008647C	pick_top_girl	best of the girls (0..10) whose Rec38 flag b1 is set by tokimeki+yuukou, ties by state code then unk_02+unk_06; meaning of the flag is a guess
+func	main	func_80086640	actor_pair_swap_sequences	swaps the sequence index (+0x16) of actors 96 and 98 and zeroes their frame and timer; no caller in C
+func	main	func_8008667C	girl_state_code	get_g_zyotai_s(girl) & 0x7F; 1078 uses
+func	main	func_800866A0	overlay_load_verify_step	HYPOTHESIS: step 0 starts a CD sync, then checks four entry words and file_checksum_ok(0x2D) and either restarts or calls func_8004284C
+func	main	func_800867CC	sound_bank_wait_latch	once D_80122EA0==0 and sound_bank_wait_ready returns 1 sets D_80122EA0=1
+comment	main	draw2d3d	Enable or disable the 2D pass (unk_1114) and the 3D pass (unk_1113) of render_frame.	O.BIN name kept; stores the two bytes
+comment	main	back_clear_switch	Turn the per-frame background clear (GsSortClear with colour unk_036..038) on or off.	O.BIN name kept; sets unk_039
+comment	main	load_palette	Queue a palette upload (data pointer, row id, stp mode, block); returns 0 when the 32-entry queue is full.	O.BIN name kept; writes unk_1328[unk_1428++]
+comment	main	load_csr_ab	Queue a raw VRAM rectangle upload (x, y, w, h from the data pointer); returns 0 when the 32-entry queue is full.	O.BIN name kept; csr_* is the developers term for these VRAM upload requests
+comment	main	load_csr_tp	Queue a texture-page block upload (tpage id, depth shift, offsets, size); returns 0 when the queue is full.	O.BIN name kept; used by the texture-block cache
+comment	main	csr_load_vram	Flush the VRAM upload queue with LoadImage calls and empty it.	O.BIN name kept; called from render_frame
+comment	main	palette_load_vram	Flush the palette queue into the VRAM palette rows (y 0x1E0..) and empty it.	O.BIN name kept; comment in source already describes the 3 stp modes
+comment	main	LoadSquare	Upload a rectangle of pixels to VRAM (wraps LoadImage).	O.BIN name kept
+comment	main	MoveSquare	Copy a rectangle inside VRAM (wraps MoveImage).	O.BIN name kept
+comment	main	StoreSquare	Read a rectangle of VRAM back to RAM (wraps StoreImage).	O.BIN name kept
+comment	main	tpage_buf_clear_all	Reset the 64-slot texture-block cache: slots with (i and 0xF) below 5 are reserved (0), the rest free (-1).	O.BIN name kept
+comment	main	tpage_buf_clear	Same reset, then install the permanent system blocks (_sys_default_tpage_set).	O.BIN name kept
+comment	main	_sys_default_tpage_set	Mark the always-resident texture slots (locked value 0x77 and the default source addresses).	O.BIN name kept
+comment	main	load_tpage_buf_lock	Put a source block into a chosen cache slot permanently and queue its upload.	O.BIN name kept
+comment	main	search_load_tpage_buf_lock	Find the first free cache slot (5..63), lock a source block there, queue its upload, return the slot or -1.	O.BIN name kept
+comment	main	search_tpage_multi	Find or load the cache slot of a given source block (shared 16 x 16 tile cache); returns the slot, 0x3F when full.	O.BIN name kept
+comment	main	search_tpage	Find or load the cache slot of an actor texture block for a 16-px cell part; arg 0x7FFF starts a new frame.	O.BIN name kept
+comment	main	search_tpage8	Same as search_tpage for 8-px cell parts (block index = texture id >> 8).	O.BIN name kept
+comment	main	SetWorkBase	Set the primitive bump allocator of draw buffer n: base address, size 0x10C00, offset 0.	O.BIN name kept
+comment	main	GetWorkBase	Allocate size bytes (rounded to 4) from the primitive area of a draw buffer; each allocation advances the offset by size but the address uses offset*4.	O.BIN name kept; emu: watch on the offset counter shows 0, 0xC, 0x18 for two 12-byte requests
+comment	main	sprite_set_gpu_poly_ft4	Build a POLY_FT4 from a GsSprite (no rotation or scale) and add it to the ordering table.	O.BIN name kept; one caller
+comment	main	goto_tpage	Add a draw-mode primitive that selects a texture page (x, y, depth, blend) to an ordering-table slot, then reset the draw offset.	O.BIN name kept
+comment	main	safe_env	Add a primitive that resets the draw-area offset to 0,0 after a mode change.	O.BIN name kept
+comment	main	dtd_on_tpage	Add a draw-mode primitive with dithering on and the given texture page.	O.BIN name kept; dtd is the PsyQ dither flag
+comment	main	dtd_on	Add a draw-mode primitive with dithering on and no page change.	O.BIN name kept
+comment	main	_sprite_set_light_effect1	Draw a pulsing light triangle (colour plus sine of the frame counter, black edge).	O.BIN name kept
+comment	main	make_color_bar	Build a 256-colour palette of eight 32-step ramps, one per red/green/blue bit combination; flag sets the stp bit.	O.BIN name kept
+comment	main	make_color_bar16	Build a gradient palette of count colours from a start to an end RGB colour; entry 0 is black.	O.BIN name kept
+comment	main	col2sepia	Turn a 256-colour palette to grey, then add (dr,dg,db) to every non-black colour with clamp 31 (sepia tone).	O.BIN name kept
+comment	main	srn_tpage_show	Draw a 768-px-wide strip from three VRAM pages as five textured quads, scrolled left by the low byte of x; colour from screen brightness.	O.BIN name kept; srn most likely means screen (HYPOTHESIS)
+comment	main	srn_vram_set	Upload the tiles of screen layer n (D_80121750 record) to VRAM through mod_trans_vram, limited to a width and height; returns -1 for an empty layer.	O.BIN name kept
+comment	main	move_255_line	Copy the 1-px column at x 0x3F of each page in a range to the next page start (fix the right edge).	O.BIN name kept
+comment	main	mod_trans_vram	Decode one frame of a tile set with get_fnt and upload it tile by tile to a texture page.	O.BIN name kept; mod likely means model or module (HYPOTHESIS)
+comment	main	get_fnt	Copy one square tile out of a 128-px-wide tile sheet, with optional vertical flip (flag 1) and horizontal flip (flag 2).	O.BIN name kept
+comment	main	mod_set_gpu	Draw one frame of a tile set as 8x8 SPRTs with one texture-page change per page.	O.BIN name kept
+comment	main	mod_set	Draw one frame of a tile set as GsSprites through GsSortFastSprite.	O.BIN name kept
+comment	main	srn_set	Draw screen layer n: each visible tile of the tile map through mod_set_gpu, culling tiles off screen.	O.BIN name kept
+comment	main	srn_init	Fill screen layer n from a layer file header and link it to tile set k.	O.BIN name kept
+comment	main	Vblnk_Timer_Init	Remember the vblank counter (unk_10F4) as the timer start.	O.BIN name kept
+comment	main	Vblnk_Timer	Return the vblank ticks elapsed since Vblnk_Timer_Init.	O.BIN name kept
+comment	main	Scroll	Draw a horizontally wrapping 5 x 64-px background strip (texture at x 0x140) offset by arg0, in OT slot arg1.	O.BIN name kept; used by runner and festival scenes
+comment	main	Rot_2D	Rotate the 2D vector (x,y) by angle arg0 (4096 per turn) into two outputs using sin and cos.	O.BIN name kept
+comment	main	Fade_Out_Init	Start a fade-out (starts the vblank timer).	O.BIN name kept
+comment	main	Fade_Out_Main	Every vblank lower screen brightness by 4 until below 3 then set 0; returns 1 when finished.	O.BIN name kept
+comment	main	Fade_In_Init	Start a fade-in (starts the vblank timer).	O.BIN name kept
+comment	main	Fade_In_Main	Every vblank raise screen brightness by 4 until 0x7E or more then set 0x80; returns 1 when finished.	O.BIN name kept
+comment	main	Yubi	Update the finger cursor (func_8006BA40 moves it) and copy its x,y into actor idx.	O.BIN name kept; Yubi means finger; actor 0 x,y hold the cursor position (func_8006BA40 moves it from the d-pad)
+comment	main	Default_Disp	Standard per-frame scene display step: text, message window, date banner, screen shake.	O.BIN name kept
+data	main	D_800B3D10	frame_hcount_stamps	4 words: hcount stamps taken in render_frame (logic, list build, GPU wait, vsync wait); drawn by frame_time_bars_draw
+data	main	D_800B3220	debug_hud_enabled	gate of every debug_print_*; set from options flag 0xF (OPTION step 2) and cleared by 800789E0
+data	main	D_800B3D80	debug_hud_level	0..8, text shows when >= 4; changed by debug_hud_level_step
+data	main	D_800B3D84	debug_font_uv	byte pairs (u,v): digits 0-9 at indices 0..19; index 18 plus 8 is the minus glyph; index 20,21 is the origin of the letter row
+data	main	D_800B3D40	bgm_playing	HYPOTHESIS: 1 after bgm_play, set to the argument by bgm_stop
+data	main	D_800B3D44	bgm_set	HYPOTHESIS: bank set of the last bgm_play, 0xFF none
+data	main	D_800B3D48	bgm_sequence	HYPOTHESIS: sequence id of the last bgm_play
+data	main	D_800B3D20	sound_load_cd_mark	CD completion counter at load start minus the number of skipped files; loads are done when counter - mark >= 5
+data	main	D_800B3D24	sound_load_set	HYPOTHESIS: bank set (0 or 1) of the load in progress
+data	main	D_800B3D28	sound_load_first_group_skipped	HYPOTHESIS: 1 when the first file group (b,c) was not loaded
+data	main	D_800B3D2C	sound_load_second_group_skipped	HYPOTHESIS: 1 when the second file group (d,e,f) was not loaded
+data	main	D_800B3D30	sound_set0_shared_file	HYPOTHESIS: file id b cached for set 0
+data	main	D_800B3D34	sound_set0_scene_file	HYPOTHESIS: file id d cached for set 0
+data	main	D_800B3D38	sound_set1_shared_file	HYPOTHESIS: file id b cached for set 1
+data	main	D_800B3D3C	sound_set1_scene_file	HYPOTHESIS: file id d cached for set 1
+data	main	D_800B3D4C	sound_load_poll_count	counts polls of sound_bank_load_poll, gives up after 0xC0
+data	main	D_800B3D50	sound_load_active	HYPOTHESIS: set to 1 by load_start, cleared by state reset
+data	main	D_800B3D54	sound_load_pending	HYPOTHESIS: per-set flag cleared when a load completes
+data	main	D_800E8C70	ot_table	two GsOT headers (0x14 bytes each), one per draw buffer; emu: disp_string argument is 0x800E8C84 on buffer 1
+data	main	D_800E8CA0	ot_tags	ordering-table tag arrays, 0x400 bytes (256 slots) per draw buffer; AddPrim index = (buf<<10)+slot*4
+data	main	D_8011ECA0	draw_buffer_index	0/1 double-buffer index from func_80098370 at frame start; indexes unk_014/018/01C
+data	main	D_8011ECD0	actor_pool	160 records of 0x44 bytes walked by actor_pool_draw; record 96 starts the scene-owned half
+data	main	D_801217D0	sprite_table	GsSprite records (0x24 bytes) drawn by render_frame in slot order with unk_10A5 priorities
+data	main	D_801217A0	tileset_records	ModRec14 (0x14 bytes) tile-set records filled by mod_init
+data	main	D_80121750	screen_layers	SrnRec28 (0x28 bytes) records filled by srn_init, layer 0 drawn by render_frame
+data	main	D_801220D0	bg_slots	two GsBG records (0x24 bytes) built by bg_slot_setup and sorted by render_frame
+data	main	D_80122120	bg_maps	two GsMAP headers, one per BG slot
+data	main	D_80122140	bg_cells	2 x 64 GsCELL entries (u, v, tpage, clut, flag)
+data	main	D_80122540	bg_cell_indices	2 x 64 halfword cell indices
+data	main	D_80122640	model_objects	4 objects of 16 bytes walked by the 3D pass of render_frame; remaining 3D structures at D_80122740
+data	main	D_801255DC	screen_shake_counter	0 = off; start sets 4; update adds 4 up to 0x80 then off
+data	main	D_801255E0	screen_shake_x	current shake offset plus 160 (screen centre x)
+data	main	D_801255E2	screen_shake_y	current shake offset plus 120 (screen centre y)
+data	main	D_800E36F0	vblank_timer_start	copy of unk_10F4 at Vblnk_Timer_Init
+data	main	D_800E36F4	vblank_timer_elapsed	unk_10F4 minus start, returned by Vblnk_Timer
+data	main	D_800C9730	default_texture_blocks	default texture-block address table written into new actors (+0x34) and slots 60..63 of the cache
+data	main	D_800C9A14	default_sequence_table	default animation-sequence table written into new actors (+0x10)
+data	main	D_80122EA0	sound_bank_wait_done	latch set by sound_bank_wait_latch
+type	main	Rec24	GsSprite	layout equals the libgs GsSPRITE (0x24 bytes); consumers func_80098680 (0x4F8 bytes, uses scale and rotation) and func_80098B80 (0x178 bytes)
+type	main	GsRec01C	PrimWorkArea	SetWorkBase/GetWorkBase record: size, offset, base address; two per GameState (one per draw buffer)
+type	main	GsRec1328	PaletteUpload	palette_load_vram queue entry (8 bytes), 32 entries
+type	main	GsRec142C	VramUpload	csr_load_vram queue entry (16 bytes), up to 32 entries
+type	main	SrnRec28	ScreenLayer	screen layer record (0x28 bytes) filled by srn_init, drawn by srn_set
+type	main	ModRec14	TileSet	tile-set record (0x14 bytes) filled by mod_init, drawn by mod_set and mod_set_gpu
+type	main	DisplayActor44	DisplayActor	record of the 160-entry actor pool; same layout as DisplayFixActor44 (renamed DisplayActorFixed)
+type	main	DisplayFixActor44	DisplayActorFixed	16.16 position view of DisplayActor
+type	main	DisplayImage78	ActorImage	image header: part count, origin, up to 8 parts; read by actor_pool_draw
+type	main	DisplayImagePart0E	ActorImagePart	one textured rectangle of an image (position, texture id, palette info, flip flags, size)
+type	main	SpriteSlot24	GsBg	layout equals libgs GsBG (0x24 bytes), sorted by func_80098D00 (GsSortBg)
+type	main	SpriteMap10	GsMap	layout equals libgs GsMAP
+type	main	SpriteCell8	GsCell	layout equals libgs GsCELL
+field	GameState	unk_014	draw_origin_x	s16[2] per draw buffer: added to every primitive x; screen centre 160 plus shake; init in screen_shake_update
+field	GameState	unk_018	draw_origin_y	s16[2] per draw buffer: 0x168 for buffer 0 (VRAM y 240 half), 0x78 for buffer 1
+field	GameState	unk_01C	prim_work	PrimWorkArea[2]
+field	GameState	unk_036	back_clear_r	passed to GsSortClear with unk_037, unk_038 when unk_039 is set
+field	GameState	unk_037	back_clear_g	same
+field	GameState	unk_038	back_clear_b	same
+field	GameState	unk_039	back_clear_enabled	set by back_clear_switch, read by render_frame
+field	GameState	unk_03A	screen_brightness	0x80 normal; fades step it by 4; used as r=g=b modulation by srn_tpage_show, Scroll, mod_set and flagged actors
+field	GameState	unk_03B	screen_brightness_rate	signed per-frame delta applied by screen_brightness_step
+field	GameState	unk_10A2	screen_layer_enabled	nonzero makes render_frame call srn_set(0)
+field	GameState	unk_10A5	sprite_priority	u8[0x40], one per sprite_table entry: bit 7 selects GsSortSprite else GsSortFastSprite, (value-1) and 0x7F is the OT slot
+field	GameState	unk_10E8	sprite_table_enabled	with draw_2d_enabled gates the sprite_table, text and BG-slot part of render_frame; KANGEI sets 1
+field	GameState	unk_10EC	bg_slot_priority	u8[2]: value below 0x80 sorts BG slot n at slot value-1; written by bg_slot_setup arg flag
+field	GameState	unk_10F0	frame_min_hcount	0x106 (262) set at boot; render_frame waits for vblank when the hcount is below it
+field	GameState	unk_10F4	vblank_count	incremented by the vblank callback func_800423D4; base of Vblnk_Timer
+field	GameState	unk_10F8	frame_count	incremented once per game_main loop pass; drives blink, light pulses and animation dividers
+field	GameState	unk_1112	actor_draw_enabled	set by actor_draw_enable
+field	GameState	unk_1113	draw_3d_enabled	second argument of draw2d3d
+field	GameState	unk_1114	draw_2d_enabled	first argument of draw2d3d
+field	GameState	unk_1128	tpage_frame_map	s32[64]: 0x7FFF free this frame, 0x7FFE resident and untouched, else the source address requested this frame
+field	GameState	unk_1228	tpage_resident	s32[64]: source address of the 128x128 block in slot i; -1 free, 0 reserved (display pages), 0x77 locked
+field	GameState	unk_1328	palette_queue	PaletteUpload[32]
+field	GameState	unk_1428	palette_queue_count	entries pending in palette_queue
+field	GameState	unk_1429	vram_upload_count	entries pending in unk_142C
+field	GameState	unk_142C	vram_upload_queue	VramUpload[]
+field	Rec24	unk_00	attribute	GsSPRITE attribute: bit 31 skip, bit 30 semi-transparent, bits 24-25 pixel mode (0 4-bit, 1 8-bit)
+field	Rec24	unk_04	x	screen x
+field	Rec24	unk_06	y	screen y
+field	Rec24	unk_08	width	pixels
+field	Rec24	unk_0A	height	pixels
+field	Rec24	unk_0C	tpage	texture page number (low 5 bits used by the renderers)
+field	Rec24	unk_0E	u	texture u
+field	Rec24	unk_0F	v	texture v
+field	Rec24	unk_10	clut_x	palette x
+field	Rec24	unk_12	clut_y	palette y (row 0x1E0 + n)
+field	Rec24	unk_14	r	modulation red (0x80 normal)
+field	Rec24	unk_15	g	modulation green
+field	Rec24	unk_16	b	modulation blue
+field	Rec24	unk_18	pivot_x	rotation and scale centre, subtracted from x
+field	Rec24	unk_1A	pivot_y	same for y
+field	Rec24	unk_1C	scale_x	0x1000 = 1.0, negative mirrors
+field	Rec24	unk_1E	scale_y	0x1000 = 1.0
+field	Rec24	unk_20	rotation	angle, 4096 per turn
+field	DisplayActor44	unk_01	draw_priority	0 = OT slot 0, n = slot n-1, passed to func_80098680
+field	DisplayActor44	unk_02	anim_flags	see const group ActorAnimFlags
+field	DisplayActor44	unk_03	draw_flags	see const group ActorDrawFlags
+field	DisplayActor44	unk_04	texture_flags	bit 3: parts use the 8-bit block index (search_tpage8)
+field	DisplayActor44	unk_05	palette_mode	bit 7 plus low bits 1,2,4,8: how many high bits of the part palette byte pick the clut column
+field	DisplayActor44	unk_06	anim_speed	bit 7 set: ticks added per frame; else advance every n frames; also the blink period
+field	DisplayActor44	unk_07	brightness	grey modulation 0x80 normal, used when no tint is set
+field	DisplayActor44	unk_08	anim_timer	ticks in the current frame, compared with the sequence duration
+field	DisplayActor44	unk_0C	image_table	ActorImage pointer table (ActorImage **)
+field	DisplayActor44	unk_10	sequence_table	animation sequences: count, then (image, duration) pairs
+field	DisplayActor44	unk_16	sequence_index	row of sequence_table
+field	DisplayActor44	unk_18	frame_index	step in the sequence, or the image index directly when anim_flags bit 6
+field	DisplayActor44	unk_1A	scale_x	0x1000 = 1.0
+field	DisplayActor44	unk_1C	scale_y	0x1000 = 1.0
+field	DisplayActor44	unk_20	rotation	copied to GsSprite rotation
+field	DisplayActor44	unk_24	x	16.16 position, integer part is the screen x
+field	DisplayActor44	unk_28	y	16.16 position
+field	DisplayActor44	unk_2C	velocity_x	16.16 per frame added when draw_flags bit 4
+field	DisplayActor44	unk_30	velocity_y	same for y
+field	DisplayActor44	unk_34	texture_blocks	table of source addresses of 128x128 texture blocks (indexed by texture id >> 6 or >> 8)
+field	DisplayActor44	unk_38	sprite_attribute	copied to GsSprite attribute; bits 24-25 pick the block depth
+field	DisplayActor44	unk_40	tint_r	tint colour, used when any of the three is nonzero
+field	DisplayActor44	unk_41	tint_g	same
+field	DisplayActor44	unk_42	tint_b	same
+field	DisplayActor44	unk_43	clut_row	nonzero: palette row 0x1E0 + (value and 0x1F); bits 5-6 pick the column set
+field	DisplayFixActor44	unk_01	draw_priority	same names as DisplayActor44 for the shared offsets
+field	DisplayFixActor44	unk_02	anim_flags	same
+field	DisplayFixActor44	unk_03	draw_flags	same
+field	DisplayFixActor44	unk_24	x	16.16, .h[1] is the screen x
+field	DisplayFixActor44	unk_28	y	16.16, .h[1] is the screen y
+field	DisplayFixActor44	unk_2C	velocity_x	16.16 per frame
+field	DisplayFixActor44	unk_30	velocity_y	16.16 per frame
+field	DisplayImagePart0E	unk_00	x	offset of the part in the image
+field	DisplayImagePart0E	unk_02	y	offset of the part in the image
+field	DisplayImagePart0E	unk_04	texture_id	high bits pick the 128x128 block, low 6 bits (16-px cells) or 8 bits (8-px cells) the cell
+field	DisplayImagePart0E	unk_06	palette_info	low 12 bits hold palette column bits, bits 8-11 the row offset
+field	DisplayImagePart0E	unk_08	flip_flags	bit 0 flips y, bit 1 flips x
+field	DisplayImagePart0E	unk_0A	width	pixels
+field	DisplayImagePart0E	unk_0C	height	pixels
+field	ScreenLayer	unk_02	scroll_x	added to tile x
+field	ScreenLayer	unk_06	scroll_y	added to tile y
+field	ScreenLayer	unk_08	tile_map	words, low 16 bits = tile frame id (0 empty)
+field	ScreenLayer	unk_0C	priority	OT slot used for the tiles (always layer 0's value in srn_set)
+field	ScreenLayer	unk_10	tile_width	pixels
+field	ScreenLayer	unk_11	tile_height	pixels
+field	ScreenLayer	unk_16	clut_x	palette x for the tiles (init 0)
+field	ScreenLayer	unk_18	clut_y	palette y (init 0x1E0)
+field	ScreenLayer	unk_1C	tile_count	words of tile_map to draw
+field	ScreenLayer	unk_24	tile_set	TileSet pointer
+field	TileSet	unk_00	bank_table	source addresses of the tile sheets, indexed by the bank byte of a tile word
+field	TileSet	unk_04	frame_data	tile words, rows*cols per frame: bank <<24, tile id <<16, clut column <<8, flags
+field	TileSet	unk_08	pixel_format	0..5: 1 and 2 are 4-bit (2 pixels per byte), others 8-bit
+field	TileSet	unk_0C	cols	tiles per row
+field	TileSet	unk_0D	rows	tile rows
+field	TileSet	unk_0E	tile_size	u8[2] width, height (8 or 16)
+const	ActorAnimFlags	0x01	ACTOR_ANIM_RUN	animation timer runs (actor_pool_draw)
+const	ActorAnimFlags	0x02	ACTOR_ANIM_END_REWIND	at sequence end go to frame 0 and clear run bits 0-1
+const	ActorAnimFlags	0x04	ACTOR_ANIM_END_BACK	at sequence end step back one frame and clear this bit
+const	ActorAnimFlags	0x08	ACTOR_ANIM_END_HIDE	at sequence end rewind, stop and clear draw_flags ACTIVE
+const	ActorAnimFlags	0x10	ACTOR_ANIM_PINGPONG_FWD	forward phase of a ping-pong; at the end switches to the backward bit
+const	ActorAnimFlags	0x20	ACTOR_ANIM_PINGPONG_BACK	backward phase; stops at frame 0 clearing run
+const	ActorAnimFlags	0x40	ACTOR_ANIM_DIRECT	frame_index is the image index, no sequence lookup, no animation
+const	ActorAnimFlags	0x80	ACTOR_ANIM_HIDDEN	actor skipped by the renderer
+const	ActorDrawFlags	0x80	ACTOR_DRAW_ACTIVE	drawn by actor_pool_draw
+const	ActorDrawFlags	0x40	ACTOR_DRAW_BLINK	skipped when frame_count % (anim_speed+1) == 0
+const	ActorDrawFlags	0x20	ACTOR_DRAW_SCREEN_BRIGHTNESS	modulation colour comes from screen_brightness
+const	ActorDrawFlags	0x10	ACTOR_DRAW_MOVE	add velocity to x,y every frame
+const	ActorDrawFlags	0x08	ACTOR_DRAW_FIRST_PARTS	HYPOTHESIS: draw only the first 4 parts and trim 1 px when rotated or scaled
+const	ActorDrawFlags	0x04	ACTOR_DRAW_NO_ORIGIN	position is not shifted by the image origin
+const	ActorDrawFlags	0x01	ACTOR_DRAW_MIRROR_X	mirror the image horizontally
+const	ScreenBrightness	0x80	SCREEN_BRIGHTNESS_NORMAL	unmodulated value of unk_03A
+const	SpritePriority	0x80	SPRITE_PRIORITY_ROTATED	bit 7 of unk_10A5[i]: use GsSortSprite instead of GsSortFastSprite
