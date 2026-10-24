@@ -177,7 +177,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25400-wave-11-until-matched|T-25400 Wave 11 - repeated passes until every game function matches]]
 - [ ] [[tickets/T-25500-stubborn-functions|T-25500 Stubborn functions - multi-angle attack, toolchain changes allowed under 7a]]
 - [ ] [[tickets/T-25600-finish-gate|T-25600 Finish gate - loop the last functions until 100%]]
-- [ ] [[tickets/T-26000-ugen-block-copy-41-rule|T-26000 Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py]]
 - [ ] [[tickets/T-25604-gate-NAME_ENT-func_80143580|T-25604 Finish gate - NAME_ENT func_80143580]]
 - [ ] [[tickets/T-25608-gate-main-func_8006B0C8|T-25608 Finish gate - main func_8006B0C8]]
 - [ ] [[tickets/T-25606-gate-main-func_800476C0|T-25606 Finish gate - main func_800476C0]]
