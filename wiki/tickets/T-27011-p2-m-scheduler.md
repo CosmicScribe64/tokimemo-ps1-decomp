@@ -1,7 +1,7 @@
 ---
 id: T-27011
 title: Phase 2 naming proposals and port spec for the main scheduler (m-scheduler)
-status: In Review
+status: Done
 assignee: claude
 created: 2026-10-24
 updated: 2026-10-24
@@ -19,7 +19,7 @@ Roadmap phase 2 (readable code), unit `m-scheduler`: name every function, owned 
 - [x] Uncertain game-meaning claims are marked `HYPOTHESIS:` first in the note column.
 - [x] O.BIN-named functions kept, each with an English comment row.
 - [x] `wiki/spec/m-scheduler.md` covers state, schedule steps, queue builder, encounter and meeting rules, special events, queue reader, notices, month start, calendar, health check and open questions; linked from `wiki/spec/index.md`.
-- [ ] Review of the table and spec by the phase-2 reviewer.
+- [x] Review of the table and spec by the phase-2 reviewer.
 
 ## Notes
 
@@ -34,3 +34,4 @@ Roadmap phase 2 (readable code), unit `m-scheduler`: name every function, owned 
 
 - 2026-10-24 review round 1 (five blocking findings, several non-blocking), all fixed in the table and [[spec/m-scheduler]]: `EVENT_FLAG_MIHARU_FINAL_DONE` note (a set flag stops scene 1, the girl 11 call and the ending roll); `EVENT_FLAG_FINAL_YOSHIO` marked HYPOTHESIS with the GEKO and ENDING uses; the 3 January 1998 branch covers clubs 7-10 only; `progress_flags_update` rewritten from the code (eight windows, second switch sets 0x80, entry 0xE, not proven to be girl ids); `CharFlags` b2 and b6 notes corrected; `schedule_step_prepare` reads the queue cursor, not the first record; `health_illness_*` renamed `health_sick_*`; the F6Bits row dropped in favour of core's `recovery_days`; `month_data_load_step` note for 1996-09-01; `overlay_scratch` BUNKAKEN user; core flag-view overlaps listed in spec section 15.
 - 2026-10-24 review round 2: one blocking finding, fixed. The TEL pending-entry step takes the last (highest-index) entry with bit 7, not the first; corrected in the `progress_flags_update` row and in [[spec/m-scheduler]] section 3.1. Ticket stays In Review.
+- 2026-10-24 review round 3: approved, no findings. The blocking finding from round 2 is resolved: in [[spec/m-scheduler]] section 3.1 (first paragraph) and the `progress_flags_update` row of `config/renames/proposals/m-scheduler.tsv`, TEL's pending-entry step turns the last (highest-index) pending entry into 1. `src/ovl/TEL/80132000.c` lines 404-424 support this: the loop counts all pending entries 0..20 in `var_v1` and decrements it at each one, and the entry where it reaches 0 is changed to 1, so that is the last one. Entry 0 is chosen only when it is the sole pending entry. The `quarter_flags` mapping in the same sentence matches the C (entry 1 to bit 1, 7 to 2, 3 to 3, 0xD to 4, 5 to 5, 0xA to 6, 6 to 7, 0xB to 8). Entry 0 or no match falls through to the else branch, which sets only `unk_110D` to 1. No leftover "first pending" wording. The table still has 115 rows with 5 tab-separated columns each. The diff against `w2-good` touches only the proposals table, `wiki/log.md`, `wiki/spec/index.md`, the spec and this ticket; nothing under `src/`, `include/` or the symbol configs. Ticket set to Done.

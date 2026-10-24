@@ -1726,3 +1726,6 @@ Reviewer findings on [[tickets/T-27011-p2-m-scheduler]] (five blocking, several 
 
 ## [2026-10-24] ticket | T-27011 review round 2 fix
 Reviewer round 2 on [[tickets/T-27011-p2-m-scheduler]] approved the five round-1 fixes and found one wrong word: TEL's pending-entry step (`src/ovl/TEL/80132000.c`) takes the last (highest-index) pending `progress_state` entry, not the first (it counts the pending entries, then picks the one where the count reaches 0; entry 0 only when it is the sole one). Fixed in `config/renames/proposals/m-scheduler.tsv` (row `progress_flags_update`) and [[spec/m-scheduler]] section 3.1. Table unchanged otherwise: 115 rows, 16 HYPOTHESIS. No src/, include/ or symbol-file changes. Ticket stays In Review.
+
+## [2026-10-24] ticket | T-27011 Done
+Review round 3 of [[tickets/T-27011-p2-m-scheduler]] approved with no findings: the TEL pending-entry fix (last pending entry) matches `src/ovl/TEL/80132000.c` lines 404-424, the table keeps 115 rows of 5 columns, and the branch changes only `config/renames/proposals/m-scheduler.tsv` and wiki files (nothing under `src/`, `include/` or `config/symbol*`). Ticket set to Done; branch p2a-m-scheduler merged into w2-good. Table: `config/renames/proposals/m-scheduler.tsv`, spec: [[spec/m-scheduler]].
