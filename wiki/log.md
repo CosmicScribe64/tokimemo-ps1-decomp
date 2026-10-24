@@ -7,30 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] build | T-25018 retained fallback verification
-
-Default funcdiff verified 180 linked bytes equal the target (assembly fallback only). After the note-only source edit, the configured KANGEI.ok Ninja target passed SHA1. Header, GameState migration, and branch prototype guards passed; no new prototype disagreement. [[tickets/T-25018-kangei-near-closure]] remains In Review.
-
-## [2026-10-22] ticket | Recovered TACO candidate investigation
-
-Created [[tickets/T-25019-recovered-taco-38b2c]] in isolated worktree /private/tmp/t25019-taco at 7bc6d8d99; recovered archive remains private evidence. Read prior T-16564/T-19015/T-20600 negatives before any experiments.
-
-## [2026-10-22] query | Recovered queue provenance and TACO baseline
-
-[[tickets/T-25019-recovered-taco-38b2c]]: 410 recovered files; 151 C body artifacts, 122 m2c bodies. TACO func_80138B2C current guarded whole-TU Docker baseline is 30 positional rows/60 printed diff lines; mechanically adapted older archive gives 103 unequal-span printed diff lines, REAL DIFFERENCE. Restored source and registered existing colour tail without speculative variants. [[matching-notes]] records result and concrete next reconstruction target main func_8005215C. Ticket and board moved to In Review for independent standards review.
-
-## [2026-10-22] decision | Evidence-based multi-chat completion plan
-
-Updated [[plan-remaining]] under [[tickets/T-25017-completion-plan]] after fresh per-file Docker census and completed worker pilots. Remaining119 functions/172244 bytes; origin/main remains811c35028, no open PRs, issue65 still reserves GEKO/OPTION. BUNKA pilot de816368f reduces7 to4 instruction positions; MAIN pilot4cf12bdd1 reproduces frame/homes and exposes a concrete global reload defect. Neither is a match. Plan assigns three file-disjoint Sol6.1medium lanes (MAIN, BUNKA scheduler, TEL qualification), bounded Astra escalation and serialized verification; no new chats launched during preflight. Corrected index's stale127 count. Raw archive stays private.
-
-## [2026-10-22] ticket | T-25020 BUNKA_SD trace mapping
-
-Created [[tickets/T-25020-bunka-sd-trace-closure]] In Progress to verify the recovered volatile trace before drawing conclusions from block 60. Reuse the isolated T-25018 worktree; own only src/ovl/BUNKA_SD/801388D0.c for new source work.
-
-## [2026-10-22] build | T-25020 improves BUNKA_SD guarded draft
-
-Mapped the recovered trace: 779 normalized DAG records and all 74 mover events equal a fresh full-unit trace. Block 60 supplies eight of 37 moved instructions from the later modulo switch, unrelated to the earlier year-load residue. Two directed empty-field-test experiments established a case-0x3B-only improvement from seven changed positions to four; retained in src/ovl/BUNKA_SD/801388D0.c under NON_MATCHING with FAKE/T-25020 notes. All-arm tests regress global-mover slots. See [[tickets/T-25020-bunka-sd-trace-closure]] and [[matching-notes]]. No promotion.
-
 ## [2026-10-22] build | T-25020 verified four-row guard handed to review
 
 Updated full-unit NON_MATCHING C verifies four changed positions (eight +/- lines), only case-0x49/0x66 load/lui swaps. Default linked-byte MATCH verifies the assembly fallback only (1516 bytes); affected BUNKA_SD SHA1 and header/global/prototype guards pass. Lint has zero broken links/status mismatches and one pre-existing large page. [[tickets/T-25020-bunka-sd-trace-closure]] and board moved to In Review, with bb 41/43/45 and head bb 42/44 mapped for the next bounded consultation. No C match counted.
@@ -1742,6 +1718,7 @@ Census of the full build (566 procedures with a `Umov`, throwaway logging shim, 
 ## [2026-10-24] ticket | T-26003 opened (Backlog)
 
 [[tickets/T-26003-ugen-value-branch-dropped-arm]]: the two IDO 4.1 behaviours the T-26000 rule does not model yet (value-branch F, dropped-arm stores), which keep four never-true FAKE arms alive per the T-26002 sweep.
+
 ## [2026-10-24] ingest | T-27028 phase 2 naming proposals and port spec for overlay TACO
 Read all 38 files of `src/ovl/TACO` (406 functions), the call graph per stage handler and the data tables, and wrote `config/renames/proposals/o-taco.tsv` (911 rows: 406 func, 179 data, 70 field, 24 type, 40 file, 176 const, 16 comment; 14 marked HYPOTHESIS) and [[spec/o-taco]] (stage machine of 19 stages, ship and wingman rules, weapons, bombs, collisions and scoring, three stage scripts, three bosses, result tally, name entry, settings in the work area at `D_800E7D10+0x40`, entry from MASTER and OPTION). Prefix `shooter_` after the glossary seed. Findings: x is mirrored (pad left raises x); the wingman cannot die (its HP is never read); `func_8015CF30/D0D0/D270` are libgte RotMatrixZ/X/Y copies (proposed as `shooter_rot_matrix_z/x/y`); enemy type 11 never spawns; boss damage percent starts above 0 by construction. Ticket [[tickets/T-27028-p2-o-taco]] In Review ([[tickets/T-27000-phase-2]]). No source, header or symbol file touched; emulator not used (see the ticket).
 
