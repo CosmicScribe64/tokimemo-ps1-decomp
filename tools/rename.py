@@ -73,6 +73,9 @@ identifier anywhere in the header closure of the scope (so no shadowing local, m
 SDK name); unique without regard to case per unit (splat's .s files on macOS); never used before in
 the ledger for another symbol. A name that already names the same address elsewhere (the O.BIN
 alias debt, G2 of the audit) needs --allow-alias; the build then decides (tools/sync_protos.py --fix).
+When that name comes from config/symbol_addrs_obin.txt or config/symbol_addrs_sdk.txt the row only carries
+it to the uses of the placeholder, so the style rules (snake_case, libc names, leading underscore) do not
+apply to it (T-27003); a C keyword, a placeholder shape and an address in the name are still refused.
 
 Proof (apply, unless --no-verify): (1) the inverse rows applied to the changed sources give the old
 text byte for byte (identifier kinds); (2) the gcc -fsyntax-only error set of the affected C files
@@ -105,6 +108,8 @@ LEDGER_DIR = "config/renames"
 KINDS = ("func", "data", "field", "type", "local", "param", "file", "dir", "const")
 IDENT_KINDS = ("func", "data", "type", "local", "param")
 EXE_TEXT_OFF = 0x80041000 - 0x800
+# symbol files whose names are carried as they are (name_problem: no style check, T-27003)
+CARRIED_FILES = ("config/symbol_addrs_obin.txt", "config/symbol_addrs_sdk.txt")
 SDK_RANGE = (0x80086810, 0x800AF340)
 
 C_KEYWORDS = set("""auto break case char const continue default do double else enum extern float for goto
@@ -513,23 +518,27 @@ def comment_mentions(text, name):
 
 # ======================================================================================= names
 
-def name_problem(row, new=None):
-    """Why `new` (default row.new) is not an acceptable name for the row's kind, else None."""
+def name_problem(row, new=None, carried=False):
+    """Why `new` (default row.new) is not an acceptable name for the row's kind, else None.
+    carried: `new` is an O.BIN or SDK name that the symbol files already give the address (T-27003);
+    the rename only carries it to the placeholder's uses, so the naming style does not apply to it
+    (O.BIN names stay as they are, SDK names keep the SDK spelling, libc names are the libc's)."""
     new = row.new if new is None else new
     if not IDENT_RE.match(new):
         return "%s is not a C identifier" % new
     if new in C_KEYWORDS:
         return "%s is a C keyword" % new
-    if new.startswith("__") or re.match(r"^_[A-Z]", new) or (new.startswith("_") and not row.old.startswith("_")):
+    if not carried and (new.startswith("__") or re.match(r"^_[A-Z]", new)
+                        or (new.startswith("_") and not row.old.startswith("_"))):
         return "%s is a reserved name (leading underscore)" % new
     if PLACEHOLDER_NAME_RE.match(new) or symtab.placeholder_addr(new) is not None or re.match(r"^(?:unk(?:_|\d|$)|pad(?:\d*|_[0-9A-Fa-f]+)$)", new):
         return "%s looks like a placeholder; a rename needs a real name" % new
     m = re.search(r"[0-9A-Fa-f]{8}", new)
     if m and re.search(r"\d", m.group(0)):
         return "%s holds an address; the address lives in the symbol file" % new
-    if new in LIBC:
+    if new in LIBC and not carried:
         return "%s is a C library name" % new
-    if row.kind in ("func", "data", "field", "local", "param") and not SNAKE_RE.match(new):
+    if row.kind in ("func", "data", "field", "local", "param") and not carried and not SNAKE_RE.match(new):
         return "%s is not snake_case (lower case, digits and _)" % new
     if row.kind == "type" and not PASCAL_RE.match(new):
         return "%s is not PascalCase" % new
@@ -742,9 +751,10 @@ def plan_symbol(ctx, row):
     row.files = set(files)
     alias = row.new in names
     row.alias = alias
+    carried = alias and any(l.name == row.new and l.path in CARRIED_FILES for l in lines)
     # ---- collisions
     if not ctx.merge:
-        why = name_problem(row)
+        why = name_problem(row, carried=carried)
         if why:
             return ctx.problem(row, why)
     units = scope_units_for(tree, owner, addr)
@@ -2069,6 +2079,74 @@ def run_rows(ctx, rows, use_gcc=True):
         if before is not None and len(ctx.done) > n_done and not ctx.merge:
             round_trip(ctx, row, before)
         i += 1
+    if not ctx.problems:
+        merge_alias_declarations(ctx)
+
+
+API_HEADER = "include/main_api.h"
+ALIAS_DECL_RE = re.compile(r"^[A-Za-z_]")
+
+
+def api_decl_lines(lines, name):
+    """Indices of the file-scope declaration lines of `name` in main_api.h text (column 0, the name outside
+    comments, a statement that ends in `;`)."""
+    out = []
+    for i, line in enumerate(lines):
+        if not ALIAS_DECL_RE.match(line):
+            continue
+        code = re.sub(r"/\*.*?\*/", " ", line)
+        if code.rstrip().endswith(";") and re.search(r"(?<![\w])%s(?![\w])" % re.escape(name), code):
+            out.append(i)
+    return out
+
+
+def merge_alias_declarations(ctx):
+    """An alias row (the new name already names the address, the O.BIN alias debt of audit G2) leaves two
+    declarations of the new name in include/main_api.h, which holds one declaration per symbol (CODING_STANDARDS
+    8a). Keep the declaration the new name had (the main-exe definition's type) and drop the one that came from
+    the old name, with its `#ifndef MAIN_API_OVERRIDE_<name>` wrapper; the kept one takes the wrapper when the
+    dropped one had it. Which files need another view of the symbol is decided by the build (overrides, 8a)."""
+    rows = [r for r in ctx.done if r.kind in ("func", "data") and getattr(r, "alias", False)]
+    tree = ctx.tree
+    if not rows or not tree.exists(API_HEADER):
+        return
+    old = (tree.orig.get(API_HEADER) or "").split("\n")
+    cur = (tree.read(API_HEADER) or "").split("\n")
+    if len(old) != len(cur):
+        ctx.notes.append("%s: the line count changed; alias declarations not merged" % API_HEADER)
+        return
+    drop, wrap = set(), []
+    for r in rows:
+        dp, dn = api_decl_lines(old, r.old), api_decl_lines(old, r.new)
+        if len(dp) != 1 or len(dn) != 1:
+            if dp and dn:
+                ctx.note(r, "%s declares %s %d times and %s %d times; merge them by hand"
+                         % (API_HEADER, r.old, len(dp), r.new, len(dn)))
+            continue
+        i = dp[0]
+        wrapped = i > 0 and old[i - 1].strip() == "#ifndef MAIN_API_OVERRIDE_%s" % r.old \
+            and i + 1 < len(old) and old[i + 1].strip() == "#endif"
+        drop.add(i)
+        if wrapped:
+            drop |= {i - 1, i + 1}
+            j = dn[0]
+            if not (j > 0 and old[j - 1].strip() == "#ifndef MAIN_API_OVERRIDE_%s" % r.new):
+                wrap.append((j, r.new))
+        ctx.note(r, "%s: declaration of %s dropped, %s keeps its own (alias merge; the build decides the views)"
+                 % (API_HEADER, r.old, r.new))
+    if not drop:
+        return
+    # a wrapper is added around the kept declaration; positions are those of the old text
+    marks = dict(wrap)
+    out = []
+    for i, line in enumerate(cur):
+        if i in drop:
+            continue
+        if i in marks:
+            out += ["#ifndef MAIN_API_OVERRIDE_%s" % marks[i], line, "#endif"]
+        else:
+            out.append(line)
+    tree.write(API_HEADER, "\n".join(out))
 
 
 def ledger_reuse(ctx, row):
@@ -2171,7 +2249,13 @@ def gcc_proof(ctx):
         return (f, ln, msg)
     want = {norm(d, True) for d in e1}
     got = {norm(d, False) for d in e2}
-    for d in sorted(got - want)[:10]:
+    # an alias merge unifies two declarations of one symbol on purpose (audit G2); an error that names such a
+    # symbol shows a changed view, which the clean build judges (IDO accepts what gcc refuses)
+    aliases = {r.new for r in ctx.done if getattr(r, "alias", False)}
+    for d in sorted(got - want)[:10 if not aliases else 400]:
+        if any("'%s'" % a in d[2] for a in aliases):
+            ctx.notes.append("proof 2 (alias merge, the build decides): new gcc error %s:%d: %s" % d)
+            continue
         ctx.problems.append("proof 2: new gcc error %s:%d: %s" % d)
     for d in sorted(want - got)[:10]:
         ctx.problems.append("proof 2: gcc error gone %s:%d: %s" % d)

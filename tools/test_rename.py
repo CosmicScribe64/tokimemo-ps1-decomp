@@ -367,6 +367,40 @@ class SymbolRenameTest(Fixture):
         self.write("config/symbol_addrs_main.txt", "boot_view = 0x80041000; // type:func\n")
         self.refused("func main func_80041000 boot_view\n", "already names 0x80041000")
 
+    def test_carried_obin_and_sdk_names(self):
+        """A name from the O.BIN or SDK file keeps its spelling when it replaces the placeholder (T-27003)."""
+        self.write("config/symbol_addrs_obin.txt", "LoadSquare = 0x80041000; // type:func\n")
+        self.write("config/SLPM_86.053.yaml", self.read("config/SLPM_86.053.yaml").replace(
+            "    - config/symbol_addrs_main.txt\n",
+            "    - config/symbol_addrs_main.txt\n    - config/symbol_addrs_obin.txt\n"))
+        self.refused("func main func_80041000 LoadSquare\n", "already names 0x80041000")
+        rc, out = self.run_plan("func main func_80041000 LoadSquare\n", allow_alias=True)
+        self.assertEqual(rc, 0, out)
+        self.write("config/symbol_addrs_obin.txt", "memcpy = 0x80041000; // type:func\n")   # libc name, carried
+        rc, out = self.run_plan("func main func_80041000 memcpy\n", allow_alias=True)
+        self.assertEqual(rc, 0, out)
+        self.write("config/symbol_addrs_obin.txt", "")
+        self.write("config/symbol_addrs_main.txt", "plain_view = 0x80041000; // type:func\n")
+        self.refused("func main func_80041000 plain_view\n", "already names 0x80041000")   # not carried: needs the flag
+        self.write("config/symbol_addrs_main.txt", "LoadSquare = 0x80041000; // type:func\n")
+        self.refused("func main func_80041000 LoadSquare\n", "is not snake_case", allow_alias=True)   # not from O.BIN/SDK
+
+    def test_alias_merge_keeps_one_declaration(self):
+        """An alias row drops the declaration of the old name and keeps the new name's (T-27003)."""
+        self.write("config/symbol_addrs_obin.txt", "boot_view = 0x80041000; // type:func\n")
+        self.write("config/SLPM_86.053.yaml", self.read("config/SLPM_86.053.yaml").replace(
+            "    - config/symbol_addrs_main.txt\n",
+            "    - config/symbol_addrs_main.txt\n    - config/symbol_addrs_obin.txt\n"))
+        self.write("include/main_api.h", self.read("include/main_api.h").replace(
+            "void known_func(s32 arg0);\n", "void known_func(s32 arg0);\nvoid boot_view(s32 arg0);\n"))
+        out = self.ok("func main func_80041000 boot_view T-1 carried\n", allow_alias=True)
+        api = self.read("include/main_api.h")
+        self.assertEqual(api.count("boot_view"), 2, api)          # the wrapper and the declaration, nothing else
+        self.assertIn("#ifndef MAIN_API_OVERRIDE_boot_view\nvoid boot_view(s32 arg0);\n#endif\n", api)
+        self.assertNotIn("func_80041000", api)
+        self.assertIn("declaration of func_80041000 dropped", out)
+
+
 
 @unittest.skipUnless(HAVE_GCC, "needs the native gcc of the Docker image")
 class OracleTest(Fixture):
