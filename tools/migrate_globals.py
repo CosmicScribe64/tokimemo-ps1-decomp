@@ -71,6 +71,27 @@ CONFIG = "config/migrate_globals.txt"
 BASE_SIZES = {"s8": 1, "u8": 1, "s16": 2, "u16": 2, "s32": 4, "u32": 4, "char": 1, "short": 2,
               "int": 4, "long": 4, "void": 1}
 SYM_RE = re.compile(r"^D_([0-9A-F]{8})$")
+_NAMES = {}   # {name: address} of the main exe's named symbols (tools/symtab.py), set by load_config
+
+
+def sym_addr(sym):
+    """Address of a D_XXXXXXXX placeholder or of a main-exe name of the symbol files (T-27002), or None."""
+    m = SYM_RE.match(sym)
+    if m:
+        return int(m.group(1), 16)
+    return _NAMES.get(sym)
+
+
+def load_names(root):
+    """Fill _NAMES from the main exe's symbol files (renamed aggregate bases and keep symbols)."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import symtab
+        table = symtab.SymbolTable(root)
+        _NAMES.update({l.name: l.addr for l in table.unit_lines("main")
+                       if symtab.placeholder_addr(l.name) is None})
+    except (OSError, ImportError):
+        pass
 # comments, string and character literals, identifiers; everything else passes through
 TOKEN_RE = re.compile(r'/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\\n])*"|\'(?:\\.|[^\'\\\n])*\'|[A-Za-z_]\w*', re.S)
 DECL_RE = re.compile(r"^[ \t]*extern[ \t]+(?:volatile[ \t]+)?([A-Za-z_]\w*)[ \t]+(\**)[ \t]*"
@@ -299,10 +320,11 @@ def parse_view(spell, types):
 class Aggregate:
     def __init__(self, base, tname, header, root):
         self.base, self.tname, self.header = base, tname, header
-        m = SYM_RE.match(base)
-        if not m:
-            raise SystemExit("migrate_globals: base %s must be a D_XXXXXXXX name" % base)
-        self.addr = int(m.group(1), 16)
+        addr = sym_addr(base)
+        if addr is None:
+            raise SystemExit("migrate_globals: base %s must be a D_XXXXXXXX name or a name of the main "
+                             "exe's symbol files" % base)
+        self.addr = addr
         text = read(os.path.join(root, header))
         self.types = parse_types(strip_comments_keep_offsets(text))
         if tname not in self.types:
@@ -330,6 +352,7 @@ def write(path, text):
 
 
 def load_config(root, path=None):
+    load_names(root)
     aggs, keep = [], {}
     p = path or os.path.join(root, CONFIG)
     if not os.path.exists(p):
@@ -424,7 +447,7 @@ def find_mapping(agg, sym, view_spell, indexed, stores_only=False):
     """Mapping for `sym` (old view `view_spell` or None), or (None, reason). With stores_only (every
     use in the file is a plain store), a scalar of the same width but other signedness also fits:
     sb/sh/sw do not depend on it."""
-    addr = int(SYM_RE.match(sym).group(1), 16)
+    addr = sym_addr(sym)
     rel = addr - agg.addr
     subs = subobjects(agg.type, rel)
     want = parse_view(view_spell, agg.types) if view_spell else None
@@ -500,10 +523,9 @@ def code_tokens(text):
 
 
 def agg_for(aggs, sym):
-    m = SYM_RE.match(sym)
-    if not m:
+    a = sym_addr(sym)
+    if a is None:
         return None
-    a = int(m.group(1), 16)
     for g in aggs:
         if g.holds(a):
             return g
@@ -743,21 +765,15 @@ def stray_uses(root, rel, sym, proofs):
 
 
 def object_asm_files(root, rel):
-    """The function asm of the original object that the C file `rel` holds, [] if none."""
+    """The function asm of the original object that the C file `rel` holds, [] if none (the path rule
+    of srcscan.asm_dirs_of_source, so readable file names work too, T-27002)."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import srcscan
     rel = rel.replace(os.sep, "/")
-    m = re.match(r"^src/ovl/(\w+)/([0-9A-Fa-f]{8})\.c$", rel)
-    if m:
-        dirs = ["asm/ovl/%s/%s/%s/%s" % (m.group(1), k, m.group(1), m.group(2)) for k in ("matchings", "nonmatchings")]
-    else:
-        m = re.match(r"^src/ovl/(\w+)\.c$", rel)
-        if m:
-            dirs = ["asm/ovl/%s/%s/%s" % (m.group(1), k, m.group(1)) for k in ("matchings", "nonmatchings")]
-        else:
-            m = re.match(r"^src/main/([0-9A-Fa-f]{8})\.c$", rel)
-            dirs = ["asm/%s/main/%s" % (k, m.group(1)) for k in ("matchings", "nonmatchings")] if m else []
+    dirs = srcscan.asm_dirs_of_source(os.path.join(root, rel)) if rel.startswith("src/") else []
     out = []
     for d in dirs:
-        for dirpath, _d, files in os.walk(os.path.join(root, d)):
+        for dirpath, _d, files in os.walk(d if os.path.isabs(d) else os.path.join(root, d)):
             out += [os.path.join(dirpath, f) for f in sorted(files) if f.endswith(".s")]
     return sorted(out)
 
@@ -790,8 +806,7 @@ def keep_evidence(root, aggs, rel, sym, proof=None):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import aggregate_audit as aa
     import type_recovery as tr
-    m = SYM_RE.match(sym)
-    if not m or not agg_for(aggs, sym):
+    if not agg_for(aggs, sym):
         return False, "not a field of an aggregate"
     problem = None
     if proof is not None:
@@ -799,11 +814,12 @@ def keep_evidence(root, aggs, rel, sym, proof=None):
         if ok:
             return True, why
         problem = why
-    addr = int(m.group(1), 16)
+    addr = sym_addr(sym)
     files = object_asm_files(root, rel)
     if not files:
         return False, problem or ("no asm of the original object for %s (run configure.py; per-object C files only)" % rel)
-    unit = rel.replace(os.sep, "/").split("/")[2].split(".")[0] if rel.startswith("src/ovl") else "main"
+    import srcscan
+    unit = srcscan.unit_of_source(os.path.join(root, rel))
     syms = tr.load_labels({k: v for k, v in tr.data_files(root).items() if k in ("main", unit)})
     ranges = aa.Ranges((g.base, g.addr, g.end) for g in aggs)
     for path in files:

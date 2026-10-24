@@ -1,4 +1,4 @@
-func_80084C98 = 0x80084C98; // Existing sprite_brightness address, promoted-index call view for T-9540.
+func_80084C98 = 0x80084C98; // alias-view Existing sprite_brightness address, promoted-index call view for T-9540.
 // T-11090: names from the English patch notes (wiki/ref-english-patch.md); facts only.
 cd_read_sectors = 0x80046318; // type:func
 cd_read_sync_status = 0x800460CC; // type:func
@@ -19,7 +19,6 @@ ovl_load_state = 0x800B6D34;
 ovl_load_sectors = 0x800B6D38;
 ovl_load_buf = 0x800B6D3C;
 ovl_load_lba = 0x800B6D40;
-cd_read_status = 0x8012512A;
 text_list = 0x800B3DC0;
 text_list_count = 0x800B3F60;
 text_glyph_count = 0x800B3F62;

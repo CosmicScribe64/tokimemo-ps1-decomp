@@ -13,3 +13,7 @@ D_800B3538 = 0x800B3538;
 D_800B4348 = 0x800B4348;
 D_800B4354 = 0x800B4354;
 D_800B4360 = 0x800B4360;
+// Main bss names inside EVENT's file range 0x800F6000-0x80126000 (T-27002): EVENT loads
+// config/symbol_addrs.txt, so these would label EVENT's own data. Overlays link them through
+// build/main_names.ld (tools/syms_to_ld.py).
+cd_read_status = 0x8012512A;

@@ -44,6 +44,7 @@ import sys
 import check_headers
 import object_boundaries as ob
 import srcscan
+import symtab
 
 INCLUDE_ASM_RE = re.compile(r'INCLUDE_ASM\(\s*"([^"]*)"\s*,\s*(\w+)\s*\)')
 INCLUDE_RODATA_RE = re.compile(r'INCLUDE_RODATA\(\s*"([^"]*)"\s*,\s*(\w+)\s*\)')
@@ -270,20 +271,13 @@ def declared_names(code):
 # ------------------------------------------------------------------ addresses
 
 def symbol_addresses(root, unit):
-    """{name: vram} from the splat symbol files a unit's config reads."""
-    files = ["config/symbol_addrs.txt", "config/symbol_addrs_sdk.txt", "config/symbol_addrs_obin.txt",
-             "config/symbol_addrs_main.txt"]
-    if unit != "main":
-        files.append("config/overlays/%s_symbols.txt" % unit)
+    """{name: vram} from the splat symbol files a unit's config reads (tools/symtab.py, T-27002),
+    and main's for an overlay."""
+    table = symtab.SymbolTable(root)
     out = {}
-    for f in files:
-        p = os.path.join(root, f)
-        if not os.path.exists(p):
-            continue
-        for line in read_text(p).splitlines():
-            m = re.match(r'\s*(\w+)\s*=\s*(0x[0-9A-Fa-f]+)\s*;', line)
-            if m:
-                out.setdefault(m.group(1), int(m.group(2), 16))
+    for u in ([unit, "main"] if unit != "main" else ["main"]):
+        for line in table.unit_lines(u):
+            out.setdefault(line.name, line.addr)
     return out
 
 
@@ -301,17 +295,18 @@ def address_of(name, funcs_by_name, syms):
 class Target:
     """One new C file."""
 
-    def __init__(self, unit, obj):
+    def __init__(self, unit, obj, name=None):
         self.unit = unit
         self.obj = obj
         self.addr = obj.text_start
+        # name: the yaml's name of the object (readable after tools/rename.py, T-27002), else the address
         if unit == "main":
-            self.name = "main/%08X" % self.addr
-            self.src = "src/main/%08X.c" % self.addr
+            self.name = name or "main/%08X" % self.addr
+            self.src = "src/%s.c" % self.name
             self.asm_dir = "asm/nonmatchings/" + self.name
             self.rodata_dir = "asm/data/%s.rodata" % self.name
         else:
-            self.name = "%s/%08X" % (unit, self.addr)
+            self.name = name or "%s/%08X" % (unit, self.addr)
             self.src = "src/ovl/%s.c" % self.name
             self.asm_dir = "asm/ovl/%s/nonmatchings/%s" % (unit, self.name)
             self.rodata_dir = "asm/ovl/%s/data/%s.rodata" % (unit, self.name)
@@ -347,11 +342,13 @@ def uses(text, name):
     return re.search(r'\b%s\b' % re.escape(name), strip_c(text)) is not None
 
 
-def plan_unit(root, unit, objs, old_files, funcs, items):
-    """[Target] for the objects `objs` from the C files `old_files` (CFile list, link order)."""
+def plan_unit(root, unit, objs, old_files, funcs, items, names=None):
+    """[Target] for the objects `objs` from the C files `old_files` (CFile list, link order).
+    names: object_names() of the unit (default: from its yaml and objects file)."""
     syms = symbol_addresses(root, unit)
     by_name = {f.name: f for f in funcs}
-    targets = [Target(unit, o) for o in objs]
+    names = names or object_names(root, unit, objs)
+    targets = [Target(unit, o, names(o.text_start)) for o in objs]
     starts = [t.addr for t in targets]
 
     def target_of(addr):
@@ -516,10 +513,27 @@ LABELS_HEADER = """// Rodata labels for the INCLUDE_RODATA lines of {what} (T-05
 """
 
 
-def labels_text(unit, syms):
+def label_addresses(root, unit):
+    """{name: address} of the unit's labels file: a label renamed by tools/rename.py (T-27002) keeps
+    its line, and its address comes from there."""
+    p = os.path.join(root, labels_path(unit))
+    out = {}
+    if os.path.exists(p):
+        for line in read_text(p).splitlines():
+            m = re.match(r'\s*(\w+)\s*=\s*0x([0-9A-Fa-f]+)\s*;', line)
+            if m:
+                out[m.group(1)] = int(m.group(2), 16)
+    return out
+
+
+def labels_text(unit, syms, known=None):
     what = "the main exe" if unit == "main" else "overlay %s" % unit
+    known = known or {}
+
+    def addr(x):
+        return known[x] if x in known else int(x[2:], 16)
     return LABELS_HEADER.format(what=what) + "".join(
-        "%s = 0x%s;\n" % (s, s[2:]) for s in sorted(syms, key=lambda x: int(x[2:], 16)))
+        "%s = 0x%08X;\n" % (s, addr(s)) for s in sorted(syms, key=addr))
 
 
 def add_symbol_file(ytext, path):
@@ -541,11 +555,39 @@ def yaml_path(unit):
     return "config/SLPM_86.053.yaml" if unit == "main" else "config/overlays/%s.yaml" % unit
 
 
-def overlay_subsegments(unit, base, objs, ro_lo, ro_end):
+def object_names(root, unit, objs=()):
+    """addr -> `c` subsegment name for a unit's objects: the yaml's name of a file that already holds
+    exactly that object (file renames of tools/rename.py survive a re-run, T-27002), else the address
+    name in the unit's folder. objs: the unit's objects (Obj list, address order)."""
+    cfs = srcscan.unit_c_files(unit, root) if os.path.exists(os.path.join(root, yaml_path(unit))) else []
+    starts = sorted(cf.start for cf in cfs)
+    by_start = {cf.start: cf.name for cf in cfs}
+    ostarts = sorted(o.text_start for o in objs)
+    folder = srcscan.unit_dir(unit, root) if cfs else ("main" if unit == "main" else unit)
+    have = {}
+    for k, a in enumerate(ostarts):
+        if a in by_start and "/" in by_start[a]:
+            nxt_c = next((x for x in starts if x > a), None)
+            nxt_o = ostarts[k + 1] if k + 1 < len(ostarts) else None
+            if nxt_c == nxt_o:
+                have[a] = by_start[a]
+
+    def name(addr):
+        return have.get(addr) or "%s/%08X" % (folder, addr)
+    return name
+
+
+def address_names(unit):
+    """object_names() stand-in for a unit without a yaml (address names only)."""
+    return lambda addr: "%s/%08X" % (unit, addr)
+
+
+def overlay_subsegments(unit, base, objs, ro_lo, ro_end, names=None):
     """Subsegment lines of an overlay's code segment."""
-    lines = ["      - [0x%X, c, %s/%08X]\n" % (o.text_start - base, unit, o.text_start) for o in objs]
+    names = names or address_names(unit)
+    lines = ["      - [0x%X, c, %s]\n" % (o.text_start - base, names(o.text_start)) for o in objs]
     lines += rodata_lines(unit, base, [o for o in objs if o.island == "yes"], ro_lo, ro_end,
-                          "%s_rodata_" % unit, lambda o: "%s/%08X" % (unit, o.text_start))
+                          "%s_rodata_" % unit, lambda o: names(o.text_start))
     lines.append("      - [0x%X, data, %s_data]\n" % (ro_end - base, unit))
     return lines
 
@@ -585,20 +627,20 @@ def parse_sub_line(line):
     return int(m.group(4), 16), m.group(5), m.group(6)
 
 
-def rewrite_overlay_yaml(text, unit, base, objs, ro_lo, ro_end):
+def rewrite_overlay_yaml(text, unit, base, objs, ro_lo, ro_end, names=None):
     """The yaml with the subsegments regenerated; `data`/`.data` lines from the end of the
     rodata on (data islands, T-9010) are kept as they are."""
     lines = text.splitlines(True)
     k = next(i for i, l in enumerate(lines) if l.strip() == "subsegments:")
     e = next(i for i in range(k + 1, len(lines)) if not lines[i].startswith("      "))
-    subs = overlay_subsegments(unit, base, objs, ro_lo, ro_end)
+    subs = overlay_subsegments(unit, base, objs, ro_lo, ro_end, names)
     kept = [l for l in lines[k + 1:e] if (parse_sub_line(l) or (0, ""))[1] in ("data", ".data")]
     if kept and parse_sub_line(kept[0])[0] == ro_end - base:
         subs = [l for l in subs if parse_sub_line(l)[1] != "data"] + kept
     return "".join(lines[:k + 1] + subs + lines[e:])
 
 
-def rewrite_main_yaml(text, split_files, rodata_lo):
+def rewrite_main_yaml(text, split_files, rodata_lo, names=None):
     """Replace the `c` lines of the files in split_files ({old name: [Obj]}) by one line per
     object and regenerate the rodata lines from rodata_lo to the next subsegment after them
     (the islands of files not in split_files are kept as they are)."""
@@ -615,13 +657,14 @@ def rewrite_main_yaml(text, split_files, rodata_lo):
         if q[1] == ".rodata" and q[2] not in split_files:
             keep.append((q[0] + EXE_TEXT_OFF, parsed[i + 1][0] + EXE_TEXT_OFF, q[2]))
     islands = [o for objs in split_files.values() for o in objs if o.island == "yes"]
+    names = names or address_names("main")
     new_ro = rodata_lines("main", EXE_TEXT_OFF, islands, rodata_lo, hi, "rodata_",
-                          lambda o: "main/%08X" % o.text_start, extra=keep)
+                          lambda o: names(o.text_start), extra=keep)
     out = []
     for i, l in enumerate(lines):
         q = parsed[i]
         if q and q[1] == "c" and q[2] in split_files:
-            out += ["      - { start: 0x%X, type: c, name: main/%08X }\n" % (o.text_start - EXE_TEXT_OFF, o.text_start)
+            out += ["      - { start: 0x%X, type: c, name: %s }\n" % (o.text_start - EXE_TEXT_OFF, names(o.text_start))
                     for o in split_files[q[2]]]
         elif i == ro[0]:
             out += new_ro
@@ -669,15 +712,17 @@ def plan(root, args, out=sys.stdout, object_maps=None):
                                  % (unit, c.name, c.start, ends[c.name]))
             groups[c.name] = mine
         funcs, items = ob.load(units[unit], root)
-        targets = plan_unit(root, unit, [o for c in cfiles for o in groups[c.name]], cfiles, funcs, items)
+        targets = plan_unit(root, unit, [o for c in cfiles for o in groups[c.name]], cfiles, funcs, items,
+                            object_names(root, unit, objs))
         news = {t.src: t.render() for t in targets}
         olds = [os.path.relpath(str(c.src), root) for c in cfiles]
         ytext = read_text(os.path.join(root, yaml_path(unit)))
         if unit == "main":
-            ynew = rewrite_main_yaml(ytext, groups, ob.MAIN_RODATA[0])
+            ynew = rewrite_main_yaml(ytext, groups, ob.MAIN_RODATA[0], object_names(root, unit, objs))
         else:
             u = units[unit]
-            ynew = rewrite_overlay_yaml(ytext, unit, u.text[0], objs, u.rodata_lo, ro_end)
+            ynew = rewrite_overlay_yaml(ytext, unit, u.text[0], objs, u.rodata_lo, ro_end,
+                                        object_names(root, unit, objs))
         labels = set()
         kept = [c for c in all_c if c not in cfiles]
         for t in targets:
@@ -685,9 +730,10 @@ def plan(root, args, out=sys.stdout, object_maps=None):
                 labels.update(v)
         for c in kept:
             labels.update(n for _f, n in INCLUDE_RODATA_RE.findall(read_text(str(c.src))))
-        labels = {x for x in labels if re.match(r'^D_[0-9A-F]{8}$', x)}
+        known = label_addresses(root, unit)
+        labels = {x for x in labels if re.match(r'^D_[0-9A-F]{8}$', x) or x in known}
         if labels:
-            news[labels_path(unit)] = labels_text(unit, labels)
+            news[labels_path(unit)] = labels_text(unit, labels, known)
             ynew = add_symbol_file(ynew, labels_path(unit))
         changed = [p for p, t in news.items() if not os.path.exists(os.path.join(root, p))
                    or read_text(os.path.join(root, p)) != t]

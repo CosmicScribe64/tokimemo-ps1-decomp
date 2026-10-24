@@ -22,6 +22,7 @@ import yaml
 sys.path.insert(0, "tools")
 import prepare_disc  # noqa: E402  (tools/prepare_disc.py: finds the user's game image)
 import srcscan  # noqa: E402  (tools/srcscan.py: the C files of every unit, from the yaml files)
+import symtab  # noqa: E402  (tools/symtab.py: the symbol files of every unit, T-27002)
 
 EXE = "SLPM_86.053"
 DISC_STAMP = "build/disc.stamp"  # tools/prepare_disc.py: disc/files is unpacked from game/ (T-3300)
@@ -176,9 +177,9 @@ def overlay_targets(n, overlays):
            description="SHA1 CHECK $in")
     # main-exe names (O.BIN, SDK, aggregate bases of T-5000) that overlays use by name; see tools/syms_to_ld.py
     n.rule("symsld", command="python3 tools/syms_to_ld.py $out $in", description="SYMS $out")
-    n.build("build/main_names.ld", "symsld",
-            ["config/symbol_addrs_obin.txt", "config/symbol_addrs_sdk.txt",
-             "config/symbol_addrs_types.txt"],
+    # inputs: the main yaml's symbol files that the overlay yamls do not load, and the aggregate bases
+    # (symtab.SymbolTable.main_link_files, T-27002)
+    n.build("build/main_names.ld", "symsld", symtab.SymbolTable().main_link_files(),
             implicit=["tools/syms_to_ld.py"])
     oks = []
     for name, _base, _text in overlays:
@@ -260,9 +261,13 @@ def main():
                     "config/%s.yaml && python3 tools/data_pieces.py config/%s.yaml && touch $out")
            % (EXE, EXE, EXE),
            description="splat split")
-    n.rule("symbols", command="python3 tools/check_symbols.py && touch $out",
-           description="CHECK SYMBOLS")
-    n.build(SYMBOLS_OK, "symbols", implicit=["tools/check_symbols.py", "config/symbol_addrs.txt"])
+    # every symbol file of every yaml (T-27002); restat: a symbol file edit that keeps the check
+    # passing leaves the stamp alone, so it does not rebuild every C object
+    n.rule("symbols", command="python3 tools/check_symbols.py --stamp $out",
+           description="CHECK SYMBOLS", restat=True)
+    table = symtab.SymbolTable()
+    n.build(SYMBOLS_OK, "symbols", implicit=["tools/check_symbols.py", "tools/symtab.py", "config/overlays.txt"]
+            + sorted({u.yaml for u in table.units.values()} | set(table.lines)))
     n.build("symbols", "phony", SYMBOLS_OK)
     n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")
