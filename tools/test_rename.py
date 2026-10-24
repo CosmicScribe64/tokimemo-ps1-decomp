@@ -423,6 +423,30 @@ class OracleTest(Fixture):
         self.assertIn("D_800E6280.step = arg0 + D_800E6280.step + D_800E6280.step;", self.read("src/main/80041100.c"))
         self.assertNotIn("PROBLEM", out)
 
+    def test_field_uses_after_a_line_directive(self):
+        # `#line N` renumbers the lines gcc reports (TACO keeps the original line numbers this way)
+        src = self.read("src/main/80041100.c")
+        self.write("src/main/80041100.c", src.replace(
+            "    D_800E6280.unk_02 = arg0;\n",
+            "#line 90\n    D_800E6280.unk_02 = arg0;\n#line 7\n    D_800E6280.unk_02 = D_800E6280.unk_02 + 1;\n"))
+        out = self.ok("field GameState unk_02 step\n", verify=True)
+        self.assertNotIn("PROBLEM", out)
+        text = self.read("src/main/80041100.c")
+        self.assertIn("#line 90\n    D_800E6280.step = arg0;\n#line 7\n    D_800E6280.step = D_800E6280.step + 1;", text)
+
+    def test_norm_diag_ignores_the_suggestion(self):
+        d = ("f.c", 3, 5, "'GameState' has no member named 'unk_3A'; did you mean 'unk_03A'?")
+        e = ("f.c", 3, 5, "'GameState' has no member named 'unk_3A'; did you mean 'brightness'?")
+        self.assertEqual(R.norm_diag(d, {"unk_03A": "brightness"}), R.norm_diag(e, {}))
+
+    def test_physical_lines(self):
+        self.assertEqual(R.physical_lines("a\nb\n", 2), [2])
+        text = "a\n#line 10\nb\nc\n#line 3\nd\n"
+        self.assertEqual(R.physical_lines(text, 10), [3])
+        self.assertEqual(R.physical_lines(text, 11), [4])
+        self.assertEqual(R.physical_lines(text, 3), [6])
+        self.assertEqual(R.physical_lines(text, 1), [1])
+
     def test_field_member_clash(self):
         self.refused("field GameState unk_00 unk_02x\n", "placeholder")
         self.refused("field GameState unk_00 unk_02\n", "placeholder")

@@ -93,6 +93,7 @@ table and in a ledger only a line that starts with # is a comment (a note keeps 
 Tests: tools/test_rename.py (synthetic trees, no game data).
 """
 import argparse
+import functools
 import glob
 import os
 import re
@@ -1227,11 +1228,41 @@ def plan_fields(ctx, rows, use_gcc=True):
             scratch.close()
 
 
+def strip_suggestion(msg):
+    """gcc's `; did you mean 'x'?` depends on the member names, which a rename changes (K&R code that reaches
+    a member of another type by its name, such as RPG_BAT's `D_800E6280.unk_3A`, errors in gcc before and after)."""
+    return re.sub(r"; did you mean '[^']*'\?$", "", msg)
+
+
 def norm_diag(d, names):
     f, ln, _col, msg = d[0], d[1], d[2], d[3]
+    msg = strip_suggestion(msg)
     for o, n in names.items():
         msg = msg.replace("'%s'" % o, "'%s'" % n)
     return (f, ln, msg)
+
+
+LINE_DIRECTIVE_RE = re.compile(r"^[ \t]*#[ \t]*line[ \t]+(\d+)")
+
+
+@functools.lru_cache(maxsize=16)
+def has_line_directive(text):
+    return re.search(r"^[ \t]*#[ \t]*line[ \t]+\d", text, re.M) is not None
+
+
+def physical_lines(text, line):
+    """Physical 1-based lines that gcc numbers `line`: a `#line N` directive renumbers the lines after it
+    (TACO uses them to keep the original line numbers), so one reported line can be several physical ones."""
+    if not has_line_directive(text):
+        return [line]
+    out, off = [], 0
+    for n, l in enumerate(text.split("\n"), 1):
+        m = LINE_DIRECTIVE_RE.match(l)
+        if m:
+            off = int(m.group(1)) - (n + 1)
+        elif n + off == line:
+            out.append(n)
+    return out
 
 
 def locate_member(text, line, col, old):
@@ -1240,13 +1271,14 @@ def locate_member(text, line, col, old):
     if text is None:
         return None
     starts = [0] + [m.end() for m in re.finditer(r"\n", text)]
-    if line - 1 >= len(starts):
-        return None
-    i = starts[line - 1] + col - 1
-    for rx in (r"(?:\.|->)\s*(\w+)", r"(\w+)"):
-        m = re.compile(rx).match(text, i)
-        if m and m.group(1) == old:
-            return m.start(1)
+    for phys in physical_lines(text, line):
+        if phys - 1 >= len(starts):
+            continue
+        i = starts[phys - 1] + col - 1
+        for rx in (r"(?:\.|->)\s*(\w+)", r"(\w+)"):
+            m = re.compile(rx).match(text, i)
+            if m and m.group(1) == old:
+                return m.start(1)
     return None
 
 
@@ -2241,7 +2273,7 @@ def gcc_proof(ctx):
     shift = {r_new: 1 for r_new in [p for _o, p in tree.moves if p.endswith(".c")]}
 
     def norm(d, mapped):
-        f, ln, _c, msg = d[0], d[1], d[2], d[3]
+        f, ln, _c, msg = d[0], d[1], d[2], strip_suggestion(d[3])
         if mapped:
             msg = map_names(msg, name_map(ctx, f))
             while f in fwd:
