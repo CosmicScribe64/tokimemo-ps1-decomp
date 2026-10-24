@@ -127,7 +127,7 @@ field	FlagsF64	b10	spot_info_10	bit (year - 95) * 4 + quarter: issue 10 (months 
 field	FlagsF64	b11	spot_info_11	bit (year - 95) * 4 + quarter: issue 11 (months 11-1, 1997-98) (no place); set by magazine_mark_read and, for the places named, by the phone call that tells the spot (TEL)
 field	FlagsF64	b13	spot_info_first_month	HYPOTHESIS: magazine_mark_read sets it in months 2, 5, 8 and 11 (and in April 1995); quarter_flags_rotate moves it to bit 14 at months 3, 6, 9, 12
 field	FlagsF64	b14	spot_info_later_month	HYPOTHESIS: set in every other month; TEL tests it for place availability in the second and third month of a quarter
-field	FlagsF64	b15	spot_info_summer	HYPOTHESIS: set when the magazine is opened in months 5-7; TEL tests it for place 9 in the first week of August
+field	FlagsF64	b15	spot_info_summer	HYPOTHESIS: set when the magazine is opened in months 5-7; TEL offers place 18 (shrine) only in the first week of August (days 1-7) when it is set
 type	main	(new)	ProgressState	new struct for GameState.progress_state (0x9C bytes): place_flags[21], command_counts[9], 2 unused bytes, profile_snapshot[0x7C]; header change to be checked byte by byte
 field	ProgressState	unk_00	place_flags	one byte per Place id (21): low 7 bits non-zero = date place available (TEL tests & 0x7F), 0x80 = pending announcement (TEL clears it to 1); emu: start-of-game state has places 0, 2, 4, 8, 9, 12, 15 set
 field	ProgressState	unk_15	command_counts	9 counters, one per command % 9, incremented per chosen command (read by ENDING to rank commands)
