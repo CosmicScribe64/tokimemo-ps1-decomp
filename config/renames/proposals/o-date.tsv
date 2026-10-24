@@ -2,7 +2,7 @@
 func	DATE	func_80132000	date_choice_tables_init	wires 40 pointer variables to the per-place response-class and face tables inside the choice file read to 0x801A4000 (called by stage 0 step 7 after the read)
 func	DATE	func_80132288	date_fireworks_resources_init	sets the image, palette and light-sprite pointers used by the shrine festival fireworks (0x801B2000..0x801F28xx)
 func	DATE	func_801323B8	date_central_park_particles_init	sets the pointers of the 20-sprite falling-particle set of central park (called after the 0x22 sectors to 0x801E0000 are read)
-func	DATE	func_80132458	date_parade_resources_init	sets the image and palette pointers of the night-parade sign (palette cycled by date_parade_sign_palette_cycle)
+func	DATE	func_80132458	date_parade_resources_init	HYPOTHESIS: the resources are the night-parade sign; sets the image and palette pointers of the night-parade sign (palette cycled by date_parade_sign_palette_cycle)
 func	DATE	func_801324A8	date_ambush_sections_init	sets the three script-table pointers of the street-gang ambush talk (used by date_ambush_prepare_battle)
 func	DATE	func_801324DC	date_arrival_init	stage 0 step 0xD: clears the per-date counters and flags, adds variant x groups_per_variant to the dialogue group and derives the greeting group from the mood rank and date_arrival
 func	DATE	func_80133DB4	date_place_enter_check	step: k_reset(0), shows the place title and runs date_event_choose (stage 0 step 0xF)
@@ -51,7 +51,7 @@ func	DATE	func_801380E4	date_stadium_enter_spot	stage 1 step 2: variant < 2 play
 func	DATE	func_801381B4	date_movie_theater_enter_spot	stage 1 step 2: logs the spot, plays 0x1500 and starts the lobby background
 func	DATE	func_80138220	date_movie_theater_load_poster	stage 1 step 0xB: switch on the film index (0-10): starts the poster background of that film
 func	DATE	func_80138314	date_movie_theater_start_film	stage 1 step 0xF: fades in, starts the film's audio clip (table of 11 pairs) and sound command 0x300
-func	DATE	func_801383BC	date_movie_theater_narration_talk	stage 1 step 0x15: first call speaks with current_girl 14 (narration voice), later calls with the date girl, via normal_date_speak
+func	DATE	func_801383BC	date_movie_theater_narration_talk	HYPOTHESIS: speaker label 14 is used as a narration voice; stage 1 step 0x15: first call speaks with current_girl 14 (narration voice), later calls with the date girl, via normal_date_speak
 func	DATE	func_80138418	date_movie_theater_fade_out	stage 1 step 0x12: normal_date_bg_fadeout
 func	DATE	func_80138440	date_movie_theater_load_screen_background	stage 1 step 0x16: snd_command(0x500), starts the theater screen background
 func	DATE	func_80138470	date_concert_hall_enter_spot	stage 1 step 2: logs the spot and starts the concert hall background
@@ -88,12 +88,12 @@ func	DATE	func_80139D60	date_amusement_park_group_by_variant	stage 1 step 0x33: 
 func	DATE	func_80139D9C	date_amusement_park_title	stage 1 step 2: sets the sub-title to the park
 func	DATE	func_80139DD0	date_movie_theater_group_by_class	stage 1 step 0x1E of the movie theater: per-girl group increments from the first response class (class 4 -> +1, class 2 -> +2 for most girls), then derives the classes
 func	DATE	func_80139F3C	date_concert_hall_group_by_class	stage 1 step 0x1A of the concert hall: per-girl group increments from the first response classes, then derives the classes
-func	DATE	func_8013A0C0	date_shrine_festival_branch	stage 1 step 8: by school year sets the group and either goes to step 0x14 or step 0x1F (festival stalls) with a small tokimeki bonus
-func	DATE	func_8013A234	date_shrine_jump_to_fireworks	stage 1 steps 0x13/0x1E: jumps to step 0x32
+func	DATE	func_8013A0C0	date_shrine_festival_branch	stage 1 step 8: by school year: 1995 group 1 (Yuina, Yukari, Yuko, Yumi) or 0 and tokimeki +1, continue to the stalls at step 0xB; 1996 group 4 or 6, jump to step 0x14 (stalls with reward); 1997 group 0xA or 0xC, tokimeki +1, jump to step 0x1F (fireworks)
+func	DATE	func_8013A234	date_shrine_jump_to_farewell	stage 1 steps 0x13 and 0x1E: jumps to step 0x32 (the shared farewell tail), skipping the fireworks
 func	DATE	func_8013A254	date_shrine_choice_tables_by_girl	stage 1 step 0x28: copies the 3 response classes and 3 faces for the girl (3 bytes per girl)
 func	DATE	func_8013A2E0	date_shrine_start_festival_stalls	stage 1 steps 0xB/0x16: saves mode, stage and resume step 0x3A and starts the festival stall mini games (mode 0x82)
 func	DATE	func_8013A344	date_shrine_result_face	stage 1 step 0x43: face by the stall result (D_80122E9C)
-func	DATE	func_8013A424	date_shrine_after_stalls_jump	stage 1 step 0x48: jumps to step 0xC (1995) or 0x17
+func	DATE	func_8013A424	date_shrine_after_stalls_jump	stage 1 step 0x48 after the stall game: 1995 jumps to step 0xC, other years to step 0x17 (stall reward)
 func	DATE	func_8013A464	date_shrine_return_setup	stage 1 step 0x3A: resets the scene after the stall game and reloads the shrine background
 func	DATE	func_8013A62C	date_shrine_stall_reward	stage 1 step 0x17: applies the result of the stall game (tokimeki, affection, stress) and selects the face
 func	DATE	func_8013A804	date_amusement_park_parade_offer	stage 1 step 0x3B: remembers the choice; in August offers the night parade (date_parade_offered) else skips 0x10 steps
@@ -195,9 +195,9 @@ func	DATE	func_80140374	date_central_park_particles_setup	stage 1 step 0xA: chec
 func	DATE	func_80140788	date_central_park_particles_hide	clears the visible bit of the 20 particle sprites
 func	DATE	func_801407D0	date_central_park_particles_update	per-frame update of the falling particles (drift, wrap at the bottom)
 func	DATE	func_80140A7C	date_mira_late_skip	stage 0 step 0x20: Mira at rank 3+ after a late arrival jumps to step 0x34 (group 8) and the place index grows by 0x32
-func	DATE	func_80140B08	date_invited_day_check	stage 1 farewell step: on 1995-10-15 or 1996-10-13 with the girl's flag 12/13 set clears both flags; the next step (extra talk) is skipped unless it applies and the mood is not the worst
-func	DATE	func_80140C6C	date_invited_day_talk	stage 1 farewell step: speaks section 22 with group D_800CA158 (3 x mood tier) and line D_800CA15C (extra talk of the invited day)
-func	DATE	func_80140D38	date_parade_sign_palette_cycle	every 7th frame advances the sign's palette frame (0-3) and reloads the palette
+func	DATE	func_80140B08	date_invited_day_check	HYPOTHESIS: the two flags are invitations to a festival that a date on that day replaces; stage 1 farewell step: on 1995-10-15 or 1996-10-13 with the girl's flag 12/13 set clears both flags; the next step (extra talk) is skipped unless it applies and the mood is not the worst
+func	DATE	func_80140C6C	date_invited_day_talk	HYPOTHESIS: extra talk of the invited day; stage 1 farewell step: speaks section 22 with group D_800CA158 (3 x mood tier) and line D_800CA15C (extra talk of the invited day)
+func	DATE	func_80140D38	date_parade_sign_palette_cycle	HYPOTHESIS: the palette frames are a neon sign; every 7th frame advances the sign's palette frame (0-3) and reloads the palette
 func	DATE	func_80140DB4	date_girl_in_clear_appointment	girl_in then clears the active bit of appointment slot 0
 func	DATE	func_80140DE4	date_ambush_bank_load_start	stage 0 step 0x42: starts the load of the ambush music bank
 func	DATE	func_80140E44	date_ambush_bank_load_wait	stage 0 step 0x43: waits for the bank, sound 0xBF, retry after 0x400 frames
@@ -294,15 +294,15 @@ func	DATE	func_8014DC5C	date_event_yuko_spring_load_data	step: cd_read_sectors o
 func	DATE	func_8014DC94	date_event_yuko_spring_load_data_2	step: cd_read_sectors of the scene's event data to 0x801B0000 and its pointer table init, then main_step_next
 func	DATE	func_8014DCCC	date_event_yuko_summer	scene dispatcher (mode 0x5E, yuko, scene 3, summer): copies the step table and calls the handler of the current step and draws the effect layers
 func	DATE	func_8014DDD8	date_event_yuko_summer_load_data	step: cd_read_sectors of the scene's event data to 0x801B0000 and its pointer table init, then main_step_next
-func	DATE	func_8014DE10	date_event_yuko_summer_sign_setup	loads the night-parade sign palette and sets its actor and image pointers
+func	DATE	func_8014DE10	date_event_yuko_summer_sign_setup	HYPOTHESIS: the actors are the night-parade neon sign; loads the night-parade sign palette and sets its actor and image pointers
 func	DATE	func_8014DF1C	date_event_yuko_summer_load_data_2	step: cd_read_sectors of the scene's event data to 0x801B0000 and its pointer table init, then main_step_next
 func	DATE	func_8014DF54	date_event_yuko_summer_still_fade_in	event_still_fade_in and shows the two sign actors with the picture brightness
 func	DATE	func_8014DFB0	date_event_yuko_summer_still_fade_out	event_still_fade_out and hides the sign actors at brightness 0
-func	DATE	func_8014E010	date_event_yuko_summer_sign_animate	every 10th frame from step 0xD advances the sign palette frames
+func	DATE	func_8014E010	date_event_yuko_summer_sign_animate	HYPOTHESIS: the actors are the night-parade neon sign; every 10th frame from step 0xD advances the sign palette frames
 func	DATE	func_8014E108	date_event_yuko_summer_light_beams	draws five coloured gradient beams (yellow and white)
 func	DATE	func_8014E2E8	date_event_yuko_autumn	scene dispatcher (mode 0x5E, yuko, scene 4, autumn): copies the step table and calls the handler of the current step
 func	DATE	func_8014E38C	date_event_yuko_autumn_load_data	step: cd_read_sectors of the scene's event data to 0x801B0000 and its pointer table init, then main_step_next
-func	DATE	func_8014E3E8	date_event_yuko_autumn_stage_lights	draws the cycling coloured gradient beams of the stage (colour sets change every 100 and 120 frames)
+func	DATE	func_8014E3E8	date_event_yuko_autumn_beam_lights	HYPOTHESIS: draws the cycling coloured gradient beams (colour sets change every 100 and 120 frames); HYPOTHESIS: stage lights of the concert
 func	DATE	func_8014EBB8	date_event_yuko_winter	scene dispatcher (mode 0x5E, yuko, scene 5, winter): copies the step table and calls the handler of the current step
 func	DATE	func_8014EC34	date_event_yuko_winter_speak_with_face	speaks; on the first frame of group 5 sets face 1
 func	DATE	func_8014EC90	date_event_yuko_winter_sound_1	step: snd_command(0x503) then main_step_next
@@ -509,7 +509,7 @@ func	DATE	func_80155E40	date_event_yukari_summer	scene dispatcher (mode 0x5E, yu
 func	DATE	func_80156024	date_event_yukari_summer_speak_with_face	speaks; first frame of line 2 sets face 1
 func	DATE	func_80156080	date_event_yukari_summer_load_data	step: cd_read_sectors of the scene's event data to 0x801B0000 and its pointer table init, then main_step_next
 func	DATE	func_801560B8	date_event_yukari_summer_sound_1	step: snd_command(0x502) then main_step_next
-func	DATE	func_801560E0	date_event_yukari_summer_fish_update	per-frame update of eight sprite actors (goldfish-style swimmers): counters, positions and visibility
+func	DATE	func_801560E0	date_event_yukari_summer_actors_update	HYPOTHESIS: per-frame update of eight sprite actors: counters, positions and visibility (HYPOTHESIS: swimming animals of the aquarium scene)
 func	DATE	func_801563A8	date_event_yukari_autumn	scene dispatcher (mode 0x5E, yukari, scene 5, autumn): copies the step table and calls the handler of the current step and draws the effect layers
 func	DATE	func_8015645C	date_event_yukari_autumn_load_data	step: cd_read_sectors of the scene's event data to 0x801B0000 and its pointer table init, then main_step_next
 func	DATE	func_80156494	date_event_yukari_winter	scene dispatcher (mode 0x5E, yukari, scene 6, winter): copies the step table and calls the handler of the current step and draws the effect layers
@@ -726,46 +726,46 @@ data	DATE	D_801609F8	date_event_yumi_autumn_steps	step table of the autumn date 
 data	DATE	D_80160AA8	date_event_yumi_winter_steps	step table of the winter date event of yumi (scene 6), 54 entries
 data	DATE	D_80160B80	date_event_miharu_spring_steps	step table of the spring date event of miharu (scene 3), 20 entries
 data	DATE	D_80160BD0	date_event_miharu_summer_steps	step table of the summer date event of miharu (scene 5), 20 entries
-data	DATE	D_8015B520	date_class_table_art_museum	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 15 bytes per girl (5 options x 3 choices); set by date_choice_tables_init, read by date_place_setup_art_museum
-data	DATE	D_8015B524	date_face_table_art_museum	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_art_museum
-data	DATE	D_8015B528	date_class_table_bowling_alley	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl (2 variants x 3); set by date_choice_tables_init, read by date_place_setup_bowling_alley
-data	DATE	D_8015B52C	date_face_table_bowling_alley	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_bowling_alley
-data	DATE	D_8015B530	date_class_table_concert_hall	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 36 per girl (12 programmes x 3); set by date_choice_tables_init, read by date_place_setup_concert_hall
-data	DATE	D_8015B534	date_face_table_concert_hall	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_concert_hall
-data	DATE	D_8015B538	date_class_table_zoo	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 9 per girl (3 variants x 3); set by date_choice_tables_init, read by date_place_setup_zoo
-data	DATE	D_8015B53C	date_face_table_zoo	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_zoo
-data	DATE	D_8015B540	date_class_table_shrine	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 3 per girl; set by date_choice_tables_init, read by date_place_setup_shrine
-data	DATE	D_8015B544	date_face_table_shrine	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_shrine
-data	DATE	D_8015B548	date_class_table_game_center	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 12 per girl (4 variants x 3); set by date_choice_tables_init, read by date_place_setup_game_center
-data	DATE	D_8015B54C	date_face_table_game_center	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_game_center
-data	DATE	D_8015B550	date_class_table_karaoke	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_karaoke
-data	DATE	D_8015B554	date_face_table_karaoke	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_karaoke
-data	DATE	D_8015B558	date_class_table_movie_theater	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 33 per girl (11 films x 3); set by date_choice_tables_init, read by date_place_setup_movie_theater
-data	DATE	D_8015B55C	date_face_table_movie_theater	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_movie_theater
-data	DATE	D_8015B560	date_class_table_pool	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_pool
-data	DATE	D_8015B564	date_face_table_pool	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_pool
-data	DATE	D_8015B568	date_class_table_planetarium	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_planetarium
-data	DATE	D_8015B56C	date_face_table_planetarium	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_planetarium
-data	DATE	D_8015B570	date_class_table_sea	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_sea
-data	DATE	D_8015B574	date_face_table_sea	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_sea
-data	DATE	D_8015B578	date_class_table_botanical_garden	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_botanical_garden
-data	DATE	D_8015B57C	date_face_table_botanical_garden	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_botanical_garden
-data	DATE	D_8015B580	date_class_table_shopping_street	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 18 per girl (3 shops x 2 variants x 3); set by date_choice_tables_init, read by date_place_setup_shopping_street
-data	DATE	D_8015B584	date_face_table_shopping_street	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_shopping_street
-data	DATE	D_8015B588	date_class_table_skating_rink	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_skating_rink
-data	DATE	D_8015B58C	date_face_table_skating_rink	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_skating_rink
-data	DATE	D_8015B590	date_class_table_ski_resort	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_ski_resort
-data	DATE	D_8015B594	date_face_table_ski_resort	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_ski_resort
-data	DATE	D_8015B598	date_class_table_stadium	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 12 per girl (4 variants x 3); set by date_choice_tables_init, read by date_place_setup_stadium
-data	DATE	D_8015B59C	date_face_table_stadium	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_stadium
-data	DATE	D_8015B5A0	date_class_table_aquarium	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 9 per girl (3 variants x 3); set by date_choice_tables_init, read by date_place_setup_aquarium
-data	DATE	D_8015B5A4	date_face_table_aquarium	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_aquarium
-data	DATE	D_8015B5A8	date_class_table_library	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_library
-data	DATE	D_8015B5AC	date_face_table_library	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_library
-data	DATE	D_8015B5B0	date_class_table_amusement_park	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 36 per girl (12 triples: 5 rides x 2 variants, extras); set by date_choice_tables_init, read by date_place_setup_amusement_park
-data	DATE	D_8015B5B4	date_face_table_amusement_park	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_amusement_park
-data	DATE	D_8015B5B8	date_class_table_central_park	pointer into the choice file (0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 9 per girl (3 variants x 3); set by date_choice_tables_init, read by date_place_setup_central_park
-data	DATE	D_8015B5BC	date_face_table_central_park	pointer into the choice file: face index shown for each of the 3 answers, same layout as date_class_table_central_park
+data	DATE	D_8015B520	date_class_table_art_museum	pointer to offset 0x27C of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 15 bytes per girl (5 options x 3 choices); set by date_choice_tables_init, read by date_place_setup_art_museum
+data	DATE	D_8015B524	date_face_table_art_museum	pointer to offset 0xD2C of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_art_museum
+data	DATE	D_8015B528	date_class_table_bowling_alley	pointer to offset 0x3EC of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl (2 variants x 3); set by date_choice_tables_init, read by date_place_setup_bowling_alley
+data	DATE	D_8015B52C	date_face_table_bowling_alley	pointer to offset 0xE9C of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_bowling_alley
+data	DATE	D_8015B530	date_class_table_concert_hall	pointer to offset 0x7F0 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 36 per girl (12 programmes x 3); set by date_choice_tables_init, read by date_place_setup_concert_hall
+data	DATE	D_8015B534	date_face_table_concert_hall	pointer to offset 0x12A0 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_concert_hall
+data	DATE	D_8015B538	date_class_table_zoo	pointer to offset 0x190 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 9 per girl (3 variants x 3); set by date_choice_tables_init, read by date_place_setup_zoo
+data	DATE	D_8015B53C	date_face_table_zoo	pointer to offset 0xC40 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_zoo
+data	DATE	D_8015B540	date_class_table_shrine	pointer to offset 0xA04 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 3 per girl; set by date_choice_tables_init, read by date_place_setup_shrine
+data	DATE	D_8015B544	date_face_table_shrine	pointer to offset 0x14B4 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_shrine
+data	DATE	D_8015B548	date_class_table_game_center	pointer to offset 0x368 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 12 per girl (4 variants x 3); set by date_choice_tables_init, read by date_place_setup_game_center
+data	DATE	D_8015B54C	date_face_table_game_center	pointer to offset 0xE18 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_game_center
+data	DATE	D_8015B550	date_class_table_karaoke	pointer to offset 0x430 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_karaoke
+data	DATE	D_8015B554	date_face_table_karaoke	pointer to offset 0xEE0 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_karaoke
+data	DATE	D_8015B558	date_class_table_movie_theater	pointer to offset 0x684 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 33 per girl (11 films x 3); set by date_choice_tables_init, read by date_place_setup_movie_theater
+data	DATE	D_8015B55C	date_face_table_movie_theater	pointer to offset 0x1134 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_movie_theater
+data	DATE	D_8015B560	date_class_table_pool	pointer to offset 0x97C of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_pool
+data	DATE	D_8015B564	date_face_table_pool	pointer to offset 0x142C of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_pool
+data	DATE	D_8015B568	date_class_table_planetarium	pointer to offset 0x238 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_planetarium
+data	DATE	D_8015B56C	date_face_table_planetarium	pointer to offset 0xCE8 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_planetarium
+data	DATE	D_8015B570	date_class_table_sea	pointer to offset 0x9C0 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_sea
+data	DATE	D_8015B574	date_face_table_sea	pointer to offset 0x1470 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_sea
+data	DATE	D_8015B578	date_class_table_botanical_garden	pointer to offset 0x1F4 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_botanical_garden
+data	DATE	D_8015B57C	date_face_table_botanical_garden	pointer to offset 0xCA4 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_botanical_garden
+data	DATE	D_8015B580	date_class_table_shopping_street	pointer to offset 0x064 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 18 per girl (3 shops x 2 variants x 3); set by date_choice_tables_init, read by date_place_setup_shopping_street
+data	DATE	D_8015B584	date_face_table_shopping_street	pointer to offset 0xB14 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_shopping_street
+data	DATE	D_8015B588	date_class_table_skating_rink	pointer to offset 0xA28 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_skating_rink
+data	DATE	D_8015B58C	date_face_table_skating_rink	pointer to offset 0x14D8 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_skating_rink
+data	DATE	D_8015B590	date_class_table_ski_resort	pointer to offset 0xA6C of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_ski_resort
+data	DATE	D_8015B594	date_face_table_ski_resort	pointer to offset 0x151C of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_ski_resort
+data	DATE	D_8015B598	date_class_table_stadium	pointer to offset 0x600 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 12 per girl (4 variants x 3); set by date_choice_tables_init, read by date_place_setup_stadium
+data	DATE	D_8015B59C	date_face_table_stadium	pointer to offset 0x10B0 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_stadium
+data	DATE	D_8015B5A0	date_class_table_aquarium	pointer to offset 0x12C of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 9 per girl (3 variants x 3); set by date_choice_tables_init, read by date_place_setup_aquarium
+data	DATE	D_8015B5A4	date_face_table_aquarium	pointer to offset 0xBDC of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_aquarium
+data	DATE	D_8015B5A8	date_class_table_library	pointer to offset 0x324 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_library
+data	DATE	D_8015B5AC	date_face_table_library	pointer to offset 0xDD4 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_library
+data	DATE	D_8015B5B0	date_class_table_amusement_park	pointer to offset 0x474 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 36 per girl (12 triples: 5 rides x 2 variants, extras); set by date_choice_tables_init, read by date_place_setup_amusement_park
+data	DATE	D_8015B5B4	date_face_table_amusement_park	pointer to offset 0xF24 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_amusement_park
+data	DATE	D_8015B5B8	date_class_table_central_park	pointer to offset 0x000 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 9 per girl (3 variants x 3); set by date_choice_tables_init, read by date_place_setup_central_park
+data	DATE	D_8015B5BC	date_face_table_central_park	pointer to offset 0xAB0 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_central_park
 data	DATE	D_8015BDC0	date_section_text	27 pointers: text table of each script section of the girl (place talks 0-21, plus 22 farewell, 23 arrival greeting, 24 special-day greeting, 25 neighborhood park opening, 26 closing); filled by date_fill_sections_<girl>
 data	DATE	D_8015BE2C	date_section_command	27 pointers: command table of each section (same index as date_section_text)
 data	DATE	D_8015BE98	date_section_voice	27 pointers: voice table of each section (same index as date_section_text)
@@ -806,7 +806,7 @@ data	DATE	D_8015B690	date_shop_index	shop chosen in the shopping street: 0 bouti
 data	DATE	D_8015B694	date_first_sunday	1 on a Sunday of the first week of a month (weekday 6, day < 8); Megumi's spring event needs it
 data	DATE	D_8015B698	date_stadium_game_day	1 in months 1, 3, 6 and 11: the stadium shows a game (spot 0x1C)
 data	DATE	D_8015B69C	date_ride_chosen	set to 1 after the first ride choice so that later steps keep the ride
-data	DATE	D_8015B6A0	date_sign_palette_frame	0-3: current palette frame of the night-parade sign (advanced every 7th frame)
+data	DATE	D_8015B6A0	date_sign_palette_frame	HYPOTHESIS: 0-3: current palette frame of the night-parade neon sign (advanced every 7th frame)
 data	DATE	D_8015BF04	date_arrival_group	dialogue group of the arrival greeting: 0-5 girl late, 6-8 on time, 9-11 player late, 12 bad looks
 data	DATE	D_8015BF08	date_arrival_line	line cursor of the arrival greeting
 data	DATE	D_8015BF0C	date_special_day_group	group of the special-day greeting (0 March 20/21 .. 4 December 23)
@@ -846,10 +846,10 @@ data	main	D_800CA364	date_special_event_active	1 while a special date event (mod
 data	main	D_800CA368	date_special_event_flag	event_flags index of the running special event; stored in the event log
 data	main	D_80122D44	date_light_effect_flags	bit 0: draw the fireworks-sky light effect, bit 1: special date event running
 data	main	D_80122D14	date_fireworks_active	1 while the shrine fireworks effect runs
-data	main	D_80122D34	date_parade_sign_visible	1 while the night-parade sign is shown
+data	main	D_80122D34	date_parade_sign_visible	HYPOTHESIS: 1 while the night-parade sign is shown (set by date_amusement_park_parade_prepare, read by date_stage_place)
 data	main	D_80122D4C	date_ambush_talk_active	1 while the ambush talk sections are in use
 data	main	D_80122CE0	rpg_launch_code	dialogue_work word +0x10: launch code of RPG_BAT (4 gang ambush, 5 boss ambush) and, after the battle, its result (0 won); DATE tests it in date_end
-data	main	D_80122E9C	festival_stall_result	result 0-4 of the festival stall game (EN_NICHI), read by the shrine steps of DATE
+data	main	D_80122E9C	festival_stall_result	HYPOTHESIS: result 0-4 of the festival stall game (EN_NICHI, stall meaning of the overlay name unproven), written by EN_NICHI, read by the shrine steps of DATE
 field	DateChoice8	unk_00	request_a	first word of the pair: first argument of cd_audio_request_set
 field	DateChoice8	unk_04	request_b	second word of the pair: second argument of cd_audio_request_set
 field	DateEventChoice6	kind	group	halfword view of date_opening_group (D_8015BF1C)
@@ -938,9 +938,9 @@ const	DateStage	0	DATE_STAGE_ARRIVAL	meeting at the place: loads, arrival, greet
 const	DateStage	1	DATE_STAGE_PLACE	the date at the place: talk, choice, reaction, farewell; ends with date_end
 const	DateStage	2	DATE_STAGE_GIRL_BIRTHDAY	the girl's birthday: gift choice (entered from date_birthday_check)
 const	DateStage	3	DATE_STAGE_PLAYER_BIRTHDAY	the player's birthday: the girl's greeting
-const	DateArrival	0	DATE_ARRIVAL_GIRL_LATE	set at the start with chance 1/4 (frame_count & 3 == 0), never for Yuina: she arrives after the player
+const	DateArrival	0	DATE_ARRIVAL_GIRL_LATE	HYPOTHESIS: late = she appears only after a waiting talk; set at the start with chance 1/4 (frame_count & 3 == 0), never for Yuina
 const	DateArrival	1	DATE_ARRIVAL_ON_TIME	default
-const	DateArrival	2	DATE_ARRIVAL_PLAYER_LATE	the player first went to a wrong place and corrected it
+const	DateArrival	2	DATE_ARRIVAL_PLAYER_LATE	HYPOTHESIS: late = the player first went to another place and corrected it (the code only shows the correction)
 const	DateResponseClass	0	DATE_CLASS_BEST	tokimeki +3, affection +2 (times multipliers / 16), syoushin -10 weight
 const	DateResponseClass	1	DATE_CLASS_GOOD	tokimeki +2, affection +1, syoushin weight -8
 const	DateResponseClass	2	DATE_CLASS_FAIR	tokimeki +1, affection 0, syoushin weight -6
