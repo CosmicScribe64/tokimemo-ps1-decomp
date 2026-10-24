@@ -98,12 +98,12 @@ Note the row order: exams (1) and club season (2) win over the festival check (3
 | icon | name (HUD, holiday units) | effect |
 |---|---|---|
 | 0-3, 5-7 | weekday commands | `last_command` low nibble := icon, sound 0x500 (`SND_COMMAND_CONFIRM`), `main_state_set(0x30)` |
-| 4 | club activity | with a club: if the club's girl (`func_80053564`: first girl whose club nibble equals the player's club) has the `club_member` flag her affection rises by 1; then as above. Without a club: nibble := 4 and stage 5 (unreachable, see section 7) |
+| 4 | club activity | with a club (emu: club 6, girl with the `club_member` flag and club nibble 6: affection 0x10 becomes 0x11, without the flag it stays 0x10): if the club's girl (`func_80053564`: first girl whose club nibble equals the player's club) has the `club_member` flag her affection rises by 1; then as above. Without a club: nibble := 4 and stage 5 (unreachable, see section 7) |
 | 8, 9, 10 | holiday-only icons | the code would play 0x50D (8, 10) or 0x500 (9) and schedule, but the icons are always locked here |
 | 11 | system settings (`ICON_SYSTEM`) | sound 0x50D, stage 4 (no availability test) |
 | 12 | calendar (`ICON_CALENDAR`) | sound 0x50D, stage 2 (no availability test) |
 | 13 | data (`HUD_ICON_CARD`) | when usable and `card_job` is 0: `icon_layout_stash(0)`, sound 0x50D, stage 3 |
-| 14 | extra "proceed" (`HUD_ICON_EXTRA`) | when usable: nibble := 0xE; if tomorrow's marker is 5 (exam) or 11 (trip) sound 0x500, `main_state_set(0x30)` and the matching notice; any other day: `main_state_set(0x30)` and nibble := 7 (rest) |
+| 14 | extra "proceed" (`HUD_ICON_EXTRA`) | when usable: nibble := 0xE; if tomorrow's marker is 5 (exam) or 11 (trip) sound 0x500, `main_state_set(0x30)` and the matching notice; any other day: `main_state_set(0x30)` and nibble := 7 (rest) (emu: in the exam week the confirm gives nibble 0xE) |
 
 (emu) circle on icon 0 of the 1995-04-09 state calls `main_state_set(0x30)` from `command_screen_icon_confirm` (frame 30); icon 11 enters stage 4 at frame 46, icon 12 stage 2, icon 13 stage 3; circle on icon 4 (no club) does nothing. With menu mode A the d-pad steps the icons in index order: DOWN and RIGHT go to the next, UP and LEFT to the previous, with wrap-around over 0-13 (UP from 0 reaches 13).
 
@@ -215,7 +215,7 @@ Details:
 
 - `join_club_select`: cross returns (`main_stage_set(0)`, and in mode 0x34 also `main_step_set(2)`); circle on the cancel item (11) does the same; circle on a club stores its id in `player_flags` bits 12-15 and goes to step 2.
 - `join_club_message` substeps: 0 announces the joined club (text built from `club_name_table[club]`); 1 waits for text and voice; 2 for clubs 6 and up (baseball, soccer, tennis, swimming, basketball) the club captain says that the third Sunday of every month is club day and members must not miss it, otherwise it skips to 0xFF; 3 `dialogue_text_step`; 4 and 0xFF finish.
-- Reachability: from this screen only icon 4 starts stage 5, and `command_screen_icons_reset` locks icon 4 for a player without a club, so the stage is dead code in mode 0x34 (emu: circle on icon 4 in the no-club state does nothing). The holiday mode runs the same three functions as its stage 7 (Sunday, no club), where the join happens in play.
+- Reachability: from this screen only icon 4 starts stage 5, and `command_screen_icons_reset` locks icon 4 for a player without a club, so the stage is dead code in mode 0x34 (emu: circle on icon 4 in the no-club state does nothing). Run with the stage byte patched to 5 on that state: the club list shows the 11 clubs in the three columns and a cancel item at the lower right, the cursor starts on the first club; DOWN six times and circle selects baseball (club 6); the announcement and then the captain's club-day line follow (each waits for a press), `player_flags` byte +0xF5 becomes 0x60 and `join_club_exit` calls `main_state_set(0x30)`. The holiday mode runs the same three functions as its stage 7 (Sunday, no club), where the join happens in play.
 
 ## 8. The rumor report (mode 0x44)
 
