@@ -1,0 +1,911 @@
+func	TACO	func_80132000	shooter_entry	overlay entry (loader default for mode 0x90): adds 1 to unk_1100, switches on stage byte unk_1109, then runs the two frame hooks
+func	TACO	func_801321A0	shooter_palette_reset	five calls of func_80058F9C with block 0x8018A000, indices 0-4; no caller in the overlay
+func	TACO	func_80132220	shooter_reset_ship_state	slot 0 and slot 8: position x/y to 0, z to 0x800, roll mode, hit flags cleared
+func	TACO	func_801322AC	shooter_init_ships	links the two ship models (func_801438F0), scale 0x400, HP 0xFF (player) and 0x80 (wingman), bomb stock 4 and 3, weapon -1, secondary -1
+func	TACO	func_8013240C	shooter_update_player	d-pad movement with ease-out near the limits (x +-0x1000, y -0x800..0x180), speed 32 or 45 on diagonals; roll buttons; roll and hit-timer state
+func	TACO	func_801328B0	shooter_update_wingman	slot 8 follows the player in one of 10 formation modes while fewer than 8 targets live, else chases the first target; fires every 8 frames when a target exists
+func	TACO	func_80132FE8	shooter_update_battle	per-frame core: input, wingman, shot updates, fire and bomb flags from the pad, bomb, collisions, effects, items
+func	TACO	func_80133374	shooter_check_battle_end	timer countdown while stages cleared < 3; START, time 0 or player HP 0 goes to stage 45
+func	TACO	func_80133410	shooter_clear_beam_flags	clears flag 0x20 on the 16 shot records of the player (0) or wingman (1)
+func	TACO	func_801334BC	shooter_clear_player_shots	zeroes flags of player and wingman shot tables, secondary tables and bomb shots; resets bomb counters
+func	TACO	func_8013356C	shooter_clear_enemy_bullets	zeroes flags of the 16 enemy bullet records
+func	TACO	func_801335A0	shooter_play_se	plays SE (id | 0x500 when arg0 odd, else | 0x600); in a stage (background flags set) ids < 10 get a random cooldown
+func	TACO	func_80133694	shooter_tick_se_cooldowns	decrements the ten SE cooldown bytes
+func	TACO	func_80133738	shooter_play_triangle_voice	HYPOTHESIS: plays one of 6 voice clips (func_80046290 is the main voice request, third argument 8); triangle press on odd stages in step 1, clip chosen at random or by ship depth
+func	TACO	func_80133870	shooter_stage_load	stage 0: step dispatch, blinking loading text, loading countdown display
+func	TACO	func_80133980	shooter_load_step_boot	sub-steps: start CD reads of the base assets, wait, set VRAM buffer addresses
+func	TACO	func_80133AF4	shooter_load_step_stream	HYPOTHESIS: music stream request: two calls of func_80044890 with LBA sets, polled by func_80044C98
+func	TACO	func_80133C08	shooter_load_step_textures	CD reads of texture pages and uploads to VRAM
+func	TACO	func_80133E98	shooter_load_step_models	CD reads of model blocks; at the end D_8015EDB4 = actor pool (D_8011ED58)
+func	TACO	func_801342CC	shooter_init_texture_pages	clears page buffers, loads six texture pages and palettes, clears 16 words
+func	TACO	func_80134450	shooter_upload_texture_banks	loads banks into VRAM pages 8,10,12,14,24,26
+func	TACO	func_80134500	shooter_load_step_finish	lights, settings load, model handles; then stage 1
+func	TACO	func_801345D4	shooter_load_settings_and_scores	if the saved flag (bit0 of word at D_800E7D10+0x40) is set, restores settings, scores, names; else writes defaults (scores 3057300, 2057300, 1057300)
+func	TACO	func_8013474C	shooter_init_coordinate_objects	GsInitCoordinate2 for the 64 objects, z -0xFA0, flags 0
+func	TACO	func_801347A8	shooter_hide_all_models	func_80059048, then attribute 0x80000000 on the 64 handles
+func	TACO	func_801347F4	shooter_link_model_handles	GsLinkObject4 for 64 handles with the block at arg0
+func	TACO	func_80134884	shooter_clear_particle_tables	zeroes the nine 16-record tables (0x140 bytes each)
+func	TACO	func_80134930	shooter_title_setup	stage 2 init: two title models at fixed positions
+func	TACO	func_80134A18	shooter_title_animate	frame-driven pose script (0x20, 0x54, 0x68, 0x72, 0x7C, 0x9A, 0xAE, 0xEA frame limits) for the two title models, light ramp
+func	TACO	func_80134D8C	shooter_stage_title	stage 2: six steps, star dots, SE at frames 0x40/0x80/0xA0/0xC0
+func	TACO	func_80134EBC	shooter_title_step_init	step 0: clears flags, star table and text layer; stage helper calls
+func	TACO	func_80134FB8	shooter_setup_text_layer	sets the main text-object fields (D_8011ED15..) used for stage texts
+func	TACO	func_8013506C	shooter_draw_title_stars	adds one random star dot per frame until 128 exist (320x240 grid) and draws all with a colour that changes every frame (twinkle)
+func	TACO	func_8013515C	shooter_title_reveal_step	step 2 helper: each call fills the first empty entry of palette slots 56-71 from the loaded palette with probability about 1/2, re-uploads the palette, returns the count of entries still empty
+func	TACO	func_80135220	shooter_title_step_wait	step 1: waits 209 frames; any of START, circle, cross skips to step 5
+func	TACO	func_80135278	shooter_title_step_reveal	step 2: runs the reveal until complete
+func	TACO	func_801352CC	shooter_title_step_hold	step 3: holds until frame 255 with a fade
+func	TACO	func_80135330	shooter_title_step_advance	step 4: advance only
+func	TACO	func_80135350	shooter_title_step_finish	step 5: reload palette, go to stage 3
+func	TACO	func_80135394	shooter_stage_menu	stage 3: main menu, 3 steps; stars
+func	TACO	func_80135418	shooter_menu_step_init	step 0
+func	TACO	func_8013546C	shooter_menu_step_select	step 1: up/down/select cycle 5 items; circle or START confirms; idle for 901 frames goes to stage 6
+func	TACO	func_8013555C	shooter_menu_draw_item	draws the label of the current item
+func	TACO	func_80135638	shooter_menu_step_confirm	step 2: after 65 frames: item 0 stage 10, 1 stage 4, 2 stage 5, 3 stage 7, 4 stage 46
+func	TACO	func_80135720	shooter_settings_reset_state	zeroes D_8015F3F0..F3FC
+func	TACO	func_80135744	shooter_stage_settings	stage 4: three steps
+func	TACO	func_801357B0	shooter_draw_label	draws a NUL-terminated string with glyph quads (13 px advance, max 21 chars)
+func	TACO	func_8013587C	shooter_settings_step_init	step 0: load page from CD, reset state
+func	TACO	func_80135944	shooter_clear_text_strip	fills rect (0x2C0,0,0x140,0x14) and flushes
+func	TACO	func_80135994	shooter_settings_step_exit	step 2: back to stage 2
+func	TACO	func_801359B4	shooter_settings_step_run	step 1: input or animation, then draw
+func	TACO	func_80135A04	shooter_settings_draw	draws title, five rows and the current values (OFF/ON, R12-L12/R1-L1/R2-L2, three button glyphs)
+func	TACO	func_80135F6C	shooter_settings_draw_changing	changing-value animation for 31 frames
+func	TACO	func_80136024	shooter_settings_anim_auto_shot	cross-fade between old and new auto shot value
+func	TACO	func_801361E8	shooter_settings_anim_roll	cross-fade for the roll setting
+func	TACO	func_80136438	shooter_settings_anim_shot	cross-fade for the shot button
+func	TACO	func_80136688	shooter_settings_anim_bomb	cross-fade for the bomb button
+func	TACO	func_801368D8	shooter_settings_cycle_value	right or circle: value+1 modulo count; left: value-1
+func	TACO	func_80136988	shooter_settings_input	up/down moves the cursor (wraps over 5 rows); left/right/circle change; cross or START leaves
+func	TACO	func_80136B40	shooter_stage_scores	stage 5: eight steps (init, stars in, reset, zoom in, show, zoom out, stars out, exit to stage 2)
+func	TACO	func_80136C00	shooter_scores_step_init	step 0: star field init, background off
+func	TACO	func_80136C60	shooter_scores_step_stars_out	step 6: star brightness ramps down over 43 frames
+func	TACO	func_80136CD8	shooter_scores_step_exit	step 7: SE 0xC1, stage 2
+func	TACO	func_80136D00	shooter_scores_step_stars_in	step 1: brightness ramps up in 64 steps of 4
+func	TACO	func_80136D78	shooter_scores_step_zoom_in	step 3: ranking scale grows by 60 per frame (120 while cross is held) up to 0x1000
+func	TACO	func_80136E08	shooter_scores_step_zoom_out	step 5: ranking scale grows by 500 per frame to 0x9001, fading out
+func	TACO	func_80136E70	shooter_draw_ranking_glyph	one ranking glyph, grid cell (arg2,arg3) scaled by arg4
+func	TACO	func_80136F4C	shooter_scores_step_show	step 4: static ranking until circle or cross
+func	TACO	func_80136FBC	shooter_draw_ranking	title, ranks 1-3, names and 8-digit scores
+func	TACO	func_801371B4	shooter_draw_ranking_text	draws a string glyph by glyph (max 21)
+func	TACO	func_80137264	shooter_format_score	fills an 8-character field: score right aligned with leading spaces, capped 99999999
+func	TACO	func_80137590	shooter_stage_demo	stage 6: demo play, two steps; blinking label every 16 frames
+func	TACO	func_8013760C	shooter_demo_step_init	step 0: same setup as a new game; step 1 picks weapon 0 or 1 from the frame counter (low 2 bits 0 or 1), else the vulcan
+func	TACO	func_8013788C	shooter_demo_step_run	step 1: scripted pad input (circle held, direction windows by frame % 512), any real input or frame 1801 returns to stage 2
+func	TACO	func_80137A60	shooter_stage_how_to_play	HYPOTHESIS: help pages (the menu item label means instructions; content is a text page plus voice lines); four steps, cross returns to stage 2
+func	TACO	func_80137B14	shooter_setup_help_text	text layer parameters for the help pages
+func	TACO	func_80137BD8	shooter_help_step_init	step 0: CD read of the help page, voice reset
+func	TACO	func_80137CBC	shooter_play_help_voice	HYPOTHESIS: voice line request: plays voice pair arg0 of the 9-entry table and SE 0x300
+func	TACO	func_80137D00	shooter_help_step_page1	step 1: plays voice lines 0-2 one at a time, waiting for each to start and end; help text scrolls
+func	TACO	func_80137E48	shooter_help_step_page2	step 2: plays voice lines 3-7 the same way
+func	TACO	func_80137F54	shooter_help_step_exit	step 3: last voice line, back to stage 2
+func	TACO	func_80137F90	shooter_stage_game_start	stage 10: three steps; draws the HUD while loading
+func	TACO	func_8013801C	shooter_game_start_step_init	step 0: clears score, timer (0x4650 frames), links 79 actors, resets ships and tables
+func	TACO	func_80138160	shooter_game_start_step_wait	step 1: waits for the load request to finish, loads page banks
+func	TACO	func_8013822C	shooter_game_start_step_begin	step 2: timer 0x4650, HP 0xFF, to stage 11
+func	TACO	func_80138280	shooter_stage_stage1	stage 11: three steps; label shown for 96 frames
+func	TACO	func_80138348	shooter_stage1_step_init	step 0: load request 0x14, background flags 0x80, reset enemy state
+func	TACO	func_8013838C	shooter_stage1_step_run	step 1: runs the stage 1 script until the stream is ready
+func	TACO	func_8013840C	shooter_stage1_step_end	step 2: load request 0x18, stage 12
+func	TACO	func_80138450	shooter_stage_stage2	stage 21: three steps
+func	TACO	func_80138520	shooter_stage2_step_init	step 0: lights, request 0x24, background flags 3
+func	TACO	func_801385B4	shooter_stage2_step_run	step 1: runs the stage 2 script
+func	TACO	func_80138634	shooter_stage2_step_end	step 2: request 0x28, stage 22
+func	TACO	func_80138680	shooter_stage_stage3	stage 31: three steps
+func	TACO	func_8013873C	shooter_stage3_step_init	step 0: lights, background flags 4, request 0x34
+func	TACO	func_801387C0	shooter_stage3_step_run	step 1: runs the stage 3 script
+func	TACO	func_80138840	shooter_stage3_step_end	step 2: request 0x38, stage 32
+func	TACO	func_80138890	shooter_stage_result	stage 8: score tally, three steps, wipe panels drawn in steps 0-1
+func	TACO	func_80138964	shooter_count_up_number	rolls a displayed number toward a target one digit place at a time (call with arg3 0 to set the target)
+func	TACO	func_80138B2C	shooter_result_step_compute	step 0: base score + 1,000,000 per cleared stage; shield, bomb and time bonuses; total capped 9,999,999
+func	TACO	func_80138D08	shooter_result_step_show	step 1: ten sub-steps roll the five numbers; circle skips or finishes
+func	TACO	func_80139118	shooter_result_step_next	step 2: stage 9 when the total beats rank 3 else stage 5
+func	TACO	func_80139170	shooter_stage_name_entry	stage 9: six steps (init, intro, input, outro, fade, done)
+func	TACO	func_8013920C	shooter_name_entry_step_init	step 0: inserts the score into the ranking and blanks the new name
+func	TACO	func_80139394	shooter_name_entry_step_fade	step 4: fade over 43 frames
+func	TACO	func_801393F4	shooter_name_entry_step_done	step 5: to stage 5
+func	TACO	func_80139424	shooter_draw_glyph	draws one font glyph as a quad (digits, letters, . - ! @ * #), scale and offset arguments
+func	TACO	func_80139AB0	shooter_name_entry_step_intro	step 1: ring grows in over 120 frames
+func	TACO	func_80139B54	shooter_name_entry_step_outro	step 3: ring shrinks
+func	TACO	func_80139BCC	shooter_name_entry_step_input	step 2: ring of 40 glyphs rotates with left/right; circle takes the glyph, cross deletes, START ends
+func	TACO	func_80139FB8	shooter_draw_glyph_ring	draws the 40-glyph ring, front glyph large, others by depth
+func	TACO	func_8013A580	shooter_draw_entered_name	draws the three entered characters
+func	TACO	func_8013A764	shooter_name_entry_reset	clears the entry cursor and ring state
+func	TACO	func_8013A790	shooter_update_stars	moves and draws the 100-star field (inward or outward warp, roll-driven sideways drift)
+func	TACO	func_8013AD64	shooter_draw_star	one star dot at polar position (angle, radius), brightness by distance
+func	TACO	func_8013AFDC	shooter_init_stars	seeds the RNG, places 80 of 100 stars
+func	TACO	func_8013B170	shooter_stage_game_end	stage 45: three steps; banner by outcome; wipe
+func	TACO	func_8013B2A0	shooter_game_end_step_init	step 0: snapshot screen, resets, request 0x44
+func	TACO	func_8013B398	shooter_game_end_step_wait	step 1: any button advances
+func	TACO	func_8013B3C4	shooter_game_end_step_leave	step 2: when the stream is ready go to stage 8
+func	TACO	func_8013B404	shooter_snapshot_screen	HYPOTHESIS: func_8009C93C is a VRAM to VRAM copy; copies the current screen rect to VRAM x 0x200
+func	TACO	func_8013B460	shooter_draw_screen_wipe	two textured quads slide the snapshot, argument 100 is fully covered
+func	TACO	func_8013B990	shooter_run_collisions	runs enemy-bullet and enemy-body hits, then shot hits for the four shot tables; adds the per-frame score tick
+func	TACO	func_8013BAC4	shooter_hit_enemies_with_shots	beam and bullet hits on enemy slots 16-62; damage, score, sparks, SE
+func	TACO	func_8013C1F4	shooter_hit_ships_with_bullets	enemy bullets hit the player (4 HP) or wingman (4 HP) within 0x80 xy and 0x100 z
+func	TACO	func_8013C440	shooter_hit_ships_with_bodies	enemy bodies (flags 0xC0) hit player (12 HP) and the wingman loop scans slots 0-15
+func	TACO	func_8013C6D4	shooter_collect_items	items within 0x200 on each axis give 1000 points and apply their kind
+func	TACO	func_8013CC40	shooter_explode_dead_enemies	explosions for enemies at HP 0 (slots 16-63); no caller in the overlay
+func	TACO	func_8013CE70	shooter_nop	empty function; no caller in the overlay
+func	TACO	func_8013CE78	shooter_bomb_damage_all	removes 2 HP from every live hittable enemy; spark; score on kill
+func	TACO	func_8013CFD8	shooter_bomb_damage_by_distance	damage = (4096 - dx + 4096 - dy) / 256 from the blast centre; capped by HP
+func	TACO	func_8013D1E0	shooter_spawn_explosion	ring slot in D_8015E9F0, position and velocity
+func	TACO	func_8013D2A0	shooter_spawn_hit_spark	ring slot in D_8015E8B0
+func	TACO	func_8013D348	shooter_update_hit_sparks	animates 16 sparks: 6 frames per image, 7 images
+func	TACO	func_8013D3F4	shooter_update_explosions	animates and moves the 16 explosions, draws two sprites each
+func	TACO	func_8013D528	shooter_draw_hit_spark	billboard quad for a spark image
+func	TACO	func_8013D838	shooter_draw_explosion_sprite	billboard quad for an explosion image (4x2 sheet)
+func	TACO	func_8013DB80	shooter_spawn_enemy_bullet	free slot of 16; flag 0x80 aims at the player (0x40 adds spread), speed arg
+func	TACO	func_8013DDE4	shooter_update_enemy_bullets	age +1, dies at 255 or z >= 10001, moves, draws
+func	TACO	func_8013DEE4	shooter_draw_enemy_bullet	billboard quad by kind (0-6)
+func	TACO	func_8013E424	shooter_spawn_item	free slot of 16 in the item table with random drift
+func	TACO	func_8013E4FC	shooter_update_items	drift with damping, bounce on z, lifetime, draw
+func	TACO	func_8013E778	shooter_draw_item_weapon	sprite for item kinds 0 and 1
+func	TACO	func_8013EAA4	shooter_draw_item	sprite for the other item kinds
+func	TACO	func_8013F250	shooter_draw_hud	score (score + 1,000,000 x stages cleared), time as minutes, seconds, hundredths, bonus popup; calls the panel drawers and the triangle voice
+func	TACO	func_8013F430	shooter_draw_hud_panels	reticle, bomb stock, bomb panel, shield gauge
+func	TACO	func_8013F468	shooter_draw_reticle	a 512-unit quad at depth -0x7000 starting at the ship x/y (aim marker), two images alternating every 8 frames
+func	TACO	func_8013F7D8	shooter_draw_bomb_stock	bomb icons for slots 1-3 at x 180, 200, 220 when the slot holds kind 3 or 4
+func	TACO	func_8013F874	shooter_draw_bomb_icon	one 16x16 icon, palette cycles with the frame counter
+func	TACO	func_8013F9C0	shooter_draw_bomb_panel	right panel in two 32x32 sprites; shakes while a bomb runs, red palette below 32 HP
+func	TACO	func_8013FBF0	shooter_draw_shield_gauge	left HP gauge: colour by HP (>192 blue, >128 green, >64 yellow, else red), pulsing
+func	TACO	func_80140000	shooter_update_secondary_shots	updates the secondary shots of both ships
+func	TACO	func_80140028	shooter_update_secondary_shots_of	homing or spreading shots for ship arg0: age, steering every 4th frame, movement, draw
+func	TACO	func_80140364	shooter_fire_secondary_spread	secondary weapon 1: shot kind 2 (flags 0x92) with sine/cosine of the roll angle as xy speed, z speed -0x40
+func	TACO	func_801404FC	shooter_fire_secondary_homing	secondary weapon 0: shot kind 1 (flags 0x91) with target index, z speed -0x100
+func	TACO	func_80140638	shooter_count_targets	counts live hittable enemy slots 16-63 whose kind is not 0xE; returns the first index through arg0
+func	TACO	func_801407D4	shooter_find_target	picks the target in front of the given position, scanning 48 slots from a frame-dependent start
+func	TACO	func_80140ADC	shooter_draw_secondary_shot	billboard quad, 2 frames by age bit 4
+func	TACO	func_80140DF0	shooter_update_primary_shots	updates the primary shots of both ships
+func	TACO	func_80140E18	shooter_update_primary_shots_of	ages, moves and draws the shots of ship arg0; positions the beam anchors; beam ends after 128 frames
+func	TACO	func_80141050	shooter_fire_vulcan	weapon -1: two-column shot kind 4 (flags 0x94), z speed -0x200
+func	TACO	func_80141170	shooter_fire_wide_shot	weapon 0: shot kind 8 (flags 0x98), z speed -0x200
+func	TACO	func_80141290	shooter_fire_beam	weapon 1: needs all 16 slots free; beam flags 0xB0 with two anchor records
+func	TACO	func_801413B8	shooter_draw_vulcan_shot	billboard quad, animates by age bit 2
+func	TACO	func_801416E8	shooter_draw_wide_shot	billboard quad of the wide shot
+func	TACO	func_80141B18	shooter_draw_beam	gouraud quads from the anchors to far depth, fade by age
+func	TACO	func_80141DE0	shooter_update_bomb	bomb state machine: waits for a start, runs pulse bomb (mode 1) or blast bomb (mode 2) timers, ends them and consumes the slot
+func	TACO	func_801420DC	shooter_consume_bomb	clears the top bomb slot holding a bomb item (slot 3, then 2, then 1)
+func	TACO	func_801421AC	shooter_peek_bomb	returns the kind (3 or 4) of the top bomb slot, 0 if none
+func	TACO	func_80142220	shooter_try_start_bomb	returns -1 while blast shots live, 1 while pulse mode runs, 0 if the ship is invulnerable or no bomb, else starts a bomb (3 or 4)
+func	TACO	func_801423B0	shooter_update_blast_shots	moves the 16 blast shots (age 255 ends, speed -0x400 after age 128), draws them; returns 0 when done
+func	TACO	func_801424A8	shooter_draw_blast_shot	billboard quad that grows with age
+func	TACO	func_80142820	shooter_stage_exit	stage 46: eight steps (save settings, audio, memory card, three reload steps, load day data, return)
+func	TACO	func_801428DC	shooter_exit_step_save_settings	step 0: writes flag, mode, selectors, scores and names back into the work area at D_800E7D10+0x40
+func	TACO	func_80142AF0	shooter_exit_step_write_memory_card	HYPOTHESIS: writes the system file to the memory card (same code in OPTION; main func_80054AF4 retries open() on a card file); step 2
+func	TACO	func_80142DE0	shooter_exit_step_return	step 7: returns to the mode saved in unk_720..722 when bit 1 of the settings word is set, else mode 0x12
+func	TACO	func_80142EC4	shooter_exit_step_reload_main_data_1	step 3: func_80059E00, the shared overlay-exit reload of main data from CD
+func	TACO	func_80142EE4	shooter_exit_step_reload_main_data_2	step 4: func_80059BE8, then next step
+func	TACO	func_80142F0C	shooter_exit_step_reload_main_data_3	step 5: func_8004ADE4, then next step
+func	TACO	func_80142F34	shooter_exit_step_load_day_data	HYPOTHESIS: loads the data for the calendar day (0x95 sectors, then func_80068938 with unk_03E and unk_03F); step 6
+func	TACO	func_80142FE8	shooter_exit_step_stop_sound	HYPOTHESIS: stops sound and waits for the audio driver (func_8004482C, func_800674B0, wait func_80044E8C); step 1
+func	TACO	func_801430B0	shooter_flash_red	full-screen translucent flash of colour 0x800000 (func_8004ACC8)
+func	TACO	func_801430D0	shooter_draw_number	decimal number right to left from x with 12 px advance, palette row arg3; negatives blink
+func	TACO	func_801432F0	shooter_draw_text	string of digits, A-Z, . - space; 12 px advance, palette row arg3
+func	TACO	func_80143574	shooter_draw_dot	one-pixel coloured primitive at an offset from the screen origin
+func	TACO	func_80143644	shooter_menu_cursor_move	moves unk_1093 with up/down; no caller in the overlay
+func	TACO	func_801436D4	shooter_snapshot_screen_copy	copy of shooter_snapshot_screen; no caller in the overlay
+func	TACO	func_80143730	shooter_load_texture_page	four 64x128 uploads from RAM to the VRAM page index arg1
+func	TACO	func_80143814	shooter_load_texture_page_32	32-wide variant; no caller in the overlay
+func	TACO	func_801438F0	shooter_init_actor_model	GsLinkObject4 for the actor at arg2 with the model block arg0, model arg1; points +8 to the coordinate object
+func	TACO	func_8014394C	shooter_set_white_lights	three lights white, ambient 0x800
+func	TACO	func_80143A74	shooter_init_camera	reference view at z 0x800, clip planes
+func	TACO	func_80143AF4	shooter_release_all_actor_models	func_80059688 for index 2..0x9E step 2
+func	TACO	func_80143B34	shooter_release_actor_model	func_80059688 with 2*slot+2
+func	TACO	func_80143B58	shooter_process_load_request	table: request code 0x10..0x44 starts CD reads or the stream; the default branch waits and clears the request
+func	TACO	func_80143E80	shooter_init_background_scroll	zeroes the scroll struct, sets b to 0x400
+func	TACO	func_80143E9C	shooter_frame_update	end-of-frame hook: camera, scroll, load requests, SE cooldowns when in a stage; background layers by flags
+func	TACO	func_80143F40	shooter_scroll_background	c += 0x80 per frame; wraps at 0x1000 into d
+func	TACO	func_80143FF4	shooter_update_camera	camera follows the player x/y; roll angle from player z rotation
+func	TACO	func_80144094	shooter_draw_floor_grid	13x8 floor tiles from the scroll state
+func	TACO	func_80144430	shooter_draw_horizon_bands	four horizon strips
+func	TACO	func_801446D0	shooter_nop_background_layer	empty (flag 4 layer)
+func	TACO	func_801446D8	shooter_draw_models	GsSortObject4 style loop over the 64 model handles
+func	TACO	func_801447D0	shooter_stage_opening	stage 1: opening animation, five steps; START, circle, cross skip to step 4
+func	TACO	func_8014488C	shooter_opening_step_init	step 0: lights, models 1 and 2 placed, star tables
+func	TACO	func_80144998	shooter_opening_step_end	step 4: hides models and goes to stage 2
+func	TACO	func_801449D8	shooter_draw_scrolling_stars	25 star dots moving by (arg1, arg2) per frame, wrapping
+func	TACO	func_80144CC0	shooter_init_scrolling_stars	random positions for 25 dots
+func	TACO	func_80144D90	shooter_select_sky_palette	VRAM move of palette row arg0 (clamped 0..7)
+func	TACO	func_80144DF8	shooter_reset_model_slot	zeroes coordinate and rotation of slot arg0
+func	TACO	func_80144E3C	shooter_draw_sky_gradient	three gradient bands, three colour sets by arg5
+func	TACO	func_8014559C	shooter_draw_sky_gradient_phase	picks a colour set by frame ranges (0x1F, 0x23, 0x61)
+func	TACO	func_80145650	shooter_rotate_gradient_quads	rotates the band quads about the first corner by arg1 degrees
+func	TACO	func_80145DC4	shooter_opening_step_fly_in	step 1: pose keys 1-8 of both models, sky gradient
+func	TACO	func_8014616C	shooter_opening_step_first_close_up	step 2: keys 9-0x16 of model 1 with banded reveals, SE 0x505-0x507
+func	TACO	func_80146754	shooter_opening_step_second_close_up	step 3: keys 9-0x16 of model 2
+func	TACO	func_80146D60	shooter_init_object_hierarchy	chains 63 coordinate objects under object 0 at depth arg0, clears rotations
+func	TACO	func_80146E3C	shooter_set_dark_lights	three directional lights (grey tones) with ambient 0
+func	TACO	func_80146F74	shooter_move_model	moves and rotates object arg0 by deltas; optional tween toward the player
+func	TACO	func_801471D0	shooter_link_model_objects	GsMapModelingData and GsLinkObject4 over the model block, 64 handles
+func	TACO	func_801472D4	shooter_set_pose_from_tables	sets object matrix from a translation row and a rotation row (index arg1)
+func	TACO	func_80147400	shooter_read_model_polygon_ranges	copies per-object polygon range words of a TMD into D_8015F290
+func	TACO	func_80147444	shooter_upload_rect_256	LoadImage-style upload of a 256-wide strip; no caller in the overlay
+func	TACO	func_80147488	shooter_apply_keyframe	adds the key's translation and rotation deltas to the object's pose
+func	TACO	func_80147674	shooter_apply_keyframe_tween	like shooter_apply_keyframe with an optional pull toward the player
+func	TACO	func_801478F8	shooter_set_rotation_from_pose	copies x, z, y rotation from a pose record
+func	TACO	func_80147928	shooter_attach_boss_part	binds object arg0 to actor slot 16+k with HP, bars, radius, link
+func	TACO	func_80147B24	shooter_boss_damage_percent	100 - 100 * sum(current HP) / sum(table HP * bars) over the first arg0 parts
+func	TACO	func_80147C98	shooter_fire_from_joint	enemy bullet from joint arg1 of object arg0 transformed by the object's rotation, plus offsets
+func	TACO	func_80147E80	shooter_boss_death_explosions	each frame for each of 8 parts: random-offset hit sparks, steps count
+func	TACO	func_801480B0	shooter_stage_boss1	stage 12: four steps (init, entrance, fight, defeat), label for 96 frames
+func	TACO	func_80148184	shooter_boss1_step_init	step 0: waits for the load request, loads model block 0x8018D000, 30 coordinate objects, parts
+func	TACO	func_80148308	shooter_boss1_step_entrance	step 1: entrance pose script for 1150 frames (func_8014AB50), then parts reset
+func	TACO	func_801483B0	shooter_boss1_step_fight	step 2: updates 11 parts, damage lights, AI; ends at 80 percent damage and clears hidden flags
+func	TACO	func_801484E4	shooter_boss1_step_defeat	step 3: explosions to frame 120, flashes, stage 21 at frame 240
+func	TACO	func_8014866C	shooter_boss1_set_lights	boss lighting set (bright)
+func	TACO	func_801487A4	shooter_boss1_update_part	places part actor from its joint (rotated offset plus table), refills HP bars, blinks hidden
+func	TACO	func_80148B58	shooter_boss1_reset_parts	releases slots 16-62, re-attaches 11 parts, clears controller actors 16-25
+func	TACO	func_80148D6C	shooter_boss1_update_damage_lights	red lights flash for 3 steps when the damage percent rises
+func	TACO	func_80148FE0	shooter_stage_boss2	stage 22: four steps (init, entrance, fight, defeat), label for 96 frames
+func	TACO	func_801490B4	shooter_boss2_step_init	step 0: waits for the load request, model block 0x80196000, 35 joints, three seven-segment chains
+func	TACO	func_8014927C	shooter_boss2_step_entrance	step 1: chains animate for 300 frames
+func	TACO	func_801493D4	shooter_boss2_step_fight	step 2: 12 parts, AI; ends at 85 percent damage once parts 16 and 17 have no HP
+func	TACO	func_80149538	shooter_boss2_step_defeat	step 3: white flashes from frame 180, SE 0x504 at 199, fade to frame 440, then stage 31
+func	TACO	func_801497EC	shooter_boss2_update_part	places the part actor from its joint, refills HP bars, recolours the model on part death
+func	TACO	func_80149B7C	shooter_boss2_reset_parts	releases slots 16-62, re-attaches 12 parts, clears controllers
+func	TACO	func_80149D1C	shooter_boss2_update_damage_lights	red lights flash for 3 steps when the damage percent rises
+func	TACO	func_80149F90	shooter_stage_boss3	stage 32: five steps (init, descend, fight, defeat, collapse)
+func	TACO	func_8014A070	shooter_boss3_step_init	step 0: model block 0x801A7000, 33 joints, pose
+func	TACO	func_8014A1D4	shooter_boss3_step_descend	step 1: descends until its y reaches the target, SE every 180 frames
+func	TACO	func_8014A234	shooter_boss3_step_fight	step 2: 11 parts, AI; ends at 85 percent damage with parts 16, 19, 20 dead
+func	TACO	func_8014A390	shooter_boss3_step_defeat	step 3: explosion script, white fade, stage clear count +1 at the end
+func	TACO	func_8014A42C	shooter_boss3_step_collapse	step 4: parts fall, clear count +1, stage 45
+func	TACO	func_8014A480	shooter_boss3_update_part	like shooter_boss1_update_part for boss 3, hides parts that die
+func	TACO	func_8014A79C	shooter_boss3_reset_parts	re-attaches 11 parts, clears controllers
+func	TACO	func_8014A8E0	shooter_boss3_update_damage_lights	red light flash on damage rise
+func	TACO	func_8014AB50	shooter_boss1_entrance_script	timeline by frame to 1150: keyframes 0-0x10, transformations at frames 500 and 649, another at 950
+func	TACO	func_8014B2A4	shooter_boss1_update_ai	runs the attack mode; arms the first morph at frame 601 when form flag is 1
+func	TACO	func_8014B374	shooter_boss1_morph_to_form2	plays the pose keys 1-0x1D, SE 0x501, holds key 0x1D
+func	TACO	func_8014B4B4	shooter_boss1_morph_to_form1	plays the pose keys backwards, SE 0x501
+func	TACO	func_8014B5F0	shooter_boss1_update_group_pair	advances the animation of a group pair (actor 18: objects 9-11, actor 19: objects 0xD-0xF) with a 50-key cycle; slower keys 12-21
+func	TACO	func_8014B790	shooter_boss1_update_group_pair_short	8-key cycle for actor 20 group; stops itself and re-poses
+func	TACO	func_8014B8B4	shooter_boss1_pose_group_pair	sets three object poses by key range (0-3, 4-7, 12-21, 24-27, 32-41, 46-49); during keys 20-29 group actors 18-25 are contact-only
+func	TACO	func_8014BC80	shooter_boss1_rest_group_pair	rest rotations for three objects
+func	TACO	func_8014BCEC	shooter_boss1_update_group_c	actor 21 group animation, 36 keys
+func	TACO	func_8014BE14	shooter_boss1_pose_group_c	pose keys for objects 1-3
+func	TACO	func_8014BED8	shooter_boss1_rest_group_c	rest rotations for objects 1-3
+func	TACO	func_8014BF38	shooter_boss1_update_group_d	actor 22 animation, 10 keys; form flag from actor 23
+func	TACO	func_8014C0D4	shooter_boss1_pose_group_d_form1	pose key 1 for 26 objects
+func	TACO	func_8014C1DC	shooter_boss1_pose_group_d_form2	pose key 2 for 26 objects
+func	TACO	func_8014C2E4	shooter_boss1_rest_group_d	rest rotations for 26 objects
+func	TACO	func_8014C3B4	shooter_boss1_update_group_e	actor 24 animation, 42 keys
+func	TACO	func_8014C578	shooter_boss1_pose_group_e	pose keys for group E objects
+func	TACO	func_8014C8DC	shooter_boss1_rest_group_e	rest rotations
+func	TACO	func_8014C978	shooter_boss1_update_group_f	actor 25 animation, 74 keys
+func	TACO	func_8014CB24	shooter_boss1_pose_group_f	pose keys for group F objects
+func	TACO	func_8014D200	shooter_boss1_rest_group_f	rest rotations
+func	TACO	func_8014D2E0	shooter_boss1_run_attack_mode	switch on the attack mode (actor 16 kind, 0-8)
+func	TACO	func_8014D3B4	shooter_boss1_mode_sway	modes 0 and 4: sideways path (direction +1 or -1) for up to 60 steps, joint shots every second step; ends at random (1 in 200)
+func	TACO	func_8014D530	shooter_boss1_sway_motion	path pieces of 5 steps with offsets +-0x96, 0x78, 0x50
+func	TACO	func_8014D918	shooter_boss1_mode_group_pair	mode 1: tilt, then group pair for steps 0x19-0x7C, tilt back
+func	TACO	func_8014DA6C	shooter_boss1_group_pair_motion	motion pieces and group triggers by step
+func	TACO	func_8014DC94	shooter_boss1_mode_scatter	mode 2: 20 steps, shots from two joints at random offsets every second step
+func	TACO	func_8014DF50	shooter_boss1_scatter_motion	sideways motion pieces
+func	TACO	func_8014E048	shooter_boss1_mode_lunge	mode 3: 80 steps: back, toward the camera, back; group actors become contact-only (flag 0x40, radius 20) in steps 45-54
+func	TACO	func_8014E1A0	shooter_boss1_lunge_motion	motion and flag changes of the lunge
+func	TACO	func_8014E4A4	shooter_boss1_mode_form2_group_d	mode 5 (form 2): group D animation with body motion
+func	TACO	func_8014E5F8	shooter_boss1_form2_group_d_motion	motion and group D start at step 19
+func	TACO	func_8014EA4C	shooter_boss1_mode_form2_group_e	mode 6 (form 2): group E animation, 80 steps
+func	TACO	func_8014EB24	shooter_boss1_form2_group_e_motion	motion and group E start at step 14
+func	TACO	func_8014EC4C	shooter_boss1_mode_rain	mode 7 (form 1): two random shots from joint 0x1B each step, 50 steps, group C animation
+func	TACO	func_8014EDCC	shooter_boss1_rain_group_c	starts and runs group C for the rain mode
+func	TACO	func_8014EE3C	shooter_boss1_mode_form2_group_f	mode 8 (form 2): group F animation, 115 steps
+func	TACO	func_8014EF14	shooter_boss1_form2_group_f_motion	motion and group F start at step 14
+func	TACO	func_8014F044	shooter_boss1_pick_attack_mode	weighted random mode: form 1 <20 mode 0, 20-39 mode 4, 40-54 mode 1 (7 if groups dead), 55-69 mode 2, 70-89 mode 3, 90+ mode 7; form 2 <40 mode 2, <70 mode 5, <95 mode 6, else mode 8
+func	TACO	func_8014F210	shooter_boss3_descend_motion	step 1 helper: sway, descent, light; ends when y is within 100 of the target
+func	TACO	func_8014F2A0	shooter_boss3_update_ai	chooses group attacks (1 in 200 per frame while damage below 75 percent) and runs them
+func	TACO	func_8014F5F0	shooter_boss3_defeat_motion	step 3 helper: explosion script over 600 frames, white fade, lights
+func	TACO	func_8014F820	shooter_boss3_collapse_motion	step 4 helper: parts fall by random speed 5-12, explosions until frame 400, ends at frame 600
+func	TACO	func_8014F9B0	shooter_boss3_update_damage_stage	damage thresholds 32 and 48 percent switch the idle pose speed and flicker the model colours
+func	TACO	func_8014FBD4	shooter_boss3_pose_idle	idle pose keys of the body objects, 48 keys
+func	TACO	func_8014FDC0	shooter_boss3_update_group_attack_a	actor 18 group attack, 4 frames per key
+func	TACO	func_8014FFDC	shooter_boss3_pose_group_attack_a	pose keys for group attack A with recolours
+func	TACO	func_801508D0	shooter_boss3_update_group_attack_b	actor 19 group attack B
+func	TACO	func_80150B3C	shooter_boss3_pose_group_attack_b	pose keys for group attack B
+func	TACO	func_80150DE8	shooter_boss3_update_group_attack_c	actor 19 group attack C, 100 keys
+func	TACO	func_80150F44	shooter_boss3_pose_group_attack_c	pose keys for group attack C
+func	TACO	func_801511C0	shooter_boss3_rest_group_attack	rest rotations for a group attack group
+func	TACO	func_80151264	shooter_boss3_update_sway	actor 16 sway cycle of 124 steps
+func	TACO	func_8015131C	shooter_boss3_sway_motion	motion pieces of the sway, also used by boss 2
+func	TACO	func_8015163C	shooter_boss3_set_part_visibility	attribute 0x40000000 or 0x80000000 by frame parity of arg1
+func	TACO	func_80151678	shooter_boss3_set_lights	boss 3 lighting
+func	TACO	func_801517AC	shooter_fade_white	full-screen flash with grey level arg0 (0-255)
+func	TACO	func_8015185C	shooter_boss3_fire_pattern	shots from joint 0x19 depending on which controller parts are alive (used by boss 3)
+func	TACO	func_80151C30	shooter_boss2_update_ai	runs the part groups; fires from joint 0x1C when parts 16-18 have no HP
+func	TACO	func_80151D1C	shooter_boss2_update_barrage	actor 16 cycle of 30 steps: shots from joints 0x16 and 0x17 every third step, SE every 10
+func	TACO	func_80151F94	shooter_boss2_update_arm_attack_a	one chain: pose keys, shots from its base joint at keys 30-32, SE 0x501, then picks the next attack
+func	TACO	func_80152110	shooter_boss2_pose_arm_a	pose keys 1 and 2 for the seven segments
+func	TACO	func_801521EC	shooter_boss2_rest_arm	rest rotations of a chain (seven segments, stride 3)
+func	TACO	func_801522B0	shooter_boss2_update_arm_attack_c	chain attack with pose keys 3-5 over 45 steps
+func	TACO	func_801523D0	shooter_boss2_pose_arm_c	pose keys 3, 4, 5 for the segments
+func	TACO	func_8015266C	shooter_boss2_update_core	actor 17 cycle of 20 steps
+func	TACO	func_80152764	shooter_boss2_pose_core	pose keys for object 0x23
+func	TACO	func_80152808	shooter_boss2_update_tail	actor 21 cycle of 70 steps for objects 0x1D-0x20
+func	TACO	func_80152944	shooter_boss2_pose_tail	pose keys 1-4 for four objects
+func	TACO	func_80152C60	shooter_boss2_update_all_arms_attack	all three chains together over 110 steps
+func	TACO	func_80152DB4	shooter_boss2_pose_all_arms	pose keys 8, 9, 10 for the segments
+func	TACO	func_80153068	shooter_boss2_update_arm_attack_b	one chain: pose keys 14, 15, aimed shots on every second step
+func	TACO	func_801531E8	shooter_boss2_pose_arm_b	pose keys 14 and 15 for a chain
+func	TACO	func_801532C4	shooter_boss2_update_arms	runs the attack of each of the three chains; all three idle triggers the combined attack
+func	TACO	func_801534E0	shooter_boss2_pick_arm_attack	random attack for chain 1-3: <50 attack 1, <70 attack 2, else 3; 0 while actor 17 is busy
+func	TACO	func_801536BC	shooter_boss2_update_idle_sway	actor 23 cycle using the boss 3 sway motion
+func	TACO	func_80153774	shooter_boss2_sway_motion_alt	motion pieces like shooter_boss3_sway_motion; no caller in the overlay
+func	TACO	func_80153AA0	shooter_draw_circle_flash	filled fan around the screen centre with radius arg0 and colour arg2
+func	TACO	func_80153B38	shooter_build_circle_fan	builds 40 gouraud triangles of the fan
+func	TACO	func_80153E78	shooter_draw_flash_overlay	full-screen translucent quad, colour arg1-arg3, blend mode arg0
+func	TACO	func_80154014	shooter_update_pulse_bomb	pulse bomb visuals and timer D_80160464 (260 frames); returns whether still active
+func	TACO	func_80154230	shooter_set_model_clut	sets the CLUT index in all textured polygons of a TMD block
+func	TACO	func_8015431C	shooter_is_model_address	true when the address is inside 0x8018A000-0x801B8000
+func	TACO	func_8015435C	shooter_set_object_clut	sets the CLUT index of one object of the model block
+func	TACO	func_8015443C	shooter_flicker_model_clut	random polygons switch CLUT, interval by boss 3 damage
+func	TACO	func_801546FC	shooter_set_model_clut_and_page	CLUT and texture-page fields of all polygons; no caller in the overlay
+func	TACO	func_80154820	shooter_set_object_flat_color	sets the vertex colour of an object's flat polygons
+func	TACO	func_80154960	shooter_update_stage1_script	stage 1 spawner: phase D_801604C4, timer D_801604C0; phases 0-5
+func	TACO	func_80154F74	shooter_spawn_debris	random debris at depth -0x8000 with random scale and spin
+func	TACO	func_80155230	shooter_behavior_debris	behavior 1: flies toward the camera (z +0x100), scales with size, spins; removed at z > 0x1000
+func	TACO	func_801553AC	shooter_spawn_swoop_wave	five swoopers (type 4, behavior 2) at depths -0x2BC to -0x44C
+func	TACO	func_801557E8	shooter_behavior_swooper	behavior 2: loops on a circle path in x/z, removed when the angle passes 2560
+func	TACO	func_8015595C	shooter_spawn_spiral_pair	type 5 behavior 3 (HP 4) and type 5 behavior 4 (HP 2) near the player
+func	TACO	func_80155C64	shooter_behavior_spiral_in	behavior 3: spiral for 100 frames, then becomes behavior 5
+func	TACO	func_80155E10	shooter_behavior_spiral_out	behavior 4: spiral path, removed after 100 frames
+func	TACO	func_80155F98	shooter_behavior_turret_sweep	behavior 5: fires every 7 frames for 60 frames, turns, then flies away
+func	TACO	func_80156178	shooter_spawn_stage1_mid_boss	spawns type 6 (behavior 6) with HP 255 and the full drop code 0xF0
+func	TACO	func_80156244	shooter_behavior_stage1_mid_boss	behavior 6: grows in from far, approaches, then gets radius 32
+func	TACO	func_801563E4	shooter_spawn_homing_mines	arg0 0: one type 7 at a random far position; 1: three at fixed x
+func	TACO	func_80156924	shooter_behavior_homing_mine	behavior 7: drifts toward the player in x/y, spins, removed at z > 2001
+func	TACO	func_80156A80	shooter_update_stage2_script	stage 2 spawner: phases 0-13 plus the sub-phase loop D_801604CC
+func	TACO	func_80156F50	shooter_spawn_patroller	type 0xB (behavior 0x10) at depth -0x8000; no caller found in the script
+func	TACO	func_801570A4	shooter_behavior_patroller	behavior 0x10: bobs, fires every 60 frames, flies forward
+func	TACO	func_801571E8	shooter_spawn_formation_right	type 8 (behavior 0x12) from x +1000
+func	TACO	func_801572D8	shooter_spawn_formation_left	type 8 (behavior 0x12) from x -1000
+func	TACO	func_801573C8	shooter_spawn_formation_v	five type 8 ships in a V, middle one HP 2
+func	TACO	func_8015776C	shooter_behavior_formation_ship	behavior 0x12: approach, fan out by spin index, aimed shot every 20 frames, leave
+func	TACO	func_80157AE0	shooter_spawn_gate_pair	type 9 (behavior 0x13) and type 0xA (behavior 0x14) at depth -0x2742 and -0x2710
+func	TACO	func_80157CD4	shooter_behavior_gate_b	behavior 0x14: follows the player 61 frames, waits, turns, leaves backward
+func	TACO	func_80157EA8	shooter_behavior_gate_a	behavior 0x13: follows 61 frames, waits 61, leaves forward
+func	TACO	func_8015800C	shooter_spawn_circling_pair	two type 0xC (behavior 0x11) on the side opposite the player
+func	TACO	func_801585D0	shooter_behavior_circler	behavior 0x11: flies in, circles radius 500 firing every 20 frames, then leaves
+func	TACO	func_801589B0	shooter_dismiss_circlers	sets behavior 0xFE on every type 0xC
+func	TACO	func_80158AB0	shooter_spawn_carrier	type 0xE (behavior 0x15), HP 16
+func	TACO	func_80158B84	shooter_behavior_carrier	behavior 0x15: crosses the screen, drops turrets at x -800, 0, 800
+func	TACO	func_80158CDC	shooter_spawn_turret_a	type 0xF (behavior 0x16), HP 4
+func	TACO	func_80158DBC	shooter_spawn_turret_b	type 0x10 (behavior 0x16), HP 8
+func	TACO	func_80158F48	shooter_behavior_turret	behavior 0x16: fires every 20 frames while moving down
+func	TACO	func_80159090	shooter_update_stage3_script	stage 3 spawner: phases 0-12
+func	TACO	func_80159260	shooter_spawn_swarm_ship	type 2 (behavior 0x20) at a random position
+func	TACO	func_80159678	shooter_behavior_swarm_ship	behavior 0x20: wobbling approach, then dives at the player
+func	TACO	func_80159878	shooter_spawn_wall_ships	type 3 (behavior 0x21), three ships by wave arg0
+func	TACO	func_80159F60	shooter_behavior_wall_ship	behavior 0x21: slides in, fires aimed bullets at three heights in timed windows
+func	TACO	func_8015A164	shooter_spawn_guardian_ring	type 0xD core (behavior 0x23) plus arg0 orbiting orbs (behavior 0x22)
+func	TACO	func_8015A378	shooter_behavior_orbiting_orb	behavior 0x22: grows, circles the centre for 601 frames, shrinks
+func	TACO	func_8015A680	shooter_behavior_guardian_core	behavior 0x23: grows, fires every 15 frames for 601 frames, shrinks
+func	TACO	func_8015A900	shooter_next_script_phase	phase +1, timer 0, side flag 0
+func	TACO	func_8015A928	shooter_next_script_subphase	sub-timer 0, sub-phase +1
+func	TACO	func_8015A948	shooter_run_enemy_behavior	switch on behavior id: 1-7 stage 1, 0x10-0x16 stage 2, 0x20-0x23 stage 3, 0xFD, 0xFE, 0xFF
+func	TACO	func_8015AB18	shooter_behavior_leave_forward	behavior 0xFE: z +0x100 per frame, removed past 0x1000
+func	TACO	func_8015AB80	shooter_behavior_leave_back	behavior 0xFD: z -250 per frame, removed past -0x7530
+func	TACO	func_8015ABF0	shooter_reset_enemies	clears coordinate pool owners, hides handles, marks slots 16-62 free, zeroes script counters
+func	TACO	func_8015ACCC	shooter_spawn_enemy	allocates a free slot (16-62), coordinate objects and a model; sets behavior, kind, HP, flags, parameters, scale, radius
+func	TACO	func_8015B1B8	shooter_set_pose_from_table	builds an object matrix from a 3x3 rotation row and a translation row
+func	TACO	func_8015B2AC	shooter_apply_initial_pose	translation and Euler rotation from a record
+func	TACO	func_8015B3B0	shooter_apply_pose_key	adds one key's delta (same as shooter_apply_keyframe, for enemy objects)
+func	TACO	func_8015B59C	shooter_update_enemies	per live enemy: first-frame show, death handling with item drops, behavior, animation
+func	TACO	func_8015BD30	shooter_animate_enemy_keys	steps an enemy's object keys from a key table (period arg1[2], limit arg1[3])
+func	TACO	func_8015BF70	shooter_animate_enemy_poses	per-object pose index unk82 (0-14)
+func	TACO	func_8015C0A0	shooter_set_enemy_visibility	arg0 1: hide-flash; 0: show; handles by kind (kinds below 11 use only the actor handle)
+func	TACO	func_8015C208	shooter_remove_enemy	hides, frees the slot and its coordinate objects
+func	TACO	func_8015C2CC	shooter_animate_enemy	by kind 11-16: key animation every 6 frames
+func	TACO	func_8015C698	shooter_zero_enemy_hp	HP 0 for slots 16-62
+func	TACO	func_8015C718	shooter_behavior_dying	behavior 0xFF: explosion bursts and spin for 61 frames, then removed
+func	TACO	func_8015CC54	shooter_count_free_coordinates	counts free entries of the coordinate pool; no caller in the overlay
+func	TACO	func_8015CCC8	shooter_count_enemies_of_kind	live enemies with HP of kind arg0 (0xFF any); clears HP of inactive slots
+func	TACO	func_8015CE64	shooter_count_active_enemies	counts slots 16-62 with flag 0x80
+func	TACO	func_8015CF30	RotMatrixZ	libgte copy in the overlay: rotation about Z (touches matrix rows 0 and 1)
+func	TACO	func_8015D0D0	RotMatrixX	libgte copy: rotation about X (rows 1 and 2)
+func	TACO	func_8015D270	RotMatrixY	libgte copy: rotation about Y (rows 0 and 2)
+data	TACO	D_8015E220	shooter_se_cooldown	byte array of 10 SE cooldowns (this address is element 0), ticked by shooter_tick_se_cooldowns
+data	TACO	D_8015E221	shooter_se_cooldown_1	element 1 of shooter_se_cooldown (declared separately in the header)
+data	TACO	D_8015E222	shooter_se_cooldown_2	elements 2-9 of shooter_se_cooldown (declared as an array in the header)
+data	TACO	D_8015E22C	shooter_se_cooldown_range	per SE id: half range of the random cooldown (cooldown = rand % (2*v+1))
+data	TACO	D_8015E238	shooter_triangle_voice_table	HYPOTHESIS: six pairs of voice ids for shooter_play_triangle_voice
+data	TACO	D_8015E270	shooter_player_primary_shots	16 ShooterParticle: vulcan, wide shot or beam of the player
+data	TACO	D_8015E3B0	shooter_wingman_primary_shots	same for the wingman
+data	TACO	D_8015E4F0	shooter_player_secondary_shots	homing or spreading shots of the player
+data	TACO	D_8015E630	shooter_wingman_secondary_shots	same for the wingman
+data	TACO	D_8015E770	shooter_bomb_shots	blast bomb shots (16 records); record 0 is the blast centre
+data	TACO	D_8015E8B0	shooter_hit_sparks	16 spark records; record 0 unk6 is the ring index
+data	TACO	D_8015E9F0	shooter_explosions	16 explosion records with velocity; record 0 unk6 is the ring index
+data	TACO	D_8015EB30	shooter_enemy_bullets	16 enemy bullet records
+data	TACO	D_8015EC70	shooter_items	16 pickup records (also the end address of the bullet table walk)
+data	TACO	D_8015EDB0	shooter_background_flags	background layers: bit0 floor grid, bit1 horizon bands, bit2 empty layer; nonzero also enables the SE cooldown and load request processing
+data	TACO	D_8015EDB4	shooter_actors	pointer to 79 ShooterActor records (set from D_8011ED58 by the loader)
+data	TACO	D_8015EDB8	shooter_loader_flag	cleared in the loader, never read
+data	TACO	D_8015EDBC	shooter_load_request	asset load request code (0x10-0x44, 0 idle); handled by shooter_process_load_request
+data	TACO	D_8015EDC0	shooter_stream_wait_state	0 waiting for the load request, 1 polling the stream, 2 ready
+data	TACO	D_8015EDC4	shooter_stream_poll_result	result of func_80044C98
+data	TACO	D_8015EDCC	shooter_stages_cleared	bosses defeated so far (boss 3 adds two); 1,000,000 points each
+data	TACO	D_8015EDD0	shooter_bonus_popup_timer	frames left for the bonus popup
+data	TACO	D_8015EDD4	shooter_bonus_popup_value	value of the last bonus item
+data	TACO	D_8015EDD8	shooter_setting_auto_shot	0 off, 1 on
+data	TACO	D_8015EDDC	shooter_setting_roll_button	0 R1+L1 and R2+L2, 1 R1/L1, 2 R2/L2
+data	TACO	D_8015EDE0	shooter_setting_shot_button	0 circle, 1 cross, 2 square
+data	TACO	D_8015EDE4	shooter_setting_bomb_button	0 cross, 1 square, 2 circle
+data	TACO	D_8015EDE8	shooter_menu_cursor	main menu item 0-4
+data	TACO	D_8015EDEC	shooter_time_left	frames left of the 18000-frame (5 minute) timer
+data	TACO	D_8015EDF0	shooter_score	score of the run (last digit forced to 1 every frame)
+data	TACO	D_8015EDF8	shooter_high_score_1	best score, saved
+data	TACO	D_8015EDFC	shooter_high_score_2	second best
+data	TACO	D_8015EE00	shooter_high_score_3	third best
+data	TACO	D_8015EE04	shooter_high_score_name_1	3-character name plus NUL
+data	TACO	D_8015EE08	shooter_high_score_name_2	name of rank 2
+data	TACO	D_8015EE0C	shooter_high_score_name_3	name of rank 3
+data	TACO	D_8015F290	shooter_model_polygon_ranges	per object index: begin and end word pointers of its polygons in the loaded TMD
+data	TACO	D_8015F3E0	shooter_title_pose_tables	two pose-table pointers for the title models
+data	TACO	D_8015F3E8	shooter_title_frame	frame counter of the title animation
+data	TACO	D_8015F3F0	shooter_settings_cursor	settings row 0-4
+data	TACO	D_8015F3F4	shooter_settings_changing	1 while a value change animates
+data	TACO	D_8015F3F8	shooter_settings_old_value	value before the change
+data	TACO	D_8015F3FC	shooter_settings_anim_frame	0-31 frames of the change animation
+data	TACO	D_8015F400	shooter_scores_zoom	scale (0x1000 is normal) of the ranking page
+data	TACO	D_8015F404	shooter_score_text_1	formatted 8-digit score string of rank 1
+data	TACO	D_8015F410	shooter_score_text_2	rank 2
+data	TACO	D_8015F41C	shooter_score_text_3	rank 3
+data	TACO	D_8015F428	shooter_score_text_template	initialiser copy used by shooter_format_score
+data	TACO	D_8015F440	shooter_help_voice_table	HYPOTHESIS: nine pairs of voice ids for the help pages
+data	TACO	D_8015F490	shooter_result_values	score, shield bonus, bomb bonus, time bonus, total
+data	TACO	D_8015F4A4	shooter_count_target	target of the roll-up number
+data	TACO	D_8015F4A8	shooter_count_current	displayed value of the roll-up number
+data	TACO	D_8015F4B0	shooter_name_glyph_table	the 40 glyphs of the name ring: A-Z, period, hyphen, 0-9, space, end mark
+data	TACO	D_8015F4D8	shooter_name_entry_rank	rank slot being filled, 0-2
+data	TACO	D_8015F4DC	shooter_name_entry_pos	characters entered, 0-3
+data	TACO	D_8015F4E0	shooter_name_ring_index	glyph at the front of the ring
+data	TACO	D_8015F4E4	shooter_name_ring_offset	sub-step -50..50 between two glyphs
+data	TACO	D_8015F4E8	shooter_name_ring_speed	-2..2 ring speed
+data	TACO	D_8015F4EC	shooter_stars	pointer to 100 ShooterStar records (in GameState unk_163C)
+data	TACO	D_8015F4F0	shooter_star_brightness	0-128 brightness factor
+data	TACO	D_8015F4F4	shooter_scores_fade	counter of the scores page fade
+data	TACO	D_8015F4F8	shooter_name_entry_intro	ring intro counter
+data	TACO	D_8015F500	shooter_hit_sound_played	1 once a hit SE played in the current frame
+data	TACO	D_8015F504	shooter_score_by_class	17 words: score value per enemy class (kind % 17)
+data	TACO	D_8015F548	shooter_shot_damage_by_kind	9 bytes: damage per shot kind 0-8
+data	TACO	D_8015F560	shooter_item_frame_count	per item kind: image count
+data	TACO	D_8015F568	shooter_item_clut_row	per item kind: palette row
+data	TACO	D_8015F570	shooter_item_u	per item kind: sheet u
+data	TACO	D_8015F578	shooter_item_v	per item kind: sheet v
+data	TACO	D_8015F580	shooter_vulcan_frame_u	two u values of the vulcan shot image
+data	TACO	D_8015F584	shooter_wide_shot_frame_u	two u values of the wide shot image
+data	TACO	D_8015F590	shooter_blast_shot_frame_u	two u values of the blast shot image
+data	TACO	D_8015F5A0	shooter_digit_uv	(u, v) pairs for digits 0-9
+data	TACO	D_8015F5B4	shooter_letter_uv	(u, v) pairs for letters A-Z
+data	TACO	D_8015F5E8	shooter_glyph_period_u	u of the period glyph
+data	TACO	D_8015F5E9	shooter_glyph_period_v	v of the period glyph
+data	TACO	D_8015F5EA	shooter_glyph_hyphen_u	u of the hyphen glyph
+data	TACO	D_8015F5EB	shooter_glyph_hyphen_v	v of the hyphen glyph
+data	TACO	D_8015F5EC	shooter_glyph_space_u	u of the space glyph
+data	TACO	D_8015F5ED	shooter_glyph_space_v	v of the space glyph
+data	TACO	D_8015F5EE	shooter_glyph_other_u	u of the fallback glyph (text) and of the exclamation mark (name ring)
+data	TACO	D_8015F5EF	shooter_glyph_other_v	v of the same glyph
+data	TACO	D_8015F5F0	shooter_background_scroll	four s16: a x offset, b depth, c scroll phase, d tile counter
+data	TACO	D_8015F5F8	shooter_floor_tile_u	four u values for the floor tiles
+data	TACO	D_8015F5FC	shooter_floor_tile_v	four v values for the floor tiles
+data	TACO	D_8015F82C	shooter_opening_pose_tables	pose-table pointers of the two opening models
+data	TACO	D_8015F840	shooter_boss1_rest_pose_ptrs	per joint 1-30: pair of words (translation base, rotation base) given to shooter_set_pose_from_tables
+data	TACO	D_8015F930	shooter_boss1_rest_pose_flags	per joint: byte pair (translation fixed, rotation fixed)
+data	TACO	D_8015FA44	shooter_boss1_part_objects	object index per part (11)
+data	TACO	D_8015FA50	shooter_boss1_part_radius	two radius bytes per part (form 1, form 2), in units of 16
+data	TACO	D_8015FA68	shooter_boss1_part_hp	per part: HP per bar and number of bars
+data	TACO	D_8015FA80	shooter_boss1_part_offsets	per part: x, y offsets for form 1 and form 2 (s16 x4)
+data	TACO	D_8015FAE0	shooter_boss2_rest_pose_ptrs	per joint 1-35: pointer pair
+data	TACO	D_8015FBF8	shooter_boss2_rest_pose_flags	per joint: byte pair
+data	TACO	D_8015FC94	shooter_boss2_core_pose	pose reference for object 0x23
+data	TACO	D_8015FC98	shooter_boss2_tail_poses	four pose references for objects 0x1D-0x20
+data	TACO	D_8015FCA8	shooter_boss2_part_objects	object index per part (12)
+data	TACO	D_8015FCB4	shooter_boss2_part_radius	radius per part (bytes, units of 16)
+data	TACO	D_8015FCC0	shooter_boss2_part_hp	per part: HP per bar and bars
+data	TACO	D_8015FCD8	shooter_boss2_part_offsets	per part: x, y offsets (s16 pairs)
+data	TACO	D_8015FD18	shooter_boss3_rest_pose_ptrs	per joint 1-33: pointer pair
+data	TACO	D_8015FE1A	shooter_boss3_rest_pose_flags	per joint: byte pair
+data	TACO	D_8015FE94	shooter_boss3_part_objects	object index per part (11)
+data	TACO	D_8015FE95	shooter_boss3_part_objects_1	element 1 of boss3_part_objects (collapse uses it alone)
+data	TACO	D_8015FEA0	shooter_boss3_part_radius	radius per part
+data	TACO	D_8015FEAC	shooter_boss3_part_hp	per part: HP per bar and bars
+data	TACO	D_8015FEC4	shooter_boss3_part_offsets	per part: x, y offsets
+data	TACO	D_8015FEF0	shooter_boss1_morph_pose_ptrs	per joint 1-30: pointer pair used for the form morph keys
+data	TACO	D_8015FFE0	shooter_boss1_morph_pose_flags	per joint: byte pair
+data	TACO	D_8016001C	shooter_boss1_group_pair_poses	pose references for the group pair poses
+data	TACO	D_80160034	shooter_boss1_group_c_poses	pose references of group C
+data	TACO	D_80160040	shooter_boss1_group_d_poses_a	five references
+data	TACO	D_80160054	shooter_boss1_group_d_poses_b	nine references
+data	TACO	D_80160078	shooter_boss1_group_d_poses_c	ten references
+data	TACO	D_801600A0	shooter_boss1_group_d_poses_d	two references
+data	TACO	D_801600A8	shooter_boss1_group_e_pose_a	one reference
+data	TACO	D_801600AC	shooter_boss1_group_e_poses_b	two references
+data	TACO	D_801600B4	shooter_boss1_group_e_pose_c	one reference
+data	TACO	D_801600B8	shooter_boss1_group_e_poses_d	two references
+data	TACO	D_801600C0	shooter_boss1_group_f_poses_a	five references
+data	TACO	D_801600D4	shooter_boss1_group_f_poses_b	three references
+data	TACO	D_801600E0	shooter_boss1_group_f_poses_c	two references
+data	TACO	D_801600E8	shooter_boss1_group_f_pose_d	one reference
+data	TACO	D_801600EC	shooter_boss1_group_f_poses_e	two references
+data	TACO	D_80160108	shooter_boss3_idle_pose_ptrs	33 joint pointer pairs of the idle pose; the labels up to D_801601E0 are elements of this table
+data	TACO	D_80160138	shooter_boss3_idle_pose_ptrs_j7	element: joint 7 pointer pair
+data	TACO	D_80160168	shooter_boss3_idle_pose_ptrs_j13	element: joint 13 pointer pair
+data	TACO	D_801601C8	shooter_boss3_idle_pose_ptrs_j26	element: joint 26 translation pointer
+data	TACO	D_801601CC	shooter_boss3_idle_pose_ptrs_j26_rot	element: joint 26 rotation pointer
+data	TACO	D_801601D0	shooter_boss3_idle_pose_ptrs_j27	element: joint 27 translation pointer
+data	TACO	D_801601D4	shooter_boss3_idle_pose_ptrs_j27_rot	element: joint 27 rotation pointer
+data	TACO	D_801601E0	shooter_boss3_idle_pose_ptrs_j28	element: joint 28 pointer pair
+data	TACO	D_8016020A	shooter_boss3_idle_pose_flags	byte pairs for joints 1-33 (flags of the idle pose table)
+data	TACO	D_80160216	shooter_boss3_idle_pose_flags_j7	element: joint 7 flag pair
+data	TACO	D_80160222	shooter_boss3_idle_pose_flags_j13	element: joint 13 flag pair
+data	TACO	D_8016023A	shooter_boss3_idle_pose_flags_j26	element: joint 26 translation flag
+data	TACO	D_8016023B	shooter_boss3_idle_pose_flags_j26_rot	element: joint 26 rotation flag
+data	TACO	D_8016023C	shooter_boss3_idle_pose_flags_j27	element: joint 27 translation flag
+data	TACO	D_8016023D	shooter_boss3_idle_pose_flags_j27_rot	element: joint 27 rotation flag
+data	TACO	D_80160240	shooter_boss3_idle_pose_flags_j28	element: joint 28 flag pair
+data	TACO	D_8016024C	shooter_boss3_rest_rotation_refs	14 pose references: joints 1-6, 7-12 and 0x1B for resting the group attack groups
+data	TACO	D_80160264	shooter_boss3_rest_rotation_refs_6	element 6
+data	TACO	D_80160268	shooter_boss3_group_attack_b_poses	elements 7-12: six pose references used for group attack B and C
+data	TACO	D_80160280	shooter_boss3_rest_rotation_refs_13	element 13: pose reference of joint 0x1B
+data	TACO	D_80160290	shooter_boss2_part_pose_ptrs	per joint 1-35: pointer pair, read at i-1
+data	TACO	D_801603A0	shooter_boss2_core_pose_ptrs	pointer pair of joint 0x23
+data	TACO	D_801603A4	shooter_boss2_core_pose_ptrs_rot	rotation pointer of joint 0x23
+data	TACO	D_801603A8	shooter_boss2_part_pose_flags	per joint: byte pair, read at i-1
+data	TACO	D_801603D4	shooter_boss2_tail_rest_poses	rest pose references for the tail objects
+data	TACO	D_801603EC	shooter_boss2_core_pose_flags	flag pair of joint 0x23
+data	TACO	D_801603ED	shooter_boss2_core_pose_flags_rot	rotation flag of joint 0x23
+data	TACO	D_801603F0	shooter_boss2_arm_poses	21 pose references: three arms of seven segments
+data	TACO	D_80160444	shooter_boss2_core_tail_poses	references for core and tail poses
+data	TACO	D_80160448	shooter_boss2_core_tail_poses_1	element 1 of boss2_core_tail_poses (first tail reference)
+data	TACO	D_80160460	shooter_pulse_bomb_active	1 while the pulse bomb runs
+data	TACO	D_80160464	shooter_pulse_bomb_timer	frame count of the pulse bomb (ends at 260)
+data	TACO	D_80160470	shooter_stage1_mid_boss_slot	actor slot of the stage 1 mid boss
+data	TACO	D_80160480	shooter_formation_velocities	five (x, y) velocity pairs of the formation fan (64,0)(48,-48)(0,-64)(-48,-48)(-64,0)
+data	TACO	D_801604A8	shooter_formation_spins	five spin speeds 64, 32, 0, -32, -64
+data	TACO	D_801604C0	shooter_script_timer	frames in the current stage script phase
+data	TACO	D_801604C4	shooter_script_phase	stage script phase
+data	TACO	D_801604C8	shooter_script_sub_timer	frames in the current stage 2 sub-phase
+data	TACO	D_801604CC	shooter_script_counter	sub-phase index (stage 2), spawn counter (stage 1 and 2)
+data	TACO	D_801604D0	shooter_script_side	side chosen for circling pairs (0 none, 1 left pair, 2 right pair)
+data	TACO	D_801604D4	shooter_zero_pos_a	zero ShooterPos used as an argument filler
+data	TACO	D_801604DC	shooter_circler_start_pos	start position of circling ships
+data	TACO	D_801604E4	shooter_zero_pos_b	zero ShooterPos used as an argument filler
+data	TACO	D_801606AC	shooter_enemy_keys_a	key table of enemy kind 11 (part 1)
+data	TACO	D_801606C4	shooter_enemy_keys_b	key table of enemy kind 11 (part 2)
+data	TACO	D_80160858	shooter_enemy_keys_c	key table of enemy kind 12
+data	TACO	D_8016090C	shooter_enemy_keys_d	key table of enemy kind 13
+data	TACO	D_80160A60	shooter_enemy_keys_e	key table of enemy kind 14
+data	TACO	D_80161D9C	shooter_coordinate_owner	64 bytes: owner actor of each coordinate object (0 free)
+data	TACO	D_80161DDC	shooter_enemy_model_base	per enemy type: model block address
+data	TACO	D_80161E20	shooter_enemy_joint_count	per enemy type: coordinate objects used
+data	TACO	D_80161E60	shooter_enemy_joint_poses	per enemy type: pointer to the joint pose table
+data	TACO	D_80161EA4	shooter_enemy_scale	per enemy type: initial scale
+data	TACO	D_80161EC8	shooter_enemy_radius	per enemy type: collision radius in units of 16
+data	TACO	D_80161ECD	shooter_enemy_radius_5	element 5 of shooter_enemy_radius (type 5 after its spiral phase)
+field	TcActor	unk0	flag_bytes	u8[2]: byte 1 is the flag byte (0x80 active and shootable, 0x40 contact damage only, 0x10 dying), byte 0 unused; propose splitting into pad0 and flags
+field	TcActor	unk2	mode	player: roll and state bits (1 roll left, 2 roll right, 4 hit flash, 0x40 bomb running, 0x80 invulnerable); enemy: behavior id; boss controllers: step or key index
+field	TcActor	unk3	phase	player: roll speed counter; enemy: 1 alive, 2 dying; boss controllers: pace counter
+field	TcActor	unk4	model	object handle (GsDOBJ2)
+field	TcActor	unk14	coord	coordinate object (GsCOORDINATE2)
+field	TcActor	unk64	rot_x	rotation about x, 4096 per turn
+field	TcActor	unk66	rot_y	rotation about y
+field	TcActor	unk68	rot_z	rotation about z (the player roll angle)
+field	TcActor	unk6A	param	spawn parameter (spin axis, formation index, ring angle)
+field	TcActor	unk6C	scale_x	model scale (0x1000 is 1.0), player 0x400
+field	TcActor	unk6E	scale_y	scale
+field	TcActor	unk70	scale_z	scale
+field	TcActor	unk72	weapon	primary weapon: -1 vulcan, 0 wide shot, 1 beam
+field	TcActor	unk74	x	world x; positive is screen left (pad left increases it)
+field	TcActor	unk76	y	world y; positive is down
+field	TcActor	unk78	z	world z; the player is near 0x800, enemies come from -0x8000
+field	TcActor	unk7A	age	frames since spawn (0x7FFF marks a fresh spawn); player: hit timer
+field	TcActor	unk7C	arg_x	player: bomb slot 1; enemy: spawn argument x (path centre, speed, phase)
+field	TcActor	unk7E	arg_y	player: bomb slot 2; enemy: spawn argument y
+field	TcActor	unk80	arg_z	player: bomb slot 3; enemy: spawn argument z
+field	TcActor	unk82	aux	player: secondary weapon (0 homing, 1 spread, -1 start); boss part: bars used; enemy: key or pose index
+field	TcActor	unk84	stats	u8[4]: radius (units of 16), HP, kind (enemy type or class), hit flags (bit0 hittable, high nibble drop code)
+field	Tc14	unk0	x	world position
+field	Tc14	unk2	y	world position
+field	Tc14	unk4	z	world position
+field	Tc14	unk6	w	spare; element 0 of the spark and explosion tables holds the ring index
+field	Tc14	unk8	vx	velocity
+field	Tc14	unkA	vy	velocity
+field	Tc14	unkC	vz	velocity
+field	Tc14	unkE	vw	spare
+field	Tc14	unk10	spare	unused
+field	Tc14	unk11	arg	shot: homing target slot; item: kind; bullet: flags; spark: image index
+field	Tc14	unk12	age	frames alive (255 ends)
+field	Tc14	unk13	flags	0x80 active, 0x20 beam, 0x10 player-side, low nibble kind
+field	TacoParticle14	unk_00	pos	ShooterPos
+field	TacoParticle14	unk_08	vel	ShooterPos
+field	TacoParticle14	unk_10	spare	unused
+field	TacoParticle14	unk_11	arg	image index
+field	TacoParticle14	unk_12	age	frame counter of the current image
+field	TacoParticle14	unk_13	flags	0x80 active
+field	TcPos	unk6	w	fourth halfword: ring index, spin selector or spare
+field	Tc10	unk0	attr	library attribute word: 0x80000000 hides the object, 0x40000000 is used to blink out dead boss parts, 0 shows it
+field	Tc10	unk4	links	three words: coordinate object, model, id
+field	TcObj50	unk0	flag	0 marks the local matrix as changed
+field	TcObj50	unk4	rot	3x3 rotation, s16
+field	TcObj50	unk18	x	local translation x
+field	TcObj50	unk1C	y	local translation y
+field	TcObj50	unk20	z	local translation z
+field	TcObj50	unk24	world	world matrix computed by the library
+field	TcObj50	unk44	param	library parameter word
+field	TcObj50	unk48	parent	super link
+field	TcObj50	unk4C	child	sub link
+field	TacoCam	a	x	horizontal offset of the floor grid
+field	TacoCam	b	y	height of the floor plane (0x400)
+field	TacoCam	c	scroll_z	scroll phase, +0x80 per frame, wraps at 0x1000
+field	TacoCam	d	tile_phase	counts wraps; selects the tile image
+field	TacoRnd	a	angle	star angle, 4096 per turn
+field	TacoRnd	b	radius	star distance times 1000
+field	TacoDigits	s	chars	template characters
+field	TcDirection	x	x	x of the pair
+field	TcDirection	y	y	y of the pair
+field	TcDirections28	pos	vectors	five pairs
+field	TcRotations14	rotation	spins	five values
+field	TcDamage9	bytes	by_kind	damage per shot kind 0-8
+field	TcPair8	a	translation	pointer to the translation rows
+field	TcPair8	b	rotation	pointer to the rotation rows
+field	TcPair2	a	translation_fixed	flag byte
+field	TcPair2	b	rotation_fixed	flag byte
+field	TcTransformObj50	unk_00	flag	same as ShooterCoord flag
+field	TcTransformObj50	transform	local	local matrix
+type	TACO	TcPos	ShooterPos	four s16 (x, y, z, w); position, velocity or spawn argument
+type	TACO	Tc10	ShooterModelHandle	GsDOBJ2 object handle (attribute word, links)
+type	TACO	TcObj50	ShooterCoord	GsCOORDINATE2 coordinate object (0x50 bytes)
+type	TACO	TcActor	ShooterActor	0x88-byte actor: ship, wingman, enemy or boss part; 79 records
+type	TACO	Tc14	ShooterParticle	0x14-byte world-space record: shot, bullet, item, spark, explosion
+type	TACO	TacoParticle14	ShooterParticle	second view of the same record (two ShooterPos plus four bytes); merge with Tc14 when the header is rewritten
+type	TACO	TacoRnd	ShooterStar	star of the 100-star field (angle, radius)
+type	TACO	TacoCam	ShooterBackgroundScroll	scroll state of the floor grid
+type	TACO	TcTex4	ShooterTexCoords4	four texture coordinate bytes
+type	TACO	TacoDigits	ShooterScoreTemplate	11-byte template copied by the score formatter
+type	TACO	TcTransformObj50	ShooterCoordView	word view of ShooterCoord with the local matrix
+type	TACO	TcDirection	ShooterVelocity2	pair of s32 (x, y)
+type	TACO	TcDirections28	ShooterFormationVelocities	five velocity pairs of the formation fan
+type	TACO	TcRotations14	ShooterFormationSpins	five spin speeds
+type	TACO	TcDamage9	ShooterShotDamage	damage per shot kind, 9 bytes
+type	TACO	TcPair8	ShooterPosePtrs	pair of words: translation and rotation base pointers
+type	TACO	TcPair2	ShooterPoseFlags	pair of bytes: fixed flags of a pose pair
+type	TACO	TacoLightBlock	ShooterLightBlock	three libgs light entries of 16 bytes
+type	TACO	TcSave	ShooterSettingsBlock	union view of the settings block at D_800E7D10+0x40 (flag word, scores, names)
+type	TACO	TcSetW	ShooterSettingsWordView	bit-field view: mode and selector
+type	TACO	TcSetH	ShooterSettingsHalfView	bit-field view of the halfword with the shot selector
+type	TACO	TcSetB	ShooterSettingsByteView	byte view with the bomb selector
+type	TACO	TcSetF	ShooterSettingsFlagView	bit-field view with the saved flag
+type	TACO	TcBits	ShooterUnlockBits	two bits of the settings word: pad and the return-to-caller flag
+file	TACO	src/ovl/TACO/80132000.c	src/ovl/shooter/entry.c	overlay entry and the stage switch
+file	TACO	src/ovl/TACO/80132220.c	src/ovl/shooter/player.c	ships, input, battle end check, shot table clears
+file	TACO	src/ovl/TACO/801335A0.c	src/ovl/shooter/sound.c	SE throttle and the triangle voice
+file	TACO	src/ovl/TACO/80133870.c	src/ovl/shooter/stage_load.c	stage 0 loader and the settings and score restore
+file	TACO	src/ovl/TACO/80134930.c	src/ovl/shooter/stage_title.c	stages 2 and 3: title and main menu
+file	TACO	src/ovl/TACO/80135720.c	src/ovl/shooter/stage_settings.c	stage 4
+file	TACO	src/ovl/TACO/80136B40.c	src/ovl/shooter/stage_scores.c	stage 5 and the score formatter
+file	TACO	src/ovl/TACO/80137590.c	src/ovl/shooter/stage_demo.c	stage 6
+file	TACO	src/ovl/TACO/80137A60.c	src/ovl/shooter/stage_how_to_play.c	stage 7
+file	TACO	src/ovl/TACO/80137F90.c	src/ovl/shooter/stage_game_start.c	stage 10
+file	TACO	src/ovl/TACO/80138280.c	src/ovl/shooter/stage1_play.c	stage 11
+file	TACO	src/ovl/TACO/80138450.c	src/ovl/shooter/stage2_play.c	stage 21
+file	TACO	src/ovl/TACO/80138680.c	src/ovl/shooter/stage3_play.c	stage 31
+file	TACO	src/ovl/TACO/80138890.c	src/ovl/shooter/stage_result.c	stage 8
+file	TACO	src/ovl/TACO/80139170.c	src/ovl/shooter/stage_name_entry.c	stage 9; also holds the glyph drawer and the star field (propose splitting into glyphs.c and starfield.c)
+file	TACO	src/ovl/TACO/8013B170.c	src/ovl/shooter/stage_game_end.c	stage 45 and the screen wipe
+file	TACO	src/ovl/TACO/8013B990.c	src/ovl/shooter/collision.c	hits, damage, scoring, pickups, bomb damage
+file	TACO	src/ovl/TACO/8013D1E0.c	src/ovl/shooter/effects.c	hit sparks and explosions
+file	TACO	src/ovl/TACO/8013DB80.c	src/ovl/shooter/bullets_items.c	enemy bullets and pickups
+file	TACO	src/ovl/TACO/8013F250.c	src/ovl/shooter/hud_secondary_weapons.c	HUD, secondary weapons and target search
+file	TACO	src/ovl/TACO/80140DF0.c	src/ovl/shooter/primary_weapons.c	vulcan, wide shot, beam
+file	TACO	src/ovl/TACO/80141DE0.c	src/ovl/shooter/bombs.c	bomb state machine and blast bomb shots
+file	TACO	src/ovl/TACO/80142820.c	src/ovl/shooter/stage_exit.c	stage 46
+file	TACO	src/ovl/TACO/801430B0.c	src/ovl/shooter/text_and_loading.c	numbers and text drawing, texture uploads, lights, camera, load requests
+file	TACO	src/ovl/TACO/80143E80.c	src/ovl/shooter/background.c	frame hook, scrolling background, model drawing
+file	TACO	src/ovl/TACO/801447D0.c	src/ovl/shooter/stage_opening.c	stage 1 opening animation and the sky gradient
+file	TACO	src/ovl/TACO/80146D60.c	src/ovl/shooter/model_pose.c	coordinate objects, keyframes, boss part helpers
+file	TACO	src/ovl/TACO/801480B0.c	src/ovl/shooter/stage_boss1.c	stage 12
+file	TACO	src/ovl/TACO/80148FE0.c	src/ovl/shooter/stage_boss2.c	stage 22
+file	TACO	src/ovl/TACO/80149F90.c	src/ovl/shooter/boss1_boss3.c	stage 32 and boss 1 and boss 3 attack logic (interleaved)
+file	TACO	src/ovl/TACO/80151C30.c	src/ovl/shooter/boss2_ai.c	boss 2 attack logic
+file	TACO	src/ovl/TACO/80153AA0.c	src/ovl/shooter/screen_effects.c	circle flash, full-screen flash, pulse bomb visuals
+file	TACO	src/ovl/TACO/80154230.c	src/ovl/shooter/model_recolor.c	CLUT and colour edits of loaded models
+file	TACO	src/ovl/TACO/80154960.c	src/ovl/shooter/stage1_script.c	stage 1 spawner and enemy behaviors 1-7
+file	TACO	src/ovl/TACO/80156A80.c	src/ovl/shooter/stage2_script.c	stage 2 spawner and enemy behaviors 0x10-0x16
+file	TACO	src/ovl/TACO/80159090.c	src/ovl/shooter/stage3_script.c	stage 3 spawner and enemy behaviors 0x20-0x23
+file	TACO	src/ovl/TACO/8015A900.c	src/ovl/shooter/enemy_dispatch.c	behavior switch and the generic leave behaviors
+file	TACO	src/ovl/TACO/8015ABF0.c	src/ovl/shooter/enemy_core.c	enemy spawn, update, death, drops, counts
+file	TACO	include/ovl/TACO.h	include/ovl/shooter.h	overlay header
+file	TACO	config/symbols_TACO.txt	config/symbols_shooter.txt	overlay symbol file (keep the splat segment name TACO until the overlay itself is renamed)
+const	ShooterStage	0	SHOOTER_STAGE_LOAD	unk_1109 value; entry table in shooter_entry
+const	ShooterStage	1	SHOOTER_STAGE_OPENING	opening animation
+const	ShooterStage	2	SHOOTER_STAGE_TITLE	title animation
+const	ShooterStage	3	SHOOTER_STAGE_MENU	main menu
+const	ShooterStage	4	SHOOTER_STAGE_SETTINGS	settings page
+const	ShooterStage	5	SHOOTER_STAGE_SCORES	ranking page
+const	ShooterStage	6	SHOOTER_STAGE_DEMO	demo play
+const	ShooterStage	7	SHOOTER_STAGE_HOW_TO_PLAY	help pages
+const	ShooterStage	8	SHOOTER_STAGE_RESULT	score tally
+const	ShooterStage	9	SHOOTER_STAGE_NAME_ENTRY	name entry
+const	ShooterStage	10	SHOOTER_STAGE_GAME_START	new game set-up
+const	ShooterStage	11	SHOOTER_STAGE_STAGE1	stage 1 play
+const	ShooterStage	12	SHOOTER_STAGE_BOSS1	boss 1
+const	ShooterStage	21	SHOOTER_STAGE_STAGE2	stage 2 play
+const	ShooterStage	22	SHOOTER_STAGE_BOSS2	boss 2
+const	ShooterStage	31	SHOOTER_STAGE_STAGE3	stage 3 play
+const	ShooterStage	32	SHOOTER_STAGE_BOSS3	boss 3
+const	ShooterStage	45	SHOOTER_STAGE_GAME_END	defeat, time-out or clear banner
+const	ShooterStage	46	SHOOTER_STAGE_EXIT	leave the overlay
+const	ShooterMenuItem	0	SHOOTER_MENU_START	main menu item, goes to stage 10
+const	ShooterMenuItem	1	SHOOTER_MENU_SETTINGS	goes to stage 4
+const	ShooterMenuItem	2	SHOOTER_MENU_SCORES	goes to stage 5
+const	ShooterMenuItem	3	SHOOTER_MENU_HOW_TO_PLAY	goes to stage 7
+const	ShooterMenuItem	4	SHOOTER_MENU_EXIT	goes to stage 46
+const	ShooterRollSetting	0	SHOOTER_ROLL_BOTH_PAIRS	D_8015EDDC: roll left with L1 or L2, roll right with R1 or R2 (masks 5 and 0xA)
+const	ShooterRollSetting	1	SHOOTER_ROLL_SHOULDER_1	L1 and R1 (masks 4 and 8)
+const	ShooterRollSetting	2	SHOOTER_ROLL_SHOULDER_2	L2 and R2 (masks 1 and 2)
+const	ShooterShotButton	0	SHOOTER_SHOT_CIRCLE	D_8015EDE0: pad mask 0x20
+const	ShooterShotButton	1	SHOOTER_SHOT_CROSS	mask 0x40
+const	ShooterShotButton	2	SHOOTER_SHOT_SQUARE	mask 0x80
+const	ShooterBombButton	0	SHOOTER_BOMB_CROSS	D_8015EDE4: pad mask 0x40
+const	ShooterBombButton	1	SHOOTER_BOMB_SQUARE	mask 0x80
+const	ShooterBombButton	2	SHOOTER_BOMB_CIRCLE	mask 0x20
+const	PadButton	0x0001	PAD_L2	pad word bit (shared with main; proposed here from TACO use)
+const	PadButton	0x0002	PAD_R2	pad word bit
+const	PadButton	0x0004	PAD_L1	pad word bit
+const	PadButton	0x0008	PAD_R1	pad word bit
+const	PadButton	0x0010	PAD_TRIANGLE	pad word bit
+const	PadButton	0x0020	PAD_CIRCLE	pad word bit
+const	PadButton	0x0040	PAD_CROSS	pad word bit
+const	PadButton	0x0080	PAD_SQUARE	pad word bit
+const	PadButton	0x0100	PAD_SELECT	pad word bit
+const	PadButton	0x0800	PAD_START	pad word bit
+const	PadButton	0x1000	PAD_UP	pad word bit
+const	PadButton	0x2000	PAD_RIGHT	pad word bit
+const	PadButton	0x4000	PAD_DOWN	pad word bit
+const	PadButton	0x8000	PAD_LEFT	pad word bit
+const	ShooterActorFlag	0x80	SHOOTER_ACTOR_ACTIVE	flag byte: shootable and visible
+const	ShooterActorFlag	0x40	SHOOTER_ACTOR_CONTACT_ONLY	flag byte: damages the ship on contact but cannot be shot
+const	ShooterActorFlag	0x10	SHOOTER_ACTOR_DYING	flag byte set with 0x80 while exploding
+const	ShooterHitFlag	0x01	SHOOTER_HIT_HITTABLE	stats[3] bit 0: takes shot damage
+const	ShooterHitFlag	0xF0	SHOOTER_HIT_DROP_MASK	stats[3] high nibble: drop code
+const	ShooterPlayerMode	0x01	SHOOTER_MODE_ROLL_LEFT	player mode bit: roll started by a left shoulder button, drifts toward +x (screen left)
+const	ShooterPlayerMode	0x02	SHOOTER_MODE_ROLL_RIGHT	player mode bit: roll started by a right shoulder button, drifts toward -x
+const	ShooterPlayerMode	0x04	SHOOTER_MODE_HIT	hit flash running
+const	ShooterPlayerMode	0x40	SHOOTER_MODE_BOMB_FROZEN	input and shots frozen during a bomb
+const	ShooterPlayerMode	0x80	SHOOTER_MODE_INVULNERABLE	roll guard window or bomb
+const	ShooterParticleFlag	0x80	SHOOTER_PARTICLE_ACTIVE	record in use
+const	ShooterParticleFlag	0x20	SHOOTER_PARTICLE_BEAM	record is a beam anchor
+const	ShooterParticleFlag	0x10	SHOOTER_PARTICLE_PLAYER_SIDE	set on every player-side shot
+const	ShooterParticleFlag	0x0F	SHOOTER_PARTICLE_KIND_MASK	low nibble: kind
+const	ShooterShotKind	0	SHOOTER_SHOT_BEAM	beam anchor and bomb shot kind
+const	ShooterShotKind	1	SHOOTER_SHOT_HOMING	secondary weapon 0
+const	ShooterShotKind	2	SHOOTER_SHOT_SPREAD	secondary weapon 1
+const	ShooterShotKind	4	SHOOTER_SHOT_VULCAN	weapon -1
+const	ShooterShotKind	8	SHOOTER_SHOT_WIDE	weapon 0, wide hit box 0x60
+const	ShooterWeapon	-1	SHOOTER_WEAPON_VULCAN	primary weapon
+const	ShooterWeapon	0	SHOOTER_WEAPON_WIDE	primary weapon
+const	ShooterWeapon	1	SHOOTER_WEAPON_BEAM	primary weapon
+const	ShooterSecondary	0	SHOOTER_SECONDARY_HOMING	secondary weapon
+const	ShooterSecondary	1	SHOOTER_SECONDARY_SPREAD	secondary weapon
+const	ShooterBombKind	3	SHOOTER_BOMB_PULSE	bomb slot value: 260-frame screen pulse that damages all enemies
+const	ShooterBombKind	4	SHOOTER_BOMB_BLAST	bomb slot value: thrown blast with distance damage
+const	ShooterItemKind	0	SHOOTER_ITEM_WEAPON_WIDE	sets weapon 0
+const	ShooterItemKind	1	SHOOTER_ITEM_WEAPON_BEAM	sets weapon 1
+const	ShooterItemKind	2	SHOOTER_ITEM_SECONDARY_TOGGLE	switches the secondary weapon
+const	ShooterItemKind	3	SHOOTER_ITEM_BOMB_PULSE	adds a pulse bomb
+const	ShooterItemKind	4	SHOOTER_ITEM_BOMB_BLAST	adds a blast bomb
+const	ShooterItemKind	5	SHOOTER_ITEM_HEAL	adds 16 HP, capped 255
+const	ShooterItemKind	6	SHOOTER_ITEM_BONUS	random score bonus
+const	ShooterItemKind	7	SHOOTER_ITEM_WEAPON_VULCAN	sets weapon -1
+const	ShooterDropCode	0x10	SHOOTER_DROP_BONUS	stats[3] high nibble: one bonus item
+const	ShooterDropCode	0x20	SHOOTER_DROP_WEAPON_VULCAN	item 7
+const	ShooterDropCode	0x30	SHOOTER_DROP_WEAPON_WIDE	item 0
+const	ShooterDropCode	0x40	SHOOTER_DROP_WEAPON_BEAM	item 1
+const	ShooterDropCode	0x50	SHOOTER_DROP_SECONDARY_TOGGLE	item 2
+const	ShooterDropCode	0x60	SHOOTER_DROP_BOMB_PULSE	item 3
+const	ShooterDropCode	0x70	SHOOTER_DROP_BOMB_BLAST	item 4
+const	ShooterDropCode	0x80	SHOOTER_DROP_HEAL	item 5
+const	ShooterDropCode	0xD0	SHOOTER_DROP_FIVE_BONUS	five bonus items
+const	ShooterDropCode	0xE0	SHOOTER_DROP_WEAPONS	items 0, 1 and 7
+const	ShooterDropCode	0xF0	SHOOTER_DROP_ALL	nine items
+const	ShooterBulletFlag	0x80	SHOOTER_BULLET_AIMED	spawn flag: velocity points at the player
+const	ShooterBulletFlag	0x40	SHOOTER_BULLET_SPREAD	spawn flag: random spread when aimed
+const	ShooterEnemyType	0	SHOOTER_ENEMY_DEBRIS	stage 1
+const	ShooterEnemyType	2	SHOOTER_ENEMY_SWARM_SHIP	stage 3
+const	ShooterEnemyType	3	SHOOTER_ENEMY_WALL_SHIP	stage 3
+const	ShooterEnemyType	4	SHOOTER_ENEMY_SWOOPER	stage 1
+const	ShooterEnemyType	5	SHOOTER_ENEMY_SPIRAL_SHIP	stage 1
+const	ShooterEnemyType	6	SHOOTER_ENEMY_STAGE1_MID_BOSS	stage 1
+const	ShooterEnemyType	7	SHOOTER_ENEMY_HOMING_MINE	stage 1
+const	ShooterEnemyType	8	SHOOTER_ENEMY_FORMATION_SHIP	stage 2
+const	ShooterEnemyType	9	SHOOTER_ENEMY_GATE_A	stage 2
+const	ShooterEnemyType	10	SHOOTER_ENEMY_GATE_B	stage 2
+const	ShooterEnemyType	11	SHOOTER_ENEMY_PATROLLER	stage 2 (spawner has no caller)
+const	ShooterEnemyType	12	SHOOTER_ENEMY_CIRCLER	stage 2
+const	ShooterEnemyType	13	SHOOTER_ENEMY_GUARDIAN	stage 3 core and orbs
+const	ShooterEnemyType	14	SHOOTER_ENEMY_CARRIER	stage 2; skipped by target selection
+const	ShooterEnemyType	15	SHOOTER_ENEMY_TURRET_A	stage 2
+const	ShooterEnemyType	16	SHOOTER_ENEMY_TURRET_B	stage 2
+const	ShooterEnemyBehavior	1	SHOOTER_BEHAVIOR_DEBRIS	enemy mode value
+const	ShooterEnemyBehavior	2	SHOOTER_BEHAVIOR_SWOOPER	enemy mode value
+const	ShooterEnemyBehavior	3	SHOOTER_BEHAVIOR_SPIRAL_IN	enemy mode value
+const	ShooterEnemyBehavior	4	SHOOTER_BEHAVIOR_SPIRAL_OUT	enemy mode value
+const	ShooterEnemyBehavior	5	SHOOTER_BEHAVIOR_TURRET_SWEEP	enemy mode value
+const	ShooterEnemyBehavior	6	SHOOTER_BEHAVIOR_MID_BOSS	enemy mode value
+const	ShooterEnemyBehavior	7	SHOOTER_BEHAVIOR_HOMING_MINE	enemy mode value
+const	ShooterEnemyBehavior	0x10	SHOOTER_BEHAVIOR_PATROLLER	enemy mode value
+const	ShooterEnemyBehavior	0x11	SHOOTER_BEHAVIOR_CIRCLER	enemy mode value
+const	ShooterEnemyBehavior	0x12	SHOOTER_BEHAVIOR_FORMATION_SHIP	enemy mode value
+const	ShooterEnemyBehavior	0x13	SHOOTER_BEHAVIOR_GATE_A	enemy mode value
+const	ShooterEnemyBehavior	0x14	SHOOTER_BEHAVIOR_GATE_B	enemy mode value
+const	ShooterEnemyBehavior	0x15	SHOOTER_BEHAVIOR_CARRIER	enemy mode value
+const	ShooterEnemyBehavior	0x16	SHOOTER_BEHAVIOR_TURRET	enemy mode value
+const	ShooterEnemyBehavior	0x20	SHOOTER_BEHAVIOR_SWARM_SHIP	enemy mode value
+const	ShooterEnemyBehavior	0x21	SHOOTER_BEHAVIOR_WALL_SHIP	enemy mode value
+const	ShooterEnemyBehavior	0x22	SHOOTER_BEHAVIOR_ORBITING_ORB	enemy mode value
+const	ShooterEnemyBehavior	0x23	SHOOTER_BEHAVIOR_GUARDIAN_CORE	enemy mode value
+const	ShooterEnemyBehavior	0xFD	SHOOTER_BEHAVIOR_LEAVE_BACK	generic: fly away to -z
+const	ShooterEnemyBehavior	0xFE	SHOOTER_BEHAVIOR_LEAVE_FORWARD	generic: fly past the camera
+const	ShooterEnemyBehavior	0xFF	SHOOTER_BEHAVIOR_DYING	generic: explode and spin 61 frames
+const	ShooterLoadRequest	0x10	SHOOTER_LOAD_GAME_START_BANKS	value of shooter_load_request
+const	ShooterLoadRequest	0x14	SHOOTER_LOAD_STREAM_STAGE1	HYPOTHESIS: starts the music stream of stage 1 (func_80044890 plus poll)
+const	ShooterLoadRequest	0x18	SHOOTER_LOAD_BOSS1	assets of boss 1
+const	ShooterLoadRequest	0x20	SHOOTER_LOAD_STAGE2	assets of stage 2, requested while boss 1 initialises
+const	ShooterLoadRequest	0x24	SHOOTER_LOAD_STREAM_STAGE2	HYPOTHESIS: music stream of stage 2
+const	ShooterLoadRequest	0x28	SHOOTER_LOAD_BOSS2	assets of boss 2
+const	ShooterLoadRequest	0x30	SHOOTER_LOAD_STAGE3	assets of stage 3, requested while boss 2 initialises
+const	ShooterLoadRequest	0x34	SHOOTER_LOAD_STREAM_STAGE3	HYPOTHESIS: music stream of stage 3
+const	ShooterLoadRequest	0x38	SHOOTER_LOAD_BOSS3	assets of boss 3
+const	ShooterLoadRequest	0x44	SHOOTER_LOAD_STREAM_RESULT	HYPOTHESIS: music stream for the end and result screens
+const	ShooterSe	0x500	SHOOTER_SE_FIRE_VULCAN	bank 5 id (func_801335A0 with an odd first argument); also the weapon-reset sound
+const	ShooterSe	0x501	SHOOTER_SE_FIRE_BEAM	bank 5
+const	ShooterSe	0x502	SHOOTER_SE_FIRE_WIDE	bank 5
+const	ShooterSe	0x503	SHOOTER_SE_FIRE_SECONDARY	bank 5
+const	ShooterSe	0x504	SHOOTER_SE_BOMB_BLAST_HIT	bank 5
+const	ShooterSe	0x505	SHOOTER_SE_BOMB_PULSE	bank 5; every damage tick of the pulse bomb and the start of the blast bomb
+const	ShooterSe	0x506	SHOOTER_SE_PLAYER_HIT	bank 5
+const	ShooterSe	0x507	SHOOTER_SE_ENEMY_HIT	bank 5
+const	ShooterSe	0x508	SHOOTER_SE_ENEMY_DESTROYED	bank 5
+const	ShooterSe	0x509	SHOOTER_SE_PICKUP	bank 5 (bomb or bonus pickup)
+const	ShooterSe	0x510	SHOOTER_SE_PICKUP_HEAL	bank 5
+const	ShooterSe	0x600	SHOOTER_SE_MENU_MOVE	bank 6 id (func_801335A0 with an even first argument)
+const	ShooterSe	0x601	SHOOTER_SE_MENU_CONFIRM	bank 6
+const	ShooterSe	0x602	SHOOTER_SE_MENU_CANCEL	bank 6
+const	ShooterSe	0x603	SHOOTER_SE_GAME_START	bank 6
+const	ShooterBoss1Mode	0	SHOOTER_BOSS1_MODE_SWAY_RIGHT	attack mode in actor 16 kind
+const	ShooterBoss1Mode	1	SHOOTER_BOSS1_MODE_GROUP_PAIR	form 1
+const	ShooterBoss1Mode	2	SHOOTER_BOSS1_MODE_SCATTER	both forms
+const	ShooterBoss1Mode	3	SHOOTER_BOSS1_MODE_LUNGE	form 1
+const	ShooterBoss1Mode	4	SHOOTER_BOSS1_MODE_SWAY_LEFT	form 1
+const	ShooterBoss1Mode	5	SHOOTER_BOSS1_MODE_FORM2_GROUP_D	form 2
+const	ShooterBoss1Mode	6	SHOOTER_BOSS1_MODE_FORM2_GROUP_E	form 2
+const	ShooterBoss1Mode	7	SHOOTER_BOSS1_MODE_RAIN	form 1
+const	ShooterBoss1Mode	8	SHOOTER_BOSS1_MODE_FORM2_GROUP_F	form 2
+const	ShooterTuning	79	SHOOTER_ACTOR_COUNT	records in the actor pool (loops stop at byte offset 0x29F8)
+const	ShooterTuning	16	SHOOTER_ENEMY_FIRST	first enemy or boss part slot
+const	ShooterTuning	63	SHOOTER_ENEMY_END	one past the last enemy slot used by spawns and hits
+const	ShooterTuning	18000	SHOOTER_START_TIME	frames (5:00) in the timer; also written as 0x4650
+const	ShooterTuning	255	SHOOTER_PLAYER_HP_MAX	player HP is stored as 0-255
+const	ShooterTuning	1000000	SHOOTER_STAGE_CLEAR_BONUS	score added per cleared boss
+const	ShooterTuning	9999999	SHOOTER_SCORE_MAX	cap of the displayed and saved score
+const	ShooterDamage	4	SHOOTER_BULLET_DAMAGE	HP lost to an enemy bullet
+const	ShooterDamage	12	SHOOTER_CONTACT_DAMAGE	HP lost to an enemy body
+const	ShooterDamage	16	SHOOTER_ITEM_HEAL_AMOUNT	HP of the heal item
+const	ShooterTuning	1000	SHOOTER_ITEM_SCORE	points per collected item
+comment	main	draw2d3d	draw2d3d	switches the 2D and 3D layers on or off with two flags; the overlay calls it with (1,1) at scene start and (0,0) on exit
+comment	main	back_clear_switch	back_clear_switch	turns the per-frame background clear on (1) or off (0)
+comment	main	load_palette	load_palette	uploads a palette from RAM into the VRAM CLUT area (source, index, mode arguments)
+comment	main	load_csr_tp	load_csr_tp	uploads a texture page block from RAM for the UI layer (source, page index, size arguments)
+comment	main	dtd_on_tpage	dtd_on_tpage	adds the draw-mode packet for texture page (x, y) to an ordering-table layer
+comment	main	GetWorkBase	GetWorkBase	reserves a block of GPU packet memory in the current frame buffer and returns its address
+comment	main	AddPrim	AddPrim	links a packet into the ordering table at the given slot
+comment	main	SetSemiTrans	SetSemiTrans	sets or clears the semi-transparency bit of a packet
+comment	main	SetShadeTex	SetShadeTex	sets or clears the flag that disables shading for a textured packet
+comment	main	safe_env	safe_env	adds the draw-environment packet of an ordering-table layer
+comment	main	LoadSquare	LoadSquare	copies a RAM block into a VRAM rectangle (x, y, width, height, source)
+comment	main	k_reset	k_reset	resets the text window system
+comment	main	tpage_buf_clear_all	tpage_buf_clear_all	clears all texture page buffers
+comment	main	load_tpage_buf_lock	load_tpage_buf_lock	uploads a texture page buffer from RAM and locks it
+comment	main	initView	initView	initialises the GTE projection and view
+comment	main	initModelingData_init	initModelingData_init	maps a TMD model block at the given address for the graphics library
