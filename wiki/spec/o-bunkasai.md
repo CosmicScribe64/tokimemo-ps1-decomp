@@ -205,6 +205,7 @@ Differences by exhibit (all other steps follow the pattern):
 - **Computer fortune telling (year 95)**: opening group 0x2A, the girl enters, a first reaction group by rank, then a hand-over to the shared fortune stage (`main_stage_next` with `culture_return_stage/step` set and sound command 0x202); on return the girl enters again (skipped for rank 4) and the reaction group is chosen by rank plus `culture_fortune_result`.
 - **Game exhibit (year 96)**: opening group 0x2A, a reaction group by rank, the girl leaves (rank 4 is skipped), then the TT launch of section 7.4; after the return the scene reloads the background and portrait, the girl enters (the background alone for rank 4) and a rank group follows, increased by one when `tt_stages_cleared` is below the girl's threshold.
 - **Art scenes (portrait drawing, sketching session, oil painting)**: no show and no sub-scene; two or three rounds of conversation with rank groups and the `clubs[4].exp` tests of section 8.3 (the Yumi sketching scene adds Yoshio as a second speaker).
+- **Mio, Yuina and Ayako (girls 1, 2, 3) visit scenes**: the only girls with club-mate blocks have extra branches. The group offset also depends on her `acquainted` bit (bit 2), on the low two bits of her `syoushin` word (`syoushin & 3` is tested 43 times, 3 of them in Yuina's file) and on her own club, and some scenes set bit 2 themselves (Mio's science scene, Ayako's follow-up).
 - **Rank 4**: usually shortens the scene (the girl does not enter, or leaves at once, and the closing group differs) and suppresses the festival-call flags.
 
 Two quirks the port must keep: the rank-4 variants skip portrait fades, and the Yumi sketching scene (stage 160) has two speakers, Yumi and girl 13 (Yoshio), but only one portrait buffer at 0x80180000: the scene reads both portraits (0x6C5F, 0x6935), keeps copies at 0x80197000 (Yoshio) and 0x801AE000 (Yumi) and copies one back when the displayed girl changes. It switches `current_girl` and the speaker names for every line, and sets `scene_mouth_lock` to 1 while the speaking girl is not the one whose portrait is shown (so the shown mouth stays still) and to 0 otherwise.
@@ -336,8 +337,9 @@ Other disc reads: gate background 0x4029, intro script 5 @ 0x49BA, birthday scri
 2. Why Megumi's and Yumi's entries only test year 96 (HYPOTHESIS: not met in 1995); how `girls[0].birthday` is set (the scene tests its month and day against today; NAME_ENT sets her club from it).
 3. The festival date itself: the scheduler places it by calendar marker 12; the days are in `month_data_table` (not decoded here).
 4. Whether the mouse-only softlock at stage 164 step 4 is intended (the code only advances for the pad).
-5. The meaning of the dialogue group numbers: they index script sections of the girl files; the stage C is the only place that maps rank, year and club to them.
-6. Name proposals for main-bss variables used by three overlays (section 3.1) must be reconciled with BUNKAKEN and BUNKA_SD.
+5. The `syoushin & 3` test in the Mio, Yuina and Ayako visit scenes (43 sites): `syoushin` is a counter that grows by 5 per week and is clamped elsewhere, so the low two bits behave like a pseudo-random or incidental flag; whether the designers meant a story flag is not known.
+6. The meaning of the dialogue group numbers: they index script sections of the girl files; the stage C is the only place that maps rank, year and club to them.
+7. Name proposals for main-bss variables used by three overlays (section 3.1) must be reconciled with BUNKAKEN and BUNKA_SD.
 
 ## 12. Function index
 
