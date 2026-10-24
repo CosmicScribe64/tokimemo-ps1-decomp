@@ -1648,3 +1648,19 @@ Committed5902c2c38 for all34logical main C filenames. Required deslop prose chec
 ## [2026-10-24] build | Commit verified filename and asset milestones; integrate exact constant reuse
 
 All437logicalCnames committed169145eff. Exactreviewed45Pythonassettool/testfiles committed98f3d22f5 from52-filefrozenmedia/textsource snapshots; combined139testspass, activeworkingfilespreserved. [[tickets/T-27068-existing-constant-sites]] exactfinalpatch integratedwith98testsandresolvedindependentreviews; actualbaseballliteralchangesremainnext. Source-onlymilestonesinclude nogameassets; broaderphase2andsemanticassetcoverage remainopen. Preservedstalezero-byteindexlockunderignoredT27060stateonlyaftercheckingnoactivehost/DockerGit; filenamecommitthensucceeded.
+
+## [2026-10-24] build | Verify 2636 source symbol names in one matching wave
+
+[[tickets/T-27050-parallel-main-reconciliation]] boundedpreparation/applicationmilestoneDone; [[tickets/T-27051-parallel-overlay-reconciliation]] remainsInProgressforits supplement. Applied247maintext/menu/HUD/holiday and2389DATE/NAME_ENT/GEKOfunc/datarows. Bothactual-sourcereviews pass,437ABIviews preservedunder scopedmapping; clean27/27and6952functions/2276920bytes, independentrehash27/27. User requestedfasterexecutionwith SAMEfullscope: asset/translation-preparationworkcontinues inparallel; avoidredundantchecks/chatter andbatchmatchingbuilds, no scope reduction.
+
+## [2026-10-24] decision | Resolve reviewed namespace gates centrally
+
+Adopted independent source-backed prefix closure: ETC keeps one expanded owner row;14unapplied etc_ targets willbecome misc_. Main boot/debug/audio groups include bounded mixed-object helpers. TT uses technicaltt_ only, preserving reservedEnglishgame/folder agreementandclaimingnoagreement. GLOSSARY/ADR/livingmainmap nowagree; no sourceidentifierschangedbythisdocumentationdecision. This removes avoidable coordinatorwaits while retaining evidence and one-owner rules.
+
+## [2026-10-24] query | Revisit fan-patch tooling as a coverage cross-check
+
+User pointed to [[ref-english-patch]]. GitHubprimaryfetch confirms repositorydefaultmain, no declaredlicense, and extraction/script-survey/renderer/font/repacking plusimage-redrawtools andper-filetranslationmetadata. [[tickets/T-28005-fan-patch-crosscheck]] comparesfactualoriginaloffset/layout/coverageevidence withour90scriptcontainers andremainingruntime/source/imagegaps. No code, prose, translatedtext orgameassets copiedintoGit. ExistingT11090notes remaincreditedfacts-only.
+
+## [2026-10-24] build | Preserve matching after proven constants and corrected views
+
+[[tickets/T-27068-existing-constant-sites]]Done:2baseball6literalsnamedthroughverifiedtool; girl7unexplainedandunchanged. [[tickets/T-27067-core-scheduler-essential-completion]]27quartercastcorrections/15O.BINcommentsappliedwithreviewedexactrebase. [[tickets/T-27064-complex-overlay-reconciliation]]RPGinvalidmemberreferencecorrectedtooffset03Ascreen_brightnesswithsigned-bytestorepreserved. Actual-sourcereviewpasses; currentmain/TEL/RPGrebuiltchecksumsandindependentall27hashesmatch,6952functionsunchanged.

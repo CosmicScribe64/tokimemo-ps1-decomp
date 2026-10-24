@@ -63,6 +63,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-28005-fan-patch-crosscheck|T-28005 Cross-check text and image-text coverage against the fan patch]]
+
 
 
 - [ ] [[tickets/T-27067-core-scheduler-essential-completion|T-27067 Complete shared core scheduler and school-day semantic residue]]
@@ -100,7 +102,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-27051-parallel-overlay-reconciliation|T-27051 Parallel overlay reconciliation]]
 
-- [ ] [[tickets/T-27050-parallel-main-reconciliation|T-27050 Parallel main-module reconciliation]]
 
 - [ ] [[tickets/T-27037-p2-o-small|T-27037 Phase 2 analysis - Remaining small overlays]]
 
@@ -153,7 +154,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-27068-existing-constant-sites|T-27068 Reuse proven constants at precise literal sites]]
 
 
 
@@ -227,6 +227,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-27068-existing-constant-sites|T-27068 Reuse proven constants at precise literal sites]]
+
+- [ ] [[tickets/T-27050-parallel-main-reconciliation|T-27050 Parallel main-module reconciliation]]
 
 - [ ] [[tickets/T-27069-file-path-scan-filter|T-27069 Skip irrelevant files in file-rename path scans]]
 

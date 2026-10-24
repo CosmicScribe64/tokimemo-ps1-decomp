@@ -9,6 +9,7 @@
 void message_window_set_title_hidden();
 void girl_scores();
 
+/* Mode 0x30 handler: on stage 0 runs the schedule build steps, then draws the HUD set */
 void schedule_init(void) {
     if (game_state.mode_stage == 0) {
         _schedule_init();
@@ -16,6 +17,7 @@ void schedule_init(void) {
     dec_bg_draw(get_last_gamen_mode());
 }
 
+/* Run the schedule step for the current step number (prepare, build week queue, resolve encounters, weekly girl decay, advance day) */
 void _schedule_init(void) {
     switch (game_state.mode_step) {
     case 0:
@@ -42,6 +44,7 @@ void _schedule_init(void) {
     hud_screen_frame_draw(1);
 }
 
+/* Once per weekly queue build, decrement each nonzero date-spot timer for girls 0-10 */
 void last_date_spot_timer_dec(void) {
     s32 i;
 
@@ -52,6 +55,7 @@ void last_date_spot_timer_dec(void) {
     }
 }
 
+/* If no BGM is active, start sound bank 0, sequence 0 */
 void restore_bgm(void) {
     if (func_8004480C() == 0) {
         audio_bank_start(0, 0);
@@ -161,12 +165,12 @@ void schedule_progress_state_update(void) {
     case 6:
     case 7:
         if (gs->year == 0x5F) {
-            if (((GirlFlagBits *)&flags)->met) {
+            if (((QuarterFlagBits *)&flags)->b1) {
                 gs->progress_state[1] = 1;
             }
             gs->progress_state[0xE] = 1;
         }
-        if ((gs->year == 0x60) && (((GirlFlagBits *)gs->quarter_flags)->b5)) {
+        if ((gs->year == 0x60) && (((QuarterFlagBits *)gs->quarter_flags)->b5)) {
             gs->progress_state[5] = 1;
         }
         if (gs->year == 0x61) {
@@ -174,22 +178,22 @@ void schedule_progress_state_update(void) {
         break;
     case 9:
     case 10:
-        if ((gs->year == 0x5F) && (((GirlFlagBits *)&flags)->b2)) {
+        if ((gs->year == 0x5F) && (((QuarterFlagBits *)&flags)->b2)) {
             gs->progress_state[7] = 1;
         }
-        if ((gs->year == 0x60) && (((GirlFlagBits *)gs->quarter_flags)->b6)) {
+        if ((gs->year == 0x60) && (((QuarterFlagBits *)gs->quarter_flags)->b6)) {
             gs->progress_state[0xA] = 1;
         }
         if (gs->year == 0x61) {
         }
         break;
     case 1:
-        if ((gs->year == 0x60) && (((GirlFlagBits *)&flags)->b3)) {
+        if ((gs->year == 0x60) && (((QuarterFlagBits *)&flags)->b3)) {
             gs->progress_state[3] = 1;
         }
         if (gs->year == 0x61) {
             /* FAKE: T-25040, this zero offset folds after uopt, retaining the base-relative byte load. */
-            if (((GirlFlagBits *)(gs->quarter_flags + ((u32)gs->month < 0)))->b7) {
+            if (((QuarterFlagBits *)(gs->quarter_flags + ((u32)gs->month < 0)))->b7) {
                 gs->progress_state[6] = 1;
             }
         }
@@ -198,10 +202,10 @@ void schedule_progress_state_update(void) {
         }
         break;
     case 12:
-        if ((gs->year == 0x5F) && (((GirlFlagBits *)&flags)->b3)) {
+        if ((gs->year == 0x5F) && (((QuarterFlagBits *)&flags)->b3)) {
             gs->progress_state[3] = 1;
         }
-        if ((gs->year == 0x60) && (((GirlFlagBits *)gs->quarter_flags)->b7)) {
+        if ((gs->year == 0x60) && (((QuarterFlagBits *)gs->quarter_flags)->b7)) {
             gs->progress_state[6] = 1;
         }
         if (gs->year == 0x61) {
@@ -209,7 +213,7 @@ void schedule_progress_state_update(void) {
         break;
     case 3:
     case 4:
-        if ((gs->year == 0x60) && (((GirlFlagBits *)&flags)->b4)) {
+        if ((gs->year == 0x60) && (((QuarterFlagBits *)&flags)->b4)) {
             gs->progress_state[0xD] = 1;
         }
         if (gs->year == 0x61) {
@@ -224,7 +228,7 @@ void schedule_progress_state_update(void) {
     }
     switch (gs->month) {
     case 5:
-        if ((gs->year == 0x60) && !(((GirlFlagBits *)gs->quarter_flags)->b4)) {
+        if ((gs->year == 0x60) && !(((QuarterFlagBits *)gs->quarter_flags)->b4)) {
             gs->progress_state[0xD] = 0x80;
         }
         if ((gs->year == 0x61) && !(gs->quarter_flags[1] & 1)) {
@@ -233,10 +237,10 @@ void schedule_progress_state_update(void) {
         }
         return;
     case 8:
-        if ((gs->year == 0x5F) && !(((GirlFlagBits *)gs->quarter_flags)->met)) {
+        if ((gs->year == 0x5F) && !(((QuarterFlagBits *)gs->quarter_flags)->b1)) {
             gs->progress_state[1] = 0x80;
         }
-        if ((gs->year == 0x60) && !(((GirlFlagBits *)gs->quarter_flags)->b5)) {
+        if ((gs->year == 0x60) && !(((QuarterFlagBits *)gs->quarter_flags)->b5)) {
             gs->progress_state[5] = 0x80;
         }
         if (gs->year == 0x61) {
@@ -245,10 +249,10 @@ void schedule_progress_state_update(void) {
         break;
     case 11:
         gs->quarter_flags[1] &= 0xFF7F;
-        if ((gs->year == 0x5F) && !(((GirlFlagBits *)gs->quarter_flags)->b2)) {
+        if ((gs->year == 0x5F) && !(((QuarterFlagBits *)gs->quarter_flags)->b2)) {
             gs->progress_state[7] = 0x80;
         }
-        if ((gs->year == 0x60) && !(((GirlFlagBits *)gs->quarter_flags)->b6)) {
+        if ((gs->year == 0x60) && !(((QuarterFlagBits *)gs->quarter_flags)->b6)) {
             gs->progress_state[0xA] = 0x80;
         }
         if (gs->year == 0x61) {
@@ -256,10 +260,10 @@ void schedule_progress_state_update(void) {
         }
         break;
     case 2:
-        if ((gs->year == 0x60) && !(((GirlFlagBits *)gs->quarter_flags)->b3)) {
+        if ((gs->year == 0x60) && !(((QuarterFlagBits *)gs->quarter_flags)->b3)) {
             gs->progress_state[3] = 0x80;
         }
-        if ((gs->year == 0x61) && (!((GirlFlagBits *)gs->quarter_flags)->b7)) {
+        if ((gs->year == 0x61) && (!((QuarterFlagBits *)gs->quarter_flags)->b7)) {
             gs->progress_state[6] = 0x80;
         }
         break;
@@ -418,7 +422,7 @@ void day_event_queue_build_week(void) {
     if (gs->month_calendar[0].marker[day] == 8) {
         /* FAKE: T-23003, the unsigned constant is a ucode constant of its own and takes $a1 as in the original */
         if ((gs->player_flags.h >> 12) != 0xB && ((u32)gs->last_command.w & 0xF) == 4U) {
-            if ((gs->player_flags.h >> 12) == 6 && (*(u16 *)&game_state.clubs[6].level & 0xF) >= 8) {
+            if ((gs->player_flags.h >> 12) == CLUB_BASEBALL && (*(u16 *)&game_state.clubs[CLUB_BASEBALL].level & 0xF) >= 8) {
                 gs->day_events[idx].type = DAY_EVENT_CLUB_MASTER_A;
                 idx++;
                 day_event_queue_push_birthdays(&idx, monthOff, day);
@@ -1343,6 +1347,7 @@ s32 schedule_special_scene_select(char *arg0, char *arg1) {
 }
 
 
+/* Choose a walk-home girl from eligible candidates (50 percent roll), skipping the most recently selected girl */
 s32 geko_judge(s8 *arg0) {
     s32 i;
     s32 idx;
@@ -1367,6 +1372,7 @@ s32 geko_judge(s8 *arg0) {
     return 0;
 }
 
+/* Choose a girl who invites the player out (8 percent roll), unless an appointment or a blocked date applies */
 s32 date_sasoi_judge(s8 *arg0) {
     s32 i;
     s32 idx;
@@ -1477,6 +1483,7 @@ void syoushin_up(void) {
     }
 }
 
+/* Weekly girl update: affection decay and syoushin growth, only in school terms (vacation 0), then next step */
 void schdeule_girls_param(void) {
     if (game_state.vacation == VACATION_NONE) {
         yuukou_down();
@@ -1961,8 +1968,8 @@ void schedule_quarter_flags_rotate(void) {
     case 6:
     case 9:
     case 12:
-        ((GirlFlagBits *)state->quarter_flags)->b14 = ((GirlFlagBits *)game_state.quarter_flags)->b13;
-        ((GirlFlagBits *)state->quarter_flags)->b13 = 0;
+        ((QuarterFlagBits *)state->quarter_flags)->b14 = ((QuarterFlagBits *)game_state.quarter_flags)->b13;
+        ((QuarterFlagBits *)state->quarter_flags)->b13 = 0;
         break;
     }
 }

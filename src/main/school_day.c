@@ -19,6 +19,7 @@ void func_800737A0(void) {
     dec_bg_draw(get_last_gamen_mode());
 }
 
+/* Handle mode 0x40 stages for school-day setup, command, exit and vacation, then draw the day HUD */
 void week_day(void) {
     switch (game_state.mode_stage) {
     case 0:
@@ -48,6 +49,7 @@ void week_day(void) {
     }
 }
 
+/* Stage 2: call week_day_exit0 at step 0 to advance the day-event queue */
 void week_day_exit(void) {
     game_state.mode_step_timer.w += 1;
     if (game_state.mode_step == 0) {
@@ -55,6 +57,7 @@ void week_day_exit(void) {
     }
 }
 
+/* Run screen setup, SD loading and SD actor setup across steps 0-2 */
 u8 week_day_init(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
@@ -67,6 +70,7 @@ u8 week_day_init(void) {
     }
 }
 
+/* Stage 1: call week_day_main0 at step 0 to wait for the animation and apply the command */
 void week_day_main(void) {
     game_state.mode_step_timer.w += 1;
     if (game_state.mode_step == 0) {
@@ -74,6 +78,7 @@ void week_day_main(void) {
     }
 }
 
+/* Disc sector of the background of today's command: per-command table, or the club table for the club command */
 s32 get_weekly_bg_sector(void) {
     u8 x;
     u16 h;
@@ -414,6 +419,7 @@ u8 school_day_sd_actors_init(void) {
     mode_stage_next();
 }
 
+/* Play the result sound and apply command/practice effects; after animation, advance when the old result timer is >=13; force exit when the step timer reaches 601 */
 s32 week_day_main0(void) {
     s16 *state;
     s32 sp28;
@@ -446,6 +452,7 @@ s32 week_day_main0(void) {
     }
 }
 
+/* Advance to the next queue record, clear SD actors A and B, return to the day screen (mode 0x31) */
 void week_day_exit0(void) {
     game_state.day_event_index++;
     actor_clear(0x60);
@@ -519,6 +526,7 @@ s32 parameter_up_down(s32 command, s32 holiday_factor, s32 result_divisor) {
     }
 }
 
+/* Set up the vacation-day screen, background and SD pack over steps 0-2; also used by KANGEI camp stages */
 u8 vacation_day_init(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {

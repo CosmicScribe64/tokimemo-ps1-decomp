@@ -500,7 +500,7 @@ void func_80153A60(void) {
     p = &D_8015EC74;
     do {
         ((Actor *)actor_pool)[i + 64].brightness = *p;
-        *(s8 *)&game_state.unk_3A = *p;
+        *(s8 *)&game_state.screen_brightness = *p;
         if (D_8015EB98 == 0x20000 && (dead = *p) >= 0x61) {
             D_80120E93 = 0x60;
         }

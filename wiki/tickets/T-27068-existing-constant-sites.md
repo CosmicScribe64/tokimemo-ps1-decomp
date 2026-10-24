@@ -1,7 +1,7 @@
 ---
 id: T-27068
 title: Reuse proven constants at precise literal sites
-status: In Review
+status: Done
 assignee: constant-tooling
 created: 2026-10-24
 updated: 2026-10-24
@@ -17,7 +17,7 @@ Allow reviewed literal replacement to reuse an existing matching enum value and 
 - [x] Existing-name/value/type ownership validated, mismatches/collisions rejected.
 - [x] Exact reviewed semantic sites supported without blanket value replacement.
 - [x] Meaningful synthetic regression tests and independent Standards/Spec reviews resolved.
-- [ ] Root integrates reviewed tooling and then applies proven sites with matching proof.
+- [x] Root integrates reviewed tooling and then applies proven sites with matching proof.
 
 ## Work notes
 
@@ -32,3 +32,5 @@ Docker validation: all 93 rename tests pass, including 15 new focused tests for 
 2026-10-24 final proof refresh completed: the final source-provenance patch selects exactly two real scheduler literals and passes inverse/gcc/prototype-view proofs, with no source flush. `real-site-dry-run.txt` and `manifest.json` now record completion. Independent Spec re-review remains root-owned.
 
 2026-10-24 root tooling integration: exact final98-test packet applied after baseline/patch/resultSHAchecks. Integrated98testsPASS2.383s. Luna Standards and independent Sol Spec review findings resolved; finalthreepreprocessing/source-provenance regressions verified. No Ctypes/declarations changed. Actualtwo-literal application and matching proof remain next; ticket InReviewuntilthatproof.
+
+2026-10-24 source application complete: exactlytwoCLUB_BASEBALLreferencesreplaceconfirmed6values in the existingclubcomparison/recordindex. Allotherliteralsincludinggirl7remainunchanged. Fullprovenance/inverse/gcc/viewsand3923-rowledgerchecks pass. Latestincrementalbuildrecompiledmain/TEL/RPG; all27currentbinariesindependentlyrehashidenticaland6952functions/2276920bytes remain. Independentactual-sourceSpecreviewconfirmsquarterviewequivalence,2literalonlysitesandRPGsigned-bytestore target. Done.

@@ -1,0 +1,3 @@
+# Rename ledger (tools/rename.py, T-27002): kind scope old new key note, appended by `rename.py apply`.
+# Do not edit by hand; `rename.py replay` applies it to any tree, `rename.py check` keeps old names out.
+const main Club include/game_enums.h - reuse-v1:eyJoZWFkZXIiOiJpbmNsdWRlL2dhbWVfZW51bXMuaCIsImVudW0iOiJDbHViIiwidmFsdWVzIjpbWyJDTFVCX0JBU0VCQUxMIiwiNiIsIiJdXSwic2l0ZXMiOlsiZXhwcjptYWluOmRheV9ldmVudF9xdWV1ZV9idWlsZF93ZWVrQDE6KGdzLT5wbGF5ZXJfZmxhZ3MuaCA-PiAxMikiLCJpbmRleDptYWluOmRheV9ldmVudF9xdWV1ZV9idWlsZF93ZWVrOmdhbWVfc3RhdGUuY2x1YnMiXX0= T-27068: encoded player club and indexed ClubRecord both use confirmed CLUB_BASEBALL=6; no other values renamed

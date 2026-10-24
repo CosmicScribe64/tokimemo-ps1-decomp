@@ -426,34 +426,34 @@ void func_80132FC4(void) {
             }
             if (var_a2 == 1) {
                 game_state.substep = 0x10;
-                ((GirlFlagBits *)game_state.quarter_flags)->met = 1;
+                ((QuarterFlagBits *)game_state.quarter_flags)->b1 = 1;
 
             } else if (var_a2 == 7) {
                 game_state.substep = 0x20;
-                ((GirlFlagBits *)game_state.quarter_flags)->b2 = 1;
+                ((QuarterFlagBits *)game_state.quarter_flags)->b2 = 1;
 
             } else if (var_a2 == 3) {
                 game_state.substep = 0x30;
-                ((GirlFlagBits *)game_state.quarter_flags)->b3 = 1;
+                ((QuarterFlagBits *)game_state.quarter_flags)->b3 = 1;
 
             } else if (var_a2 == 0xD) {
                 game_state.substep = 0x40;
-                ((GirlFlagBits *)game_state.quarter_flags)->b4 = 1;
+                ((QuarterFlagBits *)game_state.quarter_flags)->b4 = 1;
 
             } else if (var_a2 == 5) {
                 game_state.substep = 0x50;
-                ((GirlFlagBits *)game_state.quarter_flags)->b5 = 1;
+                ((QuarterFlagBits *)game_state.quarter_flags)->b5 = 1;
 
             } else if (var_a2 == 0xA) {
                 game_state.substep = 0x60;
-                ((GirlFlagBits *)game_state.quarter_flags)->b6 = 1;
+                ((QuarterFlagBits *)game_state.quarter_flags)->b6 = 1;
 
             } else if (var_a2 == 6) {
                 game_state.substep = 0x70;
-                ((GirlFlagBits *)game_state.quarter_flags)->b7 = 1;
+                ((QuarterFlagBits *)game_state.quarter_flags)->b7 = 1;
 
             } else if (var_a2 == 0xB) {
-                ((GirlFlagBits *)game_state.quarter_flags)->b8 = 1;
+                ((QuarterFlagBits *)game_state.quarter_flags)->b8 = 1;
                 game_state.substep = 0x80;
 
             } else {
