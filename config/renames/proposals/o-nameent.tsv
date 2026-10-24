@@ -1,0 +1,640 @@
+# kind	scope	old	new	note
+func	NAME_ENT	func_80132000	name_entry_preset_apply	copies preset (arg % 15) into the three name buffers: 8 bytes from the family table, 8 from the given table, 12 from the nickname table; callers name_entry_name_finish and the SELECT chord check
+func	NAME_ENT	func_8013209C	name_entry_entry	overlay entry of mode 0x14 (main_state_set(0x14) at 11 sites, entry table 0x8013209C): stage switch 0 load, 1 input steps, 2 Shiori data; then the decoded background draw and two debug digit prints
+func	NAME_ENT	func_80132134	name_entry_stage_load	stage 0: step_timer += 1, step 0 name_entry_load_init, step 1 name_entry_load_fade_in
+func	NAME_ENT	func_80132198	name_entry_load_init	stage 0 step 0, substeps 0-2: resets text, actors, sprite tables; reads the background still (10 sectors), decodes it to VRAM (0x140, 0x100) with the MDEC helpers, reads the UI sprite pack (54 sectors) and the kanji tables (6 sectors); then main_step_next
+func	NAME_ENT	func_80132320	name_entry_load_fade_in	stage 0 step 1: once the CD is idle relocates the 50 kanji-list pointers (+0x801E0000) and builds the UI; brightness += 4 per frame; at 0x80 captures the screen, builds the actors and goes to stage 1
+func	NAME_ENT	func_801324AC	name_entry_input_actors_init	builds the actor pool 96-127 of the input screens: all 32 start off screen (x 0x190, draw flags 0x84, overlay tables); then 96 and 97 (frames 3 and 0), 98-108 eleven name-slot markers (3 family, 3 given, 5 nickname boxes at y -0x4A), 109-113 tab icons (x -0x8F, y -0x28 step 0x20), 114-118 tab highlights, 119 hover marker, 120 cell cursor (off screen), 121-124 scroll arrows and their pressed overlays
+func	NAME_ENT	func_80132A38	name_entry_background_setup	sets up the six-block background image (bg_slot_setup, blocks 0x4000 apart from overlay_image_buffer) and loads the two palettes (slots 0x18 and 0x10)
+func	NAME_ENT	func_80132B78	name_entry_slot_markers_update	arg0 = name (0 family, 1 given, 2 nickname): clamps the cursor to 0xC when past the last slot of that name; a circle press on a slot box moves the cursor there; the active marker animates, the others stay at frame 0xD
+func	NAME_ENT	func_80132E80	name_entry_stage_input	stage 1: steps 1-5 draw the frames in palette A and check the SELECT chord, steps 6-7 the birthday frames, steps 8-9 the confirm frames; then switches on step 0-9 (family, given, nickname, birthday, confirm)
+func	NAME_ENT	func_80132FD4	name_entry_reading_rows_draw	draws the nine kana-row labels (3 x 3 grid at y 0x38-0x58) used to pick a reading in the kanji tab
+func	NAME_ENT	func_801330E8	name_entry_hiragana_page_draw	draws the title string and the 17 hiragana row strings (3 columns x 6 rows at 16 px)
+func	NAME_ENT	func_801332FC	name_entry_katakana_page_draw	same as the hiragana page for the katakana table (D_8014CD6C..CDAC)
+func	NAME_ENT	func_80133510	name_entry_symbol_page_draw	draws candidate list 38 (symbols) 32 characters per line, six lines, starting at line name_entry_page_scroll; keeps the scroll within the list length
+func	NAME_ENT	func_801338DC	name_entry_kanji_page_draw	arg 0 picks the heading by step (1 family, 3 given, 5 nickname), 1-3 force one of the three headings; the kanji tab prints row 0 = the kana variants of the reading and five lines of 32 bytes of candidates from the scroll line (symbol list instead when the reading is 38 or tab 2), then the nine reading rows
+func	NAME_ENT	func_80133D94	name_entry_cell_hit_test	pointer to cell column (x 16 px from -0x78) and row (from -0x30) in the 16 x 6 character grid; -1 outside; column 0x10 is excluded in the symbol and kanji tabs
+func	NAME_ENT	func_80133E54	name_entry_tab_hit_test	which of the five tab buttons (y table name_entry_tab_y, x -0x9D..-0x80) is under the pointer, else -1
+func	NAME_ENT	func_80133FC4	name_entry_tab_highlight_update	sets the active-tab highlight actors 114-118 (draw flag 0x80 only for the tab equal to name_entry_tab) and moves the hover marker (actor 119) to the hovered tab, y = tab * 32 - 0x28; off screen (y -0xB4) when none
+func	NAME_ENT	func_80134110	name_entry_reading_hit_test	pointer to column and row of the reading rows area (x -0x77..0x98, y 0x39..0x67); -1 outside; implicit-int FAKE
+func	NAME_ENT	func_801341A8	name_entry_reading_select	circle on a reading cell sets name_entry_reading = row * 15 + col % 6 + col / 6 * 5 and resets the scroll when the reading changes
+func	NAME_ENT	func_80134248	name_entry_char_put	stores the clicked character (2 bytes) at name_entry_cursor of name arg0 and advances the cursor; kana tabs: gaps of the layout store the blank character, others text[col / 6 + row * 3][col % 6]; symbols: list 38 entry row * 16 + scroll * 16 + col; kanji: row 0 gives the reading own kana, other rows the candidates (index minus 16); entries past the list length store the blank
+func	NAME_ENT	func_80134B18	name_entry_names_draw	redraws the three name buffers on the sub-text layer (family at x -0x68, given at -0x30, nickname at 0x48, y -0x58)
+func	NAME_ENT	func_80134B94	name_entry_name_finish	arg0 = name: draws a random preset (rand() % 15) into the name when it is empty, all blank, or the blank-byte count points at the terminator
+func	NAME_ENT	func_80134EB8	name_entry_cell_cursor_update	moves the cell cursor (actor 120) to the hovered grid cell (x col * 16 - 0x71, y row * 16 - 0x29) or to the hovered reading cell (y row * 16 + 0x3F, not the sixth column of a group); off screen (0x100, 0x100) when none
+func	NAME_ENT	func_80134F6C	name_entry_preset_chord_check	only while SELECT is held: a press of one to four shoulder buttons (L2 1, R2 2, L1 4, R1 8; 14 chords) loads a preset name 1-14 and redraws; all four loads preset 0 and preset birthday selections (month 12, day 10, blood A; Shiori 14 February, O)
+func	NAME_ENT	func_80135168	name_entry_step_init	step 0: prefill from the retained profile (flag 1) or blank all names and birthday selections (0xFF) with the chord check; resets tab, selections, clip request for the family prompt, then main_step_next
+func	NAME_ENT	func_80135434	name_entry_frames_draw	arg0 picks the frame palette (0: gouraud colour 0x8081F, else 0x90002); draws five tab frames, the heading box, the grid box, three extra boxes in the kanji tab, then the SELECT chord check when no confirm, cancel or START was pressed
+func	NAME_ENT	func_80135650	name_entry_scroll_arrows_update	symbol and kanji tabs: shows the up and down arrow buttons (actors 121, 122), circle on them scrolls name_entry_page_scroll by one line and redraws; other tabs hide them
+func	NAME_ENT	func_801357F4	name_entry_family_name_input	step 1: pointer, hit tests, circle puts a character (cursor < 3), tab clicks switch pages, done tab or START finishes the name and goes to step 2; cross moves the cursor back (0xC wraps to 2)
+func	NAME_ENT	func_80135A98	name_entry_given_name_init	step 2: redraws the current tab page with the given-name prompt, cursor 3, clip request for the given prompt, then main_step_next
+func	NAME_ENT	func_80135BB4	name_entry_given_name_input	step 3: same as the family input for slots 3-5 (circle puts when the cursor is below 6); finish goes to step 4
+func	NAME_ENT	func_80135E58	name_entry_nickname_init	step 4: redraws the page with the nickname prompt, cursor 6, clip request for the nickname prompt
+func	NAME_ENT	func_80135F74	name_entry_nickname_input	step 5: same input for slots 6-10 (circle puts when the cursor is below 0xB); finish goes to step 6
+func	NAME_ENT	func_8013621C	name_entry_birthday_frames_draw	arg0 picks the frame palette as in name_entry_frames_draw; draws the heading box, the selection grid box and a small button box at the left (x -0x9D, y 0x50) of the birthday screens
+func	NAME_ENT	func_801362D0	name_entry_birthday_init	step 6: shows the birthday prompt, sets up the birthday actors, clip request for the birthday prompt, redraws the date text, starts the typewriter, main_step_next
+func	NAME_ENT	func_8013635C	name_entry_birthday_actors_init	builds the 12 actors 96-107 of the birthday screens (off screen by default): 96 the panel piece (frame 1 at the centre), 97-102 two cursor boxes each for month (x -0x48, -0x38), day (-0x18, -8) and blood letter (0x68, 0x78) at y -0x4A, 104 the hover marker, 103, 105, 106, 107 button sprites at x -0x8F (y 0x58 and -0x28)
+func	NAME_ENT	func_8013664C	name_entry_actor_anim_start	starts the actor arg0 animation (frame 0, flag 1) unless it already runs
+func	NAME_ENT	func_80136688	name_entry_birthday_field_marks_update	per active field (cursor 0 month, 1 day, 2 blood type) animates its two cursor actors and parks the other fields' actors at frame 0xD
+func	NAME_ENT	func_80136808	name_entry_birthday_hit_test	pointer over the active field: month grid (6 x 2 boxes at x (i % 6) * 40 - 104, y (i / 6) * 16 - 40), day grid (11 per row, 24 px, from y 8) or four blood boxes (64 px apart, y 72-88); stores the hovered index in the player (arg0 = 0) or Shiori (arg0 != 0) selection and moves the marker (actor 104)
+func	NAME_ENT	func_801372A0	name_entry_birthday_text_draw	arg0 selects player (0) or Shiori (1) selections: draws month and day numbers and the blood letter (A, B, AB, O) of the selection, blank when 0xFF; month/day shown as index + 1
+func	NAME_ENT	func_80137608	name_entry_birthday_buttons_update	highlights actor 107 when two stack locals that the function never assigns (FAKE, leftovers of earlier calls) lie in x -0x9D..-0x80, y 0x51..0x60 (circle then finalises and goes on), and actor 106 while the field cursor is 3 (circle finalises and goes on)
+func	NAME_ENT	func_80137708	name_entry_birthday_input	step 7 for the player's birthday: field cursor 0 month, 1 day, 2 blood type; circle advances the field (at 3 finalises and goes to step 8), cross goes back one field, START finalises at once; then draws the grid numbers
+func	NAME_ENT	func_801377E8	name_entry_birthday_finalize	arg0 selects player (0) or Shiori (1): fills any unset selection (0xFF) with rand() % 12 / % 31 / % 3 and clamps the day: month 2 above day 28 becomes 28, months 4, 6, 9, 11 above day 30 become 30
+func	NAME_ENT	func_80137AA0	name_entry_day_grid_numbers_draw	draws the labels 1-31 of the day grid: 1-9 single digit sprites (y 8), 10-11, then 12-22 (y 0x18) and 23-31 (y 0x28) as two-digit sprites; ends with a tpage update
+func	NAME_ENT	func_80137B84	name_entry_digit_sprite_draw	draws one 16 x 16 sprite for digit arg0 at (arg1, arg2) from the (u, v) table D_8014D028
+func	NAME_ENT	func_80137CA0	name_entry_number_sprites_draw	draws a two-digit number arg0 (tens at x - 8, ones at x) at (arg1, arg2) from table D_8014D014
+func	NAME_ENT	func_80137EE4	name_entry_confirm_actors_init	builds two actors: 96 the confirm panel (frame 2 at the centre), 97 the yes/no marker (frame 6 at x -0xA, y 0x58)
+func	NAME_ENT	func_80137FC4	name_entry_confirm_init	step 8: resets text and actors, prints the confirm question, the three name strings, month/day numbers and the blood letters of the player's data, clip request for the confirm line, main_step_next
+func	NAME_ENT	func_80138268	name_entry_confirm_frames_draw	arg0 picks the frame palette; draws the data box (0x76 high for the player screen, 0x58 for the heroine screen) and the yes/no box
+func	NAME_ENT	func_80138330	name_entry_noop	empty function called after the confirm frames
+func	NAME_ENT	func_80138338	name_entry_confirm_input	step 9: pointer over yes (x -0x2F..0xF) or no (0x11..0x4F) at y 0x51..0x5F moves the marker; START or yes goes to stage 2; cross or no goes back to step 0
+func	NAME_ENT	func_80138488	name_entry_stage_shiori	stage 2: steps 0-5 (heroine data prompt, input, confirm question, answer, commit, exit); frames for steps 0-1 are the birthday frames, for steps 2-3 the confirm frames, both in palette B
+func	NAME_ENT	func_801385A8	name_entry_shiori_birthday_init	stage 2 step 0: shows the prompt asking for the heroine's birthday and blood type, builds the birthday actors, clip request, redraws the date text for Shiori
+func	NAME_ENT	func_80138634	name_entry_shiori_birthday_input	stage 2 step 1: same as the player's birthday input but on the Shiori selections
+func	NAME_ENT	func_80138714	name_entry_shiori_confirm_actors_init	like name_entry_confirm_actors_init with actor 96 frame 0xE
+func	NAME_ENT	func_801387F4	name_entry_shiori_confirm_init	stage 2 step 2: confirm question, the heroine's fixed family and given name, her month/day and blood letter
+func	NAME_ENT	func_80138A7C	name_entry_shiori_confirm_input	stage 2 step 3: yes or START goes to step 4, no or cross back to step 0
+func	NAME_ENT	func_80138BCC	name_entry_commit	stage 2 step 4: sound commands 5, 0xC1, 3 (fade BGM, forget voice clip), resets the actors, runs name_entry_new_game_setup, resets text, main_step_next
+func	NAME_ENT	func_80138C1C	name_entry_profile_store	copies the three name buffers into GameState without blanks (3, 3 and 5 characters), builds player_full_name = family + given, and stores both birthdays: player word and girls[0] (month = idx + 1, day = idx + 1, blood = (idx + 1) & 3)
+func	NAME_ENT	func_80138F00	name_entry_overlay_tables_set	stores the fixed addresses of the UI tpage, frame and sequence tables, the two palettes and the image buffer in overlay_* fields of GameState
+func	NAME_ENT	func_80138F60	name_entry_new_game_setup	game_data_init, name_entry_profile_store; then Shiori's club, initial affection/tokimeki/syoushin from the blood compatibility table, clubs and fixed blood types of the other heroines, and the cheat-name check
+func	NAME_ENT	func_80139440	name_entry_cheat_names_apply	name patterns: nickname of the Konami-man pattern sets all nine parameters to 0x23D; the friendly family+given pair sets Shiori to tokimeki 0x20 / affection 0x40 and meets the heroines 1-8 of other clubs at 0x7F; the Konami code in words zeroes and in arrows maxes (0x3E7) all parameters
+func	NAME_ENT	func_80139684	name_entry_exit_to_prologue	stage 2 step 5: waits 0x41 frames, fades the screen out 4 per frame, then main_state_set(0x15) and text advance 0xE
+func	NAME_ENT	func_80139740	file_select_number_draw	draws arg0 as decimal digit sprites (8 px wide, 16 high, from D_8014D0F4 (u, v) pairs) right-aligned at (arg1, arg2), least significant digit first, moving 8 px left per digit; returns 1
+func	NAME_ENT	func_801398EC	file_select_girl_icons_visibility_update	every frame: on info page 0 the icon sprites 0-12 whose counter in the album record card_block[D_800E8BEF] (a main byte that nothing writes, so record 0) is 0 are made visible with the animation tile (frame_count / 4) % 3, the others are hidden; on the other pages all 13 are hidden (the visible icons themselves are set by file_select_girl_icon_set)
+func	NAME_ENT	func_80139AD8	file_select_girl_icon_set	fills sprite_table[arg0] as a 16 x 16 girl icon at (arg1, arg2): u = (i & 7) * 16, v = i / 8 * 0x30 + (frame_count / 32 % 3) * 16 + 0x80, priority 2
+func	NAME_ENT	func_80139BA0	file_select_info_page_input	triangle, or circle on the page button region (x -0x3F..0x1F, y 0xD..0x1B), adds 1 to the info page
+func	NAME_ENT	func_80139C24	file_select_info_page_draw	info page = file_select_info_page mod 3 (negative values wrap): 0 clear counts, 1 the nine parameters, 2 girl evaluation stars; then the page input
+func	NAME_ENT	func_80139CB4	file_select_slot_header_draw	queues slot number plus the number suffix, family and given name, nickname and club name of the selected slot, from system_data (slot_info_from_system_data != 0) or from the loaded album image in card_block
+func	NAME_ENT	func_80139F30	file_select_page_clear_counts_draw	page 0 (emu: the page is titled clear count): for the 13 clear counters (system file or album image) draws the count of each non-zero one with file_select_number_draw and a girl icon (order 0-7, then 12, then 8-11); zero counters show the locked marker (actors 128-140 flag 0x80, frame class 4)
+func	NAME_ENT	func_8013A9C8	file_select_page_girl_stars_draw	page 2 (emu: the page is titled girls evaluation): for heroines 0-10 shows a star icon actor (frame 0x58 + (value & 7)) when the girl was met and her saved evaluation byte is non-zero; hides actors 140 and 136
+func	NAME_ENT	func_8013ACA4	file_select_page_parameters_draw	page 1 (emu: the page is titled parameters, labels in the Parameter order): the nine saved parameter values (metrics[i].value) of the slot as numbers in two columns (x 16 and 128)
+func	NAME_ENT	func_8013AF78	file_select_page_indicator_update	arg0 = 0 clears the highlight bit of actors 115-118 (tab icons of the three pages); otherwise sets the bit for the current page (page 0 actors 117 and 116, page 1 actor 115, page 2 actors 118 and 116)
+func	NAME_ENT	func_8013B0A0	file_select_button_highlight_update	highlights the function button of the running step range: below 0xA0 Load (actor 99), 0xA0-0xBF New (97), 0xC0-0xDF Copy (96), 0xE0 and above Clear (98); nothing at stage 0
+func	NAME_ENT	func_8013B1D8	file_select_slot_summary_draw	counts the non-zero clear counters of the slot (13 flags), marks the selected slot box (actors 100-113 unk_43 0x11), shows the cursor on the hovered slot and draws year, month, day of the slot and the clear count
+func	NAME_ENT	func_8013B51C	file_select_cursor_to_slot	places the pointer actor and the slot highlight (actor 119) on slot arg0 (column arg0 / 7, row arg0 % 7)
+func	NAME_ENT	func_8013B59C	file_select_slot_info_show	redraws the slot header text, restarts the typewriter, selects page 1 and moves the cursor to the selected album slot
+func	NAME_ENT	func_8013B5F0	file_select_background_iris_update	after stage 0: iris radius = (radius * 16 + 0x70) / 15 until 0x4001; centre drifts by a velocity that is re-rolled to a random 0-15 value, bouncing at the screen edges; draws the iris wipe sprite as the animated background
+func	NAME_ENT	func_8013B77C	file_select_settings_restore	leaving the file screens: when file_select_saved_options_mask is non-zero re-applies the saved option groups (text speed 0x80, cursor speed 8, click mode 0x40, double-click interval 0x20, confirm button 0x10; icon mode, menu mode and voice mode only when the saved value is 3 or more, 4 or more and 3 or more, which valid values never are), rebuilds the icon bar, clears the menu mode lock, runs file_select_icon_layout_validate
+func	NAME_ENT	func_8013B994	file_select_icon_layout_validate	free icon mode (icon_mode 2): counts icon positions outside x -0x86..0x7C or y -0x54..0x54 (err) and positions at (0, 0) (zero); with two or more zero entries and any err resets the icon bar in icon mode 0 and restores the mode
+func	NAME_ENT	func_8013BB10	file_select_menu_mode_unlock	clears file_select_menu_mode_lock (called after a game bank was loaded so the loaded menu mode stays)
+func	NAME_ENT	func_8013BB1C	file_select_noop	empty function
+func	NAME_ENT	func_8013BB24	file_select_init_settings	stage 0 step 0: substep 0 prepares 2D drawing, snapshots the changed option groups (options_dirty) into file_select_saved_*, sets the menu mode lock, clears the retained-profile state, seeds rand from the system seed, text speed 1, builds the iris palette and texture, starts loading sound bank 0; substep 1 waits for the bank
+func	NAME_ENT	func_8013BE18	file_select_init_assets	stage 0 step 1: fades in (brightness + 4), plays BGM 0, reads the memory-card assets (5 sectors) and the file select assets (0x89 sectors), uploads an icon rectangle and a palette; then main_step_next
+func	NAME_ENT	func_8013BF74	file_select_init_menus	stage 0 step 2: menu 0 (14 slot boxes, 2 columns of 7), menu 1 (four function buttons, 2 x 2), the 45 panel actors, 11 star actors, tpage locks, palettes, background slots; then main_stage_next
+func	NAME_ENT	func_8013C4A8	file_select_stage_init	stage 0 of mode 0x13: step 0 init_settings, 1 init_assets, 2 init_menus
+func	NAME_ENT	func_8013C510	file_select_card_check_begin	stage 1 step 0: card_state_reset, shows the two-line card-check message, starts the typewriter, main_step_next
+func	NAME_ENT	func_8013C580	file_select_card_check_poll	stage 1 step 1: card_check_poll each frame; result 1 (card ok) goes to stage 2, 0xF1 (unformatted) to stage 0xC0, 0xFF (no card) to step 2; a timeout after 0x201 frames also goes to step 2
+func	NAME_ENT	func_8013C664	file_select_no_card_message	stage 1 step 2: two-line message that no card was found
+func	NAME_ENT	func_8013C6CC	file_select_no_card_wait	stage 1 step 3: START, circle or cross continues
+func	NAME_ENT	func_8013C6FC	file_select_play_without_card_prompt	stage 1 step 4: asks whether to start a new game, with yes and no lines and the button glyphs
+func	NAME_ENT	func_8013C7C0	file_select_play_without_card_answer	stage 1 step 5: START or circle restores the settings and goes to mode 0x14 (new game without a card); cross goes to step 6
+func	NAME_ENT	func_8013C834	file_select_insert_card_message	stage 1 step 6: message to insert a card in slot 1 and press a button
+func	NAME_ENT	func_8013C8FC	file_select_insert_card_wait	stage 1 step 7: circle resets the card state and returns to step 0
+func	NAME_ENT	func_8013C934	file_select_stage_card_check	stage 1 of mode 0x13: steps 0-7
+func	NAME_ENT	func_8013C9F0	file_select_scan	stage 2 step 0: card_start, card_scan_poll (0x201 frame limit, then stage 1); counts the non-zero status bytes of the 14 album slots, slot_status[1..14] (the C reads the alias label D_800E7D11 + 4 + i for i = 0..13, which is slot_status[1 + i]; the system file entry 0 is not counted); with the system file (slot_info_from_system_data) go to step 1, else files exist go to step 0x20, else step 0x40
+func	NAME_ENT	func_8013CB44	file_select_system_file_read	stage 2 step 1: reads the system file (result 3), loads it with system_bank_load; on -1 substeps 3-7 tell that the system file is broken and offer to rebuild it (circle: stage 0xD0, cross: delete file 0 and return to stage 1); otherwise keeps the previously selected slot when it is valid, else takes the first valid slot of slots 1-13, shows its header and info, goes to step 2
+func	NAME_ENT	func_8013CEC8	file_select_list_input	stage 2 step 2: pointer or pad cursor over the 14 slot boxes; a valid slot (status 1) chosen with circle or START: first press selects and shows it, second press on the selected slot goes to step 3 (load); also runs the page widgets and the function buttons
+func	NAME_ENT	func_8013D054	file_select_album_load	stage 2 step 3: reads the selected album (substep 1), validates the bank (2), loads it into GameState with game_bank_load (3), stores the slot summary, writes the system file (4) and goes to stage 3; failures go to stages 0xF0, 0xFF or 1
+func	NAME_ENT	func_8013D2AC	file_select_album_only_read	stage 2 step 0x20 (albums but no system file): picks the first valid slot, reads it, validates and shows it, then step 0x21; a broken slot is marked 0xFF
+func	NAME_ENT	func_8013D4CC	file_select_album_only_list_input	stage 2 step 0x21: slot choice without a system file: first press selects (step 0x22), second press on the same slot goes to step 0x24
+func	NAME_ENT	func_8013D62C	file_select_album_only_loading_message	stage 2 step 0x22: loading message with the slot number
+func	NAME_ENT	func_8013D6C0	file_select_album_only_read_chosen	stage 2 step 0x23: reads and validates the chosen album, returns to step 0x21
+func	NAME_ENT	func_8013D7F4	file_select_album_only_load	stage 2 step 0x24: game_bank_load of the read bank; success goes to stage 3, failure to stage 1
+func	NAME_ENT	func_8013D874	file_select_no_data_prompt	stage 2 step 0x40 (card has no game data): asks whether to create a new album and play
+func	NAME_ENT	func_8013D954	file_select_no_data_answer	stage 2 step 0x41: circle goes to step 0x44, cross to step 0x42
+func	NAME_ENT	func_8013D9A0	file_select_no_data_decline_message	stage 2 step 0x42: message that the game starts without saving
+func	NAME_ENT	func_8013DA08	file_select_no_data_decline_wait	stage 2 step 0x43: START, circle or cross restores the settings and goes to mode 0x14
+func	NAME_ENT	func_8013DA40	file_select_create_slot_message	stage 2 step 0x44: asks which album number to create
+func	NAME_ENT	func_8013DAC4	file_select_create_slot_choose	stage 2 step 0x45: any slot box chosen with circle or START sets save_slot and goes to step 0x46
+func	NAME_ENT	func_8013DBD0	file_select_create_system_file_message	stage 2 step 0x46: three-line message about the system file
+func	NAME_ENT	func_8013DC54	file_select_create_system_file_wait	stage 2 step 0x47: any confirm button continues
+func	NAME_ENT	func_8013DC84	file_select_create_system_file_prompt	stage 2 step 0x48: asks whether to create the system file
+func	NAME_ENT	func_8013DD48	file_select_create_system_file_answer	stage 2 step 0x49: circle or START goes to step 0x4C (album and system file), cross to step 0x4A (album only)
+func	NAME_ENT	func_8013DD94	file_select_create_album_only	stage 2 step 0x4A: creates the album file (card_file_create), game_data_init, settings_defaults_set, writes the album (result 0x14), restores the settings, mode 0x14
+func	NAME_ENT	func_8013DF88	file_select_create_album_and_system_file	stage 2 step 0x4C: creates the album and system files, clears the slot status table, writes the system file (result 0x13), then game_data_init, settings_defaults_set, writes the album and goes to mode 0x14
+func	NAME_ENT	func_8013E30C	file_select_new_message	stage 2 step 0xA0 (New button): three-line instruction message
+func	NAME_ENT	func_8013E390	file_select_new_wait	stage 2 step 0xA1: any confirm button continues; also runs the function buttons
+func	NAME_ENT	func_8013E3C8	file_select_new_choose_message	stage 2 step 0xA2: asks which album to use
+func	NAME_ENT	func_8013E430	file_select_new_choose_slot	stage 2 step 0xA3: slot box chosen: a used slot (status non-zero) goes to step 0xA4, an empty one to step 0xA8 (with system file) or 0xA9
+func	NAME_ENT	func_8013E59C	file_select_new_redo_prompt	stage 2 step 0xA4: asks whether to start the album over, with yes and no lines
+func	NAME_ENT	func_8013E6A8	file_select_new_redo_answer	stage 2 step 0xA5: cross returns to step 0; circle goes to step 0xA6 (system file) or 0xA7
+func	NAME_ENT	func_8013E71C	file_select_profile_retain	copies the loaded family, given and nickname buffers into file_select_retained_* and the player's and Shiori's birthday and blood type back to selection indices (month - 1, day - 1, (blood + 3) & 3); sets the retained flag to 1 so the name entry starts filled in
+func	NAME_ENT	func_8013E80C	file_select_new_redo_load	stage 2 step 0xA6: reads and loads the chosen album, retains its profile, game_data_init, settings_defaults_set, restores settings, mode 0x14
+func	NAME_ENT	func_8013E9FC	file_select_new_redo_load_no_system	stage 2 step 0xA7: same code as step 0xA6 (identical body), chosen when there is no system file
+func	NAME_ENT	func_8013EBEC	file_select_new_create_with_system	stage 2 step 0xA8: creates the album file, game_data_init, settings_defaults_set, writes the album (0x14) and the system file (0x13), restores settings, mode 0x14
+func	NAME_ENT	func_8013EE7C	file_select_new_create_album_only	stage 2 step 0xA9: like step 0xA8 without the system file write
+func	NAME_ENT	func_8013F058	file_select_copy_message	stage 2 step 0xC0 (Copy button): three-line message
+func	NAME_ENT	func_8013F0DC	file_select_copy_source_choose	stage 2 step 0xC1: choose the source album (a valid slot, sound 0x501) then step 0xC2
+func	NAME_ENT	func_8013F208	file_select_copy_source_load	stage 2 step 0xC2: reads, validates and game_bank_loads the source album (re-locks the menu mode), then asks which album to copy to
+func	NAME_ENT	func_8013F454	file_select_copy_destination_choose	stage 2 step 0xC3: destination slot: a used slot goes to step 0xC4 (overwrite prompt), an empty one is created with card_file_create then step 0xC6; failure goes to stage 4
+func	NAME_ENT	func_8013F5B0	file_select_copy_overwrite_prompt	stage 2 step 0xC4: asks whether to overwrite the destination album
+func	NAME_ENT	func_8013F6BC	file_select_copy_overwrite_answer	stage 2 step 0xC5: circle goes on, cross returns to step 0 (substep 2)
+func	NAME_ENT	func_8013F71C	file_select_copy_route	stage 2 step 0xC6: goes to step 0xC7 with a system file, else 0xC8
+func	NAME_ENT	func_8013F758	file_select_copy_write_with_system	stage 2 step 0xC7: writes the destination album, then the system file summary; back to step 0
+func	NAME_ENT	func_8013F984	file_select_copy_write_album_only	stage 2 step 0xC8: writes the destination album only; back to step 0
+func	NAME_ENT	func_8013FB08	file_select_clear_message	stage 2 step 0xE0 (Clear button): three-line message
+func	NAME_ENT	func_8013FB8C	file_select_clear_choose_slot	stage 2 step 0xE1: choose the album to delete (status non-zero), sound 0x501, step 0xE2
+func	NAME_ENT	func_8013FCBC	file_select_clear_prompt	stage 2 step 0xE2: asks whether to delete the album for sure
+func	NAME_ENT	func_8013FDC8	file_select_clear_answer	stage 2 step 0xE3: circle goes to step 0xE4 (system file) or 0xE5, cross returns to step 0
+func	NAME_ENT	func_8013FE40	file_select_clear_delete_with_system	stage 2 step 0xE4: card_file_delete of the slot, then rewrites the system file; back to stage 1
+func	NAME_ENT	func_8013FF98	file_select_clear_delete_album_only	stage 2 step 0xE5: card_file_delete only, back to step 0
+func	NAME_ENT	func_80140024	file_select_clear_done	stage 2 step 0xE6: back to step 0
+func	NAME_ENT	func_80140044	file_select_stage_list	stage 2 of mode 0x13: step_timer += 1 and a switch over 47 step values (0-3 list flow, 0x20-0x24 albums only, 0x40-0x4A and 0x4C no data, 0xA0-0xA9 New, 0xC0-0xC8 Copy, 0xE0-0xE6 Clear); an unknown step restores settings and goes to mode 0x10
+func	NAME_ENT	func_80140430	file_select_stage_album_broken	HYPOTHESIS: the clip says the album is broken; fact: stage 0xF0 plays the per-slot voice clip pair from main table 0x800B3A3C (speaker slot % 13), waits for the clip to start and end, then returns to stage 2 step 2 (system file present) or resets the card and goes to stage 1
+func	NAME_ENT	func_80140574	file_select_stage_card_error	HYPOTHESIS: the clip says the card could not be read; fact: stage 0xFF plays the per-slot voice clip pair from main table 0x800B394C, then card_state_reset and stage 1
+func	NAME_ENT	func_8014068C	file_select_loaded_greeting	HYPOTHESIS: the clip is a greeting; fact: stage 3 step 0 after a successful load: picks a voice clip pair from girl_voice_clips_by_state for the girl of the latest event log entry (no clip for ids 13 and up; girl 11 by event flag 0x4D; girl 12 by her cleared marks and the score byte at +0xF, threshold 0x29; others clip 1 when her mood rank is 0), plays it over the loaded scene, fades out; the BGM fade commands are skipped on the 1995-04-04 and 1998-03-01 saves
+func	NAME_ENT	func_80140B20	file_select_fade_step	brightness - 2 per frame (stored into six fade bytes, set_dec_bri when below 0x80)
+func	NAME_ENT	func_80140BA4	file_select_loaded_leave	stage 3 step 1: after 0x41 frames restores settings; a save dated 1998-03-01 or 1995-04-04 runs game_data_init and event_state_init and goes to mode 0x14 (a new run), else loads the day BGM and goes to mode 0x34 stage 0xFF
+func	NAME_ENT	func_80140CCC	file_select_stage_loaded	stage 3 of mode 0x13: step 0 greeting, step 1 leave
+func	NAME_ENT	func_80140D20	file_select_no_space_message	stage 4 step 0: one-line message (card full or file creation failed)
+func	NAME_ENT	func_80140D6C	file_select_no_space_check	stage 4 step 1: after a button, scans the 15 slot status bytes: any valid album returns to stage 2 (step 1 with system file, else 0x20), none goes to step 2
+func	NAME_ENT	func_80140E18	file_select_no_space_hint	stage 4 step 2: three-line hint to use another card or delete other data
+func	NAME_ENT	func_80140E9C	file_select_no_space_hint_wait	stage 4 step 3: any confirm returns to stage 1 step 6
+func	NAME_ENT	func_80140ED4	file_select_stage_no_space	stage 4 of mode 0x13: steps 0-3
+func	NAME_ENT	func_80140F54	file_select_system_file_route	stage 0xD0 step 0: step 1 (rebuild) when slot_info_from_system_data is set, else step 2 (create)
+func	NAME_ENT	func_80140F90	file_select_system_file_rebuild	stage 0xD0 step 1: confirm, warning, then reads every valid album (slots 1-14), counts per girl how many have the girl cleared, merges with the old counts and writes the system file; ends in stage 2 step 0
+func	NAME_ENT	func_80141820	file_select_system_file_create	stage 0xD0 step 2: like the rebuild but first creates the system file and sets the counts straight from the albums
+func	NAME_ENT	func_80141FA4	file_select_stage_system_file	stage 0xD0 of mode 0x13: step 0 route, 1 rebuild, 2 create; forces menu_mode 0
+func	NAME_ENT	func_80142028	file_select_format_prompt	stage 0xC0 body: message that the card is not initialised, asks to format; yes runs card_format (1: stage 2, else stage 1), no asks for another card
+func	NAME_ENT	func_801422F0	file_select_stage_unformatted	stage 0xC0 of mode 0x13: step 0 runs the format prompt
+func	NAME_ENT	func_8014231C	file_select_entry	overlay entry of mode 0x13 (title game start): hides the 24 girl icon actors, page indicator update, stage_timer += 1, stage switch (0 init, 1 card check, 2 list, 3 loaded, 4 no space, 0xC0 unformatted, 0xD0 system file, 0xF0 album broken, 0xFF card error), then iris, typewriter, cursor and widgets
+func	NAME_ENT	func_80142560	file_select_flash_update	after stage 0: scene_work counts down from 0xFF each frame and draws a gray flash overlay while above 0 (screen fade-in)
+func	NAME_ENT	func_801425C0	file_select_slot_status_overlay_draw	draws a gray box over each slot whose status is 0 and a box in colour 0x8080 over slots with status 0xFF (broken); from stage 1 on blinks the system file present or absent icon (actors 126, 127) every 32 frames
+func	NAME_ENT	func_80142880	file_select_buttons_input	menu 1 (four function buttons) check; circle on Copy goes to step 0xC0, New to 0xA0, Clear to 0xE0 (the first three hide the 13 icon sprites), Load to step 0; hides sprite quads 0-63; resets the info page to 1; then the system file button check
+func	NAME_ENT	func_801429BC	file_select_system_button_click	circle on the system file button (x -0x8F..-0x51, y -0x27..-0x18) plays sound 0x50F and goes to stage 0xD0; returns 1 when it fired
+func	NAME_ENT	func_80142A3C	file_select_slot_markers_hide	sets the flag word of sprite_table[0..12] to 0x80000000 (hidden)
+func	NAME_ENT	func_80142A80	opening_movie	mode 0x11 stage 1: hides the debug HUD, sets text speed 3, queues the 21 lyric lines (all at (-0x88, 0x5C), shown one after another by the typewriter), plays the opening STR movie (movie_play(0, 0x33B, 0x820)), resets CD and VRAM state, restores HUD level, text speed and pad-code state and returns to the title (main_state_set(0x12))
+func	NAME_ENT	func_80142E24	opening_story_load	mode 0x11 stage 0 step 0: 14 substeps; stops the sound, loads sound bank 1 and plays BGM 1, then reads seven story pictures (FUKUTEST O_31_05L, 07, 05R, 02, 04, 01, 03) one at a time into background slots 0 and 1 with their palettes; the last substep starts the first narration clip and its four hidden text lines and goes to step 1
+func	NAME_ENT	func_80143498	opening_story_second_narration	when the first narration clip has ended (cd_state_get bit 2) and the flag is clear, starts the second clip and its three lines, sets the flag
+func	NAME_ENT	func_80143580	opening_story_scene	mode 0x11 stage 0 step 1: 20 substeps of the story animation: background fades and 4-frame-step pans of the two background slots, the third narration text at x -0x118, three picture sprites that pan, a gray flash with sepia palette conversion (col2sepia), one character actor (96), a final voiced line and a 255-step gray flash; then main_step_next
+func	NAME_ENT	func_80144654	opening_story_text_toggle	while triangle is held shows the four narration text lines and a dark box behind them; otherwise hides them
+func	NAME_ENT	func_8014472C	opening_story_voice_meter_update	HYPOTHESIS: mouth animation following the voice; fact: averages four frames of the CD level meter (simulated by stage_timer & 0x3F while a pad 2 button is held) into the history; while the voice plays (cd_state_get bit 4) re-initialises actor 98 as an animated overlay (block 0x801B27B0, tpage lock 5), otherwise clears it
+func	NAME_ENT	func_80144908	opening_story_actor97_random_anim	HYPOTHESIS: eye blink; about once per 128 frames (rand() & 0x7F == 0x7F), when actor 97 is not animating, starts its short animation (flags 3, frame 0, block 0x801B27B0)
+func	NAME_ENT	func_801449DC	opening_story_end	step 2: full gray flash, resets CD queue, VRAM, sprites and actors, stops BGM and voice, main_stage_next (to the movie)
+func	NAME_ENT	func_80144A34	opening_story_stage	mode 0x11 stage 0: step_timer += 1, step 0 load, 1 scene, 2 end; START, circle or cross (0x860) jumps to step 2
+func	NAME_ENT	func_80144AD0	opening_entry	overlay entry of mode 0x11 (title idle timeout, pad 2 reset, pad code): stage_timer += 1, stage 0 story, stage 1 movie
+func	NAME_ENT	func_80144F98	prologue_arrival_bank_start	stage 0 step 0: starts loading sound bank 0 and goes to step 1
+func	NAME_ENT	func_80144FDC	prologue_arrival_scene_init	stage 0 step 1: 5 substeps; resets screen, window title, calendar panel, loads the BGM bank, reads the first background still (P_01_01) and the first sprite pack (O_01); sets the scene actors and palettes; brightness fades in 1 per frame
+func	NAME_ENT	func_80145378	prologue_arrival_line	stage 0 step 2: plays prologue line 0, waits 0x3D frames, hides the actor and goes to stage 1
+func	NAME_ENT	func_80145454	prologue_stage_arrival	stage 0: steps 0 bank start, 1 scene init, 2 line 0; draws the calendar panel and the decoded background
+func	NAME_ENT	func_801454CC	prologue_petals_init	HYPOTHESIS: the particles are petals (seen as pink particles only; no emulator frame of the prologue exists in build/emu/states); fact: emu: pink particles fall in stages 1-2; sets eight falling-particle actors (96-103, frame 0-7) at random positions above the screen (x rand % 440 - 0xA0, y -0x78 - rand % 120)
+func	NAME_ENT	func_801455E4	prologue_petals_update	HYPOTHESIS: the particles are petals (see prologue_petals_init); fact: emu: pink particles fall in stages 1-2; moves each particle actor: x += rsin(phase) * 8, y += 1; arg0 == 0 also drifts left; at y > 40 wraps to a new random start; with arg0 == 1 particles that wrap past the last record are hidden
+func	NAME_ENT	func_80145760	prologue_board_load	HYPOTHESIS: the picture shows a board (guess from the asset order and line 1; no emulator frame of the prologue stages); fact: stage 1 step 0: reads the next background pack (P_01_02, 9 sectors), shows the calendar, sets the particle actors, decodes a still into VRAM (0x140, 0, 0x280, 0xA0)
+func	NAME_ENT	func_80145848	prologue_board_scroll	HYPOTHESIS: the picture shows a board (see prologue_board_load); fact: stage 1 step 1: scroll counter +1 per two frames; line 1 and its text, then the second background is read (P_01_03) and decoded; ends with the scroll draw and the particle update
+func	NAME_ENT	func_80145A74	prologue_stage_board	HYPOTHESIS: the picture shows a board (see prologue_board_load); fact: stage 1: steps 0 load, 1 scroll
+func	NAME_ENT	func_80145AC4	prologue_names_crossfade	HYPOTHESIS: the picture shows names, probably a class list (guess from line 2; no emulator frame of the prologue stages); fact: stage 2 step 0, 9 substeps: line 2 over the first still while the second still (P_01_03B) crossfades in and out (fade level 0x80 down to 0x10 and back), fade to black, reads CUT_12 and O_12 and P_01_04B and sets actor 96
+func	NAME_ENT	func_80145EA4	prologue_palette_adjust	walks 128 words of the palette at 0x801BC000 (two 16-bit colours each) and ORs 0x17FFF or 0x7FFF0001 into words whose upper or lower colour bits are zero
+func	NAME_ENT	func_80145F74	prologue_stage_names	HYPOTHESIS: the picture shows names (see prologue_names_crossfade); fact: stage 2: particle update (arg 1) and step 0
+func	NAME_ENT	func_80145FB0	prologue_background_slot_set	arg0 = image base, arg1 = slot offset: builds six 0x4000-byte blocks into a background slot, loads the colour palette (arg0 + 0x18000) and a gray version (palette_to_gray) and shows slot 0
+func	NAME_ENT	func_801460D8	prologue_childhood_friend_run	stage 3 step 0: line 3, fade in 4 per frame, then reads the next pack (CUT_05) and the next still (P_01_05)
+func	NAME_ENT	func_80146288	prologue_stage_childhood_friend	stage 3: step 0
+func	NAME_ENT	func_801462B4	prologue_friend_gap_run	stage 4 step 0: line 4, random 1-in-128 blink of the actor 96, reads O_05 and CUT_12, decodes P_01_04B and sets actors 96-97
+func	NAME_ENT	func_801465F8	prologue_stage_friend_gap	stage 4: step 0
+func	NAME_ENT	func_80146624	prologue_classroom_transition_run	stage 5 step 0: slides actor 97 out to the left over 0x80 frames (offset counter D_8014D184), plays SE 0x605 at its animation frame 3, decodes P_01_07, slides it back, reads CUT_07 and O_07, decodes P_01_04 (the classroom) and sets the classroom actors
+func	NAME_ENT	func_80146914	prologue_stage_classroom_transition	stage 5: step 0
+func	NAME_ENT	func_80146940	prologue_actor96_set_classroom	sets actor 96 (frame table block 0x801842C4) at x -0xA0, y -0x78, frame 0
+func	NAME_ENT	func_801469D0	prologue_lip_sync_yoshio	HYPOTHESIS: mouth animation of the speaking character; fact: four-frame average of the CD level meter / 10 (max 3) drives the mouth frame (6 - level) of actor 97 while the voice plays; used for Yoshio in stages 6 and 16
+func	NAME_ENT	func_80146B3C	prologue_actor102_set_classroom	sets actor 102 (block 0x801842C4) frame 3
+func	NAME_ENT	func_80146BCC	prologue_actor98_step_classroom	sets actor 98 each call (draw by frame index, block 0x801842C4) and counts the calls in its timer: frame 8 for the first five calls, then 0xA
+func	NAME_ENT	func_80146CB8	prologue_actor99_set_classroom	sets actor 99 (block 0x801800F4) frame 0
+func	NAME_ENT	func_80146D3C	prologue_actor99_set_classroom_b	like prologue_actor99_set_classroom with frame 5
+func	NAME_ENT	func_80146DC4	prologue_actor100_mouth_girl_a	HYPOTHESIS: mouth of schoolgirl A; fact: while a voice plays sets actor 100 (block 0x801842C4, frame 1), else hides it
+func	NAME_ENT	func_80146E88	prologue_actor101_mouth_girl_b	HYPOTHESIS: mouth of schoolgirl B; fact: while a voice plays sets actor 101 (block 0x801842C4, frame 2), else hides it
+func	NAME_ENT	func_80146F4C	prologue_actor103_set_classroom	sets actor 103 (block 0x801842C4) frame 7
+func	NAME_ENT	func_80146FE0	prologue_yoshio_greeting_run	stage 6 step 0, 17 substeps: lines 5 to 10 in order (Yoshio, player, Yoshio, player, girl A, girl B) with their lip sync, sound 0x503 before line 9, then loads the Rei assets (P_01_06, CUT_08, O_08) and builds actor 96
+func	NAME_ENT	func_80147380	prologue_stage_yoshio_greeting	stage 6: step 0
+func	NAME_ENT	func_801473AC	prologue_lip_sync_girls_notice	HYPOTHESIS: mouth animation of the speaking character; fact: CD level average / 10 (max 3) drives the mouth frames of actors 97 (frame + 1) and 98 (frame + 5) while the voice plays; block 0x8018014C
+func	NAME_ENT	func_80147590	prologue_girls_notice_run	stage 7 step 0: line 11 with lip sync, then BGM change (sound commands 5, 0xB1, bank 1), reads CUT_09 and O_09, decodes P_01_07B and sets actor 96 at brightness 0
+func	NAME_ENT	func_801478B4	prologue_stage_girls_notice	stage 7: step 0
+func	NAME_ENT	func_801478E0	prologue_white_palette_set	fills a 128-word scratch palette with white (0x7FFF7FFF, entry 0 transparent) and loads it as palette 0xE
+func	NAME_ENT	func_80147950	prologue_flash_boxes_draw	two full-height gouraud boxes (-0xA0 and 0, width 0xA0) with gray level D_8014D184 * 0x10101 (white when 0x100 or more): the screen flash of the Rei entrance
+func	NAME_ENT	func_80147A08	prologue_white_boxes_draw	two solid white boxes covering the screen
+func	NAME_ENT	func_80147A80	prologue_lip_sync_rei	HYPOTHESIS: mouth animation of the speaking character; fact: CD level average / 10 (max 3) drives the mouth frame of actor 96 while the voice plays (block 0x80180078); used for Rei in stage 8
+func	NAME_ENT	func_80147BEC	prologue_rei_banner_run	HYPOTHESIS: the faded-in actor is a banner showing Rei (guess from the white flash and line 12, whose speaker code is 0x0C = girl_short_name_table[12], Rei; that the actor is a banner is a guess, no emulator frame of the prologue stages exists); fact: stage 8 step 0: white flash up and down, fade-in of the banner actor, line 12 with lip sync, then loads the next packs (CUT_10, O_10) and the stage 9 actors
+func	NAME_ENT	func_80147F4C	prologue_stage_rei_banner	HYPOTHESIS: the faded-in actor is a banner showing Rei (see prologue_rei_banner_run); fact: stage 8: step 0
+func	NAME_ENT	func_80147F78	prologue_lip_sync_rei_speech	HYPOTHESIS: mouth animation of the speaking character; fact: CD level average / 10 drives actor 97 frame + 5 (block 0x80184288) while the voice plays; actor 97 is reset first
+func	NAME_ENT	func_801480E0	prologue_actor98_anim_start_rei	HYPOTHESIS: eye blink; fact: starts the short animation of actor 98 (flags 3, frame 0, block 0x80184288); called with a 1 in 256 chance per frame while the substep is below 6 and the actor is idle
+func	NAME_ENT	func_80148170	prologue_actors99_100_set_rei	sets actors 99 and 100 (block 0x80180110) frames 0 and 1
+func	NAME_ENT	func_8014826C	prologue_rei_speech_run	stage 9 step 0, 12 substeps: lines 13 and 14 with the white flash fading out, lip sync and random blinks; when the fourth display line is reached the sparkle actors 99 and 100 start (the patch notes name this step of the Rei entrance); then reads CUT_08 and O_11
+func	NAME_ENT	func_801486CC	prologue_stage_rei_speech	stage 9: step 0
+func	NAME_ENT	func_801486F8	prologue_lip_sync_yoshio_reacts	HYPOTHESIS: mouth animation of the speaking character; fact: CD level average / 10 drives actors 97 (frame + 1) and 98 (frame + 5) with block 0x80180150
+func	NAME_ENT	func_801488DC	prologue_yoshio_reacts_run	stage 10 step 0: lines 15 and 16 with the portraits scrolling left by 0.5 px per frame, then BGM commands and the next assets (CUT_12, O_12, P_01_07)
+func	NAME_ENT	func_80148BF4	prologue_stage_yoshio_reacts	stage 10: step 0
+func	NAME_ENT	func_80148C20	prologue_shiori_next_run	stage 11 step 0: line 17 (the player notes that Shiori is next), plays BGM 1 and sound 0x604 when the actor cycle ends, reads P_01_08 and O_13, sets actor 96
+func	NAME_ENT	func_80148EDC	prologue_stage_shiori_next	stage 11: step 0
+func	NAME_ENT	func_80148F08	prologue_shiori_load_run	stage 12 step 0: loads CUT_13, O_14 and P_01_09 and sets actor 97 (block 0x801800F4, frame 4); no text line
+func	NAME_ENT	func_80149118	prologue_stage_shiori_load	stage 12: step 0
+func	NAME_ENT	func_80149144	prologue_lip_sync_shiori	HYPOTHESIS: mouth animation of the speaking character; fact: CD level average / 10 drives actor 97 frame + 4 (block 0x801800F4) while the voice plays
+func	NAME_ENT	func_801492B0	prologue_actor98_anim_start_shiori	HYPOTHESIS: eye blink; fact: starts the animation of actor 98 (flags 0x11, block 0x801800F4); called with a 1 in 256 chance per frame in stage 13
+func	NAME_ENT	func_80149340	prologue_shiori_name_run	stage 13 step 0: line 18 (Shiori says her name) with lip sync and random blinks, then reads O_15 and sets actor 96 (block 0x80180294)
+func	NAME_ENT	func_8014952C	prologue_stage_shiori_name	stage 13: step 0
+func	NAME_ENT	func_80149558	prologue_lip_sync_shiori_hobby	HYPOTHESIS: mouth animation of the speaking character; fact: CD level average / 10 drives actor 97 frame + 5 (block 0x80180294) while the voice plays
+func	NAME_ENT	func_801496C0	prologue_actor98_anim_start_shiori_hobby	HYPOTHESIS: eye blink; fact: starts the animation of actor 98 (block 0x80180294) unless actor 99 is animating; 1 in 256 chance per frame in stage 14
+func	NAME_ENT	func_8014977C	prologue_actors_reset_shiori_hobby	resets actors 96-99 and sets actor 99 (flag 5, frame 2, block 0x80180294)
+func	NAME_ENT	func_80149840	prologue_shiori_hobby_run	stage 14 step 0: line 19 (two voice clips) with lip sync and blinks, then reads P_01_06, CUT_14 and O_16, builds actor 96 at x -0xF0
+func	NAME_ENT	func_80149ADC	prologue_stage_shiori_hobby	stage 14: step 0
+func	NAME_ENT	func_80149B08	prologue_lip_sync_quiz	HYPOTHESIS: mouth animation of the speaking character; fact: CD level average / 10 drives actors 97 (frame + 6) and 98 (frame + 10) with block 0x80180258; hides actor 100 while the voice plays
+func	NAME_ENT	func_80149CEC	prologue_actor99_set_quiz	sets actor 99 (block 0x80180258) frame 5 flag 5
+func	NAME_ENT	func_80149D74	prologue_actor100_set_quiz	sets actor 100 (block 0x80180258) frame 3 at y -0x38, checker slot 9
+func	NAME_ENT	func_80149E10	prologue_actor100_pulse	if actor 100 is not animating starts it (flag 1); checker slot 0xF
+func	NAME_ENT	func_80149E3C	prologue_yoshio_quiz_run	stage 15 step 0 (substeps 0-34): lines 20-31; after line 24 (Yoshio asks for the birthday) substep 12 builds a spoken answer from girls[0].birthday (month number, month word, day number, day word) shown under the player name, after line 25 (blood type) substep 16 builds the answer from girls[0] blood type (letter plus the type word); at substep 26 the scene scrolls left 2 px per frame, then loads P_01_04, CUT_07 and O_07
+func	NAME_ENT	func_8014A5D4	prologue_stage_yoshio_quiz	stage 15: step 0
+func	NAME_ENT	func_8014A600	prologue_yoshio_offer_run	stage 16 step 0: lines 32 to 36 with Yoshio lip sync; BGM 0 variant 1 at line 34; then decodes P_01_10
+func	NAME_ENT	func_8014A81C	prologue_stage_yoshio_offer	stage 16: step 0
+func	NAME_ENT	func_8014A848	prologue_window_tree_run	HYPOTHESIS: the picture shows a tree seen through a window (guess from line 37, stills P_01_12 and the legend stage 18 that follows; no emulator frame of the prologue stages); fact: stage 17 step 0: line 37, then decodes P_01_12 and reads O_13
+func	NAME_ENT	func_8014A960	prologue_stage_window_tree	HYPOTHESIS: the picture shows a tree seen through a window (see prologue_window_tree_run); fact: stage 17: step 0
+func	NAME_ENT	func_8014A98C	prologue_legend_run	stage 18 step 0: lines 38 to 41 (the tree legend); waits for the voice of line 38 before the text
+func	NAME_ENT	func_8014AAEC	prologue_stage_legend	stage 18: step 0
+func	NAME_ENT	func_8014AB18	prologue_flash_run	stage 19 step 0: two white flashes (D_8014D184 +4 per frame to 0x100, then -4 to 3) with the portrait actor switched in between, then main_stage_next
+func	NAME_ENT	func_8014AD18	prologue_stage_flash	stage 19: step 0
+func	NAME_ENT	func_8014AD44	prologue_closing_run	stage 20 step 0: line 42 (closing narration), waits 0x3D frames, sound commands 5 and 0xD1 (BGM fade), main_stage_next
+func	NAME_ENT	func_8014AE00	prologue_stage_closing	stage 20: step 0
+func	NAME_ENT	func_8014AE2C	prologue_finish_run	stage 21: resets CD queue and sound bank state, fades the BGM, loads sound bank 0 (day bank); then text speed 3, menu_mode 1, main_state_set(0x34), main_stage_set(0xFF) (the command screen reloads)
+func	NAME_ENT	func_8014AEFC	prologue_stage_finish	stage 21: step 0
+func	NAME_ENT	func_8014AF28	prologue_entry	overlay entry of mode 0x15: stage switch 0-21, title banner and screen frame update, window show; START at any point after the first frame jumps to stage 21
+data	NAME_ENT	D_8014CC30	name_entry_unused_clip_start	first word of a voice clip pair (0x1C0002E9, 0x410002F3) that no code reads
+data	NAME_ENT	D_8014CC34	name_entry_unused_clip_end	second word of the unused clip pair
+data	NAME_ENT	D_8014CC38	name_entry_family_prompt_clip_start	voice clip pair of the family-name prompt: xa_clip_request_set(start, end, 0) in name_entry_step_init
+data	NAME_ENT	D_8014CC3C	name_entry_family_prompt_clip_end	second word of the family-name prompt clip pair
+data	NAME_ENT	D_8014CC40	name_entry_given_prompt_clip_start	voice clip pair of the given-name prompt (name_entry_given_name_init)
+data	NAME_ENT	D_8014CC44	name_entry_given_prompt_clip_end	second word of the given-name prompt clip pair
+data	NAME_ENT	D_8014CC48	name_entry_nickname_prompt_clip_start	voice clip pair of the nickname prompt (name_entry_nickname_init)
+data	NAME_ENT	D_8014CC4C	name_entry_nickname_prompt_clip_end	second word of the nickname prompt clip pair
+data	NAME_ENT	D_8014CC50	name_entry_birthday_prompt_clip_start	voice clip pair of the birthday prompt (name_entry_birthday_init)
+data	NAME_ENT	D_8014CC54	name_entry_birthday_prompt_clip_end	second word of the birthday prompt clip pair
+data	NAME_ENT	D_8014CC58	name_entry_shiori_prompt_clip_start	voice clip pair of the prompt for the heroine's birthday (name_entry_shiori_birthday_init)
+data	NAME_ENT	D_8014CC5C	name_entry_shiori_prompt_clip_end	second word of the heroine prompt clip pair
+data	NAME_ENT	D_8014CC60	name_entry_confirm_clip_start	voice clip pair played by both confirm screens (name_entry_confirm_init, name_entry_shiori_confirm_init)
+data	NAME_ENT	D_8014CC64	name_entry_confirm_clip_end	second word of the confirm clip pair; the label also covers one more unused pair (0x1D000070, 0x0F000076 at +8)
+data	NAME_ENT	D_8014CC70	name_entry_cursor	index of the character slot being filled: 0-2 family name, 3-5 given name, 6-10 nickname, 0xC = none (u8)
+data	NAME_ENT	D_8014CC74	name_entry_family_name	family-name buffer, 8 bytes; three 2-byte characters; the blank character is a full-width space
+data	NAME_ENT	D_8014CC7C	name_entry_given_name	given-name buffer, 8 bytes, three characters
+data	NAME_ENT	D_8014CC84	name_entry_nickname	nickname buffer, 12 bytes, five characters
+data	NAME_ENT	D_8014CC8E	name_entry_nickname_end	alias label at nickname + 10: the loop bound of the blank fill and the terminator the original addresses by name
+data	NAME_ENT	D_8014CC8F	name_entry_nickname_end_1	alias label at nickname + 11
+data	NAME_ENT	D_8014CC90	name_entry_player_month	player's birthday month selection index 0-11 (month - 1), 0xFF = not chosen
+data	NAME_ENT	D_8014CC94	name_entry_player_day	player's birthday day selection index 0-30, 0xFF = not chosen
+data	NAME_ENT	D_8014CC98	name_entry_player_blood	player's blood type selection 0-3 (A, B, AB, O), 0xFF = not chosen
+data	NAME_ENT	D_8014CC9C	name_entry_shiori_month	heroine Shiori's birthday month selection (same encoding as the player's)
+data	NAME_ENT	D_8014CCA0	name_entry_shiori_day	heroine Shiori's birthday day selection
+data	NAME_ENT	D_8014CCA4	name_entry_shiori_blood	heroine Shiori's blood type selection; the label covers 8 bytes (4 padding)
+data	NAME_ENT	D_8014CCAC	name_entry_page_scroll	first visible line of the symbol and kanji candidate lists (32 characters per line)
+data	NAME_ENT	D_8014CCB0	name_entry_page_text_length	strlen of the candidate list shown on the symbol or kanji page; stored by the page draw, no reader
+data	NAME_ENT	D_8014CCB4	name_entry_reading	selected reading (0-44) of the kanji tab; 38 is the blank reading whose list is the symbol page
+data	NAME_ENT	D_8014CCB8	name_entry_reading_col	column of the pointer in the reading rows area, -1 outside
+data	NAME_ENT	D_8014CCBC	name_entry_reading_row	row of the pointer in the reading rows area, -1 outside
+data	NAME_ENT	D_8014CCC0	name_entry_cell_col	column 0-15 of the pointer in the character grid, -1 outside
+data	NAME_ENT	D_8014CCC4	name_entry_cell_row	row 0-5 of the pointer in the character grid, -1 outside
+data	NAME_ENT	D_8014CCC8	name_entry_tab	active character tab: 0 hiragana, 1 katakana, 2 symbols, 3 kanji by reading, 4 done
+data	NAME_ENT	D_8014CCCC	name_entry_tab_hover	tab button under the pointer, -1 none
+data	NAME_ENT	D_8014CCD0	name_entry_tab_y	y of the five tab buttons (-0x30, -0x10, 0x10, 0x30, 0x50), 0x10 high
+data	NAME_ENT	D_8014CCE4	name_entry_family_prompt_text	heading string of the family-name input (a question asking for the family name), 32 bytes
+data	NAME_ENT	D_8014CD04	name_entry_given_prompt_text	heading string of the given-name input, 12 bytes
+data	NAME_ENT	D_8014CD10	name_entry_nickname_prompt_text	heading string of the nickname input, 24 bytes
+data	NAME_ENT	D_8014CD28	name_entry_hiragana_rows	17 pointers to the hiragana row strings (five kana each; index = row * 3 + column group); this address is element 0, the others are declared separately
+data	NAME_ENT	D_8014CD2C	name_entry_hiragana_rows_01	element 1 of name_entry_hiragana_rows
+data	NAME_ENT	D_8014CD30	name_entry_hiragana_rows_02	element 2
+data	NAME_ENT	D_8014CD34	name_entry_hiragana_rows_03	element 3
+data	NAME_ENT	D_8014CD38	name_entry_hiragana_rows_04	element 4
+data	NAME_ENT	D_8014CD3C	name_entry_hiragana_rows_05	element 5
+data	NAME_ENT	D_8014CD40	name_entry_hiragana_rows_06	element 6
+data	NAME_ENT	D_8014CD44	name_entry_hiragana_rows_07	element 7 (the y row with three kana; the grid labels print a literal string for the blank slot)
+data	NAME_ENT	D_8014CD48	name_entry_hiragana_rows_08	element 8
+data	NAME_ENT	D_8014CD4C	name_entry_hiragana_rows_09	element 9
+data	NAME_ENT	D_8014CD50	name_entry_hiragana_rows_10	element 10
+data	NAME_ENT	D_8014CD54	name_entry_hiragana_rows_11	element 11
+data	NAME_ENT	D_8014CD58	name_entry_hiragana_rows_12	element 12
+data	NAME_ENT	D_8014CD5C	name_entry_hiragana_rows_13	element 13
+data	NAME_ENT	D_8014CD60	name_entry_hiragana_rows_14	element 14
+data	NAME_ENT	D_8014CD64	name_entry_hiragana_rows_15	element 15
+data	NAME_ENT	D_8014CD68	name_entry_hiragana_rows_16	element 16
+data	NAME_ENT	D_8014CD6C	name_entry_katakana_rows	17 pointers to the katakana row strings, same layout as the hiragana rows; this address is element 0
+data	NAME_ENT	D_8014CD70	name_entry_katakana_rows_01	element 1 of name_entry_katakana_rows
+data	NAME_ENT	D_8014CD74	name_entry_katakana_rows_02	element 2
+data	NAME_ENT	D_8014CD78	name_entry_katakana_rows_03	element 3
+data	NAME_ENT	D_8014CD7C	name_entry_katakana_rows_04	element 4
+data	NAME_ENT	D_8014CD80	name_entry_katakana_rows_05	element 5
+data	NAME_ENT	D_8014CD84	name_entry_katakana_rows_06	element 6
+data	NAME_ENT	D_8014CD88	name_entry_katakana_rows_07	element 7
+data	NAME_ENT	D_8014CD8C	name_entry_katakana_rows_08	element 8
+data	NAME_ENT	D_8014CD90	name_entry_katakana_rows_09	element 9
+data	NAME_ENT	D_8014CD94	name_entry_katakana_rows_10	element 10
+data	NAME_ENT	D_8014CD98	name_entry_katakana_rows_11	element 11
+data	NAME_ENT	D_8014CD9C	name_entry_katakana_rows_12	element 12
+data	NAME_ENT	D_8014CDA0	name_entry_katakana_rows_13	element 13
+data	NAME_ENT	D_8014CDA4	name_entry_katakana_rows_14	element 14
+data	NAME_ENT	D_8014CDA8	name_entry_katakana_rows_15	element 15
+data	NAME_ENT	D_8014CDAC	name_entry_katakana_rows_16	element 16
+data	NAME_ENT	D_8014CDB0	name_entry_reading_labels	45 pointers to the reading label strings of the kanji tab (the kana variants of one syllable: hiragana, katakana, voiced forms); index 38 is the blank label
+data	NAME_ENT	D_8014CE64	name_entry_candidate_counts	pointer to the u16 candidate counts per reading (50 entries), set to 0x801E0000 where the kanji file is read
+data	NAME_ENT	D_8014CE68	name_entry_candidate_lists	pointer to 50 string pointers (candidate characters per reading, 2 bytes each); the offsets in the file are made absolute by adding 0x801E0000 in name_entry_load_fade_in
+data	NAME_ENT	D_8014CE6C	name_entry_preset_family_names	15 preset family names, 8 bytes each (strncpy source in name_entry_preset_apply and name_entry_name_finish)
+data	NAME_ENT	D_8014CEE4	name_entry_preset_given_names	15 preset given names, 8 bytes each
+data	NAME_ENT	D_8014CF5C	name_entry_preset_nicknames	15 preset nicknames, 12 bytes each
+data	NAME_ENT	D_8014D010	name_entry_prompt_text	pointer to the heading string the kanji page prints (one of the three prompt strings)
+data	NAME_ENT	D_8014D014	name_entry_small_digit_uv	(u, v) pairs of the 8 x 16 digit sprites 0-9 used for the day grid numbers 10-31
+data	NAME_ENT	D_8014D028	name_entry_wide_digit_uv	(u, v) pairs of the 16 x 16 digit sprites used for the single-digit day numbers 1-9
+data	NAME_ENT	D_8014D03C	name_entry_blood_compat_level	4 x 4 compatibility grade 1-4, row = player's stored blood type, column = Shiori's (stored O 0, A 1, B 2, AB 3)
+data	NAME_ENT	D_8014D04C	name_entry_initial_stats	4 triples (affection, tokimeki, syoushin) indexed by compatibility grade - 1: (45, 10, 10), (50, 20, 0), (50, 25, 0), (55, 25, 0); the label covers 20 bytes (8 zero)
+data	NAME_ENT	D_8014D060	file_select_rebuild_counts	16 counters of cleared girls counted over the album slots while the system file is rebuilt
+data	NAME_ENT	D_8014D070	name_entry_retained_family_name	8 bytes: family name kept from a loaded album for the replay entry
+data	NAME_ENT	D_8014D078	name_entry_retained_given_name	8 bytes: retained given name
+data	NAME_ENT	D_8014D080	name_entry_retained_nickname	12 bytes: retained nickname
+data	NAME_ENT	D_8014D08C	name_entry_retained_player_month	retained month index of the player's birthday (s8)
+data	NAME_ENT	D_8014D090	name_entry_retained_player_day	retained day index
+data	NAME_ENT	D_8014D094	name_entry_retained_player_blood	retained blood selection index (stored value + 3 & 3)
+data	NAME_ENT	D_8014D098	name_entry_retained_shiori_month	retained month index of Shiori's birthday
+data	NAME_ENT	D_8014D09C	name_entry_retained_shiori_day	retained day index of Shiori's birthday
+data	NAME_ENT	D_8014D0A0	name_entry_retained_shiori_blood	retained blood selection of Shiori
+data	NAME_ENT	D_8014D0A4	name_entry_retained_state	0 nothing retained, 1 a retained profile waits to prefill the entry, 2 the entry is initialised; cleared by the file select start (s8)
+data	NAME_ENT	D_8014D0A8	file_select_menu_mode_lock	1 while the file screens run: file_select_entry forces menu_mode 0 each frame; cleared after a game is loaded and when leaving
+data	NAME_ENT	D_8014D0AC	file_select_saved_options_mask	options_dirty bits taken at the file select start (0x80 text speed, 0x40 click mode, 0x20 double-click interval, 0x10 confirm button, 8 cursor speed)
+data	NAME_ENT	D_8014D0B0	file_select_saved_text_speed	text speed (get_k_speed) at the start
+data	NAME_ENT	D_8014D0B4	file_select_saved_icon_mode	icon_mode at the start
+data	NAME_ENT	D_8014D0B8	file_select_saved_menu_mode	menu_mode at the start
+data	NAME_ENT	D_8014D0BC	file_select_saved_cursor_speed	cursor_speed at the start
+data	NAME_ENT	D_8014D0C0	file_select_saved_voice_mode	voice_mode at the start
+data	NAME_ENT	D_8014D0C4	file_select_saved_click_mode	click_mode at the start
+data	NAME_ENT	D_8014D0C8	file_select_saved_double_click_interval	double_click_interval at the start
+data	NAME_ENT	D_8014D0CC	file_select_saved_confirm_button	confirm_button at the start
+data	NAME_ENT	D_8014D0D0	file_select_unused_word_0	set to 0 in file_select_init_menus, never read
+data	NAME_ENT	D_8014D0D4	file_select_info_page	info page counter (page = value mod 3); set to 1 when the screens open; incremented by triangle or the page button
+data	NAME_ENT	D_8014D0D8	file_select_unused_word_1	set to 0 in file_select_init_menus, never read
+data	NAME_ENT	D_8014D0DC	file_select_unused_word_2	set to 0 in file_select_init_menus, never read
+data	NAME_ENT	D_8014D0E0	file_select_iris_radius	radius of the background iris, starts at 1 and grows to 0x4001
+data	NAME_ENT	D_8014D0E4	file_select_iris_x	iris centre x, starts at -0x50
+data	NAME_ENT	D_8014D0E8	file_select_iris_y	iris centre y, starts at -0x50
+data	NAME_ENT	D_8014D0EC	file_select_iris_x_speed	iris x speed (per update), starts at 8, re-rolled at the screen edges
+data	NAME_ENT	D_8014D0F0	file_select_iris_y_speed	iris y speed (per update), starts at 8
+data	NAME_ENT	D_8014D0F4	file_select_digit_uv	(u, v) pairs of the 8 x 16 digit sprites 0-9 used by file_select_number_draw
+data	NAME_ENT	D_8014D158	file_select_rebuild_old_counts	16 clear counts of the system file before it is rebuilt
+data	NAME_ENT	D_8014D170	opening_second_narration_started	1 once the second narration clip of the opening story was started
+data	NAME_ENT	D_8014D180	prologue_line	index 0-42 of the current prologue line, 0xFF before the first line (s8 in the header, read as u8)
+data	NAME_ENT	D_8014D184	prologue_scene_counter	general counter of the prologue scenes: scroll offset, flash level, fade level
+data	NAME_ENT	D_8014D188	prologue_voice_started	set to 1 when the voice clip of the current line has started playing (cd_state_get bit 4)
+data	NAME_ENT	D_8014D18C	prologue_blood_text_o	full-width letter O
+data	NAME_ENT	D_8014D190	prologue_blood_text_a	full-width letter A
+data	NAME_ENT	D_8014D194	prologue_blood_text_b	full-width letter B
+data	NAME_ENT	D_8014D198	prologue_blood_text_ab	full-width letters AB
+data	NAME_ENT	D_8014D1A0	prologue_blood_texts	4 pointers to the blood type letters, indexed by the stored blood type 0 O, 1 A, 2 B, 3 AB
+data	NAME_ENT	D_8014D1B0	prologue_cd_level_last	last CD level sample taken by the lip sync helpers
+data	NAME_ENT	D_8014D1B4	prologue_cd_level_history	last four CD level samples, indexed by frame_count & 3; this address is element 0, the others are declared as an array in the header
+data	NAME_ENT	D_8014D1B8	prologue_cd_level_history_1	element 1 of prologue_cd_level_history
+data	NAME_ENT	D_8014D1BC	prologue_cd_level_history_2	element 2 of prologue_cd_level_history
+data	NAME_ENT	D_8014D1C0	prologue_cd_level_history_3	element 3 of prologue_cd_level_history; the label covers 16 bytes, the last 12 are never read
+data	NAME_ENT	D_8014D958	prologue_line_texts	43 pointers to the prologue line strings (up to four short lines each)
+data	NAME_ENT	D_8014DA04	prologue_line_speakers	44 speaker codes of the prologue lines: low nibble 0xF player (0x1F = player thought), 0xD Yoshio, 0xC Rei, 0 Shiori, 0x1E and 0x2E the two unnamed schoolgirls; the 44th entry is padding
+data	NAME_ENT	D_8014DA30	prologue_line_clips	43 voice clip pairs (start, end) of the lines; both words 0 = no voice
+data	NAME_ENT	D_8014DB88	prologue_line_clips_second	43 second clip pairs (equal to the first except line 19); the label also covers about 82 KB of zero padding to the end of the overlay image
+data	NAME_ENT	D_8014B7B4	file_select_card_check_text_1	first line of the memory-card check message
+data	NAME_ENT	D_8014B7C8	file_select_card_check_text_2	second line of the memory-card check message
+data	NAME_ENT	D_8014B824	file_select_no_card_text_1	first line of the no-card message
+data	NAME_ENT	D_8014B838	file_select_no_card_text_2	second line of the no-card message
+data	NAME_ENT	D_8014B998	file_select_debug_load_ok_text	debug print after a successful load (ASCII)
+data	NAME_ENT	D_8014B9A4	file_select_debug_load_failed_text	debug print after a failed load (ASCII)
+data	NAME_ENT	D_8014BA28	file_select_play_unsaved_text_1	first line: the game starts without creating an album
+data	NAME_ENT	D_8014BA44	file_select_play_unsaved_text_2	second line of the same message
+data	NAME_ENT	D_8014BA60	file_select_create_slot_text_1	first line: asks which album number to create
+data	NAME_ENT	D_8014BA78	file_select_create_slot_text_2	second line
+data	NAME_ENT	D_8014BA88	file_select_create_slot_text_3	third line: choose with the cursor
+data	NAME_ENT	D_8014BAA4	file_select_system_file_text_1	first line: creating a system file enables saving
+data	NAME_ENT	D_8014BAC4	file_select_system_file_text_2	second line: sub-game data and so on
+data	NAME_ENT	D_8014BAE0	file_select_system_file_text_3	third line
+data	NAME_ENT	D_8014BB8C	file_select_new_text_1	first line of the New button message: the clear count stays
+data	NAME_ENT	D_8014BBA8	file_select_new_text_2	second line: the game starts from the prologue
+data	NAME_ENT	D_8014BBC0	file_select_new_text_3	third line
+data	NAME_ENT	D_8014BBD4	file_select_new_choose_text_1	first line: asks which album to start over
+data	NAME_ENT	D_8014BBEC	file_select_new_choose_text_2	second line
+data	NAME_ENT	D_8014BCB4	file_select_copy_text_1	first line of the Copy button message: which album to copy
+data	NAME_ENT	D_8014BCCC	file_select_copy_text_2	second line
+data	NAME_ENT	D_8014BCE0	file_select_copy_text_3	third line: choose with the cursor
+data	NAME_ENT	D_8014BDE8	file_select_clear_text_1	first line of the Clear button message: which album to erase
+data	NAME_ENT	D_8014BE00	file_select_clear_text_2	second line
+data	NAME_ENT	D_8014BE10	file_select_clear_text_3	third line: choose with the cursor
+data	NAME_ENT	D_8014BEB0	file_select_no_space_text	message that the file cannot be created
+data	main	D_800B3644	fullwidth_space_text	MAIN data first named here: the two-byte full-width space string, the blank character of the name buffers; read by NAME_ENT and TEL
+data	main	D_800B3A3C	file_select_broken_album_clips	HYPOTHESIS: the clips tell that the album is broken; fact: MAIN data first named here: 14 voice clip pairs (start, end), one per album slot, played by stage 0xF0 with speaker slot % 13
+data	main	D_800B394C	file_select_card_error_clips	HYPOTHESIS: the clips tell that the card could not be read; fact: MAIN data first named here: 14 voice clip pairs, one per album slot, played by stage 0xFF with speaker slot % 13
+data	main	D_800E8BEF	file_select_icon_record_index	MAIN bss byte read only by file_select_girl_icons_visibility_update as the index of the album record in card_block; no writer in src (0 in the emulator); HYPOTHESIS: meant to be GameState.album_slot
+data	NAME_ENT	D_8014D1D0	prologue_line_text_00	text of prologue line 0 (speaker code player); pointed to by prologue_line_texts[0]
+data	NAME_ENT	D_8014D204	prologue_line_text_01	text of prologue line 1 (speaker code player); pointed to by prologue_line_texts[1]
+data	NAME_ENT	D_8014D248	prologue_line_text_02	text of prologue line 2 (speaker code player); pointed to by prologue_line_texts[2]
+data	NAME_ENT	D_8014D298	prologue_line_text_03	text of prologue line 3 (speaker code player); pointed to by prologue_line_texts[3]
+data	NAME_ENT	D_8014D2E4	prologue_line_text_04	text of prologue line 4 (speaker code player); pointed to by prologue_line_texts[4]
+data	NAME_ENT	D_8014D328	prologue_line_text_05	text of prologue line 5 (speaker code Yoshio); pointed to by prologue_line_texts[5]
+data	NAME_ENT	D_8014D348	prologue_line_text_06	text of prologue line 6 (speaker code player); pointed to by prologue_line_texts[6]
+data	NAME_ENT	D_8014D37C	prologue_line_text_07	text of prologue line 7 (speaker code Yoshio); pointed to by prologue_line_texts[7]
+data	NAME_ENT	D_8014D3B8	prologue_line_text_08	text of prologue line 8 (speaker code player); pointed to by prologue_line_texts[8]
+data	NAME_ENT	D_8014D3DC	prologue_line_text_09	text of prologue line 9 (speaker code schoolgirl A); pointed to by prologue_line_texts[9]
+data	NAME_ENT	D_8014D3F0	prologue_line_text_10	text of prologue line 10 (speaker code schoolgirl B); pointed to by prologue_line_texts[10]
+data	NAME_ENT	D_8014D3FC	prologue_line_text_11	text of prologue line 11 (speaker code Yoshio); pointed to by prologue_line_texts[11]
+data	NAME_ENT	D_8014D41C	prologue_line_text_12	text of prologue line 12 (speaker code Rei); pointed to by prologue_line_texts[12]
+data	NAME_ENT	D_8014D438	prologue_line_text_13	text of prologue line 13 (speaker code Rei); pointed to by prologue_line_texts[13]
+data	NAME_ENT	D_8014D484	prologue_line_text_14	text of prologue line 14 (speaker code Rei); pointed to by prologue_line_texts[14]
+data	NAME_ENT	D_8014D4CC	prologue_line_text_15	text of prologue line 15 (speaker code Yoshio); pointed to by prologue_line_texts[15]
+data	NAME_ENT	D_8014D50C	prologue_line_text_16	text of prologue line 16 (speaker code player); pointed to by prologue_line_texts[16]
+data	NAME_ENT	D_8014D520	prologue_line_text_17	text of prologue line 17 (speaker code player thought); pointed to by prologue_line_texts[17]
+data	NAME_ENT	D_8014D548	prologue_line_text_18	text of prologue line 18 (speaker code Shiori); pointed to by prologue_line_texts[18]
+data	NAME_ENT	D_8014D574	prologue_line_text_19	text of prologue line 19 (speaker code Shiori); pointed to by prologue_line_texts[19]
+data	NAME_ENT	D_8014D5D4	prologue_line_text_20	text of prologue line 20 (speaker code Yoshio); pointed to by prologue_line_texts[20]
+data	NAME_ENT	D_8014D614	prologue_line_text_21	text of prologue line 21 (speaker code player thought); pointed to by prologue_line_texts[21]
+data	NAME_ENT	D_8014D63C	prologue_line_text_22	text of prologue line 22 (speaker code Yoshio); pointed to by prologue_line_texts[22]
+data	NAME_ENT	D_8014D66C	prologue_line_text_23	text of prologue line 23 (speaker code player); pointed to by prologue_line_texts[23]
+data	NAME_ENT	D_8014D690	prologue_line_text_24	text of prologue line 24 (speaker code Yoshio); pointed to by prologue_line_texts[24]
+data	NAME_ENT	D_8014D6C0	prologue_line_text_25	text of prologue line 25 (speaker code Yoshio); pointed to by prologue_line_texts[25]
+data	NAME_ENT	D_8014D6CC	prologue_line_text_26	text of prologue line 26 (speaker code Yoshio); pointed to by prologue_line_texts[26]
+data	NAME_ENT	D_8014D6D8	prologue_line_text_27	text of prologue line 27 (speaker code player); pointed to by prologue_line_texts[27]
+data	NAME_ENT	D_8014D6FC	prologue_line_text_28	text of prologue line 28 (speaker code Yoshio); pointed to by prologue_line_texts[28]
+data	NAME_ENT	D_8014D71C	prologue_line_text_29	text of prologue line 29 (speaker code player); pointed to by prologue_line_texts[29]
+data	NAME_ENT	D_8014D730	prologue_line_text_30	text of prologue line 30 (speaker code Yoshio); pointed to by prologue_line_texts[30]
+data	NAME_ENT	D_8014D750	prologue_line_text_31	text of prologue line 31 (speaker code player); pointed to by prologue_line_texts[31]
+data	NAME_ENT	D_8014D78C	prologue_line_text_32	text of prologue line 32 (speaker code Yoshio); pointed to by prologue_line_texts[32]
+data	NAME_ENT	D_8014D7D4	prologue_line_text_33	text of prologue line 33 (speaker code player); pointed to by prologue_line_texts[33]
+data	NAME_ENT	D_8014D7F0	prologue_line_text_34	text of prologue line 34 (speaker code Yoshio); pointed to by prologue_line_texts[34]
+data	NAME_ENT	D_8014D820	prologue_line_text_35	text of prologue line 35 (speaker code player); pointed to by prologue_line_texts[35]
+data	NAME_ENT	D_8014D830	prologue_line_text_36	text of prologue line 36 (speaker code Yoshio); pointed to by prologue_line_texts[36]
+data	NAME_ENT	D_8014D860	prologue_line_text_37	text of prologue line 37 (speaker code player); pointed to by prologue_line_texts[37]
+data	NAME_ENT	D_8014D86C	prologue_line_text_38	text of prologue line 38 (speaker code Yoshio); pointed to by prologue_line_texts[38]
+data	NAME_ENT	D_8014D8B8	prologue_line_text_39	text of prologue line 39 (speaker code player); pointed to by prologue_line_texts[39]
+data	NAME_ENT	D_8014D8D8	prologue_line_text_40	text of prologue line 40 (speaker code Yoshio); pointed to by prologue_line_texts[40]
+data	NAME_ENT	D_8014D908	prologue_line_text_41	text of prologue line 41 (speaker code player); pointed to by prologue_line_texts[41]
+data	NAME_ENT	D_8014D928	prologue_line_text_42	text of prologue line 42 (speaker code player); pointed to by prologue_line_texts[42]
+data	NAME_ENT	D_8014C4F0	opening_lyric_text_00	lyric line 0 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C4FC	opening_lyric_text_01	lyric line 1 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C510	opening_lyric_text_02	lyric line 2 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C534	opening_lyric_text_03	lyric line 3 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C554	opening_lyric_text_04	lyric line 4 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C578	opening_lyric_text_05	lyric line 5 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C5A4	opening_lyric_text_06	lyric line 6 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C5B8	opening_lyric_text_07	lyric line 7 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C5D8	opening_lyric_text_08	lyric line 8 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C5F0	opening_lyric_text_09	lyric line 9 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C60C	opening_lyric_text_10	lyric line 10 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C62C	opening_lyric_text_11	lyric line 11 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C63C	opening_lyric_text_12	lyric line 12 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C65C	opening_lyric_text_13	lyric line 13 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C668	opening_lyric_text_14	lyric line 14 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C684	opening_lyric_text_15	lyric line 15 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C6A0	opening_lyric_text_16	lyric line 16 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C6B0	opening_lyric_text_17	lyric line 17 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C6D0	opening_lyric_text_18	lyric line 18 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C6E0	opening_lyric_text_19	lyric line 19 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+data	NAME_ENT	D_8014C6F4	opening_lyric_text_20	lyric line 20 of the opening movie, queued by opening_movie at (-0x88, 0x5C)
+file	NAME_ENT	src/ovl/NAME_ENT/80132000.c	src/ovl/name_entry/name_entry.c	mode 0x14 name, birthday and blood type entry: entry, loading, kana/kanji grid, name buffers, birthday screens, confirm, Shiori data, new game setup, cheat names, exit to the prologue (62 functions)
+file	NAME_ENT	src/ovl/NAME_ENT/80139740.c	src/ovl/name_entry/file_select.c	mode 0x13 file screens: slot summary pages, card check, album load, create, New, Copy, Clear, system file rebuild; the settings restore; plus the digit drawer and the iris background (104 functions); a later split could separate the card state machine from the slot summary drawing
+file	NAME_ENT	src/ovl/NAME_ENT/80142A80.c	src/ovl/name_entry/opening.c	mode 0x11 opening: story scene steps and the opening movie with its lyric lines (9 functions)
+file	NAME_ENT	src/ovl/NAME_ENT/80144AD0.c	src/ovl/name_entry/prologue.c	mode 0x11 entry plus the mode 0x15 prologue: line player and the 22 stage handlers (82 functions: 80 renamed here, plus prologue_line_start and prologue_line_run which keep their names); the opening entry could move to opening.c
+file	NAME_ENT	include/ovl/NAME_ENT.h	include/ovl/name_entry.h	overlay header
+type	NAME_ENT	NameCommandPair8	PrologueClipPair	two words (clip start, clip end) of one voice clip; the table rows of the prologue lines; same shape as core's AudioRequestPair (old CallPair8, core.tsv type row); kept as a separate overlay type for matching, the merge step should alias it to AudioRequestPair
+type	NAME_ENT	NameKanaPages44	NameEntryKanaPage	17 string pointers of a kana page (index = row * 3 + column group), 0x44 bytes
+type	NAME_ENT	NameProfileFlags	NameEntryBirthdayBits	bit view of a birthday word: month bits 0-3, day bits 4-8, blood type bits 9-10; the same word as core's BirthdayBits (old GsDateBits, core.tsv type row); kept as a separate overlay type for matching, the merge step should alias it to BirthdayBits
+field	NameCommandPair8	unk_00	clip_start	first word of the clip pair
+field	NameCommandPair8	unk_04	clip_end	second word of the clip pair
+field	Work800E7D10	flags	girl_clear_count	per girl (0-15) the number of times her ending was reached, capped at 99 by ETC (flags[current_girl & 15] += 1); file_select shows the counts and the number of non-zero ones as the clear count; the rebuild recomputes them from the albums; OPTION and EN_NICHI test it for "cleared"; evidence (not a HYPOTHESIS, unlike core's sibling field GameState.unk_53C girl_cleared, a different per-girl flag): the ETC code adds 1 only while the value is below 0x63 when the data is saved, and the file screen's page title and the counts it shows were seen in the emulator (build/emu/states/file_select_*)
+field	NameRecordF00	flags	girl_clear_count	album image copy of SystemData.flags; read as the 13 clear counters of the slot when no system file is loaded; same evidence as the SystemData field (see Work800E7D10.flags)
+const	MainMode	0x11	MODE_OPENING	NAME_ENT entry 0x80144AD0: the attract opening (story scene with narration, then the opening movie), entered by the title idle timeout, the title pad code and the pad 2 reset; core calls it MODE_PROLOGUE, but the prologue scene is mode 0x15; MERGE: replaces core.tsv's MainMode 0x11 row (MODE_PROLOGUE); apply with the other three MainMode rows of this table and drop core's four rows 0x11, 0x13, 0x14, 0x15 in the same step
+const	MainMode	0x13	MODE_FILE_SELECT	NAME_ENT entry 0x8014231C: the file screens of the title menu item game start (card check, album and system file load, create, New, Copy, Clear); core calls it MODE_NAME_ENTRY; MERGE: replaces core.tsv's MainMode 0x13 row (MODE_NAME_ENTRY), see MODE_OPENING
+const	MainMode	0x14	MODE_NAME_ENTRY	NAME_ENT entry 0x8013209C: name, nickname, birthday and blood type entry and the heroine's birthday and blood type; entered from file_select for every new game and replay, and by the first-day and last-day saves; MERGE: replaces core.tsv's MainMode 0x14 row (MODE_NAME_ENT_3); the name MODE_NAME_ENTRY moves from value 0x13 to 0x14, see MODE_OPENING
+const	MainMode	0x15	MODE_PROLOGUE	NAME_ENT entry 0x8014AF28: the voiced prologue (22 stages, 43 lines) after the name entry; ends in mode 0x34 stage 0xFF; MERGE: replaces core.tsv's MainMode 0x15 row (MODE_NAME_ENT_4); the name MODE_PROLOGUE moves from value 0x11 to 0x15, see MODE_OPENING
+const	BloodType	0	BLOOD_O	stored blood type value: GsDateBits blood bits 9-10 and the heroine records (O is 0 because the entry stores (selection + 1) & 3 and the selection order is A, B, AB, O)
+const	BloodType	1	BLOOD_A	stored value 1; selection index 0
+const	BloodType	2	BLOOD_B	stored value 2; selection index 1
+const	BloodType	3	BLOOD_AB	stored value 3; selection index 2
+const	NameEntryStage	0	NAME_ENTRY_STAGE_LOAD	mode 0x14 stage 0: loading and fade-in
+const	NameEntryStage	1	NAME_ENTRY_STAGE_INPUT	stage 1: the player's name, birthday, blood type and the confirm
+const	NameEntryStage	2	NAME_ENTRY_STAGE_SHIORI	stage 2: the heroine's birthday and blood type, confirm, commit, exit
+const	NameEntryInputStep	0	NAME_ENTRY_INPUT_INIT	step 0: prefill or clear, family-name prompt
+const	NameEntryInputStep	1	NAME_ENTRY_INPUT_FAMILY_NAME	step 1: family name input
+const	NameEntryInputStep	2	NAME_ENTRY_INPUT_GIVEN_NAME_INIT	step 2: given-name prompt
+const	NameEntryInputStep	3	NAME_ENTRY_INPUT_GIVEN_NAME	step 3: given name input
+const	NameEntryInputStep	4	NAME_ENTRY_INPUT_NICKNAME_INIT	step 4: nickname prompt
+const	NameEntryInputStep	5	NAME_ENTRY_INPUT_NICKNAME	step 5: nickname input
+const	NameEntryInputStep	6	NAME_ENTRY_INPUT_BIRTHDAY_INIT	step 6: birthday prompt
+const	NameEntryInputStep	7	NAME_ENTRY_INPUT_BIRTHDAY	step 7: month, day and blood type
+const	NameEntryInputStep	8	NAME_ENTRY_INPUT_CONFIRM_INIT	step 8: confirm question with the entered data
+const	NameEntryInputStep	9	NAME_ENTRY_INPUT_CONFIRM	step 9: yes or no
+const	NameEntryShioriStep	0	NAME_ENTRY_SHIORI_INIT	stage 2 step 0: prompt for the heroine's birthday
+const	NameEntryShioriStep	1	NAME_ENTRY_SHIORI_INPUT	step 1: month, day, blood type input
+const	NameEntryShioriStep	2	NAME_ENTRY_SHIORI_CONFIRM_INIT	step 2: confirm question
+const	NameEntryShioriStep	3	NAME_ENTRY_SHIORI_CONFIRM	step 3: yes or no
+const	NameEntryShioriStep	4	NAME_ENTRY_SHIORI_COMMIT	step 4: new game setup
+const	NameEntryShioriStep	5	NAME_ENTRY_SHIORI_EXIT	step 5: fade out and mode 0x15
+const	NameEntryTab	0	NAME_ENTRY_TAB_HIRAGANA	character tab 0
+const	NameEntryTab	1	NAME_ENTRY_TAB_KATAKANA	character tab 1
+const	NameEntryTab	2	NAME_ENTRY_TAB_SYMBOLS	character tab 2: the symbol list (candidate list 38)
+const	NameEntryTab	3	NAME_ENTRY_TAB_KANJI	character tab 3: kanji and other characters chosen by reading
+const	NameEntryTab	4	NAME_ENTRY_TAB_DONE	tab 4: finish the current name
+const	NameEntryBirthdayField	0	NAME_ENTRY_FIELD_MONTH	birthday field cursor 0
+const	NameEntryBirthdayField	1	NAME_ENTRY_FIELD_DAY	field cursor 1
+const	NameEntryBirthdayField	2	NAME_ENTRY_FIELD_BLOOD	field cursor 2
+const	NameEntryCursor	0xC	NAME_ENTRY_CURSOR_NONE	name_entry_cursor value when no slot is active (past the last slot of the current name)
+const	NameEntryPreset	15	NAME_ENTRY_PRESET_COUNT	number of preset names (arguments are taken modulo 15)
+const	NameEntryCheat	0x23D	NAME_ENTRY_CHEAT_PARAM_573	value written to all nine parameters by the Konami-man nickname
+const	FileSelectStage	0	FILE_SELECT_STAGE_INIT	mode 0x13 stage 0: settings snapshot, assets, menus
+const	FileSelectStage	1	FILE_SELECT_STAGE_CARD_CHECK	stage 1: memory-card check and the play-without-card question
+const	FileSelectStage	2	FILE_SELECT_STAGE_LIST	stage 2: the slot list and every album and system file operation
+const	FileSelectStage	3	FILE_SELECT_STAGE_LOADED	stage 3: greeting after a successful load and the leave
+const	FileSelectStage	4	FILE_SELECT_STAGE_NO_SPACE	stage 4: a file could not be created
+const	FileSelectStage	0xC0	FILE_SELECT_STAGE_FORMAT	stage 0xC0: the card is not formatted
+const	FileSelectStage	0xD0	FILE_SELECT_STAGE_SYSTEM_FILE	stage 0xD0: rebuild or create the system file
+const	FileSelectStage	0xF0	FILE_SELECT_STAGE_ALBUM_BROKEN	stage 0xF0: the album data failed validation or loading (voice clip, then the list)
+const	FileSelectStage	0xFF	FILE_SELECT_STAGE_CARD_ERROR	stage 0xFF: the card could not be read in time or reported a read error (voice clip, then stage 1)
+const	FileSelectCardStep	0	FILE_SELECT_CARD_CHECK_BEGIN	stage 1 step 0
+const	FileSelectCardStep	1	FILE_SELECT_CARD_CHECK_POLL	stage 1 step 1
+const	FileSelectCardStep	2	FILE_SELECT_CARD_NO_CARD_MESSAGE	stage 1 step 2
+const	FileSelectCardStep	3	FILE_SELECT_CARD_NO_CARD_WAIT	stage 1 step 3
+const	FileSelectCardStep	4	FILE_SELECT_CARD_PLAY_WITHOUT_PROMPT	stage 1 step 4
+const	FileSelectCardStep	5	FILE_SELECT_CARD_PLAY_WITHOUT_ANSWER	stage 1 step 5
+const	FileSelectCardStep	6	FILE_SELECT_CARD_INSERT_MESSAGE	stage 1 step 6
+const	FileSelectCardStep	7	FILE_SELECT_CARD_INSERT_WAIT	stage 1 step 7
+const	FileSelectListStep	0	FILE_SELECT_STEP_SCAN	stage 2 step 0: card scan
+const	FileSelectListStep	1	FILE_SELECT_STEP_SYSTEM_READ	read and load the system file
+const	FileSelectListStep	2	FILE_SELECT_STEP_LIST	the slot list
+const	FileSelectListStep	3	FILE_SELECT_STEP_ALBUM_LOAD	load the selected album and write the system file
+const	FileSelectListStep	0x20	FILE_SELECT_STEP_ALBUM_ONLY_READ	no system file: read the first valid album
+const	FileSelectListStep	0x21	FILE_SELECT_STEP_ALBUM_ONLY_LIST	no system file: the slot list
+const	FileSelectListStep	0x22	FILE_SELECT_STEP_ALBUM_ONLY_LOADING_MESSAGE	no system file: loading message
+const	FileSelectListStep	0x23	FILE_SELECT_STEP_ALBUM_ONLY_READ_CHOSEN	no system file: read the chosen album
+const	FileSelectListStep	0x24	FILE_SELECT_STEP_ALBUM_ONLY_LOAD	no system file: load the album
+const	FileSelectListStep	0x40	FILE_SELECT_STEP_NO_DATA_PROMPT	no game data on the card: create an album?
+const	FileSelectListStep	0x41	FILE_SELECT_STEP_NO_DATA_ANSWER	answer to the 0x40 prompt
+const	FileSelectListStep	0x42	FILE_SELECT_STEP_NO_DATA_DECLINE_MESSAGE	play without an album message
+const	FileSelectListStep	0x43	FILE_SELECT_STEP_NO_DATA_DECLINE_WAIT	wait, then mode 0x14
+const	FileSelectListStep	0x44	FILE_SELECT_STEP_CREATE_SLOT_MESSAGE	which album number to create
+const	FileSelectListStep	0x45	FILE_SELECT_STEP_CREATE_SLOT_CHOOSE	slot choice for the new album
+const	FileSelectListStep	0x46	FILE_SELECT_STEP_CREATE_SYSTEM_FILE_MESSAGE	system file explanation
+const	FileSelectListStep	0x47	FILE_SELECT_STEP_CREATE_SYSTEM_FILE_WAIT	wait for a button
+const	FileSelectListStep	0x48	FILE_SELECT_STEP_CREATE_SYSTEM_FILE_PROMPT	create the system file?
+const	FileSelectListStep	0x49	FILE_SELECT_STEP_CREATE_SYSTEM_FILE_ANSWER	answer: yes 0x4C, no 0x4A
+const	FileSelectListStep	0x4A	FILE_SELECT_STEP_CREATE_ALBUM_ONLY	create the album only, then mode 0x14
+const	FileSelectListStep	0x4C	FILE_SELECT_STEP_CREATE_ALBUM_AND_SYSTEM_FILE	create the album and the system file, then mode 0x14
+const	FileSelectListStep	0xA0	FILE_SELECT_STEP_NEW_MESSAGE	New button: explanation
+const	FileSelectListStep	0xA1	FILE_SELECT_STEP_NEW_WAIT	wait for a button
+const	FileSelectListStep	0xA2	FILE_SELECT_STEP_NEW_CHOOSE_MESSAGE	which album to start over
+const	FileSelectListStep	0xA3	FILE_SELECT_STEP_NEW_CHOOSE_SLOT	slot choice
+const	FileSelectListStep	0xA4	FILE_SELECT_STEP_NEW_REDO_PROMPT	start the used album over?
+const	FileSelectListStep	0xA5	FILE_SELECT_STEP_NEW_REDO_ANSWER	answer
+const	FileSelectListStep	0xA6	FILE_SELECT_STEP_NEW_REDO_LOAD	load the used album (system file present), retain its profile, mode 0x14
+const	FileSelectListStep	0xA7	FILE_SELECT_STEP_NEW_REDO_LOAD_NO_SYSTEM	same without a system file
+const	FileSelectListStep	0xA8	FILE_SELECT_STEP_NEW_CREATE_WITH_SYSTEM	new album in an empty slot with a system file, then mode 0x14
+const	FileSelectListStep	0xA9	FILE_SELECT_STEP_NEW_CREATE_ALBUM_ONLY	new album without a system file, then mode 0x14
+const	FileSelectListStep	0xC0	FILE_SELECT_STEP_COPY_MESSAGE	Copy button: explanation
+const	FileSelectListStep	0xC1	FILE_SELECT_STEP_COPY_SOURCE_CHOOSE	choose the source album
+const	FileSelectListStep	0xC2	FILE_SELECT_STEP_COPY_SOURCE_LOAD	read the source album
+const	FileSelectListStep	0xC3	FILE_SELECT_STEP_COPY_DESTINATION_CHOOSE	choose the destination slot
+const	FileSelectListStep	0xC4	FILE_SELECT_STEP_COPY_OVERWRITE_PROMPT	overwrite the destination?
+const	FileSelectListStep	0xC5	FILE_SELECT_STEP_COPY_OVERWRITE_ANSWER	answer
+const	FileSelectListStep	0xC6	FILE_SELECT_STEP_COPY_ROUTE	with or without system file
+const	FileSelectListStep	0xC7	FILE_SELECT_STEP_COPY_WRITE_WITH_SYSTEM	write the destination and the system file
+const	FileSelectListStep	0xC8	FILE_SELECT_STEP_COPY_WRITE_ALBUM_ONLY	write the destination only
+const	FileSelectListStep	0xE0	FILE_SELECT_STEP_CLEAR_MESSAGE	Clear button: explanation
+const	FileSelectListStep	0xE1	FILE_SELECT_STEP_CLEAR_CHOOSE_SLOT	choose the album to delete
+const	FileSelectListStep	0xE2	FILE_SELECT_STEP_CLEAR_PROMPT	delete for sure?
+const	FileSelectListStep	0xE3	FILE_SELECT_STEP_CLEAR_ANSWER	answer
+const	FileSelectListStep	0xE4	FILE_SELECT_STEP_CLEAR_DELETE_WITH_SYSTEM	delete and rewrite the system file
+const	FileSelectListStep	0xE5	FILE_SELECT_STEP_CLEAR_DELETE_ALBUM_ONLY	delete only
+const	FileSelectListStep	0xE6	FILE_SELECT_STEP_CLEAR_DONE	back to the list
+const	FileSelectInfoPage	0	FILE_SELECT_PAGE_CLEAR_COUNTS	info page 0: clear counts per girl
+const	FileSelectInfoPage	1	FILE_SELECT_PAGE_PARAMETERS	info page 1: the nine parameter values of the slot
+const	FileSelectInfoPage	2	FILE_SELECT_PAGE_GIRL_STARS	info page 2: the star rating each met girl gave the player
+const	FileSelectButton	0	FILE_SELECT_BUTTON_COPY	function button 0 (menu 1 item): goes to step 0xC0
+const	FileSelectButton	1	FILE_SELECT_BUTTON_NEW	function button 1: step 0xA0
+const	FileSelectButton	2	FILE_SELECT_BUTTON_CLEAR	function button 2: step 0xE0
+const	FileSelectButton	3	FILE_SELECT_BUTTON_LOAD	function button 3: step 0
+const	OpeningStage	0	OPENING_STAGE_STORY	mode 0x11 stage 0: the story scene
+const	OpeningStage	1	OPENING_STAGE_MOVIE	mode 0x11 stage 1: the opening movie with the lyric lines
+const	OpeningStoryStep	0	OPENING_STORY_LOAD	story step 0
+const	OpeningStoryStep	1	OPENING_STORY_SCENE	story step 1
+const	OpeningStoryStep	2	OPENING_STORY_END	story step 2
+const	PrologueStage	0	PROLOGUE_STAGE_ARRIVAL	stage 0: bank start, scene init, line 0
+const	PrologueStage	1	PROLOGUE_STAGE_BOARD	HYPOTHESIS: the picture shows a board (see prologue_board_load); fact: stage 1: line 1
+const	PrologueStage	2	PROLOGUE_STAGE_NAMES	HYPOTHESIS: the picture shows names (see prologue_names_crossfade); fact: stage 2: line 2
+const	PrologueStage	3	PROLOGUE_STAGE_CHILDHOOD_FRIEND	stage 3: line 3
+const	PrologueStage	4	PROLOGUE_STAGE_FRIEND_GAP	stage 4: line 4
+const	PrologueStage	5	PROLOGUE_STAGE_CLASSROOM_TRANSITION	stage 5: transition, no line
+const	PrologueStage	6	PROLOGUE_STAGE_YOSHIO_GREETING	stage 6: lines 5-10
+const	PrologueStage	7	PROLOGUE_STAGE_GIRLS_NOTICE	stage 7: line 11
+const	PrologueStage	8	PROLOGUE_STAGE_REI_BANNER	HYPOTHESIS: the faded-in actor is a banner showing Rei (see prologue_rei_banner_run); fact: stage 8: line 12
+const	PrologueStage	9	PROLOGUE_STAGE_REI_SPEECH	stage 9: lines 13-14
+const	PrologueStage	10	PROLOGUE_STAGE_YOSHIO_REACTS	stage 10: lines 15-16
+const	PrologueStage	11	PROLOGUE_STAGE_SHIORI_NEXT	stage 11: line 17
+const	PrologueStage	12	PROLOGUE_STAGE_SHIORI_LOAD	stage 12: loads, no line
+const	PrologueStage	13	PROLOGUE_STAGE_SHIORI_NAME	stage 13: line 18
+const	PrologueStage	14	PROLOGUE_STAGE_SHIORI_HOBBY	stage 14: line 19
+const	PrologueStage	15	PROLOGUE_STAGE_YOSHIO_QUIZ	stage 15: lines 20-31 and two synthesised answers
+const	PrologueStage	16	PROLOGUE_STAGE_YOSHIO_OFFER	stage 16: lines 32-36
+const	PrologueStage	17	PROLOGUE_STAGE_WINDOW_TREE	HYPOTHESIS: the picture shows a tree seen through a window (see prologue_window_tree_run); fact: stage 17: line 37
+const	PrologueStage	18	PROLOGUE_STAGE_LEGEND	stage 18: lines 38-41
+const	PrologueStage	19	PROLOGUE_STAGE_FLASH	stage 19: flash transition
+const	PrologueStage	20	PROLOGUE_STAGE_CLOSING	stage 20: line 42
+const	PrologueStage	21	PROLOGUE_STAGE_FINISH	stage 21: leave for the command screen
+const	PrologueSpeaker	0x0F	PROLOGUE_SPEAKER_PLAYER	speaker code of the player lines (spoken, shown under the entered family name); no voice clip
+const	PrologueSpeaker	0x1F	PROLOGUE_SPEAKER_PLAYER_THOUGHT	player's inner voice (the low nibble 0xF also means the player)
+const	PrologueSpeaker	0x0D	PROLOGUE_SPEAKER_YOSHIO	Yoshio (girl id 13 in the short name table)
+const	PrologueSpeaker	0x0C	PROLOGUE_SPEAKER_REI	Rei (girl id 12)
+const	PrologueSpeaker	0	PROLOGUE_SPEAKER_SHIORI	Shiori (girl id 0)
+const	PrologueSpeaker	0x1E	PROLOGUE_SPEAKER_SCHOOLGIRL_A	first unnamed schoolgirl; speaker plate text is a fixed label
+const	PrologueSpeaker	0x2E	PROLOGUE_SPEAKER_SCHOOLGIRL_B	second unnamed schoolgirl
+const	PrologueTiming	0x3D	PROLOGUE_LINE_HOLD_FRAMES	frames a finished prologue line is held before the next one (the counter must reach 0x3D)
