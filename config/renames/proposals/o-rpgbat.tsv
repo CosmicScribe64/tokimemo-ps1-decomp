@@ -10,8 +10,8 @@ func	RPG_BAT	func_8013C890	rpg_battle_enemy_update	picks an enemy action when id
 func	RPG_BAT	func_8013CC90	rpg_battle_player_update	command ready flag, command bits to action code, dispatch of attack/guard/special
 func	RPG_BAT	func_8013D030	rpg_battle_player_pose_idle	chooses the player idle pose from HP (0, <10) and guard bit
 func	RPG_BAT	func_8013D0D4	rpg_battle_club_move_dispatch	switch on D_8015EBA0 (club index 0..11) to the club's special move
-func	RPG_BAT	func_8013D1D0	rpg_battle_blink_player_girl_60	toggles hide bit of player/girl records for 60 frames
-func	RPG_BAT	func_8013D290	rpg_battle_blink_player_girl_61	same blink, 61 frames
+func	RPG_BAT	func_8013D1D0	rpg_battle_blink_move_hero_and_girl_60	toggles the hide bit of the special-move hero actor 0x34 and the girl actor for 60 frames
+func	RPG_BAT	func_8013D290	rpg_battle_blink_move_hero_and_girl_61	same blink, 61 frames
 func	RPG_BAT	func_8013D350	rpg_battle_apply_damage_to_targets	applies D_8015EBB0..B8 to three delinquent slots (0x100000) or to D_8015EBAC
 func	RPG_BAT	func_8013D3E4	rpg_battle_apply_damage_single	applies D_8015EBB0 to slot D_8015EBAC
 func	RPG_BAT	func_8013D418	rpg_battle_move_approach	common first half of a special move: player dashes in and strikes pose
@@ -187,8 +187,8 @@ func	RPG_BAT	func_801477E0	rpg_battle_girl_damage_roll	damage numbers for the gi
 func	RPG_BAT	func_80143C28	rpg_battle_girl_slide_in	girl actor slides in from the left (two sub steps)
 func	RPG_BAT	func_80143CE8	rpg_battle_girl_slide_out	girl actor slides out
 func	RPG_BAT	func_80143DA8	rpg_battle_girl_move_linear	moves actor from (x0,y0) to (x1,y1) over 1000/step ticks
-func	RPG_BAT	func_80143ECC	rpg_battle_girl_blink_60	blinks player/girl records for 60 frames
-func	RPG_BAT	func_80143F68	rpg_battle_girl_blink_61	same, 61 frames
+func	RPG_BAT	func_80143ECC	rpg_battle_blink_player_and_girl_60	toggles the hide bit of the player actor 0x30 and the girl actor for 60 frames
+func	RPG_BAT	func_80143F68	rpg_battle_blink_player_and_girl_61	same, 61 frames
 func	RPG_BAT	func_801420EC	rpg_battle_girl_action_shiori	girl 0 action: slides in, shouts, slides out (resets enemy timer)
 func	RPG_BAT	func_80142000	rpg_battle_dialog_shiori_stop_it	voiced line of girl 0
 func	RPG_BAT	func_80155A70	rpg_battle_girl_action_mio	girl 1 action: triggers when the player lost over 10 percent of max HP; she says she is dizzy and then stays in state 0x1000
@@ -589,8 +589,8 @@ const	RpgActor	0x38	RPG_ACTOR_HIT_FX	hit effect on the player
 const	RpgActor	0x3B	RPG_ACTOR_ENEMY_A	first enemy actor
 const	RpgActor	0x3C	RPG_ACTOR_ENEMY_B	second delinquent
 const	RpgActor	0x3D	RPG_ACTOR_ENEMY_C	third delinquent
-const	RpgActor	0x33	RPG_ACTOR_MOVE_FX_2	club move effect actor
-const	RpgActor	0x34	RPG_ACTOR_MOVE_FX_1	club move effect actor
+const	RpgActor	0x33	RPG_ACTOR_MOVE_AUX	second sprite of the special move (effect or prop)
+const	RpgActor	0x34	RPG_ACTOR_MOVE_HERO	the hero's sprite during a special move (replaces actor 0x30 while it runs)
 const	RpgActor	0x32	RPG_ACTOR_GIRL_FX	girl effect actor
 const	RpgMenuItem	0	RPG_MENU_ATTACK	GameState unk_1093 choice
 const	RpgMenuItem	1	RPG_MENU_GUARD	choice 1

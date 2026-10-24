@@ -42,7 +42,7 @@ Before the switch: stages 6..9 run `rpg_battle_pause_update`; stages other than 
 | Stage | Constant | Does |
 | --- | --- | --- |
 | 0 | `RPG_STAGE_INIT` | `rpg_battle_stage_init` clears display state, maps the launch code to the encounter flag, `rpg_battle_init_player_state` sets start values |
-| 1 | `RPG_STAGE_LOAD_1` | CD sound-data requests through main `func_80044890` (encounter, then girl group, then club); substep `unk_110D` |
+| 1 | `RPG_STAGE_LOAD_1` | CD sound-data requests through main `func_80044890` (the encounter's block, chosen by girl group for the delinquent fight, then the club's block); substep `unk_110D` |
 | 2 | `RPG_STAGE_LOAD_2` | CD graphics packs: encounter pack to 0x80180000, boss pack to 0x801B1000 (delinquents only), club pack to 0x801D8000 |
 | 3 | `RPG_STAGE_ASSETS` | `rpg_battle_stage_asset_addresses` (RAM addresses of the loaded packs per encounter), `rpg_battle_stage_palettes_load` |
 | 4 | `RPG_STAGE_SETUP` | `rpg_battle_stage_sprites_setup`, HUD setup, `rpg_battle_stage_labels_init` (text labels for the names), HUD digits |
@@ -80,7 +80,7 @@ All motion is hand-written step scripts. Five independent channels each hold ste
 
 Other state machines: the message window (`rpg_battle_message` D_8015EE44: state, mode, frame counter; `rpg_battle_message_show` sets the line pointers, line count and frames per line), the command menu (`rpg_battle_menu` D_8015EE50), four damage popups (`rpg_battle_popup_0..3`).
 
-Actors are rows of the shared 0x44-byte display-record table `D_8011ECD0`; scripts address them as "actor i" = record 96 + i (`rpg_battle_actor_set_anim`, `_set_pos`, `_is_idle`; positions are screen coordinates minus (0xA0, 0x78)). Fixed ids: girl 0x1D, player 0x30, hit effect on the player 0x38, enemy actors 0x3B..0x3D, girl effect 0x32, move effects 0x33/0x34. Record 64..159 field `unk_07` is the fade level (`rpg_battle_fade_set_level`). Field names of that record type belong to the graphics unit.
+Actors are rows of the shared 0x44-byte display-record table `D_8011ECD0`; scripts address them as "actor i" = record 96 + i (`rpg_battle_actor_set_anim`, `_set_pos`, `_is_idle`; positions are screen coordinates minus (0xA0, 0x78)). Fixed ids: girl 0x1D, player 0x30, hit effect on the player 0x38, enemy actors 0x3B..0x3D, girl effect 0x32; during a special move the hero is shown by actor 0x34 (with 0x33 as a second sprite) instead of 0x30. Record 64..159 field `unk_07` is the fade level (`rpg_battle_fade_set_level`). Field names of that record type belong to the graphics unit.
 
 ### Action codes
 
