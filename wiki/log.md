@@ -7,34 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] build | MAIN call-boundary checkpoint
-
-[[tickets/T-25022-main-reload-boundary]] reproduces T-25021 and repairs the first mode reload:315target/314built words,127aligned/127printed. Preserved the semantically corrected later reload body despite worse310words,179/179; partial lower-score source is diagnostic only. Exact64-byte frame and homes remain. Bounded negative tests and callee effects are in drafts/T-25022/main/func_8005215C/README.md; normal/traced full-TU objects resolve identically. No C match or production change. Prepared a bounded consultation packet for read placement and conversion-web recovery.
-
-## [2026-10-22] lint | Reload checkpoint documentation
-
-Docker catalog reports793 tickets,444 sections and3,078 functions. Wiki lint reports zero broken links, zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes; src/, include/ and tools/ have no changes. Research-only pin prepared for root review; ticket remains In Progress.
-
-## [2026-10-22] ticket | T-25023 BUNKA scheduler closure
-
-Created [[tickets/T-25023-bunka-scheduler-closure]] and its In Progress card before investigation. Isolated base 883760224; only src/ovl/BUNKA_SD/801388D0.c assigned. Read [[plan-remaining]], [[tickets/T-25020-bunka-sd-trace-closure]] and [[tickets/T-24927-func-80139290-801388D0]]. Root owns integration; no old workers resumed.
-
-## [2026-10-22] query | T-25023 four-position baseline and bounded packet
-
-Reproduced whole-TU BUNKA_SD guarded C: four positions / eight printed lines / aligned cost 4, 379 instructions. Fresh print-only trace matches all four relevant sections. No source variants; prior local-order levers conflict with global filler selection. Preserved compact packet at drafts/T-25023/README.md and private pre/post evidence under build/t25023-cap. [[tickets/T-25023-bunka-scheduler-closure]] remains In Progress for root-authorized read-only Astra consultation; Sol idles during it.
-
-## [2026-10-22] decision | T-25023 consultation closes without another source sweep
-
-Read-only Astra clarified original-INST global selection versus local scheduling, and corrected the prior li-aftercycles description. No causal source recipe beyond the rejected ledger; zero new variants. Preserved exact upstream-emission revisit condition in drafts/T-25023/README.md and [[matching-notes]]. [[tickets/T-25023-bunka-scheduler-closure]] moved to In Review with its board card. Production source unchanged; no C match or coverage, root owns integration checks.
-
-## [2026-10-22] lint | T-25023 checkpoint
-
-Wiki lint passes with zero broken links and status mismatches; only the existing data/t0018-cases size warning remains. `git diff --check` passes. [[tickets/T-25023-bunka-scheduler-closure]] stays In Review. No source/header/tool differences or generated/raw artifacts included in the checkpoint.
-
-## [2026-10-22] ingest | Preserve MAIN reload source and BUNKA consultation
-
-Root reviewed research scope and source-only checkpoints, merged T-25022 pin1b50b37d6 and T-25023 pina9608aeba. No production promotion or header/tool change. MAIN keeps both semantic reload repairs separately from lower-score partial source; direct callee mutation remains unestablished, target reload placement is established. Authorized one read-only Astra consultation on the precise eager-read/control-flow packet, with Sol idle during it and at most three subsequent justified tests. BUNKA correction: the all-arm regression hoists year-address lui t0, not store-address lui at; li t2 aftercycles is0, not2. See drafts/T-25023/README.md for upstream-emission revisit condition. Merged wiki lint: zero broken links/status mismatches, one pre-existing large page. GYOZI and TEL workers continue.
-
 ## [2026-10-22] ticket | T-25025 GYOZI reaching-definition evidence
 
 Released the BUNKA source claim at separate T-25023 pin a9608aeba. Created [[tickets/T-25025-gyozi-zero-reaching-definition]] In Progress and board card before GYOZI work. Exclusive src/ovl/GYOZI/80140C90.c; inspect propagation before considering source. No old workers or automatic Astra.
@@ -1714,13 +1686,13 @@ Fixed both blocking findings of the round 3 review of [[tickets/T-27028-p2-o-tac
 
 ## [2026-10-24] ticket | T-27028 Done after review round 4
 [[tickets/T-27028-p2-o-taco]] passed the round 4 review at f73c1b522 (approved, no findings; boss start percents 36, 51 and 63 and the pos_x/neg_x names verified against the C and the `.data.s` bytes). Follow-up commit to the earlier merge; tables and wiki only, nothing under `src/`, `include/` or `config/symbol*`. Merged again as p2a-o-taco.
+
 ## [2026-10-24] ingest | Phase 2 core: names and port spec (T-27010)
 Read the matched C of GameState, the mode machine, the day-event queue, the girl score code and the top 100 main functions; wrote the proposals table `config/renames/proposals/core.tsv` (738 rows: 90 func, 39 data, 234 field, 75 type, 238 const, 60 comment, 2 file; 74 carry HYPOTHESIS) and [[spec/core]], linked from [[spec/index]]. Ticket [[tickets/T-27010-p2-core]] (In Review). Nothing in `src/`, `include/` or the symbol files changed; no emulator run (image not built here).
 Findings: `unk_1108/1109/110A/110D` are mode/stage/step/substep; `unk_0F4` is the player flag word (health state 0-3, club, flags); `unk_F68` the last chosen command; the calendar tables come from disc blobs via `D_800B3748`; `unk_71E` marks played birthday scenes; `unk_720..722` is the return triple. EVENT and GYOZI calls into main are stale (older main layout), so their uses are excluded from the top-100 census (see [[game-state]], [[data-types]]).
 
 ## [2026-10-24] ticket | T-27010 review fixes
 Fixed the four blocking findings of the review of [[tickets/T-27010-p2-core]] in `config/renames/proposals/core.tsv` (now 742 rows, 85 with HYPOTHESIS) and [[spec/core]]: the `PadBits` constants follow the pad word built in `src/main/80042A00.c` (SELECT 0x100, START 0x800, shoulders 0x1-0x8), which makes `unk_F6E` a pad 2 START toggle (`sd_anim_fast`); `unk_72C`/`unk_73C` are `girl_last_date_spot` and its weekly timer with the repeat-spot penalty; the `parameter_up_down` text matches `src/main/800737A0.c`; `func_80071038` (`girl_counters_clamp`) and `func_80071280` are in the table and the spec, so the forced encounter and rumour re-arm below syoushin 0x32. Non-blocking points handled: HYPOTHESIS marks on the camp, meeting and seasonal-party names, English-form SHOUGATU names, `bustup_wink_update`, use-count caveat, month-blob load (open question 10), and [[data/p2-core-name-conflicts]] (96 names that differ from the hardware tables, rule in spec section 17). Nothing in `src/`, `include/` or the symbol files changed; no emulator run.
-
 
 ## [2026-10-24] ticket | T-27010 second review fixes
 Fixed the three blocking findings and ten non-blocking ones of the second review of [[tickets/T-27010-p2-core]] in `config/renames/proposals/core.tsv` (now 751 rows, 97 with HYPOTHESIS) and [[spec/core]]. Blocking: `MenuMode` 2 is mouse-like + A and 3 is menu B (the stored values the settings screen writes, not the item numbers); `unk_71E` is `daily_event_bits` (bits 1, 2, 4 are the birthday skips of the queue reader, the other bits are HYPOTHESIS done marks); the event log rank is `get_g_zyotai_h`, not `girl_state_rank`. Non-blocking: `mode_timer` counted in `main_state_dispatch`, `year` is the calendar year modulo 100, `girl_met_today_clear` became `girl_flags_bit0_clear`, `rumor_done`, `saved_mode/stage/step`, HYPOTHESIS marks on three mode names, seven `GameState` members renamed from `unk_` with HYPOTHESIS names (23 members keep `unk_`), housekeeping notes and counts. No `src/`, `include/` or symbol-file edits; ticket stays In Review. See also [[data/p2-core-name-conflicts]] (no new conflicts).
