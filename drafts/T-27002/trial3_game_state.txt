@@ -1,0 +1,2 @@
+data main D_800E6280 game_state T-27002 scale test
+field GameState unk_F5F current_girl T-27002 scale test
