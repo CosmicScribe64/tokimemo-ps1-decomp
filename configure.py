@@ -30,6 +30,8 @@ INCLUDE_FILES = "build/include-files.txt"  # membership changes can alter includ
 HEADERS_OK = "build/headers.ok"  # tools/check_headers.py passed (T-1200)
 SYMBOLS_OK = "build/symbols.ok"  # no overlay symbols in shared main config (T-9400)
 GLOBALS_OK = "build/globals.ok"  # tools/migrate_globals.py --check passed (T-5100)
+RENAMES_OK = "build/renames.ok"  # tools/rename.py check passed: no renamed name came back (T-27002)
+LEDGER_DIR = "config/renames"    # rename ledger of tools/rename.py
 HEADER_FILES = sorted(glob.glob("include/**/*.h", recursive=True))
 
 # splat output layout (config/SLPM_86.053.yaml): C sources and asm objects.
@@ -234,8 +236,10 @@ def main():
     if previous != contents:
         with open(INCLUDE_FILES, "w") as f:
             f.write(contents)
+    # config/ and the ledger folder too: a new ledger or per-overlay symbol file changes the inputs (T-27002)
     directories = sorted(glob.glob("include/**/", recursive=True)
-                         + glob.glob("src/**/", recursive=True))
+                         + glob.glob("src/**/", recursive=True)
+                         + ["config/"] + ([LEDGER_DIR + "/"] if os.path.isdir(LEDGER_DIR) else []))
     n = ninja_syntax.Writer(open("build.ninja", "w"))
     n.variable("ninja_required_version", "1.10")
     n.rule("configure", command="python3 configure.py", generator=True, restat=True,
@@ -284,6 +288,15 @@ def main():
             + HEADER_FILES + sorted(glob.glob("src/**/*.c", recursive=True)),
             order_only=["build/split.stamp"] + ["build/ovl/%s.stamp" % o[0] for o in read_overlays()])
     n.build("globals", "phony", GLOBALS_OK)
+    # renamed names stay renamed (T-27002): tools/rename.py check over src/, include/, config/
+    n.rule("renames", command="python3 tools/rename.py check && touch $out", description="CHECK RENAMES")
+    n.build(RENAMES_OK, "renames",
+            implicit=["tools/rename.py", "tools/symtab.py"] + sorted(glob.glob(LEDGER_DIR + "/*.txt"))
+            + sorted({u.yaml for u in table.units.values()} | set(table.lines))
+            + [p for p in ("config/proto_known.txt", "config/migrate_globals.txt", "config/toolchains.txt")
+               if os.path.exists(p)]
+            + HEADER_FILES + sorted(glob.glob("src/**/*.c", recursive=True)))
+    n.build("renames", "phony", RENAMES_OK)
     n.rule("as", command="python3 tools/asm.py $in $out", description="AS $in")
     n.rule("cc",
            command="python3 tools/cc.py $in $out $toolchain && python3 tools/object_layout.py $in $out",
@@ -327,7 +340,7 @@ def main():
     n.rule("progress", command="python3 tools/progress.py", description="PROGRESS", pool="console")
     n.build("progress", "progress")
     oks = overlay_targets(n, read_overlays())
-    n.default(["build/%s.ok" % EXE] + oks + [GLOBALS_OK, SYMBOLS_OK])
+    n.default(["build/%s.ok" % EXE] + oks + [GLOBALS_OK, SYMBOLS_OK, RENAMES_OK])
     n.close()
 
     units = [{

@@ -81,7 +81,7 @@ class NinjaDependencies(unittest.TestCase):
 
         class FixtureWriter(writer):
             def rule(self, name, command, **kwargs):
-                if name in ("split", "osplit", "disc", "symbols", "globals", "sha1", "osha1", "symsld"):
+                if name in ("split", "osplit", "disc", "symbols", "globals", "renames", "sha1", "osha1", "symsld"):
                     command = "mkdir -p build/ovl && touch $out"
                 elif name in ("ld", "old"):
                     command = "cat $in > $out"

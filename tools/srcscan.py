@@ -187,6 +187,39 @@ def unit_of_source(src):
     return None
 
 
+_HEADER_UNITS = {}
+
+
+def header_units(root="."):
+    """{header path under include/: overlay} for the headers under include/ovl/ that the C files of
+    exactly one overlay include directly (its own header, include/ovl/<NAME>.h or a readable name
+    after tools/rename.py, T-27002). Headers several units include are not listed."""
+    if root not in _HEADER_UNITS:
+        users = {}
+        try:
+            for u in overlay_names(root):
+                for cf in unit_c_files(u, root):
+                    if not cf.src.exists():
+                        continue
+                    for inc in re.findall(r'^[ \t]*#[ \t]*include[ \t]*"([^"]+)"', cf.src.read_text(errors="replace"), re.M):
+                        users.setdefault(inc, set()).add(u)
+        except (OSError, ImportError):
+            pass
+        _HEADER_UNITS[root] = {h: next(iter(us)) for h, us in users.items() if len(us) == 1 and h.startswith("ovl/")}
+    return _HEADER_UNITS[root]
+
+
+def unit_header(unit, root="."):
+    """The root header of a unit relative to include/: game.h for main, include/ovl/<NAME>.h when it
+    exists, else the header only that overlay's C files include (renamed, T-27002)."""
+    if unit == "main":
+        return "game.h"
+    if (Path(root) / "include/ovl" / (unit + ".h")).exists():
+        return "ovl/%s.h" % unit
+    own = sorted(h for h, u in header_units(root).items() if u == unit)
+    return own[0] if own else "ovl/%s.h" % unit
+
+
 def _root_of(parts):
     """The repo root of a path split into parts (the folder above its last `src`), or '.'."""
     k = len(parts) - 1 - parts[::-1].index("src")

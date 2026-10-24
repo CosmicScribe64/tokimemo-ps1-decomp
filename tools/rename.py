@@ -503,7 +503,7 @@ def name_problem(row, new=None):
         return "%s is a C keyword" % new
     if new.startswith("__") or re.match(r"^_[A-Z]", new) or (new.startswith("_") and not row.old.startswith("_")):
         return "%s is a reserved name (leading underscore)" % new
-    if PLACEHOLDER_NAME_RE.match(new) or symtab.placeholder_addr(new) is not None:
+    if PLACEHOLDER_NAME_RE.match(new) or symtab.placeholder_addr(new) is not None or re.match(r"^(?:unk(?:_|\d|$)|pad(?:\d*|_[0-9A-Fa-f]+)$)", new):
         return "%s looks like a placeholder; a rename needs a real name" % new
     m = re.search(r"[0-9A-Fa-f]{8}", new)
     if m and re.search(r"\d", m.group(0)):
@@ -708,6 +708,7 @@ def plan_symbol(ctx, row):
     files = scope_files(tree, owner, addr)
     row.files = set(files)
     alias = row.new in names
+    row.alias = alias
     # ---- collisions
     if not ctx.merge:
         why = name_problem(row)
@@ -817,7 +818,7 @@ def edit_symbol_files(ctx, row, owner, addr, is_func, table):
     tree = ctx.tree
     target = table.placement(owner, addr, row.hypothesis)
     attrs, kept_visible = [], False
-    loaded = set(table.files[owner])
+    loaded = set(table.files[owner]) - {symtab.TYPES_FILE}     # what the owner's splat sees
     for l in table.lines_at(owner, addr):
         if l.name != row.old:
             continue
@@ -905,7 +906,8 @@ def srcscan_unit(tree, path):
 GCC = ["gcc", "-fsyntax-only", "-std=gnu89", "-w", "-fdiagnostics-column-unit=byte",
        "-fno-diagnostics-show-caret", "-fmax-errors=0", "-Iinclude"]
 DIAG_RE = re.compile(r"^(.+?):(\d+):(\d+): (error|note): (.*)$")
-NO_MEMBER_RE = re.compile(r"^'(?:struct |union )?(\w+)'(?: \{aka '(?:struct |union )?(\w+)'\})? has no member named '(\w+)'$")
+NO_MEMBER_RE = re.compile(r"^'(?:struct |union )?(\w+)'(?: \{aka '(?:struct |union )?(\w+)'\})? has no member named "
+                          r"'(\w+)'(?:; did you mean '\w+'\?)?$")
 
 
 class Scratch:
@@ -1298,13 +1300,10 @@ def function_spans(text, name):
                 if depth == 0:
                     break
             j += 1
-        k = j + 1
-        while k < len(clean) and clean[k] not in "{;":
-            k += 1
-        if k >= len(clean) or clean[k] != "{":
-            continue      # a prototype
-        between = clean[j + 1:k]
-        if between.strip() and not re.match(r"^(\s*[A-Za-z_][^;{}()]*;)*\s*$", between):
+        k = clean.find("{", j + 1)
+        between = clean[j + 1:k] if k >= 0 else ";"
+        # nothing (ANSI) or K&R parameter declarations between `)` and `{`; a prototype ends in `;`
+        if k < 0 or not re.match(r"^(?:\s*[A-Za-z_][^;{}()]*;)*\s*$", between) or re.match(r"^\s*;", between):
             continue
         out.append((m.start(), match_brace(clean, k), k))
     return out
@@ -1601,6 +1600,8 @@ def plan_header(ctx, row):
     why = stem_problem(new, header=True)
     if why and not ctx.merge:
         return ctx.problem(row, why)
+    if old.startswith("ovl/") != new.startswith("ovl/"):
+        return ctx.problem(row, "an overlay's own header stays in include/ovl/ (tools find it there)")
     if tree.exists("include/" + new) or any(h.lower() == ("include/" + new).lower() for h in tree.index()["headers"]):
         return ctx.problem(row, "include/%s exists already" % new)
     tree.move("include/" + old, "include/" + new)
@@ -1632,7 +1633,7 @@ def plan_header(ctx, row):
     n_com = path_rewrite(tree, all_code_files(tree), word, lambda m: m.group(1) + new, strings=False)
     n_cfg = sum(config_line_rewrite(tree, p, word, lambda m: m.group(1) + new) for p in config_text_files(tree))
     tools = []
-    for p in sorted(glob.glob(os.path.join(tree.root, "tools", "*.py")) + [os.path.join(tree.root, "configure.py")]):
+    for p in sorted(glob.glob(os.path.join(tree.root, "tools", "*.py")) + glob.glob(os.path.join(tree.root, "configure.py"))):
         with open(p, encoding=ENC) as f:
             t = f.read()
         if ("include/" + old) in t or ('"%s"' % old) in t:
@@ -1848,6 +1849,10 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
     for s in sites:
         if s[0] == "member" and enum:
             d = find_type(tree, s[1])[0]
+            if file_unit(tree, d[0]) != file_unit(tree, hpath):
+                report.append("%s.%s: no /* %s */ comment, the type is shared and the enum is %s's" % (
+                    s[1], s[2], enum, file_unit(tree, hpath)))
+                continue
             text = tree.read(d[0])
             body = blank_comments(text)[d[3]:d[4]]
             m = re.search(r"(?<![\w])%s(?![\w])" % re.escape(s[2]), body)
@@ -2032,9 +2037,14 @@ def views_proof(ctx):
         while p in fwd:
             p = fwd[p]
         mapped[p] = {map_names(n, names): map_names(t, names) for n, t in views.items()}
+    aliases = {r.new for r in ctx.done if getattr(r, "alias", False)}
     changes = [c for c in sp.view_changes(mapped, after)]
-    for unit, name, kind, ta, tb, cls in changes[:10]:
-        ctx.problems.append("proof 3: %s sees %s differently: %s (%s -> %s)" % (unit, name, kind, ta, tb))
+    for unit, name, kind, ta, tb, cls in changes:
+        msg = "%s sees %s differently: %s (%s -> %s, %s)" % (unit, name, kind, ta, tb, cls)
+        if name in aliases:
+            ctx.notes.append("proof 3 (alias merge, the build decides): " + msg)
+        elif len([p for p in ctx.problems if p.startswith("proof 3")]) < 10:
+            ctx.problems.append("proof 3: " + msg)
 
 
 def ledger_path(root, name):
@@ -2060,8 +2070,8 @@ def append_ledger(root, name, rows):
 def default_ledger(ctx, rows):
     for r in ctx.done or rows:
         if r.kind == "field":
-            return ctx.tree.header_owner(find_type(ctx.tree, r.new if ctx.done else r.scope)[0][0]) \
-                if find_type(ctx.tree, r.scope) else "main"
+            defs = find_type(ctx.tree, r.scope)
+            return file_unit(ctx.tree, defs[0][0]) if defs else "main"
         if r.kind == "file" and r.scope == "include":
             return "main"
         return r.unit

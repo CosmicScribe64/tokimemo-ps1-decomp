@@ -461,7 +461,7 @@ def plan_rodata(targets, funcs, items):
 def missing_prototypes(root, unit, targets):
     """[(prototype text, header)] for C functions called from another object's C and not
     declared in any header the caller includes."""
-    header = "include/main_only.h" if unit == "main" else "include/ovl/%s.h" % unit
+    header = "include/main_only.h" if unit == "main" else "include/" + srcscan.unit_header(unit, root)
     declared = set()
     for t in targets:
         for p in t.preamble:
