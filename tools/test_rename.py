@@ -585,6 +585,31 @@ class EnumRenameTest(Fixture):
         self.assertEqual(R.replay(self.root, out=io.StringIO(), use_gcc=True), 0)
         self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
 
+    def test_private_main_enum_does_not_claim_overlay_member(self):
+        main = "src/main/80041000.c"
+        self.write(main, self.read(main) + "\nenum LocalMode { MODE_WAIT = 0 };\n")
+        header = "include/ovl/AAA.h"
+        self.write(header, self.read(header) + "\nenum OtherMode { MODE_WAIT = 1 };\n")
+        self.ok("enumerator main MODE_WAIT GAME_MODE_WAIT\n", verify=True)
+        self.assertIn("MODE_WAIT = 1", self.read(header))
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.write(main, self.read(main).replace("GAME_MODE_WAIT", "MODE_WAIT"))
+        self.assertEqual(R.replay(self.root, out=io.StringIO(), use_gcc=True), 0)
+        self.assertIn("GAME_MODE_WAIT = 0", self.read(main))
+        self.assertIn("MODE_WAIT = 1", self.read(header))
+
+    def test_enum_alias_in_including_header(self):
+        path = "include/game.h"
+        self.write(path, self.read(path) + "\ntypedef enum MainMode SeparateAlias;\n")
+        self.ok("type main SeparateAlias ReadableMode\n", verify=True)
+        self.assertIn("typedef enum MainMode ReadableMode;", self.read(path))
+        self.assertIn("enum MainMode {", self.read("include/common.h"))
+
+    def test_case_insensitive_enumerator_collision(self):
+        self.write("include/common.h", self.read("include/common.h") +
+                   "\nextern s32 game_mode_wait;\n")
+        self.refused("enumerator main MODE_BOOT GAME_MODE_WAIT\n", "already an identifier")
+
 
 class FileRenameTest(Fixture):
     def test_file(self):

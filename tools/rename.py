@@ -1101,16 +1101,29 @@ def find_type(tree, spec):
     """[(path, tag, typedef, body start, body end, def end)] for a type name, or for UNIT:Type."""
     unit, name = spec.split(":", 1) if ":" in spec else (None, spec)
     found = []
+    enum_aliases = []
     files = tree.index()["headers"] + sorted(tree.index()["sources"])
     for p in files:
         text = tree.read(p) or ""
         if name not in text:
             continue
         defs, fwd = type_defs(text)
+        for m in re.finditer(r"\btypedef\s+enum\s+(\w+)\s+(%s)\s*;" % re.escape(name),
+                             blank_comments(text)):
+            if unit is None or file_unit(tree, p) == unit:
+                enum_aliases.append((p, m.group(1), m.start(2), m.end(2), m.end()))
         for tag, td, b, e, end in defs:
             if td == name or tag == name or (name in fwd and tag == fwd[name]):
                 if unit is None or file_unit(tree, p) == unit:
                     found.append((p, tag, td or (name if name in fwd else None), b, e, end))
+    if not found:
+        # A forward typedef can name an enum whose body lives in an included header.
+        # Its alias declaration owns the alias; the shared enum tag keeps its own name.
+        for p, tag, start, stop, end in enum_aliases:
+            visible = set(tree.closure(p)) | {p}
+            if any(re.search(r"\benum\s+%s\s*\{" % re.escape(tag),
+                             blank_comments(tree.read(h) or "")) for h in visible):
+                found.append((p, tag, name, start, stop, end))
     return found
 
 
@@ -1417,11 +1430,12 @@ def plan_type(ctx, row, finder=find_type):
     files = sorted(set(files))
     row.files = set(files)      # the type's scope: name_map maps the old name only there (proofs 2 and 3)
     if not ctx.merge:
-        clash = [f for f in files if row.new in ident_tokens(tree.read(f) or "", members=True)]
+        clash = [f for f in files if any(t != row.old and t.lower() == row.new.lower()
+                                        for t in ident_tokens(tree.read(f) or "", members=True))]
         if clash:
             return ctx.problem(row, "%s is already an identifier in %s" % (row.new, ", ".join(clash[:3])))
         for u in tree.unit_names if unit == "main" else [unit, "main"]:
-            if row.new in ctx.table().all_names(u):
+            if any(t != row.old and t.lower() == row.new.lower() for t in ctx.table().all_names(u)):
                 return ctx.problem(row, "%s is a symbol name in %s" % (row.new, u))
     if unit != "main":
         shared = [f for f in files if not f.endswith(".c") and tree.header_owner(f) != unit
@@ -2560,14 +2574,24 @@ def old_name_hits(tree, ch, key, o, files, idx, table):
         if o in table.names_at(unit, addr):
             hits.append("the symbol files")
         hits += config_key_hits(tree, o, set(scope_units_for(tree, unit, addr)), unit)
-    elif kind in ("type", "enumerator"):
+    elif kind == "type":
         unit = key[1]
         scope = set(files) if unit == "main" else set(tree.unit_sources(unit) + tree.private_headers(unit))
         hits = sorted(idx.get(o, set()) & scope)
-        if kind == "enumerator":
-            # name_index also indexes override-guard suffixes. GAME_MODE_RUN is one token,
-            # not a surviving reference to MODE_RUN when this is an enumerator chain.
-            hits = [f for f in hits if o in ident_tokens(tree.read(f) or "", members=True)]
+    elif kind == "enumerator":
+        # Match the declaration's users, as planning does; a main C file's private enum
+        # must not make an unrelated overlay's same-spelled member look stale.
+        final = ch[key][0][-1]
+        defs = find_enumerator(tree, final) + find_enumerator(tree, o)
+        scope = set()
+        for d in defs:
+            if file_unit(tree, d[0]) == key[1]:
+                scope.update(closure_files(tree, users_of(tree, d[0])))
+                scope.add(d[0])
+        # The general index includes guard suffixes. GAME_MODE_RUN is one token,
+        # not a surviving reference to MODE_RUN in an enumerator chain.
+        hits = sorted(f for f in idx.get(o, set()) & scope
+                      if o in ident_tokens(tree.read(f) or "", members=True))
     elif kind == "field":
         tname = current_type_name_rows(ch, key[1])
         for d in find_type(tree, tname):
