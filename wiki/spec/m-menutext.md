@@ -9,7 +9,7 @@ sources: ["src/main/8004E500.c", "src/main/8004F6B0.c", "src/main/8004F870.c", "
 
 Roadmap phase 2, unit `m-menutext` ([[tickets/T-27018-p2-m-menutext]], parent [[tickets/T-27000-phase-2]]). This is shared game logic of the main executable: the text list with its typewriter, the speaker label and dialogue-block helpers, the menu engine, the girl name builders, and the girl score and state queries that most scenes call. It covers all 61 functions of `src/main/8004E500.c` (25), `src/main/8004F6B0.c` (1) and `src/main/8004F870.c` (35). Facts come from the matched C, its callers, the decoded data tables and short emulator probes (section 15). Anything the code does not prove is marked HYPOTHESIS. No game text appears here; strings are described by their role.
 
-Names are the proposals in `config/renames/proposals/m-menutext.tsv` (150 rows) and the core table (`p2a-core`). Where core already named an address (`text_system_reset`, `menu_cursor_update`, `text_wait_confirm`, `voice_play`, `dialogue_text_step`, the GameState fields, `TextEntry`, `TextState`, `MenuItem`, `MenuSelection`) this unit uses that name and adds no row. Suggested files: `src/main/text_system.c` (8004E500), `src/main/debug_vram_view.c` (8004F6B0), `src/main/menu_speaker_girl.c` (8004F870), headers `include/main/text.h` and `include/main/menu.h`. O.BIN names stay (45 of the 61 functions); 22 of them have a comment row in core, 23 in this table (section 16 lists the core comments that could be firmer).
+Names are the proposals in `config/renames/proposals/m-menutext.tsv` (153 rows) and the core table (`p2a-core`). Where core already named an address (`text_system_reset`, `menu_cursor_update`, `text_wait_confirm`, `voice_play`, `dialogue_text_step`, the GameState fields, `TextEntry`, `TextState`, `MenuItem`, `MenuSelection`) this unit uses that name and adds no row. The `NameCode` constants of the name codes in text belong to `m-dates-b` (`NAME_CODE_PLAYER_FORM` for the `P` code, `NAME_CODE_GIRL` for `G`); this unit defines none. The `TextSpeed` constants are owned here (`m-sysmenu` cites them). Suggested files: `src/main/text_system.c` (8004E500), `src/main/debug_vram_view.c` (8004F6B0), `src/main/menu_speaker_girl.c` (8004F870), headers `include/main/text.h`, `include/main/menu.h`, `include/main/speaker.h` and `include/main/girl.h` (8004F870 is one original object with three topics, so one C file; the headers split by topic). O.BIN names stay (45 of the 61 functions); 22 of them have a comment row in core, 23 in this table (section 16 lists the core comments that could be firmer).
 
 ## 1. What the unit does
 
@@ -28,7 +28,7 @@ Use counts are call-site lines outside the unit's three files (main files / over
 | address | name | role | uses |
 |---|---|---|---|
 | 8004E500 | `text_glyph_pages_clear` | clear n glyph pages in VRAM | -/2 |
-| 8004E58C | `text_system_reset` (core) | upload text palettes, clear two glyph pages and all 52 entries, zero the counters, keep a valid advance | 42/213 |
+| 8004E58C | `text_system_reset` (core) | upload text palettes, clear two glyph pages and all 52 entries, zero count, total, revealed and mark (the speed is kept), keep a valid advance | 42/213 |
 | 8004E750 | `text_set_advance` | glyph advance 0x10 or (anything else) 0xE | -/4 |
 | 8004E780 | `text_unused_stub` | empty | - |
 | 8004E788 | `set_kanji_string` | queue one string; returns the new entry count, -1 when full | 246/329 |
@@ -42,7 +42,7 @@ Use counts are call-site lines outside the unit's three files (main files / over
 | 8004EAAC | `k_sub_reset` | `k_reset(mark)` | 48/267 |
 | 8004EAD4 | `k_sub_disp_start` | `k_disp_start(mark + n)` | 34/253 |
 | 8004EAFC | `k_disp_goto_line_end` | reveal the rest of the entry being typed | - (internal) |
-| 8004EBEC | `k_speed_set` | typewriter speed, values above 0x80 become 0x7F | 6/24 |
+| 8004EBEC | `k_speed_set` | typewriter speed, arguments from 0x81 up become 0x7F (0x80 passes) | 6/24 |
 | 8004EC14 | `get_k_speed` | read it | 3/5 |
 | 8004EC24 | `k_disp_inc` | one typewriter tick; 1 when everything is revealed | 31/17 |
 | 8004ECB4 | `check_end_k` | 1 when everything is revealed | 9/36 |
@@ -84,7 +84,7 @@ Use counts are call-site lines outside the unit's three files (main files / over
 | 80052DA4 | `birth_day_check` | birthday today | 1/- |
 | 80052DD4 | `birth_day_check_days` | birthday on a given day | 6/- |
 | 80052E60 | `girl_points_shiori` | girl 0 points | - |
-| 80052F68 | `girl_points_heroines` | girls 1-10 points | - |
+| 80052F68 | `girl_points_others` | girls 1-10 points | - |
 | 80053418 | `girl_scores` | closeness and points of girls 0-10 | 6/4 |
 | 8005352C | `player_in_sports_club` | club 6-10 | 3/- |
 | 80053564 | `girl_find_by_club` | first girl in a club | 4/- |
@@ -95,22 +95,22 @@ Use counts are call-site lines outside the unit's three files (main files / over
 
 | name | address | what |
 |---|---|---|
-| `text_list` | 800B3DC0 | 52 `TextEntry` records of 8 bytes: `x` (s16, relative to the screen centre), `y` (s16), `attr` (u8, bits 0-3 colour 0-15), `glyph_count` (u8), `extra` (u8, ordering-table slot, 0 means 1), `active` (s8, 1 = drawn). Last entry also labelled `text_list_last` |
+| `text_list` | 800B3DC0 | 52 `TextEntry` records of 8 bytes: `x` (s16, relative to the screen center), `y` (s16), `attr` (u8, the color index 0-15; proposed name `color`), `glyph_count` (u8), `extra` (u8, the ordering-table slot, 0 means 1; proposed name `ot_slot`), `active` (s8, 1 = drawn); the field names are core's rows and section 16 asks core to change the two weak ones; the rest of this spec already writes `color` and `ot_slot`. Last entry also labelled `text_list_last` |
 | `text_state` (was `text_list_count`) | 800B3F60 | `TextState`, 12 bytes: `count` (s16, entries used), `total` (s16, glyph slots allocated; alias `text_glyph_count`), `mark` (s16, saved count), `speed` (u8), `revealed` (s16, glyphs revealed), `glyph_advance` (u8, alias `text_glyph_advance`) |
 | `text_font_range_table`, `text_font_glyphs` | 800B402C, 800B6D50 | 46 range entries (first code, first glyph number); 3418 glyphs of 18 bytes |
-| `text_palette_0/1`, `text_shadow_palette_0/1` | 800B3FAC, 800B3FCC, 800B3FEC, 800B400C | 8 two-colour palettes each |
+| `text_palette_0/1`, `text_shadow_palette_0/1` | 800B3FAC, 800B3FCC, 800B3FEC, 800B400C | 8 two-color palettes each |
 | `text_glyph_upload_ring` | 801255F0 | 16 slots of 0x60 bytes |
 | `text_row_y` | 800B40F0 | 0x32, 0x42, 0x52, 0 |
 
-GameState fields the unit uses (core names): `text_lines_total` (+0xF60), `text_first_line` (+0xF61), `text_scroll_state` (+0xF62), `current_girl`, `pad_held`, `pad_pressed`, `frame_count`, `screen_brightness`, `screen_center_x/y`, `voice_mode`, `substep`, the `menu_*` fields, the girl records and the nine parameters. Section 5.2 and section 16 say what the three text fields really hold.
+GameState fields the unit uses (core names): `text_lines_total` (+0xF60, really the index one past the last entry of the current dialogue block: read it as `text_block_end`), `text_first_line` (+0xF61, really the index of the block's first entry: `text_block_first`), `text_scroll_state` (+0xF62), `current_girl`, `pad_held`, `pad_pressed`, `frame_count`, `screen_brightness`, `screen_center_x/y`, `voice_mode`, `substep`, the `menu_*` fields, the girl records and the nine parameters. Section 5.2 and section 16 say what the three text fields really hold and ask core to rename the first two; the body of this spec writes `text_block_end` and `text_block_first` for them.
 
 ### 3.2 Menu state
 
-`menu_items` (+0xF90, core): 16 x 2 `MenuItem` records of 8 bytes, item i of menu m at `+0xF90 + i * 0x10 + m * 8`: `x` (s16), `y` (s16), `w` (u8), `h` (u8), `hover` (u8, 0 none, `MENU_HOVER_POINTER` 1, `MENU_HOVER_CURSOR` 10), `disabled` (u8, 1 when w * h is 0). Next to it (+0x1090): `menu_count_0/1`, `menu_mode`, `menu_cursor_0/1` (s8, the pad cursor, -1 none), `menu_hit[menu]` (s8 at +0x1095, the item to act on). `menu_bar_style[16]` (800E3680) holds the highlight bar style per menu. The pointer position is the actor-0 position `cursor_x`/`cursor_y` (core `D_8011ECF6`/`FA`, screen-centre relative).
+`menu_items` (+0xF90, core): 16 x 2 `MenuItem` records of 8 bytes, item i of menu m at `+0xF90 + i * 0x10 + m * 8`: `x` (s16), `y` (s16), `w` (u8), `h` (u8), `hover` (u8, 0 none, `MENU_HOVER_POINTER` 1, `MENU_HOVER_CURSOR` 10), `disabled` (u8, 1 when w * h is 0). Next to it (+0x1090): `menu_count_0/1`, `menu_mode`, `menu_cursor_0/1` (s8, the pad cursor, -1 none), `menu_hit[menu]` (s8 at +0x1095, the item to act on). `menu_bar_style[16]` (800E3680) holds the highlight bar style per menu. The pointer position is the actor-0 position `cursor_x`/`cursor_y` (core `D_8011ECF6`/`FA`, screen-center relative).
 
 ### 3.3 Voice sync state
 
-Four words in the EVENT range of main bss (a main-only symbol file): `voice_table_a` (80125BF4), `voice_table_b` (80125BF8), `voice_index` (80125BFC), `voice_state` (80125C00; 0 pending, 1 playing, 2 done).
+Four words in the EVENT range of main bss (a main-only symbol file): `speaker_voice_table_a` (80125BF4), `speaker_voice_table_b` (80125BF8), `speaker_voice_index` (80125BFC), `speaker_voice_state` (80125C00; 0 pending, 1 playing, 2 done).
 
 ### 3.4 Girl score tables
 
@@ -122,15 +122,15 @@ All in `.data` at 800B4100-800B437C, indexed by girl 0-12 unless noted (section 
 | `girl_bonus_param_mask` | 800B4110 | u8[13] |
 | `girl_param_ladder_kind` | 800B4120 | u8[13], 1-6 |
 | `girl_param_bonus` | 800B4130 | s8[13][8] |
-| `param_ladder_base` | 800B4198 | u8[7] |
+| `girl_param_ladder_base` | 800B4198 | u8[7] |
 | `girl_affection_weight` (core) | 800B41A0 | u8[13], percent |
-| `closeness_grid` | 800B41B0 | u8[20][20] |
-| `shiori_param_minimum` | 800B4340 | u8[8], entries 0-6 used (label D_800B4341 sits on entry 1) |
+| `girl_closeness_grid` | 800B41B0 | u8[20][20] |
+| `girl_shiori_param_minimum` | 800B4340 | u8[8], entries 0-6 used; the splat label D_800B4341 sits on entry 1 and becomes the alias `girl_shiori_param_minimum_1` (the table start needs a new symbol entry) |
 | `girl_syoushin_weight` | 800B4348 | s8[12] |
 | `girl_points_mask_strong`, `girl_points_mask_normal` | 800B4354, 800B4360 | u8[12] each |
-| `points_param_curve`, `points_stress_curve` | 800B436C, 800B437C | s8[15] each |
+| `girl_points_param_curve`, `girl_points_stress_curve` | 800B436C, 800B437C | s8[15] each |
 | `girl_short_name_table` (kept) | 800B35F4 | 16 string pointers: family names of girls 0-12 and 14, slot 13 and 15 hold given names (section 6) |
-| `name_suffix_kun`, `name_suffix_san` | 800B3634, 800B3638 | the two suffix strings |
+| `girl_name_suffix_familiar`, `girl_name_suffix_polite` | 800B3634, 800B3638 | the two suffix strings: the familiar one (kun) and the polite one (san); the glossary keeps -kun and -san as string pieces, not stems, so the names describe the form |
 
 ## 4. Text system
 
@@ -144,7 +144,7 @@ All in `.data` at 800B4100-800B437C, indexed by girl 0-12 unless noted (section 
 
 `load_string(string)` reads two bytes per character as a Shift-JIS code until either byte is 0. A code below 0x8140 prints a debug error line and ends the string (single-byte ASCII is not supported by this system; the name codes of section 5 are replaced before the call). Otherwise it finds the first range of `text_font_range_table` whose start is above the code, takes the range before it, and the glyph number is `code - range.first + range.glyph`. Codes at or beyond the last entry (0x9873) load nothing and do not count. The font covers 3418 glyphs: punctuation, full-width digits and Latin, kana, Greek, Cyrillic (0x8140-0x84BE, glyphs 0-452) and the JIS level-1 kanji (0x889F-0x9872, glyphs 453-3417), so every on-screen text is full-width. It returns the number of glyphs loaded.
 
-`vload_font(glyph)` unpacks the 12 x 12 bitmap with `text_glyph_expand` into ring slot `total & 0xF`, uploads it as a 16 x 12 pixel block (4 halfwords x 12 rows) to the next free atlas cell and bumps `total`. The atlas has three pages of 128 cells (8 columns x 16 rows, 16 x 16 pixel cells) at VRAM x 0x320, 0x360 and 0x3A0, y 0x100-0x1FF; slot `t` is at column `t & 7`, row `(t >> 3) & 15`. A fourth page does not exist (slots 0x180 and up would overwrite page 3). `text_glyph_expand` reads the bitmap as a 144-bit stream, row by row, most significant bit first, and writes each pixel as a nibble (0 transparent, 1 text colour), two words per row.
+`vload_font(glyph)` unpacks the 12 x 12 bitmap with `text_glyph_expand` into ring slot `total & 0xF`, uploads it as a 16 x 12 pixel block (4 halfwords x 12 rows) to the next free atlas cell and bumps `total`. The atlas has three pages of 128 cells (8 columns x 16 rows, 16 x 16 pixel cells) at VRAM x 0x320, 0x360 and 0x3A0, y 0x100-0x1FF; slot `t` is at column `t & 7`, row `(t >> 3) & 15`. A fourth page does not exist: slots 0x180 and up still take the third branch of `vload_font`, so they land on the cells of slots 0x100 and up inside the third page (page 2, x 0x3A0). `text_glyph_expand` reads the bitmap as a 144-bit stream, row by row, most significant bit first, and writes each pixel as a nibble (0 transparent, 1 text color), two words per row.
 
 So glyph slot numbers are consecutive in queue order: the j-th character of entry e has slot `sum(glyph_count of entries 0..e-1) + j`. Every character occurrence is uploaded again (no sharing). `k_reset(n)` rewinds the allocator to the end of entry n-1 (`total = revealed = sum of the first n glyph counts`, `count = n`), so later entries overwrite the same cells.
 
@@ -157,7 +157,7 @@ if (frame_count % (speed + 1) == 0) { if (revealed < total) { revealed++; return
 return (revealed == total) ? 1 : 0
 ```
 
-It returns 1 whenever everything is shown, so callers also use it as the end test (`check_end_k` is the same test without a tick). Speed values: 0 one glyph per frame, 1 every 2 frames, 3 every 4 frames; the settings screen offers slow = 3, normal = 1, fast = 0; ENDING uses 8 and 16, BUNKA_SD 5. The speed is saved with the game (the memory-card code copies `get_k_speed()` into the save block and calls `k_speed_set` on load); a freshly reset state has speed 0.
+It returns 1 whenever everything is shown, so callers also use it as the end test (`check_end_k` is the same test without a tick). Speed values: 0 one glyph per frame, 1 every 2 frames, 3 every 4 frames; the settings screen offers slow = 3, normal = 1, fast = 0; ENDING uses 8 and 16, BUNKA_SD 5. The speed is saved with the game (the memory-card code copies `get_k_speed()` into the save block and calls `k_speed_set` on load). `text_system_reset` never writes the speed: it zeroes the counters and the entries and keeps the setting, so only the boot-time zero initialization leaves speed 0 (probe 2 reads speed 1 right after a reset). A port that clears the speed in its reset would lose the saved setting. `k_speed_set` clamps only arguments from 0x81 up to 0x7F; 0x80 passes unchanged.
 
 - `k_disp_start(n)`: `revealed` = glyph count of the first n entries, so those entries appear at once and the typewriter starts at entry n (TEL calls it with the current count).
 - `k_sub_reset_point_set()`: `mark = count`. `k_sub_reset()`: `k_reset(mark)`. `k_sub_disp_start(n)`: `k_disp_start(mark + n)`. A screen keeps a fixed header below the mark and replaces the message above it. The settings screens use exactly this: queue the items, set the mark, queue the message, `k_sub_disp_start(0)`; after a choice, `k_sub_reset()` and a new message.
@@ -170,23 +170,23 @@ It returns 1 whenever everything is shown, so callers also use it as the end tes
 
 For glyph stream index `i` below `min(total, revealed)` it finds the entry `j` that owns the glyph (`k` = index inside the entry) and, if `entries[j].active == 1`, emits two 16 x 16 sprites (code 0x7C) into ordering slot `ot_slot` (0 is treated as 1):
 
-- coloured sprite at screen x = `entry.x + screen_center_x + k * glyph_advance`, y = `entry.y + screen_center_y`, tint = `screen_brightness`, palette (x = 0x100 + (color & 8) * 4, y = 0x1F8 + (color & 7));
+- colored sprite at screen x = `entry.x + screen_center_x + k * glyph_advance`, y = `entry.y + screen_center_y`, tint = `screen_brightness`, palette (x = 0x100 + (color & 8) * 4, y = 0x1F8 + (color & 7));
 - shadow sprite one pixel right and down, tint 0, palette 0x10 further right (the dark twin);
 - texture coordinates `u = (i & 7) * 16 + 0x80`, `v = (i & 0x78) * 2`, texture page 0x300, 0x340 or 0x380 by `i < 0x80`, `< 0x100`, else; draw-mode primitives for the page are added after the sprites of a run so they take effect first.
 
 `glyph_advance` is 0xE (14 px) after `text_system_reset`, set to 0x10 by `text_set_advance(0x10)` (NAME_ENT `func_80132198`) and back to 0xE by NAME_ENT and OPTION code. A glyph occupies 12 pixels of its 16-pixel cell, so neighbouring cells overlap in their transparent margins.
 
-Palettes: 16 text colours, two entries each (transparent, colour), uploaded at VRAM (0x100, 0x1F8) for colours 0-7 and (0x120, 0x1F8) for 8-15, with the shadow twins at (0x110, 0x1F8) and (0x130, 0x1F8). Colour 0 is the pale default of the message window, 3 is used by the settings items, 0xF is near-black (NAME_ENT prompts). `text_system_reset` also uploads two blank strips of `text_blank_strip` at y 0x1FF under pages 0 and 1, clears pages 0 and 1 with `text_glyph_pages_clear(2)` (ENDING clears 3) and a 2 x 8 block at (0x102, 0x1F8) to grey.
+Palettes: 16 text colors, two entries each (transparent, color), uploaded at VRAM (0x100, 0x1F8) for colors 0-7 and (0x120, 0x1F8) for 8-15, with the shadow twins at (0x110, 0x1F8) and (0x130, 0x1F8). Color 0 is the pale default of the message window, 3 is used by the settings items, 0xF is near-black (NAME_ENT prompts). `text_system_reset` also uploads two blank strips of `text_blank_strip` at y 0x1FF under pages 0 and 1, clears pages 0 and 1 with `text_glyph_pages_clear(2)` (ENDING clears 3) and a 2 x 8 block at (0x102, 0x1F8) to gray.
 
 ### 4.4 Coordinates
 
-All text coordinates are relative to the screen centre of the 320 x 240 frame (160, 120); x -128 is 32 px from the left edge. The message window has three rows: y 0x32, 0x42, 0x52 (170, 186, 202 px from the top, 16 apart): `TEXT_ROW_0_Y`..`TEXT_ROW_2_Y`.
+All text coordinates are relative to the screen center of the 320 x 240 frame (160, 120); x -128 is 32 px from the left edge. The message window has three rows: y 0x32, 0x42, 0x52 (170, 186, 202 px from the top, 16 apart): `TEXT_ROW_0_Y`..`TEXT_ROW_2_Y`.
 
 ## 5. Speaker labels and dialogue blocks
 
 ### 5.1 Name plate
 
-`gnsx(string)` queues the string at row 0 with colour 0 and x by byte length: 2 bytes (1 character) -114, 4 bytes -121, 6 bytes or more -128. The three x values centre a 14 px advance string on x = -107, a plate that fits at most three characters. Callers pass a girl's short name (`girl_short_name_table[girl]`), the player's family name or a fixed label (NAME_ENT prologue, TEL, ETC).
+`gnsx(string)` queues the string at row 0 with color 0 and x by byte length: 2 bytes (1 character) -114, 4 bytes -121, 6 bytes or more -128. The three x values center a 14 px advance string on x = -107, a plate that fits at most three characters. Callers pass a girl's short name (`girl_short_name_table[girl]`), the player's family name or a fixed label (NAME_ENT prologue, TEL, ETC).
 
 ### 5.2 Dialogue line (`sndi(string, row, style)`) and block (`sndisp(string, row, style)`)
 
@@ -195,11 +195,11 @@ All text coordinates are relative to the screen centre of the 320 x 240 frame (1
 `sndi`:
 
 1. Copies up to 64 bytes of the line and clears `text_scroll_state`.
-2. Name codes (a single ASCII letter on an even byte offset, so it cannot be half of a two-byte character): if `style & 15 == 15`, the first `P` is replaced by `get_p_name(buf, 15)` (the player's full name) and then the first `G` by `get_g_name(buf, current_girl)`; otherwise only the first `P` is replaced, by `get_p_name(buf, current_girl)` (how the current girl addresses the player), whatever the speaker is. At most one replacement per code per line.
-3. Opening mark on row 0: `style == 0xF` double corner bracket, `0x1F` opening parenthesis, `0x2F` none, anything else (including 0xFF) the ordinary corner bracket (`SPEECH_*`). The mark is a character of the queued line, so row 0 has one glyph more than its text (emulator probe 5).
-4. Placement: rows 0, 1 and 2-and-up map to y 0x32, 0x42, 0x52; x is -0x56 (-86) for row 0 and -0x48 (-72) for later rows, or -0x80 for every row when `style == 0xFF` (no speaker plate). The first line is 14 px further left than the others so the opening mark hangs in the margin. Colour 0, `ot_slot` 0.
+2. Name codes (a single ASCII letter on an even byte offset, so it cannot be half of a two-byte character; the constants are m-dates-b's `NAME_CODE_PLAYER_FORM` for `P` and `NAME_CODE_GIRL` for `G`): if `style & 15 == 15`, the first `P` is replaced by `get_p_name(buf, 15)` (form 15: the player's full name, which is why m-dates-b names the code for the form and not for a fixed name) and then the first `G` by `get_g_name(buf, current_girl)`; otherwise only the first `P` is replaced, by `get_p_name(buf, current_girl)` (how the current girl addresses the player), whatever the speaker is. At most one replacement per code per line.
+3. Opening mark on row 0: `style == 0xF` double corner bracket, `0x1F` opening parenthesis, `0x2F` none, anything else (including 0xFF) the ordinary corner bracket (`SPEAKER_STYLE_*`). The mark is a character of the queued line, so row 0 has one glyph more than its text (emulator probe 5).
+4. Placement: rows 0, 1 and 2-and-up map to y 0x32, 0x42, 0x52; x is -0x56 (-86) for row 0 and -0x48 (-72) for later rows, or -0x80 for every row when `style == 0xFF` (no speaker plate). The first line is 14 px further left than the others so the opening mark hangs in the margin. Color 0, `ot_slot` 0.
 
-`sndisp` splits the string at ASCII spaces on an even byte offset (up to 5 splits, so 6 lines), replacing each space by 0, then calls `sndi` for the first piece at `row` and for the others at `row + 1 + n`. Around the calls it records `text_first_line = check_set_k()` before and `text_lines_total = check_set_k()` after, and sets `text_scroll_state = 0x80` (after the last `sndi`, which cleared it). So a block is a run of consecutive entries and a scene queues the plate first, then the block, as in this common step:
+`sndisp` splits the string at ASCII spaces on an even byte offset (5 splits at most, so 6 lines: the split positions go into a `u8 pos[5]` array without a bounds check, so five is the array capacity and a sixth space would write past it), replacing each space by 0, then calls `sndi` for the first piece at `row` and for the others at `row + 1 + n`. Around the calls it records `text_block_first = check_set_k()` before and `text_block_end = check_set_k()` after (core names `text_block_first` and `text_block_end`, +0xF61 and +0xF60), and sets `text_scroll_state = 0x80` (after the last `sndi`, which cleared it). So a block is a run of consecutive entries and a scene queues the plate first, then the block, as in this common step:
 
 ```
 k_sub_reset(); gnsx(name); sndisp(text, 0, style); voice_play(a, b, index, style); substep++
@@ -214,33 +214,33 @@ All three steps end by bumping `substep` (the caller's step function switches on
 
 `text_wait_confirm` (core `func_80052000`, overlay prompts): `k_disp_inc()`; when `pad_pressed` has circle, cross or START (0x860): `k_disp_goto_line_end()` and, if everything is now shown, `substep++`. One press therefore finishes the current line and, on the last line, also advances.
 
-`xa_wait` (O.BIN name; no voice code in this build) and `dialogue_text_step` (voice aware) share the scroll logic. A block shows three rows, `text_first_line` .. `text_first_line + 2` (call it F). With `text_scroll_state & 0x80`:
+`xa_wait` (O.BIN name; no voice code in this build) and `dialogue_text_step` (voice aware) share the scroll logic. A block shows three rows, `text_block_first` .. `text_block_first + 2` (call it F). With `text_scroll_state & 0x80`:
 
-- while `get_now_k()` is at most F + 2: tick the typewriter; when the typing reaches F + 3 (a fourth line) and `text_lines_total >= F + 3` that entry is hidden (`k_disp_switch(now, 0)`) so it does not overprint row 2;
+- while `get_now_k()` is at most F + 2: tick the typewriter; when the typing reaches F + 3 (a fourth line) and `text_block_end >= F + 3` that entry is hidden (`k_disp_switch(now, 0)`) so it does not overprint row 2;
 - when `get_now_k()` is beyond F + 2 (the typewriter waits): phase 0 hides line F, then lines F + 1 and F + 2 move up 2 px per frame (phase 1); when line F + 1 reaches y 0x32 the two lines snap to y 0x32 and 0x42, F increases by 1, the hidden fourth line (now F + 2, at y 0x52 from `sndi`) is shown and typing resumes. A block of n lines thus scrolls n - 3 times, 8 frames each.
 
 Without the 0x80 bit the step is a plain typewriter.
 
 The continue marker: when the typing is finished (`r == 1`) the step shows the marker with `text_marker_set(1)` or, when the marker actor already has bit 7 set, runs its bobbing step (`func_8006C934`). A confirm press (`pad_pressed & 0x60`): when finished, hide the marker, `substep++`, `text_scroll_state = 0`; otherwise `k_disp_goto_line_end()` (completes the line being typed, one press per line).
 
-`dialogue_text_step` adds the voice wait. `voice_mode` is 0 off, 1 on, 2 on and cancelable (core `VOICE_*`).
+`dialogue_text_step` adds the voice wait. `voice_mode` is 0 off, 1 on, 2 on and cancelable (core `VOICE_*`). `table_a` and `table_b` below are `speaker_voice_table_a` and `speaker_voice_table_b`; the `cd_audio_state` tests are masks (the code tests `& 4` and `& 2`).
 
 ```
 non-scroll typing: voice_mode 0            -> tick every frame
-                   voice_mode 1 or 2       -> tick only while voice_state != 0
-voice_state 0 -> 1 when cd_audio_state() has bit 4 (clip playing)
-voice_state 1, when cd_audio_state() has bit 2 (clip done):
-                 if voice_index != -1 and table_a[idx].start != table_b[idx].start and
+                   voice_mode 1 or 2       -> tick only while speaker_voice_state != 0
+speaker_voice_state 0 -> 1 when cd_audio_state() & 4 (value 4, bit 2: clip playing)
+speaker_voice_state 1, when cd_audio_state() & 2 (value 2, bit 1: clip done):
+                 if speaker_voice_index != -1 and table_a[idx].start != table_b[idx].start and
                     table_a[idx].start == start word of the current request:
                       cd_audio_request_set(table_b[idx].start, .end, current_girl); snd_command(0x300);
-                      voice_state = 0                      (clip B follows clip A)
-                 else voice_state = 2
-marker when typing is finished and voice_state == 2 (or voice_mode == 0)
-cross press, typing finished, voice_mode 2: voice_state = 2, sound effect 0x74 and cd_audio_command(9)  (cut the clip)
-confirm advances only if voice_mode is 0, or voice_state == 2
+                      speaker_voice_state = 0                      (clip B follows clip A)
+                 else speaker_voice_state = 2
+marker when typing is finished and speaker_voice_state == 2 (or voice_mode == 0)
+cross press, typing finished, voice_mode 2: speaker_voice_state = 2, sound effect 0x74 and cd_audio_command(9)  (cut the clip)
+confirm advances only if voice_mode is 0, or speaker_voice_state == 2
 ```
 
-`voice_play(a, b, index, style)` (core): when `voice_mode != 0` and the speaker nibble is not 15, issues the clip request with `cd_audio_request_set(start, end, style)` and `snd_command(0x300)` (clip words come from the pair tables at `index * 2`, or are `a` and `b` themselves when `index == -1`); then stores the tables and index and sets `voice_state` to 2 for speaker 15 (no voice), else 0. In the tables found (ETC, TEL) A and B hold the same pairs, so every observed line is one clip; B only matters when the tables differ (HYPOTHESIS: a second recording of a line).
+`voice_play(a, b, index, style)` (core): when `voice_mode != 0` and the speaker nibble is not 15, issues the clip request with `cd_audio_request_set(start, end, style)` and `snd_command(0x300)` (clip words come from the pair tables at `index * 2`, or are `a` and `b` themselves when `index == -1`); then stores the tables and index and sets `speaker_voice_state` to 2 for speaker 15 (no voice), else 0. In the tables found (ETC, TEL) A and B hold the same pairs, so every observed line is one clip; B only matters when the tables differ (HYPOTHESIS: a second recording of a line).
 
 Main uses `voice_play` with immediate clip words (`index -1`, speaker 0xE) in the system menus (8005A0B0); overlays (TEL 116 times, ETC 2) pass tables.
 
@@ -251,11 +251,11 @@ Main uses `voice_play` with immediate clip words (`index -1`, speaker 0xE) in th
 | girl | result |
 |---|---|
 | 0 (Shiori) | her given name, no suffix (a literal) |
-| 10 (Yumi) | the given name in `girl_short_name_table[15]` + the familiar suffix `chan` (a literal) |
+| 10 (Yumi) | the given name in `girl_short_name_table[15]` + the familiar suffix `chan` (a literal; the data string `girl_name_suffix_familiar` is the other familiar suffix, kun) |
 | 12 (Rei) | the family name in the table, no suffix |
 | any other | the table entry (family name; for girl 13 the table holds his given name) + the polite suffix `san` (a literal) |
 
-`get_p_name(buf, form)` builds how girl `form` addresses the player, from the player's family name (`player_family_name`), given name, nickname and the two suffixes. `high` means `get_g_zyotai_s(girl) & 0x80` (weighted affection at least 80). N nickname, G given name, F family name; `+kun` / `+san` append `name_suffix_kun` / `name_suffix_san`.
+`get_p_name(buf, form)` builds how girl `form` addresses the player, from the player's family name (`player_family_name`), given name, nickname and the two suffixes. `high` means `get_g_zyotai_s(girl) & 0x80` (weighted affection at least 80). N nickname, G given name, F family name; `+kun` / `+san` append the strings `girl_name_suffix_familiar` (kun) and `girl_name_suffix_polite` (san).
 
 | girl | high | otherwise |
 |---|---|---|
@@ -314,13 +314,13 @@ Screens read the result as `menu_cursor_1` (or `menu_hit[1]`) on a confirm press
 
 ### 7.3 Highlight bar
 
-`menu_bar_show(menu)` draws a gouraud box over the item at `menu_cursor[menu]` when that is a valid index: position and size from the item, ordering slot = bits 24-27 of `menu_bar_style[menu]`, colour = bits 0-23, box mode = bits 28-30, semi-transparent = bit 31 (passed as 0x80 in the mode argument); it then adds a dither-on draw-mode primitive to the same slot. `menu_bar_color(menu, rgb, slot, mode)` packs a style (`rgb + (slot & 15) << 24 + (mode & 15) << 28`); an index of 0x10 or more instead restores the two defaults 0x832F7FAF (menu 0, blue) and 0x822F7F2F (menu 1, green); boot and the settings screen do that. The emulator shows both defaults in the title-menu state.
+`menu_bar_show(menu)` draws a gouraud box over the item at `menu_cursor[menu]` when that is a valid index: position and size from the item, ordering slot = bits 24-27 of `menu_bar_style[menu]`, color = bits 0-23, box mode = bits 28-30, semi-transparent = bit 31 (passed as 0x80 in the mode argument); it then adds a dither-on draw-mode primitive to the same slot. `menu_bar_color(menu, rgb, slot, mode)` packs a style (`rgb + (slot & 15) << 24 + (mode & 15) << 28`); an index of 0x10 or more instead restores the two defaults 0x832F7FAF (menu 0, blue) and 0x822F7F2F (menu 1, green); boot and the settings screen do that. The emulator shows both defaults in the title-menu state.
 
 ## 8. Girl scores
 
 `girl` below is the index modulo 13 (`GIRL_SCORE_MODULUS`), so girls 13 and 14 read the records of girls 0 and 1.
 
-`get_h_yuukou(g)` = clamp(`affection * girl_affection_weight[g] / 100`, 0, 100) (integer division). `get_h_tokimeki(g)` = clamp(`tokimeki * girl_tokimeki_weight[g] / 100` + bonus, 0, 100). The bonus: for every parameter p in 1..6 (liberal arts, science, art, athletics, trivia, looks; guts never counts) whose bit is set in `girl_bonus_param_mask[g]`, find the first step k in 0..6 with `value(p) > T[kind][k]` and add `girl_param_bonus[g][k]`; add `girl_param_bonus[g][7]` when none matches. Bit 7 of the masks of girls 0, 4 and 6 is dead. Effective thresholds `T[kind][k]` = `param_ladder_base[k]` + offset:
+`get_h_yuukou(g)` = clamp(`affection * girl_affection_weight[g] / 100`, 0, 100) (integer division). `get_h_tokimeki(g)` = clamp(`tokimeki * girl_tokimeki_weight[g] / 100` + bonus, 0, 100). The bonus: for every parameter p in 1..6 (liberal arts, science, art, athletics, trivia, looks; guts never counts) whose bit is set in `girl_bonus_param_mask[g]`, find the first step k in 0..6 with `value(p) > T[kind][k]` and add `girl_param_bonus[g][k]`; add `girl_param_bonus[g][7]` when none matches. Bit 7 of the masks of girls 0, 4 and 6 is dead. Effective thresholds `T[kind][k]` = `girl_param_ladder_base[k]` + offset:
 
 | kind | girls | thresholds k = 0..6 |
 |---|---|---|
@@ -331,7 +331,7 @@ Screens read the result as `menu_cursor_1` (or `menu_hit[1]`) on a confirm press
 | 5 | 9 | 148, 120, 110, 90, 50, 25, 10 |
 | 6 | 10 | 128, 100, 90, 70, 45, 25, 5 |
 
-(`param_ladder_base` is 128, 100, 90, 70, 50, 30, 10.) Girls 11 and 12 have kind 0, an empty mask and zero bonuses.
+(`girl_param_ladder_base` is 128, 100, 90, 70, 50, 30, 10.) Girls 11 and 12 have kind 0, an empty mask and zero bonuses.
 
 Data (girls 0-12):
 
@@ -356,9 +356,20 @@ girl_param_bonus (steps 0..7)
 
 ## 9. Closeness and points (`girl_scores`)
 
-`girl_scores(closeness[16], points[16])`: fills 11 bytes of scores through the two table functions, then for i in 0..15 (only 0-10 are meaningful: entries 11-15 of the closeness array come from uninitialised stack bytes) sets `points[i] = 0`, divides both scores by 5 (cap 19) and stores `closeness[i] = closeness_grid[tokimeki / 5][affection / 5]`. Then `girl_points_shiori` and `girl_points_heroines` fill `points`.
+`girl_scores(closeness[16], points[16])`: fills 11 bytes of scores through the two table functions, then for i in 0..15 (only 0-10 are meaningful: entries 11-15 of the closeness array come from uninitialized stack bytes) sets `points[i] = 0`, divides both scores by 5 (cap 19) and stores `closeness[i] = girl_closeness_grid[tokimeki / 5][affection / 5]`. Then `girl_points_shiori` and `girl_points_others` fill `points`. Both output arrays are 16 entries long (`u8` closeness, `s16` points) and every caller declares them that size.
 
-`closeness_grid` is about `5 * min(a / 5, max(3, t / 5))` with a few entries one lower; rows are tokimeki buckets, columns affection buckets. Rows 0-3 are identical, so tokimeki below 20 gives at most about 15; the value climbs 5 per affection bucket up to the cap of the row. Full table (row = tokimeki / 5, 20 columns):
+Ten call sites (counted in the matched C and the asm, 2026-10-24):
+
+| caller | what it does with the result |
+|---|---|
+| scheduler (`miharu_final_event_ready`, `command_girl_select`, `geko_judge`, `date_sasoi_judge`, `yuina_top_candidate_check`) | thresholds on closeness and points (m-scheduler) |
+| holiday code `func_800754C0` (80075320.c) | calls it once and never reads the arrays afterwards |
+| ENDING `func_801330E4` (80133030.c) | among the met girls 0-10, picks the one with the most points above 0x1F3 (500 or more) as the girl of the ending; with none it falls back to girl 13, or to girl 12 when girl 0 is under 500 points and two further story tests hold |
+| ETC `func_8014B0D0` (8014ABD0.c) | among the met girls 1-10, returns the one with the highest closeness above 0x3C (0 when none) and prints both values with a debug format |
+| TEL `func_8013CCD0` (8013CCD0.c) | profile page: per met girl, points of 0x1F4 or more select variant 0 of a sprite record (type 0x59 + variant), otherwise closeness below 6, 0xB, 0x15, 0x29 and 0x3D select variants 6 down to 2 and the rest variant 1 |
+| TEL `func_80136724` (80132000.c, stage 6) | closeness of the current girl divided by 4 is a term of a random chance roll |
+
+`girl_closeness_grid` is about `5 * min(a / 5, max(3, t / 5))` with a few entries one lower; rows are tokimeki buckets, columns affection buckets. Rows 0-3 are identical, so tokimeki below 20 gives at most about 15; the value climbs 5 per affection bucket up to the cap of the row. Full table (row = tokimeki / 5, 20 columns):
 
 ```
 r0-3  0 5 10 15 15 15 14 14 15 14 15 14 15 15 14 15 15 15 15 15
@@ -382,13 +393,13 @@ r19   0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95
 
 Closeness is used by the scheduler: encounters need at least 0x11, invitations 0x21 (m-scheduler constants), `command_girl_select` compares it with rank bars. The name `closeness` is a HYPOTHESIS (meaning word), the value only grows with both scores.
 
-`girl_points_shiori(closeness, points)`: `points[0] = 0x311` (785) when all of: `closeness[0] >= 0x55`; the health bits of `player_flags` (bits 8-11) are clear; each of the parameters 1-7 is at least `shiori_param_minimum` (130, 130, 130, 130, 120, 100, 100 for liberal arts, science, art, athletics, trivia, looks, guts); the sum of her `event_counters[1..35]` is at least 8; her `syoushin` is below 0x33. Otherwise `points[0]` stays 0. (A fixed value, so only the comparison with the scheduler's 0x1F4/0x1F5 thresholds matters.)
+`girl_points_shiori(closeness, points)`: `points[0] = 0x311` (785) when all of: `closeness[0] >= 0x55`; the health bits of `player_flags` (bits 8-11) are clear; each of the parameters 1-7 is at least `girl_shiori_param_minimum` (130, 130, 130, 130, 120, 100, 100 for liberal arts, science, art, athletics, trivia, looks, guts); the sum of her `event_counters[1..35]` is at least 8; her `syoushin` is below 0x33. Otherwise `points[0]` stays 0. (A fixed value, so only the comparison with the scheduler's 0x1F4/0x1F5 thresholds matters.)
 
-`girl_points_heroines(closeness, points)`, for girls 1-10: `v = closeness * 4 + syoushin * girl_syoushin_weight[g]` (weights -4, -2, -4, -2, -2, -2, -2, -4, -4, -3 for girls 1-10); girl 2 adds `points_stress_curve[min(stress, 140) / 10]`; for every parameter p in 1..7 (guts counts here) set in `girl_points_mask_strong[g]`, with `c = min(value(p) / 10, 14)`, add `curve[c] + curve[c] / 2` (x1.5, integer halves toward zero), and for every p set in `girl_points_mask_normal[g]` add `curve[c]` (`curve` = `points_param_curve`); finally with `n` = sum of `event_counters[1..35]`: `n >= 4` adds `n * 10`, otherwise the whole value is replaced by 0. Bit 0 of the masks is never tested (the loop body has a dead `m == 7` branch that divides by 20, which suggests it was meant to include parameter 0). Tables:
+`girl_points_others(closeness, points)`, for girls 1-10: `v = closeness * 4 + syoushin * girl_syoushin_weight[g]` (weights -4, -2, -4, -2, -2, -2, -2, -4, -4, -3 for girls 1-10); girl 2 adds `girl_points_stress_curve[min(stress, 140) / 10]`; for every parameter p in 1..7 (guts counts here) set in `girl_points_mask_strong[g]`, with `c = min(value(p) / 10, 14)`, add `curve[c] + curve[c] / 2` (x1.5, integer halves toward zero), and for every p set in `girl_points_mask_normal[g]` add `curve[c]` (`curve` = `girl_points_param_curve`); finally with `n` = sum of `event_counters[1..35]`: `n >= 4` adds `n * 10`, otherwise the whole value is replaced by 0. Bit 0 of the masks is never tested (the loop body has a dead `m == 7` branch that divides by 20, which suggests it was meant to include parameter 0). Tables:
 
 ```
-points_param_curve   -100 -75 -50 -25 0 10 20 30 40 50 60 70 80 90 100        (index = value / 10, capped 14)
-points_stress_curve   100 85 65 50 37 25 17 0 -17 -34 -50 -63 -75 -87 -100    (index = stress / 10, capped 14)
+girl_points_param_curve   -100 -75 -50 -25 0 10 20 30 40 50 60 70 80 90 100        (index = value / 10, capped 14)
+girl_points_stress_curve   100 85 65 50 37 25 17 0 -17 -34 -50 -63 -75 -87 -100    (index = stress / 10, capped 14)
 girl_syoushin_weight  0 -4 -2 -4 -2 -2 -2 -2 -4 -4 -3 0
 girl_points_mask_strong  1:0x04 2:0x02 3:0x01 4:0x01 5:0x08 6:0x08 7:0x02 8:0x04 9:0 10:0x04
   parameters             1: science; 2: liberal arts; 3, 4: none; 5, 6: art; 7: liberal arts; 8, 10: science
@@ -398,7 +409,7 @@ girl_points_mask_normal  1:0x0A 2:0x04 3:0x06 4:0x88 5:0x82 6:0x81 7:0x14 8:0x0A
                          9: liberal arts, science, athletics, trivia, looks; 10: science
 ```
 
-The meaning of the points as an ending-candidate score is a HYPOTHESIS: the scheduler tests them against about 500 before the final scenes (m-scheduler section 16).
+The meaning of the points as an ending-candidate score is a HYPOTHESIS, now with direct evidence: the scheduler tests them against about 500 before the final scenes (m-scheduler section 16) and ENDING picks the girl of the ending as the met girl with the most points of 500 or more (table above). Nothing in the code names the concept, so `closeness` and `points` stay glossary words with a guessed meaning (GLOSSARY.md rows added by this unit).
 
 ## 10. Birthday and club helpers
 
@@ -412,7 +423,7 @@ The meaning of the points as an ending-candidate score is a HYPOTHESIS: the sche
 
 ## 11. Debug VRAM viewer (`mode_debug_vram_view`, mode 0xFE)
 
-Developer tool, not part of the game. Entered by the mode dispatcher on mode 0xFE and by the main loop when the debug flag (`D_800B3220`) is nonzero and pad 2 L1 and R1 are held together (0xC0000 in the pad word). It sets `pad_pressed` to 0x80000, zeroes the display start `(debug_vram_view_x, debug_vram_view_y)`, then loops once per iteration: pad 2 up/down change y by -16/+16, pad 2 right/left change x by +16/-16 (each clamped at 0), polls the pad, sets the display area to that origin and waits for a frame; it ends when pad 2 bit 0x08000000 (START) is pressed, restores the video mode from `video_width`, `video_height`, `video_interlace` and returns. A port drops it.
+Developer tool, not part of the game. Entered by the mode dispatcher on mode 0xFE and by the main loop when the debug flag (`D_800B3220`) is nonzero and pad 2 L1 and R1 are held together (0xC0000 in the pad word). It sets `pad_pressed` to 0x80000, zeroes the display start `(mode_debug_vram_view_x, mode_debug_vram_view_y)`, then loops once per iteration: pad 2 up/down change y by -16/+16, pad 2 right/left change x by +16/-16 (each clamped at 0), polls the pad, sets the display area to that origin and waits for a frame; it ends when pad 2 bit 0x08000000 (START) is pressed, restores the video mode from `video_width`, `video_height`, `video_interlace` and returns. A port drops it.
 
 ## 12. Connections
 
@@ -420,15 +431,15 @@ Developer tool, not part of the game. Entered by the mode dispatcher on mode 0xF
 - The script dialogue runner (`dialogue_run`, 8007C030) builds its own lines with `set_kanji_string` and `dialogue_names_set` (core), which uses `get_p_name` and `get_g_name`; `sndi` and `sndisp` are used by scene code that writes fixed lines (rumors, health notices, telephone, TEL, ETC).
 - Menus: HUD command screens, title (the pad branch of `func_800623E4` bypasses `menu_check`), settings, club joining, holiday phone and club screens, NAME_ENT, OPTION, TEL (date spots), ETC (`menu_girl_taku_set`).
 - `get_g_zyotai_s` is the base of core `girl_state_rank` (1,106 uses); `get_g_zyotai_h` is stored by `event_log_add`; `get_h_tokimeki` and `get_h_yuukou` also drive `syoushin_up` (affection < 10), the sick-visit pick in the health check (tokimeki of 0x33 or more), `pick_top_girl` (80085E30, used by MASTER, RENSYU and TAIIKU: the girl with the best tokimeki + affection) and score tests in SHUGAKU, SHOUGATU, VALEN, KANGEI, GEKO, DATE2, BUNKAKEN and ENDING; RPG_BAT tests `get_g_zyotai_s`.
-- `girl_scores`: `miharu_final_event_ready`, `command_girl_select`, `geko_judge`, `date_sasoi_judge`, `yuina_top_candidate_check` (m-scheduler).
+- `girl_scores`: ten call sites, listed in section 9 (the five scheduler functions, the holiday code, ENDING's choice of the ending girl, ETC, and two in TEL).
 - `voice_play` and `dialogue_text_step` depend on the CD layer (h-cdio): `cd_audio_request_set`, `cd_audio_state`, `cd_audio_command`, the sound command queue (`snd_command` 0x300 = voice class, 0x74).
 
 ## 13. Port notes
 
-- Replace the glyph atlas, the palettes, `disp_string` and the VRAM upload by normal font rendering. Keep: the 52-entry limit (or an unbounded list with the same order), the screen-centre-relative coordinates (a 320 x 240 design space), the 14 px advance (16 px on the NAME_ENT screen that asks for it), the one-pixel dark shadow, the colour index (16 colours) and the ordering slot as a draw layer.
+- Replace the glyph atlas, the palettes, `disp_string` and the VRAM upload by normal font rendering. Keep: the 52-entry limit (or an unbounded list with the same order), the screen-center-relative coordinates (a 320 x 240 design space), the 14 px advance (16 px on the NAME_ENT screen that asks for it), the one-pixel dark shadow, the color index (16 colors) and the ordering slot as a draw layer.
 - Keep the typewriter exactly: ticks on `frame_count % (speed + 1) == 0` at 60 Hz, speed 0/1/3 from the settings, `k_disp_start` and the mark/reset scheme (screens depend on it), the "confirm finishes the current line" rule, the three-row window with the 8-frame scroll for blocks of four or more lines, the voice gating of `dialogue_text_step`, and the rule that text never wraps by itself.
 - Keep the name-code and honorific rules (sections 5.2 and 6) and `get_g_zyotai_s/h`, `get_h_*` and `girl_scores` bit for bit (tables in sections 8 and 9; a Python model of sections 8 and 9 reproduced the original's closeness and points for 11 girls in two poked scenarios, section 15).
-- Menus: keep the item model, the four menu modes and their navigation, the SELECT mode switch, and the pointer/cursor rules, or reduce to mouse plus pad focus with the same item rectangles; `menu_bar_style` is a highlight colour per menu.
+- Menus: keep the item model, the four menu modes and their navigation, the SELECT mode switch, and the pointer/cursor rules, or reduce to mouse plus pad focus with the same item rectangles; `menu_bar_style` is a highlight color per menu.
 
 ## 14. Quirks kept
 
@@ -436,11 +447,11 @@ Developer tool, not part of the game. Entered by the mode dispatcher on mode 0xF
 - `get_k_work(0x34)` returns the address of `text_state` (the bound is 0x35); callers pass small values.
 - `disp_string` moves to the next entry once per glyph, so two empty entries in a row would misattribute glyphs; empty entries only occur with the stale count above.
 - `load_string` drops codes at or beyond 0x9873 without a glyph and stops at codes below 0x8140 after a debug print.
-- A third glyph page is the last; slot 0x180 and up wrap into page 3.
+- The third glyph page (page 2, x 0x3A0) is the last: slots 0x180 and up wrap inside it and overwrite the cells of slots 0x100 and up.
 - `get_now_k` returns 0xFF while `revealed` is 0; `dialogue_text_step` and `xa_wait` would then treat the block as beyond its third row. In practice the name plate before the block gives `revealed` at least 1.
 - `menu_set` writes `menu_count` and `menu_hit` before it rejects `menu >= 2`.
 - `menu_cursor_update` does not skip disabled items when no direction was pressed and may leave the cursor on one.
-- `get_h_tokimeki` ignores guts (the loop ends at parameter 6) and bit 7 of the masks; `girl_points_heroines` ignores bit 0.
+- `get_h_tokimeki` ignores guts (the loop ends at parameter 6) and bit 7 of the masks; `girl_points_others` ignores bit 0.
 - Girls 13 and 14 score as girls 0 and 1.
 - `girl_scores` writes 16 closeness bytes from 11 inputs; entries 11-15 are garbage.
 - `birth_day_check` has a `void` signature but returns the flag.
@@ -451,12 +462,12 @@ All runs start from a title-menu save state made in this worktree (`build/emu/st
 
 1. **Menu state at the title** (`func_800623E4` break): `menu_count_0` 2, `menu_count_1` 0, `menu_mode` 1, `menu_cursor_0` 0, `menu_hit_0` -1; items of menu 0 at x -48, y 66 and 82, w 160, h 20. This fixes the `MenuItem` layout (x s16, y s16, w, h, hover, disabled) and the interleaving item-major, menu-minor. The title uses the pad branch, so `menu_check` is not reached; `menu_bar_style` reads 0x832F7FAF and 0x822F7F2F.
 2. **Text entries in NAME_ENT** (`set_kanji_string` breaks after pressing circle at the title): `text_state` after the first call of one screen: count 1, total 9, mark 0, speed 1, revealed 0, advance 0xE; entry 0: x -64, y 0x20, color 0xF, glyph_count 9, ot_slot 0, active 1. On a later screen three entries at y 0x20, 0x30 and 0x40 had glyph counts 15, 12 and 12 and `total` 0x0F, 0x1B, 0x27, the running sums.
-3. **Dialogue block** (mode byte poked to 0x44, the rumor report): `sndisp` with style 0x1F, then two `sndi` calls: `set_kanji_string` at x -0x56 and y 0x32, then x -0x48 and y 0x42. After it: `text_first_line` 2, `text_lines_total` 4, `text_scroll_state` 0x80; `text_state.revealed` advances by 1 per frame at speed 0 (3, 4, 5 on three consecutive frames) and `xa_wait` runs each frame.
+3. **Dialogue block** (mode byte poked to 0x44, the rumor report): `sndisp` with style 0x1F, then two `sndi` calls: `set_kanji_string` at x -0x56 and y 0x32, then x -0x48 and y 0x42. After it: `text_block_first` 2, `text_block_end` 4, `text_scroll_state` 0x80; `text_state.revealed` advances by 1 per frame at speed 0 (3, 4, 5 on three consecutive frames) and `xa_wait` runs each frame.
 4. **Score pipeline** (mode byte poked to 0x30, girl records and parameters poked, break at the instruction after `girl_scores` returns): the buffers of the original matched a Python model of sections 8 and 9 for all 11 closeness and 11 points values in two scenarios (the first with several girls below the 4-counter limit and Shiori failing her conditions, the second with Shiori at 785 and girl 1 at 0). This covers the weights, the six ladders, the bonus table, the grid, the point masks and curves.
-5. **Scroll of a six-line block** (the rumor string rewritten in RAM as six two-character lines separated by spaces, mode byte 0x44): `sndisp` made six entries (the first one glyph longer than its text: the opening mark is part of the line), `text_first_line` 2, `text_lines_total` 8, `text_scroll_state` 0x80. Lines 0-2 typed at one glyph per frame; when the typing reached the fourth line (revealed 10) that entry became inactive, phase 1 started (`text_scroll_state` 0x81), line 0 went inactive and lines 1 and 2 moved from y 66 and 82 up by 2 per frame (64, 62, ... 52); 8 frames after the start the lines snapped to y 50 and 66, `text_first_line` became 3, the hidden line became active at y 82 and the typing went on. This repeated for lines 4 and 5 (three scrolls for six lines, 10 frames apart: 8 for the slide, 2 for the new glyphs); at the end the window showed lines 3-5 with `revealed` equal to `total`.
+5. **Scroll of a six-line block** (the rumor string rewritten in RAM as six two-character lines separated by spaces, mode byte 0x44): `sndisp` made six entries (the first one glyph longer than its text: the opening mark is part of the line), `text_block_first` 2, `text_block_end` 8, `text_scroll_state` 0x80. Lines 0-2 typed at one glyph per frame; when the typing reached the fourth line (revealed 10) that entry became inactive, phase 1 started (`text_scroll_state` 0x81), line 0 went inactive and lines 1 and 2 moved from y 66 and 82 up by 2 per frame (64, 62, ... 52); 8 frames after the start the lines snapped to y 50 and 66, `text_block_first` became 3, the hidden line became active at y 82 and the typing went on. This repeated for lines 4 and 5 (three scrolls for six lines, 10 frames apart: 8 for the slide, 2 for the new glyphs); at the end the window showed lines 3-5 with `revealed` equal to `total`.
 6. **Menu navigation** (mode byte poked to 0x34, stage 4, step 0: the system settings screen): `menu_set(0, 8, ...)` registers 8 items at x -124, y -64 + 12 * i, 96 x 12; item 6 has width 0 (disabled). With `menu_mode` 1 pad presses (DOWN, DOWN, RIGHT, DOWN, UP) moved the cursor 0, 1, 2, 3, 4, 3 and the pointer to `x = item.x + w - 4 = -32`, `y = item.y + 8`; a further run showed DOWN skipping the disabled item (5 to 7), DOWN on the last item wrapping to 0 and UP on item 0 wrapping to 7. SELECT changed the stored `menu_mode` from 1 to 2 and set the cursor to -1 for one frame, after which the item under the pointer became the cursor again.
 7. **Menu mode 3** (same screen, `menu_mode` poked to 3): DOWN stepped 0 to 5, skipped the disabled item to 7, stayed on 7 at the end (no wrap), UP went 7 to 5 to 4, RIGHT with no item to the right kept the cursor; the cursor item showed `hover` 10.
-8. **Voice sync** (the club-joining message of the system menus: mode 0x34, stage 5, step 2, substep 3 poked, `player_flags` club set to 6 so the captain's voiced lines run, `voice_mode` poked): with mode 1 `voice_state` stayed 0 until `cd_audio_state` showed bit 4 (frame 7); the typewriter started at frame 9 (one glyph per frame) and finished at frame 37; a circle press at frame 100 did nothing; the CD state showed bit 2 at frame 222 (the clip lasted about 3.6 s) and `voice_state` became 2 at frame 223; a circle press at frame 240 advanced the substep. With mode 2 a cross press at frame 100 (text finished, clip still playing) advanced at once.
+8. **Voice sync** (the club-joining message of the system menus: mode 0x34, stage 5, step 2, substep 3 poked, `player_flags` club set to 6 so the captain's voiced lines run, `voice_mode` poked): with mode 1 `speaker_voice_state` stayed 0 until `cd_audio_state` showed value 4, bit 2 (frame 7); the typewriter started at frame 9 (one glyph per frame) and finished at frame 37; a circle press at frame 100 did nothing; the CD state showed value 2, bit 1 at frame 222 (the clip lasted about 3.6 s) and `speaker_voice_state` became 2 at frame 223; a circle press at frame 240 advanced the substep. With mode 2 a cross press at frame 100 (text finished, clip still playing) advanced at once.
 9. **`get_p_name` forms** (TEL's first call line, reached through the loader: mode byte 2 with target 0x45, stage 1, step 1, substep 2; player names poked to three known characters each; the style argument of the `sndisp` call patched in RAM to a non-narration value and `current_girl` and the girl's affection poked after the overlay load): for all 16 girl ids in both affection states (weighted affection 0 and at least 80, 32 runs) the string handed to `set_kanji_string` equalled the form of the table in section 6; with the unpatched style 0xF the code came out as the full name (family name plus the first six bytes of the given name), and the name plate (`gnsx`, six-byte family name) sat at x -128.
 10. **`get_g_name`** (TEL step 3 substep 12, the line with a girl name code and style 0x1F, `current_girl` poked 0-15): every id gave the name of section 6 (id 0 the fixed given name, 10 the given name from slot 15 plus the familiar suffix, 12 the family name alone, all others including 13, 14 and 15 the table entry plus the polite suffix; id 15 is therefore girl 10's given name plus the polite suffix).
 
@@ -464,18 +475,33 @@ Not run: the second clip of a two-table line (every table found has equal halves
 
 ## 16. Open questions and disagreements with core
 
-1. Core names `text_lines_total` (+0xF60) and `text_first_line` (+0xF61): the code shows +0xF61 is the index of the first entry of the dialogue block and +0xF60 the index one past its last entry (both are `check_set_k()` values, taken before and after `sndisp` queues the lines, emulator: 2 and 4 for a two-line block after two earlier entries). `text_block_first` and `text_block_end` would say that; this unit does not rename them.
-2. Core's `TextEntry.extra` is the ordering-table slot (`disp_string` passes it as the slot of `AddPrim`; 0 means 1) and `attr` carries only the colour index (bits 0-3); `ot_slot` and `color` are suggested, and `attr` is not in the abbreviation table.
-3. Core comment rows marked HYPOTHESIS that the code proves: `k_disp_switch` (sets the entry's `active` byte, tested by `disp_string`), `check_end_k` (`revealed == total`). The `menu_bar_show` comment says "hovered item"; the bar is drawn on the item at `menu_cursor[menu]`.
-4. `GIRL_PLAYER` (15) in core: the spare name-table slot 15 is girl 10's given name (this unit's `girl_short_name_yumi_given` row); the full-name table (`girl_full_name_table`) slot 15 is the placeholder for the player's name before it is entered.
-5. `girl_short_name_table` holds family names except slot 13 (given name of girl 13) and slot 15 (given name of girl 10); it is called "short" in the patch notes; no rename proposed.
-6. Whether `voice_table_b` ever differs from `voice_table_a`: the two overlays that pass tables (TEL, ETC) pass equal ones, so the second clip may be dead; the other callers pass immediate words.
-7. Meaning of `closeness` and of the points (ending candidates?) is inferred from the scheduler's thresholds only (HYPOTHESIS).
-8. Why `get_h_tokimeki` stops at parameter 6 (guts never feeds tokimeki) while the points loop includes parameter 7: probably an original off-by-one, unconfirmed.
-9. Purpose of the two blank strips at y 0x1FF (`text_blank_strip`): HYPOTHESIS: the last pixel row of the glyph cells must be transparent.
-10. The settings screens' text speed items map slow, normal, fast to speeds 3, 1, 0; the speeds 5, 8 and 16 of BUNKA_SD and ENDING belong to those units.
-11. EVENT-range symbols: `text_glyph_upload_ring`, `debug_vram_view_x/y` and the four `voice_*` words lie in 0x800F6000-0x80126000 and must go to the main-only symbol file.
+Requests to other units (the orchestrator routes them; none is made as a second row):
+
+1. **Core: rename two GameState fields before merge.** Core names `text_lines_total` (+0xF60) and `text_first_line` (+0xF61). The code shows +0xF61 is the index of the first entry of the dialogue block and +0xF60 the index one past its last entry (both are `check_set_k()` values, taken before and after `sndisp` queues the lines; emulator: 2 and 4 for a two-line block after two earlier entries). `text_block_first` and `text_block_end` say that, and the HYPOTHESIS mark on both core rows can go. Until then a port reader of core's table would take `text_lines_total` for a count; this spec writes the proposed names in its body and gives the core names where it first uses them.
+2. **m-sysmenu: drop its three `TextSpeed` rows.** `TEXT_SPEED_FAST`, `TEXT_SPEED_NORMAL` and `TEXT_SPEED_SLOW` (values 0, 1, 3) are defined here, with the same names and values as in `m-sysmenu.tsv`, so applying both tables would add each enumerator twice. This unit owns the text module and the `TextSpeed` enum; m-sysmenu cites these rows. Item numbers: both tables now count the choices of the text speed screen from 0 (slow 0, normal 1, fast 2); the settings code stores 3, 1, 0 for cursor 0, 1, 2.
+3. **m-dates-b owns the `NameCode` constants.** This unit had `NAME_CODE_PLAYER` (0x50) and `NAME_CODE_GIRL` (0x47) rows; both are dropped. m-dates-b has `NAME_CODE_GIRL` (same value) and calls 0x50 `NAME_CODE_PLAYER_FORM`, which is the accurate name: `sndi` expands that code with `get_p_name(buf, form)`, and the form is 15 (the player's full name) when the speaker is the narration (section 5.2).
+4. **core and h-cdio name `func_800460EC` differently** (`cd_audio_state` and `cd_state_get`). This spec uses core's name; one of the two rows has to go.
+
+Disagreements with core's descriptions (no second rows):
+
+5. **Core: two weak field names of `Entry8`/`TextEntry`.** Core's field rows call the color byte `attr` (an abbreviation outside the glossary table; the code shows it carries only the color index, bits 0-3, and nothing reads the upper bits) and the ordering-table slot `extra` (`disp_string` passes it as the slot of `AddPrim`; 0 means 1). `color` and `ot_slot` say what they are, and this unit's alias label `text_list_ot_slot0` already uses `ot_slot` (one word per concept). The `MenuItem` field rows of core (`x`, `y`, `w`, `h`, `hover`, `disabled`) are right and used as they are; this unit adds only `MenuSelection5.current` -> `cursor`, the word core's type note and the GameState bytes (`menu_cursor_0/1`) use.
+6. Core comment rows marked HYPOTHESIS that the code proves: `k_disp_switch` (sets the entry's `active` byte, tested by `disp_string`), `check_end_k` (`revealed == total`). The `menu_bar_show` comment says "hovered item"; the bar is drawn on the item at `menu_cursor[menu]`.
+7. `GIRL_PLAYER` (15) in core: the spare name-table slot 15 is girl 10's given name (this unit's `girl_short_name_yumi_given` row); the full-name table (`girl_full_name_table`) slot 15 is the placeholder for the player's name before it is entered.
+8. `voice_play` and `voice_mode` are core's names; `voice_` and `debug_` are not prefixes of the ADR's main map. This unit therefore names its four voice words `speaker_voice_*` and the viewer's two words `mode_debug_vram_view_*`. If the ADR gains a `voice_` row, the four words could move to it.
+
+Open questions:
+
+9. `girl_short_name_table` holds family names except slot 13 (given name of girl 13) and slot 15 (given name of girl 10); it is called "short" in the patch notes; no rename proposed.
+10. Whether `speaker_voice_table_b` ever differs from `speaker_voice_table_a`: the two overlays that pass tables (TEL, ETC) pass equal ones, so the second clip may be dead; the other callers pass immediate words.
+11. Meaning of `closeness` and of the points (ending candidates?) is inferred from thresholds and from ENDING's use (section 9), not from a name in the code (HYPOTHESIS; the glossary rows say so).
+12. Why `get_h_tokimeki` stops at parameter 6 (guts never feeds tokimeki) while the points loop includes parameter 7: probably an original off-by-one, unconfirmed.
+13. Purpose of the two blank strips at y 0x1FF (`text_blank_strip`): HYPOTHESIS: the last pixel row of the glyph cells must be transparent.
+14. The speeds 5, 8 and 16 of BUNKA_SD and ENDING belong to those units; the settings screen offers only 3, 1 and 0.
+15. EVENT-range symbols: `text_glyph_upload_ring`, `mode_debug_vram_view_x/y` and the four `speaker_voice_*` words lie in 0x800F6000-0x80126000 and must go to the main-only symbol file.
+16. `girl_shiori_param_minimum` needs a new symbol entry at 0x800B4340 (the table start lies inside the range of the grid blob); the existing label D_800B4341 becomes the alias `girl_shiori_param_minimum_1`, which the p[-1] access of `girl_points_shiori` needs.
 
 ## 17. Rename summary
 
-150 rows: 10 func, 53 data (10 of them alias labels that splat made inside a table), 3 field, 5 file, 56 const, 23 comment (no type rows: core renames `KWork`, `Entry8`, `GsRecF90`, `MenuSelection5`). Notes starting with HYPOTHESIS: 1 (`closeness_grid`). Renames of existing non-O.BIN names that fail the module-prefix or abbreviation rules: `TextState.pos` -> `revealed` (pos is not in the abbreviation table), `glyph_expand_1bpp` -> `text_glyph_expand`, `font_glyphs` -> `text_font_glyphs`, `font_range_table` -> `text_font_range_table`; `text_list_count` -> `text_state` fixes a misleading name. Names suggested by the m-scheduler spec and adopted: `girl_scores`, `girl_points_shiori`, `girl_points_heroines`, `player_in_sports_club`.
+153 rows: 10 func, 54 data (21 of them alias labels that sit inside a table or a struct), 4 field, 7 file (3 sources, 4 new headers), 54 const, 24 comment (no type rows: core renames `KWork`, `Entry8`, `GsRecF90`, `MenuSelection5`; the field rows use the old type names, as core's field rows do). Notes starting with HYPOTHESIS: 4 (`girl_closeness_grid`, `GIRL_CLOSENESS_BUCKET_SIZE`, `GIRL_CLOSENESS_BUCKET_MAX`, `GIRL_POINTS_SHIORI_MIN_CLOSENESS`). Prefixes follow the ADR main map: `text_`, `menu_`, `speaker_`, `girl_` (and `mode_` for the viewer, as core's `mode_<handler>`); `param_` is the HUD row's and is not used. Renames of existing non-O.BIN names that fail the module-prefix or abbreviation rules: `TextState.pos` -> `revealed` (pos is not in the abbreviation table), `glyph_expand_1bpp` -> `text_glyph_expand`, `font_glyphs` -> `text_font_glyphs`, `font_range_table` -> `text_font_range_table`; `text_list_count` -> `text_state` fixes a misleading name. Names suggested by the m-scheduler spec and adopted: `girl_scores`, `girl_points_shiori`, `player_in_sports_club`; `girl_points_heroines` became `girl_points_others` (the glossary keeps heroine for prose).
+
+Glossary rows added by this unit: `closeness` and `points` (Parameters and scores). No new abbreviation and no new Module words row: `text`, `menu`, `speaker` and `girl` are stems or rows already.

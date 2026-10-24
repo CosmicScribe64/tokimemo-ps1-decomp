@@ -1,23 +1,23 @@
 # kind	scope	old	new	note
-func	main	func_8004E500	text_glyph_pages_clear	clears n glyph-cache pages (VRAM x 0x320 + 0x40*i, y 0x100, 0x20 x 0x100 halfwords) to colour 0, then waits for the GPU; callers: text_system_reset (n = 2) and ENDING (n = 3)
+func	main	func_8004E500	text_glyph_pages_clear	clears n glyph-cache pages (VRAM x 0x320 + 0x40*i, y 0x100, 0x20 x 0x100 halfwords) to color 0, then waits for the GPU; callers: text_system_reset (n = 2) and ENDING (n = 3)
 func	main	func_8004E780	text_unused_stub	empty function between text_set_advance and set_kanji_string; no caller in src/ or asm
 func	main	glyph_expand_1bpp	text_glyph_expand	unpacks one 12x12 1-bit glyph (18 bytes, MSB first) into 4-bit pixels, 4 halfwords per row, in the upload ring; patch name replaced: 1bpp is not in the glossary abbreviation table and the module prefix is text_
 func	main	func_8004F6B0	mode_debug_vram_view	mode 0xFE handler (core MODE_DEBUG_VRAM_VIEW; entered by main_state_dispatch and by main_loop when the debug flag D_800B3220 is set and pad 2 L1+R1 are held): loops with pad 2 d-pad moving the display start by 16 per frame (clamped at 0) until pad 2 bit 0x08000000, then restores the video mode and returns; developer tool
 func	main	func_80050324	menu_cursor_to_edge	scans from the last item (second argument nonzero) or from the first for an item with nonzero width and height, stores it as the cursor and returns it, -1 when none; menu_cursor_update mode 3 calls it when the cursor ran past either end
-func	main	func_80052E60	girl_points_shiori	girl 0 points: 0 unless closeness >= 0x55, health state clear, parameters 1-7 at or above shiori_param_minimum, event counters 1-35 sum >= 8 and syoushin < 0x33; then points[0] = 0x311; only caller girl_scores; name suggested by the m-scheduler spec section 16
-func	main	func_80052F68	girl_points_heroines	points of girls 1-10: closeness*4 + syoushin*girl_syoushin_weight, parameter curve terms from girl_points_mask_strong (x1.5) and girl_points_mask_normal (x1), girl 2 also gets the stress curve, then 0 when the event counters 1-35 sum < 4 else + 10 per counter; only caller girl_scores; name suggested by the m-scheduler spec section 16
-func	main	func_80053418	girl_scores	fills closeness[0..10] = closeness_grid[tokimeki/5][affection/5] and points[0..10] (points[0] by girl_points_shiori, 1-10 by girl_points_heroines); callers: miharu_final_event_ready, command_girl_select, geko_judge, date_sasoi_judge, yuina_top_candidate_check; name suggested by the m-scheduler spec section 16
+func	main	func_80052E60	girl_points_shiori	girl 0 points: 0 unless closeness >= 0x55, health state clear, parameters 1-7 at or above girl_shiori_param_minimum, event counters 1-35 sum >= 8 and syoushin < 0x33; then points[0] = 0x311; only caller girl_scores; name suggested by the m-scheduler spec section 16
+func	main	func_80052F68	girl_points_others	points of girls 1-10 (every scored girl except girl 0): closeness*4 + syoushin*girl_syoushin_weight, parameter curve terms from girl_points_mask_strong (x1.5) and girl_points_mask_normal (x1), girl 2 also gets the stress curve, then 0 when the event counters 1-35 sum < 4 else + 10 per counter; only caller girl_scores; the m-scheduler spec section 16 suggested girl_points_heroines, changed because the glossary keeps heroine for prose and uses the stem girl
+func	main	func_80053418	girl_scores	fills closeness[0..15] = girl_closeness_grid[tokimeki/5][affection/5] and points[0..15] (all 16 entries are written, but only 0..10 are meaningful: entries 11-15 come from uninitialized stack bytes); points[0] by girl_points_shiori, 1-10 by girl_points_others; 10 call sites: scheduler miharu_final_event_ready, command_girl_select, geko_judge, date_sasoi_judge, yuina_top_candidate_check; holiday func_800754C0 (80075320, one site, results not read afterwards); ENDING func_801330E4 (80133030.c: among the met girls 0-10 picks the one with the most points above 0x1F3 as the ending girl, else girl 13 or 12: direct evidence for the ending-candidate reading); ETC func_8014B0D0 (8014ABD0.c: the met girl 1-10 with the highest closeness above 0x3C, 0 when none); TEL func_8013CCD0 (profile page: points of 0x1F4 or more, else closeness bands, choose the sprite variant of each met girl) and TEL func_80136724 (80132000.c stage 6: closeness of the current girl / 4 is a term of a chance roll); name suggested by the m-scheduler spec section 16
 func	main	func_8005352C	player_in_sports_club	returns 1 when player_flags club (bits 12-15) is 6-10 (baseball, soccer, tennis, swimming, basketball); callers day_events_build_week and the holiday code (80075320); name suggested by the m-scheduler spec section 16
 func	main	func_80053564	girl_find_by_club	returns the first girl 0-10 whose GirlRecord flags club field (byte 2 >> 4) equals the club id, else -1; callers: club joining (8005A0B0) and the holiday club scenes (80075320)
 data	main	text_list_count	text_state	the TextState object (count, glyph total, mark, speed, shown glyphs, advance; 0x0C bytes); the old name only fits its first field
-data	main	D_800B3DC6	text_list_ot_slot0	alias label at text_list[0] +6 (the ot-slot byte); disp_string reads entry 0 first to start its slot choice
+data	main	D_800B3DC6	text_list_ot_slot0	alias label at text_list[0] +6 (the ordering-table slot byte, core field extra; spec section 16 asks core to call it ot_slot); disp_string reads entry 0 first to start its slot choice
 data	main	D_800B3DC7	text_list_active0	alias label at text_list[0] +7 (active byte); k_disp_switch(n, on) indexes it with stride 8, so it is text_list[n].active
 data	main	D_800B3F58	text_list_last	text_list[51], the last entry; get_k_work returns it for any index >= 0x35
 data	main	D_800B3F64	text_mark_index	alias label at TextState +4 (mark): the entry count saved by k_sub_reset_point_set
-data	main	D_800B3F66	text_reveal_speed	alias label at TextState +6 (speed): k_speed_set stores it, k_disp_inc divides frame_count by speed + 1
+data	main	D_800B3F66	text_reveal_speed	alias label at TextState +6 (speed): k_speed_set stores it, k_disp_inc divides frame_count by speed + 1; text_system_reset never writes it (only the boot-time zero initialization does), so the saved setting survives a reset
 data	main	D_800B3F68	text_revealed	alias label at TextState +8 (revealed): number of glyphs revealed so far; disp_string draws glyphs below it
 data	main	D_800B3F6C	text_blank_strip	0x40 zero bytes; text_system_reset uploads them as a 128 x 1 px strip at y 0x1FF under glyph pages 0 and 1 (x 0x320 and 0x360)
-data	main	D_800B3FAC	text_palette_0	8 two-colour palettes (transparent, text colour) for attributes 0-7; text_system_reset uploads them to VRAM (0x100, 0x1F8), disp_string picks row 0x1F8 + (attr & 7)
+data	main	D_800B3FAC	text_palette_0	8 two-color palettes (transparent, text color) for attributes 0-7; text_system_reset uploads them to VRAM (0x100, 0x1F8), disp_string picks row 0x1F8 + (attr & 7)
 data	main	D_800B3FCC	text_palette_1	palettes for attributes 8-15, uploaded to VRAM (0x120, 0x1F8); disp_string picks x = 0x100 + (attr & 8) * 4
 data	main	D_800B3FEC	text_shadow_palette_0	dark twin palettes of attributes 0-7, uploaded to (0x110, 0x1F8); the shadow sprite of every glyph uses them
 data	main	D_800B400C	text_shadow_palette_1	dark twin palettes of attributes 8-15, uploaded to (0x130, 0x1F8)
@@ -26,60 +26,64 @@ data	main	D_800B4030	text_font_range_table_1	alias label at font range entry 1; 
 data	main	D_800B40E4	text_font_range_table_end	label one past the last (46th) entry of the range table
 data	main	font_glyphs	text_font_glyphs	3418 glyphs of 18 bytes (12 x 12 pixels, 1 bit each, MSB first); patch name replaced to carry the module prefix
 data	main	D_801255F0	text_glyph_upload_ring	16 slots of 0x60 bytes; text_glyph_expand writes the 4-bit glyph to slot (text_glyph_count & 0xF) before LoadSquare uploads it; inside EVENT range 0x800F6000-0x80126000: main-only symbol file
-data	main	D_800B40F0	text_row_y	s16[4] = {0x32, 0x42, 0x52, 0}: y of the three message rows (screen centre relative); x_taku_menu_set passes it as the y array of menu_set
-data	main	D_800B40F8	sndisp_split_template	five zero bytes: the compiler template that initialises the local u8 split-position array of sndisp; no meaning of its own
+data	main	D_800B40F0	text_row_y	s16[4] = {0x32, 0x42, 0x52, 0}: y of the three message rows (screen center relative); x_taku_menu_set passes it as the y array of menu_set
+data	main	D_800B40F8	speaker_split_template	five zero bytes: the compiler template that initialises the local u8 split-position array of sndisp; no meaning of its own
 data	main	D_800E3680	menu_bar_style	u32[16], one packed highlight-bar style per menu index (only 0 and 1 are menus): bits 0-23 RGB, bits 24-27 ordering slot, bits 28-30 box mode, bit 31 semi-transparent; defaults 0x832F7FAF and 0x822F7F2F read in emu from the title-menu state
 data	main	D_800E3684	menu_bar_style_1	alias label at menu_bar_style[1] (menu 1 default 0x822F7F2F)
 data	main	D_800B4110	girl_bonus_param_mask	u8[13]: bit i (1-6; bit 7 is never read) marks parameter i as a term of the girl's tokimeki bonus in get_h_tokimeki; girls 11 and 12 are 0
 data	main	D_800B4120	girl_param_ladder_kind	u8[13]: which of six threshold ladders get_h_tokimeki uses for the girl (1-6; 0 for girls 11 and 12)
 data	main	D_800B4130	girl_param_bonus	s8[13][8]: bonus added per marked parameter for the ladder step reached (step 0 highest value, step 7 none reached); all zero for girls 11 and 12
-data	main	D_800B4198	param_ladder_base	u8[7] = {128, 100, 90, 70, 50, 30, 10}: base thresholds of the six ladders (each kind adds its own offsets, spec section 8)
-data	main	D_800B419C	param_ladder_base_4	alias label at param_ladder_base[4] (value 50); the compiler addressed lv4..lv6 from here
-data	main	D_800B41B0	closeness_grid	HYPOTHESIS: closeness is a meaning word (the value only grows with both scores and the scheduler compares it with encounter and invitation thresholds); u8[20][20] read by girl_scores as [tokimeki / 5][affection / 5] (both capped at 19), about 5 * min(affection bucket, max(3, tokimeki bucket)) with a few entries one lower; emu: matches the model in the spec
-data	main	D_800B4341	shiori_param_minimum	u8[7] read as [i - 1] for parameter i = 1..7 (label sits on entry 1 of the 8-byte table at 0x800B4340): minimum parameter values girl_points_shiori demands = 130, 130, 130, 130, 120, 100, 100; apply must keep the address (pointer arithmetic p[-1])
-data	main	D_800B4348	girl_syoushin_weight	s8[12]: points per syoushin point of girls 1-10 (all negative or zero: a penalty), used by girl_points_heroines
-data	main	D_800B4354	girl_points_mask_strong	u8[12]: bit p (1-7) marks parameter p as a x1.5 term of the girl's points (bit 0 is never tested); girl_points_heroines
+data	main	D_800B4198	girl_param_ladder_base	u8[7] = {128, 100, 90, 70, 50, 30, 10}: base thresholds of the six ladders (each kind adds its own offsets, spec section 8)
+data	main	D_800B419C	girl_param_ladder_base_4	alias label at girl_param_ladder_base[4] (value 50); the compiler addressed lv4..lv6 from here
+data	main	D_800B41B0	girl_closeness_grid	HYPOTHESIS: closeness is a meaning word (glossary row added by this unit) (the value only grows with both scores and the scheduler compares it with encounter and invitation thresholds); u8[20][20] read by girl_scores as [tokimeki / 5][affection / 5] (both capped at 19), about 5 * min(affection bucket, max(3, tokimeki bucket)) with a few entries one lower; emu: matches the model in the spec
+data	main	D_800B4340	girl_shiori_param_minimum	u8[8] at the table start: entry i is the minimum of parameter i + 1 (liberal arts, science, art, athletics, trivia, looks, guts) that girl_points_shiori demands = 130, 130, 130, 130, 120, 100, 100; entry 7 (130) is never read; NO SPLAT LABEL at this address yet (it lies inside the range of D_800B41B0, the closeness grid that ends here): the apply step must add a symbol_addrs entry (size 8) before renaming; the existing label D_800B4341 (entry 1) is the alias row below
+data	main	D_800B4348	girl_syoushin_weight	s8[12]: points per syoushin point of girls 1-10 (all negative or zero: a penalty), used by girl_points_others
+data	main	D_800B4354	girl_points_mask_strong	u8[12]: bit p (1-7) marks parameter p as a x1.5 term of the girl's points (bit 0 is never tested); girl_points_others
 data	main	D_800B4360	girl_points_mask_normal	u8[12]: bit p (1-7) marks parameter p as a x1 term of the girl's points (bit 0 is never tested)
-data	main	D_800B436C	points_param_curve	s8[15]: curve of the points terms by parameter value / 10 (capped at 14): -100, -75, -50, -25, 0, then +10 per step up to +100
-data	main	D_800B437C	points_stress_curve	s8[15]: stress term of girl 2 by stress / 10 (stress capped at 140): +100 falling to -100
-data	main	D_800B4199	param_ladder_base_1	alias label at param_ladder_base[1]; splat label made for a direct byte access in the matched asm
-data	main	D_800B419A	param_ladder_base_2	alias label at param_ladder_base[2]; splat label made for a direct byte access in the matched asm
-data	main	D_800B419B	param_ladder_base_3	alias label at param_ladder_base[3]; splat label made for a direct byte access in the matched asm
-data	main	D_800B419D	param_ladder_base_5	alias label at param_ladder_base[5]; splat label made for a direct byte access in the matched asm
-data	main	D_800B419E	param_ladder_base_6	alias label at param_ladder_base[6]; splat label made for a direct byte access in the matched asm
+data	main	D_800B436C	girl_points_param_curve	s8[15]: curve of the points terms by parameter value / 10 (capped at 14): -100, -75, -50, -25, 0, then +10 per step up to +100
+data	main	D_800B437C	girl_points_stress_curve	s8[15]: stress term of girl 2 by stress / 10 (stress capped at 140): +100 falling to -100
+data	main	D_800B4199	girl_param_ladder_base_1	alias label at girl_param_ladder_base[1]; splat label made for a direct byte access in the matched asm
+data	main	D_800B419A	girl_param_ladder_base_2	alias label at girl_param_ladder_base[2]; splat label made for a direct byte access in the matched asm
+data	main	D_800B419B	girl_param_ladder_base_3	alias label at girl_param_ladder_base[3]; splat label made for a direct byte access in the matched asm
+data	main	D_800B419D	girl_param_ladder_base_5	alias label at girl_param_ladder_base[5]; splat label made for a direct byte access in the matched asm
+data	main	D_800B419E	girl_param_ladder_base_6	alias label at girl_param_ladder_base[6]; splat label made for a direct byte access in the matched asm
 data	main	D_800B4349	girl_syoushin_weight_1	alias label at girl_syoushin_weight[1] (girl 1); splat label for a direct byte access
 data	main	D_800B434A	girl_syoushin_weight_2	alias label at girl_syoushin_weight[2] (girl 2); splat label for a direct byte access
 data	main	D_800B434B	girl_syoushin_weight_3	alias label at girl_syoushin_weight[3] (girl 3); splat label for a direct byte access
 data	main	D_800B4355	girl_points_mask_strong_1	alias label at girl_points_mask_strong[1]; splat label for a direct byte access
 data	main	D_800B4361	girl_points_mask_normal_1	alias label at girl_points_mask_normal[1]; splat label for a direct byte access
+data	main	D_800B4341	girl_shiori_param_minimum_1	alias label at girl_shiori_param_minimum[1]; girl_points_shiori starts its loop pointer here and reads p[-1], so the apply step must keep this label (a later cleanup can index the table from its start)
 data	main	D_800B3624	girl_short_name_rei	alias label at girl_short_name_table[12] (pointer to the family name of girl 12); get_g_name reads it directly
 data	main	D_800B3630	girl_short_name_yumi_given	alias label at girl_short_name_table[15]: pointer to the given name of girl 10 (her slot 10 holds the family name that girl 13 shares; slot 13 holds his given name); get_g_name adds the familiar suffix; resolves the spare given name that core GIRL_PLAYER mentions
-data	main	D_800B3634	name_suffix_kun	one-character suffix string appended by get_p_name for the familiar form (data decode: the kun honorific)
-data	main	D_800B3638	name_suffix_san	two-character suffix string appended by get_p_name for the polite form (data decode: the san honorific)
-data	main	D_80125BF0	debug_vram_view_x	s16 display start x of mode_debug_vram_view; inside EVENT range: main-only symbol file
-data	main	D_80125BF2	debug_vram_view_y	s16 display start y of mode_debug_vram_view; inside EVENT range: main-only symbol file
-data	main	D_80125BF4	voice_table_a	pointer (kept in an s32) to the first table of (start, end) clip word pairs given to voice_play; read back by dialogue_text_step; EVENT range: main-only symbol file
-data	main	D_80125BF8	voice_table_b	pointer to the second clip table; a line plays clip A then clip B when the first words differ and the request just played was A; EVENT range: main-only symbol file
-data	main	D_80125BFC	voice_index	line index into the clip tables, -1 when voice_play got the clip words directly; EVENT range: main-only symbol file
-data	main	D_80125C00	voice_state	0 waiting for the clip to start, 1 playing, 2 finished or no voice; the typewriter waits for it when voice_mode is on; EVENT range: main-only symbol file
+data	main	D_800B3634	girl_name_suffix_familiar	one-character suffix string appended by get_p_name for the familiar form (data decode: the kun honorific; get_g_name's literal chan is the other familiar suffix)
+data	main	D_800B3638	girl_name_suffix_polite	two-character suffix string appended by get_p_name for the polite form (data decode: the san honorific; get_g_name appends the same string-sized literal for most girls)
+data	main	D_80125BF0	mode_debug_vram_view_x	s16 display start x of mode_debug_vram_view; inside EVENT range: main-only symbol file
+data	main	D_80125BF2	mode_debug_vram_view_y	s16 display start y of mode_debug_vram_view; inside EVENT range: main-only symbol file
+data	main	D_80125BF4	speaker_voice_table_a	pointer (kept in an s32) to the first table of (start, end) clip word pairs given to voice_play; read back by dialogue_text_step; EVENT range: main-only symbol file
+data	main	D_80125BF8	speaker_voice_table_b	pointer to the second clip table; a line plays clip A then clip B when the first words differ and the request just played was A; EVENT range: main-only symbol file
+data	main	D_80125BFC	speaker_voice_index	line index into the clip tables, -1 when voice_play got the clip words directly; EVENT range: main-only symbol file
+data	main	D_80125C00	speaker_voice_state	0 waiting for the clip to start, 1 playing, 2 finished or no voice; the typewriter waits for it when voice_mode is on; EVENT range: main-only symbol file
 field	KWork	pos	revealed	glyphs revealed so far (the typewriter position): k_disp_inc adds 1 per tick, disp_string draws glyph indexes below it; old name pos is an abbreviation outside the glossary table; alias label D_800B3F68
 field	KWork	unk_6A	glyph_advance	x distance in pixels between glyphs: disp_string places glyph k at x + k * advance; text_set_advance stores 0xE or 0x10; alias label text_glyph_advance; emu: 0x0E in all runs
 field	MenuSelection5	pad_02	mode	the byte of the view that lies on GameState 0x1092 (core menu_mode), between the two counts and the two cursors; no code reads it through the view (menu_check and menu_cursor_update use the GameState field), so the rename is cosmetic; plan: 0 uses
+field	MenuSelection5	current	cursor	s8[2], the pad cursor item of menu 0 and 1 (-1 none); core calls the GameState bytes menu_cursor_0 and menu_cursor_1 and the type note says cursor, so one word per concept
 file	main	src/main/8004E500.c	src/main/text_system.c	text list, typewriter, glyph loading and upload, per-frame glyph drawing, text palettes and font tables (25 functions)
 file	main	src/main/8004F6B0.c	src/main/debug_vram_view.c	one function: the mode 0xFE VRAM viewer (developer tool)
-file	main	src/main/8004F870.c	src/main/menu_speaker_girl.c	menus and choices, speaker labels and dialogue lines, name builders, girl state and score queries, dialogue text steps, birthday and club helpers (35 functions); could later split along those groups
+file	main	src/main/8004F870.c	src/main/menu_speaker_girl.c	one original object (config/objects/main.txt: 8004F870-80053650), so one C file with three topics: menus and choices (menu_, x_taku_), speaker labels, dialogue lines, their text steps and the voice sync state (speaker_, gnsx, sndisp, sndi, xa_wait), and the girl queries (girl_: name builders, scores, state ranks, birthday and club helpers); 35 functions; the name lists the topics, a split needs new object boundaries and is not a naming task
 file	main	-	include/main/text.h	new header: TextEntry, TextState, FontRange, text list and typewriter prototypes and the TEXT_ constants
-file	main	-	include/main/menu.h	new header: MenuItem, MenuSelection, menu, choice, speaker and girl query prototypes and the MENU_, SPEECH_ and GIRL_STATE_ constants
+file	main	-	include/main/menu.h	new header: MenuItem, MenuSelection, the menu and choice-menu prototypes (menu_set, menu_check, menu_cursor_update, menu_bar_show, x_taku_*, menu_girl_taku_set) and the MENU_ constants
+file	main	-	include/main/speaker.h	new header: gnsx, sndisp, sndi, xa_wait, text_wait_confirm, dialogue_text_step, voice_play and the SPEAKER_STYLE_ and SPEAKER_VOICE_ constants
+file	main	-	include/main/girl.h	new header: the girl queries (girl_scores, get_h_*, get_g_zyotai_*, get_g_name, get_p_name, birthday and club helpers) and the GIRL_ constants of this unit
 const	TextLimit	0x34	TEXT_LIST_MAX	set_kanji_string returns -1 at this many entries; text_system_reset clears 0x34 entries; text_list is 52 x 8 bytes
 const	TextLimit	0x80	TEXT_GLYPHS_PER_PAGE	one glyph page holds 8 x 16 cells; the tpage choice and VRAM x change at glyph 0x80 and 0x100
-const	TextLimit	3	TEXT_GLYPH_PAGES	pages at VRAM x 0x320, 0x360, 0x3A0 (3 x 128 = 384 glyph slots; text_glyph_pages_clear(3) in ENDING)
+const	TextLimit	3	TEXT_GLYPH_PAGES	pages at VRAM x 0x320, 0x360, 0x3A0 (3 x 128 = 384 glyph slots; text_glyph_pages_clear(3) in ENDING); slots from 0x180 up wrap inside the last page (they reuse the cells of slots 0x100 and up)
 const	TextAdvance	0xE	TEXT_ADVANCE_NORMAL	default x advance, restored by text_system_reset and set by OPTION and NAME_ENT screens
 const	TextAdvance	0x10	TEXT_ADVANCE_WIDE	text_set_advance(0x10) is called once, by NAME_ENT func_80132198 right after text_system_reset; NAME_ENT and OPTION code sets 0xE again
-const	TextSpeed	0	TEXT_SPEED_FAST	one glyph per frame; settings screen item 3 stores it
-const	TextSpeed	1	TEXT_SPEED_NORMAL	one glyph per 2 frames; settings screen item 2
-const	TextSpeed	3	TEXT_SPEED_SLOW	one glyph per 4 frames; settings screen item 1
-const	TextSpeed	0x7F	TEXT_SPEED_MAX	k_speed_set clamps values above 0x80 to this
-const	TextRow	0x32	TEXT_ROW_0_Y	first message row, y relative to the screen centre (170 px from the top); sndi, gnsx, x_taku and the settings screens
+const	TextSpeed	0	TEXT_SPEED_FAST	one glyph per frame; the fast choice (item 2, items counted from 0) of the settings text speed screen stores it; the screen also shows item 2 as the start cursor for any speed other than 1 and 3, e.g. the unused 2; this unit owns the TextSpeed rows
+const	TextSpeed	1	TEXT_SPEED_NORMAL	one glyph per 2 frames; the normal choice (item 1) of the settings text speed screen
+const	TextSpeed	3	TEXT_SPEED_SLOW	one glyph per 4 frames; the slow choice (item 0) of the settings text speed screen
+const	TextSpeed	0x7F	TEXT_SPEED_CLAMP	k_speed_set stores this for any argument from 0x81 up; 0x80 itself passes unchanged, so the largest stored speed is 0x80 and 0x7F is the clamp value
+const	TextRow	0x32	TEXT_ROW_0_Y	first message row, y relative to the screen center (170 px from the top); sndi, gnsx, x_taku and the settings screens
 const	TextRow	0x42	TEXT_ROW_1_Y	second message row (16 px below the first)
 const	TextRow	0x52	TEXT_ROW_2_Y	third message row; sndi puts every row of index 2 and above here
 const	TextX	-0x80	TEXT_X_FULL_WIDTH	left edge of full-width text (system messages, sndi col 0xFF, gnsx names of 3+ characters)
@@ -88,15 +92,13 @@ const	TextX	-0x48	TEXT_X_SPEECH_NEXT	x of the following lines; one advance (14) 
 const	TextX	-0x78	TEXT_X_CHOICE	x of the labels of a choice menu (x_taku_string_set) and of its 240 px wide items
 const	TextScrollState	0x80	TEXT_SCROLL_ACTIVE	bit 7 of GameState text_scroll_state: set by sndisp after it queued a block, tested by xa_wait and dialogue_text_step
 const	TextScrollState	0x7F	TEXT_SCROLL_PHASE_MASK	low bits: 0 typing, 1 sliding the lines up by 2 px per frame
-const	SpeechStyle	0x0F	SPEECH_DOUBLE_BRACKET	sndi col 0xF (117 call sites): first line starts with the double corner bracket; low nibble 15 also selects the narration name codes
-const	SpeechStyle	0x1F	SPEECH_PAREN	sndi col 0x1F (70 sites): first line starts with an opening parenthesis (the text itself ends with the closing one)
-const	SpeechStyle	0x2F	SPEECH_PLAIN	sndi col 0x2F (21 sites): no opening mark
-const	SpeechStyle	0xFF	SPEECH_FULL_WIDTH	sndi col 0xFF (4 sites): normal opening mark, every line at x -0x80 (no speaker plate)
-const	NameCode	0x50	NAME_CODE_PLAYER	ASCII P in a dialogue line (even byte offset): sndi replaces the first one with get_p_name
-const	NameCode	0x47	NAME_CODE_GIRL	ASCII G in a dialogue line: sndi replaces the first one with get_g_name, only when the speaker nibble is 15
-const	TextCode	0x20	TEXT_LINE_BREAK	ASCII space on an even byte offset inside a sndisp string: ends the line (at most 5 breaks, so 6 lines)
-const	GirlCount	11	GIRL_HEROINE_COUNT	girls 0-10: the loops of get_h_tokimeki_table, get_h_yuukou_table and girl_find_by_club, and the first 11 slots of the girl menu (its 12th is girl 12)
-const	MenuHover	1	MENU_HOVER_POINTER	MenuItem.hover written by menu_check_1 for an item under the pointer
+const	SpeakerStyle	0x0F	SPEAKER_STYLE_DOUBLE_BRACKET	sndi style 0xF (117 call sites): first line starts with the double corner bracket; low nibble 15 also selects the narration name codes
+const	SpeakerStyle	0x1F	SPEAKER_STYLE_PAREN	sndi style 0x1F (70 sites): first line starts with an opening parenthesis (the text itself ends with the closing one)
+const	SpeakerStyle	0x2F	SPEAKER_STYLE_PLAIN	sndi style 0x2F (21 sites): no opening mark
+const	SpeakerStyle	0xFF	SPEAKER_STYLE_FULL_WIDTH	sndi style 0xFF (4 sites): normal opening mark, every line at x -0x80 (no speaker plate)
+const	TextCode	0x20	TEXT_LINE_BREAK	ASCII space on an even byte offset inside a sndisp string: ends the line; sndisp keeps the split positions in a u8 array of 5 without a bounds check, so 5 breaks (6 lines) is the array capacity and a sixth space would write past the array
+const	GirlCount	11	GIRL_SCORED_COUNT	girls 0-10: the loops of get_h_tokimeki_table, get_h_yuukou_table and girl_find_by_club, and the first 11 slots of the girl menu (its 12th is girl 12)
+const	MenuHover	1	MENU_HOVER_POINTER	MenuItem.hover (core field row) written by menu_check_1 for an item under the pointer
 const	MenuHover	10	MENU_HOVER_CURSOR	MenuItem.hover written by menu_check_2 for the item under the pad cursor (drawn stronger)
 const	MenuLimit	16	MENU_ITEM_MAX	menu_set refuses counts of 17 or more (returns -1); every menu has 16 item slots
 const	MenuLimit	2	MENU_COUNT	menus 0 and 1; menu_check returns -1 for index 2 and above
@@ -113,27 +115,28 @@ const	GirlStateRank	0x7F	GIRL_STATE_RANK_MASK	girl_state_rank masks the get_g_zy
 const	GirlStateRank	0x80	GIRL_STATE_FLAG_HIGH_AFFECTION	bit 7 of get_g_zyotai_s: weighted affection >= 80; get_p_name tests it
 const	GirlScore	13	GIRL_SCORE_MODULUS	get_h_tokimeki and get_h_yuukou reduce the girl id modulo 13: girls 13 and 14 score as 0 and 1
 const	GirlScore	100	GIRL_SCORE_MAX	both scores are clamped to 0..100 (0x64)
-const	ClosenessGrid	5	CLOSENESS_BUCKET_SIZE	girl_scores divides both scores by 5 before the grid lookup
-const	ClosenessGrid	19	CLOSENESS_BUCKET_MAX	bucket index cap (a score of 100 gives 19)
+const	GirlCloseness	5	GIRL_CLOSENESS_BUCKET_SIZE	HYPOTHESIS: closeness is a meaning word (glossary row added by this unit); girl_scores divides both scores by 5 before the grid lookup
+const	GirlCloseness	19	GIRL_CLOSENESS_BUCKET_MAX	HYPOTHESIS: closeness is a meaning word (glossary row added by this unit); bucket index cap (a score of 100 gives 19)
 const	GirlPoints	0x311	GIRL_POINTS_SHIORI_FIXED	the only nonzero value girl_points_shiori stores (785)
-const	GirlPoints	0x55	GIRL_POINTS_SHIORI_MIN_CLOSENESS	closeness below 85 gives girl 0 zero points
+const	GirlPoints	0x55	GIRL_POINTS_SHIORI_MIN_CLOSENESS	HYPOTHESIS: closeness is a meaning word (glossary row added by this unit); closeness below 85 gives girl 0 zero points
 const	GirlPoints	8	GIRL_POINTS_SHIORI_MIN_EVENTS	girl 0 needs the event counters 1-35 to sum to at least 8
 const	GirlPoints	0x33	GIRL_POINTS_SHIORI_SYOUSHIN_LIMIT	girl 0 syoushin of 0x33 or more gives zero points
 const	GirlPoints	4	GIRL_POINTS_MIN_EVENTS	girls 1-10: fewer than 4 summed event counters zero the points
 const	GirlPoints	10	GIRL_POINTS_PER_EVENT	girls 1-10: points added per summed event counter
 const	GirlPoints	140	GIRL_POINTS_STRESS_CAP	stress is capped at 140 before the girl 2 stress curve lookup
-const	VoiceState	0	VOICE_STATE_PENDING	voice_play stored a request and the CD has not reported the clip as playing yet
-const	VoiceState	1	VOICE_STATE_PLAYING	cd_audio_state bit 4 (XA playing) was seen
-const	VoiceState	2	VOICE_STATE_DONE	clip finished or no voice (speaker 15, or cut with the cross button in voice mode 2); the typewriter may finish and the line may advance
-const	VoiceIndex	-1	VOICE_INDEX_DIRECT	voice_play: the first two arguments are the clip words themselves, not tables
+const	SpeakerVoiceState	0	SPEAKER_VOICE_PENDING	voice_play stored a request and the CD has not reported the clip as playing yet
+const	SpeakerVoiceState	1	SPEAKER_VOICE_PLAYING	cd_audio_state value 4 (bit 2, XA playing) was seen
+const	SpeakerVoiceState	2	SPEAKER_VOICE_DONE	clip finished (cd_audio_state value 2, bit 1) or no voice (speaker 15, or cut with the cross button in voice mode 2); the typewriter may finish and the line may advance
+const	SpeakerVoiceIndex	-1	SPEAKER_VOICE_INDEX_DIRECT	voice_play: the first two arguments are the clip words themselves, not tables
+comment	main	text_set_advance	Set the glyph advance: 0x10 selects 16 px, any other value 14 px	body; stores 0x10 for an argument of 0x10 and 0xE otherwise; NAME_ENT calls it with 0x10; not an O.BIN name, the comment row keeps the range uniform
 comment	main	get_ksys	Return a pointer to the text state (entry count, glyph total, mark, speed, shown glyphs, advance)	returns the address of text_state; both callers ignore the result
 comment	main	set_k_work	Copy a TextEntry by value into text list slot n	body copies the six fields; no caller
 comment	main	k_disp_goto_line_end	Jump the typewriter to the end of the entry being typed; returns the new position or -1	body: first entry whose running glyph sum reaches pos
-comment	main	k_speed_set	Set the typewriter speed (frames per glyph minus one); values above 0x80 become 0x7F	body; settings screen stores 3, 1 or 0
+comment	main	k_speed_set	Set the typewriter speed (frames per glyph minus one); values from 0x81 up become 0x7F, 0x80 passes	body; settings screen stores 3, 1 or 0
 comment	main	get_k_speed	Return the typewriter speed	body; saved in the system block by the memory-card code
 comment	main	check_set_k	Return the number of text list entries (low byte)	body reads the first byte of text_state; sndisp and TEL use it as an entry index
 comment	main	get_now_k	Return the index of the text entry holding the last revealed glyph, 0xFF while nothing is revealed	body; emu: with pos 3 and two earlier entries it names the dialogue line being typed
-comment	main	disp_string	Draw the revealed glyphs of the text list: one coloured and one shadow 16x16 sprite each	body: two SPRT_16 (code 0x7C) primitives per glyph, ordering slot from the entry
+comment	main	disp_string	Draw the revealed glyphs of the text list: one colored and one shadow 16x16 sprite each	body: two SPRT_16 (code 0x7C) primitives per glyph, ordering slot from the entry
 comment	main	load_string	Look up each two-byte character in the font range table and upload its glyph; returns the glyph count	body; stops at a zero byte or a code below 0x8140
 comment	main	vload_font	Unpack one glyph and upload it to the next free glyph slot of VRAM	body: text_glyph_expand, LoadSquare, slot counter + 1
 comment	main	menu_check_1	Pointer hit test: marks the items under the pointer and returns the last one hit, or -1	body: strict inside test on x and y
