@@ -4,7 +4,7 @@ file	main	src/main/800420D0.c	src/main/main_loop.c	one object (0x800420D0-0x8004
 file	main	src/main/80042540.c	src/main/game_mode.c	one object (0x80042540-0x80042A00): mode dispatcher, mode/stage/step setters, overlay request
 file	main	src/main/80042A00.c	src/main/pad_input.c	one object (0x80042A00-0x80043510): controller detection, pad and mouse polling, soft reset, turbo, secret pad code
 file	main	src/main/800789E0.c	src/main/overlay_loader.c	one object (0x800789E0-0x80079B10): overlay loader (mode 2) with its sector and entry tables, loader screen, the TT loader (mode 0xD0)
-file	main	src/main/80061710.c	src/main/title_screen.c	one object (0x80061710-0x80062CD0): the title screen (mode 0x12) with its 3D card intro, plus the start mode (0x10)
+file	main	src/main/80061710.c	src/main/title_screen.c	one object (0x80061710-0x80062CD0): the title screen (mode 0x12) with its 3D photo intro, plus the start mode (0x10)
 file	main	src/main/80053650.c	src/main/memory_card.c	one object (0x80053650-0x80056300): memory-card layer (BIOS events, file jobs, system-file and game-save images); two MDEC still-image helpers at its top
 file	main	-	include/main/game_init.h	new header: declarations of game_init.c moved out of main_api.h (pure move, sync_protos compare)
 file	main	-	include/main/main_loop.h	new header: boot_start, main_loop, frame_begin, timer_*, sys_* and their globals
@@ -54,11 +54,11 @@ func	main	func_80061710	title_view_init	libgs projection 1000 and a reference vi
 func	main	func_80061790	title_lights_init	three directional lights, directions (0,0,100), (0,100,0), (100,0,0), tints (0xFF,0x80,0x80), (0x80,0x80,0xFF), (0x80,0xFF,0x80), ambient 0, light mode 0
 func	main	func_800618B0	title_coords_init	libgs coordinate init for the 16 model_coords records, then flag 0 and z translation 0xFA0
 func	main	func_8006190C	title_models_link	HYPOTHESIS: maps the TMD at 0x801F0000, requires object count 13 (else returns 0), links all 16 records to object 0, then record i (0-12) to object (rand() + i) % 13
-func	main	func_80061A3C	title_setup_stage	stage 0, substeps: 0 reset screen and start the sound bank load, 1 start the title BGM and read one model sector (LBA 0xBE13), 2 copy it into the next 12 sectors and read 0xD6 sectors (LBA 0xA0CC) to 0x80180000, 3 palettes (15), 13 card textures (tpage ids 0x15-0x1A, 0x25-0x27, 0x35-0x38), background blocks, actor 96, 3D setup, srand(timer_ticks), stage_next; emu: stage 1 starts 242 frames after the title
+func	main	func_80061A3C	title_setup_stage	stage 0, substeps: 0 reset screen and start the sound bank load, 1 start the title BGM and read one model sector (LBA 0xBE13), 2 copy it into the next 12 sectors and read 0xD6 sectors (LBA 0xA0CC) to 0x80180000, 3 palettes (15), 13 photo textures (tpage ids 0x15-0x1A, 0x25-0x27, 0x35-0x38), background blocks, actor 96, 3D setup, srand(timer_ticks), stage_next; emu: stage 1 starts 242 frames after the title
 func	main	func_80061EFC	title_intro_backdrop_step	stage 1 step 0: raises screen_brightness by 1 per frame to 0x80 (and the background layer tint with it); after 601 frames (0x259) step_next; START, cross or circle: white clear colour, models cleared, stage_next (menu)
-func	main	func_80061FC4	title_intro_flash_step	stage 1 step 1: screen_flash_gray(step_timer / 2); at 0xFF (510 frames) or a button: hides the backdrop and cards, white clear colour, actor 96 becomes the logo; a button then jumps to the menu stage, else step_next
+func	main	func_80061FC4	title_intro_flash_step	stage 1 step 1: screen_flash_gray(step_timer / 2); at 0xFF (510 frames) or a button: hides the backdrop and photos, white clear colour, actor 96 becomes the logo; a button then jumps to the menu stage, else step_next
 func	main	func_8006211C	title_intro_logo_step	stage 1 step 2: screen_flash_gray(0xFF - step_timer); stage_next at 255 frames or on START, cross or circle
-func	main	func_8006218C	title_intro_stage	stage 1 handler: step_timer += 1, steps 0-2, then title_cards_update every frame
+func	main	func_8006218C	title_intro_stage	stage 1 handler: step_timer += 1, steps 0-2, then title_photos_update every frame
 func	main	func_80062210	title_menu_setup_step	stage 2 step 0: menu 0 with two items (rects x -0x30, w 0xA0, h 0x14 at y 0x42 and 0x52), selection 0, white clear colour, sprite tables cleared, cursor shown, actors 96-98 set up as the menu pictures; step_next
 func	main	func_800623E4	title_menu_cursor_update	selection (scene_work word 0): pad mode up = item 0, down = item 1 and the cursor actor at y = item * 16 + 0x46; mouse mode hit test of menu 0; any change restarts step_timer (idle timer); item frames swap with the selection
 func	main	func_80062524	title_menu_select_step	stage 2 step 1: cursor update; START or circle hides the cursor, step_next, sound 0x501; step_timer >= 0x259 (601) or SELECT: actors cleared, SND_CMD_STOP_ALL, main_state_set(0x11); emu: idle timeout at 601 frames
@@ -68,7 +68,7 @@ func	main	func_80062634	title_menu_stage	stage 2 handler: step_timer += 1, steps
 func	main	func_800626B0	title_exit_dispatch_step	stage 3 step 1: full flash level, then selection 0: main_state_set(0x13) (NAME_ENT file and name entry), selection 1: main_state_set(0x20) (OPTION; with debug_hud_enabled pad right gives 0x21 and pad left 0x22), anything else game_reset_to_title; emu: item 0 leaves 162 frames after the press
 func	main	func_80062764	title_exit_fade_step	stage 3 step 0: SND_CMD_FADE_BGM_SLOW every frame, flash level step_timer * 2; at 0x80 frames actors and cursor cleared, sprite tables cleared, step_next
 func	main	func_800627DC	title_exit_stage	stage 3 handler: step_timer += 1, steps 0-1
-func	main	func_80062948	title_cards_update	each frame places the 13 card models: spin from frame_count, translation x = scene_work[i + 1] (start -400 - 100 * i, from title_card_offsets) that grows by 2 or 3 per frame, y = sin wobble - x / 2, z = -4 * x - 400; emu: screenshot at stage 1 shows photo cards flying past a still background
+func	main	func_80062948	title_photos_update	each frame places the 13 photo models: spin from frame_count, translation x = scene_work[i + 1] (start -400 - 100 * i, from title_photo_offsets) that grows by 2 or 3 per frame, y = sin wobble - x / 2, z = -4 * x - 400; emu: screenshot at stage 1 shows photo cards flying past a still background
 func	main	func_80062C28	mode_start	mode 0x10 handler, runs once: movie_play(0, 0xA7, 0x190) (the start movie), flush, CD pause and init, mdec_still_buffers_set(0x80167000, 0x80162000, 0x80162000), display on, VRAM block 0 cleared, back clear on, main_state_set(0); emu: movie starts at frame 622 and mode 0 at 1256
 func	main	func_80053650	mdec_still_buffers_set	stores the three MDEC buffers (bitstream, VLC work, output) after resetting the decoder; callers mode_start, dec_bg decode, NAME_ENT
 func	main	func_800536AC	mdec_still_decode_to_vram	(x, y, w, h): checks the bitstream header (0x3800, version 1), VLC-decodes it and streams 16-pixel-wide slices into VRAM at (x, y); -1 on a bad header, else 1; callers dec_bg, DATE, DATE2, ENDING, ETC, NAME_ENT, TACO
@@ -114,7 +114,7 @@ data	main	D_800B3CFC	pad_code_entered	1 for 240 frames after the whole code was 
 data	main	D_800B3D00	pad_code_timer	u8: 0x10 after each match and counted down per frame (reaching 0 resets pad_code_index); while pad_code_entered is set it counts up from 0x10 and clears the flag when it wraps to 0
 data	main	D_800E8BF0	pad_buffer_1	raw controller buffer of port 1 given to InitPAD and InitMouse: status, id, two button bytes (mouse: two motion bytes after them)
 data	main	D_800E8C30	pad_buffer_2	raw controller buffer of port 2 (same layout)
-data	main	D_800B5A40	title_card_offsets	s16[13]: -400, -500 ... -1600, the start x of the 13 title cards, copied to scene_work[1..13]
+data	main	D_800B5A40	title_photo_offsets	s16[13]: -400, -500 ... -1600, the start x of the 13 title photos, copied to scene_work[1..13]
 data	main	D_800B3938	card_file_prefix	string: device name bu00: plus the product code of the original release (BISLPS-00065); card_file_name_build appends one hex digit
 data	main	D_800B4390	card_icon_palettes	13 palettes of 0x20 bytes (16 colours), one per save icon; copied to the card header at +0x60
 data	main	D_800B58B0	card_icon_images	u8 *[13]: three 16x16 4-bit frames (0x180 bytes) per save icon; copied to the card header at +0x80
@@ -290,14 +290,14 @@ const	CardLayout	0x200	CARD_HEADER_SIZE	header of the file: magic, icon flag, ti
 const	CardLayout	0xF00	CARD_BANK_SIZE	one data bank; two follow the header
 const	CardIcon	0xD	CARD_ICON_COUNT	13 save icons; an icon index of 13 or more uses icon 0
 const	TitleStage	0	TITLE_STAGE_SETUP	mode_title stage 0: loads and builds the intro (title_setup_stage)
-const	TitleStage	1	TITLE_STAGE_INTRO	backdrop and flying cards, flash, logo reveal (title_intro_stage)
+const	TitleStage	1	TITLE_STAGE_INTRO	backdrop and flying photos, flash, logo reveal (title_intro_stage)
 const	TitleStage	2	TITLE_STAGE_MENU	two-item menu (title_menu_stage)
 const	TitleStage	3	TITLE_STAGE_EXIT	fade out and leave to the chosen mode (title_exit_stage)
 const	TitleSetupSubstep	0	TITLE_SETUP_RESET	reset screen state, start the sound bank load
 const	TitleSetupSubstep	1	TITLE_SETUP_MODEL_READ	start the BGM and read the model sector
 const	TitleSetupSubstep	2	TITLE_SETUP_TEXTURE_READ	copy the model sector and read the texture block
 const	TitleSetupSubstep	3	TITLE_SETUP_BUILD	upload palettes and textures, set up actors, view, lights, models
-const	TitleIntroStep	0	TITLE_INTRO_BACKDROP	fade-in and 601 frames of flying cards
+const	TitleIntroStep	0	TITLE_INTRO_BACKDROP	fade-in and 601 frames of flying photos
 const	TitleIntroStep	1	TITLE_INTRO_FLASH	510 frames of rising flash level, then the logo actor
 const	TitleIntroStep	2	TITLE_INTRO_LOGO	255 frames of falling flash level
 const	TitleMenuStep	0	TITLE_MENU_SETUP	build the two menu items
@@ -310,4 +310,4 @@ const	TitleItem	1	TITLE_ITEM_OPTIONS	leaves to mode 0x20 (OPTION)
 const	TitleTiming	0x259	TITLE_WAIT_FRAMES	601 frames: length of intro step 0 and the idle timeout of the menu
 const	TitleTiming	0x21	TITLE_CONFIRM_FRAMES	highlight time after a choice
 const	TitleTiming	0x80	TITLE_EXIT_FADE_FRAMES	fade time before the next mode
-const	TitleCards	0xD	TITLE_CARD_COUNT	13 card models of the intro (also the TMD object count title_models_link requires)
+const	TitlePhotos	0xD	TITLE_PHOTO_COUNT	13 photo models of the intro (also the TMD object count title_models_link requires)
