@@ -973,6 +973,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-27024-p2-o-tt|T-27024 Phase 2 analysis of overlay TT (TwinBee Time Attack)]]
 - [ ] [[tickets/T-27001-phase-2-conventions|T-27001 Phase 2 naming conventions: ADR, standards, glossary, plan]]
 - [ ] [[tickets/T-27014-p2-m-dates-a|T-27014 Phase 2 naming and spec for m-dates-a (src/main/80079B10.c, which is the sound driver)]]
+- [ ] [[tickets/T-27011-p2-m-scheduler|T-27011 Phase 2 naming proposals and port spec for the main scheduler (m-scheduler)]]
 
 
 %% kanban:settings
