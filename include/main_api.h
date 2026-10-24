@@ -25,6 +25,9 @@
 #include "libgpu.h"
 #include "libgte.h"
 #include "game_enums.h"
+#include "main/schedule.h"
+#include "main/day_event.h"
+#include "main/school_day.h"
 
 /* T-12010: D_801255D0 is saved as a word and read as four bytes. */
 typedef union WordBytes {
@@ -859,28 +862,8 @@ extern u8 D_800B6724[];
 extern u8 D_800B6728[];
 extern u8 D_800B672C[];
 extern u8 D_800B6730[];
-extern s8 schedule_last_picked_girl;
-extern s32 schedule_command_rank_bar_liberal_arts_athletics;
-extern s32 schedule_command_rank_bar_art;
-extern s32 schedule_command_rank_bar_trivia;
-extern s32 schedule_command_rank_bar_shiori_athletics;
-extern s32 schedule_command_rank_bar_science_looks;
-extern s32 D_800B6760[];
-extern s32 D_800B6780[];
-extern s32 D_800B67AC[];
-extern s32 D_800B6810[];
-/* T-17000: parameter tables of func_80076FDC, school_day_sd_set_select and parameter_up_down. func_80076FDC
- * reads byte [row][col] of two 12-row, two-byte tables in an 11-case switch (`lbu %lo(D_800B6892)` after
- * `addu` of the column); school_day_sd_set_select starts the next table at D_800B68C0. parameter_up_down walks
- * signed nine-byte rows (`lb`, row index * 9): eight rows at school_day_command_deltas end where club_activity_deltas starts. */
-extern u8 D_800B6890[12][2];
-extern u8 D_800B68A8[12][2];
 /* T-25049: event-selector byte regions. Indexed lbu uses offsets
  * 0,2,4,6,9,11 plus the selection column; offset13 is a scalar byte. */
-extern u8 D_800B68C0[16];
-extern u8 D_800B68D0[16];
-extern s8 school_day_command_deltas[8][9];
-extern s8 club_activity_deltas[][9];
 /* T-20940: static data of 80075320.c. D_800B6990 is a ring of the last seven keys pressed on the holiday
  * menu (0, 1, 2 from the pad bits 0x20, 0x40, 0x10; cleared to 0xFF by func_800755B4 in a loop IDO unrolled)
  * and D_800B6998 its write position: func_80075C84 stores `keys[pos] = key; pos++`, wraps pos at 7 and reads
@@ -2548,53 +2531,7 @@ s32 func_8006C700(void);
 void text_marker_set(s32 arg0);
 u8 *func_8006CA9C(void);
 u8 *func_8006CAE0(void);
-void _schedule_init(void);
 /* T-14501: _schedule_init callees defined later in 8006CB30.c. */
-void schedule_step_prepare(void);
-void schdeule_girls_param(void);
-void schedule_step_advance_day(void);
-void last_date_spot_timer_dec(void);
-void restore_bgm(void);
-s32 schedule_memory_card_save_poll(void);
-void schedule_girl_spots_expire(void);
-void schedule_progress_state_update(void);
-s32 day_event_queue_resync_after_master();
-void day_event_queue_build_week(void);
-s32 schedule_meeting_select_catchup(u8 *arg0, u8 *arg1);
-s32 schedule_meeting_select_normal(u8 *arg0, u8 *arg1);
-void schedule_girls_gakko(void);
-void yuukou_down(void);
-void syoushin_up(void);
-void schedule_day_screen_step_dispatch(void);
-void schedule_ending_start(void);
-void day_event_dispatch(void);
-void calendar_advance_day(void);
-void day_event_today_clear(u8 arg0);
-void schedule_vacation_notice_step(void);
-void func_80072734();
-s32 schedule_month_start_step_dispatch(void);
-s32 schedule_month_data_load_step(void);
-void schedule_month_start_music_wait(void);
-s32 day_event_next(s32 arg0);
-void schedule_week_end_hud_init(void);
-void schedule_health_step_dispatch(void);
-void func_80072FE8();
-void func_800737A0(void);
-u8 week_day_init(void);
-s32 get_weekly_bg_sector(void);
-u8 school_day_screen_init(void);
-u8 school_day_sd_load(void);
-u8 school_day_sd_actors_init(void);
-void func_800744A0();
-s32 week_day_main0(void);
-void week_day_exit0(void);
-void func_800748B8();
-void func_80074950();
-void func_80074A14();
-u8 vacation_day_init(void);
-u8 school_day_vacation_screen_init(void);
-u8 school_day_vacation_sd_load(void);
-u8 school_day_vacation_sd_actors_init(void);
 void func_800755B4(void);
 void func_80075A64(void);
 void func_80075AF8(void); /* T-20940: called by func_800755B4 before its definition */
@@ -3021,7 +2958,6 @@ void set_tarao_sprt();
 void set_tarao_bg(s32 arg0);
 void SD_DetectCDPeak(u16 *l, u16 *r, u16 pos, u16 n);
 void SD_CalcCDAve(s16 *left, s16 *right, u16 start, u16 count);
-s32 schedule_meeting_select_club(u8 *arg0, u8 *arg1);
 
 /* T-10860: generated from src/main/8007C030.c by sync_protos.py. */
 s16 getCDlevel(void);
