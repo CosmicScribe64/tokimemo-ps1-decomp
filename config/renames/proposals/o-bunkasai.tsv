@@ -313,7 +313,7 @@ file	BUNKASAI	src/ovl/BUNKASAI/80154018.c	src/ovl/culture_festival/mio_visit.c	M
 file	BUNKASAI	src/ovl/BUNKASAI/80158EB0.c	src/ovl/culture_festival/megumi_visit.c	Megumi visit block, stages 145-153
 file	BUNKASAI	src/ovl/BUNKASAI/8015AF90.c	src/ovl/culture_festival/fortune_telling.c	shared computer fortune stage and its result lookup
 file	BUNKASAI	include/ovl/BUNKASAI.h	include/ovl/culture_festival.h	overlay header
-const	CulturePhase	0	CULTURE_PHASE_INIT	D_80122EC0 value; init: sound bank, HUD hidden, no visitor
+const	CulturePhase	0	CULTURE_PHASE_INIT	D_80122EC0 value; init: sound bank, icon bar and parameter panel hidden, no visitor
 const	CulturePhase	1	CULTURE_PHASE_FADE_RESET	D_80122EC0 value; brightness 0
 const	CulturePhase	2	CULTURE_PHASE_GATE_LOAD	D_80122EC0 value; wait for the sound bank, read the gate background
 const	CulturePhase	3	CULTURE_PHASE_GATE_SHOW	D_80122EC0 value; wait for the read, show it, read the intro script (5 sectors at 0x49BA)

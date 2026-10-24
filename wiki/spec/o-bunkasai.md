@@ -68,7 +68,7 @@ Every frame: `bustup_wink_update()`, then a switch on `culture_phase`, then `Def
 
 | Phase | Name | What it does |
 |---|---|---|
-| 0 | `INIT` | sound command 0xBF, sound bank 1 start, scene reset, `girl_menu_enabled[i]` = the met bit of girls 0..10, background and text reset, banner title = festival name, HUD panels hidden, `culture_visitor_girl` = 0xFF, `culture_phase` += 1 |
+| 0 | `INIT` | sound command 0xBF, sound bank 1 start, scene reset, `girl_menu_enabled[i]` = the met bit of girls 0..10, background and text reset, message window initialised, banner title = festival name, icon bar, parameter panel and mascot hidden, date panel initialised (it stays visible), `culture_visitor_girl` = 0xFF, `culture_phase` += 1 |
 | 1 | `FADE_RESET` | brightness 0, next |
 | 2 | `GATE_LOAD` | when the bank wait is done (`snd_bank_load_poll() == 1`): sound command 0x200, read the festival background (sector 0x4029), next |
 | 3 | `GATE_SHOW` | when the read is done: show the background in layer 1, read the intro script (5 sectors at 0x49BA to 0x801E8000), banner on, next |
