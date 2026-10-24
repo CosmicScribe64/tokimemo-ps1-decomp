@@ -7,34 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ticket | T-25043 TACO constant tail claimed
-
-Created [[tickets/T-25043-taco-constant-tail]] In Progress in isolated managed worktree. Read [[index]], [[status]], [[playbook]], coding standards and prior [[tickets/T-24502-taco-completion]] evidence before matching.
-
-## [2026-10-22] query | T-25043 baseline and late-zero interference controls
-
-[[tickets/T-25043-taco-constant-tail]] reproduces the seven-word TACO constant-one allocation tail in the full translation unit. New controls based on late-zero comparisons do not close it: argument lifetime and loop-index priority change instead. Source remains unchanged; private replay is `build/t25043/` in the isolated tree. Prior T-25016 constant spellings and302 engine trials are excluded.
-
-## [2026-10-22] build | T-25043 literal TACO stage handler match
-
-`src/ovl/TACO/80149F90.c` now provides default C for func_8014AB50:1876 literal linked bytes and complete TACO SHA1 pass in Docker. A marked late-eliminated unsigned test keeps an existing helper result live across flag stores; allocator trace confirms constant-one moves to original v1. [[matching-notes]] and [[tickets/T-25043-taco-constant-tail]] preserve causal controls, semantic initialization check and failed candidates. Header/global checks pass; independent review pending.
-
-## [2026-10-22] ticket | T-25043 enters In Review
-
-Moved [[tickets/T-25043-taco-constant-tail]] and its [[kanban]] card to In Review after literal default-C and affected-unit proof. Coordinator owns independent standards/spec review and full27 integration.
-
-## [2026-10-22] query | T-25043 independent review passes
-
-Root reviewed [[tickets/T-25043-taco-constant-tail]] against coding standards and scope with no findings. Exact final source repeats literal default-C MATCH1876 bytes; prototype check reports0 new/15 known disagreements. Ticket stays In Review for root's full27 integration gate.
-
-## [2026-10-22] build | TACO stage handler accepted
-
-Integrated dfb51c5cb. Root independent default-C literal1876byte proof, fresh27/27 binary checksums, headers/globals and prototypes0new/15known pass. Standards/spec review has no findings; [[tickets/T-25043-taco-constant-tail]] moves Done. [[status]] now6841/6952functions,2115608/2276920bytes (92.9%),111functions/161312bytes remain. Eight matches add10932bytes. TACO worker continues under reserved T-25047; six other Astra workers remain active. GitHub check found no open PRs and unchanged contributor claim issue65; GEKO/OPTION remain reserved.
-
-## [2026-10-22] build | Quadrant shared flag/color value hoists
-
-For [[tickets/T-25034-main-quadrant-extent]], the required TILE-flag/red-mask shared high-word control hoists before the quad loop and adds a stack home (672words/810aligned/816printed), so it is rejected. Best source remains unchanged; Astra continues UV/control lifetimes. At newer root-relayed human request, coordinator also spawned independent Astra/high T-25043 TACO func_8014AB50 and T-25044 MAIN parameter_up_down workers in separate managed worktrees; no source ownership overlaps or root edits.
-
 ## [2026-10-22] build | Quadrant UV saved-register rotation explained
 
 Astra traced separate-case-break controls for [[tickets/T-25034-main-quadrant-extent]]: scaled-row priority rises8.2->9.111 and overtakes constant127/quadrant, rotating saved registers. If-chain reproduces rotation; standalone shared-u0/default bypass returns to existing360/380 best. UV byte-result cast leaves end_v in v1. Matching continues with required masking/store-chain mechanisms; production unchanged.
@@ -1487,6 +1459,7 @@ Fixed the three blocking findings of [[tickets/T-27026-p2-o-bunkaken]] and the n
 
 ## [2026-10-24] ticket | T-27026 Done after review
 [[tickets/T-27026-p2-o-bunkaken]] passed review round 2 (approved, no findings): all 457 rows follow the ADR row for BUNKAKEN (`culture_festival_tour`, `tour_`, `Tour*`, `TOUR_*`), the nine main-scope festival words carry the `culture` stem, and the abbreviations `lit`, `comp`, `y95` to `y97`, `min`, `wrapup`, `fn` and `bustup` are spelled out. The one open point is `tt` in four names, which is the TT overlay's own stem and not yet a glossary row (not blocking). Tables and wiki only, nothing under `src/`, `include/` or `config/symbol*` (checked against the merge base). Merged as p2a-o-bunkaken.
+
 ## [2026-10-24] ingest | T-27023 phase 2 analysis of overlay EVENT
 Analysis of `src/ovl/EVENT` for [[tickets/T-27023-p2-o-event]] (phase [[tickets/T-27000-phase-2]]). The overlay is a dead development copy of the girl-scene, place-date and ride-movie code, linked against another build of the main program: none of its 135 main-side call targets is a function start of the shipped exe, 53 lie below the shipped text, its script loaders match the shipped `SERIFU/EVENT_xx.BIN` and `DATE_xx.BIN` sector counts for 10 of 12 and 10 of 11 files. Written: `config/renames/proposals/o-event.tsv` (1126 rows, passes `rename.py plan`), `o-event-devmain.tsv` (121 aliases of stale main addresses, which the tool refuses as overlay rows) and `o-event-deferred.tsv` (6 data names declared in `include/main_api.h`); the port spec [[spec/o-event]] and its step-table appendix [[spec/o-event-steps]]; the line in [[spec/index]]. Nothing under `src/`, `include/` or `config/symbol*`. Answers the EVENT half of [[tickets/T-0200-event-gyozi-loader-and-address]] (no loader exists). Ticket In Review; the board card is moved by the kanban sync.
 
