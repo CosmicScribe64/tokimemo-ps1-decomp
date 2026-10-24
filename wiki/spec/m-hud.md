@@ -282,7 +282,7 @@ The eight words of `appointment_slots` (core 3.6) are kept packed and sorted.
 6. Marker 23 and frame `CAL_FRAME_WEEK_EVENT` (0x67): which event is a 7-day mark.
 7. Icons 8-11 and 14 of the command screen (mode 0x34) and 8-12 of the holiday screen: the weekday and holiday units own the names; this unit only fixes the numbering and the stage each icon opens.
 8. Core's `bustup_build` layout (quads 2-5 are the hair and body pieces) is not checked here.
-9. Dead and unused code: `bustup_hide`, `bustup_idle_counter_wrap`, `bgm_load_finish_step`, `biorhythm_probe_unused`, `cal_sprite_disp_switch`, `appraisal_base_show`, `appointment_prompt_noop`.
+9. Dead and unused code: `bustup_hide`, `bustup_idle_counter_wrap`, `bgm_load_finish_step`, `biorhythm_probe_unused`, `cal_sprite_disp_switch`, `appraisal_base_show` (no callers); `appointment_prompt_noop` is called but empty.
 10. The bottom edge test of `icon_move_allowed` repeats the top test, `appointment_add` writes past the array when all slots are active, and a negative wave adds to the biorhythm total; these are coded as described (a port should decide whether to keep them).
 11. `HudClutRow` names only the values used here; a screenshot of Sunday 1995-04-09 shows the weekday plate in red (row 0x44); the colour of row 0x43 (Saturday, raised digits) was not seen.
 12. `slot_info_from_system_data` (`D_800E8BEE`): what NAME_ENT's 20 tests mean (HYPOTHESIS name).
