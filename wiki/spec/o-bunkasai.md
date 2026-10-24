@@ -358,3 +358,11 @@ The old addresses of the framework and rule functions (the stage functions follo
 | 15 block entries | `culture_<girl>_<visit|member>_entry` | (club, year) -> stage tables of 5.3 |
 | 18 start functions | `culture_<girl>_<visit|member>_script_[a-c_]start` | name codes, script set, line 0, tables, next step |
 | `func_8013FA20`, `func_8013FA28` | `culture_ayako_visit_unused_stage`, `culture_ayako_visit_followup` | stages 78 and 79 (7.1) |
+
+## 13. Notes for the port
+
+- The 150 scene functions are copies of one template with per-girl parameters (portrait file, script file and sector count, the group numbers per rank, the TT thresholds). A data-driven scene runner (one step list, one parameter record per girl and exhibit) reproduces them; the exceptions are the Mio science scenes (three stages by year), Ayako's follow-up (stage 79), Yumi's two-speaker sketching scene (stage 160), and the game scenes that launch TT.
+- The overlay reload is a hardware-era workaround: a port keeps `culture_phase`, the stage, the step, the return point and the visitor in one scene state and needs no reload or "stage 163" re-initialisation.
+- State changes that matter for the rest of the game: the result formula (8.1) at the end of the day, the birthday scene rewards (7.5), the festival-call flags (8.4), the event log entry (8.2), `acquainted` of the member girl, and `tt_unlocked`. Everything else is presentation.
+- Random choice: only the visitor pick (5.2); any generator works. The visitor list contains the met heroines 0..10 with equal weight.
+- Data to extract from the disc for the scenes: 22 script sets (the files at the sectors of section 9.2 and the groups the code names), the portrait files, the six exhibit backgrounds and the gate background.
