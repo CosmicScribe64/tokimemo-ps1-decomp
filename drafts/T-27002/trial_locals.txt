@@ -1,0 +1,2 @@
+local RENSYU:func_80132040 tbl handlers  T-27002 trial
+local RENSYU:func_80132040 idx mode      T-27002 trial

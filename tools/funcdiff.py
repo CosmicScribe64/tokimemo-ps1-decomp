@@ -152,8 +152,8 @@ _names = {}
 
 def renamed_addresses(root="."):
     """{name: address} of the symbols whose name carries no address: the new names of
-    config/obin_renames.txt (`old new`, old = func_/D_<addr>) and config/symbol_addrs*.txt
-    (`name = 0xADDR;`). Cached per root."""
+    config/obin_renames.txt (`old new`, old = func_/D_<addr>), config/symbol_addrs*.txt and
+    config/symbols_*.txt (`name = 0xADDR;`). Cached per root."""
     key = os.path.abspath(root)
     if key not in _names:
         out = {}
@@ -169,7 +169,8 @@ def renamed_addresses(root="."):
         except OSError:
             pass
         try:
-            names = sorted(f for f in os.listdir(cfg) if f.startswith("symbol_addrs") and f.endswith(".txt"))
+            # and the per-overlay files config/symbols_<NAME>*.txt (tools/rename.py, T-27002)
+            names = sorted(f for f in os.listdir(cfg) if f.startswith(("symbol_addrs", "symbols_")) and f.endswith(".txt"))
         except OSError:
             names = []
         for fn in names:

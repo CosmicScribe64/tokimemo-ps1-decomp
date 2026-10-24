@@ -211,6 +211,7 @@ class Tree:
         self._index = None
         self.units = symtab.read_units(root)
         self.unit_names = [u.name for u in self.units]
+        self._idents = {}   # path -> (text, identifiers): the collision checks read every file per row
 
     # ------------------------------------------------------------- files
     def read(self, path):
@@ -231,6 +232,15 @@ class Tree:
     def write(self, path, text):
         self.read(path)
         self.texts[path] = text
+
+    def idents(self, path):
+        """Identifier tokens of a file (member names excluded), cached per text."""
+        text = self.read(path) or ""
+        got = self._idents.get(path)
+        if got is None or got[0] is not text:
+            got = (text, ident_tokens(text))
+            self._idents[path] = got
+        return got[1]
 
     def move(self, old, new):
         text = self.read(old)
@@ -541,7 +551,7 @@ def row_key(tree, row, table=None):
     if row.kind in ("func", "data"):
         return ("sym", row.scope, row.key)
     if row.kind == "file":
-        return ("file", row.scope, row.key)
+        return ("header" if row.scope == "include" else "file", row.scope, row.key)
     if row.kind in ("local", "param"):
         return ("local", row.scope, row.kind)
     return (row.kind, row.scope, "-")
@@ -729,7 +739,7 @@ def plan_symbol(ctx, row):
                                 "in type: rerun with --allow-alias, then tools/sync_protos.py --fix and build" %
                            (row.new, addr))
     if not alias and not ctx.merge:
-        users = [f for f in closure_files(tree, files) if row.new in ident_tokens(tree.read(f) or "", members=False)]
+        users = [f for f in closure_files(tree, files) if row.new in tree.idents(f)]
         if users:
             return ctx.problem(row, "%s is already an identifier in %s (it would shadow or clash)" %
                                (row.new, ", ".join(users[:3]) + (" ..." if len(users) > 3 else "")))
@@ -818,23 +828,24 @@ def edit_symbol_files(ctx, row, owner, addr, is_func, table):
     target = table.placement(owner, addr, row.hypothesis)
     attrs, kept_visible = [], False
     loaded = set(table.files[owner]) - {symtab.TYPES_FILE}     # what the owner's splat sees
+    by_path = {}
     for l in table.lines_at(owner, addr):
-        if l.name != row.old:
-            continue
-        in_place = (l.path == symtab.TYPES_FILE or l.path == target or
-                    (not row.hypothesis and not symtab.is_hypotheses_file(l.path)))
-        text = tree.read(l.path)
-        lines = text.splitlines(True)
-        if in_place:
-            lines[l.lineno - 1] = re.sub(r"^(\s*)" + re.escape(row.old) + r"\b", lambda m: m.group(1) + row.new,
-                                         lines[l.lineno - 1], count=1)
-            if l.path in loaded:
-                kept_visible = True
-        else:
-            attrs += [a for a in splat_attrs(l.comment) if a not in attrs]
-            lines[l.lineno - 1] = ""
-        tree.write(l.path, "".join(lines))
-        table = ctx.table()
+        if l.name == row.old:
+            by_path.setdefault(l.path, []).append(l)
+    for path, ls in sorted(by_path.items()):
+        lines = tree.read(path).splitlines(True)
+        for l in sorted(ls, key=lambda x: -x.lineno):        # bottom up: removals keep line numbers
+            in_place = (l.path == symtab.TYPES_FILE or l.path == target or
+                        (not row.hypothesis and not symtab.is_hypotheses_file(l.path)))
+            if in_place:
+                lines[l.lineno - 1] = re.sub(r"^(\s*)" + re.escape(row.old) + r"\b", lambda m: m.group(1) + row.new,
+                                             lines[l.lineno - 1], count=1)
+                if l.path in loaded:
+                    kept_visible = True
+            else:
+                attrs += [a for a in splat_attrs(l.comment) if a not in attrs]
+                del lines[l.lineno - 1]
+        tree.write(path, "".join(lines))
     if row.new in [l.name for l in ctx.table().lines_at(owner, addr) if l.path in loaded]:
         kept_visible = True
     if not kept_visible:
@@ -1905,6 +1916,11 @@ def run_rows(ctx, rows, use_gcc=True):
             continue
         before = dict(ctx.tree.texts) if row.kind in IDENT_KINDS else None
         n_done = len(ctx.done)
+        why = None if ctx.merge else ledger_reuse(ctx, row)
+        if why:
+            ctx.problem(row, why)
+            i += 1
+            continue
         if row.kind in ("func", "data"):
             plan_symbol(ctx, row)
         elif row.kind == "type":
@@ -1918,6 +1934,17 @@ def run_rows(ctx, rows, use_gcc=True):
         if before is not None and len(ctx.done) > n_done and not ctx.merge:
             round_trip(ctx, row, before)
         i += 1
+
+
+def ledger_reuse(ctx, row):
+    """Why row.new may not be used: an earlier ledger chain of the same kind and scope had it."""
+    if row.kind in ("func", "data"):
+        return None             # plan_symbol checks names across all units
+    kg = row_key(None, row)[:2]
+    for key, (names, rs) in ctx.chains().items():
+        if key[:2] == kg and row.new in names and names[-1] != row.old:
+            return "%s was used before in the ledger (%s, %s)" % (row.new, " -> ".join(names), rs[0].where)
+    return None
 
 
 def current_type_name(ctx, spec):
@@ -2175,7 +2202,6 @@ def check(root, out=sys.stdout):
     if ch:
         files = all_code_files(tree)
         idx = name_index(tree, files)
-        cfg = {p: tree.read(p) or "" for p in config_text_files(tree)}
         for key, (names, rs) in sorted(ch.items(), key=lambda kv: str(kv[0])):
             final, olds = names[-1], names[:-1]
             where = rs[-1].where
@@ -2188,9 +2214,7 @@ def check(root, out=sys.stdout):
                     hits = sorted(idx.get(o, set()) & scope)
                     if o in table.names_at(unit, addr):
                         hits.append("the symbol files")
-                    for p, text in cfg.items():
-                        if re.search(r"(?<![\w])%s(?![\w])" % re.escape(o), strip_hash_comments(text)):
-                            hits.append(p)
+                    hits += config_key_hits(tree, o, set(scope_units_for(tree, unit, addr)), unit)
                 elif kind == "type":
                     unit = key[1]
                     scope = set(files) if unit == "main" else set(tree.unit_sources(unit) + tree.private_headers(unit))
@@ -2209,6 +2233,20 @@ def check(root, out=sys.stdout):
                     unit = key[1]
                     if any(n.split("/", 1)[0] == o for _v, n in tree.c_names(unit)):
                         hits.append(tree.yaml_path(unit))
+                elif kind == "header":
+                    if tree.exists("include/" + o):
+                        hits.append("include/" + o)
+                    hits += sorted(f for f in files if re.search(r'^[ \t]*#[ \t]*include[ \t]*"%s"' % re.escape(o),
+                                                                 tree.read(f) or "", re.M))
+                elif kind == "local":
+                    unit, func = key[1].split(":", 1)
+                    func = current_func_rows(ch, unit, func)
+                    for p in tree.unit_sources(unit):
+                        text = tree.read(p)
+                        if func in text:
+                            for a, b, _k in function_spans(text, func):
+                                if o in ident_tokens(text[a:b]):
+                                    hits.append("%s (%s)" % (p, func))
                 for h in hits[:3]:
                     problems.append("%s: %s was renamed to %s (%s); run tools/rename.py replay" % (h, o, final, where))
     for p in problems:
@@ -2216,6 +2254,31 @@ def check(root, out=sys.stdout):
     if not problems:
         out.write("renames OK (%d ledger rows)\n" % len(rows))
     return len(problems)
+
+
+def config_key_hits(tree, name, units, owner):
+    """config files whose keys name `name` as seen from `units` (proto_known `UNIT:name`,
+    migrate_globals symbols and proofs of files of those units)."""
+    out = []
+    text = tree.read("config/proto_known.txt") or ""
+    if any(m.group(1) in units for m in re.finditer(r"\b(\w+):%s\b" % re.escape(name), strip_hash_comments(text))):
+        out.append("config/proto_known.txt")
+    for line in strip_hash_comments(tree.read("config/migrate_globals.txt") or "").splitlines():
+        parts = line.split()
+        if not parts or not re.search(r"(?<![\w])%s(?![\w])" % re.escape(name), line):
+            continue
+        unit = "main" if parts[0] == "aggregate" else srcscan_unit(tree, parts[1]) if len(parts) > 1 else None
+        if (owner == "main" and parts[0] == "aggregate") or unit in units:
+            out.append("config/migrate_globals.txt")
+            break
+    return out
+
+
+def current_func_rows(ch, unit, name):
+    for key, (names, _r) in ch.items():
+        if key[0] == "sym" and key[1] in (unit, "main") and name in names[:-1]:
+            return names[-1]
+    return name
 
 
 def strip_hash_comments(text):

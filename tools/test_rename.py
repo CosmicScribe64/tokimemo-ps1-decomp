@@ -260,7 +260,7 @@ class TableTest(Fixture):
 
     def test_chain_lint(self):
         rows = R.parse_rows("func main a b 0x80041000\nfunc main b c 0x80041000\n", "l", ledger=True)
-        self.assertEqual(R.chains(rows)[("sym", "main", "0x80041000")][0], ["a", "b", "c"])
+        self.assertEqual(R.chains(rows)[("sym", "main", "0x80041000", 0)][0], ["a", "b", "c"])
         with self.assertRaises(R.RenameError):
             R.chains(R.parse_rows("func main a b 0x80041000\nfunc main a c 0x80041000\n", "l", ledger=True))
         with self.assertRaises(R.RenameError):
@@ -396,7 +396,7 @@ class TypeLocalTest(Fixture):
         self.ok("type main GameState GameStatus T-1\n", ledger="main")
         self.assertIn("aggregate D_800E6280 GameStatus include/game.h", self.read("config/migrate_globals.txt"))
         self.refused("type main GameStatus s32\n", "PascalCase")
-        self.refused("type main GameStatus GirlRecord\n", "already an identifier")
+        self.refused("type main GameStatus GirlRecord\n", "used before in the ledger")
 
     def test_local_and_param(self):
         self.ok("local main:func_80041000 index mode_value T-1\n")
@@ -513,6 +513,26 @@ class LedgerTest(Fixture):
         R.replay(self.root, out=io.StringIO(), use_gcc=False)
         self.assertEqual(self.read("config/symbol_addrs_main.txt").count("text_merge"), 1)
         self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+
+    def test_check_other_kinds(self):
+        self.ok("local main:func_80041000 index mode_value\n")
+        self.ok("file include ovl/AAA.h ovl/alpha.h\n", ledger="main")
+        self.ok("type main Rec38 GirlRecord\n", ledger="main")
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.write("src/main/80041000.c", self.read("src/main/80041000.c").replace("s32 mode_value;", "s32 mode_value, index;"))
+        self.write("src/ovl/AAA/80132000.c", self.read("src/ovl/AAA/80132000.c").replace('"ovl/alpha.h"', '"ovl/AAA.h"'))
+        self.write("include/ovl/EVT.h", self.read("include/ovl/EVT.h").replace("#endif", "typedef Rec38 Other;\n#endif"))
+        out = io.StringIO()
+        self.assertEqual(R.check(self.root, out=out), 3, out.getvalue())
+        self.refused("type main GirlRecord Rec38\n", "already an identifier")
+        self.write("include/ovl/EVT.h", self.read("include/ovl/EVT.h").replace("typedef Rec38 Other;\n", ""))
+        self.refused("type main GameState GirlRecord2\ntype main GirlRecord2 Rec38\n", "used before in the ledger")
+
+    def test_config_keys_scoped_in_check(self):
+        self.write("config/proto_known.txt", "void-result EVT:func_80132000\n")
+        self.ok("func AAA func_80132000 aaa_start\n")
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertIn("EVT:func_80132000", self.read("config/proto_known.txt"))
 
     def test_round_trip_catches_impure_edit(self):
         ctx = R.Context(self.root)

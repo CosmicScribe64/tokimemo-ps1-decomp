@@ -1,0 +1,1 @@
+file RENSYU 80132000 pointer_setup  T-27002 trial: sets three pointers
