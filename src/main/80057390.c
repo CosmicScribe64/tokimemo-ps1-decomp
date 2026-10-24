@@ -13,14 +13,17 @@ s32 D_800B5944 = 0;
 s32 last_screen_mode = 0;
 s32 D_800B594C = 0;
 
+/* Set the brightness tint of the decoded backgrounds */
 void set_dec_bri(u8 arg0) {
     dec_bg_brightness = arg0;
 }
 
+/* Return the last screen mode (selects the background draw variant) */
 s32 get_last_gamen_mode(void) {
     return last_screen_mode;
 }
 
+/* Clear the background cache, show flags and brightness (0x80) */
 void dec_bg_reset(void) {
     dec_bg_lba_cache[3] = 0;
     dec_bg_lba_cache[1] = 0;
@@ -38,10 +41,13 @@ void dec_bg_show_switch(s32 arg0) {
     dec_bg_show[arg0] = 1 - dec_bg_show[arg0];
 }
 
+/* Show or hide background slot n */
 void dec_bg_show_set(s32 arg0, s32 arg1) {
     dec_bg_show[arg0] = arg1 & 1;
 }
 
+/* Start reading a compressed background file unless one of the two cached LBAs of the slot already holds it; returns
+ * 0/1 for a cache hit slot, -1 for a read started */
 s32 dec_bg_cd_read(s32 arg0, s32 arg1) {
     if (arg1 == 1) {
         if (arg0 == dec_bg_lba_cache[2]) {

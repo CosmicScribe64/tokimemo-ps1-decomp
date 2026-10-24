@@ -409,6 +409,7 @@ u8 func_80046094(void) {
     return cd_cmd_ring[(D_80125128 + 0x2FU) % 0x30U].cmd;
 }
 
+/* Return the CD read status byte (bit 0 = read finished) */
 u8 cd_read_sync_status(void) {
     return cd_read_status;
 }
@@ -495,6 +496,7 @@ void cd_read_sectors_nowait(u8 arg0, s32 arg1, s32 arg2) {
     D_800B3D60 = 0;
 }
 
+/* Read n sectors to a buffer from an LBA through the CD command ring and wait */
 void cd_read_sectors(u8 arg0, s32 arg1, s32 arg2) {
     /* FAKE: size 0x20 is taken from the original frame (local at 0x28 in 0x48);
      * the real type of this buffer is unknown. T-0016 */

@@ -381,6 +381,7 @@ void tpage_buf_clear_all(void) {
     }
 }
 
+/* Reset the 64 tpage slots (reserved and free marks) and set the default system pages */
 void tpage_buf_clear(void) {
     s32 i;
 
@@ -415,6 +416,7 @@ void _sys_default_tpage_set(void) {
     game_state.tpage_buf[59] = D_800C5FD0;
 }
 
+/* Store a resource id in a tpage slot and queue its image upload */
 void load_tpage_buf_lock(arg0, arg1, arg2)
 s32 arg0;
 s32 arg1;

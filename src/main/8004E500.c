@@ -77,6 +77,7 @@ void text_set_advance(u8 arg0) {
 void func_8004E780(void) {
 }
 
+/* Queue one string (x, y, attribute, text, extra) in the 52-entry text list for drawing */
 s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
     if (text_list_count.count >= 0x34) {
         return -1;
@@ -96,6 +97,7 @@ s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
     return ++text_list_count.count;
 }
 
+/* Start the typewriter at entry n (skips the glyphs of earlier entries) */
 void k_disp_start(s32 arg0) {
     s32 i;
 
@@ -105,6 +107,7 @@ void k_disp_start(s32 arg0) {
     }
 }
 
+/* Show or hide a text list entry */
 void k_disp_switch(s32 arg0, s32 arg1) {
     if (arg1 > 0) {
         D_800B3DC7[arg0 * 8] = 1;
@@ -113,6 +116,7 @@ void k_disp_switch(s32 arg0, s32 arg1) {
     }
 }
 
+/* Return the text list entry n */
 u8 *get_k_work(s32 arg0) {
     if (arg0 >= 0x35) {
         return D_800B3F58;
@@ -135,6 +139,7 @@ void set_k_work(s32 arg0, TextEntry arg1) {
     p->active = arg1.active;
 }
 
+/* Cut the text list to n entries and recompute the glyph totals */
 void k_reset(s32 arg0) {
     s16 sum;
     s32 i;
@@ -148,14 +153,17 @@ void k_reset(s32 arg0) {
     text_list_count.pos = sum;
 }
 
+/* Remember the current text list length as the mark */
 void k_sub_reset_point_set(void) {
     text_list_count.mark = text_list_count.count;
 }
 
+/* Cut the text list back to the saved mark */
 void k_sub_reset(void) {
     k_reset(text_list_count.mark);
 }
 
+/* Start the typewriter at mark + n */
 void k_sub_disp_start(s32 arg0) {
     k_disp_start(text_list_count.mark + arg0);
 }
@@ -186,6 +194,7 @@ u8 get_k_speed(void) {
     return text_list_count.speed;
 }
 
+/* Reveal one more glyph every speed + 1 frames; returns 1 when everything is shown */
 s32 k_disp_inc(void) {
     if (game_state.frame_count % (text_list_count.speed + 1) == 0) {
         if (text_list_count.pos < text_list_count.total) {
@@ -201,6 +210,7 @@ s32 k_disp_inc(void) {
 }
 
 /* The operand order sets the load order of the two globals (T-0017). */
+/* Return nonzero when the typewriter has shown the whole text */
 s32 check_end_k(void) {
     if (text_list_count.pos == text_list_count.total) {
         return 1;

@@ -53,6 +53,7 @@ void sprite_set_gpu_poly_ft4(SpriteQuad *arg0, s32 arg1, s32 arg2) {
     }
 }
 
+/* Select a texture page slot */
 void goto_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 work;
     u16 tpage;
@@ -74,6 +75,7 @@ void safe_env(s32 arg0) {
     AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg0 * 4, (s32)p);
 }
 
+/* Draw a sprite from a texture page slot */
 void dtd_on_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 work;
 

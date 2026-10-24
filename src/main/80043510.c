@@ -99,11 +99,13 @@ void frame_render(s32 arg0) {
     func_8009AD00((u8 *)&D_800E8C70 + draw_buffer * 0x14);
 }
 
+/* Switch the 2D sprite pass (arg 1) and the 3D pass (arg 2) on or off */
 void draw2d3d(u8 arg0, u8 arg1) {
     game_state.draw_2d_enabled = arg0;
     game_state.draw_3d_enabled = arg1;
 }
 
+/* Turn the per-frame screen clear on or off */
 void back_clear_switch(s32 arg0) {
     if (arg0 != 0) {
         game_state.back_clear = 1;
@@ -114,6 +116,7 @@ void back_clear_switch(s32 arg0) {
 
 /* Read queue counters directly and write records through g to preserve the
  * original register allocation. K&R parameters keep narrow home slots. T-9930. */
+/* Queue a palette (CLUT) upload for the next VRAM flush */
 s32 load_palette(arg0, arg1, arg2, arg3, arg4)
 s32 arg0;
 u8 arg1;
@@ -328,6 +331,7 @@ void palette_load_vram(s32 arg0) {
     base->palette_queue_count = 0;
 }
 
+/* Upload a rectangle of memory to VRAM (x, y, w, h, data) */
 void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
     RECT rect;
 

@@ -251,6 +251,7 @@ void addr_init_else_sd(s32 arg0) {
     D_80125CAC = p[2] + 0x801E0000;
 }
 
+/* Set the portrait sprite addresses for the current girl */
 void addr_init_bustup(void) {
     D_800CA120 = 0x80180084;
     D_800CA124 = 0x80180098;
@@ -755,6 +756,7 @@ s32 func_8007D8AC(void) {
     return 0;
 }
 
+/* Slide the girl's portrait in */
 void normal_date_girl_in(void) {
     switch (game_state.step_timer.u) {
     case 0:
@@ -802,6 +804,7 @@ s32 normal_date_girl_suddenin(void) {
     main_step_next();
 }
 
+/* Slide the girl's portrait out */
 void normal_date_girl_out(void) {
     switch (game_state.step_timer.u) {
     case 0:
@@ -854,6 +857,7 @@ s32 normal_date_girl_suddenout(void) {
     main_step_next();
 }
 
+/* Fade the scene background in */
 s32 normal_date_bg_fadein(void) {
     D_80122CF8 = 1;
     dec_bg_brightness += 4;
@@ -867,6 +871,7 @@ s32 normal_date_bg_fadein(void) {
 }
 
 /* s32 without a return value: the last chain value is then kept in v0 (andi v0,a0,0xff). T-11590 */
+/* Fade background and portrait in together */
 s32 normal_date_bggirl_fadein(void) {
     u8 x;
 
@@ -881,6 +886,7 @@ s32 normal_date_bggirl_fadein(void) {
     D_80122CF4 = 1;
 }
 
+/* Fade the scene background out */
 void normal_date_bg_fadeout(void) {
     D_80122CF8 = 1;
     dec_bg_brightness -= 4;
@@ -895,6 +901,7 @@ void normal_date_bg_fadeout(void) {
 }
 
 /* s32 without a return value, as normal_date_bggirl_fadein. T-11590 */
+/* Fade background and portrait out together */
 s32 normal_date_bggirl_fadeout(void) {
     u8 x;
 
@@ -984,6 +991,7 @@ s32 dec_init(void) {
     main_step_next();
 }
 
+/* Background read helper: starts the read of the scene background */
 void bg_read_sub2(s32 arg0) {
     s32 t;
 
@@ -1584,6 +1592,7 @@ void func_80081128(void) {
     }
 }
 
+/* Split a script string into lines and queue them with name code expansion */
 s32 dialogue_render(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
     s16 arg0;
     s16 arg1;
@@ -2651,6 +2660,8 @@ void bustup_return(void) {
     read_bustup();
 }
 
+/* Restore the main mode, stage and step saved in saved_mode, saved_stage and saved_step by calling main_state_set,
+ * main_stage_set and main_step_set */
 void return_step(void) {
     main_state_set(game_state.saved_mode);
     main_stage_set(game_state.saved_stage);
@@ -2813,6 +2824,8 @@ void day_plus(void) {
     main_step_next();
 }
 
+/* Clamp girl tokimeki/affection (0..0x80), syoushin (0..0xFF) and the nine parameters (0..999); the queue reader
+ * then clamps all three girl counters to 0x80 (girl_counters_clamp) */
 void check_para_limit(void) {
     s16 i;
 
@@ -3153,6 +3166,7 @@ void normal_date_speak_012(void) {
     dialogue_run(0xFF, 1, 0);
 }
 
+/* Wire the dialogue table pointers and run the talk runner for the current scene girl */
 void normal_date_speak(void) {
     dialogue_tables = &dialogue_group;
     D_800CA138 = &dialogue_line;

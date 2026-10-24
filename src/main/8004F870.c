@@ -15,6 +15,7 @@ typedef struct MenuSelection {
     /* 0x03 */ s8 current[2];
 } MenuSelection; /* size 0x05 */
 
+/* Register a menu: item count and rectangles for menu 0 or 1 */
 s32 menu_set(menu, count, x, y, w, h)
     s32 menu;
     u8 count;
@@ -62,6 +63,7 @@ s32 menu_set(menu, count, x, y, w, h)
     }
 }
 
+/* Hit-test the pointer or move the cursor of a menu by menu_mode; returns the hit index */
 s32 menu_check(arg0, arg1, arg2)
     s32 arg0;
     s16 arg1;
@@ -442,6 +444,7 @@ void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_800E3680[arg0] = ((arg2 & 0xF) << 0x18) + arg1 + ((arg3 & 0xF) << 0x1C);
 }
 
+/* Draw the highlight bar of the hovered menu item */
 void menu_bar_show(menu)
     s32 menu;
 {
@@ -489,6 +492,7 @@ void x_taku_string_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
+/* Draw a name string centered by its length (2, 4 or 6 bytes) */
 void gnsx(u8 *arg0) {
     switch (strlen(arg0)) {
     case 2:
@@ -504,6 +508,7 @@ void gnsx(u8 *arg0) {
     }
 }
 
+/* Wrap and queue a narration string at row y with color col */
 void sndisp(u8 *str, s32 y, s32 col) {
     s32 pad[2]; /* FAKE: T-25001, two unused home words at the top of the 0x168 frame */
     s32 i;
@@ -553,6 +558,7 @@ INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B4360);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B436C);
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B437C);
 
+/* Queue a narration string with the speaker name codes expanded */
 void sndi(u8 *str, s32 y, s32 col) {
     u8 *s;
     u8 original[64];
@@ -807,6 +813,7 @@ void get_p_name(u8 *arg0, u32 arg1) {
     }
 }
 
+/* Girl state rank 0-4 for scenes (4 worst); bit 7 set when affection is high */
 s32 get_g_zyotai_s(s32 arg0) {
     if (get_h_yuukou(arg0) < 0xA) {
         return 4;
@@ -832,6 +839,8 @@ s32 get_g_zyotai_s(s32 arg0) {
     return 0x80;
 }
 
+/* Girl state rank 0-4 from weighted affection and tokimeki (4 if affection < 10, 3 if < 50, 2 if tokimeki < 50, 1 if
+ * < 80, else 0) */
 s32 get_g_zyotai_h(s32 arg0) {
     if (get_h_yuukou(arg0) < 0xA) {
         return 4;
@@ -882,6 +891,7 @@ void menu_girl_taku_set(s32 menu, s32 *arg1)
     } while (i != 12);
 }
 
+/* Typewriter plus voice wait step used by dialogue lines */
 void xa_wait(void) {
     /* FAKE: two unused home words above the spills; the original frame is 8 bytes larger. T-17018 */
     s32 pad[2];
@@ -1122,6 +1132,7 @@ void dialogue_text_step(void) {
  * FAKE: the u32 level locals lv0..lv6 (copies of D_800B4198) give the frame and the colour order of
  * the thresholds, and reading the parameters through the gs pointer gives the bonus row s1 and the
  * parameter value s2; the original source of both is unknown. T-25101 */
+/* Weighted tokimeki for girl % 13 with extra terms from the player parameters */
 u32 get_h_tokimeki(s32 arg0) {
     s32 girl;
     s32 sum;
@@ -1294,6 +1305,7 @@ u32 get_h_tokimeki(s32 arg0) {
     return sum & 0xFF;
 }
 
+/* Affection * weight / 100 clamped 0..100 for girl % 13 */
 u32 get_h_yuukou(s32 arg0) {
     s32 t;
     s32 v;
@@ -1330,6 +1342,7 @@ void birth_day_check(s32 arg0) {
     birth_day_check_days(arg0, game_state.month, game_state.day);
 }
 
+/* Return 1 when the girl's (or, for 0xF, the player's) birthday is the given month and day */
 s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2) {
     s32 t;
     s32 v;

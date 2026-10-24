@@ -1407,6 +1407,7 @@ s32 date_sasoi_judge(s8 *arg0) {
     return 0;
 }
 
+/* Resolve girl-encounter placeholders in the day-event queue into special events, invitations, encounters or skips */
 void schedule_girls_gakko(void) {
     u8 cnt;
     s32 i;
@@ -1438,6 +1439,8 @@ void schedule_girls_gakko(void) {
     main_step_next();
 }
 
+/* Once per queue build (weekly): lower affection by 1 (floor 0) for every met girl when the day of month is 1-6, and
+ * for girl 0 also on days 14-20 */
 void yuukou_down(void) {
     s32 i;
     u32 q;
@@ -1460,6 +1463,7 @@ void yuukou_down(void) {
     }
 }
 
+/* Once per queue build (weekly): add 5 to the syoushin counter of met girls whose weighted affection is below 10 */
 void syoushin_up(void) {
     s32 i;
 

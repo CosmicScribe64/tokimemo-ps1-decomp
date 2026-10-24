@@ -1,7 +1,9 @@
 #ifndef MAIN_API_H
 #define MAIN_API_H
 
-/* The one declaration of every main-exe symbol (T-3340). Maintained with tools/sync_protos.py.
+/* The one declaration of every main-exe symbol (functions, globals, shared structs; T-3340). Maintained with
+ * tools/sync_protos.py. It keeps its name in phase 2; splitting it per main module and moving the enums into
+ * game_enums.h is a later step (T-27004, wiki/phase2.md step 8).
  *
  *   - A main-exe function or global (address 0x80041000-0x8012B537, or a name from
  *     config/symbol_addrs*.txt) is declared here and nowhere else. include/game.h and every

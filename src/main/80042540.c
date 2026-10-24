@@ -172,6 +172,7 @@ s32 main_step_next(void) {
     game_state.substep = *p;
 }
 
+/* Switch to a mode and reset stage, step, timers, substep */
 void main_state_set(s32 arg0) {
     u32 t;
 

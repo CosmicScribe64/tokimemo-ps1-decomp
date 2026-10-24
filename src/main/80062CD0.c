@@ -360,6 +360,7 @@ void parameter_disp_switch(s32 arg0) {
     }
 }
 
+/* Create the digit actors of the parameter panel and snapshot the profile */
 void parameter_show_init(void) {
     s32 i;
     s32 value;
@@ -586,6 +587,7 @@ void parameter_show(void) {
     }
 }
 
+/* Show or hide the calendar date HUD */
 void hizuke_disp_switch(s32 arg0) {
     s32 i;
 
@@ -598,6 +600,7 @@ void hizuke_disp_switch(s32 arg0) {
     }
 }
 
+/* Create the calendar date actors (month, day, weekday) for the HUD */
 void hizuke_init(void) {
     s32 i;
     s32 digit;
@@ -692,6 +695,7 @@ void hizuke_init(void) {
     ((Actor *)actor_pool)[16].y = -0x12;
 }
 
+/* Per-frame update of the calendar date HUD */
 void hizuke_show(void) {
     if (D_8011F113 & 0x80) {
         prim_gradient_rect(0x86, -0x4B, 0x14, 0x72, 5, 0x30E00, 0);
@@ -707,6 +711,7 @@ void message_disp_switch(s32 arg0) {
     }
 }
 
+/* Create the message window actor */
 void message_window_init(void) {
     actor_clear(1);
     D_8011ED15 = 7;
@@ -724,6 +729,7 @@ void message_window_init(void) {
     D_8011ED3E = 0x4B;
 }
 
+/* Per-frame update of the message window */
 void message_window_show(void) {
     if (D_8011ED17 & 0x80) {
         prim_gradient_rect(-0x85, 0x2E, 0x10A, 0x34, 8, 0x30E00, 0);
@@ -731,6 +737,7 @@ void message_window_show(void) {
     }
 }
 
+/* Show or hide the command icons */
 void icon_disp_switch(s32 arg0) {
     u32 i;
     u8 *p;
@@ -762,6 +769,7 @@ void icon_disp_switch(s32 arg0) {
     }
 }
 
+/* Enable or disable one of the 14 command icons */
 void icon_can_use_set(s32 idx, s32 on) {
     if (on) {
         D_80125C90[idx] = 1;
