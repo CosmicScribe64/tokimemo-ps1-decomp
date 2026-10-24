@@ -77,7 +77,8 @@ void strCallback(void) {
      * indirect store puts the RECT copy below in block-copy state F (tools/ugen_pass.py), as in
      * the original (one scratch register before the second copy word; 75 rows without it).
      * IDO 4.1's ugen gives this body F without the arm, because it also sets F at a branch on a
-     * value (`D_800B5900 & 1`); the pass does not model that. */
+     * value (`D_800B5900 & 1`); the pass does not model that and counts the store of an arm ugen
+     * drops, which 4.1 ignores (copy_dropped_arm_store). Still needed in T-26002. */
     if ((u32)D_800B0896 < 0) {
         *(u8 *)0 = 0;
     }
