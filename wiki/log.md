@@ -7,34 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] lint | T-25037 integration checkpoint
-
-Wiki lint reports0 broken links and0 status mismatches; two large pages are data/t0018-cases and the append-only log. The draft README prose check has no strong hits; its one weak colon introduces the explicit hash result and is retained. git diff --check passes. [[tickets/T-25037-bunka-upstream-emission]] remains In Review for integration.
-
-## [2026-10-22] build | BUNKA_SD scheduling match accepted
-
-Integrated5e132362 and independently verified default-C1516literal bytes plus fresh27/27binary checksums. Headers/globals and prototypes0new/15known pass. Root standards/spec review no findings; empty tests are marked FAKE and compile away without observable effects. T-25037 moves Done. Docker progress6837/6952functions,2111744/2276920bytes (92.7%);115functions/165176bytes remain. Four resumed matches add7068bytes. Worker continues T-25041 KANGEI8013852C in disjoint80137B90.c using current ledger and new preload mechanism; other four lanes continue. Updated [[status]] and catalog.
-
-## [2026-10-22] decision | Resume quadrant matching after newer instruction
-
-Root relayed newer direct human instruction to keep workers going until problems are resolved and matches made, superseding prior wrap-up. Reactivated existing Astra worker for [[tickets/T-25034-main-quadrant-extent]] from d8e482c4a, integrated by root as ff8a1c912. Same exclusive function, sole source writer, Docker only, no duplicate coordinator experiments or arbitrary stopping caps. Existing conservative361/381 and forward-join360/380 checkpoints retain full-word extent repair; no match yet.
-
-## [2026-10-22] build | Quadrant color result placement control
-
-Resumed Astra controls for [[tickets/T-25034-main-quadrant-extent]] show mask-before-shift moves the extra copy with expression order; explicit unsigned-byte consumers leave the best object unchanged. This narrows the remaining color issue to expression/result placement, not extraction arithmetic. Worker continues required primitive-field assignment propagation; no duplicate coordinator experiments, promotion or match.
-
-## [2026-10-22] build | Quadrant allocated mask still copies
-
-Astra trace for [[tickets/T-25034-main-quadrant-extent]] assigns the unsigned AND node itself to fp (priority7.625, uses5/defs2), but normal emission still routes the outer result through a temporary and copies back. Field assignment/grouping/remainder controls did not remove it. This rejects the simple outer-conversion allocation hypothesis and motivates output-ucode/lowering inspection. Production unchanged; source and negative evidence remain private pending a meaningful checkpoint.
-
-## [2026-10-22] build | Quadrant copy precedes assembly scheduling
-
-For [[tickets/T-25034-main-quadrant-extent]], Astra captured normal ugen inputs with and without CVT: both raw binasm streams already contain the extra masked-color copy, excluding as1 as its origin. Capture and normal object .text/all other sections match except .mdebug path metadata; resolved function identical. Destination forwarding into the shift child is next. This is diagnostic evidence, not justification for a compiler pass or a literal match.
-
-## [2026-10-22] build | Quadrant destination-forwarding mechanism confirmed
-
-For [[tickets/T-25034-main-quadrant-extent]], normal backend forwards fp into a single-use shift child, then rejects in-place AND and allocates/copies a temporary. Sharing the raw shift through one required color store suppresses forwarding and removes the copy in real C, confirming the mechanism. The control worsens overall output (668words/850aligned/862printed) through a0 allocation and remains diagnostic only. Astra continues source mechanisms; no backend changes or promotion.
-
 ## [2026-10-22] ingest | Preserve active quadrant lowering evidence
 
 Root preserved587f8d5c1, documentation only: faithful capture excludes as1, required-store source control removes the extra color copy but worsens global allocation. No compiler patch or coverage claim. T-25034 continues. T-25038 SHOUGATU E6E4 reports zero resolved differences under literal verification; root authorized a narrow existing-pattern declaration override with all default declarations unchanged for other translation units. No experimental result counted.
@@ -1534,6 +1506,7 @@ Findings: the build step of the command screen picks usable icons by tomorrow's 
 
 ## [2026-10-24] ticket | T-27017 Done
 [[tickets/T-27017-p2-m-sysmenu]] passed review round 2 (approved, no findings): the `quit_flags` row is gone (the club flag byte stays `ClubRecord.flags` / `ClubFlagBits.quit`), `CharFlags.b2` is cited as `acquainted` with no meaning of its own, and the stage 0xFF, ETC init clone and `UiSe` sound rows match `src/main/8005A0B0.c`, `80144AD0.c`, `80139740.c`, `8013A550.c` and `80143240.c`. The branch changes only `config/renames/proposals/m-sysmenu.tsv`, [[spec/m-sysmenu]], [[spec/index]], the ticket and the log; nothing under `src/`, `include/` or the symbol files. Open follow-up for the table merge: the three `TEXT_SPEED_*` const rows duplicate [[spec/m-menutext]]'s `TextSpeed` rows and should be dropped from `m-sysmenu.tsv` then. Merged as p2a-m-sysmenu.
+
 ## [2026-10-24] ingest | Phase 2 analysis of the main flow unit (T-27019)
 Read `src/main/80041000.c`, `800420D0.c`, `80042540.c`, `80042A00.c`, `800789E0.c`, `80061710.c` and `80053650.c` (115 functions: boot and `game_state_init`, the frame loop, the mode dispatcher and overlay loader with its sector and entry tables, the TT loader, pad and mouse polling, the title screen, the memory-card layer) with their callers, and probed the emulator from the title menu (title timings, the pad code, the soft reset, the loader read, the card check, initial game data). Wrote [[spec/m-flow]], `config/renames/proposals/m-flow.tsv` (312 rows, 3 HYPOTHESIS) and [[tickets/T-27019-p2-m-flow]] (In Review). Found: core's `MainMode` entries for modes 0x74-0x76 are in a different order than the loader code; `unk_1117` is a card bank index; the title pad code starts the opening movie; the loader skips the read for a resident file.
 
