@@ -221,7 +221,7 @@ Step 0x29 runs `date_event_choose`; two girls have events that start here instea
 
 - kind 4 (first ambush): `date_place_history[0] == date_place == date_place_history[1]` (the third date in a row at the same place), the place is not 0, `year >= 0x60`, `player_flags` bit 20 clear; sets `event_flags[0x55]` = 1, `player_flags` bit 19, clears the history;
 - kind 5 (boss ambush): `year == 0x61` and `month == 9`, bit 20 clear, and (some club record 0-10 has club flag field 3, or bit 19 is set, or no club record 0-10 has points, in which case record 11 gets flag 3); sets `event_flags[0x55]` = 2, bit 20, clears the history;
-- both set `rpg_launch_code`, `daily_event_bits &= 8`, save mode 0x50, the stage and the resume step 0x3E, and jump to step 0x40: `date_ambush_prepare_battle` loads the ambush talk data (1 sector at LBA 0xAFCA to 0x801B0000), steps 0x41-0x45 load the battle bank, shake the screen and speak (girl 14 as speaker label), step 0x4A starts RPG_BAT (mode 0x81). The battle returns to step 0x3E (`date_ambush_after_battle`): `rpg_launch_code` 0 (won): tokimeki +2 for the date girl, or in the boss case +3 for every met girl with `GirlFlags` bit 1 and +2 for the date girl; otherwise the player's stress +5; the screen is rebuilt and step 0x3F runs `date_end`. See [[spec/o-rpgbat]] for the battle.
+- both set `rpg_launch_code`, `daily_event_bits &= 8`, save mode 0x50, the stage and the resume step 0x3E, and jump to step 0x40: `date_ambush_prepare_battle` loads the ambush talk data (1 sector at LBA 0xAFCA to 0x801B0000), steps 0x41-0x45 load the battle bank, shake the screen and speak (`current_girl` = 14 with the short-name buffer set to a gang label), step 0x4A starts RPG_BAT (mode 0x81). The battle returns to step 0x3E (`date_ambush_after_battle`): `rpg_launch_code` 0 (won): tokimeki +2 for the date girl, or in the boss case +3 for every met girl with `GirlFlags` bit 1 and +2 for the date girl; otherwise the player's stress +5; the screen is rebuilt and step 0x3F runs `date_end`. See [[spec/o-rpgbat]] for the battle.
 
 ## 5. Stage 1: the date at a place
 
@@ -325,7 +325,8 @@ About 70 small handlers inside the place tables change the group, the face, or a
 - planetarium: science < 120 (0x78): for option 1 the first classes become 4 or 3 by girl, and the group gets +2;
 - game center, medal corner: opens from September 1996;
 - art museum: option 5 (exhibition already seen) scores at once and skips nine steps;
-- Mira, Shiori, Yuko and others have extra lines in the library, zoo, game center and karaoke by variant and answer.
+- Mira, Shiori, Yuko and others have extra lines in the library, zoo, game center and karaoke by variant and answer;
+- several steps (movie theater, shrine, amusement park, Saki and Mio events) set `current_girl` to 14 for a line and then back to the date girl: HYPOTHESIS: id 14 is a narration speaker; `scene_mouth_lock` is set at the same time so the portrait's mouth does not move.
 
 ### 5.7 Farewell, invitation day and closing
 
@@ -454,7 +455,7 @@ Years are the year byte (0x5F = 1995, 0x60 = 1996, 0x61 = 1997). Season = months
 | yumi | autumn (5) | stadium | variant >= 2 (game day) | 8 | 71 sets |
 | yumi | winter (6) | ski_resort | state | 0 | 72 sets |
 
-Miharu's two scenes are intrusions into a date of any girl, tested after the per-girl blocks at stage 0 step 0xF: spring scene (3): months 3-5, `girls[11].story_stage >= 2`, `event_flags[76]` clear; summer scene (5): sea, months 6-8, `story_stage >= 2`, `event_flags[78]` clear. They save mode 0x50 / stage 0 / step + 1, set `dialogue_work.girl` = 11 and return to the date with `return_step`; no reward. Their speaker label is an unnamed woman (girl 11 shown under a placeholder label, HYPOTHESIS: she is introduced as a stranger).
+Miharu's two scenes are intrusions into a date of any girl, tested after the per-girl blocks at stage 0 step 0xF: spring scene (3): months 3-5, `girls[11].story_stage >= 2`, `event_flags[76]` clear; summer scene (5): sea, months 6-8, `story_stage >= 2`, `event_flags[78]` clear. They save mode 0x50 / stage 0 / step + 1, set `dialogue_work.girl` = 11 and return to the date with `return_step`; no reward. Their speaker is girl 11 with the short-name buffer set to a "mysterious woman" label (a string in the code), so she is introduced as a stranger.
 
 ### 9.3 Rewards
 
@@ -589,8 +590,9 @@ All runs: boot-to-title save state, memory writes at frame 3 (mode 2, overlay_ta
 15. Dialogue cursor: a write watch on `dialogue_group` in the aquarium run showed 0 (reset), then +1 after each finished group at steps 2, 0xB and 0xE (section 5.3).
 16. Neighborhood park (girl 0): at the opening step tokimeki 0 -> 1 and affection 50 -> 51, opening group 0 with a random line (2) for the first answer (section 5.8).
 17. Disc check (reading the image, nothing kept): the choice file at LBA 0xAFA9 (3 sectors) holds only the values 0-4 in the class area (0x000-0xAB0) and in the face area (0xAB0-0x1560) and is zero after 0x1560, as the layout of section 10.1 says; the gift table has six empty 33-byte records (section 8).
+18. Mio spring event (girl 1, amusement park, April 1997, first ride choice): `date_event_trigger(2, 0, 9)` was called from `date_event_choose` at the ride-choice step with `dialogue_choice` 0, as the trigger table says (section 9.2).
 
-Not run: the three-way menu shuffle (main), the other rides, the hero show and the night parade, the shrine festival and fireworks, the ambush battle itself, Miharu's intrusions, and 47 of the 48 special events.
+Not run: the three-way menu shuffle (main), the other rides, the hero show and the night parade, the shrine festival and fireworks, the ambush battle itself, Miharu's intrusions, and every special event except the Shiori spring one (item 11); the Mio spring one (item 18) was only run up to its trigger.
 
 ## 14. Notes for the port and disagreements with `core`
 

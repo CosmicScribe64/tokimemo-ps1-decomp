@@ -118,7 +118,7 @@ func	DATE	func_8013BEB8	date_sea_nozomi_check	stage 1 step 0xE: non-Nozomi girls
 func	DATE	func_8013BF94	date_load_festival_portrait	stage 0 step 0x21: loads the girl's special portrait for the shrine (place 18) or the ski resort (place 20)
 func	DATE	func_8013BFF8	date_load_ski_portrait	reads the winter portrait file of the girl for the ski resort
 func	DATE	func_8013C0A4	date_load_shrine_portrait	reads the festival portrait file of the girl for the shrine
-func	DATE	func_8013C190	date_choice_score	scores the chosen answer: face, then tokimeki, affection and syoushin deltas from response class, trivia and place affinity (spec section 6); emu: break at date_choice_score (girl 0, aquarium, trivia 60, answer 2 of class 1) raised tokimeki 0 -> 1.5, affection 50 -> 50.75, syoushin stayed 0 after the clamp, as the formula gives
+func	DATE	func_8013C190	date_choice_score	scores the chosen answer: face, then tokimeki, affection and syoushin deltas from response class, trivia and place affinity (spec section 5.5); emu: break at date_choice_score (girl 0, aquarium, trivia 60, answer 2 of class 1) raised tokimeki 0 -> 1.5, affection 50 -> 50.75, syoushin stayed 0 after the clamp, as the formula gives
 func	DATE	func_8013C410	date_score_multipliers	computes the two multipliers of the score from trivia and place affinity for a positive or non-positive class weight
 func	DATE	func_8013C624	date_pool_face_step	stage 1 step 0x18 of the pool: face of the chosen answer, main_step_next
 func	DATE	func_8013C664	date_choice_mood_face_step	step: face from date_choice_mood_face (or 1 after an appointment), main_step_next
@@ -205,7 +205,7 @@ func	DATE	func_80140ECC	date_ambush_bang	stage 0 step 0x45: shows the bang text 
 func	DATE	func_80140F40	date_shared_sections_init	sets the 12 pointers of the four shared sections (shared script file at 0x80197000)
 func	DATE	func_80144720	date_init	stage 0 step 0: resets screen, text and actors, takes the place from appt_place_0, the girl from date_girl, sets date_arrival (1; 0 with chance 1/4 by frame count except for Yuina), clears the date flags, step 1; emu: first handler of the overlay (step 0), place and girl read from the poked appointment state
 func	DATE	func_801448D4	date_entry	overlay entry of mode 0x50: per frame runs the stage handler (0 arrival, 1 place, 2 girl birthday, 3 player birthday; others reset to title) and the shared screen updates; emu: entered at frame 60 of a poked mode-0x50 run; stage 0 ran steps 0-0x30, then stage 1
-func	DATE	func_801449D4	date_stage_arrival	stage 0 handler: copies the 76-step table, replaces the step-9 entry by the place's setup function, draws the fireworks-day light effect, calls the current step
+func	DATE	func_801449D4	date_stage_arrival	stage 0 handler: copies the 76-step table, replaces the step-9 entry by the place's setup function, draws the light effect (spec section 2) and calls the current step
 func	DATE	func_80144E20	date_stage_place	stage 1 handler: selects one of 21 per-place step tables by the place id, calls the current step and runs the place effects (light effect, fireworks, falling particles, parade sign)
 func	DATE	func_80145AA0	date_player_birthday_sections_init	sets 39 script pointers (13 sections of text, command and voice tables) in the player's-birthday script file read to 0x801B0000
 func	DATE	func_80145D14	date_stage_player_birthday	stage 3 handler (player's birthday, 15 steps): calls the current step
@@ -975,7 +975,7 @@ const	DateSpot	4	DATE_SPOT_JUNK_SHOP	date_spot value (index of GirlRecord.event_
 const	DateSpot	5	DATE_SPOT_AQUARIUM	date_spot value; inside the aquarium
 const	DateSpot	6	DATE_SPOT_DOLPHIN_SHOW	date_spot value; aquarium special, from March 1996, once
 const	DateSpot	7	DATE_SPOT_ZOO	date_spot value (index of GirlRecord.event_counters)
-const	DateSpot	8	DATE_SPOT_ZOO_SPECIAL	date_spot value; HYPOTHESIS name: zoo special variant, once, from December 1995; stored as spot 7 in girl_last_date_spot
+const	DateSpot	8	DATE_SPOT_ZOO_SPECIAL	HYPOTHESIS: name; zoo special variant, once, from December 1995; stored as spot 7 in girl_last_date_spot (date_spot value)
 const	DateSpot	9	DATE_SPOT_BOTANICAL_GARDEN	date_spot value (index of GirlRecord.event_counters)
 const	DateSpot	10	DATE_SPOT_PLANETARIUM	date_spot value (index of GirlRecord.event_counters)
 const	DateSpot	11	DATE_SPOT_ART_MUSEUM_HALL	date_spot value (index of GirlRecord.event_counters)

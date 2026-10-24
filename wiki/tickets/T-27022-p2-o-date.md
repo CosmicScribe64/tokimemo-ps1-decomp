@@ -14,9 +14,9 @@ Roadmap phase 2 (readable code), port-first scope, for the unit `src/ovl/DATE` (
 
 ## Acceptance criteria
 
-- [ ] `config/renames/proposals/o-date.tsv`: one row per rename (kind scope old new note); all 655 `func_` functions of the overlay named (13 patch-note names kept with comment rows, `date_shiori_dispatch` renamed), data labels, types, fields, files and constants (1,120 rows); rows with a game-meaning guess start with HYPOTHESIS; the file starts with the same header comment as `core.tsv`.
-- [ ] `wiki/spec/o-date.md`: stage machine, state and data with the new names, rules (formulas, thresholds, transitions), connections, verification log, open questions; linked from `wiki/spec/index.md`.
-- [ ] No game text, assets, asm or screenshots committed; no edits under `src/`, `include/` or `config/symbol*` files.
+- [x] `config/renames/proposals/o-date.tsv`: one row per rename (kind scope old new note); all 655 `func_` functions of the overlay named (13 patch-note names kept with comment rows, `date_shiori_dispatch` renamed), data labels, types, fields, files and constants (1,120 rows); rows with a game-meaning guess start with HYPOTHESIS; the file starts with the same header comment as `core.tsv`.
+- [x] `wiki/spec/o-date.md`: stage machine, state and data with the new names, rules (formulas, thresholds, transitions), connections, verification log, open questions; linked from `wiki/spec/index.md`.
+- [x] No game text, assets, asm or screenshots committed; no edits under `src/`, `include/` or `config/symbol*` files.
 - [ ] Code review against `CODING_STANDARDS.md` (docs-only change) and merge of the table by the phase 2 merge step.
 
 ## Notes
