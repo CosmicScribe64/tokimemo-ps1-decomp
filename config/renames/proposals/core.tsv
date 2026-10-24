@@ -22,7 +22,7 @@ func	main	func_80085CD4	bustup_quad_offsets	HYPOTHESIS: sets fields +0x0C/+0x0E 
 func	main	func_800847B8	dialogue_names_set	246 uses: fills the name buffers for dialogue codes: family and given name from GameState, the player-addressing form (get_p_name), the girl's short name and full name (get_g_name)
 func	main	func_80084E90	event_still_show	uploads six 0x40 x 0x80 tiles to VRAM and sets SpriteQuads 58-63 as a 3 x 2 grid (128 px cells) = one full-screen event still; callers KANGEI, SHOUGATU
 func	main	func_800850D4	event_anim_show	fills actors 96/97 as a full-screen animated picture from frame/sequence/tpage tables and a mode; arg0 == 0 clears them (DATE event scenes)
-func	main	func_80085B3C	event_log_add	appends (girl, flag, scene, rank, year, month, day, weekday) to event_log; rank is get_g_zyotai_h(girl), not girl_state_rank, or D_80122D48 - 1 when that override is 1-6 (cleared after use), forced to 0 for girl 12; count capped at 0xFE
+func	main	func_80085B3C	event_log_add	appends (girl, scene, category, rank, year, month, day, weekday) to event_log, called as event_log_add(category, scene); rank is get_g_zyotai_h(girl), not girl_state_rank, or D_80122D48 - 1 when that override is 1-6 (cleared after use), forced to 0 for girl 12; count capped at 0xFE
 func	main	func_8005751C	dec_bg_decode_to_vram	386 uses: reinitialises the MDEC buffers and decodes the loaded background into the VRAM band of slot arg0
 func	main	func_8004E58C	text_system_reset	257 uses: reloads six small text/cursor blocks to VRAM, calls func_8004E500(2) and clears the 52 text list entries
 func	main	func_8006612C	message_window_set_title	131 uses: queues the title string at the window's top-left and builds the title decoration actors 3.. (one per two bytes + 2); the slide-in counter starts at -0x40
@@ -192,7 +192,7 @@ field	GameState	unk_73C	girl_last_date_spot_timer	weeks left in which girl_last_
 field	GameState	unk_74C	girl_event_bits	HYPOTHESIS: one byte per girl; GEKO tests/sets bits 1, 2, 4 for scenes 0xE, 0xF, 7
 field	GameState	unk_75C	appointment_flag	copy of appointment_slots[0] bit 24, stored by appointment_launch
 field	GameState	unk_75D	date_girl	girl of the current date or event (copied from current_girl at launch); read by DATE, KANGEI, SHUGAKU, DATE2
-field	GameState	unk_75E	event_log	256 EventLogEntry records (girl, scene, rank, date) appended by event_log_add
+field	GameState	unk_75E	event_log	256 EventLogEntry records (girl, scene, category, rank, date) appended by event_log_add
 field	GameState	unk_F5E	event_log_count	number of valid entries in event_log, capped at 0xFE
 field	GameState	unk_F5F	current_girl	index of the girl record in use (1,219 uses); set by select_girl/change_girl and by the event launchers
 field	GameState	unk_F60	text_lines_total	HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step func_8005215C
@@ -291,8 +291,8 @@ field	GsRec69C	unk_01	girl	girl id (command id for school-day records)
 field	GsRec69C	unk_02	scene	scene id (command check result for school-day records)
 field	GsRec69C	unk_03	extra	chosen girl for school-day records (func_8006F524 result)
 field	GsRec75E	unk_00	girl	current_girl when the entry was logged
-field	GsRec75E	unk_01	flag	second argument of event_log_add
-field	GsRec75E	unk_02	scene	first argument of event_log_add
+field	GsRec75E	unk_01	scene	scene id inside the category: second argument of event_log_add (stored at +1); renamed from flag by the o-etc review
+field	GsRec75E	unk_02	category	event category 0-21: first argument of event_log_add (stored at +2); renamed from scene by the o-etc review
 field	GsRec75E	unk_03	rank	get_g_zyotai_h(girl) at that time, 0 (best) to 4; this is not the get_g_zyotai_s value that girl_state_rank returns, the two have different thresholds; D_80122D48 - 1 replaces it when the override is 1-6; 0 for girl 12
 field	GsRec75E	unk_04	year	calendar year
 field	GsRec75E	unk_05	month	calendar month
@@ -397,7 +397,7 @@ type	main	GsRec044	MonthCalendar	day_kind[0x20] ([0] = days in month) and marker
 type	main	GsRec0FC	ParamValue	one player parameter: 16.16 fixed point, frac at +0, value at +2
 type	main	GsRec66C	ClubRecord	per club: u16 exp at +0, level byte at +2, flag byte at +3 (ClubFlagBits view of the word)
 type	main	GsRec69C	DayEvent	queue record: type, girl, scene, flags
-type	main	GsRec75E	EventLogEntry	girl, flag, scene, rank (get_g_zyotai_h), year, month, day, weekday
+type	main	GsRec75E	EventLogEntry	girl, scene, category, rank (get_g_zyotai_h), year, month, day, weekday
 type	main	GsRecF90	MenuItem	menu item rectangle x, y, w, h, hover flag, disabled flag
 type	main	GsRec1328	PaletteLoad	queued palette upload: source pointer and 4 parameter bytes
 type	main	GsRec142C	CsrLoad	queued image upload: source pointer, tpage slot, rect (x, y, w, h)

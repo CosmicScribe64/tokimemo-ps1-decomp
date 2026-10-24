@@ -235,7 +235,7 @@ folder name.
 | GYOZI.EXN | near copy of SHOUGATU; no code found loads it | `annual_events_unused` | `annual_` | confirm unused |
 | KANGEI.EXN | club rooms, a lodge, a test of courage; probably the summer camp | `summer_camp` | `camp_` | confirm |
 | MASTER.EXN | club tournaments and prizes after mastering a club | `club_master` | `master_` | |
-| NAME_ENT.EXN | name, birthday and blood-type entry; the voiced prologue | `name_entry` | `name_entry_`, `prologue_` | |
+| NAME_ENT.EXN | file select screens, name, birthday and blood-type entry; the attract opening; the voiced prologue | `name_entry` | `name_entry_`, `file_select_`, `opening_`, `prologue_` | |
 | OLH.EXN | help pages | `help` | `help_` | |
 | OMIMAI.EXN | sick-bed visits | `sick_visit` | `sick_visit_` | |
 | OPTION.EXN | options, sound test, debug menu, extras entry points | `options` | `options_`, `sound_test_`, `debug_menu_` | |

@@ -1,0 +1,1104 @@
+# kind	scope	old	new	note
+func	DATE	func_80132000	date_choice_tables_init	wires 40 pointer variables to the per-place response-class and face tables inside the choice file read to 0x801A4000 (called by stage 0 step 7 after the read)
+func	DATE	func_80132004	date_choice_tables_init_body	alias label 4 bytes into date_choice_tables_init (the function starts with a nop, the label sits on the first real instruction): the address date_load_choice_tables calls after the choice file read
+func	DATE	func_80132288	date_fireworks_resources_init	sets the image, palette and light-sprite pointers used by the shrine festival fireworks (0x801B2000..0x801F28xx)
+func	DATE	func_801323B8	date_central_park_particles_init	sets the pointers of the 20-sprite falling-particle set of central park (called after the 0x22 sectors to 0x801E0000 are read)
+func	DATE	func_80132458	date_parade_resources_init	HYPOTHESIS: the resources are the night-parade sign; sets the image and palette pointers of the night-parade sign (palette cycled by date_parade_sign_palette_cycle)
+func	DATE	func_801324A8	date_ambush_sections_init	sets the three script-table pointers of the street-gang ambush talk (used by date_ambush_prepare_battle)
+func	DATE	func_801324DC	date_arrival_init	stage 0 step 0xD: clears the per-date counters and flags, adds variant x groups_per_variant to the dialogue group and derives the greeting group from the mood rank and date_arrival
+func	DATE	func_80133DB4	date_place_enter_check	step: k_reset(0), shows the place title and runs date_scene_choose (stage 0 step 0xF)
+func	DATE	func_80133DE8	date_place_setup_neighborhood_park	place 0 setup, also the default entry of stage 0 step 9 (the other places replace it by their own setup)
+func	DATE	func_80133EA0	date_place_setup_central_park	stage 0 step 9 for place 1: spot 1, variant 0 path / 1 pond / 2 blossom path (March 15 - April), response tables D_8015B5B8/BC
+func	DATE	func_8013426C	date_place_setup_aquarium	stage 0 step 9 for place 3: spot 5 (inside, variant = visit parity) or spot 6 (dolphin show once, from March 1996)
+func	DATE	func_801344C8	date_place_setup_zoo	stage 0 step 9 for place 4: spot 7 (variant = visit parity) or spot 8 (special, once, from December 1995); Mira cycles 3 variants
+func	DATE	func_801347B8	date_place_setup_botanical_garden	stage 0 step 9 for place 5: spot 9, variant = visit parity, 5 groups per variant for Mira
+func	DATE	func_801349A0	date_place_setup_planetarium	stage 0 step 9 for place 6: spot 0xA, option = visit parity, 7 groups per variant; low science (< 0x78) lowers the response classes
+func	DATE	func_80134C64	date_place_setup_art_museum	stage 0 step 9 for place 7: spot 0xB hall or 0xC/0xD/0xE exhibition by date, option 0-5, 15 table bytes per girl
+func	DATE	func_8013518C	date_place_setup_library	stage 0 step 9 for place 8: spot 0xF, variant = visit parity
+func	DATE	func_801353F8	date_place_setup_game_center	stage 0 step 9 for place 9: spot 0x10, variant = visit parity, 0 groups per variant; opens the medal corner (date_game_center_medals_open) from September 1996
+func	DATE	func_80135620	date_place_setup_bowling_alley	stage 0 step 9 for place 10: spot 0x12, variant = visit parity
+func	DATE	func_80135804	date_place_setup_karaoke	stage 0 step 9 for place 11: spot 0x13, variant = visit parity (variant 2 launches the DATE2 karaoke mode)
+func	DATE	func_80135A34	date_place_setup_amusement_park	stage 0 step 9 for place 12: spot 0x14, clears the ride particle slots, sets date_park_new_rides (from March 1997) and date_park_newest_rides (from December 1997)
+func	DATE	func_80135B4C	date_place_setup_shopping_street	stage 0 step 9 for place 2: spot 2
+func	DATE	func_80135BCC	date_move_place_with_sound	step: first call sends snd_command(0x202), then normal_date_move_place
+func	DATE	func_80135C14	date_place_setup_stadium	stage 0 step 9 for place 13: spot 0x1B (variant by visit parity) or 0x1C in months 1, 3, 6 and 11 (game days)
+func	DATE	func_80135E7C	date_place_setup_movie_theater	stage 0 step 9 for place 14: spot 0x23, picks the film index 0-10 from year and month
+func	DATE	func_801361C0	date_scene_reveal_start	stage 0 step 0xE: movie theater plays snd_command(0x500) once, then scene_bg_wipe_in
+func	DATE	func_80136214	date_place_reload_steps	stage 0 step 0x1C: after a place change re-reads the shared script file, the girl script file and the choice file (each by stepping back one), then fades in
+func	DATE	func_80136340	date_place_setup_concert_hall	stage 0 step 9 for place 15: spot 0x24, picks the programme index 0-11 from year and month
+func	DATE	func_801366A4	date_place_setup_pool	stage 0 step 9 for place 16: spot 0x1D, variant = visit parity
+func	DATE	func_80136870	date_place_setup_sea	stage 0 step 9 for place 17: spot 0x1E, variant = visit parity
+func	DATE	func_80136A74	date_place_setup_shrine	stage 0 step 9 for place 18: spot 0x22 (festival stalls then fireworks), 5 groups per variant
+func	DATE	func_80136B70	date_place_setup_skating_rink	stage 0 step 9 for place 19: spot 0x1F, variant = visit parity
+func	DATE	func_80136D3C	date_place_setup_ski_resort	stage 0 step 9 for place 20: spot 0x20, variant = visit parity (Yukari forced to 1 after any visit)
+func	DATE	func_80136F2C	date_choice_classes_derive	derives date_choice_mood_face (class clamped 1..3) and date_choice_tier (class - 1 clamped 0..2) from date_choice_class for the three choices
+func	DATE	func_80136FF0	date_central_park_enter_spot	stage 1 step 5: loads the background of the chosen sub-spot (path, pond or blossom path, season dependent) and logs spot 0x25/0x26/0x27
+func	DATE	func_80137154	date_shopping_street_enter_shop	stage 1 step 8: after the shop choice (boutique, fancy shop, junk shop) sets the shop's spot (2/3/4), variant, response tables and the dialogue group offset by girl
+func	DATE	func_801378BC	date_aquarium_enter_spot	stage 1 step 4: removes a duplicate log entry, logs the spot and starts the aquarium background read
+func	DATE	func_80137920	date_zoo_enter_spot	stage 1 step 4: logs the spot and starts the zoo background read
+func	DATE	func_80137984	date_botanical_garden_enter_spot	stage 1 step 4: logs the spot and starts the botanical garden background read
+func	DATE	func_801379E8	date_planetarium_enter_spot	stage 1 step 2: logs the spot and starts the planetarium background read
+func	DATE	func_80137A4C	date_art_museum_enter_spot	stage 1 step 2: logs the spot and starts the background of the hall or of the running exhibition
+func	DATE	func_80137B14	date_library_enter_spot	stage 1 step 6: logs the spot and starts the library background read
+func	DATE	func_80137B78	date_game_center_enter_spot	stage 1 step 7: video corner (choice 0, log 0x10) or medal corner (log 0x11) background
+func	DATE	func_80137C2C	date_bowling_alley_enter_spot	stage 1 step 4: logs the spot and starts the bowling background read
+func	DATE	func_80137C90	date_karaoke_enter_spot	stage 1 step 4: logs the spot and starts the karaoke background read
+func	DATE	func_80137CF4	date_amusement_park_load_background	stage 1 step 4: bg_read_sub2 of the park main area
+func	DATE	func_80137D1C	date_amusement_park_enter_hero_show	stage 1 step 0x15: plays the show music (0x207), titles the hero show, adds 0 or 2 to the group by the parity of the girl's visits of spot 0x14, logs spot 0x14 and starts its background
+func	DATE	func_80137DF4	date_amusement_park_choose_ride	stage 1 step 0x25: from the first answer picks the ride (roller coaster or scream machine / ghost house or virtual ship / Ferris wheel), adds 0, 5 or 10 to the dialogue group, sets its tables and background
+func	DATE	func_80137FAC	date_amusement_park_enter_night_parade	stage 1 step 0x41: parade title, music 0x204, background, log 0x1A, mood-dependent classes
+func	DATE	func_8013808C	date_amusement_park_enter_main_area	stage 1 step 0x4D: starts the main-area background and restarts the park music (0x200) when the show was taken
+func	DATE	func_801380E4	date_stadium_enter_spot	stage 1 step 2: variant < 2 plays 0x200, else 0x201, logs the spot and starts the stadium background
+func	DATE	func_801381B4	date_movie_theater_enter_spot	stage 1 step 2: logs the spot, plays 0x1500 and starts the lobby background
+func	DATE	func_80138220	date_movie_theater_load_poster	stage 1 step 0xB: switch on the film index (0-10): starts the poster background of that film
+func	DATE	func_80138314	date_movie_theater_start_film	stage 1 step 0xF: fades in, starts the film's audio clip (table of 11 pairs) and sound command 0x300
+func	DATE	func_801383BC	date_movie_theater_narration_talk	HYPOTHESIS: speaker 14 (core GIRL_SOTOI, name-table entry 14) is a narration voice; the code only sets current_girl to 14; stage 1 step 0x15: first call speaks as 14, later calls as the date girl (date_girl), via normal_date_speak
+func	DATE	func_80138418	date_movie_theater_fade_out	stage 1 step 0x12: normal_date_bg_fadeout
+func	DATE	func_80138440	date_movie_theater_load_screen_background	stage 1 step 0x16: snd_command(0x500), starts the theater screen background
+func	DATE	func_80138470	date_concert_hall_enter_spot	stage 1 step 2: logs the spot and starts the concert hall background
+func	DATE	func_801384D4	date_concert_hall_load_program_background	stage 1 step 0xB: switch on the programme index (0-11): starts the stage background of that programme
+func	DATE	func_801385D8	date_concert_hall_start_program	stage 1 step 0xF: fades in, starts the programme's audio clip (table of 12 pairs) and sound command 0x300
+func	DATE	func_8013867C	date_concert_hall_wait_then_background	stage 1 step 0x12: waits 32 frames, then starts the closing background
+func	DATE	func_801386C8	date_pool_enter_spot	stage 1 step 5: starts the pool background read and logs the spot
+func	DATE	func_8013872C	date_sea_enter_spot	stage 1 step 5: starts the beach background read and logs the spot
+func	DATE	func_80138790	date_sea_load_background	stage 1 step 0x3A: bg_read_sub2 of the island scene
+func	DATE	func_801387B8	date_sea_enter_deserted_island	stage 1 step 0x2E: island title, background, log 0x28
+func	DATE	func_8013882C	date_skating_rink_enter_spot	stage 1 step 3: logs the spot and starts the rink background read
+func	DATE	func_80138890	date_ski_resort_enter_spot	stage 1 step 3: logs the spot and starts the slope background read
+func	DATE	func_801388F4	date_shrine_load_fireworks_data	stage 1 step 0x21: reads 0x86 sectors to 0x801B0000, plays 0x200 and inits the fireworks resources
+func	DATE	func_80138934	date_amusement_park_ride_setup	sets the ride's title and the response tables of the chosen ride (D_8015B68C 0 roller coaster, 1 ghost house, 2 Ferris wheel, 3 scream machine, 4 virtual ship) with spot 0x15-0x19
+func	DATE	func_80139000	date_game_center_skip_medals	stage 1 step 1: when the medal corner is closed adds 1 to the group, forces choice 0 and skips three steps
+func	DATE	func_80139054	date_shopping_street_skip_extra_talk	stage 1 step 0x1B: skips 1-4 steps depending on girl, group and choice (extra shop talk only for some girls)
+func	DATE	func_80139154	date_shopping_street_boutique_group_bonus	stage 1 step 0x10: adds mood tiers to the group when Shiori or Mira choose the first answer in the first variant, else skips five steps
+func	DATE	func_80139210	date_shopping_street_group_adjust	stage 1 step 0x12: subtracts the mood tiers and adds 2 to the group
+func	DATE	func_8013926C	date_shopping_street_empty_step	stage 1 step 0x16: only main_step_next
+func	DATE	func_8013928C	date_planetarium_low_science_group_bonus	stage 1 step 0xE: adds 2 to the group while science < 120
+func	DATE	func_801392D0	date_art_museum_seen_exhibit_score	stage 1 step 9: for option 5 (the exhibition of the day was already visited: the girl's counter of its spot is nonzero) adds mood tiers to the group, scores the choice at once and clears the choice
+func	DATE	func_8013934C	date_art_museum_choice_face	stage 1 step 0x10: face of the chosen answer, step
+func	DATE	func_8013938C	date_art_museum_seen_exhibit_skip	stage 1 step 0xB: option 5 (exhibition already visited) skips nine steps
+func	DATE	func_801393DC	date_game_center_enter_medal_corner	stage 1 step 4: after the second answer sets the medal corner variant (2 or 3 by visit parity), spot 0x11 and its response tables
+func	DATE	func_801395B4	date_amusement_park_skip_show	stage 1 step 0xA: when it is not the first Sunday of the month sets the group of the ride-choice talk by girl (9; Mira 10; Megumi 8; Saki, Yuko, Yukari, Yumi 7) and skips the hero show steps (jump +0x14 to 0x1E); on a first Sunday the show is proposed
+func	DATE	func_80139664	date_amusement_park_show_first_answer	stage 1 step 0xD, after the first yes/no question about the hero show: answer 1 (no) sets the ride-choice group and skips to step 0x1F; answer 0 sets date_show_taken for Saki, Yuko, Yukari, Yumi and Megumi (first time) and skips 6 steps; Megumi after her flag 0x3E speaks a special talk
+func	DATE	func_80139834	date_amusement_park_show_second_answer	stage 1 step 0x12, after the second yes/no question: answer 1 (no) skips 0xC steps with the ride-choice group (Mira speaks first); answer 0 goes on (Mira: group +1, date_show_taken = 1)
+func	DATE	func_80139944	date_amusement_park_ride_extra_tables	stage 1 step 0x1D: skips 0x16 steps and loads the extra response tables (offset 30) for the variant
+func	DATE	func_80139A64	date_amusement_park_group_bonus	stage 1 step 0x20: adds 0x10 per unlocked ride generation to the group
+func	DATE	func_80139AC8	date_amusement_park_parade_prepare	stage 1 step 0x3F: choice 1 (decline) restores the choice and skips 0xC steps; else reads the parade graphics (29 sectors), sets the sign actor
+func	DATE	func_80139CB0	date_amusement_park_parade_visit_count	stage 1 step 0x49: counts a visit of spot 0x1A when it is still 0
+func	DATE	func_80139D08	date_amusement_park_parade_mark_visit	stage 1 step 0x4B: counts spot 0x1A and skips seven steps
+func	DATE	func_80139D60	date_amusement_park_group_by_variant	stage 1 step 0x33: group += variant x 2
+func	DATE	func_80139D9C	date_amusement_park_title	stage 1 step 2: sets the sub-title to the park
+func	DATE	func_80139DD0	date_movie_theater_group_by_class	stage 1 step 0x1E of the movie theater: per-girl group increments from the first response class (class 4 -> +1, class 2 -> +2 for most girls), then derives the classes
+func	DATE	func_80139F3C	date_concert_hall_group_by_class	stage 1 step 0x1A of the concert hall: per-girl group increments from the first response classes, then derives the classes
+func	DATE	func_8013A0C0	date_shrine_festival_branch	stage 1 step 8: by school year: 1995 group 1 (Yuina, Yukari, Yuko, Yumi) or 0 and tokimeki +1, continue to the stalls at step 0xB; 1996 group 4 or 6, jump to step 0x14 (stalls with reward); 1997 group 0xA or 0xC, tokimeki +1, jump to step 0x1F (fireworks)
+func	DATE	func_8013A234	date_shrine_jump_to_farewell	stage 1 steps 0x13 and 0x1E: jumps to step 0x32 (the shared farewell tail), skipping the fireworks
+func	DATE	func_8013A254	date_shrine_choice_tables_by_girl	stage 1 step 0x28: copies the 3 response classes and 3 faces for the girl (3 bytes per girl)
+func	DATE	func_8013A2E0	date_shrine_start_festival_stalls	stage 1 steps 0xB/0x16: saves mode, stage and resume step 0x3A and starts the festival stall mini games (mode 0x82)
+func	DATE	func_8013A344	date_shrine_result_face	stage 1 step 0x43: face by the stall result (D_80122E9C)
+func	DATE	func_8013A424	date_shrine_after_stalls_jump	stage 1 step 0x48 after the stall game: 1995 jumps to step 0xC, other years to step 0x17 (stall reward)
+func	DATE	func_8013A464	date_shrine_return_setup	stage 1 step 0x3A: resets the scene after the stall game and reloads the shrine background
+func	DATE	func_8013A62C	date_shrine_stall_reward	stage 1 step 0x17: applies the result of the stall game (tokimeki, affection, stress) and selects the face
+func	DATE	func_8013A804	date_amusement_park_parade_offer	stage 1 step 0x3B: remembers the choice; in August offers the night parade (date_parade_offered) else skips 0x10 steps
+func	DATE	func_8013A898	date_neighborhood_park_start	stage 0-style opener for place 0: group from mood tier x 2, tokimeki +1 and affection +1
+func	DATE	func_8013A94C	date_neighborhood_park_pick_greeting	place 0 step 4: picks the opening talk group and line (birthday approaching, first time at best mood, hint roll, or a random line) from the two-way answer
+func	DATE	func_8013AE04	date_arrival_late_gate	stage 0 step 0x2A: speaks the waiting talk only when the girl arrives late
+func	DATE	func_8013AE5C	date_arrival_greeting_speak	speaks the greeting group (date_arrival_group / date_arrival_line) of section 23; face 3 when the player is late and the girl is annoyed
+func	DATE	func_8013AF1C	date_special_day_greeting	stage 0 step 0x2F: greeting group of section 24 on special days: 0 = March 20/21, 1 = late-July Sunday (07-23-1995, 07-28-1996, 07-27-1997), 2 or 3 (frame parity) = September 22/23, 4 = December 23; no greeting on other days
+func	DATE	func_8013B174	date_choice_reaction_speak	speaks the reaction to the chosen answer: shared section 2, line = response class of the choice
+func	DATE	func_8013B208	date_choice_special_reactions	stage 1 reaction step of the pool (place 16), skating rink (19) and ski resort (20): when a threshold of the girl fails (athletics < 40 for pool and skating rink, < 100 for the ski resort) the first answer is forced to class 3 with face 3 and a special reaction line (5 for the pool, 6 for skating rink and ski resort)
+func	DATE	func_8013B488	date_farewell_speak	farewell talk: group = 3 x mood tier + choice tier, 0xA after an appointment, 0xB for a repeated spot (with a penalty), special for Nozomi
+func	DATE	func_8013B7B0	date_closing_speak	closing talk of section 26 by mood tier
+func	DATE	func_8013B884	date_neighborhood_park_greeting_speak	speaks the greeting group chosen by date_neighborhood_park_pick_greeting from section 25
+func	DATE	func_8013B910	date_movie_theater_film_talk	stage 1 step 0x10: after 128 frames speaks the film reaction (shared section 3, group = film index) with the portrait hidden
+func	DATE	func_8013BA80	date_concert_hall_program_talk	stage 1 step 0x10: after 128 frames speaks the concert reaction (shared section 0, group = programme index)
+func	DATE	func_8013BBF0	date_amusement_park_talk_unshuffled	speaks the park talk (section 9, selectors D_8015BF34/38) with choice 0xFF (no shuffle)
+func	DATE	func_8013BC68	date_wrong_place_speak	speaks the meeting-place talk of shared section 1, group D_8015BF3C (0-8), choice 0xFF
+func	DATE	func_8013BCE0	date_stadium_talk_speak	stage 1 step 0xC of the stadium: speaks the place talk; for Shiori in variant 0 with the player in club 6 the first line is replaced by the next one
+func	DATE	func_8013BDB4	date_shopping_street_extra_face	stage 1 step 3: for answer 2 changes the face (worst for Yuko, face 3 otherwise)
+func	DATE	func_8013BE98	date_amusement_park_empty_step	stage 1 step 0xF: only main_step_next
+func	DATE	func_8013BEB8	date_sea_nozomi_check	stage 1 step 0xE: non-Nozomi girls skip 8; Nozomi with athletics >= 150 goes to step 0x2D, else forces worst answers
+func	DATE	func_8013BF94	date_load_special_portrait	stage 0 step 0x21: for the shrine (place 18) calls date_load_shrine_portrait, for the ski resort (place 20) date_load_ski_portrait, otherwise nothing; both read a girl-specific portrait file
+func	DATE	func_8013BFF8	date_load_ski_portrait	reads the winter portrait file of the girl for the ski resort
+func	DATE	func_8013C0A4	date_load_shrine_portrait	reads the festival portrait file of the girl for the shrine
+func	DATE	func_8013C190	date_choice_score	scores the chosen answer: face, then tokimeki, affection and syoushin deltas from response class, trivia and place affinity (spec section 5.5); emu: break at date_choice_score (girl 0, aquarium, trivia 60, answer 2 of class 1) raised tokimeki 0 -> 1.5, affection 50 -> 50.75, syoushin stayed 0 after the clamp, as the formula gives
+func	DATE	func_8013C410	date_score_multipliers	computes the two multipliers of the score from trivia and place affinity for a positive or non-positive class weight
+func	DATE	func_8013C624	date_pool_face_step	stage 1 step 0x18 of the pool: face of the chosen answer, main_step_next
+func	DATE	func_8013C664	date_choice_mood_face_step	step: face from date_choice_mood_face (or 1 after an appointment), main_step_next
+func	DATE	func_8013C6C0	date_sea_mood_face_step	stage 1 steps 0x24/0x42 of the sea: face from date_choice_mood_face, main_step_next
+func	DATE	func_8013C700	date_amusement_park_yuina_reaction	stage 1 step 0x47: Yuina worst face and -1 tokimeki/affection, Mio face 0 and +1, others face 1 and +1
+func	DATE	func_8013C7D0	date_ambush_check	stage 0 step 0x2E: starts the street-gang ambush battle on the third date in a row at the same place (kind 4) or in September 1997 (kind 5)
+func	DATE	func_8013CADC	date_ambush_prepare_battle	stage 0 step 0x40: loads the ambush talk data and prepares the RPG battle (girl 14 as speaker)
+func	DATE	func_8013CBAC	date_ambush_start_battle	stage 0 step 0x4A: clears the scene and starts RPG_BAT (mode 0x81)
+func	DATE	func_8013CBF4	date_ambush_after_battle	stage 0 step 0x3E: result of the battle: won gives tokimeki +2 (+3 to every met girl in the boss case), otherwise stress +5; rebuilds the date screen
+func	DATE	func_8013CDF8	date_end	last step of a date: loads the main data, counts the visit, stores the last date spot, applies Golden Week and festival bonuses, the missed-meeting penalty, updates the place history and returns with day_event_next; emu: last step of both poked dates; it returned through day_event_next
+func	DATE	func_8013D174	date_birthday_check	stage 1 farewell tail (step 0x1A in the aquarium, 0x59 in the park, last-but-few steps elsewhere): today is the girl's birthday -> stage 2 (gift scene), the player's birthday -> stage 3, else next step; emu: with the girl's birthday poked to today stage 2 started after it; with the player's birthday poked, stage 3
+func	DATE	func_8013D23C	date_central_park_summer_group_bonus	stage 1 step 2: Mio in June-August adds 9 to the group for variants 0 and 1
+func	DATE	func_8013D2C8	date_zoo_mio_tables	stage 1 step 1: Mio gets zoo groups 4/7/0xA by variant (summer: fixed classes) and the classes are derived
+func	DATE	func_8013D3B0	date_zoo_mio_skip	stage 1 step 0xF: skips 4 steps unless Mio in summer answers 1
+func	DATE	func_8013D438	date_zoo_skip_three	stage 1 step 0x12: skips three steps
+func	DATE	func_8013D468	date_amusement_park_ride_special_mio	stage 1 step 0x2B: Mio's scream-machine and Yuko/Saki special classes and group bonuses
+func	DATE	func_8013D5FC	date_amusement_park_ride_talk	stage 1 step 0x2C: ride talk; Mira ghost-house special worst classes, Yuko and Saki replay lines
+func	DATE	func_8013D8B0	date_amusement_park_ride_skip	stage 1 step 0x2D: skips seven or thirteen steps for special girl and ride pairs
+func	DATE	func_8013D9E8	date_amusement_park_yuina_second_answer	stage 1 step 0x1B: Yuina gets face 4, group 5 and a reward and skips to step 0x5E, others run date_scene_choose
+func	DATE	func_8013DA7C	date_festival_skip_five	stage 1 step 0 (shrine): Yuina, Yuko, Yukari and Yumi skip five steps
+func	DATE	func_8013DAD8	date_amusement_park_yuina_talk	stage 1 step 0x65: speaks as girl 14 (see date_movie_theater_narration_talk) on line 1 of the group, as Yuina otherwise; mouth lock set on line 2
+func	DATE	func_8013DB4C	date_amusement_park_jump_to_end	stage 1 step 0x66: jumps to step 0x3B
+func	DATE	func_8013DB6C	date_shopping_street_third_answer_branch	stage 1 step 6: third answer for Nozomi, Yuko and Yukari goes back to step 0 with a new group
+func	DATE	func_8013DC5C	date_shopping_street_nozomi_group_bonus	stage 1 step 4: Nozomi third answer after her junk-shop visit adds 1 to the group
+func	DATE	func_8013DCC0	date_sea_forced_worst_classes	stage 1 step 0x15: sets class 4 / mood face 3 / tier 2 for all answers and skips five steps
+func	DATE	func_8013DD50	date_botanical_garden_mira_skip	stage 1 step 0xD: Mira first answer in variant 0 steps once, else three times
+func	DATE	func_8013DDC4	date_art_museum_mira_face	stage 1 step 0xD: Mira second answer in variants 0/2 uses the worst face, else skips five steps
+func	DATE	func_8013DE50	date_art_museum_variant_face	stage 1 step 0xE: variants 0 and 2 use the worst face, else date_art_museum_choice_face
+func	DATE	func_8013DEA8	date_library_talk	stage 1 step 0x12: shows the date girl again and speaks (Yuko extra line)
+func	DATE	func_8013DEF8	date_library_extra_branch	stage 1 step 0x11: Mira adds the answer to the group, Yumi first answer in variant 0 sets the speaker to girl 14 (see date_movie_theater_narration_talk) with the mouth lock, others skip three steps
+func	DATE	func_8013DFB4	date_library_empty_step	stage 1 step 0x13: only main_step_next
+func	DATE	func_8013DFD4	date_game_center_mira_extra_talk	stage 1 steps 0x11/0x12/0x14: Mira, first answer, variant 1 speaks an extra line
+func	DATE	func_8013E038	date_game_center_mira_worst_face	stage 1 step 0x13: Mira, first answer, variant 1 uses the worst face
+func	DATE	func_8013E09C	date_game_center_mira_face_1	stage 1 step 0x15: Mira, first answer, variant 1 uses face 1
+func	DATE	func_8013E100	date_karaoke_mira_extra_talk	stage 1 step 0xE: Mira, third answer, variant 1 speaks an extra line
+func	DATE	func_8013E164	date_amusement_park_speak	stage 1 step 0x39: normal_date_speak
+func	DATE	func_8013E184	date_library_yuko_skip	stage 1 step 4: Yuko with a visit of spot 0xF skips 0x1E steps, else forces tier 1
+func	DATE	func_8013E1EC	date_sea_yukari_extra_talk	stage 1 step 0x1A of the sea: Yukari, variant 0 with the third answer or variant 1 with the first, speaks an extra line
+func	DATE	func_8013E288	date_sea_yukari_extra_talk_face	stage 1 step 0x1B of the sea: Yukari, variant 0, third answer: face 3 on the first call, then the talk
+func	DATE	func_8013E30C	date_shrine_megumi_extra_talk	stage 1 step 0x2C: Megumi third answer speaks an extra line
+func	DATE	func_8013E360	date_aquarium_yumi_extra_talk	stage 1 step 0xF: Yumi second answer in the dolphin show speaks an extra line
+func	DATE	func_8013E3C4	date_planetarium_yumi_talks	stage 1 step 0x13: Yumi in variant 0 first answer talk (group 7) or, in variant 1 with the third answer and low science, a talk whose line 1 is spoken as girl 14 (see date_movie_theater_narration_talk)
+func	DATE	func_8013E4E8	date_art_museum_yumi_extra_talk	stage 1 step 0x14: Yumi third answer in option 4 speaks an extra line
+func	DATE	func_8013E54C	date_bowling_alley_yumi_extra_talk_unused	unreferenced: Yumi, first answer, variant 0 speaks (no table entry)
+func	DATE	func_8013E5B0	date_bowling_alley_yumi_extra_talk	stage 1 step 0xF: Yumi second answer in variant 1 speaks
+func	DATE	func_8013E614	date_amusement_park_yumi_ride_talk	stage 1 step 0x37: Yumi, second answer, scream-machine variant: after the talk sets group 0x37
+func	DATE	func_8013E6A4	date_shrine_closing_talk	stage 1 steps 9/0x14/0x1F: talk with the mood-based face on the second call
+func	DATE	func_8013E710	date_shrine_answer_face	stage 1 step 5: first answer face: Mira 1, others 0
+func	DATE	func_8013E770	date_shopping_street_megumi_face	stage 1 step 0x1D: Megumi face 0, others face 1
+func	DATE	func_8013E7B0	date_load_girl_script	loads the girl's date script file to 0x80198000 (sector counts and LBAs per girl) and fills her 27 section pointers
+func	DATE	func_8013E980	date_load_shared_script	reads the shared date script (2 sectors at 0xAF46) to 0x80197000 and wires its four sections
+func	DATE	func_8013E9BC	date_load_choice_tables	reads the choice file (3 sectors at 0xAFA9) to 0x801A4000 and wires its table pointers
+func	DATE	func_8013E9F8	date_sea_score_step	stage 1 step 0x18 of the sea: variant 1 for Shiori, Ayako, Saki and Megumi (and Yukari, Yuko by answer) slides the portrait in before date_choice_score
+func	DATE	func_8013EB1C	date_sea_variant_portrait_gate	stage 1 step 0xB of the sea: variant 1 for Shiori, Ayako, Saki, Yukari, Yuko and Megumi shows the portrait again
+func	DATE	func_8013EB8C	date_place_music_load_start	stage 0 steps 1/0x1A: starts the bank load for the place's music (sector/size tables per place) and plays 0xCF
+func	DATE	func_8013EE3C	date_place_music_load_wait	stage 0 steps 2/0x1B: waits for the bank, starts the place sequence (table of 21) or retries after 0x400 frames
+func	DATE	func_8013EF1C	date_shopping_street_music	stage 1 steps 0xB/0x22: starts the shop music (boutique 0x200, fancy shop 0x201, junk shop 0x202; 0x203 from step 0x14)
+func	DATE	func_8013EFA0	date_meeting_place_check	stage 0 step 0x10: checks the chosen place against the appointment: skips when right or alone, refuses when the girl's mood is 4, otherwise prepares the "which place" question; emu: appointment place 3, chosen place 5, decoy 5: this step went on to the question (step 0x11); with chosen == appointment it jumped to step 0x21
+func	DATE	func_8013F184	date_place_init_with_cost	stage 0 step 0x1D: place_init then adds variant x groups_per_variant to the group
+func	DATE	func_8013F214	date_meeting_place_resolve	stage 0 step 0x13: resolves the "which place" answer: stay, or move to the other candidate place with date_arrival = 2; emu: answer 0 with a wrong place jumped to step 0x31 (she is not here), answer 1 went on to step 0x14 and re-ran place setup and loads (date_arrival = 2)
+func	DATE	func_8013F400	date_wrong_place_outcome	stage 0 step 0x1E: if the new place is still not the appointment place the girl is not there (group 7, jump to step 0x32), else she waited: syoushin +8
+func	DATE	func_8013F494	date_meeting_place_select	stage 0 step 0x12: three-way select when there are two decoys, else two-way select
+func	DATE	func_8013F4D4	date_empty_step	only main_step_next (stage 0 step 0x27)
+func	DATE	func_8013F4F4	date_portrait_address_init_step	stage 0 steps 0x24 and shrine 0x41: addr_init_bustup (portrait sprite addresses) then step
+func	DATE	func_8013F51C	date_meeting_set_not_here_group	stage 0 step 0x32: sets the meeting talk group to DATE_MEETING_NOT_HERE (she is not here) and steps
+func	DATE	func_8013F544	date_looks_check	stage 0 step 0x28: looks below 30 (35 for Mira) -> greeting group 0xC, tokimeki -1, affection -1, syoushin +5, skip 0xF steps
+func	DATE	func_8013F638	date_shrine_fireworks_setup	stage 1 step 0x24: loads palettes and sets up 10 firework sprites and the event still tiles
+func	DATE	func_8013FA4C	date_shrine_wait_long	stage 1 step 0x25: wait_sub_sub with a wait length of 1000 frames (the only direct call of wait_sub_sub in the overlay C)
+func	DATE	func_8013FA6C	date_shrine_light_up	stage 1 step 0x26: sets actor brightness to 0x80 and starts the fireworks
+func	DATE	func_8013FAD0	date_shrine_fireworks_fade	stage 1 step 0x2E: fades the fireworks and the screen down, ends the effect
+func	DATE	func_8013FD6C	date_shrine_fireworks_update	per-frame fireworks effect called by the stage 1 dispatcher while the effect flag is set
+func	DATE	func_8014033C	date_central_park_load_particles	stage 1 step 8: reads 0x22 sectors to 0x801E0000 and inits the particle resources
+func	DATE	func_80140374	date_central_park_particles_setup	stage 1 step 0xA: checks the loaded data pointers then creates 20 falling particle sprites (blossom or leaf)
+func	DATE	func_80140788	date_central_park_particles_hide	clears the visible bit of the 20 particle sprites
+func	DATE	func_801407D0	date_central_park_particles_update	per-frame update of the falling particles (drift, wrap at the bottom)
+func	DATE	func_80140A7C	date_mira_late_skip	stage 0 step 0x20: Mira at rank 3+ after a late arrival jumps to step 0x34 (group 8) and the place index grows by 0x32
+func	DATE	func_80140B08	date_invited_day_check	HYPOTHESIS: the two flags are invitations to a festival that a date on that day replaces; stage 1 farewell step: on 1995-10-15 or 1996-10-13 with the girl's flag 12/13 set clears both flags; the next step (extra talk) is skipped unless it applies and the mood is not the worst
+func	DATE	func_80140C6C	date_invited_day_talk	HYPOTHESIS: extra talk of the invited day; stage 1 farewell step: speaks section 22 with group D_800CA158 (3 x mood tier) and line D_800CA15C (extra talk of the invited day)
+func	DATE	func_80140D38	date_parade_sign_palette_cycle	HYPOTHESIS: the palette frames are a neon sign; every 7th frame advances the sign's palette frame (0-3) and reloads the palette
+func	DATE	func_80140DB4	date_girl_in_clear_appointment	girl_in then clears the active bit of appointment slot 0
+func	DATE	func_80140DE4	date_ambush_bank_load_start	stage 0 step 0x42: starts the load of the ambush music bank
+func	DATE	func_80140E44	date_ambush_bank_load_wait	stage 0 step 0x43: waits for the bank, sound 0xBF, retry after 0x400 frames
+func	DATE	func_80140ECC	date_ambush_bang	stage 0 step 0x45: shows the bang text and plays the sounds 0x22, 0x21, 0x2F and 0x500
+func	DATE	func_80140F40	date_shared_sections_init	sets the 12 pointers of the four shared sections (shared script file at 0x80197000)
+func	DATE	func_80144720	date_init	stage 0 step 0: resets screen, text and actors, takes the place from appt_place_0, the girl from date_girl, sets date_arrival (1; 0 with chance 1/4 by frame count except for Yuina), clears the date flags, step 1; emu: first handler of the overlay (step 0), place and girl read from the poked appointment state
+func	DATE	func_801448D4	date_entry	overlay entry of mode 0x50: per frame runs the stage handler (0 arrival, 1 place, 2 girl birthday, 3 player birthday; others reset to title) and the shared screen updates; emu: entered at frame 60 of a poked mode-0x50 run; stage 0 ran steps 0-0x30, then stage 1
+func	DATE	func_801449D4	date_stage_arrival	stage 0 handler: copies the 76-step table, replaces the step-9 entry by the place's setup function, draws the light effect (spec section 2) and calls the current step
+func	DATE	func_80144E20	date_stage_place	stage 1 handler: selects one of 21 per-place step tables by the place id, calls the current step and runs the place effects (light effect, fireworks, falling particles, parade sign)
+func	DATE	func_80145AA0	date_player_birthday_sections_init	sets 39 script pointers (13 sections of text, command and voice tables) in the player's-birthday script file read to 0x801B0000
+func	DATE	func_80145D14	date_stage_player_birthday	stage 3 handler (player's birthday, 15 steps): calls the current step
+func	DATE	func_80145DB8	date_player_birthday_load_data	stage 3 step 1: reads 3 sectors (LBA 0xAF43) to 0x801B0000, inits the pointers
+func	DATE	func_80145DF0	date_player_birthday_start	stage 3 step 0: a girl in a mood rank of 2 or worse skips to step 9, otherwise logs the scene and sets the birthday-done bit
+func	DATE	func_80145E74	date_player_birthday_prepare	stage 3 step 3: sets the group selectors, names, the girl's section pointers
+func	DATE	func_80145EC4	date_player_birthday_pick_sections	sets the three table pointers of the girl's birthday greeting
+func	DATE	func_80146134	date_player_birthday_speak	stage 3 steps 5 and 6: speaks the birthday greeting
+func	DATE	func_801461B0	date_ferris_wheel_resources_init	sets the image pointers used by the Ferris wheel ride
+func	DATE	func_80146224	date_ride_dispatch	switch on date_ride_index: 0 roller coaster, 1 ghost house, 2 Ferris wheel, 3 scream machine, 4 virtual ship
+func	DATE	func_801462B0	date_ride_scream_machine	ride animation with background reads, light effects and sound (scream machine, ride 3); state in step_timer
+func	DATE	func_8014718C	date_ride_ferris_wheel	ride animation for the Ferris wheel (ride 2): backgrounds, event still and music
+func	DATE	func_80147958	date_ride_roller_coaster	ride animation for the roller coaster (ride 0): eight background reads, camera moves and sounds
+func	DATE	func_80148924	date_ride_quad_shift	moves the four ride quads (sprite quads 4-7) by an offset
+func	DATE	func_801489D0	date_ride_ghost_house	ride animation for the ghost house (ride 1): random scares, glow discs, background switching
+func	DATE	func_801491E4	date_ride_background_skip	after a background read: same buffer already shown skips 3 frames of step_timer, the other buffer 2
+func	DATE	func_80149268	date_ferris_wheel_still_copy	shows the event still tiles and copies sprite quads 58-63 to 4-9
+func	DATE	func_80149310	date_gift_sections_init	sets 39 pointers (13 sections x 3 tables) into the gift script file read to 0x801B0000
+func	DATE	func_80149584	date_stage_girl_birthday	stage 2 handler (girl's birthday gifts, 28 steps): calls the current step
+func	DATE	func_80149630	date_gift_group_reset	stage 2 step 4: group 2, line 0
+func	DATE	func_80149660	date_gift_load_data	stage 2 step 0: reads 0x16 sectors (LBA 0xAF0D) to 0x801B0000 and inits the gift section pointers
+func	DATE	func_80149698	date_gift_choice_restore	stage 2 step 0x12: restores the saved choice
+func	DATE	func_801496C4	date_gift_start	stage 2 step 2: needs the girl's birthday-known flag (else jumps to step 0x13), marks the birthday done, logs the scene, picks the girl's section pointers and the school-year index
+func	DATE	func_80149AC0	date_gift_reaction_group_by_mood	stage 2 step 0xC: group 2/4/6/8 by mood rank, line 1
+func	DATE	func_80149B78	date_gift_pick_reply_group	stage 2 step 0xF: group = 2 x choice + 13; for choice 0 patches two bytes of the reply text
+func	DATE	func_80149C1C	date_gift_player_birthday_check	stage 2 step 0x13: if today is also the player's birthday starts stage 3
+func	DATE	func_80149CA0	date_gift_prepare_choice	stage 2 step 0xA: restores the saved sections and fills the gift name buffer
+func	DATE	func_80149D04	date_gift_name_set	copies the gift name of (girl, school year, choice) into name buffer A
+func	DATE	func_80149DC4	date_gift_speak	speaks the gift sections (selectors D_8015D084/88)
+func	DATE	func_80149E40	date_gift_speak_wait	speaks the gift sections and steps when the group ends (no table entry)
+func	DATE	func_80149ED0	date_gift_speak_unshuffled	speaks the gift sections with choice 0xFF (no shuffle) (no table entry)
+func	DATE	func_80149F48	date_gift_choice_sections_set	stage 2 step 7: saves the selectors and loads the three gift choice sections of the girl and school year
+func	DATE	func_80149FF8	date_gift_apply_reward	stage 2 step 0xE: reward by the chosen gift (best: tokimeki +3, affection +2, syoushin -15; middle: +2, +1, -10; worst: affection +1, syoushin +10); emu: reached on a poked birthday (girl 0, 4/4) after date_birthday_check moved to stage 2
+func	DATE	func_8014A1B0	date_virtual_ship_sections_init	sets the three script pointers of the virtual ship ride
+func	DATE	func_8014A1E4	date_virtual_ship_dispatch	virtual ship ride (ride 4): switch on its stage (load, run, portrait read, wait, build)
+func	DATE	func_8014A280	date_virtual_ship_stage_load	virtual ship stage 0: starts the load
+func	DATE	func_8014A2AC	date_virtual_ship_stage_run	virtual ship stage 1: sub-stage switch (set up, run, finish)
+func	DATE	func_8014A314	date_virtual_ship_read_portrait	virtual ship stage 2: sound 0x200, starts the portrait read and steps back one
+func	DATE	func_8014A360	date_virtual_ship_wait_read	virtual ship stage 3: waits for the CD
+func	DATE	func_8014A39C	date_virtual_ship_build_portrait	virtual ship stage 4: checks the portrait pointers and builds it with the mood rank
+func	DATE	func_8014A4DC	date_virtual_ship_load	reads six data blocks, loads palettes and texture pages for the virtual ship
+func	DATE	func_8014A810	date_virtual_ship_setup	virtual ship sub-stage 0: sets up the 3D objects
+func	DATE	func_8014A8FC	date_virtual_ship_run	virtual ship sub-stage 1: per-frame 3D scene (window, frame, title update)
+func	DATE	func_8014AD70	date_virtual_ship_finish	virtual ship sub-stage 2: closes the 3D draw pass and steps the stage
+func	DATE	func_8014AD9C	date_virtual_ship_draw_object	draws one 3D object of the ship with the GTE helpers
+func	DATE	func_8014AF88	date_virtual_ship_vector_helper	vector helper of the ship scene (GTE code, SDK-style leaf function)
+func	DATE	func_8014B080	date_virtual_ship_matrix_helper	matrix helper of the ship scene (GTE code, SDK-style leaf function)
+func	DATE	func_8014B194	date_virtual_ship_next_stage	stage += 1, clears the sub-stage counters
+func	DATE	func_8014B1C4	date_virtual_ship_next_substage	sub-stage += 1, clears the counters
+func	DATE	func_8014B1F0	date_scene_sections_init	sets about 900 pointers: for every scene the script section tables inside the scene script file read to 0x80198000
+func	DATE	func_8014C08C	date_scene_entry	overlay entry of mode 0x5E: switches on the girl (dialogue_work.girl) to the girl's dispatcher, then runs the shared screen updates
+func	DATE	func_8014C20C	date_scene_end	last step of a scene: loads main data, stores the last date spot (looks >= 30, 35 for Mira), logs the scene, syoushin -40, Golden Week tokimeki +2, updates the place history and returns with day_event_next
+func	DATE	func_8014C550	date_scene_speak_unshuffled	speaks the scene script sections with choice 0xFF (dialogue_run keeps a three-option line in its order 0, 1, 2; main normal_date_speak_012 does the same for its tables)
+func	DATE	func_8014C5C8	date_scene_speak	speaks the scene script sections (selectors D_800CA150/154, tables D_8015E208/20C/210) with the current choice
+func	DATE	func_8014C644	date_scene_bank_load_start_unused	unreferenced: starts the sound bank load of the girl (tables D_800B3688/36C8/3708)
+func	DATE	func_8014C6CC	date_scene_bank_wait_unused	unreferenced: waits for the bank, plays 0x200 and steps; retry after 0x400 frames
+func	DATE	func_8014C754	date_scene_bank_wait_plain_unused	unreferenced: waits for the bank and steps; retry after 0x400 frames
+func	DATE	func_8014C7D4	date_scene_sequence_start_unused	unreferenced: sound command 0x200 (start of a sequence after a bank load) then step
+func	DATE	func_8014C7FC	date_scene_load_script	reads the girl's scene script file (3 to 7 sectors by girl, LBA 0xAE21-0xAE5A) to 0x80198000 and inits the section pointers
+func	DATE	func_8014C9A8	date_scene_light_beams	draws ten light-beam sprites with the tpage helper
+func	DATE	func_8014CC40	date_scene_yuko_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014CCF0	date_scene_yuko_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014CDA0	date_scene_yuko_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014CE50	date_scene_yuko_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014CF00	date_scene_yuko_december_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014CFB0	date_scene_yuko_spring_data_init_2	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014D000	date_scene_yuko_dispatch	scene dispatcher of mode 0x5E for yuko: switch on dialogue_work.scene to the season handlers
+func	DATE	func_8014D0A0	date_scene_yuko_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8014D298	date_scene_yuko_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8014D57C	date_scene_yuko_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8014D6B0	date_scene_yuko_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8014D818	date_scene_yuko_december_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8014D970	date_scene_yuko_spring_background_1	step: bg_read_sub2(0x484E) starts the read of a scene background, then main_step_next
+func	DATE	func_8014D998	date_scene_yuko_spring_background_2	step: bg_read_sub2(0x44D6) starts the read of a scene background, then main_step_next
+func	DATE	func_8014D9C0	date_scene_yuko_summer_sound_background_1	step: snd_command(0x204) and bg_read_sub2(0x480F), then main_step_next
+func	DATE	func_8014D9F0	date_scene_yuko_summer_background_1	step: bg_read_sub2(0x436B) starts the read of a scene background, then main_step_next
+func	DATE	func_8014DA18	date_scene_yuko_autumn_background_1	step: bg_read_sub2(0x483C) starts the read of a scene background, then main_step_next
+func	DATE	func_8014DA40	date_scene_yuko_background_unused	unreferenced: bg_read_sub2(0x4470) then step
+func	DATE	func_8014DA68	date_scene_yuko_autumn_background_2	step: bg_read_sub2(0x4466) starts the read of a scene background, then main_step_next
+func	DATE	func_8014DA90	date_scene_yuko_winter_background_1	step: bg_read_sub2(0x48A3) starts the read of a scene background, then main_step_next
+func	DATE	func_8014DAB8	date_scene_yuko_winter_background_2	step: bg_read_sub2(0x456C) starts the read of a scene background, then main_step_next
+func	DATE	func_8014DAE0	date_scene_yuko_december_background_1	step: bg_read_sub2(0x4880) starts the read of a scene background, then main_step_next
+func	DATE	func_8014DB08	date_scene_yuko_spring	scene dispatcher (mode 0x5E, yuko, scene 2, spring): copies the step table and calls the handler of the current step
+func	DATE	func_8014DB98	date_scene_yuko_spring_picture_animate	palette animation of the scene picture while it is visible (every 13th frame)
+func	DATE	func_8014DC5C	date_scene_yuko_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014DC94	date_scene_yuko_spring_load_data_2	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014DCCC	date_scene_yuko_summer	scene dispatcher (mode 0x5E, yuko, scene 3, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_8014DDD8	date_scene_yuko_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014DE10	date_scene_yuko_summer_sign_setup	HYPOTHESIS: the actors are the night-parade neon sign; loads the night-parade sign palette and sets its actor and image pointers
+func	DATE	func_8014DF1C	date_scene_yuko_summer_load_data_2	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014DF54	date_scene_yuko_summer_still_fade_in	event_still_fade_in and shows the two sign actors with the picture brightness
+func	DATE	func_8014DFB0	date_scene_yuko_summer_still_fade_out	event_still_fade_out and hides the sign actors at brightness 0
+func	DATE	func_8014E010	date_scene_yuko_summer_sign_animate	HYPOTHESIS: the actors are the night-parade neon sign; every 10th frame from step 0xD advances the sign palette frames
+func	DATE	func_8014E108	date_scene_yuko_summer_light_beams	draws five coloured gradient beams (yellow and white)
+func	DATE	func_8014E2E8	date_scene_yuko_autumn	scene dispatcher (mode 0x5E, yuko, scene 4, autumn): copies the step table and calls the handler of the current step
+func	DATE	func_8014E38C	date_scene_yuko_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014E3E8	date_scene_yuko_autumn_beam_lights	HYPOTHESIS: draws the cycling coloured gradient beams (colour sets change every 100 and 120 frames); HYPOTHESIS: stage lights of the concert
+func	DATE	func_8014EBB8	date_scene_yuko_winter	scene dispatcher (mode 0x5E, yuko, scene 5, winter): copies the step table and calls the handler of the current step
+func	DATE	func_8014EC34	date_scene_yuko_winter_speak_with_face	speaks; on the first frame of group 5 sets face 1
+func	DATE	func_8014EC90	date_scene_yuko_winter_sound_1	step: snd_command(0x503) then main_step_next
+func	DATE	func_8014ECB8	date_scene_yuko_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014ECF0	date_scene_yuko_december	scene dispatcher (mode 0x5E, yuko, scene 6, december): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_8014EE1C	date_scene_yuko_december_face_step	event_face1 and clears the mouth-reversal flag
+func	DATE	func_8014EE40	date_scene_yuko_december_sound_1	step: snd_command(0x200) then main_step_next
+func	DATE	func_8014EE68	date_scene_yuko_december_sound_2	step: snd_command(0x201) then main_step_next
+func	DATE	func_8014EE90	date_scene_yuko_december_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014EEC8	date_scene_yuko_december_speak_with_face	speaks; at line 4 reverses the mouth frames and steps back one
+func	DATE	func_8014EF1C	date_gradient_quad_draw	queues a four-corner gradient quad (POLY_G4) with two colours from the primitive arena
+func	DATE	func_8014F0F0	date_scene_shiori_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014F1A0	date_scene_shiori_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014F250	date_scene_shiori_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014F300	date_scene_shiori_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_8014F404	date_scene_shiori_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8014F500	date_scene_shiori_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8014F610	date_scene_shiori_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8014F744	date_scene_shiori_winter_still_setup	second event still of the scene: palette, event_still_show, event_anim_show
+func	DATE	func_8014F7F4	date_scene_shiori_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8014F8F0	date_scene_shiori_autumn_background_1	step: bg_read_sub2(0x47BA) starts the read of a scene background, then main_step_next
+func	DATE	func_8014F918	date_scene_shiori_spring_background_1	step: bg_read_sub2(0x47CD) starts the read of a scene background, then main_step_next
+func	DATE	func_8014F940	date_scene_shiori_spring_background_2	step: bg_read_sub2(0x42EB) starts the read of a scene background, then main_step_next
+func	DATE	func_8014F968	date_scene_shiori_winter_background_1	step: bg_read_sub2(0x4350) starts the read of a scene background, then main_step_next
+func	DATE	func_8014F990	date_scene_shiori_winter_background_2	step: bg_read_sub2(0x4800) starts the read of a scene background, then main_step_next
+func	DATE	func_8014F9B8	date_scene_shiori_winter_background_3	step: bg_read_sub2(0x432B) starts the read of a scene background, then main_step_next
+func	DATE	func_8014F9E0	date_scene_shiori_summer_background_1	step: bg_read_sub2(0x48EA) starts the read of a scene background, then main_step_next
+func	DATE	func_8014FA08	date_scene_shiori_summer_background_2	step: bg_read_sub2(0x45BF) starts the read of a scene background, then main_step_next
+func	DATE	func_8014FA30	date_scene_reset_choices	clears the choice state (answers, faces, classes) and the group/line selectors of a scene, then inits the scene section pointers
+func	DATE	func_8014FAE0	date_scene_shiori_autumn	scene dispatcher (mode 0x5E, shiori, scene 3, autumn): copies the step table and calls the handler of the current step
+func	DATE	func_8014FB68	date_scene_shiori_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014FBA0	date_scene_shiori_spring	scene dispatcher (mode 0x5E, shiori, scene 4, spring): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_8014FC48	date_scene_shiori_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014FC80	date_scene_shiori_winter	scene dispatcher (mode 0x5E, shiori, scene 5, winter): copies the step table and calls the handler of the current step
+func	DATE	func_8014FD08	date_scene_shiori_winter_sound_1	step: snd_command(0x200) then main_step_next
+func	DATE	func_8014FD30	date_scene_shiori_winter_shake_and_wait	first frame: screen shake and sounds 0xB1/0x501; steps after 128 frames
+func	DATE	func_8014FDA0	date_scene_shiori_winter_speak_with_effect	speaks; at line 2 starts the sound effects 0x201/0x502 and a screen effect
+func	DATE	func_8014FE24	date_scene_shiori_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8014FE5C	date_scene_shiori_winter_ferris_wheel_title	sets the sub-title to the Ferris wheel
+func	DATE	func_8014FE90	date_scene_shiori_summer	scene dispatcher (mode 0x5E, shiori, scene 6, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_8014FF2C	date_scene_shiori_summer_sound_1	step: snd_command(0x502) then main_step_next
+func	DATE	func_8014FF54	date_scene_shiori_summer_speak_with_face	speaks; face by line (5 -> 1, 9 -> 2, 11 -> mood)
+func	DATE	func_8014FFD0	date_scene_shiori_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80150010	date_scene_yuina_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80150080	date_scene_yuina_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80150130	date_scene_yuina_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80150200	date_scene_yuina_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801502B0	date_scene_yuina_dispatch	scene dispatcher of mode 0x5E for yuina: switch on dialogue_work.scene to the season handlers
+func	DATE	func_80150344	date_scene_yuina_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80150460	date_scene_yuina_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_801505B4	date_scene_yuina_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80150890	date_scene_yuina_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80150A84	date_scene_yuina_spring_background_1	step: bg_read_sub2(0x4587) starts the read of a scene background, then main_step_next
+func	DATE	func_80150AAC	date_scene_yuina_spring_background_2	step: bg_read_sub2(0x457D) starts the read of a scene background, then main_step_next
+func	DATE	func_80150AD4	date_scene_yuina_summer_background_1	step: bg_read_sub2(0x4925) starts the read of a scene background, then main_step_next
+func	DATE	func_80150AFC	date_scene_yuina_summer_background_2	step: bg_read_sub2(0x4631) starts the read of a scene background, then main_step_next
+func	DATE	func_80150B24	date_scene_yuina_autumn_background_1	step: bg_read_sub2(0x4845) starts the read of a scene background, then main_step_next
+func	DATE	func_80150B4C	date_scene_yuina_autumn_background_2	step: bg_read_sub2(0x44D6) starts the read of a scene background, then main_step_next
+func	DATE	func_80150B74	date_scene_yuina_winter_background_1	step: bg_read_sub2(0x453B) starts the read of a scene background, then main_step_next
+func	DATE	func_80150B9C	date_scene_yuina_winter_sound_background_1	step: snd_command(0x203) and bg_read_sub2(0x4520), then main_step_next
+func	DATE	func_80150BCC	date_scene_yuina_spring	scene dispatcher (mode 0x5E, yuina, scene 2, spring): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80150C78	date_scene_yuina_spring_radial_lines	draws 16 gradient lines on a circle (grey by brightness, offset by frame count)
+func	DATE	func_80150E9C	date_scene_yuina_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80150ED4	date_scene_yuina_summer	scene dispatcher (mode 0x5E, yuina, scene 3, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80151064	date_scene_yuina_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8015109C	date_scene_yuina_summer_still_fade_out	event_still_fade_out, sign actor brightness follows
+func	DATE	func_801510E8	date_scene_yuina_summer_sprite_show	shows sprite actor 98 with its animation set
+func	DATE	func_8015114C	date_scene_yuina_summer_sound_1	snd_command(0x500) (no step change; called from the scene dispatcher)
+func	DATE	func_8015116C	date_scene_yuina_summer_sound_2	snd_command(0x503) (no step change; called from the scene dispatcher)
+func	DATE	func_8015118C	date_scene_yuina_summer_sound_3	step: snd_command(0x504) then main_step_next
+func	DATE	func_801511B4	date_scene_yuina_autumn	scene dispatcher (mode 0x5E, yuina, scene 4, autumn): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80151300	date_scene_yuina_autumn_sound_1	step: snd_command(0x502) then main_step_next
+func	DATE	func_80151328	date_scene_yuina_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80151360	date_scene_yuina_winter	scene dispatcher (mode 0x5E, yuina, scene 5, winter): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80151424	date_scene_yuina_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80151460	date_scene_ayako_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80151510	date_scene_ayako_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801515C0	date_scene_ayako_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80151670	date_scene_ayako_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80151720	date_scene_ayako_spring_data_init_2	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80151734	date_scene_ayako_dispatch	scene dispatcher of mode 0x5E for ayako: switch on dialogue_work.scene to the season handlers
+func	DATE	func_801517C8	date_scene_ayako_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_801518B8	date_scene_ayako_spring_still_setup	second event still of the scene: texture slots 5-10, palette, event_still_show, event_anim_show
+func	DATE	func_80151A20	date_scene_ayako_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80151C54	date_scene_ayako_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80151D68	date_scene_ayako_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80151E44	date_scene_ayako_spring_background_1	step: bg_read_sub2(0x491B) starts the read of a scene background, then main_step_next
+func	DATE	func_80151E6C	date_scene_ayako_spring_background_2	step: bg_read_sub2(0x4613) starts the read of a scene background, then main_step_next
+func	DATE	func_80151E94	date_scene_ayako_summer_background_1	step: bg_read_sub2(0x48C5) starts the read of a scene background, then main_step_next
+func	DATE	func_80151EBC	date_scene_ayako_summer_background_2	step: bg_read_sub2(0x45A3) starts the read of a scene background, then main_step_next
+func	DATE	func_80151EE4	date_scene_ayako_autumn_background_1	step: bg_read_sub2(0x4856) starts the read of a scene background, then main_step_next
+func	DATE	func_80151F0C	date_scene_ayako_autumn_background_2	step: bg_read_sub2(0x44F1) starts the read of a scene background, then main_step_next
+func	DATE	func_80151F34	date_scene_ayako_winter_background_1	step: bg_read_sub2(0x4900) starts the read of a scene background, then main_step_next
+func	DATE	func_80151F5C	date_scene_ayako_winter_background_2	step: bg_read_sub2(0x45E6) starts the read of a scene background, then main_step_next
+func	DATE	func_80151F84	date_scene_ayako_spring	scene dispatcher (mode 0x5E, ayako, scene 2, spring): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80152024	date_scene_ayako_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80152060	date_scene_ayako_spring_clip_play	plays a long audio clip (0x1B21 frames) and sets the mouth sequence of the scene picture from a 167-row time table
+func	DATE	func_80152268	date_scene_ayako_spring_stripes_effect	moving colour stripes across the screen (random 12-colour pattern changing every 51 frames)
+func	DATE	func_80152684	date_scene_ayako_spring_stripe_draw	draws one stripe from gradient triangles
+func	DATE	func_80152948	date_scene_ayako_spring_load_data_2	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80152980	date_scene_ayako_summer	scene dispatcher (mode 0x5E, ayako, scene 3, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80152AA8	date_scene_ayako_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80152AE0	date_scene_ayako_summer_sprite_value_set	sets one actor field to 5 and steps
+func	DATE	func_80152B08	date_scene_ayako_autumn	scene dispatcher (mode 0x5E, ayako, scene 4, autumn): copies the step table and calls the handler of the current step
+func	DATE	func_80152B7C	date_scene_ayako_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80152BB4	date_scene_ayako_winter	scene dispatcher (mode 0x5E, ayako, scene 5, winter): copies the step table and calls the handler of the current step
+func	DATE	func_80152C3C	date_scene_ayako_winter_speak_with_face	speaks; at line 7 after answer 1 sets face 0
+func	DATE	func_80152CA8	date_scene_ayako_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80152CE0	date_scene_ayako_winter_answer_reward	by answer: group +2 and tokimeki +2, affection +2 / or tokimeki +3, affection +1; syoushin -20
+func	DATE	func_80152DBC	date_scene_ayako_winter_skip_by_answer	answer 0 skips two steps
+func	DATE	func_80152DF8	date_scene_ayako_winter_answer_face	answer 0 face 0, else face 1
+func	DATE	func_80152E34	date_gradient_triangle_draw	queues a three-corner gradient triangle (POLY_G3) from the primitive arena
+func	DATE	func_80152FC0	date_scene_mira_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80153070	date_scene_mira_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80153120	date_scene_mira_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801531D0	date_scene_mira_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80153280	date_scene_mira_dispatch	scene dispatcher of mode 0x5E for mira: switch on dialogue_work.scene to the season handlers
+func	DATE	func_80153320	date_scene_mira_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8015347C	date_scene_mira_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_801535D8	date_scene_mira_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_801537C0	date_scene_mira_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80153928	date_scene_mira_special_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_801539A4	date_scene_mira_spring_background_1	step: bg_read_sub2(0x486E) starts the read of a scene background, then main_step_next
+func	DATE	func_801539CC	date_scene_mira_spring_sound_background_1	step: snd_command(0x203) and bg_read_sub2(0x4520), then main_step_next
+func	DATE	func_801539FC	date_scene_mira_summer_background_1	step: bg_read_sub2(0x48D6) starts the read of a scene background, then main_step_next
+func	DATE	func_80153A24	date_scene_mira_summer_background_2	step: bg_read_sub2(0x45A3) starts the read of a scene background, then main_step_next
+func	DATE	func_80153A4C	date_scene_mira_autumn_background_1	step: bg_read_sub2(0x482A) starts the read of a scene background, then main_step_next
+func	DATE	func_80153A74	date_scene_mira_autumn_background_2	step: bg_read_sub2(0x432B) starts the read of a scene background, then main_step_next
+func	DATE	func_80153A9C	date_scene_mira_autumn_background_logged	bg_read_sub2(0x4347) and a log entry
+func	DATE	func_80153AE8	date_scene_mira_winter_background_1	step: bg_read_sub2(0x4891) starts the read of a scene background, then main_step_next
+func	DATE	func_80153B10	date_scene_mira_winter_background_2	step: bg_read_sub2(0x4558) starts the read of a scene background, then main_step_next
+func	DATE	func_80153B38	date_scene_mira_spring	scene dispatcher (mode 0x5E, mira, scene 2, spring): copies the step table and calls the handler of the current step
+func	DATE	func_80153BC0	date_scene_mira_spring_sound_2	step: snd_command(0x500) then main_step_next
+func	DATE	func_80153BE8	date_scene_mira_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80153C20	date_scene_mira_spring_answer_palette	adds the answer to the group and loads palette 0/2/1 by answer
+func	DATE	func_80153CEC	date_scene_mira_summer	scene dispatcher (mode 0x5E, mira, scene 3, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80153D94	date_scene_mira_summer_group_by_mood	group = 1 + number of mood thresholds passed, then speaks
+func	DATE	func_80153DE4	date_scene_mira_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80153E1C	date_scene_mira_autumn	scene dispatcher (mode 0x5E, mira, scene 4, autumn): copies the step table and calls the handler of the current step
+func	DATE	func_80153E90	date_scene_mira_autumn_answer_branch	answer != 0 jumps to step 0x24 with group 6, else sets the flag, affection -1, syoushin +10
+func	DATE	func_80153F10	date_scene_mira_autumn_speak_with_face	speaks; first frame of line 7 sets face 1
+func	DATE	func_80153F5C	date_scene_mira_autumn_sound_1	step: snd_command(0x200) then main_step_next
+func	DATE	func_80153F84	date_scene_mira_autumn_music_speak	plays 0x205 once, then speaks
+func	DATE	func_80153FCC	date_scene_mira_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80154004	date_scene_mira_winter	scene dispatcher (mode 0x5E, mira, scene 5, winter): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_801540B8	date_scene_mira_winter_sound_1	step: snd_command(0x502) then main_step_next
+func	DATE	func_801540E0	date_scene_mira_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80154118	date_scene_mira_special	scene dispatcher (mode 0x5E, mira, scene 6, special): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80154260	date_scene_mio_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80154310	date_scene_mio_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801543C0	date_scene_mio_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80154470	date_scene_mio_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80154520	date_scene_mio_dispatch	scene dispatcher of mode 0x5E for mio: switch on dialogue_work.scene to the season handlers
+func	DATE	func_801545B4	date_scene_mio_spring_ride_select	selects ride 3 (scream machine) and the scene sections
+func	DATE	func_8015460C	date_scene_mio_spring_still_setup	second event still of the scene
+func	DATE	func_801546BC	date_scene_mio_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8015485C	date_scene_mio_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80154990	date_scene_mio_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80154AC4	date_scene_mio_spring_background_1	step: bg_read_sub2(0x4359) starts the read of a scene background, then main_step_next
+func	DATE	func_80154AEC	date_scene_mio_spring_background_2	step: bg_read_sub2(0x4809) starts the read of a scene background, then main_step_next
+func	DATE	func_80154B14	date_scene_mio_spring_background_3	step: bg_read_sub2(0x432B) starts the read of a scene background, then main_step_next
+func	DATE	func_80154B3C	date_scene_mio_summer_background_1	step: bg_read_sub2(0x48BD) starts the read of a scene background, then main_step_next
+func	DATE	func_80154B64	date_scene_mio_summer_background_2	step: bg_read_sub2(0x45A3) starts the read of a scene background, then main_step_next
+func	DATE	func_80154B8C	date_scene_mio_background_unused	unreferenced: bg_read_sub2(0x454E) then step
+func	DATE	func_80154BB4	date_scene_mio_autumn_background_1	step: bg_read_sub2(0x4876) starts the read of a scene background, then main_step_next
+func	DATE	func_80154BDC	date_scene_mio_autumn_background_2	step: bg_read_sub2(0x4544) starts the read of a scene background, then main_step_next
+func	DATE	func_80154C04	date_scene_mio_winter_background_1	step: bg_read_sub2(0x4833) starts the read of a scene background, then main_step_next
+func	DATE	func_80154C2C	date_scene_mio_winter_background_2	step: bg_read_sub2(0x43F9) starts the read of a scene background, then main_step_next
+func	DATE	func_80154C54	date_scene_mio_winter_sound_background_1	step: snd_command(0x500) and bg_read_sub2(0x43F0), then main_step_next
+func	DATE	func_80154C84	date_scene_mio_spring	scene dispatcher (mode 0x5E, mio, scene 2, spring): copies the step table and calls the handler of the current step
+func	DATE	func_80154D00	date_scene_mio_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80154D38	date_scene_mio_spring_answer_branch	answer 1 face 2 and jump to step 0x2E; else sets the seen flag, forces mood faces and applies the penalty (tokimeki -2, affection -1, syoushin +20)
+func	DATE	func_80154E14	date_scene_mio_spring_scream_machine_title	sets the sub-title to the scream machine
+func	DATE	func_80154E48	date_scene_mio_summer	scene dispatcher (mode 0x5E, mio, scene 3, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80154F0C	date_scene_mio_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80154F44	date_scene_mio_autumn	scene dispatcher (mode 0x5E, mio, scene 4, autumn): copies the step table and calls the handler of the current step
+func	DATE	func_80154FCC	date_scene_mio_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80155004	date_scene_mio_winter	scene dispatcher (mode 0x5E, mio, scene 5, winter): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80155174	date_scene_mio_winter_narration_speak	HYPOTHESIS: speaker 14 (core GIRL_SOTOI, name-table entry 14) is a narration voice; the code only sets current_girl to 14 (same as date_movie_theater_narration_talk); first call speaks as 14, later calls as Mio
+func	DATE	func_801551D0	date_scene_mio_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8015522C	date_scene_mio_winter_answer_effect	answer != 0 raises the group, else sets Mio's flag 14
+func	DATE	func_80155284	date_scene_mio_spring_ride	runs the ride animation (date_ride_dispatch)
+func	DATE	func_801552B0	date_scene_yukari_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80155360	date_scene_yukari_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80155410	date_scene_yukari_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801554C0	date_scene_yukari_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80155530	date_scene_yukari_dispatch	scene dispatcher of mode 0x5E for yukari: switch on dialogue_work.scene to the season handlers
+func	DATE	func_801555C4	date_scene_yukari_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_801556D8	date_scene_yukari_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_801559C0	date_scene_yukari_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80155AD4	date_scene_yukari_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80155C18	date_scene_yukari_spring_background_1	step: bg_read_sub2(0x48EE) starts the read of a scene background, then main_step_next
+func	DATE	func_80155C40	date_scene_yukari_spring_background_2	step: bg_read_sub2(0x45D3) starts the read of a scene background, then main_step_next
+func	DATE	func_80155C68	date_scene_yukari_summer_background_1	step: bg_read_sub2(0x48B5) starts the read of a scene background, then main_step_next
+func	DATE	func_80155C90	date_scene_yukari_summer_background_2	step: bg_read_sub2(0x4591) starts the read of a scene background, then main_step_next
+func	DATE	func_80155CB8	date_scene_yukari_autumn_background_1	step: bg_read_sub2(0x47E0) starts the read of a scene background, then main_step_next
+func	DATE	func_80155CE0	date_scene_yukari_autumn_background_2	step: bg_read_sub2(0x42F4) starts the read of a scene background, then main_step_next
+func	DATE	func_80155D08	date_scene_yukari_winter_background_1	step: bg_read_sub2(0x488A) starts the read of a scene background, then main_step_next
+func	DATE	func_80155D30	date_scene_yukari_winter_background_2	step: bg_read_sub2(0x4562) starts the read of a scene background, then main_step_next
+func	DATE	func_80155D58	date_scene_yukari_winter_background_3	step: bg_read_sub2(0x4558) starts the read of a scene background, then main_step_next
+func	DATE	func_80155D80	date_scene_yukari_spring	scene dispatcher (mode 0x5E, yukari, scene 3, spring): copies the step table and calls the handler of the current step
+func	DATE	func_80155E08	date_scene_yukari_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80155E40	date_scene_yukari_summer	scene dispatcher (mode 0x5E, yukari, scene 4, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80156024	date_scene_yukari_summer_speak_with_face	speaks; first frame of line 2 sets face 1
+func	DATE	func_80156080	date_scene_yukari_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_801560B8	date_scene_yukari_summer_sound_1	step: snd_command(0x502) then main_step_next
+func	DATE	func_801560E0	date_scene_yukari_summer_actors_update	HYPOTHESIS: per-frame update of eight sprite actors: counters, positions and visibility (HYPOTHESIS: swimming animals of the aquarium scene)
+func	DATE	func_801563A8	date_scene_yukari_autumn	scene dispatcher (mode 0x5E, yukari, scene 5, autumn): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_8015645C	date_scene_yukari_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80156494	date_scene_yukari_winter	scene dispatcher (mode 0x5E, yukari, scene 6, winter): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80156538	date_scene_yukari_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80156570	date_scene_yukari_winter_flag_group_a	raises the group when Yukari's flag 14 is set
+func	DATE	func_801565B4	date_scene_yukari_winter_flag_group_b	raises the group when Yukari's flag 14 is clear
+func	DATE	func_80156600	date_scene_nozomi_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801566B0	date_scene_nozomi_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80156760	date_scene_nozomi_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80156810	date_scene_nozomi_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801568C0	date_scene_nozomi_dispatch	scene dispatcher of mode 0x5E for nozomi: switch on dialogue_work.scene to the season handlers
+func	DATE	func_80156954	date_scene_nozomi_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80156B20	date_scene_nozomi_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80156C40	date_scene_nozomi_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80156D60	date_scene_nozomi_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80156EC0	date_scene_nozomi_spring_background_1	step: bg_read_sub2(0x4860) starts the read of a scene background, then main_step_next
+func	DATE	func_80156EE8	date_scene_nozomi_spring_background_2	step: bg_read_sub2(0x44F1) starts the read of a scene background, then main_step_next
+func	DATE	func_80156F10	date_scene_nozomi_summer_island_title	sub-title for the deserted island and starts its background
+func	DATE	func_80156F4C	date_scene_nozomi_summer_background_1	step: bg_read_sub2(0x48CD) starts the read of a scene background, then main_step_next
+func	DATE	func_80156F74	date_scene_nozomi_summer_background_2	step: bg_read_sub2(0x45A3) starts the read of a scene background, then main_step_next
+func	DATE	func_80156F9C	date_scene_nozomi_autumn_background_1	step: bg_read_sub2(0x48F7) starts the read of a scene background, then main_step_next
+func	DATE	func_80156FC4	date_scene_nozomi_autumn_background_2	step: bg_read_sub2(0x45D3) starts the read of a scene background, then main_step_next
+func	DATE	func_80156FEC	date_scene_nozomi_winter_background_1	step: bg_read_sub2(0x492F) starts the read of a scene background, then main_step_next
+func	DATE	func_80157014	date_scene_nozomi_winter_background_2	step: bg_read_sub2(0x4631) starts the read of a scene background, then main_step_next
+func	DATE	func_8015703C	date_scene_nozomi_spring	scene dispatcher (mode 0x5E, nozomi, scene 2, spring): copies the step table and calls the handler of the current step
+func	DATE	func_801570C4	date_scene_nozomi_spring_sound_1	step: snd_command(0x500) then main_step_next
+func	DATE	func_801570EC	date_scene_nozomi_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80157124	date_scene_nozomi_spring_mood_face	mood rank below 2: face 0, else face by the h-rank
+func	DATE	func_80157184	date_scene_nozomi_spring_group_by_mood	rank 2 or worse adds 5 to the group
+func	DATE	func_801571D4	date_scene_nozomi_summer	scene dispatcher (mode 0x5E, nozomi, scene 3, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80157284	date_scene_nozomi_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_801572BC	date_scene_nozomi_summer_sound_1	step: snd_command(0x500) then main_step_next
+func	DATE	func_801572E4	date_scene_nozomi_summer_picture_swap	copies actor 96 into 98, shows the sprite quads and sets the screen fade colour to 0x7F
+func	DATE	func_801573F0	date_scene_nozomi_summer_fade_to_white	adds 0x10 per frame to the clear colour until 0xF0, then steps
+func	DATE	func_8015745C	date_scene_nozomi_summer_fade_reset	clears the colour, hides the quads, shows actors 96/97 and the background
+func	DATE	func_8015750C	date_scene_nozomi_autumn	scene dispatcher (mode 0x5E, nozomi, scene 4, autumn): copies the step table and calls the handler of the current step
+func	DATE	func_80157594	date_scene_nozomi_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_801575CC	date_scene_nozomi_autumn_group_by_mood	rank 2 or worse adds 3 to the group
+func	DATE	func_8015761C	date_scene_nozomi_winter	scene dispatcher (mode 0x5E, nozomi, scene 5, winter): copies the step table and calls the handler of the current step
+func	DATE	func_80157698	date_scene_nozomi_winter_speak_with_face	speaks; the faces change at lines 6, 8, 10 for rank 2 or worse
+func	DATE	func_801577C4	date_scene_nozomi_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_801577FC	date_scene_nozomi_winter_sound_1	step: snd_command(0x501) then main_step_next
+func	DATE	func_80157824	date_scene_nozomi_winter_group_by_mood	rank 2 or worse adds 3 to the group
+func	DATE	func_80157880	date_scene_megumi_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80157930	date_scene_megumi_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801579E0	date_scene_megumi_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80157A90	date_scene_megumi_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80157B40	date_scene_megumi_dispatch	scene dispatcher of mode 0x5E for megumi: switch on dialogue_work.scene to the season handlers
+func	DATE	func_80157BD4	date_scene_megumi_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation; also sets the mouth lock and current_girl 14 (see date_movie_theater_narration_talk)
+func	DATE	func_80157D68	date_scene_megumi_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80157E88	date_scene_megumi_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80157FE4	date_scene_megumi_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_801580FC	date_scene_megumi_spring_background_current	sets the current girl to Megumi and starts the background read
+func	DATE	func_80158130	date_scene_megumi_spring_sound_background_1	step: snd_command(0x200) and bg_read_sub2(0x432B), then main_step_next
+func	DATE	func_80158160	date_scene_megumi_summer_background_1	step: bg_read_sub2(0x47F1) starts the read of a scene background, then main_step_next
+func	DATE	func_80158188	date_scene_megumi_autumn_background_1	step: bg_read_sub2(0x48AC) starts the read of a scene background, then main_step_next
+func	DATE	func_801581B0	date_scene_megumi_autumn_background_2	step: bg_read_sub2(0x457D) starts the read of a scene background, then main_step_next
+func	DATE	func_801581D8	date_scene_megumi_winter_background_1	step: bg_read_sub2(0x456C) starts the read of a scene background, then main_step_next
+func	DATE	func_80158200	date_scene_megumi_spring	scene dispatcher (mode 0x5E, megumi, scene 3, spring): copies the step table and calls the handler of the current step
+func	DATE	func_80158288	date_scene_megumi_spring_speak_unhidden	restores Megumi as speaker, mouth lock off, speaks
+func	DATE	func_801582B8	date_scene_megumi_spring_speak_narration	HYPOTHESIS: speaker 14 (core GIRL_SOTOI, name-table entry 14) is a narration voice; the code only sets current_girl to 14; from line 4 speaks as 14 and sets the mouth mode (D_80122D10) to 2
+func	DATE	func_80158300	date_scene_megumi_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80158338	date_scene_megumi_summer	scene dispatcher (mode 0x5E, megumi, scene 4, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_80158444	date_scene_megumi_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8015847C	date_scene_megumi_summer_sound_1	step: snd_command(0x501) then main_step_next
+func	DATE	func_801584A4	date_scene_megumi_summer_sound_2	step: snd_command(0x503) then main_step_next
+func	DATE	func_801584CC	date_scene_megumi_summer_sound_3	step: snd_command(0x504) then main_step_next
+func	DATE	func_801584F4	date_scene_megumi_summer_sound_4	step: snd_command(0x505) then main_step_next
+func	DATE	func_8015851C	date_scene_megumi_summer_sound_5	step: snd_command(0x506) then main_step_next
+func	DATE	func_80158544	date_scene_megumi_autumn	scene dispatcher (mode 0x5E, megumi, scene 5, autumn): copies the step table and calls the handler of the current step
+func	DATE	func_801585B8	date_scene_megumi_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_801585F0	date_scene_megumi_winter	scene dispatcher (mode 0x5E, megumi, scene 6, winter): copies the step table and calls the handler of the current step
+func	DATE	func_80158664	date_scene_megumi_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_801586A0	date_scene_saki_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80158750	date_scene_saki_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80158800	date_scene_saki_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801588B0	date_scene_saki_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80158960	date_scene_saki_dispatch	scene dispatcher of mode 0x5E for saki: switch on dialogue_work.scene to the season handlers
+func	DATE	func_801589F4	date_scene_saki_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80158B1C	date_scene_saki_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80158C8C	date_scene_saki_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80158D98	date_scene_saki_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80158F44	date_scene_saki_spring_background_1	step: bg_read_sub2(0x47D6) starts the read of a scene background, then main_step_next
+func	DATE	func_80158F6C	date_scene_saki_spring_background_2	step: bg_read_sub2(0x42EB) starts the read of a scene background, then main_step_next
+func	DATE	func_80158F94	date_scene_saki_summer_background_1	step: bg_read_sub2(0x48E0) starts the read of a scene background, then main_step_next
+func	DATE	func_80158FBC	date_scene_saki_summer_background_2	step: bg_read_sub2(0x45BF) starts the read of a scene background, then main_step_next
+func	DATE	func_80158FE4	date_scene_saki_autumn_background_1	step: bg_read_sub2(0x490A) starts the read of a scene background, then main_step_next
+func	DATE	func_8015900C	date_scene_saki_autumn_background_2	step: bg_read_sub2(0x45F8) starts the read of a scene background, then main_step_next
+func	DATE	func_80159034	date_scene_saki_winter_background_1	step: bg_read_sub2(0x4868) starts the read of a scene background, then main_step_next
+func	DATE	func_8015905C	date_scene_saki_winter_sound_background_1	step: snd_command(0x203) and bg_read_sub2(0x4520), then main_step_next
+func	DATE	func_8015908C	date_scene_saki_spring	scene dispatcher (mode 0x5E, saki, scene 2, spring): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_8015913C	date_scene_saki_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80159174	date_scene_saki_spring_flag_group	raises the group when event flag 27 is set
+func	DATE	func_801591BC	date_scene_saki_summer	scene dispatcher (mode 0x5E, saki, scene 3, summer): copies the step table and calls the handler of the current step
+func	DATE	func_80159268	date_scene_saki_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_801592A0	date_scene_saki_autumn	scene dispatcher (mode 0x5E, saki, scene 4, autumn): copies the step table and calls the handler of the current step
+func	DATE	func_8015931C	date_scene_saki_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80159354	date_scene_saki_winter	scene dispatcher (mode 0x5E, saki, scene 5, winter): copies the step table and calls the handler of the current step
+func	DATE	func_801593C8	date_scene_saki_winter_speak_as_saki	current girl = Saki, then speaks
+func	DATE	func_801593F0	date_scene_saki_winter_speak_narration	HYPOTHESIS: speaker 14 (core GIRL_SOTOI, name-table entry 14) is a narration voice; the code only sets current_girl to 14; sets current_girl to 14, then speaks
+func	DATE	func_80159418	date_scene_saki_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80159450	date_scene_saki_winter_narration_step	HYPOTHESIS: speaker 14 (core GIRL_SOTOI, name-table entry 14) is a narration voice; the code only sets current_girl to 14; sets current_girl to 14, mouth sequence 4, step
+func	DATE	func_80159484	date_scene_saki_winter_back_to_saki	current girl = Saki, step
+func	DATE	func_801594B0	date_scene_yumi_spring_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80159560	date_scene_yumi_summer_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80159610	date_scene_yumi_autumn_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_801596C0	date_scene_yumi_winter_data_init	sets the scene's resource pointers (event stills, palettes, light sprites) into the data just read to 0x801B0000
+func	DATE	func_80159770	date_scene_yumi_dispatch	scene dispatcher of mode 0x5E for yumi: switch on dialogue_work.scene to the season handlers
+func	DATE	func_80159804	date_scene_yumi_spring_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_8015996C	date_scene_yumi_summer_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80159A98	date_scene_yumi_autumn_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80159BA4	date_scene_yumi_winter_setup	step: points the scene script sections at this scene, applies the scene's reward to the girl's counters (see spec), calls the data init and sets up the event still and the face/mouth animation
+func	DATE	func_80159D0C	date_scene_yumi_spring_background_1	step: bg_read_sub2(0x4821) starts the read of a scene background, then main_step_next
+func	DATE	func_80159D34	date_scene_yumi_spring_background_2	step: bg_read_sub2(0x432B) starts the read of a scene background, then main_step_next
+func	DATE	func_80159D5C	date_scene_yumi_spring_background_3	step: bg_read_sub2(0x4335) starts the read of a scene background, then main_step_next
+func	DATE	func_80159D84	date_scene_yumi_summer_background_1	step: bg_read_sub2(0x42FD) starts the read of a scene background, then main_step_next
+func	DATE	func_80159DAC	date_scene_yumi_summer_background_2	step: bg_read_sub2(0x47E8) starts the read of a scene background, then main_step_next
+func	DATE	func_80159DD4	date_scene_yumi_summer_background_3	step: bg_read_sub2(0x42EB) starts the read of a scene background, then main_step_next
+func	DATE	func_80159DFC	date_scene_yumi_autumn_background_1	step: bg_read_sub2(0x4913) starts the read of a scene background, then main_step_next
+func	DATE	func_80159E24	date_scene_yumi_autumn_background_2	step: bg_read_sub2(0x45F8) starts the read of a scene background, then main_step_next
+func	DATE	func_80159E4C	date_scene_yumi_winter_background_1	step: bg_read_sub2(0x489A) starts the read of a scene background, then main_step_next
+func	DATE	func_80159E74	date_scene_yumi_winter_background_2	step: bg_read_sub2(0x4562) starts the read of a scene background, then main_step_next
+func	DATE	func_80159E9C	date_scene_yumi_winter_background_3	step: bg_read_sub2(0x4558) starts the read of a scene background, then main_step_next
+func	DATE	func_80159EC4	date_scene_yumi_spring	scene dispatcher (mode 0x5E, yumi, scene 3, spring): copies the step table and calls the handler of the current step
+func	DATE	func_80159F4C	date_scene_yumi_spring_sound_1	step: snd_command(0x508) then main_step_next
+func	DATE	func_80159F74	date_scene_yumi_spring_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_80159FAC	date_scene_yumi_summer	scene dispatcher (mode 0x5E, yumi, scene 4, summer): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_8015A114	date_scene_yumi_autumn_speak_with_face	speaks; first frame of line 3 sets face 1
+func	DATE	func_8015A170	date_scene_yumi_summer_sound_1	snd_command(0x500) (no step change; called from the scene dispatcher)
+func	DATE	func_8015A190	date_scene_yumi_summer_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8015A1C8	date_scene_yumi_autumn	scene dispatcher (mode 0x5E, yumi, scene 5, autumn): copies the step table and calls the handler of the current step
+func	DATE	func_8015A250	date_scene_yumi_autumn_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8015A288	date_scene_yumi_winter	scene dispatcher (mode 0x5E, yumi, scene 6, winter): copies the step table and calls the handler of the current step and draws the effect layers
+func	DATE	func_8015A328	date_scene_yumi_winter_sound_1	step: snd_command(0x501) then main_step_next
+func	DATE	func_8015A350	date_scene_yumi_winter_sound_2	step: snd_command(0x500) then main_step_next
+func	DATE	func_8015A378	date_scene_yumi_winter_load_data	step: cd_read_sectors of the scene's scene data to 0x801B0000 and its pointer table init, then main_step_next
+func	DATE	func_8015A3B0	date_scene_miharu_dispatch	scene dispatcher of mode 0x5E for miharu: switch on dialogue_work.scene to the season handlers
+func	DATE	func_8015A414	date_scene_miharu_start	shows the title, takes the unnamed woman (girl 11) as speaker, logs the scene and wires the scene sections
+func	DATE	func_8015A4A8	date_scene_miharu_spring	scene dispatcher (mode 0x5E, miharu, scene 3, spring): copies the step table and calls the handler of the current step
+func	DATE	func_8015A530	date_scene_miharu_restore_girl	restores the date girl as current girl and the dialogue names
+func	DATE	func_8015A564	date_scene_miharu_spring_read_portrait	starts the CD read of Miharu's portrait (spring scene)
+func	DATE	func_8015A58C	date_scene_miharu_summer	scene dispatcher (mode 0x5E, miharu, scene 5, summer): copies the step table and calls the handler of the current step
+func	DATE	func_8015A610	date_scene_miharu_summer_read_portrait	starts the CD read of Miharu's portrait (summer scene)
+func	DATE	date_shiori_dispatch	date_scene_shiori_dispatch	scene dispatcher of mode 0x5E for shiori: switch on dialogue_work.scene to the season handlers (old patch name date_shiori_dispatch)
+data	DATE	D_8015BF50	date_stage_arrival_steps	76-step table of stage 0 (arrival, loads, greeting); step 9 is replaced by the place setup
+data	DATE	D_8015C080	date_neighborhood_park_steps	stage 1 step table of place 0 (neighborhood_park), 18 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C0C8	date_central_park_steps	stage 1 step table of place 1 (central_park), 35 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C154	date_shopping_street_steps	stage 1 step table of place 2 (shopping_street), 48 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C214	date_aquarium_steps	stage 1 step table of place 3 (aquarium), 32 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C294	date_zoo_steps	stage 1 step table of place 4 (zoo), 35 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C320	date_botanical_garden_steps	stage 1 step table of place 5 (botanical_garden), 34 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C3A8	date_planetarium_steps	stage 1 step table of place 6 (planetarium), 36 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C438	date_art_museum_steps	stage 1 step table of place 7 (art_museum), 37 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C4CC	date_library_steps	stage 1 step table of place 8 (library), 50 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C594	date_game_center_steps	stage 1 step table of place 9 (game_center), 39 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C630	date_bowling_alley_steps	stage 1 step table of place 10 (bowling_alley), 32 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C6B0	date_karaoke_steps	stage 1 step table of place 11 (karaoke), 34 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C738	date_amusement_park_steps	stage 1 step table of place 12 (amusement_park), 104 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C8D8	date_stadium_steps	stage 1 step table of place 13 (stadium), 29 entries; selected by date_stage_place from the place id
+data	DATE	D_8015C94C	date_movie_theater_steps	stage 1 step table of place 14 (movie_theater), 45 entries; selected by date_stage_place from the place id
+data	DATE	D_8015CA00	date_concert_hall_steps	stage 1 step table of place 15 (concert_hall), 41 entries; selected by date_stage_place from the place id
+data	DATE	D_8015CAA4	date_pool_steps	stage 1 step table of place 16 (pool), 35 entries; selected by date_stage_place from the place id
+data	DATE	D_8015CB30	date_sea_steps	stage 1 step table of place 17 (sea), 76 entries; selected by date_stage_place from the place id
+data	DATE	D_8015CC60	date_shrine_steps	stage 1 step table of place 18 (shrine), 74 entries; selected by date_stage_place from the place id
+data	DATE	D_8015CD88	date_skating_rink_steps	stage 1 step table of place 19 (skating_rink), 31 entries; selected by date_stage_place from the place id
+data	DATE	D_8015CE04	date_ski_resort_steps	stage 1 step table of place 20 (ski_resort), 31 entries; selected by date_stage_place from the place id
+data	DATE	D_8015CF3C	date_player_birthday_steps	stage 3 step table (player birthday), 15 entries
+data	DATE	D_8015D098	date_girl_birthday_steps	stage 2 step table (girl birthday gifts), 28 entries
+data	DATE	D_8015E730	date_scene_shiori_autumn_steps	step table of the autumn date scene of shiori (scene 3), 41 entries
+data	DATE	D_8015E7D4	date_scene_shiori_spring_steps	step table of the spring date scene of shiori (scene 4), 43 entries
+data	DATE	D_8015E880	date_scene_shiori_winter_steps	step table of the winter date scene of shiori (scene 5), 65 entries
+data	DATE	D_8015E984	date_scene_shiori_summer_steps	step table of the summer date scene of shiori (scene 6), 47 entries
+data	DATE	D_8015F5D4	date_scene_mio_spring_steps	step table of the spring date scene of mio (scene 2), 67 entries
+data	DATE	D_8015F6E0	date_scene_mio_summer_steps	step table of the summer date scene of mio (scene 3), 42 entries
+data	DATE	D_8015F788	date_scene_mio_autumn_steps	step table of the autumn date scene of mio (scene 4), 41 entries
+data	DATE	D_8015F82C	date_scene_mio_winter_steps	step table of the winter date scene of mio (scene 5), 53 entries
+data	DATE	D_8015EAE8	date_scene_yuina_spring_steps	step table of the spring date scene of yuina (scene 2), 40 entries
+data	DATE	D_8015EB88	date_scene_yuina_summer_steps	step table of the summer date scene of yuina (scene 3), 39 entries
+data	DATE	D_8015EC24	date_scene_yuina_autumn_steps	step table of the autumn date scene of yuina (scene 4), 40 entries
+data	DATE	D_8015ECC4	date_scene_yuina_winter_steps	step table of the winter date scene of yuina (scene 5), 43 entries
+data	DATE	D_8015EE30	date_scene_ayako_spring_steps	step table of the spring date scene of ayako (scene 2), 55 entries
+data	DATE	D_8015EF34	date_scene_ayako_summer_steps	step table of the summer date scene of ayako (scene 3), 48 entries
+data	DATE	D_8015EFF4	date_scene_ayako_autumn_steps	step table of the autumn date scene of ayako (scene 4), 42 entries
+data	DATE	D_8015F09C	date_scene_ayako_winter_steps	step table of the winter date scene of ayako (scene 5), 49 entries
+data	DATE	D_801604F0	date_scene_saki_spring_steps	step table of the spring date scene of saki (scene 2), 38 entries
+data	DATE	D_80160588	date_scene_saki_summer_steps	step table of the summer date scene of saki (scene 3), 56 entries
+data	DATE	D_80160668	date_scene_saki_autumn_steps	step table of the autumn date scene of saki (scene 4), 43 entries
+data	DATE	D_80160714	date_scene_saki_winter_steps	step table of the winter date scene of saki (scene 5), 51 entries
+data	DATE	D_8015F9D0	date_scene_yukari_spring_steps	step table of the spring date scene of yukari (scene 3), 38 entries
+data	DATE	D_8015FA68	date_scene_yukari_summer_steps	step table of the summer date scene of yukari (scene 4), 45 entries
+data	DATE	D_8015FB5C	date_scene_yukari_autumn_steps	step table of the autumn date scene of yukari (scene 5), 40 entries
+data	DATE	D_8015FBFC	date_scene_yukari_winter_steps	step table of the winter date scene of yukari (scene 6), 57 entries
+data	DATE	D_8015FD90	date_scene_nozomi_spring_steps	step table of the spring date scene of nozomi (scene 2), 50 entries
+data	DATE	D_8015FE58	date_scene_nozomi_summer_steps	step table of the summer date scene of nozomi (scene 3), 61 entries
+data	DATE	D_8015FF4C	date_scene_nozomi_autumn_steps	step table of the autumn date scene of nozomi (scene 4), 41 entries
+data	DATE	D_8015FFF0	date_scene_nozomi_winter_steps	step table of the winter date scene of nozomi (scene 5), 44 entries
+data	DATE	D_8015F210	date_scene_mira_spring_steps	step table of the spring date scene of mira (scene 2), 41 entries
+data	DATE	D_8015F2B4	date_scene_mira_summer_steps	step table of the summer date scene of mira (scene 3), 39 entries
+data	DATE	D_8015F350	date_scene_mira_autumn_steps	step table of the autumn date scene of mira (scene 4), 57 entries
+data	DATE	D_8015F434	date_scene_mira_winter_steps	step table of the winter date scene of mira (scene 5), 42 entries
+data	DATE	D_8015F4DC	date_scene_mira_special_steps	step table of the special date scene of mira (scene 6), 17 entries
+data	DATE	D_8015E31C	date_scene_yuko_spring_steps	step table of the spring date scene of yuko (scene 2), 42 entries
+data	DATE	D_8015E3C4	date_scene_yuko_summer_steps	step table of the summer date scene of yuko (scene 3), 39 entries
+data	DATE	D_8015E460	date_scene_yuko_autumn_steps	step table of the autumn date scene of yuko (scene 4), 44 entries
+data	DATE	D_8015E530	date_scene_yuko_winter_steps	step table of the winter date scene of yuko (scene 5), 43 entries
+data	DATE	D_8015E5DC	date_scene_yuko_december_steps	step table of the december date scene of yuko (scene 6), 45 entries
+data	DATE	D_80160150	date_scene_megumi_spring_steps	step table of the spring date scene of megumi (scene 3), 47 entries
+data	DATE	D_8016020C	date_scene_megumi_summer_steps	step table of the summer date scene of megumi (scene 4), 63 entries
+data	DATE	D_80160308	date_scene_megumi_autumn_steps	step table of the autumn date scene of megumi (scene 5), 42 entries
+data	DATE	D_801603B0	date_scene_megumi_winter_steps	step table of the winter date scene of megumi (scene 6), 36 entries
+data	DATE	D_80160890	date_scene_yumi_spring_steps	step table of the spring date scene of yumi (scene 3), 44 entries
+data	DATE	D_80160940	date_scene_yumi_summer_steps	step table of the summer date scene of yumi (scene 4), 46 entries
+data	DATE	D_801609F8	date_scene_yumi_autumn_steps	step table of the autumn date scene of yumi (scene 5), 44 entries
+data	DATE	D_80160AA8	date_scene_yumi_winter_steps	step table of the winter date scene of yumi (scene 6), 54 entries
+data	DATE	D_80160B80	date_scene_miharu_spring_steps	step table of the spring date scene of miharu (scene 3), 20 entries
+data	DATE	D_80160BD0	date_scene_miharu_summer_steps	step table of the summer date scene of miharu (scene 5), 20 entries
+data	DATE	D_8015B520	date_class_table_art_museum	pointer to offset 0x27C of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 15 bytes per girl (5 options x 3 choices); set by date_choice_tables_init, read by date_place_setup_art_museum
+data	DATE	D_8015B524	date_face_table_art_museum	pointer to offset 0xD2C of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_art_museum
+data	DATE	D_8015B528	date_class_table_bowling_alley	pointer to offset 0x3EC of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl (2 variants x 3); set by date_choice_tables_init, read by date_place_setup_bowling_alley
+data	DATE	D_8015B52C	date_face_table_bowling_alley	pointer to offset 0xE9C of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_bowling_alley
+data	DATE	D_8015B530	date_class_table_concert_hall	pointer to offset 0x7F0 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 36 per girl (12 programmes x 3); set by date_choice_tables_init, read by date_place_setup_concert_hall
+data	DATE	D_8015B534	date_face_table_concert_hall	pointer to offset 0x12A0 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_concert_hall
+data	DATE	D_8015B538	date_class_table_zoo	pointer to offset 0x190 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 9 per girl (3 variants x 3); set by date_choice_tables_init, read by date_place_setup_zoo
+data	DATE	D_8015B53C	date_face_table_zoo	pointer to offset 0xC40 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_zoo
+data	DATE	D_8015B540	date_class_table_shrine	pointer to offset 0xA04 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 3 per girl; set by date_choice_tables_init, read by date_place_setup_shrine
+data	DATE	D_8015B544	date_face_table_shrine	pointer to offset 0x14B4 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_shrine
+data	DATE	D_8015B548	date_class_table_game_center	pointer to offset 0x368 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 12 per girl (4 variants x 3); set by date_choice_tables_init, read by date_place_setup_game_center
+data	DATE	D_8015B54C	date_face_table_game_center	pointer to offset 0xE18 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_game_center
+data	DATE	D_8015B550	date_class_table_karaoke	pointer to offset 0x430 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_karaoke
+data	DATE	D_8015B554	date_face_table_karaoke	pointer to offset 0xEE0 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_karaoke
+data	DATE	D_8015B558	date_class_table_movie_theater	pointer to offset 0x684 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 33 per girl (11 films x 3); set by date_choice_tables_init, read by date_place_setup_movie_theater
+data	DATE	D_8015B55C	date_face_table_movie_theater	pointer to offset 0x1134 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_movie_theater
+data	DATE	D_8015B560	date_class_table_pool	pointer to offset 0x97C of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_pool
+data	DATE	D_8015B564	date_face_table_pool	pointer to offset 0x142C of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_pool
+data	DATE	D_8015B568	date_class_table_planetarium	pointer to offset 0x238 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_planetarium
+data	DATE	D_8015B56C	date_face_table_planetarium	pointer to offset 0xCE8 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_planetarium
+data	DATE	D_8015B570	date_class_table_sea	pointer to offset 0x9C0 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_sea
+data	DATE	D_8015B574	date_face_table_sea	pointer to offset 0x1470 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_sea
+data	DATE	D_8015B578	date_class_table_botanical_garden	pointer to offset 0x1F4 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_botanical_garden
+data	DATE	D_8015B57C	date_face_table_botanical_garden	pointer to offset 0xCA4 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_botanical_garden
+data	DATE	D_8015B580	date_class_table_shopping_street	pointer to offset 0x064 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 18 per girl (3 shops x 2 variants x 3); set by date_choice_tables_init, read by date_place_setup_shopping_street
+data	DATE	D_8015B584	date_face_table_shopping_street	pointer to offset 0xB14 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_shopping_street
+data	DATE	D_8015B588	date_class_table_skating_rink	pointer to offset 0xA28 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_skating_rink
+data	DATE	D_8015B58C	date_face_table_skating_rink	pointer to offset 0x14D8 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_skating_rink
+data	DATE	D_8015B590	date_class_table_ski_resort	pointer to offset 0xA6C of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_ski_resort
+data	DATE	D_8015B594	date_face_table_ski_resort	pointer to offset 0x151C of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_ski_resort
+data	DATE	D_8015B598	date_class_table_stadium	pointer to offset 0x600 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 12 per girl (4 variants x 3); set by date_choice_tables_init, read by date_place_setup_stadium
+data	DATE	D_8015B59C	date_face_table_stadium	pointer to offset 0x10B0 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_stadium
+data	DATE	D_8015B5A0	date_class_table_aquarium	pointer to offset 0x12C of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 9 per girl (3 variants x 3); set by date_choice_tables_init, read by date_place_setup_aquarium
+data	DATE	D_8015B5A4	date_face_table_aquarium	pointer to offset 0xBDC of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_aquarium
+data	DATE	D_8015B5A8	date_class_table_library	pointer to offset 0x324 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 6 per girl; set by date_choice_tables_init, read by date_place_setup_library
+data	DATE	D_8015B5AC	date_face_table_library	pointer to offset 0xDD4 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_library
+data	DATE	D_8015B5B0	date_class_table_amusement_park	pointer to offset 0x474 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 36 per girl (12 triples: 5 rides x 2 variants, extras); set by date_choice_tables_init, read by date_place_setup_amusement_park
+data	DATE	D_8015B5B4	date_face_table_amusement_park	pointer to offset 0xF24 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_amusement_park
+data	DATE	D_8015B5B8	date_class_table_central_park	pointer to offset 0x000 of the choice file (loaded at 0x801A4000): response class (0 best .. 4 worst) of the 3 answers, 9 per girl (3 variants x 3); set by date_choice_tables_init, read by date_place_setup_central_park
+data	DATE	D_8015B5BC	date_face_table_central_park	pointer to offset 0xAB0 of the choice file (class table + 0xAB0): face index shown for each of the 3 answers, same layout as date_class_table_central_park
+data	DATE	D_8015BDC0	date_section_text	27 pointers: text table of each script section of the girl (place talks 0-21, plus 22 farewell, 23 arrival greeting, 24 special-day greeting, 25 neighborhood park opening, 26 closing); filled by date_fill_sections_<girl>
+data	DATE	D_8015BE2C	date_section_command	27 pointers: command table of each section (same index as date_section_text)
+data	DATE	D_8015BE98	date_section_voice	27 pointers: voice table of each section (same index as date_section_text)
+data	DATE	D_8015BD90	date_shared_section_text	4 pointers: text tables of the shared script file (0 concert reaction, 1 meeting-place talk, 2 choice reaction, 3 film reaction); set by date_shared_sections_init
+data	DATE	D_8015BDA0	date_shared_section_command	4 pointers: command tables of the shared sections
+data	DATE	D_8015BDB0	date_shared_section_voice	4 pointers: voice tables of the shared sections
+data	DATE	D_8015E208	date_scene_text	pointer: text table of the running scene section (set by each scene setup, read by date_scene_speak)
+data	DATE	D_8015E20C	date_scene_command	pointer: command table of the running scene section
+data	DATE	D_8015E210	date_scene_voice	pointer: voice table of the running scene section
+data	DATE	D_8015B78C	date_syoushin_weight	s32[5]: -10, -8, -6, 8, 10; syoushin weight by response class 0-4 in date_choice_score
+data	DATE	D_8015B7A0	date_place_affinity	u8[11][21]: per girl and place, how much she likes the place (0 loves .. 4 dislikes); read by date_score_multipliers
+data	DATE	D_8015B888	date_place_bank_third_argument	s32[21]: third bank argument per place for snd_bank_load_start (date_place_music_load_start)
+data	DATE	D_8015B8DC	date_place_bank_first_data_argument	s32[21]: first data argument per place for snd_bank_load_start
+data	DATE	D_8015B930	date_place_bank_second_data_argument	s32[21]: second data argument per place for snd_bank_load_start
+data	DATE	D_8015B984	date_place_load_command	u16[21]: sound command sent when the place bank is ready (date_place_music_load_start)
+data	DATE	D_8015B9B0	date_place_sequence_command	u16[21]: sound command that starts the place sequence (date_place_music_load_wait)
+data	DATE	D_8015B6A4	date_movie_audio_pairs	11 pairs of CD audio request words (DateAudioPair, same layout as core AudioRequestPair): one per film index; passed to cd_audio_request_set by date_movie_theater_start_film
+data	DATE	D_8015B6FC	date_concert_audio_pairs	12 pairs of CD audio request words: one per concert programme; passed to cd_audio_request_set by date_concert_hall_start_program
+data	DATE	D_8015B75C	date_opening_count_a	s16[11]: number of opening talk lines per girl for answer 0 (modulus in date_neighborhood_park_pick_greeting)
+data	DATE	D_8015B774	date_opening_count_b	s16[11]: number of opening talk lines per girl for answer 1
+data	DATE	D_8015BCB4	date_firework_targets	GsWord[10]: target screen position per firework sprite
+data	DATE	D_8015BD40	date_particle_targets	GsWord[20]: home position per falling particle of central park
+data	DATE	D_8015B658	date_groups_per_variant	number of dialogue groups per place variant: the group offset is variant x this value (2 neighborhood park, 3 most places, 5 shrine, 7 planetarium, 0 where the group is set by hand)
+data	DATE	D_8015B65C	date_birthday_near	1 when the girl's birthday is later this month or next month (set by date_neighborhood_park_pick_greeting)
+data	DATE	D_8015B660	date_hint_roll	HYPOTHESIS: 1 on a 50% roll in the third school year (from March 1997); selects the opening talk group 3
+data	DATE	D_8015B664	date_exhibit_artist_active	1 while the autumn 1997 artist exhibition runs in the art museum (spot 0xC)
+data	DATE	D_8015B668	date_exhibit_sculpture_active	1 while the spring 1997 sculpture exhibition runs (spot 0xD)
+data	DATE	D_8015B66C	date_exhibit_painters_active	1 while the autumn 1995 painters exhibition runs (spot 0xE)
+data	DATE	D_8015B670	date_game_center_medals_open	1 from September 1996: the medal corner can be chosen
+data	DATE	D_8015B674	date_park_new_rides	1 from March 1997: scream machine replaces the roller coaster, virtual ship is reachable
+data	DATE	D_8015B678	date_park_newest_rides	1 from December 1997: virtual ship replaces the ghost house
+data	DATE	D_8015B67C	date_show_taken	1 when the hero show was accepted (Saki, Yuko, Yukari, Yumi, Megumi, Mira); the main-area step then restarts the park music
+data	DATE	D_8015B680	date_parade_offered	1 while the night-parade offer of August is pending (also disables the repeat-spot penalty)
+data	DATE	D_8015B684	date_movie_index	film index 0-10 chosen from year and month in date_place_setup_movie_theater
+data	DATE	D_8015B688	date_concert_index	programme index 0-11 chosen from year and month in date_place_setup_concert_hall
+data	DATE	D_8015B68C	date_ride_index	ride id: 0 roller coaster, 1 ghost house, 2 Ferris wheel, 3 scream machine, 4 virtual ship
+data	DATE	D_8015B690	date_shop_index	shop chosen in the shopping street: 0 boutique, 1 fancy shop, 2 junk shop
+data	DATE	D_8015B694	date_first_sunday	1 on a Sunday of the first week of a month (weekday 6, day < 8); Megumi's spring scene needs it
+data	DATE	D_8015B698	date_stadium_game_day	1 in months 1, 3, 6 and 11: the stadium shows a game (spot 0x1C)
+data	DATE	D_8015B69C	date_ride_chosen	set to 1 after the first ride choice so that later steps keep the ride
+data	DATE	D_8015B6A0	date_sign_palette_frame	HYPOTHESIS: 0-3: current palette frame of the night-parade neon sign (advanced every 7th frame)
+data	DATE	D_8015BF04	date_arrival_group	dialogue group of the arrival greeting: 0-5 girl late, 6-8 on time, 9-11 player late, 12 bad looks
+data	DATE	D_8015BF08	date_arrival_line	line cursor of the arrival greeting
+data	DATE	D_8015BF0C	date_special_day_group	group of the special-day greeting (0 March 20/21 .. 4 December 23)
+data	DATE	D_8015BF10	date_special_day_line	line cursor of the special-day greeting
+data	DATE	D_8015BF14	date_closing_group	group of the closing talk: 0..3 from the mood rank
+data	DATE	D_8015BF18	date_closing_line	line cursor of the closing talk
+data	DATE	D_8015BF1C	date_opening_group	group of the neighborhood-park opening talk
+data	DATE	D_8015BF20	date_opening_line	line cursor of the neighborhood-park opening talk
+data	DATE	D_8015BF24	date_movie_group	group cursor of the film reaction (shared section 3)
+data	DATE	D_8015BF28	date_movie_line	line cursor of the film reaction (film index)
+data	DATE	D_8015BF2C	date_concert_group	group cursor of the concert reaction (shared section 0)
+data	DATE	D_8015BF30	date_concert_line	line cursor of the concert reaction (programme index)
+data	DATE	D_8015BF34	date_park_parade_group	group cursor of the night-parade talk (section 9, DATE_SECTION_AMUSEMENT_PARK_PARADE): the parade steps advance it (+1 at step 0x3F when the girl has visited spot 0x1A before, +1 at step 0x49 when she has not); the talk is spoken at stage 1 steps 0x3D, 0x48 and 0x4A of the amusement park
+data	DATE	D_8015BF38	date_park_parade_line	line cursor of the night-parade talk (section 9)
+data	DATE	D_8015BF3C	date_meeting_group	group cursor of the meeting-place talk (shared section 1): 0 two candidates, 3 three candidates, 7 she is not here, 8 she refuses
+data	DATE	D_8015BF40	date_meeting_line	line cursor of the meeting-place talk
+data	DATE	D_8015BF44	date_girl_side_next	HYPOTHESIS: next value of date_girl_side (toggled at each place change except central park, zoo and amusement park)
+data	DATE	D_8015BF48	date_girl_side	HYPOTHESIS: copy of date_girl_side_next at the start of a place move
+data	DATE	D_8015BF4C	date_player_waited	1 when the girl waited at the appointment place after the player chose the right place in the meeting-place question
+data	DATE	D_8015CF34	date_player_birthday_group	group cursor of the player-birthday greeting (stage 3)
+data	DATE	D_8015CF38	date_player_birthday_line	line cursor of the player-birthday greeting
+data	DATE	D_8015D084	date_gift_group	group cursor of the gift scene (stage 2)
+data	DATE	D_8015D088	date_gift_line	line cursor of the gift scene
+data	DATE	D_8015D090	date_school_year	0-2: school year index (April-March) used to pick the gift table row
+data	DATE	D_8015D094	date_gift_choice	gift choice remembered across the reply steps
+data	DATE	D_8015CF1C	date_player_birthday_text	pointer: text table of the girl's player-birthday greeting (set by date_player_birthday_pick_sections)
+data	DATE	D_8015CF20	date_player_birthday_command	pointer: command table of the player-birthday greeting
+data	DATE	D_8015CF24	date_player_birthday_voice	pointer: voice table of the player-birthday greeting
+data	DATE	D_8015D06C	date_gift_text	pointer: text table of the current gift section (set per girl by date_gift_start)
+data	DATE	D_8015D070	date_gift_command	pointer: command table of the current gift section
+data	DATE	D_8015D074	date_gift_voice	pointer: voice table of the current gift section
+data	DATE	D_8015D078	date_gift_saved_text	copy of date_gift_text kept while the gift choice section is shown (date_gift_choice_sections_set)
+data	DATE	D_8015D07C	date_gift_saved_command	copy of date_gift_command kept during the gift choice
+data	DATE	D_8015D080	date_gift_saved_voice	copy of date_gift_voice kept during the gift choice
+data	DATE	D_8015D08C	date_gift_saved_group	copy of date_gift_group kept during the gift choice
+data	DATE	D_8015CF9C	date_ride_frame	u16 frame counter of the ride animation functions of rides 2 and 3 (reset at the start of a ride, +1 per frame)
+data	DATE	D_8015DE40	date_virtual_ship_stage	stage of the virtual ship ride: 0 load, 1 run, 2 portrait read, 3 wait, 4 build portrait
+data	DATE	D_8015DE44	date_virtual_ship_substage	sub-stage inside stage 1 of the virtual ship ride (0 set up, 1 run, 2 finish)
+data	DATE	D_8015DE48	date_virtual_ship_step	frame step counter of the virtual ship run
+field	DateChoice8	unk_00	request_a	first word of the pair: first argument of cd_audio_request_set
+field	DateChoice8	unk_04	request_b	second word of the pair: second argument of cd_audio_request_set
+field	DateEventChoice6	kind	group	halfword view of date_opening_group (D_8015BF1C)
+field	DateEventChoice6	index	line	halfword view of date_opening_line (D_8015BF20)
+type	DATE	FnTbl15	DateStepTable15	table of 15 step handlers
+type	DATE	FnTbl18	DateStepTable18	table of 18 step handlers (neighborhood park)
+type	DATE	FnTbl20	DateStepTable20	table of 20 step handlers
+type	DATE	FnTbl28	DateStepTable28	table of 28 step handlers (girl birthday)
+type	DATE	FnTbl29	DateStepTable29	table of 29 step handlers (stadium)
+type	DATE	FnTbl31	DateStepTable31	table of 31 step handlers (skating rink, ski resort)
+type	DATE	FnTbl32	DateStepTable32	table of 32 step handlers (aquarium, bowling alley)
+type	DATE	FnTbl34	DateStepTable34	table of 34 step handlers
+type	DATE	FnTbl35	DateStepTable35	table of 35 step handlers
+type	DATE	FnTbl36	DateStepTable36	table of 36 step handlers
+type	DATE	FnTbl37	DateStepTable37	table of 37 step handlers
+type	DATE	FnTbl38	DateStepTable38	table of 38 step handlers
+type	DATE	FnTbl39	DateStepTable39	table of 39 step handlers
+type	DATE	FnTbl40	DateStepTable40	table of 40 step handlers
+type	DATE	FnTbl41	DateStepTable41	table of 41 step handlers
+type	DATE	FnTbl42	DateStepTable42	table of 42 step handlers
+type	DATE	FnTbl43	DateStepTable43	table of 43 step handlers
+type	DATE	FnTbl44	DateStepTable44	table of 44 step handlers
+type	DATE	FnTbl45	DateStepTable45	table of 45 step handlers (movie theater)
+type	DATE	FnTbl46	DateStepTable46	table of 46 step handlers
+type	DATE	FnTbl47	DateStepTable47	table of 47 step handlers
+type	DATE	FnTbl48	DateStepTable48	table of 48 step handlers (shopping street)
+type	DATE	FnTbl50	DateStepTable50	table of 50 step handlers (library)
+type	DATE	FnTbl51	DateStepTable51	table of 51 step handlers
+type	DATE	FnTbl53	DateStepTable53	table of 53 step handlers
+type	DATE	FnTbl55	DateStepTable55	table of 55 step handlers
+type	DATE	FnTbl56	DateStepTable56	table of 56 step handlers
+type	DATE	FnTbl57	DateStepTable57	table of 57 step handlers
+type	DATE	FnTbl61	DateStepTable61	table of 61 step handlers
+type	DATE	FnTbl63	DateStepTable63	table of 63 step handlers
+type	DATE	FnTbl65	DateStepTable65	table of 65 step handlers
+type	DATE	FnTbl67	DateStepTable67	table of 67 step handlers
+type	DATE	FnTbl74	DateStepTable74	table of 74 step handlers (shrine)
+type	DATE	FnTbl76	DateStepTable76	table of 76 step handlers (stage 0)
+type	DATE	FnTbl104	DateStepTable104	table of 104 step handlers (amusement park)
+type	DATE	DateDispatch8015A288	DateStepTable52	step table of 52 entries copied by the Yumi winter scene dispatcher
+type	DATE	DateDispatch80154004	DateStepTable42Alternate	second 42-entry step table type (Mira winter dispatcher); the byte layout equals DateStepTable42
+type	DATE	DateDispatch80152980	DateStepTable48Alternate	second 48-entry step table type (Ayako summer dispatcher)
+type	DATE	DateCallbacks39	DateStepTable39Alternate	second 39-entry step table type (Mira summer dispatcher)
+type	DATE	DateChoice8	DateAudioPair	two words passed to cd_audio_request_set for one film or concert programme; same layout as core AudioRequestPair (merge when the apply allows)
+type	DATE	DateChoices58	DateMovieAudioPairs	11 DateAudioPair: one per film
+type	DATE	DateChoices60	DateConcertAudioPairs	12 DateAudioPair: one per concert programme
+type	DATE	DateChoice3	DateChoiceTriple	three bytes: values for the 3 answers
+type	DATE	DatePlaceChoices18	DateShopChoiceRow	18 bytes per girl: 3 shops x 2 variants x 3 answers
+type	DATE	DateRideChoices36	DateRideChoiceRow	36 bytes per girl: 12 triples of ride answers
+type	DATE	DateMuseumChoices15	DateMuseumChoiceRow	15 bytes per girl: 5 options x 3 answers
+type	DATE	DateEventChoice6	DateOpeningCursorView	halfword access view at date_opening_group: the group at +0 and the line at +4 (date_opening_line); the old name said event choice, the code only reads the neighborhood-park opening cursors through it
+type	DATE	DateCounts22	DateOpeningCounts	11 halfwords: opening-talk line count per girl
+type	DATE	DateSelectionView	DatePlaceView	two-byte view of date_place: place id and place option
+type	DATE	DateMovieWork	DateRideWork	0x2C-byte work area of the ride animations, kept in the background cache area D_800B5920
+type	DATE	DateMovieHeader8	DateRideHeader	8-byte header record at the start of the ride work area
+type	DATE	DateMovieScene50	DateRideScene	0x50-byte ride scene record
+type	DATE	DateTbl20	DateSyoushinWeights	five words: syoushin weight by response class
+type	DATE	DateBytes11x21	DatePlaceAffinityTable	per girl and place affinity bytes
+type	DATE	DateWords21	DatePlaceWordTable	21 words, one per place
+type	DATE	DateWords2	DateWordPair	two words passed to cd_audio_request_set (Ayako spring clip)
+type	DATE	DateShorts8	DateScreenCoords8	eight screen x or y values of the Yukari summer scene (lists used by its setup and by date_scene_yukari_summer_actors_update)
+type	DATE	DatePairs8	DateScreenPairs8	eight coordinate pairs
+type	DATE	DatePlaceNames2D6	DatePlaceNameTable	21 place names of 33 bytes (copy of date_place_names)
+type	DATE	Tbl21	DatePlaceHalfTable	21 halfwords, one per place (sound commands)
+file	DATE	src/ovl/DATE/80132000.c	src/ovl/date/place_scenes.c	stage 0 and 1 handlers of all 21 places: place setups, arrival, choice scoring, special-scene chooser, date end
+file	DATE	src/ovl/DATE/80141EE0.c	src/ovl/date/entry.c	11 per-girl script section fillers, mode 0x50 entry and the stage 0 and stage 1 dispatchers
+file	DATE	src/ovl/DATE/80145AA0.c	src/ovl/date/player_birthday.c	stage 3: the girl greets the player on his birthday
+file	DATE	src/ovl/DATE/801461B0.c	src/ovl/date/rides.c	amusement park rides: roller coaster, ghost house, Ferris wheel, scream machine (virtual ship is separate)
+file	DATE	src/ovl/DATE/80149310.c	src/ovl/date/girl_birthday.c	stage 2: gift choice on the girl's birthday
+file	DATE	src/ovl/DATE/8014A1B0.c	src/ovl/date/virtual_ship.c	virtual ship ride (3D, GTE)
+file	DATE	src/ovl/DATE/8014B1F0.c	src/ovl/date/scene_common.c	scene section pointer init, mode 0x5E entry, shared scene steps and the scene end
+file	DATE	src/ovl/DATE/8014CC40.c	src/ovl/date/scene_yuko.c	mode 0x5E scenes of Yuko (girl 8) with the shared gradient quad drawer
+file	DATE	src/ovl/DATE/8014F0F0.c	src/ovl/date/scene_shiori.c	mode 0x5E scenes of Shiori (girl 0)
+file	DATE	src/ovl/DATE/80150010.c	src/ovl/date/scene_yuina.c	mode 0x5E scenes of Yuina (girl 2)
+file	DATE	src/ovl/DATE/80151460.c	src/ovl/date/scene_ayako.c	mode 0x5E scenes of Ayako (girl 3) with the gradient triangle drawer
+file	DATE	src/ovl/DATE/80152FC0.c	src/ovl/date/scene_mira.c	mode 0x5E scenes of Mira (girl 7)
+file	DATE	src/ovl/DATE/80154260.c	src/ovl/date/scene_mio.c	mode 0x5E scenes of Mio (girl 1)
+file	DATE	src/ovl/DATE/801552B0.c	src/ovl/date/scene_yukari.c	mode 0x5E scenes of Yukari (girl 5)
+file	DATE	src/ovl/DATE/80156600.c	src/ovl/date/scene_nozomi.c	mode 0x5E scenes of Nozomi (girl 6)
+file	DATE	src/ovl/DATE/80157880.c	src/ovl/date/scene_megumi.c	mode 0x5E scenes of Megumi (girl 9)
+file	DATE	src/ovl/DATE/801586A0.c	src/ovl/date/scene_saki.c	mode 0x5E scenes of Saki (girl 4)
+file	DATE	src/ovl/DATE/801594B0.c	src/ovl/date/scene_yumi.c	mode 0x5E scenes of Yumi (girl 10)
+file	DATE	src/ovl/DATE/8015A190.c	src/ovl/date/scene_miharu.c	mode 0x5E scenes of Miharu (girl 11)
+file	DATE	include/ovl/DATE.h	include/ovl/date.h	overlay header: types, externs and prototypes; new name follows the folder
+const	DateStage	0	DATE_STAGE_ARRIVAL	meeting at the place: loads, arrival, greeting; ends with main_stage_next
+const	DateStage	1	DATE_STAGE_PLACE	the date at the place: talk, choice, reaction, farewell; ends with date_end
+const	DateStage	2	DATE_STAGE_GIRL_BIRTHDAY	the girl's birthday: gift choice (entered from date_birthday_check)
+const	DateStage	3	DATE_STAGE_PLAYER_BIRTHDAY	the player's birthday: the girl's greeting
+const	DateArrival	0	DATE_ARRIVAL_GIRL_LATE	HYPOTHESIS: late = she appears only after a waiting talk; set at the start with chance 1/4 (frame_count & 3 == 0), never for Yuina
+const	DateArrival	1	DATE_ARRIVAL_ON_TIME	default
+const	DateArrival	2	DATE_ARRIVAL_PLAYER_LATE	HYPOTHESIS: late = the player first went to another place and corrected it (the code only shows the correction)
+const	DateResponseClass	0	DATE_CLASS_BEST	tokimeki +3, affection +2 (times multipliers / 16), syoushin -10 weight
+const	DateResponseClass	1	DATE_CLASS_GOOD	tokimeki +2, affection +1, syoushin weight -8
+const	DateResponseClass	2	DATE_CLASS_FAIR	tokimeki +1, affection 0, syoushin weight -6
+const	DateResponseClass	3	DATE_CLASS_POOR	tokimeki 0, affection -1, syoushin weight +8
+const	DateResponseClass	4	DATE_CLASS_WORST	tokimeki -1, affection -2, syoushin weight +10
+const	DateRide	0	DATE_RIDE_ROLLER_COASTER	amusement park ride id (date_ride_index)
+const	DateRide	1	DATE_RIDE_GHOST_HOUSE	amusement park ride id (date_ride_index)
+const	DateRide	2	DATE_RIDE_FERRIS_WHEEL	amusement park ride id (date_ride_index)
+const	DateRide	3	DATE_RIDE_SCREAM_MACHINE	amusement park ride id (date_ride_index)
+const	DateRide	4	DATE_RIDE_VIRTUAL_SHIP	amusement park ride id (date_ride_index)
+const	DateShop	0	DATE_SHOP_BOUTIQUE	shopping street shop id (date_shop_index)
+const	DateShop	1	DATE_SHOP_FANCY_SHOP	shopping street shop id (date_shop_index)
+const	DateShop	2	DATE_SHOP_JUNK_SHOP	shopping street shop id (date_shop_index)
+const	DateSpot	1	DATE_SPOT_CENTRAL_PARK	date_spot value; event_counters index and spot id of the park (sub-spots are logged as 0x25-0x27)
+const	DateSpot	2	DATE_SPOT_BOUTIQUE	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	3	DATE_SPOT_FANCY_SHOP	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	4	DATE_SPOT_JUNK_SHOP	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	5	DATE_SPOT_AQUARIUM	date_spot value; inside the aquarium
+const	DateSpot	6	DATE_SPOT_DOLPHIN_SHOW	date_spot value; aquarium special, from March 1996, once
+const	DateSpot	7	DATE_SPOT_ZOO	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	8	DATE_SPOT_ZOO_SPECIAL	HYPOTHESIS: name; zoo special variant, once, from December 1995; stored as spot 7 in girl_last_date_spot (date_spot value)
+const	DateSpot	9	DATE_SPOT_BOTANICAL_GARDEN	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	10	DATE_SPOT_PLANETARIUM	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	11	DATE_SPOT_ART_MUSEUM_HALL	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	12	DATE_SPOT_EXHIBIT_ARTIST	date_spot value; autumn 1997 exhibition
+const	DateSpot	13	DATE_SPOT_EXHIBIT_SCULPTURE	date_spot value; spring 1997 exhibition
+const	DateSpot	14	DATE_SPOT_EXHIBIT_PAINTERS	date_spot value; autumn 1995 exhibition
+const	DateSpot	15	DATE_SPOT_LIBRARY	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	16	DATE_SPOT_VIDEO_GAMES	date_spot value; game center, video corner
+const	DateSpot	17	DATE_SPOT_MEDAL_GAMES	date_spot value; game center, medal corner
+const	DateSpot	18	DATE_SPOT_BOWLING_ALLEY	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	19	DATE_SPOT_KARAOKE	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	20	DATE_SPOT_HERO_SHOW	date_spot value; amusement park
+const	DateSpot	21	DATE_SPOT_ROLLER_COASTER	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	22	DATE_SPOT_GHOST_HOUSE	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	23	DATE_SPOT_FERRIS_WHEEL	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	24	DATE_SPOT_SCREAM_MACHINE	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	25	DATE_SPOT_VIRTUAL_SHIP	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	26	DATE_SPOT_NIGHT_PARADE	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	27	DATE_SPOT_STADIUM	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	28	DATE_SPOT_STADIUM_GAME	date_spot value; months 1, 3, 6, 11
+const	DateSpot	29	DATE_SPOT_POOL	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	30	DATE_SPOT_BEACH	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	31	DATE_SPOT_SKATING_RINK	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	32	DATE_SPOT_SKI_SLOPE	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	33	DATE_SPOT_NEIGHBORHOOD_PARK	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	34	DATE_SPOT_SHRINE_FESTIVAL	date_spot value; festival stalls and fireworks
+const	DateSpot	35	DATE_SPOT_MOVIE_THEATER	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	36	DATE_SPOT_CONCERT_HALL	date_spot value (index of GirlRecord.event_counters)
+const	DateSpot	37	DATE_SPOT_CENTRAL_PARK_PATH	date_spot value; event-log scene id only (variant 0)
+const	DateSpot	38	DATE_SPOT_CENTRAL_PARK_POND	date_spot value; event-log scene id only (variant 1)
+const	DateSpot	39	DATE_SPOT_CENTRAL_PARK_BLOSSOM_PATH	date_spot value; event-log scene id only (variant 2)
+const	DateSpot	40	DATE_SPOT_DESERTED_ISLAND	date_spot value; event-log scene id only (sea special)
+const	DateSection	0	DATE_SECTION_ART_MUSEUM	index into date_section_text/command/voice of the girl's script file
+const	DateSection	1	DATE_SECTION_BOWLING_ALLEY	index into date_section_text/command/voice of the girl's script file
+const	DateSection	2	DATE_SECTION_CONCERT_HALL	index into date_section_text/command/voice of the girl's script file
+const	DateSection	3	DATE_SECTION_ZOO	index into date_section_text/command/voice of the girl's script file
+const	DateSection	4	DATE_SECTION_SHRINE	index into date_section_text/command/voice of the girl's script file
+const	DateSection	5	DATE_SECTION_GAME_CENTER	index into date_section_text/command/voice of the girl's script file
+const	DateSection	6	DATE_SECTION_KARAOKE	index into date_section_text/command/voice of the girl's script file
+const	DateSection	7	DATE_SECTION_NEIGHBORHOOD_PARK	index into date_section_text/command/voice of the girl's script file
+const	DateSection	8	DATE_SECTION_MOVIE_THEATER	index into date_section_text/command/voice of the girl's script file
+const	DateSection	9	DATE_SECTION_AMUSEMENT_PARK_PARADE	index into date_section_text/command/voice of the girl's script file; spoken by date_amusement_park_talk_unshuffled at the steps around the night parade (0x3D, 0x48, 0x4A), cursors date_park_parade_group/line; the text was not read
+const	DateSection	10	DATE_SECTION_POOL	index into date_section_text/command/voice of the girl's script file
+const	DateSection	11	DATE_SECTION_PLANETARIUM	index into date_section_text/command/voice of the girl's script file
+const	DateSection	12	DATE_SECTION_SEA	index into date_section_text/command/voice of the girl's script file
+const	DateSection	13	DATE_SECTION_BOTANICAL_GARDEN	index into date_section_text/command/voice of the girl's script file
+const	DateSection	14	DATE_SECTION_SHOPPING_STREET	index into date_section_text/command/voice of the girl's script file
+const	DateSection	15	DATE_SECTION_SKATING_RINK	index into date_section_text/command/voice of the girl's script file
+const	DateSection	16	DATE_SECTION_SKI_RESORT	index into date_section_text/command/voice of the girl's script file
+const	DateSection	17	DATE_SECTION_STADIUM	index into date_section_text/command/voice of the girl's script file
+const	DateSection	18	DATE_SECTION_AQUARIUM	index into date_section_text/command/voice of the girl's script file
+const	DateSection	19	DATE_SECTION_LIBRARY	index into date_section_text/command/voice of the girl's script file
+const	DateSection	20	DATE_SECTION_AMUSEMENT_PARK	index into date_section_text/command/voice of the girl's script file
+const	DateSection	21	DATE_SECTION_CENTRAL_PARK	index into date_section_text/command/voice of the girl's script file
+const	DateSection	22	DATE_SECTION_FAREWELL	index into date_section_text/command/voice of the girl's script file
+const	DateSection	23	DATE_SECTION_ARRIVAL_GREETING	index into date_section_text/command/voice of the girl's script file
+const	DateSection	24	DATE_SECTION_SPECIAL_DAY_GREETING	index into date_section_text/command/voice of the girl's script file
+const	DateSection	25	DATE_SECTION_NEIGHBORHOOD_PARK_OPENING	index into date_section_text/command/voice of the girl's script file
+const	DateSection	26	DATE_SECTION_CLOSING	index into date_section_text/command/voice of the girl's script file
+const	DateSharedSection	0	DATE_SHARED_CONCERT_REACTION	group = programme index
+const	DateSharedSection	1	DATE_SHARED_MEETING_PLACE	groups 0-8, date_meeting_group
+const	DateSharedSection	2	DATE_SHARED_CHOICE_REACTION	line = response class
+const	DateSharedSection	3	DATE_SHARED_FILM_REACTION	group = film index
+const	DateGreeting	0	DATE_GREETING_LATE_TIER_0	girl late, mood tier 0 (rank 0-1) (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateGreeting	2	DATE_GREETING_LATE_TIER_1	girl late, mood tier 1 (rank 2) (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateGreeting	4	DATE_GREETING_LATE_TIER_2	girl late, mood tier 2 (rank 3-4) (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateGreeting	6	DATE_GREETING_ON_TIME_TIER_0	on time, tier 0 (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateGreeting	7	DATE_GREETING_ON_TIME_TIER_1	on time, tier 1 (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateGreeting	8	DATE_GREETING_ON_TIME_TIER_2	on time, tier 2 (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateGreeting	9	DATE_GREETING_PLAYER_LATE_TIER_0	player late, tier 0 (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateGreeting	10	DATE_GREETING_PLAYER_LATE_TIER_1	player late, tier 1 (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateGreeting	11	DATE_GREETING_PLAYER_LATE_TIER_2	player late, tier 2 (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateGreeting	12	DATE_GREETING_BAD_LOOKS	looks below the threshold (group of DATE_SECTION_ARRIVAL_GREETING, variable date_arrival_group)
+const	DateMeetingGroup	0	DATE_MEETING_ASK_TWO	"is it here?" with two candidate places
+const	DateMeetingGroup	3	DATE_MEETING_ASK_THREE	same question with three candidates
+const	DateMeetingGroup	7	DATE_MEETING_NOT_HERE	she is not at this place
+const	DateMeetingGroup	8	DATE_MEETING_REFUSES	mood rank 4: she does not come
+const	DateSpecialDay	0	DATE_SPECIAL_DAY_EQUINOX_SPRING	HYPOTHESIS: equinox days (the code only compares the date); March 20/21
+const	DateSpecialDay	1	DATE_SPECIAL_DAY_SUMMER_SUNDAY	1995-07-23, 1996-07-28, 1997-07-27 (Sundays in late July; the same dates turn on the light effect; spec section 2 has the festival-day guess)
+const	DateSpecialDay	2	DATE_SPECIAL_DAY_EQUINOX_AUTUMN_A	HYPOTHESIS: equinox days (the code only compares the date); September 22/23, frame count odd
+const	DateSpecialDay	3	DATE_SPECIAL_DAY_EQUINOX_AUTUMN_B	HYPOTHESIS: equinox days (the code only compares the date); September 22/23, frame count even
+const	DateSpecialDay	4	DATE_SPECIAL_DAY_DECEMBER_23	December 23
+const	DateSceneShiori	3	DATE_SCENE_SHIORI_AUTUMN	dialogue_work.scene value of the autumn special date scene of shiori
+const	DateSceneShiori	4	DATE_SCENE_SHIORI_SPRING	dialogue_work.scene value of the spring special date scene of shiori
+const	DateSceneShiori	5	DATE_SCENE_SHIORI_WINTER	dialogue_work.scene value of the winter special date scene of shiori
+const	DateSceneShiori	6	DATE_SCENE_SHIORI_SUMMER	dialogue_work.scene value of the summer special date scene of shiori
+const	DateSceneMio	2	DATE_SCENE_MIO_SPRING	dialogue_work.scene value of the spring special date scene of mio
+const	DateSceneMio	3	DATE_SCENE_MIO_SUMMER	dialogue_work.scene value of the summer special date scene of mio
+const	DateSceneMio	4	DATE_SCENE_MIO_AUTUMN	dialogue_work.scene value of the autumn special date scene of mio
+const	DateSceneMio	5	DATE_SCENE_MIO_WINTER	dialogue_work.scene value of the winter special date scene of mio
+const	DateSceneYuina	2	DATE_SCENE_YUINA_SPRING	dialogue_work.scene value of the spring special date scene of yuina
+const	DateSceneYuina	3	DATE_SCENE_YUINA_SUMMER	dialogue_work.scene value of the summer special date scene of yuina
+const	DateSceneYuina	4	DATE_SCENE_YUINA_AUTUMN	dialogue_work.scene value of the autumn special date scene of yuina
+const	DateSceneYuina	5	DATE_SCENE_YUINA_WINTER	dialogue_work.scene value of the winter special date scene of yuina
+const	DateSceneAyako	2	DATE_SCENE_AYAKO_SPRING	dialogue_work.scene value of the spring special date scene of ayako
+const	DateSceneAyako	3	DATE_SCENE_AYAKO_SUMMER	dialogue_work.scene value of the summer special date scene of ayako
+const	DateSceneAyako	4	DATE_SCENE_AYAKO_AUTUMN	dialogue_work.scene value of the autumn special date scene of ayako
+const	DateSceneAyako	5	DATE_SCENE_AYAKO_WINTER	dialogue_work.scene value of the winter special date scene of ayako
+const	DateSceneSaki	2	DATE_SCENE_SAKI_SPRING	dialogue_work.scene value of the spring special date scene of saki
+const	DateSceneSaki	3	DATE_SCENE_SAKI_SUMMER	dialogue_work.scene value of the summer special date scene of saki
+const	DateSceneSaki	4	DATE_SCENE_SAKI_AUTUMN	dialogue_work.scene value of the autumn special date scene of saki
+const	DateSceneSaki	5	DATE_SCENE_SAKI_WINTER	dialogue_work.scene value of the winter special date scene of saki
+const	DateSceneYukari	3	DATE_SCENE_YUKARI_SPRING	dialogue_work.scene value of the spring special date scene of yukari
+const	DateSceneYukari	4	DATE_SCENE_YUKARI_SUMMER	dialogue_work.scene value of the summer special date scene of yukari
+const	DateSceneYukari	5	DATE_SCENE_YUKARI_AUTUMN	dialogue_work.scene value of the autumn special date scene of yukari
+const	DateSceneYukari	6	DATE_SCENE_YUKARI_WINTER	dialogue_work.scene value of the winter special date scene of yukari
+const	DateSceneNozomi	2	DATE_SCENE_NOZOMI_SPRING	dialogue_work.scene value of the spring special date scene of nozomi
+const	DateSceneNozomi	3	DATE_SCENE_NOZOMI_SUMMER	dialogue_work.scene value of the summer special date scene of nozomi
+const	DateSceneNozomi	4	DATE_SCENE_NOZOMI_AUTUMN	dialogue_work.scene value of the autumn special date scene of nozomi
+const	DateSceneNozomi	5	DATE_SCENE_NOZOMI_WINTER	dialogue_work.scene value of the winter special date scene of nozomi
+const	DateSceneMira	2	DATE_SCENE_MIRA_SPRING	dialogue_work.scene value of the spring special date scene of mira
+const	DateSceneMira	3	DATE_SCENE_MIRA_SUMMER	dialogue_work.scene value of the summer special date scene of mira
+const	DateSceneMira	4	DATE_SCENE_MIRA_AUTUMN	dialogue_work.scene value of the autumn special date scene of mira
+const	DateSceneMira	5	DATE_SCENE_MIRA_WINTER	dialogue_work.scene value of the winter special date scene of mira
+const	DateSceneMira	6	DATE_SCENE_MIRA_SPECIAL	dialogue_work.scene value of the special special date scene of mira
+const	DateSceneYuko	2	DATE_SCENE_YUKO_SPRING	dialogue_work.scene value of the spring special date scene of yuko
+const	DateSceneYuko	3	DATE_SCENE_YUKO_SUMMER	dialogue_work.scene value of the summer special date scene of yuko
+const	DateSceneYuko	4	DATE_SCENE_YUKO_AUTUMN	dialogue_work.scene value of the autumn special date scene of yuko
+const	DateSceneYuko	5	DATE_SCENE_YUKO_WINTER	dialogue_work.scene value of the winter special date scene of yuko
+const	DateSceneYuko	6	DATE_SCENE_YUKO_DECEMBER	dialogue_work.scene value of the december special date scene of yuko
+const	DateSceneMegumi	3	DATE_SCENE_MEGUMI_SPRING	dialogue_work.scene value of the spring special date scene of megumi
+const	DateSceneMegumi	4	DATE_SCENE_MEGUMI_SUMMER	dialogue_work.scene value of the summer special date scene of megumi
+const	DateSceneMegumi	5	DATE_SCENE_MEGUMI_AUTUMN	dialogue_work.scene value of the autumn special date scene of megumi
+const	DateSceneMegumi	6	DATE_SCENE_MEGUMI_WINTER	dialogue_work.scene value of the winter special date scene of megumi
+const	DateSceneYumi	3	DATE_SCENE_YUMI_SPRING	dialogue_work.scene value of the spring special date scene of yumi
+const	DateSceneYumi	4	DATE_SCENE_YUMI_SUMMER	dialogue_work.scene value of the summer special date scene of yumi
+const	DateSceneYumi	5	DATE_SCENE_YUMI_AUTUMN	dialogue_work.scene value of the autumn special date scene of yumi
+const	DateSceneYumi	6	DATE_SCENE_YUMI_WINTER	dialogue_work.scene value of the winter special date scene of yumi
+const	DateSceneMiharu	3	DATE_SCENE_MIHARU_SPRING	dialogue_work.scene value of the spring special date scene of miharu
+const	DateSceneMiharu	5	DATE_SCENE_MIHARU_SUMMER	dialogue_work.scene value of the summer special date scene of miharu
+func	DATE	date_event_trigger	date_scene_trigger	patch-note name renamed (bare trap word event, GLOSSARY Traps): start a special date scene: store the scene id, mark the event_flags entry, set the special-scene marker and the title-banner bit of scene_effect_flags, switch to mode 0x5E
+func	DATE	date_event_choose	date_scene_choose	patch-note name renamed (bare trap word event, GLOSSARY Traps): chain of conditions, evaluated at every call from a date step, that decides whether a special date scene of the current girl is due (place, season, mood, step) and starts it with date_scene_trigger
+comment	DATE	date_fill_sections_shiori	Set the 27 section pointers (text, command, voice) of Shiori's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_mio	Set the 27 section pointers (text, command, voice) of Mio's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_yuina	Set the 27 section pointers (text, command, voice) of Yuina's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_ayako	Set the 27 section pointers (text, command, voice) of Ayako's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_saki	Set the 27 section pointers (text, command, voice) of Saki's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_yukari	Set the 27 section pointers (text, command, voice) of Yukari's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_nozomi	Set the 27 section pointers (text, command, voice) of Nozomi's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_mira	Set the 27 section pointers (text, command, voice) of Mira's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_yuko	Set the 27 section pointers (text, command, voice) of Yuko's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_megumi	Set the 27 section pointers (text, command, voice) of Megumi's date script file	name kept (patch-note name); English one-liner
+comment	DATE	date_fill_sections_yumi	Set the 27 section pointers (text, command, voice) of Yumi's date script file	name kept (patch-note name); English one-liner

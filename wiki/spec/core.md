@@ -178,7 +178,7 @@ Old name, new name, use count (direct `D_800E6280.` reads and writes in `src/`, 
 | 0x74C | u8[0x10] | `unk_74C` | `girl_scene_bits` | 7 | HYPOTHESIS: one byte per girl; GEKO tests/sets bits 1, 2, 4 for scenes 0xE, 0xF, 7 |
 | 0x75C | u8 | `unk_75C` | `appointment_flag` | 4 | copy of appointment_slots[0] bit 24, stored by appointment_launch |
 | 0x75D | u8 | `unk_75D` | `date_girl` | 90 | girl of the current date or event (copied from current_girl at launch); read by DATE, KANGEI, SHUGAKU, DATE2 |
-| 0x75E | GsRec75E[256] | `unk_75E` | `event_log` | 85 | 256 EventLogEntry records (girl, scene, rank from `get_g_zyotai_h`, date) appended by event_log_add |
+| 0x75E | GsRec75E[256] | `unk_75E` | `event_log` | 85 | 256 EventLogEntry records (girl, scene, category, rank from `get_g_zyotai_h`, date) appended by event_log_add |
 | 0xF5E | u8 | `unk_F5E` | `event_log_count` | 126 | number of valid entries in event_log, capped at 0xFE |
 | 0xF5F | u8 | `unk_F5F` | `current_girl` | 1219 | index of the girl record in use (1,219 uses); set by select_girl/change_girl and by the event launchers |
 | 0xF60 | u8 | `unk_F60` | `text_lines_total` | 5 | HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step func_8005215C |
@@ -346,7 +346,7 @@ Every pass of the reader starts with two housekeeping calls. `func_80071280` (`g
 
 ### 3.7 Return context and the event log
 
-A scene that must resume after a sub-scene saves `saved_game_mode`, `saved_mode_stage` and `saved_mode_step` (usually the step + 1) and restores them with the three setters (the developer function `return_step()` does exactly this). `event_log_add(scene, flag)` appends an `EventLogEntry` at `event_log_count` (capped at 0xFE) with the current girl, the rank `get_g_zyotai_h(girl)` (not `girl_state_rank`; the two functions have different thresholds, section 5.2) or the override in `D_80122D48` minus one when it is 1-6 (the override is cleared after the call), rank 0 for girl 12, and the date; MASTER, DATE and others read the entries back (index `count - 1` is the latest).
+A scene that must resume after a sub-scene saves `saved_game_mode`, `saved_mode_stage` and `saved_mode_step` (usually the step + 1) and restores them with the three setters (the developer function `return_step()` does exactly this). `event_log_add(category, scene)` appends an `EventLogEntry` (the arguments land in bytes +2 and +1) at `event_log_count` (capped at 0xFE) with the current girl, the rank `get_g_zyotai_h(girl)` (not `girl_state_rank`; the two functions have different thresholds, section 5.2) or the override in `D_80122D48` minus one when it is 1-6 (the override is cleared after the call), rank 0 for girl 12, and the date; MASTER, DATE and others read the entries back (index `count - 1` is the latest).
 
 ## 4. Player state
 
@@ -455,7 +455,7 @@ All shared types and their proposed names (the 73 types of `include/game.h` and 
 | `GsRec0FC` | `ParamValue` | one player parameter: 16.16 fixed point, frac at +0, value at +2 |
 | `GsRec66C` | `ClubRecord` | per club: u16 practice_points at +0 (HYPOTHESIS), level byte at +2, flag byte at +3 (ClubFlagBits view of the word) |
 | `GsRec69C` | `DayEvent` | queue record: type, girl, scene, flags |
-| `GsRec75E` | `EventLogEntry` | girl, flag, scene, rank (`get_g_zyotai_h`), year, month, day, weekday |
+| `GsRec75E` | `EventLogEntry` | girl, scene, category, rank (`get_g_zyotai_h`), year, month, day, weekday |
 | `GsRecF90` | `MenuItem` | menu item rectangle x, y, w, h, hover flag, disabled flag |
 | `GsRec1328` | `PaletteLoad` | queued palette upload: source pointer and 4 parameter bytes |
 | `GsRec142C` | `CsrLoad` | queued image upload: source pointer, tpage slot, rect (x, y, w, h) |
@@ -572,7 +572,7 @@ Counts are call sites plus declarations in `src/` and `include/`, without EVENT 
 | 42 | 80051010 | 156 | `sndi` (kept) | Queue a narration string with the speaker name codes expanded |
 | 43 | 800850D4 | 152 | `scene_anim_show` (was `func_800850D4`) | fills actors 96/97 as a full-screen animated picture from frame/sequence/tpage tables and a mode; arg0 == 0 clears them (DATE event scenes) |
 | 44 | 80051A68 | 150 | `get_g_zyotai_s` (kept) | Girl state rank 0-4 for scenes (4 worst); bit 7 set when affection is high |
-| 45 | 80085B3C | 143 | `event_log_add` (was `func_80085B3C`) | appends (girl, flag, scene, girl rank, year, month, day, weekday) to event_log; count capped at 0xFE |
+| 45 | 80085B3C | 143 | `event_log_add` (was `func_80085B3C`) | appends (girl, scene, category, girl rank, year, month, day, weekday) to event_log; count capped at 0xFE |
 | 46 | 80044890 | 138 | `audio_bank_load_start` (was `func_80044890`) | 138 uses: bank 0/1 sound data load: skips files already loaded (cache of LBAs), otherwise queues up to four CD reads (header, body, sequence) to... |
 | 47 | 80057390 | 137 | `set_dec_bri` (kept) | Set the brightness tint of the decoded backgrounds |
 | 48 | 8006612C | 131 | `message_window_set_title` (was `func_8006612C`) | 131 uses: queues the title string at the window's top-left and builds the title decoration actors 3.. (one per two bytes + 2); the slide-in... |

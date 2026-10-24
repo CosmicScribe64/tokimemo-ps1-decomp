@@ -977,6 +977,16 @@ kanban-plugin: board
 - [ ] [[tickets/T-27016-p2-m-hud|T-27016 Phase 2 naming and spec for m-hud (HUD, calendar page, parameter panel, magazine, save panel)]]
 - [ ] [[tickets/T-27012-p2-m-weekday|T-27012 Phase 2 naming proposals and port spec for the school-day command loop (m-weekday)]]
 - [ ] [[tickets/T-27015-p2-m-dates-b|T-27015 Phase 2 naming and port spec for the main scene library (8007C030.c)]]
+- [ ] [[tickets/T-27013-p2-m-holiday|T-27013 Phase 2 naming and port spec for the holiday screen, appointments and telephone]]
+- [ ] [[tickets/T-27018-p2-m-menutext|T-27018 Phase 2 naming proposals and port spec for main text, menus and girl queries (m-menutext)]]
+- [ ] [[tickets/T-27017-p2-m-sysmenu|T-27017 Phase 2 naming and spec for m-sysmenu (src/main/8005A0B0.c, the player's room screens)]]
+- [ ] [[tickets/T-27019-p2-m-flow|T-27019 Phase 2 naming and spec for m-flow (boot, main loop, mode machine, overlay loader, title, pad, memory card)]]
+- [ ] [[tickets/T-27022-p2-o-date|T-27022 Phase 2 naming and port spec for overlay DATE (dates)]]
+- [ ] [[tickets/T-27026-p2-o-bunkaken|T-27026 Phase 2 naming and port spec for overlay BUNKAKEN (culture festival, visitor variant)]]
+- [ ] [[tickets/T-27023-p2-o-event|T-27023 Phase 2 analysis of overlay EVENT (dead development copy of the girl-scene and date-place code)]]
+- [ ] [[tickets/T-27029-p2-o-etc|T-27029 Phase 2 analysis of overlay ETC (exams, career talks, ending tail, album)]]
+- [ ] [[tickets/T-27030-p2-o-nameent|T-27030 Phase 2 naming and port spec for overlay NAME_ENT (file screens, name entry, prologue, opening)]]
+- [ ] [[tickets/T-27025-p2-o-bunkasai|T-27025 Phase 2 naming and port spec for overlay BUNKASAI (culture festival, club-member variant)]]
 
 
 %% kanban:settings

@@ -95,6 +95,8 @@ The nine parameters are words at GameState 0x0FC-0x11C, in the order of the name
 | tokimeki | a girl's heart-throb score (girl record +2); the tokimeki meter | `tokimeki` | K | O.BIN (`get_h_tokimeki`), code |
 | zyotai | a girl's state: a rank 0-4 computed from affection and tokimeki | `girl_state` | T | O.BIN (`get_g_zyotai_h`), code |
 | syoushin | a per-girl counter (record +0xA) that rises by 5 a day while affection is under 10; meaning unknown | none yet | | O.BIN (`syoushin_up`), code |
+| closeness | the first value `girl_scores` computes per girl: a lookup of her tokimeki and affection scores in a 20 x 20 grid; the scheduler's encounter and invitation tests, ETC's best-girl pick and the command screen's rank bars read it. The game has no word for it; the guess is only the English word | `closeness` | T | code (HYPOTHESIS: the word) |
+| points | the second value `girl_scores` computes per girl: closeness, syoushin, parameters and event counters combined; the scheduler and ENDING compare it with 500 (0x1F4). The ending-candidate reading is a guess; the number itself is plain | `points` | T | code (HYPOTHESIS: the ending-candidate reading) |
 | blood type | the player's blood type, entered at the start | `blood_type` | T | strings |
 
 ## Calendar and days
@@ -178,6 +180,12 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | taiiku-sai | the sports festival | `sports_festival` | T | strings, disc (`TAIIKU/`), sound (`UNDOKAI`) |
 | folk dance | the folk dance at the sports festival | `folk_dance` | T | disc (`TAIIKU/F_DANCE`) |
 | bunka-sai | the culture festival | `culture_festival` | T | strings, sound (`SCLFEST`) |
+| exhibit | what the player's club presents at the culture festival: one per club and year (literature exhibit, speech contest, drama play, experiment show, computer fortune telling, computer game, portrait drawing, open sketching, oil painting exhibit, concert) | `exhibit`, and the names in brackets as snake_case | T | banner titles (strings), BUNKASAI code |
+| club mate | a girl whose club field equals the player's club; the BUNKASAI member blocks play a scene with her | `member` | T | code (BUNKASAI stage 0 and the member block entries) |
+| visitor | a met girl picked at random who joins the exhibit scene in BUNKASAI | `visitor` | T | code (`culture_visitor_pick`) |
+| fortune telling | the computer club's 1995 exhibit, a printout that compares two blood types; not the omikuji (the shrine slip) | `fortune` | T | banner title, BUNKASAI and BUNKAKEN code |
+| backstage | the banner title shown after a stage show | `backstage` | T | BUNKASAI string |
+| tokimeki gain | the per-girl, per-club, per-year table whose bytes are added to a girl's tokimeki at the end of the festival | `tokimeki_gain` | T | BUNKASAI code (T-27025) |
 | shuugaku ryokou | the school trip | `school_trip` | T | strings, sound (`SYUGAKU`) |
 | shougatsu | New Year | `new_year` | T | strings, O.BIN (`pre_syogatu*`) |
 | hatsumode | the first shrine visit of the year | `hatsumode` | K | strings |
@@ -240,7 +248,7 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | hud | the panels of the day screen: parameters, calendar date, portrait | `hud` | T | code |
 | save, load | the memory-card save and load | `save`, `load`, `memory_card` | T | O.BIN (`card_ev_set`) |
 | name entry | the entry of the player's name, birthday and blood type at the start; the NAME_ENT overlay | `name_entry` | T | disc (`NAME_ENT.EXN`), patch (kana grid) |
-| prologue | the voiced opening lines that NAME_ENT plays, in the attract run too | `prologue` | T | patch (`prologue_line_start`), emulator run (T-20500) |
+| prologue | the voiced scene of the first school day that NAME_ENT plays after name entry (mode 0x15: 22 stages, 43 text lines); the attract run plays the separate `opening`, not this | `prologue` | T | patch (`prologue_line_start`), emulator run (T-20500), T-27030 |
 | sound test | the OPTION screen that plays music and sound effects by bank id | `sound_test` | T | sound, strings |
 | debug menu | a developer menu whose text is in OPTION | `debug_menu` | T | patch (OPTION text offsets) |
 | system file | the memory-card system file; its contents are not decoded yet | `system_file` | T | strings |
@@ -283,6 +291,8 @@ or of a stem for one of its scenes.
 | `career` | career guidance and choice | ETC | short form of `career_guidance`, `career_choice` |
 | `annual` | the yearly school events | GYOZI | short form of `annual_event` |
 | `camp` | the summer camp | KANGEI | short form of `summer_camp` |
+| `file_select` | the file screens behind the title item "game start": memory-card check, 14 album slots, create, copy, clear | NAME_ENT | plain words |
+| `opening` | the attract opening: a narrated picture story, then the opening movie | NAME_ENT | plain word |
 | `help` | the help pages | OLH | plain word |
 | `options` | the options screen | OPTION | plain word |
 | `practice` | the club practice match | RENSYU | short form of `practice_match` |
@@ -337,6 +347,7 @@ the first name that uses it.
 | `src` | source; a parameter name of copy-like functions | SDK (`strcpy`) |
 | `sys` | system helpers of the main executable, beside the pad code (`sys_` prefix) | ADR (main prefixes) |
 | `tpage` | texture page | SDK |
+| `uv` | texture coordinates (u, v) of a sprite or glyph cell | SDK (`POLY_FT4` fields `u0`, `v0`) |
 | `vram` | video memory | SDK |
 | `vsync` | vertical blank sync | SDK (`VSync`) |
 | `xa` | CD-XA streamed audio | O.BIN (`xa_wait`) |

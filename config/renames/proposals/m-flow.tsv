@@ -1,0 +1,325 @@
+# kind	scope	old	new	note
+file	main	src/main/80041000.c	src/main/game_init.c	one object (0x80041000-0x800420D0): graphics bring-up, VRAM clears, the GameState initialiser and the data initialisers (calendar, player, girls, event state, settings), sprite and BG table clears
+file	main	src/main/800420D0.c	src/main/main_loop.c	one object (0x800420D0-0x80042540): executable entry, the frame loop, the vblank timer event, system service init
+file	main	src/main/80042540.c	src/main/game_mode.c	one object (0x80042540-0x80042A00): mode dispatcher, mode/stage/step setters, overlay request
+file	main	src/main/80042A00.c	src/main/pad_input.c	one object (0x80042A00-0x80043510): controller detection, pad and mouse polling, soft reset, turbo, secret pad code
+file	main	src/main/800789E0.c	src/main/overlay_loader.c	one object (0x800789E0-0x80079B10): overlay loader (mode 2) with its sector and entry tables, loader screen, the TT loader (mode 0xD0)
+file	main	src/main/80061710.c	src/main/title_screen.c	one object (0x80061710-0x80062CD0): the title screen (mode 0x12) with its 3D photo intro, plus the start mode (0x10)
+file	main	src/main/80053650.c	src/main/memory_card.c	one object (0x80053650-0x80056300): memory-card layer (BIOS events, file jobs, system-file and game-save images); two MDEC still-image helpers at its top
+file	main	-	include/main/game_init.h	new header: declarations of game_init.c moved out of main_api.h (pure move, sync_protos compare)
+file	main	-	include/main/main_loop.h	new header: boot_start, main_loop, frame_begin, timer_*, sys_* and their globals
+file	main	-	include/main/game_mode.h	new header: main_state_*/main_stage_*/main_step_* setters, main_state_dispatch; MainMode stays in game_enums.h
+file	main	-	include/main/pad_input.h	new header: pad_*, mouse_to_pad, mouse_driver_init, the pad code globals; PadBits stays in game_enums.h
+file	main	-	include/main/overlay_loader.h	new header: ovl_load_*, mode_overlay_loader, mode_tt_game and the OvlLba constants
+file	main	-	include/main/title_screen.h	new header: title_*, mode_title, mode_start
+file	main	-	include/main/memory_card.h	new header: card_*, mdec_still_*, CardBank, GameSaveImage, SystemSaveImage and the CardResult constants (types move from game.h with a sync_protos compare)
+func	main	func_800410AC	gpu_env_reset	only caller gpu_init: copies the default draw and display environments to the stack, sets draw clip (0,0,320,240) and display rect (1,1,320,240), applies both
+func	main	func_8004111C	vram_clear_framebuffers	clears the 640x480 VRAM rectangle at (0,0) to black then waits for the GPU; callers main_loop (boot), exit_function, ETC and TT after a mini game
+func	main	func_80041168	vram_clear_blocks	clears 64x128 blocks of the 16x4 VRAM grid (n selects x = (n & 0xF) * 64, y = ((n & 0x10) << 4) + ((n & 0x20) << 2)): 0xFF all, 0xFE the two texture strips x 704-1023 y 0-255 and x 320-639 y 256-511, 0 the strip x 320-959 y 0-255 plus x 320-383 y 256-511, else block n; every call ends with a GPU wait
+func	main	func_80041840	pad_defaults_set	input_device = pad, cursor_speed = 3, menu_mode = 1 (menu A) and overlay_entry = 0x80132000 (slot base); only caller game_state_init
+func	main	func_80041878	game_data_init	runs calendar_init, player_init, girls_init, event_state_init: the new-game state of calendar, player, girls and events (not the settings); callers game_state_init, soft reset, game_reset_to_title, NAME_ENT (new game, reload)
+func	main	func_800418B0	calendar_init	start 1995-04-04 (year 95, month 4, day 4, weekday 1 = Tuesday, day_count 0, vacation none); month_calendar[0] = April 1995 (30 days, 1st is a Saturday), [1] = May 1995 (31 days, 1st is a Monday), Sundays kind 1, national holidays kind 2; clears clubs and quarter_flags
+func	main	func_800419FC	player_init	clears the 0x7C profile block; health OK and club none (player_flags byte 1 = 0xB0); birthday 1/1 with blood-type field 1; parameters 100/40/40/40/40/32/60/5/0 in PARAM_* order; progress_state place flags set for places 0 2 4 8 9 12 15 (emu: same start state, m-hud), command counters 0, profile snapshot = copy of the profile block
+func	main	func_80041C2C	girls_init	clears the 16 GirlRecords; each: tokimeki 0, affection 0x32, syoushin 0, flags cleared, story_stage 0, club 11 (none); girls 0 and 12 start met; girl 0 also flag bits 3, 6, 7 and girl 12 bit 3; birthdays of girls 0-13 stored (table in spec/m-flow)
+func	main	func_80041F48	event_state_init	zeroes appointments, clubs, the day_events queue and its index, event_flags (0x100 bytes), appointment places, date_place_history, girl_last_date_spot, date_girl, appointment_flag and the event_log with its count; girl_last_date_spot_timer and girl_event_bits are not touched here
+func	main	func_80042058	settings_defaults_set	current_girl, text_lines_total, text_first_line, text_scroll_state and unk_F63 = 0; voice_mode 2 (cancelable), icon_mode 0, icon_count 0xE, click_mode 0, click_timer 0, double_click_interval 0x20, confirm_button 0 (left), sd_anim_fast 0; run by game_state_init and both resets
+func	main	func_800420D0	boot_start	entry PC of the executable (wiki/executable.md): stack 0x801FEFF0, heap 0x801FF800 size 0x7F0, bzero 0x45498 bytes from 0x800E60A0, saves gp, calls main_loop; emu: first function of a run
+func	main	func_800422C8	frame_begin	first call of every loop pass: draw_buffer = the buffer being drawn; points the primitive arena and the second work area at that buffer (the two areas swap places in mode 0x90), initialises its ordering table, clears cursor_moved_this_frame
+func	main	func_800423D4	timer_tick	callback of the vblank root-counter event: timer_ticks += 1 and system_data.seed += 0x377
+func	main	func_80042400	timer_seed_step	seed += 0x377 and returns it; no caller in src (dead code)
+func	main	func_80042418	sys_init	once at boot: zeroes system_data (0xEE0 bytes), timer_event_start, card_ev_set, pad_driver_init
+func	main	func_80042458	sys_cache_flush	FlushCache inside a critical section; run after an overlay (and after the TT overlay) landed in the slot
+func	main	func_80042488	timer_event_start	opens and enables the event of root counter 3 (counts vertical blanks; target 1, interrupt mode) with callback timer_tick and stores the handle in timer_event; reopened by soft reset and the TT loader
+func	main	func_800424FC	timer_event_stop	closes timer_event inside a critical section; soft reset and the TT loader close it before they restart it
+func	main	func_80042A00	pad_update	once per frame at the end of frame_render: detect the device, then mouse_to_pad or pad_poll; turbo off on any button but circle, turbo on when the four face buttons of pad 2 are held, pad 2 START flips sd_anim_fast; skipped on a frame where the device changed
+func	main	func_80042AC8	pad_device_detect	reads port 1: status byte 0 and id high nibble 1 = mouse (also menu_mode = 0), else pad; 0xFF status = none, kept while a card job is busy; on a change reinits the drivers and returns 1
+func	main	func_80042BD4	mouse_driver_init	InitMouse on the two raw buffers, SenseMouse(3, 4), start position (0xA0, 0x78), range 0..0x140 x 0..0xF0
+func	main	func_80042C30	pad_driver_init	InitPAD on the two 8-byte raw buffers, StartPAD, no auto clear
+func	main	func_80042C74	pad_state_clear	zeroes cursor_x/cursor_y, mouse_x/mouse_y and the three pad words (held, previous, pressed)
+func	main	func_80042CB0	mouse_to_pad	mouse to pointer and pad bits: motion * cursor_speed / 3 added to mouse_x (-0x96..0x8C) and mouse_y (-0x64..0x64) and copied to the cursor actor; left and right button become circle (0x20) and cross (0x40) through confirm_button; double-click mode needs two clicks of one button within double_click_interval + 8 frames; a digital pad in port 2 adds its buttons to the upper half-word
+func	main	func_80043010	pad_raw_read	builds the pad word from the two buffers: (~p2 byte2 << 24) | (~p2 byte3 << 16) | (~p1 byte2 << 8) | ~p1 byte3; its mouse branch (the two mouse buttons as 0x20 and 0x40) is never reached from pad_poll; with no device (0xFF) the function has no return statement (that path is unreachable from pad_poll)
+func	main	func_800430C0	pad_poll	pad mode: pad_held from pad_raw_read (a half-word of 0xFFFF is dropped), pad_pressed, pad_released, turbo (circle injected every other frame), pause toggle (dead: pause_allowed is never set), soft reset on the frame where pad_reset_frames already holds 0x81 (the 130th frame of SELECT+START+L1+R1; pad 2: to mode 0x11) outside modes 0x20, 0x90, 0xD0, then pad_code_update; emu: reset at frame 140 after a hold from frame 10, mode 0x10 then 0 then title
+func	main	func_80043448	pad_code_update	secret code: pad_held must equal pad_code_table[pad_code_index] exactly; each match advances and sets pad_code_timer to 0x10, which the same call decrements, so the next step has to match within 15 frames or the index resets; 18 matches set pad_code_entered, which stays set for 241 frames counting the frame of the last match (240 more frames); emu: the code at the title menu enters mode 0x11 at stage 1
+func	main	func_80043504	main_paused_step	empty handler main_loop calls instead of main_state_dispatch while paused
+func	main	func_800789E0	ovl_load_reset	loader state 0, sectors 0, buffer 0, lba 0 (forgets the resident overlay) and screen mode 0; game_reset_to_title and the soft reset call it
+func	main	func_80078A94	ovl_load_screen_draw	runs after the loader step every frame: runs the per-frame functions of the HUD pieces that are visible (date panel, message window, parameter panel, mascot, cursor) and, when at least one is visible, draws the screen frame and then, by ovl_load_screen_mode, the backdrop: 0 optional light effect and title slide (scene_effect_flags bits 0 and 1) and the last background, 1 wipe lines over the captured frame, else a cleared screen; the calendar picture is drawn while overlay_target_mode is 0x45
+func	main	func_80078C48	ovl_load_start	loader state 0: picks the screen mode (modes 0x54 0x55 0x59 0x5A 0x5B 0x5D 0x72 capture the top 160 lines and wipe over them, modes 0x13 0x35 0x50 0x81 use screen mode 0 without a capture), hides sprite quad 0 while sick, maps overlay_target_mode to the disc LBA (24 overlay files; table in spec/m-flow), 0x60 sectors to 0x80132000; same LBA as the resident file skips the read and goes to state 3; emu: read at frame 183 of a title to options run
+func	main	func_80079070	ovl_load_enter	loader state 3: overlay_entry = the entry address of overlay_target_mode (table in spec/m-flow; default 0x80132000), loader state 0, mode = overlay_target_mode with stage, step, substep and both scratch bytes restored (timers cleared)
+func	main	func_80079524	mode_is_tt_game	1 when mode is 0xD0 or 0xD1; callers: the sound driver (80079B10)
+func	main	func_80079554	mode_is_shooter	1 when mode is 0x90 (TACO); caller: the sound driver
+func	main	func_80079578	mode_is_option_2	1 when mode is 0x21; caller: the sound driver (reverb switch of the sound test)
+func	main	func_8007959C	mode_tt_game	mode 0xD0 handler with its own loader: stage 0 sets extra_mode_flags bit 0, clears debug_hud_enabled and the VRAM, reads 0x60 sectors from LBA 0x9A6A; 1 waits; 2 checks the file sum (retry from stage 0); 3 calls the TT entry 0x8013E850 (runs its own loop) with the timer event closed; 4 restores timer, sound, CD; 5 mode_tt_game_save_step; 6 returns to saved_mode/stage/step, or to mode 0 when options_dirty is set
+func	main	func_80079800	mode_tt_game_save_step	stage 5 of mode_tt_game, substeps: 0 card_start, 1 card_check_poll, 2 file 0 exists? then card_start, 3 card_system_read_poll, 4 system_bank_load, 5 card_start and selected_slot 0, 6 card_system_write_poll (done: sound 0x50F; timeout 0x201 frames or result 0xF0: sound 0x502), then stage_next; any failure jumps to 0xFF
+func	main	func_80061710	title_view_init	libgs projection 1000 and a reference view at (0, 0, 1000) looking at the origin, clip values 0x64 and 0x10000; first of the title 3D setup calls
+func	main	func_80061790	title_lights_init	three directional lights, directions (0,0,100), (0,100,0), (100,0,0), tints (0xFF,0x80,0x80), (0x80,0x80,0xFF), (0x80,0xFF,0x80), ambient 0, light mode 0
+func	main	func_800618B0	title_coords_init	libgs coordinate init for the 16 model_coords records, then flag 0 and z translation 0xFA0
+func	main	func_8006190C	title_models_link	HYPOTHESIS: maps the TMD at 0x801F0000, requires object count 13 (else returns 0), links all 16 records to object 0, then record i (0-12) to object (rand() + i) % 13
+func	main	func_80061A3C	title_setup_stage	stage 0, substeps: 0 reset screen and start the sound bank load, 1 start the title BGM and read one model sector (LBA 0xBE13), 2 copy it into the next 12 sectors and read 0xD6 sectors (LBA 0xA0CC) to 0x80180000, 3 palettes (15), 13 photo textures (tpage ids 0x15-0x1A, 0x25-0x27, 0x35-0x38), background blocks, actor 96, 3D setup, srand(timer_ticks), stage_next; emu: stage 1 starts 242 frames after the title
+func	main	func_80061EFC	title_intro_backdrop_step	stage 1 step 0: raises screen_brightness by 1 per frame to 0x80 (and the background layer tint with it); after 601 frames (0x259) step_next; START, cross or circle: white clear colour, models cleared, stage_next (menu)
+func	main	func_80061FC4	title_intro_flash_step	stage 1 step 1: screen_flash_gray(step_timer / 2); at 0xFF (510 frames) or a button: hides the backdrop and photos, white clear colour, actor 96 becomes the logo; a button then jumps to the menu stage, else step_next
+func	main	func_8006211C	title_intro_logo_step	stage 1 step 2: screen_flash_gray(0xFF - step_timer); stage_next at 255 frames or on START, cross or circle
+func	main	func_8006218C	title_intro_stage	stage 1 handler: step_timer += 1, steps 0-2, then title_photos_update every frame
+func	main	func_80062210	title_menu_setup_step	stage 2 step 0: menu 0 with two items (rects x -0x30, w 0xA0, h 0x14 at y 0x42 and 0x52), selection 0, white clear colour, sprite tables cleared, cursor shown, actors 96-98 set up as the menu pictures; step_next
+func	main	func_800623E4	title_menu_cursor_update	selection (scene_work word 0): pad mode up = item 0, down = item 1 and the cursor actor at y = item * 16 + 0x46; mouse mode hit test of menu 0; any change restarts step_timer (idle timer); item frames swap with the selection
+func	main	func_80062524	title_menu_select_step	stage 2 step 1: cursor update; START or circle hides the cursor, step_next, sound 0x501; step_timer >= 0x259 (601) or SELECT: actors cleared, SND_CMD_STOP_ALL, main_state_set(0x11); emu: idle timeout at 601 frames
+func	main	func_800625C0	title_menu_highlight	sets bit 0x40 of the byte at +3 of the chosen item's actor (actor 97 + selection)
+func	main	func_800625F4	title_menu_confirm_step	stage 2 step 2: highlight the chosen item; stage_next after 0x21 frames
+func	main	func_80062634	title_menu_stage	stage 2 handler: step_timer += 1, steps 0-2; step_timer is the idle clock and restarts on every pad up or down press even when the selection stays the same (mouse mode: on every frame the pointer rests on an item)
+func	main	func_800626B0	title_exit_dispatch_step	stage 3 step 1: full flash level, then selection 0: main_state_set(0x13) (NAME_ENT file and name entry), selection 1: main_state_set(0x20) (OPTION; with debug_hud_enabled pad right gives 0x21 and pad left 0x22), anything else game_reset_to_title; emu: item 0 leaves 162 frames after the press
+func	main	func_80062764	title_exit_fade_step	stage 3 step 0: SND_CMD_FADE_BGM_SLOW every frame, flash level step_timer * 2; at 0x80 frames actors and cursor cleared, sprite tables cleared, step_next
+func	main	func_800627DC	title_exit_stage	stage 3 handler: step_timer += 1, steps 0-1
+func	main	func_80062948	title_photos_update	each frame places the 13 photo models: spin from frame_count, translation x = scene_work[i + 1] (start -400 - 100 * i, from title_photo_offsets) that grows by 2 or 3 per frame, y = sin wobble - x / 2, z = -4 * x - 400; emu: screenshot at stage 1 shows photo cards flying past a still background
+func	main	func_80062C28	mode_start	mode 0x10 handler, runs once: movie_play(0, 0xA7, 0x190) (the start movie), flush, CD pause and init, mdec_still_buffers_set(0x80167000, 0x80162000, 0x80162000), display on, VRAM block 0 cleared, back clear on, main_state_set(0); emu: movie starts at frame 622 and mode 0 at 1256
+func	main	func_80053650	mdec_still_buffers_set	stores the three MDEC buffers (bitstream, VLC work, output) after resetting the decoder; callers mode_start, dec_bg decode, NAME_ENT
+func	main	func_800536AC	mdec_still_decode_to_vram	(x, y, w, h): checks the bitstream header (0x3800, version 1), VLC-decodes it and streams 16-pixel-wide slices into VRAM at (x, y); -1 on a bad header, else 1; callers dec_bg, DATE, DATE2, ENDING, ETC, NAME_ENT, TACO
+func	main	func_80053CAC	card_step_set	card_result = 0 and card_step = n
+func	main	func_80053CC0	card_step_next	card_result = 0 and card_step += 1
+func	main	func_80053D24	card_event_handle	polls the card events with Sw_Test: done = next step; new card = step n (argument); timeout = retry count + 1 and step 0 (card_busy 0, result 0xFF at 3 retries); error = step 0
+func	main	func_80053DDC	card_status_wait	spins on the BIOS card status until it is not 0, closes the file; status 0x11 or 0x21 counts a retry and restarts at step 0; returns the status (1 = done)
+func	main	func_80053F04	card_check_poll	card detection, called every frame (card_timer += 1): step 0 info, 1 wait, 2 load, 3 wait, 4 result 1 (OK); a new-card event at step 1 goes to 0x20 (clear, reload at 0x30-0x32) and one at step 3 or 0x31 ends in 0x40 = result 0xF1 (unformatted); returns card_result; emu: the check runs about 76 frames from NAME_ENT
+func	main	func_80054108	card_format	format of the first card slot (bu00:); 1 when it succeeded, 0 else
+func	main	func_80054140	card_scan_poll	result 2 when done: step 0 tests the system file (retry 3, then no system file), steps 1-14 test each save file into system_data.slot_status, then card_result 2
+func	main	func_80054284	card_system_read_poll	steps 0 card_file_read(0), 1 card_status_wait, 2 result 3; result 0xD0 when the read cannot start
+func	main	func_80054388	card_system_write_poll	steps 0 card_file_write(0), 1 card_status_wait, 2 result 0x13; result 0xD0 when the write cannot start
+func	main	func_8005448C	card_save_read_poll	steps 0 card_file_read(save_slot), 1 card_status_wait, 2 result 4; result 0xD0 when the read cannot start
+func	main	func_80054590	card_save_write_poll	steps 0 card_file_write(save_slot), 1 card_status_wait, 2 result 0x14; result 0xD0 when the write cannot start
+func	main	func_80054694	card_file_create	builds the name, opens with create and one block, closes; 1 or -1
+func	main	func_80054704	card_file_delete	deletes the file; after a failure it retries while a retry counter stays below 3, and the matched C reads that stack counter before it is set (its start value is undefined); 1 or -1
+func	main	func_8005478C	card_file_read	clears card_block, opens the file for reading (async, 16 tries), reads 0x2000 bytes (16 tries); 1 or -1
+func	main	func_80054884	card_file_write	opens the file for writing (creates it on failure), fills the 0x200 header (magic, icon flag 0x13, one block, title, and the palette and three icon frames of the girl in the latest date-like log entry: scene 0, 1, 2 or 0xF, else girl 0), the bank (system_bank_build for file 0, game_bank_build else), copies bank 0 into bank 1, writes 0x2000 bytes (16 tries); 1 or -1
+func	main	func_80054AF4	card_file_exists	opens the file once with write access and closes it: 1 when it opens, trying once and then retrying up to 16 more times for the system file (17 opens at most) or 8 more for a save file (9 opens at most); 0 else
+func	main	func_80054BA8	card_system_file_probe	slot_info_from_system_data = card_file_exists(0); no caller in src
+func	main	func_80054BE4	card_save_files_probe	slot_status[i] = card_file_exists(i) for the 14 save files; returns 14; no caller in src
+func	main	func_80054C4C	card_block_clear	zeroes the 0x2000-byte card_block
+func	main	func_80054C74	card_file_write_sync	older write: opens file idx, builds the same header with icon 0, writes 0x2000 in one call; no caller in src
+func	main	func_80054E6C	card_slot_summary_store	after a save: stores the current year, month, day, three name buffers, the nine parameter words, girl record 15's 16 counter bytes and the club into the slot_summary arrays of system_data at index selected_slot & 0xF
+func	main	func_80054FC0	system_bank_build	marks slot_status[selected_slot] = 1, then writes system_data into bank arg of card_block (slot_status, flags, unlock bits, selected_slot, TT and TACO records, album, slot summaries; the layout block only when options_dirty is 0 and a game slot is selected) and stores the byte sum of bytes 4-0xEFF in the first word
+func	main	func_800552DC	system_bank_load	card_bank_validate, then copies the bank back into system_data (unlock bits OR-ed; TT record only while extra_mode_flags bit 0 is clear; TACO record only while its saved flag is clear), pushes the layout block into icon_positions, mascot anchor, mascot_choice, length and swing; -1 when no bank is valid
+func	main	func_8005557C	game_bank_build	writes the whole game state into bank arg of card_block (field list in spec/m-flow), copying the text speed and cursor style into saved_settings first, then stores the byte sum
+func	main	func_80055A38	card_bank_validate	tries banks 0 and 1: byte sum of bytes 4-0xEFF equal to the first word and at least one non-zero byte; sets album_slot to the first valid bank; 1 or -1
+func	main	func_80055AFC	game_bank_load	card_bank_validate, rejects a bank with year 0 or month 0, copies every field back into the game state (text speed and cursor style from saved_settings), recomputes event_log_count, current_girl (girl of the latest log entry with scene 0, 1, 2 or 0xF, 0xFF when none) and date_girl (girl of the latest entry) with event_log_scan; 1 or -1
+func	main	func_80056070	card_file_name_build	name = card_file_prefix + one hex digit for file 0-15 (0 system file, 1-14 saves); 0 for a larger index
+func	main	func_80056284	card_state_reset	card_stop, card_block_clear, slot_status[0-14] cleared, slot_info_from_system_data = 0, card_start; run by NAME_ENT and the command screen before a new card job
+data	main	D_80125120	boot_gp	gp value saved by boot_start (GetGp); never read again
+data	main	D_80125124	boot_prev_sp	value SetSp returned in boot_start (the previous stack pointer); never read again
+data	main	D_8011ECA8	timer_event	handle of the vblank root-counter event opened by timer_event_start and closed by timer_event_stop
+data	main	D_800E94A0	gs_work_buffers	HYPOTHESIS: libgs packet work area: func_800985E0 only stores its argument in one libgs global (the GsSetWorkBase shape); 0xA000 bytes per draw buffer, 0x14000 in all up to prim_arena_buffers; in mode 0x90 the two areas change roles
+data	main	D_800FD4A0	prim_arena_buffers	primitive arena of the game's own drawing, 0x10C00 bytes per draw buffer (the PrimArena size of core); given to SetWorkBase by frame_begin, except in mode 0x90
+data	main	D_800B6D30	ovl_load_screen_mode	0 backdrop of the last scene, 1 wipe over a captured frame (modes 0x54 0x55 0x59 0x5A 0x5B 0x5D 0x72), anything else a cleared screen (never set); written by ovl_load_start and ovl_load_reset
+data	main	D_800B3CA0	pad_turbo	1 after the four face buttons of pad 2 were held together: pad_poll then adds a circle press on every odd frame; a press of any other button clears it
+data	main	D_800B3CA4	pad_reset_frames	frames in a row with SELECT+START+L1+R1 held (pad 1, or pad 2 for the opening reset); the reset runs on the frame where it already holds 0x81 (the 130th frame of the hold), any other pad state clears it
+data	main	D_800B3CA8	pad_code_table	18 words: up, release, up, release, down, release, down, release, left, release, right, release, left, release, right, release, cross, circle (0 = nothing held)
+data	main	D_800B3CF8	pad_code_index	next entry of pad_code_table; cleared by title_setup_stage and the NAME_ENT opening movie
+data	main	D_800B3CFC	pad_code_entered	1 for 241 frames counting the frame of the last match after the whole code was entered; mode_title tests it from stage 2 on; cleared by title_setup_stage and after the NAME_ENT opening movie
+data	main	D_800B3D00	pad_code_timer	u8: 0x10 after each match and counted down per frame (reaching 0 resets pad_code_index); while pad_code_entered is set it counts up from 0x0F (the value after the final match's decrement) and clears the flag when it wraps to 0
+data	main	D_800E8BF0	pad_buffer_1	raw controller buffer of port 1 given to InitPAD and InitMouse: status, id, two button bytes (mouse: two motion bytes after them)
+data	main	D_800E8C30	pad_buffer_2	raw controller buffer of port 2 (same layout)
+data	main	D_8011ECAC	card_sw_event_done	handle of the software card event for a finished operation (event spec 0x0004), opened by Sw_Start; Sw_Test result 1
+data	main	D_8011ECB0	card_sw_event_error	handle of the software card event for an error (spec 0x8000); Sw_Test result 2
+data	main	D_8011ECB4	card_sw_event_timeout	handle of the software card event for a timeout (spec 0x0100); Sw_Test result 4
+data	main	D_8011ECB8	card_sw_event_new_card	handle of the software card event for a new card (spec 0x2000); Sw_Test result 8
+data	main	D_8011ECBC	card_hw_event_done	handle of the hardware card event for a finished operation (spec 0x0004), opened by Hw_Start; Hw_Test result 0x81
+data	main	D_8011ECC0	card_hw_event_error	handle of the hardware card event for an error; Hw_Test result 0x82
+data	main	D_8011ECC4	card_hw_event_timeout	handle of the hardware card event for a timeout; Hw_Test result 0x84
+data	main	D_8011ECC8	card_hw_event_new_card	handle of the hardware card event for a new card; Hw_Test result 0x88
+data	main	D_800E8C74	ot_table_0_tags	alias label inside ot_table: the tag-array pointer of the first ordering-table header, set to ot_tags by gpu_init (the other header fields are 8 = table length)
+data	main	D_800E8C84	ot_table_1	alias label of the second GsOT header of ot_table (+0x14); gpu_init sets its length to 8
+data	main	D_800E8C88	ot_table_1_tags	alias label inside ot_table: the tag-array pointer of the second header, set to ot_tags_1 by gpu_init
+data	main	D_800E90A0	ot_tags_1	alias label inside ot_tags (+0x400): the tag array of draw buffer 1
+data	main	D_800B5A40	title_photo_offsets	s16[13]: -400, -500 ... -1600, the start x of the 13 title photos, copied to scene_work[1..13]
+data	main	D_800B3938	card_file_prefix	string: device name bu00: plus the product code of the original release (BISLPS-00065); card_file_name_build appends one hex digit
+data	main	D_800B4390	card_icon_palettes	13 palettes of 0x20 bytes (16 colours), one per save icon; copied to the card header at +0x60
+data	main	D_800B58B0	card_icon_images	u8 *[13]: three 16x16 4-bit frames (0x180 bytes) per save icon; copied to the card header at +0x80
+data	main	D_800B58E4	card_fd	file descriptor of the card file in use
+data	main	D_80123122	card_header_icon_flag	label of card_block +2: icon display flag, 0x13 = three frames
+data	main	D_80123123	card_header_block_count	label of card_block +3: number of blocks, 1
+data	main	D_80123124	card_header_title	label of card_block +4: 64-byte title field (game title, then the slot label or the system label)
+data	main	D_80123164	card_header_reserved	label of card_block +0x44: 0x1C reserved bytes, zeroed
+data	main	D_80123180	card_header_palette	label of card_block +0x60: the icon palette
+data	main	D_801231A0	card_header_icons	label of card_block +0x80: the three icon frames
+data	main	D_80123320	card_banks	label of card_block +0x200: CardBank[2], two identical copies of the file data
+data	main	D_800E7D13	system_data_plus3	alias label of system_data +3 (odd offset): base of the loop in card_state_reset that clears slot_status[3..14]
+data	main	D_800E7D15	save_slot_status_1	alias label of system_data.slot_status[1], the first save file
+data	main	D_800E7D16	save_slot_status_2	alias label of system_data.slot_status[2]
+data	main	D_800E7D4F	extra_mode_flags	HYPOTHESIS: the name and the extras meaning follow core (its ExtraModeFlags type is a hypothesis). Facts seen here: byte at system_data +0x3F (ExtraModeFlags view): bit 0 set by every TT start, bit 1 direct mode, bits 2-4 stage (o-tt spec); also the last byte of the TT record that system_bank_load protects
+data	main	D_80125C04	mdec_bitstream	address of the compressed still picture (0x80162000 in every caller)
+data	main	D_80125C08	mdec_vlc_buffer	work buffer of the VLC decode (0x80167000)
+data	main	D_80125C0C	mdec_out_buffer	decode output for one 16-pixel-wide slice (0x80162000 or 0x80188000)
+data	main	D_8011ED17	message_window_draw_flags	alias label of actor_pool[1] +3 (draw flags, bit 7 = visible): the message window actor
+data	main	D_8011F553	parameter_panel_draw_flags	alias label of actor_pool[32] +3 (bit 7 = visible): the parameter panel actor
+data	main	D_80122D44	scene_effect_flags	bit 0 = light effect on, bit 1 = title banner slide on; set by the DATE and GEKO scenes, read by ovl_load_screen_draw so the effects keep running while an overlay loads
+field	GameState	unk_668	saved_settings	u8[4]: [2] cursor style, [3] text speed; game_bank_build stores them before it copies event_flags (the array ends at 0x66B), game_bank_load reads them back; no other use
+field	GameState	unk_F71	click_timer	frames left to finish a double click (double_click_interval + 8 after the first click), counted down by mouse_to_pad
+field	GameState	unk_F72	click_button	button bits of the first click of a pending double click
+field	GameState	unk_F76	mouse_held	mouse buttons held this frame (~port byte 3; 4 right, 8 left)
+field	GameState	unk_F78	mouse_held_prev	mouse_held of the previous frame; unk_F77 (core mouse_buttons) is mouse_held & ~mouse_held_prev, the buttons pressed this frame
+field	Work800E7D10	unk_024	karaoke_unlock_bits	u8[2]: byte 0 bits 0, 2 and 3 make karaoke list rows 0, 2 and 3 appear in DATE2 (a debug word overrides); byte 0 is OR-merged on system-file load; no setter in src
+field	Work800E7D10	unk_027	album_state	byte 0 = album present, byte 1 = entry count (ETC writes both with album_entries); the array also spans the TT record at +0x2C-+0x3F, unk_027[0x18] is extra_mode_flags
+field	Work800E7D10	unk_058	album_entries	256 x 8-byte event-log entries that ETC copies for the chosen girl (its debug print names the album mode save); saved in the system file
+field	Work800E7D10	unk_CC8	slot_girl_marks	HYPOTHESIS: per save slot 16 bytes copied from girl record 15's event counters by card_slot_summary_store; NAME_ENT shows an icon of frame 0x58 + (v & 7) for each heroine 0-10 whose byte is non-zero (a per-girl state of that save)
+field	Work800E7D10	unk_DC8	layout_settings	0x100 bytes: +0 icon_positions (0x40), +0xF0 mascot anchor x (4), +0xF4 mascot_choice, +0xF5 mascot length, +0xF6 mascot swing; written by system_bank_build only while options_dirty is 0 and a game slot is selected, applied by system_bank_load
+field	SaveImageView	unk_24	karaoke_unlock_bits	image copy of system_data.karaoke_unlock_bits
+field	SaveImageView	unk_54	album_state	image copy of system_data.album_state bytes 0-1
+field	SaveImageView	records	album_entries	image copy of system_data.album_entries (0x800 bytes)
+field	SaveImageView	unk_CD8	slot_girl_marks	image copy of system_data.slot_girl_marks
+field	SaveImageView	unk_DD8	layout_settings	image copy of system_data.layout_settings
+field	SaveGameView	unk_004	vacation	image of GameState.vacation
+field	SaveGameView	unk_005	year	image of GameState.year
+field	SaveGameView	unk_006	month	image of GameState.month; game_bank_load rejects a bank whose year or month is 0
+field	SaveGameView	unk_007	day	image of GameState.day
+field	SaveGameView	unk_008	weekday	image of GameState.weekday
+field	SaveGameView	unk_00A	day_count	image of GameState.day_count
+field	SaveGameView	unk_00C	month_calendar	image of the two MonthCalendar records
+field	SaveGameView	unk_08C	profile	image of GameState +0xC4..+0x13F: names, flags, birthday, the nine parameters (0x7C bytes)
+field	SaveGameView	unk_108	girls	image of the 16 GirlRecords
+field	SaveGameView	unk_488	girl_cleared	image of GameState.girl_cleared
+field	SaveGameView	unk_498	appointments	image of the 8 appointment words
+field	SaveGameView	unk_4B8	clubs	image of the 12 club records
+field	SaveGameView	unk_4E8	event_flags	image of GameState +0x56C..+0x66B (event_flags with saved_settings in the last 4 bytes)
+field	SaveGameView	unk_5E8	date_place_history	image of GameState.date_place_history (4 bytes)
+field	SaveGameView	unk_5EC	girl_last_date_spot	image of GameState.girl_last_date_spot
+field	SaveGameView	unk_5FC	girl_last_date_spot_timer	image of GameState.girl_last_date_spot_timer
+field	SaveGameView	unk_60C	girl_event_bits	image of GameState.girl_event_bits
+field	SaveGameView	unk_61C	event_log	image of the 256 event_log entries
+field	SaveGameView	unk_E1C	icon_mode	image of GameState.icon_mode
+field	SaveGameView	unk_E1D	icon_count	image of GameState.icon_count
+field	SaveGameView	unk_E1E	menu_mode	image of GameState.menu_mode
+field	SaveGameView	unk_E1F	sd_anim_fast	image of GameState.sd_anim_fast
+field	SaveGameView	unk_E20	voice_mode	image of GameState.voice_mode
+field	SaveGameView	unk_E24	last_command	image of GameState.last_command
+field	SaveGameView	unk_E28	cursor_speed	image of GameState.cursor_speed
+field	SaveGameView	unk_E29	click_mode	image of GameState.click_mode
+field	SaveGameView	unk_E2A	double_click_interval	image of GameState.double_click_interval
+field	SaveGameView	unk_E2B	confirm_button	image of GameState.confirm_button
+field	SaveGameView	unk_E2C	quarter_flags	image of GameState.quarter_flags
+type	main	SaveBank	CardBank	one 0xF00-byte bank of card_block: byte-sum word and 0xEFC data bytes; a save file holds two identical banks
+comment	main	card_ev_set	Open the memory-card BIOS events (software and hardware), init and start the card driver and turn the BIOS auto-detect off.	O.BIN name kept; comment states behaviour read from the code
+comment	main	Sw_Start	Open and enable the four software-level card events (done, error, timeout, new card).	O.BIN name kept; comment states behaviour read from the code
+comment	main	Hw_Start	Open and enable the four hardware-level card events (done, error, timeout, new card).	O.BIN name kept; comment states behaviour read from the code
+comment	main	Sw_Test	Poll the software card events once and store done 1, error 2, timeout 4 or new card 8 in card_result (0 when none); clears the events.	O.BIN name kept; comment states behaviour read from the code
+comment	main	Sw_Clear	Reset the four software card events.	O.BIN name kept; comment states behaviour read from the code
+comment	main	Hw_Test	Wait (spin) until a hardware card event fires and store 0x81, 0x82, 0x84 or 0x88 in card_result; clears the events.	O.BIN name kept; comment states behaviour read from the code
+comment	main	Hw_Clear	Reset the four hardware card events.	O.BIN name kept; comment states behaviour read from the code
+comment	main	Hw_Stop	Close the four hardware card events.	O.BIN name kept; comment states behaviour read from the code
+comment	main	ovl_load_poll	Overlay loader state 1: go to state 2 when the CD read has finished.	name from the English-patch notes (config/symbol_addrs.txt); comment states behaviour read from the code
+comment	main	ovl_load_verify	Overlay loader state 2: check the file sum; state 3 when it matches, else forget the LBA and start over.	name from the English-patch notes (config/symbol_addrs.txt); comment states behaviour read from the code
+const	BootLayout	0x801FEFF0	BOOT_STACK_TOP	stack pointer set by boot_start
+const	BootLayout	0x801FF800	BOOT_HEAP_BASE	heap start given to InitHeap by boot_start
+const	BootLayout	0x7F0	BOOT_HEAP_SIZE	heap size given to InitHeap by boot_start
+const	BootLayout	0x800E60A0	BOOT_CLEAR_START	boot_start zeroes from here
+const	BootLayout	0x45498	BOOT_CLEAR_SIZE	boot_start zeroes this many bytes (up to 0x8012B538, the end of bss)
+const	Screen	0x140	SCREEN_WIDTH	display and draw width of game_state_init, gpu_env_reset and vram_clear callers
+const	Screen	0xF0	SCREEN_HEIGHT	display and draw height
+const	GameStart	0x5F	GAME_START_YEAR	calendar_init: year 95 (the year byte is the year mod 100, 1995)
+const	GameStart	0x32	GIRL_START_AFFECTION	girls_init: affection of every girl record at the start
+const	OvlLoad	0x80132000	OVL_SLOT_BASE	load address of every overlay and the default overlay_entry
+const	OvlLoad	0x60	OVL_FILE_SECTORS	sectors read per overlay file (0x60 * 0x800 = 196608 bytes, every .EXN)
+const	OvlLoadState	0	OVL_LOAD_START	ovl_load_start picks the file and starts the read, or skips to OVL_LOAD_ENTER when the same file is resident
+const	OvlLoadState	1	OVL_LOAD_READING	ovl_load_poll waits for the read
+const	OvlLoadState	2	OVL_LOAD_VERIFY	ovl_load_verify checks the file sum; a mismatch returns to state 0 with the LBA forgotten, so the read repeats
+const	OvlLoadState	3	OVL_LOAD_ENTER	ovl_load_enter sets the entry and returns to the target mode
+const	OvlLoadScreen	0	OVL_SCREEN_SCENE	loader screen shows the last scene backdrop (default)
+const	OvlLoadScreen	1	OVL_SCREEN_WIPE	loader screen wipes over a captured frame
+const	OvlLoadScreen	2	OVL_SCREEN_BLANK	any other value: cleared screen; never written
+const	OvlLba	0x910A	OVL_LBA_CULTURE_FESTIVAL_TOUR	HYPOTHESIS: the folder name culture_festival_tour is unproven (the ADR map keeps it as confirm). Disc file and mode are facts: BUNKAKEN.EXN, mode 0x71
+const	OvlLba	0x916A	OVL_LBA_CULTURE_FESTIVAL	BUNKASAI.EXN, mode 0x70
+const	OvlLba	0x91CA	OVL_LBA_CULTURE_STAGE_SHOWS	BUNKA_SD.EXN, mode 0x80
+const	OvlLba	0x922A	OVL_LBA_DATE	DATE.EXN, modes 0x50 and 0x5E
+const	OvlLba	0x928A	OVL_LBA_AMUSEMENT_PARK_DATE	DATE2.EXN, modes 0x58 and 0x5C
+const	OvlLba	0x92EA	OVL_LBA_ENDING	ENDING.EXN, mode 0x63
+const	OvlLba	0x934A	OVL_LBA_FESTIVAL_STALLS	EN_NICHI.EXN, mode 0x82
+const	OvlLba	0x93AA	OVL_LBA_MISC_SCENES	HYPOTHESIS: the meaning of modes 0xC2-0xC4 inside misc_scenes is unproven (the ADR map keeps them as confirm). Disc file and modes are facts: ETC.EXN, modes 0x35 0x36 0x37 0x91 0xC2 0xC3 0xC4
+const	OvlLba	0x946A	OVL_LBA_GIRL_ENCOUNTERS	HYPOTHESIS: the folder name girl_encounters is unproven (the ADR map keeps it as confirm). Disc file and modes are facts: GEKO.EXN, modes 0x56 0x57 0x59 0x5A 0x5D
+const	OvlLba	0x952A	OVL_LBA_SUMMER_CAMP	HYPOTHESIS: the folder name summer_camp is unproven (the ADR map keeps it as confirm; core also marks modes 0x5F/0x60 as a hypothesis). Disc file and modes are facts: KANGEI.EXN, modes 0x5F and 0x60
+const	OvlLba	0x958A	OVL_LBA_CLUB_MASTER	MASTER.EXN, modes 0x74 0x75 0x76
+const	OvlLba	0x95EA	OVL_LBA_NAME_ENTRY	NAME_ENT.EXN, modes 0x11 0x13 0x14 0x15
+const	OvlLba	0x96AA	OVL_LBA_HELP	OLH.EXN, mode 0x3A
+const	OvlLba	0x970A	OVL_LBA_SICK_VISIT	OMIMAI.EXN, modes 0x61 and 0x62
+const	OvlLba	0x976A	OVL_LBA_OPTIONS	OPTION.EXN, modes 0x20 0x21 0x22
+const	OvlLba	0x97CA	OVL_LBA_PRACTICE_MATCH	RENSYU.EXN, mode 0x73
+const	OvlLba	0x982A	OVL_LBA_RPG_BATTLE	RPG_BAT.EXN, mode 0x81
+const	OvlLba	0x988A	OVL_LBA_NEW_YEAR_CHRISTMAS	HYPOTHESIS: the folder name new_year_christmas is unproven (the ADR map keeps it as confirm; core also marks mode 0x55 as a hypothesis). Disc file and modes are facts: SHOUGATU.EXN, modes 0x52 0x53 0x55 0x5B
+const	OvlLba	0x98EA	OVL_LBA_SCHOOL_TRIP	SHUGAKU.EXN, mode 0x51
+const	OvlLba	0x994A	OVL_LBA_SHOOTER_3D	TACO.EXN, the default arm: every mode the table does not list, in practice 0x90
+const	OvlLba	0x99AA	OVL_LBA_SPORTS_FESTIVAL	TAIIKU.EXN, mode 0x72
+const	OvlLba	0x9A0A	OVL_LBA_TELEPHONE	TEL.EXN, modes 0x43 and 0x45
+const	OvlLba	0x9A6A	OVL_LBA_TT	TT.EXN, mode 0xD0; read by mode_tt_game (the loader's own 0xD0 case is never reached: 0xD0 is not an overlay-request mode)
+const	OvlLba	0x9ACA	OVL_LBA_VALENTINE	VALEN.EXN, mode 0x54
+const	TtLoadStage	0	TT_STAGE_READ_START	mode_tt_game stage 0: flags, VRAM clear, start the read
+const	TtLoadStage	1	TT_STAGE_READ_WAIT	wait for the read
+const	TtLoadStage	2	TT_STAGE_VERIFY	file sum check; a mismatch restarts at stage 0
+const	TtLoadStage	3	TT_STAGE_RUN	call the TT entry; it returns when the game is left
+const	TtLoadStage	4	TT_STAGE_RESTORE	timer event, sound, CD and decode state restored
+const	TtLoadStage	5	TT_STAGE_SAVE	mode_tt_game_save_step writes the system file
+const	TtLoadStage	6	TT_STAGE_RETURN	back to saved_mode/stage/step, or to mode 0 when options_dirty is set
+const	PadCombo	0x90C	PAD_COMBO_RESET	SELECT + START + L1 + R1 on pad 1
+const	PadCombo	0x090C0000	PAD_COMBO_RESET_PAD2	the same four buttons on pad 2: the reset goes to mode 0x11 instead of 0
+const	PadCombo	0xF00000	PAD_COMBO_TURBO	triangle, circle, cross and square of pad 2 held together
+const	PadCombo	0x08000800	PAD_COMBO_START_ANY	START of pad 1 or pad 2
+const	PadCombo	0x08000000	PAD_P2_START	START of pad 2: toggles sd_anim_fast
+const	PadCombo	0xC0000	PAD_COMBO_DEBUG_VIEW	L1 + R1 of pad 2 held with debug_hud_enabled: main_loop runs the VRAM view
+const	PadCombo	0xA0000	PAD_COMBO_DEBUG_STEP	R2 or R1 of pad 2 pressed with debug_hud_enabled: main_loop calls debug_hud_level_step(1)
+const	PadCombo	0x860	PAD_COMBO_ADVANCE	START, cross or circle: skips the title intro stages
+const	PadCombo	0x820	PAD_COMBO_CONFIRM	START or circle: confirms the title menu
+const	PadCombo	0xF9DF	PAD_MASK_TURBO_CANCEL	buttons that switch the turbo off (everything except circle, L3 and R3)
+const	PadTiming	0x81	PAD_RESET_HOLD_FRAMES	the soft reset runs when pad_reset_frames already holds this value (the 130th frame of the hold)
+const	PadTiming	0x12	PAD_CODE_LENGTH	entries of pad_code_table
+const	PadTiming	0x10	PAD_CODE_WINDOW_FRAMES	frames allowed between two matches of the secret code
+const	CardResult	0	CARD_RESULT_BUSY	job running (also written by every step change)
+const	CardResult	1	CARD_RESULT_OK	card_check_poll finished: a formatted card is present
+const	CardResult	2	CARD_RESULT_SCAN_DONE	card_scan_poll finished
+const	CardResult	3	CARD_RESULT_SYSTEM_READ_DONE	card_system_read_poll finished
+const	CardResult	4	CARD_RESULT_SAVE_READ_DONE	card_save_read_poll finished
+const	CardResult	0x13	CARD_RESULT_SYSTEM_WRITE_DONE	card_system_write_poll finished
+const	CardResult	0x14	CARD_RESULT_SAVE_WRITE_DONE	card_save_write_poll finished
+const	CardResult	0xD0	CARD_RESULT_FILE_ERROR	a file read or write could not start (open or read failed 16 times)
+const	CardResult	0xF0	CARD_RESULT_IO_ERROR	HYPOTHESIS: name only, as in the m-sysmenu row; set when a file job reaches card_step 16; callers treat it like a timeout; no code in src sets that step
+const	CardResult	0xF1	CARD_RESULT_UNFORMATTED	card_check_poll: the card reports a new card after the reload
+const	CardResult	0xFF	CARD_RESULT_NO_CARD	card_event_handle: three timeouts within one job
+const	CardEvent	1	CARD_EVENT_DONE	Sw_Test: the operation finished
+const	CardEvent	2	CARD_EVENT_ERROR	Sw_Test: error
+const	CardEvent	4	CARD_EVENT_TIMEOUT	Sw_Test: timeout
+const	CardEvent	8	CARD_EVENT_NEW_CARD	Sw_Test: a new card was detected
+const	CardEvent	0x81	CARD_HW_EVENT_DONE	Hw_Test: hardware-level finish
+const	CardEvent	0x82	CARD_HW_EVENT_ERROR	Hw_Test: error
+const	CardEvent	0x84	CARD_HW_EVENT_TIMEOUT	Hw_Test: timeout
+const	CardEvent	0x88	CARD_HW_EVENT_NEW_CARD	Hw_Test: new card
+const	CardCheckStep	0	CARD_CHECK_INFO	card_check_poll: request the card info
+const	CardCheckStep	1	CARD_CHECK_INFO_WAIT	wait for the event; a new card goes to CARD_CHECK_CLEAR
+const	CardCheckStep	2	CARD_CHECK_LOAD	load the card's file table
+const	CardCheckStep	3	CARD_CHECK_LOAD_WAIT	wait; a new card here means unformatted
+const	CardCheckStep	4	CARD_CHECK_DONE	result CARD_RESULT_OK
+const	CardCheckStep	0x20	CARD_CHECK_CLEAR	wait one frame, clear the BIOS state, then spin on the hardware event
+const	CardCheckStep	0x30	CARD_CHECK_RELOAD	load the file table again
+const	CardCheckStep	0x31	CARD_CHECK_RELOAD_WAIT	wait; a new card goes to CARD_CHECK_UNFORMATTED
+const	CardCheckStep	0x32	CARD_CHECK_RELOAD_DONE	result CARD_RESULT_OK
+const	CardCheckStep	0x40	CARD_CHECK_UNFORMATTED	result CARD_RESULT_UNFORMATTED
+const	CardTiming	0x200	CARD_TIMEOUT_FRAMES	callers end a card job when card_timer is above this (tests >= 0x201); same row as m-sysmenu
+const	CardRetry	3	CARD_RETRY_MAX	card events or status codes that restart a job at most this often
+const	CardRetry	0x10	CARD_IO_TRIES	open, read and write attempts of the file functions
+const	CardLayout	0x2000	CARD_FILE_SIZE	one memory-card file: one block of 8192 bytes
+const	CardLayout	0x200	CARD_HEADER_SIZE	header of the file: magic, icon flag, title, palette, icon frames
+const	CardLayout	0xF00	CARD_BANK_SIZE	one data bank; two follow the header
+const	CardIcon	0xD	CARD_ICON_COUNT	13 save icons; an icon index of 13 or more uses icon 0
+const	TitleStage	0	TITLE_STAGE_SETUP	mode_title stage 0: loads and builds the intro (title_setup_stage)
+const	TitleStage	1	TITLE_STAGE_INTRO	backdrop and flying photos, flash, logo reveal (title_intro_stage)
+const	TitleStage	2	TITLE_STAGE_MENU	two-item menu (title_menu_stage)
+const	TitleStage	3	TITLE_STAGE_EXIT	fade out and leave to the chosen mode (title_exit_stage)
+const	TitleSetupSubstep	0	TITLE_SETUP_RESET	reset screen state, start the sound bank load
+const	TitleSetupSubstep	1	TITLE_SETUP_MODEL_READ	start the BGM and read the model sector
+const	TitleSetupSubstep	2	TITLE_SETUP_TEXTURE_READ	copy the model sector and read the texture block
+const	TitleSetupSubstep	3	TITLE_SETUP_BUILD	upload palettes and textures, set up actors, view, lights, models
+const	TitleIntroStep	0	TITLE_INTRO_BACKDROP	fade-in and 601 frames of flying photos
+const	TitleIntroStep	1	TITLE_INTRO_FLASH	510 frames of rising flash level, then the logo actor
+const	TitleIntroStep	2	TITLE_INTRO_LOGO	255 frames of falling flash level
+const	TitleMenuStep	0	TITLE_MENU_SETUP	build the two menu items
+const	TitleMenuStep	1	TITLE_MENU_SELECT	choose and confirm; idle timeout
+const	TitleMenuStep	2	TITLE_MENU_CONFIRM	0x21 frames of highlight
+const	TitleExitStep	0	TITLE_EXIT_FADE	0x80 frames of fade
+const	TitleExitStep	1	TITLE_EXIT_DISPATCH	set the next mode
+const	TitleItem	0	TITLE_ITEM_GAME_START	leaves to mode 0x13 (NAME_ENT)
+const	TitleItem	1	TITLE_ITEM_OPTIONS	leaves to mode 0x20 (OPTION)
+const	TitleTiming	0x259	TITLE_WAIT_FRAMES	601 frames: length of intro step 0 and the idle timeout of the menu
+const	TitleTiming	0x21	TITLE_CONFIRM_FRAMES	highlight time after a choice
+const	TitleTiming	0x80	TITLE_EXIT_FADE_FRAMES	fade time before the next mode
+const	TitlePhotos	0xD	TITLE_PHOTO_COUNT	13 photo models of the intro (also the TMD object count title_models_link requires)
