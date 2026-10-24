@@ -1,10 +1,10 @@
 ---
 id: T-27014
 title: Phase 2 naming and spec for m-dates-a (src/main/80079B10.c, which is the sound driver)
-status: In Review
+status: Done
 assignee: Sonnet 5.5 analyst (workflow p2a)
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-23
 links: [[[tickets/T-27000-phase-2]], [[spec/m-dates-a]]]
 ---
 
@@ -17,7 +17,7 @@ Name every function and global of `src/main/80079B10.c`, the fields and types it
 - [x] `config/renames/proposals/m-dates-a.tsv`: one row per rename (kind scope old new note), a comment row for the O.BIN-named function that is applied in the repo (`SD_InitCDLevelInfo`), hypotheses marked with `HYPOTHESIS:` first in the note, one name per (unit, address).
 - [x] `wiki/spec/m-dates-a.md`: what the module does, state and data, the command protocol, rules (fades, voice clips, banks), connections, open questions; linked from `wiki/spec/index.md`.
 - [x] Facts only, no game text, no asm, no screenshots, nothing from `disc/`.
-- [ ] Review by the orchestrator, then merge the table into the rename tool input.
+- [x] Review by the orchestrator (approved after the round 1 fix), then merge the table into the rename tool input.
 
 ## Notes
 
@@ -30,3 +30,4 @@ Name every function and global of `src/main/80079B10.c`, the fields and types it
 ## Comments
 - 2026-10-24 (Sonnet 5.5): table and spec written, In Review.
 - 2026-10-24 (fix agent, review round 1): reviewer finding fixed. The pause/resume description (table rows `SND_CMD_PAUSE_XA`, `SND_CMD_RESUME_XA`, `SND_STATE_XA_PAUSED`, `snd_xa_control`, `snd_xa_promote_next`, `xa_resume_pos`; spec sections 3.1, 3.3, 4, 8.4, 12, 15) now follows the class-0 path the game uses. Also fixed: `snd_init` caller (`func_80042134`), the `snd_xa_check_end` note, the command 5 and bank-set claims (HYPOTHESIS marks, six of ten command 5 senders sit next to a bank load), the `SsSetTickMode` row. Left for the orchestrator: ownership of `normal_date_*` and related code (unit label), O.BIN naming policy, kanban card for this ticket.
+- 2026-10-23 (review, approved): the blocking finding from round 1 is resolved and no new clear errors turned up. Every place it named was checked against `src/main/80079B10.c` and the RPG_BAT and BUNKA_SD senders; the emulator was not run, and the fix commit changes only the table, the spec, the ticket and the log. Voice-clip pause and resume now match the C. Class-0 path: `snd_control_dispatch` (`func_8007A080`) calls `snd_xa_control` (`func_8007A98C`) and then `snd_xa_promote_next` (`func_8007A868`) for 0xE4 and 0xF4; the promote clears 0x400, 0x4000, 0x200 and 0x100, zeroes the level meter words, overwrites the resume position and clip words, and issues no CD command. 0xE4 with the start pending: the C stops the CD with command 9, then the promote forgets the clip. 0xE4 with the clip playing: the C sets 0x4000 and starts fade 0xB4, and the promote cancels both in the same call, so no stop is issued (the text says so). 0xF4 never acts because 0x4000 is already clear; the spec says so and notes there is no sender. The class-3 forms 0x2300 and 0x4300 skip the promote, and nothing sends them. A sender grep confirms 0xE4 at 3 RPG_BAT sites and 1 BUNKA_SD site, and 0xF4 never sent. The RPG_BAT case order (0x300, then 0xE4 in the next case) is marked HYPOTHESIS, and spec open question 8 asks for an emulator run to settle it. Scope: the branch changes only `config/renames/proposals/m-dates-a.tsv` and wiki files; nothing under `src/`, `include/` or `config/symbol*`. Moves to Done.
