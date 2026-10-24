@@ -63,7 +63,7 @@ func	RPG_BAT	func_8014F0BC	rpg_battle_enemy_wait_substep	enemy channel timer the
 func	RPG_BAT	func_8014F0F8	rpg_battle_enemy_wait_anim_step	waits actor animation end, then step++
 func	RPG_BAT	func_8014F138	rpg_battle_enemy_wait_anim_substep	waits actor animation end, then substep++
 func	RPG_BAT	func_8014F178	rpg_battle_enemy_wait_msg_step	waits message end, then step++
-func	RPG_BAT	func_8014F1D4	rpg_battle_enemy_wait_msg_substep	waits message end, then substep++
+func	RPG_BAT	func_8014F1D4	rpg_battle_enemy_wait_msg_substep_unused	no caller; waits message end, then substep++
 func	RPG_BAT	func_8014F230	rpg_battle_girl_step_next	girl channel D_8015EE00: step++ and clear sub/timers
 func	RPG_BAT	func_8014F258	rpg_battle_girl_substep_next	girl channel: substep++
 func	RPG_BAT	func_8014F278	rpg_battle_girl_action_end	clears girl channel, latches, effect records
@@ -75,7 +75,7 @@ func	RPG_BAT	func_8014F448	rpg_battle_girl_wait_msg_step	waits message end, then
 func	RPG_BAT	func_8014F4A4	rpg_battle_girl_wait_msg_substep	waits message end, then substep++
 func	RPG_BAT	func_8014F500	rpg_battle_finale_step_next	finale channel D_8015EE30: step++
 func	RPG_BAT	func_8014F524	rpg_battle_finale_substep_next	finale channel: substep++
-func	RPG_BAT	func_8014F540	rpg_battle_finale_clear	clears finale channel and battle-over flag
+func	RPG_BAT	func_8014F540	rpg_battle_finale_clear_unused	no caller; would clear the finale channel and the battle-over flag
 func	RPG_BAT	func_8014F5DC	rpg_battle_finale_wait_step	finale channel timer then step++
 func	RPG_BAT	func_8014F618	rpg_battle_finale_wait_substep_unused	no caller
 func	RPG_BAT	func_8014F654	rpg_battle_finale_wait_anim_step_unused	no caller
