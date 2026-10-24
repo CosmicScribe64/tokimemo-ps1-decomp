@@ -236,12 +236,12 @@ Reading the table: scene 1 of every girl is a short school or home meeting (corr
 | 6 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
 | 7 | `spot_place_tables_load_step` | reads 3 sectors from dev-disc sector 0xA143 to 0x801A4000 (per-place result byte tables) and stores their addresses with spot_plac |
 | 8 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
-| 9 | `spot_place_neighborhood_park_arrival` | arrival step of the place neighborhood_park (0): sets the dialogue source cells D_8009473C/40/44, the place label, the variant D_8 |
+| 9 | `spot_place_neighborhood_park_arrival` | placeholder: replaced for the frame by the arrival step of the current place (place 0 keeps this one: label, background read, dialogue source cells) |
 | 10 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
 | 11 | `spot_devmain_dec_init` | dec_init (shipped twin) |
 | 12 | `spot_devmain_change_dec_bg` | change_dec_bg (shipped twin) |
 | 13 | `spot_place_intro_step` | arrival step 13: computes the dialogue group offset D_80124344 from mood tier and arrival mode, clears the outcome cells and flags |
-| 14 | `func_80045BEC` | dev-main step |
+| 14 | `func_80045BEC` | dev-main step, not identified |
 | 15 | `spot_devmain_place_init` | place_init (shipped twin) |
 | 16 | `spot_meeting_names_step` | sets the two speaker labels from the place name table: the place of D_800B0F2D (or of D_800B0F2E when it equals the appointment pl |
 | 17 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arri |
@@ -249,7 +249,7 @@ Reading the table: scene 1 of every girl is a short school or home meeting (corr
 | 19 | `spot_meeting_decide_step` | place decision after the girl proposes places: when the first two appointment places agree and the choice is 0 it flags D_801243B4 |
 | 20 | `spot_arrival_talk_step_common` | talk step with choice 0xFF and the cells D_80124384/88 with the common tables D_801241D4/E4/F4; used at five positions of the arri |
 | 21 | `spot_devmain_normal_date_bg_fadeout` | normal_date_bg_fadeout (shipped twin) |
-| 22 | `spot_place_neighborhood_park_arrival` | arrival step of the place neighborhood_park (0): sets the dialogue source cells D_8009473C/40/44, the place label, the variant D_8 |
+| 22 | `spot_place_neighborhood_park_arrival` | placeholder: replaced for the frame by the arrival step of the current place (place 0 keeps this one: label, background read, dialogue source cells) |
 | 23 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
 | 24 | `spot_devmain_dec_init` | dec_init (shipped twin) |
 | 25 | `spot_devmain_change_dec_bg` | change_dec_bg (shipped twin) |
@@ -264,7 +264,7 @@ Reading the table: scene 1 of every girl is a short school or home meeting (corr
 | 34 | `spot_devmain_read_bustup` | read_bustup (shipped twin) |
 | 35 | `spot_devmain_scene_wait_cd_read` | scene_wait_cd_read (shipped twin) |
 | 36 | `spot_bustup_addr_init_step` | addr_init_bustup (dev func_80045B14): sets the portrait sprite addresses of the current girl, then step_next |
-| 37 | `func_8004AB74` | dev-main step |
+| 37 | `func_8004AB74` | dev-main step, not identified |
 | 38 | `spot_reaction_rows_build_step` | for the three reaction cells: row A = result cell (0 becomes 1, 4 becomes 3, 3 when the current place equals the girl favourite by |
 | 39 | `spot_arrival_wait_step` | when the arrival mode is 0 and D_801243B4 is 0 calls the dev wait helper (dev func_80046B88 with 0x80) and stays; otherwise step_n |
 | 40 | `spot_low_looks_penalty_step` | if the looks value (dev +0x106) is below 0x1E (below 0x23 for Mira) sets the dialogue group offset to 0xC, skips 0xF steps and low |
@@ -412,6 +412,8 @@ The tables below are the evidence behind the `spot_devmain_*` names. Function tw
 | func_80046598 | 36 | `spot_devmain_normal_date_bg_fadeout` | normal_date_bg_fadeout (0x8007E934) | 18 of 33 table-slot votes (moderate) |
 | func_800335E0 | 32 | `spot_devmain_bustup_read_start` | bustup_read_start (0x80062CD0) | 18 of 40 aligned call sites, the rest pair with other readers |
 | func_80012D40 | 26 | `spot_devmain_back_clear_switch` | back_clear_switch (0x800438F0) | 27 of 27 aligned scene-init sequences |
+
+24 dev primitives in the tables (145 slots) are not identified; the commonest are `func_80046900` (29 slots), `func_80045BEC` (26), `func_8004B5E4` (25), `func_8004A89C` (15, in the `bustup_expression_*` family) and `func_800464E8` (10). Their roles stay open; none carries a rule that the port needs.
 
 Data twins:
 
