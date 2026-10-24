@@ -1,248 +1,248 @@
 # kind	scope	old	new	note
-func	BUNKAKEN	func_80139E50	festival_visit_stage_solo_route	stage 5 (0x5): picks the exhibit stage of the solo block from festival_club and the year; no companion (festival_companion 0xFF); emu: club 4 year 95 went to stage 14
-func	BUNKAKEN	func_80139FB8	festival_visit_stage_solo_lit_collection	stage 6 (0x6): literature club, years 95 and 96 in one stage (window title and first group by year); no companion (festival_companion 0xFF); script BUN_PC; bg D_01_67; 14 steps
-func	BUNKAKEN	func_8013A118	festival_visit_stage_solo_lit_speech	stage 7 (0x7): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); no companion (festival_companion 0xFF); script BUN_PC; bg D_30_01; show variant 4; 16 steps
-func	BUNKAKEN	func_8013A2FC	festival_visit_stage_solo_drama	stage 8 (0x8): drama club play on the hall stage (BUNKA_SD show), every year; no companion (festival_companion 0xFF); script BUN_PC; bg D_30_01; BUNKA_SD show; 17 steps
-func	BUNKAKEN	func_8013A518	festival_visit_stage_solo_science	stage 9 (0x9): science club experiment show (BUNKA_SD show), every year; no companion (festival_companion 0xFF); script BUN_PC; bg D_01_69; show variant 1; 16 steps; emu: show round trip with variant 1, return pair (9, 8), BUNKA_SD ran in mode 0x80 and mode 0x71 resumed at step 8
-func	BUNKAKEN	func_8013A6F4	festival_visit_stage_solo_comp_fortune	stage 10 (0xA): computer club, year 95: fortune telling by blood type (sub-stage 11); no companion (festival_companion 0xFF); script BUN_PC; bg D_01_70; calls sub-stage 11; 14 steps
-func	BUNKAKEN	func_8013A8CC	festival_visit_stage_solo_comp_game	stage 12 (0xC): computer club, year 96: game exhibit (TT shooter); no companion (festival_companion 0xFF); script BUN_PC; bg D_01_70; TT via narrator stage 141 (interactive run, direct stage 0); 18 steps; emu: year 1996 club 3 went to the narrator stage 141 and TT
-func	BUNKAKEN	func_8013ABF0	festival_visit_stage_solo_comp_experiment	stage 13 (0xD): computer club, year 97: experiment show (BUNKA_SD show); no companion (festival_companion 0xFF); script BUN_PC; bg D_01_70; show variant 1; 16 steps
-func	BUNKAKEN	func_8013ADC4	festival_visit_stage_solo_art_portrait	stage 14 (0xE): art club, year 95: portrait drawing; no companion (festival_companion 0xFF); script BUN_PC; bg D_01_71; 10 steps; emu: solo run to the end, refused girl lost 10 affection
-func	BUNKAKEN	func_8013AF00	festival_visit_stage_solo_art_sketch	stage 15 (0xF): art club, year 96: open sketching; no companion (festival_companion 0xFF); script BUN_PC; bg D_01_72; portrait YO02; 23 steps
-func	BUNKAKEN	func_8013B170	festival_visit_stage_solo_art_oil	stage 16 (0x10): art club, year 97: oil painting exhibit; no companion (festival_companion 0xFF); script BUN_PC; bg D_01_71; 14 steps
-func	BUNKAKEN	func_8013B2AC	festival_visit_stage_solo_brass	stage 17 (0x11): brass band concert on the hall stage (BUNKA_SD show); no companion (festival_companion 0xFF); script BUN_PC; bg D_30_01; show variant 0; 16 steps
-func	BUNKAKEN	func_801325B0	festival_visit_stage_shiori_companion_route	stage 18 (0x12): picks the exhibit stage of the shiori companion block from festival_club and the year; Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); emu: companion 0xB club 0 year 95 went to stage 19
-func	BUNKAKEN	func_80132774	festival_visit_stage_shiori_companion_lit_poems	stage 19 (0x13): literature club, year 95: poem collection exhibit; Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_01_67; gate: param_liberal_arts >= 120 picks the first of two lines; 18 steps
-func	BUNKAKEN	func_80132AC4	festival_visit_stage_shiori_companion_lit_anthology	stage 20 (0x14): literature club, year 96: anthology exhibit; Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_01_67; 17 steps
-func	BUNKAKEN	func_80132D40	festival_visit_stage_shiori_companion_lit_speech	stage 21 (0x15): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_30_01; portrait HU02; show variant 1; 17 steps
-func	BUNKAKEN	func_80133020	festival_visit_stage_shiori_companion_drama	stage 22 (0x16): drama club play on the hall stage (BUNKA_SD show), every year; Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_30_01; portrait HU02; BUNKA_SD show; 19 steps
-func	BUNKAKEN	func_801333A8	festival_visit_stage_shiori_companion_science	stage 23 (0x17): science club experiment show (BUNKA_SD show), every year; Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_01_69; portrait HU02; show variant 1; 17 steps
-func	BUNKAKEN	func_801336AC	festival_visit_stage_shiori_companion_comp_fortune	stage 24 (0x18): computer club, year 95: fortune telling by blood type (sub-stage 11); Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_01_70; calls sub-stage 11; 18 steps
-func	BUNKAKEN	func_801339F4	festival_visit_stage_shiori_companion_comp_game	stage 25 (0x19): computer club, year 96: game exhibit (TT shooter); Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_01_70; portrait HU02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 23 steps
-func	BUNKAKEN	func_80133EC4	festival_visit_stage_shiori_companion_comp_experiment	stage 26 (0x1A): computer club, year 97: experiment show (BUNKA_SD show); Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_01_70; portrait HU02; show variant 1; 17 steps
-func	BUNKAKEN	func_801341A4	festival_visit_stage_shiori_companion_art_portrait	stage 27 (0x1B): art club, year 95: portrait drawing; Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_01_71; 16 steps
-func	BUNKAKEN	func_80134400	festival_visit_stage_shiori_companion_art_sketch	stage 28 (0x1C): art club, year 96: open sketching; Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_01_72; 12 steps
-func	BUNKAKEN	func_801345CC	festival_visit_stage_shiori_companion_art_oil	stage 29 (0x1D): art club, year 97: oil painting exhibit; Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_01_71; gate: param_art >= 120 picks the first of two lines; 18 steps
-func	BUNKAKEN	func_8013491C	festival_visit_stage_shiori_companion_brass	stage 30 (0x1E): brass band concert on the hall stage (BUNKA_SD show); Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_30_01; portrait HU02; show variant 0; 17 steps
-func	BUNKAKEN	func_80134C1C	festival_visit_stage_shiori_companion_brass_y97	stage 31 (0x1F): brass band concert, year 97 variant (BUNKA_SD show); Shiori accompanying the player, her club id 6 or more (festival_companion 0xB); script FU_S6W; bg D_30_01; portrait HU02; show variant 0; gate: param_art >= 120 picks the first of two lines; 21 steps
-func	BUNKAKEN	func_8014A6A0	festival_visit_stage_shiori_club_route	stage 32 (0x20): picks the exhibit stage of the shiori club block from festival_club and the year; Shiori at her own club (companion set to 0)
-func	BUNKAKEN	func_8014A9A8	festival_visit_stage_shiori_club_lit_collection	stage 33 (0x21): literature club, years 95 and 96 in one stage (window title and first group by year); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_67; portrait HU02; 21 steps
-func	BUNKAKEN	func_8014AF48	festival_visit_stage_shiori_club_lit_speech	stage 34 (0x22): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_68/D_30_01; portrait HU02; show variant 2; 23 steps
-func	BUNKAKEN	func_8014B378	festival_visit_stage_shiori_club_drama	stage 35 (0x23): drama club play on the hall stage (BUNKA_SD show), every year; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_68/D_30_01; portrait HU03; BUNKA_SD show; 23 steps
-func	BUNKAKEN	func_8014B7B8	festival_visit_stage_shiori_club_science	stage 36 (0x24): science club experiment show (BUNKA_SD show), every year; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_69; portrait HU05; show variant 1/2; 24 steps
-func	BUNKAKEN	func_8014BD80	festival_visit_stage_shiori_club_comp_fortune	stage 37 (0x25): computer club, year 95: fortune telling by blood type (sub-stage 11); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_70; portrait HU02; calls sub-stage 11; 27 steps
-func	BUNKAKEN	func_8014C374	festival_visit_stage_shiori_club_comp_game	stage 38 (0x26): computer club, year 96: game exhibit (TT shooter); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_70; portrait HU02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 31 steps
-func	BUNKAKEN	func_8014CB4C	festival_visit_stage_shiori_club_comp_experiment	stage 39 (0x27): computer club, year 97: experiment show (BUNKA_SD show); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_70; portrait HU02; show variant 1/2; 24 steps
-func	BUNKAKEN	func_8014D0FC	festival_visit_stage_shiori_club_art_portrait	stage 40 (0x28): art club, year 95: portrait drawing; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_71; portrait HU04/IJ02; 36 steps
-func	BUNKAKEN	func_8014D65C	festival_visit_stage_shiori_club_art_sketch	stage 41 (0x29): art club, year 96: open sketching; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_72; portrait HU04/YO02; 28 steps
-func	BUNKAKEN	func_8014DB34	festival_visit_stage_shiori_club_art_oil	stage 42 (0x2A): art club, year 97: oil painting exhibit; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_71; portrait HU04; 21 steps
-func	BUNKAKEN	func_8014DFB8	festival_visit_stage_shiori_club_brass	stage 43 (0x2B): brass band concert on the hall stage (BUNKA_SD show); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_68/D_30_01; portrait HU02; show variant 1; 23 steps
-func	BUNKAKEN	func_8013BFE0	festival_visit_stage_mio_club_route	stage 44 (0x2C): picks the exhibit stage of the mio club block from festival_club and the year; Mio at her own club (companion set to 1)
-func	BUNKAKEN	func_8013C0AC	festival_visit_stage_mio_club_lit_collection	stage 45 (0x2D): literature club, years 95 and 96 in one stage (window title and first group by year); Mio at her own club (companion set to 1); script KS_S6O; bg D_01_67; portrait KI02; 21 steps
-func	BUNKAKEN	func_8013C634	festival_visit_stage_mio_club_lit_speech	stage 46 (0x2E): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); Mio at her own club (companion set to 1); script KS_S6O; bg D_01_68/D_30_01; portrait KI02; show variant 3; 23 steps
-func	BUNKAKEN	func_8013CA6C	festival_visit_stage_mio_club_drama	stage 47 (0x2F): drama club play on the hall stage (BUNKA_SD show), every year; Mio at her own club (companion set to 1); script KS_S6O; bg D_01_68/D_30_01; portrait KI03; BUNKA_SD show; 23 steps
-func	BUNKAKEN	func_80140F60	festival_visit_stage_yuina_club_route	stage 48 (0x30): picks the exhibit stage of the yuina club block from festival_club and the year; Yuina at her own club (companion set to 2)
-func	BUNKAKEN	func_80141088	festival_visit_stage_yuina_club_science	stage 49 (0x31): science club experiment show (BUNKA_SD show), every year; Yuina at her own club (companion set to 2); script HI_S6O; bg D_01_69; portrait HI05; show variant 1/3; 24 steps
-func	BUNKAKEN	func_80141654	festival_visit_stage_yuina_club_comp_fortune	stage 50 (0x32): computer club, year 95: fortune telling by blood type (sub-stage 11); Yuina at her own club (companion set to 2); script HI_S6O; bg D_01_70; portrait HI02; calls sub-stage 11; 23 steps
-func	BUNKAKEN	func_80141B80	festival_visit_stage_yuina_club_comp_game	stage 51 (0x33): computer club, year 96: game exhibit (TT shooter); Yuina at her own club (companion set to 2); script HI_S6O; bg D_01_70; portrait HI02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 30 steps
-func	BUNKAKEN	func_801422C4	festival_visit_stage_yuina_club_comp_experiment	stage 52 (0x34): computer club, year 97: experiment show (BUNKA_SD show); Yuina at her own club (companion set to 2); script HI_S6O; bg D_01_70; portrait HI02; show variant 1/3; 24 steps
-func	BUNKAKEN	func_801428D0	festival_visit_stage_ayako_club_route	stage 53 (0x35): picks the exhibit stage of the ayako club block from festival_club and the year; Ayako at her own club (companion set to 3)
-func	BUNKAKEN	func_80142A40	festival_visit_stage_ayako_club_art_portrait	stage 54 (0x36): art club, year 95: portrait drawing; Ayako at her own club (companion set to 3); script KT_S6O; bg D_01_71; portrait IJ02/KA04; 40 steps
-func	BUNKAKEN	func_80142FD4	festival_visit_stage_ayako_club_art_sketch	stage 55 (0x37): art club, year 96: open sketching; Ayako at her own club (companion set to 3); script KT_S6O; bg D_01_72; portrait KA04/YO02; 26 steps
-func	BUNKAKEN	func_80143494	festival_visit_stage_ayako_club_art_oil	stage 56 (0x38): art club, year 97: oil painting exhibit; Ayako at her own club (companion set to 3); script KT_S6O; bg D_01_71; portrait KA04; 21 steps
-func	BUNKAKEN	func_801438F8	festival_visit_stage_ayako_club_brass	stage 57 (0x39): brass band concert on the hall stage (BUNKA_SD show); Ayako at her own club (companion set to 3); script KT_S6O; bg D_01_68/D_30_01; portrait KA02; show variant 4; 24 steps
-func	BUNKAKEN	func_80137640	festival_visit_stage_saki_route	stage 58 (0x3A): picks the exhibit stage of the saki block from festival_club and the year; companion 4 (Saki); emu: companion 4 club 0 year 95 went to stage 59
-func	BUNKAKEN	func_80137804	festival_visit_stage_saki_lit_poems	stage 59 (0x3B): literature club, year 95: poem collection exhibit; companion 4 (Saki); script NI_S6W; bg D_01_67; 14 steps; emu: run to the end gave Saki +2 affection and +1 tokimeki
-func	BUNKAKEN	func_80137A38	festival_visit_stage_saki_lit_anthology	stage 60 (0x3C): literature club, year 96: anthology exhibit; companion 4 (Saki); script NI_S6W; bg D_01_67; 17 steps
-func	BUNKAKEN	func_80137CD8	festival_visit_stage_saki_lit_speech	stage 61 (0x3D): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 4 (Saki); script NI_S6W; bg D_30_01; portrait NI02; show variant 1; 17 steps
-func	BUNKAKEN	func_80137FB8	festival_visit_stage_saki_drama	stage 62 (0x3E): drama club play on the hall stage (BUNKA_SD show), every year; companion 4 (Saki); script NI_S6W; bg D_30_01; portrait NI02; BUNKA_SD show; 18 steps
-func	BUNKAKEN	func_80138340	festival_visit_stage_saki_science	stage 63 (0x3F): science club experiment show (BUNKA_SD show), every year; companion 4 (Saki); script NI_S6W; bg D_01_69; portrait NI02; show variant 1; 21 steps
-func	BUNKAKEN	func_801386C0	festival_visit_stage_saki_comp_fortune	stage 64 (0x40): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 4 (Saki); script NI_S6W; bg D_01_70; calls sub-stage 11; 18 steps
-func	BUNKAKEN	func_80138A08	festival_visit_stage_saki_comp_game	stage 65 (0x41): computer club, year 96: game exhibit (TT shooter); companion 4 (Saki); script NI_S6W; bg D_01_70; portrait NI02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 23 steps
-func	BUNKAKEN	func_80138EB8	festival_visit_stage_saki_comp_experiment	stage 66 (0x42): computer club, year 97: experiment show (BUNKA_SD show); companion 4 (Saki); script NI_S6W; bg D_01_70; portrait NI02; show variant 1; 17 steps
-func	BUNKAKEN	func_80139184	festival_visit_stage_saki_art_portrait	stage 67 (0x43): art club, year 95: portrait drawing; companion 4 (Saki); script NI_S6W; bg D_01_71; 14 steps
-func	BUNKAKEN	func_80139364	festival_visit_stage_saki_art_sketch	stage 68 (0x44): art club, year 96: open sketching; companion 4 (Saki); script NI_S6W; bg D_01_72; 14 steps
-func	BUNKAKEN	func_8013954C	festival_visit_stage_saki_art_oil	stage 69 (0x45): art club, year 97: oil painting exhibit; companion 4 (Saki); script NI_S6W; bg D_01_71; 14 steps
-func	BUNKAKEN	func_80139780	festival_visit_stage_saki_brass	stage 70 (0x46): brass band concert on the hall stage (BUNKA_SD show); companion 4 (Saki); script NI_S6W; bg D_30_01; portrait NI02; show variant 0; 17 steps
-func	BUNKAKEN	func_80139A6C	festival_visit_stage_saki_brass_y97	stage 71 (0x47): brass band concert, year 97 variant (BUNKA_SD show); companion 4 (Saki); script NI_S6W; bg D_30_01; portrait NI02; show variant 0; gate: param_art < 120 picks the second of two lines; 21 steps
-func	BUNKAKEN	func_80135060	festival_visit_stage_yukari_route	stage 72 (0x48): picks the exhibit stage of the yukari block from festival_club and the year; companion 5 (Yukari)
-func	BUNKAKEN	func_80135200	festival_visit_stage_yukari_lit_poems	stage 73 (0x49): literature club, year 95: poem collection exhibit; companion 5 (Yukari); script KO_S6W; bg D_01_67; 14 steps
-func	BUNKAKEN	func_8013544C	festival_visit_stage_yukari_lit_anthology	stage 74 (0x4A): literature club, year 96: anthology exhibit; companion 5 (Yukari); script KO_S6W; bg D_01_67; 17 steps
-func	BUNKAKEN	func_801356C8	festival_visit_stage_yukari_lit_speech	stage 75 (0x4B): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 5 (Yukari); script KO_S6W; bg D_30_01; portrait KO02; show variant 1; 17 steps
-func	BUNKAKEN	func_801359AC	festival_visit_stage_yukari_drama	stage 76 (0x4C): drama club play on the hall stage (BUNKA_SD show), every year; companion 5 (Yukari); script KO_S6W; bg D_30_01; portrait KO02; BUNKA_SD show; 18 steps
-func	BUNKAKEN	func_80135D00	festival_visit_stage_yukari_science	stage 77 (0x4D): science club experiment show (BUNKA_SD show), every year; companion 5 (Yukari); script KO_S6W; bg D_01_69; portrait KO02; show variant 1; 17 steps
-func	BUNKAKEN	func_80136008	festival_visit_stage_yukari_comp_fortune	stage 78 (0x4E): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 5 (Yukari); script KO_S6W; bg D_01_70; calls sub-stage 11; 18 steps
-func	BUNKAKEN	func_801362EC	festival_visit_stage_yukari_comp_game	stage 79 (0x4F): computer club, year 96: game exhibit (TT shooter); companion 5 (Yukari); script KO_S6W; bg D_01_70; portrait KO02; TT twice: recorded demo of TT stage 1, then the narrator stage 141 and an interactive TT run; 34 steps
-func	BUNKAKEN	func_801369CC	festival_visit_stage_yukari_comp_experiment	stage 80 (0x50): computer club, year 97: experiment show (BUNKA_SD show); companion 5 (Yukari); script KO_S6W; bg D_01_70; portrait KO02; show variant 1; 17 steps
-func	BUNKAKEN	func_80136CB0	festival_visit_stage_yukari_art_portrait	stage 81 (0x51): art club, year 95: portrait drawing; companion 5 (Yukari); script KO_S6W; bg D_01_71; 14 steps
-func	BUNKAKEN	func_80136E9C	festival_visit_stage_yukari_art_sketch	stage 82 (0x52): art club, year 96: open sketching; companion 5 (Yukari); script KO_S6W; bg D_01_72; 13 steps
-func	BUNKAKEN	func_80137080	festival_visit_stage_yukari_art_oil	stage 83 (0x53): art club, year 97: oil painting exhibit; companion 5 (Yukari); script KO_S6W; bg D_01_71; 14 steps
-func	BUNKAKEN	func_801372CC	festival_visit_stage_yukari_brass	stage 84 (0x54): brass band concert on the hall stage (BUNKA_SD show); companion 5 (Yukari); script KO_S6W; bg D_30_01; portrait KO02; show variant 0; 17 steps
-func	BUNKAKEN	func_80146560	festival_visit_stage_nozomi_route	stage 85 (0x55): picks the exhibit stage of the nozomi block from festival_club and the year; companion 6 (Nozomi)
-func	BUNKAKEN	func_80146700	festival_visit_stage_nozomi_lit_poems	stage 86 (0x56): literature club, year 95: poem collection exhibit; companion 6 (Nozomi); script KY_S6W; bg D_01_67; gate: param_liberal_arts < 120 picks the second of two lines; 18 steps
-func	BUNKAKEN	func_801469DC	festival_visit_stage_nozomi_lit_anthology	stage 87 (0x57): literature club, year 96: anthology exhibit; companion 6 (Nozomi); script KY_S6W; bg D_01_67; 18 steps
-func	BUNKAKEN	func_80146C8C	festival_visit_stage_nozomi_lit_speech	stage 88 (0x58): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 6 (Nozomi); script KY_S6W; bg D_30_01; portrait KY02; show variant 1; 17 steps
-func	BUNKAKEN	func_80146F70	festival_visit_stage_nozomi_drama	stage 89 (0x59): drama club play on the hall stage (BUNKA_SD show), every year; companion 6 (Nozomi); script KY_S6W; bg D_30_01; portrait KY02; BUNKA_SD show; 18 steps
-func	BUNKAKEN	func_801472C4	festival_visit_stage_nozomi_science	stage 90 (0x5A): science club experiment show (BUNKA_SD show), every year; companion 6 (Nozomi); script KY_S6W; bg D_01_69; portrait KY02; show variant 1; 17 steps
-func	BUNKAKEN	func_801475CC	festival_visit_stage_nozomi_comp_fortune	stage 91 (0x5B): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 6 (Nozomi); script KY_S6W; bg D_01_70; calls sub-stage 11; 18 steps
-func	BUNKAKEN	func_80147914	festival_visit_stage_nozomi_comp_game	stage 92 (0x5C): computer club, year 96: game exhibit (TT shooter); companion 6 (Nozomi); script KY_S6W; bg D_01_70; portrait KY02; TT twice: recorded demo of TT stage 2, then the narrator stage 141 and an interactive TT run; TT stages cleared < 2 adds 1 to the reaction group; 36 steps
-func	BUNKAKEN	func_80148094	festival_visit_stage_nozomi_comp_experiment	stage 93 (0x5D): computer club, year 97: experiment show (BUNKA_SD show); companion 6 (Nozomi); script KY_S6W; bg D_01_70; portrait KY02; show variant 1; 20 steps
-func	BUNKAKEN	func_801483A8	festival_visit_stage_nozomi_art_portrait	stage 94 (0x5E): art club, year 95: portrait drawing; companion 6 (Nozomi); script KY_S6W; bg D_01_71; 14 steps
-func	BUNKAKEN	func_80148594	festival_visit_stage_nozomi_art_sketch	stage 95 (0x5F): art club, year 96: open sketching; companion 6 (Nozomi); script KY_S6W; bg D_01_72; 17 steps
-func	BUNKAKEN	func_801487DC	festival_visit_stage_nozomi_art_oil	stage 96 (0x60): art club, year 97: oil painting exhibit; companion 6 (Nozomi); script KY_S6W; bg D_01_71; 14 steps
-func	BUNKAKEN	func_80148A28	festival_visit_stage_nozomi_brass	stage 97 (0x61): brass band concert on the hall stage (BUNKA_SD show); companion 6 (Nozomi); script KY_S6W; bg D_30_01; portrait KY02; show variant 0; gate: param_art < 120 picks the second of two lines; 21 steps
-func	BUNKAKEN	func_8014E440	festival_visit_stage_mira_route	stage 98 (0x62): picks the exhibit stage of the mira block from festival_club and the year; companion 7 (Mira)
-func	BUNKAKEN	func_8014E5E0	festival_visit_stage_mira_lit_poems	stage 99 (0x63): literature club, year 95: poem collection exhibit; companion 7 (Mira); script KG_S6W; bg D_01_67; 23 steps
-func	BUNKAKEN	func_8014E890	festival_visit_stage_mira_lit_anthology	stage 100 (0x64): literature club, year 96: anthology exhibit; companion 7 (Mira); script KG_S6W; bg D_01_67; 19 steps
-func	BUNKAKEN	func_8014EAF0	festival_visit_stage_mira_lit_speech	stage 101 (0x65): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 7 (Mira); script KG_S6W; bg D_30_01; portrait KG02; show variant 1; 20 steps
-func	BUNKAKEN	func_8014EE54	festival_visit_stage_mira_drama	stage 102 (0x66): drama club play on the hall stage (BUNKA_SD show), every year; companion 7 (Mira); script KG_S6W; bg D_30_01; portrait KG02; BUNKA_SD show; 20 steps
-func	BUNKAKEN	func_8014F214	festival_visit_stage_mira_science	stage 103 (0x67): science club experiment show (BUNKA_SD show), every year; companion 7 (Mira); script KG_S6W; bg D_01_69; portrait KG02; show variant 1; 26 steps
-func	BUNKAKEN	func_8014F624	festival_visit_stage_mira_comp_fortune	stage 104 (0x68): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 7 (Mira); script KG_S6W; bg D_01_70; calls sub-stage 11; 20 steps
-func	BUNKAKEN	func_8014F9D8	festival_visit_stage_mira_comp_game	stage 105 (0x69): computer club, year 96: game exhibit (TT shooter); companion 7 (Mira); script KG_S6W; bg D_01_70; portrait KG02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 26 steps
-func	BUNKAKEN	func_8014FEF4	festival_visit_stage_mira_comp_experiment	stage 106 (0x6A): computer club, year 97: experiment show (BUNKA_SD show); companion 7 (Mira); script KG_S6W; bg D_01_70; portrait KG02; show variant 1; 19 steps
-func	BUNKAKEN	func_80150244	festival_visit_stage_mira_art_portrait	stage 107 (0x6B): art club, year 95: portrait drawing; companion 7 (Mira); script KG_S6W; bg D_01_71; 16 steps
-func	BUNKAKEN	func_8015049C	festival_visit_stage_mira_art_sketch	stage 108 (0x6C): art club, year 96: open sketching; companion 7 (Mira); script KG_S6W; bg D_01_72; 13 steps
-func	BUNKAKEN	func_80150680	festival_visit_stage_mira_art_oil	stage 109 (0x6D): art club, year 97: oil painting exhibit; companion 7 (Mira); script KG_S6W; bg D_01_71; 16 steps
-func	BUNKAKEN	func_80150958	festival_visit_stage_mira_brass	stage 110 (0x6E): brass band concert on the hall stage (BUNKA_SD show); companion 7 (Mira); script KG_S6W; bg D_30_01; portrait KG02; show variant 0; 19 steps
-func	BUNKAKEN	func_8013EB30	festival_visit_stage_yuko_route	stage 111 (0x6F): picks the exhibit stage of the yuko block from festival_club and the year; companion 8 (Yuko)
-func	BUNKAKEN	func_8013EC98	festival_visit_stage_yuko_lit_collection	stage 112 (0x70): literature club, years 95 and 96 in one stage (window title and first group by year); companion 8 (Yuko); script AS_S6W; bg D_01_67; 16 steps
-func	BUNKAKEN	func_8013EFA4	festival_visit_stage_yuko_lit_speech	stage 113 (0x71): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 8 (Yuko); script AS_S6W; bg D_30_01; portrait AS02; show variant 1; 18 steps
-func	BUNKAKEN	func_8013F29C	festival_visit_stage_yuko_drama	stage 114 (0x72): drama club play on the hall stage (BUNKA_SD show), every year; companion 8 (Yuko); script AS_S6W; bg D_30_01; portrait AS02; BUNKA_SD show; 21 steps
-func	BUNKAKEN	func_8013F6AC	festival_visit_stage_yuko_science	stage 115 (0x73): science club experiment show (BUNKA_SD show), every year; companion 8 (Yuko); script AS_S6W; bg D_01_69/D_01_70; portrait AS02; show variant 1; 18 steps; science stage 115 also serves computer club year 97 (background by festival_club)
-func	BUNKAKEN	func_8013F9E8	festival_visit_stage_yuko_comp_fortune	stage 116 (0x74): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 8 (Yuko); script AS_S6W; bg D_01_70; calls sub-stage 11; 19 steps
-func	BUNKAKEN	func_8013FD40	festival_visit_stage_yuko_comp_game	stage 117 (0x75): computer club, year 96: game exhibit (TT shooter); companion 8 (Yuko); script AS_S6W; bg D_01_70; portrait AS02; TT twice: recorded demo of TT stage 4, then the narrator stage 141 and an interactive TT run; TT stages cleared < 4 adds 1 to the reaction group; 36 steps
-func	BUNKAKEN	func_801404B0	festival_visit_stage_yuko_art_portrait	stage 118 (0x76): art club, year 95: portrait drawing; companion 8 (Yuko); script AS_S6W; bg D_01_71; 15 steps
-func	BUNKAKEN	func_801406AC	festival_visit_stage_yuko_art_sketch	stage 119 (0x77): art club, year 96: open sketching; companion 8 (Yuko); script AS_S6W; bg D_01_72; 12 steps
-func	BUNKAKEN	func_80140878	festival_visit_stage_yuko_art_oil	stage 120 (0x78): art club, year 97: oil painting exhibit; companion 8 (Yuko); script AS_S6W; bg D_01_71; 16 steps
-func	BUNKAKEN	func_80140B64	festival_visit_stage_yuko_brass	stage 121 (0x79): brass band concert on the hall stage (BUNKA_SD show); companion 8 (Yuko); script AS_S6W; bg D_30_01; portrait AS02; show variant 0; 20 steps
-func	BUNKAKEN	func_80150D30	festival_visit_stage_megumi_route	stage 122 (0x7A): picks the exhibit stage of the megumi block from festival_club and the year; companion 9 (Megumi), years 96 and 97 only
-func	BUNKAKEN	func_80150E88	festival_visit_stage_megumi_lit_anthology	stage 123 (0x7B): literature club, year 96: anthology exhibit; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_67; 17 steps
-func	BUNKAKEN	func_80151104	festival_visit_stage_megumi_lit_speech	stage 124 (0x7C): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_30_01; portrait MI02; show variant 1; 17 steps
-func	BUNKAKEN	func_801513E8	festival_visit_stage_megumi_drama	stage 125 (0x7D): drama club play on the hall stage (BUNKA_SD show), every year; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_30_01; portrait MI02; BUNKA_SD show; 18 steps
-func	BUNKAKEN	func_80151738	festival_visit_stage_megumi_science	stage 126 (0x7E): science club experiment show (BUNKA_SD show), every year; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_69/D_01_70; portrait MI02; show variant 1; 17 steps; science stage 126 also serves computer club year 97 (background by festival_club)
-func	BUNKAKEN	func_80151A78	festival_visit_stage_megumi_comp_game	stage 127 (0x7F): computer club, year 96: game exhibit (TT shooter); companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_70; portrait MI02; TT via narrator stage 141 (interactive run, direct stage 0); 21 steps
-func	BUNKAKEN	func_80151EC0	festival_visit_stage_megumi_art_sketch	stage 128 (0x80): art club, year 96: open sketching; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_72; 13 steps
-func	BUNKAKEN	func_801520B4	festival_visit_stage_megumi_art_oil	stage 129 (0x81): art club, year 97: oil painting exhibit; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_71; 14 steps
-func	BUNKAKEN	func_80152300	festival_visit_stage_megumi_brass	stage 130 (0x82): brass band concert on the hall stage (BUNKA_SD show); companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_30_01; portrait MI02; show variant 0; 17 steps
-func	BUNKAKEN	func_8013CF30	festival_visit_stage_yumi_route	stage 131 (0x83): picks the exhibit stage of the yumi block from festival_club and the year; companion 10 (Yumi), years 96 and 97 only
-func	BUNKAKEN	func_8013D048	festival_visit_stage_yumi_lit_anthology	stage 132 (0x84): literature club, year 96: anthology exhibit; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_67; 10 steps
-func	BUNKAKEN	func_8013D1F4	festival_visit_stage_yumi_lit_speech	stage 133 (0x85): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_30_01; portrait SA02; show variant 1; 17 steps
-func	BUNKAKEN	func_8013D4D8	festival_visit_stage_yumi_drama	stage 134 (0x86): drama club play on the hall stage (BUNKA_SD show), every year; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_30_01; portrait SA02; BUNKA_SD show; 18 steps
-func	BUNKAKEN	func_8013D82C	festival_visit_stage_yumi_science	stage 135 (0x87): science club experiment show (BUNKA_SD show), every year; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_69/D_01_70; portrait SA02; show variant 1; 17 steps; science stage 135 also serves computer club year 97 (background by festival_club)
-func	BUNKAKEN	func_8013DBE8	festival_visit_stage_yumi_comp_game	stage 136 (0x88): computer club, year 96: game exhibit (TT shooter); companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_70; portrait SA02; TT twice: recorded demo of TT stage 3, then the narrator stage 141 and an interactive TT run; TT stages cleared < 3 adds 1 to the reaction group; 32 steps
-func	BUNKAKEN	func_8013E2C0	festival_visit_stage_yumi_art_sketch	stage 137 (0x89): art club, year 96: open sketching; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_72; 19 steps
-func	BUNKAKEN	func_8013E578	festival_visit_stage_yumi_art_oil	stage 138 (0x8A): art club, year 97: oil painting exhibit; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_71; 14 steps
-func	BUNKAKEN	func_8013E7C4	festival_visit_stage_yumi_brass	stage 139 (0x8B): brass band concert on the hall stage (BUNKA_SD show); companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_30_01; portrait SA02; show variant 0; 17 steps
-func	BUNKAKEN	func_8013B510	festival_visit_stage_invitation	stage 0 (0x0): the best-liked girl invites the player; pick by festival_visit_invitation_pick_girl, her invitation script, accept or refuse (two-way choice); accept goes to the club menu or to her club, refuse sets festival_refused_girl and goes to stage 1; emu: poked girls 4 and 5, girl 4 (higher sum) invited, accept led to stage 3 and stage 59
-func	BUNKAKEN	func_80143DD0	festival_visit_stage_ask_companion	stage 1 (0x1): no invitation or after a refusal: two-way question (ask a girl or not), girl picker (select_girl), her reply by mood rank and club, then the club menu or stage 2; 50 steps; emu: with only Shiori met the picker listed her and led to stage 3 then stage 19
-func	BUNKAKEN	func_80144A70	festival_visit_stage_yoshio	stage 2 (0x2): Yoshio (girl id 13, portrait YO02) greets the player when no girl joins; common script group 6, then group 7 + (year - 95), then group 10, then the club menu; 11 steps
-func	BUNKAKEN	func_80144C5C	festival_visit_stage_club_menu	stage 3 (0x3): menu of the six culture clubs; step 0 builds it, step 1 reads it, step 2 stores the pick in festival_club (and plays a short comment from the common script when no girl is along) then goes to stage 4; emu: the first item gave club 0
-func	BUNKAKEN	func_80145EBC	festival_visit_stage_route_visit	stage 4 (0x4): routes to a block by festival_companion and festival_club: no companion picks Shiori at her club, Mio, Yuina or Ayako at theirs (if met and the club matches) else the solo block; a companion id picks that girl block (4-10, 11 Shiori companion)
-func	BUNKAKEN	func_80152680	festival_visit_stage_fortune_telling	stage 11 (0xB): computer fortune telling by blood type: picks a girl (select_girl2) unless one is fixed, shows a terminal screen with both blood types, looks the result up in festival_visit_fortune_grid, stores it in festival_fortune_result and returns to the saved stage and step; emu: girl blood 2 x player blood 1 gave result 1
-func	BUNKAKEN	func_801462A0	festival_visit_stage_resume	stage 140 (0x8C): after the TT game: reloads the system graphics (cursor, boot data, HUD textures, debug font, calendar ROM 0x95 sectors from sector 0x9B94, month calendar for the current month) and returns to festival_return_stage and step; 7 steps
-func	BUNKAKEN	func_801463E4	festival_visit_stage_tt_narrator	stage 141 (0x8D): narrator scene before TT (script TWINBEE, speaker id 8, blank label) then fade out and, on a pad, main_state_set(0xD0); with a mouse step 4 waits forever; 5 steps; emu: reached from stage 12, mode 0xD0 started at frame 720 with tt_direct set
-func	BUNKAKEN	func_80144F70	festival_visit_entry	mode 0x71 per-frame entry: switch on festival_phase 0-10 (init, fade, sound wait, bg load, intro speak, stage table, finish, two birthday scenes); calls Default_Disp unless festival_display_skip; emu: phases 0,2,3,4,6,7,8 observed in order
-func	BUNKAKEN	func_80145500	festival_visit_phase_next_on_step	if a main helper raised step above 0, clear step and add 1 to festival_phase (phases 4 and 6)
-func	BUNKAKEN	func_80145530	festival_visit_finish_visit	stage and step to 0 and festival_phase to 8 (end of a visit); called by the last step of every exhibit stage
-func	BUNKAKEN	func_80145550	festival_visit_apply_points	end of visit: girl festival_companion (0xB means girl 0) gets +2 affection and tokimeki + (table value - 1, if above 0) from the year table at [companion][festival_club]; the refused girl loses 10 affection and gains 10 syoushin; emu: +2 and +1 for girl 4 in year 95 club 0, penalty -10/+10 seen
-func	BUNKAKEN	func_80145844	festival_visit_window_title_set	sets the message window title for the exhibit in festival_club and the year (11 titles, year 95/96/97 where they differ); used by every stage after the background loads
-func	BUNKAKEN	func_801459FC	festival_visit_title_backstage_show	sets the window title to the backstage string and starts it; used around the stage shows of the club-girl blocks
-func	BUNKAKEN	func_80145A30	festival_visit_title_clear	sets a blank window title and hides it
-func	BUNKAKEN	func_80145A64	festival_visit_event_log_add	inline event_log_add of a visit, called by the finish step when the companion is not 0xFF and its mood rank is below 4: record (girl, flag 4*club+3 when she is at her own club else 4*club+4, scene 0x14, closeness from get_g_zyotai_h, date); skipped for the refused girl; companion 0xB logs girl 0 but the rank tests read the raw id 0xB (girl 11)
-func	BUNKAKEN	func_80145E40	festival_visit_stage_run	copies the 142-entry stage table to the stack and calls entry [GameState.stage]
-func	BUNKAKEN	func_8013BD84	festival_visit_invitation_pick_girl	picks who invites the player: among girls 0-10 (1-10 must be met) with weighted tokimeki >= 50 and weighted affection >= 80 the highest affection + tokimeki wins (ties: lowest id; girl 0 only counts when her affection is >= 80); year 96 excludes girls whose club is 1 or 4; girl 0 with a club of 6 or more becomes id 11; stores festival_companion and returns 1, else 0; emu: girl 4 (200) beat girl 5 (190)
-func	BUNKAKEN	func_8013BFA0	festival_visit_script_tables_apply	copies the three table pointers written by a script setter into the dialogue text, command and voice table words
-func	BUNKAKEN	func_80144D38	festival_visit_club_menu_init	builds the club menu: six items in two columns (x -0x80 and -0x08, y 0x32 + 0x10 per row, 0x78 x 0x10), registers them with menu_set and starts the cursor
-func	BUNKAKEN	func_80144E9C	festival_visit_club_menu_update	per-frame menu check and cursor; on circle (pad_pressed & 0x20) the hovered item index goes to dialogue_choice and the menu closes
-func	BUNKAKEN	func_8013B4A0	festival_visit_solo_script_begin	starts a common-script (BUN_PC) group in the solo exhibit stages: speaker names for girl 0, common script setter, line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_80148ED0	festival_visit_birthday_tables_init	fills the 3 x 13 pointer table festival_visit_birthday_script (text, command and voice tables of the 13 sections of the loaded P_BIRTH file at 0x801B0000)
-func	BUNKAKEN	func_80149144	festival_visit_phase_shiori_birthday	phase 9: the festival day is Shiori birthday and the companion is 0 or id 11; three paths: club id below 6 (step 0x2E, her club exhibit, two-way question then a three-way choice), the player birthday too and rank below 2 (step 0x16, P_BIRTH park scene), else the park (rank below 2) or corridor scene; gains by original option 0/1/2: tokimeki +3/+2/+0, affection +2/+1/+1, syoushin -15/-10/+10; declining at the club costs 1 affection and gives 5 syoushin; sets daily_event_bits mask 1; 73 steps; emu: standard path seen, option 1 gains matched
-func	BUNKAKEN	func_8014A0E0	festival_visit_phase_player_birthday	phase 10: the festival day is the player birthday and the companion is girl 4-10 with mood rank below 2: park scene with P_BIRTH section chosen by her id (4->10, 5->7, 6->8, 7->5, 8->0, 9->9, 10->12), logs flag 0x19, no point change; sets daily_event_bits mask 4; 12 steps
-func	BUNKAKEN	func_8014A5EC	festival_visit_birthday_option_name_set	copies the 33-byte name for [year - 95][dialogue_choice] from festival_visit_birthday_option_names into name buffer A
-func	BUNKAKEN	func_80152F4C	festival_visit_fortune_result	fortune result: 3 for the computer-club girl case (companion 2 whose club is 3, mood rank below 4, not the refused girl), else festival_visit_fortune_grid[girl blood type][player blood type] (2 same type, 0 for the pairs 0-1 and 2-3, else 1); emu: 1 for girl blood 2, player blood 1
-func	BUNKAKEN	func_80132000	festival_visit_script_invite_shiori	script setter: stores the text, command and voice table addresses of disc file FU_S6I in festival_visit_script_text/commands/voices (34 bytes of code); girl 0 invitation script (3 sectors from 0x49E8); festival_visit_script_invite_setter[0]
-func	BUNKAKEN	func_80132034	festival_visit_script_shiori_club	script setter: stores the text, command and voice table addresses of disc file FU_S6O in festival_visit_script_text/commands/voices (34 bytes of code); Shiori at her own club (23 sectors from 0x49EB); used by festival_visit_shiori_club_script_begin
-func	BUNKAKEN	func_80132068	festival_visit_script_invite_shiori_no_culture_club	script setter: stores the text, command and voice table addresses of disc file FU_S6S in festival_visit_script_text/commands/voices (34 bytes of code); invitation script for id 11, Shiori with a non-culture club (2 sectors from 0x4A02); setter [11]
-func	BUNKAKEN	func_8013209C	festival_visit_script_shiori_companion	script setter: stores the text, command and voice table addresses of disc file FU_S6W in festival_visit_script_text/commands/voices (34 bytes of code); Shiori with the player at the exhibits (15 sectors from 0x4A03); used by festival_visit_shiori_companion_script_begin
-func	BUNKAKEN	func_801320D0	festival_visit_script_invite_mio	script setter: stores the text, command and voice table addresses of disc file KS_S6I in festival_visit_script_text/commands/voices (34 bytes of code); girl 1 invitation script (2 sectors from 0x4AB4); setter [1]
-func	BUNKAKEN	func_80132104	festival_visit_script_mio_club	script setter: stores the text, command and voice table addresses of disc file KS_S6O in festival_visit_script_text/commands/voices (34 bytes of code); Mio at her own club (7 sectors from 0x4AB6)
-func	BUNKAKEN	func_80132138	festival_visit_script_invite_yuina	script setter: stores the text, command and voice table addresses of disc file HI_S6I in festival_visit_script_text/commands/voices (34 bytes of code); girl 2 invitation script (2 sectors from 0x4A36); setter [2]
-func	BUNKAKEN	func_8013216C	festival_visit_script_yuina_club	script setter: stores the text, command and voice table addresses of disc file HI_S6O in festival_visit_script_text/commands/voices (34 bytes of code); Yuina at her own club (9 sectors from 0x4A38)
-func	BUNKAKEN	func_801321A0	festival_visit_script_invite_ayako	script setter: stores the text, command and voice table addresses of disc file KT_S6I in festival_visit_script_text/commands/voices (34 bytes of code); girl 3 invitation script (2 sectors from 0x4B08); setter [3]
-func	BUNKAKEN	func_801321D4	festival_visit_script_ayako_club	script setter: stores the text, command and voice table addresses of disc file KT_S6O in festival_visit_script_text/commands/voices (34 bytes of code); Ayako at her own club (9 sectors from 0x4B0A); stores the command pointer twice, only the second survives
-func	BUNKAKEN	func_80132208	festival_visit_script_invite_saki	script setter: stores the text, command and voice table addresses of disc file NI_S6S in festival_visit_script_text/commands/voices (34 bytes of code); girl 4 invitation script (1 sector from 0x4B51); setter [4]
-func	BUNKAKEN	func_8013223C	festival_visit_script_saki	script setter: stores the text, command and voice table addresses of disc file NI_S6W in festival_visit_script_text/commands/voices (34 bytes of code); Saki with the player (12 sectors from 0x4B52)
-func	BUNKAKEN	func_80132270	festival_visit_script_invite_yukari	script setter: stores the text, command and voice table addresses of disc file KO_S6S in festival_visit_script_text/commands/voices (34 bytes of code); girl 5 invitation script (1 sector from 0x4A72); setter [5]
-func	BUNKAKEN	func_801322A4	festival_visit_script_yukari	script setter: stores the text, command and voice table addresses of disc file KO_S6W in festival_visit_script_text/commands/voices (34 bytes of code); Yukari with the player (16 sectors from 0x4A73)
-func	BUNKAKEN	func_801322D8	festival_visit_script_invite_nozomi	script setter: stores the text, command and voice table addresses of disc file KY_S6S in festival_visit_script_text/commands/voices (34 bytes of code); girl 6 invitation script (1 sector from 0x4B22); setter [6]
-func	BUNKAKEN	func_8013230C	festival_visit_script_nozomi	script setter: stores the text, command and voice table addresses of disc file KY_S6W in festival_visit_script_text/commands/voices (34 bytes of code); Nozomi with the player (16 sectors from 0x4B23)
-func	BUNKAKEN	func_80132340	festival_visit_script_invite_mira	script setter: stores the text, command and voice table addresses of disc file KG_S6S in festival_visit_script_text/commands/voices (34 bytes of code); girl 7 invitation script (2 sectors from 0x4A50); setter [7]
-func	BUNKAKEN	func_80132374	festival_visit_script_mira	script setter: stores the text, command and voice table addresses of disc file KG_S6W in festival_visit_script_text/commands/voices (34 bytes of code); Mira with the player (19 sectors from 0x4A52)
-func	BUNKAKEN	func_801323A8	festival_visit_script_invite_yuko	script setter: stores the text, command and voice table addresses of disc file AS_S6S in festival_visit_script_text/commands/voices (34 bytes of code); girl 8 invitation script (2 sectors from 0x49A5); setter [8]
-func	BUNKAKEN	func_801323DC	festival_visit_script_yuko	script setter: stores the text, command and voice table addresses of disc file AS_S6W in festival_visit_script_text/commands/voices (34 bytes of code); Yuko with the player (16 sectors from 0x49A7)
-func	BUNKAKEN	func_80132410	festival_visit_script_invite_megumi	script setter: stores the text, command and voice table addresses of disc file MI_S6S in festival_visit_script_text/commands/voices (34 bytes of code); girl 9 invitation script (1 sector from 0x4B3D); setter [9]
-func	BUNKAKEN	func_80132444	festival_visit_script_megumi	script setter: stores the text, command and voice table addresses of disc file MI_S6W in festival_visit_script_text/commands/voices (34 bytes of code); Megumi with the player (9 sectors from 0x4B3E)
-func	BUNKAKEN	func_80132478	festival_visit_script_invite_yumi	script setter: stores the text, command and voice table addresses of disc file SA_S6S in festival_visit_script_text/commands/voices (34 bytes of code); girl 10 invitation script (1 sector from 0x4B71); setter [10]
-func	BUNKAKEN	func_801324AC	festival_visit_script_yumi	script setter: stores the text, command and voice table addresses of disc file SA_S6W in festival_visit_script_text/commands/voices (34 bytes of code); Yumi with the player (13 sectors from 0x4B72)
-func	BUNKAKEN	func_801324E0	festival_visit_script_common	script setter: stores the text, command and voice table addresses of disc file BUN_PC in festival_visit_script_text/commands/voices (34 bytes of code); common script of the festival visit (5 sectors from 0x49BA to 0x801E8000): intro, questions, solo exhibits, wrap-up; text 0x801E92FC, commands 0x801E9598, voices 0x801EA298
-func	BUNKAKEN	func_80132514	festival_visit_script_narrator	script setter: stores the text, command and voice table addresses of disc file TWINBEE in festival_visit_script_text/commands/voices (34 bytes of code); narrator script of the TT stage 141 (1 sector from 0x4B7F)
-func	BUNKAKEN	func_80132548	festival_visit_script_fortune	script setter: stores the text, command and voice table addresses of disc file URANAI in festival_visit_script_text/commands/voices (34 bytes of code); fortune telling script of sub-stage 11 (1 sector from 0x4B80)
-func	BUNKAKEN	func_8013257C	festival_visit_script_birthday	script setter: stores the text, command and voice table addresses of disc file BUN_FU in festival_visit_script_text/commands/voices (34 bytes of code); Shiori birthday and player birthday common lines (3 sectors from 0x49B7)
-func	BUNKAKEN	func_80134FFC	festival_visit_shiori_companion_script_begin	speaker names for girl 0, installs that block script (func_8013209C), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_8014E3DC	festival_visit_shiori_club_script_begin	speaker names for girl 0, installs that block script (func_80132034), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_8013CEC0	festival_visit_mio_club_script_begin	speaker names for girl 1, installs that block script (func_80132104), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_80142864	festival_visit_yuina_club_script_begin	speaker names for girl 2, installs that block script (func_8013216C), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_80143D68	festival_visit_ayako_club_script_begin	speaker names for girl 3, installs that block script (func_801321D4), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_80139DEC	festival_visit_saki_script_begin	speaker names for girl 4, installs that block script (func_8013223C), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_801375D0	festival_visit_yukari_script_begin	speaker names for girl 5, installs that block script (func_801322A4), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_80148E68	festival_visit_nozomi_script_begin	speaker names for girl 6, installs that block script (func_8013230C), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_80150CC8	festival_visit_mira_script_begin	speaker names for girl 7, installs that block script (func_80132374), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_80140EF4	festival_visit_yuko_script_begin	speaker names for girl 8, installs that block script (func_801323DC), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_80152618	festival_visit_megumi_script_begin	speaker names for girl 9, installs that block script (func_80132444), line 0, copies the three table pointers, next step
-func	BUNKAKEN	func_8013EAC8	festival_visit_yumi_script_begin	speaker names for girl 10, installs that block script (func_801324AC), line 0, copies the three table pointers, next step
-data	main	D_80122E98	festival_display_skip	REQUEST (shared with BUNKASAI): word at overlay_scratch+0xC8; while nonzero the entry skips Default_Disp; set to 1 while a sub-mode is being left and re-entered, 0 again after the HUD is rebuilt
-data	main	D_80122EA4	festival_refused_girl	REQUEST (shared with BUNKASAI): overlay_scratch+0xD4; girl id the player turned down (0xFF none, set by phase 0); costs her 10 affection and gains 10 syoushin at the end, makes her absent from her own club scene and blocks her in the picker; emu: poked 4, art stage, girl 4 affection 100 to 90
-data	main	D_80122EA8	festival_fortune_result	REQUEST: overlay_scratch+0xD8; 0-3 result of the fortune telling, later added to a group base (0x3F, 0x24, 0x32, ...) to pick the reaction lines; emu: 1 for girl blood 2 x player blood 1
-data	main	D_80122EAC	festival_show_variant	REQUEST (shared with BUNKA_SD): overlay_scratch+0xDC; 0-4 variant of the stage show started with main_state_set(0x80); BUNKA_SD reads it (frames variant*2+2..): 0 concert and drama-girl scenes, 1 most experiment shows, 2 Shiori club speech, 3 Mio club speech, 4 solo speech and Ayako brass
-data	main	D_80122EB0	festival_return_stage	REQUEST: overlay_scratch+0xE0; stage to return to after a stage show or TT (stage at the time of the launch)
-data	main	D_80122EB4	festival_return_step	REQUEST: overlay_scratch+0xE4; step to return to (launch step + 1)
-data	main	D_80122EB8	festival_club	REQUEST (shared with BUNKASAI): overlay_scratch+0xE8; club id 0-5 being visited (core Club: literature, drama, science, computer, art, brass band); first word of core type BunkaDispatch8
-data	main	D_80122EBC	festival_companion	REQUEST (shared with BUNKASAI): overlay_scratch+0xEC; girl present in the visit: 0-10 a heroine, 0xB Shiori who has no culture club, 0xFF nobody; second word of BunkaDispatch8; emu: 4 after the invitation
-data	main	D_80122EC0	festival_phase	REQUEST (shared with BUNKASAI): overlay_scratch+0xF0; entry phase 0-10 (FV_PHASE_*); the entry zeroes the whole 0x100-byte overlay_scratch at the end of phase 8, which resets it to 0; emu: written 0..8 in order and cleared at frame 705 by the zeroing loop
+func	BUNKAKEN	func_80139E50	tour_stage_solo_route	stage 5 (0x5): picks the exhibit stage of the solo block from culture_exhibit_club and the year; no companion (culture_visitor_girl 0xFF); emu: club 4 year 95 went to stage 14
+func	BUNKAKEN	func_80139FB8	tour_stage_solo_literature_collection	stage 6 (0x6): literature club, years 95 and 96 in one stage (window title and first group by year); no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_01_67; 14 steps
+func	BUNKAKEN	func_8013A118	tour_stage_solo_literature_speech	stage 7 (0x7): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_30_01; show variant 4; 16 steps
+func	BUNKAKEN	func_8013A2FC	tour_stage_solo_drama	stage 8 (0x8): drama club play on the hall stage (BUNKA_SD show), every year; no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_30_01; BUNKA_SD show; 17 steps
+func	BUNKAKEN	func_8013A518	tour_stage_solo_science	stage 9 (0x9): science club experiment show (BUNKA_SD show), every year; no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_01_69; show variant 1; 16 steps; emu: show round trip with variant 1, return pair (9, 8), BUNKA_SD ran in mode 0x80 and mode 0x71 resumed at step 8
+func	BUNKAKEN	func_8013A6F4	tour_stage_solo_computer_fortune	stage 10 (0xA): computer club, year 95: fortune telling by blood type (sub-stage 11); no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_01_70; calls sub-stage 11; 14 steps
+func	BUNKAKEN	func_8013A8CC	tour_stage_solo_computer_game	stage 12 (0xC): computer club, year 96: game exhibit (TT shooter); no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_01_70; TT via narrator stage 141 (interactive run, direct stage 0); 18 steps; emu: year 1996 club 3 went to the narrator stage 141 and TT
+func	BUNKAKEN	func_8013ABF0	tour_stage_solo_computer_experiment	stage 13 (0xD): computer club, year 97: experiment show (BUNKA_SD show); no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_01_70; show variant 1; 16 steps
+func	BUNKAKEN	func_8013ADC4	tour_stage_solo_art_portrait	stage 14 (0xE): art club, year 95: portrait drawing; no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_01_71; 10 steps; emu: solo run to the end, refused girl lost 10 affection
+func	BUNKAKEN	func_8013AF00	tour_stage_solo_art_sketch	stage 15 (0xF): art club, year 96: open sketching; no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_01_72; portrait YO02; 23 steps
+func	BUNKAKEN	func_8013B170	tour_stage_solo_art_oil	stage 16 (0x10): art club, year 97: oil painting exhibit; no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_01_71; 14 steps
+func	BUNKAKEN	func_8013B2AC	tour_stage_solo_brass	stage 17 (0x11): brass band concert on the hall stage (BUNKA_SD show); no companion (culture_visitor_girl 0xFF); script BUN_PC; bg D_30_01; show variant 0; 16 steps
+func	BUNKAKEN	func_801325B0	tour_stage_shiori_companion_route	stage 18 (0x12): picks the exhibit stage of the shiori companion block from culture_exhibit_club and the year; Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); emu: companion 0xB club 0 year 95 went to stage 19
+func	BUNKAKEN	func_80132774	tour_stage_shiori_companion_literature_poems	stage 19 (0x13): literature club, year 95: poem collection exhibit; Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_01_67; gate: param_liberal_arts >= 120 picks the first of two lines; 18 steps
+func	BUNKAKEN	func_80132AC4	tour_stage_shiori_companion_literature_anthology	stage 20 (0x14): literature club, year 96: anthology exhibit; Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_01_67; 17 steps
+func	BUNKAKEN	func_80132D40	tour_stage_shiori_companion_literature_speech	stage 21 (0x15): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_30_01; portrait HU02; show variant 1; 17 steps
+func	BUNKAKEN	func_80133020	tour_stage_shiori_companion_drama	stage 22 (0x16): drama club play on the hall stage (BUNKA_SD show), every year; Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_30_01; portrait HU02; BUNKA_SD show; 19 steps
+func	BUNKAKEN	func_801333A8	tour_stage_shiori_companion_science	stage 23 (0x17): science club experiment show (BUNKA_SD show), every year; Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_01_69; portrait HU02; show variant 1; 17 steps
+func	BUNKAKEN	func_801336AC	tour_stage_shiori_companion_computer_fortune	stage 24 (0x18): computer club, year 95: fortune telling by blood type (sub-stage 11); Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_01_70; calls sub-stage 11; 18 steps
+func	BUNKAKEN	func_801339F4	tour_stage_shiori_companion_computer_game	stage 25 (0x19): computer club, year 96: game exhibit (TT shooter); Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_01_70; portrait HU02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 23 steps
+func	BUNKAKEN	func_80133EC4	tour_stage_shiori_companion_computer_experiment	stage 26 (0x1A): computer club, year 97: experiment show (BUNKA_SD show); Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_01_70; portrait HU02; show variant 1; 17 steps
+func	BUNKAKEN	func_801341A4	tour_stage_shiori_companion_art_portrait	stage 27 (0x1B): art club, year 95: portrait drawing; Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_01_71; 16 steps
+func	BUNKAKEN	func_80134400	tour_stage_shiori_companion_art_sketch	stage 28 (0x1C): art club, year 96: open sketching; Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_01_72; 12 steps
+func	BUNKAKEN	func_801345CC	tour_stage_shiori_companion_art_oil	stage 29 (0x1D): art club, year 97: oil painting exhibit; Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_01_71; gate: param_art >= 120 picks the first of two lines; 18 steps
+func	BUNKAKEN	func_8013491C	tour_stage_shiori_companion_brass	stage 30 (0x1E): brass band concert on the hall stage (BUNKA_SD show); Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_30_01; portrait HU02; show variant 0; 17 steps
+func	BUNKAKEN	func_80134C1C	tour_stage_shiori_companion_brass_1997	stage 31 (0x1F): brass band concert, year 97 variant (BUNKA_SD show); Shiori accompanying the player, her club id 6 or more (culture_visitor_girl 0xB); script FU_S6W; bg D_30_01; portrait HU02; show variant 0; gate: param_art >= 120 picks the first of two lines; 21 steps
+func	BUNKAKEN	func_8014A6A0	tour_stage_shiori_club_route	stage 32 (0x20): picks the exhibit stage of the shiori club block from culture_exhibit_club and the year; Shiori at her own club (companion set to 0)
+func	BUNKAKEN	func_8014A9A8	tour_stage_shiori_club_literature_collection	stage 33 (0x21): literature club, years 95 and 96 in one stage (window title and first group by year); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_67; portrait HU02; 21 steps
+func	BUNKAKEN	func_8014AF48	tour_stage_shiori_club_literature_speech	stage 34 (0x22): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_68/D_30_01; portrait HU02; show variant 2; 23 steps
+func	BUNKAKEN	func_8014B378	tour_stage_shiori_club_drama	stage 35 (0x23): drama club play on the hall stage (BUNKA_SD show), every year; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_68/D_30_01; portrait HU03; BUNKA_SD show; 23 steps
+func	BUNKAKEN	func_8014B7B8	tour_stage_shiori_club_science	stage 36 (0x24): science club experiment show (BUNKA_SD show), every year; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_69; portrait HU05; show variant 1/2; 24 steps
+func	BUNKAKEN	func_8014BD80	tour_stage_shiori_club_computer_fortune	stage 37 (0x25): computer club, year 95: fortune telling by blood type (sub-stage 11); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_70; portrait HU02; calls sub-stage 11; 27 steps
+func	BUNKAKEN	func_8014C374	tour_stage_shiori_club_computer_game	stage 38 (0x26): computer club, year 96: game exhibit (TT shooter); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_70; portrait HU02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 31 steps
+func	BUNKAKEN	func_8014CB4C	tour_stage_shiori_club_computer_experiment	stage 39 (0x27): computer club, year 97: experiment show (BUNKA_SD show); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_70; portrait HU02; show variant 1/2; 24 steps
+func	BUNKAKEN	func_8014D0FC	tour_stage_shiori_club_art_portrait	stage 40 (0x28): art club, year 95: portrait drawing; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_71; portrait HU04/IJ02; 36 steps
+func	BUNKAKEN	func_8014D65C	tour_stage_shiori_club_art_sketch	stage 41 (0x29): art club, year 96: open sketching; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_72; portrait HU04/YO02; 28 steps
+func	BUNKAKEN	func_8014DB34	tour_stage_shiori_club_art_oil	stage 42 (0x2A): art club, year 97: oil painting exhibit; Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_71; portrait HU04; 21 steps
+func	BUNKAKEN	func_8014DFB8	tour_stage_shiori_club_brass	stage 43 (0x2B): brass band concert on the hall stage (BUNKA_SD show); Shiori at her own club (companion set to 0); script FU_S6O; bg D_01_68/D_30_01; portrait HU02; show variant 1; 23 steps
+func	BUNKAKEN	func_8013BFE0	tour_stage_mio_club_route	stage 44 (0x2C): picks the exhibit stage of the mio club block from culture_exhibit_club and the year; Mio at her own club (companion set to 1)
+func	BUNKAKEN	func_8013C0AC	tour_stage_mio_club_literature_collection	stage 45 (0x2D): literature club, years 95 and 96 in one stage (window title and first group by year); Mio at her own club (companion set to 1); script KS_S6O; bg D_01_67; portrait KI02; 21 steps
+func	BUNKAKEN	func_8013C634	tour_stage_mio_club_literature_speech	stage 46 (0x2E): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); Mio at her own club (companion set to 1); script KS_S6O; bg D_01_68/D_30_01; portrait KI02; show variant 3; 23 steps
+func	BUNKAKEN	func_8013CA6C	tour_stage_mio_club_drama	stage 47 (0x2F): drama club play on the hall stage (BUNKA_SD show), every year; Mio at her own club (companion set to 1); script KS_S6O; bg D_01_68/D_30_01; portrait KI03; BUNKA_SD show; 23 steps
+func	BUNKAKEN	func_80140F60	tour_stage_yuina_club_route	stage 48 (0x30): picks the exhibit stage of the yuina club block from culture_exhibit_club and the year; Yuina at her own club (companion set to 2)
+func	BUNKAKEN	func_80141088	tour_stage_yuina_club_science	stage 49 (0x31): science club experiment show (BUNKA_SD show), every year; Yuina at her own club (companion set to 2); script HI_S6O; bg D_01_69; portrait HI05; show variant 1/3; 24 steps
+func	BUNKAKEN	func_80141654	tour_stage_yuina_club_computer_fortune	stage 50 (0x32): computer club, year 95: fortune telling by blood type (sub-stage 11); Yuina at her own club (companion set to 2); script HI_S6O; bg D_01_70; portrait HI02; calls sub-stage 11; 23 steps
+func	BUNKAKEN	func_80141B80	tour_stage_yuina_club_computer_game	stage 51 (0x33): computer club, year 96: game exhibit (TT shooter); Yuina at her own club (companion set to 2); script HI_S6O; bg D_01_70; portrait HI02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 30 steps
+func	BUNKAKEN	func_801422C4	tour_stage_yuina_club_computer_experiment	stage 52 (0x34): computer club, year 97: experiment show (BUNKA_SD show); Yuina at her own club (companion set to 2); script HI_S6O; bg D_01_70; portrait HI02; show variant 1/3; 24 steps
+func	BUNKAKEN	func_801428D0	tour_stage_ayako_club_route	stage 53 (0x35): picks the exhibit stage of the ayako club block from culture_exhibit_club and the year; Ayako at her own club (companion set to 3)
+func	BUNKAKEN	func_80142A40	tour_stage_ayako_club_art_portrait	stage 54 (0x36): art club, year 95: portrait drawing; Ayako at her own club (companion set to 3); script KT_S6O; bg D_01_71; portrait IJ02/KA04; 40 steps
+func	BUNKAKEN	func_80142FD4	tour_stage_ayako_club_art_sketch	stage 55 (0x37): art club, year 96: open sketching; Ayako at her own club (companion set to 3); script KT_S6O; bg D_01_72; portrait KA04/YO02; 26 steps
+func	BUNKAKEN	func_80143494	tour_stage_ayako_club_art_oil	stage 56 (0x38): art club, year 97: oil painting exhibit; Ayako at her own club (companion set to 3); script KT_S6O; bg D_01_71; portrait KA04; 21 steps
+func	BUNKAKEN	func_801438F8	tour_stage_ayako_club_brass	stage 57 (0x39): brass band concert on the hall stage (BUNKA_SD show); Ayako at her own club (companion set to 3); script KT_S6O; bg D_01_68/D_30_01; portrait KA02; show variant 4; 24 steps
+func	BUNKAKEN	func_80137640	tour_stage_saki_route	stage 58 (0x3A): picks the exhibit stage of the saki block from culture_exhibit_club and the year; companion 4 (Saki); emu: companion 4 club 0 year 95 went to stage 59
+func	BUNKAKEN	func_80137804	tour_stage_saki_literature_poems	stage 59 (0x3B): literature club, year 95: poem collection exhibit; companion 4 (Saki); script NI_S6W; bg D_01_67; 14 steps; emu: run to the end gave Saki +2 affection and +1 tokimeki
+func	BUNKAKEN	func_80137A38	tour_stage_saki_literature_anthology	stage 60 (0x3C): literature club, year 96: anthology exhibit; companion 4 (Saki); script NI_S6W; bg D_01_67; 17 steps
+func	BUNKAKEN	func_80137CD8	tour_stage_saki_literature_speech	stage 61 (0x3D): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 4 (Saki); script NI_S6W; bg D_30_01; portrait NI02; show variant 1; 17 steps
+func	BUNKAKEN	func_80137FB8	tour_stage_saki_drama	stage 62 (0x3E): drama club play on the hall stage (BUNKA_SD show), every year; companion 4 (Saki); script NI_S6W; bg D_30_01; portrait NI02; BUNKA_SD show; 18 steps
+func	BUNKAKEN	func_80138340	tour_stage_saki_science	stage 63 (0x3F): science club experiment show (BUNKA_SD show), every year; companion 4 (Saki); script NI_S6W; bg D_01_69; portrait NI02; show variant 1; 21 steps
+func	BUNKAKEN	func_801386C0	tour_stage_saki_computer_fortune	stage 64 (0x40): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 4 (Saki); script NI_S6W; bg D_01_70; calls sub-stage 11; 18 steps
+func	BUNKAKEN	func_80138A08	tour_stage_saki_computer_game	stage 65 (0x41): computer club, year 96: game exhibit (TT shooter); companion 4 (Saki); script NI_S6W; bg D_01_70; portrait NI02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 23 steps
+func	BUNKAKEN	func_80138EB8	tour_stage_saki_computer_experiment	stage 66 (0x42): computer club, year 97: experiment show (BUNKA_SD show); companion 4 (Saki); script NI_S6W; bg D_01_70; portrait NI02; show variant 1; 17 steps
+func	BUNKAKEN	func_80139184	tour_stage_saki_art_portrait	stage 67 (0x43): art club, year 95: portrait drawing; companion 4 (Saki); script NI_S6W; bg D_01_71; 14 steps
+func	BUNKAKEN	func_80139364	tour_stage_saki_art_sketch	stage 68 (0x44): art club, year 96: open sketching; companion 4 (Saki); script NI_S6W; bg D_01_72; 14 steps
+func	BUNKAKEN	func_8013954C	tour_stage_saki_art_oil	stage 69 (0x45): art club, year 97: oil painting exhibit; companion 4 (Saki); script NI_S6W; bg D_01_71; 14 steps
+func	BUNKAKEN	func_80139780	tour_stage_saki_brass	stage 70 (0x46): brass band concert on the hall stage (BUNKA_SD show); companion 4 (Saki); script NI_S6W; bg D_30_01; portrait NI02; show variant 0; 17 steps
+func	BUNKAKEN	func_80139A6C	tour_stage_saki_brass_1997	stage 71 (0x47): brass band concert, year 97 variant (BUNKA_SD show); companion 4 (Saki); script NI_S6W; bg D_30_01; portrait NI02; show variant 0; gate: param_art < 120 picks the second of two lines; 21 steps
+func	BUNKAKEN	func_80135060	tour_stage_yukari_route	stage 72 (0x48): picks the exhibit stage of the yukari block from culture_exhibit_club and the year; companion 5 (Yukari)
+func	BUNKAKEN	func_80135200	tour_stage_yukari_literature_poems	stage 73 (0x49): literature club, year 95: poem collection exhibit; companion 5 (Yukari); script KO_S6W; bg D_01_67; 14 steps
+func	BUNKAKEN	func_8013544C	tour_stage_yukari_literature_anthology	stage 74 (0x4A): literature club, year 96: anthology exhibit; companion 5 (Yukari); script KO_S6W; bg D_01_67; 17 steps
+func	BUNKAKEN	func_801356C8	tour_stage_yukari_literature_speech	stage 75 (0x4B): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 5 (Yukari); script KO_S6W; bg D_30_01; portrait KO02; show variant 1; 17 steps
+func	BUNKAKEN	func_801359AC	tour_stage_yukari_drama	stage 76 (0x4C): drama club play on the hall stage (BUNKA_SD show), every year; companion 5 (Yukari); script KO_S6W; bg D_30_01; portrait KO02; BUNKA_SD show; 18 steps
+func	BUNKAKEN	func_80135D00	tour_stage_yukari_science	stage 77 (0x4D): science club experiment show (BUNKA_SD show), every year; companion 5 (Yukari); script KO_S6W; bg D_01_69; portrait KO02; show variant 1; 17 steps
+func	BUNKAKEN	func_80136008	tour_stage_yukari_computer_fortune	stage 78 (0x4E): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 5 (Yukari); script KO_S6W; bg D_01_70; calls sub-stage 11; 18 steps
+func	BUNKAKEN	func_801362EC	tour_stage_yukari_computer_game	stage 79 (0x4F): computer club, year 96: game exhibit (TT shooter); companion 5 (Yukari); script KO_S6W; bg D_01_70; portrait KO02; TT twice: recorded demo of TT stage 1, then the narrator stage 141 and an interactive TT run; 34 steps
+func	BUNKAKEN	func_801369CC	tour_stage_yukari_computer_experiment	stage 80 (0x50): computer club, year 97: experiment show (BUNKA_SD show); companion 5 (Yukari); script KO_S6W; bg D_01_70; portrait KO02; show variant 1; 17 steps
+func	BUNKAKEN	func_80136CB0	tour_stage_yukari_art_portrait	stage 81 (0x51): art club, year 95: portrait drawing; companion 5 (Yukari); script KO_S6W; bg D_01_71; 14 steps
+func	BUNKAKEN	func_80136E9C	tour_stage_yukari_art_sketch	stage 82 (0x52): art club, year 96: open sketching; companion 5 (Yukari); script KO_S6W; bg D_01_72; 13 steps
+func	BUNKAKEN	func_80137080	tour_stage_yukari_art_oil	stage 83 (0x53): art club, year 97: oil painting exhibit; companion 5 (Yukari); script KO_S6W; bg D_01_71; 14 steps
+func	BUNKAKEN	func_801372CC	tour_stage_yukari_brass	stage 84 (0x54): brass band concert on the hall stage (BUNKA_SD show); companion 5 (Yukari); script KO_S6W; bg D_30_01; portrait KO02; show variant 0; 17 steps
+func	BUNKAKEN	func_80146560	tour_stage_nozomi_route	stage 85 (0x55): picks the exhibit stage of the nozomi block from culture_exhibit_club and the year; companion 6 (Nozomi)
+func	BUNKAKEN	func_80146700	tour_stage_nozomi_literature_poems	stage 86 (0x56): literature club, year 95: poem collection exhibit; companion 6 (Nozomi); script KY_S6W; bg D_01_67; gate: param_liberal_arts < 120 picks the second of two lines; 18 steps
+func	BUNKAKEN	func_801469DC	tour_stage_nozomi_literature_anthology	stage 87 (0x57): literature club, year 96: anthology exhibit; companion 6 (Nozomi); script KY_S6W; bg D_01_67; 18 steps
+func	BUNKAKEN	func_80146C8C	tour_stage_nozomi_literature_speech	stage 88 (0x58): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 6 (Nozomi); script KY_S6W; bg D_30_01; portrait KY02; show variant 1; 17 steps
+func	BUNKAKEN	func_80146F70	tour_stage_nozomi_drama	stage 89 (0x59): drama club play on the hall stage (BUNKA_SD show), every year; companion 6 (Nozomi); script KY_S6W; bg D_30_01; portrait KY02; BUNKA_SD show; 18 steps
+func	BUNKAKEN	func_801472C4	tour_stage_nozomi_science	stage 90 (0x5A): science club experiment show (BUNKA_SD show), every year; companion 6 (Nozomi); script KY_S6W; bg D_01_69; portrait KY02; show variant 1; 17 steps
+func	BUNKAKEN	func_801475CC	tour_stage_nozomi_computer_fortune	stage 91 (0x5B): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 6 (Nozomi); script KY_S6W; bg D_01_70; calls sub-stage 11; 18 steps
+func	BUNKAKEN	func_80147914	tour_stage_nozomi_computer_game	stage 92 (0x5C): computer club, year 96: game exhibit (TT shooter); companion 6 (Nozomi); script KY_S6W; bg D_01_70; portrait KY02; TT twice: recorded demo of TT stage 2, then the narrator stage 141 and an interactive TT run; TT stages cleared < 2 adds 1 to the reaction group; 36 steps
+func	BUNKAKEN	func_80148094	tour_stage_nozomi_computer_experiment	stage 93 (0x5D): computer club, year 97: experiment show (BUNKA_SD show); companion 6 (Nozomi); script KY_S6W; bg D_01_70; portrait KY02; show variant 1; 20 steps
+func	BUNKAKEN	func_801483A8	tour_stage_nozomi_art_portrait	stage 94 (0x5E): art club, year 95: portrait drawing; companion 6 (Nozomi); script KY_S6W; bg D_01_71; 14 steps
+func	BUNKAKEN	func_80148594	tour_stage_nozomi_art_sketch	stage 95 (0x5F): art club, year 96: open sketching; companion 6 (Nozomi); script KY_S6W; bg D_01_72; 17 steps
+func	BUNKAKEN	func_801487DC	tour_stage_nozomi_art_oil	stage 96 (0x60): art club, year 97: oil painting exhibit; companion 6 (Nozomi); script KY_S6W; bg D_01_71; 14 steps
+func	BUNKAKEN	func_80148A28	tour_stage_nozomi_brass	stage 97 (0x61): brass band concert on the hall stage (BUNKA_SD show); companion 6 (Nozomi); script KY_S6W; bg D_30_01; portrait KY02; show variant 0; gate: param_art < 120 picks the second of two lines; 21 steps
+func	BUNKAKEN	func_8014E440	tour_stage_mira_route	stage 98 (0x62): picks the exhibit stage of the mira block from culture_exhibit_club and the year; companion 7 (Mira)
+func	BUNKAKEN	func_8014E5E0	tour_stage_mira_literature_poems	stage 99 (0x63): literature club, year 95: poem collection exhibit; companion 7 (Mira); script KG_S6W; bg D_01_67; 23 steps
+func	BUNKAKEN	func_8014E890	tour_stage_mira_literature_anthology	stage 100 (0x64): literature club, year 96: anthology exhibit; companion 7 (Mira); script KG_S6W; bg D_01_67; 19 steps
+func	BUNKAKEN	func_8014EAF0	tour_stage_mira_literature_speech	stage 101 (0x65): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 7 (Mira); script KG_S6W; bg D_30_01; portrait KG02; show variant 1; 20 steps
+func	BUNKAKEN	func_8014EE54	tour_stage_mira_drama	stage 102 (0x66): drama club play on the hall stage (BUNKA_SD show), every year; companion 7 (Mira); script KG_S6W; bg D_30_01; portrait KG02; BUNKA_SD show; 20 steps
+func	BUNKAKEN	func_8014F214	tour_stage_mira_science	stage 103 (0x67): science club experiment show (BUNKA_SD show), every year; companion 7 (Mira); script KG_S6W; bg D_01_69; portrait KG02; show variant 1; 26 steps
+func	BUNKAKEN	func_8014F624	tour_stage_mira_computer_fortune	stage 104 (0x68): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 7 (Mira); script KG_S6W; bg D_01_70; calls sub-stage 11; 20 steps
+func	BUNKAKEN	func_8014F9D8	tour_stage_mira_computer_game	stage 105 (0x69): computer club, year 96: game exhibit (TT shooter); companion 7 (Mira); script KG_S6W; bg D_01_70; portrait KG02; TT via narrator stage 141 (interactive run, direct stage 0); TT stages cleared < 2 adds 1 to the reaction group; 26 steps
+func	BUNKAKEN	func_8014FEF4	tour_stage_mira_computer_experiment	stage 106 (0x6A): computer club, year 97: experiment show (BUNKA_SD show); companion 7 (Mira); script KG_S6W; bg D_01_70; portrait KG02; show variant 1; 19 steps
+func	BUNKAKEN	func_80150244	tour_stage_mira_art_portrait	stage 107 (0x6B): art club, year 95: portrait drawing; companion 7 (Mira); script KG_S6W; bg D_01_71; 16 steps
+func	BUNKAKEN	func_8015049C	tour_stage_mira_art_sketch	stage 108 (0x6C): art club, year 96: open sketching; companion 7 (Mira); script KG_S6W; bg D_01_72; 13 steps
+func	BUNKAKEN	func_80150680	tour_stage_mira_art_oil	stage 109 (0x6D): art club, year 97: oil painting exhibit; companion 7 (Mira); script KG_S6W; bg D_01_71; 16 steps
+func	BUNKAKEN	func_80150958	tour_stage_mira_brass	stage 110 (0x6E): brass band concert on the hall stage (BUNKA_SD show); companion 7 (Mira); script KG_S6W; bg D_30_01; portrait KG02; show variant 0; 19 steps
+func	BUNKAKEN	func_8013EB30	tour_stage_yuko_route	stage 111 (0x6F): picks the exhibit stage of the yuko block from culture_exhibit_club and the year; companion 8 (Yuko)
+func	BUNKAKEN	func_8013EC98	tour_stage_yuko_literature_collection	stage 112 (0x70): literature club, years 95 and 96 in one stage (window title and first group by year); companion 8 (Yuko); script AS_S6W; bg D_01_67; 16 steps
+func	BUNKAKEN	func_8013EFA4	tour_stage_yuko_literature_speech	stage 113 (0x71): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 8 (Yuko); script AS_S6W; bg D_30_01; portrait AS02; show variant 1; 18 steps
+func	BUNKAKEN	func_8013F29C	tour_stage_yuko_drama	stage 114 (0x72): drama club play on the hall stage (BUNKA_SD show), every year; companion 8 (Yuko); script AS_S6W; bg D_30_01; portrait AS02; BUNKA_SD show; 21 steps
+func	BUNKAKEN	func_8013F6AC	tour_stage_yuko_science	stage 115 (0x73): science club experiment show (BUNKA_SD show), every year; companion 8 (Yuko); script AS_S6W; bg D_01_69/D_01_70; portrait AS02; show variant 1; 18 steps; science stage 115 also serves computer club year 97 (background by culture_exhibit_club)
+func	BUNKAKEN	func_8013F9E8	tour_stage_yuko_computer_fortune	stage 116 (0x74): computer club, year 95: fortune telling by blood type (sub-stage 11); companion 8 (Yuko); script AS_S6W; bg D_01_70; calls sub-stage 11; 19 steps
+func	BUNKAKEN	func_8013FD40	tour_stage_yuko_computer_game	stage 117 (0x75): computer club, year 96: game exhibit (TT shooter); companion 8 (Yuko); script AS_S6W; bg D_01_70; portrait AS02; TT twice: recorded demo of TT stage 4, then the narrator stage 141 and an interactive TT run; TT stages cleared < 4 adds 1 to the reaction group; 36 steps
+func	BUNKAKEN	func_801404B0	tour_stage_yuko_art_portrait	stage 118 (0x76): art club, year 95: portrait drawing; companion 8 (Yuko); script AS_S6W; bg D_01_71; 15 steps
+func	BUNKAKEN	func_801406AC	tour_stage_yuko_art_sketch	stage 119 (0x77): art club, year 96: open sketching; companion 8 (Yuko); script AS_S6W; bg D_01_72; 12 steps
+func	BUNKAKEN	func_80140878	tour_stage_yuko_art_oil	stage 120 (0x78): art club, year 97: oil painting exhibit; companion 8 (Yuko); script AS_S6W; bg D_01_71; 16 steps
+func	BUNKAKEN	func_80140B64	tour_stage_yuko_brass	stage 121 (0x79): brass band concert on the hall stage (BUNKA_SD show); companion 8 (Yuko); script AS_S6W; bg D_30_01; portrait AS02; show variant 0; 20 steps
+func	BUNKAKEN	func_80150D30	tour_stage_megumi_route	stage 122 (0x7A): picks the exhibit stage of the megumi block from culture_exhibit_club and the year; companion 9 (Megumi), years 96 and 97 only
+func	BUNKAKEN	func_80150E88	tour_stage_megumi_literature_anthology	stage 123 (0x7B): literature club, year 96: anthology exhibit; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_67; 17 steps
+func	BUNKAKEN	func_80151104	tour_stage_megumi_literature_speech	stage 124 (0x7C): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_30_01; portrait MI02; show variant 1; 17 steps
+func	BUNKAKEN	func_801513E8	tour_stage_megumi_drama	stage 125 (0x7D): drama club play on the hall stage (BUNKA_SD show), every year; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_30_01; portrait MI02; BUNKA_SD show; 18 steps
+func	BUNKAKEN	func_80151738	tour_stage_megumi_science	stage 126 (0x7E): science club experiment show (BUNKA_SD show), every year; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_69/D_01_70; portrait MI02; show variant 1; 17 steps; science stage 126 also serves computer club year 97 (background by culture_exhibit_club)
+func	BUNKAKEN	func_80151A78	tour_stage_megumi_computer_game	stage 127 (0x7F): computer club, year 96: game exhibit (TT shooter); companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_70; portrait MI02; TT via narrator stage 141 (interactive run, direct stage 0); 21 steps
+func	BUNKAKEN	func_80151EC0	tour_stage_megumi_art_sketch	stage 128 (0x80): art club, year 96: open sketching; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_72; 13 steps
+func	BUNKAKEN	func_801520B4	tour_stage_megumi_art_oil	stage 129 (0x81): art club, year 97: oil painting exhibit; companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_01_71; 14 steps
+func	BUNKAKEN	func_80152300	tour_stage_megumi_brass	stage 130 (0x82): brass band concert on the hall stage (BUNKA_SD show); companion 9 (Megumi), years 96 and 97 only; script MI_S6W; bg D_30_01; portrait MI02; show variant 0; 17 steps
+func	BUNKAKEN	func_8013CF30	tour_stage_yumi_route	stage 131 (0x83): picks the exhibit stage of the yumi block from culture_exhibit_club and the year; companion 10 (Yumi), years 96 and 97 only
+func	BUNKAKEN	func_8013D048	tour_stage_yumi_literature_anthology	stage 132 (0x84): literature club, year 96: anthology exhibit; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_67; 10 steps
+func	BUNKAKEN	func_8013D1F4	tour_stage_yumi_literature_speech	stage 133 (0x85): literature club, year 97: speech contest on the hall stage (BUNKA_SD show); companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_30_01; portrait SA02; show variant 1; 17 steps
+func	BUNKAKEN	func_8013D4D8	tour_stage_yumi_drama	stage 134 (0x86): drama club play on the hall stage (BUNKA_SD show), every year; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_30_01; portrait SA02; BUNKA_SD show; 18 steps
+func	BUNKAKEN	func_8013D82C	tour_stage_yumi_science	stage 135 (0x87): science club experiment show (BUNKA_SD show), every year; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_69/D_01_70; portrait SA02; show variant 1; 17 steps; science stage 135 also serves computer club year 97 (background by culture_exhibit_club)
+func	BUNKAKEN	func_8013DBE8	tour_stage_yumi_computer_game	stage 136 (0x88): computer club, year 96: game exhibit (TT shooter); companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_70; portrait SA02; TT twice: recorded demo of TT stage 3, then the narrator stage 141 and an interactive TT run; TT stages cleared < 3 adds 1 to the reaction group; 32 steps
+func	BUNKAKEN	func_8013E2C0	tour_stage_yumi_art_sketch	stage 137 (0x89): art club, year 96: open sketching; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_72; 19 steps
+func	BUNKAKEN	func_8013E578	tour_stage_yumi_art_oil	stage 138 (0x8A): art club, year 97: oil painting exhibit; companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_01_71; 14 steps
+func	BUNKAKEN	func_8013E7C4	tour_stage_yumi_brass	stage 139 (0x8B): brass band concert on the hall stage (BUNKA_SD show); companion 10 (Yumi), years 96 and 97 only; script SA_S6W; bg D_30_01; portrait SA02; show variant 0; 17 steps
+func	BUNKAKEN	func_8013B510	tour_stage_invitation	stage 0 (0x0): the best-liked girl invites the player; pick by tour_invitation_pick_girl, her invitation script, accept or refuse (two-way choice); accept goes to the club menu or to her club, refuse sets culture_refused_girl and goes to stage 1; emu: poked girls 4 and 5, girl 4 (higher sum) invited, accept led to stage 3 and stage 59
+func	BUNKAKEN	func_80143DD0	tour_stage_ask_companion	stage 1 (0x1): no invitation or after a refusal: two-way question (ask a girl or not), girl picker (select_girl), her reply by mood rank and club, then the club menu or stage 2; 50 steps; emu: with only Shiori met the picker listed her and led to stage 3 then stage 19
+func	BUNKAKEN	func_80144A70	tour_stage_yoshio	stage 2 (0x2): Yoshio (girl id 13, portrait YO02) greets the player when no girl joins; common script group 6, then group 7 + (year - 95), then group 10, then the club menu; 11 steps
+func	BUNKAKEN	func_80144C5C	tour_stage_club_menu	stage 3 (0x3): menu of the six culture clubs; step 0 builds it, step 1 reads it, step 2 stores the pick in culture_exhibit_club (and plays a short comment from the common script when no girl is along) then goes to stage 4; emu: the first item gave club 0
+func	BUNKAKEN	func_80145EBC	tour_stage_route_visit	stage 4 (0x4): routes to a block by culture_visitor_girl and culture_exhibit_club: no companion picks Shiori at her club, Mio, Yuina or Ayako at theirs (if met and the club matches) else the solo block; a companion id picks that girl block (4-10, 11 Shiori companion)
+func	BUNKAKEN	func_80152680	tour_stage_fortune_telling	stage 11 (0xB): computer fortune telling by blood type: picks a girl (select_girl2) unless one is fixed, shows a terminal screen with both blood types, looks the result up in tour_fortune_grid, stores it in culture_fortune_result and returns to the saved stage and step; emu: girl blood 2 x player blood 1 gave result 1
+func	BUNKAKEN	func_801462A0	tour_stage_resume	stage 140 (0x8C): after the TT game: reloads the system graphics (cursor, boot data, HUD textures, debug font, calendar ROM 0x95 sectors from sector 0x9B94, month calendar for the current month) and returns to culture_return_stage and step; 7 steps
+func	BUNKAKEN	func_801463E4	tour_stage_tt_narrator	stage 141 (0x8D): narrator scene before TT (script TWINBEE, speaker id 8, blank label) then fade out and, on a pad, main_state_set(0xD0); with a mouse step 4 waits forever; 5 steps; emu: reached from stage 12, mode 0xD0 started at frame 720 with direct_mode set
+func	BUNKAKEN	func_80144F70	tour_entry	mode 0x71 per-frame entry: switch on culture_phase 0-10 (init, fade, sound wait, bg load, intro speak, stage table, finish, two birthday scenes); calls Default_Disp unless culture_display_skip; emu: phases 0,2,3,4,6,7,8 observed in order
+func	BUNKAKEN	func_80145500	tour_phase_next_on_step	if a main helper raised step above 0, clear step and add 1 to culture_phase (phases 4 and 6)
+func	BUNKAKEN	func_80145530	tour_finish_visit	stage and step to 0 and culture_phase to 8 (end of a visit); called by the last step of every exhibit stage
+func	BUNKAKEN	func_80145550	tour_apply_points	end of visit: girl culture_visitor_girl (0xB means girl 0) gets +2 affection and tokimeki + (table value - 1, if above 0) from the year table at [companion][culture_exhibit_club]; the refused girl loses 10 affection and gains 10 syoushin; emu: +2 and +1 for girl 4 in year 95 club 0, penalty -10/+10 seen
+func	BUNKAKEN	func_80145844	tour_window_title_set	sets the message window title for the exhibit in culture_exhibit_club and the year (11 titles, year 95/96/97 where they differ); used by every stage after the background loads
+func	BUNKAKEN	func_801459FC	tour_title_backstage_show	sets the window title to the backstage string and starts it; used around the stage shows of the club-girl blocks
+func	BUNKAKEN	func_80145A30	tour_title_clear	sets a blank window title and hides it
+func	BUNKAKEN	func_80145A64	tour_event_log_add	inline event_log_add of a visit, called by the finish step when the companion is not 0xFF and its mood rank is below 4: record (girl, flag 4*club+3 when she is at her own club else 4*club+4, scene 0x14, closeness from get_g_zyotai_h, date); skipped for the refused girl; companion 0xB logs girl 0 but the rank tests read the raw id 0xB (girl 11)
+func	BUNKAKEN	func_80145E40	tour_stage_run	copies the 142-entry stage table to the stack and calls entry [GameState.stage]
+func	BUNKAKEN	func_8013BD84	tour_invitation_pick_girl	picks who invites the player. Girl 0 (no met test): her weighted affection must be >= 80 (the code tests get_h_yuukou(0) twice, against 50 then 80; her weighted tokimeki is not tested here) and then her raw affection + tokimeki seeds the running maximum, else the maximum is 0. Girls 1-10: met, weighted tokimeki >= 50 and weighted affection >= 80; the raw sum must be strictly greater than the maximum to replace the winner (ties keep the lower id). Year 96 forces the sum of girls with club 1 or 4 to 0 (girl 0 seeds 0). The winner (girl 0 when nobody replaced her) is then checked again against tokimeki >= 50 and affection >= 80, so a girl 0 with affection >= 80 and tokimeki < 50 seeds the maximum, cannot win, and blocks every girl whose sum is not larger: nobody invites; girl 0 in year 96 with club 1 or 4 never wins; girl 0 with a club id of 6 or more becomes id 11; stores culture_visitor_girl and returns 1, else 0; emu: girl 4 (200) beat girl 5 (190); girl 0 (affection 100, tokimeki 45) with girl 4 (sum 115) gave stage 1 and no invitation
+func	BUNKAKEN	func_8013BFA0	tour_script_tables_apply	copies the three table pointers written by a script setter into the dialogue text, command and voice table words
+func	BUNKAKEN	func_80144D38	tour_club_menu_init	builds the club menu: six items in two columns (x -0x80 and -0x08, y 0x32 + 0x10 per row, 0x78 x 0x10), registers them with menu_set and starts the cursor
+func	BUNKAKEN	func_80144E9C	tour_club_menu_update	per-frame menu check and cursor; on circle (pad_pressed & 0x20) the hovered item index goes to dialogue_choice and the menu closes
+func	BUNKAKEN	func_8013B4A0	tour_solo_script_begin	starts a common-script (BUN_PC) group in the solo exhibit stages: speaker names for girl 0, common script setter, line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_80148ED0	tour_birthday_tables_init	fills the 3 x 13 pointer table tour_birthday_script (text, command and voice tables of the 13 sections of the loaded P_BIRTH file at 0x801B0000)
+func	BUNKAKEN	func_80149144	tour_phase_shiori_birthday	phase 9: the festival day is Shiori birthday and the companion is 0 or id 11; three paths: club id below 6 (step 0x2E, her club exhibit, two-way question then a three-way choice), the player birthday too and rank below 2 (step 0x16, P_BIRTH park scene), else the park (rank below 2) or corridor scene; gains by original option 0/1/2: tokimeki +3/+2/+0, affection +2/+1/+1, syoushin -15/-10/+10; declining at the club costs 1 affection and gives 5 syoushin; sets daily_event_bits mask 1; 73 steps; emu: standard path seen, option 1 gains matched
+func	BUNKAKEN	func_8014A0E0	tour_phase_player_birthday	phase 10: the festival day is the player birthday and the companion is girl 4-10 with mood rank below 2: park scene with P_BIRTH section chosen by her id (4->10, 5->7, 6->8, 7->5, 8->0, 9->9, 10->12), logs flag 0x19, no point change; sets daily_event_bits mask 4; 12 steps
+func	BUNKAKEN	func_8014A5EC	tour_birthday_option_name_set	copies the 33-byte name for [year - 95][dialogue_choice] from tour_birthday_option_names into name buffer A
+func	BUNKAKEN	func_80152F4C	tour_fortune_result	fortune result: 3 for the computer-club girl case (companion 2 whose club is 3, mood rank below 4, not the refused girl), else tour_fortune_grid[girl blood type][player blood type] (2 same type, 0 for the pairs 0-1 and 2-3, else 1); emu: 1 for girl blood 2, player blood 1
+func	BUNKAKEN	func_80132000	tour_script_invite_shiori	script setter: stores the text, command and voice table addresses of disc file FU_S6I in tour_script_text/commands/voices (34 bytes of code); girl 0 invitation script (3 sectors from 0x49E8); tour_invite_script_setter[0]
+func	BUNKAKEN	func_80132034	tour_script_shiori_club	script setter: stores the text, command and voice table addresses of disc file FU_S6O in tour_script_text/commands/voices (34 bytes of code); Shiori at her own club (23 sectors from 0x49EB); used by tour_shiori_club_script_begin
+func	BUNKAKEN	func_80132068	tour_script_invite_shiori_no_culture_club	script setter: stores the text, command and voice table addresses of disc file FU_S6S in tour_script_text/commands/voices (34 bytes of code); invitation script for id 11, Shiori with a non-culture club (2 sectors from 0x4A02); tour_invite_script_setter[11]
+func	BUNKAKEN	func_8013209C	tour_script_shiori_companion	script setter: stores the text, command and voice table addresses of disc file FU_S6W in tour_script_text/commands/voices (34 bytes of code); Shiori with the player at the exhibits (15 sectors from 0x4A03); used by tour_shiori_companion_script_begin
+func	BUNKAKEN	func_801320D0	tour_script_invite_mio	script setter: stores the text, command and voice table addresses of disc file KS_S6I in tour_script_text/commands/voices (34 bytes of code); girl 1 invitation script (2 sectors from 0x4AB4); tour_invite_script_setter[1]
+func	BUNKAKEN	func_80132104	tour_script_mio_club	script setter: stores the text, command and voice table addresses of disc file KS_S6O in tour_script_text/commands/voices (34 bytes of code); Mio at her own club (7 sectors from 0x4AB6)
+func	BUNKAKEN	func_80132138	tour_script_invite_yuina	script setter: stores the text, command and voice table addresses of disc file HI_S6I in tour_script_text/commands/voices (34 bytes of code); girl 2 invitation script (2 sectors from 0x4A36); tour_invite_script_setter[2]
+func	BUNKAKEN	func_8013216C	tour_script_yuina_club	script setter: stores the text, command and voice table addresses of disc file HI_S6O in tour_script_text/commands/voices (34 bytes of code); Yuina at her own club (9 sectors from 0x4A38)
+func	BUNKAKEN	func_801321A0	tour_script_invite_ayako	script setter: stores the text, command and voice table addresses of disc file KT_S6I in tour_script_text/commands/voices (34 bytes of code); girl 3 invitation script (2 sectors from 0x4B08); tour_invite_script_setter[3]
+func	BUNKAKEN	func_801321D4	tour_script_ayako_club	script setter: stores the text, command and voice table addresses of disc file KT_S6O in tour_script_text/commands/voices (34 bytes of code); Ayako at her own club (9 sectors from 0x4B0A); stores the command pointer twice, only the second survives
+func	BUNKAKEN	func_80132208	tour_script_invite_saki	script setter: stores the text, command and voice table addresses of disc file NI_S6S in tour_script_text/commands/voices (34 bytes of code); girl 4 invitation script (1 sector from 0x4B51); tour_invite_script_setter[4]
+func	BUNKAKEN	func_8013223C	tour_script_saki	script setter: stores the text, command and voice table addresses of disc file NI_S6W in tour_script_text/commands/voices (34 bytes of code); Saki with the player (12 sectors from 0x4B52)
+func	BUNKAKEN	func_80132270	tour_script_invite_yukari	script setter: stores the text, command and voice table addresses of disc file KO_S6S in tour_script_text/commands/voices (34 bytes of code); girl 5 invitation script (1 sector from 0x4A72); tour_invite_script_setter[5]
+func	BUNKAKEN	func_801322A4	tour_script_yukari	script setter: stores the text, command and voice table addresses of disc file KO_S6W in tour_script_text/commands/voices (34 bytes of code); Yukari with the player (16 sectors from 0x4A73)
+func	BUNKAKEN	func_801322D8	tour_script_invite_nozomi	script setter: stores the text, command and voice table addresses of disc file KY_S6S in tour_script_text/commands/voices (34 bytes of code); girl 6 invitation script (1 sector from 0x4B22); tour_invite_script_setter[6]
+func	BUNKAKEN	func_8013230C	tour_script_nozomi	script setter: stores the text, command and voice table addresses of disc file KY_S6W in tour_script_text/commands/voices (34 bytes of code); Nozomi with the player (16 sectors from 0x4B23)
+func	BUNKAKEN	func_80132340	tour_script_invite_mira	script setter: stores the text, command and voice table addresses of disc file KG_S6S in tour_script_text/commands/voices (34 bytes of code); girl 7 invitation script (2 sectors from 0x4A50); tour_invite_script_setter[7]
+func	BUNKAKEN	func_80132374	tour_script_mira	script setter: stores the text, command and voice table addresses of disc file KG_S6W in tour_script_text/commands/voices (34 bytes of code); Mira with the player (19 sectors from 0x4A52)
+func	BUNKAKEN	func_801323A8	tour_script_invite_yuko	script setter: stores the text, command and voice table addresses of disc file AS_S6S in tour_script_text/commands/voices (34 bytes of code); girl 8 invitation script (2 sectors from 0x49A5); tour_invite_script_setter[8]
+func	BUNKAKEN	func_801323DC	tour_script_yuko	script setter: stores the text, command and voice table addresses of disc file AS_S6W in tour_script_text/commands/voices (34 bytes of code); Yuko with the player (16 sectors from 0x49A7)
+func	BUNKAKEN	func_80132410	tour_script_invite_megumi	script setter: stores the text, command and voice table addresses of disc file MI_S6S in tour_script_text/commands/voices (34 bytes of code); girl 9 invitation script (1 sector from 0x4B3D); tour_invite_script_setter[9]
+func	BUNKAKEN	func_80132444	tour_script_megumi	script setter: stores the text, command and voice table addresses of disc file MI_S6W in tour_script_text/commands/voices (34 bytes of code); Megumi with the player (9 sectors from 0x4B3E)
+func	BUNKAKEN	func_80132478	tour_script_invite_yumi	script setter: stores the text, command and voice table addresses of disc file SA_S6S in tour_script_text/commands/voices (34 bytes of code); girl 10 invitation script (1 sector from 0x4B71); tour_invite_script_setter[10]
+func	BUNKAKEN	func_801324AC	tour_script_yumi	script setter: stores the text, command and voice table addresses of disc file SA_S6W in tour_script_text/commands/voices (34 bytes of code); Yumi with the player (13 sectors from 0x4B72)
+func	BUNKAKEN	func_801324E0	tour_script_common	script setter: stores the text, command and voice table addresses of disc file BUN_PC in tour_script_text/commands/voices (34 bytes of code); common script of the festival visit (5 sectors from 0x49BA to 0x801E8000): intro, questions, solo exhibits, wrap-up; text 0x801E92FC, commands 0x801E9598, voices 0x801EA298
+func	BUNKAKEN	func_80132514	tour_script_narrator	script setter: stores the text, command and voice table addresses of disc file TWINBEE in tour_script_text/commands/voices (34 bytes of code); narrator script of the TT stage 141 (1 sector from 0x4B7F)
+func	BUNKAKEN	func_80132548	tour_script_fortune	script setter: stores the text, command and voice table addresses of disc file URANAI in tour_script_text/commands/voices (34 bytes of code); fortune telling script of sub-stage 11 (1 sector from 0x4B80)
+func	BUNKAKEN	func_8013257C	tour_script_birthday	script setter: stores the text, command and voice table addresses of disc file BUN_FU in tour_script_text/commands/voices (34 bytes of code); Shiori birthday and player birthday common lines (3 sectors from 0x49B7)
+func	BUNKAKEN	func_80134FFC	tour_shiori_companion_script_begin	speaker names for girl 0, installs that block script (func_8013209C), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_8014E3DC	tour_shiori_club_script_begin	speaker names for girl 0, installs that block script (func_80132034), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_8013CEC0	tour_mio_club_script_begin	speaker names for girl 1, installs that block script (func_80132104), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_80142864	tour_yuina_club_script_begin	speaker names for girl 2, installs that block script (func_8013216C), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_80143D68	tour_ayako_club_script_begin	speaker names for girl 3, installs that block script (func_801321D4), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_80139DEC	tour_saki_script_begin	speaker names for girl 4, installs that block script (func_8013223C), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_801375D0	tour_yukari_script_begin	speaker names for girl 5, installs that block script (func_801322A4), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_80148E68	tour_nozomi_script_begin	speaker names for girl 6, installs that block script (func_8013230C), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_80150CC8	tour_mira_script_begin	speaker names for girl 7, installs that block script (func_80132374), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_80140EF4	tour_yuko_script_begin	speaker names for girl 8, installs that block script (func_801323DC), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_80152618	tour_megumi_script_begin	speaker names for girl 9, installs that block script (func_80132444), line 0, copies the three table pointers, next step
+func	BUNKAKEN	func_8013EAC8	tour_yumi_script_begin	speaker names for girl 10, installs that block script (func_801324AC), line 0, copies the three table pointers, next step
+data	main	D_80122E98	culture_display_skip	REQUEST (shared with BUNKASAI, whose table proposes culture_default_disp_off for this word; disp is not in the abbreviation table): word at overlay_scratch+0xC8; while nonzero the entry skips Default_Disp; set to 1 while a sub-mode is being left and re-entered, 0 again after the HUD is rebuilt
+data	main	D_80122EA4	culture_refused_girl	REQUEST (not named in the BUNKASAI table yet): overlay_scratch+0xD4; girl id the player turned down (0xFF none, set by phase 0); costs her 10 affection and gains 10 syoushin at the end, makes her absent from her own club scene and blocks her in the picker; emu: poked 4, art stage, girl 4 affection 100 to 90
+data	main	D_80122EA8	culture_fortune_result	REQUEST (same name in the BUNKASAI table): overlay_scratch+0xD8; 0-3 result of the fortune telling, later added to a group base (0x3F, 0x24, 0x32, ...) to pick the reaction lines; emu: 1 for girl blood 2 x player blood 1
+data	main	D_80122EAC	culture_show_variant	REQUEST (shared with BUNKA_SD and BUNKASAI, same name in its table): overlay_scratch+0xDC; 0-4 variant of the stage show started with main_state_set(0x80); BUNKA_SD reads it (frames variant*2+2..): 0 concert and drama-girl scenes, 1 most experiment shows, 2 Shiori club speech, 3 Mio club speech, 4 solo speech and Ayako brass
+data	main	D_80122EB0	culture_return_stage	REQUEST (same name in the BUNKASAI table): overlay_scratch+0xE0; stage to return to after a stage show or TT (stage at the time of the launch)
+data	main	D_80122EB4	culture_return_step	REQUEST (same name in the BUNKASAI table): overlay_scratch+0xE4; step to return to (launch step + 1)
+data	main	D_80122EB8	culture_exhibit_club	REQUEST (shared with BUNKASAI, same name in its table): overlay_scratch+0xE8; club id 0-5 being visited (core Club: literature, drama, science, computer, art, brass band); first word of core type BunkaDispatch8
+data	main	D_80122EBC	culture_visitor_girl	REQUEST (shared with BUNKASAI): overlay_scratch+0xEC; girl present in the visit (the companion in the BUNKAKEN spec; BUNKASAI table: culture_visitor_girl, same name): 0-10 a heroine, 0xB Shiori who has no culture club, 0xFF nobody; second word of BunkaDispatch8; emu: 4 after the invitation
+data	main	D_80122EC0	culture_phase	REQUEST (shared with BUNKASAI, same name; its enum is CulturePhase, this unit types the word with TourPhase): overlay_scratch+0xF0; entry phase 0-10 (TOUR_PHASE_*); the entry zeroes the whole 0x100-byte overlay_scratch at the end of phase 8, which resets it to 0; emu: written 0..8 in order and cleared at frame 705 by the zeroing loop
 data	main	D_800E7D4E	tt_stages_cleared	REQUEST (shared with TT, BUNKASAI): TT result byte (stages cleared, 0-4) read by the festival game exhibit to pick a reaction line (below 2, 3 or 4 by block)
-data	BUNKAKEN	D_80155E90	festival_visit_script_text	pointer to the text table of the loaded script file; written by the script setters, read by festival_visit_script_tables_apply and the stage begin helpers
-data	BUNKAKEN	D_80155E94	festival_visit_script_commands	pointer to the command byte table (one speak code per line, 0xFF ends a group)
-data	BUNKAKEN	D_80155E98	festival_visit_script_voices	pointer to the voice clip pair table (followed by one zero pad word)
-data	BUNKAKEN	D_80155EA0	festival_visit_bustup_lba	s32[12] disc sector of each companion portrait file BUSTUP/*02.BIN (girl id 0-10, id 11 repeats Shiori 0x544A)
-data	BUNKAKEN	D_80155ED0	festival_visit_invite_script_setter	void (*)(void)[12] script setter per companion id: invitation file of that girl
-data	BUNKAKEN	D_80155F00	festival_visit_invite_script_sectors	u8[12] sector counts of the invitation files (3,2,2,2,1,1,1,2,2,1,1,1)
-data	BUNKAKEN	D_80155F0C	festival_visit_invite_script_lba	s32[12] disc sectors of the invitation files (FU_S6I, KS_S6I, HI_S6I, KT_S6I, NI_S6S, KO_S6S, KY_S6S, KG_S6S, AS_S6S, MI_S6S, SA_S6S, FU_S6S)
-data	BUNKAKEN	D_80155F3C	festival_visit_bustup_layout	u8[20] argument of bustup_layout_set per companion id: 3 for ids 0,1,3,4,5,6,11 and 4 for 2,7,8,9,10 (the face shown when the girl is turned down); the last 8 bytes are zero and unused
-data	BUNKAKEN	D_80155F50	festival_visit_scratch_bytes	32 zero bytes; one store of 0 at stage 45 step 0 and no read (padding or dead variable)
-data	BUNKAKEN	D_80155F70	festival_visit_club_menu_labels	void-pointer words[8]: six string pointers to the club menu labels then two zero words
-data	BUNKAKEN	D_80155F90	festival_visit_unused_table	11 bytes (0,1,1,2,1,2,1,0,2,1,0 plus a pad byte) copied to the stack by the entry and never read
-data	BUNKAKEN	D_80155F9C	festival_visit_points_y95	u8[9][6] gain code per [companion girl 0-8][club] in year 95; only girls 0-8 exist in this table (girls 9 and 10 cannot appear in year 95)
-data	BUNKAKEN	D_80155FD4	festival_visit_points_y96	u8[11][6] gain code per [companion girl][club] in year 96
-data	BUNKAKEN	D_80156018	festival_visit_points_y97	u8[11][6] gain code per [companion girl][club] in year 97; tokimeki gain = code - 1 when code is above 0
-data	BUNKAKEN	D_80156060	festival_visit_stage_table	void (*)(void)[142] + 2 zero words: one entry per stage 0-141 (FV_STAGE_*)
-data	BUNKAKEN	D_801562A0	festival_visit_birthday_script	s32[3][13]: row 0 text, row 1 command and row 2 voice table addresses of the 13 sections of P_BIRTH (0x801B0000); sections used: 0 girl 8, 1 id 11, 5 girl 7, 7 girl 5, 8 girl 6, 9 girl 9, 10 girl 4, 12 girl 10
-data	BUNKAKEN	D_8015633C	festival_visit_birthday_option_names	HYPOTHESIS: u8[3][3][33] present names for [year - 95][option 0-2]: 33-byte records like the DATE gift table, copied into name buffer A for the reply lines of the Shiori birthday three-way choice
-data	BUNKAKEN	D_80156470	festival_visit_fortune_girl_names	string pointers[12] names shown on the terminal, indexed by companion id (11 shows Shiori)
-data	BUNKAKEN	D_801564A0	festival_visit_fortune_girl_blood_labels	string pointers[11] blood type label shown for girl 0-10
-data	BUNKAKEN	D_801564CC	festival_visit_fortune_player_blood_labels	string pointers[4] blood type labels A, B, O, AB, indexed by the 2-bit blood code
-data	BUNKAKEN	D_801564DC	festival_visit_fortune_wait_frames	frame counter of the fortune telling steps (0x15 frames between lines, 0x3D before the result)
-data	BUNKAKEN	D_801564E0	festival_visit_fortune_grid	s32[4][4]: result per [girl blood code][player blood code]: 2 for equal codes, 0 for the pairs (0,1), (1,0), (2,3), (3,2), 1 otherwise
-data	BUNKAKEN	D_80154920	festival_visit_menu_literature	club menu label: go to the literature club
-data	BUNKAKEN	D_80154930	festival_visit_menu_drama	club menu label: go to the drama club
-data	BUNKAKEN	D_80154940	festival_visit_menu_science	club menu label: go to the science club
-data	BUNKAKEN	D_80154950	festival_visit_menu_computer	club menu label: go to the computer club
-data	BUNKAKEN	D_80154960	festival_visit_menu_art	club menu label: go to the art club
-data	BUNKAKEN	D_80154970	festival_visit_menu_brass	club menu label: go to the brass band club
-data	BUNKAKEN	D_80154B84	festival_visit_title_backstage	window title: backstage (rodata island of entry.c)
-data	BUNKAKEN	D_80154B8C	festival_visit_title_blank	window title: one blank full-width space (rodata island of entry.c)
-field	BunkaDispatch8	unk_00	club	D_80122EB8: club id being visited (festival_club)
-field	BunkaDispatch8	unk_04	companion	D_80122EBC: girl present (festival_companion)
-field	FnTbl142	f	stage_fn	entry per stage
+data	BUNKAKEN	D_80155E90	tour_script_text	pointer to the text table of the loaded script file; written by the script setters, read by tour_script_tables_apply and the stage begin helpers
+data	BUNKAKEN	D_80155E94	tour_script_commands	pointer to the command byte table (one speak code per line, 0xFF ends a group)
+data	BUNKAKEN	D_80155E98	tour_script_voices	pointer to the voice clip pair table (followed by one zero pad word)
+data	BUNKAKEN	D_80155EA0	tour_portrait_lba	s32[12] disc sector of each companion portrait file BUSTUP/*02.BIN (girl id 0-10, id 11 repeats Shiori 0x544A)
+data	BUNKAKEN	D_80155ED0	tour_invite_script_setter	void (*)(void)[12] script setter per companion id: invitation file of that girl
+data	BUNKAKEN	D_80155F00	tour_invite_script_sectors	u8[12] sector counts of the invitation files (3,2,2,2,1,1,1,2,2,1,1,1)
+data	BUNKAKEN	D_80155F0C	tour_invite_script_lba	s32[12] disc sectors of the invitation files (FU_S6I, KS_S6I, HI_S6I, KT_S6I, NI_S6S, KO_S6S, KY_S6S, KG_S6S, AS_S6S, MI_S6S, SA_S6S, FU_S6S)
+data	BUNKAKEN	D_80155F3C	tour_portrait_layout	u8[20] argument of bustup_layout_set per companion id: 3 for ids 0,1,3,4,5,6,11 and 4 for 2,7,8,9,10 (the face shown when the girl is turned down); the last 8 bytes are zero and unused
+data	BUNKAKEN	D_80155F50	tour_scratch_bytes	32 zero bytes; one store of 0 at stage 45 step 0 and no read (padding or dead variable)
+data	BUNKAKEN	D_80155F70	tour_club_menu_labels	void-pointer words[8]: six string pointers to the club menu labels then two zero words
+data	BUNKAKEN	D_80155F90	tour_unused_table	11 bytes (0,1,1,2,1,2,1,0,2,1,0 plus a pad byte) copied to the stack by the entry and never read
+data	BUNKAKEN	D_80155F9C	tour_points_1995	u8[9][6] gain code per [companion girl 0-8][club] in year 95; only girls 0-8 exist in this table (girls 9 and 10 cannot appear in year 95)
+data	BUNKAKEN	D_80155FD4	tour_points_1996	u8[11][6] gain code per [companion girl][club] in year 96
+data	BUNKAKEN	D_80156018	tour_points_1997	u8[11][6] gain code per [companion girl][club] in year 97; tokimeki gain = code - 1 when code is above 0
+data	BUNKAKEN	D_80156060	tour_stage_table	void (*)(void)[142] + 2 zero words: one entry per stage 0-141 (TOUR_STAGE_*)
+data	BUNKAKEN	D_801562A0	tour_birthday_script	s32[3][13]: row 0 text, row 1 command and row 2 voice table addresses of the 13 sections of P_BIRTH (0x801B0000); sections used: 0 girl 8, 1 id 11, 5 girl 7, 7 girl 5, 8 girl 6, 9 girl 9, 10 girl 4, 12 girl 10
+data	BUNKAKEN	D_8015633C	tour_birthday_option_names	HYPOTHESIS: u8[3][3][33] present names for [year - 95][option 0-2]: 33-byte records like the DATE gift table, copied into name buffer A for the reply lines of the Shiori birthday three-way choice
+data	BUNKAKEN	D_80156470	tour_fortune_girl_names	string pointers[12] names shown on the terminal, indexed by companion id (11 shows Shiori)
+data	BUNKAKEN	D_801564A0	tour_fortune_girl_blood_labels	string pointers[11] blood type label shown for girl 0-10
+data	BUNKAKEN	D_801564CC	tour_fortune_player_blood_labels	string pointers[4] blood type labels A, B, O, AB, indexed by the 2-bit blood code
+data	BUNKAKEN	D_801564DC	tour_fortune_wait_counter	u8 frame counter of the fortune telling steps (counts up to 0x15 between the terminal lines, to 0x3D before the result); one byte, not a table
+data	BUNKAKEN	D_801564E0	tour_fortune_grid	s32[4][4]: result per [girl blood code][player blood code]: 2 for equal codes, 0 for the pairs (0,1), (1,0), (2,3), (3,2), 1 otherwise
+data	BUNKAKEN	D_80154920	tour_menu_literature	club menu label: go to the literature club
+data	BUNKAKEN	D_80154930	tour_menu_drama	club menu label: go to the drama club
+data	BUNKAKEN	D_80154940	tour_menu_science	club menu label: go to the science club
+data	BUNKAKEN	D_80154950	tour_menu_computer	club menu label: go to the computer club
+data	BUNKAKEN	D_80154960	tour_menu_art	club menu label: go to the art club
+data	BUNKAKEN	D_80154970	tour_menu_brass	club menu label: go to the brass band club
+data	BUNKAKEN	D_80154B84	tour_title_backstage	window title: backstage (rodata island of entry.c)
+data	BUNKAKEN	D_80154B8C	tour_title_blank	window title: one blank full-width space (rodata island of entry.c)
+field	BunkaDispatch8	unk_00	club	D_80122EB8: club id being visited (culture_exhibit_club)
+field	BunkaDispatch8	unk_04	girl	D_80122EBC: heroine id of the current scene (culture_visitor_girl); the companion in this overlay
+field	FnTbl142	f	handler	function pointer of the stage handler, indexed by GameState.stage
 field	Tbl6_80144D38	w	labels	six club menu label pointers
 field	BunkakenGrid4	values	result_by_blood	[girl blood code][player blood code] fortune result
 field	BunkakenTexts12	text	names	girl names on the terminal
@@ -253,206 +253,206 @@ field	BunkakenBytes9x6	b	codes	[girl][club] gain codes, year 95
 field	BunkakenBytes11x6	b	codes	[girl][club] gain codes, years 96 and 97
 field	BunkakenNames3x3	text	names	[year - 95][option] name, 33 bytes each
 field	Flags7D4F	b0	tt_unlocked	set by the TT loader and by the festival game exhibits; OPTION extras row for TT tests it (o-tt spec)
-field	Flags7D4F	b1	tt_direct	direct mode: TT skips its title and plays the stage in unk_2_4 with the recorded input; the festival sets it before every TT launch
-field	Flags7D4F	unk_2_4	tt_direct_stage	TT stage to play in direct mode: 1-4 recorded demo (Yukari 1, Nozomi 2, Yumi 3, Yuko 4), 0 means no stage (TT starts at its title for the player)
-type	BUNKAKEN	BunkakenGrid4	FestivalVisitFortuneGrid	prefix-form rename of an overlay-local table type (see the matching data row)
-type	BUNKAKEN	BunkakenTexts12	FestivalVisitFortuneNames	prefix-form rename of an overlay-local table type (see the matching data row)
-type	BUNKAKEN	BunkakenTexts11	FestivalVisitFortuneBloodLabels	prefix-form rename of an overlay-local table type (see the matching data row)
-type	BUNKAKEN	BunkakenTexts4	FestivalVisitFortunePlayerLabels	prefix-form rename of an overlay-local table type (see the matching data row)
-type	BUNKAKEN	BunkakenBytes11	FestivalVisitUnusedBytes	prefix-form rename of an overlay-local table type (see the matching data row)
-type	BUNKAKEN	BunkakenBytes9x6	FestivalVisitPointsY95	prefix-form rename of an overlay-local table type (see the matching data row)
-type	BUNKAKEN	BunkakenBytes11x6	FestivalVisitPointsYear	prefix-form rename of an overlay-local table type (see the matching data row)
-type	BUNKAKEN	BunkakenNames3x3	FestivalVisitOptionNames	prefix-form rename of an overlay-local table type (see the matching data row)
-type	BUNKAKEN	FnTbl142	FestivalVisitStageTable	prefix-form rename of an overlay-local table type (see the matching data row)
-type	BUNKAKEN	Tbl6_80144D38	FestivalVisitClubMenuLabels	prefix-form rename of an overlay-local table type (see the matching data row)
-const	FestivalVisitStage	0x0	FV_STAGE_INVITATION	GameState.stage in mode 0x71; table entry festival_visit_stage_invitation
-const	FestivalVisitStage	0x1	FV_STAGE_ASK_COMPANION	GameState.stage in mode 0x71; table entry festival_visit_stage_ask_companion
-const	FestivalVisitStage	0x2	FV_STAGE_YOSHIO	GameState.stage in mode 0x71; table entry festival_visit_stage_yoshio
-const	FestivalVisitStage	0x3	FV_STAGE_CLUB_MENU	GameState.stage in mode 0x71; table entry festival_visit_stage_club_menu
-const	FestivalVisitStage	0x4	FV_STAGE_ROUTE_VISIT	GameState.stage in mode 0x71; table entry festival_visit_stage_route_visit
-const	FestivalVisitStage	0x5	FV_STAGE_SOLO_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_route
-const	FestivalVisitStage	0x6	FV_STAGE_SOLO_LIT_COLLECTION	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_lit_collection
-const	FestivalVisitStage	0x7	FV_STAGE_SOLO_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_lit_speech
-const	FestivalVisitStage	0x8	FV_STAGE_SOLO_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_drama
-const	FestivalVisitStage	0x9	FV_STAGE_SOLO_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_science
-const	FestivalVisitStage	0xA	FV_STAGE_SOLO_COMP_FORTUNE	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_comp_fortune
-const	FestivalVisitStage	0xB	FV_STAGE_FORTUNE_TELLING	GameState.stage in mode 0x71; table entry festival_visit_stage_fortune_telling
-const	FestivalVisitStage	0xC	FV_STAGE_SOLO_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_comp_game
-const	FestivalVisitStage	0xD	FV_STAGE_SOLO_COMP_EXPERIMENT	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_comp_experiment
-const	FestivalVisitStage	0xE	FV_STAGE_SOLO_ART_PORTRAIT	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_art_portrait
-const	FestivalVisitStage	0xF	FV_STAGE_SOLO_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_art_sketch
-const	FestivalVisitStage	0x10	FV_STAGE_SOLO_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_art_oil
-const	FestivalVisitStage	0x11	FV_STAGE_SOLO_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_solo_brass
-const	FestivalVisitStage	0x12	FV_STAGE_SHIORI_COMPANION_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_route
-const	FestivalVisitStage	0x13	FV_STAGE_SHIORI_COMPANION_LIT_POEMS	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_lit_poems
-const	FestivalVisitStage	0x14	FV_STAGE_SHIORI_COMPANION_LIT_ANTHOLOGY	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_lit_anthology
-const	FestivalVisitStage	0x15	FV_STAGE_SHIORI_COMPANION_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_lit_speech
-const	FestivalVisitStage	0x16	FV_STAGE_SHIORI_COMPANION_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_drama
-const	FestivalVisitStage	0x17	FV_STAGE_SHIORI_COMPANION_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_science
-const	FestivalVisitStage	0x18	FV_STAGE_SHIORI_COMPANION_COMP_FORTUNE	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_comp_fortune
-const	FestivalVisitStage	0x19	FV_STAGE_SHIORI_COMPANION_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_comp_game
-const	FestivalVisitStage	0x1A	FV_STAGE_SHIORI_COMPANION_COMP_EXPERIMENT	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_comp_experiment
-const	FestivalVisitStage	0x1B	FV_STAGE_SHIORI_COMPANION_ART_PORTRAIT	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_art_portrait
-const	FestivalVisitStage	0x1C	FV_STAGE_SHIORI_COMPANION_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_art_sketch
-const	FestivalVisitStage	0x1D	FV_STAGE_SHIORI_COMPANION_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_art_oil
-const	FestivalVisitStage	0x1E	FV_STAGE_SHIORI_COMPANION_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_brass
-const	FestivalVisitStage	0x1F	FV_STAGE_SHIORI_COMPANION_BRASS_Y97	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_companion_brass_y97
-const	FestivalVisitStage	0x20	FV_STAGE_SHIORI_CLUB_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_route
-const	FestivalVisitStage	0x21	FV_STAGE_SHIORI_CLUB_LIT_COLLECTION	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_lit_collection
-const	FestivalVisitStage	0x22	FV_STAGE_SHIORI_CLUB_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_lit_speech
-const	FestivalVisitStage	0x23	FV_STAGE_SHIORI_CLUB_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_drama
-const	FestivalVisitStage	0x24	FV_STAGE_SHIORI_CLUB_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_science
-const	FestivalVisitStage	0x25	FV_STAGE_SHIORI_CLUB_COMP_FORTUNE	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_comp_fortune
-const	FestivalVisitStage	0x26	FV_STAGE_SHIORI_CLUB_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_comp_game
-const	FestivalVisitStage	0x27	FV_STAGE_SHIORI_CLUB_COMP_EXPERIMENT	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_comp_experiment
-const	FestivalVisitStage	0x28	FV_STAGE_SHIORI_CLUB_ART_PORTRAIT	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_art_portrait
-const	FestivalVisitStage	0x29	FV_STAGE_SHIORI_CLUB_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_art_sketch
-const	FestivalVisitStage	0x2A	FV_STAGE_SHIORI_CLUB_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_art_oil
-const	FestivalVisitStage	0x2B	FV_STAGE_SHIORI_CLUB_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_shiori_club_brass
-const	FestivalVisitStage	0x2C	FV_STAGE_MIO_CLUB_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_mio_club_route
-const	FestivalVisitStage	0x2D	FV_STAGE_MIO_CLUB_LIT_COLLECTION	GameState.stage in mode 0x71; table entry festival_visit_stage_mio_club_lit_collection
-const	FestivalVisitStage	0x2E	FV_STAGE_MIO_CLUB_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_mio_club_lit_speech
-const	FestivalVisitStage	0x2F	FV_STAGE_MIO_CLUB_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_mio_club_drama
-const	FestivalVisitStage	0x30	FV_STAGE_YUINA_CLUB_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_yuina_club_route
-const	FestivalVisitStage	0x31	FV_STAGE_YUINA_CLUB_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_yuina_club_science
-const	FestivalVisitStage	0x32	FV_STAGE_YUINA_CLUB_COMP_FORTUNE	GameState.stage in mode 0x71; table entry festival_visit_stage_yuina_club_comp_fortune
-const	FestivalVisitStage	0x33	FV_STAGE_YUINA_CLUB_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_yuina_club_comp_game
-const	FestivalVisitStage	0x34	FV_STAGE_YUINA_CLUB_COMP_EXPERIMENT	GameState.stage in mode 0x71; table entry festival_visit_stage_yuina_club_comp_experiment
-const	FestivalVisitStage	0x35	FV_STAGE_AYAKO_CLUB_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_ayako_club_route
-const	FestivalVisitStage	0x36	FV_STAGE_AYAKO_CLUB_ART_PORTRAIT	GameState.stage in mode 0x71; table entry festival_visit_stage_ayako_club_art_portrait
-const	FestivalVisitStage	0x37	FV_STAGE_AYAKO_CLUB_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_ayako_club_art_sketch
-const	FestivalVisitStage	0x38	FV_STAGE_AYAKO_CLUB_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_ayako_club_art_oil
-const	FestivalVisitStage	0x39	FV_STAGE_AYAKO_CLUB_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_ayako_club_brass
-const	FestivalVisitStage	0x3A	FV_STAGE_SAKI_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_route
-const	FestivalVisitStage	0x3B	FV_STAGE_SAKI_LIT_POEMS	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_lit_poems
-const	FestivalVisitStage	0x3C	FV_STAGE_SAKI_LIT_ANTHOLOGY	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_lit_anthology
-const	FestivalVisitStage	0x3D	FV_STAGE_SAKI_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_lit_speech
-const	FestivalVisitStage	0x3E	FV_STAGE_SAKI_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_drama
-const	FestivalVisitStage	0x3F	FV_STAGE_SAKI_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_science
-const	FestivalVisitStage	0x40	FV_STAGE_SAKI_COMP_FORTUNE	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_comp_fortune
-const	FestivalVisitStage	0x41	FV_STAGE_SAKI_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_comp_game
-const	FestivalVisitStage	0x42	FV_STAGE_SAKI_COMP_EXPERIMENT	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_comp_experiment
-const	FestivalVisitStage	0x43	FV_STAGE_SAKI_ART_PORTRAIT	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_art_portrait
-const	FestivalVisitStage	0x44	FV_STAGE_SAKI_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_art_sketch
-const	FestivalVisitStage	0x45	FV_STAGE_SAKI_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_art_oil
-const	FestivalVisitStage	0x46	FV_STAGE_SAKI_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_brass
-const	FestivalVisitStage	0x47	FV_STAGE_SAKI_BRASS_Y97	GameState.stage in mode 0x71; table entry festival_visit_stage_saki_brass_y97
-const	FestivalVisitStage	0x48	FV_STAGE_YUKARI_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_route
-const	FestivalVisitStage	0x49	FV_STAGE_YUKARI_LIT_POEMS	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_lit_poems
-const	FestivalVisitStage	0x4A	FV_STAGE_YUKARI_LIT_ANTHOLOGY	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_lit_anthology
-const	FestivalVisitStage	0x4B	FV_STAGE_YUKARI_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_lit_speech
-const	FestivalVisitStage	0x4C	FV_STAGE_YUKARI_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_drama
-const	FestivalVisitStage	0x4D	FV_STAGE_YUKARI_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_science
-const	FestivalVisitStage	0x4E	FV_STAGE_YUKARI_COMP_FORTUNE	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_comp_fortune
-const	FestivalVisitStage	0x4F	FV_STAGE_YUKARI_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_comp_game
-const	FestivalVisitStage	0x50	FV_STAGE_YUKARI_COMP_EXPERIMENT	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_comp_experiment
-const	FestivalVisitStage	0x51	FV_STAGE_YUKARI_ART_PORTRAIT	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_art_portrait
-const	FestivalVisitStage	0x52	FV_STAGE_YUKARI_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_art_sketch
-const	FestivalVisitStage	0x53	FV_STAGE_YUKARI_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_art_oil
-const	FestivalVisitStage	0x54	FV_STAGE_YUKARI_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_yukari_brass
-const	FestivalVisitStage	0x55	FV_STAGE_NOZOMI_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_route
-const	FestivalVisitStage	0x56	FV_STAGE_NOZOMI_LIT_POEMS	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_lit_poems
-const	FestivalVisitStage	0x57	FV_STAGE_NOZOMI_LIT_ANTHOLOGY	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_lit_anthology
-const	FestivalVisitStage	0x58	FV_STAGE_NOZOMI_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_lit_speech
-const	FestivalVisitStage	0x59	FV_STAGE_NOZOMI_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_drama
-const	FestivalVisitStage	0x5A	FV_STAGE_NOZOMI_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_science
-const	FestivalVisitStage	0x5B	FV_STAGE_NOZOMI_COMP_FORTUNE	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_comp_fortune
-const	FestivalVisitStage	0x5C	FV_STAGE_NOZOMI_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_comp_game
-const	FestivalVisitStage	0x5D	FV_STAGE_NOZOMI_COMP_EXPERIMENT	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_comp_experiment
-const	FestivalVisitStage	0x5E	FV_STAGE_NOZOMI_ART_PORTRAIT	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_art_portrait
-const	FestivalVisitStage	0x5F	FV_STAGE_NOZOMI_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_art_sketch
-const	FestivalVisitStage	0x60	FV_STAGE_NOZOMI_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_art_oil
-const	FestivalVisitStage	0x61	FV_STAGE_NOZOMI_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_nozomi_brass
-const	FestivalVisitStage	0x62	FV_STAGE_MIRA_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_route
-const	FestivalVisitStage	0x63	FV_STAGE_MIRA_LIT_POEMS	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_lit_poems
-const	FestivalVisitStage	0x64	FV_STAGE_MIRA_LIT_ANTHOLOGY	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_lit_anthology
-const	FestivalVisitStage	0x65	FV_STAGE_MIRA_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_lit_speech
-const	FestivalVisitStage	0x66	FV_STAGE_MIRA_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_drama
-const	FestivalVisitStage	0x67	FV_STAGE_MIRA_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_science
-const	FestivalVisitStage	0x68	FV_STAGE_MIRA_COMP_FORTUNE	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_comp_fortune
-const	FestivalVisitStage	0x69	FV_STAGE_MIRA_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_comp_game
-const	FestivalVisitStage	0x6A	FV_STAGE_MIRA_COMP_EXPERIMENT	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_comp_experiment
-const	FestivalVisitStage	0x6B	FV_STAGE_MIRA_ART_PORTRAIT	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_art_portrait
-const	FestivalVisitStage	0x6C	FV_STAGE_MIRA_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_art_sketch
-const	FestivalVisitStage	0x6D	FV_STAGE_MIRA_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_art_oil
-const	FestivalVisitStage	0x6E	FV_STAGE_MIRA_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_mira_brass
-const	FestivalVisitStage	0x6F	FV_STAGE_YUKO_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_route
-const	FestivalVisitStage	0x70	FV_STAGE_YUKO_LIT_COLLECTION	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_lit_collection
-const	FestivalVisitStage	0x71	FV_STAGE_YUKO_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_lit_speech
-const	FestivalVisitStage	0x72	FV_STAGE_YUKO_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_drama
-const	FestivalVisitStage	0x73	FV_STAGE_YUKO_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_science
-const	FestivalVisitStage	0x74	FV_STAGE_YUKO_COMP_FORTUNE	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_comp_fortune
-const	FestivalVisitStage	0x75	FV_STAGE_YUKO_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_comp_game
-const	FestivalVisitStage	0x76	FV_STAGE_YUKO_ART_PORTRAIT	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_art_portrait
-const	FestivalVisitStage	0x77	FV_STAGE_YUKO_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_art_sketch
-const	FestivalVisitStage	0x78	FV_STAGE_YUKO_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_art_oil
-const	FestivalVisitStage	0x79	FV_STAGE_YUKO_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_yuko_brass
-const	FestivalVisitStage	0x7A	FV_STAGE_MEGUMI_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_megumi_route
-const	FestivalVisitStage	0x7B	FV_STAGE_MEGUMI_LIT_ANTHOLOGY	GameState.stage in mode 0x71; table entry festival_visit_stage_megumi_lit_anthology
-const	FestivalVisitStage	0x7C	FV_STAGE_MEGUMI_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_megumi_lit_speech
-const	FestivalVisitStage	0x7D	FV_STAGE_MEGUMI_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_megumi_drama
-const	FestivalVisitStage	0x7E	FV_STAGE_MEGUMI_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_megumi_science
-const	FestivalVisitStage	0x7F	FV_STAGE_MEGUMI_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_megumi_comp_game
-const	FestivalVisitStage	0x80	FV_STAGE_MEGUMI_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_megumi_art_sketch
-const	FestivalVisitStage	0x81	FV_STAGE_MEGUMI_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_megumi_art_oil
-const	FestivalVisitStage	0x82	FV_STAGE_MEGUMI_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_megumi_brass
-const	FestivalVisitStage	0x83	FV_STAGE_YUMI_ROUTE	GameState.stage in mode 0x71; table entry festival_visit_stage_yumi_route
-const	FestivalVisitStage	0x84	FV_STAGE_YUMI_LIT_ANTHOLOGY	GameState.stage in mode 0x71; table entry festival_visit_stage_yumi_lit_anthology
-const	FestivalVisitStage	0x85	FV_STAGE_YUMI_LIT_SPEECH	GameState.stage in mode 0x71; table entry festival_visit_stage_yumi_lit_speech
-const	FestivalVisitStage	0x86	FV_STAGE_YUMI_DRAMA	GameState.stage in mode 0x71; table entry festival_visit_stage_yumi_drama
-const	FestivalVisitStage	0x87	FV_STAGE_YUMI_SCIENCE	GameState.stage in mode 0x71; table entry festival_visit_stage_yumi_science
-const	FestivalVisitStage	0x88	FV_STAGE_YUMI_COMP_GAME	GameState.stage in mode 0x71; table entry festival_visit_stage_yumi_comp_game
-const	FestivalVisitStage	0x89	FV_STAGE_YUMI_ART_SKETCH	GameState.stage in mode 0x71; table entry festival_visit_stage_yumi_art_sketch
-const	FestivalVisitStage	0x8A	FV_STAGE_YUMI_ART_OIL	GameState.stage in mode 0x71; table entry festival_visit_stage_yumi_art_oil
-const	FestivalVisitStage	0x8B	FV_STAGE_YUMI_BRASS	GameState.stage in mode 0x71; table entry festival_visit_stage_yumi_brass
-const	FestivalVisitStage	0x8C	FV_STAGE_RESUME	GameState.stage in mode 0x71; table entry festival_visit_stage_resume
-const	FestivalVisitStage	0x8D	FV_STAGE_TT_NARRATOR	GameState.stage in mode 0x71; table entry festival_visit_stage_tt_narrator
-const	FestivalVisitPhase	0	FV_PHASE_INIT	HUD and sound setup, picker flags from girl met bits, refused girl and companion cleared
-const	FestivalVisitPhase	1	FV_PHASE_FADE_RESET	set_dec_bri(0), next phase
-const	FestivalVisitPhase	2	FV_PHASE_WAIT_SOUND	waits for the sound bank, then starts music and the gate background read
-const	FestivalVisitPhase	3	FV_PHASE_WAIT_BG	waits for the background, shows it, reads the common script
-const	FestivalVisitPhase	4	FV_PHASE_FADE_IN	fade-in until a main helper raises step
-const	FestivalVisitPhase	5	FV_PHASE_WIRE_INTRO	waits for the script, names, wires the common script, group 0
-const	FestivalVisitPhase	6	FV_PHASE_INTRO_SPEAK	plays the intro line until step rises
-const	FestivalVisitPhase	7	FV_PHASE_STAGE	runs the stage table entry for GameState.stage
-const	FestivalVisitPhase	8	FV_PHASE_FINISH	birthday checks, then points, event log and day_event_next
-const	FestivalVisitPhase	9	FV_PHASE_SHIORI_BIRTHDAY	birthday scene of girl 0
-const	FestivalVisitPhase	10	FV_PHASE_PLAYER_BIRTHDAY	birthday celebration of the player by the companion
-const	FestivalVisitCompanion	0xB	FV_COMPANION_SHIORI_NO_CULTURE_CLUB	companion id given to Shiori when her club id is 6 or more (she has no culture club); portrait and script tables of girl 0
-const	FestivalVisitCompanion	0xFF	FV_COMPANION_NONE	nobody is with the player
-const	FestivalVisitShowVariant	0	FV_SHOW_VARIANT_0	stored by the brass concert stages (17, 30, 31, 70, 71, 84, 97, 110, 121, 130, 139) and left by the drama stages (they store nothing; the scratch word is 0); BUNKA_SD shows frames 2n+2 and 2n+3 of display records 99 and 100
-const	FestivalVisitShowVariant	1	FV_SHOW_VARIANT_1	stored by the science, computer-experiment and companion-block speech stages (9, 13, 21, 23, 26, 61, 63, 66, 75, 77, 80, 88, 90, 93, 101, 103, 106, 113, 115, 124, 126, 133, 135), by the Shiori-club brass (43), and by the club-girl shows when the girl is absent
-const	FestivalVisitShowVariant	2	FV_SHOW_VARIANT_2	Shiori-club shows when she is present (36, 39) and the Shiori-club speech (34, unconditional)
-const	FestivalVisitShowVariant	3	FV_SHOW_VARIANT_3	Mio-club speech (46, unconditional) and the Yuina-club science and experiment shows when she is present (49, 52); BUNKA_SD tests it for 3 specially
-const	FestivalVisitShowVariant	4	FV_SHOW_VARIANT_4	solo speech (7) and the Ayako-club brass concert (57)
-const	FestivalVisitCommonGroup	0	FV_COMMON_GROUP_INTRO	group 0 of BUN_PC: the opening narration (phase 5 and 6)
-const	FestivalVisitCommonGroup	1	FV_COMMON_GROUP_ASK_WHO	group 1: the two-way question of stage 1 (go with a girl or not)
-const	FestivalVisitCommonGroup	4	FV_COMMON_GROUP_REFUSED_PICKED	group 4: reply when the picked girl is festival_refused_girl
-const	FestivalVisitCommonGroup	5	FV_COMMON_GROUP_NO_ONE	group 5: reply when the back item of the picker is chosen
-const	FestivalVisitCommonGroup	0xC	FV_COMMON_GROUP_CLUB_COMMENT	group 0xC + club (12-17): comment after a club pick when nobody is along (stage 3)
-const	FestivalVisitCommonGroup	0x52	FV_COMMON_GROUP_WRAPUP	group 0x52: closing lines shared by the solo exhibit stages
-const	FestivalVisitInvite	0x32	FV_INVITE_TOKIMEKI_MIN	weighted tokimeki a girl needs to invite the player (get_h_tokimeki)
-const	FestivalVisitInvite	0x50	FV_INVITE_AFFECTION_MIN	weighted affection a girl needs to invite the player (get_h_yuukou)
-const	FestivalVisitGain	2	FV_VISIT_AFFECTION_GAIN	affection gained by the companion when a visit ends
-const	FestivalVisitPenalty	0xA	FV_REFUSED_PENALTY	affection lost and syoushin gained by the refused girl at the end of a visit
-const	FestivalVisitLog	0x14	FV_LOG_SCENE	scene id 0x14 of the event log: a festival visit; flag 3-0x18 = 4*club+3 (the girl is at her own club) or 4*club+4 (visit together), 0x19 and 0x1A the birthday scenes
-const	FestivalVisitParamGate	0x78	FV_PARAM_GATE	parameter value (120) that picks the first of two adjacent lines in a few exhibits (literature: liberal arts; art and brass: art)
-file	BUNKAKEN	src/ovl/BUNKAKEN/80132000.c	src/ovl/festival_visit/script_setters_shiori_yukari_blocks.c	28 script table setters, Shiori-companion block (stages 18-31), Yukari block (72-84)
-file	BUNKAKEN	src/ovl/BUNKAKEN/80137640.c	src/ovl/festival_visit/saki_block.c	Saki block (stages 58-71)
-file	BUNKAKEN	src/ovl/BUNKAKEN/80139E50.c	src/ovl/festival_visit/solo_block.c	solo exhibits (stages 5-10, 12-17) and the solo script helper
-file	BUNKAKEN	src/ovl/BUNKAKEN/8013B510.c	src/ovl/festival_visit/invitation.c	stage 0: invitation and invite pick
-file	BUNKAKEN	src/ovl/BUNKAKEN/8013BFE0.c	src/ovl/festival_visit/mio_club_block.c	Mio at her club (stages 44-47)
-file	BUNKAKEN	src/ovl/BUNKAKEN/8013CF30.c	src/ovl/festival_visit/yumi_block.c	Yumi block (stages 131-139)
-file	BUNKAKEN	src/ovl/BUNKAKEN/8013EB30.c	src/ovl/festival_visit/yuko_block.c	Yuko block (stages 111-121)
-file	BUNKAKEN	src/ovl/BUNKAKEN/80140F60.c	src/ovl/festival_visit/yuina_club_block.c	Yuina at her club (stages 48-52)
-file	BUNKAKEN	src/ovl/BUNKAKEN/801428D0.c	src/ovl/festival_visit/ayako_club_block.c	Ayako at her club (stages 53-57)
-file	BUNKAKEN	src/ovl/BUNKAKEN/80143DD0.c	src/ovl/festival_visit/companion_menu.c	stages 1-3: ask a companion, Yoshio, club menu
-file	BUNKAKEN	src/ovl/BUNKAKEN/80144F70.c	src/ovl/festival_visit/entry.c	overlay entry (phases), finish, points, titles, event log
-file	BUNKAKEN	src/ovl/BUNKAKEN/80145E40.c	src/ovl/festival_visit/stage_table.c	stage runner, stage 4 router, stage 140 resume, stage 141 narrator
-file	BUNKAKEN	src/ovl/BUNKAKEN/80146560.c	src/ovl/festival_visit/nozomi_block.c	Nozomi block (stages 85-97)
-file	BUNKAKEN	src/ovl/BUNKAKEN/80148ED0.c	src/ovl/festival_visit/birthday.c	birthday phases 9 and 10 and their tables
-file	BUNKAKEN	src/ovl/BUNKAKEN/8014A6A0.c	src/ovl/festival_visit/shiori_club_block.c	Shiori at her club (stages 32-43)
-file	BUNKAKEN	src/ovl/BUNKAKEN/8014E440.c	src/ovl/festival_visit/mira_block.c	Mira block (stages 98-110)
-file	BUNKAKEN	src/ovl/BUNKAKEN/80150D30.c	src/ovl/festival_visit/megumi_block.c	Megumi block (stages 122-130)
-file	BUNKAKEN	src/ovl/BUNKAKEN/80152680.c	src/ovl/festival_visit/computer_fortune.c	stage 11: fortune telling by blood type and its grid
-file	BUNKAKEN	include/ovl/BUNKAKEN.h	include/ovl/festival_visit.h	overlay header
+field	Flags7D4F	b1	direct_mode	direct mode: TT skips its title and plays the stage in stage_select with the recorded input; the festival sets it before every TT launch; same bit as direct_mode of TtConfigBits (o-tt table, word view D_800E7D4C bit 25), same name on purpose
+field	Flags7D4F	unk_2_4	stage_select	3 bits (byte bits 2-4): TT stage to play in direct mode, same bits as stage_select of TtConfigBits (o-tt table, word view bits 26-28), same name on purpose; 1-4 recorded demo (Yukari 1, Nozomi 2, Yumi 3, Yuko 4), 0 means no stage (TT starts at its title for the player)
+type	BUNKAKEN	BunkakenGrid4	TourFortuneGrid	prefix-form rename of an overlay-local table type (see the matching data row)
+type	BUNKAKEN	BunkakenTexts12	TourFortuneNames	prefix-form rename of an overlay-local table type (see the matching data row)
+type	BUNKAKEN	BunkakenTexts11	TourFortuneBloodLabels	prefix-form rename of an overlay-local table type (see the matching data row)
+type	BUNKAKEN	BunkakenTexts4	TourFortunePlayerLabels	prefix-form rename of an overlay-local table type (see the matching data row)
+type	BUNKAKEN	BunkakenBytes11	TourUnusedBytes	prefix-form rename of an overlay-local table type (see the matching data row)
+type	BUNKAKEN	BunkakenBytes9x6	TourPoints1995	prefix-form rename of an overlay-local table type (see the matching data row)
+type	BUNKAKEN	BunkakenBytes11x6	TourPointsLaterYears	prefix-form rename of an overlay-local table type (see the matching data row)
+type	BUNKAKEN	BunkakenNames3x3	TourOptionNames	prefix-form rename of an overlay-local table type (see the matching data row)
+type	BUNKAKEN	FnTbl142	TourStageTable	prefix-form rename of an overlay-local table type (see the matching data row)
+type	BUNKAKEN	Tbl6_80144D38	TourClubMenuLabels	prefix-form rename of an overlay-local table type (see the matching data row)
+const	TourStage	0x0	TOUR_STAGE_INVITATION	GameState.stage in mode 0x71; table entry tour_stage_invitation
+const	TourStage	0x1	TOUR_STAGE_ASK_COMPANION	GameState.stage in mode 0x71; table entry tour_stage_ask_companion
+const	TourStage	0x2	TOUR_STAGE_YOSHIO	GameState.stage in mode 0x71; table entry tour_stage_yoshio
+const	TourStage	0x3	TOUR_STAGE_CLUB_MENU	GameState.stage in mode 0x71; table entry tour_stage_club_menu
+const	TourStage	0x4	TOUR_STAGE_ROUTE_VISIT	GameState.stage in mode 0x71; table entry tour_stage_route_visit
+const	TourStage	0x5	TOUR_STAGE_SOLO_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_solo_route
+const	TourStage	0x6	TOUR_STAGE_SOLO_LITERATURE_COLLECTION	GameState.stage in mode 0x71; table entry tour_stage_solo_literature_collection
+const	TourStage	0x7	TOUR_STAGE_SOLO_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_solo_literature_speech
+const	TourStage	0x8	TOUR_STAGE_SOLO_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_solo_drama
+const	TourStage	0x9	TOUR_STAGE_SOLO_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_solo_science
+const	TourStage	0xA	TOUR_STAGE_SOLO_COMPUTER_FORTUNE	GameState.stage in mode 0x71; table entry tour_stage_solo_computer_fortune
+const	TourStage	0xB	TOUR_STAGE_FORTUNE_TELLING	GameState.stage in mode 0x71; table entry tour_stage_fortune_telling
+const	TourStage	0xC	TOUR_STAGE_SOLO_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_solo_computer_game
+const	TourStage	0xD	TOUR_STAGE_SOLO_COMPUTER_EXPERIMENT	GameState.stage in mode 0x71; table entry tour_stage_solo_computer_experiment
+const	TourStage	0xE	TOUR_STAGE_SOLO_ART_PORTRAIT	GameState.stage in mode 0x71; table entry tour_stage_solo_art_portrait
+const	TourStage	0xF	TOUR_STAGE_SOLO_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_solo_art_sketch
+const	TourStage	0x10	TOUR_STAGE_SOLO_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_solo_art_oil
+const	TourStage	0x11	TOUR_STAGE_SOLO_BRASS	GameState.stage in mode 0x71; table entry tour_stage_solo_brass
+const	TourStage	0x12	TOUR_STAGE_SHIORI_COMPANION_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_route
+const	TourStage	0x13	TOUR_STAGE_SHIORI_COMPANION_LITERATURE_POEMS	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_literature_poems
+const	TourStage	0x14	TOUR_STAGE_SHIORI_COMPANION_LITERATURE_ANTHOLOGY	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_literature_anthology
+const	TourStage	0x15	TOUR_STAGE_SHIORI_COMPANION_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_literature_speech
+const	TourStage	0x16	TOUR_STAGE_SHIORI_COMPANION_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_drama
+const	TourStage	0x17	TOUR_STAGE_SHIORI_COMPANION_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_science
+const	TourStage	0x18	TOUR_STAGE_SHIORI_COMPANION_COMPUTER_FORTUNE	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_computer_fortune
+const	TourStage	0x19	TOUR_STAGE_SHIORI_COMPANION_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_computer_game
+const	TourStage	0x1A	TOUR_STAGE_SHIORI_COMPANION_COMPUTER_EXPERIMENT	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_computer_experiment
+const	TourStage	0x1B	TOUR_STAGE_SHIORI_COMPANION_ART_PORTRAIT	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_art_portrait
+const	TourStage	0x1C	TOUR_STAGE_SHIORI_COMPANION_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_art_sketch
+const	TourStage	0x1D	TOUR_STAGE_SHIORI_COMPANION_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_art_oil
+const	TourStage	0x1E	TOUR_STAGE_SHIORI_COMPANION_BRASS	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_brass
+const	TourStage	0x1F	TOUR_STAGE_SHIORI_COMPANION_BRASS_1997	GameState.stage in mode 0x71; table entry tour_stage_shiori_companion_brass_1997
+const	TourStage	0x20	TOUR_STAGE_SHIORI_CLUB_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_route
+const	TourStage	0x21	TOUR_STAGE_SHIORI_CLUB_LITERATURE_COLLECTION	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_literature_collection
+const	TourStage	0x22	TOUR_STAGE_SHIORI_CLUB_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_literature_speech
+const	TourStage	0x23	TOUR_STAGE_SHIORI_CLUB_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_drama
+const	TourStage	0x24	TOUR_STAGE_SHIORI_CLUB_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_science
+const	TourStage	0x25	TOUR_STAGE_SHIORI_CLUB_COMPUTER_FORTUNE	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_computer_fortune
+const	TourStage	0x26	TOUR_STAGE_SHIORI_CLUB_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_computer_game
+const	TourStage	0x27	TOUR_STAGE_SHIORI_CLUB_COMPUTER_EXPERIMENT	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_computer_experiment
+const	TourStage	0x28	TOUR_STAGE_SHIORI_CLUB_ART_PORTRAIT	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_art_portrait
+const	TourStage	0x29	TOUR_STAGE_SHIORI_CLUB_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_art_sketch
+const	TourStage	0x2A	TOUR_STAGE_SHIORI_CLUB_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_art_oil
+const	TourStage	0x2B	TOUR_STAGE_SHIORI_CLUB_BRASS	GameState.stage in mode 0x71; table entry tour_stage_shiori_club_brass
+const	TourStage	0x2C	TOUR_STAGE_MIO_CLUB_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_mio_club_route
+const	TourStage	0x2D	TOUR_STAGE_MIO_CLUB_LITERATURE_COLLECTION	GameState.stage in mode 0x71; table entry tour_stage_mio_club_literature_collection
+const	TourStage	0x2E	TOUR_STAGE_MIO_CLUB_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_mio_club_literature_speech
+const	TourStage	0x2F	TOUR_STAGE_MIO_CLUB_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_mio_club_drama
+const	TourStage	0x30	TOUR_STAGE_YUINA_CLUB_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_yuina_club_route
+const	TourStage	0x31	TOUR_STAGE_YUINA_CLUB_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_yuina_club_science
+const	TourStage	0x32	TOUR_STAGE_YUINA_CLUB_COMPUTER_FORTUNE	GameState.stage in mode 0x71; table entry tour_stage_yuina_club_computer_fortune
+const	TourStage	0x33	TOUR_STAGE_YUINA_CLUB_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_yuina_club_computer_game
+const	TourStage	0x34	TOUR_STAGE_YUINA_CLUB_COMPUTER_EXPERIMENT	GameState.stage in mode 0x71; table entry tour_stage_yuina_club_computer_experiment
+const	TourStage	0x35	TOUR_STAGE_AYAKO_CLUB_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_ayako_club_route
+const	TourStage	0x36	TOUR_STAGE_AYAKO_CLUB_ART_PORTRAIT	GameState.stage in mode 0x71; table entry tour_stage_ayako_club_art_portrait
+const	TourStage	0x37	TOUR_STAGE_AYAKO_CLUB_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_ayako_club_art_sketch
+const	TourStage	0x38	TOUR_STAGE_AYAKO_CLUB_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_ayako_club_art_oil
+const	TourStage	0x39	TOUR_STAGE_AYAKO_CLUB_BRASS	GameState.stage in mode 0x71; table entry tour_stage_ayako_club_brass
+const	TourStage	0x3A	TOUR_STAGE_SAKI_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_saki_route
+const	TourStage	0x3B	TOUR_STAGE_SAKI_LITERATURE_POEMS	GameState.stage in mode 0x71; table entry tour_stage_saki_literature_poems
+const	TourStage	0x3C	TOUR_STAGE_SAKI_LITERATURE_ANTHOLOGY	GameState.stage in mode 0x71; table entry tour_stage_saki_literature_anthology
+const	TourStage	0x3D	TOUR_STAGE_SAKI_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_saki_literature_speech
+const	TourStage	0x3E	TOUR_STAGE_SAKI_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_saki_drama
+const	TourStage	0x3F	TOUR_STAGE_SAKI_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_saki_science
+const	TourStage	0x40	TOUR_STAGE_SAKI_COMPUTER_FORTUNE	GameState.stage in mode 0x71; table entry tour_stage_saki_computer_fortune
+const	TourStage	0x41	TOUR_STAGE_SAKI_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_saki_computer_game
+const	TourStage	0x42	TOUR_STAGE_SAKI_COMPUTER_EXPERIMENT	GameState.stage in mode 0x71; table entry tour_stage_saki_computer_experiment
+const	TourStage	0x43	TOUR_STAGE_SAKI_ART_PORTRAIT	GameState.stage in mode 0x71; table entry tour_stage_saki_art_portrait
+const	TourStage	0x44	TOUR_STAGE_SAKI_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_saki_art_sketch
+const	TourStage	0x45	TOUR_STAGE_SAKI_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_saki_art_oil
+const	TourStage	0x46	TOUR_STAGE_SAKI_BRASS	GameState.stage in mode 0x71; table entry tour_stage_saki_brass
+const	TourStage	0x47	TOUR_STAGE_SAKI_BRASS_1997	GameState.stage in mode 0x71; table entry tour_stage_saki_brass_1997
+const	TourStage	0x48	TOUR_STAGE_YUKARI_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_yukari_route
+const	TourStage	0x49	TOUR_STAGE_YUKARI_LITERATURE_POEMS	GameState.stage in mode 0x71; table entry tour_stage_yukari_literature_poems
+const	TourStage	0x4A	TOUR_STAGE_YUKARI_LITERATURE_ANTHOLOGY	GameState.stage in mode 0x71; table entry tour_stage_yukari_literature_anthology
+const	TourStage	0x4B	TOUR_STAGE_YUKARI_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_yukari_literature_speech
+const	TourStage	0x4C	TOUR_STAGE_YUKARI_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_yukari_drama
+const	TourStage	0x4D	TOUR_STAGE_YUKARI_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_yukari_science
+const	TourStage	0x4E	TOUR_STAGE_YUKARI_COMPUTER_FORTUNE	GameState.stage in mode 0x71; table entry tour_stage_yukari_computer_fortune
+const	TourStage	0x4F	TOUR_STAGE_YUKARI_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_yukari_computer_game
+const	TourStage	0x50	TOUR_STAGE_YUKARI_COMPUTER_EXPERIMENT	GameState.stage in mode 0x71; table entry tour_stage_yukari_computer_experiment
+const	TourStage	0x51	TOUR_STAGE_YUKARI_ART_PORTRAIT	GameState.stage in mode 0x71; table entry tour_stage_yukari_art_portrait
+const	TourStage	0x52	TOUR_STAGE_YUKARI_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_yukari_art_sketch
+const	TourStage	0x53	TOUR_STAGE_YUKARI_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_yukari_art_oil
+const	TourStage	0x54	TOUR_STAGE_YUKARI_BRASS	GameState.stage in mode 0x71; table entry tour_stage_yukari_brass
+const	TourStage	0x55	TOUR_STAGE_NOZOMI_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_nozomi_route
+const	TourStage	0x56	TOUR_STAGE_NOZOMI_LITERATURE_POEMS	GameState.stage in mode 0x71; table entry tour_stage_nozomi_literature_poems
+const	TourStage	0x57	TOUR_STAGE_NOZOMI_LITERATURE_ANTHOLOGY	GameState.stage in mode 0x71; table entry tour_stage_nozomi_literature_anthology
+const	TourStage	0x58	TOUR_STAGE_NOZOMI_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_nozomi_literature_speech
+const	TourStage	0x59	TOUR_STAGE_NOZOMI_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_nozomi_drama
+const	TourStage	0x5A	TOUR_STAGE_NOZOMI_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_nozomi_science
+const	TourStage	0x5B	TOUR_STAGE_NOZOMI_COMPUTER_FORTUNE	GameState.stage in mode 0x71; table entry tour_stage_nozomi_computer_fortune
+const	TourStage	0x5C	TOUR_STAGE_NOZOMI_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_nozomi_computer_game
+const	TourStage	0x5D	TOUR_STAGE_NOZOMI_COMPUTER_EXPERIMENT	GameState.stage in mode 0x71; table entry tour_stage_nozomi_computer_experiment
+const	TourStage	0x5E	TOUR_STAGE_NOZOMI_ART_PORTRAIT	GameState.stage in mode 0x71; table entry tour_stage_nozomi_art_portrait
+const	TourStage	0x5F	TOUR_STAGE_NOZOMI_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_nozomi_art_sketch
+const	TourStage	0x60	TOUR_STAGE_NOZOMI_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_nozomi_art_oil
+const	TourStage	0x61	TOUR_STAGE_NOZOMI_BRASS	GameState.stage in mode 0x71; table entry tour_stage_nozomi_brass
+const	TourStage	0x62	TOUR_STAGE_MIRA_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_mira_route
+const	TourStage	0x63	TOUR_STAGE_MIRA_LITERATURE_POEMS	GameState.stage in mode 0x71; table entry tour_stage_mira_literature_poems
+const	TourStage	0x64	TOUR_STAGE_MIRA_LITERATURE_ANTHOLOGY	GameState.stage in mode 0x71; table entry tour_stage_mira_literature_anthology
+const	TourStage	0x65	TOUR_STAGE_MIRA_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_mira_literature_speech
+const	TourStage	0x66	TOUR_STAGE_MIRA_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_mira_drama
+const	TourStage	0x67	TOUR_STAGE_MIRA_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_mira_science
+const	TourStage	0x68	TOUR_STAGE_MIRA_COMPUTER_FORTUNE	GameState.stage in mode 0x71; table entry tour_stage_mira_computer_fortune
+const	TourStage	0x69	TOUR_STAGE_MIRA_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_mira_computer_game
+const	TourStage	0x6A	TOUR_STAGE_MIRA_COMPUTER_EXPERIMENT	GameState.stage in mode 0x71; table entry tour_stage_mira_computer_experiment
+const	TourStage	0x6B	TOUR_STAGE_MIRA_ART_PORTRAIT	GameState.stage in mode 0x71; table entry tour_stage_mira_art_portrait
+const	TourStage	0x6C	TOUR_STAGE_MIRA_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_mira_art_sketch
+const	TourStage	0x6D	TOUR_STAGE_MIRA_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_mira_art_oil
+const	TourStage	0x6E	TOUR_STAGE_MIRA_BRASS	GameState.stage in mode 0x71; table entry tour_stage_mira_brass
+const	TourStage	0x6F	TOUR_STAGE_YUKO_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_yuko_route
+const	TourStage	0x70	TOUR_STAGE_YUKO_LITERATURE_COLLECTION	GameState.stage in mode 0x71; table entry tour_stage_yuko_literature_collection
+const	TourStage	0x71	TOUR_STAGE_YUKO_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_yuko_literature_speech
+const	TourStage	0x72	TOUR_STAGE_YUKO_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_yuko_drama
+const	TourStage	0x73	TOUR_STAGE_YUKO_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_yuko_science
+const	TourStage	0x74	TOUR_STAGE_YUKO_COMPUTER_FORTUNE	GameState.stage in mode 0x71; table entry tour_stage_yuko_computer_fortune
+const	TourStage	0x75	TOUR_STAGE_YUKO_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_yuko_computer_game
+const	TourStage	0x76	TOUR_STAGE_YUKO_ART_PORTRAIT	GameState.stage in mode 0x71; table entry tour_stage_yuko_art_portrait
+const	TourStage	0x77	TOUR_STAGE_YUKO_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_yuko_art_sketch
+const	TourStage	0x78	TOUR_STAGE_YUKO_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_yuko_art_oil
+const	TourStage	0x79	TOUR_STAGE_YUKO_BRASS	GameState.stage in mode 0x71; table entry tour_stage_yuko_brass
+const	TourStage	0x7A	TOUR_STAGE_MEGUMI_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_megumi_route
+const	TourStage	0x7B	TOUR_STAGE_MEGUMI_LITERATURE_ANTHOLOGY	GameState.stage in mode 0x71; table entry tour_stage_megumi_literature_anthology
+const	TourStage	0x7C	TOUR_STAGE_MEGUMI_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_megumi_literature_speech
+const	TourStage	0x7D	TOUR_STAGE_MEGUMI_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_megumi_drama
+const	TourStage	0x7E	TOUR_STAGE_MEGUMI_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_megumi_science
+const	TourStage	0x7F	TOUR_STAGE_MEGUMI_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_megumi_computer_game
+const	TourStage	0x80	TOUR_STAGE_MEGUMI_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_megumi_art_sketch
+const	TourStage	0x81	TOUR_STAGE_MEGUMI_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_megumi_art_oil
+const	TourStage	0x82	TOUR_STAGE_MEGUMI_BRASS	GameState.stage in mode 0x71; table entry tour_stage_megumi_brass
+const	TourStage	0x83	TOUR_STAGE_YUMI_ROUTE	GameState.stage in mode 0x71; table entry tour_stage_yumi_route
+const	TourStage	0x84	TOUR_STAGE_YUMI_LITERATURE_ANTHOLOGY	GameState.stage in mode 0x71; table entry tour_stage_yumi_literature_anthology
+const	TourStage	0x85	TOUR_STAGE_YUMI_LITERATURE_SPEECH	GameState.stage in mode 0x71; table entry tour_stage_yumi_literature_speech
+const	TourStage	0x86	TOUR_STAGE_YUMI_DRAMA	GameState.stage in mode 0x71; table entry tour_stage_yumi_drama
+const	TourStage	0x87	TOUR_STAGE_YUMI_SCIENCE	GameState.stage in mode 0x71; table entry tour_stage_yumi_science
+const	TourStage	0x88	TOUR_STAGE_YUMI_COMPUTER_GAME	GameState.stage in mode 0x71; table entry tour_stage_yumi_computer_game
+const	TourStage	0x89	TOUR_STAGE_YUMI_ART_SKETCH	GameState.stage in mode 0x71; table entry tour_stage_yumi_art_sketch
+const	TourStage	0x8A	TOUR_STAGE_YUMI_ART_OIL	GameState.stage in mode 0x71; table entry tour_stage_yumi_art_oil
+const	TourStage	0x8B	TOUR_STAGE_YUMI_BRASS	GameState.stage in mode 0x71; table entry tour_stage_yumi_brass
+const	TourStage	0x8C	TOUR_STAGE_RESUME	GameState.stage in mode 0x71; table entry tour_stage_resume
+const	TourStage	0x8D	TOUR_STAGE_TT_NARRATOR	GameState.stage in mode 0x71; table entry tour_stage_tt_narrator
+const	TourPhase	0	TOUR_PHASE_INIT	HUD and sound setup, picker flags from girl met bits, refused girl and companion cleared
+const	TourPhase	1	TOUR_PHASE_FADE_RESET	set_dec_bri(0), next phase
+const	TourPhase	2	TOUR_PHASE_WAIT_SOUND	waits for the sound bank, then starts music and the gate background read
+const	TourPhase	3	TOUR_PHASE_WAIT_BG	waits for the background, shows it, reads the common script
+const	TourPhase	4	TOUR_PHASE_FADE_IN	fade-in until a main helper raises step
+const	TourPhase	5	TOUR_PHASE_WIRE_INTRO	waits for the script, names, wires the common script, group 0
+const	TourPhase	6	TOUR_PHASE_INTRO_SPEAK	plays the intro line until step rises
+const	TourPhase	7	TOUR_PHASE_STAGE	runs the stage table entry for GameState.stage
+const	TourPhase	8	TOUR_PHASE_FINISH	birthday checks, then points, event log and day_event_next
+const	TourPhase	9	TOUR_PHASE_SHIORI_BIRTHDAY	birthday scene of girl 0
+const	TourPhase	10	TOUR_PHASE_PLAYER_BIRTHDAY	birthday celebration of the player by the companion
+const	TourCompanion	0xB	TOUR_COMPANION_SHIORI_NO_CULTURE_CLUB	companion id given to Shiori when her club id is 6 or more (she has no culture club); portrait and script tables of girl 0
+const	TourCompanion	0xFF	TOUR_COMPANION_NONE	nobody is with the player
+const	TourShowVariant	0	TOUR_SHOW_VARIANT_0	stored by the brass concert stages (17, 30, 31, 70, 71, 84, 97, 110, 121, 130, 139) and left by the drama stages (they store nothing; the scratch word is 0); BUNKA_SD shows frames 2n+2 and 2n+3 of display records 99 and 100
+const	TourShowVariant	1	TOUR_SHOW_VARIANT_1	stored by the science, computer-experiment and companion-block speech stages (9, 13, 21, 23, 26, 61, 63, 66, 75, 77, 80, 88, 90, 93, 101, 103, 106, 113, 115, 124, 126, 133, 135), by the Shiori-club brass (43), and by the club-girl shows when the girl is absent
+const	TourShowVariant	2	TOUR_SHOW_VARIANT_2	Shiori-club shows when she is present (36, 39) and the Shiori-club speech (34, unconditional)
+const	TourShowVariant	3	TOUR_SHOW_VARIANT_3	Mio-club speech (46, unconditional) and the Yuina-club science and experiment shows when she is present (49, 52); BUNKA_SD tests it for 3 specially
+const	TourShowVariant	4	TOUR_SHOW_VARIANT_4	solo speech (7) and the Ayako-club brass concert (57)
+const	TourCommonGroup	0	TOUR_COMMON_GROUP_INTRO	group 0 of BUN_PC: the opening narration (phase 5 and 6)
+const	TourCommonGroup	1	TOUR_COMMON_GROUP_ASK_WHO	group 1: the two-way question of stage 1 (go with a girl or not)
+const	TourCommonGroup	4	TOUR_COMMON_GROUP_REFUSED_PICKED	group 4: reply when the picked girl is culture_refused_girl
+const	TourCommonGroup	5	TOUR_COMMON_GROUP_NO_ONE	group 5: reply when the back item of the picker is chosen
+const	TourCommonGroup	0xC	TOUR_COMMON_GROUP_CLUB_COMMENT	group 0xC + club (12-17): comment after a club pick when nobody is along (stage 3)
+const	TourCommonGroup	0x52	TOUR_COMMON_GROUP_WRAP_UP	group 0x52: closing lines shared by the solo exhibit stages
+const	TourInvite	0x32	TOUR_INVITE_TOKIMEKI_MINIMUM	weighted tokimeki a girl needs to invite the player (get_h_tokimeki)
+const	TourInvite	0x50	TOUR_INVITE_AFFECTION_MINIMUM	weighted affection a girl needs to invite the player (get_h_yuukou)
+const	TourGain	2	TOUR_VISIT_AFFECTION_GAIN	affection gained by the companion when a visit ends
+const	TourPenalty	0xA	TOUR_REFUSED_PENALTY	affection lost and syoushin gained by the refused girl at the end of a visit
+const	TourLog	0x14	TOUR_LOG_SCENE	scene id 0x14 of the event log: a festival visit; flag 3-0x18 = 4*club+3 (the girl is at her own club) or 4*club+4 (visit together), 0x19 and 0x1A the birthday scenes
+const	TourParamGate	0x78	TOUR_PARAM_GATE	parameter value (120) that picks the first of two adjacent lines in a few exhibits (literature: liberal arts; art and brass: art)
+file	BUNKAKEN	src/ovl/BUNKAKEN/80132000.c	src/ovl/culture_festival_tour/script_setters_shiori_yukari_blocks.c	28 script table setters, Shiori-companion block (stages 18-31), Yukari block (72-84)
+file	BUNKAKEN	src/ovl/BUNKAKEN/80137640.c	src/ovl/culture_festival_tour/saki_block.c	Saki block (stages 58-71)
+file	BUNKAKEN	src/ovl/BUNKAKEN/80139E50.c	src/ovl/culture_festival_tour/solo_block.c	solo exhibits (stages 5-10, 12-17) and the solo script helper
+file	BUNKAKEN	src/ovl/BUNKAKEN/8013B510.c	src/ovl/culture_festival_tour/invitation.c	stage 0: invitation and invite pick
+file	BUNKAKEN	src/ovl/BUNKAKEN/8013BFE0.c	src/ovl/culture_festival_tour/mio_club_block.c	Mio at her club (stages 44-47)
+file	BUNKAKEN	src/ovl/BUNKAKEN/8013CF30.c	src/ovl/culture_festival_tour/yumi_block.c	Yumi block (stages 131-139)
+file	BUNKAKEN	src/ovl/BUNKAKEN/8013EB30.c	src/ovl/culture_festival_tour/yuko_block.c	Yuko block (stages 111-121)
+file	BUNKAKEN	src/ovl/BUNKAKEN/80140F60.c	src/ovl/culture_festival_tour/yuina_club_block.c	Yuina at her club (stages 48-52)
+file	BUNKAKEN	src/ovl/BUNKAKEN/801428D0.c	src/ovl/culture_festival_tour/ayako_club_block.c	Ayako at her club (stages 53-57)
+file	BUNKAKEN	src/ovl/BUNKAKEN/80143DD0.c	src/ovl/culture_festival_tour/companion_menu.c	stages 1-3: ask a companion, Yoshio, club menu
+file	BUNKAKEN	src/ovl/BUNKAKEN/80144F70.c	src/ovl/culture_festival_tour/entry.c	overlay entry (phases), finish, points, titles, event log
+file	BUNKAKEN	src/ovl/BUNKAKEN/80145E40.c	src/ovl/culture_festival_tour/stage_table.c	stage runner, stage 4 router, stage 140 resume, stage 141 narrator
+file	BUNKAKEN	src/ovl/BUNKAKEN/80146560.c	src/ovl/culture_festival_tour/nozomi_block.c	Nozomi block (stages 85-97)
+file	BUNKAKEN	src/ovl/BUNKAKEN/80148ED0.c	src/ovl/culture_festival_tour/birthday.c	birthday phases 9 and 10 and their tables
+file	BUNKAKEN	src/ovl/BUNKAKEN/8014A6A0.c	src/ovl/culture_festival_tour/shiori_club_block.c	Shiori at her club (stages 32-43)
+file	BUNKAKEN	src/ovl/BUNKAKEN/8014E440.c	src/ovl/culture_festival_tour/mira_block.c	Mira block (stages 98-110)
+file	BUNKAKEN	src/ovl/BUNKAKEN/80150D30.c	src/ovl/culture_festival_tour/megumi_block.c	Megumi block (stages 122-130)
+file	BUNKAKEN	src/ovl/BUNKAKEN/80152680.c	src/ovl/culture_festival_tour/computer_fortune.c	stage 11: fortune telling by blood type and its grid
+file	BUNKAKEN	include/ovl/BUNKAKEN.h	include/ovl/culture_festival_tour.h	overlay header
