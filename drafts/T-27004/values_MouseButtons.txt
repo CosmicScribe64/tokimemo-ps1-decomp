@@ -1,0 +1,2 @@
+MOUSE_RIGHT 4 GameState.mouse_buttons tested with confirm_button == 1
+MOUSE_LEFT 8 tested with confirm_button == 0

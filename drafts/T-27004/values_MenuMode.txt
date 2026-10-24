@@ -1,0 +1,4 @@
+MENU_MODE_MOUSE_LIKE 0 stored value 0
+MENU_MODE_A 1 stored value 1
+MENU_MODE_MOUSE_PLUS_A 2 stored value 2
+MENU_MODE_B 3 stored value 3

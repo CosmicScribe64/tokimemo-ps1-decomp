@@ -1,0 +1,31 @@
+DAY_EVENT_SCHOOL_DAY 0x00 -> mode 0x40
+DAY_EVENT_HOLIDAY 0x10 -> mode 0x46
+DAY_EVENT_SPORTS_FESTIVAL 0x20 -> mode 0x72 (TAIIKU)
+DAY_EVENT_CULTURE_FESTIVAL 0x24
+DAY_EVENT_CLUB_MASTER_A 0x25 HYPOTHESIS: club tournament scene, mode 0x74
+DAY_EVENT_CLUB_MASTER_B 0x26 HYPOTHESIS: -> mode 0x75
+DAY_EVENT_CLUB_MASTER_C 0x27 HYPOTHESIS: -> mode 0x76
+DAY_EVENT_CHRISTMAS_PREP 0x28 -> mode 0x42 (pre_xmas)
+DAY_EVENT_NEW_YEAR_PREP 0x2C -> mode 0x41 (pre_syogatu)
+DAY_EVENT_SEASONAL_PARTY 0x30 HYPOTHESIS: name; English reading of the overlay prefix
+DAY_EVENT_VALENTINE 0x31 -> mode 0x54 (VALEN)
+DAY_EVENT_GIRL_BIRTHDAY 0x32 -> mode 0x57 (GEKO)
+DAY_EVENT_PLAYER_BIRTHDAY 0x33 -> mode 0x56 (GEKO)
+DAY_EVENT_EXAM 0x40 -> mode 0x35 (ETC)
+DAY_EVENT_SCHOOL_TRIP 0x41 -> mode 0x51 (SHUGAKU)
+DAY_EVENT_CLUB_CAMP 0x42 HYPOTHESIS: name; the KANGEI overlay is rated low confidence
+DAY_EVENT_CAREER_GUIDANCE 0x43 -> mode 0x36 (ETC)
+DAY_EVENT_GIRL_ENCOUNTER 0x44 HYPOTHESIS: name; placeholder resolved by the scheduler
+DAY_EVENT_SPECIAL_EVENT 0x45 unk_01 girl, unk_02 scene -> mode 0x5D
+DAY_EVENT_GIRL_INVITATION 0x46 -> mode 0x5A (date_sasoi_judge: a girl invites the player)
+DAY_EVENT_SICK_VISIT 0x47 -> mode 0x61 (OMIMAI)
+DAY_EVENT_MEETING 0x48 HYPOTHESIS: name; mode 0x5B hosts generic scenes
+DAY_EVENT_AMUSEMENT_PARK 0x49 -> mode 0x58 (DATE2)
+DAY_EVENT_CAREER_CHOICE 0x4A -> mode 0x37 (ETC)
+DAY_EVENT_APPOINTMENT 0x80 written by appointment_launch (unk_01 girl, unk_02 place)
+DAY_EVENT_SKIP 0xFA index skipped by the queue reader
+DAY_EVENT_DAY_END 0xFB
+DAY_EVENT_WEEK_END 0xFC
+DAY_EVENT_DAY_NOTICE 0xFD HYPOTHESIS: announcement screen
+DAY_EVENT_MONTH_START 0xFE
+DAY_EVENT_NONE 0xFF cleared slot = end of the queue

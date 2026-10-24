@@ -1,0 +1,4 @@
+VACATION_NONE 0 school term
+VACATION_SUMMER 1
+VACATION_WINTER 2 month 12 announcement
+VACATION_SPRING 3 month 3 announcement

@@ -1,0 +1,16 @@
+GIRL_SHIORI 0
+GIRL_MIO 1
+GIRL_YUINA 2
+GIRL_AYAKO 3
+GIRL_SAKI 4
+GIRL_YUKARI 5
+GIRL_NOZOMI 6
+GIRL_MIRA 7
+GIRL_YUKO 8
+GIRL_MEGUMI 9 name table entry 9 (given name of the Mikihara entry)
+GIRL_YUMI 10
+GIRL_MIHARU 11
+GIRL_REI 12 name table entry 12 (the rival)
+GIRL_YOSHIO 13 name table entry 13 (friend, information giver)
+GIRL_SOTOI 14 name table entry 14 (butler)
+GIRL_PLAYER 15

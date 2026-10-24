@@ -1,0 +1,3 @@
+PLAYER_FLAG_16 0x00010000 ScheduleFlags.b16
+PLAYER_FLAG_AMUSEMENT_PARK_DONE 0x00040000 HYPOTHESIS: set when queue type 0x49 is scheduled (August Wednesday)
+PLAYER_FLAG_PLACE_REPEAT 0x00080000 HYPOTHESIS: DATE sets it when the same place is chosen repeatedly

@@ -1,0 +1,14 @@
+PAD_L2 0x0001
+PAD_R2 0x0002
+PAD_L1 0x0004
+PAD_R1 0x0008
+PAD_TRIANGLE 0x0010
+PAD_CIRCLE 0x0020 confirm: settings screens act on pad_pressed & 0x20
+PAD_CROSS 0x0040 cancel/back: pad_pressed & 0x40 leaves a settings screen
+PAD_SQUARE 0x0080
+PAD_SELECT 0x0100 pad_pressed & 0x100 steps menu_mode in menu_check
+PAD_START 0x0800 pause toggle on either pad (while pause_allowed is 1)
+PAD_UP 0x1000 menu cursor: up and left move to the previous item
+PAD_RIGHT 0x2000
+PAD_DOWN 0x4000
+PAD_LEFT 0x8000 previous item

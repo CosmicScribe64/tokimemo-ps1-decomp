@@ -1,0 +1,4 @@
+DAY_KIND_SCHOOL_DAY 0 month_calendar.day_kind
+DAY_KIND_SUNDAY 1 initial table: Sundays are 1
+DAY_KIND_HOLIDAY 2 initial table: national holidays (April 29, May 3-5) are 2
+DAY_KIND_VACATION_DAY 3 HYPOTHESIS: break weekday

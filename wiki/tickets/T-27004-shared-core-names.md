@@ -1,8 +1,8 @@
 ---
 id: T-27004
 title: "Shared core: GameState fields, core types, first enums, top 100 functions"
-status: Backlog
-assignee:
+status: In Review
+assignee: sonnet (p2-core-apply)
 created: 2026-10-24
 updated: 2026-10-24
 blocked-by: [T-27002, T-27003]
@@ -42,3 +42,69 @@ uses). Conventions: `docs/adr/0001-phase-2-naming.md`; stems: `GLOSSARY.md`.
   by T-27002 first.
 
 ## Comments
+
+- 2026-10-24 p2-core-apply (branch `p2-core-apply`, worktree `../tokimemo-wt/p2-core-apply`, base `w2-good` 2e51793aa), In Review.
+  Applied `config/renames/proposals/core.tsv` (751 rows) in eight commits: three tool commits (`tools/` only, no byte
+  of the build changes) and five batches, each with a clean build (27 of 27 sha1 OK, 6,952 of 6,952 functions,
+  `nice -n 19`, 2 jobs): 733 rows applied, 18 left out. Ledger
+  `config/renames/core.txt` (fields, types, 18 const groups, symbols; 591 rows in all ledgers). Batch tables and
+  value files: `drafts/T-27004/`.
+  1. `tools/rename.py` (3 commits, 4 new tests): the field oracle maps gcc lines back through `#line` (TACO
+     `8013B170` uses `GameState.unk_018`); the error sets ignore gcc's `did you mean` suggestion (RPG_BAT
+     `D_800E6280.unk_3A` is K&R code that finds a member of another type by name and errors in gcc before and after);
+     the round trip proof ignores the HYPOTHESIS mark of a type row (five rows failed it); `const` accepts the site
+     `*.member`. Documented in [[rename-tool]].
+  2. 239 field rows (GameState 140 members and the shared records): 24,587 uses located by gcc in 437 C files (the
+     most used, `substep`, 1,842; `current_girl`, 1,759).
+  3. 75 type rows (`Rec38` to `GirlRecord`, `DisplayActor44` to `Actor`, `Work800E7D10` to `SystemData`, ...), 5 with
+     HYPOTHESIS marks: 5,858 tokens in 189 files.
+  4. 18 const groups in the new `include/game_enums.h` (created empty, included from `main_api.h`): 15 enums (GirlId,
+     Parameter, Weekday, Club, Place, HealthState, Vacation, DayKind, CalendarMarker, DayEventType, MainMode,
+     InputDevice, VoiceMode, MenuMode, IconMode) and 3 `#define` groups (PadBits, MouseButtons, PlayerFlag); 226 rows,
+     2,437 literals named. Sites (only where the member or function is unambiguous and holds the enum):
+     GirlId `GameState.current_girl`, `date_girl`, `D_800E71DF`, and the first argument of `get_g_zyotai_s`,
+     `get_g_zyotai_h`, `get_h_tokimeki`, `get_h_yuukou`, `birth_day_check_days` (1,412); MainMode `saved_mode`,
+     `overlay_target_mode`, `main_state_set(arg0)` (408); PadBits the four pad words (361; the 204 literals that are
+     not in the table, such as 0, stay); DayEventType `*.type` (102; the only other `type` member is the PsyQ `StHEADER`, and every
+     hit is in the queue code); Weekday `*.weekday` (33); Club `*.club` (26); InputDevice 38, MenuMode 15,
+     IconMode 14, Vacation 14, VoiceMode 8, MouseButtons 6. No literal found for Parameter, Place, HealthState,
+     DayKind, CalendarMarker and PlayerFlag: no unambiguous site (`parameter_index` and `place_index` are
+     placeholder variable sites that match nothing). Four literals the tool turned into `GIRL_SHIORI` or
+     `WEEKDAY_MONDAY` are `0` again by hand: the always-false unsigned compares `(u32)x < 0` (FAKE in ETC
+     `80146400`, TEL `80132000`, main `8006CB30`) and `x >= 0` (SHUGAKU `80138A60`). The enums are in hex or decimal as
+     the table has them; `/* GirlId */` style comments went onto the typed members by the tool.
+  5. 92 func and 39 data rows (the mode machine `main_state_*`/`main_stage_*`/`main_step_*`, `game_state` and
+     `system_data`, actor, sprite, dialogue, portrait `bustup_*`, CD and `snd_*` layers): 38,901 tokens renamed;
+     `main_step_next` alone has 4,130 uses in 219 files. 8 HYPOTHESIS rows are in the new `config/symbol_addrs_hypotheses.txt`; the names in
+     EVENT's range (`actor_pool`, `draw_buffer`, `sprite_quads`, `overlay_entry`, ...) are in
+     `config/symbol_addrs_main.txt`. The dead `MAIN_API_OVERRIDE_D_80120650` line of `include/ovl/EVENT.h` was
+     removed by hand: `main_api.h` now declares `actor_pool_96`, and EVENT keeps its own `D_80120650`.
+  6. 62 comment rows: 61 one-line English comments above the C definitions of O.BIN and patch names in `src/main`
+     (K&R definitions included; wrapped at 120 columns, American spelling) and the `main_api.h` header comment.
+  Left out (18 rows):
+  - `field GameState u54C`, `unk_54C`, `unk_54C_0` (3 rows): `unk_54C` and `unk_54C_0` are `#define` aliases of `u54C.a`
+    and `u54C.e0`, not members; the tool has no row kind for a macro alias. Needs tool work, then the three rows run
+    as they are.
+  - `field DisplayActor44 unk_18 frame`: `CAL_MARK(frame, side, d)` in `src/main/800674B0.c` has a macro parameter
+    `frame`, so `.frame` in its body takes the argument. Rename the macro parameter first (no row kind), or give
+    the field another name (`frame_index`?).
+  - `const Month` (12 rows): [[phase2]] step 2 leaves the month out on purpose; drop the rows from the table or
+    decide again.
+  - `file core include/game.h -> include/game_types.h` and `file core - include/game_enums.h` (2 rows): file and
+    header renames go in a commit of their own at the end of the unit, and the tool refuses `game.h` until the
+    tools that find it by name change. `include/game_enums.h` exists already (empty header, then the const runs),
+    so only the `game.h` rename is open.
+  For the review:
+  - Prefixes the applied names use that the ADR main map and the glossary do not list: `main_`, `mode_`, `actor_`,
+    `actors_`, `audio_`, `bustup_` (O.BIN stem; the map has `portrait_`), `card_` (the map has `memory_card_`),
+    `command_`, `daily_`, `debug_`, `dialogue_`, `frame_`, `game_` (the map has `game_mode_`), `icon_`, `last_`,
+    `light_`, `mascot_`, `name_buf_`, `overlay_`, `parameter_`, `place_`, `quarter_`, `screen_`, `system_`, `voice_`;
+    and `snd_`, which the ADR calls an SDK stem ([[spec/core]] section 17 proposes it as the single sound prefix).
+    CODING_STANDARDS section 4 wants the map rows in the commit that first uses a prefix; I did not edit the ADR
+    maps, because several rows need a decision (`snd_`, `card_`, `ending_start` against the ENDING overlay prefix).
+  - Not run: emulator checks (the notes are the table's); nothing was re-derived.
+  - Checks at the tip (`57629dff2`): clean build 27/27, `ninja progress` 6,952/6,952, `rename.py check` OK (591 ledger
+    rows), `check_headers.py` OK, `migrate_globals.py --check` OK, `sync_protos.py --check-branch` OK, the tool suite
+    (`discover -s tools -p 'test_*.py'`) 1,646 tests OK (3 skipped), no `INCLUDE_ASM` in `src/` before or after,
+    `funcdiff --resolve` MATCH (compared default build) for `main_step_next`, `main_stage_set`, `main_step_set`,
+    `snd_command`, `girl_state_rank`, `bustup_read_start`, `gpu_init`, `frame_render`, `actors_draw`, `dialogue_run`.

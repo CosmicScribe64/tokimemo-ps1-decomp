@@ -101,6 +101,22 @@ when the use is in a macro). Uses in code gcc does not compile (`#if 0`, other `
 are listed. Several field rows in a row of the table run as one batch, so a whole struct costs a
 few gcc passes.
 
+Limits found by T-27004 (rows the oracle cannot apply, left out of the table until the tool learns them):
+
+- A macro alias of a member (`#define unk_54C u54C.a` in `include/main_api.h`) is not a member: the row
+  `field GameState unk_54C ...` finds no declaration, and the row for `u54C` reports every use of the alias as
+  "not the token" (gcc points at the macro use). The aliases need a row kind of their own.
+- A new member name that is also a parameter of a macro in a `.c` file (`CAL_MARK(frame, side, d)` in
+  `src/main/800674B0.c`, member `DisplayActor44.unk_18` to `frame`) is replaced by the macro argument. The oracle
+  reports it as new gcc errors ("expected identifier before numeric constant"). Rename the macro parameter first
+  or pick another name.
+- `#line N` directives (TACO) renumber the lines gcc reports; the oracle maps a reported line back to every
+  physical line that carries it. The suggestion after "has no member named" (`did you mean 'x'?`) changes with
+  the member names and is ignored when the error sets are compared (K&R code such as `D_800E6280.unk_3A` in
+  RPG_BAT finds a member of another type by name; it errors in gcc before and after).
+- A type row with a `HYPOTHESIS` note appends its mark at the definition; the round trip proof removes that mark
+  before it checks the inverse substitution.
+
 ## Files, folders and headers
 
 ```
@@ -139,6 +155,14 @@ is a site: comparisons, assignments, `case` labels of a `switch` on the site, ca
 preprocessed file; literals inside macros and values without a name are listed. Declared types stay
 as they are (an enum variable would change the code); a member of a type of the same unit gets a
 `/* EnumName */` comment.
+
+- A `Type.member` site is refused when several types in the closure have a member of that name (`girl`,
+  `mode`, `type`): the site matches by member name alone. `*.member` accepts every type's member of that name on
+  purpose (T-27004: `*.weekday` for GameState and the event log entry); check that all of them hold the enum.
+- Comparisons include `<`, `>=` and so on, so an always-false unsigned idiom (`(u32)x < 0`, a FAKE in ETC) gets
+  the zero-valued constant. Look for `< ZERO_CONSTANT` after a run and put the `0` back.
+- A header must exist before `const` runs: create it empty (guard only) and include it from the umbrella
+  header. The enum goes before the last `#endif`.
 
 ## Merges, branches and checks
 

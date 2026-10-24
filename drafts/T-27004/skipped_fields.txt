@@ -1,0 +1,4 @@
+field	GameState	u54C	appointment_slots
+field	GameState	unk_54C	appointments
+field	GameState	unk_54C_0	next_appointment
+field	DisplayActor44	unk_18	frame
