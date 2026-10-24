@@ -14,7 +14,7 @@ Name every function and global of `src/main/8005A0B0.c` (109 functions: the week
 
 ## Acceptance criteria
 
-- [x] `config/renames/proposals/m-sysmenu.tsv`: one row per rename (kind scope old new note), a comment row for each of the 16 O.BIN-named functions, hypotheses marked `HYPOTHESIS:`; 264 rows (92 func, 27 data, 1 field, 126 const, 16 comment, 2 file). `tools/rename.py plan` on its func, data and field rows: exit 0, 118 rows, 45 files, no collision.
+- [x] `config/renames/proposals/m-sysmenu.tsv`: one row per rename (kind scope old new note), a comment row for each of the 16 O.BIN-named functions, hypotheses marked `HYPOTHESIS:`; 264 rows (92 func, 27 data, 1 field, 126 const, 16 comment, 2 file). `tools/rename.py plan` on its func, data and field rows: exit 0, 120 rows, 45 files, no collision.
 - [x] `wiki/spec/m-sysmenu.md`: what each screen does, its state and data with the new names, the rules (build rules of the command screen, icon table, save and load steps, settings tables, rumor and preparation rules), connections, peculiarities and dead code, prefix requests, open questions; linked from `wiki/spec/index.md`.
 - [x] Emulator checks from the HUD unit's saved state of the command screen (1995-04-09): icon to stage mapping, settings flow and frame numbers, calendar, the data screen through save and load, the click spots in mouse-like mode, icon 0 to mode 0x30, icon 4 without a club does nothing, d-pad icon order, click spots drawn on a screenshot.
 - [x] Facts only, no game text, no asm, no screenshots, nothing from `disc/`, `versions/`, `build/`. No edit of `src/`, `include/` or symbol files.
