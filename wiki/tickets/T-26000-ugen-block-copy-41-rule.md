@@ -1,10 +1,10 @@
 ---
 id: T-26000
 title: Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py
-status: In Review
+status: Done
 assignee: w17-ugen41 (Opus)
 created: 2026-10-23
-updated: 2026-10-23
+updated: 2026-10-24
 links: [[[tickets/T-25608-gate-main-func_8006B0C8]], [[ido-52-evaluation]], [[toolchain]]]
 ---
 
@@ -43,3 +43,9 @@ Prototype: `drafts/T-25608/ido41/ugen_pass_41rule.py` (on the w16-ido41 branch, 
 - End to end, all 39 case files with IDO 4.1 and the pass: 34 agree; the 5 that differ are the 4 value-branch cases and `copy_dropped_arm_store`, all documented.
 - Dates: ticket `updated` and the [[toolchain]] census corrected to 2026-10-23; the earlier log entry keeps its 2026-10-24 date (log entries are not edited).
 - Follow-up to file (needs a board card, left to the orchestrator): measure in 4.1 the 4-byte copy's state of `func_8006B0C8`, stored compares, `Uxjp` and `Uijp`; then decide whether to model F at a branch on a value and the dropped-arm store, which would let the two main arms go.
+
+### 2026-10-24, orchestrator: reviews approved, Done
+
+- Standards review (CODING_STANDARDS.md): approved, no blocking findings. Non-blocking, left as follow-ups: (1) in `tools/ugen_pass.py`, `_is_register_compare_jump` returns False at an `Uldc` right operand before it checks that a left operand exists, so a compare with only a constant (`ldc 0; neq; fjp`) keeps the state instead of raising PassError, contrary to the claim in [[toolchain]]; uopt does not emit this shape, so no output changes; fix by finding the left operand first and adding `[ldc(0), op('neq'), fjp()]` to `test_compare_without_operands_raises`. (2) Keeping the state at a value branch rests on one original function (`func_8006B0C8`) and costs two never-true FAKE arms (`strCallback`, `func_8005938C`); no full-build census of F at a value branch exists, so file a follow-up: the census, the 4-byte copy of `func_8006B0C8` in 4.1, stored compares, `Uxjp` and `Uijp`. (3) The notation paragraph in `tools/ido_eval_cases/ugen_copy_state/README.md` still describes the removed T-25608 detector; mark it as T-25608 history. (4) The FAKE comments of `strCallback` and `func_8005938C` should say they work because the pass counts a store in an arm ugen drops (`copy_dropped_arm_store`).
+- Spec review: approved. All three acceptance criteria are met.
+- Merge checks: check_headers, migrate_globals --check, sync_protos --check-branch, `tools.test_ugen_pass`, and funcdiff MATCH for `func_8006B0C8`, `strCallback`, `func_8005938C` (INCLUDE_ASM absent).

@@ -43,7 +43,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
-- [ ] [[tickets/T-26000-ugen-block-copy-41-rule|T-26000 Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py]]
 
 ## Ready
 
@@ -177,6 +176,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-26000-ugen-block-copy-41-rule|T-26000 Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py]]
 - [ ] [[tickets/T-25604-gate-NAME_ENT-func_80143580|T-25604 Finish gate - NAME_ENT func_80143580]]
 - [ ] [[tickets/T-25608-gate-main-func_8006B0C8|T-25608 Finish gate - main func_8006B0C8]]
 - [ ] [[tickets/T-25606-gate-main-func_800476C0|T-25606 Finish gate - main func_800476C0]]
