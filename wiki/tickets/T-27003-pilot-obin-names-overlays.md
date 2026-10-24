@@ -1,7 +1,7 @@
 ---
 id: T-27003
 title: "Pilot: O.BIN names into the overlays (alias debt)"
-status: In Review
+status: Done
 assignee: sonnet (p2-pilot)
 created: 2026-10-24
 updated: 2026-10-24
@@ -75,3 +75,17 @@ the C definition; the SDK-side ones have none and are optional) and new names. A
   MASTER:func_80138490, SHOUGATU:func_8013E410, main:check_k_scroll and main:mod_set_gpu, GEKO:func_80135DC0).
   Cost: each overlay split now prints splat's "Unable to determine a segment" list for the O.BIN and SDK names
   (clean-build log 1.2 MB instead of 0.33 MB); harmless. Procedure for later alias merges: [[rename-tool]] "Alias rows".
+- 2026-10-24 review (standards and spec, against `CODING_STANDARDS.md` and the acceptance criteria): approved, no
+  blocking findings, status moves to Done. Non-blocking follow-ups, none needed for the merge:
+  1. `wiki/playbook.md` line 32 (a current page) still uses `func_80086204` (now `Rot_2D`) and `func_800AE0A0` (now
+     `memcpy`); ADR 0001 decision 6 says current pages use the new names. Fix in the next wiki upkeep pass.
+  2. `tools/redraft_extras.py` (`MENU_RE` and line 100) still emits `func_8004F870(` for `menu_set`; output of that
+     legacy tool would reintroduce a placeholder, which `rename.py check` then catches.
+  3. `src/ovl/NAME_ENT/80144AD0.c` `func_80145AC4` uses a block-scope `extern void set_dec_bri();` instead of the
+     file-scope `MAIN_API_OVERRIDE` pattern of CODING_STANDARDS 8a. It carries a reason comment, the file needs both
+     views and `check_headers.py` passes, so it is accepted.
+  4. `src/ovl/DATE2/80137D50.c` keeps the file-local macro target `func_8004E788_main_api`, which is
+     placeholder-shaped. It existed before (the macro reads `#define set_kanji_string func_8004E788_main_api`), is
+     never called and is `#undef`'d; harmless.
+  5. `wiki/kanban.md` still showed the card in Backlog while the frontmatter said In Review; `merge3.sh` derives
+     the board from the ticket frontmatter (`kanban_sync.py`), so the card moves to Done at merge.
