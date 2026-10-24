@@ -7,26 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] build | Quadrant UV saved-register rotation explained
-
-Astra traced separate-case-break controls for [[tickets/T-25034-main-quadrant-extent]]: scaled-row priority rises8.2->9.111 and overtakes constant127/quadrant, rotating saved registers. If-chain reproduces rotation; standalone shared-u0/default bypass returns to existing360/380 best. UV byte-result cast leaves end_v in v1. Matching continues with required masking/store-chain mechanisms; production unchanged.
-
-## [2026-10-22] build | Quadrant signed-byte mask closes red placement
-
-For [[tickets/T-25034-main-quadrant-extent]], signed-byte cast before mask with s32 red reproduces temporary SRA followed by direct ANDI into fp/s7 without sign-extension/copy. Whole-TU candidate674/667words,367aligned/415printed is not overall best; blue narrowing introduces a stack LB. Astra continues that local correction and trace. No literal match or promotion yet.
-
-## [2026-10-22] build | Quadrant signed-mask source improves to212
-
-[[tickets/T-25034-main-quadrant-extent]] improves from360/380 to212aligned/212printed at674target/666built padded words after removing only blue narrowing. Red/green direct masks, blue word extraction, full-word extents and0xA8 frame preserved. Archived immutable source as drafts/T-25034/main/func_80046AC8/signed-mask.c; inner signed CVTL is the measured color expression boundary. Astra continues remaining UV/register/CFG work; no promotion.
-
-## [2026-10-22] build | Quadrant archived212 candidate replayed
-
-Independent Docker replay of drafts/T-25034/main/func_80046AC8/signed-mask.c reproduces674target/666built,212aligned/212printed for [[tickets/T-25034-main-quadrant-extent]]. This validates the archived source/replay path without changing production. Worker continues remaining matching work.
-
-## [2026-10-22] query | Transfer TACO allocation evidence
-
-Added the verified T-25043 call-result liveness recipe to [[playbook]] and relayed it to the MAIN counter worker. The extra dead-arm constant use changes priority as well as interference; avoid treating this as a generic zero-expression recipe. All existing workers remain active with separate source ownership.
-
 ## [2026-10-22] build | Root preserves quadrant research checkpoint
 
 Root independently replayed b25963c45 signed-mask candidate in Docker:674 target words,666 candidate words,212 aligned/printed differences, reproducing the worker result. Preserved source and research on main without promoting production or changing coverage. Worker has reported a newer198-difference candidate and continues; it is not yet independently verified.
@@ -1468,6 +1448,7 @@ Fixed the three blocking findings of the review of [[tickets/T-27023-p2-o-event]
 
 ## [2026-10-24] ticket | T-27023 Done after review
 [[tickets/T-27023-p2-o-event]] passed the round 2 review (approved, no findings): the three blocking findings of round 1 are resolved, [[spec/o-event]] section 7.0 states that the shipped DATE is authoritative where EVENT's outcome score and close step differ, and the rows and spec lines of the fix pass match the C. Tables and wiki only; nothing under `src/`, `include/` or `config/symbol*`. Moved to Done; the board card is moved by the kanban sync in the merge step.
+
 ## [2026-10-24] ingest | T-27029 phase 2 o-etc: names and port spec for the ETC overlay
 [[tickets/T-27029-p2-o-etc]] (In Review): read the matched C of all 13 files of `src/ovl/ETC` (394 functions), the callers in main, ENDING and OPTION, the overlay data tables and the core, scheduler and sysmenu tables. Wrote `config/renames/proposals/o-etc.tsv` (779 rows: 394 func, 233 data, 114 const, 18 field, 14 file, 6 type; 5 HYPOTHESIS) and [[spec/o-etc]]; one line added to [[spec/index]].
 Findings: ETC holds seven entries, final exams (0x35), career guidance (0x36), career choice with a 10-question entrance exam (0x37), staff roll (0xC2), last photo (0xC3), clear save (0xC4) and the photo album (0x91). The exam day score is main + sub + biorhythm - 8 (halved when neurotic or sick) plus a correction bonus that shrinks per round, scaled by 100/128; three red marks start the remedial week (player flag bit 16, calendar marker 0x17). The results ranking draws noisy values per girl and a cosine rank number. The career result byte read by ENDING has bits 0-5 (accepted tier), 0x40 (club dream) and 0x80 (failed). `girl_cleared` is a per-girl ending counter incremented by the clear save. About 30 functions are dead code (three developer stub scenes, two skip-week helpers, an album fixture, three animation table setters). Emulator checks used a local poke wrapper (not committed): printed score values and screens matched the spec.
