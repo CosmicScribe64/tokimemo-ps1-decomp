@@ -1,7 +1,7 @@
 ---
 id: T-27018
 title: Phase 2 naming proposals and port spec for main text, menus and girl queries (m-menutext)
-status: In Review
+status: Done
 assignee: claude
 created: 2026-10-24
 updated: 2026-10-24
@@ -19,7 +19,7 @@ Roadmap phase 2 (readable code), unit `m-menutext`: name every function, owned g
 - [x] O.BIN-named functions kept, each with an English comment row (core covers 22 of the 45, this table the other 23).
 - [x] `wiki/spec/m-menutext.md` covers the text list and typewriter, speaker plates and dialogue blocks, the menu engine and cursor modes, girl scores, ranks, closeness and points, name builders, birthday and club helpers, connections, quirks, evidence and open questions; linked from `wiki/spec/index.md`.
 - [x] Emulator probes confirm layouts and rules where the code alone left doubt (spec section 15).
-- [ ] Review of the table and spec by the phase-2 reviewer.
+- [x] Review of the table and spec by the phase-2 reviewer.
 
 ## Notes
 
@@ -40,3 +40,8 @@ Roadmap phase 2 (readable code), unit `m-menutext`: name every function, owned g
 - Blocking 2, prefixes: `param_ladder_base` and its six aliases, `points_param_curve`, `points_stress_curve`, `closeness_grid` and `shiori_param_minimum` now start with `girl_`; `sndisp_split_template` is `speaker_split_template`; `debug_vram_view_x/y` are `mode_debug_vram_view_x/y`; `voice_*` words and `VOICE_*` constants are `speaker_voice_*` and `SPEAKER_VOICE_*`; `SPEECH_*` became `SPEAKER_STYLE_*`; `CLOSENESS_BUCKET_*` became `GIRL_CLOSENESS_BUCKET_*`. No ADR row was added.
 - Blocking 3, glossary terms: `girl_points_heroines` is `girl_points_others`, `GIRL_HEROINE_COUNT` is `GIRL_SCORED_COUNT`, the suffix strings are `girl_name_suffix_familiar` and `girl_name_suffix_polite`; glossary rows for `closeness` and `points` added, and the three closeness constants carry HYPOTHESIS.
 - Non-blocking: the Shiori minimum table is labeled at its start 0x800B4340 (new symbol entry, `D_800B4341` kept as alias `girl_shiori_param_minimum_1`); `girl_scores` lists all ten call sites (the reviewer counted two in 80075320; the C and the asm show one, whose result is unused) and the 16-entry write; cd state values are written as value 4 (bit 2) and value 2 (bit 1); the reset keeps the speed; `TEXT_SPEED_MAX` is `TEXT_SPEED_CLAMP`; five breaks is the array capacity; the page-wrap text is fixed (slots 0x180 and up reuse the third page); `text_set_advance` has a comment row; the file note explains the one-object file and the headers are split by topic (`menu.h`, `speaker.h`, `girl.h`). Core renames (`text_block_first`, `text_block_end`, `color`, `ot_slot`) are requested in spec section 16, not made here.
+
+2026-10-24, review round 2: approved with no findings. All three blocking findings of round 1 are resolved. No clear factual error in the rows or spec lines the fix touched. The reviewer checked the table (153 rows) against the C, the asm data, the ADR prefix map, `GLOSSARY.md` and every proposals table in w2-good and the in-flight worktrees (m-flow, m-holiday, m-sysmenu, o-date, o-event).
+- Blocking 1, cross-unit constants: resolved on this unit's side. The `NAME_CODE_PLAYER` and `NAME_CODE_GIRL` rows are gone and the spec cites m-dates-b's `NAME_CODE_PLAYER_FORM` and `NAME_CODE_GIRL` (spec lines 12, 198, 482). Form 15 gives the full name: for style & 15 == 15 `sndi` calls `get_p_name(name, 15)`, and `get_p_name` case 15 returns the family name plus up to 6 bytes of the given name. This unit owns the `TextSpeed` rows, and spec section 16 asks m-sysmenu to drop its three. Items are numbered 0-2 (slow, normal, fast); the code at 8005A0B0 stores 3, 1, 0 for cursors 0, 1, 2 and shows item 2 as the start cursor for any other speed, so the row notes are correct. A script over all proposals tables found one remaining overlap: the three `TEXT_SPEED_*` rows in `m-sysmenu.tsv` (same names and values). m-sysmenu has not dropped them yet and its own spec and ticket do not mention it, so whoever merges m-sysmenu must remove them there (they are not on w2-good yet, so this merge adds no duplicate).
+- Blocking 2, prefixes: resolved. Every renamed function, data, field and const name starts with a prefix the ADR main map lists (`text_`, `menu_`, `speaker_` or `gi`; the relayed review summary is cut off at that point).
+- The branch changes only `config/renames/proposals/m-menutext.tsv`, `wiki/spec/m-menutext.md`, `wiki/spec/index.md`, `wiki/spec/m-scheduler.md` (one line), `GLOSSARY.md`, this ticket and the log; nothing under `src/`, `include/` or `config/symbol*`, so no `CODING_STANDARDS.md` code checklist item applies. Moved to Done and merged as `p2a-m-menutext`.
