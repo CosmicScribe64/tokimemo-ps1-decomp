@@ -7,21 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | T-25016 hand phase: funcdiff ground truth for the near set
-
-Hand phase on [[tickets/T-25016-candidate-reconstruction]]. Two
-measurement corrections: census v2 scored stale drafts/ bodies where
-the src tree carries newer NON_MATCHING bodies (13 of 24), and the
-packet metric counts symbolization differences that funcdiff's
-after-relocation comparison resolves away. Resolved rows for the
-near set: func_8013852C 2, func_80136C20 2, func_80134724 4,
-func_801511C0 5, func_80140E0C 6, func_80139290 7, func_8014AB50 7.
-No local zero. All top-group residues are as1 local ordering
-choices on identical instruction streams; source-shape attempts
-(statement and declaration permutations, splits, label placement,
-compiler variants, a 302-trial engine run on func_8014AB50)
-recorded in the ticket do not move them.
-
 ## [2026-10-22] ticket | T-25016 phase 2 results and resolution plan by common issue
 
 ## [2026-10-22] ticket | T-25016 gate-lever experiments: flattening and volatile both negative with named causes
@@ -1749,6 +1734,7 @@ Section added to [[ido-52-evaluation]]; harness in `drafts/T-25608/ido41/`.
 ## [2026-10-23] ticket | T-25608 Done: main func_8006B0C8 matched; every game function is C
 
 The last function matched with a narrowed block-copy state rule in tools/ugen_pass.py; an IDO 4.1 check (user-approved download) confirmed the three swap copies' state and showed a better general rule, now [[tickets/T-26000-ugen-block-copy-41-rule]]. With this merge all 6,952 game functions are matched ([[tickets/T-25600-finish-gate]]).
+
 ## [2026-10-24] ticket | T-26001 Done: stale tool tests fixed
 
 [[tickets/T-26001-stale-tool-tests]]: test_build_deps now copies tools/ugen_pass.py into its fake project and the protoverride compile_unit test gives its fake context a name; the full tool suite passes (1572 OK, 3 skipped).
@@ -1756,6 +1742,7 @@ The last function matched with a narrowed block-copy state rule in tools/ugen_pa
 ## [2026-10-24] decision | Phase 1 complete: 6,952/6,952 game functions
 
 Every game function is C and every binary rebuilds byte for byte ([[status]]). Closed the wave 10/11, stubborn-function and finish-gate tickets (T-25300, T-25400, T-25500, T-25600 and their per-file tickets); T-26000 (IDO 4.1 block-copy rule) is in progress. ROADMAP.md marks phase 1 done and phase 2 (readable code) in progress; README.md says every game function is C.
+
 ## [2026-10-24] build | T-20500 emulator probe merged
 
 [[emulator]]: PCSX-Redux (pinned 8288e927 plus upstream fix 3a24bbcc) with OpenBIOS (MIT) in Docker; the game boots headless to the title menu. tools/emu/run.sh drives breakpoints on main and overlay code, memory watches, call stacks, traces, scripted input, screenshots and save states for phase 2 naming. Ticket stays In Progress for its GameState naming pilot.
